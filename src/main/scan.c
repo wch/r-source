@@ -83,8 +83,8 @@ typedef struct {
 static SEXP insertString(char *str, LocalData *l)
 {
     if (!strIsASCII(str)) {
-        if (l->con->UTF8out || l->isUTF8) return mkCharCE(str, CE_UTF8);
-        else if (l->isLatin1) return mkCharCE(str, CE_LATIN1);
+	if (l->con->UTF8out || l->isUTF8) return mkCharCE(str, CE_UTF8);
+	else if (l->isLatin1) return mkCharCE(str, CE_LATIN1);
     }
     return mkChar(str);
 }
@@ -1142,32 +1142,32 @@ static void ruleout_types(const char *s, Typecvt_Info *typeInfo, LocalData *data
     char *endp;
 
     if (typeInfo->islogical) {
-        if (strcmp(s, "F") == 0 || strcmp(s, "FALSE") == 0
-            || strcmp(s, "T") == 0 || strcmp(s, "TRUE") == 0) {
-            typeInfo->isinteger = FALSE;
-            typeInfo->isreal = FALSE;
-            typeInfo->iscomplex = FALSE;
-        } else {
-            typeInfo->islogical = TRUE;
-        }
+	if (strcmp(s, "F") == 0 || strcmp(s, "FALSE") == 0
+	    || strcmp(s, "T") == 0 || strcmp(s, "TRUE") == 0) {
+	    typeInfo->isinteger = FALSE;
+	    typeInfo->isreal = FALSE;
+	    typeInfo->iscomplex = FALSE;
+	} else {
+	    typeInfo->islogical = TRUE;
+	}
     }
 
     if (typeInfo->isinteger) {
-        res = Strtoi(s, 10);
-        if (res == NA_INTEGER)
-            typeInfo->isinteger = FALSE;
+	res = Strtoi(s, 10);
+	if (res == NA_INTEGER)
+	    typeInfo->isinteger = FALSE;
     }
 
     if (typeInfo->isreal) {
-        Strtod(s, &endp, TRUE, data);
-        if (!isBlankString(endp))
-            typeInfo->isreal = FALSE;
+	Strtod(s, &endp, TRUE, data);
+	if (!isBlankString(endp))
+	    typeInfo->isreal = FALSE;
     }
 
     if (typeInfo->iscomplex) {
-        strtoc(s, &endp, TRUE, data);
-        if (!isBlankString(endp))
-            typeInfo->iscomplex = FALSE;
+	strtoc(s, &endp, TRUE, data);
+	if (!isBlankString(endp))
+	    typeInfo->iscomplex = FALSE;
     }
 }
 
@@ -1240,7 +1240,7 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
     }
     if (i < len) {  /* not all entries are NA */
-        ruleout_types(tmp, &typeInfo, &data);
+	ruleout_types(tmp, &typeInfo, &data);
     }
 
     if (typeInfo.islogical) {
@@ -1257,7 +1257,7 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    LOGICAL(rval)[i] = 1;
 		else {
 		    typeInfo.islogical = FALSE;
-                    ruleout_types(tmp, &typeInfo, &data);
+		    ruleout_types(tmp, &typeInfo, &data);
 		    break;
 		}
 	    }
@@ -1276,7 +1276,7 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 		INTEGER(rval)[i] = Strtoi(tmp, 10);
 		if (INTEGER(rval)[i] == NA_INTEGER) {
 		    typeInfo.isinteger = FALSE;
-                    ruleout_types(tmp, &typeInfo, &data);
+		    ruleout_types(tmp, &typeInfo, &data);
 		    break;
 		}
 	    }
@@ -1295,7 +1295,7 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 		REAL(rval)[i] = Strtod(tmp, &endp, FALSE, &data);
 		if (!isBlankString(endp)) {
 		    typeInfo.isreal = FALSE;
-                    ruleout_types(tmp, &typeInfo, &data);
+		    ruleout_types(tmp, &typeInfo, &data);
 		    break;
 		}
 	    }
@@ -1314,8 +1314,8 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 		COMPLEX(rval)[i] = strtoc(tmp, &endp, FALSE, &data);
 		if (!isBlankString(endp)) {
 		    typeInfo.iscomplex = FALSE;
-                    /* this is not needed, unless other cases are added */
-                    ruleout_types(tmp, &typeInfo, &data);
+		    /* this is not needed, unless other cases are added */
+		    ruleout_types(tmp, &typeInfo, &data);
 		    break;
 		}
 	    }
@@ -1348,10 +1348,10 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    SET_STRING_ELT(levs, j++, STRING_ELT(cvec, i));
 	    }
 
-            /* We avoid an allocation by reusing dup,
-             * a LGLSXP of the right length
-             */
-            rval = dup;
+	    /* We avoid an allocation by reusing dup,
+	     * a LGLSXP of the right length
+	     */
+	    rval = dup;
 	    SET_TYPEOF(rval, INTSXP);
 
 	    /* put the levels in lexicographic order */
@@ -1653,7 +1653,7 @@ static void change_dec(char *tmp, char cdec, SEXPTYPE t)
 #endif
 
 /* a version of EncodeElement with different escaping of char strings */
-static const char 
+static const char
 *EncodeElement2(SEXP x, int indx, Rboolean quote,
 		Rboolean qmethod, R_StringBuffer *buff, char cdec)
 {

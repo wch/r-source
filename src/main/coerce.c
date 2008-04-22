@@ -968,7 +968,7 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 	     * that is really desirable though....
 	     */
 	    else if (isSymbol(VECTOR_ELT(v, i)))
-	    	SET_STRING_ELT(rval, i, PRINTNAME(VECTOR_ELT(v, i)));
+		SET_STRING_ELT(rval, i, PRINTNAME(VECTOR_ELT(v, i)));
 #endif
 	    else
 		SET_STRING_ELT(rval, i,
@@ -1779,8 +1779,8 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     switch (TYPEOF(x)) {
     case LGLSXP:
        for (i = 0; i < n; i++)
-            LOGICAL(ans)[i] = (LOGICAL(x)[i] == NA_LOGICAL);
-        break;
+	    LOGICAL(ans)[i] = (LOGICAL(x)[i] == NA_LOGICAL);
+	break;
     case INTSXP:
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = (INTEGER(x)[i] == NA_INTEGER);
@@ -2018,7 +2018,7 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, n;
     checkArity(op, args);
     if (DispatchOrEval(call, op, "is.infinite", args, rho, &ans, 0, 1))
-        return(ans);
+	return(ans);
 #ifdef stringent_is
     if (!isList(CAR(args)) && !isVector(CAR(args)))
 	errorcall_return(call, "is.infinite " R_MSG_list_vec);
@@ -2119,35 +2119,35 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(c = call = allocList(n + 1));
     SET_TYPEOF(c, LANGSXP);
     if( isString(fun) )
-        SETCAR(c, install(translateChar(STRING_ELT(fun, 0))));
+	SETCAR(c, install(translateChar(STRING_ELT(fun, 0))));
     else
-        SETCAR(c, fun);
+	SETCAR(c, fun);
     c = CDR(c);
     for (i = 0; i < n; i++) {
 #ifndef NEW
-        SETCAR(c, VECTOR_ELT(args, i));
+	SETCAR(c, VECTOR_ELT(args, i));
 #else
-        SETCAR(c, mkPROMISE(VECTOR_ELT(args, i), rho));
-        SET_PRVALUE(CAR(c), VECTOR_ELT(args, i)); */
+	SETCAR(c, mkPROMISE(VECTOR_ELT(args, i), rho));
+	SET_PRVALUE(CAR(c), VECTOR_ELT(args, i)); */
 #endif
-        if (ItemName(names, i) != R_NilValue)
-            SET_TAG(c, install(translateChar(ItemName(names, i))));
-        c = CDR(c);
+	if (ItemName(names, i) != R_NilValue)
+	    SET_TAG(c, install(translateChar(ItemName(names, i))));
+	c = CDR(c);
     }
     call = eval(call, envir);
 
     /*
     cptr = R_GlobalContext;
     while (cptr->nextcontext != NULL) {
-        if (cptr->callflag & CTXT_FUNCTION ) {
+	if (cptr->callflag & CTXT_FUNCTION ) {
 		if(cptr->cloenv == rho)
 		   break;
 	}
     }
     if( cptr->cloenv == rho )
-    	call = eval(call, cptr->sysparent);
+	call = eval(call, cptr->sysparent);
     else
-        error(_("do.call: could not find parent environment"));
+	error(_("do.call: could not find parent environment"));
     */
 
     UNPROTECT(1);
@@ -2174,7 +2174,7 @@ SEXP substitute(SEXP lang, SEXP rho)
     case PROMSXP:
 	return substitute(PREXPR(lang), rho);
     case SYMSXP:
-    	if (rho != R_NilValue) {
+	if (rho != R_NilValue) {
 	    t = findVarInFrame3( rho, lang, TRUE);
 	    if (t != R_UnboundValue) {
 		if (TYPEOF(t) == PROMSXP) {
@@ -2182,10 +2182,10 @@ SEXP substitute(SEXP lang, SEXP rho)
 			t = PREXPR(t);
 		    } while(TYPEOF(t) == PROMSXP);
 		    return t;
-	    	}
-	    	else if (TYPEOF(t) == DOTSXP)
+		}
+		else if (TYPEOF(t) == DOTSXP)
 		    error(_("... used in an incorrect context"));
-	    	if (rho != R_GlobalEnv)
+		if (rho != R_GlobalEnv)
 		    return t;
 	    }
 	}
@@ -2377,13 +2377,13 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	 * R_data_class */
 	else if(!strcmp("matrix", valueString)) {
 	    if(length(getAttrib(obj, R_DimSymbol)) != 2)
-	        error(_("invalid to set the class to matrix unless the dimension attribute is of length 2 (was %d)"),
+		error(_("invalid to set the class to matrix unless the dimension attribute is of length 2 (was %d)"),
 		 length(getAttrib(obj, R_DimSymbol)));
 	    setAttrib(obj, R_ClassSymbol, R_NilValue);
 	}
 	else if(!strcmp("array", valueString)) {
 	    if(length(getAttrib(obj, R_DimSymbol))<= 0)
-	        error(_("cannot set class to \"array\" unless the dimension attribute has length > 0"));
+		error(_("cannot set class to \"array\" unless the dimension attribute has length > 0"));
 	    setAttrib(obj, R_ClassSymbol, R_NilValue);
 	}
 	else { /* set the class but don't do the coercion; that's

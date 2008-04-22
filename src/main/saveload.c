@@ -111,10 +111,10 @@ typedef struct {
 #include <rpc/xdr.h>
 
 typedef struct {
-/* These 4 variables are accessed in the 
+/* These 4 variables are accessed in the
    InInteger, InComplex, InReal, InString
    methods for Ascii, Binary, XDR.
-   bufsize is only used in XdrInString! 
+   bufsize is only used in XdrInString!
 
 The Ascii* routines could declare their own local
 copy of smbuf and use that (non-static). That would
@@ -123,7 +123,7 @@ mean some of them wouldn't need the extra argument.
 
     R_StringBuffer buffer;
     char smbuf[512];		/* Small buffer for temp use */
-                                /* smbuf is only used by Ascii. */
+				/* smbuf is only used by Ascii. */
     XDR xdrs;
 
 } SaveLoadData;
@@ -239,7 +239,7 @@ static Rcomplex AsciiInComplex(FILE *fp, SaveLoadData *d)
 	res  = sscanf(d->smbuf, "%lg", &x.r);
 	if(res != 1) error(_("read error"));
     }
-    
+
     res = fscanf(fp, "%s", d->smbuf);
     if(res != 1) error(_("read error"));
     if (strcmp(d->smbuf, "NA") == 0)
@@ -537,7 +537,7 @@ static void RemakeNextSEXP(FILE *fp, NodeInfo *node, int version, InputRoutines 
 	/* string = */ m->InString(fp, d);
 	break;
     case REALSXP:
-        len = m->InInteger(fp, d);
+	len = m->InInteger(fp, d);
 	s = allocVector(type, len);
 	/* skip over the vector content */
 	for (j = 0; j < len; j++)
@@ -646,7 +646,7 @@ static void RestoreError(/* const */ char *msg, int startup)
     else
 	error("%s", msg);
 }
-  
+
 static SEXP DataLoad(FILE *fp, int startup, InputRoutines *m, int version, SaveLoadData *d)
 {
     int i, j;
@@ -703,7 +703,7 @@ static SEXP DataLoad(FILE *fp, int startup, InputRoutines *m, int version, SaveL
     /* first pass: allocate nodes */
 
     for (i = 0 ; i < node.NSave ; i++) {
-        RemakeNextSEXP(fp, &node, version, m, d);
+	RemakeNextSEXP(fp, &node, version, m, d);
     }
 
 
@@ -902,7 +902,7 @@ static int HashGet(SEXP item, SEXP ht)
 	    return INTEGER(CAR(cell))[0];
     return 0;
 }
-    
+
 static int NewLookup (SEXP item, SEXP ht)
 {
     int count = NewSaveSpecialHook(item);
@@ -974,18 +974,18 @@ in version 1 workspaces"));
     NewMakeLists(ATTRIB(obj), sym_list, env_list);
 }
 
-/* e.g., OutVec(fp, obj, INTEGER, OutInteger) 
+/* e.g., OutVec(fp, obj, INTEGER, OutInteger)
  The passMethods argument tells it whether to call outfunc with the
  other methods. This is only needed when calling OutCHARSXP
  since it needs to know how to write sub-elements!
 */
 #define OutVec(fp, obj, accessor, outfunc, methods, d)	                \
-	do { 								\
+	do {								\
 		int cnt;						\
 		for (cnt = 0; cnt < LENGTH(obj); ++cnt) {		\
-			methods->OutSpace(fp, 1,d);		       	\
-                        outfunc(fp, accessor(obj, cnt), d);	        \
-                        methods->OutNewline(fp, d);                     \
+			methods->OutSpace(fp, 1,d);			\
+			outfunc(fp, accessor(obj, cnt), d);	        \
+			methods->OutNewline(fp, d);                     \
 		}							\
 	} while (0)
 
@@ -1029,13 +1029,13 @@ static void NewWriteVec (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp, OutputR
 	OutVec(fp, s, COMPLEX_ELT, m->OutComplex, m, d);
 	break;
     case STRSXP:
-	do { 								
-		int cnt;						
-		for (cnt = 0; cnt < LENGTH(s); ++cnt) {		
-			m->OutSpace(fp, 1, d);			       	
-                        OutCHARSXP(fp, STRING_ELT(s, cnt), m, d);	        
-                        m->OutNewline(fp, d);                              
-		}							
+	do {
+		int cnt;
+		for (cnt = 0; cnt < LENGTH(s); ++cnt) {
+			m->OutSpace(fp, 1, d);
+			OutCHARSXP(fp, STRING_ELT(s, cnt), m, d);
+			m->OutNewline(fp, d);
+		}
 	} while (0);
 	break;
     case VECSXP:
@@ -1230,8 +1230,8 @@ static SEXP NewReadVec(SEXPTYPE type, SEXP sym_table, SEXP env_table, FILE *fp, 
 	InVec(fp, my_vec, SET_COMPLEX_ELT, m->InComplex, length, d);
 	break;
     case STRSXP:
-	do {								
-	    int cnt;						
+	do {
+	    int cnt;
 	    for (cnt = 0; cnt < length(my_vec); ++cnt)
 		SET_STRING_ELT(my_vec, cnt, InCHARSXP(fp, m, d));
 	} while (0);
@@ -1248,7 +1248,7 @@ static SEXP NewReadVec(SEXPTYPE type, SEXP sym_table, SEXP env_table, FILE *fp, 
     return my_vec;
 }
 
-static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp, 
+static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp,
 			 InputRoutines *m, SaveLoadData *d)
 {
     SEXPTYPE type;
@@ -1430,17 +1430,17 @@ static void OutStringAscii(FILE *fp, const char *x, SaveLoadData *unused)
 	case '\?': fprintf(fp, "\\?");  break;
 	case '\'': fprintf(fp, "\\'");  break;
 	case '\"': fprintf(fp, "\\\""); break;
-	default  : 
+	default  :
 	    /* cannot print char in octal mode -> cast to unsigned
 	       char first */
-	    /* actually, since x is signed char and '\?' == 127 
+	    /* actually, since x is signed char and '\?' == 127
 	       is handled above, x[i] > 126 can't happen, but
 	       I'm superstitious...  -pd */
 	    if (x[i] <= 32 || x[i] > 126)
 		fprintf(fp, "\\%03o", (unsigned char) x[i]);
-	    else 
+	    else
 		fputc(x[i], fp);
-        }
+	}
     }
 }
 
@@ -1458,7 +1458,7 @@ static char *InStringAscii(FILE *fp, SaveLoadData *unused)
     if (nbytes >= buflen) {
 	char *newbuf;
 	/* Protect against broken realloc */
-	if(buf) newbuf = (char *) realloc(buf, nbytes + 1); 
+	if(buf) newbuf = (char *) realloc(buf, nbytes + 1);
 	else newbuf = (char *) malloc(nbytes + 1);
 	if (newbuf == NULL)
 	    error(_("out of memory reading ascii string"));
@@ -1466,37 +1466,37 @@ static char *InStringAscii(FILE *fp, SaveLoadData *unused)
 	buflen = nbytes + 1;
     }
     while(isspace(c = fgetc(fp)))
-        ;
+	;
     ungetc(c, fp);
     for (i = 0; i < nbytes; i++) {
-        if ((c =  fgetc(fp)) == '\\') {
-            switch(c = fgetc(fp)) {
-            case 'n' : buf[i] = '\n'; break;
-            case 't' : buf[i] = '\t'; break;
-            case 'v' : buf[i] = '\v'; break;
-            case 'b' : buf[i] = '\b'; break;
-            case 'r' : buf[i] = '\r'; break;
-            case 'f' : buf[i] = '\f'; break;
-            case 'a' : buf[i] = '\a'; break;
-            case '\\': buf[i] = '\\'; break;
-            case '?' : buf[i] = '\?'; break;
-            case '\'': buf[i] = '\''; break;
-            case '\"': buf[i] = '\"'; break;
-            case '0': case '1': case '2': case '3':
-            case '4': case '5': case '6': case '7':
-                d = 0; j = 0;
-                while('0' <= c && c < '8' && j < 3) {
-                    d = d * 8 + (c - '0');
-                    c = fgetc(fp);
-                    j++;
-                }
-                buf[i] = d;
-                ungetc(c, fp);
-                break;
-            default  : buf[i] = c;
-            }
-        }
-        else buf[i] = c;
+	if ((c =  fgetc(fp)) == '\\') {
+	    switch(c = fgetc(fp)) {
+	    case 'n' : buf[i] = '\n'; break;
+	    case 't' : buf[i] = '\t'; break;
+	    case 'v' : buf[i] = '\v'; break;
+	    case 'b' : buf[i] = '\b'; break;
+	    case 'r' : buf[i] = '\r'; break;
+	    case 'f' : buf[i] = '\f'; break;
+	    case 'a' : buf[i] = '\a'; break;
+	    case '\\': buf[i] = '\\'; break;
+	    case '?' : buf[i] = '\?'; break;
+	    case '\'': buf[i] = '\''; break;
+	    case '\"': buf[i] = '\"'; break;
+	    case '0': case '1': case '2': case '3':
+	    case '4': case '5': case '6': case '7':
+		d = 0; j = 0;
+		while('0' <= c && c < '8' && j < 3) {
+		    d = d * 8 + (c - '0');
+		    c = fgetc(fp);
+		    j++;
+		}
+		buf[i] = d;
+		ungetc(c, fp);
+		break;
+	    default  : buf[i] = c;
+	    }
+	}
+	else buf[i] = c;
     }
     buf[i] = '\0';
     return buf;
@@ -1598,7 +1598,7 @@ static char *InStringBinary(FILE *fp, SaveLoadData *unused)
     if (nbytes >= buflen) {
 	char *newbuf;
 	/* Protect against broken realloc */
-	if(buf) newbuf = (char *) realloc(buf, nbytes + 1); 
+	if(buf) newbuf = (char *) realloc(buf, nbytes + 1);
 	else newbuf = (char *) malloc(nbytes + 1);
 	if (newbuf == NULL)
 	    error(_("out of memory reading binary string"));
@@ -1699,7 +1699,7 @@ static char *InStringXdr(FILE *fp, SaveLoadData *d)
     if (nbytes >= buflen) {
 	char *newbuf;
 	/* Protect against broken realloc */
-	if(buf) newbuf = (char *) realloc(buf, nbytes + 1); 
+	if(buf) newbuf = (char *) realloc(buf, nbytes + 1);
 	else newbuf = (char *) malloc(nbytes + 1);
 	if (newbuf == NULL)
 	    error(_("out of memory reading binary string"));
@@ -1927,7 +1927,7 @@ SEXP attribute_hidden R_LoadFromFile(FILE *fp, int startup)
 	R_InitFileInPStream(&in, fp, R_pstream_xdr_format, NULL, NULL);
 	return_and_free(R_Unserialize(&in));
     default:
-        R_FreeStringBuffer(&data.buffer);
+	R_FreeStringBuffer(&data.buffer);
 	switch (magic) {
 	case R_MAGIC_EMPTY:
 	    error(_("restore file may be empty -- no data loaded"));
@@ -2002,7 +2002,7 @@ SEXP attribute_hidden do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 	tmp = findVar(TAG(t), source);
 	if (tmp == R_UnboundValue)
 	    error(_("object '%s' not found"), CHAR(PRINTNAME(TAG(t))));
- 	if(ep && TYPEOF(tmp) == PROMSXP) {
+	if(ep && TYPEOF(tmp) == PROMSXP) {
 	    PROTECT(tmp);
 	    tmp = eval(tmp, source);
 	    UNPROTECT(1);
@@ -2042,7 +2042,7 @@ static SEXP RestoreToEnv(SEXP ans, SEXP aenv)
 	    defineVar(sym, obj, aenv);
 	    if(R_seemsOldStyleS4Object(obj))
 		warningcall(R_NilValue,
-			    _("'%s' looks like a pre-2.4.0 S4 object: please recreate it"), 
+			    _("'%s' looks like a pre-2.4.0 S4 object: please recreate it"),
 			    CHAR(STRING_ELT(names, i)));
 	}
 	UNPROTECT(2);
@@ -2059,17 +2059,17 @@ static SEXP RestoreToEnv(SEXP ans, SEXP aenv)
     PROTECT(a = ans);
     while (a != R_NilValue) {
 	SET_STRING_ELT(names, cnt++, PRINTNAME(TAG(a)));
-        defineVar(TAG(a), CAR(a), aenv);
+	defineVar(TAG(a), CAR(a), aenv);
 	if(R_seemsOldStyleS4Object(CAR(a)))
 	    warningcall(R_NilValue,
-			_("'%s' looks like a pre-2.4.0 S4 object: please recreate it"), 
+			_("'%s' looks like a pre-2.4.0 S4 object: please recreate it"),
 			CHAR(PRINTNAME(TAG(a))));
-        a = CDR(a);
+	a = CDR(a);
     }
     UNPROTECT(2);
     return names;
 }
-    
+
 static SEXP R_LoadSavedData(FILE *fp, SEXP aenv)
 {
     return RestoreToEnv(R_LoadFromFile(fp, 0), aenv);
@@ -2092,8 +2092,8 @@ SEXP attribute_hidden do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 
     aenv = CADR(args);
     if (TYPEOF(aenv) == NILSXP) {
-    	error(_("use of NULL environment is defunct"));
-    	aenv = R_BaseEnv;
+	error(_("use of NULL environment is defunct"));
+	aenv = R_BaseEnv;
     } else
     if (TYPEOF(aenv) != ENVSXP)
 	error(_("invalid '%s' argument"), "envir");
@@ -2128,50 +2128,50 @@ void attribute_hidden R_XDREncodeDouble(double d, void *buf)
 {
     XDR xdrs;
     int success;
- 
+
     xdrmem_create(&xdrs, (char *) buf, R_XDR_DOUBLE_SIZE, XDR_ENCODE);
     success = xdr_double(&xdrs, &d);
     xdr_destroy(&xdrs);
     if (! success)
-        error(_("XDR write failed"));
+	error(_("XDR write failed"));
 }
- 
+
 double attribute_hidden R_XDRDecodeDouble(void *buf)
 {
     XDR xdrs;
     double d;
     int success;
- 
+
     xdrmem_create(&xdrs, (char *) buf, R_XDR_DOUBLE_SIZE, XDR_DECODE);
     success = xdr_double(&xdrs, &d);
     xdr_destroy(&xdrs);
     if (! success)
-        error(_("XDR read failed"));
+	error(_("XDR read failed"));
     return d;
 }
- 
+
 void attribute_hidden R_XDREncodeInteger(int i, void *buf)
 {
     XDR xdrs;
     int success;
- 
+
     xdrmem_create(&xdrs, (char *) buf, R_XDR_INTEGER_SIZE, XDR_ENCODE);
     success = xdr_int(&xdrs, &i);
     xdr_destroy(&xdrs);
     if (! success)
-        error(_("XDR write failed"));
+	error(_("XDR write failed"));
 }
 
 int attribute_hidden R_XDRDecodeInteger(void *buf)
 {
     XDR xdrs;
     int i, success;
- 
+
     xdrmem_create(&xdrs, (char *) buf, R_XDR_INTEGER_SIZE, XDR_DECODE);
     success = xdr_int(&xdrs, &i);
     xdr_destroy(&xdrs);
     if (! success)
-        error(_("XDR read failed"));
+	error(_("XDR read failed"));
     return i;
 }
 
@@ -2206,7 +2206,7 @@ void R_RestoreGlobalEnvFromFile(const char *name, Rboolean quiet)
     SEXP sym = install("sys.load.image");
     if (findVar(sym, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
 	FILE *fp = R_fopen(name, "rb"); /* binary file */
-	if(fp != NULL) { 
+	if(fp != NULL) {
 	    R_LoadSavedData(fp, R_GlobalEnv);
 	    if(! quiet)
 		Rprintf("[Previously saved workspace restored]\n\n");
@@ -2230,11 +2230,11 @@ void R_RestoreGlobalEnvFromFile(const char *name, Rboolean quiet)
 /* Ideally it should be possible to do this entirely in R code with
    something like
 
-        magic <- if (ascii) "RDA2\n" else
-        writeChar(magic, con, eos = NULL)
-        val <- lapply(list, get, envir = envir)
+	magic <- if (ascii) "RDA2\n" else
+	writeChar(magic, con, eos = NULL)
+	val <- lapply(list, get, envir = envir)
 	names(val) <- list
-        invisible(serialize(val, con, ascii = ascii))
+	invisible(serialize(val, con, ascii = ascii))
 
    Unfortunately, this will result in too much duplication in the lapply
    (and any other way of doing this).  Hence we need an internal version. */
@@ -2284,7 +2284,7 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 
     wasopen = con->isopen;
     if(!wasopen && !con->open(con)) error(_("cannot open the connection"));
-    if(!con->canwrite) error(_("connection not open for writing"));    
+    if(!con->canwrite) error(_("connection not open for writing"));
 
     if (ascii) {
 	magic = "RDA2\n";
@@ -2296,7 +2296,7 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 	magic = "RDX2\n";
 	type = R_pstream_xdr_format;
     }
-	
+
     if (con->text)
 	Rconn_printf(con, "%s", magic);
     else {
@@ -2317,7 +2317,7 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 	tmp = findVar(TAG(t), source);
 	if (tmp == R_UnboundValue)
 	    error(_("object '%s' not found"), CHAR(PRINTNAME(TAG(t))));
- 	if(ep && TYPEOF(tmp) == PROMSXP) {
+	if(ep && TYPEOF(tmp) == PROMSXP) {
 	    PROTECT(tmp);
 	    tmp = eval(tmp, source);
 	    UNPROTECT(1);
@@ -2332,7 +2332,7 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/* This version reads and checks the magic number, 
+/* This version reads and checks the magic number,
    opens the connection if needed */
 
 static void saveloadcon_cleanup(void *data)
@@ -2364,8 +2364,8 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
 
     aenv = CADR(args);
     if (TYPEOF(aenv) == NILSXP) {
-    	error(_("use of NULL environment is defunct"));
-    	aenv = R_BaseEnv;
+	error(_("use of NULL environment is defunct"));
+	aenv = R_BaseEnv;
     } else if (TYPEOF(aenv) != ENVSXP)
 	error(_("invalid '%s' argument"), "envir");
 
@@ -2387,11 +2387,11 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(res = RestoreToEnv(R_Unserialize(&in), aenv));
 	if (wasopen) {
 	    endcontext(&cntxt);
-        } else {
+	} else {
 	    con->close(con);
 	}
 	UNPROTECT(1);
-    } else 
+    } else
 	error(_("the input does not start with a magic number compatible with loading from a connection"));
     return res;
 }
@@ -2414,8 +2414,8 @@ SEXP attribute_hidden do_loadFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
     con = getConnection(asInteger(CAR(args)));
     aenv = CADR(args);
     if (TYPEOF(aenv) == NILSXP) {
-    	error(_("use of NULL environment is defunct"));
-    	aenv = R_BaseEnv;
+	error(_("use of NULL environment is defunct"));
+	aenv = R_BaseEnv;
     } else if (TYPEOF(aenv) != ENVSXP)
 	error(_("invalid '%s' argument"), "envir");
 

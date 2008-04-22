@@ -130,8 +130,8 @@ static void fmingr(int n, double *p, double *df, void *ex)
 		REPROTECT(s = coerceVector(s, REALSXP), ipx);
 		val2 = REAL(s)[0]/(OS->fnscale);
 		df[i] = (val1 - val2)/(2 * eps);
-#define DO_df_x 							\
-		if(!R_FINITE(df[i])) 					\
+#define DO_df_x							\
+		if(!R_FINITE(df[i]))					\
 		    error(("non-finite finite-difference value [%d]"), i+1);\
 		REAL(x)[i] = p[i] * (OS->parscale[i])
 
@@ -180,7 +180,7 @@ static void genptry(int n, double *p, double *ptry, double scale, void *ex)
 
     if (!isNull(OS->R_gcall)) {
 	/* user defined generation of candidate point */
-      	PROTECT(x = allocVector(REALSXP, n));
+	PROTECT(x = allocVector(REALSXP, n));
 	for (i = 0; i < n; i++) {
 	    if (!R_FINITE(p[i]))
 		error(_("non-finite value supplied by optim"));
@@ -197,8 +197,8 @@ static void genptry(int n, double *p, double *ptry, double scale, void *ex)
 	UNPROTECT(2);
     }
     else {  /* default Gaussian Markov kernel */
-        for (i = 0; i < n; i++)
-            ptry[i] = p[i] + scale * norm_rand();  /* new candidate point */
+	for (i = 0; i < n; i++)
+	    ptry[i] = p[i] + scale * norm_rand();  /* new candidate point */
     }
 }
 
@@ -266,21 +266,21 @@ SEXP attribute_hidden do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     }
     else if (strcmp(tn, "SANN") == 0) {
-        tmax = asInteger(getListElement(options, "tmax"));
-        temp = asReal(getListElement(options, "temp"));
-        if (tmax == NA_INTEGER) error(_("'tmax' is not an integer"));
-        if (!isNull(gr)) {
-            if (!isFunction(gr)) error(_("'gr' is not a function"));
-                PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
-        } else {
+	tmax = asInteger(getListElement(options, "tmax"));
+	temp = asReal(getListElement(options, "temp"));
+	if (tmax == NA_INTEGER) error(_("'tmax' is not an integer"));
+	if (!isNull(gr)) {
+	    if (!isFunction(gr)) error(_("'gr' is not a function"));
+		PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
+	} else {
 	    PROTECT(OS->R_gcall = R_NilValue); /* for balance */
-        }
-        samin (npar, dpar, &val, fminfn, maxit, tmax, temp, trace, (void *)OS);
-        for (i = 0; i < npar; i++)
-            REAL(par)[i] = dpar[i] * (OS->parscale[i]);
-        fncount = npar > 0 ? maxit : 1;
-        grcount = NA_INTEGER;
-        UNPROTECT(1);  /* OS->R_gcall */
+	}
+	samin (npar, dpar, &val, fminfn, maxit, tmax, temp, trace, (void *)OS);
+	for (i = 0; i < npar; i++)
+	    REAL(par)[i] = dpar[i] * (OS->parscale[i]);
+	fncount = npar > 0 ? maxit : 1;
+	grcount = NA_INTEGER;
+	UNPROTECT(1);  /* OS->R_gcall */
 
     } else if (strcmp(tn, "BFGS") == 0) {
 	SEXP ndeps;
@@ -1123,7 +1123,7 @@ void samin(int n, double *pb, double *yb, optimfn fminfn, int maxit,
 	k = 1;
 	while ((k <= tmax) && (its < maxit))  /* iterate at constant temperature */
 	{
-            genptry(n, p, ptry, scale * t, ex);  /* generate new candidate point */
+	    genptry(n, p, ptry, scale * t, ex);  /* generate new candidate point */
 	    ytry = fminfn (n, ptry, ex);
 	    if (!R_FINITE(ytry)) ytry = big;
 	    dy = ytry - y;

@@ -60,7 +60,7 @@ static void MatrixColumnLabel(SEXP cl, int j, int w)
     SEXP tmp;
 
     if (!isNull(cl)) {
-        tmp = STRING_ELT(cl, j);
+	tmp = STRING_ELT(cl, j);
 	if(tmp == NA_STRING) l = R_print.na_width_noquote;
 	else l = Rstrlen(tmp, 0);
 	Rprintf("%*s%s", w-l, "",
@@ -77,14 +77,14 @@ static void RightMatrixColumnLabel(SEXP cl, int j, int w)
     SEXP tmp;
 
     if (!isNull(cl)) {
-        tmp = STRING_ELT(cl, j);
+	tmp = STRING_ELT(cl, j);
 	if(tmp == NA_STRING) l = R_print.na_width_noquote;
 	else l = Rstrlen(tmp, 0);
 	/* This does not work correctly at least on FC3
 	Rprintf("%*s", R_print.gap+w,
 		EncodeString(tmp, l, 0, Rprt_adj_right)); */
 	Rprintf("%*s%s", R_print.gap+w-l, "",
-	        EncodeString(tmp, l, 0, Rprt_adj_right));
+		EncodeString(tmp, l, 0, Rprt_adj_right));
     }
     else {
 	Rprintf("%*s[,%ld]%*s", R_print.gap, "", j+1, w-IndexWidth(j+1)-3, "");
@@ -97,7 +97,7 @@ static void LeftMatrixColumnLabel(SEXP cl, int j, int w)
     SEXP tmp;
 
     if (!isNull(cl)) {
-        tmp= STRING_ELT(cl, j);
+	tmp= STRING_ELT(cl, j);
 	if(tmp == NA_STRING) l = R_print.na_width_noquote;
 	else l = Rstrlen(tmp, 0);
 	Rprintf("%*s%s%*s", R_print.gap, "",
@@ -114,7 +114,7 @@ static void MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
     SEXP tmp;
 
     if (!isNull(rl)) {
-        tmp= STRING_ELT(rl, i);
+	tmp= STRING_ELT(rl, i);
 	if(tmp == NA_STRING) l = R_print.na_width_noquote;
 	else l = Rstrlen(tmp, 0);
 	Rprintf("\n%*s%s%*s", lbloff, "",

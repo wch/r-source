@@ -1192,7 +1192,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 
 		    if (method == 0) {
 			GPolyline(ns, xxx, yyy, USER, dd);
-			GText(xxx[indx], yyy[indx], USER, buffer, 
+			GText(xxx[indx], yyy[indx], USER, buffer,
 			      CE_NATIVE/*FIX*/,
 			      .5, .5, 0, dd);
 		    }
@@ -1308,7 +1308,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 				GConvert(&ux, &uy, USER, INCHES, dd);
 				GConvert(&vx, &vy, USER, INCHES, dd);
 				/* 0, .5 => left, centre justified */
-				GText (ux, uy, INCHES, buffer, 
+				GText (ux, uy, INCHES, buffer,
 				       CE_NATIVE/*FIX*/,0, .5,
 				       (180 / 3.14) * atan2(vy - uy, vx - ux),
 				       dd);
@@ -1461,7 +1461,7 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	    warning(_("all z values are equal"));
 	else
 	    warning(_("all z values are NA"));
-        UNPROTECT(4);
+	UNPROTECT(4);
 	return R_NilValue;
     }
 
@@ -1733,7 +1733,7 @@ SEXP attribute_hidden do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
 				    z[i - 1 + j * nx],
 				    z[i + j * nx],
 				    px, py, pz, &npt);
-                if (npt > 2)
+		if (npt > 2)
 		    GPolygon(npt, px, py, USER, col[(k-1)%ncol],
 			     R_TRANWHITE, dd);
 	    }
@@ -1902,7 +1902,7 @@ static void DepthOrder(double *z, double *x, double *y, int nx, int ny,
 
 static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
 		       int *indx, double xs, double ys, double zs,
-	               int *col, int ncol, int border)
+		       int *col, int ncol, int border)
 {
     double xx[4], yy[4], shade = 0;
     Vector3d u, v;
@@ -1919,7 +1919,7 @@ static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
 	j = indx[k] / nx1;
 	icol = (i + j * nx1) % ncol;
 	if (DoLighting) {
-            /* Note we must scale here */
+	    /* Note we must scale here */
 	    u[0] = xs * (x[i+1] - x[i]);
 	    u[1] = ys * (y[j] - y[j+1]);
 	    u[2] = zs * (z[(i+1)+j*nx] - z[i+(j+1)*nx]);
@@ -2098,10 +2098,10 @@ static void PerspBox(int front, double *x, double *y, double *z, pGEDevDesc dd)
     else
 	gpptr(dd)->lty = LTY_SOLID;
     for (f = 0; f < 6; f++) {
-        p0 = Face[f][0];
-        p1 = Face[f][1];
-        p2 = Face[f][2];
-        p3 = Face[f][3];
+	p0 = Face[f][0];
+	p1 = Face[f][1];
+	p2 = Face[f][2];
+	p3 = Face[f][3];
 
 	u0[0] = x[Vertex[p0][0]];
 	u0[1] = y[Vertex[p0][1]];
@@ -2129,10 +2129,10 @@ static void PerspBox(int front, double *x, double *y, double *z, pGEDevDesc dd)
 	/* Determine whether the surface normal is toward the eye. */
 	/* Note that we only draw lines once. */
 
-        for (i = 0; i < 3; i++) {
+	for (i = 0; i < 3; i++) {
 	    d[i] = v1[i]/v1[3] - v0[i]/v0[3];
 	    e[i] = v2[i]/v2[3] - v1[i]/v1[3];
-        }
+	}
 	nearby = (d[0]*e[1] - d[1]*e[0]) < 0;
 
 	if ((front && nearby) || (!front && !nearby)) {
@@ -2195,7 +2195,7 @@ static double labelAngle(double x1, double y1, double x2, double y2) {
 
 static void PerspAxis(double *x, double *y, double *z,
 		      int axis, int axisType, int nTicks, int tickType,
-		      const char *label, cetype_t enc, pGEDevDesc dd) 
+		      const char *label, cetype_t enc, pGEDevDesc dd)
 {
     Vector3d u1, u2, u3, v1, v2, v3;
     double tickLength = .03; /* proportion of axis length */
@@ -2359,7 +2359,7 @@ static void PerspAxis(double *x, double *y, double *z,
 		  v2[0]/v2[3], v2[1]/v2[3], USER, dd);
 	    /* Draw tick label */
 	    GText(v3[0]/v3[3], v3[1]/v3[3], USER,
-		  CHAR(STRING_ELT(lab, i)), 
+		  CHAR(STRING_ELT(lab, i)),
 		  getCharCE(STRING_ELT(lab, i)),
 		  .5, .5, 0, dd);
 	}
@@ -2379,8 +2379,8 @@ static void PerspAxis(double *x, double *y, double *z,
  * has the lowest x-value to decide which of the z-axes to label
  */
 static void PerspAxes(double *x, double *y, double *z,
-                      const char *xlab, cetype_t xenc,
-		      const char *ylab, cetype_t yenc, 
+		      const char *xlab, cetype_t xenc,
+		      const char *ylab, cetype_t yenc,
 		      const char *zlab, cetype_t zenc,
 		      int nTicks, int tickType, pGEDevDesc dd)
 {
@@ -2558,7 +2558,7 @@ SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     if (ncol < 1) error(_("invalid '%s' specification"), "col");
     if(!R_OPAQUE(INTEGER(col)[0])) DoLighting = FALSE;
     PROTECT(border = FixupCol(border, gpptr(dd)->fg));
-    if (length(border) < 1) 
+    if (length(border) < 1)
 	error(_("invalid '%s' specification"), "border");
 
     GSetState(1, dd);
@@ -2570,7 +2570,7 @@ SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Set up the light vector (if any) */
     if (DoLighting)
-        SetUpLight(ltheta, lphi);
+	SetUpLight(ltheta, lphi);
 
     /* Mark box edges as undrawn */
     for (i = 0; i< 12; i++)
@@ -2608,7 +2608,7 @@ SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     GMode(1, dd);
 
     if (dobox) {
-        PerspBox(0, REAL(xlim), REAL(ylim), REAL(zlim), dd);
+	PerspBox(0, REAL(xlim), REAL(ylim), REAL(zlim), dd);
 	if (doaxes) {
 	    SEXP xl = STRING_ELT(xlab, 0), yl = STRING_ELT(ylab, 0),
 		zl = STRING_ELT(zlab, 0);
@@ -2625,13 +2625,13 @@ SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 	       INTEGER(col), ncol, INTEGER(border)[0]);
 
     if (dobox)
-        PerspBox(1, REAL(xlim), REAL(ylim), REAL(zlim), dd);
+	PerspBox(1, REAL(xlim), REAL(ylim), REAL(zlim), dd);
     GMode(0, dd);
 
     GRestorePars(dd);
     UNPROTECT(10);
     if (GRecording(call, dd))
-        GErecordGraphicOperation(op, originalArgs, dd);
+	GErecordGraphicOperation(op, originalArgs, dd);
 
     PROTECT(x = allocVector(REALSXP, 16));
     PROTECT(y = allocVector(INTSXP, 2));
@@ -2644,4 +2644,3 @@ SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return x;
 }
-

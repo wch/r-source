@@ -67,7 +67,7 @@ static int HasNames(SEXP x)
     return 0;
 }
 
-static void 
+static void
 AnswerType(SEXP x, int recurse, int usenames, struct BindData *data)
 {
     switch (TYPEOF(x)) {
@@ -102,7 +102,7 @@ AnswerType(SEXP x, int recurse, int usenames, struct BindData *data)
 	if (recurse) {
 	    int i, n;
 	    n = length(x);
-	    if (usenames && !data->ans_nnames && 
+	    if (usenames && !data->ans_nnames &&
 		!isNull(getAttrib(x, R_NamesSymbol)))
 		data->ans_nnames = 1;
 	    for (i = 0; i < n; i++) {
@@ -208,7 +208,7 @@ ListAnswer(SEXP x, int recurse, struct BindData *data, SEXP call)
     }
 }
 
-static void 
+static void
 StringAnswer(SEXP x, struct BindData *data, SEXP call)
 {
     int i, n;
@@ -237,7 +237,7 @@ StringAnswer(SEXP x, struct BindData *data, SEXP call)
     }
 }
 
-static void 
+static void
 LogicalAnswer(SEXP x, struct BindData *data, SEXP call)
 {
     int i, n;
@@ -257,22 +257,22 @@ LogicalAnswer(SEXP x, struct BindData *data, SEXP call)
 	    LogicalAnswer(VECTOR_ELT(x, i), data, call);
 	break;
     case LGLSXP:
-        n = LENGTH(x);
-        for (i = 0; i < n; i++)
-            LOGICAL(data->ans_ptr)[data->ans_length++] = LOGICAL(x)[i];
-        break;
+	n = LENGTH(x);
+	for (i = 0; i < n; i++)
+	    LOGICAL(data->ans_ptr)[data->ans_length++] = LOGICAL(x)[i];
+	break;
     case INTSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
 	    LOGICAL(data->ans_ptr)[data->ans_length++] = INTEGER(x)[i];
 	break;
     default:
-	errorcall(call, _("type '%s' is unimplemented in '%s'"), 
+	errorcall(call, _("type '%s' is unimplemented in '%s'"),
 		  type2char(TYPEOF(x)), "LogicalAnswer");
     }
 }
 
-static void 
+static void
 IntegerAnswer(SEXP x, struct BindData *data, SEXP call)
 {
     int i, n;
@@ -292,17 +292,17 @@ IntegerAnswer(SEXP x, struct BindData *data, SEXP call)
 	    IntegerAnswer(VECTOR_ELT(x, i), data, call);
 	break;
     case LGLSXP:
-        n = LENGTH(x);
-        for (i = 0; i < n; i++)
-            INTEGER(data->ans_ptr)[data->ans_length++] = LOGICAL(x)[i];
-        break;
+	n = LENGTH(x);
+	for (i = 0; i < n; i++)
+	    INTEGER(data->ans_ptr)[data->ans_length++] = LOGICAL(x)[i];
+	break;
     case INTSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
 	    INTEGER(data->ans_ptr)[data->ans_length++] = INTEGER(x)[i];
 	break;
     default:
-	errorcall(call, _("type '%s' is unimplemented in '%s'"), 
+	errorcall(call, _("type '%s' is unimplemented in '%s'"),
 		  type2char(TYPEOF(x)), "IntegerAnswer");
     }
 }
@@ -350,12 +350,12 @@ RealAnswer(SEXP x, struct BindData *data, SEXP call)
 	}
 	break;
     default:
-	errorcall(call, _("type '%s' is unimplemented in '%s'"), 
+	errorcall(call, _("type '%s' is unimplemented in '%s'"),
 		  type2char(TYPEOF(x)), "RealAnswer");
     }
 }
 
-static void 
+static void
 ComplexAnswer(SEXP x, struct BindData *data, SEXP call)
 {
     int i, n, xi;
@@ -418,7 +418,7 @@ ComplexAnswer(SEXP x, struct BindData *data, SEXP call)
 	}
 	break;
     default:
-	errorcall(call, _("type '%s' is unimplemented in '%s'"), 
+	errorcall(call, _("type '%s' is unimplemented in '%s'"),
 		  type2char(TYPEOF(x)), "ComplexAnswer");
     }
 }
@@ -448,7 +448,7 @@ RawAnswer(SEXP x, struct BindData *data, SEXP call)
 	    RAW(data->ans_ptr)[data->ans_length++] = RAW(x)[i];
 	break;
     default:
-	errorcall(call, _("type '%s' is unimplemented in '%s'"), 
+	errorcall(call, _("type '%s' is unimplemented in '%s'"),
 		  type2char(TYPEOF(x)), "RawAnswer");
     }
 }
@@ -461,9 +461,9 @@ static SEXP NewBase(SEXP base, SEXP tag)
     tag = EnsureString(tag);
     if (*CHAR(base) && *CHAR(tag)) { /* test of length */
 	const char *sb = translateChar(base), *st = translateChar(tag);
-        cbuf = R_AllocStringBuffer(strlen(st) + strlen(sb) + 1, &cbuff);
+	cbuf = R_AllocStringBuffer(strlen(st) + strlen(sb) + 1, &cbuff);
 	sprintf(cbuf, "%s.%s", sb, st);
-        ans = mkChar(cbuf);
+	ans = mkChar(cbuf);
     }
     else if (*CHAR(tag)) {
 	ans = tag;
@@ -498,7 +498,7 @@ static SEXP NewName(SEXP base, SEXP tag, int i, int n, int seqno)
 	const char *sb = translateChar(base);
 	cbuf = R_AllocStringBuffer(strlen(sb) + IndexWidth(seqno), &cbuff);
 	sprintf(cbuf, "%s%d", sb, seqno);
-        ans = mkChar(cbuf);
+	ans = mkChar(cbuf);
     }
     else if (*CHAR(tag)) {
 	if(tag == NA_STRING) ans = NA_STRING;
@@ -506,7 +506,7 @@ static SEXP NewName(SEXP base, SEXP tag, int i, int n, int seqno)
 	    const char *st = translateChar(tag);
 	    cbuf = R_AllocStringBuffer(strlen(st), &cbuff);
 	    sprintf(cbuf, "%s", st);
-            ans = mkChar(cbuf);
+	    ans = mkChar(cbuf);
 	}
     }
     else ans = R_BlankString;
@@ -1030,7 +1030,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(strlen(generic) + strlen(s) + 2 > 512)
 		    error(_("class name too long in '%s'"), generic);
 		sprintf(buf, "%s.%s", generic, s);
-		classmethod = R_LookupMethod(install(buf), env, env, 
+		classmethod = R_LookupMethod(install(buf), env, env,
 					     R_BaseNamespace);
 		if (classmethod != R_UnboundValue) {
 		    if (klass[0] == '\0') {
@@ -1047,10 +1047,10 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 			if (strcmp(klass, s)) {
 			    method = R_NilValue;
 			    /* need to end both loops */
-			    compatible = 0;  
+			    compatible = 0;
 			}
-		    }			
-		    break; /* go to next parameter */		    
+		    }
+		    break; /* go to next parameter */
 		}
 	    }
 	}
@@ -1103,7 +1103,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     case STRSXP:
     case VECSXP:
     case RAWSXP:
- 	break;
+	break;
 	/* we don't handle expressions: we could, but coercion of a matrix
 	   to an expression is not ideal */
     default:

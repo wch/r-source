@@ -18,7 +18,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* These are the R interface routines to the plain FFT code 
+/* These are the R interface routines to the plain FFT code
    fft_factor() & fft_work() in ../appl/fft.c. */
 
 #ifdef HAVE_CONFIG_H

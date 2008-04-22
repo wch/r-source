@@ -157,7 +157,7 @@ SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 }/* do_prmatrix */
 
 /* .Internal(print.default(x, digits, quote, na.print, print.gap,
-                           right, max, useS4)) */
+			   right, max, useS4)) */
 SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, naprint;
@@ -214,7 +214,7 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     R_print.useSource = asLogical(CAR(args));
     if(R_print.useSource == NA_LOGICAL)
-    	error(_("invalid '%s' argument"), "useSource");
+	error(_("invalid '%s' argument"), "useSource");
     if(R_print.useSource) R_print.useSource = USESOURCE;
     args = CDR(args);
 
@@ -226,7 +226,7 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	callShow = TRUE;
 
     if(callShow) {
-	/* we need to get show from the methods namespace if it is 
+	/* we need to get show from the methods namespace if it is
 	   not visible on the search path. */
 	SEXP call, showS;
 	showS = findVar(install("show"), rho);
@@ -578,9 +578,9 @@ static void PrintEnvir(SEXP rho)
     if (rho == R_GlobalEnv)
 	Rprintf("<environment: R_GlobalEnv>\n");
     else if (rho == R_BaseEnv)
-    	Rprintf("<environment: base>\n");
+	Rprintf("<environment: base>\n");
     else if (rho == R_EmptyEnv)
-    	Rprintf("<environment: R_EmptyEnv>\n");
+	Rprintf("<environment: R_EmptyEnv>\n");
     else if (R_IsPackageEnv(rho))
 	Rprintf("<environment: %s>\n",
 		translateChar(STRING_ELT(R_PackageEnvName(rho), 0)));
@@ -605,7 +605,7 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 	    if(TYPEOF(s) == S4SXP)
 		Rprintf("<S4 object without a class>\n");
 	    else
-		Rprintf("<Object of type '%s' with S4 bit but without a class>\n", 
+		Rprintf("<Object of type '%s' with S4 bit but without a class>\n",
 			type2char(TYPEOF(s)));
 	} else {
 	    SEXP pkg = getAttrib(s, install("package"));
@@ -687,8 +687,8 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 	PrintEnvir(s);
 	break;
     case PROMSXP:
-        Rprintf("<promise: %p>\n", s);
-        break;
+	Rprintf("<promise: %p>\n", s);
+	break;
     case DOTSXP:
 	Rprintf("<...>\n");
 	break;
@@ -713,7 +713,7 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 		    const char *title = NULL;
 
 		    if (!isNull(nn))
-		        title = translateChar(STRING_ELT(nn, 0));
+			title = translateChar(STRING_ELT(nn, 0));
 
 		    printNamedVector(s, VECTOR_ELT(t, 0), R_print.quote, title);
 		}
@@ -880,13 +880,13 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
     tagbuf[0] = '\0';
     PROTECT(s);
     if(isObject(s)) {
-	/* 
+	/*
 	   The intention here is to call show() on S4 objects, otherwise
 	   print(), so S4 methods for show() have precedence over those for
 	   print() to conform with the "green book", p. 332
 	*/
 	SEXP call, showS;
-        if(isMethodsDispatchOn() && IS_S4_OBJECT(s)) {
+	if(isMethodsDispatchOn() && IS_S4_OBJECT(s)) {
 	    /*
 	      Note that we cannot assume that show() is visible from
 	      'env', but we can assume there is a loaded "methods"

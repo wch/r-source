@@ -352,10 +352,10 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
     /* We need to find the generic to find out where it is defined.
        This is set up to avoid getting caught by things like
 
-        mycoef <- function(x)
+	mycoef <- function(x)
        {
-           mycoef <- function(x) stop("not this one")
-           UseMethod("mycoef")
+	   mycoef <- function(x) stop("not this one")
+	   UseMethod("mycoef")
        }
 
 	The generic need not be a closure (Henrik Bengtsson writes
@@ -367,7 +367,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
     else defenv = R_BaseNamespace;
 /*
     if(defenv !=  ENCLOS(env)) {
-        printf("*** problem ***\n");
+	printf("*** problem ***\n");
 	PrintValue(generic);
 	PrintValue(ENCLOS(env));
     }
@@ -720,12 +720,12 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     /* It is possible that if a method was called directly that
 	'method' is unset */
     if (method != R_UnboundValue) {
- 	/* for Ops we need `method' to be a vector */
+	/* for Ops we need `method' to be a vector */
 	PROTECT(method = duplicate(method));
 	for(j = 0; j < length(method); j++) {
 	    if (strlen(CHAR(STRING_ELT(method,j))))
 		SET_STRING_ELT(method, j,  mkChar(buf));
-        }
+	}
     } else
 	PROTECT(method = mkString(buf));
     defineVar(install(".Method"), method, m);
@@ -1203,7 +1203,7 @@ void R_set_quick_method_check(R_stdGen_ptr_t value)
    already been evaluated.
  */
 SEXP attribute_hidden
-R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho, 
+R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho,
 		    Rboolean promisedArgs)
 {
     SEXP fundef, value, mlist=R_NilValue, s, a, b;
@@ -1253,7 +1253,7 @@ R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho,
 	error(_("primitive function \"%s\" has been set for methods but no generic function supplied"),
 	      PRIMNAME(op));
     /* To do:  arrange for the setting to be restored in case of an
-       error in method search */    
+       error in method search */
     if(!promisedArgs) {
 	PROTECT(s = promiseArgs(CDR(call), rho));
 	if (length(s) != length(args)) error(_("dispatch error"));
@@ -1312,7 +1312,7 @@ SEXP R_do_new_object(SEXP class_def)
 	s_virtual = Rf_install("virtual");
 	s_prototype = Rf_install("prototype");
 	s_className = Rf_install("className");
-        R_packageSymbol = install("package");
+	R_packageSymbol = install("package");
     }
     if(!class_def)
 	error(_("C level NEW macro called with null class definition pointer"));
@@ -1376,9 +1376,9 @@ SEXP R_setS4Object(SEXP object, SEXP onOff)
     Rboolean flag = asLogical(onOff);
     /* wanted     return asS4(object, flag); */
     if(flag == IS_S4_OBJECT(object))
-        return object;
+	return object;
     if(NAMED(object) == 2)
-        object = duplicate(object);
+	object = duplicate(object);
     if(flag) SET_S4_OBJECT(object);
     else UNSET_S4_OBJECT(object);
     return object;
@@ -1403,9 +1403,9 @@ Rboolean isS4(SEXP s)
 SEXP asS4(SEXP s, Rboolean flag)
 {
     if(flag == IS_S4_OBJECT(s))
-        return s;
+	return s;
     if(NAMED(s) == 2)
-        s = duplicate(s);
+	s = duplicate(s);
     if(flag) SET_S4_OBJECT(s);
     else UNSET_S4_OBJECT(s);
     return s;

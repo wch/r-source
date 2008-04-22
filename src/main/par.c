@@ -282,7 +282,7 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
 /*	  ------------
  *--- now, these are *different* from  "Specify2() use" : */
     else if (streql(what, "bg")) {
-	lengthCheck(what, value, 1, call);	
+	lengthCheck(what, value, 1, call);
 	ix = RGBpar3(value, 0, dpptr(dd)->bg);
 	/*	naIntCheck(ix, what); */
 	R_DEV__(bg) = ix;
@@ -297,7 +297,7 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
 
     else if (streql(what, "fg")) {
 	/* par(fg=) sets BOTH "fg" and "col" */
-	lengthCheck(what, value, 1, call);	
+	lengthCheck(what, value, 1, call);
 	ix = RGBpar3(value, 0, dpptr(dd)->bg);
 	/*	naIntCheck(ix, what); */
 	R_DEV__(col) = R_DEV__(fg) = ix;
@@ -350,21 +350,21 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
     else if (streql(what, "fin")) {
 	value = coerceVector(value, REALSXP);
 	lengthCheck(what, value, 2, call);
-        R_DEV_2(defaultFigure) = 0;
-        R_DEV_2(fUnits) = INCHES;
-        R_DEV_2(numrows) = 1;
-        R_DEV_2(numcols) = 1;
-        R_DEV_2(heights[0]) = 1;
-        R_DEV_2(widths[0]) = 1;
-        R_DEV_2(cmHeights[0]) = 0;
-        R_DEV_2(cmWidths[0]) = 0;
-        R_DEV_2(order[0]) = 1;
-        R_DEV_2(currentFigure) = 1;
-        R_DEV_2(lastFigure) = 1;
-        R_DEV__(rspct) = 0;
-        R_DEV_2(fin[0]) = REAL(value)[0];
-        R_DEV_2(fin[1]) = REAL(value)[1];
-        GReset(dd);
+	R_DEV_2(defaultFigure) = 0;
+	R_DEV_2(fUnits) = INCHES;
+	R_DEV_2(numrows) = 1;
+	R_DEV_2(numcols) = 1;
+	R_DEV_2(heights[0]) = 1;
+	R_DEV_2(widths[0]) = 1;
+	R_DEV_2(cmHeights[0]) = 0;
+	R_DEV_2(cmWidths[0]) = 0;
+	R_DEV_2(order[0]) = 1;
+	R_DEV_2(currentFigure) = 1;
+	R_DEV_2(lastFigure) = 1;
+	R_DEV__(rspct) = 0;
+	R_DEV_2(fin[0]) = REAL(value)[0];
+	R_DEV_2(fin[1]) = REAL(value)[1];
+	GReset(dd);
     }
     /* -- */
     else if (streql(what, "lheight")) {
@@ -738,7 +738,7 @@ static void Specify2(const char *what, SEXP value, pGEDevDesc dd, SEXP call)
     }
     else if (streql(what, "fg")) {
 	/* highlevel arg `fg = ' does *not* set `col' (as par(fg=.) does!*/
-	lengthCheck(what, value, 1, call);	
+	lengthCheck(what, value, 1, call);
 	ix = RGBpar3(value, 0, dpptr(dd)->bg);
 	/*	naIntCheck(ix, what); */
 	R_DEV__(fg) = ix;
@@ -830,10 +830,10 @@ static SEXP Query(const char *what, pGEDevDesc dd)
     else if (streql(what, "cxy")) {
 	value = allocVector(REALSXP, 2);
 	/* == par("cin") / par("pin") : */
-	REAL(value)[0] = dpptr(dd)->scale * dd->dev->cra[0] 
+	REAL(value)[0] = dpptr(dd)->scale * dd->dev->cra[0]
 	    * dd->dev->ipr[0] / dpptr(dd)->pin[0]
 	    * (dpptr(dd)->usr[1] - dpptr(dd)->usr[0]);
-	REAL(value)[1] = dpptr(dd)->scale * dd->dev->cra[1] 
+	REAL(value)[1] = dpptr(dd)->scale * dd->dev->cra[1]
 	    * dd->dev->ipr[1] / dpptr(dd)->pin[1]
 	    * (dpptr(dd)->usr[3] - dpptr(dd)->usr[2]);
     }
@@ -1113,7 +1113,7 @@ static SEXP Query(const char *what, pGEDevDesc dd)
 	value = allocVector(LGLSXP, 1);
 	LOGICAL(value)[0] = dpptr(dd)->ylog;
     }
-    else if (ParCode(what) == -2) { 
+    else if (ParCode(what) == -2) {
 	warning(_("graphical parameter \"%s\" is obsolete"), what);
 	value = R_NilValue;
     }
@@ -1316,7 +1316,7 @@ SEXP attribute_hidden do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/* ProcessInLinePars handles inline par specifications 
+/* ProcessInLinePars handles inline par specifications
    in graphics functions. */
 
 attribute_hidden
@@ -1340,4 +1340,3 @@ void ProcessInlinePars(SEXP s, pGEDevDesc dd, SEXP call)
 /*= kept-old-versions: 12 **/
 /*= kept-new-versions: 30 **/
 /*= End: **/
-

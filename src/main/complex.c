@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000-6       	    The R Development Core Team.
+ *  Copyright (C) 2000-6	    The R Development Core Team.
  *  Copyright (C) 2005		    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -143,7 +143,7 @@ static void complex_pow(Rcomplex *r, Rcomplex *a, Rcomplex *b)
 #else /* HAVE_C99_COMPLEX */
 
 #ifdef Win32
-/* Need this because the system one is explicitly linked 
+/* Need this because the system one is explicitly linked
    against MSVCRT's pow, and gets (0+0i)^Y as 0+0i for all Y */
 static double complex mycpow (double complex X, double complex Y)
 {
@@ -156,11 +156,11 @@ static double complex mycpow (double complex X, double complex Y)
       r = hypot (__real__ X, __imag__ X);
       i = carg (X);
       theta = i * __real__ Y;
- 
+
       if (__imag__ Y == 0.0)
 	  rho = pow (r, __real__ Y);
       else {
-          r = log (r);
+	  r = log (r);
 	  /* rearrangement of cexp(X * clog(Y)) */
 	  theta += r * __imag__ Y;
 	  rho = exp (r * __real__ Y - i * __imag__ Y);
@@ -179,7 +179,7 @@ static double complex mycpow (double complex X, double complex Y)
     if (X == 0.0 && tmp == 0) {
 	double complex Z = R_pow(0.0, creal(Y));
 	return Z;
-    } else 
+    } else
 	return cpow(X, Y);
 }
 #endif
@@ -213,7 +213,7 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
        if (TRACE(s1) && TRACE(s2)){
 	  if (n1>n2)
 	      memtrace_report(s1,ans);
-	  else 
+	  else
 	      memtrace_report(s2, ans);
        } else if (TRACE(s1))
 	   memtrace_report(s1,ans);
@@ -274,7 +274,7 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     case POWOP:
 	mod_iterate(n1, n2, i1, i2) {
 #ifdef HAVE_C99_COMPLEX
-	    C99_COMPLEX(ans)[i] = 
+	    C99_COMPLEX(ans)[i] =
 		mycpow(C99_COMPLEX(s1)[i1], C99_COMPLEX(s2)[i2]);
 #else
 	    x1 = COMPLEX(s1)[i1];
@@ -310,7 +310,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if (DispatchGroup("Complex", call, op, args, env, &x))
-        return x;
+	return x;
     x = CAR(args);
     n = length(x);
     if (isComplex(x)) {
@@ -435,7 +435,7 @@ void attribute_hidden z_prec_r(Rcomplex *r, Rcomplex *x, double digits)
 	double pow10 = 1.0e4;
 	digits = (double)(dig - 4);
 	r->r = rround(pow10 * x->r, digits)/pow10;
-	r->i = rround(pow10 * x->i, digits)/pow10;	
+	r->i = rround(pow10 * x->i, digits)/pow10;
     } else {
 	digits = (double)(dig);
 	r->r = rround(x->r, digits);
@@ -448,12 +448,12 @@ static void z_prec(Rcomplex *r, Rcomplex *x, Rcomplex *p)
 }
 
 #ifdef HAVE_C99_COMPLEX
-static void z_log(double complex *r, double complex *z) 
+static void z_log(double complex *r, double complex *z)
 {
     *r = clog(*z);
 }
 
-static void z_logbase(double complex *r, double complex *z, 
+static void z_logbase(double complex *r, double complex *z,
 		      double complex *base)
 {
     *r = clog(*z)/clog(*base);
@@ -525,7 +525,7 @@ static void z_tan(double complex *r, double complex *z)
 {
     double y = cimag(*z);
     *r = ctan(*z);
-    if(R_FINITE(y) && fabs(y) > 25.0) { 
+    if(R_FINITE(y) && fabs(y) > 25.0) {
 	/* at this point the real part is nearly zero, and the
 	   imaginary part is one: but some OSes get the imag wrong */
 #if __GNUC__
@@ -652,16 +652,16 @@ static void z_tan(Rcomplex *r, Rcomplex *z)
     if (ISNAN(y2) || fabs(y2) < 50.0)
 	r->i = sinh(y2)/den;
     else
-        r->i = (y2 <0 ? -1.0 : 1.0);
+	r->i = (y2 <0 ? -1.0 : 1.0);
 }
 
 	/* Complex Arcsin and Arccos Functions */
 	/* Equation (4.4.37) Abramowitz and Stegun */
- 	/* with additional terms to force the branch */
- 	/* to agree with figure 4.4, p79.  Continuity */
- 	/* on the branch cuts (real axis; y==0, |x| > 1) is */
- 	/* standard: z_asin() is continuous from below if x >= 1 */
- 	/* and continuous from above if x <= -1. */
+	/* with additional terms to force the branch */
+	/* to agree with figure 4.4, p79.  Continuity */
+	/* on the branch cuts (real axis; y==0, |x| > 1) is */
+	/* standard: z_asin() is continuous from below if x >= 1 */
+	/* and continuous from above if x <= -1. */
 
 static void z_asin(Rcomplex *r, Rcomplex *z)
 {
@@ -687,11 +687,11 @@ static void z_acos(Rcomplex *r, Rcomplex *z)
 
 	/* Complex Arctangent Function */
 	/* Equation (4.4.39) Abramowitz and Stegun */
- 	/* with additional terms to force the branch cuts */
- 	/* to agree with figure 4.4, p79.  Continuity */
- 	/* on the branch cuts (pure imaginary axis; x==0, |y|>1) */
- 	/* is standard: z_asin() is continuous from the right */
- 	/*  if y >= 1, and continuous from the left if y <= -1.	*/
+	/* with additional terms to force the branch cuts */
+	/* to agree with figure 4.4, p79.  Continuity */
+	/* on the branch cuts (pure imaginary axis; x==0, |y|>1) */
+	/* is standard: z_asin() is continuous from the right */
+	/*  if y >= 1, and continuous from the left if y <= -1.	*/
 
 static void z_atan(Rcomplex *r, Rcomplex *z)
 {
@@ -787,7 +787,7 @@ static void z_tanh(Rcomplex *r, Rcomplex *z)
 
 /* If we use a prototype here we have to distinguish Rcomplex and
    double complex cases */
-static Rboolean cmath1(void (*f)(), 
+static Rboolean cmath1(void (*f)(),
 		       Rcomplex *x, Rcomplex *y, int n)
 {
     int i;

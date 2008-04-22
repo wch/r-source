@@ -474,7 +474,7 @@ static void Psort(SEXP x, int lo, int hi, int k)
 static void Psort0(SEXP x, int lo, int hi, int *ind, int k)
 {
     if(k < 1 || hi-lo < 1) return;
-    if(k <= 1) 
+    if(k <= 1)
 	Psort(x, lo, hi, ind[0]-1);
     else {
     /* Look for index nearest the centre of the range */
@@ -648,7 +648,7 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 }
 
 #define sort2_with_index \
-            for (h = incs[t]; t < 16; h = incs[++t]) \
+	    for (h = incs[t]; t < 16; h = incs[++t]) \
 		for (i = lo + h; i <= hi; i++) { \
 		    itmp = indx[i]; \
 		    j = i; \
@@ -670,7 +670,7 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing)
     double *x = NULL /* -Wall */;
     Rcomplex *cx = NULL /* -Wall */;
     SEXP *sx = NULL /* -Wall */;
-    
+
     switch (TYPEOF(key)) {
     case LGLSXP:
     case INTSXP:
@@ -681,10 +681,10 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing)
 	break;
     case STRSXP:
 	sx = STRING_PTR(key);
- 	break;
+	break;
     case CPLXSXP:
 	cx = COMPLEX(key);
- 	break;
+	break;
     }
 
     /* First sort NAs to one end */
@@ -702,7 +702,7 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing)
 	break;
     case CPLXSXP:
 	for (i = 0; i < n; i++) isna[i] = ISNAN(cx[i].r) || ISNAN(cx[i].i);
- 	break;
+	break;
     default:
 	UNIMPLEMENTED_TYPE("orderVector1", key);
     }
@@ -732,40 +732,40 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing)
 #define less(a, b) (ix[a] < ix[b] || (ix[a] == ix[b] && a > b))
 	    sort2_with_index
 #undef less
-        } else {
+	} else {
 #define less(a, b) (ix[a] > ix[b] || (ix[a] == ix[b] && a > b))
 	    sort2_with_index
 #undef less
-        }
+	}
 	break;
     case REALSXP:
 	if (decreasing) {
 #define less(a, b) (x[a] < x[b] || (x[a] == x[b] && a > b))
 	    sort2_with_index
 #undef less
-        } else {
+	} else {
 #define less(a, b) (x[a] > x[b] || (x[a] == x[b] && a > b))
 	    sort2_with_index
 #undef less
-        }
+	}
 	break;
     case CPLXSXP:
 	if (decreasing) {
 #define less(a, b) (ccmp(cx[a], cx[b], 0) < 0 || (cx[a].r == cx[b].r && cx[a].i == cx[b].i && a > b))
 	    sort2_with_index
 #undef less
-        } else {
+	} else {
 #define less(a, b) (ccmp(cx[a], cx[b], 0) > 0 || (cx[a].r == cx[b].r && cx[a].i == cx[b].i && a > b))
 	    sort2_with_index
 #undef less
-        }
+	}
 	break;
     case STRSXP:
 	if (decreasing)
 #define less(a, b) (c=Scollate(sx[a], sx[b]), c < 0 || (c == 0 && a > b))
 	    sort2_with_index
 #undef less
-        else
+	else
 #define less(a, b) (c=Scollate(sx[a], sx[b]), c > 0 || (c == 0 && a > b))
 	    sort2_with_index
 #undef less

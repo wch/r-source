@@ -178,16 +178,16 @@ static SEXP FixupFont(SEXP font, int dflt)
 	}
     }
     else if (isInteger(font)) {
-        ans = allocVector(INTSXP, n);
-        for (i = 0; i < n; i++) {
-            k = INTEGER(font)[i];
+	ans = allocVector(INTSXP, n);
+	for (i = 0; i < n; i++) {
+	    k = INTEGER(font)[i];
 #ifndef Win32
-            if (k < 1 || k > 5) k = NA_INTEGER;
+	    if (k < 1 || k > 5) k = NA_INTEGER;
 #else
-            if (k < 1 || k > 32) k = NA_INTEGER;
+	    if (k < 1 || k > 32) k = NA_INTEGER;
 #endif
-            INTEGER(ans)[i] = k;
-        }
+	    INTEGER(ans)[i] = k;
+	}
     }
     else if (isReal(font)) {
 	ans = allocVector(INTSXP, n);
@@ -817,25 +817,25 @@ static double ComputePAdjValue(double padj, int side, int las)
     if (!R_FINITE(padj)) {
     switch(las) {
     case 0:/* parallel to axis */
-        padj = 0.0; break;
+	padj = 0.0; break;
     case 1:/* horizontal */
-        switch(side) {
-        case 1:
-        case 3: padj = 0.0; break;
-        case 2:
-        case 4: padj = 0.5; break;
-        }
-        break;
+	switch(side) {
+	case 1:
+	case 3: padj = 0.0; break;
+	case 2:
+	case 4: padj = 0.5; break;
+	}
+	break;
     case 2:/* perpendicular to axis */
-        padj = 0.5; break;
+	padj = 0.5; break;
     case 3:/* vertical */
-        switch(side) {
-        case 1:
-        case 3: padj = 0.5; break;
-        case 2:
-        case 4: padj = 0.0; break;
-        }
-        break;
+	switch(side) {
+	case 1:
+	case 3: padj = 0.5; break;
+	case 2:
+	case 4: padj = 0.0; break;
+	}
+	break;
     }
     }
     return padj;
@@ -3187,13 +3187,13 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* might want to handle warn=2? */
 	    warn = asInteger(GetOption(install("warn"), R_BaseEnv));
 	    if (dmin > tol) {
-	        if(warn >= 0) {
+		if(warn >= 0) {
 		    REprintf(_("warning: no point within %.2f inches\n"), tol);
 		    R_FlushConsole();
 		}
 	    }
 	    else if (LOGICAL(ind)[imin]) {
-	        if(warn >= 0 ) {
+		if(warn >= 0 ) {
 		    REprintf(_("warning: nearest point already identified\n"));
 		    R_FlushConsole();
 		}
@@ -3259,7 +3259,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* strheight(str, units, cex, font, vfont, ...)  ||  strwidth() */
-#define DO_STR_DIM(KIND) 						\
+#define DO_STR_DIM(KIND)						\
 {									\
     SEXP ans, str, ch, font, vfont;					\
     int i, n, units;							\
@@ -3283,8 +3283,8 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 									\
     if (isNull(CAR(args)))						\
 	cex = gpptr(dd)->cex;						\
-    else if (!R_FINITE((cex = asReal(CAR(args)))) || cex <= 0.0)       	\
-	error(_("invalid '%s' value"), "cex");	       			\
+    else if (!R_FINITE((cex = asReal(CAR(args)))) || cex <= 0.0)	\
+	error(_("invalid '%s' value"), "cex");				\
     args = CDR(args);							\
     PROTECT(font = FixupFont(CAR(args), NA_INTEGER)); args = CDR(args); \
     PROTECT(vfont = FixupVFont(CAR(args))); args = CDR(args);		\
@@ -4046,16 +4046,16 @@ SEXP attribute_hidden do_convertXY(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(x) != REALSXP) error(_("invalid '%s' argument"), "x");
     n = LENGTH(x);
     from = asInteger(CADR(args));
-    if (from == NA_INTEGER || from <= 0 || from > 17 ) 
+    if (from == NA_INTEGER || from <= 0 || from > 17 )
 	error(_("invalid '%s' argument"), "from");
     to = asInteger(CADDR(args));
-    if (to == NA_INTEGER || to <= 0 || to > 17 ) 
+    if (to == NA_INTEGER || to <= 0 || to > 17 )
 	error(_("invalid '%s' argument"), "to");
     from--; to--;
 
     PROTECT(ans = duplicate(x));
     rx = REAL(ans);
-    if (PRIMVAL(op) == 1) 
+    if (PRIMVAL(op) == 1)
 	for (i = 0; i < n; i++) rx[i] = GConvertY(rx[i], from, to, gdd);
     else
 	for (i = 0; i < n; i++) rx[i] = GConvertX(rx[i], from, to, gdd);

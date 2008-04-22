@@ -899,7 +899,7 @@ double GConvertX(double x, GUnit from, GUnit to, pGEDevDesc dd)
     /*case MAR2:	x <--> y */
     case MAR3:	x = xDevtoMAR3(devx, dd);	break;
     /*case MAR4:	x <--> y */
-    case NPC:	x = xDevtoNPC(devx, dd); 	break;
+    case NPC:	x = xDevtoNPC(devx, dd);	break;
     default:	BadUnitsError("GConvertX");
     }
     return x;
@@ -1362,16 +1362,16 @@ static void mapNDC2Dev(pGEDevDesc dd)
     gpptr(dd)->yNDCPerInch = dpptr(dd)->yNDCPerInch =
 	1.0/fabs(gpptr(dd)->ndc2dev.by * dd->dev->ipr[1]);
     gpptr(dd)->xNDCPerChar = dpptr(dd)->xNDCPerChar =
-	fabs(gpptr(dd)->cexbase * gpptr(dd)->scale * 
+	fabs(gpptr(dd)->cexbase * gpptr(dd)->scale *
 	     dd->dev->cra[1] * asp / gpptr(dd)->ndc2dev.bx);
     gpptr(dd)->yNDCPerChar = dpptr(dd)->yNDCPerChar =
-	fabs(gpptr(dd)->cexbase * gpptr(dd)->scale * 
+	fabs(gpptr(dd)->cexbase * gpptr(dd)->scale *
 	     dd->dev->cra[1] / gpptr(dd)->ndc2dev.by);
     gpptr(dd)->xNDCPerLine = dpptr(dd)->xNDCPerLine =
-	fabs(gpptr(dd)->mex * gpptr(dd)->cexbase * gpptr(dd)->scale * 
+	fabs(gpptr(dd)->mex * gpptr(dd)->cexbase * gpptr(dd)->scale *
 	     dd->dev->cra[1] * asp / gpptr(dd)->ndc2dev.bx);
     gpptr(dd)->yNDCPerLine = dpptr(dd)->yNDCPerLine =
-	fabs(gpptr(dd)->mex * gpptr(dd)->cexbase * gpptr(dd)->scale * 
+	fabs(gpptr(dd)->mex * gpptr(dd)->cexbase * gpptr(dd)->scale *
 	     dd->dev->cra[1] / gpptr(dd)->ndc2dev.by);
 }
 
@@ -1687,7 +1687,7 @@ void mapping(pGEDevDesc dd, int which)
 void GReset(pGEDevDesc dd)
 {
     /* Character extents are based on the raster size */
-    gpptr(dd)->mkh = gpptr(dd)->scale * dd->dev->cra[0] 
+    gpptr(dd)->mkh = gpptr(dd)->scale * dd->dev->cra[0]
 	* dd->dev->ipr[0];
 
     /* Recompute Mappings */
@@ -1822,11 +1822,11 @@ pGEDevDesc GNewPlot(Rboolean recording)
 	if (recording)			\
 	    invalidError(msg, dd);	\
 	else {				\
-            int xpdsaved = gpptr(dd)->xpd; \
-            gpptr(dd)->xpd = 2; \
+	    int xpdsaved = gpptr(dd)->xpd; \
+	    gpptr(dd)->xpd = 2; \
 	    GText(0.5,0.5, NFC, msg, -1, 0.5,0.5,  0, dd);  \
-            gpptr(dd)->xpd = xpdsaved; \
-        }
+	    gpptr(dd)->xpd = xpdsaved; \
+	}
 
     dpptr(dd)->valid = gpptr(dd)->valid = FALSE;
     if (!validOuterMargins(dd)) {
@@ -2401,7 +2401,7 @@ void GCheckState(pGEDevDesc dd)
     if(gpptr(dd)->state == 0)
 	error(_("plot.new has not been called yet"));
     if (!gpptr(dd)->valid)
-        error(_("invalid graphics state"));
+	error(_("invalid graphics state"));
 }
 
 /*-------------------------------------------------------------------
@@ -2430,7 +2430,7 @@ void GCheckState(pGEDevDesc dd)
 
 
 static void setClipRect(double *x1, double *y1, double *x2, double *y2,
-                        int coords, pGEDevDesc dd)
+			int coords, pGEDevDesc dd)
 {
     /*
      * xpd = 0 means clip to current plot region
@@ -2491,7 +2491,7 @@ void gcontextFromGP(pGEcontext gc, pGEDevDesc dd)
     gc->col = gpptr(dd)->col;
     gc->fill = gpptr(dd)->bg;  /* This may need manual adjusting */
     gc->gamma = gpptr(dd)->gamma;
-    /* 
+    /*
      * Scale by "zoom" factor to allow for fit-to-window resizing in Windows
      */
     gc->lwd = gpptr(dd)->lwd * gpptr(dd)->scale;
@@ -2500,7 +2500,7 @@ void gcontextFromGP(pGEcontext gc, pGEDevDesc dd)
     gc->ljoin = gpptr(dd)->ljoin;
     gc->lmitre = gpptr(dd)->lmitre;
     gc->cex = gpptr(dd)->cex;
-    /* 
+    /*
      * Scale by "zoom" factor to allow for fit-to-window resizing in Windows
      */
     gc->ps = (double) gpptr(dd)->ps * gpptr(dd)->scale;
@@ -2559,10 +2559,10 @@ void GMetricInfo(int c, double *ascent, double *descent, double *width,
 
 
 /* Check that everything is initialized :
-  	Interpretation :
-  	mode = 0, graphics off
-  	mode = 1, graphics on
-  	mode = 2, graphical input on (ignored by most drivers)
+	Interpretation :
+	mode = 0, graphics off
+	mode = 1, graphics on
+	mode = 2, graphical input on (ignored by most drivers)
 */
 void GMode(int mode, pGEDevDesc dd)
 {
@@ -3108,7 +3108,7 @@ void GLPretty(double *ul, double *uh, int *n)
     int p1, p2;
     double dl = *ul, dh = *uh;
     p1 = ceil(log10(dl));
-    p2 = floor(log10(dh));	
+    p2 = floor(log10(dh));
     if(p2 <= p1 &&  dh/dl > 10.0) {
 	p1 = ceil(log10(dl) - 0.5);
 	p2 = floor(log10(dh) + 0.5);
@@ -3409,4 +3409,3 @@ void GMMathText(SEXP str, int side, double line, int outer,
 }/* GMMathText */
 
 /* -------------------- end of code from plotmath ------------- */
-

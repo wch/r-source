@@ -80,7 +80,7 @@ SEXP attribute_hidden do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (na < 1) {
 	for (i = 0; i < n; i++)
 	    REAL(x)[i] = NA_REAL;
-        warning(_("NAs produced"));
+	warning(_("NAs produced"));
     }
     else {
 	Rboolean naflag = FALSE;
@@ -154,7 +154,7 @@ SEXP attribute_hidden do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (na < 1 || nb < 1) {
 	for (i = 0; i < n; i++)
 	    REAL(x)[i] = NA_REAL;
-        warning(_("NAs produced"));
+	warning(_("NAs produced"));
     }
     else {
 	Rboolean naflag = FALSE;
@@ -243,7 +243,7 @@ SEXP attribute_hidden do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (na < 1 || nb < 1 || nc < 1) {
 	for (i = 0; i < n; i++)
 	    REAL(x)[i] = NA_REAL;
-        warning(_("NAs produced"));
+	warning(_("NAs produced"));
     }
     else {
 	Rboolean naflag = FALSE;
@@ -465,7 +465,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     k = asInteger(CAR(args)); args = CDR(args);
     sreplace = CAR(args); args = CDR(args);
     if( length(sreplace) != 1 )
-         error(_("invalid '%s' argument"), "replace");
+	 error(_("invalid '%s' argument"), "replace");
     replace = asLogical(sreplace);
     prob = CAR(args);
     if (replace == NA_LOGICAL)

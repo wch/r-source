@@ -60,19 +60,19 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	PROTECT(ind = allocVector(INTSXP, 1));
 	if(isVectorAtomic(XX))
-	    PROTECT(tmp = LCONS(R_Bracket2Symbol, 
+	    PROTECT(tmp = LCONS(R_Bracket2Symbol,
 				LCONS(XX, LCONS(ind, R_NilValue))));
 	else
-	    PROTECT(tmp = LCONS(R_Bracket2Symbol, 
+	    PROTECT(tmp = LCONS(R_Bracket2Symbol,
 				LCONS(X, LCONS(ind, R_NilValue))));
-	PROTECT(R_fcall = LCONS(FUN, 
+	PROTECT(R_fcall = LCONS(FUN,
 				LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
 
 	for(i = 0; i < n; i++) {
 	    INTEGER(ind)[0] = i + 1;
 	    SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
 	}
-	UNPROTECT(3);	    
+	UNPROTECT(3);
     }
 
     UNPROTECT(3); /* X, XX, ans */
@@ -140,13 +140,13 @@ SEXP attribute_hidden do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 #endif
 
-static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt, 
+static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 		   Rboolean replace, SEXP rho)
 {
     SEXP ans, names, klass, R_fcall;
     int i, j, n;
     Rboolean matched = FALSE;
-    
+
     /* if X is a list, recurse.  Otherwise if it matches classes call f */
     if(isNewList(X)) {
 	n = length(X);
@@ -155,7 +155,7 @@ static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 	/* or copy attributes if replace = TRUE? */
 	if(!isNull(names)) setAttrib(ans, R_NamesSymbol, names);
 	for(i = 0; i < n; i++)
-	    SET_VECTOR_ELT(ans, i, do_one(VECTOR_ELT(X, i), FUN, classes, 
+	    SET_VECTOR_ELT(ans, i, do_one(VECTOR_ELT(X, i), FUN, classes,
 					  deflt, replace, rho));
 	UNPROTECT(1);
 	return ans;
@@ -166,7 +166,7 @@ static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 	PROTECT(klass = R_data_class(X, FALSE));
 	for(i = 0; i < LENGTH(klass); i++)
 	    for(j = 0; j < length(classes); j++)
-		if(Seql(STRING_ELT(klass, i), STRING_ELT(classes, j))) 
+		if(Seql(STRING_ELT(klass, i), STRING_ELT(classes, j)))
 		    matched = TRUE;
 	UNPROTECT(1);
     }
@@ -185,7 +185,7 @@ SEXP attribute_hidden do_rapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP X, FUN, classes, deflt, how, ans, names;
     int i, n;
     Rboolean replace;
-    
+
     checkArity(op, args);
     X = CAR(args); args = CDR(args);
     FUN = CAR(args); args = CDR(args);

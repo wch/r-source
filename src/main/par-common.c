@@ -80,7 +80,7 @@
 	R_DEV__(col) = RGBpar3(value, 0, dpptr(dd)->bg);
     }
     else if (streql(what, "col.main")) {
-	lengthCheck(what, value, 1, call);	
+	lengthCheck(what, value, 1, call);
 	R_DEV__(colmain) = RGBpar3(value, 0, dpptr(dd)->bg);
     }
     else if (streql(what, "col.lab")) {
@@ -251,10 +251,10 @@
 	lengthCheck(what, value, 3, call);
 	naRealCheck(REAL(value)[0], what);
 	naRealCheck(REAL(value)[1], what);
-        if ((R_DEV__(xlog)))
-            logAxpCheck((int) (REAL(value)[2]), what);
-        else
-            posIntCheck((int) (REAL(value)[2]), what);
+	if ((R_DEV__(xlog)))
+	    logAxpCheck((int) (REAL(value)[2]), what);
+	else
+	    posIntCheck((int) (REAL(value)[2]), what);
 	R_DEV__(xaxp[0]) = REAL(value)[0];
 	R_DEV__(xaxp[1]) = REAL(value)[1];
 	R_DEV__(xaxp[2]) = (int)(REAL(value)[2]);
@@ -288,10 +288,10 @@
 	lengthCheck(what, value, 3, call);
 	naRealCheck(REAL(value)[0], what);
 	naRealCheck(REAL(value)[1], what);
-        if ((R_DEV__(ylog)))
-            logAxpCheck((int) (REAL(value)[2]), what);
-        else
-            posIntCheck((int) (REAL(value)[2]), what);
+	if ((R_DEV__(ylog)))
+	    logAxpCheck((int) (REAL(value)[2]), what);
+	else
+	    posIntCheck((int) (REAL(value)[2]), what);
 	R_DEV__(yaxp[0]) = REAL(value)[0];
 	R_DEV__(yaxp[1]) = REAL(value)[1];
 	R_DEV__(yaxp[2]) = (int) (REAL(value)[2]);
@@ -312,4 +312,3 @@
 	    R_DEV__(yaxt) = ix;
 	else par_error(what);
     }
-

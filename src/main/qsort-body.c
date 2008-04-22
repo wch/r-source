@@ -109,9 +109,9 @@
 	m--;
     }
 
-    if (j - i > 10) 	goto L20;
+    if (j - i > 10)	goto L20;
 
-    if (i == ii) 	goto L10;
+    if (i == ii)	goto L10;
 
     --i;
   L100:

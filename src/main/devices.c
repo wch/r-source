@@ -78,7 +78,7 @@ static SEXP R_INLINE getSymbolValue(const char *symbolName)
 
 static int R_CurrentDevice = 0;
 static int R_NumDevices = 1;
-/* 
+/*
    R_MaxDevices is defined in Rgraphics.h to be 64.  Slots are
    initiialized to be NULL, and returned to NULL when a device is
    removed.
@@ -137,14 +137,14 @@ pGEDevDesc GEcurrentDevice(void)
 		eval(defdev, R_GlobalEnv);
 		UNPROTECT(1);
 	    } else {
-		/* Not globally visible: 
+		/* Not globally visible:
 		   try grDevices namespace if loaded.
 		   The option is unlikely to be set if it is not loaded,
 		   as the default setting is in grDevices:::.onLoad.
 		*/
-		SEXP ns = findVarInFrame(R_NamespaceRegistry, 
+		SEXP ns = findVarInFrame(R_NamespaceRegistry,
 					 install("grDevices"));
-		if(ns != R_UnboundValue && 
+		if(ns != R_UnboundValue &&
 		   findVar(devName, ns) != R_UnboundValue) {
 		    PROTECT(defdev = lang1(devName));
 		    eval(defdev, ns);
@@ -270,8 +270,8 @@ int selectDevice(int devNum)
     /* Valid to select nullDevice, but that will open a new device.
        See ?dev.set.
      */
-    if((devNum >= 0) && (devNum < R_MaxDevices) && 
-       (R_Devices[devNum] != NULL) && active[devNum]) 
+    if((devNum >= 0) && (devNum < R_MaxDevices) &&
+       (R_Devices[devNum] != NULL) && active[devNum])
     {
 	pGEDevDesc gdd;
 
@@ -304,8 +304,8 @@ static
 void removeDevice(int devNum, Rboolean findNext)
 {
     /* Not vaild to remove nullDevice */
-    if((devNum > 0) && (devNum < R_MaxDevices) && 
-       (R_Devices[devNum] != NULL) && active[devNum]) 
+    if((devNum > 0) && (devNum < R_MaxDevices) &&
+       (R_Devices[devNum] != NULL) && active[devNum])
     {
 	int i;
 	SEXP s;
@@ -463,7 +463,7 @@ pGEDevDesc desc2GEDesc(pDevDesc dd)
     for (i = 1; i < R_MaxDevices; i++)
 	if (R_Devices[i] != NULL && R_Devices[i]->dev == dd)
 	    return R_Devices[i];
-    /* shouldn't happen ... 
+    /* shouldn't happen ...
        but might if device is not yet registered or being killed */
     return R_Devices[0]; /* safe as will not replay a displayList */
 }
@@ -534,8 +534,8 @@ void GEaddDevice(pGEDevDesc gdd)
        chance to deallocate its resources and the current active
        device is restored to a sane value. */
     if (i == R_MaxDevices - 1) {
-        killDevice(i);
-        error(_("too many open devices"));
+	killDevice(i);
+	error(_("too many open devices"));
     }
 }
 
@@ -544,7 +544,7 @@ void GEaddDevice2(pGEDevDesc gdd, const char *name)
 {
     gsetVar(install(".Device"), mkString(name), R_BaseEnv);
     GEaddDevice(gdd);
-    GEinitDisplayList(gdd);    
+    GEinitDisplayList(gdd);
 }
 
 
@@ -569,7 +569,7 @@ pGEDevDesc GEcreateDevDesc(pDevDesc dev)
     /* NULL the gesd array
      */
     int i;
-    if (!gdd) 
+    if (!gdd)
 	error(_("not enough memory to allocate device (in GEcreateDevDesc)"));
     for (i = 0; i < MAX_GRAPHICS_SYSTEMS; i++) gdd->gesd[i] = NULL;
     gdd->dev = dev;
@@ -626,7 +626,7 @@ SEXP do_devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env)
     int ask;
     pGEDevDesc gdd = GEcurrentDevice();
     Rboolean oldask = gdd->ask;
-    
+
     checkArity(op, args);
     if (!isNull(CAR(args))) {
 	ask = asLogical(CAR(args));
@@ -635,7 +635,7 @@ SEXP do_devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env)
 	gdd->ask = ask;
 	R_Visible = FALSE;
     } else R_Visible = TRUE;
-    
+
     return ScalarLogical(oldask);
 }
 

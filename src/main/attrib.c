@@ -104,10 +104,10 @@ SEXP attribute_hidden getAttrib0(SEXP vec, SEXP name)
 	    s = getAttrib(vec, R_DimSymbol);
 	    if(TYPEOF(s) == INTSXP && length(s) == 1) {
 		s = getAttrib(vec, R_DimNamesSymbol);
-                if(!isNull(s)) {
-                    SET_NAMED(VECTOR_ELT(s, 0), 2);
-                    return VECTOR_ELT(s, 0);
-                }
+		if(!isNull(s)) {
+		    SET_NAMED(VECTOR_ELT(s, 0), 2);
+		    return VECTOR_ELT(s, 0);
+		}
 	    }
 	}
 	if (isList(vec) || isLanguage(vec)) {
@@ -664,14 +664,14 @@ SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	return(ans);
     PROTECT(args = ans);
     if (NAMED(CAR(args)) == 2)
-        SETCAR(args, duplicate(CAR(args)));
+	SETCAR(args, duplicate(CAR(args)));
     if (CADR(args) != R_NilValue) {
-        PROTECT(call = allocList(2));
-        SET_TYPEOF(call, LANGSXP);
-        SETCAR(call, install("as.character"));
-        SETCADR(call, CADR(args));
-        SETCADR(args, eval(call, env));
-        UNPROTECT(1);
+	PROTECT(call = allocList(2));
+	SET_TYPEOF(call, LANGSXP);
+	SETCAR(call, install("as.character"));
+	SETCADR(call, CADR(args));
+	SETCADR(args, eval(call, env));
+	UNPROTECT(1);
     }
     setAttrib(CAR(args), R_NamesSymbol, CADR(args));
     UNPROTECT(1);
@@ -1017,7 +1017,7 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		CHAR(STRING_ELT(names, i))[0] == '\0') { /* all ASCII tests */
 		error(_("all attributes must have names [%d does not]"), i+1);
 	    }
-        }
+	}
     }
 
     if (object == R_NilValue) {
@@ -1080,11 +1080,11 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 
     attr <- function (x, which)
     {
-        if (!is.character(which))
-            stop("attribute name must be of mode character")
-        if (length(which) != 1)
-            stop("exactly one attribute name must be given")
-        attributes(x)[[which]]
+	if (!is.character(which))
+	    stop("attribute name must be of mode character")
+	if (length(which) != 1)
+	    stop("exactly one attribute name must be given")
+	attributes(x)[[which]]
    }
 
 The R functions was being called very often and replacing it by
@@ -1222,14 +1222,14 @@ void GetMatrixDimnames(SEXP x, SEXP *rl, SEXP *cl,
 	*rl = VECTOR_ELT(dimnames, 0);
 	*cl = VECTOR_ELT(dimnames, 1);
 	nn = getAttrib(dimnames, R_NamesSymbol);
-        if (isNull(nn)) {
+	if (isNull(nn)) {
 	    *rn = NULL;
 	    *cn = NULL;
-        }
+	}
 	else {
 	    *rn = translateChar(STRING_ELT(nn, 0));
 	    *cn = translateChar(STRING_ELT(nn, 1));
-        }
+	}
     }
 }
 
@@ -1369,7 +1369,7 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
 
     if(name == s_dot_Data) {	/* special handling */
 	obj = set_data_part(obj, value);
-        UNPROTECT(2);
+	UNPROTECT(2);
 	return obj;
     }
     if(isNull(value))		/* Slots, but not attributes, can be NULL.*/

@@ -33,7 +33,7 @@
    1) this is called from user-level, so only some types of objects are
       important.
    2) an object gets charged for all the space allocated on the heap
-      and all the nodes specifically due to it, but not for the 
+      and all the nodes specifically due to it, but not for the
       space for its name nor for .Internals it references.
 */
 SEXP csduplicated(SEXP x);  /* from unique.c */
@@ -44,7 +44,7 @@ static R_size_t objectsize(SEXP s)
     R_size_t cnt = 0, vcnt = 0;
     SEXP tmp, dup;
     Rboolean isVec = FALSE;
-    
+
     switch (TYPEOF(s)) {
     case NILSXP:
 	return(0);
@@ -89,7 +89,7 @@ static R_size_t objectsize(SEXP s)
 	dup = csduplicated(s);
 	for (i = 0; i < length(s); i++) {
 	    tmp = STRING_ELT(s, i);
-	    if(tmp != NA_STRING && !LOGICAL(dup)[i]) 
+	    if(tmp != NA_STRING && !LOGICAL(dup)[i])
 		cnt += objectsize(tmp);
 	}
 	isVec = TRUE;
@@ -121,12 +121,12 @@ static R_size_t objectsize(SEXP s)
     case S4SXP:
 	/* Has TAG and ATRIB but no CAR nor CDR */
 	cnt += objectsize(TAG(s));
-        break;
+	break;
     default:
 	UNIMPLEMENTED_TYPE("object.size", s);
     }
     /* add in node space:
-       we need to take into account the rounding up that goes on 
+       we need to take into account the rounding up that goes on
        in the node classes. */
     if(isVec) {
 	cnt += sizeof(SEXPREC_ALIGN);

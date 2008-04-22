@@ -461,7 +461,7 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
     if(length(incomp) && /* S has FALSE to mean empty */
        !(isLogical(incomp) && length(incomp) == 1 && LOGICAL(incomp)[0] == 0))
 	dup = duplicated3(x, incomp, asLogical(CADDR(args)));
-    else 
+    else
 	dup = duplicated(x, asLogical(CADDR(args)));
 
     if (PRIMVAL(op) == 0) /* "duplicated()" : */

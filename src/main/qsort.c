@@ -55,7 +55,7 @@ SEXP attribute_hidden do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_OBJECT(sx, 0);
     /* if x has names, drop them, since they won't be ordered
        if (!isNull(getAttrib(sx, R_NamesSymbol)))
-           setAttrib(sx, R_NamesSymbol, R_NilValue); */
+	   setAttrib(sx, R_NamesSymbol, R_NilValue); */
     indx_ret = asLogical(CADR(args));
     n = LENGTH(x);
     if(x_int) ivx = INTEGER(sx); else vx = REAL(sx);

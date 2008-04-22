@@ -565,8 +565,8 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		case LGLSXP:
 		case INTSXP:
 		    updated = isum(TYPEOF(a) == LGLSXP ?
-                                   LOGICAL(a) :INTEGER(a), length(a),
-                                   &itmp, narm, call);
+				   LOGICAL(a) :INTEGER(a), length(a),
+				   &itmp, narm, call);
 		    if(updated) {
 			if(itmp == NA_INTEGER) goto na_answer;
 			if(ans_type == INTSXP) {

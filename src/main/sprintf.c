@@ -34,7 +34,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *formatString, *ss; char *starc;
     /* fmt2 is a copy of fmt with '*' expanded.
        bit will hold numeric formats and %<w>s, so be quite small. */
-    char fmt[MAXLINE+1], fmt2[MAXLINE+10], *fmtp, bit[MAXLINE+1], 
+    char fmt[MAXLINE+1], fmt2[MAXLINE+10], *fmtp, bit[MAXLINE+1],
 	*outputString;
     size_t n, cur, chunk;
 
@@ -77,7 +77,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	n = strlen(formatString);
 	if (n > MAXLINE)
 	    error(_("'fmt' length exceeds maximal format length %d"), MAXLINE);
- 	/* process the format string */
+	/* process the format string */
 	for (cur = 0, cnt = 0; cur < n; cur += chunk) {
 	    ss = NULL;
 	    if (formatString[cur] == '%') { /* handle special format command */
@@ -106,7 +106,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				error(_("reference to non-existent argument %d"), v);
 			    nthis = v-1;
 			    memmove(fmt+1, fmt+3, strlen(fmt)-2);
-			} else if(fmt[2] >= '1' && fmt[2] <= '9' 
+			} else if(fmt[2] >= '1' && fmt[2] <= '9'
 				  && fmt[3] == '$') {
 			    v = 10*v + fmt[2] - '0';
 			    if(v > nargs)
@@ -127,7 +127,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				    error(_("reference to non-existent argument %d"), v);
 				nstar = v-1;
 				memmove(starc+1, starc+3, strlen(starc)-2);
-			    } else if(starc[2] >= '1' && starc[2] <= '9' 
+			    } else if(starc[2] >= '1' && starc[2] <= '9'
 				      && starc[3] == '$') {
 				v = 10*v + starc[2] - '0';
 				if(v > nargs)
@@ -178,9 +178,9 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    *q = '\0';
 			    fmtp = fmt2;
 			} else fmtp = fmt;
-			
+
 			if(ns == 0) {
-			    /* Now let us see if some minimal coercion 
+			    /* Now let us see if some minimal coercion
 			       would be sensible, but only do so once. */
 			    switch(fmtp[strlen(fmtp) - 1]) {
 			    case 'd':
@@ -221,18 +221,18 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				break;
 			    }
 			}
-			
+
 			PROTECT(_this);
 			thislen = length(_this);
 			if(thislen == 0)
 			    error(_("coercion has changed vector length to 0"));
-			
+
 			switch(TYPEOF(_this)) {
 			case LGLSXP:
 			    {
 				int x = LOGICAL(_this)[ns % thislen];
 				if (strcspn(fmtp, "di") >= strlen(fmtp))
-				    error("%s", 
+				    error("%s",
 					  _("use format %d or %i for logical objects"));
 				if (x == NA_LOGICAL) {
 				    fmtp[strlen(fmtp)-1] = 's';
@@ -260,7 +260,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    {
 				double x = REAL(_this)[ns % thislen];
 				if (strcspn(fmtp, "feEgG") >= strlen(fmtp))
-				    error("%s", 
+				    error("%s",
 					  _("use format %f, %e or %g for numeric objects"));
 				if (R_FINITE(x)) {
 				    sprintf(bit, fmtp, x);
@@ -306,7 +306,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				ss = NULL;
 			    }
 			    break;
-			    
+
 			default:
 			    error(_("unsupported type"));
 			    break;
@@ -325,11 +325,11 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		bit[chunk] = '\0';
 	    }
 	    if(ss) {
-		outputString = R_AllocStringBuffer(strlen(outputString) + 
+		outputString = R_AllocStringBuffer(strlen(outputString) +
 						   strlen(ss) + 1, &outbuff);
 		strcat(outputString, ss);
 	    } else {
-		outputString = R_AllocStringBuffer(strlen(outputString) + 
+		outputString = R_AllocStringBuffer(strlen(outputString) +
 						   strlen(bit) + 1, &outbuff);
 		strcat(outputString, bit);
 	    }

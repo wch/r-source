@@ -107,5 +107,3 @@ SEXP R_stopbcprof(void);
 
 SEXP Rg_contourDef(void);
 SEXP Rg_readonlypars(void);
-
-

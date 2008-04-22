@@ -34,7 +34,7 @@
 
 #include <R_ext/Rdynload.h>
 
-static DL_FUNC User_unif_fun, User_unif_nseed, 
+static DL_FUNC User_unif_fun, User_unif_nseed,
 	User_unif_seedloc;
 typedef void (*UnifInitFun)(Int32);
 
@@ -66,7 +66,7 @@ static
 RNGTAB RNG_Table[] =
 {
 /* kind Nkind	  name	           n_seed      i_seed */
-    { WICHMANN_HILL,        BUGGY_KINDERMAN_RAMAGE, "Wichmann-Hill", 	     3,	dummy},
+    { WICHMANN_HILL,        BUGGY_KINDERMAN_RAMAGE, "Wichmann-Hill",	     3,	dummy},
     { MARSAGLIA_MULTICARRY, BUGGY_KINDERMAN_RAMAGE, "Marsaglia-MultiCarry",  2,	dummy},
     { SUPER_DUPER,          BUGGY_KINDERMAN_RAMAGE, "Super-Duper",	     2,	dummy},
     { MERSENNE_TWISTER,     BUGGY_KINDERMAN_RAMAGE, "Mersenne-Twister",  1+624,	dummy},
@@ -179,7 +179,7 @@ static void FixupSeeds(RNGtype RNG_kind, int initial)
     case MERSENNE_TWISTER:
 	if(initial) I1 = 624;
 	 /* No action unless user has corrupted .Random.seed */
-	if(I1 <= 0) I1 = 624; 
+	if(I1 <= 0) I1 = 624;
 	/* check for all zeroes */
 	for (j = 1; j <= 624; j++)
 	    if(RNG_Table[RNG_kind].i_seed[j] != 0) {
@@ -198,7 +198,7 @@ static void FixupSeeds(RNGtype RNG_kind, int initial)
 		notallzero = 1;
 		break;
 	    }
-	if(!notallzero) Randomize(RNG_kind);	
+	if(!notallzero) Randomize(RNG_kind);
 	break;
     case USER_UNIF:
 	break;
@@ -295,7 +295,7 @@ void GetRNGstate()
     int len_seed, j, tmp, *is;
     SEXP seeds;
     RNGtype newRNG; N01type newN01;
-    
+
     /* look only in the workspace */
     seeds = findVarInFrame(R_GlobalEnv, R_SeedsSymbol);
     if (seeds == R_UnboundValue) {
@@ -315,8 +315,8 @@ void GetRNGstate()
 	tmp = is[0];
 	if (tmp == NA_INTEGER)
 	    error(_(".Random.seed[1] is not a valid integer"));
-        /* How using two integers, with names in the options to identify the types. */
-	newRNG = (RNGtype) (tmp % 100); 
+	/* How using two integers, with names in the options to identify the types. */
+	newRNG = (RNGtype) (tmp % 100);
 	newN01 = (N01type) (tmp / 100);
 	/*if (RNG_kind > USER_UNIF || RNG_kind < 0) {
 	    warning(".Random.seed was invalid: re-initializing");
@@ -324,15 +324,15 @@ void GetRNGstate()
 	    }*/
 	if (newN01 < 0 || newN01 > KINDERMAN_RAMAGE)
 	    error(_(".Random.seed[0] is not a valid Normal type"));
- 	switch(newRNG) {
- 	case WICHMANN_HILL:
- 	case MARSAGLIA_MULTICARRY:
- 	case SUPER_DUPER:
- 	case MERSENNE_TWISTER:
- 	case KNUTH_TAOCP:
- 	case KNUTH_TAOCP2:
+	switch(newRNG) {
+	case WICHMANN_HILL:
+	case MARSAGLIA_MULTICARRY:
+	case SUPER_DUPER:
+	case MERSENNE_TWISTER:
+	case KNUTH_TAOCP:
+	case KNUTH_TAOCP2:
 	    break;
- 	case USER_UNIF:
+	case USER_UNIF:
 	    if(!User_unif_fun)
 		error(_(".Random.seed[1] = 5 but no user-supplied generator"));
 	    break;
@@ -364,15 +364,15 @@ void PutRNGstate()
     /* Copy out seeds to  .Random.seed  */
     int len_seed, j;
     SEXP seeds;
-    
+
     if (RNG_kind < 0 || RNG_kind > KNUTH_TAOCP2 ||
 	N01_kind < 0 || N01_kind > KINDERMAN_RAMAGE) {
 	warning("Internal .Random.seed is corrupt: not saving");
 	return;
     }
-    
+
     len_seed = RNG_Table[RNG_kind].n_seed;
-   
+
     PROTECT(seeds = allocVector(INTSXP, len_seed + 1));
 
     INTEGER(seeds)[0] = RNG_kind + 100 * N01_kind;
@@ -418,7 +418,7 @@ static void Norm_kind(N01type kind)
 	if (!User_norm_fun) error(_("'user_norm_rand' not in load table"));
     }
     GetRNGstate(); /* might not be initialized */
-    if (kind == BOX_MULLER) 
+    if (kind == BOX_MULLER)
 	BM_norm_keep = 0.0; /* zap Box-Muller history */
     N01_kind = kind;
     PutRNGstate();
@@ -562,23 +562,23 @@ static double MT_genrand(void)
     mti = dummy[0];
 
     if (mti >= N) { /* generate N words at one time */
-        int kk;
+	int kk;
 
-        if (mti == N+1)   /* if sgenrand() has not been called, */
-            MT_sgenrand(4357); /* a default initial seed is used   */
+	if (mti == N+1)   /* if sgenrand() has not been called, */
+	    MT_sgenrand(4357); /* a default initial seed is used   */
 
-        for (kk = 0; kk < N - M; kk++) {
-            y = (mt[kk] & UPPER_MASK) | (mt[kk+1] & LOWER_MASK);
-            mt[kk] = mt[kk+M] ^ (y >> 1) ^ mag01[y & 0x1];
-        }
-        for (; kk < N - 1; kk++) {
-            y = (mt[kk] & UPPER_MASK) | (mt[kk+1] & LOWER_MASK);
-            mt[kk] = mt[kk+(M-N)] ^ (y >> 1) ^ mag01[y & 0x1];
-        }
-        y = (mt[N-1] & UPPER_MASK) | (mt[0] & LOWER_MASK);
-        mt[N-1] = mt[M-1] ^ (y >> 1) ^ mag01[y & 0x1];
+	for (kk = 0; kk < N - M; kk++) {
+	    y = (mt[kk] & UPPER_MASK) | (mt[kk+1] & LOWER_MASK);
+	    mt[kk] = mt[kk+M] ^ (y >> 1) ^ mag01[y & 0x1];
+	}
+	for (; kk < N - 1; kk++) {
+	    y = (mt[kk] & UPPER_MASK) | (mt[kk+1] & LOWER_MASK);
+	    mt[kk] = mt[kk+(M-N)] ^ (y >> 1) ^ mag01[y & 0x1];
+	}
+	y = (mt[N-1] & UPPER_MASK) | (mt[0] & LOWER_MASK);
+	mt[N-1] = mt[M-1] ^ (y >> 1) ^ mag01[y & 0x1];
 
-        mti = 0;
+	mti = 0;
     }
 
     y = mt[mti++];
@@ -591,7 +591,7 @@ static double MT_genrand(void)
     return ( (double)y * 2.3283064365386963e-10 ); /* reals: [0,1)-interval */
 }
 
-/* 
+/*
    The following code was taken from earlier versions of
    http://www-cs-faculty.stanford.edu/~knuth/programs/rng.c-old
    http://www-cs-faculty.stanford.edu/~knuth/programs/rng.c
@@ -654,7 +654,7 @@ static void ran_start(long seed)
     ss<<=1; if (ss>=MM) ss-=MM-2; /* cyclic shift 29 bits */
   }
   x[1]++;              /* make x[1] (and only x[1]) odd */
-  for (ss=seed&(MM-1),t=TT-1; t; ) {       
+  for (ss=seed&(MM-1),t=TT-1; t; ) {
     for (j=KK-1;j>0;j--) x[j+j]=x[j], x[j+j-1]=0; /* "square" */
     for (j=KK+KK-2;j>=KK;j--)
       x[j-(KK-LL)]=mod_diff(x[j-(KK-LL)],x[j]),

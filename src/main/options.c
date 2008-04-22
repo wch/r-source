@@ -254,7 +254,7 @@ void attribute_hidden InitOptions(void)
     v = CDR(v);
 
     SET_TAG(v, install("check.bounds"));
-    SETCAR(v, ScalarLogical(0)); 	/* no checking */
+    SETCAR(v, ScalarLogical(0));	/* no checking */
     v = CDR(v);
 
     p = getenv("R_KEEP_PKG_SOURCE");
@@ -339,7 +339,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     n = length(args);
     if (n == 1 && (isPairList(CAR(args)) || isVectorList(CAR(args)))
-        && TAG(args) == R_NilValue ) {
+	&& TAG(args) == R_NilValue ) {
 	args = CAR(args);
 	n = length(args);
     }
@@ -419,7 +419,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (s == NA_STRING || length(s) == 0)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		/* We want to make sure these are in the native encoding */
-		SET_VECTOR_ELT(value, i, 
+		SET_VECTOR_ELT(value, i,
 			       SetOption(tag, mkString(translateChar(s))));
 	    }
 	    else if (streql(CHAR(namei), "prompt")) {
@@ -427,7 +427,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (s == NA_STRING || length(s) == 0)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		/* We want to make sure these are in the native encoding */
-		SET_VECTOR_ELT(value, i, 
+		SET_VECTOR_ELT(value, i,
 			       SetOption(tag, mkString(translateChar(s))));
 	    }
 	    else if (streql(CHAR(namei), "contrasts")) {
@@ -445,14 +445,14 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "warn")) {
 		if (!isNumeric(argi) || length(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-                SET_VECTOR_ELT(value, i, SetOption(tag, argi));
+		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if (streql(CHAR(namei), "warning.length")) {
 		k = asInteger(argi);
 		if (k < 100 || k > 8170)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		R_WarnLength = k;
-                SET_VECTOR_ELT(value, i, SetOption(tag, argi));
+		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if ( streql(CHAR(namei), "warning.expression") )  {
 		if( !isLanguage(argi) &&  ! isExpression(argi) )
@@ -460,9 +460,9 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if ( streql(CHAR(namei), "error") ) {
-	        if(isFunction(argi))
+		if(isFunction(argi))
 		  argi = makeErrorCall(argi);
-	        else if( !isLanguage(argi) &&  !isExpression(argi) )
+		else if( !isLanguage(argi) &&  !isExpression(argi) )
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
@@ -573,7 +573,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		tag = "device.ask.default";
 		argi = mkString(tag);
 	    }
-	    
+
 	    SET_VECTOR_ELT(value, i, duplicate(CAR(FindTaggedItem(options, install(tag)))));
 	    SET_STRING_ELT(names, i, STRING_ELT(argi, 0));
 	    R_Visible = TRUE;

@@ -191,14 +191,14 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
     }
 }
 
-/* 
+/*
    The return values are
      w : the required field width
      d : use %w.df in fixed format, %#w.de in scientific format
      e : use scientific format if != 0, value is number of exp digits - 1
 
    nsmall specifies the minimum number of decimal digits in fixed format:
-   it is 0 except when called from do_format.  
+   it is 0 except when called from do_format.
 */
 
 void formatReal(double *x, int n, int *w, int *d, int *e, int nsmall)
@@ -254,7 +254,7 @@ void formatReal(double *x, int n, int *w, int *d, int *e, int nsmall)
 
     /*-- These	'mxsl' & 'rgt'	are used in F Format
      *	 AND in the	____ if(.) "F" else "E" ___   below: */
-    if (mxl < 0) mxsl = 1 + neg;  /* we use %#w.dg, so have leading zero */ 
+    if (mxl < 0) mxsl = 1 + neg;  /* we use %#w.dg, so have leading zero */
 
     /* use nsmall only *after* comparing "F" vs "E": */
     if (rgt < 0) rgt = 0;
@@ -417,14 +417,14 @@ void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
 	    if (nsmall > i_rt) {i_rt = nsmall; i_wF = i_mxsl + i_rt + (i_rt != 0);}
 	    *di = i_rt;
 	    *wi = i_wF;
-	}    
+	}
     } else if(all_im_zero) {
 	if (wF <= *wr + R_print.scipen) {
 	    *er = 0;
 	    if (nsmall > rt) {rt = nsmall; wF = mxsl + rt + (rt != 0);}
 	    *dr = rt;
 	    *wr = wF;
-	    }	
+	    }
 	*ei = *di = 0;
 	*wi = i_wF;
     } else if(wF + i_wF < *wr + *wi + 2*R_print.scipen) {
@@ -435,7 +435,7 @@ void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
 
 	    *ei = 0;
 	    if (nsmall > i_rt) {
-		i_rt = nsmall; 
+		i_rt = nsmall;
 		i_wF = i_mxsl + i_rt + (i_rt != 0);
 	    }
 	    *di = i_rt;

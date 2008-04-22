@@ -73,7 +73,7 @@ void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
 
 static int ParseBrowser(SEXP, SEXP);
 
- 
+
 extern void InitDynload(void);
 
 	/* Read-Eval-Print Loop [ =: REPL = repl ] with input from a file */
@@ -231,7 +231,7 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 
     case PARSE_NULL:
 
-	/* The intention here is to break on CR but not on other 
+	/* The intention here is to break on CR but not on other
 	   null statements: see PR#9063 */
 	if (browselevel && !strcmp((char *) state->buf, "\n")) return -1;
 	R_IoBufferWriteReset(&R_ConsoleIob);
@@ -297,7 +297,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 
     R_IoBufferWriteReset(&R_ConsoleIob);
     state.buf[0] = '\0';
-    state.buf[CONSOLE_BUFFER_SIZE] = '\0'; 
+    state.buf[CONSOLE_BUFFER_SIZE] = '\0';
     /* stopgap measure if line > CONSOLE_BUFFER_SIZE chars */
     state.bufp = state.buf;
     if(R_Verbose)
@@ -305,7 +305,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
     for(;;) {
 	status = Rf_ReplIteration(rho, savestack, browselevel, &state);
 	if(status < 0)
-  	  return;
+	  return;
     }
 }
 
@@ -397,7 +397,7 @@ static RETSIGTYPE handleInterrupt(int dummy)
 static RETSIGTYPE handlePipe(int dummy)
 {
     signal(SIGPIPE, handlePipe);
-    error("ignoring SIGPIPE signal");    
+    error("ignoring SIGPIPE signal");
 }
 #endif
 
@@ -426,7 +426,7 @@ static void win32_segv(int signum)
     }
     num_caught++;
     if(num_caught < 10) signal(signum, win32_segv);
-    if(signum == SIGILL)  
+    if(signum == SIGILL)
 	error("caught access violation - continue with care");
     else
 	error("caught access violation - continue with care");
@@ -451,7 +451,7 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
     /* First check for stack overflow if we know the stack position.
        We assume anything within 16Mb beyond the stack end is a stack overflow.
      */
-    if(signum == SIGSEGV && (ip != (siginfo_t *)0) && 
+    if(signum == SIGSEGV && (ip != (siginfo_t *)0) &&
        (intptr_t) R_CStackStart != -1) {
 	uintptr_t addr = (uintptr_t) ip->si_addr;
 	intptr_t diff = (R_CStackDir > 0) ? R_CStackStart - addr:
@@ -460,20 +460,20 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 	if((intptr_t) R_CStackLimit != -1) upper += R_CStackLimit;
 	if(diff > 0 && diff < upper) {
 	    REprintf(_("Error: segfault from C stack overflow\n"));
-	    jump_to_toplevel();	
-	}    
+	    jump_to_toplevel();
+	}
     }
 
     /* need to take off stack checking as stack base has changed */
     R_CStackLimit = (uintptr_t)-1;
 
     /* Do not translate these messages */
-    REprintf("\n *** caught %s ***\n", 
-	     signum == SIGILL ? "illegal operation" : 
+    REprintf("\n *** caught %s ***\n",
+	     signum == SIGILL ? "illegal operation" :
 	     signum == SIGBUS ? "bus error" : "segfault");
     if(ip != (siginfo_t *)0) {
 	if(signum == SIGILL) {
-	    
+
 	    switch(ip->si_code) {
 #ifdef ILL_ILLOPC
 	    case ILL_ILLOPC:
@@ -560,13 +560,13 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 	}
     }
     if(R_Interactive) {
-	REprintf("\nPossible actions:\n1: %s\n2: %s\n3: %s\n4: %s\n", 
-		 "abort (with core dump, if enabled)", 
-		 "normal R exit", 
+	REprintf("\nPossible actions:\n1: %s\n2: %s\n3: %s\n4: %s\n",
+		 "abort (with core dump, if enabled)",
+		 "normal R exit",
 		 "exit R without saving workspace",
 		 "exit R saving workspace");
 	while(1) {
-	    if(R_ReadConsole("Selection: ", ConsoleBuf, CONSOLE_BUFFER_SIZE, 
+	    if(R_ReadConsole("Selection: ", ConsoleBuf, CONSOLE_BUFFER_SIZE,
 			     0) > 0) {
 		if(ConsoleBuf[0] == '1') break;
 		if(ConsoleBuf[0] == '2') R_CleanUp(SA_DEFAULT, 0, 1);
@@ -600,10 +600,10 @@ static void init_signal_handlers(void)
     struct sigaction sa;
     signal_stack = malloc(SIGSTKSZ + R_USAGE);
     if (signal_stack != NULL) {
-        sigstk.ss_sp = signal_stack;
-        sigstk.ss_size = SIGSTKSZ + R_USAGE;
-        sigstk.ss_flags = 0;
-        if(sigaltstack(&sigstk, NULL) < 0)
+	sigstk.ss_sp = signal_stack;
+	sigstk.ss_size = SIGSTKSZ + R_USAGE;
+	sigstk.ss_flags = 0;
+	if(sigaltstack(&sigstk, NULL) < 0)
 	    warning("failed to set alternate signal stack");
     } else
 	warning("failed to allocate alternate signal stack");
@@ -680,7 +680,7 @@ void setup_Rmainloop(void)
 	p = getenv("LC_ALL");
 	strncpy(Rlocale, p ? p : "", 1000);
 	if(!(p = getenv("LC_CTYPE"))) p = Rlocale;
-	/* We'd like to use warning, but need to defer. 
+	/* We'd like to use warning, but need to defer.
 	   Also cannot translate. */
 	if(!setlocale(LC_CTYPE, p))
 	    snprintf(deferred_warnings[ndeferred_warnings++], 250,
@@ -848,9 +848,9 @@ void setup_Rmainloop(void)
 	R_CurrentExpr = findVar(cmd, R_GlobalEnv);
 	if (R_CurrentExpr != R_UnboundValue &&
 	    TYPEOF(R_CurrentExpr) == CLOSXP) {
-	        PROTECT(R_CurrentExpr = lang1(cmd));
-	        R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
-	        UNPROTECT(1);
+		PROTECT(R_CurrentExpr = lang1(cmd));
+		R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
+		UNPROTECT(1);
 	}
 	UNPROTECT(1);
     }
@@ -894,7 +894,7 @@ void setup_Rmainloop(void)
 	R_InitialData();
     }
     else
-    	R_Suicide(_("unable to restore saved data in .RData\n"));
+	R_Suicide(_("unable to restore saved data in .RData\n"));
 
     /* Initial Loading is done.
        At this point we try to invoke the .First Function.
@@ -909,9 +909,9 @@ void setup_Rmainloop(void)
 	R_CurrentExpr = findVar(cmd, R_GlobalEnv);
 	if (R_CurrentExpr != R_UnboundValue &&
 	    TYPEOF(R_CurrentExpr) == CLOSXP) {
-	        PROTECT(R_CurrentExpr = lang1(cmd));
-	        R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
-	        UNPROTECT(1);
+		PROTECT(R_CurrentExpr = lang1(cmd));
+		R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
+		UNPROTECT(1);
 	}
 	UNPROTECT(1);
     }
@@ -927,9 +927,9 @@ void setup_Rmainloop(void)
 	R_CurrentExpr = findVar(cmd, baseEnv);
 	if (R_CurrentExpr != R_UnboundValue &&
 	    TYPEOF(R_CurrentExpr) == CLOSXP) {
-	        PROTECT(R_CurrentExpr = lang1(cmd));
-	        R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
-	        UNPROTECT(1);
+		PROTECT(R_CurrentExpr = lang1(cmd));
+		R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
+		UNPROTECT(1);
 	}
 	UNPROTECT(1);
     }
@@ -951,7 +951,7 @@ void end_Rmainloop(void)
 {
     /* refrain from printing trailing '\n' in slave mode */
     if (!R_Slave)
-        Rprintf("\n");
+	Rprintf("\n");
     /* run the .Last function. If it gives an error, will drop back to main
        loop. */
     R_CleanUp(SA_DEFAULT, 0, 1);
@@ -1013,11 +1013,11 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	if (!strcmp(expr, "Q")) {
 
 	    /* Run onexit/cend code for everything above the target.
-               The browser context is still on the stack, so any error
-               will drop us back to the current browser.  Not clear
-               this is a good thing.  Also not clear this should still
-               be here now that jump_to_toplevel is used for the
-               jump. */
+	       The browser context is still on the stack, so any error
+	       will drop us back to the current browser.  Not clear
+	       this is a good thing.  Also not clear this should still
+	       be here now that jump_to_toplevel is used for the
+	       jump. */
 	    R_run_onexits(R_ToplevelContext);
 
 	    /* this is really dynamic state that should be managed as such */
@@ -1164,12 +1164,12 @@ SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("unrecognized value of 'save'"));
     status = asInteger(CADR(args));
     if (status == NA_INTEGER) {
-        warning(_("invalid 'status', 0 assumed"));
+	warning(_("invalid 'status', 0 assumed"));
 	runLast = 0;
     }
     runLast = asLogical(CADDR(args));
     if (runLast == NA_LOGICAL) {
-        warning(_("invalid 'runLast', FALSE assumed"));
+	warning(_("invalid 'runLast', FALSE assumed"));
 	runLast = 0;
     }
     /* run the .Last function. If it gives an error, will drop back to main
@@ -1193,7 +1193,7 @@ static R_ToplevelCallbackEl *Rf_ToplevelTaskHandlers = NULL;
   position).
  */
 R_ToplevelCallbackEl *
-Rf_addTaskCallback(R_ToplevelCallback cb, void *data, 
+Rf_addTaskCallback(R_ToplevelCallback cb, void *data,
 		   void (*finalizer)(void *), const char *name, int *pos)
 {
     int which;
@@ -1212,19 +1212,19 @@ Rf_addTaskCallback(R_ToplevelCallback cb, void *data,
 	which = 0;
     } else {
 	R_ToplevelCallbackEl *tmp;
-        tmp = Rf_ToplevelTaskHandlers;
+	tmp = Rf_ToplevelTaskHandlers;
 	which = 1;
 	while(tmp->next) {
 	    which++;
 	    tmp = tmp->next;
 	}
-        tmp->next = el;
+	tmp->next = el;
     }
 
     if(!name) {
-        char buf[5];
+	char buf[5];
 	sprintf(buf, "%d", which+1);
-        el->name = strdup(buf);
+	el->name = strdup(buf);
     } else
 	el->name = strdup(name);
 
@@ -1245,7 +1245,7 @@ Rf_removeTaskCallbackByName(const char *name)
     }
 
     while(el) {
-        if(strcmp(el->name, name) == 0) {
+	if(strcmp(el->name, name) == 0) {
 	    if(prev == NULL) {
 		Rf_ToplevelTaskHandlers = el->next;
 	    } else {
@@ -1372,7 +1372,7 @@ R_getTaskCallbackNames(void)
 static Rboolean Rf_RunningToplevelHandlers = FALSE;
 
 void
-Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded, 
+Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
 			Rboolean visible)
 {
     R_ToplevelCallbackEl *h, *prev = NULL;
@@ -1386,11 +1386,11 @@ Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
     while(h) {
 	again = (h->cb)(expr, value, succeeded, visible, h->data);
 	if(R_CollectWarnings) {
-	    REprintf(_("warning messages from top-level task callback '%s'\n"), 
+	    REprintf(_("warning messages from top-level task callback '%s'\n"),
 		     h->name);
 	    PrintWarnings();
 	}
-        if(again) {
+	if(again) {
 	    prev = h;
 	    h = h->next;
 	} else {
@@ -1401,9 +1401,9 @@ Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
 	    h = h->next;
 	    if(tmp == Rf_ToplevelTaskHandlers)
 		Rf_ToplevelTaskHandlers = h;
-            if(tmp->finalizer)
+	    if(tmp->finalizer)
 		tmp->finalizer(tmp->data);
-            free(tmp);
+	    free(tmp);
 	}
     }
 
@@ -1426,8 +1426,8 @@ R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
     SETCAR(e, VECTOR_ELT(f, 0));
     cur = CDR(e);
     SETCAR(cur, tmp = allocVector(LANGSXP, 2));
-        SETCAR(tmp, install("quote"));
-        SETCAR(CDR(tmp), expr);
+	SETCAR(tmp, install("quote"));
+	SETCAR(CDR(tmp), expr);
     cur = CDR(cur);
     SETCAR(cur, value);
     cur = CDR(cur);
@@ -1443,13 +1443,13 @@ R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
     if(!errorOccurred) {
 	PROTECT(val);
 	if(TYPEOF(val) != LGLSXP) {
-              /* It would be nice to identify the function. */
+	      /* It would be nice to identify the function. */
 	    warning(_("top-level task callback did not return a logical value"));
 	}
 	again = asLogical(val);
 	UNPROTECT(1);
     } else {
-        /* warning("error occurred in top-level task callback\n"); */
+	/* warning("error occurred in top-level task callback\n"); */
 	again = FALSE;
     }
     return(again);
@@ -1474,15 +1474,15 @@ R_addTaskCallback(SEXP f, SEXP data, SEXP useData, SEXP name)
 
     PROTECT(index = allocVector(INTSXP, 1));
     el = Rf_addTaskCallback(R_taskCallbackRoutine,  internalData,
-			    (void (*)(void*)) R_ReleaseObject, tmpName, 
+			    (void (*)(void*)) R_ReleaseObject, tmpName,
 			    INTEGER(index));
 
     if(length(name) == 0) {
 	PROTECT(name = mkString(el->name));
-        setAttrib(index, R_NamesSymbol, name);
+	setAttrib(index, R_NamesSymbol, name);
 	UNPROTECT(1);
     } else {
-        setAttrib(index, R_NamesSymbol, name);
+	setAttrib(index, R_NamesSymbol, name);
     }
 
     UNPROTECT(1);
@@ -1501,4 +1501,3 @@ void attribute_hidden dummy12345(void)
     F77_CALL(intpr)("dummy", &i, &i, &i);
 }
 #endif
-

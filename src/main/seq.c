@@ -69,9 +69,9 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 	    for (j = 0; j < nlt; j++) {
 		const char *vj = translateChar(STRING_ELT(lt, j));
 		vt = strlen(vj);
-                cbuf = R_AllocStringBuffer(vs + vt + 1, &cbuff);
+		cbuf = R_AllocStringBuffer(vs + vt + 1, &cbuff);
 		sprintf(cbuf, "%s:%s", vi, vj);
-                SET_STRING_ELT(la, k, mkChar(cbuf));
+		SET_STRING_ELT(la, k, mkChar(cbuf));
 		k++;
 	    }
 	}
@@ -120,7 +120,7 @@ SEXP attribute_hidden do_colon(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s1, s2;
     double n1, n2;
-    
+
     checkArity(op, args);
     if (inherits(CAR(args), "factor") && inherits(CADR(args), "factor"))
 	return(cross_colon(call, CAR(args), CADR(args)));
@@ -335,7 +335,7 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
        so we manage the argument matching ourselves.  We pretend this is
        rep(x, times, length.out, each, ...)
     */
-    PROTECT(ap = CONS(R_NilValue, 
+    PROTECT(ap = CONS(R_NilValue,
 		      list4(R_NilValue, R_NilValue, R_NilValue, R_NilValue)));
     SET_TAG(ap,  install("x"));
     SET_TAG(CDR(ap), install("times"));
@@ -344,15 +344,15 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_TAG(CDDR(CDDR(ap)), R_DotsSymbol);
     PROTECT(args = matchArgs(ap, args, call));
 
-    x = CAR(args); 
+    x = CAR(args);
     lx = length(x);
 
     len = asInteger(CADDR(args));
-    if(len != NA_INTEGER && len < 0) 
+    if(len != NA_INTEGER && len < 0)
 	errorcall(call, _("invalid '%s' argument"), "length.out");
 
     each = asInteger(CADDDR(args));
-    if(each != NA_INTEGER && each < 0) 
+    if(each != NA_INTEGER && each < 0)
 	errorcall(call, _("invalid '%s' argument"), "each");
     if(each == NA_INTEGER) each = 1;
 
@@ -413,7 +413,7 @@ done:
 }
 
 
-/* 
+/*
    'along' has to be used on an unevaluated argument, and evalList
    tries to evaluate language objects.
  */
@@ -430,9 +430,9 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
        so we manage the argument matching ourselves.  We pretend this is
        seq(from, to, by, length.out, along.with, ...)
     */
-    PROTECT(ap = CONS(R_NilValue, 
-		      CONS(R_NilValue, 
-			   list4(R_NilValue, R_NilValue, R_NilValue, 
+    PROTECT(ap = CONS(R_NilValue,
+		      CONS(R_NilValue,
+			   list4(R_NilValue, R_NilValue, R_NilValue,
 				 R_NilValue))));
     tmp = ap;
     SET_TAG(tmp, install("from")); tmp = CDR(tmp);
@@ -482,7 +482,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	double rfrom = asReal(from), rto = asReal(to), rby = asReal(by);
 	if(from == R_MissingArg) rfrom = 1.0;
 	if(to == R_MissingArg) rto = 1.0;
-	if(by == R_MissingArg) 
+	if(by == R_MissingArg)
 	    ans = seq_colon(rfrom, rto, call);
 	else {
 	    double del = rto - rfrom, n, dd;
@@ -574,7 +574,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     } else
 	errorcall(call, _("too many arguments"));
-    
+
 done:
     UNPROTECT(3);
     return ans;
@@ -605,6 +605,6 @@ SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
     ans = allocVector(INTSXP, len);
     p = INTEGER(ans);
     for(i = 0; i < len; i++) p[i] = i+1;
-    
+
     return ans;
 }

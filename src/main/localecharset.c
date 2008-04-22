@@ -34,7 +34,7 @@
  *         cc -o localecharset -DDEBUG_TEST=2  localecharset.c       *
  *********************************************************************/
 #ifdef DEBUG_TEST
-#define SPRINT(x) printf("%6d:" #x "=%s\n", __LINE__, x) 
+#define SPRINT(x) printf("%6d:" #x "=%s\n", __LINE__, x)
 #define DPRINT(x) printf("%6d:" #x "=%d\n", __LINE__, x)
 #define HAVE_STRING_H
 #endif
@@ -75,9 +75,9 @@ typedef struct {
        sed -e '/\/$/d' | \
        sort | uniq | \
        awk '{NAME=$1;gsub(/-/,"_",NAME);
-             printf("static  const   char    ENC_%-20s\"%s\";\n",
-             NAME "[]=" ,
-             $1)}'
+	     printf("static  const   char    ENC_%-20s\"%s\";\n",
+	     NAME "[]=" ,
+	     $1)}'
   */
 static  char    ENC_ARMSCII_8[]=        "ARMSCII-8";
 static  char    ENC_BIG5[]=             "BIG5";
@@ -117,7 +117,7 @@ static  char    ENC_TCVN[]=             "TCVN";
 static  char    ENC_UTF_8[]=            "UTF-8";
 /* static  char    ENC_VISCII[]=           "VISCII"; */
 
-/* 
+/*
    # charset getscript. iconv list output line is backslant.
  cat /usr/X11R6/lib/X11/locale/locale.alias | \
  sed -e '/#.*$/d ; /^[A-z]*\./d' -e 's/://' | \
@@ -527,7 +527,7 @@ static const name_value known[] = {
 static const int known_count = (sizeof(known)/sizeof(name_value));
 
 
-static char* name_value_search(const char *name, const name_value table[], 
+static char* name_value_search(const char *name, const name_value table[],
 			       const int table_count)
 {
     int min, mid, max;
@@ -537,11 +537,11 @@ static char* name_value_search(const char *name, const name_value table[],
     DPRINT(last);
     last = 0;
 #endif
-    
+
     min = 0;
     max = table_count - 1;
 
-    if ( 0 > strcmp(name,table[min].name) || 
+    if ( 0 > strcmp(name,table[min].name) ||
 	 0 < strcmp(name,table[max].name) ) {
 #if defined(DEBUG_TEST) && DEBUG_TEST > 1
 	DPRINT(strcmp(name, table[min].name));
@@ -642,7 +642,7 @@ char *locale2charset(const char *locale)
 	sprintf(charset, "CP%u", cp);
 	return charset;
     }
-#endif	
+#endif
 
     /*
      * Assume locales are like en_US[.utf8[@euro]]
@@ -689,14 +689,14 @@ char *locale2charset(const char *locale)
 	/* let's hope it is a ll_* name */
 	if (0 == strcmp(enc, "euc")) {
 	    /* This is OK as encoding names are ASCII */
-	    if(isalpha((int)la_loc[0]) && isalpha((int)la_loc[1]) 
+	    if(isalpha((int)la_loc[0]) && isalpha((int)la_loc[1])
 	       && (la_loc[2] == '_')) {
 		if (0 == strncmp("ja", la_loc, 2)) return "EUC-JP";
 		if (0 == strncmp("ko", la_loc, 2)) return "EUC-KR";
 		if (0 == strncmp("zh", la_loc, 2)) return "GB2312";
 	    }
 	}
-	
+
     }
 
 #if __APPLE__

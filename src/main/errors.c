@@ -18,7 +18,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8> char here is either ASCII or handled as a whole 
+/* <UTF8> char here is either ASCII or handled as a whole
    Domain names could be non-native, but the message translation
    systen is native.
 */
@@ -103,8 +103,8 @@ void R_CheckStack(void)
 		     R_NilValue, R_NilValue);
 	cntxt.cend = &reset_stack_limit;
 	cntxt.cenddata = &stacklimit;
-	
-        errorcall(R_NilValue, "C stack usage is too close to the limit");
+
+	errorcall(R_NilValue, "C stack usage is too close to the limit");
 	/* Do not translate this, to save stack space */
     }
 }
@@ -167,7 +167,7 @@ RETSIGTYPE attribute_hidden onsigusr1(int dummy)
     R_ResetConsole();
     R_FlushConsole();
     R_ClearerrConsole();
-    R_ParseError = 0;    
+    R_ParseError = 0;
     R_ParseErrorFile = NULL;
     R_ParseErrorMsg[0] = '\0';
 
@@ -204,7 +204,7 @@ RETSIGTYPE attribute_hidden onsigusr2(int dummy)
     R_ClearerrConsole();
     R_ParseError = 0;
     R_ParseErrorFile = NULL;
-    R_ParseErrorMsg[0] = '\0';    
+    R_ParseErrorMsg[0] = '\0';
     R_CleanUp(SA_SAVE, 0, 0);
 }
 
@@ -344,7 +344,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	}
     }
     else if(w == 0) {	/* collect them */
-	char *tr; int nc; 
+	char *tr; int nc;
 	if(!R_CollectWarnings)
 	    setupwarnings();
 	if( R_CollectWarnings > 49 )
@@ -356,7 +356,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	if(R_ShowWarnCalls && call != R_NilValue) {
 	    tr =  R_ConciseTraceback(call, 0); nc = strlen(tr);
 	    if (nc && nc + strlen(buf) + 8 < BUFSIZE) {
-		strcat(buf, "\nCalls: "); 
+		strcat(buf, "\nCalls: ");
 		strcat(buf, tr);
 	    }
 	}
@@ -542,7 +542,7 @@ static void verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	     /* Can REprintf generate an error? If so we should guard for it */
 	    REprintf(_("Error during wrapup: "));
 	    /* this does NOT try to print the call since that could
-               cause a cascade of error calls */
+	       cause a cascade of error calls */
 	    Rvsnprintf(errbuf, sizeof(errbuf), format, ap);
 	    REprintf("%s\n", errbuf);
 	}
@@ -602,7 +602,7 @@ static void verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	p = errbuf + strlen(errbuf);
 	Rvsnprintf(p, min(BUFSIZE, R_WarnLength) - strlen(errbuf), format, ap);
     }
-    
+
     p = errbuf + strlen(errbuf) - 1;
     if(*p != '\n') strcat(errbuf, "\n");
 
@@ -766,7 +766,7 @@ static void jump_to_top_ex(Rboolean traceback,
 	R_ClearerrConsole();
 	R_ParseError = 0;
 	R_ParseErrorFile = NULL;
-	R_ParseErrorMsg[0] = '\0';	
+	R_ParseErrorMsg[0] = '\0';
     }
 
     /*
@@ -850,7 +850,7 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
     char *buf;
     SEXP ans, string = CADR(args);
     int i, n = LENGTH(string);
-    
+
     checkArity(op, args);
     if(isNull(string) || !n) return string;
 
@@ -896,10 +896,10 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    tmp = (char *) alloca(strlen(This) + 1);
 	    R_CheckStack();
 	    strcpy(tmp, This);
-	    /* strip leading and trailing white spaces and 
+	    /* strip leading and trailing white spaces and
 	       add back after translation */
 	    for(p = tmp;
-		*p && (*p == ' ' || *p == '\t' || *p == '\n'); 
+		*p && (*p == ' ' || *p == '\t' || *p == '\n');
 		p++, ihead++) ;
 	    if(ihead > 0) {
 		head = (char *) alloca(ihead + 1);
@@ -909,7 +909,7 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 		tmp += ihead;
 		}
 	    if(strlen(tmp))
-		for(p = tmp+strlen(tmp)-1; 
+		for(p = tmp+strlen(tmp)-1;
 		    p >= tmp && (*p == ' ' || *p == '\t' || *p == '\n');
 		    p--, itail++) ;
 	    if(itail > 0) {
@@ -930,7 +930,7 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 		strcat(tmp, tr);
 		if(itail > 0) strcat(tmp, tail);
 		SET_STRING_ELT(ans, i, mkChar(tmp));
-	    } else 
+	    } else
 		SET_STRING_ELT(ans, i, mkChar(This));
 	}
 	UNPROTECT(1);
@@ -951,7 +951,7 @@ SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     SEXP msg1 = CADR(args), msg2 = CADDR(args);
     int n = asInteger(CAR(args));
-    
+
     checkArity(op, args);
     if(n == NA_INTEGER || n < 0) error(_("invalid '%s' arguemnt"), "n");
     if(!isString(msg1) || LENGTH(msg1) != 1)
@@ -1008,14 +1008,14 @@ SEXP attribute_hidden do_bindtextdomain(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef ENABLE_NLS
     char *res;
-    
+
     checkArity(op, args);
-    if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1) 
+    if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	errorcall(call, _("invalid '%s' value"), "domain");
     if(isNull(CADR(args))) {
 	res = bindtextdomain(translateChar(STRING_ELT(CAR(args),0)), NULL);
     } else {
-	if(!isString(CADR(args)) || LENGTH(CADR(args)) != 1) 
+	if(!isString(CADR(args)) || LENGTH(CADR(args)) != 1)
 	    errorcall(call, _("invalid '%s' value"), "dirname");
 	res = bindtextdomain(translateChar(STRING_ELT(CAR(args),0)),
 			     translateChar(STRING_ELT(CADR(args),0)));
@@ -1045,8 +1045,8 @@ SEXP attribute_hidden do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(asLogical(CAR(args))) /* find context -> "Error in ..:" */
 	c_call = findCall();
     else
-	c_call = R_NilValue;    
-    
+	c_call = R_NilValue;
+
     args = CDR(args);
 
     if (CAR(args) != R_NilValue) { /* message */
@@ -1072,7 +1072,7 @@ SEXP attribute_hidden do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args);
     if(asLogical(CAR(args))) { /* immediate = TRUE */
 	immediateWarning = 1;
-    } else 
+    } else
 	immediateWarning = 0;
     args = CDR(args);
     if (CAR(args) != R_NilValue) {
@@ -1240,8 +1240,8 @@ void R_SetErrmessage(const char *s)
 void R_PrintDeferredWarnings(void)
 {
     if( R_ShowErrorMessages && R_CollectWarnings ) {
-        REprintf(_("In addition: "));
-        PrintWarnings();
+	REprintf(_("In addition: "));
+	PrintWarnings();
     }
 }
 
@@ -1297,9 +1297,9 @@ static char * R_ConciseTraceback(SEXP call, int skip)
 		SEXP fun = CAR(c->call);
 		const char *this = (TYPEOF(fun) == SYMSXP) ?
 		    CHAR(PRINTNAME(fun)) : "<Anonymous>";
-		if(streql(this, "stop") || 
-		   streql(this, "warning") || 
-		   streql(this, "suppressWarnings") || 
+		if(streql(this, "stop") ||
+		   streql(this, "warning") ||
+		   streql(this, "suppressWarnings") ||
 		   streql(this, ".signalSimpleWarning")) {
 		    buf[0] =  '\0'; ncalls = 0; too_many = FALSE;
 		} else {

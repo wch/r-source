@@ -28,13 +28,13 @@
 void attribute_hidden PrintGreeting(void)
 {
     char buf[128];
-    
+
     Rprintf("\n");
     PrintVersionString(buf);
     Rprintf("%s", buf);
     Rprintf("\nCopyright (C) %s The R Foundation for Statistical Computing\n",
 	    R_YEAR);
-    
+
     Rprintf("ISBN 3-900051-07-0\n\n");
     Rprintf(_("R is free software and comes with ABSOLUTELY NO WARRANTY.\n\
 You are welcome to redistribute it under certain conditions.\n\
@@ -51,11 +51,11 @@ SEXP attribute_hidden do_version(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP value, names;
     char buf[128];
-    
+
     checkArity(op, args);
     PROTECT(value = allocVector(VECSXP,13));
     PROTECT(names = allocVector(STRSXP,13));
-    
+
     SET_STRING_ELT(names, 0, mkChar("platform"));
     SET_VECTOR_ELT(value, 0, mkString(R_PLATFORM));
     SET_STRING_ELT(names, 1, mkChar("arch"));
@@ -87,7 +87,7 @@ SEXP attribute_hidden do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     PrintVersionString(buf);
     SET_STRING_ELT(names, 12, mkChar("version.string"));
     SET_VECTOR_ELT(value, 12, mkString(buf));
-    
+
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
     return value;
@@ -112,8 +112,8 @@ void attribute_hidden PrintVersionString(char *s)
 {
     if(strcmp(R_SVN_REVISION, "unknown")==0)
     {
-        sprintf(s, "R version %s.%s %s (%s-%s-%s)",
-                R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
+	sprintf(s, "R version %s.%s %s (%s-%s-%s)",
+		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
     }
     else{
 	if(strlen(R_STATUS)==0){
@@ -127,4 +127,3 @@ void attribute_hidden PrintVersionString(char *s)
 	}
     }
 }
-

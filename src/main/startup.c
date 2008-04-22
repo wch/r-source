@@ -2,7 +2,7 @@
   R : A Computer Language for Statistical Data Analysis
   Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
   Copyright (C) 1997-2004   Robert Gentleman, Ross Ihaka
-                            and the R Development Core Team
+			    and the R Development Core Team
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -68,8 +68,8 @@ char *R_LibraryFileName(const char *file, char *buf, size_t bsize)
     if (snprintf(buf, bsize, "%s/library/base/R/%s", R_Home, file) < 0)
 	error(_("R_LibraryFileName: buffer too small"));
     return buf;
-}     
-     
+}
+
 attribute_hidden
 FILE *R_OpenSysInitFile(void)
 {
@@ -192,7 +192,7 @@ static void SetSize(R_size_t vsize, R_size_t nsize)
     }
     if(vsize < Min_Vsize || vsize > Max_Vsize) {
 	sprintf(msg, "WARNING: invalid v(ector heap)size `%lu' ignored\n"
-		 "using default = %gM\n", (unsigned long) vsize, 
+		 "using default = %gM\n", (unsigned long) vsize,
 		R_VSIZE / Mega);
 	R_ShowMessage(msg);
 	R_VSize = R_VSIZE;
@@ -227,4 +227,3 @@ void R_SetParams(Rstart Rp)
     R_SetWin32(Rp);
 #endif
 }
-

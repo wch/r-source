@@ -24,7 +24,7 @@
 #include <Defn.h>
 
 
-SEXP attribute_hidden 
+SEXP attribute_hidden
 do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
 {
 

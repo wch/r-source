@@ -156,12 +156,12 @@ static void Putenv(char *a, char *b)
     *q = '\0';
 #ifdef HAVE_SETENV
     if(setenv(a, buf, 1))
-	warningcall(R_NilValue, 
+	warningcall(R_NilValue,
 		    _("problem in setting variable '%s' in Renviron"), a);
     free(buf);
 #elif defined(HAVE_PUTENV)
     if(putenv(buf))
-	warningcall(R_NilValue, 
+	warningcall(R_NilValue,
 		    _("problem in setting variable '%s' in Renviron"), a);
     /* no free here: storage remains in use */
 #else
@@ -184,7 +184,7 @@ static int process_Renviron(const char *filename)
 	     "\n   File %s contains invalid line(s)", filename);
 
     while(fgets(sm, BUF_SIZE, fp)) {
-        sm[BUF_SIZE-1] = '\0';
+	sm[BUF_SIZE-1] = '\0';
 	s = rmspace(sm);
 	if(strlen(s) == 0 || s[0] == '#') continue;
 	if(!(p = Rf_strchr(s, '='))) {
@@ -216,8 +216,8 @@ void process_system_Renviron()
 
 #ifdef R_ARCH
     if(strlen(R_Home) + strlen("/etc/Renviron") + strlen(R_ARCH) + 1 > PATH_MAX - 1) {
-        R_ShowMessage("path to system Renviron is too long: skipping");
-        return;
+	R_ShowMessage("path to system Renviron is too long: skipping");
+	return;
     }
     strcpy(buf, R_Home);
     strcat(buf, "/etc/");

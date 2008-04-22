@@ -55,7 +55,7 @@ SEXP attribute_hidden getParseContext(void)
     c = context[last];
     nread = 0;
     while(c) {
-        nread++;
+	nread++;
 	if(nread >= nn) {
 	    ans2 = allocVector(STRSXP, 2*nn);
 	    for(i = 0; i < nn; i++)
@@ -99,8 +99,8 @@ void attribute_hidden parseError(SEXP call, int linenum)
     int len = length(context);
     char filename[128];
     if (linenum) {
-    	getParseFilename(filename, sizeof(filename)-2);
-    	if (strlen(filename)) strcpy(filename + strlen(filename), ": ");
+	getParseFilename(filename, sizeof(filename)-2);
+	if (strlen(filename)) strcpy(filename + strlen(filename), ": ");
 
 	switch (len) {
 	case 0:
@@ -164,7 +164,7 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     wasopen = con->isopen;
     num = asInteger(CAR(args));				args = CDR(args);
     if (num == 0)
-        return(allocVector(EXPRSXP, 0));
+	return(allocVector(EXPRSXP, 0));
     PROTECT(text = coerceVector(CAR(args), STRSXP));	args = CDR(args);
     prompt = CAR(args);					args = CDR(args);
     source = CAR(args);					args = CDR(args);
@@ -206,5 +206,3 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     known_to_be_utf8 = old_utf8;
     return s;
 }
-
-
