@@ -34,7 +34,7 @@ Stangle(file, driver = Rtangle(),
 \details{
   Automatic generation of reports by mixing word processing markup (like
   latex) and S code.  The S code gets replaced by its output (text or
-  graphs) in the final markup file. This allows to re-generate a report
+  graphs) in the final markup file.  This allows a report to be re-generated
   if the input data change and documents the code to reproduce the
   analysis in the same file that also produces the report.
 
@@ -56,7 +56,7 @@ Stangle(file, driver = Rtangle(),
   executed if and only if the respective option is \code{TRUE}. Hooks must
   be named elements of the list returned by
   \code{getOption("SweaveHooks")} and be functions taking no
-  arguments. E.g., if option \code{"SweaveHooks"} is defined as
+  arguments.  E.g., if option \code{"SweaveHooks"} is defined as
   \code{list(fig = foo)}, and \code{foo} is a function, then it would be
   executed before the code in each figure chunk. This is especially useful
   to set defaults for the graphical parameters in a series of figure
@@ -95,9 +95,17 @@ options(device.ask.default=FALSE)
 ## create a LaTeX file
 Sweave(testfile)
 
+## This can be compiled to PDF by
+\dontrun{tools::texi2dvi("Sweave-test-1.tex", pdf=TRUE)}
+#ifdef unix
+## or outside R by
+## R CMD texi2dvi Sweave-test-1.tex
+## which sets the appropriate TEXINPUTS path.
+#endif
+
 ## create an S source file from the code chunks
 Stangle(testfile)
-## which can be simply sourced
+## which can be sourced, e.g.
 source("Sweave-test-1.R")
 
 \dontshow{if(!interactive()) unlink("Sweave-test-1*")}

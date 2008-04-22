@@ -47,25 +47,25 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
 
             ## Remove extra white space unless after a period which
             ## hopefully ends a sentence.
-            if(any(nc == 0)) {
-                zLenInd <- which(nc == 0)
+            if(any(nc == 0L)) {
+                zLenInd <- which(nc == 0L)
                 zLenInd <- zLenInd[!(zLenInd %in%
-                                     (grep("\\.$", words) + 1))]
-                if(length(zLenInd) > 0) {
+                                     (grep("\\.$", words) + 1L))]
+                if(length(zLenInd)) {
                     words <- words[-zLenInd]
                     nc <- nc[-zLenInd]
                 }
             }
 
-            if(length(words) == 0) {
+            if(!length(words)) {
                 yi <- c(yi, "", prefix)
                 next
             }
 
-            currentIndex <- 0
-            lowerBlockIndex <- 1
-            upperBlockIndex <- integer(0)
-            lens <- cumsum(nc + 1)
+            currentIndex <- 0L
+            lowerBlockIndex <- 1L
+            upperBlockIndex <- integer()
+            lens <- cumsum(nc + 1L)
 
             first <- TRUE
             maxLength <- width - nchar(prefix, type="w") - indent
@@ -73,40 +73,40 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
             ## Recursively build a sequence of lower and upper indices
             ## such that the words in line k are the ones in the k-th
             ## index block.
-            while(length(lens) > 0) {
-                k <- max(sum(lens <= maxLength), 1)
+            while(length(lens)) {
+                k <- max(sum(lens <= maxLength), 1L)
                 if(first) {
                     first <- FALSE
                     maxLength <- maxLength + indent - exdent
                 }
                 currentIndex <- currentIndex + k
-                if(nc[currentIndex] == 0)
+                if(nc[currentIndex] == 0L)
                     ## Are we sitting on a space?
                     upperBlockIndex <- c(upperBlockIndex,
-                                         currentIndex - 1)
+                                         currentIndex - 1L)
                 else
                     upperBlockIndex <- c(upperBlockIndex,
                                          currentIndex)
                 if(length(lens) > k) {
                     ## Are we looking at a space?
-                    if(nc[currentIndex + 1] == 0) {
-                        currentIndex <- currentIndex + 1
-                        k <- k + 1
+                    if(nc[currentIndex + 1L] == 0L) {
+                        currentIndex <- currentIndex + 1L
+                        k <- k + 1L
                     }
                     lowerBlockIndex <- c(lowerBlockIndex,
-                                         currentIndex + 1)
+                                         currentIndex + 1L)
                 }
                 if(length(lens) > k)
-                    lens <- lens[-(1:k)] - lens[k]
+                    lens <- lens[-seq_len(k)] - lens[k]
                 else
                     lens <- NULL
             }
 
             nBlocks <- length(upperBlockIndex)
             s <- paste(prefix,
-                       c(indentString, rep.int(exdentString, nBlocks - 1)),
+                       c(indentString, rep.int(exdentString, nBlocks - 1L)),
                        sep = "")
-            for(k in (1 : nBlocks))
+            for(k in seq_len(nBlocks))
                 s[k] <- paste(s[k], paste(words[lowerBlockIndex[k] :
                                                 upperBlockIndex[k]],
                                           collapse = " "),
@@ -128,15 +128,15 @@ function(x, y, style = c("table", "list"),
          width = 0.9 * getOption("width"), indent = NULL)
 {
     if(is.list(x)) {
-        if((length(x) == 2) && (diff(sapply(x, length)) == 0)) {
-            y <- x[[2]]; x <- x[[1]]
+        if((length(x) == 2L) && (diff(sapply(x, length)) == 0L)) {
+            y <- x[[2L]]; x <- x[[1L]]
         }
         else
             stop("incorrect value for 'x'")
     }
     else if(is.matrix(x)) {
-        if(NCOL(x) == 2) {
-            y <- x[, 2]; x <- x[, 1]
+        if(NCOL(x) == 2L) {
+            y <- x[, 2L]; x <- x[, 1L]
         }
         else
             stop("incorrect value for 'x'")
@@ -148,7 +148,7 @@ function(x, y, style = c("table", "list"),
     else if(length(x) != length(y))
         stop("'x' and 'y' must have the same length")
     x <- as.character(x)
-    if(length(x) == 0) return(x)
+    if(!length(x)) return(x)
     y <- as.character(y)
 
     style <- match.arg(style)
@@ -161,7 +161,7 @@ function(x, y, style = c("table", "list"),
     indentString <- paste(rep.int(" ", indent), collapse = "")
 
     if(style == "table") {
-        i <- (nchar(x, type="w") > indent - 3)
+        i <- (nchar(x, type="w") > indent - 3L)
         if(any(i))
             x[i] <- paste(x[i], "\n", indentString, sep = "")
         i <- !i

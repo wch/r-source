@@ -230,7 +230,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 \note{
   The default for \code{multi.line} differs from S.  To read one record
   per line, use \code{flush = TRUE} and \code{multi.line = FALSE}.
-  (Note that quoted character strings can still include embedded new lines.)
+  (Note that quoted character strings can still include embedded newlines.)
 
   If number of items is not specified, the internal
   mechanism re-allocates memory in powers of two and so could use up
@@ -244,8 +244,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
   Having \code{nul} bytes in fields (including \code{\0} if
   \code{allowEscapes = TRUE}) may lead to scanning the field being
-  terminated at the \code{nul}.  \R 2.8.0 will handle these better, but
-  they not normally present in text files -- see \code{\link{readBin}}.
+  terminated at the \code{nul}.  They not normally present
+  in text files -- see \code{\link{readBin}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

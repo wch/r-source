@@ -18,7 +18,7 @@ formatUL <-
 function(x, label = "*", offset = 0,
          width = 0.9 * getOption("width"))
 {
-    if(length(x) == 0)
+    if(!length(x))
         return(character())
     .format_rl_table(label, x, offset, width)
 }
@@ -27,18 +27,18 @@ formatOL <-
 function(x, type = "arabic", offset = 0, start = 1,
          width = 0.9 * getOption("width"))
 {
-    if(length(x) == 0)
+    if(!length(x))
         return(character())
     type_tokens <- c("1", "A", "a", "I", "i")
     type_full_names <- c("arabic", "Alph", "alph", "Roman", "roman")
     type <- match.arg(type, c(type_tokens, type_full_names))
-    if(nchar(type, "b") > 1)
+    if(nchar(type, "b") > 1L)
         type <- type_tokens[match(type, type_full_names)]
     len <- length(x)
-    labels <- seq.int(start[1], length.out = len)
+    labels <- seq.int(start[1L], length.out = len)
     upper <- labels[len]
     if(type %in% c("A", "a")) {
-        if(upper > 26)
+        if(upper > 26L)
             stop("too many list items (at most up to number 26)")
         labels <- if(type == "A")
             LETTERS[labels]
@@ -46,7 +46,7 @@ function(x, type = "arabic", offset = 0, start = 1,
             letters[labels]
     }
     else if(type %in% c("I", "i")) {
-        if(upper > 3899)
+        if(upper > 3899L)
             stop("too many list items (at most up to number 3899)")
         labels <- as.character(as.roman(labels))
         if(type == "i")
@@ -69,12 +69,12 @@ function(labels, x, offset = 0, width = 0.9 * getOption("width"),
 
     labels <- format(labels, justify = "right")
     len <- length(x)
-    delta <- nchar(labels[1], "width") + offset
+    delta <- nchar(labels[1L], "width") + offset
     x <- strwrap(x, width = width - delta - nchar(sep, "width"),
                  simplify = FALSE)
     nlines <- cumsum(sapply(x, length))
     prefix <- rep.int(.make_empty_string(delta), nlines[len])
-    prefix[1 + c(0, nlines[-len])] <-
+    prefix[1L + c(0L, nlines[-len])] <-
         paste(.make_empty_string(offset), labels, sep = "")
     paste(prefix, unlist(x), sep = sep)
 }

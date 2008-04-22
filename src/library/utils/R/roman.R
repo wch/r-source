@@ -22,14 +22,14 @@ function(x)
     else if(is.character(x)) {
         ## Let's be nice: either strings that are *all* arabics, or
         ## (hopefully, for the time being) all romans.
-        x <- if(all(regexpr("^[[:digit:]]+$", x) > -1))
+        x <- if(all(regexpr("^[[:digit:]]+$", x) > -1L))
             as.integer(x)
         else
             .roman2numeric(x)
     }
     else
         stop("cannot coerce 'x' to roman")
-    x[(x <= 0 | x >= 3900)] <- NA
+    x[(x <= 0L | x >= 3900L)] <- NA
     class(x) <- "roman"
     x
 }
@@ -59,7 +59,8 @@ function(x, i)
 function(x) {
     romans <- c("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX",
                 "V", "IV", "I")
-    numbers <- c(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    numbers <- c(1000L, 900L, 500L, 400L, 100L, 90L, 50L, 40L, 10L, 9L,
+                 5L, 4L, 1L) 
     n2r <- function(z) {
         y <- character()
         for(i in seq_along(romans)) {
@@ -74,7 +75,7 @@ function(x) {
 
     out <- character(length(x))
     x <- as.integer(x)
-    ind <- is.na(x) | (x <= 0) | (x >= 3900)
+    ind <- is.na(x) | (x <= 0L) | (x >= 3900L)
     out[ind] <- NA
     if(any(!ind))
         out[!ind] <- sapply(x[!ind], n2r)
@@ -90,7 +91,8 @@ function(x)
     ## </FIXME>
     romans <- c("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX",
                 "V", "IV", "I")
-    numbers <- c(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    numbers <- c(1000L, 900L, 500L, 400L, 100L, 90L, 50L, 40L, 10L, 9L,
+                 5L, 4L, 1L)
     out <- integer(length(x))
     ind <- is.na(x)
     out[ind] <- NA
@@ -102,7 +104,7 @@ function(x)
         y <- gsub("XL", "XXXX", y)
         y <- gsub("IX", "VIIII", y)
         y <- gsub("IV", "IIII", y)
-        ok <- (regexpr("^M{,3}D?C{,4}L?X{,4}V?I{,4}$", y) > -1)
+        ok <- (regexpr("^M{,3}D?C{,4}L?X{,4}V?I{,4}$", y) > -1L)
         if(any(!ok)) {
             warning(gettextf("Invalid roman numeral(s): %s",
                              paste(x[!ind][!ok], collapse = " ")))

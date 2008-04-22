@@ -389,8 +389,6 @@
  SET_UTF8
  Sys_TempDir
  UNLOCK_BINDING
- UNSET_LATIN1
- UNSET_UTF8
  UTF8in
  UTF8out
  UseInternet2
