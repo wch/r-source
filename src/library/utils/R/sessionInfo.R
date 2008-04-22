@@ -19,6 +19,7 @@ sessionInfo <- function(package=NULL)
     z <- list()
     z$R.version <- R.Version()
     z$locale <- Sys.getlocale()
+    z$platform <- .Platform
 
     if(is.null(package)){
         package <- grep("^package:", search(), value=TRUE)
@@ -56,7 +57,7 @@ print.sessionInfo <- function(x, ...)
     }
 
     cat(x$R.version$version.string, "\n")
-    cat(x$R.version$platform, "\n\n")
+    cat(x$R.version$platform, x$platform$r_arch, "\n\n")
     cat("locale:\n")
     cat(x$locale, "\n\n", sep="")
     cat("attached base packages:\n")
