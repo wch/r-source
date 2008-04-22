@@ -33,7 +33,7 @@ dev.control(displaylist = c("inhibit", "enable"))
 #endif
 #ifdef windows
   \item{out.type}{The name of the output device: only \code{"pdf"} is
-    allowed on Windows.)
+    allowed on Windows.}
 #endif
   \item{displaylist}{A character string: the only valid values are
     \code{"inhibit"} and \code{"enable"}.}
