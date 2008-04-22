@@ -51,9 +51,6 @@ NEW FEATURES
     o	segments(), arrows() and rect() allow zero-length
 	coordinates.  (Wish of PR#11192)
 
-    o	Adobe Symbol has been added to the encodings in
-	tools::charset_to_Encoding.
-
     o	pdf() has new arguments 'useDingbats' (set to FALSE for use
 	with broken viewers) and 'colormodel'.	It now only references
 	the ZapfDingbats font if it is used.
@@ -101,9 +98,7 @@ DEPRECATED & DEFUNCT
     o	In package installation, SaveImage: yes is now ignored, and
 	any use of the field will give a warning.
 
-    o	unserialize() no longer accepts character strings as input --
-	that was a format prior to R 2.4.0 which needs embedded nulls
-	in character strings.
+    o	unserialize() no longer accepts character strings as input.
 
     o	The C macro 'allocString' has been removed -- use 'mkChar',
 	or 'allocVector' directly if really necessary.
@@ -140,8 +135,6 @@ BUG FIXES
 
     o   R CMD appends (not prepends) R's texmf path to TEXINPUTS.
 
-    o	Encoding<- on NA_character_ converted it to "NA".
-
 
 
 
@@ -150,6 +143,25 @@ BUG FIXES
 	*	       2.7 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 2.7.0 patched
+
+
+DEPRECATED & DEFUNCT
+
+
+    o	The use of unserialize() on character strings is deprecated:
+	that was a format used in R < 2.4.0.
+
+
+BUG FIXES
+
+    o	Encoding<- on NA_character_ converted it to "NA".
+
+    o	Adobe Symbol was missing from the encodings in
+	tools::charset_to_Encoding.
+
 
 
 		CHANGES IN R VERSION 2.7.0
