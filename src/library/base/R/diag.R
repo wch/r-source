@@ -18,7 +18,7 @@ diag <- function(x = 1, nrow, ncol)
 {
     if (is.matrix(x) && nargs() == 1) {
         if((m <- min(dim(x))) == 0)
-            return(numeric(0))
+	    return(vector(typeof(x), 0)) # logical, integer, also list ..
 
         y <- c(x)[1 + 0:(m - 1) * (dim(x)[1] + 1)]
         nms <- dimnames(x)
