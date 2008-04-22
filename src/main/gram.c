@@ -4273,7 +4273,7 @@ static int StringValue(int c, Rboolean forSymbol)
 			if (i == 0) { /* was just \x */
 			    if(GenerateCode && R_WarnEscapes) {
 				have_warned++;
-				warningcall(R_NilValue, _("'\\u used without hex digits"));
+				warningcall(R_NilValue, _("\\u used without hex digits"));
 			    }
 			    val = 'u';
 			}
@@ -4328,7 +4328,7 @@ static int StringValue(int c, Rboolean forSymbol)
 			    if (i == 0) { /* was just \x */
 				if(GenerateCode && R_WarnEscapes) {
 				    have_warned++;
-				    warningcall(R_NilValue, _("'\\U used without hex digits"));
+				    warningcall(R_NilValue, _("\\U used without hex digits"));
 				}
 				val = 'U';
 			    }
