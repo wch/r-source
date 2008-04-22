@@ -311,7 +311,7 @@ NEW FEATURES
     o	Extensions to condition number computation for matrices, notably
 	complex ones are provided, both in kappa() and the new rcond().
 
-    o	list.file() gains a 'ignore.case' argument, to allow
+    o	list.files() gains a 'ignore.case' argument, to allow
 	case-insensitive matching on some Windows/MacOS file systems.
 
     o	ls.str() and lsf.str() have slightly changed arguments and
