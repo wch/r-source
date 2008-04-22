@@ -1352,7 +1352,6 @@ static void RunGenCollect(R_size_t size_needed)
 
     DEBUG_CHECK_NODE_COUNTS("after processing forwarded list");
 
-#ifdef USE_CHAR_HASHING
     /* process CHARSXP cache */
     { 
 	SEXP t;
@@ -1380,7 +1379,6 @@ static void RunGenCollect(R_size_t size_needed)
     }
     FORWARD_NODE(R_StringHash);
     PROCESS_NODES();
-#endif
 
     /* release large vector allocations */
     ReleaseLargeFreeVectors();

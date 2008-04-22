@@ -262,6 +262,11 @@ getOption(x)
       printed as they occur.  If \code{warn} is two or larger all
       warnings are turned into errors.}
 
+    \item{\code{warnEscapes}:}{logical.  If true (the default) the parse
+      warns on unrecognized (backslash) escapte sequences and there is a
+      truncation warning on any attempt to create a character string
+      containing an embedded nul.}
+    
     \item{\code{warnPartialMatchArgs}:}{logical.  If true, warns if
       partial matching is used in argument matching.}
 

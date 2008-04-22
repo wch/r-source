@@ -4368,13 +4368,10 @@ eight hex digits.
 A single quote may also be embedded directly in a double-quote delimited
 string and vice versa.
 
-In versions of @R{} prior to 2.8.0, the inclusion of a `nul' (@code{\0})
-in a string constant terminated the constant: further characters up to
-the closing quote were scanned but ignored.  Not many functions in @R{}
-handle character strings with embedded nuls -- @code{charToRaw} can
-convert them to a raw vector, @code{iconv} can convert them between
-encodings, and @code{nchar(type="b")} will report the total number of
-bytes including embedded nuls.
+As from @R{} 2.8.0, a `nul' (@code{\0}) is not allowed in a character
+string, so using @code{\0} in a string constant terminates the constant
+(usually with a warning0: further characters up to the closing quote are
+scanned but ignored.
 
 @node Identifiers, Reserved words, Literal constants, Tokens
 @subsection Identifiers

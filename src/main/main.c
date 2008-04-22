@@ -753,9 +753,7 @@ void setup_Rmainloop(void)
 
     InitTempDir(); /* must be before InitEd */
     InitMemory();
-#ifdef USE_CHAR_HASHING
     InitStringHash(); /* must be before InitNames */
-#endif
     InitNames();
     InitBaseEnv();
     InitGlobalEnv();

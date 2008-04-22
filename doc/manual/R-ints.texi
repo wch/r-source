@@ -1266,39 +1266,22 @@ connection passed to those functions.
 A global cache for @code{CHARSXP}s created by @code{mkChar} was
 introduced in @R{} 2.6.0 -- the cache ensures that most @code{CHARSXP}s
 with the same contents share storage (`contents' including any declared
-encoding). Not all @code{CHARSXP}s are part of the cache -- notably
+encoding).  Not all @code{CHARSXP}s are part of the cache -- notably
 @samp{NA_STRING} is not.
 
 In @R{} 2.6.x and 2.7.x character strings created by @code{mkCharLen}
 were not part of the cache: these were intended to be those containing
 embedded nuls.  As from @R{} 2.8.0 the cache can handle any content,
-including embedded nuls.
+although embedded nuls are now disallowed.
 
 There are a few other ways in which @code{CHARSXP}s could or can escape
 the cache.  @code{CHARSXP}s reloaded from the @code{save} formats of
 @R{} prior to 0.99.0 are not cached (since the code used is frozen and
-few examples still exist). Prior to @R{} 2.8.0, @code{CHARSXP}s were
+few examples still exist).  Prior to @R{} 2.8.0, @code{CHARSXP}s were
 used to hold the finalizer function of a C finalizer (uncached) -- now
 @code{RAWSXP}s are used.  Finally, user code could create
 @code{CHARSXP}s via @code{allocString} (removed in @R 2.8.0) and
 @code{allocVector(CHARSXP ...)} (deprecated in @R 2.8.0).
-
-Currently @code{CHARSXP}s with embedded nulls can be created by
-
-@itemize
-@item 
-parsing a character string containing @code{\0}. (New in @R{} 2.8.0.)
-@item 
-using @code{scan(allowEscapes=TRUE} on a string containing
-@code{\0}. (New in @R{} 2.8.0.)
-@item 
-by @code{readChar}, @code{rawToChar} or @code{intToUtf8}.
-@item 
-@code{load}ing a saved CHARSXP.  (Broken for version 2 saves in @R{} 2.6.x.)
-@end itemize
-
-@noindent
-This may change before release.
 
 @node Warnings and errors, S4 objects, The CHARSXP cache, R Internal Structures
 @section Warnings and errors

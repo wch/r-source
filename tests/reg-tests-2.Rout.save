@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-04-21 r45412)
+R version 2.8.0 Under development (unstable) (2008-04-21 r45421)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -4050,7 +4050,7 @@ In readBin(zz, "character", 100) :
 [1] "A test string"
 Warning message:
 In readChar(zz, length(xx)) :
-  truncating string with embedded nuls: 'A test string\0more'
+  truncating string with embedded nul: 'A test string\0more'
 > seek(zz) # make sure current position is reported properly
 [1] 18
 > close(zz)

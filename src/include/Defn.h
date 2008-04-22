@@ -26,8 +26,6 @@
 
 #define BYTECODE
 
-#define USE_CHAR_HASHING
-
 /* probably no longer needed */
 #define NEW_CONDITION_HANDLING
 
@@ -119,17 +117,15 @@ void UNSET_UTF8(SEXP x);
 int ENC_KNOWN(SEXP x);
 #endif
 /* macros and declarations for managing CHARSXP cache */
-#ifdef USE_CHAR_HASHING
-# define USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
-# ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
-#  define CXHEAD(x) (x)
-#  define CXTAIL(x) ATTRIB(x)
+#define USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
+#ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
+# define CXHEAD(x) (x)
+# define CXTAIL(x) ATTRIB(x)
 SEXP (SET_CXTAIL)(SEXP x, SEXP y);
-# else
-#  define CXHEAD(x) CAR(x)
-#  define CXTAIL(x) CDR(x)
-# endif /* USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS */
-#endif /* USE_CHAR_HASHING */
+#else
+# define CXHEAD(x) CAR(x)
+# define CXTAIL(x) CDR(x)
+#endif /* USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS */
 
 
 #include "Internal.h"		/* do_FOO */
