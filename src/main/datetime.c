@@ -104,7 +104,7 @@ static const int days_in_month[12] =
 
 #ifndef HAVE_POSIX_LEAPSECONDS
 /* There have been 23 leapseconds, the last being on 2005-12-31.
-   But older OSes will not necessarily know about number 23, so we do 
+   But older OSes will not necessarily know about number 23, so we do
    a run-time test (the OS could have been patched since configure).
  */
 static int n_leapseconds = -1;
@@ -218,7 +218,7 @@ static double mktime00 (struct tm *tm)
     int day = 0;
     int i, year, year0;
     double excess = 0.0;
-    
+
     day = tm->tm_mday - 1;
     year0 = 1900 + tm->tm_year;
     /* safety check for unbounded loops */
@@ -292,7 +292,7 @@ static double guess_offset (struct tm *tm)
 	    if(tm->tm_wday == wday) break;
 	}
     } else { /* a benighted OS with date before 1970 */
-	/* We could not use 1970 because of the Windows bug with 
+	/* We could not use 1970 because of the Windows bug with
 	   1970-01-01 east of GMT. */
 	for(i = 71; i < 82; i++) { /* These cover all the possibilities */
 	    tm->tm_year = i;
@@ -358,10 +358,10 @@ static double mktime0 (struct tm *tm, const int local)
 	if (res == (double)-1) return res;
 #ifndef HAVE_POSIX_LEAPSECONDS
 	if (n_leapseconds < 0) set_n_leapseconds();
-        for(i = 0; i < n_leapseconds; i++)
-            if(res > leapseconds[i]) res -= 1.0;
+	for(i = 0; i < n_leapseconds; i++)
+	    if(res > leapseconds[i]) res -= 1.0;
 #endif
-        return res;
+	return res;
 /* watch the side effect here: both calls alter their arg */
     } else return guess_offset(tm) + mktime00(tm);
 }
@@ -379,7 +379,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	t = (time_t) d;
 #ifndef HAVE_POSIX_LEAPSECONDS
 	if (n_leapseconds < 0) set_n_leapseconds();
-        for(y = 0; y < n_leapseconds; y++) if(t > leapseconds[y] + y - 1) t++;
+	for(y = 0; y < n_leapseconds; y++) if(t > leapseconds[y] + y - 1) t++;
 #endif
 	return local ? localtime(&t) : gmtime(&t);
     }
@@ -419,14 +419,14 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	res->tm_isdst = -1;
 
 	/* Try to fix up timezone differences */
-        diff = guess_offset(res)/60;
+	diff = guess_offset(res)/60;
 	shift = res->tm_min + 60*res->tm_hour;
 	res->tm_min -= diff;
 	validate_tm(res);
 	res->tm_isdst = -1;
 	/* now this might be a different day */
 	if(shift - diff < 0) res->tm_yday--;
-	if(shift - diff > 24) res->tm_yday++;	
+	if(shift - diff > 24) res->tm_yday++;
 	diff2 = guess_offset(res)/60;
 	if(diff2 != diff) {
 	    res->tm_min += (diff - diff2);
@@ -461,7 +461,7 @@ SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 	tmp -= n_leapseconds;
 #endif
 	REAL(ans)[0] = tmp;
-    } else 
+    } else
 	REAL(ans)[0] = NA_REAL;
     return ans;
 #else
@@ -603,7 +603,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_STRING_ELT(ansnames, i, mkChar(ltnames[i]));
 
     for(i = 0; i < n; i++) {
-        struct tm dummy, *ptm = &dummy;
+	struct tm dummy, *ptm = &dummy;
 	double d = REAL(x)[i];
 	if(R_FINITE(d)) {
 	    ptm = localtime0(&d, 1 - isgmt, &dummy);
@@ -698,7 +698,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef MKTIME_SETS_ERRNO
 	    REAL(ans)[i] = errno ? NA_REAL : tmp + (secs - fsecs);
 #else
-	    REAL(ans)[i] = (tmp == (double)(-1)) ? 
+	    REAL(ans)[i] = (tmp == (double)(-1)) ?
 		NA_REAL : tmp + (secs - fsecs);
 #endif
 	}
@@ -731,7 +731,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     tz = getAttrib(x, install("tzone"));
 
     /* workaround for glibc & MacOS X bugs in strftime: they have
-       undocumented and non-POSIX/C99 time zone components 
+       undocumented and non-POSIX/C99 time zone components
      */
     memset(&tm, 0, sizeof(tm));
 
@@ -739,7 +739,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     for(i = 0; i < 9; i++) {
 	nlen[i] = LENGTH(VECTOR_ELT(x, i));
 	if(nlen[i] > n) n = nlen[i];
-	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), 
+	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i),
 					  i > 0 ? INTSXP : REALSXP));
     }
     if(n > 0) N = (m > n) ? m:n; else N = 0;
@@ -764,7 +764,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(validate_tm(&tm) < 0) SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
 		const char *q = CHAR(STRING_ELT(sformat, i%m));
-                char buf2[500];
+		char buf2[500];
 		strcpy(buf2,  q);
 		p = strstr(q, "%OS");
 		if(p) {
@@ -792,7 +792,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    int i = 0;
 		    if(LENGTH(tz) == 3) {
 			if(tm.tm_isdst > 0) i = 2;
-		        else if(tm.tm_isdst == 0) i = 1;
+			else if(tm.tm_isdst == 0) i = 1;
 			else i = 0; /* Use base timezone name */
 		    }
 		    p = CHAR(STRING_ELT(tz, i));
@@ -891,7 +891,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* for glibc's sake. That only sets some unspecified fields,
 	   sometimes. */
 	tm.tm_sec = tm.tm_min = tm.tm_hour = 0;
-	tm.tm_year = tm.tm_mon = tm.tm_mday = tm.tm_yday = 
+	tm.tm_year = tm.tm_mon = tm.tm_mday = tm.tm_yday =
 	    tm.tm_wday = NA_INTEGER;
 	tm.tm_isdst = -1;
 	invalid = STRING_ELT(x, i%n) == NA_STRING ||

@@ -44,7 +44,7 @@ static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
  * then it is alloc-ed and the second pass stuffs the information in.
  */
 
-/* Note that NA_STRING is not handled separately here.  This is 
+/* Note that NA_STRING is not handled separately here.  This is
    deliberate -- see ?paste -- and implicitly coerces it to "NA"
 */
 SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -67,7 +67,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isVectorList(x))
 	error(_("invalid first argument"));
     nx = length(x);
-	
+
 
     sep = CADR(args);
     if (!isString(sep) || LENGTH(sep) <= 0 || STRING_ELT(sep, 0) == NA_STRING)
@@ -85,7 +85,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "collapse");
     if(nx == 0)
 	return (!isNull(collapse)) ? mkString("") : allocVector(STRSXP, 0);
-    
+
 
     /* Maximum argument length, coerce if needed */
 
@@ -126,7 +126,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    allKnown = allKnown && (sepKnown || sepASCII);
 	    anyKnown = anyKnown || sepKnown;
 	}
-	
+
 	pwidth = 0;
 	for (j = 0; j < nx; j++) {
 	    k = length(VECTOR_ELT(x, j));
@@ -141,13 +141,13 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (k > 0) {
 		SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
 		s = translateChar(cs);
-                strcpy(buf, s);
+		strcpy(buf, s);
 		buf += strlen(s);
 		allKnown = allKnown && (strIsASCII(s) || (ENC_KNOWN(cs)> 0));
 		anyKnown = anyKnown || (ENC_KNOWN(cs)> 0);
 	    }
 	    if (j != nx - 1 && sepw != 0) {
-	        strcpy(buf, csep);
+		strcpy(buf, csep);
 		buf += sepw;
 	    }
 	}
@@ -175,18 +175,18 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
 	for (i = 0; i < nx; i++) {
 	    if(i > 0) {
-	        strcpy(buf, csep);
+		strcpy(buf, csep);
 		buf += sepw;
 	    }
 	    s = CHAR(STRING_ELT(ans, i));
-            strcpy(buf, s);
+	    strcpy(buf, s);
 	    while (*buf)
 		buf++;
-	    allKnown = allKnown && 
+	    allKnown = allKnown &&
 		(strIsASCII(s) || (ENC_KNOWN(STRING_ELT(ans, i))> 0));
 	    anyKnown = anyKnown || (ENC_KNOWN(STRING_ELT(ans, i))> 0);
 	}
-        UNPROTECT(1);
+	UNPROTECT(1);
 	ienc = 0;
 	if(anyKnown && allKnown) {
 	    if(known_to_be_latin1) ienc = CE_LATIN1;
@@ -215,7 +215,7 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid first argument"));
     nx = length(x);
     if(nx == 0) return allocVector(STRSXP, 0);
-	
+
 
     sep = CADR(args);
     if (!isString(sep) || LENGTH(sep) <= 0 || STRING_ELT(sep, 0) == NA_STRING)
@@ -262,11 +262,11 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0) {
 		s = CHAR(STRING_ELT(VECTOR_ELT(x, j), i % k));
-                strcpy(buf, s);
+		strcpy(buf, s);
 		buf += strlen(s);
 	    }
 	    if (j != nx - 1 && sepw != 0) {
-	        strcpy(buf, csep);
+		strcpy(buf, csep);
 		buf += sepw;
 	    }
 	}
@@ -277,8 +277,8 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* format.default(x, trim, digits, nsmall, width, justify, na.encode, 
-                  scientific) */
+/* format.default(x, trim, digits, nsmall, width, justify, na.encode,
+		  scientific) */
 SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP l, x, y, swd;
@@ -289,7 +289,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     PrintDefaults(env);
-    
+
     if (!isVector(x = CAR(args)))
 	error(_("first argument must be atomic"));
     args = CDR(args);
@@ -301,7 +301,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!isNull(CAR(args))) {
 	digits = asInteger(CAR(args));
-	if (digits == NA_INTEGER || digits < R_MIN_DIGITS_OPT 
+	if (digits == NA_INTEGER || digits < R_MIN_DIGITS_OPT
 	    || digits > R_MAX_DIGITS_OPT)
 	    error(_("invalid '%s' argument"), "digits");
 	R_print.digits = digits;
@@ -394,7 +394,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	    const char *s; char *buff, *q;
 	    int b, b0, cnt = 0, j;
 	    SEXP s0, xx;
-	    
+
 	    /* This is clumsy, but it saves rewriting and re-testing
 	       this complex code */
 	    PROTECT(xx = duplicate(x));
@@ -403,8 +403,8 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 		s = translateChar(tmp);
 		if(s != CHAR(tmp)) SET_STRING_ELT(xx, i, mkChar(s));
 	    }
-		
-	    w = wd; 
+
+	    w = wd;
 	    if (adj != Rprt_adj_none) {
 		for (i = 0; i < n; i++)
 		    if (STRING_ELT(xx, i) != NA_STRING)
@@ -482,7 +482,7 @@ SEXP attribute_hidden do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
     digits = asInteger(CADR(args));
     if (!isNull(CADR(args))) {
 	digits = asInteger(CADR(args));
-	if (digits == NA_INTEGER || digits < R_MIN_DIGITS_OPT 
+	if (digits == NA_INTEGER || digits < R_MIN_DIGITS_OPT
 	    || digits > R_MAX_DIGITS_OPT)
 	    error(_("invalid '%s' argument"), "digits");
 	R_print.digits = digits;

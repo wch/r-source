@@ -49,7 +49,7 @@
 
    level 0 is no additional instrumentation
    level 1 marks uninitialized numeric, logical, integer vectors
-           and R_alloc memory
+	   and R_alloc memory
    level 2 marks free memory as inaccessible
 
    It may be necessary to define NVALGRIND for a non-gcc
@@ -448,7 +448,7 @@ static R_size_t R_NodesInUse = 0;
     { \
       int i; \
       for (i = 0; i < LENGTH(__n__); i++) \
-        dc__action__(STRING_ELT(__n__, i), dc__extra__); \
+	dc__action__(STRING_ELT(__n__, i), dc__extra__); \
     } \
     break; \
   case ENVSXP: \
@@ -954,7 +954,7 @@ static SEXP NewWeakRef(SEXP key, SEXP val, SEXP fin, Rboolean onexit)
     if (key != R_NilValue) {
 	/* If the key is R_NilValue we don't register the weak reference.
 	   This is used in loading saved images. */
-        SET_WEAKREF_KEY(w, key);
+	SET_WEAKREF_KEY(w, key);
 	SET_WEAKREF_VALUE(w, val);
 	SET_WEAKREF_FINALIZER(w, fin);
 	SET_WEAKREF_NEXT(w, R_weak_refs);
@@ -1289,14 +1289,14 @@ static void RunGenCollect(R_size_t size_needed)
 	FORWARD_NODE(ctxt->conexit);       /* on.exit expressions */
 	FORWARD_NODE(ctxt->promargs);	   /* promises supplied to closure */
 	FORWARD_NODE(ctxt->callfun);       /* the closure called */
-        FORWARD_NODE(ctxt->sysparent);     /* calling environment */
+	FORWARD_NODE(ctxt->sysparent);     /* calling environment */
 	FORWARD_NODE(ctxt->call);          /* the call */
 	FORWARD_NODE(ctxt->cloenv);        /* the closure environment */
 	FORWARD_NODE(ctxt->handlerstack);  /* the condition handler stack */
 	FORWARD_NODE(ctxt->restartstack);  /* the available restarts stack */
     }
 
-    FORWARD_NODE(framenames); 		   /* used for interprocedure
+    FORWARD_NODE(framenames);		   /* used for interprocedure
 					      communication in model.c */
 
     FORWARD_NODE(R_PreciousList);
@@ -1353,7 +1353,7 @@ static void RunGenCollect(R_size_t size_needed)
     DEBUG_CHECK_NODE_COUNTS("after processing forwarded list");
 
     /* process CHARSXP cache */
-    { 
+    {
 	SEXP t;
 	int nc = 0;
 	for (i = 0; i < LENGTH(R_StringHash); i++) {
@@ -1565,7 +1565,7 @@ void attribute_hidden InitMemory()
 
     for (i = 0; i < NUM_NODE_CLASSES; i++) {
       for (gen = 0; gen < NUM_OLD_GENERATIONS; gen++) {
-        R_GenHeap[i].Old[gen] = &R_GenHeap[i].OldPeg[gen];
+	R_GenHeap[i].Old[gen] = &R_GenHeap[i].OldPeg[gen];
 	SET_PREV_NODE(R_GenHeap[i].Old[gen], R_GenHeap[i].Old[gen]);
 	SET_NEXT_NODE(R_GenHeap[i].Old[gen], R_GenHeap[i].Old[gen]);
 
@@ -1583,7 +1583,7 @@ void attribute_hidden InitMemory()
     }
 
     for (i = 0; i < NUM_NODE_CLASSES; i++)
-        R_GenHeap[i].Free = NEXT_NODE(R_GenHeap[i].New);
+	R_GenHeap[i].Free = NEXT_NODE(R_GenHeap[i].New);
 
     SET_NODE_CLASS(&UnmarkedNodeTemplate, 0);
     orig_R_NSize = R_NSize;
@@ -1656,15 +1656,15 @@ char *R_alloc(size_t nelem, int eltsize)
 	else if(dsize < sizeof(double) * (R_LEN_T_MAX - 1))
 	    s = allocVector(REALSXP, (int)(0.99+dsize/sizeof(double)));
 	else {
-	    error(_("cannot allocate memory block of size %0.1f Gb"), 
+	    error(_("cannot allocate memory block of size %0.1f Gb"),
 		  dsize/1024.0/1024.0/1024.0);
 	    s = R_NilValue; /* -Wall */
 	}
 #else
 	if(dsize > R_LEN_T_MAX) /* must be in the Gb range */
-	    error(_("cannot allocate memory block of size %0.1f Gb"), 
+	    error(_("cannot allocate memory block of size %0.1f Gb"),
 		  dsize/1024.0/1024.0/1024.0);
-	s = allocVector(RAWSXP, size + 1); 
+	s = allocVector(RAWSXP, size + 1);
 #endif
 	ATTRIB(s) = R_VStack;
 	R_VStack = s;
@@ -1857,7 +1857,7 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
 /* Allocate a vector object (and also list-like objects).
    This ensures only validity of list-like
    SEXPTYPES (as the elements must be initialized).  Initializing of
-   other vector types is done in do_makevector 
+   other vector types is done in do_makevector
    [That comment seems outdated -- STRSXP, VECSXP, EXPRSXP
    are initialized and CHARSXP are nul-terminated.]
 */
@@ -2012,7 +2012,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 		/* reset the vector heap limit */
 		R_VSize = old_R_VSize;
 		if(dsize > 1024.0*1024.0)
-		    errorcall(R_NilValue, 
+		    errorcall(R_NilValue,
 			      _("cannot allocate vector of size %0.1f Gb"),
 			      dsize/1024.0/1024.0);
 		if(dsize > 1024.0)
@@ -2020,7 +2020,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 			      _("cannot allocate vector of size %0.1f Mb"),
 			      dsize/1024.0);
 		else
-		    errorcall(R_NilValue, 
+		    errorcall(R_NilValue,
 			      _("cannot allocate vector of size %0.f Kb"),
 			      dsize);
 	    }
@@ -2062,7 +2062,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     }
     else if (type == CHARSXP || type == intCHARSXP) {
 #if VALGRIND_LEVEL > 0
- 	VALGRIND_MAKE_WRITABLE(CHAR(s), actual_size);
+	VALGRIND_MAKE_WRITABLE(CHAR(s), actual_size);
 #endif
 	CHAR_RW(s)[length] = 0;
     }
@@ -2247,7 +2247,7 @@ SEXP attribute_hidden do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(INTSXP, 24));
     PROTECT(nms = allocVector(STRSXP, 24));
     for (i = 0; i < 24; i++) {
-        INTEGER(ans)[i] = 0;
+	INTEGER(ans)[i] = 0;
 	SET_STRING_ELT(nms, i, type2str(i > LGLSXP? i+2 : i));
     }
     setAttrib(ans, R_NamesSymbol, nms);
@@ -2335,7 +2335,7 @@ void unprotect_ptr(SEXP s)
     /* go look for  s  in  R_PPStack */
     /* (should be among the top few items) */
     do {
-    	if (i == 0)
+	if (i == 0)
 	    error(_("unprotect_ptr: pointer not found"));
     } while ( R_PPStack[--i] != s );
 
@@ -2412,10 +2412,10 @@ void R_PreserveObject(SEXP object)
 static SEXP RecursiveRelease(SEXP object, SEXP list)
 {
     if (!isNull(list)) {
-        if (object == CAR(list))
-            return CDR(list);
-        else
-            CDR(list) = RecursiveRelease(object, CDR(list));
+	if (object == CAR(list))
+	    return CDR(list);
+	else
+	    CDR(list) = RecursiveRelease(object, CDR(list));
     }
     return list;
 }
@@ -2518,14 +2518,14 @@ int (NAMED)(SEXP x) { return NAMED(x); }
 int (TRACE)(SEXP x) { return TRACE(x); }
 int (LEVELS)(SEXP x) { return LEVELS(x); }
 
-void (SET_ATTRIB)(SEXP x, SEXP v) { 
+void (SET_ATTRIB)(SEXP x, SEXP v) {
 #ifdef USE_TYPE_CHECKING
-    if(TYPEOF(v) != LISTSXP && TYPEOF(v) != NILSXP) 
-	error("value of 'SET_ATTRIB' must be a pairlist or NULL, not a '%s'", 
+    if(TYPEOF(v) != LISTSXP && TYPEOF(v) != NILSXP)
+	error("value of 'SET_ATTRIB' must be a pairlist or NULL, not a '%s'",
 	      type2char(TYPEOF(x)));
 #endif
-    CHECK_OLD_TO_NEW(x, v); 
-    ATTRIB(x) = v; 
+    CHECK_OLD_TO_NEW(x, v);
+    ATTRIB(x) = v;
 }
 void (SET_OBJECT)(SEXP x, int v) { SET_OBJECT(x, v); }
 void (SET_TYPEOF)(SEXP x, int v) { SET_TYPEOF(x, v); }
@@ -2551,8 +2551,8 @@ void (SET_TRUELENGTH)(SEXP x, int v) { SET_TRUELENGTH(x, v); }
 
 const char *(R_CHAR)(SEXP x) {
 #ifdef USE_TYPE_CHECKING
-    if(TYPEOF(x) != CHARSXP) 
-	error("%s() can only be applied to a '%s', not a '%s'", 
+    if(TYPEOF(x) != CHARSXP)
+	error("%s() can only be applied to a '%s', not a '%s'",
 	      "CHAR", "CHARSXP", type2char(TYPEOF(x)));
 #endif
     return (const char *)CHAR(x);
@@ -2561,7 +2561,7 @@ const char *(R_CHAR)(SEXP x) {
 SEXP (STRING_ELT)(SEXP x, int i) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != STRSXP)
-	error("%s() can only be applied to a '%s', not a '%s'", 
+	error("%s() can only be applied to a '%s', not a '%s'",
 	      "STRING_ELT", "character vector", type2char(TYPEOF(x)));
 #endif
     return STRING_ELT(x, i);
@@ -2570,17 +2570,17 @@ SEXP (STRING_ELT)(SEXP x, int i) {
 SEXP (VECTOR_ELT)(SEXP x, int i) {
 #ifdef USE_TYPE_CHECKING_STRICT
     /* We need to allow vector-like types here */
-    if(TYPEOF(x) != VECSXP && 
-       TYPEOF(x) != EXPRSXP && 
+    if(TYPEOF(x) != VECSXP &&
+       TYPEOF(x) != EXPRSXP &&
        TYPEOF(x) != WEAKREFSXP)
-	error("%s() can only be applied to a '%s', not a '%s'", 
+	error("%s() can only be applied to a '%s', not a '%s'",
 	      "VECTOR_ELT", "list", type2char(TYPEOF(x)));
 #elif defined(USE_TYPE_CHECKING)
     /* also allow STRSXP */
     if(TYPEOF(x) != VECSXP && TYPEOF(x) != STRSXP &&
-       TYPEOF(x) != EXPRSXP && 
+       TYPEOF(x) != EXPRSXP &&
        TYPEOF(x) != WEAKREFSXP)
-	error("%s() can only be applied to a '%s', not a '%s'", 
+	error("%s() can only be applied to a '%s', not a '%s'",
 	      "VECTOR_ELT", "list", type2char(TYPEOF(x)));
 #endif
     return VECTOR_ELT(x, i);
@@ -2597,43 +2597,43 @@ int *(LOGICAL)(SEXP x) {
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "LOGICAL",  "logical", type2char(TYPEOF(x)));
 #endif
-  return LOGICAL(x); 
+  return LOGICAL(x);
 }
 
 int *(INTEGER)(SEXP x) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != INTSXP && TYPEOF(x) != LGLSXP)
-        error("%s() can only be applied to a '%s', not a '%s'",
+	error("%s() can only be applied to a '%s', not a '%s'",
 	      "INTEGER", "integer", type2char(TYPEOF(x)));
 #endif
-    return INTEGER(x); 
+    return INTEGER(x);
 }
 
-Rbyte *(RAW)(SEXP x) { 
+Rbyte *(RAW)(SEXP x) {
 #ifdef USE_TYPE_CHECKING
-    if(TYPEOF(x) != RAWSXP) 
-	error("%s() can only be applied to a '%s', not a '%s'", 
+    if(TYPEOF(x) != RAWSXP)
+	error("%s() can only be applied to a '%s', not a '%s'",
 	      "RAW", "raw", type2char(TYPEOF(x)));
 #endif
-    return RAW(x); 
+    return RAW(x);
 }
 
-double *(REAL)(SEXP x) { 
+double *(REAL)(SEXP x) {
 #ifdef USE_TYPE_CHECKING
-    if(TYPEOF(x) != REALSXP) 
-	error("%s() can only be applied to a '%s', not a '%s'", 
+    if(TYPEOF(x) != REALSXP)
+	error("%s() can only be applied to a '%s', not a '%s'",
 	      "REAL", "numeric", type2char(TYPEOF(x)));
 #endif
-    return REAL(x); 
+    return REAL(x);
 }
 
-Rcomplex *(COMPLEX)(SEXP x) { 
+Rcomplex *(COMPLEX)(SEXP x) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != CPLXSXP)
-	error("%s() can only be applied to a '%s', not a '%s'", 
+	error("%s() can only be applied to a '%s', not a '%s'",
 	      "COMPLEX", "complex", type2char(TYPEOF(x)));
 #endif
-    return COMPLEX(x); 
+    return COMPLEX(x);
 }
 
 SEXP *(STRING_PTR)(SEXP x) { return STRING_PTR(x); }
@@ -2644,38 +2644,38 @@ SEXP *(VECTOR_PTR)(SEXP x)
   return NULL;
 }
 
-void (SET_STRING_ELT)(SEXP x, int i, SEXP v) { 
+void (SET_STRING_ELT)(SEXP x, int i, SEXP v) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != STRSXP)
-	error("%s() can only be applied to a '%s', not a '%s'", 
+	error("%s() can only be applied to a '%s', not a '%s'",
 	      "SET_STRING_ELT", "character vector", type2char(TYPEOF(x)));
     if(TYPEOF(v) != CHARSXP && TYPEOF(v) != NILSXP)
-       error("Value of SET_STRING_ELT() must be a 'CHARSXP' not a '%s'", 
+       error("Value of SET_STRING_ELT() must be a 'CHARSXP' not a '%s'",
 	     type2char(TYPEOF(v)));
 #endif
     CHECK_OLD_TO_NEW(x, v);
-    STRING_ELT(x, i) = v; 
+    STRING_ELT(x, i) = v;
 }
 
-SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v) { 
+SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v) {
 #ifdef USE_TYPE_CHECKING_STRICT
     /*  we need to allow vector-like types here */
     if(TYPEOF(x) != VECSXP &&
        TYPEOF(x) != EXPRSXP &&
        TYPEOF(x) != WEAKREFSXP) {
-	error("%s() can only be applied to a '%s', not a '%s'", 
+	error("%s() can only be applied to a '%s', not a '%s'",
 	      "SET_VECTOR_ELT", "list", type2char(TYPEOF(x)));
     }
 #elif defined(USE_TYPE_CHECKING)
     /* also allow STRSXP */
     if(TYPEOF(x) != VECSXP && TYPEOF(x) != STRSXP &&
        TYPEOF(x) != EXPRSXP && TYPEOF(x) != WEAKREFSXP) {
-	error("%s() can only be applied to a '%s', not a '%s'", 
+	error("%s() can only be applied to a '%s', not a '%s'",
 	      "SET_VECTOR_ELT", "list", type2char(TYPEOF(x)));
     }
 #endif
-    CHECK_OLD_TO_NEW(x, v); 
-    return VECTOR_ELT(x, i) = v; 
+    CHECK_OLD_TO_NEW(x, v);
+    return VECTOR_ELT(x, i) = v;
 }
 
 
@@ -2828,10 +2828,10 @@ void (SET_HASHASH)(SEXP x, int v) { SET_HASHASH(x, v); }
 void (SET_HASHVALUE)(SEXP x, int v) { SET_HASHVALUE(x, v); }
 
 #ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
-SEXP (SET_CXTAIL)(SEXP x, SEXP v) { 
+SEXP (SET_CXTAIL)(SEXP x, SEXP v) {
 #ifdef USE_TYPE_CHECKING
-    if(TYPEOF(v) != CHARSXP && TYPEOF(v) != NILSXP) 
-	error("value of 'SET_CXTAIL' must be a char or NULL, not a '%s'", 
+    if(TYPEOF(v) != CHARSXP && TYPEOF(v) != NILSXP)
+	error("value of 'SET_CXTAIL' must be a char or NULL, not a '%s'",
 	      type2char(TYPEOF(v)));
 #endif
     /*CHECK_OLD_TO_NEW(x, v); *//* not needed since not properly traced */
@@ -2852,11 +2852,11 @@ Rboolean Rf_isString(SEXP s) { return isString(s); }
 Rboolean Rf_isObject(SEXP s) { return isObject(s); }
 
 /* Bindings accessors */
-Rboolean attribute_hidden 
+Rboolean attribute_hidden
 (IS_ACTIVE_BINDING)(SEXP b) {return IS_ACTIVE_BINDING(b);}
 Rboolean attribute_hidden
 (BINDING_IS_LOCKED)(SEXP b) {return BINDING_IS_LOCKED(b);}
-void attribute_hidden 
+void attribute_hidden
 (SET_ACTIVE_BINDING_BIT)(SEXP b) {SET_ACTIVE_BINDING_BIT(b);}
 void attribute_hidden (LOCK_BINDING)(SEXP b) {LOCK_BINDING(b);}
 void attribute_hidden (UNLOCK_BINDING)(SEXP b) {UNLOCK_BINDING(b);}

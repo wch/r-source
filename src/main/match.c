@@ -173,7 +173,7 @@ SEXP attribute_hidden matchArg(SEXP tag, SEXP * list)
 
 SEXP attribute_hidden matchArgExact(SEXP tag, SEXP * list)
 {
-      return matchPar_int(CHAR(PRINTNAME(tag)), list, TRUE);  
+      return matchPar_int(CHAR(PRINTNAME(tag)), list, TRUE);
 }
 
 
@@ -283,9 +283,9 @@ nextarg1:
 			}
 #endif
 			if (R_warn_partial_match_args) {
-			    warningcall(call, 
+			    warningcall(call,
 					_("partial argument match of '%s' to '%s'"),
-					CHAR(PRINTNAME(TAG(b))), 
+					CHAR(PRINTNAME(TAG(b))),
 					CHAR(PRINTNAME(TAG(f))) );
 			}
 			SETCAR(a, CAR(b));
@@ -390,7 +390,7 @@ nextarg2:
 
 	if(last != R_NilValue) {
 	    errorcall(R_GlobalContext->call,
-		      _("unused argument(s) %s"), 
+		      _("unused argument(s) %s"),
 		      CHAR(STRING_ELT(deparse1line(unused, 0), 0)) + 4);
 	}
     }

@@ -161,9 +161,9 @@ SEXP attribute_hidden do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 static double gtrans(double u)
 {
     if (u > 0.00304)
-        return 1.055 * pow(u, (1 / GAMMA)) - 0.055;
+	return 1.055 * pow(u, (1 / GAMMA)) - 0.055;
     else
-        return 12.92 * u;
+	return 12.92 * u;
 }
 
 static int FixupColor(int *r, int *g, int *b)
@@ -192,14 +192,14 @@ hcl2rgb(double h, double c, double l, double *R, double *G, double *B)
     /* Step 2 : Convert to CIE-XYZ */
 
     if (L <= 0 && U == 0 && V == 0) {
-        X = 0; Y = 0; Z = 0;
+	X = 0; Y = 0; Z = 0;
     }
     else {
-        Y = WHITE_Y * ((L > 7.999592) ? pow((L + 16)/116, 3) : L / 903.3);
-        u = U / (13 * L) + WHITE_u;
-        v = V / (13 * L) + WHITE_v;
-        X =  9.0 * Y * u / (4 * v);
-        Z =  - X / 3 - 5 * Y + 3 * Y / v;
+	Y = WHITE_Y * ((L > 7.999592) ? pow((L + 16)/116, 3) : L / 903.3);
+	u = U / (13 * L) + WHITE_u;
+	v = V / (13 * L) + WHITE_v;
+	X =  9.0 * Y * u / (4 * v);
+	Z =  - X / 3 - 5 * Y + 3 * Y / v;
     }
 
     /* Step 4 : CIE-XYZ to sRGB */
@@ -229,8 +229,8 @@ SEXP attribute_hidden do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
     nl = LENGTH(l);
     na = LENGTH(a);
     if (nh <= 0 || nc <= 0 || nl <= 0 || na <= 0) {
-        UNPROTECT(4);
-        return(allocVector(STRSXP, 0));
+	UNPROTECT(4);
+	return(allocVector(STRSXP, 0));
     }
     max = nh;
     if (max < nc) max = nc;
@@ -238,22 +238,22 @@ SEXP attribute_hidden do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
     if (max < na) max = na;
     PROTECT(ans = allocVector(STRSXP, max));
     for (i = 0; i < max; i++) {
-        H = REAL(h)[i % nh];
-        C = REAL(c)[i % nc];
-        L = REAL(l)[i % nl];
-        A = REAL(a)[i % na];
-        if (!R_FINITE(A)) A = 1;
-        if (L < 0 || L > WHITE_Y || C < 0 || A < 0 || A > 1)
-            error(_("invalid hcl color"));
-        hcl2rgb(H, C, L, &r, &g, &b);
-        ir = 255 * r + .5;
-        ig = 255 * g + .5;
-        ib = 255 * b + .5;
-        if (FixupColor(&ir, &ig, &ib) && !fixup)
-            SET_STRING_ELT(ans, i, NA_STRING);
-        else
-            SET_STRING_ELT(ans, i, mkChar(RGBA2rgb(ir, ig, ib,
-                                          ScaleAlpha(A))));
+	H = REAL(h)[i % nh];
+	C = REAL(c)[i % nc];
+	L = REAL(l)[i % nl];
+	A = REAL(a)[i % na];
+	if (!R_FINITE(A)) A = 1;
+	if (L < 0 || L > WHITE_Y || C < 0 || A < 0 || A > 1)
+	    error(_("invalid hcl color"));
+	hcl2rgb(H, C, L, &r, &g, &b);
+	ir = 255 * r + .5;
+	ig = 255 * g + .5;
+	ib = 255 * b + .5;
+	if (FixupColor(&ir, &ig, &ib) && !fixup)
+	    SET_STRING_ELT(ans, i, NA_STRING);
+	else
+	    SET_STRING_ELT(ans, i, mkChar(RGBA2rgb(ir, ig, ib,
+					  ScaleAlpha(A))));
     }
     UNPROTECT(5);
     return ans;
@@ -384,12 +384,12 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
        this may avoid opening a new window */
 
     bg_needed = !isString(colors);
-    for (i = 0; !bg_needed && i < n; i++) 
-    	bg_needed = isdigit((int)CHAR(STRING_ELT(colors, i))[0]);
+    for (i = 0; !bg_needed && i < n; i++)
+	bg_needed = isdigit((int)CHAR(STRING_ELT(colors, i))[0]);
     if (bg_needed)
-    	bg = dpptr(GEcurrentDevice())->bg;
+	bg = dpptr(GEcurrentDevice())->bg;
     else
-    	bg = R_TRANWHITE;	
+	bg = R_TRANWHITE;
 
     if(isString(colors)) {
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
@@ -498,7 +498,7 @@ void rgb2hsv(double r, double g, double b,
     if(min > g) { /* g < r */
 	if(b < g)
 	    min = b;/* &  max = r */
-        else { /* g <= b, g < r */
+	else { /* g <= b, g < r */
 	    min = g;
 	    if(b > r) { max = b; b_max = TRUE; r_max = FALSE; }
 	    /* else : g <= b <=r */
@@ -580,7 +580,7 @@ const char *DefaultPalette[] = {
 /* to the top of the database to avoid */
 /* its being known as "gray100" */
 
-typedef 
+typedef
 struct colorDataBaseEntry {
 	char *name;	/* X11 Color Name */
 	char *rgb;	/* #RRGGBB String */
@@ -1388,7 +1388,7 @@ static unsigned int number2col(const char *nm, unsigned int bg)
 
 static char ColBuf[10];
 
-static 
+static
 char *RGB2rgb(unsigned int r, unsigned int g, unsigned int b)
 {
     ColBuf[0] = '#';
@@ -1462,7 +1462,7 @@ const char *col2name(unsigned int col)
 static unsigned int str2col(const char *s, unsigned int bg)
 {
     if(s[0] == '#') return rgb2col(s);
-    /* This seems rather strange, 
+    /* This seems rather strange,
        and made this depend on base graphics.
        Looks like it was an artefact of conversion in col2rgb().
     */
@@ -1483,12 +1483,12 @@ unsigned int R_GE_str2col(const char *s)
 unsigned int RGBpar3(SEXP x, int i, unsigned int bg)
 {
     int indx;
-    switch(TYPEOF(x)) 
+    switch(TYPEOF(x))
     {
     case STRSXP:
 	return str2col(CHAR(STRING_ELT(x, i)), bg);
     case LGLSXP:
-        indx = LOGICAL(x)[i];
+	indx = LOGICAL(x)[i];
 	if (indx == NA_LOGICAL) return R_TRANWHITE;
 	break;
     case INTSXP:

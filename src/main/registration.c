@@ -292,4 +292,3 @@ R_init_base(DllInfo *dll)
 		       fortranMethods, externalMethods);
     R_useDynamicSymbols(dll, FALSE);
 }
-

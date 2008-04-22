@@ -448,7 +448,7 @@ static void cmatprod(Rcomplex *x, int nrx, int ncx,
 
     one.r = 1.0; one.i = zero.r = zero.i = 0.0;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-        F77_CALL(zgemm)(transa, transb, &nrx, &ncy, &ncx, &one,
+	F77_CALL(zgemm)(transa, transb, &nrx, &ncy, &ncx, &one,
 			x, &nrx, y, &nry, &zero, z, &nrx);
     } else { /* zero-extent operations should return zeroes */
 	for(i = 0; i < nrx*ncy; i++) z[i].r = z[i].i = 0;
@@ -489,7 +489,7 @@ static void symcrossprod(double *x, int nr, int nc, double *z)
     double one = 1.0, zero = 0.0;
     int i, j;
     if (nr > 0 && nc > 0) {
-        F77_CALL(dsyrk)(uplo, trans, &nc, &nr, &one, x, &nr, &zero, z, &nc);
+	F77_CALL(dsyrk)(uplo, trans, &nc, &nr, &one, x, &nr, &zero, z, &nc);
 	for (i = 1; i < nc; i++)
 	    for (j = 0; j < i; j++) z[i + nc *j] = z[j + nc * i];
     } else { /* zero-extent operations should return zeroes */
@@ -504,7 +504,7 @@ static void crossprod(double *x, int nrx, int ncx,
     char *transa = "T", *transb = "N";
     double one = 1.0, zero = 0.0;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-        F77_CALL(dgemm)(transa, transb, &ncx, &ncy, &nrx, &one,
+	F77_CALL(dgemm)(transa, transb, &ncx, &ncy, &nrx, &one,
 			x, &nrx, y, &nry, &zero, z, &ncx);
     } else { /* zero-extent operations should return zeroes */
 	int i;
@@ -520,7 +520,7 @@ static void ccrossprod(Rcomplex *x, int nrx, int ncx,
 
     one.r = 1.0; one.i = zero.r = zero.i = 0.0;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-        F77_CALL(zgemm)(transa, transb, &ncx, &ncy, &nrx, &one,
+	F77_CALL(zgemm)(transa, transb, &ncx, &ncy, &nrx, &one,
 			x, &nrx, y, &nry, &zero, z, &ncx);
     } else { /* zero-extent operations should return zeroes */
 	int i;
@@ -534,7 +534,7 @@ static void symtcrossprod(double *x, int nr, int nc, double *z)
     double one = 1.0, zero = 0.0;
     int i, j;
     if (nr > 0 && nc > 0) {
-        F77_CALL(dsyrk)(uplo, trans, &nr, &nc, &one, x, &nr, &zero, z, &nr);
+	F77_CALL(dsyrk)(uplo, trans, &nr, &nc, &one, x, &nr, &zero, z, &nr);
 	for (i = 1; i < nr; i++)
 	    for (j = 0; j < i; j++) z[i + nr *j] = z[j + nr * i];
     } else { /* zero-extent operations should return zeroes */
@@ -549,7 +549,7 @@ static void tcrossprod(double *x, int nrx, int ncx,
     char *transa = "N", *transb = "T";
     double one = 1.0, zero = 0.0;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-        F77_CALL(dgemm)(transa, transb, &nrx, &nry, &ncx, &one,
+	F77_CALL(dgemm)(transa, transb, &nrx, &nry, &ncx, &one,
 			x, &nrx, y, &nry, &zero, z, &nrx);
     } else { /* zero-extent operations should return zeroes */
 	int i;
@@ -565,7 +565,7 @@ static void tccrossprod(Rcomplex *x, int nrx, int ncx,
 
     one.r = 1.0; one.i = zero.r = zero.i = 0.0;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-        F77_CALL(zgemm)(transa, transb, &nrx, &nry, &ncx, &one,
+	F77_CALL(zgemm)(transa, transb, &nrx, &nry, &ncx, &one,
 			x, &nrx, y, &nry, &zero, z, &nrx);
     } else { /* zero-extent operations should return zeroes */
 	int i;
@@ -581,8 +581,8 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP x = CAR(args), y = CADR(args), xdims, ydims, ans;
     Rboolean sym;
 
-    if(PRIMVAL(op) == 0 && 
-       (IS_S4_OBJECT(x) || IS_S4_OBJECT(y)) 
+    if(PRIMVAL(op) == 0 &&
+       (IS_S4_OBJECT(x) || IS_S4_OBJECT(y))
        && R_has_methods(op)) {
 	SEXP s, value;
 	/* Remove argument names to ensure positional matching */
@@ -1053,11 +1053,11 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     switch (TYPEOF(a)) {
 
     case INTSXP:
-        for (j=0, i=0; i<len; i++) {
-            INTEGER(r)[i] = INTEGER(a)[j];
-            CLICKJ;
-        }
-        break;
+	for (j=0, i=0; i<len; i++) {
+	    INTEGER(r)[i] = INTEGER(a)[j];
+	    CLICKJ;
+	}
+	break;
 
     case LGLSXP:
 	for (j=0, i=0; i<len; i++) {
@@ -1248,7 +1248,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0; i < n; i++) REAL(ans)[i] = rans[i];
 	    if(n > 10000) Free(rans);
 	    UNPROTECT(1);
-	    return ans;	    
+	    return ans;
 	}
 
 	for (i = 0; i < n; i++) {

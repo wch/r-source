@@ -192,8 +192,8 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	ddp->ps = dev->startps;
 	ddp->col = ddp->fg = dev->startcol;
 	ddp->bg = dev->startfill;
-	ddp->font = dev->startfont; 
-	ddp->lty = dev->startlty; 
+	ddp->font = dev->startfont;
+	ddp->lty = dev->startlty;
 	ddp->gamma = dev->startgamma;
 	/* Initialise the gp settings too: formerly in addDevice. */
 	copyGPar(ddp, &(bss->gp));
@@ -210,7 +210,7 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	pGEDevDesc curdd = GEcurrentDevice();
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
 	bss2 = curdd->gesd[baseRegisterIndex]->systemSpecific;
-	copyGPar(&(bss->dpSaved), &(bss2->dpSaved)); 
+	copyGPar(&(bss->dpSaved), &(bss2->dpSaved));
 	restoredpSaved(curdd);
 	copyGPar(&(bss2->dp), &(bss2->gp));
 	GReset(curdd);
@@ -240,7 +240,7 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
     case GE_RestoreSnapshotState:
 	/* called from GEplaySnapshot */
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
-	copyGPar((GPar*) RAW(data), &(bss->dpSaved));	
+	copyGPar((GPar*) RAW(data), &(bss->dpSaved));
 	restoredpSaved(dd);
 	copyGPar(&(bss->dp), &(bss->gp));
 	GReset(dd);
@@ -266,7 +266,7 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	    ddp->scale *= rf;
 	    /* Modify the saved settings so this effects display list too */
 	    ddpSaved->scale *= rf;
-	} else 
+	} else
 	  error(_("Event GE_ScalePS requires a single numeric value"));
 	break;
     }
@@ -307,4 +307,3 @@ void Rf_setBaseDevice(Rboolean val, pGEDevDesc dd) {
     baseSystemState *bss = dd->gesd[baseRegisterIndex]->systemSpecific;
     bss->baseDevice = val;
 }
-

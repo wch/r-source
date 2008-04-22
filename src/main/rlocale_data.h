@@ -18,7 +18,7 @@
  */
 
 /* R i18n fake locale functions. */
-enum { MB_UTF8, MB_ja_JP, MB_ko_KR, MB_zh_SG, MB_zh_CN, MB_zh_HK, 
+enum { MB_UTF8, MB_ja_JP, MB_ko_KR, MB_zh_SG, MB_zh_CN, MB_zh_HK,
        MB_zh_TW, MB_SIZE };
 struct interval {
     int first;

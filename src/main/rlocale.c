@@ -100,7 +100,7 @@ static cjk_locale_name_t cjk_locale_name[] = {
     {"CHINESE_SIGNAPORE",			MB_zh_SG},
     {"CHINESE(PRC)_PEOPLE'S REPUBLIC OF CHINA",	MB_zh_CN},
     {"CHINESE_PEOPLE'S REPUBLIC OF CHINA",	MB_zh_CN},
-    {"CHINESE_MACAU S.A.R.",		  	MB_zh_HK},
+    {"CHINESE_MACAU S.A.R.",			MB_zh_HK},
     {"CHINESE(PRC)_HONG KONG",		        MB_zh_HK},
     {"CHINESE_HONG KONG S.A.R.",		MB_zh_HK},
     {"CHINESE(TAIWAN)_TAIWAN",			MB_zh_TW},
@@ -108,7 +108,7 @@ static cjk_locale_name_t cjk_locale_name[] = {
     {"CHINESE-S",                               MB_zh_CN},
     {"CHINESE-T",                               MB_zh_TW},
     {"JAPANESE_JAPAN",				MB_ja_JP},
-    {"JAPANESE",   				MB_ja_JP},
+    {"JAPANESE",				MB_ja_JP},
     {"KOREAN_KOREA",				MB_ko_KR},
     {"KOREAN",				        MB_ko_KR},
     {"ZH_TW",                                   MB_zh_TW},
@@ -116,10 +116,10 @@ static cjk_locale_name_t cjk_locale_name[] = {
     {"ZH_CN.BIG5",                              MB_zh_TW},
     {"ZH_HK",                                   MB_zh_HK},
     {"ZH_SG",                                   MB_zh_SG},
-    {"JA_JP",        				MB_ja_JP},
+    {"JA_JP",				MB_ja_JP},
     {"KO_KR",				        MB_ko_KR},
     {"ZH",				        MB_zh_CN},
-    {"JA",        				MB_ja_JP},
+    {"JA",				MB_ja_JP},
     {"KO",				        MB_ko_KR},
     {"",				        MB_UTF8},
 };
@@ -208,10 +208,10 @@ static const char UNICODE[] = "UCS-4LE";
   size_t  wc_len;                                                    \
   void   *cd;					                     \
   char    fromcode[128];                                             \
-  char   *_mb_buf;					    	     \
-  char   *_wc_buf;					    	     \
+  char   *_mb_buf;						     \
+  char   *_wc_buf;						     \
   size_t  rc ;							     \
-                                                                     \
+								     \
   strncpy(fromcode, locale2charset(NULL), sizeof(fromcode));         \
   if(0 == strcmp(fromcode, "UTF-8"))				     \
        return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count);\
@@ -220,11 +220,11 @@ static const char UNICODE[] = "UCS-4LE";
   wcrtomb( mb_buf, wc, NULL);					     \
   if((void *)(-1) != (cd = Riconv_open(UNICODE, fromcode))) {	     \
       wc_len = sizeof(ucs4_buf);		                     \
-      _wc_buf = (char *)ucs4_buf;		       		     \
+      _wc_buf = (char *)ucs4_buf;				     \
       mb_len = strlen(mb_buf);					     \
       _mb_buf = (char *)mb_buf;					     \
       rc = Riconv(cd, (const char **)&_mb_buf, (size_t *)&mb_len,	     \
-	          (char **)&_wc_buf, (size_t *)&wc_len);       	     \
+		  (char **)&_wc_buf, (size_t *)&wc_len);	     \
       Riconv_close(cd);						     \
       wc = ucs4_buf[0];                                              \
       return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count); \

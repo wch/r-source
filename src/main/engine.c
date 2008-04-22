@@ -550,7 +550,7 @@ SEXP GE_LJOINget(R_GE_linejoin ljoin)
  */
 
 static void getClipRect(double *x1, double *y1, double *x2, double *y2,
-                        pGEDevDesc dd)
+			pGEDevDesc dd)
 {
     if (dd->dev->clipLeft < dd->dev->clipRight) {
 	*x1 = dd->dev->clipLeft;
@@ -1132,17 +1132,17 @@ static int clipCircleCode(double x, double y, double r,
     else {
 	double distance = r*r;
 	if (x-r > xmax || x+r < xmin || y-r > ymax || y+r < ymin ||
-            (x < xmin && y < ymin &&
-             ((x-xmin)*(x-xmin)+(y-ymin)*(y-ymin) > distance)) ||
+	    (x < xmin && y < ymin &&
+	     ((x-xmin)*(x-xmin)+(y-ymin)*(y-ymin) > distance)) ||
 	    (x > xmax && y < ymin &&
-             ((x-xmax)*(x-xmax)+(y-ymin)*(y-ymin) > distance)) ||
+	     ((x-xmax)*(x-xmax)+(y-ymin)*(y-ymin) > distance)) ||
 	    (x < xmin && y > ymax &&
 	     ((x-xmin)*(x-xmin)+(y-ymax)*(y-ymax) > distance)) ||
 	    (x > xmax && y > ymax &&
 	     ((x-xmax)*(x-xmax)+(y-ymax)*(y-ymax) > distance))) {
 	    result = -1;
 	}
-        /* otherwise, convert circle to polygon */
+	/* otherwise, convert circle to polygon */
 	else {
 	    /* Replace circle with polygon.
 
@@ -1366,7 +1366,7 @@ static int clipTextCode(double x, double y, const char *str, cetype_t enc,
     length = pythag(width, height);
 #endif
     theta2 = angle + atan2(height, width);
-    
+
     x -= hadj*width*cos(angle);
     y -= hadj*width*sin(angle);
     x0 = x + height*cos(theta1);
@@ -1390,7 +1390,7 @@ static void clipText(double x, double y, const char *str, cetype_t enc,
 {
     int result = clipTextCode(x, y, str, enc, width, height, rot, hadj,
 			      gc, toDevice, dd);
-    void (*textfn)(double x, double y, const char *str, double rot, 
+    void (*textfn)(double x, double y, const char *str, double rot,
 		   double hadj, const pGEcontext gc, pDevDesc dd);
     /* This guards against uninitialized values, e.g. devices installed
        in earlier versions of R */
@@ -1828,10 +1828,10 @@ SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open,
  ****************************************************************
  */
 /* Check that everything is initialized :
-  	Interpretation :
-  	mode = 0, graphics off
-  	mode = 1, graphics on
-  	mode = 2, graphical input on (ignored by most drivers)
+	Interpretation :
+	mode = 0, graphics off
+	mode = 1, graphics on
+	mode = 2, graphical input on (ignored by most drivers)
 */
 void GEMode(int mode, pGEDevDesc dd)
 {
@@ -1911,8 +1911,8 @@ void GESymbol(double x, double y, int pch, double size,
 	    char str[2];
 	    str[0] = pch;
 	    str[1] = '\0';
-	    GEText(x, y, str, 
-		   (gc->fontface == 5) ? CE_SYMBOL : CE_NATIVE, 
+	    GEText(x, y, str,
+		   (gc->fontface == 5) ? CE_SYMBOL : CE_NATIVE,
 		   NA_REAL, NA_REAL, 0., gc, dd);
 	}
     }
@@ -2278,12 +2278,12 @@ void GEMetricInfo(int c, const pGEcontext gc,
 	*/
 	static pGEDevDesc last_dd= NULL;
 	static int last_face = 1;
-	static double last_cex = 0.0, last_ps = 0.0, 
+	static double last_cex = 0.0, last_ps = 0.0,
 	    a = 0.0 , d = 0.0, w = 0.0;
 	static char last_family[201];
-	if (dd == last_dd && abs(c) == 77 
-	    && gc->cex == last_cex && gc->ps == last_ps 
-	    && gc->fontface == last_face 
+	if (dd == last_dd && abs(c) == 77
+	    && gc->cex == last_cex && gc->ps == last_ps
+	    && gc->fontface == last_face
 	    && streql(gc->fontfamily, last_family)) {
 	    *ascent = a; *descent = d; *width = w; return;
 	}
@@ -2516,7 +2516,7 @@ void GEplayDisplayList(pGEDevDesc dd)
 
     /* If the device is not registered with the engine (which might
        happen in a device callback before it has been registered or
-       while it is being killed) we might get the null device and 
+       while it is being killed) we might get the null device and
        should do nothing.
 
        Also do nothing if displayList is empty (which should be the
@@ -2526,7 +2526,7 @@ void GEplayDisplayList(pGEDevDesc dd)
     if (this == 0) return;
     theList = dd->displayList;
     if (theList == R_NilValue) return;
-    
+
     /* Get each graphics system to restore state required for
      * replaying the display list
      */
@@ -2571,7 +2571,7 @@ void GEcopyDisplayList(int fromDevice)
     SEXP tmp;
     pGEDevDesc dd = GEcurrentDevice(), gd = GEgetDevice(fromDevice);
     int i;
-    
+
     tmp = gd->displayList;
     if(!isNull(tmp)) tmp = duplicate(tmp);
     dd->displayList = tmp;
@@ -2613,9 +2613,9 @@ SEXP GEcreateSnapshot(pGEDevDesc dd)
     /* The first element of the snapshot is the display list.
      */
     if(!isNull(dd->displayList)) {
-        PROTECT(tmp = duplicate(dd->displayList));
-        SET_VECTOR_ELT(snapshot, 0, tmp);
-        UNPROTECT(1);
+	PROTECT(tmp = duplicate(dd->displayList));
+	SET_VECTOR_ELT(snapshot, 0, tmp);
+	UNPROTECT(1);
     }
     /* For each registered system, obtain state information,
      * and store that in the snapshot.
@@ -2793,10 +2793,10 @@ void GEonExit()
     if (!NoDevices()) {
 	devNum = curDevice();
 	while (i++ < NumDevices()) {
-  	    gd = GEgetDevice(devNum);
-  	    gd->recordGraphics = TRUE;
-  	    dd = gd->dev;
-  	    if (dd->onExit) dd->onExit(dd);
+	    gd = GEgetDevice(devNum);
+	    gd->recordGraphics = TRUE;
+	    dd = gd->dev;
+	    if (dd->onExit) dd->onExit(dd);
 	    devNum = nextDevice(devNum);
 	}
     }
@@ -2827,7 +2827,7 @@ int GEstring_to_pch(SEXP pch)
     } else if(mbcslocale) {
 	/* Could we safely assume that 7-bit first byte means ASCII?
 	   On Windows this only covers CJK locales, so we could.
-	 */ 
+	 */
 	unsigned int ucs = 0;
 	if ( (int) mbtoucs(&ucs, CHAR(pch), MB_CUR_MAX) > 0) ipch = ucs;
 	else error(_("invalid multibyte char in pch=\"c\""));

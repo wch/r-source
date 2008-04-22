@@ -58,7 +58,7 @@ OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, int pos, SEXP call
     if (pos < 0 && length(s) < 1) {
 	ECALL(call, _("attempt to select less than one element"));
     }
-    
+
     if(pos < 0) pos = 0;
 
     indx = -1;
@@ -122,7 +122,7 @@ OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, int pos, SEXP call
 	if (call == R_NilValue)
 	    error(_("invalid subscript type '%s'"), type2char(TYPEOF(s)));
 	else
-	    errorcall(call, _("invalid subscript type '%s'"), 
+	    errorcall(call, _("invalid subscript type '%s'"),
 		      type2char(TYPEOF(s)));
     }
     return indx;
@@ -134,15 +134,15 @@ get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
 /* Get a single index for the [[ operator.
    Check that only one index is being selected.
    pok : is "partial ok" ?
-         if pok is -1, warn if partial matching occurs
+	 if pok is -1, warn if partial matching occurs
 */
     int indx, i, warn_pok = 0;
     double dblind;
     const char *ss, *cur_name;
 
     if (pok == -1) {
-        pok = 1;
-        warn_pok = 1;
+	pok = 1;
+	warn_pok = 1;
     }
 
     if (pos < 0 && length(s) != 1) {
@@ -174,10 +174,10 @@ get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
 	if(STRING_ELT(s, pos) == NA_STRING) break;
 	/* "" matches nothing: see names.Rd */
 	if(!CHAR(STRING_ELT(s, pos))[0]) break;
-	
+
 	/* Try for exact match */
 	ss = translateChar(STRING_ELT(s, pos));
-	for (i = 0; i < length(names); i++) 
+	for (i = 0; i < length(names); i++)
 	    if (STRING_ELT(names, i) != NA_STRING) {
 		if (streql(translateChar(STRING_ELT(names, i)), ss)) {
 		    indx = i;
@@ -189,28 +189,28 @@ get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
 	    len = strlen(ss);
 	    for(i = 0; i < length(names); i++) {
 		if (STRING_ELT(names, i) != NA_STRING) {
-                    cur_name = translateChar(STRING_ELT(names, i));
+		    cur_name = translateChar(STRING_ELT(names, i));
 		    if(!strncmp(cur_name, ss, len)) {
 			if(indx == -1) {/* first one */
 			    indx = i;
-                            if (warn_pok) {
+			    if (warn_pok) {
 				if (call == R_NilValue)
 				    warning(_("partial match of '%s' to '%s'"),
 					    ss, cur_name);
 				else
-				    warningcall(call, 
+				    warningcall(call,
 						_("partial match of '%s' to '%s'"),
 						ss, cur_name);
 			    }
-                        }
+			}
 			else {
 			    indx = -2;/* more than one partial match */
-                            if (warn_pok) /* already given context */
-                                warningcall(R_NilValue, 
+			    if (warn_pok) /* already given context */
+				warningcall(R_NilValue,
 					    _("further partial match of '%s' to '%s'"),
 					    ss, cur_name);
-                            break;
-                        }
+			    break;
+			}
 		    }
 		}
 	    }
@@ -219,7 +219,7 @@ get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
     case SYMSXP:
 	for (i = 0; i < length(names); i++)
 	    if (STRING_ELT(names, i) != NA_STRING &&
-		streql(translateChar(STRING_ELT(names, i)), 
+		streql(translateChar(STRING_ELT(names, i)),
 		       CHAR(PRINTNAME(s)))) {
 		indx = i;
 		break;
@@ -228,7 +228,7 @@ get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
 	if (call == R_NilValue)
 	    error(_("invalid subscript type '%s'"), type2char(TYPEOF(s)));
 	else
-	    errorcall(call, _("invalid subscript type '%s'"), 
+	    errorcall(call, _("invalid subscript type '%s'"),
 		      type2char(TYPEOF(s)));
     }
     return indx;
@@ -250,7 +250,7 @@ SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
     if (ncols(s) != LENGTH(dims)) {
 	ECALL(call, _("incorrect number of columns in matrix subscript"));
     }
-    
+
     PROTECT(rvec = allocVector(INTSXP, nrs));
     s = coerceVector(s, INTSXP);
     setIVector(INTEGER(rvec), nrs, 0);
@@ -278,7 +278,7 @@ SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
 	    INTEGER(rvec)[i] += (k - 1) * tdim;
 	    tdim *= INTEGER(dims)[j];
 	}
-	/* transform to 1 based subscripting (0 in the input gets 0 
+	/* transform to 1 based subscripting (0 in the input gets 0
 	   in the output here) */
 	if(INTEGER(rvec)[i] != NA_INTEGER)
 	    INTEGER(rvec)[i]++;
@@ -516,7 +516,7 @@ stringSubscript(SEXP s, int ns, int nx, SEXP names,
 
 typedef SEXP AttrGetter(SEXP x, SEXP data);
 
-static SEXP 
+static SEXP
 int_arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
 		   StringEltGetter strg, SEXP x, Rboolean in, SEXP call)
 {
@@ -533,9 +533,9 @@ int_arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
     case INTSXP:
 	return integerSubscript(s, ns, nd, &stretch, call);
     case REALSXP:
-    	PROTECT(tmp = coerceVector(s, INTSXP));
+	PROTECT(tmp = coerceVector(s, INTSXP));
 	tmp = integerSubscript(tmp, ns, nd, &stretch, call);
-    	UNPROTECT(1);
+	UNPROTECT(1);
 	return tmp;
     case STRSXP:
 	dnames = dng(x, R_DimNamesSymbol);
@@ -551,13 +551,13 @@ int_arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
 	if (call == R_NilValue)
 	    error(_("invalid subscript type '%s'"), type2char(TYPEOF(s)));
 	else
-	    errorcall(call, _("invalid subscript type '%s'"), 
+	    errorcall(call, _("invalid subscript type '%s'"),
 		      type2char(TYPEOF(s)));
     }
     return R_NilValue;
 }
 
-/* This is used by packages arules and cba. Seems dangerous as the 
+/* This is used by packages arules and cba. Seems dangerous as the
    typedef is not exported */
 SEXP
 arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
@@ -583,7 +583,7 @@ SEXP attribute_hidden makeSubscript(SEXP x, SEXP s, int *stretch, SEXP call)
     if (isVector(x) || isList(x) || isLanguage(x)) {
 	nx = length(x);
 
-	ans = vectorSubscript(nx, s, stretch, getAttrib, (STRING_ELT), 
+	ans = vectorSubscript(nx, s, stretch, getAttrib, (STRING_ELT),
 			      x, call);
     }
     else {
@@ -599,7 +599,7 @@ SEXP attribute_hidden makeSubscript(SEXP x, SEXP s, int *stretch, SEXP call)
    subsetting,
 */
 
-static SEXP 
+static SEXP
 int_vectorSubscript(int nx, SEXP s, int *stretch, AttrGetter dng,
 		    StringEltGetter strg, SEXP x, Rboolean in, SEXP call)
 {
@@ -652,7 +652,7 @@ int_vectorSubscript(int nx, SEXP s, int *stretch, AttrGetter dng,
 	if (call == R_NilValue)
 	    error(_("invalid subscript type '%s'"), type2char(TYPEOF(s)));
 	else
-	    errorcall(call, _("invalid subscript type '%s'"), 
+	    errorcall(call, _("invalid subscript type '%s'"),
 		      type2char(TYPEOF(s)));
     }
     UNPROTECT(1);
@@ -666,4 +666,3 @@ vectorSubscript(int nx, SEXP s, int *stretch, AttrGetter dng,
 {
     return int_vectorSubscript(nx, s, stretch, dng, strg, x, TRUE, call);
 }
-

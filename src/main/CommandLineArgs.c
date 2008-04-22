@@ -167,7 +167,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		Rp->LoadInitFile = FALSE;
 	    }
 	    else if (!strcmp(*av, "--debug-init")) {
-	        Rp->DebugInitFile = TRUE;
+		Rp->DebugInitFile = TRUE;
 	    }
 	    else if (!strncmp(*av, "--encoding", 10)) {
 		if(strlen(*av) < 12) {
@@ -182,7 +182,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 	    }
 #ifdef Win32
 	    else if (!strcmp(*av, "--no-Rconsole")) {
-	    	R_LoadRconsole = 0;
+		R_LoadRconsole = 0;
 	    }
 #endif
 	    else if (!strcmp(*av, "-save") ||
@@ -200,8 +200,8 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 			 _("WARNING: option '%s' no longer supported\n"), *av);
 		R_ShowMessage(msg);
 	    }
-            /* mop up --max/min/-n/vsize */
- 	    else if(strncmp(*av+7, "size", 4) == 0) {
+	    /* mop up --max/min/-n/vsize */
+	    else if(strncmp(*av+7, "size", 4) == 0) {
 		if(strlen(*av) < 13) {
 		    ac--; av++; p = *av;
 		}

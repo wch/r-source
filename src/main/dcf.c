@@ -50,7 +50,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     file = CAR(args);
     con = getConnection(asInteger(file));
     if(!con->canread)
-        error(_("cannot read from this connection"));
+	error(_("cannot read from this connection"));
     wasopen = con->isopen;
     if(!wasopen)
 	if(!con->open(con)) error(_("cannot open the connection"));

@@ -38,7 +38,7 @@ static R_toCConverter   *StoCConverters = NULL;
 */
 attribute_hidden void *
 Rf_convertToC(SEXP s, R_CConvertInfo *info, int *success,
-              R_toCConverter **converter)
+	      R_toCConverter **converter)
 {
     void *ans;
     R_toCConverter *tmp = StoCConverters;
@@ -317,5 +317,3 @@ do_setToCConverterActiveStatus(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return(status);
 }
-
-

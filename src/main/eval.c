@@ -121,9 +121,9 @@ static void doprof(void)
     if (R_Mem_Profiling){
 	    get_current_mem(&smallv, &bigv, &nodes);
 	    if((len = strlen(buf)) < 1000) {
-	    	sprintf(buf+len, ":%ld:%ld:%ld:%ld:", smallv, bigv,
-                     nodes, get_duplicate_counter());
-            }
+		sprintf(buf+len, ":%ld:%ld:%ld:%ld:", smallv, bigv,
+		     nodes, get_duplicate_counter());
+	    }
 	    reset_duplicate_counter();
     }
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
@@ -163,7 +163,7 @@ static void doprof(int sig)
 	    get_current_mem(&smallv, &bigv, &nodes);
 	    if (!newline) newline = 1;
 	    fprintf(R_ProfileOutfile, ":%ld:%ld:%ld:%ld:", smallv, bigv,
-                     nodes, get_duplicate_counter());
+		     nodes, get_duplicate_counter());
 	    reset_duplicate_counter();
     }
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
@@ -234,7 +234,7 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem
     if(R_ProfileOutfile != NULL) R_EndProfiling();
     R_ProfileOutfile = RC_fopen(filename, append ? "a" : "w", TRUE);
     if (R_ProfileOutfile == NULL)
-	error(_("Rprof: cannot open profile file '%s'"), 
+	error(_("Rprof: cannot open profile file '%s'"),
 	      translateChar(filename));
     if(mem_profiling)
 	fprintf(R_ProfileOutfile, "memory profiling: sample.interval=%d\n", interval);
@@ -401,9 +401,9 @@ SEXP eval(SEXP e, SEXP rho)
     case EXPRSXP:
 	tmp = e;
 	/* Make sure constants in expressions are NAMED before being
-           used as values.  Setting NAMED to 2 makes sure weird calls
-           to assignment functions won't modify constants in
-           expressions.  */
+	   used as values.  Setting NAMED to 2 makes sure weird calls
+	   to assignment functions won't modify constants in
+	   expressions.  */
 	if (NAMED(tmp) != 2) SET_NAMED(tmp, 2);
 	break;
 #ifdef BYTECODE
@@ -465,7 +465,7 @@ SEXP eval(SEXP e, SEXP rho)
 	    if(flag < 2 && R_Visible == flag) {
 		char *nm = PRIMNAME(op);
 		if(strcmp(nm, "for")
-		   && strcmp(nm, "repeat") && strcmp(nm, "while") 
+		   && strcmp(nm, "repeat") && strcmp(nm, "while")
 		   && strcmp(nm, "[[<-") && strcmp(nm, "on.exit"))
 		    printf("vis: special %s\n", nm);
 	    }
@@ -551,7 +551,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 
     /*  Use the default code for unbound formals.  FIXME: It looks like
 	this code should preceed the building of the environment so that
-        this will also go into the hash table.  */
+	this will also go into the hash table.  */
 
     /* This piece of code is destructively modifying the actuals list,
        which is now also the list of bindings in the frame of newrho.
@@ -581,13 +581,13 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 		    break;
 	    if (a == R_NilValue)
 		/* Use defineVar instead of earlier version that added
-                   bindings manually */
+		   bindings manually */
 		defineVar(TAG(tmp), CAR(tmp), newrho);
 	}
     }
 
     /*  Terminate the previous context and start a new one with the
-        correct environment. */
+	correct environment. */
 
     endcontext(&cntxt);
 
@@ -637,8 +637,8 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     /*  It isn't completely clear that this is the right place to do
 	this, but maybe (if the matchArgs above reverses the
 	arguments) it might just be perfect.
-	
-	This will not currently work as the entry points in envir.c 
+
+	This will not currently work as the entry points in envir.c
 	are static.
     */
 
@@ -818,7 +818,7 @@ SEXP R_execMethod(SEXP op, SEXP rho)
 		 * to the promise */
 		for(deflt = CAR(op); deflt != R_NilValue; deflt = CDR(deflt)) {
 		    if(TAG(deflt) == symbol)
-		        break;
+			break;
 		}
 		if(deflt == R_NilValue)
 		    error(_("symbol \"%s\" not in environment of method"),
@@ -902,7 +902,7 @@ static SEXP replaceCall(SEXP fun, SEXP val, SEXP args, SEXP rhs)
     SETCAR(ptmp, val); ptmp = CDR(ptmp);
     while(args != R_NilValue) {
 	SETCAR(ptmp, CAR(args));
-        SET_TAG(ptmp, TAG(args));
+	SET_TAG(ptmp, TAG(args));
 	ptmp = CDR(ptmp);
 	args = CDR(args);
     }
@@ -934,7 +934,7 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
     if (length(s) > 0) {
 	/* inline common cases for efficiency */
 	switch(TYPEOF(s)) {
-	case LGLSXP: 
+	case LGLSXP:
 	    cond = LOGICAL(s)[0];
 	    break;
 	case INTSXP:
@@ -1316,10 +1316,10 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(saverhs = rhs = eval(CADR(args), rho));
 
     /*  FIXME: We need to ensure that this works for hashed
-        environments.  This code only works for unhashed ones.  the
-        syntax error here is a deliberate marker so I don't forget that
-        this needs to be done.  The code used in "missing" will help
-        here.  */
+	environments.  This code only works for unhashed ones.  the
+	syntax error here is a deliberate marker so I don't forget that
+	this needs to be done.  The code used in "missing" will help
+	here.  */
 
     /*  FIXME: This strategy will not work when we are working in the
 	data frame defined by the system hash table.  The structure there
@@ -1345,7 +1345,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /*  Do a partial evaluation down through the LHS. */
     lhs = evalseq(CADR(expr), rho,
-                  PRIMVAL(op)==1 || PRIMVAL(op)==3, tmploc);
+		  PRIMVAL(op)==1 || PRIMVAL(op)==3, tmploc);
 
     PROTECT(lhs);
     PROTECT(rhs); /* To get the loop right ... */
@@ -1681,7 +1681,7 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "enclos");
     switch(TYPEOF(env)) {
     case NILSXP:
-        env = encl;     /* so eval(expr, NULL, encl) works */
+	env = encl;     /* so eval(expr, NULL, encl) works */
     case ENVSXP:
 	PROTECT(env);	/* so we can unprotect 2 at the end */
 	break;
@@ -1748,7 +1748,7 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	expr = tmp;
     }
     else if( TYPEOF(expr) == PROMSXP ) {
-        expr = eval(expr, rho);
+	expr = eval(expr, rho);
     } /* else expr is returned unchanged */
     if (PRIMVAL(op)) { /* eval.with.vis(*) : */
 	PROTECT(expr);
@@ -1823,7 +1823,7 @@ static SEXP evalArgs(SEXP el, SEXP rho, SEXP op, int dropmissing)
  */
 attribute_hidden
 int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
-                   SEXP rho, SEXP *ans, int dropmissing, int argsevald)
+		   SEXP rho, SEXP *ans, int dropmissing, int argsevald)
 {
 /* DispatchOrEval is called very frequently, most often in cases where
    no dispatching is needed and the isObject or the string-based
@@ -1838,7 +1838,7 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
     int dots = FALSE, nprotect = 0;;
 
     if( argsevald )
-        {PROTECT(x = CAR(args)); nprotect++;}
+	{PROTECT(x = CAR(args)); nprotect++;}
     else {
 	/* Find the object to dispatch on, dropping any leading
 	   ... arguments with missing or empty values.  If there are no
@@ -1993,14 +1993,14 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
        rejected by the code following the string examination code
        below */
     if (args != R_NilValue && ! isObject(CAR(args)) &&
-        (CDR(args) == R_NilValue || ! isObject(CADR(args))))
+	(CDR(args) == R_NilValue || ! isObject(CADR(args))))
 	return 0;
 
     isOps = strcmp(group, "Ops") == 0;
 
     /* try for formal method */
     if(length(args) == 1 && !IS_S4_OBJECT(CAR(args))) useS4 = FALSE;
-    if(length(args) == 2 && 
+    if(length(args) == 2 &&
        !IS_S4_OBJECT(CAR(args)) && !IS_S4_OBJECT(CADR(args))) useS4 = FALSE;
     if(useS4 && R_has_methods(op)) {
 	SEXP value;
@@ -2344,7 +2344,7 @@ SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 	else if (TYPEOF(x) == INTSXP && LENGTH(x) == 1 && \
 		 TYPEOF(y) == REALSXP && LENGTH(y) == 1) { \
 	    double xd = INTEGER(x)[0] == NA_INTEGER ? NA_REAL : INTEGER(x)[0];\
-            DO_FAST_RELOP2(op, xd, REAL(y)[0]); \
+	    DO_FAST_RELOP2(op, xd, REAL(y)[0]); \
 	} \
 	else if (TYPEOF(x) == REALSXP && LENGTH(x) == 1 && \
 		 TYPEOF(y) == INTSXP && LENGTH(y) == 1) { \
@@ -2419,7 +2419,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
 #define Builtin1(do_fun,which) do { \
   R_BCNodeStackTop[-1] = CONS(R_BCNodeStackTop[-1], R_NilValue); \
   R_BCNodeStackTop[-1] = do_fun(FakeCall1, SYMVALUE(which), \
-                                R_BCNodeStackTop[-1], R_NilValue); \
+				R_BCNodeStackTop[-1], R_NilValue); \
   NEXT(); \
 } while(0)
 
@@ -2434,7 +2434,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
   R_BCNodeStackTop[-2] = CONS(R_BCNodeStackTop[-2], tmp); \
   R_BCNodeStackTop--; \
   R_BCNodeStackTop[-1] = do_fun(FakeCall2, SYMVALUE(which), \
-                                R_BCNodeStackTop[-1], R_NilValue); \
+				R_BCNodeStackTop[-1], R_NilValue); \
   NEXT(); \
 } while(0)
 
@@ -2672,12 +2672,12 @@ static int tryDispatch(char *generic, SEXP call, SEXP x, SEXP rho, SEXP *pv)
 
 #define DO_ISTEST(fun) do { \
   R_BCNodeStackTop[-1] = fun(R_BCNodeStackTop[-1]) ? \
-                         R_TrueValue : R_FalseValue; \
+			 R_TrueValue : R_FalseValue; \
   NEXT(); \
 } while(0)
 #define DO_ISTYPE(type) do { \
   R_BCNodeStackTop[-1] = TYPEOF(R_BCNodeStackTop[-1]) == type ? \
-                         mkTrue() : mkFalse(); \
+			 mkTrue() : mkFalse(); \
   NEXT(); \
 } while (0)
 #define isNumericOnly(x) (isNumeric(x) && ! isLogical(x))
@@ -2837,7 +2837,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
   int old_current_opcode = current_opcode;
 #endif
 #ifdef THREADED_CODE
-  int which = 0; 
+  int which = 0;
 #endif
 
   BC_CHECK_SIGINT();
@@ -3123,7 +3123,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	    value = bcEval(code, rho);
 	  else
 	    value = mkPROMISE(code, rho);
-          PUSHCALLARG(value);
+	  PUSHCALLARG(value);
 	}
 	NEXT();
       }
@@ -3176,13 +3176,13 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	  flag = PRIMPRINT(fun);
 	  R_Visible = flag != 1;
 	  value = PRIMFUN(fun) (call, fun, args, rho);
-          if (flag < 2) R_Visible = flag != 1;
+	  if (flag < 2) R_Visible = flag != 1;
 	  break;
 	case SPECIALSXP:
 	  flag = PRIMPRINT(fun);
 	  R_Visible = flag != 1;
 	  value = PRIMFUN(fun) (call, fun, CDR(call), rho);
-          if (flag < 2) R_Visible = flag != 1;
+	  if (flag < 2) R_Visible = flag != 1;
 	  break;
 	case CLOSXP:
 	  value = applyClosure(call, fun, args, rho, R_BaseEnv);
@@ -3657,7 +3657,7 @@ char *R_CompiledFileName(char *fname, char *buf, size_t bsize)
     }
     else if (ext == NULL) {
 	/* if the requested file has no extention, make a name that
-           has the extenrion added on to the expanded name */
+	   has the extenrion added on to the expanded name */
 	if (snprintf(buf, bsize, "%s%s", fname, R_COMPILED_EXTENSION) < 0)
 	    error(_("R_CompiledFileName: buffer too small"));
 	return buf;

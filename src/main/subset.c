@@ -61,11 +61,11 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 	    ii--;
 	switch (mode) {
 	case LGLSXP:
-            if (0 <= ii && ii < nx && ii != NA_LOGICAL)
-                LOGICAL(result)[i] = LOGICAL(x)[ii];
-            else
-                LOGICAL(result)[i] = NA_INTEGER;
-            break;
+	    if (0 <= ii && ii < nx && ii != NA_LOGICAL)
+		LOGICAL(result)[i] = LOGICAL(x)[ii];
+	    else
+		LOGICAL(result)[i] = NA_INTEGER;
+	    break;
 	case INTSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER)
 		INTEGER(result)[i] = INTEGER(x)[ii];
@@ -186,7 +186,7 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 	nattrib = ExtractSubset(attrib, nattrib, indx, call);
 	setAttrib(result, R_SrcrefSymbol, nattrib);
 	UNPROTECT(1);
-    }    
+    }
     UNPROTECT(3);
     return result;
 }
@@ -261,8 +261,8 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		iijj = ii + jj * nr;
 		switch (TYPEOF(x)) {
 		case LGLSXP:
-                    LOGICAL(result)[ij] = LOGICAL(x)[iijj];
-                    break;
+		    LOGICAL(result)[ij] = LOGICAL(x)[iijj];
+		    break;
 		case INTSXP:
 		    INTEGER(result)[ij] = INTEGER(x)[iijj];
 		    break;
@@ -476,7 +476,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 			ExtractSubset(VECTOR_ELT(dimnames, i),
 				      allocVector(STRSXP, bound[i]),
 				      CAR(r), call));
-		} else { /* 0-length dims have NULL dimnames */ 
+		} else { /* 0-length dims have NULL dimnames */
 		    SET_VECTOR_ELT(xdims, j++, R_NilValue);
 		}
 		r = CDR(r);
@@ -521,12 +521,12 @@ static SEXP ExtractArg(SEXP args, SEXP arg_sym)
 
     for (arg = prev_arg = args; arg != R_NilValue; arg = CDR(arg)) {
 	if(TAG(arg) == arg_sym) {
-            if (arg == prev_arg) /* found at head of args */
-                args = CDR(args);
-            else
-                SETCDR(prev_arg, CDR(arg));
-            found = 1;
-            break;
+	    if (arg == prev_arg) /* found at head of args */
+		args = CDR(args);
+	    else
+		SETCDR(prev_arg, CDR(arg));
+	    found = 1;
+	    break;
 	}
 	else  prev_arg = arg;
     }
@@ -669,7 +669,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	int ndim = length(dim);
 	ans = VectorSubset(ax, (nsubs == 1 ? CAR(subs) : R_MissingArg), call);
 	/* one-dimensional arrays went through here, and they should
-	   have their dimensions dropped only if the result has 
+	   have their dimensions dropped only if the result has
 	   length one and drop == TRUE
 	*/
 	if(ndim == 1) {
@@ -685,7 +685,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if((attrib = getAttrib(x, R_DimNamesSymbol)) != R_NilValue) {
 		    /* reinstate dimnames, include names of dimnames */
 		    PROTECT(nattrib = duplicate(attrib));
-		    SET_VECTOR_ELT(nattrib, 0, 
+		    SET_VECTOR_ELT(nattrib, 0,
 				   getAttrib(ans, R_NamesSymbol));
 		    setAttrib(ans, R_DimNamesSymbol, nattrib);
 		    setAttrib(ans, R_NamesSymbol, R_NilValue);
@@ -766,9 +766,9 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
      */
     exact = ExtractExactArg(args);
     if (exact == -1)
-        pok = exact;
+	pok = exact;
     else
-        pok = !exact;
+	pok = !exact;
 
     x = CAR(args);
 
@@ -803,13 +803,13 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
       } else {
 	    SET_NAMED(ans, 2);
       }
-      
+
       UNPROTECT(1);
       if(ans == R_UnboundValue )
 	  return(R_NilValue);
       return(ans);
     }
-    
+
     /* back to the regular program */
     if (!(isVector(x) || isList(x) || isLanguage(x)))
 	errorcall(call, R_MSG_ob_nonsub);
@@ -961,7 +961,7 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     else if(isString(nlist) )
 	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
     else {
-	errorcall(call,_("invalid subscript type '%s'"), 
+	errorcall(call,_("invalid subscript type '%s'"),
 		  type2char(TYPEOF(nlist)));
     }
 
@@ -1058,9 +1058,9 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	    case PARTIAL_MATCH:
 		havematch++;
 		if (havematch == 1) {
-		    /* partial matches can cause aliasing in eval.c:evalseq 
-                       This is overkill, but alternative ways to prevent 
-                       the aliasing appear to be even worse */
+		    /* partial matches can cause aliasing in eval.c:evalseq
+		       This is overkill, but alternative ways to prevent
+		       the aliasing appear to be even worse */
 		    y = VECTOR_ELT(x,i);
 		    SET_NAMED(y,2);
 		    SET_VECTOR_ELT(x,i,y);
@@ -1093,25 +1093,25 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	return R_NilValue;
     }
     else if( isEnvironment(x) ){
-      	y = findVarInFrame(x, install(translateChar(input)));
-      	if( TYPEOF(y) == PROMSXP ) {
+	y = findVarInFrame(x, install(translateChar(input)));
+	if( TYPEOF(y) == PROMSXP ) {
 	    PROTECT(y);
 	    y = eval(y, R_GlobalEnv);
 	    UNPROTECT(1);
-      	}   	
-        UNPROTECT(2);      
-        if( y != R_UnboundValue ) {
-            if (NAMED(x) > NAMED(y))
-	    	SET_NAMED(y, NAMED(x));
+	}
+	UNPROTECT(2);
+	if( y != R_UnboundValue ) {
+	    if (NAMED(x) > NAMED(y))
+		SET_NAMED(y, NAMED(x));
 	    return(y);
 	}
       return R_NilValue;
     }
     else if( isVectorAtomic(x) ){
-        errorcall(call, "$ operator is invalid for atomic vectors");
+	errorcall(call, "$ operator is invalid for atomic vectors");
     }
     else if( IS_S4_OBJECT(x) ){
-        errorcall(call, "$ operator not defined for this S4 class");
+	errorcall(call, "$ operator not defined for this S4 class");
     }
     UNPROTECT(2);
     return R_NilValue;

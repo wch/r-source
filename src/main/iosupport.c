@@ -236,5 +236,3 @@ int attribute_hidden R_TextBufferGetc(TextBuffer *txtb)
     }
     return *txtb->bufp++;
 }
-
-

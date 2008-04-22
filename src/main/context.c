@@ -38,7 +38,7 @@
  *	cjmpbuf		longjump information for non-local return
  *	cstacktop	the current level of the pointer protection stack
  *	callflag	the context "type"
- *	call		the call (name of function, or expression to 
+ *	call		the call (name of function, or expression to
  *			get the function) that effected this
  *			context if a closure, otherwise often NULL.
  *	callfun		the function, if this was a closure.
@@ -200,13 +200,13 @@ static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
 
     R_ReturnedValue = val;
     R_GlobalContext = cptr; /* this used to be set to
-                               cptr->nextcontext for non-toplevel
-                               jumps (with the context set back at the
-                               SETJMP for restarts).  Changing this to
-                               always using cptr as the new global
-                               context should simplify some code and
-                               perhaps allow loops to be handled with
-                               fewer SETJMP's.  LT */
+			       cptr->nextcontext for non-toplevel
+			       jumps (with the context set back at the
+			       SETJMP for restarts).  Changing this to
+			       always using cptr as the new global
+			       context should simplify some code and
+			       perhaps allow loops to be handled with
+			       fewer SETJMP's.  LT */
     R_restore_globals(R_GlobalContext);
 
     LONGJMP(cptr->cjmpbuf, mask);
@@ -276,8 +276,8 @@ void attribute_hidden findcontext(int mask, SEXP env, SEXP val)
 	     cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
 	     cptr = cptr->nextcontext)
 	    if (cptr->callflag & CTXT_LOOP && cptr->cloenv == env )
-	        jumpfun(cptr, mask, val);
-        error(_("no loop to break from, jumping to top level"));
+		jumpfun(cptr, mask, val);
+	error(_("no loop to break from, jumping to top level"));
     }
     else {				/* return; or browser */
 	for (cptr = R_GlobalContext;
@@ -399,7 +399,7 @@ SEXP attribute_hidden R_syscall(int n, RCNTXT *cptr)
     else
 	n = - n;
     if(n < 0)
-	errorcall(R_GlobalContext->call, 
+	errorcall(R_GlobalContext->call,
 		  _("not that many frames on the stack"));
     while (cptr->nextcontext != NULL) {
 	if (cptr->callflag & CTXT_FUNCTION ) {
@@ -423,7 +423,7 @@ SEXP attribute_hidden R_sysfunction(int n, RCNTXT *cptr)
     else
 	n = - n;
     if (n < 0)
-	errorcall(R_GlobalContext->call, 
+	errorcall(R_GlobalContext->call,
 		  _("not that many frames on the stack"));
     while (cptr->nextcontext != NULL) {
 	if (cptr->callflag & CTXT_FUNCTION ) {
@@ -456,7 +456,7 @@ SEXP attribute_hidden do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return(R_NilValue);
     for(cptr = R_GlobalContext->nextcontext; cptr!= R_ToplevelContext;
 	    cptr = cptr->nextcontext) {
-        if (cptr->callflag & CTXT_FUNCTION) {
+	if (cptr->callflag & CTXT_FUNCTION) {
 	    SET_RESTART_BIT_ON(cptr->callflag);
 	    break;
 	}
@@ -567,7 +567,7 @@ SEXP attribute_hidden do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (cptr->callflag & CTXT_FUNCTION ) {
 	    if (cptr->cloenv == t)
 	    {
-		if (n == 1) 
+		if (n == 1)
 		    return cptr->sysparent;
 		n--;
 		t = cptr->sysparent;
@@ -617,11 +617,11 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
 
 /*
   This is a simple interface for evaluating R expressions
-  from C with a guarantee that one will return to the 
+  from C with a guarantee that one will return to the
   point in the code from which the call was made (if it does
   return at all).
   This uses R_TopleveExec to do this.  It is important
-  in applications that embed R or wish to make general 
+  in applications that embed R or wish to make general
   callbacks to R with error handling.
 
   It is currently hidden with a data structure definition
@@ -645,7 +645,7 @@ protectedEval(void *d)
     if(data->env) {
 	env = data->env;
     }
-    data->val = eval(data->expression, env); 
+    data->val = eval(data->expression, env);
     PROTECT(data->val);
 }
 

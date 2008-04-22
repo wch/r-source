@@ -68,7 +68,7 @@ static int length_adj(const char *orig, const char *repl, int *ovec,
 		    error(_("invalid backreference %d in regular expression"), k);
 		nb = ovec[2*k+1] - ovec[2*k];
 #ifdef SUPPORT_MBCS
-		/* assume for now that in UTF-8 upper/lower pairs are same len */ 
+		/* assume for now that in UTF-8 upper/lower pairs are same len */
 		if (nb >0 && !useBytes && mbcslocale && (upper || lower)) {
 		    wctrans_t tr = wctrans(upper ? "toupper" : "tolower");
 		    int j, nc;
@@ -237,8 +237,8 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
     tables = pcre_maketables();
     re_pcre = pcre_compile(spat, options, &errorptr, &erroffset, tables);
     if (!re_pcre) {
-	if (errorptr) 
-	    warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"), 
+	if (errorptr)
+	    warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
 		    errorptr, spat+erroffset);
 	error(_("invalid regular expression '%s'"), spat);
     }
@@ -292,7 +292,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 			    offset = pos;
 			    break;
 			}
-		    }		    
+		    }
 		} else if (!useBytes && mbcslocale) {
 		    wchar_t wc; int used, pos = 0; mbstate_t mb_st;
 		    mbs_init(&mb_st);
@@ -315,7 +315,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 	    offset = 0;
 	    s = translateChar(STRING_ELT(vec, i));
 	    t = srep;
-            cbuf = u = CallocCharBuf(ns);
+	    cbuf = u = CallocCharBuf(ns);
 	    eflag = 0; last_end = -1;
 	    while (pcre_exec(re_pcre, re_pe, s, nns, offset, eflag,
 			     ovector, 30) >= 0) {
@@ -328,7 +328,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 		}
 		offset = ovector[1];
 		if (s[offset] == '\0' || !global) break;
-		if (ovector[1] == ovector[0]) { 
+		if (ovector[1] == ovector[0]) {
 		    /* advance by a char */
 #ifdef SUPPORT_MBCS
 		    if (!useBytes && ienc == CE_UTF8) {
@@ -336,7 +336,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 			while( (used = utf8clen(s[pos])) ) {
 			    pos += used;
 			    if (pos > offset) {
-				for (j = offset; j < pos; j++) *u++ = s[j]; 
+				for (j = offset; j < pos; j++) *u++ = s[j];
 				offset = pos;
 				break;
 			    }
@@ -347,7 +347,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 			while( (used = Mbrtowc(&wc, s+pos, MB_CUR_MAX, &mb_st)) ) {
 			    pos += used;
 			    if (pos > offset) {
-				for (j = offset; j < pos; j++) *u++ = s[j]; 
+				for (j = offset; j < pos; j++) *u++ = s[j];
 				offset = pos;
 				break;
 			    }
@@ -368,7 +368,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 		SET_STRING_ELT(ans, i, mkCharCE(cbuf, CE_UTF8));
 	    } else
 		SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(vec, i)));
-            Free(cbuf);
+	    Free(cbuf);
 	}
     }
     if (re_pe) pcre_free(re_pe);
@@ -436,8 +436,8 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
     tables = pcre_maketables();
     re_pcre = pcre_compile(spat, options, &errorptr, &erroffset, tables);
     if (!re_pcre) {
-	if (errorptr) 
-	    warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"), 
+	if (errorptr)
+	    warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
 		    errorptr, spat+erroffset);
 	error(_("invalid regular expression '%s'"), spat);
     }
@@ -453,134 +453,134 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 
     for (i = 0 ; i < n ; i++) {
 	const char *s;
-        int j, foundAll, foundAny, matchIndex, start;
-        foundAll = foundAny = start = 0;
-        matchIndex = -1;
-	if (STRING_ELT(text,i) == NA_STRING){ 
-            PROTECT(ans = allocVector(INTSXP, 1));
-            PROTECT(matchlen = allocVector(INTSXP, 1));
+	int j, foundAll, foundAny, matchIndex, start;
+	foundAll = foundAny = start = 0;
+	matchIndex = -1;
+	if (STRING_ELT(text,i) == NA_STRING){
+	    PROTECT(ans = allocVector(INTSXP, 1));
+	    PROTECT(matchlen = allocVector(INTSXP, 1));
 	    INTEGER(ans)[0] = INTEGER(matchlen)[0] = R_NaInt;
-            setAttrib(ans, install("match.length"), matchlen);
-            SET_VECTOR_ELT(ansList, i, ans);
-            UNPROTECT(2);
+	    setAttrib(ans, install("match.length"), matchlen);
+	    SET_VECTOR_ELT(ansList, i, ans);
+	    UNPROTECT(2);
 	    continue;
 	}
-	if (ienc == CE_UTF8) 
+	if (ienc == CE_UTF8)
 	    s = translateCharUTF8(STRING_ELT(text, i));
 	else
 	    s = translateChar(STRING_ELT(text, i));
 #ifdef SUPPORT_MBCS
 	if (!useBytes && ienc != CE_UTF8 && mbcslocale && !mbcsValid(s)) {
 	    warning(_("input string %d is invalid in this locale"), i+1);
-            PROTECT(ans = allocVector(INTSXP, 1)); 
-            PROTECT(matchlen = allocVector(INTSXP, 1));
+	    PROTECT(ans = allocVector(INTSXP, 1));
+	    PROTECT(matchlen = allocVector(INTSXP, 1));
 	    INTEGER(ans)[0] = INTEGER(matchlen)[0] = -1;
-            setAttrib(ans, install("match.length"), matchlen);
-            SET_VECTOR_ELT(ansList, i, ans);
-            UNPROTECT(2);
+	    setAttrib(ans, install("match.length"), matchlen);
+	    SET_VECTOR_ELT(ansList, i, ans);
+	    UNPROTECT(2);
 	    continue;
 	}
 #endif
-        while (!foundAll) {
-            int rc, ovector[3], slen = strlen(s);
-            rc = pcre_exec(re_pcre, re_pe, s, slen, start, 0, ovector, 3);
-            if (rc >= 0) {
-                if ((matchIndex + 1) == bufsize) {
-                    /* Reallocate match buffers */
-                    int newbufsize = bufsize * 2;
-                    SEXP tmp;
-                    tmp = allocVector(INTSXP, 2 * bufsize);
-                    for (j = 0; j < bufsize; j++)
-                        INTEGER(tmp)[j] = INTEGER(matchlenbuf)[j];
-                    UNPROTECT(1);
-                    matchlenbuf = tmp;
-                    PROTECT(matchlenbuf);
-                    tmp = allocVector(INTSXP, 2 * bufsize);
-                    for (j = 0; j < bufsize; j++)
-                        INTEGER(tmp)[j] = INTEGER(matchbuf)[j];
-                    matchbuf = tmp;
-                    UNPROTECT(2);
-                    PROTECT(matchbuf);
-                    PROTECT(matchlenbuf);
-                    bufsize = newbufsize;
-                }
-                matchIndex++;
-                foundAny = 1;
-                st = ovector[0];
-                INTEGER(matchbuf)[matchIndex] = st + 1; /* index from one */
-                INTEGER(matchlenbuf)[matchIndex] = ovector[1] - st;
+	while (!foundAll) {
+	    int rc, ovector[3], slen = strlen(s);
+	    rc = pcre_exec(re_pcre, re_pe, s, slen, start, 0, ovector, 3);
+	    if (rc >= 0) {
+		if ((matchIndex + 1) == bufsize) {
+		    /* Reallocate match buffers */
+		    int newbufsize = bufsize * 2;
+		    SEXP tmp;
+		    tmp = allocVector(INTSXP, 2 * bufsize);
+		    for (j = 0; j < bufsize; j++)
+			INTEGER(tmp)[j] = INTEGER(matchlenbuf)[j];
+		    UNPROTECT(1);
+		    matchlenbuf = tmp;
+		    PROTECT(matchlenbuf);
+		    tmp = allocVector(INTSXP, 2 * bufsize);
+		    for (j = 0; j < bufsize; j++)
+			INTEGER(tmp)[j] = INTEGER(matchbuf)[j];
+		    matchbuf = tmp;
+		    UNPROTECT(2);
+		    PROTECT(matchbuf);
+		    PROTECT(matchlenbuf);
+		    bufsize = newbufsize;
+		}
+		matchIndex++;
+		foundAny = 1;
+		st = ovector[0];
+		INTEGER(matchbuf)[matchIndex] = st + 1; /* index from one */
+		INTEGER(matchlenbuf)[matchIndex] = ovector[1] - st;
 		/* we need to advance 'start' in bytes */
-                if (INTEGER(matchlenbuf)[matchIndex] == 0)
-                    start = ovector[0] + 1;
-                else
-                    start = ovector[1];
+		if (INTEGER(matchlenbuf)[matchIndex] == 0)
+		    start = ovector[0] + 1;
+		else
+		    start = ovector[1];
 #ifdef SUPPORT_MBCS
-                if (!useBytes && ienc == CE_UTF8) {
-                    int mlen = ovector[1] - st;
-                    /* Unfortunately these are in bytes, so we need to
-                       use chars instead */
-                    R_AllocStringBuffer(imax2(st, mlen+1), &cbuff);
-                    if (st > 0) {
-                        memcpy(cbuff.data, s, st);
-                        cbuff.data[st] = '\0';
-                        INTEGER(matchbuf)[matchIndex] = 1 + utf8towcs(NULL, cbuff.data, 0);
-                        if (INTEGER(matchbuf)[matchIndex] <= 0) { /* an invalid string */
-                            INTEGER(matchbuf)[matchIndex] = NA_INTEGER;
-                            foundAll = 1; /* if we get here, we are done */
-                        }
-                    }
-                    memcpy(cbuff.data, s+st, mlen);
-                    cbuff.data[mlen] = '\0';
-                    INTEGER(matchlenbuf)[matchIndex] = utf8towcs(NULL, cbuff.data, 0);
-                    if (INTEGER(matchlenbuf)[matchIndex] < 0) {/* an invalid string */
-                        INTEGER(matchlenbuf)[matchIndex] = NA_INTEGER;
-                        foundAll = 1; 
-                    }
-                } else if (!useBytes && mbcslocale) {
-                    int mlen = ovector[1] - st;
-                    /* Unfortunately these are in bytes, so we need to
-                       use chars instead */
-                    R_AllocStringBuffer(imax2(st, mlen+1), &cbuff);
-                    if (st > 0) {
-                        memcpy(cbuff.data, s, st);
-                        cbuff.data[st] = '\0';
-                        INTEGER(matchbuf)[matchIndex] = 1 + mbstowcs(NULL, cbuff.data, 0);
-                        if (INTEGER(matchbuf)[matchIndex] <= 0) { /* an invalid string */
-                            INTEGER(matchbuf)[matchIndex] = NA_INTEGER;
-                            foundAll = 1; /* if we get here, we are done */
-                        }
-                    }
-                    memcpy(cbuff.data, s+st, mlen);
-                    cbuff.data[mlen] = '\0';
-                    INTEGER(matchlenbuf)[matchIndex] = mbstowcs(NULL, cbuff.data, 0);
-                    if (INTEGER(matchlenbuf)[matchIndex] < 0) {/* an invalid string */
-                        INTEGER(matchlenbuf)[matchIndex] = NA_INTEGER;
-                        foundAll = 1; 
-                    }
-                }
+		if (!useBytes && ienc == CE_UTF8) {
+		    int mlen = ovector[1] - st;
+		    /* Unfortunately these are in bytes, so we need to
+		       use chars instead */
+		    R_AllocStringBuffer(imax2(st, mlen+1), &cbuff);
+		    if (st > 0) {
+			memcpy(cbuff.data, s, st);
+			cbuff.data[st] = '\0';
+			INTEGER(matchbuf)[matchIndex] = 1 + utf8towcs(NULL, cbuff.data, 0);
+			if (INTEGER(matchbuf)[matchIndex] <= 0) { /* an invalid string */
+			    INTEGER(matchbuf)[matchIndex] = NA_INTEGER;
+			    foundAll = 1; /* if we get here, we are done */
+			}
+		    }
+		    memcpy(cbuff.data, s+st, mlen);
+		    cbuff.data[mlen] = '\0';
+		    INTEGER(matchlenbuf)[matchIndex] = utf8towcs(NULL, cbuff.data, 0);
+		    if (INTEGER(matchlenbuf)[matchIndex] < 0) {/* an invalid string */
+			INTEGER(matchlenbuf)[matchIndex] = NA_INTEGER;
+			foundAll = 1;
+		    }
+		} else if (!useBytes && mbcslocale) {
+		    int mlen = ovector[1] - st;
+		    /* Unfortunately these are in bytes, so we need to
+		       use chars instead */
+		    R_AllocStringBuffer(imax2(st, mlen+1), &cbuff);
+		    if (st > 0) {
+			memcpy(cbuff.data, s, st);
+			cbuff.data[st] = '\0';
+			INTEGER(matchbuf)[matchIndex] = 1 + mbstowcs(NULL, cbuff.data, 0);
+			if (INTEGER(matchbuf)[matchIndex] <= 0) { /* an invalid string */
+			    INTEGER(matchbuf)[matchIndex] = NA_INTEGER;
+			    foundAll = 1; /* if we get here, we are done */
+			}
+		    }
+		    memcpy(cbuff.data, s+st, mlen);
+		    cbuff.data[mlen] = '\0';
+		    INTEGER(matchlenbuf)[matchIndex] = mbstowcs(NULL, cbuff.data, 0);
+		    if (INTEGER(matchlenbuf)[matchIndex] < 0) {/* an invalid string */
+			INTEGER(matchlenbuf)[matchIndex] = NA_INTEGER;
+			foundAll = 1;
+		    }
+		}
 #endif
-                if (start >= slen)
-                    foundAll = 1;
-            } else {
-                foundAll = 1;
-                if (!foundAny)
-                    matchIndex = 0;
-            }
-        }
-        PROTECT(ans = allocVector(INTSXP, matchIndex + 1));
-        PROTECT(matchlen = allocVector(INTSXP, matchIndex + 1));
-        if (foundAny) {
-            /* copy from buffers */
-            for (j = 0; j <= matchIndex; j++) {
-                INTEGER(ans)[j] = INTEGER(matchbuf)[j];
-                INTEGER(matchlen)[j] = INTEGER(matchlenbuf)[j];
-            }
-        } else {
-            INTEGER(ans)[0] = INTEGER(matchlen)[0] = -1;
-        }
-        setAttrib(ans, install("match.length"), matchlen);
-        SET_VECTOR_ELT(ansList, i, ans);
-        UNPROTECT(2);
+		if (start >= slen)
+		    foundAll = 1;
+	    } else {
+		foundAll = 1;
+		if (!foundAny)
+		    matchIndex = 0;
+	    }
+	}
+	PROTECT(ans = allocVector(INTSXP, matchIndex + 1));
+	PROTECT(matchlen = allocVector(INTSXP, matchIndex + 1));
+	if (foundAny) {
+	    /* copy from buffers */
+	    for (j = 0; j <= matchIndex; j++) {
+		INTEGER(ans)[j] = INTEGER(matchbuf)[j];
+		INTEGER(matchlen)[j] = INTEGER(matchlenbuf)[j];
+	    }
+	} else {
+	    INTEGER(ans)[0] = INTEGER(matchlen)[0] = -1;
+	}
+	setAttrib(ans, install("match.length"), matchlen);
+	SET_VECTOR_ELT(ansList, i, ans);
+	UNPROTECT(2);
     }
     /* see comment above */
     R_FreeStringBufferL(&cbuff);

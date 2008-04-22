@@ -84,11 +84,11 @@ SEXP R_traceOnOff(SEXP onOff)
 {
     Rboolean prev = GET_TRACE_STATE;
     if(length(onOff) > 0) {
-        Rboolean _new = asLogical(onOff);
-        if(_new == TRUE || _new == FALSE)
-            SET_TRACE_STATE(_new);
-        else
-            error("Value for tracingState must be TRUE or FALSE");
+	Rboolean _new = asLogical(onOff);
+	if(_new == TRUE || _new == FALSE)
+	    SET_TRACE_STATE(_new);
+	else
+	    error("Value for tracingState must be TRUE or FALSE");
     }
     return ScalarLogical(prev);
 }
@@ -216,7 +216,7 @@ SEXP attribute_hidden do_memretrace(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (origin != R_NilValue){
 	SET_TRACE(object, 1);
 	if (R_current_trace_state()) {
-	    Rprintf("tracemem[%s -> %p]: ", 
+	    Rprintf("tracemem[%s -> %p]: ",
 		    translateChar(STRING_ELT(origin, 0)), (void *) object);
 	    memtrace_stack_dump();
 	}

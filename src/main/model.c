@@ -106,7 +106,7 @@ static int MatchVar(SEXP var1, SEXP var2)
 {
     /* For expedience, and sanity... */
     if ( var1 == var2 )
-    	return 1;
+	return 1;
     /* Handle Nulls */
     if (isNull(var1) && isNull(var2))
 	return 1;
@@ -841,7 +841,7 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(formula = EncodeVars(CAR(args)));
 
     nvar = length(varlist) - 1; /* need to recompute, in case
-                                   EncodeVars stretched it */
+				   EncodeVars stretched it */
 
     /* Step 2a: Compute variable names */
 
@@ -963,18 +963,18 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 		l += strlen(CHAR(STRING_ELT(varnames, i - 1)));
 	    }
 	}
-        cbuf = (char *) alloca(l+1);
-        cbuf[0] = '\0';
+	cbuf = (char *) alloca(l+1);
+	cbuf[0] = '\0';
 	l = 0;
 	for (i = 1; i <= nvar; i++) {
 	    if (GetBit(CAR(call), i)) {
 		if (l > 0)
 		    strcat(cbuf, ":");
-                strcat(cbuf, CHAR(STRING_ELT(varnames, i - 1)));
+		strcat(cbuf, CHAR(STRING_ELT(varnames, i - 1)));
 		l++;
 	    }
 	}
-        SET_STRING_ELT(termlabs, n, mkChar(cbuf));
+	SET_STRING_ELT(termlabs, n, mkChar(cbuf));
 	n++;
     }
     PROTECT(v = allocVector(VECSXP, 2));
@@ -1441,7 +1441,7 @@ SEXP attribute_hidden do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* need to transfer _all but tsp and dim_ attributes, possibly lost
 	   by subsetting in na.action.  */
 	for ( i = length(ans) ; i-- ; )
-	  	copyMostAttribNoTs(VECTOR_ELT(data, i),VECTOR_ELT(ans, i));
+		copyMostAttribNoTs(VECTOR_ELT(data, i),VECTOR_ELT(ans, i));
 
 	UNPROTECT(3);
     }
@@ -1463,15 +1463,15 @@ SEXP attribute_hidden do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_tilde(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     if (isObject(call))
-        return duplicate(call);
+	return duplicate(call);
     else {
-        SEXP klass;
-        PROTECT(call = duplicate(call));
-        PROTECT(klass = mkString("formula"));
-        setAttrib(call, R_ClassSymbol, klass);
-        setAttrib(call, R_DotEnvSymbol, rho);
-        UNPROTECT(2);
-        return call;
+	SEXP klass;
+	PROTECT(call = duplicate(call));
+	PROTECT(klass = mkString("formula"));
+	setAttrib(call, R_ClassSymbol, klass);
+	setAttrib(call, R_DotEnvSymbol, rho);
+	UNPROTECT(2);
+	return call;
     }
 }
 

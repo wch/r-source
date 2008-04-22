@@ -79,13 +79,13 @@
 
 
 /* For memory profiling.  */
-/* We want a count of calls to duplicate from outside 
+/* We want a count of calls to duplicate from outside
    which requires a wrapper function.
 
    The original duplicate() function is now duplicate1().
-   
+
    I don't see how to make the wrapper go away when R_PROFILING
-   is not defined, because we still need to be able to 
+   is not defined, because we still need to be able to
    optionally rename duplicate() as Rf_duplicate().
 */
 static SEXP duplicate1(SEXP);
@@ -110,12 +110,12 @@ SEXP duplicate(SEXP s){
     SEXP t;
 
 #ifdef R_PROFILING
-    duplicate_counter++;	
+    duplicate_counter++;
 #endif
     t = duplicate1(s);
 #ifdef R_MEMORY_PROFILING
-    if (TRACE(s) && !(TYPEOF(s) == CLOSXP || TYPEOF(s) == BUILTINSXP || 
-		      TYPEOF(s) == SPECIALSXP || TYPEOF(s) == PROMSXP || 
+    if (TRACE(s) && !(TYPEOF(s) == CLOSXP || TYPEOF(s) == BUILTINSXP ||
+		      TYPEOF(s) == SPECIALSXP || TYPEOF(s) == PROMSXP ||
 		      TYPEOF(s) == ENVSXP)){
 	    memtrace_report(s,t);
 	    SET_TRACE(t,1);
@@ -196,7 +196,7 @@ static SEXP duplicate1(SEXP s)
 	UNPROTECT(2);
 	break;
     case CHARSXP:
-        return s;
+	return s;
 	break;
     case EXPRSXP:
     case VECSXP:
@@ -224,7 +224,7 @@ static SEXP duplicate1(SEXP s)
 	return s;
 	break;
     case S4SXP:
-        PROTECT(s);
+	PROTECT(s);
 	PROTECT(t = allocS4Object());
 	DUPLICATE_ATTRIB(t, s);
 	UNPROTECT(2);

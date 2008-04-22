@@ -24,7 +24,7 @@ Furthermore:
 
 */
 
-/* 
+/*
    Based on version 0.16 of apse.c, with unused code removed.
    Modified by R-core to work with wchar_t and an alphabet of size 65536.
 */
@@ -82,7 +82,7 @@ Furthermore:
 
 #define APSE_NEXT_APPROX(state, prev_state, text, i, prev_i, carry)	\
 	(state[i]  = (((prev_state[i] << 1) & text)		  |	\
-			prev_state[prev_i] 			  |	\
+			prev_state[prev_i]			  |	\
 		      ((state[prev_i] | prev_state[prev_i]) << 1) |	\
 			carry))
 
@@ -112,7 +112,7 @@ Furthermore:
 #define APSE_PREFIX_DELETE_MASK(ap)	\
 	    do { if (ap->edit_deletions < ap->edit_distance &&	\
 		     ap->text_position  < ap->edit_distance)	\
- 	             ap->state[h] &= ap->match_begin_bitmask; } while (0)
+		     ap->state[h] &= ap->match_begin_bitmask; } while (0)
 
 /* The code begins. */
 
@@ -152,7 +152,7 @@ apse_bool_t apse_set_pattern(apse_t*		ap,
 
     for (i = 0; i < pattern_size; i++) {
 #ifdef SUPPORT_MBCS
-	unsigned o = ap->n_alphabet > 256 ? 
+	unsigned o = ap->n_alphabet > 256 ?
 	    ((wchar_t *)pattern)[i] % ap->n_alphabet :
 	    pattern[i];
 #else
@@ -199,7 +199,7 @@ static int _apse_wrap_slice(apse_t*		ap,
 
     if ((apse_size_t)begin_in >= ap->pattern_size)
 	return 0;
-	
+
     if ((apse_size_t)begin_in + size_in > ap->pattern_size)
 	size_in = ap->pattern_size - begin_in;
 
@@ -253,7 +253,7 @@ apse_bool_t apse_set_edit_distance(apse_t *ap, apse_size_t edit_distance) {
 	free(ap->prev_state);
 
     if (edit_distance >= ap->pattern_size)
-        edit_distance = ap->pattern_size;
+	edit_distance = ap->pattern_size;
 
     ap->edit_distance = edit_distance;
 
@@ -332,7 +332,7 @@ apse_bool_t apse_set_caseignore_slice(apse_t*		ap,
 	tru = wctrans("toupper");
     }
 #endif
-    
+
     if (caseignore) {
 	for (i = true_begin, j = true_begin +  true_size;
 	     i < j && i < ap->pattern_size; i++) {
@@ -409,7 +409,7 @@ void apse_destroy(apse_t *ap) {
     if (ap->fold_mask)		free(ap->fold_mask);
     if (ap->state)		free(ap->state);
     if (ap->prev_state)		free(ap->prev_state);
-    if (ap->exact_mask)	 	free(ap->exact_mask);
+    if (ap->exact_mask)		free(ap->exact_mask);
     free(ap);
 }
 
@@ -590,7 +590,7 @@ static apse_bool_t _apse_match_next_state(apse_t *ap) {
 	    for (h = 0;
 		 h <= k;
 		 h += ap->bitvectors_in_state) {
-	        for (i = h, j = h + ap->bitvectors_in_state - 1; i < j; j--)
+		for (i = h, j = h + ap->bitvectors_in_state - 1; i < j; j--)
 		    if (ap->state[j] != ap->prev_state[j])
 			break;
 		if (ap->prev_state[j] == ap->state[j])
@@ -649,7 +649,7 @@ static void _apse_exact_multiple(apse_t* ap) {
 
     for (h = 0; h < ap->bitvectors_in_state; h++)
 	ap->state[g + h] &= ~ap->exact_mask[h];
-} 
+}
 
 static apse_bool_t _apse_match_single_simple(apse_t *ap) {
     /* single apse_vec_t, edit_distance */
@@ -871,7 +871,7 @@ static apse_bool_t _apse_match_multiple_complex(apse_t *ap) {
 
 	    if (ap->exact_positions)
 		_apse_exact_multiple(ap);
-		
+
 	    if (_apse_match_next_state(ap) == APSE_MATCH_STATE_END)
 		return 1;
 
@@ -974,7 +974,7 @@ static apse_bool_t __apse_match(apse_t		*ap,
     return did_match;
 }
 
-static apse_bool_t _apse_match(apse_t 		*ap,
+static apse_bool_t _apse_match(apse_t		*ap,
 			       unsigned char	*text,
 			       apse_size_t	text_size) {
     if (ap->use_minimal_distance) {
@@ -985,7 +985,7 @@ static apse_bool_t _apse_match(apse_t 		*ap,
 	    apse_size_t minimal_edit_distance;
 	    apse_size_t previous_edit_distance = 0;
 	    apse_size_t next_edit_distance;
-	    
+
 	    for (next_edit_distance = 1;
 		 next_edit_distance <= ap->pattern_size;
 		 next_edit_distance *= 2) {
@@ -993,7 +993,7 @@ static apse_bool_t _apse_match(apse_t 		*ap,
 		if (__apse_match(ap, text, text_size))
 		    break;
 		previous_edit_distance = next_edit_distance;
-	    } 
+	    }
 	    minimal_edit_distance = next_edit_distance;
 	    if (next_edit_distance > 1) {
 		do {
@@ -1012,7 +1012,7 @@ static apse_bool_t _apse_match(apse_t 		*ap,
 	    }
 	    apse_set_edit_distance(ap, minimal_edit_distance);
 	    __apse_match(ap, text, text_size);
-	    
+
 	    return 1;
 	}
     } else

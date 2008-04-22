@@ -587,7 +587,7 @@ static BBOX DrawBBox(BBOX bbox, double xoffset, double yoffset,
      * mathematical annotation would look REALLY bad.
      * Unfortunately, this meant that the user could not set a nice
      * small lwd to get a finer line;  we always bumped it back up to 1.
-     * NOW we just reduce lwd to 1 (as a sanity check) ONLY if 
+     * NOW we just reduce lwd to 1 (as a sanity check) ONLY if
      * lwd is greater than 1.
      */
     if (gc->lwd > 1)
@@ -950,7 +950,7 @@ static BBOX GlyphBBox(int chr, pGEcontext gc, pGEDevDesc dd)
     BBOX bbox;
     double height, depth, width;
     int chr1 = chr;
-    if(dd->dev->wantSymbolUTF8 && gc->fontface == 5) 
+    if(dd->dev->wantSymbolUTF8 && gc->fontface == 5)
 	chr1 = -Rf_AdobeSymbol2ucs2(chr);
     GEMetricInfo(chr1, gc, &height, &depth, &width, dd);
     bboxHeight(bbox) = fromDeviceHeight(height, MetricUnit, dd);
@@ -1008,7 +1008,7 @@ static BBOX RenderSymbolChar(int ascii, int draw, mathContext *mc,
     if (draw) {
 	asciiStr[0] = ascii;
 	asciiStr[1] = '\0';
-	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr, 
+	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr,
 	       CE_SYMBOL,
 	       0.0, 0.0, mc->CurrentAngle, gc,
 	       dd);
@@ -1126,7 +1126,7 @@ static BBOX RenderChar(int ascii, int draw, mathContext *mc,
 
     bbox = GlyphBBox(ascii, gc, dd);
     if (draw) {
-        memset(asciiStr, 0, sizeof(asciiStr));
+	memset(asciiStr, 0, sizeof(asciiStr));
 #ifdef SUPPORT_MBCS
 	if(mbcslocale) {
 	    size_t res = wcrtomb(asciiStr, ascii, NULL);
@@ -1863,9 +1863,9 @@ static void NumDenomVShift(BBOX numBBox, BBOX denomBBox,
     delta = (*u - bboxDepth(numBBox)) - (a + 0.5 * theta);
     /*
      * Numerators and denominators on fractions appear too far from
-     * horizontal bar. 
+     * horizontal bar.
      * Reread of Knuth suggests removing "+ theta" components below.
-     */ 
+     */
     if (delta < phi)
 	*u += (phi - delta); /* + theta; */
     delta = (a + 0.5 * theta) - (bboxHeight(denomBBox) - *v);
@@ -1954,7 +1954,7 @@ static BBOX RenderFraction(SEXP expr, int rule, int draw,
 }
 
 static BBOX RenderUnderline(SEXP expr, int draw, mathContext *mc,
-	        	    pGEcontext gc, pGEDevDesc dd)
+			    pGEcontext gc, pGEDevDesc dd)
 {
     SEXP body = CADR(expr);
     BBOX BBox;
@@ -1972,24 +1972,24 @@ static BBOX RenderUnderline(SEXP expr, int draw, mathContext *mc,
     depth = bboxDepth(BBox) + adepth;
 
     if (draw) {
-        int savedlty = gc->lty;
-        double savedlwd = gc->lwd;
-        mc->CurrentX = savedX;
-        mc->CurrentY = savedY;
-        PMoveUp(-depth, mc);
-        x[0] = ConvertedX(mc, dd);
-        y[0] = ConvertedY(mc, dd);
-        PMoveAcross(width, mc);
-        x[1] = ConvertedX(mc, dd);
-        y[1] = ConvertedY(mc, dd);
-        gc->lty = LTY_SOLID;
+	int savedlty = gc->lty;
+	double savedlwd = gc->lwd;
+	mc->CurrentX = savedX;
+	mc->CurrentY = savedY;
+	PMoveUp(-depth, mc);
+	x[0] = ConvertedX(mc, dd);
+	y[0] = ConvertedY(mc, dd);
+	PMoveAcross(width, mc);
+	x[1] = ConvertedX(mc, dd);
+	y[1] = ConvertedY(mc, dd);
+	gc->lty = LTY_SOLID;
 	if (gc->lwd > 1)
 	    gc->lwd = 1;
-        GEPolyline(2, x, y, gc, dd);
-        PMoveUp(depth, mc);
-        gc->lty = savedlty;
-        gc->lwd = savedlwd;
-        PMoveTo(savedX + width, savedY, mc);
+	GEPolyline(2, x, y, gc, dd);
+	PMoveUp(depth, mc);
+	gc->lty = savedlty;
+	gc->lwd = savedlwd;
+	PMoveTo(savedX + width, savedY, mc);
     }
     return EnlargeBBox(BBox, 0.0, adepth, 0.0);
 }
@@ -2867,7 +2867,7 @@ static int SymbolFaceAtom(SEXP expr)
 }
 
 static BBOX RenderSymbolFace(SEXP expr, int draw, mathContext *mc,
-                             pGEcontext gc, pGEDevDesc dd)
+			     pGEcontext gc, pGEDevDesc dd)
 {
     BBOX bbox;
     int prevfont = SetFont(SymbolFont, gc);
@@ -3091,7 +3091,7 @@ static BBOX RenderFormula(SEXP expr, int draw, mathContext *mc,
     else if (OverAtom(head))
 	return RenderOver(expr, draw, mc, gc, dd);
     else if (UnderlAtom(head))
-        return RenderUnderl(expr, draw, mc, gc, dd);
+	return RenderUnderl(expr, draw, mc, gc, dd);
     else if (AtopAtom(head))
 	return RenderAtop(expr, draw, mc, gc, dd);
     else if (ParenAtom(head))

@@ -60,8 +60,8 @@ SEXP attribute_hidden mkPRIMSXP(int offset, int eval)
 }
 
 /* This is called by function() {}, where an invalid
-   body should be impossible. When called from 
-   other places (eg do_asfunction) they 
+   body should be impossible. When called from
+   other places (eg do_asfunction) they
    should do this checking in advance */
 
 /*  mkCLOSXP - return a closure with formals f,  */
@@ -79,7 +79,7 @@ SEXP attribute_hidden mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
     if(isList(formals))
 	SET_FORMALS(c, formals);
     else
-        error(_("invalid formal arguments for \"function\""));
+	error(_("invalid formal arguments for \"function\""));
 #else
     SET_FORMALS(c, formals);
 #endif
@@ -91,7 +91,7 @@ SEXP attribute_hidden mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
        )
 	SET_BODY(c, body);
     else
-        error(_("invalid body argument for \"function\"\n\
+	error(_("invalid body argument for \"function\"\n\
 Should NEVER happen; please bug.report() [mkCLOSXP]"));
 
     if(rho == R_NilValue)
@@ -115,9 +115,9 @@ static int isDDName(SEXP name)
 
     buf = CHAR(name);
     if( !strncmp(buf, "..", 2) && strlen(buf) > 2 ) {
-        buf += 2;
+	buf += 2;
 	val = strtol(buf, &endp, 10);
-        if( *endp != '\0')
+	if( *endp != '\0')
 	    return 0;
 	else
 	    return 1;

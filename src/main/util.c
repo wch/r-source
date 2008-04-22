@@ -67,9 +67,9 @@ Rboolean tsConform(SEXP x, SEXP y)
 	/* tspgets should enforce this, but prior to 2.4.0
 	   had INTEGER() here */
 	if(TYPEOF(x) == REALSXP && TYPEOF(y) == REALSXP)
-            return REAL(x)[0] == REAL(x)[0] &&
-                REAL(x)[1] == REAL(x)[1] &&
-                REAL(x)[2] == REAL(x)[2];
+	    return REAL(x)[0] == REAL(x)[0] &&
+		REAL(x)[1] == REAL(x)[1] &&
+		REAL(x)[2] == REAL(x)[2];
 	/* else fall through */
     }
     return FALSE;
@@ -340,17 +340,17 @@ size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc)
 
     Riconv_close(cd);
     if (status == (size_t)-1) {
-        switch(errno){
-        case EINVAL:
-            return (size_t) -2;
-        case EILSEQ:
-            return (size_t) -1;
-        case E2BIG:
-            break;
-        default:
+	switch(errno){
+	case EINVAL:
+	    return (size_t) -2;
+	case EILSEQ:
+	    return (size_t) -1;
+	case E2BIG:
+	    break;
+	default:
 	    errno = EILSEQ;
 	    return (size_t) -1;
-        }
+	}
     }
     return wc_len; /* status would be better? */
 }
@@ -699,7 +699,7 @@ SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 #else
     {
-	const char *path 
+	const char *path
 	    = R_ExpandFileName(translateChar(STRING_ELT(s, 0)));
 # ifdef HAVE_CHDIR
     if(chdir(path) < 0)
@@ -726,7 +726,7 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
-	if (STRING_ELT(s, i) == NA_STRING) 
+	if (STRING_ELT(s, i) == NA_STRING)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    pp = filenameToWchar(STRING_ELT(s, i), TRUE);
@@ -759,7 +759,7 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
-	if (STRING_ELT(s, i) == NA_STRING) 
+	if (STRING_ELT(s, i) == NA_STRING)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    pp = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
@@ -800,7 +800,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
-	if (STRING_ELT(s, i) == NA_STRING) 
+	if (STRING_ELT(s, i) == NA_STRING)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    pp = filenameToWchar(STRING_ELT(s, i), TRUE);
@@ -839,7 +839,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
-	if (STRING_ELT(s, i) == NA_STRING) 
+	if (STRING_ELT(s, i) == NA_STRING)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    pp = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
@@ -1002,9 +1002,9 @@ int attribute_hidden utf8clen(char c)
     return 1 + utf8_table4[c & 0x3f];
 }
 
-/* This returns the result in wchar_t, but does not assume 
+/* This returns the result in wchar_t, but does not assume
    wchar_t is UCS-2/4 and so is for internal use only */
-size_t attribute_hidden 
+size_t attribute_hidden
 utf8toucs(wchar_t *wc, const char *s)
 {
     unsigned int byte;
@@ -1013,28 +1013,28 @@ utf8toucs(wchar_t *wc, const char *s)
     w = wc ? wc: &local;
 
     if (byte == 0) {
-        *w = (wchar_t) 0;
-        return 0;
+	*w = (wchar_t) 0;
+	return 0;
     } else if (byte < 0xC0) {
-        *w = (wchar_t) byte;
-        return 1;
+	*w = (wchar_t) byte;
+	return 1;
     } else if (byte < 0xE0) {
 	if(strlen(s) < 2) return -2;
-        if ((s[1] & 0xC0) == 0x80) {
-            *w = (wchar_t) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
-            return 2;
-        } else return -1;
+	if ((s[1] & 0xC0) == 0x80) {
+	    *w = (wchar_t) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
+	    return 2;
+	} else return -1;
     } else if (byte < 0xF0) {
 	if(strlen(s) < 3) return -2;
-        if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
-            *w = (wchar_t) (((byte & 0x0F) << 12)
-                    | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
+	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
+	    *w = (wchar_t) (((byte & 0x0F) << 12)
+		    | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
 	    byte = *w;
 	    /* Surrogates range */
 	    if(byte >= 0xD800 && byte <= 0xDFFF) return -1;
 	    if(byte == 0xFFFE || byte == 0xFFFF) return -1;
-            return 3;
-        } else return -1;
+	    return 3;
+	} else return -1;
     }
     if(sizeof(wchar_t) < 4) return -2;
     /* So now handle 4,5.6 byte sequences with no testing */
@@ -1065,7 +1065,7 @@ utf8toucs(wchar_t *wc, const char *s)
     }
 }
 
-size_t attribute_hidden 
+size_t attribute_hidden
 utf8towcs(wchar_t *wc, const char *s, size_t n)
 {
     int m, res = 0;
@@ -1357,7 +1357,7 @@ void F77_SYMBOL(rexitc)(char *msg, int *nchar)
     int nc = *nchar;
     char buf[256];
     if(nc > 255) {
-        warning(_("error message truncated to 255 chars"));
+	warning(_("error message truncated to 255 chars"));
 	nc = 255;
     }
     strncpy(buf, msg, nc);
@@ -1370,7 +1370,7 @@ void F77_SYMBOL(rwarnc)(char *msg, int *nchar)
     int nc = *nchar;
     char buf[256];
     if(nc > 255) {
-        warning(_("warning message truncated to 255 chars"));
+	warning(_("warning message truncated to 255 chars"));
 	nc = 255;
     }
     strncpy(buf, msg, nc);
@@ -1389,10 +1389,10 @@ char *acopy_string(const char *in)
     char *out;
     int len = strlen(in);
     if (len > 0) {
-        out = (char *) R_alloc(1+strlen(in), sizeof(char));
-        strcpy(out, in);
+	out = (char *) R_alloc(1+strlen(in), sizeof(char));
+	strcpy(out, in);
     } else
-        out = "";
+	out = "";
     return out;
 }
 
@@ -1415,7 +1415,7 @@ int Scollate(SEXP a, SEXP b)
 {
     if(getCharCE(a) == CE_UTF8 || getCharCE(b) == CE_UTF8)
 	return Rstrcoll(translateCharUTF8(a), translateCharUTF8(b));
-    else 
+    else
 	return strcoll(translateChar(a), translateChar(b));
 }
 
@@ -1445,7 +1445,7 @@ int Seql(SEXP a, SEXP b)
 #endif
 
 
-/* Table from 
+/* Table from
 http://unicode.org/Public/MAPPINGS/VENDORS/ADOBE/symbol.txt
 */
 
@@ -1465,7 +1465,7 @@ static int s2u[224] = {
     0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020,
     0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020,
     0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020,
-    0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 
+    0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020, 0x0020,
     0x20AC, 0x03D2, 0x2032, 0x2264, 0x2044, 0x221E, 0x0192, 0x2663,
     0x2666, 0x2665, 0x2660, 0x2194, 0x2190, 0x2191, 0x2192, 0x2193,
     0x00B0, 0x00B1, 0x2033, 0x2265, 0x00D7, 0x221D, 0x2202, 0x2022,
@@ -1476,11 +1476,11 @@ static int s2u[224] = {
     0x00AC, 0x2227, 0x2228, 0x21D4, 0x21D0, 0x21D1, 0x21D2, 0x21D3,
     0x25CA, 0x2329, 0xF8E8, 0xF8E9, 0xF8EA, 0x2211, 0xF8EB, 0xF8EC,
     0xF8ED, 0xF8EE, 0xF8EF, 0xF8F0, 0xF8F1, 0xF8F2, 0xF8F3, 0xF8F4,
-    0x0020, 0x232A, 0x222B, 0x2320, 0xF8F5, 0x2321, 0xF8F6, 0xF8F7, 
-    0xF8F8, 0xF8F9, 0xF8FA, 0xF8FB, 0xF8FC, 0xF8FD, 0xF8FE, 0x0020 
+    0x0020, 0x232A, 0x222B, 0x2320, 0xF8F5, 0x2321, 0xF8F6, 0xF8F7,
+    0xF8F8, 0xF8F9, 0xF8FA, 0xF8FB, 0xF8FC, 0xF8FD, 0xF8FE, 0x0020
 };
 
-void *Rf_AdobeSymbol2utf8(char *work, const char *c0, int nwork) 
+void *Rf_AdobeSymbol2utf8(char *work, const char *c0, int nwork)
 {
     const unsigned char *c = (unsigned char *) c0;
     unsigned char *t = (unsigned char *) work;
@@ -1521,7 +1521,7 @@ double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
     while (isspace(*p)) p++;
 
     if (NA && strncmp(p, "NA", 2) == 0) {
-	ans = NA_REAL; 
+	ans = NA_REAL;
 	p += 2;
 	goto done;
     }
@@ -1538,14 +1538,14 @@ double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
 	p += 3;
 	goto done;
     } else if (strncasecmp(p, "Inf", 3) == 0) {
-	ans = R_PosInf; 
+	ans = R_PosInf;
 	p += 3;
 	goto done;
     /* C99 specifies this */
     } else if (strncasecmp(p, "infinity", 8) == 0) {
-        ans = R_PosInf;
-        p += 8;
-        goto done;
+	ans = R_PosInf;
+	p += 8;
+	goto done;
     }
 
     if(strlen(p) > 2 && p[0] == '0' && (p[1] == 'x' || p[1] == 'X')) {
@@ -1567,7 +1567,7 @@ double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
 	    for (n = 0; *p >= '0' && *p <= '9'; p++) n = n * 10 + (*p - '0');
 	    expn += expsign * n;
 	    if (expn < 0) {
-		for (n = -expn, fac = 1.0; n; n >>= 1, p2 *= p2) 
+		for (n = -expn, fac = 1.0; n; n >>= 1, p2 *= p2)
 		    if (n & 1) fac *= p2;
 		ans /= fac;
 	    } else {
@@ -1603,11 +1603,11 @@ double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
 	expn += ndigits;
     }
     if (expn < -307) { /* use underflow, not overflow */
-	for (n = -expn, fac = 1.0; n; n >>= 1, p10 *= p10) 
+	for (n = -expn, fac = 1.0; n; n >>= 1, p10 *= p10)
 	    if (n & 1) fac /= p10;
-	ans *= fac;	
+	ans *= fac;
     } else if (expn < 0) { /* positive powers are exact */
-	for (n = -expn, fac = 1.0; n; n >>= 1, p10 *= p10) 
+	for (n = -expn, fac = 1.0; n; n >>= 1, p10 *= p10)
 	    if (n & 1) fac *= p10;
 	ans /= fac;
     } else {
@@ -1631,4 +1631,3 @@ double R_atof(const char *str)
 {
     return R_strtod4(str, NULL, '.', FALSE);
 }
-

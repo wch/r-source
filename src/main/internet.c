@@ -56,7 +56,7 @@ void Rsockread(int *sockp, char **buf, int *maxlen)
 void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 
 int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
-                double timeout)
+		double timeout)
  */
 
 static int initialized = 0;
@@ -78,7 +78,7 @@ static void internet_Init(void)
 {
     int res;
 #ifdef Win32
-    res = UseInternet2 ? R_moduleCdynload("internet2", 1, 1) : 
+    res = UseInternet2 ? R_moduleCdynload("internet2", 1, 1) :
 	R_moduleCdynload("internet", 1, 1);
 #else
     res = R_moduleCdynload("internet", 1, 1);
@@ -87,7 +87,7 @@ static void internet_Init(void)
     if(!res) return;
     if(!ptr->download)
 	error(_("internet routines cannot be accessed in module"));
-    initialized = 1;    
+    initialized = 1;
     return;
 }
 
@@ -104,7 +104,7 @@ SEXP attribute_hidden do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 Rconnection attribute_hidden R_newurl(const char *description,
-                                      const char * const mode)
+				      const char * const mode)
 {
     if(!initialized) internet_Init();
     if(initialized > 0)
@@ -112,10 +112,10 @@ Rconnection attribute_hidden R_newurl(const char *description,
     else {
 	error(_("internet routines cannot be loaded"));
 	return (Rconnection)0;
-    }    
+    }
 }
 
-Rconnection attribute_hidden 
+Rconnection attribute_hidden
 R_newsock(const char *host, int port, int server, const char * const mode)
 {
     if(!initialized) internet_Init();
@@ -124,7 +124,7 @@ R_newsock(const char *host, int port, int server, const char * const mode)
     else {
 	error(_("internet routines cannot be loaded"));
 	return (Rconnection)0;
-    }    
+    }
 }
 
 void *R_HTTPOpen(const char *url)
@@ -146,7 +146,7 @@ int   R_HTTPRead(void *ctx, char *dest, int len)
     else {
 	error(_("internet routines cannot be loaded"));
 	return 0;
-    }    
+    }
 }
 
 void  R_HTTPClose(void *ctx)
@@ -177,7 +177,7 @@ int   R_FTPRead(void *ctx, char *dest, int len)
     else {
 	error(_("internet routines cannot be loaded"));
 	return 0;
-    }    
+    }
 }
 
 void  R_FTPClose(void *ctx)
@@ -261,4 +261,3 @@ int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
 	return 0;
     }
 }
-    
