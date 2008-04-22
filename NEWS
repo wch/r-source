@@ -170,11 +170,14 @@ BUG FIXES
     o	Adobe Symbol was missing from the encodings in
 	tools::charset_to_Encoding.
 
-    o	diag(matrix(x,0,0)) now returns a 0-length vector of correct mode,
-	instead of always numeric.
+    o	diag(matrix(x, 0, 0)) now returns a 0-length vector of the
+	correct mode, instead of always numeric.
 
-    o	plot.default(x,y) now should correctly dispatch to Axis() methods
-        whether y is NULL or not.
+    o	Under certain rare circumstances the parser could accept
+    	invalid UTF-8 quoted strings.
+
+    o	plot.default(x, y) now should correctly dispatch to Axis() methods
+    	whether y is NULL or not.
 
 
 

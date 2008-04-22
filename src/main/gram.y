@@ -2209,7 +2209,8 @@ static int StringValue(int c, Rboolean forSymbol)
        else if(mbcslocale) {
            int i, clen;
            wchar_t wc = L'\0';
-           clen = utf8locale ? utf8clen(c): mbcs_get_next(c, &wc);
+	   /* We can't assume this is valid UTF-8 */
+           clen = /* utf8locale ? utf8clen(c):*/ mbcs_get_next(c, &wc);
 	   WTEXT_PUSH(wc);
            for(i = 0; i < clen - 1; i++){
                STEXT_PUSH(c);
@@ -2341,7 +2342,8 @@ static int SymbolValue(int c)
 #if defined(SUPPORT_MBCS)
     if(mbcslocale) {
 	wchar_t wc; int i, clen;
-	clen = utf8locale ? utf8clen(c) : mbcs_get_next(c, &wc);
+	   /* We can't assume this is valid UTF-8 */
+	clen = /* utf8locale ? utf8clen(c) :*/ mbcs_get_next(c, &wc);
 	while(1) {
 	    /* at this point we have seen one char, so push its bytes 
 	       and get one more */
