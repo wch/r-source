@@ -16,7 +16,7 @@ NEW FEATURES
 
     o	The handling of nuls in character strings has been changed --
 	they are no longer allowed, and attempting to create such a
-	string now gives a truncation warning (unless 
+	string now gives a truncation warning (unless
 	options("warnEscapes") is false).
 
     o	format(), formatC() and prettyNum() gain a new argument
@@ -161,6 +161,8 @@ BUG FIXES
     o	Adobe Symbol was missing from the encodings in
 	tools::charset_to_Encoding.
 
+    o	diag(matrix(x,0,0)) now returns a 0-length vector of correct mode,
+	instead of always numeric.
 
 
 		CHANGES IN R VERSION 2.7.0
@@ -934,9 +936,6 @@ BUG FIXES
 
     o	load() again reads correctly character strings with embedded nuls.
 	(This was broken in 2.6.x, but worked in earlier versions.)
-
-    o	diag(matrix(x,0,0)) now returns a 0-length vector of correct mode,
-	instead of always numeric.
 
 
 
