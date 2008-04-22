@@ -171,6 +171,9 @@ showNonASCII <-
 function(x)
 {
     if(!capabilities("iconv")) stop("'iconv' is required")
+    ## All that is needed here is an 8-bit encoding that includes ASCII.
+    ## The only one we guarantee to exist is 'latin1'.
+    ## The default sub=NA is faster.
     ind <- is.na(iconv(x, "latin1", "ASCII"))
     if(any(ind))
         cat(paste(which(ind), ": ",
@@ -202,12 +205,38 @@ function(x, delim = c("{", "}"), syntax = "Rd")
 ### ** texi2dvi
 
 texi2dvi <-
-function(file, pdf = FALSE, clean = FALSE,
-         quiet = TRUE, texi2dvi = getOption("texi2dvi"))
+function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
+         texi2dvi = getOption("texi2dvi"), texinputs = NULL)
 {
     ## Run texi2dvi on a latex file, or emulate it.
 
     if(is.null(texi2dvi)) texi2dvi <- Sys.which("texi2dvi")
+
+    envSep <- .Platform$path.sep
+    Rtexmf <- file.path(R.home(), "share", "texmf")
+    ## "" forces use of default paths.
+    texinputs <- paste(c(texinputs, Rtexmf, ""), collapse = envSep)
+    ## not clear if this is needed, but works
+    if(.Platform$OS.type == "windows") texinputs <- gsub("\\\\", "/", texinputs)
+
+    otexinputs <- Sys.getenv("TEXINPUTS", unset = NA)
+    if(is.na(otexinputs)) {
+        on.exit(Sys.unsetenv("TEXINPUTS"))
+        otexinputs <- "."
+    } else on.exit(Sys.setenv(TEXINPUTS = otexinputs))
+    Sys.setenv(TEXINPUTS = paste(otexinputs, texinputs, sep = envSep))
+    bibinputs <- Sys.getenv("BIBINPUTS", unset = NA)
+    if(is.na(bibinputs)) {
+        on.exit(Sys.unsetenv("BIBINPUTS"), add = TRUE)
+        bibinputs <- "."
+    } else on.exit(Sys.setenv(BIBINPUTS = bibinputs, add = TRUE))
+    Sys.setenv(BIBINPUTS = paste(bibinputs, texinputs, sep = envSep))
+    bstinputs <- Sys.getenv("BSTINPUTS", unset = NA)
+    if(is.na(bstinputs)) {
+        on.exit(Sys.unsetenv("BSTINPUTS"), add = TRUE)
+        bstinputs <- "."
+    } else on.exit(Sys.setenv(BSTINPUTS = bstinputs), add = TRUE)
+    Sys.setenv(BSTINPUTS = paste(bstinputs, texinputs, sep = envSep))
 
     if(nzchar(texi2dvi)) {
         pdf <- if(pdf) "--pdf" else ""
@@ -218,16 +247,15 @@ function(file, pdf = FALSE, clean = FALSE,
         } else {
             extra <- quiet <- ""
         }
+
         if(.Platform$OS.type == "windows") {
             ## look for MiKTeX (which this almost certainly is)
             ## and set the path to R's style files.
             ## -I works in MiKTeX >= 2.4, at least
             ver <- system(paste(shQuote(texi2dvi), "--version"), intern = TRUE)
             if(length(grep("MiKTeX", ver[1]))) {
-                ## could use shortPathName here
-                stypath <-  shQuote(gsub("\\\\", "/",
-                                         file.path(R.home("share"), "texmf")))
-                clean <- paste(clean, "-I", stypath)
+                paths <- paste ("-I", shQuote(texinputs))
+                clean <- paste(clean, paste(paths, collapse = " "))
             }
         }
         if(system( paste(shQuote(texi2dvi), quiet, pdf, clean,

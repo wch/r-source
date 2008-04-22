@@ -14,7 +14,7 @@
 dev.copy(device, \dots, which = dev.next())
 dev.print(device = postscript, \dots)
 dev.copy2eps(\dots)
-dev.copy2pdf(\dots)
+dev.copy2pdf(\dots, out.type = "pdf")
 dev.control(displaylist = c("inhibit", "enable"))
 }
 \arguments{
@@ -26,6 +26,15 @@ dev.control(displaylist = c("inhibit", "enable"))
     For \code{dev.print}, this includes \code{which} and by default any
     \code{\link{postscript}} arguments.}
   \item{which}{A device number specifying the device to copy to.}
+#ifdef unix
+  \item{out.type}{The name of the output device: can be \code{"pdf"}, or
+    \code{"quartz"} (some Mac OS X builds) or \code{"cairo"} (some
+    Unix-alikes, see \code{\link{cairo_pdf}}).}
+#endif
+#ifdef windows
+  \item{out.type}{The name of the output device: only \code{"pdf"} is
+    allowed on Windows.)
+#endif
   \item{displaylist}{A character string: the only valid values are
     \code{"inhibit"} and \code{"enable"}.}
 }
