@@ -139,6 +139,15 @@ BUG FIXES
 		CHANGES IN R VERSION 2.7.0 patched
 
 
+NEW FEATURES
+
+    o	tools::texi2dvi() has a new argument 'texinputs' to allow the
+	TeX and bibtex input paths to be specified (even on MiKTeX).
+
+    o	dev.copy2pdf() gains an 'out.type' argument to allow it to be
+	used with cairo_pdf() or quartz(type = "pdf").
+
+
 DEPRECATED & DEFUNCT
 
     o	The use of unserialize() on character strings is deprecated:
