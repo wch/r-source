@@ -6,6 +6,15 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.7.0 patched
+
+
+BUG FIXES
+
+    o	Encoding<- on NA_character_ converted it to "NA".
+
+
+
 		CHANGES IN R VERSION 2.7.0
 
 

@@ -959,6 +959,7 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(streql(this, "latin1")) ienc = CE_LATIN1;
 	else if(streql(this, "UTF-8")) ienc = CE_UTF8;
 	tmp = STRING_ELT(x, i);
+	if(tmp == NA_STRING) continue;
 	if (! ((ienc == CE_LATIN1 && IS_LATIN1(tmp)) ||
 	       (ienc == CE_UTF8 && IS_UTF8(tmp)) ||
 	       (ienc == CE_NATIVE && ! IS_LATIN1(tmp) && ! IS_UTF8(tmp))))
