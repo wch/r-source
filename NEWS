@@ -13,6 +13,9 @@ BUG FIXES
 
     o	Encoding<- on NA_character_ converted it to "NA".
 
+    o	Adobe Symbol was missing from the encodings in
+	tools::charset_to_Encoding.
+
 
 
 		CHANGES IN R VERSION 2.7.0

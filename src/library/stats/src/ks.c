@@ -34,7 +34,7 @@ pkstwo(Sint *n, double *x, double *tol)
  *
  * (But note that for reasonable tolerances, one could simply take 0 as
  * the value for x < 0.2, and use the standard expansion otherwise.)
- * 
+ *
  */
     double new, old, s, w, z;
     Sint i, k, k_max;
@@ -108,18 +108,18 @@ pkolmogorov2x(double *x, Sint *n)
 
     *x = K(*n, *x);
 }
-    
+
 static double
 K(int n, double d)
 {
     /* Compute Kolmogorov's distribution.
        Code published in
-         George Marsaglia and Wai Wan Tsang and Jingbo Wang (2003),
+	 George Marsaglia and Wai Wan Tsang and Jingbo Wang (2003),
 	 "Evaluating Kolmogorov's distribution".
 	 Journal of Statistical Software, Volume 8, 2003, Issue 18.
 	 URL: http://www.jstatsoft.org/v08/i18/.
     */
-    
+
    int k, m, i, j, g, eH, eQ;
    double h, s, *H, *Q;
 
@@ -130,7 +130,7 @@ K(int n, double d)
    Q = (double*) Calloc(m * m, double);
    for(i = 0; i < m; i++)
        for(j = 0; j < m; j++)
-           if(i - j + 1 < 0)
+	   if(i - j + 1 < 0)
 	       H[i * m + j] = 0;
 	   else
 	       H[i * m + j] = 1;
@@ -187,10 +187,10 @@ m_power(double *A, int eA, double *V, int *eV, int m, int n)
     int eB , i;
 
     if(n == 1) {
-        for(i = 0; i < m * m; i++)
+	for(i = 0; i < m * m; i++)
 	    V[i] = A[i];
-        *eV = eA;
-        return;
+	*eV = eA;
+	return;
     }
     m_power(A, eA, V, eV, m, n / 2);
     B = (double*) Calloc(m * m, double);

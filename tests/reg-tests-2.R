@@ -485,7 +485,7 @@ rowsum(matrix(1:12, 3,4), c("Y","X","Y"))
 ## PR#1115 (saving strings with ascii=TRUE)
 x <- y <- unlist(as.list(
     parse(text=paste("\"\\",
-          as.character(structure(0:255,class="octmode")),
+          as.character(structure(1:255,class="octmode")),
              "\"",sep=""))))
 save(x, ascii=T, file=(fn <- tempfile()))
 load(fn)
@@ -1292,7 +1292,7 @@ readBin(zz, "integer", n=100, size = 1) # read as small integers
 seek(zz, 0, "start")
 readBin(zz, "character", 100)  # is confused by embedded nul.
 seek(zz, 0, "start")
-readChar(zz, length(xx)) # correct
+readChar(zz, length(xx)) # truncates at embedded nul
 seek(zz) # make sure current position is reported properly
 close(zz)
 unlink("testbin")

@@ -51,26 +51,26 @@ c Common Vars
       do 161 j=1,n
  161     sw=sw+w(j)
       do 201 j=1,n
-         do 201 i=1,q
-            r(i,j)=y(q*(j-1)+i)
+	 do 201 i=1,q
+	    r(i,j)=y(q*(j-1)+i)
  201  continue
       do 241 i=1,q
-         s=0d0
-         do 251 j=1,n
-            s=s+w(j)*r(i,j)
+	 s=0d0
+	 do 251 j=1,n
+	    s=s+w(j)*r(i,j)
  251     continue
-         yb(i)=s/sw
+	 yb(i)=s/sw
  241  continue
 c     yb is vector of means
       do 261 j=1,n
-        do 261 i=1,q
+	do 261 i=1,q
  261       r(i,j)=r(i,j)-yb(i)
       ys=0.d0
       do 281 i=1,q
-         s=0.d0
-         do 291 j=1,n
+	 s=0.d0
+	 do 291 j=1,n
  291        s=s+w(j)*r(i,j)**2
-         ys=ys+ww(i)*s/sw
+	 ys=ys+ww(i)*s/sw
  281  continue
       if(ys .gt. 0d0) goto 311
 c     ys is the overall standard deviation -- quit if zero
@@ -80,7 +80,7 @@ c     ys is the overall standard deviation -- quit if zero
       ys=sqrt(ys)
       s=1.d0/ys
       do 331 j=1,n
-         do 331 i=1,q
+	 do 331 i=1,q
  331        r(i,j)=r(i,j)*s
 
 c     r is now standardized residuals
@@ -91,23 +91,23 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
 C REPEAT
  371  continue
       do 381 l=1,lm
-        sc(l,1)=l+0.1d0
-        s=0d0
-        do 391 i=1,q
+	sc(l,1)=l+0.1d0
+	s=0d0
+	do 391 i=1,q
  391       s=s+ww(i)*abs(b(i,l))
-        sc(l,2)=-s
+	sc(l,2)=-s
  381  continue
       call sort(sc(1,2),sc,1,lm)
       do 461 j=1,n
-         do 461 i=1,q
+	 do 461 i=1,q
  461        r(i,j)=y(q*(j-1)+i)
       do 521 i=1,q
-        do 531 j=1,n
-           r(i,j)=r(i,j)-yb(i)
-           s=0.d0
-           do 541 l=1,lm
+	do 531 j=1,n
+	   r(i,j)=r(i,j)-yb(i)
+	   s=0.d0
+	   do 541 l=1,lm
  541          s=s+b(i,l)*f(j,l)
-          r(i,j)=r(i,j)/ys-s
+	  r(i,j)=r(i,j)/ys-s
 531     continue
 521   continue
       if(lm.le.mu) goto 9999
@@ -115,8 +115,8 @@ c back to integer:
       l=sc(lm,1)
       asr=0d0
       do 561 j=1,n
-        do 561 i=1,q
-          r(i,j)=r(i,j)+b(i,l)*f(j,l)
+	do 561 i=1,q
+	  r(i,j)=r(i,j)+b(i,l)*f(j,l)
 561     asr=asr+w(j)*ww(i)*r(i,j)**2
       asr=asr/sw
       if(l .ge. lm) goto 591
@@ -125,7 +125,7 @@ c back to integer:
       do 611 i=1,q
  611     b(i,l)=b(i,lm)
       do 621 j=1,n
-         f(j,l)=f(j,lm)
+	 f(j,l)=f(j,lm)
  621     t(j,l)=t(j,lm)
 591   continue
       lm=lm-1
@@ -159,25 +159,25 @@ c Common Vars
       asr=big
       lm=0
       do 100 l=1,m
-         call rchkusr()
-         lm=lm+1
-         asrold=asr
-         call newb(lm,q,ww,b)
-         call onetrm(0,p,q,n,w,sw,x,r,ww,a(1,lm),b(1,lm),
+	 call rchkusr()
+	 lm=lm+1
+	 asrold=asr
+	 call newb(lm,q,ww,b)
+	 call onetrm(0,p,q,n,w,sw,x,r,ww,a(1,lm),b(1,lm),
      &        f(1,lm),t(1,lm),asr,sc,g,dp,edf)
-         do 10 j=1,n
-            do 10 i=1,q
+	 do 10 j=1,n
+	    do 10 i=1,q
  10            r(i,j)=r(i,j)-b(i,lm)*f(j,lm)
-         if(lm.eq.1) goto 100
-         if(lf.gt.0) then
-            if(lm.eq.m) return
-            iflsv=ifl
-            ifl=0
-            call fulfit(lm,1,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,
+	 if(lm.eq.1) goto 100
+	 if(lf.gt.0) then
+	    if(lm.eq.m) return
+	    iflsv=ifl
+	    ifl=0
+	    call fulfit(lm,1,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,
      &           g,dp, edf)
-            ifl=iflsv
-         endif
-         if(asr.le.0d0.or.(asrold-asr)/asrold.lt.conv) return
+	    ifl=iflsv
+	 endif
+	 if(asr.le.0d0.or.(asrold-asr)/asrold.lt.conv) return
 100   continue
       return
       end
@@ -206,8 +206,8 @@ c Common Vars
       fsv=cutmin
       isv=mitone
       if(lbf .lt. 3) then
-         cutmin=1d0
-         mitone=lbf-1
+	 cutmin=1d0
+	 mitone=lbf-1
       endif
       iter=0
 C Outer loop:
@@ -215,30 +215,30 @@ C Outer loop:
       asrold=asri
       iter=iter+1
       do 100 lp=1,lm
-        do 1 i=1,q
+	do 1 i=1,q
  1         bt(i)=b(i,lp)
-        do 2 i=1,p
+	do 2 i=1,p
  2         g(i,3)=a(i,lp)
-        do 3 j=1,n
-          do 3 i=1,q
+	do 3 j=1,n
+	  do 3 i=1,q
  3           r(i,j)=r(i,j)+bt(i)*f(j,lp)
 
-        call onetrm(1,p,q,n,w,sw,x,r,ww,g(1,3),bt,sc(1,14),sc(1,15),
+	call onetrm(1,p,q,n,w,sw,x,r,ww,g(1,3),bt,sc(1,14),sc(1,15),
      &            asri,sc,g,dp,edf(lp))
-        if(asri .lt. asrold) then
-           do 4 i=1,q
+	if(asri .lt. asrold) then
+	   do 4 i=1,q
  4            b(i,lp)=bt(i)
-           do 5 i=1,p
+	   do 5 i=1,p
  5            a(i,lp)=g(i,3)
-           do 6 j=1,n
-              f(j,lp)=sc(j,14)
-              t(j,lp)=sc(j,15)
+	   do 6 j=1,n
+	      f(j,lp)=sc(j,14)
+	      t(j,lp)=sc(j,15)
  6         continue
-        else
-           asri=asrold
-        endif
-        do 8 j=1,n
-          do 8 i=1,q
+	else
+	   asri=asrold
+	endif
+	do 8 j=1,n
+	  do 8 i=1,q
  8           r(i,j)=r(i,j)-b(i,lp)*f(j,lp)
 100   continue
       if((iter .le. maxit) .and. ((asri .gt. 0d0)
@@ -246,8 +246,8 @@ C Outer loop:
       cutmin=fsv
       mitone=isv
       if(ifl .gt. 0) then
-         asr(1+lm) = asri
-         asr(1) = asri
+	 asr(1+lm) = asri
+	 asr(1) = asri
       endif
       return
       end
@@ -278,25 +278,25 @@ C REPEAT
       iter=iter+1
       asrold=asr
       do 11 j=1,n
-         s=0d0
-         do 21 i=1,q
+	 s=0d0
+	 do 21 i=1,q
  21         s=s+ww(i)*b(i)*y(i,j)
-         sc(j,13)=s
+	 sc(j,13)=s
 11    continue
       call oneone(max0(jfl,iter-1),p,n,w,sw,sc(1,13),x,a,f,t,
      &                 asr,sc,g,dp,edf)
       do 31 i=1,q
-        s=0d0
-        do 41 j=1,n
+	s=0d0
+	do 41 j=1,n
  41        s=s+w(j)*y(i,j)*f(j)
-        b(i)=s/sw
+	b(i)=s/sw
 31    continue
       asr=0d0
       do 51 i=1,q
-         s=0d0
-         do 61 j=1,n
+	 s=0d0
+	 do 61 j=1,n
  61         s=s+w(j)*(y(i,j)-b(i)*f(j))**2
-         asr=asr+ww(i)*s/sw
+	 asr=asr+ww(i)*s/sw
 51    continue
       if((q .ne. 1) .and. (iter .le. maxit) .and. (asr .gt. 0d0)
      &      .and. (asrold-asr)/asrold .ge. conv) goto 1000
@@ -322,20 +322,20 @@ c Common Vars
 
       sml=1d0/big
       if(ist .le. 0) then
-        if(p .le. 1) a(1)=1d0
-        do 10 j=1,n
-          sc(j,2)=1d0
+	if(p .le. 1) a(1)=1d0
+	do 10 j=1,n
+	  sc(j,2)=1d0
  10     continue
-        call pprdir(p,n,w,sw,y,x,sc(1,2),a,dp)
+	call pprdir(p,n,w,sw,y,x,sc(1,2),a,dp)
       endif
       s=0d0
       do 20 i=1,p
-        g(i,1)=0d0
-        s=s+a(i)**2
+	g(i,1)=0d0
+	s=s+a(i)**2
  20   continue
       s=1d0/sqrt(s)
       do 30 i=1,p
-        a(i)=a(i)*s
+	a(i)=a(i)*s
  30   continue
       iter=0
       asr=big
@@ -348,39 +348,39 @@ C REPEAT [inner loop] -----
  60   continue
       s=0d0
       do 70 i=1,p
-        g(i,2)=a(i)+g(i,1)
-        s=s+g(i,2)**2
+	g(i,2)=a(i)+g(i,1)
+	s=s+g(i,2)**2
  70   continue
       s=1.d0/sqrt(s)
       do 80 i=1,p
-        g(i,2)=g(i,2)*s
+	g(i,2)=g(i,2)*s
  80   continue
       do 90 j=1,n
-        sc(j,1)=j+0.1d0
-        s=0.d0
-        do 91 i=1,p
-          s=s+g(i,2)*x(i,j)
+	sc(j,1)=j+0.1d0
+	s=0.d0
+	do 91 i=1,p
+	  s=s+g(i,2)*x(i,j)
  91     continue
-        sc(j,11)=s
+	sc(j,11)=s
  90   continue
       call sort(sc(1,11),sc,1,n)
       do 110 j=1,n
-        k=sc(j,1)
-        sc(j,2)=y(k)
-        sc(j,3)=max(w(k),sml)
+	k=sc(j,1)
+	sc(j,2)=y(k)
+	sc(j,3)=max(w(k),sml)
  110  continue
       call supsmu(n,sc(1,11),sc(1,2),sc(1,3),1,span,alpha,
      &     sc(1,12),sc(1,4), edf)
       s=0d0
       do 120 j=1,n
-        s=s+sc(j,3)*(sc(j,2)-sc(j,12))**2
+	s=s+sc(j,3)*(sc(j,2)-sc(j,12))**2
  120  continue
       s=s/sw
       if(s .lt. asr) goto 140
       cut=cut*0.5d0
       if(cut.lt.cutmin) goto 199
       do 150 i=1,p
-        g(i,1)=g(i,1)*cut
+	g(i,1)=g(i,1)*cut
  150  continue
       go to 60
 C     --------
@@ -388,20 +388,20 @@ C     --------
       asr=s
       cut=1d0
       do 160 i=1,p
-        a(i)=g(i,2)
+	a(i)=g(i,2)
  160  continue
       do 170 j=1,n
-        k=sc(j,1)
-        t(k)=sc(j,11)
-        f(k)=sc(j,12)
+	k=sc(j,1)
+	t(k)=sc(j,11)
+	f(k)=sc(j,12)
  170  continue
       if(asr.le.0d0.or.(asrold-asr)/asrold.lt.conv) goto 199
       if(iter.gt.mitone.or.p.le.1) goto 199
       call pprder(n,sc(1,11),sc(1,12),sc(1,3),fdel,sc(1,4),sc(1,5))
       do 180 j=1,n
-        k=sc(j,1)
-        sc(j,5)=y(j)-f(j)
-        sc(k,6)=sc(j,4)
+	k=sc(j,1)
+	sc(j,5)=y(j)-f(j)
+	sc(k,6)=sc(j,4)
  180  continue
       call pprdir(p,n,w,sw,sc(1,5),x,sc(1,6),g,dp)
 
@@ -412,16 +412,16 @@ c--------------
       s=0d0
       v=s
       do 210 j=1,n
-        s=s+w(j)*f(j)
+	s=s+w(j)*f(j)
  210  continue
       s=s/sw
       do 220 j=1,n
-        f(j)=f(j)-s
-        v=v+w(j)*f(j)**2
+	f(j)=f(j)-s
+	v=v+w(j)*f(j)**2
  220  continue
       if(v .gt. 0d0) then
-        v=1d0/sqrt(v/sw)
-        do 230 j=1,n
+	v=1d0/sqrt(v/sw)
+	do 230 j=1,n
  230      f(j)=f(j)*v
       endif
       return
@@ -441,33 +441,33 @@ c--------------
       common /pprz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
 
       do 10 i=1,p
-         s=0d0
-         do 15 j=1,n
-            s=s+w(j)*d(j)*x(i,j)
+	 s=0d0
+	 do 15 j=1,n
+	    s=s+w(j)*d(j)*x(i,j)
  15      continue
-         e(i)=s/sw
+	 e(i)=s/sw
  10   continue
       k=0
       m1=p*(p+1)/2
       m2=m1+p
       do 20 j=1,p
-         s=0d0
-         do 22 l=1,n
-            s=s+w(l)*r(l)*(d(l)*x(j,l)-e(j))
+	 s=0d0
+	 do 22 l=1,n
+	    s=s+w(l)*r(l)*(d(l)*x(j,l)-e(j))
  22      continue
-         g(m1+j)=s/sw
-         do 25 i=1,j
-            s=0d0
-            do 27 l=1,n
-               s=s+w(l)*(d(l)*x(i,l)-e(i))*(d(l)*x(j,l)-e(j))
+	 g(m1+j)=s/sw
+	 do 25 i=1,j
+	    s=0d0
+	    do 27 l=1,n
+	       s=s+w(l)*(d(l)*x(i,l)-e(i))*(d(l)*x(j,l)-e(j))
  27         continue
-            k=k+1
-            g(k)=s/sw
+	    k=k+1
+	    g(k)=s/sw
  25      continue
  20   continue
       call ppconj(p,g,g(m1+1),g(m2+1),cjeps,mitcj,g(m2+p+1))
       do 30 i=1,p
-         e(i)=g(m2+i)
+	 e(i)=g(m2+i)
  30   continue
       return
       end
@@ -480,8 +480,8 @@ c--------------
       double precision beta,h,s,alpha,t
 
       do 1 i=1,p
-         x(i)=0d0
-         sc(i,2)=0d0
+	 x(i)=0d0
+	 sc(i,2)=0d0
  1    continue
       nit=0
 C REPEAT
@@ -490,67 +490,67 @@ C REPEAT
       h=0d0
       beta=0d0
       do 11331 i=1,p
-        sc(i,4)=x(i)
-        s=g(i*(i-1)/2+i)*x(i)
-        im1=i-1
-        j=1
-        goto 11343
+	sc(i,4)=x(i)
+	s=g(i*(i-1)/2+i)*x(i)
+	im1=i-1
+	j=1
+	goto 11343
 11341   j=j+1
 11343   if(j.gt.im1) goto 11342
-        s=s+g(i*(i-1)/2+j)*x(j)
-        goto 11341
+	s=s+g(i*(i-1)/2+j)*x(j)
+	goto 11341
 11342   continue
-        j=i+1
-        goto 11353
+	j=i+1
+	goto 11353
 11351   j=j+1
 11353   if(j.gt.p) goto 11352
-        s=s+g(j*(j-1)/2+i)*x(j)
-        goto 11351
+	s=s+g(j*(j-1)/2+i)*x(j)
+	goto 11351
 11352   continue
-        sc(i,1)=s-c(i)
-        h=h+sc(i,1)**2
+	sc(i,1)=s-c(i)
+	h=h+sc(i,1)**2
 11331 continue
       if(h.le.0d0) goto 11322
       do 11361 iter=1,p
-        do 11371 i=1,p
-          sc(i,2)=beta*sc(i,2)-sc(i,1)
+	do 11371 i=1,p
+	  sc(i,2)=beta*sc(i,2)-sc(i,1)
 11371   continue
-        t=0d0
-        do 11381 i=1,p
-          s=g(i*(i-1)/2+i)*sc(i,2)
-          im1=i-1
-          j=1
-          goto 11393
+	t=0d0
+	do 11381 i=1,p
+	  s=g(i*(i-1)/2+i)*sc(i,2)
+	  im1=i-1
+	  j=1
+	  goto 11393
 11391     j=j+1
 11393     if(j.gt.im1) goto 11392
-          s=s+g(i*(i-1)/2+j)*sc(j,2)
-          goto 11391
+	  s=s+g(i*(i-1)/2+j)*sc(j,2)
+	  goto 11391
 11392     continue
-          j=i+1
-          goto 11403
+	  j=i+1
+	  goto 11403
 11401     j=j+1
 11403     if(j.gt.p) goto 11402
-          s=s+g(j*(j-1)/2+i)*sc(j,2)
-          goto 11401
+	  s=s+g(j*(j-1)/2+i)*sc(j,2)
+	  goto 11401
 11402     continue
-          sc(i,3)=s
-          t=t+s*sc(i,2)
+	  sc(i,3)=s
+	  t=t+s*sc(i,2)
 11381   continue
-        alpha=h/t
-        s=0d0
-        do 11411 i=1,p
-          x(i)=x(i)+alpha*sc(i,2)
-          sc(i,1)=sc(i,1)+alpha*sc(i,3)
-          s=s+sc(i,1)**2
+	alpha=h/t
+	s=0d0
+	do 11411 i=1,p
+	  x(i)=x(i)+alpha*sc(i,2)
+	  sc(i,1)=sc(i,1)+alpha*sc(i,3)
+	  s=s+sc(i,1)**2
 11411   continue
-        if(s.le.0d0) goto 11362
-        beta=s/h
-        h=s
+	if(s.le.0d0) goto 11362
+	beta=s/h
+	h=s
 11361 continue
 11362 continue
       s=0d0
       do 11421 i=1,p
-        s=dmax1(s,dabs(x(i)-sc(i,4)))
+	s=dmax1(s,dabs(x(i)-sc(i,4)))
 11421 continue
       if((s .ge. eps) .and. (nit .lt. maxit)) goto 11321
 11322 continue
@@ -828,14 +828,14 @@ c
       integer l,j,k
 
       do 100 l=1,mu
-         do 10 j=1,n
-            sp(j,1)=j+0.1d0
-            sp(j,2)=f(j,l)
+	 do 10 j=1,n
+	    sp(j,1)=j+0.1d0
+	    sp(j,2)=f(j,l)
  10      continue
-         call sort(t(1,l),sp,1,n)
-         do 20 j=1,n
-            k=sp(j,1)
-            f(j,l)=sp(k,2)
+	 call sort(t(1,l),sp,1,n)
+	 do 20 j=1,n
+	    k=sp(j,1)
+	    f(j,l)=sp(k,2)
  20      continue
  100  continue
       return
@@ -862,62 +862,62 @@ c
       jt=jf+n*m
       call fsort(mu,n,smod(jf+1),smod(jt+1),sc)
       do 100 inp = 1, np
-        ja=q+6
-        jb=ja+p*m
-        jf=jb+m*q
-        jt=jf+n*m
-        do 81 i=1,q
-          y(inp,i)=0d0
+	ja=q+6
+	jb=ja+p*m
+	jf=jb+m*q
+	jt=jf+n*m
+	do 81 i=1,q
+	  y(inp,i)=0d0
  81     continue
-        do 91 l=1,mu
-          s=0d0
-          do 12201 j=1,p
-            s=s+smod(ja+j)*x(inp,j)
+	do 91 l=1,mu
+	  s=0d0
+	  do 12201 j=1,p
+	    s=s+smod(ja+j)*x(inp,j)
 12201     continue
-          if(s .gt. smod(jt+1)) goto 12221
-          place=1
-          go to 12230
+	  if(s .gt. smod(jt+1)) goto 12221
+	  place=1
+	  go to 12230
 12221     continue
-          if(s .lt. smod(jt+n)) goto 12251
-          place=n
-          go to 12230
+	  if(s .lt. smod(jt+n)) goto 12251
+	  place=n
+	  go to 12230
 
 12251     continue
-          low=0
-          high=n+1
+	  low=0
+	  high=n+1
 C        WHILE
 12261     if(low+1.ge.high) goto 12262
-          place=(low+high)/2
-          t=smod(jt+place)
-          if(s.eq.t) goto 12230
-          if(s .lt. t) then
-             high=place
-          else
-             low=place
-          endif
-          goto 12261
+	  place=(low+high)/2
+	  t=smod(jt+place)
+	  if(s.eq.t) goto 12230
+	  if(s .lt. t) then
+	     high=place
+	  else
+	     low=place
+	  endif
+	  goto 12261
 C        END
 12262     continue
-          jfl=jf+low
-          jfh=jf+high
-          jtl=jt+low
-          jth=jt+high
-          t=smod(jfl)+(smod(jfh)-smod(jfl))*(s-smod(jtl))  /
+	  jfl=jf+low
+	  jfh=jf+high
+	  jtl=jt+low
+	  jth=jt+high
+	  t=smod(jfl)+(smod(jfh)-smod(jfl))*(s-smod(jtl))  /
      &         (smod(jth)-smod(jtl))
-          go to 12300
+	  go to 12300
 12230     continue
-          t=smod(jf+place)
+	  t=smod(jf+place)
 12300     continue
-          do 12311 i=1,q
-             y(inp,i)=y(inp,i)+smod(jb+i)*t
+	  do 12311 i=1,q
+	     y(inp,i)=y(inp,i)+smod(jb+i)*t
 12311     continue
-          ja=ja+p
-          jb=jb+q
-          jf=jf+n
-          jt=jt+n
+	  ja=ja+p
+	  jb=jb+q
+	  jf=jf+n
+	  jt=jt+n
  91     continue
-        do 12321 i=1,q
-           y(inp,i)=ys*y(inp,i)+smod(i+5)
+	do 12321 i=1,q
+	   y(inp,i)=ys*y(inp,i)+smod(i+5)
 12321   continue
  100  continue
       return
@@ -997,69 +997,69 @@ c Var
       sy=0d0
       sw=sy
       do 10 j=1,n
-         sy=sy+w(j)*y(j)
-         sw=sw+w(j)
+	 sy=sy+w(j)*y(j)
+	 sw=sw+w(j)
  10   continue
       a=0d0
       if (sw.gt.0d0) a=sy/sw
       do 20 j=1,n
-         smo(j)=a
+	 smo(j)=a
  20   continue
       return
  30   continue
 
-C     change by 
+C     change by
       if (ismethod .ne. 0) then
-        call spline(n, x, y, w, smo, edf)
+	call spline(n, x, y, w, smo, edf)
       else
-         i=n/4
-         j=3*i
-         scale=x(j)-x(i)
+	 i=n/4
+	 j=3*i
+	 scale=x(j)-x(i)
  40      if (scale.gt.0d0) go to 50
-         if (j.lt.n) j=j+1
-         if (i.gt.1) i=i-1
-         scale=x(j)-x(i)
-         go to 40
+	 if (j.lt.n) j=j+1
+	 if (i.gt.1) i=i-1
+	 scale=x(j)-x(i)
+	 go to 40
  50      vsmlsq=(eps*scale)**2
-         jper=iper
-         if (iper.eq.2.and.(x(1).lt.0d0.or.x(n).gt.1d0)) jper=1
-         if (jper.lt.1.or.jper.gt.2) jper=1
-         if (span.le.0d0) go to 60
-         call smooth (n,x,y,w,span,jper,vsmlsq,smo,sc)
-         return
+	 jper=iper
+	 if (iper.eq.2.and.(x(1).lt.0d0.or.x(n).gt.1d0)) jper=1
+	 if (jper.lt.1.or.jper.gt.2) jper=1
+	 if (span.le.0d0) go to 60
+	 call smooth (n,x,y,w,span,jper,vsmlsq,smo,sc)
+	 return
  60      do 70 i=1,3
-            call smooth(n,x,y,w,spans(i),jper,vsmlsq,
+	    call smooth(n,x,y,w,spans(i),jper,vsmlsq,
      &           sc(1,2*i-1),sc(1,7))
-            call smooth(n,x,sc(1,7),w,spans(2),-jper,vsmlsq,
+	    call smooth(n,x,sc(1,7),w,spans(2),-jper,vsmlsq,
      &           sc(1,2*i),h)
  70      continue
-         do 90 j=1,n
-            resmin=big
-            do 80 i=1,3
-               if (sc(j,2*i).ge.resmin) go to 80
-               resmin=sc(j,2*i)
-               sc(j,7)=spans(i)
+	 do 90 j=1,n
+	    resmin=big
+	    do 80 i=1,3
+	       if (sc(j,2*i).ge.resmin) go to 80
+	       resmin=sc(j,2*i)
+	       sc(j,7)=spans(i)
  80         continue
-            if (alpha.gt.0d0.and.alpha.le.10d0 .and.
+	    if (alpha.gt.0d0.and.alpha.le.10d0 .and.
      &           resmin.lt.sc(j,6).and.resmin.gt.0d0)
      &           sc(j,7)= sc(j,7)+(spans(3)-sc(j,7)) *
      &                          max(sml,resmin/sc(j,6))**(10d0-alpha)
  90      continue
 
-         call smooth (n,x,sc(1,7),w,spans(2),-jper,vsmlsq,sc(1,2),h)
-         do 110 j=1,n
-            if (sc(j,2).le.spans(1)) sc(j,2)=spans(1)
-            if (sc(j,2).ge.spans(3)) sc(j,2)=spans(3)
-            f=sc(j,2)-spans(2)
-            if (f.ge.0d0) go to 100
-            f=-f/(spans(2)-spans(1))
-            sc(j,4)=(1d0-f)*sc(j,3)+f*sc(j,1)
-            go to 110
+	 call smooth (n,x,sc(1,7),w,spans(2),-jper,vsmlsq,sc(1,2),h)
+	 do 110 j=1,n
+	    if (sc(j,2).le.spans(1)) sc(j,2)=spans(1)
+	    if (sc(j,2).ge.spans(3)) sc(j,2)=spans(3)
+	    f=sc(j,2)-spans(2)
+	    if (f.ge.0d0) go to 100
+	    f=-f/(spans(2)-spans(1))
+	    sc(j,4)=(1d0-f)*sc(j,3)+f*sc(j,1)
+	    go to 110
  100        f=f/(spans(3)-spans(2))
-            sc(j,4)=(1d0-f)*sc(j,3)+f*sc(j,5)
+	    sc(j,4)=(1d0-f)*sc(j,3)+f*sc(j,5)
  110     continue
-         call smooth (n,x,sc(1,4),w,spans(1),-jper,vsmlsq,smo,h)
-         edf = 0
+	 call smooth (n,x,sc(1,4),w,spans(1),-jper,vsmlsq,smo,h)
+	 edf = 0
       endif
       return
       end
@@ -1082,70 +1082,70 @@ c Var
       if (ibw.lt.2) ibw=2
       it=2*ibw+1
       do 20 i=1,it
-         j=i
-         if (jper.eq.2) j=i-ibw-1
-         if (j.ge.1) xti=x(j)
-         if (j.ge.1) go to 10
-         j=n+j
-         xti=x(j)-1d0
+	 j=i
+	 if (jper.eq.2) j=i-ibw-1
+	 if (j.ge.1) xti=x(j)
+	 if (j.ge.1) go to 10
+	 j=n+j
+	 xti=x(j)-1d0
  10      wt=w(j)
-         fbo=fbw
-         fbw=fbw+wt
-         if (fbw.gt.0d0) xm=(fbo*xm+wt*xti)/fbw
-         if (fbw.gt.0d0) ym=(fbo*ym+wt*y(j))/fbw
-         tmp=0d0
-         if (fbo.gt.0d0) tmp=fbw*wt*(xti-xm)/fbo
-         var=var+tmp*(xti-xm)
-         cvar=cvar+tmp*(y(j)-ym)
+	 fbo=fbw
+	 fbw=fbw+wt
+	 if (fbw.gt.0d0) xm=(fbo*xm+wt*xti)/fbw
+	 if (fbw.gt.0d0) ym=(fbo*ym+wt*y(j))/fbw
+	 tmp=0d0
+	 if (fbo.gt.0d0) tmp=fbw*wt*(xti-xm)/fbo
+	 var=var+tmp*(xti-xm)
+	 cvar=cvar+tmp*(y(j)-ym)
  20   continue
       do 80 j=1,n
-         out=j-ibw-1
-         in=j+ibw
-         if ((jper.ne.2).and.(out.lt.1.or.in.gt.n)) go to 60
-         if (out.ge.1) go to 30
-         out=n+out
-         xto=x(out)-1d0
-         xti=x(in)
-         go to 50
+	 out=j-ibw-1
+	 in=j+ibw
+	 if ((jper.ne.2).and.(out.lt.1.or.in.gt.n)) go to 60
+	 if (out.ge.1) go to 30
+	 out=n+out
+	 xto=x(out)-1d0
+	 xti=x(in)
+	 go to 50
  30      if (in.le.n) go to 40
-         in=in-n
-         xti=x(in)+1d0
-         xto=x(out)
-         go to 50
+	 in=in-n
+	 xti=x(in)+1d0
+	 xto=x(out)
+	 go to 50
  40      xto=x(out)
-         xti=x(in)
+	 xti=x(in)
  50      wt=w(out)
-         fbo=fbw
-         fbw=fbw-wt
-         tmp=0d0
-         if (fbw.gt.0d0) tmp=fbo*wt*(xto-xm)/fbw
-         var=var-tmp*(xto-xm)
-         cvar=cvar-tmp*(y(out)-ym)
-         if (fbw.gt.0d0) xm=(fbo*xm-wt*xto)/fbw
-         if (fbw.gt.0d0) ym=(fbo*ym-wt*y(out))/fbw
-         wt=w(in)
-         fbo=fbw
-         fbw=fbw+wt
-         if (fbw.gt.0d0) xm=(fbo*xm+wt*xti)/fbw
-         if (fbw.gt.0d0) ym=(fbo*ym+wt*y(in))/fbw
-         tmp=0d0
-         if (fbo.gt.0d0) tmp=fbw*wt*(xti-xm)/fbo
-         var=var+tmp*(xti-xm)
-         cvar=cvar+tmp*(y(in)-ym)
+	 fbo=fbw
+	 fbw=fbw-wt
+	 tmp=0d0
+	 if (fbw.gt.0d0) tmp=fbo*wt*(xto-xm)/fbw
+	 var=var-tmp*(xto-xm)
+	 cvar=cvar-tmp*(y(out)-ym)
+	 if (fbw.gt.0d0) xm=(fbo*xm-wt*xto)/fbw
+	 if (fbw.gt.0d0) ym=(fbo*ym-wt*y(out))/fbw
+	 wt=w(in)
+	 fbo=fbw
+	 fbw=fbw+wt
+	 if (fbw.gt.0d0) xm=(fbo*xm+wt*xti)/fbw
+	 if (fbw.gt.0d0) ym=(fbo*ym+wt*y(in))/fbw
+	 tmp=0d0
+	 if (fbo.gt.0d0) tmp=fbw*wt*(xti-xm)/fbo
+	 var=var+tmp*(xti-xm)
+	 cvar=cvar+tmp*(y(in)-ym)
  60      a=0d0
-         if (var.gt.vsmlsq) a=cvar/var
-         smo(j)=a*(x(j)-xm)+ym
-         if (iper.le.0) go to 80
-         h=0d0
-         if (fbw.gt.0d0) h=1d0/fbw
-         if (var.gt.vsmlsq) h=h+(x(j)-xm)**2/var
-         acvr(j)=0d0
-         a=1d0-w(j)*h
-         if (a.le.0d0) go to 70
-         acvr(j)=abs(y(j)-smo(j))/a
-         go to 80
+	 if (var.gt.vsmlsq) a=cvar/var
+	 smo(j)=a*(x(j)-xm)+ym
+	 if (iper.le.0) go to 80
+	 h=0d0
+	 if (fbw.gt.0d0) h=1d0/fbw
+	 if (var.gt.vsmlsq) h=h+(x(j)-xm)**2/var
+	 acvr(j)=0d0
+	 a=1d0-w(j)*h
+	 if (a.le.0d0) go to 70
+	 acvr(j)=abs(y(j)-smo(j))/a
+	 go to 80
  70      if (j.le.1) go to 80
-         acvr(j)=acvr(j-1)
+	 acvr(j)=acvr(j-1)
  80   continue
       j=1
 c--
@@ -1162,7 +1162,7 @@ c--
       a=0d0
       if (fbw.gt.0d0) a=sy/fbw
       do 120 i=j0,j
-         smo(i)=a
+	 smo(i)=a
  120  continue
  130  j=j+1
       if (j.le.n) go to 90
@@ -1226,8 +1226,8 @@ c Var
 
       if (n .gt. 2500) call bdrsplerr()
       do 10 i = 1,n
-        dx(i) = (x(i)-x(1))/(x(n)-x(1))
-        dy(i) = y(i)
+	dx(i) = (x(i)-x(1))/(x(n)-x(1))
+	dy(i) = y(i)
  10     dw(i) = w(i)
       nk = min(n,15)
       knot(1) = dx(1)
@@ -1239,19 +1239,19 @@ c Var
       knot(nk+3) = dx(n)
       knot(nk+4) = dx(n)
       do 40 i = 5, nk
-        p = (n-1)*real(i-4)/real(nk-3)
-        ip = int(p)
-        p = p-ip
-        knot(i) = (1-p)*dx(ip+1) + p*dx(ip+2)
+	p = (n-1)*real(i-4)/real(nk-3)
+	ip = int(p)
+	p = p-ip
+	knot(i) = (1-p)*dx(ip+1) + p*dx(ip+2)
  40   continue
 c      call dblepr('knots', 5, knot, nk+4)
 C     iparms(1:2) := (icrit, ispar)  for ./sbart.f
       if (iabs(ismethod) .eq. 1) then
-         iparms(1) = 3
-         df1 = df
+	 iparms(1) = 3
+	 df1 = df
       else
-         iparms(1) = 1
-         df1 = 0d0
+	 iparms(1) = 1
+	 df1 = 0d0
       endif
 c     ispar := 0 <==> estimate `spar' :
       iparms(2) = 0
@@ -1277,8 +1277,8 @@ c      call dblepr('smoothed',8, dsmo, n)
  60      s = s + lev(i)
       edf = s
       if(ismethod.lt.0) then
-         call dblepr('lambda', 6, lambda, 1)
-         call dblepr('df', 2, s, 1)
+	 call dblepr('lambda', 6, lambda, 1)
+	 call dblepr('df', 2, s, 1)
       endif
       return
       end

@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2008-03-21 r44828)
+R version 2.7.0 Patched (2008-04-22 r45429)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1422,7 +1422,7 @@ Y    4   10   16   22
 > ## PR#1115 (saving strings with ascii=TRUE)
 > x <- y <- unlist(as.list(
 +     parse(text=paste("\"\\",
-+           as.character(structure(0:255,class="octmode")),
++           as.character(structure(1:255,class="octmode")),
 +              "\"",sep=""))))
 > save(x, ascii=T, file=(fn <- tempfile()))
 > load(fn)
@@ -4046,7 +4046,7 @@ In readBin(zz, "character", 100) :
   incomplete string at end of file has been discarded
 > seek(zz, 0, "start")
 [1] 18
-> readChar(zz, length(xx)) # correct
+> readChar(zz, length(xx)) # truncates at embedded nul
 [1] "A test string\0more"
 > seek(zz) # make sure current position is reported properly
 [1] 18

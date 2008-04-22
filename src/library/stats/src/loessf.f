@@ -31,32 +31,32 @@ c     MachInf -> machin
       execnt=execnt+1
       if(execnt.eq.1)then
 c     initialize  d1mach(2) === DBL_MAX:
-         machin=D1MACH(2)
+	 machin=D1MACH(2)
       end if
 c     fill in vertices for bounding box of $x$
 c     lower left, upper right
       do 3 k=1,d
-         alpha=machin
-         beta=-machin
-         do 4 i=1,n
-            t=x(i,k)
-            alpha=min(alpha,t)
-            beta=max(beta,t)
+	 alpha=machin
+	 beta=-machin
+	 do 4 i=1,n
+	    t=x(i,k)
+	    alpha=min(alpha,t)
+	    beta=max(beta,t)
     4    continue
 c        expand the box a little
-         mu=0.005D0*max(beta-alpha,1.d-10*max(DABS(alpha),DABS(beta))+
+	 mu=0.005D0*max(beta-alpha,1.d-10*max(DABS(alpha),DABS(beta))+
      +        1.d-30)
-         alpha=alpha-mu
-         beta=beta+mu
-         v(1,k)=alpha
-         v(vc,k)=beta
+	 alpha=alpha-mu
+	 beta=beta+mu
+	 v(1,k)=alpha
+	 v(vc,k)=beta
     3 continue
 c     remaining vertices
       do 5 i=2,vc-1
-         j=i-1
-         do 6 k=1,d
-            v(i,k)=v(1+mod(j,2)*(vc-1),k)
-            j=DBLE(j)/2.D0
+	 j=i-1
+	 do 6 k=1,d
+	    v(i,k)=v(1+mod(j,2)*(vc-1),k)
+	    j=DBLE(j)/2.D0
     6    continue
     5 continue
       return
@@ -74,56 +74,56 @@ c     remaining vertices
       execnt=execnt+1
       h=nv
       do 3 i=1,r
-         do 4 j=1,s
-            h=h+1
-            do 5 i3=1,d
-               v(h,i3)=v(f(i,0,j),i3)
+	 do 4 j=1,s
+	    h=h+1
+	    do 5 i3=1,d
+	       v(h,i3)=v(f(i,0,j),i3)
     5       continue
-            v(h,k)=t
+	    v(h,k)=t
 c           check for redundant vertex
-            match=.false.
-            m=1
+	    match=.false.
+	    m=1
 c           top of while loop
     6       if(.not.match)then
-               i1=(m.le.nv)
-            else
-               i1=.false.
-            end if
-            if(.not.(i1))goto 7
-               match=(v(m,1).eq.v(h,1))
-               mm=2
+	       i1=(m.le.nv)
+	    else
+	       i1=.false.
+	    end if
+	    if(.not.(i1))goto 7
+	       match=(v(m,1).eq.v(h,1))
+	       mm=2
 c              top of while loop
     8          if(match)then
-                  i2=(mm.le.d)
-               else
-                  i2=.false.
-               end if
-               if(.not.(i2))goto 9
-                  match=(v(m,mm).eq.v(h,mm))
-                  mm=mm+1
-                  goto 8
+		  i2=(mm.le.d)
+	       else
+		  i2=.false.
+	       end if
+	       if(.not.(i2))goto 9
+		  match=(v(m,mm).eq.v(h,mm))
+		  mm=mm+1
+		  goto 8
 c              bottom of while loop
     9          m=m+1
-               goto 6
+	       goto 6
 c           bottom of while loop
     7       m=m-1
-            if(match)then
-               h=h-1
-            else
-               m=h
-               if(vhit(1).ge.0)then
-                  vhit(m)=p
-               end if
-            end if
-            l(i,0,j)=f(i,0,j)
-            l(i,1,j)=m
-            u(i,0,j)=m
-            u(i,1,j)=f(i,1,j)
+	    if(match)then
+	       h=h-1
+	    else
+	       m=h
+	       if(vhit(1).ge.0)then
+		  vhit(m)=p
+	       end if
+	    end if
+	    l(i,0,j)=f(i,0,j)
+	    l(i,1,j)=m
+	    u(i,0,j)=m
+	    u(i,1,j)=f(i,1,j)
     4    continue
     3 continue
       nv=h
       if(.not.(nv.le.nvmax))then
-         call ehg182(180)
+	 call ehg182(180)
       end if
       return
       end
@@ -140,17 +140,17 @@ c     descend tree until leaf or ambiguous
       j=i
 c     top of while loop
     3 if(a(j).ne.0)then
-         i1=(z(a(j)).ne.xi(j))
+	 i1=(z(a(j)).ne.xi(j))
       else
-         i1=.false.
+	 i1=.false.
       end if
       if(.not.(i1))goto 4
-         if(z(a(j)).lt.xi(j))then
-            j=lo(j)
-         else
-            j=hi(j)
-         end if
-         goto 3
+	 if(z(a(j)).lt.xi(j))then
+	    j=lo(j)
+	 else
+	    j=hi(j)
+	 end if
+	 goto 3
 c     bottom of while loop
     4 ehg138=j
       return
@@ -182,54 +182,54 @@ c     while (l < r )
     3 if(.not.(l.lt.r))goto 4
 c        to avoid recursion, sophisticated partition deleted
 c        partition $x sub {l..r}$ about $t$
-         t=p(1,pi(k))
-         i=l
-         j=r
-         ii=pi(l)
-         pi(l)=pi(k)
-         pi(k)=ii
-         if(t.lt.p(1,pi(r)))then
-            ii=pi(l)
-            pi(l)=pi(r)
-            pi(r)=ii
-         end if
+	 t=p(1,pi(k))
+	 i=l
+	 j=r
+	 ii=pi(l)
+	 pi(l)=pi(k)
+	 pi(k)=ii
+	 if(t.lt.p(1,pi(r)))then
+	    ii=pi(l)
+	    pi(l)=pi(r)
+	    pi(r)=ii
+	 end if
 c        top of while loop
     5    if(.not.(i.lt.j))goto 6
-            ii=pi(i)
-            pi(i)=pi(j)
-            pi(j)=ii
-            i=i+1
-            j=j-1
+	    ii=pi(i)
+	    pi(i)=pi(j)
+	    pi(j)=ii
+	    i=i+1
+	    j=j-1
 c           top of while loop
     7       if(.not.(p(1,pi(i)).lt.t))goto 8
-               i=i+1
-               goto 7
+	       i=i+1
+	       goto 7
 c           bottom of while loop
     8       continue
 c           top of while loop
     9       if(.not.(t.lt.p(1,pi(j))))goto 10
-               j=j-1
-               goto 9
+	       j=j-1
+	       goto 9
 c           bottom of while loop
    10       goto 5
 c        bottom of while loop
     6    if(p(1,pi(l)).eq.t)then
-            ii=pi(l)
-            pi(l)=pi(j)
-            pi(j)=ii
-         else
-            j=j+1
-            ii=pi(r)
-            pi(r)=pi(j)
-            pi(j)=ii
-         end if
-         if(j.le.k)then
-            l=j+1
-         end if
-         if(k.le.j)then
-            r=j-1
-         end if
-         goto 3
+	    ii=pi(l)
+	    pi(l)=pi(j)
+	    pi(j)=ii
+	 else
+	    j=j+1
+	    ii=pi(r)
+	    pi(r)=pi(j)
+	    pi(j)=ii
+	 end if
+	 if(j.le.k)then
+	    l=j+1
+	 end if
+	 if(k.le.j)then
+	    r=j-1
+	 end if
+	 goto 3
 c     bottom of while loop
     4 return
       end
@@ -262,158 +262,158 @@ c     X -> b
       execnt=execnt+1
       if(execnt.eq.1)then
 c     initialize  d1mach(4) === 1 / DBL_EPSILON === 2^52  :
-         machep=d1mach(4)
+	 machep=d1mach(4)
       end if
 c     sort by distance
       do 3 i3=1,n
-         dist(i3)=0
+	 dist(i3)=0
     3 continue
       do 4 j=1,dd
-         i4=q(j)
-         do 5 i3=1,n
-            dist(i3)=dist(i3)+(x(i3,j)-i4)**2
+	 i4=q(j)
+	 do 5 i3=1,n
+	    dist(i3)=dist(i3)+(x(i3,j)-i4)**2
     5    continue
     4 continue
       call ehg106(1,n,nf,1,dist,psi,n)
       rho=dist(psi(nf))*max(1.d0,f)
       if(rho .le. 0)then
-         call ehg182(120)
+	 call ehg182(120)
       end if
 c     compute neighborhood weights
       if(kernel.eq.2)then
-         do 6 i=1,nf
-            if(dist(psi(i)).lt.rho)then
-               i1=dsqrt(rw(psi(i)))
-            else
-               i1=0
-            end if
-            w(i)=i1
+	 do 6 i=1,nf
+	    if(dist(psi(i)).lt.rho)then
+	       i1=dsqrt(rw(psi(i)))
+	    else
+	       i1=0
+	    end if
+	    w(i)=i1
     6    continue
       else
-         do 7 i3=1,nf
-            w(i3)=dsqrt(dist(psi(i3))/rho)
+	 do 7 i3=1,nf
+	    w(i3)=dsqrt(dist(psi(i3))/rho)
     7    continue
-         do 8 i3=1,nf
-            w(i3)=dsqrt(rw(psi(i3))*(1-w(i3)**3)**3)
+	 do 8 i3=1,nf
+	    w(i3)=dsqrt(rw(psi(i3))*(1-w(i3)**3)**3)
     8    continue
       end if
       if(dabs(w(idamax(nf,w,1))).eq.0)then
-         call ehg184('at ',q,dd,1)
-         call ehg184('radius ',rho,1,1)
-         if(.not..false.)then
-            call ehg182(121)
-         end if
+	 call ehg184('at ',q,dd,1)
+	 call ehg184('radius ',rho,1,1)
+	 if(.not..false.)then
+	    call ehg182(121)
+	 end if
       end if
 c     fill design matrix
       column=1
       do 9 i3=1,nf
-         b(i3,column)=w(i3)
+	 b(i3,column)=w(i3)
     9 continue
       if(tdeg.ge.1)then
-         do 10 j=1,d
-            if(cdeg(j).ge.1)then
-               column=column+1
-               i5=q(j)
-               do 11 i3=1,nf
-                  b(i3,column)=w(i3)*(x(psi(i3),j)-i5)
+	 do 10 j=1,d
+	    if(cdeg(j).ge.1)then
+	       column=column+1
+	       i5=q(j)
+	       do 11 i3=1,nf
+		  b(i3,column)=w(i3)*(x(psi(i3),j)-i5)
    11          continue
-            end if
+	    end if
    10    continue
       end if
       if(tdeg.ge.2)then
-         do 12 j=1,d
-            if(cdeg(j).ge.1)then
-               if(cdeg(j).ge.2)then
-                  column=column+1
-                  i6=q(j)
-                  do 13 i3=1,nf
-                     b(i3,column)=w(i3)*(x(psi(i3),j)-i6)**2
+	 do 12 j=1,d
+	    if(cdeg(j).ge.1)then
+	       if(cdeg(j).ge.2)then
+		  column=column+1
+		  i6=q(j)
+		  do 13 i3=1,nf
+		     b(i3,column)=w(i3)*(x(psi(i3),j)-i6)**2
    13             continue
-               end if
-               do 14 jj=j+1,d
-                  if(cdeg(jj).ge.1)then
-                     column=column+1
-                     i7=q(j)
-                     i8=q(jj)
-                     do 15 i3=1,nf
-                        b(i3,column)=w(i3)*(x(psi(i3),j)-i7)*(x(psi(i3),
+	       end if
+	       do 14 jj=j+1,d
+		  if(cdeg(jj).ge.1)then
+		     column=column+1
+		     i7=q(j)
+		     i8=q(jj)
+		     do 15 i3=1,nf
+			b(i3,column)=w(i3)*(x(psi(i3),j)-i7)*(x(psi(i3),
      +jj)-i8)
    15                continue
-                  end if
+		  end if
    14          continue
-            end if
+	    end if
    12    continue
-         k=column
+	 k=column
       end if
       do 16 i3=1,nf
-         eta(i3)=w(i3)*y(psi(i3))
+	 eta(i3)=w(i3)*y(psi(i3))
    16 continue
 c     equilibrate columns
       do 17 j=1,k
-         scal=0
-         do 18 inorm2=1,nf
-            scal=scal+b(inorm2,j)**2
+	 scal=0
+	 do 18 inorm2=1,nf
+	    scal=scal+b(inorm2,j)**2
    18    continue
-         scal=dsqrt(scal)
-         if(0.lt.scal)then
-            do 19 i3=1,nf
-               b(i3,j)=b(i3,j)/scal
+	 scal=dsqrt(scal)
+	 if(0.lt.scal)then
+	    do 19 i3=1,nf
+	       b(i3,j)=b(i3,j)/scal
    19       continue
-            colnor(j)=scal
-         else
-            colnor(j)=1
-         end if
+	    colnor(j)=scal
+	 else
+	    colnor(j)=1
+	 end if
    17 continue
 c     singular value decomposition
       call dqrdc(b,nf,nf,k,qraux,jpvt,work,0)
       call dqrsl(b,nf,nf,k,qraux,eta,work,eta,eta,work,work,1000,info)
       do 20 i9=1,k
-         do 21 i3=1,k
-            u(i3,i9)=0
+	 do 21 i3=1,k
+	    u(i3,i9)=0
    21    continue
    20 continue
       do 22 i=1,k
-         do 23 j=i,k
-            u(i,j)=b(i,j)
+	 do 23 j=i,k
+	    u(i,j)=b(i,j)
    23    continue
    22 continue
       call dsvdc(u,15,k,k,sigma,g,u,15,e,15,work,21,info)
       if(.not.(info.eq.0))then
-         call ehg182(182)
+	 call ehg182(182)
       end if
       tol=sigma(1)*(100*machep)
       rcond=min(rcond,sigma(k)/sigma(1))
       if(sigma(k).le.tol)then
-         sing=sing+1
-         if(sing.eq.1)then
-            call ehg184('pseudoinverse used at',q,d,1)
-            call ehg184('neighborhood radius',dsqrt(rho),1,1)
-            call ehg184('reciprocal condition number ',rcond,1,1)
-         else
-            if(sing.eq.2)then
-               call ehg184('There are other near singularities as well.'
+	 sing=sing+1
+	 if(sing.eq.1)then
+	    call ehg184('pseudoinverse used at',q,d,1)
+	    call ehg184('neighborhood radius',dsqrt(rho),1,1)
+	    call ehg184('reciprocal condition number ',rcond,1,1)
+	 else
+	    if(sing.eq.2)then
+	       call ehg184('There are other near singularities as well.'
      +,rho,1,1)
-            end if
-         end if
+	    end if
+	 end if
       end if
 c     compensate for equilibration
       do 24 j=1,k
-         i10=colnor(j)
-         do 25 i3=1,k
-            e(j,i3)=e(j,i3)/i10
+	 i10=colnor(j)
+	 do 25 i3=1,k
+	    e(j,i3)=e(j,i3)/i10
    25    continue
    24 continue
 c     solve least squares problem
       do 26 j=1,k
-         if(tol.lt.sigma(j))then
-            i2=ddot(k,u(1,j),1,eta,1)/sigma(j)
-         else
-            i2=0.d0
-         end if
-         dgamma(j)=i2
+	 if(tol.lt.sigma(j))then
+	    i2=ddot(k,u(1,j),1,eta,1)/sigma(j)
+	 else
+	    i2=0.d0
+	 end if
+	 dgamma(j)=i2
    26 continue
       do 27 j=0,od
-         s(j)=ddot(k,e(j+1,1),15,dgamma,1)
+	 s(j)=ddot(k,e(j+1,1),15,dgamma,1)
    27 continue
       return
       end
@@ -439,30 +439,30 @@ c     Identity -> identi
 c     X -> b
       execnt=execnt+1
       if(.not.(d.le.8))then
-         call ehg182(101)
+	 call ehg182(101)
       end if
 c     build $k$-d tree
       call ehg126(d,n,vc,x,v,nvmax)
       nv=vc
       nc=1
       do 3 j=1,vc
-         c(j,nc)=j
-         vhit(j)=0
+	 c(j,nc)=j
+	 vhit(j)=0
     3 continue
       do 4 i1=1,d
-         delta(i1)=v(vc,i1)-v(1,i1)
+	 delta(i1)=v(vc,i1)-v(1,i1)
     4 continue
       fd=fd*dnrm2(d,delta,1)
       do 5 identi=1,n
-         pi(identi)=identi
+	 pi(identi)=identi
     5 continue
       call ehg124(1,n,d,n,nv,nc,ncmax,vc,x,pi,a,xi,lo,hi,c,v,vhit,nvmax,
      +ntol,fd,dd)
 c     smooth
       if(trl.ne.0)then
-         do 6 i2=1,nv
-            do 7 i1=0,d
-               vval2(i1,i2)=0
+	 do 6 i2=1,nv
+	    do 7 i1=0,d
+	       vval2(i1,i2)=0
     7       continue
     6    continue
       end if
@@ -484,10 +484,10 @@ c Var
       external ehg128
 
       do 3 i=1,m
-         do 4 i1=1,d
-            delta(i1)=z(i,i1)
+	 do 4 i1=1,d
+	    delta(i1)=z(i,i1)
     4    continue
-         s(i)=ehg128(delta,d,ncmax,vc,a,xi,lo,hi,c,v,nvmax,vval)
+	 s(i)=ehg128(delta,d,ncmax,vc,a,xi,lo,hi,c,v,nvmax,vval)
     3 continue
       return
       end
@@ -535,24 +535,24 @@ c     coef, d, deg, del
       c4=dexp(ehg176(z))
       i=1+3*(min(d,4)-1+4*(deg-1))
       if(d.le.4)then
-         c1=c(i)
-         c2=c(i+1)
-         c3=c(i+2)
+	 c1=c(i)
+	 c2=c(i+1)
+	 c3=c(i+2)
       else
-         c1=c(i)+(d-4)*(c(i)-c(i-3))
-         c2=c(i+1)+(d-4)*(c(i+1)-c(i-2))
-         c3=c(i+2)+(d-4)*(c(i+2)-c(i-1))
+	 c1=c(i)+(d-4)*(c(i)-c(i-3))
+	 c2=c(i+1)+(d-4)*(c(i+1)-c(i-2))
+	 c3=c(i+2)+(d-4)*(c(i+2)-c(i-1))
       endif
       delta1=n-trl*dexp(c1*z**c2*(1-z)**c3*c4)
       i=i+24
       if(d.le.4)then
-         c1=c(i)
-         c2=c(i+1)
-         c3=c(i+2)
+	 c1=c(i)
+	 c2=c(i+1)
+	 c3=c(i+2)
       else
-         c1=c(i)+(d-4)*(c(i)-c(i-3))
-         c2=c(i+1)+(d-4)*(c(i+1)-c(i-2))
-         c3=c(i+2)+(d-4)*(c(i+2)-c(i-1))
+	 c1=c(i)+(d-4)*(c(i)-c(i-3))
+	 c2=c(i+1)+(d-4)*(c(i+1)-c(i-2))
+	 c3=c(i+2)+(d-4)*(c(i+2)-c(i-1))
       endif
       delta2=n-trl*dexp(c1*z**c2*(1-z)**c3*c4)
       return
@@ -569,32 +569,32 @@ c     coef, d, deg, del
       execnt=execnt+1
 c     compute $LL~=~(I-L)(I-L)'$
       do 3 i=1,n
-         l(i,i)=l(i,i)-1
+	 l(i,i)=l(i,i)-1
     3 continue
       do 4 i=1,n
-         do 5 j=1,i
-            ll(i,j)=ddot(n,l(i,1),n,l(j,1),n)
+	 do 5 j=1,i
+	    ll(i,j)=ddot(n,l(i,1),n,l(j,1),n)
     5    continue
     4 continue
       do 6 i=1,n
-         do 7 j=i+1,n
-            ll(i,j)=ll(j,i)
+	 do 7 j=i+1,n
+	    ll(i,j)=ll(j,i)
     7    continue
     6 continue
       do 8 i=1,n
-         l(i,i)=l(i,i)+1
+	 l(i,i)=l(i,i)+1
     8 continue
 c     accumulate first two traces
       trl=0
       delta1=0
       do 9 i=1,n
-         trl=trl+l(i,i)
-         delta1=delta1+ll(i,i)
+	 trl=trl+l(i,i)
+	 delta1=delta1+ll(i,i)
     9 continue
 c     $delta sub 2 = "tr" LL sup 2$
       delta2=0
       do 10 i=1,n
-         delta2=delta2+ddot(n,ll(i,1),n,ll(1,i),1)
+	 delta2=delta2+ddot(n,ll(i,1),n,ll(1,i),1)
    10 continue
       return
       end
@@ -612,10 +612,10 @@ c     $delta sub 2 = "tr" LL sup 2$
 c     as in bbox
 c     remaining vertices
       do 3 i=2,vc-1
-         j=i-1
-         do 4 k=1,d
-            v(i,k)=v(1+mod(j,2)*(vc-1),k)
-            j=ifloor(DBLE(j)/2.D0)
+	 j=i-1
+	 do 4 k=1,d
+	    v(i,k)=v(1+mod(j,2)*(vc-1),k)
+	    j=ifloor(DBLE(j)/2.D0)
     4    continue
     3 continue
 c     as in ehg131
@@ -623,31 +623,31 @@ c     as in ehg131
       mv=vc
       novhit(1)=-1
       do 5 j=1,vc
-         c(j,mc)=j
+	 c(j,mc)=j
     5 continue
 c     as in rbuild
       p=1
 c     top of while loop
     6 if(.not.(p.le.nc))goto 7
-         if(a(p).ne.0)then
-            k=a(p)
+	 if(a(p).ne.0)then
+	    k=a(p)
 c           left son
-            mc=mc+1
-            lo(p)=mc
+	    mc=mc+1
+	    lo(p)=mc
 c           right son
-            mc=mc+1
-            hi(p)=mc
-            call ehg125(p,mv,v,novhit,nvmax,d,k,xi(p),2**(k-1),2**(d-k),
+	    mc=mc+1
+	    hi(p)=mc
+	    call ehg125(p,mv,v,novhit,nvmax,d,k,xi(p),2**(k-1),2**(d-k),
      +           c(1,p),c(1,lo(p)),c(1,hi(p)))
-         end if
-         p=p+1
-         goto 6
+	 end if
+	 p=p+1
+	 goto 6
 c     bottom of while loop
     7 if(.not.(mc.eq.nc))then
-         call ehg182(193)
+	 call ehg182(193)
       end if
       if(.not.(mv.eq.nv))then
-         call ehg182(193)
+	 call ehg182(193)
       end if
       return
       end
@@ -791,33 +791,33 @@ c Var
       data execnt /0/
       execnt=execnt+1
       do 3 j=1,n
-         do 4 i2=1,nv
-            do 5 i1=0,d
-               vval2(i1,i2)=0
+	 do 4 i2=1,nv
+	    do 5 i1=0,d
+	       vval2(i1,i2)=0
     5       continue
     4    continue
-         do 6 i=1,nv
+	 do 6 i=1,nv
 c           linear search for i in Lq
-            lq1=lq(i,1)
-            lq(i,1)=j
-            p=nf
+	    lq1=lq(i,1)
+	    lq(i,1)=j
+	    p=nf
 c           top of while loop
     7       if(.not.(lq(i,p).ne.j))goto 8
-               p=p-1
-               goto 7
+	       p=p-1
+	       goto 7
 c           bottom of while loop
     8       lq(i,1)=lq1
-            if(lq(i,p).eq.j)then
-               do 9 i1=0,d
-                  vval2(i1,i)=lf(i1,i,p)
+	    if(lq(i,p).eq.j)then
+	       do 9 i1=0,d
+		  vval2(i1,i)=lf(i1,i,p)
     9          continue
-            end if
+	    end if
     6    continue
-         do 10 i=1,m
-            do 11 i1=1,d
-               zi(i1)=z(i,i1)
+	 do 10 i=1,m
+	    do 11 i1=1,d
+	       zi(i1)=z(i,i1)
    11       continue
-            l(i,j)=ehg128(zi,d,ncmax,vc,a,xi,lo,hi,c,v,nvmax,vval2)
+	    l(i,j)=ehg128(zi,d,ncmax,vc,a,xi,lo,hi,c,v,nvmax,vval2)
    10    continue
     3 continue
       return
@@ -857,15 +857,15 @@ c           bottom of while loop
       DOUBLE PRECISION lf(0:d,nvmax,nf),vval(0:d,nvmax),y(n)
 
       do 3 i2=1,nv
-         do 4 i1=0,d
-            vval(i1,i2)=0
+	 do 4 i1=0,d
+	    vval(i1,i2)=0
     4    continue
     3 continue
       do 5 i=1,nv
-         do 6 j=1,nf
-            i3=y(lq(i,j))
-            do 7 i1=0,d
-               vval(i1,i)=vval(i1,i)+i3*lf(i1,i,j)
+	 do 6 j=1,nf
+	    i3=y(lq(i,j))
+	    do 7 i1=0,d
+	       vval(i1,i)=vval(i1,i)+i3*lf(i1,i,j)
     7       continue
     6    continue
     5 continue
@@ -898,59 +898,59 @@ c     locate enclosing cell
       j=1
 c     top of while loop
     3 if(.not.(a(j).ne.0))goto 4
-         nt=nt+1
-         if(z(a(j)).lt.xi(j))then
-            i1=lo(j)
-         else
-            i1=hi(j)
-         end if
-         t(nt)=i1
-         if(.not.(nt.lt.20))then
-            call ehg182(181)
-         end if
-         j=t(nt)
-         goto 3
+	 nt=nt+1
+	 if(z(a(j)).lt.xi(j))then
+	    i1=lo(j)
+	 else
+	    i1=hi(j)
+	 end if
+	 t(nt)=i1
+	 if(.not.(nt.lt.20))then
+	    call ehg182(181)
+	 end if
+	 j=t(nt)
+	 goto 3
 c     bottom of while loop
     4 continue
 c     tensor
       do 5 i12=1,vc
-         do 6 i11=0,d
-            g(i11,i12)=vval(i11,c(i12,j))
+	 do 6 i11=0,d
+	    g(i11,i12)=vval(i11,c(i12,j))
     6    continue
     5 continue
       lg=vc
       ll=c(1,j)
       ur=c(vc,j)
       do 7 i=d,1,-1
-         h=(z(i)-v(ll,i))/(v(ur,i)-v(ll,i))
-         if(h.lt.-.001D0)then
-            call ehg184('eval ',z,d,1)
-            call ehg184('lowerlimit ',v(ll,1),d,nvmax)
-         else
-            if(1.001D0.lt.h)then
-               call ehg184('eval ',z,d,1)
-               call ehg184('upperlimit ',v(ur,1),d,nvmax)
-            end if
-         end if
-         if(-.001D0.le.h)then
-            i2=(h.le.1.001D0)
-         else
-            i2=.false.
-         end if
-         if(.not.i2)then
-            call ehg182(122)
-         end if
-         lg=DBLE(lg)/2.D0
-         do 8 ig=1,lg
+	 h=(z(i)-v(ll,i))/(v(ur,i)-v(ll,i))
+	 if(h.lt.-.001D0)then
+	    call ehg184('eval ',z,d,1)
+	    call ehg184('lowerlimit ',v(ll,1),d,nvmax)
+	 else
+	    if(1.001D0.lt.h)then
+	       call ehg184('eval ',z,d,1)
+	       call ehg184('upperlimit ',v(ur,1),d,nvmax)
+	    end if
+	 end if
+	 if(-.001D0.le.h)then
+	    i2=(h.le.1.001D0)
+	 else
+	    i2=.false.
+	 end if
+	 if(.not.i2)then
+	    call ehg182(122)
+	 end if
+	 lg=DBLE(lg)/2.D0
+	 do 8 ig=1,lg
 c           Hermite basis
-            phi0=(1-h)**2*(1+2*h)
-            phi1=h**2*(3-2*h)
-            psi0=h*(1-h)**2
-            psi1=h**2*(h-1)
-            g(0,ig)=phi0*g(0,ig) + phi1*g(0,ig+lg) +
+	    phi0=(1-h)**2*(1+2*h)
+	    phi1=h**2*(3-2*h)
+	    psi0=h*(1-h)**2
+	    psi1=h**2*(h-1)
+	    g(0,ig)=phi0*g(0,ig) + phi1*g(0,ig+lg) +
      +           (psi0*g(i,ig)+psi1*g(i,ig+lg)) * (v(ur,i)-v(ll,i))
-            do 9 ii=1,i-1
-               g(ii,ig)=phi0*g(ii,ig)+phi1*g(ii,ig+lg)
+	    do 9 ii=1,i-1
+	       g(ii,ig)=phi0*g(ii,ig)+phi1*g(ii,ig+lg)
     9       continue
     8    continue
     7 continue
@@ -958,258 +958,258 @@ c           Hermite basis
 c     blending
       if(d.eq.2)then
 c        ----- North -----
-         v0=v(ll,1)
-         v1=v(ur,1)
-         do 10 i11=0,d
-            g0(i11)=vval(i11,c(3,j))
+	 v0=v(ll,1)
+	 v1=v(ur,1)
+	 do 10 i11=0,d
+	    g0(i11)=vval(i11,c(3,j))
    10    continue
-         do 11 i11=0,d
-            g1(i11)=vval(i11,c(4,j))
+	 do 11 i11=0,d
+	    g1(i11)=vval(i11,c(4,j))
    11    continue
-         xibar=v(ur,2)
-         m=nt-1
+	 xibar=v(ur,2)
+	 m=nt-1
 c        top of while loop
    12    if(m.eq.0)then
-            i4=.true.
-         else
-            if(a(t(m)).eq.2)then
-               i3=(xi(t(m)).eq.xibar)
-            else
-               i3=.false.
-            end if
-            i4=i3
-         end if
-         if(.not.(.not.i4))goto 13
-            m=m-1
+	    i4=.true.
+	 else
+	    if(a(t(m)).eq.2)then
+	       i3=(xi(t(m)).eq.xibar)
+	    else
+	       i3=.false.
+	    end if
+	    i4=i3
+	 end if
+	 if(.not.(.not.i4))goto 13
+	    m=m-1
 c           voidp junk
-            goto 12
+	    goto 12
 c        bottom of while loop
    13    if(m.ge.1)then
-            m=hi(t(m))
+	    m=hi(t(m))
 c           top of while loop
    14       if(.not.(a(m).ne.0))goto 15
-               if(z(a(m)).lt.xi(m))then
-                  m=lo(m)
-               else
-                  m=hi(m)
-               end if
-               goto 14
+	       if(z(a(m)).lt.xi(m))then
+		  m=lo(m)
+	       else
+		  m=hi(m)
+	       end if
+	       goto 14
 c           bottom of while loop
    15       if(v0.lt.v(c(1,m),1))then
-               v0=v(c(1,m),1)
-               do 16 i11=0,d
-                  g0(i11)=vval(i11,c(1,m))
+	       v0=v(c(1,m),1)
+	       do 16 i11=0,d
+		  g0(i11)=vval(i11,c(1,m))
    16          continue
-            end if
-            if(v(c(2,m),1).lt.v1)then
-               v1=v(c(2,m),1)
-               do 17 i11=0,d
-                  g1(i11)=vval(i11,c(2,m))
+	    end if
+	    if(v(c(2,m),1).lt.v1)then
+	       v1=v(c(2,m),1)
+	       do 17 i11=0,d
+		  g1(i11)=vval(i11,c(2,m))
    17          continue
-            end if
-         end if
-         h=(z(1)-v0)/(v1-v0)
+	    end if
+	 end if
+	 h=(z(1)-v0)/(v1-v0)
 c        Hermite basis
-         phi0=(1-h)**2*(1+2*h)
-         phi1=h**2*(3-2*h)
-         psi0=h*(1-h)**2
-         psi1=h**2*(h-1)
-         gn=phi0*g0(0)+phi1*g1(0)+(psi0*g0(1)+psi1*g1(1))*(v1-v0)
-         gpn=phi0*g0(2)+phi1*g1(2)
+	 phi0=(1-h)**2*(1+2*h)
+	 phi1=h**2*(3-2*h)
+	 psi0=h*(1-h)**2
+	 psi1=h**2*(h-1)
+	 gn=phi0*g0(0)+phi1*g1(0)+(psi0*g0(1)+psi1*g1(1))*(v1-v0)
+	 gpn=phi0*g0(2)+phi1*g1(2)
 c        ----- South -----
-         v0=v(ll,1)
-         v1=v(ur,1)
-         do 18 i11=0,d
-            g0(i11)=vval(i11,c(1,j))
+	 v0=v(ll,1)
+	 v1=v(ur,1)
+	 do 18 i11=0,d
+	    g0(i11)=vval(i11,c(1,j))
    18    continue
-         do 19 i11=0,d
-            g1(i11)=vval(i11,c(2,j))
+	 do 19 i11=0,d
+	    g1(i11)=vval(i11,c(2,j))
    19    continue
-         xibar=v(ll,2)
-         m=nt-1
+	 xibar=v(ll,2)
+	 m=nt-1
 c        top of while loop
    20    if(m.eq.0)then
-            i6=.true.
-         else
-            if(a(t(m)).eq.2)then
-               i5=(xi(t(m)).eq.xibar)
-            else
-               i5=.false.
-            end if
-            i6=i5
-         end if
-         if(.not.(.not.i6))goto 21
-            m=m-1
+	    i6=.true.
+	 else
+	    if(a(t(m)).eq.2)then
+	       i5=(xi(t(m)).eq.xibar)
+	    else
+	       i5=.false.
+	    end if
+	    i6=i5
+	 end if
+	 if(.not.(.not.i6))goto 21
+	    m=m-1
 c           voidp junk
-            goto 20
+	    goto 20
 c        bottom of while loop
    21    if(m.ge.1)then
-            m=lo(t(m))
+	    m=lo(t(m))
 c           top of while loop
    22       if(.not.(a(m).ne.0))goto 23
-               if(z(a(m)).lt.xi(m))then
-                  m=lo(m)
-               else
-                  m=hi(m)
-               end if
-               goto 22
+	       if(z(a(m)).lt.xi(m))then
+		  m=lo(m)
+	       else
+		  m=hi(m)
+	       end if
+	       goto 22
 c           bottom of while loop
    23       if(v0.lt.v(c(3,m),1))then
-               v0=v(c(3,m),1)
-               do 24 i11=0,d
-                  g0(i11)=vval(i11,c(3,m))
+	       v0=v(c(3,m),1)
+	       do 24 i11=0,d
+		  g0(i11)=vval(i11,c(3,m))
    24          continue
-            end if
-            if(v(c(4,m),1).lt.v1)then
-               v1=v(c(4,m),1)
-               do 25 i11=0,d
-                  g1(i11)=vval(i11,c(4,m))
+	    end if
+	    if(v(c(4,m),1).lt.v1)then
+	       v1=v(c(4,m),1)
+	       do 25 i11=0,d
+		  g1(i11)=vval(i11,c(4,m))
    25          continue
-            end if
-         end if
-         h=(z(1)-v0)/(v1-v0)
+	    end if
+	 end if
+	 h=(z(1)-v0)/(v1-v0)
 c        Hermite basis
-         phi0=(1-h)**2*(1+2*h)
-         phi1=h**2*(3-2*h)
-         psi0=h*(1-h)**2
-         psi1=h**2*(h-1)
-         gs=phi0*g0(0)+phi1*g1(0)+(psi0*g0(1)+psi1*g1(1))*(v1-v0)
-         gps=phi0*g0(2)+phi1*g1(2)
+	 phi0=(1-h)**2*(1+2*h)
+	 phi1=h**2*(3-2*h)
+	 psi0=h*(1-h)**2
+	 psi1=h**2*(h-1)
+	 gs=phi0*g0(0)+phi1*g1(0)+(psi0*g0(1)+psi1*g1(1))*(v1-v0)
+	 gps=phi0*g0(2)+phi1*g1(2)
 c        ----- East -----
-         v0=v(ll,2)
-         v1=v(ur,2)
-         do 26 i11=0,d
-            g0(i11)=vval(i11,c(2,j))
+	 v0=v(ll,2)
+	 v1=v(ur,2)
+	 do 26 i11=0,d
+	    g0(i11)=vval(i11,c(2,j))
    26    continue
-         do 27 i11=0,d
-            g1(i11)=vval(i11,c(4,j))
+	 do 27 i11=0,d
+	    g1(i11)=vval(i11,c(4,j))
    27    continue
-         xibar=v(ur,1)
-         m=nt-1
+	 xibar=v(ur,1)
+	 m=nt-1
 c        top of while loop
    28    if(m.eq.0)then
-            i8=.true.
-         else
-            if(a(t(m)).eq.1)then
-               i7=(xi(t(m)).eq.xibar)
-            else
-               i7=.false.
-            end if
-            i8=i7
-         end if
-         if(.not.(.not.i8))goto 29
-            m=m-1
+	    i8=.true.
+	 else
+	    if(a(t(m)).eq.1)then
+	       i7=(xi(t(m)).eq.xibar)
+	    else
+	       i7=.false.
+	    end if
+	    i8=i7
+	 end if
+	 if(.not.(.not.i8))goto 29
+	    m=m-1
 c           voidp junk
-            goto 28
+	    goto 28
 c        bottom of while loop
    29    if(m.ge.1)then
-            m=hi(t(m))
+	    m=hi(t(m))
 c           top of while loop
    30       if(.not.(a(m).ne.0))goto 31
-               if(z(a(m)).lt.xi(m))then
-                  m=lo(m)
-               else
-                  m=hi(m)
-               end if
-               goto 30
+	       if(z(a(m)).lt.xi(m))then
+		  m=lo(m)
+	       else
+		  m=hi(m)
+	       end if
+	       goto 30
 c           bottom of while loop
    31       if(v0.lt.v(c(1,m),2))then
-               v0=v(c(1,m),2)
-               do 32 i11=0,d
-                  g0(i11)=vval(i11,c(1,m))
+	       v0=v(c(1,m),2)
+	       do 32 i11=0,d
+		  g0(i11)=vval(i11,c(1,m))
    32          continue
-            end if
-            if(v(c(3,m),2).lt.v1)then
-               v1=v(c(3,m),2)
-               do 33 i11=0,d
-                  g1(i11)=vval(i11,c(3,m))
+	    end if
+	    if(v(c(3,m),2).lt.v1)then
+	       v1=v(c(3,m),2)
+	       do 33 i11=0,d
+		  g1(i11)=vval(i11,c(3,m))
    33          continue
-            end if
-         end if
-         h=(z(2)-v0)/(v1-v0)
+	    end if
+	 end if
+	 h=(z(2)-v0)/(v1-v0)
 c        Hermite basis
-         phi0=(1-h)**2*(1+2*h)
-         phi1=h**2*(3-2*h)
-         psi0=h*(1-h)**2
-         psi1=h**2*(h-1)
-         ge=phi0*g0(0)+phi1*g1(0)+(psi0*g0(2)+psi1*g1(2))*(v1-v0)
-         gpe=phi0*g0(1)+phi1*g1(1)
+	 phi0=(1-h)**2*(1+2*h)
+	 phi1=h**2*(3-2*h)
+	 psi0=h*(1-h)**2
+	 psi1=h**2*(h-1)
+	 ge=phi0*g0(0)+phi1*g1(0)+(psi0*g0(2)+psi1*g1(2))*(v1-v0)
+	 gpe=phi0*g0(1)+phi1*g1(1)
 c        ----- West -----
-         v0=v(ll,2)
-         v1=v(ur,2)
-         do 34 i11=0,d
-            g0(i11)=vval(i11,c(1,j))
+	 v0=v(ll,2)
+	 v1=v(ur,2)
+	 do 34 i11=0,d
+	    g0(i11)=vval(i11,c(1,j))
    34    continue
-         do 35 i11=0,d
-            g1(i11)=vval(i11,c(3,j))
+	 do 35 i11=0,d
+	    g1(i11)=vval(i11,c(3,j))
    35    continue
-         xibar=v(ll,1)
-         m=nt-1
+	 xibar=v(ll,1)
+	 m=nt-1
 c        top of while loop
    36    if(m.eq.0)then
-            i10=.true.
-         else
-            if(a(t(m)).eq.1)then
-               i9=(xi(t(m)).eq.xibar)
-            else
-               i9=.false.
-            end if
-            i10=i9
-         end if
-         if(.not.(.not.i10))goto 37
-            m=m-1
+	    i10=.true.
+	 else
+	    if(a(t(m)).eq.1)then
+	       i9=(xi(t(m)).eq.xibar)
+	    else
+	       i9=.false.
+	    end if
+	    i10=i9
+	 end if
+	 if(.not.(.not.i10))goto 37
+	    m=m-1
 c           voidp junk
-            goto 36
+	    goto 36
 c        bottom of while loop
    37    if(m.ge.1)then
-            m=lo(t(m))
+	    m=lo(t(m))
 c           top of while loop
    38       if(.not.(a(m).ne.0))goto 39
-               if(z(a(m)).lt.xi(m))then
-                  m=lo(m)
-               else
-                  m=hi(m)
-               end if
-               goto 38
+	       if(z(a(m)).lt.xi(m))then
+		  m=lo(m)
+	       else
+		  m=hi(m)
+	       end if
+	       goto 38
 c           bottom of while loop
    39       if(v0.lt.v(c(2,m),2))then
-               v0=v(c(2,m),2)
-               do 40 i11=0,d
-                  g0(i11)=vval(i11,c(2,m))
+	       v0=v(c(2,m),2)
+	       do 40 i11=0,d
+		  g0(i11)=vval(i11,c(2,m))
    40          continue
-            end if
-            if(v(c(4,m),2).lt.v1)then
-               v1=v(c(4,m),2)
-               do 41 i11=0,d
-                  g1(i11)=vval(i11,c(4,m))
+	    end if
+	    if(v(c(4,m),2).lt.v1)then
+	       v1=v(c(4,m),2)
+	       do 41 i11=0,d
+		  g1(i11)=vval(i11,c(4,m))
    41          continue
-            end if
-         end if
-         h=(z(2)-v0)/(v1-v0)
+	    end if
+	 end if
+	 h=(z(2)-v0)/(v1-v0)
 c        Hermite basis
-         phi0=(1-h)**2*(1+2*h)
-         phi1=h**2*(3-2*h)
-         psi0=h*(1-h)**2
-         psi1=h**2*(h-1)
-         gw=phi0*g0(0)+phi1*g1(0)+(psi0*g0(2)+psi1*g1(2))*(v1-v0)
-         gpw=phi0*g0(1)+phi1*g1(1)
+	 phi0=(1-h)**2*(1+2*h)
+	 phi1=h**2*(3-2*h)
+	 psi0=h*(1-h)**2
+	 psi1=h**2*(h-1)
+	 gw=phi0*g0(0)+phi1*g1(0)+(psi0*g0(2)+psi1*g1(2))*(v1-v0)
+	 gpw=phi0*g0(1)+phi1*g1(1)
 c        NS
-         h=(z(2)-v(ll,2))/(v(ur,2)-v(ll,2))
+	 h=(z(2)-v(ll,2))/(v(ur,2)-v(ll,2))
 c        Hermite basis
-         phi0=(1-h)**2*(1+2*h)
-         phi1=h**2*(3-2*h)
-         psi0=h*(1-h)**2
-         psi1=h**2*(h-1)
-         sns=phi0*gs+phi1*gn+(psi0*gps+psi1*gpn)*(v(ur,2)-v(ll,2))
+	 phi0=(1-h)**2*(1+2*h)
+	 phi1=h**2*(3-2*h)
+	 psi0=h*(1-h)**2
+	 psi1=h**2*(h-1)
+	 sns=phi0*gs+phi1*gn+(psi0*gps+psi1*gpn)*(v(ur,2)-v(ll,2))
 c        EW
-         h=(z(1)-v(ll,1))/(v(ur,1)-v(ll,1))
+	 h=(z(1)-v(ll,1))/(v(ur,1)-v(ll,1))
 c        Hermite basis
-         phi0=(1-h)**2*(1+2*h)
-         phi1=h**2*(3-2*h)
-         psi0=h*(1-h)**2
-         psi1=h**2*(h-1)
-         sew=phi0*gw+phi1*ge+(psi0*gpw+psi1*gpe)*(v(ur,1)-v(ll,1))
-         s=(sns+sew)-s
+	 phi0=(1-h)**2*(1+2*h)
+	 phi1=h**2*(3-2*h)
+	 psi0=h*(1-h)**2
+	 psi1=h**2*(h-1)
+	 sew=phi0*gw+phi1*ge+(psi0*gpw+psi1*gpe)*(v(ur,1)-v(ll,1))
+	 s=(sns+sew)-s
       end if
       ehg128=s
       return
@@ -1260,92 +1260,92 @@ c     X -> b
       if(k .gt. nf-1) call ehg182(104)
       if(k .gt. 15)   call ehg182(105)
       do 3 identi=1,n
-         psi(identi)=identi
+	 psi(identi)=identi
     3 continue
       do 4 l=1,m
-         do 5 i1=1,d
-            q(i1)=u(l,i1)
+	 do 5 i1=1,d
+	    q(i1)=u(l,i1)
     5    continue
-         call ehg127(q,n,d,nf,f,x,psi,y,rw,kernel,k,dist,eta,b,od,w,
+	 call ehg127(q,n,d,nf,f,x,psi,y,rw,kernel,k,dist,eta,b,od,w,
      +        rcond,sing,sigma,e,g,dgamma,qraux,work,tol,dd,tdeg,cdeg,
      +        s(0,l))
-         if(ihat.eq.1)then
+	 if(ihat.eq.1)then
 c           $L sub {l,l} =
 c           V sub {1,:} SIGMA sup {+} U sup T
 c           (Q sup T W e sub i )$
-            if(.not.(m.eq.n))then
-               call ehg182(123)
-            end if
+	    if(.not.(m.eq.n))then
+	       call ehg182(123)
+	    end if
 c           find $i$ such that $l = psi sub i$
-            i=1
+	    i=1
 c           top of while loop
     6       if(.not.(l.ne.psi(i)))goto 7
-               i=i+1
-               if(.not.(i.lt.nf))then
-                  call ehg182(123)
-                  goto 7
-               end if
-               goto 6
+	       i=i+1
+	       if(.not.(i.lt.nf))then
+		  call ehg182(123)
+		  goto 7
+	       end if
+	       goto 6
 c           bottom of while loop
     7       do 8 i1=1,nf
-               eta(i1)=0
+	       eta(i1)=0
     8       continue
-            eta(i)=w(i)
+	    eta(i)=w(i)
 c           $eta = Q sup T W e sub i$
-            call dqrsl(b,nf,nf,k,qraux,eta,eta,eta,eta,eta,eta,1000,
+	    call dqrsl(b,nf,nf,k,qraux,eta,eta,eta,eta,eta,eta,1000,
      +           info)
 c           $gamma = U sup T eta sub {1:k}$
-            do 9 i1=1,k
-               dgamma(i1)=0
+	    do 9 i1=1,k
+	       dgamma(i1)=0
     9       continue
-            do 10 j=1,k
-               i2=eta(j)
-               do 11 i1=1,k
-                  dgamma(i1)=dgamma(i1)+i2*e(j,i1)
+	    do 10 j=1,k
+	       i2=eta(j)
+	       do 11 i1=1,k
+		  dgamma(i1)=dgamma(i1)+i2*e(j,i1)
    11          continue
    10       continue
 c           $gamma = SIGMA sup {+} gamma$
-            do 12 j=1,k
-               if(tol.lt.sigma(j))then
-                  dgamma(j)=dgamma(j)/sigma(j)
-               else
-                  dgamma(j)=0.d0
-               end if
+	    do 12 j=1,k
+	       if(tol.lt.sigma(j))then
+		  dgamma(j)=dgamma(j)/sigma(j)
+	       else
+		  dgamma(j)=0.d0
+	       end if
    12       continue
 c           voidp junk
 c           voidp junk
-            o(l,1)=ddot(k,g(1,1),15,dgamma,1)
-         else
-            if(ihat.eq.2)then
+	    o(l,1)=ddot(k,g(1,1),15,dgamma,1)
+	 else
+	    if(ihat.eq.2)then
 c              $L sub {l,:} =
 c              V sub {1,:} SIGMA sup {+}
 c              ( U sup T Q sup T ) W $
-               do 13 i1=1,n
-                  o(l,i1)=0
+	       do 13 i1=1,n
+		  o(l,i1)=0
    13          continue
-               do 14 j=1,k
-                  do 15 i1=1,nf
-                     eta(i1)=0
+	       do 14 j=1,k
+		  do 15 i1=1,nf
+		     eta(i1)=0
    15             continue
-                  do 16 i1=1,k
-                     eta(i1)=e(i1,j)
+		  do 16 i1=1,k
+		     eta(i1)=e(i1,j)
    16             continue
-                  call dqrsl(b,nf,nf,k,qraux,eta,eta,work,work,work,work
+		  call dqrsl(b,nf,nf,k,qraux,eta,eta,work,work,work,work
      +                 ,10000,info)
-                  if(tol.lt.sigma(j))then
-                     scale=1.d0/sigma(j)
-                  else
-                     scale=0.d0
-                  end if
-                  do 17 i1=1,nf
-                     eta(i1)=eta(i1)*(scale*w(i1))
+		  if(tol.lt.sigma(j))then
+		     scale=1.d0/sigma(j)
+		  else
+		     scale=0.d0
+		  end if
+		  do 17 i1=1,nf
+		     eta(i1)=eta(i1)*(scale*w(i1))
    17             continue
-                  do 18 i=1,nf
-                     o(l,psi(i))=o(l,psi(i))+g(1,j)*eta(i)
+		  do 18 i=1,nf
+		     o(l,psi(i))=o(l,psi(i))+g(1,j)*eta(i)
    18             continue
    14          continue
-            end if
-         end if
+	    end if
+	 end if
     4 continue
       return
       end
@@ -1383,126 +1383,126 @@ c     l2fit with trace(L)
       if(k .gt. nf-1) call ehg182(104)
       if(k .gt. 15)   call ehg182(105)
       if(trl.ne.0)then
-         do 3 i5=1,n
-            diagl(i5)=0
+	 do 3 i5=1,n
+	    diagl(i5)=0
     3    continue
-         do 4 i6=1,nv
-            do 5 i5=0,d
-               vval2(i5,i6)=0
+	 do 4 i6=1,nv
+	    do 5 i5=0,d
+	       vval2(i5,i6)=0
     5       continue
     4    continue
       end if
       do 6 identi=1,n
-         psi(identi)=identi
+	 psi(identi)=identi
     6 continue
       do 7 l=1,nv
-         do 8 i5=1,d
-            q(i5)=v(l,i5)
+	 do 8 i5=1,d
+	    q(i5)=v(l,i5)
     8    continue
-         call ehg127(q,n,d,nf,f,x,psi,y,rw,kernel,k,dist,eta,b,od,w,
+	 call ehg127(q,n,d,nf,f,x,psi,y,rw,kernel,k,dist,eta,b,od,w,
      +        rcond,sing,sigma,u,e,DGAMMA,qraux,work,tol,dd,tdeg,cdeg,
      +        s(0,l))
-         if(trl.ne.0)then
+	 if(trl.ne.0)then
 c           invert $psi$
-            do 9 i5=1,n
-               phi(i5)=0
+	    do 9 i5=1,n
+	       phi(i5)=0
     9       continue
-            do 10 i=1,nf
-               phi(psi(i))=i
+	    do 10 i=1,nf
+	       phi(psi(i))=i
    10       continue
-            do 11 i5=1,d
-               z(i5)=v(l,i5)
+	    do 11 i5=1,d
+	       z(i5)=v(l,i5)
    11       continue
-            call ehg137(z,vhit(l),leaf,nleaf,d,nv,nvmax,ncmax,a,xi,
+	    call ehg137(z,vhit(l),leaf,nleaf,d,nv,nvmax,ncmax,a,xi,
      +           lo,hi)
-            do 12 ileaf=1,nleaf
-               do 13 ii=lo(leaf(ileaf)),hi(leaf(ileaf))
-                  i=phi(pi(ii))
-                  if(i.ne.0)then
-                     if(.not.(psi(i).eq.pi(ii)))then
-                        call ehg182(194)
-                     end if
-                     do 14 i5=1,nf
-                        eta(i5)=0
+	    do 12 ileaf=1,nleaf
+	       do 13 ii=lo(leaf(ileaf)),hi(leaf(ileaf))
+		  i=phi(pi(ii))
+		  if(i.ne.0)then
+		     if(.not.(psi(i).eq.pi(ii)))then
+			call ehg182(194)
+		     end if
+		     do 14 i5=1,nf
+			eta(i5)=0
    14                continue
-                     eta(i)=w(i)
+		     eta(i)=w(i)
 c                    $eta = Q sup T W e sub i$
-                     call DQRSL(b,nf,nf,k,qraux,eta,work,eta,eta,work,
+		     call DQRSL(b,nf,nf,k,qraux,eta,work,eta,eta,work,
      +                    work,1000,info)
-                     do 15 j=1,k
-                        if(tol.lt.sigma(j))then
-                           i4=DDOT(k,u(1,j),1,eta,1)/sigma(j)
-                        else
-                           i4=0.D0
-                        end if
-                       DGAMMA(j)=i4
+		     do 15 j=1,k
+			if(tol.lt.sigma(j))then
+			   i4=DDOT(k,u(1,j),1,eta,1)/sigma(j)
+			else
+			   i4=0.D0
+			end if
+		       DGAMMA(j)=i4
    15                continue
-                     do 16 j=1,d+1
-                        vval2(j-1,l)=DDOT(k,e(j,1),15,DGAMMA,1)
+		     do 16 j=1,d+1
+			vval2(j-1,l)=DDOT(k,e(j,1),15,DGAMMA,1)
    16                continue
-                     do 17 i5=1,d
-                        z(i5)=x(pi(ii),i5)
+		     do 17 i5=1,d
+			z(i5)=x(pi(ii),i5)
    17                continue
-                     term=ehg128(z,d,ncmax,vc,a,xi,lo,hi,c,v,nvmax,
+		     term=ehg128(z,d,ncmax,vc,a,xi,lo,hi,c,v,nvmax,
      +                    vval2)
-                     diagl(pi(ii))=diagl(pi(ii))+term
-                     do 18 i5=0,d
-                        vval2(i5,l)=0
+		     diagl(pi(ii))=diagl(pi(ii))+term
+		     do 18 i5=0,d
+			vval2(i5,l)=0
    18                continue
-                  end if
+		  end if
    13          continue
    12       continue
-         end if
-         if(setlf)then
+	 end if
+	 if(setlf)then
 c           $Lf sub {:,l,:} = V SIGMA sup {+} U sup T Q sup T W$
-            if(.not.(k.ge.d+1))then
-               call ehg182(196)
-            end if
-            do 19 i5=1,nf
-               lq(l,i5)=psi(i5)
+	    if(.not.(k.ge.d+1))then
+	       call ehg182(196)
+	    end if
+	    do 19 i5=1,nf
+	       lq(l,i5)=psi(i5)
    19       continue
-            do 20 i6=1,nf
-               do 21 i5=0,d
-                  lf(i5,l,i6)=0
+	    do 20 i6=1,nf
+	       do 21 i5=0,d
+		  lf(i5,l,i6)=0
    21          continue
    20       continue
-            do 22 j=1,k
-               do 23 i5=1,nf
-                  eta(i5)=0
+	    do 22 j=1,k
+	       do 23 i5=1,nf
+		  eta(i5)=0
    23          continue
-               do 24 i5=1,k
-                  eta(i5)=u(i5,j)
+	       do 24 i5=1,k
+		  eta(i5)=u(i5,j)
    24          continue
-               call DQRSL(b,nf,nf,k,qraux,eta,eta,work,work,work,work,
+	       call DQRSL(b,nf,nf,k,qraux,eta,eta,work,work,work,work,
      +              10000,info)
-               if(tol.lt.sigma(j))then
-                  scale=1.D0/sigma(j)
-               else
-                  scale=0.D0
-               end if
-               do 25 i5=1,nf
-                  eta(i5)=eta(i5)*(scale*w(i5))
+	       if(tol.lt.sigma(j))then
+		  scale=1.D0/sigma(j)
+	       else
+		  scale=0.D0
+	       end if
+	       do 25 i5=1,nf
+		  eta(i5)=eta(i5)*(scale*w(i5))
    25          continue
-               do 26 i=1,nf
-                  i7=eta(i)
-                  do 27 i5=0,d
-                     lf(i5,l,i)=lf(i5,l,i)+e(1+i5,j)*i7
+	       do 26 i=1,nf
+		  i7=eta(i)
+		  do 27 i5=0,d
+		     lf(i5,l,i)=lf(i5,l,i)+e(1+i5,j)*i7
    27             continue
    26          continue
    22       continue
-         end if
+	 end if
     7 continue
       if(trl.ne.0)then
-         if(n.le.0)then
-            trl=0.D0
-         else
-            i3=n
-            i1=diagl(i3)
-            do 28 i2=i3-1,1,-1
-               i1=diagl(i2)+i1
+	 if(n.le.0)then
+	    trl=0.D0
+	 else
+	    i3=n
+	    i1=diagl(i3)
+	    do 28 i2=i3-1,1,-1
+	       i1=diagl(i2)+i1
    28       continue
-            trl=i1
-         end if
+	    trl=i1
+	 end if
       end if
       return
       end
@@ -1525,18 +1525,18 @@ c Var
       data execnt /0/
       execnt=execnt+1
       if(.not.(iv(28).ne.173))then
-         call ehg182(174)
+	 call ehg182(174)
       end if
       if(iv(28).ne.172)then
-         if(.not.(iv(28).eq.171))then
-            call ehg182(171)
-         end if
+	 if(.not.(iv(28).eq.171))then
+	    call ehg182(171)
+	 end if
       end if
       iv(28)=173
       if(infl)then
-         trl=1.D0
+	 trl=1.D0
       else
-         trl=0.D0
+	 trl=0.D0
       end if
       setlf=(iv(27).ne.iv(25))
       call ehg131(xx,yy,ww,trl,diagl,iv(20),iv(29),iv(3),iv(2),iv(5),
@@ -1547,13 +1547,13 @@ c Var
      +     wv(4),iv(30),iv(33),iv(32),iv(41),iv(iv(25)),wv(iv(34)),
      +     setlf)
       if(iv(14).lt.iv(6)+DBLE(iv(4))/2.D0)then
-         call ehg183('k-d tree limited by memory; nvmax=',
+	 call ehg183('k-d tree limited by memory; nvmax=',
      +        iv(14),1,1)
       else
-         if(iv(17).lt.iv(5)+2)then
-            call ehg183('k-d tree limited by memory. ncmax=',
+	 if(iv(17).lt.iv(5)+2)then
+	    call ehg183('k-d tree limited by memory. ncmax=',
      +           iv(17),1,1)
-         end if
+	 end if
       end if
       return
       end
@@ -1579,7 +1579,7 @@ c
 c     version -> versio
       execnt=execnt+1
       if(.not.(versio.eq.106))then
-         call ehg182(100)
+	 call ehg182(100)
       end if
       iv(28)=171
       iv(2)=d
@@ -1587,21 +1587,21 @@ c     version -> versio
       vc=2**d
       iv(4)=vc
       if(.not.(0.lt.f))then
-         call ehg182(120)
+	 call ehg182(120)
       end if
       nf=min(n,ifloor(n*f))
       iv(19)=nf
       iv(20)=1
       if(ideg.eq.0)then
-         i1=1
+	 i1=1
       else
-         if(ideg.eq.1)then
-            i1=d+1
-         else
-            if(ideg.eq.2)then
-               i1=dble((d+2)*(d+1))/2.d0
-            end if
-         end if
+	 if(ideg.eq.1)then
+	    i1=d+1
+	 else
+	    if(ideg.eq.2)then
+	       i1=dble((d+2)*(d+1))/2.d0
+	    end if
+	 end if
       end if
       iv(29)=i1
       iv(21)=1
@@ -1611,14 +1611,14 @@ c     version -> versio
       iv(30)=0
       iv(32)=ideg
       if(.not.(ideg.ge.0))then
-         call ehg182(195)
+	 call ehg182(195)
       end if
       if(.not.(ideg.le.2))then
-         call ehg182(195)
+	 call ehg182(195)
       end if
       iv(33)=d
       do 3 i2=41,49
-         iv(i2)=ideg
+	 iv(i2)=ideg
     3 continue
       iv(7)=50
       iv(8)=iv(7)+ncmax
@@ -1628,18 +1628,18 @@ c     version -> versio
 c     initialize permutation
       j=iv(22)-1
       do 4 i=1,n
-         iv(j+i)=i
+	 iv(j+i)=i
     4 continue
       iv(23)=iv(22)+n
       iv(25)=iv(23)+nvmax
       if(setlf)then
-         iv(27)=iv(25)+nvmax*nf
+	 iv(27)=iv(25)+nvmax*nf
       else
-         iv(27)=iv(25)
+	 iv(27)=iv(25)
       end if
       bound=iv(27)+n
       if(.not.(bound-1.le.liv))then
-         call ehg182(102)
+	 call ehg182(102)
       end if
       iv(11)=50
       iv(13)=iv(11)+nvmax*d
@@ -1650,13 +1650,13 @@ c     initialize permutation
       iv(24)=iv(18)+iv(29)*nf
       iv(34)=iv(24)+(d+1)*nvmax
       if(setlf)then
-         iv(26)=iv(34)+(d+1)*nvmax*nf
+	 iv(26)=iv(34)+(d+1)*nvmax*nf
       else
-         iv(26)=iv(34)
+	 iv(26)=iv(34)
       end if
       bound=iv(26)+nf
       if(.not.(bound-1.le.lv))then
-         call ehg182(103)
+	 call ehg182(103)
       end if
       v(1)=f
       v(2)=0.05d0
@@ -1677,10 +1677,10 @@ c     initialize permutation
       data execnt /0/
       execnt=execnt+1
       if(.not.(iv(28).ne.172))then
-         call ehg182(172)
+	 call ehg182(172)
       end if
       if(.not.(iv(28).eq.173))then
-         call ehg182(173)
+	 call ehg182(173)
       end if
       call ehg133(iv(3),iv(2),iv(4),iv(14),iv(5),iv(17),iv(iv(7)),iv(iv(
      +8)),iv(iv(9)),iv(iv(10)),wv(iv(11)),wv(iv(13)),wv(iv(12)),m,z,s)
@@ -1702,16 +1702,16 @@ c     m = number of x values at which to evaluate
       data execnt /0/
       execnt=execnt+1
       if(171.le.iv(28))then
-         i1=(iv(28).le.174)
+	 i1=(iv(28).le.174)
       else
-         i1=.false.
+	 i1=.false.
       end if
       if(.not.i1)then
-         call ehg182(171)
+	 call ehg182(171)
       end if
       iv(28)=172
       if(.not.(iv(14).ge.iv(19)))then
-         call ehg182(186)
+	 call ehg182(186)
       end if
 
 c do the work; in ehg136()  give the argument names as they are there:
@@ -1735,13 +1735,13 @@ c              w,     rcond,sing,    dd,    tdeg,cdeg,  s)
       data execnt /0/
       execnt=execnt+1
       if(.not.(iv(28).ne.172))then
-         call ehg182(172)
+	 call ehg182(172)
       end if
       if(.not.(iv(28).eq.173))then
-         call ehg182(173)
+	 call ehg182(173)
       end if
       if(.not.(iv(26).ne.iv(34)))then
-         call ehg182(175)
+	 call ehg182(175)
       end if
       call ehg191(m,z,l,iv(2),iv(3),iv(19),iv(6),iv(17),iv(4),iv(iv(7)),
      +     wv(iv(12)),iv(iv(10)),iv(iv(9)),iv(iv(8)),wv(iv(11)),iv(14),
@@ -1760,10 +1760,10 @@ c              w,     rcond,sing,    dd,    tdeg,cdeg,  s)
       data execnt /0/
       execnt=execnt+1
       if(.not.(iv(28).ne.172))then
-         call ehg182(172)
+	 call ehg182(172)
       end if
       if(.not.(iv(28).eq.173))then
-         call ehg182(173)
+	 call ehg182(173)
       end if
       call ehg192(yy,iv(2),iv(3),iv(19),iv(6),iv(14),wv(iv(13)),
      +     wv(iv(34)),iv(iv(25)))
@@ -1793,36 +1793,36 @@ c     Identity -> identi
 
 c     find median of absolute residuals
       do 3 i1=1,n
-         rw(i1)=dabs(res(i1))
+	 rw(i1)=dabs(res(i1))
     3 continue
       do 4 identi=1,n
-         pi(identi)=identi
+	 pi(identi)=identi
     4 continue
       nh=ifloor(dble(n)/2.d0)+1
 c     partial sort to find 6*mad
       call ehg106(1,n,nh,1,rw,pi,n)
       if((n-nh)+1.lt.nh)then
-         call ehg106(1,nh-1,nh-1,1,rw,pi,n)
-         cmad=3*(rw(pi(nh))+rw(pi(nh-1)))
+	 call ehg106(1,nh-1,nh-1,1,rw,pi,n)
+	 cmad=3*(rw(pi(nh))+rw(pi(nh-1)))
       else
-         cmad=6*rw(pi(nh))
+	 cmad=6*rw(pi(nh))
       end if
       rsmall=d1mach(1)
       if(cmad.lt.rsmall)then
-         do 5 i1=1,n
-            rw(i1)=1
+	 do 5 i1=1,n
+	    rw(i1)=1
     5    continue
       else
-         do 6 i=1,n
-            if(cmad*0.999d0.lt.rw(i))then
-               rw(i)=0
-            else
-               if(cmad*0.001d0.lt.rw(i))then
-                  rw(i)=(1-(rw(i)/cmad)**2)**2
-               else
-                  rw(i)=1
-               end if
-            end if
+	 do 6 i=1,n
+	    if(cmad*0.999d0.lt.rw(i))then
+	       rw(i)=0
+	    else
+	       if(cmad*0.001d0.lt.rw(i))then
+		  rw(i)=(1-(rw(i)/cmad)**2)**2
+	       else
+		  rw(i)=1
+	       end if
+	    end if
     6    continue
       end if
       return
@@ -1845,41 +1845,41 @@ c     Identity -> identi
       execnt=execnt+1
 c     median absolute deviation
       do 3 i5=1,n
-         ytilde(i5)=dabs(y(i5)-yhat(i5))*dsqrt(pwgts(i5))
+	 ytilde(i5)=dabs(y(i5)-yhat(i5))*dsqrt(pwgts(i5))
     3 continue
       do 4 identi=1,n
-         pi(identi)=identi
+	 pi(identi)=identi
     4 continue
       m=ifloor(dble(n)/2.d0)+1
       call ehg106(1,n,m,1,ytilde,pi,n)
       if((n-m)+1.lt.m)then
-         call ehg106(1,m-1,m-1,1,ytilde,pi,n)
-         mad=(ytilde(pi(m-1))+ytilde(pi(m)))/2
+	 call ehg106(1,m-1,m-1,1,ytilde,pi,n)
+	 mad=(ytilde(pi(m-1))+ytilde(pi(m)))/2
       else
-         mad=ytilde(pi(m))
+	 mad=ytilde(pi(m))
       end if
 c     magic constant
       c=(6*mad)**2/5
       do 5 i5=1,n
-         ytilde(i5)=1-((y(i5)-yhat(i5))**2*pwgts(i5))/c
+	 ytilde(i5)=1-((y(i5)-yhat(i5))**2*pwgts(i5))/c
     5 continue
       do 6 i5=1,n
-         ytilde(i5)=ytilde(i5)*dsqrt(rwgts(i5))
+	 ytilde(i5)=ytilde(i5)*dsqrt(rwgts(i5))
     6 continue
       if(n.le.0)then
-         i4=0.d0
+	 i4=0.d0
       else
-         i3=n
-         i1=ytilde(i3)
-         do 7 i2=i3-1,1,-1
-            i1=ytilde(i2)+i1
+	 i3=n
+	 i1=ytilde(i3)
+	 do 7 i2=i3-1,1,-1
+	    i1=ytilde(i2)+i1
     7    continue
-         i4=i1
+	 i4=i1
       end if
       c=n/i4
 c     pseudovalues
       do 8 i5=1,n
-         ytilde(i5)=yhat(i5)+(c*rwgts(i5))*(y(i5)-yhat(i5))
+	 ytilde(i5)=yhat(i5)+(c*rwgts(i5))*(y(i5)-yhat(i5))
     8 continue
       return
       end
@@ -1908,73 +1908,73 @@ c     pseudovalues
       hi(p)=u
 c     top of while loop
     3 if(.not.(p.le.nc))goto 4
-         do 5 i4=1,dd
-            diag(i4)=v(c(vc,p),i4)-v(c(1,p),i4)
+	 do 5 i4=1,dd
+	    diag(i4)=v(c(vc,p),i4)-v(c(1,p),i4)
     5    continue
-         diam=0
-         do 6 inorm2=1,dd
-            diam=diam+diag(inorm2)**2
+	 diam=0
+	 do 6 inorm2=1,dd
+	    diam=diam+diag(inorm2)**2
     6    continue
-         diam=DSQRT(diam)
-         if((u-l)+1.le.fc)then
-            i1=.true.
-         else
-            i1=(diam.le.fd)
-         end if
-         if(i1)then
-            leaf=.true.
-         else
-            if(ncmax.lt.nc+2)then
-               i2=.true.
-            else
-               i2=(nvmax.lt.nv+DBLE(vc)/2.D0)
-            end if
-            leaf=i2
-         end if
-         if(.not.leaf)then
-            call ehg129(l,u,dd,x,pi,n,sigma)
-            k=IDAMAX(dd,sigma,1)
-            m=DBLE(l+u)/2.D0
-            call ehg106(l,u,m,1,x(1,k),pi,n)
+	 diam=DSQRT(diam)
+	 if((u-l)+1.le.fc)then
+	    i1=.true.
+	 else
+	    i1=(diam.le.fd)
+	 end if
+	 if(i1)then
+	    leaf=.true.
+	 else
+	    if(ncmax.lt.nc+2)then
+	       i2=.true.
+	    else
+	       i2=(nvmax.lt.nv+DBLE(vc)/2.D0)
+	    end if
+	    leaf=i2
+	 end if
+	 if(.not.leaf)then
+	    call ehg129(l,u,dd,x,pi,n,sigma)
+	    k=IDAMAX(dd,sigma,1)
+	    m=DBLE(l+u)/2.D0
+	    call ehg106(l,u,m,1,x(1,k),pi,n)
 c           all ties go with hi son
 c           top of while loop
     7       if(1.lt.m)then
-               i3=(x(pi(m-1),k).eq.x(pi(m),k))
-            else
-               i3=.false.
-            end if
-            if(.not.(i3))goto 8
-               m=m-1
-               goto 7
+	       i3=(x(pi(m-1),k).eq.x(pi(m),k))
+	    else
+	       i3=.false.
+	    end if
+	    if(.not.(i3))goto 8
+	       m=m-1
+	       goto 7
 c           bottom of while loop
     8       if(v(c(1,p),k).eq.x(pi(m),k))then
-               leaf=.true.
-            else
-               leaf=(v(c(vc,p),k).eq.x(pi(m),k))
-            end if
-         end if
-         if(leaf)then
-            a(p)=0
-         else
-            a(p)=k
-            xi(p)=x(pi(m),k)
+	       leaf=.true.
+	    else
+	       leaf=(v(c(vc,p),k).eq.x(pi(m),k))
+	    end if
+	 end if
+	 if(leaf)then
+	    a(p)=0
+	 else
+	    a(p)=k
+	    xi(p)=x(pi(m),k)
 c           left son
-            nc=nc+1
-            lo(p)=nc
-            lo(nc)=l
-            hi(nc)=m
+	    nc=nc+1
+	    lo(p)=nc
+	    lo(nc)=l
+	    hi(nc)=m
 c           right son
-            nc=nc+1
-            hi(p)=nc
-            lo(nc)=m+1
-            hi(nc)=u
-            call ehg125(p,nv,v,vhit,nvmax,d,k,xi(p),2**(k-1),2**(d-k),
+	    nc=nc+1
+	    hi(p)=nc
+	    lo(nc)=m+1
+	    hi(nc)=u
+	    call ehg125(p,nv,v,vhit,nvmax,d,k,xi(p),2**(k-1),2**(d-k),
      +                  c(1,p),c(1,lo(p)),c(1,hi(p)))
-         end if
-         p=p+1
-         l=lo(p)
-         u=hi(p)
-         goto 3
+	 end if
+	 p=p+1
+	 l=lo(p)
+	 u=hi(p)
+	 goto 3
 c     bottom of while loop
     4 return
       end
@@ -1992,17 +1992,17 @@ c     MachInf -> machin
       execnt=execnt+1
       if(execnt.eq.1)then
 c     initialize  d1mach(2) === DBL_MAX:
-         machin=D1MACH(2)
+	 machin=D1MACH(2)
       end if
       do 3 k=1,d
-         alpha=machin
-         beta=-machin
-         do 4 i=l,u
-            t=x(pi(i),k)
-            alpha=min(alpha,x(pi(i),k))
-            beta=max(beta,t)
+	 alpha=machin
+	 beta=-machin
+	 do 4 i=l,u
+	    t=x(pi(i),k)
+	    alpha=min(alpha,x(pi(i),k))
+	    beta=max(beta,t)
     4    continue
-         sigma(k)=beta-alpha
+	 sigma(k)=beta-alpha
     3 continue
       return
       end
@@ -2026,38 +2026,38 @@ c     find leaf cells affected by $z$
       nleaf=0
 c     top of while loop
     3 if(.not.(0.lt.p))goto 4
-         if(a(p).eq.0)then
+	 if(a(p).eq.0)then
 c           leaf
-            nleaf=nleaf+1
-            leaf(nleaf)=p
+	    nleaf=nleaf+1
+	    leaf(nleaf)=p
 c           Pop
-            if(stackt.ge.1)then
-               p=pstack(stackt)
-            else
-               p=0
-            end if
-            stackt=max(0,stackt-1)
-         else
-            if(z(a(p)).eq.xi(p))then
+	    if(stackt.ge.1)then
+	       p=pstack(stackt)
+	    else
+	       p=0
+	    end if
+	    stackt=max(0,stackt-1)
+	 else
+	    if(z(a(p)).eq.xi(p))then
 c              Push
-               stackt=stackt+1
-               if(.not.(stackt.le.20))then
-                  call ehg182(187)
-               end if
-               pstack(stackt)=hi(p)
-               p=lo(p)
-            else
-               if(z(a(p)).lt.xi(p))then
-                  p=lo(p)
-               else
-                  p=hi(p)
-               end if
-            end if
-         end if
-         goto 3
+	       stackt=stackt+1
+	       if(.not.(stackt.le.20))then
+		  call ehg182(187)
+	       end if
+	       pstack(stackt)=hi(p)
+	       p=lo(p)
+	    else
+	       if(z(a(p)).lt.xi(p))then
+		  p=lo(p)
+	       else
+		  p=hi(p)
+	       end if
+	    end if
+	 end if
+	 goto 3
 c     bottom of while loop
     4 if(.not.(nleaf.le.256))then
-         call ehg182(185)
+	 call ehg182(185)
       end if
       return
       end

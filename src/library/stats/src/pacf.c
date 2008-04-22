@@ -78,7 +78,7 @@ static SEXP Starma_tag;
 #define GET_STARMA \
     Starma G; \
     if (TYPEOF(pG) != EXTPTRSXP || R_ExternalPtrTag(pG) != Starma_tag) \
-        error(_("bad Starma struct"));\
+	error(_("bad Starma struct"));\
     G = (Starma) R_ExternalPtrAddr(pG)
 
 SEXP setup_starma(SEXP na, SEXP x, SEXP pn, SEXP xreg, SEXP pm,
@@ -367,7 +367,7 @@ SEXP Invtrans(SEXP pG, SEXP x)
     GET_STARMA;
 
     n = G->mp + G->mq + G->msp + G->msq;
-    
+
     v = 0;
     invpartrans(G->mp, raw + v, new + v);
     v += G->mp;
@@ -420,7 +420,7 @@ SEXP Gradtrans(SEXP pG, SEXP x)
 	for(i = 0; i < G->msp; i++) {
 	    w1[i] += eps;
 	    partrans(G->msp, w1, w3);
-	    for(j = 0; j < G->msp; j++) 
+	    for(j = 0; j < G->msp; j++)
 		A[i + v + (j+v)*n] = (w3[j] - w2[j])/eps;
 	    w1[i] -= eps;
 	}
@@ -432,7 +432,7 @@ SEXP Gradtrans(SEXP pG, SEXP x)
 	for(i = 0; i < G->msq; i++) {
 	    w1[i] += eps;
 	    partrans(G->msq, w1, w3);
-	    for(j = 0; j < G->msq; j++) 
+	    for(j = 0; j < G->msq; j++)
 		A[i + v + (j+v)*n] = (w3[j] - w2[j])/eps;
 	    w1[i] -= eps;
 	}
@@ -446,7 +446,7 @@ ARMAtoMA(SEXP ar, SEXP ma, SEXP lag_max)
     int i, j, p = LENGTH(ar), q = LENGTH(ma), m = asInteger(lag_max);
     double *phi = REAL(ar), *theta = REAL(ma), *psi, tmp;
     SEXP res;
-    
+
     if(m <= 0 || m == NA_INTEGER)
 	error(_("invalid value of lag.max"));
     PROTECT(res = allocVector(REALSXP, m));
@@ -460,4 +460,3 @@ ARMAtoMA(SEXP ar, SEXP ma, SEXP lag_max)
     UNPROTECT(1);
     return res;
 }
-

@@ -35,7 +35,7 @@
 #define my_isok(x) (!ISNA(x) & !ISNAN(x))
 
 void
-filter1(double *x, int *n, double *filter, int *nfilt, int *sides, 
+filter1(double *x, int *n, double *filter, int *nfilt, int *sides,
 	int *circular, double *out)
 {
     int i, ii, j, nf=*nfilt, nn = *n, nshift;
@@ -73,7 +73,7 @@ filter1(double *x, int *n, double *filter, int *nfilt, int *sides,
 	    out[i] = z;
 	bad2:
 	    continue;
-	}	
+	}
     }
 }
 
@@ -92,7 +92,7 @@ filter2(double *x, int *n, double *filter, int *nfilt, double *out)
 	}
 	out[nf + i] = sum;
     bad3:
-	continue;	
+	continue;
     }
 }
 
@@ -100,10 +100,10 @@ filter2(double *x, int *n, double *filter, int *nfilt, double *out)
 void
 acf(double *x, int *n, int *nser, int *nlag, int *correlation, double *acf)
 {
-    int i, u, v, lag, nl = *nlag, nn=*n, ns = *nser, d1 = nl+1, d2 = ns*d1, 
+    int i, u, v, lag, nl = *nlag, nn=*n, ns = *nser, d1 = nl+1, d2 = ns*d1,
 	nu;
     double sum, *se;
-    
+
     se = (double *) R_alloc(ns, sizeof(double));
     for(u = 0; u < ns; u++)
 	for(v = 0; v < ns; v++)
@@ -121,7 +121,7 @@ acf(double *x, int *n, int *nser, int *nlag, int *correlation, double *acf)
 	    se[u] = sqrt(acf[0 + d1*u + d2*u]);
 	if(nn == 1) {
 	    for(u = 0; u < ns; u++)
-	    	acf[0 + d1*u + d2*u] = 1.0;
+		acf[0 + d1*u + d2*u] = 1.0;
 	} else {
 	    for(u = 0; u < ns; u++)
 		for(v = 0; v < ns; v++)

@@ -2707,15 +2707,15 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 no_more_lines:
     if(!wasopen) con->close(con);
     if(nbuf > 0) { /* incomplete last line */
-	if(con->text && con->blocking) {
+	if(con->text && !con->blocking) {
+	    /* push back the rest */
+	    con_pushback(con, 0, buf);
+	    con->incomplete = TRUE;
+	} else {
 	    nread++;
 	    if(warn)
 		warning(_("incomplete final line found on '%s'"),
 			con->description);
-	} else {
-	    /* push back the rest */
-	    con_pushback(con, 0, buf);
-	    con->incomplete = TRUE;
 	}
     }
     free(buf);
@@ -2817,7 +2817,7 @@ static SEXP readOneString(Rconnection con)
 	}
     }
     if(pos == 10000)
-	warning(_("null terminator not found: breaking string at 10000 chars"));
+	warning(_("null terminator not found: breaking string at 10000 bytes"));
     return mkChar(buf);
 }
 

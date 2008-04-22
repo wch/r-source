@@ -13,10 +13,10 @@
 /* sbart() : The cubic spline smoother
    -------
  Calls	 sgram	(sg0,sg1,sg2,sg3,knot,nk)
- 	 stxwx	(xs,ys,ws,n,knot,nk,xwy,hs0,hs1,hs2,hs3)
- 	 sslvrg (penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,	coef,sz,lev,crit,icrit,
- 		 lambda, xwy, hs0,hs1,hs2,hs3, sg0,sg1,sg2,sg3,
- 		 abd,p1ip,p2ip,ld4,ldnk,ier)
+	 stxwx	(xs,ys,ws,n,knot,nk,xwy,hs0,hs1,hs2,hs3)
+	 sslvrg (penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,	coef,sz,lev,crit,icrit,
+		 lambda, xwy, hs0,hs1,hs2,hs3, sg0,sg1,sg2,sg3,
+		 abd,p1ip,p2ip,ld4,ldnk,ier)
 
  is itself called from	 qsbart() [./qsbart.f]	 which has only one work array
 */
@@ -48,21 +48,21 @@ void F77_SUB(sbart)
    n		number of data points
    ys(n)	vector of length n containing the observations
    ws(n)	vector containing the weights given to each data point
-                NB: the code alters the values here.
+		NB: the code alters the values here.
    xs(n)	vector containing the ordinates of the observations
    ssw          `centered weighted sum of y^2'
    nk		number of b-spline coefficients to be estimated
-                nk <= n+2
+		nk <= n+2
    knot(nk+4)	vector of knot points defining the cubic b-spline basis.
-                To obtain full cubic smoothing splines one might
-                have (provided the xs-values are strictly increasing)
+		To obtain full cubic smoothing splines one might
+		have (provided the xs-values are strictly increasing)
    spar		penalised likelihood smoothing parameter
    ispar	indicating if spar is supplied (ispar=1) or to be estimated
    lspar, uspar lower and upper values for spar search;  0.,1. are good values
    tol, eps	used in Golden Search routine
    isetup	setup indicator [initially 0
    icrit	indicator saying which cross validation score is to be computed
-   		0: none ;  1: GCV ;  2: CV ;  3: 'df matching'
+		0: none ;  1: GCV ;  2: CV ;  3: 'df matching'
    ld4		the leading dimension of abd (ie ld4=4)
    ldnk		the leading dimension of p2ip (not referenced)
 
@@ -76,7 +76,7 @@ void F77_SUB(sbart)
    lspar         == lambda (a function of spar and the design)
    iter		number of iterations needed for spar search (if ispar != 1)
    ier		error indicator
-   		ier = 0 ___  everything fine
+		ier = 0 ___  everything fine
 		ier = 1 ___  spar too small or too big
 			problem in cholesky decomposition
 
@@ -87,11 +87,11 @@ void F77_SUB(sbart)
    abd (ld4,nk)		[ X'WX + lambda*SIGMA ] in diagonal form
    p1ip(ld4,nk)		inner products between columns of L inverse
    p2ip(ldnk,nk)	all inner products between columns of L inverse
-                        where  L'L = [X'WX + lambda*SIGMA]  NOT REFERENCED
+			where  L'L = [X'WX + lambda*SIGMA]  NOT REFERENCED
 */
 
 #define CRIT(FX) (*icrit == 3 ? FX - 3. : FX)
- 	/* cancellation in (3 + eps) - 3, but still...informative */
+	/* cancellation in (3 + eps) - 3, but still...informative */
 
 #define BIG_f (1e100)
 
@@ -173,9 +173,9 @@ void F77_SUB(sbart)
    ax	 left endpoint of initial interval
    bx	 right endpoint of initial interval
    f	 function subprogram which evaluates  f(x)  for any  x
-         in the interval  (ax,bx)
+	 in the interval  (ax,bx)
    tol	 desired length of the interval of uncertainty of the final
-         result ( >= 0 )
+	 result ( >= 0 )
 
    OUTPUT
 
@@ -189,7 +189,7 @@ void F77_SUB(sbart)
    derivative which is positive at the minimum (which is not  at  ax  or
    bx),	 then  convergence  is	superlinear, and usually of the order of
    about  1.324....
-   	the function  f  is never evaluated at two points closer together
+	the function  f  is never evaluated at two points closer together
    than	 eps*abs(fmin) + (tol/3), where eps is	approximately the square
    root	 of  the  relative  machine  precision.	  if   f   is a unimodal
    function and the computed values of	 f   are  always  unimodal  when
@@ -198,7 +198,7 @@ void F77_SUB(sbart)
    an error less than  3*eps*abs(fmin) + tol.  if   f	is not unimodal,
    then fmin may approximate a local, but perhaps non-global, minimum to
    the same accuracy.
-   	this function subprogram is a slightly modified	version	 of  the
+	this function subprogram is a slightly modified	version	 of  the
    algol  60 procedure	localmin  given in richard brent, algorithms for
    minimization without derivatives, prentice - hall, inc. (1973).
 
@@ -253,7 +253,7 @@ void F77_SUB(sbart)
 	    if(*iter == 1) {/* write header */
 		Rprintf("sbart (ratio = %15.8g) iterations;"
 			" initial tol1 = %12.6e :\n"
- 			"%11s %14s  %9s %11s  Kind %11s %12s\n%s\n",
+			"%11s %14s  %9s %11s  Kind %11s %12s\n%s\n",
 			ratio, tol1, "spar",
 			((*icrit == 1) ? "GCV" :
 			 (*icrit == 2) ?  "CV" :

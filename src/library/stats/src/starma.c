@@ -82,7 +82,7 @@ void starma(Starma G, int *ifault)
     int i, j, k, ithisr, ind, npr, ind1, ind2, npr1, im, jm;
 
 /*      Invoking this subroutine sets the values of v and phi, and
-        obtains the initial values of a and p. */
+	obtains the initial values of a and p. */
 
 /*     Check if ar(1) */
 
@@ -127,9 +127,9 @@ void starma(Starma G, int *ifault)
 
     if (p > 0) {
 /*      The set of equations s * vec(p(0)) = vec(v) is solved for
-        vec(p(0)).  s is generated row by row in the array xnext.  The
-        order of elements in p is changed, so as to bring more leading
-        zeros into the rows of s. */
+	vec(p(0)).  s is generated row by row in the array xnext.  The
+	order of elements in p is changed, so as to bring more leading
+	zeros into the rows of s. */
 
 	for (i = 0; i < nrbar; i++) rbar[i] = 0.0;
 	for (i = 0; i < np; i++) {
@@ -373,14 +373,14 @@ forkal(Starma G, int d, int il, double *delta, double *y, double *amse,
     }
 
 /*     Evaluate likelihood to obtain final Kalman filter conditions */
-    
+
     {
 	double sumlog = 0.0, ssq = 0.0;
 	int nit = 0;
 	G->n = nt;
 	karma(G, &sumlog, &ssq, 1, &nit);
     }
-    
+
 
 /*     Calculate m.l.e. of sigma squared */
 
@@ -390,7 +390,7 @@ forkal(Starma G, int d, int il, double *delta, double *y, double *amse,
 	tmp = G->resid[j];
 	if(!ISNAN(tmp)) { nu++; sigma2 += tmp * tmp; }
     }
-    
+
     sigma2 /= nu;
 
 /*     reset the initial a and P when differencing occurs */

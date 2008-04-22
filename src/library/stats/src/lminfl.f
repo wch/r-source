@@ -80,40 +80,40 @@ c
 c     hat matrix diagonal
 c
       do 10 i = 1,n
-        hat(i) = 0.0d0
+	hat(i) = 0.0d0
    10 continue
 
       do 40 j = 1,k
-        do 20 i = 1,n
-          sigma(i) = 0.0d0
+	do 20 i = 1,n
+	  sigma(i) = 0.0d0
    20   continue
-        sigma(j) = 1.0d0
-        call dqrsl(x, ldx, n, k, qraux, sigma, sigma, dummy,
+	sigma(j) = 1.0d0
+	call dqrsl(x, ldx, n, k, qraux, sigma, sigma, dummy,
      .       dummy, dummy, dummy, 10000, info)
-        do 30 i = 1, n
-          hat(i) = hat(i)+sigma(i)*sigma(i)
+	do 30 i = 1, n
+	  hat(i) = hat(i)+sigma(i)*sigma(i)
    30   continue
    40 continue
       do 45 i = 1, n
-        if(hat(i) .ge. 1.0d0 - tol) hat(i) = 1.0d0
+	if(hat(i) .ge. 1.0d0 - tol) hat(i) = 1.0d0
    45 continue
 c
 c     changes in the estimated coefficients
 c
       if(docoef .ne. 0) then
-         do 70 i = 1,n
-            do 50 j = 1,n
-               sigma(j) = 0.0d0
+	 do 70 i = 1,n
+	    do 50 j = 1,n
+	       sigma(j) = 0.0d0
    50       continue
 c           if hat is effectively 1, change is zero
-            if(hat(i) .lt. 1.0d0) then
-               sigma(i) = resid(i)/(1.0d0 - hat(i))
-               call dqrsl(x, ldx, n, k, qraux, sigma, dummy, sigma,
+	    if(hat(i) .lt. 1.0d0) then
+	       sigma(i) = resid(i)/(1.0d0 - hat(i))
+	       call dqrsl(x, ldx, n, k, qraux, sigma, dummy, sigma,
      .                    dummy, dummy, dummy, 1000, info)
-               call dtrsl(x, ldx, k, sigma, 1, info)
-            endif
-            do 60 j = 1,k
-               coef(i,j) = sigma(j)
+	       call dtrsl(x, ldx, k, sigma, 1, info)
+	    endif
+	    do 60 j = 1,k
+	       coef(i,j) = sigma(j)
    60       continue
    70    continue
       endif
@@ -123,14 +123,14 @@ c
       denom = (n - k - 1)
       sum = 0.0d0
       do 80 i = 1,n
-        sum = sum + resid(i)*resid(i)
+	sum = sum + resid(i)*resid(i)
    80 continue
       do 90 i = 1,n
-        if(hat(i) .lt. 1.0d0) then 
-           sigma(i) = sqrt((sum-resid(i)*resid(i)/(1.0d0-hat(i)))/denom)
-        else
-           sigma(i) = sqrt(sum/denom)
-        endif
+	if(hat(i) .lt. 1.0d0) then
+	   sigma(i) = sqrt((sum-resid(i)*resid(i)/(1.0d0-hat(i)))/denom)
+	else
+	   sigma(i) = sqrt(sum/denom)
+	endif
    90 continue
       return
       end

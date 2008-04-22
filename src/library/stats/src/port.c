@@ -49,7 +49,7 @@
 #define NGCOV   53
 #define NITER   31
 #define NVDFLT  50
-#define NVSAVE   9 
+#define NVSAVE   9
 #define OUTLEV  19
 #define PARPRT  20
 #define PARSAV  49
@@ -94,9 +94,9 @@ void F77_NAME(ditsum)(const double d[], const double g[],
 /* dv7dfl.... provides default values to v. */
 extern void F77_NAME(dv7dfl)(const int *Alg, const int *Lv, double v[]);
 
-/** 
+/**
  * Supply default values for elements of the iv and v arrays
- * 
+ *
  * @param alg algorithm specification (1 <= alg <= 4)
  * @param iv integer working vector
  * @param liv length of iv
@@ -298,11 +298,11 @@ int F77_NAME(stopx)(void)
 }
 
 #if OLD
-/** 
+/**
  * return integer machine-dependent constants
- * 
+ *
  * @param k integer indicating the desired unit number
- * 
+ *
  * @return standard output unit number for k = 1, alternate output
  *unit number for k = 2, input unit number for k = 3, 0 for k = 0.
  */
@@ -312,11 +312,11 @@ int Rf_i7mdcn(int k) {
 	error("Rf_i7mdcn: k = %d must be 1, 2, or 3", k);
     return Rf_i1mach(mdperm[k]);
 }
-    
+
 int F77_NAME(i7mdcn)(const int *k) {return Rf_i7mdcn(*k);}
 #endif
 
-static 
+static
 double* check_gv(SEXP gr, SEXP hs, SEXP rho, int n, double *gv, double *hv)
 {
     SEXP gval = PROTECT(coerceVector(eval(gr, rho), REALSXP));
@@ -348,7 +348,7 @@ nlminb_iterate(double b[], double d[], double fx, double g[], double h[],
     int lh = (n * (n + 1))/2;
     if (b) {
 	if (g) {
-	    if (h) 
+	    if (h)
 		F77_CALL(drmnhb)(b, d, &fx, g, h, iv, &lh, &liv, &lv, &n, v, x);
 	    else
 		F77_CALL(drmngb)(b, d, &fx, g, iv, &liv, &lv, &n, v, x);
@@ -373,7 +373,7 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 		 SEXP lowerb, SEXP upperb, SEXP d, SEXP iv, SEXP v)
 {
     int i, n = LENGTH(d);
-    SEXP xpt; 
+    SEXP xpt;
     double *b = (double *) NULL, *g = (double *) NULL,
 	*h = (double *) NULL, fx = R_PosInf;
     if (isNull(rho)) {
@@ -435,12 +435,12 @@ nlsb_iterate(double b[], double d[], double dr[], int iv[], int liv,
 			&nd, &p, r, rd, v, x);
 }
 
-/** 
+/**
  * Return the element of a given name from a named list
- * 
- * @param list 
+ *
+ * @param list
  * @param nm name of desired element
- * 
+ *
  * @return element of list with name nm
  */
 static R_INLINE SEXP getElement(SEXP list, char *nm)
@@ -455,14 +455,14 @@ static R_INLINE SEXP getElement(SEXP list, char *nm)
     return R_NilValue;
 }
 
-/** 
+/**
  * Return the element of a given name from a named list after ensuring
  * that it is a function
- * 
- * @param list 
+ *
+ * @param list
  * @param enm name of desired element
  * @param lnm string version of the name of the list
- * 
+ *
  * @return a SEXP that points to a function
  */
 static R_INLINE SEXP getFunc(SEXP list, char *enm, char *lnm)
@@ -488,14 +488,14 @@ static void neggrad(SEXP gf, SEXP rho, SEXP gg)
     UNPROTECT(1);
 }
 
-/** 
+/**
  * Evaluate an expression in an environment, check that the length and
  * mode are as expected and store the result.
- * 
+ *
  * @param fcn expression to evaluate
  * @param rho environment in which to evaluate it
  * @param vv position to store the result
- * 
+ *
  * @return vv with new contents
  */
 static
@@ -580,11 +580,11 @@ SEXP port_nlsb(SEXP m, SEXP d, SEXP gg, SEXP iv, SEXP v,
 	case 0:
 	    Rprintf("nlsb_iterate returned %d", INTEGER(iv)[0]);
 	    break;
-	case 1: 
+	case 1:
 	    eval(setPars, R_GlobalEnv);
 	    eval_check_store(resid, R_GlobalEnv, rr);
 	    break;
-	case 2: 
+	case 2:
 	    eval(setPars, R_GlobalEnv);
 	    neggrad(gradient, R_GlobalEnv, gg);
 	    break;
@@ -595,4 +595,3 @@ SEXP port_nlsb(SEXP m, SEXP d, SEXP gg, SEXP iv, SEXP v,
     UNPROTECT(6);
     return R_NilValue;
 }
-

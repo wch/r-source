@@ -103,7 +103,7 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 
   The default colors are not pretty.  Consider using enhancements such
   as the \pkg{RColorBrewer} package,
-  \url{http://cran.r-project.org/src/contrib/PACKAGES.html#RColorBrewer}.
+  \url{http://cran.r-project.org/package=RColorBrewer}.
 }
 \note{
   Unless \code{Rowv = NA} (or \code{Colw = NA}), the original rows and
