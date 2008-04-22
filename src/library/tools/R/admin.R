@@ -471,10 +471,12 @@ function(dir, outDir)
         ## install tangled versions of all vignettes
         cwd <- getwd()
         setwd(outVignetteDir)
-        for(srcfile in vignetteIndex$File){
-            yy <- try(utils::Stangle(srcfile))
-            if(inherits(yy, "try-error")) stop(yy)
-        }
+        for(srcfile in vignetteIndex$File)
+            tryCatch(utils::Stangle(srcfile),
+                     error = function(e)
+                     stop(gettextf("running Stangle on vignette '%s' failed with message:\n%s",
+                                   srcfile, conditionMessage(e)),
+                          domain = NA, call. = FALSE))
         vignetteIndex$R <-
             sub("$", ".R", basename(file_path_sans_ext(vignetteIndex$File)))
         setwd(cwd)
@@ -549,9 +551,10 @@ function(dir, outDir, keep.source = FALSE)
         return(invisible())
 
     ## For the time being, the primary use of this function is to
-    ## install (and build) vignettes in base packages.  Hence, we build
-    ## in a subdir of the current directory rather than a temp dir: this
-    ## allows inspection of problems and automatic cleanup via Make.
+    ## build and install vignettes in base packages (which means grid).
+    ## Hence, we build in a subdir of the current directory rather than
+    ## a temp dir:
+    ## this allows inspection of problems and automatic cleanup via Make.
     cwd <- getwd()
     buildDir <- file.path(cwd, ".vignettes")
     if(!file_test("-d", buildDir) && !dir.create(buildDir))
@@ -559,32 +562,24 @@ function(dir, outDir, keep.source = FALSE)
     on.exit(setwd(cwd))
     setwd(buildDir)
 
-    ## Argh.  We need to ensure that vignetteDir is in TEXINPUTS and
-    ## BIBINPUTS.  Note that this does not work with MiKTeX, but the
-    ## use of 'texi2dvi -I' as from R 2.7.0 suffices.
-    envSep <- .Platform$path.sep
-    ## (Yes, it would be nice to have envPath() similar to file.path().)
-    texinputs <- Sys.getenv("TEXINPUTS")
-    bibinputs <- Sys.getenv("BIBINPUTS")
-    Rtexmf <- gsub("\\\\", "/", file.path(R.home(), "share", "texmf"))
-    on.exit(Sys.setenv(TEXINPUTS = texinputs, BIBINPUTS = bibinputs),
-            add = TRUE)
-    Sys.setenv(TEXINPUTS = paste(vignetteDir, Rtexmf, Sys.getenv("TEXINPUTS"),
-               sep = envSep),
-               BIBINPUTS = paste(vignetteDir, Rtexmf, Sys.getenv("BIBINPUTS"),
-               sep = envSep))
-
     for(srcfile in vignetteFiles[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
         message("processing '", basename(srcfile), "'")
         texfile <- paste(base, ".tex", sep = "")
-        yy <- try(utils::Sweave(srcfile, pdf = TRUE, eps = FALSE,
-                                quiet = TRUE, keep.source = keep.source,
-                                stylepath = FALSE))
-        if(inherits(yy, "try-error")) stop(yy)
+        tryCatch(utils::Sweave(srcfile, pdf = TRUE, eps = FALSE,
+                               quiet = TRUE, keep.source = keep.source,
+                               stylepath = FALSE),
+                 error = function(e)
+                 stop(gettextf("running Sweave on vignette '%s' failed with message:\n%s",
+                               srcfile, conditionMessage(e)),
+                      domain = NA, call. = FALSE))
         ## In case of an error, do not clean up: should we point to
         ## buildDir for possible inspection of results/problems?
-        texi2dvi(texfile, pdf = TRUE, quiet = TRUE)
+        ## We need to ensure that vignetteDir is in TEXINPUTS and BIBINPUTS.
+        ## <FIXME>
+        ## What if this fails?
+        texi2dvi(texfile, pdf = TRUE, quiet = TRUE, texinputs = vignetteDir)
+        ## </FIXME>
         pdffile <-
             paste(basename(file_path_sans_ext(srcfile)), ".pdf", sep = "")
         if(!file.exists(pdffile))
