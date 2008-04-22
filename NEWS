@@ -11,12 +11,17 @@
 
 DEPRECATED & DEFUNCT
 
-
     o	The use of unserialize() on character strings is deprecated:
 	that was a format used in R < 2.4.0.
 
     o	The C macro 'allocString' is deprecated -- use 'mkChar',
 	or 'allocVector' directly if really necessary.
+
+
+UTILITIES
+
+    o	R CMD build tries harder to clean up the inst/doc directory
+    	from the remnants of earlier builds.
 
 
 BUG FIXES

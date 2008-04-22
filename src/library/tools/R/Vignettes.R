@@ -161,7 +161,7 @@ function(package, dir, lib.loc = NULL)
 ### remove all temporary files that were created.
 
 buildVignettes <-
-function(package, dir, lib.loc = NULL, quiet = TRUE)
+function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
 {
     vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc)
     if(is.null(vigns)) return(NULL)
@@ -170,8 +170,10 @@ function(package, dir, lib.loc = NULL, quiet = TRUE)
     on.exit(setwd(wd))
     setwd(vigns$dir)
 
-    origfiles <- list.files()
+    ## should this recurse into subdirs?
+    origfiles <- list.files(all.files = TRUE)
     have.makefile <- "makefile" %in% tolower(origfiles)
+    file.create(".build.timestamp")
 
     pdfs <- character()
     for(f in vigns$docs) {
@@ -196,9 +198,13 @@ function(package, dir, lib.loc = NULL, quiet = TRUE)
         yy <- system(make)
         if(make == "" || yy > 0) stop("running 'make' failed")
     } else {
-        f <- list.files()
-        f <- f %w/o% c(pdfs, origfiles)
-        file.remove(f)
+        if(clean) {
+            f <- list.files(all.files = TRUE) %w/o% c(".", "..", pdfs)
+            newer <- sapply(f, function(x) file_test("-nt", x, ".build.timestamp"))
+            file.remove(f[newer])
+        }
+        f <- list.files(all.files = TRUE)
+        file.remove(f %w/o% c(".", "..", pdfs, origfiles))
     }
     invisible(NULL)
 }
