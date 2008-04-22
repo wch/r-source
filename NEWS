@@ -37,14 +37,8 @@ NEW FEATURES
 	such as "a\0b" -- previous versions of R terminated scanning
 	at the first (actual or escaped) nul.
 
-    o	tools::texi2dvi() has a new argument 'texinputs' to allow the
-	TeX and bibtex input paths to be specified (even on MiKTeX).
-
     o	setEPS() and setPS() gain '...' to allow other arguments to be
     	passed to ps.options(), including overriding 'width' and 'height'.
-
-    o	dev.copy2pdf() gains an 'out.type' argument to allow it to be
-	used with cairo_pdf() or quartz(type = "pdf").
 
     o	by() gains a 'simplify' argument, passed to tapply().
 
@@ -124,9 +118,6 @@ UTILITIES
     	R_PDFVIEWER is set (as it will normally be on a Unix-aloke but
     	not on Windows).
 
-    o	R CMD build tries harder to clean up the inst/doc directory
-    	from the remnants of earlier builds.
-
 
 BUG FIXES
 
@@ -150,9 +141,17 @@ BUG FIXES
 
 DEPRECATED & DEFUNCT
 
-
     o	The use of unserialize() on character strings is deprecated:
 	that was a format used in R < 2.4.0.
+
+    o	The C macro 'allocString' is deprecated -- use 'mkChar',
+	or 'allocVector' directly if really necessary.
+
+
+UTILITIES
+
+    o	R CMD build tries harder to clean up the inst/doc directory
+    	from the remnants of earlier builds.
 
 
 BUG FIXES

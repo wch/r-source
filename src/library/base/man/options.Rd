@@ -262,7 +262,7 @@ getOption(x)
       printed as they occur.  If \code{warn} is two or larger all
       warnings are turned into errors.}
 
-    \item{\code{warnEscapes}:}{logical.  If true (the default) the parse
+    \item{\code{warnEscapes}:}{logical.  If true (the default) the parser
       warns on unrecognized (backslash) escapte sequences and there is a
       truncation warning on any attempt to create a character string
       containing an embedded nul.}
