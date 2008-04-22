@@ -179,6 +179,10 @@ BUG FIXES
     o	plot.default(x, y) now should correctly dispatch to Axis() methods
     	whether y is NULL or not.
 
+    o	Cocoa Quartz window could close without warning under certain
+	circumstances (specific autorelease pool flush).
+
+
 
 
 		CHANGES IN R VERSION 2.7.0
