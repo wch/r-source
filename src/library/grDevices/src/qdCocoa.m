@@ -39,6 +39,7 @@
 struct sQuartzCocoaDevice {
     QuartzDesc_t    qd;
     QuartzCocoaView *view;
+    NSWindow        *window;
     CGLayerRef      layer;   /* layer */
     CGContextRef    layerContext; /* layer context */
     CGContextRef    context; /* window drawing context */
@@ -75,6 +76,7 @@ static QuartzFunctions_t *qf;
 
 + (QuartzCocoaView*) quartzWindowWithRect: (NSRect) rect andInfo: (void*) info
 {
+    QuartzCocoaDevice *ci = (QuartzCocoaDevice*) info;
     QuartzCocoaView* view = [[QuartzCocoaView alloc] initWithFrame: rect andInfo: info];
     NSWindow* window = [[NSWindow alloc] initWithContentRect: rect
                                                    styleMask: NSTitledWindowMask|NSClosableWindowMask|
@@ -83,8 +85,8 @@ static QuartzFunctions_t *qf;
     NSColor *canvasColor = [view canvasColor];
     [window setBackgroundColor:canvasColor ? canvasColor : [NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:0.5]];
     [window setOpaque:NO];
-
-    [window autorelease];
+    ci->window = window;
+	
     [window setDelegate: view];
     [window setContentView: view];
     [window setInitialFirstResponder: view];
@@ -651,6 +653,11 @@ static void QuartzCocoa_Close(QuartzDesc_t dev,void *userInfo) {
     /* close the window (if it's not already closing) */
     if (ci && ci->view && !ci->closing)
         [[ci->view window] close];
+	
+    if (ci->view) [ci->view release]; /* this is our own release, the window should still have a copy */
+    if (ci->window) [ci->window release]; /* that should close it all */
+    ci->view = nil;
+    ci->window = nil;
 }
 
 static int QuartzCocoa_Locator(QuartzDesc_t dev, void* userInfo, double *x, double*y) {
@@ -788,6 +795,7 @@ QuartzDesc_t QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPar
         /* Rprintf("scale=%f/%f; size=%f x %f\n", scalex, scaley, rect.size.width, rect.size.height); */
         [QuartzCocoaView quartzWindowWithRect: rect andInfo: dev];
     }
-    [[dev->view window] makeKeyAndOrderFront: dev->view];
+    if (dev->view)
+        [[dev->view window] makeKeyAndOrderFront: dev->view];
     return qd;
 }

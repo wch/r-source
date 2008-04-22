@@ -47,6 +47,10 @@ BUG FIXES
     	invalid UTF-8 quoted strings.
 
 
+    o	Cocoa Quartz window could close without warning under certain
+	circumstances (specific autorelease pool flush).
+
+
 
 		CHANGES IN R VERSION 2.7.0
 
