@@ -266,8 +266,12 @@ graphics.off <- function ()
 dev.new <- function()
 {
     dev <- getOption("device")
-    if(is.function(dev)) dev()
-    else if(!is.character(dev))
+    if(is.function(dev)) {
+        if (identical(dev, pdf)) dev <- "pdf"
+        else if(identical(dev, postscript)) dev <- "postscript"
+        else return(dev())
+    }
+    if(!is.character(dev))
         stop("invalid setting for 'getOption(\"device\")'")
     else if(identical(dev, "pdf")) {
         ## Take care not to open device on top of another.

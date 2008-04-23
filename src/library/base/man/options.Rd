@@ -504,8 +504,7 @@ getOption(x)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-options() # printing all current options
-op <- options(); utils::str(op) # nicer printing
+op <- options(); utils::str(op) # op() may contain functions.
 
 getOption("width") == options()$width # the latter needs more memory
 options(digits = 15)

@@ -23,7 +23,7 @@
         list(windowsTimeouts = c(100L,500L)) else
     list(bitmapType = if(capabilities("aqua")) "quartz" else if(capabilities("cairo")) "cairo" else "Xlib")
     defdev <- Sys.getenv("R_DEFAULT_DEVICE")
-    if(!nzchar(defdev)) defdev <- "pdf"
+    if(!nzchar(defdev)) defdev <- pdf
     device <- if(interactive()) {
         intdev <- Sys.getenv("R_INTERACTIVE_DEVICE")
         if(nzchar(intdev)) intdev
