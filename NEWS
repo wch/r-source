@@ -46,9 +46,15 @@ BUG FIXES
     o	Under certain rare circumstances the parser could accept
     	invalid UTF-8 quoted strings.
 
-
     o	Cocoa Quartz window could close without warning under certain
 	circumstances (specific autorelease pool flush).
+
+    o	Plotting symbols with separate border and fill colours
+	(e.g., plot(pch = 21)) now works with transparent 'col', but
+	opaque or semi-transparent 'bg'.
+
+	Previously, if 'col' was transparent then 'bg' was ignored
+	and nothing was drawn.
 
 
 
