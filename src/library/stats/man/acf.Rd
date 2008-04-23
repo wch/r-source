@@ -101,8 +101,16 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
 \author{
   Original: Paul Gilbert, Martyn Plummer.
   Extensive modifications and univariate case of \code{pacf} by
-  B.D. Ripley.
+  B. D. Ripley.
 }
+\references{
+  Venables, W. N. and Ripley, B. D. (2002)
+  \emph{Modern Applied Statistics with S}.  Fourth Edition.
+  Springer-Verlag.
+
+  (This contains the exact definitions used.)
+}
+
 \seealso{
   \code{\link{plot.acf}}, \code{\link{ARMAacf}} for the exact
   autocorrelations of a given ARMA process.
@@ -118,7 +126,7 @@ pacf(lh)
 acf(ldeaths)
 acf(ldeaths, ci.type = "ma")
 acf(ts.union(mdeaths, fdeaths))
-ccf(mdeaths, fdeaths, ylab="cross-correlation")
+ccf(mdeaths, fdeaths, ylab = "cross-correlation")
 # (just the cross-correlations)
 
 presidents # contains missing values
