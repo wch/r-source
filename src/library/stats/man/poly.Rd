@@ -1,6 +1,6 @@
 % File src/library/stats/man/poly.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{poly}
@@ -25,7 +25,8 @@ polym(\dots, degree = 1, raw = FALSE)
  \item{x, newdata}{a numeric vector at which to evaluate the
    polynomial. \code{x} can also be a matrix.  Missing values are not
    allowed in \code{x}.}
- \item{degree}{the degree of the polynomial}
+ \item{degree}{the degree of the polynomial.  Must be less than the
+   number of unique points.}
  \item{coefs}{for prediction, coefficients from a previous fit.}
  \item{raw}{if true, use raw and not orthogonal polynomials.}
  \item{object}{an object inheriting from class \code{"poly"}, normally

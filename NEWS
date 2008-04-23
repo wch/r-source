@@ -147,6 +147,8 @@ NEW FEATURES
     o	dev.copy2pdf() gains an 'out.type' argument to allow it to be
 	used with cairo_pdf() or quartz(type = "pdf").
 
+    o	poly() has additional checks against user error (as in PR#11243).
+
 
 DEPRECATED & DEFUNCT
 
