@@ -316,7 +316,7 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 		    case L'\r':
 		    case L'\t':
 		    case L'\v':
-		    case L'\0': /* historical */
+		    case L'\0':
 			len += 2; break;
 		    default:
 			/* print in octal */
@@ -361,7 +361,7 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 		    case '\r':
 		    case '\t':
 		    case '\v':
-		    case '\0': /* historical */
+		    case '\0':
 			len += 2; break;
 		    default:
 			/* print in octal */
@@ -486,7 +486,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		mbrtowc(&wc, p, MB_CUR_MAX, NULL);
 	    if(res >= 0) { /* res = 0 is a terminator */
 		k = wc;
-		/* historical: To be portable, treat \0 explicitly */
+		/* To be portable, treat \0 explicitly */
 		if(res == 0) {k = 0; wc = L'\0';}
 		if(0x20 <= k && k < 0x7f && iswprint(wc)) {
 		    switch(wc) {
@@ -510,7 +510,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		    case L'\r': *q++ = '\\'; *q++ = 'r'; break;
 		    case L'\t': *q++ = '\\'; *q++ = 't'; break;
 		    case L'\v': *q++ = '\\'; *q++ = 'v'; break;
-		    case L'\0': *q++ = '\\'; *q++ = '0'; break; /* historical */
+		    case L'\0': *q++ = '\\'; *q++ = '0'; break;
 
 		    default:
 			/* print in octal */
@@ -574,7 +574,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		    case '\r': *q++ = '\\'; *q++ = 'r'; break;
 		    case '\t': *q++ = '\\'; *q++ = 't'; break;
 		    case '\v': *q++ = '\\'; *q++ = 'v'; break;
-		    case '\0': *q++ = '\\'; *q++ = '0'; break; /* historical */
+		    case '\0': *q++ = '\\'; *q++ = '0'; break;
 
 		    default:
 			/* print in octal */
