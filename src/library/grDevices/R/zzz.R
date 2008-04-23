@@ -23,17 +23,18 @@
         list(windowsTimeouts = c(100L,500L)) else
     list(bitmapType = if(capabilities("aqua")) "quartz" else if(capabilities("cairo")) "cairo" else "Xlib")
     defdev <- Sys.getenv("R_DEFAULT_DEVICE")
+    ## Use devices rather than names to make it harder to get masked.
     if(!nzchar(defdev)) defdev <- pdf
     device <- if(interactive()) {
         intdev <- Sys.getenv("R_INTERACTIVE_DEVICE")
         if(nzchar(intdev)) intdev
         else {
-            if(.Platform$OS.type == "windows") "windows"
-            else if (.Platform$GUI == "AQUA") "quartz"
+            if(.Platform$OS.type == "windows") windows
+            else if (.Platform$GUI == "AQUA") quartz
             else if (Sys.getenv("DISPLAY") != "")
-                switch(.Platform$GUI, "Tk" = "X11", "X11" = "X11",
-                       "GNOME" = "X11", defdev)
-            else if (.Call("makeQuartzDefault")) "quartz"
+                switch(.Platform$GUI, "Tk" = X11, "X11" = X11,
+                       "GNOME" = X11, defdev)
+            else if (.Call("makeQuartzDefault")) quartz
 	    else defdev
         }
     } else defdev
