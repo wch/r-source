@@ -19,10 +19,10 @@ objects(name, pos= -1, envir = as.environment(pos),
     environment.  Although called \code{name} for back compatibility, in
     fact this argument can specify the environment in any form; see the
     details section.}
-  \item{pos}{An alternative  argument to \code{name} for specifying the
+  \item{pos}{an alternative argument to \code{name} for specifying the
     environment as a position in the search list.  Mostly there for
     back compatibility.}
-  \item{envir}{an alternative  argument to \code{name} for specifying the
+  \item{envir}{an alternative argument to \code{name} for specifying the
     environment evaluation environment. Mostly there for back compatibility.}
   \item{all.names}{a logical value.  If \code{TRUE}, all
     object names are returned.  If \code{FALSE}, names which begin with a
@@ -30,6 +30,15 @@ objects(name, pos= -1, envir = as.environment(pos),
   \item{pattern}{an optional \link{regular expression}.  Only names
     matching \code{pattern} are returned.  \code{\link{glob2rx}} can be
     used to convert wildcard patterns to regular expressions.}
+}
+\description{
+   \code{ls} and \code{objects} return a vector of character strings
+   giving the names of the objects in the specified environment.
+   When invoked with no argument at the top level prompt,
+   \code{ls} shows what data sets and functions a user has defined.
+   When invoked with no argument inside a function,
+   \code{ls} returns the names of the functions local variables.
+   This is useful in conjunction with \code{browser}.
 }
 \details{
   The \code{name} argument can specify the  environment from which
@@ -42,15 +51,9 @@ objects(name, pos= -1, envir = as.environment(pos),
   is used. The \code{pos} and \code{envir} arguments are an alternative
   way to specify an environment, but are primarily there for back
   compatibility.
-}
-\description{
-   \code{ls} and \code{objects} return a vector of character strings
-   giving the names of the objects in the specified environment.
-   When invoked with no argument at the top level prompt,
-   \code{ls} shows what data sets and functions a user has defined.
-   When invoked with no argument inside a function,
-   \code{ls} returns the names of the functions local variables.
-   This is useful in conjunction with \code{browser}.
+
+  Note that the \emph{order} of the resulting strings is locale
+  dependent, see \code{\link{Sys.getlocale}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
