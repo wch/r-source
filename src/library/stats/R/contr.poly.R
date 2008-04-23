@@ -74,8 +74,8 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE)
     if(any(is.na(x))) stop("missing values are not allowed in 'poly'")
     n <- degree + 1
     if(raw) {
-        if(degree >= length(x))
-            stop("'degree' must be less than number of points")
+        if(degree >= length(unique(x)))
+            stop("'degree' must be less than number of unique points")
         Z <- outer(x, 1:degree, "^")
         colnames(Z) <- 1:degree
         attr(Z, "degree") <- 1:degree
@@ -83,12 +83,14 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE)
         return(Z)
     }
     if(is.null(coefs)) { # fitting
-        if(degree >= length(x))
-            stop("'degree' must be less than number of points")
+        if(degree >= length(unique(x)))
+            stop("'degree' must be less than number of unique points")
         xbar <- mean(x)
         x <- x - xbar
         X <- outer(x, seq_len(n) - 1, "^")
         QR <- qr(X)
+        if(QR$rank < degree)
+            stop("'degree' must be less than number of unique points")
         z <- QR$qr
         z <- z * (row(z) == col(z))
         raw <- qr.qy(QR, z)
