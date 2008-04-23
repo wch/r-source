@@ -71,7 +71,7 @@ static void check_init(void)
 #endif
 	Sock_init();
 	sock_inited = 1;
-    } 
+    }
 }
 
 void in_Rsockopen(int *port)
@@ -512,7 +512,7 @@ int R_SockClose(int sockp)
 int R_SockRead(int sockp, void *buf, int len, int blocking)
 {
     int res;
-    
+
     if(blocking && R_SocketWait(sockp, 0) != 0) return 0;
     res = (int) recv(sockp, buf, len, 0);
     return (res >= 0) ? res : -socket_errno();

@@ -22,7 +22,7 @@
  * Protoized (ANSI C, no longer old K&R C):  Martin Maechler, R core team.
  */
 
-/* The version for R 2.1.0 is based on patches by 
+/* The version for R 2.1.0 is based on patches by
    Ei-ji Nakama <nakama@ki.rim.or.jp> for use in Japanese. */
 
 /* ********************************************************************** */
@@ -188,7 +188,7 @@ static int XmbRotDrawString(Display *dpy, XFontSet fontset, double angle,
 
 /* ---------------------------------------------------------------------- */
 
-int XRfRotDrawString(Display *dpy, R_XFont *rfont, double angle, 
+int XRfRotDrawString(Display *dpy, R_XFont *rfont, double angle,
 		     Drawable drawable, GC gc, int x, int y, const char *str)
 {
 #ifdef USE_FONTSET
@@ -1187,7 +1187,7 @@ static void XRotAddToLinkedList(Display *dpy, RotatedTextItem *item)
 
 #ifdef CACHE_FID
 	if(i1->font_name==NULL)
-            DEBUG_PRINT5("  (`%s'\n  FID=%ld\n   angle=%f align=%d)\n",
+	    DEBUG_PRINT5("  (`%s'\n  FID=%ld\n   angle=%f align=%d)\n",
 			 i1->text, i1->fid, i1->angle, i1->align);
 #endif /*CACHE_FID*/
 
@@ -1499,7 +1499,7 @@ XPoint *XRotTextExtents(Display *dpy, XFontStruct *font, double angle,
 
 
 #ifdef USE_FONTSET
-static XFontStruct * RXFontStructOfFontSet(XFontSet font) 
+static XFontStruct * RXFontStructOfFontSet(XFontSet font)
 {
     char **ml;
     XFontStruct **fs_list;
@@ -1507,23 +1507,23 @@ static XFontStruct * RXFontStructOfFontSet(XFontSet font)
     return fs_list[0];
 }
 
-static int 
-XmbRotPaintAlignedString(Display *dpy, XFontSet font, 
-			 double angle, Drawable drawable, GC gc, int x, int y, 
+static int
+XmbRotPaintAlignedString(Display *dpy, XFontSet font,
+			 double angle, Drawable drawable, GC gc, int x, int y,
 			 const char *text, int align);
-static int		
-XmbRotDrawHorizontalString(Display *dpy, XFontSet font, Drawable drawable, 
+static int
+XmbRotDrawHorizontalString(Display *dpy, XFontSet font, Drawable drawable,
 			   GC gc, int x, int y, const char *text, int align);
-static RotatedTextItem 
+static RotatedTextItem
 *XmbRotRetrieveFromCache(Display *dpy, XFontSet font, double angle, const char *text,
 			 int align);
-static RotatedTextItem 
-*XmbRotCreateTextItem(Display *dpy, XFontSet font, double angle, const char *text, 
+static RotatedTextItem
+*XmbRotCreateTextItem(Display *dpy, XFontSet font, double angle, const char *text,
 		      int align);
 
-static int 
-XRfTextExtents(XFontSet font_set, const char *string, int num_bytes, 
-	       XRectangle *overall_ink_return, 
+static int
+XRfTextExtents(XFontSet font_set, const char *string, int num_bytes,
+	       XRectangle *overall_ink_return,
 	       XRectangle *overall_logical_return)
 {
 #ifdef HAVE_XUTF8TEXTEXTENTS
@@ -1535,8 +1535,8 @@ XRfTextExtents(XFontSet font_set, const char *string, int num_bytes,
 			overall_ink_return, overall_logical_return);
 }
 
-static void 
-XRfDrawString(Display *display, Drawable d, XFontSet font_set, GC gc, 
+static void
+XRfDrawString(Display *display, Drawable d, XFontSet font_set, GC gc,
 	      int x, int y, const char *string, int num_bytes)
 {
 #ifdef HAVE_XUTF8DRAWSTRING
@@ -1572,7 +1572,7 @@ static int XmbRotDrawString(Display *dpy, XFontSet fontset, double angle,
 /*  Aligns and paints a rotated string					  */
 /**************************************************************************/
 
-static int 
+static int
 XmbRotPaintAlignedString(Display *dpy, XFontSet font, double angle,
 			 Drawable drawable, GC gc, int x, int y,
 			 const char *text, int align)
@@ -1827,7 +1827,7 @@ static int XmbRotDrawHorizontalString(Display *dpy, XFontSet font,
     /* loop through each section in the string */
     do {
 
-        XRectangle    r_ink, r_log;
+	XRectangle    r_ink, r_log;
 	XRfTextExtents(font, str3, strlen(str3), &r_ink, &r_log);
 
 	/* where to draw section in x ? */
@@ -1863,7 +1863,7 @@ static int XmbRotDrawHorizontalString(Display *dpy, XFontSet font,
 /*	 request, otherwise arrange for its creation			  */
 /**************************************************************************/
 
-static RotatedTextItem 
+static RotatedTextItem
 *XmbRotRetrieveFromCache(Display *dpy, XFontSet font,
 			 double angle, const char *text,
 			 int align)
@@ -2010,7 +2010,7 @@ static RotatedTextItem
 /*  Create a rotated text item						  */
 /**************************************************************************/
 
-static RotatedTextItem 
+static RotatedTextItem
 *XmbRotCreateTextItem(Display *dpy, XFontSet font,
 		      double angle, const char *text, int align)
 {
@@ -2132,7 +2132,7 @@ static RotatedTextItem
 
     /* loop through each section in the string */
     do {
-        XRectangle    r_ink, r_log;
+	XRectangle    r_ink, r_log;
 	XRfTextExtents(font, str3, strlen(str3), &r_ink, &r_log);
 
 	/* where to draw section in x ? */

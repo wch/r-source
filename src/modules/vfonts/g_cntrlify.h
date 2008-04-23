@@ -22,7 +22,7 @@ static const char * const _control_tbl[NUM_CONTROLS] =
   "sp",
   /* \ep = end superscript */
   "ep",
-  /* \sb = start subscript */ 
+  /* \sb = start subscript */
   "sb",
   /* \eb = end subscript */
   "eb",
@@ -67,7 +67,7 @@ typedef struct
 
 #define NUM_ISO_ESCAPES 95
 
-static const Escape _iso_escape_tbl[NUM_ISO_ESCAPES] = 
+static const Escape _iso_escape_tbl[NUM_ISO_ESCAPES] =
 {
   /* escape sequences, taken from groff */
   {161, "r!", "exclamdown"},
@@ -175,7 +175,7 @@ static const Escape _iso_escape_tbl[NUM_ISO_ESCAPES] =
 
 #define NUM_SYMBOL_ESCAPES 161
 
-static const Escape _symbol_escape_tbl[NUM_SYMBOL_ESCAPES] = 
+static const Escape _symbol_escape_tbl[NUM_SYMBOL_ESCAPES] =
 {
   /* escape sequences, taken from groff, except for (1) several characters
    for which the escape sequences were invented, because groff has no
@@ -324,7 +324,7 @@ static const Escape _symbol_escape_tbl[NUM_SYMBOL_ESCAPES] =
   {0357, "bv", "braceex"},
   /* Euro symbol, added by Adobe 1997(?).  ObHistorical note: Back in Apple
      LaserWriter days, the Apple logo was stored in this slot. */
-  {0360, "eu", "euro"},	
+  {0360, "eu", "euro"},
   {0361, "ra", "angleright"},
   {0362, "is", "integral"},
   {0363, "NO_ABBREV", "integraltp"},
@@ -359,7 +359,7 @@ static const Escape _symbol_escape_tbl[NUM_SYMBOL_ESCAPES] =
 
 #define NUM_SPECIAL_ESCAPES 40
 
-static const Escape _special_escape_tbl[NUM_SPECIAL_ESCAPES] = 
+static const Escape _special_escape_tbl[NUM_SPECIAL_ESCAPES] =
 {
   /* zodiacal Hershey glyphs */
   {01, "AR", "aries"},
@@ -397,7 +397,7 @@ static const Escape _special_escape_tbl[NUM_SPECIAL_ESCAPES] =
   {0226, "AS", "ascendingnode"},
   {0227, "DE", "descendingnode"},
   /* final `s', treated specially in g_cntrlify.c */
-#define FINAL_LOWERCASE_S 0230  
+#define FINAL_LOWERCASE_S 0230
   {0230, "s-", "s1"},
   /* non-astronomical Hershey glyphs */
   {0231, "dg", "dagger"},
@@ -416,7 +416,7 @@ static const Escape _special_escape_tbl[NUM_SPECIAL_ESCAPES] =
    Hershey fonts.  Certain printable 8-bit characters are drawn as small
    raised ASCII characters, possibly underlined. */
 
-typedef struct 
+typedef struct
 {
   unsigned char from, to;
   bool underscored;
@@ -424,7 +424,7 @@ typedef struct
 
 #define NUM_RAISED_CHARS 5
 
-static const Raiseinfo _raised_char_tbl[NUM_RAISED_CHARS] = 
+static const Raiseinfo _raised_char_tbl[NUM_RAISED_CHARS] =
 {
   {170, 97, true},			/* ordfeminine mapped to 'a' */
   {178, 50, false},			/* twosuperior mapped to '2' */
@@ -446,7 +446,7 @@ typedef struct
 
 #define NUM_DELIGATURED_CHARS 3
 
-static const Deligature _deligature_char_tbl[NUM_DELIGATURED_CHARS] = 
+static const Deligature _deligature_char_tbl[NUM_DELIGATURED_CHARS] =
 {
   {198, "AE", 999},
   {230, "ae", 999},
@@ -465,7 +465,7 @@ typedef struct
 
 #define NUM_DELIGATURED_ESCAPES 3
 
-static const Deligature_escape _deligature_escape_tbl[NUM_DELIGATURED_ESCAPES] = 
+static const Deligature_escape _deligature_escape_tbl[NUM_DELIGATURED_ESCAPES] =
 {
   {"AE", "AE", 999},
   {"ae", "ae", 999},
@@ -491,26 +491,26 @@ typedef struct
 
 #define NUM_LIGATURES 22
 
-static const Ligature _ligature_tbl[NUM_LIGATURES] = 
+static const Ligature _ligature_tbl[NUM_LIGATURES] =
 {
   {HERSHEY_SERIF, "ffi", 0203},
   {HERSHEY_SERIF, "ffl", 0204},
   {HERSHEY_SERIF, "ff", 0200},
   {HERSHEY_SERIF, "fi", 0201},
   {HERSHEY_SERIF, "fl", 0202},
-  {HERSHEY_SERIF_ITALIC, "ffi", 0203},	
+  {HERSHEY_SERIF_ITALIC, "ffi", 0203},
   {HERSHEY_SERIF_ITALIC, "ffl", 0204},
   {HERSHEY_SERIF_ITALIC, "ff", 0200},
   {HERSHEY_SERIF_ITALIC, "fi", 0201},
   {HERSHEY_SERIF_ITALIC, "fl", 0202},
-  {HERSHEY_GOTHIC_GERMAN, "ch", 0206},	
+  {HERSHEY_GOTHIC_GERMAN, "ch", 0206},
   {HERSHEY_GOTHIC_GERMAN, "tz", 0207},
   {HERSHEY_CYRILLIC, "ffi", 0203},
   {HERSHEY_CYRILLIC, "ffl", 0204},
   {HERSHEY_CYRILLIC, "ff", 0200},
   {HERSHEY_CYRILLIC, "fi", 0201},
   {HERSHEY_CYRILLIC, "fl", 0202},
-  {HERSHEY_EUC, "ffi", 0203},		
+  {HERSHEY_EUC, "ffi", 0203},
   {HERSHEY_EUC, "ffl", 0204},
   {HERSHEY_EUC, "ff", 0200},
   {HERSHEY_EUC, "fi", 0201},

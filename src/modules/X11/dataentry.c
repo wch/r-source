@@ -780,7 +780,7 @@ static const char *get_col_name(DEstruct DE, int col)
     }
     nwrote = snprintf(clab, 25, "var%d", col);
     if (nwrote >= 25)
-        error("get_col_name: column number too big to stringify");
+	error("get_col_name: column number too big to stringify");
     return (const char *)clab;
 }
 
@@ -958,7 +958,7 @@ static void jumppage(DEstruct DE, DE_DIRECTION dir)
     case RIGHT:
 	oldcol = DE->colmin;
 	wcol = DE->colmin + DE->ccol + 1; /* column to be selected */
-        /* There may not be room to fit the next column in */
+	/* There may not be room to fit the next column in */
 	w = DE->fullwindowWidth - DE->boxw[0] - BOXW(DE->colmax + 1);
 	for (i = DE->colmax; i >= oldcol; i--) {
 	    w -= BOXW(i);
@@ -1130,7 +1130,7 @@ static void closerect(DEstruct DE)
 /* This version will only display 200 chars, but the maximum col width
    will not allow that many */
 static void printstring(DEstruct DE, const char *ibuf, int buflen, int row,
-                        int col, int left)
+			int col, int left)
 {
     int i, x_pos, y_pos, bw, bufw;
     char pbuf[BOOSTED_BUF_SIZE];
@@ -1154,26 +1154,26 @@ static void printstring(DEstruct DE, const char *ibuf, int buflen, int row,
     wcsbufw = mbsrtowcs(wcspbuf, (const char **)&p, bufw, NULL);
     wcspbuf[wcsbufw]=L'\0';
     if(left) {
-        for (i = wcsbufw; i > 1; i--) {
+	for (i = wcsbufw; i > 1; i--) {
 	    for(j=0;*(wcspc+j)!=L'\0';j++)wcs[j]=*(wcspc+j);
 	    wcs[j]=L'\0';
 	    w_p=wcs;
 	    cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
 	    s[cnt]='\0';
-            if (textwidth(DE, s, strlen(s)) < (bw - DE->text_offset)) break;
-            *(++wcspc) = L'<';
-        }
+	    if (textwidth(DE, s, strlen(s)) < (bw - DE->text_offset)) break;
+	    *(++wcspc) = L'<';
+	}
     } else {
-        for (i = wcsbufw; i > 1; i--) {
+	for (i = wcsbufw; i > 1; i--) {
 	    for(j=0;*(wcspc+j)!=L'\0';j++)wcs[j]=*(wcspc+j);
 	    wcs[j]=L'\0';
 	    w_p=wcs;
 	    cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
 	    s[cnt]='\0';
-            if (textwidth(DE, s, strlen(s)) < (bw - DE->text_offset)) break;
-            *(wcspbuf + i - 2) = L'>';
-            *(wcspbuf + i - 1) = L'\0';
-        }
+	    if (textwidth(DE, s, strlen(s)) < (bw - DE->text_offset)) break;
+	    *(wcspbuf + i - 2) = L'>';
+	    *(wcspbuf + i - 1) = L'\0';
+	}
     }
     for(j=0;*(wcspc+j)!=L'\0';j++) wcs[j]=*(wcspc+j);
     wcs[j]=L'\0';
@@ -1191,15 +1191,15 @@ static void printstring(DEstruct DE, const char *ibuf, int buflen, int row,
     bufw = (buflen > 200) ? 200 : buflen;
     strncpy(pbuf, ibuf, bufw);
     if(left) {
-        for (i = bufw; i > 1; i--) {
-            if (textwidth(DE, pc, i) < (bw - DE->text_offset)) break;
-            *(++pc) = '<';
-        }
+	for (i = bufw; i > 1; i--) {
+	    if (textwidth(DE, pc, i) < (bw - DE->text_offset)) break;
+	    *(++pc) = '<';
+	}
     } else {
-        for (i = bufw; i > 1; i--) {
-            if (textwidth(DE, pbuf, i) < (bw - DE->text_offset)) break;
-            *(pbuf + i - 2) = '>';
-        }
+	for (i = bufw; i > 1; i--) {
+	    if (textwidth(DE, pbuf, i) < (bw - DE->text_offset)) break;
+	    *(pbuf + i - 2) = '>';
+	}
     }
     drawtext(DE, x_pos + DE->text_offset, y_pos + DE->box_h - DE->text_offset,
 	     pc, i);
@@ -1242,7 +1242,7 @@ static void handlechar(DEstruct DE, char *text)
     if ( c == '\033' ) { /* ESC */
 	CellModified = FALSE;
 	clength = 0;
-        bufp = buf;
+	bufp = buf;
 	drawelt(DE, DE->crow, DE->ccol);
 	cell_cursor_init(DE);
 	return;
@@ -1308,7 +1308,7 @@ static void handlechar(DEstruct DE, char *text)
 	  }
       }
 #else
-        switch (c) {
+	switch (c) {
 	case '-':
 	    if (nneg == 0) nneg++; else goto donehc;
 	    break;
@@ -1385,7 +1385,7 @@ static void printlabs(DEstruct DE)
     }
 }
 
-               /* ================ X11-specific ================ */
+	       /* ================ X11-specific ================ */
 
 /* find out whether the button click was in the quit box */
 static int checkquit(int xw)
@@ -1481,7 +1481,7 @@ static int findcell(DEstruct DE)
 
 
 /* Event Loop Functions */
-#define mouseDown 	ButtonPress
+#define mouseDown	ButtonPress
 #define keyDown		KeyPress
 #define activateEvt	MapNotify
 #define updateEvt	Expose
@@ -1493,10 +1493,10 @@ static void eventloop(DEstruct DE)
 
     done = 0;
     while (done == 0) {
-        XNextEvent(iodisplay, &ioevent);
-        {
+	XNextEvent(iodisplay, &ioevent);
+	{
 #ifdef USE_FONTSET
-            if (XFilterEvent(&ioevent, None)){
+	    if (XFilterEvent(&ioevent, None)){
 		if(ioic){
 		    XSetICFocus(ioic);
 		    if (ioim_style & XIMPreeditPosition)
@@ -1510,7 +1510,7 @@ static void eventloop(DEstruct DE)
 	    case keyDown:/* KeyPress */
 		doSpreadKey(DE, 0, &ioevent);
 		break;
-            case Expose:
+	    case Expose:
 		while(XCheckTypedEvent(iodisplay, Expose, &ioevent))
 		    ;
 		/*
@@ -1518,7 +1518,7 @@ static void eventloop(DEstruct DE)
 		 * XIM off - KeyPress - KeyRelease
 		 * colname change XIM on mode. type Backspace.
 		 */
-	        if(DE->crow == 0){
+		if(DE->crow == 0){
 		    drawwindow(DE);
 		    printstring(DE, buf, clength, DE->crow, DE->ccol, 1);
 		} else {
@@ -1528,10 +1528,10 @@ static void eventloop(DEstruct DE)
 		}
 		break;
 	    case activateEvt:/* MapNotify */
-	      	closerect(DE);
+		closerect(DE);
 		drawwindow(DE);
 		cell_cursor_init(DE);
- 		break;
+		break;
 	    case mouseDown:/* ButtonPress */
 		if(DE->isEditor) {
 		    done  = doMouseDown(DE, &ioevent);
@@ -1567,7 +1567,7 @@ static void R_ProcessX11Events(void *data)
     int done = 0;
 
     while (XPending(iodisplay)) {
-        XNextEvent(iodisplay, &ioevent);
+	XNextEvent(iodisplay, &ioevent);
 	XFindContext(iodisplay, ioevent.xany.window, deContext, &temp);
 	DE = (DEstruct) temp;
 	switch (WhichEvent(ioevent)) {
@@ -1612,7 +1612,7 @@ static void R_ProcessX11Events(void *data)
 	    XCloseDisplay(iodisplay);
 	    iodisplay = NULL;
 	}
-	
+
     }
 }
 
@@ -1737,7 +1737,7 @@ static char *GetCharP(DEEvent * event)
 #ifdef USE_FONTSET
     if(mbcslocale) {
 #ifdef HAVE_XUTF8LOOKUPSTRING
-        if(utf8locale)
+	if(utf8locale)
 	    Xutf8LookupString(ioic, (XKeyEvent *)event,
 			      text, sizeof(text) - clength,
 			      &iokey, &status);
@@ -1910,7 +1910,7 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
 	XSetErrorHandler(R_X11Err);
 	XSetIOErrorHandler(R_X11IOErr);
     }
-    
+
 
     /* Get Font Loaded if we can */
 
@@ -2019,7 +2019,7 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
 	XtAppContext app_con;
 	Widget toplevel;
 	Display *xtdpy;
-        int zero = 0;
+	int zero = 0;
 
 	XtToolkitInitialize();
 	app_con = XtCreateApplicationContext();
@@ -2128,7 +2128,7 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
 					XNSpotLocation, &xpoint, NULL);
 
 	ioic = XCreateIC(ioim,
- 			 XNInputStyle, ioim_style,
+			 XNInputStyle, ioim_style,
 			 XNClientWindow,DE->iowindow,
 			 XNFocusWindow,DE->iowindow,
 			 XNPreeditAttributes, xva_nlist,
@@ -2285,10 +2285,10 @@ static void drawtext(DEstruct DE, int xpos, int ypos, char *text, int len)
 #ifdef USE_FONTSET
     if(mbcslocale)
 #ifdef HAVE_XUTF8DRAWIMAGESTRING
-        if(utf8locale)
+	if(utf8locale)
 	    Xutf8DrawImageString(iodisplay, DE->iowindow, font_set,
 				 DE->iogc, xpos, ypos,text, len);
-        else
+	else
 #endif
 	    XmbDrawImageString(iodisplay, DE->iowindow, font_set,
 			       DE->iogc, xpos, ypos,text, len);
@@ -2312,13 +2312,13 @@ static int textwidth(DEstruct DE, const char *text, int nchar)
 #ifdef USE_FONTSET
     if(mbcslocale) {
 #ifdef HAVE_XUTF8TEXTESCAPEMENT
-        if (utf8locale)
+	if (utf8locale)
 	    ans = Xutf8TextEscapement(font_set, buf, nchar);
-        else
+	else
 #endif
 	    ans = XmbTextEscapement(font_set, buf, nchar);
-        Free(buf);
-        return ans;
+	Free(buf);
+	return ans;
     }
 #endif
     ans = XTextWidth(DE->font_info, buf, nchar);
@@ -2359,7 +2359,7 @@ void popupmenu(DEstruct DE, int x_pos, int y_pos, int col, int row)
 #ifdef USE_FONTSET
     if(mbcslocale)
 #ifdef HAVE_XUTF8DRAWSTRING
-        if(utf8locale)
+	if(utf8locale)
 	    Xutf8DrawString(iodisplay,
 			    menupanes[0],
 			    font_set, DE->iogc, 3, DE->box_h - 3, name,
@@ -2372,14 +2372,14 @@ void popupmenu(DEstruct DE, int x_pos, int y_pos, int col, int row)
 			  strlen(name));
     else
 #endif
-        XDrawString(iodisplay,
+	XDrawString(iodisplay,
 		    menupanes[0], DE->iogc, 3, DE->box_h - 3, name,
 		    strlen(name));
     for (i = 1; i < 4; i++)
 #ifdef USE_FONTSET
       if(mbcslocale)
 #ifdef HAVE_XUTF8DRAWSTRING
-        if(utf8locale)
+	if(utf8locale)
 	  Xutf8DrawString(iodisplay,
 			  menupanes[i],
 			  font_set, DE->iogc, 3, DE->box_h - 3,
@@ -2400,7 +2400,7 @@ void popupmenu(DEstruct DE, int x_pos, int y_pos, int col, int row)
 #ifdef USE_FONTSET
       if(mbcslocale)
 #ifdef HAVE_XUTF8DRAWSTRING
-        if(utf8locale)
+	if(utf8locale)
 	  Xutf8DrawString(iodisplay,
 			  menupanes[1],
 			  font_set, DE->iogc, 0, DE->box_h - 3,
@@ -2419,7 +2419,7 @@ void popupmenu(DEstruct DE, int x_pos, int y_pos, int col, int row)
 #ifdef USE_FONTSET
       if(mbcslocale)
 #ifdef HAVE_XUTF8DRAWSTRING
-        if(utf8locale)
+	if(utf8locale)
 	  Xutf8DrawString(iodisplay,
 			  menupanes[2],
 			  font_set, DE->iogc, 0, DE->box_h - 3,
@@ -2489,8 +2489,8 @@ void popupmenu(DEstruct DE, int x_pos, int y_pos, int col, int row)
 		}
 	    }
 	}
-        /* this doesn't work and perhaps I should move it up to the
-           main control loop */
+	/* this doesn't work and perhaps I should move it up to the
+	   main control loop */
 	else if (event.type == Expose) {
 	    if (event.xexpose.window == menuwindow) {
 		XDrawString(iodisplay, menupanes[0], DE->iogc, 3,
@@ -2532,12 +2532,12 @@ static void copycell(DEstruct DE)
 	    if (tmp != R_NilValue &&
 		(i = whichrow - 1) < LENGTH(tmp) ) {
 		PrintDefaults(R_NilValue);
-                if (TYPEOF(tmp) == REALSXP) {
+		if (TYPEOF(tmp) == REALSXP) {
 			strncpy(copycontents, EncodeElement(tmp, i, 0, '.'),
 				BOOSTED_BUF_SIZE-1);
 			copycontents[BOOSTED_BUF_SIZE-1]='\0';
-                } else if (TYPEOF(tmp) == STRSXP) {
-                    if (STRING_ELT(tmp, i) != ssNA_STRING) {
+		} else if (TYPEOF(tmp) == STRSXP) {
+		    if (STRING_ELT(tmp, i) != ssNA_STRING) {
 			strncpy(copycontents, EncodeElement(tmp, i, 0, '.'),
 				BOOSTED_BUF_SIZE-1);
 			copycontents[BOOSTED_BUF_SIZE-1]='\0';
@@ -2621,7 +2621,7 @@ static int last_wchar_bytes(char *str)
 
     if((size_t)-1 == (cnt = mbsrtowcs(wcs, (const char **)&mbs,
 				      strlen(mbs), &mb_st))) {
-        return 0;
+	return 0;
     }
     if(wcs[0] == L'\0') return 0;
 

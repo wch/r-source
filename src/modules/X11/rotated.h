@@ -25,9 +25,9 @@ typedef enum {One_Font, Font_Set} R_FontType;
 typedef struct R_XFont
 {
     R_FontType type;
-    XFontStruct *font;  
-    XFontSet fontset; 
-    int height;  
+    XFontStruct *font;
+    XFontSet fontset;
+    int height;
     int ascent;
     int descent;
 } R_XFont;

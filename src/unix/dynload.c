@@ -54,7 +54,7 @@
 
 #ifdef HAVE_DYNAMIC_LOADING
 
-static void *loadLibrary(const char *path, int asLocal, int now, 
+static void *loadLibrary(const char *path, int asLocal, int now,
 			 const char *search);
 static void closeLibrary(void *handle);
 static void deleteCachedSymbols(DllInfo *);
@@ -158,7 +158,7 @@ static int computeDLOpenFlag(int asLocal, int now)
 # define DL_WARN(i) \
     if(asInteger(GetOption(install("warn"), R_BaseEnv)) == 1 || \
        asInteger(GetOption(install("verbose"), R_BaseEnv)) > 0) \
-        warning(_(warningMessages[i]))
+	warning(_(warningMessages[i]))
 #endif
 
     int openFlag = 0;		/* Default value so no-ops for undefined
@@ -187,7 +187,7 @@ static int computeDLOpenFlag(int asLocal, int now)
 #ifndef RTLD_NOW
 # ifndef __CYGWIN__
 	DL_WARN(2);
-# endif	
+# endif
 #else
 	openFlag |= RTLD_NOW;
 #endif
@@ -195,7 +195,7 @@ static int computeDLOpenFlag(int asLocal, int now)
 #ifndef RTLD_LAZY
 # ifndef __CYGWIN__
 	DL_WARN(3);
-# endif	
+# endif
 #else
 	openFlag |= RTLD_LAZY;
 #endif

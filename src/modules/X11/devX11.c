@@ -78,7 +78,7 @@
 #define MM_PER_INCH	25.4			/* mm -> inch conversion */
 
 #define X_BELL_VOLUME 0 /* integer between -100 and 100 for the volume
-                            of the bell in locator. */
+			    of the bell in locator. */
 			/* Note: This is in relation to
 			the general bell level. Was 50, but if > 0
 			then "xset b off" will not disable the
@@ -611,7 +611,7 @@ static void handleEvent(XEvent event)
 	    }
 #endif
 	}
-        dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top),
+	dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top),
 		     dd);
 
 	if (do_update) /* Gobble Expose events; we'll redraw anyway */
@@ -646,7 +646,7 @@ static void handleEvent(XEvent event)
 		if(xd->useCairo && xd->xcc && do_update == 1) {
 		    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
 		    cairo_paint(xd->xcc);
-		} else 
+		} else
 #endif
 		    GEplayDisplayList(gdd);
 		XSync(display, 0);
@@ -768,13 +768,13 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
     if (size < SMALLEST) size = SMALLEST;
     face--;
 
-    if(xd->type == PNG || xd->type == JPEG || 
+    if(xd->type == PNG || xd->type == JPEG ||
        xd->type == TIFF || xd->type == BMP) {
 	dpi = (xd->res_dpi > 0) ? xd->res_dpi + 0.5 : 72;
     } else {
 	dpi = (1./pixelHeight() + 0.5);
     }
-    
+
     if(abs(dpi - 75) < 5) {
 	/* use pointsize as pixel size */
     } else if(abs(dpi - 100) < 5) {
@@ -783,7 +783,7 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
        an integer "size" at 100 dpi, namely 6, 7, 8, 9, 10, 12, 13,
        14, 17, 18, 24 points. It's almost y = x * 100/72, but not
        quite. The constants were found using lm(). --pd */
- 	size = R_rint(size * 1.43 - 0.4);
+	size = R_rint(size * 1.43 - 0.4);
     } else size = R_rint(size * dpi/72);
 
     /* search fontcache */
@@ -804,13 +804,13 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
      * Always use a standard font for font face 5
      */
     if (face == SYMBOL_FONTFACE - 1) /* NB: face-- above */
-        sprintf(buf, xd->symbolfamily,  pixelsize);
+	sprintf(buf, xd->symbolfamily,  pixelsize);
     else
 #ifdef USE_FONTSET
       if (mbcslocale && *slant[(face & 2) >> 1] == 'o') {
-        sprintf(buf, family, weight[face & 1], slant[(face & 2) >> 1],
+	sprintf(buf, family, weight[face & 1], slant[(face & 2) >> 1],
 		pixelsize);
-        sprintf(buf1, family, weight[face & 1], "i",  pixelsize);
+	sprintf(buf1, family, weight[face & 1], "i",  pixelsize);
 	strcat(buf,",");
 	strcat(buf,buf1);
       } else
@@ -848,7 +848,7 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
 #ifdef USE_FONTSET
 	    if(mbcslocale)
 		tmp = (void*) R_XLoadQueryFontSet(display,
-                   "-*-fixed-medium-r-*--13-*-*-*-*-*-*-*");
+		   "-*-fixed-medium-r-*--13-*-*-*-*-*-*-*");
 	    else
 #endif
 		tmp = (void*) R_XLoadQueryFont(display, "fixed");
@@ -981,16 +981,16 @@ static int gcToX11lend(R_GE_lineend lend) {
     int newend = CapRound; /* -Wall */
     switch (lend) {
     case GE_ROUND_CAP:
-        newend = CapRound;
+	newend = CapRound;
 	break;
     case GE_BUTT_CAP:
-        newend = CapButt;
+	newend = CapButt;
 	break;
     case GE_SQUARE_CAP:
-        newend = CapProjecting;
+	newend = CapProjecting;
 	break;
     default:
-        error(_("invalid line end"));
+	error(_("invalid line end"));
     }
     return newend;
 }
@@ -999,16 +999,16 @@ static int gcToX11ljoin(R_GE_linejoin ljoin) {
     int newjoin = JoinRound; /* -Wall */
     switch (ljoin) {
     case GE_ROUND_JOIN:
-        newjoin = JoinRound;
+	newjoin = JoinRound;
 	break;
     case GE_MITRE_JOIN:
-        newjoin = JoinMiter;
+	newjoin = JoinMiter;
 	break;
     case GE_BEVEL_JOIN:
-        newjoin = JoinBevel;
+	newjoin = JoinBevel;
 	break;
     default:
-        error(_("invalid line join"));
+	error(_("invalid line join"));
     }
     return newjoin;
 }
@@ -1073,7 +1073,7 @@ static int R_X11Err(Display *dsp, XErrorEvent *event)
     XGetErrorText(dsp, event->error_code, buff, 1000);
     /* for R commander */
     if(strncmp(buff, "BadWindow (invalid Window parameter)", 36) != 0)
-        warning(_("X11 protocol error: %s"), buff);
+	warning(_("X11 protocol error: %s"), buff);
     return 0;
 }
 
@@ -1198,7 +1198,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	xd->res_dpi = res; /* place holder */
 	dd->displayListOn = FALSE;
 #endif
-    } 
+    }
     else if (!strncmp(dsp, "tiff::", 5)) {
 #ifndef HAVE_TIFF
 	warning(_("no tiff support in this version of R"));
@@ -1318,8 +1318,8 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 		XtAppContext app_con;
 		Widget toplevel;
 		Display *xtdpy;
-                int zero = 0;
-                gx_device_X xdev;
+		int zero = 0;
+		gx_device_X xdev;
 
 		XtToolkitInitialize();
 
@@ -1384,7 +1384,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    }
 	    XSetWMNormalHints(display, xd->window, hint);
 	    XFree(hint);
-      	    XChangeWindowAttributes(display, xd->window,
+	    XChangeWindowAttributes(display, xd->window,
 				    CWEventMask | CWBackPixel |
 				    CWBorderPixel | CWBackingStore,
 				    &attributes);
@@ -1461,7 +1461,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 
 	    while ( XPeekEvent(display, &event),
 		    !XCheckTypedEvent(display, Expose, &event))
-                ;
+		;
 	    /* XNextEvent(display, &event);
 	       if (event.xany.type == Expose) {
 	       while (event.xexpose.count)
@@ -1617,9 +1617,9 @@ static void X11_MetricInfo(int c, const pGEcontext gc,
     } else return;
 
     if (c == 0) {
-        *ascent = f->ascent;
-        *descent = f->descent;
-        *width = f->max_bounds.width;
+	*ascent = f->ascent;
+	*descent = f->descent;
+	*width = f->max_bounds.width;
 	return;
     }
 
@@ -1641,7 +1641,7 @@ static void X11_MetricInfo(int c, const pGEcontext gc,
 	/* <FIXME> why logical and not ink width? */
 	*width = log.width;
 	/* Rprintf("%d %lc w=%f a=%f d=%f\n", c, wc[0],
-	            *width, *ascent, *descent);*/
+		    *width, *ascent, *descent);*/
     } else { /* symbol font */
 	if(first <= c && c <= last) {
 	  /*
@@ -1779,7 +1779,7 @@ extern int R_SaveAsTIFF(void  *d, int width, int height,
 			int compression);
 
 extern int R_SaveAsBmp(void  *d, int width, int height,
-		       unsigned int (*gp)(void *, int, int), 
+		       unsigned int (*gp)(void *, int, int),
 		       int bgr, FILE *fp, int res);
 
 static int knowncols[512];
@@ -1854,8 +1854,8 @@ static void X11_Close_bitmap(pX11Desc xd)
     else if (xd->type == TIFF) {
 	char buf[PATH_MAX];
 	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
-        R_SaveAsTIFF(xi, xd->windowWidth, xd->windowHeight,
-		     bitgp, 0, R_ExpandFileName(buf), xd->res_dpi, 
+	R_SaveAsTIFF(xi, xd->windowWidth, xd->windowHeight,
+		     bitgp, 0, R_ExpandFileName(buf), xd->res_dpi,
 		     xd->quality);
     }
 
@@ -1899,7 +1899,7 @@ static void X11_Close(pDevDesc dd)
 	while (nfonts--)
 	      R_XFreeFont(display, fontcache[nfonts].font);
 	nfonts = 0;
-        if(xd->handleOwnEvents == FALSE)
+	if(xd->handleOwnEvents == FALSE)
 	    removeInputHandler(&R_InputHandlers,
 			       getInputHandler(R_InputHandlers,fd));
 	XCloseDisplay(display);
@@ -2126,9 +2126,9 @@ static Rboolean X11_Locator(double *x, double *y, pDevDesc dd)
 						      R_BaseEnv));
 		    *x = event.xbutton.x;
 		    *y = event.xbutton.y;
-  		       /* Make a beep! Was print "\07", but that
-                          messes up some terminals. */
-                    if(useBeep) XBell(display, X_BELL_VOLUME);
+		       /* Make a beep! Was print "\07", but that
+			  messes up some terminals. */
+		    if(useBeep) XBell(display, X_BELL_VOLUME);
 		    XSync(display, 0);
 		    done = 1;
 		}
@@ -2144,7 +2144,7 @@ static Rboolean X11_Locator(double *x, double *y, pDevDesc dd)
 }
 
 	/********************************************************/
-	/* device_Mode is called whenever the graphics engine 	*/
+	/* device_Mode is called whenever the graphics engine	*/
 	/* starts drawing (mode=1) or stops drawing (mode=0)	*/
 	/* the device is not required to do anything		*/
 	/********************************************************/
@@ -2340,16 +2340,16 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 #ifdef HAVE_WORKING_CAIRO
 	if(xd->useCairo) {
 # ifdef HAVE_PANGOCAIRO
-	    /* Pango's default resolution is 96 dpi */ 
+	    /* Pango's default resolution is 96 dpi */
 	    ps *= 1.0/(96.0*pixelWidth());
 # else
-	    /* Cairo's default resolution is 72 dpi */ 
+	    /* Cairo's default resolution is 72 dpi */
 	    ps *= 1.0/(72.0*pixelWidth());
 # endif
 	}
 #endif
     }
-    
+
     /* Character Addressing Offsets */
     /* These are used to plot a single plotting character */
     /* so that it is exactly over the plotting point */
@@ -2428,7 +2428,7 @@ Rboolean in_R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
 	pX11Desc xd = GEgetDevice(d)->dev->deviceSpecific;
 
 	*((XImage**) pximage) =
-            XGetImage(display, xd->window, 0, 0,
+	    XGetImage(display, xd->window, 0, 0,
 		      xd->windowWidth, xd->windowHeight,
 		      AllPlanes, ZPixmap);
 	*pwidth = xd->windowWidth;
@@ -2532,7 +2532,7 @@ Rf_addX11Device(const char *display, double width, double height, double ps,
 			     xpos, ypos, title, useCairo, antialias)) {
 	    free(dev);
 	    errorcall(gcall, _("unable to start device %s"), devname);
-       	}
+	}
 	dd = GEcreateDevDesc(dev);
 	GEaddDevice2(dd, devname);
     } END_SUSPEND_INTERRUPTS;
@@ -2583,7 +2583,7 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     maxcubesize = asInteger(CAR(args));
     if (maxcubesize < 1 || maxcubesize > 256)
-        maxcubesize = 256;
+	maxcubesize = 256;
     args = CDR(args);
     sc = CAR(args);
     if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
@@ -2651,7 +2651,7 @@ static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *fn, *type;
     pGEDevDesc gdd;
     pX11Desc xd;
-    
+
     checkArity(op, args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) < 1)
 	error(_("invalid '%s' argument"), "filename");
@@ -2683,7 +2683,7 @@ static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
     } else if (streql(type, "tiff")) {
 	void *xi = cairo_image_surface_get_data(xd->cs);
 	stride = xd->windowWidth;
-        R_SaveAsTIFF(xi, xd->windowWidth, xd->windowHeight,
+	R_SaveAsTIFF(xi, xd->windowWidth, xd->windowHeight,
 		     Sbitgp, 0, fn, 0, 1L);
     }
 #else
@@ -2723,7 +2723,7 @@ static void null_Mode(int mode, pDevDesc dd)
 {
 }
 
-static Rboolean 
+static Rboolean
 BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
 {
     cairo_status_t res;
@@ -2960,15 +2960,15 @@ static void BM_Close(pDevDesc dd)
 
 
 
-static Rboolean 
-BMDeviceDriver(pDevDesc dd, int kind, const char * filename, 
-	       int quality, int width, int height, int ps, 
+static Rboolean
+BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
+	       int quality, int width, int height, int ps,
 	       int bg, int res, int antialias)
 {
     pX11Desc xd;
     int res0 = (res > 0) ? res : 72;
     double dps = ps;
-    
+
     /* allocate new device description */
     if (!(xd = (pX11Desc) calloc(1, sizeof(X11Desc)))) return FALSE;
     strcpy(xd->filename, filename);
@@ -2976,7 +2976,7 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     xd->windowWidth = width;
     xd->windowHeight = height;
 #ifdef HAVE_PANGOCAIRO
-    /* Pango's default resolution is 96 dpi */ 
+    /* Pango's default resolution is 96 dpi */
     dps *= res0/96.0;
 #else
     dps *= res0/72.0;
@@ -3034,7 +3034,7 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
 
     dd->newPage = BM_NewPage;
     dd->close = BM_Close;
- 
+
     dd->left = 0;
     dd->right = width;
     dd->top = 0;
@@ -3043,7 +3043,7 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     dd->cra[0] = 0.9 * ps * res0/72.0;
     dd->cra[1] = 1.2 * ps * res0/72.0;
     dd->startps = ps;
-    dd->ipr[0] = dd->ipr[1] = 1.0/res0;  
+    dd->ipr[0] = dd->ipr[1] = 1.0/res0;
     xd->lwdscale = res0/96.0;
     dd->xCharOffset = 0.4900;
     dd->yCharOffset = 0.3333;
@@ -3059,7 +3059,7 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     dd->displayListOn = FALSE;
     dd->deviceSpecific = (void *) xd;
 
-    return TRUE;    
+    return TRUE;
 }
 
 const static struct {
@@ -3077,8 +3077,8 @@ const static struct {
     { "tiff", TIFF },
     { "bmp", BMP }
 };
-      
-/* 
+
+/*
    cairo(filename, type, width, height, pointsize, bg, res, antialias, quality)
 */
 static SEXP in_do_cairo(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -3137,7 +3137,7 @@ static SEXP in_do_cairo(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Allocate and initialize the device driver data */
 	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return 0;
 	if (!BMDeviceDriver(dev, devtable[type].gtype, filename, quality,
-			    width, height, pointsize, 
+			    width, height, pointsize,
 			    bgcolor, res, antialias)) {
 	    free(dev);
 	    error(_("unable to start device '%s'"), devtable[type].name);

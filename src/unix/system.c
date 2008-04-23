@@ -105,14 +105,14 @@ void R_setupHistory()
     char *p;
 
     if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
-        R_HistoryFile = ".Rhistory";
+	R_HistoryFile = ".Rhistory";
     R_HistorySize = 512;
     if ((p = getenv("R_HISTSIZE"))) {
-        value = R_Decode2Long(p, &ierr);
-        if (ierr != 0 || value < 0)
-            R_ShowMessage("WARNING: invalid R_HISTSIZE ignored;");
-        else
-            R_HistorySize = value;
+	value = R_Decode2Long(p, &ierr);
+	if (ierr != 0 || value < 0)
+	    R_ShowMessage("WARNING: invalid R_HISTSIZE ignored;");
+	else
+	    R_HistorySize = value;
     }
 }
 
@@ -152,16 +152,16 @@ int Rf_initialize_R(int ac, char **av)
     struct rlimit rlim;
 
     {
-        int ii;
+	int ii;
 	/* 1 is downwards */
-        R_CStackDir = ((uintptr_t)&i > (uintptr_t)&ii) ? 1 : -1;
+	R_CStackDir = ((uintptr_t)&i > (uintptr_t)&ii) ? 1 : -1;
     }
 
     if(getrlimit(RLIMIT_STACK, &rlim) == 0) {
 	unsigned long lim1, lim2;
 	lim1 = (unsigned long) rlim.rlim_cur;
 	lim2 = (unsigned long) rlim.rlim_max; /* Usually unlimited */
-        R_CStackLimit = lim1 < lim2 ? lim1 : lim2;
+	R_CStackLimit = lim1 < lim2 ? lim1 : lim2;
     }
 #if defined(HAVE_LIBC_STACK_END)
     R_CStackStart = (uintptr_t) __libc_stack_end;
@@ -184,7 +184,7 @@ int Rf_initialize_R(int ac, char **av)
     if(R_CStackStart == -1) R_CStackLimit = -1; /* never set */
 
     /* printf("stack limit %ld, start %lx dir %d \n", R_CStackLimit,
-              R_CStackStart, R_CStackDir); */
+	      R_CStackStart, R_CStackDir); */
 }
 #endif
 
@@ -310,8 +310,8 @@ int Rf_initialize_R(int ac, char **av)
 		    ifp = R_fopen(*av, "r");
 		    if(!ifp) {
 #ifdef HAVE_STRERROR
-			snprintf(msg, 1024, 
-				 _("cannot open file '%s': %s"), 
+			snprintf(msg, 1024,
+				 _("cannot open file '%s': %s"),
 				 *av, strerror(errno));
 #else
 			snprintf(msg, 1024, _("cannot open file '%s'"), *av);
@@ -325,11 +325,11 @@ int Rf_initialize_R(int ac, char **av)
 		    ifp = R_fopen( (*av)+7, "r");
 		    if(!ifp) {
 #ifdef HAVE_STRERROR
-			snprintf(msg, 1024, 
-				 _("cannot open file '%s': %s"), 
+			snprintf(msg, 1024,
+				 _("cannot open file '%s': %s"),
 				 (*av)+7, strerror(errno));
 #else
-			snprintf(msg, 1024, 
+			snprintf(msg, 1024,
 				 _("cannot open file '%s'"),
 				 (*av)+7);
 #endif
@@ -476,5 +476,3 @@ int R_EditFiles(int nfile, const char **file, const char **title,
     }
     return 1;
 }
-
-

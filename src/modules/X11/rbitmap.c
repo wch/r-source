@@ -378,10 +378,10 @@ int R_SaveAsJpeg(void  *d, int width, int height,
     /* First we supply a description of the input image.
      * Four fields of the cinfo struct must be filled in:
      */
-    cinfo.image_width = width; 	/* image width and height, in pixels */
+    cinfo.image_width = width;	/* image width and height, in pixels */
     cinfo.image_height = height;
     cinfo.input_components = 3;		/* # of color components per pixel */
-    cinfo.in_color_space = JCS_RGB; 	/* colorspace of input image */
+    cinfo.in_color_space = JCS_RGB;	/* colorspace of input image */
     jpeg_set_defaults(&cinfo);
     if(res > 0) {
 	cinfo.density_unit = 1;  /* pixels per inch */
@@ -457,7 +457,7 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 	    }
 	}
     sampleperpixel = 3 + have_alpha;
-    
+
     out = TIFFOpen(outfile, "w");
     if (!out) {
 	warning("unable to open TIFF file '%s'", outfile);
@@ -479,7 +479,7 @@ int R_SaveAsTIFF(void  *d, int width, int height,
        COMPRESSION_LZW = 5;
        COMPRESSION_JPEG = 7;
        COMPRESSION_DEFLATE = 32946;
-       COMPRESSION_ADOBE_DEFLATE = 8;  
+       COMPRESSION_ADOBE_DEFLATE = 8;
     */
     TIFFSetField(out, TIFFTAG_COMPRESSION, COMPRESSION_NONE);
 #endif
@@ -497,7 +497,7 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 	buf =(unsigned char *)_TIFFmalloc(linebytes);
     else
 	buf = (unsigned char *)_TIFFmalloc(TIFFScanlineSize(out));
- 
+
     for (i = 0; i < height; i++) {
 	pscanline = buf;
 	for(j = 0; j < width; j++) {
@@ -535,7 +535,7 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 #define BMPW(a) bmpw(a, fp)
 #define BMPDW(a) bmpdw(a, fp)
 
-static void bmpw(unsigned short x, FILE *fp) 
+static void bmpw(unsigned short x, FILE *fp)
 {
     unsigned short wrd = x;
 #ifdef WORDS_BIGENDIAN
@@ -544,13 +544,13 @@ static void bmpw(unsigned short x, FILE *fp)
     if(fwrite(&wrd,sizeof(unsigned short),1,fp)!=1)
 	error("Problems writing to 'bmp' file");
 }
-static void bmpdw(unsigned int x, FILE *fp) 
+static void bmpdw(unsigned int x, FILE *fp)
 {
     unsigned int dwrd = x;
 #ifdef WORDS_BIGENDIAN
     dwrd = (x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24);
 #endif
-    if(fwrite(&dwrd,sizeof(unsigned int),1,fp)!=1) 
+    if(fwrite(&dwrd,sizeof(unsigned int),1,fp)!=1)
 	error("Problems writing to 'bmp' file");
 }
 
@@ -610,7 +610,7 @@ int R_SaveAsBmp(void  *d, int width, int height,
     }
 
     /* write the header */
-    
+
     BMPPUTC('B');BMPPUTC('M');
     BMPDW(bfSize); /*bfSize*/
     BMPW(0);BMPW(0); /* bfReserved1 and bfReserved2 must be 0*/

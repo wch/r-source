@@ -83,7 +83,7 @@ static Rboolean url_open(Rconnection con)
 	PROTECT(agentFun = lang1(install("makeUserAgent")));
 #endif
 	PROTECT(sheaders = eval(agentFun, R_FindNamespace(mkString("utils"))));
-	
+
 	if(TYPEOF(sheaders) == NILSXP)
 	    headers = NULL;
 	else
@@ -308,9 +308,9 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(sheaders = eval(agentFun, R_FindNamespace(mkString("utils"))));
     UNPROTECT(1);
     if(TYPEOF(sheaders) == NILSXP)
-        headers = NULL;
+	headers = NULL;
     else
-        headers = CHAR(STRING_ELT(sheaders, 0));
+	headers = CHAR(STRING_ELT(sheaders, 0));
 #ifdef Win32
     if (!quiet && !pbar.wprog) {
 	pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
@@ -336,7 +336,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	in = R_fopen(R_ExpandFileName(url+nh), (mode[2] == 'b') ? "rb" : "r");
 	if(!in) {
 #ifdef HAVE_STRERROR
-	    error(_("cannot open URL '%s', reason '%s'"), 
+	    error(_("cannot open URL '%s', reason '%s'"),
 		  url, strerror(errno));
 #else
 	    error(_("cannot open URL '%s'"), url);
@@ -346,7 +346,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	out = R_fopen(R_ExpandFileName(file), mode);
 	if(!out) {
 #ifdef HAVE_STRERROR
-	    error(_("cannot open destfile '%s', reason '%s'"), 
+	    error(_("cannot open destfile '%s', reason '%s'"),
 		  file, strerror(errno));
 #else
 	    error(_("cannot open destfile '%s'"), file);
@@ -376,7 +376,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	out = R_fopen(R_ExpandFileName(file), mode);
 	if(!out) {
 #ifdef HAVE_STRERROR
-	    error(_("cannot open destfile '%s', reason '%s'"), 
+	    error(_("cannot open destfile '%s', reason '%s'"),
 		  file, strerror(errno));
 #else
 	    error(_("cannot open destfile '%s'"), file);
@@ -448,7 +448,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		REprintf("\n");
 #endif
 		if(nbytes > 1024*1024)
-		    REprintf("downloaded %0.1f Mb\n\n", 
+		    REprintf("downloaded %0.1f Mb\n\n",
 			     (double)nbytes/1024/1024, url);
 		else if(nbytes > 10240)
 		    REprintf("downloaded %d Kb\n\n", nbytes/1024, url);
@@ -482,7 +482,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	out = R_fopen(R_ExpandFileName(file), mode);
 	if(!out) {
 #ifdef HAVE_STRERROR
-	    error(_("cannot open destfile '%s', reason '%s'"), 
+	    error(_("cannot open destfile '%s', reason '%s'"),
 		  file, strerror(errno));
 #else
 	    error(_("cannot open destfile '%s'"), file);
@@ -521,7 +521,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		pbar.cntxt.cenddata = &pbar;
 		pbar.pc = 0;
 	    }
-	    
+
 #endif
 	    while ((len = in_R_FTPRead(ctxt, buf, sizeof(buf))) > 0) {
 		size_t res = fwrite(buf, 1, len, out);
@@ -557,7 +557,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		REprintf("\n");
 #endif
 		if(nbytes > 1024*1024)
-		    REprintf("downloaded %0.1f Mb\n\n", 
+		    REprintf("downloaded %0.1f Mb\n\n",
 			     (double)nbytes/1024/1024, url);
 		else if(nbytes > 10240)
 		    REprintf("downloaded %d Kb\n\n", nbytes/1024, url);
@@ -726,7 +726,7 @@ InternetCallback(HINTERNET hInternet, DWORD context, DWORD Status,
 #endif /* USE_WININET_ASYNC */
 
 static void *in_R_HTTPOpen(const char *url, const char *headers,
-                           const int cacheOK)
+			   const int cacheOK)
 {
     WIctxt  wictxt;
     DWORD status, d1 = 4, d2 = 0, d3 = 100;
@@ -749,7 +749,7 @@ static void *in_R_HTTPOpen(const char *url, const char *headers,
 #else
 		     0
 #endif
-	             );
+		     );
     if(!wictxt->hand) {
 	free(wictxt);
 	/* error("cannot open Internet connection"); */
@@ -770,7 +770,7 @@ static void *in_R_HTTPOpen(const char *url, const char *headers,
     callback_status = 0;
     InternetOpenUrl(wictxt->hand, url,
 		    NULL, 0,
-        INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
+	INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
 		    17);
 
     {
@@ -796,7 +796,7 @@ static void *in_R_HTTPOpen(const char *url, const char *headers,
 	} */
     wictxt->session = InternetOpenUrl(wictxt->hand, url,
 				      NULL, 0,
-        INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
+	INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
 				      0);
 #endif /* USE_WININET_ASYNC */
     if(!wictxt->session) {
@@ -853,10 +853,10 @@ static void *in_R_HTTPOpen(const char *url, const char *headers,
     wictxt->type = strdup(buf);
     if(!IDquiet) {
 	if(status > 1024*1024)
-	    REprintf("Content type '%s' length %d bytes (%0.1f Mb)\n", 
+	    REprintf("Content type '%s' length %d bytes (%0.1f Mb)\n",
 		     buf, status, status/1024.0/1024.0);
 	else if(status > 10240)
-	    REprintf("Content type '%s' length %d bytes (%d Kb)\n", 
+	    REprintf("Content type '%s' length %d bytes (%d Kb)\n",
 		     buf, status, status/1024);
 	else
 	    REprintf("Content type '%s' length %d bytes\n", buf, status);
@@ -914,7 +914,7 @@ static void *in_R_FTPOpen(const char *url)
 #else
 		     0
 #endif
-	             );
+		     );
     if(!wictxt->hand) {
 	free(wictxt);
 	return NULL;
@@ -934,7 +934,7 @@ static void *in_R_FTPOpen(const char *url)
     callback_status = 0;
     InternetOpenUrl(wictxt->hand, url,
 		    NULL, 0,
-        INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
+	INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
 		    17);
     {
 	DWORD t1 = GetTickCount();
@@ -959,7 +959,7 @@ static void *in_R_FTPOpen(const char *url)
     }
     wictxt->session = InternetOpenUrl(wictxt->hand, url,
 				      NULL, 0,
-        INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
+	INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
 				      0);
     if(!wictxt->session) {
 	char buf[256];
@@ -999,7 +999,7 @@ static void in_R_FTPClose(void *ctx)
 
 #ifndef HAVE_INTERNET
 static void *in_R_HTTPOpen(const char *url, const char *headers,
-                           const int cacheOK)
+			   const int cacheOK)
 {
     return NULL;
 }
