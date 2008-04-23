@@ -13,6 +13,14 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.7.0 patched
+
+BUG FIXES
+
+    o	Sys.getenv() could read incorrectly non-ASCII values.
+
+
+
 		CHANGES IN R VERSION 2.7.0
 
 

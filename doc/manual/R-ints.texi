@@ -1250,9 +1250,9 @@ despite some claims to the contrary on the Microsoft site.} strings.
 without extensive changes.  As from @R{} 2.7.0 the @file{Rgui}
 console@footnote{but not the GraphApp toolkit.} uses UCS-2 internally,
 but communicates with the @R{} engine in the native encoding.  To allow
-UTF-8 strings to be printed in UTF-8, there is an escape convention is
-used (see header @file{rgui_UTF8.h}) used by @code{cat}, @code{print}
-and autoprinting.
+UTF-8 strings to be printed in UTF-8, an escape convention is used (see
+header @file{rgui_UTF8.h}) which is used by @code{cat}, @code{print} and
+autoprinting.
 
 `Unicode' (UCS-2LE) files are common in the Windows world, and
 @code{readLines} and @code{scan} will read them into UTF-8 strings on
@@ -1271,8 +1271,8 @@ encoding).  Not all @code{CHARSXP}s are part of the cache -- notably
 
 In @R{} 2.6.x and 2.7.x character strings created by @code{mkCharLen}
 are not part of the cache: these were intended to be those containing
-embedded nuls.  As from @R{} 2.8.0 the cache will handle any content,
-including strings with embedded nuls.
+embedded nuls.  As from @R{} 2.8.0 strings with embedded nuls will be
+disallowed. 
 
 There are a few other ways in which @code{CHARSXP}s could or can escape
 the cache.  @code{CHARSXP}s reloaded from the @code{save} formats of
