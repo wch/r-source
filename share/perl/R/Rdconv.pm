@@ -299,10 +299,14 @@ sub mark_brackets {
 		my $extra_info = "\'$1\'" ;
 		$extra_info = "\'$1\'" if $line =~ /(\\\w+{)/ ; # }
 		if( $extra_info =~ /^'}'$/ ) {
-		    warn "Note: unmatched right brace in '$Rdname'".
+		    my $Rd = $Rdname;
+		    $Rd =~ s/\.Rd$//;
+		    warn "Note: unmatched right brace in file '$Rd.Rd'".
 			" on or after line $badlineno\n";
 		} elsif(! ($extra_info =~ /\\alias{/) ) { # }
-		    warn "Warning: unmatched brace ($extra_info) in '$Rdname'".
+		    my $Rd = $Rdname;
+		    $Rd =~ s/\.Rd$//;
+		    warn "Warning: unmatched brace ($extra_info) in file '$Rd.Rd'".
 			" on or after line $badlineno\n"; 
 		}
 	    }
