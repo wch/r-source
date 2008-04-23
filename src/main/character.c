@@ -3045,6 +3045,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	/* do we want to copy e.g. names here? */
     } else {
+	/* Note that this gives zero length for input '0', so it is omitted */
 	for (i = 0, len = 0; i < nc; i++)
 	    len += inttomb(NULL, INTEGER(x)[i]);
 	tmp = alloca(len);
