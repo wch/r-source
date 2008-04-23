@@ -126,13 +126,6 @@ BUG FIXES
 
     o   R CMD appends (not prepends) R's texmf path to TEXINPUTS.
 
-    o   Plotting symbols with separate border and fill colours
-        (e.g., plot(pch=21)) now work with transparent 'col', but 
-        opaque or semitransparent 'bg'. 
-        
-        Previously, if 'col' was transparent then 'bg' was ignored
-        and nothing was drawn.
-
 
 
 
@@ -160,9 +153,6 @@ DEPRECATED & DEFUNCT
     o	The use of unserialize() on character strings is deprecated:
 	that was a format used in R < 2.4.0.
 
-    o	The C macro 'allocString' is deprecated -- use 'mkChar',
-	or 'allocVector' directly if really necessary.
-
 
 UTILITIES
 
@@ -189,6 +179,10 @@ BUG FIXES
     o	Cocoa Quartz window could close without warning under certain
 	circumstances (specific autorelease pool flush).
 
+    o	Plotting symbols with separate border and fill colours (e.g.,
+	plot(pch = 21)) now works with transparent 'col', but opaque
+	or semi-transparent 'bg'.  Previously, if 'col' was
+	transparent then 'bg' was ignored and nothing was drawn.
 
 
 
