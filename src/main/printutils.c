@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999--2007  The R Development Core Team
+ *  Copyright (C) 1999--2008  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -209,7 +209,7 @@ const char *EncodeReal2(double x, int w, int d, int e)
 
 void z_prec_r(Rcomplex *r, Rcomplex *x, double digits);
 
-const char 
+const char
 *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei,
 	       char cdec)
 {
@@ -255,7 +255,7 @@ const char
 
    On Windows with surrogate pairs it will not be canonical, but AFAIK
    they do not occur in any MBCS (so it would only matter if we implement
-   UTF-8, and then only if Windows has surrogate pairs switched on, 
+   UTF-8, and then only if Windows has surrogate pairs switched on,
    which Western versions at least do not.).
 */
 
@@ -354,19 +354,19 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 			len++; break;
 		    }
 		} else switch(*p) {
-		case '\a':
-		case '\b':
-		case '\f':
-		case '\n':
-		case '\r':
-		case '\t':
-		case '\v':
-		case '\0':
-		    len += 2; break;
-		default:
-		    /* print in octal */
-		    len += 4; break;
-		}
+		    case '\a':
+		    case '\b':
+		    case '\f':
+		    case '\n':
+		    case '\r':
+		    case '\t':
+		    case '\v':
+		    case '\0':
+			len += 2; break;
+		    default:
+			/* print in octal */
+			len += 4; break;
+		    }
 		p++;
 	    } else { /* 8 bit char */
 #ifdef Win32 /* It seems Windows does not know what is printable! */
@@ -433,7 +433,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	    }
 	} else
 #endif
-        {
+	{
 	    p = translateChar(s);
 	    if(p == CHAR(s)) {
 		i = Rstrlen(s, quote);
@@ -470,11 +470,11 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	mbstate_t mb_st;
 	wchar_t wc;
 	unsigned int k; /* not wint_t as it might be signed */
-        Rboolean Unicode_warning = FALSE;
+	Rboolean Unicode_warning = FALSE;
 
 	if(ienc != CE_UTF8)  mbs_init(&mb_st);
 #ifdef Win32
-	else if(WinUTF8out) { memcpy(q, UTF8in, 3); q += 3; } 
+	else if(WinUTF8out) { memcpy(q, UTF8in, 3); q += 3; }
 #endif
 	for (i = 0; i < cnt; i++) {
 	    res = (ienc == CE_UTF8) ? utf8toucs(&wc, p):
@@ -519,7 +519,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 			/* The problem here is that wc may be
 			   printable according to the Unicode tables,
 			   but it may not be printable on the ouput
-			   device concerned. */ 
+			   device concerned. */
 			for(j = 0; j < res; j++) *q++ = *p++;
 		    } else {
 #ifndef Win32
@@ -561,22 +561,22 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		    default: *q++ = *p; break;
 		    }
 		} else switch(*p) {
-		    /* ANSI Escapes */
-		case '\a': *q++ = '\\'; *q++ = 'a'; break;
-		case '\b': *q++ = '\\'; *q++ = 'b'; break;
-		case '\f': *q++ = '\\'; *q++ = 'f'; break;
-		case '\n': *q++ = '\\'; *q++ = 'n'; break;
-		case '\r': *q++ = '\\'; *q++ = 'r'; break;
-		case '\t': *q++ = '\\'; *q++ = 't'; break;
-		case '\v': *q++ = '\\'; *q++ = 'v'; break;
-		case '\0': *q++ = '\\'; *q++ = '0'; break;
+			/* ANSI Escapes */
+		    case '\a': *q++ = '\\'; *q++ = 'a'; break;
+		    case '\b': *q++ = '\\'; *q++ = 'b'; break;
+		    case '\f': *q++ = '\\'; *q++ = 'f'; break;
+		    case '\n': *q++ = '\\'; *q++ = 'n'; break;
+		    case '\r': *q++ = '\\'; *q++ = 'r'; break;
+		    case '\t': *q++ = '\\'; *q++ = 't'; break;
+		    case '\v': *q++ = '\\'; *q++ = 'v'; break;
+		    case '\0': *q++ = '\\'; *q++ = '0'; break;
 
-		default:
-		    /* print in octal */
-		    snprintf(buf, 5, "\\%03o", (unsigned char) *p);
-		    for(j = 0; j < 4; j++) *q++ = buf[j];
-		    break;
-		}
+		    default:
+			/* print in octal */
+			snprintf(buf, 5, "\\%03o", (unsigned char) *p);
+			for(j = 0; j < 4; j++) *q++ = buf[j];
+			break;
+		    }
 		p++;
 	    } else {  /* 8 bit char */
 #ifdef Win32 /* It seems Windows does not know what is printable! */
@@ -593,7 +593,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	}
 
 #ifdef Win32
-    if(WinUTF8out && ienc == CE_UTF8)  { memcpy(q, UTF8out, 3); q += 3; } 
+    if(WinUTF8out && ienc == CE_UTF8)  { memcpy(q, UTF8out, 3); q += 3; }
 #endif
     if(quote) *q++ = quote;
     if(b > 0 && justify != Rprt_adj_right) {
@@ -828,4 +828,3 @@ void attribute_hidden VectorIndex(int i, int w)
 /* print index label "[`i']" , using total width `w' (left filling blanks) */
     Rprintf("%*s[%ld]", w-IndexWidth(i)-2, "", i);
 }
-

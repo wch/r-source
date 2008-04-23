@@ -4370,7 +4370,7 @@ string and vice versa.
 
 Currently the inclusion of @code{\0} in a string constant terminates the
 constant: further characters up to the closing quote are scanned but
-ignored.  (This will change in @R{} 2.8.0.)
+ignored.  (This will give a warning in @R{} 2.8.0.)
 
 @node Identifiers, Reserved words, Literal constants, Tokens
 @subsection Identifiers

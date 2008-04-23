@@ -61,6 +61,10 @@
 
   These forms will also be used by \code{\link{print.default}}
   when outputting non-printable characters (including backslash).
+  
+  Note that as from \R 2.8.0 are not allowed by the parser in character
+  strings, so using escapes (such as \code{\\0}) for a nul will result
+  in the string being (silently) truncated at that point.
 }
 \section{Names and Identifiers}{
   Identifiers consist of a sequence of letters, digits, the period
