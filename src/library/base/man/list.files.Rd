@@ -42,14 +42,15 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
   is skipped, with a warning.
 
   The files are sorted in alphabetical order, on the full path
-  if \code{full.names = TRUE}.
+  if \code{full.names = TRUE}.  Directories are included only if
+  \code{recursive = FALSE}.
 }
 \author{Ross Ihaka, Brian Ripley}
 \note{
-  File naming conventions are very platform dependent.
+  File naming conventions are platform dependent.
 
-  \code{recursive = TRUE} is not supported on all platforms, and may be
-  ignored, with a warning.
+  \code{recursive = TRUE} is not supported on all platforms and may be
+  ignored (with a warning).
 }
 \seealso{\code{\link{file.info}}, \code{\link{file.access}}
   and \code{\link{files}} for many more file handling functions and 
