@@ -23,9 +23,6 @@ DEPRECATED & DEFUNCT
     o	The use of unserialize() on character strings is deprecated:
 	that was a format used in R < 2.4.0.
 
-    o	The C macro 'allocString' is deprecated -- use 'mkChar',
-	or 'allocVector' directly if really necessary.
-
 
 UTILITIES
 
@@ -49,12 +46,10 @@ BUG FIXES
     o	Cocoa Quartz window could close without warning under certain
 	circumstances (specific autorelease pool flush).
 
-    o	Plotting symbols with separate border and fill colours
-	(e.g., plot(pch = 21)) now works with transparent 'col', but
-	opaque or semi-transparent 'bg'.
-
-	Previously, if 'col' was transparent then 'bg' was ignored
-	and nothing was drawn.
+    o	Plotting symbols with separate border and fill colours (e.g.,
+	plot(pch = 21)) now works with transparent 'col', but opaque
+	or semi-transparent 'bg'.  Previously, if 'col' was
+	transparent then 'bg' was ignored and nothing was drawn.
 
 
 
@@ -188,7 +183,7 @@ NEW FEATURES
     o	Extensions to condition number computation for matrices, notably
 	complex ones are provided, both in kappa() and the new rcond().
 
-    o	list.file() gains a 'ignore.case' argument, to allow
+    o	list.files() gains a 'ignore.case' argument, to allow
 	case-insensitive matching on some Windows/MacOS file systems.
 
     o	ls.str() and lsf.str() have slightly changed arguments and
