@@ -67,7 +67,7 @@ extern FILE* ifp;
 
 void attribute_hidden Rstd_Suicide(const char *s)
 {
-    REprintf("Fatal error: %s\n", s); 
+    REprintf("Fatal error: %s\n", s);
     /* Might be called before translation is running */
     R_CleanUp(SA_SUICIDE, 2, 0);
 }
@@ -518,7 +518,7 @@ static void popReadline(void)
      rl_callback_handler_remove();
      ReadlineStack.fun[ReadlineStack.current--] = NULL;
      if(ReadlineStack.current > -1 && ReadlineStack.fun[ReadlineStack.current])
-        rl_callback_handler_install("", ReadlineStack.fun[ReadlineStack.current]);
+	rl_callback_handler_install("", ReadlineStack.fun[ReadlineStack.current]);
   }
 }
 
@@ -586,7 +586,7 @@ handleInterrupt(void)
 static char **R_custom_completion(const char *text, int start, int end);
 static char *R_completion_generator(const char *text, int state);
 
-static SEXP 
+static SEXP
     RComp_assignBufferSym,
     RComp_assignStartSym,
     RComp_assignEndSym,
@@ -622,7 +622,7 @@ static void initialize_rlcompletion(void)
 	char *p = getenv("R_COMPLETION");
 	if(p && streql(p, "FALSE")) {
 	    rcompgen_active = 0;
-	    return;	    
+	    return;
 	}
 	/* First check if namespace is loaded */
 	if(findVarInFrame(R_NamespaceRegistry, install("utils"))
@@ -658,7 +658,7 @@ static void initialize_rlcompletion(void)
     RComp_completeTokenSym = install(".completeToken");
     RComp_getFileCompSym   = install(".getFileComp");
     RComp_retrieveCompsSym = install(".retrieveCompletions");
-    
+
     /* Allow conditional parsing of the ~/.inputrc file. */
     rl_readline_name = "RCustomCompletion";
 
@@ -707,7 +707,7 @@ static void initialize_rlcompletion(void)
 
 static char **
 R_custom_completion(const char *text, int start, int end)
-     /* 
+     /*
 	Make some relevant information available to R, then call
 	rl_completion_matches to generate matches.  FIXME: It would be
 	nice if we could figure whether we are in a partially
@@ -717,8 +717,8 @@ R_custom_completion(const char *text, int start, int end)
 {
     char **matches = (char **)NULL;
     SEXP infile,
-	linebufferCall = PROTECT(lang2(RComp_assignBufferSym, 
-				       mkString(rl_line_buffer))), 
+	linebufferCall = PROTECT(lang2(RComp_assignBufferSym,
+				       mkString(rl_line_buffer))),
 	startCall = PROTECT(lang2(RComp_assignStartSym, ScalarInteger(start))),
 	endCall = PROTECT(lang2(RComp_assignEndSym,ScalarInteger(end)));
 
@@ -754,8 +754,8 @@ static char *R_completion_generator(const char *text, int state)
     if (!state) {
 	int i;
 	SEXP completions,
-	    assignCall = PROTECT(lang2(RComp_assignTokenSym, mkString(text))), 
-	    completionCall = PROTECT(lang1(RComp_completeTokenSym)), 
+	    assignCall = PROTECT(lang2(RComp_assignTokenSym, mkString(text))),
+	    completionCall = PROTECT(lang1(RComp_completeTokenSym)),
 	    retrieveCall = PROTECT(lang1(RComp_retrieveCompsSym));
 
 	eval(assignCall, rcompgen_rho);
@@ -774,7 +774,7 @@ static char *R_completion_generator(const char *text, int state)
     if (list_index < ncomp)
 	return compstrings[list_index++];
     else {
-	/* nothing matched or remaining, so return NULL. */ 
+	/* nothing matched or remaining, so return NULL. */
 	if (ncomp > 0) free(compstrings);
     }
     return (char *)NULL;
@@ -824,7 +824,7 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	    size_t res, inb = strlen((char *)buf), onb = len;
 	    char obuf[CONSOLE_BUFFER_SIZE+1];
 	    const char *ib = (const char *)buf;
-            char *ob = obuf;
+	    char *ob = obuf;
 	    if(!cd) {
 		cd = Riconv_open("", R_StdinEnc);
 		if(!cd) error(_("encoding '%s' is not recognised"), R_StdinEnc);
@@ -842,10 +842,10 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 		cd = (void *)1;
 	    }
 #endif
-    	}
+	}
 /* according to system.txt, should be terminated in \n, so check this
    at eof and error */
-	if ((err || feof(ifp ? ifp : stdin)) 
+	if ((err || feof(ifp ? ifp : stdin))
 	    && (ll == 0 || buf[ll - 1] != '\n') && ll < len) {
 	    buf[ll++] = '\n'; buf[ll] = '\0';
 	}
@@ -857,7 +857,7 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
     }
     else {
 #ifdef HAVE_LIBREADLINE
-        R_ReadlineData rl_data;
+	R_ReadlineData rl_data;
 	if (UsingReadline) {
 	    rl_data.readline_gotaline = 0;
 	    rl_data.readline_buf = buf;
@@ -1048,7 +1048,7 @@ void attribute_hidden Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 	break;
     case SA_SUICIDE:
     default:
-        break;
+	break;
     }
     R_RunExitFinalizers();
     CleanEd();
@@ -1070,7 +1070,7 @@ void attribute_hidden Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 # include <errno.h>
 #endif
 int attribute_hidden
-Rstd_ShowFiles(int nfile, 		/* number of files */
+Rstd_ShowFiles(int nfile,		/* number of files */
 	       const char **file,		/* array of filenames */
 	       const char **headers,	/* the `headers' args of file.show.
 					   Printed before each file. */
@@ -1093,9 +1093,9 @@ Rstd_ShowFiles(int nfile, 		/* number of files */
     char buf[1024];
 
     if (nfile > 0) {
-        if (pager == NULL || strlen(pager) == 0) pager = "more";
+	if (pager == NULL || strlen(pager) == 0) pager = "more";
 	filename = R_tmpnam(NULL, R_TempDir); /* mallocs result */
-        if ((tfp = R_fopen(filename, "w")) != NULL) {
+	if ((tfp = R_fopen(filename, "w")) != NULL) {
 	    for(i = 0; i < nfile; i++) {
 		if (headers[i] && *headers[i])
 		    fprintf(tfp, "%s\n\n", headers[i]);
@@ -1113,7 +1113,7 @@ Rstd_ShowFiles(int nfile, 		/* number of files */
 		}
 		else
 #ifdef HAVE_STRERROR
-		    fprintf(tfp, _("Cannot open file '%s': %s\n\n"), 
+		    fprintf(tfp, _("Cannot open file '%s': %s\n\n"),
 			    file[i], strerror(errno));
 #else
 		    fprintf(tfp, _("Cannot open file '%s'\n\n"), file[i]);
@@ -1222,16 +1222,16 @@ void attribute_hidden Rstd_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stamp;
     int i;
-    
+
     checkArity(op, args);
     stamp = CAR(args);
     if (!isString(stamp))
-    	errorcall(call, _("invalid timestamp"));
+	errorcall(call, _("invalid timestamp"));
 #if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
-    if(R_Interactive && UsingReadline) 
-	for (i = 0; i < LENGTH(stamp); i++) 
+    if(R_Interactive && UsingReadline)
+	for (i = 0; i < LENGTH(stamp); i++)
 	    add_history(CHAR(STRING_ELT(stamp, i))); /* ASCII */
-# endif      
+# endif
 }
 
 
@@ -1285,7 +1285,7 @@ SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (;;) {
 	fd_set *what;
 	tm = R_MIN(tm, 2e9); /* avoid integer overflow */
-        Timeout = (int) (R_wait_usec ? R_MIN(tm, R_wait_usec) : tm);
+	Timeout = (int) (R_wait_usec ? R_MIN(tm, R_wait_usec) : tm);
 	what = R_checkActivity(Timeout, 1);
 
 	/* Time up? */

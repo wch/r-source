@@ -19,7 +19,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* POSIX says ssize_t is defined in unistd.h, but apparently on 
+/* POSIX says ssize_t is defined in unistd.h, but apparently on
    RH9 it is not.  (Dominick Samperi, R-devel, 2006-04-27)
    So include sys/types.h and remove Win32 special casing.
 */

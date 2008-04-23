@@ -22,12 +22,12 @@
    \f1, \f2, \f3, \f4, etc., which switch among the various fonts in the
    current typeface:
 
-   	\f1	Switch to font #1, basic
+	\f1	Switch to font #1, basic
 	\f2	Switch to font #2, italic
 	\f3	Switch to font #3, bold
 	\f4	Switch to font #4, bold italic
 	\f0	Switch to font #0, symbol (including Greek characters)
-   
+
    \fP switches to the previously used font (there is a depth-1 stack,
    i.e. only one previous font is remembered, as in troff).
 
@@ -40,14 +40,14 @@
    codes (unsigned shorts with particular bit patterns in their high
    bytes), which are produced by the escape sequences:
 
-        \sp  start superscript
-        \ep  end superscript
+	\sp  start superscript
+	\ep  end superscript
 
-        \sb  start subscript
-        \eb  end subscript
+	\sb  start subscript
+	\eb  end subscript
 
-        \mk  mark location
-        \rt  return to mark 
+	\mk  mark location
+	\rt  return to mark
 	     [useful e.g. for underlining, and filling square roots]
 
     There are also control codes for horizontal shifts.  \r1, \r2, \r4,
@@ -82,7 +82,7 @@
 attribute_hidden
 unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 			      int typeface, int fontindex)
-{     
+{
   unsigned short *dest;
   unsigned char c, d;
   unsigned char esc[3];
@@ -90,16 +90,16 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
   int raw_fontnum, raw_symbol_fontnum;
   int previous_raw_fontnum;	/* implement depth-1 stack */
   unsigned short fontword, symbol_fontword;
-  
+
   /* note: string length can grow by a factor of 6, because a single
      printable character can be mapped to a sequence of unsigned shorts, of
      length up to 6 (see comment below) */
   /* PAUL MURRELL
      replace _plot_xmalloc with R_alloc
   */
-  dest = (unsigned short *) R_alloc (1, (6 * strlen ((char *)src) + 1) * 
+  dest = (unsigned short *) R_alloc (1, (6 * strlen ((char *)src) + 1) *
 				     sizeof(unsigned short));
-  
+
   /* PAUL MURRELL
      only for Hershey fonts so removed switch ...
   */
@@ -120,7 +120,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	 separately.  This approach is awkward (we duplicate a lot of code
 	 here, which appears elsewhere below). */
 
-      if ((raw_fontnum == HERSHEY_EUC) 
+      if ((raw_fontnum == HERSHEY_EUC)
 	  && (*src & 0x80) && (*(src + 1) & 0x80))
 	{
 	  unsigned char jis_row = *src & ~(0x80);
@@ -129,14 +129,14 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	  if (GOOD_JIS_INDEX(jis_row, jis_col))
 	    {
 	      int jis_glyphindex = 256 * jis_row + jis_col;
-	  
+
 	      if (jis_glyphindex >= BEGINNING_OF_KANJI)
 		/* in Kanji range, so check if we have it */
 		{
 #ifndef NO_KANJI
 		  const struct kanjipair *kanji = _builtin_kanji_glyphs;
 		  bool matched = false;
-		  
+
 		  while (kanji->jis != 0)
 		    {
 		      if (jis_glyphindex == kanji->jis)
@@ -166,7 +166,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		{
 		  const struct jis_entry *char_mapping = _builtin_jis_chars;
 		  bool matched = false;
-		  
+
 		  while (char_mapping->jis != 0)
 		    {
 		      if (jis_glyphindex == char_mapping->jis)
@@ -183,7 +183,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		    {
 		      int fontnum = char_mapping->font;
 		      unsigned short charnum = char_mapping->charnum;
-		      
+
 		      if (charnum & RAW_HERSHEY_GLYPH)
 			/* a raw Hershey glyph, not in any font */
 			dest[j++] = RAW_HERSHEY_GLYPH | charnum;
@@ -211,21 +211,21 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	}
 
       /* if current font is Hershey, first try to match each ligature
-         pattern (no ligatures supported in non-Hershey fonts) */
+	 pattern (no ligatures supported in non-Hershey fonts) */
       if (1) /* _plotter->drawstate->font_type == F_HERSHEY) */
 	{
 	  int i;
 	  bool matched = false;
-	  
-	  for (i = 0; i < NUM_LIGATURES; i++) 
+
+	  for (i = 0; i < NUM_LIGATURES; i++)
 	    if ((_ligature_tbl[i].font == raw_fontnum)
-		&& (strncmp ((char *)src, _ligature_tbl[i].from, 
+		&& (strncmp ((char *)src, _ligature_tbl[i].from,
 			     strlen (_ligature_tbl[i].from)) == 0))
 	      {
 		matched = true;
 		break;
 	      }
-	  
+
 	  if (matched)
 	    {
 	      dest[j++] = fontword | (unsigned short)_ligature_tbl[i].byte;
@@ -245,7 +245,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	      bool matched = false;
 
 	      /* check if this is a `raised' ISO-Latin-1 character */
-	      for (i = 0; i < NUM_RAISED_CHARS; i++) 
+	      for (i = 0; i < NUM_RAISED_CHARS; i++)
 		if (c == _raised_char_tbl[i].from)
 		  {
 		    matched = true;
@@ -257,33 +257,33 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		     `begin superscript' control code, [`mark'
 		     control code,] replacement char, [`return'
 		     control code, underline,] `end superscript' */
-		  dest[j++] = 
+		  dest[j++] =
 		    (unsigned short) (CONTROL_CODE | C_BEGIN_SUPERSCRIPT);
 		  if (_raised_char_tbl[i].underscored) /* also underline */
 		    {
-		      dest[j++] = 
+		      dest[j++] =
 			(unsigned short) (CONTROL_CODE | C_PUSH_LOCATION);
-		      dest[j++] = 
+		      dest[j++] =
 			fontword | (unsigned short)_raised_char_tbl[i].to;
-		      dest[j++] = 
+		      dest[j++] =
 			(unsigned short) (CONTROL_CODE | C_POP_LOCATION);
 		      /* select appropriate HersheySymbol font */
-		      dest[j++] = 
+		      dest[j++] =
 			symbol_fontword | (unsigned short)VECTOR_SYMBOL_FONT_UNDERSCORE;
 		    }
 		  else	/* just print raised char, no underline */
-		    dest[j++] = 
+		    dest[j++] =
 		      fontword | (unsigned short)_raised_char_tbl[i].to;
-		  
-		  dest[j++] = 
+
+		  dest[j++] =
 		    (unsigned short) (CONTROL_CODE | C_END_SUPERSCRIPT);
-		  
+
 		  continue; /* back to top of while loop */
 		}
 
 	      /* since current font is an ISO-Latin-1 Hershey font, also
-                 check if this char should be deligatured */
-	      for (i = 0; i < NUM_DELIGATURED_CHARS; i++) 
+		 check if this char should be deligatured */
+	      for (i = 0; i < NUM_DELIGATURED_CHARS; i++)
 		if (c == _deligature_char_tbl[i].from)
 		  {
 		    matched = true;
@@ -293,31 +293,31 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		{
 		  if (_deligature_char_tbl[i].except_font != raw_fontnum)
 		    {
-		      dest[j++] = fontword 
+		      dest[j++] = fontword
 			| (unsigned short)_deligature_char_tbl[i].to[0];
-		      dest[j++] = fontword 
+		      dest[j++] = fontword
 			| (unsigned short)_deligature_char_tbl[i].to[1];
 		      continue;	/* back to top of while loop */
 		    }
 		}
 	    }
-	  
+
 	  /* didn't do anything special, so just pass the character thru */
-	  dest[j++] = fontword | (unsigned short)c; 
+	  dest[j++] = fontword | (unsigned short)c;
 	  continue;		/* back to top of while loop */
 	}
       else			/* character is a backslash */
 	{
 	  int i;
-      
+
 	  c = *(src++);		/* grab next character */
 	  if (c == (unsigned char)'\0')	/* ASCII NUL ? */
 	    {
 	      dest[j++] = fontword | (unsigned short)'\\';
 	      break;		/* string terminated with a backslash */
 	    }
-	  
- 	  if (c == (unsigned char)'\\')
+
+	  if (c == (unsigned char)'\\')
 	    {
 	      dest[j++] = fontword | (unsigned short)'\\';
 	      dest[j++] = fontword | (unsigned short)'\\';
@@ -325,7 +325,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	    }
 
 	  d = *(src++);
- 	  if (d == (unsigned char)'\0')
+	  if (d == (unsigned char)'\0')
 	    {
 	      dest[j++] = fontword | (unsigned short)'\\';
 	      dest[j++] = fontword | (unsigned short)c;
@@ -335,7 +335,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	  esc[0] = c;
 	  esc[1] = d;
 	  esc[2] = (unsigned char)'\0';	/* have an escape sequence */
-	  
+
 	  /* is this an escape seq. (e.g. \#H0001) for a raw Hershey glyph? */
 	  if (1 /* _plotter->drawstate->font_type == F_HERSHEY */
 	      && esc[0] == '#' && esc[1] == 'H'
@@ -358,7 +358,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 
 #ifndef NO_KANJI
 	  /* is this an escape seq. (e.g. \#N0001) for a raw Japanese
-             Hershey glyph (Kanji), as numbered in Nelson's dictionary? */
+	     Hershey glyph (Kanji), as numbered in Nelson's dictionary? */
 	  if (1 /* _plotter->drawstate->font_type == F_HERSHEY */
 	      && esc[0] == '#' && esc[1] == 'N'
 	      && src[0] >= '0' && src[0] <= '9'
@@ -380,7 +380,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 #endif /* not NO_KANJI */
 
 	  /* is this an escape seq. (e.g. \#J0001) for a raw Japanese
-             Hershey glyph (JIS numbering, in hex)? */
+	     Hershey glyph (JIS numbering, in hex)? */
 	  if (1 /* _plotter->drawstate->font_type == F_HERSHEY */
 	      && esc[0] == '#' && esc[1] == 'J'
 	      && ((src[0] >= '0' && src[0] <= '9')
@@ -399,7 +399,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	      int jis_glyphindex;
 	      int i, hexnum[4];
 	      int jis_row, jis_col;
-	      
+
 	      for (i = 0; i < 4; i++)
 		if (src[i] >= 'a' && src[i] <= 'f')
 		  hexnum[i] = 10 + src[i] - 'a';
@@ -421,7 +421,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 #ifndef NO_KANJI
 		      const struct kanjipair *kanji = _builtin_kanji_glyphs;
 		      bool matched = false;
-		      
+
 		      while (kanji->jis != 0)
 			{
 			  if (jis_glyphindex == kanji->jis)
@@ -451,7 +451,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		    {
 		      const struct jis_entry *char_mapping = _builtin_jis_chars;
 		      bool matched = false;
-		      
+
 		      while (char_mapping->jis != 0)
 			{
 			  if (jis_glyphindex == char_mapping->jis)
@@ -468,7 +468,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 			{
 			  int fontnum = char_mapping->font;
 			  unsigned short charnum = char_mapping->charnum;
-			  
+
 			  if (charnum & RAW_HERSHEY_GLYPH)
 			    /* a raw Hershey glyph, not in any font */
 			    dest[j++] = RAW_HERSHEY_GLYPH | charnum;
@@ -493,7 +493,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	    bool matched = false;
 
 	    /* is this an escape seq. for a control code? */
-	    for (i = 0; i < NUM_CONTROLS; i++) 
+	    for (i = 0; i < NUM_CONTROLS; i++)
 	      if (strcmp ((char *)esc, _control_tbl[i]) == 0)
 		{
 		  matched = true;
@@ -514,7 +514,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	    {
 	      int i;
 	      bool matched = false;
-	     
+
 	      for (i = 0; i < NUM_DELIGATURED_ESCAPES; i++)
 		if (strcmp ((char *)esc, _deligature_escape_tbl[i].from) == 0)
 		  {
@@ -525,9 +525,9 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		{
 		  if (_deligature_escape_tbl[i].except_font != raw_fontnum)
 		    {
-		      dest[j++] = fontword 
+		      dest[j++] = fontword
 			| (unsigned short)_deligature_escape_tbl[i].to[0];
-		      dest[j++] = fontword 
+		      dest[j++] = fontword
 			| (unsigned short)_deligature_escape_tbl[i].to[1];
 
 		      continue;	/* back to top of while loop */
@@ -536,9 +536,9 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	    }
 
 	  /* if the current font is an ISO-Latin-1 font (no matter whether
-             font is a a Hershey font, a PS or PCL/Stick font, or a
-             device-specific font for which we have no table entry), is
-             this an escape seq. for an 8-bit (non-ASCII) ISO8859-1 char?  */
+	     font is a a Hershey font, a PS or PCL/Stick font, or a
+	     device-specific font for which we have no table entry), is
+	     this an escape seq. for an 8-bit (non-ASCII) ISO8859-1 char?  */
 
 	  /* PAUL MURRELL
 	     Only concerned with Hershey fonts
@@ -561,7 +561,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	    {
 	      bool matched = false;
 
-	      for (i = 0; i < NUM_ISO_ESCAPES; i++) 
+	      for (i = 0; i < NUM_ISO_ESCAPES; i++)
 		if (strcmp ((char *)esc, _iso_escape_tbl[i].string) == 0)
 		  {
 		    matched = true;
@@ -570,14 +570,14 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	      if (matched)	/* it's an 8-bit ISO8859-1 character */
 		{
 		  /* certain such characters are drawn in the Hershey fonts
-                     as superscripts */
+		     as superscripts */
 		    if (1) /* _plotter->drawstate->font_type == F_HERSHEY) */
 		    {
 		      int k;
 		      bool matched2 = false;
-		      
+
 		      /* check if this is a `raised' ISO-Latin-1 character */
-		      for (k = 0; k < NUM_RAISED_CHARS; k++) 
+		      for (k = 0; k < NUM_RAISED_CHARS; k++)
 			if (_iso_escape_tbl[i].byte == _raised_char_tbl[k].from)
 			  {
 			    matched2 = true;
@@ -589,27 +589,27 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 			     `begin superscript' control code, [`mark'
 			     control code,] replacement char, [`return'
 			     control code, underline,] `end superscript' */
-			  dest[j++] = 
+			  dest[j++] =
 			    (unsigned short) (CONTROL_CODE | C_BEGIN_SUPERSCRIPT);
 			  if (_raised_char_tbl[k].underscored) /* also underline */
 			    {
-			      dest[j++] = 
+			      dest[j++] =
 				(unsigned short) (CONTROL_CODE | C_PUSH_LOCATION);
-			      dest[j++] = 
+			      dest[j++] =
 				fontword | (unsigned short)_raised_char_tbl[k].to;
-			      dest[j++] = 
+			      dest[j++] =
 				(unsigned short) (CONTROL_CODE | C_POP_LOCATION);
 			      /* select appropriate HersheySymbol font */
-			      dest[j++] = 
+			      dest[j++] =
 				symbol_fontword | (unsigned short)VECTOR_SYMBOL_FONT_UNDERSCORE;
 			    }
 			  else	/* just print raised char, no underline */
 			    {
-			      dest[j++] = 
+			      dest[j++] =
 				fontword | (unsigned short)_raised_char_tbl[k].to;
 			    }
 
-			  dest[j++] = 
+			  dest[j++] =
 			    (unsigned short) (CONTROL_CODE | C_END_SUPERSCRIPT);
 
 			  continue; /* back to top of while loop */
@@ -629,7 +629,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	    {
 	      bool matched = false;
 
-	      for (i = 0; i < NUM_SPECIAL_ESCAPES; i++) 
+	      for (i = 0; i < NUM_SPECIAL_ESCAPES; i++)
 		if (strcmp ((char *)esc, _special_escape_tbl[i].string) == 0)
 		  {
 		    matched = true;
@@ -639,7 +639,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		{
 		  /* "\s-" is special; yields character in current font */
 		  if (_special_escape_tbl[i].byte == FINAL_LOWERCASE_S)
-		  dest[j++] = 
+		  dest[j++] =
 		    fontword | (unsigned short)(_special_escape_tbl[i].byte);
 		  else
 		  /* we select symbol font of typeface, in which we've
@@ -651,10 +651,10 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 
 	  {
 	    bool matched = false;
-	    
+
 	    /* Irrespective of font type, is this an escape seq. for a char
 	       in the font's corresponding symbol font? */
-	    for (i = 0; i < NUM_SYMBOL_ESCAPES; i++) 
+	    for (i = 0; i < NUM_SYMBOL_ESCAPES; i++)
 	      if (strcmp (_symbol_escape_tbl[i].string, "NO_ABBREV") != 0
 		  && strcmp ((char *)esc, _symbol_escape_tbl[i].string) == 0)
 		{
@@ -692,15 +692,15 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	  cc  if (_plotter->drawstate->font_type == F_POSTSCRIPT
 	  cc  || _plotter->drawstate->font_type == F_PCL)
 	  cc {
-	  cc  dest[j++] 
+	  cc  dest[j++]
 	  cc    = (unsigned short)(CONTROL_CODE | C_LEFT_RADICAL_SHIFT);
-		  cc take `radicalex' glyph from PS symbol font 
-	  cc  dest[j++] 
-	  cc    = symbol_fontword | (unsigned short)RADICALEX; 
-	  cc  dest[j++] 
+		  cc take `radicalex' glyph from PS symbol font
+	  cc  dest[j++]
+	  cc    = symbol_fontword | (unsigned short)RADICALEX;
+	  cc  dest[j++]
 	  cc    = (unsigned short)(CONTROL_CODE | C_RIGHT_RADICAL_SHIFT);
 
-	  cc  continue;	cc back to top of while loop 
+	  cc  continue;	cc back to top of while loop
 	  cc }
 	  cc }
 
@@ -722,7 +722,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	  cc  && ((esc[1] >= '2' && esc[1] <= '9')
 	  cc      || esc[1] == 'I' || esc[1] == 'B'))
 	  cc esc[1] = '1'; cc treat as \f1 cc
-	      
+
 	  cc troff compatibility cc
 	  cc if (esc[1] == 'R')
 	  cc esc[1] = '1';
@@ -779,7 +779,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 	  cc  continue;		cc back to top of while loop cc
 	  cc }
 	  */
-	  
+
 	  /* couldn't match; unknown escape seq., so pass through unchanged */
 	  dest[j++] = fontword | (unsigned short)'\\';
 	  dest[j++] = fontword | (unsigned short)c;
@@ -793,7 +793,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 }
 
 #ifdef UNUSED
-int 
+int
 #ifdef _HAVE_PROTOS
 _codestring_len (const unsigned short *codestring)
 #else
@@ -808,7 +808,7 @@ _codestring_len (codestring)
       i++;
       codestring++;
     }
-  
+
   return i;
 }
 #endif

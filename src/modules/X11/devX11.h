@@ -76,7 +76,7 @@ typedef enum {
 
 
 Rboolean X11DeviceDriver(pDevDesc, const char*, double, double, double,
-			 double, X_COLORTYPE, int, int, int, SEXP, 
+			 double, X_COLORTYPE, int, int, int, SEXP,
 			 int, int, int, const char *, int, int);
 
 
@@ -98,7 +98,7 @@ typedef struct {
     /* Local device copy so that we can detect */
     /* when parameter changes. */
 
-    /* Used to detect changes */ 
+    /* Used to detect changes */
     int lty;				/* Line type */
     double lwd;
     R_GE_lineend lend;
@@ -139,7 +139,7 @@ typedef struct {
 
     Rboolean handleOwnEvents;           /* Flag indicating whether events will
 					   be handled externally from R (TRUE),
-                                           or whether R is to handle the events
+					   or whether R is to handle the events
 					   (FALSE) */
     int res_dpi;			/* used for png/jpeg */
     Rboolean warn_trans;		/* have we warned about translucent cols? */
@@ -167,4 +167,3 @@ int Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel,
 int Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, X11Desc *xd);
 
 #endif
-

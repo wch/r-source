@@ -86,7 +86,7 @@
 
 static void Cairo_update(pX11Desc xd)
 {
-    /* We could first paint the canvas colour and 
+    /* We could first paint the canvas colour and
        then the backing surface. */
     if(xd->xcc) {
 	cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
@@ -105,13 +105,13 @@ static void CairoColor(unsigned int col, pX11Desc xd)
     red = pow(red, RedGamma);
     green = pow(green, GreenGamma);
     blue = pow(blue, BlueGamma);
-    
+
     /* These optimizations should not be necessary, but alpha = 1
        seems to cause image fallback in some backends */
     if (alpha == 255)
-	cairo_set_source_rgb(xd->cc, red, green, blue); 
+	cairo_set_source_rgb(xd->cc, red, green, blue);
     else
-	cairo_set_source_rgba(xd->cc, red, green, blue, alpha/255.0); 
+	cairo_set_source_rgba(xd->cc, red, green, blue, alpha/255.0);
 }
 
 static void CairoLineType(const pGEcontext gc, pX11Desc xd)
@@ -129,7 +129,7 @@ static void CairoLineType(const pGEcontext gc, pX11Desc xd)
     case GE_ROUND_JOIN: ljoin = CAIRO_LINE_JOIN_ROUND; break;
     case GE_MITRE_JOIN: ljoin = CAIRO_LINE_JOIN_MITER; break;
     case GE_BEVEL_JOIN: ljoin = CAIRO_LINE_JOIN_BEVEL; break;
-    } 
+    }
     cairo_set_line_width(cc, (lwd > 0.01 ? lwd : 0.01) * xd->lwdscale);
     cairo_set_line_cap(cc, lcap);
     cairo_set_line_join(cc, ljoin);
@@ -140,7 +140,7 @@ static void CairoLineType(const pGEcontext gc, pX11Desc xd)
     else {
 	double ls[16], lwd = (gc->lwd > 1) ? gc->lwd : 1;
 	int l, dt = gc->lty;
-	for (l = 0; dt != 0; dt >>= 4, l++)  
+	for (l = 0; dt != 0; dt >>= 4, l++)
 	    ls[l] = (dt & 0xF) * lwd * xd->lwdscale;
 	cairo_set_dash(cc, ls, l, 0);
     }
@@ -165,7 +165,7 @@ static void Cairo_Clip(double x0, double x1, double y0, double y1,
 static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    
+
     cairo_reset_clip(xd->cc);
     xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
     CairoColor(xd->fill, xd);
@@ -256,7 +256,7 @@ static void Cairo_Polygon(int n, double *x, double *y,
 {
     int i;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    
+
     cairo_new_path(xd->cc);
     cairo_move_to(xd->cc, x[0], y[0]);
     for(i = 0; i < n; i++) cairo_line_to(xd->cc, x[i], y[i]);
@@ -283,9 +283,9 @@ static PangoFontDescription *PG_getFont(const pGEcontext gc)
     PangoFontDescription *fontdesc;
     gint face = gc->fontface;
     double size = gc->cex * gc->ps;
-    
+
     if (face < 1 || face > 5) face = 1;
-	
+
     fontdesc = pango_font_description_new();
     if (face == 5)
 	pango_font_description_set_family(fontdesc, "symbol");
@@ -301,15 +301,15 @@ static PangoFontDescription *PG_getFont(const pGEcontext gc)
 	    pango_font_description_set_style(fontdesc, PANGO_STYLE_OBLIQUE);
     }
     pango_font_description_set_size(fontdesc, PANGO_SCALE * size);
-	
+
     return fontdesc;
 }
 
-static PangoLayout 
+static PangoLayout
 *PG_layout(PangoFontDescription *desc, cairo_t *cc, const char *str)
 {
     PangoLayout *layout;
-	
+
     layout = pango_cairo_create_layout(cc);
     pango_layout_set_font_description(layout, desc);
     pango_layout_set_text(layout, str, -1);
@@ -318,7 +318,7 @@ static PangoLayout
 
 static void
 PG_text_extents(cairo_t *cc, PangoLayout *layout,
-		gint *lbearing, gint *rbearing, 
+		gint *lbearing, gint *rbearing,
 		gint *width, gint *ascent, gint *descent, int ink)
 {
     PangoRectangle rect, lrect;
@@ -331,7 +331,7 @@ PG_text_extents(cairo_t *cc, PangoLayout *layout,
 	if(ascent) *ascent = PANGO_ASCENT(rect);
 	if(descent) *descent = PANGO_DESCENT(rect);
 	if(lbearing) *lbearing = PANGO_LBEARING(rect);
-	if(rbearing) *rbearing = PANGO_RBEARING(rect);	
+	if(rbearing) *rbearing = PANGO_RBEARING(rect);
     } else {
 	if(ascent) *ascent = PANGO_ASCENT(lrect);
 	if(descent) *descent = PANGO_DESCENT(lrect);
@@ -340,7 +340,7 @@ PG_text_extents(cairo_t *cc, PangoLayout *layout,
     }
 }
 
-static void 
+static void
 PangoCairo_MetricInfo(int c, const pGEcontext gc,
 		      double* ascent, double* descent,
 		      double* width, pDevDesc dd)
@@ -351,7 +351,7 @@ PangoCairo_MetricInfo(int c, const pGEcontext gc,
     PangoFontDescription *desc = PG_getFont(gc);
     PangoLayout *layout;
     gint iascent, idescent, iwidth;
-	
+
     if(c == 0) c = 77;
     if(c < 0) {c = -c; Unicode = 1;}
 
@@ -362,7 +362,7 @@ PangoCairo_MetricInfo(int c, const pGEcontext gc,
 	str[0] = c; str[1] = 0;
     }
     layout = PG_layout(desc, xd->cc, str);
-    PG_text_extents(xd->cc, layout, NULL, NULL, &iwidth, 
+    PG_text_extents(xd->cc, layout, NULL, NULL, &iwidth,
 		    &iascent, &idescent, 1);
     g_object_unref(layout);
     pango_font_description_free(desc);
@@ -370,7 +370,7 @@ PangoCairo_MetricInfo(int c, const pGEcontext gc,
     *descent = idescent;
     *width = iwidth;
 #if 0
-    printf("c = %d, '%s', face %d %f %f %f\n", 
+    printf("c = %d, '%s', face %d %f %f %f\n",
 	   c, str, gc->fontface, *width, *ascent, *descent);
 #endif
 }
@@ -398,7 +398,7 @@ PangoCairo_Text(double x, double y,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     gint ascent, lbearing, width;
     PangoLayout *layout;
-    
+
     if (R_ALPHA(gc->col) > 0) {
 	PangoFontDescription *desc = PG_getFont(gc);
 	cairo_save(xd->cc);
@@ -421,7 +421,7 @@ PangoCairo_Text(double x, double y,
 /* ------------- cairo-ft section --------------- */
 
 /* FIXME: although this should work on all platforms, I didn't get to
-   test it (yet) anywhere else, hence the __APPLE__ condition for now [SU] 
+   test it (yet) anywhere else, hence the __APPLE__ condition for now [SU]
    r44621: now works on Linux, just finds the same fonts as before. [BDR]
 */
 #if CAIRO_HAS_FT_FONT && __APPLE__
@@ -466,9 +466,9 @@ static void Rc_addFont(const char *family, int face, cairo_font_face_t* font)
 
 /* FC patterns to append to font family names */
 static const char *face_styles[4] = {
-    ":style=Regular", 
+    ":style=Regular",
     ":style=Bold",
-    ":style=Italic", 
+    ":style=Italic",
     ":style=Bold Italic,BoldItalic"
 };
 
@@ -476,7 +476,7 @@ static int fc_loaded;
 static FT_Library ft_library;
 
 /* use FC to find a font, load it in FT and return the Cairo FT font face */
-static cairo_font_face_t *FC_getFont(const char *family, int style) 
+static cairo_font_face_t *FC_getFont(const char *family, int style)
 {
     FcFontSet *fs;
     FcPattern *pat, *match;
@@ -486,7 +486,7 @@ static cairo_font_face_t *FC_getFont(const char *family, int style)
 
     /* find candidate fonts via FontConfig */
     if (!fc_loaded) {
-        if (!FcInit()) return NULL;
+	if (!FcInit()) return NULL;
 	fc_loaded = 1;
     }
     style &= 3;
@@ -499,8 +499,8 @@ static cairo_font_face_t *FC_getFont(const char *family, int style)
     fs = FcFontSetCreate ();
     match = FcFontMatch (0, pat, &result);
     FcPatternDestroy (pat);
-    if (!match) { 
-        FcFontSetDestroy (fs);
+    if (!match) {
+	FcFontSetDestroy (fs);
 	return NULL;
     }
     FcFontSetAdd (fs, match);
@@ -509,13 +509,13 @@ static cairo_font_face_t *FC_getFont(const char *family, int style)
     if (fs) {
 	int j = 0, index = 0;
 	while (j < fs->nfont) { /* find the font file + face index and use it with FreeType */
-	    if (FcPatternGetString (fs->fonts[j], FC_FILE, 0, &file) 
+	    if (FcPatternGetString (fs->fonts[j], FC_FILE, 0, &file)
 		== FcResultMatch &&
 		FcPatternGetInteger(fs->fonts[j], FC_INDEX, 0, &index)
 		== FcResultMatch) {
-	        FT_Face face;
+		FT_Face face;
 		if (!ft_library && FT_Init_FreeType(&ft_library)) {
-		    FcFontSetDestroy (fs);  
+		    FcFontSetDestroy (fs);
 		    return NULL;
 		}
 		/* some FreeType versions have broken index support, fall back to index 0 */
@@ -595,7 +595,7 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd)
     if (face == 5) family = "Symbol";
     if (face == 2 || face == 4) wt = CAIRO_FONT_WEIGHT_BOLD;
     if (face == 3 || face == 4) slant = CAIRO_FONT_SLANT_ITALIC;
-  
+
     cairo_select_font_face (xd->cc, family, slant, wt);
     /* FIXME: this should really use a matrix if pixels are non-square */
     cairo_set_font_size (xd->cc, size);
@@ -610,7 +610,7 @@ static void Cairo_MetricInfo(int c, pGEcontext gc,
     cairo_text_extents_t exts;
     char str[16];
     int Unicode = mbcslocale;
-	
+
     if(c == 0) c = 77;
     if(c < 0) {c = -c; Unicode = 1;}
 
@@ -620,14 +620,14 @@ static void Cairo_MetricInfo(int c, pGEcontext gc,
 	/* Here, we assume that c < 256 */
 	str[0] = c; str[1] = 0;
     }
-    
+
     FT_getFont(gc, dd);
     cairo_text_extents(xd->cc, str, &exts);
-    *ascent  = -exts.y_bearing; 
+    *ascent  = -exts.y_bearing;
     *descent = exts.height + exts.y_bearing;
     *width = exts.x_advance;
 #if 0
-    printf("c = %d, '%s', face %d %f %f %f\n", 
+    printf("c = %d, '%s', face %d %f %f %f\n",
 	   c, str, gc->fontface, *width, *ascent, *descent);
 #endif
 }
@@ -647,7 +647,7 @@ static void Cairo_Text(double x, double y,
 		    pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    
+
     if (R_ALPHA(gc->col) > 0) {
 	cairo_save(xd->cc);
 	FT_getFont(gc, dd);
@@ -656,7 +656,7 @@ static void Cairo_Text(double x, double y,
 	    cairo_text_extents_t te;
 	    cairo_text_extents(xd->cc, str, &te);
 	    if (rot != 0.0) cairo_rotate(xd->cc, -rot/180.*M_PI);
-	    if (hadj != 0.0) 
+	    if (hadj != 0.0)
 		cairo_rel_move_to(xd->cc, -te.x_advance * hadj, 0);
 	}
 	CairoColor(gc->col, xd);

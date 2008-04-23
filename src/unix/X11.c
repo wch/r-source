@@ -56,7 +56,7 @@ int attribute_hidden R_X11_Init(void)
     if(!res) return initialized;
     if(!ptr->access)
 	error(_("X11 routines cannot be accessed in module"));
-    initialized = 1;    
+    initialized = 1;
     return initialized;
 }
 

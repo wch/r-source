@@ -1,4 +1,4 @@
-/* 
+/*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1999-2008 The R Development Core Team
  *
@@ -35,14 +35,14 @@
 /* tell QuartzDevice to insert definitions for us (to maintain consistency) */
 #define IN_AQUA_C 1
 
-#include <R_ext/GraphicsEngine.h> 
+#include <R_ext/GraphicsEngine.h>
 #include <R_ext/Rdynload.h>
 #include <R_ext/QuartzDevice.h>
 
 extern Rboolean useaqua; /* from src/unix/system.c */
 
 
-DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, 
+DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters,
     ptr_do_dataentry, ptr_do_browsepkgs, ptr_do_datamanger,
     ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser,
     ptr_do_selectlist;
@@ -85,7 +85,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP env)
 	return(ptr_do_dataentry(call, op, args, env));
 #if defined(HAVE_X11)
     else
-	return(X11_do_dataentry(call, op, args, env));	
+	return(X11_do_dataentry(call, op, args, env));
 #endif
 }
 
@@ -115,7 +115,7 @@ SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	if(ptr_do_flushconsole)
 		ptr_do_flushconsole(call, op, args, env);
-	return R_NilValue; 
+	return R_NilValue;
 }
 
 SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -127,20 +127,20 @@ SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char *vm;
     const char *ct;
-    int cpr;  
+    int cpr;
     SEXP rv, objType, obj;
 
     if (!ptr_Raqua_CustomPrint) return R_NilValue;
 
     checkArity(op, args);
-  
+
     vm = vmaxget();
-  
+
     objType = CAR(args); args = CDR(args);
     obj = CAR(args);
 
     if (!isString(objType) || LENGTH(objType)<1)
-        errorcall(call, "invalid arguments");
+	errorcall(call, "invalid arguments");
     ct=CHAR(STRING_ELT(objType,0));
     cpr=ptr_Raqua_CustomPrint(ct, obj);
 

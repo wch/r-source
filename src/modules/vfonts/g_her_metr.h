@@ -90,9 +90,9 @@
 #define HERSHEY_EM HERSHEY_LARGE_EM
 
 /* PAUL MURRELL
-   I have converted HERSHEY_UNITS_TO_USER_UNITS into 
+   I have converted HERSHEY_UNITS_TO_USER_UNITS into
    HERSHEY_X_UNITS_TO_USER_UNITS and HERSHEY_Y_UNITS_TO_USER_UNITS
-   (Not sure how the original authors got away with ignoring 
+   (Not sure how the original authors got away with ignoring
    the distinction ?)
    ... and added HERSHEY_UNITS_TO_DEVICE_UNITS
    ... and replaced HERSHEY_EM with HERSHEY_LARGE_CAPHEIGHT
@@ -111,11 +111,11 @@
 /*
  * R Graphics Engine line width of 1 is approx 1/96 inches (0.75 points)
  * We calculate Hershey line width in points and then multiply by 4/3 to
- * convert to R Graphics Engine line width units 
+ * convert to R Graphics Engine line width units
  */
 #define HERSHEY_LINE_WIDTH_TO_LWD(width) \
-        ((width)*((4/3)*(gc->ps * gc->cex))/(HERSHEY_LARGE_HEIGHT))
-        
+	((width)*((4/3)*(gc->ps * gc->cex))/(HERSHEY_LARGE_HEIGHT))
+
 /************************************************************************/
 
 /* Some miscellaneous information on typesetting mathematics, taken from
@@ -123,7 +123,7 @@
 
    Subscripts and superscripts, in math text, should be in indexical size.
    The centerline of subscripts/superscripts would be lowered/raised by 10
-   vertical units.  
+   vertical units.
 
    [In principal size the centerline is 9.5 units above the baseline; in
    indexical size the centerline is 6.5 units above the baseline.  So when

@@ -18,7 +18,7 @@
    g_her_glyph.c.  Accented characters are formed as composites. */
 
 /* PAUL MURRELL
-   sys-defines.h not used 
+   sys-defines.h not used
 */
 /* #include "sys-defines.h" */
 
@@ -66,7 +66,7 @@
    corresponding entries in this table are never accessed.  In the file
    g_cntrlify.c these characters are mapped to sequences of control
    sequences, which implement them as superscripts.
-   
+
    2. the characters ae, AE, and germandbls (i.e. eszet), which (except in
    Gothic-German) are also written as 0.  That is because they are
    `deligatured' in g_cntrlify.c, via a translation table in g_cntrlify.h.
@@ -80,7 +80,7 @@
    superimposed on the character, that it should be raised by 7 Hershey
    units (for capitals), and that it should be raised by 7 units and also
    displaced rightward by 2 units (for italic capitals).
-   
+
    4. the small Katakana in the HersheyEUC font.  These are written as KS
    (i.e. Katakana small) + true glyph number.  This means that they should
    be isotropically compressed, with the baseline preserved.
@@ -112,7 +112,7 @@
 
    In the symbol fonts, we store miscellaneous symbols and astronomical
    symbols in this range.  In fact, in the symbol fonts the astronomical
-   symbols overflow to the other nonprintable range 0x00..0x1f 
+   symbols overflow to the other nonprintable range 0x00..0x1f
    (the twelve zodiacal signs are stored there). */
 
 #define CEDILLA UNDE   /* currently undefined, to be implemented someday */
@@ -125,16 +125,16 @@
 
 /* LIST them by  (occur "^ *\"Hershey.*#" nil)  <<C-x C-e in Emacs */
 
-const struct plHersheyFontInfoStruct _hershey_font_info[] = 
+const struct plHersheyFontInfoStruct _hershey_font_info[] =
 {
   {
     "HersheySerif",		/* #0 */
     NULL,
     "Complex Roman",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2199, 2214, 2217, 2275, 2274, 2271, 2272, 2251,
       2221, 2222, 2219, 2232, 2211, 2231, 2210, 2220,
@@ -150,13 +150,13 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       2124, 2125, 2126, 2225, 2229, 2226, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      2177, 2178, 2179, 2180, 2181, 0, 0, 0, 
+      2177, 2178, 2179, 2180, 2181, 0, 0, 0,
       4180, 4181, 4182, 4183, 4184, 4185, 4186, 0,
       /* PAUL MURRELL
 	 Added accents for "Oslash" and "oslash"
-      */	 
+      */
       /*      0, 0, 0, 0, 0, 0, 0, 0, */
-      802, 220, 0, 0, 0, 0, 0, 0, 
+      802, 220, 0, 0, 0, 0, 0, 0,
       2119, 2182, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       2199, 4113,  910,	 272, UNDE, 4125, 4106, 2276,
@@ -187,9 +187,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Complex Italic",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2199, 2214, 2217, 2275, 2274, 2271, 2272, 2251,
       2221, 2222, 2219, 2232, 2211, 2231, 2210, 2770,
@@ -205,10 +205,10 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       2174, 2175, 2176, 2225, 2229, 2226, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      2191, 2192, 2193, 2194, 2195, 0, 0, 0, 
+      2191, 2192, 2193, 2194, 2195, 0, 0, 0,
       4180, 4181, 4182, 4183, 4184, 4185, 4186, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      2169, 2196, 0, 0, 0, 0, 0, 0, 
+      2169, 2196, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       2199, 4113,  910,	 272, UNDE, 4129, 4106, 2276,
       4182,  274,    0, UNDE, 4080, 4104,  273, 4187,
@@ -230,9 +230,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Triplex Roman",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       3249, 3214, 3228, 3232, 3219, 3233, 3218, 3217,
       3221, 3222, 3223, 3225, 3211, 3224, 3210, 3220,
@@ -248,10 +248,10 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       3124, 3125, 3126, 2225, 4108, 2226, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       4180, 4181, 4182, 4183, 4184, 4185, 4186, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      3119, 4160, 0, 0, 0, 0, 0, 0, 
+      3119, 4160, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       3249, 4119,  910,	 272, UNDE, 4126, 4107, 2276,
       4182,  274,    0, UNDE, 4080, 4105,  273, 4187,
@@ -273,9 +273,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Triplex Italic",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       3249, 3264, 3278, 3282, 3269, 3283, 3268, 3267,
       3271, 3272, 3273, 3275, 3261, 3274, 3260, 3270,
@@ -291,10 +291,10 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       3174, 3175, 3176, 2225, 4108, 2226, 2246,	   0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       4180, 4181, 4182, 4183, 4184, 4185, 4186, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      3169, 4161, 0, 0, 0, 0, 0, 0, 
+      3169, 4161, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       3249, 4121,  910,	 272, UNDE, 4130, 4107, 2276,
       4182,  274,    0, UNDE, 4080, 4105,  273, 4187,
@@ -316,9 +316,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Complex Cyrillic",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2199, 2214, 2217, 2275, 2274, 2271, 2272, 2251,
       2221, 2222, 2219, 2232, 2211, 2231, 2210, 2220,
@@ -334,14 +334,14 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       2124, 2125, 2126, 2225, 2229, 2226, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      2177, 2178, 2179, 2180, 2181, 0, 0, 0, 
+      2177, 2178, 2179, 2180, 2181, 0, 0, 0,
       4180, 4181, 4182, 4183, 4184, 4185, 4186, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       2119, 0, 0, 0, 0, 0, 0, 0,
       /* begin bogus region */
-      0, 0, 0, ACC0, 0, 0, 0, 0, 
+      0, 0, 0, ACC0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, ACC1, 0, 0, 0, 0, 
+      0, 0, 0, ACC1, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 274,
       /* end bogus region */
       2931, 2901, 2902, 2923, 2905, 2906, 2921, 2904,
@@ -360,9 +360,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Complex Cyrillic (obliqued)",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2199, 2214, 2217, 2275, 2274, 2271, 2272, 2251,
       2221, 2222, 2219, 2232, 2211, 2231, 2210, 2220,
@@ -378,14 +378,14 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       2124, 2125, 2126, 2225, 2229, 2226, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      2177, 2178, 2179, 2180, 2181, 0, 0, 0, 
+      2177, 2178, 2179, 2180, 2181, 0, 0, 0,
       4180, 4181, 4182, 4183, 4184, 4185, 4186, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       2119, 0, 0, 0, 0, 0, 0, 0,
       /* begin bogus region */
-      0, 0, 0, ACC0, 0, 0, 0, 0, 
+      0, 0, 0, ACC0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, ACC1, 0, 0, 0, 0, 
+      0, 0, 0, ACC1, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 274,
       /* end bogus region */
       2931, 2901, 2902, 2923, 2905, 2906, 2921, 2904,
@@ -404,27 +404,27 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Hiragana (from oriental glyph database)",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      4399, 4200+KS, 4200, 4201+KS, 4201, 4202+KS, 4202, 4203+KS, 
-      4203, 4204+KS, 4204, 4205, 4255, 4206, 4256, 4207, 
-      4257, 4208, 4258, 4209, 4259, 4210, 4260, 4211, 
-      4261, 4212, 4262, 4213, 4263, 4214, 4264, 4215, 
-      4265, 4216, 4266, 4217+KS, 4217, 4267, 4218, 4268, 
-      4219, 4269, 4220, 4221, 4222, 4223, 4224, 4225, 
-      4270, 4275, 4226, 4271, 4276, 4227, 4272, 4277, 
-      4228, 4273, 4278, 4229, 4274, 4279, 4230, 4231, 
-      4232, 4233, 4234, 4235+KS, 4235, 4237+KS, 4237, 4239+KS, 
-      4239, 4240, 4241, 4242, 4243, 4244, 4245+KS, 4245, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
+      4399, 4200+KS, 4200, 4201+KS, 4201, 4202+KS, 4202, 4203+KS,
+      4203, 4204+KS, 4204, 4205, 4255, 4206, 4256, 4207,
+      4257, 4208, 4258, 4209, 4259, 4210, 4260, 4211,
+      4261, 4212, 4262, 4213, 4263, 4214, 4264, 4215,
+      4265, 4216, 4266, 4217+KS, 4217, 4267, 4218, 4268,
+      4219, 4269, 4220, 4221, 4222, 4223, 4224, 4225,
+      4270, 4275, 4226, 4271, 4276, 4227, 4272, 4277,
+      4228, 4273, 4278, 4229, 4274, 4279, 4230, 4231,
+      4232, 4233, 4234, 4235+KS, 4235, 4237+KS, 4237, 4239+KS,
+      4239, 4240, 4241, 4242, 4243, 4244, 4245+KS, 4245,
       4246, 4248, 4249, 4250,	 0,    0,    0,	   0,
       4197, 4196, 4195,	   0,	 0,    0,    0,	   0,
       /********************/
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
@@ -445,27 +445,27 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Katakana (from oriental glyph database)",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      4399, 4300+KS, 4300, 4301+KS, 4301, 4302+KS, 4302, 4303+KS, 
-      4303, 4304+KS, 4304, 4305, 4355, 4306, 4356, 4307, 
-      4357, 4308, 4358, 4309, 4359, 4310, 4360, 4311, 
-      4361, 4312, 4362, 4313, 4363, 4314, 4364, 4315, 
-      4365, 4316, 4366, 4317+KS, 4317, 4367, 4318, 4368, 
-      4319, 4369, 4320, 4321, 4322, 4323, 4324, 4325, 
-      4370, 4375, 4326, 4371, 4376, 4327, 4372, 4377, 
-      4328, 4373, 4378, 4329, 4374, 4379, 4330, 4331, 
-      4332, 4333, 4334, 4335+KS, 4335, 4337+KS, 4337, 4339+KS, 
-      4339, 4340, 4341, 4342, 4343, 4344, 4345+KS, 4345, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
+      4399, 4300+KS, 4300, 4301+KS, 4301, 4302+KS, 4302, 4303+KS,
+      4303, 4304+KS, 4304, 4305, 4355, 4306, 4356, 4307,
+      4357, 4308, 4358, 4309, 4359, 4310, 4360, 4311,
+      4361, 4312, 4362, 4313, 4363, 4314, 4364, 4315,
+      4365, 4316, 4366, 4317+KS, 4317, 4367, 4318, 4368,
+      4319, 4369, 4320, 4321, 4322, 4323, 4324, 4325,
+      4370, 4375, 4326, 4371, 4376, 4327, 4372, 4377,
+      4328, 4373, 4378, 4329, 4374, 4379, 4330, 4331,
+      4332, 4333, 4334, 4335+KS, 4335, 4337+KS, 4337, 4339+KS,
+      4339, 4340, 4341, 4342, 4343, 4344, 4345+KS, 4345,
       4346, 4348, 4349, 4350, 4398, 4305+KS, 4308+KS,  0,
       4197, 4196, 4195,	   0,	 0,    0,    0,	   0,
       /********************/
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
@@ -486,9 +486,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Composite Japanese (from oriental glyph database)",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2199, 2214, 2217, 2275, 2274, 2271, 2272, 2251,
       2221, 2222, 2219, 2232, 2211, 2231, 2210, 2220,
@@ -504,9 +504,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       2124, 2125, 2126, 2225, 2229, 2226, 4008, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      2177, 2178, 2179, 2180, 2181, 0, 0, 0, 
+      2177, 2178, 2179, 2180, 2181, 0, 0, 0,
       4180, 4181, 4182, 4183, 4184, 4185, 4186, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       2119, 2182, 0, 0, 0, 0, 0, 0,
       /* printable single-byte 8-bit characters (none for this font) */
 	 0,    0,    0,	   0,	 0,    0,    0,	   0,
@@ -529,9 +529,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Simplex Roman",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       699, 714, 717, 733, 719, 697, 734, 731,
       721, 722, 728, 725, 711, 724, 710, 720,
@@ -547,14 +547,14 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       624, 625, 626, 695, 723, 696, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       4188, 4189, 4182, 4190, 4191, 4185, 4186, 0,
       /* PAUL MURRELL
 	 Added accents for "Oslash" and "oslash"
-      */	 
+      */
       /*      0, 0, 0, 0, 0, 0, 0, 0, */
-      802, 220, 0, 0, 0, 0, 0, 0, 
-      619, 4162, 0, 0, 0, 0, 0, 0, 
+      802, 220, 0, 0, 0, 0, 0, 0,
+      619, 4162, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       699, 4111,  910,	272, UNDE, 4127, 4106, 2276,
       4182,  274, 0, UNDE, 4080, 4104,	273, 4187,
@@ -584,9 +584,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Simplex Roman (obliqued)",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       699, 714, 717, 733, 719, 697, 734, 731,
       721, 722, 728, 725, 711, 724, 710, 720,
@@ -602,10 +602,10 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       624, 625, 626, 695, 723, 696, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       4188, 4189, 4182, 4190, 4191, 4185, 4186, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      619, 4162, 0, 0, 0, 0, 0, 0, 
+      619, 4162, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       699, 4111,  910,	272, UNDE, 4127, 4106, 2276,
       4182,  274, 0, UNDE, 4080, 4104,	273, 4187,
@@ -627,9 +627,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Duplex Roman",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2699, 2714, 2728, 2732, 2719, 2733, 2718, 2717,
       2721, 2722, 2723, 2725, 2711, 2724, 2710, 2720,
@@ -645,10 +645,10 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       2624, 2625, 2626, 2225, 4108, 2226, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       4180, 4181, 4182, 4183, 4184, 4185, 4186, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      2619, 4163, 0, 0, 0, 0, 0, 0, 
+      2619, 4163, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       2699, 4115,  910,	 272, UNDE, 4128, 4107, 2276,
       4182,  274, 0, UNDE, 4080, 4105,	273, 4187,
@@ -670,9 +670,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Duplex Roman (obliqued)",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2699, 2714, 2728, 2732, 2719, 2733, 2718, 2717,
       2721, 2722, 2723, 2725, 2711, 2724, 2710, 2720,
@@ -688,10 +688,10 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       2624, 2625, 2626, 2225, 4108, 2226, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       4180, 4181, 4182, 4183, 4184, 4185, 4186, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      2619, 4163, 0, 0, 0, 0, 0, 0, 
+      2619, 4163, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       2699, 4115,  910,	 272, UNDE, 4128, 4107, 2276,
       4182,  274, 0, UNDE, 4080, 4105,	273, 4187,
@@ -713,9 +713,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Simplex Script",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       699, 714, 717, 733, 719, 697, 734, 731,
       721, 722, 728, 725, 711, 724, 710, 720,
@@ -731,10 +731,10 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       674, 675, 676, 695, 723, 696, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      669, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      669, 0, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       699, 4111,  910,	272, UNDE, 4127, 4106, 2276,
       4182,  274, 0, UNDE, 4080, 4104,	273, 4187,
@@ -756,9 +756,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     "Complex Script",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2749, 2764, 2778, 2782, 2769, 2783, 2768, 2767,
       2771, 2772, 2773, 2775, 2761, 2774, 2760, 2770,
@@ -774,10 +774,10 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       2674, 2675, 2676, 2225, 2229, 2226, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      2669, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      2669, 0, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       2749, 4117,  910,	 272, UNDE, 4128, 4106, 2276,
       4182,  274, 0, UNDE, 4080, 4105,	273, 4187,
@@ -799,9 +799,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     "HersheyGothic-English",
     "Gothic English",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       3699, 3714, 3728, 3732, 3719, 3733, 3718, 3717,
       3721, 3722, 3723, 3725, 3711, 3724, 3710, 3720,
@@ -817,10 +817,10 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       3624, 3625, 3626, 2225, 4108, 2226, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       4180, 4181, 4182, 4183, 4184, 4185, 4186, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      3619, 4165, 0, 0, 0, 0, 0, 0, 
+      3619, 4165, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       3699, 4123,  910,	 272, UNDE, 4126, 4107, 2276,
       4182,  274, 0, UNDE, 4080, 4105,	273, 4187,
@@ -842,9 +842,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     "HersheyGothic-German",
     "Gothic German",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       3249, 3214, 3228, 3232, 3219, 3233, 3218, 3217,
       3221, 3222, 3223, 3225, 3211, 3224, 3210, 3220,
@@ -860,10 +860,10 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       3424, 3425, 3426, 2225, 4108, 2226, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      0, 0, 0, 0, 0, 0, 4179, 3429, 
+      0, 0, 0, 0, 0, 0, 4179, 3429,
       4180, 4181, 4182, 4183, 4184, 4185, 4186, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      3427, 4164, 0, 0, 0, 0, 0, 0, 
+      3427, 4164, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       3249, 4119,  910,	 272, UNDE, 4126, 4107, 2276,
       4182,  274, 0, UNDE, 4080, 4105,	273, 4187,
@@ -885,9 +885,9 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     "HersheyGothic-Italian",
     "Gothic Italian",
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       3249, 3214, 3228, 3232, 3219, 3233, 3218, 3217,
       3221, 3222, 3223, 3225, 3211, 3224, 3210, 3220,
@@ -903,10 +903,10 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       3924, 3925, 3926, 2225, 4108, 2226, 2246, 0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       4180, 4181, 4182, 4183, 4184, 4185, 4186, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
-      3919, 4166, 0, 0, 0, 0, 0, 0, 
+      3919, 4166, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       3249, 4119,  910,	 272, UNDE, 4126, 4107, 2276,
       4182,  274, 0, UNDE, 4080, 4105,	273, 4187,
@@ -933,7 +933,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 characters (e.g., Hershey zodiacal signs) in this range. */
 	 0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
       2308, 2309, 2310, 2311, 2312,    0,    0,	   0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2199, 2214, 4014, 2275, 2279, 2271, 2272,	 282,
       2221, 2222, 2219, 2232, 2211, 2231, 2210, 2220,
@@ -954,7 +954,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 0,    0,    0,	   0, 4019, 4020, 4021, 4022,
       UNDE, 2281, 2282, 2283, 2284, 2285, 2286, 2287,
       2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295,
-      2187, 2277, 2278, 2269, 2234, 2230, 4008, 4012, 
+      2187, 2277, 2278, 2269, 2234, 2230, 4008, 4012,
       /* symbol encoding resumes... */
       2199, 2046, 2216, 2243, 2220, 2270, 2156,	 744,
        743,  742,  741, 4045, 2263, 2262, 2261, 2264,
@@ -981,7 +981,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 characters (e.g., Hershey zodiacal signs) in this range. */
 	 0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
       2308, 2309, 2310, 2311, 2312,    0,    0,	   0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2199, 2214, 4014, 2275, 2279, 2271, 2272,	 282,
       2221, 2222, 2219, 2232, 2211, 2231, 2210, 2220,
@@ -1002,7 +1002,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 0,    0,    0,	   0, 4019, 4020, 4021, 4022,
       UNDE, 2281, 2282, 2283, 2284, 2285, 2286, 2287,
       2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295,
-      2187, 2277, 2278, 2269, 2234, 2230, 4008, 4012, 
+      2187, 2277, 2278, 2269, 2234, 2230, 4008, 4012,
       /* symbol encoding resumes... */
       2199, 2046, 2216, 2243, 2220, 2270, 2156,	 744,
        743,  742,  741, 4045, 2263, 2262, 2261, 2264,
@@ -1029,7 +1029,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 characters (e.g., Hershey zodiacal signs) in this range. */
 	 0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
       2308, 2309, 2310, 2311, 2312,    0,    0,	   0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2199, 3214, 4014, 3232, 2279, 3233, 3219,	 282,
       3221, 3222, 3223, 3225, 3211, 3224, 3210, 3220,
@@ -1050,7 +1050,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 0,    0,    0,	   0, 4019, 4020, 4021, 4022,
       UNDE, 2281, 2282, 2283, 2284, 2285, 2286, 2287,
       2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295,
-      3187, 2277, 2278, 2269, 2234, 2230, 4008, 4012, 
+      3187, 2277, 2278, 2269, 2234, 2230, 4008, 4012,
       /* symbol encoding resumes... */
       2199, 3046, 3227, 2243, 3220, 2270, 3156,	 744,
        743,  742,  741, 4045, 2263, 2262, 2261, 2264,
@@ -1077,7 +1077,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 characters (e.g., Hershey zodiacal signs) in this range. */
 	 0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
       2308, 2309, 2310, 2311, 2312,    0,    0,	   0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2199, 3214, 4014, 3232, 2279, 3233, 3219,	 282,
       3221, 3222, 3223, 3225, 3211, 3224, 3210, 3220,
@@ -1098,7 +1098,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 0,    0,    0,	   0, 4019, 4020, 4021, 4022,
       UNDE, 2281, 2282, 2283, 2284, 2285, 2286, 2287,
       2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295,
-      3187, 2277, 2278, 2269, 2234, 2230, 4008, 4012, 
+      3187, 2277, 2278, 2269, 2234, 2230, 4008, 4012,
       /* symbol encoding resumes... */
       2199, 3046, 3227, 2243, 3220, 2270, 3156,	 744,
        743,  742,  741, 4045, 2263, 2262, 2261, 2264,
@@ -1125,7 +1125,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 characters (e.g., Hershey zodiacal signs) in this range. */
 	 0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
       2308, 2309, 2310, 2311, 2312,    0,    0,	   0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2199,  714, 4014,	 733, 2279,  697,  734,	 282,
        721,  722,  728,	 725,  711,  724,  710,	 720,
@@ -1146,7 +1146,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 0,    0,    0,	   0, 4019, 4020, 4021, 4022,
       UNDE, 2281, 2282, 2283, 2284, 2285, 2286, 2287,
       2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295,
-       687, 2277, 2278, 2269, 2234, 2230, 4008, 4012, 
+       687, 2277, 2278, 2269, 2234, 2230, 4008, 4012,
       /* symbol encoding resumes... */
       2199,  546,  716, 2243,  720,  736, 2156,	 744,
        743,  742,  741, 4045, 2263, 2262, 2261, 2264,
@@ -1173,7 +1173,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 characters (e.g., Hershey zodiacal signs) in this range. */
 	 0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
       2308, 2309, 2310, 2311, 2312,    0,    0,	   0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
       2199,  714, 4014,	 733, 2279,  697,  734,	 282,
        721,  722,  728,	 725,  711,  724,  710,	 720,
@@ -1194,7 +1194,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 0,    0,    0,	   0, 4019, 4020, 4021, 4022,
       UNDE, 2281, 2282, 2283, 2284, 2285, 2286, 2287,
       2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295,
-       687, 2277, 2278, 2269, 2234, 2230, 4008, 4012, 
+       687, 2277, 2278, 2269, 2234, 2230, 4008, 4012,
       /* symbol encoding resumes... */
       2199,  546,  716, 2243,  720,  736, 2156,	 744,
        743,  742,  741, 4045, 2263, 2262, 2261, 2264,
@@ -1217,30 +1217,30 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     {
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0
     },
     0, 0, false, false, false
@@ -1256,7 +1256,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
    are stored in the inaccessible 0x80--0x9f region (i.e., \0200--\0237
    region) of each font. */
 
-const struct plHersheyAccentedCharInfoStruct _hershey_accented_char_info[] = 
+const struct plHersheyAccentedCharInfoStruct _hershey_accented_char_info[] =
 {
   /* for HersheyCyrillic[-Oblique] (KOI8-R encoding) accented characters */
   {0243, 0305, 0212},		/* edieresis */
@@ -1328,7 +1328,7 @@ const struct plHersheyAccentedCharInfoStruct _hershey_accented_char_info[] =
 
 /* known Hershey vector font typefaces.	 Each plTypefaceInfoStruct contains
    the following information:
-   
+
    (1) number of valid fonts [should be >= 2, since every typeface
        should include a symbol font (the zeroth font, the 1st listed)]
    (2) a list of fonts (each number is an index into
@@ -1338,7 +1338,7 @@ const struct plHersheyAccentedCharInfoStruct _hershey_accented_char_info[] =
    initializers are filled out with dummy fonts to get arrays of length
    FONTS_PER_TYPEFACE. */
 
-const struct plTypefaceInfoStruct _hershey_typeface_info[] = 
+const struct plTypefaceInfoStruct _hershey_typeface_info[] =
 {
   /* Hershey Serif [including Cyrillic, Cyrillic-Obl., and EUC], typeface #0 */
   { 8, { 18, 0, 1, 2, 3, 4, 5, 8, 999, 999 } },

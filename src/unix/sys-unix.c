@@ -19,7 +19,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8> 
+/* <UTF8>
    char here is mainly handled as a whole string.
    Does handle file names.
    Chopping final \n is OK in UTF-8.
@@ -136,7 +136,7 @@ const char *R_ExpandFileName(const char *s)
 {
 #ifdef HAVE_LIBREADLINE
     if(UsingReadline) {
-        const char * c = R_ExpandFileName_readline(s, newFileName);
+	const char * c = R_ExpandFileName_readline(s, newFileName);
 	/* we can return the result only if tilde_expand is not broken */
 	if (!c || c[0]!='~' || (c[1]!='\0' && c[1]!='/'))
 	    return c;
@@ -214,13 +214,13 @@ void R_getProcTime(double *data)
 #ifdef HAVE_GETRUSAGE
     getrusage(RUSAGE_SELF, &self);
     getrusage(RUSAGE_CHILDREN, &children);
-    data[0] = (double) self.ru_utime.tv_sec + 
+    data[0] = (double) self.ru_utime.tv_sec +
 	1e-3 * (self.ru_utime.tv_usec/1000);
-    data[1] = (double) self.ru_stime.tv_sec + 
+    data[1] = (double) self.ru_stime.tv_sec +
 	1e-3 * (self.ru_stime.tv_usec/1000);
-    data[3] = (double) children.ru_utime.tv_sec + 
+    data[3] = (double) children.ru_utime.tv_sec +
 	1e-3 * (children.ru_utime.tv_usec/1000);
-    data[4] = (double) children.ru_utime.tv_sec + 
+    data[4] = (double) children.ru_utime.tv_sec +
 	1e-3 * (children.ru_utime.tv_usec/1000);
 #else
     data[0] = rround(timeinfo.tms_utime / clk_tck, 3);
@@ -258,7 +258,7 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isLogical(CADR(args)) && (read = LOGICAL(CADR(args))[0]) != NA_INTEGER)
 	;
     else
-        errorcall(call, _("'intern' must be logical and not NA"));
+	errorcall(call, _("'intern' must be logical and not NA"));
     if (read) {
 #ifdef HAVE_POPEN
 	FILE *fp;
@@ -270,9 +270,9 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	fp = R_popen(translateChar(STRING_ELT(CAR(args), 0)), x);
 	for (i = 0; fgets(buf, INTERN_BUFSIZE, fp); i++) {
 	    read = strlen(buf);
-	    if(read >= INTERN_BUFSIZE - 1) 
+	    if(read >= INTERN_BUFSIZE - 1)
 		warning(_("line %d may be truncated in call to system(, intern = TRUE)"), i + 1);
-	    if (read > 0 && buf[read-1] == '\n') 
+	    if (read > 0 && buf[read-1] == '\n')
 		buf[read - 1] = '\0'; /* chop final CR */
 	    tchar = mkChar(buf);
 	    UNPROTECT(1);
@@ -293,13 +293,13 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else {
 #ifdef HAVE_AQUA
-    	R_Busy(1);
+	R_Busy(1);
 #endif
 	tlist = allocVector(INTSXP, 1);
 	fflush(stdout);
 	INTEGER(tlist)[0] = R_system(translateChar(STRING_ELT(CAR(args), 0)));
 #ifdef HAVE_AQUA
-    	R_Busy(0);
+	R_Busy(0);
 #endif
 	R_Visible = 0;
 	return tlist;
