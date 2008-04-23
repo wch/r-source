@@ -43,6 +43,9 @@ BUG FIXES
     o	Under certain rare circumstances the parser could accept
     	invalid UTF-8 quoted strings.
 
+    o	plot.default(x, y) now should correctly dispatch to Axis() methods
+    	whether y is NULL or not.
+
     o	Cocoa Quartz window could close without warning under certain
 	circumstances (specific autorelease pool flush).
 
