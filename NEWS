@@ -186,6 +186,9 @@ BUG FIXES
 	or semi-transparent 'bg'.  Previously, if 'col' was
 	transparent then 'bg' was ignored and nothing was drawn.
 
+    o	file.path() did not work correctly if the components had
+    	different encodings.
+
 
 
 		CHANGES IN R VERSION 2.7.0
