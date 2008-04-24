@@ -254,14 +254,14 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 	pwidth = 0;
 	for (j = 0; j < nx; j++) {
 	    k = length(VECTOR_ELT(x, j));
-	    pwidth += strlen(CHAR(STRING_ELT(VECTOR_ELT(x, j), i % k)));
+	    pwidth += strlen(translateChar(STRING_ELT(VECTOR_ELT(x, j), i % k)));
 	}
 	pwidth += (nx - 1) * sepw;
 	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
 	for (j = 0; j < nx; j++) {
 	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0) {
-		s = CHAR(STRING_ELT(VECTOR_ELT(x, j), i % k));
+		s = translateChar(STRING_ELT(VECTOR_ELT(x, j), i % k));
 		strcpy(buf, s);
 		buf += strlen(s);
 	    }
