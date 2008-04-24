@@ -41,6 +41,10 @@ BUG FIXES
 
     o	Sys.getenv() could read incorrectly non-ASCII values.
 
+    o	Rgui now accepts Unicode characters invalid in the locale when
+	pasted in and converts them to \uxxxx sequences before passing
+	to R.
+
 
 
 		CHANGES IN R VERSION 2.7.0
