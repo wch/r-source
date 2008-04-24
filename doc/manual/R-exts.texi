@@ -134,6 +134,7 @@ Other types of extensions are supported: @xref{Package types}.
 * Writing portable packages::   
 * Diagnostic messages::         
 * Internationalization::        
+* CITATION files::              
 * Package types::               
 * Services::                    
 @end menu
@@ -645,12 +646,16 @@ the top level of the package will @emph{not} be installed and so not be
 known to users of Windows and MacOS X compiled packages (and not seen by
 those who use @command{R CMD INSTALL} or @command{install.packages} on
 the tarball).  So any information files you wish an end user to see
-should be included in @file{inst}.  One thing you might like to add to
-@file{inst} is a @file{CITATION} file for use by the @code{citation}
-function.  Note that if the named exceptions also occur in @file{inst},
-the version in @file{inst} will be that seen in the installed package.
-If you want @file{NEWS} to be installed by your package in earlier
-versions of @R{}, you need to include it in @file{inst}.
+should be included in @file{inst}.  
+
+@findex CITATION
+@cindex citation
+One thing you might like to add to @file{inst} is a @file{CITATION} file
+for use by the @code{citation} function.  Note that if the named
+exceptions also occur in @file{inst}, the version in @file{inst} will be
+that seen in the installed package.  If you want @file{NEWS} to be
+installed by your package in earlier versions of @R{}, you need to
+include it in @file{inst}.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.
@@ -2455,7 +2460,7 @@ in another language one might need to say `There is no package in library
 
 @end itemize
 
-@node Internationalization, Package types, Diagnostic messages, Creating R packages
+@node Internationalization, CITATION files, Diagnostic messages, Creating R packages
 @section Internationalization
 
 There are mechanisms to translate the R- and C-level error and warning
@@ -2560,7 +2565,58 @@ Packages without name spaces will need to use @code{domain="R-@var{pkg}"}
 explicitly in calls to @code{stop}, @code{warning}, @code{message},
 @code{gettext}/@code{gettextf} and @code{ngettext}.
 
-@node Package types, Services, Internationalization, Creating R packages
+@findex CITATION
+@cindex citation
+@node CITATION files, Package types, Internationalization, Creating R packages
+@section CITATION files
+
+An installed file named @file{CTIATION} will be used by the
+@code{citation()} function.  (To be installed, it needed to be in the
+@file{inst} subdirectory of the package sources.)
+
+The @file{CTIATION} file is parsed as @R{} code, currently in Latin-1.
+(This will change once there is a means to declare an encoding.)  If no
+such file is present, @code{citation} generates a standard contents, and
+an example of what that would look like as a @file{CTIATION} file can be
+seen in recommended package @pkg{nlme} (see below): recommended packages
+@pkg{boot}, @pkg{cluster} and @pkg{mgcv} have further examples.
+
+A @file{CTIATION} file will contain calls to the functions
+@code{citHeader}, @code{citEntry} and (optionally)
+@code{citFooter}. Here is that for @pkg{nlme}, re-formatted:
+
+@example
+citHeader("To cite package 'nlme' in publications use:")
+
+desc <- packageDescription("nlme")
+year <- sub(".*(2[[:digit:]]@{3@})-.*", "\\1", desc$Date)
+vers <- paste("R package version", desc$Version)
+
+citEntry(entry="Manual",
+         title = "nlme: Linear and Nonlinear Mixed Effects Models",
+         author = personList(as.person("Jose Pinheiro"),
+                             as.person("Douglas Bates"),
+                             as.person("Saikat DebRoy"),
+                             as.person("Deepayan Sarkar"),
+                             as.person("the R Core team")),
+         year = year,
+         note = vers,
+
+         textVersion =
+         paste("Jose Pinheiro, Douglas Bates, Saikat DebRoy,",
+               "Deepayan Sarkar and the R Core team (",
+               year,
+               "). nlme: Linear and Nonlinear Mixed Effects Models. ",
+               vers, ".", sep=""))
+@end example
+
+Note the way that information that may need to be updated is picked up
+from the @file{DESCRIPTION} file -- it is tempting to hardcode such
+information, but it normally then gets outdated.  See @code{?citEntry}
+for further details of the information which can be provided.
+
+
+@node Package types, Services, CITATION files, Creating R packages
 @section Package types
 
 The @file{DESCRIPTION} file has an optional field @code{Type} which if
