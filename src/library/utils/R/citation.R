@@ -47,7 +47,8 @@ citFooter <- function(...)
 
 readCitationFile <- function(file)
 {
-    pcf <- parse(file)
+    ## Assume latin1 until we have a mechanism for this
+    pcf <- parse(file(file, encoding="latin1"))
     z <- list()
     k = 0
     envir = new.env()
