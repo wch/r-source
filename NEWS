@@ -172,14 +172,14 @@ BUG FIXES
     o	diag(matrix(x, 0, 0)) now returns a 0-length vector of the
 	correct mode, instead of always numeric.
 
-    o	Under certain rare circumstances the parser could accept
-    	invalid UTF-8 quoted strings.
+    o	The parser sometimes accepted invalid quoted strings in a UTF-8
+    	locale.
 
-    o	plot.default(x, y) now should correctly dispatch to Axis() methods
-    	whether y is NULL or not.
+    o	plot.default(x, y) now should dispatch to Axis() methods whether
+    	y is NULL or not.
 
-    o	Cocoa Quartz window could close without warning under certain
-	circumstances (specific autorelease pool flush).
+    o	On Mac OS X, the Cocoa Quartz window could close without warning
+	under certain circumstances (specific autorelease pool flush).
 
     o	Plotting symbols with separate border and fill colours (e.g.,
 	plot(pch = 21)) now works with transparent 'col', but opaque
