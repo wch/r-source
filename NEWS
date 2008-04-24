@@ -175,7 +175,7 @@ BUG FIXES
     o	The parser sometimes accepted invalid quoted strings in a UTF-8
     	locale.
 
-    o	plot.default(x, y) now should dispatch to Axis() methods whether
+    o	plot.default(x, y) now dispatches to Axis() methods whether
     	y is NULL or not.
 
     o	On Mac OS X, the Cocoa Quartz window could close without warning
