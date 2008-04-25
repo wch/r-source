@@ -33,10 +33,6 @@ NEW FEATURES
 	the 'REPORT' control argument, thanks to code proposals by
 	Thomas Petzoldt.
 
-    o	The parser and scan() now accept strings with embedded nuls
-	such as "a\0b" -- previous versions of R terminated scanning
-	at the first (actual or escaped) nul.
-
     o	setEPS() and setPS() gain '...' to allow other arguments to be
     	passed to ps.options(), including overriding 'width' and 'height'.
 
@@ -100,12 +96,6 @@ DEPRECATED & DEFUNCT
     o	Use of allocVector(CHARSXP ...) is deprecated and gives a warning.
 
 
-C-LEVEL FACILITIES
-
-    o	CHARSXPs with embedded nuls are now cached, and can be
-    	created	by mkCharLen and mkCharLenCE (with a declared encoding).
-
-
 UTILITIES
 
     o	The default for 'stylepath' in Sweave's (default) RweaveLatex
@@ -115,7 +105,7 @@ UTILITIES
 	to the input search path.
 
     o	R CMD Rd2dvi now previews PDF output (as was documented) if
-    	R_PDFVIEWER is set (as it will normally be on a Unix-aloke but
+    	R_PDFVIEWER is set (as it will normally be on a Unix-alike but
     	not on Windows).
 
 
