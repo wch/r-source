@@ -48,7 +48,9 @@ citFooter <- function(...)
 readCitationFile <- function(file)
 {
     ## Assume latin1 until we have a mechanism for this
-    pcf <- parse(file(file, encoding="latin1"))
+    con <- file(file, encoding="latin1")
+    on.exit(close(con))
+    pcf <- parse(con)
     z <- list()
     k = 0
     envir = new.env()
@@ -56,11 +58,11 @@ readCitationFile <- function(file)
     for(expr in pcf){
 
         x <- eval(expr, envir=envir)
-        if(class(x)=="citation")
+        if(class(x) == "citation")
             z[[k <- k+1]] <- x
-        else if(class(x)=="citationHeader")
+        else if(class(x) == "citationHeader")
             attr(z, "header") <- c(attr(z, "header"), x)
-        else if(class(x)=="citationFooter")
+        else if(class(x) == "citationFooter")
             attr(z, "footer") <- c(attr(z, "footer"), x)
     }
     class(z) <- "citationList"
