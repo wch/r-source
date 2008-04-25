@@ -73,6 +73,6 @@
 \examples{\dontrun{
 ## open the default screen device on this platform if no device is
 ## open
-if(dev.cur() == 1) get(getOption("device"))()
+if(dev.cur() == 1) dev.new()
 }}
 \keyword{device}
