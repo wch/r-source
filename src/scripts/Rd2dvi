@@ -64,7 +64,7 @@ enc=unknown
 
 if test "${R_OSTYPE}" = "windows"; then
   echo=echo
-  preview=${xdvi-yap}
+  preview=${xdvi-open}
   OSdir=windows
 else
   ## Need a `safe' echo which does not interpret backslash-escaped
@@ -95,7 +95,9 @@ while test -n "${1}"; do
       if test "${preview}" != "false"; then
 	if test -n "${R_PDFVIEWER}"; then
 	    preview=${R_PDFVIEWER}
-	else
+	elif test "${R_OSTYPE}" = "windows"; then
+	    preview=open
+        else
 	    preview=false
 	fi
       fi

@@ -25,6 +25,12 @@ OTHER
 	TMPDIR setting: it tries TMPDIR, TMP, TEMP and R_USER looking
 	for a directory -- the last will succeed as it does for R.
 
+    o	Rcmd has a new utility open.exe to open files via their file
+    	associations.
+
+    o	Rcmd Rd2dvi now opens .dvi and .pdf files via their file
+    	associations (if set -- MiKTeX sets 'yap' for .dvi).
+
 
 
 

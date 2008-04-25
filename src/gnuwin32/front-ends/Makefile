@@ -26,7 +26,8 @@ all: makeMakedeps \
      $(R_HOME)/bin/Rgui.exe $(R_HOME)/bin/Rterm.exe \
      $(R_HOME)/bin/Rcmd.exe  $(R_HOME)/bin/RSetReg.exe  \
      $(R_HOME)/bin/Rproxy.dll $(R_HOME)/bin/R.exe \
-     $(R_HOME)/bin/md5check.exe $(R_HOME)/bin/Rscript.exe
+     $(R_HOME)/bin/md5check.exe $(R_HOME)/bin/Rscript.exe \
+     $(R_HOME)/bin/open.exe 
 
 $(R_HOME)/bin/Rgui.exe: Rgui.exe
 	$(MKDIR) -p $(R_HOME)/bin
@@ -53,6 +54,10 @@ $(R_HOME)/bin/md5check.exe: md5check.exe
 	$(CP) $^ $@	
 
 $(R_HOME)/bin/Rscript.exe: Rscript.exe
+	$(MKDIR) -p $(R_HOME)/bin
+	$(CP) $^ $@	
+
+$(R_HOME)/bin/open.exe: open.exe
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) $^ $@	
 
@@ -96,6 +101,9 @@ rcmd.o R.o rgui.o rterm.o RSetReg.o rproxy_impl.o rgico.o rtico.o rcico.o: ../..
 rgico.o: Rgui.exe.manifest
 rtico.o: Rterm.exe.manifest
 rcico.o: Rcmd.exe.manifest
+
+open.o: open.c
+open.exe: open.o
 
 clean:
 	$(RM) *.o *.obj *.exe *~ *.exp *.dll *.lib *.a *.d Makedeps

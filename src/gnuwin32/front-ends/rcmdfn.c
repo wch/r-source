@@ -77,6 +77,7 @@ void rcmdusage (char *RCMD)
 	    "  Stangle  Extract S/R code from Sweave documentation.\n",
 	    "  Sweave   Process Sweave documentation.\n",
 	    "  config   Obtain configuration information about R.\n"
+	    "  open     Open a file via Windows file associations.\n"
 	    );
 
     fprintf(stderr, "\n%s%s%s%s",

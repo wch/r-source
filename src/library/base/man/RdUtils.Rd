@@ -44,7 +44,7 @@
 #endif
 #ifdef windows
   \env{R\_PAPERSIZE} (default \code{a4}, ) and \env{xdvi} (the DVI
-  previewer, default \code{yap} as from \R 2.8.0),
+  previewer, default \code{open} (use file associations) as from \R 2.8.0),
 #endif
   and \env{R\_PDFVIEWER} (the PDF previwer).  (Valid values for
   \env{R\_PAPERSIZE} are \code{a4}, \code{letter}, \code{legal} and
