@@ -44,8 +44,7 @@
 #endif
 #ifdef windows
   \env{R\_PAPERSIZE} (default \code{a4}, ) and \env{xdvi} (the DVI
-  previewer, default \code{xdvi.bat} (but will be \code{yap} as
-  from \R 2.8.0).
+  previewer, current default \code{yap}).
 #endif
   (Valid values for \env{R\_PAPERSIZE} are \code{a4}, \code{letter},
   \code{legal} and \code{executive}.)
