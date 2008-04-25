@@ -18,8 +18,13 @@
 {
     e1Expr <- substitute(e1)
     if(missing(e2)) {
-        if(is.call(e1Expr))
+        if(is.call(e1Expr)) {
+            if(e1Expr[[1]] == "::" || e1Expr[[1]] == ":::")
+                return(eval(substitute(help(TOPIC, package=PACKAGE),
+                                       list(TOPIC = e1Expr[[3]],
+                                            PACKAGE = e1Expr[[2]]))))
             return(.helpForCall(e1Expr, parent.frame()))
+        }
         if(is.name(e1Expr))
             e1 <- as.character(e1Expr)
         eval(substitute(help(TOPIC), list(TOPIC = e1)))
@@ -102,7 +107,7 @@ topicName <- function(type, topic)
             }
         }
         method <- methods::selectMethod(f, sigClasses, optional=TRUE,
-                                        fdef = fdef) 
+                                        fdef = fdef)
         if(methods::is(method, "MethodDefinition"))
             sigClasses <- method@defined
         else

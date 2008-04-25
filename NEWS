@@ -52,6 +52,9 @@ NEW FEATURES
     	non-text-mode connections has been changed to be like blocking
     	rather than non-blocking text-mode connections.
 
+    o	?pkg::topic and ?pkg:::topic now help on 'topic' from package
+	'pkg' (and not help on :: or :::).
+
 
 PACKAGE INSTALLATION
 
