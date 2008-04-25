@@ -54,7 +54,7 @@
 %-- in the future -- when example() will
 %   show comments, and always have a pager and ... :
 % ## Open a default device; if it's an interactive one, continue example:
-% get(devNam <- getOption("device"))()
+% dev.new()
 % if (dev.interactive()) {
 \dontrun{
 require(graphics)

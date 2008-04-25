@@ -43,7 +43,7 @@ lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1:lags,
     tot.lags <- nser * lags
 
     if(is.null(ask)) {
-        if (.Device == "null device") get(getOption("device"))()
+        if (.Device == "null device") dev.new()
         ask <-
             if(is.null(layout)) par("ask") ## FALSE, since will have big layout
             else (dev.interactive() && prod(layout) < tot.lags)
