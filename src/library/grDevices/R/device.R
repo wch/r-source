@@ -267,6 +267,7 @@ dev.new <- function()
 {
     dev <- getOption("device")
     if(is.function(dev)) {
+        ## this ensures that pdf and postscript in this namespace are used.
         if (identical(dev, pdf)) dev <- "pdf"
         else if(identical(dev, postscript)) dev <- "postscript"
         else return(dev())
@@ -294,8 +295,10 @@ dev.new <- function()
             postscript(tmp[!fe][1])
         }
     } else {
-        ## this is documented to be searched for from base,
+        ## this is documented to be searched for from workspace,
         ## then in graphics namespace.
+        ## We could restrict the search to functions, but the C
+        ## code in devices.c does not.
         if(exists(dev, .GlobalEnv)) get(dev, .GlobalEnv)()
         else if(exists(dev, asNamespace("grDevices")))
             get(dev, asNamespace("grDevices"))()
