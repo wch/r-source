@@ -2615,6 +2615,7 @@ from the @file{DESCRIPTION} file -- it is tempting to hardcode such
 information, but it normally then gets outdated.  See @code{?citEntry}
 for further details of the information which can be provided.
 
+The @file{CITATION} should itself produce no output.
 
 @node Package types, Services, CITATION files, Creating R packages
 @section Package types
