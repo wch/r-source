@@ -846,7 +846,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 			SET_STRING_ELT(source, lines++,
 				       mkChar2((char *)SourceLine));
 		    } else { /* over-long line */
-			char *LongLine = (char *) malloc(nc);
+			char *LongLine = (char *) malloc(nc+1);
 			if(!LongLine) 
 			    error(_("unable to allocate space for source line %d"), xxlineno);
 			strncpy(LongLine, (char *)p0, nc);
