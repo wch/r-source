@@ -122,7 +122,7 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	    if(s[i] == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), xxlineno);
 	}
 	res = mbrtowc(wc, s, clen, NULL);
-	if(res == -1) error(_("invalid multibyte character in mbcs_get_next at line %d"), xxlineno);
+	if(res == -1) error(_("invalid multibyte character in parser at line %d"), xxlineno);
     } else {
 	/* This is not necessarily correct for stateful MBCS */
 	while(clen <= MB_CUR_MAX) {
@@ -130,10 +130,10 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	    res = mbrtowc(wc, s, clen, &mb_st);
 	    if(res >= 0) break;
 	    if(res == -1) 
-		error(_("invalid multibyte character in mbcs_get_next at line %d"), xxlineno);
+		error(_("invalid multibyte character in parser at line %d"), xxlineno);
 	    /* so res == -2 */
 	    c = xxgetc();
-	    if(c == R_EOF) error(_("EOF whilst reading MBCS char"));
+	    if(c == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), xxlineno);
 	    s[clen++] = c;
 	} /* we've tried enough, so must be complete or invalid by now */
     }
@@ -145,16 +145,10 @@ static int mbcs_get_next(int c, wchar_t *wc)
 
 /* Handle function source */
 
-/* FIXME: These arrays really ought to be dynamically extendable
-   As from 1.6.0, SourceLine[] is, and the other two are checked.
-*/
-
 #define MAXFUNSIZE 131072
-#define MAXLINESIZE  1024
 #define MAXNEST       265
 
 static unsigned char FunctionSource[MAXFUNSIZE];
-static unsigned char SourceLine[MAXLINESIZE];
 static unsigned char *FunctionStart[MAXNEST], *SourcePtr;
 static int FunctionLevel = 0;
 static int KeepSource;
@@ -771,16 +765,6 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
     return ans;
 }
 
-
-static SEXP mkChar2(const char *name)
-{
-    if(!strIsASCII(name)) {
-	if(known_to_be_latin1) return mkCharCE(name, CE_LATIN1);
-	else if(known_to_be_utf8) return mkCharCE(name, CE_UTF8);
-    }
-    return mkChar(name);
-}
-
 static SEXP mkString2(const char *s, int len)
 {
     SEXP t;
@@ -837,24 +821,13 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 	    lines = 0;
 	    for (p = FunctionStart[FunctionLevel]; p < end ; p++)
 		if (*p == '\n' || p == end - 1) {
+		    cetype_t enc = CE_NATIVE;
 		    nc = p - p0;
-		    if (*p != '\n')
-			nc++;
-		    if (nc < MAXLINESIZE) {
-			strncpy((char *)SourceLine, (char *)p0, nc);
-			SourceLine[nc] = '\0';
-			SET_STRING_ELT(source, lines++,
-				       mkChar2((char *)SourceLine));
-		    } else { /* over-long line */
-			char *LongLine = (char *) malloc(nc+1);
-			if(!LongLine) 
-			    error(_("unable to allocate space for source line %d"), xxlineno);
-			strncpy(LongLine, (char *)p0, nc);
-			LongLine[nc] = '\0';
-			SET_STRING_ELT(source, lines++,
-				       mkChar2((char *)LongLine));
-			free(LongLine);
-		    }
+		    if (*p != '\n') nc++;
+		    if(known_to_be_latin1) enc = CE_LATIN1;
+		    else if(known_to_be_utf8) enc = CE_UTF8;
+		    SET_STRING_ELT(source, lines++,
+				   mkCharLenCE((char *)p0, nc, enc));
 		    p0 = p + 1;
 		}
 	    /* PrintValue(source); */

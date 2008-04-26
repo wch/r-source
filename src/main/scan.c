@@ -82,11 +82,10 @@ typedef struct {
 
 static SEXP insertString(char *str, LocalData *l)
 {
-    if (!strIsASCII(str)) {
-	if (l->con->UTF8out || l->isUTF8) return mkCharCE(str, CE_UTF8);
-	else if (l->isLatin1) return mkCharCE(str, CE_LATIN1);
-    }
-    return mkChar(str);
+    cetype_t enc = CE_NATIVE;
+    if (l->con->UTF8out || l->isUTF8) enc = CE_UTF8;
+    else if (l->isLatin1) enc = CE_LATIN1;
+    return mkCharCE(str, enc);
 }
 
 static R_INLINE Rboolean Rspace(unsigned int c)

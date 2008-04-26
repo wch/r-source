@@ -3217,6 +3217,7 @@ SEXP mkCharCE(const char *name, cetype_t enc)
     return mkCharLenCE(name, strlen(name), enc);
 }
 
+/* no longer used in R but docuented in 2.7.x */
 SEXP mkCharLen(const char *name, int len)
 {
     return mkCharLenCE(name, len, CE_NATIVE);

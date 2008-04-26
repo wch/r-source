@@ -2786,8 +2786,9 @@ SEXP attribute_hidden do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
 	len = LENGTH(x);
 	PROTECT(ans = allocVector(STRSXP, 1));
 	/* String is not necessarily 0-terminated and may contain nuls
-	   so don't use mkChar */
-	SET_STRING_ELT(ans, 0, mkCharLen((const char *)RAW(x), len));
+	   so don't use mkString */
+	SET_STRING_ELT(ans, 0, 
+		       mkCharLenCE((const char *)RAW(x), len, CE_NATIVE));
     }
     UNPROTECT(1);
     return ans;
