@@ -292,10 +292,10 @@ a <- `dim<-`(a, c(7, 2))
 but for no longer, and so some primitive functions can be optimized to
 avoid a copy in this case.
 
-The @code{gp} bits are by definition `general purpose'.  As of version
-2.4.0 of R, bit 4 (i.e., the fifth bit) is turned on to mark S4 objects.
-Bits 0-3 and bits 14-15 have been used previously as described below
-(from detective work on the sources).
+The @code{gp} bits are by definition `general purpose'.  We label these
+from 0 to 15.  As of version 2.4.0 of R, bit 4 is turned on to mark S4
+objects.  Bits 0-3 and bits 14-15 have been used previously as described
+below (from detective work on the sources).
 
 @findex gp bits
 @findex LEVELS
@@ -307,12 +307,11 @@ code.  The @code{gp} field is serialized/unserialized for the
 @code{SEXPTYPE}s other than @code{NILSXP}, @code{SYMSXP} and
 @code{ENVSXP}.
 
-If we label the bits from 0, bits 14 and 15 of @code{gp} are used for
-`fancy bindings'.  Bit 14 is used to lock a binding or an environment,
-and bit 15 is used to indicate an active binding.  (For the definition
-of an `active binding' see the header comments in file
-@file{src/main/envir.c}.)  Bit 15 is used for an environment to indicate
-if it participates in the global cache.
+Bits 14 and 15 of @code{gp} are used for `fancy bindings'.  Bit 14 is
+used to lock a binding or an environment, and bit 15 is used to indicate
+an active binding.  (For the definition of an `active binding' see the
+header comments in file @file{src/main/envir.c}.)  Bit 15 is used for an
+environment to indicate if it participates in the global cache.
 
 Almost all other uses seem to be only of bits 0 and 1, although one
 reserves the first four bits.
@@ -357,7 +356,11 @@ indicate a calling handler.
 As from @R{} 2.5.0, bits 2 and 3 for a @code{CHARSXP} are used to note
 that it is known to be in Latin-1 and UTF-8 respectively.  (These are not
 usually set if it is also known to be in ASCII, since code does not need
-to know the charset to handle ASCII strings.)
+to know the charset to handle ASCII strings.  From @R{} 2.8.0
+it is guaranteed that they will not be set for CHARSXPs created by @R{}
+itself.)  As from @R{} 2.8.0 bit 5 is used to indicate that a CHARSXP
+is hashed by its address, that is NA_STRING or in the CHARSXP cache.
+
 
 @c Finally, @code{SETLEVELS} and @code{LEVELS} are used by that name for
 @c the internal code for @code{terms.formula} to compute the @code{order}

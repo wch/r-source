@@ -3421,6 +3421,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 	default:
 	    error("unknown encoding mask: %d", enc);
 	}
+	SET_CACHED(cval);  /* Mark it */
 	/* add the new value to the cache */
 	chain = VECTOR_ELT(R_StringHash, hashcode);
 	if (ISNULL(chain))

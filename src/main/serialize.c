@@ -655,13 +655,20 @@ static int HashGet(SEXP item, SEXP ht)
 #define IS_OBJECT_BIT_MASK (1 << 8)
 #define HAS_ATTR_BIT_MASK (1 << 9)
 #define HAS_TAG_BIT_MASK (1 << 10)
-#define ENCODE_LEVELS(v) (v << 12)
-#define DECODE_LEVELS(v) (v >> 12)
-#define DECODE_TYPE(v) (v & 255)
+#define ENCODE_LEVELS(v) ((v) << 12)
+#define DECODE_LEVELS(v) ((v) >> 12)
+#define DECODE_TYPE(v) ((v) & 255)
 
 static int PackFlags(int type, int levs, int isobj, int hasattr, int hastag)
 {
-    int val = type | ENCODE_LEVELS(levs);
+    /* We don't write out bit 5 as from R 2.8.0.
+       It is used to indicate if an object is in CHARSXP cache 
+       - not that it matters to this version of R, but it saves
+       checking all previous versions.
+    */
+    int val;
+    if (type == CHARSXP) levs &= (~CACHED_MASK);
+    val = type | ENCODE_LEVELS(levs);
     if (isobj) val |= IS_OBJECT_BIT_MASK;
     if (hasattr) val |= HAS_ATTR_BIT_MASK;
     if (hastag) val |= HAS_TAG_BIT_MASK;

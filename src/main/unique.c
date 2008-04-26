@@ -190,13 +190,10 @@ static int sequal(SEXP x, int i, SEXP y, int j)
        so avoid looking at the contents */
     if (STRING_ELT(x, i) == STRING_ELT(y, j)) return 1;
     /* Then if either is NA the other cannot be */
+    /* Once all CHARSXPs are cached, Seql will handle this */
     if (STRING_ELT(x, i) == NA_STRING || STRING_ELT(y, j) == NA_STRING)
 	return 0;
-    /* Look at the lengths, as that is some check for embedded nuls. */
-    if (LENGTH(STRING_ELT(x, i)) != LENGTH(STRING_ELT(y, j))) return 0;
-    /* Finally look at the contents if necessary */
-    return !strcmp(translateChar(STRING_ELT(x, i)),
-		   translateChar(STRING_ELT(y, j)));
+    return Seql(STRING_ELT(x, i), STRING_ELT(y, j));
 }
 
 static int rawhash(SEXP x, int indx, HashData *d)

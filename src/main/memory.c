@@ -2872,6 +2872,7 @@ int  attribute_hidden (IS_UTF8)(SEXP x) { return IS_UTF8(x); }
 void attribute_hidden (SET_LATIN1)(SEXP x) { SET_LATIN1(x); }
 void attribute_hidden (SET_UTF8)(SEXP x) { SET_UTF8(x); }
 int  attribute_hidden (ENC_KNOWN)(SEXP x) { return ENC_KNOWN(x); }
+void attribute_hidden (SET_CACHED)(SEXP x) { SET_CACHED(x); }
 
 /*******************************************/
 /* Non-sampling memory use profiler
@@ -3030,3 +3031,59 @@ R_FreeStringBufferL(R_StringBuffer *buf)
 	buf->data = NULL;
     }
 }
+
+/* ======== These need direct access to gp field for efficiency ======== */
+
+/* FIXME: consider inlining here */
+#ifdef Win32
+
+static int Rstrcoll(const char *s1, const char *s2)
+{
+    wchar_t *w1, *w2;
+    w1 = (wchar_t *) alloca((strlen(s1)+1)*sizeof(wchar_t));
+    w2 = (wchar_t *) alloca((strlen(s2)+1)*sizeof(wchar_t));
+    R_CheckStack();
+    utf8towcs(w1, s1, strlen(s1));
+    utf8towcs(w2, s2, strlen(s2));
+    return wcscoll(w1, w2);
+}
+
+int Scollate(SEXP a, SEXP b)
+{
+    if(getCharCE(a) == CE_UTF8 || getCharCE(b) == CE_UTF8)
+	return Rstrcoll(translateCharUTF8(a), translateCharUTF8(b));
+    else
+	return strcoll(translateChar(a), translateChar(b));
+}
+
+int Seql(SEXP a, SEXP b)
+{
+    if (a == b) return 1;
+    if (LENGTH(a) != LENGTH(b)) return 0;
+    if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b)) return 0;
+    return !strcmp(translateCharUTF8(a), translateCharUTF8(b));
+}
+
+#else
+
+# ifdef HAVE_STRCOLL
+#  define STRCOLL strcoll
+# else
+#  define STRCOLL strcmp
+# endif
+
+int Scollate(SEXP a, SEXP b)
+{
+    return STRCOLL(translateChar(a), translateChar(b));
+}
+
+/* this has NA_STRING = NA_STRING */
+int Seql(SEXP a, SEXP b)
+{
+    if (a == b) return 1;
+    if (LENGTH(a) != LENGTH(b)) return 0;
+    if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b)) return 0;
+    return !strcmp(translateChar(a), translateChar(b));
+}
+
+#endif
