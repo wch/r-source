@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 2.3.  */
+ /* A Bison parser, made by GNU Bison 2.3.  */
 
 /* Skeleton implementation for Bison's Yacc-like parsers in C
 
@@ -3025,7 +3025,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 		    nc = p - p0;
 		    if (*p != '\n')
 			nc++;
-		    if (nc <= MAXLINESIZE) {
+		    if (nc < MAXLINESIZE) {
 			strncpy((char *)SourceLine, (char *)p0, nc);
 			SourceLine[nc] = '\0';
 			SET_STRING_ELT(source, lines++,
