@@ -818,6 +818,9 @@ FILE *R_popen(const char *, const char *);
 #endif
 int R_system(const char *);
 
+/* FIXME: remove before release */
+#define allocString(n)		Rf_allocVector(CHARSXP, n)
+
 #ifndef R_NO_REMAP
 #define acopy_string		Rf_acopy_string
 #define alloc3DArray            Rf_alloc3DArray
