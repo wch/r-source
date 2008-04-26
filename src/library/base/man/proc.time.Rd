@@ -29,6 +29,14 @@ proc.time()
   system times of any child processes spawned by it on which it has
   waited.  (The \code{print} method combines the child times with those
   of the main process.)
+
+  The definition of \sQuote{user} and \sQuote{system} times is from your
+  OS.  Typically it is something like
+
+  \emph{The \sQuote{user time} is the CPU time charged for the execution
+  of user instructions of the calling process. The \sQuote{system lime}
+  is the CPU time charged for execution by the system on behalf of the
+  calling process.}
  
   The resolution of the times will be system-specific
 #ifdef unix
@@ -39,9 +47,6 @@ proc.time()
 #ifdef windows
   and are typically available to 10ms on Windows.
 #endif
-
-  It is useful for timing the evaluation of \R expressions,
-  which can be done more conveniently with \code{\link{system.time}}.
 }
 \note{
 #ifdef unix
