@@ -270,5 +270,7 @@ setTimeLimit <- function(cpu = Inf, elapsed = Inf, transient = FALSE)
 setSessionTimeLimit <- function(cpu = Inf, elapsed = Inf)
     .Internal(setSessionTimeLimit(cpu, elapsed))
 
+icuSetCollate <- function(...) .Internal(icuSetCollate(...))
+
 ## base has no S4 generics
 .noGenerics <- TRUE

@@ -2430,6 +2430,15 @@ Debian meta-package @samp{xorg-dev}), but some distributions have
 split this into smaller parts, so for example Fedora Core 5/6 require
 the @samp{libXmu} and @samp{libXmu-devel} RPMs.
 
+Some systems (notably Mac OS X and at least some FreeBSD systems) have
+inadequate support for collation in multibyte locales.  It is possible
+to replace the OS's collation support by that from ICU (International
+Components for Unicode, @uref{http://www.icu-project.org}), and this
+provides much more precise control over collation on all systems.  ICU
+is available as sources and as binary distributions for (at least) most
+Linux distributions, Solaris 9/10, AIX and Windows, usually as @code{libicu} or
+@code{icu4c}.
+
 @menu
 * Tcl/Tk::                      
 * Java support::                

@@ -1586,8 +1586,115 @@ double R_atof(const char *str)
     return R_strtod4(str, NULL, '.', FALSE);
 }
 
-/* FIXME: consider inlining here */
-#ifdef Win32
+#ifdef USE_ICU
+#include <unicode/utypes.h>
+#include <unicode/ucol.h>
+#include <unicode/uloc.h>
+#include <unicode/uiter.h>
+
+static UCollator *collator = NULL;
+
+static const struct {
+    const char * const str;
+    int val;
+} ATtable[] = {
+    { "on", UCOL_ON },
+    { "off", UCOL_OFF },
+    { "upper", UCOL_UPPER_FIRST },
+    { "lower", UCOL_LOWER_FIRST },
+    { "default ", UCOL_DEFAULT },
+    { "french_collation", UCOL_FRENCH_COLLATION },
+    { "case_first", UCOL_CASE_FIRST },
+    { NULL,  0 }
+};
+    
+
+SEXP do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP x;
+    UErrorCode  status = U_ZERO_ERROR;
+    
+    for (; args != R_NilValue; args = CDR(args)) {
+	const char *this = CHAR(PRINTNAME(TAG(args)));
+	const char *s;
+
+	x = CAR(args);
+	if (!isString(x) || LENGTH(x) != 1)
+	    error(_("invalid argument"));
+	s = CHAR(STRING_ELT(x, 0));
+	if (streql(this, "locale")) {
+	    if (collator) ucol_close(collator);
+	    uloc_setDefault(s, &status);
+	    if(U_FAILURE(status))
+		error("failed to set ICU locale");
+	    collator = ucol_open(NULL, &status);
+	    if (U_FAILURE(status)) error("failed to open ICU collator");
+	} else {
+	    int i, at = -1, val = -1;
+	    for (i = 0; ATtable[i].str; i++)
+		if (streql(this, ATtable[i].str)) {
+		    at = ATtable[i].val;
+		    break;
+		}
+	    for (i = 0; ATtable[i].str; i++)
+		if (streql(s, ATtable[i].str)) {
+		    val = ATtable[i].val;
+		    break;
+		}
+	    if (collator && at >= 0 && val >= 0) {
+		ucol_setAttribute(collator, at, val, &status);
+		if (U_FAILURE(status)) 
+		    error("failed to set ICU collator attribute");
+	    }
+	}
+    }
+
+    return R_NilValue;
+}
+
+
+int Scollate(SEXP a, SEXP b)
+{
+    int result = 0;
+    UErrorCode  status = U_ZERO_ERROR;
+    UCharIterator aIter, bIter;
+    const char *as = translateCharUTF8(a), *bs = translateCharUTF8(b);
+    size_t len1 = strlen(as), len2 = strlen(bs);
+
+    if (collator == NULL && strcmp("C", setlocale(LC_COLLATE, NULL)) ) {
+	/* do better later */
+	uloc_setDefault(setlocale(LC_COLLATE, NULL), &status);
+	if(U_FAILURE(status))
+	    error("failed to set ICU locale");
+	collator = ucol_open(NULL, &status);
+	if (U_FAILURE(status)) error("failed to open ICU collator");
+    }
+    if (collator == NULL)
+	return strcoll(translateChar(a), translateChar(b));
+    
+    uiter_setUTF8(&aIter, as, len1);
+    uiter_setUTF8(&bIter, bs, len2);
+    result = ucol_strcollIter(collator, &aIter, &bIter, &status);   
+    if (U_FAILURE(status)) error("could not collate");
+
+    if (result == 0) { /* refine, perhaps needed? */
+	result = strcmp(as, bs);
+	if ((result == 0) && (len1 != len2))
+	    result = (len1 < len2) ? -1 : 1;
+    }
+    
+    return result;
+}
+
+#else /* not USE_ICU */
+
+SEXP do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    warning(_("ICU is not supported on this build"));
+    return R_NilValue;
+}
+
+# ifdef Win32
 
 static int Rstrcoll(const char *s1, const char *s2)
 {
@@ -1608,57 +1715,13 @@ int Scollate(SEXP a, SEXP b)
 	return strcoll(translateChar(a), translateChar(b));
 }
 
-#else
-
-# ifdef USE_ICU
-#include <unicode/utypes.h>
-#include <unicode/ucol.h>
-#include <unicode/uloc.h>
-#include <unicode/uiter.h>
-
-static UCollator *collator = NULL;
-
-int Scollate(SEXP a, SEXP b)
-{
-    int result = 0;
-    UErrorCode  status = U_ZERO_ERROR;
-    UCharIterator aIter, bIter;
-    const char *as = translateCharUTF8(a), *bs = translateCharUTF8(b);
-    size_t len1 = strlen(as), len2 = strlen(bs);
-
-    if (collator == NULL) {
-	/* do better later */
-	uloc_setDefault(setlocale(LC_COLLATE, NULL), &status);
-	if(U_FAILURE(status))
-	    error("failed to set ICU locale");
-	collator = ucol_open(NULL, &status);
-	if (U_FAILURE(status)) error("failed to open ICU collator");
-	ucol_setAttribute(collator, UCOL_CASE_FIRST, UCOL_UPPER_FIRST, &status);
-    }
-    
-    uiter_setUTF8(&aIter, as, len1);
-    uiter_setUTF8(&bIter, bs, len2);
-    result = ucol_strcollIter(collator, &aIter, &bIter, &status);   
-    if (U_FAILURE(status)) error("could not collate");
-
-    if (result == 0) { /* refine, perhaps */
-	result = strcmp(as, bs);
-	if ((result == 0) && (len1 != len2))
-	    result = (len1 < len2) ? -1 : 1;
-    }
-    
-    return result;
-}
-
-
-
-# else /* not USE_ICU */
-
-# ifdef HAVE_STRCOLL
-#  define STRCOLL strcoll
 # else
-#  define STRCOLL strcmp
-# endif
+
+#  ifdef HAVE_STRCOLL
+#   define STRCOLL strcoll
+#  else
+#   define STRCOLL strcmp
+#  endif
 
 int Scollate(SEXP a, SEXP b)
 {
