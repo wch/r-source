@@ -57,6 +57,11 @@ ifeq ($(strip $(WIN)),64)
 USE_IMPLIBS = YES
 endif
 
+# use ICU
+USE_ICU=NO
+# path to parent of ICU headers
+ICU_PATH=/sources/icu
+
 ## ====== configuration macros for building installer ===========
 
 # location where Inno Setup 5.[12].x was installed. Spaces allowed.

@@ -50,10 +50,9 @@ endif
 # used when compiling src/main: needed for memory.c, regex.c
 OPTFLAGS_M=$(OPTFLAGS)
 
-ifneq ($(strip $(BUILD)),CROSS)
-R-DLLFLAGS = -mwindows
-else
-R-DLLFLAGS = -mwindows
+R-DLLFLAGS=-mwindows
+ifeq ($(strip $(USE_ICU)),YES)
+LIBEXTRAS+=-licuin38 -licuuc38
 endif
 
 R-DLLLIBS =-L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -liconv -lcomctl32 -lversion $(LIBEXTRAS)
