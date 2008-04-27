@@ -1585,3 +1585,85 @@ double R_atof(const char *str)
 {
     return R_strtod4(str, NULL, '.', FALSE);
 }
+
+/* FIXME: consider inlining here */
+#ifdef Win32
+
+static int Rstrcoll(const char *s1, const char *s2)
+{
+    wchar_t *w1, *w2;
+    w1 = (wchar_t *) alloca((strlen(s1)+1)*sizeof(wchar_t));
+    w2 = (wchar_t *) alloca((strlen(s2)+1)*sizeof(wchar_t));
+    R_CheckStack();
+    utf8towcs(w1, s1, strlen(s1));
+    utf8towcs(w2, s2, strlen(s2));
+    return wcscoll(w1, w2);
+}
+
+int Scollate(SEXP a, SEXP b)
+{
+    if(getCharCE(a) == CE_UTF8 || getCharCE(b) == CE_UTF8)
+	return Rstrcoll(translateCharUTF8(a), translateCharUTF8(b));
+    else
+	return strcoll(translateChar(a), translateChar(b));
+}
+
+#else
+
+# ifdef USE_ICU
+#include <unicode/utypes.h>
+#include <unicode/ucol.h>
+#include <unicode/uloc.h>
+#include <unicode/uiter.h>
+
+static UCollator *collator = NULL;
+
+int Scollate(SEXP a, SEXP b)
+{
+    int result = 0;
+    UErrorCode  status = U_ZERO_ERROR;
+    UCharIterator aIter, bIter;
+    const char *as = translateCharUTF8(a), *bs = translateCharUTF8(b);
+    size_t len1 = strlen(as), len2 = strlen(bs);
+
+    if (collator == NULL) {
+	/* do better later */
+	uloc_setDefault(setlocale(LC_COLLATE, NULL), &status);
+	if(U_FAILURE(status))
+	    error("failed to set ICU locale");
+	collator = ucol_open(NULL, &status);
+	if (U_FAILURE(status)) error("failed to open ICU collator");
+	ucol_setAttribute(collator, UCOL_CASE_FIRST, UCOL_UPPER_FIRST, &status);
+    }
+    
+    uiter_setUTF8(&aIter, as, len1);
+    uiter_setUTF8(&bIter, bs, len2);
+    result = ucol_strcollIter(collator, &aIter, &bIter, &status);   
+    if (U_FAILURE(status)) error("could not collate");
+
+    if (result == 0) { /* refine, perhaps */
+	result = strcmp(as, bs);
+	if ((result == 0) && (len1 != len2))
+	    result = (len1 < len2) ? -1 : 1;
+    }
+    
+    return result;
+}
+
+
+
+# else /* not USE_ICU */
+
+# ifdef HAVE_STRCOLL
+#  define STRCOLL strcoll
+# else
+#  define STRCOLL strcmp
+# endif
+
+int Scollate(SEXP a, SEXP b)
+{
+    return STRCOLL(translateChar(a), translateChar(b));
+}
+
+# endif
+#endif

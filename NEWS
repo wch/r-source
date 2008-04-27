@@ -52,11 +52,15 @@ NEW FEATURES
     	non-text-mode connections has been changed to be like blocking
     	rather than non-blocking text-mode connections.
 
-    o	?pkg::topic and ?pkg:::topic now help on 'topic' from package
-	'pkg' (and not help on :: or :::).
+    o	?pkg::topic and ?pkg:::topic now find help on 'topic' from
+	package 'pkg' (and not help on :: or :::).
 	
     o	??topic now does help.search("topic"); variations such as
     	??pkg::topic or field??topic are also supported.
+
+    o	[Experimental] There is support for using ICU (International
+	Components for Unicode) for collation, enabled by configure
+	option --with-ICU.
     	
 
 PACKAGE INSTALLATION
