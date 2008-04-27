@@ -32,8 +32,12 @@ function(lines)
         if((Sys.getlocale("LC_CTYPE") != "C")
            && capabilities("iconv")) {
             encoding <- encoding[1L]     # Just making sure ...
-            if(.is_ASCII(encoding))
+            if(.is_ASCII(encoding)) {
+                if (!tolower(encoding) %in% c("latin1", "latin2", "utf-8"))
+                    warning(gettextf("encoding '%s' is not portable",
+                                     encoding), domain = NA)
                 lines <- iconv(lines, encoding, "")
+            }
         }
     }
     else {
