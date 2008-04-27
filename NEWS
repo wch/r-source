@@ -54,7 +54,10 @@ NEW FEATURES
 
     o	?pkg::topic and ?pkg:::topic now help on 'topic' from package
 	'pkg' (and not help on :: or :::).
-
+	
+    o	??topic now does help.search("topic"); variations such as
+    	??pkg::topic or field??topic are also supported.
+    	
 
 PACKAGE INSTALLATION
 

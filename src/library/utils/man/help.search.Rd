@@ -5,6 +5,7 @@
 
 \name{help.search}
 \alias{help.search}
+\alias{??}
 \alias{print.hsearch}
 \title{Search the Help System}
 \description{
@@ -21,6 +22,8 @@ help.search(pattern, fields = c("alias", "concept", "title"),
             help.db = getOption("help.db"),
             verbose = getOption("verbose"),
             rebuild = FALSE, agrep = NULL)
+??pattern
+field??pattern
 }
 \arguments{
   \item{pattern}{a character string to be matched in the specified
@@ -67,6 +70,7 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     used.  Otherwise, one can give a numeric or a list specifying the
     maximal distance for the approximate match, see argument
     \code{max.distance} in the documentation for \code{\link{agrep}}.}
+  \item{field}{a single value of \code{fields} to search.}
 }
 \details{
   Upon installation of a package, a pre-built help.search index is
@@ -91,13 +95,22 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   Matching by \code{agrep} is by bytes even in multi-byte locales:
   character-by-character matching will be too slow with a thousand or
   more packages.
+  
+  As with \code{\link{?}}, in \code{??} the pattern may be prefixed with a 
+  package name followed by \code{::} or \code{:::} to limit the search
+  to that package.
 }
+
 \value{
   The results are returned in a list object of class \code{"hsearch"},
   which has a print method for nicely formatting the results of the
   query.  This mechanism is experimental, and may change in future
   versions of \R.
 
+  In R.app on Mac OS X, this will show up a browser with selectable items. On
+  exiting this browser, the help pages for the selected items will be
+  shown in separate help windows.
+  
   The internal format of the class is undocumented and subject to change.
 }
 \seealso{
@@ -114,6 +127,9 @@ help.search(pattern, fields = c("alias", "concept", "title"),
 help.search("linear models")    # In case you forgot how to fit linear
                                 # models
 help.search("non-existent topic")
+
+??utils::help  # All the topics matching "help" in the utils package
+
 \dontrun{
 help.search("print")            # All help pages with topics or title
                                 # matching 'print'

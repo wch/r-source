@@ -3615,7 +3615,7 @@ contains
 @end example
 
 @noindent
-so that e.g.@: @kbd{help.search("Spearman")} will succeed in finding the
+so that e.g.@: @kbd{??Spearman} will succeed in finding the
 help page for the test for association between paired samples using
 Spearman's @eqn{\rho, rho}.  (Note that concepts are not currently
 supported by the @HTML{} search accessed @emph{via}

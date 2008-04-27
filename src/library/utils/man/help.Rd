@@ -38,7 +38,7 @@ type?topic
    For \code{?} the \code{topic} argument may also be a function call,
    to ask for documentation on a corresponding method: see the section
    on S4 method documentation.  Unlike \code{help}, all names are
-   deparsed to give the desired topic.  The funtion calls
+   deparsed to give the desired topic.  The forms
    \code{pkg::topic} and \code{pkg:::topic} are treated specially, and
    look for help on \code{topic} in package \pkg{package}.
 
@@ -197,7 +197,7 @@ type?topic
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{help.search}()} for finding help pages on a vague
+  \code{\link{help.search}()} or \code{\link{??}} for finding help pages on a vague
   topic;
   \code{\link{help.start}()} which opens the HTML version of the \R
   help pages;

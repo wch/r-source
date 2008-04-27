@@ -408,16 +408,15 @@ printhsearchInternal  <- function(x, ...)
 	writeLines(c(strwrap(paste("Help files with", fields,
 				   "matching", sQuote(x$pattern),
 				   "using", type, "matching:")),
-		     "\n\n"),
+		     "\n"),
 		   outConn)
-	dbnam <- paste(db[ , "topic"], "(",
-		       db[, "Package"], ")",
+	dbnam <- paste(db[, "Package"], "::", db[ , "topic"],
 		       sep = "")
 	dbtit <- paste(db[ , "title"], sep = "")
 	writeLines(formatDL(dbnam, dbtit), outConn)
-	writeLines(c("\n\n",
-		     strwrap(paste("Type 'help(FOO, package = PKG)' to",
-				   "inspect entry 'FOO(PKG) TITLE'."))),
+	writeLines(c("\n",
+		     strwrap(paste("Type '?PKG::FOO' to",
+				   "inspect entry 'PKG::FOO TITLE'."))),
 		   outConn)
 	close(outConn)
 	file.show(outFile, delete.file = TRUE)

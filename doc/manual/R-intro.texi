@@ -414,8 +414,16 @@ functions.  It can be a great way to get your bearings quickly and to
 understand the breadth of what @R{} has to offer.
 
 @findex help.search
-The @code{help.search} command allows searching for help in various
-ways: try @code{?help.search} for details and examples.
+The @code{help.search} command (alternatively @code{??}) 
+allows searching for help in various
+ways. For example,
+
+@example
+> ??solve
+@end example
+@findex ??
+
+Try @code{?help.search} for details and more examples.
 
 The examples on a help topic can normally be run by
 
