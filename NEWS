@@ -192,6 +192,11 @@ BUG FIXES
     o	file.path() did not work correctly if the components had
     	different encodings.
 
+    o	merge() failed if there were no common columns and one of the
+    	inputs had zero rows.
+
+    o	expand.grid() failed if an input had length 0.
+
 
 
 		CHANGES IN R VERSION 2.7.0

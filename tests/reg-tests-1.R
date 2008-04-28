@@ -5156,3 +5156,11 @@ plot(1:10)
 segments(1, 1, 10, 10, col='green')
 segments(numeric(0), numeric(0), numeric(0), numeric(0), col='green')
 ## last was error in R < 2.8.0
+
+
+## merging with a zero-row data frame
+merge(NULL, women)
+merge(women, NULL)
+merge(women[FALSE, ], women)
+merge(women, women[FALSE, ])
+## first two failed in 2.7.0
