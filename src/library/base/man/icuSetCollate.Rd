@@ -13,7 +13,7 @@ icuSetCollate(...)
 }
 \details{
   Optionally, \R can be built to collate character strings by ICU
-  (\url{http://www.icu-project.org}.  For such systems,
+  (\url{http://www.icu-project.org}).  For such systems,
   \code{icuSetCollate} can be used to tune the way collation is done.
   On other builds calling this function does nothing, with a warning.
   
@@ -26,16 +26,16 @@ icuSetCollate(...)
       \code{"default"}, asking for upper- or lower-case characters to be
       sorted first.  The default is usually lower-case first, but not in
       all languages.}
-    \item{\code{strength}:}{which components should be used?  Possible
+    \item{\code{strength}:}{Which components should be used?  Possible
       values \code{"primary"}, \code{"secondary"}, \code{"tertiary"}
-      (default}, \code{"quaternary"} and \code{"identical"}. }
+      (default), \code{"quaternary"} and \code{"identical"}. }
     \item{\code{french_collation}:}{In a French locale the way accents
       affect collation is from right to left, whereas in most other locales
       it is from left to right.  Possible values \code{"on"}, \code{"off"}
       and \code{"default"}.}
     \item{\code{normalizaton}:}{Should strings be normalized? Possible values
       \code{"on"} and \code{"off"}.}
-    \item{\code{alternate_handling}:}{Possible values \code{"non_ginorable"} and
+    \item{\code{alternate_handling}:}{Possible values \code{"non_ignorable"} and
       \code{"shifted"}.}
     \item{\code{case_level}:}{Possible values \code{"on"} and \code{"off"}.}
     \item{\code{hiragana_quaternary}:}{Possible values \code{"on"} and
