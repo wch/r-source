@@ -52,6 +52,9 @@ BUG FIXES
 	pasted in and converts them to \uxxxx sequences before passing
 	to R.
 
+    o	The vertical scrollbar on the data editor/viewer now works
+	when scrolling beyond 65535 rows.  (PR#11291)
+
 
 
 		CHANGES IN R VERSION 2.7.0

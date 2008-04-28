@@ -274,6 +274,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     /* scale scrollbars as needed */
+    DE->xScrollbarScale = DE->yScrollbarScale = 1;
     if (DE->xmaxused > 10000) DE->xScrollbarScale = DE->xmaxused/1000;
     if (DE->ymaxused > 10000) DE->yScrollbarScale = DE->ymaxused/1000;
 
@@ -670,7 +671,7 @@ static void jumppage(DEstruct DE, int dir)
 			 max(DE->nhigh/DE->yScrollbarScale, 1), 0);
 	break;
     case DOWN:
-	if (DE->rowmax >= 65535) return;
+	// if (DE->rowmax >= 65535) return;
 	DE->rowmin++;
 	DE->rowmax++;
 	copyarea(DE, 0, DE->hwidth + 2 * DE->box_h, 0, DE->hwidth + DE->box_h);
@@ -1360,7 +1361,6 @@ static Rboolean initwin(DEstruct DE, const char *title)
     if(!DE->de) return TRUE;
     DE->oldWIDTH = DE->oldHEIGHT = 0;
     DE->nboxchars = 5;
-    DE->xScrollbarScale = DE->yScrollbarScale = 1;
 
     DE->nboxchars = asInteger(GetOption(install("de.cellwidth"), R_GlobalEnv));
     if (DE->nboxchars == NA_INTEGER || DE->nboxchars < 0) DE->nboxchars = 0;
@@ -1547,6 +1547,7 @@ static void de_sbf(control c, int pos)
 	DE->rowmin = 1 + pos*DE->yScrollbarScale;
 	if(DE->rowmin > DE->ymaxused - DE->nhigh + 2)
 	    DE->rowmin = max(1,DE->ymaxused - DE->nhigh + 2);
+	printf("pos %d, rowmin %d, scale %d\n", pos, DE->rowmin, DE->yScrollbarScale);
     }
     drawwindow(DE);
 }
@@ -1838,6 +1839,7 @@ SEXP do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     /* scale scrollbars as needed */
+    DE->xScrollbarScale = DE->yScrollbarScale = 1;
     if (DE->xmaxused > 10000) DE->xScrollbarScale = DE->xmaxused/1000;
     if (DE->ymaxused > 10000) DE->yScrollbarScale = DE->ymaxused/1000;
 
