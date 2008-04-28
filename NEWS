@@ -58,9 +58,11 @@ NEW FEATURES
     o	??topic now does help.search("topic"); variations such as
     	??pkg::topic or field??topic are also supported.
 
-    o	[Experimental] There is support for using ICU (International
-	Components for Unicode) for collation, enabled by configure
-	option --with-ICU.
+    o	There is support for using ICU (International Components for
+	Unicode) for collation, enabled by configure option --with-ICU
+	on a Unix-alike and by a setting in MkRules on Windows.
+	Function icuSetCollate() allows the collation rules (including
+	the locale) to be tuned.  [Experimental]
     	
 
 PACKAGE INSTALLATION

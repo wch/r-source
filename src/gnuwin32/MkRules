@@ -58,7 +58,7 @@ USE_IMPLIBS = YES
 endif
 
 # use ICU
-USE_ICU=NO
+USE_ICU=YES
 # path to parent of ICU headers
 ICU_PATH=/sources/icu
 

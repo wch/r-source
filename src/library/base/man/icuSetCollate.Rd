@@ -15,7 +15,7 @@ icuSetCollate(...)
   Optionally, \R can be built to collate character strings by ICU
   (\url{http://www.icu-project.org}.  For such systems,
   \code{icuSetCollate} can be used to tune the way collation is done.
-  On other build, calling this function does nothing, with a warning.
+  On other builds calling this function does nothing, with a warning.
   
   Possible arguments are
   \itemize{
@@ -26,15 +26,30 @@ icuSetCollate(...)
       \code{"default"}, asking for upper- or lower-case characters to be
       sorted first.  The default is usually lower-case first, but not in
       all languages.}
+    \item{\code{strength}:}{which components should be used?  Possible
+      values \code{"primary"}, \code{"secondary"}, \code{"tertiary"}
+      (default}, \code{"quaternary"} and \code{"identical"}. }
     \item{\code{french_collation}:}{In a French locale the way accents
       affect collation is from right to left, whereas in most other locales
       it is from left to right.  Possible values \code{"on"}, \code{"off"}
       and \code{"default"}.}
+    \item{\code{normalizaton}:}{Should strings be normalized? Possible values
+      \code{"on"} and \code{"off"}.}
+    \item{\code{alternate_handling}:}{Possible values \code{"non_ginorable"} and
+      \code{"shifted"}.}
+    \item{\code{case_level}:}{Possible values \code{"on"} and \code{"off"}.}
+    \item{\code{hiragana_quaternary}:}{Possible values \code{"on"} and
+      \code{"off"}.}
   }
-  Others may be added in future.
+  Some exaples are \code{case_level="on", strength="primary"} to ignore
+  accent differences, \code{alternate_handling="shifted"} to ignore
+  space and punctuation characters.
 }
 \seealso{
   \link{Comparison}, \code{\link{sort}}
+  
+  The ICU user guide chapter on collation
+  (\url{http://www.icu-project.org/userguide/Collate_Intro.html}).
 }
 \examples{\donttest{
 x <- c("Aarhus", "aarhus", "safe", "test", "Zoo")
