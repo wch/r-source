@@ -25,7 +25,7 @@ icuSetCollate(...)
     \item{\code{case_first}:}{\code{"upper"}, \code{"lower"} or
       \code{"default"}, asking for upper- or lower-case characters to be
       sorted first.  The default is usually lower-case first, but not in
-      all languages.}
+      all languages (see the Danish example).}
     \item{\code{strength}:}{Which components should be used?  Possible
       values \code{"primary"}, \code{"secondary"}, \code{"tertiary"}
       (default), \code{"quaternary"} and \code{"identical"}. }
