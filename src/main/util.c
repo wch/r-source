@@ -1667,6 +1667,7 @@ SEXP do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+/* NB: strings can have equal collation weight without being identical */
 int Scollate(SEXP a, SEXP b)
 {
     int result = 0;
@@ -1690,13 +1691,6 @@ int Scollate(SEXP a, SEXP b)
     uiter_setUTF8(&bIter, bs, len2);
     result = ucol_strcollIter(collator, &aIter, &bIter, &status);   
     if (U_FAILURE(status)) error("could not collate");
-
-    if (result == 0) { /* refine, perhaps needed? */
-	result = strcmp(as, bs);
-	if ((result == 0) && (len1 != len2))
-	    result = (len1 < len2) ? -1 : 1;
-    }
-    
     return result;
 }
 
