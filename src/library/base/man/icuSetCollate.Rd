@@ -26,6 +26,10 @@ icuSetCollate(...)
       \code{"default"}, asking for upper- or lower-case characters to be
       sorted first.  The default is usually lower-case first, but not in
       all languages (see the Danish example).}
+    \item{\code{alternate_handling}:}{Controls the handling of
+      \sQuote{variable} characters (mainly punctuation and symbols).
+      Possible values are \code{"non_ignorable"} (primary strength) and
+      \code{"shifted"} (quaternary strength).}
     \item{\code{strength}:}{Which components should be used?  Possible
       values \code{"primary"}, \code{"secondary"}, \code{"tertiary"}
       (default), \code{"quaternary"} and \code{"identical"}. }
@@ -33,15 +37,19 @@ icuSetCollate(...)
       affect collation is from right to left, whereas in most other locales
       it is from left to right.  Possible values \code{"on"}, \code{"off"}
       and \code{"default"}.}
-    \item{\code{normalizaton}:}{Should strings be normalized? Possible values
-      \code{"on"} and \code{"off"}.}
-    \item{\code{alternate_handling}:}{Possible values \code{"non_ignorable"} and
-      \code{"shifted"}.}
-    \item{\code{case_level}:}{Possible values \code{"on"} and \code{"off"}.}
-    \item{\code{hiragana_quaternary}:}{Possible values \code{"on"} and
-      \code{"off"}.}
+    \item{\code{normalization}:}{Should strings be normalized? Possible values
+      \code{"on"} and \code{"off"} (default). This affects the
+      collation of composite characters.}
+    \item{\code{case_level}:}{An additional level between secondary and
+      tertiary, used to distinguish large and small Japanese Kana
+      characters. Possible values \code{"on"} and \code{"off"} (default).}
+    \item{\code{hiragana_quaternary}:}{Possible values \code{"on"} (sort
+      Hiragana first at quaternary level) and \code{"off"}.}
   }
-  Some exaples are \code{case_level="on", strength="primary"} to ignore
+  Only the first three are likely to be of interest except to those with a 
+  detailed understanding of collation and specialized requirements.
+  
+  Some examples are \code{case_level="on", strength="primary"} to ignore
   accent differences, \code{alternate_handling="shifted"} to ignore
   space and punctuation characters.
 }
