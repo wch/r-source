@@ -25,6 +25,9 @@ DEPRECATED & DEFUNCT
     o	The use of unserialize() on character strings is deprecated:
 	that was a format used in R < 2.4.0.
 
+    o	The use of embedded nuls in character strings is deprecated:
+	They will no longer be allowed in R 2.8.0.
+
 
 UTILITIES
 
