@@ -43,8 +43,7 @@ Portugal,Portugal,Porto,http://cran.pt.r-project.org/,"Universidade do Porto",ne
 "South Africa","South Africa",Grahamstown,http://cran.za.r-project.org/,"Rhodes University","Jeremy Baxter <J.Baxter at ru.ac.za>",1,za
 "Spain (Madrid)",Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias@rediris.es>",1,es
 Sweden,Sweden,Uppsala,http://ftp.sunet.se/pub/lang/CRAN/,"Swedish University Computer Network, Uppsala","Goran Brostrom <gb@stat.umu.se>",1,se
-"Switzerland (Zuerich)",Switzerland,Zuerich,http://cran.ch.r-project.org/,"ETH Zuerich",Martin.Maechler@R-project.org,1,ch
-"Switzerland (Bern)",Switzerland,Bern,http://www.imsv.unibe.ch/cran/,"Universitaet Bern","Thomas Schweizer <Thomas.Schweizer@stat.unibe.ch>",1,ch
+Switzerland,Switzerland,Zuerich,http://cran.ch.r-project.org/,"ETH Zuerich",Martin.Maechler@R-project.org,1,ch
 "Taiwan (Taichung)",Taiwan,Taichung,http://cran.cs.pu.edu.tw/,"Providence University, Taichung",hcchang@cs.pu.edu.tw,1,tw
 "Taiwan (Taipeh)",Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan@infor.org>",1,tw
 Thailand,Thailand,Bangkok,http://mirror.kapook.com/cran/,"Kapook.com, Bangkok",thawachchai@bunditcenter.com,1,th
