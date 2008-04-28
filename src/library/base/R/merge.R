@@ -60,8 +60,12 @@ merge.data.frame <-
             cnm <- nm.y %in% nm
             names(y)[cnm] <- paste(nm.y[cnm], suffixes[2], sep="")
         }
-        ij <- expand.grid(seq_len(nx), seq_len(ny))
-        res <- cbind(x[ij[,1], , drop = FALSE], y[ij[,2], , drop = FALSE])
+        if (nx == 0 || ny == 0) {
+            res <- cbind(x[FALSE, ], y[FALSE, ])
+        } else {
+            ij <- expand.grid(seq_len(nx), seq_len(ny))
+            res <- cbind(x[ij[,1], , drop = FALSE], y[ij[,2], , drop = FALSE])
+        }
     }
     else {
         if(any(by.x == 0)) {
