@@ -197,6 +197,9 @@ BUG FIXES
 
     o	expand.grid() failed if an input had length 0.
 
+    o	match() does again truncate strings at embedded nuls (as newly
+	documented in 2.7.0).
+
 
 
 		CHANGES IN R VERSION 2.7.0
