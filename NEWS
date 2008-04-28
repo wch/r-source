@@ -152,6 +152,8 @@ NEW FEATURES
 
     o	poly() has additional checks against user error (as in PR#11243).
 
+    o	Quartz draws contiguous lines much faster
+
 
 DEPRECATED & DEFUNCT
 
