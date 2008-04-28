@@ -22,10 +22,10 @@
     extras <- if(.Platform$OS.type == "windows")
         list(windowsTimeouts = c(100L,500L)) else
     list(bitmapType = if(capabilities("aqua")) "quartz" else if(capabilities("cairo")) "cairo" else "Xlib")
-    defdev <- Sys.getenv("R_DEFAULT_DEVICE")
+    defdev <- as.vector(Sys.getenv("R_DEFAULT_DEVICE"))
     if(!nzchar(defdev)) defdev <- "pdf"
     device <- if(interactive()) {
-        intdev <- Sys.getenv("R_INTERACTIVE_DEVICE")
+        intdev <- as.vector(Sys.getenv("R_INTERACTIVE_DEVICE"))
         if(nzchar(intdev)) intdev
         else {
             if(.Platform$OS.type == "windows") "windows"
