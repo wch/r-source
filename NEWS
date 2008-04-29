@@ -209,6 +209,9 @@ BUG FIXES
     o	match() does again truncate strings at embedded nuls (as newly
 	documented in 2.7.0).
 
+    o	Because of a typo, 'pointsize' in png(type="cairo") etc
+    	devices was being interpreted in pixels not bigpoints.
+
 
 
 		CHANGES IN R VERSION 2.7.0
