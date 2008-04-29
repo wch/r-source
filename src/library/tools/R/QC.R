@@ -1240,10 +1240,10 @@ function(x, ...)
         writeLines(c(gettextf("Variables in data frame '%s'",
                               docObj[["name"]]),
                      strwrap(gettextf("Code: %s",
-                                   format_args(docObj[["code"]])),
+                                      format_args(docObj[["code"]])),
                              indent = 2L, exdent = 8L),
                      strwrap(gettextf("Docs: %s",
-                                   format_args(docObj[["docs"]])),
+                                      format_args(docObj[["docs"]])),
                              indent = 2L, exdent = 8L)))
         writeLines("")
     }
@@ -2291,7 +2291,6 @@ function(package, dir, lib.loc = NULL)
             c(bad_replace_funs,
               unlist(bad_S4_replace_methods, use.names = FALSE))
     }
-
 
     class(bad_replace_funs) <- "checkReplaceFuns"
     bad_replace_funs
@@ -4092,15 +4091,13 @@ function(package, dir, lib.loc = NULL)
         exprs <- lapply(ls(envir = code_env, all.names = TRUE),
                         function(f) {
                             f <- get(f, envir = code_env)
-                            if(typeof(f) == "closure")
-                                body(f)
-                            else
-                                NULL
+			    if(typeof(f) == "closure") body(f) # else NULL
                         })
         if(.isMethodsDispatchOn()) {
             ## Also check the code in S4 methods.
             ## This may find things twice.
-            for(f in .get_S4_generics_really_in_env(code_env)) {
+	    ##M for(f in .get_S4_generics_really_in_env(code_env)) {
+	    for(f in methods::getGenerics(code_env)) {
                 mlist <- .get_S4_methods_list(f, code_env)
                 exprs <- c(exprs, lapply(mlist, body))
             }
@@ -4474,10 +4471,11 @@ function(g, env)
         .Internal(getRegisteredNamespace(as.name(package)))
     } # else NULL
     penv <- parent.env(if(is.environment(penv)) penv else env)
-    if((g %in% .get_S4_generics_really_in_env(penv))
-       && length(mlist_from_penv <- methods::findMethods(g, penv)))
-        mlist <- mlist[is.na(match(names(mlist),
-                                   names(mlist_from_penv)))]
+    ##M if((g %in% .get_S4_generics_really_in_env(penv))
+    if((g %in% methods::getGenerics(penv)) &&
+       length(mlist_from_penv <- methods::findMethods(g, penv)))
+	mlist <- mlist[is.na(match(names(mlist),
+				   names(mlist_from_penv)))]
 
     mlist
 }
