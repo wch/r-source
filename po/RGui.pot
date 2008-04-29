@@ -941,24 +941,12 @@ msgstr ""
 msgid "Jpeg file"
 msgstr ""
 
-#: ../library/grDevices/src/devWindows.c:896
-msgid "Postscript files (*.ps)"
-msgstr ""
-
 #: ../library/grDevices/src/devWindows.c:897
 msgid "Postscript file"
 msgstr ""
 
-#: ../library/grDevices/src/devWindows.c:908
-msgid "PDF files (*.pdf)"
-msgstr ""
-
 #: ../library/grDevices/src/devWindows.c:909
 msgid "PDF file"
-msgstr ""
-
-#: ../library/grDevices/src/devWindows.c:920
-msgid "Enhanced metafiles (*.emf)"
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:921
