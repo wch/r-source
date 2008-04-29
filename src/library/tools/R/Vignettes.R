@@ -40,13 +40,7 @@ function(package, dir, lib.loc = NULL,
         if(workdir == "src") setwd(vigns$dir)
     }
 
-    outConn <- file(open = "w+")        # anonymous tempfile
-    sink(outConn, type = "output")
-    sink(outConn, type = "message")
-
     on.exit({
-        sink(type = "output")
-        sink(type = "message")
         setwd(wd)
         if(!keepfiles) unlink(tmpd, recursive = TRUE)
     })
@@ -56,20 +50,23 @@ function(package, dir, lib.loc = NULL,
 
     for(f in vigns$docs) {
         if(tangle)
-            tryCatch(utils::Stangle(f, quiet = TRUE),
-                     error = function(e)
-                     result$tangle[[f]] <<- conditionMessage(e))
+            .eval_with_capture(tryCatch(utils::Stangle(f, quiet = TRUE),
+                                        error = function(e)
+                                        result$tangle[[f]] <<-
+                                        conditionMessage(e)))
         if(weave)
-            tryCatch(utils::Sweave(f, quiet = TRUE),
-                     error = function(e)
-                     result$weave[[f]] <<- conditionMessage(e))
+            .eval_with_capture(tryCatch(utils::Sweave(f, quiet = TRUE),
+                                        error = function(e)
+                                        result$weave[[f]] <<-
+                                        conditionMessage(e)))
     }
 
     if(tangle) {
         for(f in list_files_with_exts(getwd(), c("r", "s", "R", "S")))
-            tryCatch(source(f),
-                     error = function(e)
-                     result$source[[f]] <<- conditionMessage(e))
+            .eval_with_capture(tryCatch(source(f),
+                                        error = function(e)
+                                        result$source[[f]] <<-
+                                        conditionMessage(e)))
     }
     if(tangle && weave && latex) {
         if(! "makefile" %in% tolower(list.files(vigns$dir))) {
@@ -93,18 +90,11 @@ function(package, dir, lib.loc = NULL,
                 bf <- file_path_sans_ext(basename(f))
                 if(bf %in% bad_vignettes) break
                 bft <- paste(bf, ".tex", sep = "")
-                tryCatch(texi2dvi(file = bft, pdf = TRUE,
-                                  clean = FALSE, quiet = 2L),
-                         error = function(e)
-                         result$latex[[f]] <<- conditionMessage(e))
-                ## <NOTE>
-                ## In case the texi2dvi() *output* was of interest, we
-                ## could try to get this by
-                ##   seek(outConn)
-                ## before calling texi2dvi(), and in case of no error
-                ## retrieve the output via
-                ##   readLines(outConn, warn = FALSE)
-                ## </NOTE>
+                .eval_with_capture(tryCatch(texi2dvi(file = bft, pdf = TRUE,
+                                                     clean = FALSE, quiet = 2L),
+                                            error = function(e)
+                                            result$latex[[f]] <<-
+                                            conditionMessage(e)))
             }
         }
     }
