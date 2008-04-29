@@ -893,7 +893,7 @@ static void menups(control m)
     pDevDesc dd = (pDevDesc) getdata(m);
     char  *fn;
 
-    setuserfilter(G_("Postscript files (*.ps)\0*.ps\0All files (*.*)\0*.*\0\0"));
+    setuserfilter("Encapsulated postscript files (*.eps)\0*.eps\0Postscript files (*.ps)\0*.ps\0All files (*.*)\0*.*\0\0");
     fn = askfilesave(G_("Postscript file"), "|.ps");
     if (!fn) return;
     SaveAsPostscript(dd, fn);
@@ -905,7 +905,7 @@ static void menupdf(control m)
     pDevDesc dd = (pDevDesc) getdata(m);
     char  *fn;
 
-    setuserfilter(G_("PDF files (*.pdf)\0*.pdf\0All files (*.*)\0*.*\0\0"));
+    setuserfilter("PDF files (*.pdf)\0*.pdf\0All files (*.*)\0*.*\0\0");
     fn = askfilesave(G_("PDF file"), "|.pdf");
     if (!fn) return;
     SaveAsPDF(dd, fn);
@@ -917,7 +917,7 @@ static void menuwm(control m)
     pDevDesc dd = (pDevDesc) getdata(m);
     char  display[550], *fn;
 
-    setuserfilter(G_("Enhanced metafiles (*.emf)\0*.emf\0All files (*.*)\0*.*\0\0"));
+    setuserfilter("Enhanced metafiles (*.emf)\0*.emf\0All files (*.*)\0*.*\0\0");
     fn = askfilesave(G_("Enhanced metafiles"), "|.emf");
     if (!fn) return;
     if(strlen(fn) > 512) {
