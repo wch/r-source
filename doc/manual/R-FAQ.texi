@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-04-18
+@set FAQ_DATE @value{FAQ_YEAR}-04-28
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -500,14 +500,14 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2008-01-17:
+@c Linux binaries as of 2008-04-29:
 @c
 @c debian
 @c   oldstable
 @c           i386   2.4.1  Johannes Ranke
 @c           amd64  2.4.1  Johannes Ranke
-@c   stable  i386   2.6.1  Johannes Ranke
-@c           amd64  2.6.1  Johannes Ranke
+@c   stable  i386   2.7.0  Johannes Ranke
+@c           amd64  2.7.0  Johannes Ranke
 @c redhat
 @c   el4     i386   2.6.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
 @c           x86_64 2.6.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
@@ -518,30 +518,33 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   fedora8 i386   2.6.1  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c           x86_64 2.6.1  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c suse
-@c   10.0    i586   2.6.1  Detlef Steuer <steuer@hsu-hh.de>
-@c           x86_64 2.6.1  Detlef Steuer <steuer@hsu-hh.de
-@c   10.1    i586   2.6.1  Detlef Steuer <steuer@hsu-hh.de>
-@c           x86_64 2.6.1  Detlef Steuer <steuer@hsu-hh.de>
-@c   10.2    i586   2.6.1  Detlef Steuer <steuer@hsu-hh.de>
-@c           x86_64 2.6.1  Detlef Steuer <steuer@hsu-hh.de>
-@c   10.3    i586   2.6.1  Detlef Steuer <steuer@hsu-hh.de>
-@c           x86_64 2.6.1  Detlef Steuer <steuer@hsu-hh.de>
+@c   10.0    i586   2.7.0  Detlef Steuer <steuer@hsu-hh.de>
+@c           x86_64 2.7.0  Detlef Steuer <steuer@hsu-hh.de
+@c   10.1    i586   2.7.0  Detlef Steuer <steuer@hsu-hh.de>
+@c           x86_64 2.7.0  Detlef Steuer <steuer@hsu-hh.de>
+@c   10.2    i586   2.7.0  Detlef Steuer <steuer@hsu-hh.de>
+@c           x86_64 2.7.0  Detlef Steuer <steuer@hsu-hh.de>
+@c   10.3    i586   2.7.0  Detlef Steuer <steuer@hsu-hh.de>
+@c           x86_64 2.7.0  Detlef Steuer <steuer@hsu-hh.de>
 @c ubuntu
+@c   hardy   [Hardy Heron, 8.04]
+@c           i386   2.7.0  Vincent Goulet
+@c           amd64  2.7.0  Michael Rutter
 @c   gutsy   [Gutsy Gibbon, 7.10]
-@c           i386   2.6.1  Vincent Goulet
-@c           amd64  2.6.1  Michael Rutter
+@c           i386   2.7.0  Vincent Goulet
+@c           amd64  2.7.0  Michael Rutter
 @c   feisty  [Feisty Fawn,  7.04]
-@c           i386   2.6.1  Vincent Goulet
-@c           amd64  2.6.1  Michael Rutter
+@c           i386   2.7.0  Vincent Goulet
+@c           amd64  2.7.0  Michael Rutter
 @c   dapper  [Dapper Drake, 6.06]
-@c           i386   2.6.1  Vincent Goulet
-@c           amd64  2.6.1  Michael Rutter
+@c           i386   2.7.0  Vincent Goulet
+@c           amd64  2.7.0  Michael Rutter
 
 The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
 
 @quotation
-@multitable {Red Hat} {i386/x86_64} {dapper/feisty/gutsy} {Martyn Plummer}
+@multitable {Red Hat} {i386/x86_64} {dapper/feisty/gutsy/hardy} {Martyn Plummer}
 @headitem @tab CPU @tab Versions @tab Provider
 @item Debian   @tab i386/amd64 @tab stable/oldstable @tab Johannes Ranke
 @c @item          @tab amd64 @tab stable/oldstable @tab Johannes Ranke
@@ -551,8 +554,8 @@ packages.
 @c @item          @tab x86_64 @tab Enterprise Linux @tab Matthew P. Cox
 @item SuSE     @tab i586/x86_64 @tab 10.0/10.1/10.2/10.3 @tab Detlef Steuer
 @c @item          @tab x86_64 @tab 10.0/10.1/10.2/10.3 @tab Detlef Steuer
-@item Ubuntu   @tab i386   @tab dapper/feisty/gutsy @tab Vincent Goulet
-@item          @tab amd64  @tab dapper/feisty/gutsy @tab Michael Rutter
+@item Ubuntu   @tab i386   @tab dapper/feisty/gutsy/hardy @tab Vincent Goulet
+@item          @tab amd64  @tab dapper/feisty/gutsy/hardy @tab Michael Rutter
 @end multitable
 @end quotation
 
@@ -1844,6 +1847,10 @@ models, and emulation of computer programs, respectively.
 Better Automated ReDistricting.
 @item BAYSTAR
 Bayesian analysis of threshold autoregressive models.
+@item BB
+Barzilai-Borwein spectral methods for solving nonlinear system of
+equations, and for optimizing nonlinear objective functions subject to
+simple constraints.
 @item BHH2
 Functions and data sets reproducing some examples in ``Statistics for
 Experimenters II'' by G. E. P. Box, J. S. Hunter, and W. C. Hunter,
@@ -1879,6 +1886,8 @@ Functions and data sets for the book ``Introduction to Bayesian
 Statistics'' by W. M. Bolstad, 2004, John Wiley and Sons.
 @item BootCL
 Bootstrapping test for chromosomal localization.
+@item BootPR
+Bootstrap prediction intervals and bias-corrected forecasting.
 @item BradleyTerry
 Specify and fit the Bradley-Terry model and structured versions.
 @item Brobdingnag
@@ -2193,6 +2202,8 @@ IDP/ZHW.
 @item ISA
 Functions to support ``Introduzione alla Statistica Applicata con esempi
 in R'' by Federico M. Stefanini, Pearson Education Milano, 2007.
+@item ISOcodes
+ISO language, territory, currency, script and character codes.
 @item ISwR
 Data sets for ``Introductory Statistics with R'' by Peter Dalgaard,
 2002, Springer.
@@ -2207,9 +2218,12 @@ Functions for computing the NPMLE for censored and truncated data.
 Functions to perform isotonic regression.
 @item JADE
 JADE and ICA performance criteria.
-@item JLLprod
-Nonparametric estimation of homothetic and generalized homothetic
-production functions.
+@c <COMMENT>
+@c Moved to the Archive on 2008-04-22 (Orphaned/2.6.0).
+@c @item JLLprod
+@c Nonparametric estimation of homothetic and generalized homothetic
+@c production functions.
+@c </COMMENT>
 @item JGR
 Java Gui for R.
 @item JM
@@ -2721,6 +2735,8 @@ Johnson distributions, normal scores and generalized hypergeometric
 distributions).
 @item SwissAir
 Air quality data of Switzerland for one year in 30 min resolution.
+@item SyNet
+Inference and analysis of sympatry networks.
 @item Synth
 Causal inference using the synthetic control group method.
 @item TIMP
@@ -2936,6 +2952,9 @@ Bayesian Change Point based on the Barry and Hartigan product partition
 model.
 @item benchden
 28 benchmark densities from Berlinet/Devroye (1994).
+@item bentcableAR
+Bent-cable regression for independent data or autoregressive time
+series.
 @item betareg
 Beta regression for modeling rates and proportions.
 @item bs
@@ -3016,6 +3035,8 @@ Bias-reduction in binomial-response GLMs.
 @item brlr
 Bias-reduced logistic regression: fits logistic regression models by
 maximum penalized likelihood.
+@item bspec
+Bayesian inference on the (discrete) power spectrum of time series.
 @item butler
 Unit testing, profiling and benchmarking for R.
 @item bvls
@@ -3188,6 +3209,8 @@ A series of simple tools for constructing and manipulating confounded
 and fractional factorial designs.
 @item connectedness
 Find disconnected sets for two-way classification.
+@item contfrac
+Continued fractions.
 @item contrast
 A collection of contrast methods.
 @item copula
@@ -3383,8 +3406,11 @@ Ecological inference and higher-dimension data management.
 @item eigenmodel
 Semiparametric factor and regression models for symmetric relational
 data.
-@item elasticnet
-Elastic net regularization and variable selection.
+@c <COMMENT>
+@c Moved to the Archive on 2008-04-22 (Orphaned/2.6.0).
+@c @item elasticnet
+@c Elastic net regularization and variable selection.
+@c </COMMENT>
 @item ellipse
 Package for drawing ellipses and ellipse-like confidence regions.
 @item elliptic
@@ -3417,8 +3443,11 @@ Elementary functions for epidemiological analysis.
 Epidemiological calculator.
 @item epitools
 Basic tools for applied epidemiology.
-@item epsi
-Edge Preserving Smoothing for Images.
+@c <COMMENT>
+@c Moved to the Archive on 2008-04-22 (Orphaned/2.6.0).
+@c @item epsi
+@c Edge Preserving Smoothing for Images.
+@c </COMMENT>
 @item equivalence
 Tests and graphics for assessing tests of equivalence.
 @item ergm
@@ -3759,6 +3788,8 @@ Regression models for grouped and coarse data, under the Coarsened At
 Random assumption.
 @item grplasso
 Fit user specified models with group lasso penalty.
+@item gsarima
+functions for Generalized SARIMA time series simulation.
 @item gsl
 Wrapper for special functions of the Gnu Scientific Library (GSL).
 @item gss
@@ -3810,6 +3841,9 @@ Interface to the @acronym{NCSA} HDF5 library.
 Highest Density Regions and Conditional Density Estimation.
 @item heatmap.plus
 Heatmap with sensible behavior.
+@item helloJavaWorld
+A demonstration how to interface to a jar file that resides inside an R
+package.
 @item heplots
 Visualizing tests in multivariate linear models.
 @item hett
@@ -3860,6 +3894,8 @@ Hybrid hierarchical clustering via mutual clusters.
 Groundwater data presentation and interpretation.
 @item hydrosanity
 Graphical user interface for exploring hydrological time series.
+@item hypergeo
+The hypergeometric function over the whole complex plane.
 @item ibdreg
 Regression methods for IBD linkage with covariates.
 @item identity
@@ -3934,8 +3970,11 @@ Miscellaneous functions for classification and visualization developed
 at the Department of Statistics, University of Dortmund.
 @item klin
 Linear equations with Kronecker structure.
-@item km.ci
-Confidence intervals for the Kaplan-Meier estimator.
+@c <COMMENT>
+@c Moved to the Archive on 2008-04-22 (Orphaned/2.6.0).
+@c @item km.ci
+@c Confidence intervals for the Kaplan-Meier estimator.
+@c </COMMENT>
 @item knnFinder
 Fast nearest neighbor search.
 @item knnTree
@@ -3969,6 +4008,8 @@ Laboratory for Dynamic Synthetic Vegephenomenology.
 Functions for the book ``Laboratorio di statistica con R'' by
 S. M. Iacus and G. Masarotto, 2002, McGraw-Hill.  Function names and
 documentation in Italian.
+@item lago
+LAGO for rare target detection.
 @item lancet.iraqmortality
 Surveys of Iraq mortality published in The Lancet.
 @item languageR
@@ -4015,6 +4056,8 @@ Tools for Linear Grouping Analysis (LGA).
 A set of methods for longitudinal data objects.
 @item lhs
 Latin Hypercube Samples.
+@item limSolve
+Solving linear inverse models.
 @c <COMMENT>
 @c Moved to Archive on 2007-10-03 as requested by the maintainer.
 @c @item limma
@@ -4056,6 +4099,8 @@ Analysis of sparse contingency tables with penalization approaches.
 @item logistf
 Firth's bias reduced logistic regression approach with penalized profile
 likelihood based confidence intervals for parameter estimates.
+@item logregperm
+Inference in Logistic Regression using permutation tests.
 @item logspline
 Logspline density estimation.
 @item lokern
@@ -4304,6 +4349,8 @@ Analysis of multilevel data by organizational and social psychologists.
 @item multinomRob
 Overdispersed multinomial regression using robust (LQD and tanh)
 estimation.
+@item multipol
+Utilities to manipulate multivariate polynomials.
 @c <COMMENT>
 @c Moved to the Archive on 2004-09-30.
 @c @item multiv
@@ -4344,8 +4391,11 @@ Spatial nonparametric covariance functions.
 Functions to perform the regression depth method (RDM) to binary
 regression to approximate the minimum number of observations that can be
 removed such that the reduced data set has complete separation.
-@item ncvar
-High-level R interface to netCDF datasets.
+@c <COMMENT>
+@c Moved to the Archive on 2008-04-22 (Orphaned/2.6.0).
+@c @item ncvar
+@c High-level R interface to netCDF datasets.
+@c </COMMENT>
 @item negenes
 Estimating the number of essential genes in a genome on the basis of
 data from a random transposon mutagenesis experiment, through the use of
@@ -4404,6 +4454,8 @@ networks''), and for multinomial log-linear models.  Contained in the
 @file{VR} bundle.  @emph{Recommended}.
 @item nnls
 The Lawson-Hanson NNLS algorithm for non-negative least squares.
+@item noia
+Implementation of the Natural and Orthogonal InterAction (NOIA) model.
 @item nonbinROC
 ROC-type analysis for non-binary gold standards.
 @item nor1mix
@@ -4536,6 +4588,9 @@ Permutation test to compare variability within and distance between two
 groups.
 @item perturb
 Perturbation analysis for evaluating collinearity.
+@item pga
+An ensemble method for variable selection by carrying out Darwinian
+evolution in parallel universes.
 @item pgam
 Poisson-Gamma Additive Models.
 @item pgirmess
@@ -4851,9 +4906,12 @@ fft, histogram equalization, and reading @acronym{JPEG} files.
 Indexing for R.
 @item risksetROC
 Riskset ROC curve estimation from censored survival data.
-@item riv
-Robust Instrumental Variables estimators based on high breakpoint point
-S-estimators of multivariate location and scatter matrices.
+@c <COMMENT>
+@c Moved to the Archive on 2008-04-22 (Orphaned/2.6.0).
+@c @item riv
+@c Robust Instrumental Variables estimators based on high breakpoint point
+@c S-estimators of multivariate location and scatter matrices.
+@c </COMMENT>
 @item rjacobi
 Jacobi polynomials and Gauss-Jacobi quadrature related operations.
 @item rjson
@@ -4882,8 +4940,11 @@ Basic Robust Statistics.
 Simple interactive controls for R using the tcltk package.
 @item rpart
 Recursive PARTitioning and regression trees.  @emph{Recommended}.
-@item rpart.permutation
-Permutation tests of rpart models.
+@c <COMMENT>
+@c Moved to the Archive on 2008-04-22 (Orphaned/2.6.0).
+@c @item rpart.permutation
+@c Permutation tests of rpart models.
+@c </COMMENT>
 @item rpubchem
 R interface to the PubChem collection.
 @item rpvm
@@ -5316,9 +5377,12 @@ Track objects.
 Post-trade analysis of transaction costs.
 @item tree
 Classification and regression trees.
-@item treeglia
-Stem analysis functions for volume increment and carbon uptake
-assessment from tree-rings.
+@c <COMMENT>
+@c Moved to the Archive on 2008-04-22 (Orphaned/2.6.0).
+@c @item treeglia
+@c Stem analysis functions for volume increment and carbon uptake
+@c assessment from tree-rings.
+@c </COMMENT>
 @item triangle
 Standard distribution functions for the triangle distribution.
 @item trimcluster
@@ -5379,8 +5443,11 @@ Unit root tests and graphics for seasonal time series.
 Variational Bayesian mixture model.
 @item varSelRF
 Variable selection using random forests.
-@item vardiag
-Interactive variogram diagnostics.
+@c <COMMENT>
+@c Moved to the Archive on 2008-04-22 (Orphaned/2.6.0).
+@c @item vardiag
+@c Interactive variogram diagnostics.
+@c </COMMENT>
 @item varmixt
 Mixture model on the variance for the analysis of gene expression data.
 @item vars
@@ -5442,9 +5509,12 @@ Performs popular nearest neighbor routines.
 Methods to convert R to YAML and back.
 @item yest
 Gaussian independence models.
-@item zicounts
-Fit classical, zero-inflated and interval censored count data regression
-models.
+@c <COMMENT>
+@c Moved to the Archive on 2008-04-22 (Orphaned/2.6.0).
+@c @item zicounts
+@c Fit classical, zero-inflated and interval censored count data regression
+@c models.
+@c </COMMENT>
 @item zipfR
 Statistical models for word frequency distributions.
 @item zoeppritz
