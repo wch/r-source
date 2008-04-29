@@ -217,7 +217,8 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     ## "" forces use of default paths.
     texinputs <- paste(c(texinputs, Rtexmf, ""), collapse = envSep)
     ## not clear if this is needed, but works
-    if(.Platform$OS.type == "windows") texinputs <- gsub("\\\\", "/", texinputs)
+    if(.Platform$OS.type == "windows")
+        texinputs <- gsub("\\\\", "/", texinputs)
 
     otexinputs <- Sys.getenv("TEXINPUTS", unset = NA)
     if(is.na(otexinputs)) {
@@ -239,37 +240,87 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     Sys.setenv(BSTINPUTS = paste(bstinputs, texinputs, sep = envSep))
 
     if(nzchar(texi2dvi)) {
-        ignore.stderr <- FALSE
-        pdf <- if(pdf) "--pdf" else ""
-        if(is.numeric(quiet)) {
-            ignore.stderr <- quiet >= 2
-            quiet <- quiet >= 1
+        pdf <- if(pdf) "--pdf" else ""        
+        out <- .shell_with_capture(paste(shQuote(texi2dvi), "--help"))
+        texi2dvi_supports_build_dir <-
+            length(grep("--build-dir=", out$stdout)) > 0L
+        if(texi2dvi_supports_build_dir) {
+            build_dir <- tempfile("texi2dvi")            
+            on.exit(unlink(build_dir, recursive = TRUE), add = TRUE)
+            extra <- sprintf("--build-dir=%s --no-line-error",
+                             shQuote(build_dir))
+            clean <- ""
         }
-        clean <- if(clean) "--clean" else ""
-        if(quiet) {
-            quiet <- "--quiet"
-            extra <- if(.Platform$OS.type == "windows") "" else " > /dev/null"
-        } else {
-            extra <- quiet <- ""
+        else {
+            build_dir <- getwd()
+            extra <- ""
+            clean <- if(clean) "--clean" else ""
         }
-
+        ## Back compatibility for now.
+        if(is.numeric(quiet)) quiet <- quiet >= 1
+        quiet <- if(quiet) "--quiet" else ""
+                                           
         if(.Platform$OS.type == "windows") {
             ## look for MiKTeX (which this almost certainly is)
             ## and set the path to R's style files.
             ## -I works in MiKTeX >= 2.4, at least
-            ver <- system(paste(shQuote(texi2dvi), "--version"), intern = TRUE)
+            ver <- system(paste(shQuote(texi2dvi), "--version"),
+                          intern = TRUE)
             if(length(grep("MiKTeX", ver[1]))) {
                 paths <- paste ("-I", shQuote(texinputs))
                 clean <- paste(clean, paste(paths, collapse = " "))
             }
         }
 
-        ## print(paste(shQuote(texi2dvi), quiet, pdf, clean, shQuote(file), extra))
-        if(system(paste(shQuote(texi2dvi), quiet, pdf, clean,
-                        shQuote(file), extra),
-                  ignore.stderr = ignore.stderr))
-            stop(gettextf("running 'texi2dvi' on '%s' failed", file),
-                 domain = NA)
+        out <- .shell_with_capture(paste(shQuote(texi2dvi), quiet,
+                                         pdf, clean, shQuote(file),
+                                         extra))
+        if(out$status) {
+            ## Trouble.
+            ## <FIXME>
+            ## What should we do with the texi2dvi diagnostics if not
+            ## quiet?
+            ## </FIXME>
+            msg <- gettextf("running 'texi2dvi' on '%s' failed", file)
+            ## Try to provide additional diagnostics.
+            if(length(grep("exited with bad status, quitting.$",
+                           out$stderr))) {
+                ## (La)TeX errors.
+                log <- list.files(build_dir, pattern = "\\.log$",
+                                  all.files = TRUE, full.names = TRUE,
+                                  recursive = TRUE)
+                log <- log[file_path_sans_ext(basename(log)) ==
+                           file_path_sans_ext(file)]
+                if(length(log)) {
+                    lines <- .get_LaTeX_errors_from_log_file(log)
+                    if(length(lines))
+                        msg <- paste(msg, "LaTeX errors:",
+                                     paste(lines, collapse = "\n"),
+                                     sep = "\n")
+                }
+            } else if(length(grep("bibtex failed$", out$stderr,
+                                  ignore.case = TRUE))) {
+                ## BibTeX errors.
+                log <- list.files(build_dir, pattern = "\\.blg$",
+                                  all.files = TRUE, full.names = TRUE,
+                                  recursive = TRUE)
+                log <- log[file_path_sans_ext(basename(log)) ==
+                           file_path_sans_ext(file)]
+                if(length(log)) {
+                    lines <- .get_BibTeX_errors_from_blg_file(log)
+                    if(length(lines))
+                        msg <- paste(msg, "BibTeX errors:",
+                                     paste(lines, collapse = "\n"),
+                                     sep = "\n")
+                }
+            } else {
+                ## Use texi2dvi message.
+                msg <- paste(msg, "Diagnostics:",
+                             paste(out$stderr, collapse = "\n"),
+                             sep = "\n")
+            }
+            stop(msg, domain = NA)
+        }
     } else {
         ## Do not have texi2dvi
         ## Needed at least on Windows except for MiKTeX
@@ -313,7 +364,6 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     }
 }
 
-
 ### * Internal utility functions.
 
 ### ** %w/o%
@@ -349,6 +399,31 @@ function(x, ...)
     on.exit({ sink(); close(file) })
     print(x, ...)
     out
+}
+
+### ** .eval_with_capture
+
+.eval_with_capture <-
+function(expr)
+{
+    ## Evaluate the given expression and return a list with elements
+    ## 'value', 'output' and 'message' (with obvious meanings).
+
+    outcon <- file(open = "w+")
+    msgcon <- file(open = "w+")
+    sink(outcon, type = "output")
+    sink(msgcon, type = "message")
+    on.exit({
+        sink(type = "output")
+        sink(type = "message")
+        close(outcon)
+        close(msgcon)
+    })
+
+    value <- eval(expr)
+    list(value = value,
+         output = readLines(outcon, warn = FALSE),
+         message = readLines(msgcon, warn = FALSE))
 }
 
 ### ** .file_append_ensuring_LFs
@@ -401,7 +476,7 @@ function(con, n = 4L)
     ## context.
     lines <- readLines(con, warn = FALSE)
     pos <- grep("^!", lines)
-    if(!length(pos)) character()
+    if(!length(pos)) return(character())
     ## Error chunk extends to at most the next error line.
     mapply(function(from, to) paste(lines[from : to], collapse = "\n"),
            pos, pmin(pos + n, c(pos[-1L], length(lines)) - 1L))
@@ -465,6 +540,46 @@ function(nsInfo)
               S3_methods_list[idx, 2L],
               sep = ".")
     S3_methods_list
+}
+
+### ** .get_package_metadata
+
+.get_package_metadata <-
+function(dir, installed = FALSE)
+{
+    ## Get the package DESCRIPTION metadata for a package with root
+    ## directory 'dir'.  If an unpacked source (uninstalled) package,
+    ## base packages (have only a DESCRIPTION.in file with priority
+    ## "base") and bundle packages (have a DESCRIPTION.in file and need
+    ## additional metadata from the the bundle DESCRIPTION file) need
+    ## special attention.
+    dir <- file_path_as_absolute(dir)
+    dfile <- file.path(dir, "DESCRIPTION")
+    if(file_test("-f", dfile)) return(.read_description(dfile))
+    if(installed) stop("File 'DESCRIPTION' is missing.")
+    dfile <- file.path(dir, "DESCRIPTION.in")
+    if(file_test("-f", dfile))
+        meta <- .read_description(dfile)
+    else
+        stop("Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing.")
+    if(identical(meta["Priority"], "base")) return(meta)
+    ## Otherwise, this must be a bundle package.
+    bdfile <- file.path(dirname(dir), "DESCRIPTION")
+    if(file_test("-f", bdfile)) {
+        file <- tempfile()
+        on.exit(unlink(file))
+        writeLines(c(readLines(bdfile), readLines(dfile)), file)
+        .read_description(file)
+        ## Using an anonymous tempfile (con <- file()) would work too
+        ## for accumulating, e.g.,
+        ##   con <- file(open = "w+")
+        ##   on.exit(close(con))
+        ##   writeLines(c(readLines(bdfile), readLines(dfile)), con)
+        ## but .read_description() insists on an existing file (maybe
+        ## this should be changed?).
+    }
+    else
+        stop("Bundle 'DESCRIPTION' is missing.")
 }
 
 ### ** .get_requires_from_package_db
@@ -923,6 +1038,28 @@ function(dfile)
              error = function(e)
              stop(gettextf("file '%s' is not in valid DCF format", dfile),
                   domain = NA, call. = FALSE))
+}
+
+### ** .shell_with_capture
+
+.shell_with_capture <-
+function(command, input = NULL)
+{
+    ## Invoke a system command using a shell and capture its status,
+    ## stdout and stderr into separate components.
+
+    ## Should try some sanity checking that there is no redirection in
+    ## command thus far ...
+    outfile <- tempfile("xshell")
+    errfile <- tempfile("xshell")
+    on.exit(unlink(c(outfile, errfile)))
+    .shell <- if(.Platform$OS.type == "windows") shell else system
+    status <-
+        .shell(sprintf("%s > %s 2> %s", command, outfile, errfile),
+               input = input)
+    list(status = status,
+         stdout = readLines(outfile, warn = FALSE),
+         stderr = readLines(errfile, warn = FALSE))
 }
 
 ### ** .source_assignments
