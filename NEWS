@@ -119,7 +119,7 @@ UTILITIES
 
     o	R CMD Rd2dvi now previews PDF output (as was documented) if
     	R_PDFVIEWER is set (as it will normally be on a Unix-alike but
-    	not on Windows).
+    	not on Windows, where the file association is used by default).
 
 
 BUG FIXES
@@ -159,6 +159,9 @@ DEPRECATED & DEFUNCT
 
     o	The use of unserialize() on character strings is deprecated:
 	that was a format used in R < 2.4.0.
+
+    o	The use of embedded nuls in character strings is deprecated:
+	They will no longer be allowed in R 2.8.0.
 
 
 UTILITIES
