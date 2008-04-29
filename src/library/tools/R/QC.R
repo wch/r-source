@@ -130,6 +130,13 @@ function(package, dir, lib.loc = NULL)
             data_objs <- c(data_objs, new)
             rm(list = new, envir = data_env)
         }
+
+	## <FIXME>
+	## Currently, loading data from an R file via sys.source() puts
+	## .required into the load environment if the R code has a call to
+	## require().
+	data_objs <- data_objs %w/o% c(".required")
+	## </FIXME>
     }
 
     ## There was a time when packages contained code or data (or both).
@@ -183,13 +190,6 @@ function(package, dir, lib.loc = NULL)
 	    code_objs %w/o% c("Arith", "Compare", "Complex", "Logic",
 			      "Math", "Math2", "Ops", "Summary")
     }
-
-    ## <FIXME>
-    ## Currently, loading data from an R file via sys.source() puts
-    ## .required into the load environment if the R code has a call to
-    ## require().
-    data_objs <- data_objs %w/o% c(".required")
-    ## </FIXME>
 
     undoc_things <-
         list("code objects" =
@@ -496,8 +496,7 @@ function(package, dir, lib.loc = NULL,
         ## hence, let's make this optional for the time being.
         ## </NOTE>
         check_S4_methods <-
-            identical(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")),
-                      TRUE)
+            isTRUE(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")))
         if(check_S4_methods) {
             get_formals_from_method_definition <- function(m) {
                 ## Argh, see methods:::rematchDefinition().
@@ -551,7 +550,7 @@ function(package, dir, lib.loc = NULL,
                     ## Could add more tests :-)
                     formals(bdy[[2L]][[3L]])
                 } else
-                    formals(fun)
+                formals(fun)
             }
             lapply(.get_S4_generics_really_in_env(code_env),
                    function(f) {
@@ -2916,8 +2915,7 @@ function(x, ...)
         writeLines("")
     }
 
-    if(identical(as.logical(Sys.getenv("_R_CHECK_RD_EMPTY_SECTIONS_")),
-                 TRUE)
+    if(isTRUE(as.logical(Sys.getenv("_R_CHECK_RD_EMPTY_SECTIONS_")))
        && length(x$files_with_empty_sections)) {
         writeLines(gettext("Rd files with empty sections:"))
         bad <- x$files_with_empty_sections
@@ -3271,8 +3269,8 @@ print.check_package_license <-
 function(x, ...)
 {
     if(length(x)
-       && identical(as.logical(Sys.getenv("_R_CHECK_LICENSE_")),
-                    TRUE)) {
+       && isTRUE(as.logical(Sys.getenv("_R_CHECK_LICENSE_"))))
+    {
         writeLines(c(gettext("Non-standard license specification:"),
                      strwrap(x$license, indent = 2L, exdent = 2L),
                      if(length(x$bad_pointers))
@@ -4196,8 +4194,7 @@ function(package, dir, lib.loc = NULL)
     ## in "strange" diagnostic output.  Let's more or less disable this
     ## for the time being.
     check_examples <-
-        identical(as.logical(Sys.getenv("_R_CHECK_RD_EXAMPLES_T_AND_F_")),
-                  TRUE)
+        isTRUE(as.logical(Sys.getenv("_R_CHECK_RD_EXAMPLES_T_AND_F_")))
 
 
     bad_closures <- character()
@@ -4435,13 +4432,14 @@ function()
 
 ### ** .get_S4_generics_really_in_env
 
-.get_S4_generics_really_in_env <-
-function(env)
+.get_S4_generics_really_in_env <- function(env)
 {
     env <- as.environment(env)
-#    Filter(function(g) !is.null(methods::getGeneric(g, where = env)),
-    Filter(function(g) exists(g, envir = env, inherits=FALSE) &&
-	   methods::is(get(g, envir = env), "genericFunction"),
+## Hmm, why Filter()?
+    Filter(function(g) !is.null(methods::getGeneric(g, where = env)),
+## 2.7.0 "workaround" -- fails to find group generics, primitives, ... :
+##     Filter(function(g) exists(g, envir = env, inherits=FALSE) &&
+## 	   methods::is(get(g, envir = env), "genericFunction"),
            methods::getGenerics(env))
 }
 
@@ -4474,14 +4472,9 @@ function(g, env)
         ## given package (getNamespace() would try loading a name space
         ## not found in the registry).
         .Internal(getRegisteredNamespace(as.name(package)))
-    }
-    else
-        NULL
-    penv <- if(is.environment(penv))
-        parent.env(penv)
-    else
-        parent.env(env)
-    if((g %in% tools:::.get_S4_generics_really_in_env(penv))
+    } # else NULL
+    penv <- parent.env(if(is.environment(penv)) penv else env)
+    if((g %in% .get_S4_generics_really_in_env(penv))
        && length(mlist_from_penv <- methods::findMethods(g, penv)))
         mlist <- mlist[is.na(match(names(mlist),
                                    names(mlist_from_penv)))]
