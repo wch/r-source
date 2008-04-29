@@ -18,7 +18,7 @@
 citEntry(entry, textVersion, header = NULL, footer = NULL, ...)
 citHeader(...)
 citFooter(...)
-readCitationFile(file)
+readCitationFile(file, meta = NULL)
 }
 \arguments{
   \item{entry}{a character string with a BibTeX entry type}
@@ -28,6 +28,8 @@ readCitationFile(file)
   \item{footer}{a character string with optional footer text}
   \item{file}{a file name}
   \item{\dots}{see details below}
+  \item{meta}{a list of package metadata as obtained by
+    \code{\link{packageDescription}}, or \code{NULL} (default).}
 }
 \details{
   The \file{CITATION} file of an R package should be placed in the
