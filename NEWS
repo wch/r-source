@@ -67,6 +67,8 @@ NEW FEATURES
     o	New function as.hexmode() for converting integers in hex format.
     	format.hexmode() and as.character.hexmode() gain an 'upper.case'
 	argument.
+
+    o	bitmap() and dev2bitmap() gain support for anti-aliasing.
     	
 
 PACKAGE INSTALLATION

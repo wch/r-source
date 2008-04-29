@@ -16,7 +16,7 @@
 
 dev2bitmap <- function(file, type="png256", height = 7, width = 7, res = 72,
                        units = "in", pointsize, ...,
-                       method = c("postscript", "pdf"))
+                       method = c("postscript", "pdf"), taa = NA, gaa = NA)
 {
     if(missing(file)) stop("'file' is missing with no default")
     if(!is.character(file) || length(file) != 1 || !nzchar(file))
@@ -59,17 +59,20 @@ dev2bitmap <- function(file, type="png256", height = 7, width = 7, res = 72,
                          pointsize=pointsize, paper="special",
                          horizontal=FALSE, ...))
     dev.set(current.device)
+    if (!is.na(taa)) extra <- paste(" -dTextAlphaBits=", taa, sep="")
+    if (!is.na(gaa)) extra <- paste(extra, " -dGraphicsAlphaBits=", gaa, sep="")
     cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,
                  "-dAutoRotatePages=/None",
                  " -g", ceiling(res*width), "x", ceiling(res*height),
+                  extra,
                  " -sOutputFile=", file, " ", tmp, sep="")
     system(cmd, invisible=TRUE)
     invisible()
 }
 
 bitmap <- function(file, type="png256", height = 7, width = 7, res = 72,
-                   units = "in", pointsize, ...)
+                   units = "in", pointsize, taa = NA, gaa = NA, ...)
 {
     if(missing(file)) stop("'file' is missing with no default")
     if(!is.character(file) || length(file) != 1 || !nzchar(file))
@@ -94,11 +97,15 @@ bitmap <- function(file, type="png256", height = 7, width = 7, res = 72,
                       paste(gsdevs, collapse="\n")),
              domain = NA)
     if(missing(pointsize)) pointsize <- 1.5*min(width, height)
+    extra <- ""
+    if (!is.na(taa)) extra <- paste(" -dTextAlphaBits=", taa, sep="")
+    if (!is.na(gaa)) extra <- paste(extra, " -dGraphicsAlphaBits=", gaa, sep="")
     tmp <- tempfile("Rbit")
     cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,
                  "-dAutoRotatePages=/None",
                  " -g", ceiling(res*width), "x", ceiling(res*height),
+                 extra,
                  " -sOutputFile=", file, sep="")
     postscript(file=tmp, width=width, height=height,
                pointsize=pointsize, paper="special", horizontal=FALSE,

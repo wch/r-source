@@ -9,11 +9,11 @@
 \title{Graphics Device for Bitmap Files via GhostScript}
 \usage{
 bitmap(file, type = "png256", height = 7, width = 7, res = 72,
-       units = "in", pointsize, \dots)
+       units = "in", pointsize, taa = NA, gaa = NA, \dots)
 
 dev2bitmap(file, type = "png256", height = 7, width = 7, res = 72,
            units = "in", pointsize, \dots,
-           method = c("postscript", "pdf"))
+           method = c("postscript", "pdf", taa = NA, gaa = NA))
 }
 \arguments{
   \item{file}{The output file name, with an appropriate extension.}
@@ -29,6 +29,8 @@ dev2bitmap(file, type = "png256", height = 7, width = 7, res = 72,
     \code{\link{pdf}}.}
   \item{method}{Should the plot be done by \code{\link{postscript}} or
     \code{\link{pdf}}?}
+  \item{taa, gaa}{Number of bits of antialiasing for text and graphics
+    respectively. Usually 4 or 2.}
 }
 \description{
   \code{bitmap} generates a graphics file.
