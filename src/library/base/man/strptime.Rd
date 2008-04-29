@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -123,7 +123,9 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 #ifdef windows
     \item{\code{\%z}, \code{\%Z}}{(output only.)  Time zone as a character
       string (empty if not available).  For \code{\%z} this differs
-      from POSIX.}
+      from POSIX.  Also, this is done by a Windows C function and so
+      will use Windows' idea of the timezone names, not that used by
+      other date-time functions.}
 #endif
   }
   Where leading zeros are shown they will be used on output but are
@@ -178,7 +180,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   not followed by a digit, it uses the setting of
   \code{\link{getOption}("digits.secs")}, or if that is unset, \code{n = 3}).
   Further, for \code{strptime} \code{\%OS} will input seconds including
-  fractional seconds.  Note that \code{\%S} ignore fractional parts on output.
+  fractional seconds.  Note that \code{\%S} ignores (and not rounds)
+  fractional parts on output.
 
   The behaviour of other conversion specifications (and even if other
   character sequences commencing with \code{\%} \emph{are} conversion
