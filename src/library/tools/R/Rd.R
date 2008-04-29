@@ -88,7 +88,7 @@ function(lines)
 
     ## Looks stupid, but ... we need a loop to determine the skip list
     ## to deal with nested conditionals.
-    skip_list <- integer(0)
+    skip_list <- integer()
     skip_level <- 0L
     skip_indices <- pp_line_indices
     for(i in seq_along(pp_types)) {
@@ -195,10 +195,10 @@ function(RdFiles)
     RdFiles <- path.expand(RdFiles[file_test("-f", RdFiles)])
 
     if(length(RdFiles) == 0L) {
-        out <- data.frame(File = character(0),
-                          Name = character(0),
-                          Type = character(0),
-                          Title = character(0),
+        out <- data.frame(File = character(),
+                          Name = character(),
+                          Type = character(),
+                          Title = character(),
                           Encoding = character(),
                           stringsAsFactors = FALSE)
         out$Aliases <- list()
@@ -444,8 +444,21 @@ function(package, dir, lib.loc = NULL)
         names(db) <- docs_files
     }
 
-    db
+    ## Add package encoding metadata if available and not override by
+    ## Rd \encoding entries.
+    encoding <-
+        .get_package_metadata(dir, !missing(package))["Encoding"]
+    ## Should we catch cases where (non-installed) packages have no
+    ## DESCRIPTION or DESCRIPTION.in files (then really they cannot be
+    ## packages ...)?
+    if(!is.na(encoding)) {
+        ## For simplicity, always add a package \encoding entry at the
+        ## end (so that an explicit \encoding entry in an Rd file always
+        ## takes precedence.
+        db <- mapply(c, db, sprintf("\\encoding{%s}", encoding))
+    }
 
+    db
 }
 
 ### * Rd_parse
