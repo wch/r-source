@@ -166,7 +166,7 @@ print.octmode <- function(x, ...)
 as.octmode <- function(x)
 {
     if(inherits(x, "octmode")) return(x)
-    if(length(x) != 1) stop("'x' must be have length 1")
+    if(length(x) != 1) stop("'x' must have length 1")
     if(is.double(x) && x == as.integer(x)) x <- as.integer(x)
     if(is.integer(x)) return(structure(x, class="octmode"))
     if(is.character(x)) {
@@ -178,7 +178,7 @@ as.octmode <- function(x)
     stop("'x' cannot be coerced to 'octmode'")
 }
 
-format.hexmode <- function(x, ...)
+format.hexmode <- function(x, upper.case = FALSE, ...)
 {
     isna <- is.na(x)
     y <- x[!isna]
@@ -188,7 +188,8 @@ format.hexmode <- function(x, ...)
     while(any(y > 0) || is.null(z)) {
         z <- y%%16
         y <- floor(y/16)
-        ans0 <- paste(c(0:9, letters)[1+z], ans0, sep="")
+        ans0 <- paste(c(0:9, if(upper.case) LETTERS else letters)[1+z],
+                      ans0, sep = "")
     }
     ans <- rep.int(NA_character_, length(x))
     ans[!isna] <- ans0
@@ -213,8 +214,25 @@ print.hexmode <- function(x, ...)
     y
 }
 
+as.hexmode <-
+function(x)
+{
+    if(inherits(x, "hexmode")) return(x)
+    if(length(x) != 1L) stop("'x' must be of length 1")
+    if(is.double(x) && (x == as.integer(x))) x <- as.integer(x)
+    if(is.integer(x)) return(structure(x, class = "hexmode"))
+    if(is.character(x)) {
+        xx <- strsplit(tolower(x), "")[[1L]]
+        pos <- match(xx, c(0 : 9, letters[1 : 6]))
+        if(any(is.na(pos))) stop("invalid digits")
+        z <- (pos - 1L) * 16 ^ (rev(seq_along(xx) - 1))
+        return(structure(as.integer(sum(z)), class = "hexmode"))
+    }
+    stop("'x' cannot be coerced to hexmode")
+}
+        
 system.file <-
-    function(..., package = "base", lib.loc = NULL)
+function(..., package = "base", lib.loc = NULL)
 {
     if(nargs() == 0)
         return(file.path(.Library, "base"))

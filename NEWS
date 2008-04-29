@@ -63,6 +63,10 @@ NEW FEATURES
 	on a Unix-alike and by a setting in MkRules on Windows.
 	Function icuSetCollate() allows the collation rules (including
 	the locale) to be tuned.  [Experimental]
+
+    o	New function as.hexmode() for converting integers in hex format.
+    	format.hexmode() and as.character.hexmode() gain an 'upper.case'
+	argument.
     	
 
 PACKAGE INSTALLATION

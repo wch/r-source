@@ -1,6 +1,6 @@
 
-R version 2.7.0 Under development (unstable) (2007-09-26 r42984)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.8.0 Under development (unstable) (2008-04-29 r45545)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -276,6 +276,8 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
+> f <- try(as.hexmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hexmode( f )))
 > f <- try(as.integer( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.integer( f )))
 [1] TRUE
@@ -588,6 +590,8 @@ Error: x is not TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.factor( f )))
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
+> f <- try(as.hexmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hexmode( f )))
 > f <- try(as.integer( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.integer( f )))
 [1] TRUE
@@ -899,6 +903,8 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.factor( f )))
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
+> f <- try(as.hexmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hexmode( f )))
 > f <- try(as.integer( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.integer( f )))
 [1] TRUE
@@ -1227,6 +1233,9 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
+> f <- try(as.hexmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hexmode( f )))
+[1] TRUE
 > f <- try(as.integer( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.integer( f )))
 [1] TRUE
@@ -1572,6 +1581,8 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
+> f <- try(as.hexmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hexmode( f )))
 > f <- try(as.integer( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.integer( f )))
 [1] TRUE
@@ -1907,6 +1918,8 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
+> f <- try(as.hexmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hexmode( f )))
 > f <- try(as.integer( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.integer( f )))
 [1] TRUE
@@ -2229,6 +2242,8 @@ IS: [1] TRUE
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
 [1] TRUE
+> f <- try(as.hexmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hexmode( f )))
 > f <- try(as.integer( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.integer( f )))
 [1] TRUE
@@ -2550,6 +2565,8 @@ Error: x is not TRUE
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
 [1] TRUE
+> f <- try(as.hexmode( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.hexmode( f )))
 > f <- try(as.integer( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.integer( f )))
 [1] TRUE
@@ -2619,6 +2636,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.232 0.016 0.249 0 0 
+Time elapsed:  0.292 0.028 0.318 0 0 
 > 
 > 
