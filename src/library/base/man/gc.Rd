@@ -40,8 +40,8 @@ gcinfo(verbose)
   connection at each garbage collection of the form
   \preformatted{
     Garbage collection 12 = 10+0+2 (level 0) ...
-    6.4 Mbytes of cons cells used (58%)
-    2.0 Mbytes of vectors used (32%)
+    6.4 Mbytes of cons cells used (58\%)
+    2.0 Mbytes of vectors used (32\%)
   }
   Here the last two lines give the current memory usage rounded up to
   the next 0.1Mb and as a percentage of the current trigger value.
