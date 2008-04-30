@@ -844,17 +844,19 @@ static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC)
     DRAWSPEC;
     if (!ctx) NOCTX;
     SET(RQUARTZ_STROKE | RQUARTZ_LINE);
-	
+
     /* drawing lines here seems to be quadratic in the number
        of points, therefore we split it into 10 segments at a time
-       (empirically sensible). 
+       (empirically sensible using CGLayer backend). 
        FIXME: Nonetheless it appears as if Quartz falls back to
        software rendering (HW should have far higher throughput)
-       and the question is why. */
+       and the question is why. In addition the slowness depends
+       on the backend, some implementations (e.g. PDF) have no
+       problem with it. */
     CGPoint pts[20];
     for(i = 1 ; i < n; i++) {
         if (j == 20) {
-	    CGContextStrokeLineSegments(ctx, pts, j / 2);
+	    CGContextStrokeLineSegments(ctx, pts, j);
 	    j = 0;
 	}
 	pts[j].x = x[i-1];
@@ -865,7 +867,7 @@ static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC)
 	j++;
     }
     if (j)
-        CGContextStrokeLineSegments(ctx, pts, j / 2);
+        CGContextStrokeLineSegments(ctx, pts, j);
 }
 
 static void RQuartz_Polygon(int n, double *x, double *y, CTXDESC)
