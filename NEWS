@@ -82,6 +82,10 @@ BUG FIXES
     o	Because of a typo, 'pointsize' in png(type="cairo") (and jpeg,
     	bmp, tiff) devices was being interpreted in pixels not bigpoints.
 
+    o	is() was wrong for some S3 class objects with multi-string class.
+
+    o	undoc() / codoc() where not checking all S4 methods in some cases.
+
 
 
 		CHANGES IN R VERSION 2.7.0

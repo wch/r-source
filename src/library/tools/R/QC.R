@@ -4423,13 +4423,11 @@ function()
 
 ### ** .get_S4_generics_really_in_env
 
-.get_S4_generics_really_in_env <-
-function(env)
+.get_S4_generics_really_in_env <- function(env)
 {
     env <- as.environment(env)
-    Filter(function(g) exists(g, envir = env, inherits=FALSE) &&
-	   methods::is(get(g, envir = env), "genericFunction"),
-           methods::getGenerics(env))
+    Filter(function(g) methods::isGeneric(g, where = env),
+	   methods::getGenerics(env))
 }
 
 ### ** .get_S4_methods_list
