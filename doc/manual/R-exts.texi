@@ -446,15 +446,15 @@ Windows build will zip up the data directory or no: set this to
 @samp{no} if your package will not work with a zipped data directory.
 
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
-should contain an @samp{Encoding} field specifying an encoding.  This
-is currently used as the encoding of the @file{DESCRIPTION} file
-itself and of the @file{R} and @file{NAMESPACE} files, and is taken as
-the default encoding of @file{.Rd} files as from @R{} 2.6.0.  As from
-@R{} 2.7.0, the examples are assumed to be in this encoding when
-running @command{R CMD check}.  Only encoding names @code{latin1},
-@code{latin2} and @code{UTF-8} are known to be portable.  (Do not
-specify an encoding unless one is actually needed: doing so makes the
-package @emph{less} portable.)
+should contain an @samp{Encoding} field specifying an encoding.  This is
+currently used as the encoding of the @file{DESCRIPTION} file itself and
+of the @file{R} and @file{NAMESPACE} files, and as the default encoding
+of @file{.Rd} files.  The examples are assumed to be in this encoding
+when running @command{R CMD check}.  As from @R{} 2.8.0 it is used for
+the encoding of the @code{CITATION} file.  Only encoding names
+@code{latin1}, @code{latin2} and @code{UTF-8} are known to be portable.
+(Do not specify an encoding unless one is actually needed: doing so
+makes the package @emph{less} portable.)
 
 
 The optional @samp{Type} field specifies the type of the package:
@@ -2616,6 +2616,13 @@ information, but it normally then gets outdated.  See @code{?citEntry}
 for further details of the information which can be provided.
 
 The @file{CITATION} should itself produce no output.
+
+As from @R{} 2.8.0, the @file{CITATION} file will be read in Latin-1 unless a
+package encoding is declared in the package's @file{DESCRIPTION} file.
+(@R{} 2.7.0 read the @file{CITATION} file in Latin-1, which covered all
+the examples at the time.  Earlier versions of @R{} read the file in the
+encoding of the session.)
+
 
 @node Package types, Services, CITATION files, Creating R packages
 @section Package types

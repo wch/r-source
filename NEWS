@@ -69,6 +69,9 @@ NEW FEATURES
 	argument.
 
     o	bitmap() and dev2bitmap() gain support for anti-aliasing.
+
+    o	readCitationFile() (and hence citation) now reads a package's
+	CITATION file in the package's declared encoding (if there is one).
     	
 
 PACKAGE INSTALLATION
