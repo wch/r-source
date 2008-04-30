@@ -4429,14 +4429,11 @@ function()
 
 ### ** .get_S4_generics_really_in_env
 
+## FIXME: We shouldn't have to use this at all :
 .get_S4_generics_really_in_env <- function(env)
 {
     env <- as.environment(env)
-## Hmm, why Filter()?
-    Filter(function(g) !is.null(methods::getGeneric(g, where = env)),
-## 2.7.0 "workaround" -- fails to find group generics, primitives, ... :
-##     Filter(function(g) exists(g, envir = env, inherits=FALSE) &&
-## 	   methods::is(get(g, envir = env), "genericFunction"),
+    Filter(function(g) methods::isGeneric(g, where = env),
            methods::getGenerics(env))
 }
 

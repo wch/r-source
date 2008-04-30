@@ -331,7 +331,7 @@ pfit <- function(data) {
 }
 AIC.pfit <- function(object, ..., k = 2) -2*object$loglik + k
 AIC(pfit(1:10))
-library(stats4)
+library(stats4) # and keep on search() for tests below
 AIC(pfit(1:10)) # failed in R < 2.7.0
 
 ## For a few days (~ 2008-01-30), this failed to work without any notice:
@@ -365,3 +365,30 @@ foo(new("m1"), bla = TRUE)
 foo(new("m2"), bla = TRUE)
 foo(new("m3"), bla = TRUE)
 ## The last one used to loose 'bla = TRUE' {the "..."} when it got to m1
+
+## is() for S3 objects with multiple class strings
+setClassUnion("OptionalPOSIXct",   c("POSIXct",   "NULL"))
+stopifnot(is(Sys.time(), "OptionalPOSIXct"))
+## failed in R 2.7.0
+
+## getGeneric() / getGenerics() "problems" related to 'tools' usage:
+e4 <- as.environment("package:stats4")
+gg4 <- getGenerics(e4)
+stopifnot(c("BIC", "coef", "confint", "logLik", "plot", "profile",
+            "show", "summary", "update", "vcov") %in% gg4) # %in% : "future proof"
+stopifnot(unlist(lapply(gg4, function(g) !is.null(getGeneric(g, where = e4)))))
+stopifnot(unlist(lapply(gg4, function(g) !is.null(getGeneric(g)))))
+em <- as.environment("package:methods")
+ggm <- getGenerics(em)
+stopifnot(unlist(lapply(ggm, function(g) !is.null(getGeneric(g, where = em)))))
+stopifnot(unlist(lapply(ggm, function(g) !is.null(getGeneric(g)))))
+## all above worked in 2.7.0, however:
+stopifnot(isGeneric("show", where=e4),
+          ## isGeneric("dim", where=as.environment("package:Matrix"))
+	  identical(as.vector(ggm),
+		    tools:::.get_S4_generics_really_in_env(em)),
+	  identical(as.vector(gg4),
+		    tools:::.get_S4_generics_really_in_env(e4)) )
+## the last failed in R 2.7.0 : was not showing  "show"
+## TODO: use "Matrix" checks once that is >= 1.0
+

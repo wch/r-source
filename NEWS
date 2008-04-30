@@ -54,7 +54,7 @@ NEW FEATURES
 
     o	?pkg::topic and ?pkg:::topic now find help on 'topic' from
 	package 'pkg' (and not help on :: or :::).
-	
+
     o	??topic now does help.search("topic"); variations such as
     	??pkg::topic or field??topic are also supported.
 
@@ -74,7 +74,7 @@ NEW FEATURES
 
     o	readCitationFile() (and hence citation) now reads a package's
 	CITATION file in the package's declared encoding (if there is one).
-    	
+
 
 PACKAGE INSTALLATION
 
@@ -222,6 +222,10 @@ BUG FIXES
 
     o	Because of a typo, 'pointsize' in png(type="cairo") (and jpeg,
     	bmp, tiff) devices was being interpreted in pixels not bigpoints.
+
+    o	is() was wrong for some S3 class objects with multi-string class.
+
+    o	undoc() / codoc() where not checking all S4 methods in some cases.
 
 
 
