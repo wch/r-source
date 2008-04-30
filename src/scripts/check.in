@@ -111,15 +111,9 @@ my $R_check_weave_vignettes =
     &R_getenv("_R_CHECK_WEAVE_VIGNETTES_", "TRUE");
 
 ## This needs texi2dvi.  MiKTeX has a binary texi2dvi, but other
-## Windows' LaTeX distributions do not.
-my $check_latex_vignettes_default;
-if($WINDOWS) { 
-    $check_latex_vignettes_default = "FALSE"; 
-} else { 
-    $check_latex_vignettes_default = "TRUE"; 
-}
+## Windows' LaTeX distributions do not.  We check later.
 my $R_check_latex_vignettes =
-    &R_getenv("_R_CHECK_LATEX_VIGNETTES_", $check_latex_vignettes_default);
+    &R_getenv("_R_CHECK_LATEX_VIGNETTES_", "TRUE");
 
 my $R_check_subdirs_strict =
     &R_getenv("_R_CHECK_SUBDIRS_STRICT_", "default");
@@ -2276,6 +2270,9 @@ sub check_pkg {
 	    ## so we can work in place.
 	    mkpath("inst/doc");
 	    dircopy($vignette_dir, "inst/doc");
+	    if ($R_check_latex_vignettes) {
+		$R_check_latex_vignettes = 0 if R_system("texi2dvi --version");
+	    }
 
 	    my $Rcmd = "options(warn=1)\nlibrary(tools)\n";
 	    ## Should checking the vignettes assume the system default

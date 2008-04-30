@@ -169,6 +169,9 @@ NEW FEATURES
     	(it was on all platforms in 2.7.0, but not on most in earlier
 	versions of R).
 
+    o	CITATION files are now read in Latin-1: quite a few were
+    	failing if used in a multibyte locale such as UTF-8.
+
 
 DEPRECATED & DEFUNCT
 

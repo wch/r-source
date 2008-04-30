@@ -31,6 +31,9 @@ OTHER
     o	Rcmd Rd2dvi now opens .dvi and .pdf files via their file
     	associations (if set -- MiKTeX sets 'yap' for .dvi).
 
+    o	Rcmd check now checks the latex of package vignettes if
+	texi2dvi (presumably from MiKTeX) is found on the path.
+
 
 
 
