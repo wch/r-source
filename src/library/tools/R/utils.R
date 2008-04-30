@@ -210,7 +210,10 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 {
     ## Run texi2dvi on a latex file, or emulate it.
 
-    if(is.null(texi2dvi)) texi2dvi <- Sys.which("texi2dvi")
+    if(is.null(texi2dvi)) {
+        ## we really don't wan't the full path below on Windows
+        if(nzchar(Sys.which("texi2dvi"))) texi2dvi <- "texi2dvi"
+    }
 
     envSep <- .Platform$path.sep
     Rtexmf <- file.path(R.home(), "share", "texmf")
@@ -240,12 +243,12 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     Sys.setenv(BSTINPUTS = paste(bstinputs, texinputs, sep = envSep))
 
     if(nzchar(texi2dvi)) {
-        pdf <- if(pdf) "--pdf" else ""        
+        pdf <- if(pdf) "--pdf" else ""
         out <- .shell_with_capture(paste(shQuote(texi2dvi), "--help"))
         texi2dvi_supports_build_dir <-
             length(grep("--build-dir=", out$stdout)) > 0L
         if(texi2dvi_supports_build_dir) {
-            build_dir <- tempfile("texi2dvi")            
+            build_dir <- tempfile("texi2dvi")
             on.exit(unlink(build_dir, recursive = TRUE), add = TRUE)
             extra <- sprintf("--build-dir=%s --no-line-error",
                              shQuote(build_dir))
@@ -259,7 +262,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## Back compatibility for now.
         if(is.numeric(quiet)) quiet <- quiet >= 1
         quiet <- if(quiet) "--quiet" else ""
-                                           
+
         if(.Platform$OS.type == "windows") {
             ## look for MiKTeX (which this almost certainly is)
             ## and set the path to R's style files.
@@ -270,9 +273,10 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                 paths <- paste ("-I", shQuote(texinputs))
                 clean <- paste(clean, paste(paths, collapse = " "))
             }
-        }
+            q_texi2dvi <- gsub("\\\\", "/", shortPathName(texi2dvi))
+        } else q_texi2dvi <- shQuote(texi2dvi)
 
-        out <- .shell_with_capture(paste(shQuote(texi2dvi), quiet,
+        out <- .shell_with_capture(paste(q_texi2dvi, quiet,
                                          pdf, clean, shQuote(file),
                                          extra))
         if(out$status) {
@@ -344,7 +348,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         if(system(paste(shQuote(latex), "-interaction=nonstopmode", texfile)))
             stop(gettextf("unable to run %s on '%s'", latex, file), domain = NA)
         nmiss <- length(grep("^LaTeX Warning:.*Citation.*undefined",
-                           readLines(paste(base, ".log", sep = ""))))
+                             readLines(paste(base, ".log", sep = ""))))
         for(iter in 1:10) { ## safety check
             ## This might fail as the citations have been included in the Rnw
             if(nmiss) system(paste(shQuote(bibtex), shQuote(base)))
