@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-dev2bitmap <- function(file, type="png256", height = 7, width = 7, res = 72,
+dev2bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
                        units = "in", pointsize, ...,
                        method = c("postscript", "pdf"), taa = NA, gaa = NA)
 {
@@ -71,7 +71,7 @@ dev2bitmap <- function(file, type="png256", height = 7, width = 7, res = 72,
     invisible()
 }
 
-bitmap <- function(file, type="png256", height = 7, width = 7, res = 72,
+bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
                    units = "in", pointsize, taa = NA, gaa = NA, ...)
 {
     if(missing(file)) stop("'file' is missing with no default")

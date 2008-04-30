@@ -69,6 +69,8 @@ NEW FEATURES
 	argument.
 
     o	bitmap() and dev2bitmap() gain support for anti-aliasing.
+	The default type has been changed to '16m', which supports
+	anti-aliasing.
 
     o	readCitationFile() (and hence citation) now reads a package's
 	CITATION file in the package's declared encoding (if there is one).

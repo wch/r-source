@@ -8,12 +8,12 @@
 \alias{bitmap}
 \title{Graphics Device for Bitmap Files via GhostScript}
 \usage{
-bitmap(file, type = "png256", height = 7, width = 7, res = 72,
+bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
        units = "in", pointsize, taa = NA, gaa = NA, \dots)
 
-dev2bitmap(file, type = "png256", height = 7, width = 7, res = 72,
+dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
            units = "in", pointsize, \dots,
-           method = c("postscript", "pdf", taa = NA, gaa = NA))
+           method = c("postscript", "pdf"), taa = NA, gaa = NA)
 }
 \arguments{
   \item{file}{The output file name, with an appropriate extension.}
@@ -29,8 +29,9 @@ dev2bitmap(file, type = "png256", height = 7, width = 7, res = 72,
     \code{\link{pdf}}.}
   \item{method}{Should the plot be done by \code{\link{postscript}} or
     \code{\link{pdf}}?}
-  \item{taa, gaa}{Number of bits of antialiasing for text and graphics
-    respectively. Usually 4 or 2.}
+  \item{taa, gaa}{Number of bits of antialiasing for text and for graphics
+    respectively.  Usually 4 (for best effect) or 2.  Not supported on
+    all types.}
 }
 \description{
   \code{bitmap} generates a graphics file.
@@ -66,9 +67,15 @@ dev2bitmap(file, type = "png256", height = 7, width = 7, res = 72,
   \code{"tiffpack"}, \code{"tiff12nc"}, \code{"tiff24nc"},
   \code{"psmono"}, \code{"psgray"}, \code{"psrgb"}, \code{"bit"},
   \code{"bitrgb"}, \code{"bitcmyk"}, \code{"pngmono"}, \code{"pnggray"},
-  \code{"png16"}, \code{"png256"}, \code{"png16m"}, \code{"jpeg"},
-  \code{"jpeggray"}, \code{"pdfwrite"}.
-
+  \code{"pngalpha"}, \code{"png16"}, \code{"png256"}, \code{"png16m"},
+  \code{"png48"}, \code{"jpeg"}, \code{"jpeggray"}, \code{"pdfwrite"}.
+  
+  The default type, \code{"png16m"} supports 24-bit colour and
+  anti-aliasing.  Versions of \R prior to 2.7.0 defaulted to
+  \code{"png256"}, which used a palette of 256 colours and could be a
+  more compact representation.  Monochrome graphs can used
+  \code{"pngmono"}, or \code{"pnggray"} if anti-aliasing is desired.
+  
   For formats which contain a single image, a file specification like
   \code{Rplots\%03d.png} can be used: this is interpreted by GhostScript.
 
