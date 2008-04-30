@@ -287,8 +287,11 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             ## </FIXME>
             msg <- gettextf("running 'texi2dvi' on '%s' failed", file)
             ## Try to provide additional diagnostics.
+            ## First message is from texinfo's texi2dvi,
+            ## second from MiKTeX
             if(length(grep("exited with bad status, quitting.$",
-                           out$stderr))) {
+                           out$stderr)) ||
+               length(grep("latex failed for some reason", out$stderr))) {
                 ## (La)TeX errors.
                 log <- list.files(build_dir, pattern = "\\.log$",
                                   all.files = TRUE, full.names = TRUE,
