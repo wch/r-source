@@ -1362,14 +1362,15 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE) {
         f <- deparse(substitute(f))
     }
     if(!is(fdef, "genericFunction")) {
-        warning("non-generic function given to findMethods()")
+        warning(gettextf("non-generic function '%s' given to findMethods()", f),
+                domain = NA)
         return(list())
     }
     if(missing(where))
       table <- get(if(inherited) ".AllMTable" else ".MTable", envir = environment(fdef))
     else {
         if(!identical(inherited, FALSE))
-          stop("Only FALSE meaningful for inherited, when where is supplied (got ", inherited, "\"")
+          stop("Only FALSE is meaningful for 'inherited', when 'where' is supplied (got ", inherited, "\"")
         where <- as.environment(where)
         what <- .TableMetaName(f, fdef@package)
         if(exists(what, envir = where, inherits = FALSE))
