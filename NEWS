@@ -229,6 +229,8 @@ BUG FIXES
 
     o	undoc() / codoc() where not checking all S4 methods in some cases.
 
+    o	Use of textConnection(NULL, mode="w") could segfault.
+
 
 
 		CHANGES IN R VERSION 2.7.0

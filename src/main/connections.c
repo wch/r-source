@@ -2007,6 +2007,7 @@ static void outtext_destroy(Rconnection con)
        However, this could be quite expensive.
     */
     SET_VECTOR_ELT(OutTextData, idx, R_NilValue);
+    if(!this->namesymbol) R_ReleaseObject(this->data);
     free(this->lastline); free(this);
 }
 
@@ -2067,6 +2068,9 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 		   != R_UnboundValue) R_unLockBinding(this->namesymbol, env);
 		defineVar(this->namesymbol, tmp, env);
 		R_LockBinding(this->namesymbol, env);
+	    } else {
+		R_ReleaseObject(this->data);
+		R_PreserveObject(tmp);
 	    }
 	    this->data = tmp;
 	    SET_NAMED(tmp, 2);
@@ -2096,6 +2100,7 @@ static void outtext_init(Rconnection con, SEXP stext, const char *mode, int idx)
 	this->namesymbol = NULL;
 	    /* create variable pointed to by con->description */
 	val = allocVector(STRSXP, 0);
+	R_PreserveObject(val);
     } else {
 	this->namesymbol = install(con->description);
 	if(strcmp(mode, "w") == 0) {
