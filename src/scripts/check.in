@@ -2271,7 +2271,8 @@ sub check_pkg {
 	    mkpath("inst/doc");
 	    dircopy($vignette_dir, "inst/doc");
 	    if ($R_check_latex_vignettes) {
-		$R_check_latex_vignettes = 0 if R_system("texi2dvi --version");
+		$R_check_latex_vignettes = 0 
+		    if R_system("texi2dvi --version > /dev/null");
 	    }
 
 	    my $Rcmd = "options(warn=1)\nlibrary(tools)\n";
