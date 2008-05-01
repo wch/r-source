@@ -86,6 +86,10 @@ PACKAGE INSTALLATION
     	configure script in the package -- this usually indicates a
     	file system with insufficient permissions.
 
+    o	The DESCRIPTION file of a package can specify an 'OS_type' field
+	as either 'unix' or 'windows' to confine installation to that
+	OS type.
+
 
 DEPRECATED & DEFUNCT
 

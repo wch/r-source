@@ -520,6 +520,12 @@ do_install_source () {
     return
   fi
 
+  OS_type=`get_dcf_field OS_type DESCRIPTION`
+  if test "$OS_type" = "windows" ; then
+    error "windows-only package"
+    do_exit_on_error
+  fi
+
   if test "${pkg_name}" = "${R_PACKAGE_NAME}"; then
     message "Installing *source* package '${pkg_name}' ..."
   else

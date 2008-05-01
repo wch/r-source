@@ -720,7 +720,7 @@ local({
 .get_standard_repository_db_fields <-
 function()
     c("Package", "Version", "Priority", "Bundle",
-      "Contains", "Depends", "Imports", "Suggests")
+      "Contains", "Depends", "Imports", "Suggests", "OS_type")
 
 ### ** .is_ASCII
 

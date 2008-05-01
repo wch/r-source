@@ -456,6 +456,10 @@ the encoding of the @code{CITATION} file.  Only encoding names
 (Do not specify an encoding unless one is actually needed: doing so
 makes the package @emph{less} portable.)
 
+The optional @samp{OS_ype} field specifies the OSes for which the
+package is intended.  If present, it should be one of @code{unix} or
+@code{windows}, and indicates that the package should only be installed
+on a platform with @samp{.Platform$OS.type} having that value.
 
 The optional @samp{Type} field specifies the type of the package:
 @pxref{Package types}.
