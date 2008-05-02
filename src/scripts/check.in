@@ -400,6 +400,20 @@ foreach my $pkg (@ARGV) {
 
         if(defined $encoding) {$log->message("package encoding: $encoding");}
 
+	## Check if we have any hope of installing
+
+	my $OS_type = $description->{"OS_type"};
+	if($opt_install && $OS_type) {
+	    if($WINDOWS && $OS_type == "unix") {
+		$log->message("will not attempt to install this package on Windows");
+		$opt_install = 0;
+	    }
+	    if(!$WINDOWS && $OS_type == "windows") {
+		$log->message("this is a Windows-only package, skipping isntallation");
+		$opt_install = 0;
+	    }
+	}
+
 	## Check package dependencies.
 
 	## <NOTE>
