@@ -565,6 +565,76 @@ foreach my $pkg (@ARGV) {
 	    $log->result("OK");
 	}
 
+	## we need to do this before installation
+	if ($R_check_executables) {
+	    my $have_GNU_File = 0;
+	    my $tmpfile = R_tempfile("file");
+	    if (!$WINDOWS) {
+		R_system("file --version > $tmpfile");
+		open FILE, "< $tmpfile";
+		my @lines = <FILE>;
+		close(FILE);
+		## a reasonable check -- it does not identify itself well
+		$have_GNU_file = 1 if grep(/^file-4/, @lines);
+	    }
+	    if ($have_GNU_file) {
+		$log->checking("for executable files");
+		my @exec_files = ();
+		sub find_execs {
+		    my $file_path = $File::Find::name;
+		    my $file_name = basename($file_path);
+		    my $bare_path = $file_path;
+		    $bare_path =~ s+^$pkgdir/++;
+		    ## watch out for spaces in file names here
+		    R_system("file '$file_name' > $tmpfile");	    
+		    open FILE, "< $tmpfile";
+		    my @lines = <FILE>;
+		    close(FILE);
+		    my $line = $lines[0];
+		    my $t1 = $line =~ /executable/;
+		    my $t2 = $line =~ /script text/;
+		    push @exec_files, $bare_path if ($t1 && ! $t2);
+		}
+		find(\&find_execs, "$pkgdir");
+		if(scalar(@exec_files) > 0) {
+		    $log->warning();
+		    $log->print("Found the following executable file(s):\n");
+		    $log->print("  " . join("\n  ", @exec_files) . "\n");
+		    $log->print(wrap("", "",
+				     ("Source packages should not contain executable files.\n",
+				      "See section 'Package structure'",
+				      "in manual 'Writing R Extensions'.\n")));
+		}
+		else {
+		    $log->result("OK");
+		}
+	    } else {	       # no GNU file, so just check extensions
+		$log->checking("for .dll and .exe files");
+		my @exec_files = ();
+		sub find_execs2 {
+		    my $file_path = $File::Find::name;
+		    my $bare_path = $file_path;
+		    $bare_path =~ s+^$pkgdir/++;
+		    push @exec_files, $bare_path 
+			if $file_path =~ /\.(exe|dll)$/;
+		}
+		find(\&find_execs2, "$pkgdir");
+		if(scalar(@exec_files) > 0) {
+		    $log->warning();
+		    $log->print("Found the following executable file(s):\n");
+		    $log->print("  " . join("\n  ", @exec_files) . "\n");
+		    $log->print(wrap("", "",
+				     ("Source packages should not contain executable files.\n",
+				      "See section 'Package structure'",
+				      "in manual 'Writing R Extensions'.\n")));
+		}
+		else {
+		    $log->result("OK");
+		}
+	    }
+	    unlink $tmpfile;
+	}
+
 	## Option '--no-install' turns off installation and the tests
 	## which require the package to be installed.  When testing
 	## recommended packages bundled with R we can skip installation,
@@ -1008,74 +1078,6 @@ sub check_pkg {
 	$log->result("OK");
     }
 
-    if ($R_check_executables) {
-	my $have_GNU_File = 0;
-	my $tmpfile = R_tempfile("file");
-	if (!$WINDOWS) {
-	    R_system("file --version > $tmpfile");
-	    open FILE, "< $tmpfile";
-	    my @lines = <FILE>;
-	    close(FILE);
-	    ## a reasonable check -- it does not identify itself well
-	    $have_GNU_file = 1 if grep(/^file-4/, @lines);
-	}
-	if ($have_GNU_file) {
-	    $log->checking("for executable files");
-	    my @exec_files = ();
-	    sub find_execs {
-		my $file_path = $File::Find::name;
-		my $file_name = basename($file_path);
-		my $bare_path = $file_path;
-		$bare_path =~ s+^\./++;
-		## watch out for spaces in file names here
-		R_system("file '$file_name' > $tmpfile");	    
-		open FILE, "< $tmpfile";
-		my @lines = <FILE>;
-		close(FILE);
-		my $line = $lines[0];
-		my $t1 = $line =~ /executable/;
-		my $t2 = $line =~ /script text/;
-		push @exec_files, $bare_path if ($t1 && ! $t2);
-	    }
-	    find(\&find_execs, ".");
-	    if(scalar(@exec_files) > 0) {
-		$log->warning();
-		$log->print("Found the following executable file(s):\n");
-		$log->print("  " . join("\n  ", @exec_files) . "\n");
-		$log->print(wrap("", "",
-				 ("Source packages should not contain executable files.\n",
-				  "See section 'Package structure'",
-				  "in manual 'Writing R Extensions'.\n")));
-	    }
-	    else {
-		$log->result("OK");
-	    }
-	} else { # no GNU file, so just check extensions
-	    $log->checking("for .dll and .exe files");
-	    my @exec_files = ();
-	    sub find_execs2 {
-		my $file_path = $File::Find::name;
-		my $bare_path = $file_path;
-		$bare_path =~ s+^\./++;
-		push @exec_files, $bare_path 
-		    if $file_path =~ /\.(exe|dll)$/;
-	    }
-	    find(\&find_execs2, ".");
-	    if(scalar(@exec_files) > 0) {
-		$log->warning();
-		$log->print("Found the following executable file(s):\n");
-		$log->print("  " . join("\n  ", @exec_files) . "\n");
-		$log->print(wrap("", "",
-				 ("Source packages should not contain executable files.\n",
-				  "See section 'Package structure'",
-				  "in manual 'Writing R Extensions'.\n")));
-	    }
-	    else {
-		$log->result("OK");
-	    }
-	}
-	unlink $tmpfile;
-    }
 
     ## Check for sufficient file permissions (Unix only).
 
