@@ -38,6 +38,10 @@ strheight(s, units = "user", cex = NULL, font = NULL, vfont = NULL, ...)
   inter-line spacing is controlled by \code{cex},
   \code{\link{par}("lheight")} and the \sQuote{point size} (but not the
   actual font in use).
+
+  Measurements in \code{"user"} units (the default) are only available
+  after \code{\link{plot.new}} has been called -- otherwise an error is
+  thrown.
 }
 \value{
   Numeric vector with the same length as \code{s}, giving the

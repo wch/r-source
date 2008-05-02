@@ -229,11 +229,20 @@ BUG FIXES
     o	Because of a typo, 'pointsize' in png(type="cairo") (and jpeg,
     	bmp, tiff) devices was being interpreted in pixels not bigpoints.
 
-    o	is() was wrong for some S3 class objects with multi-string class.
+    o	is() was wrong for some S3 class objects with class for length
+	greater than one.
 
     o	undoc() / codoc() where not checking all S4 methods in some cases.
 
     o	Use of textConnection(NULL, mode="w") could segfault.
+
+    o	Use of strwidth/height(units="user") (the default) is again an
+    	error before a user coordinate system has been set on the
+    	device, rather than giving nonsensical values (the effect of
+    	r31367).
+
+    o	Rare string width calculations in package grid were not
+    	interpreting the string encoding correctly.
 
 
 
