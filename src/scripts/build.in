@@ -1,7 +1,7 @@
 #! @PERL@
 #-*- perl -*-
 
-## Copyright (C) 2000-2007 R Development Core Team
+## Copyright (C) 2000-2008 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -210,12 +210,14 @@ foreach my $pkg (@ARGV) {
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^check$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^chm$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /[Oo]ld$/);
-	print EXCLUDE "$File::Find::name\n" if /^GNUMakefile$/;
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^CVS$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.svn$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.arch-ids$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.bzr$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.git$/);
+	## some authors managed to create ..Rcheck as well as pkgname.Rcheck
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /\.Rcheck$/);
+	print EXCLUDE "$File::Find::name\n" if /^GNUMakefile$/;
 	## Windows DLL resource file
 	push(@exclude_patterns, "^src/" . $pkgname . "_res\\.rc");
 	my $filename = $File::Find::name;

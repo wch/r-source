@@ -197,6 +197,8 @@ UTILITIES
     o	R CMD build tries harder to clean up the inst/doc directory
     	from the remnants of earlier builds.
 
+	It also removes any directories with extension .Rcheck.
+
 
 BUG FIXES
 
