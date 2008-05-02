@@ -455,7 +455,8 @@ function(package, dir, lib.loc = NULL)
         ## For simplicity, always add a package \encoding entry at the
         ## end (so that an explicit \encoding entry in an Rd file always
         ## takes precedence.
-        db <- mapply(c, db, sprintf("\\encoding{%s}", encoding))
+        db <- Map(c, db, sprintf("\\encoding{%s}", encoding))
+        ## (As we want mapply(SIMPLIFY = FALSE, USE.NAMES = TRUE).)
     }
 
     db
