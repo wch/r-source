@@ -1,12 +1,14 @@
 % File src/library/graphics/man/plot.window.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{plot.window}
 \alias{plot.window}
 \alias{asp}
 \concept{aspect ratio}
+\concept{log scale}
+\concept{axis range}
 \title{Set up World Coordinates for Graphics Window}
 \description{
   This function sets up the world coordinate system for a graphics
