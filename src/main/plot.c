@@ -1627,21 +1627,21 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
 	    if (R_FINITE(xx) && R_FINITE(yy)) {
-		if (R_FINITE( (thiscex = REAL(cex)[i % ncex]) ) && 
-                    (thispch = INTEGER(pch)[i % npch]) != NA_INTEGER) {
-                    thiscol = INTEGER(col)[i % ncol];
-                    thisbg = INTEGER(bg)[i % nbg];
-                    if (!(R_TRANSPARENT(thiscol) && 
-                          R_TRANSPARENT(thisbg))) {
-                        gpptr(dd)->cex = thiscex * gpptr(dd)->cexbase;
-                        gpptr(dd)->col = thiscol;
-                        if(nlwd > 1 && 
-                           R_FINITE((thislwd = REAL(lwd)[i % nlwd])))
-                            gpptr(dd)->lwd = thislwd;
-                        gpptr(dd)->bg = thisbg;
-                        GSymbol(xx, yy, DEVICE, thispch, dd);
-                    }
-                }
+		if (R_FINITE( (thiscex = REAL(cex)[i % ncex]) ) &&
+		    (thispch = INTEGER(pch)[i % npch]) != NA_INTEGER) {
+		    thiscol = INTEGER(col)[i % ncol];
+		    thisbg = INTEGER(bg)[i % nbg];
+		    if (!(R_TRANSPARENT(thiscol) &&
+			  R_TRANSPARENT(thisbg))) {
+			gpptr(dd)->cex = thiscex * gpptr(dd)->cexbase;
+			gpptr(dd)->col = thiscol;
+			if(nlwd > 1 &&
+			   R_FINITE((thislwd = REAL(lwd)[i % nlwd])))
+			    gpptr(dd)->lwd = thislwd;
+			gpptr(dd)->bg = thisbg;
+			GSymbol(xx, yy, DEVICE, thispch, dd);
+		    }
+		}
 	    }
 	}
     }
@@ -3283,6 +3283,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 									\
     if ((units = asInteger(CAR(args))) == NA_INTEGER || units < 0)	\
 	error(_("invalid units"));					\
+    if(units == 1)  GCheckState(dd); \
     args = CDR(args);							\
 									\
     if (isNull(CAR(args)))						\
