@@ -207,6 +207,10 @@ many utilities do not accept spaces in file paths): non-English alphabetic
 characters cannot be guaranteed to be supported in all locales.  It would
 be good practice to avoid the shell metacharacters @code{()@{@}'[]$}.
 
+A source package should not contain binary executable files: they are
+not portable, and a security risk if they are of the appropriate
+architecture.
+
 The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
 
@@ -456,7 +460,7 @@ the encoding of the @code{CITATION} file.  Only encoding names
 (Do not specify an encoding unless one is actually needed: doing so
 makes the package @emph{less} portable.)
 
-The optional @samp{OS_ype} field specifies the OSes for which the
+The optional @samp{OS_type} field specifies the OS(es) for which the
 package is intended.  If present, it should be one of @code{unix} or
 @code{windows}, and indicates that the package should only be installed
 on a platform with @samp{.Platform$OS.type} having that value.
@@ -1263,6 +1267,10 @@ The files and directories are checked for sufficient permissions (Unix
 only).
 
 @item
+The files are checked for binary executables, using GNU @command{file}
+if available.  (There may be rare false positives.)
+
+@item
 The @file{DESCRIPTION} file is checked for completeness, and some of its
 entries for correctness.  Unless installation tests are skipped,
 checking is aborted if the package dependencies cannot be resolved at
@@ -1293,6 +1301,10 @@ value @samp{yes-maybe}) and there is no @file{src/Makefile} or
 
 To allow a @file{configure} script to generate suitable files, files
 ending in @samp{.in} will be allowed in the @file{R} directory.
+
+A warning is given for directory names that look like @R{} package check
+directories -- many packages have been submitted to CRAN containing
+these.
 
 @item
 The @R{} files are checked for syntax errors.  Bytes which are

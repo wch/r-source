@@ -125,6 +125,8 @@ my $R_check_force_suggests =
     &R_getenv("_R_CHECK_FORCE_SUGGESTS_", "TRUE");
 my $R_check_Rd_style =
     &R_getenv("_R_CHECK_RD_STYLE_", "TRUE");
+my $R_check_executables =
+    &R_getenv("_R_CHECK_EXECUTABLES_", "TRUE");
 
 ## Maybe move basic configuration (and documentation) to
 ##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
@@ -165,6 +167,8 @@ $R_check_use_codetools =
     &config_val_to_logical($R_check_use_codetools);
 $R_check_Rd_style =
     &config_val_to_logical($R_check_Rd_style);
+$R_check_executables =
+    &config_val_to_logical($R_check_executables);
 ## <NOTE>
 ## This looks a bit strange, but tools:::.check_package_depends()
 ## currently gets the information about forcing suggests via an
@@ -990,6 +994,75 @@ sub check_pkg {
 	$log->result("OK");
     }
 
+    if ($R_check_executables) {
+	my $have_GNU_File = 0;
+	my $tmpfile = R_tempfile("file");
+	if (!$WINDOWS) {
+	    R_system("file --version > $tmpfile");
+	    open FILE, "< $tmpfile";
+	    my @lines = <FILE>;
+	    close(FILE);
+	    ## a reasonable check -- it does not identify itself well
+	    $have_GNU_file = 1 if grep(/^file-4/, @lines);
+	}
+	if ($have_GNU_file) {
+	    $log->checking("for executable files");
+	    my @exec_files = ();
+	    sub find_execs {
+		my $file_path = $File::Find::name;
+		my $file_name = basename($file_path);
+		my $bare_path = $file_path;
+		$bare_path =~ s+^\./++;
+		## watch out for spaces in file names here
+		R_system("file '$file_name' > $tmpfile");	    
+		open FILE, "< $tmpfile";
+		my @lines = <FILE>;
+		close(FILE);
+		my $line = $lines[0];
+		my $t1 = $line =~ /executable/;
+		my $t2 = $line =~ /script text/;
+		push @exec_files, $bare_path if ($t1 && ! $t2);
+	    }
+	    find(\&find_execs, ".");
+	    if(scalar(@exec_files) > 0) {
+		$log->warning();
+		$log->print("Found the following executable file(s):\n");
+		$log->print("  " . join("\n  ", @exec_files) . "\n");
+		$log->print(wrap("", "",
+				 ("Source packages should not contain executable files.\n",
+				  "See section 'Package structure'",
+				  "in manual 'Writing R Extensions'.\n")));
+	    }
+	    else {
+		$log->result("OK");
+	    }
+	} else { # no GNU file, so just check extensions
+	    $log->checking("for .dll and .exe files");
+	    my @exec_files = ();
+	    sub find_execs2 {
+		my $file_path = $File::Find::name;
+		my $bare_path = $file_path;
+		$bare_path =~ s+^\./++;
+		push @exec_files, $bare_path 
+		    if $file_path =~ /\.(exe|dll)$/;
+	    }
+	    find(\&find_execs2, ".");
+	    if(scalar(@exec_files) > 0) {
+		$log->warning();
+		$log->print("Found the following executable file(s):\n");
+		$log->print("  " . join("\n  ", @exec_files) . "\n");
+		$log->print(wrap("", "",
+				 ("Source packages should not contain executable files.\n",
+				  "See section 'Package structure'",
+				  "in manual 'Writing R Extensions'.\n")));
+	    }
+	    else {
+		$log->result("OK");
+	    }
+	}
+	unlink $tmpfile;
+    }
+
     ## Check for sufficient file permissions (Unix only).
 
     ## This used to be much more 'aggressive', requiring that dirs and
@@ -1192,6 +1265,34 @@ sub check_pkg {
 	    $log->print("Most likely, this should be 'data'.\n")
 	}
     }
+
+    ## several packages have had check dirs in the sources, e.g.
+    ## ./languageR/languageR.Rcheck
+    ## ./locfdr/man/locfdr.Rcheck
+    ## ./clustvarsel/inst/doc/clustvarsel.Rcheck
+    ## ./bicreduc/OldFiles/bicreduc.Rcheck
+    ## ./waved/man/waved.Rcheck
+    ## ./waved/..Rcheck
+    my @check_files = ();
+    sub find_check_names {
+	my $file_path = $File::Find::name;
+	my $file_name = basename($file_path);
+	my $bare_path = $file_path;
+	$bare_path =~ s+^\./++;
+	push(@check_files, $bare_path) 
+	    if -d $file_name && $file_path =~ /\.Rcheck$/;
+    }
+    find(\&find_check_names, ".");
+    if(scalar(@check_files) > 0) {
+	$log->warning() unless($any);
+	$any++;
+	$log->print("Found the following directory(s) with " .
+		    "names of check directories:\n");
+	$log->print("  " . join("\n  ", @check_files) . "\n");
+	$log->print("Most likely, these were included erroneously.\n")
+    }
+    
+
     sub check_subdirs {
 	my ($dpath) = @_;
 	my $Rcmd = "tools:::.check_package_subdirs(\"$dpath\")\n";
