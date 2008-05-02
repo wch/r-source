@@ -404,12 +404,12 @@ foreach my $pkg (@ARGV) {
 
 	my $OS_type = $description->{"OS_type"};
 	if($opt_install && $OS_type) {
-	    if($WINDOWS && $OS_type == "unix") {
+	    if($WINDOWS && $OS_type ne "windows") {
 		$log->message("will not attempt to install this package on Windows");
 		$opt_install = 0;
 	    }
-	    if(!$WINDOWS && $OS_type == "windows") {
-		$log->message("this is a Windows-only package, skipping isntallation");
+	    if(!$WINDOWS && $OS_type eq "windows") {
+		$log->message("this is a Windows-only package, skipping installation");
 		$opt_install = 0;
 	    }
 	}
