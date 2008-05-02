@@ -570,7 +570,7 @@ foreach my $pkg (@ARGV) {
 	    my $have_GNU_File = 0;
 	    my $tmpfile = R_tempfile("file");
 	    if (!$WINDOWS) {
-		R_system("file --version > $tmpfile");
+		R_system("file --version > $tmpfile 2>&1");
 		open FILE, "< $tmpfile";
 		my @lines = <FILE>;
 		close(FILE);
