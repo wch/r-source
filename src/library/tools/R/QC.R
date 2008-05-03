@@ -4328,6 +4328,22 @@ function(dir)
                        }))
 }
 
+### * .check_citation
+
+.check_citation <-
+function(cfile)
+{
+    cfile <- tools::file_path_as_absolute(cfile)
+    meta <- if(basename(dir <- dirname(cfile)) == "inst")
+        as.list(tools:::.get_package_metadata(dirname(dir)))
+    else
+        NULL
+    out <- tryCatch(suppressMessages(readCitationFile(cfile, meta)),
+                    error = identity)
+    if(inherits(out, "error"))
+        writeLines(conditionMessage(out))
+}
+
 ### * .find_charset
 
 .find_charset <-

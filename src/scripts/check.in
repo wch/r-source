@@ -1412,8 +1412,7 @@ sub check_pkg {
     ## For the time being, only try parsing inst/CITATION ...
     my $file = &file_path("inst", "CITATION");
     if(-f $file) {
-	my $Rcmd = "invisible(tryCatch(readCitationFile(\"${file}\"), ";
-	$Rcmd .= "error = function(e) writeLines(conditionMessage(e))))";
+	my $Rcmd = "tools:::.check_citation(\"${file}\")";
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=utils");
 	@out = grep(!/^\>/, @out);
