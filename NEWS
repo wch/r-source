@@ -170,7 +170,7 @@ NEW FEATURES
 
     o	poly() has additional checks against user error (as in PR#11243).
 
-    o	The Mac OS quartz() devicde draws contiguous lines much faster.
+    o	The Mac OS quartz() device draws contiguous lines much faster.
 
     o	A field containing just a sign is no longer regarded as numeric
     	(it was on all platforms in 2.7.0, but not on most in earlier
