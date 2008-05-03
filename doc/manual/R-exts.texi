@@ -9116,7 +9116,7 @@ The following headers are included by @file{R.h}:
 @end quotation
 
 The graphics systems are exposed in headers
-@file{R_ext/GraphicsEngine.h}, @file{R_ext/GraphicsDevice,h} (which it
+@file{R_ext/GraphicsEngine.h}, @file{R_ext/GraphicsDevice.h} (which it
 includes) and @file{R_ext/QuartzDevice.h}.  Some entry points from the
 @pkg{stats} package are in @file{R_ext/stats_package.h} (currently
 related to the internals of @samp{nls} and @samp{nlminb}).
