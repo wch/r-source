@@ -402,6 +402,20 @@ foreach my $pkg (@ARGV) {
 
         if(defined $encoding) {$log->message("package encoding: $encoding");}
 
+	## Check if we have any hope of installing
+
+	my $OS_type = $description->{"OS_type"};
+	if($opt_install && $OS_type) {
+	    if($WINDOWS && $OS_type ne "windows") {
+		$log->message("will not attempt to install this package on Windows");
+		$opt_install = 0;
+	    }
+	    if(!$WINDOWS && $OS_type eq "windows") {
+		$log->message("this is a Windows-only package, skipping installation");
+		$opt_install = 0;
+	    }
+	}
+
 	## Check package dependencies.
 
 	## <NOTE>
@@ -1198,6 +1212,34 @@ sub check_pkg {
 	    $log->print("Most likely, this should be 'data'.\n")
 	}
     }
+
+    ## several packages have had check dirs in the sources, e.g.
+    ## ./languageR/languageR.Rcheck
+    ## ./locfdr/man/locfdr.Rcheck
+    ## ./clustvarsel/inst/doc/clustvarsel.Rcheck
+    ## ./bicreduc/OldFiles/bicreduc.Rcheck
+    ## ./waved/man/waved.Rcheck
+    ## ./waved/..Rcheck
+    my @check_files = ();
+    sub find_check_names {
+	my $file_path = $File::Find::name;
+	my $file_name = basename($file_path);
+	my $bare_path = $file_path;
+	$bare_path =~ s+^\./++;
+	push(@check_files, $bare_path) 
+	    if -d $file_name && $file_path =~ /\.Rcheck$/;
+    }
+    find(\&find_check_names, ".");
+    if(scalar(@check_files) > 0) {
+	$log->warning() unless($any);
+	$any++;
+	$log->print("Found the following directory(s) with " .
+		    "names of check directories:\n");
+	$log->print("  " . join("\n  ", @check_files) . "\n");
+	$log->print("Most likely, these were included erroneously.\n")
+    }
+    
+
     sub check_subdirs {
 	my ($dpath) = @_;
 	my $Rcmd = "tools:::.check_package_subdirs(\"$dpath\")\n";
