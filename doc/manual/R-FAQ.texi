@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-04-28
+@set FAQ_DATE @value{FAQ_YEAR}-04-30
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -2356,6 +2356,8 @@ Odds ratio based multivactor-dimensionality reduction method for
 detecting gene-gene interactions.
 @item Oarray
 Arrays with arbitrary offsets.
+@item PARccs
+Estimation of partial attributable risks (PAR) from case-control data.
 @item PASWR
 Data and functions for the book ``Probability and Statistics with R'' by
 M. D. Ugarte, A. F. Militino and A. T. Arnholt, 2008, Chapman & Hall/CRC.
@@ -3037,8 +3039,11 @@ Bias-reduced logistic regression: fits logistic regression models by
 maximum penalized likelihood.
 @item bspec
 Bayesian inference on the (discrete) power spectrum of time series.
-@item butler
-Unit testing, profiling and benchmarking for R.
+@c <COMMENT>
+@c Moved to the Archive on 2008-05-02 as requested by the maintainer.
+@c @item butler
+@c Unit testing, profiling and benchmarking for R.
+@c </COMMENT>
 @item bvls
 The Stark-Parker algorithm for bounded-variable least squares.
 @item ca
@@ -4251,6 +4256,8 @@ Estimation/multiple imputation programs for mixed categorical and
 continuous data.
 @item mixPHM
 Mixtures of proportional hazard models.
+@item mixdist
+Finite mixture distribution models.
 @item mixreg
 Functions to fit mixtures of regressions.
 @item mixstock
@@ -4312,6 +4319,12 @@ Multivariate probit model for binary/ordinal response.
 Analysis of capture-recapture data.
 @item mratios
 Inferences for ratios of coefficients in the general linear model.
+@item msProcess
+Tools for protein mass spectra processing including data preparation,
+denoising, noise estimation, baseline correction, intensity
+normalization, peak detection, peak alignment, peak quantification, and
+various functionalities for data ingestion/conversion, mass calibration,
+data quality assessment, and protein mass spectra simulation.
 @c <COMMENT>
 @c Moved to the Archive on 2005-07-27 as requested by Witold Eryk Wolski
 @c <W.E.Wolski@ncl.ac.uk> (package now in BioC).
@@ -4714,6 +4727,8 @@ Fits a principal curve to a matrix of points in arbitrary dimension.
 Elementary probability on finite sample spaces.
 @item profileModel
 Tools for profiling inference functions for various model classes.
+@item profr
+Alternative display for profiling information.
 @item proftools
 Profile output processing tools for R.
 @item proj4
@@ -5241,6 +5256,8 @@ Smoothing splines on the sphere.
 Shrinkage @math{t} statistic.
 @item staRt
 Inferenza classica con TI-83 Plus.
+@item stab
+Data analysis of drug stability.
 @c @item stable
 @c Density, distribution, quantile and hazard functions of a stable
 @c variate; generalized linear models for the parameters of a stable
