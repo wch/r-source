@@ -115,6 +115,15 @@ available.packages <-
         }
         res <- res[apply(res, 1, .checkRversion), , drop=FALSE]
     }
+    ## and those that do not fit our OS
+    if(length(res)) {
+        current <- .Platform$OS.type
+        .checkOStype <- function(x) {
+            xx <- x["OS_type"]
+            is.na(xx) || xx == current
+        }
+        res <- res[apply(res, 1, .checkOStype), , drop=FALSE]
+    }
     res
 }
 

@@ -249,8 +249,13 @@ foreach $pkg (@ARGV){
 	if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
 	die "cannot install package '${pkgname}' of type '$Type'\n"
     }
- 
+
     die "no valid package name found\n" unless length($pkgname) > 0;
+
+    my $OS_type = $description->{"OS_type"};
+    die "cannot install package '${pkgname}' for '$OS_type'\n" if
+	$OS_type && $OS_type ne "windows";
+
     my $pkgoutdir = "$library/$pkgname";
     die "  *** can't install into source directory ***\n"
 	if $canonpkg eq $pkgoutdir;
