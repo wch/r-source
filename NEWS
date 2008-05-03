@@ -139,8 +139,8 @@ UTILITIES
     	sources -- in mid-2008 there were about 20 examples on CRAN.
 
     o	R CMD check checks for binary executable files (which should not
-	appear in a source package), using GNU file if available, else
-	by name.
+	appear in a source package), using a suitable 'file' if
+	available, else by name.
 
 
 BUG FIXES

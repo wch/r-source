@@ -567,7 +567,9 @@ foreach my $pkg (@ARGV) {
 
 	## we need to do this before installation
 	if ($R_check_executables) {
-	    my $have_GNU_File = 0;
+	    ## this is tailored to the FreeBSD/Linux file, 
+	    ## see http://www.darwinsys.com/file/
+	    my $have_free_File = 0;
 	    my $tmpfile = R_tempfile("file");
 	    if (!$WINDOWS) {
 		R_system("file --version > $tmpfile 2>&1");
@@ -575,9 +577,9 @@ foreach my $pkg (@ARGV) {
 		my @lines = <FILE>;
 		close(FILE);
 		## a reasonable check -- it does not identify itself well
-		$have_GNU_file = 1 if grep(/^file-4/, @lines);
+		$have_free_file = 1 if grep(/^file-4/, @lines);
 	    }
-	    if ($have_GNU_file) {
+	    if ($have_free_file) {
 		$log->checking("for executable files");
 		my @exec_files = ();
 		sub find_execs {

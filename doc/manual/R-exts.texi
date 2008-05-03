@@ -1267,8 +1267,9 @@ The files and directories are checked for sufficient permissions (Unix
 only).
 
 @item
-The files are checked for binary executables, using GNU @command{file}
-if available.  (There may be rare false positives.)
+The files are checked for binary executables, using a suitable version
+of @command{file} if available.  (There may be rare false positives --
+package @pkg{foreign} has one.)
 
 @item
 The @file{DESCRIPTION} file is checked for completeness, and some of its
