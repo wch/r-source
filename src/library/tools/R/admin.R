@@ -377,17 +377,17 @@ function(dir, outDir)
     indices <- c(file.path("Meta", "Rd.rds"),
                  file.path("Meta", "hsearch.rds"),
                  "CONTENTS", "INDEX")
-    upToDate <- file_test("-nt", file.path(outDir, indices), docsDir)
+    newestRd <- max(file.info(list.files(docsDir))$mtime)
+    upToDate <- file.info(file.path(outDir, indices))$mtime >= newestRd
     if(file_test("-d", dataDir)) {
         ## Note that the data index is computed from both the package's
         ## Rd files and the data sets actually available.
-        upToDate <-
-            c(upToDate,
-              file_test("-nt",
-                        file.path(outDir, "Meta", "data.rds"),
-                        c(dataDir, docsDir)))
+        newestData <- max(file.info(list.files(dataDir))$mtime)
+        upToDate <- c(upToDate,
+              file.info(file.path(outDir, "Meta", "data.rds"))$mtime >= 
+                        max(newestRd, newestData))
     }
-    if(all(upToDate)) return(invisible())
+    if(all(upToDate, na.rm=TRUE)) return(invisible())
 
     contents <- Rdcontents(list_files_with_type(docsDir, "docs"))
 
