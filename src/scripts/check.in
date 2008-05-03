@@ -572,6 +572,8 @@ foreach my $pkg (@ARGV) {
 	    my $have_free_File = 0;
 	    my $tmpfile = R_tempfile("file");
 	    if (!$WINDOWS) {
+		## version 4.21 writes to stdout, 4.23 to stderr
+		## and set an error status code
 		R_system("file --version > $tmpfile 2>&1");
 		open FILE, "< $tmpfile";
 		my @lines = <FILE>;
