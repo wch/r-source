@@ -135,9 +135,6 @@ UTILITIES
     	R_PDFVIEWER is set (as it will normally be on a Unix-alike but
     	not on Windows, where the file association is used by default).
 
-    o	R CMD check checks for possibly check directories in the
-    	sources -- in mid-2008 there were about 20 examples on CRAN.
-
     o	R CMD check checks for binary executable files (which should not
 	appear in a source package), using a suitable 'file' if
 	available, else by name.
@@ -173,7 +170,7 @@ NEW FEATURES
 
     o	poly() has additional checks against user error (as in PR#11243).
 
-    o	Quartz draws contiguous lines much faster.
+    o	The Mac OS quartz() devicde draws contiguous lines much faster.
 
     o	A field containing just a sign is no longer regarded as numeric
     	(it was on all platforms in 2.7.0, but not on most in earlier
@@ -193,6 +190,9 @@ DEPRECATED & DEFUNCT
 
 
 UTILITIES
+
+    o	R CMD check checks for possible check directories in the
+    	sources -- in mid-2008 there were about 20 examples on CRAN.
 
     o	R CMD build tries harder to clean up the inst/doc directory
     	from the remnants of earlier builds.
@@ -224,8 +224,8 @@ BUG FIXES
 	or semi-transparent 'bg'.  Previously, if 'col' was
 	transparent then 'bg' was ignored and nothing was drawn.
 
-    o	file.path() did not work correctly if the components had
-    	different encodings.
+    o	file.path() did not work correctly in 2.7.0 if the components
+    	had different encodings.
 
     o	merge() failed if there were no common columns and one of the
     	inputs had zero rows.
@@ -238,7 +238,7 @@ BUG FIXES
     o	Because of a typo, 'pointsize' in png(type="cairo") (and jpeg,
     	bmp, tiff) devices was being interpreted in pixels not bigpoints.
 
-    o	is() was wrong for some S3 class objects with class for length
+    o	is() was wrong for some S3 class objects with class of length
 	greater than one.
 
     o	undoc() / codoc() where not checking all S4 methods in some cases.
