@@ -113,8 +113,8 @@ DEPRECATED & DEFUNCT
 
     o	unserialize() no longer accepts character strings as input.
 
-    o	The C macro 'allocString' has been removed -- use 'mkChar',
-	or 'allocVector' directly if really necessary.
+    o	The C macro 'allocString' has been removed -- use 'mkChar' and
+	variants.
 
     o	Use of allocVector(CHARSXP ...) is deprecated and gives a warning.
 
