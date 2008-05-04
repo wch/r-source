@@ -380,6 +380,7 @@ function(dir, outDir)
     ## we want the date of the newest .Rd file we will install
     allRd <- list_files_with_type(docsDir, "docs")
     newestRd <- max(file.info(allRd)$mtime)
+    ## these files need not exist, which gives NA.
     upToDate <- file.info(file.path(outDir, indices))$mtime >= newestRd
     if(file_test("-d", dataDir)) {
         ## Note that the data index is computed from both the package's
@@ -389,7 +390,8 @@ function(dir, outDir)
               file.info(file.path(outDir, "Meta", "data.rds"))$mtime >=
                         max(newestRd, newestData))
     }
-    if(all(upToDate, na.rm=TRUE)) return(invisible())
+    ## we want to proceed if any is NA.
+    if(all(upToDate %in% TRUE)) return(invisible())
 
     contents <- Rdcontents(allRd)
 
