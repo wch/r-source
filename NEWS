@@ -86,10 +86,6 @@ PACKAGE INSTALLATION
     	configure script in the package -- this usually indicates a
     	file system with insufficient permissions.
 
-    o	The DESCRIPTION file of a package can specify an 'OS_type' field
-	as either 'unix' or 'windows' to confine installation to that
-	OS type.
-
 
 DEPRECATED & DEFUNCT
 
@@ -179,6 +175,10 @@ NEW FEATURES
     o	CITATION files are now read in Latin-1: quite a few were
     	failing if used in a multibyte locale such as UTF-8.
 
+    o	The DESCRIPTION file of a package can specify an 'OS_type' field
+	as either 'unix' or 'windows' to confine installation to that
+	OS type.
+
 
 DEPRECATED & DEFUNCT
 
@@ -241,7 +241,7 @@ BUG FIXES
     o	is() was wrong for some S3 class objects with class of length
 	greater than one.
 
-    o	undoc() / codoc() where not checking all S4 methods in some cases.
+    o	undoc() / codoc() were not checking all S4 methods in some cases.
 
     o	Use of textConnection(NULL, mode="w") could segfault.
 
