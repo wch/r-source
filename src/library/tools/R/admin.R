@@ -377,19 +377,21 @@ function(dir, outDir)
     indices <- c(file.path("Meta", "Rd.rds"),
                  file.path("Meta", "hsearch.rds"),
                  "CONTENTS", "INDEX")
-    newestRd <- max(file.info(list.files(docsDir))$mtime)
+    ## we want the date of the newest .Rd file we will install
+    allRd <- list_files_with_type(docsDir, "docs")
+    newestRd <- max(file.info(allRd)$mtime)
     upToDate <- file.info(file.path(outDir, indices))$mtime >= newestRd
     if(file_test("-d", dataDir)) {
         ## Note that the data index is computed from both the package's
         ## Rd files and the data sets actually available.
         newestData <- max(file.info(list.files(dataDir))$mtime)
         upToDate <- c(upToDate,
-              file.info(file.path(outDir, "Meta", "data.rds"))$mtime >= 
+              file.info(file.path(outDir, "Meta", "data.rds"))$mtime >=
                         max(newestRd, newestData))
     }
     if(all(upToDate, na.rm=TRUE)) return(invisible())
 
-    contents <- Rdcontents(list_files_with_type(docsDir, "docs"))
+    contents <- Rdcontents(allRd)
 
     .write_contents_as_RDS(contents,
                            file.path(outDir, "Meta", "Rd.rds"))
