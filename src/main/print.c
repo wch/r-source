@@ -827,7 +827,22 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		UNPROTECT(1);
 		goto nextattr;
 	    }
-	    if (isObject(CAR(a))) {
+	    if (isMethodsDispatchOn() && IS_S4_OBJECT(CAR(a))) {
+		SEXP s, showS;
+
+		showS = findVar(install("show"), env);
+		if(showS == R_UnboundValue) {
+		    SEXP methodsNS = R_FindNamespace(mkString("methods"));
+		    if(methodsNS == R_UnboundValue)
+			error("missing methods namespace: this should not happen");
+		    showS = findVarInFrame3(methodsNS, install("show"), TRUE);
+		    if(showS == R_UnboundValue)
+			error("missing show() in methods namespace: this should not happen");
+		}
+		PROTECT(s = lang2(showS, CAR(a)));
+		eval(s, env);
+		UNPROTECT(1);
+	    } else if (isObject(CAR(a))) {
 		/* Need to construct a call to
 		   print(CAR(a), digits)
 		   based on the R_print structure, then eval(call, env).
@@ -835,6 +850,8 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 
 		   quote, right, gap should probably be included if
 		   they have non-missing values.
+
+		   This will not dispatch to show() as 'digits' is supplied.
 		*/
 		SEXP s, t, na_string = R_print.na_string,
 		    na_string_noquote = R_print.na_string_noquote;

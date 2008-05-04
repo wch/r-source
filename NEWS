@@ -75,6 +75,10 @@ NEW FEATURES
     o	readCitationFile() (and hence citation) now reads a package's
 	CITATION file in the package's declared encoding (if there is one).
 
+    o	If S4 method dispatch is on and S4 objects are found as
+	attributes, show() rather than print() is used to print the
+	S4 attributes.
+
 
 PACKAGE INSTALLATION
 
