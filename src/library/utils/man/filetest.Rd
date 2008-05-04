@@ -9,7 +9,7 @@
   Shell-style Tests on Files
 }
 \description{
-  Utility for testing files.
+  Utility for shell-style file tests.
 }
 \usage{
 file_test(op, x, y)
@@ -17,20 +17,23 @@ file_test(op, x, y)
 \arguments{
   \item{op}{a character string specifying the test to be performed.
     Unary tests (only \code{x} is used) are \code{"-f"} (existence and
-    not being a directory) and \code{"-d"} (existence and directory);
-    binary tests are \code{"-nt"} (newer than, using the modification
-    dates) and \code{"-ot"}.}
+    not being a directory) and \code{"-d"} (existence and directory).
+    Binary tests are \code{"-nt"} (strictly newer than, using the modification
+    dates) and \code{"-ot"} (strictly older than): in both cases the
+    test is false unless both files exist.}
   \item{x,y}{character vectors giving file paths.}
 }
 \details{
-  \code{file_test} performs shell-style file tests.
-
-  Note that \code{\link{file.exists}} only tests for existence
-  (\code{test -e} on some systems) but not for not being a directory.
+  \sQuote{Existence} here means being on the file system and accessible
+  by the \code{stat} system call (or a 64-bit extension) -- on a
+  Unix-alike this requires execute permission on all of the directories in
+  the path that leads to the file, but no permissions on the file itself.
 }
 \seealso{
-  \code{\link{file.path}},
-  \code{\link{file.info}}
+  \code{\link{file.exists}} which only tests for existence
+  (\code{test -e} on some systems) but not for not being a directory.
+  
+  \code{\link{file.path}}, \code{\link{file.info}}
 }
 \examples{
 dir <- file.path(R.home(), "library", "stats")
