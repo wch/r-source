@@ -590,6 +590,8 @@ foreach my $pkg (@ARGV) {
 		my @exec_files = ();
 		sub find_execs {
 		    my $file_path = $File::Find::name;
+		    ## false positive
+		    return if $file_path =~ m+foreign/tests/datefactor.dta$+;
 		    my $file_name = basename($file_path);
 		    my $bare_path = $file_path;
 		    $bare_path =~ s+^$pkgdir/++;
@@ -621,7 +623,7 @@ foreach my $pkg (@ARGV) {
 		    $log->print("Found the following executable file(s):\n");
 		    $log->print("  " . join("\n  ", @exec_files) . "\n");
 		    $log->print(wrap("", "",
-				     ("Source packages should not contain executable files.\n",
+				     ("Source packages should not contain undeclared executable files.\n",
 				      "See section 'Package structure'",
 				      "in manual 'Writing R Extensions'.\n")));
 		}

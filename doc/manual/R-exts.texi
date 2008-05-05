@@ -209,8 +209,9 @@ be good practice to avoid the shell metacharacters @code{()@{@}'[]$}.
 
 A source package if possible should not contain binary executable files:
 they are not portable, and a security risk if they are of the
-appropriate architecture.  @command{R CMD check} will warn about them
-unless they are listed (one filepath per line) in a file
+appropriate architecture.  @command{R CMD check} will warn about
+them@footnote{false positives are possible, but only one has been seen
+so far.} unless they are listed (one filepath per line) in a file
 @file{BinaryFiles} at the top level of the package or bundle.
 
 The @R{} function @code{package.skeleton} can help to create the
