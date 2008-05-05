@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-05-05 r45615)
+R version 2.8.0 Under development (unstable) (2008-05-05 r45617)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -718,8 +718,6 @@ to include omitted arguments in definition: mode = "missing"
 + 	  identical(as.vector(gg4),
 + 		    tools:::getGenerics_with_methods(e4))
 + 	  )
-generics without methods in package:methods:
-	 Arith, Compare, Complex, Logic, Math2, Summary, coerce, coerce<-
 > ## the last failed in R 2.7.0 : was not showing  "show"
 > ## TODO: use "Matrix" checks once that is >= 1.0
 > 

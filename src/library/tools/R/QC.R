@@ -231,7 +231,7 @@ function(package, dir, lib.loc = NULL)
             else
                 character()
         }
-        S4_methods <- sapply(getGenerics_with_methods(code_env),
+        S4_methods <- sapply(get_S4_generics_with_methods(code_env),
                              .make_S4_method_siglist)
         S4_methods <- as.character(unlist(S4_methods, use.names = FALSE))
 
@@ -552,7 +552,7 @@ function(package, dir, lib.loc = NULL,
                 } else
                 formals(fun)
             }
-            lapply(getGenerics_with_methods(code_env),
+            lapply(get_S4_generics_with_methods(code_env),
                    function(f) {
                        mlist <- .get_S4_methods_list(f, code_env)
                        sigs <- .make_siglist(mlist)
@@ -1874,7 +1874,7 @@ function(package, dir, file, lib.loc = NULL,
             ## Also check the code in S4 methods.
             ## This may find things twice if a setMethod() with a bad FF
             ## call is from inside a function (e.g., InitMethods()).
-            for(f in getGenerics_with_methods(code_env)) {
+            for(f in get_S4_generics_with_methods(code_env)) {
                 mlist <- .get_S4_methods_list(f, code_env)
                 exprs <- c(exprs, lapply(mlist, body))
             }
@@ -2270,7 +2270,7 @@ function(package, dir, lib.loc = NULL)
     } else character(0)
 
     if(.isMethodsDispatchOn()) {
-        S4_generics <- getGenerics_with_methods(code_env)
+        S4_generics <- get_S4_generics_with_methods(code_env)
         ## Assume that the ones with names ending in '<-' are always
         ## replacement functions.
         S4_generics <- grep("<-$", S4_generics, value = TRUE)
@@ -4095,7 +4095,7 @@ function(package, dir, lib.loc = NULL)
         if(.isMethodsDispatchOn()) {
             ## Also check the code in S4 methods.
             ## This may find things twice.
-            for(f in getGenerics_with_methods(code_env)) {
+            for(f in get_S4_generics_with_methods(code_env)) {
                 mlist <- .get_S4_methods_list(f, code_env)
                 exprs <- c(exprs, lapply(mlist, body))
             }
@@ -4441,9 +4441,9 @@ function()
       "!")
 }
 
-### ** getGenerics_with_methods --- FIXME: make option of methods::getGenerics()
+### ** get_S4_generics_with_methods --- FIXME: make option of methods::getGenerics()
 
-getGenerics_with_methods <- function(env, verbose=FALSE)
+get_S4_generics_with_methods <- function(env, verbose=FALSE)
 {
     env <- as.environment(env)
 ##  Filter(function(g) methods::isGeneric(g, where = env),
@@ -4491,7 +4491,7 @@ function(g, env)
         .Internal(getRegisteredNamespace(as.name(package)))
     } # else NULL
     penv <- parent.env(if(is.environment(penv)) penv else env)
-    if((g %in% getGenerics_with_methods(penv)) &&
+    if((g %in% get_S4_generics_with_methods(penv)) &&
        length(mlist_from_penv <- methods::findMethods(g, penv)))
 	mlist <- mlist[is.na(match(names(mlist),
 				   names(mlist_from_penv)))]

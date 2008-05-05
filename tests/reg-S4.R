@@ -385,13 +385,13 @@ gms <- c("addNextMethod", "body<-", "cbind2", "initialize",
 stopifnot(unlist(lapply(ggm, function(g) !is.null(getGeneric(g, where = em)))),
 	  unlist(lapply(ggm, function(g) !is.null(getGeneric(g)))),
 	  gms %in% ggm,
-	  gms %in% tools:::getGenerics_with_methods(em), # with "message"
+	  gms %in% tools:::get_S4_generics_with_methods(em), # with "message"
 	  ## all above worked in 2.7.0, however:
 	  isGeneric("show",  where=e4),
 	  hasMethods("show", where=e4), hasMethods("show", where=em),
 	  ## isGeneric("dim", where=as.environment("package:Matrix"))
 	  identical(as.vector(gg4),
-		    tools:::getGenerics_with_methods(e4))
+		    tools:::get_S4_generics_with_methods(e4))
 	  )
 ## the last failed in R 2.7.0 : was not showing  "show"
 ## TODO: use "Matrix" checks once that is >= 1.0
