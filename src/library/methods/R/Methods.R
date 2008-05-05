@@ -1393,37 +1393,41 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE) {
       list()
 }
 
-findMethodSignatures <- function(..., target = TRUE, methods = findMethods(...)) {
+findMethodSignatures <- function(..., target = TRUE, methods = findMethods(...))
+{
     ## unless target is FALSE, the signatures are just the names from the table
     ## unscrambled.
     if(length(methods) < 1)
-      return(methods)
+        return(methods)
     ## find the argument names
     prims <- sapply(methods, is.primitive)
     if(!all(prims)) {
         what <- lapply(methods[!prims], function(x)  names(x@target))
         lens <- sapply(what, length)
         if(length(unique(lens)) == 1) # asserted to be true for legit. method tables
-          what <- what[[1]]
+            what <- what[[1]]
         else
-          what <- what[lens == max(lens)][[1]]
+            what <- what[lens == max(lens)][[1]]
     }
     else
-      what <- names(formals(args(methods[[1]]))) # uses the hack that args() returns a function if its argument is a primitve!
+        ## uses the hack that args() returns a function if its argument is a primitve!
+        what <- names(formals(args(methods[[1]])))
     if(target)
-      sigs <- strsplit(names(methods), "#", fixed = TRUE)
+        sigs <- strsplit(names(methods), "#", fixed = TRUE)
     else {
         anySig <- rep("ANY", length(what))
-        sigs <- lapply(methods, function(x) if(is.primitive(x)) anySig else as.character(x@defined))
+        sigs <- lapply(methods, function(x)
+                       if(is.primitive(x)) anySig else as.character(x@defined))
     }
     lens <- unique(sapply(sigs, length))
     if(length(lens) > 1)
-      sigs
+        sigs
     else
-      t(matrix(unlist(sigs), nrow = lens, dimnames = list(what, NULL)))
+        t(matrix(unlist(sigs), nrow = lens, dimnames = list(what, NULL)))
 }
 
-hasMethods <- function(f, where,package) {
+hasMethods <- function(f, where, package)
+{
     fdef <- NULL
     nowhere <- missing(where) # because R resets this if where is assigned
     if(is(f, "genericFunction")) {
@@ -1434,19 +1438,20 @@ hasMethods <- function(f, where,package) {
         stop(gettextf("argument \"f\" must be a generic function or a single character string; got an object of class \"%s\"", class(f)), domain = NA)
     if(missing(package)) {
         package <- packageSlot(f)
-        if(is.null(package)) {
-            if(missing(where))
-              where <- .GlobalEnv
-            fdef <- getFunction(f, where = where)
-            if(is(fdef, "genericFunction"))
-              package <- fdef@package
-            else if(is.primitive(fdef))
-              package <- "base"
-            else if( length(ff <- findFunction(f, where = where)) == 1)
-                package <- getPackageName(ff[[1]])
-            else
-              stop(gettextf("f does not correspond to a generic function and package not specified"), domain = NA)
-        }
+	if(is.null(package)) {
+	    if(missing(where))
+		where <- .GlobalEnv
+	    fdef <- getFunction(f, where = where, mustFind = FALSE)
+	    if(is(fdef, "genericFunction"))
+		package <- fdef@package
+	    else if(is.primitive(fdef))
+		package <- "base"
+	    else if( length(ff <- findFunction(f, where = where)) == 1)
+		package <- getPackageName(ff[[1]])
+	    else
+		stop(gettextf("f does not correspond to a generic function and package not specified"),
+		     domain = NA)
+	}
     }
     what <- .TableMetaName(f, package)
     testEv <- function(ev)
