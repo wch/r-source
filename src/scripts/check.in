@@ -127,6 +127,8 @@ my $R_check_Rd_style =
     &R_getenv("_R_CHECK_RD_STYLE_", "TRUE");
 my $R_check_executables =
     &R_getenv("_R_CHECK_EXECUTABLES_", "TRUE");
+my $R_check_executables_exclusions =
+    &R_getenv("_R_CHECK_EXECUTABLES_EXCLUSIONS_", "TRUE");
 
 ## Maybe move basic configuration (and documentation) to
 ##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
@@ -169,6 +171,8 @@ $R_check_Rd_style =
     &config_val_to_logical($R_check_Rd_style);
 $R_check_executables =
     &config_val_to_logical($R_check_executables);
+$R_check_executables_exclusions =
+    &config_val_to_logical($R_check_executables_exclusions);
 ## <NOTE>
 ## This looks a bit strange, but tools:::.check_package_depends()
 ## currently gets the information about forcing suggests via an
@@ -600,6 +604,18 @@ foreach my $pkg (@ARGV) {
 		    push @exec_files, $bare_path if ($t1 && ! $t2);
 		}
 		find(\&find_execs, "$pkgdir");
+		if($R_check_executables_exclusions &&
+		   -f "$pkgdir/BinaryFiles") {
+		    my %bin;
+		    open FILE, "< $pkgdir/BinaryFiles";
+		    while (<FILE>) { chomp; $bin{$_} = $_; }
+		    close(FILE);
+		    my @exec_files0 = @exec_files;
+		    @exec_files = ();
+		    foreach my $file (@exec_files0) {
+			push @exec_files, $file unless $bin{$file};
+		    }
+		}
 		if(scalar(@exec_files) > 0) {
 		    $log->warning();
 		    $log->print("Found the following executable file(s):\n");
@@ -623,6 +639,18 @@ foreach my $pkg (@ARGV) {
 			if $file_path =~ /\.(exe|dll)$/;
 		}
 		find(\&find_execs2, "$pkgdir");
+		if(R_check_executables_exclusions &&
+		   -f "$pkgdir/BinaryFiles") {
+		    my %bin;
+		    open FILE, "< $pkgdir/BinaryFiles";
+		    while (<FILE>) { chomp; $bin{$_} = $_; }
+		    close(FILE);
+		    my @exec_files0 = @exec_files;
+		    @exec_files = ();
+		    foreach my $file (@exec_files0) {
+			push @exec_files, $file unless $bin{$file};
+		    }
+		}
 		if(scalar(@exec_files) > 0) {
 		    $log->warning();
 		    $log->print("Found the following executable file(s):\n");

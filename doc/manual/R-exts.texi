@@ -207,9 +207,11 @@ many utilities do not accept spaces in file paths): non-English alphabetic
 characters cannot be guaranteed to be supported in all locales.  It would
 be good practice to avoid the shell metacharacters @code{()@{@}'[]$}.
 
-A source package should not contain binary executable files: they are
-not portable, and a security risk if they are of the appropriate
-architecture.
+A source package if possible should not contain binary executable files:
+they are not portable, and a security risk if they are of the
+appropriate architecture.  @command{R CMD check} will warn about them
+unless they are listed (one filepath per line) in a file
+@file{BinaryFiles} at the top level of the package or bundle.
 
 The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
