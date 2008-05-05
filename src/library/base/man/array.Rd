@@ -1,11 +1,12 @@
 % File src/library/base/man/array.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{array}
 \alias{array}
 \alias{as.array}
+\alias{as.array.default}
 \alias{is.array}
 \title{Multi-way Arrays}
 \description{
@@ -13,7 +14,7 @@
 }
 \usage{
 array(data = NA, dim = length(data), dimnames = NULL)
-as.array(x)
+as.array(x, ...)
 is.array(x)
 }
 \arguments{
@@ -26,6 +27,7 @@ is.array(x)
     the length given by \code{dim} for that dimension.  The list can be
     names, and the names will be used as names for the dimensions.}
   \item{x}{an \R object.}
+  \item{\dots}{additional arguments to be passed to or from methods.}
 }
 \value{
   \code{array} returns an array with the extents specified in \code{dim}
@@ -36,11 +38,11 @@ is.array(x)
   length zero, \code{NA} of an appropriate type is used for atomic
   vectors (\code{0} for raw vectors) and \code{NULL} for lists.
 
-  \code{as.array()} coerces its argument to be an array by attaching a
-  \code{\link{dim}} attribute to it.  It also attaches
-  \code{\link{dimnames}} if \code{x} has \code{\link{names}}.
-  The sole purpose of this is to make it possible to access the
-  \code{dim}[names] attribute at a later time.
+  \code{as.array} is a generic function for coercing to arrays.  The
+  default method does so by attaching a \code{\link{dim}} attribute to
+  it.  It also attaches \code{\link{dimnames}} if \code{x} has
+  \code{\link{names}}.  The sole purpose of this is to make it possible
+  to access the \code{dim}[names] attribute at a later time.
 
   \code{is.array} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is an array (i.e., has a \code{dim} attribute of

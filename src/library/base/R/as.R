@@ -62,7 +62,8 @@ as.function <- function(x,...) UseMethod("as.function")
 as.function.default <- function (x, envir = parent.frame(), ...)
     if (is.function(x)) x else .Internal(as.function.default(x, envir))
 
-as.array <- function(x)
+as.array <- function(x, ...) UseMethod("as.array")
+as.array.default <- function(x, ...)
 {
     if(is.array(x))
 	return(x)

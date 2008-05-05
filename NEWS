@@ -79,6 +79,8 @@ NEW FEATURES
 	attributes, show() rather than print() is used to print the
 	S4 attributes.
 
+    o	as.array() is now generic, gains a '...' argument.
+
 
 PACKAGE INSTALLATION
 
