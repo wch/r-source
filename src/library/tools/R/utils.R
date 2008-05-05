@@ -375,12 +375,8 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
 ### ** %w/o%
 
-"%w/o%" <-
-function(x, y)
-{
-    ## x without y, as in the examples of ?match.
-    x[!x %in% y]
-}
+## x without y, as in the examples of ?match.
+`%w/o%` <- function(x, y) { x[!x %in% y] }
 
 ### ** .OStype
 

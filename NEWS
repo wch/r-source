@@ -259,6 +259,8 @@ BUG FIXES
     o	Rare string width calculations in package grid were not
     	interpreting the string encoding correctly.
 
+    o	hasMethods(f, env) {without specified 'package'} now works better.
+
 
 
 		CHANGES IN R VERSION 2.7.0

@@ -18,7 +18,8 @@ setClass <-
     ## Define Class to be an S-style class.
     function(Class, representation = list(), prototype = NULL,
              contains = character(), validity = NULL, access = list(),
-             where = topenv(parent.frame()), version = .newExternalptr(), sealed = FALSE, package = getPackageName(where))
+             where = topenv(parent.frame()), version = .newExternalptr(),
+             sealed = FALSE, package = getPackageName(where))
 {
     oldDef <- getClassDef(Class, where)
     if(is(oldDef, "classRepresentation") && oldDef@sealed)

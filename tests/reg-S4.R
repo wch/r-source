@@ -375,20 +375,24 @@ stopifnot(is(Sys.time(), "OptionalPOSIXct"))
 e4 <- as.environment("package:stats4")
 gg4 <- getGenerics(e4)
 stopifnot(c("BIC", "coef", "confint", "logLik", "plot", "profile",
-            "show", "summary", "update", "vcov") %in% gg4) # %in% : "future proof"
-stopifnot(unlist(lapply(gg4, function(g) !is.null(getGeneric(g, where = e4)))))
-stopifnot(unlist(lapply(gg4, function(g) !is.null(getGeneric(g)))))
+            "show", "summary", "update", "vcov") %in% gg4, # %in% : "future proof"
+          unlist(lapply(gg4, function(g) !is.null(getGeneric(g, where = e4)))),
+          unlist(lapply(gg4, function(g) !is.null(getGeneric(g)))))
 em <- as.environment("package:methods")
 ggm <- getGenerics(em)
-stopifnot(unlist(lapply(ggm, function(g) !is.null(getGeneric(g, where = em)))))
-stopifnot(unlist(lapply(ggm, function(g) !is.null(getGeneric(g)))))
-## all above worked in 2.7.0, however:
-stopifnot(isGeneric("show", where=e4),
-          ## isGeneric("dim", where=as.environment("package:Matrix"))
-	  identical(as.vector(ggm),
-		    tools:::.get_S4_generics_really_in_env(em)),
+gms <- c("addNextMethod", "body<-", "cbind2", "initialize",
+	 "loadMethod", "Math", "Ops", "rbind2", "show")
+stopifnot(unlist(lapply(ggm, function(g) !is.null(getGeneric(g, where = em)))),
+	  unlist(lapply(ggm, function(g) !is.null(getGeneric(g)))),
+	  gms %in% ggm,
+	  gms %in% tools:::getGenerics_with_methods(em), # with "message"
+	  ## all above worked in 2.7.0, however:
+	  isGeneric("show",  where=e4),
+	  hasMethods("show", where=e4), hasMethods("show", where=em),
+	  ## isGeneric("dim", where=as.environment("package:Matrix"))
 	  identical(as.vector(gg4),
-		    tools:::.get_S4_generics_really_in_env(e4)) )
+		    tools:::getGenerics_with_methods(e4))
+	  )
 ## the last failed in R 2.7.0 : was not showing  "show"
 ## TODO: use "Matrix" checks once that is >= 1.0
 
