@@ -243,22 +243,16 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     Sys.setenv(BSTINPUTS = paste(bstinputs, texinputs, sep = envSep))
 
     if(nzchar(texi2dvi)) {
+        extra <- ""
+        ext <- if(pdf) "pdf" else "dvi"        
         pdf <- if(pdf) "--pdf" else ""
         out <- .shell_with_capture(paste(shQuote(texi2dvi), "--help"))
-        texi2dvi_supports_build_dir <-
-            length(grep("--build-dir=", out$stdout)) > 0L
-        if(texi2dvi_supports_build_dir) {
-            build_dir <- tempfile("texi2dvi")
-            on.exit(unlink(build_dir, recursive = TRUE), add = TRUE)
-            extra <- sprintf("--build-dir=%s --no-line-error",
-                             shQuote(build_dir))
-            clean <- ""
-        }
-        else {
-            build_dir <- getwd()
-            extra <- ""
-            clean <- if(clean) "--clean" else ""
-        }
+        if(length(grep("--no-line-error", out$stdout) > 0L))
+            extra <- "--no-line-error"
+        ## (Maybe change eventually, but the current heuristics for
+        ## finding error messages in log files rely on ^! entries and
+        ## fail for entries starting with a line number.)
+        file.create(".timestamp")
         ## Back compatibility for now.
         if(is.numeric(quiet)) quiet <- quiet >= 1
         quiet <- if(quiet) "--quiet" else ""
@@ -271,34 +265,32 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                           intern = TRUE)
             if(length(grep("MiKTeX", ver[1]))) {
                 paths <- paste ("-I", shQuote(texinputs))
-                clean <- paste(clean, paste(paths, collapse = " "))
+                extra <- paste(extra, paste(paths, collapse = " "))
             }
             q_texi2dvi <- gsub("\\\\", "/", shortPathName(texi2dvi))
         } else q_texi2dvi <- shQuote(texi2dvi)
 
-        out <- .shell_with_capture(paste(q_texi2dvi, quiet,
-                                         pdf, clean, shQuote(file),
-                                         extra))
+        out <- .shell_with_capture(paste(q_texi2dvi, quiet, pdf,
+                                         shQuote(file), extra))
+
+        ## <FIXME>
+        ## What should we do with the texi2dvi diagnostics if not
+        ## quiet?
+        ## </FIXME>
+        
         if(out$status) {
             ## Trouble.
-            ## <FIXME>
-            ## What should we do with the texi2dvi diagnostics if not
-            ## quiet?
-            ## </FIXME>
             msg <- gettextf("running 'texi2dvi' on '%s' failed", file)
             ## Try to provide additional diagnostics.
             ## First message is from texinfo's texi2dvi,
             ## second from MiKTeX
-            if(length(grep("exited with bad status, quitting.$",
+            if(length(grep("exited with bad status, quitting\\.$",
                            out$stderr)) ||
-               length(grep("latex failed for some reason", out$stderr))) {
+               length(grep("latex failed for some reason",
+                           out$stderr))) {
                 ## (La)TeX errors.
-                log <- list.files(build_dir, pattern = "\\.log$",
-                                  all.files = TRUE, full.names = TRUE,
-                                  recursive = TRUE)
-                log <- log[file_path_sans_ext(basename(log)) ==
-                           file_path_sans_ext(file)]
-                if(length(log)) {
+                log <- paste(file_path_sans_ext(file), "log", sep = ".")
+                if(file_test("-f", log)) {
                     lines <- .get_LaTeX_errors_from_log_file(log)
                     if(length(lines))
                         msg <- paste(msg, "LaTeX errors:",
@@ -308,12 +300,8 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             } else if(length(grep("bibtex failed$", out$stderr,
                                   ignore.case = TRUE))) {
                 ## BibTeX errors.
-                log <- list.files(build_dir, pattern = "\\.blg$",
-                                  all.files = TRUE, full.names = TRUE,
-                                  recursive = TRUE)
-                log <- log[file_path_sans_ext(basename(log)) ==
-                           file_path_sans_ext(file)]
-                if(length(log)) {
+                log <- paste(file_path_sans_ext(file), "blg", sep = ".")
+                if(file_test("-f", log)) {
                     lines <- .get_BibTeX_errors_from_blg_file(log)
                     if(length(lines))
                         msg <- paste(msg, "BibTeX errors:",
@@ -326,8 +314,20 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                              paste(out$stderr, collapse = "\n"),
                              sep = "\n")
             }
-            stop(msg, domain = NA)
         }
+
+        ## Clean up as needed.
+        if(clean) {
+            out_file <- paste(file_path_sans_ext(file), ext, sep = ".")
+            files <- list.files(all.files = TRUE) %w/o% c(".", "..",
+                                                          out_file)
+            file.remove(files[file_test("-nt", files, ".timestamp")])
+        }
+        file.remove(".timestamp")
+
+        if(out$status)
+            stop(msg, domain = NA)
+        
     } else {
         ## Do not have texi2dvi
         ## Needed at least on Windows except for MiKTeX
@@ -569,7 +569,7 @@ function(dir, installed = FALSE)
         meta <- .read_description(dfile)
     else
         stop("Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing.")
-    if(identical(meta["Priority"], "base")) return(meta)
+    if(identical(as.character(meta["Priority"]), "base")) return(meta)
     ## Otherwise, this must be a bundle package.
     bdfile <- file.path(dirname(dir), "DESCRIPTION")
     if(file_test("-f", bdfile)) {
