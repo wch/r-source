@@ -1037,10 +1037,14 @@ function(dfile)
     if(!file_test("-f", dfile))
         stop(gettextf("file '%s' does not exist", dfile),
              domain = NA)
-    tryCatch(read.dcf(dfile)[1L, ],
-             error = function(e)
-             stop(gettextf("file '%s' is not in valid DCF format", dfile),
-                  domain = NA, call. = FALSE))
+    out <- tryCatch(read.dcf(dfile)[1L, ],
+                    error = function(e)
+                    stop(gettextf("file '%s' is not in valid DCF format",
+                                  dfile),
+                         domain = NA, call. = FALSE))
+    if(!is.na(encoding <- out["Encoding"]))
+        Encoding(out) <- encoding
+    out
 }
 
 ### ** .shell_with_capture
