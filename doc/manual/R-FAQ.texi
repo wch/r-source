@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-04-30
+@set FAQ_DATE @value{FAQ_YEAR}-05-05
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -1817,6 +1817,10 @@ binary distributions of R.)
 @table @strong
 @item ADaCGH
 Analysis of data from aCGH experiments.
+@item AER
+Functions, data sets, examples and vignettes for the book ``Applied
+Econometrics with R'' by Christian Kleiber and Achim Zeileis, 2008,
+Springer-Verlag, New York.
 @item AIS
 Tools to look at the data (``Ad Inidicia Spectata'').
 @item AMORE
@@ -3411,11 +3415,8 @@ Ecological inference and higher-dimension data management.
 @item eigenmodel
 Semiparametric factor and regression models for symmetric relational
 data.
-@c <COMMENT>
-@c Moved to the Archive on 2008-04-22 (Orphaned/2.6.0).
-@c @item elasticnet
-@c Elastic net regularization and variable selection.
-@c </COMMENT>
+@item elasticnet
+Elastic net regularization and variable selection.
 @item ellipse
 Package for drawing ellipses and ellipse-like confidence regions.
 @item elliptic
@@ -3893,6 +3894,9 @@ requests).
 @item hwde
 Models and tests for departure from Hardy-Weinberg equilibrium and
 independence between loci.
+@item hwriter
+Easy-to-use and versatile functions to output R objects in @HTML{}
+format.
 @item hybridHclust
 Hybrid hierarchical clustering via mutual clusters.
 @item hydrogeo
@@ -4556,6 +4560,8 @@ Modeling evolution in paleontological time-series.
 @item paleoTSalt
 Modeling evolution in paleontological time-series (alternate
 paramaterization).
+@item paltran
+Functions for paleolimnology.
 @item pamr
 Pam: Prediction Analysis for Microarrays.
 @item pan
