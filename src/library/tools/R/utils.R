@@ -244,7 +244,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
     if(nzchar(texi2dvi)) {
         extra <- ""
-        ext <- if(pdf) "pdf" else "dvi"        
+        ext <- if(pdf) "pdf" else "dvi"
         pdf <- if(pdf) "--pdf" else ""
         out <- .shell_with_capture(paste(shQuote(texi2dvi), "--help"))
         if(length(grep("--no-line-error", out$stdout) > 0L))
@@ -277,7 +277,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## What should we do with the texi2dvi diagnostics if not
         ## quiet?
         ## </FIXME>
-        
+
         if(out$status) {
             ## Trouble.
             msg <- gettextf("running 'texi2dvi' on '%s' failed", file)
@@ -327,7 +327,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
         if(out$status)
             stop(msg, domain = NA)
-        
+
     } else {
         ## Do not have texi2dvi
         ## Needed at least on Windows except for MiKTeX
@@ -1056,10 +1056,11 @@ function(command, input = NULL)
     outfile <- tempfile("xshell")
     errfile <- tempfile("xshell")
     on.exit(unlink(c(outfile, errfile)))
-    .shell <- if(.Platform$OS.type == "windows") shell else system
-    status <-
-        .shell(sprintf("%s > %s 2> %s", command, outfile, errfile),
-               input = input)
+    status <-if(.Platform$OS.type == "windows")
+        shell(sprintf("'%s' > %s 2> %s", command, outfile, errfile),
+              input = input, shell = "cmd.exe")
+    else system(sprintf("%s > %s 2> %s", command, outfile, errfile),
+                input = input)
     list(status = status,
          stdout = readLines(outfile, warn = FALSE),
          stderr = readLines(errfile, warn = FALSE))
