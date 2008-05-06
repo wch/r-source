@@ -1282,10 +1282,28 @@ sub check_pkg {
 	$log->result("OK");
     }
 
+    ## checks below look for R code.  Package WWGbook has an empty R dir.
+    my $haveR = -d "R";
+
     ## Check package subdirectories.
 
     $log->checking("package subdirectories");
     my $any;
+    if ($haveR) {
+	opendir(DIR, "R") or die "cannot open dir R\n";
+	my @files = readdir(DIR);
+	closedir(DIR);
+	my $valid = 0;
+	foreach my $f (@files) {
+	   $valid = 1 if $f =~ /\.[RrSsq]/;
+	}
+	if(!$valid) {
+	    $haveR = 0;
+	    $log->warning() unless $any;
+	    $any++;
+	    $log->print("Found directory 'R' with no source files.\n");	    
+	}
+    }
     if($R_check_subdirs_nocase) {
 	## Argh.  We often get submissions where 'R' comes out as 'r',
 	## or 'man' comes out as 'MAN', and we've just ran into 'DATA'
@@ -1460,7 +1478,7 @@ sub check_pkg {
     ## We need to do the non-ASCII check first to get the more
     ## specific warning message before an error.
 
-    if(!$is_base_pkg && (-d "R")) {
+    if(!$is_base_pkg && $haveR) {
 	$log->checking("R files for non-ASCII characters");
 	my @out = R_runR("tools:::.check_package_ASCII_code('.')",
 			 "${R_opts} --slave");
@@ -1562,7 +1580,7 @@ sub check_pkg {
 	}
     }
 
-    if(!$is_base_pkg && (-d "R")) {
+    if(!$is_base_pkg && $haveR) {
 	if($opt_install) {
 	    $log->checking("for unstated dependencies in R code");
 	    my $Rcmd = "options(warn=1,warnEscapes=FALSE);tools:::.check_packages_used(package=\"${pkgname}\")\n";
@@ -1598,7 +1616,7 @@ sub check_pkg {
     ## Check whether methods have all arguments of the corresponding
     ## generic.
 
-    if(-d "R") {
+    if($haveR) {
 	$log->checking("S3 generic/method consistency");
 
 	my @msg_S3_methods =
@@ -1630,7 +1648,7 @@ sub check_pkg {
     ## Check whether replacement functions have their final argument
     ## named 'value'.
 
-    if(-d "R") {
+    if($haveR) {
 	$log->checking("replacement functions");
 
 	my @msg_replace_funs =
@@ -1666,7 +1684,7 @@ sub check_pkg {
 
     ## Check foreign function calls.
 
-    if($opt_ff_calls && (-d "R")) {
+    if($opt_ff_calls && $haveR) {
 	$log->checking("foreign function calls");
 
 	my @msg_ff_calls =
@@ -1697,7 +1715,7 @@ sub check_pkg {
     ## Check R code for possible problems, including tests based on LT's
     ## codetools package.
 
-    if(-d "R") {
+    if($haveR) {
 	$log->checking("R code for possible problems");
 
 	my $any;
@@ -1831,7 +1849,7 @@ sub check_pkg {
 
     ## Check for missing documentation entries.
 
-    if(((-d "R") || (-d "data"))) {
+    if($haveR || (-d "data")) {
 	$log->checking("for missing documentation entries");
 
 	my $Rcmd= "options(warn=1,warnEscapes=FALSE)\n";
@@ -1875,7 +1893,7 @@ sub check_pkg {
 	my $any = 0;
 
 	## Check for code/documentation mismatches in functions.
-	if(-d "R") {
+	if($haveR) {
 	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
 	    if($opt_install) {
 		$Rcmd .= "tools::codoc(package = \"${pkgname}\")\n";
@@ -1908,7 +1926,7 @@ sub check_pkg {
 	}
 
 	## Check for code/documentation mismatches in S4 classes.
-	if($opt_install && (-d "R")) {
+	if($opt_install && $haveR) {
 	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\ntools::codocClasses(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
@@ -1959,7 +1977,7 @@ sub check_pkg {
 	    $log->print(wrap("", "", @msg_writing_Rd));
 	}
 
-	if($R_check_Rd_style && (-d "R")) {
+	if($R_check_Rd_style && $haveR) {
 
 	    my @msg_doc_style =
 		("The \\usage entries for S3 methods should use",
