@@ -266,11 +266,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             ## Trouble.
             msg <- gettextf("running 'texi2dvi' on '%s' failed", file)
             ## Try to provide additional diagnostics.
-            ## First message is from texinfo's texi2dvi,
-            ## second from MiKTeX
             if(length(grep("exited with bad status, quitting\\.$",
-                           out$stderr)) ||
-               length(grep("latex failed for some reason",
                            out$stderr))) {
                 ## (La)TeX errors.
                 log <- paste(file_path_sans_ext(file), "log", sep = ".")
@@ -329,8 +325,33 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             paths <- paste ("-I", shQuote(texinputs))
             extra <- paste(extra, paste(paths, collapse = " "))
         }
-        out <- system(paste(shQuote(texi2dvi), quiet, pdf,
-                            shQuote(file), extra))
+        ## this only gives a failure in some cases, e.g. not for bibtex errors.
+        system(paste(shQuote(texi2dvi), quiet, pdf,
+                     shQuote(file), extra),
+               intern=TRUE, ignore.stderr=TRUE)
+        msg <- ""
+        ## (La)TeX errors.
+        log <- paste(file_path_sans_ext(file), "log", sep = ".")
+        if(file_test("-f", log)) {
+            lines <- .get_LaTeX_errors_from_log_file(log)
+            if(length(lines))
+                msg <- paste(msg, "LaTeX errors:",
+                             paste(lines, collapse = "\n"),
+                             sep = "\n")
+        }
+        ## BibTeX errors.
+        log <- paste(file_path_sans_ext(file), "blg", sep = ".")
+        if(file_test("-f", log)) {
+            lines <- .get_BibTeX_errors_from_blg_file(log)
+            if(length(lines))
+                msg <- paste(msg, "BibTeX errors:",
+                             paste(lines, collapse = "\n"),
+                             sep = "\n")
+        }
+
+        if(nzchar(msg))
+            msg <- paste(gettextf("running 'texi2dvi' on '%s' failed", file),
+                         msg, "", sep = "\n")
         if(clean) {
             out_file <- paste(file_path_sans_ext(file), ext, sep = ".")
             files <- list.files(all.files = TRUE) %w/o% c(".", "..",
@@ -339,9 +360,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         }
         file.remove(".timestamp")
 
-        if(out)
-            stop(gettextf("running 'texi2dvi' on '%s' failed", file),
-                 domain = NA)
+        if(nzchar(msg)) stop(msg, domain = NA)
     } else {
         ## Do not have texi2dvi
         ## Needed at least on Windows except for MiKTeX
@@ -478,7 +497,8 @@ function(con)
     really_has_errors <-
         (length(grep("^---", lines)) ||
          regexpr("error message", lines[length(lines)]) > -1L)
-    pos <- grep("^(Warning|You)", lines)
+    ## MiKTeX does not give usage, so '(There were n error messages)' is last
+    pos <- grep("^(Warning|You|\\(There)", lines)
     if(!really_has_errors || !length(pos) ) return(character())
     ind <- seq.int(from = 3L, length.out = pos[1L] - 3L)
     lines[ind]
