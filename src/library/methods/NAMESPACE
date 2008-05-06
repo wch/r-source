@@ -1,4 +1,4 @@
-useDynLib(methods)
+useDynLib(methods) #>> fails for now : .registration = TRUE
 
 importFrom(utils, find)
 S3method(print, MethodsList)
