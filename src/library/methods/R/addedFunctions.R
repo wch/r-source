@@ -15,15 +15,14 @@
 #  http://www.r-project.org/Licenses/
 
 
-functionBody <- get("body", mode = "function")
+functionBody <- base::body #was get("body", mode = "function")
 
-.ff <- function(fun, envir = environment(fun), value) fun
-
-body(.ff, envir = .GlobalEnv) <- body(get("body<-"))
-
-"functionBody<-" <- .ff
-
-rm(.ff)
+`functionBody<-` <- base::`body<-`
+## was
+## .ff <- function(fun, envir = environment(fun), value) fun
+## body(.ff, envir = .GlobalEnv) <- body(get("body<-"))
+## "functionBody<-" <- .ff
+## rm(.ff)
 
 allNames <-
   ## the character vector of names (unlike names(), never returns NULL)
@@ -36,12 +35,12 @@ allNames <-
         value
 }
 
-getFunction <-  function(name, generic = TRUE, mustFind = TRUE,
-           where = topenv(parent.frame()))
+getFunction <- function(name, generic = TRUE, mustFind = TRUE,
+                        where = topenv(parent.frame()))
       ## find the object as a function.
 {
     if(!nzchar(name))
-      stop(gettextf('expected a non-empty character string for argument name'), domain = NA)
+        stop(gettextf('expected a non-empty character string for argument name'), domain = NA)
     found <- FALSE
     where <- as.environment(where)
     f <- NULL
@@ -59,9 +58,10 @@ getFunction <-  function(name, generic = TRUE, mustFind = TRUE,
         where <- parent.env(where)
     }
     if(!found && mustFind)
-	if(generic) stop(gettextf("no function \"%s\" found", name), domain = NA)
-	else stop(gettextf("no non-generic function \"%s\" found", name),
-		  domain = NA)
+	stop(if(generic)
+	     gettextf("no function \"%s\" found", name) else
+	     gettextf("no non-generic function \"%s\" found", name),
+	     domain = NA)
     f
 }
 
@@ -93,70 +93,48 @@ elNamed <-
 }
 
 "elNamed<-" <-
-  ## set the element of the vector corresponding to name.
-  function(x, name, value)
+    ## set the element of the vector corresponding to name.
+    function(x, name, value)
 {
     x[[name]] <- value
     x
 }
 
 formalArgs <-
-  ## Returns the names of the formal arguments of this function.
-  function(def)
-    names(formals(def))
+    ## Returns the names of the formal arguments of this function.
+    function(def) names(formals(def))
 
 
 findFunction <-
-  ## return a list of all the places where a function
-  ## definition for `name' exists.  If `generic' is FALSE, ignore generic
-  ## functions.
-  function(f, generic = TRUE, where = topenv(parent.frame()))
+    ## return a list of all the places where a function
+    ## definition for `name' exists.  If `generic' is FALSE, ignore generic
+    ## functions.
+    function(f, generic = TRUE, where = topenv(parent.frame()))
 {
-    allWhere <- .findAll(f, where)
-    ok <- rep(FALSE, length(allWhere))
-    for(i in seq_along(ok)) {
-        wherei <- allWhere[[i]]
-        if(exists(f, wherei, inherits = FALSE)) {
-            fdef <-get(f, wherei)
-            if(generic || is.primitive(fdef)
-               || !isGeneric(f, wherei, fdef))
-                ok[[i]] <- TRUE
-        }
+    allWhere <- .findAll(f, where) # .findAll() in ./ClassExtensions.R
+    ok <- logical(length(allWhere))
+    for(i in seq_along(allWhere)) {
+	wherei <- allWhere[[i]]
+	if(exists(f, wherei, inherits = FALSE)) {
+	    fdef <- get(f, wherei)
+	    ok[i] <- (generic || is.primitive(fdef) || !isGeneric(f, wherei, fdef))
+	}## else ok[i] <- FALSE
     }
     allWhere[ok]
-  }
+}
 
 existsFunction <- function(f, generic=TRUE, where = topenv(parent.frame()))
-    length(findFunction(f, generic, where))>0
+    length(findFunction(f, generic, where)) > 0
 
-Quote <- get("quote" , mode = "function")
+Quote <- base::quote #was get("quote" , mode = "function")
 
-
-.message <-
-  ## output all the arguments, pasted together with no intervening spaces.
-  function(...) {
-      ## the junk below is just til cat honors fill=TRUE on a single string.
-      text <- paste(..., collapse="", sep="")
-      lines <- character()
-      pos <- max(2 * getOption("width") %/% 3, 20)
-      while(nchar(text, "c") > pos) {
-          line <- substr(text, 1, pos)
-          text <- substr(text, pos+1, nchar(text, "c"))
-          word <- regexpr(" ", text)
-          if(word < 0) {
-              line <- paste(line, text, sep="")
-              text <- ""
-          }
-          else {
-              line <- paste(line, substr(text, 1, word -1), sep="")
-              text <- substr(text, word+1, nchar(text, "c"))
-          }
-          lines <- c(lines, line)
-      }
-      if(nzchar(text))
-          lines <- c(lines, text)
-      message(paste(lines, collapse="\n"))
-  }
+.message <- function(...) {
+    ## Output all the arguments, pasted together with no intervening spaces,
+    ## wrapping long lines
+    text <- paste(..., collapse="", sep="")
+    lines <- strwrap(text, width = max(20, 7 * getOption("width") %/% 8))
+    message(paste(lines, collapse="\n"))
+}
 
 hasArg <- function(name) {
     aname <- as.character(substitute(name))
