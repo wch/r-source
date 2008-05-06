@@ -81,6 +81,12 @@ NEW FEATURES
 
     o	as.array() is now generic, gains a '...' argument.
 
+    o	Starting package tcltk without access to Tk (e.g. no available
+    	display) is now a warning rather than an error, as Tcl
+    	will still be usable.  (On most platforms it was possible to
+    	inhibit Tk by not having DISPLAY set, but not on Windows nor
+    	Mac OS X builds with --with-aqua.)
+
 
 PACKAGE INSTALLATION
 
