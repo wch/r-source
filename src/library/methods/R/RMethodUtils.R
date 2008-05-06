@@ -107,7 +107,7 @@
 
 ## stripped down version of asS4 in base, which can't be used until the methods
 ## namespace is available
-.asS4 <- function (object) 
+.asS4 <- function (object)
 {
     .Call("R_setS4Object", object, TRUE, PACKAGE = "base")
 }
@@ -387,18 +387,19 @@ getGeneric <-
         else
             stop("Argument f must be a string, generic function, or primitive: got an ordinary function")
     }
-    value <- .getGeneric( f, where, package)
+    value <- .getGeneric(f, where, package)
     if(is.null(value) && exists(f, "package:base", inherits = FALSE)) {
         ## check for primitives
         baseDef <- get(f, "package:base")
         if(is.primitive(baseDef)) {
             value <- genericForPrimitive(f)
             if(!is.function(value) && mustFind)
-                stop(gettextf("methods cannot be defined for the primitive function \"%s\"", f), domain = NA)
+                stop(gettextf("methods cannot be defined for the primitive function \"%s\"",
+                              f), domain = NA)
             if(is(value, "genericFunction"))
                 value <- .cacheGeneric(f, value)
         }
-  }
+    }
     if(is.function(value))
         value
     else if(mustFind)
@@ -411,13 +412,13 @@ getGeneric <-
 ## low-level version
 .getGeneric <- function(f, where, package = "") {
     if(is.character(f) && f %in% c("as.double", "as.real")) f <- "as.numeric"
-    if(is.character(f) && !nzchar(f))
-      {message("Empty function name in .getGeneric");
-       dput(sys.calls())
-   }
+    if(is.character(f) && !nzchar(f)) {
+	message("Empty function name in .getGeneric")
+	dput(sys.calls())
+    }
     if(isNamespace(where))
-        value <-.Call("R_getGeneric", f, FALSE, where, package,
-                     PACKAGE = "methods")
+	value <-.Call("R_getGeneric", f, FALSE, where, package,
+		      PACKAGE = "methods")
     else {
         ## first look in the cache (which should eventually be done in C for speed perhaps)
         value <- .getGenericFromCache(f, where, package)
@@ -426,14 +427,14 @@ getGeneric <-
                            PACKAGE = "methods")
             ## cache public generics
             if(!is.null(value))
-              .cacheGeneric(f, value)
+                .cacheGeneric(f, value)
         }
     }
     if(is.null(value) && nzchar(package) && !identical(package, "base")) {
         env <- .requirePackage(package, FALSE)
         if(is.environment(env))
-          value <- .Call("R_getGeneric", f, FALSE, env, package,
-                     PACKAGE = "methods")
+            value <- .Call("R_getGeneric", f, FALSE, env, package,
+                           PACKAGE = "methods")
     }
     value
 }
@@ -607,7 +608,9 @@ getGroup <-
 
 getMethodsMetaData <-
 function(f, where = topenv(parent.frame())) {
-## For 2.8.0?    .methodsDeprecated("getMethodsMetaData", "Methods list objects are no longer used and will not be generated in future versions; see findMethods() for alternatives")
+## Deprecate for 2.8.0? {currently would give 22 warnings when loading methods:} _FIXME_
+##     .methodsDeprecated("getMethodsMetaData",
+##                        "Methods list objects are no longer used and will not be generated in future versions; see findMethods() for alternatives")
     fdef <- getGeneric(f, where = where)
     mname <- methodsPackageMetaName("M",fdef@generic, fdef@package)
     if (exists(mname, where = where, inherits = missing(where)))
@@ -635,38 +638,43 @@ assignMethodsMetaData <-
 ## utility for getGenerics to return package(s)
 .packageForGeneric <- function(object) {
     if(is.list(object)) # a list of objects
-      lapply(object, .packageForGeneric)
+        lapply(object, .packageForGeneric)
     else if(is(object, "genericFunction"))
-      object@package
-    else # ?? possibly a primitive
-      "base"
+        object@package
+    else ## ?? possibly a primitive
+        "base"
 }
 
-getGenerics <-
-  function(where, searchForm = FALSE) {
-      if(missing(where)) {
-          ## all the packages cached ==? all packages with methods
-          ## globally visible.  Assertion based on cacheMetaData + setMethod
-          fnames <- as.list(objects(.genericTable, all.names=TRUE))
-          packages <- vector("list", length(fnames))
-          for(i in seq_along(fnames)) {
-              obj <- get(fnames[[i]], envir = .genericTable)
-              if(is.list(obj))
+getGenerics <- function(where, searchForm = FALSE)
+{
+    if(missing(where)) {
+        ## all the packages cached ==? all packages with methods
+        ## globally visible.  Assertion based on cacheMetaData + setMethod
+        fnames <- as.list(objects(.genericTable, all.names=TRUE))
+        packages <- vector("list", length(fnames))
+        for(i in seq_along(fnames)) {
+            obj <- get(fnames[[i]], envir = .genericTable)
+            if(is.list(obj))
                 fnames[[i]] <-  names(obj)
-              packages[[i]] <- .packageForGeneric(obj)
-          }
-          new("ObjectsWithPackage", unlist(fnames), package=unlist(packages))
-      }
-      else {
-          if(is.environment(where)) where <- list(where)
-          these <- character()
-          for(i in where)
+            packages[[i]] <- .packageForGeneric(obj)
+        }
+        new("ObjectsWithPackage", unlist(fnames), package=unlist(packages))
+    }
+    else {
+        if(is.environment(where)) where <- list(where)
+        these <- character()
+        for(i in where)
             these <- c(these, objects(i, all.names=TRUE))
-          metaNameUndo(unique(these), prefix = "M", searchForm = searchForm)
-      }
-  }
+	## FIXME: deprecated
+        metaNameUndo(unique(these), prefix = "T", searchForm = searchForm)
+    }
+}
 
-allGenerics <- getGenerics
+allGenerics <- function(...) {
+    .Deprecated("getGenerics")
+    ## this is used nowhere, and we already have too many functions
+    getGenerics(...)
+}
 
 ## Find the pattern for methods lists or tables
 ## Currently driven by mlists, but eventually these will go away
@@ -978,16 +986,16 @@ methodSignatureMatrix <- function(object, sigSlots = c("target", "defined")) {
 ## (it may in fact work now).
 .asGroupArgument <- function(group) {
     if(is.character(group)) {
-        if(identical(group, ""))
-            list()
-        else
-          as.list(group) ## should we allow c(group, package) ?
+	if(identical(group, ""))
+	    list()
+	else
+	    as.list(group) ## should we allow c(group, package) ?
     }
     else
-        group
+	group
 }
 
-metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
+metaNameUndo <- function(strings, prefix, searchForm = FALSE) {
     pattern <- methodsPackageMetaName(prefix, "")
     n <- nchar(pattern, "c")
     matched <- substr(strings, 1, n) == pattern

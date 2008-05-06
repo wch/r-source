@@ -114,6 +114,8 @@ DEPRECATED & DEFUNCT
 	mlistMetaName(), removeMethodsObject() and seemsS4Object() are
 	defunct.
 
+    o	allGenerics(), getMethodsMetaData() are deprecated.
+
     o	In package installation, SaveImage: yes is now ignored, and
 	any use of the field will give a warning.
 

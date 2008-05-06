@@ -11,7 +11,7 @@
 % standardGeneric() is a .Primitive in 'base', not 'methods'
 %\alias{standardGeneric}
 \alias{getGenerics}
-\alias{allGenerics}
+\alias{allGenerics}%% << deprecated in 2.8.0
 \alias{dumpMethod}
 \alias{findFunction}
 \alias{dumpMethods}
@@ -20,7 +20,7 @@
 \alias{setReplaceMethod}
 \alias{callGeneric}
 %% FIXME:  These are basically not documented at all:
-%% -----  isGroup, setReplaceMethod, allGenerics
+%% -----  isGroup, setReplaceMethod
 \title{Tools for Managing Generic Functions}
 \description{
   The functions documented here manage collections of methods associated
@@ -42,7 +42,7 @@ removeMethods(f, where = topenv(parent.frame()), all = missing(where))
 setReplaceMethod(f, \dots, where = topenv(parent.frame()))
 
 getGenerics(where, searchForm = FALSE)
-allGenerics(where, searchForm = FALSE)
+%Deprecated: allGenerics(where, searchForm = FALSE)
 callGeneric(\dots)
 }
 \section{Summary of Functions}{
@@ -108,10 +108,11 @@ callGeneric(\dots)
       Returns a named list of classes to be matched to arguments of a
       generic function.
     }
-    \item{\code{getGenerics}:}{ Returns the names of the generic
+    \item{\code{getGenerics}:}{returns the names of the generic
       functions that have methods defined on \code{where}; this
       argument can be an environment or an index into the search
       list.  By default, the whole search list is used.
+      (\code{allGenerics()} is a \emph{deprecated} alias for \code{getGenerics}.)
 
       The methods definitions are stored with
       package qualifiers; for example, methods for function

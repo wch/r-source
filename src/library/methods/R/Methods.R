@@ -1435,7 +1435,8 @@ hasMethods <- function(f, where, package)
         f <- fdef@generic
     }
     else if(!(is.character(f) && length(f) == 1))
-        stop(gettextf("argument \"f\" must be a generic function or a single character string; got an object of class \"%s\"", class(f)), domain = NA)
+        stop(gettextf("argument \"f\" must be a generic function or a single character string; got an object of class \"%s\"",
+                      class(f)), domain = NA)
     if(missing(package)) {
         package <- packageSlot(f)
 	if(is.null(package)) {
@@ -1446,7 +1447,7 @@ hasMethods <- function(f, where, package)
 		package <- fdef@package
 	    else if(is.primitive(fdef))
 		package <- "base"
-	    else if( length(ff <- findFunction(f, where = where)) == 1)
+	    else if(length(ff <- findFunction(f, where = where)) == 1)
 		package <- getPackageName(ff[[1]])
 	    else
 		stop(gettextf("f does not correspond to a generic function and package not specified"),
