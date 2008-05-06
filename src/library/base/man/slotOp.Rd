@@ -19,7 +19,7 @@ object@name
 }
 \details{
   This operator supports the formal classes of package \pkg{methods}, and
-  is disabled unless the \pkg{methods} is loaded.  See
+  is enabled only when \pkg{methods} is loaded (as per default).  See
   \code{\link[methods]{slot}} for further details.
 
   As from \R 2.7.0 it is checked that \code{object} is an S4 object (see
