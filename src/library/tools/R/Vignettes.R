@@ -91,7 +91,8 @@ function(package, dir, lib.loc = NULL,
                 if(bf %in% bad_vignettes) break
                 bft <- paste(bf, ".tex", sep = "")
                 .eval_with_capture(tryCatch(texi2dvi(file = bft, pdf = TRUE,
-                                                     clean = FALSE, quiet = 2L),
+                                                     clean = FALSE,
+                                                     quiet = TRUE),
                                             error = function(e)
                                             result$latex[[f]] <<-
                                             conditionMessage(e)))
@@ -205,7 +206,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
     } else {
         if(clean) {
             f <- list.files(all.files = TRUE) %w/o% c(".", "..", pdfs)
-            newer <- sapply(f, function(x) file_test("-nt", x, ".build.timestamp"))
+            newer <- file_test("-nt", f, ".build.timestamp")
             file.remove(f[newer])
         }
         f <- list.files(all.files = TRUE)

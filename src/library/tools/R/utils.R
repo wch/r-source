@@ -240,81 +240,88 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     Sys.setenv(BSTINPUTS = paste(bstinputs, texinputs, sep = envSep))
 
     if(nzchar(texi2dvi) && .Platform$OS.type != "windows") {
-        extra <- ""
-        ext <- if(pdf) "pdf" else "dvi"
-        pdf <- if(pdf) "--pdf" else ""
+        opt_pdf <- if(pdf) "--pdf" else ""
+        opt_quiet <- if(quiet) "--quiet" else ""
+        opt_extra <- ""
         out <- .shell_with_capture(paste(shQuote(texi2dvi), "--help"))
         if(length(grep("--no-line-error", out$stdout) > 0L))
-            extra <- "--no-line-error"
-        ## (Maybe change eventually, but the current heuristics for
-        ## finding error messages in log files rely on ^! entries and
-        ## fail for entries starting with a line number.)
+            opt_extra <- "--no-line-error"
+        ## (Maybe change eventually: the current heuristics for finding
+        ## error messages in log files should work for both regular and
+        ## file line error indicators.)
+
         file.create(".timestamp")
-        ## Back compatibility for now.
-        if(is.numeric(quiet)) quiet <- quiet >= 1
-        quiet <- if(quiet) "--quiet" else ""
+        out <- .shell_with_capture(paste(shQuote(texi2dvi), opt_pdf,
+                                         opt_quiet, opt_extra,
+                                         shQuote(file)))
 
-        out <- .shell_with_capture(paste(shQuote(texi2dvi), quiet, pdf,
-                                         shQuote(file), extra))
+        ## We cannot necessarily rely on out$status, hence let us
+        ## analyze the log files in any case.
+        errors <- character()
+        ## (La)TeX errors.
+        log <- paste(file_path_sans_ext(file), "log", sep = ".")
+        if(file_test("-f", log)) {
+            lines <- .get_LaTeX_errors_from_log_file(log)
+            if(length(lines))
+                errors <- paste("LaTeX errors:",
+                                paste(lines, collapse = "\n"),
+                                sep = "\n")
+        }
+        ## BibTeX errors.
+        log <- paste(file_path_sans_ext(file), "blg", sep = ".")
+        if(file_test("-f", log)) {
+            lines <- .get_BibTeX_errors_from_blg_file(log)
+            if(length(lines))
+                errors <- paste("BibTeX errors:",
+                                paste(lines, collapse = "\n"),
+                                sep = "\n")
+        }
 
-        ## <FIXME>
-        ## What should we do with the texi2dvi diagnostics if not
-        ## quiet?
-        ## </FIXME>
-
+        msg <- ""
         if(out$status) {
-            ## Trouble.
-            msg <- gettextf("running 'texi2dvi' on '%s' failed", file)
-            ## Try to provide additional diagnostics.
-            if(length(grep("exited with bad status, quitting\\.$",
-                           out$stderr))) {
-                ## (La)TeX errors.
-                log <- paste(file_path_sans_ext(file), "log", sep = ".")
-                if(file_test("-f", log)) {
-                    lines <- .get_LaTeX_errors_from_log_file(log)
-                    if(length(lines))
-                        msg <- paste(msg, "LaTeX errors:",
-                                     paste(lines, collapse = "\n"),
-                                     sep = "\n")
-                }
-            } else if(length(grep("bibtex failed$", out$stderr,
-                                  ignore.case = TRUE))) {
-                ## BibTeX errors.
-                log <- paste(file_path_sans_ext(file), "blg", sep = ".")
-                if(file_test("-f", log)) {
-                    lines <- .get_BibTeX_errors_from_blg_file(log)
-                    if(length(lines))
-                        msg <- paste(msg, "BibTeX errors:",
-                                     paste(lines, collapse = "\n"),
-                                     sep = "\n")
-                }
-            } else {
-                ## Use texi2dvi message.
-                msg <- paste(msg, "Diagnostics:",
+            ## <NOTE>
+            ## If we cannot rely on out$status, we could test for
+            ##   if(out$status || length(errors))
+            ## But shouldn't we be able to rely on out$status on Unix?
+            ## </NOTE>
+            msg <- gettextf("Running 'texi2dvi' on '%s' failed.", file)
+            ## Error messages from GNU texi2dvi are rather terse, so
+            ## only use them in case no additional diagnostics are
+            ## available (e.g, makeindex errors).
+            if(length(errors))
+                msg <- paste(msg, errors, sep = "\n")
+            else if(length(out$stderr))
+                msg <- paste(msg, "Messages:",
                              paste(out$stderr, collapse = "\n"),
                              sep = "\n")
-            }
+            if(!quiet)
+                msg <- paste(msg, "Output:",
+                             paste(out$stdout, collapse = "\n"),
+                             sep = "\n")
         }
 
         ## Clean up as needed.
         if(clean) {
-            out_file <- paste(file_path_sans_ext(file), ext, sep = ".")
+            out_file <- paste(file_path_sans_ext(file),
+                              if(pdf) "pdf" else "dvi",
+                              sep = ".")
             files <- list.files(all.files = TRUE) %w/o% c(".", "..",
                                                           out_file)
             file.remove(files[file_test("-nt", files, ".timestamp")])
         }
         file.remove(".timestamp")
 
-        if(out$status)
+        if(nzchar(msg))
             stop(msg, domain = NA)
-
-    } else if (nzchar(texi2dvi)) { # Windows
+        else if(!quiet)
+            message(paste(paste(out$stderr, collapse = "\n"),
+                          paste(out$stdout, collapse = "\n"),
+                          sep = "\n"))
+    } else if(nzchar(texi2dvi)) {       # Windows
         extra <- ""
         ext <- if(pdf) "pdf" else "dvi"
         pdf <- if(pdf) "--pdf" else ""
         file.create(".timestamp")
-        ## Back compatibility for now.
-        if(is.numeric(quiet)) quiet <- quiet >= 1
         quiet <- if(quiet) "--quiet" else ""
 
         ## look for MiKTeX (which this almost certainly is)
@@ -493,11 +500,14 @@ function(con)
     ## warning or summary, hoping for the best ...
     lines <- readLines(con, warn = FALSE)
     ## How can we find out for sure that there were errors?  Try
-    ## guessing ...
+    ## guessing ... and peeking at tex-buf.el from AUCTeX.
     really_has_errors <-
         (length(grep("^---", lines)) ||
-         regexpr("error message", lines[length(lines)]) > -1L)
-    ## MiKTeX does not give usage, so '(There were n error messages)' is last
+         regexpr("There (was|were) ([0123456789]+) error messages?",
+                 lines[length(lines)]) > -1L)
+    ## (Note that warnings are ignored for now.)
+    ## MiKTeX does not give usage, so '(There were n error messages)' is
+    ## last.
     pos <- grep("^(Warning|You|\\(There)", lines)
     if(!really_has_errors || !length(pos) ) return(character())
     ind <- seq.int(from = 3L, length.out = pos[1L] - 3L)
@@ -512,7 +522,9 @@ function(con, n = 4L)
     ## Get (La)TeX lines with error plus n (default 4) lines of trailing
     ## context.
     lines <- readLines(con, warn = FALSE)
-    pos <- grep("^!", lines)
+    ## Try matching both the regular error indicator ('!') as well as
+    ## the file line error indicator ('file:line:').
+    pos <- grep("^(!|.*:[0123456789]+:)", lines)
     if(!length(pos)) return(character())
     ## Error chunk extends to at most the next error line.
     mapply(function(from, to) paste(lines[from : to], collapse = "\n"),
