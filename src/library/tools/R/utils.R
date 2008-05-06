@@ -210,10 +210,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 {
     ## Run texi2dvi on a latex file, or emulate it.
 
-    if(is.null(texi2dvi)) {
-        ## we really don't wan't the full path below on Windows
-        if(nzchar(Sys.which("texi2dvi"))) texi2dvi <- "texi2dvi"
-    }
+    if(is.null(texi2dvi)) texi2dvi <- Sys.which("texi2dvi")
 
     envSep <- .Platform$path.sep
     Rtexmf <- file.path(R.home(), "share", "texmf")
@@ -242,7 +239,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     } else on.exit(Sys.setenv(BSTINPUTS = bstinputs), add = TRUE)
     Sys.setenv(BSTINPUTS = paste(bstinputs, texinputs, sep = envSep))
 
-    if(nzchar(texi2dvi)) {
+    if(nzchar(texi2dvi) && .Platform$OS.type != "windows") {
         extra <- ""
         ext <- if(pdf) "pdf" else "dvi"
         pdf <- if(pdf) "--pdf" else ""
@@ -257,20 +254,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         if(is.numeric(quiet)) quiet <- quiet >= 1
         quiet <- if(quiet) "--quiet" else ""
 
-        if(.Platform$OS.type == "windows") {
-            ## look for MiKTeX (which this almost certainly is)
-            ## and set the path to R's style files.
-            ## -I works in MiKTeX >= 2.4, at least
-            ver <- system(paste(shQuote(texi2dvi), "--version"),
-                          intern = TRUE)
-            if(length(grep("MiKTeX", ver[1]))) {
-                paths <- paste ("-I", shQuote(texinputs))
-                extra <- paste(extra, paste(paths, collapse = " "))
-            }
-            q_texi2dvi <- gsub("\\\\", "/", shortPathName(texi2dvi))
-        } else q_texi2dvi <- shQuote(texi2dvi)
-
-        out <- .shell_with_capture(paste(q_texi2dvi, quiet, pdf,
+        out <- .shell_with_capture(paste(shQuote(texi2dvi), quiet, pdf,
                                          shQuote(file), extra))
 
         ## <FIXME>
@@ -328,6 +312,36 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         if(out$status)
             stop(msg, domain = NA)
 
+    } else if (nzchar(texi2dvi)) { # Windows
+        extra <- ""
+        ext <- if(pdf) "pdf" else "dvi"
+        pdf <- if(pdf) "--pdf" else ""
+        file.create(".timestamp")
+        ## Back compatibility for now.
+        if(is.numeric(quiet)) quiet <- quiet >= 1
+        quiet <- if(quiet) "--quiet" else ""
+
+        ## look for MiKTeX (which this almost certainly is)
+        ## and set the path to R's style files.
+        ## -I works in MiKTeX >= 2.4, at least
+        ver <- system(paste(shQuote(texi2dvi), "--version"), intern = TRUE)
+        if(length(grep("MiKTeX", ver[1]))) {
+            paths <- paste ("-I", shQuote(texinputs))
+            extra <- paste(extra, paste(paths, collapse = " "))
+        }
+        out <- system(paste(shQuote(texi2dvi), quiet, pdf,
+                            shQuote(file), extra))
+        if(clean) {
+            out_file <- paste(file_path_sans_ext(file), ext, sep = ".")
+            files <- list.files(all.files = TRUE) %w/o% c(".", "..",
+                                                          out_file)
+            file.remove(files[file_test("-nt", files, ".timestamp")])
+        }
+        file.remove(".timestamp")
+
+        if(out)
+            stop(gettextf("running 'texi2dvi' on '%s' failed", file),
+                 domain = NA)
     } else {
         ## Do not have texi2dvi
         ## Needed at least on Windows except for MiKTeX
