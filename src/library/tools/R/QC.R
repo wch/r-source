@@ -3661,7 +3661,7 @@ function(dir, doDelete = FALSE)
                                                 all.files = TRUE,
                                                 full.names = FALSE)))
             }
-        d[sapply(file.path(dir, d), function(x) file_test("-f", x))]
+        d[file_test("-f", file.path(dir, d))]
     }
 
     if(!file_test("-d", dir))
