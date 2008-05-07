@@ -1244,15 +1244,16 @@ prohibitGeneric <- function(name, where = topenv(parent.frame()))
       .saveToImplicitGenerics(name, FALSE, where)
   }
 
-registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where), where = topenv(parent.frame()))
-  {
-      if(!is.environment(what))
+registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
+                                     where = topenv(parent.frame()))
+{
+    if(!is.environment(what))
         stop(gettextf("Must provide an environment table; got class \"%s\"",
-             class(what)), domain = NA)
-      objs <- objects(what, all=TRUE)
-      for(f in objs)
+                      class(what)), domain = NA)
+    objs <- objects(what, all=TRUE)
+    for(f in objs)
         .cacheImplicitGeneric(f, get(f, envir = what))
-  }
+}
 
 
 ### the metadata name for the implicit generic table
@@ -1270,52 +1271,54 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where), where
   .cacheGenericTable(name, def, .ImplicitGenericsTable(where))
 
 .getImplicitGeneric <- function(name, where, pkg = "")
-  {
-      value <- .getImplicitGenericFromCache(name, where, pkg)
-      if(is.null(value) && exists(.ImplicitGenericsMetaName, where, inherits = FALSE)) {
-          tbl <-  get(.ImplicitGenericsMetaName, where)
-          value <- .getGenericFromCacheTable(name, where, pkg, tbl)
-      }
-      value
-  }
+{
+    value <- .getImplicitGenericFromCache(name, where, pkg)
+    if(is.null(value) && exists(.ImplicitGenericsMetaName, where, inherits = FALSE)) {
+        tbl <-  get(.ImplicitGenericsMetaName, where)
+        value <- .getGenericFromCacheTable(name, where, pkg, tbl)
+    }
+    value
+}
 
 .restoreImplicitGeneric <- function(name, fdef, where, OK)
-  {
-      ## look for an implicit function table in the function's namespace or package
-      fwhere <- environment(fdef)
-      if(!isNamespace(fwhere)) {
-          fwhere <- findFunction(name, where = where)
-          if(length(fwhere) > 0)
+{
+    ## look for an implicit function table in the function's namespace or package
+    fwhere <- environment(fdef)
+    if(!isNamespace(fwhere)) {
+        fwhere <- findFunction(name, where = where)
+        if(length(fwhere) > 0)
             fwhere <- fwhere[[1]]
-          else
+        else
             return(FALSE)
-      }
-      genericFunction <- .getImplicitGeneric(name, fwhere)
-      if(is.null(genericFunction)) {
-          if(OK)  #try to create the default implicit generic
+    }
+    genericFunction <- .getImplicitGeneric(name, fwhere)
+    if(is.null(genericFunction)) {
+        if(OK)             #try to create the default implicit generic
             genericFunction <- implicitGeneric(name, where)
-          if(is.null(genericFunction)) # usually, a new definition
+        if(is.null(genericFunction))    # usually, a new definition
             return(FALSE)
-      }
-      if(identical(genericFunction, FALSE))
-        stop(gettextf("Function \"%s\" may not be used as a generic (implicitly prohibited)", name), domain = NA)
-      if(!OK)
-        warning(gettextf("Implicit generic exists for \"%s\", but will be overriden by explicit call to setGeneric()", name), domain = NA)
-      else {
-          ## compare this to the end of setGeneric().  It does not check group membership
-          ## or assign a methods list object.  Keep an eye on the differences.
-          assign(name, genericFunction, where)
-          .cacheGeneric(name, genericFunction)
-          .assignMethodsTableMetaData(name, genericFunction, where)
-      }
-      OK
-  }
+    }
+    if(identical(genericFunction, FALSE))
+        stop(gettextf("Function \"%s\" may not be used as a generic (implicitly prohibited)",
+                      name), domain = NA)
+    if(!OK)
+        warning(gettextf("Implicit generic exists for \"%s\", but will be overriden by explicit call to setGeneric()",
+                         name), domain = NA)
+    else {
+        ## compare this to the end of setGeneric().  It does not check group membership
+        ## or assign a methods list object.  Keep an eye on the differences.
+        assign(name, genericFunction, where)
+        .cacheGeneric(name, genericFunction)
+        .assignMethodsTableMetaData(name, genericFunction, where)
+    }
+    OK
+}
 
 .identicalGeneric <- function(f1, f2) {
     ## environments will be different
     f2d <- f2@.Data; f1d <- f1@.Data
     if(!(is.function(f2d) && is.function(f1d)))
-      return(FALSE)
+        return(FALSE)
     environment(f2d) <- environment(f1d)
     (identical(class(f1), class(f2)) &&
      identical(f1d, f2d) &&
@@ -1450,7 +1453,8 @@ hasMethods <- function(f, where, package)
 	    else if(length(ff <- findFunction(f, where = where)) == 1)
 		package <- getPackageName(ff[[1]])
 	    else
-		stop(gettextf("f does not correspond to a generic function and package not specified"),
+		stop(gettextf("'%s' is not a generic function in '%s' {and 'package' not specified}",
+			      f, format(where)),
 		     domain = NA)
 	}
     }
