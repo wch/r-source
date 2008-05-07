@@ -87,6 +87,9 @@ NEW FEATURES
     	inhibit Tk by not having DISPLAY set, but not on Windows nor
     	Mac OS X builds with --with-aqua.)
 
+    o	format() now works for environments; also print(env) and str(env)
+	share the same code for environments.
+
 
 PACKAGE INSTALLATION
 

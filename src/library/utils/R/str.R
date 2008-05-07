@@ -326,12 +326,9 @@ str.default <-
 	    if(has.class)
                 cat(pClass(cl))
 	    le <- v.len <- 0
-	    str1 <- paste("<", typeof(object), ">", sep="")
-	    if(typeof(object) == "environment") {
-                nm <- environmentName(object)
-                str1 <- if(nchar(nm)[1]) paste("<", nm , ">", sep="")
-		else paste("length", length(object), str1)
-            }
+	    str1 <-
+		if(is.environment(object)) format(object)
+		else paste("<", typeof(object), ">", sep="")
 	    has.class <- TRUE # fake for later
 	    std.attr <- "class"
 	    ## ideally we would figure out if as.character has a

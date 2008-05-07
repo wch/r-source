@@ -140,6 +140,26 @@ const char *EncodeRaw(Rbyte x)
     return buff;
 }
 
+const char *EncodeEnvironment(SEXP x)
+{
+    static char ch[100];
+    if (x == R_GlobalEnv)
+	sprintf(ch, "<environment: R_GlobalEnv>");
+    else if (x == R_BaseEnv)
+	sprintf(ch, "<environment: base>");
+    else if (x == R_EmptyEnv)
+	sprintf(ch, "<environment: R_EmptyEnv>");
+    else if (R_IsPackageEnv(x))
+	sprintf(ch, "<environment: %s>",
+		translateChar(STRING_ELT(R_PackageEnvName(x), 0)));
+    else if (R_IsNamespaceEnv(x))
+	sprintf(ch, "<environment: namespace:%s>",
+		translateChar(STRING_ELT(R_NamespaceEnvSpec(x), 0)));
+    else sprintf(ch, "<environment: %p>", (void *)x);
+
+    return ch;
+}
+
 const char *EncodeReal(double x, int w, int d, int e, char cdec)
 {
     static char buff[NB];

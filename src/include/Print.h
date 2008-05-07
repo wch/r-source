@@ -27,6 +27,7 @@
 #define formatRaw           Rf_formatRaw
 #define formatString        Rf_formatString
 #define EncodeElement       Rf_EncodeElement
+#define EncodeEnvironment   Rf_EncodeEnvironment
 #define printArray          Rf_printArray
 #define printMatrix         Rf_printMatrix
 #define printNamedVector    Rf_printNamedVector
@@ -54,6 +55,7 @@ void formatString(SEXP*, int, int*, int);
 
 /* Formating of values */
 const char *EncodeElement(SEXP, int, int, char);
+const char *EncodeEnvironment(SEXP);
 
 
 /* In Rinternals.h (and MUST be there):
