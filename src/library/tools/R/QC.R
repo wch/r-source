@@ -4443,18 +4443,32 @@ function()
 
 ### ** get_S4_generics_with_methods --- FIXME: make option of methods::getGenerics()
 
-get_S4_generics_with_methods <- function(env, verbose=FALSE)
+formatEnvironment <- function(env)
+    paste("'<", environmentName(env), ">'", sep="")
+
+get_S4_generics_with_methods <- function(env, verbose = getOption("verbose"))
 {
     env <- as.environment(env)
 ##  Filter(function(g) methods::isGeneric(g, where = env),
-##         methods::getGenerics(env))
+##	   methods::getGenerics(env))
     r <- methods::getGenerics(env)
-    if(length(r) &&
-       !all(ok <- sapply(r, function(g)
-			 methods::hasMethods(g, where = env)))) {
+    if(length(r) && {
+	hasM <- lapply(r, function(g)
+		       tryCatch(methods::hasMethods(g, where = env),
+				error = function(e) e))
+	hasErr <- sapply(hasM, inherits, what = "error")
+	if(any(hasErr)) {
+	    warning("Generics g in environment  env = ", formatEnvironment(env),
+		    " where hasMethods(g, env) errors:\n  ",
+		    paste(dQuote(r[hasErr]), collapse = ", "))
+	    hasM <- hasM[!hasErr]
+	}
+	!all(ok <- unlist(hasM))
+    }) {
 	if(verbose)
-            message("generics without methods in ", attr(env,"name"),
-                    ":\n\t ", paste(r[!ok], collapse = ", "))
+	    message("Generics without methods in environment ",
+		    formatEnvironment(env), ": ",
+		    paste(dQuote(r[!ok]), collapse = ", "))
 	r[ok]
     }
     else as.vector(r)# for back-compatibility and current ..../tests/reg-S4.R
