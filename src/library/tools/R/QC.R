@@ -4443,9 +4443,6 @@ function()
 
 ### ** get_S4_generics_with_methods --- FIXME: make option of methods::getGenerics()
 
-formatEnvironment <- function(env)
-    paste("'<", environmentName(env), ">'", sep="")
-
 get_S4_generics_with_methods <- function(env, verbose = getOption("verbose"))
 {
     env <- as.environment(env)
@@ -4456,18 +4453,25 @@ get_S4_generics_with_methods <- function(env, verbose = getOption("verbose"))
 	hasM <- lapply(r, function(g)
 		       tryCatch(methods::hasMethods(g, where = env),
 				error = function(e) e))
-	hasErr <- sapply(hasM, inherits, what = "error")
-	if(any(hasErr)) {
-	    warning("Generics g in environment  env = ", formatEnvironment(env),
-		    " where hasMethods(g, env) errors:\n  ",
-		    paste(dQuote(r[hasErr]), collapse = ", "))
+	if(any(hasErr <- sapply(hasM, inherits, what = "error"))) {
+            dq <- function(ch) paste('"',ch,'"', sep='')
+            rErr <- r[hasErr]
+            pkgs <- r@package[hasErr]
+### FIXME: This warning should not happen here when called from R CMD check,
+##         but rather be part of a new "check" there !
+	    warning("Generics g in env = ", format(env),
+		    " where hasMethods(g, env) errors: ",
+		    paste(dQuote(rErr), collapse = ", "),
+		    "\nMay need something like\n\n",
+		    paste("  importFrom(", paste(dq(pkgs), dq(rErr), sep=", "),
+                          ")\n", sep=''),
+		    "\nin NAMESPACE.")
 	    hasM <- hasM[!hasErr]
 	}
 	!all(ok <- unlist(hasM))
     }) {
 	if(verbose)
-	    message("Generics without methods in environment ",
-		    formatEnvironment(env), ": ",
+	    message("Generics without methods in ", format(env), ": ",
 		    paste(dQuote(r[!ok]), collapse = ", "))
 	r[ok]
     }
