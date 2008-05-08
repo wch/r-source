@@ -528,7 +528,7 @@ function(con, n = 4L)
     if(!length(pos)) return(character())
     ## Error chunk extends to at most the next error line.
     mapply(function(from, to) paste(lines[from : to], collapse = "\n"),
-           pos, pmin(pos + n, c(pos[-1L], length(lines)) - 1L))
+           pos, pmin(pos + n, c(pos[-1L], length(lines))))
 }
 
 ### ** .get_contains_from_package_db
