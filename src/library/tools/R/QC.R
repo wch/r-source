@@ -4087,6 +4087,14 @@ function(package, dir, lib.loc = NULL)
     }
 
     if(!missing(package)) {
+        ## <FIXME>
+        ## Suggested way of checking for S4 metadata.
+        ## Change to use as envir_has_S4_metadata() once this makes it
+        ## into base or methods.
+        if(length(objects(code_env, all.names = TRUE,
+                          pattern = "^\\.__[CMT]_")))
+            uses_methods <- TRUE
+        ## </FIXME>
         exprs <- lapply(ls(envir = code_env, all.names = TRUE),
                         function(f) {
                             f <- get(f, envir = code_env)
