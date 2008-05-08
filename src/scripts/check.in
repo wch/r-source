@@ -412,7 +412,7 @@ foreach my $pkg (@ARGV) {
 		$log->message("will not attempt to install this package on Windows");
 		$opt_install = 0;
 	    }
-	    if(!$WINDOWS && $OS_type eq "windows") {
+	    if(!$WINDOWS && $OS_type eq "windows" && $opt_install == 1) {
 		$log->message("this is a Windows-only package, skipping installation");
 		$opt_install = 0;
 	    }
@@ -1359,7 +1359,6 @@ sub check_pkg {
 	$log->print("  " . join("\n  ", @check_files) . "\n");
 	$log->print("Most likely, these were included erroneously.\n")
     }
-    
 
     sub check_subdirs {
 	my ($dpath) = @_;
@@ -1371,7 +1370,7 @@ sub check_pkg {
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
-	    $log->warning() unless($any);
+	    $log->warning() unless $any;
 	    $any++;
 	    $log->print(join("\n", @out) . "\n");
 	    $log->print(wrap("", "",
@@ -1380,6 +1379,7 @@ sub check_pkg {
 			      "in manual 'Writing R Extensions'.\n")));
 	}
     }
+
     &check_subdirs(".") unless ($subdirs eq "no");
     sub has_lazyload_data {
         my ($dir) = @_;

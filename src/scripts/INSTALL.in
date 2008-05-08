@@ -521,7 +521,7 @@ do_install_source () {
   fi
 
   OS_type=`get_dcf_field OS_type DESCRIPTION`
-  if test "$OS_type" = "windows" ; then
+  if test "$OS_type" = "windows" && test "${fake}" != "true"; then
     error "windows-only package"
     do_exit_on_error
   fi
