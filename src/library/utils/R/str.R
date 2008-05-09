@@ -151,9 +151,7 @@ str.default <-
     ## NON interesting attributes:
     std.attr <- "names"
 
-    cl <-
-	if((S4 <- isS4(object)))
-	    class(object) else attr(object, "class")
+    cl <- if((S4 <- isS4(object))) class(object) else oldClass(object)
     has.class <- S4 || !is.null(cl) # S3 or S4
     mod <- ""; char.like <- FALSE
     if(give.attr) a <- attributes(object)#-- save for later...
@@ -424,7 +422,7 @@ str.default <-
 	    if(int.surv || (all(ao > 1e-10 | ao==0) && all(ao < 1e10| ao==0) &&
 #			    all(ob == signif(ob, digits.d)))) {
 			    all(abs(ob - signif(ob, digits.d)) <= 9e-16*ao))) {
-		if(!iSurv || di.[2] == 2)
+		if(!iSurv || di.[2] == 2) # "Surv" : implemented as matrix
 		    ## use integer-like length
 		    v.len <- iv.len
 		format.fun <- function(x)x

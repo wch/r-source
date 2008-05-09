@@ -135,3 +135,9 @@ curve(5*exp(-x), 0.1, 100, n = 3, log="x", ylab="", axes=FALSE)
 curve(5*exp(-x), add=TRUE, n = 3, col=2,lwd=3)
 ## should fully overplot; wrong default xlim in 2.6.1
 ## (and *slightly* wrong up to 2.6.0)
+
+## Axis() calls via plot()  {[xy]axt to keep *.ps small}
+x <- as.Date("2008-04-22 09:45") + (i <- c(0,4))
+plot(x,    xaxt="n")# not ok in 2.6.2, nor 2.7.0
+plot(x, i, yaxt="n")# ok in 2.6.2  and 2.7.0
+plot(i, x, xaxt="n")# ok in 2.6.2 and not in 2.7.0
