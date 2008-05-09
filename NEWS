@@ -95,6 +95,11 @@ NEW FEATURES
         limitations imposed by special treatment of these objects in
         the base code, to allow other classes to contain them. See class?ts.
 
+    o	str()'s default method gains a 'formatNum' function argument which
+	is used for formatting numeric vectors.	 Note that this is very
+	slightly not backward compatible, and that its default may change
+	before release.
+
 
 PACKAGE INSTALLATION
 

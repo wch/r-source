@@ -70,18 +70,22 @@ str.POSIXt <- function(object, ...) {
     do.call(str, c(list(format(object), give.head = FALSE), larg))
 }
 
-strOptions <- function(strict.width = "no", digits.d = 3, vec.len = 4)
-    list(strict.width = strict.width, digits.d = digits.d, vec.len = vec.len)
+strOptions <- function(strict.width = "no", digits.d = 3, vec.len = 4,
+		       formatNum = function(x, ...)
+		       format(x, trim=TRUE, drop0trailing=TRUE, ...))
+    list(strict.width = strict.width, digits.d = digits.d, vec.len = vec.len,
+	 formatNum = match.fun(formatNum))
 
 str.default <-
     function(object, max.level = NA, vec.len = strO$vec.len,
-             digits.d = strO$digits.d,
+	     digits.d = strO$digits.d,
 	     nchar.max = 128, give.attr = TRUE,
-             give.head = TRUE, give.length = give.head,
+	     give.head = TRUE, give.length = give.head,
 	     width = getOption("width"), nest.lev = 0,
 	     indent.str= paste(rep.int(" ", max(0,nest.lev+1)), collapse= ".."),
 	     comp.str="$ ", no.list = FALSE, envir = baseenv(),
-             strict.width = strO$strict.width,
+	     strict.width = strO$strict.width,
+	     formatNum = strO$formatNum,
 	     ...)
 {
     ## Purpose: Display STRucture of any R - object (in a compact form).
@@ -404,7 +408,7 @@ str.default <-
 
 	} else if(is.logical(object)) {
 	    v.len <- 1.5 * v.len # was '3' originally (but S prints 'T' 'F' ..)
-	    format.fun <- format
+	    format.fun <- formatNum
 	} else if(is.numeric(object)) {
 	    iv.len <- round(2.5 * v.len)
 	    if(iSurv <- inherits(object, "Surv"))
@@ -417,19 +421,18 @@ str.default <-
 	    else if(iSurv)
 		le <- length(object <- as.character(object))
 	    if(int.surv || (all(ao > 1e-10 | ao==0) && all(ao < 1e10| ao==0) &&
-#			    all(ob == signif(ob, digits.d)))) {
 			    all(abs(ob - signif(ob, digits.d)) <= 9e-16*ao))) {
 		if(!iSurv || di.[2] == 2) # "Surv" : implemented as matrix
 		    ## use integer-like length
 		    v.len <- iv.len
-		format.fun <- function(x)x
+		format.fun <- formatNum
 	    } else {
 		v.len <- round(1.25 * v.len)
-		format.fun <- format
+		format.fun <- formatNum
 	    }
 	} else if(is.complex(object)) {
 	    v.len <- round(.75 * v.len)
-	    format.fun <- format
+	    format.fun <- formatNum
 	}
 
 	## Not sure, this is ever triggered:
