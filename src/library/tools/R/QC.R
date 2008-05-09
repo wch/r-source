@@ -4469,7 +4469,7 @@ get_S4_generics_with_methods <- function(env, verbose = getOption("verbose"))
 ##         but rather be part of a new "check" there !
 	    warning("Generics g in env = ", format(env),
 		    " where hasMethods(g, env) errors: ",
-		    paste(dQuote(rErr), collapse = ", "),
+		    paste(sQuote(rErr), collapse = ", "),
 		    "\nMay need something like\n\n",
 		    paste("  importFrom(", paste(dq(pkgs), dq(rErr), sep=", "),
                           ")\n", sep=''),
@@ -4480,7 +4480,7 @@ get_S4_generics_with_methods <- function(env, verbose = getOption("verbose"))
     }) {
 	if(verbose)
 	    message("Generics without methods in ", format(env), ": ",
-		    paste(dQuote(r[!ok]), collapse = ", "))
+		    paste(sQuote(r[!ok]), collapse = ", "))
 	r[ok]
     }
     else as.vector(r)# for back-compatibility and current ..../tests/reg-S4.R
