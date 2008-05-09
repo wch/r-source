@@ -106,6 +106,9 @@ BUG FIXES
     o	Rare string width calculations in package grid were not
     	interpreting the string encoding correctly.
 
+    o	A missing PROTECT could cause segfaults on string
+	comparisons.  (PR#11421)
+
 
 
 		CHANGES IN R VERSION 2.7.0
