@@ -448,7 +448,7 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
     n = (n1 > n2) ? n1 : n2;
     PROTECT(s1);
     PROTECT(s2);
-    ans = allocVector(LGLSXP, n);
+    PROTECT(ans = allocVector(LGLSXP, n));
 
     switch (code) {
     case EQOP:
@@ -544,7 +544,7 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	}
 	break;
     }
-    UNPROTECT(2);
+    UNPROTECT(3);
     return ans;
 }
 
