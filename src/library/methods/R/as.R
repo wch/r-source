@@ -262,7 +262,7 @@ setAs <-
  "POSIXct",  "POSIXlt",  "array",  "call",  "character",  "complex",  "data.frame",
  "environment",  "expression",  "factor",  "formula",  "function",  "integer",
  "list",  "logical",  "matrix",  "name",  "numeric",  "ordered",
-  "single",  "table",  "ts",  "vector")
+  "single",  "table",   "vector")
   basics <- basics[!is.na(match(basics,.BasicClasses))]
   for(what in basics) {
       ## if the class is a basic class and there exists an as.<class> function,

@@ -172,6 +172,9 @@ makeClassRepresentation <-
         if(virtual && !is.na(match("VIRTUAL", superClasses)))
             elNamed(contains, "VIRTUAL") <- NULL
     }
+    # new() must return an S4 object, except perhaps for basic classes
+    if(!is.null(prototype) && is.na(match(name, .BasicClasses)))
+      prototype <- .asS4(prototype)
     newClassRepresentation(className = name, slots = slots,
                            contains = contains,
                            prototype = prototype,

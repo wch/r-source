@@ -587,6 +587,8 @@ reconcilePropertiesAndPrototype <-
           ## .Data slot, or a basic class.  Uses the first possibility, warns of conflicts
           for(cl in superClasses) {
               clDef <- getClassDef(cl, where = where)
+              if(is.null(clDef))
+                stop(gettextf("No definition was found for superclass \"%s\" in the specification of class \"%s\" ", cl, name), domain = NA)
               thisDataPart <-  .validDataPartClass(clDef, name)
               if(!is.null(thisDataPart)) {
                   if(is.null(dataPartClass)) {
@@ -1162,7 +1164,7 @@ setDataPart <- function(object, value) {
     else
         ClassDef <- getClass(cl, TRUE)
 
-    switch(cl, ts =, matrix = , array = value <- cl,
+    switch(cl, matrix = , array = value <- cl,
            value <- elNamed(ClassDef@slots, ".Data"))
     if(is.null(value)) {
         if(.identC(cl, "structure"))
@@ -1218,7 +1220,10 @@ setDataPart <- function(object, value) {
             if(is.null(valueAttrs[[what]]))
                 attr(value, what) <- supplied[[what]]
     }
-    value
+    if(isS4(object))
+      .asS4(value)
+    else
+      value
 }
 
 .newExternalptr <- function()
