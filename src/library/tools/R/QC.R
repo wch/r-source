@@ -4092,7 +4092,7 @@ function(package, dir, lib.loc = NULL)
         ## Change to use as envir_has_S4_metadata() once this makes it
         ## into base or methods.
         if(length(objects(code_env, all.names = TRUE,
-                          pattern = "^\\.__[CMT]_")))
+                          pattern = "^[.]__[CT]_")))
             uses_methods <- TRUE
         ## </FIXME>
         exprs <- lapply(ls(envir = code_env, all.names = TRUE),
