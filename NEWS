@@ -285,6 +285,8 @@ BUG FIXES
     o	A missing PROTECT could cause segfaults on string
 	comparisons.  (PR#11421)
 
+    o	str(structure(1, classID = "Pooh")) now works fine.
+
 
 
 		CHANGES IN R VERSION 2.7.0
