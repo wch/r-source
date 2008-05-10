@@ -958,13 +958,17 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
 
 SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP Cond = eval(CAR(args), rho);
-
-    if (asLogicalNoNA(Cond, call))
+    SEXP Cond;
+    PROTECT(Cond = eval(CAR(args), rho));
+    if (asLogicalNoNA(Cond, call)) {
+	UNPROTECT(1);
 	return (eval(CAR(CDR(args)), rho));
-    else if (length(args) > 2)
+    } else if (length(args) > 2) {
+	UNPROTECT(1);
 	return (eval(CAR(CDR(CDR(args))), rho));
+    }
     R_Visible = FALSE; /* case of no 'else' so return invisible NULL */
+	UNPROTECT(1);
     return R_NilValue;
 }
 

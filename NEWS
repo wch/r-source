@@ -292,6 +292,9 @@ BUG FIXES
 
     o	str(structure(1, classID = "Pooh")) now works fine.
 
+    o	A missing PROTECT could cause segfaults in if() if coercion of
+    	the condition was required or a warning was to be given.
+
 
 
 		CHANGES IN R VERSION 2.7.0
