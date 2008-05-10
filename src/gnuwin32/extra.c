@@ -476,7 +476,7 @@ SEXP do_setwinprogressbar(SEXP call, SEXP op, SEXP args, SEXP env)
 		settext(pbar->lab, translateChar(clab));
 	}
     }
-    return ScalarInteger(value);
+    return ScalarReal(value);
 }
 
 

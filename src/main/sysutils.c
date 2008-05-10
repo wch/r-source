@@ -660,7 +660,9 @@ void * Riconv_open (const char* tocode, const char* fromcode)
     const char *cp = "UTF-8";
 # ifdef Win32
 #  ifndef SUPPORT_UTF8_WIN32
-    cp = locale2charset(NULL);
+    char buf[7];
+    snprintf(buf, 7, "CP%d", localeCP);
+    //cp = locale2charset(NULL);
 #  endif
 # else /* __APPLE__ */
     if (latin1locale) cp = "ISO-8859-1";
