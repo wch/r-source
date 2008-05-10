@@ -1,6 +1,6 @@
 % File src/library/base/man/rawConversion.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{rawConversion}
@@ -46,7 +46,7 @@ packBits(x, type = c("raw", "integer"))
   of 32 times the length of an integer vector with entries 0 or 1. In
   both cases the unpacking is least-significant bit first.
 
-  \code{packbits} packs its input (using only the lowest bit for raw or
+  \code{packBits} packs its input (using only the lowest bit for raw or
   integer vectors) least-significant bit first to a raw or integer vector.
 }
 \details{
