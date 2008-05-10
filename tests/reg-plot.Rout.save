@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-04-22 r45447)
+R version 2.8.0 Under development (unstable) (2008-05-09 r45656)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -29,7 +29,7 @@ Type 'q()' to quit R.
 > plot(0) # this should remain constant
 > str(par(c("usr","xaxp","yaxp")))
 List of 3
- $ usr : num [1:4]  0.568  1.432 -1.080  1.080
+ $ usr : num [1:4] 0.568 1.432 -1.08 1.08
  $ xaxp: num [1:3] 0.6 1.4 4
  $ yaxp: num [1:3] -1 1 4
 > 
