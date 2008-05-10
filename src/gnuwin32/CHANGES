@@ -56,11 +56,6 @@ NEW FEATURES
     o	The Save as | Postscript ... file selection box now offers
 	*.eps (default) and *.ps file selections.
 
-    o	For Latin locales, iconv() now uses the codepage and not the
-	ISO-8859-x encoding of which it is an extension.  This means
-	that some characters which are not in ISO-8859-x (such as
-	directional quotes) will now be successfully translated.
-
 
 BUG FIXES
 
