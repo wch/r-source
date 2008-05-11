@@ -117,6 +117,12 @@ BUG FIXES
     o	validObject called with complete=TRUE did not use inherited
         validity methods for slot classes.
 
+    o	several bugs fixed in as():  the initial method lookup was not using
+        the table with inherited methods (so inheritance had to be
+        recomputed each time); coerce() should not be called directly--it
+        can insert invalid inherited methods; the constructed as()
+        methods were not retaining the function's environment.
+
 
 		CHANGES IN R VERSION 2.7.0
 
