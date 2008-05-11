@@ -38,11 +38,6 @@
  *
  */
 
-/* <UTF8> char here is either ASCII or handled as a whole
-   or as an initial segment (which is OK if entities are valid)
- */
-
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

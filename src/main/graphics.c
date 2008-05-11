@@ -25,10 +25,6 @@
  *  functionality in the AT&T Bell Laboratories GRZ library.
  */
 
-/* <UTF8>
-   OK if we assume GMetricInfo is passed a suitable int (e.g. Unicode)
- */
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

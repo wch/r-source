@@ -19,8 +19,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8> Only ASCII values */
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

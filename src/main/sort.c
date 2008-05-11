@@ -19,10 +19,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8> char here is handled as a whole string.
-   Does rely on strcoll being correct.
- */
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

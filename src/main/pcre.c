@@ -19,12 +19,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8>
-   regex code should be OK.
-   substitution code does ASCII comparisons only.
-   regexpr returned pos and match length in bytes not chars.
-*/
-
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif

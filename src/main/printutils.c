@@ -18,15 +18,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8>
-
-   char here is either ASCII or handled as a whole, apart from Rstrlen
-   and EncodeString.
-
-   Octal representation of strings replaced by \u+4/8hex (can that be
-   improved?).
-*/
-
 
 /* =========
  * Printing:

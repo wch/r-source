@@ -17,8 +17,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8> char here is either ASCII or handled as a whole */
-
 /* Graphical parameters which are treated identically by
  * par( <nam> = <value> )  and	highlevel  plotfun (..., <nam> = <value> ).
  *

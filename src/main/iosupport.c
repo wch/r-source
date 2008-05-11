@@ -28,8 +28,6 @@
  *  previous anarchy.
  */
 
-/* <UTF8> byte-level access is ok */
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

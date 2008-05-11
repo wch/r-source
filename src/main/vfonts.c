@@ -19,10 +19,6 @@
 
 /* This should be regarded as part of the graphics engine */
 
-/* <UTF8> char here is either ASCII or handled as a whole.
-   However, the interpretation is as ASCII or in some cases Latin-1
- */
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

@@ -18,8 +18,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8> char here is handled as a whole string */
-
 /* The x:y  primitive calls do_colon(); do_colon() calls cross_colon() if
    both arguments are factors and seq_colon() otherwise.
  */

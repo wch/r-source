@@ -18,8 +18,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8> char here is either ASCII or handled as a whole */
-
 
 #undef HASHING
 

@@ -19,22 +19,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8>
-   abbreviate needs to be fixed, if possible.
-
-   Changes already made:
-   abbreviate needs to be fixed, if possible, but warns for now.
-   Regex code should be OK, substitution does ASCII comparisons only.
-   charToRaw/rawToChar should work at byte level, so is OK.
-   agrep needed to work at char level.
-   make.names worked at byte not char level.
-   substr() should work at char not byte level.
-   Semantics of nchar() have been fixed.
-   regexpr returned pos and match length in bytes not chars.
-   tolower/toupper added wchar versions
-   chartr works at char not byte level.
- */
-
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif

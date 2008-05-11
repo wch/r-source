@@ -19,13 +19,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8>
-   char here is mainly either ASCII or handled as a whole.
-   isBlankString has been improved.
-   do_basename and do_dirname now work in chars.
-*/
-
-
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>

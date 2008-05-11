@@ -17,10 +17,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8> char here is either ASCII or handled as a whole.
-   Metric info is requested on widechar if found.
- */
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

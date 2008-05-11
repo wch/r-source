@@ -19,11 +19,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8>
-   Looks OK as byte-level comparions are all with ASCII chars.
-   Has own case-insensitive comparisons which we never use (as from R 2.1.0).
- */
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

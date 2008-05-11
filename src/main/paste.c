@@ -24,8 +24,6 @@
  *  See ./format.c	 for the  format_Foo_  functions.
  */
 
-/* <UTF8> char here is handled as a whole */
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

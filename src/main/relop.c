@@ -18,10 +18,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* <UTF8> char here is handled as a whole.
-   Collation is locale-specific if strcoll exists and works.
- */
-
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
