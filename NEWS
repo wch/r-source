@@ -175,6 +175,8 @@ BUG FIXES
          type S4 would not be S4 objects.  new() applied to basic, non S4
          classes still will (and should) return non-S4 objects.
 
+    o	validObject called with complete=TRUE did not use inherited
+        validity methods for slot classes.
 
 
 
