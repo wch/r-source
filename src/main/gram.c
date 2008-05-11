@@ -275,7 +275,7 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	    if(s[i] == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), xxlineno);
 	}
 	res = mbrtowc(wc, s, clen, NULL);
-	if(res == -1) error(_("invalid multibyte character in mbcs_get_next at line %d"), xxlineno);
+	if(res == -1) error(_("invalid multibyte character in parser at line %d"), xxlineno);
     } else {
 	/* This is not necessarily correct for stateful MBCS */
 	while(clen <= MB_CUR_MAX) {
@@ -283,10 +283,10 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	    res = mbrtowc(wc, s, clen, &mb_st);
 	    if(res >= 0) break;
 	    if(res == -1) 
-		error(_("invalid multibyte character in mbcs_get_next at line %d"), xxlineno);
+		error(_("invalid multibyte character in parser at line %d"), xxlineno);
 	    /* so res == -2 */
 	    c = xxgetc();
-	    if(c == R_EOF) error(_("EOF whilst reading MBCS char"));
+	    if(c == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), xxlineno);
 	    s[clen++] = c;
 	} /* we've tried enough, so must be complete or invalid by now */
     }
