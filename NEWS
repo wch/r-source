@@ -114,6 +114,8 @@ BUG FIXES
     o	A missing PROTECT could cause segfaults in if() if coercion of
     	the condition was required or a warning was to be given.
 
+    o	validObject called with complete=TRUE did not use inherited
+        validity methods for slot classes.
 
 
 		CHANGES IN R VERSION 2.7.0

@@ -425,17 +425,14 @@ validObject <- function(object, test = FALSE, complete = FALSE)
 	    next
 	}
 	if(!complete)
-	    next
-	validityMethod <- classDefi@validity
-	if(is(validityMethod, "function")) {
-	    errori <- anyStrings(validityMethod(sloti))
-	    if(length(errori) > 0) {
-		errori <- paste("In slot \"", slotNames[[i]],
-				"\" of class \"", class(sloti), "\": ",
-				errori, sep = "")
-		errors <- c(errors, errori)
-	    }
-	}
+          next
+        errori <- anyStrings(Recall(sloti, TRUE, TRUE))
+        if(length(errori) > 0) {
+            errori <- paste("In slot \"", slotNames[[i]],
+                            "\" of class \"", class(sloti), "\": ",
+                            errori, sep = "")
+            errors <- c(errors, errori)
+        }
     }
     extends <- rev(classDef@contains)
     for(i in seq_along(extends)) {
