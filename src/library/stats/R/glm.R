@@ -759,6 +759,8 @@ residuals.glm <-
     res
 }
 
+## For influence.glm() ... --> ./lm.influence.R
+
 ## KH on 1998/06/22: update.default() is now used ...
 
 model.frame.glm <- function (formula, ...)

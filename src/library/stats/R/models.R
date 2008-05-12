@@ -233,8 +233,6 @@ deviance.default <- function(object, ...) object$deviance
 fitted <- function(object, ...) UseMethod("fitted")
 ## we really do need partial matching here
 fitted.default <- function(object, ...)
-    napredict(object$na.action, object$fitted)
-fitted.default <- function(object, ...)
 {
     xx <- if("fitted.values" %in% names(object))
         object$fitted.values else object$fitted
@@ -446,6 +444,8 @@ model.offset <- function(x) {
 
 model.matrix <- function(object, ...) UseMethod("model.matrix")
 
+fitted.default <- function(object, ...)
+    napredict(object$na.action, object$fitted)
 model.matrix.default <- function(object, data = environment(object),
 				 contrasts.arg = NULL, xlev = NULL, ...)
 {

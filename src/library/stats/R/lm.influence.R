@@ -219,9 +219,6 @@ function(model, infl = influence(model, do.coef=FALSE),
     res
 }
 
-## FIXME: The following probably needs partial adapation for glm
-## -----  (whenever there's an extra glm method above!)
-
 influence.measures <- function(model)
 {
     is.influential <- function(infmat, n)
@@ -240,7 +237,7 @@ influence.measures <- function(model)
 	dimnames(result) <- dimnames(infmat)
 	result
     }
-    infl <- lm.influence(model)
+    infl <- influence(model) # generic -> lm, glm, [...] methods
     p <- model$rank
     e <- weighted.residuals(model)
     s <- sqrt(sum(e^2, na.rm=TRUE)/df.residual(model))
@@ -250,9 +247,15 @@ influence.measures <- function(model)
     dfbetas <- infl$coefficients / outer(infl$sigma, sqrt(diag(xxi)))
     vn <- variable.names(model); vn[vn == "(Intercept)"] <- "1_"
     colnames(dfbetas) <- paste("dfb",abbreviate(vn),sep=".")
+    ## Compatible to dffits():
     dffits <- e*sqrt(h)/(si*(1-h))
+    if(any(ii <- is.infinite(dffits))) dffits[ii] <- NaN
     cov.ratio <- (si/s)^(2 * p)/(1 - h)
-    cooks.d <- ((e/(s * (1 - h)))^2 * h)/p
+    cooks.d <-
+        if(inherits(model, "glm"))
+            (infl$pear.res/(1-h))^2 * h/(summary(model)$dispersion * p)
+        else # lm
+            ((e/(s * (1 - h)))^2 * h)/p
 #    dn <- dimnames(model$qr$qr)
     infmat <- cbind(dfbetas, dffit = dffits, cov.r = cov.ratio,
 		    cook.d = cooks.d, hat=h)
