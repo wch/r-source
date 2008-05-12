@@ -2034,7 +2034,9 @@ Y <- matrix(rnorm(3 * n), n, 3)
 X <- matrix(rnorm(5 * n), n, 5)
 infm <- lm.influence(mod <- lm(Y ~ X))
 ## failed up to 2003-03-29 (pre 1.7.0)
-
+im1 <- influence.measures(mod)
+stopifnot(identical(unname(im1$infmat[,1:6]),
+		    unname(dfbetas(mod))))
 
 ## rbind.data.frame with character and ordered columns
 A <- data.frame(a=1)
@@ -3875,17 +3877,16 @@ stopifnot(identical(x, t(x)),
 
 ## infinite influence measures (PR#8367)
 occupationalStatus <-
-    structure(as.integer(c(50, 16, 12, 11, 2, 12, 0, 0, 19, 40, 35,
-                           20, 8, 28, 6, 3, 26, 34, 65, 58, 12, 102,
-                           19, 14, 8, 18, 66, 110, 23, 162, 40, 32, 7,
-                           11, 35, 40, 25, 90, 21, 15, 11, 20, 88, 183,
-                           46, 554, 158, 126, 6, 8, 23, 64, 28, 230, 143,
-                           91, 2, 3, 21, 32, 12, 177, 71, 106)
-                         ), .Dim = c(8L, 8L), .Dimnames =
-              structure(list(origin = c("1", "2", "3", "4", "5", "6", "7", "8"),
-                             destination = c("1", "2", "3", "4", "5", "6", "7",
-                             "8")), .Names = c("origin", "destination")),
-              class = "table")
+    as.table(matrix(as.integer(c(50, 16, 12, 11,  2, 12,  0,  0,
+                                 19, 40, 35, 20,  8, 28,  6,  3,
+                                 26, 34, 65, 58, 12,102, 19, 14,
+                                  8, 18, 66,110, 23,162, 40, 32,
+                                  7, 11, 35, 40, 25, 90, 21, 15,
+                                 11, 20, 88,183, 46,554,158,126,
+                                  6,  8, 23, 64, 28,230,143, 91,
+                                  2,  3, 21, 32, 12,177, 71,106)),
+                    8, 8,
+                    dimnames = list(origin=paste(1:8), destination=paste(1:8))))
 Diag <- as.factor(diag(1:8))
 Rscore <- scale(as.numeric(row(occupationalStatus)), scale = FALSE)
 Cscore <- scale(as.numeric(col(occupationalStatus)), scale = FALSE)
@@ -3893,12 +3894,12 @@ Uniform <- glm(Freq ~ origin + destination + Diag +
                Rscore:Cscore, family = poisson, data = occupationalStatus)
 Ind <- as.logical(diag(8))
 residuals(Uniform)[Ind] #zero/near-zero
-stopifnot(is.nan(rstandard(Uniform)[Ind]))
-stopifnot(is.nan(rstudent(Uniform)[Ind]))
-stopifnot(is.nan(dffits(Uniform)[Ind]))
-stopifnot(is.nan(covratio(Uniform)[Ind]))
-stopifnot(is.nan(cooks.distance(Uniform)[Ind]))
-# had infinities in 2.2.0 on some platforms
+stopifnot(is.nan(rstandard(Uniform)[Ind]),
+          is.nan(rstudent (Uniform)[Ind]),
+          is.nan(dffits   (Uniform)[Ind]),
+          is.nan(covratio (Uniform)[Ind]),
+          is.nan(cooks.distance(Uniform)[Ind]))
+## had infinities in 2.2.0 on some platforms
 plot(Uniform)
 plot(Uniform, 6) # added 2006-01-10
 ##
@@ -5164,3 +5165,18 @@ merge(women, NULL)
 merge(women[FALSE, ], women)
 merge(women, women[FALSE, ])
 ## first two failed in 2.7.0
+
+if(require(MASS)) {
+    fit <- lm(formula = 1000/MPG.city ~ Weight + Cylinders + Type + EngineSize + DriveTrain, data = Cars93)
+    gf <- glm(formula(fit), data=Cars93) # should be "identical"
+    im1 <- influence.measures(fit)
+    im2 <- influence.measures(gf)
+    stopifnot(all.equal(im1[1:2], im2[1:2]),
+	      all.equal(unname(im1$infmat[,1:15]),
+			unname(dfbetas(fit))),
+	      all.equal(im1$infmat[,"dffit"], dffits(fit)),
+	      all.equal(im1$infmat[,"cov.r"], covratio(fit)),
+	      all.equal(im1$infmat[,"cook.d"],	cooks.distance(fit)),
+	      all.equal(im2$infmat[,"cook.d"],	cooks.distance(gf)),
+	      all.equal(im1$infmat[,"hat"],  hatvalues(fit)))
+}

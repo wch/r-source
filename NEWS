@@ -296,6 +296,9 @@ BUG FIXES
 
     o	plot(<table>) now uses a sensible default main title.
 
+    o	influence.measures(<glm-object>) now computes the same
+    	Cook's distance approximations as cooks.distance().
+
 
 
 		CHANGES IN R VERSION 2.7.0
