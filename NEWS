@@ -299,6 +299,9 @@ BUG FIXES
     o	influence.measures(<glm-object>) now computes the same
     	Cook's distance approximations as cooks.distance().
 
+    o	plot(<glm>, which=5) uses more correct cook's distance contours;
+	(fix to fix to PR#9316).
+
 
 
 		CHANGES IN R VERSION 2.7.0

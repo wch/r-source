@@ -55,11 +55,16 @@ function (x, which = c(1:3,5), ## was which = 1:4,
             else cooks.distance(x, sd = s, res = r)
 	}
     }
-    if (any(show[c(2:3,5)])) {
-	ylab23 <- if (isGlm)
-	    "Std. deviance resid."
-	else "Standardized residuals"
+    if (any(show[2:3])) {
+	ylab23 <- if(isGlm) "Std. deviance resid." else "Standardized residuals"
 	r.w <- if (is.null(w)) r else sqrt(w) * r
+    }
+    if (show[5]) {
+        ylab5 <- if (isGlm) "Std. Pearson resid." else "Standardized residuals"
+        r.w <- residuals(x, "pearson")
+        if(!is.null(w)) r.w <- r.w[wind] # drop 0-weight cases
+    }
+    if (any(show[c(2:3,5)])) {
 	rs <- r.w/(s * sqrt(1 - hii))
         rs[is.infinite(rs)] <- NaN
     }
@@ -68,9 +73,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
         isConst.hat <- all(r.hat == 0) || diff(r.hat) < 1e-10 * mean(hii)
     }
     if (any(show[c(1, 3)]))
-	l.fit <- if (isGlm)
-	    "Predicted values"
-	else "Fitted values"
+	l.fit <- if (isGlm) "Predicted values" else "Fitted values"
     if (is.null(id.n))
 	id.n <- 0
     else {
@@ -200,7 +203,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
                 plot(facval, rs, xlim = c(-1/2, sum((nlev-1) * ff) + 1/2),
                      ylim = ylim, xaxt = "n",
                      main = main, xlab = "Factor Level Combinations",
-                     ylab = ylab23, type = "n", ...)
+                     ylab = ylab5, type = "n", ...)
                 axis(1, at = ff[1]*(1:nlev[1] - 1/2) - 1/2,
                      labels= x$xlevels[[1]][order(sapply(split(yh,mf[,1]), mean))])
                 mtext(paste(facvars[1],":"), side = 1, line = 0.25, adj=-.05)
@@ -222,20 +225,19 @@ function (x, which = c(1:3,5), ## was which = 1:4,
             xx[xx >= 1] <- NA
 
             plot(xx, rs, xlim = c(0, max(xx, na.rm = TRUE)), ylim = ylim,
-                 main = main, xlab = "Leverage", ylab = ylab23, type = "n",
+                 main = main, xlab = "Leverage", ylab = ylab5, type = "n",
                  ...)
             panel(xx, rs, ...)
             abline(h = 0, v = 0, lty = 3, col = "gray")
             if (one.fig)
                 title(sub = sub.caption, ...)
             if(length(cook.levels)) {
-                dispersion <- if(isGlm) summary(x)$dispersion else 1
                 p <- length(coef(x))
                 usr <- par("usr")
                 hh <- seq.int(min(r.hat[1], r.hat[2]/100), usr[2],
                               length.out = 101)
                 for(crit in cook.levels) {
-                    cl.h <- sqrt(crit*p*(1-hh)/hh * dispersion)
+                    cl.h <- sqrt(crit*p*(1-hh)/hh)
                     lines(hh, cl.h, lty = 2, col = 2)
                     lines(hh,-cl.h, lty = 2, col = 2)
                 }

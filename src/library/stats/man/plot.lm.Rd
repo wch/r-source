@@ -81,7 +81,9 @@
   \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s*sqrt(1 - h.ii))}
   where \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
 % bug in Rdconv: "$" and \link inside \code fails; '\$' doesn't help :
-  \code{\link{influence}()}\code{$hat}, see also \code{\link{hat}}.
+  \code{\link{influence}()}\code{$hat}, see also \code{\link{hat}}, and
+  where the Residual-Leverage uses standardized Pearson residuals
+  (\code{\link{residuals.glm}(type = "pearson")}) for \eqn{R[i]}.
 
   The Residual-Leverage plot shows contours of equal Cook's distance,
   for values of \code{cook.levels} (by default 0.5 and 1) and omits
