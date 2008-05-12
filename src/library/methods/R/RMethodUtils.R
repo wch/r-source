@@ -376,8 +376,7 @@ getGeneric <-
   ##
   ## If there is no definition, throws an error or returns
   ## NULL according to the value of mustFind.
-  function(f, mustFind = FALSE, where = .genEnv(f, topenv(parent.frame()), package),
-           package = "")
+  function(f, mustFind = FALSE, where, package = "")
 {
     if(is.function(f)) {
         if(is(f, "genericFunction"))
@@ -387,7 +386,7 @@ getGeneric <-
         else
             stop("Argument f must be a string, generic function, or primitive: got an ordinary function")
     }
-    value <- .getGeneric(f, where, package)
+    value <- if(missing(where)) .getGeneric(f, ,package) else .getGeneric( f, where, package)
     if(is.null(value) && exists(f, "package:base", inherits = FALSE)) {
         ## check for primitives
         baseDef <- get(f, "package:base")
@@ -410,32 +409,33 @@ getGeneric <-
 }
 
 ## low-level version
-.getGeneric <- function(f, where, package = "") {
+.getGeneric <- function(f, where = .GlobalEnv, # default only for C search
+                        package = "") {
     if(is.character(f) && f %in% c("as.double", "as.real")) f <- "as.numeric"
     if(is.character(f) && !nzchar(f)) {
 	message("Empty function name in .getGeneric")
 	dput(sys.calls())
     }
-    if(isNamespace(where))
-	value <-.Call("R_getGeneric", f, FALSE, where, package,
-		      PACKAGE = "methods")
-    else {
-        ## first look in the cache (which should eventually be done in C for speed perhaps)
-        value <- .getGenericFromCache(f, where, package)
-        if(is.null(value)) {
-            value <- .Call("R_getGeneric", f, FALSE, as.environment(where), package,
+    ## do not search the cache if getGeneric() was called with explicit where=
+    if(missing(where))
+      value <- .getGenericFromCache(f, where,  package)
+    else
+        value <- NULL
+    if(is.null(value)) {
+        value <- .Call("R_getGeneric", f, FALSE, as.environment(where), package,
                            PACKAGE = "methods")
-            ## cache public generics
-            if(!is.null(value))
+        ## cache public generics (usually these will have been cached already
+        ## and we get to this code for non-exported generics)
+        if(!is.null(value) && exists(f, .GlobalEnv) &&
+           identical(get(f, .GlobalEnv), value))
                 .cacheGeneric(f, value)
-        }
     }
-    if(is.null(value) && nzchar(package) && !identical(package, "base")) {
-        env <- .requirePackage(package, FALSE)
-        if(is.environment(env))
-            value <- .Call("R_getGeneric", f, FALSE, env, package,
-                           PACKAGE = "methods")
-    }
+##     if(is.null(value) && nzchar(package) && !identical(package, "base")) {
+##         env <- .requirePackage(package, FALSE)
+##         if(is.environment(env))
+##           value <- .Call("R_getGeneric", f, FALSE, env, package,
+##                      PACKAGE = "methods")
+##     }
     value
 }
 
@@ -526,7 +526,9 @@ getGeneric <-
                 else {
                   pkg <- attr(name, "package")
                   if(is.null(pkg))
-                    pkg <- getPackageName(where)
+                    pkg <- getPackageName(where, FALSE)
+                  if(identical(pkg, ".GlobalEnv"))
+                    pkg <- ""
                 }
             }
             pkgs <- names(value)
@@ -612,6 +614,8 @@ function(f, where = topenv(parent.frame())) {
 ##     .methodsDeprecated("getMethodsMetaData",
 ##                        "Methods list objects are no longer used and will not be generated in future versions; see findMethods() for alternatives")
     fdef <- getGeneric(f, where = where)
+    if(is.null(fdef))
+      return(NULL)
     mname <- methodsPackageMetaName("M",fdef@generic, fdef@package)
     if (exists(mname, where = where, inherits = missing(where)))
         get(mname, where)
@@ -665,10 +669,10 @@ getGenerics <- function(where, searchForm = FALSE)
         these <- character()
         for(i in where)
             these <- c(these, objects(i, all.names=TRUE))
-	## FIXME: deprecated
         metaNameUndo(unique(these), prefix = "T", searchForm = searchForm)
     }
 }
+
 
 allGenerics <- function(...) {
     .Deprecated("getGenerics")
@@ -1368,4 +1372,18 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
            },
            ignore =
            )
+}
+
+.NamespaceOrPackage <- function(what) {
+    name <- as.name(what)
+    ns <-  .Internal(getRegisteredNamespace(name))
+    if(!is.null(ns))
+      asNamespace(ns)
+    else {
+        i <- match(paste("package", what, sep=":"), search())
+        if(is.na(i))
+          .GlobalEnv
+        else
+          as.environment(i)
+    }
 }

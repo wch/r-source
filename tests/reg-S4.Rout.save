@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-05-06 r45626)
+R version 2.8.0 Under development (unstable) (2008-05-11 r45672)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -506,91 +506,22 @@ $answer.all
 > as.raw(x_c1)
 [1] 0a
 > 
-> # as.numeric sets methods on all the equivalent functions
+> # as.double, as.real use as.numeric for their methods to maintain equivalence
 > setMethod("as.numeric", "c1", function(x, ...) 42+pi)
 [1] "as.numeric"
-> as.numeric(x_c1)
-[1] 45.14159
-> as.double(x_c1)
-[1] 45.14159
-> as.real(x_c1)
-[1] 45.14159
-> showMethods(as.numeric)
-Function: as.numeric (package base)
-x="c1"
-
-> showMethods(as.double)
-Function: as.numeric (package base)
-x="c1"
-
-> showMethods(as.real)
-Function: as.numeric (package base)
-x="c1"
-
+> identical(as.numeric(x_c1),as.double(x_c1))
+[1] TRUE
+> identical(as.numeric(x_c1),as.real(x_c1))
+[1] TRUE
+> 
 > 
 > setMethod(as.double, "c2", function(x, ...) x@.Data+pi)
 [1] "as.numeric"
 > x_c2 <- new("c2", pi)
-> as.numeric(x_c2)
-[1] 6.283185
-> showMethods(as.numeric)
-Function: as.numeric (package base)
-x="c1"
-x="c2"
-
-> 
-> promptClass("c1", stdout())# want all methods
-\name{c1-class}
-\docType{class}
-\alias{c1-class}
-\alias{as.character,c1-method}
-\alias{as.complex,c1-method}
-\alias{as.integer,c1-method}
-\alias{as.logical,c1-method}
-\alias{as.numeric,c1-method}
-\alias{as.raw,c1-method}
-
-\title{Class "c1" ~~~ }
-\description{	 ~~ A concise (1-5 lines) description of what the class is.  ~~}
-\section{Objects from the Class}{
-Objects can be created by calls of the form \code{new("c1", ...)}.
-	 ~~ describe objects here ~~ 
-}
-\section{Slots}{
-	 \describe{
-    \item{\code{.Data}:}{Object of class \code{"numeric"} ~~ }
-  }
-}
-\section{Extends}{
-Class \code{"\linkS4class{numeric}"}, from data part.
-Class \code{"\linkS4class{vector}"}, by class "numeric", distance 2.
-}
-\section{Methods}{
-  \describe{
-    \item{as.character}{\code{signature(x = "c1")}: ... }
-    \item{as.complex}{\code{signature(x = "c1")}: ... }
-    \item{as.integer}{\code{signature(x = "c1")}: ... }
-    \item{as.logical}{\code{signature(x = "c1")}: ... }
-    \item{as.numeric}{\code{signature(x = "c1")}: ... }
-    \item{as.raw}{\code{signature(x = "c1")}: ... }
-	 }
-}
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ }
-
- ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-	~~objects to See Also as \code{\link{~~fun~~}}, ~~~
-	or \code{\linkS4class{CLASSNAME}} for links to other classes
-}
-\examples{
-showClass("c1")
-}
-\keyword{classes}
-A shell of class documentation has been written to the connection
-'stdout'.
+> identical(as.numeric(x_c2),as.double(x_c2))
+[1] TRUE
+> identical(as.numeric(x_c2),as.real(x_c2))
+[1] TRUE
 > 
 > ## '!' changed signature from 'e1' to 'x' in 2.6.0
 > setClass("foo", "logical")
@@ -714,7 +645,7 @@ include omitted arguments in definition: mode = "missing"
 + 	  isGeneric("show",  where=e4),
 + 	  hasMethods("show", where=e4), hasMethods("show", where=em),
 + 	  ## isGeneric("dim", where=as.environment("package:Matrix"))
-+ 	  identical(as.vector(gg4),
++ 	  identical(as.character(gg4), #gg4 has packages attr.; tools::: doesn't
 + 		    tools:::get_S4_generics_with_methods(e4))
 + 	  )
 > ## the last failed in R 2.7.0 : was not showing  "show"

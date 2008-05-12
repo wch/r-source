@@ -292,21 +292,16 @@ as.complex(x_c1)
 setMethod("as.raw", "c1", function(x) as.raw(10))
 as.raw(x_c1)
 
-# as.numeric sets methods on all the equivalent functions
+# as.double, as.real use as.numeric for their methods to maintain equivalence
 setMethod("as.numeric", "c1", function(x, ...) 42+pi)
-as.numeric(x_c1)
-as.double(x_c1)
-as.real(x_c1)
-showMethods(as.numeric)
-showMethods(as.double)
-showMethods(as.real)
+identical(as.numeric(x_c1),as.double(x_c1))
+identical(as.numeric(x_c1),as.real(x_c1))
+
 
 setMethod(as.double, "c2", function(x, ...) x@.Data+pi)
 x_c2 <- new("c2", pi)
-as.numeric(x_c2)
-showMethods(as.numeric)
-
-promptClass("c1", stdout())# want all methods
+identical(as.numeric(x_c2),as.double(x_c2))
+identical(as.numeric(x_c2),as.real(x_c2))
 
 ## '!' changed signature from 'e1' to 'x' in 2.6.0
 setClass("foo", "logical")
@@ -390,7 +385,7 @@ stopifnot(unlist(lapply(ggm, function(g) !is.null(getGeneric(g, where = em)))),
 	  isGeneric("show",  where=e4),
 	  hasMethods("show", where=e4), hasMethods("show", where=em),
 	  ## isGeneric("dim", where=as.environment("package:Matrix"))
-	  identical(as.vector(gg4),
+	  identical(as.character(gg4), #gg4 has packages attr.; tools::: doesn't
 		    tools:::get_S4_generics_with_methods(e4))
 	  )
 ## the last failed in R 2.7.0 : was not showing  "show"
