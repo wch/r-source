@@ -2940,7 +2940,7 @@ bp
 18.00 18.00 823.89 577.28 cl
 /ps 14 def /Font2 findfont 14 s
 0 setgray
-435.34 542.73 (x) .5 0 0 t
+435.34 542.73 (UCBAdmissions) .5 0 0 t
 /ps 12 def /Font1 findfont 12 s
 435.34 65.52 (Admit) .5 0 0 t
 59.76 304.84 (Gender) .5 0 90 t
@@ -3120,7 +3120,7 @@ bp
 18.00 18.00 823.89 577.28 cl
 /ps 14 def /Font2 findfont 14 s
 0 setgray
-435.34 542.73 (x) .5 0 0 t
+435.34 542.73 (UCBAdmissions) .5 0 0 t
 /ps 12 def /Font1 findfont 12 s
 435.34 65.52 (x label) .5 0 0 t
 59.76 304.84 (YY) .5 0 90 t
