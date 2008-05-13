@@ -263,47 +263,53 @@ graphics.off <- function ()
 	dev.off(which)
 }
 
-dev.new <- function()
+dev.new <- function(...)
 {
     dev <- getOption("device")
-    if(is.function(dev)) {
-        ## this ensures that pdf and postscript in this namespace are used.
-        if (identical(dev, pdf)) dev <- "pdf"
-        else if(identical(dev, postscript)) dev <- "postscript"
-        else return(dev())
-    }
-    if(!is.character(dev))
+    if(!is.character(dev) && !is.function(dev))
         stop("invalid setting for 'getOption(\"device\")'")
-    else if(identical(dev, "pdf")) {
-        ## Take care not to open device on top of another.
-        if(!file.exists("Rplots.pdf")) pdf()
-        else {
-            fe <- file.exists(tmp <- paste("Rplots", 1:999, ".pdf", sep=""))
-            if(all(fe)) stop("no suitable unused file name for pdf()")
-            message(gettextf("dev.new(): using pdf(file=\"%s\")", tmp[!fe][1]),
-                    domain=NA)
-            pdf(tmp[!fe][1])
-        }
-    } else if(identical(dev, "postscript")) {
-        ## Take care not to open device on top of another.
-        if(!file.exists("Rplots.ps")) postscript()
-        else {
-            fe <- file.exists(tmp <- paste("Rplots", 1:999, ".ps", sep=""))
-            if(all(fe)) stop("no suitable unused file name for postscript()")
-            message(gettextf("dev.new(): using postscript(file=\"%s\")",
-                             tmp[!fe][1]), domain=NA)
-            postscript(tmp[!fe][1])
-        }
-    } else {
+    if(is.character(dev)) {
         ## this is documented to be searched for from workspace,
         ## then in graphics namespace.
         ## We could restrict the search to functions, but the C
         ## code in devices.c does not.
-        if(exists(dev, .GlobalEnv)) get(dev, .GlobalEnv)()
+        dev <- if(exists(dev, .GlobalEnv)) get(dev, .GlobalEnv)
         else if(exists(dev, asNamespace("grDevices")))
-            get(dev, asNamespace("grDevices"))()
+            get(dev, asNamespace("grDevices"))
         else stop(gettextf("device '%s' not found", dev), domain=NA)
     }
+    ## only include named args in the devices's arglist
+    a <- list(...)
+    a2 <- names(formals(dev))
+    a <- a[names(a) %in% a2]
+    if(identical(dev, pdf)) {
+        ## Take care not to open device on top of another.
+        if(is.null(a[["file"]]) && file.exists("Rplots.pdf")) {
+            fe <- file.exists(tmp <- paste("Rplots", 1:999, ".pdf", sep=""))
+            if(all(fe)) stop("no suitable unused file name for pdf()")
+            message(gettextf("dev.new(): using pdf(file=\"%s\")", tmp[!fe][1]),
+                    domain=NA)
+            a$file <- tmp[!fe][1]
+        }
+    } else if(identical(dev, postscript)) {
+        ## Take care not to open device on top of another.
+        if(is.null(a[["file"]]) && file.exists("Rplots.ps")) {
+            fe <- file.exists(tmp <- paste("Rplots", 1:999, ".ps", sep=""))
+            if(all(fe)) stop("no suitable unused file name for postscript()")
+            message(gettextf("dev.new(): using postscript(file=\"%s\")",
+                             tmp[!fe][1]), domain=NA)
+            a$file <- tmp[!fe][1]
+        }
+    } else if (!is.null(a[["width"]]) && !is.null(a[["height"]]) &&
+               (identical(dev, png) || identical(dev, jpeg) ||
+                identical(dev, bmp) || identical(dev, tiff))) {
+        ## some people want dev.new(width=12, height=7) to be portable
+        if(is.null(a[["units"]]) && is.null(a[["res"]])) {
+            a$units <- "in"
+            a$res <- 72
+        }
+    }
+    do.call(dev, a)
 }
 
 ### Check for a single valid integer format

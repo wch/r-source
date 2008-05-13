@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/dev.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dev.xxx}
@@ -23,12 +23,13 @@ dev.next(which = dev.cur())
 dev.prev(which = dev.cur())
 dev.off(which = dev.cur())
 dev.set(which = dev.next())
-dev.new()
+dev.new(\dots)
 graphics.off()
 }
 
 \arguments{
   \item{which}{An integer specifying a device number.}
+  \item{\dots}{arguments to be passed to the device selected.}
 }
 \details{
   Only one device is the \sQuote{active} device: this is the device in
@@ -63,7 +64,11 @@ graphics.off()
   file-based devices such as \code{\link{pdf}} and
   \code{\link{postscript}} and in that case file names such as
   \file{Rplots.pdf}, \file{Rplots1.pdf}, \dots, \file{Rplots999.pdf} are
-  tried in turn.
+  tried in turn.  Only named arguments are passed to the device, and
+  then only if they match the argument list of the device.  Even so,
+  case is needed with the interpretation of e.g. \code{width}, and for
+  the standard bitmap devices \code{units="in", res=72} is forced if
+  neither is supplied but both \code{width} and \code{height} are.
 }
 \value{
   \code{dev.cur} returns a length-one named integer vector giving the

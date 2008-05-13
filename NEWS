@@ -107,6 +107,10 @@ NEW FEATURES
 	get(getOption("device"))() will work will catch users of those
 	packages.
 
+    o	dev.new() gains a '...' argument which can be used to passed
+    	named arguments which will be used if appropriate to the
+    	device selected.
+
 
 PACKAGE INSTALLATION
 
