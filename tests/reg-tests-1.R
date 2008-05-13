@@ -5166,6 +5166,7 @@ merge(women[FALSE, ], women)
 merge(women, women[FALSE, ])
 ## first two failed in 2.7.0
 
+## influence.measures() for lm and glm, and its constituents
 if(require(MASS)) {
     fit <- lm(formula = 1000/MPG.city ~ Weight + Cylinders + Type + EngineSize + DriveTrain, data = Cars93)
     gf <- glm(formula(fit), data=Cars93) # should be "identical"
@@ -5176,7 +5177,8 @@ if(require(MASS)) {
 			unname(dfbetas(fit))),
 	      all.equal(im1$infmat[,"dffit"], dffits(fit)),
 	      all.equal(im1$infmat[,"cov.r"], covratio(fit)),
-	      all.equal(im1$infmat[,"cook.d"],	cooks.distance(fit)),
-	      all.equal(im2$infmat[,"cook.d"],	cooks.distance(gf)),
+	      all.equal(im1$infmat[,"cook.d"], cooks.distance(fit)),
+	      all.equal(im2$infmat[,"cook.d"], cooks.distance(gf)),
 	      all.equal(im1$infmat[,"hat"],  hatvalues(fit)))
 }
+## "cook.d" part of influence.measures(<glm>) differed in R <= 2.7.0
