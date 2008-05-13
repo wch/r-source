@@ -27,8 +27,12 @@ setOldClass <- function(Classes, prototype,
             if(!extends(cl, prevClass))
                 warning(gettextf("inconsistent old-style class information for \"%s\" (maybe mixing old and new classes?)", cl), domain = NA)
         }
-        else
+        else {
             setClass(cl, contains = c(prevClass, "VIRTUAL"), where = where)
+            def <- getClassDef(cl, where)
+            def@prototype <- .notS4(def@prototype)
+            assignClassDef(cl, def, where = where)
+        }
         prevClass <- cl
     }
     if(!missing(prototype)) {

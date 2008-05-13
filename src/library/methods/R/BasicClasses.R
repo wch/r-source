@@ -145,6 +145,8 @@
     setIs("ts", "structure", where = envir)
     setMethod("initialize", "ts",
               function(.Object,  ...) {
+                  if(identical(as.character(class(.Object)), "ts"))
+                    .Object <- .notS4(.Object)
                   if(nargs() < 2) # guaranteed to be called with .Object from new
                      return( .Object)
                   args <- list(...)
@@ -186,9 +188,7 @@
             cat("\n")
         }
     })
-        
-
-
+ 
     ## Next, miscellaneous S3 classes.
     for(cl in .OldClassesList)
         setOldClass(cl, where = envir)
@@ -207,6 +207,7 @@
     setClass(cl, ..., where = where)
     def <- getClassDef(cl, where)
     def@className <- as.character(def@className)
+    def@prototype <- .notS4(def@prototype)
     assignClassDef(cl, def, where = where)
 }
 

@@ -112,6 +112,11 @@
     .Call("R_setS4Object", object, TRUE, PACKAGE = "base")
 }
 
+.notS4 <- function (object)
+{
+    .Call("R_setS4Object", object, FALSE, PACKAGE = "base")
+}
+
 
 ## the bootstrap version: "#----" brackets lines that replace parts of the real version
 makeGeneric <-
