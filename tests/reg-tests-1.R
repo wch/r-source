@@ -3876,22 +3876,12 @@ stopifnot(identical(x, t(x)),
 
 
 ## infinite influence measures (PR#8367)
-occupationalStatus <-
-    as.table(matrix(as.integer(c(50, 16, 12, 11,  2, 12,  0,  0,
-                                 19, 40, 35, 20,  8, 28,  6,  3,
-                                 26, 34, 65, 58, 12,102, 19, 14,
-                                  8, 18, 66,110, 23,162, 40, 32,
-                                  7, 11, 35, 40, 25, 90, 21, 15,
-                                 11, 20, 88,183, 46,554,158,126,
-                                  6,  8, 23, 64, 28,230,143, 91,
-                                  2,  3, 21, 32, 12,177, 71,106)),
-                    8, 8,
-                    dimnames = list(origin=paste(1:8), destination=paste(1:8))))
+data(occupationalStatus)
 Diag <- as.factor(diag(1:8))
 Rscore <- scale(as.numeric(row(occupationalStatus)), scale = FALSE)
 Cscore <- scale(as.numeric(col(occupationalStatus)), scale = FALSE)
-Uniform <- glm(Freq ~ origin + destination + Diag +
-               Rscore:Cscore, family = poisson, data = occupationalStatus)
+Uniform <- glm(Freq ~ origin + destination + Diag + Rscore:Cscore,
+	       family = poisson, data = occupationalStatus)
 Ind <- as.logical(diag(8))
 residuals(Uniform)[Ind] #zero/near-zero
 stopifnot(is.nan(rstandard(Uniform)[Ind]),
