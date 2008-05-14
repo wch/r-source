@@ -391,3 +391,14 @@ stopifnot(unlist(lapply(ggm, function(g) !is.null(getGeneric(g, where = em)))),
 ## the last failed in R 2.7.0 : was not showing  "show"
 ## TODO: use "Matrix" checks once that is >= 1.0
 
+## containing "array" ("matrix", "ts", ..)
+t. <- ts(1:10, frequency = 4, start = c(1959, 2))
+setClass("Arr", contains= "array"); x <- new("Arr", cbind(17))
+setClass("Ts",  contains= "ts");   tt <- new("Ts", t.); t2 <- as(t., "Ts")
+setClass("ts2", representation(x = "Ts", y = "ts"))
+tt2 <- new("ts2", x=t2, y=t.)
+stopifnot(dim(x) == c(1,1), is(tt, "ts"), is(t2, "ts"),
+          ## FIXME:  identical(tt, t2)
+          length(tt) == length(t.),
+          identical(tt2@x, t2), identical(tt2@y, t.))
+## new(..) failed in R 2.7.0
