@@ -487,7 +487,7 @@ and indicate continuation by simple indenting.
 Command lines entered at the console are limited@footnote{some of the
 consoles will not allow you to enter more, and amongst those which do
 some will silently discard the excess and some will use it as the start
-of the next line.} to about 1024 bytes (not characters).
+of the next line.} to about 4095 bytes (not characters).
 
 @node Recall and correction of previous commands, Executing commands from or diverting output to a file, R commands; case sensitivity etc, Introduction and preliminaries
 @section Recall and correction of previous commands

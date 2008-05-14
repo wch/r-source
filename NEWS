@@ -49,7 +49,7 @@ NEW FEATURES
 	accept that are now rare.
 
     o	The behaviour of readLines() for incomplete final lines on
-    	non-text-mode connections has been changed to be like blocking
+    	binary-mode connections has been changed to be like blocking
     	rather than non-blocking text-mode connections.
 
     o	?pkg::topic and ?pkg:::topic now find help on 'topic' from
@@ -172,6 +172,13 @@ UTILITIES
     o	R CMD check checks for binary executable files (which should not
 	appear in a source package), using a suitable 'file' if
 	available, else by name.
+
+
+C-LEVEL FACILITIES
+
+    o	R_ReadConsole will now be called with a buffer size of 4096
+	bytes, (rather than 1024): maintainers of alternative
+	front-ends should check that they do not have a smaller limit.
 
 
 BUG FIXES
