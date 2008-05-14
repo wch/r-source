@@ -111,6 +111,9 @@ NEW FEATURES
     	named arguments which will be used if appropriate to the
     	device selected.
 
+    o	plot(<lm-obj>) now warns when it omits points with leverage one
+	from a plot.
+
 
 PACKAGE INSTALLATION
 
