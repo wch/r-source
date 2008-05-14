@@ -323,6 +323,9 @@ BUG FIXES
     o	plot(<glm>, which=5) uses more correct Cook's distance contours;
 	(fix to fix to PR#9316).
 
+    o	pdf() and postscript() were not working correctly with UTF-8
+	encoded data in a non-UTF-8 MBCS (e.g. CJK locales on Windows).
+
 
 
 		CHANGES IN R VERSION 2.7.0
