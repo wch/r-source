@@ -324,9 +324,8 @@ size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc)
     const char *i_buf;
     char *o_buf;
     size_t  i_len, o_len, status, wc_len;
-
     /* out length */
-    wc_len = mbstowcs(NULL, in, 0);
+    wc_len = (enc == CE_UTF8)? utf8towcs(NULL, in, 0) : mbstowcs(NULL, in, 0);
     if (out == NULL || (int)wc_len < 0) return wc_len;
 
     if ((void*)-1 == (cd = Riconv_open(UCS2ENC, (enc == CE_UTF8) ? "UTF-8": "")))
@@ -1065,7 +1064,7 @@ utf8toucs(wchar_t *wc, const char *s)
     }
 }
 
-size_t attribute_hidden
+size_t 
 utf8towcs(wchar_t *wc, const char *s, size_t n)
 {
     int m, res = 0;

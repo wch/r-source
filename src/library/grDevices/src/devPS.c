@@ -4073,8 +4073,8 @@ static void PS_Text0(double x, double y, const char *str, int enc,
 	cidfontfamily cidfont = findDeviceCIDFont(gc->fontfamily,
 						  pd->cidfonts,
 						  &fontIndex);
-	if (!strcmp(locale2charset(NULL),
-		    cidfont->encoding)) {
+	if (!dd->hasTextUTF8 &&
+	    !strcmp(locale2charset(NULL), cidfont->encoding)) {
 	    SetFont(translateCIDFont(gc->fontfamily, gc->fontface, pd),
 		    (int)floor(gc->cex * gc->ps + 0.5),dd);
 	    CheckAlpha(gc->col, pd);
@@ -4089,7 +4089,7 @@ static void PS_Text0(double x, double y, const char *str, int enc,
 	/*
 	 * CID convert PS encoding != locale encode case
 	 */
-        ucslen = mbstowcs(NULL, str, 0);
+        ucslen = (dd->hasTextUTF8) ? Rf_utf8towcs(NULL, str, 0) : mbstowcs(NULL, str, 0);
         if (ucslen != (size_t)-1) {
 	    void *cd;
 	    unsigned char *buf;
@@ -6759,7 +6759,8 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
 	}
 	if (!cidfont)
 	    error(_("Failed to find or load PDF CID font"));
-        if(!strcmp(locale2charset(NULL), cidfont->encoding)) {
+        if(!dd->hasTextUTF8 &&
+	   !strcmp(locale2charset(NULL), cidfont->encoding)) {
 	    PDF_SetFill(gc->col, dd);
 	    fprintf(pd->pdffp,
 		    "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
@@ -6778,7 +6779,7 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
         /*
          * CID convert  PDF encoding != locale encode case
          */
-	ucslen = mbstowcs(NULL, str, 0);
+	ucslen = (dd->hasTextUTF8) ? Rf_utf8towcs(NULL, str, 0): mbstowcs(NULL, str, 0);
         if (ucslen != (size_t)-1) {
 	    void *cd;
 	    const char *i_buf; char *o_buf;
