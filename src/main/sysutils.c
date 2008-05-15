@@ -580,7 +580,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(streql(to, "") && known_to_be_utf8) isUTF8 = TRUE;
 	obj = Riconv_open(to, from);
 	if(obj == (iconv_t)(-1))
-	    error(_("unsupported conversion"));
+	    error(_("unsupported conversion from '%s' to '%s'"), from, to);
 	PROTECT(ans = duplicate(x));
 	R_AllocStringBuffer(0, &cbuff);  /* 0 -> default */
 	for(i = 0; i < LENGTH(x); i++) {
