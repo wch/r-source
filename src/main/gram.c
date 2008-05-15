@@ -4159,7 +4159,7 @@ static SEXP mkStringUTF8(const wchar_t *wcs, int cnt)
     R_CheckStack();
     memset(s, 0, cnt*6);
 #endif
-    wcstoutf8(s, wcs, cnt);
+    wcstoutf8(s, wcs, cnt*6);
     PROTECT(t = allocVector(STRSXP, 1));
     SET_STRING_ELT(t, 0, mkCharCE(s, CE_UTF8));
     UNPROTECT(1);
