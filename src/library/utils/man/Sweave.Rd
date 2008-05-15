@@ -76,14 +76,14 @@ Stangle(file, driver = Rtangle(),
 }
 \author{Friedrich Leisch}
 \references{
-  Friedrich Leisch: Sweave User Manual, 2002\cr
-  \url{http://www.ci.tuwien.ac.at/~leisch/Sweave}
-
   Friedrich Leisch: Dynamic generation of statistical reports using
   literate data analysis. In W. \enc{Härdle}{Haerdle} and
   B. \enc{Rönz}{Roenz}, editors, Compstat 2002 - Proceedings in Computational
   Statistics, pages 575--580. Physika Verlag, Heidelberg, Germany,
   2002. ISBN 3-7908-1517-9.
+  
+  Friedrich Leisch: Sweave User Manual, 2008\cr
+  \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}
 }
 \seealso{\code{\link{RweaveLatex}}, \code{\link{Rtangle}}}
 \examples{

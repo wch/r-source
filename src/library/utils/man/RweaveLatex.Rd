@@ -120,8 +120,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 }
 \author{Friedrich Leisch}
 \references{
-  Friedrich Leisch: Sweave User Manual, 2002\cr
-  \url{http://www.ci.tuwien.ac.at/~leisch/Sweave}
+  Friedrich Leisch: Sweave User Manual, 2008\cr
+  \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}
 }
 \seealso{\code{\link{Sweave}}, \code{\link{Rtangle}}}
 \keyword{utilities}

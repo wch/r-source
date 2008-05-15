@@ -24,8 +24,8 @@ SweaveSyntConv(file, syntax, output = NULL)
     that the output is created in the current working directory.}}
 \author{Friedrich Leisch}
 \references{
-  Friedrich Leisch: Sweave User Manual, 2002\cr
-  \url{http://www.ci.tuwien.ac.at/~leisch/Sweave}
+  Friedrich Leisch: Sweave User Manual, 2008\cr
+  \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}
 }
 \seealso{\code{\link{RweaveLatex}}, \code{\link{Rtangle}}}
 \examples{
