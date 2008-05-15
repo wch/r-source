@@ -2529,6 +2529,11 @@ static int token(void)
 	yylval = install(yytext);
 	return c;
     case '*':
+	/* Replace ** by ^.  This has been here since 1998, but is
+	   undocumented (at least in the obvious places).  It is in
+	   the index of the Blue Book with a reference to p. 431, the
+	   help for 'Deprecated'.  S-PLUS 6.2 still allowed this, so
+	   presumably it was for compatibility with S. */
 	if (nextchar('*'))
 	    c='^';
 	yytext[0] = c;
