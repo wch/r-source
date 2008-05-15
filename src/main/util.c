@@ -731,7 +731,8 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 		while (p >= buf && *p == L'/') *(p--) = L'\0';
 	    }
 	    if ((p = wcsrchr(buf, L'/'))) p++; else p = buf;
-	    wcstoutf8(sp, p, wcslen(p) + 1);
+	    memset(sp, 0, PATH_MAX); /* safety */
+	    wcstoutf8(sp, p, 4*wcslen(p) + 1);
 	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
 	}
     }
@@ -811,7 +812,8 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 		      && (p > buf+2 || *(p-1) != L':')) --p;
 		p[1] = L'\0';
 	    }
-	    wcstoutf8(sp, buf, wcslen(buf)+1);
+	    memset(sp, 0, PATH_MAX);
+	    wcstoutf8(sp, buf, 4*wcslen(buf)+1);
 	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
 	}
     }

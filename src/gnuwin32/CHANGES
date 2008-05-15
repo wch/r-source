@@ -67,6 +67,9 @@ BUG FIXES
     o	getWinProgressBar() returned an integer result -- it now
     	returns a double value.
 
+   o	basename() and dirname() could truncate their results when
+   	Unicode chars were used (usually in a CJK locale).
+
 
 
 		CHANGES IN R VERSION 2.7.0
