@@ -14,7 +14,7 @@ Croatia,Croatia,Zagreb,http://june.irb.hr/r/,"Rudjer Boskovic Institute",mislav.
 "Czech Republic","Czech Republic",Brno,http://cran.biokontakt.cz/,"Biokontakt Brno",Tomas.Kaplan@biokontakt.cz,1,cz
 Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirror@dotsrc.org,1,dk
 "France (Toulouse)",France,Toulouse,http://cran.fr.r-project.org/,"CICT, Toulouse","David Allouche <allouche@tlse.toulouse.inra.fr>",1,fr
-"France (Lyon)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <jthioulouse@biomserv.univ-lyon1.fr>",0,fr
+"France (Lyon)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse@univ-lyon1.fr>",1,fr
 "France (Paris)",France,Paris,http://cran.miroir-francais.fr/,"Miroir-Francais, Paris","Kurt LeClerc <kurt@miroir-francais.fr>",1,fr
 "Germany (Goettingen)",Germany,Goettingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Goettingen","Eberhard Moenkeberg <emoenke@gwdg.de>",1,de
 "Germany (Muenchen)",Germany,Muenchen,http://cran.rakanu.com/,"Rakanu.com, Muenchen","Carsten Zedler <info@rakanu.com>",1,de
