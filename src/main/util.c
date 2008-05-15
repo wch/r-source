@@ -1132,30 +1132,6 @@ size_t wcstoutf8(char *s, const wchar_t *wc, size_t n)
     return res;
 }
 
-size_t wcstoutf8em(char *s, const wchar_t *wc, size_t n)
-{
-    int m, res=0;
-    char *t;
-    const wchar_t *p;
-    if(s) {
-	for(p = wc, t = s; ; p++) {
-	    m  = Rwcrtomb(t, *p);
-	    if(m == 0) m = 1;
-	    if(m <= 0) break;
-	    res += m;
-	    if(res >= n) break;
-	    t += m;
-	}
-    } else {
-	for(p = wc; ; p++) {
-	    m  = Rwcrtomb(NULL, *p);
-	    if(m == 0) m = 1;
-	    if(m <= 0) break;
-	    res += m;
-	}
-    }
-    return res;
-}
 
 /* A version that reports failure as an error */
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)

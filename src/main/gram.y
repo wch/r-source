@@ -1925,25 +1925,22 @@ static int NumericValue(int c)
 #ifdef USE_UTF8_IF_POSSIBLE
 #define WTEXT_PUSH(c) do { if(wcnt < 1000) wcs[wcnt++] = c; } while(0)
 
-extern size_t wcstoutf8em(char *s, const wchar_t *wc, size_t n);
-
 static SEXP mkStringUTF8(const wchar_t *wcs, int cnt)
 {
     SEXP t;
     char *s;
     int nb;
-
+    
 /* NB: cnt includes the terminator */
 #ifdef Win32
-    s = alloca(cnt*4); /* UCS-2/UTF-16 so max 4 bytes per wchar_t */
-    R_CheckStack();
-    memset(s, 0, cnt*4);
+    nb = cnt*4; /* UCS-2/UTF-16 so max 4 bytes per wchar_t */
 #else
-    s = alloca(cnt*6); /* max 6 bytes per wchar_t */
-    R_CheckStack();
-    memset(s, 0, cnt*6);
+    nb = cnt*6;
 #endif
-    nb = wcstoutf8em(s, wcs, 6*cnt);
+    s = alloca(nb);
+    R_CheckStack();
+    memset(s, 0, nb); /* safety */
+    wcstoutf8(s, wcs, nb);
     PROTECT(t = allocVector(STRSXP, 1));
     SET_STRING_ELT(t, 0, mkCharCE(s, CE_UTF8));
     UNPROTECT(1);
