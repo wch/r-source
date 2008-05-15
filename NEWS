@@ -114,6 +114,11 @@ NEW FEATURES
     o	plot(<lm-obj>) now warns when it omits points with leverage one
 	from a plot.
 
+    o	dimnames(x) <- value extends 'value' if it a list and too
+	short, and 'x' is an array.  This allows constructions such as
+	dimnames(x)[[1]] <- 1:3 to work whether or not 'x' already has
+	dimnames.
+
 
 PACKAGE INSTALLATION
 

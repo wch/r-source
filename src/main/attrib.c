@@ -811,7 +811,7 @@ static SEXP dimnamesgets1(SEXP val1)
 
 SEXP dimnamesgets(SEXP vec, SEXP val)
 {
-    SEXP dims, top;
+    SEXP dims, top, newval;
     int i, k;
 
     PROTECT(vec);
@@ -821,20 +821,25 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	error(_("'dimnames' applied to non-array"));
     /* This is probably overkill, but you never know; */
     /* there may be old pair-lists out there */
+    /* There are, when this gets used as names<- for 1-d arrays */
     if (!isPairList(val) && !isNewList(val))
 	error(_("'dimnames' must be a list"));
     dims = getAttrib(vec, R_DimSymbol);
-    if ((k = LENGTH(dims)) != length(val))
+    if ((k = LENGTH(dims)) < length(val))
 	error(_("length of 'dimnames' [%d] must match that of 'dims' [%d]"),
 	      length(val), k);
     /* Old list to new list */
     if (isList(val)) {
-	SEXP newval;
 	newval = allocVector(VECSXP, k);
 	for (i = 0; i < k; i++) {
 	    SET_VECTOR_ELT(newval, i, CAR(val));
 	    val = CDR(val);
 	}
+	UNPROTECT(1);
+	PROTECT(val = newval);
+    }
+    if (length(val) > 0 && length(val) < k) {
+	newval = lengthgets(val, k);
 	UNPROTECT(1);
 	PROTECT(val = newval);
     }

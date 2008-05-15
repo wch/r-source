@@ -5156,6 +5156,7 @@ merge(women[FALSE, ], women)
 merge(women, women[FALSE, ])
 ## first two failed in 2.7.0
 
+
 ## influence.measures() for lm and glm, and its constituents
 if(require(MASS)) {
     fit <- lm(formula = 1000/MPG.city ~ Weight + Cylinders + Type + EngineSize + DriveTrain, data = Cars93)
@@ -5163,8 +5164,7 @@ if(require(MASS)) {
     im1 <- influence.measures(fit)
     im2 <- influence.measures(gf)
     stopifnot(all.equal(im1[1:2], im2[1:2]),
-	      all.equal(unname(im1$infmat[,1:15]),
-			unname(dfbetas(fit))),
+	      all.equal(unname(im1$infmat[,1:15]), unname(dfbetas(fit))),
 	      all.equal(im1$infmat[,"dffit"], dffits(fit)),
 	      all.equal(im1$infmat[,"cov.r"], covratio(fit)),
 	      all.equal(im1$infmat[,"cook.d"], cooks.distance(fit)),
@@ -5172,3 +5172,9 @@ if(require(MASS)) {
 	      all.equal(im1$infmat[,"hat"],  hatvalues(fit)))
 }
 ## "cook.d" part of influence.measures(<glm>) differed in R <= 2.7.0
+
+
+## short list value for dimnames
+n <- matrix(c(1259, 845, 719,390,1360,1053,774,413), nrow = 2, byrow = TRUE)
+dimnames(n)[[1]] <- c("a", "b")
+## was (correctly) an error in R < 2.8.0
