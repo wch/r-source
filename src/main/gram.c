@@ -4148,18 +4148,18 @@ static SEXP mkStringUTF8(const wchar_t *wcs, int cnt)
 {
     SEXP t;
     char *s;
-
+    int nb;
+    
 /* NB: cnt includes the terminator */
 #ifdef Win32
-    s = alloca(cnt*4); /* UCS-2/UTF-16 so max 4 bytes per wchar_t */
-    R_CheckStack();
-    memset(s, 0, cnt*4);
+    nb = cnt*4; /* UCS-2/UTF-16 so max 4 bytes per wchar_t */
 #else
-    s = alloca(cnt*6); /* max 6 bytes per wchar_t */
-    R_CheckStack();
-    memset(s, 0, cnt*6);
+    nb = cnt*6;
 #endif
-    wcstoutf8(s, wcs, cnt*6);
+    s = alloca(nb);
+    R_CheckStack();
+    memset(s, 0, nb); /* safety */
+    wcstoutf8(s, wcs, nb);
     PROTECT(t = allocVector(STRSXP, 1));
     SET_STRING_ELT(t, 0, mkCharCE(s, CE_UTF8));
     UNPROTECT(1);
@@ -4745,6 +4745,11 @@ static int token(void)
 	yylval = install(yytext);
 	return c;
     case '*':
+	/* Replace ** by ^.  This has been here since 1998, but is
+	   undocumented (at least in the obvious places).  It is in
+	   the index of the Blue Book with a reference to p. 431, the
+	   help for 'Deprecated'.  S-PLUS 6.2 still allowed this, so
+	   presumably it was for compatibility with S. */
 	if (nextchar('*'))
 	    c='^';
 	yytext[0] = c;
