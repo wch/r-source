@@ -568,6 +568,25 @@ getGeneric <-
       NULL
 }
 
+.genericOrImplicit <- function(name, pkg, env) {
+    fdef <- .getGenericFromCache(name, env, pkg)
+    if(is.null(fdef)) {
+        penv <- getNamespace(pkg)
+        if(!isNamespace(penv))  {# no namespace--should be rare!
+            pname <- paste("package:", pkg, sep="")
+            if(pname %in% search())
+              penv <- as.environment(pname)
+            else
+              penv <- env
+        }
+        fdef <- getFunction(name, TRUE, FALSE, penv)
+        if(!is(fdef, "genericFunction"))
+          fdef <- implicitGeneric(name, penv)
+    }
+    fdef
+}
+        
+
 ## copy the environments in the generic function so later merging into
 ## the cached generic will not modify the generic in the package.
 ## NOT CURRENTLY USED: see comments in .getGeneric()
@@ -738,29 +757,35 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
     if(length(packages) <  length(generics))
       packages <- rep(packages, length = length(generics))
     pkg <- getPackageName(where)
-     for(i in seq_along(generics)) {
-         f <- generics[[i]]
-         pkg <- packages[[i]]
-         fdef <- getGeneric(f, FALSE, searchWhere, pkg)
-        ## silently ignores all generics not visible from searchWhere
-        if(is(fdef, "genericFunction")) {
-	  if(attach) {
-	      env <- as.environment(where)
-	      ## all instances of this generic in different attached packages must
-	      ## be the cached version of the generic for consistent
-	      ## method selection.
-	      if(exists(f, envir = env, inherits = FALSE)) {
-		  def <- get(f, envir = env)
-		  if(!identical(def, fdef))
-		      .assignOverBinding(f, fdef,  env, FALSE)
-	      }
-	  }
-          else if(identical(fdef@package, pkg))
-              .uncacheGeneric(f, fdef)
-	  methods <- .updateMethodsInTable(fdef, where, attach)
-          cacheGenericsMetaData(f, fdef, attach, where, fdef@package, methods)
-          }
+    for(i in seq_along(generics)) {
+        f <- generics[[i]]
+        fpkg <- packages[[i]]
+        if(!identical(fpkg, pkg)) {
+            if(attach) {
+                env <- as.environment(where)
+                ## All instances of this generic in different attached packages must
+                ## be the cached version of the generic for consistent
+                ## method selection.
+                if(exists(f, envir = env, inherits = FALSE)) {
+                    fdef <- .genericOrImplicit(f, fpkg, env)
+                    def <- get(f, envir = env)
+                    if(!identical(def, fdef) && is(fdef, "genericFunction")) {
+                        .assignOverBinding(f, fdef,  env, FALSE)
+                    }
+                }
+                else # either imported generic or a primitive
+                  fdef <- getGeneric(f, FALSE, searchWhere, fpkg)
+            }
         }
+        else
+          fdef <- getGeneric(f, FALSE, searchWhere, fpkg)
+        if(!is(fdef, "genericFunction"))
+          next ## silently ignores all generics not visible from searchWhere
+        if(!attach)
+          .uncacheGeneric(f, fdef)
+        methods <- .updateMethodsInTable(fdef, where, attach)
+        cacheGenericsMetaData(f, fdef, attach, where, fdef@package, methods)
+    }
     classes <- getClasses(where)
     for(cl in classes) {
         cldef <- (if(attach) get(classMetaName(cl), where) # NOT getClassDef, it will use cache

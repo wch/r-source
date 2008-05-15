@@ -115,7 +115,8 @@ setGeneric <-
         if(is.null(implicit))
           {} # New function, go ahead
         else if(.identicalGeneric(fdef, implicit)) {
-        }  # go ahead (FIXME: Would like  fdef <- implicit, but there are subtle diff's)
+            fdef <- implicit
+        }  #go ahead silently
         else if(is.function(implicit)) {
             message(gettextf(
               "New generic for \"%s\" does not agree with implicit generic from package \"%s\"; a new generic will be assigned with package \"%s\"",
@@ -1190,6 +1191,7 @@ implicitGeneric <- function(...) NULL
           fdefault <- getFunction(name, where = where, mustFind = FALSE)
           if(is.null(fdefault))
             return(NULL)  # no implicit generic
+          env <- environment(fdefault) # the environment for an implicit generic table
           fdefault <- .derivedDefaultMethod(fdefault)
           if(is.primitive(fdefault)) {
               value <- genericForPrimitive(name)
@@ -1199,27 +1201,26 @@ implicitGeneric <- function(...) NULL
               package <- "base"
                }
           else
-            package <- getPackageName(environment(fdefault))
+            package <- getPackageName(env)
           ## look for a group
           if(identical(package,"base"))
             group <- .getImplicitGroup(name, .methodsNamespace)
           else
             group <- .getImplicitGroup(name, environment(fdefault))
           if(missing(generic)) {
-            generic <- .getImplicitGeneric(name, where, package)
-            if(is.null(generic)) {
+            generic <- .getImplicitGeneric(name, env, package)
+            if(is.null(generic))  { # make a new one
                 generic <- makeGeneric(name, fdefault = fdefault, package = package,
                                      group = group)
+                .cacheImplicitGeneric(name, generic)
             }
-            else #return value, don't save it again
-              return(generic)
           }
-          else
+          else {
             generic <- makeGeneric(name, generic, fdefault, package = package,
                                    group = group)
-
+            .cacheImplicitGeneric(name, generic)
+        }
       }
-      .saveToImplicitGenerics(name, generic, where)
       generic
   }
 
