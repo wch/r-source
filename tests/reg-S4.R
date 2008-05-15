@@ -402,3 +402,10 @@ stopifnot(dim(x) == c(1,1), is(tt, "ts"), is(t2, "ts"),
           length(tt) == length(t.),
           identical(tt2@x, t2), identical(tt2@y, t.))
 ## new(..) failed in R 2.7.0
+
+## Method with wrong argument order :
+setGeneric("test1", function(x, printit = TRUE, name = "tmp")
+           standardGeneric("test1"))
+assertError(
+setMethod("test1", "numeric", function(x, name, printit) match.call())
+)## did not give an error in R 2.7.0 and earlier

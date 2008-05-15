@@ -331,6 +331,9 @@ BUG FIXES
     o	pdf() and postscript() were not working correctly with UTF-8
 	encoded data in a non-UTF-8 MBCS (e.g. CJK locales on Windows).
 
+    o	conformMethod(), called by setMethod(), now checks better about
+	argument names in wrong order.
+
 
 
 		CHANGES IN R VERSION 2.7.0

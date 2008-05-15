@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-05-14 r45689)
+R version 2.8.0 Under development (unstable) (2008-05-15 r45692)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -665,4 +665,12 @@ include omitted arguments in definition: mode = "missing"
 +           length(tt) == length(t.),
 +           identical(tt2@x, t2), identical(tt2@y, t.))
 > ## new(..) failed in R 2.7.0
+> 
+> ## Method with wrong argument order :
+> setGeneric("test1", function(x, printit = TRUE, name = "tmp")
++            standardGeneric("test1"))
+[1] "test1"
+> assertError(
++ setMethod("test1", "numeric", function(x, name, printit) match.call())
++ )## did not give an error in R 2.7.0 and earlier
 > 
