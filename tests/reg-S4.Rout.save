@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-05-15 r45692)
+R version 2.8.0 Under development (unstable) (2008-05-15 r45703)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -282,6 +282,13 @@ Slot "y":
 > ## Now ensure that using group members gives error:
 > assertError <- function(expr)
 +     stopifnot(inherits(try(expr, silent = TRUE), "try-error"))
+> assertWarning <- function(expr)
++     stopifnot(inherits(tryCatch(expr, warning = function(w)w), "warning"))
+> assertWarning_atleast <- function(expr) {
++     r <- tryCatch(expr, warning = function(w)w, error = function(e)e)
++     stopifnot(inherits(r, "warning") || inherits(r, "error"))
++ }
+> 
 > assertError(b & b)
 Warning message:
 Ambiguous method selection for "&", target "brob#brob" (the first of the signatures shown will be used)
@@ -670,7 +677,7 @@ include omitted arguments in definition: mode = "missing"
 > setGeneric("test1", function(x, printit = TRUE, name = "tmp")
 +            standardGeneric("test1"))
 [1] "test1"
-> assertError(
+> assertWarning_atleast(
 + setMethod("test1", "numeric", function(x, name, printit) match.call())
-+ )## did not give an error in R 2.7.0 and earlier
++ )## did not warn or error in R 2.7.0 and earlier
 > 

@@ -179,6 +179,13 @@ setMethod("Logic", signature("ANY", "brob"), logic2)
 ## Now ensure that using group members gives error:
 assertError <- function(expr)
     stopifnot(inherits(try(expr, silent = TRUE), "try-error"))
+assertWarning <- function(expr)
+    stopifnot(inherits(tryCatch(expr, warning = function(w)w), "warning"))
+assertWarning_atleast <- function(expr) {
+    r <- tryCatch(expr, warning = function(w)w, error = function(e)e)
+    stopifnot(inherits(r, "warning") || inherits(r, "error"))
+}
+
 assertError(b & b)
 assertError(b | 1)
 assertError(TRUE & b)
@@ -406,6 +413,6 @@ stopifnot(dim(x) == c(1,1), is(tt, "ts"), is(t2, "ts"),
 ## Method with wrong argument order :
 setGeneric("test1", function(x, printit = TRUE, name = "tmp")
            standardGeneric("test1"))
-assertError(
+assertWarning_atleast(
 setMethod("test1", "numeric", function(x, name, printit) match.call())
-)## did not give an error in R 2.7.0 and earlier
+)## did not warn or error in R 2.7.0 and earlier
