@@ -285,7 +285,8 @@ conformMethod <- function(signature, mnames, fnames,
     label <- paste("In method for function \"", f,"\": ", sep="")
     omitted <- is.na(imf <- match(fnames, mnames))
     if(is.unsorted(imf[!omitted]))
-	stop(label,
+	## Should be an error, but the test was not triggering for such a long time :
+	warning(label,
 	     "formal arguments in method and function do not appear in the same order")
     if(!any(omitted)) ## i.e. mnames contains all fnames
         return(signature)
@@ -585,7 +586,7 @@ getGeneric <-
     }
     fdef
 }
-        
+
 
 ## copy the environments in the generic function so later merging into
 ## the cached generic will not modify the generic in the package.

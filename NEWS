@@ -332,7 +332,8 @@ BUG FIXES
 	encoded data in a non-UTF-8 MBCS (e.g. CJK locales on Windows).
 
     o	conformMethod(), called by setMethod(), now checks better about
-	argument names in wrong order.
+	argument names in wrong order.  Whereas it only warns currently,
+	it is planned to become be an error in the future.
 
 
 
