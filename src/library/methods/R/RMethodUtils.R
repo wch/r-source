@@ -343,7 +343,7 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
 
     ## Should not be needed, if conformMethod() has already been called:
     if(is.unsorted(imf[!is.na(imf)]))
-	stop("Arguments of method and generic are not in the same order")
+	warning("Arguments of method and generic are not in the same order")
 
     ## leave newCall as a list while checking the trailing args
     if(keepsDots && dotsPos < length(fnames)) {
@@ -435,7 +435,7 @@ getGeneric <-
     }
     ## do not search the cache if getGeneric() was called with explicit where=
     if(missing(where))
-      value <- .getGenericFromCache(f, where,  package)
+        value <- .getGenericFromCache(f, where,  package)
     else
         value <- NULL
     if(is.null(value)) {
