@@ -17,6 +17,7 @@ x \%/\% y
 \alias{+}
 \alias{-}
 \alias{*}
+\alias{**}
 \alias{/}
 \alias{^}
 \alias{\%\%}
@@ -95,6 +96,13 @@ x \%/\% y
   and so methods can be written for them individually as well as for the
   group generic (or the \code{Ops} group generic), with arguments
   \code{c(e1, e2)}.
+}
+\note{
+  \code{**} is translated in the parser to \code{^}, but this was
+  undocumented for many years.  It appears as an index entry in Becker
+  \emph{et al} (1988), pointing to the help for \code{Deprecated} but
+  is not actually mentioned on that page.  Even though it has been
+  deprecated in S for 20 years, it is still accepted.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
