@@ -598,14 +598,6 @@ for(p in list(c(1,2,5), 1:3, 3:1, 2:0, 0:2, c(1,2,1), c(0,0,1))) {
 ## end of moved from Multinom.Rd
 
 
-## plot.lm
-# which=4 failed in R 1.0.1
-par(mfrow=c(1,1), oma= rep(0,4))
-summary(lm.fm2 <- lm(Employed ~ . - Population - GNP.deflator, data = longley))
-for(wh in 1:6) plot(lm.fm2, which = wh)
-## end of moved from plot.lm.Rd
-
-
 ## Poisson
 dpois(c(0, 1, 0.17, 0.77), 1)
 ## end of moved from Poisson.Rd
@@ -3890,8 +3882,10 @@ stopifnot(is.nan(rstandard(Uniform)[Ind]),
           is.nan(covratio (Uniform)[Ind]),
           is.nan(cooks.distance(Uniform)[Ind]))
 ## had infinities in 2.2.0 on some platforms
+## plot.lm() on <glm> objects:
 plot(Uniform)
 plot(Uniform, 6) # added 2006-01-10
+plot(Uniform, 5:6)# failed for a few days 2008-05
 ##
 
 
@@ -4141,6 +4135,12 @@ sum(DF, DF) # failed
 DF[1, 1] <- NA
 stopifnot(is.na(sum(DF)), sum(DF, na.rm=TRUE) == 9)
 ## failures < 2.4.0
+
+## plot.lm
+# which=4 failed in R 1.0.1
+par(mfrow=c(1,1), oma= rep(0,4))
+summary(lm.fm2 <- lm(Employed ~ . - Population - GNP.deflator, data = longley))
+for(wh in 1:6) plot(lm.fm2, which = wh)
 
 op <- par(mfrow = c(2,2), mar = .1+c(3,3,2,1), mgp = c(1.5, .6, 0))
 y <- rt(200, df= 3)

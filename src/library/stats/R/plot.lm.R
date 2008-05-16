@@ -19,15 +19,14 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	  caption = list("Residuals vs Fitted", "Normal Q-Q",
 	  "Scale-Location", "Cook's distance",
 	  "Residuals vs Leverage",
-          expression("Cook's distance vs Leverage  " *
-                 h[ii] / (1 - h[ii]))),
+	  expression("Cook's dist vs Leverage  " * h[ii] / (1 - h[ii]))),
 	  panel = if(add.smooth) panel.smooth else points,
-          sub.caption = NULL, main = "",
+	  sub.caption = NULL, main = "",
 	  ask = prod(par("mfcol")) < length(which) && dev.interactive(), ...,
 	  id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
-          qqline = TRUE, cook.levels = c(0.5, 1.0),
-          add.smooth = getOption("add.smooth"),
-          label.pos = c(4,2), cex.caption = 1)
+	  qqline = TRUE, cook.levels = c(0.5, 1.0),
+	  add.smooth = getOption("add.smooth"),
+	  label.pos = c(4,2), cex.caption = 1)
 {
     if (!inherits(x, "lm"))
 	stop("use only with \"lm\" objects")
@@ -77,7 +76,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
     }
     if (any(show[c(2:3,5)]))
 	rs <- dropInf( r.w/(s * sqrt(1 - hii)) )
-    else if(show[6])
+    if(show[6])
 	g <- dropInf( hii/(1-hii) )
 
     if (any(show[5:6])) { # using 'leverages'

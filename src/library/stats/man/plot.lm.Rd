@@ -9,9 +9,10 @@
 \title{Plot Diagnostics for an lm Object}
 \usage{
 \method{plot}{lm}(x, which = c(1:3,5), %% was which = 1:4
-     caption = c("Residuals vs Fitted", "Normal Q-Q",
+     caption = list("Residuals vs Fitted", "Normal Q-Q",
           "Scale-Location", "Cook's distance",
-          "Residuals vs Leverage", "Cook's distance vs Leverage"),
+          "Residuals vs Leverage",
+	  expression("Cook's dist vs Leverage  " * h[ii] / (1 - h[ii]))),
      panel = if(add.smooth) panel.smooth else points,
      sub.caption = NULL, main = "",
      ask = prod(par("mfcol")) < length(which) && dev.interactive(),
@@ -26,7 +27,10 @@
     \code{\link{glm}}.}
   \item{which}{if a subset of the plots is required, specify a subset of
     the numbers \code{1:6}.}
-  \item{caption}{captions to appear above the plots}
+  \item{caption}{captions to appear above the plots;
+    \code{\link{character}} vector or \code{\link{list}} of valid
+    graphics annotations, see \code{\link[grDevices]{as.graphicsAnnot}}.
+  }
   \item{panel}{panel function.  The useful alternative to
     \code{\link{points}}, \code{\link{panel.smooth}} can be chosen
     by \code{add.smooth = TRUE}.}
