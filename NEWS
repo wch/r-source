@@ -331,12 +331,16 @@ BUG FIXES
     o	plot(<glm>, which=5) uses more correct Cook's distance contours;
 	(fix to fix to PR#9316).
 
-    o	pdf() and postscript() were not working correctly with UTF-8
-	encoded data in a non-UTF-8 MBCS (e.g. CJK locales on Windows).
+    o	pdf() and postscript() were not working correctly in 2.7.0 with
+	UTF-8 encoded data in a non-UTF-8 MBCS (e.g. EUC-JP on Unix,
+	CJK locales on Windows).
 
     o	conformMethod(), called by setMethod(), now checks better about
 	argument names in wrong order.  Whereas it only warns currently,
 	it is planned to become be an error in the future.
+
+    o	The predict() method for prcomp() had an incorrect check for
+	the number of columns of 'newdata' if the columns were not named.
 
 
 

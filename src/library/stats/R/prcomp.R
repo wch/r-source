@@ -119,14 +119,13 @@ predict.prcomp <- function(object, newdata, ...)
     }
     if(length(dim(newdata)) != 2L)
         stop("'newdata' must be a matrix or data frame")
-    p <- NCOL(object$rotation)
     nm <- rownames(object$rotation)
     if(!is.null(nm)) {
         if(!all(nm %in% colnames(newdata)))
             stop("'newdata' does not have named columns matching one or more of the original columns")
         newdata <- newdata[, nm, drop = FALSE]
     } else {
-        if(NCOL(newdata) != p)
+        if(NCOL(newdata) != NROW(object$rotation) )
             stop("'newdata' does not have the correct number of columns")
     }
     ## next line does as.matrix
