@@ -119,6 +119,9 @@ NEW FEATURES
 	dimnames(x)[[1]] <- 1:3 to work whether or not 'x' already has
 	dimnames.
 
+    o	Box.test() gains a 'fitdf' argument to adjust the degrees of
+	freedom if applied to residuals.
+
 
 PACKAGE INSTALLATION
 

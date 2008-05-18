@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-Box.test <- function (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"))
+Box.test <- function (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"), fitdf=0)
 {
     if (NCOL(x) > 1)
         stop ("x is not a vector or univariate time series")
@@ -28,13 +28,13 @@ Box.test <- function (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"))
     {
         METHOD <- "Box-Pierce test"
         STATISTIC <- n*sum(obs^2)
-        PVAL <- 1-pchisq(STATISTIC,lag)
+        PVAL <- 1-pchisq(STATISTIC, lag-fitdf)
     }
     else
     {
         METHOD <- "Box-Ljung test"
         STATISTIC <- n*(n+2)*sum(1/seq.int(n-1, n-lag)*obs^2)
-        PVAL <- 1-pchisq(STATISTIC,lag)
+        PVAL <- 1-pchisq(STATISTIC, lag-fitdf)
     }
     names(STATISTIC) <- "X-squared"
     names(PARAMETER) <- "df"
