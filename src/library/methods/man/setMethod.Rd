@@ -317,7 +317,7 @@ removeMethods("\%*\%")
 
 removeMethods("plot")
 
-stopifnot(existsFunction("plot", FALSE) && !isGeneric("plot", 1))
+## Hold until removeMethods revised: stopifnot(existsFunction("plot", FALSE) && !isGeneric("plot", 1))
 
 ## methods for plotData
 plotData <- function(x, y, ...) plot(x, y, ...)
