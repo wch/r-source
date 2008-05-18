@@ -766,24 +766,33 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
             if(attach) {
                 env <- as.environment(where)
                 ## All instances of this generic in different attached packages must
-                ## be the cached version of the generic for consistent
+                ## agree with the cached version of the generic for consistent
                 ## method selection.
                 if(exists(f, envir = env, inherits = FALSE)) {
-                    fdef <- .genericOrImplicit(f, fpkg, env)
                     def <- get(f, envir = env)
-                    if(!identical(def, fdef) && is(fdef, "genericFunction")) {
-                        .assignOverBinding(f, fdef,  env, FALSE)
-                    }
+                    fdef <- .genericOrImplicit(f, fpkg, env)
+                    if(is.function(def)) {
+                        ## exclude a non-function of the same name as a primitive with methods (!)
+                        if(identical(environment(def), environment(fdef)))
+                          next # the methods are identical
+                        else if( is(fdef, "genericFunction")) {
+                            .assignOverBinding(f, fdef,  env, FALSE)
+                        }
+                    } # else, go ahead to update primitive methods
                 }
                 else # either imported generic or a primitive
                   fdef <- getGeneric(f, FALSE, searchWhere, fpkg)
             }
+            else
+              fdef <- getGeneric(f, FALSE, searchWhere, fpkg)
         }
         else
           fdef <- getGeneric(f, FALSE, searchWhere, fpkg)
         if(!is(fdef, "genericFunction"))
           next ## silently ignores all generics not visible from searchWhere
-        if(!attach)
+        if(attach)
+          .cacheGeneric(f, fdef)
+        else
           .uncacheGeneric(f, fdef)
         methods <- .updateMethodsInTable(fdef, where, attach)
         cacheGenericsMetaData(f, fdef, attach, where, fdef@package, methods)
@@ -1429,3 +1438,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
           as.environment(i)
     }
 }
+
+.hasS4MetaData <- function(env)
+  (length(objects(env, all.names = TRUE,
+                          pattern = "^[.]__[CT]_")))
