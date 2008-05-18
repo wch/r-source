@@ -1,10 +1,12 @@
 % File src/library/stats/man/HoltWinters.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{HoltWinters}
 \alias{HoltWinters}
+\alias{print.HoltWinters}
+\alias{residuals.HoltWinters}
 \title{Holt-Winters Filtering}
 \description{
   Computes Holt-Winters Filtering of a given time series.
@@ -14,33 +16,35 @@
 \usage{
 HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
             seasonal = c("additive", "multiplicative"),
-            start.periods = 3, l.start = NULL, b.start = NULL,
+            start.periods = 2, l.start = NULL, b.start = NULL,
             s.start = NULL,
             optim.start = c(alpha = 0.3, beta = 0.1, gamma = 0.1),
             optim.control = list())
 }
 \arguments{
   \item{x}{An object of class \code{ts}}
-  \item{alpha}{\eqn{alpha} parameter of Holt-Winters Filter}
+  \item{alpha}{\eqn{alpha} parameter of Holt-Winters Filter.}
   \item{beta}{\eqn{beta} parameter of Holt-Winters Filter. If set to 0,
     the function will do exponential smoothing.}
   \item{gamma}{\eqn{gamma} parameter used for the seasonal component.
     If set to 0, an non-seasonal model is fitted.}
-  \item{seasonal}{Character string to select an \code{"additive"} 
+  \item{seasonal}{Character string to select an \code{"additive"}
     (the default) or \code{"multiplicative"} seasonal model. The first
-    few characters are sufficient. (Only takes effect if 
+    few characters are sufficient. (Only takes effect if
     \code{gamma} is non-zero).}
   \item{start.periods}{Start periods used in the autodetection of start
-    values. Must be at least 3.}
+    values. Must be at least 2.}
   \item{l.start}{Start value for level (a[0]).}
   \item{b.start}{Start value for trend (b[0]).}
   \item{s.start}{Vector of start values for the seasonal component
     (\eqn{s_1[0]...s_p[0]}{s_1[0]...s_p[0]})}
   \item{optim.start}{Vector with named components \code{alpha},
     \code{beta}, and \code{gamma} containing the starting values for the
-    optimizer. Only the values needed must be specified.}
+    optimizer. Only the values needed must be specified.  Ignored in the
+    one-parameter case.}
   \item{optim.control}{Optional list with additional control parameters
-    passed to \code{optim}.}
+    passed to \code{optim} if this is used.  Ignored in the
+    one-parameter case.}
 }
 \details{
   The additive Holt-Winters prediction function (for time series with
@@ -69,9 +73,11 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
 
   The function tries to find the optimal values of \eqn{\alpha} and/or
   \eqn{\beta} and/or \eqn{\gamma} by minimizing the squared
-  one-step prediction error if they are omitted.
+  one-step prediction error if they are omitted. \code{optimize} will be
+  used for the univariate case, and \code{optim} else.
 
-  For seasonal models, start values for \code{a}, \code{b} and \code{s} are detected by
+  For seasonal models, start values for \code{a}, \code{b} and \code{s}
+  are detected by
   performing a simple decomposition in trend and seasonal component using
   moving averages (see function \code{decompose}) on the
   \code{start.periods} first periods (a simple linear regression on the
@@ -101,7 +107,7 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
   C. C. Holt (1957)
   Forecasting seasonals and trends by exponentially weighted
   moving averages,
-  ONR Research Memorandum, Carnigie Institute 52.
+  \emph{ONR Research Memorandum, Carnigie Institute} \bold{52}.
 
   P. R. Winters (1960)
   Forecasting sales by exponentially weighted moving averages,

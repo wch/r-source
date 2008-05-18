@@ -22,7 +22,7 @@ function (x,
           beta     = NULL, # trend
           gamma    = NULL, # seasonal component
           seasonal = c("additive", "multiplicative"),
-          start.periods = 3,
+          start.periods = 2,
 
           # starting values
           l.start  = NULL, # level
@@ -45,9 +45,9 @@ function (x,
         stop ("'alpha', 'beta' and 'gamma' must be within the unit interval.")
     if((is.null(gamma) || gamma > 0)) {
         if (seasonal == "multiplicative" && any(x <= 0))
-            stop ("data must be strictly non-negative for multiplicative Holt-Winters")
-        if (start.periods < 3)
-            stop ("need at least 3 periods to compute seasonal start values")
+            stop ("data must be strictly non-negative for multiplicative Holt-Winters.")
+        if (start.periods < 2)
+            stop ("need at least 2 periods to compute seasonal start values.")
     }
 
     ## initialization
@@ -146,11 +146,7 @@ function (x,
         ## !optimize beta
           ## --> optimize gamma
           error <- function (p) hw(alpha, beta, p)$SSE
-          sol   <- optim(optim.start["gamma"],
-                         error, method = "L-BFGS-B",
-                         lower = 0, upper = 1,
-                         control = optim.control)
-          gamma <- sol$par
+          gamma <- optimize(error, lower = 0, upper = 1)$minimum
         }
       }
     } else {
@@ -171,9 +167,7 @@ function (x,
         ## !optimize beta
           ## --> optimize alpha
           error <- function (p) hw(p, beta, gamma)$SSE
-          sol   <- optim(optim.start["alpha"], error, method = "L-BFGS-B",
-                         lower = 0, upper = 1, control = optim.control)
-          alpha <- sol$par
+          alpha <- optimize(error, lower = 0, upper = 1)$minimum
         }
       } else {
       ## !optimize alpha
@@ -181,9 +175,7 @@ function (x,
         ## optimize beta
           ## --> optimize beta
           error <- function (p) hw(alpha, p, gamma)$SSE
-          sol   <- optim(optim.start["beta"], error, method = "L-BFGS-B",
-                         lower = 0, upper = 1, control = optim.control)
-          beta  <- sol$par
+          beta <- optimize(error, lower = 0, upper = 1)$minimum
         } ## else optimize nothing!
       }
     }
@@ -327,62 +319,70 @@ print.HoltWinters <- function (x, ...)
 }
 
 # decompose additive/multiplicative series into trend/seasonal figures/noise
-decompose <- function (x, type = c("additive", "multiplicative"), filter = NULL)
+decompose <-
+function (x, type = c("additive", "multiplicative"), filter = NULL)
 {
     type <- match.arg(type)
     l <- length(x)
     f <- frequency(x)
-    if (f <= 1 || length(na.omit(x)) < 3 * f)
-      stop ("time series has no or less than 3 periods")
+    if (f <= 1 || length(na.omit(x)) < 2 * f)
+        stop("time series has no or less than 2 periods")
 
     ## filter out seasonal components
     if (is.null(filter))
-      filter <- if (!f %% 2)
-        c(0.5, rep(1, f - 1), 0.5) / f
-      else
-        rep(1, f) / f
-
+        filter <- if (!f %% 2)
+            c(0.5, rep(1, f - 1), 0.5) / f
+        else
+            rep(1, f) / f
     trend <- filter(x, filter)
 
     ## compute seasonal components
-    season <- if (type == "additive") x - trend else x / trend
+    season <- if (type == "additive")
+        x - trend
+    else
+        x / trend
 
-    ## remove incomplete seasons at beginning/end
-    season <- window(season, start(x) + c(1, 0), c(end(x)[1] - 1, f))
+    ## rearrange seasons at beginning/end
+    season <- na.omit(c(as.numeric(window(season,
+                                          start(x) + c(1, 0),
+                                          end(x))),
+                        as.numeric(window(season,
+                                          start(x),
+                                          start(x) + c(0, f))))
+                      )
 
     ## average seasonal figures
-    periods <- l %/% f
-    index <- c(0, cumsum(rep (f, periods - 3)))
+    periods <- l%/%f
+    index <- c(0, cumsum(rep(f, periods - 2)))
     figure <- numeric(f)
     for (i in 1:f) figure[i] <- mean(season[index + i])
 
     ## normalize figure
-    figure <- if (type == "additive") figure - mean(figure)
+    figure <- if (type == "additive")
+        figure - mean(figure)
     else figure / mean(figure)
 
-    ## return values
     seasonal <- ts(rep(figure, periods), start = start(x), frequency = f)
 
-    structure(
-              list(seasonal = seasonal,
-                   trend    = trend,
-                   random   = if (type == "additive")
-                      x - seasonal - trend
+    ## return values
+    structure(list(seasonal = seasonal,
+                   trend = trend,
+                   random = if (type == "additive")
+                       x - seasonal - trend
                    else
-                      x / seasonal / trend,
-                   figure   = figure,
-                   type     = type
-                   ),
-              class = "decomposed.ts"
-              )
+                       x / seasonal / trend,
+                   figure = figure,
+                   type = type),
+              class = "decomposed.ts")
 }
 
 plot.decomposed.ts <- function(x, ...)
 {
     plot(cbind(
-               observed = x$random +
-               if (x$type == "additive") x$trend + x$seasonal
-               else x$trend * x$seasonal,
+               observed = if (x$type == "additive")
+                 x$random + x$trend + x$seasonal
+               else
+                 x$random * x$trend * x$seasonal,
                trend    = x$trend,
                seasonal = x$seasonal,
                random   = x$random

@@ -122,6 +122,10 @@ NEW FEATURES
     o	Box.test() gains a 'fitdf' argument to adjust the degrees of
 	freedom if applied to residuals.
 
+    o	HoltWinters() and decompose() use a (statistically) more
+	efficient computation for seasonal fits (they used to waste
+	one period).
+
 
 PACKAGE INSTALLATION
 
@@ -238,6 +242,9 @@ NEW FEATURES
     o	The DESCRIPTION file of a package can specify an 'OS_type' field
 	as either 'unix' or 'windows' to confine installation to that
 	OS type.
+
+    o	HoltWinters() now uses optimize() rather than optim for
+    	one-parameter problems which should be more reliable (PR#11469).
 
 
 DEPRECATED & DEFUNCT
