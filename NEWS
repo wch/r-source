@@ -332,6 +332,16 @@ BUG FIXES
 
     o	plot(<table>) now uses a sensible default main title.
 
+    o	validObject() called with complete=TRUE did not use inherited
+	validity methods for slot classes.
+
+    o	Several bugs fixed in as(): the initial method lookup was not
+	using the table with inherited methods (so inheritance had to
+	be recomputed each time); coerce() should not be called
+	directly--it can insert invalid inherited methods; the
+	constructed as() methods were not retaining the function's
+	environment.
+
     o	influence.measures(<glm-object>) now computes the same
     	Cook's distance approximations as cooks.distance().
 
