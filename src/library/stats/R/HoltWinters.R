@@ -146,11 +146,7 @@ function (x,
         ## !optimize beta
           ## --> optimize gamma
           error <- function (p) hw(alpha, beta, p)$SSE
-          sol   <- optim(optim.start["gamma"],
-                         error, method = "L-BFGS-B",
-                         lower = 0, upper = 1,
-                         control = optim.control)
-          gamma <- sol$par
+          gamma <- optimize(error, lower = 0, upper = 1)$minimum
         }
       }
     } else {
@@ -171,9 +167,7 @@ function (x,
         ## !optimize beta
           ## --> optimize alpha
           error <- function (p) hw(p, beta, gamma)$SSE
-          sol   <- optim(optim.start["alpha"], error, method = "L-BFGS-B",
-                         lower = 0, upper = 1, control = optim.control)
-          alpha <- sol$par
+          alpha <- optimize(error, lower = 0, upper = 1)$minimum
         }
       } else {
       ## !optimize alpha
@@ -181,9 +175,7 @@ function (x,
         ## optimize beta
           ## --> optimize beta
           error <- function (p) hw(alpha, p, gamma)$SSE
-          sol   <- optim(optim.start["beta"], error, method = "L-BFGS-B",
-                         lower = 0, upper = 1, control = optim.control)
-          beta  <- sol$par
+          beta <- optimize(error, lower = 0, upper = 1)$minimum
         } ## else optimize nothing!
       }
     }

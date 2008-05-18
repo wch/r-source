@@ -32,6 +32,9 @@ NEW FEATURES
 	as either 'unix' or 'windows' to confine installation to that
 	OS type.
 
+    o	HoltWinters() now uses optimize() rather than optim for
+    	one-parameter problems which should be more reliable (PR#11469).
+
 
 DEPRECATED & DEFUNCT
 
@@ -106,6 +109,8 @@ BUG FIXES
     o	Rare string width calculations in package grid were not
     	interpreting the string encoding correctly.
 
+    o	hasMethods(f, env) {without specified 'package'} now works better.
+
     o	A missing PROTECT could cause segfaults on string
 	comparisons.  (PR#11421)
 
@@ -114,28 +119,33 @@ BUG FIXES
     o	A missing PROTECT could cause segfaults in if() if coercion of
     	the condition was required or a warning was to be given.
 
-    o	validObject called with complete=TRUE did not use inherited
-        validity methods for slot classes.
+    o	validObject() called with complete=TRUE did not use inherited
+	validity methods for slot classes.
 
-    o	several bugs fixed in as():  the initial method lookup was not using
-        the table with inherited methods (so inheritance had to be
-        recomputed each time); coerce() should not be called directly--it
-        can insert invalid inherited methods; the constructed as()
-        methods were not retaining the function's environment.
+    o	Several bugs fixed in as(): the initial method lookup was not
+	using the table with inherited methods (so inheritance had to
+	be recomputed each time); coerce() should not be called
+	directly--it can insert invalid inherited methods; the
+	constructed as() methods were not retaining the function's
+	environment.
 
     o	influence.measures(<glm-object>) now computes the same
     	Cook's distance approximations as cooks.distance().
 
-    o	plot(<glm>, which=5) uses more correct cook's distance contours;
+    o	plot(<glm>, which=5) uses more correct Cook's distance contours;
 	(fix to fix to PR#9316).
 
     o	pdf() and postscript() were not working correctly in 2.7.0 with
 	UTF-8 encoded data in a non-UTF-8 MBCS (e.g. EUC-JP on Unix,
 	CJK locales on Windows).
 
+    o	conformMethod(), called by setMethod(), now checks better about
+	argument names in wrong order.  Whereas it only warns currently,
+	it is planned to become be an error in the future.
 
     o	The predict() method for prcomp() had an incorrect check for
 	the number of columns of 'newdata' if the columns were not named.
+
 
 
 		CHANGES IN R VERSION 2.7.0
