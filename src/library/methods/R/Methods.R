@@ -161,7 +161,7 @@ setGeneric <-
     }
     if(doUncache)
       .uncacheGeneric(name, oldDef)
-    groups = fdef@group
+    groups <- fdef@group
     for(group in groups) { # add as member of group generic(s) if not there
         gdef <- getGeneric(group)
         if(is(gdef, "groupGenericFunction") &&
@@ -292,15 +292,14 @@ getMethods <-
         stop(gettextf("invalid argument \"f\", expected a function or its name, got an object of class \"%s\"",
                       class(f)), domain = NA)
     if(!is.null(fdef)) {
-        if(nowhere) {
-            if(is(fdef, "genericFunction"))
-              value <- .makeMlistFromTable(fdef)
-            else
-              value <- NULL
-        }
-        else
-          value <- getMethodsMetaData(f, where = where)
-        if(is.null(value))              # return empty methods list
+        value <-
+            if(nowhere) {
+                if(is(fdef, "genericFunction"))
+                    .makeMlistFromTable(fdef) # else NULL
+            }
+            else getMethodsMetaData(f, where = where)
+
+        if(is.null(value)) ## return empty methods list
             new("MethodsList", argument = fdef@default@argument)
         else
             value
@@ -374,19 +373,19 @@ cacheMethod <-
 
 
 setMethod <-
-## Define a method for the specified combination of generic function and signature.
-## The method is stored in the methods meta-data of the specified database.
-  ##
-  ## Note that assigning methods anywhere but the global environment (`where==1') will
-  ## not have a permanent effect beyond the current R session.
-  function(f, signature = character(), definition, where = topenv(parent.frame()), valueClass = NULL,
-           sealed = FALSE)
+    ## Define a method for the specified combination of generic function and signature.
+    ## The method is stored in the methods meta-data of the specified database.
+    ##
+    ## Note that assigning methods anywhere but the global environment (`where==1') will
+    ## not have a permanent effect beyond the current R session.
+    function(f, signature = character(), definition,
+	     where = topenv(parent.frame()), valueClass = NULL,
+	     sealed = FALSE)
 {
-
-    ischar <- try(is.character(f), silent = TRUE)
-    funcName = if (inherits(ischar, "try-error")) deparse(substitute(f)) else f
+    ischar <- tryCatch(is.character(f), error = NULL)
+    funcName <- if(is.null(ischar)) deparse(substitute(f)) else f
     if(is(funcName, "standardGeneric") || is(funcName, "MethodDefinition"))
-       funcName = funcName@generic
+	funcName <- funcName@generic
 
     ## Methods are stored in metadata in database where.  A generic function will be
     ## assigned if there is no current generic, and the function is NOT a primitive.
@@ -399,12 +398,12 @@ setMethod <-
         gwhere <- .genEnv(f)
     }
     else if(is.function(f)) {
-          if(is.primitive(f)) {
+        if(is.primitive(f)) {
             f <- .primname(f)
             fdef <- genericForPrimitive(f)
             gwhere <- .genEnv(f)
-         }
-          else
+        }
+        else
             stop("A function for argument \"f\" must be a generic function")
     }
     ## slight subtlety:  calling getGeneric vs calling isGeneric
@@ -426,7 +425,7 @@ setMethod <-
     if(identical(gwhere, baseenv())) {
         allWhere <- findFunction(f, where = where)
         generics <-logical(length(allWhere))
-        if(length(allWhere)>0) { # put methods into existing generic
+        if(length(allWhere) > 0) { # put methods into existing generic
             for(i in seq_along(allWhere)) {
                 fi <- get(f, allWhere[[i]])
                 geni <- is(fi, "genericFunction")
@@ -455,10 +454,10 @@ setMethod <-
         }
     }
     if(!hasMethods)
-      fdef <- deflt
+        fdef <- deflt
     if(is.null(fdef))
-      stop(gettextf("no existing definition for function \"%s\"", f),
-           domain = NA)
+        stop(gettextf("no existing definition for function \"%s\"", f),
+             domain = NA)
     if(!hasMethods) {
         ## create using the visible non-generic as a pattern and default method
         setGeneric(f, where = where)
@@ -477,72 +476,75 @@ setMethod <-
             stop(gettextf("apparent internal error: a generic function was found for \"%s\", but no corresponding object was found searching from \"%s\"",
                           f, getPackageName(where)), domain = NA)
         if(!isGeneric(f))
-          setGeneric(f) #  turn on this generic and cache it.
+            setGeneric(f) # turn on this generic and cache it.
     }
     if(isSealedMethod(f, signature, fdef, where=where))
         stop(gettextf("the method for function \"%s\" and signature %s is sealed and cannot be re-defined",
                       f, .signatureString(fdef, signature)), domain = NA)
     signature <- matchSignature(signature, fdef, where)
     switch(typeof(definition),
-           closure = {
-               fnames <- formalArgs(fdef)
-               mnames <- formalArgs(definition)
-               ## fix up arg name for single-argument generics
-               ## useful for e.g. '!'
-               if(!identical(mnames, fnames) &&
-                  length(fnames) == length(mnames) && length(mnames) == 1) {
-                   warning(gettextf("argument in method definition changed from (%s) to (%s)",
-                                    mnames, fnames), domain = NA, call. = FALSE)
-                   formals(definition) <- formals(fdef)
-                   ll <- list(as.name(formalArgs(fdef))); names(ll) <- mnames
-                   body(definition) <- substituteDirect(body(definition), ll)
-                   mnames <- fnames
-               }
-               if(!identical(mnames, fnames)) {
-                   ## omitted classes in method => "missing"
-                   fullSig <- conformMethod(signature, mnames, fnames, f, fdef, definition)
-                   if(!identical(fullSig, signature)) {
-                       formals(definition, envir = environment(definition)) <- formals(fdef)
-                       signature <- fullSig
-                   }
-                   ## extra classes in method => use "..." to rematch
-                   definition <- rematchDefinition(definition, fdef, mnames, fnames, signature)
-               }
-               definition <- matchDefaults(definition, fdef) # use generic's defaults if none in method
-           },
-           builtin = , special = {
-             ## the only primitive methods allowed are those equivalent
-             ## to the default, for generics that were primitives before
-             ## and will be dispatched by C code.
-             if(!identical(definition, deflt))
-                stop("primitive functions cannot be methods; they must be enclosed in a regular function")
-           },
-           "NULL" = {
+	   "closure" = {
+	       fnames <- formalArgs(fdef)
+	       mnames <- formalArgs(definition)
+	       if(!identical(mnames, fnames)) {
+		   ## fix up arg name for single-argument generics
+		   ## useful for e.g. '!'
+		   if(length(fnames) == length(mnames) && length(mnames) == 1) {
+		       warning(gettextf("argument in method definition changed from (%s) to (%s)",
+					mnames, fnames), domain = NA, call. = FALSE)
+		       formals(definition) <- formals(fdef)
+		       ll <- list(as.name(formalArgs(fdef))); names(ll) <- mnames
+		       body(definition) <- substituteDirect(body(definition), ll)
+		       mnames <- fnames
+		   }
+		   else {
+		       ## omitted arguments (classes) in method => "missing"
+		       fullSig <- conformMethod(signature, mnames, fnames, f, fdef, definition)
+		       if(!identical(fullSig, signature)) {
+			   formals(definition, envir = environment(definition)) <- formals(fdef)
+			   signature <- fullSig
+		       }
+		       ## extra arguments (classes) in method => use "..." to rematch
+		       definition <- rematchDefinition(definition, fdef, mnames, fnames, signature)
+		   }
+	       }
+	       definition <- matchDefaults(definition, fdef) # use generic's defaults if none in method
+	   },
+	   "builtin" = , "special" = {
+	       ## the only primitive methods allowed are those equivalent
+	       ## to the default, for generics that were primitives before
+	       ## and will be dispatched by C code.
+	       if(!identical(definition, deflt))
+		   stop("primitive functions cannot be methods; they must be enclosed in a regular function")
+	   },
+	   "NULL" = {
 
-           },
-           stop(gettextf("invalid method definition: expected a function, got an object of class \"%s\"",
-                         class(definition)), domain = NA)
-           )
+	   },
+	   stop(gettextf("invalid method definition: expected a function, got an object of class \"%s\"",
+			 class(definition)), domain = NA)
+	   )
     fenv <- environment(fdef)
     ## check length against active sig. length, reset if necessary in .addToMetaTable
     nSig <- .getGenericSigLength(fdef, fenv, TRUE)
     signature <- .matchSigLength(signature, fdef, fenv, TRUE)
-    margs  <- (fdef@signature)[1:length(signature)]
+    margs <- (fdef@signature)[seq_along(signature)]
     definition <- asMethodDefinition(definition, signature, sealed, funcName)
     if(is(definition, "MethodDefinition"))
-      definition@generic <- fdef@generic
-    whereMethods <- .getOrMakeMethodsList(f, where, fdef)
-    whereMethods <- insertMethod(whereMethods, signature, margs, definition)
+        definition@generic <- fdef@generic
+    is.not.base <- !identical(where, baseenv())
+    if(is.not.base)
+        whereMethods <- insertMethod(.getOrMakeMethodsList(f, where, fdef),
+                                     signature, margs, definition)
     allMethods <- getMethodsForDispatch(fdef)
-        ## cache in both direct and inherited tables
-      .cacheMethodInTable(fdef, signature, definition, allMethods) #direct
-      .cacheMethodInTable(fdef, signature, definition) # inherited, by default
-      if(!identical(where, baseenv()))
-         .addToMetaTable(fdef, signature, definition,where, nSig)
+    ## cache in both direct and inherited tables
+    .cacheMethodInTable(fdef, signature, definition, allMethods) #direct
+    .cacheMethodInTable(fdef, signature, definition) # inherited, by default
+    if(is.not.base)
+        .addToMetaTable(fdef, signature, definition, where, nSig)
     resetGeneric(f, fdef, allMethods, gwhere, deflt) # Note: gwhere not used by resetGeneric
     ## assigns the methodslist object
     ## and deals with flags for primitives & for updating group members
-    if(!identical(where, baseenv()))
+    if(is.not.base)
         assignMethodsMetaData(f, whereMethods, fdef, where, deflt)
     f
 }
@@ -1331,45 +1333,50 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
 
 .identicalGeneric <- function(f1, f2) {
     gpString <- function(gp) {
-        if(length(gp) > 0)
-              paste(as.character(gp), collapse = ", ")
-        else
-          "<none>"
+	if(length(gp) > 0)
+	    paste(as.character(gp), collapse = ", ")
+	else
+	    "<none>"
     }
     if(identical(f2, FALSE))
-      return("Original function is prohibited as a generic function")
+	return("Original function is prohibited as a generic function")
     if(!(is.function(f2) && is.function(f1)))
-      return("not both functions!")
+	return("not both functions!")
     if(isS4(f2))
-      f2d <- f2@.Data
+	f2d <- f2@.Data
     if(isS4(f1))
-      f1d <- f1@.Data
+	f1d <- f1@.Data
     ## environments will be different
     if(!identical(class(f1), class(f2)))
-      return(sprintf("Classes: \"%s\", \"%s\"", class(f1), class(f2)))
+	return(sprintf("Classes: \"%s\", \"%s\"", class(f1), class(f2)))
     if(!identical(formals(f1d), formals(f2d))) {
-        a1 = names(formals(f1d)); a2 = names(formals(f2d))
-        if(identical(a1, a2))
-          return("Formal arguments differ (in default values?)")
-        else
-          return(sprintf("Formal arguments differ: (%s), (%s)",
-                         paste(a1, collapse = ", "), paste(a2, collapse = ", ")))
+	a1 <- names(formals(f1d)); a2 <- names(formals(f2d))
+	if(identical(a1, a2))
+	    return("Formal arguments differ (in default values?)")
+	else
+	    return(sprintf("Formal arguments differ: (%s), (%s)",
+			   paste(a1, collapse = ", "), paste(a2, collapse = ", ")))
     }
     if(!identical(f1@valueClass, f2@valueClass))
-      return(sprintf("Value classes differ: \"%s\", \"%s\"", gpString(f1@valueClass), gpString(f2@valueClass)))
+	return(sprintf("Value classes differ: \"%s\", \"%s\"",
+		       gpString(f1@valueClass), gpString(f2@valueClass)))
     if(!identical(body(f1d), body(f2d)))
-       return("Function body differs")
+	return("Function body differs")
     if(!identical(f1@signature, f2@signature))
-      return(sprintf("Signatures differ:  (%s), (%s)",
-                         paste(f1@signature, collapse = ", "), paste(f2@signature, collapse = ", ")))
+	return(sprintf("Signatures differ:  (%s), (%s)",
+		       paste(f1@signature, collapse = ", "),
+		       paste(f2@signature, collapse = ", ")))
     if(!identical(f1@package, f2@package))
-      return(sprintf("Package slots  differ: \"%s\", \"%s\"", gpString(f1@package), gpString(f2@package)))
+	return(sprintf("Package slots  differ: \"%s\", \"%s\"",
+		       gpString(f1@package), gpString(f2@package)))
     if(!identical(f1@group, f2@group)) {
-      return(sprintf("Groups differ: \"%s\", \"%s\"", gpString(f1@group), gpString(f2@group)))
-  }
+	return(sprintf("Groups differ: \"%s\", \"%s\"",
+		       gpString(f1@group), gpString(f2@group)))
+    }
     if(!identical(as.character(f1@generic), as.character(f2@generic)))
-      return(sprintf("Generic names differ: \"%s\", \"%s\"", f1@generic, f2@generic))
-     return(TRUE)
+	return(sprintf("Generic names differ: \"%s\", \"%s\"",
+		       f1@generic, f2@generic))
+    return(TRUE)
 }
 
 .ImplicitGroupMetaName <- ".__IGM__table"
