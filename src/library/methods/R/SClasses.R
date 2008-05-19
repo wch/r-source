@@ -203,7 +203,7 @@ getClassDef <-
 			  Class[[1]] else Class)
 	## a string with a package slot strongly implies the class definition
 	## should be in that package.
-	if(!is.null(package)) {
+	if(identical(nzchar(package), TRUE)) {
 	    whereP <- .requirePackage(package)
 	    if(exists(cname, whereP))
 		value <- get(cname, whereP)
@@ -638,27 +638,48 @@ initialize <- function(.Object, ...) {
 findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
     if(is(Class, "classRepresentation")) {
         pkg <- Class@package
+        classDef <- Class
         Class <- Class@className
     }
-    else
-        pkg <- ""
+    else {
+        pkg <- packageSlot(Class)
+        if(is.null(pkg))
+          pkg <- ""
+        classDef <- getClassDef(Class, where, pkg)
+    } 
     if(missing(where) && nzchar(pkg))
             where <- .requirePackage(pkg)
     else
         where <- as.environment(where)
     what <- classMetaName(Class)
     where <- .findAll(what, where)
-    if(length(where) != 1 && nzchar(unique)) {
-            if(length(where) == 0)
-                stop(gettextf("no definition of \"%s\" to use for %s",
+    if(length(where) > 1 && nzchar(pkg)) {
+        pkgs <- sapply(where, function(db)get(what, db)@package)
+        where <- where[match(pkg, pkgs, 0)]
+    }
+    else
+      pkgs <- pkg
+    if(length(where) != 1) {
+            if(length(where) == 0) {
+                if(is.null(classDef))
+                  classDef <- getClassDef(Class) # but won't likely succeed over previous
+                if(nzchar(unique)) {
+                    if(is(classDef, "classRepresentation"))
+                      stop(gettextf('Class "%s" is defined, with package "%s", but no corresponding metadata object was found (not exported?)',
+                                  Class, classDef@package), domain = NA)
+                    else
+                      stop(gettextf("no definition of \"%s\" to use for %s",
                               Class, unique), domain = NA)
-            if(length(where) > 1) {
+                }
+            }
+            else if(nzchar(unique)) {
                 where <- where[1]
                 ## problem: 'unique'x is text passed in, so do not translate
                 warning(sprintf("multiple definitions of class \"%s\" visible; using the definition on package \"%s\" for %s",
                                  Class, getPackageName(where[[1]]), unique),
                         domain = NA)
             }
+            ## else returns a list of >1 places, for the caller to sort out (e.g., .findOrCopyClass)
     }
     where
 }

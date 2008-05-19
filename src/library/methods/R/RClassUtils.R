@@ -1679,7 +1679,7 @@ substituteFunctionArgs <-
 	if(is.list(value)) { ## multiple classes with this name
 	    pkg <- packageSlot(name)
 	    if(is.null(pkg))
-		pkg <- if(is.character(where)) where else getPackageName(where)
+		pkg <- if(is.character(where)) where else getPackageName(where, FALSE) # may be ""
 	    pkgs <- names(value)
 	    i <- match(pkg, pkgs, 0)
 	    if(i == 0) ## try 'methods':

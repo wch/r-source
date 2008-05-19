@@ -140,21 +140,13 @@ setIs <-
         obj <- extensionObject
     ## revise the superclass/subclass info in the stored class definition
     .validExtends(class1, class2, classDef,  classDef2, obj@simple)
-    where2 <- findClass(classDef2, where)
-    if(length(where2) > 0) {
-        where2 <- where2[[1]]
+    where2 <- .findOrCopyClass(class2, classDef2, where, "subclass")
         elNamed(classDef2@subclasses, class1) <- obj
         if(doComplete)
           classDef2@subclasses <- completeSubclasses(classDef2, class1, obj, where)
         assignClassDef(class2, classDef2, where2, TRUE)
         .removePreviousCoerce(class1, class2, where, prevIs)
-    }
-    else
-      stop(gettextf("Unable to find package environment for class \"%s\" to revise subclass information", class2))
-    where1 <- findClass(class1, where)
-    if(length(where1) == 0)
-      stop(gettextf("Unable to find package environment for class \"%s\" to revise subclass information", class1))
-    where1 <- where1[[1]]
+    where1 <- .findOrCopyClass(class1, classDef, where, "superClass")
     ## the direct contains information
     elNamed(classDef@contains, class2) <- obj
     if(doComplete) {
@@ -165,6 +157,18 @@ setIs <-
     assignClassDef(class1, classDef, where1, TRUE)
     invisible(classDef)
  }
+
+.findOrCopyClass <- function(class, classDef, where, purpose) {
+    whereIs <- findClass(classDef, where)
+    if(length(whereIs) > 0)
+      whereIs[[1]]
+    else {
+        warning(gettextf("Class \"%s\" is defined but no metadata object found to revise %s information (not exported?): making a copy in package \"%s\"",
+                 class, purpose, getPackageName(where, FALSE)), domain = NA)
+        where
+    }
+}
+       
 
 .validExtends <- function(class1, class2, classDef1,  classDef2, slotTests) {
     .msg <- function(class1, class2) gettextf("class \"%s\" cannot extend class \"%s\"", class1, class2)
