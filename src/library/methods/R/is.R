@@ -151,7 +151,10 @@ setIs <-
     }
     else
       stop(gettextf("Unable to find package environment for class \"%s\" to revise subclass information", class2))
-    where1 <- findClass(class1, where)[[1]]
+    where1 <- findClass(class1, where)
+    if(length(where1) == 0)
+      stop(gettextf("Unable to find package environment for class \"%s\" to revise subclass information", class1))
+    where1 <- where1[[1]]
     ## the direct contains information
     elNamed(classDef@contains, class2) <- obj
     if(doComplete) {
