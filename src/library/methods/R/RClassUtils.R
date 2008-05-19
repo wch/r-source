@@ -1675,27 +1675,20 @@ substituteFunctionArgs <-
 
 .getClassFromCache <- function(name, where) {
     if(exists(name, envir = .classTable, inherits = FALSE)) {
-        value <- get(name, envir = .classTable)
-        if(is.list(value)) { # multiple classes with this name
-            pkg <- packageSlot(name)
-            if(is.null(pkg) && is.character(where))
-              pkg <- where
-            else
-              pkg <- getPackageName(where)
-            pkgs <- names(value)
-            i <- match(pkg, pkgs,0)
-            if(i > 0)
-              return(value[[i]])
-            i <- match("methods", pkgs,0)
-            if(i > 0)
-               return(value[[i]])
-            else
-              return(NULL)
-        }
-        value
-    }
-    else
-      NULL
+	value <- get(name, envir = .classTable)
+	if(is.list(value)) { ## multiple classes with this name
+	    pkg <- packageSlot(name)
+	    if(is.null(pkg))
+		pkg <- if(is.character(where)) where else getPackageName(where)
+	    pkgs <- names(value)
+	    i <- match(pkg, pkgs, 0)
+	    if(i == 0) ## try 'methods':
+		i <- match("methods", pkgs, 0)
+	    if(i > 0) value[[i]]	# else NULL
+	}
+	else
+	    value
+    } ## else NULL
 }
 
 ### insert superclass information into all the subclasses of this
@@ -1703,20 +1696,20 @@ substituteFunctionArgs <-
 ### ClassUnions
 .recacheSubclasses <- function(class, def, subclasses) {
     if(identical(subclasses, TRUE))
-      subclasses <- class
+        subclasses <- class
     subs <- def@subclasses
     subNames <- names(subs)
     for(i in seq_along(subs)) {
         what <- subNames[[i]]
         subDef <- getClassDef(what)
         if(is.null(subDef))
-          warning(
-           gettextf("Undefined subclass, \"%s\", of class \"%s\"; definition not updated",
-                    what, def@className))
+            warning(gettextf(
+		"Undefined subclass, \"%s\", of class \"%s\"; definition not updated",
+                             what, def@className))
         else if(match(what, subclasses, 0) > 0)
-          next # would like warning, but seems to occur often
-          #warning(
-             #gettextf("Apparent loop in subclasses: \"%s\" found twice; ignored this time", what))
+            next        # would like warning, but seems to occur often
+        ##warning(
+        ##gettextf("Apparent loop in subclasses: \"%s\" found twice; ignored this time", what))
         else if(is.na(match(what, names(subDef@contains)))) {
             subclasses <- c(subclasses, what)
             subDef@contains[[class]] <- subs[[i]]
