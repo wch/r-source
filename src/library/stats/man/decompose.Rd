@@ -29,7 +29,7 @@ decompose(x, type = c("additive", "multiplicative"), filter = NULL)
   The additive model used is:
   \deqn{Y_t = T_t + S_t + e_t}{Y[t] = T[t] + S[t] + e[t]}
   The multiplicative model used is:
-  \deqn{Y_t = T_t\,S_t * e_t}{Y[t] = T[t] + S[t] + e[t]}
+  \deqn{Y_t = T_t\,S_t\, e_t}{Y[t] = T[t] * S[t] * e[t]}
   
   The function first determines the trend component using a moving
   average (if \code{filter} is \code{NULL}, a symmetric window with equal
