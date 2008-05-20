@@ -839,6 +839,45 @@ static double ComputePAdjValue(double padj, int side, int las)
     return padj;
 }
 
+static void getxlimits(double *x, pGEDevDesc dd) {
+    /*
+     * xpd = 0 means clip to current plot region
+     * xpd = 1 means clip to current figure region
+     * xpd = 2 means clip to device region
+     */
+    switch (gpptr(dd)->xpd) {
+    case 0:
+	x[0] = gpptr(dd)->usr[0];
+	x[1] = gpptr(dd)->usr[1];
+	break;
+    case 1:
+	x[0] = GConvertX(0, NFC, USER, dd);
+	x[1] = GConvertX(1, NFC, USER, dd);
+	break;
+    case 2:
+	x[0] = GConvertX(0, NDC, USER, dd);
+	x[1] = GConvertX(1, NDC, USER, dd);
+	break;
+    }
+}
+
+static void getylimits(double *y, pGEDevDesc dd) {
+    switch (gpptr(dd)->xpd) {
+    case 0:
+	y[0] = gpptr(dd)->usr[2];
+	y[1] = gpptr(dd)->usr[3];
+	break;
+    case 1:
+	y[0] = GConvertY(0, NFC, USER, dd);
+	y[1] = GConvertY(1, NFC, USER, dd);
+	break;
+    case 2:
+	y[0] = GConvertY(0, NDC, USER, dd);
+	y[1] = GConvertY(1, NDC, USER, dd);
+	break;
+    }
+}
+
 SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* axis(side, at, labels, tick, line, pos,
@@ -852,7 +891,7 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean dolabels, doticks, logflag = FALSE;
     Rboolean create_at;
     double x, y, temp, tnew, tlast;
-    double axp[3], usr[2];
+    double axp[3], usr[2], limits[2];
     double gap, labw, low, high, line, pos, lwd, hadj;
     double axis_base, axis_tick, axis_lab, axis_low, axis_high;
 
@@ -1074,10 +1113,6 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
      *	gpptr(dd)->lty = LTY_SOLID; */
     gpptr(dd)->lty = lty;
     gpptr(dd)->lwd = lwd;
-
-    /* Override par("xpd") and force clipping to device region. */
-    gpptr(dd)->xpd = 2;
-
     gpptr(dd)->adj = R_FINITE(hadj) ? hadj : 0.5;
     gpptr(dd)->font = (font == NA_INTEGER)? gpptr(dd)->fontaxis : font;
     gpptr(dd)->cex = gpptr(dd)->cexbase * gpptr(dd)->cexaxis;
@@ -1088,9 +1123,13 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     switch (side) {
     case 1: /*--- x-axis -- horizontal --- */
     case 3:
-	GetAxisLimits(gpptr(dd)->usr[0], gpptr(dd)->usr[1], &low, &high);
-	axis_low  = GConvertX(fmax2(low, REAL(at)[0]), USER, NFC, dd);
-	axis_high = GConvertX(fmin2(high, REAL(at)[n-1]), USER, NFC, dd);
+        /* First set the clipping limits */
+        getxlimits(limits, dd);
+        /* Now override par("xpd") and force clipping to device region. */
+        gpptr(dd)->xpd = 2;        
+	GetAxisLimits(limits[0], limits[1], &low, &high);
+	axis_low  = GConvertX(fmin2(high, fmax2(low, REAL(at)[0])), USER, NFC, dd);
+	axis_high = GConvertX(fmin2(high, fmax2(low, REAL(at)[n-1])), USER, NFC, dd);
 	if (side == 1) {
 	    if (R_FINITE(pos))
 		axis_base = GConvertY(pos, USER, NFC, dd);
@@ -1220,9 +1259,13 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
     case 2: /*--- y-axis -- vertical --- */
     case 4:
-	GetAxisLimits(gpptr(dd)->usr[2], gpptr(dd)->usr[3], &low, &high);
-	axis_low = GConvertY(fmax2(low, REAL(at)[0]), USER, NFC, dd);
-	axis_high = GConvertY(fmin2(high, REAL(at)[n-1]), USER, NFC, dd);
+        /* First set the clipping limits */
+        getylimits(limits, dd);
+        /* Now override par("xpd") and force clipping to device region. */
+        gpptr(dd)->xpd = 2;      
+	GetAxisLimits(limits[0], limits[1], &low, &high);
+	axis_low = GConvertY(fmin2(high, fmax2(low, REAL(at)[0])), USER, NFC, dd);
+	axis_high = GConvertY(fmin2(high, fmax2(low, REAL(at)[n-1])), USER, NFC, dd);
 	if (side == 2) {
 	    if (R_FINITE(pos))
 		axis_base = GConvertX(pos, USER, NFC, dd);
@@ -2695,45 +2738,6 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /*  abline(a, b, h, v, col, lty, lwd, ...)
     draw lines in intercept/slope form.	 */
-
-static void getxlimits(double *x, pGEDevDesc dd) {
-    /*
-     * xpd = 0 means clip to current plot region
-     * xpd = 1 means clip to current figure region
-     * xpd = 2 means clip to device region
-     */
-    switch (gpptr(dd)->xpd) {
-    case 0:
-	x[0] = gpptr(dd)->usr[0];
-	x[1] = gpptr(dd)->usr[1];
-	break;
-    case 1:
-	x[0] = GConvertX(0, NFC, USER, dd);
-	x[1] = GConvertX(1, NFC, USER, dd);
-	break;
-    case 2:
-	x[0] = GConvertX(0, NDC, USER, dd);
-	x[1] = GConvertX(1, NDC, USER, dd);
-	break;
-    }
-}
-
-static void getylimits(double *y, pGEDevDesc dd) {
-    switch (gpptr(dd)->xpd) {
-    case 0:
-	y[0] = gpptr(dd)->usr[2];
-	y[1] = gpptr(dd)->usr[3];
-	break;
-    case 1:
-	y[0] = GConvertY(0, NFC, USER, dd);
-	y[1] = GConvertY(1, NFC, USER, dd);
-	break;
-    case 2:
-	y[0] = GConvertY(0, NDC, USER, dd);
-	y[1] = GConvertY(1, NDC, USER, dd);
-	break;
-    }
-}
 
 SEXP attribute_hidden do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 {

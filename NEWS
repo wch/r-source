@@ -246,6 +246,8 @@ NEW FEATURES
     o	HoltWinters() now uses optimize() rather than optim for
     	one-parameter problems which should be more reliable (PR#11469).
 
+    o	axis() now respects the setting of par("xpd") when clipping.
+
 
 DEPRECATED & DEFUNCT
 
