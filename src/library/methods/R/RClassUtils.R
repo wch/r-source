@@ -447,7 +447,7 @@ assignClassDef <-
       }
       else
           assign(mname, def, where)
-      .cacheClass(clName, def, is(def, "ClassUnionRepresentation"))
+      .cacheClass(clName, def, is(def, "ClassUnionRepresentation"), where)
   }
 
 
@@ -1627,9 +1627,9 @@ substituteFunctionArgs <-
 ## See .cacheGeneric, etc. for analogous computations for generics
 .classTable <- new.env(TRUE, baseenv())
 
-.cacheClass <- function(name, def, doSubclasses = FALSE) {
+.cacheClass <- function(name, def, doSubclasses = FALSE, env) {
     if(!identical(doSubclasses, FALSE))
-      .recacheSubclasses(def@className, def, doSubclasses)
+      .recacheSubclasses(def@className, def, doSubclasses, env)
     if(exists(name, envir = .classTable, inherits = FALSE)) {
         newpkg <- def@package
         prev <- get(name, envir = .classTable)
@@ -1694,26 +1694,35 @@ substituteFunctionArgs <-
 ### insert superclass information into all the subclasses of this
 ### class.  Used to incorporate inheritance information from
 ### ClassUnions
-.recacheSubclasses <- function(class, def, subclasses) {
-    if(identical(subclasses, TRUE))
-        subclasses <- class
+.subclassesDone <- NA
+.recacheSubclasses <- function(class, def, doSubclasses, env) {
     subs <- def@subclasses
     subNames <- names(subs)
+    topLevel <- identical(.subclassesDone, NA)
+    if(topLevel) {
+        on.exit({
+            .subclassesDone <<- NA
+        })
+        ev <- environment(sys.function())
+        if(bindingIsLocked(".subclassesDone", ev))
+                  unlockBinding(".subclassesDone", ev)
+        .subclassesDone <<- character() # a list to guard against recursive loops!
+    }
     for(i in seq_along(subs)) {
         what <- subNames[[i]]
-        subDef <- getClassDef(what)
+        subDef <- getClassDef(what, env)
         if(is.null(subDef))
             warning(gettextf(
 		"Undefined subclass, \"%s\", of class \"%s\"; definition not updated",
                              what, def@className))
-        else if(match(what, subclasses, 0) > 0)
-            next        # would like warning, but seems to occur often
-        ##warning(
-        ##gettextf("Apparent loop in subclasses: \"%s\" found twice; ignored this time", what))
+        else if(what %in% .subclassesDone)
+          ## whether subclasses can appear more than once may be subtle--
+          ## if we were really certain, a warning here would be ok
+          next
         else if(is.na(match(what, names(subDef@contains)))) {
-            subclasses <- c(subclasses, what)
+            .subclassesDone <<- c(.subclassesDone, what)
             subDef@contains[[class]] <- subs[[i]]
-            .cacheClass(what, subDef, subclasses)
+            .cacheClass(what, subDef, doSubclasses, env)
         }
     }
 }
@@ -1791,7 +1800,7 @@ substituteFunctionArgs <-
             else {
                 newdef <- .deleteSubClass(cdef, subclass)
                 if(!is.null(newdef))
-                  .cacheClass(class, newdef)
+                  .cacheClass(class, newdef, FALSE, where)
             }
         }
         sig <- signature(from=subclass, to=class)
