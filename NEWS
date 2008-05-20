@@ -370,6 +370,10 @@ BUG FIXES
 
     o	The canvas is no longer painted on copy or save in Cocoa Quartz.
 
+    o	identify() in Quartz can now be terminated by either using popup
+	menu equivalent (Ctrl-click or second mouse button) or by pressing
+	the <Esc> key. The latter was documented but did not work.
+
 
 
 		CHANGES IN R VERSION 2.7.0

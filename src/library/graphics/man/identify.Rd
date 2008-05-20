@@ -73,7 +73,8 @@ identify(x, \dots)
   For the usual \code{\link{X11}} device the identification process is
   terminated by pressing any mouse button other than the first.
   For the \code{\link{quartz}} device the process is terminated by
-  pressing the \code{ESC} key.
+  pressing either the pop-up menu equivalent (usually second mouse
+  button or \code{Ctrl}-click) or the \code{ESC} key.
 #endif
 #ifdef windows
   The identification process is terminated by clicking the second button
