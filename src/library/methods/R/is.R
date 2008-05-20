@@ -163,8 +163,8 @@ setIs <-
     if(length(whereIs) > 0)
       whereIs[[1]]
     else {
-        warning(gettextf("Class \"%s\" is defined but no metadata object found to revise %s information (not exported?): making a copy in package \"%s\"",
-                 class, purpose, getPackageName(where, FALSE)), domain = NA)
+        warning(gettextf("Class \"%s\" is defined (with package slot \"%s\") but no metadata object found to revise %s information---not exported?  Making a copy in package \"%s\"",
+                 class, classDef@package, purpose, getPackageName(where, FALSE)), domain = NA)
         where
     }
 }
