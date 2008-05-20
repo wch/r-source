@@ -404,9 +404,9 @@ getGeneric <-
             stop("Argument f must be a string, generic function, or primitive: got an ordinary function")
     }
     value <- if(missing(where)) .getGeneric(f, ,package) else .getGeneric( f, where, package)
-    if(is.null(value) && exists(f, "package:base", inherits = FALSE)) {
+    if(is.null(value) && exists(f, envir = baseenv(), inherits = FALSE)) {
         ## check for primitives
-        baseDef <- get(f, "package:base")
+        baseDef <- get(f, envir = baseenv())
         if(is.primitive(baseDef)) {
             value <- genericForPrimitive(f)
             if(!is.function(value) && mustFind)
@@ -428,24 +428,24 @@ getGeneric <-
 ## low-level version
 .getGeneric <- function(f, where = .GlobalEnv, # default only for C search
                         package = "") {
-    if(is.character(f) && f %in% c("as.double", "as.real")) f <- "as.numeric"
-    if(is.character(f) && !nzchar(f)) {
-	message("Empty function name in .getGeneric")
-	dput(sys.calls())
-    }
     ## do not search the cache if getGeneric() was called with explicit where=
     if(missing(where))
         value <- .getGenericFromCache(f, where,  package)
     else
         value <- NULL
     if(is.null(value)) {
+        if(is.character(f) && f %in% c("as.double", "as.real")) f <- "as.numeric"
+        if(is.character(f) && !nzchar(f)) {
+            message("Empty function name in .getGeneric")
+            dput(sys.calls())
+        }
         value <- .Call("R_getGeneric", f, FALSE, as.environment(where), package,
-                           PACKAGE = "methods")
+                       PACKAGE = "methods")
         ## cache public generics (usually these will have been cached already
         ## and we get to this code for non-exported generics)
         if(!is.null(value) && exists(f, .GlobalEnv) &&
            identical(get(f, .GlobalEnv), value))
-                .cacheGeneric(f, value)
+          .cacheGeneric(f, value)
     }
 ##     if(is.null(value) && nzchar(package) && !identical(package, "base")) {
 ##         env <- .requirePackage(package, FALSE)
@@ -751,7 +751,7 @@ allGenerics <- function(...) {
     }
 }
 
-cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(where)) {
+cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(where), doCheck = TRUE) {
     ## a collection of actions performed on attach or detach
     ## to update class and method information.
     generics <- .getGenerics(where)
@@ -762,7 +762,7 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
     for(i in seq_along(generics)) {
         f <- generics[[i]]
         fpkg <- packages[[i]]
-        if(!identical(fpkg, pkg)) {
+        if(!identical(fpkg, pkg) && doCheck) {
             if(attach) {
                 env <- as.environment(where)
                 ## All instances of this generic in different attached packages must
@@ -803,7 +803,7 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
                   else  getClassDef(cl, searchWhere))
         if(is(cldef, "classRepresentation")) {
             if(attach) {
-              .cacheClass(cl, cldef, is(cldef, "ClassUnionRepresentation"))
+              .cacheClass(cl, cldef, is(cldef, "ClassUnionRepresentation"), where)
              }
             else if(identical(cldef@package, pkg)) {
               .uncacheClass(cl, cldef)
