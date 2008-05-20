@@ -366,6 +366,8 @@ BUG FIXES
 
     o	glob2rx("*[*") now produces a correct regular expression.
 
+    o	The canvas is no longer painted on copy or save in Cocoa Quartz.
+
 
 
 		CHANGES IN R VERSION 2.7.0
