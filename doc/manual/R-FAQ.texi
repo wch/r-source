@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-05-05
+@set FAQ_DATE @value{FAQ_YEAR}-05-20
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -1855,6 +1855,9 @@ Bayesian analysis of threshold autoregressive models.
 Barzilai-Borwein spectral methods for solving nonlinear system of
 equations, and for optimizing nonlinear objective functions subject to
 simple constraints.
+@item BCE
+Bayesian Composition Estimator for sample (taxonomic) composition from
+biomarker data.
 @item BHH2
 Functions and data sets reproducing some examples in ``Statistics for
 Experimenters II'' by G. E. P. Box, J. S. Hunter, and W. C. Hunter,
@@ -1864,8 +1867,12 @@ Bayesian Model Averaging for linear models, generalizable linear models
 and survival models (Cox regression).
 @item BPHO
 Bayesian Prediction with High-order Interactions.
-@item BRugs
-OpenBUGS and its R interface BRugs.
+@c <COMMENT>
+@c Moved to the Archive on 2008-05-19 as requested by the maintainer:
+@c Now lives in CRANextras ...
+@c @item BRugs
+@c OpenBUGS and its R interface BRugs.
+@c </COMMENT>
 @item BayHaz
 Functions for Bayesian Hazard rate estimation.
 @item BayesTree
@@ -2163,10 +2170,14 @@ passing by reference.
 Graphical tests for Hardy-Weinberg equilibrium.
 @item HiddenMarkov
 Hidden Markov Models.
-@item HighProbability
-Estimation of the alternative hypotheses having frequentist or Bayesian
-probabilities at least as great as a specified threshold, given a list
-of @math{p}-values.
+@c <COMMENT>
+@c Moved to the Archive on 2008-05-09 (now contained in 'empiricalBayes'
+@c bundle.
+@c @item HighProbability
+@c Estimation of the alternative hypotheses having frequentist or Bayesian
+@c probabilities at least as great as a specified threshold, given a list
+@c of @math{p}-values.
+@c </COMMENT>
 @item Hmisc
 Functions useful for data analysis, high-level graphics, utility
 operations, functions for computing sample size and power, importing
@@ -2303,6 +2314,8 @@ Maximum kernel likelihood estimation.
 Maximum Likelihood Difference Scaling.
 @item MLEcens
 Computation of the MLE for bivariate (interval) censored data.
+@item MMG
+Mixture Model on Graphs.
 @item MNP
 Fitting Bayesian Multinomial Probit models via Markov chain Monte Carlo.
 Along with the standard Multinomial Probit model, it can also fit models
@@ -2403,6 +2416,8 @@ system.
 Econometric tools for performance and risk analysis.
 @item PhySim
 Phylogenetic tree simulation.
+@item PolynomF
+Univariate polynomials.
 @item PresenceAbsence
 Presence-absence model evaluation.
 @item ProbForecastGOP
@@ -3206,6 +3221,8 @@ Combinatorics utilities.
 Complementary hierarchical clustering.
 @item compOverlapCorr
 Comparing overlapping correlation coefficients.
+@item compoisson
+Conway-Maxwell-Poisson distribution.
 @item compositions
 Functions for the consistent analysis of compositional data (e.g.,
 portions of substances) and positive numbers (e.g., concentrations).
@@ -3222,6 +3239,8 @@ Find disconnected sets for two-way classification.
 Continued fractions.
 @item contrast
 A collection of contrast methods.
+@item copas
+Statistical methods to model and adjust for bias in meta-analysis.
 @item copula
 Classes of commonly used copulas (including elliptical and Archimedian),
 and methods for density, distribution, random number generators, and
@@ -3429,6 +3448,10 @@ Data sets and auxiliary functions for ``Ecological Models and Data'' by
 Ben Bolker (work in progress).
 @item emme2
 Functions to read from and write to an EMME/2 databank.
+@item empiricalBayes
+A bundle for dealing with extreme multiple testing problems by
+estimating local false discovery rates.  Contains packages
+@strong{localFDR} and @strong{HighProbability}.
 @item emplik
 Empirical likelihood ratio for means/quantiles/hazards from possibly
 right censored data.
@@ -3680,6 +3703,8 @@ and Schapire's AdaBoost algorithm and J. Friedman's gradient boosting
 machine.  Includes regression methods for least squares, absolute loss,
 logistic, Poisson, Cox proportional hazards partial likelihood, and
 AdaBoost exponential loss.
+@item gbs
+Generalized Birnbaum-Saunders distributions.
 @item gcl
 Compute a fuzzy rules or tree classifier from data.
 @item gclus
@@ -4282,6 +4307,9 @@ Examples from Multilevel Modelling Software Review.
 @item mlmmm
 Maximum likelihood estimation under multivariate linear mixed models
 with missing values.
+@item mlogit
+Estimation of the multinomial logit model with choice specific
+variables.
 @item mmlcr
 Mixed-mode latent class regression (also known as mixed-mode mixture
 model regression or mixed-mode mixture regression models) which can
@@ -4317,12 +4345,16 @@ Strictly monotone smoothing procedure.
 Basic astronomical calculations.
 @item mota
 Mean Optimal Transformation Approach.
+@item mpm
+Spectral map analysis.
 @item mprobit
 Multivariate probit model for binary/ordinal response.
 @item mra
 Analysis of capture-recapture data.
 @item mratios
 Inferences for ratios of coefficients in the general linear model.
+@item mrdrc
+Model-robust concentration-response analysis.
 @item msProcess
 Tools for protein mass spectra processing including data preparation,
 denoising, noise estimation, baseline correction, intensity
@@ -4495,6 +4527,8 @@ number of observations that need to be removed such that the reduced
 data set has no longer overlap.
 @item np
 Nonparametric kernel smoothing methods for mixed datatypes.
+@item nparcomp
+Nonparametric relative contrast effects.
 @item npde
 Normalized prediction distribution errors for nonlinear mixed-effect
 models.
@@ -4543,6 +4577,10 @@ English and spanish models for @strong{openNLP}.
 Functions to perform optimal matching, particularly full matching.
 @item orientlib
 Representations, conversions and display of orientation SO(3) data.
+@item orth
+Multivariate logistic regressions using orthogonalized residuals.
+@item orthopolynom
+Functions for orthogonal and orthonormal polynomials.
 @item ouch
 Ornstein-Uhlenbeck models for phylogenetic comparative hypotheses.
 @item outliers
@@ -4815,6 +4853,9 @@ corresponding @LaTeX{} code.
 @item rJava
 Low-level R to Java interface.  Allows creation of objects, calling
 methods and accessing fields.
+@item rPorta
+An R interface to PORTA, a collection of routines for analyzing
+polytopes and polyhedra.
 @item race
 Implementation of some racing methods for the empirical selection of the
 best.
@@ -4935,6 +4976,8 @@ Riskset ROC curve estimation from censored survival data.
 @c </COMMENT>
 @item rjacobi
 Jacobi polynomials and Gauss-Jacobi quadrature related operations.
+@item rjags
+Bayesian graphical models via an interface to the JAGS MCMC library.
 @item rjson
 JSON (JavaScript Object Notation) for R.
 @item rlecuyer
@@ -5050,6 +5093,8 @@ Statistical Disclosure Control methods for the generation of public and
 scientific use files.
 @item sde
 Simulation and inference for Stochastic Differential Equations.
+@item sdtalt
+Signal Detection Theory measures and ALTernatives.
 @item seacarb
 Calculates parameters of the seawater carbonate system.
 @c <COMMENT>
@@ -5133,6 +5178,8 @@ SIMEX and MCSIMEX algorithms for measurement error models.
 Similarity of Richards curves.
 @item simpleboot
 Simple bootstrap routines.
+@item singlecase
+Tests for single case studies in neuropsychology.
 @item skewt
 Density, distribution function, quantile function and random generation
 for the skewed @math{t} distribution of Fernandez and Steel.
@@ -5348,11 +5395,8 @@ Three-Stage Least Squares (3SLS).
 @c @item tapiR
 @c Tools for accessing (UK) parliamentary information in R.
 @c </COMMENT>
-@c <COMMENT>
-@c Moved to the Archive on 2007-12-06 as requested by the maintainer.
-@c @item taskPR
-@c Task-Parallel R package.
-@c </COMMENT>
+@item taskPR
+Task-Parallel R package.
 @item tcltk2
 A series of widgets and functions to supplement @strong{tcltk}.
 @item tdist
@@ -5371,6 +5415,8 @@ Term structure and credit spread estimation.
 @item tframe
 Time Frame coding kernel: functions for writing code that is independent
 of the way time is represented.
+@item tframePlus
+Time Frame coding kernel extensions.
 @item tgp
 Bayesian regression and adaptive sampling with Treed Gaussian Process
 models.
