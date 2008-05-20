@@ -369,10 +369,33 @@ static QuartzFunctions_t *qf;
         unsigned int mf = [theEvent modifierFlags];
         ci->locator[0] = pt.x;
         ci->locator[1] = pt.y;
-        if (mf&NSControlKeyMask)
+        /* Note: we still use menuForEvent:  because no other events than left click get here ..*/
+        if (mf&(NSControlKeyMask|NSRightMouseDownMask|NSOtherMouseDownMask))
             ci->locator[0] = -1.0;
         ci->inLocator = NO;
     }
+}
+
+/* right-click does NOT generate mouseDown: events, sadly, so we have to (ab)use menuForEvent: */
+- (NSMenu *)menuForEvent:(NSEvent *)theEvent
+{
+    if (ci->inLocator) {
+        ci->locator[0] = -1.0;
+        ci->inLocator = NO;
+        return nil;
+    }
+    return [super menuForEvent:theEvent];
+}
+
+/* <Esc> is caught before so keyDown: won't work */
+- (BOOL)performKeyEquivalent:(NSEvent *)theEvent
+{
+    if (ci->inLocator && [theEvent keyCode] == 53 /* ESC - can't find the proper constant for this */) {
+        ci->locator[0] = -1.0;
+        ci->inLocator = NO;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 static void QuartzCocoa_SaveHistory(QuartzCocoaDevice *ci, int last) {
@@ -446,13 +469,6 @@ static void QuartzCocoa_SaveHistory(QuartzCocoaDevice *ci, int last) {
         i++;
     }
 }
-
-#if 0
-- (void)keyDown:(NSEvent *)theEvent
-{
-    Rprintf("keyCode=%d\n", [theEvent keyCode]);
-}
-#endif
 
 - (void)viewDidEndLiveResize
 {
