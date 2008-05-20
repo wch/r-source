@@ -5178,3 +5178,14 @@ if(require(MASS)) {
 n <- matrix(c(1259, 845, 719,390,1360,1053,774,413), nrow = 2, byrow = TRUE)
 dimnames(n)[[1]] <- c("a", "b")
 ## was (correctly) an error in R < 2.8.0
+
+## glob2rx(pattern, .) with "(", "[" or "{" in pattern :
+nm <- "my(ugly[file{name"
+stopifnot(identical(regexpr(glob2rx("*[*"), nm),
+		    structure(1L, match.length = 8L)),
+	  identical(regexpr(glob2rx("*{n*"), nm),
+		    structure(1L, match.length = 14L)),
+	  identical(regexpr(glob2rx("*y(*{*"), nm),
+		    structure(1L, match.length = 13L))
+	  )
+## gave 'Invalid regular expression' in R <= 2.7.0

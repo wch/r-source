@@ -359,6 +359,8 @@ BUG FIXES
     o	The predict() method for prcomp() had an incorrect check for
 	the number of columns of 'newdata' if the columns were not named.
 
+    o	glob2rx("*[*") now produces a correct regular expression.
+
 
 
 		CHANGES IN R VERSION 2.7.0

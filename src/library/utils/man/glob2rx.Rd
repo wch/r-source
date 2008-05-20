@@ -1,6 +1,7 @@
 % File src/library/utils/man/glob2rx.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2008 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{glob2rx}
@@ -27,6 +28,10 @@ glob2rx(pattern, trim.head = FALSE, trim.tail = TRUE)
   empty one), and the pattern is anchored (it must start at the
   beginning and end at the end).  Optionally, the resulting regexp is
   simplified.
+
+  Note that now even \code{(}, \code{[} and \code{\{} can be used
+  in \code{pattern}, but \code{glob2rx()} may not work correctly with
+  arbitrary characters in \code{pattern}.
 }
 \value{
   A character vector of the same length as the input \code{pattern}
@@ -45,7 +50,8 @@ stopifnot(glob2rx("abc.*") == "^abc\\\\.",% '\\' doubled in Rd file!
           glob2rx("*.doc") == "^.*\\\\.doc$",
           glob2rx("*.doc", trim.head=TRUE) == "\\\\.doc$",
           glob2rx("*.t*")  == "^.*\\\\.t",
-          glob2rx("*.t??") == "^.*\\\\.t..$"
+          glob2rx("*.t??") == "^.*\\\\.t..$",
+          glob2rx("*[*")  == "^.*\\\\["
 )
 }
 \keyword{file}
