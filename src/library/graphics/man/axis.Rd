@@ -66,13 +66,12 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     and \code{xaxp} or \code{yaxp} for positioning, \code{tck} or
     \code{tcl} for tick mark length and direction, \code{las} for
     vertical/horizontal label orientation, or \code{fg} instead of
-    \code{col}, see \code{\link{par}} on these.
+    \code{col}, and \code{xpd} for clipping.  See \code{\link{par}} on these.
 
     Parameters \code{xaxt} (sides 1 and 3) and \code{yaxt} (sides 2 and
     4) control if the axis is plotted at all.
 
-    Note that \code{xpd} is not accepted as clipping is always to the
-    device region, and that \code{lab} will partial match to argument
+    Note that \code{lab} will partial match to argument
     \code{labels} unless the latter is also supplied.  (Since the
     default axes have already been set up by \code{\link{plot.window}},
     \code{lab} will not be acted on by \code{axis}.)}
@@ -86,10 +85,11 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 }
 \details{
   The axis line is drawn from the lowest to the highest value of
-  \code{at}, but will be clipped at the plot region.  Only ticks which
+  \code{at}, but will be clipped at the plot region.  By default, only ticks which
   are drawn from points within the plot region (up to a tolerance for
   rounding error) are plotted, but the ticks and their labels may well
-  extend outside the plot region.
+  extend outside the plot region.  Use \code{xpd=TRUE} or \code{xpd=NA}
+  to allow axes to extend further.
 
   When \code{at = NULL}, pretty tick mark locations are computed internally
   (the same way \code{\link{axTicks}(side)} would) from
