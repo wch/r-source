@@ -229,6 +229,7 @@ static QuartzFunctions_t *qf;
     qpar.flags = 0;
     qpar.width = qf->GetWidth(ci->qd);
     qpar.height = qf->GetHeight(ci->qd);
+    qpar.canvas = 0; /* disable canvas */
     QuartzDesc_t qd = Quartz_C(&qpar, QuartzPDF_DeviceCreate, NULL);
     if (qd == NULL) return NO;
     void *ss = qf->GetSnapshot(ci->qd, 0);
@@ -266,6 +267,7 @@ static QuartzFunctions_t *qf;
     qpar.flags = 0;
     qpar.width = qf->GetWidth(ci->qd);
     qpar.height = qf->GetHeight(ci->qd);
+    qpar.canvas = 0; /* have to disable canvas */
     /* replay our snapshot and close the PDF device */
     QuartzDesc_t qd = Quartz_C(&qpar, QuartzPDF_DeviceCreate, NULL);
     if (qd == NULL) {
