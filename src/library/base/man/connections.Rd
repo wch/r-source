@@ -182,6 +182,11 @@ isIncomplete(con)
   happen automatically in due course if there is no \R object referring
   to the connection.
 
+  A maximum of 128 connections can be allocated (not necessarily open)
+  at any one time.  Three of these are pre-allocated (see
+  \code{\link{stdout}}).   The OS will impose limits on the numbers of
+  connections of various types, but these are usually larger than 125.
+
   \code{flush} flushes the output stream of a connection open for
   write/append (where implemented).
 
