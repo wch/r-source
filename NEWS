@@ -360,7 +360,7 @@ BUG FIXES
 
     o	The predict() method for prcomp() had an incorrect check for
 	the number of columns of 'newdata' if the columns were not named.
-	
+
     o	The axis() function now distinguishes between setting "at" to
 	NULL or a zero-length vector, treating the latter as a request
 	for no ticks.  This corrects the handling of the "x" parameter
@@ -373,6 +373,9 @@ BUG FIXES
     o	identify() in Quartz can now be terminated by either using popup
 	menu equivalent (Ctrl-click or second mouse button) or by pressing
 	the <Esc> key. The latter was documented but did not work.
+
+    o	tools:::.check_package_depends() {called from 'R CMD check'} now
+	also works correctly when directory-name != package-name.
 
 
 

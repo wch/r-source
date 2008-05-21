@@ -2433,8 +2433,7 @@ function(x, ...)
 
 ## changed in 2.3.0 to refer to a source dir.
 
-.check_package_depends <-
-function(dir)
+.check_package_depends <- function(dir)
 {
     if(length(dir) != 1L)
         stop("argument 'package' must be of length 1")
@@ -2442,9 +2441,15 @@ function(dir)
     ## We definitely need a valid DESCRIPTION file.
     db <- .read_description(file.path(dir, "DESCRIPTION"))
 
-    package_name <- basename(dir)
-    ## (Should really use db["Package"], but then we need to check
-    ## whether this is really there ...)
+    dir_name <- basename(dir)
+    package_name <- db["Package"]
+    if(!identical(package_name, dir_name) &&
+       (!is.character(package_name) || !nzchar(package_name))) {
+	message(sprintf(
+	"package name '%s' seems invalid; using directory name '%s' instead",
+			package_name, dir_name))
+	package_name <- dir_name
+    }
     depends <- .get_requires_from_package_db(db, "Depends")
     imports <- .get_requires_from_package_db(db, "Imports")
     suggests <- .get_requires_from_package_db(db, "Suggests")
