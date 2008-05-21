@@ -81,7 +81,8 @@ findUnique(what, message, where)
 
 MethodAddCoerce(method, argName, thisClass, methodClass)
 
-cacheMetaData(where, attach = TRUE, searchWhere)
+cacheMetaData(where, attach = TRUE, searchWhere =  as.environment(where),
+              doCheck=TRUE)
 
 cacheGenericsMetaData(f, fdef, attach = TRUE, where, package, methods)
 
