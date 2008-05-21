@@ -1694,20 +1694,9 @@ substituteFunctionArgs <-
 ### insert superclass information into all the subclasses of this
 ### class.  Used to incorporate inheritance information from
 ### ClassUnions
-.subclassesDone <- NA
 .recacheSubclasses <- function(class, def, doSubclasses, env) {
     subs <- def@subclasses
     subNames <- names(subs)
-    topLevel <- identical(.subclassesDone, NA)
-    if(topLevel) {
-        on.exit({
-            .subclassesDone <<- NA
-        })
-        ev <- environment(sys.function())
-        if(bindingIsLocked(".subclassesDone", ev))
-                  unlockBinding(".subclassesDone", ev)
-        .subclassesDone <<- character() # a list to guard against recursive loops!
-    }
     for(i in seq_along(subs)) {
         what <- subNames[[i]]
         subDef <- getClassDef(what, env)
@@ -1715,12 +1704,7 @@ substituteFunctionArgs <-
             warning(gettextf(
 		"Undefined subclass, \"%s\", of class \"%s\"; definition not updated",
                              what, def@className))
-        else if(what %in% .subclassesDone)
-          ## whether subclasses can appear more than once may be subtle--
-          ## if we were really certain, a warning here would be ok
-          next
         else if(is.na(match(what, names(subDef@contains)))) {
-            .subclassesDone <<- c(.subclassesDone, what)
             subDef@contains[[class]] <- subs[[i]]
             .cacheClass(what, subDef, doSubclasses, env)
         }
