@@ -379,6 +379,8 @@ BUG FIXES
 	
     o	Source references were sometimes off by a line.
 
+    o	The quartz() parameter 'antialias' is no longer ignored.
+
 
 
 		CHANGES IN R VERSION 2.7.0
