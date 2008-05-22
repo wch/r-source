@@ -157,7 +157,7 @@ QuartzDesc_t QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPa
 	CGContextScaleCTM(dev->bitmap, 1.0, -1.0);
 	QuartzBackend_t qdef = {
 	    sizeof(qdef), width, height, dpi[0]/72.0 , dpi[1]/72.0, par->pointsize,
-	    par->bg, par->canvas, par->flags,
+	    par->bg, par->canvas, par->flags | QDFLAG_RASTERIZED,
 	    dev,
 	    QuartzBitmap_GetCGContext,
 	    NULL,	/* locate */

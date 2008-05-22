@@ -75,6 +75,13 @@
  *    may be removed in the future as it is not clear whether it makes
  *    sense to be part of the device. See Cocoa module for a
  *    module-internal implementation of the display history.
+ *
+ *  Quartz device creation path:
+ *    quartz() function -> SEXP Quartz(args) ->
+ *    setup QuartzParameters_t, call backend constructor
+ *    [e.g. QuartzCocoa_DeviceCreate(dd, fn, QuartzParameters_t *pars)] ->
+ *    create backend definition (QuartzBackend_t backend) -> 
+ *    fn->Create(dd, &backend), return the result
  */
 
 #ifndef R_EXT_QUARTZDEVICE_H_
@@ -100,7 +107,11 @@ extern "C" {
 /* flags passed to QuartzDevice_Create (as fs parameter) */
 #define QDFLAG_DISPLAY_LIST 0x0001
 #define QDFLAG_INTERACTIVE  0x0002 
-	
+#define QDFLAG_RASTERIZED   0x0004 /* rasterized media - may imply disabling AA paritally for rects etc. */
+
+/* parameter flags (they should not conflict with QDFLAGS to allow chaining) */
+#define QPFLAG_ANTIALIAS 0x0100
+
 typedef void* QuartzDesc_t;
 
 typedef struct QuartzBackend_s {
@@ -118,8 +129,6 @@ typedef struct QuartzBackend_s {
     void*        (*par)(QuartzDesc_t dev, void*userInfo, int set, const char *key, void *value);
     void         (*sync)(QuartzDesc_t dev, void*userInfo);
 } QuartzBackend_t;
-
-#define QPFLAG_ANTIALIAS 0x0100
 
 /* parameters that are passed to functions that create backends */
 typedef struct QuartzParameters_s {
