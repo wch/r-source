@@ -376,6 +376,8 @@ BUG FIXES
 
     o	tools:::.check_package_depends() {called from 'R CMD check'} now
 	also works correctly when directory-name != package-name.
+	
+    o	Source references were sometimes off by a line.
 
 
 
