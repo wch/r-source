@@ -66,6 +66,7 @@ typedef struct yyltype
 static void	CheckFormalArgs(SEXP, SEXP, YYLTYPE *);
 static SEXP	FirstArg(SEXP, SEXP);
 static SEXP	GrowList(SEXP, SEXP);
+static SEXP	Insert(SEXP, SEXP);
 static void	IfPush(void);
 static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
@@ -197,7 +198,7 @@ static SEXP	xxunary(SEXP, SEXP);
 static SEXP	xxbinary(SEXP, SEXP, SEXP);
 static SEXP	xxparen(SEXP, SEXP);
 static SEXP	xxsubscript(SEXP, SEXP, SEXP);
-static SEXP	xxexprlist(SEXP, SEXP);
+static SEXP	xxexprlist(SEXP, YYLTYPE *, SEXP);
 static int	xxvalue(SEXP, int, YYLTYPE *);
 
 #define YYSTYPE		SEXP
@@ -255,7 +256,7 @@ expr	: 	NUM_CONST			{ $$ = $1; }
 	|	NULL_CONST			{ $$ = $1; }
 	|	SYMBOL				{ $$ = $1; }
 
-	|	'{' exprlist '}'		{ $$ = xxexprlist($1,$2); }
+	|	'{' exprlist '}'		{ $$ = xxexprlist($1,&@1,$2); }
 	|	'(' expr_or_assign ')'			{ $$ = xxparen($1,$2); }
 
 	|	'-' expr %prec UMINUS		{ $$ = xxunary($1,$2); }
@@ -917,7 +918,7 @@ static SEXP xxsubscript(SEXP a1, SEXP a2, SEXP a3)
     return ans;
 }
 
-static SEXP xxexprlist(SEXP a1, SEXP a2)
+static SEXP xxexprlist(SEXP a1, YYLTYPE *lloc, SEXP a2)
 {
     SEXP ans;
     SEXP prevSrcrefs;
@@ -928,6 +929,7 @@ static SEXP xxexprlist(SEXP a1, SEXP a2)
 	SETCAR(a2, a1);
 	if (SrcFile) {
 	    PROTECT(prevSrcrefs = getAttrib(a2, R_SrcrefSymbol));
+	    REPROTECT(SrcRefs = Insert(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
 	    PROTECT(ans = attachSrcrefs(a2, SrcFile));
 	    REPROTECT(SrcRefs = prevSrcrefs, srindex);
 	    /* SrcRefs got NAMED by being an attribute... */
@@ -985,6 +987,18 @@ static SEXP GrowList(SEXP l, SEXP s)
     UNPROTECT(1);
     SETCDR(CAR(l), tmp);
     SETCAR(l, tmp);
+    return l;
+}
+
+/* Insert a new element at the head of a stretchy list */
+
+static SEXP Insert(SEXP l, SEXP s)
+{
+    SEXP tmp;
+    PROTECT(s);
+    tmp = CONS(s, CDR(l));
+    UNPROTECT(1);
+    SETCDR(l, tmp);
     return l;
 }
 
