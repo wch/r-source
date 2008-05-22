@@ -384,6 +384,9 @@ BUG FIXES
     o	The Quartz device is now trying hard to remove anti-aliasing
 	effects for rasterized backends in plots that use adjacent,
 	borderless rectangles such as image().
+	
+    o	The srcfilecopy() function now adds a timestamp to the object it
+    	creates.
 
 
 
