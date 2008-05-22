@@ -782,7 +782,7 @@ QuartzDesc_t QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPar
 
     QuartzBackend_t qdef = {
 	sizeof(qdef), width, height, scalex, scaley, par->pointsize,
-	par->bg, par->canvas, par->flags | QDFLAG_INTERACTIVE | QDFLAG_DISPLAY_LIST,
+	par->bg, par->canvas, par->flags | QDFLAG_INTERACTIVE | QDFLAG_DISPLAY_LIST | QDFLAG_RASTERIZED,
 	dev,
 	QuartzCocoa_GetCGContext,
 	QuartzCocoa_Locator,

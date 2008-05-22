@@ -381,6 +381,10 @@ BUG FIXES
 
     o	The quartz() parameter 'antialias' is no longer ignored.
 
+    o	The Quartz device is now trying hard to remove anti-aliasing
+	effects for rasterized backends in plots that use adjacent,
+	borderless rectangles such as image().
+
 
 
 		CHANGES IN R VERSION 2.7.0

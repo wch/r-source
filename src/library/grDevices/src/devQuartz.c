@@ -810,6 +810,19 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
     DRAWSPEC;
     if (!ctx) NOCTX;
     SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
+    if (xd->flags & QDFLAG_RASTERIZED) {
+        /* in the case of borderless rectangles snap them to pixels.
+           this solves issues with image() without introducing other artifacts.
+           other approaches (disabling anti-aliasing, drawing background first,
+           snapping rect with borders) don't work as well, because they have
+           unwanted visual side-effects. */
+        if (R_ALPHA(gc->fill) > 0 && R_ALPHA(gc->col) == 0) {
+            x0 = (round(x0 * xd->scalex)) / xd->scalex;
+            x1 = (round(x1 * xd->scalex)) / xd->scalex;
+            y0 = (round(y0 * xd->scaley)) / xd->scaley;
+            y1 = (round(y1 * xd->scaley)) / xd->scaley;
+        }
+    }
     CGContextBeginPath(ctx);
     CGContextAddRect(ctx, CGRectMake(x0, y0, x1 - x0, y1 - y0));
     CGContextDrawPath(ctx, kCGPathFillStroke);
