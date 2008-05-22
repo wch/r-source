@@ -421,7 +421,7 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     qd->ps         = def->pointsize;
     qd->bg         = def->bg;
     qd->canvas     = def->canvas;
-    qd->antialias  = /* FIXME: aa as a flag */ 1;
+    qd->antialias  = (def->flags & QPFLAG_ANTIALIAS) ? 1 : 0;
     qd->flags      = def->flags;
     qd->gstate     = 0;
 
