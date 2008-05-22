@@ -343,6 +343,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                        !exists(".conflicts.OK", envir = env, inherits = FALSE))
                         checkConflicts(package, pkgname, pkgpath,
                                        nogenerics, ns)
+                    ##FIXME: assertion is that cacheMetaData now is done in
+                    ## loadNamespace() and so not needed here. NEEDS VERIFICATION
+                    if(!nogenerics && !identical(pkgname, "package:methods"))
+                        methods::cacheMetaData(env, TRUE,
+                                               searchWhere = .GlobalEnv)
                     runUserHook(package, pkgpath)
                     on.exit()
                     if (logical.return)
@@ -419,7 +424,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                !exists(".conflicts.OK", envir = env, inherits = FALSE))
                 checkConflicts(package, pkgname, pkgpath, nogenerics, env)
 
-            if(!nogenerics)
+            if(!nogenerics && !identical(pkgname, "package:methods"))
                 methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
             runUserHook(package, pkgpath)
             on.exit()

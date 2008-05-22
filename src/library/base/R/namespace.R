@@ -426,11 +426,9 @@ loadNamespace <- function (package, lib.loc = NULL,
         for (p in nsInfo$exportPatterns)
             exports <- c(ls(env, pattern = p, all.names = TRUE), exports)
         ## 
-        if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(ns) &&
-           !identical(package, "methods") ) {
-            ## cache generics, classes in this namespace (but not methods itself,
-            ## which pre-cached at install time
-            methods:::cacheMetaData(ns, TRUE, ns) 
+        if(.isMethodsDispatchOn() &&
+                   methods:::.hasS4MetaData(ns)) {
+            methods:::cacheMetaData(ns, TRUE, ns) # cache generics, classes in this namespace
             ## process class definition objects
             expClasses <- nsInfo$exportClasses
             if(length(expClasses) > 0) {
