@@ -1706,7 +1706,7 @@ substituteFunctionArgs <-
                              what, def@className))
         else if(is.na(match(what, names(subDef@contains)))) {
             subDef@contains[[class]] <- subs[[i]]
-            .cacheClass(what, subDef, doSubclasses, env)
+            .cacheClass(what, subDef, FALSE, env)
         }
     }
 }
