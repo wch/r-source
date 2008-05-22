@@ -249,23 +249,23 @@ getAllMethods <-
 
 
 mergeMethods <-
-  ## merge the methods in the second MethodsList object into the first,
-  ## and return the merged result.
-  function(m1, m2, genericLabel = character()) {
-      if(length(genericLabel) > 0 && is(m2, "MethodsList"))
-          m2 <- .GenericInPrimitiveMethods(m2, genericLabel)
-    if(is.null(m1) || is(m1, "EmptyMethodsList"))
-      return(m2)
-    tmp <- listFromMlist(m2)
-    sigs <- el(tmp, 1)
-    methods <- el(tmp, 2)
-    for(i in seq_along(sigs)) {
-      sigi <- el(sigs, i)
-      args <- names(sigi)
-      m1 <- insertMethod(m1, as.character(sigi), args, el(methods, i), FALSE)
+    ## merge the methods in the second MethodsList object into the first,
+    ## and return the merged result.
+    function(m1, m2, genericLabel = character()) {
+        if(length(genericLabel) > 0 && is(m2, "MethodsList"))
+            m2 <- .GenericInPrimitiveMethods(m2, genericLabel)
+        if(is.null(m1) || is(m1, "EmptyMethodsList"))
+            return(m2)
+        tmp <- listFromMlist(m2)
+        sigs <- el(tmp, 1)
+        methods <- el(tmp, 2)
+        for(i in seq_along(sigs)) {
+            sigi <- el(sigs, i)
+            args <- names(sigi)
+            m1 <- insertMethod(m1, as.character(sigi), args, el(methods, i), FALSE)
+        }
+        m1
     }
-    m1
-  }
 
 doPrimitiveMethod <-
   ## do a primitive call to builtin function 'name' the definition and call
@@ -289,18 +289,21 @@ doPrimitiveMethod <-
     eval(call, ev)
 }
 
-conformMethod <-
-    function(signature, mnames, fnames, f = "<unspecified>", fdef, method)
+conformMethod <- function(signature, mnames, fnames,
+			  f = "<unspecified>", fdef, method)
 {
     fsig <- fdef@signature
     if(is.na(match("...", mnames)) && !is.na(match("...", fnames)))
         fnames <- fnames[-match("...", fnames)]
-    omitted <- is.na(match(fnames, mnames))
-    if(!any(omitted))
-        return(signature)
     label <- paste("In method for function \"", f,"\": ", sep="")
-    if(!all(diff(seq_along(fnames)[!omitted]) > 0))
-        stop(label, "formal arguments in method and function do not appear in the same order")
+    omitted <- is.na(imf <- match(fnames, mnames))
+    if(is.unsorted(imf[!omitted]))
+	## Should be an error, but the test was not triggering for such a long time :
+	warning(label,
+	     "formal arguments in method and function do not appear in the same order")
+    if(!any(omitted)) ## i.e. mnames contains all fnames
+        return(signature)
+
     signature <- c(signature, rep("ANY", length(fsig)-length(signature)))
     ### FIXME:  the test below is too broad, with all.names().  Would be nice to have a test
     ### for something like assigning to one of the omitted arguments.
@@ -343,32 +346,40 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
     dotsPos <- match("...", fnames)
     if(added && is.na(dotsPos))
         stop("methods can add arguments to the generic only if '...' is an argument to the generic")
-    ## pass down all the names in common between method & generic, plus "..."
-    ## even if the method doesn't have it.  But NOT any arguments having class
-    ## "missing" implicitly (see conformMethod)
-    useNames <- !is.na(match(fnames, mnames)) | fnames == "..."
+    ## pass down all the names in common between method & generic,
+    ## plus "..."  even if the method doesn't have it.  But NOT any
+    ## arguments having class "missing" implicitly (see conformMethod),
+    ## i.e., are not among 'mnames':
+    useNames <- !is.na(imf <- match(fnames, mnames)) | fnames == "..."
     newCall <- lapply(c(".local", fnames[useNames]), as.name)
+
+    ## Should not be needed, if conformMethod() has already been called:
+    if(is.unsorted(imf[!is.na(imf)]))
+	warning("Arguments of method and generic are not in the same order")
+
     ## leave newCall as a list while checking the trailing args
     if(keepsDots && dotsPos < length(fnames)) {
-        ## trailing arguments are required to match.  This is a little stronger
-        ## than necessary, but this is a dicey case, because the argument-matching
-        ## may not be consistent otherwise (in the generic, such arguments have to be
-        ## supplied by name).  The important special case is replacement methods, where
-        ## value is the last argument.
-        ntrail <- length(fnames) - dotsPos
-        trailingArgs <- fnames[seq.int(to = length(fnames), length.out = ntrail)]
-        if(!identical(mnames[seq.int(to = length(mnames), length.out = ntrail)],
-                      trailingArgs))
-            stop(gettextf("arguments after '...' in the generic (%s) must appear in the method, in the same place at the end of the argument list",
-                          paste(trailingArgs, collapse=", ")), domain = NA)
-        newCallNames <- character(length(newCall))
-        newCallNames[seq.int(to =length(newCallNames), length.out = ntrail)] <-
-            trailingArgs
-        names(newCall) <- newCallNames
+	## Trailing arguments are required to match.  This is a little
+	## stronger than necessary, but this is a dicey case, because
+	## the argument-matching may not be consistent otherwise (in
+	## the generic, such arguments have to be supplied by name).
+	## The important special case is replacement methods, where
+	## value is the last argument.
+
+	ntrail <- length(fnames) - dotsPos
+	trailingArgs <- fnames[seq.int(to = length(fnames), length.out = ntrail)]
+	if(!identical(	mnames[seq.int(to = length(mnames), length.out = ntrail)],
+		      trailingArgs))
+	    stop(gettextf("arguments after '...' in the generic (%s) must appear in the method, in the same place at the end of the argument list",
+			  paste(trailingArgs, collapse=", ")), domain = NA)
+	newCallNames <- character(length(newCall))
+	newCallNames[seq.int(to = length(newCallNames), length.out = ntrail)] <-
+	    trailingArgs
+	names(newCall) <- newCallNames
     }
     newCall <- as.call(newCall)
     newBody <- substitute({.local <- DEF; NEWCALL},
-                          list(DEF = definition, NEWCALL = newCall))
+			  list(DEF = definition, NEWCALL = newCall))
     generic <- .copyMethodDefaults(generic, definition)
     body(generic, envir = environment(definition)) <- newBody
     generic
