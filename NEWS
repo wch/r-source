@@ -356,7 +356,7 @@ BUG FIXES
 
     o	conformMethod(), called by setMethod(), now checks better about
 	argument names in wrong order.  Whereas it only warns currently,
-	it is planned to become be an error in the future.
+	it is planned to become an error in the future.
 
     o	The predict() method for prcomp() had an incorrect check for
 	the number of columns of 'newdata' if the columns were not named.

@@ -3883,9 +3883,10 @@ stopifnot(is.nan(rstandard(Uniform)[Ind]),
           is.nan(cooks.distance(Uniform)[Ind]))
 ## had infinities in 2.2.0 on some platforms
 ## plot.lm() on <glm> objects:
-plot(Uniform)
+plot(Uniform) # last plot gives warning on h_ii ~= 1
 plot(Uniform, 6) # added 2006-01-10
 plot(Uniform, 5:6)# failed for a few days 2008-05
+plot(Uniform, 1:2, caption = "")# ditto
 ##
 
 

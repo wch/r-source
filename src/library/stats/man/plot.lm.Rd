@@ -30,6 +30,7 @@
   \item{caption}{captions to appear above the plots;
     \code{\link{character}} vector or \code{\link{list}} of valid
     graphics annotations, see \code{\link[grDevices]{as.graphicsAnnot}}.
+    Can be set to \code{""} or \code{NA} to suppress all captions.
   }
   \item{panel}{panel function.  The useful alternative to
     \code{\link{points}}, \code{\link{panel.smooth}} can be chosen
