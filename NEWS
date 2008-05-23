@@ -387,6 +387,8 @@ BUG FIXES
 	
     o	The srcfilecopy() function now adds a timestamp to the object it
     	creates.
+    
+    o	parse() would lose a token when run on stdin().
 
 
 
