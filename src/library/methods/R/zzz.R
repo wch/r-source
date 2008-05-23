@@ -15,14 +15,9 @@
 #  http://www.r-project.org/Licenses/
 
 ..First.lib  <-
-  ## Initialize the methods package:  the session table of method
-  ## definitions.
-  ##
-  ## run the initial computations for the methods package, if this
-  ## wasn't done at INSTALL time:
-  ##  - define the basic classes (vector, the informal classes that
-  ##  extend vector)
-  ##  - define the classes needed to represent methods
+  ## Initialize the methods package.  Called from .onLoad, first
+  ## during INSTALL, when saved will be FALSE, at which time
+  ## the serious computation is done.  (The name ..First.lib is only historical)
   function(libname, pkgname, where)
 {
     if(missing(where)) {
@@ -36,8 +31,7 @@
     initMethodDispatch(where)
     ## temporary empty reference to the package's own namespace
     assign(".methodsNamespace", new.env(), envir = where)
-    useTables <-  !nzchar(Sys.getenv("R_NO_METHODS_TABLES"))
-    .Call("R_set_method_dispatch", useTables, PACKAGE = "methods")
+    .Call("R_set_method_dispatch", TRUE, PACKAGE = "methods")
     saved <- (if(exists(".saveImage", envir = where, inherits = FALSE))
               get(".saveImage", envir = where)
               else
@@ -79,7 +73,10 @@
         ## so that non-default signatures are allowed in setGeneric()
         .initImplicitGenerics(where)
         assign("implicitGeneric", .implicitGeneric, envir = where)
-        assign(".saveImage", TRUE, envir = where)
+        cacheMetaData(where, TRUE, searchWhere = .GlobalEnv, FALSE)
+        ## unlock some bindings that must be modifiable
+        unlockBinding(".BasicFunsList", where)
+         assign(".saveImage", TRUE, envir = where)
         on.exit()
         cat("done\n")
     }
@@ -94,26 +91,6 @@
 
         assign(".methodsNamespace",
                environment(get("setGeneric", where)), where)
-        ## cache metadata for all environments in search path.  The
-        ## assumption is that this has not been done, since
-        ## cacheMetaData is in this package.  library, attach, and
-        ## detach functions look for cacheMetaData and call it if it's
-        ## found.
-
-        sch <- rev(search())[-(1:2)]  # skip base and autoloads
-        sch <- sch[! sch %in% paste("package",
-                                    c("datasets", "grDevices", "graphics",
-                                      "stats", "utils"),
-                                    sep=":")]
-        for(i in sch) {
-            nev <- ev <- as.environment(i)
-            ns <- .Internal(getRegisteredNamespace(as.name(getPackageName(ev))))
-            if(!is.null(ns)) nev <- asNamespace(ns)
-            if(identical(getPackageName(ev), "methods"))
-               next
-            if(!exists(".noGenerics", where = nev, inherits = FALSE))
-                cacheMetaData(ev, TRUE, searchWhere = .GlobalEnv)
-        }
     }
 }
 
@@ -140,15 +117,15 @@
 
 .onAttach <- function(libname, pkgName) {
     env <- environment(sys.function())
-    ## unlock some bindings that must be modifiable to set methods
+    ## unlock some bindings that must be modifiable
     unlockBinding(".BasicFunsList", env)
-    ## following  has to be on attach , not on load, but why???
-    cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
-    result <- try(cacheMetaData(.GlobalEnv, TRUE))
-    ## still attach  methods package if global env has bad objets
-    if(is(result, "try-error"))
-	warning("apparently bad method or class metadata in saved environment;\n",
-		"move the file or remove the class/method")
+    if(methods:::.hasS4MetaData(.GlobalEnv)) {
+        result <- try(cacheMetaData(.GlobalEnv, TRUE))
+        ## still attach  methods package if global env has bad objets
+        if(is(result, "try-error"))
+          warning("apparently bad method or class metadata in saved environment;\n",
+                  "move the file or remove the class/method")
+    }
 }
 
 .Last.lib <- function(libpath) {
