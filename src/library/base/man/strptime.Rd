@@ -112,7 +112,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     \item{\code{\%X}}{Time, locale-specific.}
     \item{\code{\%y}}{Year without century (00--99). If you use this on
       input, which century you get is system-specific.  So don't!  Often
-      values up to 69 (or 68) are prefixed by 20 and 70(or 69) to 99 by 19.}
+      values up to 69 (or 68) are prefixed by 20 and 70 (or 69) to 99 by 19.}
     \item{\code{\%Y}}{Year with century.}
 #ifdef unix
     \item{\code{\%z}}{(output only.) Offset from Greenwich, so
