@@ -306,6 +306,8 @@ functionality,@footnote{for example, if you configured @R{} with
 should look carefully at any reported discrepancies.  (Some non-fatal
 errors are expected in locales that do not support Latin-1, in
 particular in true @code{C} locales and non-UTF-8 non-European locales.)
+A falure in @file{tests/ok-errors.R} may indicate inadequate resource
+limits (@pxref{Running R}).
 
 To re-run the tests including those successfully run you would need
 
@@ -1313,6 +1315,11 @@ see the FAQ for details.
 
 How to start @R{} and what command-line options are available is discussed
 in @ref{Invoking R, , Invoking R, R-intro, An Introduction to R}.
+
+You should ensure that the shell has set adequate resource limits: @R{}
+expects a stack size of at least 8MB and to be able to open at least 256
+file descriptors.  (Any modern OS will have default limits at least as
+large as these, but apparently NetBSD does not.)
 
 @R{} makes use of a number of environment variables, the default values
 of many of which are set in file @file{@var{R_HOME}/etc/Renviron} (there
@@ -4171,8 +4178,8 @@ port would be greatly appreciated.
 
 We no longer support AIX prior to 4.2, and @command{configure} will
 throw an error on such systems.  The recent testing has been under AIX
-5.2 on @cputype{powerpc}, where Ei-ji Nakama was able to build pre-2.5.0
-with @command{gcc 4.0.3} in several configurations.
+5.2 on @cputype{powerpc}, where Ei-ji Nakama was able to build with
+@command{gcc 4.0.3} in several configurations.
 
 Mr Nakama found 32-bit versions of @R{} could be built with
 @command{configure --without-iconv} as well as
@@ -4199,6 +4206,11 @@ FC="f90 -cpu=pwr4 -hf77 -parallel=0 -i,L -O3 -64"
 FLIBS="-L/opt/ofort90/lib -lhf90vecmath -lhf90math -lf90"
 @end example
 
+Some systems have @command{f95} as an IBM compiler that does not by
+default accept FORTRAN 77.  It needs the flag @code{-qfixed=72}, or to
+be invoked as @command{xlf_r}.
+%http://publib.boulder.ibm.com/infocenter/comphelp/v7v91/index.jsp?topic=/com.ibm.xlf91a.doc/xlfug/hu00465.htm
+
 The AIX native @code{iconv} does not support encodings @samp{latin1} nor
 @samp{""} and so cannot be used.  (As far as we know GNU @code{libiconv}
 could be installed.)
@@ -4210,8 +4222,8 @@ The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
 This is unsupported, but experiments have been conducted and a few
 workarounds added for @R{} 2.6.0.
 
-Only building as a shared library works,@footnote{DLLs need to have all
-links resolved at build time and so cannot resolve against
+Only building as a shared library works,@footnote{Windows DLLs need to
+have all links resolved at build time and so cannot resolve against
 @file{R.bin}.} so use
 
 @example
@@ -4225,8 +4237,8 @@ use in a CJK locale.  NLS does work, although
 @option{--with-included-gettext} is preferable.  You will see many
 warnings about the use of auto-import.
 
-It almost passes @command{make check}: FIFOs are supposedly supported
-but hung in @samp{example(fifo)}.
+%It almost passes @command{make check}: FIFOs are supposedly supported
+%but hung in @samp{example(fifo)}.
 
 Note that this gives you a command-line application using @code{readline}
 for command editing.  The @samp{X11} graphics device will work if a
