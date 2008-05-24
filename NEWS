@@ -126,6 +126,8 @@ NEW FEATURES
 	efficient computation for seasonal fits (they used to waste
 	one period).
 
+    o	polyroot() no longer has a maximum degree.
+
 
 PACKAGE INSTALLATION
 
