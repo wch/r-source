@@ -979,7 +979,7 @@ SEXP attribute_hidden do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     n = degree + 1; /* omit trailing zeroes */
     if(degree >= 1) {
-	if(n > 49) error(_("polynomial degree too high (49 max)"));
+	if(n > 50) error(_("polynomial degree too high (49 max)"));
 	/* <==>	 #define NMAX 50  in  ../appl/cpoly.c */
 
 	/* if(COMPLEX(z)[n-1].r == 0.0 && COMPLEX(z)[n-1].i == 0.0)
