@@ -19,7 +19,7 @@ contrasts(x, how.many) <- value
   \item{contrasts}{logical.  See \sQuote{Details}.}
   \item{how.many}{How many contrasts should be made. Defaults to one
     less than the number of levels of \code{x}.  This need not be the
-    same as the number of columns of \code{ctr}.}
+    same as the number of columns of \code{value}.}
   \item{value}{either a numeric matrix whose columns give coefficients for
     contrasts in the levels of \code{x}, or the (quoted) name of a
     function which computes such matrices.}
@@ -37,6 +37,12 @@ contrasts(x, how.many) <- value
   it is passed to a contrasts function such as
   \code{\link{contr.treatment}} and if \code{contrasts = FALSE}
   an identity matrix is returned.
+
+  If \code{value} supplies more than \code{how.many} contrasts, the
+  first \code{how.many} are used.  If too few are supplied, a suitable
+  contrast matrix is created by extending \code{value} after ensuring
+  its columns are contrasts (orthogonal to the constant term) and not
+  collinear.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
