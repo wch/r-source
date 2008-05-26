@@ -128,6 +128,9 @@ NEW FEATURES
 
     o	polyroot() no longer has a maximum degree.
 
+    o	dev.interactive() is able to recognize the standard screen
+	devices if getOption("device") is a function (as well as by name).
+
 
 PACKAGE INSTALLATION
 

@@ -20,12 +20,16 @@
 
 dev.interactive <- function(orNone = FALSE)
 {
-    iDevs <- .known_interactive.devices
-    interactive() &&
-    (.Device %in% iDevs ||
-     (orNone && .Device == "null device" &&
-      is.character(newdev <- getOption("device")) &&
-      newdev %in% iDevs))
+    if(!interactive()) return(FALSE)
+    if(.Device %in% .known_interactive.devices) return(TRUE)
+    if(!(orNone && .Device == "null device")) return(FALSE)
+    ## at this point we have mo active device.
+    newdev <- getOption("device")
+    if(is.character(newdev)) newdev %in% .known_interactive.devices
+    else { # a function
+        if(.Platform$OS.type == "windows") identical(newdev, windows)
+        else identical(newdev, X11) || identical(newdev, quartz)
+    }
 }
 
 deviceIsInteractive <- function(name = NULL)
