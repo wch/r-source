@@ -392,6 +392,10 @@ BUG FIXES
     
     o	parse() would lose a token when run on stdin().
 
+    o	socketConnection() was using internally the class "socket" 
+	and not "sockconn", which caused a conflict with make.socket().
+	(PR#11515)
+
 
 
 		CHANGES IN R VERSION 2.7.0
