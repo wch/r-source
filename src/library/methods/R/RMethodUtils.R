@@ -1439,6 +1439,28 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
     }
 }
 
+.NamespaceOrEnvironment <- function(where) {
+    value <- NULL
+    if(is.environment(where))
+      value <- where
+    else if(is.character(where) && nzchar(where)) {
+        ns <- .Internal(getRegisteredNamespace(where))
+        if(isNamespace(ns))
+          value <- ns
+        else if(where %in% search())
+          value <- as.environment(where)
+        else {
+            where <- paste("package:", where, sep="")
+            if(where %in% search())
+              value <- as.environment(where)
+        }
+    }
+    else if(is.numeric(where) && where %in% seq(along = search()))
+      value <- as.environment(where)
+    value
+}
+    
+
 .hasS4MetaData <- function(env)
   (length(objects(env, all.names = TRUE,
                           pattern = "^[.]__[CT]_")))

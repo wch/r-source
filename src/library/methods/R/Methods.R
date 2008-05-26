@@ -620,15 +620,35 @@ getMethod <-
   ## Return the function that is defined as the method for this generic function and signature
   ## (classes to be matched to the arguments of the generic function).
   function(f, signature = character(), where = topenv(parent.frame()), optional = FALSE,
-           mlist, fdef = getGeneric(f, !optional, where = where))
+           mlist, fdef )
 {
-    if(!is(fdef, "genericFunction")) # must be the optional case, else an error in getGeneric
-        return(NULL)
+    if(!missing(where)) {
+        env <- .NamespaceOrEnvironment(where)
+        if(is.null(env))
+          stop(gettextf("no environment or package corresponding to argument where=%s",
+               deparse(where)), domain = NA)
+        where <- env
+    }
+    if(missing(fdef)) {
+        if(missing(where))
+          fdef <-  getGeneric(f, FALSE)
+        else {
+            fdef <-  getGeneric(f, FALSE, where = where)
+            if(is.null(fdef))
+              fdef <- getGeneric(f, FALSE)
+        }
+    }
+    if(!is(fdef, "genericFunction")) {
+        if(optional)
+          return(NULL)
+        else
+          stop(gettextf('No generic function found for "%s"', f), domain = NA)
+    }
     if(missing(mlist)) {
         if(missing(where))
             mlist <- getMethodsForDispatch(fdef)
         else
-            mlist <- .getMethodsTableMetaData(fdef, as.environment(where), optional)
+            mlist <- .getMethodsTableMetaData(fdef, where, optional)
     }
     if(is.environment(mlist)) {
         signature <- matchSignature(signature, fdef)
@@ -872,16 +892,11 @@ existsMethod <-
   ## this signature.
   function(f, signature = character(), where = topenv(parent.frame()))
 {
-    fdef <- getGeneric(f, FALSE, where = where)
-    if(is.null(fdef))
-      FALSE
-    else  {
         if(missing(where))
-          method <- getMethod(f, signature, fdef = fdef, optional = TRUE)
+          method <- getMethod(f, signature,  optional = TRUE)
         else
           method <- getMethod(f, signature, where = where, optional = TRUE)
         !is.null(method)
-    }
 }
 
 signature <-
