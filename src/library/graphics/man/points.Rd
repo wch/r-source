@@ -83,14 +83,15 @@ points(x, \dots)
     \item \code{-32 \dots} Unicode point (where supported).
   }
   Note that unlike S (which uses octagons), symbols \code{1}, \code{10},
-  \code{13} and \code{19} use circles.
+  \code{13} and \code{16} use circles.  The filled shapes do not include
+  a border except for \code{16} (and that is likely to be changed).
   
   The following  \R plotting symbols are can be obtained with
   \code{pch=19:25}: those with \code{21:25} can be colored and
   filled with different colors: \code{col} gives the border color
   and \code{bg} the background color.
   \itemize{
-    \item \code{pch=19}: solid circle,
+    \item \code{pch=19}: solid circle (currently the same as \code{16}),
     \item \code{pch=20}: bullet (smaller circle),
     \item \code{pch=21}: filled circle,
     \item \code{pch=22}: filled square,
@@ -98,6 +99,10 @@ points(x, \dots)
     \item \code{pch=24}: filled triangle point-up,
     \item \code{pch=25}: filled triangle point down.
   }
+  Note that all of these both fill the shape and draw a border. Some
+  care in interpretation is needed when semi-transparent colours are
+  used for both fill and border (and the result might be device-specific
+  and even viewer-specific for \code{\link{pdf}}).
       
   Values \code{pch=26:31} are currently unused and \code{pch=32:127}
   give the ASCII characters.  In a single-byte locale
