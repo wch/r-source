@@ -99,7 +99,8 @@ prettyNum(x, big.mark = "",   big.interval = 3,
   \item{\dots}{arguments passed to \code{format}.}
 }
 \value{
-  A character object of same size and attributes as \code{x}.
+  A character object of same size and attributes as \code{x}, in the
+  current locale's encoding.
   Unlike \code{\link{format}}, each number is formatted individually.
   Looping over each element of \code{x}, the C function
   \code{sprintf(\dots)} is called (inside the C function \code{str_signif}).

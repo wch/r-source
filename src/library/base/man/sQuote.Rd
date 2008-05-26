@@ -1,6 +1,6 @@
 % File src/library/base/man/sQuote.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sQuote}
@@ -75,6 +75,9 @@ dQuote(x)
   Lucida Console and standard the CJK fonts, but directional double
   quotes are missing in raster fonts such as Courier and FixedSys.
 #endif
+}
+\value{
+  A character vector in the current locale's encoding.
 }
 \seealso{
   \code{Quotes} for quoting \R code.

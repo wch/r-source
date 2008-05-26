@@ -112,7 +112,8 @@ gettextf(fmt, \dots, domain = NULL)
 }
 
 \value{
-  A character vector of length that of the longest input.
+  A character vector of length that of the longest input, in the current
+  locale's encoding.
 }
 
 \references{
