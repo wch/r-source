@@ -1,6 +1,6 @@
 % File src/library/base/man/make.names.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{make.names}
@@ -21,7 +21,7 @@ make.names(names, unique = FALSE, allow_ = TRUE)
 }
 \value{
   A character vector of same length as \code{names} with each changed to
-  a syntactically valid name.
+  a syntactically valid name, in the current locale's encoding.
 }
 \details{
   A syntactically valid name consists of letters, numbers and the dot or

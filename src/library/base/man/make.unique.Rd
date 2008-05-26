@@ -1,6 +1,6 @@
 % File src/library/base/man/make.unique.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{make.unique}
@@ -19,7 +19,8 @@ make.unique(names, sep = ".")
     its sequence number.}
 }
 \value{
-  A character vector of same length as \code{names} with duplicates changed.
+  A character vector of same length as \code{names} with duplicates
+  changed, in the current locale's encoding.
 }
 \details{
   The algorithm used by \code{make.unique} has the property that
@@ -34,7 +35,7 @@ make.unique(names, sep = ".")
 
   Inputs with embedded nul bytes will be truncated at the first nul.
 }
-\author{Thomas P Minka}
+\author{Thomas P. Minka}
 \seealso{
   \code{\link{make.names}}
 }

@@ -1,6 +1,6 @@
 % File src/library/base/man/strwrap.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{strwrap}
@@ -43,6 +43,9 @@ strwrap(x, width = 0.9 * getOption("width"), indent = 0,
   string.
 
   Inputs with embedded nul bytes will be truncated at the first nul.
+}
+\value{
+  A character vector in the current locale's encoding.
 }
 \examples{
 ## Read in file 'THANKS'.

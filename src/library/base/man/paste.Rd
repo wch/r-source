@@ -44,10 +44,11 @@ paste(\dots, sep = " ", collapse = NULL)
   zero if all the objects are, unless \code{collapse} is non-NULL in
   which case it is a single empty string.
 
-  The encoding of an element of the result is declared if the current
-  locale is either Latin-1 or UTF-8, at least one of the corresponding
-  inputs (including separators) had a declared encoding and all inputs
-  were either ASCII or declared.
+  The results will be in the current encoding.  The encoding of an
+  element of the result is declared if the current locale is either
+  Latin-1 or UTF-8, at least one of the corresponding inputs (including
+  separators) had a declared encoding and all inputs were either ASCII
+  or declared.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
