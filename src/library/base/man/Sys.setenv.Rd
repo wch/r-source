@@ -40,6 +40,15 @@ Sys.unsetenv(x)
   (Windows does, but the facilities provided by \R may not handle these
   correctly so they should be avoided.)
 #endif
+  
+  There may be system-specific limits on the maximum length of the values
+  of individual environment variables or of all environment variables.
+#ifdef windows
+  Windows has a limit of 32,767 characters on the environment block, and
+  \code{cmd.exe} has a limit of 2047 (Windows 2000) or 8192 characters
+  (XP and later) for each value.
+  % http://support.microsoft.com/kb/830473
+#endif
 }
 \note{
   Not all systems need support \code{Sys.setenv} (although all known
