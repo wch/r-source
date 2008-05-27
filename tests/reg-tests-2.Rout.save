@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-04-23 r45460)
+R version 2.8.0 Under development (unstable) (2008-05-26 r45783)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6150,4 +6150,25 @@ In `[<-.data.frame`(`*tmp*`, , 3, value = list(a = 1:3, b = 2:4)) :
 2 2 3   2
 3 3 4   3
 > ## warning during printing < 2.7.0
+> 
+> 
+> ## format.factor used to lose dim[names] and names (PR#11512)
+> x <- factor(c("aa", letters[-1]))
+> dim(x) <- c(13,2)
+> format(x, justify="right")
+      [,1] [,2]
+ [1,] "aa" " n"
+ [2,] " b" " o"
+ [3,] " c" " p"
+ [4,] " d" " q"
+ [5,] " e" " r"
+ [6,] " f" " s"
+ [7,] " g" " t"
+ [8,] " h" " u"
+ [9,] " i" " v"
+[10,] " j" " w"
+[11,] " k" " x"
+[12,] " l" " y"
+[13,] " m" " z"
+> ##
 > 

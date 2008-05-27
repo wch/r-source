@@ -207,8 +207,10 @@ formatC <- function (x, digits = NULL, width = NULL,
     r
 }
 
-format.factor <- function(x, ...)
-    format(as.character(x), ...)
+format.factor <- function (x, ...)
+    format(structure(as.character(x), names=names(x),
+                     dim=dim(x), dimnames=dimnames(x)), ...)
+
 
 format.data.frame <- function(x, ..., justify = "none")
 {

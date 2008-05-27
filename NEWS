@@ -256,6 +256,9 @@ NEW FEATURES
 
     o	axis() now respects the setting of par("xpd") when clipping.
 
+    o	The 'factor' method of format() now preserves names, dims and
+    	dimnames in the same way as for character and numeric inputs.
+
 
 DEPRECATED & DEFUNCT
 

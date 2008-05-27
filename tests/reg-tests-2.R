@@ -2268,3 +2268,10 @@ x <- data.frame(a=1:3, b=2:4)
 x[,3] <- x
 x
 ## warning during printing < 2.7.0
+
+
+## format.factor used to lose dim[names] and names (PR#11512)
+x <- factor(c("aa", letters[-1]))
+dim(x) <- c(13,2)
+format(x, justify="right")
+##
