@@ -137,6 +137,16 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    INTEGER(s)[i] = length(sxi);
 	} else if (strncmp(type, "chars", ntype) == 0) {
 #ifdef SUPPORT_MBCS
+	    /* only on Windows will non-representable UTF-8 chars be
+	       usefully ouptut as chars and not <U+xxxx> */
+# ifdef Win32
+	    if (IS_UTF8(sxi)) { /* assume this is valid */
+		const char *p = CHAR(sxi);
+		nc = 0;
+		for( ; *p; p +=utf8clen(*p)) nc++;
+		INTEGER(s)[i] = nc;
+	    } else
+# endif
 	    if (mbcslocale) {
 		nc = mbstowcs(NULL, translateChar(sxi), 0);
 		if (!allowNA && nc < 0)
@@ -147,6 +157,18 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 		INTEGER(s)[i] = strlen(translateChar(sxi));
 	} else if (strncmp(type, "width", ntype) == 0) {
 #ifdef SUPPORT_MBCS
+# ifdef Win32
+	    if (IS_UTF8(sxi)) { /* assume this is valid */
+		const char *p = CHAR(sxi);
+		wchar_t wc1;
+		nc = 0;
+		for( ; *p; p +=utf8clen(*p)) {
+		    utf8toucs(&wc1, p);
+		    nc +=Ri18n_wcwidth(wc1);
+		}
+		INTEGER(s)[i] = nc;
+	    } else
+# endif
 	    if (mbcslocale) {
 		xi = translateChar(sxi);
 		nc = mbstowcs(NULL, xi, 0);

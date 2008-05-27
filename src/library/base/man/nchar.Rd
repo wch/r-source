@@ -72,6 +72,14 @@ nzchar(x)
   will be used to \code{print()} the string.  Use
   \code{\link{encodeString}} to find the characters used to print the
   string.
+#ifdef windows
+  This is particularly important on Windows when \code{\\uxxxx}
+  sequences have been used to enter Unicode characters not representable
+  in the current encoding.  Thus \code{nchar("\\u2642")} is \code{1},
+  and it is printed in \code{Rgui} as one character, but it will be
+  printed in \code{Rterm} as \code{<U+2642>}, which is what
+  \code{encodeString} gives.
+#endif
 
   Embedded \code{nul} bytes are included in the byte count (but not the
   final \code{nul}).  In contrast, characters are counted up to the
