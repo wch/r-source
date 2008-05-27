@@ -56,6 +56,10 @@ NEW FEATURES
     o	The Save as | Postscript ... file selection box now offers
 	*.eps (default) and *.ps file selections.
 
+    o	nchar() now gives the number of characters and their width as
+	would be printed in Rgui for UTF-8 strings, not as they would
+	be printed in Rterm (via <U+xxxx> escapes).
+
 
 BUG FIXES
 
