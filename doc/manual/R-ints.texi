@@ -2830,16 +2830,20 @@ standard text, and converted to UCS-2 in the plotting functions in file
 Unicode symbol fonts, and symbols are handled in Adobe Symbol encoding.
 
 Support for translucent colours (with alpha channel between 0 and 255)
-was introduced in @R{} 2.6.0 for the screen device only.  This is done
-by drawing on a further internal bitmap, @code{xd->bm2}, in the opaque
-version of the colour then alpha-blending that bitmap to @code{xd->bm}.
-The alpha-blending routine is in a separate DLL, @file{msimg32.dll} that
-is available on Windows 2000 or later and is loaded on first use.  As
-small a rectangular region as reasonably possible is alpha-blended (this
-is rectangle @code{r} in the code), but things like mitre joins make
-estimation of a tight bounding box too much work for lines and polygonal
-boundaries.  Translucent-coloured lines are not common, and the
-performance seems acceptable.
+was introduced in @R{} 2.6.0 for the screen device only, and extended to
+the bitmap devices in @R{} 2.7.0.@footnote{It is technically possible to
+use alpha-blending on metafile devices such as printers, but it seems
+few drivers have support for this.} This is done by drawing on a further
+internal bitmap, @code{xd->bm2}, in the opaque version of the colour
+then alpha-blending that bitmap to @code{xd->bm}.  The alpha-blending
+routine is in a separate DLL, @file{msimg32.dll}, which is loaded on
+first use.@footnote{It is avaliable on Windows 2000 or later, and so had
+to be optional in @R{} 2.6.0.}  As small a rectangular region as
+reasonably possible is alpha-blended (this is rectangle @code{r} in the
+code), but things like mitre joins make estimation of a tight bounding
+box too much work for lines and polygonal boundaries.
+Translucent-coloured lines are not common, and the performance seems
+acceptable.
 
 The support for a transparent background in @code{png()} predates full
 alpha-channel support in @code{libpng} (let alone in PNG viewers), so
@@ -2850,12 +2854,12 @@ uses this as the background colour (in @code{GA_NewPage} if the
 specified background colour is transparent (and all non-opaque
 background colours are treated as transparent).  So this works by
 marking that colour in the PNG file, and viewers without transparency
-support see a slightly-off-white background, as if there were a near-white
-canvas.  Where a palette is used in the PNG file (if less than 256
-colours were used) then this colour is recorded with full transparency
-and the remaining colours as opaque.  If 32-bit colour was available
-then we could add a full alpha channel, but this is dependent on the
-graphics hardware and undocumented properties of GDI.
+support see a slightly-off-white background, as if there were a
+near-white canvas.  Where a palette is used in the PNG file (if less
+than 256 colours were used) then this colour is recorded with full
+transparency and the remaining colours as opaque.  If 32-bit colour were
+available then we could add a full alpha channel, but this is dependent
+on the graphics hardware and undocumented properties of GDI.
 
 
 @node Colours, Base graphics, Graphics devices, Graphics Devices
@@ -2894,6 +2898,20 @@ The sRGB colorspace is an industry standard: it is used by Web browsers
 and JPEGs from all but high-end digital cameras.  The interpretation is
 a matter for graphics devices and for code that manipulates colours, but
 not for the graphics engine or subsystems.
+
+@R{} uses a painting model similar to PostScript and PDF.  This means
+that where shapes (circles, rectangles and polygons) can both be filled
+and have a stroked border, the fill should be painted first and then the
+border (or otherwise only half the border will be visible).  Where both
+the fill and the border are semi-transparent there is some room for
+interpretation of the intention.  Most devices first paint the fill and
+then the border, alpha-blending at each step.  However, PDF does some
+automatic grouping of objects, and @emph{when the fill and the border
+have the same alpha}, they are painted onto the same layer and then
+alpha-blended in one step.  (See p. 569 of the PDF Reference Sixth
+Edition, version 1.7.  Unfortunately, although this is what the PDF
+standard says should happen, it is not correctly implemented by some
+viewers.)
 
 
 @node Base graphics, Grid graphics, Colours, Graphics Devices
