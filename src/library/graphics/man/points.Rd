@@ -84,7 +84,8 @@ points(x, \dots)
   }
   Note that unlike S (which uses octagons), symbols \code{1}, \code{10},
   \code{13} and \code{16} use circles.  The filled shapes do not include
-  a border except for \code{16} (and that is likely to be changed).
+  a border except for \code{16} (but this will change in \R 2.8.0 to be
+  borderless).
   
   The following  \R plotting symbols are can be obtained with
   \code{pch=19:25}: those with \code{21:25} can be colored and
