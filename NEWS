@@ -22,23 +22,23 @@ NEW FEATURES
     o	The Mac OS quartz() device draws contiguous lines much faster.
 
     o	A field containing just a sign is no longer regarded as numeric
-    	(it was on all platforms in 2.7.0, but not on most in earlier
+	(it was on all platforms in 2.7.0, but not on most in earlier
 	versions of R).
 
     o	CITATION files are now read in Latin-1: quite a few were
-    	failing if used in a multibyte locale such as UTF-8.
+	failing if used in a multibyte locale such as UTF-8.
 
     o	The DESCRIPTION file of a package can specify an 'OS_type' field
 	as either 'unix' or 'windows' to confine installation to that
 	OS type.
 
     o	HoltWinters() now uses optimize() rather than optim for
-    	one-parameter problems which should be more reliable (PR#11469).
+	one-parameter problems which should be more reliable (PR#11469).
 
     o	axis() now respects the setting of par("xpd") when clipping.
 
     o	The 'factor' method of format() now preserves names, dims and
-    	dimnames in the same way as for character and numeric inputs.
+	dimnames in the same way as for character and numeric inputs.
 
 
 DEPRECATED & DEFUNCT
@@ -53,10 +53,10 @@ DEPRECATED & DEFUNCT
 UTILITIES
 
     o	R CMD check checks for possible check directories in the
-    	sources -- in mid-2008 there were about 20 examples on CRAN.
+	sources -- in mid-2008 there were about 20 examples on CRAN.
 
     o	R CMD build tries harder to clean up the inst/doc directory
-    	from the remnants of earlier builds.
+	from the remnants of earlier builds.
 
 	It also removes any directories with extension .Rcheck.
 
@@ -72,10 +72,10 @@ BUG FIXES
 	correct mode, instead of always numeric.
 
     o	The parser sometimes accepted invalid quoted strings in a UTF-8
-    	locale.
+	locale.
 
     o	plot.default(x, y) now dispatches to Axis() methods whether
-    	y is NULL or not.
+	y is NULL or not.
 
     o	On Mac OS X, the Cocoa Quartz window could close without warning
 	under certain circumstances (specific autorelease pool flush).
@@ -86,10 +86,10 @@ BUG FIXES
 	transparent then 'bg' was ignored and nothing was drawn.
 
     o	file.path() did not work correctly in 2.7.0 if the components
-    	had different encodings.
+	had different encodings.
 
     o	merge() failed if there were no common columns and one of the
-    	inputs had zero rows.
+	inputs had zero rows.
 
     o	expand.grid() failed if an input had length 0.
 
@@ -97,7 +97,7 @@ BUG FIXES
 	documented in 2.7.0).
 
     o	Because of a typo, 'pointsize' in png(type="cairo") (and jpeg,
-    	bmp, tiff) devices was being interpreted in pixels not bigpoints.
+	bmp, tiff) devices was being interpreted in pixels not bigpoints.
 
     o	is() was wrong for some S3 class objects with class of length
 	greater than one.
@@ -107,12 +107,12 @@ BUG FIXES
     o	Use of textConnection(NULL, mode="w") could segfault.
 
     o	Use of strwidth/height(units="user") (the default) is again an
-    	error before a user coordinate system has been set on the
-    	device, rather than giving nonsensical values (the effect of
-    	r31367).
+	error before a user coordinate system has been set on the
+	device, rather than giving nonsensical values (the effect of
+	r31367).
 
     o	Rare string width calculations in package grid were not
-    	interpreting the string encoding correctly.
+	interpreting the string encoding correctly.
 
     o	hasMethods(f, env) {without specified 'package'} now works better.
 
@@ -122,7 +122,7 @@ BUG FIXES
     o	str(structure(1, classID = "Pooh")) now works fine.
 
     o	A missing PROTECT could cause segfaults in if() if coercion of
-    	the condition was required or a warning was to be given.
+	the condition was required or a warning was to be given.
 
     o	validObject() called with complete=TRUE did not use inherited
 	validity methods for slot classes.
@@ -135,7 +135,7 @@ BUG FIXES
 	environment.
 
     o	influence.measures(<glm-object>) now computes the same
-    	Cook's distance approximations as cooks.distance().
+	Cook's distance approximations as cooks.distance().
 
     o	plot(<glm>, which=5) uses more correct Cook's distance contours;
 	(fix to fix to PR#9316).
@@ -176,8 +176,8 @@ BUG FIXES
 	borderless rectangles such as image().
 	
     o	The srcfilecopy() function now adds a timestamp to the object it
-    	creates.
- 
+	creates.
+    
     o	parse() would lose a token when run on stdin().
 
     o	socketConnection() was using internally the class "socket" 
@@ -620,7 +620,7 @@ GRAPHICS CHANGES
 	devices (it used to prompt for all devices).
 
     o	When plot.default() is called with y=NULL it now calls Axis()
-    	with the 'y' it constructs rather than use the default axis.
+	with the 'y' it constructs rather than use the default axis.
 
 
 DEPRECATED & DEFUNCT
@@ -705,7 +705,7 @@ INSTALLATION
     o	libtool has been updated to version 2.2.
 
     o	Use of --with-system-zlib, --with-system-bzlib or
-    	--with-system-pcre now requires version >= 1.2.3, 1.0.5, 7.6
+	--with-system-pcre now requires version >= 1.2.3, 1.0.5, 7.6
 	respectively, for security.
 
 
@@ -927,7 +927,7 @@ BUG FIXES
 	conflicting local names in the method definition.
 
     o	qgamma() and qchisq() could be inaccurate for small p,
-    	e.g. qgamma(1.2e-10, shape = 19) was 2.52 rather than 2.73.
+	e.g. qgamma(1.2e-10, shape = 19) was 2.52 rather than 2.73.
 
     o	dbeta(.., ncp) is now more accurate for large ncp, and typically no
 	longer underflows for give.log = TRUE.
@@ -935,10 +935,10 @@ BUG FIXES
     o	coerce() is now a proper S4 object and so prints correctly.
 
     o	@ now checks it is being applied to an S4 object, and if not
-    	gives a warning (which will become an error in 2.8.0).
+	gives a warning (which will become an error in 2.8.0).
 
     o	dump() and friends now warn that all S4 objects (even those
-    	based on vectors) are not source()able, with a stronger wording.
+	based on vectors) are not source()able, with a stronger wording.
 
     o	read.dcf(all = TRUE) was leaking connections.
 
@@ -953,7 +953,7 @@ BUG FIXES
 	name space was unloaded.
 
     o	getNativeSymbolInfo() was unaware of non-registered Fortran
-    	names, because one of the C support routines ignored them.
+	names, because one of the C support routines ignored them.
 
     o	load() again reads correctly character strings with embedded nuls.
 	(This was broken in 2.6.x, but worked in earlier versions.)
