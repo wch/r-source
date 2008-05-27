@@ -84,14 +84,14 @@ points(x, \dots)
   }
   Note that unlike S (which uses octagons), symbols \code{1}, \code{10},
   \code{13} and \code{16} use circles.  The filled shapes do not include
-  a border except for \code{16} (and that is likely to be changed).
+  a border.
   
   The following  \R plotting symbols are can be obtained with
   \code{pch=19:25}: those with \code{21:25} can be colored and
   filled with different colors: \code{col} gives the border color
   and \code{bg} the background color.
   \itemize{
-    \item \code{pch=19}: solid circle (currently the same as \code{16}),
+    \item \code{pch=19}: solid circle,
     \item \code{pch=20}: bullet (smaller circle),
     \item \code{pch=21}: filled circle,
     \item \code{pch=22}: filled square,

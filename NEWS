@@ -131,6 +131,9 @@ NEW FEATURES
     o	dev.interactive() is able to recognize the standard screen
 	devices if getOption("device") is a function (as well as by name).
 
+    o	pch=16 now has no border (for consistency with 15, 17, 18) and
+	hence is now different from pch=19.
+
 
 PACKAGE INSTALLATION
 
