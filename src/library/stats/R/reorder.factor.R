@@ -14,6 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+reorder.character <- 
 reorder.factor <- function(x, X, FUN = mean, ..., order = is.ordered(x))
 {
     scores <- tapply(X, x, FUN, ...)
@@ -21,3 +22,4 @@ reorder.factor <- function(x, X, FUN = mean, ..., order = is.ordered(x))
     attr(ans, "scores") <- scores
     ans
 }
+

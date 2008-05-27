@@ -134,6 +134,10 @@ NEW FEATURES
     o	pch=16 now has no border (for consistency with 15, 17, 18) and
 	hence is now different from pch=19.
 
+    o	A new reorder.character() method has been added.  This allows
+	use 'reorder(x, ...)' as a shorthand for
+	'reorder(factor(x), ...)' when 'x' is a character vector.
+
 
 PACKAGE INSTALLATION
 
