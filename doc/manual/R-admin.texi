@@ -3422,7 +3422,7 @@ what is needed.
 
 It seems that @cputype{ix86} Linux accepts non-PIC code in shared
 libraries, but this is not necessarily so on other platforms, in
-particular for 64-bit CPUs such as that for AMD Opteron.  So care can be
+particular for 64-bit CPUs such as @cputype{x86_64}.  So care can be
 needed with BLAS libraries and when building @R{} as a shared library to
 ensure that position-independent code is used in any static libraries
 (such as the Tcl/Tk libraries, @code{libpng}, @code{libjpeg} and
@@ -3471,20 +3471,23 @@ required @option{-D__NO_MATH_INLINES} to achieve
 @acronym{IEC}@tie{}60059-compliance for @code{exp}, and this is included
 in @code{R_XTRA_CFLAGS} if required.
 
-Several Linux distributions have shipped unreleased versions of
-@command{gcc}@tie{}4.0.0 and its FORTRAN compiler @command{gfortran}
-(see the separate comments).  Some versions of @command{gcc}@tie{}4
-(such as that in Fedora Core 3) produce incorrect code.  In our
-experiments @command{gcc}@tie{}3.4.x always produced faster and more
-reliable code.  It seems that @command{gcc}@tie{}4.0.x cannot compile
-@file{src/main/plot.c} when building R as a shared library on
-@cputype{ix86} unless the optimization level is changed from the default
-@option{-O2} (@option{-O3} works, as does @command{gcc}@tie{}4.1.0 with
-the default settings).
+There are known problems with several early versions of
+@command{gcc}@tie{}4, but @command{gcc}@tie{}4.1.0 and later seems to
+cause no special difficulties.
+@c Several Linux distributions have shipped unreleased versions of
+@c @command{gcc}@tie{}4.0.0 and its FORTRAN compiler @command{gfortran}
+@c (see the separate comments).  Some versions of @command{gcc}@tie{}4
+@c (such as that in Fedora Core 3) produce incorrect code.  In our
+@c experiments @command{gcc}@tie{}3.4.x always produced faster and more
+@c reliable code.  It seems that @command{gcc}@tie{}4.0.x cannot compile
+@c @file{src/main/plot.c} when building R as a shared library on
+@c @cputype{ix86} unless the optimization level is changed from the default
+@c @option{-O2} (@option{-O3} works, as does @command{gcc}@tie{}4.1.0 with
+@c the default settings).
 
-It has been reported that using @command{gcc}@tie{}4.0.3 on
-@cputype{ppc64} needed the compiler flag @option{-mminimal-toc} to avoid
-errors when linking @R{} as a shared library.
+@c It has been reported that using @command{gcc}@tie{}4.0.3 on
+@c @cputype{ppc64} needed the compiler flag @option{-mminimal-toc} to avoid
+@c errors when linking @R{} as a shared library.
 
 To build a 64-bit version of @R{} on @cputype{ppc64} (also known as
 @cputype{powerpc64}) with @command{gcc}@tie{}4.1.1, Ei-Ji Nakama used
@@ -3504,8 +3507,8 @@ the additional flags being needed to problems linking against
 
 On some@footnote{e.g.@: Fedora Core 5} @code{glibc} systems,
 @samp{-fgnu89-inline} needs to be added to @option{CFLAGS} when using
-the (currently unreleased) @command{gcc}@tie{}4.3.0, since
-@file{wchar.h} is not set up properly for C99-style inlines.
+@command{gcc}@tie{}4.3.x, since @file{wchar.h} is not set up properly
+for C99-style inlines.
 
 @menu
 * Intel compilers::             
