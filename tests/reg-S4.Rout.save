@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-05-15 r45703)
+R version 2.8.0 Under development (unstable) (2008-05-27 r45800)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -680,4 +680,14 @@ include omitted arguments in definition: mode = "missing"
 > assertWarning_atleast(
 + setMethod("test1", "numeric", function(x, name, printit) match.call())
 + )## did not warn or error in R 2.7.0 and earlier
+> 
+> library(stats4)
+> c1 <- getClass("mle", where = "stats4")
+> c2 <- getClass("mle", where = "package:stats4")
+> s1 <- getMethod("summary", "mle", where = "stats4")
+> s2 <- getMethod("summary", "mle", where = "package:stats4")
+> stopifnot(is(c1, "classRepresentation"),
++ 	  is(s1, "MethodDefinition"),
++ 	  identical(c1,c2), identical(s1,s2))
+> ## failed at times in the past
 > 
