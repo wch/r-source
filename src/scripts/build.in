@@ -218,6 +218,10 @@ foreach my $pkg (@ARGV) {
 	## some authors managed to create ..Rcheck as well as pkgname.Rcheck
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /\.Rcheck$/);
 	print EXCLUDE "$File::Find::name\n" if /^GNUMakefile$/;
+	## Mac resource forks
+	print EXCLUDE "$File::Find::name\n" if(/^\._/);
+	## Mac Finder files
+	print EXCLUDE "$File::Find::name\n" if(/^\.DS_Store$/);
 	## Windows DLL resource file
 	push(@exclude_patterns, "^src/" . $pkgname . "_res\\.rc");
 	my $filename = $File::Find::name;
@@ -388,6 +392,9 @@ foreach my $pkg (@ARGV) {
 	    if(R_system($cmd)) { $log->error("installation failed"); }
 	    chdir("$libdir");
 	    copy(&file_path($pkgdir, "DESCRIPTION"), "DESCRIPTION");
+	    ## precaution for Mac OS X to omit resource forks
+	    $ENV{COPYFILE_DISABLE} = 1; # Leopard
+	    $ENV{COPY_EXTENDED_ATTRIBUTES_DISABLE} = 1; # Tiger
 	    R_system(join(" ",
 			  ("$tar -chf ",
 			   &shell_quote_file_path($filepath),
@@ -407,6 +414,9 @@ foreach my $pkg (@ARGV) {
 	    if(R_system($cmd)) { $log->error("installation failed"); }
 	}
     } else {
+	## precaution for Mac OS X to omit resource forks
+	$ENV{COPYFILE_DISABLE} = 1; # Leopard
+	$ENV{COPY_EXTENDED_ATTRIBUTES_DISABLE} = 1; # Tiger
 	$log->message("building '$filename.gz'");
 	R_system(join(" ",
 		      ("$tar -chf",

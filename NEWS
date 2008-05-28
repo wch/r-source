@@ -281,7 +281,10 @@ UTILITIES
     o	R CMD build tries harder to clean up the inst/doc directory
 	from the remnants of earlier builds.
 
-	It also removes any directories with extension .Rcheck.
+	It also removes any directories with extension .Rcheck, and
+	files .DS_Store and ._* (created by tar on Mac OS X under some
+	circumstances: it now sets environment variables to ask for
+	such files not to be created by that tar.)
 
 
 BUG FIXES
