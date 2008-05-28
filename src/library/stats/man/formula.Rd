@@ -83,7 +83,7 @@ as.formula(object, env = parent.frame())
   including the function \code{\link{offset}} to indicate terms with a
   fixed coefficient of one.  Some functions accept other
   \sQuote{specials} such as \code{strata} or \code{cluster} (see the
-  \code{specials} argument of \code{\link{terms.formula}).
+  \code{specials} argument of \code{\link{terms.formula})}.
 
   When \code{formula} is called on a fitted model object, either a
   specific method is used (such as that for class \code{"nls"}) or the
