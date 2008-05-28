@@ -1,6 +1,6 @@
 % File src/library/stats/man/formula.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{formula}
@@ -79,6 +79,12 @@ as.formula(object, env = parent.frame())
   formulae, although there is no guarantee that all code using formulae
   will accept such non-syntactic names.
 
+  Most model-fitting functions accept formulae with right-hand-side
+  including the function \code{\link{offset}} to indicate terms with a
+  fixed coefficient of one.  Some functions accept other
+  \sQuote{specials} such as \code{strata} or \code{cluster} (see the
+  \code{specials} argument of \code{\link{terms.formula}).
+
   When \code{formula} is called on a fitted model object, either a
   specific method is used (such as that for class \code{"nls"}) or the
   default method.  The default first looks for a \code{"formula"}
@@ -115,7 +121,7 @@ as.formula(object, env = parent.frame())
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{I}}.
+  \code{\link{I}}, \code{\link{offset}}.
   
   For formula manipulation: \code{\link{terms}}, and \code{\link{all.vars}};
   for typical use: \code{\link{lm}}, \code{\link{glm}}, and
