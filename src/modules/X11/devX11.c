@@ -2227,6 +2227,9 @@ Rboolean X11DeviceDriver(pDevDesc dd,
 
     /*	Start the Device Driver and Hardcopy.  */
 
+    strncpy(xd->title, title, 100);
+    xd->title[100] = '\0';
+
     if (!X11_Open(dd, xd, disp_name, width, height,
 		  gamma_fac, colormodel, maxcube, bgcolor,
 		  canvascolor, res, xpos, ypos)) {
@@ -2238,8 +2241,6 @@ Rboolean X11DeviceDriver(pDevDesc dd,
     xd->fill = 0xffffffff; /* this is needed to ensure that the
 			      first newpage does set whitecolor
 			      if par("bg") is not transparent */
-    strncpy(xd->title, title, 100);
-    xd->title[100] = '\0';
 
 #if BUG
     R_ProcessX11Events((void*) NULL);
