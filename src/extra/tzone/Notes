@@ -1,5 +1,5 @@
 localtime.c is a stripped-down version of that from tzcode2007k, from
-ftp://elsie.nci.nih.gov/pub/.  Apart from removing unused code and
+ftp://elsie.nci.nih.gov/pub/ .  Apart from removing unused code and
 merging in the parts of private.h which are needed, the main changes
 are
 
@@ -20,6 +20,6 @@ time_t is signed, which it is on all sensible platforms.)
 To remake it, use a machine with zic in the path (it may be /usr/sbin/zic).
 Copy the current version of tzdataXXXXx.tar.gz to this directory and run
 
-make -f Make.zi VERSION=2008b
+make -f Make.zi VERSION=2008c
 
 for the appropriate version.
