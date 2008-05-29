@@ -1177,6 +1177,8 @@ do not at present distribute suitable cross-compilers.
 For Fedora 8 and 9 users, RPMs are available at
 @uref{http://sourceforge.net/projects/mingw-cross/}, currently of
 @command{gcc} 4.3.0 for both @cputype{ix86} and @cputype{x86_64}.
+(Recent Debian and Ubuntu versions have C/C++ but it seems not Fortran
+cross-compilers based on @command{gcc} 4.2.1.)
 
 @c There is currently a complete set of tools based on @command{gcc} 3.4.5
 @c at @uref{http://www.stats.ox.ac.uk/pub/Rtools/i586-cross-tools.tar.bz2,
