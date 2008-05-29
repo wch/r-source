@@ -582,8 +582,12 @@ getGeneric <-
               penv <- env
         }
         fdef <- getFunction(name, TRUE, FALSE, penv)
-        if(!is(fdef, "genericFunction"))
-          fdef <- implicitGeneric(name, penv)
+        if(!is(fdef, "genericFunction")) {
+            if(is.primitive(fdef))
+              fdef <- genericForPrimitive(name, penv)
+            else
+              fdef <- implicitGeneric(name, penv)
+        }
     }
     fdef
 }
@@ -1464,3 +1468,16 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
 .hasS4MetaData <- function(env)
   (length(objects(env, all.names = TRUE,
                           pattern = "^[.]__[CT]_")))
+
+## returns TRUE if the argument is a non-empty character vector of length 1
+## otherwise, returns a diagnostic character string reporting the non-conformance
+.isSingleName <- function(x) {
+    paste0 <- function(...)paste(..., sep="")
+    if(!is.character(x))
+      return(paste0('required to be a character vector, got an object of class "', class(x)[[1]], '"'))
+    if(length(x) != 1)
+      return(paste0("required to be a character vector of length 1, got length ",length(x)))
+    if(is.na(x) || !nzchar(x))
+      return(paste0('required a non-empty string, got "',x, '"'))
+    TRUE
+}
