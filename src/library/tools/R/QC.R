@@ -1369,6 +1369,8 @@ function(package, dir, lib.loc = NULL)
         ## namespace renaming.
         functions <- .transform_S3_method_markup(functions)
         ## </NOTE>
+        ## Also transform the markup for S4 replacement methods.
+        functions <- .transform_S4_method_markup(functions)
 
         ## Now analyze what we found.
         arg_names_in_usage_missing_in_arg_list <-
@@ -3368,18 +3370,22 @@ function(package, lib.loc = NULL)
     if(!is_base) {
         .load_package_quietly(package, lib.loc)
 
-        capture.output({
-        ## avoid warnings about code in other packages the package uses
-        desc <- .readRDS(file.path(.find.package(package, NULL),
-                                   "Meta", "package.rds"))
-        pkgs1 <- sapply(desc$Suggests, "[[", "name")
-        pkgs2 <- sapply(desc$Enhances, "[[", "name")
-	## add tcltk for now, as many packages require() but not Suggests it
-        for( pkg in unique(c(pkgs1, pkgs2, "tcltk")) )
-            ## tcltk warns if no DISPLAY variable
-            suppressWarnings(suppressMessages(try(require(pkg, character.only = TRUE, quietly=TRUE),
-                                                  silent = TRUE)))
-                       })
+        .eval_with_capture({
+            ## avoid warnings about code in other packages the package
+            ## uses
+            desc <- .readRDS(file.path(.find.package(package, NULL),
+                                       "Meta", "package.rds"))
+            pkgs1 <- sapply(desc$Suggests, "[[", "name")
+            pkgs2 <- sapply(desc$Enhances, "[[", "name")
+            ## add tcltk for now, as many packages require() but not
+            ## Suggests it
+            for(pkg in unique(c(pkgs1, pkgs2, "tcltk")))
+                ## tcltk warns if no DISPLAY variable
+                suppressWarnings(suppressMessages(try(require(pkg,
+                                                              character.only = TRUE,
+                                                              quietly=TRUE),
+                                                      silent = TRUE)))
+        }, type = "output")
 
         runif(1) # create .Random.seed
         compat <- new.env(hash=TRUE)
@@ -4653,6 +4659,16 @@ function(x)
         x)
 }
 
+### ** .transform_S4_method_markup
+
+.transform_S4_method_markup <-
+function(x)
+{
+    sub(sprintf("%s(<-)?", .S4_method_markup_regexp),
+        "\\\\S4method{\\2\\4}{\\3}",
+        x)
+}
+
 ### ** .S3_method_markup_regexp
 
 ## For matching \(S3)?method{GENERIC}{CLASS}.
@@ -4682,7 +4698,10 @@ function(x)
 
 .S4_method_markup_regexp <-
     sprintf("(\\\\S4method\\{(%s)\\}\\{(%s)\\})",
-            "[._[:alnum:]]*",
+            paste(c("[._[:alnum:]]*",
+                    ## Subscripting
+                    "\\$", "\\[\\[?"),
+                  collapse = "|"),
             "[._[:alnum:],]*")
 
 ### ** .valid_maintainer_field_regexp
