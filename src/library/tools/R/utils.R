@@ -429,45 +429,66 @@ function()
 
 ### ** .capture_output_from_print
 
-.capture_output_from_print <-
-function(x, ...)
-{
-    ## Better to provide a simple variant of utils::capture.output()
-    ## ourselves (so that bootstrapping R only needs base and tools).
-    out <- NULL # Prevent codetools warning about "no visible binding
-                # for global variable out".  Maybe there will eventually
-                # be a better design for output text connections ...
-    file <- textConnection("out", "w", local = TRUE)
-    sink(file)
-    on.exit({ sink(); close(file) })
-    print(x, ...)
-    out
-}
+## <NOTE>
+## Should no longer be needed now that we have .eval_with_capture().
+## 
+## .capture_output_from_print <-
+## function(x, ...)
+## {
+##     ## Better to provide a simple variant of utils::capture.output()
+##     ## ourselves (so that bootstrapping R only needs base and tools).
+##     out <- NULL # Prevent codetools warning about "no visible binding
+##                 # for global variable out".  Maybe there will eventually
+##                 # be a better design for output text connections ...
+##     file <- textConnection("out", "w", local = TRUE)
+##     sink(file)
+##     on.exit({ sink(); close(file) })
+##     print(x, ...)
+##     out
+## }
+##
+## </NOTE>
 
 ### ** .eval_with_capture
 
 .eval_with_capture <-
-function(expr)
+function(expr, type = NULL)
 {
     ## Evaluate the given expression and return a list with elements
     ## 'value', 'output' and 'message' (with obvious meanings).
 
+    ## <NOTE>
+    ## The current implementation gives character() if capturing was not
+    ## attempted of gave nothing.  If desired, one could modify the code
+    ## to return NULL in the former case.
+    ## </NOTE>
+
+    if(is.null(type))
+        capture_output <- capture_message <- TRUE
+    else {
+        type <- match.arg(type, c("output", "message"))
+        capture_output <- type == "output"
+        capture_message <- !capture_output
+    }
+
     outcon <- file(open = "w+")
     msgcon <- file(open = "w+")
-    sink(outcon, type = "output")
-    sink(msgcon, type = "message")
-    on.exit({
-        sink(type = "output")
-        sink(type = "message")
-        close(outcon)
-        close(msgcon)
-    })
-
+    if(capture_output) {
+        sink(outcon, type = "output")
+        on.exit(sink(type = "output"))
+    }
+    if(capture_message) {
+        sink(msgcon, type = "message")
+        on.exit(sink(type = "message"), add = capture_output)
+    }
+    on.exit({ close(outcon) ; close(msgcon) }, add = TRUE)
+    
     value <- eval(expr)
     list(value = value,
-         output = readLines(outcon, warn = FALSE),
+         output = readLines(outcon, warn = FALSE), 
          message = readLines(msgcon, warn = FALSE))
 }
+
 
 ### ** .file_append_ensuring_LFs
 
@@ -1240,7 +1261,7 @@ function(expr)
                                     tb <- lapply(calls, deparse)
                                     stop(conditionMessage(e),
                                          "\nCall sequence:\n",
-                                         paste(utils::capture.output(traceback(tb)),
+                                         paste(.eval_with_capture(traceback(tb))$output,
                                                collapse = "\n"),
                                          call. = FALSE)
                                 }),
