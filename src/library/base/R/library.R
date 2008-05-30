@@ -207,6 +207,10 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 
 	if(!character.only)
 	    package <- as.character(substitute(package))
+        if(length(package) != 1)
+            stop("'package' must be of length 1")
+        if(is.na(package) || (package == ""))
+            stop("invalid package name")
 
         if(package %in% c("ctest", "eda", "modreg", "mva", "nls",
                           "stepfun", "ts")) {
@@ -265,8 +269,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 
         ## NB from this point on `package' is either the original name or
         ## something like ash_1.0-8
-        if(length(package) != 1)
-            stop("'package' must be of length 1")
 	pkgname <- paste("package", package, sep = ":")
 	newpackage <- is.na(match(pkgname, search()))
 	if(newpackage) {
