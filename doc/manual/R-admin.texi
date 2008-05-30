@@ -899,13 +899,12 @@ You need @code{libpng} and @code{jpeg} sources (available, e.g., from
 @file{libpng-1.2.18.tar.gz}, @file{jpegsrc.v6b.tar.gz},
 @file{tiff-3.8.0.tar.gz} or later.
 
-Working in the directory @file{@var{R_HOME}
-/src/gnuwin32/bitmap}, install the @code{libpng} and
-@code{jpeg} sources in sub-directories.  The @code{libpng} sub-directory must
-be named @file{libpng} (as required by the @code{libpng}
-documentation).  The @code{jpeg} sub-directory for version 6b is named
-@file{jpeg-6b}; if you use a different version, edit @file{Makefile}
-and change the definition of @code{JPEGDIR}.
+Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
+install the @code{libpng} and @code{jpeg} sources in sub-directories.
+The @code{libpng} sub-directory must be named @file{libpng} (as required
+by the @code{libpng} documentation).  The @code{jpeg} sub-directory for
+version 6b is named @file{jpeg-6b}; if you use a different version, edit
+@file{Makefile} and change the definition of @code{JPEGDIR}.
 
 Example:
 
@@ -1411,22 +1410,23 @@ be used to customize @R{}, e.g.@: for class use.
 directories in the file system containing a subdirectory for each
 package installed there.
 
-@R{} comes with a single library, @file{R_HOME/library} which is the
-value of the @R{} object @samp{.Library} containing the standard and
-recommended@footnote{unless they were excluded in the build.}
-packages.  Both sites and users can create others and make use of them
-(or not) in an @R{} session.  At the lowest level @samp{.libPaths()}
-can be used to add paths to the collection of libraries or to report
-the current collection.
+@R{} comes with a single library, @file{@var{R_HOME}/library} which is
+the value of the @R{} object @samp{.Library} containing the standard and
+recommended@footnote{unless they were excluded in the build.}  packages.
+Both sites and users can create others and make use of them (or not) in
+an @R{} session.  At the lowest level @samp{.libPaths()} can be used to
+add paths to the collection of libraries or to report the current
+collection.
 
 @cindex Libraries, site
 @cindex Site libraries
 As from @R{} 2.5.0 @R{} will automatically make use of a site-specific
-library @file{R_HOME/site-library} if this exists (it does not in a
-vanilla @R{} installation).  This location can be overridden by
-setting@footnote{its binding is looked once that files has been read,
-so users cannot easily change it.} @samp{.Library.site} in
-@file{R_HOME/etc/Rprofile.site}, or (not recommended) by setting the
+library @file{@var{R_HOME}/site-library} if this exists (it does not in
+a vanilla @R{} installation).  This location can be overridden by
+setting@footnote{its binding is looked once that files has been read, so
+users cannot easily change it.} @samp{.Library.site} in
+@file{@var{R_HOME}/etc/Rprofile.site}, or (not recommended) by setting
+the
 @enindex R_LIBS_SITE
 environment variable @env{R_LIBS_SITE}.  Like @samp{.Library}, the
 site libraries are always included by @samp{.libPaths()}.
@@ -2494,8 +2494,8 @@ to a specific JRE/JDK.
 
 Principal amongst these are some library paths to the Java libraries and
 JVM, which are stored in environment variable
-@env{R_JAVA_LD_LIBRARY_PATH} in file @file{R_HOME/etc/ldpaths} (or a
-sub-architecture-specific version).  A typical setting for Sun Java is
+@env{R_JAVA_LD_LIBRARY_PATH} in file @file{@var{R_HOME}/etc/ldpaths} (or
+a sub-architecture-specific version).  A typical setting for Sun Java is
 
 @example
 /usr/java/jdk1.5.0_06/jre/lib/amd64/server:/usr/java/jdk1.5.0_06/jre/lib/amd64
@@ -2505,8 +2505,8 @@ Note that this unfortunately depends on the exact version of the JRE/JDK
 installed, and so will need updating if the Java installation is
 updated.  This can be done by running @code{R CMD javareconf}. The
 script re-runs Java detection in a manner similar to that of the
-@code{configure} script and updates settings in both @file{Makeconf}
-and @file{R_HOME/etc/ldpaths}. See @code{R CMD javareconf --help} for
+@code{configure} script and updates settings in both @file{Makeconf} and
+@file{@var{R_HOME}/etc/ldpaths}. See @code{R CMD javareconf --help} for
 details.
 
 Another alternative of overriding those setting is to  set

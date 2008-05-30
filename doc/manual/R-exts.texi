@@ -5665,10 +5665,10 @@ system makefile and then any personal @file{Makevars} files.
 If the @file{src} subdirectory of package contains a file
 @file{Makefile}, this is used in place of the @code{R CMD SHLIB}
 mechanism.  @command{make} is called with makefiles
-@file{R_HOME/etc@var{R_ARCH}/Makeconf}@footnote{or the version specific to a
-sub-architecture}, @file{src/Makefile} and any personal @file{Makevars}
-files (in that order).  The first target found in @file{src/Makefile} is
-used.
+@file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}@footnote{or the version
+specific to a sub-architecture}, @file{src/Makefile} and any personal
+@file{Makevars} files (in that order).  The first target found in
+@file{src/Makefile} is used.
 
 It is better to make use of a @code{Makevars}
 file rather than a @code{Makefile}: the latter should be needed only
@@ -9362,7 +9362,7 @@ Setting @env{R_HOME} and checking it is valid, as well as the path
 Setting @env{LD_LIBRARY_PATH} to include the directories used in linking
 @R{}.  This is recorded as the default setting of
 @env{R_LD_LIBRARY_PATH} in the shell script
-@file{R_HOME/etc@var{R_ARCH}/ldpaths}.
+@file{@var{R_HOME}/etc@var{R_ARCH}/ldpaths}.
 
 @item
 Processing some of the arguments, for example to run @R{} under a

@@ -6805,8 +6805,8 @@ for some Windows-specific details).
 Unless @option{--no-environ} was given, @R{} searches for user and site
 files to process for setting environment variables.  The name of the
 site file is the one pointed to by the environment variable
-@env{R_ENVIRON}; if this is unset, @file{$R_HOME/etc/Renviron.site} is
-used (if it exists).  The user file is the one pointed to by the
+@env{R_ENVIRON}; if this is unset, @file{@var{R_HOME}/etc/Renviron.site}
+is used (if it exists).  The user file is the one pointed to by the
 environment variable @env{R_ENVIRON_USER} if this is set; otherwise,
 files @file{.Renviron} in the current or in the user's home directory
 (in that order) are searched for.  These files should contain lines of
@@ -6820,8 +6820,8 @@ library trees searched for add-on packages).
 Then @R{} searches for the site-wide startup profile unless the command
 line option @option{--no-site-file} was given.  The name of this file is
 taken from the value of the @env{R_PROFILE} environment variable.  If
-that variable is unset, the default @file{$R_HOME/etc/Rprofile.site} is
-used if this exists.
+that variable is unset, the default
+@file{@var{R_HOME}/etc/Rprofile.site} is used if this exists.
 
 @item
 Then, unless @option{--no-init-file} was given, @R{} searches for a user
