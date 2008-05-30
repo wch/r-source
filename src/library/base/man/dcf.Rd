@@ -67,11 +67,11 @@ write.dcf(x, file = "", append = FALSE,
   corresponding value is empty, then an empty string is returned.  If
   the tag name of a field is never used in a record, then \code{NA} is
   returned.  If fields are repeated within a record, the last one
-  encountered is returned.  Malformed lines are ignored (with a
-  warning).  If \code{all} is true, a data frame is returned, again with
-  one row per record and one column per field, and columns lists of
-  character vectors for fields with multiple occurrences, and character
-  vectors otherwise.
+  encountered is returned.  Malformed lines lead to an error.  If
+  \code{all} is true, a data frame is returned, again with one row per
+  record and one column per field, and columns lists of character
+  vectors for fields with multiple occurrences, and character vectors
+  otherwise.
 
   \code{write.dcf} does not write \code{NA} fields.
 }    
