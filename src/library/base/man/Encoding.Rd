@@ -53,8 +53,9 @@ Encoding(x) <- value
   \code{\link{substr}} does preserve the encoding, and
   \code{\link{chartr}}, \code{\link{tolower}} and \code{\link{toupper}}
   preserve UTF-8 encoding on systems with Unicode wide characters.
-  With their \code{fixed} and \code{perl} options, \code{\link{sub}} and
-  \code{gsub} will give a UTF-8 result if any of the inputs are UTF-8.
+  With their \code{fixed} and \code{perl} options,
+  \code{\link{strsplit}}, \code{\link{sub}} and \code{gsub} will give a
+  UTF-8 result if any of the inputs are UTF-8.
 }
 \value{
   A character vector.

@@ -45,11 +45,13 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
   A list of length \code{length(x)} the \code{i}-th element of which
   contains the vector of splits of \code{x[i]}.
 
-  If any element of \code{x} or \code{split} is declared to be in UTF-8
-  (see \code{\link{Encoding}} , non-ASCII character strings in the
-  result will be have the encoding declared as UTF-8.  Otherwise they
-  will be declared to have the encoding of the current locale if either
-  Latin-1 or UTF-8 and  the corresponding input had a declared encoding.
+  If \code{fixed = TRUE} or \code{perl = TRUE} and if any element of
+  \code{x} or \code{split} is declared to be in UTF-8 (see
+  \code{\link{Encoding}}, non-ASCII character strings in the result will
+  be in UTF-8 and have the encoding declared as UTF-8.  Otherwise they
+  will be in the current locale's encoding, and be declared to have the
+  encoding of the current locale if either Latin-1 or UTF-8 and  the
+  corresponding input had a declared encoding.
 }
 \details{
   Argument \code{split} will be coerced to character, so
