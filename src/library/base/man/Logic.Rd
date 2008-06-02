@@ -54,8 +54,9 @@ isTRUE(x)
 
   The operators \code{!}, \code{&} and \code{|} are generic functions:
   methods can be written for them individually or via the
-  \code{\link[base:groupGeneric]{Ops}}) group generic function.  (See
-  \code{\link[base:groupGeneric]{Ops}} for how dispatch is computed.)
+  \code{\link[base:groupGeneric]{Ops}} (or S4 \code{Logic}, see below)
+  group generic function.  (See \code{\link[base:groupGeneric]{Ops}} for
+  how dispatch is computed.)
 
   \code{\link{NA}} is a valid logical object.  Where a component of
   \code{x} or \code{y} is \code{NA}, the result will be \code{NA} if the
@@ -69,7 +70,7 @@ isTRUE(x)
 }
 \value{
   For \code{!}, a logical or raw vector of the same length as \code{x}.
-  
+
   For \code{|}, \code{&} and \code{xor} a logical or raw vector. The
   elements of shorter vectors are recycled as necessary (with a
   \code{\link{warning}} when they are recycled only \emph{fractionally}).
@@ -87,8 +88,8 @@ isTRUE(x)
 }
 \section{S4 methods}{
   \code{!}, \code{&} and \code{|} are S4 generics, the latter two part
-  of the \code{Logic} group generic (and hence methods need argument names
-  \code{e1, e2}).
+  of the \code{\link[methods:S4groupGeneric]{Logic}} group generic (and
+  hence methods need argument names \code{e1, e2}).
 
   Prior to \R 2.6.0 S4 methods for \code{!} needed argument name
   \code{e1}, but now \code{x} is correct.
