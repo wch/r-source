@@ -11,70 +11,50 @@
 \alias{hasMethod}
 \title{ Get or Test for the Definition of a Method }
 \description{
-  The functions \code{getMethod} and \code{selectMethod} get the
-  definition of a particular method; the functions \code{existsMethod}
-  and \code{hasMethod} test for the existence of a method.  In both
+  Functions to look for a method corresponding to a given generic function and signature.
+  The functions \code{getMethod} and \code{selectMethod} return the method; the functions \code{existsMethod}
+  and \code{hasMethod} test for its existence.  In both
   cases the first function only gets direct definitions and the second
-  uses inheritance.
+  uses inheritance.  In all cases, the search is in the generic function itself or in the package/environment specified by argument \code{where}.
+
   The function \code{findMethod} returns the package(s) in the search
   list (or in the packages specified by the \code{where} argument) that
   contain a method for this function and signature.
-
-  The other functions are support functions: see the details below.
 }
 \usage{
 getMethod(f, signature=character(), where, optional = FALSE,
           mlist, fdef)
 
+existsMethod(f, signature = character(), where)
+
 findMethod(f, signature, where)
 
-existsMethod(f, signature = character(), where)
+selectMethod(f, signature, optional = FALSE, useInherited =,
+             mlist = , fdef = , verbose = )
 
 hasMethod(f, signature=character(), where)
 
-selectMethod(f, signature, optional = FALSE, useInherited = TRUE,
-             mlist = if (!is.null(fdef)) getMethodsForDispatch(fdef),
-             fdef = getGeneric(f, !optional), verbose = FALSE)
-
 }
 \arguments{
-  \item{f}{The character-string name of the generic function.}
+  \item{f}{A  generic function or the character-string name of one.}
   \item{signature}{the signature of classes to match to the arguments
     of \code{f}.  See the details below.
 
-    For \code{selectMethod}, the signature can optionally be an
-    environment with classes assigned to the names of the corresponding
-    arguments.  Note:  the names correspond to the names of the classes, \emph{not}
-    to the objects supplied in a call to the generic function.  (You
-    are not likely to find this approach convenient, but it is used
-    internally and is marginally more efficient.)
   }
   \item{where}{The position or environment in which to look for the
-    method(s):  by default, anywhere in the current search list.}
-  \item{optional}{ If the selection does not produce a unique result,
+    method(s):  by default, the table of methods defined in the generic function itself is used.}
+
+  \item{optional}{ If the selection in  \code{selectMethod} does find a valid method
     an error is generated, unless this argument is \code{TRUE}.  In that
-    case, the value returned is either a \code{MethodsList} object, if
-    more than one method matches this signature, or \code{NULL} if no
+    case, the value returned is  \code{NULL} if no
     method matches.}
-  \item{mlist}{Optionally, the list of methods in which to search.  By
-    default, the function finds the methods for the corresponding
-    generic function.  To restrict the search to a particular package
-    or environment, e.g., supply this argument as
-    \code{getMethodsMetaData(f,where)}.  For \code{selectMethod}, see
-    the discussion of argument \code{fdef}.
+  \item{mlist, fdef, useInherited, verbose}{Optional arguments  to  \code{getMethod} and \code{selectMethod}.  Avoid these: some will work and others will not, and none of them is required for normal use of the functions.
     }
-  \item{fdef}{Optionally, the generic function from which the method is
-      to be retrieved.
-    (Unlikely to be used, except internally in the package source.)}
-  \item{verbose}{logical indicating if method selection should print
-    some info about its progress.}
-  \item{useInherited}{ Internal-use
-    argument: should method selection use inheritance.}
+
 }
 \details{
-  The \code{signature} argument specifies classes, in an extended
-    sense, corresponding to formal arguments of the generic function.
-    As supplied, the argument may be a vector of strings identifying
+  The \code{signature} argument specifies classes, corresponding to formal arguments of the generic function; to be precise, to the \code{signature} slot of the generic function object.
+    The argument may be a vector of strings identifying
     classes, and may be named or not.  Names, if supplied, match the
     names of those formal arguments included in the signature of the
     generic.  That signature is normally all the arguments except
@@ -117,48 +97,34 @@ selectMethod(f, signature, optional = FALSE, useInherited = TRUE,
   the first corresponding to \code{getMethod} (no inheritance) and the
   second to \code{selectMethod}.
 
-  The function \code{getMethods} returns all the methods for a
-  particular generic (in the form of a generic function with the
-  methods information in its environment).  The function is called
-  from the evaluator to merge method information, and is not intended
-  to be called directly.  Note that it gets \emph{all} the visible
-  methods for the specified functions.  If you want only the methods
-  defined explicitly in a particular environment, use the function
-  \code{\link{getMethodsMetaData}} instead.
-
 }
 \value{
-  The call to \code{selectMethod} or \code{getMethod} returns a
-  \code{\linkS4class{MethodDefinition}} object, the selected method, if
-  a unique selection exists.
+  The call to \code{selectMethod} or \code{getMethod} returns  the selected method, if
+ one is found.
   (This class extends \code{function}, so you can use the result
   directly as a function if that is what you want.)
-  Otherwise an error is thrown if \code{optional} is \code{FALSE}.  If
-  \code{optional} is \code{TRUE}, the value returned is \code{NULL} if
-  no method matched, or a \code{MethodsList} object if multiple
-  methods matched.
+  Otherwise an error is thrown if \code{optional} is \code{FALSE}  and  \code{NULL} is returned if
+  \code{optional} is \code{TRUE}.
 
-  The call to \code{getMethods} returns the \code{MethodsList} object
-  containing all the methods requested.  If there are none,
-  \code{NULL} is returned: \code{getMethods} does not generate an
-  error in this case.
+The returned method object is a
+  \code{\linkS4class{MethodDefinition}} object, \emph{except} that the default method for a primitive function is required to be the primitive itself.
+Note therefore that the only reliable test that the search failed is \code{is.null()}.
+
 }
 \references{
-  The R package \pkg{methods} implements, with a few exceptions, the
-  programming interface for classes
-  and methods in the book \emph{Programming with Data} (John
-  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
-  and chapters 7 and 8.
+ Chambers, John M. (2008)
+ \emph{Software for Data Analysis: Programming with R}
+  Springer.  (For the R version.)
 
-  While the programming interface for the \pkg{methods} package follows
-  the reference, the R software is an original implementation, so
-  details in the reference that reflect the S4 implementation may appear
-  differently in R.  Also, there are extensions to the programming
-  interface developed more recently than the reference.  For a
-  discussion of details see \code{?\link{Methods}}
-  and the links from that documentation.
+ Chambers, John M. (1998)
+ \emph{Programming with Data}
+ Springer (For the original S4 version.)
 }
-\seealso{\code{\link{GenericFunctions}}}
+\seealso{\code{\link{Methods}} for the details of method
+  selection; \code{\link{GenericFunctions}} for other functions
+  manipulating methods and generic function objects;
+  \code{\linkS4class{MethodDefinition}} for the class that represents
+  method definitions.}
 \examples{
 setGeneric("testFun", function(x)standardGeneric("testFun"))
 setMethod("testFun", "numeric", function(x)x+1)

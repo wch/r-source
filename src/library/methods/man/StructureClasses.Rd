@@ -85,7 +85,14 @@
   The current behavior (beginning with version 2.8.0 of \R) registers
   \code{"ts"} as an S3 class, but also provides some methods that at
   least partially support classes that contain \code{"ts"}.  The S3
-  inheritance of \code{"mts"} in package \code{stats} is also registered.
+  inheritance of \code{"mts"} in package \code{stats} is also
+  registered.
+
+  As with other S3 classes, there are problems in defining
+  an S4 class that inherits from \code{"ts"}, say by  using the
+  \code{contains=} argument to \code{setClass}.  Existing S3 methods
+  for  \code{"ts"} will not recognize objects from the new class (see
+  \code{\link{Classes}} for details).
 }
 \section{Extends}{
   The specific classes all extend class \code{"structure"}, directly, and

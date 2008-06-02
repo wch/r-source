@@ -5,162 +5,93 @@
 
 \name{setClass}
 \alias{setClass}
-\alias{removeClass}
-\alias{resetClass}
-\alias{isClass}
-\alias{getClasses}
-\alias{findClass}
-\alias{sealClass}
 \title{Create a Class Definition}
 \description{
-  Functions to create (\code{setClass}) and manipulate class definitions.
+  Create  a class definition, specifying the representation (the slots) and/or the classes contained in this one (the superclasses), plus other optional details.
 }
 \usage{
 setClass(Class, representation, prototype, contains=character(),
          validity, access, where, version, sealed, package)
-
-removeClass(Class, where)
-
-isClass(Class, formal=TRUE, where)
-
-getClasses(where, inherits = missing(where))
-
-findClass(Class, where, unique = "")
-
-resetClass(Class, classDef, where)
-
-sealClass(Class, where)
-
 }
 \arguments{
-  \item{Class}{character string name for the class.  Other than
-    \code{setClass}, the functions will usually take a class definition
-    instead of the string (allowing the caller to identify the class uniquely).}
-  \item{representation}{ the slots that the new class should have
-    and/or other classes that this class extends.  Usually a call to
-    the \code{\link{representation}} function. }
-  \item{prototype}{ an object (usually a list) providing the default
-    data for the slots specified in the representation. }
+  \item{Class}{character string name for the class.}
+  \item{representation}{ a named list of the slots that the new class should have, the names giving the names of the slots and the corresponding elements being the character string names of  the corresponding classes.
+     Usually a call to
+    the \code{\link{representation}} function. 
+
+Backward compatibility and compatibility with S-Plus allows unnamed
+elements for superclasses, but the recommended style is to use the
+\code{contains=} argument instead.}
+  \item{prototype}{ an object providing the default
+    data for the slots in this class.  Usually and preferably the
+    result of a call to \code{\llink{prototype}}. }
   \item{contains}{ what classes does this class extend?  (These are
     called \emph{superclasses} in some languages.)  When these classes
     have slots, all their slots will be contained in the new class as
     well. }
-  \item{where}{ For \code{setClass} and \code{removeClass}, the
+  \item{where}{ the
     environment in which to store or remove the
     definition.  Defaults to the top-level environment of the calling function
-    (the global environment for ordinary computations, but the
-    environment or name space of a package when loading that package).
-
-    For other functions, \code{where} defines where to do the search
-    for the class definition, and the default is to search from the top-level
-    environment or name space of the caller to this function.
-  }
-  \item{unique}{if \code{findClass} expects a unique location for the
-    class, \code{unique} is a character string explaining the purpose
-    of the search (and is used in warning and error messages).  By
-    default, multiple locations are possible and the function always
-    returns a list.
-  }
-  \item{inherits}{in a call to \code{getClasses}, should the value
-    returned include all parent environments of \code{where}, or that
-    environment only?  Defaults to \code{TRUE} if \code{where} is
-    omitted, and to \code{FALSE} otherwise.
+    (the global environment for ordinary computations, and the
+    environment or name space of a package in the source code for that package).
   }
   \item{validity}{ if supplied, should be a validity-checking method
     for objects from this class (a function that returns \code{TRUE} if
     its argument is a valid object of this class and one or more strings
     describing the failures otherwise).  See \code{\link{validObject}}
     for details.}
-  \item{access}{Access list for the class.  Saved in the definition, but
-    not currently used.}
-  \item{version}{A version indicator for this definition. Saved in the
-    definition, but not currently used.}
-  \item{sealed}{ If \code{TRUE}, the class definition will be sealed,
+  \item{access, version}{access and version, included for
+      compatibility with S-Plus, but currently ignored.}
+  \item{sealed}{ if \code{TRUE}, the class definition will be sealed,
     so that another call to \code{setClass} will fail on this class name.
   }
-  \item{package}{ An optional package name for the class.  By default
-    (and usually) the package where the class definition is assigned
-    will be used.
-  }
-  \item{formal}{ Should a formal definition be required? }
-  \item{classDef}{ For \code{removeClass}, the optional class
-    definition (but usually it's better for \code{Class} to be the
-    class definition, and to omit \code{classDef}).
+  \item{package}{ an optional package name for the class.  By default
+    (and usually) the name of the package in which the class definition is assigned.
   }
 }
+\section{Basic Use: Slots and Inheritance}{
+The two essential arguments, other than the class name are
+\code{representation} and \code{contains}, defining the explicit slots
+and the inheritance (superclasses). Together, these arguments define
+all the information in an object from this class; that is, the names
+of all the slots and the classes required for each of them.
 
-\details{
-  These are the functions that create and manipulate formal class
-  definitions.  Brief documentation is provided below.  See the
-  references for an introduction and for more details.
+The name of the class determines
+which methods apply directly to objects from this class.  The 
+inheritance information specifies which methods apply indirectly,
+through inheritance.  See \link{Methods}.
 
-  \describe{
-    \item{\code{setClass}:}{
-      Define \code{Class} to be an S-style class.  The effect is to
-      create an object, of class \code{"classRepEnvironment"}, and store
-      this (hidden) in the specified environment or database.  Objects
-      can be created from the class (e.g., by calling
-      \code{\link{new}}), manipulated (e.g., by accessing the object's
-      slots), and methods may be defined including the class name in the
-      signature (see \code{\link{setMethod}}).
-    }
-    \item{\code{removeClass}:}{
-      Remove the definition of this class, from the environment
-      \code{where} if this argument is supplied; if not,
-      \code{removeClass} will search for a definition, starting in the
-      top-level environment of the call to \code{removeClass}, and
-      remove the (first) definition found.
-    }
-    \item{\code{isClass}:}{
-      Is this the name of a formally defined class? (Argument
-      \code{formal} is for compatibility and is ignored.)
-    }
-    \item{\code{getClasses}:}{
-      The names of all the classes formally defined on \code{where}.  If
-      called with no argument, all the classes visible from the
-      calling function (if called from the top-level, all the classes
-      in any of the environments on the search list).  The
-      \code{inherits} argument can be used to search a particular
-      environment and all its parents, but usually the default setting
-      is what you want.
-    }
-    \item{\code{findClass}:}{
-      The list of environments or positions on the search list in
-      which a class definition of \code{Class} is found.  If
-      \code{where} is supplied, this is an environment (or name space)
-      from which the search takes place; otherwise the top-level
-      environment of the caller is used.  If \code{unique} is supplied
-      as a character string, \code{findClass} returns a single
-      environment or position.  By default, it always returns a list.
-      The calling function should select, say, the first element as a
-      position or environment for functions such as \code{\link{get}}.
+The slots in a class definition will be the union of all the slots
+specified directly by \code{representation} and all the slots in all
+the contained classes.
+There can only be one slot with a given name; specifically, the
+direct and inherited slot names must be unique.
+That does not, however, prevent the same class from being inherited
+via more than one path.
 
-      If \code{unique} is supplied as a character string,
-      \code{findClass} will warn if there is more than one definition
-      visible (using the string to identify the purpose of the call),
-      and will generate an error if no definition can be found.
-    }
-    \item{\code{resetClass}:}{
-      Reset the internal definition of a class.  Causes the complete
-      definition of the class to be re-computed, from the
-      representation and superclasses specified in the original
-      call to \code{setClass}.
+One kind of element in the \code{contains=} argument is special, specifying one of the R
+vector types or one of a few other special \R types (\code{matrix} and
+\code{array}).
+A class can contain at most one of these, directly or indirectly.
+When it does, that contained class determines the \dQuote{data part}
+of the class, and objects from the new class inherit all the built in
+behavior of the contained type.
+Two direct consequences are:  for any object \code{x} from the class,
+\code{typeof(x)} will be the contained basic type; and a special
+pseudo-slot, \code{.Data}, will be shown with the corresponding class.
 
-      This function is called when aspects of the class definition are
-      changed.  You would need to call it explicitly if you changed the
-      definition of a class that this class extends (but doing that in
-      the  middle of a session is living dangerously, since it may
-      invalidate existing objects).
-    }
-    \item{\code{sealClass}:}{ Seal the current definition of the specified
-      class, to prevent further changes.  It is possible to seal a class
-      in the call to \code{setClass}, but sometimes further changes have
-      to be made (e.g., by calls to \code{setIs}).  If so, call
-      \code{sealClass} after all the relevant changes have been made.
-    }
-  }
+For an object from any class that does \emph{not} contain such a type,
+\code{typeof(x)} will be \code{"S4"} and the class will have no
+\code{.Data} slot.
+
+\note{
+  Certain slot names are not allowed in the current implementation, as
+  they correspond to \link{attributes} which are treated
+  specially.  These are \code{class}, \code{comment}, \code{dim},
+  \code{dimnames}, \code{names}, \code{row.names} and \code{tsp}.
 }
-\section{Inheritance and Prototypes}{
+}
+\section{ Prototypes}{
   Defining new classes that inherit from (\sQuote{extend}) other classes
   is a powerful technique, but has to be used carefully and not
   over-used.  Otherwise, you will often get unintended results when you
@@ -172,7 +103,7 @@ sealClass(Class, where)
 
   Then extensions will add some new slots and new behavior.
 
-  Another variety of extension starts with one of the built-in data types,
+  Another variety of extension starts with one of the built-in objects,
   perhaps with the intention of modifying R's standard behavior for that
   class.  In this case, the new class inherits the built-in data type
   as its \sQuote{data} part.  See the \code{"numWithId"} example below.
@@ -181,82 +112,45 @@ sealClass(Class, where)
   pseudo-slot named \code{.Data}.
 }
 
-\section{S3 Classes}{
 
-  Earlier, informal classes of objects (usually referred to as
-  \sQuote{S3} classes) are used by many R functions.  It is natural to
-  consider including them as the class for a slot in a formal class,
-  or even as a class to be extended by the new class.  This isn't
-  prohibited but there are some disadvantages, and if you do want to
-  include S3 classes, they should be declared by including them in a
-  call to \code{\link{setOldClass}}.  Here are some considerations:
+\section{Classes and Packages}{
 
-  \itemize{
-  \item Using S3 classes somewhat defeats the purpose of defining a
-    formal class:  An important advantage to your users is that a formal
-    class provides guarantees of what the object contains (minimally,
-    the classes of the slots and therfore what data they contain;
-    optionally, any other requirements imposed by a validity method).
+Class definitions normally belong to packages (but can be defined in
+the  global environment as well, by evaluating the expression on the
+command line or in a file sourced from the command line).
+The corresponding package name is part of the class definition; that
+is, part of the \code{classRepresentation} object holding that
+definition.  Thus, two classes with the same name can exist in
+different packages, for most purposes.
 
-    But there is no guarantee whatever about the data in an object from
-    an S3 class.  It's entirely up to the functions that create or
-    modify such objects.  If you want to provide guarantees to your
-    users, you will need a valdity method that explicitly checks the
-    contents of S3-class objects.
+When a class name is supplied for a slot or a superclass, a
+corresponding class definition will be found, looking from the
+namespace or environment of the current package, assuming the call to
+\code{setClass} in question appears directly in the source for the
+package.  That's where it should appear, to avoid ambiguity.
 
-  \item To get the minimal guarantee (that the object in a slot has, or
-    extends, the class for the slot) you should ensure that the S3
-    classes are known to \emph{be} S3 classes, with the possible
-    inheritance.  To do this, include a call to
-    \code{\link{setOldClass}} for the S3 classes used.
+In particular, if the current package has a namespace then the  class
+must be found in the current package itself, in the imports defined by that namespace, or in the base
+package.
 
-    Otherwise, the S3 class is undefined (and the code used by
-    \code{setClass} will issue a warning).  Slot assignments, for
-    example, will not then check for possible errors.
-
-  \item These caveats apply to S3 classes; that is, objects with a
-    class assigned by some R function but without a formal class
-    definition.  In contrast, the built-in data types (\code{numeric},
-    \code{list}, etc.) are generally fine as slots or for
-    \code{contains=} classes (see the previous section).  These data
-    types don't have formal slots, but the base code in the system
-    essentially forces them to contain the type of data they claim to
-    have.
-
-    The data types \code{matrix} and \code{array} are somewhat in
-    between.  They do not have an explicit S3 class, but do have one or
-    two attributes.  There is no general problem in having these as
-    slots, but because there is no guarantee of a dimnames slot, they
-    don't work as formal classes.  The \code{ts} class is treated as a
-    formal class, extending class \code{vector}.
-  }
-
-}% S3 classes
-
-\note{
-  Certain slot names are not allowed in the current implementation, as
-  they correspond to \link{attributes} which are treated
-  specially.  These are \code{class}, \code{comment}, \code{dim},
-  \code{dimnames}, \code{names}, \code{row.names} and \code{tsp}.
+When this rule does not identify a class uniquely (because it appears
+in more than one imported package) then the \code{\link{packageSlot}}
+of the character string name needs to be supplied with the name.
+This should be a rare occurrence.
 }
 
 \references{
-  The \R package \pkg{methods} implements, with a few exceptions, the
-  programming interface for classes and methods in the book
-  \emph{Programming with Data} (John M. Chambers, Springer, 1998), in
-  particular sections 1.6, 2.7, 2.8, and chapters 7 and 8.
+ Chambers, John M. (2008)
+ \emph{Software for Data Analysis: Programming with R}
+  Springer.  (For the R version.)
 
-  While the programming interface for the \pkg{methods} package follows
-  the reference, the \R software is an original implementation, so
-  details in the reference that reflect the S4 implementation may appear
-  differently in \R.  Also, there are extensions to the programming
-  interface developed more recently than the reference.  For a
-  discussion of details see \code{?\link{Methods}}
-  and the links from that documentation.
+ Chambers, John M. (1998)
+ \emph{Programming with Data}
+ Springer (For the original S4 version.) 
 }
 \seealso{
-  \code{\link{setClassUnion}},
-  \code{\link{Methods}},
+\code{\link{Classes}} for a general discussion of classes,
+  \code{\link{Methods}} for an analogous discussion of methods,
   \code{\link{makeClassRepresentation}}
 }
 \examples{
@@ -270,7 +164,8 @@ setClass("track",
          representation(x="numeric", y="numeric"))
 ## A class extending the previous, adding one more slot
 setClass("trackCurve",
-         representation("track", smooth = "numeric"))
+    representation(smooth = "numeric"),
+    contains = "track")
 ## A class similar to "trackCurve", but with different structure
 ## allowing matrices for the "y" and "smooth" slots
 setClass("trackMultiCurve",

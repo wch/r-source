@@ -5,6 +5,7 @@
 
 \name{S4groupGeneric}
 \alias{S4groupGeneric}
+\alias{GroupGenericFunctions}
 \alias{Math}
 \alias{Ops}
 \alias{Summary}
@@ -13,19 +14,20 @@
 \alias{Compare}
 \alias{Complex}
 \alias{Math2}
-\title{S4 Group Generic Functions}
+\title{Group Generic Functions}
 \description{
-  Methods can be defined for groups of functions known as \emph{group
-    generic functions}.  These exist in both S3 (see
-  \link{S3groupGeneric}) and S4 flavours, with different groups.
+  Methods can be defined  for \emph{group
+    generic functions}.  Each group generic function has a number of
+  \emph{member} generic functions associated with it.
 
-  Methods are defined for the group of functions as a whole.  A method
-  defined for an individual member of the group takes precedence over a
-  method defined for the group as a whole.
+  Methods  defined for a group generic function cause the same
+  method to be defined for each member of the group, but a method explicitly
+  defined for a  member of the group takes precedence over a
+  method defined, with the same signature, for the group generic.
 
-  When package \pkg{methods} is attached there are objects visible with
-  the names of the group generics: these functions should never be
-  called directly (a suitable error message will result if they are).
+  The functions shown in this documentation page all reside in the
+  \pkg{methods} package, but the mechanism is available to any
+  programmer, by calling \code{\link{setGroupGeneric}}.
 }
 \usage{
 ## S4 group generics:
@@ -46,23 +48,34 @@ Complex(z)
 }
 
 \details{
-  When package \pkg{methods} is attached (which it is by default),
-  formal (S4) methods can be defined for the group generic functions
-  (which are \R objects which should never be called directly
-  -- a suitable error message will result if they are).  There are also
+  Methods can be defined for the group generic functions by calls to
+  \code{\link{setMethod}} in the usual way.
+  Note that the group generic functions
+   should never be called directly
+  -- a suitable error message will result if they are.  When metadata
+  for a group generic is loaded, the methods defined become methods
+  for the members of the group, but only if no method has been
+  specified directly for the member function for the same signature.
+  The effect is that group generic definitions are selected before
+  inherited methods but after directly specified methods.  For more on
+  method selection, see \code{\link{Methods}}.
+
+There are also
   S3 groups \code{Math}, \code{Ops}, \code{Summary} and
   \code{Complex}, see \code{?\link{S3groupGeneric}},
-  with no corresponding \R objects.
+  with no corresponding \R objects, but these are irrelevant for S4
+  group generic functions.
 
-  The functions belonging to the various groups are as follows:
+  The members of the group defined by a particular generic can be
+  obtained by calling \code{\link{getGroupMembers}}. For the group
+  generic functions currently defined in this package the members are
+  as follows:
   \describe{
     \item{\code{Arith}}{\code{"+"}, \code{"-"}, \code{"*"}, \code{"^"},
       \code{"\%\%"}, \code{"\%/\%"}, \code{"/"}}
     \item{\code{Compare}}{\code{"=="}, \code{">"}, \code{"<"},
       \code{"!="}, \code{"<="}, \code{">="}}
-    \item{\code{Logic}}{\code{"&"}, \code{"|"}, but \bold{not}
-      \code{"!"} since that has only one argument.  Note that this is
-      contrary to Chambers(1998), on purpose.
+    \item{\code{Logic}}{\code{"&"}, \code{"|"}.
     }
     \item{\code{Ops}}{\code{"Arith"}, \code{"Compare"}, \code{"Logic"}}
     \item{\code{Math}}{\code{"abs"}, \code{"sign"}, \code{"sqrt"},
@@ -83,33 +96,38 @@ Complex(z)
       \code{"Mod"}, \code{"Re"}}
   }
   Note that \code{Ops} merely consists of three sub groups.
-  Functions with the group names exist in the \pkg{methods} package but
-  should not be called directly.
-
+  
   All the functions in these groups (other than the group generics
   themselves) are basic functions in \R.  They are not by default S4 generic
-  functions, and many of them are defined as primitives, meaning that
-  they do not have formal arguments.  However, you can still define
-  formal methods for them.  The effect of doing so is to create an S4 generic
-  function with the appropriate arguments, in the environment where the
-  method definition is to be stored.  It all works more or less as you
+  functions, and many of them are defined as primitives.  However, you can still define
+  formal methods for them, both individually and via the group generics.  It all works more or less as you
   might expect, admittedly via a bit of trickery in the background.
+  See \link{Methods} for details.
 
   Note that two members of the \code{Math} group, \code{\link{log}} and
-  \code{\link{trunc}}, have more than one argument: S4 group dispatch
-  will always pass only one argument to the method so if you want to
-  handle \code{base} in \code{log}, set a specific method as well.
+  \code{\link{trunc}}, have \dots as an extra formal argument.
+  Since methods for \code{Math} will have only one formal argument,
+  you must set a specific method for these functions in order to call
+  them with the extra argument(s).
+
+  For further details about group generic functions see section 10.5 of
+  \emph{Software for Data Analysis}.
+  
 }
 \references{
-  Appendix A, \emph{Classes and Methods} of\cr
-  Chambers, J. M.  and Hastie, T. J. eds (1992)
-  \emph{Statistical Models in S.}
-  Wadsworth & Brooks/Cole.
+ Chambers, John M. (2008)
+ \emph{Software for Data Analysis: Programming with R}
+  Springer.  (For the R version.)
 
-  Chambers, J. M. (1998) \emph{Programming with Data.} Springer, pp. 352--4.
+ Chambers, John M. (1998)
+ \emph{Programming with Data}
+ Springer (For the original S4 version).
 }
-\seealso{
-  \link{S3groupGeneric} for S3 group generics.
+\seealso{ The function \code{\link{callGeneric}} is nearly always
+  relevant when writing a method for a group generic.  See the
+  examples below and in section 10.5 of \emph{Software for Data Analysis}.
+
+  See \link{S3groupGeneric} for S3 group generics.
 }
 \examples{
 setClass("testComplex", representation(zz = "complex"))

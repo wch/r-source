@@ -20,25 +20,21 @@ removeMethod(f, signature, where)
 \arguments{
   \item{f}{ A generic function or the character-string name of the function. }
   \item{signature}{ A match of formal argument names for \code{f} with
-    the character-string names of corresponding classes.  This
-    argument can also just be the vector of class names, in which case
-    the first name corresponds to the first formal argument, the
-    next to the second formal argument, etc.}
+    the character-string names of corresponding classes.  See the
+    details below; however, if the signature is not trivial, you should use \code{\link{method.skeleton}} to generate a valid call to \code{setMethod}.}
   \item{definition}{ A function definition, which will become the method
     called when the arguments in a call to \code{f} match the
     classes in \code{signature}, directly or through inheritance. }
-  \item{where}{the database in which to store the definition of the
-    method; % FIXME: by default, the ... environment.
+  \item{where}{the environment in which to store the definition of the
+    method.
+For \code{setMethod}, it is recommended to omit this argument and to include the call in source code that is evaluated at the top level; that is, either in an R session by something equivalent to a call to \code{\link{source}}, or as part of the R source code for a package.
 
     For \code{removeMethod}, the default is the location of the (first)
     instance of the method for this signature.}
-  \item{valueClass}{ If supplied, this argument asserts that the
-    method will return a value of this class.  (At present this
-    argument is stored but not explicitly used.) }
+  \item{valueClass}{ Obsolete and unused, but see the same argument for \code{\link{setGeneric}}. }
   \item{sealed}{ If \code{TRUE}, the method so defined cannot be
       redefined by another call to \code{setMethod} (although it can
-      be removed and then re-assigned).  Note that this argument is an
-      extension to the definition of \code{setMethod} in the reference.}
+      be removed and then re-assigned).}
 }
 \value{
   These functions exist for their side-effect, in setting or removing a
@@ -48,24 +44,38 @@ removeMethod(f, signature, where)
   was found to be removed.
 }
 \details{
-  R methods for a particular generic function are stored in an object
-  of class \code{\link{MethodsList}}.  The effect of calling
-  \code{setMethod} is to store \code{definition}  in a \code{MethodsList}
-  object on database \code{where}.   If \code{f} doesn't
-  exist as a generic function, but there is an ordinary function of
-  the same name and the same formal arguments, a new generic function
-  is created, and the previous non-generic version of \code{f} becomes
-  the default method.  This is equivalent to the programmer calling
-  \code{\link{setGeneric}} for the same function; it's better practice
-  to do the call explicitly, since it shows that you intend to turn
-  \code{f} into a generic function.
+The call to \code{setMethod} stores the supplied method definition  in
+the metadata table for this generic function in the environment,
+typically the global environment or the namespace of a package.
+In the case of a package, the table object becomes part of the namespace or environment of the
+package.
+When the package is loaded into a later session, the
+methods will be merged into the table of methods in the corresponding
+generic function object.
 
-  Methods are stored in a hierarchical structure:  see
-  \link{Methods} for how the objects are used to select a method, and
-  \code{\link{MethodsList}} for functions that manipulate the objects.
+Generic functions are referenced by the combination of the function name and
+the package name;
+for example, the function \code{"show"} from the package
+\code{"methods"}.
+Metadata for methods is identified by the two strings; in particular, the
+generic function object itself has slots containing its name and its
+package name.
+The package name of a generic is set according to the package
+from which it originally comes; in particular, and frequently, the
+package where a non-generic version of the function originated.
+For example, generic functions for all the functions in package \code{base} will
+have \code{"base"} as the package name, although none of them is an
+S4 generic on that package.
+
+Multiple packages can have methods for the same generic function; that
+is, for the same combination of generic function name and package
+name.
+Even though the methods are stored in separate tables in separate
+environments, loading the corresponding packages adds the methods to
+the table in the generic function itself, for the duration of the session.
 
  The class
-  names in the signature can be any formal class, plus predefined basic
+  names in the signature can be any formal class, including basic
   classes such as \code{"numeric"}, \code{"character"}, and
   \code{"matrix"}.  Two additional special class names can appear:
   \code{"ANY"}, meaning that this argument can have any class at all;
@@ -79,27 +89,23 @@ removeMethod(f, signature, where)
   \code{\link{setOldClass}} if you want S3-style inheritance to work.
 
 
-  While \code{f} can correspond to methods defined on several packages
-  or environments, the underlying model is that these together make up
-  the definition for a single generic function.  When R proceeds to
-  select and evaluate methods for \code{f}, the methods on the current
-  search list are merged to form a single generic function and
-  associated methods list.  When \code{f}
-  is called and a method is dispatched, the evaluator matches the
-  classes of the actual arguments to the signatures of the available
-  methods.  When a match is found, the body of the corresponding
-  method is evaluated, but without rematching the arguments to
-  \code{f}.   Aside from not rematching the arguments, the computation
-  proceeds as if the call had been to the method.  In particular, the
-  lexical scope of the method is used.
-
   Method definitions can
-  have default expressions for arguments.  If those arguments are then
+  have default expressions for arguments, but a current limitation is
+  that the generic function must have \emph{some} default expression for the
+  same argument in order for the method's defaults to be used.
+  If so, and if the corresponding argument is
   missing in the call to the generic function, the default expression
   in the method is used.  If the method definition has no default for
-  the argument, then the expression (if any) supplied in the definition of the
-  generic function itself is used.  But note that this expression will
-  be evaluated in the environment defined by the method.
+  the argument, then the expression supplied in the definition of the
+  generic function itself is used, but note that this expression will
+  be evaluated using the enclosing environment of the method, not of
+  the generic function.
+  Note also that specifying class \code{"missing"} in the signature
+  does not require any default expressions, and method selection does
+  not evaluate default expressions.
+  All actual (non-missing) arguments in the signature of the
+  generic function will be evaluated when a method is selected---when
+  the call to \code{standardGeneric(f)} occurs.
 
   It is possible to have some differences between the
   formal arguments to a method supplied to \code{setMethod} and those
@@ -107,31 +113,39 @@ removeMethod(f, signature, where)
   arguments, then the method may have extra formal arguments, which
   will be matched from the arguments matching \dots in the call to
   \code{f}.  (What actually happens is that a local function is
-  created inside the method, with its formal arguments, and the method
+  created inside the method, with the modified formal arguments, and the method
   is re-defined to call that local function.)
 
   Method dispatch tries to match the class of the actual arguments in a
-  call to the available methods collected for \code{f}.  Roughly, for
-  each formal argument in turn, we look for the best match (the exact
-  same class or the nearest element in the value of
-  \code{\link{extends}} for that class) for which there is any
-  possible method matching the remaining arguments.  See
+  call to the available methods collected for \code{f}.  If there is a
+  method defined for the exact same classes as in this call, that
+  method is used.  Otherwise, all possible signatures are considered
+  corresponding to the actual classes or to superclasses of the actual
+  classes (including \code{"ANY"}).
+  The method having the least distance from the actual classes is
+  chosen; if more than one method has minimal distance, one is chosen
+  (the lexicographically first in terms of superclasses) but a warning
+  is issued.
+  All inherited methods chosen are stored in another table, so that
+  the inheritance calculations only need to be done once per session
+  per sequence of actual classes.
+  See
   \link{Methods} for more details.
+
+The function \code{removeMethod} removes the specified method from the
+metadata table in the corresponding environment.
+It's not a function that is used much, since one normally wants to
+redefine a method rather than leave no definition.
 
 }
 \references{
-  The R package \pkg{methods} implements, with a few exceptions, the
-  programming interface for classes and methods in the book
-  \emph{Programming with Data} (John M. Chambers, Springer, 1998), in
-  particular sections 1.6, 2.7, 2.8, and chapters 7 and 8.
+ Chambers, John M. (2008)
+ \emph{Software for Data Analysis: Programming with R}
+  Springer.  (For the R version.)
 
-  While the programming interface for the \pkg{methods} package follows
-  the reference, the R software is an original implementation, so
-  details in the reference that reflect the S4 implementation may appear
-  differently in R.  Also, there are extensions to the programming
-  interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see \code{?\link{Methods}} and the
-  pointers from that documentation..
+ Chambers, John M. (1998)
+ \emph{Programming with Data}
+ Springer (For the original S4 version.)
 }
 \examples{
 \dontshow{  require(stats)
@@ -402,13 +416,12 @@ removeGeneric("doubleAnything")
 
 \seealso{
 
-\link{method.skeleton}, which is the recommended way to generate a skeleton of the call to \code{setMethod}, with the correct formal arguments and other details.
+\code{\link{method.skeleton}}, which is the recommended way to generate a skeleton of the call to \code{setMethod}, with the correct formal arguments and other details.
 
-\link{Methods}, \code{\link{MethodsList}} for details of the
-  implementation
+\link{Methods} for a general discussion of the
+  implementation of S4 methods.
 }
 
 \keyword{programming}
-\keyword{classes}
 \keyword{classes}
 \keyword{methods}

@@ -17,23 +17,24 @@ other programming tools, as described in the references.
   This package provides the \sQuote{S4} or \sQuote{S version 4} 
   approach to methods and classes in a functional language.
 
+  See the documentation entries \code{\link{Classes}},
+  \code{\link{Methods}}, and \code{\link{GenericFunctions}} for general discussion of these topics, at a
+  fairly technical level.  Links from those pages, and the
+  documentation of \code{\link{setClass}} and \code{\link{setMethod}}
+  cover the main programming tools needed.
+
   For a complete
   list of functions and classes, use \code{library(help="methods")}.
 }
 
 \references{
-  The \R package \pkg{methods} implements, with a few exceptions, the
-  programming interface for classes and methods in the book
-  \emph{Programming with Data} (John M. Chambers, Springer, 1998), in
-  particular sections 1.6, 2.7, 2.8, and chapters 7 and 8.
+ Chambers, John M. (2008)
+ \emph{Software for Data Analysis: Programming with R}
+  Springer.  (For the R version.)
 
-  While the programming interface for the methods package follows the
-  reference, the \R software is an original implementation, so details in
-  the reference that reflect the S4 implementation may appear
-  differently in \R.  Also, there are extensions to the programming
-  interface developed more recently than the reference.  For a
-  discussion of details see \code{?\link{Methods}}
-  and the links from that documentation.
+ Chambers, John M. (1998)
+ \emph{Programming with Data}
+ Springer (For the original S4 version.) 
 }
 \author{
 R Development Core Team

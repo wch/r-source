@@ -8,10 +8,9 @@
 \alias{setGroupGeneric}
 \title{Define a New Generic Function}
 \description{
-  Create a new generic function of the given name, for which formal
-  methods can then be defined.  Typically, an existing non-generic
-  function becomes the default method, but there is much optional
-  control.  See the details section.
+  Create a new generic function of the given name, that is, a function
+  that dispatches methods according to the classes of the arguments,
+  from among the formal methods defined for this function.
 }
 \usage{
 setGeneric(name, def= , group=list(), valueClass=character(),
@@ -22,34 +21,31 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
                 knownMembers=list(), package= , where= )
 }
 \arguments{
-  \item{name}{ The character string name of the generic function.  In
-    the simplest and most common case, a function of this name is
-    already defined.  The existing function may be non-generic or
-    already a generic (see the details).
+  \item{name}{ The character string name of the generic function.
+    The simplest (and recommended) call, \code{setGeneric(name)}, 
+    looks for a function with this name and creates a corresponding
+    generic function,  if the function found was not generic.
   }
-  \item{def}{ An optional function object, defining the generic.  This
-    argument is usually only needed (and is then required) if there is
-    no current function of this name. In that case, the formal arguments
+  \item{def}{ An optional function object, defining the generic.
+      Don't supply this argument if you want an existing non-generic
+      function to supply the arguments. Do supply it if there is
+    no current function of this name, or if you want the generic
+    function to have different arguments. In that case, the formal arguments
     and default values for the generic are taken from \code{def}.  You
     can also supply this argument if you want the generic function to
-    do something other than just dispatch methods (an advanced topic
-    best left alone unless you are sure you want it).
+    do something other than just dispatch methods.
 
     Note that \code{def} is \emph{not} the default method; use argument
     \code{useAsDefault} if you want to specify the default separately.
   }
-  \item{group}{ Optionally, a character string giving the group of
-    generic functions to which this function belongs.  Methods can be
-    defined for the corresponding group generic, and these will then
-    define methods for this specific generic function, if no method has
-    been explicitly defined for the corresponding signature.  See the
-    references for more discussion.
+  \item{group}{ Optionally, a character string giving the name of the group
+    generic function to which this function belongs.    See
+    \link{Methods} for details of group generic functions in method selection.
   }
-  \item{valueClass}{ An optional character vector or unevaluated
-    expression.  The value returned by the generic function must
+  \item{valueClass}{ An optional character vector of one or more class
+      names.  The value returned by the generic function must
     have (or extend) this class, or one of the classes; otherwise,
-    an error is generated.  See the
-    details section for supplying an expression.
+    an error is generated.
   }
   \item{package}{ The name of the package with which this function is
     associated.  Usually determined automatically (as the package
@@ -61,15 +57,15 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
     default, stored into the top-level environment.
   }
   \item{signature}{
-    Optionally, the signature of arguments in the function that can
-    be used in methods for this generic.  By default, all arguments
-    other than \code{...} can be used.  The signature argument can
-    prohibit methods from using some arguments.  The argument, if
-    provided, is a vector of formal argument names.
+    Optionally, the vector of names, from among the formal arguments
+    to the  function, that can
+   appear in the signature of methods for this function, in calls to
+   \code{\link{setMethod}}. By default, the signature is all the
+   formal arguments except \dots, in the order they appear in the
+   function definition.  See the \dQuote{Implicit
+      Generic} section below for more details.
   }
-  \item{genericFunction}{ The object to be used as a (nonstandard)
-    generic function definition.  Supply this explicitly \emph{only} if
-    you know what you are doing!
+  \item{genericFunction}{ Don't use; for (possible) internal use only.
   }
   \item{useAsDefault}{
     Override the usual choice of default argument (an existing
@@ -91,53 +87,68 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
     about the group generic is changed.
   }
 }
-\details{
+\section{Basic Use}{
   The \code{setGeneric} function is called to initialize a generic
-  function in an environment (usually the global environment), as
+  function as
   preparation for defining some methods for that function.
 
   The simplest and most common situation is that \code{name} is already
   an ordinary non-generic non-primitive function, and you now want to turn this
   function into a generic.  In this case you will most often supply only
-  \code{name}.  The existing function becomes the default method, and
-  the special \code{group} and \code{valueClass} properties remain
-  unspecified.
+  \code{name}, for example:
 
-  A second situation is that you want to create a new, generic
-  function, unrelated to any existing function.  In this case, you
+    \code{setGeneric("colSums")}
+
+There must be an existing function of this name, on some  attached package (in this case package \code{"base"}).
+A generic version of this function will be created in the current package (or in the global environment if the call to \code{setGeneric()} is from an ordinary source file or is entered on the command line).
+ The existing function becomes the default method, and
+the package slot of the new generic function is set to the location of the original function (\code{"base"} in the example).  It's an important feature that the same generic function definition is created each time, depending in the example only on the definition of \code{print} and where it is found.
+The \code{signature} of the generic function, defining which of the formal arguments can be used in specifying methods, is set by default to all the formal arguments except \dots.
+
+Note that calling \code{setGeneric()} in this form is not strictly necessary before calling \code{setMethod()} for the same function.  If the function specified in the call to \code{setMethod} is not generic, \code{setMethod} will execute the call to \code{setGeneric} itself.  Declaring explicitly that you want the function to be generic can be considered better programming style; the only difference in the result, however, is that not doing so produces a message noting the creation of the generic function.
+
+  You cannot (and never need to) create an explicit generic version of the
+  primitive functions in the base package.  Those which can be treated
+  as generic functions have methods selected and
+  dispatched from the internal C code, to satisfy concerns for  efficiency, and the others cannot be made
+  generic.  See the section on Primitive Functions below.
+
+The description above is the effect when the package that owns the non-generic function has not created an implicit generic version.  Otherwise, it is this implicit generic function that is used. See the section on Implicit Generic Functions below.  Either way, the essential result is that the \emph{same} version of the  generic function will be created each time.
+
+ The second common use of \code{setGeneric()}  is to create a new generic
+  function, unrelated to any existing function, and frequently having no default method.  In this case, you
   need to supply a skeleton of the function definition, to define the
   arguments for the function.  The body of a generic function is
   usually a standard form, \code{standardGeneric(name)} where
   \code{name} is the quoted name of the generic function.
-
   When calling \code{setGeneric} in this form, you would normally
-  supply the \code{def} argument as a function of this form.  If not
+  supply the \code{def} argument as a function of this form.  See the second and third examples below.
+
+The \code{useAsDefault} argument controls the default method for the new generic.
+ If not
   told otherwise, \code{setGeneric} will try to find a non-generic
-  version of the function to use as a default.  If you don't want this
-  to happen, supply the argument \code{useAsDefault}.  That argument
-  can be the function you want to be the default method.  You can supply
-  the argument as \code{FALSE} to force no default (i.e., to cause an error if
-  there is not direct or inherited method on call to the function).
+  version of the function to use as a default. 
+So, if you do have a suitable default method, it is often simpler to first set this up as a non-generic function, and then use the one-argument call to \code{setGeneric} at the beginning of this section.   See the first example in the Examples section below.
 
-  The same no-default situation occurs if there is no non-generic form
-  of the function, and \code{useAsDefault=FALSE}.  Remember, though, you
-  can also just assign the default you want (even one that generates an
-  error) rather than relying on the prior situation.
+ If you \emph{don't} want the existing function to be taken as default, supply the argument \code{useAsDefault}.  That argument
+  can be the function you want to be the default method, or
+  \code{FALSE} to force no default (i.e., to cause an error if
+  there is no direct or inherited method selected for a call to the function).
+}
+\section{Details}{
+If you want to change the behavior of an existing function (typically, one in another package) when you create a generic version, you must supply arguments to \code{setGeneric} correspondingly.
+Whatever changes are made, the new generic function will be assigned with a package slot set to the \emph{current} package, not the one in which the non-generic version of the function is found.
+This step is required because the version you are creating is no longer the same as that implied by the function in the other package.
+A message will be printed to indicate that this has taken place and noting one of the differences between the two functions.
 
-  You cannot (and never need to) create an explicit generic for the
-  primitive functions in the base package.  Those which are generic are
-  dispatched from C code for efficiency and the others cannot be made
-  generic.  If you want to define a generic with the same name as a
-  primitive but unrelated to it, you must specify both \code{def} and
-  \code{useAsDefault} (as a function or \code{FALSE}).
 
-  As mentioned, the body of a generic function usually does nothing
+  The body of a generic function usually does nothing
   except for dispatching methods by a call to \code{standardGeneric}.
   Under some circumstances you might just want to do some additional
   computation in the generic function itself.  As long as your
   function eventually calls \code{standardGeneric} that is permissible
-  (though perhaps not a good idea, in that it makes the behavior of
-  your function different from the usual S model).  If your explicit
+  (though perhaps not a good idea, in that it may make the behavior of
+  your function less easy to understand).  If your explicit
   definition of the generic function
   does \emph{not} call \code{standardGeneric} you are in trouble,
   because none of the methods for the function will ever be
@@ -161,6 +172,49 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   changes, through changes in the search list or direct specification
   of methods, etc.
 }
+\section{Implicit Generic Functions}{
+
+Saying that a non-generic function \dQuote{is converted to a generic}
+is more precisely state that the function is converted to the
+corresponding \emph{implicit} generic function.
+If no special action has been taken, any function corresponds
+implicitly to a generic function with the same arguments, in which
+ all arguments
+    other than \dots can be used.  The signature of this generic
+    function is the vector of formal arguments, in order, except for
+    \dots.
+
+The source code for a package can define an implicit generic function
+version of any function in that package (see \link{implicitGeneric}
+for the mechanism).  You can not, generally, define an implicit
+generic function in someone else's package. The usual reason for
+defining an implicit generic is to prevent certain arguments from
+appearing in the signature, which you must do if you want the
+arguments to be used literally or if you want to enforce lazy
+evaluation for any reason.  An implicit generic can also contain some
+methods that you want to be predefined; in fact, the implicit generic
+can be any generic version of the non-generic function.  The implicit
+generic mechanism can also be used to prohibit a generic version (see \code{\link{prohibitGeneric}}).
+
+Whether defined or inferred automatically, the implicit generic will
+be compared with the generic function that \code{setGeneric}
+creates, when the implicit generic is in another package.  If the two
+functions are identical, then the \code{package} slot of the created
+generic will have the name of the package containing the implicit
+generic.  Otherwise, the slot will be the name of the package in which
+the generic is assigned.
+
+The purpose of this rule is to ensure that all methods defined for a
+particular combination of generic function and package names
+correspond to a single, consistent version of the generic
+function.  Calling \code{setGeneric} with only \code{name} and
+possibly \code{package} as arguments guarantees getting the implicit
+generic version, if one exists.
+
+Including any of the other arguments can force a new, local version of
+the generic function.  If you don't want to create a new version,
+don't use the extra arguments. 
+}
 \section{Generic Functions and Primitive Functions}{
   A number of the basic \R functions are specially implemented as
   primitive functions, to be evaluated directly in the underlying C
@@ -169,9 +223,18 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   generic as soon as methods (including group methods) are defined on
   them.  Others cannot be made generic.
 
-  Currently those with implicit generics are those which are
-  \link{internal generic} (which includes all members of the group
-  generics) and \code{\link{\%*\%}}.
+  Even when methods are defined for such functions, the generic
+  version is not visible on the search list, in order that the C
+  version continues to be called.  Method selection will be initiated
+  in the C code.  Note, however, that the result is to restrict
+  methods for primitive functions to signatures in which at least one
+  of the classes in the signature is a formal S4 class.
+
+  To see the generic version of a primitive function, use
+  \code{\link{getGeneric}(name)}.  The function
+  \code{\link{isGeneric}} will tell you whether methods are defined
+  for the function in the current session.
+
 }
 \value{
   The \code{setGeneric} function exists for its side effect: saving the
@@ -179,23 +242,29 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   \code{name}.
 }
 \references{
-  The R package \pkg{methods} implements, with a few exceptions, the
-  programming interface for classes and methods in the book
-  \emph{Programming with Data} (John M. Chambers, Springer, 1998), in
-  particular sections 1.6, 2.7, 2.8, and chapters 7 and 8.
+ Chambers, John M. (2008)
+ \emph{Software for Data Analysis: Programming with R}
+  Springer.  (For the R version.)
 
-  While the programming interface for the \pkg{methods} package follows
-  the reference, the R software is an original implementation, so
-  details in the reference that reflect the S4 implementation may appear
-  differently in R.  Also, there are extensions to the programming
-  interface developed more recently than the reference.  For a
-  discussion of details see \code{?\link{Methods}}
-  and the links from that documentation.
+ Chambers, John M. (1998)
+ \emph{Programming with Data}
+ Springer (For the original S4 version.)
 }
 \examples{
 \dontshow{
 setClass("track", representation(x="numeric", y="numeric"))
 }
+
+## create a new generic function, with a default method
+props <- function(object) attributes(object)
+setGeneric("props")
+
+## A new generic function with no default method
+setGeneric("increment",
+  function(object, step, ...)
+    standardGeneric("increment")
+)
+
 
 ###   A non-standard generic function.  It insists that the methods
 ###   return a non-empty character vector (a stronger requirement than
@@ -245,6 +314,8 @@ t1 - 100
 removeGeneric("authorNames")
 removeClass("track")
 removeMethods("Arith")
+removeGeneric("props")
+removeGeneric("increment")
 }
 }
 \seealso{
