@@ -83,13 +83,13 @@ pseudo-slot, \code{.Data}, will be shown with the corresponding class.
 For an object from any class that does \emph{not} contain such a type,
 \code{typeof(x)} will be \code{"S4"} and the class will have no
 \code{.Data} slot.
+}
 
 \note{
   Certain slot names are not allowed in the current implementation, as
   they correspond to \link{attributes} which are treated
   specially.  These are \code{class}, \code{comment}, \code{dim},
   \code{dimnames}, \code{names}, \code{row.names} and \code{tsp}.
-}
 }
 \section{ Prototypes}{
   Defining new classes that inherit from (\sQuote{extend}) other classes
