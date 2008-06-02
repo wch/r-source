@@ -76,6 +76,11 @@ nzchar(x)
   printed in \code{Rterm} as \code{<U+2642>}, which is what
   \code{encodeString} gives.
 #endif
+#ifdef unix
+  Where character strings have been marked as UTF-8, the number of
+  characters and widths will be computed in UTF-8, even though printing
+  may use escapes such as \code{<U+2642>} in a non-UTF-8 locale.
+#endif
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
