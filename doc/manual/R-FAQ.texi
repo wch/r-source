@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-05-26
+@set FAQ_DATE @value{FAQ_YEAR}-06-03
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -1423,20 +1423,23 @@ In S, the functions named @code{.First} and @code{.Last} in the
 @file{.Data} directory can be used for customizing, as they are executed
 at the very beginning and end of a session, respectively.
 
-In R, the startup mechanism is as follows.  R first sources the system
-startup file @file{@env{$@w{R_HOME}}/library/base/R/Rprofile}.  Then, it
-searches for a site-wide startup profile unless the command line option
-@option{--no-site-file} was given.  The name of this file is taken from
-the value of the @env{R_PROFILE} environment variable.  If that variable
-is unset, the default is @file{@env{$R_HOME}/etc/Rprofile.site}.  This
-code is loaded in package @strong{base}.  Then, unless
-@option{--no-init-file} was given, R searches for a file called
-@file{.Rprofile} in the current directory or in the user's home
-directory (in that order) and sources it into the user workspace.  It
-then loads a saved image of the user workspace from @file{.RData} in
-case there is one (unless @option{--no-restore} was specified).  If
-needed, the functions @code{.First()} and @code{.Last()} should be
-defined in the appropriate startup profiles.
+In R, the startup mechanism is as follows.  Unless @option{--no-environ}
+was given on the command line, R searches for site and user files to
+process for setting environment variables.  Then, R searches for a
+site-wide startup profile unless the command line option
+@option{--no-site-file} was given.  This code is loaded in package
+@strong{base}.  Then, unless @option{--no-init-file} was given, R
+searches for a user profile file, and sources it into the user
+workspace.  It then loads a saved image of the user workspace from
+@file{.RData} in case there is one (unless @option{--no-restore-data} or
+@option{--no-restore} were specified).  Next, a function @code{.First()}
+is run if found on the search path.  Finally, function @code{.First.sys}
+in the @strong{base} package is run.  When terminating an R session, by
+default a function @code{.Last} is run if found on the search path,
+followed by @code{.Last.sys}.  If needed, the functions @code{.First()}
+and @code{.Last()} should be defined in the appropriate startup
+profiles.  See the help pages for @code{.First} and @code{.Last} for
+more details.
 
 @item
 In R, @code{T} and @code{F} are just variables being set to @code{TRUE}
@@ -2423,6 +2426,8 @@ Econometric tools for performance and risk analysis.
 Phylogenetic tree simulation.
 @item PolynomF
 Univariate polynomials.
+@item Pomic
+Pattern oriented modeling information criterion.
 @item PresenceAbsence
 Presence-absence model evaluation.
 @item ProbForecastGOP
@@ -2433,6 +2438,8 @@ Reliability for gene expression from Affymetrix chip.
 @item ProfessR
 Programs to determine student grades and create examinations from
 question banks.
+@item PtProcess
+Time dependent point process modeling.
 @item PwrGSD
 Power in a Group Sequential Design.
 @item QCA
@@ -2680,6 +2687,8 @@ examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 @item SASxport
 Read and write SAS XPORT files.
+@item SDDA
+Stepwise Diagonal Discriminant Analysis.
 @item SIN
 A SINful approach to selection of Gaussian Graphical Markov Models.
 @item SLmisc
@@ -3018,6 +3027,8 @@ Self-contained parallel system for R.
 Visualises bipartite networks and calculates some ecological indices.
 @item birch
 Dealing with very large datasets using BIRCH.
+@item bise
+Auxiliary functions for phenological data analysis.
 @item bitops
 Functions for Bitwise operations on integer vectors.
 @item bivpois
@@ -3305,6 +3316,9 @@ Calculates the NPMLE of the survival distribution for doubly censored
 data.
 @item ddesolve
 Solver for Delay Differential Equations.
+@item deSolve
+General solvers for ordinary differential equations (ODE) and for
+differential algebraic equations (DAE).
 @item deal
 Bayesian networks with continuous and/or discrete variables can be
 learned and compared from data.
@@ -3789,6 +3803,8 @@ Generalized Linear Mixed Models.
 @item glmmML
 A Maximum Likelihood approach to generalized linear models with random
 intercept.
+@item glmnet
+Lasso and elastic-net regularized generalized linear models.
 @item glmpath
 L1 regularization path for Generalized Linear Models.
 @item glpk
@@ -4372,12 +4388,18 @@ Analysis of capture-recapture data.
 Inferences for ratios of coefficients in the general linear model.
 @item mrdrc
 Model-robust concentration-response analysis.
+@item msBreast
+Protein mass spectra dataset from a breast cancer study.
+@item msDilution
+Protein mass spectra dataset from a dilution experiment.
 @item msProcess
 Tools for protein mass spectra processing including data preparation,
 denoising, noise estimation, baseline correction, intensity
 normalization, peak detection, peak alignment, peak quantification, and
 various functionalities for data ingestion/conversion, mass calibration,
 data quality assessment, and protein mass spectra simulation.
+@item msProstate
+Protein mass spectra dataset from a prostate cancer study.
 @c <COMMENT>
 @c Moved to the Archive on 2005-07-27 as requested by Witold Eryk Wolski
 @c <W.E.Wolski@ncl.ac.uk> (package now in BioC).
@@ -4686,6 +4708,8 @@ Serialize R to PHP associative array.
 @c Software to process data from phylogenetic or identification
 @c microarrays.
 @c </COMMENT>
+@item picante
+Tools for integrating phylogenies and ecology.
 @item pinktoe
 Converts S trees to @HTML{}/Perl files for interactive tree traversal.
 @item pixmap
@@ -5023,6 +5047,9 @@ Robust time series filters.
 Insightful robust package.
 @item robustbase
 Basic Robust Statistics.
+@item rootSolve
+Nonlinear root finding, equilibrium and steady-state analysis of
+ordinary differential equations.
 @item rpanel
 Simple interactive controls for R using the tcltk package.
 @item rpart
@@ -5985,7 +6012,8 @@ Functions for designing genetics studies.
 @item GeneticsPed
 Pedigree and genetic relationship functions.
 @item GenomeGraphs
-Plotting genomic information from Ensembl.@item GlobalAncova
+Plotting genomic information from Ensembl.
+@item GlobalAncova
 Calculates a global test for differential gene expression between
 groups.
 @item GraphAT
@@ -6542,10 +6570,8 @@ $ R CMD INSTALL /path/to/@var{pkg}_@var{version}.tar.gz
 
 @noindent
 at the shell prompt to install to the library tree rooted at the first
-directory given in @env{R_LIBS} (see below) if this is set and non-null,
-and to the default library (the @file{library} subdirectory of
-@file{@env{R_HOME}}) otherwise.  (Versions of R prior to 1.3.0 installed
-to the default library by default.)
+directory in your library search path (see the help page for
+@code{.libPaths()} for details on how the search path is determined).
 
 To install to another tree (e.g., your private one), use
 
@@ -6561,28 +6587,31 @@ packages from within R if you have access to repositories such as
 @CRAN{}.  See the help page for @code{available.packages()} for more
 information.
 
-You can use several library trees of add-on packages.  The easiest way
-to tell R to use these is via the environment variable @env{R_LIBS}
-which should be a colon-separated list of directories at which R library
-trees are rooted.  You do not have to specify the default tree in
-@env{R_LIBS}.  E.g., to use a private tree in @file{$HOME/lib/R} and a
-public site-wide tree in @file{/usr/local/lib/R-contrib}, put
+@c <COMMENT>
+@c This is really no longer quite accurate (R_LIBS_USER is preferred to
+@c R_LIBS), and described in ?libPaths anyways ... hence comment out.
+@c You can use several library trees of add-on packages.  The easiest way
+@c to tell R to use these is via the environment variable @env{R_LIBS}
+@c which should be a colon-separated list of directories at which R library
+@c trees are rooted.  You do not have to specify the default tree in
+@c @env{R_LIBS}.  E.g., to use a private tree in @file{$HOME/lib/R} and a
+@c public site-wide tree in @file{/usr/local/lib/R-contrib}, put
 
-@example
-R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"; export R_LIBS
-@end example
+@c @example
+@c R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"; export R_LIBS
+@c @end example
 
-@noindent
-into your (Bourne) shell profile or even preferably, add the line
+@c @noindent
+@c into your (Bourne) shell profile or even preferably, add the line
 
-@example
-R_LIBS="~/lib/R:/usr/local/lib/R-contrib"
-@end example
+@c @example
+@c R_LIBS="~/lib/R:/usr/local/lib/R-contrib"
+@c @end example
 
-@noindent
-your environment (e.g., @file{~/.Renviron}) file.  (Note that no
-@code{export} statement is needed or allowed in this file; see the
-on-line help for @code{Startup} for more information.)
+@c @noindent
+@c your environment (e.g., @file{~/.Renviron}) file.  (Note that no
+@c @code{export} statement is needed or allowed in this file; see the
+@c on-line help for @code{Startup} for more information.)
 
 @node How can add-on packages be used?, How can add-on packages be removed?, How can add-on packages be installed?, R Add-On Packages
 @section How can add-on packages be used?
@@ -7940,7 +7969,7 @@ R Installation and Administration}.
 @end ifset
 
 For earlier versions of R, you could change the file
-@file{$@env{R_HOME}/etc/Makeconf} to reflect your preferences, or (at
+@file{@var{R_HOME}/etc/Makeconf} to reflect your preferences, or (at
 least for systems using @acronym{GNU} Make) override them by the
 environment variable @env{MAKEFLAGS}.
 @ifclear UseExternalXrefs
