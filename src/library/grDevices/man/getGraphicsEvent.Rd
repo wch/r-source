@@ -68,14 +68,18 @@ A non-\code{NULL} value returned from one of the event handlers.
 \examples{
 \dontrun{
     mousedown <- function(buttons, x, y) {
-	cat("Buttons ", paste(buttons, collapse=" "), " at ", x, y, "\n")
-	points(x, y)
+        plx <- grconvertX(x,"ndc","user")
+        ply <- grconvertY(y,"ndc","user")    
+	cat("Buttons ", paste(buttons, collapse=" "), " at ndc", x, y, "user", plx, ply, "\n")
+	points(plx, ply, col="red", pch=19, cex=2)
 	if (x > 0.85 && y > 0.85) "Done"
 	else NULL
     }
     
     mousemove <- function(buttons, x, y) {
-	points(x, y)
+        plx<-grconvertX(x,"ndc","user")
+        ply<-grconvertY(y,"ndc","user")    
+	points(plx, ply)
 	NULL
     }
     
