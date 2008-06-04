@@ -174,7 +174,7 @@ Rconnection in_R_newsock(const char *host, int port, int server,
 
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of socket connection failed"));
-    new->class = (char *) malloc(strlen("socket") + 1);
+    new->class = (char *) malloc(strlen("sockconn") + 1);
     if(!new->class) {
 	free(new);
 	error(_("allocation of socket connection failed"));
