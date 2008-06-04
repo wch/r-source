@@ -206,7 +206,7 @@ bringToTop <- function(which = dev.cur(), stay = FALSE)
     invisible(.Internal(bringToTop(as.integer(which), as.logical(stay))))
 }
 
-savePlot <- function(filename = paste("Rplot", type, sep="."),
+savePlot <- function(filename = "Rplot",
                      type = c("wmf", "emf", "png", "jpg", "jpeg", "bmp",
                      "tif", "tiff", "ps", "eps", "pdf"),
                      device = dev.cur(),
@@ -219,6 +219,7 @@ savePlot <- function(filename = paste("Rplot", type, sep="."),
     devname <- names(devlist)[devcur]
     if(devname != "windows") stop("can only copy from 'windows' devices")
     if(filename == "clipboard" && type == "wmf") filename <- ""
+    else if(regexpr("\\.",filename) < 0) filename <- paste(filename,type,sep=".")
     invisible(.External(CsavePlot, device, filename, type, restoreConsole))
 }
 

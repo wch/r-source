@@ -60,6 +60,12 @@ NEW FEATURES
 	would be printed in Rgui for UTF-8 strings, not as they would
 	be printed in Rterm (via <U+xxxx> escapes).
 
+    o	savePlot() now adds the file type as an extension to the
+	filename if no dot ('.') is present in the filename.  This
+	provides the same default as in versions prior to 2.7.0, but
+	allows the extension to be specified explicitly. (Contributed
+	by Steve Ellison.)
+
 
 BUG FIXES
 

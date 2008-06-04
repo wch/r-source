@@ -7,7 +7,7 @@
 \alias{savePlot}
 \title{Save Windows Plot to a File}
 \usage{
-savePlot(filename = paste("Rplot", type, sep="."),
+savePlot(filename = "Rplot",
          type = c("wmf", "emf", "png", "jpg", "jpeg", "bmp",
                   "tif", "tiff", "ps", "eps", "pdf"),
          device = dev.cur(),
@@ -28,6 +28,12 @@ savePlot(filename = paste("Rplot", type, sep="."),
 \details{
   This is equivalent to selecting the \sQuote{Save as} menu item on the
   \sQuote{File} menu of a \code{\link{windows}} device.
+
+  If \code{filename} does not include a dot (\sQuote{.}), savePlot
+  will add the file type as an extension; that is, the filename will
+  be set to \code{paste(filename,type,".")}. If a dot is present in
+  \code{filename}, the filename is assumed to include an extension and
+  is used without change.
 
   Using \code{filename} as \code{"clipboard"} or \code{""} with
   \code{type = "wmf"} will copy to the clipboard.
