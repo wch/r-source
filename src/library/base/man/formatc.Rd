@@ -36,9 +36,10 @@ prettyNum(x, big.mark = "",   big.interval = 3,
     Default: 2 for integer, 4 for real numbers.  If less than 0,
     the C default of 6 digits is used.  If specified as more than 50, 50
     will be used with a warning unless \code{format = "f"} where it is
-    limited to typically 324. (Not more than about 15 digits will be
-    significant, and this limit is just a precaution against segfaults
-    in the underlying C runtime.)}
+    limited to typically 324. (Not more than 15--21 digits need be
+    accurate, depending on the OS and compiler used.  This limit is
+    just a precaution against segfaults in the underlying C runtime.)
+  }
 
   \item{width}{the total field width; if both \code{digits} and
     \code{width} are unspecified, \code{width} defaults to 1,
