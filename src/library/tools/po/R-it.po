@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:28\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -170,6 +170,9 @@ msgid "File '%s':"
 msgstr ""
 
 msgid "found T/F in %s"
+msgstr ""
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 
 msgid "Packages required but not available:"
@@ -382,8 +385,39 @@ msgstr ""
 msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 
+msgid "Generics g in env ="
+msgstr ""
+
+msgid "where hasMethods(g, env) errors:"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "May need something like"
+msgstr ""
+
+msgid "importFrom("
+msgstr ""
+
+msgid ")"
+msgstr ""
+
+msgid "in NAMESPACE."
+msgstr ""
+
+msgid "Generics without methods in"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
 msgid "argument 'lines' must be a character vector"
 msgstr "argomento 'lines' deve essere un vettore carattere"
+
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr "il test '%s' non è disponibile"
 
 msgid "argument 'file' must be a character string or connection"
 msgstr ""
@@ -482,9 +516,6 @@ msgid "cannot open directory '%s'"
 msgstr "impossibile leggere directory '%s'"
 
 msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "only the first will be used in R < 2.7.0"
@@ -646,12 +677,25 @@ msgid "only Rd syntax is currently supported"
 msgstr "solo la sintassi Rd è supportata al momento"
 
 #, fuzzy
+msgid "Running 'texi2dvi' on '%s' failed."
+msgstr "esecuzione texi2dvi su '%s' fallita"
+
+#, fuzzy
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "esecuzione texi2dvi su '%s' fallita"
 
 #, fuzzy
 msgid "unable to run %s on '%s'"
 msgstr "impossibile eseguire bibtext su '%s'"
+
+msgid "File 'DESCRIPTION' is missing."
+msgstr ""
+
+msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
+msgstr ""
+
+msgid "Bundle 'DESCRIPTION' is missing."
+msgstr ""
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "il fil e'%s' non è in formato DCF valido"

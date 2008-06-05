@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:49\n"
+"POT-Creation-Date: 2008-06-05 19:48\n"
 "PO-Revision-Date: 2008-04-04 14:57+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -118,6 +118,9 @@ msgstr ""
 msgid "invalid setting for 'getOption(\"device\")'"
 msgstr " 'getOption(\"device\")'の設定が不正です "
 
+msgid "device '%s' not found"
+msgstr " デバイス '%s' が見つかりません "
+
 msgid "no suitable unused file name for pdf()"
 msgstr " pdf()に適した未使用のファイル名がありません "
 
@@ -129,9 +132,6 @@ msgstr " postscript()に適した未使用のファイル名がありません "
 
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr " dev.new(): postscript(file=\"%s\")を使用します "
-
-msgid "device '%s' not found"
-msgstr " デバイス '%s' が見つかりません "
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr " '%s' 中に不正な引数があります（名前付き引数が必要です） "
@@ -280,7 +280,8 @@ msgstr " 不正な X11 フォントの指定方法です "
 msgid "no such device"
 msgstr " そのようなデバイスはありません "
 
-msgid "can only copy from 'X11(type=\"cairo\")' devices"
+#, fuzzy
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
 msgstr " 'X11(type=\"cairo\")' デバイスからしかコピーできません "
 
 msgid "invalid value for 'rescale'"

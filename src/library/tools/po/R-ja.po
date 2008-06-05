@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:28\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: 2008-04-04 15:03+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -173,6 +173,9 @@ msgstr " ファイル '%s'： "
 
 msgid "found T/F in %s"
 msgstr " %s 中に T/F が見つかりました "
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
+msgstr ""
 
 msgid "Packages required but not available:"
 msgstr " パッケージが必要ですが，利用可能ではありません "
@@ -392,8 +395,39 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 " 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
 
+msgid "Generics g in env ="
+msgstr ""
+
+msgid "where hasMethods(g, env) errors:"
+msgstr ""
+
+msgid ","
+msgstr " , "
+
+msgid "May need something like"
+msgstr ""
+
+msgid "importFrom("
+msgstr ""
+
+msgid ")"
+msgstr ""
+
+msgid "in NAMESPACE."
+msgstr ""
+
+msgid "Generics without methods in"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
 msgid "argument 'lines' must be a character vector"
 msgstr " 引数 'lines' は文字列ベクトルでなければなりません "
+
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr " エンコーディング '%s' は移植出来ません "
 
 msgid "argument 'file' must be a character string or connection"
 msgstr " 引数 'file' は文字列ベクトルかコネクションでなければなりません "
@@ -497,9 +531,6 @@ msgstr " ディレクトリ '%s' を開くことが出来ません "
 #, fuzzy
 msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 msgstr " 警告：'Depends' 項目は多重依存性を持ちます "
-
-msgid ","
-msgstr " , "
 
 #, fuzzy
 msgid "only the first will be used in R < 2.7.0"
@@ -662,11 +693,24 @@ msgstr " 引数 'delim' は2つの文字を特定しなければいけません 
 msgid "only Rd syntax is currently supported"
 msgstr " 現在はRd構文のみがサポートされています "
 
+#, fuzzy
+msgid "Running 'texi2dvi' on '%s' failed."
+msgstr " 'texi2dvi' を '%s' に対して実行できませんでした "
+
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr " 'texi2dvi' を '%s' に対して実行できませんでした "
 
 msgid "unable to run %s on '%s'"
 msgstr " %s を '%s' に対して実行出来ません "
+
+msgid "File 'DESCRIPTION' is missing."
+msgstr ""
+
+msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
+msgstr ""
+
+msgid "Bundle 'DESCRIPTION' is missing."
+msgstr ""
 
 msgid "file '%s' is not in valid DCF format"
 msgstr " ファイル '%s' は有効な DCF フォーマットではありません "

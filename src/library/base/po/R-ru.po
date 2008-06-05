@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-08 11:41\n"
+"POT-Creation-Date: 2008-06-05 19:48\n"
 "PO-Revision-Date: 2008-04-06 23:46-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -502,8 +502,19 @@ msgstr "'to' должен быть объектом POSIXt"
 msgid "'file' must be a character string or connection"
 msgstr "'file' должен быть текстовой строкой или соединением"
 
-msgid "Invalid DCF format."
-msgstr "Неправильный формат DCF."
+msgid ""
+"Invalid DCF format.\n"
+"Regular lines must have a tag.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+
+msgid ""
+"Invalid DCF format.\n"
+"Continuation lines must not start a record.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
 
 msgid "'x' must be a square matrix"
 msgstr "'x' должен быть квадратной матрицей"
@@ -606,13 +617,22 @@ msgstr "нет файлов для ссылки с"
 msgid "no files/directory to link to"
 msgstr "нет файлов/папок для ссылки на"
 
-msgid "'x' must be have length 1"
+#, fuzzy
+msgid "'x' must have length 1"
 msgstr "'x' должен иметь длину 1"
 
 msgid "invalid digits"
 msgstr "неправильное количество знаков после запятой"
 
 msgid "'x' cannot be coerced to 'octmode'"
+msgstr "'x' нельзя преобразовать в 'octmode'"
+
+#, fuzzy
+msgid "'x' must be of length 1"
+msgstr "'to' должен быть длиной 1"
+
+#, fuzzy
+msgid "'x' cannot be coerced to hexmode"
 msgstr "'x' нельзя преобразовать в 'octmode'"
 
 msgid "'package' must be of length 1"
@@ -722,6 +742,10 @@ msgstr "из"
 
 msgid ":"
 msgstr ":"
+
+#, fuzzy
+msgid "invalid package name"
+msgstr "неправильное имя"
 
 msgid "package '%s' has been merged into '%s'"
 msgstr "пакет '%s' был слит с '%s'"
@@ -1496,6 +1520,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "Invalid DCF format."
+#~ msgstr "Неправильный формат DCF."
 
 #~ msgid "No methods table for \""
 #~ msgstr "Нет таблицы методов для \""

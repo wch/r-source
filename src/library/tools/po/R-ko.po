@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:28\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -170,6 +170,9 @@ msgid "File '%s':"
 msgstr ""
 
 msgid "found T/F in %s"
+msgstr ""
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 
 msgid "Packages required but not available:"
@@ -380,8 +383,39 @@ msgstr ""
 msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 
+msgid "Generics g in env ="
+msgstr ""
+
+msgid "where hasMethods(g, env) errors:"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "May need something like"
+msgstr ""
+
+msgid "importFrom("
+msgstr ""
+
+msgid ")"
+msgstr ""
+
+msgid "in NAMESPACE."
+msgstr ""
+
+msgid "Generics without methods in"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
 msgid "argument 'lines' must be a character vector"
 msgstr "인수'lines'는 문자 벡터이어야만 합니다"
+
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr "test '%s'는 이용 가능하지 않습니다"
 
 msgid "argument 'file' must be a character string or connection"
 msgstr "인수'file'는 문자열 또는 connection이어야만 합니다"
@@ -479,9 +513,6 @@ msgid "cannot open directory '%s'"
 msgstr "디렉토리 '%s'를 열수가 없습니다"
 
 msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "only the first will be used in R < 2.7.0"
@@ -644,12 +675,25 @@ msgid "only Rd syntax is currently supported"
 msgstr "Rd syntax만 현재 주어졌습니다"
 
 #, fuzzy
+msgid "Running 'texi2dvi' on '%s' failed."
+msgstr "'%s'에서 texi2dvi를 실행하는 것은 실패했습니다"
+
+#, fuzzy
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "'%s'에서 texi2dvi를 실행하는 것은 실패했습니다"
 
 #, fuzzy
 msgid "unable to run %s on '%s'"
 msgstr "'%s'에서 bibtex를 실행할 수 없습니다"
+
+msgid "File 'DESCRIPTION' is missing."
+msgstr ""
+
+msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
+msgstr ""
+
+msgid "Bundle 'DESCRIPTION' is missing."
+msgstr ""
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "파일 '%s'는 유효한 DCF format에 있지 않습니다"

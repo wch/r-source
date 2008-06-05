@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
-"PO-Revision-Date: 2008-04-05 11:08\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
+"PO-Revision-Date: 2008-06-05 19:49\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -132,11 +132,11 @@ msgstr "bad argument"
 msgid "all arguments must be of class \"person\""
 msgstr "all arguments must be of class “person”"
 
-msgid "broken installation, no CITATION file in the base package."
-msgstr "broken installation, no CITATION file in the base package."
-
 msgid "package '%s' not found"
 msgstr "package ‘%s’ not found"
+
+msgid "broken installation, no CITATION file in the base package."
+msgstr "broken installation, no CITATION file in the base package."
 
 msgid "no date field in DESCRIPTION file of package '%s'"
 msgstr "no date field in DESCRIPTION file of package ‘%s’"
@@ -296,8 +296,8 @@ msgstr "‘topic’ should be a name, length-one character vector or reserved wo
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "No documentation for ‘%s’ in specified packages and libraries:"
 
-msgid "you could try 'help.search(\"%s\")'"
-msgstr "you could try ‘help.search(“%s”)’"
+msgid "you could try '??%s'"
+msgstr "you could try ‘??%s’"
 
 msgid ""
 "Help for topic '%s' is not in any loaded package but can be found in the "
@@ -654,45 +654,6 @@ msgstr "Created file named '%s'."
 
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "Edit the file and move it to the appropriate directory."
-
-msgid "Maintainer:"
-msgstr "Maintainer:"
-
-msgid "Index:"
-msgstr "Index:"
-
-msgid "Further information is available in the following vignettes:"
-msgstr "Further information is available in the following vignettes:"
-
-msgid "package title"
-msgstr "package title"
-
-msgid "A concise (1-5 lines) description of the package"
-msgstr "A concise (1-5 lines) description of the package"
-
-msgid ""
-"An overview of how to use the package, including the most important functions"
-msgstr ""
-"An overview of how to use the package, including the most important functions"
-
-msgid "The author and/or maintainer of the package"
-msgstr "The author and/or maintainer of the package"
-
-msgid "Literature or other references for background information"
-msgstr "Literature or other references for background information"
-
-msgid "Optional links to other man pages, e.g."
-msgstr "Optional links to other man pages, e.g."
-
-msgid "simple examples of the most important functions"
-msgstr "simple examples of the most important functions"
-
-msgid ""
-"Optionally other standard keywords, one per line, from file KEYWORDS in the "
-"R documentation directory"
-msgstr ""
-"Optionally other standard keywords, one per line, from file KEYWORDS in the "
-"R documentation directory"
 
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"

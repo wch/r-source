@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-08 11:41\n"
+"POT-Creation-Date: 2008-06-05 19:48\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -524,7 +524,18 @@ msgstr "'to' deve ser um objeto POSIXt"
 msgid "'file' must be a character string or connection"
 msgstr "'file' deve ser uma string de caracteres ou uma conexão"
 
-msgid "Invalid DCF format."
+msgid ""
+"Invalid DCF format.\n"
+"Regular lines must have a tag.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+
+msgid ""
+"Invalid DCF format.\n"
+"Continuation lines must not start a record.\n"
+"Offending lines start with:\n"
+"%s"
 msgstr ""
 
 msgid "'x' must be a square matrix"
@@ -633,7 +644,7 @@ msgid "no files/directory to link to"
 msgstr "nenhum arquivo/diretório para onde fazer a vinculação"
 
 #, fuzzy
-msgid "'x' must be have length 1"
+msgid "'x' must have length 1"
 msgstr "'input' deve ter comprimento 1"
 
 #, fuzzy
@@ -642,6 +653,14 @@ msgstr "'digits' inválido"
 
 #, fuzzy
 msgid "'x' cannot be coerced to 'octmode'"
+msgstr "não é possível fazer coerção para tabela"
+
+#, fuzzy
+msgid "'x' must be of length 1"
+msgstr "'to' deve ter comprimento 1"
+
+#, fuzzy
+msgid "'x' cannot be coerced to hexmode"
 msgstr "não é possível fazer coerção para tabela"
 
 msgid "'package' must be of length 1"
@@ -756,6 +775,10 @@ msgstr ""
 
 msgid ":"
 msgstr ""
+
+#, fuzzy
+msgid "invalid package name"
+msgstr "nome inválido"
 
 msgid "package '%s' has been merged into '%s'"
 msgstr "pacote '%s' foi incluído em '%s'"

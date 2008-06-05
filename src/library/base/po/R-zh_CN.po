@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-08 11:41\n"
+"POT-Creation-Date: 2008-06-05 19:48\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -495,8 +495,19 @@ msgstr "'to'一定得是POSIXt对象"
 msgid "'file' must be a character string or connection"
 msgstr "'file'要么是字符串，要么是连接"
 
-msgid "Invalid DCF format."
-msgstr "DCF格式不对"
+msgid ""
+"Invalid DCF format.\n"
+"Regular lines must have a tag.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+
+msgid ""
+"Invalid DCF format.\n"
+"Continuation lines must not start a record.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
 
 msgid "'x' must be a square matrix"
 msgstr "'x'必需是正方形矩阵"
@@ -598,13 +609,22 @@ msgstr "鏈結时没有可以读的文件"
 msgid "no files/directory to link to"
 msgstr "鏈結时没有可以写的文件/目錄"
 
-msgid "'x' must be have length 1"
+#, fuzzy
+msgid "'x' must have length 1"
 msgstr "'x'的长度一定得为一"
 
 msgid "invalid digits"
 msgstr "数字无效"
 
 msgid "'x' cannot be coerced to 'octmode'"
+msgstr "不能强迫把'x'改变成'octmode'"
+
+#, fuzzy
+msgid "'x' must be of length 1"
+msgstr "'to'的长度必需为一"
+
+#, fuzzy
+msgid "'x' cannot be coerced to hexmode"
 msgstr "不能强迫把'x'改变成'octmode'"
 
 msgid "'package' must be of length 1"
@@ -713,6 +733,10 @@ msgstr "从"
 
 msgid ":"
 msgstr ":"
+
+#, fuzzy
+msgid "invalid package name"
+msgstr "名字不对"
 
 msgid "package '%s' has been merged into '%s'"
 msgstr "程辑包'%s'已经被合并到'%s'"
@@ -1463,6 +1487,9 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "Invalid DCF format."
+#~ msgstr "DCF格式不对"
 
 #~ msgid "No methods table for \""
 #~ msgstr "没有方法列表于"

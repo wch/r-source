@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:07\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: 2008-03-26 17:25+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -88,12 +88,15 @@ msgstr ""
 "fonction existante"
 
 msgid ""
-"New generic for \"%s\" does not agree with implicit generic from package \"%s"
-"\"; a new generic will be assigned with package \"%s\""
+"Restoring the implicit generic function for \"%s\" from package \"%s\" into "
+"package \"%s\"; the generic differs from the default conversion (%s)"
 msgstr ""
-"La nouvelle fonction générique pour \"%s\" n'est pas conforme avec le "
-"générique implicite pour le package\"%s\" ; un nouveau générique sera "
-"assigné avec le package \"%s\""
+
+msgid ""
+"Creating a generic for \"%s\" in package  \"%s\"\n"
+"    (the supplied definition differs from and overrides the implicit generic "
+"in package \"%s\": %s)"
+msgstr ""
 
 msgid ""
 "No generic version of  \"%s\" on package \"%s\" is allowed; a new generic "
@@ -152,6 +155,10 @@ msgstr ""
 msgid "no existing definition for function \"%s\""
 msgstr "aucune définition n'existe pour la fonction \"%s\""
 
+#, fuzzy
+msgid "Creating a generic function from function \"%s\""
+msgstr "Une nouvelle fonction générique est créée pour \"%s\" dans \"%s\""
+
 msgid "Creating a new generic function for \"%s\" in \"%s\""
 msgstr "Une nouvelle fonction générique est créée pour \"%s\" dans \"%s\""
 
@@ -198,6 +205,13 @@ msgstr ""
 
 msgid "no generic function \"%s\" found"
 msgstr "aucune fonction générique \"%s\" n'est trouvée"
+
+msgid "no environment or package corresponding to argument where=%s"
+msgstr ""
+
+#, fuzzy
+msgid "No generic function found for \"%s\""
+msgstr "aucune fonction générique n'est trouvée pour \"%s\""
 
 msgid "No method found for function \"%s\" and signature %s"
 msgstr ""
@@ -312,18 +326,6 @@ msgstr ""
 "il fallait fournir une table d'environnement, et c'est un objet de classe \"%"
 "s\""
 
-msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
-msgstr ""
-"La fonction \"%s\" ne peut être utilisée comme générique (forme implicite "
-"interdite)"
-
-msgid ""
-"Implicit generic exists for \"%s\", but will be overriden by explicit call "
-"to setGeneric()"
-msgstr ""
-"Un générique implicite existe pour \"%s\", mais il sera remplacé par un "
-"appel explicite à setGeneric()"
-
 msgid ""
 "argument \"f\" must be a generic function or a single character string; got "
 "an object of class \"%s\""
@@ -331,16 +333,19 @@ msgstr ""
 "l'argument \"f\" doit être une fonction générique ou une chaîne de "
 "caractères ; un objet de classe \"%s\" est obtenu"
 
-msgid "non-generic function given to findMethods()"
+#, fuzzy
+msgid "non-generic function '%s' given to findMethods()"
 msgstr "fonction non générique fournie à findMethods()"
 
-msgid "Only FALSE meaningful for inherited, when where is supplied (got"
+#, fuzzy
+msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr "Seul FALSE a un sens pour 'inherited', lorsque 'where' est fourni ("
 
 msgid "\""
 msgstr "\""
 
-msgid "f does not correspond to a generic function and package not specified"
+#, fuzzy
+msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
 msgstr ""
 "f ne correspond pas à une fonction générique et le package n'est pas spécifié"
 
@@ -562,6 +567,14 @@ msgstr ""
 "données, \"%s\", n'est pas correcte (doit être une classe basique ou une "
 "classe virtuelle qui combine des classes basiques)"
 
+#, fuzzy
+msgid ""
+"No definition was found for superclass \"%s\" in the specification of class "
+"\"%s\""
+msgstr ""
+"aucune définition de la classe \"%s\" n'existe à la position spécifiée, %s, "
+"définition(s) dans : %s"
+
 msgid "class \"%s\" cannot be used as the data part of another class"
 msgstr ""
 "la classe \"%s\" ne peut être utilisée comme partie de données d'une autre "
@@ -764,6 +777,12 @@ msgid ""
 msgstr ""
 "les méthodes peuvent ajouter des arguments à la fonction générique seulement "
 "si '...' est un argument de cette fonction générique"
+
+#, fuzzy
+msgid "Arguments of method and generic are not in the same order"
+msgstr ""
+"les arguments formels n'apparaissent pas dans le même ordre dans la méthode "
+"et dans la fonction"
 
 msgid ""
 "arguments after '...' in the generic (%s) must appear in the method, in the "
@@ -1013,6 +1032,11 @@ msgstr ""
 msgid "invalid names for slots of class \"%s\": %s"
 msgstr "noms incorrects pour des slots de la classe \"%s\" : %s"
 
+msgid ""
+"Class \"%s\" is defined, with package \"%s\", but no corresponding metadata "
+"object was found (not exported?)"
+msgstr ""
+
 msgid "no definition of \"%s\" to use for %s"
 msgstr "aucune définition de \"%s\" à utiliser pour %s"
 
@@ -1153,11 +1177,10 @@ msgstr ""
 "définies, à l'exception de 'setClassUnion'"
 
 msgid ""
-"Unable to find package environment for class \"%s\" to revise subclass "
-"information"
+"Class \"%s\" is defined (with package slot \"%s\") but no metadata object "
+"found to revise %s information---not exported?  Making a copy in package \"%s"
+"\""
 msgstr ""
-"impossible de trouver un environnement de package contenant la classe \"%s\" "
-"pour pouvoir revoir les informations de sous-classes"
 
 msgid "class \"%s\" cannot extend class \"%s\""
 msgstr "la classe \"%s\" ne peut étendre la classe \"%s\""
@@ -1465,6 +1488,33 @@ msgstr[0] ""
 msgstr[1] ""
 "dans la signature de méthode pour la fonction \"%s\", il n'y a aucune "
 "définition pour les classes : %s"
+
+#~ msgid ""
+#~ "New generic for \"%s\" does not agree with implicit generic from package "
+#~ "\"%s\"; a new generic will be assigned with package \"%s\""
+#~ msgstr ""
+#~ "La nouvelle fonction générique pour \"%s\" n'est pas conforme avec le "
+#~ "générique implicite pour le package\"%s\" ; un nouveau générique sera "
+#~ "assigné avec le package \"%s\""
+
+#~ msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
+#~ msgstr ""
+#~ "La fonction \"%s\" ne peut être utilisée comme générique (forme implicite "
+#~ "interdite)"
+
+#~ msgid ""
+#~ "Implicit generic exists for \"%s\", but will be overriden by explicit "
+#~ "call to setGeneric()"
+#~ msgstr ""
+#~ "Un générique implicite existe pour \"%s\", mais il sera remplacé par un "
+#~ "appel explicite à setGeneric()"
+
+#~ msgid ""
+#~ "Unable to find package environment for class \"%s\" to revise subclass "
+#~ "information"
+#~ msgstr ""
+#~ "impossible de trouver un environnement de package contenant la classe \"%s"
+#~ "\" pour pouvoir revoir les informations de sous-classes"
 
 #~ msgid "Could not find generic function \"%s\" to initialize cached methods"
 #~ msgstr ""

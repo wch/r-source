@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:07\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -83,8 +83,14 @@ msgstr ""
 "분명히 또는 기존의 함수에 의해 기능 골격을 주어지지 않으면 되지 않습니다"
 
 msgid ""
-"New generic for \"%s\" does not agree with implicit generic from package \"%s"
-"\"; a new generic will be assigned with package \"%s\""
+"Restoring the implicit generic function for \"%s\" from package \"%s\" into "
+"package \"%s\"; the generic differs from the default conversion (%s)"
+msgstr ""
+
+msgid ""
+"Creating a generic for \"%s\" in package  \"%s\"\n"
+"    (the supplied definition differs from and overrides the implicit generic "
+"in package \"%s\": %s)"
 msgstr ""
 
 msgid ""
@@ -146,6 +152,10 @@ msgid "no existing definition for function \"%s\""
 msgstr "함수'%s'를 위한 기존의 정의가 아닙니다"
 
 #, fuzzy
+msgid "Creating a generic function from function \"%s\""
+msgstr "'%s'으로 '%s'를 위해서 새로운 generic 함수를 작성합니다"
+
+#, fuzzy
 msgid "Creating a new generic function for \"%s\" in \"%s\""
 msgstr "'%s'으로 '%s'를 위해서 새로운 generic 함수를 작성합니다"
 
@@ -193,6 +203,13 @@ msgstr "함수'%s' 그리고 기호 %s 때문에 검색되는 메소드가 아�
 #, fuzzy
 msgid "no generic function \"%s\" found"
 msgstr "'%s'가 검색되어 일반적인 함수가 아닙니다"
+
+msgid "no environment or package corresponding to argument where=%s"
+msgstr ""
+
+#, fuzzy
+msgid "No generic function found for \"%s\""
+msgstr "'%s'를 위해서 검색되어진 generic 함수가 아닙니다"
 
 #, fuzzy
 msgid "No method found for function \"%s\" and signature %s"
@@ -314,14 +331,6 @@ msgstr ""
 msgid "Must provide an environment table; got class \"%s\""
 msgstr "환경이 클래스 \"%s\"를 포함하고 있는것을 검색할수가 없습니다"
 
-msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
-msgstr ""
-
-msgid ""
-"Implicit generic exists for \"%s\", but will be overriden by explicit call "
-"to setGeneric()"
-msgstr ""
-
 #, fuzzy
 msgid ""
 "argument \"f\" must be a generic function or a single character string; got "
@@ -332,17 +341,18 @@ msgstr ""
 "의 오브젝트를 얻었습니다"
 
 #, fuzzy
-msgid "non-generic function given to findMethods()"
+msgid "non-generic function '%s' given to findMethods()"
 msgstr "'%s'가 검색되어진 non-geteric 함수가 아닙니다"
 
-msgid "Only FALSE meaningful for inherited, when where is supplied (got"
+msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
 
 msgid "\""
 msgstr ""
 
-msgid "f does not correspond to a generic function and package not specified"
-msgstr ""
+#, fuzzy
+msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
+msgstr "'%s'는 '%s'의 일반적인 함수가 아닙니다; 제거되지 않는 메소드입니다"
 
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
@@ -563,6 +573,12 @@ msgstr ""
 "습니다\n"
 "(basic classes를 결합하는 basic 클래스 또는 가상 클래스이어야만 합니다)"
 
+#, fuzzy
+msgid ""
+"No definition was found for superclass \"%s\" in the specification of class "
+"\"%s\""
+msgstr "지정된 위치의 클래스 \"%s\", %s,(s) 정의가 없습니다: %s"
+
 msgid "class \"%s\" cannot be used as the data part of another class"
 msgstr "클래스 \"%s\"가 다른 클래스의 데이터 일부로서 사용될 수가 없습니다"
 
@@ -751,6 +767,10 @@ msgid ""
 "generic"
 msgstr ""
 "만약에 '...' 인수에 있다면 메소드는 generic 인수에서만 추가할 수 있습니다"
+
+#, fuzzy
+msgid "Arguments of method and generic are not in the same order"
+msgstr "메소드와 함수의 가인수는 동일 순서로 나타나지 않습니다"
 
 msgid ""
 "arguments after '...' in the generic (%s) must appear in the method, in the "
@@ -998,6 +1018,11 @@ msgstr ""
 msgid "invalid names for slots of class \"%s\": %s"
 msgstr "클래스 \"%s\"의 slot 무효인 이름: %s 입니다"
 
+msgid ""
+"Class \"%s\" is defined, with package \"%s\", but no corresponding metadata "
+"object was found (not exported?)"
+msgstr ""
+
 msgid "no definition of \"%s\" to use for %s"
 msgstr "%s를 사용하는 \"%s\"의 정의가 아닙니다"
 
@@ -1139,11 +1164,11 @@ msgstr ""
 "우 이외는 \n"
 "정의 할수가 없습니다"
 
-#, fuzzy
 msgid ""
-"Unable to find package environment for class \"%s\" to revise subclass "
-"information"
-msgstr "환경이 클래스 \"%s\"를 포함하고 있는것을 검색할수가 없습니다"
+"Class \"%s\" is defined (with package slot \"%s\") but no metadata object "
+"found to revise %s information---not exported?  Making a copy in package \"%s"
+"\""
+msgstr ""
 
 msgid "class \"%s\" cannot extend class \"%s\""
 msgstr "클래스 \"%s\"는 클래스 \"%s\"를 연장시킬 수가 없습니다"
@@ -1422,6 +1447,12 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "함수'%s'를 위한 메소드 signature으로, 클래스용 정의는 없습니다: %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to find package environment for class \"%s\" to revise subclass "
+#~ "information"
+#~ msgstr "환경이 클래스 \"%s\"를 포함하고 있는것을 검색할수가 없습니다"
 
 #, fuzzy
 #~ msgid ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:49\n"
+"POT-Creation-Date: 2008-06-05 19:48\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -122,6 +122,10 @@ msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
 msgid "invalid setting for 'getOption(\"device\")'"
 msgstr ""
 
+#, fuzzy
+msgid "device '%s' not found"
+msgstr "device '%s' non disponibile"
+
 msgid "no suitable unused file name for pdf()"
 msgstr ""
 
@@ -133,10 +137,6 @@ msgstr ""
 
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr ""
-
-#, fuzzy
-msgid "device '%s' not found"
-msgstr "device '%s' non disponibile"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "argomenti non validi in '%s' (devono essere argomenti con nome)"
@@ -296,7 +296,7 @@ msgid "no such device"
 msgstr "dispositivo non trovato"
 
 #, fuzzy
-msgid "can only copy from 'X11(type=\"cairo\")' devices"
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
 msgstr "posso copiare solo da dispositivi 'windows'"
 
 msgid "invalid value for 'rescale'"

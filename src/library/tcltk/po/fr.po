@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:06+0000\n"
+"POT-Creation-Date: 2008-06-05 19:49+0100\n"
 "PO-Revision-Date: 2007-04-13 12:33+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -26,7 +26,7 @@ msgstr "erreur d'analyse de code dans l'expression R"
 msgid "tcl error.\n"
 msgstr "erreur Tcl.\n"
 
-#: tcltk.c:187 tcltk.c:684
+#: tcltk.c:187 tcltk.c:685
 msgid "invalid argument"
 msgstr "argument incorrect"
 
@@ -40,7 +40,7 @@ msgstr ""
 msgid "argument is not of correct type"
 msgstr "l'argument n'est pas d'un type correct"
 
-#: tcltk.c:643
+#: tcltk.c:644
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "pas de variable DISPLAY, donc Tk n'est pas disponible"
 

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:28\n"
-"PO-Revision-Date: 2008-04-07 08:28\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
+"PO-Revision-Date: 2008-06-05 19:49\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -182,6 +182,9 @@ msgstr "File '%s':"
 
 msgid "found T/F in %s"
 msgstr "found T/F in %s"
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
+msgstr "package name ‘%s’ seems invalid; using directory name ‘%s’ instead"
 
 msgid "Packages required but not available:"
 msgstr "Packages required but not available:"
@@ -393,8 +396,38 @@ msgstr "‘::’ or ‘:::’ imports not declared from:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "‘library’ or ‘require’ calls not declared from:"
 
+msgid "Generics g in env ="
+msgstr "Generics g in env ="
+
+msgid "where hasMethods(g, env) errors:"
+msgstr "where hasMethods(g, env) errors:"
+
+msgid ","
+msgstr ","
+
+msgid "May need something like"
+msgstr "May need something like"
+
+msgid "importFrom("
+msgstr "importFrom("
+
+msgid ")"
+msgstr ")"
+
+msgid "in NAMESPACE."
+msgstr "in NAMESPACE."
+
+msgid "Generics without methods in"
+msgstr "Generics without methods in"
+
+msgid ":"
+msgstr ":"
+
 msgid "argument 'lines' must be a character vector"
 msgstr "argument ‘lines’ must be a character vector"
+
+msgid "encoding '%s' is not portable"
+msgstr "encoding ‘%s’ is not portable"
 
 msgid "argument 'file' must be a character string or connection"
 msgstr "argument ‘file’ must be a character string or connection"
@@ -490,9 +523,6 @@ msgstr "cannot open directory ‘%s’"
 
 msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 msgstr "WARNING: ‘Depends’ entry has multiple dependencies on R:"
-
-msgid ","
-msgstr ","
 
 msgid "only the first will be used in R < 2.7.0"
 msgstr "only the first will be used in R < 2.7.0"
@@ -648,11 +678,23 @@ msgstr "argument ‘delim’ must specify two characters"
 msgid "only Rd syntax is currently supported"
 msgstr "only Rd syntax is currently supported"
 
+msgid "Running 'texi2dvi' on '%s' failed."
+msgstr "Running ‘texi2dvi’ on ‘%s’ failed."
+
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "running ‘texi2dvi’ on ‘%s’ failed"
 
 msgid "unable to run %s on '%s'"
 msgstr "unable to run %s on ‘%s’"
+
+msgid "File 'DESCRIPTION' is missing."
+msgstr "File ‘DESCRIPTION’ is missing."
+
+msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
+msgstr "Files ‘DESCRIPTION’ and ‘DESCRIPTION.in’ are missing."
+
+msgid "Bundle 'DESCRIPTION' is missing."
+msgstr "Bundle ‘DESCRIPTION’ is missing."
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "file ‘%s’ is not in valid DCF format"

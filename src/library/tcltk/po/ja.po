@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:06+0000\n"
+"POT-Creation-Date: 2008-06-05 19:49+0100\n"
 "PO-Revision-Date: 2007-04-03 01:06+0900 \n"
 "Last-Translator: Ei-ji Nakama <nakama@ki.rim.or.jp> \n"
 "Language-Team: Japanese <translation-team-ja@lists.sourceforge.net> \n"
@@ -26,7 +26,7 @@ msgstr " R expression 内に構文エラー "
 msgid "tcl error.\n"
 msgstr " tcl エラー \n"
 
-#: tcltk.c:187 tcltk.c:684
+#: tcltk.c:187 tcltk.c:685
 msgid "invalid argument"
 msgstr " 不正な引数 "
 
@@ -38,7 +38,7 @@ msgstr " 引数リストはtcltkの内部関数 `callback_closure' において�
 msgid "argument is not of correct type"
 msgstr " 引数は正しいタイプではありません "
 
-#: tcltk.c:643
+#: tcltk.c:644
 msgid "no DISPLAY variable so Tk is not available"
 msgstr " DISPLAY環境変数が無いのでTkは利用出来ません "
 

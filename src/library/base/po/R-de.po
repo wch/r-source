@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-08 11:41\n"
+"POT-Creation-Date: 2008-06-05 19:48\n"
 "PO-Revision-Date: 2008-04-06 18:07+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -503,8 +503,19 @@ msgstr "'to' muss ein \"POSIXt\" Objekt sein"
 msgid "'file' must be a character string or connection"
 msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
 
-msgid "Invalid DCF format."
-msgstr "Ungültiges DCF Format"
+msgid ""
+"Invalid DCF format.\n"
+"Regular lines must have a tag.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+
+msgid ""
+"Invalid DCF format.\n"
+"Continuation lines must not start a record.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
 
 msgid "'x' must be a square matrix"
 msgstr "'x' muss eine quadratische Matrix sein"
@@ -609,13 +620,22 @@ msgstr "keine Dateien, um davon zu linken"
 msgid "no files/directory to link to"
 msgstr "keine Dateien/Verzeichnis, um dorthin zu linken"
 
-msgid "'x' must be have length 1"
+#, fuzzy
+msgid "'x' must have length 1"
 msgstr "'x' muss Länge 1 haben"
 
 msgid "invalid digits"
 msgstr "ungültige 'digits'"
 
 msgid "'x' cannot be coerced to 'octmode'"
+msgstr "'x' kann nicht in 'octmode' umgewandelt werden"
+
+#, fuzzy
+msgid "'x' must be of length 1"
+msgstr "'to' muss Länge 1 haben"
+
+#, fuzzy
+msgid "'x' cannot be coerced to hexmode"
 msgstr "'x' kann nicht in 'octmode' umgewandelt werden"
 
 msgid "'package' must be of length 1"
@@ -725,6 +745,10 @@ msgstr "von"
 
 msgid ":"
 msgstr ":"
+
+#, fuzzy
+msgid "invalid package name"
+msgstr "ungültiger Name"
 
 msgid "package '%s' has been merged into '%s'"
 msgstr "Paket '%s' wurde in '%s' eingebaut"
@@ -1495,6 +1519,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "Invalid DCF format."
+#~ msgstr "Ungültiges DCF Format"
 
 #~ msgid "No methods table for \""
 #~ msgstr "Keine Methodentabelle für\""

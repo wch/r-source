@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -112,11 +112,11 @@ msgstr "불적절한 인수"
 msgid "all arguments must be of class \"person\""
 msgstr "모든 인수는 클래스 \"person\"이어야만 합니다"
 
-msgid "broken installation, no CITATION file in the base package."
-msgstr "파손 되어진 설치, 기초 패키지로서 CITATION 파일은 없습니다"
-
 msgid "package '%s' not found"
 msgstr "'%s' 패키지가 검색되지 않습니다"
+
+msgid "broken installation, no CITATION file in the base package."
+msgstr "파손 되어진 설치, 기초 패키지로서 CITATION 파일은 없습니다"
 
 msgid "no date field in DESCRIPTION file of package '%s'"
 msgstr "패키지 '%s'의  DESCRIPTION 파일에서 date 필드가 있습니다"
@@ -291,7 +291,8 @@ msgstr "'package'는 문자열이나 NULL이어야만 합니다"
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "지정된 패키지 및 라이브러리에서 '%s'때문에 documentation는 없습니다"
 
-msgid "you could try 'help.search(\"%s\")'"
+#, fuzzy
+msgid "you could try '??%s'"
 msgstr "help.search(\"%s\")를 시도할 수 있었습니다"
 
 msgid ""
@@ -672,43 +673,6 @@ msgstr "'%s' 라고 하는 이름으로 작성된 파일입니다"
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "파일을 편집하고 적절한 디렉토리에 그것을 이동시켜 주십시오"
 
-msgid "Maintainer:"
-msgstr ""
-
-msgid "Index:"
-msgstr ""
-
-msgid "Further information is available in the following vignettes:"
-msgstr ""
-
-#, fuzzy
-msgid "package title"
-msgstr "패키지"
-
-msgid "A concise (1-5 lines) description of the package"
-msgstr ""
-
-msgid ""
-"An overview of how to use the package, including the most important functions"
-msgstr ""
-
-msgid "The author and/or maintainer of the package"
-msgstr ""
-
-msgid "Literature or other references for background information"
-msgstr ""
-
-msgid "Optional links to other man pages, e.g."
-msgstr ""
-
-msgid "simple examples of the most important functions"
-msgstr ""
-
-msgid ""
-"Optionally other standard keywords, one per line, from file KEYWORDS in the "
-"R documentation directory"
-msgstr ""
-
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"
 msgstr ""
@@ -1083,6 +1047,10 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] ""
 "package '%s'는 사용되고 있어 인스톨 되지 않을 것입니다\n"
 "packages '%s'는 사용되고 있어 인스톨 되지 않을 것입니다"
+
+#, fuzzy
+#~ msgid "package title"
+#~ msgstr "패키지"
 
 #~ msgid "cannot update HTML package index"
 #~ msgstr "HTML 패키지 인덱스를 갱신할 수 없습니다"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:28\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -26,17 +26,20 @@ msgstr "non posso stimare modelli senza livelli ('alpha' non deve essere 0)."
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
 msgstr "'alpha', 'beta' e 'gamma' devono essere nel cerchio unitario."
 
-msgid "data must be strictly non-negative for multiplicative Holt-Winters"
+#, fuzzy
+msgid "data must be strictly non-negative for multiplicative Holt-Winters."
 msgstr ""
 "i dati devono essere strettamente non negativi per Holt-Winters "
 "moltiplicativo"
 
-msgid "need at least 3 periods to compute seasonal start values"
+#, fuzzy
+msgid "need at least 2 periods to compute seasonal start values."
 msgstr ""
 "sono necessari almeno 3 periodi per poter calcolare valori stagionali "
 "iniziali"
 
-msgid "time series has no or less than 3 periods"
+#, fuzzy
+msgid "time series has no or less than 2 periods"
 msgstr "la serie storica non ha o ha meno di 3 periodi"
 
 msgid "the series is entirely NA"
@@ -490,7 +493,8 @@ msgstr "'degree' deve essere almeno 1"
 msgid "missing values are not allowed in 'poly'"
 msgstr "valori mancanti non ammessi in 'poly'"
 
-msgid "'degree' must be less than number of points"
+#, fuzzy
+msgid "'degree' must be less than number of unique points"
 msgstr "'degree' deve essere inferiore al numero di punti"
 
 msgid "must supply one or more vectors"
@@ -1682,6 +1686,9 @@ msgstr "nome kernel sconosciuto"
 msgid "read the documentation for 'trace' more carefully"
 msgstr "leggere la documentazione di 'trace' più attentamente"
 
+msgid "'trace != 0' needs 'REPORT >= 1'"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
@@ -1710,6 +1717,9 @@ msgstr "usare solo con oggetti \"lm\""
 
 msgid "'which' must be in 1:6"
 msgstr "'which' deve essere in 1:6"
+
+msgid "Not plotting observations with leverage one:"
+msgstr ""
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' deve essere in {1,..,%d}"

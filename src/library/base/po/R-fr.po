@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-08 11:41\n"
+"POT-Creation-Date: 2008-06-05 19:48\n"
 "PO-Revision-Date: 2008-03-26 10:09+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -522,8 +522,19 @@ msgstr "'to' doit être un objet \"POSIXt\""
 msgid "'file' must be a character string or connection"
 msgstr "'file' doit être une chîne de caractères ou une connection"
 
-msgid "Invalid DCF format."
-msgstr "Format DCf incorrecT."
+msgid ""
+"Invalid DCF format.\n"
+"Regular lines must have a tag.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+
+msgid ""
+"Invalid DCF format.\n"
+"Continuation lines must not start a record.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
 
 msgid "'x' must be a square matrix"
 msgstr "'x' doit être une matrice carrée"
@@ -631,13 +642,22 @@ msgstr "aucun fichier vers où pointer un lien"
 msgid "no files/directory to link to"
 msgstr "aucun fichier / répertoire vers où pointer un lien"
 
-msgid "'x' must be have length 1"
+#, fuzzy
+msgid "'x' must have length 1"
 msgstr "'x' doit être de longueur 1"
 
 msgid "invalid digits"
 msgstr "nombre de chiffres incorrect"
 
 msgid "'x' cannot be coerced to 'octmode'"
+msgstr "impossible de convertir automatiquement 'x' en 'octmode'"
+
+#, fuzzy
+msgid "'x' must be of length 1"
+msgstr "'to' doit être de longeur 1"
+
+#, fuzzy
+msgid "'x' cannot be coerced to hexmode"
 msgstr "impossible de convertir automatiquement 'x' en 'octmode'"
 
 msgid "'package' must be of length 1"
@@ -752,6 +772,10 @@ msgstr "de"
 
 msgid ":"
 msgstr " : "
+
+#, fuzzy
+msgid "invalid package name"
+msgstr "nom incorrect"
 
 msgid "package '%s' has been merged into '%s'"
 msgstr "le package '%s' a été fusionné avec '%s'"
@@ -1536,3 +1560,6 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "Invalid DCF format."
+#~ msgstr "Format DCf incorrecT."

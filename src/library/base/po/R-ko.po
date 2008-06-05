@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-08 11:41\n"
+"POT-Creation-Date: 2008-06-05 19:48\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -511,7 +511,18 @@ msgstr "'to'는  POSIXt 오브젝트가 아니면 되지 않습니다"
 msgid "'file' must be a character string or connection"
 msgstr "'file'는 문자열 또는 connection가 아니면 되지 않습니다"
 
-msgid "Invalid DCF format."
+msgid ""
+"Invalid DCF format.\n"
+"Regular lines must have a tag.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+
+msgid ""
+"Invalid DCF format.\n"
+"Continuation lines must not start a record.\n"
+"Offending lines start with:\n"
+"%s"
 msgstr ""
 
 msgid "'x' must be a square matrix"
@@ -620,7 +631,7 @@ msgid "no files/directory to link to"
 msgstr "link 해야할 파일 또는 디렉토리가 없습니다"
 
 #, fuzzy
-msgid "'x' must be have length 1"
+msgid "'x' must have length 1"
 msgstr "'input'는 길이 1 이 나오지 않으면 되지 않습니다"
 
 #, fuzzy
@@ -629,6 +640,14 @@ msgstr "무효인 'digits'입니다"
 
 #, fuzzy
 msgid "'x' cannot be coerced to 'octmode'"
+msgstr "테이블에 강제 변환 할수 없습니다"
+
+#, fuzzy
+msgid "'x' must be of length 1"
+msgstr "'to'는 길이 1이 나오지 않으면 되지 않습니다"
+
+#, fuzzy
+msgid "'x' cannot be coerced to hexmode"
 msgstr "테이블에 강제 변환 할수 없습니다"
 
 msgid "'package' must be of length 1"
@@ -746,6 +765,10 @@ msgstr ""
 
 msgid ":"
 msgstr ""
+
+#, fuzzy
+msgid "invalid package name"
+msgstr "부적절한 이름입니다"
 
 msgid "package '%s' has been merged into '%s'"
 msgstr "패케지'%s'는 '%s'에 병합되었습니다"

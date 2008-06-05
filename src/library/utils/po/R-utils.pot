@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,10 +98,10 @@ msgstr ""
 msgid "all arguments must be of class \"person\""
 msgstr ""
 
-msgid "broken installation, no CITATION file in the base package."
+msgid "package '%s' not found"
 msgstr ""
 
-msgid "package '%s' not found"
+msgid "broken installation, no CITATION file in the base package."
 msgstr ""
 
 msgid "no date field in DESCRIPTION file of package '%s'"
@@ -257,7 +257,7 @@ msgstr ""
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr ""
 
-msgid "you could try 'help.search(\"%s\")'"
+msgid "you could try '??%s'"
 msgstr ""
 
 msgid "Help for topic '%s' is not in any loaded package but can be found in the following packages:"
@@ -573,39 +573,6 @@ msgid "Created file named '%s'."
 msgstr ""
 
 msgid "Edit the file and move it to the appropriate directory."
-msgstr ""
-
-msgid "Maintainer:"
-msgstr ""
-
-msgid "Index:"
-msgstr ""
-
-msgid "Further information is available in the following vignettes:"
-msgstr ""
-
-msgid "package title"
-msgstr ""
-
-msgid "A concise (1-5 lines) description of the package"
-msgstr ""
-
-msgid "An overview of how to use the package, including the most important functions"
-msgstr ""
-
-msgid "The author and/or maintainer of the package"
-msgstr ""
-
-msgid "Literature or other references for background information"
-msgstr ""
-
-msgid "Optional links to other man pages, e.g."
-msgstr ""
-
-msgid "simple examples of the most important functions"
-msgstr ""
-
-msgid "Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory"
 msgstr ""
 
 msgid "no documentation of type '%s' and topic '%s' (or error in processing help)"

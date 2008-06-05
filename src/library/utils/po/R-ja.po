@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: 2008-04-04 15:18+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -111,12 +111,12 @@ msgstr " 誤った引数 "
 msgid "all arguments must be of class \"person\""
 msgstr " 全ての引数がクラス \"person\" でなければなりません "
 
+msgid "package '%s' not found"
+msgstr " パッケージ '%s' が見付かりません "
+
 msgid "broken installation, no CITATION file in the base package."
 msgstr ""
 " インストールが不完全です、base パッケージに CITATION ファイルがありません "
-
-msgid "package '%s' not found"
-msgstr " パッケージ '%s' が見付かりません "
 
 msgid "no date field in DESCRIPTION file of package '%s'"
 msgstr " パッケージ '%s' の DESCRIPTION ファイル中に日付け欄がありません "
@@ -284,7 +284,8 @@ msgstr ""
 " 指定されたパッケージやライブラリ中には '%s' に対するドキュメントはありませ"
 "ん "
 
-msgid "you could try 'help.search(\"%s\")'"
+#, fuzzy
+msgid "you could try '??%s'"
 msgstr " 'help.search(\"%s\")' を使うべきだったかも知れません "
 
 msgid ""
@@ -655,44 +656,6 @@ msgstr " 名前 '%s' のファイルを作成しました "
 msgid "Edit the file and move it to the appropriate directory."
 msgstr " ファイルを編集してきとうなディレクトリに移動してください "
 
-msgid "Maintainer:"
-msgstr " 管理者: "
-
-msgid "Index:"
-msgstr " 索引: "
-
-msgid "Further information is available in the following vignettes:"
-msgstr " より詳しい情報は以下のビニエットで入手できます: "
-
-msgid "package title"
-msgstr " パッケージのタイトル "
-
-msgid "A concise (1-5 lines) description of the package"
-msgstr " パッケージの簡略(1-5 行)な解説 "
-
-msgid ""
-"An overview of how to use the package, including the most important functions"
-msgstr " 最も重要な関数を含む、パッケージの使い方の概略 "
-
-msgid "The author and/or maintainer of the package"
-msgstr " パッケージの作者と(もしくは)管理者 "
-
-msgid "Literature or other references for background information"
-msgstr " 背景情報の文献もしくはその他の参考文献 "
-
-msgid "Optional links to other man pages, e.g."
-msgstr " 他のマニュアルページへのオプションのリンク、例えば "
-
-msgid "simple examples of the most important functions"
-msgstr " 最も重要な関数の簡単な実行例 "
-
-msgid ""
-"Optionally other standard keywords, one per line, from file KEYWORDS in the "
-"R documentation directory"
-msgstr ""
-" オプションとして、R ドキュメントのディレクトリ中の KEYWORDS ファイルからの、"
-"一行に一つの他の標準キーワード "
-
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"
 msgstr ""
@@ -1044,6 +1007,45 @@ msgstr[0] " 依存対象(dependency)　%s もインストールします "
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "Maintainer:"
+#~ msgstr " 管理者: "
+
+#~ msgid "Index:"
+#~ msgstr " 索引: "
+
+#~ msgid "Further information is available in the following vignettes:"
+#~ msgstr " より詳しい情報は以下のビニエットで入手できます: "
+
+#~ msgid "package title"
+#~ msgstr " パッケージのタイトル "
+
+#~ msgid "A concise (1-5 lines) description of the package"
+#~ msgstr " パッケージの簡略(1-5 行)な解説 "
+
+#~ msgid ""
+#~ "An overview of how to use the package, including the most important "
+#~ "functions"
+#~ msgstr " 最も重要な関数を含む、パッケージの使い方の概略 "
+
+#~ msgid "The author and/or maintainer of the package"
+#~ msgstr " パッケージの作者と(もしくは)管理者 "
+
+#~ msgid "Literature or other references for background information"
+#~ msgstr " 背景情報の文献もしくはその他の参考文献 "
+
+#~ msgid "Optional links to other man pages, e.g."
+#~ msgstr " 他のマニュアルページへのオプションのリンク、例えば "
+
+#~ msgid "simple examples of the most important functions"
+#~ msgstr " 最も重要な関数の簡単な実行例 "
+
+#~ msgid ""
+#~ "Optionally other standard keywords, one per line, from file KEYWORDS in "
+#~ "the R documentation directory"
+#~ msgstr ""
+#~ " オプションとして、R ドキュメントのディレクトリ中の KEYWORDS ファイルから"
+#~ "の、一行に一つの他の標準キーワード "
 
 #~ msgid "cannot update HTML package index"
 #~ msgstr " HTML パッケージ索引を更新出来ません "

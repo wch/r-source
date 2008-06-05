@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:07\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,7 +50,10 @@ msgstr ""
 msgid "must supply a function skeleton, explicitly or via an existing function"
 msgstr ""
 
-msgid "New generic for \"%s\" does not agree with implicit generic from package \"%s\"; a new generic will be assigned with package \"%s\""
+msgid "Restoring the implicit generic function for \"%s\" from package \"%s\" into package \"%s\"; the generic differs from the default conversion (%s)"
+msgstr ""
+
+msgid "Creating a generic for \"%s\" in package  \"%s\"\n    (the supplied definition differs from and overrides the implicit generic in package \"%s\": %s)"
 msgstr ""
 
 msgid "No generic version of  \"%s\" on package \"%s\" is allowed; a new generic will be assigned with package \"%s\""
@@ -83,6 +86,9 @@ msgstr ""
 msgid "no existing definition for function \"%s\""
 msgstr ""
 
+msgid "Creating a generic function from function \"%s\""
+msgstr ""
+
 msgid "Creating a new generic function for \"%s\" in \"%s\""
 msgstr ""
 
@@ -111,6 +117,12 @@ msgid "no method found for function \"%s\" and signature %s"
 msgstr ""
 
 msgid "no generic function \"%s\" found"
+msgstr ""
+
+msgid "no environment or package corresponding to argument where=%s"
+msgstr ""
+
+msgid "No generic function found for \"%s\""
 msgstr ""
 
 msgid "No method found for function \"%s\" and signature %s"
@@ -188,25 +200,19 @@ msgstr ""
 msgid "Must provide an environment table; got class \"%s\""
 msgstr ""
 
-msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
-msgstr ""
-
-msgid "Implicit generic exists for \"%s\", but will be overriden by explicit call to setGeneric()"
-msgstr ""
-
 msgid "argument \"f\" must be a generic function or a single character string; got an object of class \"%s\""
 msgstr ""
 
-msgid "non-generic function given to findMethods()"
+msgid "non-generic function '%s' given to findMethods()"
 msgstr ""
 
-msgid "Only FALSE meaningful for inherited, when where is supplied (got"
+msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
 
 msgid "\""
 msgstr ""
 
-msgid "f does not correspond to a generic function and package not specified"
+msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
 msgstr ""
 
 msgid "invalid first argument: should be the name of the first argument in the dispatch"
@@ -326,6 +332,9 @@ msgstr ""
 msgid "in defining class \"%s\", the supplied data part class, \"%s\" is not valid (must be a basic class or a virtual class combining basic classes)"
 msgstr ""
 
+msgid "No definition was found for superclass \"%s\" in the specification of class \"%s\""
+msgstr ""
+
 msgid "class \"%s\" cannot be used as the data part of another class"
 msgstr ""
 
@@ -438,6 +447,9 @@ msgid ","
 msgstr ""
 
 msgid "methods can add arguments to the generic only if '...' is an argument to the generic"
+msgstr ""
+
+msgid "Arguments of method and generic are not in the same order"
 msgstr ""
 
 msgid "arguments after '...' in the generic (%s) must appear in the method, in the same place at the end of the argument list"
@@ -584,6 +596,9 @@ msgstr ""
 msgid "invalid names for slots of class \"%s\": %s"
 msgstr ""
 
+msgid "Class \"%s\" is defined, with package \"%s\", but no corresponding metadata object was found (not exported?)"
+msgstr ""
+
 msgid "no definition of \"%s\" to use for %s"
 msgstr ""
 
@@ -665,7 +680,7 @@ msgstr ""
 msgid "class \"%s\" is sealed; new superclasses can not be defined, except by 'setClassUnion'"
 msgstr ""
 
-msgid "Unable to find package environment for class \"%s\" to revise subclass information"
+msgid "Class \"%s\" is defined (with package slot \"%s\") but no metadata object found to revise %s information---not exported?  Making a copy in package \"%s\""
 msgstr ""
 
 msgid "class \"%s\" cannot extend class \"%s\""

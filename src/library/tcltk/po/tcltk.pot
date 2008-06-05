@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:06+0000\n"
+"POT-Creation-Date: 2008-06-05 19:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "tcl error.\n"
 msgstr ""
 
-#: tcltk.c:187 tcltk.c:684
+#: tcltk.c:187 tcltk.c:685
 msgid "invalid argument"
 msgstr ""
 
@@ -36,7 +36,7 @@ msgstr ""
 msgid "argument is not of correct type"
 msgstr ""
 
-#: tcltk.c:643
+#: tcltk.c:644
 msgid "no DISPLAY variable so Tk is not available"
 msgstr ""
 

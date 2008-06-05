@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:28\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -165,6 +165,9 @@ msgstr "文件'%s':"
 
 msgid "found T/F in %s"
 msgstr "%s里不能有T/F这样的值"
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
+msgstr ""
 
 msgid "Packages required but not available:"
 msgstr "需要有程辑包但它却不存在:"
@@ -371,8 +374,39 @@ msgstr "'::'或':::'引进没有被声明:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "'library'或'require'调用没有被声明:"
 
+msgid "Generics g in env ="
+msgstr ""
+
+msgid "where hasMethods(g, env) errors:"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "May need something like"
+msgstr ""
+
+msgid "importFrom("
+msgstr ""
+
+msgid ")"
+msgstr ""
+
+msgid "in NAMESPACE."
+msgstr ""
+
+msgid "Generics without methods in"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
 msgid "argument 'lines' must be a character vector"
 msgstr "变元'lines'必需是字符矢量"
+
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr "编码'%s'不可便携"
 
 msgid "argument 'file' must be a character string or connection"
 msgstr "变元'document'必需是字符串或联结"
@@ -468,9 +502,6 @@ msgstr "无法打开目录'%s'"
 #, fuzzy
 msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 msgstr "警告：'Depends'项有多个從屬项"
-
-msgid ","
-msgstr ","
 
 #, fuzzy
 msgid "only the first will be used in R < 2.7.0"
@@ -628,11 +659,24 @@ msgstr "变元'delim'必需指定两个字符"
 msgid "only Rd syntax is currently supported"
 msgstr "目前只支持Rd语法"
 
+#, fuzzy
+msgid "Running 'texi2dvi' on '%s' failed."
+msgstr "给'%s'调用'texi2dvi'失败了"
+
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "给'%s'调用'texi2dvi'失败了"
 
 msgid "unable to run %s on '%s'"
 msgstr "无法在'%2$s'上调用%1$s"
+
+msgid "File 'DESCRIPTION' is missing."
+msgstr ""
+
+msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
+msgstr ""
+
+msgid "Bundle 'DESCRIPTION' is missing."
+msgstr ""
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "文件'%s'不含正确的DCF格式"

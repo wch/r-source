@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-01-27 18:06+0000\n"
+"POT-Creation-Date: 2008-06-05 19:49+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -24,7 +24,7 @@ msgstr "R表达式里句法分析错误"
 msgid "tcl error.\n"
 msgstr "tcl错误。\n"
 
-#: tcltk.c:187 tcltk.c:684
+#: tcltk.c:187 tcltk.c:685
 msgid "invalid argument"
 msgstr "变元不对"
 
@@ -36,7 +36,7 @@ msgstr "tcltk内部函数'callback_closure'的变元串列太长"
 msgid "argument is not of correct type"
 msgstr "变元的种类不对"
 
-#: tcltk.c:643
+#: tcltk.c:644
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "没有DISPLAY变量，因此没有Tk这个功能"
 

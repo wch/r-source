@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:28\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: 2008-04-07 00:29-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -170,6 +170,9 @@ msgstr "Файл '%s':"
 
 msgid "found T/F in %s"
 msgstr "найден T/F в %s"
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
+msgstr ""
 
 msgid "Packages required but not available:"
 msgstr "Пакет требуется, но недоступен:"
@@ -384,8 +387,39 @@ msgstr "не объявлен импорт '::' или ':::' из:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "не объявлены вызовы 'library' или 'require' из:"
 
+msgid "Generics g in env ="
+msgstr ""
+
+msgid "where hasMethods(g, env) errors:"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "May need something like"
+msgstr ""
+
+msgid "importFrom("
+msgstr ""
+
+msgid ")"
+msgstr ""
+
+msgid "in NAMESPACE."
+msgstr ""
+
+msgid "Generics without methods in"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
 msgid "argument 'lines' must be a character vector"
 msgstr "аргумент 'lines' должен быть текстовым вектором"
+
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr "Кодировка '%s' не переносима"
 
 msgid "argument 'file' must be a character string or connection"
 msgstr "аргумент 'file' должен быть текстовой строкой  или соединением"
@@ -482,9 +516,6 @@ msgstr "не могу открыть папку '%s'"
 #, fuzzy
 msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: У 'Depends' множественные зависимости:"
-
-msgid ","
-msgstr ","
 
 #, fuzzy
 msgid "only the first will be used in R < 2.7.0"
@@ -644,11 +675,24 @@ msgstr "аргумент 'delim' должен определять два символа"
 msgid "only Rd syntax is currently supported"
 msgstr "сейчас поддерживается только Rd-синтаксис"
 
+#, fuzzy
+msgid "Running 'texi2dvi' on '%s' failed."
+msgstr "запуск 'texi2dvi' на '%s' не удался"
+
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "запуск 'texi2dvi' на '%s' не удался"
 
 msgid "unable to run %s on '%s'"
 msgstr "не могу запустить %s на '%s'"
+
+msgid "File 'DESCRIPTION' is missing."
+msgstr ""
+
+msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
+msgstr ""
+
+msgid "Bundle 'DESCRIPTION' is missing."
+msgstr ""
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "файл '%s' не является правильным форматом DCF"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:07\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: 2008-04-05 19:59+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -82,11 +82,15 @@ msgstr ""
 " 明示的もしくは既存の関数経由で関数の骨格(skelton) を与える必要があります "
 
 msgid ""
-"New generic for \"%s\" does not agree with implicit generic from package \"%s"
-"\"; a new generic will be assigned with package \"%s\""
+"Restoring the implicit generic function for \"%s\" from package \"%s\" into "
+"package \"%s\"; the generic differs from the default conversion (%s)"
 msgstr ""
-" \"%s\" に対する新しい総称がパッケージ  \"%s\" からの暗黙の総称と一致しませ"
-"ん; 新しい総称がパッケージ \"%s\" を用いて割り当てられます "
+
+msgid ""
+"Creating a generic for \"%s\" in package  \"%s\"\n"
+"    (the supplied definition differs from and overrides the implicit generic "
+"in package \"%s\": %s)"
+msgstr ""
 
 msgid ""
 "No generic version of  \"%s\" on package \"%s\" is allowed; a new generic "
@@ -144,6 +148,10 @@ msgstr ""
 msgid "no existing definition for function \"%s\""
 msgstr " 関数 \"%s\" に対する既存の定義はありません "
 
+#, fuzzy
+msgid "Creating a generic function from function \"%s\""
+msgstr " 新しいジェネリック関数 \"%s\" を \"%s\" 中に生成します "
+
 msgid "Creating a new generic function for \"%s\" in \"%s\""
 msgstr " 新しいジェネリック関数 \"%s\" を \"%s\" 中に生成します "
 
@@ -188,6 +196,13 @@ msgstr " 関数 \"%s\" とシグネチャ(signature) %s に対するメソッド
 
 msgid "no generic function \"%s\" found"
 msgstr " 総称的関数 \"%s\" が見つかりません "
+
+msgid "no environment or package corresponding to argument where=%s"
+msgstr ""
+
+#, fuzzy
+msgid "No generic function found for \"%s\""
+msgstr " \"%s\" に対する総称的関数は見付かりません "
 
 msgid "No method found for function \"%s\" and signature %s"
 msgstr " 関数 \"%s\" とシグネチャ(signature) %s に対するメソッドがありません "
@@ -295,18 +310,6 @@ msgstr ""
 msgid "Must provide an environment table; got class \"%s\""
 msgstr " 環境テーブルを提供する必要があります；クラス \"%s\" が得られました "
 
-msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
-msgstr ""
-"関数 \"%s\" は総称的関数として使うことができません(暗黙のうちに禁止されていま"
-"す) "
-
-msgid ""
-"Implicit generic exists for \"%s\", but will be overriden by explicit call "
-"to setGeneric()"
-msgstr ""
-" \"%s\" に対する暗黙の総称が存在しますが、setGeneric() の明示的な呼出しにより"
-"上書きされます "
-
 msgid ""
 "argument \"f\" must be a generic function or a single character string; got "
 "an object of class \"%s\""
@@ -314,10 +317,12 @@ msgstr ""
 "クラス \"%s\" のオブジェクトを得ましたが、引数 'f' は総称的関数か単一の文字列"
 "でなければなりません; "
 
-msgid "non-generic function given to findMethods()"
+#, fuzzy
+msgid "non-generic function '%s' given to findMethods()"
 msgstr " findMethods() に総称的でない関数が与えられました "
 
-msgid "Only FALSE meaningful for inherited, when where is supplied (got"
+#, fuzzy
+msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
 " where が与えられた時は、継承に対しては FALSE だけが意味を持ちます(以下が与え"
 "られました "
@@ -325,7 +330,8 @@ msgstr ""
 msgid "\""
 msgstr " \" "
 
-msgid "f does not correspond to a generic function and package not specified"
+#, fuzzy
+msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
 msgstr " f は総称的関数に対応しませんし、パッケージも指定されていません "
 
 msgid ""
@@ -536,6 +542,13 @@ msgstr ""
 " クラス \"%s\"、与えられたデータパートクラス, の定義において \"%s\" が不正で"
 "す(基本クラスか、ベーシッククラスを結合した仮想的クラスである必要があります) "
 
+#, fuzzy
+msgid ""
+"No definition was found for superclass \"%s\" in the specification of class "
+"\"%s\""
+msgstr ""
+" クラス \"%s\" の定義は指定された位置 %s にありません、%s に関する定義です "
+
 msgid "class \"%s\" cannot be used as the data part of another class"
 msgstr " クラス \"%s\" は他のクラスのデータ部分として使うことは出来ません "
 
@@ -720,6 +733,10 @@ msgid ""
 msgstr ""
 " メソッドは総称的関数に、 '...' がそれへの引数である時に限り、引数を追加でき"
 "ます "
+
+#, fuzzy
+msgid "Arguments of method and generic are not in the same order"
+msgstr " メソッドと関数の形式的引数が同じ順序で現れていません "
 
 msgid ""
 "arguments after '...' in the generic (%s) must appear in the method, in the "
@@ -951,6 +968,11 @@ msgstr ""
 msgid "invalid names for slots of class \"%s\": %s"
 msgstr " クラス \"%s\" のスロットに対しては不正な名前です: %s "
 
+msgid ""
+"Class \"%s\" is defined, with package \"%s\", but no corresponding metadata "
+"object was found (not exported?)"
+msgstr ""
+
 msgid "no definition of \"%s\" to use for %s"
 msgstr " \"%s\" (%s に対して使用する)の定義がありません "
 
@@ -1085,11 +1107,10 @@ msgstr ""
 "ない限り、定義できません "
 
 msgid ""
-"Unable to find package environment for class \"%s\" to revise subclass "
-"information"
+"Class \"%s\" is defined (with package slot \"%s\") but no metadata object "
+"found to revise %s information---not exported?  Making a copy in package \"%s"
+"\""
 msgstr ""
-" 下位クラス情報を改訂するためのクラス \"%s\" に対するパッケージ情報を見付ける"
-"ことが出来ません "
 
 msgid "class \"%s\" cannot extend class \"%s\""
 msgstr " クラス \"%s\" はクラス \"%s\" に拡張できません "
@@ -1375,6 +1396,32 @@ msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] ""
 " 関数 \"%s\" に対するメソッドシグネチャ中に、シグネチャ中の不正な引数名：% "
+
+#~ msgid ""
+#~ "New generic for \"%s\" does not agree with implicit generic from package "
+#~ "\"%s\"; a new generic will be assigned with package \"%s\""
+#~ msgstr ""
+#~ " \"%s\" に対する新しい総称がパッケージ  \"%s\" からの暗黙の総称と一致しま"
+#~ "せん; 新しい総称がパッケージ \"%s\" を用いて割り当てられます "
+
+#~ msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
+#~ msgstr ""
+#~ "関数 \"%s\" は総称的関数として使うことができません(暗黙のうちに禁止されて"
+#~ "います) "
+
+#~ msgid ""
+#~ "Implicit generic exists for \"%s\", but will be overriden by explicit "
+#~ "call to setGeneric()"
+#~ msgstr ""
+#~ " \"%s\" に対する暗黙の総称が存在しますが、setGeneric() の明示的な呼出しに"
+#~ "より上書きされます "
+
+#~ msgid ""
+#~ "Unable to find package environment for class \"%s\" to revise subclass "
+#~ "information"
+#~ msgstr ""
+#~ " 下位クラス情報を改訂するためのクラス \"%s\" に対するパッケージ情報を見付"
+#~ "けることが出来ません "
 
 #~ msgid "Could not find generic function \"%s\" to initialize cached methods"
 #~ msgstr ""

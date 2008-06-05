@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:28\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: 2008-03-26 10:35+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -177,6 +177,9 @@ msgstr "Fichier '%s' :"
 
 msgid "found T/F in %s"
 msgstr "T/F trouvé(s) dans %s"
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
+msgstr ""
 
 msgid "Packages required but not available:"
 msgstr "Packages requis mais non disponibles :"
@@ -393,8 +396,39 @@ msgstr "importations '::' ou ':::' non déclarées depuis :"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "appels 'library' ou 'require' non déclarés depuis :"
 
+msgid "Generics g in env ="
+msgstr ""
+
+msgid "where hasMethods(g, env) errors:"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "May need something like"
+msgstr ""
+
+msgid "importFrom("
+msgstr ""
+
+msgid ")"
+msgstr ""
+
+msgid "in NAMESPACE."
+msgstr ""
+
+msgid "Generics without methods in"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
 msgid "argument 'lines' must be a character vector"
 msgstr "l'argument 'lines' doit être un vecteur de chaînes de caractères"
+
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr "l'encodage '%s' n'est pas portable"
 
 msgid "argument 'file' must be a character string or connection"
 msgstr "l'argument 'file' doit être une chaîne de caractères ou une connexion"
@@ -496,9 +530,6 @@ msgstr "impossible d'ouvrir le répertoire '%s'"
 #, fuzzy
 msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 msgstr "AVIS : l'entrée 'Depends' a des dépendances multiples :"
-
-msgid ","
-msgstr ","
 
 #, fuzzy
 msgid "only the first will be used in R < 2.7.0"
@@ -659,11 +690,24 @@ msgstr "l'argument 'delim' doit spécifier deux caractères"
 msgid "only Rd syntax is currently supported"
 msgstr "seule la syntaxe Rd est actuellement supportée"
 
+#, fuzzy
+msgid "Running 'texi2dvi' on '%s' failed."
+msgstr "l'exécution de 'texi2dvi' sur '%s' a échoué"
+
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "l'exécution de 'texi2dvi' sur '%s' a échoué"
 
 msgid "unable to run %s on '%s'"
 msgstr "impossible d'exécuter %s sur '%s'"
+
+msgid "File 'DESCRIPTION' is missing."
+msgstr ""
+
+msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
+msgstr ""
+
+msgid "Bundle 'DESCRIPTION' is missing."
+msgstr ""
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "le fichier '%s' n'est pas d'un format DCF valide"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:07\n"
+"POT-Creation-Date: 2008-06-05 19:49\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -86,8 +86,14 @@ msgstr ""
 "de uma função existente"
 
 msgid ""
-"New generic for \"%s\" does not agree with implicit generic from package \"%s"
-"\"; a new generic will be assigned with package \"%s\""
+"Restoring the implicit generic function for \"%s\" from package \"%s\" into "
+"package \"%s\"; the generic differs from the default conversion (%s)"
+msgstr ""
+
+msgid ""
+"Creating a generic for \"%s\" in package  \"%s\"\n"
+"    (the supplied definition differs from and overrides the implicit generic "
+"in package \"%s\": %s)"
 msgstr ""
 
 msgid ""
@@ -151,6 +157,10 @@ msgid "no existing definition for function \"%s\""
 msgstr "nenhuma definição existente para função '%s'"
 
 #, fuzzy
+msgid "Creating a generic function from function \"%s\""
+msgstr "Criando uma nova função genérica para '%s' em '%s'"
+
+#, fuzzy
 msgid "Creating a new generic function for \"%s\" in \"%s\""
 msgstr "Criando uma nova função genérica para '%s' em '%s'"
 
@@ -200,6 +210,13 @@ msgstr "nenhum método encontrado para a função '%s' e assinatura %s"
 
 #, fuzzy
 msgid "no generic function \"%s\" found"
+msgstr "nenhuma função genérica '%s' encontrada"
+
+msgid "no environment or package corresponding to argument where=%s"
+msgstr ""
+
+#, fuzzy
+msgid "No generic function found for \"%s\""
 msgstr "nenhuma função genérica '%s' encontrada"
 
 #, fuzzy
@@ -319,14 +336,6 @@ msgstr ""
 msgid "Must provide an environment table; got class \"%s\""
 msgstr "não foi possível encontrar um ambiente contendo a classe \"%s\""
 
-msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
-msgstr ""
-
-msgid ""
-"Implicit generic exists for \"%s\", but will be overriden by explicit call "
-"to setGeneric()"
-msgstr ""
-
 #, fuzzy
 msgid ""
 "argument \"f\" must be a generic function or a single character string; got "
@@ -336,17 +345,18 @@ msgstr ""
 "objeto de classe  \"%s\""
 
 #, fuzzy
-msgid "non-generic function given to findMethods()"
+msgid "non-generic function '%s' given to findMethods()"
 msgstr "nenhuma função genérica '%s' encontrada"
 
-msgid "Only FALSE meaningful for inherited, when where is supplied (got"
+msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
 
 msgid "\""
 msgstr "\""
 
-msgid "f does not correspond to a generic function and package not specified"
-msgstr ""
+#, fuzzy
+msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
+msgstr "'%s' não é uma função genérica em '%s'; métodos não removidos"
 
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
@@ -567,6 +577,11 @@ msgstr ""
 "\" não é válida (deve ser uma classe básica ou uma classe virtual combinando "
 "classes básicas)"
 
+msgid ""
+"No definition was found for superclass \"%s\" in the specification of class "
+"\"%s\""
+msgstr ""
+
 msgid "class \"%s\" cannot be used as the data part of another class"
 msgstr "classe \"%s\" não pode ser usada como parte de dados de outra classe"
 
@@ -734,6 +749,10 @@ msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
 "generic"
 msgstr ""
+
+#, fuzzy
+msgid "Arguments of method and generic are not in the same order"
+msgstr "argumentos 'names' e 'signature' devem ter o mesmo comprimento"
 
 msgid ""
 "arguments after '...' in the generic (%s) must appear in the method, in the "
@@ -927,6 +946,11 @@ msgstr ""
 msgid "invalid names for slots of class \"%s\": %s"
 msgstr ""
 
+msgid ""
+"Class \"%s\" is defined, with package \"%s\", but no corresponding metadata "
+"object was found (not exported?)"
+msgstr ""
+
 msgid "no definition of \"%s\" to use for %s"
 msgstr ""
 
@@ -1036,11 +1060,11 @@ msgid ""
 "'setClassUnion'"
 msgstr ""
 
-#, fuzzy
 msgid ""
-"Unable to find package environment for class \"%s\" to revise subclass "
-"information"
-msgstr "não foi possível encontrar um ambiente contendo a classe \"%s\""
+"Class \"%s\" is defined (with package slot \"%s\") but no metadata object "
+"found to revise %s information---not exported?  Making a copy in package \"%s"
+"\""
+msgstr ""
 
 msgid "class \"%s\" cannot extend class \"%s\""
 msgstr ""
@@ -1308,6 +1332,12 @@ msgstr[0] ""
 msgstr[1] ""
 "na assinatura do método da função '%s' nomes de argumentos inválidos na "
 "assinatura: %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to find package environment for class \"%s\" to revise subclass "
+#~ "information"
+#~ msgstr "não foi possível encontrar um ambiente contendo a classe \"%s\""
 
 #, fuzzy
 #~ msgid ""

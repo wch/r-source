@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:07\n"
-"PO-Revision-Date: 2008-04-05 11:07\n"
+"POT-Creation-Date: 2008-06-05 19:48\n"
+"PO-Revision-Date: 2008-06-05 19:48\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -135,6 +135,9 @@ msgstr "dev.displaylist() called without an open graphics device"
 msgid "invalid setting for 'getOption(\"device\")'"
 msgstr "invalid setting for ‘getOption(“device”)’"
 
+msgid "device '%s' not found"
+msgstr "device ‘%s’ not found"
+
 msgid "no suitable unused file name for pdf()"
 msgstr "no suitable unused file name for pdf()"
 
@@ -146,9 +149,6 @@ msgstr "no suitable unused file name for postscript()"
 
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): using postscript(file=“%s”)"
-
-msgid "device '%s' not found"
-msgstr "device ‘%s’ not found"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "invalid arguments in ‘%s’ (need named args)"
@@ -297,8 +297,8 @@ msgstr "invalid X11 font specification:"
 msgid "no such device"
 msgstr "no such device"
 
-msgid "can only copy from 'X11(type=\"cairo\")' devices"
-msgstr "can only copy from ‘X11(type=“cairo”)’ devices"
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
+msgstr "can only copy from ‘X11(type=“*cairo”)’ devices"
 
 msgid "invalid value for 'rescale'"
 msgstr "invalid value for ‘rescale’"
