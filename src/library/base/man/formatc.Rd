@@ -1,6 +1,6 @@
 % File src/library/base/man/formatc.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{formatC}
@@ -44,7 +44,10 @@ prettyNum(x, big.mark = "",   big.interval = 3,
     otherwise to \code{digits + 1}.  \code{width = 0} will use
     \code{width = digits}, \code{width < 0} means left
     justify the number in this field (equivalent to \code{flag ="-"}).
-    If necessary, the result will have more characters than \code{width}.}
+    If necessary, the result will have more characters than
+    \code{width}.  For character data this is interpreted in characters
+    (not bytes nor display width).
+  }
 
   \item{format}{equal to \code{"d"}  (for integers), \code{"f"},
     \code{"e"}, \code{"E"}, \code{"g"}, \code{"G"}, \code{"fg"} (for
@@ -57,7 +60,7 @@ prettyNum(x, big.mark = "",   big.interval = 3,
     \code{x[i]} into scientific format only if it saves space to do so.
 
     \code{"fg"} uses fixed format as \code{"f"}, but \code{digits} as
-    the minimum number of \emph{significant} digits.  That this can lead
+    the minimum number of \emph{significant} digits.  This can lead
     to quite long result strings, see examples below.  Note that unlike
     \code{\link{signif}} this prints large numbers with
     more significant digits than \code{digits}.}
@@ -99,10 +102,11 @@ prettyNum(x, big.mark = "",   big.interval = 3,
   current locale's encoding.
   Unlike \code{\link{format}}, each number is formatted individually.
   Looping over each element of \code{x}, the C function
-  \code{sprintf(\dots)} is called (inside the C function \code{str_signif}).
+  \code{sprintf(\dots)} is called for numeric inputs (inside the C
+  function \code{str_signif}).
 
-  \code{formatC}: for character \code{x}, do
-  simple (left or right) padding with white space.
+  \code{formatC}: for character \code{x}, do simple (left or right)
+  padding with white space.
 }
 \details{
   If you set \code{format} it overrides the setting of \code{mode}, so
