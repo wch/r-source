@@ -228,6 +228,9 @@ BUG FIXES
 	type S4 would not be S4 objects.  new() applied to basic,
 	non-S4 classes still will (and should) return non-S4 objects.
 
+    o	qf() no longer gives NaN when df1 and df2 are both large and
+	one is infinite.
+
 
 
 	**************************************************
