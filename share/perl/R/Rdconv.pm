@@ -661,12 +661,17 @@ sub transform_S3method {
     ## NB: \w includes _ as well as [:alnum:], which R now allows in name
     my ($text) = @_;
     my ($method, $prefix, $match, $rest);
+    my ($str, $ini, $fun, $cls, @args);
     my $delimround = new Text::DelimMatch("\\(", "\\)");
     $delimround->quote('"');
     $delimround->quote("'");
     my $S3method_RE =
       "([ \t]*)\\\\(S3)?method\{([\\w.]+)\}\{([\\w.]+)\}";
+    
     while($text =~ /$S3method_RE(.*)/s) {
+	$ini = $1;
+	$fun = $3;
+	$cls = $4;
 	$method = "method";
 	($prefix, $match, $rest) = $delimround->match($5);
 	if(($prefix eq "") && ($rest =~ m/^[ \t]*<-/)) {
@@ -674,20 +679,19 @@ sub transform_S3method {
 	    ## that we could check for a syntacticaly valid R name.)
 	    $method = "replacement method";
 	}
-	if($4 eq "default") {
-	    $text =~
-		s/$S3method_RE/$1\#\# Default S3 $method:\n$1$3/s;
+	if($cls eq "default") {
+	    $str = "$ini\#\# Default S3 $method:\n$ini$fun";
 	}
 	else {
-	    $text =~
-		s/$S3method_RE/$1\#\# S3 $method for class '$4':\n$1$3/s;
+	    $str = "$ini\#\# S3 $method for class '$cls':\n$ini$fun";
 	}
+	$text =~ s/$S3method_RE/$str/s;
     }
+
     ## Also try to handle markup for S3 methods for subscripting and
     ## subassigning.
     $S3method_RE = "([ \t]*)\\\\(S3)?method" .
 	"\{(\\\$|\\\[\\\[?)\}\{([\\w.]+)\}\\\(([^)]+)\\\)";
-    my ($str, $name, @args);
     while($text =~ /$S3method_RE(.*)/s) {
 	## <NOTE>
 	## The hard part is to rewrite the argument list, because
@@ -701,20 +705,22 @@ sub transform_S3method {
 	## parentheses (e.g., in default argument strings), so we use
 	## Text::DelimMatch.
 	## </NOTE>
-	$str = "$1\#\# S3 method for class '$4':\n$1";
-	$name = $3;
+	$ini = $1;
+	$fun = $3;
+	$cls = $4;
+	$method = "method";
 	## The match was for something ending in a pair of balanced
 	## parentheses, which are not necessarily the matching ones.
 	($prefix, $match, $rest) = $delimround->match("($5)$6");
+	$method = "replacement method" if($rest =~ m/^[ \t]*<-/);
 	## Extract the first argument from the argument list.
 	substr($match, 1, -1) =~ m/\s*([^,]+),\s*(.*)/s;
 	## Now put things together.
-	$str .= "$1$name$2";
-	$str .= "]" x length($name) if($name ne "\$");
-	$str =~ s/method/replacement method/ if($rest =~ m/^[ \t]*<-/);
-	
+	$str = "$ini\#\# S3 $method for class '$cls':\n$ini$1$fun$2";
+	$str .= "]" x length($fun) if($fun ne "\$");
 	$text =~ s/$S3method_RE.*/$str$rest/s;
     }
+
     ## Also try to handle markup for S3 methods for binary ops and S3
     ## Ops group methods.
     $S3method_RE = "([ \t]*)\\\\(S3)?method" .
@@ -726,21 +732,21 @@ sub transform_S3method {
 	")\}\{([\\w.]+)\}\\\(([^)]+)\\\)";
     while($text =~ /$S3method_RE/) {
 	$str = "$1\#\# S3 method for class '$4':\n$1";
-	$name = $3;
+	$fun = $3;
 	@args = split(/,\s*/, $5);
 	my $nargs = scalar(@args);
-	if(($nargs == 1) && ($name eq "!")) {
+	if(($nargs == 1) && ($fun eq "!")) {
 	    ## Unary: !.
-	    $str .= "$name $args[0]";
+	    $str .= "$fun $args[0]";
 	}
-	elsif(($nargs == 2) && ($name ne "!")) {
+	elsif(($nargs == 2) && ($fun ne "!")) {
 	    ## Binary: everything but !.
-	    $str .= "$args[0] $name $args[1]";
+	    $str .= "$args[0] $fun $args[1]";
 	}
 	else {
 	    ## 
-	    warn "Warning: arity problem for \\$2method{$name}{$4}?\n";
-	    $str .= "`$name`($5)";
+	    warn "Warning: arity problem for \\$2method{$fun}{$4}?\n";
+	    $str .= "`$fun`($5)";
 	}
 	$text =~ s/$S3method_RE/$str/s;
     }
@@ -751,16 +757,57 @@ sub transform_S4method {
     ## \S4method{GENERIC}{SIGLIST}
     ## Note that this markup should really only be used inside \usage.
     my ($text) = @_;
+    my ($method, $prefix, $match, $rest);
+    my ($str, $ini, $fun, $sig, @args);
+    my $delimround = new Text::DelimMatch("\\(", "\\)");
+    $delimround->quote('"');
+    $delimround->quote("'");
     my $S4method_RE =
-      "([ \t]*)\\\\S4method\{([\\w.]+)\}\{([\\w.,]+)\}";
+      "([ \t]*)\\\\(S4)method\{([\\w.]+)\}\{([\\w.,]+)\}";
+    ## Use grouping on 'S4' so that the S3 method code can easily be
+    ## reused.
     local($Text::Wrap::columns) = 60;
-    while($text =~ /$S4method_RE/) {
-	my $pretty = wrap("$1\#\# ", "$1\#\#   ",
-			  "S4 method for signature '" .
-			  join(", ", split(/,/, $3)) . "':\n") .
-			  "$1$2";
-	$text =~ s/$S4method_RE/$pretty/s;
+
+    while($text =~ /$S4method_RE(.*)/s) {
+	$ini = $1;
+	$fun = $3;
+	$sig = join(", ", split(/,/, $4));
+	$method = "method";
+	($prefix, $match, $rest) = $delimround->match($5);
+  	if(($prefix eq "") && ($rest =~ m/^[ \t]*<-/)) {
+  	    ## (Note that the RHS should really be called 'value', and
+  	    ## that we could check for a syntacticaly valid R name.)
+  	    $method = "replacement method";
+  	}
+	$str = wrap("$ini\#\# ", "$ini\#\#   ",
+		    "S4 $method for signature '$sig':\n") .
+			"$ini$fun";
+	$text =~ s/$S4method_RE/$str/s;
     }
+
+    ## Also try to handle markup for S4 methods for subscripting and
+    ## subassigning.  See transform_S3method() above for details.
+    $S4method_RE = "([ \t]*)\\\\(S4)method" .
+	"\{(\\\$|\\\[\\\[?)\}\{([\\w.,]+)\}\\\(([^)]+)\\\)";
+    while($text =~ /$S4method_RE(.*)/s) {
+	$ini = $1;
+	$fun = $3;
+	$sig = join(", ", split(/,/, $4));
+	$method = "method";
+	## The match was for something ending in a pair of balanced
+	## parentheses, which are not necessarily the matching ones.
+	($prefix, $match, $rest) = $delimround->match("($5)$6");
+	$method = "replacement method" if($rest =~ m/^[ \t]*<-/);
+	## Extract the first argument from the argument list.
+	substr($match, 1, -1) =~ m/\s*([^,]+),\s*(.*)/s;
+	## Now put things together.
+	$str = wrap("$ini\#\# ", "$ini\#\#   ",
+		    "S4 $method for signature '$sig':\n") .
+			"$ini$1$fun$2";
+	$str .= "]" x length($fun) if($fun ne "\$");
+	$text =~ s/$S4method_RE.*/$str$rest/s;
+    }
+    
     $text;
 }
 

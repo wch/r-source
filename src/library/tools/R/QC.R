@@ -1369,6 +1369,8 @@ function(package, dir, lib.loc = NULL)
         ## If we were really picky, we would worry about possible
         ## namespace renaming.
         functions <- .transform_S3_method_markup(functions)
+        ## Also transform the markup for S4 replacement methods.
+        functions <- .transform_S4_method_markup(functions)
         ## </NOTE>
 
         ## Now analyze what we found.
@@ -4622,6 +4624,16 @@ function(x)
         x)
 }
 
+### ** .transform_S4_method_markup
+
+.transform_S4_method_markup <-
+function(x)
+{
+    sub(sprintf("%s(<-)?", .S4_method_markup_regexp),
+        "\\\\S4method{\\2\\4}{\\3}",
+        x)
+}
+
 ### ** .S3_method_markup_regexp
 
 ## For matching \(S3)?method{GENERIC}{CLASS}.
@@ -4651,7 +4663,10 @@ function(x)
 
 .S4_method_markup_regexp <-
     sprintf("(\\\\S4method\\{(%s)\\}\\{(%s)\\})",
-            "[._[:alnum:]]*",
+            paste(c("[._[:alnum:]]*",
+                    ## Subscripting
+                    "\\$", "\\[\\[?"),
+                  collapse = "|"),
             "[._[:alnum:],]*")
 
 ### ** .valid_maintainer_field_regexp
