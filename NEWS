@@ -138,6 +138,8 @@ NEW FEATURES
 	use 'reorder(x, ...)' as a shorthand for
 	'reorder(factor(x), ...)' when 'x' is a character vector.
 
+    o	read.dcf() now consistently gives an error for malformed DCF.
+
 
 PACKAGE INSTALLATION
 
