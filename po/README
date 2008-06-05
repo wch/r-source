@@ -13,7 +13,7 @@ Target
 	make update-pkg-po
 
 updates the message catalogs for the C and R code in the standard packages,
-uses msgmerge --update to update the translations and then re-makes the 
+uses msgmerge --update to update the translations and then re-makes the
 compiled (.mo) files.
 
 To do this for an individual standard package use
@@ -36,6 +36,13 @@ to check and compile the translation, and
 	cp ll.gmo R_BUILD_DIR/share/locale/ll/LC_MESSAGES/R.mo
 
 to install it manually for testing.
+
+An R-core member, after fixing a translation file, e.g.,
+   	../src/library/<pkg>/po/R-<ll>.po
+needs to use msgfmt as above, e.g., inside the <pkg>/po/ directory,
+        msgfmt -c --statistics -o R-<ll>.gmo R-<ll>.po
+and     mv R-<ll>.gmo ../inst/po/<ll>/LC_MESSAGES/R-tools.mo
+
 
 
 Windows RGui translations
