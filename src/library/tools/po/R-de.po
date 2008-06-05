@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-04-07 08:28\n"
-"PO-Revision-Date: 2008-04-06 19:24+0200\n"
+"PO-Revision-Date: 2008-06-05 14:54+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgid "you must specify 'package' or 'dir'"
 msgstr "'package' oder 'dir' muss angegeben werden"
 
 msgid "directory '%s' does not exist"
-msgstr "Verzeichnis '%s' exisitiert nicht"
+msgstr "Verzeichnis '%s' existiert nicht"
 
 msgid "neither code nor data objects found"
 msgstr "weder Code noch Datenobjekte gefunden"
@@ -32,7 +32,7 @@ msgid "Undocumented code objects:"
 msgstr "Undokumentierte Code-Objekte:"
 
 msgid "Undocumented data sets:"
-msgstr "Undokumentierte Datansätze:"
+msgstr "Undokumentierte Datensätze:"
 
 msgid "Undocumented S4 classes:"
 msgstr "Undokumentierte S4 Klassen:"
@@ -50,7 +50,7 @@ msgid "directory '%s' does not contain R code"
 msgstr "Verzeichnis '%s' enthält keinen R Code"
 
 msgid "directory '%s' does not contain Rd sources"
-msgstr "Verze<chnis '%s' enthält keine Rd Quellen"
+msgstr "Verzeichnis '%s' enthält keine Rd Quellen"
 
 msgid ""
 "Functions/methods with usage in documentation object '%s' but not in code:"
@@ -138,7 +138,7 @@ msgid "you must specify 'package', 'dir' or 'file'"
 msgstr "sie müssen 'package', 'dir' oder 'file' angeben"
 
 msgid "file '%s' does not exist"
-msgstr "Datei '%s' exisitert nicht"
+msgstr "Datei '%s' existiert nicht"
 
 #, fuzzy
 msgid ""
@@ -167,7 +167,7 @@ msgid "File '%s':"
 msgstr "Datei '%s':"
 
 msgid "found T/F in %s"
-msgstr "T/F in %s gedunden"
+msgstr "T/F in %s gefunden"
 
 msgid "Packages required but not available:"
 msgstr "Benötigte, aber nicht verfügbare Pakete:"
@@ -182,7 +182,7 @@ msgid ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
 "DESCRIPTION Depends/Suggests/Imports entries."
 msgstr ""
-"Abhängigkeiten einer Vignette (\\VignetteDepens[] Einträge) müssen in den "
+"Abhängigkeiten einer Vignette (\\VignetteDepends[] Einträge) müssen in den "
 "DESCRIPTION-Feldern Depends/Sugggests/Imports enthalten sein"
 
 msgid "Namespace dependencies not required:"
@@ -205,7 +205,7 @@ msgid "Unaccounted top-level text in file '%s':"
 msgstr "unbenutzter top-level Text in Datei '%s':"
 
 msgid "Following section '%s'"
-msgstr "Folgender Abscnitt '%s'"
+msgstr "Folgender Abschnitt '%s'"
 
 msgid "Rd files with unknown encoding:"
 msgstr "Rd-Dateien mit unbekannter Kodierung:"
@@ -232,7 +232,7 @@ msgid "Rd files with duplicate '%s':"
 msgstr "Rd-Dateien mit doppeltem '%s':"
 
 msgid "These entries must be unique in an Rd file."
-msgstr "Diese Einträge dürfenin einer Rd-Datei nur ein Mal vorkommen"
+msgstr "Diese Einträge dürfen in einer Rd-Datei nur ein Mal vorkommen"
 
 msgid "Rd files with unknown sections:"
 msgstr "Rd-Dateien mit unbekannten Abschnitten:"
@@ -313,7 +313,7 @@ msgid ""
 "space, and a valid version number in parentheses."
 msgstr ""
 "Einträge müssen Paketnamen sein, optional gefolgt von '<=', '>=' oder "
-"Leerraum,s owie einer gültigen Versionsnummer in Klammern "
+"Leerraum, sowie einer gültigen Versionsnummer in Klammern "
 
 msgid "Entries with infeasible comparison operator:"
 msgstr "Einträgen mit falschen Vergleichsoperator:"
@@ -407,7 +407,7 @@ msgid "Rd files must have a non-empty \\title."
 msgstr "Rd-Dateien dürfen kein leeres \\title Feld haben"
 
 msgid "argument 'outFile' must be a character string or connection"
-msgstr "Argument 'outfile' muss eine Zeichenkette oder eine Verbindung sein"
+msgstr "Argument 'outFile' muss eine Zeichenkette oder eine Verbindung sein"
 
 msgid "directory '%s' does not contain Rd objects"
 msgstr "Verzeichnis '%s' enthält keine Rd-Objekte"
@@ -541,7 +541,7 @@ msgstr ""
 "%s"
 
 msgid "file '%s' was not created"
-msgstr "Datein '%s' wurde nicht erzeugt"
+msgstr "Datei '%s' wurde nicht erzeugt"
 
 msgid "cannot copy '%s' to '%s'"
 msgstr "kann '%s' nicht nach '%s' kopieren"
@@ -589,10 +589,10 @@ msgid "this cannot be used for package 'base'"
 msgstr "dies kann für Paket 'base' nicht benutzt werden"
 
 msgid "package contains no R code"
-msgstr "Paket enthält keine R Kode"
+msgstr "Paket enthält keinen R Code"
 
 msgid "package seems to be using lazy loading already"
-msgstr "Paket nutzt lazs loading anscheinend bereits"
+msgstr "Paket nutzt lazy loading anscheinend bereits"
 
 msgid "cannot update HTML package index"
 msgstr "kann HTML Paketindex nicht aktualisieren"
@@ -652,7 +652,7 @@ msgid "file '%s' is not in valid DCF format"
 msgstr "Datei '%s' liegt nicht in gültigem DCF Format vor"
 
 msgid "cannot source package code"
-msgstr "kann Paketquelltet nicht einlesen"
+msgstr "kann Paketquelltext nicht einlesen"
 
 msgid "Call sequence:"
 msgstr "Aufrufsequenz:"
