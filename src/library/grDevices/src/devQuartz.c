@@ -960,37 +960,26 @@ static void RQuartz_Line(double x1, double y1, double x2, double y2, CTXDESC)
     CGContextStrokePath(ctx);
 }
 
+#define max_segments 100
+
 static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC)
 {
     if (n < 2) return;
-    int i, j = 0;
+    int i = 0;
     DRAWSPEC;
     if (!ctx) NOCTX;
     SET(RQUARTZ_STROKE | RQUARTZ_LINE);
 
-    /* drawing lines here seems to be quadratic in the number
-       of points, therefore we split it into 10 segments at a time
-       (empirically sensible using CGLayer backend). 
-       FIXME: Nonetheless it appears as if Quartz falls back to
-       software rendering (HW should have far higher throughput)
-       and the question is why. In addition the slowness depends
-       on the backend, some implementations (e.g. PDF) have no
-       problem with it. */
-    CGPoint pts[20];
-    for(i = 1 ; i < n; i++) {
-        if (j == 20) {
-	    CGContextStrokeLineSegments(ctx, pts, j);
-	    j = 0;
-	}
-	pts[j].x = x[i-1];
-	pts[j].y = y[i-1];
-	j++;
-	pts[j].x = x[i];
-	pts[j].y = y[i];
-	j++;
+    /* CGContextStrokeLineSegments turned out to be a bad idea due to Leopard restarting dashes for each segment. CGContextAddLineToPoint is fast enough. The only remaining porblem is that Quartz seems to restart dashes at segment breakup points. We should make the segments break-up an optional feature and possibly fix the underlying problem (software rendering). */
+    while (i < n) {
+        int j = i + max_segments;
+        if (j > n) j = n;
+        CGContextBeginPath(ctx);
+        CGContextMoveToPoint(ctx, x[i], y[i]);
+        while(++i < j)
+            CGContextAddLineToPoint(ctx, x[i], y[i]);
+        CGContextStrokePath(ctx);
     }
-    if (j)
-        CGContextStrokeLineSegments(ctx, pts, j);
 }
 
 static void RQuartz_Polygon(int n, double *x, double *y, CTXDESC)
