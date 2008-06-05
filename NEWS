@@ -423,6 +423,12 @@ BUG FIXES
 	and not "sockconn", which caused a conflict with make.socket().
 	(PR#11515)
 
+    o	Quartz is now trying harder to find the proper font for a given
+	family which resolves font issues on Mac OS X 10.4. Full font
+	names and PostScript names can be used interchangeably. (Note,
+	however that italic/oblique font faces of Helvetica are not
+	included in the Mac OS X 10.4 system).
+
 
 
 		CHANGES IN R VERSION 2.7.0
