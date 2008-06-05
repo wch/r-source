@@ -1220,7 +1220,7 @@ function(x)
     x1 <- sub(pat, "\\1", x)
     x2 <- sub(pat, "\\2", x)
     if(x2 != x1) {
-        pat <- "[[:space:]]*([[<>=]+)[[:space:]]+(.*)"
+        pat <- "[[:space:]]*([[<>=!]+)[[:space:]]+(.*)"
         list(name = x1, op = sub(pat, "\\1", x2),
              version = package_version(sub(pat, "\\2", x2)))
     } else list(name=x1)
@@ -1256,8 +1256,8 @@ function(expr)
                                 grmbl = function(e, calls) {
                                     n <- length(sys.calls())
                                     ## Chop things off as needed ...
-                                    calls <- calls[-seq.int(length.out = n - 1)]
-                                    calls <- rev(calls)[-c(1, 2)]
+                                    calls <- calls[-seq.int(length.out = n - 1L)]
+                                    calls <- rev(calls)[-c(1L, 2L)]
                                     tb <- lapply(calls, deparse)
                                     stop(conditionMessage(e),
                                          "\nCall sequence:\n",
