@@ -68,17 +68,18 @@ A non-\code{NULL} value returned from one of the event handlers.
 \examples{
 \dontrun{
     mousedown <- function(buttons, x, y) {
-        plx <- grconvertX(x,"ndc","user")
-        ply <- grconvertY(y,"ndc","user")    
-	cat("Buttons ", paste(buttons, collapse=" "), " at ndc", x, y, "user", plx, ply, "\n")
+        plx <- grconvertX(x, "ndc"," user")
+        ply <- grconvertY(y, "ndc", "user")    
+	cat("Buttons ", paste(buttons, collapse=" "), " at ndc",
+            x, y, "user", plx, ply, "\n")
 	points(plx, ply, col="red", pch=19, cex=2)
 	if (x > 0.85 && y > 0.85) "Done"
 	else NULL
     }
     
     mousemove <- function(buttons, x, y) {
-        plx<-grconvertX(x,"ndc","user")
-        ply<-grconvertY(y,"ndc","user")    
+        plx <- grconvertX(x, "ndc", "user")
+        ply <- grconvertY(y, "ndc", "user")    
 	points(plx, ply)
 	NULL
     }
@@ -94,4 +95,4 @@ A non-\code{NULL} value returned from one of the event handlers.
                      onKeybd = keybd)
 }
 }
-\keyword{ iplot }% at least one, from doc/KEYWORDS
+\keyword{iplot}
