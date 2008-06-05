@@ -65,8 +65,6 @@ win.packages.html <-
                 txt["Title"]
             } else NA
 
-#             title <- utils::packageDescription(i, lib.loc = lib, field = "Title",
-#                                         encoding = "UTF-8")
             if (is.na(title)) title <- "-- Title is missing --"
             cat('<tr align="left" valign="top">\n',
                 '<td width="25%"><a href="', lib0, '/', i,
