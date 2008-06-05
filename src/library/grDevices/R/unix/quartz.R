@@ -140,7 +140,7 @@ quartzFonts(# Default Serif font is Times
             "Times-Italic", "Times-BoldItalic")),
                 # Default Sans Serif font is Helvetica
             sans = quartzFont(c("Helvetica", "Helvetica-Bold",
-            "Helvetica-Italic", "Helvetica-BoldOblique")),
+            "Helvetica-Oblique", "Helvetica-BoldOblique")),
                 # Default Monospace font is Courier
             mono = quartzFont(c("Courier", "Courier-Bold",
             "Courier-Oblique", "Courier-BoldOblique")),
