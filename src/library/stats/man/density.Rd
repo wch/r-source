@@ -117,6 +117,9 @@ density(x, \dots)
   \item{call}{the call which produced the result.}
   \item{data.name}{the deparsed name of the \code{x} argument.}
   \item{has.na}{logical, for compatibility (always \code{FALSE}).}
+  
+  The \code{print} method reports \code{\link{summary}} values on the
+  \code{x} and \code{y} components.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
