@@ -39,6 +39,7 @@ NEW FEATURES
 
     o	The 'factor' method of format() now preserves names, dims and
 	dimnames in the same way as for character and numeric inputs.
+	(PR#11512)
 
 
 DEPRECATED & DEFUNCT

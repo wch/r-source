@@ -129,8 +129,12 @@ plot.table <-
 		if(!is.null(as$axes) && !as$axes) "n" else as$xaxt
 	    }## else NULL
 	axis(1, at = x0, labels = nx, xaxt = xaxt)
-    } else
-	mosaicplot(x, xlab = xlab, ylab = ylab, ...)
+    } else {
+	if(length(as <- list(...)) && !is.null(as$main)) # use 'main'
+	    mosaicplot(x, xlab = xlab, ylab = ylab, ...)
+	else # default main
+	    mosaicplot(x, xlab = xlab, ylab = ylab, main = xnam, ...)
+    }
 }
 
 plot.formula <-
