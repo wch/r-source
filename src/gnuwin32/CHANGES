@@ -34,6 +34,9 @@ OTHER
     o	Rcmd check now checks the latex of package vignettes if
 	texi2dvi (presumably from MiKTeX) is found on the path.
 
+    o	Package checking (including 'make check') is no longer done in
+    	a C locale (although LANGUAGE=en is used).
+
 
 
 
