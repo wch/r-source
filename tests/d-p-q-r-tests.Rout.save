@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-04-12 r45262)
+R version 2.8.0 Under development (unstable) (2008-06-06 r45871)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1175,8 +1175,18 @@ Warning messages:
 > t2 <- table(rbinom(100, 10*M, pr = 1e-10))
 > stopifnot(names(tt) == 0:6, sum(tt) == 100, sum(t2) == 100) ## no NaN there
 > 
+> ## qf() with large df1, df2  and/or  small p:
+> x <- 0.01; f1 <- 1e60; f2 <- 1e90
+> stopifnot(qf(1/4, Inf, Inf) == 1,
++ 	  all.equal(1, 1e-18/ pf(qf(1e-18, 12,50), 12,50), tol=1e-10),
++ 	  abs(x - qf(pf(x, f1,f2, log.p=TRUE), f1,f2, log.p=TRUE)) < 1e-4)
+no Newton step done since delta{p} >= last delta
+> 
+> ## qbeta(*, log.p) for "border" case:
+> stopifnot(is.finite(qbeta(-1e10, 50, 40, log.p=TRUE)))
+> ## infinite loop in R <= 2.7.0
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  4.62 0.024 6.494 0 0 
+Time elapsed:  4.476 0.032 11.249 0 0 
 > 
