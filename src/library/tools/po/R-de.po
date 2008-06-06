@@ -140,11 +140,10 @@ msgstr "sie müssen 'package', 'dir' oder 'file' angeben"
 msgid "file '%s' does not exist"
 msgstr "Datei '%s' existiert nicht"
 
-#, fuzzy
 msgid ""
 "parse error in file '%s':\n"
 "%s"
-msgstr "Parsingfehler in Datei '%s'"
+msgstr "Parse-Fehler in Datei '%s'"
 
 msgid "Foreign function calls without 'PACKAGE' argument:"
 msgstr "Aufrufe paketexterner Funktionen ohne 'PACKAGE' Argument:"
@@ -155,13 +154,11 @@ msgstr "angekündigte S3 Methode '%s' nicht gefunden"
 msgid "cannot check R code installed as image"
 msgstr "kann R-Code, der als Image installiert ist, nicht überprüfen"
 
-#, fuzzy
 msgid "parse error in file '%s':"
-msgstr "Parsingfehler in Datei '%s'"
+msgstr "Parse-Fehler in Datei '%s'"
 
-#, fuzzy
 msgid "parse error in examples from file '%s':"
-msgstr "Parsingfehler bei den Beispielen aus Datei '%s'"
+msgstr "Parse-Fehler bei den Beispielen aus Datei '%s'"
 
 msgid "File '%s':"
 msgstr "Datei '%s':"
@@ -170,7 +167,7 @@ msgid "found T/F in %s"
 msgstr "T/F in %s gefunden"
 
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
-msgstr ""
+msgstr "Paketname '%s' scheint unzulässig; verwende stattdessen Verzeichnisname '%s'"
 
 msgid "Packages required but not available:"
 msgstr "Benötigte, aber nicht verfügbare Pakete:"
@@ -332,7 +329,7 @@ msgid ""
 "separated by single '.' or '-'."
 msgstr ""
 "Versionsnummern müssen Folgen von mindestens zwei nicht-negativen, ganzen "
-"Zahlen , getrennt durch einen '.' oder einen '-', sein"
+"Zahlen, getrennt durch einen '.' oder einen '-', sein"
 
 msgid "Package name and namespace differ."
 msgstr "Paketname und Namensraum unterscheiden sich"
@@ -409,7 +406,7 @@ msgid "in NAMESPACE."
 msgstr ""
 
 msgid "Generics without methods in"
-msgstr ""
+msgstr "Generische Funktionen ohne Methoden in"
 
 msgid ":"
 msgstr ""
@@ -508,7 +505,7 @@ msgid "Invalid DESCRIPTION file"
 msgstr "Unzulässige DESCRIPTION Datei"
 
 msgid "*** someone has corrupted the Built field in package '%s' ***"
-msgstr "**+ jemand hat das 'Built' Feld im Paket '%s' beschädigt ***"
+msgstr "*** jemand hat das 'Built' Feld im Paket '%s' beschädigt ***"
 
 msgid "cannot open directory '%s'"
 msgstr "kann Verzeichnis '%s' nicht öffnen"
@@ -519,7 +516,7 @@ msgstr "Warnung: 'Depends' Eintrag hat mehrfache Abhängigkeiten:"
 
 #, fuzzy
 msgid "only the first will be used in R < 2.7.0"
-msgstr "nur die erste wird genutzt"
+msgstr "nur die erste wird genutzt in R < 2.7.0"
 
 msgid ""
 "WARNING: omitting pointless dependence on 'R' without a version requirement"
@@ -665,7 +662,7 @@ msgid "'iconv' is required"
 msgstr "'iconv' wird benötigt"
 
 msgid "argument 'x' must be a character vector"
-msgstr "Argument 'x' muss eine Charaktervektor sein"
+msgstr "Argument 'x' muss ein Charaktervektor sein"
 
 msgid "argument 'delim' must specify two characters"
 msgstr "Argument 'delim' muss zwei Charakter spezifizieren"
@@ -675,7 +672,7 @@ msgstr "momentan nur Rd Syntax unterstützt"
 
 #, fuzzy
 msgid "Running 'texi2dvi' on '%s' failed."
-msgstr "Ausführen von 'texi2dvi' für '%s' fehlgeschlagen"
+msgstr "Ausführen von 'texi2dvi' für '%s' fehlgeschlagen."
 
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "Ausführen von 'texi2dvi' für '%s' fehlgeschlagen"
@@ -684,13 +681,13 @@ msgid "unable to run %s on '%s'"
 msgstr "kann %s nicht für '%s' ausführen"
 
 msgid "File 'DESCRIPTION' is missing."
-msgstr ""
+msgstr "Datei 'DESCRIPTION' fehlt."
 
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
-msgstr ""
+msgstr "Dateien 'DESCRIPTION' und 'DESCRIPTION.in' fehlen."
 
 msgid "Bundle 'DESCRIPTION' is missing."
-msgstr ""
+msgstr "Bundle 'DESCRIPTION' fehlt."
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "Datei '%s' liegt nicht in gültigem DCF Format vor"
