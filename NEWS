@@ -93,7 +93,7 @@ NEW FEATURES
     o	The treatment of special pseudo-classes "matrix", "array", and "ts"
 	as S4 classes has been modified to be more consistent and, within
 	limitations imposed by special treatment of these objects in
-	the base code, to allow other classes to contain them. See class?ts.
+	the base code, to allow other classes to contain them.  See class?ts.
 
     o	str()'s default method gains a 'formatNum' function argument which
 	is used for formatting numeric vectors.	 Note that this is very
@@ -228,9 +228,6 @@ BUG FIXES
 	type S4 would not be S4 objects.  new() applied to basic,
 	non-S4 classes still will (and should) return non-S4 objects.
 
-    o	qf() no longer gives NaN when df1 and df2 are both large and
-	one is infinite.
-
 
 
 	**************************************************
@@ -273,6 +270,7 @@ NEW FEATURES
 
     o	The 'factor' method of format() now preserves names, dims and
 	dimnames in the same way as for character and numeric inputs.
+	(PR#11512)
 
 
 DEPRECATED & DEFUNCT
@@ -428,6 +426,9 @@ BUG FIXES
 	names and PostScript names can be used interchangeably. (Note,
 	however that italic/oblique font faces of Helvetica are not
 	included in the Mac OS X 10.4 system).
+
+    o	qf() no longer gives NaN when one of df1 and df2 is large and
+	the other is infinite (including if both are infinite).
 
 
 
