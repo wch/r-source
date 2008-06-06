@@ -667,17 +667,18 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef LEA_MALLOC
+#define MALLINFO_FIELD_TYPE size_t
 struct mallinfo {
-    int arena;    /* non-mmapped space allocated from system */
-    int ordblks;  /* number of free chunks */
-    int smblks;   /* number of fastbin blocks */
-    int hblks;    /* number of mmapped regions */
-    int hblkhd;   /* space in mmapped regions */
-    int usmblks;  /* maximum total allocated space */
-    int fsmblks;  /* space available in freed fastbin blocks */
-    int uordblks; /* total allocated space */
-    int fordblks; /* total free space */
-    int keepcost; /* top-most, releasable (via malloc_trim) space */
+    MALLINFO_FIELD_TYPE arena;    /* non-mmapped space allocated from system */
+    MALLINFO_FIELD_TYPE ordblks;  /* number of free chunks */
+    MALLINFO_FIELD_TYPE smblks;   /* number of fastbin blocks */
+    MALLINFO_FIELD_TYPE hblks;    /* number of mmapped regions */
+    MALLINFO_FIELD_TYPE hblkhd;   /* space in mmapped regions */
+    MALLINFO_FIELD_TYPE usmblks;  /* maximum total allocated space */
+    MALLINFO_FIELD_TYPE fsmblks;  /* space available in freed fastbin blocks */
+    MALLINFO_FIELD_TYPE uordblks; /* total allocated space */
+    MALLINFO_FIELD_TYPE fordblks; /* total free space */
+    MALLINFO_FIELD_TYPE keepcost; /* top-most, releasable (via malloc_trim) space */
 };
 extern unsigned int R_max_memory;
 

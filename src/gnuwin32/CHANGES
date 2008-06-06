@@ -57,8 +57,8 @@ NEW FEATURES
 	*.eps (default) and *.ps file selections.
 
     o	nchar() now gives the number of characters and their width as
-	would be printed in Rgui for UTF-8 strings, not as they would
-	be printed in Rterm (via <U+xxxx> escapes).
+	would be printed in Rgui for non-representable UTF-8 strings,
+	not as they would be printed in Rterm (via <U+xxxx> escapes).
 
     o	savePlot() now adds the file type as an extension to the
 	filename if no dot ('.') is present in the filename.  This
@@ -79,6 +79,9 @@ BUG FIXES
 
     o	basename() and dirname() could truncate their results when
    	Unicode chars were used (usually in a CJK locale).
+
+    o	memory.size() no longer wraps around allocations greater than
+	2Gb.  (PR#11596)
 
 
 
