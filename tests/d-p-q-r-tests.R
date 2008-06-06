@@ -640,6 +640,14 @@ tt <- table(rbinom(100,    M, pr = 1e-9)) # had values in {0,2} only
 t2 <- table(rbinom(100, 10*M, pr = 1e-10))
 stopifnot(names(tt) == 0:6, sum(tt) == 100, sum(t2) == 100) ## no NaN there
 
+## qf() with large df1, df2
+x <- 0.01; f1 <- 1e60; f2 <- 1e90
+stopifnot(qf(1/4, Inf, Inf) == 1,
+          abs(x - qf(pf(x, f1,f2, log.p=TRUE), f1,f2, log.p=TRUE)) < 1e-4)
+
+## qbeta(*, log.p) for "border" case:
+stopifnot(is.finite(qbeta(-1e10, 50, 40, log.p=TRUE)))
+## infinite loop in R <= 2.7.0
 
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

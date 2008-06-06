@@ -403,7 +403,7 @@ BUG FIXES
 
     o	tools:::.check_package_depends() {called from 'R CMD check'} now
 	also works correctly when directory-name != package-name.
-	
+
     o	Source references were sometimes off by a line.
 
     o	The quartz() parameter 'antialias' is no longer ignored.
@@ -411,13 +411,13 @@ BUG FIXES
     o	The Quartz device is now trying hard to remove anti-aliasing
 	effects for rasterized backends in plots that use adjacent,
 	borderless rectangles such as image().
-	
+
     o	The srcfilecopy() function now adds a timestamp to the object it
 	creates.
-    
+
     o	parse() would lose a token when run on stdin().
 
-    o	socketConnection() was using internally the class "socket" 
+    o	socketConnection() was using internally the class "socket"
 	and not "sockconn", which caused a conflict with make.socket().
 	(PR#11515)
 
@@ -428,7 +428,10 @@ BUG FIXES
 	included in the Mac OS X 10.4 system).
 
     o	qf() no longer gives NaN when one of df1 and df2 is large and
-	the other is infinite (including if both are infinite).
+	the other is infinite (including if both are infinite); it is more
+	accurate e.g. for qf(1e-18, 2,4).
+
+    o	qbeta(-1e10, 50, 40, log.p=TRUE) no longer hangs.
 
 
 
