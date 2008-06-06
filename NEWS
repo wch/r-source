@@ -127,6 +127,8 @@ BUG FIXES
     o	A missing PROTECT could cause segfaults in if() if coercion of
 	the condition was required or a warning was to be given.
 
+    o	plot(<table>) now uses a sensible default main title.
+
     o	validObject() called with complete=TRUE did not use inherited
 	validity methods for slot classes.
 
@@ -192,6 +194,9 @@ BUG FIXES
 	names and PostScript names can be used interchangeably. (Note,
 	however that italic/oblique font faces of Helvetica are not
 	included in the Mac OS X 10.4 system).
+
+    o	qf() no longer gives NaN when one of df1 and df2 is large and
+	the other is infinite (including if both are infinite).
 
 
 
