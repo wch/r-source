@@ -647,8 +647,9 @@ stopifnot(qf(1/4, Inf, Inf) == 1,
 	  abs(x - qf(pf(x, f1,f2, log.p=TRUE), f1,f2, log.p=TRUE)) < 1e-4)
 
 ## qbeta(*, log.p) for "border" case:
-stopifnot(is.finite(qbeta(-1e10, 50, 40, log.p=TRUE)))
-## infinite loop in R <= 2.7.0
+stopifnot(is.finite(qbeta(-1e10, 50,40, log.p=TRUE)),
+          is.finite(qbeta(-1e10,  2, 3, lower=FALSE, log.p=TRUE)))
+## infinite loop or NaN in R <= 2.7.0
 
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

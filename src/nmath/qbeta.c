@@ -66,8 +66,8 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 
     p_ = R_DT_qIv(alpha);/* lower_tail prob (in any case) */
 
-    if(log_p && p_ == 0.)
-	return 0.; /* better than NaN or infinite loop;
+    if(log_p && (p_ == 0. || p_ == 1.))
+	return p_; /* better than NaN or infinite loop;
 		      FIXME: suboptimal, since -Inf < alpha ! */
 
     /* initialize */
@@ -136,7 +136,6 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 
     for (i_pb=0; i_pb < 1000; i_pb++) {
 	y = pbeta_raw(xinbta, pp, qq, /*lower_tail = */ TRUE, FALSE);
-	/* y = pbeta_raw2(xinbta, pp, qq, logbeta) -- to SAVE CPU; */
 #ifdef IEEE_754
 	if(!R_FINITE(y))
 #else
