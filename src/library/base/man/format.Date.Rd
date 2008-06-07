@@ -44,7 +44,7 @@ as.Date(x, \ldots)
   The usual vector re-cycling rules are applied to \code{x} and
   \code{format} so the answer will be of length that of the longer of the
   vectors.
-  
+
   Locale-specific conversions to and from character strings are used
   where appropriate and available.  This affects the names of the days
   and months.
@@ -61,7 +61,7 @@ as.Date(x, \ldots)
   trailing characters are ignored.
 
   \code{as.Date} will accept numeric data (the number of days since an
-  epoch), but \emph{only} is \code{origin} is supplied.
+  epoch), but \emph{only} if \code{origin} is supplied.
 
   The \code{format} and \code{as.character} methods ignore any
   fractional part of the date.
@@ -99,7 +99,7 @@ as.Date(x, \ldots)
 \seealso{
   \link{Date} for details of the date class;
   \code{\link{locales}} to query or set a locale.
-  
+
   Your system's help pages on \code{strftime} and \code{strptime} to
   see how to specify their formats.
 #ifdef windows
