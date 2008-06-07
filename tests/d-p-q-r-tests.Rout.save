@@ -1180,7 +1180,6 @@ Warning messages:
 > stopifnot(qf(1/4, Inf, Inf) == 1,
 + 	  all.equal(1, 1e-18/ pf(qf(1e-18, 12,50), 12,50), tol=1e-10),
 + 	  abs(x - qf(pf(x, f1,f2, log.p=TRUE), f1,f2, log.p=TRUE)) < 1e-4)
-no Newton step done since delta{p} >= last delta
 > 
 > ## qbeta(*, log.p) for "border" case:
 > stopifnot(is.finite(qbeta(-1e10, 50, 40, log.p=TRUE)))
