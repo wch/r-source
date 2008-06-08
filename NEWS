@@ -433,6 +433,9 @@ BUG FIXES
 
     o	qbeta(-1e10, 50, 40, log.p=TRUE) no longer hangs.
 
+    o	Cocoa Quartz backend autodetection of display DPI was not
+	correct for screens rotated by 90 or 270 degrees.
+
 
 
 		CHANGES IN R VERSION 2.7.0
