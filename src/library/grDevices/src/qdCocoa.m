@@ -767,13 +767,19 @@ QuartzDesc_t QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPar
             CGSize ds = CGDisplayScreenSize(md);
             double width  = (double)CGDisplayPixelsWide(md);
             double height = (double)CGDisplayPixelsHigh(md);
-            mydpi[0] = width / ds.width*25.4;
-            mydpi[1] = height / ds.height*25.4;
+	    /* landscape screen, portrait resolution -> rotated screen */
+	    if (ds.width > ds.height && width < height) {
+		mydpi[0] = width / ds.height * 25.4;
+		mydpi[1] = height / ds.width * 25.4;
+	    } else {
+		mydpi[0] = width / ds.width * 25.4;
+		mydpi[1] = height / ds.height * 25.4;
+	    }
             /* Rprintf("screen resolution %f x %f\n", mydpi[0], mydpi[1]); */
         }
         dpi = mydpi;
     }
-    
+
     scalex = dpi[0] / 72.0;
     scaley = dpi[1] / 72.0;
 
