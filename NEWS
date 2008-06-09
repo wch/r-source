@@ -436,6 +436,9 @@ BUG FIXES
     o	Cocoa Quartz backend autodetection of display DPI was not
 	correct for screens rotated by 90 or 270 degrees.
 
+    o	selectMethod("coerce", .) now uses a correct default for
+	'useInherited', and hence no longer may mess up the method cache.
+
 
 
 		CHANGES IN R VERSION 2.7.0

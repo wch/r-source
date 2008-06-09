@@ -313,8 +313,8 @@ getMethodsForDispatch <- function(fdef, inherited = FALSE)
     .getMethodsTable(fdef, environment(fdef), inherited = inherited)
 }
 
-## some functions used in MethodsListSelect, that must be safe against recursive
-## method selection.  TODO:  wouldn't need this if methods package had a name space
+## Some functions used in MethodsListSelect, that must be safe against recursive
+## method selection.
 
 .setIfBase <- function(f, fdef, mlist) {
     if(is.null(f))
@@ -757,19 +757,11 @@ dumpMethods <- function(f, file = "", signature = character(), methods,
 
 
 selectMethod <-
-  ## Returns the method (a function) that R would use to evaluate a call to this generic,
-  ## with arguments corresponding to the specified signature.
-  ##
-  ## f = the name of the generic function
-  ## env = an environment, in which the class corresponding to each argument
-  ##       is assigned with the argument's name.
-  ## optional = If TRUE, and no explicit selection results, return result anyway. else error
-  ## mlist = Optional MethodsList object to use in the search.
-    function(f, signature, optional = FALSE,
-             useInherited = TRUE,
+    ## Returns the method (a function) that R would use to evaluate a call to
+    ## generic 'f' with arguments corresponding to the specified signature.
+    function(f, signature, optional = FALSE, useInherited = TRUE,
 	     mlist = if(!is.null(fdef)) getMethodsForDispatch(fdef),
-             fdef = getGeneric(f, !optional),
-             verbose = FALSE)
+	     fdef = getGeneric(f, !optional), verbose = FALSE)
 {
     if(is.environment(mlist))  {# using methods tables
         fenv <- environment(fdef)
@@ -778,10 +770,12 @@ selectMethod <-
             cat("* mlist environment with", length(mlist),"potential methods\n")
         if(length(signature) < nsig)
             signature[(length(signature)+1):nsig] <- "ANY"
-        if(missing(useInherited))
-	    useInherited <- is.na(match(signature, "ANY"))# -> vector
         method <- .findMethodInTable(signature, mlist, fdef)
 	if(is.null(method)) {
+	    if(missing(useInherited))
+		useInherited <- (is.na(match(signature, "ANY")) & # -> vector
+				 if(identical(fdef, coerce))# careful !
+				 c(TRUE,FALSE) else TRUE)
 	    methods <-
 		if(any(useInherited)) {
 		    allmethods <- .getMethodsTable(fdef, fenv, check=FALSE, inherited=TRUE)
@@ -838,12 +832,14 @@ selectMethod <-
       ##
       ## assign the updated information to the method environment
       fEnv <- environment(fdef)
-      if(exists(".SelectMethodOn", fEnv, inherits = FALSE))
+      if(exists(".SelectMethodOn", fEnv, inherits = FALSE)) {
           ##<FIXME> This should have been eliminated now
           ## we shouldn't be doing method selection on a function used in method selection!
           ## Having name spaces for methods will prevent this happening -- until then
           ## force a return of the original default method
+          message("selectMethod(): .SelectMethodOn - old stuff - please report")
           return(finalDefaultMethod(mlist, f))
+      }
       assign(".SelectMethodOn", TRUE, fEnv)
       on.exit(rm(.SelectMethodOn, envir = fEnv))
       ##</FIXME>
@@ -854,20 +850,11 @@ selectMethod <-
           selection <- .Call("R_selectMethod", f, env, mlist, evalArgs, PACKAGE = "methods")
       ## else: selection remains NULL
     }
-    if(is(selection, "function"))
+    if(is(selection, "function") || optional)
         selection
-    else if(is(selection, "MethodsList")) {
-      if(optional)
-        selection
-      else
+    else if(is(selection, "MethodsList"))
         stop("no unique method corresponding to this signature")
-    }
-    else {
-        if(optional)
-            selection
-        else
-            stop("unable to match signature to methods")
-    }
+    else stop("unable to match signature to methods")
 }
 
 hasMethod <-
