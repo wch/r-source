@@ -29,15 +29,18 @@ sealClass(Class, where)
 
 }
 \arguments{
-  \item{Class}{character string name for the class.  The functions will usually take a class definition
-    instead of the string.  To restrict the class to those defined in a particular package, set the \code{\link{packageSlot}} of the character string.}
+  \item{Class}{character string name for the class.  The functions will
+    usually take a class definition instead of the string.  To restrict
+    the class to those defined in a particular package, set the
+    \code{\link{packageSlot}} of the character string.}
   \item{where}{ The
     environment in which to modify or remove the
     definition.  Defaults to the top-level environment of the calling function
     (the global environment for ordinary computations, but the
     environment or name space of a package in the source for a package).
 
-    When searching for class definitions, \code{where} defines where to do the search, and the default is to search from the top-level
+    When searching for class definitions, \code{where} defines where to
+    do the search, and the default is to search from the top-level
     environment or name space of the caller to this function.
   }
   \item{unique}{if \code{findClass} expects a unique location for the
@@ -128,7 +131,7 @@ sealClass(Class, where)
 
  Chambers, John M. (1998)
  \emph{Programming with Data}
- Springer (For the original S4 version.) 
+ Springer (For the original S4 version.)
 }
 \seealso{
   \code{\link{setClassUnion}},

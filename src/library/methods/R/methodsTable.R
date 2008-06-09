@@ -309,7 +309,7 @@
                 domain = NA, call. = FALSE)
       methods <- methods[1]
   }
-  if(doMtable  && length(methods)>0) {
+  if(doMtable && length(methods) > 0) {
     tlabel <- .sigLabel(classes)
     m <- methods[[1]]
     if(is(m, "MethodDefinition"))  { # else, a primitive
