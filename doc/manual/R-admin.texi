@@ -3787,7 +3787,7 @@ CXXFLAGS=-O
 FC=f95
 FCFLAGS=$FFLAGS
 LDFLAGS=-L/opt/csw/lib
-SHLIB_CXXLDFLAGS=-G -lCstd
+SHLIB_CXXLDFLAGS="-G -lCstd"
 @end example
 
 @noindent
