@@ -79,8 +79,9 @@ x \%in\% table
   \code{\link{is.element}} for an S-compatible equivalent of \code{\%in\%}.
 }
 \examples{
-## The intersection of two sets :
-intersect <- function(x, y) y[match(x, y, nomatch = 0)]
+## The intersection of two sets can be defined via match():
+## Simple version:  intersect <- function(x, y) y[match(x, y, nomatch = 0)]
+intersect # the R function in base, slightly more careful
 intersect(1:10,7:20)
 
 1:10 \%in\% c(1,3,5,9)
