@@ -42,14 +42,15 @@ as <-
         asMethod <- selectMethod("coerce", sig, optional = TRUE,
                                  useInherited = FALSE, #optional, no inheritance
                                  fdef = coerceFun, mlist = getMethodsForDispatch(coerceFun))
-        canCache <- TRUE
         if(is.null(asMethod)) {
+            canCache <- TRUE
             inherited <- FALSE
             if(is(object, Class)) {
                 ClassDef <- getClassDef(Class, where)
                 ## use the ext information, computed or supplied
                 if(identical(ext, FALSE))
-                    stop(gettextf("internal problem in as(): \"%s\" is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE", thisClass, Class), domain = NA)
+                    stop(gettextf("internal problem in as(): \"%s\" is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE",
+                                  thisClass, Class), domain = NA)
                 else if(identical(ext, TRUE))
                     asMethod <- .makeAsMethod(quote(from), TRUE, Class, ClassDef, where)
                 else {
@@ -72,16 +73,17 @@ as <-
             }
             else if(canCache)  # make into method definition
                 asMethod <- .asCoerceMethod(asMethod, sig, FALSE)
-            ## cache in the coerce function's environment
-            if(canCache && !is.null(asMethod)) {
-                cacheMethod("coerce", sig, asMethod, fdef = coerceFun,
-                            inherited = inherited)
-            }
+	    if(is.null(asMethod))
+		stop(gettextf("no method or default for coercing \"%s\" to \"%s\"",
+			      thisClass, Class), domain = NA)
+	    else if(canCache) {
+		## cache in the coerce function's environment
+		cacheMethod("coerce", sig, asMethod, fdef = coerceFun,
+			    inherited = inherited)
+	    }
         }
     }
-    if(is.null(asMethod))
-        stop(gettextf("no method or default for coercing \"%s\" to \"%s\"", thisClass, Class), domain = NA)
-    else if(strict)
+    if(strict)
         asMethod(object)
     else
         asMethod(object, strict = FALSE)
@@ -399,20 +401,19 @@ canCoerce <- function(object, Class) {
 ## Very primitive to survive bootstrap stage, so includes knowledge of
 ## the classes and does no checking.
 .asCoerceMethod <- function(def, sig, replace) {
-  if(replace)
-    fdef <- quote(function(from, to = TO, value)NULL)
-  else
-    fdef <- quote(function(from, to = TO, strict = TRUE) NULL)
-  fdef[[2]]$to <- sig[[2]]
-  fdef <- eval(fdef)
-  body(fdef, environment(def)) <- body(def)
-  attr(fdef, "source") <- deparse(fdef) # because it's wrong from the quote()
-    value = new("MethodDefinition")
+    fdef <-
+	if(replace) quote(function(from, to = TO, value) NULL)
+	else	    quote(function(from, to = TO, strict = TRUE) NULL)
+    fdef[[2]]$to <- sig[[2]]
+    fdef <- eval(fdef)
+    body(fdef, environment(def)) <- body(def)
+    attr(fdef, "source") <- deparse(fdef) # because it's wrong from the quote()
+    value <- new("MethodDefinition")
     value@.Data <- fdef
     classes <- new("signature")
     classes@.Data <- sig
     classes@names <- c("from", "to")
-        value@target <- classes
-        value@defined <- classes
+    value@target <- classes
+    value@defined <- classes
     value
 }
