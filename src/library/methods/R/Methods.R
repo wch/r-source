@@ -308,27 +308,24 @@ getMethods <-
       NULL
 }
 
-getMethodsForDispatch <- function(fdef)
+getMethodsForDispatch <- function(fdef, inherited = FALSE)
 {
-    .getMethodsTable(fdef, environment(fdef))
+    .getMethodsTable(fdef, environment(fdef), inherited = inherited)
 }
 
 ## some functions used in MethodsListSelect, that must be safe against recursive
 ## method selection.  TODO:  wouldn't need this if methods package had a name space
 
-.existsBasic <- get("exists", "package:base")
-.getBasic <- get("get", "package:base")
-.evBasic <- get("environment", "package:base")
-.assignBasic <- get("assign", "package:base")
 .setIfBase <- function(f, fdef, mlist) {
     if(is.null(f))
         FALSE
     else {
-        found <- .existsBasic(f, "package:base")
-        if(found) {
-            ## force (default) computation of mlist in MethodsListSelect
-            .assignBasic(".Methods", envir = .evBasic(fdef), .getBasic(f, "package:base"))
-        }
+        found <- base::exists(f, "package:base")
+	if(found) {
+	    ## force (default) computation of mlist in MethodsListSelect
+	    base::assign(".Methods", envir = base::environment(fdef),
+			 base::get(f, "package:base"))
+	}
         found
     }
 }
@@ -336,12 +333,10 @@ getMethodsForDispatch <- function(fdef)
 ##NB used internally in MethodsListSelect.  Must NOT use the standard version
 ## to prevent recursion
 .getMethodsForDispatch <- function(fdef) {
-    ev <- .evBasic(fdef)
-    if(.existsBasic(".Methods", envir = ev)) {
-        .getBasic(".Methods", envir = ev)
-    }
-    else
-        NULL
+    ev <- base::environment(fdef)
+    if(base::exists(".Methods", envir = ev))
+        base::get(".Methods", envir = ev)
+    ## else NULL
 }
 
 .setMethodsForDispatch <- function(f, fdef, mlist) {

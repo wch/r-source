@@ -4,31 +4,36 @@
 % Distributed under GPL 2 or later
 
 \name{MethodSupport}
+\title{Additional (Support) Functions for Methods}
 \alias{.conflicts.OK}
 \alias{OldEvalSelectedMethod}
 \alias{getMethodsForDispatch}
 \alias{cacheMethod}
 \alias{resetGeneric}
 \alias{listFromMethods}
-\title{Additional (Support) Functions for Methods}
 \description{
   These are support routines for computations on formal methods.
 }
 \usage{
-
 listFromMethods(generic, where, table)
 
-getMethodsForDispatch(fdef)
+getMethodsForDispatch(fdef, inherited = FALSE)
 
 cacheMethod(f, sig, def, args, fdef, inherited = FALSE)
 
 resetGeneric(f, fdef, mlist, where, deflt)
-
 }
 \section{Summary of Functions}{
   \describe{
     \item{\code{listFromMethods}:}{
-        A list object describing the methods for the function \code{generic}, supplied either as the function or the name of the function.  If \code{where} is supplied, this should be an environment or search list position from which a table of methods for the generic will be taken.  If \code{table} is supplied, this is itself assumed to be such a table.  If neither argument is supplied, the table is taken directly from the generic function (that is, the current set of methods defined for this generic).
+      A list object describing the methods for the function
+      \code{generic}, supplied either as the function or the name of the
+      function.  If \code{where} is supplied, this should be an
+      environment or search list position from which a table of methods
+      for the generic will be taken.  If \code{table} is supplied, this
+      is itself assumed to be such a table.  If neither argument is
+      supplied, the table is taken directly from the generic function
+      (that is, the current set of methods defined for this generic).
 
       Returns an object of class \code{"LinearMethodsList"} (see
       \linkS4class{LinearMethodsList}) describing all the methods in the
@@ -41,7 +46,7 @@ resetGeneric(f, fdef, mlist, where, deflt)
       was found in the metadata.
 
       Normally not called directly, since changes to methods,
-    attaching and detaching packages all generate a call automatically.
+      attaching and detaching packages all generate a call automatically.
     }
     \item{\code{cacheMethod}:}{
       Store the definition for this function and signature in the method
