@@ -38,7 +38,7 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 /* do the two objects compute as identical? */
 Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 {
-    SEXP ax, ay;
+    SEXP ax, ay, atrx, atry;
     if(x == y)
 	return TRUE;
     if(TYPEOF(x) != TYPEOF(y))
@@ -73,9 +73,13 @@ Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 		    if(streql(tx, CHAR(PRINTNAME(TAG(ely))))) {
 			/* We need to treat row.names specially here */
 			if(streql(tx, "row.names")) {
-			    if(!compute_identical(getAttrib(x, R_RowNamesSymbol),
-						  getAttrib(y, R_RowNamesSymbol)))
+                            PROTECT(atrx = getAttrib(x, R_RowNamesSymbol));
+                            PROTECT(atry = getAttrib(y, R_RowNamesSymbol));
+			    if(!compute_identical(atrx, atry)){
+                               UNPROTECT(2);
 			       return FALSE;
+                            } else
+                              UNPROTECT(2);
 			} else
 			    if(!compute_identical(CAR(elx), CAR(ely)))
 				return FALSE;
