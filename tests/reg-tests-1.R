@@ -5190,3 +5190,7 @@ stopifnot(identical(regexpr(glob2rx("*[*"), nm),
 		    structure(1L, match.length = 13L))
 	  )
 ## gave 'Invalid regular expression' in R <= 2.7.0
+
+## showDefault() problem with "unregistered" S3 classes:
+show(structure(1:3, class = "myClass"))
+## failed in R <= 2.7.0

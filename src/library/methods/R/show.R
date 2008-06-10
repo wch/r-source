@@ -14,14 +14,10 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-showDefault <-
-  function(object, oldMethods = TRUE)
+showDefault <- function(object, oldMethods = TRUE)
 {
-    printNoClass <- function(x)
-        .Internal(print.default(x, NULL, TRUE, NULL, NULL, FALSE, FALSE))
-
-    cl <- classLabel(class(object))
-    clDef <- getClass(class(object))
+    clDef <- getClass(cl <- class(object), .Force=TRUE)
+    cl <- classLabel(cl)
     if(!is.null(clDef) && is.na(match(clDef@className, .BasicClasses)) &&
        !extends(clDef, "oldClass")) {
         cat("An object of class ", cl, "\n", sep="")
@@ -60,7 +56,6 @@ showDefault <-
         ## NBB:  This relies on the delicate fact (as of version 1.7 at least)
         ## that print will NOT recursively call show if it gets more than one argument!
         print(object, useS4 = FALSE)
-
 }
 
 ## temporary definition of show, to become the default method

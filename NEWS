@@ -439,6 +439,8 @@ BUG FIXES
     o	selectMethod("coerce", .) now uses a correct default for
 	'useInherited', and hence no longer may mess up the method cache.
 
+    o	show() now also works on "unregistered" S3 class objects.
+
 
 
 		CHANGES IN R VERSION 2.7.0
