@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) Martin Maechler, 1994, 1998
- *  Copyright (C) 2001-2007 the R Development Core Team
+ *  Copyright (C) 2001-2008 the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,8 +53,8 @@
  *		"g" and "G" puts them into scientific format if it saves
  *		space to do so.
  *	    NEW: "fg" gives numbers in "xxx.xxx" format as "f",
- *		  ~~  however, digits are *significant* digits and no
- *		      trailing zeros are produced, as in "g".
+ *		  ~~  however, digits are *significant* digits and,
+ *		      if digits > 0, no trailing zeros are produced, as in "g".
  *
  *	flag	Format modifier as in K&R "C", 2nd ed., p.243;
  *		e.g., "0" pads leading zeros; "-" does left adjustment
@@ -99,9 +99,10 @@ void str_signif(char *x, int *n, const char **type, int *width, int *digits,
 		const char **format, const char **flag, char **result)
 {
     int wid = *width;
-    int dig = *digits;
+    int dig = abs(*digits);
     int i, nn = *n;
-    int short do_fg = !strcmp("fg",*format);/* == 1  iff  format == "fg" */
+    Rboolean rm_trailing_0 = (*digits) >= 0;
+    Rboolean do_fg = !strcmp("fg",*format);/* TRUE  iff  format == "fg" */
     double xx;
     int iex, j, jL, len_flag = strlen(*flag);
 
@@ -160,7 +161,7 @@ void str_signif(char *x, int *n, const char **type, int *width, int *digits,
 			*/
 			double xxx = fabs(xx), X;
 			iex= (int)floor(log10(xxx) + 1e-12);
-			X = fround(xxx/pow(10.0, (double)iex)+ 1e-12, 
+			X = fround(xxx/pow(10.0, (double)iex)+ 1e-12,
 				   (double)(dig-1));
 			if(iex > 0 &&  X >= 10) {
 			    xx = X * pow(10.0, (double)iex);
@@ -173,17 +174,20 @@ void str_signif(char *x, int *n, const char **type, int *width, int *digits,
 				/* "g" would result in 'e-' representation:*/
 			    sprintf(result[i], f0, dig-1 + -iex, xx);
 #ifdef DEBUG
-			    fprintf(stderr, " x[%d]=%g, iex%d\n", i, xx, iex);
+			    fprintf(stderr, " x[%d]=%g, iex=%d\n", i, xx, iex);
 			    fprintf(stderr, "\tres. = '%s'; ", result[i]);
 #endif
-				/* Remove trailing  "0"s : */
-			    jL = j = strlen(result[i])-1;
-			    while(result[i][j] == '0') j--;
-			    result[i][j+1] = '\0';
+			    /* Remove trailing  "0"s __ IFF flag has no '#': */
+			    if(rm_trailing_0) {
+				jL = j = strlen(result[i])-1;
+				while(result[i][j] == '0') j--;
+				result[i][j+1] = '\0';
 #ifdef DEBUG
-			    fprintf(stderr, "\t>>> jL=%d, j=%d; new res= '%s'\n",
-				    jL, j, result[i]);
+				fprintf(stderr, "\t>>> jL=%d, j=%d; new res= '%s'\n",
+					jL, j, result[i]);
 #endif
+			    }
+
 			} else { /* iex >= -4:	NOT "e-" */
 				/* if iex >= dig, would have "e+" representation */
 #ifdef DEBUG

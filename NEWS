@@ -441,6 +441,9 @@ BUG FIXES
 
     o	show() now also works on "unregistered" S3 class objects.
 
+    o	formatC(*, format="fg", flag="#") is no longer dropping trailing
+	zeros.
+
 
 
 		CHANGES IN R VERSION 2.7.0

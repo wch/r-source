@@ -180,7 +180,10 @@ formatC <- function (x, digits = NULL, width = NULL,
     flag <- as.character(flag)
     nf <- strsplit(flag, "")[[1]]
     if(!all(nf %in% c("0", "+", "-", " ", "#")))
-       stop("'flag' can contain only '0+- #'")
+	stop("'flag' can contain only '0+- #'")
+    if(digits > 0 && any(nf == "#"))
+	digits <- -digits # C-code will notice "do not drop trailing zeros"
+
     attr(x, "Csingle") <- NULL	# avoid interpreting as.single
     r <- .C("str_signif",
 	    x = x,

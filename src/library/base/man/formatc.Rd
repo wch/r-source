@@ -65,7 +65,9 @@ prettyNum(x, big.mark = "",   big.interval = 3,
     the minimum number of \emph{significant} digits.  This can lead
     to quite long result strings, see examples below.  Note that unlike
     \code{\link{signif}} this prints large numbers with
-    more significant digits than \code{digits}.}
+    more significant digits than \code{digits}.  Trailing zeros are
+    \emph{dropped} in this format, unless \code{flag} contains
+    \code{"#"}.}
 
   \item{flag}{For \code{formatC}, a character string giving a
     format modifier as in Kernighan and Ritchie (1988, page 243).

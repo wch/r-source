@@ -5194,3 +5194,8 @@ stopifnot(identical(regexpr(glob2rx("*[*"), nm),
 ## showDefault() problem with "unregistered" S3 classes:
 show(structure(1:3, class = "myClass"))
 ## failed in R <= 2.7.0
+
+## formatC(.., format="fg", flag="#"):
+stopifnot(identical("0.000060",
+                    formatC(0.0000599, digits=2, format="fg", flag="#")))
+## dropped the trailing "0" in R <= 2.7.0
