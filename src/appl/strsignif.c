@@ -70,6 +70,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <stdlib.h>
 
 #include <R_ext/Error.h>	/* error */
 #include <R_ext/Memory.h>	/* R_alloc */
