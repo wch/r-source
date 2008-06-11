@@ -5196,6 +5196,7 @@ show(structure(1:3, class = "myClass"))
 ## failed in R <= 2.7.0
 
 ## formatC(.., format="fg", flag="#"):
-stopifnot(identical("0.000060",
-                    formatC(0.0000599, digits=2, format="fg", flag="#")))
-## dropped the trailing "0" in R <= 2.7.0
+x <- 0.599 * c(.1, .01, .001, 1e-4,1e-5,1e-6)
+(fCx <- formatC(x, digits=2, format="fg", flag="#"))
+stopifnot(sub(".*(..)$", "\\1", fCx) == "60")
+## dropped the trailing "0" in the last 3 cases, in R <= 2.7.0
