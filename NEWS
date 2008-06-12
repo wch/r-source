@@ -261,7 +261,7 @@ NEW FEATURES
 
     o	A field containing just a sign is no longer regarded as numeric
 	(it was on all platforms in 2.7.0, but not on most in earlier
-	versions of R).
+	versions of R).  Similarly, '.' is now always non-numeric.
 
     o	CITATION files are now read in Latin-1: quite a few were
 	failing if used in a multibyte locale such as UTF-8.
