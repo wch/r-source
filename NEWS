@@ -279,6 +279,9 @@ NEW FEATURES
 	dimnames in the same way as for character and numeric inputs.
 	(PR#11512)
 
+    o	read.DIF(*, transpose=TRUE) now allows to correctly read DIF files
+	produced by some versions of Excel.
+
 
 DEPRECATED & DEFUNCT
 
@@ -454,6 +457,8 @@ BUG FIXES
     o	read.table(file = stdin()) with invalid input could leave the
 	connection in an invalid state and hence cause a later
 	segfault.  (PR#11627)
+
+    o	read.DIF() did not obey the default 'stringsAsFactors = TRUE'.
 
 
 

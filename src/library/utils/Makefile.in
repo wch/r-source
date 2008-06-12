@@ -59,12 +59,13 @@ most: DESCRIPTION
 	    -exec rm -rf \{\} \; 2>/dev/null; \
 	  fi; \
 	fi
-	@if test -d $(srcdir)/inst/Sweave; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/Sweave; \
-	  for f in `ls -d $(srcdir)/inst/Sweave/* | sed '/CVS/d'`; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/Sweave; \
-	  done; \
-	fi
+	@for D in Sweave misc; do \
+	 if test -d $(srcdir)/inst/$${D}; then \
+	   $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/$${D}; \
+	   for f in `ls -d $(srcdir)/inst/$${D}/*`; do \
+	     $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/$${D}; \
+	   done; \
+	 fi; done
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \
@@ -97,7 +98,7 @@ $(top_builddir)/library/$(pkg)/iconvlist: most
 mostlyclean: clean
 clean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
-	-@rm -f all.R 
+	-@rm -f all.R
 distclean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f Makefile DESCRIPTION

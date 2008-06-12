@@ -11,13 +11,14 @@
   from it.  DIF is a format for data matrices such as single spreadsheets.
 }
 \usage{
-read.DIF(file, header = FALSE, 
+read.DIF(file, header = FALSE,
            dec = ".", row.names, col.names,
            as.is = !stringsAsFactors,
            na.strings = "NA", colClasses = NA, nrows = -1,
-           skip = 0, check.names = TRUE, 
+           skip = 0, check.names = TRUE,
            blank.lines.skip = TRUE,
-           stringsAsFactors = default.stringsAsFactors())
+           stringsAsFactors = default.stringsAsFactors(),
+           transpose = FALSE)
 }
 \arguments{
   \item{file}{the name of the file which the data are to be read from,
@@ -108,6 +109,11 @@ read.DIF(file, header = FALSE,
 
   \item{stringsAsFactors}{logical: should character vectors be converted
     to factors?}
+
+  \item{transpose}{logical, indicating if the row and column
+    interpretation should be transposed.  Microsoft's Excel has been
+    known to produce (non-standard conforming) DIF files which would
+    need \code{transpose = TRUE} to be read correctly.}
 }
 \value{
   A data frame (\code{\link{data.frame}}) containing a representation of
@@ -123,7 +129,8 @@ read.DIF(file, header = FALSE,
   Less memory will be used if \code{colClasses} is specified as one of
   the six atomic vector classes.
 }
-
+\author{R Core; \code{transpose} option by
+  Christoph Buser, ETH Zurich}
 \seealso{
   The \emph{R Data Import/Export} manual.
 
@@ -142,6 +149,13 @@ read.DIF(file, header = FALSE,
   The term is likely to lead to confusion: Windows will have a
   \sQuote{Windows Data Interchange Format (DIF) data format} as part of
   its WinFX system, which may or may not be compatible.
+}
+\examples{
+## read.DIF() needs transpose=TRUE for file exported from Excel
+udir <- system.file("misc", package="utils")
+dd <- read.DIF(file.path(udir, "exDIF.dif"), header= TRUE, transpose=TRUE)
+dc <- read.csv(file.path(udir, "exDIF.csv"), header= TRUE)
+stopifnot(identical(dd,dc), dim(dd) == c(4,2))
 }
 \keyword{file}
 \keyword{connection}
