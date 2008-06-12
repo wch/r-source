@@ -85,9 +85,14 @@ install: @WANT_R_STATIC_TRUE@ install-pc
 install-main: install-Rscript
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(bindir)"
 	@$(INSTALL_PROGRAM) Rscript "$(DESTDIR)$(bindir)/Rscript"
+	@if test -n "${R_ARCH}"; then \
+	  $(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir2)"; \
+	  $(INSTALL_PROGRAM) Rscript "$(DESTDIR)$(Rexecbindir2)/Rscript"; \
+	fi
 
 uninstall:
 	@rm -f "$(DESTDIR)$(bindir)/Rscript" "$(DESTDIR)$(Rexecbindir)/Rscript" \
+	  "$(DESTDIR)$(Rexecbindir2)/Rscript" \
 	  "$(DESTDIR)$(libdir)/pkgconfig/libR.pc"
 
 install-strip:

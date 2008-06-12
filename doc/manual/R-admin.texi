@@ -690,7 +690,7 @@ R --arch=@var{name}
 @noindent
 and just running @samp{R} will run the last build that was installed.
 
-@code{R CMD INSTALL} will detect if more that one build is installed and
+@code{R CMD INSTALL} will detect if more than one build is installed and
 try to install packages with the appropriate library objects for each.
 This will not be done if the package has an executable @code{configure}
 script or a @file{src/Makefile} file.  In such cases you can install for
@@ -704,6 +704,14 @@ If you want to mix sub-architectures compiled on different platforms
 (for example @cputype{x86_64} Linux and @cputype{i686} Linux), it is
 wise to use explicit names for each, and you may also need to set
 @option{libdir} to ensure that they install into the same place.
+
+When sub-architectures are used the version of @command{Rscript} in
+e.g.@: @file{/usr/bin} will be the last installed, but
+architecture-specific versions will be available in e.g.@:
+@file{/usr/lib64/R/bin/exec$@{R_ARCH@}}.  Normally all installed
+architectures will run on the platform so the architecture of
+@command{Rscript} does not matter.
+
 
 On Linux, there is an alternative mechanism for mixing 32-bit and
 64-bit libraries known as @emph{multilib}. If a Linux distribution supports
@@ -739,6 +747,13 @@ setarch i686 R CMD javareconf
 
 @noindent
 to get a suitable setting.
+
+When this mechanism is used, the version of @command{Rscript} in
+e.g.@: @file{/usr/bin} will be the last installed, but an
+architecture-specific version will be available in
+e.g.@: @file{/usr/lib64/R/bin}.  Normally all installed architectures
+will run on the platform so the architecture of @command{Rscript} does
+not matter.
 
 @node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows

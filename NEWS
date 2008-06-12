@@ -282,6 +282,13 @@ DEPRECATED & DEFUNCT
 	They will no longer be allowed in R 2.8.0.
 
 
+INSTALLATION
+
+    o	If sub-architectures are used, a copy of Rscript is installed
+    	in ${R_HOME}/bin/exec${R_ARCH} (since that in ${R_HOME}/bin
+    	and /usr/bin might be overwritten in a subsequent installation).
+
+
 UTILITIES
 
     o	R CMD check checks for possible check directories in the
