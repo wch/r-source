@@ -20,28 +20,32 @@ read.DIF <- function(file, header = FALSE, dec = ".",
          nrows = -1, skip = 0,
          check.names = TRUE,
          blank.lines.skip = TRUE,
-         stringsAsFactors = default.stringsAsFactors())
+         stringsAsFactors = default.stringsAsFactors(),
+	 transpose = FALSE)
 {
     if (.Platform$OS.type == "windows" && identical(file, "clipboard")) {
 	if (!(5 %in% getClipboardFormats()) ) stop("No DIF data on clipboard")
 	lines <- readClipboard(5)
-    } else
-    {
+    } else {
 	lines <- readLines(file)
     }
+    if(length(lines) < 1) stop("file had no lines")
     topic <- ""
     nrow <- NA
     ncol <- NA
     i <- 1
+    ## Read header info :
     while (topic != "DATA") {
 	topic <- lines[i]
 	vnum <- lines[i+1]
-	v <- as.numeric(sub(",.*$","",vnum))
 	num <- as.numeric(sub("^.*,","",vnum))
-	value <- lines[i+2]
- 	i <- i + 3
-	if (topic == "VECTORS") ncol <- num
-	else if (topic == "TUPLES") nrow <- num
+	## v <- as.numeric(sub(",.*$","",vnum))
+	## value <- lines[i+2]
+	i <- i + 3
+	if (topic == "VECTORS")
+	    if(transpose) nrow <- num else ncol <- num
+	else if (topic == "TUPLES")
+	    if(transpose) ncol <- num else nrow <- num
     }
     if (is.na(nrow) || is.na(ncol)) stop("row and column counts not found")
 
@@ -58,31 +62,36 @@ read.DIF <- function(file, header = FALSE, dec = ".",
 	if (type == -1) {
 	    if (stringval == "BOT") {
 		row <- row + 1
+                if(row > nrow)
+                    stop("More rows than specified in header; maybe use 'transpose=TRUE'")
 		col <- 0
 	    } else if (stringval == "EOD") break
 	    else stop("Unrecognized special data value")
-	} else if (type == 0) {
+	} else {
 	    col <- col + 1
-	    types[row, col] <- "numeric"
-	    if (stringval == "V") data[row, col] <- num
-	    else if (stringval == "NA") data[row, col] <- NA
-	    else if (stringval == "ERROR") data[row, col] <- NA
-	    else if (stringval == "TRUE") {
-		data[row, col] <- "TRUE"
-		types[row, col] <- "logical"
-	    }
-	    else if (stringval == "FALSE") {
-		data[row, col] <- "FALSE"
-		types[row, col] <- "logical"
-	    }
-	    else stop("Unrecognized value indicator")
-	} else if (type == 1) {
-	    col <- col + 1
-	    types[row, col] <- "character"
-	    stringval <- sub("^\"", "", stringval)
-	    stringval <- sub("\"$", "", stringval)
-	    data[row, col] <- stringval
-	}
+            if(col > ncol)
+                stop("More columns than specified in header; maybe use 'transpose=TRUE'")
+            if (type == 0) {
+                types[row, col] <- "numeric"
+                if (stringval == "V") data[row, col] <- num
+                else if (stringval == "NA") data[row, col] <- NA
+                else if (stringval == "ERROR") data[row, col] <- NA
+                else if (stringval == "TRUE") {
+                    data[row, col] <- "TRUE"
+                    types[row, col] <- "logical"
+                }
+                else if (stringval == "FALSE") {
+                    data[row, col] <- "FALSE"
+                    types[row, col] <- "logical"
+                }
+                else stop("Unrecognized value indicator")
+            } else if (type == 1) {
+                types[row, col] <- "character"
+                stringval <- sub("^\"", "", stringval)
+                stringval <- sub("\"$", "", stringval)
+                data[row, col] <- stringval
+            }
+        }
     }
 
     if(skip > 0) data <- data[-(1:skip),]
@@ -196,12 +205,12 @@ read.DIF <- function(file, header = FALSE, dec = ".",
     if(rlabp) do[1] <- FALSE # don't convert "row.names"
     for (i in (1:cols)[do]) {
         data[[i]] <-
-            if (is.na(colClasses[i])) {
-            	if (!any(types[,i] == "character"))
-                    type.convert(data[[i]], as.is = as.is[i], dec = dec,
-                                 na.strings = character(0))
-                else data[[i]]
-            }
+	    if (is.na(colClasses[i])) {
+		if (stringsAsFactors || all(types[,i] != "character"))
+		    type.convert(data[[i]], as.is = as.is[i], dec = dec,
+				 na.strings = character(0))
+		else data[[i]]
+	    }
         ## as na.strings have already been converted to <NA>
             else if (colClasses[i] == "factor") as.factor(data[[i]])
             else if (colClasses[i] == "Date") as.Date(data[[i]])
