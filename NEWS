@@ -444,6 +444,10 @@ BUG FIXES
     o	formatC(*, format="fg", flag="#") is no longer dropping trailing
 	zeros.
 
+    o	read.table(file = stdin()) with invalid input could leave the
+	connection in an invalid state and hence cause a later
+	segfault.  (PR#11627)
+
 
 
 		CHANGES IN R VERSION 2.7.0
