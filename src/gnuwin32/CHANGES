@@ -18,8 +18,8 @@
 
 OTHER
 
-    o	Rcmd sets many more enviroment variables, all those set by
-	R CMD under a Unix-alike which make sense.
+    o	Rcmd sets many more enviroment variables, including all those
+	set by R CMD under a Unix-alike which make sense on Windows.
 
     o	Rcmd now follows a similar strategy to R when finding a valid
 	TMPDIR setting: it tries TMPDIR, TMP, TEMP and R_USER looking
@@ -31,11 +31,12 @@ OTHER
     o	Rcmd Rd2dvi now opens .dvi and .pdf files via their file
     	associations (if set -- MiKTeX sets 'yap' for .dvi).
 
-    o	Rcmd check now checks the latex of package vignettes if
+    o	Rcmd check now checks the latex of any package vignettes if
 	texi2dvi (presumably from MiKTeX) is found on the path.
 
-    o	Package checking (including 'make check') is no longer done in
-    	a C locale (although LANGUAGE=en is used).
+    o	Package checking (including 'make check') is no longer done in a
+    	C locale but in the current locale (although LANGUAGE=en is
+    	used).
 
 
 
