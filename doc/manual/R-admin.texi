@@ -2086,8 +2086,9 @@ is larger (normally twice the size).  This means that @R{} objects take
 more space and (usually) more time to manipulate.  So 64-bit versions of
 @R{} will typically run slower than 32-bit versions.  (On Sparc Solaris
 the difference was 15-20%, on Linux on Opteron around 10%.  The pattern
-is not universal on Intel Core 2 Duo the 64-bit version is around 10%
-faster on both Linux and Mac OS X.)
+is not universal, as on Intel Core 2 Duo the vanilla 64-bit version is
+around 10% faster on both Linux and Mac OS X -- this can be reduced by
+tuning the compiler to that chip.)
 @end itemize
 
 So, for speed you may want to use a 32-bit build, but to handle large
@@ -3099,7 +3100,10 @@ On systems using the GNU linker (especially those using @R{} as a shared
 library), it is likely that including @samp{-Wl,-O1} in @code{LDFLAGS}
 is worthwhile, and on recent systems@footnote{e.g.@: Fedora Core 6}
 @samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is recommended at
-@uref{http://lwn.net/Articles/192624/}
+@uref{http://lwn.net/Articles/192624/}.  Tuning compilation to a
+specific CPU family (e.g.@: @samp{-mtune=core2} for @command{gcc}) can
+give worthwhile performance gains, especially on older architectures
+such as @cputype{ix86}.
 
 @node Making manuals,  , Compilation flags, Configuration variables
 @subsection Making manuals
