@@ -997,9 +997,7 @@ sometimes without quotes).  They use C-style escape sequences, using
 @code{\} as the escape character, so @code{\\} is entered and printed as
 @code{\\}, and inside double quotes @code{"} is entered as @code{\"}.
 Other useful escape sequences are @code{\n}, newline, @code{\t}, tab and
-@code{\b}, backspace---see @command{?Quotes} for a full list.  Character
-strings entered as part of @R{} code are limited to 8191 bytes (not
-characters): those read in as data are limited only by memory limits.
+@code{\b}, backspace---see @command{?Quotes} for a full list.
 
 Character vectors may be concatenated into a vector by the @code{c()}
 function; examples of their use will emerge frequently.

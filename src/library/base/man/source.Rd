@@ -1,6 +1,6 @@
 % File src/library/base/man/source.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{source}
@@ -72,8 +72,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   trial encoding.
 
   Unlike input from a console, lines in the file or on a connection can
-  contain an essentially unlimited number of characters, but quoted
-  character strings are limited to 8191 bytes.
+  contain an unlimited number of characters.
   
   When \code{skip.echo > 0}, that many comment lines at the start of
   the file will not be echoed.  This does not affect the execution of
