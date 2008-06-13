@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-06-03
+@set FAQ_DATE @value{FAQ_YEAR}-06-12
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -1833,6 +1833,8 @@ network algorithm.
 Allelic richness estimation, with extrapolation beyond the sample size.
 @item AcceptanceSampling
 Creation and evaluation of acceptance sampling plans,
+@item AdMit
+Adaptive mixture of Student @math{t} distributions.
 @item AdaptFit
 Adaptive semiparametic regression.
 @item AlgDesign
@@ -2270,6 +2272,8 @@ the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
 @emph{Recommended}.
 @item LDheatmap
 Heat maps of linkage disequilibrium measures.
+@item LDtests
+Exact tests for linkage disequilibrium and Hardy-Weinberg equilibrium.
 @item LIStest
 Longest increasing subsequence independence test.
 @item LLAhclust
@@ -2318,6 +2322,8 @@ S-PLUS'' by J. Pinheiro and D. Bates, 2000, Springer.
 Model Based Functional Data Analysis.
 @item MKLE
 Maximum kernel likelihood estimation.
+@item MLDA
+Methylation Linear Discriminant Analysis (MLDA).
 @item MLDS
 Maximum Likelihood Difference Scaling.
 @item MLEcens
@@ -2410,6 +2416,9 @@ Unified computational interfaces for pop PK.
 Generalized Pareto distribution and Peaks Over Threshold.
 @item PSAgraphics
 Propensity Score Analysis Graphics.
+@item PSM
+Non-linear mixed-effects modeling using stochastic differential
+equations.
 @item PTAk
 A multiway method to decompose a tensor (array) of any order, as a
 generalisation of SVD also supporting non-identity metrics and
@@ -2716,6 +2725,8 @@ import/export, @strong{svMisc} with miscellaneous supporting functions,
 and @strong{svViews} providing views and report features (views are
 @acronym{HTML} presentations of the content of R objects, combining
 text, tables and graphs in the same document).
+@item SiZer
+Significant Zero crossings.
 @item SemiPar
 Functions for semiparametric regression analysis, to complement the
 book ``Semiparametric Regression'' by R. Ruppert, M. P. Wand, and
@@ -2966,6 +2977,9 @@ Functions to perform adaptive weights smoothing.
 Backfitted independent values of Richards curves.
 @item backtest
 Exploring portfolio-based hypotheses about financial instruments.
+@item bayesGARCH
+Bayesian estimation of the GARCH(1,1) model with Student's @math{t}
+innovations.
 @item bayesSurv
 Bayesian survival regression with flexible error and (later on also
 random effects) distributions.
@@ -2990,6 +3004,9 @@ model.
 @item bentcableAR
 Bent-cable regression for independent data or autoregressive time
 series.
+@item betaper
+Distance decay of similarity among biological inventories in the face of
+taxonomic uncertainty.
 @item betareg
 Beta regression for modeling rates and proportions.
 @item bs
@@ -3040,6 +3057,8 @@ Block, randomly assign, and diagnose potential problems between units in
 randomized experiments.
 @item blockrand
 Randomization for block random clinical trials.
+@item bmd
+Benchmark dose analysis for dose-response data.
 @item bnlearn
 Bayesian network structure learning.
 @item boa
@@ -3306,6 +3325,8 @@ Cyclone identification.
 @c @item data.table
 @c Just like a data frame but without rownames.
 @c </COMMENT>
+@item dataframes2xls
+Write data frames to @file{.xls} files.
 @item date
 Functions for dealing with dates.  The most useful of them accepts a
 vector of input dates in any of the forms @samp{8/30/53},
@@ -3361,6 +3382,9 @@ Calculate probabilities of various dice-rolling events.
 @item dichromat
 Color schemes for dichromats: collapse red-green distinctions to
 simulate the effects of colour-blindness.
+@item diffractometry
+Baseline identification and peak decomposition for x-ray
+diffractograms.
 @item digest
 Two functions for the creation of ``hash'' digests of arbitrary R
 objects using the md5 and sha-1 algorithms permitting easy comparison of
@@ -3446,6 +3470,10 @@ Functions and data for spatial point pattern analysis.
 Fitting Bayesian models of ecological inference in 2 by 2 tables.
 @item ecodist
 Dissimilarity-based functions for ecological analysis.
+@item ecolMod
+Figures, data sets and examples from the book ``A Practical Guide to
+Ecological Modelling --- Using R as a Simulation Platform'' by Karline
+Soetaert and Peter M. J. Herman, 2008, Springer.
 @c <COMMENT>
 @c Moved to the Archive on 2007-11-29 as it fails R CMD check.
 @c @item edci
@@ -4075,6 +4103,8 @@ Laboratory for Dynamic Synthetic Vegephenomenology.
 Functions for the book ``Laboratorio di statistica con R'' by
 S. M. Iacus and G. Masarotto, 2002, McGraw-Hill.  Function names and
 documentation in Italian.
+@item laercio
+Tests to compare means.
 @item lago
 LAGO for rare target detection.
 @item lancet.iraqmortality
@@ -4179,6 +4209,10 @@ Long-Memory Processes'' by J. Beran, 1994, Chapman & Hall.
 @item lpSolve
 Functions that solve general linear/integer problems, assignment
 problems, and transportation problems via interfacing Lp_solve.
+@item lpSolveAPI
+An R interface to the lp_solve library API.
+@item lpc
+Lassoed principal components for testing significance of features.
 @item lpridge
 Local polynomial (ridge) regression.
 @item lsa
@@ -4601,6 +4635,10 @@ ODEs are expressed as R functions.
 Sweave processing of Open Document Format (ODF) files.
 @item ofw
 Optimal Feature Weighting algorithm.
+@item onemap
+Analysis of molecular marker data from non-model systems to
+simultaneously estimate linkage and linkage phases (genetic map
+construction).
 @item onion
 A collection of routines to manipulate and visualize quaternions and
 octonions.
@@ -5347,6 +5385,8 @@ Insightful package providing missing S-PLUS functionality in R.
 @c for summarising these objects, and for permitting their use in spatial
 @c data analysis.
 @c </COMMENT>
+@item spssDDI
+Read SPSS system files and produce valid DDI version 3.0 documents.
 @item spsurvey
 Spatial survey design and analysis.
 @item sqldf
@@ -5556,6 +5596,8 @@ Interface to Unidata's routines to convert units.
 Uniformly Most Powerful tests.
 @item unbalhaar
 Function estimation via Unbalanced Haar wavelets.
+@item uncompress
+For uncompressing @file{.Z} files.
 @item untb
 Ecological drift under the UNTB (Unified Neutral Theory of
 Biodiversity).
@@ -5653,6 +5695,14 @@ irregular time series.
 
 @noindent
 See @CRAN{} @file{src/contrib/PACKAGES} for more information.
+
+Some @CRAN{} packages that do not build out of the box on Windows,
+require additional software, or are shipping third party libraries for
+Windows cannot be made available on @CRAN{} in form of a Windows binary
+packages.  Nevertheless, some of these packages are available at the
+``CRAN extras'' repository at @url{http://www.stats.ox.ac.uk/pub/RWin/}
+kindly provided by Brian D. Ripley.  Note that this repository is a
+default repository for recent versions of R for Windows.
 
 There used to be a @CRAN{} @file{src/contrib/Devel} directory with
 packages still ``under development'' or depending on features only
