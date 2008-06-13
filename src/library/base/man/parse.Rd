@@ -1,6 +1,6 @@
 % File src/library/base/man/parse.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{parse}
@@ -52,7 +52,8 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
   that is missing the final EOL marker.
 
   See \code{\link{source}} for the limits on the size of functions
-  that can be parsed (by default).
+  that can be parsed (by default).  The parsing of quoted character
+  strings is limited to 8191 bytes.
 
   When input is taken from the console, \code{n = NULL} is equivalent to
   \code{n = 1}, and \code{n < 0} will read until an EOF character is read.

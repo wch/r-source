@@ -979,7 +979,7 @@ and @code{NaN} values.  To differentiate these, @code{is.nan(xx)} is only
 @code{TRUE} for @code{NaN}s.
 @findex is.nan
 
-Missing values are sometimes printed as @code{<NA>}, when character
+Missing values are sometimes printed as @code{<NA>} when character
 vectors are printed without quotes.
 
 @node Character vectors, Index vectors, Missing values, Simple manipulations numbers and vectors
@@ -991,13 +991,15 @@ for example as plot labels.  Where needed they are denoted by a sequence
 of characters delimited by the double quote character, e.g.,
 @code{"x-values"}, @code{"New iteration results"}.
 
-Character strings are entered using either double (@code{"}) or single
-(@code{'}) quotes, but are printed using double quotes (or sometimes
-without quotes).  They use C-style escape sequences, using @code{\} as
-the escape character, so @code{\\} is entered and printed as @code{\\},
-and inside double quotes @code{"} is entered as @code{\"}.  Other
-useful escape sequences are @code{\n}, newline, @code{\t}, tab and
-@code{\b}, backspace.
+Character strings are entered using either matching double (@code{"}) or
+single (@code{'}) quotes, but are printed using double quotes (or
+sometimes without quotes).  They use C-style escape sequences, using
+@code{\} as the escape character, so @code{\\} is entered and printed as
+@code{\\}, and inside double quotes @code{"} is entered as @code{\"}.
+Other useful escape sequences are @code{\n}, newline, @code{\t}, tab and
+@code{\b}, backspace---see @command{?Quotes} for a full list.  Character
+strings entered as part of @R{} code are limited to 8191 bytes (not
+characters): those read in as data are limited only by memory limits.
 
 Character vectors may be concatenated into a vector by the @code{c()}
 function; examples of their use will emerge frequently.
