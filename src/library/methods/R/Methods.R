@@ -776,6 +776,8 @@ selectMethod <-
 		useInherited <- (is.na(match(signature, "ANY")) & # -> vector
 				 if(identical(fdef, coerce))# careful !
 				 c(TRUE,FALSE) else TRUE)
+	    if(verbose) cat("  no direct match found to signature (",
+			    paste(signature, collapse=", "),")\n", sep="")
 	    methods <-
 		if(any(useInherited)) {
 		    allmethods <- .getMethodsTable(fdef, fenv, check=FALSE, inherited=TRUE)

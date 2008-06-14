@@ -219,12 +219,15 @@
   }
   hasGroup <- length(fdef@group) > 0
   if(hasGroup)
-        groupGenerics <- .getAllGroups(list(fdef))
+      groupGenerics <- .getAllGroups(list(fdef))
   doMtable <- is.environment(mtable)
   doExcluded <- length(excluded) > 0
   nargs <- length(classes)
   if(verbose)
-      cat(sprintf("* .findInheritedMethods(): nargs=%d, returnAll=%s\n",
+      cat(sprintf("* .findInheritedMethods():%s nargs=%d, returnAll=%s\n",
+                  if(hasGroup) paste(" has group generics ",
+                                     paste(sapply(groupGenerics, slot, "generic"),
+                                           collapse=", "),";", sep='') else "",
                   nargs, returnAll))
   methods <- list()
   if(!missing(useInherited) && length(useInherited) < nargs)
