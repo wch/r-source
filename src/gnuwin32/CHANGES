@@ -86,6 +86,9 @@ BUG FIXES
 
     o	memory.size() no longer wraps around allocations greater than
 	2Gb.  (PR#11596)
+	
+    o	file.choose() in SDI mode now restores the window focus
+    	properly.
 
 
 

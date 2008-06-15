@@ -209,6 +209,7 @@ char *askfilenames(const char *title, const char *default_name, int multi,
     int i;
     OPENFILENAME ofn;
     char cwd[MAX_PATH] = "";
+    HWND prev = GetFocus();
 
     if (!default_name) default_name = "";
     strcpy(strbuf, default_name);
@@ -245,13 +246,13 @@ char *askfilenames(const char *title, const char *default_name, int multi,
 	SetCurrentDirectory(cwd);
 	strbuf[0] = 0;
 	strbuf[1] = 0;
-	return strbuf;
     } else {
 	GetCurrentDirectory(MAX_PATH, cod);
 	SetCurrentDirectory(cwd);
 	for (i = 0; i <  10; i++) if (peekevent()) doevent();
-	return strbuf;
     }
+    SetFocus(prev);
+    return strbuf;
 }
 
 int countFilenames(const char *list)
