@@ -824,12 +824,18 @@ SEXP getQ0(SEXP sPhi, SEXP sTheta)
 
     /* thetab[np], xnext[np], xrow[np].  rbar[rbar] */
     double *P, *xnext, *xrow, *rbar, *thetab;
-    int r = max(p, q + 1), np = r * (r + 1) / 2, nrbar = np * (np - 1) / 2;
+    /* NB: nrbar could overflow */
+    int r = max(p, q + 1);
+    size_t np = r * (r + 1) / 2, nrbar = np * (np - 1) / 2;
     int indi, indj, indn;
     double phii, phij, ynext, bi, vi, vj;
     int   i, j, ithisr, ind, npr, ind1, ind2, npr1, im, jm;
 
 
+    /* This is the limit using an int index.  We could use
+       size_t and get more on a 64-bit system, 
+       but there seems no practical need. */
+    if(r > 350) error(_("maximum supported lag is 350"));
     thetab = (double *) R_alloc(np, sizeof(double));
     xnext = (double *) R_alloc(np, sizeof(double));
     xrow = (double *) R_alloc(np, sizeof(double));
