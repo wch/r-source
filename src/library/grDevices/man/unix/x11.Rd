@@ -229,4 +229,10 @@ X11.options(\dots, reset = FALSE)
 \seealso{
   \code{\link{Devices}}, \code{\link{X11Fonts}}, \code{\link{savePlot}}.
 }
+\examples{\dontrun{
+## put something this is your .Rprofile to customize the defaults
+setHook(packageEvent("grDevices", "onLoad"),
+        function(...) grDevices::X11.options(width=8, height=6, xpos=0,
+                                             pointsize=10))
+}}
 \keyword{device}

@@ -21,7 +21,7 @@ quartz.options(\dots, reset = FALSE)
 }
 \arguments{
   \item{title}{title for the Quartz window (applies to on-screen output
-    only). Default \code{"Quartz \%d"}.  A C-style format for an integer
+    only), default \code{"Quartz \%d"}.  A C-style format for an integer
     will be substituted by the device number (see the \code{file}
     argument to \code{\link{postscript}} for further details).}
   \item{width}{the width of the plotting area in inches.  Default \code{7}.}
@@ -31,8 +31,7 @@ quartz.options(\dots, reset = FALSE)
     that will be used by the device.  Default \code{"Helvetica"}.}
   \item{fontsmooth}{logical specifying if fonts should be
     smoothed. Default \code{TRUE}.  Currently unused.}
-  \item{antialias}{whether to use antialiasing.  Default \code{TRUE}.
-    Currently unused.}
+  \item{antialias}{whether to use antialiasing.  Default \code{TRUE}.}
   \item{type}{the type of output to use.  See \sQuote{Details} for
     more information.  Default \code{"native"}.}
   \item{file}{an optional target for the graphics device. The default,
@@ -124,4 +123,10 @@ quartz.options(\dots, reset = FALSE)
   \code{\link{png}} for way to access the bitmap types of this device
   via \R's standard bitmap devices.
 }
+\examples{\dontrun{
+## put something this is your .Rprofile to customize the defaults
+setHook(packageEvent("grDevices", "onLoad"),
+        function(...) grDevices::quartz.options(width=8, height=6,
+                                                pointsize=10))
+}}
 \keyword{device}
