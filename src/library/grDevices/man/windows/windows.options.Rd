@@ -39,4 +39,11 @@ windows.options(\dots, reset = FALSE)
 \seealso{
   \code{\link{windows}}, \code{\link{ps.options}}.
 }
+\examples{\dontrun{
+## put something like this is your .Rprofile to customize the defaults
+setHook(packageEvent("grDevices", "onLoad"),
+        function(...)
+            grDevices::windows.options(width=8, height=6, xpos=0,
+                                       pointsize=10))
+}}
 \keyword{device}
