@@ -5074,6 +5074,7 @@ stopifnot(identical(expect, gregexpr("", "abc", perl=TRUE)[[1]]))
 stopifnot(all.equal(round(d=2, x=pi), 3.14))
 ## used positional matching in 2.6.x
 
+
 ## kappa.tri(x, exact=TRUE) wrongly ended using exact=FALSE:
 data(longley)
 fm1 <- lm(Employed ~ ., data = longley)
@@ -5098,6 +5099,7 @@ attr(df,"foo") <- 10
 df[, "b"] <- 10:12
 stopifnot(identical(attr(df, "foo"), 10))
 ## dropped attributes < 2.7.0
+
 
 ## r<foo> NA warnings, and rnorm(*, mu = +- Inf) consistency
 op <- options(warn=2)
@@ -5180,6 +5182,7 @@ n <- matrix(c(1259, 845, 719,390,1360,1053,774,413), nrow = 2, byrow = TRUE)
 dimnames(n)[[1]] <- c("a", "b")
 ## was (correctly) an error in R < 2.8.0
 
+
 ## glob2rx(pattern, .) with "(", "[" or "{" in pattern :
 nm <- "my(ugly[file{name"
 stopifnot(identical(regexpr(glob2rx("*[*"), nm),
@@ -5191,12 +5194,20 @@ stopifnot(identical(regexpr(glob2rx("*[*"), nm),
 	  )
 ## gave 'Invalid regular expression' in R <= 2.7.0
 
+
 ## showDefault() problem with "unregistered" S3 classes:
 show(structure(1:3, class = "myClass"))
 ## failed in R <= 2.7.0
+
 
 ## formatC(.., format="fg", flag="#"):
 x <- 0.599 * c(.1, .01, .001, 1e-4,1e-5,1e-6)
 (fCx <- formatC(x, digits=2, format="fg", flag="#"))
 stopifnot(sub(".*(..)$", "\\1", fCx) == "60")
 ## dropped the trailing "0" in the last 3 cases, in R <= 2.7.0
+
+
+## c.nquote bug, posted to R-devel by Ray Brownrigg, 2008-06-16
+z <- c(noquote('z'), 'y', 'x', 'w')
+stopifnot(identical(unclass(z), c('z', 'y', 'x', 'w')))
+## repeated third and later args in R < 2.7.1.

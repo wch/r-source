@@ -463,6 +463,9 @@ BUG FIXES
 
     o	read.DIF() did not obey the default 'stringsAsFactors = TRUE'.
 
+    o	The 'noquote' method for c() now works correctly with three or
+	more arguments.
+
 
 
 		CHANGES IN R VERSION 2.7.0
