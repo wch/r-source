@@ -263,8 +263,8 @@ getOption(x)
       warnings are turned into errors.}
 
     \item{\code{warnEscapes}:}{logical.  If true (the default) the parser
-      warns on unrecognized (backslash) escapte sequences.}
-    
+      warns on unrecognized (backslash) escape sequences.}
+
     \item{\code{warnPartialMatchArgs}:}{logical.  If true, warns if
       partial matching is used in argument matching.}
 
