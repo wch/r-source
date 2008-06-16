@@ -771,8 +771,8 @@ showClass <-
         ClassDef <- getClass(Class)
     else
         ClassDef <- getClassDef(Class)
-    if(identical(ClassDef@virtual, TRUE))
-        cat("Virtual Class\n")
+    cat(if(identical(ClassDef@virtual, TRUE)) "Virtual ",
+	"Class ", dQuote(Class), "\n", sep="")
     x <- ClassDef@slots
     if(length(x)>0) {
         n <- length(x)

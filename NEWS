@@ -149,6 +149,8 @@ NEW FEATURES
     o	The undocumented limit of 8191 bytes on comments (from # to
 	the end of the line) in R code has been removed.
 
+    o	show(<class definition>) now also shows the class name.
+
 
 INSTALLATION
 
