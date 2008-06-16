@@ -22,7 +22,7 @@ CFLAGS = @CFLAGS@
 CPICFLAGS = @CPICFLAGS@
 CPPFLAGS = @CPPFLAGS@
 DEFS = @DEFS@ @R_DEFS@
-DISTDIR_TAR_EXCLUDE = --exclude=.svn --exclude=CVS --exclude=Makefile --exclude="*.o" --exclude="*$(SHLIB_EXT)"
+DISTDIR_TAR_EXCLUDE = --exclude=.svn --exclude=CVS --exclude=Makefile --exclude="*~" --exclude="*.o" --exclude="*$(SHLIB_EXT)"
 DVIPS = @DVIPS@
 DYLIB_EXT = @DYLIB_EXT@
 DYLIB_LD = @DYLIB_LD@
