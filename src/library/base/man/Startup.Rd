@@ -149,6 +149,15 @@
   \code{\link{.Last}} for final actions at the close of an \R session.
   \code{\link{commandArgs}} for accessing the command line arguments.
 
+  There are examples of using startup files to set defaults for graphics
+  devices in the help for
+#ifdef windows
+  \code{\link{windows.options}}.
+#endif
+#ifdef unix
+  \code{\link{X11}} and \code{\link{quartz}}.
+#endif
+  
   \emph{An Introduction to R} for more command-line options: those
   affecting memory management are covered in the help file for
   \link{Memory}.
