@@ -719,7 +719,7 @@ function(dir, packages)
 {
     .canonicalize_metadata <- function(m) {
         ## Drop entries which are NA or empty.
-        m[!is.na(m) & (regexpr("^[[:space:]]*$", m) < 0)]
+        m[!is.na(m) & (regexpr("^[[:space:]]*$", m) < 0L)]
     }
 
     dir <- file_path_as_absolute(dir)
