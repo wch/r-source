@@ -7,7 +7,7 @@
 \alias{strwrap}
 \title{Wrap Character Strings to Format Paragraphs}
 \description{
-  Each character string in the input is first split into paragraphs (on
+  Each character string in the input is first split into paragraphs (or
   lines containing whitespace only).  The paragraphs are then formatted
   by breaking lines at word boundaries.  The target columns for wrapping
   lines and the indentation of the first and all subsequent lines of a
@@ -35,9 +35,10 @@ strwrap(x, width = 0.9 * getOption("width"), indent = 0,
     of the latter.)}
 }
 \details{
-  Whitespace in the input is destroyed.  Double spaces after periods
-  (thought as representing sentence ends) are preserved.  Currently,
-  possible sentence ends at line breaks are not considered specially.
+  Whitespace (space, tab or newline characters) in the input is
+  destroyed.  Double spaces after periods (thought as representing
+  sentence ends) are preserved.  Currently, possible sentence ends at
+  line breaks are not considered specially.
   
   Indentation is relative to the number of characters in the prefix
   string.
