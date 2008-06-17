@@ -225,7 +225,7 @@ function(package, dir, lib.loc = NULL)
         ## </NOTE>
         .make_S4_method_siglist <- function(g) {
             mlist <- .get_S4_methods_list(g, code_env)
-            sigs <- .make_siglist(mlist)
+            sigs <- .make_siglist(mlist) #  s/#/,/g
             if(length(sigs))
                 paste(g, ",", sigs, sep = "")
             else
@@ -4499,8 +4499,7 @@ get_S4_generics_with_methods <- function(env, verbose = getOption("verbose"))
 
 ### ** .get_S4_methods_list
 
-.get_S4_methods_list <-
-function(g, env)
+.get_S4_methods_list <- function(g, env)
 {
     ## For the QC computations, we really only want the S4 methods
     ## defined in a package, so we try to exclude derived default
@@ -4510,10 +4509,17 @@ function(g, env)
     env <- as.environment(env)
     mlist <- methods::findMethods(g, env)
 
-    ## First, derived default methods.
+    ## First, derived default methods (signature w/ "ANY").
     if(any(ind <- as.logical(sapply(mlist, methods::is,
                                     "derivedDefaultMethod"))))
         mlist <- mlist[!ind]
+
+    ## Keep only those methods whose definition environment is ' == env ':
+    keep <- environmentName(env) == sapply(mlist, function(m)
+			   environmentName(environment(m@.Data)))
+    mlist <- mlist[keep]
+
+    ## FIXME: MM thinks we can return here
 
     ## Second, "inherited" methods.
     ## Note that for packages with a namespace, the table in the
@@ -4526,7 +4532,7 @@ function(g, env)
         ## given package (getNamespace() would try loading a name space
         ## not found in the registry).
         .Internal(getRegisteredNamespace(as.name(package)))
-    } # else NULL
+    }## else NULL
     penv <- parent.env(if(is.environment(penv)) penv else env)
     if((g %in% get_S4_generics_with_methods(penv)) &&
        length(mlist_from_penv <- methods::findMethods(g, penv)))
