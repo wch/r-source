@@ -1674,7 +1674,8 @@ R_CHECK_FUNCS([va_copy __va_copy], [#include <stdarg.h>])
 R_CHECK_FUNCS([fdopen popen], [#include <stdio.h>])
 ## system is C89: [un]setenv are POSIX and BSD
 R_CHECK_FUNCS([setenv system unsetenv], [#include <stdlib.h>])
-R_CHECK_FUNCS([strcoll strerror], [#include <string.h>])
+## strcoll is C89
+R_CHECK_FUNCS([strcoll], [#include <string.h>])
 R_CHECK_FUNCS([getrlimit getrusage], [#include <sys/resource.h>])
 R_CHECK_FUNCS([chmod mkfifo stat umask], [#include <sys/stat.h>])
 R_CHECK_FUNCS([gettimeofday], [#include <sys/time.h>])

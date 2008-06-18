@@ -1983,11 +1983,7 @@ SEXP attribute_hidden do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     fp = RC_fopen(STRING_ELT(CADR(args), 0), "wb", TRUE);
     if (!fp) {
 	const char *cfile = CHAR(STRING_ELT(CADR(args), 0));
-#ifdef HAVE_STERROR
 	error(_("cannot open file '%s': %s"), cfile, strerror(error));
-#else
-	error(_("cannot open file '%s'"), cfile);
-#endif
     }
 
     /* set up a context which will close the file if there is an error */
@@ -2185,12 +2181,8 @@ void R_SaveGlobalEnvToFile(const char *name)
     if (findVar(sym, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
 	FILE *fp = R_fopen(name, "wb"); /* binary file */
 	if (!fp) {
-#ifdef HAVE_STRERROR
 	    error(_("cannot save data -- unable to open '%s': %s"),
 		  name, strerror(errno));
-#else
-	    error(_("cannot save data -- unable to open '%s'"), name);
-#endif
 	}
 	R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
 	fclose(fp);
