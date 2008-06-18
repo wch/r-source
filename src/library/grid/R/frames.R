@@ -71,16 +71,71 @@ frameDim <- function(frame) {
 }
 
 # Get the framevp slot to show up in grid.ls() output
+# Minor mod of gridList.gTree() with childrenvp actions
+# replaced by framevp actions
 gridList.frame <- function(x, grobs=TRUE, viewports=FALSE,
                            fullNames=FALSE, recursive=TRUE) {
-    # Hack:  replace the existing vp slot with a vpStack
-    # consisting of the existing vp and the framevp
-    # THEN call gridList.gTree()
-    if (is.null(x$vp))
-        x$vp <- x$framevp
-    else if (!is.null(x$framevp))
-        x$vp <- vpStack(x$vp, x$framevp)
-    gridList.gTree(x, grobs, viewports, fullNames, recursive)
+    if (fullNames) {
+        name <- as.character(x)
+    } else {
+        name <- x$name
+    }
+    class(name) <- c("grobListing", "gridVectorListing", "gridListing")
+    if (recursive) {
+        # Allow for grobs=FALSE but viewports=TRUE
+        result <- gridList(x$children,
+                          grobs=grobs, viewports=viewports,
+                          fullNames=fullNames, recursive=recursive)
+        if (viewports && !is.null(x$framevp)) {
+            # Bit dodgy this bit
+            # Emulates an "upViewport" on the DL
+            n <- depth(x$framevp)
+            class(n) <- "up"
+            result <- list(gridList(x$framevp,
+                                    grobs=grobs, viewports=viewports,
+                                    fullNames=fullNames,
+                                    recursive=recursive),
+                           result,
+                           gridList(n,
+                                    grobs=grobs, viewports=viewports,
+                                    fullNames=fullNames,
+                                    recursive=recursive))
+            class(result) <- c("gridListListing", "gridListing")
+        }
+        if (grobs) {
+            result <- list(parent=name,
+                           children=result)
+            class(result) <- c("gTreeListing", "gridTreeListing",
+                               "gridListing")
+        } else if (!viewports) {
+            result <- character()
+            class(result) <- "gridListing"
+        }
+    } else {
+        if (grobs) {
+            result <- name
+        } else {
+            result <- character()
+            class(result) <- "gridListing"
+        }
+    }
+    if (viewports && !is.null(x$vp)) {
+        # Bit dodgy this bit
+        # Emulates an "upViewport" on the DL
+        n <- depth(x$vp)
+        class(n) <- "up"
+        result <- list(gridList(x$vp,
+                                grobs=grobs, viewports=viewports,
+                                fullNames=fullNames,
+                                recursive=recursive),
+                       result,
+                       gridList(n, 
+                                grobs=grobs, viewports=viewports,
+                                fullNames=fullNames,
+                                recursive=recursive))
+        class(result) <- c("gridListListing", "gridListing")
+    }
+    result
 }
 
 ################

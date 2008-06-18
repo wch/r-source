@@ -1175,6 +1175,64 @@ grid.clip <- function(...) {
 }
 
 
+######################################
+# NULL primitive
+######################################
+
+validDetails.null <- function(x) {
+  if (!is.unit(x$x) ||
+      !is.unit(x$y))
+    stop("'x' and 'y' must be units")
+  if (length(x$x) > 1 || length(x$y) > 1)
+    stop("'x' and 'y' must all be units of length 1")
+  x
+}
+
+drawDetails.null <- function(x, recording=TRUE) {
+    # Deliberate null op.
+    # NOTE: nothing will go on the graphics engine DL
+    # This is ok I think because these grobs are only
+    # useful on the grid DL (for other grid code to query
+    # their size or location).
+}
+
+xDetails.null <- function(x, theta) {
+    bounds <- grid.Call("L_locnBounds", x$x, x$y, theta)
+    if (is.null(bounds))
+        unit(0.5, "npc")
+    else
+        unit(bounds[1], "inches")
+}
+
+yDetails.null <- function(x, theta) {
+    bounds <- grid.Call("L_locnBounds", x$x, x$y, theta)
+    if (is.null(bounds))
+        unit(0.5, "npc")
+    else
+        unit(bounds[2], "inches")
+}
+
+# Deliberately ZERO
+widthDetails.null <- function(x) {
+    unit(0, "inches")
+}
+
+heightDetails.null <- function(x) {
+    unit(0, "inches")
+}
+
+# A grob with GUARANTEED zero-width
+# also GUARANTEED NOT to draw anything
+nullGrob <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
+                     default.units="npc",
+                     name=NULL, vp=NULL) {
+    grob(x=x, y=y, name=name, vp=vp, cl="null")
+}
+
+# Convenient way to get nullGrob on the grid display list
+grid.null <- function(...) {
+    grid.draw(nullGrob(...))
+}
 
 
 

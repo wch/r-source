@@ -69,11 +69,11 @@ export(
        
        # Creating and drawing predefined grobs and gTrees
        "grid.arrows", "grid.circle", "grid.clip", "grid.curve",
-       "grid.line.to", "grid.lines", "grid.move.to",
+       "grid.line.to", "grid.lines", "grid.move.to", "grid.null", 
        "grid.points", "grid.polygon", "grid.polyline", 
        "grid.rect", "grid.segments", "grid.text", "grid.xspline",
        "arrowsGrob", "circleGrob", "clipGrob", "curveGrob",
-       "linesGrob", "lineToGrob", "moveToGrob",
+       "linesGrob", "lineToGrob", "moveToGrob", "nullGrob",
        "pointsGrob", "polygonGrob", "polylineGrob",
        "rectGrob", "segmentsGrob", "textGrob", "xsplineGrob",
        

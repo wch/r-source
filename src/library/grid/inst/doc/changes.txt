@@ -1,3 +1,18 @@
+Changes from grid_2.7.0 to grid_2.8.0:
+------------------------------------
+
+1.  Added grid.null() and nullGrob();  grob that is guaranteed
+    to have zero-width, zero-height, and draw nothing.
+
+    Useful as zero-size placeholder AND as invisible reference
+    point for other grobs to draw relative to.
+
+2.  Fixed bug in listing, via grid.ls(), of frame grobs.  If the frame
+    had a vpPath in its 'vp' component, you got an error from vpStack().
+
+    Problem reported by Hadley Wickham.
+
+
 Changes from grid_2.6.0 to grid_2.7.0:
 ------------------------------------
 
