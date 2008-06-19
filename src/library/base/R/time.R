@@ -22,14 +22,12 @@ system.time <- function(expr, gcFirst = TRUE)
         y[1:3]
     }
     if(!exists("proc.time")) return(rep(NA_real_, 5))
-    loc.frame <- parent.frame()
     if(gcFirst)  gc(FALSE)
-    expr <- substitute(expr)
     time <- proc.time()
     ## need on.exit after 'time' has been set:
     ## on some systems proc.time throws an error.
     on.exit(cat("Timing stopped at:", ppt(proc.time() - time), "\n"))
-    eval(expr, envir = loc.frame)
+    expr # evaluated here because of lazy evaluation
     new.time <- proc.time()
     on.exit()
     structure(new.time - time, class="proc_time")
