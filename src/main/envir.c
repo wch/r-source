@@ -1648,6 +1648,9 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     rval = findVar1mode(t1, genv, gmode, ginherits, PRIMVAL(op));
 
     if (PRIMVAL(op)) { /* have get(.) */
+	if (rval == R_MissingArg)
+	    error(_("argument \"%s\" is missing, with no default"),
+		  CHAR(PRINTNAME(t1)));
 	if (rval == R_UnboundValue) {
 	    if (gmode == ANYSXP)
 		error(_("variable \"%s\" was not found"),
