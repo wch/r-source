@@ -2259,7 +2259,8 @@ library.
 @node Windows standalone,  , Unix standalone, The standalone Rmath library
 @section Windows
 
-You need to set up almost all the tools to make @R{} and then run
+You need to set up almost all the tools to make @R{} and then run (in a
+Unix-like shell)
 
 @example
 (cd ../../include; make -f Makefile.win config.h Rconfig.h Rmath.h)
@@ -2267,6 +2268,16 @@ make -f Makefile.win
 @end example
 
 @noindent
+For @file{cmd.exe} use
+
+@example
+cd ../../include
+make -f Makefile.win config.h Rconfig.h Rmath.h
+cd ../nmath/standalone
+make -f Makefile.win
+@end example
+
+
 This creates a static library @file{libRmath.a} and a DLL
 @file{Rmath.dll}.  If you want an import library @file{libRmath.dll.a}
 (you don't need one), use
@@ -2275,7 +2286,7 @@ This creates a static library @file{libRmath.a} and a DLL
 make -f Makefile.win shared implib
 @end example
 
-To use the routines in your own C or C++ programs, include
+To use the routines in your own C or C++ programs using MinGW, include
 
 @example
 #define MATHLIB_STANDALONE
@@ -2293,9 +2304,15 @@ able to force static or dynamic linking  @emph{via}
 @end example
 
 or by linking to explicit files (as in the @samp{test} target in
-@file{Makefile.win}: this makes two executable @file{test.exe} which is
-dynamically linked, and @code{test-static}, which is statically
+@file{Makefile.win}: this makes two executables, @file{test.exe} which
+is dynamically linked, and @code{test-static}, which is statically
 linked).
+
+It is possible to link to @file{Rmath.dll} using other compilers, either
+directly or via an import library: if you make a MinGW import library as
+above, you will create a file @file{Rmath.def} which can be used
+(possibly after editing) to creat an import library for other systems
+such as Visual C++.
 
 If you make use of dynamic linking you should use
 
@@ -2306,8 +2323,10 @@ If you make use of dynamic linking you should use
 @end example
 
 @noindent
-to ensure that the constant like @code{NA_REAL} are linked correctly.
-(Auto-import will probably work, but it is better to be sure.)
+to ensure that the constants like @code{NA_REAL} are linked correctly.
+(Auto-import will probably work with MinGW, but it is better to be
+sure. This is likely to also work with VC++, Borland and similar
+compilers.)
 
 
 @node Essential and useful other programs under Unix, Configuration on Unix, The standalone Rmath library, Top
