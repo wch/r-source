@@ -472,6 +472,9 @@ BUG FIXES
     o	The 'noquote' method for c() now works correctly with three or
 	more arguments.
 
+    o	symbol() in plotmath expressions works again with non-ASCII
+    	input on devices that use UTF-8 for the symbol font.
+
 
 
 		CHANGES IN R VERSION 2.7.0

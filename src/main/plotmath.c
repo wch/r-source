@@ -1062,7 +1062,8 @@ static BBOX RenderSymbolStr(const char *str, int draw, mathContext *mc,
 		    if(wcrtomb(chr, wc, &mb_st) == -1)
 			error("invalid multibyte string");
 		    PMoveAcross(lastItalicCorr, mc);
-		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr, CE_NATIVE,
+		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr,
+			   CE_NATIVE,
 			   0.0, 0.0, mc->CurrentAngle, gc, dd);
 		    PMoveAcross(bboxWidth(glyphBBox), mc);
 		}
@@ -1092,7 +1093,8 @@ static BBOX RenderSymbolStr(const char *str, int draw, mathContext *mc,
 		if (draw) {
 		    chr[0] = *s;
 		    PMoveAcross(lastItalicCorr, mc);
-		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr, CE_NATIVE,
+		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr, 
+			   CE_NATIVE,
 			   0.0, 0.0, mc->CurrentAngle, gc, dd);
 		    PMoveAcross(bboxWidth(glyphBBox), mc);
 		}
@@ -1144,6 +1146,7 @@ static BBOX RenderStr(const char *str, int draw, mathContext *mc,
     BBOX glyphBBox = NullBBox(); /* might be use do italic corr on str="" */
     BBOX resultBBox = NullBBox();
     int nc = 0;
+    cetype_t enc = (gc->fontface == 5) ? CE_SYMBOL : CE_NATIVE;
 
     if (str) {
 #ifdef SUPPORT_MBCS
@@ -1171,11 +1174,11 @@ static BBOX RenderStr(const char *str, int draw, mathContext *mc,
 	}
 	if(nc > 1) {
 	    /* Finding the width by adding up boxes is incorrect (kerning) */
-	    double wd = GEStrWidth(str, CE_NATIVE, gc, dd);
+	    double wd = GEStrWidth(str, enc, gc, dd);
 	    bboxWidth(resultBBox) = fromDeviceHeight(wd, MetricUnit, dd);
 	}
 	if (draw) {
-	    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), str, CE_NATIVE,
+	    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), str, enc,
 		   0.0, 0.0, mc->CurrentAngle, gc, dd);
 	    PMoveAcross(bboxWidth(resultBBox), mc);
 	}
