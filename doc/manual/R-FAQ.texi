@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-06-12
+@set FAQ_DATE @value{FAQ_YEAR}-06-15
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -3256,6 +3256,8 @@ Combinatorics utilities.
 Complementary hierarchical clustering.
 @item compOverlapCorr
 Comparing overlapping correlation coefficients.
+@item compare
+Comparing objects for differences.
 @item compoisson
 Conway-Maxwell-Poisson distribution.
 @item compositions
@@ -4070,6 +4072,8 @@ Linear equations with Kronecker structure.
 @c @item km.ci
 @c Confidence intervals for the Kaplan-Meier estimator.
 @c </COMMENT>
+@item kml
+@math{K}-Means for Longitudinal data.
 @item knnFinder
 Fast nearest neighbor search.
 @item knnTree
@@ -4654,6 +4658,8 @@ English and spanish models for @strong{openNLP}.
 Functions to perform optimal matching, particularly full matching.
 @item orientlib
 Representations, conversions and display of orientation SO(3) data.
+@item orloca
+Operations Research LOCational Analysis models.
 @item orth
 Multivariate logistic regressions using orthogonalized residuals.
 @item orthopolynom
@@ -4761,8 +4767,11 @@ A @acronym{GUI} for interactive plots using GTK+.
 Separate calibration linking methods.
 @item plm
 Linear models for panel data.
-@item plotAndPlayGTK
-A @acronym{GUI} for interactive plots using GTK.
+@c <COMMENT>
+@c Moved to the Archive on 2008-06-19 as requested by the maintainer.
+@c @item plotAndPlayGTK
+@c A @acronym{GUI} for interactive plots using GTK.
+@c </COMMENT>
 @item plotSEMM
 Graphing nonlinear latent variable interactions in SEMM.
 @item plotrix
@@ -5021,6 +5030,8 @@ Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model.
 @item relsurv
 Various functions for regression in relative survival.
+@item repolr
+Repeated measures proportional odds logistic regression.
 @item reshape
 Flexibly reshape data.
 @item resper
@@ -5304,6 +5315,9 @@ Simple Network of Workstations: support for simple parallel computing in
 R.
 @item snowFT
 Fault Tolerant Simple Network of Workstations.
+@item snowfall
+Wrapper around @strong{snow} for easier development of parallel R
+programs.
 @item snp.plotter
 Plots of @math{p}-values using single SNP and/or haplotype data.
 @item snpXpert
@@ -5637,6 +5651,8 @@ Violin plots, which are a combination of a box plot and a kernel density
 plot.
 @item vrtest
 Variance ratio tests for weak-form market efficiency.
+@item waveclock
+Time-frequency analysis of cycling cell luminescence data.
 @item waved
 WaveD transform in R.
 @item wavelets
