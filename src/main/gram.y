@@ -972,55 +972,6 @@ static SEXP Insert(SEXP l, SEXP s)
     return l;
 }
 
-
-#if 0
-/* Comment Handling :R_CommentSxp is of the same form as an expression */
-/* list, each time a new { is encountered a new element is placed in the */
-/* R_CommentSxp and when a } is encountered it is removed. */
-
-static void ResetComment(void)
-{
-    R_CommentSxp = CONS(R_NilValue, R_NilValue);
-}
-
-static void PushComment(void)
-{
-    if (GenerateCode)
-	R_CommentSxp = CONS(R_NilValue, R_CommentSxp);
-}
-
-static void PopComment(void)
-{
-    if (GenerateCode)
-	R_CommentSxp = CDR(R_CommentSxp);
-}
-
-static void AddComment(SEXP l)
-{
-    SEXP tcmt, cmt;
-    int i, ncmt;
-
-    if(GenerateCode) {
-	tcmt = CAR(R_CommentSxp);
-	/* Return if there are no comments */
-	if (tcmt == R_NilValue || l == R_NilValue)
-	    return;
-	/* Attach the comments as a comment attribute */
-	ncmt = length(tcmt);
-	cmt = allocVector(STRSXP, ncmt);
-	for(i=0 ; i<ncmt ; i++) {
-	    STRING(cmt)[i] = CAR(tcmt);
-	    tcmt = CDR(tcmt);
-	}
-	PROTECT(cmt);
-	setAttrib(l, R_CommentSymbol, cmt);
-	UNPROTECT(1);
-	/* Reset the comment accumulator */
-	CAR(R_CommentSxp) = R_NilValue;
-    }
-}
-#endif
-
 static SEXP FirstArg(SEXP s, SEXP tag)
 {
     SEXP tmp;
@@ -1188,37 +1139,6 @@ static int text_getc(void)
     return R_TextBufferGetc(txtb);
 }
 
-
-/* unused */
-#ifdef PARSE_UNUSED
-SEXP R_Parse1Vector(TextBuffer *textb, int gencode, ParseStatus *status)
-{
-    ParseInit();
-    ParseContextInit();
-    GenerateCode = gencode;
-    txtb = textb;
-    ptr_getc = text_getc;
-    R_Parse1(status);
-    return R_CurrentExpr;
-}
-#endif
-
-
-#ifdef PARSE_UNUSED
-/* Not used, and note ungetc is no longer needed */
-attribute_hidden
-SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
-		     int gencode, ParseStatus *status)
-{
-    ParseInit();
-    ParseContextInit();
-    GenerateCode = gencode;
-    ptr_getc = g_getc;
-    R_Parse1(status);
-    return R_CurrentExpr;
-}
-#endif
-
 static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
 {
     volatile int savestack;
@@ -1321,17 +1241,6 @@ SEXP R_ParseVector(SEXP text, int n, ParseStatus *status, SEXP srcfile)
     R_TextBufferFree(&textb);
     return rval;
 }
-
-#ifdef PARSE_UNUSED
-/* Not used, and note ungetc is no longer needed */
-SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n,
-		    ParseStatus *status, SEXP srcfile)
-{
-    GenerateCode = 1;
-    ptr_getc = ggetc;
-    return R_Parse(n, status, srcfile);
-}
-#endif
 
 static const char *Prompt(SEXP prompt, int type)
 {
@@ -1801,20 +1710,6 @@ static int SkipSpace(void)
 /* special assignment EndOfFile=2 to indicate that this is */
 /* going on.  This is detected and dealt with in Parse1Buffer. */
 
-#ifdef OLD
-/* This collected the comment in yytext but did not use it */
-static int SkipComment(void)
-{
-    DECLARE_YYTEXT_BUFP(yyp);
-    int c;
-    YYTEXT_PUSH('#', yyp);
-    while ((c = xxgetc()) != '\n' && c != R_EOF)
-	YYTEXT_PUSH(c, yyp);
-    YYTEXT_PUSH('\0', yyp);
-    if (c == R_EOF) EndOfFile = 2;
-    return c;
-}
-#else
 static int SkipComment(void)
 {
     int c;
@@ -1822,7 +1717,6 @@ static int SkipComment(void)
     if (c == R_EOF) EndOfFile = 2;
     return c;
 }
-#endif
 
 static int NumericValue(int c)
 {
