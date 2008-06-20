@@ -240,6 +240,10 @@ BUG FIXES
 	type S4 would not be S4 objects.  new() applied to basic,
 	non-S4 classes still will (and should) return non-S4 objects.
 
+    o	system.time() now uses lazy evaluation rather than
+	eval/substitute, which results in more natural scoping.
+	(PR#11169)
+
 
 
 	**************************************************
