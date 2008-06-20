@@ -316,7 +316,7 @@ BUG FIXES
     o	Encoding<- on NA_character_ converted it to "NA".
 
     o	Adobe Symbol was missing from the encodings in
-	tools::charset_to_Encoding.
+	tools::charset_to_Unicode.
 
     o	diag(matrix(x, 0, 0)) now returns a 0-length vector of the
 	correct mode, instead of always numeric.
