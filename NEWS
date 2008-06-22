@@ -155,8 +155,8 @@ NEW FEATURES
 INSTALLATION
 
     o	If sub-architectures are used, a copy of Rscript is installed
-    	in ${R_HOME}/bin/exec${R_ARCH} (since that in ${R_HOME}/bin
-    	and /usr/bin might be overwritten in a subsequent installation).
+	in ${R_HOME}/bin/exec${R_ARCH} (since that in ${R_HOME}/bin
+	and /usr/bin might be overwritten in a subsequent installation).
 
 
 PACKAGE INSTALLATION
@@ -473,7 +473,7 @@ BUG FIXES
 	more arguments.
 
     o	symbol() in plotmath expressions works again with non-ASCII
-    	input on devices that use UTF-8 for the symbol font.
+	input on devices that use UTF-8 for the symbol font.
 
 
 
