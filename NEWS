@@ -151,6 +151,9 @@ NEW FEATURES
 
     o	show(<class definition>) now also shows the class name.
 
+    o	Plotmath now recognizes 'aleph' and 'nabla' (the Adobe Symbol
+	'gradient' glyph) as symbol names.
+
 
 INSTALLATION
 

@@ -803,7 +803,7 @@ SymbolTable[] = {
     { "element",	206 },
     { "notelement",	207 },
     { "angle",		208 },
-    { "gradient",	209 },
+    { "nabla",		209 },/* = 0321, Adobe name 'gradient' */
     { "registerserif",	210 },
     { "copyrightserif", 211 },
     { "trademarkserif", 212 },
@@ -864,14 +864,16 @@ static int SymbolCode(SEXP expr)
 static int TranslatedSymbol(SEXP expr)
 {
     int code = SymbolCode(expr);
-    if ((0101 <= code && code <= 0132)	||   /* Greek */
-	(0141 <= code && code <= 0172)	||   /* Greek */
+    if ((0101 <= code && code <= 0132)	||   /* l/c Greek */
+	(0141 <= code && code <= 0172)	||   /* u/c Greek */
+	code == 0300			||   /* aleph */
 	code == 0241			||   /* Upsilon1 */
 	code == 0242			||   /* minute */
 	code == 0245			||   /* infinity */
 	code == 0260			||   /* degree */
 	code == 0262			||   /* second */
 	code == 0266                    ||   /* partialdiff */
+	code == 0321                    ||   /* nabla */
 	0)
 	return code;
     else

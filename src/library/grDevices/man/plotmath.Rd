@@ -123,8 +123,10 @@
     \code{Alpha} -- \code{Omega} \tab uppercase Greek symbols \cr
     \code{theta1, phi1, sigma1, omega1} \tab cursive Greek symbols\cr
     \code{Upsilon1} \tab capital upsilon with hook\cr
+    \code{aleph} \tab first letter of Hebrew alphabet\cr
     \code{infinity}   \tab infinity symbol \cr
     \code{partialdiff} \tab partial differential symbol \cr
+    \code{nabla} \tab nabla, gradient symbol\cr
     \code{32*degree}   \tab 32 degrees \cr
     \code{60*minute}   \tab 60 minutes of angle \cr
     \code{30*second}   \tab 30 seconds of angle \cr
@@ -160,7 +162,7 @@
   case mu can be obtained either by the special symbol \code{mu} or by
   \code{symbol("m")}.  This provides access to symbols that have no
   special symbol name, for example, the universal, or forall, symbol is
-  \code{symbol("\\042")}, and \emph{aleph} is \code{symbol("\\300")}.
+  \code{symbol("\\042")}.
 
   Note to TeX users: TeX's \code{\Upsilon} is \code{Upsilon1}, TeX's
   \code{\varepsilon} is close to \code{epsilon}, and there is no
@@ -229,5 +231,30 @@ text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))",
 text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ",
                             plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})),
      cex = 1.2)
+
+## some other useful symbols
+plot.new(); plot.window(c(0,4), c(15,1))
+text(1, 1, "universal", adj=0); text(2.5, 1,  "\\\\042")
+text(3, 1, expression(symbol("\\042")))
+text(1, 2, "existential", adj=0); text(2.5, 2,  "\\\\044")
+text(3, 2, expression(symbol("\\044")))
+text(1, 3, "suchthat", adj=0); text(2.5, 3,  "\\\\047")
+text(3, 3, expression(symbol("\\047")))
+text(1, 4, "therefore", adj=0); text(2.5, 4,  "\\\\134")
+text(3, 4, expression(symbol("\\134")))
+text(1, 5, "perpendicular", adj=0); text(2.5, 5,  "\\\\136")
+text(3, 5, expression(symbol("\\136")))
+text(1, 6, "circlemultiply", adj=0); text(2.5, 6,  "\\\\304")
+text(3, 6, expression(symbol("\\304")))
+text(1, 7, "circleplus", adj=0); text(2.5, 7,  "\\\\305")
+text(3, 7, expression(symbol("\\305")))
+text(1, 8, "emptyset", adj=0); text(2.5, 8,  "\\\\306")
+text(3, 8, expression(symbol("\\306")))
+text(1, 9, "angle", adj=0); text(2.5, 9,  "\\\\320")
+text(3, 9, expression(symbol("\\320")))
+text(1, 10, "lefrangle", adj=0); text(2.5, 10,  "\\\\341")
+text(3, 10, expression(symbol("\\341")))
+text(1, 11, "rightangle", adj=0); text(2.5, 11,  "\\\\361")
+text(3, 11, expression(symbol("\\361")))
 }
 \keyword{aplot}
