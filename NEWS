@@ -256,6 +256,18 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.7.1 patched
+
+
+BUG FIXES
+
+    o	Plotmath computed the glyph metrics for the wrong character (and
+	perhaps for a non-existent one) if this was a single-byte
+	character with the top bit set.  An example was
+	symbol("\300").
+
+
+
 		CHANGES IN R VERSION 2.7.1
 
 
