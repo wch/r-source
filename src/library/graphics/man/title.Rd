@@ -41,7 +41,7 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   greek letters, fractions, etc: see \link{plotmath}
 }
 \details{
-  The labels passed to \code{title} can be a character strings or
+  The labels passed to \code{title} can be character strings or
   language objects (names, calls or expressions), or a list
   containing the string to be plotted, and a selection of the optional
   modifying graphical parameters \code{cex=}, \code{col=} and
