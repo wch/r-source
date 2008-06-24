@@ -266,6 +266,8 @@ BUG FIXES
 	character with the top bit set.  An example was
 	symbol("\300").
 
+    o	sink() and cat() could divert output to a non-writable connection.
+
 
 
 		CHANGES IN R VERSION 2.7.1
