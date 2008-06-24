@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-06-15
+@set FAQ_DATE @value{FAQ_YEAR}-06-24
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
-@set REL_PATCHLEVEL 0
+@set REL_PATCHLEVEL 1
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -2315,6 +2315,9 @@ Multiple comparisons using normal approximation.
 Design and analysis of dose-finding studies.
 @item MChtest
 Monte Carlo hypothesis tests.
+@item MDD
+Minimum Detectable Difference calculations for several continuous and
+binary endpoints.
 @item MEMSS
 Data sets and sample analyses from ``Mixed-effects Models in S and
 S-PLUS'' by J. Pinheiro and D. Bates, 2000, Springer.
@@ -2690,6 +2693,8 @@ An R interfaces to the yacas computer algebra system.
 @c Retrieval, preparation and analysis of data from the Affymetrix
 @c GeneChip.
 @c </COMMENT>
+@item SASPECT
+Significant AnalysiS of PEptide CounTs.
 @item SASmixed
 Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,
@@ -3024,6 +3029,9 @@ bivariate interval-censored data.
 Inferences for bi- and trifactorial trial designs.
 @item biglm
 Linear regression for data too large to fit in memory.
+@item bigmemory
+Manage massive matrices in R using C++, with UNIX support for shared
+memory.
 @item bim
 Bayesian interval mapping diagnostics:  functions to interpret QTLCart
 and Bmapqtl samples.
@@ -4911,6 +4919,8 @@ characteristic curves.  Process capability analysis.  Pareto chart and
 cause-and-effect chart.
 @item qgen
 Quantitative Genetics using R.
+@item qlspack
+Quasi least squares package.
 @item qp
 @math{q}-order partial correlation graph search algorithm.
 @item qpcR
@@ -5664,6 +5674,9 @@ Basic wavelet routines for time series analysis.
 Software to perform 1-d and 2-d wavelet statistics and transforms.
 @item wccsom
 SOM networks for comparing patterns with peak shifts.
+@item wgaim
+Whole Genome Average Interval Mapping for QTL detection using mixed
+models.
 @item wikibooks
 Functions and datasets for the German WikiBook ``GNU R''.
 @item wle
