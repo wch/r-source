@@ -72,9 +72,10 @@
     \item{\code{pch}}{a vector of plotting characters or symbols:
       see \code{\link{points}}.}
     \item{\code{cex}}{a numerical vector giving the amount by which
-      plotting text and symbols should be scaled relative to the
+      plotting characters and symbols should be scaled relative to the
       default.  This works as a multiple of \code{\link{par}("cex")}.
-      \code{NULL} and \code{NA} are equivalent to \code{1.0}.}
+      \code{NULL} and \code{NA} are equivalent to \code{1.0}.  Note that
+      this does not affect annotation: see below.}
     \item{\code{lty}}{the line type, see \code{\link{par}}.}
     \item{\code{cex.main, col.lab, font.sub}, etc}{settings for main- and
       sub-title and axis annotation, see \code{\link{title}} and
