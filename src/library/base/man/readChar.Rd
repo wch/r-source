@@ -43,9 +43,9 @@ writeChar(object, con,
   the duration of the function call.
 
   If the connection is open it is read/written from its current
-  position.  If it is not open, it is opened for the duration of the call
-  and then closed again.  Connections can be open in either text or
-  binary mode.
+  position.  If it is not open, it is opened for the duration of the
+  call in an appropriate mode (binary read or write) and then closed
+  again.  An open connection must be in binary mode.
   
   If \code{readChar} is called with \code{con} a raw vector, the data in
   the vector is used as input.  If \code{writeChar} is called with

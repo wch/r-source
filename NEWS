@@ -154,6 +154,10 @@ NEW FEATURES
     o	Plotmath now recognizes 'aleph' and 'nabla' (the Adobe Symbol
 	'gradient' glyph) as symbol names.
 
+    o	readBin(), writeBin(), readChar() and writeChar() now open a
+	connection which was not already open in an appropriate binary
+	mode rather than the default mode.
+
 
 INSTALLATION
 
@@ -246,6 +250,11 @@ BUG FIXES
     o	system.time() now uses lazy evaluation rather than
 	eval/substitute, which results in more natural scoping.
 	(PR#11169)
+
+    o	Functions writing to connections such as writeLines(),
+	writeBin() and writeChar() now check more carefully that they
+	are opened for writing, including connections that they open
+	themselves.
 
 
 

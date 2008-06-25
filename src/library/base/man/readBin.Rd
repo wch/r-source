@@ -45,8 +45,8 @@ writeBin(object, con, size = NA_integer_,
 
   If the connection is open it is read/written from its current
   position.  If it is not open, it is opened for the duration of the
-  call and then closed again.  The connection must be open or open-able
-  in binary mode.
+  call in an appropriate mode (binary read or write) and then closed
+  again.  An open connection must be in binary mode.
 
   If \code{readBin} is called with \code{con} a raw vector, the data in
   the vector is used as input.  If \code{writeBin} is called with
