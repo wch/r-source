@@ -48,6 +48,15 @@ OTHER
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.7.1 patched
+
+
+BUG FIXES
+
+    o	Saving a graph in TIFF format could crash R (PR#11804).
+    
+
+
 		CHANGES IN R VERSION 2.7.1
 
 
