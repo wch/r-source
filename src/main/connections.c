@@ -33,6 +33,8 @@
 
 int attribute_hidden R_OutputCon; /* used in printutils.c */
 
+static void con_destroy(int i);
+
 #include <errno.h>
 
 #ifdef HAVE_UNISTD_H
@@ -143,7 +145,7 @@ static void conFinalizer(SEXP ptr)
     warning(_("closing unused connection %d (%s)\n"), ncon,
 	    getConnection(ncon)->description);
 
-    con_close(ncon);
+    con_destroy(ncon);
     R_ClearExternalPtr(ptr); /* not really needed */
 }
 
@@ -927,7 +929,7 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
     if(strlen(open)) {
 	Rboolean success = con->open(con);
 	if(!success) {
-	    con_close(ncon);
+	    con_destroy(ncon);
 	    error(_("cannot open the connection"));
 	}
     }
@@ -1084,7 +1086,7 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
     if(strlen(open)) {
 	Rboolean success = con->open(con);
 	if(!success) {
-	    con_close(ncon);
+	    con_destroy(ncon);
 	    error(_("cannot open the connection"));
 	}
     }
@@ -1273,7 +1275,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     if(strlen(open)) {
 	Rboolean success = con->open(con);
 	if(!success) {
-	    con_close(ncon);
+	    con_destroy(ncon);
 	    error(_("cannot open the connection"));
 	}
     }
@@ -1454,7 +1456,7 @@ SEXP attribute_hidden do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     if(strlen(open)) {
 	Rboolean success = con->open(con);
 	if(!success) {
-	    con_close(ncon);
+	    con_destroy(ncon);
 	    error(_("cannot open the connection"));
 	}
     }
@@ -2277,7 +2279,7 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     if(strlen(open)) {
 	Rboolean success = con->open(con);
 	if(!success) {
-	    con_close(ncon);
+	    con_destroy(ncon);
 	    error(_("cannot open the connection"));
 	}
     }
@@ -2331,7 +2333,7 @@ SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
     if(strlen(open)) {
 	Rboolean success = con->open(con);
 	if(!success) {
-	    con_close(ncon);
+	    con_destroy(ncon);
 	    error(_("cannot open the connection"));
 	}
     }
@@ -2381,7 +2383,7 @@ SEXP attribute_hidden do_open(SEXP call, SEXP op, SEXP args, SEXP env)
     con->blocking = block;
     success = con->open(con);
     if(!success) {
-	/* con_close(i); user might have a reference */
+	/* con_destroy(i); user might have a reference */
 	error(_("cannot open the connection"));
     }
     return R_NilValue;
@@ -2452,7 +2454,7 @@ static void con_close1(Rconnection con)
 }
 
 
-void con_close(int i)
+static void con_destroy(int i)
 {
     Rconnection con=NULL;
 
@@ -2477,7 +2479,7 @@ SEXP attribute_hidden do_close(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("cannot close output sink connection"));
     if(i == R_ErrorCon)
 	error(_("cannot close messages sink connection"));
-    con_close(i);
+    con_destroy(i);
     return R_NilValue;
 }
 
@@ -3740,19 +3742,14 @@ switch_or_tee_stdout(int icon, int closeOnExit, int tee)
 		if(SinkConsClose[R_SinkNumber + 1] == 1) /* close it */
 		    con->close(con);
 		else if (SinkConsClose[R_SinkNumber + 1] == 2) /* destroy it */
-		    con_close(icon);
+		    con_destroy(icon);
 	    }
 	}
     }
     return TRUE;
 }
 
-/* This is not only used by cat(), but is in a public
-   header, so we need a wrapper
-
-   No, Rconnections.h is not public and not installed.
-*/
-
+/* This is only used by cat() */
 Rboolean attribute_hidden switch_stdout(int icon, int closeOnExit)
 {
   return switch_or_tee_stdout(icon, closeOnExit, 0);
@@ -4011,7 +4008,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(strlen(open)) {
 	Rboolean success = con->open(con);
 	if(!success) {
-	    con_close(ncon);
+	    con_destroy(ncon);
 	    error(_("cannot open the connection"));
 	}
     }
