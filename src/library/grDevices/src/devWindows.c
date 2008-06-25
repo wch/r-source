@@ -1705,6 +1705,9 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 		    */
     xd->xshift = xd->yshift = 0;
     xd->npage = 0;
+    xd->fp = NULL; /* not all devices (e.g. TIFF) use the file pointer, but SaveAsBitmap
+                      looks at it */
+    
     if (!dsp[0]) {
 	if (!setupScreenDevice(dd, xd, w, h, recording, resize, xpos, ypos))
 	    return FALSE;
