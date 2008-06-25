@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -367,10 +367,17 @@ isIncomplete(con)
 }
 
 \seealso{
-  \code{\link{textConnection}}, \code{\link{seek}}, \code{\link{readLines}},
-  \code{\link{readBin}}, \code{\link{writeLines}}, \code{\link{writeBin}},
+  \code{\link{textConnection}}, \code{\link{seek}},
   \code{\link{showConnections}}, \code{\link{pushBack}}.
-
+  
+  Functions making direct use of connections are \code{\link{readLines}},
+  \code{\link{readBin}}, \code{\link{readChar}},
+  \code{\link{writeLines}}, \code{\link{writeBin}},
+  \code{\link{writeChar}}, \code{\link{cat}}, \code{\link{sink}},
+  \code{\link{scan}}, \code{\link{parse}}, \code{\link{dcf}},
+  \code{\link{load}}, \code{\link{save}}, \code{\link{dput}} and
+  \code{\link{dump}}.
+  
   \code{\link{capabilities}} to see if \code{url},
   \code{fifo} and \code{socketConnection} are supported by this build of \R.
 

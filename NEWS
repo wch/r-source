@@ -252,9 +252,12 @@ BUG FIXES
 	(PR#11169)
 
     o	Functions writing to connections such as writeLines(),
-	writeBin() and writeChar() now check more carefully that they
-	are opened for writing, including connections that they open
-	themselves.
+	writeBin(), writeChar(), save(), dput() and dump() now check
+	more carefully that the connections are opened for writing,
+	including connections that they open themselves.
+
+	Similarly functions which read such as readLines(), scan(),
+	dcf() and parse() check for being open for reading.
 
 
 

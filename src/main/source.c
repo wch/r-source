@@ -189,8 +189,14 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (ifile >= 3) {/* file != "" */
 	if (num == NA_INTEGER)
 	    num = -1;
-	if(!wasopen)
+	if(!wasopen) {
 	    if(!con->open(con)) error(_("cannot open the connection"));
+	    if(!con->canread) {
+		con->close(con);
+		error(_("cannot read from this connection"));
+	    }
+	} else if(!con->canread)
+	    error(_("cannot read from this connection"));
 	s = R_ParseConn(con, num, &status, source);
 	if(!wasopen) con->close(con);
 	if (status != PARSE_OK) parseError(call, R_ParseError);

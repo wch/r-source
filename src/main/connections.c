@@ -2644,6 +2644,10 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!wasopen) {
 	con->UTF8out = TRUE;  /* a request */
 	if(!con->open(con)) error(_("cannot open the connection"));
+	if(!con->canread) { /* recheck */
+	    con->close(con);
+	    error(_("cannot read from this connection"));
+	}
     } else { /* for a non-blocking connection, more input may
 		have become available, so re-position */
 	if(con->canseek && !con->blocking)

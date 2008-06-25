@@ -295,8 +295,14 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (ifile != 1) {
 	con = getConnection(ifile);
 	wasopen = con->isopen;
-	if(!wasopen)
+	if(!wasopen) {
 	    if(!con->open(con)) error(_("cannot open the connection"));
+	    if(!con->canwrite) {
+		con->close(con);
+		error(_("cannot write to this connection"));
+	    }
+	} else if(!con->canwrite)
+	    error(_("cannot write to this connection"));
     }/* else: "Stdout" */
     for (i = 0; i < LENGTH(tval); i++)
 	if (ifile == 1)
@@ -368,8 +374,14 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else {
 	    con = getConnection(INTEGER(file)[0]);
 	    wasopen = con->isopen;
-	    if (!wasopen)
+	    if(!wasopen) {
 		if(!con->open(con)) error(_("cannot open the connection"));
+		if(!con->canwrite) {
+		    con->close(con);
+		    error(_("cannot write to this connection"));
+		}
+	    } else if(!con->canwrite)
+		error(_("cannot write to this connection"));
 	    for (i = 0, nout = 0; i < nobjs; i++) {
 		const char *s;
 		if (CAR(o) == R_UnboundValue) continue;
