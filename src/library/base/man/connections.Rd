@@ -374,7 +374,7 @@ isIncomplete(con)
   \code{\link{readBin}}, \code{\link{readChar}},
   \code{\link{writeLines}}, \code{\link{writeBin}},
   \code{\link{writeChar}}, \code{\link{cat}}, \code{\link{sink}},
-  \code{\link{scan}}, \code{\link{parse}}, \code{\link{dcf}},
+  \code{\link{scan}}, \code{\link{parse}}, \code{\link{read.dcf}},
   \code{\link{load}}, \code{\link{save}}, \code{\link{dput}} and
   \code{\link{dump}}.
   
