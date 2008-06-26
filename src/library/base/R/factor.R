@@ -267,3 +267,12 @@ function (e1, e2)
     x <- NextMethod()
     structure(x, levels=levs, class=cl)
 }
+
+addNA <- function(x, ifany=FALSE)
+{
+    if (!is.factor(x)) x <- factor(x)
+    if (ifany & !any(is.na(x))) return(x)
+    ll <- levels(x)
+    if (!any(is.na(ll))) ll <- c(ll, NA)
+    factor(x, levels=ll, exclude=NULL)
+}

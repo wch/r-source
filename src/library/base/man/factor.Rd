@@ -7,6 +7,7 @@
 \title{Factors}
 \alias{factor}
 \alias{ordered}
+\alias{addNA}
 \alias{is.factor}
 \alias{is.ordered}
 \alias{as.factor}
@@ -16,6 +17,7 @@
 \alias{Ops.factor}
 \alias{Summary.factor}
 \alias{Ops.ordered}
+\alias{addNA}
 \concept{categorical variable}
 \concept{enumerated type}
 \concept{category}
@@ -41,6 +43,8 @@ is.ordered(x)
 
 as.factor(x)
 as.ordered(x)
+
+addNA(x, ifany=FALSE)
 }
 \arguments{
   \item{x}{a vector of data, usually taking a small number of distinct
@@ -58,6 +62,8 @@ as.ordered(x)
     as ordered (in the order given).}
   \item{\dots}{(in \code{ordered(.)}): any of the above, apart from
     \code{ordered} itself.}
+  \item{ifany}{(in \code{addNA}): Only add an \code{NA} level if it is
+    used, i.e. if \code{any(is.na(x))}.} 
 }
 \value{
   \code{factor} returns an object of class \code{"factor"} which has a
@@ -80,6 +86,9 @@ as.ordered(x)
 
   \code{as.ordered(x)} returns \code{x} if this is ordered, and
   \code{ordered(x)} otherwise.
+
+  \code{addNA} modifies a factor by turning \code{NA} into an extra
+  level (so that \code{NA} values are counted in tables, for instance). 
 }
 \details{
   The type of the vector \code{x} is not restricted.
@@ -108,12 +117,14 @@ as.ordered(x)
 
   The codes of a factor may contain \code{\link{NA}}. For a numeric
   \code{x}, set \code{exclude=NULL} to make \code{\link{NA}} an extra
-  level (\code{"NA"}), by default the last level.
+  level (prints as \code{<NA>}); by default, this is the last level.
 
-  If \code{"NA"} is a level, the way to set a code to be missing is to
-  use \code{\link{is.na}} on the left-hand-side of an assignment.
-  Under those circumstances missing values are printed as \code{<NA>}.
-
+  If \code{NA} is a level, the way to set a code to be missing (as
+  opposed to the code of the missing level) is to
+  use \code{\link{is.na}} on the left-hand-side of an assignment (as in
+  \code{is.na(f)[i] <- TRUE}; indexing inside \code{is.na} does not work).
+% UNTRUE  Under those circumstances missing values are printed as \code{<NA>}.
+  
   \code{is.factor} is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
 }
@@ -130,6 +141,10 @@ as.ordered(x)
   The levels of a factor are by default sorted, but the sort order
   may well depend on the locale at the time of creation, and should
   not be assumed to be ASCII.
+  
+  There are some anomalies associated with factors that have
+  \code{NA} as a level. It is suggested to use them sparingly, e.g. only
+  for tabulation purposes.   
 }
 \section{Comparison operators and group generic methods}{
   There are \code{"factor"} and \code{"ordered"} methods for the
@@ -183,12 +198,16 @@ factor(letters[1:20], labels="letter")
 class(ordered(4:1)) # "ordered", inheriting from "factor"
 
 ## suppose you want "NA" as a level, and to allow missing values.
-(x <- factor(c(1, 2, "NA"), exclude = ""))
+(x <- factor(c(1, 2, NA), exclude = ""))
 is.na(x)[2] <- TRUE
-x  # [1] 1    <NA> NA, <NA> used because NA is a level.
+x  # [1] 1    <NA> <NA> 
 is.na(x)
 # [1] FALSE  TRUE FALSE
-factor()
+
+## Using addNA()
+Month <- airquality$Month
+table(addNA(Month))
+table(addNA(Month, ifany=TRUE))
 }
 \keyword{category}
 \keyword{NA}
