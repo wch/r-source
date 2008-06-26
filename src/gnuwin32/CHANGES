@@ -55,6 +55,8 @@ BUG FIXES
 
     o	Saving a graph in TIFF format could crash R (PR#11804).
     
+    o	Rterm did not always flush console output properly.
+    
 
 
 		CHANGES IN R VERSION 2.7.1
