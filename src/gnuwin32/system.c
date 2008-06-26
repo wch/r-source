@@ -337,7 +337,7 @@ void R_ResetConsole(void)
 
 void R_FlushConsole(void)
 {
-    if (CharacterMode == RTerm && R_Interactive) fflush(stdin);
+    if (CharacterMode == RTerm && R_Interactive) fflush(stdout);
     else if (CharacterMode == RGui && RConsole) consoleflush(RConsole);
 }
 
