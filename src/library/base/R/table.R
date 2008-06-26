@@ -14,7 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-table <- function (..., exclude = c(NA, NaN),
+table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
+                   useNA = c("no", "ifany", "always"),
 		   dnn = list.names(...), deparse.level = 1)
 {
     list.names <- function(...) {
@@ -34,7 +35,10 @@ table <- function (..., exclude = c(NA, NaN),
 	    nm
 	}
     }
+    if (!missing(exclude) && is.null(exclude))
+        useNA <- "always"
 
+    useNA <- match.arg(useNA)
     args <- list(...)
     if (length(args) == 0)
 	stop("nothing to tabulate")
@@ -58,12 +62,34 @@ table <- function (..., exclude = c(NA, NaN),
 	    stop("all arguments must have the same length")
         cat <-
             if (is.factor(a)) {
-                if (!missing(exclude)) {
-                    ll <- levels(a)
-                    factor(a, levels = ll[!(ll %in% exclude)],
-                           exclude = if(is.null(exclude)) NULL else NA)
-                } else a
-            } else factor(a, exclude = exclude)
+                if (any(is.na(levels(a)))) # Don't touch this!
+                    a
+                else {
+                    ## The logic here is tricky because it tries to do
+                    ## something sensible if both 'exclude' and
+                    ## 'useNA' is set. A non-null setting of 'exclude'
+                    ## sets the excluded levels to missing, which is
+                    ## different from the <NA> factor level. Excluded
+                    ## levels are NOT tabulated, even if 'useNA' is
+                    ## set.
+                    if (is.null(exclude) && useNA != "no")
+                        addNA(a, ifany = (useNA == "ifany"))
+                    else {
+                        if (useNA != "no")
+                            a <- addNA(a, ifany = (useNA == "ifany"))
+                        ll <- levels(a)
+                        a <- factor(a, levels = ll[!(ll %in% exclude)],
+                               exclude = if (useNA == "no") NA)
+                    }
+                }
+            }
+            else {
+                a <- factor(a, exclude = exclude)
+                if (useNA != "no")
+                    addNA(a, ifany = (useNA == "ifany"))
+                else
+                    a
+            }
 
 	nl <- length(ll <- levels(cat))
 	dims <- c(dims, nl)

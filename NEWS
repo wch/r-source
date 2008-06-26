@@ -14,6 +14,12 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o   In table(), 'exclude=NULL' now does something also for factor
+        arguments. A new 'useNA' argument allows you to control
+        whether to add NA levels unconditionally or only when present
+        in data. A new convenience function addNA() gives similar 
+	functionality by adding NA levels to individual factors.
+
     o	The handling of nuls in character strings has been changed --
 	they are no longer allowed, and attempting to create such a
 	string now gives a truncation warning (unless
