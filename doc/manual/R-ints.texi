@@ -1898,7 +1898,7 @@ inside other functions), such as
 @example
 @group
 nargs        missing
-interactive  is.@emph{xxx}
+interactive  is.@var{xxx}
 as.call      as.character as.complex  as.double
 as.environment
 as.integer   as.logical   as.raw

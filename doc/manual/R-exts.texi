@@ -5643,8 +5643,8 @@ R Installation and Administration}.
 
 
 Note that as @code{R CMD SHLIB} uses Make, it will not remake a shared
-object just because the flags have changed, and if @code{test.c} and
-@code{test.f} both exist in the current directory
+object just because the flags have changed, and if @file{test.c} and
+@file{test.f} both exist in the current directory
 
 @example
 R CMD SHLIB test.f
@@ -6572,7 +6572,7 @@ and there are versions of this for all the atomic vector types (those for
 a length-one character vector being @code{ScalarString} with argument a
 @code{CHARSXP} and @code{mkString} with argument @code{const char *}).
 
-Some of the @code{isXXXX} functions differ from their apparent
+Some of the @code{is@var{XXXX}} functions differ from their apparent
 @R{}-level counterparts: for example @code{isVector} is true for any
 atomic vector type (@code{isVectorAtomic}) and for lists and expressions
 (@code{isVectorList}) (with no check on attributes).  @code{isMatrix} is
@@ -6999,8 +6999,8 @@ SEXP lapply(SEXP list, SEXP expr, SEXP rho)
   R_len_t i, n = length(list);
   SEXP ans;
 
-  if(!isNewList(list)) error("`list' must be a list");
-  if(!isEnvironment(rho)) error("`rho' should be an environment");
+  if(!isNewList(list)) error("'list' must be a list");
+  if(!isEnvironment(rho)) error("'rho' should be an environment");
   PROTECT(ans = allocVector(VECSXP, n));
   for(i = 0; i < n; i++) @{
     defineVar(install("x"), VECTOR_ELT(list, i), rho);
@@ -7026,9 +7026,9 @@ SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
   R_len_t i, n = length(list);
   SEXP R_fcall, ans;
 
-  if(!isNewList(list)) error("`list' must be a list");
-  if(!isFunction(fn)) error("`fn' must be a function");
-  if(!isEnvironment(rho)) error("`rho' should be an environment");
+  if(!isNewList(list)) error("'list' must be a list");
+  if(!isFunction(fn)) error("'fn' must be a function");
+  if(!isEnvironment(rho)) error("'rho' should be an environment");
   PROTECT(R_fcall = lang2(fn, R_NilValue));
   PROTECT(ans = allocVector(VECSXP, n));
   for(i = 0; i < n; i++) @{
@@ -7741,32 +7741,32 @@ files when using these entry points.
 
 This remapping can cause problems@footnote{Known problems are redefining
 @code{error}, @code{length}, @code{vector} and @code{warning}}, and can
-be eliminated by defining @code{R_NO_REMAP} and prepending @code{Rf_} to
+be eliminated by defining @code{R_NO_REMAP} and prepending @samp{Rf_} to
 @emph{all} the function names used from @file{Rinternals.h} and
 @file{R_ext/Error.h}.
 
 We can classify the entry points as
 
-@itemize
-@item @emph{API}
+@table @emph
+@item API
 Entry points which are documented in this manual and declared in an
 installed header file.  These can be used in distributed packages and
 will only be changed after deprecation.
 
-@item @emph{public}
+@item public
 Entry points declared in an installed header file that are exported
 on all @R{} platforms but are not documented and subject to change
 without notice.
 
-@item @emph{private}
+@item private
 Entry points that are used when building @R{} and exported on all @R{}
 platforms but are not declared in the installed header files.
 Do not use these in distributed code.
 
-@item @emph{hidden}
+@item hidden
 Entry points that are where possible (Windows and some modern Unix
 compilers/loaders when using @R{} as a shared library) not exported.
-@end itemize
+@end table
 
 @node Memory allocation, Error handling, The R API, The R API
 @section Memory allocation
@@ -9122,7 +9122,7 @@ The graphics systems are exposed in headers
 @file{R_ext/GraphicsEngine.h}, @file{R_ext/GraphicsDevice.h} (which it
 includes) and @file{R_ext/QuartzDevice.h}.  Some entry points from the
 @pkg{stats} package are in @file{R_ext/stats_package.h} (currently
-related to the internals of @samp{nls} and @samp{nlminb}).
+related to the internals of @code{nls} and @code{nlminb}).
 
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
