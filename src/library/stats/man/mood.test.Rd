@@ -1,6 +1,6 @@
 % File src/library/stats/man/mood.test.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{mood.test}
@@ -46,6 +46,8 @@ mood.test(x, \dots)
   The null hypothesis is \eqn{s = 1}.
 
   There are more useful tests for this problem.
+
+  In the case of ties, the formulation of Mielke (1967) is employed.
 }
 \value{
   A list with class \code{"htest"} containing the following components:
@@ -61,6 +63,10 @@ mood.test(x, \dots)
   \emph{Practical nonparametric statistics}.
   New York: John Wiley & Sons.
   Pages 234f.
+
+  Paul W. Mielke, Jr. (1967),
+  Note on some squared rank tests with existing ties.
+  \emph{Technometrics}, \bold{9}/2, 312--314.
 }
 \seealso{
   \code{\link{fligner.test}} for a rank-based (nonparametric) k-sample

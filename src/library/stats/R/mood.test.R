@@ -26,11 +26,27 @@ function(x, y, alternative = c("two.sided", "less", "greater"), ...)
     y <- y[is.finite(y)]
     m <- length(x)
     n <- length(y)
-    if ((s <- m + n) < 3)
+    if ((N <- m + n) < 3L)
         stop("not enough observations")
-    r <- rank(c(x, y))
-    z <- ((sum((r[seq_along(x)] - (s + 1) / 2)^2) - m * (s^2 - 1) / 12)
-          / sqrt(m * n * (s + 1) * (s + 2) * (s - 2) / 180))
+    E <- m * (N ^ 2 - 1) / 12
+    v <- m * n * (N + 1L) * (N + 2L) * (N - 2L) / 180
+    z <- c(x, y)
+    if(!any(duplicated(z))) {
+        ## Proceed as per Conover (1971).
+        r <- rank(z)
+        T <- sum((r[seq_along(x)] - (N + 1L) / 2) ^ 2)
+    }
+    else {
+        ## Proceed as per Mielke (1967).
+        u <- sort(unique(z))
+        a <- tabulate(match(x, u), length(u))
+        t <- tabulate(match(z, u), length(u))
+        p <- cumsum((seq_along(z) - (N + 1L) / 2) ^ 2)
+        v <- v - (m * n) / (180 * N * (N - 1L)) *
+            sum(t * (t ^ 2 - 1) * (t ^ 2 - 4 + 15 * (N - t) ^ 2))
+        T <- sum(a * diff(c(0, p[cumsum(t)])) / t)
+    }
+    z <- (T - E) / sqrt(v)
     p <- pnorm(z)
     PVAL <- switch(alternative,
                    "less" = p,
@@ -49,8 +65,8 @@ mood.test.formula <-
 function(formula, data, subset, na.action, ...)
 {
     if(missing(formula)
-       || (length(formula) != 3)
-       || (length(attr(terms(formula[-2]), "term.labels")) != 1))
+       || (length(formula) != 3L)
+       || (length(attr(terms(formula[-2]), "term.labels")) != 1L))
         stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
@@ -62,7 +78,7 @@ function(formula, data, subset, na.action, ...)
     names(mf) <- NULL
     response <- attr(attr(mf, "terms"), "response")
     g <- factor(mf[[-response]])
-    if(nlevels(g) != 2)
+    if(nlevels(g) != 2L)
         stop("grouping factor must have exactly 2 levels")
     DATA <- split(mf[[response]], g)
     names(DATA) <- c("x", "y")

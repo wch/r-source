@@ -158,6 +158,8 @@ NEW FEATURES
 	connection which was not already open in an appropriate binary
 	mode rather than the default mode.
 
+    o	mood.test() now behaves better in the presence of ties.
+
 
 INSTALLATION
 
