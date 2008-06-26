@@ -15,7 +15,7 @@ sink(file = NULL, append = FALSE, type = c("output", "message"),
 sink.number(type = c("output", "message"))
 }
 \arguments{
-  \item{file}{a connection or a character string naming the
+  \item{file}{a writable connection or a character string naming the
     file to write to, or \code{NULL} to stop sink-ing.}
   \item{append}{logical. If \code{TRUE}, output will be appended to
     \code{file}; otherwise, it will overwrite the contents of
@@ -50,9 +50,11 @@ sink.number(type = c("output", "message"))
   output, so output reverts to the previous diversion (if there was
   one).  The stack is of up to 21 connections (20 diversions).
 
-  If \code{file} is a connection it will be opened if necessary.
+  If \code{file} is a connection it will be opened if necessary (in
+  \code{"wt"} mode) and closed once it is removed from the stack of
+  diversions.
 
-  If \code{split = TRUE} only splits \R output (via \code{Rvprintf}) and
+  \code{split = TRUE} only splits \R output (via \code{Rvprintf}) and
   the default output from \code{\link{writeLines}}: it does not split
   all output that might be sent to \code{\link{stdout}()}.
 

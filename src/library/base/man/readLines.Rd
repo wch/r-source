@@ -37,9 +37,9 @@ readLines(con = stdin(), n = -1, ok = TRUE, warn = TRUE,
   \code{\link{file}} to obtain a file connection which is opened for
   the duration of the function call.
 
-  If the connection is open it is read from its current position.
-  If it is not open, it is opened for the duration of the call and then
-  closed again.
+  If the connection is open it is read from its current position.  If it
+  is not open, it is opened in \code{"rt"} mode for the duration of
+  the call and then closed again.
 
   If the final line is incomplete (no final EOL marker) the behaviour
   depends on whether the connection is blocking or not.  For a

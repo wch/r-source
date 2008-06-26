@@ -2644,8 +2644,12 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     encoding = CHAR(STRING_ELT(CAD4R(args), 0)); /* ASCII */
     wasopen = con->isopen;
     if(!wasopen) {
+	char mode[5];
 	con->UTF8out = TRUE;  /* a request */
+	strcpy(mode, con->mode);
+	strcpy(con->mode, "rt");
 	if(!con->open(con)) error(_("cannot open the connection"));
+	strcpy(con->mode, mode);
 	if(!con->canread) { /* recheck */
 	    con->close(con);
 	    error(_("cannot read from this connection"));
@@ -2738,9 +2742,12 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("cannot write to this connection"));
     wasopen = con->isopen;
     if(!wasopen) {
+	char mode[5];
 	/* Documented behaviour */
+	strcpy(mode, con->mode);
 	strcpy(con->mode, "wt");
 	if(!con->open(con)) error(_("cannot open the connection"));
+	strcpy(con->mode, mode);
 	if(!con->canwrite) { /* unlikely, but be safe */
 	    con->close(con);
 	    error(_("cannot write to this connection"));
@@ -2896,8 +2903,11 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	wasopen = con->isopen;
 	if(!wasopen) {
 	    /* Documented behaviour */
+	    char mode[5];
+	    strcpy(mode, con->mode);
 	    strcpy(con->mode, "rb");
 	    if(!con->open(con)) error(_("cannot open the connection"));
+	    strcpy(con->mode, mode);
 	    if(!con->canread) {
 		con->close(con);
 		error(_("cannot read from this connection"));
@@ -3104,8 +3114,11 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(!wasopen) {
 	/* Documented behaviour */
+	char mode[5];
+	strcpy(mode, con->mode);
 	strcpy(con->mode, "wb");
 	if(!con->open(con)) error(_("cannot open the connection"));
+	strcpy(con->mode, mode);
 	if(!con->canwrite) {
 	    con->close(con);
 	    error(_("cannot write to this connection"));
@@ -3413,8 +3426,11 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	wasopen = con->isopen;
 	if(!wasopen) {
 	    /* Documented behaviour */
+	    char mode[5];
+	    strcpy(mode, con->mode);
 	    strcpy(con->mode, "rb");
 	    if(!con->open(con)) error(_("cannot open the connection"));
+	    strcpy(con->mode, mode);
 	    if(!con->canread) {
 		con->close(con);
 		error(_("cannot read from this connection"));
@@ -3511,8 +3527,11 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(!wasopen) {
 	/* Documented behaviour */
+	char mode[5];
+	strcpy(mode, con->mode);
 	strcpy(con->mode, "wb");
 	if(!con->open(con)) error(_("cannot open the connection"));
+	strcpy(con->mode, mode);
 	if(!con->canwrite) {
 	    con->close(con);
 	    error(_("cannot write to this connection"));
@@ -3714,18 +3733,20 @@ switch_or_tee_stdout(int icon, int closeOnExit, int tee)
 	SinkConsClose[R_SinkNumber] = 0;
     } else if(icon >= 3) {
 	Rconnection con = getConnection(icon); /* checks validity */
-	if(!con->canwrite)
-	    error(_("cannot write to this connection"));
 	toclose = 2*closeOnExit;
 	if(!con->isopen) {
+	    char mode[5];
+	    strcpy(mode, con->mode);
+	    strcpy(con->mode, "wt");
 	    if(!con->open(con)) error(_("cannot open the connection"));
-	    toclose = 1;
-	    /* Once open, writability may have changed */
+	    strcpy(con->mode, mode);
 	    if(!con->canwrite) {
 		con->close(con);
 		error(_("cannot write to this connection"));
 	    }
-	}
+	    toclose = 1;
+	} else if(!con->canwrite)
+	    error(_("cannot write to this connection"));
 	R_OutputCon = SinkCons[++R_SinkNumber] = icon;
 	SinkConsClose[R_SinkNumber] = toclose;
 	R_SinkSplit[R_SinkNumber] = tee;
