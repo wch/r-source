@@ -885,8 +885,10 @@ and return a list of data frames.  If SAS is available on your system,
 function @code{read.ssd} can be used to create and run a SAS script that
 saves a SAS permanent dataset (@file{.ssd} or @file{.sas7bdat}) in
 Transport format.  It then calls @code{read.xport} to read the resulting
-file.  Package @pkg{Hmisc} has a similar function @code{sas.get}, also
-running SAS.
+file.  (Package @pkg{Hmisc} has a similar function @code{sas.get}, also
+running SAS.)  For those without access to SAS but running on Windows,
+the SAS System Viewer (a zero-cost download) can be used to open SAS
+datasets and export them to e.g.@: @file{.csv} format.
 
 @cindex S-PLUS
 @findex read.S
@@ -901,7 +903,7 @@ containing those.
 Function @code{data.restore} reads S-PLUS data dumps (created by
 @code{data.dump}) with the same restrictions (except that dumps from the
 Alpha platform can also be read).  It should be possible to read data
-dumps from S-PLUS 5.x and 6.x written with @code{data.dump(oldStyle=T)}.
+dumps from S-PLUS 5.x and later written with @code{data.dump(oldStyle=T)}.
 
 If you have access to S-PLUS, it is usually more reliable to @code{dump}
 the object(s) in S-PLUS and @code{source} the dumpfile in @R{}.  For
