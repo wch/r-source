@@ -651,5 +651,8 @@ stopifnot(is.finite(qbeta(-1e10, 50,40, log.p=TRUE)),
           is.finite(qbeta(-1e10,  2, 3, lower=FALSE, log.p=TRUE)))
 ## infinite loop or NaN in R <= 2.7.0
 
+## phyper(x, 0,0,0), notably for huge x
+stopifnot(all(phyper(c(0:3, 1e67), 0,0,0) == 1))
+## practically infinite loop and NaN in R <= 2.7.1 (PR#11813)
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

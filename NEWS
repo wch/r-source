@@ -290,10 +290,12 @@ BUG FIXES
 
     o	Plotmath computed the glyph metrics for the wrong character (and
 	perhaps for a non-existent one) if this was a single-byte
-	character with the top bit set.  An example was
-	symbol("\300").
+	character with the top bit set.  An example was	symbol("\300").
 
     o	sink() and cat() could divert output to a non-writable connection.
+
+    o	phyper(x, 0,0,0) no longer hangs for huge x and gives 1 for x >= 0.
+	(PR#11813)
 
 
 
