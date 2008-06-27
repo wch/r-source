@@ -2073,7 +2073,7 @@ SEXP attribute_hidden R_unserialize(SEXP icon, SEXP fun)
 	struct membuf_st mbs;
 	void *data = (void *)CHAR(STRING_ELT(icon, 0)); /* FIXME, is this right? */
 	int length = LENGTH(STRING_ELT(icon, 0));
-	warning("unserialize()from a character string is deprecated and will be withdrawn in R 2.8.0");
+	warning("unserialize() from a character string is deprecated and will be withdrawn in R 2.8.0");
 	InitMemInPStream(&in, &mbs, data,  length, hook, fun);
 	return R_Unserialize(&in);
     } else if (TYPEOF(icon) == RAWSXP) {
