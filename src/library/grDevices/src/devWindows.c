@@ -3305,7 +3305,7 @@ static Rboolean GA_NewFrameConfirm(pDevDesc dev)
     R_WriteConsole("\n", 1);
     R_FlushConsole();
     settext(xd->gawin, G_("Click or hit ENTER for next page"));
-    BringToTop(xd->gawin, 1);
+    BringToTop(xd->gawin, 0);
     dev->onExit = GA_onExit;  /* install callback for cleanup */
     while (!xd->clicked && !xd->enterkey) {
 	SH;
