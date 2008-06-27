@@ -148,16 +148,26 @@ Ops.factor <- function(e1, e2)
 	return(rep.int(NA, max(length(e1), if(!missing(e2))length(e2))))
     }
     nas <- is.na(e1) | is.na(e2)
-    if (nzchar(.Method[1])) {
-	l1 <- levels(e1)
+    ## Need this for NA *levels* as opposed to missing
+    noNA.levels <- function(f) {
+	r <- levels(f)
+	if(any(ina <- is.na(r))) {
+	    n <- "  NA "
+	    while(n %in% r) n <- paste(n, ".")
+	    r[ina] <- n
+	}
+	r
+    }
+    if (nzchar(.Method[1])) { # e1 *is* a factor
+	l1 <- noNA.levels(e1)
 	e1 <- l1[e1]
     }
-    if (nzchar(.Method[2])) {
-	l2 <- levels(e2)
+    if (nzchar(.Method[2])) { # e2 *is* a factor
+	l2 <- noNA.levels(e2)
 	e2 <- l2[e2]
     }
-    if (all(nzchar(.Method) > 0) &&
-        (length(l1) != length(l2) || !all(sort.int(l2) == sort.int(l1))))
+    if (all(nzchar(.Method)) &&
+	(length(l1) != length(l2) || !all(sort.int(l2) == sort.int(l1))))
 	stop("level sets of factors are different")
     value <- NextMethod(.Generic)
     value[nas] <- NA

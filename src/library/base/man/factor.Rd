@@ -63,7 +63,7 @@ addNA(x, ifany=FALSE)
   \item{\dots}{(in \code{ordered(.)}): any of the above, apart from
     \code{ordered} itself.}
   \item{ifany}{(in \code{addNA}): Only add an \code{NA} level if it is
-    used, i.e. if \code{any(is.na(x))}.} 
+    used, i.e. if \code{any(is.na(x))}.}
 }
 \value{
   \code{factor} returns an object of class \code{"factor"} which has a
@@ -88,7 +88,7 @@ addNA(x, ifany=FALSE)
   \code{ordered(x)} otherwise.
 
   \code{addNA} modifies a factor by turning \code{NA} into an extra
-  level (so that \code{NA} values are counted in tables, for instance). 
+  level (so that \code{NA} values are counted in tables, for instance).
 }
 \details{
   The type of the vector \code{x} is not restricted.
@@ -115,7 +115,7 @@ addNA(x, ifany=FALSE)
   also be a factor with the same level set as \code{x} or a set of codes
   for the levels to be excluded.
 
-  The codes of a factor may contain \code{\link{NA}}. For a numeric
+  The codes of a factor may contain \code{\link{NA}}.  For a numeric
   \code{x}, set \code{exclude=NULL} to make \code{\link{NA}} an extra
   level (prints as \code{<NA>}); by default, this is the last level.
 
@@ -123,8 +123,9 @@ addNA(x, ifany=FALSE)
   opposed to the code of the missing level) is to
   use \code{\link{is.na}} on the left-hand-side of an assignment (as in
   \code{is.na(f)[i] <- TRUE}; indexing inside \code{is.na} does not work).
-% UNTRUE  Under those circumstances missing values are printed as \code{<NA>}.
-  
+  Under those circumstances missing values are currently printed as
+  \code{<NA>}, i.e., identical to entries of level \code{NA}.
+
   \code{is.factor} is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
 }
@@ -141,10 +142,11 @@ addNA(x, ifany=FALSE)
   The levels of a factor are by default sorted, but the sort order
   may well depend on the locale at the time of creation, and should
   not be assumed to be ASCII.
-  
+
+%% Is this still true, after Ops.factor (==, !=) is fixed ?
   There are some anomalies associated with factors that have
-  \code{NA} as a level. It is suggested to use them sparingly, e.g. only
-  for tabulation purposes.   
+  \code{NA} as a level.  It is suggested to use them sparingly, e.g.,
+  only for tabulation purposes.
 }
 \section{Comparison operators and group generic methods}{
   There are \code{"factor"} and \code{"ordered"} methods for the
@@ -159,7 +161,7 @@ addNA(x, ifany=FALSE)
   (not necessarily in the same ordering) or to a character vector.
   Ordered factors are compared in the same way, but the general dispatch
   mechanism precludes comparing ordered and unordered factors.
-  
+
   All the comparison operators are available for ordered factors.
   Sorting is done by the levels of the operands: if both operands are
   ordered factors they must have the same level set.
@@ -200,7 +202,7 @@ class(ordered(4:1)) # "ordered", inheriting from "factor"
 ## suppose you want "NA" as a level, and to allow missing values.
 (x <- factor(c(1, 2, NA), exclude = NULL))
 is.na(x)[2] <- TRUE
-x  # [1] 1    <NA> <NA> 
+x  # [1] 1    <NA> <NA>
 is.na(x)
 # [1] FALSE  TRUE FALSE
 

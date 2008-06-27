@@ -5207,7 +5207,22 @@ stopifnot(sub(".*(..)$", "\\1", fCx) == "60")
 ## dropped the trailing "0" in the last 3 cases, in R <= 2.7.0
 
 
-## c.nquote bug, posted to R-devel by Ray Brownrigg, 2008-06-16
+## c.noquote bug, posted to R-devel by Ray Brownrigg, 2008-06-16
 z <- c(noquote('z'), 'y', 'x', 'w')
 stopifnot(identical(unclass(z), c('z', 'y', 'x', 'w')))
 ## repeated third and later args in R < 2.7.1.
+
+## PD found that f==f contains NA when f has NA levels (but no missing value)
+f1 <- factor(c(1, 2, NA), exclude = "")
+f2 <- factor(c(1, 2, NA), exclude = NULL)
+stopifnot(identical(f1, factor(c(1,2,NA))),
+          nlevels(f1) == 2, nlevels(f2) == 3,
+          all(f2 == f2), !any(f2 != f2),
+          identical(f1 == f1, c(TRUE,TRUE,NA)))
+
+f. <- f <- factor(c(letters[c(1:3,3:1)],"NA", "d","d", NA), exclude=NULL)
+is.na(f.)[2:3] <- TRUE
+f.
+stopifnot(all(f == f), identical(f == f., f. == f.),
+          identical(2:3, which(is.na(f. == f.))))
+## f == f was wrong in R 1.5.0 -- 2.7.1

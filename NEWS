@@ -17,7 +17,7 @@ NEW FEATURES
     o   In table(), 'exclude=NULL' now does something also for factor
         arguments. A new 'useNA' argument allows you to control
         whether to add NA levels unconditionally or only when present
-        in data. A new convenience function addNA() gives similar 
+        in data. A new convenience function addNA() gives similar
 	functionality by adding NA levels to individual factors.
 
     o	The handling of nuls in character strings has been changed --
@@ -270,6 +270,9 @@ BUG FIXES
 
 	Similarly functions which read such as readLines(), scan(),
 	dcf() and parse() check for being open for reading.
+
+    o	Equality comparison of factors with <NA> levels now works
+	correctly again.
 
 
 
