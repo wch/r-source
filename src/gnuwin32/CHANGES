@@ -38,6 +38,9 @@ OTHER
     	C locale but in the current locale (although LANGUAGE=en is
     	used).
 
+    o	Rterm --ess sets stdout to be unbuffered, as it would be for
+	output to a terminal.
+
 
 
 
@@ -55,10 +58,10 @@ BUG FIXES
 
     o	Saving a graph in TIFF format could crash R (PR#11804).
     
-    o	Rterm in interactive use did implement R_FlushConsole() fully.
+    o	Rterm in interactive use did not implement R_FlushConsole() fully.
 
     o	The confirmation of an new frame for a windows() graphics
-	device works harder to give the devive focus, including
+	device works harder to give the device focus, including
 	bringing it to the top.
  
 
