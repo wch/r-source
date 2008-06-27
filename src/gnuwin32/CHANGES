@@ -41,6 +41,13 @@ OTHER
     o	Rterm --ess sets stdout to be unbuffered, as it would be for
 	output to a terminal.
 
+    o	windows() gains a new argument 'clickToConfirm', default TRUE,
+	which controls if new-frame confirmation is done via clicking
+	(or ENTER) on the window (the recent default) or via a
+	question in the console (the default for other interactive
+	devices).  The non-default behaviour may be useful when R is
+	driven indirectly (e.g. via ESS) and for some Rterm users.
+
 
 
 

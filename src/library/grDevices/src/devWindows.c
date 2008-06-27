@@ -67,7 +67,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 			Rboolean recording, int resize, int bg, int canvas,
 			double gamma, int xpos, int ypos, Rboolean buffered,
 			SEXP psenv, Rboolean restoreConsole, 
-			const char *title);
+			const char *title, Rboolean clickToConfirm);
 
 
 /* a colour used to represent the background on png if transparent
@@ -289,7 +289,7 @@ static void SaveAsWin(pDevDesc dd, const char *display,
 					GE_INCHES, gdd),
 		       ((gadesc*) dd->deviceSpecific)->basefontsize,
 		       0, 1, White, White, 1, NA_INTEGER, NA_INTEGER, FALSE,
-		       R_GlobalEnv, restoreConsole, ""))
+		       R_GlobalEnv, restoreConsole, "", FALSE))
         PrivateCopyDevice(dd, ndd, display);
 }
 
@@ -2774,7 +2774,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 			Rboolean recording, int resize, int bg, int canvas,
 			double gamma, int xpos, int ypos, Rboolean buffered,
 			SEXP psenv, Rboolean restoreConsole,
-			const char *title)
+			const char *title, Rboolean clickToConfirm)
 {
     /* if need to bail out with some sort of "error" then */
     /* must free(dd) */
@@ -2839,7 +2839,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     dd->locator = GA_Locator;
     dd->mode = GA_Mode;
     dd->metricInfo = GA_MetricInfo;
-    dd->newFrameConfirm = GA_NewFrameConfirm;
+    dd->newFrameConfirm = clickToConfirm ? GA_NewFrameConfirm : NULL;
     dd->hasTextUTF8 = TRUE;
     dd->strWidthUTF8 = GA_StrWidth_UTF8;
     dd->textUTF8 = GA_Text_UTF8;    
@@ -2923,7 +2923,6 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 	    xd->timesince = 500;
 	}
     }
-    dd->newFrameConfirm = GA_NewFrameConfirm;
     dd->displayListOn = (xd->kind == SCREEN);
     if (RConsole && restoreConsole) show(RConsole);
     return TRUE;
@@ -3199,7 +3198,7 @@ SEXP devga(SEXP args)
     char *vmax;
     double height, width, ps, xpinch, ypinch, gamma;
     int recording = 0, resize = 1, bg, canvas, xpos, ypos, buffered;
-    Rboolean restoreConsole;
+    Rboolean restoreConsole, clickToConfirm;
     SEXP sc, psenv;
 
     vmax = vmaxget();
@@ -3254,6 +3253,8 @@ SEXP devga(SEXP args)
     if (!isString(sc) || LENGTH(sc) != 1)
 	error(_("invalid value of '%s'"), "title");
     title = CHAR(STRING_ELT(sc, 0));
+    args = CDR(args);
+    clickToConfirm = asLogical(CAR(args));
     
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -3265,7 +3266,7 @@ SEXP devga(SEXP args)
 	if (!GADeviceDriver(dev, display, width, height, ps,
 			    (Rboolean)recording, resize, bg, canvas, gamma,
 			    xpos, ypos, (Rboolean)buffered, psenv,
-			    restoreConsole, title)) {
+			    restoreConsole, title, clickToConfirm)) {
 	    free(dev);
 	    error(_("unable to start device"));
 	}
@@ -3317,7 +3318,7 @@ static Rboolean GA_NewFrameConfirm(pDevDesc dev)
     R_WriteConsole("\n", 1);
     R_FlushConsole();
     settext(xd->gawin, G_("Click or hit ENTER for next page"));
-    BringToTop(xd->gawin, 1);
+    BringToTop(xd->gawin, 0);
     dev->onExit = GA_onExit;  /* install callback for cleanup */
     while (!xd->clicked && !xd->enterkey) {
 	SH;

@@ -26,7 +26,7 @@
 \usage{
 windows(width, height, pointsize, record, rescale, xpinch, ypinch,
         bg, canvas, gamma, xpos, ypos, buffered, title,
-        restoreConsole)
+        restoreConsole, clickToConfirm)
 
 win.graph(width, height, pointsize)
 x11(width, height, pointsize)
@@ -84,6 +84,9 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     causes a dialog box to come for the user to choose a printer.}
   \item{restoreConsole}{logical:  see the \sQuote{Details} below.  Defaults to
     \code{FALSE} for screen devices.}
+  \item{clickToConfirm}{logical: if true confirmation of a new frame
+    will be by clicking on the device rather than answering a problem in
+    the console.  Default \code{TRUE}.}
 }
 
 \details{
@@ -183,8 +186,8 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 
   There is support for semi-transparent colours of lines, fills and text
   on the \code{windows()} device.  These work for saving (from the
-  \sQuote{File} menu) to PDF, PNG, BMP and JPEG, but will be ignored if
-  saving to Metafile and PostScript.
+  \sQuote{File} menu) to PDF, PNG, BMP, JPEG and TIFF, but will be ignored if
+  saving to Metafile, PDF and PostScript.
 }
 \section{Conventions}{
   This section describes the implementation of the conventions for

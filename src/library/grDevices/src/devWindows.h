@@ -98,4 +98,5 @@ typedef struct {
     Rboolean have_alpha; /* support for AlphaBlend */
     Rboolean warn_trans; /* Warn on use of translucency if not supported */
     char title[101];
+    Rboolean clickToConfirm; /* for NewFrameConfirm */
 } gadesc;
