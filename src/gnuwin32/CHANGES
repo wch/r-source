@@ -55,8 +55,12 @@ BUG FIXES
 
     o	Saving a graph in TIFF format could crash R (PR#11804).
     
-    o	Rterm did not always flush console output properly.
-    
+    o	Rterm in interactive use did implement R_FlushConsole() fully.
+
+    o	The confirmation of an new frame for a windows() graphics
+	device works harder to give the devive focus, including
+	bringing it to the top.
+ 
 
 
 		CHANGES IN R VERSION 2.7.1
