@@ -1226,6 +1226,10 @@ heightDetails.null <- function(x) {
 nullGrob <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
                      default.units="npc",
                      name=NULL, vp=NULL) {
+    if (!is.unit(x))
+        x <- unit(x, default.units)
+    if (!is.unit(y))
+        y <- unit(y, default.units)
     grob(x=x, y=y, name=name, vp=vp, cl="null")
 }
 
