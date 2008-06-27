@@ -68,7 +68,7 @@ A non-\code{NULL} value returned from one of the event handlers.
 \examples{
 \dontrun{
     mousedown <- function(buttons, x, y) {
-        plx <- grconvertX(x, "ndc"," user")
+        plx <- grconvertX(x, "ndc", "user")
         ply <- grconvertY(y, "ndc", "user")    
 	cat("Buttons ", paste(buttons, collapse=" "), " at ndc",
             x, y, "user", plx, ply, "\n")
