@@ -60,7 +60,10 @@ BUG FIXES
     
     o	Rterm in interactive use did not implement R_FlushConsole() fully.
 
-    o	The confirmation of an new frame for a windows() graphics
+    o	getGraphicsEvent did not return onMouseMove events while a
+	mouse button was depressed.
+
+    o	The confirmation of a new frame for a windows() graphics
 	device works harder to give the device focus, including
 	bringing it to the top.
  
