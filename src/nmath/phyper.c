@@ -108,6 +108,8 @@ double phyper (double x, double NR, double NB, double n,
 
     if (x < 0)
 	return R_DT_0;
+    if (x >= NR || x >= n)
+	return R_DT_1;
 
     d  = dhyper (x, NR, NB, n, log_p);
     pd = pdhyper(x, NR, NB, n, log_p);
