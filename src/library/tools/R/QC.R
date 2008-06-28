@@ -4461,7 +4461,7 @@ function()
 }
 
 ### ** get_S4_generics_with_methods --- FIXME: make option of methods::getGenerics()
-
+## JMC agreed & proposed argument  'excludeEmpty = FALSE'
 get_S4_generics_with_methods <- function(env, verbose = getOption("verbose"))
 {
     env <- as.environment(env)
@@ -4511,34 +4511,38 @@ get_S4_generics_with_methods <- function(env, verbose = getOption("verbose"))
 
     ## First, derived default methods (signature w/ "ANY").
     if(any(ind <- as.logical(sapply(mlist, methods::is,
-                                    "derivedDefaultMethod"))))
-        mlist <- mlist[!ind]
+				    "derivedDefaultMethod"))))
+	mlist <- mlist[!ind]
 
-    ## Keep only those methods whose definition environment is ' == env ':
-    keep <- environmentName(env) == sapply(mlist, function(m)
-			   environmentName(environment(m@.Data)))
-    mlist <- mlist[keep]
+    if(length(mlist) > 0) {
+	## Keep only those methods whose definition environment is ' == env ':
+	keep <- sapply(mlist, function(m) identical(env, environment(m)))
+	mlist <- mlist[keep]
+	## FIXME: MM thinks we can return here; KH seems similar..
+	ml0 <- mlist
+	## Second, "inherited" methods.
+	## Note that for packages with a namespace, the table in the
+	## namespace is meant to be only the methods in the package, so we
+	## might simply use findMethods() on the namespace instead.
+	package <- sub(".*:([^_]*).*", "\\1", attr(env, "name", exact = TRUE))
+	## (Ugly, but why not?)
+	penv <- if(length(package) && nzchar(package)) {
+	    ## Seems that there is no other way to get the name space for a
+	    ## given package (getNamespace() would try loading a name space
+	    ## not found in the registry).
+	    .Internal(getRegisteredNamespace(as.name(package)))
+	} ## else NULL
+	penv <- parent.env(if(is.environment(penv)) penv else env)
+	if((g %in% get_S4_generics_with_methods(penv)) &&
+	   length(mlist_from_penv <- methods::findMethods(g, penv)))
+	    mlist <- mlist[is.na(match(names(mlist),
+				       names(mlist_from_penv)))]
 
-    ## FIXME: MM thinks we can return here
-
-    ## Second, "inherited" methods.
-    ## Note that for packages with a namespace, the table in the
-    ## namespace is meant to be only the methods in the package, so we
-    ## might simply use findMethods() on the namespace instead.
-    package <- sub(".*:([^_]*).*", "\\1", attr(env, "name", exact = TRUE))
-    ## (Ugly, but why not?)
-    penv <- if(length(package) && nzchar(package)) {
-        ## Seems that there is no other way to get the name space for a
-        ## given package (getNamespace() would try loading a name space
-        ## not found in the registry).
-        .Internal(getRegisteredNamespace(as.name(package)))
-    }## else NULL
-    penv <- parent.env(if(is.environment(penv)) penv else env)
-    if((g %in% get_S4_generics_with_methods(penv)) &&
-       length(mlist_from_penv <- methods::findMethods(g, penv)))
-	mlist <- mlist[is.na(match(names(mlist),
-				   names(mlist_from_penv)))]
-
+	## Check to see if the above FIXME is correct
+	if(!identical(ml0, mlist))
+	    message(".get_S4_methods_list(): *did* reduce list, dropping\n\t ",
+		    paste(setdiff(ml0, mlist), collapse=", "))
+    }
     mlist
 }
 
