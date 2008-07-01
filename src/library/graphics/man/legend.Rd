@@ -221,7 +221,7 @@ ex12 <- expression(bar(x) == sum(over(x[i], n), i==1, n),
                    hat(x) == median(x[i], i==1,n))
 utils::str(legend(4.1, 30, ex12, col = 2:3, lty=2:3, lwd=2))
 
-## 'Filled' boxes -- for more, see example(plotfactor)
+## 'Filled' boxes -- for more, see example(plot.factor)
 op <- par(bg="white") # to get an opaque box for the legend
 plot(cut(weight, 3) ~ group, data = PlantGrowth, col = NULL,
      density = 16*(1:3))
