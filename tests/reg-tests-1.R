@@ -5226,3 +5226,14 @@ f.
 stopifnot(all(f == f), identical(f == f., f. == f.),
           identical(2:3, which(is.na(f. == f.))))
 ## f == f was wrong in R 1.5.0 -- 2.7.1
+
+
+## data.frame[, <char>] must match exactly
+dd <- data.frame(ii = 1:10, xx = pi * -3:6)
+t1 <- try(dd[,"x"])# partial match
+t2 <- try(dd[,"C"])# no match
+stopifnot(inherits(t1, "try-error"),
+	  inherits(t2, "try-error"),
+	  ## partial matching is "ok" for '$' {hence don't use for dataframes!}
+	  identical(dd$x, dd[,"xx"]))
+## From 2.5.0 to 2.7.1, the non-match indexing gave NULL instead of error

@@ -297,6 +297,10 @@ BUG FIXES
     o	phyper(x, 0,0,0) no longer hangs for huge x and gives 1 for x >= 0.
 	(PR#11813)
 
+    o	<data.frame>[, ch] gives an error (again!) when ch is a string not
+	exactly mathing the column names, thanks to an oral bug report by
+	Matthew Dowle.
+
 
 
 		CHANGES IN R VERSION 2.7.1
