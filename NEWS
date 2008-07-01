@@ -297,6 +297,8 @@ BUG FIXES
     o	phyper(x, 0,0,0) no longer hangs for huge x and gives 1 for x >= 0.
 	(PR#11813)
 
+    o	plnorm(x, ..., log.p=TRUE) is now correct for x <= 0. (PR#11867)
+
     o	<data.frame>[, ch] gives an error (again!) when ch is a string not
 	exactly mathing the column names, thanks to an oral bug report by
 	Matthew Dowle.

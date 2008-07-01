@@ -655,4 +655,10 @@ stopifnot(is.finite(qbeta(-1e10, 50,40, log.p=TRUE)),
 stopifnot(all(phyper(c(0:3, 1e67), 0,0,0) == 1))
 ## practically infinite loop and NaN in R <= 2.7.1 (PR#11813)
 
+## plnorm(<= 0, . , log.p=TRUE)
+stopifnot(plnorm(-1:0, lower.tail=FALSE, log.p=TRUE) == 0,
+	  plnorm(-1:0, lower.tail=TRUE,	 log.p=TRUE) == -Inf)
+## was wrongly == 'log.p=FALSE' up to R <= 2.7.1 (PR#11867)
+
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
