@@ -508,9 +508,9 @@ data.frame <-
         ## not quite the same as the 1/2-arg case, as 'drop' is used.
         if(missing(j) && drop && length(x) == 1L) return(.subset2(x, 1L))
         y <- if(missing(j)) x else .subset(x, j)
-        if(drop && length(y) == 1L) return(.subset2(y, 1L))
 	cols <- names(y)
 	if(any(is.na(cols))) stop("undefined columns selected")
+        if(drop && length(y) == 1L) return(.subset2(y, 1L))
         if(any(duplicated(cols))) names(y) <- make.unique(cols)
         nrow <- .row_names_info(x, 2L)
         if(drop && !mdrop && nrow == 1L)
