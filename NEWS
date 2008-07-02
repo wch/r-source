@@ -303,6 +303,9 @@ BUG FIXES
 	exactly matching the column names, thanks to an oral bug report by
 	Matthew Dowle.
 
+    o	data.frame(x=1:2, y=3:4, row.names=c("a","NA"))[c(2,NA),] has
+	correct row names c("NA,"NA.1") again.
+
 
 
 		CHANGES IN R VERSION 2.7.1

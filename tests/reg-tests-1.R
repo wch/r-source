@@ -5237,3 +5237,10 @@ stopifnot(inherits(t1, "try-error"),
 	  ## partial matching is "ok" for '$' {hence don't use for dataframes!}
 	  identical(dd$x, dd[,"xx"]))
 ## From 2.5.0 to 2.7.1, the non-match indexing gave NULL instead of error
+
+## data.frame[ (<NA>), ] when row.names had  "NA"
+x <- data.frame(x=1:3, y=2:4, row.names=c("a","b","NA"))
+y  <- x [c(2:3, NA),]
+y.ok <- data.frame(x=c(2:3,NA), y=c(3:4,NA), row.names=c("b", "NA", "NA.1"))
+stopifnot(identical(y, y.ok))
+## From 2.5.0 to 2.7.1,  y had row name "NA" twice

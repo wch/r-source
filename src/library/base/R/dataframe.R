@@ -581,6 +581,7 @@ data.frame <-
         rows <- rows[i]
 	if((ina <- any(is.na(rows))) | (dup <- any(duplicated(rows)))) {
 	    ## both will coerce integer 'rows' to character:
+	    if (!dup && is.character(rows)) dup <- "NA" %in% rows
 	    if(ina)
 		rows[is.na(rows)] <- "NA"
 	    if(dup)
