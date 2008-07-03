@@ -83,6 +83,9 @@ BUG FIXES
     	on some filename patterns including non-ASCII characters.
     	Part of the problem was specific to 2.7.x, part has existed
     	since 2.5.0.
+
+    o	Sys.glob() returned a UTF-8 result in 2.7.[01] but failed to
+	mark its encoding.
  
 
 
