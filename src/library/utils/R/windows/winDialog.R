@@ -17,6 +17,8 @@
 winDialog <- function(type = c("ok", "okcancel", "yesno", "yesnocancel"),
                        message)
 {
+    if (!interactive())
+        stop("winDialog() cannot be used non-interactively")
     type <- match.arg(type)
     res <- .Internal(winDialog(type, message))
     if(res == 10) return(invisible(NULL))
@@ -24,7 +26,11 @@ winDialog <- function(type = c("ok", "okcancel", "yesno", "yesnocancel"),
 }
 
 winDialogString <- function(message, default)
+{
+    if (!interactive())
+        stop("winDialogString() cannot be used non-interactively")
     .Internal(winDialogString(message, default))
+}
 
 winMenuDel <- function(menuname)
     invisible(.Internal(winMenuDel(menuname, NULL)))

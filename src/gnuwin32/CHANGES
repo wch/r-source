@@ -49,6 +49,11 @@ OTHER
 	driven indirectly (e.g. via ESS) and for some Rterm users.
 
 
+BUG FIXES
+
+    o	winDialog() and winDialogString() check that they are being
+	used in an interactive session.
+
 
 
 	**************************************************
