@@ -170,6 +170,10 @@ NEW FEATURES
 
     o	mood.test() now behaves better in the presence of ties.
 
+    o	unlink() tries the literal pattern if it does not match with
+	wildcards interpreted -- this helps with e.g. unlink("a[b")
+	which previously needed to be unlink("a\\[b").
+
 
 INSTALLATION
 
