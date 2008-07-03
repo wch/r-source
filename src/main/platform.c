@@ -1208,15 +1208,15 @@ static int R_rmdir(const wchar_t *dir)
 {
     wchar_t tmp[MAX_PATH];
     GetShortPathNameW(dir, tmp, MAX_PATH);
-    /* printf("removing directory %ls\n", tmp); */
+    //printf("removing directory %ls\n", tmp);
     return _wrmdir(tmp);
 }
 
 static int R_unlink(wchar_t *name, int recursive)
 {
     if (wcscmp(name, L".") == 0 || wcscmp(name, L"..") == 0) return 0;
-    /* printf("R_unlink(%ls)\n", name); */
-    if (!R_FileExists(name)) return 0;
+    //printf("R_unlink(%ls)\n", name);
+    if (!R_WFileExists(name)) return 0;
     if (recursive) {
 	_WDIR *dir;
 	struct _wdirent *de;
@@ -1334,10 +1334,11 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
 		names = filenameToWchar(STRING_ELT(fn, i), FALSE);
-		res = dos_wglob(names, 0, NULL, &globbuf);
+		//Rprintf("do_unlink(%ls)\n", names);
+		res = dos_wglob(names, GLOB_NOCHECK, NULL, &globbuf);
 		if (res == GLOB_NOSPACE)
 		    error(_("internal out-of-memory condition"));
-		for ( j = 0; j < globbuf.gl_pathc; j++)
+		for (j = 0; j < globbuf.gl_pathc; j++)
 		    failures += R_unlink(globbuf.gl_pathv[j], recursive);
 		dos_wglobfree(&globbuf);
 	    } else failures++;
@@ -1381,7 +1382,7 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (res == GLOB_NOSPACE)
 		    error(_("internal out-of-memory condition"));
 # endif
-		for ( j = 0; j < globbuf.gl_pathc; j++)
+		for (j = 0; j < globbuf.gl_pathc; j++)
 		    failures += R_unlink(globbuf.gl_pathv[j], recursive);
 		globfree(&globbuf);
 	    } else failures++;

@@ -78,6 +78,11 @@ BUG FIXES
     o	The confirmation of a new frame for a windows() graphics
 	device works harder to give the device focus, including
 	bringing it to the top.
+
+    o	glob (used by Sys.glob() and unlink()) was not working correctly
+    	on some filename patterns including non-ASCII characters.
+    	Part of the problem was specific to 2.7.x, part has existed
+    	since 2.5.0.
  
 
 
