@@ -3219,10 +3219,10 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
     {
 	wchar_t *w = globbuf.gl_pathv[i];
 	char *buf;
-	int n = wcslen(w);
-	buf = R_AllocStringBuffer(2*(n+1), &cbuff);
-	wcstoutf8(buf, w, n+1);
-	SET_STRING_ELT(ans, i, mkChar(buf));
+	int nb = wcstoutf8(NULL, w, 0);
+	buf = R_AllocStringBuffer(nb+1, &cbuff);
+	wcstoutf8(buf, w, nb+1); buf[nb] = '\0'; /* safety check */
+	SET_STRING_ELT(ans, i, mkCharCE(buf, CE_UTF8));
     }
 #else
 	SET_STRING_ELT(ans, i, mkChar(globbuf.gl_pathv[i]));
