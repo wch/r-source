@@ -119,7 +119,7 @@ png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
                 units = "px",
                 pointsize = 12, bg = "white", res = NA, restoreConsole = TRUE)
 {
-    checkIntFormat(filename)
+    if(!checkIntFormat(filename)) stop("invalid 'filename'")
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     if(units != "px" && is.na(res))
         stop("'res' must be specified unless 'units = \"px\"'")
