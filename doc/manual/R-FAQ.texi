@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-06-24
+@set FAQ_DATE @value{FAQ_YEAR}-07-05
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -2026,6 +2026,8 @@ Engineering and the Sciences (6th ed)'' by Jay L. Devore, 2003, Duxbury.
 @item Devore7
 Data sets and sample analyses from ``Probability and Statistics for
 Engineering and the Sciences (7th ed)'' by Jay L. Devore, 2008, Thomson.
+@item DiagnosisMed
+Diagnostic test accuracy evaluation for medical professionals.
 @item DierckxSpline
 R companion to ``Curve and Surface Fitting with Splines'' by Paul
 Dierckx, 1993, Oxford University Press.
@@ -2389,6 +2391,8 @@ Data sets with sample code from ``Nonlinear Regression Analysis and Its
 Applications'' by Doug Bates and Donald Watts, 1988, Wiley.
 @item NestedCohort
 Survival analysis for cohorts with missing covariate information.
+@item Network
+Estimates network indices, including trophic structure of foodwebs.
 @item ORMDR
 Odds ratio based multivactor-dimensionality reduction method for
 detecting gene-gene interactions.
@@ -2444,6 +2448,8 @@ Phylogenetic tree simulation.
 Univariate polynomials.
 @item Pomic
 Pattern oriented modeling information criterion.
+@item PredictiveRegression
+Prediction intervals for three basic statistical models.
 @item PresenceAbsence
 Presence-absence model evaluation.
 @item ProbForecastGOP
@@ -2718,6 +2724,10 @@ Sequential Monte Carlo (SMC) Algorithm.
 Data sets and a few functions for use with the practicals outlined in
 Appendix A of the book ``Statistical Models'' by Anthony Davison, 2003,
 Cambridge University Press.
+@item SNPMaP
+SNP Microarrays and Pooling in R.
+@item SNPMaP.cdm
+Annotation for SNP microarrays and pooling in R.
 @item SNPassoc
 SNP-based whole genome association studies.
 @item SNPmaxsel
@@ -4188,6 +4198,8 @@ Fit smoothing spline terms in Gaussian linear and nonlinear
 mixed-effects models.
 @item lmm
 Linear mixed models.
+@item lmom
+@math{L}-moments.
 @item lmomco
 @math{L}-moments and @math{L}-comoments.
 @item lmtest
@@ -4672,6 +4684,8 @@ Functions to perform optimal matching, particularly full matching.
 Representations, conversions and display of orientation SO(3) data.
 @item orloca
 Operations Research LOCational Analysis models.
+@item orloca.es
+Spanish version of @strong{orloca} package.
 @item orth
 Multivariate logistic regressions using orthogonalized residuals.
 @item orthopolynom
@@ -4921,6 +4935,8 @@ Quality Control Charts.  Shewhart quality control charts for continuous,
 attribute and count data.  Cusum and EWMA charts.  Operating
 characteristic curves.  Process capability analysis.  Pareto chart and
 cause-and-effect chart.
+@item qdg
+Infer QTL-directed Dependency Graphs for phenotype networks.
 @item qgen
 Quantitative Genetics using R.
 @item qlspack
