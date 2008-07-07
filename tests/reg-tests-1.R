@@ -5117,21 +5117,32 @@ stopifnot(sapply(R, function(ch) sub(".* : ", '', ch) ==
 ## was inconsistent in R < 2.7.0
 
 ## package.skeleton() with metadata-only code
-(cwd <- getwd())
-tDir <- tempdir()
-tmp <- tempfile(tmpdir = tDir)
+## work in current (= ./tests/ directory):
+tmp <- tempfile()
 writeLines(c('setClass("foo", contains="numeric")',
              'setMethod("show", "foo",',
              '          function(object) cat("I am a \\"foo\\"\\n"))'),
            tmp)
-setwd(tDir)
 if(file.exists("myTst")) unlink("myTst", recursive=TRUE)
 package.skeleton("myTst", code_files = tmp, namespace=TRUE)# with a file name warning
 stopifnot(1 == grep("setClass",
 	  readLines(list.files("myTst/R", full.names=TRUE))),
 	  c("foo-class.Rd","show-methods.Rd") %in% list.files("myTst/man"))
-setwd(cwd)
 ## failed for several reasons in R < 2.7.0
+##
+## Part 2: -- build, install, load and "inspect" the package:
+if(.Platform$OS.type == "unix") {
+ ## <FIXME> need build.package()
+ Rcmd <- paste(file.path(R.home("bin"), "R"), "CMD")
+ system(paste(Rcmd, "build", "myTst"))
+ dir.create("myLib")
+ install.packages("myTst", lib = "myLib", repos=NULL)# with warnings
+ stopifnot(require("myTst",lib = "myLib"))
+ sm <- getMethods(show, where= as.environment("package:myTst"))
+ stopifnot(names(sm@methods) == "foo")
+}
+
+
 
 
 ## predict.loess with transformed variables
