@@ -1193,7 +1193,6 @@
  winaddmenuitem
  windelmenu
  windelmenuitem
- windelmenus
  wingetmenuitems
  xbufaddxc
  xbufaddxs
