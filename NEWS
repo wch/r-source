@@ -315,8 +315,7 @@ BUG FIXES
 	correct row names c("NA,"NA.1") again.
 
     o	The GUI data editor for dataframes did not handle escape
-	characters in entries properly.  (Currently this has only been
-	fixed on Windows; the other platforms will follow.) (PR#11897)
+	characters in entries properly. (PR#11897)
 
 
 
