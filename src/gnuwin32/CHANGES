@@ -86,6 +86,9 @@ BUG FIXES
 
     o	Sys.glob() returned a UTF-8 result in 2.7.[01] but failed to
 	mark its encoding.
+
+    o	User menus were not properly removed when a graph window was 
+	closed.
  
 
 

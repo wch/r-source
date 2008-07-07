@@ -2155,7 +2155,6 @@ static void GA_NewPage(const pGEcontext gc,
     SH;
 }
 
-#ifdef UNUSED
 static void deleteGraphMenus(int devnum)
 {
     char prefix[15];
@@ -2163,7 +2162,6 @@ static void deleteGraphMenus(int devnum)
     sprintf(prefix, "$Graph%i", devnum);
     windelmenus(prefix);
 }
-#endif
 
 	/********************************************************/
 	/* device_Close is called when the device is killed	*/
@@ -2196,6 +2194,8 @@ static void GA_Close(pDevDesc dd)
 	del(xd->bm);
 	/* If this is the active device and buffered, shut updates off */
 	if (xd == GA_xd) GA_xd = NULL;
+	deleteGraphMenus(ndevNumber(dd) + 1);
+	
     } else if ((xd->kind == PNG) || (xd->kind == JPEG) 
 	       || (xd->kind == BMP) || (xd->kind == TIFF)) {
 	SaveAsBitmap(dd, xd->res_dpi);
