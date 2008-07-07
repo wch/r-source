@@ -3,8 +3,9 @@
  *   Catherine Loader, catherine@research.bell-labs.com.
  *   October 23, 2000.
  *
- *  Merge in to R:
+ *  Merge in to R and further tweaks :
  *	Copyright (C) 2000, The R Core Development Team
+ *	Copyright (C) 2008, The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -64,7 +65,10 @@ dbinom_raw(double x, double n, double p, double q, int give_log)
     lc = stirlerr(n) - stirlerr(x) - stirlerr(n-x) - bd0(x,n*p) - bd0(n-x,n*q);
 
     /* f = (M_2PI*x*(n-x))/n; could overflow or underflow */
-    lf = log(M_2PI) + log(x) + log(n-x) - log(n);
+    /* Upto R 2.7.1:
+     * lf = log(M_2PI) + log(x) + log(n-x) - log(n);
+     * -- following is much better for  x << n : */
+    lf = log(M_2PI) + log(x) + log1p(- x/n);
 
     return R_D_exp(lc - 0.5*lf);
 }
