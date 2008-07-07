@@ -35,6 +35,8 @@
 
 #include "Defn.h"
 #include "Print.h"
+#include <Rinternals.h>
+#include <R_ext/Parse.h>  /* parsing is used in handling escape codes */
 
 #include "graphapp/ga.h"
 #include "console.h"
@@ -774,6 +776,54 @@ static Rboolean getccol(DEstruct DE)
     return newcol;
 }
 
+static SEXP lang5(SEXP s, SEXP t, SEXP u, SEXP v, SEXP w)
+{
+    PROTECT(s);
+    s = LCONS(s, list4(t, u, v, w));
+    UNPROTECT(1);
+    return s;
+}
+
+static SEXP processEscapes(SEXP x)
+{
+    SEXP newval, pattern, replacement, expr;
+    ParseStatus status;
+    
+    /* We process escape sequences in a scalar string by escaping
+       unescaped quotes, then quoting the whole thing and parsing it.  This
+       is supposed to be equivalent to the R code
+
+       newval <- gsub(perl=TRUE, "(?<!\\\\)((\\\\\\\\)*)\"", "\\1\\\\\"", x)
+       newval <- sub('(^.*$)', '"\1"', newval)
+       newval <- eval(parse(text=newval))
+
+       We do it this way to avoid extracting the escape handling
+       code from the parser.  We need it in C code because this may be executed
+       numerous times from C in dataentry.c */
+    	
+    PROTECT( pattern = mkString("(?<!\\\\)((\\\\\\\\)*)\"") );
+    PROTECT( replacement = mkString("\\1\\\\\"") );
+    PROTECT( expr = lang5(install("gsub"), ScalarLogical(1), pattern, replacement, x) );
+    SET_TAG( CDR(expr), install("perl") );
+
+    PROTECT( newval = eval(expr, R_BaseEnv) );
+    PROTECT( pattern = mkString("(^.*$)") );
+    PROTECT( replacement = mkString("\"\\1\"") );
+    PROTECT( expr = lang4(install("sub"), pattern, replacement, newval) );
+    PROTECT( newval = eval(expr, R_BaseEnv) );
+    PROTECT( expr = R_ParseVector( newval, 1, &status, R_NilValue) );
+    
+    /* We only handle the first entry. If this were available more generally,
+       we'd probably want to loop over all of expr */
+       
+    if (status == PARSE_OK && length(expr))
+	PROTECT( newval = eval(VECTOR_ELT(expr, 0), R_BaseEnv) );
+    else
+	PROTECT( newval = R_NilValue );  /* protect just so the count doesn't change */
+    UNPROTECT(10);
+    return newval;
+}
+
 /* close up the entry to a cell, put the value that has been entered
    into the correct place and as the correct type */
 
@@ -803,9 +853,16 @@ static void closerect(DEstruct DE)
 	    char *endp;
 	    double new = R_strtod(DE->buf, &endp);
 	    int warn = !isBlankString(endp);
-	    if (TYPEOF(cvec) == STRSXP)
-		SET_STRING_ELT(cvec, wrow - 1, mkChar(DE->buf));
-	    else
+	    if (TYPEOF(cvec) == STRSXP) {
+	    	SEXP newval;
+	    	PROTECT( newval = mkString(DE->buf) );
+	    	PROTECT( newval = processEscapes(newval) );
+	    	if (TYPEOF(newval) == STRSXP && length(newval) == 1)
+		    SET_STRING_ELT(cvec, wrow - 1, STRING_ELT(newval, 0));
+		else
+		    warning(G_("dataentry: parse error on string"));
+		UNPROTECT(2);
+	    } else
 		REAL(cvec)[wrow - 1] = new;
 	    if (newcol && warn) {
 		/* change mode to character */

@@ -29,11 +29,12 @@
   At present, this only works on simple data frames containing numeric,
   logical or character vectors and factors, and numeric, logical or
   character matrices.  Any other mode of matrix will give an error, and
-  a warnng is givne when the matrix has a class (which will be discarded).
+  a warning is given when the matrix has a class (which will be discarded).
 
   Data frame columns are coerced on input to \emph{character} unless
   numeric (in the sense of \code{is.numeric}), logical or factor.  A
-  warning is given when classes are discarded.
+  warning is given when classes are discarded.  Special characters
+  (tabs, non-printing ASCII, etc.) will be displayed as escape sequences.
 
   Factors columns are represented in the spreadsheet as either numeric
   vectors (which are more suitable for data entry) or character vectors

@@ -310,6 +310,10 @@ BUG FIXES
     o	data.frame(x=1:2, y=3:4, row.names=c("a","NA"))[c(2,NA),] has
 	correct row names c("NA,"NA.1") again.
 
+    o	The GUI data editor for dataframes did not handle escape
+	characters in entries properly.  (Currently this has only been
+	fixed on Windows; the other platforms will follow.) (PR#11897)
+
 
 
 		CHANGES IN R VERSION 2.7.1
