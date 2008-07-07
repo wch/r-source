@@ -1,9 +1,9 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
- *  Copyright (C) 2003-4      The R Foundation
+ *  Copyright (C) 2003--2008  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -175,6 +175,7 @@ SEXP attribute_hidden do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    RAND2(10, rweibull);
 	    RAND2(11, rwilcox);
 	    RAND2(12, rnchisq);
+	    RAND2(13, rnbinom_mu);
 	default:
 	    error(_("internal error in do_random2"));
 	}

@@ -1668,6 +1668,9 @@ SEXP attribute_hidden do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
     case 43:  return Math3(args, bessel_i);
     case 44:  return Math3(args, bessel_k);
 
+    case 45:  return Math3_1(args, dnbinom_mu);
+    case 46:  return Math3_2(args, pnbinom_mu);
+    case 47:  return Math3_2(args, qnbinom_mu);
 
     default:
 	errorcall(call,

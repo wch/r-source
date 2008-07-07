@@ -21,7 +21,7 @@
  *  SYNOPSIS
  *
  *	#include <Rmath.h>
- *	double qnbinom(double p, double size, double prob, 
+ *	double qnbinom(double p, double size, double prob,
  *                     int lower_tail, int log_p)
  *
  *  DESCRIPTION
@@ -44,7 +44,7 @@
 #include "nmath.h"
 #include "dpq.h"
 
-static double 
+static double
 do_search(double y, double *z, double p, double n, double pr, double incr)
 {
     if(*z >= p) {
@@ -76,6 +76,7 @@ double qnbinom(double p, double size, double prob, int lower_tail, int log_p)
 	return p + size + prob;
 #endif
     if (prob <= 0 || prob > 1 || size <= 0) ML_ERR_return_NAN;
+    /* FIXME: size = 0 is well defined ! */
     if (prob == 1) return 0;
 
     R_Q_P01_boundaries(p, 0, ML_POSINF);
@@ -117,4 +118,10 @@ double qnbinom(double p, double size, double prob, int lower_tail, int log_p)
 	} while(oldincr > 1 && incr > y*1e-15);
 	return y;
     }
+}
+
+double qnbinom_mu(double p, double size, double mu, int lower_tail, int log_p)
+{
+/* FIXME!  Implement properly!! (not losing accuracy for very large size (prob ~= 1)*/
+    return qnbinom(p, size, /* prob = */ size/(size+mu), lower_tail, log_p);
 }

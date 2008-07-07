@@ -194,24 +194,27 @@ rhyper <- function(nn, m, n, k) .Internal(rhyper(nn, m, n, k))
 dnbinom <- function(x, size, prob, mu, log = FALSE)
 {
     if (!missing(mu)) {
-        if (!missing(prob)) stop("'prob' and 'mu' both specified")
-        prob <- size/(size + mu)
+	if (!missing(prob)) stop("'prob' and 'mu' both specified")
+	.Internal(dnbinom_mu(x, size, mu, log))
     }
-    .Internal(dnbinom(x, size, prob, log))
+    else
+	.Internal(dnbinom (x, size, prob, log))
 }
 pnbinom <- function(q, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
 {
     if (!missing(mu)) {
-        if (!missing(prob)) stop("'prob' and 'mu' both specified")
-        prob <- size/(size + mu)
+	if (!missing(prob)) stop("'prob' and 'mu' both specified")
+	.Internal(pnbinom_mu(q, size, mu, lower.tail, log.p))
     }
-    .Internal(pnbinom(q, size, prob, lower.tail, log.p))
+    else
+	.Internal(pnbinom (q, size, prob, lower.tail, log.p))
 }
 qnbinom <- function(p, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
 {
     if (!missing(mu)) {
-        if (!missing(prob)) stop("'prob' and 'mu' both specified")
-        prob <- size/(size + mu)
+	if (!missing(prob)) stop("'prob' and 'mu' both specified")
+### FIXME: implement qnbinom_mu(...)
+	prob <- size/(size + mu)
     }
     .Internal(qnbinom(p, size, prob, lower.tail, log.p))
 }
@@ -219,9 +222,10 @@ rnbinom <- function(n, size, prob, mu)
 {
     if (!missing(mu)) {
         if (!missing(prob)) stop("'prob' and 'mu' both specified")
-        prob <- size/(size + mu)
+        .Internal(rnbinom_mu(n, size, mu))
     }
-    .Internal(rnbinom(n, size, prob))
+    else
+        .Internal(rnbinom(n, size, prob))
 }
 
 dpois <- function(x, lambda, log = FALSE) .Internal(dpois(x, lambda, log))

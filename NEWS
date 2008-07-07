@@ -278,6 +278,10 @@ BUG FIXES
     o	Equality comparison of factors with <NA> levels now works
 	correctly again.
 
+    o	dnbinom(x, size, mu=*, ..) is now more accurate for very large
+	'size'.	 The same applies to pnbinom() and rnbinom().
+	[maybe moved to 2.7.1 patched eventually]
+
 
 
 	**************************************************
