@@ -1510,7 +1510,14 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP op)
 	    }
 	    else if (h != R_MissingArg)
 		error(_("'...' used in an incorrect context"));
+/* Uncomment the following to restore old behavior */
+/* #define OLDMISSING */
+#ifdef OLDMISSING
 	} else if (CAR(el) != R_MissingArg) {
+#else
+	} else if (!(CAR(el) == R_MissingArg ||
+                 (isSymbol(CAR(el)) && R_isMissing(CAR(el), rho)))) {
+#endif
 	    SETCDR(tail, CONS(eval(CAR(el), rho), R_NilValue));
 	    tail = CDR(tail);
 	    SET_TAG(tail, CreateTag(TAG(el)));
@@ -1572,7 +1579,12 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 	    else if(h != R_MissingArg)
 		error(_("'...' used in an incorrect context"));
 	}
+#ifdef OLDMISSING
 	else if (CAR(el) == R_MissingArg) {
+#else
+	else if (CAR(el) == R_MissingArg ||
+                 (isSymbol(CAR(el)) && R_isMissing(CAR(el), rho))) {
+#endif
 	    SETCDR(tail, CONS(R_MissingArg, R_NilValue));
 	    tail = CDR(tail);
 	    SET_TAG(tail, CreateTag(TAG(el)));
