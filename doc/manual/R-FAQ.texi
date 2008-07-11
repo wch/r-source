@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-07-05
+@set FAQ_DATE @value{FAQ_YEAR}-07-11
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -458,11 +458,11 @@ respectively.
 
 The @file{bin/windows} directory of a @CRAN{} site contains binaries for
 a base distribution and a large number of add-on packages from @CRAN{}
-to run on Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and
-clones (but not on other platforms).  The Windows version of R was
-created by Robert Gentleman and Guido Masarotto, and is now being
-developed and maintained by @email{murdoch@@stats.uwo.ca, Duncan
-Murdoch} and @email{Brian.Ripley@@R-project.org, Brian D. Ripley}.
+to run on Windows 2000 and later (including 64-bit versions of Windows)
+on ix86 and x86_64 chips. The Windows version of R was created by Robert
+Gentleman and Guido Masarotto, and is now being developed and maintained
+by @email{murdoch@@stats.uwo.ca, Duncan Murdoch} and
+@email{Brian.Ripley@@R-project.org, Brian D. Ripley}.
 
 @c Note that when uncompressing the zip files, the pkunzip program needs to
 @c be invoked with the @samp{-D} flag to create subdirectories.  Also, be
@@ -697,7 +697,7 @@ The book
 
 @quotation
 W. N. Venables and B. D. Ripley (2002), ``Modern Applied Statistics with
-S.  Fourth Edition''.  Springer, ISBN 0-387-95457-0
+S'' (4th edition).  Springer, ISBN 0-387-95457-0
 @end quotation
 
 @noindent
@@ -723,8 +723,8 @@ between R and S?}).  Introductory books include
 @quotation
 P. Spector (1994), ``An introduction to S and @SPLUS{}'', Duxbury Press.
 
-A. Krause and M. Olsen (2005), ``The Basics of @SPLUS{}'' (Fourth
-Edition).  Springer, ISBN 0-387-26109-5.
+A. Krause and M. Olsen (2005), ``The Basics of @SPLUS{}'' (4th edition).
+Springer, ISBN 0-387-26109-5.
 @end quotation
 
 The book
@@ -1882,6 +1882,9 @@ Bayesian Prediction with High-order Interactions.
 @c @item BRugs
 @c OpenBUGS and its R interface BRugs.
 @c </COMMENT>
+@item BaM
+Functions and datasets for ``Bayesian Methods: A Social and Behavioral
+Sciences Approach'' (2nd edition) by Jeff Gill, 2007, CRC Press.
 @item BayHaz
 Functions for Bayesian Hazard rate estimation.
 @item BayesTree
@@ -1917,6 +1920,9 @@ Data sets for the book ``Basic Statistics and Data Analysis'' by
 L. J. Kitchens, 2003, Duxbury.
 @item BsMD
 Bayes screening and model discrimination follow-up designs.
+@item CADStat
+A @acronym{GUI} to several statistical methods for biological
+inferences.
 @item CCA
 Canonical correlation analysis.
 @item CDNmoney
@@ -2086,8 +2092,8 @@ on Generalized Linear Models'' by Ludwig Fahrmeir and Gerhard Tutz
 @item FieldSim
 Random fields simulations.
 @item FinTS
-Companion to the book ``Analysis of Financial Time Series'' by Ruey Tsay
-(2005), Wiley (2nd edition).
+Companion to the book ``Analysis of Financial Time Series'' (2nd
+edition) by Ruey Tsay (2005), Wiley.
 @item FitAR
 Subset AR model fitting.
 @item Flury
@@ -2165,6 +2171,8 @@ Interactive exploratory spatial data analysis.
 Gillespie's Stochastic Simulation Algorithm (SSA).
 @item GroupSeq
 Computations related to group-seqential boundaries.
+@item HAPim
+Methods for QTL detection and fine mapping.
 @item HH
 Support software for ``Statistical Analysis and Data Display'' by
 Richard M. Heiberger and Burt Holland, Springer, 2005.
@@ -2369,6 +2377,8 @@ similar covariate distributions.
 Multivariate and propensity score matching with formal tests of balance.
 @item Matrix
 A Matrix package.
+@item Metabonomic
+@acronym{GUI} for metabonomic analysis.
 @item MiscPsycho
 Miscellaneous Psychometrics.
 @item MultEq
@@ -2535,6 +2545,8 @@ data using natural cubic splines.
 Access to databases through the JDBC interface.
 @item RJaCGH
 Reversible Jump MCMC for the analysis of CGH arrays.
+@item RKEA
+R/KEA interface for extracting keyphrases from text documents.
 @item RLMM
 A genotype calling algorithm for Affymetrix SNP arrays.
 @item RLRsim
@@ -2811,7 +2823,7 @@ Terminal Restriction Fragment Length Polymorphism (TRFLP) Analysis and
 Matching Package for R.
 @item TSA
 Functions and datasets detailed in the book ``Time Series Analysis
-With Applications in R'' (second edition) by Jonathan Cryer and Kung-Sik
+With Applications in R'' (3rd edition) by Jonathan Cryer and Kung-Sik
 Chan, 2008, Springer.
 @item TSHRC
 Two Stage Hazard Rate Comparison.
@@ -3018,6 +3030,8 @@ Modifications and extensions of @strong{stats4} MLE code.
 @item bcp
 Bayesian Change Point based on the Barry and Hartigan product partition
 model.
+@item bear
+Bioavability and bioequivalence data analysis with crossover design.
 @item benchden
 28 benchmark densities from Berlinet/Devroye (1994).
 @item bentcableAR
@@ -3720,6 +3734,8 @@ Fuzzy set ordination.
 Features and strings for nonparametric regression.
 @item fuzzyFDR
 Exact calculation of fuzzy decision rules for multiple testing.
+@item fuzzyOP
+Fuzzy numbers and the main mathematical operations on these.
 @item fuzzyRankTests
 Fuzzy rank tests and confidence intervals.
 @item fxregime
@@ -3809,6 +3825,9 @@ correlation link.  Can also handle clustered categorical responses.
 Analysis of evolutionary diversification.
 @item genalg
 R based genetic algorithm for binary and floating point chromosomes.
+@item gene2pathway
+Prediction of KEGG pathway membership for individual genes based on
+InterPro domain signatures.
 @item genetics
 Classes and methods for handling genetic data.  Includes classes to
 represent genotypes and haplotypes at single markers up to multiple
@@ -4017,6 +4036,8 @@ Graphical user interface for exploring hydrological time series.
 The hypergeometric function over the whole complex plane.
 @item ibdreg
 Regression methods for IBD linkage with covariates.
+@item icomp
+Calculates the ICOMP criterion and its variations.
 @item identity
 Jacquard condensed coefficients of identity.
 @item ifa
@@ -5579,6 +5600,8 @@ A framework for text mining applications within R.
 @c @item torus
 @c Torus algorithm for quasi random number generation.
 @c </COMMENT>
+@item tossm
+Testing Of Spatial Structure Methods.
 @item tpr
 Temporal Process Regression.
 @item trackObjs
