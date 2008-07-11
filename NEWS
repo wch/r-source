@@ -282,6 +282,9 @@ BUG FIXES
 	'size'.	 The same applies to pnbinom() and rnbinom().
 	[maybe moved to 2.7.1 patched eventually]
 
+    o   plots of profile.mle objects was misbehaving when the
+        'which' argument had been used in their calculation.
+
 
 
 	**************************************************
