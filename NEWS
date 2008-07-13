@@ -32,6 +32,8 @@ BUG FIXES
     o	The GUI data editor for dataframes did not handle escape
 	characters in entries properly. (PR#11897)
 
+    o	PCRE has been updated to 7.7 (bugfix release).
+
 
 
 		CHANGES IN R VERSION 2.7.1
@@ -254,7 +256,7 @@ BUG FIXES
 	more arguments.
 
     o	symbol() in plotmath expressions works again with non-ASCII
-    	input on devices that use UTF-8 for the symbol font.
+	input on devices that use UTF-8 for the symbol font.
 
 
 
