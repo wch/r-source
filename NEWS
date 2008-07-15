@@ -174,7 +174,8 @@ NEW FEATURES
 	wildcards interpreted -- this helps with e.g. unlink("a[b")
 	which previously needed to be unlink("a\\[b").
 
-    o	abbreviate() gaines an optional switch 'strict'.
+    o	abbreviate() gains an optional switch 'strict' allowing cheap and
+	fast strict abbrevation.
 
 
 INSTALLATION
