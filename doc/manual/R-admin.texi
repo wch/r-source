@@ -908,7 +908,7 @@ The Tcl/Tk support files are in a zip file at
 
 @item
 You need @code{libpng} and @code{jpeg} sources (available, e.g., from
-@uref{http://www.libpng.org, @code{www.libpng.org}},
+@uref{http://www.libpng.org},
 @uref{ftp://ftp.uu.net/graphics/}[png,jpeg],
 @uref{http://www.libtiff.org}.  You will need files
 @file{libpng-1.2.18.tar.gz}, @file{jpegsrc.v6b.tar.gz},
@@ -1189,7 +1189,7 @@ You will need suitable cross-compilers installed and in your path.  We
 do not at present distribute suitable cross-compilers.
 
 For Fedora 8 and 9 users, RPMs are available at
-@uref{http://sourceforge.net/projects/mingw-cross/}, currently of
+@uref{http://sourceforge.net/projects/@/mingw-cross/}, currently of
 @command{gcc} 4.3.0 for both @cputype{ix86} and @cputype{x86_64}.
 (Recent Debian and Ubuntu versions have C/C++ but it seems not Fortran
 cross-compilers based on @command{gcc} 4.2.1.)
@@ -2532,9 +2532,9 @@ JVM, which are stored in environment variable
 @env{R_JAVA_LD_LIBRARY_PATH} in file @file{@var{R_HOME}/etc/ldpaths} (or
 a sub-architecture-specific version).  A typical setting for Sun Java is
 
-@example
+@smallexample
 /usr/java/jdk1.5.0_06/jre/lib/amd64/server:/usr/java/jdk1.5.0_06/jre/lib/amd64
-@end example
+@end smallexample
 
 Note that this unfortunately depends on the exact version of the JRE/JDK
 installed, and so will need updating if the Java installation is
@@ -2551,7 +2551,7 @@ Another alternative of overriding those setting is to  set
 the system. Other settings are recorded in @file{etc/Makeconf} (or a
 sub-architecture-specific version), e.g.
 
-@example
+@smallexample
 JAVA = /usr/bin/java
 JAVAC = /usr/bin/javac
 JAVA_HOME = /usr/java/jdk1.5.0_06/jre
@@ -2559,7 +2559,7 @@ JAVA_LD_LIBRARY_PATH = $(JAVA_HOME)/lib/amd64/server:$(JAVA_HOME)/lib/amd64:\
 $(JAVA_HOME)/../lib/amd64:/usr/local/lib64
 JAVA_LIBS = -L$(JAVA_HOME)/lib/amd64/server -L$(JAVA_HOME)/lib/amd64 
             -L$(JAVA_HOME)/../lib/amd64 -L/usr/local/lib64 -ljvm
-@end example
+@end smallexample
 
 @noindent
 where @samp{JAVA_LIBS} contains flags necessary to link JNI programs.
@@ -3646,7 +3646,7 @@ suggests that @option{-pc64} may be desirable.
 @subsection SunPro compilers
 
 Brian Ripley tested the SunPro Studio 12 compilers
-(@uref{http://developers.sun.com/sunstudio/index.jsp}) on
+(@uref{http://developers.sun.com/@/sunstudio/@/index.jsp}) on
 @cputype{x86_64} Linux with
 
 @example
@@ -3670,8 +3670,8 @@ SAFE_FFLAGS="-O5 -libmil"
 @end example
 
 @noindent
-@code{-m64} could be added, but was the default.  Do not use
-@code{-fast}: see the warnings under Solaris.
+@option{-m64} could be added, but was the default.  Do not use
+@option{-fast}: see the warnings under Solaris.
 
 The resulting build of @R{} was not quite as fast as that built with
 @command{gcc}@tie{}4.2.1 at @code{-O3}.
@@ -4256,7 +4256,7 @@ FLIBS="-L/opt/ofort90/lib -lhf90vecmath -lhf90math -lf90"
 Some systems have @command{f95} as an IBM compiler that does not by
 default accept FORTRAN 77.  It needs the flag @code{-qfixed=72}, or to
 be invoked as @command{xlf_r}.
-%http://publib.boulder.ibm.com/infocenter/comphelp/v7v91/index.jsp?topic=/com.ibm.xlf91a.doc/xlfug/hu00465.htm
+@c http://publib.boulder.ibm.com/infocenter/comphelp/v7v91/index.jsp?topic=/com.ibm.xlf91a.doc/xlfug/hu00465.htm
 
 The AIX native @code{iconv} does not support encodings @samp{latin1} nor
 @samp{""} and so cannot be used.  (As far as we know GNU @code{libiconv}
@@ -4539,10 +4539,10 @@ always use the short forms (found by @code{dir /x} at the Windows
 command line).  Network shares (with paths starting @code{\\}) are not
 supported.  For example, all on one line,
 
-@example
+@smallexample
 PATH=c:\Rtools\bin;c:\Rtools\perl\bin;c:\Rtools\MinGW\bin;c:\texmf\miktex\bin;
      c:\progra~1\htmhe~1;c:\R\bin;c:\windows;c:\windows\system32
-@end example
+@end smallexample
 
 It is essential that the directory containing the command line tools
 comes first or second in the path: there are typically like-named
@@ -4707,7 +4707,7 @@ or later are needed to get a correct build of @R{} itself.  (The
 `Snapshot' @code{binutils-2.17.50-20070129-1.tar.gz} has also be
 tested.)  There are known problems with using other compiler sets on
 Windows Vista
-(@uref{http://www.nabble.com/environment-hosed-during-upgrade-tf3305745.html#a9195667}
+(@uref{http://www.nabble.com/environment-hosed-during-upgrade-tf3305745.html#a9195667})
 and that a suitable @code{PATH} needs to be set to include the path to
 @file{cc1}.
 

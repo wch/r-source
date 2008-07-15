@@ -1928,9 +1928,9 @@ data is transferred directly from memory to the connection or @emph{vice
 versa}.  This will not suffice if the file is to be transferred to a
 machine with a different architecture, but between almost all @R{}
 platforms the only change needed is that of byte-order.  Common PCs
-(@code{ix86}-based and @code{x86_64}-based machines), Compaq Alpha and
-Vaxen are @emph{little-endian}, whereas Sun Sparc, mc680x0 series, IBM
-R6000, Apple Macintosh, SGI and most others are @emph{big-endian}.
+(@cputype{ix86}-based and @cputype{x86_64}-based machines), Compaq Alpha
+and Vaxen are @emph{little-endian}, whereas Sun Sparc, mc680x0 series,
+IBM R6000, Apple Macintosh, SGI and most others are @emph{big-endian}.
 (Network byte-order (as used by XDR, eXternal Data Representation) is
 big-endian.)  To transfer to or from other programs we may need to do
 more, for example to read 16-bit integers or write single-precision real

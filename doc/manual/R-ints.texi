@@ -1450,7 +1450,7 @@ only the visible methods will be cached.
 @subsection Mechanics of S4 dispatch
 
 This subsection does not discuss how S4 methods are chosen: see
-@uref{http://developer.r-project.org/howMethodsWork.pdf}.
+@uref{http://@/developer.@/r-project.org/howMethodsWork.pdf}.
 
 For all but primitive functions, setting a method on an existing
 function that is not itself S4 generic creates a new object in the
@@ -2213,8 +2213,8 @@ directory @file{src/main}.} is in package @pkg{graphics}) and one
 implemented in package @pkg{grid}.
 
 Some notes on the changes for 1.4.0 can be found at
-@uref{http://www.stat.auckland.ac.nz/~paul/R/basegraph.html} and
-@uref{http://www.stat.auckland.ac.nz/~paul/R/graphicsChanges.html}.
+@uref{http://www.stat.auckland.ac.nz/@/~paul/@/R/basegraph.html} and
+@uref{http://www.stat.auckland.ac.nz/@/~paul/R/@/graphicsChanges.html}.
 
 At the lowest level is a graphics device, which manages a plotting
 surface (a screen window or a representation to be written to a file).

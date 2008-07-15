@@ -180,7 +180,7 @@ distribution (in directory @file{share/licenses}).
 
 For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 GNU project see
-@uref{http://www.gnu.org/prep/standards/standards.html#Documentation}.
+@uref{http://@/www.gnu.org/prep/standards/standards.html#Documentation}.
 
 The package subdirectory should be given the same name as the package.
 Because some file systems (e.g., those on Windows) are not
@@ -1658,16 +1658,10 @@ admitted to the main @acronym{CRAN} package area.
 
 When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to
-
-@example
-@uref{ftp://CRAN.R-project.org/incoming/}
-@end example
-
-@noindent
-(note: use @code{ftp} and not @code{sftp} to connect to this server) and
-send a message to @email{CRAN@@R-project.org} about it.  The
-@acronym{CRAN} maintainers will run these tests before putting a
-submission in the main archive.
+@uref{ftp://CRAN.R-project.org/incoming/} (note: use @samp{ftp} and not
+@samp{sftp} to connect to this server) and send a message to
+@email{CRAN@@R-project.org} about it.  The @acronym{CRAN} maintainers
+will run these tests before putting a submission in the main archive.
 
 Note that @acronym{CRAN} generally does not accept submissions of
 precompiled binaries due to security reasons.
@@ -4185,7 +4179,7 @@ profile DLLs on Windows.
 @subsection Linux
 
 Options include using @command{sprof} for a shared object, and
-@command{oprofile} (see @uref{http://oprofile.sourceforge.net/}) for any
+@command{oprofile} (see @uref{http://@/oprofile.sourceforge.net/}) for any
 executable or shared object.
 
 @subsubsection sprof
@@ -4276,7 +4270,7 @@ collects information from shared libraries compiled with @option{-pg}.
 Developers have recommended @command{sample} (or @command{Sampler.app},
 which is a GUI version) and @command{Shark} (see
 @uref{http://developer.apple.com/tools/sharkoptimize.html} and
-@uref{http://developer.apple.com/tools/shark_optimize.html}).
+@uref{http://@/developer.@/apple.com/tools/shark_optimize.html}).
 
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
@@ -4740,8 +4734,8 @@ It is possible to run all the examples, tests and vignettes covered by
 @node Using valgrind,  , Using gctorture, Using gctorture and valgrind
 @subsection Using valgrind
 
-If you have access to Linux on an @code{ix86}, @code{x86_64} or
-@code{ppc32} platform you can use @code{valgrind}
+If you have access to Linux on an @cputype{ix86}, @cputype{x86_64} or
+@cputype{ppc32} platform you can use @code{valgrind}
 (@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
 check for possible problems.  To run some examples under @code{valgrind}
 use something like
@@ -5540,7 +5534,8 @@ routines declared as
 @findex R_RegisterCCallable
 @findex R_GetCCallable
 @example
-void R_RegisterCCallable(const char *package, const char *name, DL_FUNC fptr);
+void R_RegisterCCallable(const char *package, const char *name,
+                         DL_FUNC fptr);
 DL_FUNC R_GetCCallable(const char *package, const char *name);
 @end example
 
@@ -7655,7 +7650,8 @@ Function
 
 @findex reEnc
 @example
-const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst);
+const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out,
+                  int subst);
 @end example
 
 @noindent
