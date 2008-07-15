@@ -40,7 +40,7 @@ substring <- function(text,first,last=1000000)
 
 abbreviate <-
     function(names.arg, minlength = 4, use.classes = TRUE, dot = FALSE,
-             method = c("left.kept", "both.sides"))
+             strict = FALSE, method = c("left.kept", "both.sides"))
 {
     ## we just ignore use.classes
     if(minlength <= 0)
@@ -52,31 +52,36 @@ abbreviate <-
     old <- names.arg
     if(any(dups))
 	names.arg <- names.arg[!dups]
-    method <- match.arg(method)
-    if(method == "both.sides")
-        ## string reversion: FIXME reverse .Internal(abbreviate(.))
-	chRev <- function(x)
-	    sapply(lapply(strsplit(x, NULL), rev), paste, collapse="")
-    dup2 <- rep.int(TRUE, length(names.arg))
-    x <- these <- names.arg
-    repeat {
-	ans <- .Internal(abbreviate(these, minlength, use.classes))
-        ## NB: fulfills   max(nchar(ans)) <= minlength
-	x[dup2] <- ans
-	if(!any(dup2 <- duplicated(x))) break
-	if(method == "both.sides") { ## abbreviate the dupl. ones from the other side:
-	    x[dup2] <- chRev(.Internal(abbreviate(chRev(names.arg[dup2]),
-						  minlength, use.classes)))
+    x <- names.arg
+    if(strict) {
+	x[] <- .Internal(abbreviate(x, minlength, use.classes))
+    } else {
+	method <- match.arg(method)
+	if(method == "both.sides")
+	    ## string reversion: FIXME reverse .Internal(abbreviate(.))
+	    chRev <- function(x)
+		sapply(lapply(strsplit(x, NULL), rev), paste, collapse="")
+	dup2 <- rep.int(TRUE, length(names.arg))
+	these <- names.arg
+	repeat {
+	    ans <- .Internal(abbreviate(these, minlength, use.classes))
+	    ## NB: fulfills   max(nchar(ans)) <= minlength
+	    x[dup2] <- ans
 	    if(!any(dup2 <- duplicated(x))) break
+	    if(method == "both.sides") { ## abbreviate the dupl. ones from the other side:
+		x[dup2] <- chRev(.Internal(abbreviate(chRev(names.arg[dup2]),
+						      minlength, use.classes)))
+		if(!any(dup2 <- duplicated(x))) break
+	    }
+	    minlength <- minlength+1
+	    dup2 <- dup2 | match(x, x[dup2], 0)
+	    these <- names.arg[dup2]
 	}
-	minlength <- minlength+1
-	dup2 <- dup2 | match(x, x[dup2], 0)
-	these <- names.arg[dup2]
     }
     if(any(dups))
 	x <- x[match(old,names.arg)]
-    if(dot) { # add "." where we did abbreviate:
-        chgd <- x != old
+    if(dot) {			    # add "." where we did abbreviate:
+	chgd <- x != old
 	x[chgd] <- paste(x[chgd],".",sep = "")
     }
     names(x) <- old

@@ -1,13 +1,14 @@
 % File src/library/base/man/abbreviate.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2007 R Core Development Team
+% Copyright 2008      The R Foundation
 % Distributed under GPL 2 or later
 
 \name{abbreviate}
 \title{Abbreviate Strings}
 \usage{
 abbreviate(names.arg, minlength = 4, use.classes = TRUE,
-           dot = FALSE, method = c("left.kept", "both.sides"))
+           dot = FALSE, strict = FALSE, method = c("left.kept", "both.sides"))
 }
 \alias{abbreviate}
 \arguments{
@@ -16,12 +17,16 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   \item{minlength}{the minimum length of the abbreviations.}
   \item{use.classes}{logical (currently ignored by \R).}
   \item{dot}{logical: should a dot (\code{"."}) be appended?}
+  \item{strict}{logical: should \code{minlength} be observed strictly?
+    Note that setting \code{strict=TRUE} may return \emph{non}-unique
+    strings.}
   \item{method}{a string specifying the method used with default
     \code{"left.kept"}, see \sQuote{Details} below.}
 }
 \description{
   Abbreviate strings to at least \code{minlength} characters,
-  such that they remain \emph{unique} (if they were).
+  such that they remain \emph{unique} (if they were),
+  unless \code{strict=TRUE}.
 }
 \details{
   The algorithm (\code{method = "left.kept"}) used is similar to that of
@@ -50,10 +55,10 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   the same \code{minlength} abbreviations then, if \code{method =
   "both.sides"} the basic internal \code{abbreviate()} algorithm is
   applied to the characterwise \emph{reversed} strings; if there are
-  still duplicated abbreviations, \code{minlength} is
-  incremented by one and new abbreviations are found for those elements
-  only.  This process is repeated until all unique elements of
-  \code{names.arg} have unique abbreviations.
+  still duplicated abbreviations and if \code{strict=FALSE} as by
+  default, \code{minlength} is incremented by one and new abbreviations
+  are found for those elements only.  This process is repeated until all
+  unique elements of \code{names.arg} have unique abbreviations.
 
   The character version of \code{names.arg} is attached to the returned
   value as a names argument: no other attributes are retained.
@@ -69,10 +74,14 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
 \examples{
 x <- c("abcd", "efgh", "abce")
 abbreviate(x, 2)
+abbreviate(x, 2, strict=TRUE)# >> 1st and 3rd are == "ab"
 
 (st.abb <- abbreviate(state.name, 2))
-table(nchar(st.abb))# out of 50, 3 need 4 letters
-
+table(nchar(st.abb))# out of 50, 3 need 4 letters :
+as <- abbreviate(state.name, 3, strict=TRUE)
+as[which(as == "Mss")]
+\dontshow{stopifnot(which(as == "Mss") == c(21,24,25))
+}
 ## method="both.sides" helps:  no 4-letters, and only 4 3-letters:
 st.ab2 <- abbreviate(state.name, 2, method="both")
 table(nchar(st.ab2))
