@@ -2713,7 +2713,11 @@ sub rdoc2latex {# (filename)
 ## The basic translator for 'normal text'
 sub text2latex {
 
-    my $text = $_[0];
+    my ($text, $recursive) = @_;
+
+    ## When processing \item, this calls itself (recursively), hence we
+    ## need to make sure that handling things like \tab and \cr happens
+    ## only once.
 
     $text =~ s/$EOB/\\\{/go;
     $text =~ s/$ECB/\\\}/go;
@@ -2755,7 +2759,8 @@ sub text2latex {
     while(checkloop($loopcount++, $text, "\\item")
 	  && $text =~ /\\itemnormal/s) {
 	my ($id, $arg, $desc) = get_arguments("item", $text, 2);
-	$descitem = "\\DITEM[" . text2latex($arg) . "] " . text2latex($desc);
+	$descitem = "\\DITEM[" .
+	    text2latex($arg, 1) . "] " . text2latex($desc, 1);
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
     }
 
@@ -2771,13 +2776,15 @@ sub text2latex {
 	$text =~ s/$EPREFORMAT$id/$ec/;
     }
 
-    $text =~ s/\\\\/\\bsl{}/go;
-    ## A mess:  map  & \& \\& \\\& to  \& \& \bsl{}\& \bsl{}\&
-    $text =~ s/([^\\])&/$1\\&/go;
-    $text =~ s/\\R(\s+)/\\R\{\}$1/go;
-    $text =~ s/\\cr\n\[/\\\\\{\}\n\[/go;
-    $text =~ s/\\cr/\\\\/go;
-    $text =~ s/\\tab(\s+)/&$1/go;
+    if(!$recursive) {
+	$text =~ s/\\\\/\\bsl{}/go;
+	## A mess:  map  & \& \\& \\\& to  \& \& \bsl{}\& \bsl{}\&
+	$text =~ s/([^\\])&/$1\\&/go;
+	$text =~ s/\\R(\s+)/\\R\{\}$1/go;
+	$text =~ s/\\cr\n\[/\\\\\{\}\n\[/go;
+	$text =~ s/\\cr/\\\\/go;
+	$text =~ s/\\tab(\s+)/&$1/go;
+    }
 
     ## we need to convert \links's
     while(checkloop($loopcount++, $text, "\\link")
