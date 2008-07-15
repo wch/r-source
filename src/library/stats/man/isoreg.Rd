@@ -74,6 +74,9 @@ plot(ir, plot.type = "row")
 (ir4 <- isoreg(1:10, y4 <- c(5, 9, 1:2, 5:8, 3, 8)))
 cat(sprintf("R^2 = \%.2f\n",
             1 - sum(residuals(ir4)^2) / ((10-1)*var(y4))))
+
+## If you are interested in the knots alone :
+with(ir4, cbind(iKnots, yf[iKnots]))
 }
 \keyword{regression}
 \keyword{smooth}
