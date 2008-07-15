@@ -52,7 +52,7 @@ grid.ls <- function(x=NULL, grobs=TRUE, viewports=FALSE, fullNames=FALSE,
     } else if (is.function(print)) {
         print(listing, ...)
     } else {
-        stop(paste("Invalid", sQuote("print"), "argument"))
+        stop("Invalid 'print' argument")
     }
     invisible(listing)
 }
