@@ -103,7 +103,8 @@ export(Rtangle, RtangleSetup, RweaveLatex, RweaveLatexSetup, Stangle,
        RtangleWritedoc, RweaveLatexOptions, RweaveChunkPrefix,
        RweaveEvalWithOpt, RweaveTryStop, SweaveHooks,
        RweaveLatexWritedoc, RweaveLatexOptions, RweaveLatexFinish,
-       makeRweaveLatexCodeRunner)
+       makeRweaveLatexCodeRunner,
+       RweaveRd, RweaveRdSetup, RweaveRdSyntax)
 
 if(tools:::.OStype() == "unix") {
 export(nsl)
