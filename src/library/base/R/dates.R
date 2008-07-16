@@ -413,6 +413,16 @@ diff.Date <- function (x, lag = 1, differences = 1, ...)
     r
 }
 
-# ---- additions in 2.6.0 -----
+## ---- additions in 2.6.0 -----
 
 is.numeric.Date <- function(x) FALSE
+
+## ---- additions in 2.8.0 -----
+
+split.Date <-
+function(x, f, drop = FALSE, ...)
+{
+    y <- split.default(as.integer(x), f, drop = drop)
+    for(i in seq_along(y)) class(y[[i]]) <- "Date"
+    y
+}

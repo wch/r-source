@@ -16,6 +16,7 @@
 \alias{as.data.frame.Date}
 \alias{c.Date}
 \alias{mean.Date}
+\alias{split.Date}
 
 \title{Date Class}
 \description{
