@@ -327,6 +327,9 @@ BUG FIXES
 
     o	PCRE has been updated to 7.7 (bugfix release).
 
+    o	package.skeleton() wrongly warned about invalid code_files names
+	when these were not in the current directory.
+
 
 
 		CHANGES IN R VERSION 2.7.1

@@ -180,15 +180,15 @@ package.skeleton <-
 	R_files <- tools::list_files_with_type(code_dir, "code",
 					       full.names = FALSE,
 					       OS_subdirs = "")
+        code_files <- basename(code_files)
 	wrong <- code_files[is.na(match(code_files, R_files))]
 	if(length(wrong)) {
-            bn <- basename(wrong)
 	    warning("Invalid file name(s) for R code in ", code_dir,":\n",
-		    strwrap(paste(sQuote(bn), collapse = ", "), indent=2),
+		    strwrap(paste(sQuote(wrong), collapse = ", "), indent=2),
 		    "\n are now renamed to 'z<name>.R'")
-	    file.rename(from = file.path(code_dir, bn),
+	    file.rename(from = file.path(code_dir, wrong),
 			to = file.path(code_dir,
-			paste("z", sub("(\\.[^.]*)?$", ".R", bn), sep="")))
+			paste("z", sub("(\\.[^.]*)?$", ".R", wrong), sep="")))
         }
     }
 

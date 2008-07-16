@@ -5124,7 +5124,13 @@ writeLines(c('setClass("foo", contains="numeric")',
              '          function(object) cat("I am a \\"foo\\"\\n"))'),
            tmp)
 if(file.exists("myTst")) unlink("myTst", recursive=TRUE)
-package.skeleton("myTst", code_files = tmp, namespace=TRUE)# with a file name warning
+package.skeleton("myTst", code_files = tmp)# with a file name warning
+file.copy(tmp, (tm2 <- paste(tmp,".R", sep="")))
+unlink("myTst", recursive=TRUE)
+op <- options(warn=2) # *NO* "invalid file name" warning {failed in 2.7.[01]}:
+package.skeleton("myTst", code_files = tm2, namespace=TRUE)
+options(op)
+
 stopifnot(1 == grep("setClass",
 	  readLines(list.files("myTst/R", full.names=TRUE))),
 	  c("foo-class.Rd","show-methods.Rd") %in% list.files("myTst/man"))
