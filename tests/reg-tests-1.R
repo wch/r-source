@@ -5142,7 +5142,7 @@ if(.Platform$OS.type == "unix") {
  Rcmd <- paste(file.path(R.home("bin"), "R"), "CMD")
  system(paste(Rcmd, "build", "myTst"))
  dir.create("myLib")
- install.packages("myTst", lib = "myLib", repos=NULL)# with warnings
+ install.packages("myTst", lib = "myLib", repos=NULL, type = "source")# with warnings
  stopifnot(require("myTst",lib = "myLib"))
  sm <- getMethods(show, where= as.environment("package:myTst"))
  stopifnot(names(sm@methods) == "foo")
