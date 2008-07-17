@@ -27,20 +27,8 @@ swilk(int *init,/* logical: is a[] already initialized ? */
     const static float zero = 0.f;
     const static float one = 1.f;
     const static float two = 2.f;
-    const static float three = 3.f;
 
-    const static float z90 = 1.2816f;
-    const static float z95 = 1.6449f;
-    const static float z99 = 2.3263f;
-    const static float zm = 1.7509f;
-    const static float zss = .56268f;
-    const static float bf1 = .8378f;
-    const static double xx90 = .556;
-    const static double xx95 = .622;
-    const static float sqrth = .70711f;/* sqrt(1/2) = .7071068 */
     const static float small = 1e-19f;
-    const static float pi6 = 1.909859f;
-    const static float stqr = 1.047198f;
 
     /* polynomial coefficients */
     const static float g[2] = { -2.273f,.459f };
@@ -68,25 +56,35 @@ swilk(int *init,/* logical: is a[] already initialized ? */
     float a1, a2, an, bf, ld, m, s, sa, xi, sx, xx, y, w1;
     float fac, asa, an25, ssa, z90f, sax, zfm, z95f, zsd, z99f, rsn, ssx, xsx;
 
-    /* Parameter adjustments */
-    --a;
-
     *pw = 1.;
     if (*w >= 0.) {
 	*w = 1.;
     }
-    an = (float) (*n);
-    nn2 = *n / 2;
-    if (*n2 < nn2) {
-	*ifault = 3; return;
-    }
-    if (*n < 3) {
-	*ifault = 1; return;
+    if (*n < 3) {	*ifault = 1; return;
     }
 
-/*	If INIT is false, calculate coefficients a[] for the test */
+    an = (float) (*n);
+    nn2 = *n / 2;
+    if (*n2 < nn2) {	*ifault = 3; return;
+    }
+    if (*n1 < 3) {	*ifault = 1; return;
+    }
+    ncens = *n - *n1;
+    if (ncens < 0 || (ncens > 0 && *n < 20)) {	*ifault = 4; return;
+    }
+    if (ncens > 0) {
+	delta = (float) ncens / an;
+	if (delta > .8f) {	*ifault = 5; return;
+	}
+    }
+
+    --a; /* so we can keep using 1-based indices */
+
+/*	If INIT is false (always when called from R),
+ *	calculate coefficients a[] for the test statistic W */
     if (! (*init)) {
 	if (*n == 3) {
+	    const static float sqrth = .70710678f;/* = sqrt(1/2), was .70711f */
 	    a[1] = sqrth;
 	} else {
 	    an25 = an + .25;
@@ -119,19 +117,8 @@ swilk(int *init,/* logical: is a[] already initialized ? */
 	}
 	*init = (1);
     }
-    if (*n1 < 3) {
-	*ifault = 1;	return;
-    }
-    ncens = *n - *n1;
-    if (ncens < 0 || (ncens > 0 && *n < 20)) {
-	*ifault = 4;	return;
-    }
-    delta = (float) ncens / an;
-    if (delta > .8f) {
-	*ifault = 5;	return;
-    }
 
-/*	If W input as negative, calculate significance level of -W */
+/*	If W is input as negative, calculate significance level of -W */
 
     if (*w < zero) {
 	w1 = 1. + *w;
@@ -148,7 +135,7 @@ swilk(int *init,/* logical: is a[] already initialized ? */
 
 /*	Check for correct sort order on range - scaled X */
 
-    /* *ifault = 7; <-- a no-op, since it is set 0, below, in ANY CASE! */
+    /* *ifault = 7; <-- a no-op, since it is changed below, in ANY CASE! */
     *ifault = 0;
     xx = x[0] / range;
     sx = xx;
@@ -158,7 +145,7 @@ swilk(int *init,/* logical: is a[] already initialized ? */
 	xi = x[i] / range;
 	if (xx - xi > small) {
 	    /* Fortran had:	 print *, "ANYTHING"
-	     * but do NOT; it *does* happen with sorted x (on Intel GNU/linux):
+	     * but do NOT; it *does* happen with sorted x (on Intel GNU/linux 32bit):
 	     *  shapiro.test(c(-1.7, -1,-1,-.73,-.61,-.5,-.24, .45,.62,.81,1))
 	     */
 	    *ifault = 7;
@@ -202,7 +189,10 @@ L70:
 /*	Calculate significance level for W */
 
     if (*n == 3) {/* exact P value : */
+	const static double pi6 = 1.90985931710274;/* = 6/pi, was  1.909859f */
+	const static double stqr= 1.04719755119660;/* = asin(sqrt(3/4)), was 1.047198f */
 	*pw = pi6 * (asin(sqrt(*w)) - stqr);
+	if(*pw < 0.) *pw = 0.;
 	return;
     }
     y = log(w1);
@@ -210,7 +200,7 @@ L70:
     if (*n <= 11) {
 	gamma = poly(g, 2, an);
 	if (y >= gamma) {
-	    *pw = small;/* FIXME: rather use an even smaller value, or NA ? */
+	    *pw = 1e-99;/* an "obvious" value, was 'small' which was 1e-19f */
 	    return;
 	}
 	y = -log(gamma - y);
@@ -222,10 +212,22 @@ L70:
     }
     /*DBG printf("c(w1=%g, w=%g, y=%g, m=%g, s=%g)\n",w1,*w,y,m,s); */
 
-    if (ncens > 0) {/* <==>  n > n1 */
+    if (ncens > 0) {/* <==>  n > n1 --- not happening currently when called from R */
 
 /*	Censoring by proportion NCENS/N.
 	Calculate mean and sd of normal equivalent deviate of W. */
+
+	const static float three = 3.f;
+
+	const static float z90 = 1.2816f;
+	const static float z95 = 1.6449f;
+	const static float z99 = 2.3263f;
+	const static float zm = 1.7509f;
+	const static float zss = .56268f;
+	const static float bf1 = .8378f;
+
+	const static double xx90 = .556;
+	const static double xx95 = .622;
 
 	ld = -log(delta);
 	bf = one + xx * bf1;
