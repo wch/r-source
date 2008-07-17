@@ -5261,3 +5261,6 @@ y  <- x [c(2:3, NA),]
 y.ok <- data.frame(x=c(2:3,NA), y=c(3:4,NA), row.names=c("b", "NA", "NA.1"))
 stopifnot(identical(y, y.ok))
 ## From 2.5.0 to 2.7.1,  y had row name "NA" twice
+
+stopifnot(shapiro.test(c(0,0,1))$p.value >= 0)
+## was wrong up to 2.7.1, because of rounding errors (in single precision).

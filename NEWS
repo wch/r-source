@@ -330,6 +330,9 @@ BUG FIXES
     o	package.skeleton() wrongly warned about invalid code_files names
 	when these were not in the current directory.
 
+    o	shapiro.test(c(0,0,1)) now has P value >= 0 (instead of barely
+	negative).
+
 
 
 		CHANGES IN R VERSION 2.7.1
