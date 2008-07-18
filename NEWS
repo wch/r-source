@@ -288,8 +288,6 @@ BUG FIXES
     o   plots of profile.mle objects was misbehaving when the
         'which' argument had been used in their calculation.
 
-    o	PCRE has been updated to 7.7 (bugfix release).
-
 
 
 	**************************************************
