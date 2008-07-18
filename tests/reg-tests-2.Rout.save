@@ -4912,7 +4912,7 @@ NULL
   `--[dendrogram w/ 2 branches and 2 members at h = 89.2]
      |--leaf "Branch 3" (h= 44.8 midpoint = 6.8, x.member = 14 )
      `--leaf "Branch 4" (h= 54.7 midpoint = 7.65, x.member = 20 )
-> ## gave much too many spaces in 2.2.[01]
+> ## {{for Emacs: `}}  gave much too many spaces in 2.2.[01]
 > 
 > 
 > ## formatC on Windows (PR#8337)

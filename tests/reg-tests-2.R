@@ -1695,7 +1695,7 @@ pairs(iris[1:4], oma=rep(3,4))
 dend <- as.dendrogram(hclust(dist(USArrests), "ave")) # "print()" method
 dend2 <- cut(dend, h=70)
 str(dend2$upper)
-## gave much too many spaces in 2.2.[01]
+## {{for Emacs: `}}  gave much too many spaces in 2.2.[01]
 
 
 ## formatC on Windows (PR#8337)
