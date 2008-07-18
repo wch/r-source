@@ -58,6 +58,7 @@ Rboolean UseInternet2 = FALSE;
 extern SA_TYPE SaveAction; /* from ../main/startup.c */
 Rboolean DebugMenuitem = FALSE;  /* exported for rui.c */
 static FILE *ifp = NULL;
+static char ifile[MAX_PATH] = "\0";
 
 __declspec(dllexport) UImode  CharacterMode;
 int ConsoleAcceptCmd;
@@ -480,6 +481,7 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     app_cleanup();
     RConsole = NULL;
     if(ifp) fclose(ifp);
+    if(ifile[0]) unlink(ifile);
     exit(status);
 }
 
@@ -805,6 +807,22 @@ void R_setupHistory(void)
     }
 }
 
+#include <sys/stat.h>
+#include <time.h>
+static int isDir(char *path)
+{
+    struct stat sb;
+    int isdir = 0;
+    if(!path) return 0;
+    if(stat(path, &sb) == 0) {
+	isdir = (sb.st_mode & S_IFDIR) > 0; /* is a directory */
+	/* We want to know if the directory is writable by this user,
+	   which mode does not tell us */
+	isdir &= (access(path, W_OK) == 0);
+    }
+    return isdir;
+}
+
 int cmdlineoptions(int ac, char **av)
 {
     int   i, ierr;
@@ -1047,7 +1065,25 @@ int cmdlineoptions(int ac, char **av)
 	if(ifp) R_Suicide(_("cannot use -e with -f or --file"));
 	Rp->R_Interactive = FALSE;
 	Rp->ReadConsole = FileReadConsole;
+	/* tmpfile() seems not to work on Vista: it tries to write in c:/
 	ifp = tmpfile();
+	*/
+	{
+	    char *tm;
+	    tm = getenv("TMPDIR");
+	    if (!isDir(tm)) {
+		tm = getenv("TMP");
+		if (!isDir(tm)) {
+		    tm = getenv("TEMP");
+		    if (!isDir(tm))
+			tm = getenv("R_USER"); /* this one will succeed */
+		}
+	    }
+	    srand( (unsigned) time(NULL) );
+	    sprintf(ifile, "%s/Rscript%x%x", tm, rand(), rand());
+	    ifp = fopen(ifile, "w+b");
+	    if(!ifp) R_Suicide(_("creation of tmpfile failed -- set TMPDIR suitably?"));
+	}
 	fwrite(cmdlines, strlen(cmdlines)+1, 1, ifp);
 	fflush(ifp);
 	rewind(ifp);

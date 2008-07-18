@@ -89,7 +89,10 @@ BUG FIXES
 
     o	User menus were not properly removed when a graph window was 
 	closed.
- 
+
+    o	Rscript -e (and Rterm -e) failed on Vista because the MSCVRT
+	function 'tmpfile' is broken on that platform.
+
 
 
 		CHANGES IN R VERSION 2.7.1
