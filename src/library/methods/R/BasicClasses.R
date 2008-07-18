@@ -164,7 +164,7 @@
               })
     ## the following mimics settings for other basic classes ("ts" was
     ## not defined at the time these are done).
-    setMethod("coerce", c("ANY", "ts"), function (from, to, strict = TRUE) 
+    setMethod("coerce", c("ANY", "ts"), function (from, to, strict = TRUE)
               {
                   value <- as.ts(from)
                   if(strict) {
@@ -188,7 +188,7 @@
             cat("\n")
         }
     })
- 
+
     ## Next, miscellaneous S3 classes.
     for(cl in .OldClassesList)
         setOldClass(cl, where = envir)
@@ -214,41 +214,55 @@
 
 .tsArgNames <- names(formals(stats::ts))
 
-### The following methods are not currently installed.  (Tradeoff between intuition
-### of users that new("matrix", ...) should be like matrix(...) vs
-### consistency of new().  Relevant when new class has basic class as its data part.
+### The following methods are now activated
+### via the last line of the function .InitMethodDefinitions in ./MethodsListClass.R
 ###
-### To install the methods below, uncomment the last line of the function
-### .InitMethodDefinitions in ./MethodsListClass.R
+### Tradeoff between intuition of users that
+### new("matrix", ...) should be like matrix(...) vs consistency of new().
+### Relevant when new class has basic class as its data part.
 .InitBasicClassMethods <- function(where) {
     ## methods to initialize "informal" classes by using the
     ## functions of the same name.
-    ##
+
     ## These methods are designed to be inherited or extended
     setMethod("initialize", "matrix",
-              function(.Object, data =   NA, nrow = 1, ncol = 1,
-                       byrow = FALSE, dimnames = NULL, ...) {
-                  if(nargs() < 2) # guaranteed to be called with .Object from new
-                      .Object
-                  else if(is.matrix(data) && nargs() == 2 + length(list(...)))
-                      .mergeAttrs(data, .Object, list(...))
-                  else {
-                      value <- matrix(data, nrow, ncol, byrow, dimnames)
-                      .mergeAttrs(value, .Object, list(...))
-                  }
-              })
+	      function(.Object, data = NA, nrow = 1, ncol = 1,
+		       byrow = FALSE, dimnames = NULL, ...) {
+		  if((na <- nargs()) < 2) # guaranteed to be called with .Object from new
+		      .Object
+		  else if(length(dots <- list(...)) && ".Data" %in% names(dots)) {
+		      if(na > 2)
+			  stop("Cannot specify matrix() arguments when specifying .Data")
+		      .mergeAttrs(dots$.Data, .Object)
+		  }
+		  else if(is.matrix(data) && na == 2 + length(dots))
+		      .mergeAttrs(data, .Object, dots)
+		  else {
+		      if (missing(nrow))
+			  nrow <- ceiling(length(data)/ncol)
+		      else if (missing(ncol))
+			  ncol <- ceiling(length(data)/nrow)
+		      value <- matrix(data, nrow, ncol, byrow, dimnames)
+		      .mergeAttrs(value, .Object, dots)
+		  }
+	      })
     setMethod("initialize", "array",
-              function(.Object, data =   NA, dim = length(data),
-                       dimnames = NULL, ...) {
-                  if(nargs() < 2) # guaranteed to be called with .Object from new
-                      .Object
-                  else if(is.array(data) && nargs() == 2 + length(list(...)))
-                      .mergeAttrs(data, .Object, list(...))
-                  else {
-                      value <- array(data, dim, dimnames)
-                      .mergeAttrs(value, .Object, list(...))
-                  }
-              })
+	      function(.Object, data = NA, dim = length(data),
+		       dimnames = NULL, ...) {
+		  if((na <- nargs()) < 2) # guaranteed to be called with .Object from new
+		      .Object
+		  else if(length(dots <- list(...)) && ".Data" %in% names(dots)) {
+		      if(na > 2)
+			  stop("Cannot specify array() arguments when specifying .Data")
+		      .mergeAttrs(dots$.Data, .Object)
+		  }
+		  else if(is.array(data) && na == 2 + length(dots))
+		      .mergeAttrs(data, .Object, dots)
+		  else {
+		      value <- array(data, dim, dimnames)
+		      .mergeAttrs(value, .Object, dots)
+		  }
+	      })
 }
 
 ## .OldClassList is a purely heuristic list of known old-style classes, with emphasis
