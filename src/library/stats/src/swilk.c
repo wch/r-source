@@ -76,7 +76,7 @@ swilk(int *init,/* logical: is a[] already initialized ? */
 	delta = (float) ncens / an;
 	if (delta > .8f) {	*ifault = 5; return;
 	}
-    }
+    } /* just for -Wall:*/ else { delta = 0.f; }
 
     --a; /* so we can keep using 1-based indices */
 
