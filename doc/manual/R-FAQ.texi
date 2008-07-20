@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-07-11
+@set FAQ_DATE @value{FAQ_YEAR}-07-20
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -2401,7 +2401,7 @@ Data sets with sample code from ``Nonlinear Regression Analysis and Its
 Applications'' by Doug Bates and Donald Watts, 1988, Wiley.
 @item NestedCohort
 Survival analysis for cohorts with missing covariate information.
-@item Network
+@item NetIndices
 Estimates network indices, including trophic structure of foodwebs.
 @item ORMDR
 Odds ratio based multivactor-dimensionality reduction method for
@@ -2847,11 +2847,13 @@ Trees WIth eXtra splits.
 A set of demonstration functions that can be used in a classroom to
 demonstrate statistical concepts, or on your own to better understand
 the concepts or the programming.
+@item TraMineR
+Sequences and trajectories mining for social scientists.
+@item TwoWaySurvival
+Additive two-way hazards modeling of right censored survival data.
 @item TwslmSpikeWeight
 Normalization of cDNA microarray data with the two-way semilinear model
 (TW-SLM).
-@item TwoWaySurvival
-Additive two-way hazards modeling of right censored survival data.
 @item UNF
 Tools for creating universal numeric fingerprints for data.
 @item USPS
@@ -3008,6 +3010,8 @@ Functions to perform adaptive weights smoothing.
 Backfitted independent values of Richards curves.
 @item backtest
 Exploring portfolio-based hypotheses about financial instruments.
+@item bark
+Bayesian Additive Regression Kernels.
 @item bayesGARCH
 Bayesian estimation of the GARCH(1,1) model with Student's @math{t}
 innovations.
@@ -3575,6 +3579,8 @@ Tests and graphics for assessing tests of equivalence.
 @item ergm
 An integrated set of tools to analyze and simulate networks based on
 exponential-family random graph models (ERGM).
+@item etm
+Empirical Transition Matrix.
 @item evd
 Functions for extreme value distributions.  Extends simulation,
 distribution, quantile and density functions to univariate, bivariate
@@ -3599,6 +3605,8 @@ Exact methods for maximally selected statistics for binary response
 variables.
 @item experiment
 Designing and analyzing randomized experiments.
+@item expert
+Modeling of data using expert opinion.
 @item extRemes
 Extreme value toolkit.
 @item fArma
@@ -3732,6 +3740,9 @@ using a Penalized Likelihood on the hazard function.
 Fuzzy set ordination.
 @item ftnonpar
 Features and strings for nonparametric regression.
+@item fts
+Fast operations for time series objects via an interface to tslib (a
+C++ time series library).
 @item fuzzyFDR
 Exact calculation of fuzzy decision rules for multiple testing.
 @item fuzzyOP
@@ -3763,6 +3774,8 @@ gWidgets API for building toolkit-independent, interactive
 @acronym{GUI}s.
 @item gWidgetsRGtk2
 Toolkit implementation of @strong{gWidgets} for @strong{RGtk2}.
+@item gWidgetsWWW
+Toolkit implementation of gWidgets for www.
 @item gWidgetsrJava
 Toolkit implementation of @strong{gWidgets} for @strong{rJava}.
 @item gWidgetstcltk
@@ -4036,6 +4049,8 @@ Graphical user interface for exploring hydrological time series.
 The hypergeometric function over the whole complex plane.
 @item ibdreg
 Regression methods for IBD linkage with covariates.
+@item ic.infer
+Inequality constrained inference in linear normal situations.
 @item icomp
 Calculates the ICOMP criterion and its variations.
 @item identity
@@ -4310,6 +4325,8 @@ Functions with example data for graphing and mapping models from
 hierarchical clustering and classification and regression trees.
 @item marginTree
 Margin trees for high-dimensional classification.
+@item marginalmodelplots
+Marginal model plots for linear and generalized linear models.
 @item mathgraph
 Tools for constructing and manipulating objects from a class of directed
 and undirected graphs.
@@ -4770,6 +4787,8 @@ principal component analyses.
 Periodic Autoregression Analysis.
 @item penalized
 Penalized estimation in generalized linear models.
+@item peperr
+Parallelised Estimation of Prediction ERRor.
 @item permax
 Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
@@ -5272,6 +5291,8 @@ observed and unobserved variables) by the method of maximum likelihood
 using the RAM approach.
 @item sendplot
 Tool for sending interactive plots.
+@item sensR
+Thurstonian models for sensory discrimination.
 @item sensitivity
 Sensitivity analysis.
 @item seqinr
