@@ -1,6 +1,6 @@
 % File src/library/base/man/assign.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{assign}
@@ -14,7 +14,9 @@ assign(x, value, pos = -1, envir = as.environment(pos),
        inherits = FALSE, immediate = TRUE)
 }
 \arguments{
-  \item{x}{a variable name (given as a quoted string in the function call).}
+  \item{x}{a variable name, given as a character string.  No coercion is
+    done, and the first element of a character vector of length greater
+    than one will be used, with a warning }
   \item{value}{a value to be assigned to \code{x}.}
   \item{pos}{where to do the assignment.  By default, assigns into the
     current environment.  See the details for other possibilities.}

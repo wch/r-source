@@ -1452,8 +1452,11 @@ SEXP attribute_hidden do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (!isString(CAR(args)) || length(CAR(args)) == 0)
 	error(_("invalid first argument"));
-    else
+    else {
+	if (length(CAR(args)) > 1)
+	    warning(_("only the first element is used as variable name"));
 	name = install(translateChar(STRING_ELT(CAR(args), 0)));
+    }
     PROTECT(val = CADR(args));
     aenv = CADDR(args);
     if (TYPEOF(aenv) == NILSXP)
