@@ -331,6 +331,9 @@ BUG FIXES
     o	shapiro.test(c(0,0,1)) now has P value >= 0 (instead of barely
 	negative).
 
+    o	assign() now warns if given a character vector of length > 1,
+	rather than silently taking the first element.
+
 
 
 		CHANGES IN R VERSION 2.7.1
