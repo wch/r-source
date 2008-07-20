@@ -67,7 +67,7 @@ env.profile(env)
   \code{fun} to the \code{value} given.
 
   \code{is.environment(obj)} returns \code{TRUE} if and only if
-  \code{obj} is an\code{environment}.
+  \code{obj} is an \code{environment}.
 
   \code{new.env} returns a new (empty) environment enclosed in the
   parent's environment, by default.
