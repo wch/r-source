@@ -761,7 +761,7 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
     generics <- .getGenerics(where)
     packages <- attr(generics, "package")
     if(length(packages) <  length(generics))
-      packages <- rep(packages, length = length(generics))
+      packages <- rep(packages, length.out = length(generics))
     pkg <- getPackageName(where)
     for(i in seq_along(generics)) {
         f <- generics[[i]]

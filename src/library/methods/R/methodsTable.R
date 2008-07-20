@@ -231,7 +231,7 @@
                   nargs, returnAll))
   methods <- list()
   if(!missing(useInherited) && length(useInherited) < nargs)
-    useInherited <- rep(useInherited, length = nargs)
+    useInherited <- rep(useInherited, length.out = nargs)
   if(hasGroup && !doExcluded) {
     ## first try for an exact match in a group generic
     ## If this matches &  is cached, it then will be treated as a non-inherited method
