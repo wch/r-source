@@ -31,10 +31,13 @@ setGeneric <-
              package = NULL, signature = NULL,
              useAsDefault = NULL, genericFunction = NULL)
 {
-    name <- switch(name, "as.double" =, "as.real" = "as.numeric", name)
+    if(is.character(.isSingleName(name)))
+        stop(gettextf('invalid argument "name": %s',
+                      .isSingleName(name)), domain = NA)
     if(exists(name, "package:base") &&
        is.primitive(get(name, "package:base"))) { # primitives
 
+        name <- switch(name, "as.double" =, "as.real" = "as.numeric", name)
         fdef <- getGeneric(name) # will fail if this can't have methods
         if(nargs() <= 1) {
             ## generics for primitives are global, so can & must always be cached
