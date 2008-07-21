@@ -64,7 +64,7 @@ replicate(n, expr, simplify = TRUE)
   The mode of the simplified answer is chosen to accommodate the modes of
   all the values returned by the calls to \code{FUN}: see \code{\link{unlist}}.
 
-  if \code{X} has length 0, the return value of \code{sapply} is always
+  If \code{X} has length 0, the return value of \code{sapply} is always
   a 0-length list.
 
   Users of S4 classes should pass a list to \code{lapply}: the internal
