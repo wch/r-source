@@ -23,7 +23,11 @@
 \alias{as.data.frame.numeric_version}
 \alias{as.list.numeric_version}
 \alias{c.numeric_version}
+\alias{duplicated.numeric_version}
 \alias{print.numeric_version}
+\alias{rep.numeric_version}
+\alias{sort.numeric_version}
+\alias{unique.numeric_version}
 \alias{$.package_version}
 % Internal.
 \alias{.encode_numeric_version}
