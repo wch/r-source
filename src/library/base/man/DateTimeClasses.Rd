@@ -39,6 +39,7 @@
 \alias{check_tzones}
 \alias{duplicated.POSIXlt}
 \alias{unique.POSIXlt}
+\alias{split.POSIXct}
 
 \alias{date-time} % linked to in difftime.Rd
 
