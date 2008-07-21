@@ -225,10 +225,8 @@ plot.profile.nls <-
 {
     obj <- x
     dfres <- attr(obj, "summary")$df[2]
-    if(missing(levels)) {
+    if(missing(levels))
         levels <- sqrt(qf(pmax(0, pmin(1, conf)), 1, dfres))
-        confstr <- paste(format(100 * conf), "%", sep = "")
-    }
     if(any(levels <= 0)) {
         levels <- levels[levels > 0]
         warning("levels truncated to positive values only")

@@ -1,6 +1,6 @@
 % File src/library/stats/man/plot.profile.nls.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{plot.profile.nls}
@@ -44,9 +44,9 @@
 require(graphics)
 
 # obtain the fitted object
-fm1 <- nls(demand ~ SSasympOrig( Time, A, lrc ), data = BOD)
+fm1 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 # get the profile for the fitted model
-pr1 <- profile( fm1 )
+pr1 <- profile(fm1, alpha = 0.05)
 opar <- par(mfrow = c(2,2), oma = c(1.1, 0, 1.1, 0), las = 1)
 plot(pr1, conf = c(95, 90, 80, 50)/100)
 plot(pr1, conf = c(95, 90, 80, 50)/100, absVal = FALSE)

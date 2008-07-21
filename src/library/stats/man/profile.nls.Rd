@@ -1,6 +1,6 @@
 % File src/library/stats/man/profile.nls.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{profile.nls}
@@ -21,8 +21,8 @@
     By default, all non-linear parameters are profiled.}
   \item{maxpts}{maximum number of points to be used for profiling each
     parameter.}
-  \item{alphamax}{maximum significance level allowed for the profile
-    t-statistics.}
+  \item{alphamax}{highest significance level allowed
+    for the profile t-statistics.}
   \item{delta.t}{suggested change on the scale of the profile
     t-statistics.  Default value chosen to allow profiling at about
     10 parameter values.}
@@ -52,12 +52,13 @@
 }
 \examples{
 # obtain the fitted object
-fm1 <- nls(demand ~ SSasympOrig( Time, A, lrc ), data = BOD)
-# get the profile for the fitted model
-pr1 <- profile( fm1 )
+fm1 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
+# get the profile for the fitted model: default level is too extreme
+pr1 <- profile(fm1, alpha = 0.05)
 # profiled values for the two parameters
 pr1$A
 pr1$lrc
+# see also example(plot.profile.nls)
 }
 \keyword{nonlinear}
 \keyword{regression}
