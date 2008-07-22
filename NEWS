@@ -177,6 +177,10 @@ NEW FEATURES
     o	abbreviate() gains an optional switch 'strict' allowing cheap and
 	fast strict abbrevation.
 
+    o	lockBinding(), unlockBindign(), lockEnvironment() and
+    	makeActiveBinding() now all return invisibly (they always
+    	return NULL).
+
 
 INSTALLATION
 

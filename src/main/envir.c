@@ -2929,7 +2929,7 @@ SEXP attribute_hidden do_bndIsActive(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarLogical(R_BindingIsActive(sym, env));
 }
 
-/* This is a .Internal with no wrapper */
+/* This is a .Internal with no wrapper, currently unused in base R */
 SEXP attribute_hidden do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP sym;

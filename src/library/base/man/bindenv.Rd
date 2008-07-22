@@ -55,6 +55,10 @@ bindingIsActive(sym, env)
   linked to \R variables and variables linked to databases.  It may also
   be useful for making thread-safe versions of some system globals.
 }
+\value{
+  The \code{*isLocked} funtions return a length-one logical vector.  The
+  remaining functions return \code{NULL}, invisibly.
+}
 \examples{
 # locking environments
 e <- new.env()
