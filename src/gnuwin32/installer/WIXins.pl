@@ -91,9 +91,10 @@ while(<tfile>) {
     if(/<Component Id=\"([^\"]*)\"/) {
 	$id = $1;
     }
-    if(/<File Id=\"([^\"]*).* src=\"([^\"]*)\"/) {
+    ## WiX 2.0.4221 uses 'src', 2.0.5805 uses 'Source'
+    if(/<File Id=\"([^\"]*).* (src|Source)=\"([^\"]*)\"/) {
 	$fn = $1;
-	$src = $2;
+	$src = $3;
 	$src =~ s+.*\\$SRCDIR\\++;
 	$src =~ s+\\+/+g;
 	$comp{$src} = $id;

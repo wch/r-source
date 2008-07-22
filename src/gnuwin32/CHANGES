@@ -93,6 +93,9 @@ BUG FIXES
     o	Rscript -e (and Rterm -e) failed on Vista because the MSCVRT
 	function 'tmpfile' is broken on that platform.
 
+    o	Making a .msi installer now works with WiX 2.0.5805 (the file
+	format had been changed since 2.0.4221).
+
 
 
 		CHANGES IN R VERSION 2.7.1
