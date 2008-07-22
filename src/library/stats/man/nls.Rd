@@ -273,7 +273,7 @@ lines(x, predict(nlmod), col=2)
 ## contraction on 21 animals.  The observed variables are Strip
 ## (identifier of muscle), Conc (Cacl concentration) and Length
 ## (resulting length of muscle section).
-\dontshow{utils::}data(muscle, package = "MASS")
+utils::data(muscle, package = "MASS")
 
 ## The non linear model considered is
 ##       Length = alpha + beta*exp(-Conc/theta) + error
