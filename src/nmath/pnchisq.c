@@ -40,12 +40,11 @@ double pnchisq(double x, double df, double ncp, int lower_tail, int log_p)
     if (df < 0. || ncp < 0.) ML_ERR_return_NAN;
 
     ans = pnchisq_raw(x, df, ncp, 1e-12, 8*DBL_EPSILON, 1000000, lower_tail);
-    if(lower_tail || ncp < 80) return log_p ? log(ans) : ans;
-    else {
+    if(!lower_tail && ncp >= 80) {
 	if(ans < 1e-10) ML_ERROR(ME_PRECISION, "pnchisq");
 	ans = fmax2(ans, 0.0);  /* Precaution PR#7099 */
-	return log_p ? log(ans) : ans;
     }
+    return log_p ? log(ans) : ans;
 }
 
 double attribute_hidden
