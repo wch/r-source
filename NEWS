@@ -181,6 +181,9 @@ NEW FEATURES
     	makeActiveBinding() now all return invisibly (they always
     	return NULL).
 
+    o	The summary() method for class "ecdf" now uses a print()
+    	method rather than printing directly.
+
 
 INSTALLATION
 
