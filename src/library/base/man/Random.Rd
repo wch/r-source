@@ -137,8 +137,10 @@ set.seed(seed, kind = NULL)
 }
 \note{
   Initially, there is no seed;	a new one is created from the current
-  time when one is required.  Hence, different sessions will give
-  different simulation results, by default.
+  time when one is required.  Hence, different sessions started at
+  (sufficiently) different times will give different simulation results,
+  by default.  However, the seed might be restored from a previous
+  session if a previously saved workspace is restored.
 
   \code{.Random.seed} saves the seed set for the uniform random-number
   generator, at least for the system generators.  It does not
