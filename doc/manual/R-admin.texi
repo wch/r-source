@@ -1149,12 +1149,14 @@ It is also possible to build an installer for use with Microsoft
 Installer.  This is intended for use by sysadmins doing automated
 installs, and is not recommended for casual use.
 
-It makes use of the Windows Installer XML (WiX) toolkit available from
-@uref{http://wix.sourceforge.net/}: we tested version 2.0.  (This needs
-the .NET 1.1 framework installed: it ran on a vanilla Windows XP SP2
-machine. Probably Windows 2000 or later is required by some of the
-features used.)  Once WiX is installed, set the path to its home
-directory in @file{MkRules}.
+It makes use of the Windows Installer XML (WiX) toolkit (wersion 2.0)
+available from @uref{http://wix.sourceforge.net/}.  (This needs the .NET
+1.1 framework installed: it ran on a vanilla Windows XP SP2
+machine. Unfortunately the file format has been changed within the same
+version: currently our code works with releases 2.0.4221.0 and
+2.0.5805.0 -- the latter is now said to be `production/stable' so
+hopefully there will be no more format changes.)  Once WiX is installed,
+set the path to its home directory in @file{MkRules}.
 
 You need to have the files for a complete R build, including bitmap and
 Tcl/Tk support and the manuals, as well as the recommended packages.

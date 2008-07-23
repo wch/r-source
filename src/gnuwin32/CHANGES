@@ -72,7 +72,7 @@ BUG FIXES
     
     o	Rterm in interactive use did not implement R_FlushConsole() fully.
 
-    o	getGraphicsEvent did not return onMouseMove events while a
+    o	getGraphicsEvent() did not return onMouseMove events while a
 	mouse button was depressed.
 
     o	The confirmation of a new frame for a windows() graphics
@@ -90,11 +90,11 @@ BUG FIXES
     o	User menus were not properly removed when a graph window was 
 	closed.
 
-    o	Rscript -e (and Rterm -e) failed on Vista because the MSCVRT
+    o	Rscript -e (and Rterm -e) failed on Vista because the MSVCRT
 	function 'tmpfile' is broken on that platform.
 
-    o	Making a .msi installer now works with WiX 2.0.5805 (the file
-	format had been changed since 2.0.4221).
+    o	Making a .msi installer now works with WiX 2.0.5805.0 (the file
+	format had been changed since 2.0.4221.0 as previously tested).
 
 
 
