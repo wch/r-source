@@ -42,7 +42,7 @@ nls(formula, data, start, control, algorithm,
     The default algorithm is a Gauss-Newton algorithm.  Other possible
     values are \code{"plinear"} for the Golub-Pereyra algorithm for
     partially linear least-squares models and \code{"port"} for the
-    \sQuote{nl2sol} algorithm from the Port package.}
+    \sQuote{nl2sol} algorithm from the Port library -- see the references.}
   \item{trace}{logical value indicating if a trace of the iteration
     progress should be printed.  Default is \code{FALSE}.  If
     \code{TRUE} the residual (weighted) sum-of-squares and the
@@ -139,7 +139,7 @@ nls(formula, data, start, control, algorithm,
   Chapter 10 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 
-  \url{http://netlib.bell-labs.com/netlib/port/} for the Port library
+  \url{http://www.netlib.org/port/} for the Port library
   documentation.
 }
 \author{Douglas M. Bates and Saikat DebRoy}
