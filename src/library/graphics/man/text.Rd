@@ -64,10 +64,15 @@ text(x, \dots)
 
   \code{adj} allows \emph{adj}ustment of the text with respect to \code{(x,y)}.
   Values of 0, 0.5, and 1 specify left/bottom, middle and
-  right/top, respectively.  The default is for centered text, i.e.,
-  \code{adj = c(0.5, 0.5)}. Accurate vertical centering needs
-  character metric information on individual characters, which is
-  only available on some devices.
+  right/top alignment, respectively.  The default is for centered text, i.e.,
+  \code{adj = c(0.5, 0.5)}.  Accurate vertical centering needs
+  character metric information on individual characters which is
+  only available on some devices.  Vertical alignment is done slightly
+  differently for character strings and for expressions:
+  \code{adj=c(0,0)} means to left-justify and to align on the baseline
+  for strings but on the bottom of the bounding box for expressions.
+  This also affects vertical centering: for strings the centering
+  excludes any descenders whereas for expressions it includes them.
 
   The \code{pos} and \code{offset} arguments can be used in conjunction
   with values returned by \code{identify} to recreate an interactively
