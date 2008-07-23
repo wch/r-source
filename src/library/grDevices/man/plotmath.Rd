@@ -172,6 +172,10 @@
 
   Control characters (e.g. \code{\\n}) are not interpreted in character
   strings in plotmath, unlike normal plotting.
+
+  The fonts used are taken from the current font family, and so can be
+  set by \code{\link{par}(family=)} in base graphics, and
+  \code{\link{gpar}(fontfamily=)} in package \pkg{grid}.
 }
 \references{
   Murrell, P. and Ihaka, R. (2000) An approach to providing
