@@ -96,6 +96,10 @@ BUG FIXES
     o	Making a .msi installer now works with WiX 2.0.5805.0 (the file
 	format had been changed since 2.0.4221.0 as previously tested).
 
+    o	The grid package could set the clipping region outside the
+	device region, and the windows() device now intersects the two
+	when setting the clipping region.  Once an invalid region was
+	set, semi-transparent text and lines might have been omitted.
 
 
 		CHANGES IN R VERSION 2.7.1
