@@ -1949,10 +1949,18 @@ static void GA_MetricInfo(int c,
 static void GA_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
+    rect r;
 
-    xd->clip = rcanon(rpt(pt(x0, y0), pt(x1, y1)));
-    xd->clip.width  += 1;
-    xd->clip.height += 1;
+    /* the grid package sets arbitrary clipping regions, so intersect
+       with the device region here. */
+    r = rcanon(rpt(pt(x0, y0), pt(x1, y1)));
+    r.width  += 1;
+    r.height += 1;
+    r.x = max(0, r.x);
+    r.y = max(0, r.y);
+    r.width = min(r.width, xd->windowWidth);
+    r.height = min(r.height, xd->windowHeight);
+    xd->clip = r;
 }
 
 	/********************************************************/
@@ -2585,6 +2593,7 @@ static void GA_Text0(double x, double y, const char *str, int enc,
 
     SetFont(gc, rot, xd);
     SetColor(gc->col, gc->gamma, xd);
+    printf("text in %08x\n", gc->col);
     if (R_OPAQUE(gc->col)) {
 	if(gc->fontface != 5) {
 	    /* As from 2.7.0 can use Unicode always */
@@ -2605,7 +2614,10 @@ static void GA_Text0(double x, double y, const char *str, int enc,
 	/*  it is too hard to get a correct bounding box */
 	if(xd->have_alpha) {
 	    rect r = xd->clip; 
+	    printf("r = %d %d %d %d\n", r.x, r.y, r.width, r.height);
+	    r = getregion(xd);
 	    gsetcliprect(xd->bm, xd->clip);
+	    printf("r = %d %d %d %d\n", r.x, r.y, r.width, r.height);
 	    gcopy(xd->bm2, xd->bm, r);
 	    if(gc->fontface != 5) {
 		wchar_t *wc; 
