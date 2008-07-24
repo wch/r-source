@@ -187,6 +187,13 @@ NEW FEATURES
     o	plot.dendrogram() has new arguments (xlim, ylim) which allows to
 	zoom into a hiearchical clustering dendrogram.
 
+    o	Different viewers were rendering consecutive text() calls on a
+	pdf() device in different ways where translucency was
+	involved.  The PDF generated has been changed to force each
+	call to be treated separately (which is the way xpdf or
+	ghostscript was rendering, but not Acrobat, and is consistent
+	with other graphics devices supporting transparency).
+
 
 INSTALLATION
 
@@ -260,7 +267,7 @@ UTILITIES
 C-LEVEL FACILITIES
 
     o	R_ReadConsole will now be called with a buffer size of 4096
-	bytes, (rather than 1024): maintainers of alternative
+	bytes (rather than 1024): maintainers of alternative
 	front-ends should check that they do not have a smaller limit.
 
 
@@ -292,11 +299,11 @@ BUG FIXES
 	correctly again.
 
     o	dnbinom(x, size, mu=*, ..) is now more accurate for very large
-	'size'.	 The same applies to pnbinom() and rnbinom().
+	'size'.  The same applies to pnbinom() and rnbinom().
 	[maybe moved to 2.7.1 patched eventually]
 
-    o   plots of profile.mle objects was misbehaving when the
-        'which' argument had been used in their calculation.
+    o	Plots of profile.mle() objects was misbehaving when the 'which'
+        argument had been used in their calculation.
 
 
 
