@@ -184,15 +184,19 @@ NEW FEATURES
     o	The summary() method for class "ecdf" now uses a print()
     	method rather than printing directly.
 
-    o	plot.dendrogram() has new arguments (xlim, ylim) which allows to
-	zoom into a hiearchical clustering dendrogram.
+    o	plot.dendrogram() has new arguments (xlim, ylim) which allows
+	zooming into a hiearchical clustering dendrogram.
 
     o	Different viewers were rendering consecutive text() calls on a
 	pdf() device in different ways where translucency was
 	involved.  The PDF generated has been changed to force each
-	call to be treated separately (which is the way xpdf or
-	ghostscript was rendering, but not Acrobat, and is consistent
-	with other graphics devices supporting transparency).
+	call to be rendered separately (which is the way xpdf or
+	ghostscript was rendering, but Acrobat was forming a
+	transparency group), which is consistent with other graphics
+	devices supporting transparency.
+
+    o	Using $ on a non-subsettable object (such as a function) is
+	now an error (rather than returning NULL).
 
 
 INSTALLATION

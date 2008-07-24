@@ -1836,6 +1836,13 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     else if( TYPEOF(x) == ENVSXP ) {
       defineVar(nlist, val, x);
     }
+    else if( TYPEOF(x) == SYMSXP || /* Used to 'work' in R < 2.8.0 */
+	     TYPEOF(x) == CLOSXP ||
+	     TYPEOF(x) == SPECIALSXP ||
+	     TYPEOF(x) == BUILTINSXP) {
+	error(_("object of type '%s' is not subsettable"),
+	      type2char(TYPEOF(x)));
+    }
     else {
 	int i, imatch, nx;
 	SEXP names;
