@@ -7003,7 +7003,7 @@ skipped: this can be useful to retrieve values from it with
 @end table
 
 Note that input and output can be redirected in the usual way (using
-@samp{<} and @samp{>}), but the line length limit of 1024 bytes still
+@samp{<} and @samp{>}), but the line length limit of 4095 bytes still
 applies.  Warning and error messages are sent to the error channel
 (@code{stderr}).
 
