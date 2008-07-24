@@ -7091,7 +7091,15 @@ You need to ensure that either the environment variables @env{TMPDIR},
 valid place to create temporary files and directories.
 
 Environment variables can be supplied as @samp{@var{name}=@var{value}}
-pairs at the end of the command line.
+pairs on the command line.
+
+If there is an argument ending @file{.RData} (in any case) it is
+interpreted as the path to the workspace to be restored: it implies
+@option{--restore} and sets the working directory to the parent of the
+named file.  (This mechanism is used for drag-and-drop and file
+association with @code{RGui.exe}, but also works for @code{Rterm.exe}.
+If the named file does not exist it sets the working directory
+if the parent directory exists.)
 
 The following additional command-line options are available when
 invoking @code{RGui.exe}.

@@ -776,7 +776,8 @@ char *PrintUsage(void)
 	msg3[] =
 	"  -q, --quiet           Don't print startup message\n  --silent              Same as --quiet\n  --slave               Make R run as quietly as possible\n  --verbose             Print more information about progress\n  --args                Skip the rest of the command line\n",
 	msg4[] =
-	"  --ess                 Don't use getline for command-line editing\n                          and assert interactive use\n  -f file               Take input from 'file'\n  --file=file           ditto\n  -e expression         Use 'expression' as input\n\nOne or more -e options can be used, but not together with -f or --file";
+	"  --ess                 Don't use getline for command-line editing\n                          and assert interactive use\n  -f file               Take input from 'file'\n  --file=file           ditto\n  -e expression         Use 'expression' as input\n\nOne or more -e options can be used, but not together with -f or --file\n",
+	msg5[] = "\nAn argument ending in .RData (in any case) is taken as the path\nto the workspace to be restored (and implies --restore)";
     if(CharacterMode == RTerm)
 	strcpy(msg, "Usage: Rterm [options] [< infile] [> outfile] [EnvVars]\n\n");
     else strcpy(msg, "Usage: Rgui [options] [EnvVars]\n\n");
@@ -786,6 +787,7 @@ char *PrintUsage(void)
     strcat(msg, msg2b);
     strcat(msg, msg3);
     if(CharacterMode == RTerm) strcat(msg, msg4);
+    strcat(msg, msg5);
     strcat(msg, "\n");
     return msg;
 }
@@ -1039,7 +1041,8 @@ int cmdlineoptions(int ac, char **av)
 		R_ShowMessage(s);
 	    }
 	} else {
-	    /* Look for *.RData, as given by drag-and-drop */
+	    /* Look for *.RData, as given by drag-and-drop 
+	       and file association */
 	    char path[MAX_PATH];
 
 	    if(!usedRdata &&
