@@ -39,7 +39,7 @@ as.dendrogram(object, \dots)
       nodePar = NULL, edgePar = list(),
       leaflab = c("perpendicular", "textlike", "none"),
       dLeaf = NULL, xlab = "", ylab = "", xaxt = "n", yaxt = "s",
-      horiz = FALSE, frame.plot = FALSE, \dots)
+      horiz = FALSE, frame.plot = FALSE, xlim, ylim, \dots)
 
 \method{cut}{dendrogram}(x, h, \dots)
 
@@ -92,6 +92,9 @@ is.leaf(object)
   \item{frame.plot}{logical indicating if a box around the plot should
     be drawn, see \code{\link{plot.default}}.}
   \item{h}{height at which the tree is cut.}
+  \item{xlim, ylim}{optional x- and y-limits of the plot, passed to
+    \code{\link{plot.default}}.  The defaults for these show the full
+    dendrogram.}
   \item{\dots, xlab, ylab, xaxt, yaxt}{graphical parameters, or arguments for
     other methods.}
   \item{digits}{integer specifying the precision for printing, see
@@ -202,6 +205,9 @@ plot(dend2$lower[[2]], nodePar=list(col=1),# non empty list
      edgePar = list(lty=1:2, col=2:1), edge.root=TRUE)
 par(op)
 str(d3 <- dend2$lower[[2]][[2]][[1]])
+
+## "Zoom" in to the first dendrogram :
+plot(dend1, xlim = c(1,20), ylim = c(1,50))
 
 nP <- list(col=3:2, cex=c(2.0, 0.75), pch= 21:22,
            bg= c("light blue", "pink"),

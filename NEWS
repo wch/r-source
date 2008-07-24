@@ -184,6 +184,9 @@ NEW FEATURES
     o	The summary() method for class "ecdf" now uses a print()
     	method rather than printing directly.
 
+    o	plot.dendrogram() has new arguments (xlim, ylim) which allows to
+	zoom into a hiearchical clustering dendrogram.
+
 
 INSTALLATION
 
