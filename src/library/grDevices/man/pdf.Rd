@@ -29,7 +29,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{width, height}{the width and height of the graphics region in
     inches.  The default values are \code{7}.}
   \item{onefile}{logical: if true (the default) allow multiple figures
-    in one file.  If false, generate a file wiht name containing the page
+    in one file.  If false, generate a file with name containing the page
     number for each page.  Defaults to \code{TRUE}.}
   \item{family}{the font family to be used, see
     \code{\link{postscript}}.  Defaults to \code{"Helvetica"}.}
