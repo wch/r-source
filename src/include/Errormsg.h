@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *                2000        the R Development Core Team
+ *                2000-8      the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@
 #define R_MSG_A2_list _("second argument must be a list")
 
 #define R_MSG_subs_o_b	_("subscript out of bounds")
-#define R_MSG_ob_nonsub	_("object is not subsettable")
+#define R_MSG_ob_nonsub _("object of type '%s' is not subsettable")
 #define R_MSG_mode	_("invalid 'mode' argument")
 #define R_MSG_type	_("invalid 'type' (%s) of argument")
 #define R_MSG_list_vec	_("applies only to lists and vectors")

@@ -1362,8 +1362,7 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	break;
     default:
-	error(_("object of type '%s' is not subsettable"),
-	      type2char(TYPEOF(x)));
+	error(R_MSG_ob_nonsub, type2char(TYPEOF(x)));
 	break;
     }
 
@@ -1726,8 +1725,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	xtop = x;
 	UNPROTECT(1);
     }
-    else error(_("object of type '%s' is not subsettable"),
-	       type2char(TYPEOF(x)));
+    else error(R_MSG_ob_nonsub, type2char(TYPEOF(x)));
 
     UNPROTECT(1);
     SET_NAMED(xtop, 0);
@@ -1840,8 +1838,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	     TYPEOF(x) == CLOSXP ||
 	     TYPEOF(x) == SPECIALSXP ||
 	     TYPEOF(x) == BUILTINSXP) {
-	error(_("object of type '%s' is not subsettable"),
-	      type2char(TYPEOF(x)));
+	error(R_MSG_ob_nonsub, type2char(TYPEOF(x)));
     }
     else {
 	int i, imatch, nx;
