@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pdf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{pdf}
@@ -163,7 +163,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 \section{Color models}{
   The default color model is RGB, and model \code{"gray"} maps RGB
   colors to greyscale using perceived luminosity (biased towards green).
-  \code{"cmyk"} outputs in CMYK colorspace. Nothing in \R specifies the
+  \code{"cmyk"} outputs in CMYK colorspace.  Nothing in \R specifies the
   interpretation of the RGB or CMYK color spaces, and the simplest
   possible conversion to CMYK is used
   (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
@@ -177,7 +177,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \item Font sizes are in big points.
     \item The default font family is Helvetica.
     \item Line widths are as a multiple of 1/96 inch, with no minimum. 
-    \item Circle of any radius are allowed.  Opaque circles of less than 10
+    \item Circles of any radius are allowed.  Unless \code{useDingbats =
+    FALSE}, opaque circles of less than 10 big
     points radius are rendered using char 108 in the Dingbats font:
     all semi-transparent and larger circles using a \enc{Bézier}{Bezier}
     curve for each quadrant.
@@ -188,13 +189,17 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   Acrobat Reader does not use the fonts specified but rather emulates
   them from multiple-master fonts.  This can be seen in imprecise
   centering of characters, for example the multiply and divide signs in
-  Helvetica.  This can be circumvented by embedding fonts where possible.
+  Helvetica.  This can be circumvented by embedding fonts where
+  possible.  Most other viewers substitute fonts, e.g. URW fonts for the
+  standard Helvetica and Times fonts, and these too often have different
+  font metrics from the true fonts.
 
   Acrobat Reader 5.x and later can be extended by support for Asian and
-  (so-called) Central European fonts (the latter only for 7.x and
-  later, part of the \sQuote{Extended} pack for 8.x), and this will be
-  needed for the full use of encodings other than Latin-1.  See
-  \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html}.
+  (so-called) Central European fonts (the latter only for 7.x and later,
+  part of the \sQuote{Extended} pack for 8.x and later), and these will
+  be needed for the full use of encodings other than Latin-1.  See
+  \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html} for
+  Reader 5.x to 8.x, and Updates on \url{http://www.adobe.com} for 9.x.
 }
 \seealso{
   \code{\link{pdfFonts}}, \code{\link{pdf.options}},
