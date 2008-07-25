@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pdf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{pdf}
@@ -28,10 +28,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{width, height}{the width and height of the graphics region in
     inches.  The default values are \code{7}.}
   \item{onefile}{logical: if true (the default) allow multiple figures
-    in one file.  If false, generate a file name containing the page
-    number for each page.  Defaults to  \code{TRUE}.}
+    in one file.  If false, generate a file with name containing the page
+    number for each page.  Defaults to \code{TRUE}.}
   \item{family}{the font family to be used, see
-    \code{\link{postscript}}.  Defaults to \code{"Helvetica"}. }
+    \code{\link{postscript}}.  Defaults to \code{"Helvetica"}.}
   \item{title}{title string to embed as the \code{/Title} field in the
     file.  Defaults to \code{"R Graphics Output"}.}
   \item{fonts}{a character vector specifying \R graphics font family
@@ -160,7 +160,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \item Font sizes are in big points.
     \item The default font family is Helvetica.
     \item Line widths are as a multiple of 1/96 inch, with no minimum. 
-    \item Circle of any radius are allowed.  Opaque circles of less than 10
+    \item Circles of any radius are allowed.  Opaque circles of less than 10
     points radius are rendered using char 108 in the Dingbats font:
     all semi-transparent and larger circles using a \enc{Bézier}{Bezier}
     curve for each quadrant.
@@ -171,13 +171,17 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   Acrobat Reader does not use the fonts specified but rather emulates
   them from multiple-master fonts.  This can be seen in imprecise
   centering of characters, for example the multiply and divide signs in
-  Helvetica.  This can be circumvented by embedding fonts where possible.
+  Helvetica.  This can be circumvented by embedding fonts where
+  possible.  Most other viewers substitute fonts, e.g. URW fonts for the
+  standard Helvetica and Times fonts, and these too often have different
+  font metrics from the true fonts.
 
   Acrobat Reader 5.x and later can be extended by support for Asian and
-  (so-called) Central European fonts (the latter only for 7.x and
-  later, part of the \sQuote{Extended} pack for 8.x), and this will be
-  needed for the full use of encodings other than Latin-1.  See
-  \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html}.
+  (so-called) Central European fonts (the latter only for 7.x and later,
+  part of the \sQuote{Extended} pack for 8.x and later), and these will
+  be needed for the full use of encodings other than Latin-1.  See
+  \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html} for
+  Reader 5.x to 8.x, and Updates on \url{http://www.adobe.com} for 9.x.
 }
 \seealso{
   \code{\link{pdfFonts}}, \code{\link{pdf.options}},
