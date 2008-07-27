@@ -291,7 +291,7 @@ SEXP R_quick_dispatch(SEXP args, SEXP mtable, SEXP fdef)
 	   If that changes, e.g. to include
 	   the package, the code here must change too.
 	   Or, better, the two should use the same C code. */
-	if(ptr > buf) { ptr = strcpy(ptr, "#");  ptr += 2;}
+	if(ptr > buf) { ptr = strcpy(ptr, "#");  ptr += 1;}
 	ptr = strcpy(ptr, class); ptr += strlen(class);
 	value = findVarInFrame(mtable, install(buf));
 	if(value != R_UnboundValue) {

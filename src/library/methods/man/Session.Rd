@@ -52,7 +52,12 @@ browseAll()
   }
 }
 \references{
-  See \emph{Programming with Data} (John M. Chambers, Springer, 1998)
-  for the equivalent functions.
+ Chambers, John M. (2008)
+ \emph{Software for Data Analysis: Programming with R}
+  Springer.  (For the R version.)
+
+ Chambers, John M. (1998)
+ \emph{Programming with Data}
+ Springer (For the original S4 version.) 
 }
 \keyword{internal}

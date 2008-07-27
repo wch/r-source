@@ -106,8 +106,8 @@
       value
   }
 
-## stripped down version of asS4 in base, which can't be used until the methods
-## namespace is available
+## stripped down version of asS4 in base (asS4 can't be used until the methods
+## namespace is available)
 .asS4 <- function (object)
 {
     .Call("R_setS4Object", object, TRUE, PACKAGE = "base")
@@ -1469,15 +1469,3 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
   (length(objects(env, all.names = TRUE,
                           pattern = "^[.]__[CT]_")))
 
-## returns TRUE if the argument is a non-empty character vector of length 1
-## otherwise, returns a diagnostic character string reporting the non-conformance
-.isSingleName <- function(x) {
-    paste0 <- function(...)paste(..., sep="")
-    if(!is.character(x))
-      return(paste0('required to be a character vector, got an object of class "', class(x)[[1]], '"'))
-    if(length(x) != 1)
-      return(paste0("required to be a character vector of length 1, got length ",length(x)))
-    if(is.na(x) || !nzchar(x))
-      return(paste0('required a non-empty string, got "',x, '"'))
-    TRUE
-}

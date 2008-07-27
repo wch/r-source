@@ -9,6 +9,7 @@
 \alias{@<-}
 \alias{slotNames}
 \alias{.slotNames}
+\alias{getSlots}
 \title{The Slots in an Object from a Formal Class}
 \description{
   These functions return or set information about the individual slots
@@ -22,6 +23,8 @@ slot(object, name)
 slot(object, name, check = TRUE) <- value
 
 slotNames(x)
+getSlots(x)
+
 }
 %% .slotNames(x)
 %%
@@ -31,64 +34,75 @@ slotNames(x)
 %%
 \arguments{
   \item{object}{An object from a formally defined class.}
-  \item{name}{The character-string name of the slot. The name must be a
-    valid slot name:  see Details below.}
-  \item{value}{A new value for the named slot.  The value must be
-    valid for this slot in this object's class.}
-  \item{x}{Either the name of a class or an object from that class.
-    Print \code{\link{getClass}(class)} to see the full description of
-    the slots.}
-  \item{check}{If \code{TRUE}, check the assigned value for validity
-    as the value of this slot.  You should never set this to
-    \code{FALSE} in normal use, since the result can create invalid objects.
-  }
-}
-\details{
-  The \code{"@"} operator and the \code{slot} function extract or
-  replace the formally defined slots for the object.  The operator
+  \item{name}{The name of the slot. The operator
   takes a fixed name, which can be unquoted if it is syntactically a
   name in the language.  A slot name can be any non-empty string, but
   if the name is not made up of letters, numbers, and \code{.}, it
   needs to be quoted (by backticks or single or double quotes).
 
+
   In the case of the \code{slot} function, \code{name} can be any
   expression that evaluates to a valid slot in the class definition.
   Generally, the only reason to use the functional form rather than
   the simpler operator is \emph{because} the slot name has to be computed.
+}
+  \item{value}{A new value for the named slot.  The value must be
+    valid for this slot in this object's class.}
+  \item{check}{In the replacement version of \code{slot}, a flag.  If \code{TRUE}, check the assigned value for validity
+    as the value of this slot.  User's coded should not set this to
+    \code{FALSE} in normal use, since the resulting object can be invalid.
+  }
 
-  The definition of the class contains the names of all slots directly
-  and indirectly defined.  Each slot has a name and an associated
+  \item{x}{Either the name of a class or a class definition.
+    If given an argument that is neither a character string nor a
+    class definition, \code{slotNames} (only) uses \code{class(x)} instead.}
+
+}
+\value{
+The \code{"@"} operator and the \code{slot} function extract or
+  replace the formally defined slots for the object.  
+
+Functions \code{slotNames} and \code{getSlots} return respectively the
+names of the slots and the classes associated with the slots in the
+specified class definition.  Except for its extended interpretation of
+\code{x} (above), \code{slotNames(x)} is just \code{names(getSlots(x))}.
+}
+\details{
+  
+
+  The definition of the class specifies all slots directly
+  and indirectly defined for that class.  Each slot has a name and an associated
   class.  Extracting a slot returns an object from that class.  Setting
   a slot first coerces the value to the specified slot and then stores
   it.
 
-  Unlike attributes, slots are not partially matched, and asking for (or
+  Unlike general attributes, slots are not partially matched, and asking for (or
   trying to set) a slot with an invalid name for that class generates an
   error.
 
-  Note that currently, \code{slotNames()} behaves particularly for class
-  representation objects -- this is considered bogus and likely to be
-  changed.
+  The \code{\link{@}} extraction operator and \code{slot}
+  function themselves do no checking against the class definition,
+  simply matching the name in the object itself.
+  The replacement forms do check (except for \code{slot} in the case
+  \code{check=FALSE}).  So long as slots are set without cheating, the
+  extracted slots will be valid.
 
-  Currently the \code{\link{@}} extraction operator and \code{slot}
-  function do no checking, neither that \code{object} has a formal class
-  nor that \code{name} is a valid slot name for the class.  (They will
-  extract the attribute of the given name if it exists from any \R object.)
-  The replacement forms do check (at least if \code{check=TRUE}).
+  Be aware that there are two ways to cheat, both to be avoided but
+  with no guarantees.  The obvious way is to assign a slot with
+  \code{check=FALSE}.  Also, slots in \R are implemented as
+  attributes, for the sake of some back compatibility.  The current
+  implementation does not prevent attributes being assigned, via
+  \code{\link{attr<-}}, and such assignments are not checked for
+  legitimate slot names.
 }
 \references{
-  The R package \pkg{methods} implements, with a few exceptions, the
-  programming interface for classes and methods in the book
-  \emph{Programming with Data} (John M. Chambers, Springer, 1998), in
-  particular sections 1.6, 2.7, 2.8, and chapters 7 and 8.
+ Chambers, John M. (2008)
+ \emph{Software for Data Analysis: Programming with R}
+  Springer.  (For the R version.)
 
-  While the programming interface for the \pkg{methods} package follows
-  the reference, the R software is an original implementation, so
-  details in the reference that reflect the S4 implementation may appear
-  differently in R.  Also, there are extensions to the programming
-  interface developed more recently than the reference.  For a
-  discussion of details see \code{?\link{Methods}}
-  and the links from that documentation.
+ Chambers, John M. (1998)
+ \emph{Programming with Data}
+ Springer (For the original S4 version.)
 }
 \seealso{
   \code{\link{@}},
@@ -105,14 +119,10 @@ slot(myTrack, "x")
 slot(myTrack, "y") <- log(slot(myTrack, "y"))
 utils::str(myTrack)
 
-slotNames("track") # is the same as
+getSlots("track") # or
+getSlots(getClass("track"))
+slotNames(class(myTrack)) # is the same as
 slotNames(myTrack)
-
-%% Don't do this --- this is a bug
-% ## sophisticated:
-% clDef <- getClass(class(myTrack))
-% slotNames(clDef) # "x" and "y" -- as for myTrack
-% .slotNames(clDef)# the slots of the class definition object itself
 
 \dontshow{removeClass("track")##  should not be needed... see ./setClass.Rd}
 }

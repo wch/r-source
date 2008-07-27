@@ -96,8 +96,14 @@ NEW FEATURES
     o	format() now works for environments; also print(env) and str(env)
 	share the same code for environments.
 
-    o	The treatment of special pseudo-classes "matrix", "array", and "ts"
-	as S4 classes has been modified to be more consistent and, within
+    o  S3 classes that are registered by a call to setOldClass() now
+        have the S3 class as a special slot, and therefore so do
+        any S4 classes that contain them.  This mechanism is used to
+        support S4 classes that extend S3 classes, to the extent
+        possible.  See ?Classes, ?setOldClass, and ?S3Class.
+
+    	The treatment of special pseudo-classes "matrix", "array", and "ts"
+	as S4 classes has also been modified to be more consistent and, within
 	limitations imposed by special treatment of these objects in
 	the base code, to allow other classes to contain them.  See class?ts.
 

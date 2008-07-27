@@ -28,7 +28,6 @@
            }, envir)
     clList = character()
     setClass("VIRTUAL", where = envir); clList <- c(clList, "VIRTUAL")
-    setClass("oldClass", where = envir) ## NOT A BASIC CLASS
     setClass("ANY", where = envir); clList <- c(clList, "ANY")
     setClass("vector", where = envir); clList <- c(clList, "vector")
     setClass("missing", where = envir); clList <- c(clList, "missing")
@@ -121,6 +120,10 @@
 }
 
 .InitS3Classes <- function(envir) {
+    # create a virtual class from which all S3 classes will inherit the .S3Class slot
+    setClass("oldClass", representation(.S3Class = "character"),
+             contains = "VIRTUAL", prototype = prototype(.S3Class = character()),
+             where = envir)
       ## call setOldClass on some known old-style classes.  Ideally this would be done
     ## in the code that uses the classes, but that code doesn't know about the methods
     ## package.
@@ -282,8 +285,8 @@
        list("factor",  factor()),
        list(c("ordered", "factor"), ordered(character())),
        list("table",  table(factor())),
-       list("summary.table",  summary.table(table(factor()))),
-       list("ts", stats::ts())
+       list("summary.table",  summary.table(table(factor())))
+       , list("ts", stats::ts())
        )
 .OldClassesList <-
     list(
@@ -292,6 +295,7 @@
          c("aov", "lm"), # see also .OldIsList
          c("maov", "mlm", "lm"),
          "POSIXt", "POSIXct", "POSIXlt", # see .OldIsList
+         "Date",
          "dump.frames",
          c("ordered", "factor"),
          c("glm.null", "glm", "lm"),

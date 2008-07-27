@@ -9,18 +9,30 @@
 \alias{setIs}
 \title{Is an Object from a Class}
 \description{
-  \code{is}:
-  With two arguments, tests whether \code{object} can be treated as from
-  \code{class2}.
+Functions to test inheritance relationships between an object and a
+class (\code{is}) or between two classes (\code{extends}), and to
+establish such relationships (\code{setIs},  an explicit alternative to the \code{contains=} argument to \code{\link{setClass}}).
+}
+\section{Summary of Functions}{
+  \describe{
+  \item{\code{is}:}{
+      With two arguments, tests whether \code{object} can be treated as from
+      \code{class2}.
 
-  With one argument, returns all the super-classes of this object's class.
+      With one argument, returns all the super-classes of this object's class.
+    }
+  \item{\code{extends}:}{
+      Does the first class extend the second class?
+      The call returns \code{maybe} if the extension includes a test.  
 
-  \code{extends}:
-  Does the first class extend the second class?
-  Returns \code{maybe} if the extension includes a test.
-
-  \code{setIs}:
-  Defines \code{class1} to be an extension of \code{class2}.
+When called with one argument, the value is a vector of the
+superclasses of \code{class1}.  If argument \code{fullInfo}  is
+\code{TRUE}, the call returns a named list of objects of class \code{\linkS4class{SClassExtension}}; otherwise, just the names of the superclasses.
+    }
+  \item{\code{setIs}:}{
+      Defines \code{class1} to be an extension (subclass) of \code{class2}, with \code{coerce} and \code{replace} defining methods to coerce to the superclass and to replace the part corresponding to the superclass.
+    }
+  }
 }
 \usage{
 is(object, class2)
@@ -35,15 +47,24 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
   \item{object}{any \R object.}
   \item{class1, class2}{
     the names of the classes between which \code{is} relations are to be
-    defined.}
+    examined defined, or (more efficiently) the class definition
+    objects for the classes.}
 
   \item{maybe, fullInfo}{
-      In a call to \code{extends}, \code{maybe} is a flag to
-      include/exclude conditional relations, and \code{fullInfo} is a
-      flag, which if \code{TRUE} causes object(s) of class
+      In a call to \code{extends}, \code{maybe} is the value returned if a
+      relation is conditional. In a call with \code{class2} missing, \code{fullInfo} is a
+      flag, which if \code{TRUE} causes a list of objects of class
       \code{classExtension} to be returned, rather than just the
-      names of the classes or a logical value.  See the details
-      below.}
+      names of the classes.
+      }
+
+  \item{test, coerce, replace}{
+    In a call to \code{setIs}, functions optionally supplied to test whether the relation is
+    defined, to coerce the object to \code{class2}, and to alter the
+    object so that \code{is(object, class2)} is identical to
+    \code{value}. See the details section below.
+
+  The remaining arguments are for internal use and/or usually omitted.}
 
   \item{extensionObject}{ alternative to the \code{test, coerce,
     replace, by} arguments; an object from class
@@ -53,19 +74,13 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
   \item{doComplete}{when \code{TRUE}, the class definitions will be
   augmented with indirect relations as well.  (Used in internal calls.)}
 
-
-  \item{test, coerce, replace}{
-    In a call to \code{setIs}, functions optionally supplied to test whether the relation is
-    defined, to coerce the object to \code{class2}, and to alter the
-    object so that \code{is(object, class2)} is identical to
-    \code{value}.}
   \item{by}{
     In a call to \code{setIs}, the name of an intermediary class.  Coercion will proceed by first
     coercing to this class and from there to the target class.  (The
     intermediate coercions have to be valid.)}
   \item{where}{
     In a call to \code{setIs}, where to store the metadata defining the relationship. Default is
-    the global environment.}
+    the global environment for calls from the top level of the session or a source file evaluated there.  When the call occurs in the top level of a file in the source of a package, the default will be the namespace or environment of the package.  Other uses are tricky and not usually a good idea, unless you really know what you are doing.}
   \item{classDef}{
     Optional class definition for \code{class} , required internally
     when \code{setIs} is called during the initial definition of the
@@ -73,42 +88,51 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
     argument, unless you really know why you're doing so.}
 }
 
-\details{
-\describe{
-  \item{\code{extends}:}{
+\section{Details}{
 
-  Given two class names, \code{extends} by default says whether the
-  first class extends the second; that is, it does for class names
-  what \code{is} does for an object and a class.  Given one class
-  name, it returns all the classes that class extends (the
-  \sQuote{superclasses} of that class), including the class itself.  If
-  the flag \code{fullInfo} is \code{TRUE}, the result is a list, each
-  element of which is an object describing the relationship;
-  otherwise, and by default, the value returned is only the names of
-  the classes.}
-
-  \item{\code{setIs}: }{
-
-    This function establishes an inheritance relation between two
+    The function \code{setIs} establishes an inheritance relation between two
     classes, by some means other than having one class contain the
     other.  It should \emph{not} be used for ordinary relationships:
     either include the second class in the \code{contains=} argument
     to \code{\link{setClass}} if the class is contained in the usual
-    way, or consider \code{setClassUnion} to define a virtual class
-    that is extended by several ordinary classes.  A call to
-    \code{setIs} makes sense, for example, if one class ought to be
+    way, or consider \code{\link{setClassUnion}} to define a virtual class
+    that is extended by several ordinary classes.  
+
+    A call to
+    \code{setIs} does make sense, for example, if one class ought to be
     automatically convertible into a second class, but they have
     different representations, so that the conversion must be done by
-    an explicit computation, not just be inheriting slots, for
-    example.  In this case, you will typically need to provide both a
+    an explicit computation, not just by inheriting slots.
+    In this case, you will typically need to provide both a
     \code{coerce=} and \code{replace=} argument to \code{setIs}.
 
+    Another reasonable use of \code{setIs} may be to relate two
+    classes with  some common slots, but in which one class (the
+    subclass) puts extra
+    constraints on the values in some slots.  In this case, simple
+    \code{contains=} relations will generate methods for coercing to
+    the class with the constraints that can produce invalid objects.
 
-  The \code{coerce}, \code{replace}, and \code{by} arguments behave as
-  described for the \code{\link{setAs}} function.  It's unlikely you
+
+  The \code{coerce} and \code{replace} arguments are functions the
+  define how to coerce a \code{class1} object to \code{class2}, and
+  how to replace the part of the subclass object that corresponds to
+  \code{class2}.  The first of these is a function of one argument
+  (conventionally \code{from}) and the second of two arguments
+  (\code{from}, \code{value}).  For details, see the section on coerce
+  functions below .
+
+   When \code{by} is specified, the coerce process first coerces to
+   this class and then to \code{class2}.  It's unlikely you
   would use the \code{by} argument directly, but it is used in defining
-  cached information about classes.  The value returned (invisibly) by
-  \code{setIs} is the extension information, as a list.
+  cached information about classes.
+
+  The value returned (invisibly) by
+  \code{setIs} is the revised class definition of \code{class1}.
+
+}
+
+\section{Coerce, replace, and test functions}{
 
   The  \code{coerce} argument is a function that turns a
   \code{class1} object into a \code{class2} object.  The
@@ -131,41 +155,31 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
   the \code{class1} object the slots corresponding to \code{class2},
   and return the modified object as its value.
 
+  For additional discussion of these functions, see
+  the documentation of the
+   \code{\link{setAs}} function.  (Unfortunately, argument
+   \code{def} to that function corresponds to argument \code{coerce} here.) 
 
-  The relationship can also be conditional, if a function is supplied as the
+  The inheritance relationship can also be conditional, if a function is supplied as the
   \code{test} argument.  This should be a function of one argument
   that returns \code{TRUE} or \code{FALSE} according to whether the
   object supplied satisfies the relation \code{is(object, class2)}.
-  If you worry about such things, conditional relations between
+  Conditional relations between
   classes are slightly deprecated because they cannot be implemented
   as efficiently as ordinary relations and because they sometimes can
   lead to confusion (in thinking about what methods are dispatched for
   a particular function, for example).  But they can correspond to
-  useful distinctions, such as when two classes have the same representation,
-  but only one of them obeys certain additional constraints.
-
-  Because only global environment information is saved, it rarely makes
-  sense to give a value other than the default for argument
-  \code{where}.  One exception is \code{where=0}, which modifies the
-  cached (i.e., session-scope) information about the class.  Class
-  completion computations use this version, but don't use it yourself
-  unless you are quite sure you know what you're doing.
-}
-}
+  distinctions such as two classes that have the same representation,
+  but with only one of them obeying certain additional constraints.
 }
 \references{
-  The R package \pkg{methods} implements, with a few exceptions, the
-  programming interface for classes and methods in the book
-  \emph{Programming with Data} (John M. Chambers, Springer, 1998), in
-  particular sections 1.6, 2.7, 2.8, and chapters 7 and 8.
+ Chambers, John M. (2008)
+ \emph{Software for Data Analysis: Programming with R}
+  Springer.  (For the R version.)
 
-  While the programming interface for the \pkg{methods} package follows
-  the reference, the R software is an original implementation, so
-  details in the reference that reflect the S4 implementation may appear
-  differently in R.  Also, there are extensions to the programming
-  interface developed more recently than the reference.  For a
-  discussion of details see \code{?\link{Methods}}
-  and the links from that documentation.
+ Chambers, John M. (1998)
+ \emph{Programming with Data}
+ Springer (For the original S4 version.)
 }
 \examples{
 \dontshow{

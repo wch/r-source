@@ -22,7 +22,6 @@
 \alias{makePrototypeFromClassDef}
 \alias{newEmptyObject}
 \alias{completeClassDefinition}
-\alias{getSlots}
 \alias{getAllSuperClasses}
 \alias{superClassDepth}
 \alias{isVirtualClass}
@@ -71,8 +70,6 @@ makePrototypeFromClassDef(slots, ClassDef, extends, where)
 newEmptyObject()
 
 completeClassDefinition(Class, ClassDef, where, doExtends)
-
-getSlots(x)
 
 getAllSuperClasses(ClassDef, simpleOnly = TRUE)
 
