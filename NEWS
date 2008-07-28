@@ -587,6 +587,8 @@ BUG FIXES
     o	symbol() in plotmath expressions works again with non-ASCII
 	input on devices that use UTF-8 for the symbol font.
 
+    o	There was a memory leak in ucstoutf8 used by some graphics devices.
+
 
 
 		CHANGES IN R VERSION 2.7.0
