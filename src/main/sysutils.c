@@ -1159,6 +1159,7 @@ size_t ucstoutf8(char *s, const unsigned int wc)
     }
     *outbuf = '\0';
     strcpy(s, buf);
+    Riconv_close(cd);
     return strlen(buf);
 }
 
