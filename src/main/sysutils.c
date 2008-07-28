@@ -1119,6 +1119,7 @@ mbtoucs(unsigned int *wc, const char *s, size_t n)
 	    return (size_t) -1;
 	}
     }
+    Riconv_close(cd);
     *wc = wcs[0];
     return (size_t) 1;
 }
