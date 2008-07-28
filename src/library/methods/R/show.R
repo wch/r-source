@@ -37,7 +37,7 @@ showDefault <- function(object, oldMethods = TRUE)
             cat("\n")
         }
     }
-    else if(isClass(clDef) && extends(clDef, "oldClass") &&
+    else if(isS4(object) && isClass(clDef) && extends(clDef, "oldClass") &&
             length(slotNames(clDef)) > 0) {
         ## print the old-style object
         cat("An object of class ", cl, "\n", sep="")
