@@ -219,8 +219,10 @@ PACKAGE INSTALLATION
 	the DESCRIPTION file.
 
     o	R CMD INSTALL will now fail if it finds a non-executable
-	configure script in the package -- this usually indicates a
-	file system with insufficient permissions.
+	'configure' script in the package -- this usually indicates a
+	file system with insufficient permissions.  If a
+	non-executable 'cleanup' script is found and either
+	--clean or --preclean is used, a warning is given.
 
 
 DEPRECATED & DEFUNCT
