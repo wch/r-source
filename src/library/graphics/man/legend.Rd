@@ -1,6 +1,6 @@
 % File src/library/graphics/man/legend.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{legend}
@@ -10,7 +10,7 @@
 legend(x, y = NULL, legend, fill = NULL, col = par("col"),
        lty, lwd, pch,
        angle = 45, density = NULL, bty = "o", bg = par("bg"),
-       box.lwd = par("lwd"), box.lty = par("lty"),
+       box.lwd = par("lwd"), box.lty = par("lty"), box.col = par("fg"),
        pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
        xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1,
        adj = c(0, 0.5), text.width = NULL, text.col = par("col"),
@@ -47,7 +47,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     values are \code{"o"} (the default) and \code{"n"}.}
   \item{bg}{the background color for the legend box.  (Note that this is
     only used if \code{bty != "n"}.)}
-  \item{box.lty, box.lwd}{the line type and width for the legend box.}
+  \item{box.lty, box.lwd, box.col}{the line type, width and color for
+    the legend box (if \code{bty = "o"}).}
   \item{pt.bg}{the background color for the \code{\link{points}},
     corresponding to its argument \code{bg}.}
   \item{cex}{character expansion factor \bold{relative} to current
