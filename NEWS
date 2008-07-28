@@ -204,6 +204,11 @@ NEW FEATURES
     o	Using $ on a non-subsettable object (such as a function) is
 	now an error (rather than returning NULL).
 
+    o	axis() has a new arguments 'col.ticks' and 'lwd.ticks' to allow
+	the colour and line width of ticks to be set separately from
+	that of the line (e.g. to set one or the other to transparent
+	or zero width).
+
 
 INSTALLATION
 

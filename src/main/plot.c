@@ -881,18 +881,20 @@ static void getylimits(double *y, pGEDevDesc dd) {
 SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* axis(side, at, labels, tick, line, pos,
-     *	    outer, font, lty, lwd, col, padj, ...) */
+     	    outer, font, lty, lwd, lwd.ticks, col, col.ticks, 
+	    hadj, padj, ...)
+    */
 
     SEXP at, lab, padj;
     int font, lty, npadj;
-    rcolor col;
+    rcolor col, colticks;
     int i, n, nint = 0, ntmp, side, *ind, outer, lineoff = 0;
     int istart, iend, incr;
     Rboolean dolabels, doticks, logflag = FALSE;
     Rboolean create_at;
     double x, y, temp, tnew, tlast;
     double axp[3], usr[2], limits[2];
-    double gap, labw, low, high, line, pos, lwd, hadj;
+    double gap, labw, low, high, line, pos, lwd, lwdticks, hadj;
     double axis_base, axis_tick, axis_lab, axis_low, axis_high;
 
     SEXP originalArgs = args, label;
@@ -902,7 +904,7 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* This is a builtin function, so it should always have */
     /* the correct arity, but it doesn't hurt to be defensive. */
 
-    if (length(args) < 12)
+    if (length(args) < 15)
 	error(_("too few arguments"));
     GCheckState(dd);
 
@@ -995,9 +997,13 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Optional argument: "lwd" */
     lwd = asReal(FixupLwd(CAR(args), 1));
     args = CDR(args);
+    lwdticks = asReal(FixupLwd(CAR(args), 1));
+    args = CDR(args);
 
     /* Optional argument: "col" */
     col = asInteger(FixupCol(CAR(args), gpptr(dd)->fg));
+    args = CDR(args);
+    colticks = asInteger(FixupCol(CAR(args), col));
     args = CDR(args);
 
     /* Optional argument: "hadj" */
@@ -1109,14 +1115,11 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
 
-    /* no! we do allow an `lty' argument -- will not be used often though
-     *	gpptr(dd)->lty = LTY_SOLID; */
     gpptr(dd)->lty = lty;
     gpptr(dd)->lwd = lwd;
     gpptr(dd)->adj = R_FINITE(hadj) ? hadj : 0.5;
     gpptr(dd)->font = (font == NA_INTEGER)? gpptr(dd)->fontaxis : font;
     gpptr(dd)->cex = gpptr(dd)->cexbase * gpptr(dd)->cexaxis;
-    /* no!   col = gpptr(dd)->col; */
 
     /* Draw the axis */
     GMode(1, dd);
@@ -1174,13 +1177,18 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		    GConvertYUnits(gpptr(dd)->tcl, LINES, NFC, dd);
 	}
 	if (doticks) {
-	    gpptr(dd)->col = col;/*was fg */
-	    GLine(axis_low, axis_base, axis_high, axis_base, NFC, dd);
-	    for (i = 0; i < n; i++) {
-		x = REAL(at)[i];
-		if (low <= x && x <= high) {
-		    x = GConvertX(x, USER, NFC, dd);
-		    GLine(x, axis_base, x, axis_tick, NFC, dd);
+	    gpptr(dd)->col = col;
+	    if (lwd > 0.0)
+		GLine(axis_low, axis_base, axis_high, axis_base, NFC, dd);
+	    gpptr(dd)->col = colticks;
+	    gpptr(dd)->lwd = lwdticks;
+	    if (lwdticks > 0) {
+		for (i = 0; i < n; i++) {
+		    x = REAL(at)[i];
+		    if (low <= x && x <= high) {
+			x = GConvertX(x, USER, NFC, dd);
+			GLine(x, axis_base, x, axis_tick, NFC, dd);
+		    }
 		}
 	    }
 	}
@@ -1309,13 +1317,18 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		    GConvertXUnits(gpptr(dd)->tcl, LINES, NFC, dd);
 	}
 	if (doticks) {
-	    gpptr(dd)->col = col;/*was fg */
-	    GLine(axis_base, axis_low, axis_base, axis_high, NFC, dd);
-	    for (i = 0; i < n; i++) {
-		y = REAL(at)[i];
-		if (low <= y && y <= high) {
-		    y = GConvertY(y, USER, NFC, dd);
-		    GLine(axis_base, y, axis_tick, y, NFC, dd);
+	    gpptr(dd)->col = col;
+	    if (lwd > 0.0)
+		GLine(axis_base, axis_low, axis_base, axis_high, NFC, dd);
+	    gpptr(dd)->col = colticks;
+	    gpptr(dd)->lwd = lwdticks;
+	    if (lwdticks > 0) {
+		for (i = 0; i < n; i++) {
+		    y = REAL(at)[i];
+		    if (low <= y && y <= high) {
+			y = GConvertY(y, USER, NFC, dd);
+			GLine(axis_base, y, axis_tick, y, NFC, dd);
+		    }
 		}
 	    }
 	}

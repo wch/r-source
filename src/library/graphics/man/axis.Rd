@@ -1,6 +1,6 @@
 % File src/library/graphics/man/axis.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{axis}
@@ -11,9 +11,9 @@
 }
 \usage{
 axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
-     pos = NA, outer = FALSE, font = NA,
-     lty = "solid", lwd = 1, col = NULL, hadj = NA, padj = NA,
-     \dots)
+     pos = NA, outer = FALSE, font = NA, lty = "solid",
+     lwd = 1, lwd.ticks = lwd, col = NULL, col.ticks = NULL,
+     hadj = NA, padj = NA, \dots)
 }
 \arguments{
   \item{side}{an integer specifying which side of the plot the axis is
@@ -42,9 +42,13 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     drawn in the outer plot margin, rather than the standard plot
     margin.}
   \item{font}{font for text.  Defaults to \code{par("font")}.}
-  \item{lty, lwd}{line type, width for the axis line and the tick marks.}
-  \item{col}{color for the axis line and the tick marks.  Here
-    \code{NULL} means to use \code{par("fg")}, possibly specified inline.}
+  \item{lty}{line type for both the axis line and the tick marks.}
+  \item{lwd, lwd.ticks}{line widths for the axis line and the tick
+    marks. Zero or negative values will suppress the line or ticks.}
+  \item{col, col.ticks}{colors for the axis line and the tick marks
+    respectively.  \code{col = NULL} means to use \code{par("fg")},
+    possibly specified inline, and \code{col=NULL} means to use whatever
+    color \code{col} resolved to.}
   \item{hadj}{adjustment (see \code{\link{par}("adj")}) for all labels
     \emph{parallel} (\sQuote{horizontal}) to the reading direction.  If
     this is not a finite value, the default is used (centring for
