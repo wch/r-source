@@ -211,6 +211,8 @@ NEW FEATURES
 	that of the line (e.g. to set one or the other to transparent
 	or zero width).
 
+	This now used by rug(), which no longer draws an axis line.
+
     o	legend() has a new argument 'box.col' to set the colour of the
 	enclosing box.
 

@@ -1,6 +1,6 @@
 % File src/library/graphics/man/rug.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{rug}
@@ -16,7 +16,8 @@ rug(x, ticksize = 0.03, side = 1, lwd = 0.5, col = par("fg"),
    Positive lengths give inwards ticks.}
  \item{side}{On which side of the plot box the rug will be
    plotted. Normally 1 (bottom) or 3 (top).}
- \item{lwd}{The line width of the ticks.}
+ \item{lwd}{The line width of the ticks.  Some devices will round the
+   default width up to \code{1}.}
  \item{col}{The colour the ticks are plotted in.}
  \item{quiet}{logical indicating if there should be a warning about
    clipped values.}
@@ -31,10 +32,8 @@ rug(x, ticksize = 0.03, side = 1, lwd = 0.5, col = par("fg"),
   that fall within the plot region are included.  There will be a
   warning if any finite values are omitted, but non-finite values are
   omitted silently.
-
-  Because of the way colours are done the axis itself is redrawn in the
-  same colour, \code{lty} and \code{lwd} as the ticks.  You can
-  replot the box if you don't like this feature.
+  
+  Prior to \R 2.8.0 \code{rug} re-drew the axis like: it no longer does so.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
