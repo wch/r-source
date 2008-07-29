@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-07-17 r46074)
+R version 2.8.0 Under development (unstable) (2008-07-29 r46148)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -320,13 +320,17 @@ An object of class "Foo"
 Slot "name":
 [1] "Sam"
 
+> f2 <- new("Foo", .Data = diag(2), name="Diag")# explicit .Data
 > (m <- as(f, "matrix"))
      [,1]
 [1,]   NA
-> show(m)
+> ## this has no longer (2.7.0) an S4 bit: set it explicitly just for testing:
+> stopifnot(isS4(m. <- asS4(m)),
++           identical(m, f@.Data))
+> show(m.)
      [,1]
 [1,]   NA
-> print(m)
+> print(m.)
      [,1]
 [1,]   NA
 > ## fixed in 2.5.0 patched

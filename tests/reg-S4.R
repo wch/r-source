@@ -203,9 +203,13 @@ stopifnot(identical(m, cBind(m)))
 ## caused infinite recursion
 setClass("Foo", representation(name="character"), contains="matrix")
 (f <- new("Foo", name="Sam", matrix()))
+f2 <- new("Foo", .Data = diag(2), name="Diag")# explicit .Data
 (m <- as(f, "matrix"))
-show(m)
-print(m)
+## this has no longer (2.7.0) an S4 bit: set it explicitly just for testing:
+stopifnot(isS4(m. <- asS4(m)),
+          identical(m, f@.Data))
+show(m.)
+print(m.)
 ## fixed in 2.5.0 patched
 
 ## callGeneric inside a method with new arguments {hence using .local()}:

@@ -234,9 +234,17 @@
 		  if((na <- nargs()) < 2) # guaranteed to be called with .Object from new
 		      .Object
 		  else if(length(dots <- list(...)) && ".Data" %in% names(dots)) {
-		      if(na > 2)
-			  stop("Cannot specify matrix() arguments when specifying .Data")
-		      .mergeAttrs(dots$.Data, .Object)
+		      if(na == 2)
+			  .mergeAttrs(dots$.Data, .Object)
+		      else {
+			  dat <- dots$.Data
+			  dots <- dots[names(dots) != ".Data"]
+			  if(na == 2 + length(dots)) {
+			      .mergeAttrs(as.matrix(dat), .Object, dots)
+			  }
+			  else
+			      stop("Cannot specify matrix() arguments when specifying .Data")
+		      }
 		  }
 		  else if(is.matrix(data) && na == 2 + length(dots))
 		      .mergeAttrs(data, .Object, dots)
@@ -249,15 +257,24 @@
 		      .mergeAttrs(value, .Object, dots)
 		  }
 	      })
+
     setMethod("initialize", "array",
 	      function(.Object, data = NA, dim = length(data),
 		       dimnames = NULL, ...) {
 		  if((na <- nargs()) < 2) # guaranteed to be called with .Object from new
 		      .Object
 		  else if(length(dots <- list(...)) && ".Data" %in% names(dots)) {
-		      if(na > 2)
-			  stop("Cannot specify array() arguments when specifying .Data")
-		      .mergeAttrs(dots$.Data, .Object)
+		      if(na == 2)
+			  .mergeAttrs(dots$.Data, .Object)
+		      else {
+			  dat <- dots$.Data
+			  dots <- dots[names(dots) != ".Data"]
+			  if(na == 2 + length(dots)) {
+			      .mergeAttrs(as.array(dat), .Object, dots)
+			  }
+			  else
+			      stop("Cannot specify array() arguments when specifying .Data")
+		      }
 		  }
 		  else if(is.array(data) && na == 2 + length(dots))
 		      .mergeAttrs(data, .Object, dots)
