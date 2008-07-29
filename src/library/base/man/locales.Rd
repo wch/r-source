@@ -68,12 +68,12 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   information is unavailable.
 
   For \code{category = "LC_ALL"} the details of the string are
-  system-specific: it might be a single locale or a set of locales
-  separated by \code{"/"} (Solaris) or \code{";"} (Windows, Linux).  For
-  portability, it is best to query categories individually.  It is
-  guaranteed that the result of \code{foo <- Sys.getlocale()} can be
-  used in \code{Sys.setlocale("LC_ALL", locale = foo)} on the same
-  machine.
+  system-specific: it might be a single locale name or a set of locale
+  names separated by \code{"/"} (Solaris, Mac OS X) or \code{";"}
+  (Windows, Linux).  For portability, it is best to query categories
+  individually: it is not necessarily the case that the result of
+  \code{foo <- Sys.getlocale()} can be used in
+  \code{Sys.setlocale("LC_ALL", locale = foo)}.
 }
 % assume this just affects strtod/atof, scanf/printf and friends,
 % as seems to be the case in glibc.
