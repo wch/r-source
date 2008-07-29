@@ -1965,11 +1965,11 @@ static void GA_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
     r.width  += 1;
     r.height += 1;
     if (r.x < 0) {
-	r.width -= r.x;
+	r.width += r.x;
 	r.x = 0;
     }
     if (r.y < 0) {
-	r.height -= r.y;
+	r.height += r.y;
 	r.y = 0;
     }
     r.width = min(r.width, xd->windowWidth - r.x);
