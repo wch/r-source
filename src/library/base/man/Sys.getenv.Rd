@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.getenv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Sys.getenv}
@@ -30,15 +30,16 @@ Sys.getenv(x = NULL, unset = "")
   name was found).
 
   On most platforms \code{Sys.getenv()} will return a named vector giving
-  the values of all the environment variables, collated in the current
-  locale.  (It may be confused by names containing \code{"="} which some
-  platforms allow but POSIX does not.)
+  the values of all the environment variables, sorted in the current
+  locale.  It may be confused by names containing \code{=} which some
+  platforms allow but POSIX does not.
 #ifdef windows
-  (Windows is such a platform.)
+  (Windows is such a platform: there names including \code{=} are
+  truncated just before the first \code{=}.)
 #endif
 }
 \seealso{
-  \code{\link{Sys.putenv}},
+  \code{\link{Sys.setenv}},
   \code{\link{Sys.getlocale}} for the locale in use,
   \code{\link{getwd}} for the working directory.
 }
