@@ -6241,6 +6241,10 @@ free_charset (re_charset_t *cset)
   re_free (cset->coll_syms);
   re_free (cset->equiv_classes);
 # endif
+/* R CHANGE July 2008
+   moved up two lines follwing R-devel post
+   https://stat.ethz.ch/pipermail/r-devel/2008-July/050136.html
+ */
   re_free (cset->range_starts);
   re_free (cset->range_ends);
   re_free (cset->char_classes);
