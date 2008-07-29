@@ -88,7 +88,7 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
     n = xdims[0]; p = xdims[1];
     xvals = (double *) R_alloc(n * p, sizeof(double));
     /* work on a copy of x */
-    Memcpy(xvals, REAL(x), (size_t) (n * p));
+    Memcpy(xvals, REAL(x), n * p);
 
     {
 	int ldu = INTEGER(getAttrib(u, R_DimSymbol))[0],
@@ -236,7 +236,7 @@ static SEXP modLa_rg(SEXP x, SEXP only_values)
 
     xvals = (double *) R_alloc(n * n, sizeof(double));
     /* work on a copy of x */
-    Memcpy(xvals, REAL(x), (size_t) (n * n));
+    Memcpy(xvals, REAL(x), n * n);
     ov = asLogical(only_values);
     if (ov == NA_LOGICAL) error(_("invalid '%s' argument"), "only.values");
     vectors = !ov;
@@ -413,7 +413,7 @@ static SEXP modLa_zgecon(SEXP A, SEXP norm)
     /* Compute the LU-decomposition and overwrite 'x' with result;
      * working on a copy of A : */
     avals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex));
-    Memcpy(avals, COMPLEX(A), (size_t) (n * n));
+    Memcpy(avals, COMPLEX(A), n * n);
     F77_CALL(zgetrf)(&n, &n, avals, &n,
 		     /* iwork: */(int *) R_alloc(n, sizeof(int)),
 		     &info);
@@ -499,7 +499,7 @@ static SEXP modLa_zgesv(SEXP A, SEXP Bin)
 
     avals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex));
     /* work on a copy of x */
-    Memcpy(avals, COMPLEX(A), (size_t) (n * n));
+    Memcpy(avals, COMPLEX(A), n * n);
     F77_CALL(zgesv)(&n, &p, avals, &n, ipiv, COMPLEX(B), &n, &info);
     if (info < 0)
 	error(_("argument %d of Lapack routine %s had invalid value"),
@@ -769,7 +769,7 @@ static SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
 
     xvals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex));
     /* work on a copy of x */
-    Memcpy(xvals, COMPLEX(x), (size_t) (n * n));
+    Memcpy(xvals, COMPLEX(x), n * n);
     ov = asLogical(only_values);
     if (ov == NA_LOGICAL) error(_("invalid '%s' argument"), "only.values");
     jobVL[0] = jobVR[0] = 'N';
@@ -915,7 +915,7 @@ static SEXP modLa_dgesv(SEXP A, SEXP Bin, SEXP tolin)
 
     avals = (double *) R_alloc(n * n, sizeof(double));
 				/* work on a copy of A */
-    Memcpy(avals, REAL(A), (size_t) (n * n));
+    Memcpy(avals, REAL(A), n * n);
     F77_CALL(dgesv)(&n, &p, avals, &n, ipiv, REAL(B), &n, &info);
     if (info < 0)
 	error(_("argument %d of Lapack routine %s had invalid value"),
