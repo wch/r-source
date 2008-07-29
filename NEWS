@@ -1215,6 +1215,9 @@ BUG FIXES
 	(Note that this is pretty arbitrary, but zero-length vectors
 	always give an error so it is at least consistent.)
 
+	Since sd(na.rm=TRUE) and var(na.rm=TRUE) both call cov(use =
+	"complete.obs"), this applies also to them.
+
 	cor(use="pair") used to give diagonal 1 even if the variable
 	was completely missing for the rank methods but NA for the
 	Pearson method: it now gives NA in all cases.
