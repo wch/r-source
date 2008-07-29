@@ -603,6 +603,7 @@ BUG FIXES
 
     o	There was a memory leak in ucstoutf8 used by some graphics devices.
 
+    o	axis() was ignoring par() mgp[3] is mgp was set in-line.
 
 
 		CHANGES IN R VERSION 2.7.0
