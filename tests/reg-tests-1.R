@@ -5264,3 +5264,6 @@ stopifnot(identical(y, y.ok))
 
 stopifnot(shapiro.test(c(0,0,1))$p.value >= 0)
 ## was wrong up to 2.7.1, because of rounding errors (in single precision).
+
+stopifnot(rcond(cbind(1, c(3,3))) == 0)
+## gave an error (because Lapack's LU detects exact singularity)

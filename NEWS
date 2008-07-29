@@ -375,6 +375,8 @@ BUG FIXES
     o	assign() now warns if given a character vector of length > 1,
 	rather than silently taking the first element.
 
+    o	rcond(<exactly singular matrix>) now gives 0 instead of an error.
+
 
 
 		CHANGES IN R VERSION 2.7.1

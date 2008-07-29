@@ -335,8 +335,20 @@ static SEXP modLa_dgecon(SEXP A, SEXP norm)
     /* Compute the LU-decomposition and overwrite 'x' with result :*/
     F77_CALL(dgetrf)(&m, &n, REAL(x), &m, iwork, &info);
     if (info) {
-	UNPROTECT(2);
-	error(_("error [%d] from Lapack 'dgetrf()'"), info);
+	if (info < 0) {
+	    UNPROTECT(2);
+	    error(_("error [%d] from Lapack 'dgetrf()'"), info);
+	}
+	else { /* i := info > 0:  LU decomp. is completed, but  U[i,i] = 0
+		* <==> singularity */
+#if 0
+	    warning(_("exact singularity: U[%d,%d] = 0 in LU-decomposition {Lapack 'dgetrf()'}"),
+		    info,info);
+#endif
+	    REAL(val)[0] = 0.; /* rcond = 0 <==> singularity */
+	    UNPROTECT(2);
+	    return val;
+	}
     }
     F77_CALL(dgecon)(typNorm, &n, REAL(x), &n, &anorm,
 		     /* rcond = */ REAL(val),
