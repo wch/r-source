@@ -1320,8 +1320,8 @@ SEXP attribute_hidden do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 /* The S4 Math2 group, round and signif */
 SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP res, ap;
-    int n, nprotect = 1;
+    SEXP res, ap, call2;
+    int n, nprotect = 2;
 
     if (length(args) >= 2 &&
 	isSymbol(CADR(args)) && R_isMissing(CADR(args), env)) {
@@ -1331,6 +1331,8 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     PROTECT(args = evalListKeepMissing(args, env));
+    PROTECT(call2 = lang2(CAR(call), R_NilValue));
+    SETCDR(call2, args);
 
     n = length(args);
     switch (n) {
@@ -1342,7 +1344,7 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 	      n, PRIMNAME(op));
     }
 
-    if (! DispatchGroup("Math", call, op, args, env, &res)) {
+    if (! DispatchGroup("Math", call2, op, args, env, &res)) {
 	if(n == 1) {
 	    double digits = 0.0;
 	    if(PRIMVAL(op) == 10004) digits = 6.0;
@@ -1385,8 +1387,8 @@ SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP res, ap = args;
-    int n = length(args), nprotect = 1;
+    SEXP res, ap = args, call2;
+    int n = length(args), nprotect = 2;
 
     if (n >= 2 && isSymbol(CADR(args)) && R_isMissing(CADR(args), env)) {
 #ifdef M_E
@@ -1397,9 +1399,11 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(args = list2(CAR(args), ScalarReal(e))); nprotect++;
     }
     PROTECT(args = evalListKeepMissing(args, env));
+    PROTECT(call2 = lang2(CAR(call), R_NilValue));
+    SETCDR(call2, args);
     n = length(args);
 
-    if (! DispatchGroup("Math", call, op, args, env, &res)) {
+    if (! DispatchGroup("Math", call2, op, args, env, &res)) {
 	switch (n) {
 	case 1:
 	    if (isComplex(CAR(args)))
