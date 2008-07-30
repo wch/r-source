@@ -180,7 +180,7 @@ typedef struct {
 typedef R_GE_gcontext* pGEcontext;
     
 
-#include <R_ext/GraphicsDevice.h> /* needed for NewDevDesc */
+#include <R_ext/GraphicsDevice.h> /* needed for DevDesc */
 
 typedef struct _GEDevDesc GEDevDesc;
 
@@ -251,7 +251,7 @@ typedef GEDevDesc* pGEDevDesc;
 /* functions from devices.c for use by graphics devices */
 
 #define desc2GEDesc		Rf_desc2GEDesc
-/* map NewDevDesc to enclosing GEDevDesc */
+/* map DevDesc to enclosing GEDevDesc */
 pGEDevDesc desc2GEDesc(pDevDesc dd);
 int GEdeviceNumber(pGEDevDesc);
 pGEDevDesc GEgetDevice(int);

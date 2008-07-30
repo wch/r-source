@@ -19,7 +19,7 @@
 
 /* Used by third-party graphics devices.
  *
- * This defines NewDevDesc, whereas GraphicsEngine.h defines GEDevDesc.
+ * This defines DevDesc, whereas GraphicsEngine.h defines GEDevDesc.
  * Also contains entry points from gevents.c
  */
 
@@ -27,10 +27,9 @@
 #define R_GRAPHICSDEVICE_H_
 
 
-/* ideally we would use prototypes in NewDevDesc.  
-   But the pre-1.4.0 system used DevDesc*, and some devices
-   have taken to passing pointers to their own structure
-   instead of NewDevDesc* , defining R_USE_PROTOTYPES 0 allows them to
+/* ideally we would use prototypes in DevDesc.  
+   Some devices have taken to passing pointers to their own structure
+   instead of DevDesc* , defining R_USE_PROTOTYPES 0 allows them to
    opt out.
 */
 
@@ -78,10 +77,13 @@ extern "C" {
  *    complement the size() function.)
  */
 
-typedef struct _NewDevDesc NewDevDesc;
-typedef NewDevDesc* pDevDesc;
+/* Cope with name used in 1.4.0 to 2.7.x.  Remove for R 2.9.0 */
+#define NewDevDesc DevDesc
 
-struct _NewDevDesc {
+typedef struct _DevDesc DevDesc;
+typedef DevDesc* pDevDesc;
+
+struct _DevDesc {
     /********************************************************
      * Device physical characteristics
      ********************************************************/

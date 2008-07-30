@@ -28,7 +28,7 @@ extern "C" {
 #include "bdx.h"
 
 #include <Rinternals.h>
-/* This misuses the NewDevDesc interface to pass its own pointers */
+/* This misuses the DevDesc interface to pass its own pointers */
 #define R_USE_PROTOTYPES 0
 #include <R_ext/GraphicsEngine.h>
 
@@ -63,17 +63,17 @@ struct __tag_graphics_device {
 };
 
 /* 06-08-20 | baier | data structures for graphics devices ("inherits" from
- *                    NewDevDesc) */
-/* 06-09-12 | baier | NewDevDesc instead of NewDevDesc* */
+ *                    DevDesc) */
+/* 06-09-12 | baier | DevDesc instead of DevDesc* */
 #define GFXDEV_ACTIVEX  1
 #define GFXDEV_RECORDER 2
 typedef struct __tag_graphics_device_description_cb
 {
-  NewDevDesc dd;
+  DevDesc dd;
 } R_Proxy_Graphics_CB;
 typedef struct __tag_graphics_device_description_recorder
 {
-  NewDevDesc dd;
+  DevDesc dd;
   void* recorder_data;                           /* for recording plots */
 } R_Proxy_Graphics_Recorder;
 

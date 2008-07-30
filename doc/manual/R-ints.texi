@@ -2347,8 +2347,8 @@ of a would-be writer of a graphics device.
 There are two types used internally which are pointers to structures
 related to graphics devices.
 
-The @code{NewDevDesc} type@footnote{`new' in @R 1.4.0 and scheduled to
-be renamed in @R 2.8.0.} is a structure defined in the header file
+The @code{DevDesc} type@footnote{@code{NewDevDesc} from @R 1.4.0,
+renamed in @R 2.8.0.} is a structure defined in the header file
 @file{R_ext/GraphicsDevice.h} (which is included by
 @file{R_ext/GraphicsEngine.h}).  This describes the physical
 characteristics of a device, the capabilities of the device driver and
@@ -2358,7 +2358,7 @@ engine to obtain information about the device and initiate actions
 is a pointer to this type.
 
 The relationship of device units to physical dimensions is set by the
-element @code{ipr} of the @code{NewDevDesc} structure: a @samp{double}
+element @code{ipr} of the @code{DevDesc} structure: a @samp{double}
 array of length 2.
 
 
@@ -2384,7 +2384,7 @@ struct _GEDevDesc @{
 So this is essentially a device structure plus information about the
 device maintained by the graphics engine and normally@footnote{It is
 possible for the device to find the @code{GEDevDesc} which points to its
-@code{NewDevSec}, and this is done often enough that there is a
+@code{DevSec}, and this is done often enough that there is a
 convenience function @code{desc2GEDesc} to do so.} visible to the engine
 and not to the device.  Type @code{pGEDevDesc} is a pointer to this
 type.
@@ -2411,7 +2411,7 @@ structure by code very similar to
     BEGIN_SUSPEND_INTERRUPTS @{
         pDevDesc dev;
         /* Allocate and initialize the device driver data */
-        if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc))))
+        if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc))))
             return 0; /* or error() */
         /* set up device driver or free 'dev' and error() */
         gdd = GEcreateDevDesc(dev);
@@ -2419,10 +2419,10 @@ structure by code very similar to
     @} END_SUSPEND_INTERRUPTS;
 @end example
 
-The @code{NewDevDesc} structure contains a @code{void *} pointer
+The @code{DevDesc} structure contains a @code{void *} pointer
 @samp{deviceSpecific} which is used to store data specific to the
 device.  Setting up the device driver includes initializing all the
-non-zero elements of the @code{NewDevDesc} structure.
+non-zero elements of the @code{DevDesc} structure.
 
 Note that the device structure is zeroed when allocated: this provides
 some protection against future expansion of the structure since the
@@ -2448,7 +2448,7 @@ API it was designed for and compiled against.
 @subsection Device capabilities
 
 The following `capabilities' can be defined for the device's
-@code{NewDevDesc} structure.
+@code{DevDesc} structure.
 
 @itemize
 @item canChangeGamma --

@@ -761,7 +761,7 @@ SEXP PicTeX(SEXP args)
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
-	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc))))
+	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc))))
 	    return 0;
 	if(!PicTeXDeviceDriver(dev, file, bg, fg, width, height, debug)) {
 	    free(dev);

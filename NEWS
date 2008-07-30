@@ -294,6 +294,10 @@ C-LEVEL FACILITIES
 	bytes (rather than 1024): maintainers of alternative
 	front-ends should check that they do not have a smaller limit.
 
+    o	Graphics structure NewDevDesc has been renamed to DevDesc.
+	For now there is a compatibility define in GraphicDevice.h,
+	but it will be removed in R 2.9.0.
+
 
 BUG FIXES
 
