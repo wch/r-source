@@ -438,7 +438,7 @@ clean:
 	  R-exts.* R-intro.R R-intro.Rout \
 	  FALSE.R FALSE.tex mirrors.html
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R
-	-@rm -rf anRpackage
+	-@rm -rf anRpackage myTst* myLib
 distclean: clean
 	-@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \

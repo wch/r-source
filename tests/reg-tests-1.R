@@ -5116,6 +5116,7 @@ stopifnot(sapply(R, function(ch) sub(".* : ", '', ch) ==
                  "(converted from warning) NAs produced\n"))
 ## was inconsistent in R < 2.7.0
 
+
 ## package.skeleton() with metadata-only code
 ## work in current (= ./tests/ directory):
 tmp <- tempfile()
@@ -5130,7 +5131,6 @@ unlink("myTst", recursive=TRUE)
 op <- options(warn=2) # *NO* "invalid file name" warning {failed in 2.7.[01]}:
 package.skeleton("myTst", code_files = tm2, namespace=TRUE)
 options(op)
-
 stopifnot(1 == grep("setClass",
 	  readLines(list.files("myTst/R", full.names=TRUE))),
 	  c("foo-class.Rd","show-methods.Rd") %in% list.files("myTst/man"))
@@ -5138,17 +5138,18 @@ stopifnot(1 == grep("setClass",
 ##
 ## Part 2: -- build, install, load and "inspect" the package:
 if(.Platform$OS.type == "unix") {
- ## <FIXME> need build.package()
- Rcmd <- paste(file.path(R.home("bin"), "R"), "CMD")
- system(paste(Rcmd, "build", "myTst"))
- dir.create("myLib")
- install.packages("myTst", lib = "myLib", repos=NULL, type = "source")# with warnings
- stopifnot(require("myTst",lib = "myLib"))
- sm <- getMethods(show, where= as.environment("package:myTst"))
- stopifnot(names(sm@methods) == "foo")
+    ## <FIXME> need build.package()
+    Rcmd <- paste(file.path(R.home("bin"), "R"), "CMD")
+    system(paste(Rcmd, "build", "myTst"))
+    dir.create("myLib")
+    install.packages("myTst", lib = "myLib", repos=NULL, type = "source") # with warnings
+    stopifnot(require("myTst",lib = "myLib"))
+    sm <- getMethods(show, where= as.environment("package:myTst"))
+    stopifnot(names(sm@methods) == "foo")
+    unlink("myLib", recursive=TRUE)
+    unlink("myTst_*")
 }
-
-
+unlink("myTst", recursive=TRUE)
 
 
 ## predict.loess with transformed variables
