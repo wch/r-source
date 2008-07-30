@@ -14,53 +14,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-.findNextMethod <- function(method, f = "<unknown>", mlist, optional = FALSE, excluded, envir) {
-    ## find the next method for dispatch, and return that method
-    ## If no next method can be found, returns NULL or error
-    ##
-    ## The next method is defined as the method selected if the given method
-    ## were not there.  The definition is applied literally by deleting the given
-    ## method and then calling MethodListSelect.
-    if(!is(method, "MethodDefinition"))
-        stop("'NextMethod' not defined because the current method is not a 'MethodDefinition' object")
-    ## remove all cached methods
-    mlist@allMethods <- mlist@methods
-    ## delete the excluded method(s)
-    for(signature in excluded) {
-        if(!is(signature, "signature"))
-            stop(gettextf("expected a list of signature objects, got \"%s\"", class(signature)), domain = NA)
-        if(length(signature)>0)
-            mlist <- insertMethod(mlist, signature, names(signature), NULL, FALSE)
-    }
-    ## and now redo method selection.  Note the use of
-    ## method@defined, not the actual environment to force a consistent
-    ## nextMethod in the methods list object for the generic.  (Inconsistent
-    ## results are possible with next methods)
-    value <- selectMethod(f, method@defined, optional, TRUE, mlist)
-    if(!is(value, "MethodWithNext") && is(value, "MethodDefinition") &&
-       .hasCallNextMethod(value@.Data)) {
-        ## complete the chain of callNextMethod's
-        excluded <- c(excluded, list(value@defined))
-        nextMethod <- .findNextMethod(value, f, mlist, optional, excluded, envir)
-        value <- new("MethodWithNext", value, nextMethod = nextMethod, excluded = excluded)
-    }
-    value
-}
-
-## find a call to callNextMethod in the body or one of the default arg. expressions
-## (If the R version of all.names, all.vars worked on function definitions would be no need
-## for the loop)
-.hasCallNextMethod <- function(def) {
-    if(!identical(typeof(def), "closure"))
-        return(FALSE)
-    def <- as.list(def)
-    for(i in rev(seq_along(def))) {
-        if(is.call(def[[i]]) && !is.na(match("callNextMethod", all.names(def[[i]]))))
-            return(TRUE)
-    }
-    FALSE
-}
-
 callNextMethod <- function(...) {
     method <- nextMethod <-  NULL
     dotNextMethod <- as.name(".nextMethod")
