@@ -3197,7 +3197,7 @@ free_dfa_content (re_dfa_t *dfa)
 
 /* Free dynamically allocated space used by PREG.  */
 
-void atttribute_hidden /* R CHANGE */
+void attribute_hidden /* R CHANGE */
 regfree (regex_t *preg)
 /*    regex_t *preg; */
 {
