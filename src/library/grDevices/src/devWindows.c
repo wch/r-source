@@ -1959,21 +1959,11 @@ static void GA_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     rect r;
 
-    /* the grid package sets arbitrary clipping regions, so intersect
-       with the device region here. */
     r = rcanon(rpt(pt(x0, y0), pt(x1, y1)));
     r.width  += 1;
     r.height += 1;
-    if (r.x < 0) {
-	r.width += r.x;
-	r.x = 0;
-    }
-    if (r.y < 0) {
-	r.height += r.y;
-	r.y = 0;
-    }
-    r.width = min(r.width, xd->windowWidth - r.x);
-    r.height = min(r.height, xd->windowHeight - r.y);
+    r.width = r.width;
+    r.height = r.height;
     xd->clip = r;
 }
 
