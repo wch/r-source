@@ -75,6 +75,18 @@ replicate(n, expr, simplify = TRUE)
 \note{
   \code{sapply(*, simplify = FALSE, USE.NAMES = FALSE)} is
   equivalent to \code{lapply(*)}.
+
+  For historical reasons, the calls created by \code{lapply} are
+  unevaluated, and code has been written (e.g. \code{bquote}) that
+  relies on this.  This means that the recorded call is always of the
+  form \code{FUN(X[[0L]], ...)}, with \code{0L} replaced by the current
+  integer index.  This not normally a problem, but it can be if
+  \code{FUN} uses \code{\link{sys.call}} or \code{\link{match.call}} or
+  if it is a primitive function that makes use of the call.  This means
+  that it is often safer to call primitive functions with a wrapper, so
+  that e.g. \code{lapply(ll, function(x) is.numeric(x))} is required in
+  \R 2.7.1 to ensure that method dispatch for \code{is.numeric} occurs
+  correctly.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

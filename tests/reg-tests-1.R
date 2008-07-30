@@ -5267,3 +5267,13 @@ stopifnot(shapiro.test(c(0,0,1))$p.value >= 0)
 
 stopifnot(rcond(cbind(1, c(3,3))) == 0)
 ## gave an error (because Lapack's LU detects exact singularity)
+
+
+## dispatch when primitives are called from lapply.
+x <- data.frame(d=Sys.Date())
+stopifnot(sapply(x, is.numeric) == FALSE)
+# TRUE in 2.7.1, tried to dispatch on "FUN"
+(ds <- seq(from=Sys.Date(), by=1, length=4))
+lapply(list(d=ds), round)
+# failed in 2.7.1 with 'dispatch error' since call had '...' arg
+## related to calls being passed unevaluated by lapply.
