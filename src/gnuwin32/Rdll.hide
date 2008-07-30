@@ -341,6 +341,7 @@
  Rf_regcomp
  Rf_regerror
  Rf_regexec
+ Rf_regfree
  Rf_setBaseDevice
  Rf_setIVector
  Rf_setRVector
