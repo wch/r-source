@@ -329,6 +329,10 @@ BUG FIXES
     o	Plots of profile.mle() objects was misbehaving when the 'which'
 	argument had been used in their calculation.
 
+    o	Repainting of open X11 View() windows is now done whilst an
+	X11 dataentry window is in use.
+
+
 
 
 	**************************************************
