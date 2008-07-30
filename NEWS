@@ -377,6 +377,9 @@ BUG FIXES
 
     o	rcond(<exactly singular matrix>) now gives 0 instead of an error.
 
+    o	Closing an X11 View() or dataentry window via its frame's
+	close control now works better on some window managers.
+
 
 
 		CHANGES IN R VERSION 2.7.1
