@@ -241,9 +241,6 @@
     ## inherited in the nextMethod sense, since they have the same signature
     label <- .sigLabel(classes)
     direct <- .getGroupMethods(label, groupGenerics, FALSE)
-##M doExcluded must be FALSE here
-##M     if(doExcluded && length(direct) > 0)
-##M       direct <- direct[is.na(match(names(direct), excluded))]
     if(length(direct) > 0 && doMtable) {
         assign(label, direct[[1]], envir = mtable)
         if(verbose) cat("* found (and cached) direct group method for", label,"\n")
@@ -312,7 +309,7 @@
                 domain = NA, call. = FALSE)
       methods <- methods[1]
   }
-  if(doMtable && length(methods) > 0) {
+  if(doMtable && length(methods) > 0) { ## Cache the newly found one
     tlabel <- .sigLabel(classes)
     m <- methods[[1]]
     if(is(m, "MethodDefinition"))  { # else, a primitive
