@@ -1,6 +1,6 @@
 % File src/library/stats/man/sd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sd}
@@ -18,8 +18,15 @@
 sd(x, na.rm = FALSE)
 }
 \arguments{
-  \item{x}{a numeric vector, matrix or data frame.}
+  \item{x}{a numeric vector, matrix or data frame. An object which is
+    not a vector, matrix or data frame is coerced (if possible)
+    by \code{as.vector}.}
   \item{na.rm}{logical. Should missing values be removed?}
+}
+\details{
+  The standard deviation of a zero-length vector (after removal of
+  \code{NA}s if \code{na.rm = TRUE}) is not defined and gives an error.
+  The standard deviation of a length-one vector is \code{NA}.
 }
 \seealso{
   \code{\link{var}} for its square, and \code{\link{mad}}, the most
