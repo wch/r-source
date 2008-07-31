@@ -166,12 +166,10 @@ package.skeleton <-
         for(item in list){
             if(is.function(get(item, envir = environment)))
                 dump(item,
-                     file = file.path(code_dir,
-                     sprintf("%s.R", list0[item])))
+                     file = file.path(code_dir, sprintf("%s.R", list0[item])))
             else       # we cannot guarantee this is a valid file name
-                try(save(list = item,
-                         file = file.path(data_dir,
-                         sprintf("%s.rda", item))))
+                try(save(list = item, envir = environment,
+                         file = file.path(data_dir, sprintf("%s.rda", item))))
         }
     } else {
         message("Copying code files ...")

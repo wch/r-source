@@ -86,7 +86,7 @@ as.formula(object, env = parent.frame())
   \code{specials} argument of \code{\link{terms.formula})}.
 
   There are two special interpretations of \code{.} in a formula.  The
-  usual one is in the context of a \code{data} argument of a model
+  usual one is in the context of a \code{data} argument of model
   fitting functions and means \sQuote{all columns not otherwise in the
   formula}: see \code{\link{terms.formula}}.  In the context of
   \code{\link{update.formula}}, \bold{only}, it means \sQuote{what was
