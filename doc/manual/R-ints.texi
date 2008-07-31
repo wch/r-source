@@ -2744,11 +2744,11 @@ decisions.
 @node X11(), windows(), Specific devices, Specific devices
 @subsubsection X11()
 
-The @code{X11()} device dates back to the mid 1990's and was written
-then in @code{Xlib}, the most basic X11 toolkit.  It has since
-optionally made use of a few features from other toolkits: @code{libXt} is
-used to read X11 resources, and @code{libXmu} is used in the handling of
-clipboard selections.
+The @code{X11(type="Xlib")} device dates back to the mid 1990's and was
+written then in @code{Xlib}, the most basic X11 toolkit.  It has since
+optionally made use of a few features from other toolkits: @code{libXt}
+is used to read X11 resources, and @code{libXmu} is used in the handling
+of clipboard selections.
 
 Using basic @code{Xlib} code makes drawing fast, but is limiting.  There
 is no support of translucent colours (that came in the @code{Xrender}
@@ -2791,13 +2791,13 @@ fonts on the machine running @R{} and send grayscale bitmaps to cairo.
 @subsubsection windows()
 
 The @code{windows()} device is a family of devices: it supports plotting
-to Windows (enhanced) metafiles, @code{BMP}, @code{JPEG} and @code{PNG}
-files as well as to Windows printers.
+to Windows (enhanced) metafiles, @code{BMP}, @code{JPEG}, @code{PNG} and
+@code{TIFF} files as well as to Windows printers.
 
 In most of these cases the primary plotting is to a bitmap: this is used
 for the (default) buffering of the screen device, which also enables the
-current plot to be saved to BMP, JPEG or PNG (it is the internal bitmap
-which is copied to the file in the appropriate format).
+current plot to be saved to BMP, JPEG, PNG or TIFF (it is the internal
+bitmap which is copied to the file in the appropriate format).
 
 The device units are pixels (logical ones on a metafile device).
 
