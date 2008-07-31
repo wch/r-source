@@ -30,7 +30,8 @@ nls(formula, data, start, control, algorithm,
   \item{formula}{a nonlinear model \link{formula} including variables and
     parameters.  Will be coerced to a formula if necessary.}
   \item{data}{an optional data frame in which to evaluate the variables in
-    \code{formula}.  Can also be a list or an environment, but not a matrix.}
+    \code{formula} and \code{weights}.  Can also be a list or an
+    environment, but not a matrix.}
   \item{start}{a named list or named numeric vector of starting
     estimates.  When \code{start} is missing, a very cheap guess for
     \code{start} is tried (if \code{algorithm != "plinear"}).
@@ -80,10 +81,15 @@ nls(formula, data, start, control, algorithm,
   \code{\link{print}}, \code{\link{profile}}, \code{\link{residuals}},
   \code{\link{summary}}, \code{\link{vcov}} and \code{\link{weights}}.
 
-  Variables in \code{formula} are looked for first in \code{data}, then
-  the environment of \code{formula} and finally along the search path.
-  Functions in \code{formula} are searched for first in the environment
-  of \code{formula} and then along the search path.
+  Variables in \code{formula} (and \code{weights} if not missing) are
+  looked for first in \code{data}, then the environment of
+  \code{formula} and finally along the search path.  Functions in
+  \code{formula} are searched for first in the environment of
+  \code{formula} and then along the search path.
+
+  Arguments \code{subset} and \code{na.action} are supported only when
+  all the variables in the formula taken from \code{data} are of the
+  same length: other cases give a warning.
 }
 \section{Warning}{
   \bold{Do not use \code{nls} on artificial "zero-residual" data.}
