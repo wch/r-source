@@ -492,11 +492,20 @@ data.frame <-
 	if(missing(i)) return(x)
 	if(is.matrix(i))
 	    return(as.matrix(x)[i])  # desperate measures
-	y <- NextMethod("[")
-        cols <- names(y)
         ## zero-column data frames prior to 2.4.0 had no names.
-	if(!is.null(cols) && any(is.na(cols)))
-            stop("undefined columns selected")
+        nm <- names(x); if(is.null(nm)) nm <- character(0)
+        if(is.numeric(i) && any(is.na(nm))) { # less efficient version
+            names(nm) <- names(x) <- seq_along(x)
+            y <- NextMethod("[")
+            cols <- names(y)
+            if(any(is.na(cols))) stop("undefined columns selected")
+            cols <- names(y) <- nm[cols]
+        } else {
+            y <- NextMethod("[")
+            cols <- names(y)
+            if(!is.null(cols) && any(is.na(cols)))
+                stop("undefined columns selected")
+        }
         ## added in 1.8.0
         if(any(duplicated(cols))) names(y) <- make.unique(cols)
         ## since we have not touched the rows, copy over the raw row.names
@@ -507,9 +516,19 @@ data.frame <-
     if(missing(i)) { # df[, j] or df[ , ]
         ## not quite the same as the 1/2-arg case, as 'drop' is used.
         if(missing(j) && drop && length(x) == 1L) return(.subset2(x, 1L))
-        y <- if(missing(j)) x else .subset(x, j)
-	cols <- names(y)
-	if(any(is.na(cols))) stop("undefined columns selected")
+        nm <- names(x); if(is.null(nm)) nm <- character(0)
+        if(!missing(j) && is.numeric(j) && any(is.na(nm))) {
+            ## less efficient version
+            names(nm) <- names(x) <- seq_along(x)
+            y <- if(missing(j)) x else .subset(x, j)
+            cols <- names(y)
+            if(any(is.na(cols))) stop("undefined columns selected")
+            cols <- names(y) <- nm[cols]
+        } else {
+            y <- if(missing(j)) x else .subset(x, j)
+            cols <- names(y)
+            if(any(is.na(cols))) stop("undefined columns selected")
+        }
         if(drop && length(y) == 1L) return(.subset2(y, 1L))
         if(any(duplicated(cols))) names(y) <- make.unique(cols)
         nrow <- .row_names_info(x, 2L)
@@ -523,7 +542,7 @@ data.frame <-
     ### df[i, j] or df[i , ]
     ## rewritten for R 2.5.0 to avoid duplicating x.
     xx <- x
-    cols <- names(xx)  # needed for 'drop'
+    cols <- names(xx)  # needed for computation of 'drop' arg
     ## make a shallow copy
     x <- vector("list", length(x))
     ## attributes(x) <- attributes(xx) expands row names
@@ -531,6 +550,9 @@ data.frame <-
     oldClass(x) <- attr(x, "row.names") <- NULL
 
     if(!missing(j)) { # df[i, j]
+        nm <- names(x); if(is.null(nm)) nm <- character(0)
+        if(is.numeric(j) && any(is.na(nm)))
+            names(nm) <- names(x) <- seq_along(x)
         x <- x[j]
         cols <- names(x)  # needed for 'drop'
         if(drop && length(x) == 1L) {
@@ -546,6 +568,8 @@ data.frame <-
             return(if(length(dim(xj)) != 2L) xj[i] else xj[i, , drop = FALSE])
         }
         if(any(is.na(cols))) stop("undefined columns selected")
+        ## fix up names if we altered them.
+        if(!is.null(names(nm))) cols <- names(x) <- nm[cols]
         ## sxx <- match(cols, names(xx)) fails with duplicate names
         nxx <- structure(seq_along(xx), names=names(xx))
         sxx <- match(nxx[j], seq_along(xx))

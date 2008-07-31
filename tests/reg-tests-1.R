@@ -5278,3 +5278,14 @@ stopifnot(sapply(x, is.numeric) == FALSE)
 lapply(list(d=ds), round)
 # failed in 2.7.1 with 'dispatch error' since call had '...' arg
 ## related to calls being passed unevaluated by lapply.
+
+
+## subsetting data frames with NA cols
+## Dieter Menne: https://stat.ethz.ch/pipermail/r-help/2008-January/151266.html
+df3 <- data.frame(a=0:10,b=10:20,c=20:30)
+names(df3) <- c("A","B", NA)
+df3[-2]
+df3[, -2]
+df3[1:4, -2]
+## all gave 'undefined columns selected', 2.6.1 to 2.7.x
+## note that you can only select columns by number, not by name

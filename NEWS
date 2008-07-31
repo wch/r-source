@@ -336,6 +336,10 @@ BUG FIXES
     o	Repainting of open X11 View() windows is now done whilst an
 	X11 dataentry window is in use.
 
+    o	Indexing of data frames with NA column names and a numeric
+	column index works again even if columns with NA names are
+	selected.
+
 
 
 
