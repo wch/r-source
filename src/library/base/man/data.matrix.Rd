@@ -1,6 +1,6 @@
 % File src/library/base/man/data.matrix.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{data.matrix}
@@ -57,6 +57,6 @@ DF <- data.frame(a=1:3, b=letters[10:12],
                  c=seq(as.Date("2004-01-01"), by = "week", len = 3),
                  stringsAsFactors = TRUE)
 data.matrix(DF[1:2])
-data.matrix(DF) # gives a warning and quotes dates as #days since 1970.
+try(data.matrix(DF)) # fails as a Date is not numeric
 }
 \keyword{array}

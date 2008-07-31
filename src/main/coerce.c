@@ -1577,10 +1577,19 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* These are all builtins, so we do not need to worry about
        evaluating arguments in DispatchOrEval */
     if(PRIMVAL(op) >= 100 && PRIMVAL(op) < 200 &&
-       isObject(CAR(args)) &&
-       DispatchOrEval(call, op, CHAR(PRINTNAME(CAR(call))), /* ASCII */
-		      args, rho, &ans, 0,1))
-	return(ans);
+       isObject(CAR(args))) {
+	/* This used CHAR(PRINTNAME(CAR(call))), but that is not 
+	   necessarily correct, e.g. when called from lapply() */
+	const char *nm;
+	switch(PRIMVAL(op)) {
+	case 100: nm = "is.numeric"; break;
+	case 101: nm = "is.matrix"; break;
+	case 102: nm = "is.array"; break;
+	default: nm = ""; /* -Wall */
+	}
+	if(DispatchOrEval(call, op, nm, args, rho, &ans, 0, 1))
+	    return(ans);
+    }
 
     PROTECT(ans = allocVector(LGLSXP, 1));
     switch (PRIMVAL(op)) {
