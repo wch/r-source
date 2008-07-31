@@ -5289,3 +5289,28 @@ df3[, -2]
 df3[1:4, -2]
 ## all gave 'undefined columns selected', 2.6.1 to 2.7.x
 ## note that you can only select columns by number, not by name
+
+
+## nls with weights in an unusual model
+Data <- data.frame(x=c(1,1,1,1,1,2,2,3,3,3,3,3,3,4,4,4,5,5,5,5,6,6,6,6,6,6,
+                   7,7,7,7,7,7,7,7,7,8,8,8, 8,8,8,8,8,8,8,9,9,9,9,9,11,12),
+                   y=c(73,73,70,74,75,115,105,107,124,107,116,125,102,144,178,
+                   149,177,124,157,128, 169,165,186,152,181,139,173,151,138,
+                   181,152,188,173,196,180,171,188,174,198, 172, 176,162,188,
+                   182,182,141,191,190,159,170,163,197),
+                   weight=c(1, rep(0.1, 51)))
+G.st <- c(k=0.005, g1=50,g2=550)
+# model has length-1 (and 52) variables
+Ta <- min(Data$x)
+Tb <- max(Data$x)
+
+#no weights
+nls(y~((g1)*exp((log(g2/g1))*(1-exp(-k*(x-Ta)))
+                /(1-exp(-k*(Tb-Ta))))), data=Data, start=G.st, trace=TRUE)
+
+#with weights
+nls(y~((g1)*exp((log(g2/g1))*(1-exp(-k*(x-Ta)))
+                /(1-exp(-k*(Tb-Ta))))), data=Data, start=G.st,
+    trace=TRUE, weights=weight)
+## failed for find weights in R <= 2.7.1
+

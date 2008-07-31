@@ -400,6 +400,15 @@ BUG FIXES
     o	package.skeleton() was not looking for non-function objects in
     	its 'environment' argument.
 
+    o	nls() was only finding its 'weights' argument in the case when
+    	all the variables in the formula were of the same length and
+    	hence that model.frame() could be used.
+
+	It was silently ignoring 'subset' and 'na.action' except in
+	that case.  Now they are ignored only if 'data' is a list and
+	variables taken from 'data' are not all of the same length,
+	in whih case a warning is given.
+
 
 
 		CHANGES IN R VERSION 2.7.1
