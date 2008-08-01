@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.7.0\n"
+"Project-Id-Version: R 2.7.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:26\n"
-"PO-Revision-Date: 2008-04-07 08:26\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
+"PO-Revision-Date: 2008-08-01 08:44\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -175,6 +175,9 @@ msgstr "File '%s':"
 
 msgid "found T/F in %s"
 msgstr "found T/F in %s"
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
+msgstr "package name ‘%s’ seems invalid; using directory name ‘%s’ instead"
 
 msgid "Packages required but not available:"
 msgstr "Packages required but not available:"
@@ -389,6 +392,9 @@ msgstr "‘library’ or ‘require’ calls not declared from:"
 msgid "argument 'lines' must be a character vector"
 msgstr "argument ‘lines’ must be a character vector"
 
+msgid "encoding '%s' is not portable"
+msgstr "encoding ‘%s’ is not portable"
+
 msgid "argument 'file' must be a character string or connection"
 msgstr "argument ‘file’ must be a character string or connection"
 
@@ -522,6 +528,13 @@ msgstr "unable to re-encode ‘%s’"
 msgid "unable to copy INDEX to '%s'"
 msgstr "unable to copy INDEX to ‘%s’"
 
+msgid ""
+"running Stangle on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"running Stangle on vignette ‘%s’ failed with message:\n"
+"%s"
+
 msgid "cannot create directory '%s'"
 msgstr "cannot create directory ‘%s’"
 
@@ -530,6 +543,13 @@ msgstr "processing '"
 
 msgid "'"
 msgstr "'"
+
+msgid ""
+"running Sweave on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"running Sweave on vignette ‘%s’ failed with message:\n"
+"%s"
 
 msgid "file '%s' was not created"
 msgstr "file ‘%s’ was not created"

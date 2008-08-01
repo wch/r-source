@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:49\n"
+"POT-Creation-Date: 2008-08-01 08:43\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -240,6 +240,9 @@ msgstr "'%s' não tem métodos definidos"
 msgid "signature must be a vector of classes or an environment"
 msgstr "assinatura deve ser um vetor de classes ou um ambiente"
 
+msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+msgstr ""
+
 msgid "no unique method corresponding to this signature"
 msgstr "nenhum método único correspondente a essa assinatura"
 
@@ -351,7 +354,7 @@ msgstr ""
 msgid "non-generic function given to findMethods()"
 msgstr "nenhuma função genérica '%s' encontrada"
 
-msgid "Only FALSE meaningful for inherited, when where is supplied (got"
+msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
 
 msgid "\""
@@ -746,6 +749,10 @@ msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
 "generic"
 msgstr ""
+
+#, fuzzy
+msgid "Arguments of method and generic are not in the same order"
+msgstr "argumentos 'names' e 'signature' devem ter o mesmo comprimento"
 
 msgid ""
 "arguments after '...' in the generic (%s) must appear in the method, in the "

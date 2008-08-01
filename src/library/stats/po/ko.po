@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-02-08 14:27+0000\n"
+"POT-Creation-Date: 2008-08-01 08:44+0100\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -44,6 +44,10 @@ msgstr "부적절한 인수의 유형입니다"
 #: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
 msgid "can only transform 100 pars in arima0"
 msgstr "arima0에서 100개의 파라미터까지만 변환 할수 없습니다"
+
+#: arima.c:838
+msgid "maximum supported lag is 350"
+msgstr ""
 
 #: distance.c:152
 #, fuzzy

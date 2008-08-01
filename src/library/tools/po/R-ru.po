@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:26\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: 2008-04-07 00:29-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -162,6 +162,9 @@ msgstr "Файл '%s':"
 
 msgid "found T/F in %s"
 msgstr "найден T/F в %s"
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
+msgstr ""
 
 msgid "Packages required but not available:"
 msgstr "Пакет требуется, но недоступен:"
@@ -379,6 +382,10 @@ msgstr "не объявлены вызовы 'library' или 'require' из:"
 msgid "argument 'lines' must be a character vector"
 msgstr "аргумент 'lines' должен быть текстовым вектором"
 
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr "Кодировка '%s' не переносима"
+
 msgid "argument 'file' must be a character string or connection"
 msgstr "аргумент 'file' должен быть текстовой строкой  или соединением"
 
@@ -515,6 +522,14 @@ msgstr "не могу перекодировать '%s'"
 msgid "unable to copy INDEX to '%s'"
 msgstr "не могу скопировать 'INDEX' в '%s'"
 
+#, fuzzy
+msgid ""
+"running Stangle on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"выполнение очерка '%s' не удалось с диагностикой:\n"
+"%s"
+
 msgid "cannot create directory '%s'"
 msgstr "Не могу создать папку '%s'"
 
@@ -523,6 +538,14 @@ msgstr "обрабытываю '"
 
 msgid "'"
 msgstr "'"
+
+#, fuzzy
+msgid ""
+"running Sweave on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"выполнение очерка '%s' не удалось с диагностикой:\n"
+"%s"
 
 msgid "file '%s' was not created"
 msgstr "файл '%s' не создан"

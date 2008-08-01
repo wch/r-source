@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-02-08 14:27+0000\n"
+"POT-Creation-Date: 2008-08-01 08:44+0100\n"
 "PO-Revision-Date: 2008-04-06 19:13+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -43,6 +43,10 @@ msgstr "unzulässiger Argumenttyp"
 #: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
 msgid "can only transform 100 pars in arima0"
 msgstr "kann nur 100 Parameter in arima0 transformieren"
+
+#: arima.c:838
+msgid "maximum supported lag is 350"
+msgstr ""
 
 #: distance.c:152
 msgid "treating non-finite values as NA"

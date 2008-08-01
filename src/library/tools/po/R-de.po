@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:26\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: 2008-04-06 19:24+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -160,6 +160,9 @@ msgstr "Datei '%s':"
 
 msgid "found T/F in %s"
 msgstr "T/F in %s gedunden"
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
+msgstr ""
 
 msgid "Packages required but not available:"
 msgstr "Benötigte, aber nicht verfügbare Pakete:"
@@ -379,6 +382,10 @@ msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 msgid "argument 'lines' must be a character vector"
 msgstr "Argument 'lines' muss ein Charaktervektor sein"
 
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr "Kodierung '%s' ist nicht portabel"
+
 msgid "argument 'file' must be a character string or connection"
 msgstr "Argument 'file' muss eine Zeichenkette oder eine Verbindung sein"
 
@@ -513,6 +520,14 @@ msgstr "kann '%s' nicht rekodieren"
 msgid "unable to copy INDEX to '%s'"
 msgstr "kann INDEX nicht nach '%s' kopieren"
 
+#, fuzzy
+msgid ""
+"running Stangle on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"Verarbeitung der Vignette '%s' mit folgender Diagnose fehlgeschlagen:\n"
+"%s"
+
 msgid "cannot create directory '%s'"
 msgstr "kann  Verzeichnis '%s' nicht erzeugen"
 
@@ -521,6 +536,14 @@ msgstr "Bearbeiten von'"
 
 msgid "'"
 msgstr "'"
+
+#, fuzzy
+msgid ""
+"running Sweave on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"Verarbeitung der Vignette '%s' mit folgender Diagnose fehlgeschlagen:\n"
+"%s"
 
 msgid "file '%s' was not created"
 msgstr "Datein '%s' wurde nicht erzeugt"

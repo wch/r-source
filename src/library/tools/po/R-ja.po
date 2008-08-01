@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:26\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: 2008-04-04 15:03+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -165,6 +165,9 @@ msgstr " ファイル '%s'： "
 
 msgid "found T/F in %s"
 msgstr " %s 中に T/F が見つかりました "
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
+msgstr ""
 
 msgid "Packages required but not available:"
 msgstr " パッケージが必要ですが，利用可能ではありません "
@@ -387,6 +390,10 @@ msgstr ""
 msgid "argument 'lines' must be a character vector"
 msgstr " 引数 'lines' は文字列ベクトルでなければなりません "
 
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr " エンコーディング '%s' は移植出来ません "
+
 msgid "argument 'file' must be a character string or connection"
 msgstr " 引数 'file' は文字列ベクトルかコネクションでなければなりません "
 
@@ -528,6 +535,14 @@ msgstr " '%s' 再エンコード出来ません "
 msgid "unable to copy INDEX to '%s'"
 msgstr " INDEX を '%s' にコピーすることが出来ません "
 
+#, fuzzy
+msgid ""
+"running Stangle on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+" ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
+" %s "
+
 msgid "cannot create directory '%s'"
 msgstr " ディレクトリ '%s' を生成することが出来ません "
 
@@ -536,6 +551,14 @@ msgstr " 以下を処理中 ' "
 
 msgid "'"
 msgstr " , "
+
+#, fuzzy
+msgid ""
+"running Sweave on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+" ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
+" %s "
 
 msgid "file '%s' was not created"
 msgstr " ファイル '%s' は生成されませんでした "

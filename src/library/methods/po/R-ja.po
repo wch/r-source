@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:49\n"
+"POT-Creation-Date: 2008-08-01 08:43\n"
 "PO-Revision-Date: 2008-04-05 19:59+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -223,6 +223,9 @@ msgstr " \"%s\" は定義されたメソッドを持ちません "
 msgid "signature must be a vector of classes or an environment"
 msgstr " シグネチャ(signature)はクラスのベクトルか環境でなければなりません "
 
+msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+msgstr ""
+
 msgid "no unique method corresponding to this signature"
 msgstr " このシグネチャ(signature)に対応するユニークなメソッドはありません "
 
@@ -330,7 +333,8 @@ msgstr ""
 msgid "non-generic function given to findMethods()"
 msgstr " findMethods() に総称的でない関数が与えられました "
 
-msgid "Only FALSE meaningful for inherited, when where is supplied (got"
+#, fuzzy
+msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
 " where が与えられた時は、継承に対しては FALSE だけが意味を持ちます(以下が与え"
 "られました "
@@ -733,6 +737,10 @@ msgid ""
 msgstr ""
 " メソッドは総称的関数に、 '...' がそれへの引数である時に限り、引数を追加でき"
 "ます "
+
+#, fuzzy
+msgid "Arguments of method and generic are not in the same order"
+msgstr " メソッドと関数の形式的引数が同じ順序で現れていません "
 
 msgid ""
 "arguments after '...' in the generic (%s) must appear in the method, in the "

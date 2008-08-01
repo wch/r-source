@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:26\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -162,6 +162,9 @@ msgid "File '%s':"
 msgstr ""
 
 msgid "found T/F in %s"
+msgstr ""
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 
 msgid "Packages required but not available:"
@@ -375,6 +378,10 @@ msgstr ""
 msgid "argument 'lines' must be a character vector"
 msgstr "인수'lines'는 문자 벡터이어야만 합니다"
 
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr "test '%s'는 이용 가능하지 않습니다"
+
 msgid "argument 'file' must be a character string or connection"
 msgstr "인수'file'는 문자열 또는 connection이어야만 합니다"
 
@@ -514,6 +521,11 @@ msgstr "'%s'를 작성할수가 없습니다"
 msgid "unable to copy INDEX to '%s'"
 msgstr "INDEX를 복사할수가 없습니다"
 
+msgid ""
+"running Stangle on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+
 msgid "cannot create directory '%s'"
 msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
 
@@ -522,6 +534,11 @@ msgid "processing '"
 msgstr "분석 '%s'"
 
 msgid "'"
+msgstr ""
+
+msgid ""
+"running Sweave on vignette '%s' failed with message:\n"
+"%s"
 msgstr ""
 
 msgid "file '%s' was not created"

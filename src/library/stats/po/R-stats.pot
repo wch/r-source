@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:26\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -464,7 +464,7 @@ msgstr ""
 msgid "missing values are not allowed in 'poly'"
 msgstr ""
 
-msgid "'degree' must be less than number of points"
+msgid "'degree' must be less than number of unique points"
 msgstr ""
 
 msgid "must supply one or more vectors"
@@ -1521,6 +1521,12 @@ msgid "without any variables"
 msgstr ""
 
 msgid "no parameters to fit"
+msgstr ""
+
+msgid "argument 'subset' will be ignored"
+msgstr ""
+
+msgid "argument 'na.action' will be ignored"
 msgstr ""
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""

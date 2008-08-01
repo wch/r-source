@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:50\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -672,43 +672,6 @@ msgstr "'%s' 라고 하는 이름으로 작성된 파일입니다"
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "파일을 편집하고 적절한 디렉토리에 그것을 이동시켜 주십시오"
 
-msgid "Maintainer:"
-msgstr ""
-
-msgid "Index:"
-msgstr ""
-
-msgid "Further information is available in the following vignettes:"
-msgstr ""
-
-#, fuzzy
-msgid "package title"
-msgstr "패키지"
-
-msgid "A concise (1-5 lines) description of the package"
-msgstr ""
-
-msgid ""
-"An overview of how to use the package, including the most important functions"
-msgstr ""
-
-msgid "The author and/or maintainer of the package"
-msgstr ""
-
-msgid "Literature or other references for background information"
-msgstr ""
-
-msgid "Optional links to other man pages, e.g."
-msgstr ""
-
-msgid "simple examples of the most important functions"
-msgstr ""
-
-msgid ""
-"Optionally other standard keywords, one per line, from file KEYWORDS in the "
-"R documentation directory"
-msgstr ""
-
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"
 msgstr ""
@@ -740,10 +703,19 @@ msgstr "함수 '%s' 그리고 기호 '%s' 때문에 documentation이 없습니�
 msgid "No DIF data on clipboard"
 msgstr ""
 
+msgid "file had no lines"
+msgstr ""
+
 msgid "row and column counts not found"
 msgstr ""
 
+msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
+
 msgid "Unrecognized special data value"
+msgstr ""
+
+msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
 msgstr ""
 
 msgid "Unrecognized value indicator"
@@ -1083,6 +1055,10 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] ""
 "package '%s'는 사용되고 있어 인스톨 되지 않을 것입니다\n"
 "packages '%s'는 사용되고 있어 인스톨 되지 않을 것입니다"
+
+#, fuzzy
+#~ msgid "package title"
+#~ msgstr "패키지"
 
 #~ msgid "cannot update HTML package index"
 #~ msgstr "HTML 패키지 인덱스를 갱신할 수 없습니다"

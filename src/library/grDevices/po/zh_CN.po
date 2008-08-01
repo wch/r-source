@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-08 11:23+0100\n"
+"POT-Creation-Date: 2008-08-01 08:43+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -37,7 +37,7 @@ msgstr "无法对字符信息作句法分析"
 msgid "unknown AFM entity encountered"
 msgstr "遇到未知AFM值这个错误"
 
-#: devPS.c:770 devPS.c:773 devPS.c:4135 devPS.c:6821 devPicTeX.c:503
+#: devPS.c:770 devPS.c:773 devPS.c:4135 devPS.c:6822 devPicTeX.c:503
 #: devPicTeX.c:505
 #, c-format
 msgid "invalid string in '%s'"
@@ -195,7 +195,7 @@ msgstr "postscript(print.it=TRUE)不能用在空印刷命令里"
 msgid "invalid page type '%s' (postscript)"
 msgstr "页类别'%s'(postscript)不对"
 
-#: devPS.c:3363 devPS.c:4292 devWindows.c:2258
+#: devPS.c:3363 devPS.c:4292 devWindows.c:2273
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -258,7 +258,7 @@ msgstr "'mbcsToSbcs'里转换'%s'出错：<%02x>代替了dot"
 msgid "failed open converter to encoding '%s'"
 msgstr "编码'%s'时文字转换器出了错"
 
-#: devPS.c:4121 devPS.c:5010 devPS.c:6807
+#: devPS.c:4121 devPS.c:5010 devPS.c:6808
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "文字转换到编码'%s'时出了错"
@@ -387,33 +387,33 @@ msgstr ""
 "无法打开'pdf'文本变元'%s'\n"
 "  请关闭PDF装置"
 
-#: devPS.c:6645 devPS.c:6939 devPS.c:6982
+#: devPS.c:6645 devPS.c:6940 devPS.c:6983
 msgid "Failed to find or load PDF font"
 msgstr "没有能够找到和载入PDF字体"
 
-#: devPS.c:6761 devPS.c:6896
+#: devPS.c:6761 devPS.c:6897
 msgid "Failed to find or load PDF CID font"
 msgstr "没有能够找到和载入PDFCID字体"
 
-#: devPS.c:7121 devPS.c:7125 devPS.c:7267 devPS.c:7271
+#: devPS.c:7122 devPS.c:7126 devPS.c:7268 devPS.c:7272
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "%s里的'system'参数不对"
 
-#: devPS.c:7144 devPS.c:7283
+#: devPS.c:7145 devPS.c:7284
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s里的'fonts'参数不对"
 
-#: devPS.c:7157
+#: devPS.c:7158
 msgid "unable to start device PostScript"
 msgstr "无法启动PostScript装置"
 
-#: devPS.c:7219
+#: devPS.c:7220
 msgid "unable to start device xfig"
 msgstr "无法启动xfig装置"
 
-#: devPS.c:7297
+#: devPS.c:7298
 msgid "unable to start device pdf"
 msgstr "无法启动pdf装置"
 
@@ -421,23 +421,38 @@ msgstr "无法启动pdf装置"
 msgid "unable to start device PicTeX"
 msgstr "无法启动PicTeX装置"
 
-#: devQuartz.c:963
+#: devQuartz.c:622
+#, c-format
+msgid "font \"%s\" could not be found for family \"%s\""
+msgstr ""
+
+#: devQuartz.c:634
+#, fuzzy
+msgid "font family name is too long"
+msgstr "pdf文本名字太长"
+
+#: devQuartz.c:674
+#, c-format
+msgid "no font could be found for family \"%s\""
+msgstr ""
+
+#: devQuartz.c:1164
 msgid "invalid 'file' argument"
 msgstr "'file'变元不对"
 
-#: devQuartz.c:991
+#: devQuartz.c:1192
 msgid "invalid Quartz device size"
 msgstr "石英装置大小不对"
 
-#: devQuartz.c:1018
+#: devQuartz.c:1220
 msgid "Unable to create device description."
 msgstr "无法建立设备描述文件"
 
-#: devQuartz.c:1068
+#: devQuartz.c:1270
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr "无法建立石英装置，可能不支持所提供的种类"
 
-#: devQuartz.c:1089
+#: devQuartz.c:1356
 msgid "Quartz device is not available on this platform"
 msgstr "这个平台上没有石英装置"
 
@@ -470,142 +485,142 @@ msgstr "绘图历史好象坏了"
 msgid "no plot history!"
 msgstr "没有绘图历史!"
 
-#: devWindows.c:1722
+#: devWindows.c:1726
 #, c-format
 msgid "filename too long in %s() call"
 msgstr "%s()調用里的文本名字太长"
 
-#: devWindows.c:1726 devWindows.c:1761 devWindows.c:1795
+#: devWindows.c:1730 devWindows.c:1765 devWindows.c:1799
 msgid "Unable to load Rbitmap.dll"
 msgstr "无法载入Rbitmap.dll"
 
-#: devWindows.c:1731 devWindows.c:1770 devWindows.c:1804
+#: devWindows.c:1735 devWindows.c:1774 devWindows.c:1808
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'width=%d, height=%d'这样的像素值很可能不对"
 
-#: devWindows.c:1739 devWindows.c:1744 devWindows.c:1773 devWindows.c:1778
-#: devWindows.c:1807 devWindows.c:1812
+#: devWindows.c:1743 devWindows.c:1748 devWindows.c:1777 devWindows.c:1782
+#: devWindows.c:1811 devWindows.c:1816
 msgid "Unable to allocate bitmap"
 msgstr "无法分配bitmap"
 
-#: devWindows.c:1750 devWindows.c:1784 devWindows.c:2103
+#: devWindows.c:1754 devWindows.c:1788 devWindows.c:2121
 #, c-format
 msgid "Unable to open file '%s' for writing"
 msgstr "无法打开'%s'文本来进行读写"
 
-#: devWindows.c:1767
+#: devWindows.c:1771
 msgid "filename too long in jpeg() call"
 msgstr "jpeg()調用中的文本名字太长"
 
-#: devWindows.c:1801
+#: devWindows.c:1805
 msgid "filename too long in tiff() call"
 msgstr "tiff()調用里的文本名字太长"
 
-#: devWindows.c:1831
+#: devWindows.c:1835
 msgid "filename too long in win.metafile() call"
 msgstr "win.metafile()調用里的文本名字太长"
 
-#: devWindows.c:1841
+#: devWindows.c:1845
 #, c-format
 msgid "Unable to open metafile '%s' for writing"
 msgstr "无法打开元文本'%s'来读写"
 
-#: devWindows.c:1843
+#: devWindows.c:1847
 msgid "Unable to open clipboard to write metafile"
 msgstr "无法打开剪輯板来讀寫元文本"
 
-#: devWindows.c:2052
+#: devWindows.c:2070
 msgid "Insufficient memory for resize. Killing device"
 msgstr "内存不够，无法重新修改大小. 关闭装置"
 
-#: devWindows.c:2059
+#: devWindows.c:2077
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "内存不够，无法重新修改大小. 关闭alpha混合"
 
-#: devWindows.c:2088
+#: devWindows.c:2106
 msgid "A clipboard metafile can store only one figure."
 msgstr "剪輯板元文本只能保存一个图片."
 
-#: devWindows.c:2094
+#: devWindows.c:2112
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr "无法建立元文本'%s'"
 
-#: devWindows.c:2663 devWindows.c:3283
+#: devWindows.c:2682 devWindows.c:3302
 msgid "R Graphics"
 msgstr "R Graphics"
 
-#: devWindows.c:2909
+#: devWindows.c:2928
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "'windowsTimeouts'选择项必需是整数"
 
-#: devWindows.c:2931
+#: devWindows.c:2950
 msgid "invalid device number in 'savePlot'"
 msgstr "'savePlot'里的装置数目出了错"
 
-#: devWindows.c:2933
+#: devWindows.c:2952
 msgid "invalid device in 'savePlot'"
 msgstr "'savePlot'装置出错"
 
-#: devWindows.c:2936
+#: devWindows.c:2955
 msgid "invalid filename argument in savePlot"
 msgstr "savePlot文本名字变元不对"
 
-#: devWindows.c:2940
+#: devWindows.c:2959
 msgid "invalid type argument in 'savePlot'"
 msgstr "'savePlot'类别变元不对"
 
-#: devWindows.c:2967
+#: devWindows.c:2986
 msgid "unknown type in savePlot"
 msgstr "savePlot里没有类别"
 
-#: devWindows.c:3049 devWindows.c:3085 devWindows.c:3117 devWindows.c:3152
-#: devWindows.c:3177
+#: devWindows.c:3068 devWindows.c:3104 devWindows.c:3136 devWindows.c:3171
+#: devWindows.c:3196
 msgid "processing of the plot ran out of memory"
 msgstr "处理图象时内存用完了"
 
-#: devWindows.c:3065 devWindows.c:3098 devWindows.c:3131 devWindows.c:3164
+#: devWindows.c:3084 devWindows.c:3117 devWindows.c:3150 devWindows.c:3183
 msgid "Impossible to load Rbitmap.dll"
 msgstr "无法载入Rbitmap.dll"
 
-#: devWindows.c:3137
+#: devWindows.c:3156
 msgid "Impossible to open "
 msgstr "无法打开"
 
-#: devWindows.c:3202
+#: devWindows.c:3221
 msgid "invalid 'width' or 'height' in devWindows"
 msgstr "devWindows的'width'或'height'值不对"
 
-#: devWindows.c:3207
+#: devWindows.c:3226
 msgid "invalid value of 'record' in devWindows"
 msgstr "devWindows的'record'值不对"
 
-#: devWindows.c:3211
+#: devWindows.c:3230
 msgid "invalid value of 'rescale' in devWindows"
 msgstr "devWindows的'rescale'值不对"
 
-#: devWindows.c:3219
+#: devWindows.c:3238
 msgid "invalid value of 'canvas' in devWindows"
 msgstr "devWindows的'canvas'值不对"
 
-#: devWindows.c:3230
+#: devWindows.c:3249
 msgid "invalid value of 'buffered' in devWindows"
 msgstr "devWindows的'buffered'值不对"
 
-#: devWindows.c:3236
+#: devWindows.c:3255
 msgid "invalid value of 'bg' in devWindows"
 msgstr "devWindows的'bg'值不对"
 
-#: devWindows.c:3243
+#: devWindows.c:3262
 msgid "invalid value of 'title' in devWindows"
 msgstr "devWindows的'title'值不对"
 
-#: devWindows.c:3258
+#: devWindows.c:3277
 msgid "unable to start device devWindows"
 msgstr "无法启动devWindows装置"
 
-#: devWindows.c:3327
+#: devWindows.c:3347
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "不支持getGraphicsEvent的遞迴使用"
 
@@ -613,7 +628,7 @@ msgstr "不支持getGraphicsEvent的遞迴使用"
 msgid "Not a supported scheme, no image data written"
 msgstr "不支持这个规划，因此没有写任何图象数据"
 
-#: qdPDF.c:97
+#: qdPDF.c:98
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "无法打开'%s'文件"

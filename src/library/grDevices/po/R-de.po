@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:49\n"
+"POT-Creation-Date: 2008-08-01 08:43\n"
 "PO-Revision-Date: 2008-04-06 18:19+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -281,7 +281,8 @@ msgstr "ungültige X11 Zeichensatzspezifikation"
 msgid "no such device"
 msgstr "kein solches Device"
 
-msgid "can only copy from 'X11(type=\"cairo\")' devices"
+#, fuzzy
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
 msgstr "kann nur aus 'X11(type=\"cairo\")' Devices kopieren"
 
 msgid "invalid value for 'rescale'"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:50\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -575,39 +575,6 @@ msgstr ""
 msgid "Edit the file and move it to the appropriate directory."
 msgstr ""
 
-msgid "Maintainer:"
-msgstr ""
-
-msgid "Index:"
-msgstr ""
-
-msgid "Further information is available in the following vignettes:"
-msgstr ""
-
-msgid "package title"
-msgstr ""
-
-msgid "A concise (1-5 lines) description of the package"
-msgstr ""
-
-msgid "An overview of how to use the package, including the most important functions"
-msgstr ""
-
-msgid "The author and/or maintainer of the package"
-msgstr ""
-
-msgid "Literature or other references for background information"
-msgstr ""
-
-msgid "Optional links to other man pages, e.g."
-msgstr ""
-
-msgid "simple examples of the most important functions"
-msgstr ""
-
-msgid "Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory"
-msgstr ""
-
 msgid "no documentation of type '%s' and topic '%s' (or error in processing help)"
 msgstr ""
 
@@ -629,10 +596,19 @@ msgstr ""
 msgid "No DIF data on clipboard"
 msgstr ""
 
+msgid "file had no lines"
+msgstr ""
+
 msgid "row and column counts not found"
 msgstr ""
 
+msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
+
 msgid "Unrecognized special data value"
+msgstr ""
+
+msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
 msgstr ""
 
 msgid "Unrecognized value indicator"

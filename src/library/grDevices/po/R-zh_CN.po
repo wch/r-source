@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:49\n"
+"POT-Creation-Date: 2008-08-01 08:43\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -280,7 +280,8 @@ msgstr "X11字体设置出了错:"
 msgid "no such device"
 msgstr "没有这样的装置"
 
-msgid "can only copy from 'X11(type=\"cairo\")' devices"
+#, fuzzy
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
 msgstr "只能从'X11(type=\"cairo\")'装置拷贝"
 
 msgid "invalid value for 'rescale'"

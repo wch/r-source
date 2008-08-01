@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:26\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -483,7 +483,8 @@ msgstr "차수는 적어도 1이 나오지 않으면 되지 않습니다"
 msgid "missing values are not allowed in 'poly'"
 msgstr "결측치 'poly'에서는 허용되지 않습니다"
 
-msgid "'degree' must be less than number of points"
+#, fuzzy
+msgid "'degree' must be less than number of unique points"
 msgstr "'degree'는 점의 수미만이 아니면 되지 않습니다"
 
 msgid "must supply one or more vectors"
@@ -1647,6 +1648,13 @@ msgstr ""
 #, fuzzy
 msgid "no parameters to fit"
 msgstr "모든 파라미터가 고정되어 있었습니다"
+
+#, fuzzy
+msgid "argument 'subset' will be ignored"
+msgstr "인수 sides는 1 또는 2가 나오지 않으면 되지 않습니다"
+
+msgid "argument 'na.action' will be ignored"
+msgstr ""
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr ""

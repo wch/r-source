@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:49\n"
+"POT-Creation-Date: 2008-08-01 08:43\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -197,6 +197,9 @@ msgstr "'%s'没有设定任何方法"
 msgid "signature must be a vector of classes or an environment"
 msgstr "标记要么是个含类别的矢量，要么是个环境"
 
+msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+msgstr ""
+
 msgid "no unique method corresponding to this signature"
 msgstr "这一标记没有与之相对应的唯一方法"
 
@@ -284,7 +287,8 @@ msgstr ""
 msgid "non-generic function given to findMethods()"
 msgstr "findMethods()没有非同屬函数"
 
-msgid "Only FALSE meaningful for inherited, when where is supplied (got"
+#, fuzzy
+msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr "FALSE只对于继承类别有意义，当提供where时(得到了"
 
 msgid "\""
@@ -628,6 +632,10 @@ msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
 "generic"
 msgstr "只有当'...'是同屬的变元时方法才能加变元"
+
+#, fuzzy
+msgid "Arguments of method and generic are not in the same order"
+msgstr "方法里的正式变元和函数两都的顺序不同"
 
 msgid ""
 "arguments after '...' in the generic (%s) must appear in the method, in the "

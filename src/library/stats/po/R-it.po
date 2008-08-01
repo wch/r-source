@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:26\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -490,7 +490,8 @@ msgstr "'degree' deve essere almeno 1"
 msgid "missing values are not allowed in 'poly'"
 msgstr "valori mancanti non ammessi in 'poly'"
 
-msgid "'degree' must be less than number of points"
+#, fuzzy
+msgid "'degree' must be less than number of unique points"
 msgstr "'degree' deve essere inferiore al numero di punti"
 
 msgid "must supply one or more vectors"
@@ -1647,6 +1648,13 @@ msgstr ""
 #, fuzzy
 msgid "no parameters to fit"
 msgstr "specificati tutti i parametri"
+
+#, fuzzy
+msgid "argument 'subset' will be ignored"
+msgstr "l'argomento 'sides' deve essere 1 o 2"
+
+msgid "argument 'na.action' will be ignored"
+msgstr ""
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr ""

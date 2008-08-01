@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-02-08 14:27+0000\n"
+"POT-Creation-Date: 2008-08-01 08:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,6 +42,10 @@ msgstr ""
 
 #: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
 msgid "can only transform 100 pars in arima0"
+msgstr ""
+
+#: arima.c:838
+msgid "maximum supported lag is 350"
 msgstr ""
 
 #: distance.c:152

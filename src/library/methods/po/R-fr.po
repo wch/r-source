@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:49\n"
+"POT-Creation-Date: 2008-08-01 08:43\n"
 "PO-Revision-Date: 2008-03-26 17:25+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -233,6 +233,9 @@ msgstr "\"%s\" n'a aucune méthode définie"
 msgid "signature must be a vector of classes or an environment"
 msgstr "la signature doit être un vecteur de classes ou un environnement"
 
+msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+msgstr ""
+
 msgid "no unique method corresponding to this signature"
 msgstr "plus d'une méthode correspond à cette signature"
 
@@ -347,7 +350,8 @@ msgstr ""
 msgid "non-generic function given to findMethods()"
 msgstr "fonction non générique fournie à findMethods()"
 
-msgid "Only FALSE meaningful for inherited, when where is supplied (got"
+#, fuzzy
+msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr "Seul FALSE a un sens pour 'inherited', lorsque 'where' est fourni ("
 
 msgid "\""
@@ -777,6 +781,12 @@ msgid ""
 msgstr ""
 "les méthodes peuvent ajouter des arguments à la fonction générique seulement "
 "si '...' est un argument de cette fonction générique"
+
+#, fuzzy
+msgid "Arguments of method and generic are not in the same order"
+msgstr ""
+"les arguments formels n'apparaissent pas dans le même ordre dans la méthode "
+"et dans la fonction"
 
 msgid ""
 "arguments after '...' in the generic (%s) must appear in the method, in the "

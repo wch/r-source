@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-04-08 11:23+0100\n"
+"POT-Creation-Date: 2008-08-01 08:43+0100\n"
 "PO-Revision-Date: 2008-04-07 00:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -41,7 +41,7 @@ msgstr "CharInfo не разбирается"
 msgid "unknown AFM entity encountered"
 msgstr "встречен неизвестный раздел AFM"
 
-#: devPS.c:770 devPS.c:773 devPS.c:4135 devPS.c:6821 devPicTeX.c:503
+#: devPS.c:770 devPS.c:773 devPS.c:4135 devPS.c:6822 devPicTeX.c:503
 #: devPicTeX.c:505
 #, c-format
 msgid "invalid string in '%s'"
@@ -200,7 +200,7 @@ msgstr "postscript(print.it=TRUE) использован с пустой командой печати"
 msgid "invalid page type '%s' (postscript)"
 msgstr "неправильный тип страницы '%s' (postscript)"
 
-#: devPS.c:3363 devPS.c:4292 devWindows.c:2258
+#: devPS.c:3363 devPS.c:4292 devWindows.c:2273
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -265,7 +265,7 @@ msgstr "ошибка конвертации '%s' в 'mbcsToSbcs': точка заменена на <%02x>"
 msgid "failed open converter to encoding '%s'"
 msgstr "не удалась конверсия в кодировку '%s'"
 
-#: devPS.c:4121 devPS.c:5010 devPS.c:6807
+#: devPS.c:4121 devPS.c:5010 devPS.c:6808
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "не удалась конверсия текста в кодировку '%s'"
@@ -394,33 +394,33 @@ msgstr ""
 "не могу открыть 'pdf'-файл аргумента '%s'\n"
 "  пожалуйста, выключите PDFdevice"
 
-#: devPS.c:6645 devPS.c:6939 devPS.c:6982
+#: devPS.c:6645 devPS.c:6940 devPS.c:6983
 msgid "Failed to find or load PDF font"
 msgstr "Не удалось найти или загрузить шрифт PDF"
 
-#: devPS.c:6761 devPS.c:6896
+#: devPS.c:6761 devPS.c:6897
 msgid "Failed to find or load PDF CID font"
 msgstr "Не удалось найти или загрузить CID-шрифт PDF"
 
-#: devPS.c:7121 devPS.c:7125 devPS.c:7267 devPS.c:7271
+#: devPS.c:7122 devPS.c:7126 devPS.c:7268 devPS.c:7272
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "неправильный параметр 'family' в %s"
 
-#: devPS.c:7144 devPS.c:7283
+#: devPS.c:7145 devPS.c:7284
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "неправильный параметр 'fonts' в %s"
 
-#: devPS.c:7157
+#: devPS.c:7158
 msgid "unable to start device PostScript"
 msgstr "не могу запустить устройство PostScript"
 
-#: devPS.c:7219
+#: devPS.c:7220
 msgid "unable to start device xfig"
 msgstr "не могу запустить устройство xfig"
 
-#: devPS.c:7297
+#: devPS.c:7298
 msgid "unable to start device pdf"
 msgstr "не могу запустить устройство pdf"
 
@@ -428,25 +428,40 @@ msgstr "не могу запустить устройство pdf"
 msgid "unable to start device PicTeX"
 msgstr "не могу запустить устройство PicTeX"
 
-#: devQuartz.c:963
+#: devQuartz.c:622
+#, c-format
+msgid "font \"%s\" could not be found for family \"%s\""
+msgstr ""
+
+#: devQuartz.c:634
+#, fuzzy
+msgid "font family name is too long"
+msgstr "слишком длинное имя файла для pdf"
+
+#: devQuartz.c:674
+#, c-format
+msgid "no font could be found for family \"%s\""
+msgstr ""
+
+#: devQuartz.c:1164
 msgid "invalid 'file' argument"
 msgstr "неправильный аргумент 'file'"
 
-#: devQuartz.c:991
+#: devQuartz.c:1192
 msgid "invalid Quartz device size"
 msgstr "неправильный размер устройства Quartz"
 
-#: devQuartz.c:1018
+#: devQuartz.c:1220
 msgid "Unable to create device description."
 msgstr "Не могу создать описание устройства."
 
-#: devQuartz.c:1068
+#: devQuartz.c:1270
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 "Не могу создать целевое устройство Quartz, указанный тип не может быть "
 "поддержан."
 
-#: devQuartz.c:1089
+#: devQuartz.c:1356
 msgid "Quartz device is not available on this platform"
 msgstr "Устройство Quartz на этой платформе недоступно"
 
@@ -479,142 +494,142 @@ msgstr "история графиков, похоже, повреждена"
 msgid "no plot history!"
 msgstr "нет истории графиков!"
 
-#: devWindows.c:1722
+#: devWindows.c:1726
 #, c-format
 msgid "filename too long in %s() call"
 msgstr "слишком длинное имя файла в вызове %s()"
 
-#: devWindows.c:1726 devWindows.c:1761 devWindows.c:1795
+#: devWindows.c:1730 devWindows.c:1765 devWindows.c:1799
 msgid "Unable to load Rbitmap.dll"
 msgstr "Не могу загрузить Rbitmap.dll"
 
-#: devWindows.c:1731 devWindows.c:1770 devWindows.c:1804
+#: devWindows.c:1735 devWindows.c:1774 devWindows.c:1808
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "не похоже, что 'width=%d, height=%d' в пикселях"
 
-#: devWindows.c:1739 devWindows.c:1744 devWindows.c:1773 devWindows.c:1778
-#: devWindows.c:1807 devWindows.c:1812
+#: devWindows.c:1743 devWindows.c:1748 devWindows.c:1777 devWindows.c:1782
+#: devWindows.c:1811 devWindows.c:1816
 msgid "Unable to allocate bitmap"
 msgstr "Не могу разместить bitmap"
 
-#: devWindows.c:1750 devWindows.c:1784 devWindows.c:2103
+#: devWindows.c:1754 devWindows.c:1788 devWindows.c:2121
 #, c-format
 msgid "Unable to open file '%s' for writing"
 msgstr "Не могу открыть файл '%s' для записи"
 
-#: devWindows.c:1767
+#: devWindows.c:1771
 msgid "filename too long in jpeg() call"
 msgstr "слишком длинное имя файла в вызове jpeg()"
 
-#: devWindows.c:1801
+#: devWindows.c:1805
 msgid "filename too long in tiff() call"
 msgstr "слишком длинное имя файла в вызове tiff()"
 
-#: devWindows.c:1831
+#: devWindows.c:1835
 msgid "filename too long in win.metafile() call"
 msgstr "слишком длинное имя файла в вызове win.metafile()"
 
-#: devWindows.c:1841
+#: devWindows.c:1845
 #, c-format
 msgid "Unable to open metafile '%s' for writing"
 msgstr "Не могу открыть метафайл '%s' для записи"
 
-#: devWindows.c:1843
+#: devWindows.c:1847
 msgid "Unable to open clipboard to write metafile"
 msgstr "Не могу открыть буфер обмена для записи метафайла"
 
-#: devWindows.c:2052
+#: devWindows.c:2070
 msgid "Insufficient memory for resize. Killing device"
 msgstr "Не хватает памяти для масштабирования. Убиваю устройство"
 
-#: devWindows.c:2059
+#: devWindows.c:2077
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "Не хватает памяти для масштабирования. Отключаю alpha-blending"
 
-#: devWindows.c:2088
+#: devWindows.c:2106
 msgid "A clipboard metafile can store only one figure."
 msgstr "Метафайл в буфере обмена может хранить только одну фигуру."
 
-#: devWindows.c:2094
+#: devWindows.c:2112
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr "метафайл '%s' не получается создать"
 
-#: devWindows.c:2663 devWindows.c:3283
+#: devWindows.c:2682 devWindows.c:3302
 msgid "R Graphics"
 msgstr "R-графика"
 
-#: devWindows.c:2909
+#: devWindows.c:2928
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "опция 'windowsTimeouts' должна быть целым числом"
 
-#: devWindows.c:2931
+#: devWindows.c:2950
 msgid "invalid device number in 'savePlot'"
 msgstr "неправильный номер устройства в 'savePlot'"
 
-#: devWindows.c:2933
+#: devWindows.c:2952
 msgid "invalid device in 'savePlot'"
 msgstr "неправильное устройство в 'savePlot'"
 
-#: devWindows.c:2936
+#: devWindows.c:2955
 msgid "invalid filename argument in savePlot"
 msgstr "неправильный аргумент имени файла в savePlot"
 
-#: devWindows.c:2940
+#: devWindows.c:2959
 msgid "invalid type argument in 'savePlot'"
 msgstr "неправильный тип аргумента в 'savePlot'"
 
-#: devWindows.c:2967
+#: devWindows.c:2986
 msgid "unknown type in savePlot"
 msgstr "неизвестный тип в savePlot"
 
-#: devWindows.c:3049 devWindows.c:3085 devWindows.c:3117 devWindows.c:3152
-#: devWindows.c:3177
+#: devWindows.c:3068 devWindows.c:3104 devWindows.c:3136 devWindows.c:3171
+#: devWindows.c:3196
 msgid "processing of the plot ran out of memory"
 msgstr "обработка графика исчерпала память"
 
-#: devWindows.c:3065 devWindows.c:3098 devWindows.c:3131 devWindows.c:3164
+#: devWindows.c:3084 devWindows.c:3117 devWindows.c:3150 devWindows.c:3183
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Невозможно загрузить Rbitmap.dll"
 
-#: devWindows.c:3137
+#: devWindows.c:3156
 msgid "Impossible to open "
 msgstr "Нельзя открыть "
 
-#: devWindows.c:3202
+#: devWindows.c:3221
 msgid "invalid 'width' or 'height' in devWindows"
 msgstr "неправильная 'width' или 'height' в devWindows"
 
-#: devWindows.c:3207
+#: devWindows.c:3226
 msgid "invalid value of 'record' in devWindows"
 msgstr "неправильное значение 'record' в devWindows"
 
-#: devWindows.c:3211
+#: devWindows.c:3230
 msgid "invalid value of 'rescale' in devWindows"
 msgstr "неправильное значение 'rescale' в devWindows"
 
-#: devWindows.c:3219
+#: devWindows.c:3238
 msgid "invalid value of 'canvas' in devWindows"
 msgstr "неправильное значение 'canvas' в devWindows"
 
-#: devWindows.c:3230
+#: devWindows.c:3249
 msgid "invalid value of 'buffered' in devWindows"
 msgstr "неправильное значение 'buffered' в devWindows"
 
-#: devWindows.c:3236
+#: devWindows.c:3255
 msgid "invalid value of 'bg' in devWindows"
 msgstr "неправильное значение 'bg' в devWindows"
 
-#: devWindows.c:3243
+#: devWindows.c:3262
 msgid "invalid value of 'title' in devWindows"
 msgstr "неправильное значение 'title' в devWindows"
 
-#: devWindows.c:3258
+#: devWindows.c:3277
 msgid "unable to start device devWindows"
 msgstr "не могу запустить устройство devWindows"
 
-#: devWindows.c:3327
+#: devWindows.c:3347
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "рекурсивное использование getGraphicsEvent не поддерживается"
 
@@ -622,7 +637,7 @@ msgstr "рекурсивное использование getGraphicsEvent не поддерживается"
 msgid "Not a supported scheme, no image data written"
 msgstr "Схема не поддерживается, данные изображения не записаны"
 
-#: qdPDF.c:97
+#: qdPDF.c:98
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "не могу открыть файл '%s'"

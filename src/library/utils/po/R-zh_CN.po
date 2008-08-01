@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:50\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -632,42 +632,6 @@ msgstr "建立一名字叫'%s'的文件。"
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "修改文件再把它放到合适的目录中去。"
 
-msgid "Maintainer:"
-msgstr "维修人:"
-
-msgid "Index:"
-msgstr "索引:"
-
-msgid "Further information is available in the following vignettes:"
-msgstr "以下的小文品里有其他信息:"
-
-msgid "package title"
-msgstr "程序包标题"
-
-msgid "A concise (1-5 lines) description of the package"
-msgstr "程序包的非常简明(1-5行) 的描述"
-
-msgid ""
-"An overview of how to use the package, including the most important functions"
-msgstr "如何用程序包的概况，包括最重要的函数"
-
-msgid "The author and/or maintainer of the package"
-msgstr "程序包的作者或维修人"
-
-msgid "Literature or other references for background information"
-msgstr "背景文选或其他参考材料"
-
-msgid "Optional links to other man pages, e.g."
-msgstr "可任意选择到其他帮助文件的联结，如"
-
-msgid "simple examples of the most important functions"
-msgstr "给最重要的函数的一些简单例子"
-
-msgid ""
-"Optionally other standard keywords, one per line, from file KEYWORDS in the "
-"R documentation directory"
-msgstr "也可以用其他标准词汇，一行一个，在R文件目录中的KEYWORDS文件里列出"
-
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"
 msgstr "没有种类为'%s'和題目为'%s'的文件(或是在处理帮助文件时发生了错误)"
@@ -692,11 +656,20 @@ msgstr "函数'%s'和簽署'%s'没有帮助文件"
 msgid "No DIF data on clipboard"
 msgstr "剪贴板里没有DIF数据"
 
+msgid "file had no lines"
+msgstr ""
+
 msgid "row and column counts not found"
 msgstr "找不到行和列的数目"
 
+msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
+
 msgid "Unrecognized special data value"
 msgstr "没有这样的特殊数据值"
+
+msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
 
 msgid "Unrecognized value indicator"
 msgstr "没有这样的数值指示器"
@@ -1006,6 +979,43 @@ msgstr[0] "还安装相依关系%s"
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "Maintainer:"
+#~ msgstr "维修人:"
+
+#~ msgid "Index:"
+#~ msgstr "索引:"
+
+#~ msgid "Further information is available in the following vignettes:"
+#~ msgstr "以下的小文品里有其他信息:"
+
+#~ msgid "package title"
+#~ msgstr "程序包标题"
+
+#~ msgid "A concise (1-5 lines) description of the package"
+#~ msgstr "程序包的非常简明(1-5行) 的描述"
+
+#~ msgid ""
+#~ "An overview of how to use the package, including the most important "
+#~ "functions"
+#~ msgstr "如何用程序包的概况，包括最重要的函数"
+
+#~ msgid "The author and/or maintainer of the package"
+#~ msgstr "程序包的作者或维修人"
+
+#~ msgid "Literature or other references for background information"
+#~ msgstr "背景文选或其他参考材料"
+
+#~ msgid "Optional links to other man pages, e.g."
+#~ msgstr "可任意选择到其他帮助文件的联结，如"
+
+#~ msgid "simple examples of the most important functions"
+#~ msgstr "给最重要的函数的一些简单例子"
+
+#~ msgid ""
+#~ "Optionally other standard keywords, one per line, from file KEYWORDS in "
+#~ "the R documentation directory"
+#~ msgstr "也可以用其他标准词汇，一行一个，在R文件目录中的KEYWORDS文件里列出"
 
 #~ msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
 #~ msgstr "'format'的值必需是\"normal\"或是\"short\"。现用\"normal\""

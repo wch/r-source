@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:26\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -157,6 +157,9 @@ msgstr "文件'%s':"
 
 msgid "found T/F in %s"
 msgstr "%s里不能有T/F这样的值"
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
+msgstr ""
 
 msgid "Packages required but not available:"
 msgstr "需要有程辑包但它却不存在:"
@@ -366,6 +369,10 @@ msgstr "'library'或'require'调用没有被声明:"
 msgid "argument 'lines' must be a character vector"
 msgstr "变元'lines'必需是字符矢量"
 
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr "编码'%s'不可便携"
+
 msgid "argument 'file' must be a character string or connection"
 msgstr "变元'document'必需是字符串或联结"
 
@@ -499,6 +506,14 @@ msgstr "无法重新编码'%s'"
 msgid "unable to copy INDEX to '%s'"
 msgstr "无法拷贝索引至'%s'"
 
+#, fuzzy
+msgid ""
+"running Stangle on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"处理标头'%s'失败，诊断信息为:\n"
+"%s"
+
 msgid "cannot create directory '%s'"
 msgstr "无法建立目录'%s'"
 
@@ -507,6 +522,14 @@ msgstr "处理 '"
 
 msgid "'"
 msgstr "'"
+
+#, fuzzy
+msgid ""
+"running Sweave on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+"处理标头'%s'失败，诊断信息为:\n"
+"%s"
 
 msgid "file '%s' was not created"
 msgstr "无法产生文件'%s'"

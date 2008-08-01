@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:26\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: 2008-04-04 14:59+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -480,7 +480,8 @@ msgstr " 次数('degree')は少なくとも 1 でなければなりません "
 msgid "missing values are not allowed in 'poly'"
 msgstr " 欠測値は 'poly' では許されません "
 
-msgid "'degree' must be less than number of points"
+#, fuzzy
+msgid "'degree' must be less than number of unique points"
 msgstr " 次数('degree')は点の数未満でなければなりません "
 
 msgid "must supply one or more vectors"
@@ -1594,6 +1595,13 @@ msgstr " 変数無しで"
 
 msgid "no parameters to fit"
 msgstr " 当てはめるべきパラメータがありません "
+
+#, fuzzy
+msgid "argument 'subset' will be ignored"
+msgstr " 引数 sides は 1 か 2 でなければなりません "
+
+msgid "argument 'na.action' will be ignored"
+msgstr ""
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr " algorithm = \"port\" でない限り上限もしくは下限は無視されます "

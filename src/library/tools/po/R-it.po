@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:26\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -162,6 +162,9 @@ msgid "File '%s':"
 msgstr ""
 
 msgid "found T/F in %s"
+msgstr ""
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 
 msgid "Packages required but not available:"
@@ -377,6 +380,10 @@ msgstr ""
 msgid "argument 'lines' must be a character vector"
 msgstr "argomento 'lines' deve essere un vettore carattere"
 
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr "il test '%s' non è disponibile"
+
 msgid "argument 'file' must be a character string or connection"
 msgstr ""
 "argomento 'file' deve essere una stringa di caratteri o una connessione"
@@ -516,6 +523,11 @@ msgstr "impossibile creare '%s'"
 msgid "unable to copy INDEX to '%s'"
 msgstr "impossibile copiare INDEX su"
 
+msgid ""
+"running Stangle on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+
 msgid "cannot create directory '%s'"
 msgstr "impossibile creare directory '%s'"
 
@@ -524,6 +536,11 @@ msgid "processing '"
 msgstr "analizzo '%s'"
 
 msgid "'"
+msgstr ""
+
+msgid ""
+"running Sweave on vignette '%s' failed with message:\n"
+"%s"
 msgstr ""
 
 msgid "file '%s' was not created"

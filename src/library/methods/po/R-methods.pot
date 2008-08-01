@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:49\n"
+"POT-Creation-Date: 2008-08-01 08:43\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,6 +137,9 @@ msgstr ""
 msgid "signature must be a vector of classes or an environment"
 msgstr ""
 
+msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+msgstr ""
+
 msgid "no unique method corresponding to this signature"
 msgstr ""
 
@@ -206,7 +209,7 @@ msgstr ""
 msgid "non-generic function given to findMethods()"
 msgstr ""
 
-msgid "Only FALSE meaningful for inherited, when where is supplied (got"
+msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
 
 msgid "\""
@@ -444,6 +447,9 @@ msgid ","
 msgstr ""
 
 msgid "methods can add arguments to the generic only if '...' is an argument to the generic"
+msgstr ""
+
+msgid "Arguments of method and generic are not in the same order"
 msgstr ""
 
 msgid "arguments after '...' in the generic (%s) must appear in the method, in the same place at the end of the argument list"

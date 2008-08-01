@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 10:50\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: 2008-03-26 16:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -662,48 +662,6 @@ msgstr "Création du fichier '%s'"
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "Editez le fichier et déplacez-le dans le répertoire approprié"
 
-msgid "Maintainer:"
-msgstr "Responsable :"
-
-msgid "Index:"
-msgstr "Index :"
-
-msgid "Further information is available in the following vignettes:"
-msgstr "Plus d'information disponible dans les vignettes suivantes :"
-
-msgid "package title"
-msgstr "titre du package"
-
-msgid "A concise (1-5 lines) description of the package"
-msgstr "Description concise (1-5 lignes) du package"
-
-msgid ""
-"An overview of how to use the package, including the most important functions"
-msgstr ""
-"Une vue d'ensemble montrant comment utiliser le package, y compris ses "
-"fonctions les plus importantes"
-
-msgid "The author and/or maintainer of the package"
-msgstr "L'auteur et/ou la personne responsable du package"
-
-msgid "Literature or other references for background information"
-msgstr ""
-"Références bibliographiques ou autre références pour de l'information "
-"générale"
-
-msgid "Optional links to other man pages, e.g."
-msgstr "Liens valides vers d'autres pages de manuel, par exemple"
-
-msgid "simple examples of the most important functions"
-msgstr "exemples simples des fonctions les plus importantes"
-
-msgid ""
-"Optionally other standard keywords, one per line, from file KEYWORDS in the "
-"R documentation directory"
-msgstr ""
-"Eventuellement d'autres mots clés, un par ligne, issus du fichier KEYWORDS "
-"du répertoire documentation de R"
-
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"
 msgstr ""
@@ -736,11 +694,20 @@ msgstr "pas de documentation pour la fonction '%s' et pour la signature '%s'"
 msgid "No DIF data on clipboard"
 msgstr "Pas de données DIF dans le presse-papier"
 
+msgid "file had no lines"
+msgstr ""
+
 msgid "row and column counts not found"
 msgstr "nombres de lignes et de colonnes non trouvés"
 
+msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
+
 msgid "Unrecognized special data value"
 msgstr "Valeur spéciale de données non reconnue"
+
+msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
 
 msgid "Unrecognized value indicator"
 msgstr "Indicateur de données non reconnu"
@@ -1069,3 +1036,46 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "Maintainer:"
+#~ msgstr "Responsable :"
+
+#~ msgid "Index:"
+#~ msgstr "Index :"
+
+#~ msgid "Further information is available in the following vignettes:"
+#~ msgstr "Plus d'information disponible dans les vignettes suivantes :"
+
+#~ msgid "package title"
+#~ msgstr "titre du package"
+
+#~ msgid "A concise (1-5 lines) description of the package"
+#~ msgstr "Description concise (1-5 lignes) du package"
+
+#~ msgid ""
+#~ "An overview of how to use the package, including the most important "
+#~ "functions"
+#~ msgstr ""
+#~ "Une vue d'ensemble montrant comment utiliser le package, y compris ses "
+#~ "fonctions les plus importantes"
+
+#~ msgid "The author and/or maintainer of the package"
+#~ msgstr "L'auteur et/ou la personne responsable du package"
+
+#~ msgid "Literature or other references for background information"
+#~ msgstr ""
+#~ "Références bibliographiques ou autre références pour de l'information "
+#~ "générale"
+
+#~ msgid "Optional links to other man pages, e.g."
+#~ msgstr "Liens valides vers d'autres pages de manuel, par exemple"
+
+#~ msgid "simple examples of the most important functions"
+#~ msgstr "exemples simples des fonctions les plus importantes"
+
+#~ msgid ""
+#~ "Optionally other standard keywords, one per line, from file KEYWORDS in "
+#~ "the R documentation directory"
+#~ msgstr ""
+#~ "Eventuellement d'autres mots clés, un par ligne, issus du fichier "
+#~ "KEYWORDS du répertoire documentation de R"

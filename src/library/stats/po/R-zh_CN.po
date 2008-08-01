@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-07 08:26\n"
+"POT-Creation-Date: 2008-08-01 08:44\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -475,7 +475,8 @@ msgstr "'degree'至少为一"
 msgid "missing values are not allowed in 'poly'"
 msgstr "'poly'里不能有遺漏值"
 
-msgid "'degree' must be less than number of points"
+#, fuzzy
+msgid "'degree' must be less than number of unique points"
 msgstr "'degree'小于数据点的数目"
 
 msgid "must supply one or more vectors"
@@ -1560,6 +1561,13 @@ msgstr "没有变量"
 
 msgid "no parameters to fit"
 msgstr "没有可用来拟合的参数值"
+
+#, fuzzy
+msgid "argument 'subset' will be ignored"
+msgstr "变元'sides'必需是一或二"
+
+msgid "argument 'na.action' will be ignored"
+msgstr ""
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "除非algorithm = \"port\"，上限或下限将略过不用"
