@@ -216,6 +216,14 @@ NEW FEATURES
     o	legend() has a new argument 'box.col' to set the colour of the
 	enclosing box.
 
+    o	The alpha/alphamax argument of the 'nls' and 'mle' profile()
+    	methods is used to compute confidence limits for univariate
+    	t-statistics rather than a confidence region for all the
+    	parameters (and not just those being profiled).
+
+	The 'mle' confint() method now takes 'level' into account when
+	setting 'alpha' for the profile.
+
 
 INSTALLATION
 

@@ -94,7 +94,7 @@ setMethod("summary", "mle", function(object, ...){
 
 setMethod("profile", "mle",
           function (fitted, which = 1:p, maxsteps = 100,
-                    alpha = 0.01, zmax = sqrt(qchisq(1 - alpha, p)),
+                    alpha = 0.01, zmax = sqrt(qchisq(1 - alpha, 1L)),
                     del = zmax/5, trace = FALSE, ...)
 {
     onestep <- function(step)
@@ -297,7 +297,7 @@ setMethod("confint", "mle",
 function (object, parm, level = 0.95, ...)
 {
     cat("Profiling...\n")
-    confint(profile(object), parm, level, ...)
+    confint(profile(object), alpha = (1 - level)/4, parm, level, ...)
 })
 
 setMethod("logLik", "mle",
