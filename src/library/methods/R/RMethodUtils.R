@@ -573,14 +573,11 @@ getGeneric <-
 .genericOrImplicit <- function(name, pkg, env) {
     fdef <- .getGenericFromCache(name, env, pkg)
     if(is.null(fdef)) {
-        penv <- getNamespace(pkg)
-        if(!isNamespace(penv))  {# no namespace--should be rare!
-            pname <- paste("package:", pkg, sep="")
-            if(pname %in% search())
-              penv <- as.environment(pname)
-            else
-              penv <- env
-        }
+	penv <- tryCatch(getNamespace(pkg), error = function(e)e)
+	if(!isNamespace(penv))	{# no namespace--should be rare!
+	    pname <- paste("package:", pkg, sep="")
+	    penv <- if(pname %in% search()) as.environment(pname) else env
+	}
         fdef <- getFunction(name, TRUE, FALSE, penv)
         if(!is(fdef, "genericFunction")) {
             if(is.primitive(fdef))
@@ -1463,7 +1460,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
       value <- as.environment(where)
     value
 }
-    
+
 
 .hasS4MetaData <- function(env)
   (length(objects(env, all.names = TRUE,
