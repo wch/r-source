@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49\n"
+"POT-Creation-Date: 2008-08-01 09:16\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -25,11 +25,44 @@ msgstr "OOPS: algo errado com a linha"
 msgid "in .OldClassesPrototypes"
 msgstr "em .OldClassesPrototypes"
 
+msgid "Cannot specify matrix() arguments when specifying .Data"
+msgstr ""
+
+msgid "Cannot specify array() arguments when specifying .Data"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "methods may not be defined for primitive function \"%s\" in this version of R"
 msgstr ""
 "métodos não podem ser definidos para função primitiva '%s' nessa versão do R"
+
+msgid ""
+"S3Part() is only defined for classes set up by setOldCLass() or extend such "
+"a class:  not true of class \"%s\""
+msgstr ""
+
+msgid ""
+"The S3Class argument must be a class set up by setOldCLass() or an extension "
+"of such a class:  not true of class \"%s\""
+msgstr ""
+
+msgid "Not meaningful to have keepSlots=TRUE and strict=TRUE"
+msgstr ""
+
+msgid "Replacement value must extend class \"%s\", got  \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "Replacement value must be of class \""
+msgstr "valor de substituição não é uma matriz"
+
+#, fuzzy
+msgid "\", got one of class \""
+msgstr "Um objeto de classe \""
+
+msgid "\""
+msgstr "\""
 
 msgid ""
 "no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\""
@@ -64,6 +97,9 @@ msgstr "as classes membro devem estar definidas: isso não vale para %s"
 
 msgid "unable to create union class:  could not set members %s"
 msgstr "impossível criar classe união: não foi possível ajustar os membros %s"
+
+msgid "invalid argument \"name\": %s"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -257,6 +293,9 @@ msgstr "'%s' não tem métodos definidos"
 msgid "signature must be a vector of classes or an environment"
 msgstr "assinatura deve ser um vetor de classes ou um ambiente"
 
+msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+msgstr ""
+
 msgid "no unique method corresponding to this signature"
 msgstr "nenhum método único correspondente a essa assinatura"
 
@@ -350,9 +389,6 @@ msgstr "nenhuma função genérica '%s' encontrada"
 
 msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
-
-msgid "\""
-msgstr "\""
 
 #, fuzzy
 msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
@@ -475,16 +511,6 @@ msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 "os nomes na assinatura do método (%s) não correspondem aos argumentos da "
 "função (%s)"
-
-msgid ""
-"'NextMethod' not defined because the current method is not a "
-"'MethodDefinition' object"
-msgstr ""
-"'NextMethod' não definido por que o método atual não é um objeto 'Method "
-"Definition'"
-
-msgid "expected a list of signature objects, got \"%s\""
-msgstr "esperada uma lista de objetos de assinatura, obtido \"%s\""
 
 #, fuzzy
 msgid ""
@@ -1210,6 +1236,11 @@ msgid ""
 "new classes?)"
 msgstr ""
 
+msgid ""
+"The class of the prototype, \"%s\", is undefined; only allowed for the S3 "
+"class being registered (\"%s\")"
+msgstr ""
+
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr ""
 
@@ -1221,6 +1252,11 @@ msgstr ""
 msgid ""
 "argument 'Classes' must be a vector of two classes; got an argument of "
 "length %d"
+msgstr ""
+
+msgid ""
+"S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
+"true of class \"%s\""
 msgstr ""
 
 msgid "Created a package name, \"%s\", when none found"
@@ -1332,6 +1368,16 @@ msgstr[0] ""
 msgstr[1] ""
 "na assinatura do método da função '%s' nomes de argumentos inválidos na "
 "assinatura: %s"
+
+#~ msgid ""
+#~ "'NextMethod' not defined because the current method is not a "
+#~ "'MethodDefinition' object"
+#~ msgstr ""
+#~ "'NextMethod' não definido por que o método atual não é um objeto 'Method "
+#~ "Definition'"
+
+#~ msgid "expected a list of signature objects, got \"%s\""
+#~ msgstr "esperada uma lista de objetos de assinatura, obtido \"%s\""
 
 #, fuzzy
 #~ msgid ""

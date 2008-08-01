@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49\n"
+"POT-Creation-Date: 2008-08-01 09:16\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -20,11 +20,43 @@ msgstr ""
 msgid "in .OldClassesPrototypes"
 msgstr ""
 
+msgid "Cannot specify matrix() arguments when specifying .Data"
+msgstr ""
+
+msgid "Cannot specify array() arguments when specifying .Data"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "methods may not be defined for primitive function \"%s\" in this version of R"
 msgstr ""
 "메소드는 R의 버전으로 최초의 함수 '%s' 때문애 정해지지 않을지도 모릅니다"
+
+msgid ""
+"S3Part() is only defined for classes set up by setOldCLass() or extend such "
+"a class:  not true of class \"%s\""
+msgstr ""
+
+msgid ""
+"The S3Class argument must be a class set up by setOldCLass() or an extension "
+"of such a class:  not true of class \"%s\""
+msgstr ""
+
+msgid "Not meaningful to have keepSlots=TRUE and strict=TRUE"
+msgstr ""
+
+msgid "Replacement value must extend class \"%s\", got  \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "Replacement value must be of class \""
+msgstr "치환값은 행렬이 아닙니다"
+
+msgid "\", got one of class \""
+msgstr ""
+
+msgid "\""
+msgstr ""
 
 msgid ""
 "no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\""
@@ -60,6 +92,9 @@ msgstr "member 클래스는 정해지지 않으면 안됩니다: %s에 정확하
 
 msgid "unable to create union class:  could not set members %s"
 msgstr "union 클래스를 작성할 수 없습니다: members %s를 세트 할수가 없습니다"
+
+msgid "invalid argument \"name\": %s"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -251,6 +286,9 @@ msgstr "'%s'는 메소드를 정해두지 않습니다"
 msgid "signature must be a vector of classes or an environment"
 msgstr "기호는 클래스 또는 환경의 벡터가 아니면 되지 않습니다"
 
+msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+msgstr ""
+
 msgid "no unique method corresponding to this signature"
 msgstr "이 기호와 일치하고 있는 특별한 메소드가 아닙니다"
 
@@ -345,9 +383,6 @@ msgid "non-generic function '%s' given to findMethods()"
 msgstr "'%s'가 검색되어진 non-geteric 함수가 아닙니다"
 
 msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
-msgstr ""
-
-msgid "\""
 msgstr ""
 
 #, fuzzy
@@ -469,16 +504,6 @@ msgstr ""
 #, fuzzy
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr "메소드(%s)를 위한 기호의 이름은 함수 인수(%s)에 match하지 않습니다"
-
-msgid ""
-"'NextMethod' not defined because the current method is not a "
-"'MethodDefinition' object"
-msgstr ""
-"정의 되지 않는 'NextMethod' 의 것으로 , 현재의 메소드는 \n"
-"'MethodDefinition' 오브젝트가 아닙니다"
-
-msgid "expected a list of signature objects, got \"%s\""
-msgstr "리스트는 기호에 예측하여 \"%s\"를 얻었습니다"
 
 #, fuzzy
 msgid ""
@@ -1317,6 +1342,11 @@ msgstr ""
 "style\n"
 "클래스 정보입니다"
 
+msgid ""
+"The class of the prototype, \"%s\", is undefined; only allowed for the S3 "
+"class being registered (\"%s\")"
+msgstr ""
+
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr "old-style 클래스(%s)의 명시적인 강제는 정의 되지 있지 않았습니다"
 
@@ -1333,6 +1363,11 @@ msgid ""
 msgstr ""
 "인수 'Classes'는 2개 클래스의 벡터이어야만 합니다;\n"
 "길이 %d의 인수를 얻었습니다"
+
+msgid ""
+"S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
+"true of class \"%s\""
+msgstr ""
 
 #, fuzzy
 msgid "Created a package name, \"%s\", when none found"
@@ -1447,6 +1482,16 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "함수'%s'를 위한 메소드 signature으로, 클래스용 정의는 없습니다: %s"
+
+#~ msgid ""
+#~ "'NextMethod' not defined because the current method is not a "
+#~ "'MethodDefinition' object"
+#~ msgstr ""
+#~ "정의 되지 않는 'NextMethod' 의 것으로 , 현재의 메소드는 \n"
+#~ "'MethodDefinition' 오브젝트가 아닙니다"
+
+#~ msgid "expected a list of signature objects, got \"%s\""
+#~ msgstr "리스트는 기호에 예측하여 \"%s\"를 얻었습니다"
 
 #, fuzzy
 #~ msgid ""

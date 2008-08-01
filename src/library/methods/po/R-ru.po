@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49\n"
+"POT-Creation-Date: 2008-08-01 09:16\n"
 "PO-Revision-Date: 2008-04-07 00:23-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -29,11 +29,44 @@ msgstr "OOPS: что-то не так с линией"
 msgid "in .OldClassesPrototypes"
 msgstr "в .OldClassesPrototypes"
 
+msgid "Cannot specify matrix() arguments when specifying .Data"
+msgstr ""
+
+msgid "Cannot specify array() arguments when specifying .Data"
+msgstr ""
+
 msgid ""
 "methods may not be defined for primitive function \"%s\" in this version of R"
 msgstr ""
 "методы не могут быть определены для элементарной функции \"%s\" в этой "
 "версии R"
+
+msgid ""
+"S3Part() is only defined for classes set up by setOldCLass() or extend such "
+"a class:  not true of class \"%s\""
+msgstr ""
+
+msgid ""
+"The S3Class argument must be a class set up by setOldCLass() or an extension "
+"of such a class:  not true of class \"%s\""
+msgstr ""
+
+msgid "Not meaningful to have keepSlots=TRUE and strict=TRUE"
+msgstr ""
+
+msgid "Replacement value must extend class \"%s\", got  \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "Replacement value must be of class \""
+msgstr "замещающее значение не является матрицей"
+
+#, fuzzy
+msgid "\", got one of class \""
+msgstr "Объект класса \""
+
+msgid "\""
+msgstr "\""
 
 msgid ""
 "no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\""
@@ -69,6 +102,9 @@ msgstr "классы-члены класса должны быть определены: не верно для %s"
 
 msgid "unable to create union class:  could not set members %s"
 msgstr "не могу создать класс union:  не могу установить членов %s"
+
+msgid "invalid argument \"name\": %s"
+msgstr ""
 
 msgid ""
 "\"%s\" is a primitive function;  methods can be defined, but the generic "
@@ -241,6 +277,9 @@ msgstr "\"%s\" не содержит определенных методов"
 msgid "signature must be a vector of classes or an environment"
 msgstr "идентификатор должен быть вектором классов или окружением"
 
+msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+msgstr ""
+
 msgid "no unique method corresponding to this signature"
 msgstr ""
 "не существует единственного метода соответствующего данному идентификатору"
@@ -329,9 +368,6 @@ msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
 "Только FALSE имеет значение для унаследованного, когда поддержано "
 "'where' (получен"
-
-msgid "\""
-msgstr "\""
 
 #, fuzzy
 msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
@@ -448,16 +484,6 @@ msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 "имена в идентификаторе для метода (%s) не совпадают с %s аргументами функции "
 "(%s)"
-
-msgid ""
-"'NextMethod' not defined because the current method is not a "
-"'MethodDefinition' object"
-msgstr ""
-"'NextMethod' не определен, потому-что текущий метод не является объектом "
-"'MethodDefinition'"
-
-msgid "expected a list of signature objects, got \"%s\""
-msgstr "ожидался список идентификаторов, получен \"%s\""
 
 msgid ""
 "a call to callNextMethod() appears in a call to \"%s\", but the call does "
@@ -1268,6 +1294,11 @@ msgstr ""
 "противоречивая, в старом стиле информация для класса \"%s\" (возможно имеет "
 "место смешение старых и новых классов?)"
 
+msgid ""
+"The class of the prototype, \"%s\", is undefined; only allowed for the S3 "
+"class being registered (\"%s\")"
+msgstr ""
+
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr "не определено четкого приведения для устаревшего класса (%s)"
 
@@ -1284,6 +1315,11 @@ msgid ""
 msgstr ""
 "аргумент 'Classes' должен быть вектором двух классов; получен аргумент длины "
 "%d"
+
+msgid ""
+"S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
+"true of class \"%s\""
+msgstr ""
 
 msgid "Created a package name, \"%s\", when none found"
 msgstr "Создано имя пакета, \"%s\", в то время как ни одного не найдено"
@@ -1402,6 +1438,16 @@ msgstr[1] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
 msgstr[2] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
+
+#~ msgid ""
+#~ "'NextMethod' not defined because the current method is not a "
+#~ "'MethodDefinition' object"
+#~ msgstr ""
+#~ "'NextMethod' не определен, потому-что текущий метод не является объектом "
+#~ "'MethodDefinition'"
+
+#~ msgid "expected a list of signature objects, got \"%s\""
+#~ msgstr "ожидался список идентификаторов, получен \"%s\""
 
 #~ msgid ""
 #~ "New generic for \"%s\" does not agree with implicit generic from package "

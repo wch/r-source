@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49\n"
-"PO-Revision-Date: 2008-06-05 19:49\n"
+"POT-Creation-Date: 2008-08-01 09:16\n"
+"PO-Revision-Date: 2008-08-01 09:16\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -42,10 +42,45 @@ msgstr "OOPS: something wrong with line"
 msgid "in .OldClassesPrototypes"
 msgstr "in .OldClassesPrototypes"
 
+msgid "Cannot specify matrix() arguments when specifying .Data"
+msgstr "Cannot specify matrix() arguments when specifying .Data"
+
+msgid "Cannot specify array() arguments when specifying .Data"
+msgstr "Cannot specify array() arguments when specifying .Data"
+
 msgid ""
 "methods may not be defined for primitive function \"%s\" in this version of R"
 msgstr ""
 "methods may not be defined for primitive function “%s” in this version of R"
+
+msgid ""
+"S3Part() is only defined for classes set up by setOldCLass() or extend such "
+"a class:  not true of class \"%s\""
+msgstr ""
+"S3Part() is only defined for classes set up by setOldCLass() or extend such "
+"a class:  not true of class “%s”"
+
+msgid ""
+"The S3Class argument must be a class set up by setOldCLass() or an extension "
+"of such a class:  not true of class \"%s\""
+msgstr ""
+"The S3Class argument must be a class set up by setOldCLass() or an extension "
+"of such a class:  not true of class “%s”"
+
+msgid "Not meaningful to have keepSlots=TRUE and strict=TRUE"
+msgstr "Not meaningful to have keepSlots=TRUE and strict=TRUE"
+
+msgid "Replacement value must extend class \"%s\", got  \"%s\""
+msgstr "Replacement value must extend class “%s”, got  “%s”"
+
+msgid "Replacement value must be of class \""
+msgstr "Replacement value must be of class \""
+
+msgid "\", got one of class \""
+msgstr "“, got one of class ”"
+
+msgid "\""
+msgstr "\""
 
 msgid ""
 "no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\""
@@ -80,6 +115,9 @@ msgstr "the member classes must be defined: not true of %s"
 
 msgid "unable to create union class:  could not set members %s"
 msgstr "unable to create union class:  could not set members %s"
+
+msgid "invalid argument \"name\": %s"
+msgstr "invalid argument “name”: %s"
 
 msgid ""
 "\"%s\" is a primitive function;  methods can be defined, but the generic "
@@ -254,6 +292,9 @@ msgstr "“%s” has no methods defined"
 msgid "signature must be a vector of classes or an environment"
 msgstr "signature must be a vector of classes or an environment"
 
+msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+msgstr "selectMethod(): .SelectMethodOn - old stuff - please report"
+
 msgid "no unique method corresponding to this signature"
 msgstr "no unique method corresponding to this signature"
 
@@ -336,9 +377,6 @@ msgstr "non-generic function ‘%s’ given to findMethods()"
 msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
 "Only FALSE is meaningful for 'inherited', when ‘where’ is supplied (got"
-
-msgid "\""
-msgstr "\""
 
 msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
 msgstr "‘%s’ is not a generic function in ‘%s’ {and ‘package’ not specified}"
@@ -452,16 +490,6 @@ msgstr ""
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 "the names in signature for method (%s) do not match %s's arguments (%s)"
-
-msgid ""
-"'NextMethod' not defined because the current method is not a "
-"'MethodDefinition' object"
-msgstr ""
-"‘NextMethod’ not defined because the current method is not a "
-"‘MethodDefinition’ object"
-
-msgid "expected a list of signature objects, got \"%s\""
-msgstr "expected a list of signature objects, got “%s”"
 
 msgid ""
 "a call to callNextMethod() appears in a call to \"%s\", but the call does "
@@ -1250,6 +1278,13 @@ msgstr ""
 "inconsistent old-style class information for “%s” (maybe mixing old and new "
 "classes?)"
 
+msgid ""
+"The class of the prototype, \"%s\", is undefined; only allowed for the S3 "
+"class being registered (\"%s\")"
+msgstr ""
+"The class of the prototype, “%s”, is undefined; only allowed for the S3 "
+"class being registered (“%s”)"
+
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr "explicit coercion of old-style class (%s) is not defined"
 
@@ -1266,6 +1301,13 @@ msgid ""
 msgstr ""
 "argument ‘Classes’ must be a vector of two classes; got an argument of "
 "length %d"
+
+msgid ""
+"S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
+"true of class \"%s\""
+msgstr ""
+"S3Class can only be assigned to S4 objects that extend “oldClass”; not true "
+"of class “%s”"
 
 msgid "Created a package name, \"%s\", when none found"
 msgstr "Created a package name, “%s”, when none found"

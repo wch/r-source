@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49\n"
+"POT-Creation-Date: 2008-08-01 09:17\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -657,11 +657,20 @@ msgstr "函数'%s'和簽署'%s'没有帮助文件"
 msgid "No DIF data on clipboard"
 msgstr "剪贴板里没有DIF数据"
 
+msgid "file had no lines"
+msgstr ""
+
 msgid "row and column counts not found"
 msgstr "找不到行和列的数目"
 
+msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
+
 msgid "Unrecognized special data value"
 msgstr "没有这样的特殊数据值"
+
+msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
 
 msgid "Unrecognized value indicator"
 msgstr "没有这样的数值指示器"
@@ -931,6 +940,14 @@ msgstr "更新HTML程序包的描述内容"
 
 msgid "cannot update '%s'"
 msgstr "无法更新'%s'"
+
+#, fuzzy
+msgid "winDialog() cannot be used non-interactively"
+msgstr "menu()不能在非互交形式下使用"
+
+#, fuzzy
+msgid "winDialogString() cannot be used non-interactively"
+msgstr "menu()不能在非互交形式下使用"
 
 msgid "'pb' is not from class \"winProgressBar\""
 msgstr ""
