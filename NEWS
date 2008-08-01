@@ -45,6 +45,11 @@ BUG FIXES
 
     o	rcond(<exactly singular matrix>) now gives 0 instead of an error.
 
+    o	There was a memory leak in C function ucstoutf8 used by some
+	graphics devices.
+
+    o	axis() was ignoring par() mgp[3] if mgp was set in-line.
+
     o	Closing an X11 View() or dataentry window via its frame's
 	close control now works better on some window managers.
 
@@ -288,11 +293,8 @@ BUG FIXES
 	more arguments.
 
     o	symbol() in plotmath expressions works again with non-ASCII
-	input on devices that use UTF-8 for the symbol font.
+    	input on devices that use UTF-8 for the symbol font.
 
-    o	There was a memory leak in ucstoutf8 used by some graphics devices.
-
-    o	axis() was ignoring par() mgp[3] is mgp was set in-line.
 
 
 		CHANGES IN R VERSION 2.7.0
