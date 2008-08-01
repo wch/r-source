@@ -23,7 +23,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	 text.width = NULL, text.col = par("col"),
 	 merge = do.lines && has.pch, trace = FALSE,
 	 plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
-	 inset = 0)
+	 inset = 0, xpd)
 {
     ## the 2nd arg may really be `legend'
     if(missing(legend) && !missing(y) &&
@@ -33,6 +33,11 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
     }
     mfill <- !missing(fill) || !missing(density)
 
+    if(!missing(xpd)) {
+        op <- par("xpd")
+        on.exit(par(op))
+        par(xpd=xpd)
+    }
     title <- as.graphicsAnnot(title)
     if(length(title) > 1) stop("invalid title")
     legend <- as.graphicsAnnot(legend)

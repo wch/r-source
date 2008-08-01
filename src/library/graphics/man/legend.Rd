@@ -16,7 +16,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
        adj = c(0, 0.5), text.width = NULL, text.col = par("col"),
        merge = do.lines && has.pch, trace = FALSE,
        plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
-       inset = 0)
+       inset = 0, xpd)
 }
 \description{
   This function can be used to add legends to plots.  Note that a call
@@ -85,7 +85,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     coerced by \code{\link{as.graphicsAnnot}}.}
   \item{inset}{inset distance(s) from the margins as a fraction of the
     plot region when legend is placed by keyword.}
-
+  \item{xpd}{if supplied, a value of the graphical parameter \code{xpd}
+    to be used while the legend is being drawn.}
 }
 \details{
   Arguments \code{x, y, legend} are interpreted in a non-standard way to

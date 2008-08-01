@@ -227,6 +227,9 @@ NEW FEATURES
     o	data.matrix() now tries harder to convert non-numeric columns,
     	via as.numeric() or as(, "numeric").
 
+    o	legend() gains a 'xpd' argument to make it easier to place a
+	legend in the margins or outer margins.
+
 
 INSTALLATION
 
