@@ -5287,6 +5287,9 @@ names(df3) <- c("A","B", NA)
 df3[-2]
 df3[, -2]
 df3[1:4, -2]
+df3[c(TRUE,FALSE,TRUE)]
+df3[, c(TRUE,FALSE,TRUE)]
+df3[1:4, c(TRUE,FALSE,TRUE)]
 ## all gave 'undefined columns selected', 2.6.1 to 2.7.x
 ## note that you can only select columns by number, not by name
 

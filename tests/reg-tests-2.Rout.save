@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-05-26 r45783)
+R version 2.8.0 Under development (unstable) (2008-07-31 r46195)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -358,12 +358,12 @@ There were 22 warnings (use warnings() to see them)
  $ y  : num  1 2 3 4 5 6 7 8 9 10
  $ fac: Factor w/ 3 levels "A","B","C": 1 3 2 3 3 1 2 3 2 2
 > (d0  <- d[, FALSE]) # NULL dataframe with 10 rows
-NULL data frame with 10 rows
+data frame with 0 columns and 10 rows
 > (d.0 <- d[FALSE, ]) # <0 rows> dataframe  (3 cols)
 [1] x   y   fac
 <0 rows> (or 0-length row.names)
 > (d00 <- d0[FALSE,]) # NULL dataframe with 0 rows
-NULL data frame with 0 rows
+data frame with 0 columns and 0 rows
 > stopifnot(identical(d, cbind(d, d0)),
 +           identical(d, cbind(d0, d)))
 > stopifnot(identical(d, rbind(d,d.0)),
@@ -5372,7 +5372,7 @@ Levels: A B C D E
 > 
 > ## [ on a zero-column data frame, names of such
 > data.frame()[FALSE]
-NULL data frame with 0 rows
+data frame with 0 columns and 0 rows
 > names(data.frame())
 character(0)
 > # gave NULL names and hence spurious warning.
@@ -5729,7 +5729,7 @@ $weight
 > 
 > ## data.frame() with zero columns ignored 'row.names'
 > (x <- data.frame(row.names=1:4))
-NULL data frame with 4 rows
+data frame with 0 columns and 4 rows
 > nrow(x)
 [1] 4
 > row.names(x)

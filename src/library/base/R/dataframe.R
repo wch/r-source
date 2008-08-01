@@ -494,7 +494,9 @@ data.frame <-
 	    return(as.matrix(x)[i])  # desperate measures
         ## zero-column data frames prior to 2.4.0 had no names.
         nm <- names(x); if(is.null(nm)) nm <- character(0)
-        if(is.numeric(i) && any(is.na(nm))) { # less efficient version
+        ## if we have NA names, character indexing should always fail
+        ## (for positive index length)
+        if(!is.character(i) && any(is.na(nm))) { # less efficient version
             names(nm) <- names(x) <- seq_along(x)
             y <- NextMethod("[")
             cols <- names(y)
@@ -517,7 +519,7 @@ data.frame <-
         ## not quite the same as the 1/2-arg case, as 'drop' is used.
         if(missing(j) && drop && length(x) == 1L) return(.subset2(x, 1L))
         nm <- names(x); if(is.null(nm)) nm <- character(0)
-        if(!missing(j) && is.numeric(j) && any(is.na(nm))) {
+        if(!missing(j) && !is.character(j) && any(is.na(nm))) {
             ## less efficient version
             names(nm) <- names(x) <- seq_along(x)
             y <- if(missing(j)) x else .subset(x, j)
@@ -551,7 +553,7 @@ data.frame <-
 
     if(!missing(j)) { # df[i, j]
         nm <- names(x); if(is.null(nm)) nm <- character(0)
-        if(is.numeric(j) && any(is.na(nm)))
+        if(!is.character(j) && any(is.na(nm)))
             names(nm) <- names(x) <- seq_along(x)
         x <- x[j]
         cols <- names(x)  # needed for 'drop'
@@ -1245,10 +1247,11 @@ print.data.frame <-
 {
     n <- length(row.names(x))
     if(length(x) == 0L) {
-	cat("NULL data frame with", n, "rows\n")
+        cat(gettextf("data frame with 0 columns and %d rows\n", n))
     } else if(n == 0L) {
+        ## FIXME: header format is inconsistent here
 	print.default(names(x), quote = FALSE)
-	cat("<0 rows> (or 0-length row.names)\n")
+	cat(gettext("<0 rows> (or 0-length row.names)\n"))
     } else {
 	## format.<*>() : avoiding picking up e.g. format.AsIs
 	m <- as.matrix(format.data.frame(x, digits=digits, na.encode=FALSE))
