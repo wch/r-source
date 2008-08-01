@@ -224,6 +224,9 @@ NEW FEATURES
 	The 'mle' confint() method now takes 'level' into account when
 	setting 'alpha' for the profile.
 
+    o	data.matrix() now tries harder to convert non-numeric columns,
+    	via as.numeric() or as(, "numeric").
+
 
 INSTALLATION
 

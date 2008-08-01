@@ -4006,9 +4006,9 @@ stopifnot(nchar(fc) == 11)
 DF <- data.frame(x=c("a", "b"), y=2:3)[FALSE,]
 stopifnot(is.numeric(data.matrix(DF)))
 # was logical in 2.2.1.
-DF <- data.frame(I(character(0)))
-X <- try(data.matrix(DF))
-stopifnot(inherits(X, "try-error"))
+DF <- data.frame(a=I(character(0)))
+X <- data.matrix(DF)
+stopifnot(is.numeric(X))
 ## gave logical matrix in 2.2.1.
 
 stopifnot(pbirthday(950, coincident=250) == 0,

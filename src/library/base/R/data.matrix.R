@@ -19,28 +19,26 @@ data.matrix <- function(frame, rownames.force = NA)
     if(!is.data.frame(frame)) return(as.matrix(frame))
 
     d <- dim(frame)
-    if(d[2] > 0) {
-	log <- unlist(lapply(frame, is.logical))
-	num <- unlist(lapply(frame, is.numeric))
-	fac <- unlist(lapply(frame, is.factor))
-
-	if(!all(log|fac|num))
-	    stop("non-numeric data type in frame")
-        cl <- sapply(frame[log|num], function(x) {
-            cl <- class(x)
-            length(cl) > 1 || ! (cl %in% c("numeric", "integer", "logical"))
-        })
-        if(length(cl) && any(cl))
-            warning("class information lost from one or more columns")
-    }
     rn <- if(rownames.force %in% FALSE) NULL
     else if(rownames.force %in% TRUE) row.names(frame)
     else {if(.row_names_info(frame) <= 0) NULL else row.names(frame)}
-    x <- matrix(NA_integer_, nrow = d[1], ncol = d[2],
-		dimnames = list(rn, names(frame)) )
-    for(i in seq_len(d[2]) ) {
-	xi <- frame[[i]]
-	x[,i] <- if(is.logical(xi) || is.factor(xi)) as.integer(xi) else xi
+
+    for(i in seq_len(d[2])) {
+        xi <- frame[[i]]
+        ## at present is.numeric suffices, but let's be cautious
+        if(is.integer(xi) || is.numeric(xi)) next
+        if(is.logical(xi) || is.factor(xi)) {
+            frame[[i]] <- as.integer(xi)
+            next
+        }
+        frame[[i]] <- if(isS4(xi)) methods::as(xi, "numeric") else as.numeric(xi)
     }
+
+    ## it makes sense to find the type needed first.
+    intOK <- all(unlist(lapply(frame, is.integer)))
+    x <- matrix(if(intOK) NA_integer_ else NA_real_,
+                nrow = d[1], ncol = d[2],
+		dimnames = list(rn, names(frame)) )
+    for(i in seq_len(d[2])) x[, i] <- frame[[i]]
     x
 }
