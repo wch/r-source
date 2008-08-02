@@ -48,6 +48,10 @@ BUG FIXES
     o	There was a memory leak in C function ucstoutf8 used by some
 	graphics devices.
 
+    o	Plots of profile.mle() objects (package 'stats4') was
+	misbehaving when the 'which' argument had been used in their
+	calculation.
+
     o	axis() was ignoring par() mgp[3] if mgp was set in-line.
 
     o	Closing an X11 View() or dataentry window via its frame's
@@ -71,6 +75,8 @@ BUG FIXES
 	variables taken from 'data' are not all of the same length,
 	in which case a warning is given.
 
+    o	The 'mle' confint() method now takes 'level' into account when
+	setting 'alpha' for the profile.
 
 
 

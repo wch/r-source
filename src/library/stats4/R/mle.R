@@ -94,7 +94,7 @@ setMethod("summary", "mle", function(object, ...){
 
 setMethod("profile", "mle",
           function (fitted, which = 1:p, maxsteps = 100,
-                    alpha = 0.01, zmax = sqrt(qchisq(1 - alpha/2, p)),
+                    alpha = 0.01, zmax = sqrt(qchisq(1 - alpha, p)),
                     del = zmax/5, trace = FALSE, ...)
 {
     onestep <- function(step)
@@ -202,18 +202,20 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
     nm <- names(obj)
     opar <- par(mar = c(5, 4, 1, 1) + 0.1)
     if (absVal) {
-        for (i in seq_along(nm)) {
+        ## OBS: it is important to use the actual names for indexing,
+        ## in case profile(....,which=....) was used
+        for (i in nm) {
             ## <FIXME> This does not need to be monotonic
             sp <- splines::interpSpline(obj[[i]]$par.vals[, i], obj[[i]]$z,
                                na.action=na.omit)
-            bsp <-splines:: backSpline(sp)
+            bsp <- splines:: backSpline(sp)
             ## </FIXME>
             xlim <- predict(bsp, c(-mlev, mlev))$y
             if (is.na(xlim[1]))
                 xlim[1] <- min(obj[[i]]$par.vals[, i])
             if (is.na(xlim[2]))
                 xlim[2] <- max(obj[[i]]$par.vals[, i])
-            plot(abs(z) ~ par.vals[, i], data = obj[[i]], xlab = nm[i],
+            plot(abs(z) ~ par.vals[, i], data = obj[[i]], xlab = i,
                 ylim = c(0, mlev), xlim = xlim, ylab = expression(abs(z)),
                 type = "n")
             avals <- rbind(as.data.frame(predict(sp)),
@@ -235,7 +237,7 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
         }
     }
     else {
-        for (i in seq_along(nm)) {
+        for (i in nm) {
             ## <FIXME> This does not need to be monotonic
             sp <- splines::interpSpline(obj[[i]]$par.vals[, i], obj[[i]]$z,
                                na.action=na.omit)
@@ -247,7 +249,7 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
                 xlim[1] <- min(obj[[i]]$par.vals[, i])
             if (is.na(xlim[2]))
                 xlim[2] <- max(obj[[i]]$par.vals[, i])
-            plot(z ~ par.vals[, i], data = obj[[i]], xlab = nm[i],
+            plot(z ~ par.vals[, i], data = obj[[i]], xlab = i,
                 ylim = c(-mlev, mlev), xlim = xlim, ylab = expression(z),
                 type = "n")
             lines(predict(sp), col = 4)
@@ -295,7 +297,7 @@ setMethod("confint", "mle",
 function (object, parm, level = 0.95, ...)
 {
     cat("Profiling...\n")
-    confint(profile(object), parm, level, ...)
+    confint(profile(object), alpha = (1 - level)/4, parm, level, ...)
 })
 
 setMethod("logLik", "mle",
