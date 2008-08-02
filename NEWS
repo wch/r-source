@@ -149,7 +149,7 @@ NEW FEATURES
 	hence is now different from pch=19.
 
     o	A new reorder.character() method has been added.  This allows
-	use 'reorder(x, ...)' as a shorthand for
+	use of 'reorder(x, ...)' as a shorthand for
 	'reorder(factor(x), ...)' when 'x' is a character vector.
 
     o	read.dcf() now consistently gives an error for malformed DCF.
@@ -221,14 +221,15 @@ NEW FEATURES
     	t-statistics rather than a confidence region for all the
     	parameters (and not just those being profiled).
 
-	The 'mle' confint() method now takes 'level' into account when
-	setting 'alpha' for the profile.
-
     o	data.matrix() now tries harder to convert non-numeric columns,
     	via as.numeric() or as(, "numeric").
 
     o	legend() gains a 'xpd' argument to make it easier to place a
 	legend in the margins or outer margins.
+
+    o	system.time() now uses lazy evaluation rather than
+	eval/substitute, which results in more natural scoping.
+	(PR#11169)
 
 
 INSTALLATION
@@ -325,10 +326,6 @@ BUG FIXES
 	type S4 would not be S4 objects.  new() applied to basic,
 	non-S4 classes still will (and should) return non-S4 objects.
 
-    o	system.time() now uses lazy evaluation rather than
-	eval/substitute, which results in more natural scoping.
-	(PR#11169)
-
     o	Functions writing to connections such as writeLines(),
 	writeBin(), writeChar(), save(), dput() and dump() now check
 	more carefully that the connections are opened for writing,
@@ -339,14 +336,6 @@ BUG FIXES
 
     o	Equality comparison of factors with <NA> levels now works
 	correctly again.
-
-    o	dnbinom(x, size, mu=*, ..) is now more accurate for very large
-	'size'.  The same applies to pnbinom() and rnbinom().
-	[maybe moved to 2.7.1 patched eventually]
-
-    o	Plots of profile.mle() objects (package 'stats4') was
-	misbehaving when the 'which' argument had been used in their
-	calculation.
 
     o	Repainting of open X11 View() windows is now done whilst an
 	X11 dataentry window is in use.
@@ -407,6 +396,13 @@ BUG FIXES
     o	There was a memory leak in C function ucstoutf8 used by some
 	graphics devices.
 
+    o	Plots of profile.mle() objects (package 'stats4') was
+	misbehaving when the 'which' argument had been used in their
+	calculation.
+
+    o	dnbinom(x, size, mu=*, ..) is now more accurate for very large
+	'size'.  The same applies to pnbinom() and rnbinom().
+
     o	axis() was ignoring par() mgp[3] if mgp was set in-line.
 
     o	Closing an X11 View() or dataentry window via its frame's
@@ -430,6 +426,8 @@ BUG FIXES
 	variables taken from 'data' are not all of the same length,
 	in which case a warning is given.
 
+    o	The 'mle' confint() method now takes 'level' into account when
+	setting 'alpha' for the profile.
 
 
 
