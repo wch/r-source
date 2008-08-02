@@ -396,7 +396,7 @@ BUG FIXES
     o	There was a memory leak in C function ucstoutf8 used by some
 	graphics devices.
 
-    o	Plots of profile.mle() objects (package 'stats4') was
+    o	Plots of profile.mle() objects (package 'stats4') were
 	misbehaving when the 'which' argument had been used in their
 	calculation.
 
