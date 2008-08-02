@@ -74,7 +74,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	return ans;
     }
 
-    /* That symbols and calls were allowwed was undocumented prior to
+    /* That symbols and calls were allowed was undocumented prior to
        R 2.5.0.  We deparse them as deparse() would, minus attributes */
     if ((iS = isSymbol(x)) || TYPEOF(x) == LANGSXP) {
 	SEXP tmp = allocVector(STRSXP, 1);

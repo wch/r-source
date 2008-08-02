@@ -389,6 +389,11 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"besselI",	do_math3,	43,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"besselK",	do_math3,	44,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 
+{"dnbinom_mu",	do_math3,	45,	11,	3+1,	{PP_FUNCALL, PREC_FN,	0}},
+{"pnbinom_mu",	do_math3,	46,	11,	3+2,	{PP_FUNCALL, PREC_FN,	0}},
+{"qnbinom_mu",	do_math3,	47,	11,	3+2,	{PP_FUNCALL, PREC_FN,	0}},
+
+
 /* Mathematical Functions of Four Numeric (+ 1-2 int) Variables */
 
 {"dhyper",	do_math4,	1,	11,	4+1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -424,6 +429,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"rlnorm",	do_random2,	5,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"rlogis",	do_random2,	6,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"rnbinom",	do_random2,	7,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"rnbinom_mu",	do_random2,	13,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"rnchisq",	do_random2,	12,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"rnorm",	do_random2,	8,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"runif",	do_random2,	9,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},

@@ -52,6 +52,9 @@ BUG FIXES
 	misbehaving when the 'which' argument had been used in their
 	calculation.
 
+    o	dnbinom(x, size, mu=*, ..) is now more accurate for very large
+	'size'.  The same applies to pnbinom() and rnbinom().
+
     o	axis() was ignoring par() mgp[3] if mgp was set in-line.
 
     o	Closing an X11 View() or dataentry window via its frame's

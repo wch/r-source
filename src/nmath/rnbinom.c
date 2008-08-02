@@ -51,3 +51,10 @@ double rnbinom(double size, double prob)
 	ML_ERR_return_NAN;
     return (prob == 1) ? 0 : rpois(rgamma(size, (1 - prob) / prob));
 }
+
+double rnbinom_mu(double size, double mu)
+{
+    if(!R_FINITE(size) || !R_FINITE(mu) || size <= 0 || mu < 0)
+	ML_ERR_return_NAN;
+    return (mu == 0) ? 0 : rpois(rgamma(size, mu / size));
+}

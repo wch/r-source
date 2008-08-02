@@ -3,6 +3,8 @@
  *    Catherine Loader, catherine@research.bell-labs.com.
  *    October 23, 2000 and Feb, 2001.
  *
+ *    dnbinom_mu(): Martin Maechler, June 2008
+ *
  *  Merge in to R:
  *	Copyright (C) 2000--2008, The R Core Development Team
  *
@@ -34,7 +36,7 @@
 #include "dpq.h"
 
 double dnbinom(double x, double size, double prob, int give_log)
-{ 
+{
     double ans, p;
 
 #ifdef IEEE_754
@@ -42,12 +44,39 @@ double dnbinom(double x, double size, double prob, int give_log)
         return x + size + prob;
 #endif
 
-    if (prob <= 0 || prob > 1 || size <= 0) ML_ERR_return_NAN;
+    if (prob <= 0 || prob > 1 || size < 0) ML_ERR_return_NAN;
     R_D_nonint_check(x);
     if (x < 0 || !R_FINITE(x)) return R_D__0;
     x = R_D_forceint(x);
 
     ans = dbinom_raw(size, x+size, prob, 1-prob, give_log);
+    p = ((double)size)/(size+x);
+    return((give_log) ? log(p) + ans : p * ans);
+}
+
+double dnbinom_mu(double x, double size, double mu, int give_log)
+{
+    double ans, p;
+
+#ifdef IEEE_754
+    if (ISNAN(x) || ISNAN(size) || ISNAN(mu))
+        return x + size + mu;
+#endif
+
+    if (mu < 0 || size < 0) ML_ERR_return_NAN;
+    R_D_nonint_check(x);
+    if (x < 0 || !R_FINITE(x)) return R_D__0;
+    x = R_D_forceint(x);
+    if(x == 0)
+	return R_D_exp(size * log1p(- mu/(size+mu)));
+    if(x < 1e-10 * size) { /* don't use dbinom_raw() but MM's formula: */
+	return R_D_exp(x * log(size*mu / (size+mu)) - mu - lgamma(x+1) +
+		       log1p(x*(x-1)/(2*size)));
+    }
+    /* else: no unnecessary cancellation inside dbinom_raw, when
+     * x_ = size and n_ = x+size are so cloase that n_ - x_ loses accuracy
+     */
+    ans = dbinom_raw(size, x+size, size/(size+mu), mu/(size+mu), give_log);
     p = ((double)size)/(size+x);
     return((give_log) ? log(p) + ans : p * ans);
 }
