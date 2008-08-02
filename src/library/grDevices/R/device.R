@@ -178,8 +178,9 @@ dev.print <- function(device = postscript, ...)
         if(is.null(oc$height))
             oc$height <- if(!is.null(oc$width)) h/w * eval.parent(oc$width) else h
     }
+    ## protect against failure (PR#9801)
+    on.exit(dev.set(current.device))
     dev.off(eval.parent(oc))
-    dev.set(current.device)
 }
 
 dev.copy2eps <- function(...)
@@ -202,8 +203,9 @@ dev.copy2eps <- function(...)
     if(is.null(oc$height))
         oc$height <- if(!is.null(oc$width)) h/w * eval.parent(oc$width) else h
     if(is.null(oc$file)) oc$file <- "Rplot.eps"
+    ## protect against failure (PR#9801)
+    on.exit(dev.set(current.device))
     dev.off(eval.parent(oc))
-    dev.set(current.device)
 }
 
 dev.copy2pdf <- function(..., out.type = "pdf")
@@ -235,8 +237,9 @@ dev.copy2pdf <- function(..., out.type = "pdf")
     if(is.null(oc$height))
         oc$height <- if(!is.null(oc$width)) h/w * eval.parent(oc$width) else h
     if(is.null(oc$file)) oc$file <- "Rplot.pdf"
+    ## protect against failure (PR#9801)
+    on.exit(dev.set(current.device))
     dev.off(eval.parent(oc))
-    dev.set(current.device)
 }
 
 dev.control <- function(displaylist = c("inhibit", "enable"))

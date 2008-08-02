@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-07-31 r46195)
+R version 2.8.0 Under development (unstable) (2008-08-02 r46213)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6171,4 +6171,30 @@ In `[<-.data.frame`(`*tmp*`, , 3, value = list(a = 1:3, b = 2:4)) :
 [12,] " l" " y"
 [13,] " m" " z"
 > ##
+> 
+> 
+> ## removing columns in within (PR#1131)
+> abc <- data.frame(a=1:5, b=2:6, c=3:7)
+> within(abc, b<-NULL)
+  a c
+1 1 3
+2 2 4
+3 3 5
+4 4 6
+5 5 7
+> within(abc,{d<-a+7;b<-NULL})
+  a c  d
+1 1 3  8
+2 2 4  9
+3 3 5 10
+4 4 6 11
+5 5 7 12
+> within(abc,{a<-a+7;b<-NULL})
+   a c
+1  8 3
+2  9 4
+3 10 5
+4 11 6
+5 12 7
+> ## Second produced corrupt data frame in 2.7.1
 > 

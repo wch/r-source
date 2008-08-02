@@ -2275,3 +2275,11 @@ x <- factor(c("aa", letters[-1]))
 dim(x) <- c(13,2)
 format(x, justify="right")
 ##
+
+
+## removing columns in within (PR#1131)
+abc <- data.frame(a=1:5, b=2:6, c=3:7)
+within(abc, b<-NULL)
+within(abc,{d<-a+7;b<-NULL})
+within(abc,{a<-a+7;b<-NULL})
+## Second produced corrupt data frame in 2.7.1

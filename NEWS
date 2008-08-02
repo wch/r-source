@@ -429,6 +429,13 @@ BUG FIXES
     o	The 'mle' confint() method now takes 'level' into account when
 	setting 'alpha' for the profile.
 
+    o	within() was not handling correctly expressions that produced
+	NULL columns.  (PR#11131)
+
+    o	dev.print() and dev.copy2{eps,pdf}() now ensure that the current
+	device is restored as the active device even if an error
+	occurs. (PR#9801)
+
 
 
 		CHANGES IN R VERSION 2.7.1
