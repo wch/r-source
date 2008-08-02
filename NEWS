@@ -415,7 +415,8 @@ BUG FIXES
     o	Calling lapply() with certain primitives was not handling method
 	dispatch correctly for is.numeric(), is.matrix(), is.array(),
 	log() and the Math2 group.  This affected data.matrix() which
-	incorrectly regarded "Date" and "POSIXct" objects as numeric.
+	incorrectly regarded "Date" and "POSIXct" objects as numeric,
+	and has been adjusted to still do so.
 
     o	package.skeleton() was not looking for non-function objects in
     	its 'environment' argument.
