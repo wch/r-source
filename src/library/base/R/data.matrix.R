@@ -21,7 +21,9 @@ data.matrix <- function(frame, rownames.force = NA)
     d <- dim(frame)
     if(d[2] > 0) {
 	log <- unlist(lapply(frame, is.logical))
-	num <- unlist(lapply(frame, is.numeric))
+	num <- unlist(lapply(frame,
+                             function(x) is.numeric(x) || inherits(x, "Date") || inherits(x, "POSIXct")
+                             ))
 	fac <- unlist(lapply(frame, is.factor))
 
 	if(!all(log|fac|num))
