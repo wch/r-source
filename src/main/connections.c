@@ -4466,7 +4466,7 @@ SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < nsock; i++) {
 	Rconnection conn = getConnection(asInteger(VECTOR_ELT(insock, i)));
 	Rsockconn scp = (Rsockconn) conn->private;
-	if (strcmp(conn->class, "socket") != 0)
+	if (strcmp(conn->class, "sockconn") != 0)
 	    error(_("not a socket connection"));
 	INTEGER(insockfd)[i] = scp->fd;
 	if (! LOGICAL(write)[i] && scp->pstart < scp->pend) {
