@@ -53,18 +53,16 @@ within <- function(data, expr, ...) UseMethod("within")
 with.default <- function(data, expr, ...)
     eval(substitute(expr), data, enclos=parent.frame())
 
-within.data.frame <- function(data, expr, ...) {
-
+within.data.frame <- function(data, expr, ...)
+{
     parent <- parent.frame()
-
     e   <- evalq(environment(), data, parent)
-
-    ret <- eval(substitute(expr), e)
+    eval(substitute(expr), e)
     l   <- as.list(e)
+    l <- l[!sapply(l, is.null)]
     del <- setdiff(names(data), names(l))
     data[names(l)] <- l
     data[del] <- NULL
-
     data
 }
 
