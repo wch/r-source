@@ -231,6 +231,9 @@ NEW FEATURES
 	eval/substitute, which results in more natural scoping.
 	(PR#11169)
 
+    o	The "lm" methods of add1(), anova() and drop1() warn if they are
+	mis-used on an essentialy exact fit.
+
 
 INSTALLATION
 

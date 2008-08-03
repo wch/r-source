@@ -66,6 +66,20 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     aod
 }
 
+check_exact <- function(object)
+{
+    w <- object$weights
+    if(is.null(w)) {
+        mss <- sum(object$fitted.values^2)
+        rss <- sum(object$residuals^2)
+    } else {
+        mss <- sum(w * object$fitted.values^2)
+        rss <- sum(w * object$residuals^2)
+    }
+    if(rss < 1e-10*mss)
+        warning("attempting model selection on an essentially perfect fit is nonsense", call. = FALSE)
+}
+
 add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 		    x = NULL, k = 2,...)
 {
@@ -81,6 +95,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	list(Fs=Fs, P=P)
     }
 
+    check_exact(object)
     if(missing(scope) || is.null(scope)) stop("no terms in scope")
     if(!is.character(scope))
 	scope <- add.scope(object, update.formula(object, scope))
@@ -352,6 +367,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 		     test=c("none", "Chisq", "F"), k = 2, ...)
 {
+    check_exact(object)
     x <- model.matrix(object)
     offset <- model.offset(model.frame(object))
     iswt <- !is.null(wt <- object$weights)
