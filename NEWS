@@ -347,6 +347,10 @@ BUG FIXES
 	logical column index works again even if columns with NA names
 	are selected.
 
+    o	The default methods of drop1() and add1() now re-evaluate in the
+	object's formula environment, rather than simply in the parent
+	(informal bug report by Werner Stahel).
+
 
 
 
