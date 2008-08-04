@@ -184,13 +184,16 @@ par(\dots, no.readonly = FALSE)
 \section{Graphical Parameters}{
   \describe{
     \item{\code{adj}}{The value of \code{adj} determines the way in
-      which text strings are justified.  A value of \code{0} produces
+      which text strings are justified in \code{\link{text}},
+      \code{\link{mtext}} and \code{\link{title}}.  A value of \code{0} produces
       left-justified text, \code{0.5} (the default) centered text and \code{1}
       right-justified text.  (Any value in \eqn{[0, 1]} is allowed, and
       on most devices values outside that interval will also work.)
       Note that the \code{adj} argument of \code{\link{text}} also
       allows \code{adj = c(x, y)} for different adjustment in x- and y-
-      direction.}
+      directions.  Note that whereas for \code{text} it refers to
+      positioning of text about a point, for \code{mtext} and
+      \code{title} it controls placement within the plot or device region.}
     \item{\code{ann}}{If set to \code{FALSE}, high-level plotting
       functions calling \code{\link{plot.default}} do not annotate the
       plots they produce with axis titles and overall titles.  The
@@ -432,7 +435,8 @@ par(\dots, no.readonly = FALSE)
       number of rows and number of columns.  Mismatches will be ignored,
       with a warning.}
     \item{\code{mgp}}{The margin line (in \code{mex} units) for the axis
-      title, axis labels and axis line.
+      title, axis labels and axis line.  Note that \code{mgp[1]} affects
+      \code{\link{title}} whereas \code{mgp[2:3]} affect \code{\link{axis}}.
       The default is \code{c(3, 1, 0)}.}
     \item{\code{mkh}}{The height in inches of symbols to be drawn when
       the value of \code{pch} is an integer.
