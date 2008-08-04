@@ -1,6 +1,6 @@
 % File src/library/graphics/man/title.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{title}
@@ -26,7 +26,8 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
     placed in the outer margins of the plot.}
   \item{\dots}{further graphical parameters from \code{\link{par}}.  Use
     e.g., \code{col.main} or \code{cex.sub} instead of just \code{col}
-    or \code{cex}.  \code{xpd} can be used to set the clipping region:
+    or \code{cex}.  \code{adj} controls the justification of the titles.
+    \code{xpd} can be used to set the clipping region:
     this defaults to the figure region unless \code{outer = TRUE},
     otherwise the device region and can only be increased.  \code{mgp}
     controls the default placing of the axis titles.
@@ -47,6 +48,18 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   modifying graphical parameters \code{cex=}, \code{col=} and
   \code{font=}.  Other objects will be coerced by
   \code{\link{as.graphicsAnnot}}. 
+
+  The position of \code{main} defaults to being vertically centered in
+  (outer) margin 3 and justified horizontally according to
+  \code{par("adj")} on the plot region (device region for
+  \code{outer=TRUE}).
+
+  The positions of \code{xlab}, \code{ylab} and \code{sub} are
+  \code{line} (default for \code{xlab} and \code{ylab} being
+  \code{par("mgp")[1]} and increased by \code{1} for \code{sub}) lines
+  (of height \code{par("mex")}) into the appropriate margin, justified
+  in the text direction according to \code{par("adj")} on the
+  plot/device region.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
