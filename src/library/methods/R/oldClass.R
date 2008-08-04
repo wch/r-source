@@ -89,11 +89,20 @@ isXS3Class <- function(classDef) {
 
 S3Class <- function(object) {
     value <- attr(object, ".S3Class")
-    if(is.null(value))
-      class(object)
+    if(is.null(value)) {
+        if(isS4(object)) {
+            if(is.na(match(".Data", names(getClass(class(object))@slots))))
+              stop("S3Class only defined for extensions of \"oldClass\" or classes with a data part:  not true of class \"", class(object), "\"")
+            class(getDataPart(object))
+        }
+        else
+          class(object)
+    }
     else
       value
 }
+
+.S3Class <- S3Class # alias for functions with S3Class as an argument
 
 .addS3Class <- function(class, prototype, contains, where) {
     for(what in contains) {
@@ -108,10 +117,14 @@ S3Class <- function(object) {
 "S3Class<-" <- function(object, value) {
     if(isS4(object)) {
         current <- attr(object, ".S3Class")
-        if(is.null(current))
-          stop(gettextf("S3Class can only be assigned to S4 objects that extend \"oldClass\"; not true of class \"%s\"",
+        if(is.null(current)) {
+            if(is.na(match(value, .BasicClasses)))
+               stop(gettextf("S3Class can only be assigned to S4 objects that extend \"oldClass\"; not true of class \"%s\"",
                         class(object)), domain = NA)
-        slot(object, ".S3Class") <- value
+            mode(object) <- value ## may still fail, a further check would be good
+        }
+        else
+          slot(object, ".S3Class") <- value
     }
     else
       class(object) <- value
