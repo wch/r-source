@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49\n"
+"POT-Creation-Date: 2008-08-01 09:17\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -596,10 +596,19 @@ msgstr ""
 msgid "No DIF data on clipboard"
 msgstr ""
 
+msgid "file had no lines"
+msgstr ""
+
 msgid "row and column counts not found"
 msgstr ""
 
+msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
+
 msgid "Unrecognized special data value"
+msgstr ""
+
+msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
 msgstr ""
 
 msgid "Unrecognized value indicator"
@@ -855,6 +864,12 @@ msgid "updating HTML package descriptions"
 msgstr ""
 
 msgid "cannot update '%s'"
+msgstr ""
+
+msgid "winDialog() cannot be used non-interactively"
+msgstr ""
+
+msgid "winDialogString() cannot be used non-interactively"
 msgstr ""
 
 msgid "'pb' is not from class \"winProgressBar\""

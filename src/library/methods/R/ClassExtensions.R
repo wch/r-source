@@ -65,6 +65,94 @@
     from
 }
 
+S3Part <- function(object, strictS3 = FALSE, S3Class) {
+    classDef <- getClass(class(object))
+    oldClassCase <- extends(classDef, "oldClass")
+    defltS3Class <- missing(S3Class)
+    if(oldClassCase) {
+        if(defltS3Class) {
+            S3Class <- .S3Class(object)[[1]]
+            if(strictS3)
+              keepSlots <- character()
+            else
+              keepSlots <- ".S3Class"
+        }
+        else
+          keepSlots <- slotNames(S3Class)
+    }
+    else {
+        if(all(is.na(match(extends(classDef), .BasicClasses))))
+          stop(gettextf("S3Part() is only defined for classes set up by setOldCLass(), basic classes or subclasses of these:  not true of class \"%s\"", class(object)), domain = NA)
+        if(missing(S3Class)) {
+            S3Class <- classDef@slots$.Data
+            if(is.null(S3Class)) # is this an error?
+              S3Class <- typeof(object)
+            keepSlots <- character()
+        }
+        else
+          keepSlots <- slotNames(S3Class)
+    }
+    if(!(defltS3Class || extends(classDef, S3Class)))
+      stop(gettextf("The S3Class argument must be a superclass of \"%s\":  not true of class \"%s\"", class(object), S3Class), domain = NA)
+    deleteSlots = slotNames(classDef)
+    deleteSlots <- deleteSlots[is.na(match(deleteSlots,keepSlots))]
+    for(slot in deleteSlots)
+      attr(object, slot) <- NULL
+    class(object) <- S3Class
+    if(strictS3) {
+        if(oldClassCase) {
+            if(length(keepSlots) >1)
+              stop("Not meaningful to have  strictS3=TRUE when the S3 class has slots")
+            attr(object, ".S3Class") <- NULL
+        }
+        else {
+             if(length(keepSlots) >0)
+              stop("Not meaningful to have  strictS3=TRUE when the S3 class has slots")
+         }
+        object <- asS4(object, FALSE)
+    }
+    object
+}
+
+"S3Part<-" <- function(object, strictS3 = FALSE, needClass = .S3Class(object) , value) {
+    S3Class <- .S3Class(value)
+    def <- getClassDef(S3Class[[1]])
+    if(is.null(def) || !extends(def, needClass))
+      stop(gettextf("Replacement value must extend class \"%s\", got  \"%s\"", needClass, S3Class[[1]]), domain = NA)
+    slots <- slotNames(class(object))
+    if(!strictS3) {
+        fromValue <- names(attributes(value))
+        slots <- slots[is.na(match(slots, fromValue))]
+    }
+    slots <- c("class", slots)  # always preserve class(object)
+    for(slot in slots)
+      attr(value, slot) <- attr(object, slot)
+    if(extends(def, "oldClass"))
+      attr(value, ".S3Class") <- S3Class
+    if(isS4(object))
+      value <- .asS4(value)
+    value
+}
+
+## templates for replacement methods for S3 classes in classes that extend oldClass
+.S3replace1 <- function(from, to, value) {
+    S3Part(from, needClass = NEED) <- value
+    from
+}
+
+.S3replace2 <- function(from, to, value) {
+    if(is(value, CLASS)) {
+        S3Part(from,  needClass = NEED) <- value
+        from
+    }
+    else
+      stop("Replacement value must be of class \"", CLASS, "\", got one of class \"", class(value)[[1]], "\"")
+}
+
+.S3coerce <- function(from, to) {
+    S3Part(from)
+}
+
 .ErrorReplace <- function(from, to, value)
     stop(gettextf("no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\"",
                   to, class(from)), domain = NA)
@@ -107,7 +195,15 @@ makeExtends <- function(Class, to,
     }
     if(is.null(coerce)) {
         coerce <- .simpleExtCoerce
-        if(!isVirtualClass(classDef2))
+        if(isXS3Class(classDef2)) {
+            allNames <- names(slots)
+            body(coerce, envir = packageEnv) <-
+                substitute({
+                    if(strict) S3Part(from, S3Class = S3CLASS)
+                    else from
+                }, list(S3CLASS =  to)) 
+        }
+        else if(!isVirtualClass(classDef2))
             body(coerce, envir = packageEnv) <-
                  .simpleCoerceExpr(Class, to, names(slots), classDef2)
     }
@@ -148,7 +244,17 @@ makeExtends <- function(Class, to,
         }
         else if(simple) {
             replace <- .simpleExtReplace
-            if(isVirtualClass(classDef2)) {  # a simple is to a virtual class => a union
+            if(isXS3Class(classDef2)) {  # replace the S3 part & slots in class to
+                S3Class <- attr(classDef2@prototype, ".S3Class")
+                if(is.null(S3Class)) # the setOldClass case ?
+                  S3Class <- to
+                body(replace, envir = packageEnv) <-
+                  quote({
+                      S3Part(from) <- value
+                      from
+                  })
+            }
+            else if(isVirtualClass(classDef2)) {  # a simple is to a virtual class => a union
                 body(replace, envir = packageEnv) <-
                     substitute({
                         if(!is(value, TO))
@@ -235,5 +341,45 @@ makeExtends <- function(Class, to,
        exists(what, .methodsNamespace, inherits = FALSE))
 	value <- list(.methodsNamespace)
     value
+}
+
+.S4inherits <- function(x, what, which) {
+    superClasses <- extends(getClass(class(x)))
+    if(which)
+       match(what, superClasses, 0)
+    else
+      what %in% superClasses
+}
+
+## find the S3 classes or their extensions in the indirect superclasses
+## and give them the correct coerce and replacement methods
+.S3Extends <- function(ClassDef, exts, where) {
+    superClasses <- names(exts)
+    S3Class <- attr(ClassDef@prototype, ".S3Class")
+    need <- S3Class[[1]]
+    for(i in seq_along(exts)) {
+        exti <- exts[[i]]
+        if(exti@distance == 1)
+            next # asserted that this was done by makeExtends
+        what <- superClasses[[i]]
+        whatDef <- getClassDef(what, where)
+        if(is.null(whatDef) # but shouldn't happen,
+           || !isXS3Class(whatDef))
+            next
+        coerce <- exti@coerce
+        body(coerce, environment(coerce))<- body(.S3coerce)
+        exti@coerce <- coerce
+        replace <- exti@replace
+        pos <- match(what, S3Class, 0)
+        if(pos > 1) # not the complete S3 class, probably an error
+          body(replace, environment(replace)) <-
+            substituteDirect(body(.S3replace2), list(CLASS = what, NEED = need))
+        else
+          body(replace, environment(replace))  <-
+            substituteDirect(body(.S3replace1), list(NEED = need))
+        exti@replace <- replace
+        exts[[i]] <- exti
+    }
+    exts
 }
 

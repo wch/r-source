@@ -329,10 +329,10 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
     case INTSXP:
 	n = LENGTH(s);
 	iptr = INTEGER(s);
-	for (i = 0 ; i < n ; i++) {
-	    if(!naok && iptr[i] == NA_INTEGER)
-		error(_("NAs in foreign function call (arg %d)"), narg);
-	}
+	if(!naok)
+	    for (i = 0 ; i < n ; i++)
+		if(iptr[i] == NA_INTEGER)
+		    error(_("NAs in foreign function call (arg %d)"), narg);
 	if (dup) {
 	    iptr = (int*)R_alloc(n, sizeof(int));
 	    for (i = 0 ; i < n ; i++)
@@ -343,10 +343,10 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
     case REALSXP:
 	n = LENGTH(s);
 	rptr = REAL(s);
-	for (i = 0 ; i < n ; i++) {
-	    if(!naok && !R_FINITE(rptr[i]))
-		error(_("NA/NaN/Inf in foreign function call (arg %d)"), narg);
-	}
+	if(!naok)
+	    for (i = 0 ; i < n ; i++)
+		if(!R_FINITE(rptr[i]))
+		    error(_("NA/NaN/Inf in foreign function call (arg %d)"), narg);
 	if (dup) {
 	    if(asLogical(getAttrib(s, CSingSymbol)) == 1) {
 		sptr = (float*)R_alloc(n, sizeof(float));
@@ -365,11 +365,10 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
     case CPLXSXP:
 	n = LENGTH(s);
 	zptr = COMPLEX(s);
-	for (i = 0 ; i < n ; i++) {
-	    if(!naok && (!R_FINITE(zptr[i].r) || !R_FINITE(zptr[i].i)))
-		error(_("complex NA/NaN/Inf in foreign function call (arg %d)"),
-		      narg);
-	}
+	if(!naok)
+	    for (i = 0 ; i < n ; i++)
+		if(!R_FINITE(zptr[i].r) || !R_FINITE(zptr[i].i))
+		    error(_("complex NA/NaN/Inf in foreign function call (arg %d)"), narg);
 	if (dup) {
 	    zptr = (Rcomplex*)R_alloc(n, sizeof(Rcomplex));
 	    for (i = 0 ; i < n ; i++)

@@ -4006,9 +4006,9 @@ stopifnot(nchar(fc) == 11)
 DF <- data.frame(x=c("a", "b"), y=2:3)[FALSE,]
 stopifnot(is.numeric(data.matrix(DF)))
 # was logical in 2.2.1.
-DF <- data.frame(I(character(0)))
-X <- try(data.matrix(DF))
-stopifnot(inherits(X, "try-error"))
+DF <- data.frame(a=I(character(0)))
+X <- data.matrix(DF)
+stopifnot(is.numeric(X))
 ## gave logical matrix in 2.2.1.
 
 stopifnot(pbirthday(950, coincident=250) == 0,
@@ -5116,6 +5116,7 @@ stopifnot(sapply(R, function(ch) sub(".* : ", '', ch) ==
                  "(converted from warning) NAs produced\n"))
 ## was inconsistent in R < 2.7.0
 
+
 ## package.skeleton() with metadata-only code
 ## work in current (= ./tests/ directory):
 tmp <- tempfile()
@@ -5124,7 +5125,12 @@ writeLines(c('setClass("foo", contains="numeric")',
              '          function(object) cat("I am a \\"foo\\"\\n"))'),
            tmp)
 if(file.exists("myTst")) unlink("myTst", recursive=TRUE)
-package.skeleton("myTst", code_files = tmp, namespace=TRUE)# with a file name warning
+package.skeleton("myTst", code_files = tmp)# with a file name warning
+file.copy(tmp, (tm2 <- paste(tmp,".R", sep="")))
+unlink("myTst", recursive=TRUE)
+op <- options(warn=2) # *NO* "invalid file name" warning {failed in 2.7.[01]}:
+package.skeleton("myTst", code_files = tm2, namespace=TRUE)
+options(op)
 stopifnot(1 == grep("setClass",
 	  readLines(list.files("myTst/R", full.names=TRUE))),
 	  c("foo-class.Rd","show-methods.Rd") %in% list.files("myTst/man"))
@@ -5132,17 +5138,18 @@ stopifnot(1 == grep("setClass",
 ##
 ## Part 2: -- build, install, load and "inspect" the package:
 if(.Platform$OS.type == "unix") {
- ## <FIXME> need build.package()
- Rcmd <- paste(file.path(R.home("bin"), "R"), "CMD")
- system(paste(Rcmd, "build", "myTst"))
- dir.create("myLib")
- install.packages("myTst", lib = "myLib", repos=NULL)# with warnings
- stopifnot(require("myTst",lib = "myLib"))
- sm <- getMethods(show, where= as.environment("package:myTst"))
- stopifnot(names(sm@methods) == "foo")
+    ## <FIXME> need build.package()
+    Rcmd <- paste(file.path(R.home("bin"), "R"), "CMD")
+    system(paste(Rcmd, "build", "myTst"))
+    dir.create("myLib")
+    install.packages("myTst", lib = "myLib", repos=NULL, type = "source") # with warnings
+    stopifnot(require("myTst",lib = "myLib"))
+    sm <- getMethods(show, where= as.environment("package:myTst"))
+    stopifnot(names(sm@methods) == "foo")
+    unlink("myLib", recursive=TRUE)
+    unlink("myTst_*")
 }
-
-
+unlink("myTst", recursive=TRUE)
 
 
 ## predict.loess with transformed variables
@@ -5255,3 +5262,58 @@ y  <- x [c(2:3, NA),]
 y.ok <- data.frame(x=c(2:3,NA), y=c(3:4,NA), row.names=c("b", "NA", "NA.1"))
 stopifnot(identical(y, y.ok))
 ## From 2.5.0 to 2.7.1,  y had row name "NA" twice
+
+stopifnot(shapiro.test(c(0,0,1))$p.value >= 0)
+## was wrong up to 2.7.1, because of rounding errors (in single precision).
+
+stopifnot(rcond(cbind(1, c(3,3))) == 0)
+## gave an error (because Lapack's LU detects exact singularity)
+
+
+## dispatch when primitives are called from lapply.
+x <- data.frame(d=Sys.Date())
+stopifnot(sapply(x, is.numeric) == FALSE)
+# TRUE in 2.7.1, tried to dispatch on "FUN"
+(ds <- seq(from=Sys.Date(), by=1, length=4))
+lapply(list(d=ds), round)
+# failed in 2.7.1 with 'dispatch error' since call had '...' arg
+## related to calls being passed unevaluated by lapply.
+
+
+## subsetting data frames with NA cols
+## Dieter Menne: https://stat.ethz.ch/pipermail/r-help/2008-January/151266.html
+df3 <- data.frame(a=0:10,b=10:20,c=20:30)
+names(df3) <- c("A","B", NA)
+df3[-2]
+df3[, -2]
+df3[1:4, -2]
+df3[c(TRUE,FALSE,TRUE)]
+df3[, c(TRUE,FALSE,TRUE)]
+df3[1:4, c(TRUE,FALSE,TRUE)]
+## all gave 'undefined columns selected', 2.6.1 to 2.7.x
+## note that you can only select columns by number, not by name
+
+
+## nls with weights in an unusual model
+Data <- data.frame(x=c(1,1,1,1,1,2,2,3,3,3,3,3,3,4,4,4,5,5,5,5,6,6,6,6,6,6,
+                   7,7,7,7,7,7,7,7,7,8,8,8, 8,8,8,8,8,8,8,9,9,9,9,9,11,12),
+                   y=c(73,73,70,74,75,115,105,107,124,107,116,125,102,144,178,
+                   149,177,124,157,128, 169,165,186,152,181,139,173,151,138,
+                   181,152,188,173,196,180,171,188,174,198, 172, 176,162,188,
+                   182,182,141,191,190,159,170,163,197),
+                   weight=c(1, rep(0.1, 51)))
+G.st <- c(k=0.005, g1=50,g2=550)
+# model has length-1 (and 52) variables
+Ta <- min(Data$x)
+Tb <- max(Data$x)
+
+#no weights
+nls(y~((g1)*exp((log(g2/g1))*(1-exp(-k*(x-Ta)))
+                /(1-exp(-k*(Tb-Ta))))), data=Data, start=G.st, trace=TRUE)
+
+#with weights
+nls(y~((g1)*exp((log(g2/g1))*(1-exp(-k*(x-Ta)))
+                /(1-exp(-k*(Tb-Ta))))), data=Data, start=G.st,
+    trace=TRUE, weights=weight)
+## failed for find weights in R <= 2.7.1
+

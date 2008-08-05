@@ -105,6 +105,9 @@ x$name
   adjusted suitably).  Subassignment is done sequentially, so if an
   index is specified more than once the latest assigned value for an
   index will result.
+  
+  It is an error to apply any of these operators to an object which is
+  not subsettable (e.g. a function).
 }
 \section{Atomic vectors}{
   The usual form of indexing is \code{"["}.  \code{"[["} can be used to

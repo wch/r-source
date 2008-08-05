@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006-7  The R Development Core Team
+ *  Copyright (C) 2006-8  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -221,7 +221,7 @@ int main(int argc, char *argv[])
     AppMain(ac, av);
 #endif
     return res;
-#else
+#else /* No execv*/
     fprintf(stderr, "Rscript is not supported on this system");
     exit(1);
 #endif

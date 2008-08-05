@@ -31,10 +31,13 @@ setGeneric <-
              package = NULL, signature = NULL,
              useAsDefault = NULL, genericFunction = NULL)
 {
-    name <- switch(name, "as.double" =, "as.real" = "as.numeric", name)
+    if(is.character(.isSingleName(name)))
+        stop(gettextf('invalid argument "name": %s',
+                      .isSingleName(name)), domain = NA)
     if(exists(name, "package:base") &&
        is.primitive(get(name, "package:base"))) { # primitives
 
+        name <- switch(name, "as.double" =, "as.real" = "as.numeric", name)
         fdef <- getGeneric(name) # will fail if this can't have methods
         if(nargs() <= 1) {
             ## generics for primitives are global, so can & must always be cached
@@ -1522,4 +1525,16 @@ hasMethods <- function(f, where, package)
     }
     else
       testEv(as.environment(where))
+}
+## returns TRUE if the argument is a non-empty character vector of length 1
+## otherwise, returns a diagnostic character string reporting the non-conformance
+.isSingleName <- function(x) {
+    paste0 <- function(...)paste(..., sep="")
+    if(!is.character(x))
+      return(paste0('required to be a character vector, got an object of class "', class(x)[[1]], '"'))
+    if(length(x) != 1)
+      return(paste0("required to be a character vector of length 1, got length ",length(x)))
+    if(is.na(x) || !nzchar(x))
+      return(paste0('required a non-empty string, got "',x, '"'))
+    TRUE
 }

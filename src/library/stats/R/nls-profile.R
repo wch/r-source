@@ -109,9 +109,9 @@ profiler.nls <- function(fitted, ...)
 		 } else {
 		     iv <- nls_port_fit(fittedModel, startPars[vary],
 					lower[vary], upper[vary], ctrl, trace)
-		     dev <- if(!iv[1] %in% 3:6) 
-			NA_real_ 
-		     else 
+		     dev <- if(!iv[1] %in% 3:6)
+			NA_real_
+		     else
 			fittedModel$deviance()
 		 }
 		 profiledModel <- fittedModel
@@ -143,7 +143,8 @@ profile.nls <-
     upper <- rep(if(!is.null(upper)) as.double(upper) else Inf, length.out = npar)
     if(is.character(which)) which <- match(which, names(pars), 0)
     which <- which[which >= 1 & which <= npar]
-    cutoff <- sqrt(npar * qf(1 - alphamax, npar, nobs - npar))
+    ## was 'npar' - length(which) would have made more sense
+    cutoff <- sqrt(qf(1 - alphamax, 1L, nobs - npar))
     out <- vector("list", npar)
     on.exit(prof$setDefault())     # in case there is an abnormal exit
     for(par in which) {
@@ -220,22 +221,16 @@ profile.nls <-
     out
 }
 
-plot.profile.nls <- function(x, levels, conf = c(99, 95, 90, 80, 50)/100,
-                             nseg = 50, absVal = TRUE, ...)
+plot.profile.nls <-
+    function(x, levels, conf = c(99, 95, 90, 80, 50)/100, absVal = TRUE, ...)
 {
     obj <- x
     dfres <- attr(obj, "summary")$df[2]
-    confstr <- NULL
-    if(missing(levels)) {
+    if(missing(levels))
         levels <- sqrt(qf(pmax(0, pmin(1, conf)), 1, dfres))
-        confstr <- paste(format(100 * conf), "%", sep = "")
-    }
     if(any(levels <= 0)) {
         levels <- levels[levels > 0]
         warning("levels truncated to positive values only")
-    }
-    if(is.null(confstr)) {
-        confstr <- paste(format(100 * pf(levels^2, 1, dfres)), "%", sep = "")
     }
     mlev <- max(levels) * 1.05
     nm <- names(obj)

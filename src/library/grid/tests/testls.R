@@ -1,5 +1,14 @@
 library(grid)
 
+# Test hole in DL (deleted grob)
+grid.lines(name="foo")
+grid.lines(x=1:0, name="foo2")
+grid.ls()
+grid.remove("foo")
+grid.ls()
+# New blank page
+grid.newpage()
+
 
 #######
 # GROBS
@@ -144,7 +153,6 @@ grid.ls(sampleGTree, print=pathListing)
 grid.ls(sampleGTree, view=TRUE, grob=FALSE, print=pathListing)
 # raw flat listing
 str(grid.ls(sampleGTree, view=TRUE, print=FALSE))
-
 
 
 

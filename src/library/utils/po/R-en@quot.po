@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49\n"
-"PO-Revision-Date: 2008-06-05 19:49\n"
+"POT-Creation-Date: 2008-08-01 09:17\n"
+"PO-Revision-Date: 2008-08-01 09:17\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -682,11 +682,20 @@ msgstr "no documentation for function ‘%s’ and signature ‘%s’"
 msgid "No DIF data on clipboard"
 msgstr "No DIF data on clipboard"
 
+msgid "file had no lines"
+msgstr "file had no lines"
+
 msgid "row and column counts not found"
 msgstr "row and column counts not found"
 
+msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
+msgstr "More rows than specified in header; maybe use ‘transpose=TRUE’"
+
 msgid "Unrecognized special data value"
 msgstr "Unrecognized special data value"
+
+msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
+msgstr "More columns than specified in header; maybe use ‘transpose=TRUE’"
 
 msgid "Unrecognized value indicator"
 msgstr "Unrecognized value indicator"
@@ -958,6 +967,12 @@ msgstr "updating HTML package descriptions"
 
 msgid "cannot update '%s'"
 msgstr "cannot update ‘%s’"
+
+msgid "winDialog() cannot be used non-interactively"
+msgstr "winDialog() cannot be used non-interactively"
+
+msgid "winDialogString() cannot be used non-interactively"
+msgstr "winDialogString() cannot be used non-interactively"
 
 msgid "'pb' is not from class \"winProgressBar\""
 msgstr "‘pb’ is not from class “winProgressBar”"

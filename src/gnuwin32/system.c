@@ -58,6 +58,7 @@ Rboolean UseInternet2 = FALSE;
 extern SA_TYPE SaveAction; /* from ../main/startup.c */
 Rboolean DebugMenuitem = FALSE;  /* exported for rui.c */
 static FILE *ifp = NULL;
+static char ifile[MAX_PATH] = "\0";
 
 __declspec(dllexport) UImode  CharacterMode;
 int ConsoleAcceptCmd;
@@ -480,6 +481,7 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     app_cleanup();
     RConsole = NULL;
     if(ifp) fclose(ifp);
+    if(ifile[0]) unlink(ifile);
     exit(status);
 }
 
@@ -774,7 +776,8 @@ char *PrintUsage(void)
 	msg3[] =
 	"  -q, --quiet           Don't print startup message\n  --silent              Same as --quiet\n  --slave               Make R run as quietly as possible\n  --verbose             Print more information about progress\n  --args                Skip the rest of the command line\n",
 	msg4[] =
-	"  --ess                 Don't use getline for command-line editing\n                          and assert interactive use\n  -f file               Take input from 'file'\n  --file=file           ditto\n  -e expression         Use 'expression' as input\n\nOne or more -e options can be used, but not together with -f or --file";
+	"  --ess                 Don't use getline for command-line editing\n                          and assert interactive use\n  -f file               Take input from 'file'\n  --file=file           ditto\n  -e expression         Use 'expression' as input\n\nOne or more -e options can be used, but not together with -f or --file\n",
+	msg5[] = "\nAn argument ending in .RData (in any case) is taken as the path\nto the workspace to be restored (and implies --restore)";
     if(CharacterMode == RTerm)
 	strcpy(msg, "Usage: Rterm [options] [< infile] [> outfile] [EnvVars]\n\n");
     else strcpy(msg, "Usage: Rgui [options] [EnvVars]\n\n");
@@ -784,6 +787,7 @@ char *PrintUsage(void)
     strcat(msg, msg2b);
     strcat(msg, msg3);
     if(CharacterMode == RTerm) strcat(msg, msg4);
+    strcat(msg, msg5);
     strcat(msg, "\n");
     return msg;
 }
@@ -803,6 +807,22 @@ void R_setupHistory(void)
 	else
 	    R_HistorySize = value;
     }
+}
+
+#include <sys/stat.h>
+#include <time.h>
+static int isDir(char *path)
+{
+    struct stat sb;
+    int isdir = 0;
+    if(!path) return 0;
+    if(stat(path, &sb) == 0) {
+	isdir = (sb.st_mode & S_IFDIR) > 0; /* is a directory */
+	/* We want to know if the directory is writable by this user,
+	   which mode does not tell us */
+	isdir &= (access(path, W_OK) == 0);
+    }
+    return isdir;
 }
 
 int cmdlineoptions(int ac, char **av)
@@ -1021,7 +1041,8 @@ int cmdlineoptions(int ac, char **av)
 		R_ShowMessage(s);
 	    }
 	} else {
-	    /* Look for *.RData, as given by drag-and-drop */
+	    /* Look for *.RData, as given by drag-and-drop 
+	       and file association */
 	    char path[MAX_PATH];
 
 	    if(!usedRdata &&
@@ -1047,7 +1068,25 @@ int cmdlineoptions(int ac, char **av)
 	if(ifp) R_Suicide(_("cannot use -e with -f or --file"));
 	Rp->R_Interactive = FALSE;
 	Rp->ReadConsole = FileReadConsole;
+	/* tmpfile() seems not to work on Vista: it tries to write in c:/
 	ifp = tmpfile();
+	*/
+	{
+	    char *tm;
+	    tm = getenv("TMPDIR");
+	    if (!isDir(tm)) {
+		tm = getenv("TMP");
+		if (!isDir(tm)) {
+		    tm = getenv("TEMP");
+		    if (!isDir(tm))
+			tm = getenv("R_USER"); /* this one will succeed */
+		}
+	    }
+	    srand( (unsigned) time(NULL) );
+	    sprintf(ifile, "%s/Rscript%x%x", tm, rand(), rand());
+	    ifp = fopen(ifile, "w+b");
+	    if(!ifp) R_Suicide(_("creation of tmpfile failed -- set TMPDIR suitably?"));
+	}
 	fwrite(cmdlines, strlen(cmdlines)+1, 1, ifp);
 	fflush(ifp);
 	rewind(ifp);

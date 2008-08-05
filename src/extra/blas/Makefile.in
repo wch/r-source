@@ -17,7 +17,8 @@ ALL_FFLAGS = $(ALL_FFLAGS_LO)
 SOURCES = blas00.c blas.f cmplxblas.f
 
 Rblas_la = libRblas$(DYLIB_EXT)
-Rblas_la_LIBADD = @RBLAS_LDFLAGS@ @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL) $(FLIBS)
+## @RBLAS_LDFLAGS@ is used on Mac OS X
+Rblas_la_LIBADD = @RBLAS_LDFLAGS@ $(FLIBS)
 Rblas_la_LIBADD0 = @RBLAS_LDFLAGS@
 
 all: Makefile @BLAS_SHLIB_TRUE@ R

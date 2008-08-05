@@ -121,7 +121,7 @@ rbind(\dots, deparse.level = 1)
     memberships from the class attribute.
 
     \item We inspect each class in turn to see if there is an
-    an applicable method.
+    applicable method.
 
     \item If we find an applicable method we make sure that it is
      identical to any method determined for prior arguments.

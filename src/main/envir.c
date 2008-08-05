@@ -1450,8 +1450,11 @@ SEXP attribute_hidden do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (!isString(CAR(args)) || length(CAR(args)) == 0)
 	error(_("invalid first argument"));
-    else
+    else {
+	if (length(CAR(args)) > 1)
+	    warning(_("only the first element is used as variable name"));
 	name = install(translateChar(STRING_ELT(CAR(args), 0)));
+    }
     PROTECT(val = CADR(args));
     aenv = CADDR(args);
     if (TYPEOF(aenv) == NILSXP)
@@ -2926,7 +2929,7 @@ SEXP attribute_hidden do_bndIsActive(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarLogical(R_BindingIsActive(sym, env));
 }
 
-/* This is a .Internal with no wrapper */
+/* This is a .Internal with no wrapper, currently unused in base R */
 SEXP attribute_hidden do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP sym;

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49\n"
+"POT-Creation-Date: 2008-08-01 09:17\n"
 "PO-Revision-Date: 2008-03-26 16:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -695,11 +695,20 @@ msgstr "pas de documentation pour la fonction '%s' et pour la signature '%s'"
 msgid "No DIF data on clipboard"
 msgstr "Pas de données DIF dans le presse-papier"
 
+msgid "file had no lines"
+msgstr ""
+
 msgid "row and column counts not found"
 msgstr "nombres de lignes et de colonnes non trouvés"
 
+msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
+
 msgid "Unrecognized special data value"
 msgstr "Valeur spéciale de données non reconnue"
+
+msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
 
 msgid "Unrecognized value indicator"
 msgstr "Indicateur de données non reconnu"
@@ -978,6 +987,14 @@ msgstr "mise à jour des descriptions HTML des packages"
 
 msgid "cannot update '%s'"
 msgstr "impossible de mettre à jour '%s'"
+
+#, fuzzy
+msgid "winDialog() cannot be used non-interactively"
+msgstr "menu() ne peut être utilisé en mode non interactif"
+
+#, fuzzy
+msgid "winDialogString() cannot be used non-interactively"
+msgstr "menu() ne peut être utilisé en mode non interactif"
 
 msgid "'pb' is not from class \"winProgressBar\""
 msgstr ""

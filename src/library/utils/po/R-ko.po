@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49\n"
+"POT-Creation-Date: 2008-08-01 09:17\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -704,10 +704,19 @@ msgstr "함수 '%s' 그리고 기호 '%s' 때문에 documentation이 없습니�
 msgid "No DIF data on clipboard"
 msgstr ""
 
+msgid "file had no lines"
+msgstr ""
+
 msgid "row and column counts not found"
 msgstr ""
 
+msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
+
 msgid "Unrecognized special data value"
+msgstr ""
+
+msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
 msgstr ""
 
 msgid "Unrecognized value indicator"
@@ -993,6 +1002,14 @@ msgstr "갱신하는 HTML 패키지 기술입니다"
 
 msgid "cannot update '%s'"
 msgstr "'%s'를 갱신할 수 없습니다"
+
+#, fuzzy
+msgid "winDialog() cannot be used non-interactively"
+msgstr "menu()는 non-intertactively에 사용할 수가 없습니다"
+
+#, fuzzy
+msgid "winDialogString() cannot be used non-interactively"
+msgstr "menu()는 non-intertactively에 사용할 수가 없습니다"
 
 msgid "'pb' is not from class \"winProgressBar\""
 msgstr ""

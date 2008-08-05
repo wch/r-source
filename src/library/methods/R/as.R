@@ -147,7 +147,7 @@ as <-
   function(object, Class, value) {
     thisClass <- .class1(object)
     if(!.identC(.class1(value), Class))
-      value <- as(value, Class)
+      value <- as(value, Class, strict = FALSE)
     where <- .classEnv(class(object))
     coerceFun <- getGeneric("coerce<-", where = where)
     coerceMethods <- getMethodsForDispatch(coerceFun)
@@ -275,7 +275,7 @@ setAs <-
       standardGeneric("coerce<-")
       }, where = where)
   basics <- c(
- "POSIXct",  "POSIXlt",  "array",  "call",  "character",  "complex",  "data.frame",
+ "POSIXct",  "POSIXlt", "Date",  "array",  "call",  "character",  "complex",  "data.frame",
  "environment",  "expression",  "factor",  "formula",  "function",  "integer",
  "list",  "logical",  "matrix",  "name",  "numeric",  "ordered",
   "single",  "table",   "vector")

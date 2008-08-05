@@ -119,7 +119,7 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 		RAW(result)[i] = (Rbyte) 0;
 	    break;
 	default:
-	    errorcall(call, R_MSG_ob_nonsub);
+	    errorcall(call, R_MSG_ob_nonsub, type2char(mode));
 	}
     }
     return result;
@@ -659,7 +659,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for(px = x, i = 0 ; px != R_NilValue ; px = CDR(px))
 	    SET_VECTOR_ELT(ax, i++, CAR(px));
     }
-    else errorcall(call, R_MSG_ob_nonsub);
+    else errorcall(call, R_MSG_ob_nonsub, type2char(TYPEOF(x)));
 
     /* This is the actual subsetting code. */
     /* The separation of arrays and matrices is purely an optimization. */
@@ -812,7 +812,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* back to the regular program */
     if (!(isVector(x) || isList(x) || isLanguage(x)))
-	errorcall(call, R_MSG_ob_nonsub);
+	errorcall(call, R_MSG_ob_nonsub, type2char(TYPEOF(x)));
 
     if(nsubs == 1) { /* vector indexing */
 	SEXP thesub = CAR(subs);
@@ -1112,7 +1112,9 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
     }
     else if( IS_S4_OBJECT(x) ){
 	errorcall(call, "$ operator not defined for this S4 class");
-    }
+    } 
+    else /* e.g. a function */
+	errorcall(call, R_MSG_ob_nonsub, type2char(TYPEOF(x)));
     UNPROTECT(2);
     return R_NilValue;
 }

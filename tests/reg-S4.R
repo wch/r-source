@@ -203,9 +203,13 @@ stopifnot(identical(m, cBind(m)))
 ## caused infinite recursion
 setClass("Foo", representation(name="character"), contains="matrix")
 (f <- new("Foo", name="Sam", matrix()))
+f2 <- new("Foo", .Data = diag(2), name="Diag")# explicit .Data
 (m <- as(f, "matrix"))
-show(m)
-print(m)
+## this has no longer (2.7.0) an S4 bit: set it explicitly just for testing:
+stopifnot(isS4(m. <- asS4(m)),
+          identical(m, f@.Data))
+show(m.)
+print(m.)
 ## fixed in 2.5.0 patched
 
 ## callGeneric inside a method with new arguments {hence using .local()}:
@@ -426,3 +430,14 @@ stopifnot(is(c1, "classRepresentation"),
 	  is(s1, "MethodDefinition"),
 	  identical(c1,c2), identical(s1,s2))
 ## failed at times in the past
+
+## Extending "matrix", the .Data slot etc:
+setClass("moo", representation("matrix"))
+m <- matrix(1:4, 2, dimnames= list(NULL, c("A","B")))
+nf <- new("moo", .Data = m)
+n2 <- new("moo", 3:1, 3,2)
+n3 <- new("moo", 1:6, ncol=2)
+stopifnot(identical(m,			as(nf, "matrix")),
+	  identical(matrix(3:1,3,2),	as(n2, "matrix")),
+	  identical(matrix(1:6,ncol=2), as(n3, "matrix")))
+## partly failed at times in pre-2.8.0

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:48\n"
+"POT-Creation-Date: 2008-08-01 09:16\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -360,6 +360,12 @@ msgid "invalid list argument: all variables should have the same length"
 msgstr ""
 "argomento list non valido: tutte le variabili devono avere la stessa "
 "lunghezza"
+
+msgid "data frame with 0 columns and %d rows"
+msgstr ""
+
+msgid "<0 rows> (or 0-length row.names)"
+msgstr ""
 
 msgid "non-numeric variable in data frame:"
 msgstr "variabile non numerica nel data frame:"
@@ -1495,6 +1501,14 @@ msgstr "argomento sbagliato"
 #, fuzzy
 msgid "invalid value"
 msgstr "valore 'n' non valido"
+
+#, fuzzy
+msgid "unary '%s' not defined for \"numeric_version\" objects"
+msgstr "non definito per oggetti package_version"
+
+#, fuzzy
+msgid "'%s' not defined for \"numeric_version\" objects"
+msgstr "non definito per oggetti package_version"
 
 #, fuzzy
 msgid "not defined for numeric_version objects"

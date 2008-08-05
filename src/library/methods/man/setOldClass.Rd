@@ -14,6 +14,7 @@
 \alias{anova-class}
 \alias{anova.glm-class}
 \alias{anova.glm.null-class}
+\alias{Date-class}
 \alias{data.frame-class}
 \alias{density-class}
 \alias{dump.frames-class}
@@ -51,7 +52,7 @@
   \code{class} attribute; in particular, if there is more than one
   string,  old-style class inheritance is mimicked.  Registering via
   \code{setOldClass} allows S3 classes to appear  in method
-  signatures, and as a slot in an S4 class if a prototype is included.
+  signatures, as a slot in an S4 class or as a superclass of an S4 class.
 }
 \usage{
 setOldClass(Classes, prototype, where, test = FALSE)
@@ -60,12 +61,13 @@ setOldClass(Classes, prototype, where, test = FALSE)
   \item{Classes}{
     A character vector, giving the names for old-style
     classes, as they would appear on the right side of an assignment of
-    the \code{class} attribute.
+    the \code{class} attribute in S3 computations.
   }
 \item{prototype}{
     An optional object to use as the prototype.  This should be provided
-    as the default S3 object for the class, if you plan to use the class as
-    a slot in an S4 class.  See the details section.
+    as the default S3 object for the class.  If omitted, the S4 class
+    created to register the S3 class is \code{VIRTUAL}.  See the
+    details.
   }
   \item{where}{
     Where to store the class definitions, the global or top-level
@@ -85,28 +87,22 @@ setOldClass(Classes, prototype, where, test = FALSE)
   which is the \sQuote{root} of all old-style classes. S3 classes have
   no formal definition, and therefore no formally defined slots. If a
   \code{prototype} argument is supplied in the call to
-  \code{setOldClass()}, objects from the class can be generated. If the
-  S3 class is to be a slot in an S4 class, providing a prototype is
-  recommended. Otherwise, the class will be created as a virtual S4
-  class; method dispatch will still work and inheritance will follow the
-  S3 class hierarchy, but actions that require a prototype object from
-  the class will not. For example, using the class as a slot in an S4
-  class definition will set the corresponding slot to \code{NULL} in the
-  prototype for the S4 class.
+  \code{setOldClass()}, objects from the class can be generated, by a
+  call to \code{\link{new}}; however, this usually not as relevant as
+  generating objects from subclasses (see the section on extending S3
+  classes below).   If  a prototype is not provided,
+   the class will be created as a virtual S4
+  class.
+The main disadvantage is that the prototype object in an S4 class that
+uses this class as a slot will have a \code{NULL} object in that slot,
+which can sometimes lead to confusion.
 
-  Providing a prototype allows the function \code{new()} to be called
-  for this class, but optional arguments in this call are not
-  meaningful, since the class has no formal slots. Extending an S3 class
-  with an S4 class is formally legal, but discouraged. Since the S4
-  subclass will have a single character string in its \code{class()}, S3
-  inheritance will not work. Also, there is no safe way for a general
-  object from the S3 class to be inserted when an object is generated
-  from the subclass.
+ Beginning with version 2.8.0 of \R, support is provided for using a
+ (registered) S3 class as a super class of a new S4 class.  See the
+ section on extending S3 classes below, and the examples.
 
   See \link{Methods} for the details of method dispatch and
-  inheritance. See the section \bold{Register or Convert?} for
-  comments on the alternative of defining \sQuote{real} S4 classes
-  rather than using \code{setOldClass}.
+  inheritance.
 
   Some S3 classes cannot be represented as an ordinary combination of S4
   classes and superclasses, because objects from the S3 class can have a
@@ -142,56 +138,54 @@ setOldClass(Classes, prototype, where, test = FALSE)
   the list.
 }
 
-\section{Register or Convert?}{
+\section{Extending S3 Classes}{
   A call to \code{setOldClass} creates formal classes corresponding
   to S3 classes, allows these to be used as slots in other classes or in
-  a signature in \code{\link{setMethod}}, and mimics the S3 inheritance.
+  a signature in \code{\link{setMethod}}, and mimics the S3
+  inheritance.
 
-  Supplying the \code{prototype} and optionally the \code{generator} arguments allows the S4 class created to be non-virtual, making it a candidate to be a slot in S4 class definitions and to be extended by  S4 classes.
-The class still does not have formally defined slots.
-Because R implements slots as attributes, an S3 class that uses attributes (\code{factor}, for example) can in principle be defined as an S4 class with slots.
-However, a class such as \code{lm} that uses components of a list in a similar role cannot have formal slots.
-The slots would  not be interpreted by S3 code written for \code{lm} objects.
+  In documentation for the initial implementation of S4 classes in \R,
+  users were warned against defining S4 classes that contained S3
+  classes, even if those had been registered.  The warning was based
+  mainly on two points.  1) The S3 behavior of the objects would fail
+  because the S3 class would not be visible, for example, when S3
+  methods are dispatched.  2) Because S3 classes have no formal
+  definition, nothing can be asserted in general about the S3 part of
+  an object from such a class.  (The warning was repeated as recently
+  as the first reference below.)
 
-  \emph{If} your class does in fact have a consistent set of attributes, so that
-  every object from the class has the same structure, you may prefer to
-  take some extra time to write down a specific definition in a call to
-  \code{\link{setClass}} to convert the class to a fully functional
-  formal class.  On the other hand, if the actual contents of the class
-  vary from one object to another, such a definition will not generally be possible.  You should still register the class via
-  \code{setOldClass}, unless its class attribute is hopelessly unpredictable.
+  Nevertheless, defining S4 classes to contain an S3 class and extend
+  its behavior is attractive in many applications.  The alternative is
+  to be stuck with S3 programming, without the flexibility and security of
+  formal class and method definitions.
 
-  An S3 class has consistent structure if each object has the same set
-  of attributes, both the names and the classes of the attributes being
-  the same for every object in the class.  In practice, you can convert
-  classes that are slightly less well behaved.  If a few attributes
-  appear in some but not all objects, you can include these optional
-  attributes as slots that \emph{always} appear in the objects, if you
-  can supply a default value that is equivalent to the attribute being
-  missing.  Sometimes \code{NULL} can be that value: A slot (but not an
-  attribute) can have the value \code{NULL}.  If \code{version}, for
-  example, was an optional attribute, the old test
-  \code{is.null(attr(x,"version")} for a missing version attribute could
-  turn into \code{is.null(x@version)} for the formal class.
+  Beginning with version 2.8.0, \R will provide support for extending
+  registered S3 classes; that is, for new classes defined by a call to
+  \code{\link{setClass}} in which the \code{contains=} argument
+  includes an S3 class.  See the examples below.  The support is aimed
+  primarily at providing the S3 class information for all classes that
+  extend class \linkS4class{oldClass}, in particular by ensuring that
+  all objects from such classes contain the S3 class in a special slot.
 
-  The requirement that slots have a fixed class can be satisfied
-  indirectly as well.  Slots \emph{can} be specified with class
-  \code{"ANY"}, allowing an arbitrary object.  However, this eliminates
-  an important benefit of formal class definitions; namely, automatic
-  validation of objects assigned to a slot.  If just a few different
-  classes are possible, consider using \code{\link{setClassUnion}} to
-  define valid objects for a slot.
-}
+ }
 
 \seealso{
   \code{\link{setClass}}, \code{\link{setMethod}}
 }
 
-\examples{
-\dontshow{
-## VOODO Why is this needed?
-removeMethods("length")
+\references{
+ Chambers, John M. (2008)
+ \emph{Software for Data Analysis: Programming with R}
+  Springer.  (For the R version: see section 10.6 for method
+  selection and section 13.4 for generic functions).
+
+ Chambers, John M. (1998)
+ \emph{Programming with Data}
+ Springer (For the original S4 version.)
 }
+
+\examples{
+
 require(stats)
 setOldClass(c("mlm", "lm"))
 setGeneric("dfResidual", function(model)standardGeneric("dfResidual"))
@@ -201,11 +195,17 @@ setMethod("dfResidual", "lm", function(model)model$df.residual)
 myData <- data.frame(time = 1:10, y = (1:10)^.5)
 myLm <- lm(cbind(y, y^3)  ~ time, myData)
 
-\dontshow{
-stopifnot(identical(dfResidual(myLm), myLm$df.residual))}
+## two examples extending S3 class "lm", class "xlm"  directly and "ylm" indirectly
+setClass("xlm", representation(eps = "numeric"), contains = "lm")
+setClass("ylm", representation(header = "character"), contains = "xlm")
+ym1 = new("ylm", myLm, header = "Example", eps = 0.)
+## for more examples, see ?\link{S3Class}.
 
+\dontshow{
+stopifnot(identical(dfResidual(myLm), myLm$df.residual))
+removeClass("ylm"); removeClass("xlm")
 rm(myData, myLm)
-removeGeneric("dfResidual")
+removeGeneric("dfResidual")}
 \dontrun{setOldClass("data.frame", prototoype = data.frame())
 
 }

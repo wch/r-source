@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49\n"
+"POT-Creation-Date: 2008-08-01 09:16\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -25,9 +25,42 @@ msgstr "啊呀：哪里出错了"
 msgid "in .OldClassesPrototypes"
 msgstr "在.OldClassesPrototypes里"
 
+msgid "Cannot specify matrix() arguments when specifying .Data"
+msgstr ""
+
+msgid "Cannot specify array() arguments when specifying .Data"
+msgstr ""
+
 msgid ""
 "methods may not be defined for primitive function \"%s\" in this version of R"
 msgstr "此版本的R没有给基元函数'%s'定义方法"
+
+msgid ""
+"S3Part() is only defined for classes set up by setOldCLass() or extend such "
+"a class:  not true of class \"%s\""
+msgstr ""
+
+msgid ""
+"The S3Class argument must be a class set up by setOldCLass() or an extension "
+"of such a class:  not true of class \"%s\""
+msgstr ""
+
+msgid "Not meaningful to have keepSlots=TRUE and strict=TRUE"
+msgstr ""
+
+msgid "Replacement value must extend class \"%s\", got  \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "Replacement value must be of class \""
+msgstr "替换值不是矩阵"
+
+#, fuzzy
+msgid "\", got one of class \""
+msgstr "对象为类别"
+
+msgid "\""
+msgstr "\""
 
 msgid ""
 "no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\""
@@ -58,6 +91,9 @@ msgstr "必需设定成员类别: %s没有这样的设定"
 
 msgid "unable to create union class:  could not set members %s"
 msgstr "无法建立併集类别: 无法设定%s成员"
+
+msgid "invalid argument \"name\": %s"
+msgstr ""
 
 msgid ""
 "\"%s\" is a primitive function;  methods can be defined, but the generic "
@@ -212,6 +248,9 @@ msgstr "'%s'没有设定任何方法"
 msgid "signature must be a vector of classes or an environment"
 msgstr "标记要么是个含类别的矢量，要么是个环境"
 
+msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+msgstr ""
+
 msgid "no unique method corresponding to this signature"
 msgstr "这一标记没有与之相对应的唯一方法"
 
@@ -286,9 +325,6 @@ msgstr "findMethods()没有非同屬函数"
 #, fuzzy
 msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr "FALSE只对于继承类别有意义，当提供where时(得到了"
-
-msgid "\""
-msgstr "\""
 
 #, fuzzy
 msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
@@ -384,14 +420,6 @@ msgstr "初始化方法回復了类别为\"%s\"的对象而不是所要求的\"%
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr "方法(%s)标记里的名字同函数%s变元(%s)不相对应"
-
-msgid ""
-"'NextMethod' not defined because the current method is not a "
-"'MethodDefinition' object"
-msgstr "'NextMethod'没有设定，因为目前的方法不是'MethodDefinition'这种对象"
-
-msgid "expected a list of signature objects, got \"%s\""
-msgstr "需要的是标记对象串列，得到的却是\"%s\""
 
 msgid ""
 "a call to callNextMethod() appears in a call to \"%s\", but the call does "
@@ -1096,6 +1124,11 @@ msgid ""
 "new classes?)"
 msgstr "\"%s\"旧式类别信息有矛盾(会不会是将旧的和新的类别混在了一起用?)"
 
+msgid ""
+"The class of the prototype, \"%s\", is undefined; only allowed for the S3 "
+"class being registered (\"%s\")"
+msgstr ""
+
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr "旧式类别(%s)的明确强制转换没有定义"
 
@@ -1108,6 +1141,11 @@ msgid ""
 "argument 'Classes' must be a vector of two classes; got an argument of "
 "length %d"
 msgstr "变元'classes'必需是包含两个类别的矢量；现在得到的是长度为%d的变元"
+
+msgid ""
+"S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
+"true of class \"%s\""
+msgstr ""
 
 msgid "Created a package name, \"%s\", when none found"
 msgstr "建立了程輯包名: '%s'，因为没有找到其它名字"
@@ -1210,6 +1248,14 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
+
+#~ msgid ""
+#~ "'NextMethod' not defined because the current method is not a "
+#~ "'MethodDefinition' object"
+#~ msgstr "'NextMethod'没有设定，因为目前的方法不是'MethodDefinition'这种对象"
+
+#~ msgid "expected a list of signature objects, got \"%s\""
+#~ msgstr "需要的是标记对象串列，得到的却是\"%s\""
 
 #~ msgid ""
 #~ "New generic for \"%s\" does not agree with implicit generic from package "

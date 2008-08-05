@@ -1,6 +1,6 @@
 % File src/library/stats4/man/profile-methods.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{profile-methods}
@@ -11,20 +11,21 @@
 \title{Methods for Function profile in Package `stats4'}
 \description{Profile likelihood for \code{"mle"} objects.}
 \usage{
-\S4method{profile}{mle}(fitted, which = 1:p, maxsteps = 100, alpha =
-0.01, zmax = sqrt(qchisq(1 - alpha, p)), del = zmax/5, trace = FALSE, ...)
+\S4method{profile}{mle}(fitted, which = 1:p, maxsteps = 100, alpha = 0.01,
+        zmax = sqrt(qchisq(1 - alpha, 1L)), del = zmax/5,
+        trace = FALSE, ...)
 }
 \arguments{
   \item{fitted}{Object to be profiled}
   \item{which}{Optionally select subset of parameters to profile.}
-  \item{maxsteps}{Maximum number of steps to bracket \code{zmax}}
+  \item{maxsteps}{Maximum number of steps to bracket \code{zmax}.}
   \item{alpha}{Significance level corresponding to \code{zmax}, based on
-    a Scheffe-style multiple testing interval. Ignored
+    a Scheffe-style multiple testing interval.  Ignored
     if \code{zmax} is specified.}
-  \item{zmax}{Cutoff for the profiled value of the signed root-likelihood}
-  \item{del}{Initial stepsize on root-likelihood scale}
+  \item{zmax}{Cutoff for the profiled value of the signed root-likelihood.}
+  \item{del}{Initial stepsize on root-likelihood scale.}
   \item{trace}{Logical. Print intermediate results.}
-  \item{\dots}{Currently unused}
+  \item{\dots}{Currently unused.}
 }
 \details{
   The profiling algoritm tries to find an approximately evenly spaced
@@ -40,9 +41,7 @@ An object of class \code{"profile.mle"}, see  \code{"profile.mle-class"}.
 }
 
 \section{Methods}{\describe{
-
 \item{fitted = "ANY"}{Generic function: see \code{\link[stats]{profile}}.}
-
 \item{fitted = "mle"}{Profile the likelihood in the vicinity of the
   optimum of an \code{"mle"} object.}
 }}

@@ -100,6 +100,12 @@ socketConnection <- function(host= "localhost", port, server = FALSE,
                              encoding = getOption("encoding"))
     .Internal(socketConnection(host, port, server, blocking, open, encoding))
 
+rawConnection <- function(object, open = "r") {
+    .Internal(rawConnection(deparse(substitute(object)), object, open))
+}
+
+rawConnectionValue <- function(con) .Internal(rawConnectionValue(con))
+
 textConnection <- function(object, open = "r", local = FALSE) {
     env <- if (local) parent.frame() else .GlobalEnv
     .Internal(textConnection(deparse(substitute(object)), object, open, env))

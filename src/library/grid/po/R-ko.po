@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34\n"
+"POT-Creation-Date: 2008-08-01 09:16\n"
 "PO-Revision-Date: 2005-05-25 16:34+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -281,14 +281,8 @@ msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
 msgstr "'respect'는 논리값 또는 'ncol * 'nrow' 행렬이 아니면 되지 않습니다"
 
 #, fuzzy
-msgid "Invalid"
-msgstr "부적절한 'theta' 입니다"
-
-msgid "print"
-msgstr ""
-
-msgid "argument"
-msgstr ""
+msgid "Invalid 'print' argument"
+msgstr "부적절한 'rot' 값입니다"
 
 #, fuzzy
 msgid "Invalid object in listing"
@@ -381,6 +375,10 @@ msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
 msgstr ""
 "'x', 'y', 'width' 그리고 'height'는 모두 길이 1의 units가 나오지 않으면 되지 "
 "않습니다"
+
+#, fuzzy
+msgid "'x' and 'y' must all be units of length 1"
+msgstr "'x' 그리고 'y'는 길이 1이 아니면 안됩니다"
 
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x'  그리고 'units'는 0보다 큰 길이가 나오지 않으면 되지 않습니다"
@@ -498,6 +496,10 @@ msgstr "'x' 또는 'xscale' 중 적어도 하나를 지정하지 않으면 되�
 
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "'y' 또는 'yscale' 중 적어도 하나를 지정하지 않으면 되지 않습니다"
+
+#, fuzzy
+#~ msgid "Invalid"
+#~ msgstr "부적절한 'theta' 입니다"
 
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x'는 수치가 아니면 되지 않습니다"

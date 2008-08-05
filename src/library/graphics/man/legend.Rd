@@ -1,6 +1,6 @@
 % File src/library/graphics/man/legend.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{legend}
@@ -10,13 +10,13 @@
 legend(x, y = NULL, legend, fill = NULL, col = par("col"),
        lty, lwd, pch,
        angle = 45, density = NULL, bty = "o", bg = par("bg"),
-       box.lwd = par("lwd"), box.lty = par("lty"),
+       box.lwd = par("lwd"), box.lty = par("lty"), box.col = par("fg"),
        pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
        xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1,
        adj = c(0, 0.5), text.width = NULL, text.col = par("col"),
        merge = do.lines && has.pch, trace = FALSE,
        plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
-       inset = 0)
+       inset = 0, xpd)
 }
 \description{
   This function can be used to add legends to plots.  Note that a call
@@ -47,7 +47,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     values are \code{"o"} (the default) and \code{"n"}.}
   \item{bg}{the background color for the legend box.  (Note that this is
     only used if \code{bty != "n"}.)}
-  \item{box.lty, box.lwd}{the line type and width for the legend box.}
+  \item{box.lty, box.lwd, box.col}{the line type, width and color for
+    the legend box (if \code{bty = "o"}).}
   \item{pt.bg}{the background color for the \code{\link{points}},
     corresponding to its argument \code{bg}.}
   \item{cex}{character expansion factor \bold{relative} to current
@@ -84,7 +85,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     coerced by \code{\link{as.graphicsAnnot}}.}
   \item{inset}{inset distance(s) from the margins as a fraction of the
     plot region when legend is placed by keyword.}
-
+  \item{xpd}{if supplied, a value of the graphical parameter \code{xpd}
+    to be used while the legend is being drawn.}
 }
 \details{
   Arguments \code{x, y, legend} are interpreted in a non-standard way to

@@ -62,9 +62,13 @@ promptClass(clName, filename = NULL, type = "class",
   VJ Carey \email{stvjc@channing.harvard.edu} and John Chambers
 }
 \references{
-    The functions in this package emulate the facility for classes and
-  methods described in \emph{Programming with Data} (John M. Chambers,
-  Springer, 1998).  See this book for further details and examples.
+ Chambers, John M. (2008)
+ \emph{Software for Data Analysis: Programming with R}
+  Springer.  (For the R version.)
+
+ Chambers, John M. (1998)
+ \emph{Programming with Data}
+ Springer (For the original S4 version.) 
 }
 \seealso{
   \code{\link{prompt}} for documentation of functions,

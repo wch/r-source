@@ -110,7 +110,7 @@ isIncomplete(con)
   extension if required.
 
   For \code{pipe} the description is the command line to be piped to or
-  from (see the Examples).
+  from.
 #ifdef windows
   This command line is run in the shell specified by the \env{COMSPEC}
   environment variable.
@@ -125,11 +125,11 @@ isIncomplete(con)
   \code{file} allows \code{description="stdin"} to refer to the C-level
   \code{stdin} of the process (which need not be connected to anything
 #ifdef unix
-  in a console version or embedded version of \R), provided the C99 function
+  in a console or embedded version of \R), provided the C99 function
   \code{fdopen} is supported on the platform.
 #endif
 #ifdef windows
-  in a console version or embedded version of \R, and is not in \code{RGui}).
+  in a console or embedded version of \R, and is not in \code{RGui}).
 #endif
 
   \code{gzfile} and \code{bzfile} open the actual file in binary mode
@@ -356,7 +356,7 @@ isIncomplete(con)
   This differs from S, where it is the equivalent of \code{"r+"},
   known as \code{"*"}.
 
-  On platforms where \code{vsnprintf} does not return the needed length
+  On (rare) platforms where \code{vsnprintf} does not return the needed length
   of output there is a 100,000 character output limit on
   the length of line for \code{fifo}, \code{gzfile} and \code{bzfile}
   connections: longer lines will be truncated with a warning.

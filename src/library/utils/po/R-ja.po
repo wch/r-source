@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49\n"
+"POT-Creation-Date: 2008-08-01 09:17\n"
 "PO-Revision-Date: 2008-04-04 15:18+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -689,11 +689,20 @@ msgstr ""
 msgid "No DIF data on clipboard"
 msgstr " クリップボード上には如何なる DIF データもありません "
 
+msgid "file had no lines"
+msgstr ""
+
 msgid "row and column counts not found"
 msgstr " 行、列カウントが見付かりません "
 
+msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
+
 msgid "Unrecognized special data value"
 msgstr " 認識不能な特殊データ値です "
+
+msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
+msgstr ""
 
 msgid "Unrecognized value indicator"
 msgstr " 認識不能な値指示子です "
@@ -967,6 +976,14 @@ msgstr " HTML パッケージ記述を更新 "
 
 msgid "cannot update '%s'"
 msgstr " '%s' を更新出来ません "
+
+#, fuzzy
+msgid "winDialog() cannot be used non-interactively"
+msgstr " menu() は対話的にしか使用できません "
+
+#, fuzzy
+msgid "winDialogString() cannot be used non-interactively"
+msgstr " menu() は対話的にしか使用できません "
 
 msgid "'pb' is not from class \"winProgressBar\""
 msgstr ""

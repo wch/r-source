@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49\n"
+"POT-Creation-Date: 2008-08-01 09:16\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,34 @@ msgstr ""
 msgid "in .OldClassesPrototypes"
 msgstr ""
 
+msgid "Cannot specify matrix() arguments when specifying .Data"
+msgstr ""
+
+msgid "Cannot specify array() arguments when specifying .Data"
+msgstr ""
+
 msgid "methods may not be defined for primitive function \"%s\" in this version of R"
+msgstr ""
+
+msgid "S3Part() is only defined for classes set up by setOldCLass() or extend such a class:  not true of class \"%s\""
+msgstr ""
+
+msgid "The S3Class argument must be a class set up by setOldCLass() or an extension of such a class:  not true of class \"%s\""
+msgstr ""
+
+msgid "Not meaningful to have keepSlots=TRUE and strict=TRUE"
+msgstr ""
+
+msgid "Replacement value must extend class \"%s\", got  \"%s\""
+msgstr ""
+
+msgid "Replacement value must be of class \""
+msgstr ""
+
+msgid "\", got one of class \""
+msgstr ""
+
+msgid "\""
 msgstr ""
 
 msgid "no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\""
@@ -39,6 +66,9 @@ msgid "the member classes must be defined: not true of %s"
 msgstr ""
 
 msgid "unable to create union class:  could not set members %s"
+msgstr ""
+
+msgid "invalid argument \"name\": %s"
 msgstr ""
 
 msgid "\"%s\" is a primitive function;  methods can be defined, but the generic function is implicit, and cannot be changed."
@@ -149,6 +179,9 @@ msgstr ""
 msgid "signature must be a vector of classes or an environment"
 msgstr ""
 
+msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+msgstr ""
+
 msgid "no unique method corresponding to this signature"
 msgstr ""
 
@@ -207,9 +240,6 @@ msgid "non-generic function '%s' given to findMethods()"
 msgstr ""
 
 msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
-msgstr ""
-
-msgid "\""
 msgstr ""
 
 msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
@@ -276,12 +306,6 @@ msgid "initialize method returned an object of class \"%s\" instead of the requi
 msgstr ""
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
-msgstr ""
-
-msgid "'NextMethod' not defined because the current method is not a 'MethodDefinition' object"
-msgstr ""
-
-msgid "expected a list of signature objects, got \"%s\""
 msgstr ""
 
 msgid "a call to callNextMethod() appears in a call to \"%s\", but the call does not seem to come from either a generic function or another 'callNextMethod'"
@@ -800,6 +824,9 @@ msgstr ""
 msgid "inconsistent old-style class information for \"%s\" (maybe mixing old and new classes?)"
 msgstr ""
 
+msgid "The class of the prototype, \"%s\", is undefined; only allowed for the S3 class being registered (\"%s\")"
+msgstr ""
+
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr ""
 
@@ -807,6 +834,9 @@ msgid "explicit replacement not defined for as(x, \"%s\") <- value for old-style
 msgstr ""
 
 msgid "argument 'Classes' must be a vector of two classes; got an argument of length %d"
+msgstr ""
+
+msgid "S3Class can only be assigned to S4 objects that extend \"oldClass\"; not true of class \"%s\""
 msgstr ""
 
 msgid "Created a package name, \"%s\", when none found"

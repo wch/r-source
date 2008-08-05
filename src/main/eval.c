@@ -2148,7 +2148,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 
     PROTECT(s = promiseArgs(CDR(call), rho));
     if (length(s) != length(args))
-	error(_("dispatch error"));
+	error(_("dispatch error in group dispatch"));
     for (m = s ; m != R_NilValue ; m = CDR(m), args = CDR(args) ) {
 	SET_PRVALUE(CAR(m), CAR(args));
 	/* ensure positional matching for operators */

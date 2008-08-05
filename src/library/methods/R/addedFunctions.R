@@ -117,7 +117,7 @@ findFunction <-
 	wherei <- allWhere[[i]]
 	if(exists(f, wherei, inherits = FALSE)) {
 	    fdef <- get(f, wherei)
-	    ok[i] <- (generic || is.primitive(fdef) || !isGeneric(f, wherei, fdef))
+	    ok[i] <- is.function(fdef) && (generic || is.primitive(fdef) || !isGeneric(f, wherei, fdef))
 	}## else ok[i] <- FALSE
     }
     allWhere[ok]

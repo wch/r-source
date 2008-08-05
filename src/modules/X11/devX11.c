@@ -2526,7 +2526,7 @@ Rf_addX11Device(const char *display, double width, double height, double ps,
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	/* Allocate and initialize the device driver data */
-	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return;
+	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc)))) return;
 	if (!X11DeviceDriver(dev, display, width, height,
 			     ps, gamma, colormodel, maxcubesize,
 			     bgcolor, canvascolor, sfonts, res,
@@ -3135,7 +3135,7 @@ static SEXP in_do_cairo(SEXP call, SEXP op, SEXP args, SEXP env)
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
 	/* Allocate and initialize the device driver data */
-	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return 0;
+	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc)))) return 0;
 	if (!BMDeviceDriver(dev, devtable[type].gtype, filename, quality,
 			    width, height, pointsize,
 			    bgcolor, res, antialias)) {

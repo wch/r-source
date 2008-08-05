@@ -183,8 +183,8 @@ void set_iconv(Rconnection con)
 #endif
 	tmp = Riconv_open(con->UTF8out ? "UTF-8" : "", con->encname);
 	if(tmp != (void *)-1) con->inconv = tmp;
-	else error(_("conversion from encoding '%s' is unsupported"),
-		   con->encname);
+	else error(_("unsupported conversion from '%s' to '%s'"),
+		   con->encname, con->UTF8out ? "UTF-8" : "");
 	con->EOF_signalled = FALSE;
 	/* initialize state, and prepare any initial bytes */
 	Riconv(tmp, NULL, NULL, &ob, &onb);
@@ -198,8 +198,8 @@ void set_iconv(Rconnection con)
 	char *ob = con->init_out;
 	tmp = Riconv_open(con->encname, "");
 	if(tmp != (void *)-1) con->outconv = tmp;
-	else error(_("conversion to encoding '%s' is unsupported"),
-		   con->encname);
+	else error(_("unsupported conversion from '%s' to '%s'"),
+		   con->encname, "");
 	/* initialize state, and prepare any initial bytes */
 	Riconv(tmp, NULL, NULL, &ob, &onb);
 	ob[25-onb] = '\0';
@@ -264,8 +264,12 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
     va_end(aq);
 #ifdef HAVE_VASPRINTF
     if(res >= BUFSIZE || res < 0) {
-	(void) vasprintf(&b, format, ap);
-	usedVasprintf = TRUE;
+	res = vasprintf(&b, format, ap);
+	if (res < 0) {
+	    b = buf;
+	    buf[BUFSIZE-1] = '\0';
+	    warning(_("printing of extremely long output is truncated"));
+	} else usedVasprintf = TRUE;
     }
 #else
     if(res >= BUFSIZE) { /* res is the desired output length */
@@ -1855,6 +1859,213 @@ SEXP attribute_hidden do_stderr(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* ------------------- raw connections --------------------- */
+
+/* copy a raw vector into a buffer */
+static void raw_init(Rconnection con, SEXP raw)
+{
+    Rrawconn this = (Rrawconn) con->private;
+	
+    this->data = NAMED(raw) ? duplicate(raw) : raw;    
+    R_PreserveObject(this->data);
+    this->nbytes = length(this->data);
+    this->pos = 0;
+}
+
+static Rboolean raw_open(Rconnection con)
+{
+    return TRUE;
+}
+
+static void raw_close(Rconnection con)
+{
+}
+
+static void raw_destroy(Rconnection con)
+{
+    Rrawconn this = (Rrawconn) con->private;
+
+    R_ReleaseObject(this->data);
+    free(this);
+}
+
+static void raw_resize(Rrawconn this, int needed)
+{
+    SEXP tmp;
+
+    /* NB: this does not set the size on the connection: raw_write does */
+    PROTECT(tmp = lengthgets(this->data, needed));
+    R_ReleaseObject(this->data);
+    this->data = tmp;
+    R_PreserveObject(this->data);
+    UNPROTECT(1);
+}
+
+static size_t raw_write(const void *ptr, size_t size, size_t nitems,
+			Rconnection con)
+{
+    Rrawconn this = (Rrawconn) con->private;
+    int freespace = LENGTH(this->data) - this->pos;
+    int bytes = size*nitems;    
+
+    /* resize may fail, when this will give an error */
+    if(bytes >= freespace) raw_resize(this, bytes + this->pos);
+    memmove(RAW(this->data) + this->pos, ptr, bytes); 
+    this->pos += bytes;
+    if (this->pos > this->nbytes) this->nbytes = this->pos;    
+    return nitems;
+}
+
+static void raw_truncate(Rconnection con)
+{
+    Rrawconn this = (Rrawconn)con->private;
+    this->nbytes = this->pos;
+}
+
+static size_t raw_read(void *ptr, size_t size, size_t nitems,
+		       Rconnection con)
+{
+    Rrawconn this = (Rrawconn) con->private;
+    int available = this->nbytes - this->pos, request = size*nitems, used;
+    used = (request < available) ? request : available;
+    memmove(ptr, RAW(this->data) + this->pos, used);
+    return (size_t) used/size;
+}
+
+static int raw_fgetc(Rconnection con)
+{
+    Rrawconn this = (Rrawconn) con->private;
+    if(this->pos >= this->nbytes) return R_EOF;
+    else return (int) RAW(this->data)[this->pos++];
+}
+
+static double raw_seek(Rconnection con, double where, int origin, int rw)
+{
+    Rrawconn this = (Rrawconn) con->private;
+    int newpos, oldpos = this->pos;
+
+    if(ISNA(where)) return oldpos;
+
+    switch(origin) {
+    case 2: newpos = this->pos + (int) where; break;
+    case 3: newpos = this->nbytes + (int) where; break;
+    default: newpos = where;
+    }
+    if(newpos < 0 || newpos > this->nbytes)
+	error(_("attempt to seek outside the range of the raw connection"));
+    else this->pos = newpos;
+
+    return (double) oldpos;
+}
+
+static Rconnection newraw(const char *description, SEXP raw, const char *mode)
+{
+    Rconnection new;
+
+    new = (Rconnection) malloc(sizeof(struct Rconn));
+    if(!new) error(_("allocation of raw connection failed"));
+    new->class = (char *) malloc(strlen("rawConnection") + 1);
+    if(!new->class) {
+	free(new);
+	error(_("allocation of raw connection failed"));
+    }
+    strcpy(new->class, "rawConnection");
+    new->description = (char *) malloc(strlen(description) + 1);
+    if(!new->description) {
+	free(new->class); free(new);
+	error(_("allocation of raw connection failed"));
+    }
+    init_con(new, description, CE_NATIVE, mode);
+    new->isopen = TRUE;
+    new->text = FALSE;
+    new->blocking = TRUE;
+    new->canseek = TRUE;
+    new->canwrite = (mode[0] == 'w' || mode[0] == 'a');
+    new->canread = mode[0] == 'r';
+    if(strlen(mode) >= 2 && mode[1] == '+') new->canread = new->canwrite = TRUE;
+    new->open = &raw_open;
+    new->close = &raw_close;
+    new->destroy = &raw_destroy;
+    if(new->canwrite) {
+    	new->write = &raw_write;
+    	new->vfprintf = &dummy_vfprintf;
+    	new->truncate = &raw_truncate;
+    }
+    if(new->canread) {
+        new->read = &raw_read;
+    	new->fgetc = &raw_fgetc;
+    }
+    new->seek = &raw_seek;
+    new->private = (void*) malloc(sizeof(struct rawconn));
+    if(!new->private) {
+	free(new->description); free(new->class); free(new);
+	error(_("allocation of raw connection failed"));
+    }
+    raw_init(new, raw);
+    if(mode[0] == 'a') raw_seek(new, 0, 3, 0);
+    return new;
+}
+
+SEXP attribute_hidden do_rawconnection(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP sfile, sraw, sopen, ans, class;
+    const char *desc, *open;
+    int ncon;
+    Rconnection con = NULL;
+
+    checkArity(op, args);
+    sfile = CAR(args);
+    if(!isString(sfile) || length(sfile) != 1)
+	error(_("invalid '%s' argument"), "description");
+    desc = translateChar(STRING_ELT(sfile, 0));
+    sraw = CADR(args);
+    sopen = CADDR(args);
+    if(!isString(sopen) || length(sopen) != 1)
+	error(_("invalid '%s' argument"), "open");
+    open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
+    if(strchr(open, 't'))
+        error(_("invalid '%s' argument"), "open");
+    ncon = NextConnection();
+    if(TYPEOF(sraw) != RAWSXP)
+	error(_("invalid '%s' argument"), "raw");
+    con = Connections[ncon] = newraw(desc, sraw, open);
+
+    /* already opened */
+
+    PROTECT(ans = ScalarInteger(ncon));
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar("rawConnection"));
+    SET_STRING_ELT(class, 1, mkChar("connection"));
+    classgets(ans, class);
+    con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"),
+				    R_NilValue);
+    setAttrib(ans, install("conn_id"), con->ex_ptr);
+    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
+    UNPROTECT(2);
+    return ans;
+}
+
+SEXP attribute_hidden do_rawconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    Rconnection con=NULL;
+    Rrawconn this;
+    SEXP ans;
+
+    checkArity(op, args);
+    if(!inherits(CAR(args), "rawConnection"))
+	error(_("'con' is not a rawConnection"));
+    con = getConnection(asInteger(CAR(args)));
+    if(!con->canwrite)
+	error(_("'con' is not an output rawConnection"));
+    this = (Rrawconn)con->private;
+    PROTECT(ans = lengthgets(this->data, this->nbytes));    
+    R_ReleaseObject(this->data);
+    this->data = ans;
+    R_PreserveObject(this->data);
+    UNPROTECT(1);
+    return this->data;
+}
+
 /* ------------------- text connections --------------------- */
 
 /* read a R character vector into a buffer */
@@ -2002,25 +2213,29 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	already = strlen(this->lastline);
     SEXP tmp;
 
+#ifdef HAVE_VA_COPY
+    va_list aq;
+    va_copy(aq, ap);
     if(already >= BUFSIZE) {
 	/* This will fail so just call vsnprintf to get the length of
 	   the new piece */
-	res = vsnprintf(buf, 0, format, ap);
+	res = vsnprintf(buf, 0, format, aq);
 	if(res > 0) res += already;
 	buffree = 0;
     } else {
 	strcpy(b, this->lastline);
 	p = b + already;
 	buffree = BUFSIZE - already;
-	res = vsnprintf(p, buffree, format, ap);
+	res = vsnprintf(p, buffree, format, aq);
     }
+    va_end(aq);
     if(res >= buffree) { /* res is the desired output length */
 	usedRalloc = TRUE;
 	b = R_alloc(res + already + 1, sizeof(char));
 	strcpy(b, this->lastline);
 	p = b + already;
 	vsprintf(p, format, ap);
-    } else if(res < 0) { /* just a failure indication -- e.g. Windows */
+    } else if(res < 0) { /* just a failure indication */
 #define NBUFSIZE (already + 100*BUFSIZE)
 	usedRalloc = TRUE;
 	b = R_alloc(NBUFSIZE, sizeof(char));
@@ -2033,6 +2248,19 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	    warning(_("printing of extremely long output is truncated"));
 	}
     }
+#else /* no va_copy: very rare so don't try too hard */
+    if(already >= BUFSIZE) {
+	res = -1;
+    } else {
+	strcpy(b, this->lastline);
+	p = b + already;
+	buffree = BUFSIZE - already;
+	res = vsnprintf(p, buffree, format, ap);
+	b[BUFSIZE-1] = '\0';
+    }
+    if (res >= buffree || res < 0)
+	warning(_("printing of extremely long output is truncated"));
+#endif
 
     /* copy buf line-by-line to object */
     for(p = b; ; p = q+1) {
@@ -4499,7 +4727,7 @@ SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < nsock; i++) {
 	Rconnection conn = getConnection(asInteger(VECTOR_ELT(insock, i)));
 	Rsockconn scp = (Rsockconn) conn->private;
-	if (strcmp(conn->class, "socket") != 0)
+	if (strcmp(conn->class, "sockconn") != 0)
 	    error(_("not a socket connection"));
 	INTEGER(insockfd)[i] = scp->fd;
 	if (! LOGICAL(write)[i] && scp->pstart < scp->pend) {

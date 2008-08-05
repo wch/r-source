@@ -175,6 +175,8 @@ makeClassRepresentation <-
     # new() must return an S4 object, except perhaps for basic classes
     if(!is.null(prototype) && is.na(match(name, .BasicClasses)))
       prototype <- .asS4(prototype)
+    if(".S3Class" %in% names(slots))
+      prototype <- .addS3Class(name, prototype, contains, where)
     newClassRepresentation(className = name, slots = slots,
                            contains = contains,
                            prototype = prototype,
@@ -563,10 +565,12 @@ initialize <- function(.Object, ...) {
             for(i in rev(seq_along(supers))) {
                 obj <- el(supers, i)
                 Classi <- class(obj)
+                if(length(Classi)>1)
+                    Classi <- Classi[[1]] #possible S3 inheritance
                 ## test some cases that let information be copied into the
                 ## object, ordered from more to less:  all the slots in the
                 ## first two cases, some in the 3rd, just the data part in 4th
-                if(.identC(Classi[[1]], Class))
+                if(.identC(Classi, Class))
                     .Object <- obj
                 else if(extends(Classi, Class))
                     .Object <- as(obj, Class, strict=FALSE)
@@ -584,7 +588,9 @@ initialize <- function(.Object, ...) {
                     which <- seq_along(which)[!is.na(which)]
                     if(length(which) >0 ) {
                         Classi <- thisExtends[which[1]]
-                        as(.Object, Classi) <- as(obj, Classi, strict = FALSE)
+###                    was:    as(.Object, Classi) <- as(obj, Classi, strict = FALSE)
+                        ## but   as<- does an as(....) to its value argument                   
+                        as(.Object, Classi) <- obj
                     }
                     else
                         stop(gettextf("cannot use object of class \"%s\" in new():  class \"%s\" does not extend that class", Classi, Class), domain = NA)

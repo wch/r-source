@@ -817,7 +817,7 @@ round.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
     trunc.POSIXt(x, units = units)
 }
 
-# ---- additions in 1.5.0 -----
+## ---- additions in 1.5.0 -----
 
 "[.POSIXlt" <- function(x, ..., drop = TRUE)
 {
@@ -845,7 +845,7 @@ as.data.frame.POSIXlt <- function(x, row.names = NULL, optional = FALSE, ...)
     value
 }
 
-# ---- additions in 1.8.0 -----
+## ---- additions in 1.8.0 -----
 
 rep.POSIXct <- function(x, ...)
 {
@@ -877,7 +877,7 @@ diff.POSIXt <- function (x, lag = 1, differences = 1, ...)
     r
 }
 
-# ---- additions in 2.2.0 -----
+## ---- additions in 2.2.0 -----
 
 duplicated.POSIXlt <- function(x, incomparables = FALSE, ...)
 {
@@ -888,12 +888,21 @@ duplicated.POSIXlt <- function(x, incomparables = FALSE, ...)
 unique.POSIXlt <- function(x, incomparables = FALSE, ...)
     x[!duplicated(x, incomparables, ...)]
 
-# ---- additions in 2.4.0 -----
+## ---- additions in 2.4.0 -----
 
 sort.POSIXlt <- function(x, decreasing = FALSE, na.last = NA, ...)
     x[order(as.POSIXct(x), na.last = na.last, decreasing = decreasing)]
 
 
-# ---- additions in 2.6.0 -----
+## ---- additions in 2.6.0 -----
 
 is.numeric.POSIXt <- function(x) FALSE
+
+## ---- additions in 2.6.0 -----
+
+split.POSIXct <-
+function(x, f, drop = FALSE, ...)
+{
+    lapply(split.default(as.double(x), f, drop = drop), structure,
+           class = c("POSIXt", "POSIXct"), tzone = attr(x, "tzone"))
+}

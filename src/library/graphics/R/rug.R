@@ -30,6 +30,7 @@ rug <- function(x, ticksize = 0.03, side = 1, lwd = 0.5, col = par("fg"),
 	if(any(x < u[1] | x > u[2]))
 	    warning("some values will be clipped")
     }
-    Axis(side = side, at = x, labels = FALSE, lwd = lwd, col = col,
+    Axis(side = side, at = x, labels = FALSE,
+         lwd = 0, lwd.ticks = lwd, col.ticks = col,
          tck = ticksize, ...)
 }

@@ -47,12 +47,20 @@ print.ecdf <- function (x, digits= getOption("digits") - 2, ...)
 
 summary.ecdf <- function(object, ...)
 {
-    cat("Empirical CDF:	 ",
-	eval(expression(n), envir = environment(object)),
-        "unique values with summary\n")
-    summary(knots(object), ...)
+    header <- paste("Empirical CDF:	 ",
+                    eval(expression(n), envir = environment(object)),
+                    "unique values with summary\n")
+    structure(summary(knots(object), ...),
+              header = header, class = "summary.ecdf")
 }
 
+print.summary.ecdf <- function(x, ...)
+{
+    cat(attr(x, "header"))
+    y <- unclass(x); attr(y, "header") <- NULL
+    print(y, ...)
+    invisible(x)
+}
 
 ## add  conf.int = 0.95
 ## and  conf.type = c("none", "KS")

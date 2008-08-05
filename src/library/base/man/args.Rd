@@ -19,19 +19,20 @@ args(name)
     name is found and used.}
 }
 \value{
-  A function with identical formal argument list but an empty body if
-  given a closure.
-
-  A function with the documented usage for a primitive: note that in
-  almost all cases primitives do not make use of named arguments and
-  match by position rather than name.  (\code{rep} and \code{seq.int}
-  are exceptions.)
+  For a closure, a closure with identical formal argument list but an
+  empty (\code{NULL}) body.
+  
+  For a primitive, a closure with the documented usage and \code{NULL}
+  body.  Note that in almost all cases primitives do not make use of
+  named arguments and match by position rather than name.  (\code{rep}
+  and \code{seq.int} are exceptions.)
 
   \code{NULL} in case of a non-function.
 }
 \details{
-  This function is mainly used interactively.
-  For programming, use \code{\link{formals}} instead.
+  This function is mainly used interactively to print the argument list
+  of a function.  For programming, consider using \code{\link{formals}}
+  instead.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

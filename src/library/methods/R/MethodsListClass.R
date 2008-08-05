@@ -218,7 +218,7 @@
 	      function(x,y) .Internal(rbind(deparse.level = 0, x)))
     .InitStructureMethods(envir)
 ### Uncomment next line if we want special initialize methods for basic classes
-    .InitBasicClassMethods(where)
+    .InitBasicClassMethods(envir)
 }
 
 .InitStructureMethods <- function(where) {

@@ -217,13 +217,25 @@
 
   \item To get the minimal guarantee (that the object in a slot has, or
     extends, the class for the slot) you should ensure that the S3
-    classes are known to \emph{be} S3 classes, with the possible
+    classes are known to \emph{be} S3 classes, possibly with S
     inheritance.  To do this, include a call to
     \code{\link{setOldClass}} for the S3 classes used.
 
     Otherwise, the S3 class is undefined (and the code used by
     \code{setClass} will issue a warning).  Slot assignments, for
     example, will not then check for possible errors.
+
+  \item Current versions of \R (beginning with 2.8.0) try to
+    accommodate S4 classes that extend S3 classes, that is, those
+    including an S3 class in the \code{contains=} argument to
+    \code{\link{setClass}} . Specifically, objects from  such classes
+    will contain the S3 class as a slot, and some S3 computations will
+    recognize the S3 class,
+    including method dispatch and the function
+    \code{\link{inherits}}.  See  \code{\link{S3Class}} for details.
+    The S3 classes \emph{must} have been registered by a call to  \code{\link{setOldClass}}.
+    The basic caution remains true however: There is no guarantee that all S3 computations will be
+    compatible, and some are known not to be.
 
   \item These caveats apply to S3 classes; that is, objects with a
     class assigned by some \R function but without a formal class

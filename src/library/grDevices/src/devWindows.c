@@ -270,7 +270,7 @@ static void PrivateCopyDevice(pDevDesc dd, pDevDesc ndd, const char *name)
 static void SaveAsWin(pDevDesc dd, const char *display,
 		      Rboolean restoreConsole)
 {
-    pDevDesc ndd = (pDevDesc) calloc(1, sizeof(NewDevDesc));
+    pDevDesc ndd = (pDevDesc) calloc(1, sizeof(DevDesc));
     if (!ndd) {
 	R_ShowMessage(_("Not enough memory to copy graphics window"));
 	return;
@@ -309,7 +309,7 @@ static void init_PS_PDF(void)
 static void SaveAsPostscript(pDevDesc dd, const char *fn)
 {
     SEXP s;
-    pDevDesc ndd = (pDevDesc) calloc(1, sizeof(NewDevDesc));
+    pDevDesc ndd = (pDevDesc) calloc(1, sizeof(DevDesc));
     pGEDevDesc gdd = desc2GEDesc(dd);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     char family[256], encoding[256], paper[256], bg[256], fg[256];
@@ -378,7 +378,7 @@ static void SaveAsPostscript(pDevDesc dd, const char *fn)
 static void SaveAsPDF(pDevDesc dd, const char *fn)
 {
     SEXP s;
-    pDevDesc ndd = (pDevDesc) calloc(1, sizeof(NewDevDesc));
+    pDevDesc ndd = (pDevDesc) calloc(1, sizeof(DevDesc));
     pGEDevDesc gdd = desc2GEDesc(dd);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     char family[256], encoding[256], bg[256], fg[256];
@@ -1957,10 +1957,14 @@ static void GA_MetricInfo(int c,
 static void GA_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
+    rect r;
 
-    xd->clip = rcanon(rpt(pt(x0, y0), pt(x1, y1)));
-    xd->clip.width  += 1;
-    xd->clip.height += 1;
+    r = rcanon(rpt(pt(x0, y0), pt(x1, y1)));
+    r.width  += 1;
+    r.height += 1;
+    r.width = r.width;
+    r.height = r.height;
+    xd->clip = r;
 }
 
 	/********************************************************/
@@ -2613,7 +2617,10 @@ static void GA_Text0(double x, double y, const char *str, int enc,
 	/*  it is too hard to get a correct bounding box */
 	if(xd->have_alpha) {
 	    rect r = xd->clip; 
+	    printf("r = %d %d %d %d\n", r.x, r.y, r.width, r.height);
+	    r = getregion(xd);
 	    gsetcliprect(xd->bm, xd->clip);
+	    printf("r = %d %d %d %d\n", r.x, r.y, r.width, r.height);
 	    gcopy(xd->bm2, xd->bm, r);
 	    if(gc->fontface != 5) {
 		wchar_t *wc; 
@@ -3261,7 +3268,7 @@ SEXP devga(SEXP args)
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
 	/* Allocate and initialize the device driver data */
-	if (!(dev = (pDevDesc) calloc(1, sizeof(NewDevDesc)))) return 0;
+	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc)))) return 0;
 	GAsetunits(xpinch, ypinch);
 	if (!GADeviceDriver(dev, display, width, height, ps,
 			    (Rboolean)recording, resize, bg, canvas, gamma,

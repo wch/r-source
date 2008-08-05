@@ -97,6 +97,11 @@ typedef struct gzfileconn {
     int cp;
 } *Rgzfileconn;
 
+typedef struct rawconn {
+    SEXP data; /* all the data, stored as a raw vector */
+    int pos, nbytes; /* current pos and number of bytes (same pos for read and write) */
+} *Rrawconn;
+
 typedef struct textconn {
     char *data;  /* all the data */
     int cur, nchars; /* current pos and number of chars */

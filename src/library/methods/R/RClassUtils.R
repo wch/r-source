@@ -694,9 +694,13 @@ reconcilePropertiesAndPrototype <-
       }
       else {
           dataPartDef <- getClass(dataPartClass)
-          if((is.na(match(dataPartClass, .BasicClasses)) &&
-             !isVirtualClass(dataPartDef)) ||
-             length(dataPartDef@slots) > 0)
+          checkDataPart <- !isXS3Class(dataPartDef)
+          if(checkDataPart)
+            checkDataPart  <-
+              ((is.na(match(dataPartClass, .BasicClasses)) &&
+                !isVirtualClass(dataPartDef)) ||
+               length(dataPartDef@slots) > 0)
+          if(checkDataPart)
               stop(gettextf("\"%s\" is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots)", dataPartClass),
                    domain = NA)
           if(extends(prototypeClass, "classPrototypeDef"))
@@ -909,10 +913,14 @@ completeExtends <-    function(ClassDef, class2, extensionDef, where) {
         ## FIXME:  getAllSuperClassses sometimes misses.  Why?
         if(length(superClassNames) == length(exts))
             exts <- exts[superClassNames]
+        if("oldClass" %in% superClassNames &&
+           length(ClassDef@slots) > 1) # an extension of an S3 class
+          exts <- .S3Extends(ClassDef, exts, where)
     }
     if(!missing(class2) && length(ClassDef@subclasses) > 0) {
+        strictBy <- TRUE # FIXME:  would like to make this conditional but a safe condition is unknown
         subclasses <-
-            .transitiveSubclasses(ClassDef@className, class2, extensionDef, ClassDef@subclasses)
+            .transitiveSubclasses(ClassDef@className, class2, extensionDef, ClassDef@subclasses, strictBy)
         ## insert the new is relationship, but without any recursive completion
         ## (asserted not to be needed if the subclass slot is complete)
         for(i in seq_along(subclasses)) {
@@ -939,8 +947,9 @@ completeSubclasses <-
     }
     subclasses <- .walkClassGraph(classDef, "subclasses", where)
     if(!missing(class2) && length(classDef@contains) > 0) {
+        strictBy <-TRUE
         contains <-
-            .transitiveExtends(class2, classDef@className, extensionDef, classDef@contains)
+            .transitiveExtends(class2, classDef@className, extensionDef, classDef@contains, strictBy)
         ## insert the new is relationship, but without any recursive completion
         ## (asserted not to be needed if the subclass slot is complete)
         for(i in seq_along(contains)) {
@@ -975,10 +984,14 @@ completeSubclasses <-
             ## add in those classes not already known to be super/subclasses
             exti <- exti[is.na(match(names(exti), what))]
             if(length(exti)> 0) {
-                if(superClassCase)
-                    exti <- .transitiveExtends(fromTo, by, ext[[i]], exti)
-                else
-                    exti <- .transitiveSubclasses(by, fromTo, ext[[i]], exti)
+                if(superClassCase) {
+                    strictBy <- TRUE  # FIXME:  need to find some safe test allowing non-strict
+                      exti <- .transitiveExtends(fromTo, by, ext[[i]], exti, strictBy)
+                }
+                else {
+                    strictBy <- TRUE 
+                    exti <- .transitiveSubclasses(by, fromTo, ext[[i]], exti, strictBy)
+                }
                 ext <- c(ext, exti)
             }
         }
@@ -1232,28 +1245,32 @@ setDataPart <- function(object, value) {
 ## modify the list moreExts, currently from class `by', to represent
 ## extensions instead from an originating class; byExt is the extension
 ## from that class to `by'
-.transitiveExtends <- function(from, by, byExt, moreExts) {
+.transitiveExtends <- function(from, by, byExt, moreExts, strictBy) {
     what <- names(moreExts)
+###    if(!strictBy) message("Extends: ",from, ": ", paste(what, collapse = ", "))
     for(i in seq_along(moreExts)) {
         toExt <- moreExts[[i]]
         to <- what[[i]]
-        toExt <- .combineExtends(byExt, toExt, by, to)
+        toExt <- .combineExtends(byExt, toExt, by, to, strictBy)
         moreExts[[i]] <- toExt
     }
     moreExts
+###    if(!strictBy) message("Done")
 }
 
-.transitiveSubclasses <- function(by, to, toExt, moreExts) {
+.transitiveSubclasses <- function(by, to, toExt, moreExts, strictBy) {
     what <- names(moreExts)
+###    if(!strictBy) message("Subclasses: ",by, ": ", paste(what, collapse = ", "))
     for(i in seq_along(moreExts)) {
         byExt <- moreExts[[i]]
-        byExt <- .combineExtends(byExt, toExt, by, to)
+        byExt <- .combineExtends(byExt, toExt, by, to, strictBy)
         moreExts[[i]] <- byExt
     }
     moreExts
+###    if(!strictBy) message("Done")
 }
 
-.combineExtends <- function(byExt, toExt, by, to) {
+.combineExtends <- function(byExt, toExt, by, to, strictBy) {
         ## construct the composite coerce method, taking into account the strict=
         ## argument.
         f <- toExt@coerce
@@ -1299,9 +1316,14 @@ setDataPart <- function(object, value) {
         toExt@test <- f
         f <- byExt@replace
         byExpr <- body(f)
+        if(!strictBy) {
+            toDef <- getClassDef(to)
+            byDef <- getClassDef(by)
+            strictBy <- is.null(toDef) || is.null(byDef) || toDef@virtual || byDef@virtual
+        }
         ## Is there a danger of infinite loop below?
-        expr <- substitute({.value <- as(from, BY); as(.value, TO) <- value; value <- .value; BYEXPR},
-                           list(BY=by, TO = to, BYEXPR = byExpr))
+        expr <- substitute({.value <- as(from, BY, STRICT); as(.value, TO) <- value; value <- .value; BYEXPR},
+                           list(BY=by, TO = to, BYEXPR = byExpr, STRICT = strictBy))
         body(f, envir = environment(f)) <- expr
         toExt@replace <- f
         toExt@by <- toExt@subClass

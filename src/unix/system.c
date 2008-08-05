@@ -365,6 +365,7 @@ int Rf_initialize_R(int ac, char **av)
 	size_t res;
 	if(ifp) R_Suicide(_("cannot use -e with -f or --file"));
 	ifp = tmpfile();
+	if(!ifp) R_Suicide(_("creating temporary file for '-e' failed"));
 	res = fwrite(cmdlines, strlen(cmdlines)+1, 1, ifp);
 	/* FIXME: do something with res */
 	fflush(ifp);

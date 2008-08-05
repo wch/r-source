@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-03 19:13+0000\n"
+"POT-Creation-Date: 2008-08-01 09:16+0100\n"
 "PO-Revision-Date: 2005-05-25 16:44+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -27,36 +27,36 @@ msgstr ""
 "top level의 viewport는 pop할수가 없습니다(grid 와 graphics 출력을 mix하고 있"
 "지 않습니까?)"
 
-#: grid.c:930
+#: grid.c:932
 msgid "attempt to plot on null device"
 msgstr "null 디바이스에서 plot를 시도합니다"
 
-#: grid.c:1210
+#: grid.c:1212
 msgid "There is no layout defined"
 msgstr "layout가 정의 되어있지 않습니다"
 
-#: grid.c:1430
+#: grid.c:1432
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 
-#: grid.c:1439
+#: grid.c:1441
 msgid "Polygon edge not found"
 msgstr ""
 
-#: grid.c:1579
+#: grid.c:1581
 msgid "Require at least two points to draw arrow"
 msgstr ""
 
-#: grid.c:1893
+#: grid.c:1895
 msgid "Non-finite control point in Xspline"
 msgstr ""
 
-#: grid.c:2988
+#: grid.c:2995
 #, fuzzy
 msgid "invalid plotting symbol"
 msgstr "부적절한 layout.pos.col입니다"
 
-#: grid.c:3068
+#: grid.c:3081
 #, fuzzy
 msgid "Unable to clip to rotated rectangle"
 msgstr "회전한 viewport에 생략할수가 없습니다"

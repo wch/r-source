@@ -38,7 +38,7 @@ void GEnullDevice()
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
-	if (!(dev = (pDevDesc ) calloc(1, sizeof(NewDevDesc))))
+	if (!(dev = (pDevDesc ) calloc(1, sizeof(DevDesc))))
 	    error(_("unable to start NULL device"));
 	if (!nullDeviceDriver(dev)) {
 	    free(dev);

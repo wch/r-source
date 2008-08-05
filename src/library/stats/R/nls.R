@@ -531,9 +531,13 @@ nls <-
 
     if(length(n) > 0) {
 	varIndex <- n %% respLength == 0
-	if(is.list(data) && diff(range(n)) > 0) {
+	if(is.list(data) && diff(range(n[names(n) %in% names(data)])) > 0) {
 	    ## 'data' is a list that can not be coerced to a data.frame
 	    mf <- data
+            if(!missing(subset))
+                warning("argument 'subset' will be ignored")
+            if(!missing(na.action))
+                warning("argument 'na.action' will be ignored")
 	    if(missing(start))
 		start <- getInitial(formula, mf)
 	    startEnv <- new.env(parent = environment(formula))
@@ -541,6 +545,9 @@ nls <-
 		assign(i, start[[i]], envir = startEnv)
 	    rhs <- eval(formula[[3]], data, startEnv)
 	    n <- NROW(rhs)
+            ## mimic what model.frame.default does
+            wts <- if (mWeights) rep(1, n) else
+                eval(substitute(weights), data, environment(formula))
 	}
         else {
             mf$formula <-  # replace by one-sided linear model formula
@@ -552,8 +559,8 @@ nls <-
             mf <- eval.parent(mf)
             n <- nrow(mf)
             mf <- as.list(mf)
+            wts <- if (!mWeights) model.weights(mf) else rep(1, n)
         }
-        wts <- if (!mWeights) model.weights(mf) else rep(1, n)
         if (any(wts < 0 | is.na(wts)))
             stop("missing or negative weights not allowed")
     }

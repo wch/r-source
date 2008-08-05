@@ -31,8 +31,9 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     ns <- length(scope)
     ans <- matrix(nrow = ns + 1, ncol = 2,
                   dimnames = list(c("<none>", scope), c("df", "AIC")))
-    ans[1,  ] <- extractAIC(object, scale, k = k, ...)
+    ans[1, ] <- extractAIC(object, scale, k = k, ...)
     n0 <- length(object$residuals)
+    env <- environment(formula(object))
     for(i in seq(ns)) {
 	tt <- scope[i]
 	if(trace > 1) {
@@ -41,7 +42,7 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	}
 	nfit <- update(object, as.formula(paste("~ . +", tt)),
                        evaluate = FALSE)
-        nfit <- eval.parent(nfit)
+	nfit <- eval(nfit, envir=env) # was  eval.parent(nfit)
 	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
         if(length(nfit$residuals) != n0)
             stop("number of rows in use has changed: remove missing values?")
@@ -66,6 +67,20 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     aod
 }
 
+check_exact <- function(object)
+{
+    w <- object$weights
+    if(is.null(w)) {
+        mss <- sum(object$fitted.values^2)
+        rss <- sum(object$residuals^2)
+    } else {
+        mss <- sum(w * object$fitted.values^2)
+        rss <- sum(w * object$residuals^2)
+    }
+    if(rss < 1e-10*mss)
+        warning("attempting model selection on an essentially perfect fit is nonsense", call. = FALSE)
+}
+
 add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 		    x = NULL, k = 2,...)
 {
@@ -81,6 +96,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	list(Fs=Fs, P=P)
     }
 
+    check_exact(object)
     if(missing(scope) || is.null(scope)) stop("no terms in scope")
     if(!is.character(scope))
 	scope <- add.scope(object, update.formula(object, scope))
@@ -314,8 +330,9 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     ns <- length(scope)
     ans <- matrix(nrow = ns + 1, ncol = 2,
                   dimnames =  list(c("<none>", scope), c("df", "AIC")))
-    ans[1,  ] <- extractAIC(object, scale, k = k, ...)
+    ans[1, ] <- extractAIC(object, scale, k = k, ...)
     n0 <- length(object$residuals)
+    env <- environment(formula(object))
     for(i in seq(ns)) {
 	tt <- scope[i]
 	if(trace > 1) {
@@ -324,7 +341,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
         }
         nfit <- update(object, as.formula(paste("~ . -", tt)),
                        evaluate = FALSE)
-        nfit <- eval.parent(nfit)
+	nfit <- eval(nfit, envir=env) # was  eval.parent(nfit)
 	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
         if(length(nfit$residuals) != n0)
             stop("number of rows in use has changed: remove missing values?")
@@ -352,6 +369,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 		     test=c("none", "Chisq", "F"), k = 2, ...)
 {
+    check_exact(object)
     x <- model.matrix(object)
     offset <- model.offset(model.frame(object))
     iswt <- !is.null(wt <- object$weights)

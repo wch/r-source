@@ -548,6 +548,7 @@ SEXP GE_LJOINget(R_GE_linejoin ljoin)
 static void getClipRect(double *x1, double *y1, double *x2, double *y2,
 			pGEDevDesc dd)
 {
+    /* Since these are only set by GESetClip they should be in order */
     if (dd->dev->clipLeft < dd->dev->clipRight) {
 	*x1 = dd->dev->clipLeft;
 	*x2 = dd->dev->clipRight;
@@ -567,6 +568,7 @@ static void getClipRect(double *x1, double *y1, double *x2, double *y2,
 static void getClipRectToDevice(double *x1, double *y1, double *x2, double *y2,
 				pGEDevDesc dd)
 {
+    /* Devices can have flipped coord systems */
     if (dd->dev->left < dd->dev->right) {
 	*x1 = dd->dev->left;
 	*x2 = dd->dev->right;
@@ -589,15 +591,33 @@ static void getClipRectToDevice(double *x1, double *y1, double *x2, double *y2,
  */
 void GESetClip(double x1, double y1, double x2, double y2, pGEDevDesc dd)
 {
-    dd->dev->clip(x1, x2, y1, y2, dd->dev);
+    pDevDesc d = dd->dev;
+    double dx1 = d->left, dx2 = d->right, dy1 = d->bottom, dy2 = d->top;
+
+    /* clip to device region */
+    if (dx1 <= dx2) {
+	x1 = fmax2(x1, dx1);
+	x2 = fmin2(x2, dx2);
+    } else {
+	x1 = fmin2(x1, dx1);
+	x2 = fmax2(x2, dx2);
+    }
+    if (dy1 <= dy2) {
+	y1 = fmax2(y1, dy1);
+	y2 = fmin2(y2, dy2);
+    } else {
+	y1 = fmin2(y1, dy1);
+	y2 = fmax2(y2, dy2);
+    }
+    d->clip(x1, x2, y1, y2, dd->dev);
     /*
      * Record the current clip rect settings so that calls to
      * getClipRect get the up-to-date values.
      */
-    dd->dev->clipLeft = fmin2(x1, x2);
-    dd->dev->clipRight = fmax2(x1, x2);
-    dd->dev->clipTop = fmax2(y1, y2);
-    dd->dev->clipBottom = fmin2(y1, y2);
+    d->clipLeft = fmin2(x1, x2);
+    d->clipRight = fmax2(x1, x2);
+    d->clipTop = fmax2(y1, y2);
+    d->clipBottom = fmin2(y1, y2);
 }
 
 /****************************************************************

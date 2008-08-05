@@ -25,3 +25,9 @@
 \DefineVerbatimEnvironment{Scode}{Verbatim}{fontshape=sl}
 
 \newenvironment{Schunk}{}{}
+
+\newcommand{\Sconcordance}[1]{%
+  \ifx\pdfoutput\undefined%
+  \csname newcount\endcsname\pdfoutput\fi%
+  \ifcase\pdfoutput\special{#1}%
+  \else\immediate\pdfobj{#1}\fi}

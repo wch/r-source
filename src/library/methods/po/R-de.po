@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49\n"
+"POT-Creation-Date: 2008-08-01 09:16\n"
 "PO-Revision-Date: 2008-04-06 19:08+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -25,11 +25,44 @@ msgstr "OOPS: mit der Zeile ist irgendetwas falsch"
 msgid "in .OldClassesPrototypes"
 msgstr "in .OldClassesPrototypes"
 
+msgid "Cannot specify matrix() arguments when specifying .Data"
+msgstr ""
+
+msgid "Cannot specify array() arguments when specifying .Data"
+msgstr ""
+
 msgid ""
 "methods may not be defined for primitive function \"%s\" in this version of R"
 msgstr ""
 "in dieser Version von R dürfen keine Methoden für die primitive Funktion \"%s"
 "\" definiert werden"
+
+msgid ""
+"S3Part() is only defined for classes set up by setOldCLass() or extend such "
+"a class:  not true of class \"%s\""
+msgstr ""
+
+msgid ""
+"The S3Class argument must be a class set up by setOldCLass() or an extension "
+"of such a class:  not true of class \"%s\""
+msgstr ""
+
+msgid "Not meaningful to have keepSlots=TRUE and strict=TRUE"
+msgstr ""
+
+msgid "Replacement value must extend class \"%s\", got  \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "Replacement value must be of class \""
+msgstr "neuer Wert ist keine Matrix"
+
+#, fuzzy
+msgid "\", got one of class \""
+msgstr "Ein Objekt der Klasse \""
+
+msgid "\""
+msgstr "\""
 
 msgid ""
 "no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\""
@@ -66,6 +99,9 @@ msgstr "die Zugehörigkeitsklassen müssen definiert werden: nicht wahr für %s"
 msgid "unable to create union class:  could not set members %s"
 msgstr ""
 "kann Vereinigungsklasse nicht erzeugen: konnte Mitglieder %s nicht setzen"
+
+msgid "invalid argument \"name\": %s"
+msgstr ""
 
 msgid ""
 "\"%s\" is a primitive function;  methods can be defined, but the generic "
@@ -243,6 +279,9 @@ msgstr "\"%s\" hat keine Methoden definiert"
 msgid "signature must be a vector of classes or an environment"
 msgstr "Signatur muss ein Vektor von Klassen oder eine Umgebung sein"
 
+msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+msgstr ""
+
 msgid "no unique method corresponding to this signature"
 msgstr "keine eindeutige Methode Korrespondiert mit dieser Signatur"
 
@@ -333,9 +372,6 @@ msgstr "nicht-generische Funktion an findMethods() übergeben"
 #, fuzzy
 msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr "Nur FALSE sinnvoll für Vererbung, wenn Ort angegeben (bekam"
-
-msgid "\""
-msgstr "\""
 
 #, fuzzy
 msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
@@ -458,16 +494,6 @@ msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 "die Namen in der Signatur für die Methode (%s) passen nicht zu den "
 "Argumenten von %s (%s)"
-
-msgid ""
-"'NextMethod' not defined because the current method is not a "
-"'MethodDefinition' object"
-msgstr ""
-"NextMethod: nicht definiert, da das aktuelle Methodenobjekt kein "
-"'MethodDefinition'-Objekt ist"
-
-msgid "expected a list of signature objects, got \"%s\""
-msgstr "erwartet war eine Liste von Signaturobjekten, bekam \"%s\""
 
 msgid ""
 "a call to callNextMethod() appears in a call to \"%s\", but the call does "
@@ -1298,6 +1324,11 @@ msgstr ""
 "inkonsistente Klasseninformation für \"%s\" im alten Stil (werden evtl. "
 "alten und neue Klassen vermischt?)"
 
+msgid ""
+"The class of the prototype, \"%s\", is undefined; only allowed for the S3 "
+"class being registered (\"%s\")"
+msgstr ""
+
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr "expizite Umwandlung der Klasse (%s) im alten Stil ist nicht defineirt"
 
@@ -1314,6 +1345,11 @@ msgid ""
 msgstr ""
 "Argument 'Classes' muss ein Vektor aus zwei Klassen sein: bekam Argument der "
 "Länge %d"
+
+msgid ""
+"S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
+"true of class \"%s\""
+msgstr ""
 
 msgid "Created a package name, \"%s\", when none found"
 msgstr "Erzeuge Paketnamen, \"%s\", da keinen gefunden"
@@ -1437,6 +1473,16 @@ msgstr[0] ""
 "in der Methodensignatur für Funktion \"%s\" keine Definition für Klasse: %s"
 msgstr[1] ""
 "in der Methodensignatur für Funktion \"%s\" keine Definition für Klassen: %s"
+
+#~ msgid ""
+#~ "'NextMethod' not defined because the current method is not a "
+#~ "'MethodDefinition' object"
+#~ msgstr ""
+#~ "NextMethod: nicht definiert, da das aktuelle Methodenobjekt kein "
+#~ "'MethodDefinition'-Objekt ist"
+
+#~ msgid "expected a list of signature objects, got \"%s\""
+#~ msgstr "erwartet war eine Liste von Signaturobjekten, bekam \"%s\""
 
 #~ msgid ""
 #~ "New generic for \"%s\" does not agree with implicit generic from package "

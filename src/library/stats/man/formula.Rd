@@ -85,6 +85,13 @@ as.formula(object, env = parent.frame())
   \sQuote{specials} such as \code{strata} or \code{cluster} (see the
   \code{specials} argument of \code{\link{terms.formula})}.
 
+  There are two special interpretations of \code{.} in a formula.  The
+  usual one is in the context of a \code{data} argument of model
+  fitting functions and means \sQuote{all columns not otherwise in the
+  formula}: see \code{\link{terms.formula}}.  In the context of
+  \code{\link{update.formula}}, \bold{only}, it means \sQuote{what was
+    previously in this part of the formula}.
+
   When \code{formula} is called on a fitted model object, either a
   specific method is used (such as that for class \code{"nls"}) or the
   default method.  The default first looks for a \code{"formula"}

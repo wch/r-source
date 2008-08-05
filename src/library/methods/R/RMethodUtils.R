@@ -106,8 +106,8 @@
       value
   }
 
-## stripped down version of asS4 in base, which can't be used until the methods
-## namespace is available
+## stripped down version of asS4 in base (asS4 can't be used until the methods
+## namespace is available)
 .asS4 <- function (object)
 {
     .Call("R_setS4Object", object, TRUE, PACKAGE = "base")
@@ -573,14 +573,11 @@ getGeneric <-
 .genericOrImplicit <- function(name, pkg, env) {
     fdef <- .getGenericFromCache(name, env, pkg)
     if(is.null(fdef)) {
-        penv <- getNamespace(pkg)
-        if(!isNamespace(penv))  {# no namespace--should be rare!
-            pname <- paste("package:", pkg, sep="")
-            if(pname %in% search())
-              penv <- as.environment(pname)
-            else
-              penv <- env
-        }
+	penv <- tryCatch(getNamespace(pkg), error = function(e)e)
+	if(!isNamespace(penv))	{# no namespace--should be rare!
+	    pname <- paste("package:", pkg, sep="")
+	    penv <- if(pname %in% search()) as.environment(pname) else env
+	}
         fdef <- getFunction(name, TRUE, FALSE, penv)
         if(!is(fdef, "genericFunction")) {
             if(is.primitive(fdef))
@@ -761,7 +758,7 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
     generics <- .getGenerics(where)
     packages <- attr(generics, "package")
     if(length(packages) <  length(generics))
-      packages <- rep(packages, length = length(generics))
+      packages <- rep(packages, length.out = length(generics))
     pkg <- getPackageName(where)
     for(i in seq_along(generics)) {
         f <- generics[[i]]
@@ -1463,21 +1460,9 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
       value <- as.environment(where)
     value
 }
-    
+
 
 .hasS4MetaData <- function(env)
   (length(objects(env, all.names = TRUE,
                           pattern = "^[.]__[CT]_")))
 
-## returns TRUE if the argument is a non-empty character vector of length 1
-## otherwise, returns a diagnostic character string reporting the non-conformance
-.isSingleName <- function(x) {
-    paste0 <- function(...)paste(..., sep="")
-    if(!is.character(x))
-      return(paste0('required to be a character vector, got an object of class "', class(x)[[1]], '"'))
-    if(length(x) != 1)
-      return(paste0("required to be a character vector of length 1, got length ",length(x)))
-    if(is.na(x) || !nzchar(x))
-      return(paste0('required a non-empty string, got "',x, '"'))
-    TRUE
-}

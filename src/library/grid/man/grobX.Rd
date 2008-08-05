@@ -32,11 +32,19 @@ grobY(x, theta)
   If the grob describes a single shape, the boundary value should
   correspond to the exact edge of the shape.
 
-  If the grob describes multiple shapes, in most cases, the boundary
-  value will correspond to the edge of a bounding box around all of
-  the shapes.  The exception to this is a polygon grob describing
-  multiple polygons;  in that case, the edge corresponds to a
-  convex hull around all points of all polygons described by the grob.
+  If the grob describes multiple shapes, the boundary
+  value will either correspond to the edge of a bounding box around all of
+  the shapes described by the grob (for multiple rectangles, circles,
+  xsplines, or text), or to a 
+  convex hull around all vertices of all shapes described by the grob
+  (for multiple polygons, points, lines, polylines, 
+  and segments).
+
+  Points grobs are currently a special case because the convex hull
+  is based on the data symbol \emph{locations} and does not take
+  into account the extent of the data symbols themselves.
+
+  The extents of any arrow heads are currently \emph{not} taken into account.
 }
 \value{
   A unit object. 

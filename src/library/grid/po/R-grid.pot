@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34\n"
+"POT-Creation-Date: 2008-08-01 09:16\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -260,13 +260,7 @@ msgstr ""
 msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
 msgstr ""
 
-msgid "Invalid"
-msgstr ""
-
-msgid "print"
-msgstr ""
-
-msgid "argument"
+msgid "Invalid 'print' argument"
 msgstr ""
 
 msgid "Invalid object in listing"
@@ -345,6 +339,9 @@ msgid "'x' and 'y' must be unit objects and have the same length"
 msgstr ""
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
+msgstr ""
+
+msgid "'x' and 'y' must all be units of length 1"
 msgstr ""
 
 msgid "'x' and 'units' must have length > 0"

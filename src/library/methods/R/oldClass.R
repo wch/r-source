@@ -22,26 +22,37 @@ setOldClass <- function(Classes, prototype,
         return(.setOldIs(Classes, where))
     mainClass <- Classes[[1]]
     prevClass <- "oldClass"
+    S3Class <- character()  #will accumulate the S3 classes inherited
     for(cl in rev(Classes)) {
+       S3Class <- c(cl, S3Class)
         if(isClass(cl, where)) {
             if(!extends(cl, prevClass))
                 warning(gettextf("inconsistent old-style class information for \"%s\" (maybe mixing old and new classes?)", cl), domain = NA)
+            if(missing(prototype))
+              prototype <- getClass(cl, where)@prototype
         }
         else {
-            setClass(cl, contains = c(prevClass, "VIRTUAL"), where = where)
+            useP <- TRUE
+            if(cl != mainClass || missing(prototype))
+                setClass(cl, contains = c(prevClass, "VIRTUAL"), where = where)
+            else if(isClass(class(prototype)))
+                setClass(cl, contains = prevClass, prototype = prototype, where = where)
+            else { #exceptionally, we allow an S3 object from the S3 class as prototype
+                if(.class1(prototype) != mainClass)
+                  stop(gettextf('The class of the prototype, "%s", is undefined; only allowed for the S3 class being registered ("%s")', .class1(prototype), mainClass), domain = NA)
+                setClass(cl, contains = prevClass, where = where)
+                useP <- FALSE
+            }
             def <- getClassDef(cl, where)
-            def@prototype <- .notS4(def@prototype)
+            if(useP) clp <- def@prototype else clp <- prototype
+            attr(clp, ".S3Class") <- S3Class
+            def@prototype <- .notS4(clp)
             assignClassDef(cl, def, where = where)
         }
-        prevClass <- cl
+       prevClass <- cl
     }
-    if(!missing(prototype)) {
-      cl <- Classes[[1]]
-      prevClass <- if(length(Classes)>1) Classes[[2]] else "oldClass"
-      setClass(cl, contains = prevClass, prototype = prototype, where = where)
-    }
-
 }
+
 .oldTestFun <- function(object) CLASS %in% attr(object, "class")
 .oldCoerceFun <- function(from, strict = TRUE) {
     if(strict)
@@ -70,4 +81,52 @@ setOldClass <- function(Classes, prototype,
         setIs(Class1, cl, test = tfun, coerce = .oldCoerceFun,
               replace = .oldReplaceFun, where = where)
     }
+}
+
+isXS3Class <- function(classDef) {
+    ".S3Class" %in% names(classDef@slots)
+}
+
+S3Class <- function(object) {
+    value <- attr(object, ".S3Class")
+    if(is.null(value)) {
+        if(isS4(object)) {
+            if(is.na(match(".Data", names(getClass(class(object))@slots))))
+              stop("S3Class only defined for extensions of \"oldClass\" or classes with a data part:  not true of class \"", class(object), "\"")
+            class(getDataPart(object))
+        }
+        else
+          class(object)
+    }
+    else
+      value
+}
+
+.S3Class <- S3Class # alias for functions with S3Class as an argument
+
+.addS3Class <- function(class, prototype, contains, where) {
+    for(what in contains) {
+        whatDef <- getClassDef(what@superClass, where = where)
+        if(isXS3Class(whatDef))
+          class <- c(class, attr(whatDef@prototype, ".S3Class"))
+    }
+    attr(prototype, ".S3Class") <- unique(class)
+    prototype
+}
+
+"S3Class<-" <- function(object, value) {
+    if(isS4(object)) {
+        current <- attr(object, ".S3Class")
+        if(is.null(current)) {
+            if(is.na(match(value, .BasicClasses)))
+               stop(gettextf("S3Class can only be assigned to S4 objects that extend \"oldClass\"; not true of class \"%s\"",
+                        class(object)), domain = NA)
+            mode(object) <- value ## may still fail, a further check would be good
+        }
+        else
+          slot(object, ".S3Class") <- value
+    }
+    else
+      class(object) <- value
+    object
 }

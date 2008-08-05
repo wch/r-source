@@ -1,6 +1,6 @@
 % File src/library/graphics/man/axis.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{axis}
@@ -11,17 +11,18 @@
 }
 \usage{
 axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
-     pos = NA, outer = FALSE, font = NA,
-     lty = "solid", lwd = 1, col = NULL, hadj = NA, padj = NA,
-     \dots)
+     pos = NA, outer = FALSE, font = NA, lty = "solid",
+     lwd = 1, lwd.ticks = lwd, col = NULL, col.ticks = NULL,
+     hadj = NA, padj = NA, \dots)
 }
 \arguments{
   \item{side}{an integer specifying which side of the plot the axis is
     to be drawn on.  The axis is placed as follows: 1=below,
     2=left, 3=above and 4=right.}
   \item{at}{the points at which tick-marks are to be drawn.  Non-finite
-    (infinite, \code{NaN} or \code{NA}) values are omitted.  By default,
-    when \code{NULL}, tickmark locations are computed, see \sQuote{Details} below.}
+    (infinite, \code{NaN} or \code{NA}) values are omitted.  By default
+    (when \code{NULL}) tickmark locations are computed, see
+    \sQuote{Details} below.}
   \item{labels}{this can either be a logical value specifying whether
     (numerical) annotations are to be made at the tickmarks, or a
     character or expression vector of labels to be placed at the
@@ -31,20 +32,21 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     it has the same effect as supplying \code{TRUE}.}
   \item{tick}{a logical value specifying whether tickmarks and an axis line
     should be drawn}.
-  \item{line}{the number of lines into the margin which the axis will
-    be drawn.  If not \code{NA} this overrides the value of the
-    graphical parameter \code{mgp[3]}.  The relative placing of
-    tickmarks and tick labels is unchanged.}
+  \item{line}{the number of lines into the margin at which the axis line
+    will be drawn, if not \code{NA}.}
   \item{pos}{the coordinate at which the axis line is to be drawn:
-    if not \code{NA} this overrides the values of both \code{line} and
-    \code{mgp[3]}.}
+    if not \code{NA} this overrides the value of \code{line}.}
   \item{outer}{a logical value indicating whether the axis should be
     drawn in the outer plot margin, rather than the standard plot
     margin.}
   \item{font}{font for text.  Defaults to \code{par("font")}.}
-  \item{lty, lwd}{line type, width for the axis line and the tick marks.}
-  \item{col}{color for the axis line and the tick marks.  Here
-    \code{NULL} means to use \code{par("fg")}, possibly specified inline.}
+  \item{lty}{line type for both the axis line and the tick marks.}
+  \item{lwd, lwd.ticks}{line widths for the axis line and the tick
+    marks. Zero or negative values will suppress the line or ticks.}
+  \item{col, col.ticks}{colors for the axis line and the tick marks
+    respectively.  \code{col = NULL} means to use \code{par("fg")},
+    possibly specified inline, and \code{col=NULL} means to use whatever
+    color \code{col} resolved to.}
   \item{hadj}{adjustment (see \code{\link{par}("adj")}) for all labels
     \emph{parallel} (\sQuote{horizontal}) to the reading direction.  If
     this is not a finite value, the default is used (centring for
@@ -85,11 +87,11 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 }
 \details{
   The axis line is drawn from the lowest to the highest value of
-  \code{at}, but will be clipped at the plot region.  By default, only ticks which
-  are drawn from points within the plot region (up to a tolerance for
-  rounding error) are plotted, but the ticks and their labels may well
-  extend outside the plot region.  Use \code{xpd=TRUE} or \code{xpd=NA}
-  to allow axes to extend further.
+  \code{at}, but will be clipped at the plot region.  By default, only
+  ticks which are drawn from points within the plot region (up to a
+  tolerance for rounding error) are plotted, but the ticks and their
+  labels may well extend outside the plot region.  Use \code{xpd=TRUE}
+  or \code{xpd=NA} to allow axes to extend further.
 
   When \code{at = NULL}, pretty tick mark locations are computed internally
   (the same way \code{\link{axTicks}(side)} would) from
@@ -107,16 +109,21 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   This can result in, for example, every other tick being labelled.
   (The ticks are drawn left to right or bottom to top, and space at
   least the size of an \sQuote{m} is left between labels.)
-
+  
+  If either \code{line} or \code{pos} is set, they (rather than
+  \code{par("mgp")[3]}) determine the position of the axis line and tick
+  marks, and the tick labels are placed \code{par("mgp")[2]} further
+  lines into (or towards for \code{pos}) the margin.
+  
   Several of the graphics parameters affect the way axes are drawn. The
   vertical (for sides 1 and 3) positions of the axis and the tick labels
-  are controlled by \code{mgp}, the size and direction of the ticks is
-  controlled by \code{tck} and \code{tcl} and the appearance of the tick
-  labels by \code{cex.axis}, \code{col.axis} and \code{font.axis} with
-  orientation controlled by \code{las} (but not \code{srt}, unlike S
-  which uses \code{srt} if \code{at} is supplied and \code{las} if it is
-  not).  Note that \code{adj} is not supported.
-  See \code{\link{par}} for details.
+  are controlled by \code{mgp[2:3]} and \code{mex}, the size and
+  direction of the ticks is controlled by \code{tck} and \code{tcl} and
+  the appearance of the tick labels by \code{cex.axis}, \code{col.axis}
+  and \code{font.axis} with orientation controlled by \code{las} (but
+  not \code{srt}, unlike S which uses \code{srt} if \code{at} is
+  supplied and \code{las} if it is not).  Note that \code{adj} is not
+  supported and labels are always centered.  See \code{\link{par}} for details.
 }
 \seealso{
   \code{\link{Axis}} for a generic interface.
