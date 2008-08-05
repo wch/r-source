@@ -712,7 +712,7 @@ RweaveLatexFinish <- function(object, error=FALSE)
         vals <- rle(diff(linesout))
         vals <- c(linesout[1], as.numeric(rbind(vals$lengths, vals$values)))
     	concordance <- paste(strwrap(paste(vals, collapse=" ")), collapse=" %\n")
-    	special <- paste("\\special{concordance:", outputname, ":", inputname, ":%\n",
+    	special <- paste("\\Sconcordance{concordance:", outputname, ":", inputname, ":%\n",
     			 concordance,"}\n", sep="")
     	cat(special, file=object$concordfile)
     }

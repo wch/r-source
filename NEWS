@@ -244,6 +244,9 @@ NEW FEATURES
     o	which(b) is somewhat faster now, notably for named vectors, thanks
         to a suggestion by Henrik Bengtsson.
 
+    o	Sweave() now writes concordance information inside a \Sconcordance
+    	LaTeX macro, which allows it to be inserted into PDF output.
+
 
 INSTALLATION
 
