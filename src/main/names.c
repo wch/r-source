@@ -910,6 +910,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"pushBack",	do_pushback,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"clearPushBack",do_clearpushback,0,    11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"pushBackLength",do_pushbacklength,0,  11,     1,      {PP_FUNCALL, PREC_FN,	0}},
+{"rawConnection",do_rawconnection,0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"rawConnectionValue",do_rawconvalue,0, 11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"textConnection",do_textconnection,0,	11,     4,      {PP_FUNCALL, PREC_FN,	0}},
 {"textConnectionValue",do_textconvalue,0,11,    1,      {PP_FUNCALL, PREC_FN,	0}},
 {"socketConnection",do_sockconn,0,	11,     6,      {PP_FUNCALL, PREC_FN,	0}},

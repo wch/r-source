@@ -545,6 +545,8 @@ SEXP do_truncate(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pushback(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pushbacklength(SEXP, SEXP, SEXP, SEXP);
 SEXP do_clearpushback(SEXP, SEXP, SEXP, SEXP);
+SEXP do_rawconnection(SEXP, SEXP, SEXP, SEXP);
+SEXP do_rawconvalue(SEXP, SEXP, SEXP, SEXP);
 SEXP do_textconnection(SEXP, SEXP, SEXP, SEXP);
 SEXP do_textconvalue(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getconnection(SEXP, SEXP, SEXP, SEXP);

@@ -233,8 +233,11 @@ NEW FEATURES
 
     o	The "lm" methods of add1(), anova() and drop1() warn if they are
 	mis-used on an essentialy exact fit.
+	
+    o	New functions rawConnection() and rawConnectionValue() allow
+    	raw vectors to be treated as connections.
 
-    o  New functions S3Part() and S3Class() provide access to the
+    o	New functions S3Part() and S3Class() provide access to the
         corresponding S3 object and class for S4 classes that extend
         either an S3 class or a basic R object type.
 
