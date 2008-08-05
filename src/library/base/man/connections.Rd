@@ -356,7 +356,7 @@ isIncomplete(con)
   This differs from S, where it is the equivalent of \code{"r+"},
   known as \code{"*"}.
 
-  On platforms where \code{vsnprintf} does not return the needed length
+  On (rare) platforms where \code{vsnprintf} does not return the needed length
   of output there is a 100,000 character output limit on
   the length of line for \code{fifo}, \code{gzfile} and \code{bzfile}
   connections: longer lines will be truncated with a warning.
