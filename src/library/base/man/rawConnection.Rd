@@ -32,6 +32,8 @@ rawConnectionValue(con)
   internally.  The raw vector can be retrieved \emph{via} 
   \code{rawConnectionValue}.
 
+  If a connection is open for both input and output the initial raw
+  vector supplied is copied when the connections is open
 }
 
 \value{
@@ -42,10 +44,10 @@ rawConnectionValue(con)
 }
 
 \note{
-  As output raw connections keep the character vector up to date
-  call-by-call, they are relatively expensive to use, and it is often
-  better to use an anonymous \code{\link{file}()} connection to collect
-  output.
+  As output raw connections keep the internal raw vector up to date
+  call-by-call, they are relatively expensive to use (although
+  over-allocation is used), and it may be better to use an anonymous
+  \code{\link{file}()} connection to collect output.
 
   On (rare) platforms where \code{vsnprintf} does not return the needed length
   of output there is a 100,000 character limit on the length of line for
@@ -57,10 +59,10 @@ rawConnectionValue(con)
 }
 
 \examples{
-zz <- rawConnection(raw(0), "r+")
+zz <- rawConnection(raw(0), "r+") # start with empty raw vector
 writeBin(LETTERS, zz)
 seek(zz, 0)
-readLines(zz)
+readLines(zz) # raw vector has embedded nuls
 seek(zz, 0)
 writeBin(letters[1:3], zz)
 rawConnectionValue(zz)

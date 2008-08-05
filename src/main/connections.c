@@ -1865,10 +1865,10 @@ SEXP attribute_hidden do_stderr(SEXP call, SEXP op, SEXP args, SEXP env)
 static void raw_init(Rconnection con, SEXP raw)
 {
     Rrawconn this = (Rrawconn) con->private;
-	
-    this->data = NAMED(raw) ? duplicate(raw) : raw;    
+
+    this->data = NAMED(raw) ? duplicate(raw) : raw;
     R_PreserveObject(this->data);
-    this->nbytes = length(this->data);
+    this->nbytes = this->nalloc = LENGTH(this->data);
     this->pos = 0;
 }
 
@@ -1891,12 +1891,18 @@ static void raw_destroy(Rconnection con)
 
 static void raw_resize(Rrawconn this, int needed)
 {
+    int nalloc = 64;
     SEXP tmp;
 
-    /* NB: this does not set the size on the connection: raw_write does */
-    PROTECT(tmp = lengthgets(this->data, needed));
+    if (needed > 8192) nalloc = 1.2*needed; /* 20% over-allocation */
+    else while(nalloc < needed) nalloc *= 2;
+    PROTECT(tmp = allocVector(RAWSXP, nalloc));
+    memcpy(RAW(tmp), RAW(this->data), this->nbytes);
+    /* later SET_TRUELENGTH(tmp, this->nbytes); */
     R_ReleaseObject(this->data);
     this->data = tmp;
+    this->nbytes = needed;
+    this->nalloc = needed;
     R_PreserveObject(this->data);
     UNPROTECT(1);
 }
@@ -1905,14 +1911,13 @@ static size_t raw_write(const void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
     Rrawconn this = (Rrawconn) con->private;
-    int freespace = LENGTH(this->data) - this->pos;
-    int bytes = size*nitems;    
+    int freespace = this->nalloc - this->pos;
+    int bytes = size*nitems;
 
     /* resize may fail, when this will give an error */
     if(bytes >= freespace) raw_resize(this, bytes + this->pos);
-    memmove(RAW(this->data) + this->pos, ptr, bytes); 
+    memmove(RAW(this->data) + this->pos, ptr, bytes);
     this->pos += bytes;
-    if (this->pos > this->nbytes) this->nbytes = this->pos;    
     return nitems;
 }
 
@@ -2057,13 +2062,10 @@ SEXP attribute_hidden do_rawconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
     con = getConnection(asInteger(CAR(args)));
     if(!con->canwrite)
 	error(_("'con' is not an output rawConnection"));
-    this = (Rrawconn)con->private;
-    PROTECT(ans = lengthgets(this->data, this->nbytes));    
-    R_ReleaseObject(this->data);
-    this->data = ans;
-    R_PreserveObject(this->data);
-    UNPROTECT(1);
-    return this->data;
+    this = (Rrawconn) con->private;
+    ans = allocVector(RAWSXP, this->nbytes); /* later, use TRUELENGTH? */
+    memcpy(RAW(ans), RAW(this->data), this->nbytes);
+    return ans;
 }
 
 /* ------------------- text connections --------------------- */

@@ -99,7 +99,10 @@ typedef struct gzfileconn {
 
 typedef struct rawconn {
     SEXP data; /* all the data, stored as a raw vector */
-    int pos, nbytes; /* current pos and number of bytes (same pos for read and write) */
+    /* replace nbytes by TRUELENGTH in due course? */
+    int pos, nbytes; /* current pos and number of bytes 
+			(same pos for read and write) */
+    int nalloc; /* the currently allocated size */
 } *Rrawconn;
 
 typedef struct textconn {
