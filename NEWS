@@ -238,8 +238,8 @@ NEW FEATURES
     	raw vectors to be treated as connections.
 
     o	New functions S3Part() and S3Class() provide access to the
-        corresponding S3 object and class for S4 classes that extend
-        either an S3 class or a basic R object type.
+	corresponding S3 object and class for S4 classes that extend
+	either an S3 class or a basic R object type.
 
 
 INSTALLATION
