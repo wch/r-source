@@ -1861,6 +1861,8 @@ SEXP attribute_hidden do_stderr(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- raw connections --------------------- */
 
+/* Possible future redesign: store nbytes as TRUELENGTH */
+
 /* copy a raw vector into a buffer */
 static void raw_init(Rconnection con, SEXP raw)
 {
@@ -1868,7 +1870,7 @@ static void raw_init(Rconnection con, SEXP raw)
 
     this->data = NAMED(raw) ? duplicate(raw) : raw;
     R_PreserveObject(this->data);
-    this->nbytes = this->nalloc = LENGTH(this->data);
+    this->nbytes = LENGTH(this->data);
     this->pos = 0;
 }
 
@@ -1889,20 +1891,17 @@ static void raw_destroy(Rconnection con)
     free(this);
 }
 
-static void raw_resize(Rrawconn this, int needed)
+static void raw_resize(Rrawconn this, size_t needed)
 {
-    int nalloc = 64;
+    size_t nalloc = 64;
     SEXP tmp;
 
     if (needed > 8192) nalloc = 1.2*needed; /* 20% over-allocation */
-    else while(nalloc < needed) nalloc *= 2;
+    else while(nalloc < needed) nalloc *= 2;  /* use powers of 2 if small */
     PROTECT(tmp = allocVector(RAWSXP, nalloc));
     memcpy(RAW(tmp), RAW(this->data), this->nbytes);
-    /* later SET_TRUELENGTH(tmp, this->nbytes); */
     R_ReleaseObject(this->data);
     this->data = tmp;
-    this->nbytes = needed;
-    this->nalloc = needed;
     R_PreserveObject(this->data);
     UNPROTECT(1);
 }
@@ -1911,13 +1910,14 @@ static size_t raw_write(const void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
     Rrawconn this = (Rrawconn) con->private;
-    int freespace = this->nalloc - this->pos;
-    int bytes = size*nitems;
+    size_t freespace = LENGTH(this->data) - this->pos, bytes = size*nitems;
 
     /* resize may fail, when this will give an error */
     if(bytes >= freespace) raw_resize(this, bytes + this->pos);
+    /* the source just might be this raw vector */
     memmove(RAW(this->data) + this->pos, ptr, bytes);
     this->pos += bytes;
+    this->nbytes = max(this->nbytes, this->pos);
     return nitems;
 }
 
@@ -1931,10 +1931,11 @@ static size_t raw_read(void *ptr, size_t size, size_t nitems,
 		       Rconnection con)
 {
     Rrawconn this = (Rrawconn) con->private;
-    int available = this->nbytes - this->pos, request = size*nitems, used;
-    used = (request < available) ? request : available;
+    size_t available = this->nbytes - this->pos, request = size*nitems, used;
+
+    used = max(request, available);
     memmove(ptr, RAW(this->data) + this->pos, used);
-    return (size_t) used/size;
+    return used/size;
 }
 
 static int raw_fgetc(Rconnection con)
@@ -1947,13 +1948,13 @@ static int raw_fgetc(Rconnection con)
 static double raw_seek(Rconnection con, double where, int origin, int rw)
 {
     Rrawconn this = (Rrawconn) con->private;
-    int newpos, oldpos = this->pos;
+    size_t newpos, oldpos = this->pos;
 
-    if(ISNA(where)) return oldpos;
+    if(ISNA(where)) return (double) oldpos;
 
     switch(origin) {
-    case 2: newpos = this->pos + (int) where; break;
-    case 3: newpos = this->nbytes + (int) where; break;
+    case 2: newpos = this->pos + (size_t) where; break;
+    case 3: newpos = this->nbytes + (size_t) where; break;
     default: newpos = where;
     }
     if(newpos < 0 || newpos > this->nbytes)
