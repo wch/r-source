@@ -843,6 +843,9 @@ static size_t fifo_read(void *ptr, size_t size, size_t nitems,
 {
     Rfifoconn this = (Rfifoconn)con->private;
 
+    /* uses 'size_t' for len */
+    if ((double) size * (double) nitems > SSIZE_MAX)
+	error(_("too large a block specified"));
     return read(this->fd, ptr, size * nitems)/size;
 }
 
@@ -851,6 +854,9 @@ static size_t fifo_write(const void *ptr, size_t size, size_t nitems,
 {
     Rfifoconn this = (Rfifoconn)con->private;
 
+    /* uses 'size_t' for len */
+    if ((double) size * (double) nitems > SSIZE_MAX)
+	error(_("too large a block specified"));
     return write(this->fd, ptr, size * nitems)/size;
 }
 
@@ -1196,6 +1202,9 @@ static size_t gzfile_read(void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
     gzFile fp = ((Rgzfileconn)(con->private))->fp;
+    /* uses 'unsigned' for len */
+    if ((double) size * (double) nitems > UINT_MAX)
+	error(_("too large a block specified"));
     return gzread(fp, ptr, size*nitems)/size;
 }
 
@@ -1203,6 +1212,9 @@ static size_t gzfile_write(const void *ptr, size_t size, size_t nitems,
 			   Rconnection con)
 {
     gzFile fp = ((Rgzfileconn)(con->private))->fp;
+    /* uses 'unsigned' for len */
+    if ((double) size * (double) nitems > UINT_MAX)
+	error(_("too large a block specified"));
     return gzwrite(fp, (voidp)ptr, size*nitems)/size;
 }
 
@@ -1379,6 +1391,9 @@ static size_t bzfile_read(void *ptr, size_t size, size_t nitems,
     BZFILE* bfp = (BZFILE *)((Rbzfileconn)(con->private))->bfp;
     int bzerror;
 
+    /* uses 'int' for len */
+    if ((double) size * (double) nitems > INT_MAX)
+	error(_("too large a block specified"));
     return BZ2_bzRead(&bzerror, bfp, ptr, size*nitems)/size;
 }
 
@@ -1388,6 +1403,9 @@ static size_t bzfile_write(const void *ptr, size_t size, size_t nitems,
     BZFILE* bfp = (BZFILE *)((Rbzfileconn)(con->private))->bfp;
     int bzerror;
 
+    /* uses 'int' for len */
+    if ((double) size * (double) nitems > INT_MAX)
+	error(_("too large a block specified"));
     BZ2_bzWrite(&bzerror, bfp, (voidp)ptr, size*nitems);
     if(bzerror != BZ_OK) return 0;
     else return nitems;
@@ -1635,6 +1653,8 @@ static size_t clp_read(void *ptr, size_t size, size_t nitems,
 {
     Rclpconn this = con->private;
     int available = this->len - this->pos, request = size*nitems, used;
+    if ((double) size * (double) nitems > INT_MAX)
+	error(_("too large a block specified"));
     used = (request < available) ? request : available;
     strncpy(ptr, this->buff, used);
     return (size_t) used/size;
@@ -1649,6 +1669,8 @@ static size_t clp_write(const void *ptr, size_t size, size_t nitems,
 
     if(!con->canwrite)
 	error(_("clipboard connection is open for reading only"));
+    if ((double) size * (double) nitems > INT_MAX)
+	error(_("too large a block specified"));
 
     for(i = 0; i < len; i++) {
 	if(this->pos >= this->len) break;
@@ -1912,6 +1934,8 @@ static size_t raw_write(const void *ptr, size_t size, size_t nitems,
     Rrawconn this = (Rrawconn) con->private;
     size_t freespace = LENGTH(this->data) - this->pos, bytes = size*nitems;
 
+    if ((double) size * (double) nitems + (double) this->pos > R_LEN_T_MAX)
+	error(_("attempting to add too many elements to raw vector"));
     /* resize may fail, when this will give an error */
     if(bytes >= freespace) raw_resize(this, bytes + this->pos);
     /* the source just might be this raw vector */
@@ -1933,6 +1957,8 @@ static size_t raw_read(void *ptr, size_t size, size_t nitems,
     Rrawconn this = (Rrawconn) con->private;
     size_t available = this->nbytes - this->pos, request = size*nitems, used;
 
+    if ((double) size * (double) nitems + (double) this->pos > R_LEN_T_MAX)
+	error(_("too large a block specified"));
     used = (request < available) ? request : available;
     memmove(ptr, RAW(this->data) + this->pos, used);
     return used/size;
@@ -1948,18 +1974,20 @@ static int raw_fgetc(Rconnection con)
 static double raw_seek(Rconnection con, double where, int origin, int rw)
 {
     Rrawconn this = (Rrawconn) con->private;
-    size_t newpos, oldpos = this->pos;
+    double newpos;
+    size_t oldpos = this->pos;
 
     if(ISNA(where)) return (double) oldpos;
 
+    /* Do the calculations here as double to avoid integer overflow */
     switch(origin) {
-    case 2: newpos = this->pos + (size_t) where; break;
-    case 3: newpos = this->nbytes + (size_t) where; break;
+    case 2: newpos = this->pos + where; break;
+    case 3: newpos = this->nbytes + where; break;
     default: newpos = where;
     }
     if(newpos < 0 || newpos > this->nbytes)
 	error(_("attempt to seek outside the range of the raw connection"));
-    else this->pos = newpos;
+    else this->pos = (size_t) newpos;
 
     return (double) oldpos;
 }
@@ -4470,6 +4498,9 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 
     if (priv->z_err == Z_STREAM_END) return 0;  /* EOF */
 
+    /* wrapped connection only needs to handle INT_MAX */
+    if ((double) size * (double) nitems > INT_MAX)
+	error(_("too large a block specified"));
     if (priv->nsaved >= 0) { /* non-compressed mode */
 	size_t len = size*nitems;
 	int i, nsaved = priv->nsaved;
@@ -4523,7 +4554,7 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 	if (priv->z_err != Z_OK || priv->z_eof) break;
     }
     priv->crc = crc32(priv->crc, start, (uInt)(priv->s.next_out - start));
-    return (int)(size*nitems - priv->s.avail_out)/size;
+    return (size_t)(size*nitems - priv->s.avail_out)/size;
 }
 
 static size_t gzcon_write(const void *ptr, size_t size, size_t nitems,
@@ -4532,6 +4563,8 @@ static size_t gzcon_write(const void *ptr, size_t size, size_t nitems,
     Rgzconn priv = (Rgzconn)con->private;
     Rconnection icon = priv->con;
 
+    if ((double) size * (double) nitems > INT_MAX)
+	error(_("too large a block specified"));
     priv->s.next_in = (Bytef*)ptr;
     priv->s.avail_in = size*nitems;
 
@@ -4549,7 +4582,7 @@ static size_t gzcon_write(const void *ptr, size_t size, size_t nitems,
 	if (priv->z_err != Z_OK) break;
     }
     priv->crc = crc32(priv->crc, (const Bytef *)ptr, size*nitems);
-    return (int)(size*nitems - priv->s.avail_in)/size;
+    return (size_t)(size*nitems - priv->s.avail_in)/size;
 }
 
 static int gzcon_fgetc(Rconnection con)
