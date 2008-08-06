@@ -45,12 +45,12 @@ as.Date.character <- function(x, format="", ...)
             if(is.na(xx)) f <- "%Y-%m-%d" # all NAs
         }
 	if(is.na(xx) ||
-	   !is.na(strptime(xx, f <- "%Y-%m-%d")) ||
-	   !is.na(strptime(xx, f <- "%Y/%m/%d"))
+	   !is.na(strptime(xx, f <- "%Y-%m-%d", tz="GMT")) ||
+	   !is.na(strptime(xx, f <- "%Y/%m/%d", tz="GMT"))
            ) return(strptime(x, f))
 	stop("character string is not in a standard unambiguous format")
     }
-    res <- if(missing(format)) fromchar(x) else strptime(x, format)
+    res <- if(missing(format)) fromchar(x) else strptime(x, format, tz="GMT")
     .Internal(POSIXlt2Date(res))
 }
 

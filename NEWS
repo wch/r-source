@@ -456,6 +456,10 @@ BUG FIXES
 	device is restored as the active device even if an error
 	occurs. (PR#9801)
 
+    o	as.Date() could fail to convert character strings representing
+	days on which midnight did not exist in the current timezone
+	(as happened in parts of Africa on 1960-01-01).
+
 
 
 		CHANGES IN R VERSION 2.7.1
