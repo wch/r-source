@@ -1099,7 +1099,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
     {
 	char tpb[32]; /* need 12+2+2*sizeof(void*) */
 	d->sourceable = FALSE;
-	sprintf(tpb, "<pointer: %p>", R_ExternalPtrAddr(s));
+	snprintf(tpb, 32, "<pointer: %p>", R_ExternalPtrAddr(s));
+	tpb[31] = '\0';
 	print2buff(tpb, d);
     }
 	break;
