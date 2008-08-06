@@ -1089,7 +1089,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	break;
     case EXTPTRSXP:
     {
-	char tpb[12+sizeof(void *)];
+	char tpb[16+sizeof(void *)];
 	d->sourceable = FALSE;
 	sprintf(tpb, "<pointer: %p>", R_ExternalPtrAddr(s));
 	print2buff(tpb, d);
