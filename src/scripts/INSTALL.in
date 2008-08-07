@@ -614,11 +614,13 @@ do_install_source () {
     fi
   fi
 
-  ## changed in 2.6.0
-  # system_makefile = "${R_SHARE_DIR}/make/shlib.mk"
   system_makefile="${R_HOME}/etc${R_ARCH}/Makeconf"
   if test -d src && test "${fake}" != "true"; then
     message "libs"
+    if ! test -f "${R_INCLUDE_DIR}/R.h" ; then
+      ## maybe even an error?  But installing Fortran-based packages should work
+      warning "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
+    fi
     has_error=false
     CLINK_CPPFLAGS=`echo "tools:::.find_cinclude_paths(file='DESCRIPTION')" | \
       "${R_EXE}" --vanilla --slave`
@@ -635,10 +637,6 @@ do_install_source () {
       elif test -r "${HOME}/.R/Makevars"; then
 	  makefiles="${makefiles} -f \"${HOME}/.R/Makevars\""
       fi
-      ## removed in 2.6.0
-#      if test -r Makevars; then
-#	makefiles="-f Makevars ${makefiles}"
-#      fi
       eval ${MAKE} ${makefiles} \
 	&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
         || has_error=true; \
