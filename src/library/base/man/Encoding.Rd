@@ -58,7 +58,7 @@ Encoding(x) <- value
   \code{\link{sub}} and \code{gsub} will give a UTF-8 result if any of
   the inputs are UTF-8.
 
-  As from \R 2.8.0 \code{\link{paste}} and \code{\link{sprintf}} will
+  As from \R 2.8.0 \code{\link{paste}} and \code{\link{sprintf}}
   return a UTF-8 encoded element is any of the inputs to that element
   are UTF-8.
 }

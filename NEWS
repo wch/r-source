@@ -154,12 +154,6 @@ NEW FEATURES
 
     o	read.dcf() now consistently gives an error for malformed DCF.
 
-    o	sprintf() returns elements of the result in UTF-8 when the
-	format or any character input has a corresponding element
-	declared as UTF-8.  Similarly for paste(), elements of the
-	result are in UTF-8 when any input to that element is declared
-	as UTF-8.
-
     o	The undocumented limit of 8191 bytes on comments (from # to
 	the end of the line) in R code has been removed.
 
@@ -375,6 +369,15 @@ BUG FIXES
 
 
 		CHANGES IN R VERSION 2.7.1 patched
+
+
+NEW FEATURES
+
+    o	sprintf() returns elements of the result in UTF-8 when the
+	format or any character input has a corresponding element
+	declared as UTF-8.  Similarly for paste(), elements of the
+	result are in UTF-8 when any input to that element is declared
+	as UTF-8.
 
 
 BUG FIXES
