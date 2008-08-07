@@ -41,6 +41,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP format, ans, _this, a[100], tmp;
     int ns, maxlen, lens[100], nthis, has_star, star_arg = 0, nstar;
     static R_StringBuffer outbuff = {NULL, 0, MAXELTSIZE};
+    Rboolean use_UTF8;
 
     outputString = R_AllocStringBuffer(0, &outbuff);
 
@@ -73,7 +74,19 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(STRSXP, maxlen));
     for(ns = 0; ns < maxlen; ns++) {
 	outputString[0] = '\0';
-	formatString = translateChar(STRING_ELT(format, ns % nfmt));
+	use_UTF8 = getCharCE(STRING_ELT(format, ns % nfmt)) == CE_UTF8;
+	if (!use_UTF8) {
+	    for(i = 0; i < nargs; i++) {
+		if (!isString(a[i])) continue;
+		if (getCharCE(STRING_ELT(a[i], ns % lens[i])) == CE_UTF8) {
+		    use_UTF8 = TRUE; break;
+		}
+	    }
+	}
+	if (use_UTF8)
+	    formatString = translateCharUTF8(STRING_ELT(format, ns % nfmt));
+	else
+	    formatString = translateChar(STRING_ELT(format, ns % nfmt));
 	n = strlen(formatString);
 	if (n > MAXLINE)
 	    error(_("'fmt' length exceeds maximal format length %d"), MAXLINE);
@@ -296,7 +309,10 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    /* NA_STRING will be printed as 'NA' */
 			    if (strcspn(fmtp, "s") >= strlen(fmtp))
 				error("%s", _("use format %s for character objects"));
-			    ss = translateChar(STRING_ELT(_this, ns % thislen));
+			    if (use_UTF8)
+				ss = translateCharUTF8(STRING_ELT(_this, ns % thislen));
+			    else
+				ss = translateChar(STRING_ELT(_this, ns % thislen));
 			    if(fmtp[1] != 's') {
 				if(strlen(ss) > MAXLINE)
 				    warning(_("likely truncation of character string to %d characters"),
@@ -334,7 +350,8 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		strcat(outputString, bit);
 	    }
 	}
-	SET_STRING_ELT(ans, ns, mkChar(outputString));
+	SET_STRING_ELT(ans, ns, mkCharCE(outputString, 
+					 use_UTF8 ? CE_UTF8 : CE_NATIVE));
     }
 
     UNPROTECT(nprotect);

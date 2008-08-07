@@ -51,7 +51,7 @@ prettyNum(x, big.mark = "",   big.interval = 3,
 
   \item{format}{equal to \code{"d"}  (for integers), \code{"f"},
     \code{"e"}, \code{"E"}, \code{"g"}, \code{"G"}, \code{"fg"} (for
-    reals), or \code{"s"} (for strings). Default is \code{"d"} for
+    reals), or \code{"s"} (for strings).  Default is \code{"d"} for
     integers, \code{"g"} for reals.
 
     \code{"f"} gives numbers in the usual

@@ -50,9 +50,10 @@ static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, collapse, sep, x;
-    int i, j, k, maxlen, nx, pwidth, sepw, ienc;
-    const char *s, *csep, *cbuf; char *buf;
-    Rboolean allKnown, anyKnown, sepASCII, sepKnown;
+    int i, j, k, maxlen, nx, pwidth, sepw, u_sepw, ienc;
+    const char *s, *csep, *cbuf, *u_csep=NULL;
+    char *buf;
+    Rboolean allKnown, anyKnown, sepASCII, sepKnown, use_UTF8, sepUTF8;
 
     checkArity(op, args);
 
@@ -74,9 +75,10 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid separator"));
     sep = STRING_ELT(sep, 0);
     csep = translateChar(sep);
-    sepw = strlen(csep); /* not LENGTH as might contain \0 */
+    u_sepw = sepw = strlen(csep);
     sepASCII = strIsASCII(csep);
     sepKnown = ENC_KNOWN(sep) > 0;
+    sepUTF8 = IS_UTF8(sep);
 
     collapse = CADDR(args);
     if (!isNull(collapse))
@@ -121,38 +123,65 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	 * declared encoding, we should mark.
 	 * Need to be careful only to include separator if it is used.
 	 */
-	anyKnown = FALSE; allKnown = TRUE;
+	anyKnown = FALSE; allKnown = TRUE; use_UTF8 = FALSE;
 	if(nx > 1) {
-	    allKnown = allKnown && (sepKnown || sepASCII);
-	    anyKnown = anyKnown || sepKnown;
+	    allKnown = sepKnown || sepASCII;
+	    anyKnown = sepKnown;
+	    use_UTF8 = sepUTF8;
 	}
 
 	pwidth = 0;
 	for (j = 0; j < nx; j++) {
 	    k = length(VECTOR_ELT(x, j));
-	    if (k > 0)
-		pwidth += strlen(translateChar(STRING_ELT(VECTOR_ELT(x, j),
-							  i % k)));
+	    if (k > 0) {
+		SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
+		if(IS_UTF8(cs)) use_UTF8 = TRUE;
+	    }
 	}
-	pwidth += (nx - 1) * sepw;
+	for (j = 0; j < nx; j++) {
+	    k = length(VECTOR_ELT(x, j));
+	    if (k > 0) {
+		if(use_UTF8)
+		    pwidth += strlen(translateCharUTF8(STRING_ELT(VECTOR_ELT(x, j), i % k)));
+		else
+		    pwidth += strlen(translateChar(STRING_ELT(VECTOR_ELT(x, j), i % k)));
+	    }
+	}
+	if (use_UTF8 && !u_csep) {
+	    u_csep = translateCharUTF8(sep);
+	    u_sepw = strlen(u_csep);
+	}
+	pwidth += (nx - 1) * (use_UTF8 ? u_sepw : sepw);
 	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
 	for (j = 0; j < nx; j++) {
 	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0) {
 		SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
-		s = translateChar(cs);
-		strcpy(buf, s);
-		buf += strlen(s);
-		allKnown = allKnown && (strIsASCII(s) || (ENC_KNOWN(cs)> 0));
-		anyKnown = anyKnown || (ENC_KNOWN(cs)> 0);
+		if (use_UTF8) {
+		    s = translateCharUTF8(cs);
+		    strcpy(buf, s);
+		    buf += strlen(s);
+		} else {
+		    s = translateChar(cs);
+		    strcpy(buf, s);
+		    buf += strlen(s);
+		    allKnown = allKnown && (strIsASCII(s) || (ENC_KNOWN(cs)> 0));
+		    anyKnown = anyKnown || (ENC_KNOWN(cs)> 0);
+		}
 	    }
 	    if (j != nx - 1 && sepw != 0) {
-		strcpy(buf, csep);
-		buf += sepw;
+		if (use_UTF8) {
+		    strcpy(buf, u_csep);
+		    buf += u_sepw;
+		} else {
+		    strcpy(buf, csep);
+		    buf += sepw;
+		}
 	    }
 	}
 	ienc = 0;
-	if(anyKnown && allKnown) {
+	if(use_UTF8) ienc = CE_UTF8;
+	else if(anyKnown && allKnown) {
 	    if(known_to_be_latin1) ienc = CE_LATIN1;
 	    if(known_to_be_utf8) ienc = CE_UTF8;
 	}
@@ -161,16 +190,24 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Now collapse, if required. */
 
-    if(collapse != R_NilValue && (nx = LENGTH(ans)) > 0) {
+    if(collapse != R_NilValue && (nx = LENGTH(ans)) > 0) {	
 	sep = STRING_ELT(collapse, 0);
-	csep = translateChar(sep);
+	use_UTF8 = IS_UTF8(sep);
+	for (i = 0; i < nx; i++) 
+	    if(IS_UTF8(STRING_ELT(ans, i))) use_UTF8 = TRUE;
+	if(use_UTF8)
+	    csep = translateCharUTF8(sep);
+	else
+	    csep = translateChar(sep);
 	sepw = strlen(csep);
 	anyKnown = ENC_KNOWN(sep) > 0;
 	allKnown = anyKnown || strIsASCII(csep);
 	pwidth = 0;
-	/* 'ans' is already translated */
 	for (i = 0; i < nx; i++)
-	    pwidth += strlen(CHAR(STRING_ELT(ans, i)));
+	    if(use_UTF8)
+		pwidth += strlen(translateCharUTF8(STRING_ELT(ans, i)));
+	    else
+		pwidth += strlen(CHAR(STRING_ELT(ans, i)));
 	pwidth += (nx - 1) * sepw;
 	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
 	for (i = 0; i < nx; i++) {
@@ -178,7 +215,10 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		strcpy(buf, csep);
 		buf += sepw;
 	    }
-	    s = CHAR(STRING_ELT(ans, i));
+	    if(use_UTF8)
+		s = translateCharUTF8(STRING_ELT(ans, i));
+	    else /* already translated */
+		s = CHAR(STRING_ELT(ans, i));
 	    strcpy(buf, s);
 	    while (*buf)
 		buf++;
@@ -187,8 +227,9 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    anyKnown = anyKnown || (ENC_KNOWN(STRING_ELT(ans, i))> 0);
 	}
 	UNPROTECT(1);
-	ienc = 0;
-	if(anyKnown && allKnown) {
+	ienc = CE_NATIVE;
+	if(use_UTF8) ienc = CE_UTF8;
+	else if(anyKnown && allKnown) {
 	    if(known_to_be_latin1) ienc = CE_LATIN1;
 	    if(known_to_be_utf8) ienc = CE_UTF8;
 	}
