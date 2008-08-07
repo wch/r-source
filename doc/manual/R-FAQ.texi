@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-07-29
+@set FAQ_DATE @value{FAQ_YEAR}-08-07
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -1830,6 +1830,8 @@ Econometrics with R'' by Christian Kleiber and Achim Zeileis, 2008,
 Springer-Verlag, New York.
 @item AIS
 Tools to look at the data (``Ad Inidicia Spectata'').
+@item ALS
+Multivariate curve resolution alternating least squares (MCR-ALS).
 @item AMORE
 A MORE flexible neural network package, providing the TAO robust neural
 network algorithm.
@@ -1929,6 +1931,8 @@ Canonical correlation analysis.
 Components of Canadian monetary aggregates.
 @item CGIwithR
 Facilities for the use of R to write CGI scripts.
+@item CHsharp
+Choi and Hall clustering in 3d.
 @item CORREP
 Multivariate correlation estimation.
 @item COZIGAM
@@ -2068,6 +2072,8 @@ epidemiological analysis in the Lexis diagram.
 Factor Analysis in R, using genetic algorithms.
 @item FGN
 Fractional Gaussian Noise model fitting.
+@item FITSio
+FITS (Flexible Image Transport System) utilities.
 @item FKBL
 Fuzzy Knowledge Base Learning.
 @c <COMMENT>
@@ -2645,6 +2651,9 @@ quadratic) mixed integer programs.
 @c @item RcppTemplate
 @c An illustration of the use of the Rcpp R/C++ interface library.
 @c </COMMENT>
+@item Read.isi
+Access old data saved in fixed-width format based on ISI-formatted
+codebooks.
 @item Reliability
 Functions for estimating parameters in software reliability models.
 @item ResistorArray
@@ -2878,6 +2887,9 @@ Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
 @item VaR
 Methods for calculation of Value at Risk (VaR).
+@item VhayuR
+R interface to the Vhayu Velocity high volume fast financial market data
+archival and analysis products.
 @item WINRPACK
 Reads in WIN pickfile and waveform files.
 @item WWGbook
@@ -3923,6 +3935,8 @@ multi-group (more than 2 group) classification.
 Various functions to draw plots.
 @item grImport
 Importing vector graphics.
+@item grade
+Binary grading functions.
 @item granova
 Graphical Analysis of Variance.
 @item graph
@@ -4055,6 +4069,8 @@ The hypergeometric function over the whole complex plane.
 Regression methods for IBD linkage with covariates.
 @item ic.infer
 Inequality constrained inference in linear normal situations.
+@item ic50
+Evaluation of compound screens.
 @item icomp
 Calculates the ICOMP criterion and its variations.
 @item identity
@@ -4264,6 +4280,8 @@ Analysis of sparse contingency tables with penalization approaches.
 @item logistf
 Firth's bias reduced logistic regression approach with penalized profile
 likelihood based confidence intervals for parameter estimates.
+@item loglognorm
+Double log normal distribution functions.
 @item logregperm
 Inference in Logistic Regression using permutation tests.
 @item logspline
@@ -4361,9 +4379,10 @@ regularization.
 @c </COMMENT>
 @item mclust02
 Model-based cluster analysis: the 2002 version of MCLUST.
-
 @item mcmc
 Functions for Markov Chain Monte Carlo (MCMC).
+@item mco
+Multi criteria optimization algorithms.
 @item mda
 Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -5623,6 +5642,8 @@ Simple mechanism for placing R graphics in a Tk widget.
 Two-level normal independent sampling estimation.
 @item tm
 A framework for text mining applications within R.
+@item topmodel
+An R implementation of TOPMODEL.
 @c <COMMENT>
 @c Moved to the Archive on 2008-05-25 as requested by the maintainer.
 @c (Replaced by randtoolbox.)
