@@ -325,6 +325,10 @@ BUG FIXES
     o	symbol() in plotmath expressions works again with non-ASCII
     	input on devices that use UTF-8 for the symbol font.
 
+    o	The automatic placement of legend() with 'title' and a
+	reversed 'x' axis was incorrect. (PR#12019)
+
+
 
 
 		CHANGES IN R VERSION 2.7.0
