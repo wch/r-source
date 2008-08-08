@@ -1285,7 +1285,7 @@ void R_CleanTempDir(void)
     }
 }
 #else
-static int R_unlink(char *name, int recursive)
+static int R_unlink(const char *name, int recursive)
 {
     if (streql(name, ".") || streql(name, "..")) return 0;
     if (recursive) {
@@ -1368,9 +1368,10 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn;
-    int i, j, nfiles, res, failures = 0, recursive;
+    int i, nfiles, failures = 0, recursive;
     const char *names;
 #if defined(HAVE_GLOB)
+    int j, res;
     glob_t globbuf;
 #endif
 
@@ -1401,7 +1402,8 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 		globfree(&globbuf);
 	    } else failures++;
 #else /* HAVE_GLOB */
-	    failures += R_unlink(names, recursive);
+	        failures += R_unlink(names, recursive);
+	    } else failures++;
 #endif
 	}
     }
