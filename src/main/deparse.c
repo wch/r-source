@@ -284,11 +284,12 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isNull(CADDR(args)))
 	opts = asInteger(CADDR(args));
 
-    PROTECT(tval = deparse1(tval, 0, opts));
+    tval = deparse1(tval, 0, opts);
     if (TYPEOF(CAR(args)) == CLOSXP) {
 	SET_CLOENV(CAR(args), saveenv);
 	UNPROTECT(1);
     }
+    PROTECT(tval); /* against Rconn_printf */
     ifile = asInteger(CADR(args));
 
     wasopen = 1;
