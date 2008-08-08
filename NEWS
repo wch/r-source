@@ -241,6 +241,9 @@ NEW FEATURES
     o	Sweave() now writes concordance information inside a \Sconcordance
     	LaTeX macro, which allows it to be inserted into PDF output.
 
+    o	stripchart() now passes '...' to title (as well as to
+	plot.default() and axis(). (Wish of PR#12202)
+
 
 INSTALLATION
 
