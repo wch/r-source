@@ -622,8 +622,9 @@ do_install_source () {
       warning "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
     fi
     has_error=false
+    ## not --vanilla as we need to pick up the libpaths
     CLINK_CPPFLAGS=`echo "tools:::.find_cinclude_paths(file='DESCRIPTION')" | \
-      "${R_EXE}" --vanilla --slave`
+      "${R_EXE}" --no-restore --no-save --slave`
     export CLINK_CPPFLAGS
     if ${debug}; then set -x; fi
     ${MKDIR_P} "${R_PACKAGE_DIR}/libs${R_ARCH}"
