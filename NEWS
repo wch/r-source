@@ -226,23 +226,23 @@ NEW FEATURES
 	(PR#11169)
 
     o	The "lm" methods of add1(), anova() and drop1() warn if they are
-	mis-used on an essentialy exact fit.
+	mis-used on an essentially exact fit.
 
     o	New functions rawConnection() and rawConnectionValue() allow
-    	raw vectors to be treated as connections.
+	raw vectors to be treated as connections.
 
     o	New functions S3Part() and S3Class() provide access to the
 	corresponding S3 object and class for S4 classes that extend
 	either an S3 class or a basic R object type.
 
     o	which(b) is somewhat faster now, notably for named vectors, thanks
-        to a suggestion by Henrik Bengtsson.
+	to a suggestion by Henrik Bengtsson.
 
     o	Sweave() now writes concordance information inside a \Sconcordance
-    	LaTeX macro, which allows it to be inserted into PDF output.
+	LaTeX macro, which allows it to be inserted into PDF output.
 
     o	stripchart() now passes '...' to title (as well as to
-	plot.default() and axis(). (Wish of PR#12202)
+	plot.default() and axis()). (Wish of PR#12202)
 
 
 INSTALLATION
