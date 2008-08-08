@@ -469,6 +469,8 @@ BUG FIXES
     o	The automatic placement of legend() with 'title' and a
 	reversed 'x' axis was incorrect. (PR#12019)
 
+    o	The use of multiple packages in 'LinkingTo' works again.
+
 
 
 		CHANGES IN R VERSION 2.7.1

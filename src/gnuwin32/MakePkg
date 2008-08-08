@@ -277,9 +277,9 @@ ifneq ($(strip $(BUILD)),CROSS)
 	elif test -r "${HOME}/.R/Makevars"; then \
 	  makefiles="$${makefiles} -f \"${HOME}/.R/Makevars\""; \
 	fi; \
-	CLINK_CPPFLAGS=`echo "tools:::.find_cinclude_paths(file='DESCRIPTION')" | $(REXE) R_DEFAULT_PACKAGES=NULL`; \
+	CLINK_CPPFLAGS=`echo "tools:::.find_cinclude_paths(file='DESCRIPTION')" | $(R_EXE) --no-save --slave R_DEFAULT_PACKAGES=NULL`; \
 	$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
-	  DLLNAME=$(DLLNAME) CLINK_CPPFLAGS=$${CLINK_CPPFLAGS} \
+	  DLLNAME=$(DLLNAME) CLINK_CPPFLAGS="$${CLINK_CPPFLAGS}" \
 	  $${makefiles}
 	@$(ECHO) "  ... DLL made"
 else
