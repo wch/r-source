@@ -361,9 +361,6 @@ BUG FIXES
 	object's formula environment, rather than simply in the parent
 	(informal bug report by Werner Stahel).
 
-    o	The automatic placement of legend() with 'title' and a
-	reversed 'x' axis was incorrect. (PR#12019)
-
 
 
 
@@ -468,6 +465,9 @@ BUG FIXES
     o	as.Date() could fail to convert character strings representing
 	days on which midnight did not exist in the current timezone
 	(as happened in parts of Africa on 1960-01-01).
+
+    o	The automatic placement of legend() with 'title' and a
+	reversed 'x' axis was incorrect. (PR#12019)
 
 
 
