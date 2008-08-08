@@ -102,6 +102,8 @@ BUG FIXES
 	(as happened in parts of Africa on 1960-01-01).
 
 
+    o	The use of multiple packages in 'LinkingTo' works again.
+
 
 		CHANGES IN R VERSION 2.7.1
 
