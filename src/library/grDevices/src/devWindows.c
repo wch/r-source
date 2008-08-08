@@ -2599,7 +2599,6 @@ static void GA_Text0(double x, double y, const char *str, int enc,
 
     SetFont(gc, rot, xd);
     SetColor(gc->col, gc->gamma, xd);
-    printf("text in %08x\n", gc->col);
     if (R_OPAQUE(gc->col)) {
 	if(gc->fontface != 5) {
 	    /* As from 2.7.0 can use Unicode always */
@@ -2620,10 +2619,8 @@ static void GA_Text0(double x, double y, const char *str, int enc,
 	/*  it is too hard to get a correct bounding box */
 	if(xd->have_alpha) {
 	    rect r = xd->clip; 
-	    printf("r = %d %d %d %d\n", r.x, r.y, r.width, r.height);
 	    r = getregion(xd);
 	    gsetcliprect(xd->bm, xd->clip);
-	    printf("r = %d %d %d %d\n", r.x, r.y, r.width, r.height);
 	    gcopy(xd->bm2, xd->bm, r);
 	    if(gc->fontface != 5) {
 		wchar_t *wc; 
