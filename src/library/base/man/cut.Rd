@@ -118,5 +118,10 @@ table(cut(y, breaks =  1*(-3:3), right = FALSE))
 aaa <- c(1,2,3,4,5,2,3,4,5,6,7)
 cut(aaa, 3)
 cut(aaa, 3, dig.lab=4, ordered = TRUE)
+
+## one way to extract the breakpoints
+labs <- levels(cut(aaa, 3))
+cbind(lower = as.numeric( sub("\\\\((.+),.*", "\\\\1", labs) ),
+      upper = as.numeric( sub("[^,]*,([^]]*)\\\\]", "\\\\1", labs) ))
 }
 \keyword{category}
