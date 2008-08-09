@@ -479,6 +479,9 @@ BUG FIXES
     o	barplot(log = "y") failed if there were NAs in the 'height'
 	argument.  (PR#11585)
 
+    o	pbeta() is more accurate in some cases with extreme values of
+	ncp.  (PR#11277).
+
 
 
 		CHANGES IN R VERSION 2.7.1
