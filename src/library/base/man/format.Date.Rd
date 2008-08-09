@@ -68,7 +68,7 @@ as.Date(x, \ldots)
 }
 \value{
   The \code{format} and \code{as.character} methods return a character vector
-  representing the date.
+  representing the date.  \code{NA} dates are returned as \code{NA_character_}.
 
   The \code{as.Date} methods return an object of class \code{"\link{Date}"}.
 }

@@ -203,7 +203,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 }
 \value{
   The \code{format} methods and \code{strftime} return character vectors
-  representing the time.
+  representing the time.  \code{NA} times are returned as \code{NA_character_}.
 
   \code{strptime} turns character representations into an object of
   class \code{"\link{POSIXlt}"}.  The timezone is used to set the
