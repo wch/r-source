@@ -276,7 +276,8 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     axes <- is.null(pars$axes)
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }
     if(axes) {
-	ax.pars <- pars[names(pars) %in% c("xaxt", "yaxt", "las",
+	ax.pars <- pars[names(pars) %in% c("xaxt", "yaxt", "xaxp", "yaxp",
+                                           "las",
 					   "cex.axis", "col.axis", "format")]
 	if (is.null(show.names)) show.names <- n > 1
 	if (show.names)
