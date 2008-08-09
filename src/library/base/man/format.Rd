@@ -51,7 +51,10 @@ format(x, \dots)
     \code{AsIs} method: the \emph{maximum} field width for non-character
     objects.  \code{NULL} corresponds to the default 12.
   }
-  \item{na.encode}{logical: should \code{NA} strings be encoded?}
+  \item{na.encode}{logical: should \code{NA} strings be encoded?  Note
+    this only applies to elements of character vectors, not to numerical
+    or logical \code{NA}s, which are always encoded as \code{"NA"}.}
+  % because Mr Gorjanc won't read, PR#12318
   \item{scientific}{Either a logical specifying whether
     elements of a real or complex vector should be encoded in scientific
     format, or an integer penalty (see \code{\link{options}("scipen")}.
