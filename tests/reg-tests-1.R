@@ -5317,3 +5317,9 @@ nls(y~((g1)*exp((log(g2/g1))*(1-exp(-k*(x-Ta)))
     trace=TRUE, weights=weight)
 ## failed for find weights in R <= 2.7.1
 
+
+## barplot(log = "y") with NAs (PR#11585)
+dat <- matrix(1:25, 5)
+dat[2,3] <- NA
+barplot(dat, beside = TRUE, log = "y")
+## failed in 2.7.1

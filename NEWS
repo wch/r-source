@@ -434,11 +434,11 @@ BUG FIXES
     o	Closing an X11 View() or dataentry window via its frame's
 	close control now works better on some window managers.
 
-    o	Calling lapply() with certain primitives was not handling method
-	dispatch correctly for is.numeric(), is.matrix(), is.array(),
-	log() and the Math2 group.  This affected data.matrix() which
-	incorrectly regarded "Date" and "POSIXct" objects as numeric,
-	and has been adjusted to still do so.
+    o	Calling lapply() was not handling method dispatch correctly for
+	is.numeric(), is.matrix(), is.array(), log() and the Math2
+	group.  This affected data.matrix() which incorrectly regarded
+	"Date" and "POSIXct" objects as numeric, and has been adjusted
+	to do so as exceptions.
 
     o	package.skeleton() was not looking for non-function objects in
     	its 'environment' argument.
@@ -469,7 +469,15 @@ BUG FIXES
     o	The automatic placement of legend() with 'title' and a
 	reversed 'x' axis was incorrect. (PR#12019)
 
-    o	The use of multiple packages in 'LinkingTo' works again.
+    o	The use of multiple packages in 'LinkingTo' works again, and
+    	now works when the dependent packages are in libraries loaded
+    	by R but not by R --vanilla.
+
+    o	bxp() (and hence boxplot) now respects in-line graphical
+	parameters 'xaxp'/'yaxp' as appropriate.  (PR#11463)
+
+    o	barplot(log = "y") failed if there were NAs in the 'height'
+	argument.  (PR#11585)
 
 
 
