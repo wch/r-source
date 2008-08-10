@@ -48,7 +48,8 @@ mean(x, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{weighted.mean}}, \code{\link{mean.POSIXct}}
+  \code{\link{weighted.mean}}, \code{\link{mean.POSIXct}},
+  \code{\link{colMeans}} for row and column means.
 }
 \examples{
 x <- c(0:10, 50)
