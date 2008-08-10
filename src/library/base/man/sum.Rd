@@ -1,6 +1,6 @@
 % File src/library/base/man/sum.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sum}
@@ -46,6 +46,9 @@ sum(\dots, na.rm = FALSE)
   \code{x, \dots, na.rm}.
 
   \sQuote{\link{plotmath}} for the use of \code{sum} in plot annotation.
+}
+\seealso{
+  \code{\link{colSums}} for row and column sums.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
