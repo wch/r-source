@@ -5117,7 +5117,7 @@ Here is an example from Bates & Watts (1988), page 51.  The data are:
 > y <- c(76, 47, 97, 107, 123, 139, 159, 152, 191, 201, 207, 200)
 @end example
 
-The model to be fitted is:
+The fit criterion to be minimized is:
 
 @example
 > fn <- function(p) sum((y - (p[1] * x)/(p[2] + x))^2)
