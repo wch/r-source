@@ -482,6 +482,9 @@ BUG FIXES
     o	pbeta() is more accurate in some cases with extreme values of
 	ncp.  (PR#11277).
 
+    o	edit.data.frame() not longer fails if called on a 0-column
+	data frame and no column is created.
+
 
 
 		CHANGES IN R VERSION 2.7.1
