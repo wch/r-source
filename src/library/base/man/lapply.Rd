@@ -89,7 +89,7 @@ replicate(n, expr, simplify = TRUE)
   correctly.
   
   If \code{expr} is a function call, be aware of assumptions about where
-  it is evaluated, and in particular what \code{\dots}} might refer to.
+  it is evaluated, and in particular what \code{\dots} might refer to.
   You can pass additional named arguments to a function call as
   additional named arguments to \code{replicate}: see \sQuote{Examples}.
 }
