@@ -178,8 +178,7 @@ for(cl in c("Number", "vdate", "cdate")) removeClass(cl)
 \references{
  Chambers, John M. (2008)
  \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version: see section 10.6 for method
-  selection and section 13.4 for generic functions).
+  Springer.  (For the R version.)
 
  Chambers, John M. (1998)
  \emph{Programming with Data}
