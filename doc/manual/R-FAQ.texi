@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-08-07
+@set FAQ_DATE @value{FAQ_YEAR}-08-08
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -1979,10 +1979,14 @@ Competing risk model with frailties for right censored survival data.
 @item Containers
 Object-oriented data structures including stack, queue, and binary
 search tree.
+@item ConvergenceConcepts
+Seeing convergence concepts in action.
 @item CoxBoost
 Cox survival models by likelihood based boosting.
 @item CreditMetrics
 Functions for calculating the CreditMetrics risk model.
+@item CvM2SL2Test
+Cramer-von Mises two sample tests.
 @item DAAG
 Various data sets used in examples and exercises in ``Data Analysis and
 Graphics Using R'' by John H. Maindonald and W. John Brown, 2003.
@@ -2656,6 +2660,8 @@ Access old data saved in fixed-width format based on ISI-formatted
 codebooks.
 @item Reliability
 Functions for estimating parameters in software reliability models.
+@item ResearchMethods
+Using GUIs to help teach statistics to non-statistics students.
 @item ResistorArray
 Electrical properties of resistor networks.
 @item Rfwdmv
@@ -2815,6 +2821,8 @@ Read and write StatDataML.
 @c @item StoppingRules
 @c Stopping rules for microarray classifiers.
 @c </COMMENT>
+@item StreamMetabolism
+Calculation of single station metabolism from diurnal oxygen curves.
 @item SuppDists
 Ten distributions supplementing those built into R (Inverse Gauss,
 Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
@@ -3330,8 +3338,6 @@ Find disconnected sets for two-way classification.
 Continued fractions.
 @item contrast
 A collection of contrast methods.
-@item convco
-Seeing convergence concepts in action.
 @item copas
 Statistical methods to model and adjust for bias in meta-analysis.
 @item copula
@@ -3395,6 +3401,8 @@ Calculates the NPMLE of the survival distribution for doubly censored
 data.
 @item ddesolve
 Solver for Delay Differential Equations.
+@item ddst
+Data driven smooth Neyman test.
 @item deSolve
 General solvers for ordinary differential equations (ODE) and for
 differential algebraic equations (DAE).
@@ -5628,6 +5636,10 @@ Bayesian regression and adaptive sampling with Treed Gaussian Process
 models.
 @item time
 Time tracking for developers.
+@item timereg
+Code and data sets for the book ``Dynamic Regression Models for Survival
+Data'' by T.  Martinussen and T. Scheike, 2006, Springer Verlag, plus
+more recent developments.
 @item timsac
 TIMe Series Analysis and Control package.
 @item titan
