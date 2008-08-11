@@ -14,6 +14,20 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## version to return NA for df = 0, as R did before 2.7.0
+safe_pchisq <- function(q, df, ...)
+{
+    df[df <= 0] <- NA
+    pchisq(q=q, df=df, ...)
+}
+## and to avoid a warning
+safe_pf <- function(q, df1, ...)
+{
+    df1[df1 <= 0] <- NA
+    pf(q=q, df1=df1, ...)
+}
+
+
 add1 <- function(object, scope, ...) UseMethod("add1")
 
 add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
@@ -56,7 +70,7 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	dev <- dev[1] - dev; dev[1] <- NA
 	nas <- !is.na(dev)
 	P <- dev
-	P[nas] <- pchisq(dev[nas], dfs[nas], lower.tail=FALSE)
+	P[nas] <- safe_pchisq(dev[nas], dfs[nas], lower.tail=FALSE)
 	aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
     }
     head <- c("Single term additions", "\nModel:",
@@ -92,7 +106,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	Fs[df < .Machine$double.eps] <- NA
 	P <- Fs
 	nnas <- !is.na(Fs)
-	P[nnas] <- pf(Fs[nnas], df[nnas], rdf - df[nnas], lower.tail=FALSE)
+	P[nnas] <- safe_pf(Fs[nnas], df[nnas], rdf - df[nnas], lower.tail=FALSE)
 	list(Fs=Fs, P=P)
     }
 
@@ -177,7 +191,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         } else dev <- dev/scale
         df <- aod$Df
         nas <- !is.na(df)
-        dev[nas] <- pchisq(dev[nas], df[nas], lower.tail=FALSE)
+        dev[nas] <- safe_pchisq(dev[nas], df[nas], lower.tail=FALSE)
         aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
 	rdf <- object$df.residual
@@ -202,7 +216,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	Fs[df < .Machine$double.eps] <- NA
 	P <- Fs
 	nnas <- !is.na(Fs)
-	P[nnas] <- pf(Fs[nnas], df[nnas], rdf - df[nnas], lower.tail=FALSE)
+	P[nnas] <- safe_pf(Fs[nnas], df[nnas], rdf - df[nnas], lower.tail=FALSE)
 	list(Fs=Fs, P=P)
     }
     if(!is.character(scope))
@@ -292,7 +306,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         LRT <- if(dispersion == 1) "LRT" else "scaled dev."
         aod[, LRT] <- dev
         nas <- !is.na(dev)
-        dev[nas] <- pchisq(dev[nas], aod$Df[nas], lower.tail=FALSE)
+        dev[nas] <- safe_pchisq(dev[nas], aod$Df[nas], lower.tail=FALSE)
         aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
         if(fam == "binomial" || fam == "poisson")
@@ -355,7 +369,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
         dev <- dev - dev[1] ; dev[1] <- NA
         nas <- !is.na(dev)
         P <- dev
-        P[nas] <- pchisq(dev[nas], dfs[nas], lower.tail = FALSE)
+        P[nas] <- safe_pchisq(dev[nas], dfs[nas], lower.tail = FALSE)
         aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
     }
     head <- c("Single term deletions", "\nModel:",
@@ -422,7 +436,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
         } else dev <- dev/scale
         df <- aod$Df
         nas <- !is.na(df)
-        dev[nas] <- pchisq(dev[nas], df[nas], lower.tail=FALSE)
+        dev[nas] <- safe_pchisq(dev[nas], df[nas], lower.tail=FALSE)
         aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
 	dev <- aod$"Sum of Sq"
@@ -433,7 +447,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 	Fs[dfs < 1e-4] <- NA
 	P <- Fs
 	nas <- !is.na(Fs)
-	P[nas] <- pf(Fs[nas], dfs[nas], rdf, lower.tail=FALSE)
+	P[nas] <- safe_pf(Fs[nas], dfs[nas], rdf, lower.tail=FALSE)
 	aod[, c("F value", "Pr(F)")] <- list(Fs, P)
     }
     head <- c("Single term deletions", "\nModel:",
@@ -506,7 +520,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         nas <- !is.na(dev)
         LRT <- if(dispersion == 1) "LRT" else "scaled dev."
         aod[, LRT] <- dev
-        dev[nas] <- pchisq(dev[nas], aod$Df[nas], lower.tail=FALSE)
+        dev[nas] <- safe_pchisq(dev[nas], aod$Df[nas], lower.tail=FALSE)
         aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
         if(fam == "binomial" || fam == "poisson")
@@ -521,7 +535,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	Fs[dfs < 1e-4] <- NA
 	P <- Fs
 	nas <- !is.na(Fs)
-	P[nas] <- pf(Fs[nas], dfs[nas], rdf, lower.tail=FALSE)
+	P[nas] <- safe_pf(Fs[nas], dfs[nas], rdf, lower.tail=FALSE)
 	aod[, c("F value", "Pr(F)")] <- list(Fs, P)
     }
     head <- c("Single term deletions", "\nModel:",
