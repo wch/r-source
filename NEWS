@@ -101,6 +101,8 @@ BUG FIXES
 	days on which midnight did not exist in the current timezone
 	(as happened in parts of Africa on 1960-01-01).
 
+    o	The automatic placement of legend() with 'title' and a
+	reversed 'x' axis was incorrect. (PR#12019)
 
     o	The use of multiple packages in 'LinkingTo' works again, and
     	now works when the dependent packages are in libraries loaded
@@ -120,6 +122,14 @@ BUG FIXES
 
     o	pchisq(x, df=0) was always one even for x < 0; similarly for
 	pgamma(x, alpha=0).
+
+    o	add1() and drop1() now return a P-value of NaN in cases with
+	df=0 for test="Chisq" (they gave NaN until pchisq was altered
+	in R 2.6.2).
+
+    o	The default methods of drop1() and add1() now re-evaluate in the
+	object's formula environment, rather than simply in the parent
+	(informal bug report by Werner Stahel).
 
 
 
@@ -344,10 +354,6 @@ BUG FIXES
 
     o	symbol() in plotmath expressions works again with non-ASCII
     	input on devices that use UTF-8 for the symbol font.
-
-    o	The automatic placement of legend() with 'title' and a
-	reversed 'x' axis was incorrect. (PR#12019)
-
 
 
 
