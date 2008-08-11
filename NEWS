@@ -154,9 +154,6 @@ NEW FEATURES
 
     o	read.dcf() now consistently gives an error for malformed DCF.
 
-    o	The undocumented limit of 8191 bytes on comments (from # to
-	the end of the line) in R code has been removed.
-
     o	show(<class definition>) now also shows the class name.
 
     o	Plotmath now recognizes 'aleph' and 'nabla' (the Adobe Symbol
@@ -200,15 +197,8 @@ NEW FEATURES
     o	Using $ on a non-subsettable object (such as a function) is
 	now an error (rather than returning NULL).
 
-    o	axis() has new arguments 'col.ticks' and 'lwd.ticks' to allow
-	the colour and line width of ticks to be set separately from
-	that of the line (e.g. to set one or the other to transparent
-	or zero width).
-
-	This now used by rug(), which no longer draws an axis line.
-
-    o	legend() has a new argument 'box.col' to set the colour of the
-	enclosing box.
+    o	axis()'s new arguments in 2.7.2 are now used by rug(), which no
+	longer draws an axis line.
 
     o	The alpha/alphamax argument of the 'nls' and 'mle' profile()
     	methods is used to compute confidence limits for univariate
@@ -217,9 +207,6 @@ NEW FEATURES
 
     o	data.matrix() now tries harder to convert non-numeric columns,
     	via as.numeric() or as(, "numeric").
-
-    o	legend() gains a 'xpd' argument to make it easier to place a
-	legend in the margins or outer margins.
 
     o	system.time() now uses lazy evaluation rather than
 	eval/substitute, which results in more natural scoping.
@@ -240,9 +227,6 @@ NEW FEATURES
 
     o	Sweave() now writes concordance information inside a \Sconcordance
 	LaTeX macro, which allows it to be inserted into PDF output.
-
-    o	stripchart() now passes '...' to title (as well as to
-	plot.default() and axis()). (Wish of PR#12202)
 
 
 INSTALLATION
@@ -378,6 +362,20 @@ NEW FEATURES
 	result are in UTF-8 when any input to that element is declared
 	as UTF-8.
 
+    o	axis() has new arguments 'col.ticks' and 'lwd.ticks' to allow
+	the colour and line width of ticks to be set separately from
+	that of the line (e.g. to set one or the other to transparent
+	or zero width).
+
+    o	legend() has a new argument 'box.col' to set the colour of the
+	enclosing box.
+
+    o	legend() gains a 'xpd' argument to make it easier to place a
+	legend in the margins or outer margins.
+
+    o	stripchart() now passes '...' to title() (as well as to
+	plot.default() and axis()). (Wish of PR#12202)
+
 
 BUG FIXES
 
@@ -491,6 +489,9 @@ BUG FIXES
     o	The default methods of drop1() and add1() now re-evaluate in the
 	object's formula environment, rather than simply in the parent
 	(informal bug report by Werner Stahel).
+
+    o	The undocumented limit of 8191 bytes on comments (from # to
+	the end of the line) in R code has been removed.
 
 
 
