@@ -5141,6 +5141,8 @@ if(.Platform$OS.type == "unix") {
     ## <FIXME> need build.package()
     Rcmd <- paste(file.path(R.home("bin"), "R"), "CMD")
     system(paste(Rcmd, "build", "myTst"))
+    # clean up any previous attempt (which might have left a 00LOCK)
+    system("rm -rf myLib")
     dir.create("myLib")
     install.packages("myTst", lib = "myLib", repos=NULL, type = "source") # with warnings
     stopifnot(require("myTst",lib = "myLib"))
