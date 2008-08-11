@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2008-01-15 r44001)
+R version 2.8.0 Under development (unstable) (2008-08-11 r46312)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -89,8 +89,8 @@ Algorithm "port", convergence message: both X-convergence and relative convergen
 Waiting for profiling to be done...
      2.5%    97.5%
 a 1.00875 1.037847
-b 0.84147 0.915063
-c      NA 0.042693
+b 0.84138 0.914645
+c      NA 0.042807
 > 
 > 
 > ## weighted nls fit: unsupported < 2.3.0
@@ -146,7 +146,7 @@ Correlation of Parameter Estimates:
 b -0.89
 
 Number of iterations to convergence: 1 
-Achieved convergence tolerance: 2.74e-06 
+Achieved convergence tolerance: 2.75e-06 
 
 > stopifnot(all.equal(residuals(fit), residuals(fit0), 1e5,
 +                     check.attributes = FALSE))
@@ -157,7 +157,7 @@ Achieved convergence tolerance: 2.74e-06
   0:     56.070572: 0.123450 0.543210
   1:     6.3964587:  1.34546 0.700840
   2: 0.00060639084: 0.00517053 0.999153
-  3: 0.00060639084: 0.00517052 0.999153
+  3: 0.00060639084: 0.00517051 0.999153
 > summary(fit2, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -226,7 +226,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Residual standard error: 0.0355 on 13 degrees of freedom
 
 Number of iterations to convergence: 6 
-Achieved convergence tolerance: 1.34e-07 
+Achieved convergence tolerance: 1.04e-07 
 
 > stopifnot(all.equal(coef(summary(fm2)), coef(summary(fm1)), tol = 1e-6))
 > stopifnot(all.equal(residuals(fm2), residuals(fm1), tol = 1e-5))
@@ -261,7 +261,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Residual standard error: 0.0355 on 13 degrees of freedom
 
 Number of iterations to convergence: 6 
-Achieved convergence tolerance: 1.29e-07 
+Achieved convergence tolerance: 1.73e-07 
 
 > stopifnot(all.equal(coef(summary(fm3)), coef(summary(fm1)), tol = 1e-6))
 > ft <- with(DNase1, density - fitted(fm3)/sqrt(wts))
@@ -300,7 +300,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Residual standard error: 0.0355 on 13 degrees of freedom
 
 Number of iterations to convergence: 5 
-Achieved convergence tolerance: 8.48e-09 
+Achieved convergence tolerance: 3.73e-08 
 
 > cf <- coef(summary(fm4))[c(3,1,2), ]
 > rownames(cf)[2] <- "Asym"
@@ -354,9 +354,9 @@ Algorithm "port", convergence message: relative convergence (4)
 > (c1 <- confint(fm1))
 Waiting for profiling to be done...
         2.5%  97.5%
-Asym 2.14936 2.5725
-xmid 1.28538 1.6967
-scal 0.97527 1.1068
+Asym 2.14936 2.5724
+xmid 1.28535 1.6966
+scal 0.97526 1.1068
 > (c4 <- confint(fm4, 1:2))
 Waiting for profiling to be done...
        2.5%  97.5%
@@ -394,7 +394,7 @@ Nonlinear regression model
  residual sum-of-squares: 2.39
 
 Number of iterations to convergence: 4 
-Achieved convergence tolerance: 2.81e-07 
+Achieved convergence tolerance: 2.80e-07 
 Waiting for profiling to be done...
    2.5%   97.5% 
 0.68704 0.70281 
@@ -442,12 +442,12 @@ Nonlinear regression model
  residual sum-of-squares: 2.44
 
 Number of iterations to convergence: 5 
-Achieved convergence tolerance: 3.43e-06 
+Achieved convergence tolerance: 3.16e-06 
 Waiting for profiling to be done...
          2.5%   97.5%
-a     0.35005 0.66045
-b     0.45122 0.91492
-logc -0.64620 0.40950
+a     0.35006 0.66057
+b     0.45107 0.91473
+logc -0.64627 0.40946
 Nonlinear regression model
   model:  y3 ~ a * (x + exp(logc))^b 
    data:  parent.frame() 
@@ -458,9 +458,9 @@ Nonlinear regression model
 Algorithm "port", convergence message: relative convergence (4) 
 Waiting for profiling to be done...
          2.5%   97.5%
-a     0.35005 0.66045
-b     0.45122 0.91492
-logc -0.64620 0.40950
+a     0.35006 0.66057
+b     0.45107 0.91473
+logc -0.64627 0.40946
 > 
 > fm <- nls(y2~x^b, start=c(b=1), algorithm="plinear")
 > confint(profile(fm))
@@ -469,8 +469,8 @@ logc -0.64620 0.40950
 > fm <- nls(y3 ~ (x+exp(logc))^b, start=c(b=1, logc=0), algorithm="plinear")
 > confint(profile(fm))
          2.5%   97.5%
-b     0.45121 0.91489
-logc -0.64628 0.40953
+b     0.45105 0.91471
+logc -0.64625 0.40933
 > 
 > 
 > ## more profiling with bounds
@@ -489,28 +489,29 @@ logc -0.64628 0.40953
 > (pr1 <- profile(m1))
 $a
         tau par.vals.a par.vals.b
-1  -4.55943    0.61825    0.00000
-2  -3.69338    0.72777    0.00000
-3  -1.43894    1.02459    0.00000
+1  -3.86867    0.70553    0.00000
+2  -3.11444    0.80157    0.00000
+3  -0.86265    1.12381    0.00000
 4   0.00000    1.53805    0.26331
-5   0.70536    2.05151    0.48084
-6   1.25688    2.65703    0.64972
-7   1.78274    3.57029    0.81653
-8   2.26362    5.01493    0.97638
-9   2.70180    7.51383    1.12707
-10  3.08992   12.25766    1.26434
-11  3.40458   22.42471    1.38476
+5   0.59024    1.95229    0.44581
+6   1.07023    2.42326    0.59215
+7   1.53445    3.08172    0.73679
+8   1.96936    4.03360    0.87774
+9   2.37551    5.50237    1.01449
+10  2.75132    7.92922    1.14433
+11  3.09020   12.26285    1.26444
+12  3.37482   20.84454    1.37255
 
 $b
        tau par.vals.a par.vals.b
-1 -0.74662    1.17755    0.00000
-2  0.00000    1.53805    0.26331
-3  0.87566    2.14030    0.55601
-4  1.67482    3.03728    0.83406
-5  2.43255    4.61672    1.12347
-6  3.18042    7.90950    1.44117
-7  3.89865   23.13399    1.79455
-8  4.52605  166.09149    2.20381
+1 -0.67325   1.208691   0.027176
+2  0.00000   1.538051   0.263312
+3  0.70691   2.002554   0.499448
+4  1.36488   2.629529   0.723616
+5  1.99377   3.576219   0.952247
+6  2.61117   5.181970   1.196218
+7  3.22517   8.216219   1.461400
+8  3.81994  17.394550   1.751233
 
 attr(,"original.fit")
 Nonlinear regression model
@@ -540,8 +541,8 @@ attr(,"class")
 [1] "profile.nls" "profile"    
 > confint(pr1)
      2.5%  97.5%
-a 0.98596 5.2072
-b      NA 1.0733
+a 0.96002 5.2007
+b      NA 1.0731
 > 
 > gfun <- function(a,b,x) {
 +     if(a < 0 || b < 0 || a > 1.5 || b > 1) stop("bounds violated")
@@ -551,19 +552,20 @@ b      NA 1.0733
 +           lower = c(0, 0), upper=c(1.5, 1), start = c(a=1, b=1))
 > profile(m2)
 $a
-      tau par.vals.a par.vals.b
-1 -4.4367    0.63351    0.00000
-2 -3.5758    0.74251    0.00000
-3 -1.5917    1.00251    0.00000
-4  0.0000    1.50000    0.24263
+       tau par.vals.a par.vals.b
+1 -3.68128    0.72911    0.00000
+2 -2.94528    0.82308    0.00000
+3 -0.97741    1.09865    0.00000
+4  0.00000    1.50000    0.24263
 
 $b
        tau par.vals.a par.vals.b
-1 -0.74358    1.17755    0.00000
-2  0.00000    1.50000    0.24263
-3  1.95266    1.50000    0.53849
-4  2.54777    1.50000    0.66452
-5  3.23041    1.50000    0.84069
+1 -0.73294  1.1819991  0.0039513
+2  0.00000  1.5000000  0.2426345
+3  1.64499  1.5000000  0.4813178
+4  2.15400  1.5000000  0.5786889
+5  2.72674  1.5000000  0.7070632
+6  3.28816  1.5000000  0.8574785
 
 attr(,"original.fit")
 Nonlinear regression model
@@ -594,8 +596,8 @@ attr(,"class")
 > confint(m2)
 Waiting for profiling to be done...
      2.5%   97.5%
-a 0.90457      NA
-b      NA 0.61016
+a 0.90673      NA
+b      NA 0.61132
 > 
 > ## scoping problems
 > test <- function()
@@ -623,7 +625,7 @@ Nonlinear regression model
  residual sum-of-squares: 26.5
 
 Number of iterations to convergence: 6 
-Achieved convergence tolerance: 7.45e-07 
+Achieved convergence tolerance: 7.17e-07 
 > ## failed to find n in 2.2.x
 > ## found wrong n in 2.3.x
 > ## finally worked in 2.4.0
@@ -659,7 +661,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Residual standard error: 0.00205 on 96 degrees of freedom
 
 Number of iterations to convergence: 7 
-Achieved convergence tolerance: 1.98e-06 
+Achieved convergence tolerance: 2.08e-06 
 
 > 
 > ## didn't work with port in 2.4.1
@@ -685,5 +687,5 @@ Algorithm "port", convergence message: both X-convergence and relative convergen
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  7.453 0.057 7.515 0 0 
+Time elapsed:  3.051 0.028 3.079 0 0 
 > 
