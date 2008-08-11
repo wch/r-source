@@ -3955,6 +3955,12 @@ static void CheckFormalArgs(SEXP formlist, SEXP _new, YYLTYPE *lloc)
     }
 }
 
+/* This is used as the buffer for NumericValue, SpecialValue and
+   SymbolValue.  None of these could conceivably need 8192 bytes.
+
+   It has not been used as the buffer for input character strings
+   since Oct 2007 (released as 2.7.0), and for comments since 2.8.0
+ */
 static char yytext[MAXELTSIZE];
 
 #define DECLARE_YYTEXT_BUFP(bp) char *bp = yytext
@@ -4013,6 +4019,8 @@ static int SkipSpace(void)
 /* special assignment EndOfFile=2 to indicate that this is */
 /* going on.  This is detected and dealt with in Parse1Buffer. */
 
+#ifdef OLD
+/* This collected the comment in yytext but did not use it */
 static int SkipComment(void)
 {
     DECLARE_YYTEXT_BUFP(yyp);
@@ -4024,6 +4032,15 @@ static int SkipComment(void)
     if (c == R_EOF) EndOfFile = 2;
     return c;
 }
+#else
+static int SkipComment(void)
+{
+    int c;
+    while ((c = xxgetc()) != '\n' && c != R_EOF) ;
+    if (c == R_EOF) EndOfFile = 2;
+    return c;
+}
+#endif
 
 static int NumericValue(int c)
 {

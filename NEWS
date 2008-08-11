@@ -28,7 +28,7 @@ NEW FEATURES
     o	legend() gains a 'xpd' argument to make it easier to place a
 	legend in the margins or outer margins.
 
-    o	stripchart() now passes '...' to title (as well as to
+    o	stripchart() now passes '...' to title() (as well as to
 	plot.default() and axis()). (Wish of PR#12202)
 
 
@@ -144,6 +144,9 @@ BUG FIXES
     o	The default methods of drop1() and add1() now re-evaluate in the
 	object's formula environment, rather than simply in the parent
 	(informal bug report by Werner Stahel).
+
+    o	The undocumented limit of 8191 bytes on comments (from # to
+	the end of the line) in R code has been removed.
 
 
 
