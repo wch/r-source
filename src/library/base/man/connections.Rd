@@ -488,9 +488,9 @@ while(isIncomplete(con2)) {Sys.sleep(1); readLines(con2)}
 close(con2)
 
 ## examples of use of encodings
-cat(x, file = file("foo", "w", encoding="UTF-8"))
-# read a 'Windows Unicode' file including personal names
-A <- read.table(file("students", encoding="UCS-2LE"))
+cat(x, file = (con <- file("foo", "w", encoding="UTF-8"))); close(con)
+# read a 'Windows Unicode' file
+A <- read.table(con <- file("students", encoding="UCS-2LE")); close(con)
 }}
 \keyword{file}
 \keyword{connection}
