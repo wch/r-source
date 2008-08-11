@@ -623,7 +623,9 @@ do_install_source () {
     fi
     has_error=false
     ## not --vanilla as we need to pick up the libpaths
-    CLINK_CPPFLAGS=`echo "tools:::.find_cinclude_paths(file='DESCRIPTION')" | \
+    ## and we do want where we are installing to in here.
+    echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))) |"${R_EXE}" --no-restore --no-save --slave
+    CLINK_CPPFLAGS=`echo "invisible(.libPaths(c(\"${lib}\", .libPaths())));tools:::.find_cinclude_paths(file='DESCRIPTION')" | \
       "${R_EXE}" --no-restore --no-save --slave`
     export CLINK_CPPFLAGS
     if ${debug}; then set -x; fi
