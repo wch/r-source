@@ -4413,6 +4413,29 @@ function(x)
     y
 }
 
+### ** .dquote_method_markup
+
+## See the notes below.
+## An alternative and possibly more efficient implementation could be
+## based using gregexpr(re, txt), massaging the matches and merging with
+## the non-matched parts.
+
+.dquote_method_markup <-
+function(txt, re)
+{
+    out <- ""
+    while((ipos <- regexpr(re, txt)) > -1L) {
+        epos <- ipos + attr(ipos, "match.length") - 1L
+        str <- substring(txt, ipos, epos)
+        str <- sub("\"", "\\\"", str, fixed = TRUE)
+        str <- sub("\\", "\\\\", str, fixed = TRUE)
+        out <- sprintf("%s%s\"%s\"", out,
+                       substring(txt, 1L, ipos - 1L), str)
+        txt <- substring(txt, epos + 1L)
+    }
+    paste(out, txt, sep = "")
+}
+
 ### ** .functions_to_be_ignored_from_usage
 
 .functions_to_be_ignored_from_usage <-
@@ -4460,24 +4483,28 @@ function()
       "!")
 }
 
-### ** get_S4_generics_with_methods --- FIXME: make option of methods::getGenerics()
+### ** get_S4_generics_with_methods
+
+## FIXME: make option of methods::getGenerics()
 ## JMC agreed & proposed argument  'excludeEmpty = FALSE'
-get_S4_generics_with_methods <- function(env, verbose = getOption("verbose"))
+get_S4_generics_with_methods <-
+function(env, verbose = getOption("verbose"))
 {
     env <- as.environment(env)
-##  Filter(function(g) methods::isGeneric(g, where = env),
-##	   methods::getGenerics(env))
+    ##  Filter(function(g) methods::isGeneric(g, where = env),
+    ##	       methods::getGenerics(env))
     r <- methods::getGenerics(env)
     if(length(r) && {
 	hasM <- lapply(r, function(g)
 		       tryCatch(methods::hasMethods(g, where = env),
-				error = function(e) e))
+				error = identity))
 	if(any(hasErr <- sapply(hasM, inherits, what = "error"))) {
-            dq <- function(ch) paste('"',ch,'"', sep='')
+            dq <- function(ch) paste('"', ch ,'"', sep='')
             rErr <- r[hasErr]
             pkgs <- r@package[hasErr]
-### FIXME: This warning should not happen here when called from R CMD check,
-##         but rather be part of a new "check" there !
+            ## FIXME: This warning should not happen here when called
+            ## from R CMD check, but rather be part of a new "check"
+            ## there !
 	    warning("Generics g in env = ", format(env),
 		    " where hasMethods(g, env) errors: ",
 		    paste(sQuote(rErr), collapse = ", "),
@@ -4499,12 +4526,12 @@ get_S4_generics_with_methods <- function(env, verbose = getOption("verbose"))
 
 ### ** .get_S4_methods_list
 
-.get_S4_methods_list <- function(g, env)
+.get_S4_methods_list <-
+function(g, env)
 {
     ## For the QC computations, we really only want the S4 methods
     ## defined in a package, so we try to exclude derived default
-    ## methods as well as methods inherited from the "appropriate"
-    ## parent environment of 'env' or the associated name space env.
+    ## methods as well as methods inherited from other environments.
 
     env <- as.environment(env)
     mlist <- methods::findMethods(g, env)
@@ -4514,37 +4541,53 @@ get_S4_generics_with_methods <- function(env, verbose = getOption("verbose"))
 				    "derivedDefaultMethod"))))
 	mlist <- mlist[!ind]
 
-    if(length(mlist) > 0) {
-	## Keep only those methods whose definition environment is ' == env ':
-	keep <- sapply(mlist, function(m) identical(env, environment(m)))
-	mlist <- mlist[keep]
-	## FIXME: MM thinks we can return here; KH seems similar..
-	ml0 <- mlist
-	## Second, "inherited" methods.
-	## Note that for packages with a namespace, the table in the
-	## namespace is meant to be only the methods in the package, so we
-	## might simply use findMethods() on the namespace instead.
-	package <- sub(".*:([^_]*).*", "\\1", attr(env, "name", exact = TRUE))
-	## (Ugly, but why not?)
-	penv <- if(length(package) && nzchar(package)) {
-	    ## Seems that there is no other way to get the name space for a
-	    ## given package (getNamespace() would try loading a name space
-	    ## not found in the registry).
-	    .Internal(getRegisteredNamespace(as.name(package)))
-	} ## else NULL
-	penv <- parent.env(if(is.environment(penv)) penv else env)
-	if((g %in% get_S4_generics_with_methods(penv)) &&
-	   length(mlist_from_penv <- methods::findMethods(g, penv)))
-	    mlist <- mlist[is.na(match(names(mlist),
-				       names(mlist_from_penv)))]
+    if(length(mlist)) {
+        ## Keep only those methods defined in the given environment, or
+        ## the associated namespace in case there is one.  This is not
+        ## quite pretty, as an environment per se does not know about
+        ## this.
+        namespace <- .get_namespace_from_package_env(env)
+        mlist <- Filter(function(m) {
+                            e <- environment(m)
+                            identical(e, env) || identical(e, namespace)
+                        },
+                        mlist)
+        ## Could also use something like
+        ## mlist <- Filter(function(m)                        
+        ##                 !is.na(match(list(environment(m)),
+        ##                              list(env, namespace))),
+        ##                 mlist)
 
-	## Check to see if the above FIXME is correct
-	if(!identical(ml0, mlist))
-	    message(".get_S4_methods_list(): *did* reduce list, dropping\n\t ",
-		    paste(setdiff(ml0, mlist), collapse=", "))
+        ## Earlier versions of this also tried to exclude methods
+        ## "inherited" from appropriate parent environment (i.e., the
+        ## parent env of the package env or its associated namespace),
+        ## via something like
+        ## penv <- parent.env(if(is.null(namespace)) env else namespace)
+        ## if((g %in% get_S4_generics_with_methods(penv)) &&
+        ##    length(mlist_from_penv <- methods::findMethods(g, penv)))
+        ##     mlist <- mlist[is.na(match(names(mlist),
+        ##                          names(mlist_from_penv)))]
+        ## Still doable, of course, but somewhat pointless if we check
+        ## the method environments as above: why should my parent env
+        ## have my methods?
     }
+
     mlist
 }
+
+.get_namespace_from_package_env <-
+function(env)
+{
+    package <-
+        sub(".*:([^_]*).*", "\\1", attr(env, "name", exact = TRUE))
+    ## (Ugly, but why not?)
+    if(length(package) && nzchar(package)) {
+        .Internal(getRegisteredNamespace(as.name(package)))
+        ## Note that we could also use
+        ##   getNamespace(package, error = function(e) NULL)
+    }
+}
+   
 
 ### ** .is_call_from_replacement_function_usage
 
@@ -4628,11 +4671,12 @@ function(txt)
 .parse_usage_as_much_as_possible <-
 function(txt)
 {
+    if(!length(txt)) return(expression())
     txt <- gsub("\\\\l?dots", "...", txt)
     txt <- gsub("\\\\%", "%", txt)
     txt <- .Rd_transform_command(txt, "special", function(u) NULL)
-    txt <- gsub(.S3_method_markup_regexp, "\"\\\\\\1\"", txt)
-    txt <- gsub(.S4_method_markup_regexp, "\"\\\\\\1\"", txt)
+    txt <- .dquote_method_markup(txt, .S3_method_markup_regexp)
+    txt <- .dquote_method_markup(txt, .S4_method_markup_regexp)    
     ## Transform <<see below>> style markup so that we can catch and
     ## throw it, rather than "basically ignore" it by putting it in the
     ## bad_lines attribute.
@@ -4642,8 +4686,9 @@ function(txt)
     txt <- gsub("\\\\\\{", "{", txt)
     txt <- gsub("\\\\\\}", "}", txt)
     txt <- gsub("\\\\%", "%", txt)
-    ## yes really 16, as we want 4 in the Rd file coverted to 2.
+    ## Yes, really 16, as we want 4 in the Rd file converted to 2.
     txt <- gsub("\\\\\\\\\\\\\\\\", "\\\\\\\\", txt)
+    ## Using fixed = TRUE might enhance readability ...
     .parse_text_as_much_as_possible(txt)
 }
 
@@ -4656,6 +4701,12 @@ function(x)
                        indent = 2L, exdent = 2L))
 }
 
+### ** .strip_backticks
+
+.strip_backticks <-
+function(x)
+    gsub("`", "", x)
+
 ### ** .transform_S3_method_markup
 
 .transform_S3_method_markup <-
@@ -4664,9 +4715,15 @@ function(x)
     ## Note how we deal with S3 replacement methods found.
     ## These come out named "\method{GENERIC}{CLASS}<-" which we
     ## need to turn into 'GENERIC<-.CLASS'.
-    sub(sprintf("%s(<-)?", .S3_method_markup_regexp),
-        "\\3\\5.\\4",
-        x)
+    re <- sprintf("%s(<-)?", .S3_method_markup_regexp)
+    ## Note that this is really only called on "function" names obtained
+    ## by parsing the \usage texts, so that the method regexps possibly
+    ## augmented by '<-' fully match if they match.
+    ## We should be able to safely strip all backticks; alternatively,
+    ## we could do something like
+    ##   cl <- .strip_backticks(sub(re, "\\4", x))
+    ##   sub(re, sprintf("\\3\\5.%s", cl), x)
+    .strip_backticks(sub(re, "\\3\\5.\\4", x))
 }
 
 ### ** .transform_S4_method_markup
@@ -4674,9 +4731,12 @@ function(x)
 .transform_S4_method_markup <-
 function(x)
 {
-    sub(sprintf("%s(<-)?", .S4_method_markup_regexp),
-        "\\\\S4method{\\2\\4}{\\3}",
-        x)
+    re <- sprintf("%s(<-)?", .S4_method_markup_regexp)
+    ## We should be able to safely strip all backticks; alternatively,
+    ## we could do something like
+    ##   sl <- .strip_backticks(sub(re, "\\3", x))
+    ##   sub(re, sprintf("\\\\S4method{\\2\\7}{%s}", sl), x)
+    .strip_backticks(sub(re, "\\\\S4method{\\2\\7}{\\3}", x))
 }
 
 ### ** .S3_method_markup_regexp
@@ -4689,6 +4749,34 @@ function(x)
 ##   + - * / ^ < <= > >= != == | & %something%
 ## (as supported by Rdconv).
 ## See also .functions_with_no_useful_S3_method_markup.
+## CLASS can be a syntactic name (we could be more precise about the
+## fact that these must start with a letter or '.'), or anything quoted
+## by backticks (not containing backticks itself for now).  Arguably,
+## non-syntactic class names should best be avoided, but R has always
+## had them at least for
+## R> class(bquote({.}))
+## [1] "{"
+## R> class(bquote((.)))
+## [1] "("
+
+## <NOTE>
+## Handling S3/S4 method markup is somewhat tricky.
+## When using R to parse the usage entries, we turn the
+##   \METHOD{GENERIC}{CLASS_OR_SIGLIST}(args) 
+## markup into (something which parses to) a function call by suitably
+## quoting the \METHOD{GENERIC}{CLASS_OR_SIGLIST} part.  In case of a
+## replacement method
+##   \METHOD{GENERIC}{CLASS_OR_SIGLIST}(args) <- value
+## parsing results in a
+##   \METHOD{GENERIC}{CLASS_OR_SIGLIST}<-
+## pseudo name, which need to be transformed to
+##   \METHOD{GENERIC<-}{CLASS_OR_SIGLIST}
+## We currently use double quoting for the parse step.  As we also allow
+## for non-syntactic class names quoted by backticks, this means that
+## double quotes and backslashes need to be escaped.  Alternatively, we
+## could strip backticks right away and quote by backticks, but then the
+## replacement method transformation would need different regexps.
+## </NOTE>
 
 .S3_method_markup_regexp <-
     sprintf("(\\\\(S3)?method\\{(%s)\\}\\{(%s)\\})",
@@ -4700,11 +4788,12 @@ function(x)
                     "!=", "==", "\\&", "\\|",
                     "\\%[[:alnum:][:punct:]]*\\%"),
                   collapse = "|"),
-            "[._[:alnum:]]*")
+            "[._[:alnum:]]+|`[^`]+`")
 
 ### ** .S4_method_markup_regexp
 
 ## For matching \S4method{GENERIC}{SIGLIST}.
+## SIGLIST can be a comma separated list of CLASS specs as above.
 
 .S4_method_markup_regexp <-
     sprintf("(\\\\S4method\\{(%s)\\}\\{(%s)\\})",
@@ -4712,7 +4801,7 @@ function(x)
                     ## Subscripting
                     "\\$", "\\[\\[?"),
                   collapse = "|"),
-            "[._[:alnum:],]*")
+            "(([._[:alnum:]]+|`[^`]+`),)*([._[:alnum:]]+|`[^`]+`)")
 
 ### ** .valid_maintainer_field_regexp
 
