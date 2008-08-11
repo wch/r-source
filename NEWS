@@ -482,7 +482,7 @@ BUG FIXES
     o	pbeta() is more accurate in some cases with extreme values of
 	ncp.  (PR#11277).
 
-    o	edit.data.frame() not longer fails if called on a 0-column
+    o	edit.data.frame() no longer fails if called on a 0-column
 	data frame and no column is created.
 
     o	pchisq(x, df=0) was always one even for x < 0; similarly for
