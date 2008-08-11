@@ -16,7 +16,8 @@
 
 axis <- function(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
                  pos = NA, outer = FALSE, font = NA,
-                 lty = "solid", lwd = 1, col = NULL,
+                 lty = "solid", lwd = 1, lwd.ticks = lwd,
+                 col = NULL, col.ticks = NULL,
                  hadj = NA, padj = NA, ...)
 {
     ## we need to do this as the C code processes 'col' before '...'
@@ -28,7 +29,8 @@ axis <- function(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     ## axis(1, at = my.at <- 10^(1:5), labels = formatC(my.at, format="fg"))
     ## which depends on the order of evaluation of the args.
     .Internal(axis(side, at, as.graphicsAnnot(labels),
-                   tick, line, pos, outer, font, lty, lwd, col, hadj, padj, ...))
+                   tick, line, pos, outer, font, lty, lwd, lwd.ticks,
+                   col, col.ticks, hadj, padj, ...))
 }
 
 

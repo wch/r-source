@@ -17,6 +17,11 @@ NEW FEATURES
 	result are in UTF-8 when any input to that element is declared
 	as UTF-8.
 
+    o	axis() has new arguments 'col.ticks' and 'lwd.ticks' to allow
+	the colour and line width of ticks to be set separately from
+	that of the line (e.g. to set one or the other to transparent
+	or zero width).
+
     o	legend() has a new argument 'box.col' to set the colour of the
 	enclosing box.
 
