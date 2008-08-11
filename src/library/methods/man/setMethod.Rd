@@ -419,7 +419,7 @@ removeGeneric("doubleAnything")
 \code{\link{method.skeleton}}, which is the recommended way to generate a skeleton of the call to \code{setMethod}, with the correct formal arguments and other details.
 
 \link{Methods} and the links there for a general discussion, \code{\link{dotsMethods}} for methods that dispatch on
-  \dQuote{\dots}}, and \code{\link{setGeneric}} for generic functions.
+  \dQuote{\dots}, and \code{\link{setGeneric}} for generic functions.
 }
 
 \keyword{programming}

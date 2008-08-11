@@ -334,7 +334,7 @@ removeGeneric("increment")
 \seealso{
   \code{\link{Methods}} and the links there for a general discussion,
   \code{\link{dotsMethods}} for methods that dispatch on
-  \dQuote{\dots}}, and \code{\link{setMethod}} for method definitions.
+  \dQuote{\dots}, and \code{\link{setMethod}} for method definitions.
 }
 \keyword{ programming }
 \keyword{ methods }
