@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-06-28 r46012)
+R version 2.8.0 Under development (unstable) (2008-08-11 r46288)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1195,6 +1195,10 @@ Warning messages:
 + 	  plnorm(-1:0, lower.tail=TRUE,	 log.p=TRUE) == -Inf)
 > ## was wrongly == 'log.p=FALSE' up to R <= 2.7.1 (PR#11867)
 > 
+> 
+> ## pchisq(df=0) was wrong in 2.7.1
+> stopifnot(pchisq(c(-1,0,1), df=0) == c(0,1,1),
++           pchisq(c(-1,0,1), df=0, lower.tail=FALSE) == c(1,0,0))
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
 Time elapsed:  4.508 0.052 4.72 0 0 

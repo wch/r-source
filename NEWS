@@ -485,6 +485,9 @@ BUG FIXES
     o	edit.data.frame() not longer fails if called on a 0-column
 	data frame and no column is created.
 
+    o	pchisq(x, df=0) was always one even for x < 0; similarly for
+	pgamma(x, alpha=0).
+
 
 
 		CHANGES IN R VERSION 2.7.1

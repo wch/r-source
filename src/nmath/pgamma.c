@@ -681,7 +681,7 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 	return x;
 #endif
     if(alph == 0.) /* limit case; useful e.g. in pnchisq() */
-	return R_DT_1;
+	return (x < 0) ? R_DT_0: R_DT_1;
     return pgamma_raw (x, alph, lower_tail, log_p);
 }
 /* From: terra@gnome.org (Morten Welinder)

@@ -661,4 +661,8 @@ stopifnot(plnorm(-1:0, lower.tail=FALSE, log.p=TRUE) == 0,
 ## was wrongly == 'log.p=FALSE' up to R <= 2.7.1 (PR#11867)
 
 
+## pchisq(df=0) was wrong in 2.7.1
+stopifnot(pchisq(c(-1,0,1), df=0) == c(0,1,1),
+          pchisq(c(-1,0,1), df=0, lower.tail=FALSE) == c(1,0,0))
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
