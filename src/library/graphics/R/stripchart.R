@@ -75,7 +75,7 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	    if (is.null(xlab)) xlab <- dlab
 	    if (is.null(ylab)) ylab <- glab
 	}
-	title(xlab=xlab, ylab=ylab)
+	title(xlab=xlab, ylab=ylab, ...)
     }
     csize <- cex*
 	if(vertical) xinch(par("cin")[1]) else yinch(par("cin")[2])

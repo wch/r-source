@@ -17,13 +17,13 @@
 legend <-
 function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	 angle = 45, density = NULL, bty = "o", bg = par("bg"),
-         box.lwd = par("lwd"), box.lty = par("lty"),
+         box.lwd = par("lwd"), box.lty = par("lty"), box.col = par("fg"),
 	 pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
 	 xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = c(0, 0.5),
 	 text.width = NULL, text.col = par("col"),
 	 merge = do.lines && has.pch, trace = FALSE,
 	 plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
-	 inset = 0)
+	 inset = 0, xpd)
 {
     ## the 2nd arg may really be `legend'
     if(missing(legend) && !missing(y) &&
@@ -33,6 +33,11 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
     }
     mfill <- !missing(fill) || !missing(density)
 
+    if(!missing(xpd)) {
+        op <- par("xpd")
+        on.exit(par(op))
+        par(xpd=xpd)
+    }
     title <- as.graphicsAnnot(title)
     if(length(title) > 1) stop("invalid title")
     legend <- as.graphicsAnnot(legend)
@@ -193,7 +198,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	if(trace)
 	    catn("  rect2(",left,",",top,", w=",w,", h=",h,", ...)",sep="")
 	rect2(left, top, dx = w, dy = h, col = bg, density = NULL,
-              lwd = box.lwd, lty = box.lty)
+              lwd = box.lwd, lty = box.lty, border = box.col)
     }
 
     ## (xt[],yt[]) := `current' vectors of (x/y) legend text

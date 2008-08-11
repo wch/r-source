@@ -44,8 +44,8 @@ stripchart(x, \dots)
     when the data contain \code{NA}s.  The default is to ignore missing
     values in either the response or the group.}
   \item{\dots}{additional parameters passed to the default method, or by
-    it to \code{plot} and \code{axis} to control the appearance of the 
-    plot.}
+    it to \code{plot}, \code{axis} and \code{title} to control the
+    appearance of the plot.}
   \item{method}{the method to be used to separate coincident points.
     The default method \code{"overplot"} causes such points to be
     overplotted, but it is also possible to specify \code{"jitter"} to

@@ -17,6 +17,15 @@ NEW FEATURES
 	result are in UTF-8 when any input to that element is declared
 	as UTF-8.
 
+    o	legend() has a new argument 'box.col' to set the colour of the
+	enclosing box.
+
+    o	legend() gains a 'xpd' argument to make it easier to place a
+	legend in the margins or outer margins.
+
+    o	stripchart() now passes '...' to title (as well as to
+	plot.default() and axis()). (Wish of PR#12202)
+
 
 BUG FIXES
 
