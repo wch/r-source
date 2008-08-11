@@ -357,10 +357,6 @@ BUG FIXES
 	logical column index works again even if columns with NA names
 	are selected.
 
-    o	The default methods of drop1() and add1() now re-evaluate in the
-	object's formula environment, rather than simply in the parent
-	(informal bug report by Werner Stahel).
-
 
 
 
@@ -491,6 +487,10 @@ BUG FIXES
     o	add1() and drop1() now return a P-value of NaN in cases with
 	df=0 for test="Chisq" (they gave NaN until pchisq was altered
 	in R 2.6.2).
+
+    o	The default methods of drop1() and add1() now re-evaluate in the
+	object's formula environment, rather than simply in the parent
+	(informal bug report by Werner Stahel).
 
 
 
