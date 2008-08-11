@@ -101,6 +101,11 @@ BUG FIXES
 	when setting the clipping region.  Once an invalid region was
 	set, semi-transparent text and lines might have been omitted.
 
+    o	Some (but not all) Korean users have been having problems with
+	Korean translations of the RGui menus.  These had not been
+	updated for a long time, and have now been removed.
+
+
 
 		CHANGES IN R VERSION 2.7.1
 
