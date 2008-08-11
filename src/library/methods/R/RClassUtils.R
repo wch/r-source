@@ -1833,3 +1833,46 @@ substituteFunctionArgs <-
         else
           NULL
     }
+
+## remove superclass from  definition of class in the cache & in environments
+## on search list
+.removeSuperClass <- function(class, superclass) {
+    cdef <- .getClassFromCache(class, where)
+    if(is.null(cdef)) {}
+    else {
+        newdef <- .deleteSuperClass(cdef, superclass)
+        if(!is.null(newdef))
+          .cacheClass(class, newdef, FALSE, where)
+    }
+    sig <- signature(from=class, to=superclass)
+    if(existsMethod("coerce", sig))
+      .removeCachedMethod("coerce", sig)
+    if(existsMethod("coerce<-", sig))
+      .removeCachedMethod("coerce<-", sig)
+    evv <- findClass(class, .GlobalEnv) # what about hidden classes?  how to find them?
+    mname <- classMetaName(class)
+    for(where in evv) {
+        if(exists(mname, envir = where, inherits = FALSE)) {
+            cdef <- get(mname, envir = where)
+            newdef <- .deleteSuperClass(cdef, superclass)
+            if(!is.null(newdef)) {
+              assignClassDef(class, newdef,  where, TRUE)
+              ## message("deleted ",superclass, " from ",class, "in environment")
+          }
+        }
+    }
+}
+
+.deleteSuperClass <- function(cdef, superclass) {
+        superclasses <- cdef@contains
+        ii <- match(superclass, names(superclasses), 0)
+        if(ii > 0) {
+            cdef@contains <- superclasses[-ii]
+            for(subclass in names(cdef@subclasses))
+              .removeSuperClass(subclass, superclass)
+            cdef
+        }
+        else
+          NULL
+    }
+

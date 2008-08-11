@@ -109,6 +109,11 @@ NEW FEATURES
 	treatment of these objects in the base code, to allow other
 	classes to contain them.  See class?ts.
 
+    o	S4 methods may now be defined corresponding to "...", by
+        creating a generic function that has "..." as its signature.
+        A method will be selected and called if all the arguments
+        matching "..." are from this class or a subclass.  See ?dotsMethods.
+
     o	str()'s default method gains a 'formatNum' function argument which
 	is used for formatting numeric vectors.	 Note that this is very
 	slightly not backward compatible, and that its default may change

@@ -102,8 +102,8 @@ insertMethod <-
 {
     ## Checks for assertions about valid calls.
     ## See rev. 1.17 for the code before the assertions added.
-    if(identical(args[1], "...")) {
-        if(!identical(signature[[1]], "ANY"))
+    if(identical(args[1], "...") && !identical(names(signature), "...")) {
+        if(identical(signature[[1]], "ANY"))
            stop(gettextf("inserting method with invalid signature matching argument '...' to class \"%s\"", signature[[1]]), domain = NA)
         args <- args[-1]
         signature <- signature[-1]
@@ -751,13 +751,13 @@ listFromMlist <-
 ## Define a trivial version of asMethodDefinition for bootstrapping.
 ## The real version requires several class definitions as well as
 ## methods for as<-
-asMethodDefinition <- function(def, signature = list(), sealed = FALSE, functionName = character()) {
+asMethodDefinition <- function(def, signature = list(), sealed = FALSE, fdef = def) {
   if(is.primitive(def))
     def
   else {
     value = new("MethodDefinition")
     value@.Data <- def
-    classes <- .MakeSignature(new("signature"),  def, signature)
+    classes <- .MakeSignature(new("signature"),  def, signature, fdef)
         value@target <- classes
         value@defined <- classes
     value

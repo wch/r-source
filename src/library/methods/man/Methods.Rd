@@ -374,8 +374,11 @@ The  \code{"target"} slot starts off equal to the \code{"defined"}
  Springer (For the original S4 version.)
 }
 \seealso{
+For more specific information, see
   \code{\link{setGeneric}}, \code{\link{setMethod}}, and
   \code{\link{setClass}}.
+
+For the use of \dots in methods, see  \link{dotsMethods}.
 }
 \keyword{programming}
 \keyword{classes}

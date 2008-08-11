@@ -78,8 +78,10 @@
                      paste(signature[is.na(match(signature, args))],
                            collapse = ", ")), domain = NA)
       dots <- match("...", signature)
-      if(!is.na(dots)) ## ... is not currently supported in method signatures
-          signature <- signature[-dots]
+      if(!is.na(dots)) { # remove "..." unless it is the only element of the signature
+          if(length(signature) > 1)
+            signature <- signature[-dots]
+      }
       if(length(signature) == 0)
           stop("no suitable arguments to dispatch methods in this function")
       value@signature <- signature
@@ -94,7 +96,7 @@
                             f, paste(formalArgs(fdef), collapse = ", "),
                             paste(formalArgs(fdefault), collapse = ", ")),
                    domain = NA)
-          fdefault <- asMethodDefinition(fdefault)
+          fdefault <- asMethodDefinition(fdefault, fdef = value)
           if(is(fdefault, "MethodDefinition"))
             fdefault@generic <- value@generic
           methods <- MethodsList(name, fdefault)
@@ -164,7 +166,7 @@ makeGeneric <-
       if(is.null(fdefault))
           methods <- MethodsList(name)
       else
-          methods <- MethodsList(name, asMethodDefinition(fdefault))
+          methods <- MethodsList(name, asMethodDefinition(fdefault, fdef = value))
 ###--------
       assign(".Methods", methods, envir = ev)
       slot(value, "default", FALSE) <- methods
@@ -1307,7 +1309,7 @@ matchDefaults <- function(method, generic) {
         garg <- gargs[[arg]]
         if(missing(marg) && !missing(garg)) {
             changes <- TRUE
-            margs[[arg]] <- garg
+            margs[arg] <- gargs[arg] # NOT  [[]], which woud fail for NULL element
         }
     }
     if(changes)
@@ -1466,3 +1468,108 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
   (length(objects(env, all.names = TRUE,
                           pattern = "^[.]__[CT]_")))
 
+## turn ordinary generic into one that dispatches on "..."
+.dotsGeneric <- function(f) {
+    if(!is(f, "genericFunction"))
+      f <- getGeneric(f)
+    if(!is(f, "genericFunction") || !identical(f@signature, "..."))
+      stop("argument f must be a generic function with signature \"...\"")
+    def <- .standardGenericDots
+    fenv <- environment(f)
+    environment(def) <- fenv
+    assign("standardGeneric", def, envir = fenv)
+    assign(".dotsCall", .makeDotsCall(formalArgs(f)), envir = fenv)
+   f
+}
+
+
+.standardGenericDots <- function(name) {
+    env <- sys.frame(sys.parent())
+    dots <- eval(quote(list(...)), env)
+    classes <- unique(unlist(lapply(dots, methods:::.class1)))
+    method <-methods:::.selectDotsMethod(classes, .MTable, .AllMTable)
+    if(is.null(method))
+      stop(gettextf("No method or default matching the \"...\" arguments in %s",
+               deparse(sys.call(sys.parent()), nlines = 1)), domain = NA)
+    assign(".Method", method, envir = env)
+    eval(.dotsCall, env)
+}
+
+.makeDotsCall <- function(formals) {
+    call <- quote(.Method(...))
+    if(length(formals)  > 1) {
+        idots <- match("...", formals)
+        for(what in formals[-idots]) {
+            ## the following nonsense is required to get the names in the call
+            ## expression to be empty for ... and there for other args
+            eval(substitute(call$NAME <- as.name(WHAT),
+                            list(NAME = as.name(what), WHAT = what)))
+        }
+    }
+    call
+}
+
+.selectDotsMethod <- function(classes, mtable, allmtable) {
+    .pasteC <- function(names) paste('"', names, '"', sep="", collapse = ", ")
+    found <- character()
+    distances <- numeric()
+    methods <- objects(mtable, all=TRUE)
+    direct <- match(classes, methods, 0) > 0
+    if(all(direct)) {
+        if(length(classes) > 1) {
+            warning("multiple direct matches: ", .pasteC(classes), "; using the first of these")
+            classes <- classes[1]
+        }
+        else if(length(classes) == 0)
+          return( if(is.na(match("ANY", methods))) NULL else get("ANY", envir = mtable))
+        return(get(classes,envir = mtable))
+    }
+    if(is.null(allmtable))
+      return(NULL)
+    
+    ## Else, look for an acceptable inherited method, which must match or be a superclass
+    ## of the class of each of the arguments.
+    classes <- sort(classes) # make slection depend only on the set of classes
+    label <- .sigLabel(classes)
+    if(exists(label, envir = allmtable, inherits = FALSE))
+      ## pre-cached, but possibly NULL to indicate no match
+      return(get(label, envir = allmtable))
+    for(i in seq_along(classes)) {
+        classi <- classes[[i]]
+        defi <- getClassDef(classi)
+        if(is.null(defi)) next
+        extendsi <- defi@contains
+        namesi <- c(classi, names(extendsi))
+        if(i == 1) 
+          namesi <- namesi[match(namesi, methods, 0) > 0]
+        else { # only the superclass methods matching all arguments are kept
+            namesi <- namesi[match(namesi, found, 0) > 0]
+            found <- namesi
+            if(length(found) == 0) break  # no possible non-default match
+        }
+        for(namei in namesi) {
+            disti <- if(identical(namei, classi)) 0 else extendsi[[namei]]@distance
+            prev <- match(namei, found)
+            if(is.na(prev)) { # must be the 1st element
+                found <- c(found, namei)
+                distances <- c(distances, disti)
+            }
+            else if(disti < distances[[prev]])
+              distances[[prev]] <- disti
+        }
+    }
+    if(length(found) == 0)
+      method <-  if(is.na(match("ANY", methods))) NULL else get("ANY", envir = mtable)
+    else {
+        classes <- found[which.min(distances)]
+        if(length(classes) > 1) {
+            warning("multiple equivalent inherited matches: ", .pasteC(classes), "; using the first of these")
+            classes <- classes[1]
+        }
+        method <- get(classes,envir = mtable)
+    }
+    if(!is.null(method))
+      method@target <- new("signature", ... = label) # ?? not a legal class name if > 1 classes
+    assign(label, method, allmtable)
+    method
+}

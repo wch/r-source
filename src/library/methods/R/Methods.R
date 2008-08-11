@@ -138,7 +138,7 @@ setGeneric <-
             }  # go ahead silently
             else if(is.function(implicit)) {
                 ## choose the implicit unless an explicit def was given
-                if(is.null(def)) {
+                if(is.null(def) && is.null(signature)) {
                     message(gettextf(
                        "Restoring the implicit generic function for \"%s\" from package \"%s\" into package \"%s\"; the generic differs from the default conversion (%s)",
                                      name, package, thisPackage, cmp), domain = NA)
@@ -162,6 +162,8 @@ setGeneric <-
             }
         }
     }
+    if(identical(fdef@signature, "..."))
+      fdef <- .dotsGeneric(fdef)
     if(doUncache)
       .uncacheGeneric(name, oldDef)
     groups <- fdef@group
@@ -380,11 +382,6 @@ setMethod <-
 	     where = topenv(parent.frame()), valueClass = NULL,
 	     sealed = FALSE)
 {
-    ischar <- tryCatch(is.character(f), error = NULL)
-    funcName <- if(is.null(ischar)) deparse(substitute(f)) else f
-    if(is(funcName, "standardGeneric") || is(funcName, "MethodDefinition"))
-	funcName <- funcName@generic
-
     ## Methods are stored in metadata in database where.  A generic function will be
     ## assigned if there is no current generic, and the function is NOT a primitive.
     ## Primitives are dispatched from the main C code, and an explicit generic NEVER
@@ -526,7 +523,7 @@ setMethod <-
     nSig <- .getGenericSigLength(fdef, fenv, TRUE)
     signature <- .matchSigLength(signature, fdef, fenv, TRUE)
     margs <- (fdef@signature)[seq_along(signature)]
-    definition <- asMethodDefinition(definition, signature, sealed, funcName)
+    definition <- asMethodDefinition(definition, signature, sealed, fdef)
     if(is(definition, "MethodDefinition"))
         definition@generic <- fdef@generic
     is.not.base <- !identical(where, baseenv())
@@ -773,6 +770,14 @@ selectMethod <-
             cat("* mlist environment with", length(mlist),"potential methods\n")
         if(length(signature) < nsig)
             signature[(length(signature)+1):nsig] <- "ANY"
+        if(identical(fdef@signature, "...")) {
+            method <- .selectDotsMethod(signature, mlist,
+                 if(useInherited) getMethodsForDispatch(fdef, inherited = TRUE) else NULL)
+            if(is.null(method) && !optional)
+              stop(gettextf("No method for \"...\" matches class \"%s\"", signature),
+                   domain = NA)
+            return(method)
+        }
         method <- .findMethodInTable(signature, mlist, fdef)
 	if(is.null(method)) {
 	    if(missing(useInherited))

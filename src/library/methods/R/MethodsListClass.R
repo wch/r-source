@@ -74,7 +74,7 @@
 ## some initializations that need to be done late
 .InitMethodDefinitions <- function(envir) {
     assign("asMethodDefinition",
-           function(def, signature = list(), sealed = FALSE, functionName = character()) {
+           function(def, signature = list(), sealed = FALSE, fdef = def) {
         ## primitives can't take slots, but they are only legal as default methods
         ## and the code will just have to accomodate them in that role, w/o the
         ## MethodDefinition information.
@@ -90,15 +90,12 @@
         else
             value <- new("MethodDefinition", def)
 
-        if(length(functionName) == 0)
-          functionName = value@generic
-
         if(sealed)
             value <- new("SealedMethodDefinition", value)
         ## this is really new("signature",  def, signature)
         ## but bootstrapping problems force us to make
         ## the initialize method explicit here
-        classes <- .MakeSignature(new("signature"),  def, signature, functionName)
+        classes <- .MakeSignature(new("signature"),  def, signature, fdef)
         value@target <- classes
         value@defined <- classes
         value
@@ -160,11 +157,11 @@
                   if(nargs() < 2)
                       .Object
                   else if(missing(functionDef))
-                      .MakeSignature(.Object, , list(...), "initialize")
+                      .MakeSignature(.Object, , list(...))
                   else if(!is(functionDef, "function"))
-                      .MakeSignature(.Object, , list(functionDef, ...), "initialize")
+                      .MakeSignature(.Object, , list(functionDef, ...))
                   else
-                      .MakeSignature(.Object, functionDef, list(...), "initialize")
+                      .MakeSignature(.Object, functionDef, list(...))
               }, where = envir)
     setMethod("initialize", "environment",
               function(.Object, ...) {
@@ -273,27 +270,31 @@
 }
 
 
-.MakeSignature <- function(object, def, signature, functionName = "function") {
+.MakeSignature <- function(object, def = NULL, signature, fdef = def) {
     signature <- unlist(signature)
     if(length(signature)>0) {
         classes <- as.character(signature)
         sigArgs <- names(signature)
-        if(is(def, "genericFunction"))
-            formalNames <- def@signature
-        else if(is(def, "function")) {
-            formalNames <- formalArgs(def)
+        if(is(fdef, "genericFunction"))
+            formalNames <- fdef@signature
+        else if(is.function(def)) {
+            if(!is(fdef, "function")) fdef <- def
+            formalNames <- formalArgs(fdef)
             dots <- match("...", formalNames)
             if(!is.na(dots))
                 formalNames <- formalNames[-dots]
         }
-        if(is.null(sigArgs))
-            names(signature) <- formalNames[seq_along(classes)]
-        else if(length(sigArgs) > 0 && any(is.na(match(sigArgs, formalNames))))
-            stop(gettextf("the names in signature for method (%s) do not match %s's arguments (%s)",
-                          paste(sigArgs, collapse = ", "),
-                          functionName,
-                          paste(formalNames, collapse = ", ")),
-                 domain = NA)
+        else formalNames <- character()
+        if(length(formalNames) > 0) {
+            if(is.null(sigArgs))
+              names(signature) <- formalNames[seq_along(classes)]
+            else if(length(sigArgs) > 0 && any(is.na(match(sigArgs, formalNames))))
+              stop(gettextf("the names in signature for method (%s) do not match %s's arguments (%s)",
+                            paste(sigArgs, collapse = ", "),
+                            if(is(fdef, "genericFunction")) fdef@generic else "function",
+                            paste(formalNames, collapse = ", ")),
+                   domain = NA)
+        }
         ## the named classes become the signature object
         class(signature) <- class(object)
         signature
