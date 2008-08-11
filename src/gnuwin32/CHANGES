@@ -13,7 +13,7 @@
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.7.1 patched
+		CHANGES IN R VERSION 2.7.2
 
 
 BUG FIXES
@@ -31,7 +31,7 @@ BUG FIXES
 
     o	glob (used by Sys.glob() and unlink()) was not working correctly
     	on some filename patterns including non-ASCII characters.
-    	Part of the problem was specific to 2.7.x, part has existed
+    	Part of the problem was specific to 2.7.[01], part has existed
     	since 2.5.0.
 
     o	Sys.glob() returned a UTF-8 result in 2.7.[01] but failed to
@@ -50,6 +50,10 @@ BUG FIXES
 	device region, and the windows() device now intersects the two
 	when setting the clipping region.  Once an invalid region was
 	set, semi-transparent text and lines might have been omitted.
+
+    o	Some (but not all) Korean users have been having problems with
+	Korean translations of the RGui menus.  These had not been
+	updated for a long time, and have now been removed.
 
 
 
