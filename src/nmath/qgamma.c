@@ -144,6 +144,9 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 
     if (alpha == 0) /* all mass at 0 : */ return 0.;
 
+    if (alpha < 1e-10)
+	MATHLIB_WARNING("value of shape (%g) is extremely small: results may be unreliable", alpha);
+
     p_ = R_DT_qIv(p);/* lower_tail prob (in any case) */
 
 #ifdef DEBUG_qgamma

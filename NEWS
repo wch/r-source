@@ -481,7 +481,7 @@ BUG FIXES
 	argument.  (PR#11585)
 
     o	pbeta() is more accurate in some cases with extreme values of
-	ncp.  (PR#11277).
+	'ncp'.  (PR#11277).
 
     o	edit.data.frame() no longer fails if called on a 0-column
 	data frame and no column is created.
@@ -499,6 +499,9 @@ BUG FIXES
 
     o	The undocumented limit of 8191 bytes on comments (from # to
 	the end of the line) in R code has been removed.
+
+    o	qgamma() warns if used with shape < 1e-10, when it may be
+ 	unreliable.  (PR#12324)
 
 
 
