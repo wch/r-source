@@ -233,6 +233,8 @@ NEW FEATURES
     o	Sweave() now writes concordance information inside a \Sconcordance
 	LaTeX macro, which allows it to be inserted into PDF output.
 
+    o	plot.histogram() gains an 'ann' argument. (Wish from Ben Bolker.)
+
 
 INSTALLATION
 
