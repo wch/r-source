@@ -156,7 +156,7 @@ function(x, ...)
 ### * .build_hsearch_index
 
 .build_hsearch_index <-
-function(contents, packageName)
+function(contents, packageName, defaultEncoding = NULL)
 {
     ## Build an index of the Rd contents in 'contents', of a package
     ## named 'packageName' in a form useful for help.search().
@@ -186,10 +186,12 @@ function(contents, packageName)
         else {
             base <- as.matrix(contents[, c("Name", "Title")])
             aliases <- contents[, "Aliases"]
-            encoding <- contents $ Encoding # may not be there ...
+            encoding <- contents$Encoding # may not be there ...
         }
         if(is.null(encoding))
             encoding <- character(length = nr)
+        if(!is.null(defaultEncoding))
+            encoding[!nzchar(encoding)] <- defaultEncoding
         keywords <- contents[, "Keywords"]
         ## We create 4 character matrices (cannot use data frames for
         ## efficiency reasons): 'dbBase' holds all character string

@@ -398,7 +398,9 @@ function(dir, outDir)
     .write_contents_as_RDS(contents,
                            file.path(outDir, "Meta", "Rd.rds"))
 
-    .saveRDS(.build_hsearch_index(contents, packageName),
+    defaultEncoding <- as.vector(.readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION["Encoding"])
+    if(is.na(defaultEncoding)) defaultEncoding <- NULL
+    .saveRDS(.build_hsearch_index(contents, packageName, defaultEncoding),
              file.path(outDir, "Meta", "hsearch.rds"))
 
     .write_contents_as_DCF(contents, packageName,
