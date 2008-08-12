@@ -73,7 +73,7 @@ hist(x, \dots)
     \code{nclass} is equivalent to \code{breaks} for a scalar or
     character argument.}
   \item{\dots}{further graphical parameters passed to
-    \code{\link{plot.histogram}} and their to \code{\link{title}} and
+    \code{\link{plot.histogram}} and thence to \code{\link{title}} and
     \code{\link{axis}} (if \code{plot=TRUE}).}
 }
 \description{
