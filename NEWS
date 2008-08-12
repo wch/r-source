@@ -503,6 +503,12 @@ BUG FIXES
     o	qgamma() warns if used with shape < 1e-10, when it may be
  	unreliable.  (PR#12324)
 
+    o	Installing a source package was not using the package's declared
+	encoding (if any) as a default encoding for the help.search()
+	database in Meta/hsearch.rds.  This could cause packages with
+	a default encoding to have some of their entries rejected by
+	help.search() in a multi-byte locale (such as a UTF-8 locale).
+
 
 
 		CHANGES IN R VERSION 2.7.1
