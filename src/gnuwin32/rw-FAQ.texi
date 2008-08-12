@@ -114,6 +114,7 @@ The information here applies only to recent versions of R for Windows,
 * Why does R never use more than 50% of my CPU?::  
 * Does R run under Windows Vista?::  
 * Quotes don't come out right on the console/terminal/pager::  
+* There is no tilde on my keyboard::  
 @end menu
 
 
@@ -738,8 +739,8 @@ System Properties -> Advanced -> Performance), and sysadmins can turn
 this on for all programs.  R runs correctly with DEP enabled.
 
 
-@node Quotes don't come out right on the console/terminal/pager,  , Does R run under Windows Vista?, Installation and Usage
-@section Quotes don't come out right on the console/terminal/pager
+@node Quotes don't come out right on the console/terminal/pager, There is no tilde on my keyboard, Does R run under Windows Vista?, Installation and Usage
+@section Quotes don't come out right on the console/terminal/pager.
 
 R version 2.6.0 and later will make use of directional quotes that are
 not always rendered correctly by Windows.
@@ -769,6 +770,23 @@ but seems rather light on Windows XP (it looks better than @code{Courier
 New} on Vista).  Non-TrueType fonts such as @code{Courier} and
 @code{FixedSys} lack directional double quotes on all the systems we
 tried.
+
+@node There is no tilde on my keyboard,  , Quotes don't come out right on the console/terminal/pager, Installation and Usage
+@section There is no tilde on my keyboard!
+
+Often there is but it is not marked: also on all Windows versions you
+should be able to get tilde by holding the down the left Alt key and
+typing 0126 on the numeric keypad, then releasing the Alt key.
+
+Where tilde does not appear on the main keyboard, it can normally be
+accessed by pressing AltGr (the right Alt key) plus some other key.
+This is @code{]} in Canadian (multilingual), German and Scandinavian
+layouts, @code{1} in Eastern Europe, @code{[} in Portuguese, @code{4} or
+@code{5} in Spanish, @code{/} in Francophone Belgian, and so on.  For
+some keyboards the uses of AltGr are at
+@url{http://office.microsoft.com/en-us/word/HP052590631033.aspx}: you
+can explore those for your keyboard via the `On-Screen Keyboard' (under
+Accessories, Accessibility on XP).
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
@@ -851,10 +869,11 @@ locale names from
 @uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/html/_crt_language_and_country_strings.asp}:
 beware that @code{"Chinese"} is Traditional Chinese (code page 950,
 Big5) and @code{"chs"} is needed for Simplified Chinese (code page 936,
-GB2312).  Note that this can be rather tricky: on Windows XP there are
-several places to select the language under the `Regional and Language
-Options' part of the control panel, and the appropriate language has to
-be set under @emph{both} the `Regional Options' and `Advanced' tabs.
+GB2312).  Note that this can be rather tricky: on International versions
+of Windows XP there are several places to select the language under the
+`Regional and Language Options' part of the control panel, and the
+appropriate language has to be set under @emph{both} the `Regional
+Options' and `Advanced' tabs.
 
 When using @command{Rterm} the window in which it is run has to be set
 up to use a suitable font (e.g. Lucida Console, not the OEM raster
