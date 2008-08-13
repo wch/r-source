@@ -4404,6 +4404,14 @@ On Mozilla-based browsers the links on the results page will
 become inactive if you return to it: to work around this you can open
 a link in a new tab or window.
 
+@c https://stat.ethz.ch/pipermail/r-help/2008-July/169521.html
+There is a known issue with Firefox 3 (and 3.0.1).  The links in the
+results page may point to the wrong directory level.  This is a bug in
+the way Firefox is interpreting relative URLs, and can be circumvented
+by opening the HTML search page (@file{.../doc/html/SearchEngine.html})
+directly rather than from @file{.../doc/html/index.html} as shown by
+@code{help.start()}.
+
 Many thanks to Marc Schwartz in tracking down many of these issues with
 enabling the Java search engine.
 
@@ -4427,14 +4435,20 @@ Note that there appears not to be a Sun Java plugin for 64-bit browsers
 on @cputype{x86_64} Linux:
 (@uref{http://forum.java.sun.com/thread.jspa?threadID=568127&tstart=75,
 @code{forum.java.sun.com/thread.jspa?threadID=568127&tstart=75}})
-(although one is promised for Java 7) but 32-bit browsers have been used
-on that platform.
+(although one is expected for Java 6 in early 2009) but 32-bit browsers
+have been used on that platform.
 
-Marc Schwartz reports that the `IcedTea' JVM that ships with Fedora 8
-does not work with the search applet.  On @cputype{ix86} the Sun JRE and
-plugin can be instaled: see
+Marc Schwartz reports that the `IcedTea' (later called `OpenJDK') JVM
+that ships with Fedora 8 and 9 does not work with the search applet.
+(The bug report is part of
+@uref{https://bugzilla.redhat.com/show_bug.cgi?id=304021,
+@code{bugzilla.redhat.com/show_bug.cgi?id=304021}}.)  On @cputype{ix86}
+the Sun JRE and plugin can be installed: see
 @uref{http://www.fedorafaq.org/#java, @code{www.fedorafaq.org/#java}}.
-(The same FAQ documents the use of 32-bit Firefox on @cputype{x86_64}.)
+(The same FAQ documents the use of 32-bit Firefox on @cputype{x86_64}.
+There is a detailed account of one user's experience at
+@uref{http://www.knutejohnson.com/sun-java-on-F8.html,
+@code{www.knutejohnson.com/sun-java-on-F8.html}}.)
 
 Other Java installations, for example those from Blackdown and IBM, have
 been used.
@@ -4476,7 +4490,9 @@ in Windows XP (SP1 or later), and which JVM is used by browser plugins
 may also be controlled by the Sun Java applet in the Control Panel.
 
 Recent versions of Internet Explorer may block the use of Java applets
-and need the block removed @emph{via} the @emph{information bar}.
+and need the block removed @emph{via} the @emph{information bar}.  Also,
+we have seen cases in which the search results come up as a blank page:
+go back one page in the browser history to find the real results page.
 
 Apple's Safari 3.0.4 also works.
 
