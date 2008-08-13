@@ -4446,12 +4446,14 @@ that ships with Fedora 8 and 9 does not work with the search applet.
 the Sun JRE and plugin can be installed: see
 @uref{http://www.fedorafaq.org/#java, @code{www.fedorafaq.org/#java}}.
 (The same FAQ documents the use of 32-bit Firefox on @cputype{x86_64}.
-There is a detailed account of one user's experience at
-@uref{http://www.knutejohnson.com/sun-java-on-F8.html,
-@code{www.knutejohnson.com/sun-java-on-F8.html}}.)
+See also
+@uref{http://www.mjmwired.net/resources/mjm-fedora-f8.html#java,
+@code{www.mjmwired.net/resources/mjm-fedora-f8.html#java}} and
+@uref{http://www.mjmwired.net/resources/mjm-fedora-f9.html#java,
+@code{www.mjmwired.net/resources/mjm-fedora-f9.html#java}}.)
 
 Other Java installations, for example those from Blackdown and IBM, have
-been used.
+been used in the (not recent) past.
 
 Older but still useful links are for Firefox/Mozilla,
 @uref{http://plugindoc.mozdev.org/faqs/java.html,
