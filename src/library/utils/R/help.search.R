@@ -157,8 +157,6 @@ function(pattern, fields = c("alias", "concept", "title"),
         }
 
 	## Create the hsearch db.
-	contents_DCF_fields <-
-	    c("Entry", "Aliases", "Description", "Keywords")
 	np <- 0
 	if(verbose)
 	    message("Packages {.readRDS() sequentially}:")
@@ -261,9 +259,6 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    }
 	    if(verbose) message(" done")
 	}
-	## Let us be defensive about invalid multi-byte character data
-	## here.  We simple remove all Rd objects with at least one
-	## invalid entry, and warn in case we found one.
 	bad_IDs <-
 	    unlist(sapply(db,
 			  function(u)
@@ -278,6 +273,9 @@ function(pattern, fields = c("alias", "concept", "title"),
                               function(u)
                               u[rowSums(is.na(nchar(u, "c", TRUE))) > 0, "ID"]))
         }
+	## If there are any invalid multi-byte character data
+	## left, we simple remove all Rd objects with at least one
+	## invalid entry, and warn.
         if(length(bad_IDs)) {
 	    warning("removing all entries with invalid multi-byte character data")
 	    for(i in seq_along(db)) {

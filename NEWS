@@ -236,8 +236,7 @@ NEW FEATURES
     o	plot.histogram() gains an 'ann' argument. (Wish from Ben Bolker.)
 
     o	help.search() now assumes that non-ASCII items are in latin1
-	if that makes sense (experimental: may consult the package's
-	encoding first).
+	if that makes sense (all known examples on CRAN are).
 
 
 INSTALLATION
