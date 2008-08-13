@@ -15,11 +15,10 @@
 #  http://www.r-project.org/Licenses/
 
 help.start <- function(update = TRUE, gui = "irrelevant",
-                       browser = getOption("browser"))
+                       browser = getOption("browser"), searchEngine = FALSE)
 {
-    a <- file.path(R.home("doc"), "html", "index.html")
-    if(!file.exists(a))
-        a <- file.path(R.home("doc"), "html", "index.htm")
+    a <- if(searchEngine) file.path(R.home("doc"), "html", "index.html")
+    else file.path(R.home("doc"), "html", "search", "SearchEngine.html")
     if(!file.exists(a))
         stop("unable to find the HTML help")
     if(update) {

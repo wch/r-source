@@ -66,6 +66,15 @@ BUG FIXES
 		CHANGES IN R VERSION 2.7.2
 
 
+NEW FEATURES
+
+    o	Rgui has a new menu item 'Html search page' on the Help menu,
+	which goes directly to the HTML search form.  This is needed
+	by users of Firefox 3, which generates incorrect links in
+	search results when the page is accessed via the 'Html help'
+	menu item (or via help.start()).
+
+
 BUG FIXES
 
     o	Saving a graph in TIFF format could crash R (PR#11804).

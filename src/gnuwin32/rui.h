@@ -42,21 +42,20 @@ typedef struct {
 typedef uitem *Uitem;
 
 typedef struct {
-  int numItems;
-  Uitem *mItems;
+    int numItems;
+    Uitem *mItems;
 } menuItems;
 
 struct structHelpMenuItems {
-  menuitem mhelp, mmanintro, mmanref, mmandata,
-    mmanext, mmanint, mmanlang, mmanadmin, mman0, mapropos, mhelpstart, 
-    mhelpsearch, msearchRsite, mFAQ, mrwFAQ, mCRAN;
-  menu mman;
+    menuitem mhelp, mmanintro, mmanref, mmandata,
+	mmanext, mmanint, mmanlang, mmanadmin, mman0, mapropos, mhelpstart, 
+	mhelpsearchstart, mhelpsearch, msearchRsite, mFAQ, mrwFAQ, mCRAN;
+    menu mman;
 };
 typedef struct structHelpMenuItems *HelpMenuItems;
 
 struct structPkgMenuItems {
-  menuitem mpkgl, mpkgm, mpkgi, mpkgil, mpkgu,
-    mrepos;
+    menuitem mpkgl, mpkgm, mpkgi, mpkgil, mpkgu, mrepos;
 };
 typedef struct structPkgMenuItems *PkgMenuItems;
 
