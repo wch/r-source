@@ -1,6 +1,6 @@
 % File src/library/utils/man/help.start.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{help.start}
@@ -13,11 +13,11 @@
 \usage{
 #ifdef unix  
 help.start(gui = "irrelevant", browser = getOption("browser"),
-           remote = NULL)
+           remote = NULL, searchEngine = FALSE)
 #endif
 #ifdef windows  
 help.start(update = TRUE, gui = "irrelevant",
-           browser = getOption("browser"))
+           browser = getOption("browser"), searchEngine = FALSE)
 #endif
 }
 \arguments{
@@ -35,6 +35,8 @@ help.start(update = TRUE, gui = "irrelevant",
   \item{update}{logical: should this attempt to update the indices to
     reflect the currently installed packages.}
 #endif
+  \item{searchEngine}{logical: if true go directly to the search engine
+    page.  A workaround for Firefox 3 users (see \sQuote{Notes}).}
 }
 \details{
 #ifdef unix
@@ -76,6 +78,11 @@ help.start(update = TRUE, gui = "irrelevant",
   that \code{help.start} brings up.  Should this not work, please
   consult the \sQuote{R Installation and Administration} manual which is
   linked from that page.
+
+  Note to users of Firefox 3: the search results have links that are
+  resolved incorrectly by that browser if starting from the normal HTML
+  index page.  The workaround is to start with
+  \code{help.start(searchEngine = TRUE)}
 }
 
 \seealso{

@@ -618,6 +618,14 @@ static void menuhelpstart(control m)
     internal_shellexec("doc\\html\\index.html");
 }
 
+static void menuhelpsearchstart(control m)
+{
+/*    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole, "help.start()");
+    show(RConsole);*/
+    internal_shellexec("doc\\html\\search\\SearchEngine.html");
+}
+
 static void menuFAQ(control m)
 {
     internal_shellexec("doc\\manual\\R-FAQ.html");
@@ -956,6 +964,9 @@ int RguiCommonHelp(menu m, HelpMenuItems hmenu)
 				      menuhelp));
     MCHECK(hmenu->mhelpstart = newmenuitem(G_("Html help"), 0, menuhelpstart));
     if (!check_doc_file("doc\\html\\index.html")) disable(hmenu->mhelpstart);
+    MCHECK(hmenu->mhelpsearchstart = newmenuitem(G_("Html search page"), 0, menuhelpsearchstart));
+    if (!check_doc_file("doc\\html\\search\\SearchEngine.html"))
+	disable(hmenu->mhelpsearchstart);
     MCHECK(hmenu->mhelpsearch = newmenuitem(G_("Search help..."), 0,
 					    menuhelpsearch));
     MCHECK(hmenu->msearchRsite = newmenuitem("search.r-project.org ...", 0,
