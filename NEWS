@@ -351,6 +351,10 @@ BUG FIXES
 	logical column index works again even if columns with NA names
 	are selected.
 
+    o	on.exit() fixed to use lexical scope in determining where to
+        insert the exit action when the on.exit expression appears in a
+        function argument.
+
 
 
 

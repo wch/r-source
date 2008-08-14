@@ -159,7 +159,12 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall_return(call, _("invalid number of arguments"));
     }
     ctxt = R_GlobalContext;
-    while (ctxt != R_ToplevelContext && !(ctxt->callflag & CTXT_FUNCTION) )
+    /* Search for the context to which the on.exit action is to be
+       attached. Lexical scoping is implemented by searching for the
+       first closure call context with an environment matching the
+       expression evaluation environment. */
+    while (ctxt != R_ToplevelContext &&
+	   !((ctxt->callflag & CTXT_FUNCTION) && ctxt->cloenv == rho) )
 	ctxt = ctxt->nextcontext;
     if (ctxt->callflag & CTXT_FUNCTION)
     {
