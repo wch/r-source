@@ -40,6 +40,13 @@
   (1994) for further references.  All four approximate F statistics are
   the same when the term being tested has one degree of freedom, but in
   other cases that for the Roy statistic is an upper bound.
+  
+  The tolerance \code{tol} is applied to the QR decomposition of the
+  residual correlation matrix (unless some response has essentially zero
+  residuals, when it is unscaled).  Thus the default value guards
+  against very highly correlated responses: it can be reduced but doing
+  so will allow rather inaccurate results and it will normally be better
+  to transform the responses to remove the high correlation.
 }
 \value{
   An object of class \code{"summary.manova"}.  If there is a positive
