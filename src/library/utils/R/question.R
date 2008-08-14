@@ -27,6 +27,14 @@
             # ??foo is parsed as `?`(`?`(foo))
             	search <- TRUE
             	topicExpr <- topicExpr[[2]]
+            	if (is.call(topicExpr) && topicExpr[[1]] == "?"
+            	    && is.call(topicExpr[[2]]) && topicExpr[[2]][[1]] == "?") {
+            	     cat("Contacting Delphi...")
+            	     flush.console()
+            	     Sys.sleep(2+rpois(1,2))
+            	     cat("the oracle is unavailable.\nWe apologize for any inconvenience.\n")
+            	     return(invisible())
+            	 }
             } else 
             	search <- FALSE
 
