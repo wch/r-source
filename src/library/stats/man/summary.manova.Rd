@@ -1,6 +1,6 @@
 % File src/library/stats/man/summary.manova.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{summary.manova}
@@ -38,13 +38,21 @@
   (1994) for further references.  All four approximate F statistics are
   the same when the term being tested has one degree of freedom, but in
   other cases that for the Roy statistic is an upper bound.
+  
+  The current computation is sensitive to the scaling of the responses:
+  use responses of comparable magnitude for best results.
 }
 \value{
-  A list with components
+  An object of class \code{"summary.manova"}.  If there is a positive
+  residual degrees of freedom, this is a list with components
+  \item{row.names}{The names of the terms, the row names of the
+    \code{stats} table if present.}
   \item{SS}{A named list of sums of squares and product matrices.}
   \item{Eigenvalues}{A matrix of eigenvalues.}
   \item{stats}{A matrix of the statistics, approximate F value,
     degrees of freedom and P value.}
+  otherwise components \code{row.names}, \code{SS} and \code{Df}
+  (degrees of freedom) for the terms (and not the residuals).
 }
 \references{
   Anderson, T. W. (1994) \emph{An Introduction to Multivariate
