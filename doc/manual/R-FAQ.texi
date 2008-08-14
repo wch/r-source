@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-08-08
+@set FAQ_DATE @value{FAQ_YEAR}-08-14
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -1906,6 +1906,8 @@ Mapping between BioIDs.
 A number of functions for biodemographycal analysis.
 @item BiodiversityR
 GUI for biodiversity and community ecology analysis.
+@item BiplotGUI
+Interactive biplots in R.
 @item Bolstad
 Functions and data sets for the book ``Introduction to Bayesian
 Statistics'' by W. M. Bolstad, 2004, John Wiley and Sons.
@@ -2330,6 +2332,10 @@ bundle.  @emph{Recommended}.
 Multilevel @math{B}-spline Approximation.
 @item MBESS
 Methods for the Behavioral, Educational, and Social Sciences.
+@item MCAPS
+Weather and air pollution data, risk estimates, and other information
+from the Medicare Air Pollution Study (MCAPS) of 204 U.S. counties,
+1999--2002.
 @item MCMCpack
 Markov chain Monte Carlo (MCMC) package: functions for posterior
 simulation for a number of statistical models.
@@ -2564,6 +2570,8 @@ Exact (Restricted) Likelihood Ratio tests for mixed and additive
 models.
 @item RLadyBug
 Analysis of infectious diseases using stochastic epidemic models.
+@item RM2
+Revenue management and pricing.
 @item RMySQL
 An interface between R and the MySQL database system.
 @item RNetCDF
@@ -3985,6 +3993,8 @@ Miscellaneous string utilities.
 @c </COMMENT>
 @item gtools
 Various functions to help manipulate data.
+@item gumbel
+Functions for the Gumbel-Hougaard copula.
 @item gvlma
 Global Validation of Linear Models Assumptions.
 @item hapassoc
@@ -4230,6 +4240,8 @@ law.
 Lazy learning for local regression.
 @item ldDesign
 Design of experiments for detection of linkage disequilibrium,
+@item lda.cv
+Cross-validation for linear discriminant analysis.
 @item ldbounds
 Lan-DeMets method for group sequential boundaries.
 @item leaps
@@ -5230,6 +5242,8 @@ Random Recursive Partitioning.
 @c @item rsbml
 @c R support for SBML (Systems Biology Markup Language), using libsbml.
 @c </COMMENT>
+@item rscproxy
+A portable C-style interface to R (StatConnector).
 @item rsprng
 Provides interface to SPRNG (Scalable Parallel Random Number Generators)
 APIs, and examples and documentation for its use.
@@ -5695,6 +5709,8 @@ Goodness-of-fit tests allowing for left truncated data.
 Local optimization using two derivatives and trust regions.
 @item tsDyn
 Time series analysis based on dynamical systems theory.
+@item tsModel
+Time series modeling for air pollution and health.
 @item tseries
 Package for time series analysis with emphasis on non-linear modelling.
 @item tseriesChaos
