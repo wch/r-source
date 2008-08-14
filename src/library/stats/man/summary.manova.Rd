@@ -1,6 +1,6 @@
 % File src/library/stats/man/summary.manova.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{summary.manova}
@@ -13,7 +13,7 @@
 \usage{
 \method{summary}{manova}(object,
         test = c("Pillai", "Wilks", "Hotelling-Lawley", "Roy"),
-        intercept = FALSE, \dots)
+        intercept = FALSE, tol = 1e-7, \dots)
 }
 \arguments{
   \item{object}{An object of class \code{"manova"} or an \code{aov}
@@ -22,6 +22,8 @@
     matching is used so the name can be abbreviated.}
   \item{intercept}{logical.  If \code{TRUE}, the intercept term is
     included in the table.}
+  \item{tol}{tolerance to be used in deciding if the residuals are
+    rank-deficient: see \code{\link{qr}}.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
@@ -40,11 +42,16 @@
   other cases that for the Roy statistic is an upper bound.
 }
 \value{
-  A list with components
+  An object of class \code{"summary.manova"}.  If there is a positive
+  residual degrees of freedom, this is a list with components
+  \item{row.names}{The names of the terms, the row names of the
+    \code{stats} table if present.}
   \item{SS}{A named list of sums of squares and product matrices.}
   \item{Eigenvalues}{A matrix of eigenvalues.}
   \item{stats}{A matrix of the statistics, approximate F value,
     degrees of freedom and P value.}
+  otherwise components \code{row.names}, \code{SS} and \code{Df}
+  (degrees of freedom) for the terms (and not the residuals).
 }
 \references{
   Anderson, T. W. (1994) \emph{An Introduction to Multivariate

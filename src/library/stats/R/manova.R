@@ -36,7 +36,7 @@ manova <- function(...)
 summary.manova <-
     function(object,
              test = c("Pillai", "Wilks", "Hotelling-Lawley", "Roy"),
-             intercept = FALSE, ...)
+             intercept = FALSE, tol = 1e-7, ...)
 {
     if(!inherits(object, "maov"))
         stop("object must be of class \"manova\" or \"maov\"")
@@ -54,7 +54,7 @@ summary.manova <-
     wt <- object$weights
     if (!is.null(wt)) resid <- resid * wt^0.5
     nresp <- NCOL(resid)
-    if(nresp <= 1) stop("need multiple response")
+    if(nresp <= 1) stop("need multiple responses")
 
     if (is.null(effects)) {
         df <- nterms <- 0
@@ -93,14 +93,20 @@ summary.manova <-
         dimnames(stats) <-  list(nmrows,
                                  c(test, "approx F", "num Df", "den Df",
                                    "Pr(>F)"))
-        rss.qr <- qr(ss[[nt]])
+        sc <- sqrt(diag(ss[[nt]]))
+        ## Let us try to distnguish bad scaling and near-perfect fit
+        sss <- sc^2
+        for(i in seq_len(nterms)[ok]) sss <- sss +  diag(ss[[i]])
+        sc[sc < sqrt(sss)*1e-6] <- 1
+        D <- diag(1/sc)
+        rss.qr <- qr(D %*% ss[[nt]] %*% D, tol=tol)
         if(rss.qr$rank < ncol(resid))
             stop(gettextf("residuals have rank %d < %d",
                           rss.qr$rank, ncol(resid)), domain = NA)
         if(!is.null(rss.qr))
             for(i in seq_len(nterms)[ok]) {
-                eigs[i, ] <- Re(eigen(qr.coef(rss.qr, ss[[i]]),
-                                       symmetric = FALSE)$values)
+                A1 <- qr.coef(rss.qr, D %*% ss[[i]] %*% D)
+                eigs[i, ] <- Re(eigen(A1, symmetric = FALSE)$values)
                 stats[i, 1:4] <-
                     switch(test,
                            "Pillai" = Pillai(eigs[i,  ], df[i], df[nt]),

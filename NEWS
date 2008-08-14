@@ -238,6 +238,11 @@ NEW FEATURES
     o	help.search() now assumes that non-ASCII items are in latin1
 	if that makes sense (all known examples on CRAN are).
 
+    o	summary.manova() uses a stabler computation of the test
+	statistics, and gains a 'tol' argument to allow highly
+	correlated responses to be explored (with probable loss of
+	accuracy).
+
 
 INSTALLATION
 
