@@ -82,9 +82,9 @@ This is an introduction to R.
 @value{ISBN-intro}
 @end titlepage
 
-@ifnothtml
+@c @ifnothtml
 @contents
-@end ifnothtml
+@c @end ifnothtml
 
 @ifnottex
 @node Top, Preface, (dir), (dir)

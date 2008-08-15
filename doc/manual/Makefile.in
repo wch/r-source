@@ -124,6 +124,15 @@ R-admin.html: $(srcdir)/R-admin.texi
 	  fi ; \
 	fi
 
+R-FAQ.html: $(srcdir)/R-FAQ.texi
+	@if test "$(MAKEINFO)" = false; then \
+	  $(ECHO) "'makeinfo' v4.7 or later needed to make HTML docs but missing on your system." ; \
+	  $(ECHO) "file $@ will be missing"; \
+	else \
+	  $(ECHO) "creating doc/manual/$@"; \
+	  $(MAKEINFO) --html --no-split --css-include=$(srcdir)/Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@; \
+	fi
+
 dvi: refman.dvi $(OBJECTS_DVI)
 refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
 	@if test "$(LATEX)" = false; then \
@@ -249,6 +258,7 @@ R-exts.html: $(texiincludes) $(srcdir)/Rman.css
 R-intro.html: $(texiincludes) $(srcdir)/Rman.css
 R-ints.html: $(texiincludes) $(srcdir)/Rman.css
 R-lang.html: $(texiincludes) $(srcdir)/Rman.css
+R-FAQ.html: $(srcdir)/Rfaq.css
 
 info: $(OBJECTS_INFO)
 R-admin.info: $(texiincludes)

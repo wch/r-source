@@ -48,9 +48,9 @@ notice identical to this one except for the removal of this paragraph
 @value{ISBN-admin}
 @end titlepage
 
-@ifnothtml
+@c @ifnothtml
 @contents
-@end ifnothtml
+@c @end ifnothtml
 
 @ifnottex
 @node Top, Obtaining R, (dir), (dir)
