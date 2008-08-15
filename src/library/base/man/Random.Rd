@@ -151,10 +151,12 @@ set.seed(seed, kind = NULL)
 
   The object \code{.Random.seed} is only looked for in the user's
   workspace.
-
-  Most of the supplied uniform generators return 32-bit integer values that
-  are converted to doubles, so they take at most \eqn{2^{32}}{2^32}
-  distinct values and long runs will return duplicated values.
+  
+  Do not rely on randomness of low-order bits from RNGs.  Most of the
+  supplied uniform generators return 32-bit integer values that are
+  converted to doubles, so they take at most \eqn{2^{32}}{2^32} distinct
+  values and long runs will return duplicated values (Wichman-Hill is
+  the exception, and all give at least 30 varying bits.)
 }
 \value{
   \code{.Random.seed} is an \code{\link{integer}} vector whose first
@@ -272,7 +274,7 @@ RNGkind()
 RNGkind(ok[1])
 
 ## ----
-sum(duplicated(runif(1e6))) # around 110
+sum(duplicated(runif(1e6))) # around 110 for default generator
 ## and we would expect about almost sure duplicates beyond about
 qbirthday(1-1e-6, classes=2e9) # 235,000
 }
