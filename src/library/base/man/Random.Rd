@@ -1,6 +1,6 @@
 % File src/library/base/man/Random.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Random}
@@ -152,7 +152,7 @@ set.seed(seed, kind = NULL)
   The object \code{.Random.seed} is only looked for in the user's
   workspace.
 
-  All the supplied uniform generators return 32-bit integer values that
+  Most of the supplied uniform generators return 32-bit integer values that
   are converted to doubles, so they take at most \eqn{2^{32}}{2^32}
   distinct values and long runs will return duplicated values.
 }
