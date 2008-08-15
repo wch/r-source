@@ -622,15 +622,10 @@ do_install_source () {
       warning "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
     fi
     has_error=false
-    ## not --vanilla as we need to pick up the libpaths
-    ## and we do want where we are installing to in here.
-    ## also, do this in startdir to pick up any local .Renviron etc
-    curdir=`${GETWD}`
-    cd "${startdir}"
-    CLINK_CPPFLAGS=`echo "invisible(.libPaths(c(\"${lib}\", .libPaths())));tools:::.find_cinclude_paths(file=file.path(\"${curdir}\",'DESCRIPTION'))" | \
-      "${R_EXE}" --no-restore --no-save --slave`
+    ## prepend ${lib} to library path.
+    CLINK_CPPFLAGS=`echo "invisible(.libPaths(c(\"${lib}\", .libPaths())));tools:::.find_cinclude_paths(file='DESCRIPTION')" | \
+      "${R_EXE}" --vanilla --slave`
     export CLINK_CPPFLAGS
-    cd "${curdir}"
     if ${debug}; then set -x; fi
     ${MKDIR_P} "${R_PACKAGE_DIR}/libs${R_ARCH}"
     if test -f src/Makefile; then

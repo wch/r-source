@@ -488,8 +488,8 @@ BUG FIXES
 	reversed 'x' axis was incorrect. (PR#12019)
 
     o	The use of multiple packages in 'LinkingTo' works again, and
-    	now works when the dependent packages are in libraries loaded
-    	by R but not by R --vanilla.
+    	now works when the dependent packages are in the library to be
+    	installed to (but not in the library path seen by R --vanilla).
 
     o	bxp() (and hence boxplot) now respects in-line graphical
 	parameters 'xaxp'/'yaxp' as appropriate.  (PR#11463)
