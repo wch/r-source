@@ -3996,8 +3996,8 @@ useful to compare profiling code immediately after a call to @code{gc()}
 with a profiling run without a preceding call to @code{gc}.
 
 More detailed analysis of the output can be achieved by the tools in the
-CRAN package @pkg{proftools}: in particular this allows call graphs to
-be studied.
+CRAN packages @pkg{proftools} and @pkg{prof}: in particular these allow
+call graphs to be studied.
 
 @node Profiling R code for memory use, Profiling compiled code, Profiling R code for speed, Tidying and profiling R code
 @section Profiling R code for memory use
