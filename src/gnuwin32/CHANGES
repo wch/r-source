@@ -54,6 +54,9 @@ BUG FIXES
     o	winDialog() and winDialogString() check that they are being
 	used in an interactive session.
 
+    o	The Korean translation of the RGui menus has been corrected
+    	and restored.
+
 
 
 	**************************************************
