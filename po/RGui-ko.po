@@ -26,7 +26,7 @@ msgstr "메모리가 부족합니다:text를 clipboard으로부터 복사를 할수가 없습니다"
 #: console.c:1201 ../extra/graphapp/clipboard.c:53
 #: ../extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
-msgstr "clipborad를 열수 없습니다"
+msgstr "clipboard를 열수 없습니다"
 
 #: console.c:1766
 msgid "Insufficient memory. Please close the console"
