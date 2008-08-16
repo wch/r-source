@@ -22,7 +22,7 @@ ecdf(x)
 \arguments{
   \item{x, object}{numeric vector of the observations for \code{ecdf};  for
     the methods, an object inheriting from class \code{"ecdf"}.}
-  \item{\dots}{arguments to be passed to subsequent methods, i.e.,
+  \item{\dots}{arguments to be passed to subsequent methods, e.g.,
     \code{\link{plot.stepfun}} for the \code{plot} method.}
   \item{ylab}{label for the y-axis.}
   \item{verticals}{see \code{\link{plot.stepfun}}.}
