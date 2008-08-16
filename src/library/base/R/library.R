@@ -153,6 +153,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		    sapply(same, exists,
                            where = where, mode = "function", inherits = FALSE)
 		same <- same[same.isFn(i) == same.isFn(lib.pos)]
+                ## if a package imports, and re-exports, there's no problem
+		if(length(same))
+		    same <- same[sapply(same, function(.)
+					!identical(get(., i),
+						   get(., lib.pos)))]
                 if(length(same)) {
                     if (fst) {
                         fst <- FALSE

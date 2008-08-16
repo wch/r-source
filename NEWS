@@ -243,6 +243,9 @@ NEW FEATURES
 	correlated responses to be explored (with probable loss of
 	accuracy).
 
+    o	library() no longer warns about the masking objects that are
+	identical(.,.) to those they mask.
+
 
 INSTALLATION
 
