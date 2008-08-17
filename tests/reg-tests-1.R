@@ -5325,3 +5325,11 @@ dat <- matrix(1:25, 5)
 dat[2,3] <- NA
 barplot(dat, beside = TRUE, log = "y")
 ## failed in 2.7.1
+
+
+## related to PR#12551
+unique("a", c("a", "b"))
+unique(1, 1:2)
+# could seqfault in 2.7.1 on some platforms
+stopifnot(!duplicated(rep("a", 3), "a"))
+## wrong answer in 2.7.1

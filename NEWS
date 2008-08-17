@@ -534,6 +534,8 @@ BUG FIXES
 	a default encoding to have some of their entries rejected by
 	help.search() in a multi-byte locale (such as a UTF-8 locale).
 
+    o	duplicated() and unique() now handle 'incomparables' better,
+    	and avoid occasional segfaults (PR#12551).
 
 
 		CHANGES IN R VERSION 2.7.1
