@@ -816,8 +816,8 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rank, indx, x;
-    int *in;
-    double *rk;
+    int *in, *ik = NULL /* -Wall */;
+    double *rk = NULL /* -Wall */;
     int i, j, k, n;
     const char *ties_str;
     enum {AVERAGE, MAX, MIN} ties_kind = AVERAGE;
@@ -831,41 +831,38 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(TYPEOF(x) == RAWSXP)
 	error(_("raw vectors cannot be sorted"));
     n = LENGTH(x);
-    PROTECT(indx = allocVector(INTSXP, n));
-    PROTECT(rank = allocVector(REALSXP, n));
-    UNPROTECT(2);
     ties_str = CHAR(asChar(CADR(args)));
     if(!strcmp(ties_str, "average"))	ties_kind = AVERAGE;
     else if(!strcmp(ties_str, "max"))	ties_kind = MAX;
     else if(!strcmp(ties_str, "min"))	ties_kind = MIN;
     else error(_("invalid ties.method for rank() [should never happen]"));
+    PROTECT(indx = allocVector(INTSXP, n));
+    if (ties_kind == AVERAGE) {
+	PROTECT(rank = allocVector(REALSXP, n));
+	rk = REAL(rank);
+    } else {
+	PROTECT(rank = allocVector(INTSXP, n));
+	ik = INTEGER(rank);
+    }
     if (n > 0) {
 	in = INTEGER(indx);
-	rk = REAL(rank);
-	for (i = 0; i < n; i++)
-	    in[i] = i;
+	for (i = 0; i < n; i++) in[i] = i;
 	orderVector1(in, n, x, TRUE, FALSE);
-	i = 0;
-	while (i < n) {
+	for (i = 0; i < n; i = j+1) {
 	    j = i;
-	    while ((j < n - 1) && equal(in[j], in[j + 1], x, TRUE))
-		j++;
-	    if (i != j) { /* ties */
-		switch(ties_kind) {
-		    case AVERAGE:
-			for (k = i; k <= j; k++)
-			    rk[in[k]] = (i + j + 2) / 2.; break;
-		    case MAX:
-			for (k = i; k <= j; k++) rk[in[k]] = j+1; break;
-		    case MIN:
-			for (k = i; k <= j; k++) rk[in[k]] = i+1; break;
-		}
+	    while ((j < n - 1) && equal(in[j], in[j + 1], x, TRUE)) j++;
+	    switch(ties_kind) {
+	    case AVERAGE:
+		for (k = i; k <= j; k++)
+		    rk[in[k]] = (i + j + 2) / 2.; break;
+	    case MAX:
+		for (k = i; k <= j; k++) ik[in[k]] = j+1; break;
+	    case MIN:
+		for (k = i; k <= j; k++) ik[in[k]] = i+1; break;
 	    }
-	    else
-		rk[in[i]] = i + 1;
-	    i = j + 1;
 	}
     }
+    UNPROTECT(2);
     return rank;
 }
 

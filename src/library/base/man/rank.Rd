@@ -1,6 +1,6 @@
 % File src/library/base/man/rank.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{rank}
@@ -43,6 +43,12 @@ rank(x, na.last = TRUE,
   \code{NA} values are never considered to be equal: for \code{na.last =
     TRUE} and \code{na.last = FALSE} they are given distinct ranks in
   the order in which they occur in \code{x}.
+}
+\value{
+  A numeric vector of the same length as \code{x} with names copied from
+  \code{x} (unless \code{na.last = NA}, when missing values are
+  removed).  The vector is of integer type unless \code{ties.method =
+    "average"} when it is of double type (whether or not there are any ties).
 }
 \seealso{
   \code{\link{order}} and \code{\link{sort}}.

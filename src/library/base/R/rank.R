@@ -27,7 +27,7 @@ rank <- function(x, na.last = TRUE,
                 stats::runif(sum(!nas)))))
     if(!is.na(na.last) && any(nas)) {
 	## the internal code has ranks in [1, length(y)]
-	storage.mode(x) <- "double"
+	storage.mode(x) <- storage.mode(y) # integer or double
 	NAkeep <- (na.last == "keep")
 	if(NAkeep || na.last) {
 	    x[!nas] <- y

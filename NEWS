@@ -363,6 +363,11 @@ BUG FIXES
         insert the exit action when the on.exit expression appears in a
         function argument.
 
+    o	rank() now consistently returns a double result for
+	ties.method = "average" and an integer result otherwise.
+	Previously the storage mode depended on 'na.last' and if any
+	NAs were present.
+
 
 
 
