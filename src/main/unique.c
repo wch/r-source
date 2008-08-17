@@ -407,12 +407,11 @@ SEXP duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 {
     SEXP ans;
     int *h, *v;
-    int i, n;
+    int i, j, n,m;
     HashData data;
 
     if (!isVector(x))
 	error(_("'duplicated' applies only to vectors"));
-    PROTECT(incomp = coerceVector(incomp, TYPEOF(x)));
 
     n = LENGTH(x);
     HashTableSetup(x, &data);
@@ -423,13 +422,22 @@ SEXP duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
     v = LOGICAL(ans);
 
     for (i = 0; i < data.M; i++) h[i] = NIL;
-    for (i = 0; i < length(incomp); i++) removeEntry(incomp, i, &data);
-    UNPROTECT(1);
 
     if(from_last)
 	for (i = n-1; i >= 0; i--) v[i] = isDuplicated(x, i, &data);
     else
 	for (i = 0; i < n; i++) v[i] = isDuplicated(x, i, &data);
+
+    if(length(incomp)) {
+	PROTECT(incomp = coerceVector(incomp, TYPEOF(x)));
+	m = length(incomp);
+	for (i = 0; i < n; i++) 
+	    if(v[i]) {
+		for(j = 0; j < m; j++)
+		    if(data.equal(x, i, incomp, j)) {v[i] = 0; break;}
+	    }
+	UNPROTECT(1);
+    }
 
     return ans;
 }

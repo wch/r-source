@@ -29,7 +29,8 @@ duplicated(x, incomparables = FALSE, \dots)
   \item{incomparables}{a vector of values that cannot be compared.
     \code{FALSE} is a special value, meaning that all values can be
     compared, and may be the only value accepted for methods other than
-    the default.}
+    the default.  It will be coerced internally to the same type as
+       \code{x}.}
   \item{fromLast}{logical indicating if duplication should be considered
     from the reverse side, i.e., the last (or rightmost) of identical
     elements would correspond to \code{duplicated=FALSE}.}
@@ -52,15 +53,24 @@ duplicated(x, incomparables = FALSE, \dots)
   The array method calculates for each element of the sub-array
   specified by \code{MARGIN} if the remaining dimensions are identical
   to those for an earlier (or later, when \code{fromLast=TRUE}) element
-  (in row-major order).  This would most
-  commonly be used to find duplicated rows (the default) or columns
-  (with \code{MARGIN = 2}).
+  (in row-major order).  This would most commonly be used to find
+  duplicated rows (the default) or columns (with \code{MARGIN = 2}).
 
   Missing values are regarded as equal, but \code{NaN} is not equal to
   \code{NA_real_}.
 
   Strings with embedded nuls of the same length will be considered
   equal if they agree when truncated at the first nul.
+  
+  Values in \code{incomparables} will never be marked as duplicated.
+  This is intended to be used for a fairly small set of values and will
+  not be efficient for a very large set.
+}
+\value{
+  For a vector input, a logical vector of the same lemgth as
+  \code{x}.  For a data frame, a logical vector with one element for
+  each row.  For a matrix or array, a logical array with the same
+  dimensions and dimnames.
 }
 \section{Warning}{
   Using this for lists is potentially slow, especially if the elements
