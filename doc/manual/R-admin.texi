@@ -1191,10 +1191,12 @@ You will need suitable cross-compilers installed and in your path.  We
 do not at present distribute suitable cross-compilers.
 
 For Fedora 8 and 9 users, RPMs are available at
-@uref{http://sourceforge.net/projects/@/mingw-cross/}, currently of
-@command{gcc} 4.3.0 for both @cputype{ix86} and @cputype{x86_64}.
-(Recent Debian and Ubuntu versions have C/C++ but it seems not Fortran,
-cross-compilers based on @command{gcc} 4.2.1.)
+@uref{http://sourceforge.net/projects/@/mingw-cross/} for both
+@cputype{ix86} and @cputype{x86_64}.  (Currently there are Fedora 8 RPMs
+for 4.3.0 and Fedora 9 RPMs for both 4.3.0 and 4.3.1.  The Fedora 8
+@cputype{x86_64} RPMs have been tested.)  Recent Debian and Ubuntu
+versions have C/C++ (but it seems not Fortran) cross-compilers based on
+@command{gcc} 4.2.1.
 
 @c There is currently a complete set of tools based on @command{gcc} 3.4.5
 @c at @uref{http://www.stats.ox.ac.uk/pub/Rtools/i586-cross-tools.tar.bz2,
