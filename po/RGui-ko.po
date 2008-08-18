@@ -874,7 +874,7 @@ msgstr "모든 오브젝트의 삭제"
 
 #: rui.c:1128
 msgid "List search &path"
-msgstr "검색 경로의 일람"
+msgstr "검색경로를 나타내세요"
 
 #: rui.c:1136
 msgid "Console"
