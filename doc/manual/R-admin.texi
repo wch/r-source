@@ -996,7 +996,7 @@ You can test a build by running @code{make check}.  You may need to set
 @enindex TMPDIR
 @env{TMPDIR} to the absolute path to a suitable temporary directory: the
 default is @samp{c:/TEMP}.  (Use forward slashes and do not use a path
-including spaces.)
+including spaces.  It will be ignored if not set to a directory.)
 
 The recommended packages can be  checked by
 

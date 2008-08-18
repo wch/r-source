@@ -1464,7 +1464,9 @@ you will need to set it in the environment.
 @code{R CMD check} and @code{R CMD build} need you to have installed the
 files for building source packages (which is the default), as well as
 the Windows toolset (see the ``R Installation and Administration''
-manual).
+manual).  You may need to set @env{TMPDIR} to point to a suitable
+writeable directory with a path not containing spaces -- use forward
+slashes for the separators. 
 @end quotation
 
 @node Customizing checking and building,  , Building packages, Checking and building packages

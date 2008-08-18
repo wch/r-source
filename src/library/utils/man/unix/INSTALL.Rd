@@ -1,6 +1,6 @@
 % File src/library/utils/man/unix/INSTALL.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{INSTALL}
@@ -66,6 +66,14 @@
   terminates.
 
   Use \code{R CMD INSTALL --help} for more usage information.
+}
+
+\note{
+  Some parts of the operation of \code{INSTALL} depend on \file{/tmp}
+  having both write and execution access to the account running \R.
+  This is usually the case, but if  \file{/tmp} has been mounted as
+  \code{noexec}, environment variable \env{TMPDIR} needs to be set to a
+  directory from which execution is allowed.
 }
 
 \section{Packages using the methods package}{
