@@ -1010,7 +1010,7 @@ You can test a build by running @code{make check}.  You may need to set
 @enindex TMPDIR
 @env{TMPDIR} to the absolute path to a suitable temporary directory: the
 default is @samp{c:/TEMP}.  (Use forward slashes and do not use a path
-including spaces.)
+including spaces.  It will be ignored if not set to a directory.)
 
 The recommended packages can be  checked by
 
@@ -1193,7 +1193,7 @@ do not at present distribute suitable cross-compilers.
 For Fedora 8 and 9 users, RPMs are available at
 @uref{http://sourceforge.net/projects/@/mingw-cross/}, currently of
 @command{gcc} 4.3.0 for both @cputype{ix86} and @cputype{x86_64}.
-(Recent Debian and Ubuntu versions have C/C++ but it seems not Fortran
+(Recent Debian and Ubuntu versions have C/C++ but it seems not Fortran,
 cross-compilers based on @command{gcc} 4.2.1.)
 
 @c There is currently a complete set of tools based on @command{gcc} 3.4.5
