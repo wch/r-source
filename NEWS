@@ -241,7 +241,8 @@ NEW FEATURES
     o	summary.manova() uses a stabler computation of the test
 	statistics, and gains a 'tol' argument to allow highly
 	correlated responses to be explored (with probable loss of
-	accuracy).
+	accuracy). Similar changes have been made to anova.mlm() and
+	anova.mlmlist().
 
     o	library() no longer warns about the masking objects that are
 	identical(.,.) to those they mask.

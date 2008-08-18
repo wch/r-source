@@ -17,7 +17,7 @@
          c("Pillai", "Wilks", "Hotelling-Lawley", "Roy", "Spherical"),
       Sigma = diag(nrow = p), T = Thin.row(proj(M) - proj(X)),
        M = diag(nrow = p), X = ~0,
-      idata = data.frame(index = seq_len(p)))
+      idata = data.frame(index = seq_len(p)), tol = 1e-7)
 }
 \arguments{
   \item{object}{an object of class \code{"mlm"}.}
@@ -30,6 +30,8 @@
   \item{M}{formula or matrix describing the outer projection (see below).}
   \item{X}{formula or matrix describing the inner projection (see below).}
   \item{idata}{data frame describing intra-block design.}
+  \item{tol}{tolerance to be used in deciding if the residuals are
+    rank-deficient: see \code{\link{qr}}.}
 }
 \details{
   The \code{anova.mlm} method uses either a multivariate test statistic for
