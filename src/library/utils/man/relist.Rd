@@ -59,15 +59,15 @@ is.relistable(x)
   \preformatted{
       list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0))).
   }
-  However, \code{\link{optim}} cannot operate on functions that take lists as input; it
-  only likes numeric vectors.  The solution is conversion:
+  However, \code{\link{optim}} cannot operate on functions that take
+  lists as input; it only likes numeric vectors.  The solution is conversion:
   \preformatted{
  	ipar <- list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0)))
  	initial.param <- as.relistable(ipar)
 
  	ll <- function(param.vector)
  	{
-	   param <- relist(param.vector)
+	   param <- relist(param.vector, skeleton=ipar))
 	   -sum(dnorm(x, mean = param$mean, vcov = param$vcov,
 		      log = TRUE))
 	   ## NB: dnorm() has no vcov... you should get the point
@@ -85,7 +85,9 @@ is.relistable(x)
   skeleton explicitly if the skeleton is stored as an attribute inside flesh.
   In particular, flesh was created from some object obj with
   \code{unlist(as.relistable(obj))}
-  then the skeleton attribute is automatically set.
+  then the skeleton attribute is automatically set.  (Note that this
+  does not apply to the example here, as \code{\link{optim}} is creating
+  a new vector to pass to \code{ll} and not its \code{par} argument.)
 
   As long as \code{skeleton} has the right shape, it should be a precise inverse
   of \code{\link{unlist}}.  These equalities hold:
@@ -100,8 +102,11 @@ is.relistable(x)
 \value{
 .....................
 }
-\author{R Core, based on a code proposal by Andrew Clausen.}
-\seealso{\code{\link{unlist}}%, ..... MORE ?
+\author{
+  R Core, based on a code proposal by Andrew Clausen.
+}
+\seealso{
+  \code{\link{unlist}}%, ..... MORE ?
 }
 \examples{
  ipar <- list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0)))

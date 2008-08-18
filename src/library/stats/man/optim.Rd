@@ -157,7 +157,8 @@ optim(par, fn, gr = NULL, \dots,
   }
 
   Any names given to \code{par} will be copied to the vectors passed to
-  \code{fn} and \code{gr}.
+  \code{fn} and \code{gr}.  Note that no other attributes of \code{par}
+  are copied over.
 }
 \value{
   A list with components:
