@@ -3498,12 +3498,36 @@ function(package, lib.loc = NULL)
     ## result, but we can always do this by suitably splitting the
     ## messages on the double colons ...
 
+    ## Not only check function definitions, but also S4 methods
+    ## [a version of this should be part of codetools eventually] :
+    checkMethodUsageEnv <- function(env, ...) {
+	for (g in methods::getGenerics(where = env))
+	    for (m in methods::findMethods(g, where = env)) {
+		fun <- methods::getDataPart(m)
+		signature <- paste(m@generic,
+				   paste(m@target, collapse = "-"),
+				   sep = ",")
+		codetools::checkUsage(fun, signature, ...)
+	    }
+    }
+    checkMethodUsagePackage <- function (pack, ...) {
+	pname <- paste("package", pack, sep = ":")
+	if (!pname %in% search())
+	    stop("package must be loaded")
+	checkMethodUsageEnv(if (pack %in% loadedNamespaces())
+			    getNamespace(pack) else as.environment(pname), ...)
+    }
+
     ## <NOTE>
     ## Eventually, we should be able to specify a codetools "profile"
     ## for checking.
     ## </NOTE>
 
     suppressMessages(codetools::checkUsagePackage(package,
+                                                  report = foo,
+                                                  suppressLocalUnused = TRUE,
+                                                  skipWith = TRUE))
+    suppressMessages(checkMethodUsagePackage     (package,
                                                   report = foo,
                                                   suppressLocalUnused = TRUE,
                                                   skipWith = TRUE))
@@ -4553,7 +4577,7 @@ function(g, env)
                         },
                         mlist)
         ## Could also use something like
-        ## mlist <- Filter(function(m)                        
+        ## mlist <- Filter(function(m)
         ##                 !is.na(match(list(environment(m)),
         ##                              list(env, namespace))),
         ##                 mlist)
@@ -4587,7 +4611,7 @@ function(env)
         ##   getNamespace(package, error = function(e) NULL)
     }
 }
-   
+
 
 ### ** .is_call_from_replacement_function_usage
 
@@ -4676,7 +4700,7 @@ function(txt)
     txt <- gsub("\\\\%", "%", txt)
     txt <- .Rd_transform_command(txt, "special", function(u) NULL)
     txt <- .dquote_method_markup(txt, .S3_method_markup_regexp)
-    txt <- .dquote_method_markup(txt, .S4_method_markup_regexp)    
+    txt <- .dquote_method_markup(txt, .S4_method_markup_regexp)
     ## Transform <<see below>> style markup so that we can catch and
     ## throw it, rather than "basically ignore" it by putting it in the
     ## bad_lines attribute.
@@ -4762,7 +4786,7 @@ function(x)
 ## <NOTE>
 ## Handling S3/S4 method markup is somewhat tricky.
 ## When using R to parse the usage entries, we turn the
-##   \METHOD{GENERIC}{CLASS_OR_SIGLIST}(args) 
+##   \METHOD{GENERIC}{CLASS_OR_SIGLIST}(args)
 ## markup into (something which parses to) a function call by suitably
 ## quoting the \METHOD{GENERIC}{CLASS_OR_SIGLIST} part.  In case of a
 ## replacement method
