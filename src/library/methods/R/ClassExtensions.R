@@ -258,7 +258,7 @@ makeExtends <- function(Class, to,
                 body(replace, envir = packageEnv) <-
                     substitute({
                         if(!is(value, TO))
-                            stop(gexttextf("the computation: as(object,\"%s\") <- value is valid when object has class \"%s\" only if is(value, \"%s\") is TRUE (class(value) was \"%s\")\n",
+                            stop(gettextf("the computation: as(object,\"%s\") <- value is valid when object has class \"%s\" only if is(value, \"%s\") is TRUE (class(value) was \"%s\")\n",
                                  TO, FROM, TO, class(value)), domain = NA)
                         value
                     }, list(FROM = Class, TO = to))
