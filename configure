@@ -44611,7 +44611,15 @@ echo $ECHO_N "checking if bzip2 version >= 1.0.5... $ECHO_C" >&6; }
 if test "${r_cv_have_bzlib+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  if test "$cross_compiling" = yes; then
+  ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+r_save_LIBS="${LIBS}"
+LIBS="-lbz2 ${LIBS}"
+if test "$cross_compiling" = yes; then
   r_cv_have_bzlib=no
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -44662,6 +44670,13 @@ fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
 fi
 
+
+LIBS="${r_save_LIBS}"
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 fi
 { echo "$as_me:$LINENO: result: $r_cv_have_bzlib" >&5
@@ -45248,6 +45263,8 @@ cat >>confdefs.h <<\_ACEOF
 _ACEOF
 
     TIFF_LIBS=-ltiff
+  else
+    have_tiff=no
   fi
 fi
 
@@ -47922,11 +47939,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:47925: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:47942: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:47929: \$? = $ac_status" >&5
+   echo "$as_me:47946: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -48021,11 +48038,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48024: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48041: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:48028: \$? = $ac_status" >&5
+   echo "$as_me:48045: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -48073,11 +48090,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48076: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48093: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:48080: \$? = $ac_status" >&5
+   echo "$as_me:48097: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -62208,6 +62225,15 @@ if test -z "${r_capabilities}"; then
   r_capabilities="JPEG"
 else
   r_capabilities="${r_capabilities}${separator}JPEG"
+fi
+fi
+if test "${have_tiff}" = yes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_capabilities}"; then
+  r_capabilities="TIFF"
+else
+  r_capabilities="${r_capabilities}${separator}TIFF"
 fi
 fi
 if test "${r_cv_iconv_latin1}" = yes; then

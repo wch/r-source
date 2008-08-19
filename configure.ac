@@ -2029,6 +2029,8 @@ if test "x${ac_cv_header_tiffio_h}" = xyes ; then
   if test "x${have_tiff}" = xyes; then
     AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
     TIFF_LIBS=-ltiff
+  else
+    have_tiff=no
   fi
 fi
 AC_SUBST(TIFF_LIBS)
@@ -2489,6 +2491,9 @@ if test "${have_png}" = yes; then
 fi
 if test "${have_jpeg}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [JPEG], [, ])
+fi
+if test "${have_tiff}" = yes; then
+  R_SH_VAR_ADD(r_capabilities, [TIFF], [, ])
 fi
 if test "${r_cv_iconv_latin1}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [iconv], [, ])

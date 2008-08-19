@@ -1667,8 +1667,8 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 		break;
 	    }
 #endif
-    PROTECT(ans = allocVector(LGLSXP, 14));
-    PROTECT(ansnames = allocVector(STRSXP, 14));
+    PROTECT(ans = allocVector(LGLSXP, 15));
+    PROTECT(ansnames = allocVector(STRSXP, 15));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -1683,6 +1683,17 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("png"));
 #ifdef HAVE_PNG
+# if defined Unix && !defined HAVE_WORKING_CAIRO
+    LOGICAL(ans)[i++] = X11;
+# else /* Windows */
+    LOGICAL(ans)[i++] = TRUE;
+# endif
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("tiff"));
+#ifdef HAVE_TIFF
 # if defined Unix && !defined HAVE_WORKING_CAIRO
     LOGICAL(ans)[i++] = X11;
 # else /* Windows */

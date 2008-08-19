@@ -21,7 +21,8 @@ capabilities(what = NULL)
   A named logical vector. Current components are
     \item{jpeg}{Is the \code{\link{jpeg}} function operational?}
     \item{png}{Is the \code{\link{png}} function operational?}
-    \item{tcltk}{Is the \pkg{tcltk} package operational?}
+    \item{tiff}{Is the \code{\link{tiff}} function operational?}
+   \item{tcltk}{Is the \pkg{tcltk} package operational?}
     \item{X11}{(Unix)  Are the \code{X11} graphics device and the
       X11-based data editor available?  This loads the
       X11 module if not already loaded, and checks that the default

@@ -247,6 +247,9 @@ NEW FEATURES
     o	library() no longer warns about the masking objects that are
 	identical(.,.) to those they mask.
 
+    o	capabilities() gains a new argument "tiff" to report if tiff()
+	is operational.
+
 
 INSTALLATION
 
