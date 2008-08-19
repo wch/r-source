@@ -318,6 +318,9 @@ UTILITIES
 	appear in a source package), using a suitable 'file' if
 	available, else by name.
 
+    o	R CMD check now also uses codetools' checks on the body of S4
+        methods.
+
 
 C-LEVEL FACILITIES
 
