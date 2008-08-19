@@ -332,7 +332,7 @@ C-LEVEL FACILITIES
 	front-ends should check that they do not have a smaller limit.
 
     o	Graphics structure NewDevDesc has been renamed to DevDesc.
-	For now there is a compatibility define in GraphicDevice.h,
+	For now there is a compatibility define in GraphicsDevice.h,
 	but it will be removed in R 2.9.0.
 
 
