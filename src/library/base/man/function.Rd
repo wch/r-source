@@ -25,7 +25,10 @@ return(value)
 
   If \code{value} is missing, \code{NULL} is returned.  If it is a
   single expression, the value of the evaluated expression is returned.
-
+  (The expression is evaluated as soon as \code{return} is called, in
+  the evaluation frame of the function and before any
+  \code{\link{on.exit}} expression is evaluated.)
+  
   If the end of a function is reached without calling \code{return}, the
   value of the last evaluated expression is returned.
 }
