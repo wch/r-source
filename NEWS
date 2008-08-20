@@ -375,6 +375,9 @@ BUG FIXES
 	Previously the storage mode depended on 'na.last' and if any
 	NAs were present.
 
+    o	The "lm" methods of add1(), and drop1() now also work on a model
+	fit with  na.action = na.exclude.
+
 
 
 

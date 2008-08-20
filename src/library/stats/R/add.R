@@ -119,7 +119,8 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     oTerms <- attr(object$terms, "term.labels")
     int <- attr(object$terms, "intercept")
     ns <- length(scope)
-    y <- object$residuals + predict(object)
+    y <- object$residuals + object$fitted.values
+    ## predict(object) applies na.action where na.exclude results in too long
     dfs <- numeric(ns+1)
     RSS <- numeric(ns+1)
     names(dfs) <- names(RSS) <- c("<none>", scope)
@@ -403,12 +404,12 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
     chisq <- deviance.lm(object)
     dfs <- numeric(ns)
     RSS <- numeric(ns)
-    y <- object$residuals + predict(object)
+    y <- object$residuals + object$fitted.values
+    ## predict(object) applies na.action where na.exclude results in too long
     na.coef <- (1:length(object$coefficients))[!is.na(object$coefficients)]
     for(i in 1:ns) {
 	ii <- seq_along(asgn)[asgn == ndrop[i]]
-	if(all.cols) jj <- setdiff(seq(ncol(x)), ii)
-	else jj <- setdiff(na.coef, ii)
+	jj <- setdiff(if(all.cols) seq(ncol(x)) else na.coef, ii)
 	z <- if(iswt) lm.wfit(x[, jj, drop = FALSE], y, wt, offset=offset)
 	else lm.fit(x[, jj, drop = FALSE], y, offset=offset)
 	dfs[i] <- z$rank
