@@ -250,6 +250,9 @@ NEW FEATURES
     o	capabilities() gains a new argument "tiff" to report if tiff()
 	is operational.
 
+    o	round() now computes in long doubles where possible so the
+	results are more likely to be correct to representation error.
+
 
 INSTALLATION
 
