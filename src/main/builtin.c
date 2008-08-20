@@ -491,6 +491,8 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     file = CAR(args);
     ifile = asInteger(file);
     con = getConnection(ifile);
+    if(!con->canwrite) /* if it is not open, we may not know yet */
+	error(_("cannot write to this connection"));
     args = CDR(args);
 
     sepr = CAR(args);
@@ -530,7 +532,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     ci.wasopen = con->isopen;
 
     ci.changedcon = switch_stdout(ifile, 0);
-    /* will open new connection if required */
+    /* will open new connection if required, and check for writeable */
 
     ci.con = con;
 
