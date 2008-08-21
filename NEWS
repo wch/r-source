@@ -253,6 +253,13 @@ NEW FEATURES
     o	round() now computes in long doubles where possible so the
 	results are more likely to be correct to representation error.
 
+    o	set.seed(kind=NULL) now takes 'kind' from a saved seed if the
+	workspace has been restored or .Random.seed has been set in 
+	some other way.  Previously it took the 'currently used' value,
+	which was "default" unless random numbers had been used in
+	the current session.  Similarly for the values reported by
+	RNGkind().  (Related to PR#12567.) 
+
 
 INSTALLATION
 

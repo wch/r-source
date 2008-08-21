@@ -33,12 +33,12 @@ set.seed(seed, kind = NULL)
 }
 \arguments{
   \item{kind}{character or \code{NULL}.  If \code{kind} is a character
-    string, set \R's RNG to the kind desired. If it is \code{NULL},
-    return the currently used RNG. Use \code{"default"} to return to the
-    \R default.}
+    string, set \R's RNG to the kind desired.  Use \code{"default"} to
+    return to the \R default.  See \sQuote{Details} for the
+    intepretation of \code{NULL}.}
   \item{normal.kind}{character string or \code{NULL}.  If it is a character
-    string, set the method of Normal generation. Use \code{"default"}
-    to return to the \R default.}
+    string, set the method of Normal generation.  Use \code{"default"}
+    to return to the \R default.  \code{NULL} makes no change.}
   \item{seed}{a single value, interpreted as an integer.}
   \item{vstr}{a character string containing a version number,
     e.g., \code{"1.6.2"}}
@@ -92,7 +92,7 @@ set.seed(seed, kind = NULL)
     }
 
     \item{\code{"Knuth-TAOCP-2002":}}{
-      A GFSR using lagged Fibonacci sequences with
+      A 32-bit integer GFSR using lagged Fibonacci sequences with
       subtraction.  That is, the recurrence used is
       \deqn{X_j = (X_{j-100} - X_{j-37}) \bmod 2^{30}%
       }{X[j] = (X[j-100] - X[j-37]) mod 2^30}
@@ -134,6 +134,12 @@ set.seed(seed, kind = NULL)
   seeds by specifying small integer arguments, and also as a way to get
   valid seed sets for the more complicated methods (especially
   \code{"Mersenne-Twister"} and \code{"Knuth-TAOCP"}).
+
+  The use of \code{kind=NULL} in \code{RNGkind} and \code{set.seed}
+  selects the currently-used generator (including as from \R 2.7.2 that
+  used in the previous session if the workspace has been restored): if
+  no generator has been used it selects \code{"default"}.  Similarly for
+  \code{RNGkind(normal.kind=NULL)}.
 }
 \note{
   Initially, there is no seed;	a new one is created from the current
@@ -146,8 +152,8 @@ set.seed(seed, kind = NULL)
   generator, at least for the system generators.  It does not
   necessarily save the state of other generators, and in particular does
   not save the state of the Box--Muller normal generator.  If you want
-  to reproduce work later, call \code{set.seed} rather than set
-  \code{.Random.seed}.
+  to reproduce work later, call \code{set.seed} (preferably with an
+  explicit value for \code{kind}) rather than set \code{.Random.seed}.
 
   The object \code{.Random.seed} is only looked for in the user's
   workspace.
@@ -155,14 +161,14 @@ set.seed(seed, kind = NULL)
   Do not rely on randomness of low-order bits from RNGs.  Most of the
   supplied uniform generators return 32-bit integer values that are
   converted to doubles, so they take at most \eqn{2^{32}}{2^32} distinct
-  values and long runs will return duplicated values (Wichman-Hill is
+  values and long runs will return duplicated values (Wichmann-Hill is
   the exception, and all give at least 30 varying bits.)
 }
 \value{
   \code{.Random.seed} is an \code{\link{integer}} vector whose first
   element \emph{codes} the kind of RNG and normal generator. The lowest
   two decimal digits are in \code{0:(k-1)}
-  where \code{k} is the number of available RNGs. The hundreds
+  where \code{k} is the number of available RNGs.  The hundreds
   represent the type of normal generator (starting at \code{0}).
 
   In the underlying C, \code{.Random.seed[-1]} is \code{unsigned};
@@ -170,9 +176,13 @@ set.seed(seed, kind = NULL)
   the representation of an unsigned integer by a signed integer.
 
   \code{RNGkind} returns a two-element character vector of the RNG and
-  normal kinds in use \emph{before} the call, invisibly if either
-  argument is not \code{NULL}. \code{RNGversion} returns the same
-  information.
+  normal kinds selected \emph{before} the call, invisibly if either
+  argument is not \code{NULL}.  A type starts a session as the default,
+  and is selected either by a call to \code{RNGkind} or by setting
+  \code{.Random.seed} in the workspace.
+
+  \code{RNGversion} returns the same information as \code{RNGkind} about
+  the defaults in a specific \R version.
 
   \code{set.seed} returns \code{NULL}, invisibly.
 }
