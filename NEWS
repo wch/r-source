@@ -381,6 +381,8 @@ BUG FIXES
     o	The "lm" methods of add1(), and drop1() now also work on a model
 	fit with  na.action = na.exclude.
 
+    o	median(c(x = NA_real_)) no longer has spurious names().
+
 
 
 
