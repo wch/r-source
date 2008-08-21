@@ -25,7 +25,7 @@ endif
 all: makeMakedeps \
      $(R_HOME)/bin/Rgui.exe $(R_HOME)/bin/Rterm.exe \
      $(R_HOME)/bin/Rcmd.exe  $(R_HOME)/bin/RSetReg.exe  \
-     $(R_HOME)/bin/Rproxy.dll $(R_HOME)/bin/R.exe \
+     $(R_HOME)/bin/R.exe \
      $(R_HOME)/bin/md5check.exe $(R_HOME)/bin/Rscript.exe \
      $(R_HOME)/bin/open.exe 
 
@@ -97,7 +97,7 @@ Rpwd:
 
 Rpwd.exe: rpwd.o rcico.o
 
-rcmd.o R.o rgui.o rterm.o RSetReg.o rproxy_impl.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
+rcmd.o R.o rgui.o rterm.o RSetReg.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
 rgico.o: Rgui.exe.manifest
 rtico.o: Rterm.exe.manifest
 rcico.o: Rcmd.exe.manifest
@@ -107,23 +107,6 @@ open.exe: open.o
 
 clean:
 	$(RM) *.o *.obj *.exe *~ *.exp *.dll *.lib *.a *.d Makedeps
-
-bdx_util-CFLAGS=-D_IN_RPROXY_
-bdx_com-CFLAGS=-D_IN_RPROXY_
-bdx_SEXP-CFLAGS=-D_IN_RPROXY_
-## for graphapp.h
-rproxy_impl-CFLAGS=-I../../../include
-Rproxy-DLLFLAGS=-mwindows
-Rproxy-DLLLIBS=-L../../../$(IMPDIR) -lR $(GRAPHAPP_LIB) -lole32 -luuid -loleaut32
-## this one needs Rproxy.dll as the LIBRARY line
-Rproxy.dll: Rproxy.def rproxy.o rproxy_dev.o rproxy_impl.o com_util.o \
-	bdx_util.o bdx_SEXP.o bdx_com.o rtico.o
-	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $^ $($*-DLLLIBS) $(DLLLIBS)
-
-
-$(R_HOME)/bin/Rproxy.dll: Rproxy.dll
-	@$(MKDIR) -p $(R_HOME)/bin
-	$(CP) Rproxy.dll $@	
 
 CSOURCES=$(filter-out R.c rcmd.c rpwd.c rtest.c, $(wildcard *.c))
 DEPS=$(CSOURCES:.c=.d)

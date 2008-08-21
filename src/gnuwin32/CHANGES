@@ -15,8 +15,20 @@
 
 		CHANGES IN R VERSION 2.8.0
 
+NEW FEATURES
 
-OTHER
+    o	Rterm --ess sets stdout to be unbuffered, as it would be for
+	output to a terminal.
+
+    o	windows() gains a new argument 'clickToConfirm', default TRUE,
+	which controls if new-frame confirmation is done via clicking
+	(or ENTER) on the window (the recent default) or via a
+	question in the console (the default for other interactive
+	devices).  The non-default behaviour may be useful when R is
+	driven indirectly (e.g. via ESS) and for some Rterm users.
+
+
+UTILITIES
 
     o	Rcmd sets many more enviroment variables, including all those
 	set by R CMD under a Unix-alike which make sense on Windows.
@@ -38,15 +50,8 @@ OTHER
     	C locale but in the current locale (although LANGUAGE=en is
     	used).
 
-    o	Rterm --ess sets stdout to be unbuffered, as it would be for
-	output to a terminal.
-
-    o	windows() gains a new argument 'clickToConfirm', default TRUE,
-	which controls if new-frame confirmation is done via clicking
-	(or ENTER) on the window (the recent default) or via a
-	question in the console (the default for other interactive
-	devices).  The non-default behaviour may be useful when R is
-	driven indirectly (e.g. via ESS) and for some Rterm users.
+    o	Rproxy.dll is no longer part of the R distribution: it has
+	been replaced by CRAN package rscproxy.
 
 
 BUG FIXES
