@@ -168,6 +168,9 @@ BUG FIXES
     o	data.frame(row.names=NULL) once again behaves differently from
 	the default (as documented).
 
+    o	plot(isoreg(x,y)) now plots the points correctly, also when 'x'
+	is not sorted.
+
 
 
 		CHANGES IN R VERSION 2.7.1

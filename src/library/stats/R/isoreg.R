@@ -96,7 +96,8 @@ plot.isoreg <-
     ##Dbg    warning("x$iKnots differs from which(i[-1]) ..")
 
     ## Plot of "Data" + Fit
-    plot(x0, c(NA,x$y), ..., xlab = xlab, ylab = ylab, main = if(!both) main)
+    plot(x0, c(NA, if(x$isOrd) x$y else x$y[x$ord]), ...,
+	 xlab = xlab, ylab = ylab, main = if(!both) main)
     lines (xx, x$yf, col = par.fit$col, lwd = par.fit$lwd, type = "S")
     points(xx[x$iKnots], x$yf[x$iKnots], col = par.fit$col,
            cex = par.fit$cex, pch = par.fit$pch)
