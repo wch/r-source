@@ -407,7 +407,7 @@ data.frame <-
                 vnames[[i]] <- tmpname
             }
         } # end of ncols[i] <= 1
-	if(is.null(row.names) && nrows[i] > 0L) {
+	if(missing(row.names) && nrows[i] > 0L) {
             rowsi <- attr(xi, "row.names")
             ## old way to mark optional names
             if(!(rowsi[[1L]] %in% ""))

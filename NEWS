@@ -165,6 +165,10 @@ BUG FIXES
     o	duplicated() and unique() now handle 'incomparables' better,
     	and avoid occasional segfaults (PR#12551).
 
+    o	data.frame(row.names=NULL) once again behaves differently from
+	the default (as documented).
+
+
 
 		CHANGES IN R VERSION 2.7.1
 
