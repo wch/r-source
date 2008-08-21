@@ -25,14 +25,8 @@ isoreg <- function(x, y=NULL)
     isOrd <- ((!is.null(xy$xlab) && xy$xlab == "Index")
               || !is.unsorted(x, strictly = TRUE))
     if(!isOrd) {
-	## order(x,y, 'increasing in x, decreasing in y'):
 	y <- xy$y
-	ix <- order(x)
-	xx <- x[ix]
-	iy <- tapply(y[ix], xx, order, decreasing = TRUE)
-	ord <- unlist(mapply(`[`, split(ix,xx), iy,
-			     SIMPLIFY = FALSE, USE.NAMES = FALSE),
-		      use.names = FALSE)
+	ord <- order(x, -y) ## 'increasing in x, decreasing in y'
 	y <- y[ord]
     }
     z <- .Call("R_isoreg", if(isOrd)xy$y else y, PACKAGE = "stats")
