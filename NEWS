@@ -561,8 +561,11 @@ BUG FIXES
     o	duplicated() and unique() now handle 'incomparables' better,
     	and avoid occasional segfaults (PR#12551).
 
-    o	plot(isoreg(x,y)) now plots the points correctly, also when 'x'
-	is not sorted.
+    o	plot(isoreg(x, y)) now plots the points correctly when 'x'
+	is unssorted.
+
+    o	data.frame(row.names=NULL) once again behaves differently from
+	the default (as documented).
 
 
 

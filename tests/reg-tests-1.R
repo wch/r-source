@@ -5334,8 +5334,16 @@ unique(1, 1:2)
 stopifnot(!duplicated(rep("a", 3), "a"))
 ## wrong answer in 2.7.1
 
+
 ## drop1.lm() bug
 dd <- stackloss ; dd[1,3] <- NA
 rr <- lm(stack.loss ~ ., data=dd, na.action=na.exclude)
 drop1(rr)
 ## failed in 2.7.x
+
+
+## explicit row.names=NULL in data.frame()
+stopifnot(identical(row.names(data.frame(x=c(a=1,b=2), row.names=NULL)),
+                    c("1", "2")))
+stopifnot(identical(row.names(data.frame(x=c(a=1,b=2))), c("a", "b")))
+## same as default in 2.5.0 <= R < 2.7.2
