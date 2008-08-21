@@ -552,6 +552,10 @@ BUG FIXES
     o	duplicated() and unique() now handle 'incomparables' better,
     	and avoid occasional segfaults (PR#12551).
 
+    o	The plot(isoreg(x,y)) now plots the points correctly, also when 'x'
+	is not sorted.
+
+
 
 		CHANGES IN R VERSION 2.7.1
 
