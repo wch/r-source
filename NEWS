@@ -260,6 +260,8 @@ NEW FEATURES
 	the current session.  Similarly for the values reported by
 	RNGkind().  (Related to PR#12567.) 
 
+	set.seed() gains a 'normal.kind' argument.
+
 
 INSTALLATION
 

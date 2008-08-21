@@ -20,7 +20,7 @@
 
   \code{RNGversion} can be used to set the random generators as they
   were in an earlier \R version (for reproducibility).
-  
+
   \code{set.seed} is the recommended way to specify seeds.
 }
 \usage{
@@ -29,7 +29,7 @@ save.seed <- .Random.seed
 
 RNGkind(kind = NULL, normal.kind = NULL)
 RNGversion(vstr)
-set.seed(seed, kind = NULL)
+set.seed(seed, kind = NULL, normal.kind = NULL)
 }
 \arguments{
   \item{kind}{character or \code{NULL}.  If \code{kind} is a character
@@ -43,7 +43,7 @@ set.seed(seed, kind = NULL)
   \item{vstr}{a character string containing a version number,
     e.g., \code{"1.6.2"}}
   \item{rng.kind}{integer code in \code{0:k} for the above \code{kind}.}
-  \item{n1, n2, \dots}{integers. See the details for how many are required
+  \item{n1, n2, \dots}{integers.  See the details for how many are required
     (which depends on \code{rng.kind}).}
 }
 \details{
@@ -100,10 +100,10 @@ set.seed(seed, kind = NULL)
       recorded as 101 numbers, the last being a cyclic shift of the
       buffer).  The period is around \eqn{2^{129}}{2^129}.
     }
-    
+
     \item{\code{"Knuth-TAOCP":}}{
       An earlier version from Knuth (1997).
-      
+
       The 2002 version was not backwards compatible with the earlier
       version: the initialization of the GFSR from the seed was altered.
       \R did not allow you to choose consecutive seeds, the reported
@@ -119,15 +119,17 @@ set.seed(seed, kind = NULL)
     }
   }
 
-  \code{normal.kind} can be \code{"Kinderman-Ramage"}, 
-  \code{"Buggy Kinderman-Ramage"},
-  \code{"Ahrens-Dieter"}, \code{"Box-Muller"}, \code{"Inversion"} (the
-  default), or
+  \code{normal.kind} can be \code{"Kinderman-Ramage"}, \code{"Buggy
+  Kinderman-Ramage"} (not for \code{set.seed}), \code{"Ahrens-Dieter"},
+  \code{"Box-Muller"}, \code{"Inversion"} (the default), or
   \code{"user-supplied"}.  (For inversion, see the reference in
-  \code{\link{qnorm}}.)
-  The Kinderman-Ramage generator used in versions prior
-  to 1.7.1 had several approximation errors and should only be used for
-  reproduction of older results.
+  \code{\link{qnorm}}.)  The Kinderman-Ramage generator used in versions
+  prior to 1.7.1 (now called \code{"Buggy"} had several approximation
+  errors and should only be used for reproduction of older results.
+  The \code{"Box-Muller"} generator is stateful as pairs of normals are
+  generated and returned sequentially.  The state is reset whenever it
+  is selected (even if it is the current normal generator) and when
+  \code{kind} is changed.
 
   \code{set.seed} uses its single integer argument to set as many seeds
   as are required.  It is intended as a simple way to get quite different
@@ -135,11 +137,11 @@ set.seed(seed, kind = NULL)
   valid seed sets for the more complicated methods (especially
   \code{"Mersenne-Twister"} and \code{"Knuth-TAOCP"}).
 
-  The use of \code{kind=NULL} in \code{RNGkind} and \code{set.seed}
-  selects the currently-used generator (including as from \R 2.7.2 that
-  used in the previous session if the workspace has been restored): if
-  no generator has been used it selects \code{"default"}.  Similarly for
-  \code{RNGkind(normal.kind=NULL)}.
+  The use of \code{kind=NULL} or \code{normal.kind=NULL} in
+  \code{RNGkind} or \code{set.seed} selects the currently-used
+  generator (including as from \R 2.8.0 that used in the previous
+  session if the workspace has been restored): if no generator has been
+  used it selects \code{"default"}.
 }
 \note{
   Initially, there is no seed;	a new one is created from the current
@@ -152,12 +154,13 @@ set.seed(seed, kind = NULL)
   generator, at least for the system generators.  It does not
   necessarily save the state of other generators, and in particular does
   not save the state of the Box--Muller normal generator.  If you want
-  to reproduce work later, call \code{set.seed} (preferably with an
-  explicit value for \code{kind}) rather than set \code{.Random.seed}.
+  to reproduce work later, call \code{set.seed} (preferably with
+  explicit values for \code{kind} and \code{normal.kind}) rather than
+  set \code{.Random.seed}.
 
   The object \code{.Random.seed} is only looked for in the user's
   workspace.
-  
+
   Do not rely on randomness of low-order bits from RNGs.  Most of the
   supplied uniform generators return 32-bit integer values that are
   converted to doubles, so they take at most \eqn{2^{32}}{2^32} distinct

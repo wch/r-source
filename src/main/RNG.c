@@ -457,21 +457,20 @@ SEXP attribute_hidden do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_setseed (SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP skind;
+    SEXP skind, nkind;
     int seed;
-    RNGtype kind;
 
     checkArity(op,args);
     seed = asInteger(CAR(args));
     if (seed == NA_INTEGER)
 	error(_("supplied seed is not a valid integer"));
     skind = CADR(args);
-    if (!isNull(skind)) {
-	kind = (RNGtype) asInteger(skind);
-	RNGkind(kind);
-    } else
-	GetRNGkind(R_NilValue); /* pull from .Random.seed if present */
-    RNG_Init(RNG_kind, (Int32) seed);
+    nkind = CADDR(args);
+    GetRNGkind(R_NilValue); /* pull RNG_kind, N01_kind from 
+			       .Random.seed if present */
+    if (!isNull(skind)) RNGkind((RNGtype) asInteger(skind));
+    if (!isNull(nkind)) Norm_kind((N01type) asInteger(nkind));
+    RNG_Init(RNG_kind, (Int32) seed); /* zaps BM history */
     PutRNGstate();
     return R_NilValue;
 }
