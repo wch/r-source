@@ -22,12 +22,20 @@ isoreg <- function(x, y=NULL)
     x <- xy$x
     if(any(is.na(x)) || any(is.na(xy$y)))
 	stop("missing values not allowed")
-    isOrd <- (!is.null(xy$xlab) && xy$xlab == "Index") || !is.unsorted(x)
+    isOrd <- ((!is.null(xy$xlab) && xy$xlab == "Index")
+              || !is.unsorted(x, strictly = TRUE))
     if(!isOrd) {
-        ord <- order(x)
-	yo <- xy$y[ord]
+	## order(x,y, 'increasing in x, decreasing in y'):
+	y <- xy$y
+	ix <- order(x)
+	xx <- x[ix]
+	iy <- tapply(y[ix], xx, order, decreasing = TRUE)
+	ord <- unlist(mapply(`[`, split(ix,xx), iy,
+			     SIMPLIFY = FALSE, USE.NAMES = FALSE),
+		      use.names = FALSE)
+	y <- y[ord]
     }
-    z <- .Call("R_isoreg", if(isOrd)xy$y else yo, PACKAGE = "stats")
+    z <- .Call("R_isoreg", if(isOrd)xy$y else y, PACKAGE = "stats")
     structure(c(xy[c("x","y")], z[c("yf","yc","iKnots")],
                 list(isOrd = isOrd, ord = if(!isOrd) ord,
                      call = match.call())),
@@ -47,7 +55,7 @@ print.isoreg <- function(x, digits = getOption("digits"), ...)
   cat("Isotonic regression from ", deparse(x$call), ",\n", sep="")
   cat("  with", length(x$iKnots), "knots / breaks at obs.nr.", x$iKnots, ";\n")
   if(x$isOrd) cat("  initially ordered 'x'\n")
-  else { cat("  x ordering:"); str(x$ord) }
+  else { cat("  (x,y) ordering:"); str(x$ord) }
   cat("  and further components ")
   str(x[1:4], digits.d = 3 + max(0,digits - 7))
   invisible(x)

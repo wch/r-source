@@ -78,7 +78,7 @@ static int scmp(SEXP x, SEXP y, Rboolean nalast)
     return Scollate(x, y);
 }
 
-Rboolean isUnsorted(SEXP x)
+Rboolean isUnsorted(SEXP x, Rboolean strictly)
 {
     int n, i;
 
@@ -91,27 +91,55 @@ Rboolean isUnsorted(SEXP x)
 	    /* NOTE: x must have no NAs {is.na(.) in R};
 	       hence be faster than `rcmp()', `icmp()' for these two cases */
 
+	    /* The only difference between strictly and not is '>' vs '>='
+	       but we want the if() outside the loop */
 	case LGLSXP:
 	case INTSXP:
-	    for(i = 0; i+1 < n ; i++)
-		if(INTEGER(x)[i] > INTEGER(x)[i+1])
-		    return TRUE;
+	    if(strictly) {
+		for(i = 0; i+1 < n ; i++)
+		    if(INTEGER(x)[i] >= INTEGER(x)[i+1])
+			return TRUE;
+
+	    } else {
+		for(i = 0; i+1 < n ; i++)
+		    if(INTEGER(x)[i] > INTEGER(x)[i+1])
+			return TRUE;
+	    }
 	    break;
 	case REALSXP:
-	    for(i = 0; i+1 < n ; i++)
-		if(REAL(x)[i] > REAL(x)[i+1])
-		    return TRUE;
+	    if(strictly) {
+		for(i = 0; i+1 < n ; i++)
+		    if(REAL(x)[i] >= REAL(x)[i+1])
+			return TRUE;
+	    } else {
+		for(i = 0; i+1 < n ; i++)
+		    if(REAL(x)[i] > REAL(x)[i+1])
+			return TRUE;
+	    }
 	    break;
 	case CPLXSXP:
-	    for(i = 0; i+1 < n ; i++)
-		if(ccmp(COMPLEX(x)[i], COMPLEX(x)[i+1], TRUE) > 0)
-		    return TRUE;
+	    if(strictly) {
+		for(i = 0; i+1 < n ; i++)
+		    if(ccmp(COMPLEX(x)[i], COMPLEX(x)[i+1], TRUE) >= 0)
+			return TRUE;
+	    } else {
+		for(i = 0; i+1 < n ; i++)
+		    if(ccmp(COMPLEX(x)[i], COMPLEX(x)[i+1], TRUE) > 0)
+			return TRUE;
+	    }
 	    break;
 	case STRSXP:
-	    for(i = 0; i+1 < n ; i++)
-		if(scmp(STRING_ELT(x, i ),
-			STRING_ELT(x,i+1), TRUE) > 0)
-		    return TRUE;
+	    if(strictly) {
+		for(i = 0; i+1 < n ; i++)
+		    if(scmp(STRING_ELT(x, i ),
+			    STRING_ELT(x,i+1), TRUE) >= 0)
+			return TRUE;
+	    } else {
+		for(i = 0; i+1 < n ; i++)
+		    if(scmp(STRING_ELT(x, i ),
+			    STRING_ELT(x,i+1), TRUE) > 0)
+			return TRUE;
+	    }
 	    break;
 	default:
 	    UNIMPLEMENTED_TYPE("isUnsorted", x);
@@ -122,7 +150,7 @@ Rboolean isUnsorted(SEXP x)
 SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    return ScalarLogical(isUnsorted(CAR(args)));
+    return ScalarLogical(isUnsorted(CAR(args), asLogical(CADR(args))));
 }
 
 
@@ -364,7 +392,7 @@ static void ssort2(SEXP *x, int n, Rboolean decreasing)
 void sortVector(SEXP s, Rboolean decreasing)
 {
     int n = LENGTH(s);
-    if (n >= 2 && (decreasing || isUnsorted(s)))
+    if (n >= 2 && (decreasing || isUnsorted(s, FALSE)))
 	switch (TYPEOF(s)) {
 	case LGLSXP:
 	case INTSXP:

@@ -597,7 +597,7 @@ SEXP Rf_install(const char *);
 Rboolean Rf_isFree(SEXP);
 Rboolean Rf_isOrdered(SEXP);
 Rboolean Rf_isUnordered(SEXP);
-Rboolean Rf_isUnsorted(SEXP);
+Rboolean Rf_isUnsorted(SEXP, Rboolean);
 SEXP Rf_lengthgets(SEXP, R_len_t);
 SEXP R_lsInternal(SEXP, Rboolean);
 SEXP Rf_match(SEXP, SEXP, int);

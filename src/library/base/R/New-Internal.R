@@ -146,15 +146,15 @@ gc <- function(verbose = getOption("verbose"),	reset=FALSE)
 gcinfo <- function(verbose) .Internal(gcinfo(verbose))
 gctorture <- function(on=TRUE) invisible(.Internal(gctorture(on)))
 
-is.unsorted <- function(x, na.rm = FALSE) {
+is.unsorted <- function(x, na.rm = FALSE, strictly = FALSE) {
     if(is.null(x)) return(FALSE)
     if(!is.atomic(x) ||
-       (!na.rm && any(is.na(x))))
+       (!na.rm && any(is.na(x))))## "FIXME" is.na(<large>) is "too slow"
 	return(NA)
     ## else
     if(na.rm && any(ii <- is.na(x)))
 	x <- x[!ii]
-    .Internal(is.unsorted(x))
+    .Internal(is.unsorted(x, strictly))
 }
 
 mem.limits <- function(nsize=NA, vsize=NA)
