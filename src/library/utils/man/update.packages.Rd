@@ -119,7 +119,9 @@ contrib.url(repos, type = getOption("pkgType"))
     packages on which these packages depend/suggest/import
     (and so on recursively).  Not used if \code{repos = NULL}.
     Can also be a character vector, a subset of
-    \code{c("Depends", "Imports", "Suggests")}.
+    \code{c("Depends", "Imports", "Suggests")}.  Note that only if the
+    dependent package is \emph{installed} is checked, not if it meets
+    the version requirements.
 
     Only supported if \code{lib} is of length one (or missing),
     so it is unambiguous where to install the dependent packages.
@@ -309,6 +311,10 @@ contrib.url(repos, type = getOption("pkgType"))
   for it is unclear where new dependencies should be installed.  The
   current implementation will only allow it if all the packages to be
   updated are in a single library, when that library will be used.
+
+  You are advised to run \code{update.packages} before
+  \code{install.packages} to ensure that any installed dependencies have
+  their latest versions.
 }
 #ifdef unix
 \note{
