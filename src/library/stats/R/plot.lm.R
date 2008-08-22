@@ -48,7 +48,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
     n <- length(r)
     if (any(show[2:6])) {
 	s <- if (inherits(x, "rlm")) x$s
-        else if(inherits(x, "glm")) sqrt(summary(x)$dispersion)
+        else if(isGlm) sqrt(summary(x)$dispersion)
         else sqrt(deviance(x)/df.residual(x))
 	hii <- lm.influence(x, do.coef = FALSE)$hat
 	if (any(show[4:6])) {
