@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-08-14
+@set FAQ_DATE @value{FAQ_YEAR}-08-22
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
-@set REL_PATCHLEVEL 1
+@set REL_PATCHLEVEL 2
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -1873,6 +1873,8 @@ biomarker data.
 Functions and data sets reproducing some examples in ``Statistics for
 Experimenters II'' by G. E. P. Box, J. S. Hunter, and W. C. Hunter,
 2005, John Wiley and Sons.
+@item BLCOP
+Black-Litterman and copula-opinion pooling frameworks.
 @item BMA
 Bayesian Model Averaging for linear models, generalizable linear models
 and survival models (Cox regression).
@@ -3003,6 +3005,8 @@ minimum spanning tree, or the population parameter theta based on
 various approaches.
 @item aplpack
 Another PLot PACKage: stem.leaf, bagplot, faces, spin3R, @dots{}.
+@item apsrtable
+American Political Science Review style table formatting.
 @item argosfilter
 Argos locations filter.
 @item arm
@@ -3148,6 +3152,8 @@ Model selection by bootstrapping the @code{stepAIC()} procedure.
 Software (bootstrap, cross-validation, jackknife), data and errata for
 the book ``An Introduction to the Bootstrap'' by B. Efron and
 R. Tibshirani, 1993, Chapman and Hall.
+@item bpca
+Biplot of multivariate data based on Principal Components Analysis.
 @item bqtl
 QTL mapping toolkit for inbred crosses and recombinant inbred lines.
 Includes maximum likelihood and Bayesian tools.
@@ -3216,6 +3222,8 @@ update algorithm (Hard Competitive Learning) and Neural Gas algorithm
 finding the number of clusters in a data set.
 @item celsius
 Retrieve Affymetrix microarray measurements and metadata from Celsius.
+@item cem
+The coarsened exact matching algorithm (and many extensions).
 @item cfa
 Analysis of configuration frequencies.
 @item cggd
@@ -3434,6 +3442,9 @@ Analysis of age-structured demographic models.
 Visualization of multivariate density functions and estimates with level 
 set trees and shape trees, and visualization of multivariate data with
 tail trees.
+@item denstrip
+Density strips and other methods for compactly illustrating
+distributions.
 @item depmix
 Dependent Mixture Models: fit (multi-group) mixtures of latent Markov
 models on mixed categorical and continuous (time series) data.
@@ -3442,6 +3453,8 @@ Dependent Mixture Models: fit latent (hidden) Markov models on mixed
 categorical and continuous (time series) data.
 @item desirability
 Desirabiliy function optimization and ranking.
+@item dfcrm
+Dose-finding by the continual reassessment method.
 @item dglm
 Double generalized linear models.
 @item diagram
@@ -4780,6 +4793,8 @@ Functions for plotting Australia's coastline and state boundaries.
 @item pARtial
 (Partial) attributable risk estimates, corresponding variance estimates
 and confidence intervals.
+@item pack
+Create and manipulate raw vectors.
 @item pairwiseCI
 Calculate and plot unadjusted confidence intervals for two sample
 comparisons.
@@ -5648,6 +5663,8 @@ Time Frame coding kernel extensions.
 @item tgp
 Bayesian regression and adaptive sampling with Treed Gaussian Process
 models.
+@item tileHMM
+Hidden Markov Models for ChIP-on-Chip analysis.
 @item time
 Time tracking for developers.
 @item timereg
