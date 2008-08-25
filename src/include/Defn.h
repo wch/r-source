@@ -1122,7 +1122,7 @@ const char *EncodeReal2(double, int, int, int);
 
 /* main/sort.c */
 void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
-		  Rboolean decreasing);
+		  Rboolean decreasing, SEXP rho);
 
 /* main/subset.c */
 SEXP R_subset3_dflt(SEXP, SEXP, SEXP);
