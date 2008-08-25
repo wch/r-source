@@ -92,6 +92,6 @@ x[1, 3]      # 4 as an integer
 x[[2, 3]] <- 0   # zero the patchlevel
 x[[c(2,3)]] <- 0 # same
 x
-x[3] <- "2.2.3"; x
+x[[3]] <- "2.2.3"; x
 }
 \keyword{utilities}
