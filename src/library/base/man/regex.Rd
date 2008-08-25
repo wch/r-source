@@ -1,6 +1,6 @@
 % File src/library/base/man/regex.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{regex}
@@ -37,7 +37,7 @@
 \section{Extended Regular Expressions}{
   This section covers the regular expressions allowed if \code{extended
   = TRUE} in \code{grep}, \code{regexpr}, \code{gregexpr}, \code{sub},
-  \code{gsub} and \code{strsplit}.  They use the \code{glibc 2.6}
+  \code{gsub} and \code{strsplit}.  They use the \code{glibc 2.7}
   implementation of the POSIX 1003.2 standard.
 
   Regular expressions are constructed analogously to arithmetic
@@ -70,11 +70,15 @@
   does may or may not include \code{w}.  (In most English locales the
   collation order is \code{wWxXyYzZ}.)  For caseless matching the
   characters in a range are interpreted as if in lower case, so in an
-  English locale \code{[W-z]} matches \code{WXYZwxyz}.
+  English locale \code{[W-z]} matches \code{WXYZwxyz}.  The only
+  portable way to specify all ASCII letters is to list them all as
+  character class,
+  \code{[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]}.
 
   For Perl regexps, the ranges are interpreted in the numerical order of
-  the characters, either as bytes in an 8-bit locale or as Unicode
-  points in a UTF-8 locale.
+  the characters, either as bytes in a single-byte locale or as Unicode
+  points in a UTF-8 locale.  So in either case \code{[A-Za-z]} specifies
+  the set of ASCII letters.
 
   Certain named classes of characters are predefined.  Their
   interpretation depends on the \emph{locale} (see \link{locales}); the
@@ -205,7 +209,7 @@
   For complete details please consult the man pages for PCRE, especially
   \code{man pcrepattern} and \code{man pcreapi}), on your system or from
   the sources at \url{http://www.pcre.org}. If PCRE support was compiled
-  from the sources within \R, the PCRE version is 7.6 as described here
+  from the sources within \R, the PCRE version is 7.7 as described here
   (version \eqn{\ge}{>=} 7.6 is required if \R is configured to use the
   system's PCRE library).
 

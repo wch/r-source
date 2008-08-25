@@ -24,6 +24,8 @@ sd(x, na.rm = FALSE)
   \item{na.rm}{logical. Should missing values be removed?}
 }
 \details{
+  Like \code{\link{var}} this uses denominator \eqn{n - 1}.
+  
   The standard deviation of a zero-length vector (after removal of
   \code{NA}s if \code{na.rm = TRUE}) is not defined and gives an error.
   The standard deviation of a length-one vector is \code{NA}.
