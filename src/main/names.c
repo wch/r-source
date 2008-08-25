@@ -1093,7 +1093,7 @@ SEXP install(const char *name)
     if (*name == '\0')
 	error(_("attempt to use zero-length variable name"));
     if (strlen(name) > MAXIDSIZE)
-	error(_("symbol print-name too long"));
+	error(_("variable names are limited to %d bytes"), MAXIDSIZE);
     strcpy(buf, name);
     hashcode = R_Newhashpjw(buf);
     i = hashcode % HSIZE;
