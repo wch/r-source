@@ -24,7 +24,7 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
 \arguments{
   \item{\dots}{a sequence of numeric, complex, character or logical
     vectors, all of the same length.}
-  \item{x}{an atomic vector.}
+  \item{x}{a vector.}
   \item{partial}{vector of indices for partial sorting.
     (Non-\code{NULL} values are not implemented.)}
   \item{decreasing}{logical. Should the sort order be increasing or
@@ -59,7 +59,7 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   implementations of S, but no other values are accepted and ordering is
   always complete.
 
-  Note that these functions are only defined for atomic vectors, so any class
+  Note that these functions are only defined for vectors, so any class
   of the object supplied is ignored: this means factors are sorted on
   their internal codes and not their printed representation.
 }
@@ -73,7 +73,7 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
 }
-\seealso{\code{\link{order1}}, \code{\link{sort}} and \code{\link{rank}}.}
+\seealso{\code{\link{sort}} and \code{\link{rank}}.}
 \examples{
 require(stats)
 

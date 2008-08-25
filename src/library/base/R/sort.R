@@ -138,7 +138,3 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
     if(is.na(na.last)) .Internal(order(TRUE, decreasing, x[!is.na(x)]))
     else .Internal(order(na.last, decreasing, x))
 }
-
-order1 <- function(x, ...) UseMethod("order1")
-
-order1.default <- function(x, ...) sort.list(x, ...)
