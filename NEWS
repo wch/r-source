@@ -407,6 +407,17 @@ BUG FIXES
 	**************************************************
 
 
+
+		CHANGES IN R VERSION 2.7.2 patched
+
+
+BUG FIXES
+
+    o	within(<dataframe>, { ... }) now also works when '...' removes
+    	more than one column.
+
+
+
 		CHANGES IN R VERSION 2.7.2
 
 

@@ -56,13 +56,15 @@ with.default <- function(data, expr, ...)
 within.data.frame <- function(data, expr, ...)
 {
     parent <- parent.frame()
-    e   <- evalq(environment(), data, parent)
+    e <- evalq(environment(), data, parent)
     eval(substitute(expr), e)
-    l   <- as.list(e)
+    l <- as.list(e)
     l <- l[!sapply(l, is.null)]
-    del <- setdiff(names(data), names(l))
-    data[names(l)] <- l
-    data[del] <- NULL
+    ## del: variables to *del*ete from data[]
+    nD <- length(del <- setdiff(names(data), (nl <- names(l))))
+    data[nl] <- l
+    if(nD)
+	data[del] <- if(nD == 1) NULL else vector("list", nD)
     data
 }
 
