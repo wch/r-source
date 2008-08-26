@@ -1,6 +1,6 @@
 % File src/library/base/man/rank.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{rank}
@@ -21,7 +21,7 @@ rank(x, na.last = TRUE,
     \code{FALSE}, they are put first; if \code{NA}, they are removed; if
     \code{"keep"} they are kept with rank \code{NA}.}
   \item{ties.method}{a character string specifying how ties are treated,
-    see below; can be abbreviated.}
+    see \sQuote{Details}; can be abbreviated.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -43,6 +43,15 @@ rank(x, na.last = TRUE,
   \code{NA} values are never considered to be equal: for \code{na.last =
     TRUE} and \code{na.last = FALSE} they are given distinct ranks in
   the order in which they occur in \code{x}.
+
+  Only the base type of \code{x} is considered in comparisons, so that
+  for example factors are ranked by their integer codes.  On the other
+  hand, methods for \code{is.na} will be used.
+}
+\value{
+  A numeric (possibly integer) vector of the same length as \code{x}
+  with names copied from \code{x} (unless \code{na.last = NA}, when
+  missing values are removed).
 }
 \seealso{
   \code{\link{order}} and \code{\link{sort}}.
