@@ -4566,34 +4566,40 @@ function(g, env)
 	mlist <- mlist[!ind]
 
     if(length(mlist)) {
-        ## Keep only those methods defined in the given environment, or
-        ## the associated namespace in case there is one.  This is not
-        ## quite pretty, as an environment per se does not know about
-        ## this.
+        ## Determining the methods defined in a package from the package
+        ## env or the associated namespace seems rather tricky.  What we
+        ## seem to observe is the following.
+        ## * If there is a namespace N, methods defined in the package
+        ##   have N as their environment, for both the package env and
+        ##   the associated namespace.
+        ## * If there is no namespace, methods defined in the package
+        ##   have an environment E which is empty and has globalenv() as
+        ##   its parent.  (If the package defines generics, these seem
+        ##   to have E as their parent env.)
+        ## However, in the latter case, there seems no way to infer E
+        ## from the package env.  Hence, we fall back to comparing the
+        ## methods in the package env with those in its parent env, and
+        ## exclude the ones already found there.
         namespace <- .get_namespace_from_package_env(env)
-        mlist <- Filter(function(m) {
-                            e <- environment(m)
-                            identical(e, env) || identical(e, namespace)
-                        },
-                        mlist)
-        ## Could also use something like
-        ## mlist <- Filter(function(m)
-        ##                 !is.na(match(list(environment(m)),
-        ##                              list(env, namespace))),
-        ##                 mlist)
-
-        ## Earlier versions of this also tried to exclude methods
-        ## "inherited" from appropriate parent environment (i.e., the
-        ## parent env of the package env or its associated namespace),
-        ## via something like
-        ## penv <- parent.env(if(is.null(namespace)) env else namespace)
-        ## if((g %in% get_S4_generics_with_methods(penv)) &&
-        ##    length(mlist_from_penv <- methods::findMethods(g, penv)))
-        ##     mlist <- mlist[is.na(match(names(mlist),
-        ##                          names(mlist_from_penv)))]
-        ## Still doable, of course, but somewhat pointless if we check
-        ## the method environments as above: why should my parent env
-        ## have my methods?
+        if(!is.null(namespace)) {
+            mlist <- Filter(function(m)
+                            identical(environment(m), namespace),
+                            mlist)
+        } else {
+            penv <- parent.env(env)
+            if((g %in% get_S4_generics_with_methods(penv)) &&
+               length(pmlist <- methods::findMethods(g, penv))) {
+                ## Alas,
+                ##   match(mlist, pmlist)
+                ## does not work ...
+                ind <- sapply(mlist,
+                              function(m)
+                              any(sapply(pmlist, identical, m)))
+                ## When worried about efficiency, we could try to
+                ## compare just names and environments ...
+                mlist <- mlist[!ind]
+            }
+        }
     }
 
     mlist
