@@ -49,7 +49,7 @@ within(data, expr, \dots)
 }
 \seealso{
   \code{\link{evalq}}, \code{\link{attach}}, \code{\link{assign}},
-  \code{\link{transform}}. 
+  \code{\link{transform}}.
 }
 \examples{
 require(stats); require(graphics)
@@ -68,9 +68,9 @@ with(anorexia, {
 aq <- within(airquality, {     # Notice that multiple vars can be changed
     lOzone<-log(Ozone)
     Month<-factor(month.abb[Month])
-    rm(Day)
+    cTemp <- round((Temp - 32) * 5/9, 1) # From Fahrenheit to Celsius
+    rm(Day, Temp)
 })
-
 head(aq)
 
 with(data.frame(u = c(5,10,15,20,30,40,60,80,100),
