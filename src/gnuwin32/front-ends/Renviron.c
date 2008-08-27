@@ -143,7 +143,7 @@ static void Putenv(char *a, char *b)
     }
     *q = '\0';
     if(putenv(buf))
-	fprintf(stderr, "roblem in setting variable '%s' in Renviron", a);
+	fprintf(stderr, "Problem in setting variable '%s' in Renviron", a);
     /* no free here: storage remains in use */
 }
 
