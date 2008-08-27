@@ -27,6 +27,9 @@ NEW FEATURES
 	devices).  The non-default behaviour may be useful when R is
 	driven indirectly (e.g. via ESS) and for some Rterm users.
 
+    o	If the HOME environment variable is not set, Rgui and Rterm
+	will set it to match R_USER (as Rcmd does).
+
 
 UTILITIES
 
