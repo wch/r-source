@@ -264,6 +264,8 @@ NEW FEATURES
 
     o	is.unsorted() gains an argument 'strictly'.
 
+    o	na.action() now works on fits of classes "lm", "glm", ....
+
 
 INSTALLATION
 
@@ -396,6 +398,8 @@ BUG FIXES
 
     o	isoreg(x,y) now returns the correct result also when x has ties,
 	in all cases.
+
+    o	What na.action() does is now correctly documented.
 
 
 

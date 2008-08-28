@@ -16,7 +16,11 @@
 
 na.pass <- function(object, ...) object
 na.action <- function(object, ...) UseMethod("na.action")
-na.action.default <- function(object, ...) attr(object, "na.action")
+na.action.default <- function(object, ...)
+{
+    if(is.list(object) && "na.action" %in% names(object)) object[["lm"]]
+    else attr(object, "na.action")
+}
 
 na.fail <- function(object, ...) UseMethod("na.fail")
 na.fail.default <- function(object, ...)
