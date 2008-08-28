@@ -420,6 +420,11 @@ BUG FIXES
     o	within(<dataframe>, { ... }) now also works when '...' removes
     	more than one column.
 
+    o	Attempting to open an X11() device on a non-existent display
+ 	when one is already open on another display now gives a
+ 	warning rather than terminating R via a fatal X11 error.
+	(PR#12628)
+
 
 
 		CHANGES IN R VERSION 2.7.2
