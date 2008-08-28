@@ -19,7 +19,7 @@
 .proctime00 <- proc.time()
 library(stats)
 options(digits=5) # to avoid trivial printed differences
-
+options(show.signif.stars=FALSE) # avoid fancy quotes in o/p
 postscript("nls-test.ps")
 
 ## selfStart.default() w/ no parameters:
