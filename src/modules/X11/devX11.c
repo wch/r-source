@@ -99,6 +99,7 @@
 	 * with only one copy for all x11 devices */
 
 static Display *display;			/* Display */
+static char dspname[101];
 static int screen;				/* Screen */
 static Window rootwin;				/* Root Window */
 static Visual *visual;				/* Visual */
@@ -1089,6 +1090,7 @@ static int R_X11IOErr(Display *dsp)
     /*
     XCloseDisplay(display);
     displayOpen = FALSE;
+    strcpy(dspname, "");
     */
     error(_("X11 fatal IO error: please save work and shut down R"));
     return 0; /* but should never get here */
@@ -1252,10 +1254,13 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	DisplayOpened = TRUE;
 	Rf_setX11Display(display, gamma_fac, colormodel, maxcube, TRUE);
 	displayOpen = TRUE;
+	strncpy(dspname, p, 101);
+	dspname[100] = '\0';
 	if(xd->handleOwnEvents == FALSE)
 	    addInputHandler(R_InputHandlers, ConnectionNumber(display),
 			    R_ProcessX11Events, XActivity);
-    }
+    } else if(strcmp(p, dspname))
+	warning(_("ignoring 'display' argument as an X11 device is already open"));
     whitepixel = GetX11Pixel(R_RED(canvascolor), R_GREEN(canvascolor),
 			     R_BLUE(canvascolor));
     blackpixel = GetX11Pixel(0, 0, 0);
@@ -1325,45 +1330,50 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 
 		app_con = XtCreateApplicationContext();
 		XtAppSetFallbackResources(app_con, x_fallback_resources);
-		xtdpy = XtOpenDisplay(app_con, dsp, "r_x11", "R_x11",
+		xtdpy = XtOpenDisplay(app_con, dspname, "r_x11", "R_x11",
 				      NULL, 0, &zero, NULL);
-		toplevel = XtAppCreateShell(NULL, "R_x11",
-					    applicationShellWidgetClass,
-					    xtdpy, NULL, 0);
-		XtGetApplicationResources(toplevel, (XtPointer) &xdev,
-					  x_resources,
-					  x_resource_count,
-					  NULL, 0);
-		if (xdev.geometry != NULL) {
-		    char gstr[40];
-		    int bitmask;
+		if(xtdpy) {
+		    toplevel = XtAppCreateShell(NULL, "R_x11",
+						applicationShellWidgetClass,
+						xtdpy, NULL, 0);
+		    XtGetApplicationResources(toplevel, (XtPointer) &xdev,
+					      x_resources,
+					      x_resource_count,
+					      NULL, 0);
+		    if (xdev.geometry != NULL) {
+			char gstr[40];
+			int bitmask;
 
-		    sprintf(gstr, "%dx%d+%d+%d", hint->width,
-			    hint->height, hint->x, hint->y);
-		    bitmask = XWMGeometry(display, DefaultScreen(display),
-					  xdev.geometry, gstr,
-					  1,
-					  hint,
-					  &hint->x, &hint->y,
-					  &hint->width, &hint->height,
-					  &hint->win_gravity);
+			sprintf(gstr, "%dx%d+%d+%d", hint->width,
+				hint->height, hint->x, hint->y);
+			bitmask = XWMGeometry(display, DefaultScreen(display),
+					      xdev.geometry, gstr,
+					      1,
+					      hint,
+					      &hint->x, &hint->y,
+					      &hint->width, &hint->height,
+					      &hint->win_gravity);
 
-		    if (bitmask & (XValue | YValue))
-			hint->flags |= USPosition;
-		    if (bitmask & (WidthValue | HeightValue))
-			hint->flags |= USSize;
-		    /* Restore user-specified settings */
-		    if(xpos != NA_INTEGER)
-			hint->x = (xpos >= 0) ? xpos :
-			    DisplayWidth(display, screen) - iw + xpos;
-		    if(ypos != NA_INTEGER)
-			hint->y = (ypos >= 0)? ypos :
-			    DisplayHeight(display, screen) - iw - ypos;
-		    if(!ISNA(w)) hint->width = iw;
-		    if(!ISNA(h)) hint->height = ih;
+			if (bitmask & (XValue | YValue))
+			    hint->flags |= USPosition;
+			if (bitmask & (WidthValue | HeightValue))
+			    hint->flags |= USSize;
+			/* Restore user-specified settings */
+			if(xpos != NA_INTEGER)
+			    hint->x = (xpos >= 0) ? xpos :
+				DisplayWidth(display, screen) - iw + xpos;
+			if(ypos != NA_INTEGER)
+			    hint->y = (ypos >= 0)? ypos :
+				DisplayHeight(display, screen) - iw - ypos;
+			if(!ISNA(w)) hint->width = iw;
+			if(!ISNA(h)) hint->height = ih;
+		    }
+		    XtDestroyWidget(toplevel);
+		    XtCloseDisplay(xtdpy);
+		} else {
+		    warning(_("unable to obtain information on display '%s'"),
+			    dsp);
 		}
-		XtDestroyWidget(toplevel);
-		XtCloseDisplay(xtdpy);
 		XtDestroyApplicationContext(app_con);
 	    }
 #endif
@@ -3238,7 +3248,10 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
     }
     XDeleteProperty(display, clpwin, pty);
     XFree(buffer);
-    if (!displayOpen) XCloseDisplay(display);
+    if (!displayOpen) {
+	XCloseDisplay(display);
+	strcpy(dspname, "");
+    }
     return res;
 }
 
