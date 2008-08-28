@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-08-11 r46312)
+R version 2.8.0 Under development (unstable) (2008-08-27 r46445)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -113,7 +113,7 @@ Coefficients:
 (Intercept)  0.00517    0.00764    0.68     0.52    
 x            0.99915    0.00119  841.38   <2e-16 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 Multiple R-squared:    1,	Adjusted R-squared:    1 
@@ -137,7 +137,7 @@ Parameters:
 a  0.00517    0.00764    0.68     0.52    
 b  0.99915    0.00119  841.37   <2e-16 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 
@@ -167,7 +167,7 @@ Parameters:
 a  0.00517    0.00764    0.68     0.52    
 b  0.99915    0.00119  841.38   <2e-16 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 
@@ -199,7 +199,7 @@ Asym   2.3350     0.0966    24.2  3.5e-12 ***
 xmid   1.4731     0.0947    15.6  8.8e-10 ***
 scal   1.0385     0.0304    34.1  4.2e-14 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -221,7 +221,7 @@ Asym   2.3350     0.0966    24.2  3.5e-12 ***
 xmid   1.4731     0.0947    15.6  8.8e-10 ***
 scal   1.0385     0.0304    34.1  4.2e-14 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -256,7 +256,7 @@ Asym   2.3350     0.0966    24.2  3.5e-12 ***
 xmid   1.4731     0.0947    15.6  8.8e-10 ***
 scal   1.0385     0.0304    34.1  4.2e-14 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -295,7 +295,7 @@ xmid   1.4731     0.0947    15.6  8.8e-10 ***
 scal   1.0385     0.0304    34.1  4.2e-14 ***
 .lin   2.3350     0.0966    24.2  3.5e-12 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -335,7 +335,7 @@ Asym   2.3350     0.0966    24.2  3.5e-12 ***
 xmid   1.4731     0.0947    15.6  8.8e-10 ***
 scal   1.0385     0.0304    34.1  4.2e-14 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -474,6 +474,7 @@ logc -0.64625 0.40933
 > 
 > 
 > ## more profiling with bounds
+> op <- options(digits=3)
 > npts <- 10
 > set.seed(1001)
 > a <- 2
@@ -488,38 +489,38 @@ logc -0.64625 0.40933
 +           lower = c(0,0), start = c(a=1, b=1))
 > (pr1 <- profile(m1))
 $a
-        tau par.vals.a par.vals.b
-1  -3.86867    0.70553    0.00000
-2  -3.11444    0.80157    0.00000
-3  -0.86265    1.12381    0.00000
-4   0.00000    1.53805    0.26331
-5   0.59024    1.95229    0.44581
-6   1.07023    2.42326    0.59215
-7   1.53445    3.08172    0.73679
-8   1.96936    4.03360    0.87774
-9   2.37551    5.50237    1.01449
-10  2.75132    7.92922    1.14433
-11  3.09020   12.26285    1.26444
-12  3.37482   20.84454    1.37255
+      tau par.vals.a par.vals.b
+1  -3.869      0.706      0.000
+2  -3.114      0.802      0.000
+3  -0.863      1.124      0.000
+4   0.000      1.538      0.263
+5   0.590      1.952      0.446
+6   1.070      2.423      0.592
+7   1.534      3.082      0.737
+8   1.969      4.034      0.878
+9   2.376      5.502      1.014
+10  2.751      7.929      1.144
+11  3.090     12.263      1.264
+12  3.375     20.845      1.373
 
 $b
-       tau par.vals.a par.vals.b
-1 -0.67325   1.208691   0.027176
-2  0.00000   1.538051   0.263312
-3  0.70691   2.002554   0.499448
-4  1.36488   2.629529   0.723616
-5  1.99377   3.576219   0.952247
-6  2.61117   5.181970   1.196218
-7  3.22517   8.216219   1.461400
-8  3.81994  17.394550   1.751233
+     tau par.vals.a par.vals.b
+1 -0.673     1.2087     0.0272
+2  0.000     1.5381     0.2633
+3  0.707     2.0026     0.4994
+4  1.365     2.6295     0.7236
+5  1.994     3.5762     0.9522
+6  2.611     5.1820     1.1962
+7  3.225     8.2162     1.4614
+8  3.820    17.3946     1.7512
 
 attr(,"original.fit")
 Nonlinear regression model
   model:  y ~ gfun(a, b, x) 
    data:  parent.frame() 
-      a       b 
-1.53805 0.26331 
- residual sum-of-squares: 0.38938
+    a     b 
+1.538 0.263 
+ residual sum-of-squares: 0.389
 
 Algorithm "port", convergence message: relative convergence (4) 
 attr(,"summary")
@@ -528,21 +529,21 @@ Formula: y ~ gfun(a, b, x)
 
 Parameters:
   Estimate Std. Error t value Pr(>|t|)  
-a  1.53805    0.61727  2.4917  0.03742 *
-b  0.26331    0.35188  0.7483  0.47569  
+a    1.538      0.617    2.49    0.037 *
+b    0.263      0.352    0.75    0.476  
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
-Residual standard error: 0.22062 on 8 degrees of freedom
+Residual standard error: 0.221 on 8 degrees of freedom
 
 Algorithm "port", convergence message: relative convergence (4) 
 
 attr(,"class")
 [1] "profile.nls" "profile"    
 > confint(pr1)
-     2.5%  97.5%
-a 0.96002 5.2007
-b      NA 1.0731
+  2.5% 97.5%
+a 0.96  5.20
+b   NA  1.07
 > 
 > gfun <- function(a,b,x) {
 +     if(a < 0 || b < 0 || a > 1.5 || b > 1) stop("bounds violated")
@@ -552,28 +553,28 @@ b      NA 1.0731
 +           lower = c(0, 0), upper=c(1.5, 1), start = c(a=1, b=1))
 > profile(m2)
 $a
-       tau par.vals.a par.vals.b
-1 -3.68128    0.72911    0.00000
-2 -2.94528    0.82308    0.00000
-3 -0.97741    1.09865    0.00000
-4  0.00000    1.50000    0.24263
+     tau par.vals.a par.vals.b
+1 -3.681      0.729      0.000
+2 -2.945      0.823      0.000
+3 -0.977      1.099      0.000
+4  0.000      1.500      0.243
 
 $b
-       tau par.vals.a par.vals.b
-1 -0.73294  1.1819991  0.0039513
-2  0.00000  1.5000000  0.2426345
-3  1.64499  1.5000000  0.4813178
-4  2.15400  1.5000000  0.5786889
-5  2.72674  1.5000000  0.7070632
-6  3.28816  1.5000000  0.8574785
+     tau par.vals.a par.vals.b
+1 -0.733    1.18200    0.00395
+2  0.000    1.50000    0.24263
+3  1.645    1.50000    0.48132
+4  2.154    1.50000    0.57869
+5  2.727    1.50000    0.70706
+6  3.288    1.50000    0.85748
 
 attr(,"original.fit")
 Nonlinear regression model
   model:  y ~ gfun(a, b, x) 
    data:  parent.frame() 
-      a       b 
-1.50000 0.24263 
- residual sum-of-squares: 0.38958
+    a     b 
+1.500 0.243 
+ residual sum-of-squares: 0.390
 
 Algorithm "port", convergence message: relative convergence (4) 
 attr(,"summary")
@@ -582,12 +583,12 @@ Formula: y ~ gfun(a, b, x)
 
 Parameters:
   Estimate Std. Error t value Pr(>|t|)  
-a  1.50000    0.59807  2.5080  0.03648 *
-b  0.24263    0.35567  0.6822  0.51438  
+a    1.500      0.598    2.51    0.036 *
+b    0.243      0.356    0.68    0.514  
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
-Residual standard error: 0.22068 on 8 degrees of freedom
+Residual standard error: 0.221 on 8 degrees of freedom
 
 Algorithm "port", convergence message: relative convergence (4) 
 
@@ -595,9 +596,10 @@ attr(,"class")
 [1] "profile.nls" "profile"    
 > confint(m2)
 Waiting for profiling to be done...
-     2.5%   97.5%
-a 0.90673      NA
-b      NA 0.61132
+   2.5% 97.5%
+a 0.907    NA
+b    NA 0.611
+> options(op)
 > 
 > ## scoping problems
 > test <- function()
@@ -656,7 +658,7 @@ k2  4.99e-03   5.38e-05    92.8   <2e-16 ***
 sp1 1.00e+00   4.47e-03   224.0   <2e-16 ***
 sp2 9.99e-01   5.00e-03   199.8   <2e-16 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.00205 on 96 degrees of freedom
 
@@ -678,7 +680,7 @@ k2  4.99e-03   5.38e-05    92.8   <2e-16 ***
 sp1 1.00e+00   4.47e-03   224.0   <2e-16 ***
 sp2 9.99e-01   5.00e-03   199.8   <2e-16 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.00205 on 96 degrees of freedom
 
@@ -687,5 +689,5 @@ Algorithm "port", convergence message: both X-convergence and relative convergen
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  3.051 0.028 3.079 0 0 
+Time elapsed:  2.928 0.011 2.94 0 0 
 > 
