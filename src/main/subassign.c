@@ -462,7 +462,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     if ((TYPEOF(x) != VECSXP && TYPEOF(x) != EXPRSXP) || y != R_NilValue) {
 	if (n > 0 && ny == 0)
-	    error(_("nothing to replace with"));
+	    error(_("replacement has length zero"));
 	if (n > 0 && n % ny)
 	    warning(_("number of items to replace is not a multiple of replacement length"));
     }
@@ -732,7 +732,7 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
        </TSL>  */
 
     if (n > 0 && ny == 0)
-	error(_("nothing to replace with"));
+	error(_("replacement has length zero"));
     if (n > 0 && n % ny)
 	error(_("number of items to replace is not a multiple of replacement length"));
 
@@ -999,7 +999,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     }
 
     if (n > 0 && ny == 0)
-	error(_("nothing to replace with"));
+	error(_("replacement has length zero"));
     if (n > 0 && n % ny)
 	error(_("number of items to replace is not a multiple of replacement length"));
 
@@ -1186,7 +1186,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     nx = length(x);
 
     if (n > 0 && ny == 0)
-	error(_("nothing to replace with"));
+	error(_("replacement has length zero"));
     if (n > 0 && n % ny)
 	error(_("number of items to replace is not a multiple of replacement length"));
 
