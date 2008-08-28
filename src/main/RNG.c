@@ -287,7 +287,7 @@ static void Randomize(RNGtype kind)
     RNG_Init(kind, seed);
 }
 
-static void GetRNGkind(SEXP seeds)
+static SEXP GetRNGkind(SEXP seeds)
 {
     /* Load RNG_kind, N01_kind from .Random.seed if present */
     int tmp, *is;
@@ -295,7 +295,7 @@ static void GetRNGkind(SEXP seeds)
 
     if (isNull(seeds))
 	seeds = findVarInFrame(R_GlobalEnv, R_SeedsSymbol);
-    if (seeds == R_UnboundValue) return;
+    if (seeds == R_UnboundValue) return seeds;
     if (!isInteger(seeds)) {
 	if (seeds == R_MissingArg) /* How can this happen? */
 	    error(_(".Random.seed is a missing argument with no default"));
@@ -329,6 +329,7 @@ static void GetRNGkind(SEXP seeds)
 	error(_(".Random.seed[1] is not a valid RNG kind (code)"));
     }
     RNG_kind = newRNG; N01_kind = newN01;
+    return seeds;
 }
 
 
@@ -343,7 +344,7 @@ void GetRNGstate()
     if (seeds == R_UnboundValue) {
 	Randomize(RNG_kind);
     } else {
-	GetRNGkind(seeds);
+	seeds = GetRNGkind(seeds);
 	len_seed = RNG_Table[RNG_kind].n_seed;
 	/* Not sure whether this test is needed: wrong for USER_UNIF */
 	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1)
@@ -351,14 +352,9 @@ void GetRNGstate()
 	if(LENGTH(seeds) == 1 && RNG_kind != USER_UNIF)
 	    Randomize(RNG_kind);
 	else {
-	    int j, tmp, *is = INTEGER(seeds);
-	    for(j = 1; j <= len_seed; j++) {
-		tmp = is[j];
-/* Some generators can generate NA_INTEGER as a valid integer value */
-/*		if(tmp == NA_INTEGER)
-		error(".Random.seed[%d] is not a valid integer", j+1);*/
-		RNG_Table[RNG_kind].i_seed[j - 1] = tmp;
-	    }
+	    int j, *is = INTEGER(seeds);
+	    for(j = 1; j <= len_seed; j++)
+		RNG_Table[RNG_kind].i_seed[j - 1] = is[j];
 	    FixupSeeds(RNG_kind, 0);
 	}
     }
