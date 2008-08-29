@@ -125,7 +125,18 @@ fi
 javac_works='not present'
 if test -n "$JAVAC"; then
     javac_works='not functional'
-    tempdir=`mktemp -d`
+#    tempdir=`mktemp -d`
+
+    : ${TMPDIR=/tmp}
+    { tempdir=`(mktemp -d -q "${TMPDIR}/RJRECONF.XXXXXX") 2>/dev/null` \
+	&& test -n "${tempdir}" && test -d "${tempdir}" ; } ||
+    { test -n "${RANDOM}" && tempdir=${TMPDIR}/RJRECONF$$-${RANDOM} \
+	&& (mkdir "${tempdir}") ; } ||
+    { tempdir=${TMPDIR}/RJRECONF.$$-`date +%m%d%H%M%S` \
+	&& (mkdir "${tempdir}"); } ||
+    { tempdir=${TMPDIR}/RJRECONF.$$ && (mkdir "${tempdir}") ; } ||
+    (error "cannot create temporary directory" && exit 1)
+
     echo "public class A { }" > ${tempdir}/A.java
     if test -e ${tempdir}/A.java; then
 	if "${JAVAC}" ${tempdir}/A.java >/dev/null; then
