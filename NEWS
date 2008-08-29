@@ -266,6 +266,8 @@ NEW FEATURES
 
     o	na.action() now works on fits of classes "lm", "glm", ....
 
+    o	chol2inv() now treats <numeric(1)> as a [1 x 1]-matrix.
+
 
 INSTALLATION
 
