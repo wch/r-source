@@ -125,16 +125,17 @@ fi
 javac_works='not present'
 if test -n "$JAVAC"; then
     javac_works='not functional'
-    rm -rf /tmp/A.java /tmp/A.class
-    echo "public class A { }" > /tmp/A.java
-    if test -e /tmp/A.java; then
-	if "${JAVAC}" /tmp/A.java >/dev/null; then
-	    if test -e /tmp/A.class; then
+    tempdir=`mktemp -d`
+    echo "public class A { }" > ${tempdir}/A.java
+    if test -e ${tempdir}/A.java; then
+	if "${JAVAC}" ${tempdir}/A.java >/dev/null; then
+           if test -e ${tempdir}/A.class; then
 		javac_works=yes
 	    fi
 	fi
     fi
-    rm -rf /tmp/A.java /tmp/A.class
+    rm -rf ${tempdir}
+
 fi
 if test "${javac_works}" = yes; then
     echo "Java compiler    : ${JAVAC}"
