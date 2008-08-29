@@ -403,6 +403,9 @@ BUG FIXES
 
     o	What na.action() does is now correctly documented.
 
+    o	source() with echo=TRUE now behaves like ordinary automatic
+        printing, by using methods::show() for S4 objects.
+
 
 
 

@@ -165,8 +165,12 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    cat(".... mode(ei[[1]])=", mode(ei[[1]]), "; paste(curr.fun)=")
 	    utils::str(paste(curr.fun))
 	}
-	if (print.eval && yy$visible)
-	    print(yy$value)
+	if (print.eval && yy$visible) {
+            if(isS4(yy$value))
+                methods::show(yy$value)
+            else
+                print(yy$value)
+        }
 	if (verbose)
 	    cat(" .. after ", sQuote(deparse(ei,
 	    	control = c("showAttributes","useSource"))), "\n", sep = "")
