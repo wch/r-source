@@ -425,6 +425,9 @@ BUG FIXES
  	warning rather than terminating R via a fatal X11 error.
 	(PR#12628)
 
+    o	source() did not respect the setting of options("keep.source")
+	when setting source references.
+
 
 
 		CHANGES IN R VERSION 2.7.2

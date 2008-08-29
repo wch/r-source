@@ -69,7 +69,8 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         }
         if(file == "") file <- stdin()
         else {
-            srcfile <- srcfile(file, encoding = encoding)
+            if (isTRUE(getOption("keep.source")))
+            	srcfile <- srcfile(file, encoding = encoding)
 	    file <- file(file, "r", encoding = encoding)
 	    on.exit(close(file))
             from_file <- TRUE
