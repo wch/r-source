@@ -3871,11 +3871,10 @@ dump(ls(all = TRUE), file = "new.myfuns.R")
 and run @R{} with this as the source file, for example by @kbd{R
 --vanilla < tidy.R} or by pasting into an @R{} session.  Then the file
 @file{new.myfuns.R} will contain the functions in alphabetical order in
-the standard layout.  You may need to move comments to more appropriate
-places.
+the standard layout.  Warning:  comments in your functions will be lost.
 
 The standard format provides a good starting point for further tidying.
-Most package authors use a version of Emacs (on Unix or Windows) to edit
+Many package authors use a version of Emacs (on Unix or Windows) to edit
 @R{} code, using the ESS[S] mode of the @acronym{ESS} Emacs package.
 See @ref{R coding standards, , R coding standards, R-ints, R Internals}
 for style options within the ESS[S] mode recommended for the source code
