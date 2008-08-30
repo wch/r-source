@@ -410,6 +410,9 @@ BUG FIXES
         trying to construct some error messages; for S4 methods, class
         "ANY" should be used for omitted arguments and default methods.
 
+    o	trace() should create missing traceable classes in the global
+        environment, not in baseenv(), where other classes won't be found.
+
 
 
 

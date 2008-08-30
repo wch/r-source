@@ -490,8 +490,8 @@ trySilent <- function(expr) {
   env <- .classEnv(className)
   if(environmentIsLocked(env)) {
     message("Environment of class \"", className,
-            "\" is locked; using base environment for new class")
-    env <- baseenv()
+            "\" is locked; using global environment for new class")
+    env <- .GlobalEnv
     packageSlot(traceClassName) <- NULL
   }
   setClass(traceClassName,
