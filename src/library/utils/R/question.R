@@ -79,11 +79,12 @@
             	if (is.call(topicExpr) && identical(type, "method"))
             	    return(.helpForCall(topicExpr, parent.frame(), FALSE))
             	topic <- e2
-	    }   
-	    topic <- topicName(type, topic)
-	    doHelp <- .tryHelp(topic, package = package)
+	    }
+	    doHelp <- .tryHelp(topicName(type, topic), package = package)
 	    if(inherits(doHelp, "try-error")) {
-		stop(gettextf("no documentation of type '%s' and topic '%s' (or error in processing help)", e1, e2), domain = NA)
+                if(is.language(topicExpr))
+                  topicExpr <- deparse(topicExpr)
+		stop(gettextf("no documentation of type '%s' and topic '%s' (or error in processing help)", type, topicExpr), domain = NA)
             }
         }
     }
@@ -121,7 +122,7 @@ topicName <- function(type, topic)
         call <- match.call(fdef, expr)
         ## make the signature
         sigNames <- fdef@signature
-        sigClasses <- rep.int("missing", length(sigNames))
+        sigClasses <- rep.int("ANY", length(sigNames))
         names(sigClasses) <- sigNames
         for(arg in sigNames) {
             argExpr <- methods::elNamed(call, arg)
@@ -149,8 +150,11 @@ topicName <- function(type, topic)
         }
         method <- methods::selectMethod(f, sigClasses, optional=TRUE,
                                         fdef = fdef)
-        if(methods::is(method, "MethodDefinition"))
+        if(methods::is(method, "MethodDefinition")) {
             sigClasses <- method@defined
+            if(length(sigClasses) < length(sigNames))
+              sigClasses<- c(sigClasses, rep("ANY", length(sigNames)-length(sigClasses)))
+        }
         else
             warning(gettextf("no method defined for function '%s' and signature '%s'",
                              f, paste(sigNames, " = ", dQuote(sigClasses),

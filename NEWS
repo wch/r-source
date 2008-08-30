@@ -406,6 +406,10 @@ BUG FIXES
     o	source() with echo=TRUE now behaves like ordinary automatic
         printing, by using methods::show() for S4 objects.
 
+    o	Several bugs fixed in `?` with topics: it previously died
+        trying to construct some error messages; for S4 methods, class
+        "ANY" should be used for omitted arguments and default methods.
+
 
 
 
