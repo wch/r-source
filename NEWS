@@ -413,6 +413,9 @@ BUG FIXES
     o	trace() should create missing traceable classes in the global
         environment, not in baseenv(), where other classes won't be found.
 
+    o	In S4 class definitions, where multiple paths to a super/sub
+        class exist, only the closest in distance should be stored
+        (for correct method dispatch).
 
 
 

@@ -981,8 +981,6 @@ completeSubclasses <-
         if(isClass(by, where = where)) {
             byDef <- getClass(by, where = where)
             exti <-  slot(byDef, slotName)
-            ## add in those classes not already known to be super/subclasses
-            exti <- exti[is.na(match(names(exti), what))]
             if(length(exti)> 0) {
                 if(superClassCase) {
                     strictBy <- TRUE  # FIXME:  need to find some safe test allowing non-strict
@@ -991,6 +989,16 @@ completeSubclasses <-
                 else {
                     strictBy <- TRUE 
                     exti <- .transitiveSubclasses(by, fromTo, ext[[i]], exti, strictBy)
+                }
+                old <- names(ext)
+                new <- names(exti)
+                matches <- new[match(new, old, 0) > 0]
+                ## where mutiple paths to a class exist, use the new if it's closer
+                for(matchi in matches) {
+                    if(exti[[matchi]]@distance < ext[[matchi]]@distance)
+                      ext[[matchi]] <- NULL
+                    else
+                      exti[[matchi]] <- NULL
                 }
                 ext <- c(ext, exti)
             }
@@ -1238,6 +1246,26 @@ setDataPart <- function(object, value) {
     else
       value
 }
+
+## rename a class definition:  needs to change if any additional occurences of class
+## name are added, other than the className slot and the super/sub class names
+## in the contains, subclasses slots respectively.
+.renameClassDef <- function(def, className) {
+    oldName <- def@className
+    validObject(def) # to catch any non-SClassExtension objects
+    def@className <- className
+    comp <- def@contains
+    for(i in seq_along(comp))
+        comp[[i]]@subClass <- className
+    def@contains <- comp
+    comp <- def@subclasses
+    for(i in seq_along(comp))
+        comp[[i]]@superClass <- className
+    def@subclasses <- comp
+    def
+}
+    
+        
 
 .newExternalptr <- function()
     .Call("R_externalptr_prototype_object", PACKAGE = "methods")
