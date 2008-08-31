@@ -117,6 +117,10 @@ is.unsorted(x, na.rm = FALSE, strictly = FALSE)
   this means that the returned value has no class, except for factors
   and ordered factors (which are treated specially and whose result is
   transformed back to the original class).
+
+  For \code{is.unsorted}, a length-one logical value.  All objects of
+  length 0 or 1 are sorted: the result will be \code{NA} for objects of
+  length 2 or more unless they have a class or are an atomic vector.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

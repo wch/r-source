@@ -151,27 +151,25 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int strictly, n;
     SEXP x, ans;
-    Rboolean res = TRUE;
+    int res = TRUE;
 
     checkArity(op, args);
     x = CAR(args);
     strictly = asLogical(CADR(args));
     if(strictly == NA_LOGICAL)
 	errorcall(call, _("invalid '%s' argument"), "strictly");
+    n = length(x);
+    if(n < 2) return ScalarLogical(FALSE);
     if(isVectorAtomic(x))
 	return ScalarLogical(isUnsorted(x, strictly));
     if(isObject(x)) {
 	/* try dispatch */
-	n = length(x);
-	if(n >= 2) {
-	    SEXP call;
-	    PROTECT(call = lang3(install(".gtn"), x, CADR(args)));
-	    ans = eval(call, rho);
-	    UNPROTECT(1);
-	    return ans;
-	}
-    } else
-	error(_("'x' must be atomic or have a method for >"));
+	SEXP call;
+	PROTECT(call = lang3(install(".gtn"), x, CADR(args)));
+	ans = eval(call, rho);
+	UNPROTECT(1);
+	return ans;
+    } else res = NA_LOGICAL;
     return ScalarLogical(res);
 }
 

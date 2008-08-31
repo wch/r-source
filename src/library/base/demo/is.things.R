@@ -31,7 +31,7 @@ is.method <- function(fname) {
 
 is.ALL <- function(obj, func.names = ls(pos=length(search())),
 		   not.using = c("is.single", "is.loaded",
-                     "is.empty.model", "is.R", "is.element"),
+                     "is.empty.model", "is.R", "is.element", "is.unsorted"),
 		   true.only = FALSE, debug = FALSE)
 {
     ## Purpose: show many 'attributes' of  R object __obj__

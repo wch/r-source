@@ -267,7 +267,7 @@ NEW FEATURES
 	documented earlier).
 
     o	New generic function xtfrm() as an auxiliary helper for
-	sort(), order() and rank().  This should return an integer
+	sort(), order() and rank().  This should return a numeric
 	vector that sorts in the same way as its input.  The default
 	method supports any class with ==, > and is.na() methods but
 	specific methods can be much faster.
