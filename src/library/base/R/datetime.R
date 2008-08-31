@@ -906,3 +906,6 @@ function(x, f, drop = FALSE, ...)
     lapply(split.default(as.double(x), f, drop = drop), structure,
            class = c("POSIXt", "POSIXct"), tzone = attr(x, "tzone"))
 }
+
+xtfrm.POSIXct <- function(x) as.numeric(x)
+xtfrm.POSIXlt <- function(x) as.double(x)  # has POSIXlt method

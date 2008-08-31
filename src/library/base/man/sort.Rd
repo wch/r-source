@@ -1,6 +1,6 @@
 % File src/library/base/man/sort.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sort}
@@ -26,9 +26,10 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
 is.unsorted(x, na.rm = FALSE, strictly = FALSE)
 }
 \arguments{
-  \item{x}{for \code{sort}, an R object with a class or a numeric,
-    complex, character or logical vector.  For \code{sort.int}, a
-    numeric, complex, character or logical vector, or a factor.}
+  \item{x}{for \code{sort} and \code{is.unsorted}, an R object with a
+    class or a numeric, complex, character or logical vector.  For
+    \code{sort.int}, a numeric, complex, character or logical vector, or
+    a factor.}
   \item{decreasing}{logical.  Should the sort be increasing or decreasing?
      Not available for partial sorting.}
   \item{\dots}{arguments to be passed to or from methods or (for the
@@ -50,6 +51,10 @@ is.unsorted(x, na.rm = FALSE, strictly = FALSE)
   \code{sort} is a generic function for which methods can be written,
   and \code{sort.int} is the internal method which is compatible
   with S if only the first three arguments are used.
+  
+  The default \code{sort} method makes use of \code{\link{order}} for
+  objects with classes, which in turn makes use of the generic function
+  \code{\link{xtfrm}}.
 
   If \code{partial} is not \code{NULL}, it is taken to contain indices
   of elements of \code{x} which are to be placed in their correct

@@ -1,6 +1,6 @@
 % File src/library/base/man/base-internal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{base-internal}
@@ -21,6 +21,8 @@
 \alias{findPackageEnv}
 \alias{lazyLoadDBfetch}
 \alias{.TAOCP1997init}
+\alias{.gt}
+\alias{.gtn}
 \title{Internal Functions in the Base Package}
 \description{
   Internal functions in the base package, which are only user-visible
@@ -55,6 +57,10 @@ findPackageEnv(info)
 lazyLoadDBfetch(key, file, compressed, hook)
 
 .TAOCP1997init(seed)
+
+.gt(x, i, j)
+
+.gtn(x, strictly)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -86,6 +92,8 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{compressed}{logical: are the values in the database compressed?}
   \item{refhook}{a load hook: see \code{\link{unserialize}}.}
   \item{seed}{a length-one integer vector.}
+  \item{i, j}{indices.}
+  \item{strictly}{logical.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
@@ -166,6 +174,9 @@ lazyLoadDBfetch(key, file, compressed, hook)
 
   \code{.TAOCP1997init} is the initialization code for the
   \code{"Knuth-TAOCP"} \link{RNG}.
+
+  \code{.gt} and \code{.gtn} are callbacks from \code{\link{rank}} and
+  \code{\link{is.unsorted}} used for classed objects.
 }
 \value{
   \code{.find.package} and \code{.path.packages} return a character

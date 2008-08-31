@@ -1731,7 +1731,7 @@ static SEXP readRegistryKey(HKEY hkey, int depth)
 	/* now sort by name */
 	PROTECT(sind = allocVector(INTSXP, nval));  indx = INTEGER(sind);
 	for (i = 0; i < nval; i++) indx[i] = i;
-	orderVector1(indx, nval, nm0, TRUE, FALSE);
+	orderVector1(indx, nval, nm0, TRUE, FALSE, R_NilValue);
 	for (i = 0; i < nval; i++, k++) {
 	    SET_VECTOR_ELT(ans, k, VECTOR_ELT(ans0, indx[i]));
 	    SET_STRING_ELT(nm, k, STRING_ELT(nm0, indx[i]));
@@ -1755,7 +1755,7 @@ static SEXP readRegistryKey(HKEY hkey, int depth)
 	/* now sort by name */
 	PROTECT(sind = allocVector(INTSXP, nsubkeys));  indx = INTEGER(sind);
 	for (i = 0; i < nsubkeys; i++) indx[i] = i;
-	orderVector1(indx, nsubkeys, nm0, TRUE, FALSE);
+	orderVector1(indx, nsubkeys, nm0, TRUE, FALSE, R_NilValue);
 	for (i = 0; i < nsubkeys; i++, k++) {
 	    SET_VECTOR_ELT(ans, k, VECTOR_ELT(ans0, indx[i]));
 	    SET_STRING_ELT(nm, k, STRING_ELT(nm0, indx[i]));

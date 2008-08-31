@@ -426,3 +426,5 @@ function(x, f, drop = FALSE, ...)
     for(i in seq_along(y)) class(y[[i]]) <- "Date"
     y
 }
+
+xtfrm.Date <- function(x) as.numeric(x)

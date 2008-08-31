@@ -262,7 +262,18 @@ NEW FEATURES
 
 	set.seed() gains a 'normal.kind' argument.
 
-    o	is.unsorted() gains an argument 'strictly'.
+    o	is.unsorted() gains an argument 'strictly'.  It now works for
+	classed objects with a >= or > method (as incorrectly
+	documented earlier).
+
+    o	New generic function xtfrm() as an auxiliary helper for
+	sort(), order() and rank().  This should return an integer
+	vector that sorts in the same way as its input.  The default
+	method supports any class with ==, > and is.na() methods but
+	specific methods can be much faster.
+
+	As a side-effect, rank() will now work better on classed
+	objects, although possibly rather slowly.
 
     o	na.action() now works on fits of classes "lm", "glm", ....
 

@@ -18,7 +18,10 @@ rank <- function(x, na.last = TRUE,
 		 ties.method=c("average", "first", "random", "max", "min"))
 {
     nas <- is.na(x)
+    nm <- names(x)
     ties.method <- match.arg(ties.method)
+    ## To preserve past behaviour
+    if(is.factor(x)) x <- as.integer(x)
     y <- switch(ties.method,
 		"average"= , "min"= , "max" =
 		.Internal(rank(x[!nas], ties.method)),
@@ -39,7 +42,7 @@ rank <- function(x, na.last = TRUE,
 	    yy[nas] <- 1 : len
 	}
 	y <- yy
-	names(y) <- names(x)
-    } else names(y) <- names(x)[!nas]
+	names(y) <- nm
+    } else names(y) <- nm[!nas]
     y
 }

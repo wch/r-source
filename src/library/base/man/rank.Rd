@@ -21,7 +21,7 @@ rank(x, na.last = TRUE,
     \code{FALSE}, they are put first; if \code{NA}, they are removed; if
     \code{"keep"} they are kept with rank \code{NA}.}
   \item{ties.method}{a character string specifying how ties are treated,
-    see below; can be abbreviated.}
+    see \sQuote{Details}; can be abbreviated.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -43,6 +43,12 @@ rank(x, na.last = TRUE,
   \code{NA} values are never considered to be equal: for \code{na.last =
     TRUE} and \code{na.last = FALSE} they are given distinct ranks in
   the order in which they occur in \code{x}.
+
+  \strong{NB}: \code{rank} is not itself generic but \code{\link{xtfrm}}
+  is, and \code{rank(xtfrm(x), ....)} will have the desired result if
+  there is a \code{xtfrm} method.  Otherwise, \code{rank} will make use
+  of \code{==}, \code{>} and \code{is.na} methods for classed objects,
+  possibly rather slowly.
 }
 \value{
   A numeric vector of the same length as \code{x} with names copied from
