@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-08-22
+@set FAQ_DATE @value{FAQ_YEAR}-08-31
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -2421,6 +2421,9 @@ Applications'' by Doug Bates and Donald Watts, 1988, Wiley.
 Survival analysis for cohorts with missing covariate information.
 @item NetIndices
 Estimates network indices, including trophic structure of foodwebs.
+@item OPE
+Fit an outer-product emlator to the multivariate evaluations of a
+computer model.
 @item ORMDR
 Odds ratio based multivactor-dimensionality reduction method for
 detecting gene-gene interactions.
@@ -2640,6 +2643,8 @@ Creating random fields using various methods.
 Weighted rank aggregation.
 @item RaschSampler
 Sampling binary matrices with fixed margins.
+@item Ratings
+Model-based ratings figures.
 @item Rcapture
 Loglinear models in capture-recapture experiments.
 @item Rcmdr
@@ -3400,11 +3405,9 @@ Server-side and client-side tools for @acronym{CRAN} task views.
 Miscellaneous functions by Christian W. Hoffmann.
 @item cyclones
 Cyclone identification.
-@c <COMMENT>
-@c Moved to Archive on 2006-05-19 as requested by the maintainer.
-@c @item data.table
-@c Just like a data frame but without rownames.
-@c </COMMENT>
+@item data.table
+Extension of data frames to allow subscripting by expressions evaluated
+within the frame.
 @item dataframes2xls
 Write data frames to @file{.xls} files.
 @item date
@@ -5231,6 +5234,9 @@ Basic Robust Statistics.
 @item rootSolve
 Nonlinear root finding, equilibrium and steady-state analysis of
 ordinary differential equations.
+@item roxygen
+A Doxygen-like in-source documentation system for Rd, collation,
+namespace and callgraphs.
 @item rpanel
 Simple interactive controls for R using the tcltk package.
 @item rpart
@@ -5269,6 +5275,8 @@ random numbers from different sources.
 Read TIFF format images and return them as pixmap objects.
 @item rv
 Simulation-based random variable object class.
+@item rwm
+R Workspace Manager.
 @item rwt
 Rice Wavelet Toolbox wrapper, providing a set of functions for
 performing digital signal processing.
