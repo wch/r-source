@@ -5347,3 +5347,15 @@ stopifnot(identical(row.names(data.frame(x=c(a=1,b=2))), c("a", "b")))
 stopifnot(all.equal(chol2inv(2), matrix(0.25, 1), tol = 4*Meps),
 	  all.equal(solve(chol2inv(chol(4))), matrix(4, 1), tol = 10*Meps))
 ## chol2inv() did not accept non-matrices up to 2.7.*
+
+
+## seek should discard pushback. (PR#12640)
+cat(c("1\t2\t3", "4\t5\t6"), file="foo.txt", sep="\n")
+fd <- file("foo.txt",open="rt")
+scan(file=fd,what=double(),n=2)
+seek(con=fd,where=0,origin="start")
+z <- scan(file=fd,what=double(),n=2)
+close(fd)
+unlink("foo.txt")
+stopifnot(identical(z, c(1,2)))
+## changed in 2.7.2 patched

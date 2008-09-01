@@ -455,6 +455,9 @@ BUG FIXES
     o	source() did not respect the setting of options("keep.source")
 	when setting source references.
 
+    o	seek() now clears the pushback on a text-mode connection if
+ 	used to set a new position.  (PR#12640)
+
 
 
 		CHANGES IN R VERSION 2.7.2
