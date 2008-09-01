@@ -8,7 +8,6 @@
 \alias{sort.default}
 \alias{sort.POSIXlt}
 \alias{sort.int}
-\alias{is.unsorted}
 \title{Sorting or Ordering Vectors}
 \description{
   Sort (or \emph{order}) a vector or factor (partially) into
@@ -22,14 +21,11 @@ sort(x, decreasing = FALSE, \dots)
 
 sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
          method = c("shell", "quick"), index.return = FALSE)
-
-is.unsorted(x, na.rm = FALSE, strictly = FALSE)
 }
 \arguments{
-  \item{x}{for \code{sort} and \code{is.unsorted}, an R object with a
-    class or a numeric, complex, character or logical vector.  For
-    \code{sort.int}, a numeric, complex, character or logical vector, or
-    a factor.}
+  \item{x}{for \code{sort} an \R object with a class or a numeric,
+         complex, character or logical vector.  For \code{sort.int}, a
+         numeric, complex, character or logical vector, or a factor.}
   \item{decreasing}{logical.  Should the sort be increasing or decreasing?
      Not available for partial sorting.}
   \item{\dots}{arguments to be passed to or from methods or (for the
@@ -43,9 +39,6 @@ is.unsorted(x, na.rm = FALSE, strictly = FALSE)
   \item{index.return}{logical indicating if the ordering index vector should
     be returned as well; this is only available for a few cases, the default
     \code{na.last = NA} and full sorting of non-factors.}
-  \item{na.rm}{logical.  Should missing values be removed?}
-  \item{strictly}{logical indicating if \code{is.unsorted()} should
-    check for \emph{strictly} increasing values.}
 }
 \details{
   \code{sort} is a generic function for which methods can be written,
@@ -75,12 +68,6 @@ is.unsorted(x, na.rm = FALSE, strictly = FALSE)
   sequence of the locale in use: see \code{\link{Comparison}}.
   The sort order for factors is the order of their levels (which is
   particularly appropriate for ordered factors).
-
-  \code{is.unsorted} returns a logical indicating if \code{x} is sorted
-  increasingly, i.e., \code{is.unsorted(x)} is true if \code{any(x !=
-    sort(x))} (and there are no \code{NA}s).  Note that
-  \code{is.unsorted(x, strictly=TRUE)} returns \code{TRUE} already when
-  \code{x} has ties.
 
   Method \code{"shell"} uses Shellsort (an \eqn{O(n^{4/3})} variant
   from Sedgewick (1996)).  If \code{x} has names a stable sort is used,
@@ -117,10 +104,6 @@ is.unsorted(x, na.rm = FALSE, strictly = FALSE)
   this means that the returned value has no class, except for factors
   and ordered factors (which are treated specially and whose result is
   transformed back to the original class).
-
-  For \code{is.unsorted}, a length-one logical value.  All objects of
-  length 0 or 1 are sorted: the result will be \code{NA} for objects of
-  length 2 or more unless they have a class or are an atomic vector.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -138,7 +121,7 @@ is.unsorted(x, na.rm = FALSE, strictly = FALSE)
 \seealso{
   \code{\link{order}} for sorting on or reordering multiple variables.
 
-  \code{\link{rank}}.
+  \code{\link{is.unsorted}}. \code{\link{rank}}.
 }
 \examples{
 require(stats)
