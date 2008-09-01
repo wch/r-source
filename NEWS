@@ -324,7 +324,7 @@ DEPRECATED & DEFUNCT
 	mlistMetaName(), removeMethodsObject() and seemsS4Object() are
 	defunct.
 
-    o	Use of a non-integer .Randon.seed is now an error.  (R itself
+    o	Use of a non-integer .Random.seed is now an error.  (R itself
 	has never generated such values, but user code has, and
 	R >= 2.6.0 has given a warning.)
 
