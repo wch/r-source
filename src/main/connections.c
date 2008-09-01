@@ -2536,6 +2536,13 @@ SEXP attribute_hidden do_seek(SEXP call, SEXP op, SEXP args, SEXP env)
     where = asReal(CADR(args));
     origin = asInteger(CADDR(args));
     rw = asInteger(CADDDR(args));
+    if(!ISNAN(where) && con->nPushBack > 0) {
+	/* clear pushback */
+	int j;
+	for(j = 0; j < con->nPushBack; j++) free(con->PushBack[j]);
+	free(con->PushBack);
+	con->nPushBack = 0;	
+    }
     return ScalarReal(con->seek(con, where, origin, rw));
 }
 

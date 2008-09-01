@@ -71,6 +71,9 @@ truncate(con, \dots)
   an append mode will typically be unreliable until the file has been
   written to.)
 
+  If \code{seek} is called with a non-\code{NA} value of \code{where},
+  any pushback on a text-mode connection is discarded.
+
   \code{truncate} truncates a file opened for writing at its current
   position.  It works only for \code{file} connections, and is not
   implemented on all platforms: on others (including Windows) it will
