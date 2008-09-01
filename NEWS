@@ -279,6 +279,9 @@ NEW FEATURES
 
     o	chol2inv() now treats <numeric(1)> as a [1 x 1]-matrix.
 
+    o	read.fwf() no longer passes its default for 'as.is' to
+	read.table(): this allows the latter's default to be used.
+
 
 INSTALLATION
 

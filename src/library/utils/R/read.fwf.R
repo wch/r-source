@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 read.fwf <-
-function(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
+function(file, widths, header = FALSE, sep = "\t",
          skip = 0, row.names, col.names, n = -1, buffersize = 2000, ...)
 {
     doone <- function(x) {
@@ -85,6 +85,6 @@ function(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
 
     close(FILE)
     FILE <- file(FILENAME,"r")
-    read.table(file = FILE, header = header, sep = sep, as.is = as.is,
+    read.table(file = FILE, header = header, sep = sep,
 	       row.names = row.names, col.names = col.names, quote = "", ...)
 }

@@ -173,7 +173,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     This allows putting comments after the last field.}
 
   \item{stringsAsFactors}{logical: should character vectors be converted
-    to factors?}
+    to factors?  Note that this is overridden bu \code{as.is} and
+    \code{colClasses}, both of which allow finer control.}
 
   \item{encoding}{encoding to be assumed for input strings.  It is
     used to mark character strings as known to be in

@@ -1,6 +1,6 @@
 % File src/library/utils/man/read.fwf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{read.fwf}
@@ -11,7 +11,7 @@
   data into a \code{\link{data.frame}}.
 }
 \usage{
-read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
+read.fwf(file, widths, header = FALSE, sep = "\t",
          skip = 0, row.names, col.names, n = -1,
          buffersize = 2000, \dots)
 }
@@ -31,7 +31,6 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
     must be delimited by \code{sep}.}
   \item{sep}{character; the separator used internally; should be a
     character that does not occur in the file (except in the header).}
-  \item{as.is}{see \code{\link{read.table}}.}
   \item{skip}{number of initial lines to skip; see
     \code{\link{read.table}}.}
   \item{row.names}{see \code{\link{read.table}}.}
@@ -41,7 +40,7 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
   \item{buffersize}{Maximum number of lines to read at one time}
   \item{\dots}{further arguments to be passed to
     \code{\link{read.table}}.  Useful further arguments include
-    \code{na.strings}, \code{colClasses} and \code{strip.white}.}
+    \code{as.is}, \code{na.strings}, \code{colClasses} and \code{strip.white}.}
     % PR#8083 mentions strip.white
 }
 \value{
