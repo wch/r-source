@@ -14,7 +14,8 @@ savePlot(filename = "Rplot",
          restoreConsole = TRUE)
 }
 \arguments{
-  \item{filename}{The filename under which to save the plot.}
+  \item{filename}{The filename under which to save the plot.
+    Tilde-expansion (see \code{\link{path.expand}} is supported.}
   \item{type}{The type of plot, Windows metafile, PNG, JPEG, BMP
     (Windows bitmap format), TIFF, PostScript or PDF.}
   \item{device}{A device number of a \code{windows} device, by default

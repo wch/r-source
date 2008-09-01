@@ -31,7 +31,8 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
 \arguments{
   \item{filename}{the name of the output file, up to 511 characters.  The
     page number is substituted if a C integer format is included in the
-    character string, as in the default.  (The result must be less than
+    character string, as in the default, and tilde-expansion is
+    performed (see \code{\link{path.expand}}).   (The result must be less than
     600 characters long.  See \code{\link{postscript}} for further
     details.)
   }

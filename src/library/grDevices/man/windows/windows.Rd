@@ -77,7 +77,8 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     Windows metafile, usually given extension \file{.emf} or
     \file{.wmf}.  Up to 511 characters are allowed. The page number is
     substituted if an integer format is included in the character
-    string: see \code{\link{postscript}} for further details. (The
+    string: see \code{\link{postscript}} for further details, and
+    tilde-expansion (see \code{\link{path.expand}} is performed. (The
     result must be less than 600 characters long.)  The default,
     \code{""}, means the clipboard.}
   \item{printer}{The name of a printer as known to Windows. The default

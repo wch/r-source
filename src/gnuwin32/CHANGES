@@ -30,6 +30,10 @@ NEW FEATURES
     o	If the HOME environment variable is not set, Rgui and Rterm
 	will set it to match R_USER (as Rcmd does).
 
+    o	The graphics devices bmp, jpeg, png, tiff and win.metafile
+	perform tilde-expansion on their 'filename' argument.  Also
+	savePlot.
+
 
 UTILITIES
 
