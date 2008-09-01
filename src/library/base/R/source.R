@@ -21,7 +21,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	 max.deparse.length = 150, chdir = FALSE,
          encoding = getOption("encoding"),
          continue.echo = getOption("continue"),
-         skip.echo = 0)
+         skip.echo = 0, keep.source = getOption("keep.source"))
 {
     eval.with.vis <-
 	function (expr, envir = parent.frame(),
@@ -69,7 +69,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         }
         if(file == "") file <- stdin()
         else {
-            if (isTRUE(getOption("keep.source")))
+            if (isTRUE(keep.source))
             	srcfile <- srcfile(file, encoding = encoding)
 	    file <- file(file, "r", encoding = encoding)
 	    on.exit(close(file))
