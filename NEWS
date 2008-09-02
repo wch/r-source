@@ -461,6 +461,10 @@ BUG FIXES
     o	seek() now clears the pushback on a text-mode connection if
  	used to set a new position.  (PR#12640)
 
+    o	quartz() would segfault if asked to create a file for bitmap
+	output which could not be created.  This applied also to the
+	type="quartz" versions of bmp(), jpeg(), png() and tiff().
+
 
 
 		CHANGES IN R VERSION 2.7.2
