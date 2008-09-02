@@ -465,6 +465,9 @@ BUG FIXES
 	output which could not be created.  This applied also to the
 	type="quartz" versions of bmp(), jpeg(), png() and tiff().
 
+    o	dnbinom(0, size, mu = <large>) suffered from cancellation in 2.7.2
+	only.
+
 
 
 		CHANGES IN R VERSION 2.7.2

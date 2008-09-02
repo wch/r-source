@@ -56,6 +56,8 @@ double dnbinom(double x, double size, double prob, int give_log)
 
 double dnbinom_mu(double x, double size, double mu, int give_log)
 {
+    /* originally, just set  prob :=  size / (size + mu)  and called dbinom_raw(),
+     * but that suffers from cancellation when   mu << size  */
     double ans, p;
 
 #ifdef IEEE_754
@@ -67,14 +69,14 @@ double dnbinom_mu(double x, double size, double mu, int give_log)
     R_D_nonint_check(x);
     if (x < 0 || !R_FINITE(x)) return R_D__0;
     x = R_D_forceint(x);
-    if(x == 0)
-	return R_D_exp(size * log1p(- mu/(size+mu)));
+    if(x == 0)/* be accurate, both for n << mu, and n >> mu :*/
+	return R_D_exp(size * (size < mu ? log(size/(size+mu)) : log1p(- mu/(size+mu))));
     if(x < 1e-10 * size) { /* don't use dbinom_raw() but MM's formula: */
 	return R_D_exp(x * log(size*mu / (size+mu)) - mu - lgamma(x+1) +
 		       log1p(x*(x-1)/(2*size)));
     }
     /* else: no unnecessary cancellation inside dbinom_raw, when
-     * x_ = size and n_ = x+size are so cloase that n_ - x_ loses accuracy
+     * x_ = size and n_ = x+size are so close that n_ - x_ loses accuracy
      */
     ans = dbinom_raw(size, x+size, size/(size+mu), mu/(size+mu), give_log);
     p = ((double)size)/(size+x);

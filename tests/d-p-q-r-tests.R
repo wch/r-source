@@ -665,4 +665,15 @@ stopifnot(plnorm(-1:0, lower.tail=FALSE, log.p=TRUE) == 0,
 stopifnot(pchisq(c(-1,0,1), df=0) == c(0,1,1),
           pchisq(c(-1,0,1), df=0, lower.tail=FALSE) == c(1,0,0))
 
+## dnbinom for extreme  size and/or mu :
+mu <- 20
+d <- dnbinom(17, mu=mu, size = 1e15*2^(1:10)) - dpois(17, lambda=mu)
+stopifnot(d < 0, abs(d) < 1e-14)
+## was wrong up to 2.7.1
+## The fix to the above, for x = 0, had a new cancellation problem
+mu <- 1e12 * 2^(0:20)
+stopifnot(all.equal(1/(1+mu), dnbinom(0, size = 1, mu = mu), tol=1e-13))
+## was wrong in 2.7.2 (only)
+
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
