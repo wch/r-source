@@ -282,6 +282,11 @@ NEW FEATURES
     o	read.fwf() no longer passes its default for 'as.is' to
 	read.table(): this allows the latter's default to be used.
 
+    o	X11() and capabilities("X11") now catch some X11 I/O errors that
+	previously terminated R.  These were rare and have only be
+	seen with a misconfigured X11 setup on a rather old version of
+	X11.
+
 
 INSTALLATION
 

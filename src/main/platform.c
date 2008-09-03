@@ -1652,7 +1652,8 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Don't load the module and contact the X11 display
        unless it is necessary.
     */
-    if (isNull(what)) X11 = R_can_use_X11();
+    if (isNull(what)) 
+	X11 = R_can_use_X11();
     else
 	for (j = 0; j < LENGTH(what); j++)
 	    if (streql(CHAR(STRING_ELT(what, j)), "X11")
@@ -1661,6 +1662,9 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 #if defined HAVE_PNG  & !defined HAVE_WORKING_CAIRO
 	       || streql(CHAR(STRING_ELT(what, j)), "png")
+#endif
+#if defined HAVE_TIFF  & !defined HAVE_WORKING_CAIRO
+	       || streql(CHAR(STRING_ELT(what, j)), "tiff")
 #endif
 		) {
 		X11 = R_can_use_X11();

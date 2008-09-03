@@ -70,6 +70,8 @@
 # endif */
 #endif
 
+typedef int (*X11IOhandler)(Display *);
+
 #include "devX11.h"
 
 #include <Rmodules/RX11.h>
@@ -99,7 +101,7 @@
 	 * with only one copy for all x11 devices */
 
 static Display *display;			/* Display */
-static char dspname[101];
+static char dspname[101]="";
 static int screen;				/* Screen */
 static Window rootwin;				/* Root Window */
 static Visual *visual;				/* Visual */
@@ -1078,6 +1080,14 @@ static int R_X11Err(Display *dsp, XErrorEvent *event)
     return 0;
 }
 
+static int R_X11IOErrSimple(Display *dsp)
+{
+    char *dn = XDisplayName(dspname);
+    strcpy(dspname, "");
+    error(_("X11 I/O error while opening X11 connection to '%s'"), dn);
+    return 0; /* but should never get here */
+}
+
 static int R_X11IOErr(Display *dsp)
 {
     int fd = ConnectionNumber(display);
@@ -1247,15 +1257,23 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     /* initialize the X11 device driver data structures. */
 
     if (!displayOpen) {
+	/* Bill Dunlap sees an error when tunneling to a non-existent
+	   X11 connection that BDR cannot reproduce.  We leave a handler set
+	   if we get an error, but that is rare.
+	*/
+	X11IOhandler old;
+	strncpy(dspname, p, 101);
+	dspname[100] = '\0';
+	old = XSetIOErrorHandler(R_X11IOErrSimple);
 	if ((display = XOpenDisplay(p)) == NULL) {
+	    XSetIOErrorHandler(old);
 	    warning(_("unable to open connection to X11 display '%s'"), p);
 	    return FALSE;
 	}
+	XSetIOErrorHandler(old);
 	DisplayOpened = TRUE;
 	Rf_setX11Display(display, gamma_fac, colormodel, maxcube, TRUE);
 	displayOpen = TRUE;
-	strncpy(dspname, p, 101);
-	dspname[100] = '\0';
 	if(xd->handleOwnEvents == FALSE)
 	    addInputHandler(R_InputHandlers, ConnectionNumber(display),
 			    R_ProcessX11Events, XActivity);
@@ -3170,13 +3188,21 @@ static SEXP in_do_cairo(SEXP call, SEXP op, SEXP args, SEXP env)
 static int in_R_X11_access(void)
 {
     char *p;
+    X11IOhandler old;
 
     if (displayOpen) return TRUE;
     if(!(p = getenv("DISPLAY"))) return FALSE;
+    /* Bill Dunlap sees an error when tunneling to a non-existent
+       X11 connection that BDR cannot reproduce.  We leave a handler set
+       if we get an error, but that is rare.
+    */
+    old = XSetIOErrorHandler(R_X11IOErrSimple);
     if ((display = XOpenDisplay(NULL)) == NULL) {
+	XSetIOErrorHandler(old);
 	return FALSE;
     } else {
 	XCloseDisplay(display);
+	XSetIOErrorHandler(old);
 	return TRUE;
     }
 }
