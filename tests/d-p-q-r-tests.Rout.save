@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-09-01 r46481)
+R version 2.8.0 Under development (unstable) (2008-09-03 r46487)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1202,8 +1202,8 @@ Warning messages:
 > 
 > ## dnbinom for extreme  size and/or mu :
 > mu <- 20
-> d <- dnbinom(17, mu=mu, size = 1e15*2^(1:10)) - dpois(17, lambda=mu)
-> stopifnot(d < 0, abs(d) < 1e-14)
+> d <- dnbinom(17, mu=mu, size = 1e11*2^(1:10)) - dpois(17, lambda=mu)
+> stopifnot(d < 0, diff(d) > 0, d[1] < 1e-10)
 > ## was wrong up to 2.7.1
 > ## The fix to the above, for x = 0, had a new cancellation problem
 > mu <- 1e12 * 2^(0:20)
@@ -1212,5 +1212,5 @@ Warning messages:
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  2.244 0.019 2.264 0 0 
+Time elapsed:  2.219 0.019 2.24 0 0 
 > 
