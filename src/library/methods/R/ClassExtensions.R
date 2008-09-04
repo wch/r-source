@@ -117,7 +117,7 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
 "S3Part<-" <- function(object, strictS3 = FALSE, needClass = .S3Class(object) , value) {
     S3Class <- .S3Class(value)
     def <- getClassDef(S3Class[[1]])
-    if(is.null(def) || !extends(def, needClass))
+    if(is.null(def) || !extends(def, needClass[[1]]))
       stop(gettextf("Replacement value must extend class \"%s\", got  \"%s\"", needClass, S3Class[[1]]), domain = NA)
     slots <- slotNames(class(object))
     if(!strictS3) {
