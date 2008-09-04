@@ -667,8 +667,8 @@ stopifnot(pchisq(c(-1,0,1), df=0) == c(0,1,1),
 
 ## dnbinom for extreme  size and/or mu :
 mu <- 20
-d <- dnbinom(17, mu=mu, size = 1e15*2^(1:10)) - dpois(17, lambda=mu)
-stopifnot(d < 0, abs(d) < 1e-14)
+d <- dnbinom(17, mu=mu, size = 1e11*2^(1:10)) - dpois(17, lambda=mu)
+stopifnot(d < 0, diff(d) > 0, d[1] < 1e-10)
 ## was wrong up to 2.7.1
 ## The fix to the above, for x = 0, had a new cancellation problem
 mu <- 1e12 * 2^(0:20)
