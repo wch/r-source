@@ -61,16 +61,21 @@ replicate(n, expr, simplify = TRUE)
   length is one the result is a vector, and if greater than one is a
   matrix with a column corresponding to each element of \code{X}.
 
-  The mode of the simplified answer is chosen to accommodate the modes of
-  all the values returned by the calls to \code{FUN}: see \code{\link{unlist}}.
-
-  If \code{X} has length 0, the return value of \code{sapply} is always
-  a 0-length list.
-
   Users of S4 classes should pass a list to \code{lapply}: the internal
   coercion is done by the system \code{as.list} in the base namespace
   and not one defined by a user (e.g. by setting S4 methods on the
   system function).
+}
+\value{
+  For \code{lapply} and \code{sapply(simplify=FALSE)}, a list.
+
+  For \code{sapply(simplify=TRUE)} and \code{replicate}: if \code{X} has
+  length zero or \code{n = 0}, an empty list.  Otherwise an atomic
+  vector or matrix or list of the same length as \code{X} (of length
+  \code{n} for \code{replicate}).  If simplification occurs, the output
+  type is determined from the highest type of the return values in the
+  hierarchy NULL < raw < logical < integer < real < complex < character
+  < list < expression, after coercion of pairlists tolists.
 }
 \note{
   \code{sapply(*, simplify = FALSE, USE.NAMES = FALSE)} is

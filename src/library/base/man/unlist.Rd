@@ -26,9 +26,6 @@ unlist(x, recursive = TRUE, use.names = TRUE)
   and note, e.g., \code{\link[utils]{relist}} with the \code{unlist} method
   for \code{relistable} objects.
 
-%never true
-%  If \code{x} has length zero the result is \code{NULL}.
-
   If \code{recursive = FALSE}, the function will not recurse beyond the
   first level items in \code{x}.
 
