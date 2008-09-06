@@ -287,6 +287,9 @@ NEW FEATURES
 	seen with a misconfigured X11 setup on a rather old version of
 	X11.
 
+    o	It is now possible to create and open a text-mode gzfile
+	connection by explicitly using e.g. open="rt".
+
 
 INSTALLATION
 

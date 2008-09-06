@@ -1128,10 +1128,11 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 static Rboolean gzfile_open(Rconnection con)
 {
     gzFile fp;
-    char mode[6];
+    char mode[6], *p;
 
     strcpy(mode, con->mode);
-    if(!strchr(mode, 'b')) strcat(mode, "b");
+    /* Must open as binary */
+    if((p = strchr(mode, 't'))) *p = 'b';
 
     fp = gzopen(R_ExpandFileName(con->description), mode);
     if(!fp) {
@@ -1237,7 +1238,10 @@ static Rconnection newgzfile(const char *description, const char *mode,
     }
     init_con(new, description, CE_NATIVE, "");
     strncpy(new->mode, mode, 1);
-    sprintf(new->mode+1, "b%1d", compress);
+    if(strlen(mode) > 1 && mode[1] == 't')
+	sprintf(new->mode+1, "t%1d", compress);
+    else
+	sprintf(new->mode+1, "b%1d", compress);
 
     new->canseek = TRUE;
     new->open = &gzfile_open;

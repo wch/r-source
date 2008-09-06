@@ -177,6 +177,10 @@ isIncomplete(con)
   the maximal allowed by the current setting of \code{umask} (see
   \code{\link{Sys.umask}}).
 #endif
+  
+  \code{gzfile} connections are an exception, as the file always has to
+  be opened in binary mode.  Thus modes such as \code{r} are binary, and
+  \code{rt} is needed to have a text-mode connection.
 
   \code{close} closes and destroys a connection.  Note that this will
   happen automatically in due course if there is no \R object referring
