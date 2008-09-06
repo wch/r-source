@@ -197,11 +197,11 @@ capabilities <- function(what = NULL)
         z <- z[match(what, names(z), 0)]
     if(.Platform$OS.type == "windows") return(z)
     ## Now we need to deal with any NA entries if X11 is unknown.
-    nas <- names(is.na(z))
+    nas <- names(z[is.na(z)])
     if(any(nas %in% c("X11", "jpeg", "png", "tiff"))) {
         ## This might throw an X11 error
          z[nas] <- tryCatch(.Internal(capabilitiesX11()),
-                            error = function(e) NA)
+                            error = function(e) FALSE)
     }
     z
 }
