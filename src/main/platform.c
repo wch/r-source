@@ -1640,10 +1640,9 @@ SEXP attribute_hidden do_capabilitiesX11(SEXP call, SEXP op, SEXP args, SEXP rho
 
 SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP what, ans, ansnames;
+    SEXP ans, ansnames;
     int i = 0;
 #ifdef Unix
-    int j = 0;
     int X11 = NA_LOGICAL;
 #endif
 
