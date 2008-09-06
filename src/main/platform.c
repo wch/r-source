@@ -1633,6 +1633,10 @@ static Rboolean R_can_use_X11(void)
 }
 #endif
 
+SEXP attribute_hidden do_capabilitiesX11(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    return ScalarLogical(R_can_use_X11());
+}
 
 SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1640,37 +1644,15 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i = 0;
 #ifdef Unix
     int j = 0;
-    Rboolean X11 = FALSE;
+    int X11 = NA_LOGICAL;
 #endif
 
     checkArity(op, args);
-    what = CAR(args);
-    if (!isNull(what) && !isString(what))
-	error(_("invalid '%s' argument"), "what");
 
-#if defined(Unix) && defined(HAVE_X11)
-    /* Don't load the module and contact the X11 display
-       unless it is necessary.
-    */
-    if (isNull(what)) 
-	X11 = R_can_use_X11();
-    else
-	for (j = 0; j < LENGTH(what); j++)
-	    if (streql(CHAR(STRING_ELT(what, j)), "X11")
-#if defined HAVE_JPEG  & !defined HAVE_WORKING_CAIRO
-	       || streql(CHAR(STRING_ELT(what, j)), "jpeg")
+#ifndef HAVE_X11
+    X11 = FALSE
 #endif
-#if defined HAVE_PNG  & !defined HAVE_WORKING_CAIRO
-	       || streql(CHAR(STRING_ELT(what, j)), "png")
-#endif
-#if defined HAVE_TIFF  & !defined HAVE_WORKING_CAIRO
-	       || streql(CHAR(STRING_ELT(what, j)), "tiff")
-#endif
-		) {
-		X11 = R_can_use_X11();
-		break;
-	    }
-#endif
+
     PROTECT(ans = allocVector(LGLSXP, 15));
     PROTECT(ansnames = allocVector(STRSXP, 15));
 

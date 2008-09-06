@@ -128,6 +128,7 @@ SEXP do_c(SEXP, SEXP, SEXP, SEXP);
 SEXP do_c_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_call(SEXP, SEXP, SEXP, SEXP);
 SEXP do_capabilities(SEXP, SEXP, SEXP, SEXP);
+SEXP do_capabilitiesX11(SEXP, SEXP, SEXP, SEXP);
 SEXP do_cat(SEXP, SEXP, SEXP, SEXP);
 SEXP do_charmatch(SEXP, SEXP, SEXP, SEXP);
 SEXP do_charToRaw(SEXP, SEXP, SEXP, SEXP);
