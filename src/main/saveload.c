@@ -2273,10 +2273,6 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     if (ep == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "eval.promises");
 
-    source = CAR(nthcdr(args,4));
-    if (source != R_NilValue && TYPEOF(source) != ENVSXP)
-	error(_("bad environment"));
-
     wasopen = con->isopen;
     if(!wasopen && !con->open(con)) error(_("cannot open the connection"));
     if(!con->canwrite) {
