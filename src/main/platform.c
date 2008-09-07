@@ -1633,9 +1633,14 @@ static Rboolean R_can_use_X11(void)
 }
 #endif
 
+/* only actually used on Unix */
 SEXP attribute_hidden do_capabilitiesX11(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+#ifdef Unix
     return ScalarLogical(R_can_use_X11());
+#else
+    return ScalarLogical(FALSE);
+#endif
 }
 
 SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1643,14 +1648,14 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, ansnames;
     int i = 0;
 #ifdef Unix
+# ifdef HAVE_X11
     int X11 = NA_LOGICAL;
+# else
+    int X11 = FALSE
+# endif
 #endif
 
     checkArity(op, args);
-
-#ifndef HAVE_X11
-    X11 = FALSE
-#endif
 
     PROTECT(ans = allocVector(LGLSXP, 15));
     PROTECT(ansnames = allocVector(STRSXP, 15));
