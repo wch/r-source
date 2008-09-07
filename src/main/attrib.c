@@ -387,6 +387,13 @@ SEXP tspgets(SEXP vec, SEXP val)
     if (vec == R_NilValue)
 	error(_("attempt to set an attribute on NULL"));
 
+    if(IS_S4_OBJECT(vec)) { /* leave validity checking to validObject */
+        if (!isNumeric(val)) /* but should have been checked */
+	    error(_("'tsp' attribute must be numeric")); 
+	installAttrib(vec, R_TspSymbol, val);
+	return vec;
+    }
+
     if (!isNumeric(val) || length(val) != 3)
 	error(_("'tsp' attribute must be numeric of length three"));
 
