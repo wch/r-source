@@ -284,11 +284,14 @@ NEW FEATURES
 
     o	X11() and capabilities("X11") now catch some X11 I/O errors that
 	previously terminated R.  These were rare and have only be
-	seen with a misconfigured X11 setup on a rather old version of
-	X11.
+	seen with a misconfigured X11 setup on some versions of X11.
 
     o	It is now possible to create and open a text-mode gzfile
 	connection by explicitly using e.g. open="rt".
+
+    o	save() (optionally, but by default) checks for the existence
+	of objects before opening the file/connections (wish of
+	PR#12543).
 
 
 INSTALLATION

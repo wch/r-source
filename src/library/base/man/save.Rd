@@ -21,7 +21,7 @@
 save(\dots, list = character(0),
      file = stop("'file' must be specified"),
      ascii = FALSE, version = NULL, envir = parent.frame(),
-     compress = !ascii, eval.promises = TRUE)
+     compress = !ascii, eval.promises = TRUE, precheck = TRUE)
 
 save.image(file = ".RData", version = NULL, ascii = FALSE,
            compress = !ascii, safe = TRUE)
@@ -46,6 +46,9 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     workspace format version 1.}
   \item{eval.promises}{logical: should objects which are promises be
     forced before saving?}
+  \item{precheck}{logical: should the existence of the objects be
+    checked before starting to save (and in particular before opening
+    the file/connection)?  Does not apply to version 1 saves.}
   \item{safe}{logical.  If \code{TRUE}, a temporary file is used for
     creating the saved workspace.  The temporary file is renamed to
     \code{file} if the save succeeds.  This preserves an existing

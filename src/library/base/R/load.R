@@ -44,7 +44,7 @@ load <-
 save <- function(..., list = character(0),
                  file = stop("'file' must be specified"),
                  ascii = FALSE, version = NULL, envir = parent.frame(),
-                 compress = !ascii, eval.promises = TRUE)
+                 compress = !ascii, eval.promises = TRUE, precheck = TRUE)
 {
     opts <- getOption("save.defaults")
     if (missing(compress) && ! is.null(opts$compress))
@@ -61,6 +61,20 @@ save <- function(..., list = character(0),
         invisible(.Internal(save(list, file, ascii, version, envir,
                                  eval.promises)))
     else {
+        if (precheck) {
+            ## check for existence of objects before opening connection
+            ## (and e.g. clobering file)
+            ok <- unlist(lapply(list, exists, envir=envir))
+            if(!all(ok)) {
+                n <- sum(!ok)
+                stop(sprintf(ngettext(n,
+                                      "object %s not found",
+                                      "objects %s not found"
+                                      ),
+                             paste(sQuote(list[!ok]), collapse = ", ")
+                             ), domain = NA)
+            }
+        }
         if (is.character(file)) {
             if (file == "") stop("'file' must be non-empty string")
             if (compress) con <- gzfile(file, "wb")
@@ -78,7 +92,8 @@ save <- function(..., list = character(0),
 }
 
 save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
-                        compress = !ascii, safe = TRUE) {
+                        compress = !ascii, safe = TRUE)
+{
     if (! is.character(file) || file == "")
         stop("'file' must be non-empty string")
 
@@ -108,7 +123,7 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
     on.exit(file.remove(outfile))
     save(list = ls(envir = .GlobalEnv, all.names = TRUE), file = outfile,
          version = version, ascii = ascii, compress = compress,
-         envir = .GlobalEnv)
+         envir = .GlobalEnv, precheck = FALSE)
     if (safe)
         if (! file.rename(outfile, file)) {
             on.exit()
@@ -117,7 +132,8 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
     on.exit()
 }
 
-sys.load.image <- function(name, quiet) {
+sys.load.image <- function(name, quiet)
+{
     if (file.exists(name)) {
         load(name, envir = .GlobalEnv)
         if (! quiet)
