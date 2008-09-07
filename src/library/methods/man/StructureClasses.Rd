@@ -22,6 +22,7 @@
 \alias{initialize,array-method}
 \alias{initialize,matrix-method}
 \alias{initialize,ts-method}
+\alias{initialize,mts-method}
 \alias{show,ts-method}
 %
 \description{
@@ -83,16 +84,17 @@
   \code{"mts"}.)
 
   The current behavior (beginning with version 2.8.0 of \R) registers
-  \code{"ts"} as an S3 class, but also provides some methods that at
-  least partially support classes that contain \code{"ts"}.  The S3
+  \code{"ts"} as an S3 class,  using an S4-style definition (see the
+  documentation for \code{\link{setOldClass}} in the examples section
+  for an abbreviated listing of how this is done.  The S3
   inheritance of \code{"mts"} in package \code{stats} is also
   registered.
+  These classes, as well as \code{"matrix"} and \code{"array"} should
+  be valid in most examples as superclasses for new S4 class
+  definitions.
 
-  As with other S3 classes, there are problems in defining
-  an S4 class that inherits from \code{"ts"}, say by  using the
-  \code{contains=} argument to \code{setClass}.  Existing S3 methods
-  for  \code{"ts"} will not recognize objects from the new class (see
-  \code{\link{Classes}} for details).
+
+  
 }
 \section{Extends}{
   The specific classes all extend class \code{"structure"}, directly, and

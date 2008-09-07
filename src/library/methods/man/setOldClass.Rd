@@ -16,6 +16,7 @@
 \alias{anova.glm.null-class}
 \alias{Date-class}
 \alias{data.frame-class}
+\alias{data.frameRowLabels-class}
 \alias{density-class}
 \alias{dump.frames-class}
 \alias{factor-class}
@@ -45,17 +46,17 @@
 \alias{initialize,ordered-method}
 \alias{initialize,table-method}
 \alias{initialize,summary.table-method}
-\title{ Specify Names for Old-Style Classes }
+\title{Register Old-Style (S3) Classes and Inheritance }
 \description{
   Register an old-style (a.k.a. \sQuote{S3}) class as a formally defined
   class. The \code{Classes} argument is the character vector used as the
   \code{class} attribute; in particular, if there is more than one
   string,  old-style class inheritance is mimicked.  Registering via
   \code{setOldClass} allows S3 classes to appear  in method
-  signatures, as a slot in an S4 class or as a superclass of an S4 class.
+  signatures, as a slot in an S4 class, or as a superclass of an S4 class.
 }
 \usage{
-setOldClass(Classes, prototype, where, test = FALSE)
+setOldClass(Classes, prototype, where, test = FALSE, S4Class)
 }
 \arguments{
   \item{Classes}{
@@ -75,12 +76,22 @@ setOldClass(Classes, prototype, where, test = FALSE)
     source for a package, the class definitions will be included in the
     package's environment by default.)
   }
-  \item{test}{flag, if \code{TRUE}, inheritance must be tested
+  \item{test}{flag, if \code{TRUE}, arrange to test inheritance 
     explicitly for each object, needed if the S3 class can have a
     different set of class strings, with the same first string.
+    This is a different mechanism in implementation and should be
+    specified separately for each pair of classes that have an
+    optional inheritance.
     See the details below.
   }
-}
+  \item{S4Class}{ optionally, the class definition or the class name
+      of an S4 class.  The new class will have all the slots and other
+      properties of this class, plus its S3 inheritance as defined by
+      the \code{Classses} argument.  Arguments \code{prototype} and
+      \code{test} must not be supplied in this case.  See the section
+      on \dQuote{S3 classes with known attributes} below.
+    }
+  }
 \details{
   Each of the names will be defined as an S4 class, extending the
   remaining classes in \code{Classes}, and the class \code{oldClass},
@@ -138,7 +149,7 @@ which can sometimes lead to confusion.
   the list.
 }
 
-\section{Extending S3 Classes}{
+\section{Extending S3 classes}{
   A call to \code{setOldClass} creates formal classes corresponding
   to S3 classes, allows these to be used as slots in other classes or in
   a signature in \code{\link{setMethod}}, and mimics the S3
@@ -147,9 +158,9 @@ which can sometimes lead to confusion.
   In documentation for the initial implementation of S4 classes in \R,
   users were warned against defining S4 classes that contained S3
   classes, even if those had been registered.  The warning was based
-  mainly on two points.  1) The S3 behavior of the objects would fail
+  mainly on two points.  1: The S3 behavior of the objects would fail
   because the S3 class would not be visible, for example, when S3
-  methods are dispatched.  2) Because S3 classes have no formal
+  methods are dispatched.  2: Because S3 classes have no formal
   definition, nothing can be asserted in general about the S3 part of
   an object from such a class.  (The warning was repeated as recently
   as the first reference below.)
@@ -159,15 +170,69 @@ which can sometimes lead to confusion.
   to be stuck with S3 programming, without the flexibility and security of
   formal class and method definitions.
 
-  Beginning with version 2.8.0, \R will provide support for extending
+  Beginning with version 2.8.0, \R provides support for extending
   registered S3 classes; that is, for new classes defined by a call to
   \code{\link{setClass}} in which the \code{contains=} argument
   includes an S3 class.  See the examples below.  The support is aimed
   primarily at providing the S3 class information for all classes that
   extend class \linkS4class{oldClass}, in particular by ensuring that
-  all objects from such classes contain the S3 class in a special slot.
+  all objects from such classes contain the S3 class in a special
+  slot.
 
  }
+
+\section{S3 Classes with known attributes}{
+  A further specification of an S3 class can be made \emph{if} the
+  class is guaranteed to have some attributes of known class (where as
+  with slots, \dQuote{known} means that the attribute is an object of
+  a specified class, or a subclass of that class).
+
+  In this case, the call to \code{setOldClass()} can supply an S4 class
+  definition representing the known structure.  Since S4 slots are
+  implemented as attributes (largely for just this reason), the know
+  attributes can be specified in the representation of the S4 class.
+  The usual technique will be to create an S4 class with the desired
+  structure, and then supply the class name or definition as the
+  argument \code{S4Class} to \code{setOldClass()}. 
+
+  See the definition of class \code{"ts"} in the examples below.  The
+  call to \code{\link{setClass}} to create the S4 class can use the same class name, as here,
+  so long as the class definition is not sealed.  In the example, we
+  define \code{"ts"} as a vector structure with a numeric slot for
+  \code{"tsp"}.  The validity of this definition relies on an
+  assertion that all the S3 code for this class is consistent with
+  that definition; specifically, that all \code{"ts"} objects will
+  behave as vector structures and will have a numeric \code{"tsp"}
+  attribute. We  believe this to be true of all the base code in \R,
+  but as always with S3 classes, no guarantee is possible.
+
+  The S4 class definition can  have virtual superclasses (as in
+  the \code{"ts"} case) if the S3 class is asserted to behave
+  consistently with these (in the example, time-series objects are
+  asserted to be consistent with the \linkS4class{structure} class).
+
+For another example, look at the S4 class definition for \code{"data.frame"}.
+
+  Be warned that failures of the S3 class to live up to its asserted
+  behavior will usually go uncorrected, since S3 classes inherently
+  have no definition, and the resulting invalid S4 objects can cause
+  all sorts of grief.  Many S3 classes are not candidates for known
+  slots, either because the presence or class of the attributes are
+  not guaranteed  (e.g., \code{dimnames} in arrays, although these are
+  not even S3 classes), or because the class uses named components of
+  a list rather than attributes (e.g., \code{"lm"}).  An attribute
+  that is sometimes missing cannot be represented as a slot, not even
+  by pretending that it is present with class \code{"NULL"}, because
+  attributes unlike slots can not have value \code{NULL}.
+
+  One irregularity that is usually tolerated, however, is to
+  optionally add other attributes to those guaranteed to exist (for
+  example, \code{"terms"} in \code{data.frame"} objects returned by
+ \code{\link{model.frame}}).  As of version 2.8.0, validity checks by
+ \code{\link{validObject}} ignore extra attributes; even if this
+ check is tightened in the future, classes extending S3 classes
+ would likely be exempted because extra attributes are so common.
+  }
 
 \seealso{
   \code{\link{setClass}}, \code{\link{setMethod}}
@@ -206,9 +271,60 @@ stopifnot(identical(dfResidual(myLm), myLm$df.residual))
 removeClass("ylm"); removeClass("xlm")
 rm(myData, myLm)
 removeGeneric("dfResidual")}
-\dontrun{setOldClass("data.frame", prototoype = data.frame())
 
+## Examples of S3 classes with guaranteed attributes
+## an S3 class "stamped" with a vector and  a "date" attribute
+## Here is a generator function and an S3 print method.
+## NOTE:  it's essential that the generator checks the attribute classes
+stamped <- function(x, date = Sys.time()) {
+    if(!inherits(date, "POSIXt"))
+      stop("bad date argument")
+    if(!is.vector(x))
+      stop("x must be a vector")
+    attr(x, "date") <- date
+    class(x) <- "stamped"
+    x
 }
+
+print.stamped <- function(x, ...) {
+    print(as.vector(x))
+    cat("Date: ",  format(attr(x,"date")), "\n")
+}
+
+## Now, an S4 class with the same structure:
+setClass("stamped4", contains = "vector", representation(date = "POSIXt"))
+
+## We can use the S4 class to register "stamped", with its attributes:
+setOldClass("stamped", S4Class = "stamped4")
+selectMethod("show", "stamped")
+## and then remove "stamped4" to clean up
+removeClass("stamped4")
+\dontshow{
+set.seed(113)}
+someLetters <- stamped(sample(letters, 10),  ISOdatetime(2008, 10, 15, 12, 0, 0))
+
+st <- new("stamped", someLetters)  
+st  # show() method prints the object's class, then calls the S3 print method.
+
+stopifnot(identical(S3Part(st, TRUE), someLetters))
+
+# creating the S4 object directly from its data part and slots
+new("stamped", 1:10, date = ISOdatetime(1976, 5, 5, 15, 10, 0))
+
+\dontrun{
+## The code in R that defines "ts" as an S4 class
+setClass("ts", contains = "structure", 
+      representation(tsp = "numeric"), 
+      prototype(NA, tsp = rep(1,3))) # prototype to be a legal S3 time-series
+## and now registers it as an S3 class
+    setOldClass("ts", S4Class = "ts", where = envir)
+ }
+
+\dontshow{
+  removeClass("stamped")
+  rm(someLetters, st)
+}
+
 }
 \keyword{ programming }
 \keyword{ methods }

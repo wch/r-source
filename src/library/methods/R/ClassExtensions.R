@@ -66,20 +66,16 @@
 }
 
 S3Part <- function(object, strictS3 = FALSE, S3Class) {
+    if(!isS4(object))
+      return(object)
     classDef <- getClass(class(object))
     oldClassCase <- extends(classDef, "oldClass")
     defltS3Class <- missing(S3Class)
     if(oldClassCase) {
-        if(defltS3Class) {
-            S3Class <- .S3Class(object)[[1]]
-            if(strictS3)
-              keepSlots <- character()
-            else
-              keepSlots <- ".S3Class"
-        }
-        else
-          keepSlots <- slotNames(S3Class)
-    }
+        if(defltS3Class)
+            S3Class <- .S3Class(object)
+        keepSlots <- slotNames(S3Class[[1]])
+     }
     else {
         if(all(is.na(match(extends(classDef), .BasicClasses))))
           stop(gettextf("S3Part() is only defined for classes set up by setOldCLass(), basic classes or subclasses of these:  not true of class \"%s\"", class(object)), domain = NA)
@@ -90,27 +86,22 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
             keepSlots <- character()
         }
         else
-          keepSlots <- slotNames(S3Class)
+          keepSlots <- slotNames(S3Class[[1]])
     }
     if(!(defltS3Class || extends(classDef, S3Class)))
       stop(gettextf("The S3Class argument must be a superclass of \"%s\":  not true of class \"%s\"", class(object), S3Class), domain = NA)
+    if(strictS3)
+      keepSlots <- keepSlots[is.na(match(keepSlots, ".S3Class"))]
     deleteSlots = slotNames(classDef)
     deleteSlots <- deleteSlots[is.na(match(deleteSlots,keepSlots))]
     for(slot in deleteSlots)
       attr(object, slot) <- NULL
-    class(object) <- S3Class
     if(strictS3) {
-        if(oldClassCase) {
-            if(length(keepSlots) >1)
-              stop("Not meaningful to have  strictS3=TRUE when the S3 class has slots")
-            attr(object, ".S3Class") <- NULL
-        }
-        else {
-             if(length(keepSlots) >0)
-              stop("Not meaningful to have  strictS3=TRUE when the S3 class has slots")
-         }
-        object <- asS4(object, FALSE)
+        object <- .notS4(object)
+        class(object) <- S3Class
     }
+    else
+      class(object) <- S3Class[[1]]
     object
 }
 

@@ -49,9 +49,11 @@
 
     .setBaseClass("externalptr", prototype = .newExternalptr(), where = envir); clList <- c(clList, "externalptr")
 
-    ## S4 is a basic class, but virtual:  new("S4") is an error; must be an actual S4 class
-     tmp <- newClassRepresentation(className="S4", prototype = defaultPrototype(), virtual=TRUE, package = "methods")
-    assignClassDef("S4", tmp, where = envir); clList <- c(clList, "S4")
+    ## S4, S3 are basic classes that are used to define methods related to being S4, S3 object
+    for(cl in c("S4", "S3")) {
+        tmp <- newClassRepresentation(className=cl, prototype = defaultPrototype(), virtual=TRUE, package = "methods")
+        assignClassDef(cl, tmp, where = envir); clList <- c(clList, cl)
+    }
 
     ## NULL is weird in that it has NULL as a prototype, but is not virtual
     tmp <- newClassRepresentation(className="NULL", prototype = NULL, virtual=FALSE, package = "methods")
@@ -137,34 +139,34 @@
        else
         warning("OOPS: something wrong with line ",i, " in .OldClassesPrototypes")
     }
-  ## note re "ts".  An attempt was made, through R 2.7.0, to treat this as an S4 class.
-    ## However, this has not proved to be very practical; for example,
-    ## internal restrictions prevent assigning a slot "tsp" if it is
-    ## temporarily inconsistent with the data part, and vice-versa.
-    ## Also "mts" extends "ts" in an S3 sense but doesn't work as an
-    ## S4 extension.  Beginning with 2.8, "ts" will be treated as a
-    ## registered S3 class, but we try to keep its "structure"
-    ## behavior
-    setIs("ts", "structure", where = envir)
-    setMethod("initialize", "ts",
-              function(.Object,  ...) {
-                  if(identical(as.character(class(.Object)), "ts"))
-                    .Object <- .notS4(.Object)
-                  if(nargs() < 2) # guaranteed to be called with .Object from new
-                     return( .Object)
-                  args <- list(...)
-                  argnames <- names(args)
-                  if(is.null(argnames))
-                    slotnames <- FALSE
-                  else
-                    slotnames <- nzchar(argnames) & is.na(match(argnames, .tsArgNames))
-                  if(any(slotnames)) {
-                      value = do.call(stats::ts, args[!slotnames])
-                      .mergeAttrs(value, .Object, args[slotnames])
-                  }
-                  else
-                    .mergeAttrs(stats::ts(...), .Object, list())
-              })
+    setGeneric("slotsFromS3", where = envir)
+    ## the method for "oldClass" is really a constant, just hard to express that way
+    setMethod("slotsFromS3", "oldClass", function(object)   getClass("oldClass")@slots,
+              where = envir)
+
+    setClass("ts", contains = "structure", representation(tsp = "numeric"), prototype(NA, tsp = rep(1,3)), where = envir)
+
+    setOldClass("ts", S4Class = "ts", where = envir)
+
+    setClass("mts", contains=c("matrix", "ts"), prototype = prototype(matrix(NA,1,1), tsp = rep(1,3), .S3Class = c("mts", "ts")))
+    .init_ts <-  function(.Object,  ...) {
+        if(nargs() < 2) # guaranteed to be called with .Object from new
+          return( .Object)
+        args <- list(...)
+        argnames <- names(args)
+        if(is.null(argnames))
+          slotnames <- FALSE
+        else
+          slotnames <- nzchar(argnames) & is.na(match(argnames, .tsArgNames))
+        if(any(slotnames)) {
+            value = do.call(stats::ts, args[!slotnames])
+            .mergeAttrs(value, .Object, args[slotnames])
+        }
+        else
+          .mergeAttrs(stats::ts(...), .Object, list())
+    }
+    setMethod("initialize", "ts", .init_ts, where = envir)
+    setMethod("initialize", "mts", .init_ts, where = envir) #else, it's ambiguous
     ## the following mimics settings for other basic classes ("ts" was
     ## not defined at the time these are done).
     setMethod("coerce", c("ANY", "ts"), function (from, to, strict = TRUE)
@@ -174,24 +176,77 @@
                       attrs <- attributes(value)
                       if(length(attrs)>2)
                         attributes(value) <- attrs[c("class", "tsp")]
+                      value <- .asS4(value)
                   }
                   value
               },
               where = envir)
-    setMethod("show", "ts", function(object) {
+    setMethod("show", "oldClass", function(object) {
         cl <- as.character(class(object))
-        if(!identical(cl, "ts"))
-          cat("Object of class \"", cl, "\"\n", sep = "")
-        print(as(object, "ts"))
+        S3Class <- object@.S3Class
+        if(length(S3Class)) S3Class <- S3Class[[1]]
+        else S3Class <- "oldClass" # or error?
+        cat("Object of class \"", cl, "\"\n", sep = "")
+        print(S3Part(object, strict = TRUE))
         otherSlots <- slotNames(cl)
-        otherSlots <- otherSlots[is.na(match(otherSlots, c(".Data", "tsp")))]
+        S3slots <- slotNames(S3Class)
+        otherSlots <- otherSlots[is.na(match(otherSlots, S3slots))]
         for(what in otherSlots) {
             cat('Slot "', what, '":\n', sep = "")
             show(slot(object, what))
             cat("\n")
         }
-    })
-
+    }, where = envir)
+   .initS3 <- function(.Object, ...) {
+         if(nargs() < 2)
+           return(.Object)
+         args <- list(...)
+         Class <- class(.Object)
+        ClassDef <- getClass(Class)
+        ## separate the slots, superclass objects
+        snames <- allNames(args)
+        which <- nzchar(snames)
+        elements <- args[which]
+        supers <- args[!which]
+        thisExtends <- names(ClassDef@contains)
+        slotDefs <- ClassDef@slots
+        dataPart <- elNamed(slotDefs, ".Data")
+        if(is.null(dataPart))
+          dataPart <- "missing" # nothing will extend this => no data part args allowed
+        S3Class <- attr(ClassDef@prototype, ".S3Class")
+        S3ClassP <- S3Class[[1]]
+        if(length(supers) > 0) {
+            for(i in rev(seq_along(supers))) {
+                obj <- el(supers, i)
+                Classi <- class(obj)
+                defi <- getClassDef(Classi)
+                if(is.null(defi))
+                  stop(gettextf("unnamed argument to initialize() for S3 class must have a class defintion; \"%s\" does not", Classi), domain = NA)
+                if(is(obj, S3ClassP)) {
+                    ## eligible to be the S3 part; merge other slots from prototype;
+                    ## obj then becomes the object, with its original class as the S3Class
+                    if(is.null(attr(obj, ".S3Class"))) # must be an S3 object; use its own class
+                       attr(obj, ".S3Class") <- Classi
+                    .Object <- .asS4(.mergeAttrs(obj, .Object))
+                }
+                else if(is(obj, dataPart)) {
+                    ## the S3Class stays from the prototype
+                    .Object <- .mergeAttrs(obj, .Object)
+                }
+                else stop(gettextf("unnamed argument must extend either the S3 class or the class of the data part; not true of class \"%s\"", Classi), domain = NA)
+                    
+            }
+        }
+        ## named slots are done as in the default method, which will also call validObject()
+        if(length(elements)>0) {
+            elements <- c(list(.Object), elements)
+            .Object <- do.call(`callNextMethod`, elements)
+        }
+         else
+           validObject(.Object)
+         .Object
+    }
+    setMethod("initialize", "oldClass", .initS3, where = envir)        
     ## Next, miscellaneous S3 classes.
     for(cl in .OldClassesList)
         setOldClass(cl, where = envir)
@@ -199,8 +254,71 @@
     ## model.  To emulate their (unfortunate) behavior requires a setIs with a test.
     for(cl in .OldIsList)
         .setOldIs(cl, envir)
+    setClassUnion("data.frameRowLabels", c("character", "integer"), where = envir)
+    setClass("data.frame",
+             representation(names = "character", row.names = "data.frameRowLabels"),
+             contains = "list", prototype = unclass(data.frame()), where = envir) # the S4 version
+    setOldClass("data.frame", S4Class = "data.frame", where = envir)
+    ## methods to go from S4 to S3; first, using registered class; second, general S4 object
+    setMethod("coerce", c("oldClass", "S3"), function (from, to, strict = TRUE)
+              {
+                  from <- .notS4(from) # not needed? ensures that class() can return >1 string
+                  cl <- class(from)
+                  cl1 <- .class1(from)
+                  classDef <- getClassDef(cl1)
+                  S3Class <- attr(classDef@prototype, ".S3Class")
+                  if(length(S3Class) > length(cl))  #add S3 inheritance
+                      attr(from, "class") <- S3Class
+                  from
+              },
+              where = envir)
+    setMethod("coerce", c("ANY", "S3"), function (from, to, strict = TRUE)
+              {
+                  switch(typeof(from),
+                         S4 = stop(gettextf("Class \"%s\" does not have an S3 data part, and so is of type \"S4\"; no S3 equivalent",class(from)), domain = NA),
+                         .notS4(from) )
+              },
+              where = envir)
+    setMethod("coerce", c("ANY", "S4"), function (from, to, strict = TRUE)
+              {
+                  if(isS4(from)) {
+                      value <- from
+                  }
+                  else {
+                      cl <- .class1(from)
+                      classDef <- getClass(cl)
+                      if(identical(classDef@virtual, TRUE))
+                        stop(gettextf("Class \"%s\" is VIRTUAL; not meaningful to create an S4 object from this class", cl), domain = NA)
+                      pr <- classDef@prototype
+                      value <- new(cl)
+                      slots <- classDef@slots
+                      if(match(".Data", names(slots), 0) > 0) {
+                          data <- unclass(from)
+                          if(!is(data, slots[[".Data"]]))
+                            stop(gettextf("Object must be a valid data part for class \"%s\"; not true of type \"%s\"", cl, class(data)),
+                                 domain = NA)
+                          value@.Data <- unclass(from)
+                      }
+                      ## copy attributes:  Note that this copies non-slots as well
+                      ## but checks the slots for validity
+                      anames <- names(attributes(from))
+                      isSlot <- anames %in% names(slots)
+                      for(i in seq_along(anames)) {
+                          what <- anames[[i]]
+                          if(isSlot[[i]])
+                            slot(value, what) <- attr(from, what)
+                          else
+                            attr(value, what) <- attr(from, what)
+                      }
+                  }
+                  if(strict)
+                    ## validate.  If we created S4 object, slots were tested; else, not
+                    ## so complete= is set accordingly.
+                      validObject(value, complete = isS4(from))
+                  value
+              })
     assign(".SealedClasses", c(clList,unique(unlist(.OldClassesList))),  envir)
-  }
+}
 
 ### create a class definition for one of the pseudo-classes in base
 ### The class name does _not_ have a package attribute, which signals
@@ -325,7 +443,6 @@
          "mtable",
          "table",
          "summary.table",
-         c("mts", "ts"),
          "recordedplot",
          "socket",
          "packageIQR",

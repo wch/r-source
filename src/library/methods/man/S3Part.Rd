@@ -1,10 +1,17 @@
-\name{S3Part}
+\name{S3}
 \alias{S3Part}
 \alias{S3Part<-}
 \alias{S3Class}
 \alias{S3Class<-}
 \alias{isXS3Class}
-\title{ S3-style Objects Contained in S4-class Objects}
+\alias{slotsFromS3}
+\alias{S4}
+\alias{S3}
+\alias{coerce,ANY,S3-method}
+\alias{coerce,oldClass,S3-method}
+\alias{coerce,ANY,S4-method}
+\alias{S3-class}
+\title{ S3-style Objects and S4-class Objects}
 \description{
   Old-style (S3) classes may be registered as S4 classes (by calling
   \code{\link{setOldClass}}, and many have been.  These classes can
@@ -16,6 +23,9 @@
   aspects can coerce the objects automatically, without direct calls
   to these functions.  The functions also work for classes that extend
   basic vector or matrix object types.  See the details below.
+
+  Also discussed are S3 <-> S4 coercion; see the section
+  \dQuote{S3 and S4 objects}
 }
 \usage{
 
@@ -28,6 +38,9 @@ S3Class(object)
 S3Class(object) <-  value
 
 isXS3Class(classDef)
+
+slotsFromS3(object)
+
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -38,6 +51,9 @@ isXS3Class(classDef)
       one of its superclasses an S3 class registered by a call to
       \code{\link{setOldClass}}, or from a class that extends a basic
       vector, matrix or array object type.  See the details.
+
+      For most of the functions, an S3 object can also be supplied,
+      with the interpretation that it is its own S3 part.
  }
     \item{strictS3}{  If \code{TRUE}, the value returned by
         \code{S3Part} will be an S3 object, with all the S4 slots
@@ -55,11 +71,13 @@ isXS3Class(classDef)
       subclass of it.
       }
 
-  \item{value}{The replacement value for the S3 part of the object.
+  \item{value}{ For \code{S3Part<-}, the replacement value for the S3 part of the object.
       This does \emph{not} need to be an S4 object; in fact, the
       usual way to create objects from these classes is by giving an
       S3 object of the right class as an argument to
       \code{\link{new}}.
+
+      For \code{S3Class<-}, the character vector to assign as the S3 class.
     }
 
 
@@ -119,6 +137,16 @@ isXS3Class(classDef)
   coercing objects to the desired class; methods are automatically
   defined to deal correctly with the slots when \code{\link{as}} is
   called to extract or replace superclass objects.
+
+  The function \code{slotsFromS3()} is a generic function used
+  internally to access the slots associated with the S3 part of the
+  object.  Methods for this function are created automatically when
+  \code{\link{setOldClass}} is called with the \code{S4Class}
+  argument.  Usually, there is only one S3 slot, containing the S3
+  class, but the \code{S4Class} argument may provide additional slots,
+  in the case that the S3 class has some guaranteed attributes that
+  can be used as formal S4 slots.  See the corresponding section in
+  the documentation of \code{\link{setOldClass}}.
 }
 \value{
 
@@ -138,6 +166,46 @@ isXS3Class(classDef)
     to whether the class defined by \code{ClassDef}
     extends S3 classes (specifically, whether it has the slot for
     holding the S3 class).
+
+\code{slotsFromS3}: returns a list of the relevant slot classes, or an
+empty list for any other object.
+}
+
+\section{S3 and S4 Objects: Conversion Mechanisms}{
+
+  Objects in \R have an internal bit that indicates whether or not to
+  treat the object as coming from an S4 class.  This bit is tested by
+  \code{\link{isS4}} and can be set on or off by \code{\link{asS4}}.
+  The latter function, however, does no checking or interpretation;
+  you should only use it if you are very certain every detail has been
+  handled correctly.
+
+  As a friendlier alternative, methods have been defined for coercing
+  to the virtual classes \code{"S3"} and \code{"S4"}.  The expressions
+  \code{as(object, "S3")}  and \code{as(object, "S4")}  return S3
+  and S4 objects, respectively.  In addition, they attempt
+  to do conversions in a valid way, and also check validity when
+  coercing to S4.
+
+  The expression \code{as(object, "S3")} can be used in two ways.  For
+  objects from one of the registered S3 classes, the expression will
+  ensure that the class attribute is the full multi-string S3 class
+  implied by \code{class(object)}.  If the registered class has known
+  attribute/slots, these will also be provided.
+
+  Another use of  \code{as(object, "S3")}  is to take an S4 object and
+  turn it into an S3 object with corresponding attributes.  This is
+  only meaningful with S4 classes that have a data part.  If you want
+  to operate on the object without invoking S4 methods, this
+  conversion is usually the safest way.
+
+  The expression  \code{as(object, "S4")} will use the attributes in
+  the object to create an object from the S4 definition of
+  \code{class(object)}. This is a general mechanism to create
+  partially defined version of S4 objects via S3 computations  (not
+  much different from invoking \code{\link{new}} with corresponding
+  arguments, but usable in this form even if the S4 object has an
+  initialize method with different arguments). 
 }
 
 \references{

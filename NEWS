@@ -109,6 +109,16 @@ NEW FEATURES
 	treatment of these objects in the base code, to allow other
 	classes to contain them.  See class?ts.
 
+	A general feature added to implement "ts" and also
+	"data.frame" as S4 classes is that an S4 class definition can
+	be supplied to setOldClass() when the S3 class has known
+	attributes of known class.
+
+	setOldClass() now saves all the S3 inheritance, allowing the
+	calls to be built up in stages, rather than including all the
+	S3 classes in each call.  Also allows as(x,"S3") to generate
+	valid S3 inheritance from the stored definition.  See ?S3.
+
     o	S4 methods may now be defined corresponding to "...", by
         creating a generic function that has "..." as its signature.
         A method will be selected and called if all the arguments
