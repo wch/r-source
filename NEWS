@@ -443,14 +443,15 @@ BUG FIXES
     o	What na.action() does is now correctly documented.
 
     o	source() with echo=TRUE now behaves like ordinary automatic
-        printing, by using methods::show() for S4 objects.
+	printing, by using methods::show() for S4 objects.
 
-    o	Several bugs fixed in `?` with topics: it previously died
-        trying to construct some error messages; for S4 methods, class
-        "ANY" should be used for omitted arguments and default methods.
+    o	Several bugs fixed in `?` with topics: it previously died trying
+	to construct some error messages; for S4 methods, class "ANY"
+	should be used for omitted arguments and default methods.
 
     o	trace() should create missing traceable classes in the global
-        environment, not in baseenv(), where other classes won't be found.
+    	environment, not in baseenv() where other classes will not be
+    	found.
 
 
 
