@@ -78,6 +78,23 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.7.2 patched
+
+
+BUG FIXES
+
+    o	iconv() was incorrectly identifying R running in an Eastern
+	European locale as using ISO-8859-2 (aka Latin-2) rather than
+	CP1250: they differ in the positions of some characters,
+	notably s and z with caron.  This was seen in tcltk output
+	from Rcmdr in 2.7.x, but might have occurred elsewhere (and
+	earlier).
+
+	This also affected localeToCharset() which incorrectly
+	returned "ISO8859-2".
+
+
+
 		CHANGES IN R VERSION 2.7.2
 
 
