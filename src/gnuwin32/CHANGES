@@ -93,6 +93,10 @@ BUG FIXES
 	This also affected localeToCharset() which incorrectly
 	returned "ISO8859-2".
 
+	The same issue seems to have caused problems with starting
+	R 2.7.x in the Chinese (Hong Kong S.A.R.) locale on some
+	systems (e.g. PR#12658).
+
 
 
 		CHANGES IN R VERSION 2.7.2
