@@ -95,7 +95,8 @@ BUG FIXES
 
 	The same issue seems to have caused problems with starting
 	R 2.7.x in the Chinese (Hong Kong S.A.R.) locale on some
-	systems (e.g. PR#12658).
+	systems (e.g. PR#12658): the problems were with locale names
+	which contained periods.
 
 
 

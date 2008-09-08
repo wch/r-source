@@ -583,9 +583,8 @@ char *locale2charset(const char *locale)
     static char charset[128];
 
     char la_loc[128];
-    char enc[128];
+    char enc[128], *p;
     int i;
-    int offset;
     int  cp;
     char *value;
 
@@ -598,18 +597,19 @@ char *locale2charset(const char *locale)
 
     memset(charset,0,sizeof(charset));
 
-    /* separate language_locale.encoding */
+    /* separate language_locale.encoding
+       NB, under Windows 'locale' may contains dots
+     */
     memset(la_loc, 0, sizeof(la_loc));
     memset(enc, 0, sizeof(enc));
-    for (i = 0; locale[i] && locale[i]!='.' && i < sizeof(la_loc) - 1; i++)
-	la_loc[i] = locale[i];
-    if(locale[i]) {
-	i++;
-	offset = i;
-	for(i = 0; locale[i+offset] && i < sizeof(enc) - 1; i++)
-	    enc[i] = locale[i+offset];
+    p = strrchr(locale, '.');
+    if(p) {
+	strncpy(enc, p+1, sizeof(enc)-1);
+	strncpy(la_loc, locale, sizeof(la_loc)-1);
+	p = strrchr(la_loc, '.');
+	if(p) *p = '\0';
     }
-
+    
 #ifdef Win32
     /*
       ## PUTTY suggests mapping Windows code pages as
