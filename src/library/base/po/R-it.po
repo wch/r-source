@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -72,13 +72,20 @@ msgstr ""
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr "'%s' non è una abbreviazione valida di un RNG"
 
-msgid "'normal.kind' must be a character string of length 1."
+#, fuzzy
+msgid "'normal.kind' must be a character string of length 1"
 msgstr "'normal.kind' deve essere una stringa di caratteri di lunghezza 1"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' non è una scelta valida"
 
-msgid "Buggy version of Kinderman-Ramage generator used."
+#, fuzzy
+msgid "Buggy version of Kinderman-Ramage generator used"
+msgstr ""
+"Stai usando una versione non funzionante del generatore di Kinderman-Ramage."
+
+#, fuzzy
+msgid "Buggy version of Kinderman-Ramage generator is not allowed"
 msgstr ""
 "Stai usando una versione non funzionante del generatore di Kinderman-Ramage."
 
@@ -215,12 +222,6 @@ msgstr "i 'breaks' non sono distinti"
 
 msgid "labels/breaks length conflict"
 msgstr "lunghezze di labels e breaks differenti"
-
-msgid "non-numeric data type in frame"
-msgstr "dati in frame non di tipo numeric"
-
-msgid "class information lost from one or more columns"
-msgstr "informazioni sulla classe perse per una o più colonne"
 
 msgid "invalid 'row.names' length"
 msgstr "lunghezza di 'row.names' non ammissibile"
@@ -1565,6 +1566,12 @@ msgstr[0] "non c'è alcun pacchetto chiamato '%s'"
 msgstr[1] "non c'è alcun pacchetto chiamato '%s'"
 
 #, fuzzy
+msgid "object %s not found"
+msgid_plural "objects %s not found"
+msgstr[0] "%s non trovato"
+msgstr[1] "%s non trovato"
+
+#, fuzzy
 msgid "object '%s' is not exported by 'namespace:%s'"
 msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] "l'oggetto %s non è esportato da 'namespace:%s'"
@@ -1585,6 +1592,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#~ msgid "non-numeric data type in frame"
+#~ msgstr "dati in frame non di tipo numeric"
+
+#~ msgid "class information lost from one or more columns"
+#~ msgstr "informazioni sulla classe perse per una o più colonne"
 
 #~ msgid "not defined for POSIXt objects"
 #~ msgstr "non definito per oggetti POSIXt"

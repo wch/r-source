@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2008-03-26 10:35+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -381,6 +381,10 @@ msgstr "Vérifiable comme Open Source : %s"
 msgid "Non-portable flags in variable '%s':"
 msgstr "Indicateur non portable dans la variable '%s' :"
 
+#, fuzzy
+msgid "package must be loaded"
+msgstr "l'espace de noms ne doit pas être chargé."
+
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
 
@@ -421,9 +425,6 @@ msgid "Generics without methods in"
 msgstr ""
 
 msgid ":"
-msgstr ""
-
-msgid ".get_S4_methods_list(): *did* reduce list, dropping"
 msgstr ""
 
 msgid "argument 'lines' must be a character vector"

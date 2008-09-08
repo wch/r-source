@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2008-03-26 10:26+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -105,6 +105,9 @@ msgstr "aucun terme dans la formule cible à rajouter à l'objet"
 msgid "number of rows in use has changed: remove missing values?"
 msgstr ""
 "le nombre de lignes utilisées a changé : supprimer les valeurs manquantes ?"
+
+msgid "attempting model selection on an essentially perfect fit is nonsense"
+msgstr ""
 
 msgid "using the %d/%d rows from a combined fit"
 msgstr "utilisation des %d/%d lignes d'un ajustement combiné"
@@ -1280,6 +1283,9 @@ msgstr ""
 "les degrés de liberté résiduels de l'objet suggère que ce n'est pas un "
 "ajustement \"lm\""
 
+msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
+msgstr ""
+
 msgid "removed because response differs from"
 msgstr "supprimés car la réponse diffère de"
 
@@ -1409,6 +1415,10 @@ msgstr "réponse multiple nécessaire"
 
 msgid "object must be of class \"manova\" or \"maov\""
 msgstr "l'objet doit être de la classe \"manova\" ou \"maov\""
+
+#, fuzzy
+msgid "need multiple responses"
+msgstr "réponse multiple nécessaire"
 
 msgid "residuals have rank %d < %d"
 msgstr "les résidus sont de rang %d < %d"

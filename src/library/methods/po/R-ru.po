@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2008-04-07 00:23-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -29,6 +29,31 @@ msgstr "OOPS: что-то не так с линией"
 msgid "in .OldClassesPrototypes"
 msgstr "в .OldClassesPrototypes"
 
+msgid ""
+"unnamed argument to initialize() for S3 class must have a class defintion; "
+"\"%s\" does not"
+msgstr ""
+
+msgid ""
+"unnamed argument must extend either the S3 class or the class of the data "
+"part; not true of class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Class \"%s\" does not have an S3 data part, and so is of type \"S4\"; no S3 "
+"equivalent"
+msgstr "класс \"%s\" не имеет определенного раздела данных (слот.Data)"
+
+msgid ""
+"Class \"%s\" is VIRTUAL; not meaningful to create an S4 object from this "
+"class"
+msgstr ""
+
+msgid ""
+"Object must be a valid data part for class \"%s\"; not true of type \"%s\""
+msgstr ""
+
 msgid "Cannot specify matrix() arguments when specifying .Data"
 msgstr ""
 
@@ -42,16 +67,13 @@ msgstr ""
 "версии R"
 
 msgid ""
-"S3Part() is only defined for classes set up by setOldCLass() or extend such "
-"a class:  not true of class \"%s\""
+"S3Part() is only defined for classes set up by setOldCLass(), basic classes "
+"or subclasses of these:  not true of class \"%s\""
 msgstr ""
 
 msgid ""
-"The S3Class argument must be a class set up by setOldCLass() or an extension "
-"of such a class:  not true of class \"%s\""
-msgstr ""
-
-msgid "Not meaningful to have keepSlots=TRUE and strict=TRUE"
+"The S3Class argument must be a superclass of \"%s\":  not true of class \"%s"
+"\""
 msgstr ""
 
 msgid "Replacement value must extend class \"%s\", got  \"%s\""
@@ -80,6 +102,11 @@ msgid ""
 msgstr ""
 "аргумент 'coerce' для 'setIs' должен быть функцией одного аргумента, получен "
 "объект класса \"%s\""
+
+msgid ""
+"the computation: as(object,\"%s\") <- value is valid when object has class "
+"\"%s\" only if is(value, \"%s\") is TRUE (class(value) was \"%s\")"
+msgstr ""
 
 msgid ""
 "there is no automatic definition for as(object, \"%s\") <- value when object "
@@ -267,6 +294,9 @@ msgstr "не определено метода для функции \"%s\" идентификатора %s"
 
 msgid "'file' must be a character string or a connection"
 msgstr "'file' должен быть текстовой строкой или соединением"
+
+msgid "No method for \"...\" matches class \"%s\""
+msgstr ""
 
 msgid "No method found for signature %s"
 msgstr "Не найдено метода для идентификатора %s"
@@ -892,6 +922,23 @@ msgstr ""
 "\" не относится к известным акциям (warn, stop, once, ignore); акция для "
 "функции не записана \""
 
+#, fuzzy
+msgid "argument f must be a generic function with signature \"...\""
+msgstr "Функция для аргумента \"f\" должна быть общей функцией"
+
+#, fuzzy
+msgid "No method or default matching the \"...\" arguments in %s"
+msgstr "нет метода или значения по умолчанию для приведения \"%s\" к \"%s\""
+
+msgid "multiple direct matches:"
+msgstr ""
+
+msgid "; using the first of these"
+msgstr ""
+
+msgid "multiple equivalent inherited matches:"
+msgstr ""
+
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr ""
 "\"%s\" имеет запечатанное определение класса и не может быть переопределено"
@@ -963,15 +1010,6 @@ msgstr ""
 msgid "class \"%s\" has multiple definitions visible; only the first removed"
 msgstr ""
 "класс \"%s\" имеет несколько видимых определений; удалено только первое"
-
-msgid "The class to be removed  (\""
-msgstr "Данный класс будет удален  (\""
-
-msgid "\") has defined subclasses that should also be removed: ("
-msgstr "\") содержит определенные подклассы, которые должны быть удалены: ("
-
-msgid ")"
-msgstr ")"
 
 msgid "invalid class \"%s\" object:"
 msgstr "неверный объект класса \"%s\" :"
@@ -1287,6 +1325,16 @@ msgstr ""
 "Не могу найти таблицу методов для общего \"%s\" из пакета \"%s\" в пакете \"%"
 "s\""
 
+msgid "not allowed to have test==TRUE and an S4Class definition"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"argument S4Class must be a class definition:  got an object of class \"%s\""
+msgstr ""
+"аргумент 'classDef' должен быть строкой либо представлением класса; получен "
+"объект класса \"%s\""
+
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
 "new classes?)"
@@ -1295,8 +1343,8 @@ msgstr ""
 "место смешение старых и новых классов?)"
 
 msgid ""
-"The class of the prototype, \"%s\", is undefined; only allowed for the S3 "
-"class being registered (\"%s\")"
+"The S3 class of the prototype, \"%s\", is undefined; only allowed when this "
+"is the S3 class being registered (\"%s\")"
 msgstr ""
 
 msgid "explicit coercion of old-style class (%s) is not defined"
@@ -1315,6 +1363,11 @@ msgid ""
 msgstr ""
 "аргумент 'Classes' должен быть вектором двух классов; получен аргумент длины "
 "%d"
+
+msgid ""
+"S3Class only defined for extensions of \"oldClass\" or classes with a data "
+"part:  not true of class \""
+msgstr ""
 
 msgid ""
 "S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
@@ -1417,7 +1470,8 @@ msgstr "Конструирование отслеживаемого класса \""
 msgid "Environment of class \""
 msgstr "Окружение класса \""
 
-msgid "\" is locked; using base environment for new class"
+#, fuzzy
+msgid "\" is locked; using global environment for new class"
 msgstr "\" заблокировано; использую основное окружение для нового класса"
 
 msgid "not a package name: \"%s\""
@@ -1438,6 +1492,15 @@ msgstr[1] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
 msgstr[2] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
+
+#~ msgid "The class to be removed  (\""
+#~ msgstr "Данный класс будет удален  (\""
+
+#~ msgid "\") has defined subclasses that should also be removed: ("
+#~ msgstr "\") содержит определенные подклассы, которые должны быть удалены: ("
+
+#~ msgid ")"
+#~ msgstr ")"
 
 #~ msgid ""
 #~ "'NextMethod' not defined because the current method is not a "

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2008-04-07 00:29-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -372,6 +372,10 @@ msgstr "Поддается проверке как open source: %s"
 msgid "Non-portable flags in variable '%s':"
 msgstr "Непереносимые флаги в переменной '%s':"
 
+#, fuzzy
+msgid "package must be loaded"
+msgstr "должно быть загружено пространство имен."
+
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Пропущенные связ(и) с объектом документации '%s':"
 
@@ -412,9 +416,6 @@ msgid "Generics without methods in"
 msgstr ""
 
 msgid ":"
-msgstr ""
-
-msgid ".get_S4_methods_list(): *did* reduce list, dropping"
 msgstr ""
 
 msgid "argument 'lines' must be a character vector"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2008-03-26 17:25+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -25,6 +25,31 @@ msgstr "OOPS : il y a un problème avec la ligne"
 msgid "in .OldClassesPrototypes"
 msgstr "dans .OldClassesPrototypes"
 
+msgid ""
+"unnamed argument to initialize() for S3 class must have a class defintion; "
+"\"%s\" does not"
+msgstr ""
+
+msgid ""
+"unnamed argument must extend either the S3 class or the class of the data "
+"part; not true of class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Class \"%s\" does not have an S3 data part, and so is of type \"S4\"; no S3 "
+"equivalent"
+msgstr "la classe \"%s\" n'a pas de partie de données définie (un slot .Data)"
+
+msgid ""
+"Class \"%s\" is VIRTUAL; not meaningful to create an S4 object from this "
+"class"
+msgstr ""
+
+msgid ""
+"Object must be a valid data part for class \"%s\"; not true of type \"%s\""
+msgstr ""
+
 msgid "Cannot specify matrix() arguments when specifying .Data"
 msgstr ""
 
@@ -38,16 +63,13 @@ msgstr ""
 "\" dans cette version de R"
 
 msgid ""
-"S3Part() is only defined for classes set up by setOldCLass() or extend such "
-"a class:  not true of class \"%s\""
+"S3Part() is only defined for classes set up by setOldCLass(), basic classes "
+"or subclasses of these:  not true of class \"%s\""
 msgstr ""
 
 msgid ""
-"The S3Class argument must be a class set up by setOldCLass() or an extension "
-"of such a class:  not true of class \"%s\""
-msgstr ""
-
-msgid "Not meaningful to have keepSlots=TRUE and strict=TRUE"
+"The S3Class argument must be a superclass of \"%s\":  not true of class \"%s"
+"\""
 msgstr ""
 
 msgid "Replacement value must extend class \"%s\", got  \"%s\""
@@ -76,6 +98,11 @@ msgid ""
 msgstr ""
 "l'argument 'coerce' de 'setIs' doit être une fonction à un seul argument et "
 "un objet de la classe \"%s\" est défini"
+
+msgid ""
+"the computation: as(object,\"%s\") <- value is valid when object has class "
+"\"%s\" only if is(value, \"%s\") is TRUE (class(value) was \"%s\")"
+msgstr ""
 
 msgid ""
 "there is no automatic definition for as(object, \"%s\") <- value when object "
@@ -273,6 +300,9 @@ msgstr "pas de méthode définie pour la fonction \"%s\" et la signature %s"
 
 msgid "'file' must be a character string or a connection"
 msgstr "'file' doit être une chaîne de caractères ou une connexion"
+
+msgid "No method for \"...\" matches class \"%s\""
+msgstr ""
 
 msgid "No method found for signature %s"
 msgstr "aucune méthode trouvée pour la signature %s"
@@ -939,6 +969,25 @@ msgstr ""
 "\" n'est pas une action connue (warn, stop, once, ignore) ; aucune action "
 "enregistrée pour la fonction \""
 
+#, fuzzy
+msgid "argument f must be a generic function with signature \"...\""
+msgstr "Une fonction pour l'argument \"f\" doit être générique"
+
+#, fuzzy
+msgid "No method or default matching the \"...\" arguments in %s"
+msgstr ""
+"pas de méthode ou de fonction par défaut pour la conversion automatique de "
+"\"%s\" en \"%s\""
+
+msgid "multiple direct matches:"
+msgstr ""
+
+msgid "; using the first of these"
+msgstr ""
+
+msgid "multiple equivalent inherited matches:"
+msgstr ""
+
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr ""
 "\"%s\" a une définition de classe scellée et ne peut donc pas être redéfinie"
@@ -1013,17 +1062,6 @@ msgid "class \"%s\" has multiple definitions visible; only the first removed"
 msgstr ""
 "la classe \"%s\" a plusieurs définitions visibles ; Seule la première est "
 "détruite"
-
-msgid "The class to be removed  (\""
-msgstr "La classe à éliminer (\""
-
-msgid "\") has defined subclasses that should also be removed: ("
-msgstr ""
-"\") a des définitions de sous-classes qui doivent également être éliminées : "
-"("
-
-msgid ")"
-msgstr ")"
 
 msgid "invalid class \"%s\" object:"
 msgstr "objet de classe \"%s\" incorrect :"
@@ -1362,6 +1400,16 @@ msgstr ""
 "Impossible de trouver la table des méthodes pour \"%s\", le package \"%s\" "
 "est sans doute périmé"
 
+msgid "not allowed to have test==TRUE and an S4Class definition"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"argument S4Class must be a class definition:  got an object of class \"%s\""
+msgstr ""
+"l'argument 'classDef' doit être une chaîne de caractères ou une "
+"représentation de classe ; Un objet de classe \"%s\" est obtenu"
+
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
 "new classes?)"
@@ -1370,8 +1418,8 @@ msgstr ""
 "mélange entre des anciennes et nouvelles classes est peut-être fait)"
 
 msgid ""
-"The class of the prototype, \"%s\", is undefined; only allowed for the S3 "
-"class being registered (\"%s\")"
+"The S3 class of the prototype, \"%s\", is undefined; only allowed when this "
+"is the S3 class being registered (\"%s\")"
 msgstr ""
 
 msgid "explicit coercion of old-style class (%s) is not defined"
@@ -1391,6 +1439,11 @@ msgid ""
 msgstr ""
 "l'argument 'Classes' doit être un vecteur contenant deux classes ; un "
 "argument de longueur %d est obtenu à la place"
+
+msgid ""
+"S3Class only defined for extensions of \"oldClass\" or classes with a data "
+"part:  not true of class \""
+msgstr ""
 
 msgid ""
 "S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
@@ -1499,7 +1552,8 @@ msgstr "La construction de la classe traçable \""
 msgid "Environment of class \""
 msgstr "Un environnement de classe \""
 
-msgid "\" is locked; using base environment for new class"
+#, fuzzy
+msgid "\" is locked; using global environment for new class"
 msgstr ""
 "\" est verrouillée ; Utilisation de l'environnement de base pour la nouvelle "
 "classe"
@@ -1524,6 +1578,17 @@ msgstr[0] ""
 msgstr[1] ""
 "dans la signature de méthode pour la fonction \"%s\", il n'y a aucune "
 "définition pour les classes : %s"
+
+#~ msgid "The class to be removed  (\""
+#~ msgstr "La classe à éliminer (\""
+
+#~ msgid "\") has defined subclasses that should also be removed: ("
+#~ msgstr ""
+#~ "\") a des définitions de sous-classes qui doivent également être "
+#~ "éliminées : ("
+
+#~ msgid ")"
+#~ msgstr ")"
 
 #~ msgid ""
 #~ "'NextMethod' not defined because the current method is not a "

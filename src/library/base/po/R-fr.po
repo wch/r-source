@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2008-03-26 10:09+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -71,13 +71,19 @@ msgstr ""
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr "'%s' n'est pas une abbréviation valide d'un RNG"
 
-msgid "'normal.kind' must be a character string of length 1."
+#, fuzzy
+msgid "'normal.kind' must be a character string of length 1"
 msgstr "'normal.kind' doit être une chaîne de caractères de longueur 1."
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' n'est pas un choix correct."
 
-msgid "Buggy version of Kinderman-Ramage generator used."
+#, fuzzy
+msgid "Buggy version of Kinderman-Ramage generator used"
+msgstr "La version boggée du générateur Kinderman-Ramage est utilisée."
+
+#, fuzzy
+msgid "Buggy version of Kinderman-Ramage generator is not allowed"
 msgstr "La version boggée du générateur Kinderman-Ramage est utilisée."
 
 msgid "malformed version string"
@@ -214,12 +220,6 @@ msgstr "'breaks' ne sont pas des valeurs uniques"
 
 msgid "labels/breaks length conflict"
 msgstr "longueurs de 'labels' et 'breaks' non conformes"
-
-msgid "non-numeric data type in frame"
-msgstr "type de données non numériques"
-
-msgid "class information lost from one or more columns"
-msgstr "information de classe perdue pour une ou plusieurs colonnes"
 
 msgid "invalid 'row.names' length"
 msgstr "longueur de 'row.names' incorrecte"
@@ -1554,6 +1554,12 @@ msgid_plural "there are no packages called"
 msgstr[0] "aucun package nommé '%s' n'est trouvé"
 msgstr[1] "aucun packages nommé '%s' n'est trouvé"
 
+#, fuzzy
+msgid "object %s not found"
+msgid_plural "objects %s not found"
+msgstr[0] "%s introuvable"
+msgstr[1] "%s introuvable"
+
 msgid "object '%s' is not exported by 'namespace:%s'"
 msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] "l'objet '%s' n'est pas exporté par 'namespace:%s'"
@@ -1574,6 +1580,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "non-numeric data type in frame"
+#~ msgstr "type de données non numériques"
+
+#~ msgid "class information lost from one or more columns"
+#~ msgstr "information de classe perdue pour une ou plusieurs colonnes"
 
 #~ msgid "Invalid DCF format."
 #~ msgstr "Format DCf incorrecT."

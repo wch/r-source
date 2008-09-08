@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -20,6 +20,31 @@ msgstr ""
 msgid "in .OldClassesPrototypes"
 msgstr ""
 
+msgid ""
+"unnamed argument to initialize() for S3 class must have a class defintion; "
+"\"%s\" does not"
+msgstr ""
+
+msgid ""
+"unnamed argument must extend either the S3 class or the class of the data "
+"part; not true of class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Class \"%s\" does not have an S3 data part, and so is of type \"S4\"; no S3 "
+"equivalent"
+msgstr "클래스 \"%s\"는 데이터 일부(.Data slot)를 정해지지 않습니다"
+
+msgid ""
+"Class \"%s\" is VIRTUAL; not meaningful to create an S4 object from this "
+"class"
+msgstr ""
+
+msgid ""
+"Object must be a valid data part for class \"%s\"; not true of type \"%s\""
+msgstr ""
+
 msgid "Cannot specify matrix() arguments when specifying .Data"
 msgstr ""
 
@@ -33,16 +58,13 @@ msgstr ""
 "메소드는 R의 버전으로 최초의 함수 '%s' 때문애 정해지지 않을지도 모릅니다"
 
 msgid ""
-"S3Part() is only defined for classes set up by setOldCLass() or extend such "
-"a class:  not true of class \"%s\""
+"S3Part() is only defined for classes set up by setOldCLass(), basic classes "
+"or subclasses of these:  not true of class \"%s\""
 msgstr ""
 
 msgid ""
-"The S3Class argument must be a class set up by setOldCLass() or an extension "
-"of such a class:  not true of class \"%s\""
-msgstr ""
-
-msgid "Not meaningful to have keepSlots=TRUE and strict=TRUE"
+"The S3Class argument must be a superclass of \"%s\":  not true of class \"%s"
+"\""
 msgstr ""
 
 msgid "Replacement value must extend class \"%s\", got  \"%s\""
@@ -70,6 +92,11 @@ msgid ""
 msgstr ""
 "'setIs'에서 'coerce' 인수는 하나의 인수함수이어야만 합니다,\n"
 "클래스 \"%s\" 오브젝트를 얻었습니다"
+
+msgid ""
+"the computation: as(object,\"%s\") <- value is valid when object has class "
+"\"%s\" only if is(value, \"%s\") is TRUE (class(value) was \"%s\")"
+msgstr ""
 
 msgid ""
 "there is no automatic definition for as(object, \"%s\") <- value when object "
@@ -273,6 +300,9 @@ msgid "no method defined for function \"%s\" and signature %s"
 msgstr "함수 '%s'와 기호 %s를 위해서 정해지는 메소드가 아닙니다"
 
 msgid "'file' must be a character string or a connection"
+msgstr ""
+
+msgid "No method for \"...\" matches class \"%s\""
 msgstr ""
 
 #, fuzzy
@@ -923,6 +953,23 @@ msgid ""
 "function \""
 msgstr ""
 
+#, fuzzy
+msgid "argument f must be a generic function with signature \"...\""
+msgstr "함수'%s'는 일반명 '%s'로 이외에, 일반적인 함수인 것처럼 보입니다"
+
+#, fuzzy
+msgid "No method or default matching the \"...\" arguments in %s"
+msgstr "\"%s\"에서 \"%s\"를 강제하기 때문에 메소드 또는 디폴트가 없습니다"
+
+msgid "multiple direct matches:"
+msgstr ""
+
+msgid "; using the first of these"
+msgstr ""
+
+msgid "multiple equivalent inherited matches:"
+msgstr ""
+
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr "\"%s\"는 밀폐된 클래스 정의를 가져, 다시 정의를 될수가 없습니다"
 
@@ -999,15 +1046,6 @@ msgstr "\"%s\"는 클래스(되는 행동이 아닙니다)가 아닙니다"
 
 msgid "class \"%s\" has multiple definitions visible; only the first removed"
 msgstr "클래스 \"%s\"는 복수의 정의를 인정하도록 합니다; 첫번째에만 제거됩니다"
-
-msgid "The class to be removed  (\""
-msgstr ""
-
-msgid "\") has defined subclasses that should also be removed: ("
-msgstr ""
-
-msgid ")"
-msgstr ""
 
 msgid "invalid class \"%s\" object:"
 msgstr "무효인 클래스 \"%s\" 오브젝트입니다"
@@ -1334,6 +1372,17 @@ msgid ""
 "No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
 msgstr ""
 
+msgid "not allowed to have test==TRUE and an S4Class definition"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"argument S4Class must be a class definition:  got an object of class \"%s\""
+msgstr ""
+"인수'classDef'는 문자열 또는 클래스는 representation가 아니면 안됩니다; 클래"
+"스 \"%s\"\n"
+"의 오브젝트를 얻었습니다"
+
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
 "new classes?)"
@@ -1343,8 +1392,8 @@ msgstr ""
 "클래스 정보입니다"
 
 msgid ""
-"The class of the prototype, \"%s\", is undefined; only allowed for the S3 "
-"class being registered (\"%s\")"
+"The S3 class of the prototype, \"%s\", is undefined; only allowed when this "
+"is the S3 class being registered (\"%s\")"
 msgstr ""
 
 msgid "explicit coercion of old-style class (%s) is not defined"
@@ -1363,6 +1412,11 @@ msgid ""
 msgstr ""
 "인수 'Classes'는 2개 클래스의 벡터이어야만 합니다;\n"
 "길이 %d의 인수를 얻었습니다"
+
+msgid ""
+"S3Class only defined for extensions of \"oldClass\" or classes with a data "
+"part:  not true of class \""
+msgstr ""
 
 msgid ""
 "S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
@@ -1463,7 +1517,7 @@ msgstr ""
 msgid "Environment of class \""
 msgstr ""
 
-msgid "\" is locked; using base environment for new class"
+msgid "\" is locked; using global environment for new class"
 msgstr ""
 
 #, fuzzy

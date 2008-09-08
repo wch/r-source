@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
-"PO-Revision-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
+"PO-Revision-Date: 2008-09-08 14:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -87,14 +87,17 @@ msgstr "‘kind’ must be a character string of length 1 (RNG to be used)."
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr "‘%s’ is not a valid abbreviation of an RNG"
 
-msgid "'normal.kind' must be a character string of length 1."
-msgstr "‘normal.kind’ must be a character string of length 1."
+msgid "'normal.kind' must be a character string of length 1"
+msgstr "‘normal.kind’ must be a character string of length 1"
 
 msgid "'%s' is not a valid choice"
 msgstr "‘%s’ is not a valid choice"
 
-msgid "Buggy version of Kinderman-Ramage generator used."
-msgstr "Buggy version of Kinderman-Ramage generator used."
+msgid "Buggy version of Kinderman-Ramage generator used"
+msgstr "Buggy version of Kinderman-Ramage generator used"
+
+msgid "Buggy version of Kinderman-Ramage generator is not allowed"
+msgstr "Buggy version of Kinderman-Ramage generator is not allowed"
 
 msgid "malformed version string"
 msgstr "malformed version string"
@@ -227,12 +230,6 @@ msgstr "‘breaks’ are not unique"
 
 msgid "labels/breaks length conflict"
 msgstr "labels/breaks length conflict"
-
-msgid "non-numeric data type in frame"
-msgstr "non-numeric data type in frame"
-
-msgid "class information lost from one or more columns"
-msgstr "class information lost from one or more columns"
 
 msgid "invalid 'row.names' length"
 msgstr "invalid ‘row.names’ length"
@@ -1515,6 +1512,11 @@ msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] "there is no package called"
 msgstr[1] "there are no packages called"
+
+msgid "object %s not found"
+msgid_plural "objects %s not found"
+msgstr[0] "object %s not found"
+msgstr[1] "objects %s not found"
 
 msgid "object '%s' is not exported by 'namespace:%s'"
 msgid_plural "objects '%s' are not exported by 'namespace:%s'"

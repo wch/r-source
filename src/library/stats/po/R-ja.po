@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2008-04-04 14:59+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -96,6 +96,9 @@ msgstr " オブジェクトへ加えるべき項がスコープ中にありま�
 
 msgid "number of rows in use has changed: remove missing values?"
 msgstr " 使用中の行数が変わりました: 欠損値を取除きますか？ "
+
+msgid "attempting model selection on an essentially perfect fit is nonsense"
+msgstr ""
 
 msgid "using the %d/%d rows from a combined fit"
 msgstr " 同時当てはめから %d/%d 行を使用します。 "
@@ -1242,6 +1245,9 @@ msgstr " 無効な 'lm' オブジェクト: 項('terms')もしくは 'qr' 成分
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr " オブジェクト中の残り自由度はこの 'lm'ではないと示唆します "
 
+msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
+msgstr ""
+
 msgid "removed because response differs from"
 msgstr " を持つモデルを取り除きました。応答が以下と異なるからです： "
 
@@ -1359,6 +1365,10 @@ msgstr " 多重応答を必要とします "
 
 msgid "object must be of class \"manova\" or \"maov\""
 msgstr " オブジェクトはクラス \"manova\" か \"maov\" でなければなりません "
+
+#, fuzzy
+msgid "need multiple responses"
+msgstr " 多重応答を必要とします "
 
 msgid "residuals have rank %d < %d"
 msgstr " 残差はランク %d < %d を持ちます "

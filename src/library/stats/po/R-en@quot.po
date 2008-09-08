@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
-"PO-Revision-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
+"PO-Revision-Date: 2008-09-08 14:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -113,6 +113,9 @@ msgstr "no terms in scope for adding to object"
 
 msgid "number of rows in use has changed: remove missing values?"
 msgstr "number of rows in use has changed: remove missing values?"
+
+msgid "attempting model selection on an essentially perfect fit is nonsense"
+msgstr "attempting model selection on an essentially perfect fit is nonsense"
 
 msgid "using the %d/%d rows from a combined fit"
 msgstr "using the %d/%d rows from a combined fit"
@@ -1236,6 +1239,9 @@ msgstr "invalid ‘lm’ object:  no ‘terms’ nor ‘qr’ component"
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr "residual degrees of freedom in object suggest this is not an “lm” fit"
 
+msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
+msgstr "ANOVA F-tests on an essentially perfect fit are unreliable"
+
 msgid "removed because response differs from"
 msgstr "removed because response differs from"
 
@@ -1357,6 +1363,9 @@ msgstr "need multiple response"
 
 msgid "object must be of class \"manova\" or \"maov\""
 msgstr "object must be of class “manova” or “maov”"
+
+msgid "need multiple responses"
+msgstr "need multiple responses"
 
 msgid "residuals have rank %d < %d"
 msgstr "residuals have rank %d < %d"

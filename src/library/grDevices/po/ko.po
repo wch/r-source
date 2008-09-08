@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16+0100\n"
+"POT-Creation-Date: 2008-09-08 14:13+0100\n"
 "PO-Revision-Date: 2005-05-31 10:31+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -575,71 +575,76 @@ msgstr "clipboard metafile은 단지 하나의 figure만을 저장할수가 있�
 msgid "metafile '%s' could not be created"
 msgstr "'%s' metafile 하는것을 작성할 수 없습니다"
 
-#: devWindows.c:2679 devWindows.c:3303
+#: devWindows.c:2677 devWindows.c:3301
 msgid "R Graphics"
 msgstr "R Graphics"
 
-#: devWindows.c:2928
+#: devWindows.c:2926
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "옵션 'windowsTimeouts'는 정수가 아니면 되지 않습니다"
 
-#: devWindows.c:2949
+#: devWindows.c:2947
 #, fuzzy
 msgid "invalid device number in 'savePlot'"
 msgstr "savePlot의 무효인 디바이스번호입니다"
 
-#: devWindows.c:2951
+#: devWindows.c:2949
 #, fuzzy
 msgid "invalid device in 'savePlot'"
 msgstr "savePlot의 무효인 디비이스입니다"
 
-#: devWindows.c:2954
+#: devWindows.c:2952
 msgid "invalid filename argument in savePlot"
 msgstr "savaPlot에서 무효인 파일명 인수입니다"
 
-#: devWindows.c:2958
+#: devWindows.c:2956
 #, fuzzy
 msgid "invalid type argument in 'savePlot'"
 msgstr "savePlot에서 무효인 유형 인수입니다"
 
-#: devWindows.c:2985
+#: devWindows.c:2983
 msgid "unknown type in savePlot"
 msgstr "savePlot의 의미없는 유형입니다"
 
-#: devWindows.c:3067 devWindows.c:3103 devWindows.c:3135 devWindows.c:3170
-#: devWindows.c:3195
+#: devWindows.c:3065 devWindows.c:3101 devWindows.c:3133 devWindows.c:3168
+#: devWindows.c:3193
 msgid "processing of the plot ran out of memory"
 msgstr "plot 처리는 메모리를 전부 소모 했습니다"
 
-#: devWindows.c:3083 devWindows.c:3116 devWindows.c:3149 devWindows.c:3182
+#: devWindows.c:3081 devWindows.c:3114 devWindows.c:3147 devWindows.c:3180
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Rbitmap.dll를 적재하는데 가능하지 않습니다"
 
-#: devWindows.c:3155
+#: devWindows.c:3153
 msgid "Impossible to open "
 msgstr "여는 것이 불가능합니다"
 
-#: devWindows.c:3220
+#: devWindows.c:3218
 #, fuzzy
 msgid "invalid 'width' or 'height'"
 msgstr "devWindow에서 무효인 폭 또는 높이 입니다"
 
-#: devWindows.c:3225 devWindows.c:3229 devWindows.c:3237 devWindows.c:3248
-#: devWindows.c:3254 devWindows.c:3261
+#: devWindows.c:3223 devWindows.c:3227 devWindows.c:3235 devWindows.c:3246
+#: devWindows.c:3252 devWindows.c:3259
 #, fuzzy, c-format
 msgid "invalid value of '%s'"
 msgstr "devWindows에서 'bg'의 무효인 값입니다"
 
-#: devWindows.c:3278
+#: devWindows.c:3276
 #, fuzzy
 msgid "unable to start device"
 msgstr "디바이스 pdf를 시작할수가 없습니다"
 
-#: devWindows.c:3348
+#: devWindows.c:3346
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "지원되지 않는 getGraphicsEvent의 재귀적으로 사용합니다"
 
-#: qdBitmap.c:91
+#: qdBitmap.c:79
+#, c-format
+msgid "QuartzBitmap_Output - unable to open file '%s'"
+msgstr ""
+
+#: qdBitmap.c:94
 msgid "Not a supported scheme, no image data written"
 msgstr ""
 

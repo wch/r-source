@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -370,6 +370,10 @@ msgid "Non-portable flags in variable '%s':"
 msgstr ""
 
 #, fuzzy
+msgid "package must be loaded"
+msgstr "il name space non deve essere caricato."
+
+#, fuzzy
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
 
@@ -410,9 +414,6 @@ msgid "Generics without methods in"
 msgstr ""
 
 msgid ":"
-msgstr ""
-
-msgid ".get_S4_methods_list(): *did* reduce list, dropping"
 msgstr ""
 
 msgid "argument 'lines' must be a character vector"

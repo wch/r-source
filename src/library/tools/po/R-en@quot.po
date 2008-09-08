@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
-"PO-Revision-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
+"PO-Revision-Date: 2008-09-08 14:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -381,6 +381,9 @@ msgstr "Verifiable as open source: %s"
 msgid "Non-portable flags in variable '%s':"
 msgstr "Non-portable flags in variable '%s':"
 
+msgid "package must be loaded"
+msgstr "package must be loaded"
+
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Missing link(s) in documentation object '%s':"
 
@@ -422,9 +425,6 @@ msgstr "Generics without methods in"
 
 msgid ":"
 msgstr ":"
-
-msgid ".get_S4_methods_list(): *did* reduce list, dropping"
-msgstr ".get_S4_methods_list(): *did* reduce list, dropping"
 
 msgid "argument 'lines' must be a character vector"
 msgstr "argument ‘lines’ must be a character vector"

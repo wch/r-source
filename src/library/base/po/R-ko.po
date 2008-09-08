@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -65,13 +65,19 @@ msgstr "'kind'는 길이 1의 문자열(사용되어야할 RNG명)가 아니면 
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr "'%s' RNG의 유효한 생략명이 아닙니다"
 
-msgid "'normal.kind' must be a character string of length 1."
+#, fuzzy
+msgid "'normal.kind' must be a character string of length 1"
 msgstr "'normal.kind'는 길이1의 문자열이 아니면 안됩니다"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s'는 유효한 선택이 아닙니다"
 
-msgid "Buggy version of Kinderman-Ramage generator used."
+#, fuzzy
+msgid "Buggy version of Kinderman-Ramage generator used"
+msgstr "Kinderman-Ramage의 유사 Buggy 버전의 생성원(generator)을 사용합니다"
+
+#, fuzzy
+msgid "Buggy version of Kinderman-Ramage generator is not allowed"
 msgstr "Kinderman-Ramage의 유사 Buggy 버전의 생성원(generator)을 사용합니다"
 
 msgid "malformed version string"
@@ -209,12 +215,6 @@ msgstr "'breaks'가 일의적이지는 않습니다"
 
 msgid "labels/breaks length conflict"
 msgstr "labels/breaks의 길이가 모순되어져 있습니다"
-
-msgid "non-numeric data type in frame"
-msgstr "프레임중에 수치가 아닌 데이터 유형이 있습니다"
-
-msgid "class information lost from one or more columns"
-msgstr "class 정보가 하나 이상의 열로부터 잃게 되었습니다"
 
 msgid "invalid 'row.names' length"
 msgstr "무효인 'row.names' 길이입니다"
@@ -1561,6 +1561,11 @@ msgid_plural "there are no packages called"
 msgstr[0] "'%s'라는 이름의 패키지는 없습니다"
 
 #, fuzzy
+msgid "object %s not found"
+msgid_plural "objects %s not found"
+msgstr[0] "%s를 검색해낼수가 없습니다"
+
+#, fuzzy
 msgid "object '%s' is not exported by 'namespace:%s'"
 msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] ""
@@ -1585,6 +1590,12 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#~ msgid "non-numeric data type in frame"
+#~ msgstr "프레임중에 수치가 아닌 데이터 유형이 있습니다"
+
+#~ msgid "class information lost from one or more columns"
+#~ msgstr "class 정보가 하나 이상의 열로부터 잃게 되었습니다"
 
 #~ msgid "not defined for POSIXt objects"
 #~ msgstr "POSIXt 오브젝트에 대해서는 정의 되어 있지 않습니다"

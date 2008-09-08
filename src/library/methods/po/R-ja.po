@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2008-04-05 19:59+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -21,6 +21,31 @@ msgstr " おやまあ: 行が何か変です "
 msgid "in .OldClassesPrototypes"
 msgstr " .OldClassesPrototypes 内 "
 
+msgid ""
+"unnamed argument to initialize() for S3 class must have a class defintion; "
+"\"%s\" does not"
+msgstr ""
+
+msgid ""
+"unnamed argument must extend either the S3 class or the class of the data "
+"part; not true of class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Class \"%s\" does not have an S3 data part, and so is of type \"S4\"; no S3 "
+"equivalent"
+msgstr " クラス \"%s\" はデータパート(.Data スロット)が定義されていません "
+
+msgid ""
+"Class \"%s\" is VIRTUAL; not meaningful to create an S4 object from this "
+"class"
+msgstr ""
+
+msgid ""
+"Object must be a valid data part for class \"%s\"; not true of type \"%s\""
+msgstr ""
+
 msgid "Cannot specify matrix() arguments when specifying .Data"
 msgstr ""
 
@@ -34,16 +59,13 @@ msgstr ""
 "とが出来ません． "
 
 msgid ""
-"S3Part() is only defined for classes set up by setOldCLass() or extend such "
-"a class:  not true of class \"%s\""
+"S3Part() is only defined for classes set up by setOldCLass(), basic classes "
+"or subclasses of these:  not true of class \"%s\""
 msgstr ""
 
 msgid ""
-"The S3Class argument must be a class set up by setOldCLass() or an extension "
-"of such a class:  not true of class \"%s\""
-msgstr ""
-
-msgid "Not meaningful to have keepSlots=TRUE and strict=TRUE"
+"The S3Class argument must be a superclass of \"%s\":  not true of class \"%s"
+"\""
 msgstr ""
 
 msgid "Replacement value must extend class \"%s\", got  \"%s\""
@@ -72,6 +94,11 @@ msgid ""
 msgstr ""
 " 'setIs' に対する 'coerce' 引数は１つの引数を持つ関数であるべきですが、クラ"
 "ス \"%s\" のオブジェクトを受け取りました "
+
+msgid ""
+"the computation: as(object,\"%s\") <- value is valid when object has class "
+"\"%s\" only if is(value, \"%s\") is TRUE (class(value) was \"%s\")"
+msgstr ""
 
 msgid ""
 "there is no automatic definition for as(object, \"%s\") <- value when object "
@@ -264,6 +291,9 @@ msgstr ""
 
 msgid "'file' must be a character string or a connection"
 msgstr " 'file' は文字列かコネクションでなければなりません "
+
+msgid "No method for \"...\" matches class \"%s\""
+msgstr ""
 
 msgid "No method found for signature %s"
 msgstr " シグネチャ(signature) %s に対するメソッドが見付かりませんでした "
@@ -884,6 +914,23 @@ msgstr ""
 "” は既知のアクション(warn, stop, once, ignore)ではありません； 以下の関数に対"
 "してはいかなるアクションも記録されていません "
 
+#, fuzzy
+msgid "argument f must be a generic function with signature \"...\""
+msgstr " 引数 \"f\" に対する関数は総称的でなければなりません "
+
+#, fuzzy
+msgid "No method or default matching the \"...\" arguments in %s"
+msgstr " \"%s\" を \"%s\" へ強制変換するためのメソッドや既定動作はありません "
+
+msgid "multiple direct matches:"
+msgstr ""
+
+msgid "; using the first of these"
+msgstr ""
+
+msgid "multiple equivalent inherited matches:"
+msgstr ""
+
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr " \"%s\" は封印されたクラス定義を持ち、再定義は出来ません "
 
@@ -954,15 +1001,6 @@ msgstr " \"%s\" に対するクラス定義が見付かりません(何も行い
 msgid "class \"%s\" has multiple definitions visible; only the first removed"
 msgstr ""
 " クラス \"%s\" は複数の可視な定義を持ちます；最初のものだけが取り除かれます "
-
-msgid "The class to be removed  (\""
-msgstr " 取り除かれるべきクラス (\" "
-
-msgid "\") has defined subclasses that should also be removed: ("
-msgstr " \") は同様に取り除かれるべきサブクラスを定義しました： ( "
-
-msgid ")"
-msgstr " ) "
 
 msgid "invalid class \"%s\" object:"
 msgstr " 不正なクラス \"%s\" オブジェクト： "
@@ -1283,6 +1321,16 @@ msgstr ""
 " \"%s\" に対するメソッドテーブルを見付けられませんでした。パッケージ \"%s\" "
 "は時代遅れかもしれません "
 
+msgid "not allowed to have test==TRUE and an S4Class definition"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"argument S4Class must be a class definition:  got an object of class \"%s\""
+msgstr ""
+" 引数 'classDef' は文字列かクラス表現でなければなりません；クラス \"%s\" のオ"
+"ブジェクトでした "
+
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
 "new classes?)"
@@ -1291,8 +1339,8 @@ msgstr ""
 "る？) "
 
 msgid ""
-"The class of the prototype, \"%s\", is undefined; only allowed for the S3 "
-"class being registered (\"%s\")"
+"The S3 class of the prototype, \"%s\", is undefined; only allowed when this "
+"is the S3 class being registered (\"%s\")"
 msgstr ""
 
 msgid "explicit coercion of old-style class (%s) is not defined"
@@ -1311,6 +1359,11 @@ msgid ""
 msgstr ""
 " 引数 'Classes' は二つのクラスのベクトルでなければなりません；長さ %d の引数"
 "でした "
+
+msgid ""
+"S3Class only defined for extensions of \"oldClass\" or classes with a data "
+"part:  not true of class \""
+msgstr ""
 
 msgid ""
 "S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
@@ -1414,7 +1467,8 @@ msgstr " トレース可能な以下のクラスを作成中 \" "
 msgid "Environment of class \""
 msgstr " 以下のクラスの環境 \" "
 
-msgid "\" is locked; using base environment for new class"
+#, fuzzy
+msgid "\" is locked; using global environment for new class"
 msgstr " \" はロックされています； base 環境を新しいクラスのために使います "
 
 msgid "not a package name: \"%s\""
@@ -1432,6 +1486,15 @@ msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] ""
 " 関数 \"%s\" に対するメソッドシグネチャ中に、シグネチャ中の不正な引数名：% "
+
+#~ msgid "The class to be removed  (\""
+#~ msgstr " 取り除かれるべきクラス (\" "
+
+#~ msgid "\") has defined subclasses that should also be removed: ("
+#~ msgstr " \") は同様に取り除かれるべきサブクラスを定義しました： ( "
+
+#~ msgid ")"
+#~ msgstr " ) "
 
 #~ msgid ""
 #~ "'NextMethod' not defined because the current method is not a "

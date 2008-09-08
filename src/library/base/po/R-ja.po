@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2008-04-04 15:20+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -66,13 +66,19 @@ msgstr " 'kind' は長さ 1 の文字列(使用されるべき RNG 名) でな�
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr " '%s' は RNG の有効な省略名ではありません "
 
-msgid "'normal.kind' must be a character string of length 1."
+#, fuzzy
+msgid "'normal.kind' must be a character string of length 1"
 msgstr " 'normal.kind' は長さ 1 の文字列でなければなりません "
 
 msgid "'%s' is not a valid choice"
 msgstr " '%s' は有効な選択ではありません "
 
-msgid "Buggy version of Kinderman-Ramage generator used."
+#, fuzzy
+msgid "Buggy version of Kinderman-Ramage generator used"
+msgstr " Kinderman-Ramage の疑似乱数発生法のバギー版を使います "
+
+#, fuzzy
+msgid "Buggy version of Kinderman-Ramage generator is not allowed"
 msgstr " Kinderman-Ramage の疑似乱数発生法のバギー版を使います "
 
 msgid "malformed version string"
@@ -207,12 +213,6 @@ msgstr " 'breaks' が一意的ではありません "
 
 msgid "labels/breaks length conflict"
 msgstr " ラベルまたは分割点の長さが矛盾しています "
-
-msgid "non-numeric data type in frame"
-msgstr " フレーム中に数値でないデータタイプがあります "
-
-msgid "class information lost from one or more columns"
-msgstr " クラス情報が一つ以上の列から失われました "
 
 msgid "invalid 'row.names' length"
 msgstr " 無効な 'row.names' 長です "
@@ -1532,6 +1532,11 @@ msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] "呼び出されたパッケージがありません "
 
+#, fuzzy
+msgid "object %s not found"
+msgid_plural "objects %s not found"
+msgstr[0] " %s を見付けることができません "
+
 msgid "object '%s' is not exported by 'namespace:%s'"
 msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] ""
@@ -1549,6 +1554,12 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "non-numeric data type in frame"
+#~ msgstr " フレーム中に数値でないデータタイプがあります "
+
+#~ msgid "class information lost from one or more columns"
+#~ msgstr " クラス情報が一つ以上の列から失われました "
 
 #~ msgid "Invalid DCF format."
 #~ msgstr "DCFのフォーマットが不正です "

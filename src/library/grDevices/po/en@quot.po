@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16+0100\n"
-"PO-Revision-Date: 2008-08-01 09:16+0100\n"
+"POT-Creation-Date: 2008-09-08 14:13+0100\n"
+"PO-Revision-Date: 2008-09-08 14:13+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -572,66 +572,71 @@ msgstr "A clipboard metafile can store only one figure."
 msgid "metafile '%s' could not be created"
 msgstr "metafile ‘%s’ could not be created"
 
-#: devWindows.c:2679 devWindows.c:3303
+#: devWindows.c:2677 devWindows.c:3301
 msgid "R Graphics"
 msgstr "R Graphics"
 
-#: devWindows.c:2928
+#: devWindows.c:2926
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "option ‘windowsTimeouts’ should be integer"
 
-#: devWindows.c:2949
+#: devWindows.c:2947
 msgid "invalid device number in 'savePlot'"
 msgstr "invalid device number in ‘savePlot’"
 
-#: devWindows.c:2951
+#: devWindows.c:2949
 msgid "invalid device in 'savePlot'"
 msgstr "invalid device in ‘savePlot’"
 
-#: devWindows.c:2954
+#: devWindows.c:2952
 msgid "invalid filename argument in savePlot"
 msgstr "invalid filename argument in savePlot"
 
-#: devWindows.c:2958
+#: devWindows.c:2956
 msgid "invalid type argument in 'savePlot'"
 msgstr "invalid type argument in ‘savePlot’"
 
-#: devWindows.c:2985
+#: devWindows.c:2983
 msgid "unknown type in savePlot"
 msgstr "unknown type in savePlot"
 
-#: devWindows.c:3067 devWindows.c:3103 devWindows.c:3135 devWindows.c:3170
-#: devWindows.c:3195
+#: devWindows.c:3065 devWindows.c:3101 devWindows.c:3133 devWindows.c:3168
+#: devWindows.c:3193
 msgid "processing of the plot ran out of memory"
 msgstr "processing of the plot ran out of memory"
 
-#: devWindows.c:3083 devWindows.c:3116 devWindows.c:3149 devWindows.c:3182
+#: devWindows.c:3081 devWindows.c:3114 devWindows.c:3147 devWindows.c:3180
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Impossible to load Rbitmap.dll"
 
-#: devWindows.c:3155
+#: devWindows.c:3153
 msgid "Impossible to open "
 msgstr "Impossible to open "
 
-#: devWindows.c:3220
+#: devWindows.c:3218
 msgid "invalid 'width' or 'height'"
 msgstr "invalid ‘width’ or ‘height’"
 
-#: devWindows.c:3225 devWindows.c:3229 devWindows.c:3237 devWindows.c:3248
-#: devWindows.c:3254 devWindows.c:3261
+#: devWindows.c:3223 devWindows.c:3227 devWindows.c:3235 devWindows.c:3246
+#: devWindows.c:3252 devWindows.c:3259
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "invalid value of ‘%s’"
 
-#: devWindows.c:3278
+#: devWindows.c:3276
 msgid "unable to start device"
 msgstr "unable to start device"
 
-#: devWindows.c:3348
+#: devWindows.c:3346
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "recursive use of getGraphicsEvent not supported"
 
-#: qdBitmap.c:91
+#: qdBitmap.c:79
+#, c-format
+msgid "QuartzBitmap_Output - unable to open file '%s'"
+msgstr "QuartzBitmap_Output - unable to open file ‘%s’"
+
+#: qdBitmap.c:94
 msgid "Not a supported scheme, no image data written"
 msgstr "Not a supported scheme, no image data written"
 

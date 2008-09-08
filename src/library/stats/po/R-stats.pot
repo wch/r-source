@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,6 +90,9 @@ msgid "no terms in scope for adding to object"
 msgstr ""
 
 msgid "number of rows in use has changed: remove missing values?"
+msgstr ""
+
+msgid "attempting model selection on an essentially perfect fit is nonsense"
 msgstr ""
 
 msgid "using the %d/%d rows from a combined fit"
@@ -1181,6 +1184,9 @@ msgstr ""
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr ""
 
+msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
+msgstr ""
+
 msgid "removed because response differs from"
 msgstr ""
 
@@ -1290,6 +1296,9 @@ msgid "need multiple response"
 msgstr ""
 
 msgid "object must be of class \"manova\" or \"maov\""
+msgstr ""
+
+msgid "need multiple responses"
 msgstr ""
 
 msgid "residuals have rank %d < %d"

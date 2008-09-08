@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -25,6 +25,31 @@ msgstr "啊呀：哪里出错了"
 msgid "in .OldClassesPrototypes"
 msgstr "在.OldClassesPrototypes里"
 
+msgid ""
+"unnamed argument to initialize() for S3 class must have a class defintion; "
+"\"%s\" does not"
+msgstr ""
+
+msgid ""
+"unnamed argument must extend either the S3 class or the class of the data "
+"part; not true of class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Class \"%s\" does not have an S3 data part, and so is of type \"S4\"; no S3 "
+"equivalent"
+msgstr "类别\"%s\"没有数据部分(.Data 槽)"
+
+msgid ""
+"Class \"%s\" is VIRTUAL; not meaningful to create an S4 object from this "
+"class"
+msgstr ""
+
+msgid ""
+"Object must be a valid data part for class \"%s\"; not true of type \"%s\""
+msgstr ""
+
 msgid "Cannot specify matrix() arguments when specifying .Data"
 msgstr ""
 
@@ -36,16 +61,13 @@ msgid ""
 msgstr "此版本的R没有给基元函数'%s'定义方法"
 
 msgid ""
-"S3Part() is only defined for classes set up by setOldCLass() or extend such "
-"a class:  not true of class \"%s\""
+"S3Part() is only defined for classes set up by setOldCLass(), basic classes "
+"or subclasses of these:  not true of class \"%s\""
 msgstr ""
 
 msgid ""
-"The S3Class argument must be a class set up by setOldCLass() or an extension "
-"of such a class:  not true of class \"%s\""
-msgstr ""
-
-msgid "Not meaningful to have keepSlots=TRUE and strict=TRUE"
+"The S3Class argument must be a superclass of \"%s\":  not true of class \"%s"
+"\""
 msgstr ""
 
 msgid "Replacement value must extend class \"%s\", got  \"%s\""
@@ -71,6 +93,11 @@ msgid ""
 "an object of class \"%s\""
 msgstr ""
 "'setIs'的'coerce'变元值必需是单变元函数，而现在它却是类别为\"%s\"的对象"
+
+msgid ""
+"the computation: as(object,\"%s\") <- value is valid when object has class "
+"\"%s\" only if is(value, \"%s\") is TRUE (class(value) was \"%s\")"
+msgstr ""
 
 msgid ""
 "there is no automatic definition for as(object, \"%s\") <- value when object "
@@ -238,6 +265,9 @@ msgstr "函数'%s'和标记%s没有设定方法"
 
 msgid "'file' must be a character string or a connection"
 msgstr "'file'必需是字符串或联结"
+
+msgid "No method for \"...\" matches class \"%s\""
+msgstr ""
 
 msgid "No method found for signature %s"
 msgstr "标记'%s'里不存在任何方法"
@@ -770,6 +800,23 @@ msgid ""
 "function \""
 msgstr "\"没有这样的作用(警告，停止，一次，忽视) ；函数没有记录作用"
 
+#, fuzzy
+msgid "argument f must be a generic function with signature \"...\""
+msgstr "为变元\"f\"提供的函数必需是同属函数"
+
+#, fuzzy
+msgid "No method or default matching the \"...\" arguments in %s"
+msgstr "没有可以用来強制转换\"%s\"成\"%s\"的方法或默认函数"
+
+msgid "multiple direct matches:"
+msgstr ""
+
+msgid "; using the first of these"
+msgstr ""
+
+msgid "multiple equivalent inherited matches:"
+msgstr ""
+
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr "\"%s\"的类别定义被封闭了，因此无法重新被定义"
 
@@ -830,15 +877,6 @@ msgstr "找不到\"%s\"类别定义(无效果)"
 
 msgid "class \"%s\" has multiple definitions visible; only the first removed"
 msgstr "类别\"%s\"有多种定义；只删除了第一个"
-
-msgid "The class to be removed  (\""
-msgstr "将被删除的类别(\""
-
-msgid "\") has defined subclasses that should also be removed: ("
-msgstr "\")带定义了的子类别，这些子类别也应该被删除：("
-
-msgid ")"
-msgstr ")"
 
 msgid "invalid class \"%s\" object:"
 msgstr "类别为\"%s\"的对象不对:"
@@ -1119,14 +1157,24 @@ msgid ""
 "No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
 msgstr "\"%s\"找不到方法列表，\"%s\"程序包可能过时了"
 
+msgid "not allowed to have test==TRUE and an S4Class definition"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"argument S4Class must be a class definition:  got an object of class \"%s\""
+msgstr ""
+"变元'classDef'要么是个字串要么是个类别表现；现在得到的却是类别为\"%s\"的目标"
+"对象"
+
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
 "new classes?)"
 msgstr "\"%s\"旧式类别信息有矛盾(会不会是将旧的和新的类别混在了一起用?)"
 
 msgid ""
-"The class of the prototype, \"%s\", is undefined; only allowed for the S3 "
-"class being registered (\"%s\")"
+"The S3 class of the prototype, \"%s\", is undefined; only allowed when this "
+"is the S3 class being registered (\"%s\")"
 msgstr ""
 
 msgid "explicit coercion of old-style class (%s) is not defined"
@@ -1141,6 +1189,11 @@ msgid ""
 "argument 'Classes' must be a vector of two classes; got an argument of "
 "length %d"
 msgstr "变元'classes'必需是包含两个类别的矢量；现在得到的是长度为%d的变元"
+
+msgid ""
+"S3Class only defined for extensions of \"oldClass\" or classes with a data "
+"part:  not true of class \""
+msgstr ""
 
 msgid ""
 "S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
@@ -1232,7 +1285,8 @@ msgstr "建立可追踪的类别"
 msgid "Environment of class \""
 msgstr "环境有类别"
 
-msgid "\" is locked; using base environment for new class"
+#, fuzzy
+msgid "\" is locked; using global environment for new class"
 msgstr "\"被锁住了；在新的类别上用基本环境"
 
 msgid "not a package name: \"%s\""
@@ -1248,6 +1302,15 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
+
+#~ msgid "The class to be removed  (\""
+#~ msgstr "将被删除的类别(\""
+
+#~ msgid "\") has defined subclasses that should also be removed: ("
+#~ msgstr "\")带定义了的子类别，这些子类别也应该被删除：("
+
+#~ msgid ")"
+#~ msgstr ")"
 
 #~ msgid ""
 #~ "'NextMethod' not defined because the current method is not a "
