@@ -613,7 +613,7 @@ char *locale2charset(const char *locale)
 #ifdef Win32
     /*
       ## PUTTY suggests mapping Windows code pages as
-      ## 1250 -> ISO 8859-2
+      ## 1250 -> ISO 8859-2: this is WRONG
       ## 1251 -> KOI8-U
       ## 1252 -> ISO 8859-1
       ## 1253 -> ISO 8859-7
@@ -623,21 +623,16 @@ char *locale2charset(const char *locale)
       ## 1257 -> ISO 8859-13
     */
     switch(cp = atoi(enc)) {
-    case 1250:
-	return "ISO8859-2";
-    /* case 1251: return "KOI8-U"; This is not anywhere near the same */
-    case 1252:
-	return "ISO8859-1";
-    case 1253:
-	return "ISO8859-7";
-    case 1254:
-	return "ISO8859-9";
-    case 1255:
-	return "ISO8859-8";
-    case 1256:
-	return "ISO8859-6";
-    case 1257:
-	return "ISO8859-13";
+	/* case 1250: return "ISO8859-2"; */
+	/* case 1251: return "KOI8-U"; This is not anywhere near the same */
+    case 1252: return "ISO8859-1";
+	/*
+	  case 1253: return "ISO8859-7";
+	  case 1254: return "ISO8859-9";
+	  case 1255: return "ISO8859-8";
+	  case 1256: return "ISO8859-6";
+	*/
+    case 1257: return "ISO8859-13";
     default:
 	sprintf(charset, "CP%u", cp);
 	return charset;

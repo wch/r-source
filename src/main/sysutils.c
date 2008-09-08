@@ -141,6 +141,7 @@ wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand)
     static wchar_t filename[PATH_MAX+1];
     void *obj;
     const char *from = "", *inbuf;
+    char cpx[7];
     char *outbuf;
     size_t inb, outb, res;
 
@@ -148,6 +149,7 @@ wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand)
 	wcscpy(filename, L"");
 	return filename;
     }
+    if(localeCP > 0) {snprintf(cpx, 7, "CP%d", localeCP);  from = cpx;}
     if(IS_LATIN1(fn)) from = "latin1";
     if(IS_UTF8(fn)) from = "UTF-8";
     obj = Riconv_open("UCS-2LE", from);
@@ -882,7 +884,10 @@ const wchar_t *wtransChar(SEXP x)
 	    obj = utf8_wobj;
 	knownEnc = TRUE;
     } else {
-	obj = Riconv_open("UCS-2LE", "");
+	/* This gets used in reading environment variables early on */
+	char to[7] = "";
+	if (localeCP > 0) snprintf(to, 7, "CP%d", localeCP);
+	obj = Riconv_open("UCS-2LE", to);
 	if(obj == (void *)(-1)) error(_("unsupported conversion"));
     }
 
@@ -962,7 +967,17 @@ const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
     }
 
     switch(ce_out) {
+ #ifdef Win32
+    case CE_NATIVE:
+	{
+	    /* avoid possible misidentification of CP1250 as LATIN-2 */
+	    sprintf(buf, "CP%d", localeCP);
+	    tocode = buf;
+	    break;
+	}
+#else
     case CE_NATIVE: tocode = ""; break;
+#endif
     case CE_LATIN1: tocode = "latin1"; break;
     case CE_UTF8:   tocode = "UTF-8"; break;
     default: return x;

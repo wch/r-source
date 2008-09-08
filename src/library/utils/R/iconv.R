@@ -62,13 +62,13 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
         ## 1256 -> ISO 8859-6
         ## 1257 -> ISO 8859-13
         switch(x[2],
-               "1250" = return("ISO8859-2"),
+              # this is quite wrong "1250" = return("ISO8859-2"),
               # this is quite wrong "1251" = return("KOI8-U"),
                "1252" = return("ISO8859-1"),
-               "1253" = return("ISO8859-7"),
-               "1254" = return("ISO8859-9"),
-               "1255" = return("ISO8859-8"),
-               "1256" = return("ISO8859-6"),
+              # "1253" = return("ISO8859-7"),
+              # "1254" = return("ISO8859-9"),
+              # "1255" = return("ISO8859-8"),
+              # "1256" = return("ISO8859-6"),
                "1257" = return("ISO8859-13")
                )
         return(paste("CP", x[2], sep=""))
