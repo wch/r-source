@@ -18,7 +18,7 @@ showDefault <- function(object, oldMethods = TRUE)
 {
     clDef <- getClass(cl <- class(object), .Force=TRUE)
     cl <- classLabel(cl)
-    if(!is.null(clDef) && is.na(match(clDef@className, .BasicClasses)) &&
+    if(!is.null(clDef) && isS4(object) && is.na(match(clDef@className, .BasicClasses)) &&
        !extends(clDef, "oldClass")) {
         cat("An object of class ", cl, "\n", sep="")
         slots <- slotNames(clDef)

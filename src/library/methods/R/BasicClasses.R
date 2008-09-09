@@ -182,6 +182,10 @@
               },
               where = envir)
     setMethod("show", "oldClass", function(object) {
+        if(!isS4(object))  {
+            print(object)
+            return(invisible())
+        }
         cl <- as.character(class(object))
         S3Class <- object@.S3Class
         if(length(S3Class)) S3Class <- S3Class[[1]]
