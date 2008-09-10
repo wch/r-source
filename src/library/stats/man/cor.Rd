@@ -8,10 +8,10 @@
 \usage{
 var(x, y = NULL, na.rm = FALSE, use)
 
-cov(x, y = NULL, use = "all.obs",
+cov(x, y = NULL, use = "everything",
     method = c("pearson", "kendall", "spearman"))
 
-cor(x, y = NULL, use = "all.obs",
+cor(x, y = NULL, use = "everything",
      method = c("pearson", "kendall", "spearman"))
 
 cov2cor(V)
@@ -39,7 +39,8 @@ cov2cor(V)
   \item{use}{an optional character string giving a
     method for computing covariances in the presence
     of missing values.	This must be (an abbreviation of) one of the strings
-    \code{"all.obs"}, \code{"complete.obs"} or \code{"pairwise.complete.obs"}.}
+    \code{"everything"}, \code{"all.obs"}, \code{"complete.obs"} or
+    \code{"pairwise.complete.obs"}.}
   \item{method}{a character string indicating which correlation
     coefficient (or covariance) is to be computed.  One of
     \code{"pearson"} (default), \code{"kendall"}, or \code{"spearman"},
@@ -61,6 +62,9 @@ cov2cor(V)
   variance.  Otherwise (\code{use = "all"}), \code{var} will give an
   error if there are missing values.
 
+  If \code{use} is \code{"everything"}, \code{\link{NA}}s will
+  propagate conceptually, i.e., a resulting value will be \code{NA}
+  whenever one of its contributuing observations is \code{NA}.\cr
   If \code{use} is \code{"all.obs"}, then the presence of missing
   observations will produce an error.  If \code{use} is
   \code{"complete.obs"} then missing values are handled by casewise
@@ -77,7 +81,7 @@ cov2cor(V)
   The denominator \eqn{n - 1} is used which gives an unbiased estimator
   of the (co)variance for i.i.d. observations.
   These functions return \code{\link{NA}} when there is only one
-  observation (whereas S-PLUS has been returning \code{NaN}), and 
+  observation (whereas S-PLUS has been returning \code{NaN}), and
   fail if \code{x} has length zero.
 
   For \code{cor()}, if \code{method} is \code{"kendall"} or
@@ -107,7 +111,7 @@ cov2cor(V)
 }
 \seealso{
   \code{\link{cor.test}} for confidence intervals (and tests).
-  
+
   \code{\link{cov.wt}} for \emph{weighted} covariance computation.
 
   \code{\link{sd}} for standard deviation (vectors).

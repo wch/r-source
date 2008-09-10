@@ -303,6 +303,10 @@ NEW FEATURES
 	of objects before opening the file/connections (wish of
 	PR#12543).
 
+    o	cov() and cor() newly have the new option 'use = "everything"' as
+	default, and so does var() with its default 'na.rm = FALSE'.  This
+	returns NA instead of signalling an error for NA observations.
+
 
 INSTALLATION
 
@@ -452,6 +456,10 @@ BUG FIXES
     o	trace() should create missing traceable classes in the global
     	environment, not in baseenv() where other classes will not be
     	found.
+
+    o	In S4 class definitions, where multiple paths to a super/sub
+	class exist, only the closest in distance is now stored
+	(for correct method dispatch).
 
 
 
