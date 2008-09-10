@@ -307,8 +307,10 @@ NEW FEATURES
 	default, and so does var() with its default 'na.rm = FALSE'.  This
 	returns NA instead of signalling an error for NA observations.
 
-    o	sprintf() optionally supports the %a notation of C99 (if the
+    o	sprintf() optionally supports the %a/%A notation of C99 (if the
 	platform does, including under Windows).
+
+    o	Binary numerical constants may now contain a decimal point.
 
 
 INSTALLATION

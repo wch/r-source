@@ -70,10 +70,14 @@ gettextf(fmt, \dots, domain = NULL)
       of hex digits after the decimal point is specified by the precision:
       the default is enough digits to represent exactly the internal
       binary representation.  Non-finite values are converted to \code{NA},
-      \code{NaN} or (perhaps a sign followed by) \code{Inf}.  This might
-      not be supported on all platforms as if is a feature of C99.
-      Format \code{\%a} uses lower-case for \code{x}, \code{p} and the
-      hex values: format \code{\%A} uses upper-case.
+      \code{NaN} or (perhaps a sign followed by) \code{Inf}.  Format
+      \code{\%a} uses lower-case for \code{x}, \code{p} and the hex
+      values: format \code{\%A} uses upper-case.
+  
+      This might not be supported on all platforms as if is a feature of C99.
+      The format is not uniquely defined: although it would be possible
+      to make the leading \code{h} always zero or one, this is not
+      always done.
     }
     \item{\code{s}}{Character string.   Character \code{NA}s are
       converted to \code{"NA"}.
