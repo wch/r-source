@@ -64,6 +64,17 @@ gettextf(fmt, \dots, domain = NULL)
       \code{\%E} format if the exponent is less than -4 or greater than or
       equal to the precision, and \code{\%f} format otherwise.
     }
+    \item{\code{a, A}}{Double precision value, in binary notation of the
+      form \code{[-]0xh.hhhp[+-]d}.  This is a binary fraction
+      expressed in hex multiplied by a (decimal) power of 2.  The number
+      of hex digits after the decimal point is specified by the precision:
+      the default is enough digits to represent exactly the internal
+      binary representation.  Non-finite values are converted to \code{NA},
+      \code{NaN} or (perhaps a sign followed by) \code{Inf}.  This might
+      not be supported on all platforms as if is a feature of C99.
+      Format \code{\%a} uses lower-case for \code{x}, \code{p} and the
+      hex values: format \code{\%A} uses upper-case.
+    }
     \item{\code{s}}{Character string.   Character \code{NA}s are
       converted to \code{"NA"}.
     }
@@ -200,6 +211,10 @@ sprintf("e with \%1$2d digits = \%2$.*1$g", n, exp(1))
 
 ## re-cycle arguments 
 sprintf("\%s \%d", "test", 1:3)
+
+## binary output showing rounding/representation errors
+x <- seq(0, 1.0, 0.1); y <- c(0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1)
+cbind(x, sprintf("\%a", x), sprintf("\%a", y))
 }
 \keyword{print}
 \keyword{character}
