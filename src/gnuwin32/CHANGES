@@ -32,6 +32,9 @@ BUG FIXES
 	R 2.7.x in the Chinese (Hong Kong S.A.R.) locale on some
 	systems (e.g. PR#12658).
 
+    o	dir.create(recursive = TRUE) was not working on //server/share
+	paths.
+
 
 
 		CHANGES IN R VERSION 2.7.2

@@ -1928,6 +1928,11 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     while (*p == L'\\' && wcslen(dir) > 1 && *(p-1) != L':') *p-- = L'\0';
     if (recursive) {
 	p = dir;
+	/* skip leading \\share */
+	if (*p == L'\\' && *(p+1) == L'\\') {
+	    p += 2;
+	    p = wcschr(p, L'\\');
+	}
 	while ((p = wcschr(p+1, L'\\'))) {
 	    *p = L'\0';
 	    if (*(p-1) != L':') {
