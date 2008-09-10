@@ -98,6 +98,9 @@ BUG FIXES
 	systems (e.g. PR#12658): the problems were with locale names
 	which contained periods.
 
+    o	dir.create(recursive = TRUE) was not working on //server/share
+	paths.
+
 
 
 		CHANGES IN R VERSION 2.7.2
