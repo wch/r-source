@@ -228,7 +228,8 @@ isIncomplete(con)
 #ifdef windows
   only supported if \code{--internet2} was used (to make use of Internet
   Explorer internals), and then only if the certificate is considered to
-  be valid.
+  be valid.  With that option only, the \code{http://user:pass@site}
+  notation for sites requiring authentication is also accepted.
 #endif
 }
 \value{

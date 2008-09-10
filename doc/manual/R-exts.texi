@@ -760,22 +760,23 @@ Note that most of this section is Unix-specific: see the comments
 later on about the Windows port of @R{}.
 
 If your package needs some system-dependent configuration before
-installation you can include a (Bourne shell) script @file{configure} in
-your package which (if present) is executed by @code{R CMD INSTALL}
-before any other action is performed.  This can be a script created by
-the Autoconf mechanism, but may also be a script written by yourself.
-Use this to detect if any nonstandard libraries are present such that
-corresponding code in the package can be disabled at install time rather
-than giving error messages when the package is compiled or used.  To
-summarize, the full power of Autoconf is available for your extension
-package (including variable substitution, searching for libraries,
-etc.).
+installation you can include an executable (Bourne shell) script
+@file{configure} in your package which (if present) is executed by
+@code{R CMD INSTALL} before any other action is performed.  This can be
+a script created by the Autoconf mechanism, but may also be a script
+written by yourself.  Use this to detect if any nonstandard libraries
+are present such that corresponding code in the package can be disabled
+at install time rather than giving error messages when the package is
+compiled or used.  To summarize, the full power of Autoconf is available
+for your extension package (including variable substitution, searching
+for libraries, etc.).
 
-The (Bourne shell) script @file{cleanup} is executed as last thing by
-@code{R CMD INSTALL} if present and option @option{--clean} was given,
-and by @code{R CMD build} when preparing the package for building from
-its source.  It can be used to clean up the package source tree.  In
-particular, it should remove all files created by @command{configure}.
+Under a Unix-alike only, an executable (Bourne shell) script
+@file{cleanup} is executed as last thing by @code{R CMD INSTALL} if
+option @option{--clean} was given, and by @code{R CMD build} when
+preparing the package for building from its source.  It can be used to
+clean up the package source tree.  In particular, it should remove all
+files created by @command{configure}.
 
 As an example consider we want to use functionality provided by a (C or
 FORTRAN) library @code{foo}.  Using Autoconf, we can create a configure
