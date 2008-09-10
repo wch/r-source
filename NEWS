@@ -48,7 +48,7 @@ NEW FEATURES
     o	segments(), arrows() and rect() allow zero-length
 	coordinates.  (Wish of PR#11192)
 
-    o	pdf() has new arguments 'useDingbats' (set to FALSE for use
+    o	pdf() has new arguments 'useDingbats' (set this to FALSE for use
 	with broken viewers) and 'colormodel'.	It now only references
 	the ZapfDingbats font if it is used (for small opaque circles).
 
@@ -136,7 +136,7 @@ NEW FEATURES
 	get(getOption("device"))() will work will catch users of those
 	packages.
 
-    o	dev.new() gains a '...' argument which can be used to passed
+    o	dev.new() gains a '...' argument which can be used to pass
 	named arguments which will be used if appropriate to the
 	device selected.
 
@@ -251,7 +251,7 @@ NEW FEATURES
     o	summary.manova() uses a stabler computation of the test
 	statistics, and gains a 'tol' argument to allow highly
 	correlated responses to be explored (with probable loss of
-	accuracy). Similar changes have been made to anova.mlm() and
+	accuracy).  Similar changes have been made to anova.mlm() and
 	anova.mlmlist().
 
     o	library() no longer warns about the masking objects that are
@@ -437,7 +437,7 @@ BUG FIXES
 
     o	median(c(x = NA_real_)) no longer has spurious names().
 
-    o	isoreg(x,y) now returns the correct result also when x has ties,
+    o	isoreg(x, y) now returns the correct result also when x has ties,
 	in all cases.
 
     o	What na.action() does is now correctly documented.
