@@ -29,7 +29,7 @@ browseURL(url, browser = getOption("browser"), encodeIfNeeded = FALSE)
     needed (and might be harmful) if the \code{browser} program/function
     itself does encoding, and can be harmful for \code{file://} URLs on some
     systems and for \code{http://} URLs passed to some CGI applications.
-    Fortunately, most URLs do not need encoding.
+    Fortunately, most URLs do not need encoding.}
 }
 #ifdef unix
 \details{

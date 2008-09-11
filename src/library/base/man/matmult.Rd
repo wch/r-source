@@ -1,6 +1,6 @@
 % File src/library/base/man/matmult.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{matmult}
@@ -11,7 +11,7 @@
   Multiplies two matrices, if they are conformable.
   If one argument is a vector, it will be promoted to either a row or
   column matrix to make the two arguments conformable.
-  If both are vectors it will return the inner product.
+  If both are vectors it will return the inner product (as a matrix).
 }
 \usage{
 x \%*\% y
@@ -27,8 +27,8 @@ x \%*\% y
   written for a function of two arguments named \code{x} and \code{y}.
 }
 \value{
-  The matrix product.  Use \code{\link{drop}} to get rid of dimensions
-  which have only one level.
+  A double or complex matrix product.  Use \code{\link{drop}} to remove
+  dimensions which have only one level.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

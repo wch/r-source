@@ -1,6 +1,6 @@
 % File src/library/base/man/crossprod.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{crossprod}
@@ -19,9 +19,13 @@ crossprod(x, y = NULL)
 tcrossprod(x, y = NULL)
 }
 \arguments{
-  \item{x, y}{matrices: \code{y = NULL} is taken to be the
-    same matrix as \code{x}.  Vectors are promoted to single-column
-    matrices.}
+  \item{x, y}{numeric or complex matrices: \code{y = NULL} is taken to
+    be the same matrix as \code{x}.  Vectors are promoted to
+    single-column matrices.}
+}
+\value{
+  A double or complex matrix, with appropriate \code{dimnames} taken
+  from \code{x} and \code{y}.
 }
 \note{
   When \code{x} or \code{y} are not matrices, they are treated as column or
