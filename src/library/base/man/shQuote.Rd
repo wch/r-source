@@ -42,13 +42,13 @@ shQuote(string, type = c("sh", "csh", "cmd"))
   implementation does is to surround the string by double quotes and
   escape internal double quotes by a backslash.  As Windows path names
   cannot contain double quotes, this makes \code{shQuote} safe for use
-  with \code{\link{system}} and with \code{\link{shell}} if the default
-  shell is used.
+  with file paths in \code{\link{system}}, and with \code{\link{shell}}
+  if the default shell is used.
 
   It will usually be safe to use \code{shQuote} to quote arguments of a
   command, but because \code{\link{system}} does not use a shell,
   interpretation of quoted arguments is done by the run-time code of the
-  executable.  This could depend on the compiler used: Microsoft's rules
+  executable.  This may depend on the compiler used: Microsoft's rules
   for the C run-time are given at
   \url{http://msdn2.microsoft.com/en-us/library/ms880421.aspx}.
 #endif
