@@ -39,7 +39,7 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
     options(htmlhelp = TRUE)
 }
 
-browseURL <- function(url, browser = getOption("browser"))
+browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
 {
     ## escape characters.  ' can occur in URLs, so we must use " to
     ## delimit the URL.  We need to escape $, but "`\ do not occur in
@@ -50,7 +50,7 @@ browseURL <- function(url, browser = getOption("browser"))
     if(!is.character(url) || !(length(url) == 1) || !nzchar(url))
         stop("'url' must be a non-empty character string")
     if (is.function(browser))
-        return(invisible(browser(url)))
+        return(invisible(browser(if(encodeIfNeeded) URLencode(url) else url)))
     if(!is.character(browser)
        || !(length(browser) == 1)
        || !nzchar(browser))
@@ -62,7 +62,7 @@ browseURL <- function(url, browser = getOption("browser"))
     else
       isLocal <- FALSE
 
-    quotedUrl <- shQuote(url)
+    quotedUrl <- shQuote(if(encodeIfNeeded) URLencode(url) else url)
     remoteCmd <- if(isLocal)
         switch(basename(browser),
                "gnome-moz-remote" =, "open" = quotedUrl,

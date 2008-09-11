@@ -312,6 +312,10 @@ NEW FEATURES
 
     o	Binary numerical constants may now contain a decimal point.
 
+    o	brwoseURL() has a new argument 'encodeIfNeeded' to use
+	URLencode() in cases where it seems likely that would be
+	helpful.  (Unfortunately, those are hard to guess.)
+
 
 INSTALLATION
 
@@ -465,6 +469,9 @@ BUG FIXES
     o	In S4 class definitions, where multiple paths to a super/sub
 	class exist, only the closest in distance is now stored
 	(for correct method dispatch).
+
+    o	RSiteSearch() encodes its query (it seems this is occasionally
+	needed to some platforms, but encoding other fields is harmful).
 
 
 
