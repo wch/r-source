@@ -77,9 +77,11 @@ gettextf(fmt, \dots, domain = NULL)
       This might not be supported on all platforms as if is a feature of C99.
       The format is not uniquely defined: although it would be possible
       to make the leading \code{h} always zero or one, this is not
-      always done: sometimes a pure hex representation (with exponent a
-      multiple of 4) is preferred.  Most systems will suppress trailing
-      zeros, but a few do not.
+      always done.  Most systems will suppress trailing zeros, but a few
+      do not. On a well-written platform, for normal numbers there will
+      be a leading one before the decimal point plus (by default) 13
+      hexadecimal digits, hence 53 bits.  (The treatment of denormalized
+      numbers is very platform-dependent.)
     }
     \item{\code{s}}{Character string.   Character \code{NA}s are
       converted to \code{"NA"}.
