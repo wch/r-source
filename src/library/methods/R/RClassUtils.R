@@ -61,9 +61,9 @@ makePrototypeFromClassDef <-
     ## try for a single superclass that is not virtual
     supers <- names(extends)
     virtual <- NA
-    dataPartDone <- length(slots)==0 || !is.na(match(".Data", snames))
-    dataPartClass <- if(dataPartDone) "ANY" else elNamed(slots, ".Data")
+    dataPartClass <- elNamed(slots, ".Data")
     prototype <- ClassDef@prototype
+    dataPartDone <- is.null(dataPartClass)  || is(prototype, dataPartClass)# don't look for data part in supreclasses
     ## check for a formal prototype object (TODO:  sometime ensure that this happens
     ## at setClass() time, so prototype slot in classRepresentation can have that class
     if(!.identC(class(prototype), className) && .isPrototype(prototype)) {
@@ -96,7 +96,7 @@ makePrototypeFromClassDef <-
                 for(slotName in slotsi) {
                     if(identical(slotName, ".Data")) {
                         if(!dataPartDone) {
-                            prototype <- setDataPart(prototype, getDataPart(pri))
+                            prototype <- setDataPart(prototype, getDataPart(pri), FALSE)
                             dataPartDone <- TRUE
                         }
                     }
@@ -108,8 +108,10 @@ makePrototypeFromClassDef <-
                     }
                 }
             }
-            else if(!dataPartDone && extends(cli, dataPartClass))
-                prototype <- setDataPart(prototype, pri)
+            else if(!dataPartDone && extends(cli, dataPartClass)) {
+                 prototype <- setDataPart(prototype, pri, FALSE)
+                 dataPartDone <- TRUE
+            }
         }
     }
     if(length(slots) == 0)
@@ -1159,13 +1161,15 @@ getDataPart <- function(object) {
     object
 }
 
-setDataPart <- function(object, value) {
-    classDef <- getClass(class(object))
-    dataClass <- elNamed(getSlots(classDef), ".Data")
-    if(is.null(dataClass))
-        stop(gettextf("class \"%s\" does not have a data part (a .Data slot) defined",
-                      class(object)), domain = NA)
-    value <- as(value, dataClass)
+setDataPart <- function(object, value, check = TRUE) {
+    if(check) {
+        classDef <- getClass(class(object))
+        dataClass <- elNamed(getSlots(classDef), ".Data")
+        if(is.null(dataClass))
+          stop(gettextf("class \"%s\" does not have a data part (a .Data slot) defined",
+                        class(object)), domain = NA)
+        value <- as(value, dataClass)
+    }
     .mergeAttrs(value, object)
 }
 

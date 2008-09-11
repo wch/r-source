@@ -179,6 +179,43 @@ which can sometimes lead to confusion.
   all objects from such classes contain the S3 class in a special
   slot.
 
+There are three different ways to indicate an extension to an existing
+S3 class:  \code{setOldClass()},  \code{setClass()} and
+\code{setIs()}.  In most cases, calling \code{setOldClass} is the
+best approach,  but the alternatives may be preferred in the special
+circumstances described below.
+
+Suppose \code{"A"} is any class extending \code{"oldClass"}. then
+
+ \code{setOldClass(c("B", "A"))} 
+
+creates a new class \code{"B"} whose S3 class
+concatenates \code{"B"}  with \code{S3Class("A")}.  The new class is a
+virtual class.  If \code{"A"} was defined with known attribute/slots,
+then \code{"B"} has these slots also; therefore, you must believe that
+the corresponding S3 objects from class \code{"B"} do indeed have the
+claimed attributes.  Notice that you can supply an S4 definition for the
+new class to specify additional attributes (as described in the next
+section.)
+The first alternative call produces a non-virtual  class.
+
+\code{"setClass("B", contains = "A")}
+
+This creates a non-virtual class with the same slots and superclasses
+as class \code{"A"}.  However, class \code{"B"} is not included in
+the S3 class slot of the new class, unless you provide it explicitly
+in the prototype.
+
+\code{setClass("B"); setIs("B", "A", .....)}
+
+This creates a virtual class that extends \code{"A"}, but does not
+contain the slots of \code{"A"}.  The additional arguments to
+\code{\link{setIs}} should provide a coerce and replacement method.
+In order for the new class to inherit S3 methods, the coerce method must
+ensure that the class \code{"A"} object produced has a suitable S3
+class.  The only likely reason to prefer this third approach is that
+class \code{"B"} is not consistent with known attributes in class \code{"A"}.
+
  }
 
 \section{S3 Classes with known attributes}{
