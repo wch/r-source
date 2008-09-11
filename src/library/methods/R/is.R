@@ -21,16 +21,30 @@ is <-
 function(object, class2)
 {
     cl <- class(object)
-    if(length(cl) > 1) {
-        if( is.na(match(cl[[1]], names(getClass("oldClass")@subclasses))))
-          return(class2 %in% cl) # must be an S3 class, treat like inherits()
-        cl <- cl[[1]]
-    }
+    S3Case <- length(cl) > 1
+    if(S3Case)
+      cl <- cl[[1]]
     if(missing(class2))
         return(extends(cl))
+    class1Def <- getClassDef(cl)
+    if(is.null(class1Def)) # an unregistered S3 class
+      return(inherits(object, class2))
+    if(is.character(class2))
+      class2Def <- getClassDef(class2, .classDefEnv(class1Def))
+    else {
+        class2Def <- class2
+        class2 <- class2Def@ className
+    }
+    ## S3 inheritance is applied if the object is not S4 and class2 is either a basic
+    ## class or an S3 class (registered or not)
+    S3Case <- S3Case || (is.object(object) && !isS4(object)) # first requirement
+    S3Case <- S3Case && (is.null(class2Def) || class2 %in% .BasicClasses ||
+                         extends(class2Def, "oldClass"))
+    if(S3Case)
+        return(inherits(object, class2))
     if(.identC(cl, class2) || .identC(class2, "ANY"))
         return(TRUE)
-    ext <- possibleExtends(cl, class2)
+    ext <- possibleExtends(cl, class2, class1Def, class2Def)
     if(is.logical(ext))
         ext
     else if(ext@simple)
@@ -45,6 +59,8 @@ extends <-
   function(class1, class2, maybe = TRUE, fullInfo = FALSE)
 {
     if(is.character(class1)) {
+        if(length(class1)>1)
+            class1 <- class1[[1]]
 	classDef1 <- getClassDef(class1)
     } else if(is(class1, "classRepresentation")) {
 	classDef1 <- class1
