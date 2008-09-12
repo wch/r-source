@@ -1962,8 +1962,6 @@ static void GA_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
     r = rcanon(rpt(pt(x0, y0), pt(x1, y1)));
     r.width  += 1;
     r.height += 1;
-    r.width = r.width;
-    r.height = r.height;
     xd->clip = r;
 }
 

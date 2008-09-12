@@ -101,6 +101,9 @@ BUG FIXES
     o	dir.create(recursive = TRUE) was not working on //server/share
 	paths.
 
+    o	The clip region was sometimes wrong when printing from the
+	menu on a windows() graphics device (in 2.7.2 only).
+
 
 
 		CHANGES IN R VERSION 2.7.2
