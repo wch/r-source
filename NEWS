@@ -310,9 +310,10 @@ NEW FEATURES
     o	sprintf() optionally supports the %a/%A notation of C99 (if the
 	platform does, including under Windows).
 
-    o	Binary numerical constants may now contain a decimal point.
+    o	Hexadecimal numerical constants (such as 0xab.cdp+12) may now
+	contain a decimal point.
 
-    o	brwoseURL() has a new argument 'encodeIfNeeded' to use
+    o	browseURL() has a new argument 'encodeIfNeeded' to use
 	URLencode() in cases where it seems likely that would be
 	helpful.  (Unfortunately, those are hard to guess.)
 
