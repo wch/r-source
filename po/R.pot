@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:12+0100\n"
+"POT-Creation-Date: 2008-09-12 08:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -155,8 +155,8 @@ msgstr ""
 #: src/main/platform.c:1330 src/main/platform.c:1333 src/main/platform.c:1369
 #: src/main/platform.c:1372 src/main/platform.c:1410 src/main/platform.c:1449
 #: src/main/platform.c:1451 src/main/platform.c:1509 src/main/platform.c:1600
-#: src/main/platform.c:1861 src/main/platform.c:1901 src/main/platform.c:2012
-#: src/main/platform.c:2040 src/main/plot.c:2951 src/main/plot.c:4085
+#: src/main/platform.c:1861 src/main/platform.c:1901 src/main/platform.c:2017
+#: src/main/platform.c:2045 src/main/plot.c:2951 src/main/plot.c:4085
 #: src/main/plot.c:4089 src/main/plot.c:4092 src/main/plot3d.c:2464
 #: src/main/plot3d.c:2468 src/main/plot3d.c:2473 src/main/plot3d.c:2477
 #: src/main/plot3d.c:2481 src/main/plot3d.c:2485 src/main/print.c:175
@@ -176,7 +176,7 @@ msgstr ""
 #: src/main/scan.c:1753 src/main/scan.c:1754 src/main/scan.c:1755
 #: src/main/seq.c:350 src/main/seq.c:354 src/main/seq.c:372 src/main/seq.c:376
 #: src/main/seq.c:382 src/main/seq.c:390 src/main/sort.c:160
-#: src/main/sysutils.c:565 src/main/sysutils.c:567 src/main/sysutils.c:569
+#: src/main/sysutils.c:563 src/main/sysutils.c:565 src/main/sysutils.c:567
 #: src/main/unique.c:704 src/main/unique.c:951 src/main/unique.c:1011
 #: src/main/unique.c:1018 src/main/util.c:558 src/main/util.c:561
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
@@ -249,14 +249,14 @@ msgstr ""
 #: src/main/errors.c:1006 src/main/errors.c:1031 src/main/errors.c:1036
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
-#: src/main/platform.c:2060 src/main/plot.c:276 src/main/plot.c:470
+#: src/main/platform.c:2065 src/main/plot.c:276 src/main/plot.c:470
 #: src/main/plot.c:475 src/main/plot.c:2131 src/main/plot.c:2138
 #: src/main/plot.c:3164 src/main/plot.c:3166 src/main/plot.c:3168
 #: src/main/plot.c:3326 src/main/plot3d.c:1397 src/main/plot3d.c:2542
 #: src/main/plot3d.c:2546 src/main/plot3d.c:2548 src/main/seq.c:152
 #: src/main/seq.c:243 src/main/seq.c:246 src/main/sort.c:859
 #: src/main/sort.c:957 src/main/source.c:172 src/main/summary.c:977
-#: src/main/sysutils.c:231 src/main/util.c:875 src/main/util.c:880
+#: src/main/sysutils.c:229 src/main/util.c:875 src/main/util.c:880
 #: src/main/util.c:887 src/main/util.c:890 src/modules/X11/devX11.c:2592
 #: src/modules/X11/devX11.c:2619 src/modules/X11/devX11.c:2624
 #: src/modules/X11/devX11.c:2629 src/modules/X11/devX11.c:2639
@@ -535,7 +535,7 @@ msgid "Non-numeric argument to mathematical function"
 msgstr ""
 
 #: src/include/Errormsg.h:35 src/main/builtin.c:848 src/main/devices.c:366
-#: src/main/scan.c:1446 src/main/util.c:1611
+#: src/main/scan.c:1446 src/main/util.c:1614
 msgid "invalid argument"
 msgstr ""
 
@@ -960,8 +960,8 @@ msgid "'x' must be numeric"
 msgstr ""
 
 #: src/main/attrib.c:40 src/main/attrib.c:220 src/main/attrib.c:256
-#: src/main/attrib.c:278 src/main/attrib.c:388 src/main/attrib.c:435
-#: src/main/attrib.c:484
+#: src/main/attrib.c:278 src/main/attrib.c:391 src/main/attrib.c:438
+#: src/main/attrib.c:487
 msgid "attempt to set an attribute on NULL"
 msgstr ""
 
@@ -985,147 +985,147 @@ msgstr ""
 msgid "'names' attribute [%d] must be the same length as the vector [%d]"
 msgstr ""
 
-#: src/main/attrib.c:371
+#: src/main/attrib.c:374
 msgid "names() applied to a non-vector"
 msgstr ""
 
-#: src/main/attrib.c:379
+#: src/main/attrib.c:382
 msgid "invalid time series parameters specified"
 msgstr ""
 
-#: src/main/attrib.c:392
+#: src/main/attrib.c:395
 msgid "'tsp' attribute must be numeric"
 msgstr ""
 
-#: src/main/attrib.c:398
+#: src/main/attrib.c:401
 msgid "'tsp' attribute must be numeric of length three"
 msgstr ""
 
-#: src/main/attrib.c:415
+#: src/main/attrib.c:418
 msgid "cannot assign 'tsp' to zero-length vector"
 msgstr ""
 
-#: src/main/attrib.c:446
+#: src/main/attrib.c:449
 msgid "attempt to set invalid 'comment' attribute"
 msgstr ""
 
-#: src/main/attrib.c:493
+#: src/main/attrib.c:496
 msgid "adding class \"factor\" to an invalid object"
 msgstr ""
 
-#: src/main/attrib.c:501
+#: src/main/attrib.c:504
 msgid "attempt to set invalid 'class' attribute"
 msgstr ""
 
-#: src/main/attrib.c:706
+#: src/main/attrib.c:709
 msgid "incompatible 'names' argument"
 msgstr ""
 
-#: src/main/attrib.c:761
+#: src/main/attrib.c:764
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr ""
 
-#: src/main/attrib.c:835
+#: src/main/attrib.c:838
 msgid "'dimnames' applied to non-array"
 msgstr ""
 
-#: src/main/attrib.c:840
+#: src/main/attrib.c:843
 msgid "'dimnames' must be a list"
 msgstr ""
 
-#: src/main/attrib.c:843
+#: src/main/attrib.c:846
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr ""
 
-#: src/main/attrib.c:864
+#: src/main/attrib.c:867
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr ""
 
-#: src/main/attrib.c:867
+#: src/main/attrib.c:870
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr ""
 
-#: src/main/attrib.c:927 src/main/builtin.c:81 src/main/builtin.c:118
+#: src/main/attrib.c:930 src/main/builtin.c:81 src/main/builtin.c:118
 #: src/main/envir.c:1452 src/main/envir.c:1548 src/main/envir.c:1609
 #: src/main/envir.c:1726 src/main/paste.c:67 src/main/paste.c:254
 #: src/main/plot.c:1723
 msgid "invalid first argument"
 msgstr ""
 
-#: src/main/attrib.c:930 src/main/plot.c:1730
+#: src/main/attrib.c:933 src/main/plot.c:1730
 msgid "invalid second argument"
 msgstr ""
 
-#: src/main/attrib.c:938
+#: src/main/attrib.c:941
 msgid "length-0 dimension vector is invalid"
 msgstr ""
 
-#: src/main/attrib.c:943
+#: src/main/attrib.c:946
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr ""
 
-#: src/main/attrib.c:1026
+#: src/main/attrib.c:1029
 msgid "attributes must be a list or NULL"
 msgstr ""
 
-#: src/main/attrib.c:1031
+#: src/main/attrib.c:1034
 msgid "attributes must be named"
 msgstr ""
 
-#: src/main/attrib.c:1035
+#: src/main/attrib.c:1038
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr ""
 
-#: src/main/attrib.c:1131
+#: src/main/attrib.c:1134
 msgid "'which' must be of mode character"
 msgstr ""
 
-#: src/main/attrib.c:1133
+#: src/main/attrib.c:1136
 msgid "exactly one attribute 'which' must be given"
 msgstr ""
 
-#: src/main/attrib.c:1179 src/main/attrib.c:1197 src/main/subscript.c:196
+#: src/main/attrib.c:1182 src/main/attrib.c:1200 src/main/subscript.c:196
 #: src/main/subscript.c:200 src/main/subset.c:1036 src/main/subset.c:1086
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr ""
 
-#: src/main/attrib.c:1216
+#: src/main/attrib.c:1219
 msgid "'name' must be non-null character string"
 msgstr ""
 
-#: src/main/attrib.c:1328 src/main/attrib.c:1385 src/main/attrib.c:1425
+#: src/main/attrib.c:1331 src/main/attrib.c:1388 src/main/attrib.c:1428
 msgid "invalid type or length for slot name"
 msgstr ""
 
-#: src/main/attrib.c:1355
+#: src/main/attrib.c:1358
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1366
+#: src/main/attrib.c:1369
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1420
+#: src/main/attrib.c:1423
 msgid "formal classes cannot be used without the methods package"
 msgstr ""
 
-#: src/main/attrib.c:1432
+#: src/main/attrib.c:1435
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr ""
 
-#: src/main/attrib.c:1436
+#: src/main/attrib.c:1439
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1779,9 +1779,9 @@ msgid "closing unused connection %d (%s)\n"
 msgstr ""
 
 #: src/main/connections.c:186 src/main/connections.c:201
-#: src/main/sysutils.c:589 src/main/sysutils.c:732 src/main/sysutils.c:747
-#: src/main/sysutils.c:834 src/main/sysutils.c:891 src/main/sysutils.c:901
-#: src/main/sysutils.c:1184
+#: src/main/sysutils.c:587 src/main/sysutils.c:731 src/main/sysutils.c:746
+#: src/main/sysutils.c:833 src/main/sysutils.c:890 src/main/sysutils.c:900
+#: src/main/sysutils.c:1180
 #, c-format
 msgid "unsupported conversion from '%s' to '%s'"
 msgstr ""
@@ -2318,27 +2318,27 @@ msgstr ""
 msgid "internal error in 'do_sys'"
 msgstr ""
 
-#: src/main/cov.c:344
+#: src/main/cov.c:541
 msgid "missing observations in cov/cor"
 msgstr ""
 
-#: src/main/cov.c:392
+#: src/main/cov.c:623
 msgid "'x' is empty"
 msgstr ""
 
-#: src/main/cov.c:412 src/main/cov.c:418
+#: src/main/cov.c:643 src/main/cov.c:649
 msgid "incompatible dimensions"
 msgstr ""
 
-#: src/main/cov.c:443
+#: src/main/cov.c:677
 msgid "invalid 'use' (computational method)"
 msgstr ""
 
-#: src/main/cov.c:457 src/main/cov.c:474
+#: src/main/cov.c:701 src/main/cov.c:732
 msgid "no complete element pairs"
 msgstr ""
 
-#: src/main/cov.c:509
+#: src/main/cov.c:767
 msgid "the standard deviation is zero"
 msgstr ""
 
@@ -5010,7 +5010,7 @@ msgstr ""
 msgid "nsl() is not supported on this platform"
 msgstr ""
 
-#: src/main/platform.c:1884 src/main/platform.c:1925
+#: src/main/platform.c:1884 src/main/platform.c:1930
 #, c-format
 msgid "'%s' already exists"
 msgstr ""
@@ -5020,7 +5020,7 @@ msgstr ""
 msgid "cannot create dir '%s', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:2067
+#: src/main/platform.c:2072
 msgid "insufficient OS support on this platform"
 msgstr ""
 
@@ -6322,36 +6322,36 @@ msgstr ""
 msgid "argument for '*' conversion specification must be a number"
 msgstr ""
 
-#: src/main/sprintf.c:241
+#: src/main/sprintf.c:243
 msgid "coercion has changed vector length to 0"
 msgstr ""
 
-#: src/main/sprintf.c:249
+#: src/main/sprintf.c:251
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr ""
 
-#: src/main/sprintf.c:263
+#: src/main/sprintf.c:265
 #, c-format
 msgid "use format %d, %i, %x or %X for integer objects"
 msgstr ""
 
-#: src/main/sprintf.c:277
+#: src/main/sprintf.c:279
 #, c-format
-msgid "use format %f, %e or %g for numeric objects"
+msgid "use format %f, %e, %g or %a for numeric objects"
 msgstr ""
 
-#: src/main/sprintf.c:311
+#: src/main/sprintf.c:313
 #, c-format
 msgid "use format %s for character objects"
 msgstr ""
 
-#: src/main/sprintf.c:318
+#: src/main/sprintf.c:320
 #, c-format
 msgid "likely truncation of character string to %d characters"
 msgstr ""
 
-#: src/main/sprintf.c:327
+#: src/main/sprintf.c:329
 msgid "unsupported type"
 msgstr ""
 
@@ -6573,95 +6573,95 @@ msgstr ""
 msgid "cannot determine file modification time of '%s'"
 msgstr ""
 
-#: src/main/sysutils.c:164
+#: src/main/sysutils.c:162
 msgid "file name conversion problem"
 msgstr ""
 
-#: src/main/sysutils.c:165
+#: src/main/sysutils.c:163
 msgid "file name conversion problem -- name too long?"
 msgstr ""
 
-#: src/main/sysutils.c:229
+#: src/main/sysutils.c:227
 msgid "invalid filename pattern"
 msgstr ""
 
-#: src/main/sysutils.c:233
+#: src/main/sysutils.c:231
 msgid "no 'pattern'"
 msgstr ""
 
-#: src/main/sysutils.c:235
+#: src/main/sysutils.c:233
 msgid "no 'tempdir'"
 msgstr ""
 
-#: src/main/sysutils.c:321 src/main/sysutils.c:324 src/main/sysutils.c:415
-#: src/main/sysutils.c:417 src/main/sysutils.c:453
+#: src/main/sysutils.c:319 src/main/sysutils.c:322 src/main/sysutils.c:413
+#: src/main/sysutils.c:415 src/main/sysutils.c:451
 msgid "wrong type for argument"
 msgstr ""
 
-#: src/main/sysutils.c:419
+#: src/main/sysutils.c:417
 msgid "wrong length for argument"
 msgstr ""
 
-#: src/main/sysutils.c:440
+#: src/main/sysutils.c:438
 msgid "'Sys.setenv' is not available on this system"
 msgstr ""
 
-#: src/main/sysutils.c:485
+#: src/main/sysutils.c:483
 msgid "this system cannot unset environment variables: setting to \"\""
 msgstr ""
 
-#: src/main/sysutils.c:496
+#: src/main/sysutils.c:494
 msgid "'Sys.unsetenv' is not available on this system"
 msgstr ""
 
-#: src/main/sysutils.c:563
+#: src/main/sysutils.c:561
 msgid "'x' must be a character vector"
 msgstr ""
 
-#: src/main/sysutils.c:647 src/main/sysutils.c:1214 src/main/sysutils.c:1221
-#: src/main/sysutils.c:1227
+#: src/main/sysutils.c:645 src/main/sysutils.c:1210 src/main/sysutils.c:1217
+#: src/main/sysutils.c:1223
 msgid "'iconv' is not available on this system"
 msgstr ""
 
-#: src/main/sysutils.c:655 src/main/sysutils.c:717 src/main/sysutils.c:823
-#: src/main/sysutils.c:885
+#: src/main/sysutils.c:653 src/main/sysutils.c:716 src/main/sysutils.c:822
+#: src/main/sysutils.c:884
 #, c-format
 msgid "'%s' must be called on a CHARSXP"
 msgstr ""
 
-#: src/main/sysutils.c:930
+#: src/main/sysutils.c:926
 msgid "invalid input in wtransChar"
 msgstr ""
 
-#: src/main/sysutils.c:1338
+#: src/main/sysutils.c:1334
 msgid "cannot mkdir R_TempDir"
 msgstr ""
 
-#: src/main/sysutils.c:1342 src/main/sysutils.c:1349 src/main/sysutils.c:1352
+#: src/main/sysutils.c:1338 src/main/sysutils.c:1345 src/main/sysutils.c:1348
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr ""
 
-#: src/main/sysutils.c:1361
+#: src/main/sysutils.c:1357
 msgid "cannot allocate R_TempDir"
 msgstr ""
 
-#: src/main/sysutils.c:1380
+#: src/main/sysutils.c:1376
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr ""
 
-#: src/main/sysutils.c:1395
+#: src/main/sysutils.c:1391
 msgid "cannot find unused tempfile name"
 msgstr ""
 
-#: src/main/sysutils.c:1420
+#: src/main/sysutils.c:1416
 msgid "proc.time() is not implemented on this system"
 msgstr ""
 
-#: src/main/sysutils.c:1472
+#: src/main/sysutils.c:1468
 msgid "setTimelimit() is not implemented on this system"
 msgstr ""
 
-#: src/main/sysutils.c:1500
+#: src/main/sysutils.c:1496
 msgid "setSessionTimelimit() is not implemented on this system"
 msgstr ""
 
@@ -6818,7 +6818,7 @@ msgstr ""
 msgid "warning message truncated to 255 chars"
 msgstr ""
 
-#: src/main/util.c:1677
+#: src/main/util.c:1680
 msgid "ICU is not supported on this build"
 msgstr ""
 
