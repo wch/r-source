@@ -474,6 +474,9 @@ BUG FIXES
     o	RSiteSearch() encodes its query (it seems this is occasionally
 	needed to some platforms, but encoding other fields is harmful).
 
+    o	'incomparables' in match() was looking up indices in the wrong
+	table.
+
 
 
 
