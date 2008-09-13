@@ -395,9 +395,6 @@ cbind(tt, tt + 1)
 try(cov(rnorm(10), NULL))
 try(cor(rnorm(10), NULL))
 ## gave the variance and 1 respectively in 1.2.2.
-try(var(NULL))
-try(var(numeric(0)))
-## gave NA in 1.2.2
 
 
 ## PR 960 (format() of a character matrix converts to vector)

@@ -5359,3 +5359,16 @@ close(fd)
 unlink("foo.txt")
 stopifnot(identical(z, c(1,2)))
 ## changed in 2.7.2 patched
+
+## cov / cor / var etc with NAs :
+stopifnot(inherits(try(var(NULL)), "try-error"))## gave NA in 1.2.2
+v0 <- var(0[FALSE]) # gave "'x' is empty" in the past;  NA in 1.2.2
+x <- c(1:2,NA)
+v1 <- var(c(1,NA))
+v2 <- var(c(NA,0/0, Inf-Inf))
+sx <- sd(x)# sd() -> var()
+## all three gave "missing observations in cov/cor"  for a long time in the past
+is.NA <- function(x) is.na(x) & !is.nan(x)
+stopifnot(is.NA(v1), is.NA(v2), is.NA(sx),
+	  all.equal(0.5, var(x, na.rm=TRUE), tol=8*Meps)# should even be exact
+	  )

@@ -303,9 +303,13 @@ NEW FEATURES
 	of objects before opening the file/connections (wish of
 	PR#12543).
 
-    o	cov() and cor() newly have the new option 'use = "everything"' as
-	default, and so does var() with its default 'na.rm = FALSE'.  This
+    o	cov() and cor() have the option 'use = "everything"' as default,
+    	and so does var() with its default 'na.rm = FALSE'.  This
 	returns NA instead of signalling an error for NA observations.
+	Another new option is 'use = "na.or.complete"' which is the default
+	for var(*, na.rm=FALSE).
+	var(double(0), na.rm= L) now returns NA instead of signalling an error,
+	for both L = TRUE or FALSE, as one consequence of these changes.
 
     o	sprintf() optionally supports the %a/%A notation of C99 (if the
 	platform does, including under Windows).

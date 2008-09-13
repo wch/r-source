@@ -603,14 +603,15 @@ find_na_2(int n, int ncx, int ncy, double *x, double *y, int *has_na_x, int *has
 #undef NA_CHECK
 #undef HAS_NA_1
 
-/* co[vr](x, y,
-          use = {1,		2,		3,                   4}
-		"all.obs", "complete.obs", "pairwise.complete.obs", "everything"
-		    kendall = TRUE/FALSE) */
+/* co[vr](x, y, use =
+	{ 1,		2,		3,		   4,		5  }
+  "all.obs", "complete.obs", "pairwise.complete", "everything", "na.or.complete"
+	  kendall = TRUE/FALSE)
+*/
 SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, ans, xm, ym, ind;
-    Rboolean cor, ansmat, kendall, pair, na_fail, everything, sd_0;
+    Rboolean cor, ansmat, kendall, pair, na_fail, everything, sd_0, empty_err;
     int i, method, n, ncx, ncy;
 
     checkArity(op, args);
@@ -620,7 +621,9 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     cor = PRIMVAL(op);
 
     /* Arg.1: x */
-    if (isNull(CAR(args)) || !LENGTH(CAR(args))) error(_("'x' is empty"));
+    if(isNull(CAR(args))) /* never allowed */
+	error(_("'x' is NULL"));
+    /* length check of x -- only if(empty_err) --> below */
     x = SETCAR(args, coerceVector(CAR(args), REALSXP));
     if ((ansmat = isMatrix(x))) {
 	n = nrows(x);
@@ -659,7 +662,7 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     kendall = asLogical(CAR(args));
 
     /* "default: complete" (easier for -Wall) */
-    na_fail = FALSE; everything = FALSE;
+    na_fail = FALSE; everything = FALSE; empty_err = TRUE;
     pair = FALSE;
     switch(method) {
     case 1:		/* use all :  no NAs */
@@ -672,10 +675,17 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     case 4:		/* "everything": NAs are propagated */
 	everything = TRUE;
+	empty_err = FALSE;
+	break;
+    case 5:		/* "na.or.complete": NAs are propagated */
+	empty_err = FALSE;
 	break;
     default:
 	error(_("invalid 'use' (computational method)"));
     }
+    if (empty_err && !LENGTH(x))
+	error(_("'x' is empty"));
+
     if (ansmat) PROTECT(ans = allocMatrix(REALSXP, ncx, ncy));
     else PROTECT(ans = allocVector(REALSXP, ncx * ncy));
     sd_0 = FALSE;
@@ -689,16 +699,18 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	    UNPROTECT(2);
 	}
 	else if (!pair) { /* all | complete "var" */
-	    Rboolean indany = FALSE;
 	    PROTECT(xm = allocVector(REALSXP, ncx));
 	    PROTECT(ind = allocVector(INTSXP, n));
 	    complete1(n, ncx, REAL(x), INTEGER(ind), na_fail);
 	    cov_complete1(n, ncx, REAL(x), REAL(xm),
 			  INTEGER(ind), REAL(ans), &sd_0, cor, kendall);
-	    for(i = 0; i < n; i++) {
-		if(INTEGER(ind)[i] == 1) { indany = TRUE; break; }
+	    if(empty_err) {
+		Rboolean indany = FALSE;
+		for(i = 0; i < n; i++) {
+		    if(INTEGER(ind)[i] == 1) { indany = TRUE; break; }
+		}
+		if(!indany) error(_("no complete element pairs"));
 	    }
-	    if(!indany) error(_("no complete element pairs"));
 	    UNPROTECT(2);
 	}
 	else {		/* pairwise "var" */
@@ -719,17 +731,19 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	    UNPROTECT(4);
 	}
 	else if (!pair) { /* all | complete */
-	    Rboolean indany = FALSE;
 	    PROTECT(xm = allocVector(REALSXP, ncx));
 	    PROTECT(ym = allocVector(REALSXP, ncy));
 	    PROTECT(ind = allocVector(INTSXP, n));
 	    complete2(n, ncx, ncy, REAL(x), REAL(y), INTEGER(ind), na_fail);
 	    cov_complete2(n, ncx, ncy, REAL(x), REAL(y), REAL(xm), REAL(ym),
 			  INTEGER(ind), REAL(ans), &sd_0, cor, kendall);
-	    for(i = 0; i < n; i++) {
-		if(INTEGER(ind)[i] == 1) { indany = TRUE; break; }
+	    if(empty_err) {
+		Rboolean indany = FALSE;
+		for(i = 0; i < n; i++) {
+		    if(INTEGER(ind)[i] == 1) { indany = TRUE; break; }
+		}
+		if(!indany) error(_("no complete element pairs"));
 	    }
-	    if(!indany) error(_("no complete element pairs"));
 	    UNPROTECT(3);
 	}
 	else {		/* pairwise */

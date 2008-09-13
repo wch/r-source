@@ -20,8 +20,8 @@ cor <-
 function(x, y=NULL, use="everything", method = c("pearson", "kendall", "spearman"))
 {
     na.method <-
-	pmatch(use, c("all.obs", "complete.obs",
-		      "pairwise.complete.obs", "everything"))
+	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
+		      "everything", "na.or.complete"))
     method <- match.arg(method)
     if(is.data.frame(y)) y <- as.matrix(y) else stopifnot(is.atomic(y))
     if(is.data.frame(x)) x <- as.matrix(x)
@@ -103,8 +103,8 @@ cov <-
 function(x, y=NULL, use="everything", method = c("pearson", "kendall", "spearman"))
 {
     na.method <-
-	pmatch(use, c("all.obs", "complete.obs",
-		      "pairwise.complete.obs", "everything"))
+	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
+		      "everything", "na.or.complete"))
     method <- match.arg(method)
     if(is.data.frame(y)) y <- as.matrix(y) else stopifnot(is.atomic(y))
     if(is.data.frame(x)) x <- as.matrix(x)
@@ -135,9 +135,10 @@ function(x, y=NULL, use="everything", method = c("pearson", "kendall", "spearman
 
 var <- function(x, y = NULL, na.rm = FALSE, use) {
     if(missing(use))
-	use <- if(na.rm) "complete.obs" else "everything"
-    na.method <- pmatch(use, c("all.obs", "complete.obs",
-			       "pairwise.complete.obs", "everything"))
+	use <- if(na.rm) "na.or.complete" else "everything"
+    na.method <-
+	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
+		      "everything", "na.or.complete"))
     if (is.data.frame(x)) x <- as.matrix(x) else stopifnot(is.atomic(x))
     if (is.data.frame(y)) y <- as.matrix(y) else stopifnot(is.atomic(y))
     .Internal(cov(x, y, na.method, FALSE))
