@@ -5372,3 +5372,11 @@ is.NA <- function(x) is.na(x) & !is.nan(x)
 stopifnot(is.NA(v1), is.NA(v2), is.NA(sx),
 	  all.equal(0.5, var(x, na.rm=TRUE), tol=8*Meps)# should even be exact
 	  )
+
+## write.dcf() indenting for ".<foo>" (PR#12816)
+zz <- textConnection("foo", "w")
+write.dcf(list(Description = 'what a fat goat .haha'),
+          file = zz, indent=1, width=10)
+stopifnot(substring(foo[-1], 1,1) == " ", length(foo) == 4,
+          foo[4] == "  .haha")
+## was " .haha" (not according to DCF standard)

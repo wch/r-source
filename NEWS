@@ -481,6 +481,9 @@ BUG FIXES
     o	'incomparables' in match() was looking up indices in the wrong
 	table.
 
+    o	write.dcf() did not escape "." according to Debian policy
+	(PR#12816).
+
 
 
 
