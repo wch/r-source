@@ -80,7 +80,7 @@ cut(x, \dots)
 
   \code{\link{quantile}} for ways of choosing breaks of roughly equal
   content (rather than length), \code{\link[Hmisc]{cut2}} in package
-  \pkg{hmisc} for a canned way to form quantile groups.
+  \pkg{Hmisc} for a canned way to form quantile groups.
 }
 \examples{
 Z <- stats::rnorm(10000)
