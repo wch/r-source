@@ -18,8 +18,7 @@ showDefault <- function(object, oldMethods = TRUE)
 {
     clDef <- getClass(cl <- class(object), .Force=TRUE)
     cl <- classLabel(cl)
-    if(!is.null(clDef) && isS4(object) && is.na(match(clDef@className, .BasicClasses)) &&
-       !extends(clDef, "oldClass")) {
+    if(!is.null(clDef) && isS4(object) && is.na(match(clDef@className, .BasicClasses)) ) {
         cat("An object of class ", cl, "\n", sep="")
         slots <- slotNames(clDef)
         if(!is.na(match(".Data", slots))) {
@@ -78,7 +77,7 @@ show <- function(object)
 
 .InitShowMethods <- function(envir) {
     if(!isGeneric("show", envir))
-        setGeneric("show", where = envir)
+        setGeneric("show", where = envir, simpleInheritanceOnly = TRUE)
     setMethod("show", "MethodDefinition",
               function(object) {
                   cl <- class(object)
@@ -117,6 +116,8 @@ show <- function(object)
                       paste(object@signature, collapse=", "), "\n",
 			    "Use  showMethods(\"", object@generic,
 			    "\")  for currently available ones.\n", sep="")
+                  if(.simpleInheritanceGeneric(object))
+                      cat("(This generic function excludes non-simple inheritance; see ?setIs)\n");
               },
               where = envir)
     setMethod("show", "classRepresentation",

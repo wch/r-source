@@ -32,19 +32,19 @@ show(object)
   \code{show} returns an invisible \code{NULL}.
 }
 \details{
-  The \pkg{methods} package overrides the base definition of
-  \code{print.default} to arrange for automatic printing to honor
-  methods for the function \code{show}.  This does not quite manage to
-  override old-style printing methods, since the automatic printing in
-  the evaluator will look first for the old-style method.
+  Objects from an S4 class (a class defined by a call to
+  \code{\link{setClass}}) will be displayed automatically is if by a
+  call to \code{show}.  S4 objects that occur as attributes of S3
+objects will also be displayed in this form; conversely, S3 objects
+encountered as slots in S4 objects will be printed using the S3
+convention, as if by a call to \code{\link{print}}.
 
-  If you have a class \code{myClass} and want to define a method for
-  \code{show}, all will be well unless there is already a function named
-  \code{print.myClass}.  In that case, to get your method dispatched for
-  automatic printing, it will have to be a method for \code{print}.  A
-  slight cheat is to override the function \code{print.myClass} yourself,
-  and then call that function also in the method for \code{show}
-  with signature \code{"myClass"}.
+Methods defined for \code{show} will only be inherited  by simple
+inheritance, since otherwise the method would not receive the
+complete, original object, with misleading results.  See the
+\code{simpleInheritanceOnly} argument to \code{\link{setGeneric}} and
+the discussion in \code{\link{setIs}} for the general concept.
+
 }
 \seealso{
   \code{\link{showMethods}} prints all the methods for one or more

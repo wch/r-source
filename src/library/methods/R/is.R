@@ -84,15 +84,15 @@ extends <-
         else
             return(c(class1,names(ext)))
     }
-
+    value <- NULL
     if(is.character(class2) && length(class2) == 1) { ## fast first checks
 	## the [[1]] below handles old-style classes & throws away package attributes
-	## {Really? :} A cleaner version needed, to also ignore attr's of class2
-	if(.identC(class1[[1]], class2) || .identC(class2, "ANY") ||
-	   (!is.null(classDef1) && class2 %in% names(classDef1@contains)))
-	    return(TRUE)
-	else
-	    classDef2 <- getClassDef(class2)
+	if(.identC(class1[[1]], class2) || .identC(class2, "ANY"))
+          return(TRUE)
+        if(!is.null(classDef1) && class2 %in% names(classDef1@contains))
+	    value <- classDef1@contains[[class2]]
+        else 
+          classDef2 <- getClassDef(class2)
     }
     else if(is(class2, "classRepresentation")) {
 	classDef2 <- class2
@@ -100,7 +100,8 @@ extends <-
     }
     else
 	stop("'class2' must be the name of a class or a class definition")
-    value <- possibleExtends(class1, class2, classDef1, classDef2)
+    if(is.null(value))
+      value <- possibleExtends(class1, class2, classDef1, classDef2)
     if(fullInfo)
         value
     else if(is.logical(value))

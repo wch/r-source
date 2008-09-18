@@ -207,7 +207,8 @@
     function(classes, fdef, mtable = NULL,
              table = get(".MTable", envir = environment(fdef)),
              excluded = NULL, useInherited, verbose = FALSE,
-             returnAll = !(doMtable || doExcluded) )
+             returnAll = !(doMtable || doExcluded)
+             , simpleOnly = .simpleInheritanceGeneric(fdef))
 {
   ## classes is a list of the class(x) for each arg in generic
   ## signature, with "missing" for missing args
@@ -253,7 +254,7 @@
   def <- getClass(classes[[1]], .Force = TRUE)
   labels <-
       if(missing(useInherited) || useInherited[[1]])
-          c(classes[[1]], names(def@contains), "ANY")
+          c(classes[[1]], .eligibleSuperClasses(def@contains, simpleOnly), "ANY")
       else classes[[1]]
   if(nargs > 1) {
       classDefs <- vector("list", nargs)
@@ -261,7 +262,7 @@
       for(i in 2:nargs) {
           cc <- classDefs[[i]] <- getClass(classes[[i]], .Force = TRUE)
           allLabels <- if(missing(useInherited) || useInherited[[i]])
-              c(cc@className, names(cc@contains), "ANY") else cc@className
+              c(cc@className, .eligibleSuperClasses(cc@contains, simpleOnly), "ANY") else cc@className
           labels <- outerLabels(labels, allLabels)
       }
   }
@@ -309,16 +310,40 @@
                 domain = NA, call. = FALSE)
       methods <- methods[1]
   }
+  if(simpleOnly && length(methods) == 0) {
+      methods <- Recall(classes, fdef, mtable, table, excluded, useInherited,verbose, returnAll, FALSE)
+      if(length(methods) > 0)
+        message(gettextf("No simply inherited methds found for function \"%s\"; using non-simple method",
+                      fdef@generic), domain = NA)
+  }
   if(doMtable && length(methods) > 0) { ## Cache the newly found one
     tlabel <- .sigLabel(classes)
     m <- methods[[1]]
     if(is(m, "MethodDefinition"))  { # else, a primitive
       m@target <- .newSignature(classes, fdef@signature)
+      ## if any of the inheritance is not simple, must insert coerce's in method body
+      coerce <- .inheritedArgsExpression(m@target, m@defined, body(m))
+      if(!is.null(coerce))
+        body(m) <- coerce
       methods[[1]] <- m
     }
     assign(tlabel, m, envir = mtable)
   }
   methods
+}
+
+.simpleInheritanceGeneric <- function(fdef) {
+    identical(attr(fdef@signature, "simpleOnly"), TRUE)
+}
+
+.eligibleSuperClasses <- function(contains, simpleOnly) {
+    what <- names(contains)
+    if(simpleOnly && length(what) > 0) {
+        eligible <- sapply(contains, function(x) (is.logical(x) && x) || x@simple)
+        what[eligible]
+    }
+    else
+        what
 }
 
 .newSignature <- function(classes, names) {
@@ -928,4 +953,22 @@ listFromMethods <- function(generic, where, table) {
       NULL
     else
       stop(gettextf("No methods table for generic \"%s\" from package \"%s\" in package \"%s\"", generic@generic, generic@package, getPackageName(where)), domain = NA)
+}
+
+.inheritedArgsExpression <- function(target, defined, body) {
+    expr <- substitute({}, list(DUMMY = "")) # bug if you use quote({})--is overwritten!!
+    args <- names(defined)
+    for(i in seq_along(defined)) {
+        ei <- extends(target[[i]], defined[[i]], fullInfo = TRUE)
+        if(is(ei, "SClassExtension")  && !ei@simple)
+          expr[[length(expr)+1]] <-
+            substitute(ARG <- as(ARG, DEFINED, strict = FALSE),
+                       list(ARG = as.name(args[[i]]), DEFINED = as.character(defined[[i]])))
+    }
+    if(length(expr) > 1) {
+       expr[[length(expr)+1]] <- body
+       expr
+   }
+    else
+      NULL
 }

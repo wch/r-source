@@ -204,9 +204,13 @@
    .initS3 <- function(.Object, ...) {
          if(nargs() < 2)
            return(.Object)
-         args <- list(...)
          Class <- class(.Object)
-        ClassDef <- getClass(Class)
+         ClassDef <- getClass(Class)
+         S3Class <- attr(ClassDef@prototype, ".S3Class")
+         if(is.null(S3Class)) # not a class set up by setOldClass()
+             return(callNextMethod())
+        S3ClassP <- S3Class[[1]]
+         args <- list(...)
         ## separate the slots, superclass objects
         snames <- allNames(args)
         which <- nzchar(snames)
@@ -217,8 +221,6 @@
         dataPart <- elNamed(slotDefs, ".Data")
         if(is.null(dataPart))
           dataPart <- "missing" # nothing will extend this => no data part args allowed
-        S3Class <- attr(ClassDef@prototype, ".S3Class")
-        S3ClassP <- S3Class[[1]]
         if(length(supers) > 0) {
             for(i in rev(seq_along(supers))) {
                 obj <- el(supers, i)

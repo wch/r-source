@@ -29,7 +29,8 @@ setGeneric <-
     function(name, def = NULL, group = list(), valueClass = character(),
              where = topenv(parent.frame()),
              package = NULL, signature = NULL,
-             useAsDefault = NULL, genericFunction = NULL)
+             useAsDefault = NULL, genericFunction = NULL,
+             simpleInheritanceOnly = NULL)
 {
     if(is.character(.isSingleName(name)))
         stop(gettextf('invalid argument "name": %s',
@@ -52,7 +53,7 @@ setGeneric <-
         }
     }
     simpleCall <- nargs() < 2 || all(missing(def), missing(group), missing(valueClass),
-               missing(package), missing(signature), missing(useAsDefault), missing(genericFunction))
+               missing(package), missing(signature), missing(useAsDefault), missing(genericFunction), missing(simpleInheritanceOnly))
     stdGenericBody <- substitute(standardGeneric(NAME), list(NAME = name))
     ## get the current function which may already be a generic
     if(is.null(package))
@@ -122,7 +123,8 @@ setGeneric <-
             fdeflt <- .derivedDefaultMethod(fdeflt)
         fdef <- makeGeneric(name, fdef, fdeflt, group=group, valueClass=valueClass,
                             package = package, signature = signature,
-                            genericFunction = genericFunction)
+                            genericFunction = genericFunction,
+                            simpleInheritanceOnly = simpleInheritanceOnly)
     }
     if(!identical(package, thisPackage)) {
         ## setting a generic for a function in another package.
@@ -485,8 +487,8 @@ setMethod <-
 		   ## fix up arg name for single-argument generics
 		   ## useful for e.g. '!'
 		   if(length(fnames) == length(mnames) && length(mnames) == 1) {
-		       warning(gettextf("argument in method definition changed from (%s) to (%s)",
-					mnames, fnames), domain = NA, call. = FALSE)
+		       warning(gettextf("For function \"%s\", signature \"%s\": argument in method definition changed from (%s) to (%s)",
+					f, signature, mnames, fnames), domain = NA, call. = FALSE)
 		       formals(definition) <- formals(fdef)
 		       ll <- list(as.name(formalArgs(fdef))); names(ll) <- mnames
 		       body(definition) <- substituteDirect(body(definition), ll)

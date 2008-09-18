@@ -15,7 +15,7 @@
 \usage{
 setGeneric(name, def= , group=list(), valueClass=character(),
            where= , package= , signature= , useAsDefault= ,
-           genericFunction= )
+           genericFunction= , simpleInheritanceOnly = )
 
 setGroupGeneric(name, def= , group=list(), valueClass=character(),
                 knownMembers=list(), package= , where= )
@@ -78,8 +78,6 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
    signature argument explicitly.  See the \dQuote{Implicit
       Generic} section below for more details.
   }
-  \item{genericFunction}{ Don't use; for (possible) internal use only.
-  }
   \item{useAsDefault}{
     Override the usual choice of default argument (an existing
     non-generic function or no default if there is no such function).
@@ -91,6 +89,22 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
     \code{TRUE} says to use the existing function as default,
     unconditionally (hardly ever needed as an explicit argument).
     See the section on details.
+  }
+  \item{simpleInheritanceOnly}{
+      Supply this argument as \code{TRUE} to require that methods
+      selected be inherited through simple inheritance only; that is,
+      from superclasses specified in the \code{contains=} argument to
+      \code{\link{setClass}}, or by simple inheritance to a class
+      union or other virtual class.  Generic functions should require
+      simple inheritance if they need to be assured that they get the
+      complete original object, not one that has been transformed.
+      Examples of functions requiring simple inheritance are
+      \code{\link{initialize}}, because by definition it must return
+      an object from the same class as its argument, and
+      \code{\link{show}}, because it claims to give a full description
+      of the object provided as its argument.
+    }
+  \item{genericFunction}{ Don't use; for (possible) internal use only.
   }
 
   \item{knownMembers}{

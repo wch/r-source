@@ -149,7 +149,7 @@
             value
         }
     if(!isGeneric("initialize", envir)) {
-        setGeneric("initialize",  .initGeneric, where = envir, useAsDefault = TRUE)
+        setGeneric("initialize",  .initGeneric, where = envir, useAsDefault = TRUE, simpleInheritanceOnly = TRUE)
     }
     .InitTraceFunctions(envir)
     setMethod("initialize", "signature",

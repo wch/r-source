@@ -30,7 +30,19 @@ superclasses of \code{class1}.  If argument \code{fullInfo}  is
 \code{TRUE}, the call returns a named list of objects of class \code{\linkS4class{SClassExtension}}; otherwise, just the names of the superclasses.
     }
   \item{\code{setIs}:}{
-      Defines \code{class1} to be an extension (subclass) of \code{class2}, with \code{coerce} and \code{replace} defining methods to coerce to the superclass and to replace the part corresponding to the superclass.
+      Defines \code{class1} to be an extension (subclass) of
+      \code{class2}.
+      If \code{class2} is an existing virtual class, such as a class
+      union, then only the two classes need to be supplied in the
+      call, if the implied inherited methods work for \code{class1}.
+      See the details section below.
+
+      Alternatively, arguments
+      \code{coerce} and \code{replace} should be supplied, defining
+      methods to coerce to the superclass and to replace the part
+      corresponding to the superclass. As discussed in the details and
+      other sections below, this form is often less recommended than the
+      corresponding call to \code{\link{setAs}}, to which it is an alternative. 
     }
   }
 }
@@ -90,31 +102,66 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
 
 \section{Details}{
 
-    The function \code{setIs} establishes an inheritance relation between two
-    classes, by some means other than having one class contain the
-    other.  It should \emph{not} be used for ordinary relationships:
-    either include the second class in the \code{contains=} argument
-    to \code{\link{setClass}} if the class is contained in the usual
-    way, or consider \code{\link{setClassUnion}} to define a virtual class
-    that is extended by several ordinary classes.  
+  Arranging for a class to inherit from another class is a key tool in
+  programming.  In \R, there are three basic techniques, the first two
+  providing what is called  \dQuote{simple} inheritance, the preferred form:
+  \enumerate{
 
-    A call to
-    \code{setIs} does make sense, for example, if one class ought to be
-    automatically convertible into a second class, but they have
-    different representations, so that the conversion must be done by
-    an explicit computation, not just by inheriting slots.
-    In this case, you will typically need to provide both a
-    \code{coerce=} and \code{replace=} argument to \code{setIs}.
+  \item
+    By the \code{contains=} argument in a call to \code{\link{setClass}}.  This
+      is and should be the most common mechanism.  It arranges that the new
+      class contains all the structure of the existing class, and in
+      particular all the slots with the same class specified.  The
+      resulting class extension is defined to be \code{simple}, with
+      important implications for method definition (see the section on
+      this topic below).
+ 
+  \item
+     Making \code{class1} a subclass of a virtual class
+      either by a call to \code{\link{setClassUnion}} to make the
+      subclass a member of a new class union, or by a call to
+      \code{setIs} to add a class to an existing class union or as a new
+      subclass of an existing virtual class.  In either case, the
+      implication should be that methods defined for the class union or
+      other superclass all work correctly for the subclass.  This may
+      depend on some similarity in the structure of the subclasses or
+      simply indicate that the superclass methods are defined in terms
+      of generic functions that apply to all the subclasses.  These
+      relationships are also generally simple.
 
-    Another reasonable use of \code{setIs} may be to relate two
-    classes with  some common slots, but in which one class (the
-    subclass) puts extra
-    constraints on the values in some slots.  In this case, simple
-    \code{contains=} relations will generate methods for coercing to
-    the class with the constraints that can produce invalid objects.
+
+  \item
+    Supplying \code{coerce}  and \code{replace} arguments to \code{setAs}.
+      \R allows arbitrary inheritance relationships, using the same
+      mechanism for defining coerce methods by a call to
+      \code{\link{setAs}}.  The difference between the  two is simply
+      that \code{\link{setAs}} will require a call to \code{\link{as}}
+      for a conversion to take place, whereas after the call to
+      \code{\link{setIs}}, objects will be automatically converted to
+      the superclass.
+
+      The automatic feature is the dangerous part, mainly because it
+      results in the subclass potentially inheriting methods that do
+      not work.  See the section on inheritance below.  If the two
+      classes involved do not actually inherit a large collection of
+      methods, as in the first example below, the danger may be
+      relatively slight.
+
+      If the superclass inherits methods where the subclass has only a
+      default or remotely inherited method, problems are more likely.
+      In this case, a general
+      recommendation is to use the \code{\link{setAs}} mechanism
+      instead, unless there is a strong counter reason. Otherwise, be prepared to
+      override some of  the methods inherited.
+
+  }
+ 
+  With this caution given, the rest of this section describes what
+  happens when
+    \code{coerce=} and \code{replace=} argument are supplied to \code{setIs}.
 
 
-  The \code{coerce} and \code{replace} arguments are functions the
+  The \code{coerce} and \code{replace} arguments are functions that
   define how to coerce a \code{class1} object to \code{class2}, and
   how to replace the part of the subclass object that corresponds to
   \code{class2}.  The first of these is a function of one argument
@@ -172,6 +219,68 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
   distinctions such as two classes that have the same representation,
   but with only one of them obeying certain additional constraints.
 }
+\section{Inherited methods}{
+  A method written for a particular signature (classes matched to one
+  or more formal arguments to the function) naturally assumes that the
+  objects corresponding to the arguments can be treated as coming from
+  the corresponding classes.  The objects will have all the slots and
+  available methods for the classes.
+
+  The code that selects and dispatches the methods ensures that this
+  assumption is correct.  If the inheritance was \dQuote{simple}, that
+  is, defined by one or more uses of the \code{contains=} argument in
+  a call to \code{\link{setClass}}, no extra work is generally
+  needed.  Classes are inherited from the superclass, with the same
+  definition.
+
+  When inheritance is defined by a general call to
+  \code{setIs}, extra computations are required.  This form of
+  inheritance implies that the subclass does \emph{not} just contain
+  the slots of the superclass, but instead requires the explicit call
+  to the coerce and/or replace method.  To ensure correct computation,
+  the inherited method is supplemented by calls to \code{\link{as}}
+  before the body of the method is evaluated.
+
+  The calls to \code{\link{as}} generated in this case have the
+  argument \code{strict = FALSE}, meaning that extra information can
+  be left in the converted object, so long as it has all the
+  appropriate slots.  (It's this option that allows simple subclass
+  objects to be used without any change.)  When you are writing your
+  coerce method, you may want to take advantage of that option.
+
+  Methods inherited through non-simple extensions can result in ambiguities
+  or unexpected selections.  If \code{class2} is a specialized class
+  with just a few applicable methods, creating the inheritance
+  relation may have little effect on the behavior of \code{class1}.
+  But if \code{class2} is a class with many methods, you may
+  find that you now inherit some undesirable methods for
+  \code{class1}, in some cases, fail to inherit expected methods.
+  In the second example below, the non-simple inheritance from class
+  \code{"factor"} might be assumed to inherit S3 methods via that
+  class.  But the S3 class is ambiguous, and in fact is
+  \code{"character"} rather than \code{"factor"}.
+
+  For some generic functions, methods inherited by non-simple
+  extensions are either known to be invalid or sufficiently likely to
+  be so that the generic function has been defined to exclude such
+  inheritance.  For example \code{\link{initialize}} methods must
+  return an object of the target class; this is straightforward if the
+  extension is simple, because no change is made to the argument
+  object, but is essentially impossible.  For this reason, the generic
+  function insists on only simple extensions for inheritance.  See the
+  \code{simpleInheritanceOnly} argument to \code{\link{setGeneric}}
+  for the mechanism.  You can use this mechanism when defining new
+  generic functions.
+
+  If you get into problems with functions that do allow non-simple
+  inheritance, there are two basic choices.  Either 
+  back off from the \code{setIs} call and settle for explicit coercing
+  defined by a call to \code{\link{setAs}}; or, define explicit
+  methods involving \code{class1} to override the bad inherited
+  methods.  The first choice is the safer, when there are serious
+  problems.
+
+}
 \references{
  Chambers, John M. (2008)
  \emph{Software for Data Analysis: Programming with R}
@@ -188,9 +297,17 @@ setClass("track",
          representation(x="numeric", y="numeric"))
 ## A class extending the previous, adding one more slot
 }
-## a class definition (see \link{setClass} for the example)
-setClass("trackCurve",
-         representation("track", smooth = "numeric"))
+## Two examples of setIs() with coerce= and replace= arguments
+## The first one works fairly well, because neither class has many
+## inherited methods do be disturbed by the new inheritance
+
+## The second example does NOT work well, because the new superclass,
+## "factor", causes methods to be inherited that should not be.
+
+## First example:
+## a class definition (see \link{setClass} for class "track")
+setClass("trackCurve", contains = "track",
+         representation( smooth = "numeric"))
 ## A class similar to "trackCurve", but with different structure
 ## allowing matrices for the "y" and "smooth" slots
 setClass("trackMultiCurve",
@@ -206,7 +323,7 @@ setIs("trackCurve",
         new("trackMultiCurve",
             x = obj@x,
             y = as.matrix(obj@y),
-            curve = as.matrix(obj@smooth))
+            smooth = as.matrix(obj@smooth))
       },
       replace = function(obj, value) {
         obj@y <- as.matrix(value@y)
@@ -214,27 +331,44 @@ setIs("trackCurve",
         obj@smooth <- as.matrix(value@smooth)
         obj})
 
-## Automatically convert the other way, but ONLY
-## if the y data is one variable.
-setIs("trackMultiCurve",
-      "trackCurve",
-      test = function(obj) {ncol(obj@y) == 1},
-      coerce = function(obj) {
-        new("trackCurve",
-            x = slot(obj, "x"),
-            y = as.numeric(obj@y),
-            smooth = as.numeric(obj@smooth))
-      },
-      replace = function(obj, value) {
-        obj@y <- matrix(value@y, ncol=1)
-        obj@x <- value@x
-        obj@smooth <- value@smooth
-        obj})
+
 \dontshow{
 removeClass("trackMultiCurve")
 removeClass("trackCurve")
 removeClass("track")
 }
+
+## Second Example:
+## A class that adds a slot to "character"
+setClass("stringsDated", contains = "character", representation(stamp="POSIXt"))
+
+## Convert automatically to a factor by explicit coerce 
+setIs("stringsDated", "factor",
+   coerce = function(from){factor(from@.Data)}, 
+   replace=function(from, value){
+       from@.Data<- as.character(value); from})
+
+\dontshow{
+
+set.seed(750)
+}
+ll <- sample(letters, 10, replace = TRUE)
+ ld <- new("stringsDated", ll, stamp = Sys.time())
+
+levels(as(ld, "factor"))
+
+levels(ld) # will be NULL--see comment in section on inheritance above.
+
+## In contrast, a class that simply extends "factor" has no such amiguities
+
+setClass("factorDated", contains = "factor", representation(stamp="POSIXt"))
+
+fd = new("factorDated", factor(ll), stamp = Sys.time())
+
+identical(levels(fd), levels(as(fd, "factor")))
+
+
+
 }
 \keyword{programming}
 \keyword{classes}

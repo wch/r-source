@@ -358,7 +358,7 @@
                   .Object
               }, where = envir)
     if(!isGeneric("show", envir))
-        setGeneric("show", where = envir)
+        setGeneric("show", where = envir, simpleInheritanceOnly = TRUE)
     setMethod("show", "traceable", .showTraceable, where = envir)
 }
 

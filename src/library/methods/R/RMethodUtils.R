@@ -26,7 +26,8 @@
            valueClass = character(),
            package = getPackageName(environment(fdef)),
            signature = NULL,
-           genericFunction = NULL) {
+           genericFunction = NULL,
+           simpleInheritanceOnly = NULL) {
       checkTrace <- function(fun, what, f) {
           if(is(fun, "traceable")) {
               warning(gettextf("the function being used as %s in making a generic function for \"%s\" is currently traced; the function used will have tracing removed",
@@ -84,6 +85,7 @@
       }
       if(length(signature) == 0)
           stop("no suitable arguments to dispatch methods in this function")
+      attr(signature, "simpleOnly") <- simpleInheritanceOnly # usually NULL
       value@signature <- signature
       name <- signature[[1]]
       if(is.null(fdefault))
@@ -126,7 +128,7 @@ makeGeneric <-
       function(f, fdef,
            fdefault = getFunction(f, generic = FALSE, mustFind = FALSE),
            group = list(), valueClass = character(), package, signature = NULL,
-           genericFunction = NULL) {
+           genericFunction = NULL, simpleInheritanceOnly = NULL) {
       ## give the function a new environment, to cache methods later
       ev <- new.env()
       parent.env(ev) <- environment(fdef)
@@ -154,6 +156,7 @@ makeGeneric <-
           stop(gettextf("non-arguments found in the signature: %s",
                         paste(signature[is.na(match(signature, args))],
                               collapse = ", ")), domain = NA)
+      attr(signature, "simpleOnly") <- simpleInheritanceOnly # usually NULL
       dots <- match("...", signature)
       if(!is.na(dots)) ## ... is not currently supported in method signatures
           signature <- signature[-dots]

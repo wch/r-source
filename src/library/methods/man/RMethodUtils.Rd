@@ -61,8 +61,9 @@ getGroupMembers(group, recursive = FALSE, character = TRUE)
 getMethodsMetaData(f, where)
 assignMethodsMetaData (f, value, fdef, where, deflt)
 
-makeGeneric(f, fdef, fdefault, group=list(), valueClass=character(),
-            package, signature = NULL, genericFunction = NULL)
+makeGeneric(f, fdef, fdefault =, group=list(), valueClass=character(),
+            package =, signature = NULL, genericFunction = NULL,
+            simpleInheritanceOnly = NULL)
 
 makeStandardGeneric(f, fdef)
 
