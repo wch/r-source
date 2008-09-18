@@ -11,6 +11,9 @@
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
+    o   var(),cov(),cor() etc now by default (when 'use' is not specified)
+    	return NA in many cases where they signalled an error before.
+
 
 NEW FEATURES
 
@@ -320,6 +323,9 @@ NEW FEATURES
     o	browseURL() has a new argument 'encodeIfNeeded' to use
 	URLencode() in cases where it seems likely that would be
 	helpful.  (Unfortunately, those are hard to guess.)
+
+    o	splinefun() has a new method = "monoH.FC" for monotone Hermite
+	spline interpolation.
 
 
 INSTALLATION
