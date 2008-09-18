@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-08-31
+@set FAQ_DATE @value{FAQ_YEAR}-09-17
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 7
@@ -1951,6 +1951,8 @@ Concordance probability estimates in survival analysis.
 @c </COMMENT>
 @item CTFS
 The CTFS large plot forest dynamics analyses.
+@item CTT
+Classical Test Theory functions.
 @item CVThresh
 Level-dependent Cross-Validation Thresholding.
 @item Cairo
@@ -2062,6 +2064,8 @@ Estimation of missing values in a matrix by a @math{k}-th nearest
 neighboors algorithm.
 @item ETC
 Tests and simultaneous confidence intervals for equivalence to control.
+@item EVER
+Estimation of Variance by Efficient Replication.
 @item EbayesThresh
 Empirical Bayes thresholding and related methods.
 @item Ecdat
@@ -2137,6 +2141,9 @@ Platform and X11 independent device for creating bitmaps (png, gif and
 jpeg) using the GD graphics library.
 @item GEOmap
 Topographic and geologic mapping.
+@item GExMap
+Functions for the analysis of genomic distribution of genes lists
+produced by transcriptomic studies.
 @item GLDEX
 Fit RS and FMKL generalised lambda distributions using discretized and
 maximum likelihood methods.
@@ -2355,8 +2362,13 @@ Data sets and sample analyses from ``Mixed-effects Models in S and
 S-PLUS'' by J. Pinheiro and D. Bates, 2000, Springer.
 @item MFDA
 Model Based Functional Data Analysis.
+@item MIfuns
+Pharmacometric tools for data preparation, analysis, simulation, and
+reporting.
 @item MKLE
 Maximum kernel likelihood estimation.
+@item MKmisc
+Miscellaneous Functions from M. Kohl.
 @item MLDA
 Methylation Linear Discriminant Analysis (MLDA).
 @item MLDS
@@ -2377,6 +2389,8 @@ Sons.
 @item MSBVAR
 Bayesian vector autoregression models, impulse responses and
 forecasting.
+@item MSVAR
+Markov Switching VAR.
 @c <COMMENT>
 @c Moved to the Archive on 2006-04-20 as requested by the maintainer.
 @c @item Malmig
@@ -2707,6 +2721,8 @@ statistical computing can be carried out.
 @c @item Rnotes
 @c The data sets for the exercises in ``An Introduction to R''
 @c (@pxref{What documentation exists for R?}).
+@item RobAStBase
+Base classes and functions for robust asymptotic statistics.
 @item RobLox
 Optimally robust influence curves for location and scale.
 @item RobRex
@@ -2718,6 +2734,8 @@ Seismic tools for R.
 @item Rserve
 A socket server (TCP/IP or local sockets) which allows binary requests
 to be sent to R.
+@item Rsge
+Interface to the SGE cluster/grid queuing system.
 @c REMOVED 2001-12-08
 @c @item Rstreams
 @c Binary file stream support functions.
@@ -2774,12 +2792,14 @@ Annotation for SNP microarrays and pooling in R.
 SNP-based whole genome association studies.
 @item SNPmaxsel
 Maximally selected statistics for SNP data.
-@item SRPM
-Shared Reproducibility Package Management.
 @item SQLiteMap
 Manage vector graphical maps using SQLite.
 @item SQLiteDF
 Stores data frames and matrices in SQLite tables.
+@item SRPM
+Shared Reproducibility Package Management.
+@item STAR
+Spike Train Analysis with R.
 @item SciViews
 A bundle of packages to implement a full reusable @acronym{GUI} API for
 R.  Contains @strong{svGUI} with the main @acronym{GUI} features,
@@ -2788,8 +2808,6 @@ import/export, @strong{svMisc} with miscellaneous supporting functions,
 and @strong{svViews} providing views and report features (views are
 @acronym{HTML} presentations of the content of R objects, combining
 text, tables and graphs in the same document).
-@item SiZer
-Significant Zero crossings.
 @item SemiPar
 Functions for semiparametric regression analysis, to complement the
 book ``Semiparametric Regression'' by R. Ruppert, M. P. Wand, and
@@ -2804,10 +2822,16 @@ Sequential KNN imputation.
 @item SharedHT2
 Shared Hotelling @math{T^2} test for small sample microarray
 experiments.
+@item SiZer
+Significant Zero crossings.
 @item SimHap
 A comprehensive modeling framework for epidemiological outcomes and a
 multiple-imputation approach to haplotypic analysis of population-based
 data.
+@item SimpleTable
+Bayesian inference and sensitivity analysis for causal effects from
+@math{2 x 2} and @math{2 x 2 x K} tables in the presence of unmeasured
+confounding.
 @item Snowball
 Snowball stemmers.
 @item SoDA
@@ -2881,6 +2905,8 @@ Trees WIth eXtra splits.
 A set of demonstration functions that can be used in a classroom to
 demonstrate statistical concepts, or on your own to better understand
 the concepts or the programming.
+@item TinnR
+Resources for the Tinn-R GUI/Editor for R.
 @item TraMineR
 Sequences and trajectories mining for social scientists.
 @item TwoWaySurvival
@@ -3220,6 +3246,8 @@ Special models for categorical variables.
 @item cba
 Clustering for Business Analytics, including implementations of Proximus
 and Rock.
+@item ccgarch
+Conditional Correlation GARCH models.
 @item cclust
 Convex clustering methods, including @math{k}-means algorithm, on-line
 update algorithm (Hard Competitive Learning) and Neural Gas algorithm
@@ -3359,6 +3387,8 @@ Find disconnected sets for two-way classification.
 Continued fractions.
 @item contrast
 A collection of contrast methods.
+@item convexHaz
+Nonparametric MLE/LSE of convex hazard.
 @item copas
 Statistical methods to model and adjust for bias in meta-analysis.
 @item copula
@@ -3481,6 +3511,8 @@ objects using the md5 and sha-1 algorithms permitting easy comparison of
 R language objects.
 @item diptest
 Compute Hartigan's dip test statistic for unimodality.
+@item dirichlet
+Dirichlet model of consumer buying behavior for marketing research.
 @item dispmod
 Functions for modelling dispersion in GLMs.
 @item distr
@@ -3491,12 +3523,20 @@ Documentation for packages @strong{distr}, @strong{distrEx},
 @strong{distrSim}, and @strong{distrTEst}.
 @item distrEx
 Extensions of package @strong{distr}.
+@item distrMod
+Object orientated implementation of probability models based on
+@strong{distr} and @strong{distrEx}.
 @item distrSim
 Simulation classes based on package @strong{distr}.
 @item distrTEst
 Estimation and Testing classes based on package @strong{distr}.
+@item distrTeach
+Extensions of @strong{distr} for teaching stochastics/statistics in
+secondary school.
 @item distributions
 Probability distributions based on TI-83 Plus.
+@item divagis
+Tools for quality checks of georeferenced plant species accessions.
 @item diveMove
 Dive analysis and calibration.
 @item dlm
@@ -3609,6 +3649,8 @@ distributions, hierarchical clustering by e-distances.
 @item ensembleBMA
 Probabilistic forecasting using Bayesian Model Averaging of ensembles
 using a mixture of normal distributions.
+@item entropy
+Entropy estimation.
 @item epiR
 Functions for analyzing epidemiological data.
 @item epibasix
@@ -3622,6 +3664,8 @@ Basic tools for applied epidemiology.
 @c @item epsi
 @c Edge Preserving Smoothing for Images.
 @c </COMMENT>
+@item eqtl
+Tools for analyzing eQTL experiments.
 @item equivalence
 Tests and graphics for assessing tests of equivalence.
 @item ergm
@@ -3932,6 +3976,8 @@ including some latent class models via EM and Fisher scoring approaches.
 Fitting Generalized Linear Models subject to Constraints.
 @item glmmAK
 Generalized Linear Mixed Models.
+@item glmmBUGS
+Generalised Linear Mixed Models with WinBUGS.
 @item glmmML
 A Maximum Likelihood approach to generalized linear models with random
 intercept.
@@ -4060,6 +4106,8 @@ data with any numbers of levels in the hierarchy, and tests for the
 significance of each F and variance components.
 @item hints
 Provide hints on what to do next.
+@item hlr
+Hidden logistic regression.
 @item hmm.discnp
 Hidden Markov models with discrete non-parametric observation
 distributions.
@@ -4469,6 +4517,9 @@ optimization library, solving the nonlinear least squares problem by a
 modification of the Levenberg-Marquardt algorithm.
 @item misc3d
 A collection of miscellaneous 3d plots, including rgl-based isosurfaces.
+@item mirf
+Multiple Imputation and Random Forests for unobservable phase,
+high-dimensional data.
 @item mitools
 Tools to perform analyses and combine results from multiple-imputation
 datasets.
@@ -4479,6 +4530,8 @@ continuous data.
 Mixtures of proportional hazard models.
 @item mixdist
 Finite mixture distribution models.
+@item mixnet
+Random graph clustering via estimation of Erd@H{o}s-R@'enyi mixtures.
 @item mixreg
 Functions to fit mixtures of regressions.
 @item mixstock
@@ -5131,6 +5184,8 @@ Completion generator for R.  @emph{Recommended} for R 2.5.0 or 2.6.0.
 @c </COMMENT>
 @item rda
 Shrunken Centroids Regularized Discriminant Analysis.
+@item rdetools
+Relevant Dimension Estimation (RDE) in feature spaces.
 @item realized
 Realized variance toolkit.
 @item ref
@@ -5273,6 +5328,8 @@ Unified object oriented interface for multiple independent streams of
 random numbers from different sources.
 @item rtiff
 Read TIFF format images and return them as pixmap objects.
+@item runjags
+Run Bayesian MCMC models in the BUGS syntax using JAGS.
 @item rv
 Simulation-based random variable object class.
 @item rwm
@@ -5681,6 +5738,8 @@ Data'' by T.  Martinussen and T. Scheike, 2006, Springer Verlag, plus
 more recent developments.
 @item timsac
 TIMe Series Analysis and Control package.
+@item tis
+Time indexes and time indexed series.
 @item titan
 Titration analysis for mass spectrometry data.
 @item titecrm
