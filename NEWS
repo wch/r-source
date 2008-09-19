@@ -492,6 +492,9 @@ BUG FIXES
     o	write.dcf() did not escape "." according to Debian policy
 	(PR#12816).
 
+    o	col2rgb() sometimes opened a graphics device unnecessarily, and
+	col2rgb(NA) did not return a transparent color, as documented.
+
 
 
 
