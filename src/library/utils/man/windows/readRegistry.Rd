@@ -5,7 +5,7 @@
   Read values of keys in the Windows Registry, and optionally whole hives.
 }
 \usage{
-readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC, HPD"),
+readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
              maxdepth = 1)
 }
 \arguments{

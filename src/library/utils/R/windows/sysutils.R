@@ -72,5 +72,5 @@ menuShowCRAN <- function()
 shortPathName <- function(path) .Internal(shortPathName(path))
 
 readRegistry <-
-    function(key, hive=c("HLM", "HCR", "HCU", "HU", "HCC, HPD"), maxdepth = 1)
+    function(key, hive=c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"), maxdepth = 1)
     .Internal(readRegistry(key, match.arg(hive), maxdepth))

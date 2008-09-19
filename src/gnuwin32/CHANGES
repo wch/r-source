@@ -68,6 +68,9 @@ BUG FIXES
 
     o	The Korean translation of the RGui menus has been corrected
     	and restored.  (Thanks to June Kim and Seung-ho Kang.)
+    	
+    o	The list of hives in the readRegistry() defaults contained
+    	a typo; error messages were incomplete. (PR#12937)
 
 
 
