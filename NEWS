@@ -327,6 +327,9 @@ NEW FEATURES
     o	splinefun() has a new method = "monoH.FC" for monotone Hermite
 	spline interpolation.
 
+    o	intToUtf8() and intToBits() now accept numeric vectors,
+	truncating them to integers.
+
 
 INSTALLATION
 
