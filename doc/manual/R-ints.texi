@@ -2384,7 +2384,7 @@ struct _GEDevDesc @{
 So this is essentially a device structure plus information about the
 device maintained by the graphics engine and normally@footnote{It is
 possible for the device to find the @code{GEDevDesc} which points to its
-@code{DevSec}, and this is done often enough that there is a
+@code{DevDesc}, and this is done often enough that there is a
 convenience function @code{desc2GEDesc} to do so.} visible to the engine
 and not to the device.  Type @code{pGEDevDesc} is a pointer to this
 type.
@@ -2532,7 +2532,7 @@ character, and so needs to include left and right bearings.
 The @emph{interpretation} of @samp{c} depends on the locale.  Using
 @code{c = 0} used to give an indication of the size of the font: it
 often returned the measurements for character @code{"M"}---however it is
-not longer used as from @R{} 2.7.0.  In a single-byte locale values
+no longer used as from @R{} 2.7.0.  In a single-byte locale values
 @code{32...255} indicate the corresponding character in the locale (if
 present).  For the symbol font (as used by @samp{graphics::par(font=5)},
 @samp{grid::gpar(fontface=5}) and by `plotmath'), values @code{32...126,
