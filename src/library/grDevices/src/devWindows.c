@@ -617,14 +617,13 @@ static void SetFont(pGEcontext gc, double rot, gadesc *xd)
 	    xd->font = gnewfont(xd->gawin,
 				fontfamily, fontstyle[face - 1],
 				size, rot, usePoints);
-	    if (xd->font)
-                strcpy(xd->fontfamily, gc->fontfamily);
 	} else {
             xd->font = gnewfont(xd->gawin,
 				fontname[face - 1], fontstyle[face - 1],
 				size, rot, usePoints);
 	}
 	if (xd->font) {
+            strcpy(xd->fontfamily, gc->fontfamily);	
 	    xd->fontface = face;
 	    xd->fontsize = size;
 	    xd->fontangle = rot;
