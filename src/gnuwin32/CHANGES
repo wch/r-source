@@ -107,6 +107,9 @@ BUG FIXES
     o	The clip region was sometimes wrong when printing from the
 	menu on a windows() graphics device (in 2.7.2 only).
 
+    o	The windows() device would sometimes ignore font family
+    	requests (PR#12931).	
+
 
 
 		CHANGES IN R VERSION 2.7.2
