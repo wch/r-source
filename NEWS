@@ -1,6 +1,22 @@
 			Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       2.9 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.9.0
+
+NEW FEATURES
+
+BUG FIXES
+
+
+
+
+	**************************************************
+	*						 *
 	*	       2.8 SERIES NEWS			 *
 	*						 *
 	**************************************************
@@ -329,6 +345,10 @@ NEW FEATURES
 
     o	intToUtf8() and intToBits() now accept numeric vectors,
 	truncating them to integers.
+
+    o	pdf() and postscript() when using Type1 (T1) fonts (as per default
+	for most users) now more carefully kern, i.e., compute
+	intercharacter distances when placing text, thanks to Ei-ji Nakama.
 
 
 INSTALLATION

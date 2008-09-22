@@ -555,7 +555,7 @@ PostScriptLoadFontMetrics(const char * const fontpath,
 #endif
 
     if(strchr(fontpath, FILESEP[0])) strcpy(buf, fontpath);
-    else 
+    else
 #ifdef USE_GZIO
 	snprintf(buf, BUFSIZE,"%s%slibrary%sgrDevices%safm%s%s.gz",
 		 R_Home, FILESEP, FILESEP, FILESEP, FILESEP, fontpath);
@@ -846,8 +846,8 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	return;
     }
 
-#ifdef SUPPORT_MBCS   
-    if (c < 0) { Unicode = TRUE; c = -c; } 
+#ifdef SUPPORT_MBCS
+    if (c < 0) { Unicode = TRUE; c = -c; }
     /* We don't need the restriction to 65536 here any more as we could
        convert from  UCS4ENC, but there are few language chars above 65536. */
     if(Unicode && !isSymbol && c >= 128 && c < 65536) { /* Unicode */
@@ -1478,8 +1478,8 @@ SEXP Type1FontInUse(SEXP name, SEXP isPDF)
 {
     if (!isString(name) || LENGTH(name) > 1)
 	error(_("Invalid font name or more than one font name"));
-    return ScalarLogical( 
-	findLoadedFont(CHAR(STRING_ELT(name, 0)), NULL, asLogical(isPDF)) 
+    return ScalarLogical(
+	findLoadedFont(CHAR(STRING_ELT(name, 0)), NULL, asLogical(isPDF))
 	!= NULL);
 }
 
@@ -1512,7 +1512,7 @@ SEXP CIDFontInUse(SEXP name, SEXP isPDF)
     if (!isString(name) || LENGTH(name) > 1)
 	error(_("Invalid font name or more than one font name"));
     return ScalarLogical(
-	findLoadedCIDFont(CHAR(STRING_ELT(name, 0)), asLogical(isPDF)) 
+	findLoadedCIDFont(CHAR(STRING_ELT(name, 0)), asLogical(isPDF))
 	!= NULL);
 }
 
@@ -2749,6 +2749,96 @@ static void PostScriptCircle(FILE *fp, double x, double y, double r)
     fprintf(fp, "%.2f %.2f %.2f c ", x, y, r);
 }
 
+/* added for 2.8.0 (donated by Ei-ji Nakama) : */
+#define KERNING_PS 0
+#define KERNING_PDF 1
+static void PostScriptWriteT1KerningString(FILE *fp, const char *str,
+					   const int mode,
+					   FontMetricInfo *metrics,
+					   const pGEcontext gc)
+{
+    const unsigned char *p = NULL, *str1 = str;
+    unsigned char p1, p2;
+    int i,j;
+    double ary_buf[128];
+    double *ary;
+
+    if(strlen(str) > sizeof(ary_buf)/sizeof(double)){
+	ary = calloc(strlen(str),sizeof(double));
+	if(!ary)
+	    return;
+    }
+    else
+	ary = ary_buf;
+
+    for(i=0; str1[i] && str1[i+1]; i++){
+	ary[i] = 0.;
+	p1 = str1[i];
+	p2 = str1[i+1];
+#ifdef USE_HYPHEN
+	if (p1 == '-' && !isdigit((int)p2))
+	    p1 = (unsigned char)PS_hyphen;
+#endif
+	if(mode == KERNING_PS)
+	    ary[i]=(double)metrics->CharInfo[p1].WX;
+	for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++) {
+	    if(metrics->KernPairs[j].c2 == p2 &&
+	       metrics->KernPairs[j].c1 == p1	) {
+		ary[i] += (double)metrics->KernPairs[j].kern;
+		break;
+	    }
+	}
+	if (mode == KERNING_PS)
+	    ary[i] *= 0.001 * floor(gc->cex * gc->ps + 0.5);
+    }
+
+    if(mode == KERNING_PDF)
+	fputc('[', fp);
+    fputc('(', fp);
+    for(i=0; str1[i]; i++) {
+	switch(str1[i]) {
+	case '\n':
+	    fprintf(fp, "\\n");
+	    break;
+	case '\\':
+	    fprintf(fp, "\\\\");
+	    break;
+	case '-':
+#ifdef USE_HYPHEN
+	    if (!isdigit((int)str1[i+1]))
+		fputc(PS_hyphen, fp);
+	    else
+#endif
+		fputc(str1[i], fp);
+	    break;
+	case '(':
+	case ')':
+	    fprintf(fp, "\\%c", str1[i]);
+	    break;
+	default:
+	    fputc(str1[i], fp);
+	    break;
+	}
+	if( mode == KERNING_PDF && (int)ary[i] != 0 && str1[i+1] )
+	    fprintf(fp, ") %d (", (int)(ary[i]*-1));
+    }
+    fputc(')', fp);
+    if(mode == KERNING_PDF)
+	fputc(']', fp);
+
+    fputc(' ', fp);
+
+    if(mode == KERNING_PS) {
+	fputc('[', fp);
+	for(i=0; str1[i] && str1[i+1]; i++)
+	    fprintf(fp, "%.2f ", ary[i]);
+	fputc(']', fp);
+    }
+    if(ary != ary_buf)
+	free(ary);
+}
+
+static FontMetricInfo *metricInfo(const char *, int, PostScriptDesc *);
 static void PostScriptWriteString(FILE *fp, const char *str)
 {
     fputc('(', fp);
@@ -2780,10 +2870,23 @@ static void PostScriptWriteString(FILE *fp, const char *str)
 }
 
 static void PostScriptText(FILE *fp, double x, double y,
-			   const char *str, double xc, double yc, double rot)
+			   const char *str, double xc, double yc, double rot,
+			   const pGEcontext gc,
+			   pDevDesc dd)
 {
+    PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
+    int face = gc->fontface;
+    if(face < 1 || face > 5) face = 1;
+
     fprintf(fp, "%.2f %.2f ", x, y);
-    PostScriptWriteString(fp, str);
+
+    if (isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont))
+       PostScriptWriteT1KerningString(fp, str,
+				      KERNING_PS,
+				      metricInfo(gc->fontfamily, face, pd),
+				      gc);
+    else
+       PostScriptWriteString(fp, str);
 
     if(xc == 0) fprintf(fp, " 0");
     else if(xc == 0.5) fprintf(fp, " .5");
@@ -2799,7 +2902,10 @@ static void PostScriptText(FILE *fp, double x, double y,
     else if(rot == 90) fprintf(fp, " 90");
     else fprintf(fp, " %.2f", rot);
 
-    fprintf(fp, " t\n");
+    if (isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont))
+       fprintf(fp, " tk\n");
+    else
+       fprintf(fp, " t\n");
 }
 
 #ifdef SUPPORT_MBCS
@@ -3310,7 +3416,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     /* GREset(.)  dd->gp.mkh = dd->gp.cra[0] * dd->gp.ipr[0]; */
 
     dd->canClip = TRUE;
-    dd->canHAdj = 2;
+    dd->canHAdj = 0;
     dd->canChangeGamma = FALSE;
 
     /*	Start the driver */
@@ -3979,7 +4085,7 @@ static void drawSimpleText(double x, double y, const char *str,
     CheckAlpha(gc->col, pd);
     if(R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
-	PostScriptText(pd->psfp, x, y, str, hadj, 0.0, rot);
+	PostScriptText(pd->psfp, x, y, str, hadj, 0.0, rot, gc, dd);
     }
 }
 
@@ -4014,7 +4120,7 @@ static void mbcsToSbcs(const char *in, char *out, const char *encoding,
     }
 #endif
 
-    if ((void*)-1 == 
+    if ((void*)-1 ==
 	(cd = Riconv_open(encoding, (enc == CE_UTF8) ? "UTF-8" : "")))
 	error(_("unknown encoding '%s' in 'mbcsToSbcs'"), encoding);
 
@@ -4026,14 +4132,14 @@ next_char:
     status = Riconv(cd, &i_buf, &i_len, &o_buf, &o_len);
     if(status == (size_t) -1 && errno == EILSEQ) {
 	warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"),
-		in, (unsigned char) *i_buf), 
+		in, (unsigned char) *i_buf),
 	*o_buf++ = '.'; i_buf++; o_len--; i_len--;
-	if(i_len > 0) goto next_char; 
+	if(i_len > 0) goto next_char;
     }
 
     Riconv_close(cd);
     if (status == (size_t)-1)  /* internal error? */
-	error("conversion failure from %s to %s on '%s' in 'mbcsToSbcs'", 
+	error("conversion failure from %s to %s on '%s' in 'mbcsToSbcs'",
 	      (enc == CE_UTF8) ? "UTF-8" : "native", encoding, in);
 }
 
@@ -4098,11 +4204,11 @@ static void PS_Text0(double x, double y, const char *str, int enc,
 	    size_t nb, i_len,  o_len, buflen = ucslen * sizeof(ucs2_t);
 	    size_t status;
 
-            cd = (void*) Riconv_open(cidfont->encoding, 
+            cd = (void*) Riconv_open(cidfont->encoding,
 				     (enc == CE_UTF8) ? "UTF-8" : "");
             if(cd == (void*)-1) {
 		warning(_("failed open converter to encoding '%s'"),
-			cidfont->encoding);		
+			cidfont->encoding);
 		return;
 	    }
 
@@ -4138,7 +4244,7 @@ static void PS_Text0(double x, double y, const char *str, int enc,
 	}
     }
 
-    /* Now using single-byte non-symbol font. 
+    /* Now using single-byte non-symbol font.
 
        Was utf8locale, but it is not entirely obvious that only UTF-8
        needs re-encoding, although we don't have any other MBCSs that
@@ -4984,7 +5090,7 @@ static void XFig_Text(double x, double y, const char *str,
 	/* color, depth, pen_style */
 	fprintf(fp, "%d %d %.4f 4 ", fontnum, (int)size, rot * DEG2RAD);
 	/* font pointsize angle flags (Postscript font) */
-	fprintf(fp, "%d %d ", (int)(size*12), 
+	fprintf(fp, "%d %d ", (int)(size*12),
 		(int)(16.667*XFig_StrWidth(str, gc, dd) +0.5));
 	fprintf(fp, "%d %d ", (int)x, (int)y);
 	if(strcmp(pd->encoding, "none") != 0) {
@@ -5270,7 +5376,7 @@ static Rboolean addPDFDevicefont(type1fontfamily family,
 
 Rboolean
 PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
-		const char *family, const char **afmpaths, 
+		const char *family, const char **afmpaths,
 		const char *encoding,
 		const char *bg, const char *fg, double width, double height,
 		double ps, int onefile, int pagecentre,
@@ -5819,7 +5925,7 @@ static void PDF_SetFill(int color, pDevDesc dd)
 		    R_RED(color)/255.0,
 		    R_GREEN(color)/255.0,
 		    R_BLUE(color)/255.0);
-    
+
 	pd->current.fill = color;
     }
 }
@@ -5951,8 +6057,8 @@ static void PDF_Encodings(PDFDesc *pd)
 	        enc_first=0;
 	    fprintf(pd->pdffp, "/BaseEncoding /PDFDocEncoding\n");
 	    fprintf(pd->pdffp, "/Differences [\n");
-	    while(encoding->enccode[enc_first]){
-		switch (encoding->enccode[enc_first]){
+	    while(encoding->enccode[enc_first]) {
+		switch (encoding->enccode[enc_first]) {
 		  case ' ':
 		  case '\t':
 		  case '\n':
@@ -6480,7 +6586,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
 	    PDF_SetLineStyle(gc, dd);
 	}
 	fprintf(pd->pdffp, "%.2f %.2f %.2f %.2f re", x0, y0, x1-x0, y1-y0);
-	switch(code){
+	switch(code) {
 	case 1: fprintf(pd->pdffp, " S\n"); break;
 	case 2: fprintf(pd->pdffp, " f\n"); break;
 	case 3: fprintf(pd->pdffp, " B\n"); break;
@@ -6507,7 +6613,7 @@ static void PDF_Circle(double x, double y, double r,
 	}
     }
     if (code) {
-	if (semiTransparent(gc->col) || semiTransparent(gc->fill) 
+	if (semiTransparent(gc->col) || semiTransparent(gc->fill)
 	    || r > 10  || !pd->dingbats) {
 	    /*
 	     * Due to possible bug in Acrobat Reader for rendering
@@ -6527,7 +6633,7 @@ static void PDF_Circle(double x, double y, double r,
 			x + r, y - s, x + s, y - r, x, y - r);
 		fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
 			x - s, y - r, x - r, y - s, x - r, y);
-		switch(code){
+		switch(code) {
 		case 1: fprintf(pd->pdffp, "S\n"); break;
 		case 2: fprintf(pd->pdffp, "f\n"); break;
 		case 3: fprintf(pd->pdffp, "B\n"); break;
@@ -6594,7 +6700,7 @@ static void PDF_Polygon(int n, double *x, double *y,
 	    yy = y[i];
 	    fprintf(pd->pdffp, "  %.2f %.2f l\n", xx, yy);
 	}
-	switch(code){
+	switch(code) {
 	case 1: fprintf(pd->pdffp, "s\n"); break;
 	case 2: fprintf(pd->pdffp, "h f\n"); break;
 	case 3: fprintf(pd->pdffp, "b\n"); break;
@@ -6702,6 +6808,7 @@ static int PDFfontNumber(const char *family, int face, PDFDesc *pd)
     return num;
 }
 
+static FontMetricInfo *PDFmetricInfo(const char *, int, PDFDesc *);
 static void PDFSimpleText(double x, double y, const char *str,
 			  double rot, double hadj,
 			  int font,
@@ -6730,8 +6837,16 @@ static void PDFSimpleText(double x, double y, const char *str,
     fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
 	    font,
 	    a, b, -b, a, x, y);
-    PostScriptWriteString(pd->pdffp, str1);
-    fprintf(pd->pdffp, " Tj\n");
+    if (isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
+       PostScriptWriteT1KerningString(pd->pdffp, str1,
+                                      KERNING_PDF,
+                                      PDFmetricInfo(gc->fontfamily, face, pd),
+                                      gc);
+       fprintf(pd->pdffp, " TJ\n");
+    }else{
+       PostScriptWriteString(pd->pdffp, str1);
+       fprintf(pd->pdffp, " Tj\n");
+    }
     textoff(pd); /* added in 2.8.0 */
 }
 
@@ -6885,8 +7000,18 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
 	mbcsToSbcs(str, buff, PDFconvname(gc->fontfamily, pd), enc);
 	str1 = buff;
     }
-    PostScriptWriteString(pd->pdffp, str1);
-    fprintf(pd->pdffp, " Tj\n");
+
+    if (isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
+       PostScriptWriteT1KerningString(pd->pdffp, str1,
+                                      KERNING_PDF,
+                                      PDFmetricInfo(gc->fontfamily, face, pd),
+                                      gc);
+       fprintf(pd->pdffp, " TJ\n");
+    }
+    else{
+       PostScriptWriteString(pd->pdffp, str1);
+       fprintf(pd->pdffp, " Tj\n");
+    }
     textoff(pd); /* added in 2.8.0 */
 }
 
