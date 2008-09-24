@@ -71,6 +71,9 @@ BUG FIXES
     	
     o	The list of hives in the readRegistry() defaults contained
     	a typo; error messages were incomplete. (PR#12937)
+    	
+    o	The custom install options were not saved/restored when the
+    	installer was run with /SAVEINF or /LOADINF respectively.
 
 
 
