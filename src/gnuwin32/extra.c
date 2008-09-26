@@ -1788,7 +1788,7 @@ SEXP do_readRegistry(SEXP call, SEXP op, SEXP args, SEXP env)
     hive = find_hive(CHAR(STRING_ELT(CADR(args), 0)));
     res = RegOpenKeyExW(hive, key, 0, KEY_READ, &hkey);
     if (res == ERROR_FILE_NOT_FOUND)
-	error(_("Registry key '%S' not found"), key);
+	error(_("Registry key '%s' not found"), key);
     if (res != ERROR_SUCCESS)
 	error("RegOpenKeyEx error code %d: '%s'", (int) res, formatError(res));
     ans = readRegistryKey(hkey, maxdepth);
