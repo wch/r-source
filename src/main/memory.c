@@ -1839,6 +1839,10 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
 #if VALGRIND_LEVEL > 2
     VALGRIND_MAKE_READABLE(s,sizeof(*s));
 #endif
+    /* precaution to ensure code does not get modified via
+       substitute() and the like */ 
+    if (NAMED(expr) < 2) SET_NAMED(expr, 2);
+
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(s) = PROMSXP;
     PRCODE(s) = expr;
