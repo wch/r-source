@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.7.0\n"
+"Project-Id-Version: R-2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-09-12 08:55+0100\n"
-"PO-Revision-Date: 2008-04-06 17:51+0200\n"
+"POT-Creation-Date: 2008-09-26 09:07+0100\n"
+"PO-Revision-Date: 2008-09-18 16:15+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -97,9 +97,9 @@ msgstr "Problem bei der Anzeige von '%s'"
 #: src/main/array.c:1161 src/main/attrib.c:191 src/main/builtin.c:155
 #: src/main/builtin.c:508 src/main/builtin.c:524 src/main/builtin.c:702
 #: src/main/character.c:105 src/main/character.c:108 src/main/character.c:167
-#: src/main/character.c:3088 src/main/character.c:3092
-#: src/main/character.c:3155 src/main/character.c:3159
-#: src/main/character.c:3221 src/main/connections.c:911
+#: src/main/character.c:3091 src/main/character.c:3095
+#: src/main/character.c:3158 src/main/character.c:3162
+#: src/main/character.c:3224 src/main/connections.c:911
 #: src/main/connections.c:917 src/main/connections.c:920
 #: src/main/connections.c:924 src/main/connections.c:1066
 #: src/main/connections.c:1078 src/main/connections.c:1083
@@ -425,19 +425,19 @@ msgstr "Zeichenkette als drittes Argument erwartet"
 
 #: src/gnuwin32/system.c:118 src/main/errors.c:130
 msgid "reached session elapsed time limit"
-msgstr ""
+msgstr "Zeitlimit für die Sitzung erreicht"
 
 #: src/gnuwin32/system.c:120 src/main/errors.c:132
 msgid "reached elapsed time limit"
-msgstr ""
+msgstr "Zeitlimit erreicht"
 
 #: src/gnuwin32/system.c:126 src/main/errors.c:138
 msgid "reached session CPU time limit"
-msgstr ""
+msgstr "CPU Zeitlimit für die Sitzung erreicht"
 
 #: src/gnuwin32/system.c:128 src/main/errors.c:140
 msgid "reached CPU time limit"
-msgstr ""
+msgstr "CPU Zeitlimit erreicht"
 
 #: src/gnuwin32/system.c:148
 #, c-format
@@ -514,7 +514,7 @@ msgstr "kann -e nicht mit -f oder --file benutzen"
 
 #: src/gnuwin32/system.c:1094
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
-msgstr ""
+msgstr "Erzeugung von tmpfile fehlgeschlagen -- ist TMPDIR geeignet gesetzt?"
 
 #: src/gnuwin32/system.c:1113 src/unix/system.c:416
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
@@ -1004,9 +1004,8 @@ msgid "invalid time series parameters specified"
 msgstr "ungültige Zeitreihen Parameter spezifiziert"
 
 #: src/main/attrib.c:395
-#, fuzzy
 msgid "'tsp' attribute must be numeric"
-msgstr "'tsp' Attribut muss numerisch sein und Länge 3 haben"
+msgstr "'tsp' Attribut muss numerisch sein"
 
 #: src/main/attrib.c:401
 msgid "'tsp' attribute must be numeric of length three"
@@ -1317,9 +1316,9 @@ msgid "switch: EXPR must return a length 1 vector"
 msgstr "switch: EXPR muss einen Vektor der Länge 1 zurückgeben"
 
 #: src/main/character.c:77 src/main/character.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' requires a character vector"
-msgstr "strtrim() benötigt Charakter-Vektor"
+msgstr "'%s' benötigt einen Charakter-Vektor"
 
 #: src/main/character.c:134 src/main/character.c:160 src/main/character.c:898
 #: src/main/character.c:2101
@@ -1498,11 +1497,11 @@ msgstr "konnte keinen Speicher für approximate matching zuteilen"
 msgid "could not perform case insensitive matching"
 msgstr "konnte case insensitive matching nicht durchführen"
 
-#: src/main/character.c:2755 src/main/character.c:2987
+#: src/main/character.c:2755 src/main/character.c:2988
 msgid "argument must be a character vector of length 1"
 msgstr "Argument muss ein Charakter-Vektor der Länge 1 sein"
 
-#: src/main/character.c:2757 src/main/character.c:2989
+#: src/main/character.c:2757 src/main/character.c:2990
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1515,7 +1514,7 @@ msgstr ""
 msgid "argument 'x' must be a raw vector"
 msgstr "Argument 'x' muss ein raw Vektor sein"
 
-#: src/main/character.c:2776 src/main/character.c:3039
+#: src/main/character.c:2776 src/main/character.c:3042
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "Argument 'multiple' muss TRUE oder FALSE sein"
 
@@ -1523,45 +1522,41 @@ msgstr "Argument 'multiple' muss TRUE oder FALSE sein"
 msgid "argument 'shift' must be a small integer"
 msgstr "Argument 'shift' muss eine kleine ganze Zahl sein"
 
-#: src/main/character.c:2843
-msgid "argument 'x' must be a integer vector"
+#: src/main/character.c:2844 src/main/character.c:3038
+msgid "argument 'x' must be an integer vector"
 msgstr "Argument 'x' muss ein Vektor ganzer Zahlen sein"
 
-#: src/main/character.c:2863
+#: src/main/character.c:2864
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "Argument 'x' muss entweder raw, ganzzahlig oder logisch sein"
 
-#: src/main/character.c:2865
+#: src/main/character.c:2866
 msgid "argument 'type' must be a character string"
 msgstr "Argument 'type' muss eine Zeichenkette sein"
 
-#: src/main/character.c:2869
+#: src/main/character.c:2870
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "Länge des Argumentes 'x' muss ein Vielfaches von %d sein"
 
-#: src/main/character.c:2882 src/main/character.c:2896
+#: src/main/character.c:2883 src/main/character.c:2897
 msgid "argument 'x' must not contain NAs"
 msgstr "Argument 'x' darf keine NAs enthalten"
 
-#: src/main/character.c:3036
-msgid "argument 'x' must be an integer vector"
-msgstr "Argument 'x' muss ein Vektor ganzer Zahlen sein"
-
-#: src/main/character.c:3083
+#: src/main/character.c:3086
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() benötigt Charakter-Vektor"
 
-#: src/main/character.c:3162
+#: src/main/character.c:3165
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'dirmark = TRUE' wird auf dieser Platform nicht unterstützt"
 
-#: src/main/character.c:3174 src/main/character.c:3188
+#: src/main/character.c:3177 src/main/character.c:3191
 #: src/main/platform.c:1340 src/main/platform.c:1384
 msgid "internal out-of-memory condition"
 msgstr "interner out-of-memory Vorfall"
 
-#: src/main/character.c:3184 src/main/platform.c:1380
+#: src/main/character.c:3187 src/main/platform.c:1380
 #, c-format
 msgid "read error on '%s'"
 msgstr "Lesefehler auf '%s'"
@@ -1722,53 +1717,53 @@ msgstr "ungültiger 'names' Vektor"
 msgid "invalid gray level, must be in [0,1]."
 msgstr "ungültige Graustufe, muss in [0,1] sein"
 
-#: src/main/colors.c:426
+#: src/main/colors.c:429
 msgid "rgb is not a matrix (internally)"
 msgstr "rgb ist keine Matrix (intern)"
 
-#: src/main/colors.c:429
+#: src/main/colors.c:432
 msgid "rgb must have 3 rows (internally)"
 msgstr "rgb muss 3 Zeilen haben (intern)"
 
-#: src/main/colors.c:483
+#: src/main/colors.c:486
 msgid "bad hsv to rgb color conversion"
 msgstr "unbrauchbarer Konverter hsv -> rgb"
 
-#: src/main/colors.c:1274 src/main/errors.c:1129 src/main/logic.c:164
+#: src/main/colors.c:1277 src/main/errors.c:1129 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr "ungültiger Argumenttyp"
 
-#: src/main/colors.c:1278
+#: src/main/colors.c:1281
 msgid "unknown palette (need >= 2 colors)"
 msgstr "unbekannte Palette (brauche >= 2 Farben)"
 
-#: src/main/colors.c:1282
+#: src/main/colors.c:1285
 msgid "maximum number of colors exceeded"
 msgstr "maximale Anzahl von Farben überschritten"
 
-#: src/main/colors.c:1313 src/main/engine.c:2898
+#: src/main/colors.c:1316 src/main/engine.c:2898
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "ungültige Hex-Ziffer für 'color' oder 'lty'"
 
-#: src/main/colors.c:1331 src/main/colors.c:1341
+#: src/main/colors.c:1334 src/main/colors.c:1344
 msgid "invalid RGB specification"
 msgstr "ungültige RGB Spezifikation"
 
-#: src/main/colors.c:1374
+#: src/main/colors.c:1377
 #, c-format
 msgid "invalid color name '%s'"
 msgstr "ungültiger Farbname '%s'"
 
-#: src/main/colors.c:1383
+#: src/main/colors.c:1386
 #, c-format
 msgid "invalid color specification '%s'"
 msgstr "ungültige Farbspezifikation '%s'"
 
-#: src/main/colors.c:1503
+#: src/main/colors.c:1506
 msgid "supplied color is not numeric nor character"
 msgstr "angegebene Farbe ist weder numeric noch character"
 
-#: src/main/colors.c:1535
+#: src/main/colors.c:1538
 msgid "Invalid color specification"
 msgstr "ungültige Farbspezifikation"
 
@@ -1813,9 +1808,9 @@ msgstr "ungenutzte Verbindung %d (%s) geschlossen\n"
 #: src/main/sysutils.c:587 src/main/sysutils.c:731 src/main/sysutils.c:746
 #: src/main/sysutils.c:833 src/main/sysutils.c:890 src/main/sysutils.c:900
 #: src/main/sysutils.c:1180
-#, fuzzy, c-format
+#, c-format
 msgid "unsupported conversion from '%s' to '%s'"
-msgstr "nicht unterstützte Umwandlung"
+msgstr "nicht unterstützte Umwandlung von '%s' nach '%s'"
 
 #: src/main/connections.c:214 src/main/connections.c:230
 #: src/main/connections.c:392 src/main/connections.c:398
@@ -1892,9 +1887,8 @@ msgstr "kann fifo '%s' nicht öffnen"
 #: src/main/connections.c:1661 src/main/connections.c:1677
 #: src/main/connections.c:1965 src/main/connections.c:4514
 #: src/main/connections.c:4578
-#, fuzzy
 msgid "too large a block specified"
-msgstr "zu viele Elemente angegeben"
+msgstr "zu großer Block spezifiziert"
 
 #: src/main/connections.c:868 src/main/connections.c:872
 #: src/main/connections.c:878 src/main/connections.c:894
@@ -2018,28 +2012,24 @@ msgstr "Allokation einer Terminal Verbindung fehlgeschlagen"
 
 #: src/main/connections.c:1942
 msgid "attempting to add too many elements to raw vector"
-msgstr ""
+msgstr "Versuch einem raw Vektor zu viele Elements hinzuzufügen"
 
 #: src/main/connections.c:1993
-#, fuzzy
 msgid "attempt to seek outside the range of the raw connection"
-msgstr "Versuch den Bereich der Zwischenablage zu verlassen"
+msgstr "Versuch außerhalb des Bereichs einer raw connection zuzugreifen"
 
 #: src/main/connections.c:2004 src/main/connections.c:2008
 #: src/main/connections.c:2014 src/main/connections.c:2040
-#, fuzzy
 msgid "allocation of raw connection failed"
-msgstr "Allokation einer URL-Verbindung fehlgeschlagen"
+msgstr "Allokation einer raw-Verbindung fehlgeschlagen"
 
 #: src/main/connections.c:2094
-#, fuzzy
 msgid "'con' is not a rawConnection"
-msgstr "'con' ist keine Verbindung"
+msgstr "'con' ist keine raw-Verbindung"
 
 #: src/main/connections.c:2097
-#, fuzzy
 msgid "'con' is not an output rawConnection"
-msgstr "'con' ist keine Ausgabe-Textverbindung"
+msgstr "'con' ist keine Ausgabe-Verbindung vom raw Typ"
 
 #: src/main/connections.c:2117
 msgid "cannot allocate memory for text connection"
@@ -2145,7 +2135,6 @@ msgid "incomplete string at end of file has been discarded"
 msgstr "unvollstädige Zeichenkette am Ende der Datei wurde verworfen"
 
 #: src/main/connections.c:3090
-#, fuzzy
 msgid "null terminator not found: breaking string at 10000 bytes"
 msgstr ""
 "Null Terminator nicht gefunden: Zeichenkette bei 10000 Zeichen abgebrochen"
@@ -2372,23 +2361,27 @@ msgstr "interner Fehler in 'do_sys'"
 msgid "missing observations in cov/cor"
 msgstr "fehlende Beobachtungen in cov/cor"
 
-#: src/main/cov.c:623
-msgid "'x' is empty"
-msgstr "'x' ist leer"
+#: src/main/cov.c:625
+msgid "'x' is NULL"
+msgstr "'x' ist NULL"
 
-#: src/main/cov.c:643 src/main/cov.c:649
+#: src/main/cov.c:646 src/main/cov.c:652
 msgid "incompatible dimensions"
 msgstr "inkompatible Dimensionen"
 
-#: src/main/cov.c:677
+#: src/main/cov.c:684
 msgid "invalid 'use' (computational method)"
 msgstr "ungültiger 'use' (Berechnungsmethode)"
 
-#: src/main/cov.c:701 src/main/cov.c:732
+#: src/main/cov.c:687
+msgid "'x' is empty"
+msgstr "'x' ist leer"
+
+#: src/main/cov.c:712 src/main/cov.c:745
 msgid "no complete element pairs"
 msgstr "keine vollständigen Elementpaare"
 
-#: src/main/cov.c:767
+#: src/main/cov.c:781
 msgid "the standard deviation is zero"
 msgstr "Standardabweichung ist Null"
 
@@ -2430,11 +2423,12 @@ msgstr "konnte Speicher für 'read.dcf' nicht zuteilen"
 #, c-format
 msgid "Found continuation line starting '%s ...' at begin of record."
 msgstr ""
+"Fortsetzungszeile beginnend mit '%s ...' am Anfang des Records gefunden."
 
 #: src/main/dcf.c:189
 #, c-format
 msgid "Line starting '%s ...' is malformed!"
-msgstr ""
+msgstr "Zeile beginnend mit '%s ...' ist fehlformatiert"
 
 #: src/main/debug.c:40
 msgid "argument must be a closure"
@@ -3157,7 +3151,7 @@ msgstr "exportiertes Symbol '%s' hat keinen Wert"
 #: src/main/envir.c:3382
 #, c-format
 msgid "truncating string with embedded nul: '%s'"
-msgstr ""
+msgstr "Zeichenkette mit nul abgeschnitten: '%s'"
 
 #: src/main/errors.c:175 src/main/errors.c:212
 msgid "interrupts suspended; signal ignored"
@@ -3504,9 +3498,8 @@ msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "Inkompatible Methoden (\"%s\", \"%s\") für \"%s\""
 
 #: src/main/eval.c:2151
-#, fuzzy
 msgid "dispatch error in group dispatch"
-msgstr "Dispatch Fehler"
+msgstr "Dispatch Fehler beim Gruppendispatch"
 
 #: src/main/eval.c:2532
 msgid "node stack overflow"
@@ -3701,9 +3694,9 @@ msgid "EOF whilst reading MBCS char at line %d"
 msgstr "EOF beim Lesen von MBCS Zeichen in Zeile %d"
 
 #: src/main/gram.y:119 src/main/gram.y:127
-#, fuzzy, c-format
+#, c-format
 msgid "invalid multibyte character in parser at line %d"
-msgstr "ungültiges multibyte Zeichen in mbcs_get_next in Zeile %d"
+msgstr "ungültiges multibyte Zeichen im Parser in Zeile %d"
 
 #: src/main/gram.y:380
 #, c-format
@@ -3786,7 +3779,7 @@ msgstr ""
 
 #: src/main/gram.y:1942
 msgid "'\\x used without hex digits"
-msgstr ""
+msgstr "\\x ohne Hex-Ziffern genutzt"
 
 #: src/main/gram.y:1954
 #, c-format
@@ -3795,7 +3788,7 @@ msgstr "\\uxxxx Sequenzen werden nicht unterstützt (Zeile %d)"
 
 #: src/main/gram.y:1974
 msgid "\\u used without hex digits"
-msgstr ""
+msgstr "\\u ohne Hex-Ziffern genutzt"
 
 #: src/main/gram.y:1984 src/main/gram.y:1997
 #, c-format
@@ -3814,7 +3807,7 @@ msgstr "\\Uxxxxxxx Sequenzen werden nicht unterstützt (Zeile %d)"
 
 #: src/main/gram.y:2029
 msgid "\\U used without hex digits"
-msgstr ""
+msgstr "\\U ohne Hex-Ziffern genutzt"
 
 #: src/main/gram.y:2039 src/main/gram.y:2045
 #, c-format
@@ -4363,7 +4356,7 @@ msgstr "Versuch einen Variablennamen der Länge 0 zu nutzen"
 #: src/main/names.c:1097
 #, c-format
 msgid "variable names are limited to %d bytes"
-msgstr ""
+msgstr "Variablennamen sind auf %d Bytes beschränkt"
 
 #: src/main/names.c:1126
 msgid "invalid .Internal() argument"
@@ -4670,9 +4663,8 @@ msgid "L-BFGS-B needs finite values of 'fn'"
 msgstr "L-BFGS-B benötigt endliche Werte von 'fn'"
 
 #: src/main/optim.c:1105
-#, fuzzy
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
-msgstr "REPORT muss > 0 sein (method = \"BFGS\")"
+msgstr "trace, REPORT muss > 0 sein (method = \"SANN\")"
 
 #: src/main/optimize.c:53 src/main/optimize.c:137 src/main/optimize.c:386
 msgid "NA replaced by maximum positive value"
@@ -5255,9 +5247,8 @@ msgid "invalid fourth argument"
 msgstr "ungültiges viertes Argument"
 
 #: src/main/plot.c:1754
-#, fuzzy
 msgid "cannot mix zero-length and non-zero-length coordinates"
-msgstr "kann keine Vektoren mit 0-Länge mit anderen mischen"
+msgstr "kann keine Koordinaten mit Länge 0 und Länge ungleich 0 mischen"
 
 #: src/main/plot.c:1928
 msgid "invalid arrow head length"
@@ -5989,7 +5980,6 @@ msgid "error writing to connection"
 msgstr "Schreibfehler in Verbindung"
 
 #: src/main/saveload.c:2360
-#, fuzzy
 msgid "connection not open for reading"
 msgstr "Verbindung nicht zum Lesen geöffnet"
 
@@ -6481,9 +6471,9 @@ msgid "use format %d, %i, %x or %X for integer objects"
 msgstr "benutze Format %d, %i, %x oder %X für integer Objekte"
 
 #: src/main/sprintf.c:279
-#, fuzzy, c-format
+#, c-format
 msgid "use format %f, %e, %g or %a for numeric objects"
-msgstr "benutze Format %f, %e oder %g für numerische Objekte"
+msgstr "benutze Format %f, %e, %g or %a für numerische Objekte"
 
 #: src/main/sprintf.c:313
 #, c-format
@@ -6525,9 +6515,8 @@ msgstr "NAs nicht zugelassen in Teilbereichszuweisungen"
 
 #: src/main/subassign.c:465 src/main/subassign.c:735 src/main/subassign.c:1002
 #: src/main/subassign.c:1189
-#, fuzzy
 msgid "replacement has length zero"
-msgstr "Argument hat Länge 0"
+msgstr "Ersetzung hat Länge 0"
 
 #: src/main/subassign.c:467 src/main/subassign.c:737 src/main/subassign.c:1004
 #: src/main/subassign.c:1191
@@ -6805,14 +6794,12 @@ msgid "proc.time() is not implemented on this system"
 msgstr "proc.time() ist auf diesem System nicht implementiert"
 
 #: src/main/sysutils.c:1468
-#, fuzzy
 msgid "setTimelimit() is not implemented on this system"
-msgstr "gc.time() ist auf diesem System nicht implementiert"
+msgstr "setTimelimit() ist auf diesem System nicht implementiert"
 
 #: src/main/sysutils.c:1496
-#, fuzzy
 msgid "setSessionTimelimit() is not implemented on this system"
-msgstr "gc.time() ist auf diesem System nicht implementiert"
+msgstr "setSessionTimelimit() ist auf diesem System nicht implementiert"
 
 #: src/main/unique.c:284
 #, c-format
@@ -6968,9 +6955,8 @@ msgid "warning message truncated to 255 chars"
 msgstr "Warnung auf 255 Zeichen gekürzt"
 
 #: src/main/util.c:1680
-#, fuzzy
 msgid "ICU is not supported on this build"
-msgstr "savePlot() wird auf dieser Platform nicht unterstützt"
+msgstr "ICU wird in diesem Binary nicht unterstützt"
 
 #: src/main/version.c:39
 msgid ""
@@ -7263,7 +7249,7 @@ msgstr "Fehlercode %d von Lapackroutine 'dgetrf()'"
 #: src/modules/lapack/Lapack.c:345
 #, c-format
 msgid "exact singularity: U[%d,%d] = 0 in LU-decomposition {Lapack 'dgetrf()'}"
-msgstr ""
+msgstr "exakte Singularität: U[%d,%d] = 0 in LU-Zerlegung {Lapack 'dgetrf()'}"
 
 #: src/modules/lapack/Lapack.c:357
 #, c-format
@@ -7456,7 +7442,7 @@ msgstr "X11 Protokollfehler: %s"
 #: src/modules/X11/devX11.c:1087
 #, c-format
 msgid "X11 I/O error while opening X11 connection to '%s'"
-msgstr ""
+msgstr "X11 E/A Fehler beim Öffnen einer X11 Verbindung nach '%s'"
 
 #: src/modules/X11/devX11.c:1105
 msgid "X11 fatal IO error: please save work and shut down R"
@@ -7522,16 +7508,16 @@ msgstr "konnte Verbindung zu X11 display '%s' nicht öffnen"
 
 #: src/modules/X11/devX11.c:1281
 msgid "ignoring 'display' argument as an X11 device is already open"
-msgstr ""
+msgstr "'display' Argument ignoriert, da X11 Device bereits geöffnet"
 
 #: src/modules/X11/devX11.c:1292
 msgid "jpeg() does not support transparency: using white bg"
 msgstr "jpeg() unstützt keine Transparenz: nutze weißen Hintergrund"
 
 #: src/modules/X11/devX11.c:1392
-#, fuzzy, c-format
+#, c-format
 msgid "unable to obtain information on display '%s'"
-msgstr "konnte Verbindung zu X11 display '%s' nicht öffnen"
+msgstr "konnte keine Informationen über Display '%s' erhalten"
 
 #: src/modules/X11/devX11.c:1410
 msgid "unable to create X11 window"
@@ -7892,9 +7878,8 @@ msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "Warnung: unbekanntes gui '%s', nutze keines\n"
 
 #: src/unix/system.c:368
-#, fuzzy
 msgid "creating temporary file for '-e' failed"
-msgstr "Stellen des Profile-Zeitnehmers fehlgeschlagen"
+msgstr "Erzeugen einer temporären Datei für '-e' fehlgeschlagen"
 
 #: src/unix/system.c:449
 msgid "WARNING: Only editing the first in the list of files"
@@ -7917,6 +7902,9 @@ msgstr "X11 Modul kann nicht geladen werden"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11 nicht verfügbar"
+
+#~ msgid "argument 'x' must be a integer vector"
+#~ msgstr "Argument 'x' muss ein Vektor ganzer Zahlen sein"
 
 #~ msgid "unable to coerce .Random.seed to an integer vector"
 #~ msgstr "kann .Random.seed nicht in einen Integer-Vektor umwandeln"

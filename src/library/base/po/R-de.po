@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.7.0\n"
+"Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-09-08 14:13\n"
-"PO-Revision-Date: 2008-04-06 18:07+0200\n"
+"PO-Revision-Date: 2008-09-18 16:26+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -70,20 +70,17 @@ msgstr "'kind' muss eine Zeichenkette der Länge 1 sein (zu nutzender RNG)."
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr "'%s' ist keine gültige Abkürzung für einen RNG"
 
-#, fuzzy
 msgid "'normal.kind' must be a character string of length 1"
 msgstr "'normal.kind' muss eine Zeichenkette der Länge 1 sein."
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' ist keine gültige Wahl"
 
-#, fuzzy
 msgid "Buggy version of Kinderman-Ramage generator used"
 msgstr "Fehlerhafte Version des Kinderman-Ramage Generators benutzt."
 
-#, fuzzy
 msgid "Buggy version of Kinderman-Ramage generator is not allowed"
-msgstr "Fehlerhafte Version des Kinderman-Ramage Generators benutzt."
+msgstr "Fehlerhafte Version des Kinderman-Ramage Generators ist nicht zulässig."
 
 msgid "malformed version string"
 msgstr "falsch aufgebaute Versionszeichenkette"
@@ -351,10 +348,10 @@ msgid "invalid list argument: all variables should have the same length"
 msgstr "ungültiges list Argument: alle Variablen sollten dieselbe Länge haben"
 
 msgid "data frame with 0 columns and %d rows"
-msgstr ""
+msgstr "Dataframe mit 0 Spalten und %d Zeilen"
 
 msgid "<0 rows> (or 0-length row.names)"
-msgstr ""
+msgstr "<0 Zeilen> (oder row.names mit Länge 0)"
 
 msgid "non-numeric variable in data frame:"
 msgstr "nicht numerische Variable in data frame:"
@@ -515,6 +512,10 @@ msgid ""
 "Offending lines start with:\n"
 "%s"
 msgstr ""
+"Unzulässiges DCF Format.\n"
+"Reguläre Zeilen müssen einen Tag aufweisen.\n"
+"Problematische Zeilen beginnen mit:\n"
+"%s"
 
 msgid ""
 "Invalid DCF format.\n"
@@ -522,6 +523,10 @@ msgid ""
 "Offending lines start with:\n"
 "%s"
 msgstr ""
+"Unzulässiges DCF Format.\n"
+"Fortsetzungszeilen dürfen keinen Record beginnen.\n"
+"Problematische Zeilen beginnen mit:\n"
+"%s"
 
 msgid "'x' must be a square matrix"
 msgstr "'x' muss eine quadratische Matrix sein"
@@ -626,7 +631,6 @@ msgstr "keine Dateien, um davon zu linken"
 msgid "no files/directory to link to"
 msgstr "keine Dateien/Verzeichnis, um dorthin zu linken"
 
-#, fuzzy
 msgid "'x' must have length 1"
 msgstr "'x' muss Länge 1 haben"
 
@@ -636,13 +640,11 @@ msgstr "ungültige 'digits'"
 msgid "'x' cannot be coerced to 'octmode'"
 msgstr "'x' kann nicht in 'octmode' umgewandelt werden"
 
-#, fuzzy
 msgid "'x' must be of length 1"
-msgstr "'to' muss Länge 1 haben"
+msgstr "'x' muss Länge 1 haben"
 
-#, fuzzy
 msgid "'x' cannot be coerced to hexmode"
-msgstr "'x' kann nicht in 'octmode' umgewandelt werden"
+msgstr "'x' kann nicht in hexmode umgewandelt werden"
 
 msgid "'package' must be of length 1"
 msgstr "'package' muss Länge 1 haben"
@@ -663,9 +665,8 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format' muss eins aus {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"} sein"
 
-#, fuzzy
 msgid "'digits' reduced to"
-msgstr "'digits' auf 50 reduziert"
+msgstr "'digits' reduziert auf "
 
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag' kann nur '0+- #' enthalten"
@@ -752,9 +753,8 @@ msgstr "von"
 msgid ":"
 msgstr ":"
 
-#, fuzzy
 msgid "invalid package name"
-msgstr "ungültiger Name"
+msgstr "ungültiger Paketname"
 
 msgid "package '%s' has been merged into '%s'"
 msgstr "Paket '%s' wurde in '%s' eingebaut"
@@ -1455,13 +1455,11 @@ msgstr "falsches Argument"
 msgid "invalid value"
 msgstr "ungültiger Wert"
 
-#, fuzzy
 msgid "unary '%s' not defined for \"numeric_version\" objects"
-msgstr "für numeric_version Objekte nicht definiert"
+msgstr "unäres '%s' für \"numeric_version\" Objekte nicht definiert"
 
-#, fuzzy
 msgid "'%s' not defined for \"numeric_version\" objects"
-msgstr "für numeric_version Objekte nicht definiert"
+msgstr "'%s' für numeric_version Objekte nicht definiert"
 
 msgid "not defined for numeric_version objects"
 msgstr "für numeric_version Objekte nicht definiert"
@@ -1514,11 +1512,10 @@ msgid_plural "there are no packages called"
 msgstr[0] "es gibt kein Paket mit Namen"
 msgstr[1] "es gibt keine Pakete mit Namen"
 
-#, fuzzy
 msgid "object %s not found"
 msgid_plural "objects %s not found"
-msgstr[0] "%s nicht gefunden"
-msgstr[1] "%s nicht gefunden"
+msgstr[0] "Objekt %s nicht gefunden"
+msgstr[1] "Objekte %s nicht gefunden"
 
 msgid "object '%s' is not exported by 'namespace:%s'"
 msgid_plural "objects '%s' are not exported by 'namespace:%s'"

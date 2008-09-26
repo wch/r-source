@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:13\n"
+"POT-Creation-Date: 2008-09-26 09:07\n"
 "PO-Revision-Date: 2008-03-26 10:26+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -2071,6 +2071,13 @@ msgstr "'spline' nécessite n >= 1"
 
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv' doit être compris entre 0 et 3"
+
+#, fuzzy
+msgid "'deriv' must be between 0 and 2"
+msgstr "'deriv' doit être compris entre 0 et 3"
+
+msgid "'x' must be *strictly* increasing (non - NA)"
+msgstr ""
 
 msgid "stepfun: 'x' must be ordered increasingly"
 msgstr "stepfun : 'x' doit être rangé par ordre croissant"

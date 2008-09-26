@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-09-12 08:55+0100\n"
+"POT-Creation-Date: 2008-09-26 09:07+0100\n"
 "PO-Revision-Date: 2008-04-04 18:31+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -100,9 +100,9 @@ msgstr " '%s'の表示に問題があります "
 #: src/main/array.c:1161 src/main/attrib.c:191 src/main/builtin.c:155
 #: src/main/builtin.c:508 src/main/builtin.c:524 src/main/builtin.c:702
 #: src/main/character.c:105 src/main/character.c:108 src/main/character.c:167
-#: src/main/character.c:3088 src/main/character.c:3092
-#: src/main/character.c:3155 src/main/character.c:3159
-#: src/main/character.c:3221 src/main/connections.c:911
+#: src/main/character.c:3091 src/main/character.c:3095
+#: src/main/character.c:3158 src/main/character.c:3162
+#: src/main/character.c:3224 src/main/connections.c:911
 #: src/main/connections.c:917 src/main/connections.c:920
 #: src/main/connections.c:924 src/main/connections.c:1066
 #: src/main/connections.c:1078 src/main/connections.c:1083
@@ -1505,11 +1505,11 @@ msgstr " 近似マッチングのためのメモリを割り当てられませ�
 msgid "could not perform case insensitive matching"
 msgstr " 大小文字を無視したマッチングを行なえませんでした "
 
-#: src/main/character.c:2755 src/main/character.c:2987
+#: src/main/character.c:2755 src/main/character.c:2988
 msgid "argument must be a character vector of length 1"
 msgstr " 引数は長さ1の文字ベクトルでなくてはなりません "
 
-#: src/main/character.c:2757 src/main/character.c:2989
+#: src/main/character.c:2757 src/main/character.c:2990
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1522,7 +1522,7 @@ msgstr ""
 msgid "argument 'x' must be a raw vector"
 msgstr " 引数 'x' は raw ベクトルでなくてはなりません "
 
-#: src/main/character.c:2776 src/main/character.c:3039
+#: src/main/character.c:2776 src/main/character.c:3042
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr " 引数 'multiple' は TRUE か FALSE でなくてはなりません "
 
@@ -1530,45 +1530,41 @@ msgstr " 引数 'multiple' は TRUE か FALSE でなくてはなりません "
 msgid "argument 'shift' must be a small integer"
 msgstr " 引数 'shift' は小さな整数でなくてはなりません "
 
-#: src/main/character.c:2843
-msgid "argument 'x' must be a integer vector"
+#: src/main/character.c:2844 src/main/character.c:3038
+msgid "argument 'x' must be an integer vector"
 msgstr " 引数 'x' は整数ベクトルでなくてはなりません "
 
-#: src/main/character.c:2863
+#: src/main/character.c:2864
 msgid "argument 'x' must be raw, integer or logical"
 msgstr " 引数'x'は，raw, 整数，論理値でなくてはいけません "
 
-#: src/main/character.c:2865
+#: src/main/character.c:2866
 msgid "argument 'type' must be a character string"
 msgstr " 引数 'type' は文字列でなくてはなりません "
 
-#: src/main/character.c:2869
+#: src/main/character.c:2870
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr " 引数 'x' は長さ %d の整数倍でなくてはなりません "
 
-#: src/main/character.c:2882 src/main/character.c:2896
+#: src/main/character.c:2883 src/main/character.c:2897
 msgid "argument 'x' must not contain NAs"
 msgstr " 引数 'x' は，NA を含んではいけません "
 
-#: src/main/character.c:3036
-msgid "argument 'x' must be an integer vector"
-msgstr " 引数 'x' は整数ベクトルでなくてはなりません "
-
-#: src/main/character.c:3083
+#: src/main/character.c:3086
 msgid "strtrim() requires a character vector"
 msgstr " strtrim 関数は文字ベクトルを要求します "
 
-#: src/main/character.c:3162
+#: src/main/character.c:3165
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr " 'dirmark  = TRUE' はこのプラットフォームではサポートされていません "
 
-#: src/main/character.c:3174 src/main/character.c:3188
+#: src/main/character.c:3177 src/main/character.c:3191
 #: src/main/platform.c:1340 src/main/platform.c:1384
 msgid "internal out-of-memory condition"
 msgstr " 内部でアウトオブメモリーが発生しています "
 
-#: src/main/character.c:3184 src/main/platform.c:1380
+#: src/main/character.c:3187 src/main/platform.c:1380
 #, c-format
 msgid "read error on '%s'"
 msgstr " \"%s\" の読み込みエラーです "
@@ -1727,53 +1723,53 @@ msgstr " 不正な名前ベクトルです "
 msgid "invalid gray level, must be in [0,1]."
 msgstr " グレー・レベルが不正です。[0,1] の範囲でなければなりません "
 
-#: src/main/colors.c:426
+#: src/main/colors.c:429
 msgid "rgb is not a matrix (internally)"
 msgstr " rgb が行列ではありません（内部的に） "
 
-#: src/main/colors.c:429
+#: src/main/colors.c:432
 msgid "rgb must have 3 rows (internally)"
 msgstr " rgb は3行なければなりません（内部的に） "
 
-#: src/main/colors.c:483
+#: src/main/colors.c:486
 msgid "bad hsv to rgb color conversion"
 msgstr " hsv から rgb への色の変換が上手くいきません "
 
-#: src/main/colors.c:1274 src/main/errors.c:1129 src/main/logic.c:164
+#: src/main/colors.c:1277 src/main/errors.c:1129 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr " 引数の型が不正です "
 
-#: src/main/colors.c:1278
+#: src/main/colors.c:1281
 msgid "unknown palette (need >= 2 colors)"
 msgstr " 未知のパレットです（2色以上必要です） "
 
-#: src/main/colors.c:1282
+#: src/main/colors.c:1285
 msgid "maximum number of colors exceeded"
 msgstr " 色の数が最大値を超えてしまいました "
 
-#: src/main/colors.c:1313 src/main/engine.c:2898
+#: src/main/colors.c:1316 src/main/engine.c:2898
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr " 'color' または 'lty' 中の16進数が不正です "
 
-#: src/main/colors.c:1331 src/main/colors.c:1341
+#: src/main/colors.c:1334 src/main/colors.c:1344
 msgid "invalid RGB specification"
 msgstr " RGB の指定が不正です "
 
-#: src/main/colors.c:1374
+#: src/main/colors.c:1377
 #, c-format
 msgid "invalid color name '%s'"
 msgstr " 色の名前　'%s' が不正です "
 
-#: src/main/colors.c:1383
+#: src/main/colors.c:1386
 #, c-format
 msgid "invalid color specification '%s'"
 msgstr " 色の指定 '%s' が不正です "
 
-#: src/main/colors.c:1503
+#: src/main/colors.c:1506
 msgid "supplied color is not numeric nor character"
 msgstr " 与えられた色は数字も文字でもありません "
 
-#: src/main/colors.c:1535
+#: src/main/colors.c:1538
 msgid "Invalid color specification"
 msgstr " 色の指定が不正です "
 
@@ -2376,23 +2372,28 @@ msgstr " 'do_sys' で内部エラーが起きました "
 msgid "missing observations in cov/cor"
 msgstr " cov/cor 関数に欠損した観測値があります "
 
-#: src/main/cov.c:623
-msgid "'x' is empty"
+#: src/main/cov.c:625
+#, fuzzy
+msgid "'x' is NULL"
 msgstr " 'x' が空です "
 
-#: src/main/cov.c:643 src/main/cov.c:649
+#: src/main/cov.c:646 src/main/cov.c:652
 msgid "incompatible dimensions"
 msgstr " 互換性のない次元です "
 
-#: src/main/cov.c:677
+#: src/main/cov.c:684
 msgid "invalid 'use' (computational method)"
 msgstr " 'use' (計算法)が不正です "
 
-#: src/main/cov.c:701 src/main/cov.c:732
+#: src/main/cov.c:687
+msgid "'x' is empty"
+msgstr " 'x' が空です "
+
+#: src/main/cov.c:712 src/main/cov.c:745
 msgid "no complete element pairs"
 msgstr " 完全な要素のペアがありません "
 
-#: src/main/cov.c:767
+#: src/main/cov.c:781
 msgid "the standard deviation is zero"
 msgstr " 標準偏差が0です "
 
@@ -7923,6 +7924,9 @@ msgstr " X11 モジュールをロードできません "
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr " X11 が利用できません "
+
+#~ msgid "argument 'x' must be a integer vector"
+#~ msgstr " 引数 'x' は整数ベクトルでなくてはなりません "
 
 #~ msgid "unable to coerce .Random.seed to an integer vector"
 #~ msgstr " .Random.seed を整数ベクトルに変換できません "

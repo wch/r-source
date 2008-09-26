@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:13\n"
+"POT-Creation-Date: 2008-09-26 09:07\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -2049,6 +2049,13 @@ msgstr "'approx' requer n >= 1"
 
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv' deve estar entre 0 e 3"
+
+#, fuzzy
+msgid "'deriv' must be between 0 and 2"
+msgstr "'deriv' deve estar entre 0 e 3"
+
+msgid "'x' must be *strictly* increasing (non - NA)"
+msgstr ""
 
 msgid "stepfun: 'x' must be ordered increasingly"
 msgstr "stepfun: 'x' deve estar ordenado crescentemente"

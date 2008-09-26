@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:13\n"
+"POT-Creation-Date: 2008-09-26 09:07\n"
 "PO-Revision-Date: 2008-04-07 00:23-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -237,7 +237,10 @@ msgid ""
 msgstr ""
 "метод для функции \"%s\" и подпись %s запечатаны и не могут быть изменены"
 
-msgid "argument in method definition changed from (%s) to (%s)"
+#, fuzzy
+msgid ""
+"For function \"%s\", signature \"%s\": argument in method definition changed "
+"from (%s) to (%s)"
 msgstr "аргументы в определении метода изменены с (%s) на (%s)"
 
 msgid ""
@@ -1258,6 +1261,11 @@ msgid ""
 msgstr ""
 "(будет использован первый из показанных идентификаторов)\n"
 "%s"
+
+#, fuzzy
+msgid ""
+"No simply inherited methds found for function \"%s\"; using non-simple method"
+msgstr "Не найдено метода для функции \"%s\" и идентификатора %s"
 
 msgid "found"
 msgstr "найдено"

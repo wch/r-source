@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-09-12 08:55+0100\n"
+"POT-Creation-Date: 2008-09-26 09:07+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -100,9 +100,9 @@ msgstr ""
 #: src/main/array.c:1161 src/main/attrib.c:191 src/main/builtin.c:155
 #: src/main/builtin.c:508 src/main/builtin.c:524 src/main/builtin.c:702
 #: src/main/character.c:105 src/main/character.c:108 src/main/character.c:167
-#: src/main/character.c:3088 src/main/character.c:3092
-#: src/main/character.c:3155 src/main/character.c:3159
-#: src/main/character.c:3221 src/main/connections.c:911
+#: src/main/character.c:3091 src/main/character.c:3095
+#: src/main/character.c:3158 src/main/character.c:3162
+#: src/main/character.c:3224 src/main/connections.c:911
 #: src/main/connections.c:917 src/main/connections.c:920
 #: src/main/connections.c:924 src/main/connections.c:1066
 #: src/main/connections.c:1078 src/main/connections.c:1083
@@ -1535,11 +1535,11 @@ msgstr "근사 matching을 위한 메모리를 할당할수 없습니다"
 msgid "could not perform case insensitive matching"
 msgstr "대소문자를 무시한 matching를 실행할수 없습니다"
 
-#: src/main/character.c:2755 src/main/character.c:2987
+#: src/main/character.c:2755 src/main/character.c:2988
 msgid "argument must be a character vector of length 1"
 msgstr "인수는 길이 1의 문자 벡터이어야만 합니다"
 
-#: src/main/character.c:2757 src/main/character.c:2989
+#: src/main/character.c:2757 src/main/character.c:2990
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1552,7 +1552,7 @@ msgstr ""
 msgid "argument 'x' must be a raw vector"
 msgstr "인수 'x'는 raw 벡터이어야만 합니다"
 
-#: src/main/character.c:2776 src/main/character.c:3039
+#: src/main/character.c:2776 src/main/character.c:3042
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "인수 'multiple'는 TRUE 또는 FALSE 이어야만 합니다"
 
@@ -1560,47 +1560,43 @@ msgstr "인수 'multiple'는 TRUE 또는 FALSE 이어야만 합니다"
 msgid "argument 'shift' must be a small integer"
 msgstr "인수 'shift'는 작은 정수 벡터이어야만 합니다"
 
-#: src/main/character.c:2843
-msgid "argument 'x' must be a integer vector"
-msgstr "인수 'x'는 정수 벡터이어야만 합니다"
-
-#: src/main/character.c:2863
-msgid "argument 'x' must be raw, integer or logical"
-msgstr "인수 'x'는 raw, 정수, 논리값이어야만 합니다"
-
-#: src/main/character.c:2865
-msgid "argument 'type' must be a character string"
-msgstr "인수 'type'는 문자열이어야만 합니다"
-
-#: src/main/character.c:2869
-#, c-format
-msgid "argument 'x' must be a multiple of %d long"
-msgstr "인수 'x'는 길이 %d의 정수배이어야만 합니다"
-
-#: src/main/character.c:2882 src/main/character.c:2896
-msgid "argument 'x' must not contain NAs"
-msgstr "인수 'x'는 NA를 포함해서는 안됩니다"
-
-#: src/main/character.c:3036
+#: src/main/character.c:2844 src/main/character.c:3038
 #, fuzzy
 msgid "argument 'x' must be an integer vector"
 msgstr "인수 'x'는 정수 벡터이어야만 합니다"
 
-#: src/main/character.c:3083
+#: src/main/character.c:2864
+msgid "argument 'x' must be raw, integer or logical"
+msgstr "인수 'x'는 raw, 정수, 논리값이어야만 합니다"
+
+#: src/main/character.c:2866
+msgid "argument 'type' must be a character string"
+msgstr "인수 'type'는 문자열이어야만 합니다"
+
+#: src/main/character.c:2870
+#, c-format
+msgid "argument 'x' must be a multiple of %d long"
+msgstr "인수 'x'는 길이 %d의 정수배이어야만 합니다"
+
+#: src/main/character.c:2883 src/main/character.c:2897
+msgid "argument 'x' must not contain NAs"
+msgstr "인수 'x'는 NA를 포함해서는 안됩니다"
+
+#: src/main/character.c:3086
 msgid "strtrim() requires a character vector"
 msgstr "strtrim 함수는 문자 벡터를 요구합니다"
 
-#: src/main/character.c:3162
+#: src/main/character.c:3165
 #, fuzzy
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'recursive = TRUE'는 이 platform에서는 서포트되어있지 않습니다"
 
-#: src/main/character.c:3174 src/main/character.c:3188
+#: src/main/character.c:3177 src/main/character.c:3191
 #: src/main/platform.c:1340 src/main/platform.c:1384
 msgid "internal out-of-memory condition"
 msgstr ""
 
-#: src/main/character.c:3184 src/main/platform.c:1380
+#: src/main/character.c:3187 src/main/platform.c:1380
 #, fuzzy, c-format
 msgid "read error on '%s'"
 msgstr "read error입니다"
@@ -1763,53 +1759,53 @@ msgstr "벡터이름이 부적절합니다"
 msgid "invalid gray level, must be in [0,1]."
 msgstr "gray level가 부적절합니다. [0,1]의 범위이어야만 합니다"
 
-#: src/main/colors.c:426
+#: src/main/colors.c:429
 msgid "rgb is not a matrix (internally)"
 msgstr "rgb가 행렬이 아닙니다(내부적으로)"
 
-#: src/main/colors.c:429
+#: src/main/colors.c:432
 msgid "rgb must have 3 rows (internally)"
 msgstr "rgb는 3행이 되어야만 합니다(내부적으로)"
 
-#: src/main/colors.c:483
+#: src/main/colors.c:486
 msgid "bad hsv to rgb color conversion"
 msgstr "bad hsv로부터 rgb에서 색 변경이 잘 되지 않습니다"
 
-#: src/main/colors.c:1274 src/main/errors.c:1129 src/main/logic.c:164
+#: src/main/colors.c:1277 src/main/errors.c:1129 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr "인수의 유형이 부적절합니다"
 
-#: src/main/colors.c:1278
+#: src/main/colors.c:1281
 msgid "unknown palette (need >= 2 colors)"
 msgstr "알수 없는 팔레트입니다 (2색이상이 필요합니다)"
 
-#: src/main/colors.c:1282
+#: src/main/colors.c:1285
 msgid "maximum number of colors exceeded"
 msgstr "색의 수가 최대치를 초과해 버렸습니다"
 
-#: src/main/colors.c:1313 src/main/engine.c:2898
+#: src/main/colors.c:1316 src/main/engine.c:2898
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "'color' 또는 'lty'에서 16진수가 부적절합니다"
 
-#: src/main/colors.c:1331 src/main/colors.c:1341
+#: src/main/colors.c:1334 src/main/colors.c:1344
 msgid "invalid RGB specification"
 msgstr "RGB의 지정이 부적절합니다"
 
-#: src/main/colors.c:1374
+#: src/main/colors.c:1377
 #, fuzzy, c-format
 msgid "invalid color name '%s'"
 msgstr "색의 이름이 부적절합니다"
 
-#: src/main/colors.c:1383
+#: src/main/colors.c:1386
 #, fuzzy, c-format
 msgid "invalid color specification '%s'"
 msgstr "색의 지정이 부적절합니다"
 
-#: src/main/colors.c:1503
+#: src/main/colors.c:1506
 msgid "supplied color is not numeric nor character"
 msgstr ""
 
-#: src/main/colors.c:1535
+#: src/main/colors.c:1538
 #, fuzzy
 msgid "Invalid color specification"
 msgstr "색의 지정이 부적절합니다"
@@ -2418,23 +2414,28 @@ msgstr "'do_sys'로 내부에러가 발생했습니다"
 msgid "missing observations in cov/cor"
 msgstr "cov/cor 함수에 결손한 관측값이 있습니다"
 
-#: src/main/cov.c:623
-msgid "'x' is empty"
+#: src/main/cov.c:625
+#, fuzzy
+msgid "'x' is NULL"
 msgstr "'x'가 비어 있습니다"
 
-#: src/main/cov.c:643 src/main/cov.c:649
+#: src/main/cov.c:646 src/main/cov.c:652
 msgid "incompatible dimensions"
 msgstr "호환성이 없는 차원입니다"
 
-#: src/main/cov.c:677
+#: src/main/cov.c:684
 msgid "invalid 'use' (computational method)"
 msgstr "'use' (computational method)가 부적절합니다"
 
-#: src/main/cov.c:701 src/main/cov.c:732
+#: src/main/cov.c:687
+msgid "'x' is empty"
+msgstr "'x'가 비어 있습니다"
+
+#: src/main/cov.c:712 src/main/cov.c:745
 msgid "no complete element pairs"
 msgstr ""
 
-#: src/main/cov.c:767
+#: src/main/cov.c:781
 msgid "the standard deviation is zero"
 msgstr "표준 편차가 0 입니다"
 
@@ -8050,6 +8051,9 @@ msgstr "X11 모듈은 적재할수가 없습니다"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11를 이용할수가 없습니다"
+
+#~ msgid "argument 'x' must be a integer vector"
+#~ msgstr "인수 'x'는 정수 벡터이어야만 합니다"
 
 #~ msgid "symbol print-name too long"
 #~ msgstr "심벌의 표시명이 너무 깁니다"

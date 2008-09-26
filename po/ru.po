@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-09-12 08:55+0100\n"
+"POT-Creation-Date: 2008-09-26 09:07+0100\n"
 "PO-Revision-Date: 2008-04-06 23:39-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -102,9 +102,9 @@ msgstr "проблема при отображении '%s'"
 #: src/main/array.c:1161 src/main/attrib.c:191 src/main/builtin.c:155
 #: src/main/builtin.c:508 src/main/builtin.c:524 src/main/builtin.c:702
 #: src/main/character.c:105 src/main/character.c:108 src/main/character.c:167
-#: src/main/character.c:3088 src/main/character.c:3092
-#: src/main/character.c:3155 src/main/character.c:3159
-#: src/main/character.c:3221 src/main/connections.c:911
+#: src/main/character.c:3091 src/main/character.c:3095
+#: src/main/character.c:3158 src/main/character.c:3162
+#: src/main/character.c:3224 src/main/connections.c:911
 #: src/main/connections.c:917 src/main/connections.c:920
 #: src/main/connections.c:924 src/main/connections.c:1066
 #: src/main/connections.c:1078 src/main/connections.c:1083
@@ -1499,11 +1499,11 @@ msgstr "не могу выделить память для приблизительного поиска"
 msgid "could not perform case insensitive matching"
 msgstr "не могу выполнить поиск, нечувствительный к регистру"
 
-#: src/main/character.c:2755 src/main/character.c:2987
+#: src/main/character.c:2755 src/main/character.c:2988
 msgid "argument must be a character vector of length 1"
 msgstr "аргумент должен быть a текстовым вектором единичной длины"
 
-#: src/main/character.c:2757 src/main/character.c:2989
+#: src/main/character.c:2757 src/main/character.c:2990
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1516,7 +1516,7 @@ msgstr ""
 msgid "argument 'x' must be a raw vector"
 msgstr "аргумент 'x' должен быть простым вектором"
 
-#: src/main/character.c:2776 src/main/character.c:3039
+#: src/main/character.c:2776 src/main/character.c:3042
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "аргумент 'multiple' должен быть TRUE или FALSE"
 
@@ -1524,45 +1524,41 @@ msgstr "аргумент 'multiple' должен быть TRUE или FALSE"
 msgid "argument 'shift' must be a small integer"
 msgstr "аргумент 'shift' должен быть небольшим целым числом"
 
-#: src/main/character.c:2843
-msgid "argument 'x' must be a integer vector"
+#: src/main/character.c:2844 src/main/character.c:3038
+msgid "argument 'x' must be an integer vector"
 msgstr "аргумент 'x' должен быть целочисленным вектором"
 
-#: src/main/character.c:2863
+#: src/main/character.c:2864
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "аргумент 'x' должен быть простым, целочисленным или логическим"
 
-#: src/main/character.c:2865
+#: src/main/character.c:2866
 msgid "argument 'type' must be a character string"
 msgstr "аргумент 'тип' должен быть текстовой строкой"
 
-#: src/main/character.c:2869
+#: src/main/character.c:2870
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "аргумент 'x' должен быть произведением длины %d"
 
-#: src/main/character.c:2882 src/main/character.c:2896
+#: src/main/character.c:2883 src/main/character.c:2897
 msgid "argument 'x' must not contain NAs"
 msgstr "аргумент 'x' не должен содержать NA"
 
-#: src/main/character.c:3036
-msgid "argument 'x' must be an integer vector"
-msgstr "аргумент 'x' должен быть целочисленным вектором"
-
-#: src/main/character.c:3083
+#: src/main/character.c:3086
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() требует текстового вектора"
 
-#: src/main/character.c:3162
+#: src/main/character.c:3165
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'dirmarke = TRUE' не поддерживается на этой платформе"
 
-#: src/main/character.c:3174 src/main/character.c:3188
+#: src/main/character.c:3177 src/main/character.c:3191
 #: src/main/platform.c:1340 src/main/platform.c:1384
 msgid "internal out-of-memory condition"
 msgstr "внутренняя нехватка памяти"
 
-#: src/main/character.c:3184 src/main/platform.c:1380
+#: src/main/character.c:3187 src/main/platform.c:1380
 #, c-format
 msgid "read error on '%s'"
 msgstr "ошибка чтения в '%s'"
@@ -1723,53 +1719,53 @@ msgstr "неправильный вектор 'names'"
 msgid "invalid gray level, must be in [0,1]."
 msgstr "неправильный уровень серого, должен быть в [0,1]."
 
-#: src/main/colors.c:426
+#: src/main/colors.c:429
 msgid "rgb is not a matrix (internally)"
 msgstr "rgb не является матрицей (внутренне)"
 
-#: src/main/colors.c:429
+#: src/main/colors.c:432
 msgid "rgb must have 3 rows (internally)"
 msgstr "rgb должен иметь 3 строки (внутренне)"
 
-#: src/main/colors.c:483
+#: src/main/colors.c:486
 msgid "bad hsv to rgb color conversion"
 msgstr "неправильная конвертация цвета из hsv в rgb"
 
-#: src/main/colors.c:1274 src/main/errors.c:1129 src/main/logic.c:164
+#: src/main/colors.c:1277 src/main/errors.c:1129 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr "неправильный тип аргумента"
 
-#: src/main/colors.c:1278
+#: src/main/colors.c:1281
 msgid "unknown palette (need >= 2 colors)"
 msgstr "неизвестная палитра (нужно >= 2 цветов)"
 
-#: src/main/colors.c:1282
+#: src/main/colors.c:1285
 msgid "maximum number of colors exceeded"
 msgstr "превышено максимальное количество цветов"
 
-#: src/main/colors.c:1313 src/main/engine.c:2898
+#: src/main/colors.c:1316 src/main/engine.c:2898
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "неправильное шестнадцатеричное число в 'цвет' или 'lty'"
 
-#: src/main/colors.c:1331 src/main/colors.c:1341
+#: src/main/colors.c:1334 src/main/colors.c:1344
 msgid "invalid RGB specification"
 msgstr "неправильное указание RGB "
 
-#: src/main/colors.c:1374
+#: src/main/colors.c:1377
 #, c-format
 msgid "invalid color name '%s'"
 msgstr "неправильное имя цвета '%s'"
 
-#: src/main/colors.c:1383
+#: src/main/colors.c:1386
 #, c-format
 msgid "invalid color specification '%s'"
 msgstr "неправильное указание цвета '%s'"
 
-#: src/main/colors.c:1503
+#: src/main/colors.c:1506
 msgid "supplied color is not numeric nor character"
 msgstr "предложенный цвет -- не цифра и не символ"
 
-#: src/main/colors.c:1535
+#: src/main/colors.c:1538
 msgid "Invalid color specification"
 msgstr "Неправильное определение цвета"
 
@@ -2369,23 +2365,28 @@ msgstr "внутренняя ошибка в 'do_sys'"
 msgid "missing observations in cov/cor"
 msgstr "пропущенные наблюдения в cov/cor"
 
-#: src/main/cov.c:623
-msgid "'x' is empty"
+#: src/main/cov.c:625
+#, fuzzy
+msgid "'x' is NULL"
 msgstr "'x' пусто"
 
-#: src/main/cov.c:643 src/main/cov.c:649
+#: src/main/cov.c:646 src/main/cov.c:652
 msgid "incompatible dimensions"
 msgstr "несовместимые размерности"
 
-#: src/main/cov.c:677
+#: src/main/cov.c:684
 msgid "invalid 'use' (computational method)"
 msgstr "неправильный 'use' (метод вычисления)"
 
-#: src/main/cov.c:701 src/main/cov.c:732
+#: src/main/cov.c:687
+msgid "'x' is empty"
+msgstr "'x' пусто"
+
+#: src/main/cov.c:712 src/main/cov.c:745
 msgid "no complete element pairs"
 msgstr "нет полных пар элементов"
 
-#: src/main/cov.c:767
+#: src/main/cov.c:781
 msgid "the standard deviation is zero"
 msgstr "стандартное отклонение нулевое"
 
@@ -7897,6 +7898,9 @@ msgstr "модуль X11 нельзя загрузить"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11 недоступен"
+
+#~ msgid "argument 'x' must be a integer vector"
+#~ msgstr "аргумент 'x' должен быть целочисленным вектором"
 
 #~ msgid "unable to coerce .Random.seed to an integer vector"
 #~ msgstr "не могу преобразовать .Random.seed в целочисленный вектор"

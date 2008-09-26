@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:13\n"
+"POT-Creation-Date: 2008-09-26 09:07\n"
 "PO-Revision-Date: 2008-03-26 17:25+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -239,7 +239,10 @@ msgstr ""
 "la méthode pour la fonction \"%s\", ainsi que la signature %s, sont "
 "verrouillées et ne peuvent être redéfinies"
 
-msgid "argument in method definition changed from (%s) to (%s)"
+#, fuzzy
+msgid ""
+"For function \"%s\", signature \"%s\": argument in method definition changed "
+"from (%s) to (%s)"
 msgstr ""
 "les arguments dans la définition de méthode sont changés de (%s) vers (%s)"
 
@@ -1326,6 +1329,12 @@ msgid ""
 msgstr ""
 "(la première des signatures affichées sera utilisée)\n"
 "%s"
+
+#, fuzzy
+msgid ""
+"No simply inherited methds found for function \"%s\"; using non-simple method"
+msgstr ""
+"aucune méthode n'est trouvée pour la fonction \"%s\" et la signature %s"
 
 msgid "found"
 msgstr "trouvé"

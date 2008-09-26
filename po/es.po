@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-09-12 08:55+0100\n"
+"POT-Creation-Date: 2008-09-26 09:07+0100\n"
 "PO-Revision-Date: 2008-04-09 16:16+0100\n"
 "Last-Translator: Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language-Team: Spanish <RenEspanol@googlegroups.com>\n"
@@ -98,9 +98,9 @@ msgstr "problemas al mostrar  '%s'"
 #: src/main/array.c:1161 src/main/attrib.c:191 src/main/builtin.c:155
 #: src/main/builtin.c:508 src/main/builtin.c:524 src/main/builtin.c:702
 #: src/main/character.c:105 src/main/character.c:108 src/main/character.c:167
-#: src/main/character.c:3088 src/main/character.c:3092
-#: src/main/character.c:3155 src/main/character.c:3159
-#: src/main/character.c:3221 src/main/connections.c:911
+#: src/main/character.c:3091 src/main/character.c:3095
+#: src/main/character.c:3158 src/main/character.c:3162
+#: src/main/character.c:3224 src/main/connections.c:911
 #: src/main/connections.c:917 src/main/connections.c:920
 #: src/main/connections.c:924 src/main/connections.c:1066
 #: src/main/connections.c:1078 src/main/connections.c:1083
@@ -1511,11 +1511,11 @@ msgid "could not perform case insensitive matching"
 msgstr ""
 "no fue posible realizar una concordancia no sensible a mayúsculas/minúsculas"
 
-#: src/main/character.c:2755 src/main/character.c:2987
+#: src/main/character.c:2755 src/main/character.c:2988
 msgid "argument must be a character vector of length 1"
 msgstr "el argumento debe ser un vector de caracteres de longitud 1"
 
-#: src/main/character.c:2757 src/main/character.c:2989
+#: src/main/character.c:2757 src/main/character.c:2990
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1528,7 +1528,7 @@ msgstr ""
 msgid "argument 'x' must be a raw vector"
 msgstr "el argumento 'x' debe ser un vector crudo (raw)"
 
-#: src/main/character.c:2776 src/main/character.c:3039
+#: src/main/character.c:2776 src/main/character.c:3042
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "el argumento 'multiple' debe ser TRUE o FALSE"
 
@@ -1536,45 +1536,41 @@ msgstr "el argumento 'multiple' debe ser TRUE o FALSE"
 msgid "argument 'shift' must be a small integer"
 msgstr "el argumento 'shift' debe ser un entero pequeño"
 
-#: src/main/character.c:2843
-msgid "argument 'x' must be a integer vector"
+#: src/main/character.c:2844 src/main/character.c:3038
+msgid "argument 'x' must be an integer vector"
 msgstr "el argumento 'x' debe ser un vector entero"
 
-#: src/main/character.c:2863
+#: src/main/character.c:2864
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "el argumento 'x' debe ser crudo (raw), entero o lógico"
 
-#: src/main/character.c:2865
+#: src/main/character.c:2866
 msgid "argument 'type' must be a character string"
 msgstr "el argumento 'type' debe ser una cadena de caracteres"
 
-#: src/main/character.c:2869
+#: src/main/character.c:2870
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "el argumento 'x' debe ser un múltiplo de la longitud de %d"
 
-#: src/main/character.c:2882 src/main/character.c:2896
+#: src/main/character.c:2883 src/main/character.c:2897
 msgid "argument 'x' must not contain NAs"
 msgstr "el argumento 'x' no puede contener NAs"
 
-#: src/main/character.c:3036
-msgid "argument 'x' must be an integer vector"
-msgstr "el argumento 'x' debe ser un vector entero"
-
-#: src/main/character.c:3083
+#: src/main/character.c:3086
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() requiere un vector de caracteres"
 
-#: src/main/character.c:3162
+#: src/main/character.c:3165
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "esta plataforma no soporta 'dirmark = TRUE'"
 
-#: src/main/character.c:3174 src/main/character.c:3188
+#: src/main/character.c:3177 src/main/character.c:3191
 #: src/main/platform.c:1340 src/main/platform.c:1384
 msgid "internal out-of-memory condition"
 msgstr "memoria interna rebasada"
 
-#: src/main/character.c:3184 src/main/platform.c:1380
+#: src/main/character.c:3187 src/main/platform.c:1380
 #, c-format
 msgid "read error on '%s'"
 msgstr "error de lectura en '%s'"
@@ -1737,53 +1733,53 @@ msgstr "vector de nombres inválido"
 msgid "invalid gray level, must be in [0,1]."
 msgstr "nivel de gris inválido, debe estar en el intervalo [0,1]"
 
-#: src/main/colors.c:426
+#: src/main/colors.c:429
 msgid "rgb is not a matrix (internally)"
 msgstr "rgb no es una matriz (internamente)"
 
-#: src/main/colors.c:429
+#: src/main/colors.c:432
 msgid "rgb must have 3 rows (internally)"
 msgstr "rgb debe tener 3 filas (internamente)"
 
-#: src/main/colors.c:483
+#: src/main/colors.c:486
 msgid "bad hsv to rgb color conversion"
 msgstr "conversión de color hsv a rgb imperfecta"
 
-#: src/main/colors.c:1274 src/main/errors.c:1129 src/main/logic.c:164
+#: src/main/colors.c:1277 src/main/errors.c:1129 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr "argumento de tipo inválido"
 
-#: src/main/colors.c:1278
+#: src/main/colors.c:1281
 msgid "unknown palette (need >= 2 colors)"
 msgstr "paleta desconocida (>= 2 colores son necesarios)"
 
-#: src/main/colors.c:1282
+#: src/main/colors.c:1285
 msgid "maximum number of colors exceeded"
 msgstr "excedido el número máximo de colores"
 
-#: src/main/colors.c:1313 src/main/engine.c:2898
+#: src/main/colors.c:1316 src/main/engine.c:2898
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "valor de dígito hexadecimal inválido en 'color' o 'lty'"
 
-#: src/main/colors.c:1331 src/main/colors.c:1341
+#: src/main/colors.c:1334 src/main/colors.c:1344
 msgid "invalid RGB specification"
 msgstr "especificación RGB inválida"
 
-#: src/main/colors.c:1374
+#: src/main/colors.c:1377
 #, c-format
 msgid "invalid color name '%s'"
 msgstr "nombre de color inválido  '%s'"
 
-#: src/main/colors.c:1383
+#: src/main/colors.c:1386
 #, c-format
 msgid "invalid color specification '%s'"
 msgstr "especificación de color inválida '%s"
 
-#: src/main/colors.c:1503
+#: src/main/colors.c:1506
 msgid "supplied color is not numeric nor character"
 msgstr "los colores suministrados no son numéricos ni caracteres"
 
-#: src/main/colors.c:1535
+#: src/main/colors.c:1538
 msgid "Invalid color specification"
 msgstr "especificación de color inválida"
 
@@ -2387,23 +2383,28 @@ msgstr "error interno en 'do_sys'"
 msgid "missing observations in cov/cor"
 msgstr "observaciones perdidas en cov/cor"
 
-#: src/main/cov.c:623
-msgid "'x' is empty"
+#: src/main/cov.c:625
+#, fuzzy
+msgid "'x' is NULL"
 msgstr "'x' está vacío"
 
-#: src/main/cov.c:643 src/main/cov.c:649
+#: src/main/cov.c:646 src/main/cov.c:652
 msgid "incompatible dimensions"
 msgstr "dimensiones incompatibles"
 
-#: src/main/cov.c:677
+#: src/main/cov.c:684
 msgid "invalid 'use' (computational method)"
 msgstr "'use' inválido (método computacional)"
 
-#: src/main/cov.c:701 src/main/cov.c:732
+#: src/main/cov.c:687
+msgid "'x' is empty"
+msgstr "'x' está vacío"
+
+#: src/main/cov.c:712 src/main/cov.c:745
 msgid "no complete element pairs"
 msgstr "no hay pares de elementos completos"
 
-#: src/main/cov.c:767
+#: src/main/cov.c:781
 msgid "the standard deviation is zero"
 msgstr "el desvío estándar es cero"
 
@@ -8028,6 +8029,9 @@ msgstr "módulo X11 no puede ser cargado"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11 no está disponible"
+
+#~ msgid "argument 'x' must be a integer vector"
+#~ msgstr "el argumento 'x' debe ser un vector entero"
 
 #~ msgid "unable to coerce .Random.seed to an integer vector"
 #~ msgstr ""
