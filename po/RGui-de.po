@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: RGui\n"
+"Project-Id-Version: R-2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2008-09-08 14:15+0100\n"
-"PO-Revision-Date: 2008-04-06 17:59+0200\n"
+"PO-Revision-Date: 2008-09-18 16:17+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -235,9 +235,8 @@ msgid "internal type error in dataentry"
 msgstr "interner Typfehler in dataentry"
 
 #: dataentry.c:863
-#, fuzzy
 msgid "dataentry: parse error on string"
-msgstr "dataentry: Ausdruck zu lang"
+msgstr "dataentry: Parserfehler in Zeichenkette"
 
 #: dataentry.c:1006
 msgid "dataentry: expression too long"
@@ -772,9 +771,8 @@ msgid "Html help"
 msgstr "HTML Hilfe"
 
 #: rui.c:967
-#, fuzzy
 msgid "Html search page"
-msgstr "Liste Suchpfad auf"
+msgstr "HTML Suchseite"
 
 #: rui.c:970
 msgid "Search help..."

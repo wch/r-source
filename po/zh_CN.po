@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-09-26 08:38+0100\n"
+"POT-Creation-Date: 2008-09-26 09:05+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -352,7 +352,7 @@ msgstr "设备有错"
 
 #: src/gnuwin32/extra.c:1791
 #, fuzzy, c-format
-msgid "Registry key '%S' not found"
+msgid "Registry key '%s' not found"
 msgstr "找不到寄存器键'%s'"
 
 #: src/gnuwin32/extra.c:1855 src/gnuwin32/extra.c:1863

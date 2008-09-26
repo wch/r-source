@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.7.0\n"
+"Project-Id-Version: R-2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2008-08-01 09:16+0100\n"
-"PO-Revision-Date: 2008-04-06 19:13+0100\n"
+"PO-Revision-Date: 2008-09-19 10:40+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "kann nur 100 Parameter in arima0 transformieren"
 
 #: arima.c:838
 msgid "maximum supported lag is 350"
-msgstr ""
+msgstr "maximal unterstützter Lag ist 350"
 
 #: distance.c:152
 msgid "treating non-finite values as NA"

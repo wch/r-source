@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-09-26 08:38+0100\n"
+"POT-Creation-Date: 2008-09-26 09:05+0100\n"
 "PO-Revision-Date: 2008-04-09 16:16+0100\n"
 "Last-Translator: Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language-Team: Spanish <RenEspanol@googlegroups.com>\n"
@@ -355,7 +355,7 @@ msgstr "dispositivo defectuoso "
 
 #: src/gnuwin32/extra.c:1791
 #, fuzzy, c-format
-msgid "Registry key '%S' not found"
+msgid "Registry key '%s' not found"
 msgstr "objeto '%s' no encontrado"
 
 #: src/gnuwin32/extra.c:1855 src/gnuwin32/extra.c:1863

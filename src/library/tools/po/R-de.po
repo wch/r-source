@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.7.0\n"
+"Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-09-08 14:13\n"
-"PO-Revision-Date: 2008-06-05 14:54+0200\n"
+"PO-Revision-Date: 2008-09-19 10:57+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -370,9 +370,8 @@ msgstr "Verifizierbar als Open Source: %s"
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nicht portierbare Flags in der Variablen '%s'"
 
-#, fuzzy
 msgid "package must be loaded"
-msgstr "Namensraum darf nicht geladen werden"
+msgstr "Paket muss geladen werden"
 
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Fehlende(r) Link(s) im Dokuobjekt '%s':"
@@ -390,36 +389,35 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 
 msgid "Generics g in env ="
-msgstr ""
+msgstr "Generische g in env ="
 
 msgid "where hasMethods(g, env) errors:"
-msgstr ""
+msgstr "wo hasMethods(g, env) fehlt:"
 
 msgid ","
 msgstr ","
 
 msgid "May need something like"
-msgstr ""
+msgstr "Benötige etwas wie"
 
 msgid "importFrom("
-msgstr ""
+msgstr "importFrom("
 
 msgid ")"
-msgstr ""
+msgstr ")"
 
 msgid "in NAMESPACE."
-msgstr ""
+msgstr "im NAMESPACE."
 
 msgid "Generics without methods in"
 msgstr "Generische Funktionen ohne Methoden in"
 
 msgid ":"
-msgstr ""
+msgstr ":"
 
 msgid "argument 'lines' must be a character vector"
 msgstr "Argument 'lines' muss ein Charaktervektor sein"
 
-#, fuzzy
 msgid "encoding '%s' is not portable"
 msgstr "Kodierung '%s' ist nicht portabel"
 
@@ -515,13 +513,11 @@ msgstr "*** jemand hat das 'Built' Feld im Paket '%s' beschädigt ***"
 msgid "cannot open directory '%s'"
 msgstr "kann Verzeichnis '%s' nicht öffnen"
 
-#, fuzzy
 msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
-msgstr "Warnung: 'Depends' Eintrag hat mehrfache Abhängigkeiten:"
+msgstr "Warnung: 'Depends' Eintrag hat mehrfache Abhängigkeiten von R:"
 
-#, fuzzy
 msgid "only the first will be used in R < 2.7.0"
-msgstr "nur die erste wird genutzt in R < 2.7.0"
+msgstr "nur die Erste wird genutzt in R < 2.7.0"
 
 msgid ""
 "WARNING: omitting pointless dependence on 'R' without a version requirement"
@@ -548,12 +544,11 @@ msgstr "kann '%s' nicht rekodieren"
 msgid "unable to copy INDEX to '%s'"
 msgstr "kann INDEX nicht nach '%s' kopieren"
 
-#, fuzzy
 msgid ""
 "running Stangle on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
-"Verarbeitung der Vignette '%s' mit folgender Diagnose fehlgeschlagen:\n"
+"Stangle auf der Vignette '%s' auszuführen mit folgender Diagnose fehlgeschlagen:\n"
 "%s"
 
 msgid "cannot create directory '%s'"
@@ -565,12 +560,11 @@ msgstr "Bearbeiten von'"
 msgid "'"
 msgstr "'"
 
-#, fuzzy
 msgid ""
 "running Sweave on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
-"Verarbeitung der Vignette '%s' mit folgender Diagnose fehlgeschlagen:\n"
+"Sweave auf der Vignette '%s' auszuführen mit folgender Diagnose fehlgeschlagen:\n"
 "%s"
 
 msgid "file '%s' was not created"
@@ -675,7 +669,6 @@ msgstr "Argument 'delim' muss zwei Charakter spezifizieren"
 msgid "only Rd syntax is currently supported"
 msgstr "momentan nur Rd Syntax unterstützt"
 
-#, fuzzy
 msgid "Running 'texi2dvi' on '%s' failed."
 msgstr "Ausführen von 'texi2dvi' für '%s' fehlgeschlagen."
 

@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.7.0\n"
+"Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-08-01 09:17\n"
-"PO-Revision-Date: 2008-04-06 23:20+0200\n"
+"PO-Revision-Date: 2008-09-19 11:00+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -284,9 +284,8 @@ msgstr ""
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "Keine Dokumentation für '%s' in angegebenen Paketen und Bibliotheken:"
 
-#, fuzzy
 msgid "you could try '??%s'"
-msgstr "Sie können 'help.search(\"%s\")' versuchen"
+msgstr "Sie können '??%s' versuchen"
 
 msgid ""
 "Help for topic '%s' is not in any loaded package but can be found in the "
@@ -677,19 +676,19 @@ msgid "No DIF data on clipboard"
 msgstr "Keine DIF Daten im Clipboard"
 
 msgid "file had no lines"
-msgstr ""
+msgstr "Datei hat keine Zeilen"
 
 msgid "row and column counts not found"
 msgstr "Zeilen und Spaltenzahlen nicht gefunden"
 
 msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
-msgstr ""
+msgstr "mehr Zeilen als im Kopf spezifiziert; evtl 'transpose=TRUE'?"
 
 msgid "Unrecognized special data value"
 msgstr "Unerkannte spezielle Datenwerte"
 
 msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
-msgstr ""
+msgstr "mehr Spalten als im Kopf spezifiziert; evtl. 'transpose=TRUE'?"
 
 msgid "Unrecognized value indicator"
 msgstr "Unbekannter Wertindikator"
@@ -962,13 +961,11 @@ msgstr "aktualisiere HTML Paketbeschreibungen"
 msgid "cannot update '%s'"
 msgstr "kann '%s' nicht aktualisieren"
 
-#, fuzzy
 msgid "winDialog() cannot be used non-interactively"
-msgstr "menu() kann nicht nicht-interaktiv genutzt werden"
+msgstr "winDialog() kann nicht nicht-interaktiv genutzt werden"
 
-#, fuzzy
 msgid "winDialogString() cannot be used non-interactively"
-msgstr "menu() kann nicht nicht-interaktiv genutzt werden"
+msgstr "winDialogString() kann nicht nicht-interaktiv genutzt werden"
 
 msgid "'pb' is not from class \"winProgressBar\""
 msgstr "'pb' ist nicht aus der Klasse \"winProgressBar\""

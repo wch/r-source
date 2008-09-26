@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-09-26 08:38+0100\n"
+"POT-Creation-Date: 2008-09-26 09:05+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -366,7 +366,7 @@ msgstr "dispositivo errato"
 
 #: src/gnuwin32/extra.c:1791
 #, fuzzy, c-format
-msgid "Registry key '%S' not found"
+msgid "Registry key '%s' not found"
 msgstr "oggetto \"%s\" non trovato"
 
 #: src/gnuwin32/extra.c:1855 src/gnuwin32/extra.c:1863

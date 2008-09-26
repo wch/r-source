@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-09-26 08:38+0100\n"
+"POT-Creation-Date: 2008-09-26 09:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -353,7 +353,7 @@ msgstr ""
 
 #: src/gnuwin32/extra.c:1791
 #, c-format
-msgid "Registry key '%S' not found"
+msgid "Registry key '%s' not found"
 msgstr ""
 
 #: src/gnuwin32/extra.c:1855 src/gnuwin32/extra.c:1863

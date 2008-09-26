@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-09-26 08:38+0100\n"
+"POT-Creation-Date: 2008-09-26 09:05+0100\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -350,7 +350,7 @@ msgstr ""
 
 #: src/gnuwin32/extra.c:1791
 #, c-format
-msgid "Registry key '%S' not found"
+msgid "Registry key '%s' not found"
 msgstr ""
 
 #: src/gnuwin32/extra.c:1855 src/gnuwin32/extra.c:1863
