@@ -33,9 +33,7 @@
        1 index stringwidth pop
        mul neg 0 rmoveto show grestore } def
 /tk  { 7 -2 roll moveto gsave rotate
-       ps mul neg 0 2 1 roll rmoveto
-       2 index stringwidth pop
-       mul neg 0 rmoveto xshow grestore } def
+       ps pop pop pop xshow grestore } def
 /cl  { grestore gsave newpath 3 index 3 index moveto 1 index
        4 -1 roll lineto  exch 1 index lineto lineto
        closepath clip newpath } def

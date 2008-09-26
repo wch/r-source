@@ -5380,3 +5380,22 @@ write.dcf(list(Description = 'what a fat goat .haha'),
 stopifnot(substring(foo[-1], 1,1) == " ", length(foo) == 4,
           foo[4] == "  .haha")
 ## was " .haha" (not according to DCF standard)
+
+
+## Pdf() with CIDfonts active
+isUx <- .Platform$OS.type == "unix"
+setLC <- (isUx && !(inf <- l10n_info())$`UTF-8`)
+if(setLC) { # have Unix, but not necessarily Linux
+    old.ctype <- Sys.getlocale("LC_CTYPE")
+    Sys.setlocale("LC_CTYPE",
+                  if(R.version$os == "linux-gnu") "en_US.UTF-8")
+    inf <- l10n_info()
+}
+if(!isUx || inf$`UTF-8`) {
+    pdf(family="Japan1") # << for CIDfonts, pd->fonts is NULL
+    plot(1,1,pch="", axes=FALSE)
+    text(1,1,"F.1", family="Helvetica")
+    dev.off()
+}
+if(setLC) Sys.setlocale("LC_CTYPE", old.ctype)
+## text() seg.faulted up to 2.7.2

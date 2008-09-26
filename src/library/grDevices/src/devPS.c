@@ -908,7 +908,8 @@ PostScriptCIDMetricInfo(int c, double *ascent, double *descent, double *width)
 #ifdef SUPPORT_MBCS
     if(!mbcslocale && c > 0) {
 	if (c > 255)
-	    error(_("invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"));
+	    error(_("invalid character (%04x) sent to 'PostScriptCIDMetricInfo' in a single-byte locale"),
+		  c);
 	else {
 	    /* convert to UCS-2 to use wcwidth. */
 	    char str;
@@ -2779,7 +2780,8 @@ static void PostScriptWriteT1KerningString(FILE *fp, const char *str,
 	    p1 = (unsigned char)PS_hyphen;
 #endif
 	if(mode == KERNING_PS)
-	    ary[i]=(double)metrics->CharInfo[p1].WX;
+	    ary[i]=(double) (metrics->CharInfo[p1].WX == NA_SHORT) ?
+		0 : metrics->CharInfo[p1].WX;
 	for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++) {
 	    if(metrics->KernPairs[j].c2 == p2 &&
 	       metrics->KernPairs[j].c1 == p1	) {
@@ -2837,7 +2839,6 @@ static void PostScriptWriteT1KerningString(FILE *fp, const char *str,
 	free(ary);
 }
 
-static FontMetricInfo *metricInfo(const char *, int, PostScriptDesc *);
 static void PostScriptWriteString(FILE *fp, const char *str)
 {
     fputc('(', fp);
@@ -2867,6 +2868,8 @@ static void PostScriptWriteString(FILE *fp, const char *str)
 	}
     fputc(')', fp);
 }
+
+static FontMetricInfo *metricInfo(const char *, int, PostScriptDesc *);
 
 static void PostScriptText(FILE *fp, double x, double y,
 			   const char *str, double xc, double yc, double rot,
@@ -7122,7 +7125,9 @@ static FontMetricInfo
 static char
 *PDFconvname(const char *family, PDFDesc *pd)
 {
-    char *result = pd->fonts->family->encoding->convname;
+    char *result = (pd->fonts) ? pd->fonts->family->encoding->convname : "latin1";
+    /* pd->fonts is NULL when CIDfonts are used */
+
     if (strlen(family) > 0) {
 	int dontcare;
 	/*
