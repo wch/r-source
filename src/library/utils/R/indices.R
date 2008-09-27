@@ -63,7 +63,7 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
             stop(gettextf("metadata of package '%s' is corrupt", pkg),
                  domain = NA)
         desc <- as.list(desc)
-     } else if(file.exists(file <- file.path(pkgpath,"DESCRIPTION"))) {
+    } else if(file.exists(file <- file.path(pkgpath,"DESCRIPTION"))) {
         dcf <- read.dcf(file=file)
         if(NROW(dcf) < 1)
             stop(gettextf("DESCRIPTION file of package '%s' is corrupt", pkg),

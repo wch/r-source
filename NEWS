@@ -350,6 +350,15 @@ NEW FEATURES
 	for most users) now more carefully kern, i.e., compute
 	intercharacter distances when placing text, thanks to Ei-ji Nakama.
 
+    o	new help.request() function for compiling an e-mail to R-help
+	according to "the rules". It is built on the new utility,
+	create.post() on which also bug.report() is based now; both
+	thanks to a contribution by Heather Turner.
+
+    o	update.packages() gains an argument 'oldPkgs', where
+	new.packages() and old.packages() get 'instPkgs'.  These allow to
+	consider only subsets of packages instead of all installed ones.
+
 
 INSTALLATION
 
