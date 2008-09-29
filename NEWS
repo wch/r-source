@@ -10,6 +10,11 @@
 
 NEW FEATURES
 
+    o	Package 'Matrix' is now formally recommended. It provides S4
+	classes and methods for dense and sparse matrices, often by
+	using the numerical libraries Lapack, CHOLMOD and CSparse.
+
+
 BUG FIXES
 
 
