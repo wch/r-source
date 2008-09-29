@@ -1783,3 +1783,14 @@ do_printDeferredWarnings(SEXP call, SEXP op, SEXP args, SEXP env)
     R_PrintDeferredWarnings();
     return R_NilValue;
 }
+
+SEXP attribute_hidden
+do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    int orig_value = R_interrupts_suspended;
+    if (args != R_NilValue) 
+	R_interrupts_suspended = asLogical(CAR(args));
+    return ScalarLogical(orig_value);
+}
+	
+	
