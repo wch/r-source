@@ -330,6 +330,8 @@ NEW FEATURES
     o	intToUtf8() and intToBits() now accept numeric vectors,
 	truncating them to integers.
 
+    o	PROTECT and UNPROTECT macros now work even with R_NO_REMAP
+
 
 INSTALLATION
 
