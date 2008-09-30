@@ -481,9 +481,9 @@ void (SET_HASHVALUE)(SEXP x, int v);
 #endif
 
 /* Pointer Protection and Unprotection */
-#define PROTECT(s)	protect(s)
-#define UNPROTECT(n)	unprotect(n)
-#define UNPROTECT_PTR(s)	unprotect_ptr(s)
+#define PROTECT(s)	Rf_protect(s)
+#define UNPROTECT(n)	Rf_unprotect(n)
+#define UNPROTECT_PTR(s)	Rf_unprotect_ptr(s)
 
 /* We sometimes need to coerce a protected value and place the new
    coerced value under protection.  For these cases PROTECT_WITH_INDEX

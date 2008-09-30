@@ -364,6 +364,8 @@ NEW FEATURES
 	new.packages() and old.packages() get 'instPkgs'.  These allow to
 	consider only subsets of packages instead of all installed ones.
 
+    o	PROTECT and UNPROTECT macros now work even with R_NO_REMAP
+
 
 INSTALLATION
 
