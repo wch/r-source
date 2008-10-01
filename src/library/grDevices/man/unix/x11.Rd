@@ -93,7 +93,7 @@ X11.options(\dots, reset = FALSE)
     in non-UTF-8 locales).  The output should be locale-independent.
   }
   \code{type = "nbcairo"} is the same device as \code{type="cairo"}
-  without buffering: which is faster will depend on the the X11
+  without buffering: which is faster will depend on the X11
   connection.  Both will be slower than \code{type = "Xlib"}, especially
   on a slow X11 connection as all the rendering is done on the machine
   running \R rather than in the X server.

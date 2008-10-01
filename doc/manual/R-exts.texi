@@ -285,7 +285,7 @@ contained in subdirectory @file{share/licenses} of the R source or home
 directory.
 @item
 The names of abbreviations of free or open software licenses as
-contained the the license data base in file
+contained in the license data base in file
 @file{share/licenses/license.db} in the R source or home directory,
 possibly (for versioned licenses) followed by a version restriction of
 the form @samp{(@var{op} @var{v})} with @var{op} one of the comparison
