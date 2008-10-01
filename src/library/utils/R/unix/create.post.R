@@ -1,23 +1,10 @@
-#  File src/library/utils/R/unix/bug.report.R
-#  Part of the R package, http://www.R-project.org
-#
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
-
-bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
-                       method = getOption("mailer"),
-                       address = "r-bugs@r-project.org",
-                       file = "R.bug.report")
+create.post <- function(instructions = "\\n",
+                        description = "post",
+                        subject = "",
+                        ccaddress = Sys.getenv("USER"),
+                        method = getOption("mailer"),
+                        address ="the relevant mailing list",
+                        file = "R.post")
 {
     methods <- c("mailx", "gnudoit", "none", "ess")
 
@@ -25,7 +12,7 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
 	if(is.null(method)) "none"
 	else methods[pmatch(method, methods)]
 
-    body <- paste("\\n<<insert bug report here>>\\n\\n\\n\\n",
+    body <- paste(instructions,
 		  "--please do not edit the information below--\\n\\n",
 		  "Version:\\n ",
 		  paste(names(R.version),R.version, sep=" = ",collapse="\\n "),
@@ -56,8 +43,8 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
 
         disclaimer <-
             paste("# Your mailer is set to \"none\" (default on Windows),\n",
-                  "# hence we cannot send the bug report directly from R.\n",
-                  "# Please copy the bug report (after finishing it) to\n",
+                  "# hence we cannot send the, ", description, " directly from R.\n",
+                  "# Please copy the ", description, " (after finishing it) to\n",
                   "# your favorite email program and send it to\n#\n",
                   "#       ", address, "\n#\n",
                   "######################################################\n",
@@ -67,8 +54,9 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
         cat(disclaimer, file=file)
 	body <- gsub("\\\\n", "\n", body)
 	cat(body, file=file, append=TRUE)
+        cat("The", description, "is being opened for you to edit.\n")
 	system(paste(getOption("editor"), file))
-        cat("The unsent bug report can be found in file", file, "\n")
+        cat("The unsent", description, "can be found in file", file, "\n")
     }
     else if(method == "mailx"){
 
@@ -76,6 +64,7 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
 
 	body <- gsub("\\\\n", "\n", body)
 	cat(body, file=file, append=FALSE)
+        cat("The", description, "is being opened for you to edit.\n")
 	system(paste(getOption("editor"), file))
 
         if(is.character(ccaddress) && nzchar(ccaddress)) {
@@ -88,9 +77,9 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
 
         status <- 1
 
-        cat("Submit the bug report? ")
-        answer <- readline()
-        answer <- grep("y", answer, ignore.case=TRUE)
+        answer <- readline(paste("Email the ", description, " now? (yes/no) ",
+                                 sep = ""))
+        answer <- grep("yes", answer, ignore.case=TRUE)
         if(length(answer)>0){
             cat("Sending email ...\n")
             status <- system(paste("mailx", cmdargs))
@@ -102,13 +91,13 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
             if(status==0) unlink(file)
             else{
                 cat("Sending email failed!\n")
-                cat("The unsent bug report can be found in file",
+                cat("The unsent", description, "can be found in file",
                     file, "\n")
             }
 
         }
         else
-            cat("The unsent bug report can be found in file",
+            cat("The unsent", description, "can be found in file",
                 file, "\n")
 
     }

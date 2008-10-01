@@ -140,14 +140,14 @@ simplifyRepos <- function(repos, type)
 update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                             contriburl = contrib.url(repos, type),
                             method, instlib = NULL, ask = TRUE,
-                            available = NULL, ...,
+                            available = NULL, oldPkgs = NULL, ...,
                             checkBuilt = FALSE, type = getOption("pkgType"))
 {
-    ask  # just a check that it is valid before we start work
+    force(ask)  # just a check that it is valid before we start work
     text.select <- function(old)
     {
         update <- NULL
-        for(k in 1:nrow(old)){
+        for(k in seq_len(nrow(old))) {
             cat(old[k, "Package"], ":\n",
                 "Version", old[k, "Installed"],
                 "installed in", old[k, "LibPath"],
@@ -173,27 +173,31 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
+    if(is.null(oldPkgs)) {
+	oldPkgs <- old.packages(lib.loc = lib.loc,
+				contriburl = contriburl,
+				method = method,
+				available = available, checkBuilt = checkBuilt)
+	if(is.null(oldPkgs))
+	    return(invisible())
+    }
+    else if(!(is.matrix(oldPkgs) && is.character(oldPkgs)))
+	stop("invalid 'oldPkgs'; must be as result from old.packages()")
 
-    old <- old.packages(lib.loc = lib.loc,
-                        contriburl = contriburl,
-                        method = method,
-                        available = available, checkBuilt = checkBuilt)
-
-    if(is.null(old)) return(invisible())
     if(is.character(ask) && ask == "graphics") {
         if(.Platform$OS.type == "unix" && .Platform$GUI != "AQUA"
            && capabilities("tcltk") && capabilities("X11")) {
-            k <- tcltk::tk_select.list(old[,1], old[,1], multiple = TRUE,
+            k <- tcltk::tk_select.list(oldPkgs[,1], oldPkgs[,1], multiple = TRUE,
                                        title = "Packages to be updated")
-            update <- old[match(k, old[,1]), , drop=FALSE]
+            update <- oldPkgs[match(k, oldPkgs[,1]), , drop=FALSE]
         } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
-            k <- select.list(old[,1], old[,1], multiple = TRUE,
+            k <- select.list(oldPkgs[,1], oldPkgs[,1], multiple = TRUE,
                              title = "Packages to be updated")
-            update <- old[match(k, old[,1]), , drop=FALSE]
-        } else update <- text.select(old)
+            update <- oldPkgs[match(k, oldPkgs[,1]), , drop=FALSE]
+        } else update <- text.select(oldPkgs)
         if(nrow(update) == 0) return(invisible())
-    } else if(is.logical(ask) && ask) update <- text.select(old)
-    else update <- old
+    } else if(is.logical(ask) && ask) update <- text.select(oldPkgs)
+    else update <- oldPkgs
 
 
     if(!is.null(update)) {
@@ -209,13 +213,16 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
 old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contrib.url(repos),
+                         instPkgs = installed.packages(lib.loc = lib.loc),
                          method, available = NULL, checkBuilt = FALSE)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
-
-    instp <- installed.packages(lib.loc = lib.loc)
-    if(NROW(instp) == 0) return(NULL)
+    if(!missing(instPkgs)) {
+        if(!is.matrix(instPkgs) || !is.character(instPkgs[,"Package"]))
+            stop("illformed 'instPkgs' matrix")
+    }
+    if(NROW(instPkgs) == 0) return(NULL)
     ##    stop(gettextf("no installed packages for (invalid?) 'lib.loc=%s'",
     ##                  lib.loc), domain = NA)
     if(is.null(available))
@@ -226,17 +233,17 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     ## For bundles it is sufficient to install the first package
     ## contained in the bundle, as this will install the complete bundle
     ## However, a bundle might be installed in more than one place.
-    for(b in unique(instp[, "Bundle"])){
+    for(b in unique(instPkgs[, "Bundle"])){
         if(!is.na(b))
-            for (w in unique(instp[, "LibPath"])) {
-                ok <- which(instp[, "Bundle"] == b & instp[, "LibPath"] == w)
-                if(length(ok) > 1) instp <- instp[-ok[-1], ]
+            for (w in unique(instPkgs[, "LibPath"])) {
+                ok <- which(instPkgs[, "Bundle"] == b & instPkgs[, "LibPath"] == w)
+                if(length(ok) > 1) instPkgs <- instPkgs[-ok[-1], ]
             }
     }
 
     ## for packages contained in bundles use bundle names from now on
-    ok <- !is.na(instp[, "Bundle"])
-    instp[ok, "Package"] <- instp[ok, "Bundle"]
+    ok <- !is.na(instPkgs[, "Bundle"])
+    instPkgs[ok, "Package"] <- instPkgs[ok, "Bundle"]
     ok <- !is.na(available[, "Bundle"])
     available[ok, "Package"] <- available[ok, "Bundle"]
 
@@ -244,15 +251,15 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
     currentR <- minorR <- getRversion()
     minorR[[c(1,3)]] <- 0 # set patchlevel to 0
-    for(k in 1:nrow(instp)) {
-        if (instp[k, "Priority"] %in% "base") next
-        z <- match(instp[k, "Package"], available[,"Package"])
+    for(k in 1:nrow(instPkgs)) {
+        if (instPkgs[k, "Priority"] %in% "base") next
+        z <- match(instPkgs[k, "Package"], available[,"Package"])
         if(is.na(z)) next
         onRepos <- available[z, ]
         ## works OK if Built: is missing (which it should not be)
-	if((!checkBuilt || package_version(instp[k, "Built"]) >= minorR) &&
+	if((!checkBuilt || package_version(instPkgs[k, "Built"]) >= minorR) &&
            package_version(onRepos["Version"]) <=
-           package_version(instp[k, "Version"])) next
+           package_version(instPkgs[k, "Version"])) next
         deps <- onRepos["Depends"]
         if(!is.na(deps)) {
             Rdeps <- tools:::.split_dependencies(deps)[["R", exact=TRUE]]
@@ -263,7 +270,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
             }
         }
         update <- rbind(update,
-                        c(instp[k, c("Package", "LibPath", "Version", "Built")],
+                        c(instPkgs[k, c("Package", "LibPath", "Version", "Built")],
                           onRepos["Version"], onRepos["Repository"]))
     }
     if(!is.null(update))
@@ -275,14 +282,13 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
 new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contrib.url(repos, type),
+                         instPkgs = installed.packages(lib.loc = lib.loc),
                          method, available = NULL, ask = FALSE,
                          ..., type = getOption("pkgType"))
 {
     ask  # just a check that it is valid before we start work
     if(is.null(lib.loc)) lib.loc <- .libPaths()
-
-    instp <- installed.packages(lib.loc = lib.loc)
-    if(is.null(dim(instp)))
+    if(!is.matrix(instPkgs))
         stop(gettextf("no installed packages for (invalid?) 'lib.loc=%s'",
                       lib.loc), domain = NA)
     if(is.null(available))
@@ -292,28 +298,28 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     ## We used not to have enough information to know if they are complete,
     ## as they may be out of date and the contents may have changed
     ## However, as from 2.1.0 we install the Contains: field.
-    ok <- !is.na(instp[, "Bundle"])
+    ok <- !is.na(instPkgs[, "Bundle"])
     if(any(ok)) { # we have at least one bundle installed
-        for(b in unique(instp[ok, "Bundle"]))
+        for(b in unique(instPkgs[ok, "Bundle"]))
             if(!is.na(b)) {
                 if(! b %in% rownames(available)) next
-                ok1 <- which(instp[, "Bundle"] == b)
-                contains <- instp[ok1[1], "Contains"]
+                ok1 <- which(instPkgs[, "Bundle"] == b)
+                contains <- instPkgs[ok1[1], "Contains"]
                 if(!is.na(contains)) {
                     contains <- strsplit(contains, "[[:space:]]+")[[1]]
-                    if(!all(contains %in% instp[ok1, "Package"]))
+                    if(!all(contains %in% instPkgs[ok1, "Package"]))
                         warning(gettextf("bundle '%s' is incompletely installed", b), domain = NA)
                 }
                 new <- setdiff(strsplit(available[b, "Contains"], "[[:space:]]+")[[1]],
-                               instp[ok1, "Package"])
+                               instPkgs[ok1, "Package"])
                 if(length(new))
                     warning(gettextf("bundle '%s' has extra contents %s", b,
                                      paste(sQuote(new), collapse = ", ")),
                             domain = NA)
             }
     }
-    instp[ok, "Package"] <- instp[ok, "Bundle"]
-    installed <- unique(instp[, "Package"])
+    instPkgs[ok, "Package"] <- instPkgs[ok, "Bundle"]
+    installed <- unique(instPkgs[, "Package"])
     poss <- sort(unique(available[ ,"Package"])) # sort in local locale
     res <- setdiff(poss, installed)
 
@@ -356,18 +362,8 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     res
 }
 
-installed.packages <-
-    function(lib.loc = NULL, priority = NULL,  noCache = FALSE,
-             fields = NULL)
-{
-    if(is.null(lib.loc))
-        lib.loc <- .libPaths()
-    if(!is.null(priority)) {
-        if(!is.character(priority))
-            stop("'priority' must be character or NULL")
-        if(any(b <- priority %in% "high"))
-            priority <- c(priority[!b], "recommended","base")
-    }
+.instPkgFields <- function(fields) {
+    ## to be used in installed.packages() and similar
     requiredFields <-
         c(tools:::.get_standard_repository_db_fields(), "Built")
     if (is.null(fields))
@@ -378,52 +374,82 @@ installed.packages <-
     }
     ## Don't retain 'Package' and 'LibPath' fields as these are used to
     ## record name and path of installed packages.
-    fields <- fields[! fields %in% c("Package", "LibPath")]
-    retval <- matrix("", 0, 2 + length(fields))
-    for(lib in lib.loc) {
-        dest <- file.path(tempdir(),
-                          paste("libloc_", URLencode(lib, TRUE),
-                                paste(fields, collapse=","),
-                                ".rds",
-                                sep=""))
-        if(!noCache && file.exists(dest) &&
-            file.info(dest)$mtime > file.info(lib.loc)$mtime) {
-            retval <- rbind(retval, .readRDS(dest))
-        } else {
-            pkgs <- list.files(lib)
-            ret0 <- matrix(NA_character_, length(pkgs), 2+length(fields))
-            for(i in seq_along(pkgs)) {
-                pkgpath <- file.path(lib, pkgs[i])
-                if(file.access(pkgpath, 5)) next
-                pkgpath <- file.path(pkgpath, "DESCRIPTION")
-                if(file.access(pkgpath, 4)) next
-                desc <- read.dcf(pkgpath, fields = fields)[1,]
-                Rver <- strsplit(strsplit(desc["Built"], ";")[[1]][1],
-                                     "[ \t]+")[[1]][2]
-                desc["Built"] <- Rver
-                ret0[i, ] <- c(sub("_.*", "", pkgs[i]), lib, desc)
-            }
-            ret0 <- ret0[!is.na(ret0[,1]), ]
-            if(length(ret0)) {
-                retval <- rbind(retval, ret0)
-                .saveRDS(ret0, dest, compress = TRUE)
-            }
-        }
-    }
-    colnames(retval) <- c("Package", "LibPath", fields)
-    if(length(retval) && !is.null(priority)) {
-        keep <- !is.na(pmatch(retval[,"Priority"], priority,
-                              duplicates.ok = TRUE))
-        retval <- retval[keep, ]
-    }
-    if (length(retval)) {
-        rownames(retval) <- retval[, "Package"]
-    }
-    retval
+    fields[! fields %in% c("Package", "LibPath")]
 }
 
-remove.packages <- function(pkgs, lib, version) {
 
+##' Read Packages Description and aggregate 'fields' into character matrix
+.readPkgDesc <- function(lib, fields, pkgs = list.files(lib)) {
+    ## to be used in installed.packages() and similar
+    ret <- matrix(NA_character_, length(pkgs), 2+length(fields))
+    for(i in seq_along(pkgs)) {
+        pkgpath <- file.path(lib, pkgs[i])
+        if(file.access(pkgpath, 5)) next
+        pkgpath <- file.path(pkgpath, "DESCRIPTION")
+        if(file.access(pkgpath, 4)) next
+        desc <- read.dcf(pkgpath, fields = fields)[1,]
+        Rver <- strsplit(strsplit(desc["Built"], ";")[[1]][1],
+                         "[ \t]+")[[1]][2]
+        desc["Built"] <- Rver
+        ret[i, ] <- c(sub("_.*", "", pkgs[i]), lib, desc)
+    }
+    ret[!is.na(ret[,1]), ]
+}
+
+installed.packages <-
+    function(lib.loc = NULL, priority = NULL, noCache = FALSE,
+             fields = NULL)
+{
+    if(is.null(lib.loc))
+        lib.loc <- .libPaths()
+    if(!is.null(priority)) {
+        if(!is.character(priority))
+            stop("'priority' must be character or NULL")
+        if(any(b <- priority %in% "high"))
+            priority <- c(priority[!b], "recommended","base")
+    }
+
+    fields <- .instPkgFields(fields)
+    retval <- matrix("", 0, 2 + length(fields))
+    for(lib in lib.loc) {
+	dest <- file.path(tempdir(),
+			  paste("libloc_", URLencode(lib, TRUE),
+				paste(fields, collapse=","), ".rds",
+				sep=""))
+	if(!noCache && file.exists(dest) &&
+	    file.info(dest)$mtime > file.info(lib.loc)$mtime) {
+	    ## use the cache file
+	    retval <- rbind(retval, .readRDS(dest))
+	} else {
+	    ret0 <- .readPkgDesc(lib, fields)
+	    if(length(ret0)) {
+		retval <- rbind(retval, ret0)
+		## save the cache file
+		.saveRDS(ret0, dest, compress = TRUE)
+	    }
+	}
+    }
+
+    .fixupPkgMat(retval, fields, priority)
+}
+
+.fixupPkgMat <- function(mat, fields, priority) {
+    ## to be used in installed.packages() and similar
+    colnames(mat) <- c("Package", "LibPath", fields)
+    if(length(mat) && !is.null(priority)) {
+	keep <- !is.na(pmatch(mat[,"Priority"], priority,
+			      duplicates.ok = TRUE))
+	mat <- mat[keep, ]
+    }
+    if (length(mat)) {
+	rownames(mat) <- mat[, "Package"]
+    }
+    mat
+}
+
+
+remove.packages <- function(pkgs, lib, version)
+{
     updateIndices <- function(lib) {
         ## This should eventually be made public, as it could also be
         ## used by install.packages() && friends.
