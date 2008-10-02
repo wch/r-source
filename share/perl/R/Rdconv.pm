@@ -727,11 +727,17 @@ sub transform_S3method {
 
     ## Also try to handle markup for S3 methods for binary ops and S3
     ## Ops group methods.
+    ## Argh.  When converting to HTML/SGML, ampersands get replaced by
+    ## '&amp;' entities early on ...
+    my $amp = "\\\&";
+    if($type =~ /html/i || $type =~ /Ssgm/ || $type =~ /chm/i) {
+	$amp = "\\\&amp;";
+    }
     $S3method_RE = "([ \t]*)\\\\(S3)?method" .
 	"\{(" .
 	join("|",
 	     ("\\\+", "\\\-", "\\\*", "\\\/", "\\\^",
-	      "<=?", ">=?", "!=?", "==", "\\\&", "\\\|",
+	      "<=?", ">=?", "!=?", "==", $amp, "\\\|",
 	      "\\\%[[:alnum:][:punct:]]*\\\%")) .
 	")\}" .
 	"\{([._[:alnum:]]+|`[^`]+`)\}" .
