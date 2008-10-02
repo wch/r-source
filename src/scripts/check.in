@@ -2515,13 +2515,19 @@ sub check_pkg {
 	    my $encs = "";
 	    if (scalar(%encodings)) {
 		$encs = "\\usepackage[" . join(",", values %encodings) .
-		    "]{inputenc}";
+		    "]{inputenc}\n";
 	    }
 	    open(MANUAL, "> ${pkgname}-manual.tex")
 	      or die("Error: cannot open file '${pkgname}-manual.tex'" .
 		     "for writing\n");
-	    print MANUAL "\\documentclass\{article\}\n" . $encs .
-		"\\usepackage[ae,hyper]\{Rd\}\n\\begin\{document\}\n";
+	    print MANUAL "\\documentclass\{book\}\n" . $encs;
+	    ## Use the same Rd.sty defaults as Rd2dvi.
+	    if($HAVE_PDFLATEX) {
+		print MANUAL "\\usepackage[times,hyper]\{Rd\}\n";
+	    } else {
+		print MANUAL "\\usepackage[ae]\{Rd\}\n";
+	    }
+	    print MANUAL "\\begin\{document\}\n";
 	    foreach my $file (@tex_files) {
 		open(FILE, "< $file")
 		  or die("Error: cannot open file '$file' for reading\n");
