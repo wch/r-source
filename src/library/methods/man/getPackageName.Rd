@@ -48,19 +48,23 @@ packageSlot(object) <- value
   (without the extraneous \code{"package:"} found in the search list).
 
   \code{packageSlot} returns or sets the package name slot (currently
-  an attribute, not a formal slot, but this will likely change).
+  an attribute, not a formal slot, but this may change someday).
 
   \code{setPackageName} can be used to establish a package name in an
-  environment that would otherwise not have one.  You should do this
-  if you want to create classes and/or methods in an arbitrary
-  environment (see the example below).  On the other hand, you should \emph{}
+  environment that would otherwise not have one.  This
+  allows you to create classes and/or methods in an arbitrary
+  environment, but it is usually preferable to create packages by the
+  standard \R programming tools (\code{\link{package.skeleton}}, etc.)
 }
 
 \seealso{ \code{\link{search}} }
 
 \examples{
-## both the following usually return "base"
+## all the following usually return "base"
 getPackageName(length(search()))
+getPackageName(baseenv())
+getPackageName(asNamespace("base"))
+getPackageName("package:base")
 
 }
 \keyword{ programming }% at least one, from doc/KEYWORDS
