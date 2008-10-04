@@ -2198,7 +2198,13 @@ static void FrameValues(SEXP frame, int all, SEXP values, int *indx)
     while (frame != R_NilValue) {
 	if ((all || CHAR(PRINTNAME(TAG(frame)))[0] != '.') &&
 				      CAR(frame) != R_UnboundValue) {
-	    SET_VECTOR_ELT(values, *indx, duplicate(CAR(frame)));
+	    SEXP value = CAR(frame);
+	    if (TYPEOF(value) == PROMSXP) {
+		PROTECT(value);
+		value = eval(value, R_GlobalEnv);
+		UNPROTECT(1);
+	    }
+	    SET_VECTOR_ELT(values, *indx, duplicate(value));
 	    (*indx)++;
 	}
 	frame = CDR(frame);
