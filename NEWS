@@ -510,6 +510,9 @@ BUG FIXES
 	col2rgb(NA) did not return a transparent color, as documented.
 
 
+    o	as.list applied to an environment now forces promises and returns
+	values.
+
 
 
 	**************************************************
