@@ -540,6 +540,10 @@ BUG FIXES
     o	as.list applied to an environment now forces promises and returns
 	values.
 
+    o	Promises capturing calls to sys.parent and friends did not work
+	properly when evaluated via method dispatch for internal S3
+	generics.
+
 
 
 
