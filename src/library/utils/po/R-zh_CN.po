@@ -504,10 +504,10 @@ msgid "unable to access index for repository %s"
 msgstr "无法在貯藏處%s中读写索引"
 
 msgid "invalid 'oldPkgs'; must be as result from old.packages()"
-msgstr ""
+msgstr "'oldPkgs'的值不对；必需是从old.packages()得到的结果"
 
 msgid "illformed 'instPkgs' matrix"
-msgstr ""
+msgstr "'instPkgs'矩阵有错"
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "'lib.loc=%s'里没有已经安装好了的程序包"
@@ -1058,3 +1058,4 @@ msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
 
 #~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
 #~ msgstr "可以从其他文件/KEYWORDS中任选其他关键字，每行一个"
+
