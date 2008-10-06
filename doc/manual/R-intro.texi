@@ -5523,7 +5523,7 @@ of classes is usually chosen, but a recommendation can be given with the
 @code{nclass=} argument.  Alternatively, the breakpoints can be
 specified exactly with the @code{breaks=} argument.  If the
 @code{probability=TRUE} argument is given, the bars represent relative
-frequencies instead of counts.
+frequencies divided by bin width instead of counts.
 
 @item dotchart(x, @dots{})
 @findex dotchart
