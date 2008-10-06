@@ -192,6 +192,9 @@ NEW FEATURES
 	t-statistics rather than a confidence region for all the
 	parameters (and not just those being profiled).
 
+    o	quantile.default() allows 'probs' to stray just beyond [0, 1],
+	to allow for computed values.
+ 
     o	New functions rawConnection() and rawConnectionValue() allow
 	raw vectors to be treated as connections.
 
