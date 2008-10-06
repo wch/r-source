@@ -1887,7 +1887,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	actual_size=length;
 	break;
     case CHARSXP:
-	warning("use of allocVector(CHARSXP ...) is deprecated\n");
+	error("use of allocVector(CHARSXP ...) is defunct\n");
     case intCHARSXP:
 	size = BYTE2VEC(length + 1);
 	actual_size=length+1;

@@ -15,6 +15,16 @@ NEW FEATURES
 	using the numerical libraries Lapack, CHOLMOD and CSparse.
 
 
+DEPRECATED & DEFUNCT
+
+    o	allGenerics() is defunct.
+
+    o	Use of allocVector(CHARSXP ...) is defunct and gives an error.
+
+    o	The compatibility define for graphics structure NewDevDesc in
+	GraphicsDevice.h has been removed.
+
+
 BUG FIXES
 
 
@@ -415,7 +425,7 @@ DEPRECATED & DEFUNCT
 	has never generated such values, but user code has, and
 	R >= 2.6.0 has given a warning.)
 
-    o	allGenerics(), getMethodsMetaData() are deprecated.
+    o	methods::allGenerics() is deprecated.
 
     o	In package installation, SaveImage: yes is now ignored, and
 	any use of the field will give a warning.

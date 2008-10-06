@@ -77,9 +77,6 @@ extern "C" {
  *    complement the size() function.)
  */
 
-/* Cope with name used in 1.4.0 to 2.7.x.  Remove for R 2.9.0 */
-#define NewDevDesc DevDesc
-
 typedef struct _DevDesc DevDesc;
 typedef DevDesc* pDevDesc;
 

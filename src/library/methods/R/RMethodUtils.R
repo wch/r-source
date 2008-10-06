@@ -715,13 +715,6 @@ getGenerics <- function(where, searchForm = FALSE)
     }
 }
 
-
-allGenerics <- function(...) {
-    .Deprecated("getGenerics")
-    ## this is used nowhere, and we already have too many functions
-    getGenerics(...)
-}
-
 ## Find the pattern for methods lists or tables
 ## Currently driven by mlists, but eventually these will go away
 ## in favor of tables.
@@ -1529,7 +1522,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
     }
     if(is.null(allmtable))
       return(NULL)
-    
+
     ## Else, look for an acceptable inherited method, which must match or be a superclass
     ## of the class of each of the arguments.
     classes <- sort(classes) # make slection depend only on the set of classes
@@ -1543,7 +1536,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
         if(is.null(defi)) next
         extendsi <- defi@contains
         namesi <- c(classi, names(extendsi))
-        if(i == 1) 
+        if(i == 1)
           namesi <- namesi[match(namesi, methods, 0) > 0]
         else { # only the superclass methods matching all arguments are kept
             namesi <- namesi[match(namesi, found, 0) > 0]
