@@ -394,7 +394,7 @@ DEPRECATED & DEFUNCT
 	has never generated such values, but user code has, and
 	R >= 2.6.0 has given a warning.)
 
-    o	allGenerics(), getMethodsMetaData() are deprecated.
+    o	methods::allGenerics() is deprecated.
 
     o	In package installation, SaveImage: yes is now ignored, and
 	any use of the field will give a warning.
