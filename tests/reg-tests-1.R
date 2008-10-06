@@ -5380,3 +5380,18 @@ write.dcf(list(Description = 'what a fat goat .haha'),
 stopifnot(substring(foo[-1], 1,1) == " ", length(foo) == 4,
           foo[4] == "  .haha")
 ## was " .haha" (not according to DCF standard)
+
+
+## Pdf() with CIDfonts active
+pdf(family="Japan1") # << for CIDfonts, pd->fonts is NULL
+plot(1,1,pch="", axes=FALSE)
+text(1,1,"F.1", family="Helvetica"); dev.off()
+## text() seg.faulted up to 2.7.2 (and early 2.8.0-alpha)
+
+## PS mixing CIDfonts and Type1 - reverse case
+postscript(family="Helvetica")
+plot(1,1,pch="", axes=FALSE)
+try(text(1,1,"A",family="Japan1"))
+## error instead of seg.fault
+
+

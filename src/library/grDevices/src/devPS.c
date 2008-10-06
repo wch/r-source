@@ -908,13 +908,14 @@ PostScriptCIDMetricInfo(int c, double *ascent, double *descent, double *width)
 #ifdef SUPPORT_MBCS
     if(!mbcslocale && c > 0) {
 	if (c > 255)
-	    error(_("invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"));
+	    error(_("invalid character (%04x) sent to 'PostScriptCIDMetricInfo' in a single-byte locale"),
+		  c);
 	else {
 	    /* convert to UCS-2 to use wcwidth. */
-	    char str;
+	    char str[2]={0,0};
 	    ucs2_t out;
-	    str = c;
-	    if(mbcsToUcs2(&str, &out, 1, CE_NATIVE) == (size_t)-1)
+	    str[0] = c;
+	    if(mbcsToUcs2(str, &out, 1, CE_NATIVE) == (size_t)-1)
 		error(_("invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"));
 	    c = out;
 	}
@@ -4074,6 +4075,10 @@ static void PS_Text0(double x, double y, const char *str, int enc,
 	cidfontfamily cidfont = findDeviceCIDFont(gc->fontfamily,
 						  pd->cidfonts,
 						  &fontIndex);
+	if(!cidfont)
+	    error(_("family '%s' not included in PostScript device"),
+		  gc->fontfamily);
+
 	if (!dd->hasTextUTF8 &&
 	    !strcmp(locale2charset(NULL), cidfont->encoding)) {
 	    SetFont(translateCIDFont(gc->fontfamily, gc->fontface, pd),
@@ -5951,8 +5956,8 @@ static void PDF_Encodings(PDFDesc *pd)
 		enc_first=0;
 	    fprintf(pd->pdffp, "/BaseEncoding /PDFDocEncoding\n");
 	    fprintf(pd->pdffp, "/Differences [\n");
-	    while(encoding->enccode[enc_first]){
-		switch (encoding->enccode[enc_first]){
+	    while(encoding->enccode[enc_first]) {
+		switch (encoding->enccode[enc_first]) {
 		  case ' ':
 		  case '\t':
 		  case '\n':
@@ -6480,7 +6485,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
 	    PDF_SetLineStyle(gc, dd);
 	}
 	fprintf(pd->pdffp, "%.2f %.2f %.2f %.2f re", x0, y0, x1-x0, y1-y0);
-	switch(code){
+	switch(code) {
 	case 1: fprintf(pd->pdffp, " S\n"); break;
 	case 2: fprintf(pd->pdffp, " f\n"); break;
 	case 3: fprintf(pd->pdffp, " B\n"); break;
@@ -6527,7 +6532,7 @@ static void PDF_Circle(double x, double y, double r,
 			x + r, y - s, x + s, y - r, x, y - r);
 		fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
 			x - s, y - r, x - r, y - s, x - r, y);
-		switch(code){
+		switch(code) {
 		case 1: fprintf(pd->pdffp, "S\n"); break;
 		case 2: fprintf(pd->pdffp, "f\n"); break;
 		case 3: fprintf(pd->pdffp, "B\n"); break;
@@ -6594,7 +6599,7 @@ static void PDF_Polygon(int n, double *x, double *y,
 	    yy = y[i];
 	    fprintf(pd->pdffp, "  %.2f %.2f l\n", xx, yy);
 	}
-	switch(code){
+	switch(code) {
 	case 1: fprintf(pd->pdffp, "s\n"); break;
 	case 2: fprintf(pd->pdffp, "h f\n"); break;
 	case 3: fprintf(pd->pdffp, "b\n"); break;
@@ -6998,7 +7003,9 @@ static FontMetricInfo
 static char
 *PDFconvname(const char *family, PDFDesc *pd)
 {
-    char *result = pd->fonts->family->encoding->convname;
+    char *result = (pd->fonts) ? pd->fonts->family->encoding->convname : "latin1";
+    /* pd->fonts is NULL when CIDfonts are used */
+
     if (strlen(family) > 0) {
 	int dontcare;
 	/*
