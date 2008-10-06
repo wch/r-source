@@ -14,6 +14,10 @@ NEW FEATURES
 	classes and methods for dense and sparse matrices, often by
 	using the numerical libraries Lapack, CHOLMOD and CSparse.
 
+    o	pdf() and postscript() gain a 'forceLetterSpacing' argument to
+	place text strings letter-by-letter, based on an idea and code
+	from Ei-ji Nakama.
+
 
 DEPRECATED & DEFUNCT
 
@@ -154,10 +158,6 @@ NEW FEATURES
 
     o	pch=16 now has no border (for consistency with 15, 17, 18) and
 	hence is now different from pch=19.
-
-    o	pdf() and postscript() when using Type1 (T1) fonts (as per default
-	for most users) now more carefully kern, i.e., compute
-	intercharacter distances when placing text, thanks to Ei-ji Nakama.
 
     o	pdf() has new arguments 'useDingbats' (set this to FALSE for use
 	with broken viewers) and 'colormodel'.	It now only references

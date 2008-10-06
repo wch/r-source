@@ -193,7 +193,8 @@ guessEncoding <- function(family)
 postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
                        onefile, family, title , fonts, encoding, bg, fg,
                        width, height, horizontal, pointsize,
-                       paper, pagecentre, print.it, command, colormodel)
+                       paper, pagecentre, print.it, command, colormodel,
+                       forceLetterSpacing)
 {
     ## do initialization if needed
     initPSandPDFfonts()
@@ -215,6 +216,7 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
     if(!missing(print.it)) new$print.it <- print.it
     if(!missing(command)) new$command <- command
     if(!missing(colormodel)) new$colormodel <- colormodel
+    if(!missing(forceLetterSpacing)) new$forceLetterSpacing <- forceLetterSpacing
 
     old <- check.options(new, name.opt = ".PostScript.Options", envir = .PSenv)
 
@@ -261,7 +263,7 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
               onefile, old$pagecentre, old$print.it, old$command,
-              old$title, old$fonts, old$colormodel)
+              old$title, old$fonts, old$colormodel, old$forceLetterSpacing)
     # if .ps.prolog is searched for and fails, NULL got returned.
     invisible()
 }
@@ -286,7 +288,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
 pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                 width, height, onefile, family, title, fonts, version,
                 paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
-                useDingbats)
+                useDingbats, forceLetterSpacing)
 {
     ## do initialization if needed
     initPSandPDFfonts()
@@ -307,6 +309,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     if(!missing(pagecentre)) new$pagecentre <- pagecentre
     if(!missing(colormodel)) new$colormodel <- colormodel
     if(!missing(useDingbats)) new$useDingbats <- useDingbats
+    if(!missing(forceLetterSpacing)) new$forceLetterSpacing <- forceLetterSpacing
 
     old <- check.options(new, name.opt = ".PDF.Options", envir = .PSenv)
 
@@ -356,7 +359,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$pointsize, onefile, old$pagecentre,
               old$title, old$fonts, version[1], version[2],
-              old$colormodel, old$useDingbats)
+              old$colormodel, old$useDingbats, old$forceLetterSpacing)
     invisible()
 }
 
@@ -626,7 +629,8 @@ assign(".PostScript.Options",
          pagecentre = TRUE,
 	 print.it   = FALSE,
 	 command    = "default",
-         colormodel = "rgb"), envir = .PSenv)
+         colormodel = "rgb",
+         forceLetterSpacing = FALSE), envir = .PSenv)
 assign(".PostScript.Options.default",
        get(".PostScript.Options", envir = .PSenv),
        envir = .PSenv)
@@ -646,7 +650,8 @@ assign(".PDF.Options",
 	 pointsize  = 12,
 	 pagecentre = TRUE,
          colormodel = "rgb",
-         useDingbats = TRUE), envir = .PSenv)
+         useDingbats = TRUE,
+         forceLetterSpacing = FALSE), envir = .PSenv)
 assign(".PDF.Options.default",
        get(".PDF.Options", envir = .PSenv),
        envir = .PSenv)

@@ -18,7 +18,8 @@
 postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            onefile, family, title, fonts, encoding, bg, fg,
            width, height, horizontal, pointsize,
-           paper, pagecentre, print.it, command, colormodel)
+           paper, pagecentre, print.it, command,
+           colormodel, forceLetterSpacing)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.  If it is
@@ -109,6 +110,10 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \item{colormodel}{a character string describing the color model:
     currently allowed values as \code{"rgb"}, \code{"rgb-nogray"},
     \code{"gray"} and \code{"cmyk"}.  Defaults to \code{"rgb"}.}
+  \item{forceLetterSpacing}{logical.  If false (the default), the
+    viewing application places letters in text strings in the natural
+    spacing of the font actually used.  If true, letters are placed
+    individually using the widths specified in the \code{afm} file.}
 }
 \details{
   All arguments except \code{file} default to values given by
@@ -203,6 +208,12 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 
   Note that \R does not embed the font(s) used in the PostScript output:
   see \code{\link{embedFonts}} for a utility to help do so.
+
+  Viewers and embedding applications frequently substitute fonts for
+  those specified in the family, and the substitute will often have
+  slightly different font metrics.  Use \code{forceLetterSpacing=TRUE}
+  to space the letters in the string exactly as for the intended family:
+  this may look uglier than the default. 
 }
 
 \section{Encodings}{

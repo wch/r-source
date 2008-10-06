@@ -2231,6 +2231,7 @@ typedef struct {
     Rboolean onefile;	/* EPSF header etc*/
     Rboolean paperspecial;	/* suppress %%Orientation */
     Rboolean warn_trans; /* have we warned about translucent cols? */
+    Rboolean lspace;
 
     /* This group of variables track the current device status.
      * They should only be set by routines that emit PostScript code. */
@@ -2882,7 +2883,8 @@ static void PostScriptText(FILE *fp, double x, double y,
 
     fprintf(fp, "%.2f %.2f ", x, y);
 
-    if (isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont))
+    if (pd->lspace &&
+	isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont))
        PostScriptWriteT1KerningString(fp, str,
 				      KERNING_PS,
 				      metricInfo(gc->fontfamily, face, pd),
@@ -2904,7 +2906,8 @@ static void PostScriptText(FILE *fp, double x, double y,
     else if(rot == 90) fprintf(fp, " 90");
     else fprintf(fp, " %.2f", rot);
 
-    if (isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont))
+    if (pd->lspace &&
+	isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont))
        fprintf(fp, " tk\n");
     else
        fprintf(fp, " t\n");
@@ -3066,7 +3069,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	       Rboolean horizontal, double ps,
 	       Rboolean onefile, Rboolean pagecentre, Rboolean printit,
 	       const char *cmd, const char *title, SEXP fonts,
-	       const char *colormodel)
+	       const char *colormodel, int lspace)
 {
     /* If we need to bail out with some sort of "error"
        then we must free(dd) */
@@ -3100,6 +3103,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     strcpy(pd->papername, paper);
     strncpy(pd->title, title, 1024);
     strncpy(pd->colormodel, colormodel, 30);
+    pd->lspace = (lspace != 0);
 
     if(strlen(encoding) > PATH_MAX - 1) {
 	free(dd);
@@ -3418,7 +3422,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     /* GREset(.)  dd->gp.mkh = dd->gp.cra[0] * dd->gp.ipr[0]; */
 
     dd->canClip = TRUE;
-    dd->canHAdj = 0;
+    dd->canHAdj = pd->lspace ? 0 : 2;
     dd->canChangeGamma = FALSE;
 
     /*	Start the driver */
@@ -5249,7 +5253,7 @@ typedef struct {
     Rboolean inText;
     char title[1024];
     char colormodel[30];
-    Rboolean dingbats;
+    Rboolean dingbats, lspace;
 
     /*
      * Fonts and encodings used on the device
@@ -5388,7 +5392,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 		double ps, int onefile, int pagecentre,
 		const char *title, SEXP fonts,
 		int versionMajor, int versionMinor,
-		const char *colormodel, int dingbats)
+		const char *colormodel, int dingbats, int lspace)
 {
     /* If we need to bail out with some sort of "error" */
     /* then we must free(dd) */
@@ -5439,6 +5443,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     memset(pd->fontUsed, 0, 100*sizeof(Rboolean));
     strncpy(pd->colormodel, colormodel, 30);
     pd->dingbats = (dingbats != 0);
+    pd->lspace = (lspace != 0);
 
     pd->width = width;
     pd->height = height;
@@ -6843,13 +6848,14 @@ static void PDFSimpleText(double x, double y, const char *str,
     fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
 	    font,
 	    a, b, -b, a, x, y);
-    if (isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
+    if (pd->lspace &&
+	isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
        PostScriptWriteT1KerningString(pd->pdffp, str1,
 				      KERNING_PDF,
 				      PDFmetricInfo(gc->fontfamily, face, pd),
 				      gc);
        fprintf(pd->pdffp, " TJ\n");
-    }else{
+    } else {
        PostScriptWriteString(pd->pdffp, str1);
        fprintf(pd->pdffp, " Tj\n");
     }
@@ -7007,7 +7013,8 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
 	str1 = buff;
     }
 
-    if (isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
+    if (pd->lspace &&
+	isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
        PostScriptWriteT1KerningString(pd->pdffp, str1,
 				      KERNING_PDF,
 				      PDFmetricInfo(gc->fontfamily, face, pd),
@@ -7289,7 +7296,7 @@ SEXP PostScript(SEXP args)
     const char *file, *paper, *family=NULL, *bg, *fg, *cmd;
     const char *afms[5];
     const char *encoding, *title, call[] = "postscript", *colormodel;
-    int i, horizontal, onefile, pagecentre, printit;
+    int i, horizontal, onefile, pagecentre, printit, lspace;
     double height, width, ps;
     SEXP fam, fonts;
 
@@ -7324,7 +7331,9 @@ SEXP PostScript(SEXP args)
     cmd = CHAR(asChar(CAR(args)));    args = CDR(args);
     title = translateChar(asChar(CAR(args)));  args = CDR(args);
     fonts = CAR(args);		      args = CDR(args);
-    colormodel = CHAR(asChar(CAR(args)));
+    colormodel = CHAR(asChar(CAR(args)));  args = CDR(args);
+    lspace = asLogical(CAR(args));
+    if (lspace == NA_LOGICAL) lspace = 1;
     if (!isNull(fonts) && !isString(fonts))
 	error(_("invalid 'fonts' parameter in %s"), call);
 
@@ -7337,7 +7346,7 @@ SEXP PostScript(SEXP args)
 	if(!PSDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			   width, height, (double)horizontal, ps, onefile,
 			   pagecentre, printit, cmd, title, fonts,
-			   colormodel)) {
+			   colormodel, lspace)) {
 	    /* free(dev); No, dev freed inside PSDeviceDrive */
 	    error(_("unable to start device PostScript"));
 	}
@@ -7430,6 +7439,7 @@ SEXP XFig(SEXP args)
  *  versionMinor
  *  colormodel
  *  useDingbats
+ *  forceLetterSpacing
  */
 
 SEXP PDF(SEXP args)
@@ -7440,7 +7450,7 @@ SEXP PDF(SEXP args)
 	*bg, *fg, *title, call[] = "PDF", *colormodel;
     const char *afms[5];
     double height, width, ps;
-    int i, onefile, pagecentre, major, minor, dingbats;
+    int i, onefile, pagecentre, major, minor, dingbats, lspace;
     SEXP fam, fonts;
 
     vmax = vmaxget();
@@ -7471,8 +7481,10 @@ SEXP PDF(SEXP args)
     major = asInteger(CAR(args)); args = CDR(args);
     minor = asInteger(CAR(args)); args = CDR(args);
     colormodel = CHAR(asChar(CAR(args))); args = CDR(args);
-    dingbats = asLogical(CAR(args));
+    dingbats = asLogical(CAR(args)); args = CDR(args);
     if (dingbats == NA_LOGICAL) dingbats = 1;
+    lspace = asLogical(CAR(args));
+    if (lspace == NA_LOGICAL) lspace = 1;
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -7483,7 +7495,7 @@ SEXP PDF(SEXP args)
 	if(!PDFDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			    width, height, ps, onefile, pagecentre,
 			    title, fonts, major, minor, colormodel,
-			    dingbats)) {
+			    dingbats, lspace)) {
 	    /* free(dev); PDFDeviceDriver now frees */
 	    error(_("unable to start device pdf"));
 	}
