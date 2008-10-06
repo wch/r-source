@@ -24,12 +24,14 @@ quantile.default <-
 	x <- x[!is.na(x)]
     else if (any(is.na(x)))
 	stop("missing values and NaN's not allowed if 'na.rm' is FALSE")
-    if (any((p.ok <- !is.na(probs)) & (probs < 0 | probs > 1)))
+    eps <- 100*.Machine$double.eps
+    if (any((p.ok <- !is.na(probs)) & (probs < -eps | probs > 1+eps)))
 	stop("'probs' outside [0,1]")
     n <- length(x)
     if(na.p <- any(!p.ok)) { # set aside NA & NaN
         o.pr <- probs
         probs <- probs[p.ok]
+        probs <- pmax(0, pmin(1, probs)) # allow for slight overshoot
     }
     np <- length(probs)
     if (n > 0 && np > 0) {
