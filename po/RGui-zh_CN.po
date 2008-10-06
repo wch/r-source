@@ -222,9 +222,8 @@ msgid "internal type error in dataentry"
 msgstr "dataentry中的内部类型出错"
 
 #: dataentry.c:863
-#, fuzzy
 msgid "dataentry: parse error on string"
-msgstr "dataentry：表达式太长"
+msgstr "dataentry：字符串句法分析出错"
 
 #: dataentry.c:1006
 msgid "dataentry: expression too long"
@@ -748,9 +747,8 @@ msgid "Html help"
 msgstr "Html帮助"
 
 #: rui.c:967
-#, fuzzy
 msgid "Html search page"
-msgstr "列出查找路径"
+msgstr "Html查找路径"
 
 #: rui.c:970
 msgid "Search help..."

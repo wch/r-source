@@ -274,9 +274,8 @@ msgstr "垂直定位不对"
 msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
 msgstr "'respect'的值要么是逻辑值，要么是一个'nrow'乘'ncol'大小的矩阵"
 
-#, fuzzy
 msgid "Invalid 'print' argument"
-msgstr "'grob'变元值不对"
+msgstr "'print'变元值不对"
 
 msgid "Invalid object in listing"
 msgstr "表里目标对象不对"
@@ -358,9 +357,8 @@ msgstr "'x'和'y'必需为单元对象，而且它们的长度必需相同"
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
 msgstr "'x', 'y', 'width'和'height'都应该是长度为一的单元值"
 
-#, fuzzy
 msgid "'x' and 'y' must all be units of length 1"
-msgstr "'x'和'y'的长度必需为一"
+msgstr "'x'和'y'必需是长度为一的单元"
 
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x'和'unit'的长度必需大于零"
@@ -489,3 +487,4 @@ msgstr "至少要设定'y'或'yscale'两个中的一个"
 
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x'必需是数字"
+

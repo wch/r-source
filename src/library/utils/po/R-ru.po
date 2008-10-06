@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.7.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:17\n"
+"POT-Creation-Date: 2008-10-06 07:30\n"
 "PO-Revision-Date: 2008-04-07 00:39-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -517,6 +517,12 @@ msgstr "Дальнейшее указано в '%s'."
 
 msgid "unable to access index for repository %s"
 msgstr "недоступен индекс для хранилища %s"
+
+msgid "invalid 'oldPkgs'; must be as result from old.packages()"
+msgstr ""
+
+msgid "illformed 'instPkgs' matrix"
+msgstr ""
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "нет установленных пакетов для (неправильного?) 'lib.loc=%s'"

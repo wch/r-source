@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-26 09:07\n"
+"POT-Creation-Date: 2008-10-06 07:30\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -29,32 +29,33 @@ msgid ""
 "unnamed argument to initialize() for S3 class must have a class defintion; "
 "\"%s\" does not"
 msgstr ""
+"给S3类别用的initialize()函数中变元没有名字的话则必需具有类别室定义； \"%s\"没"
+"有"
 
 msgid ""
 "unnamed argument must extend either the S3 class or the class of the data "
 "part; not true of class \"%s\""
-msgstr ""
+msgstr "没有名字的变元要么扩充S3类别，要么扩充数据类别 \"%s\"类别没有做到"
 
-#, fuzzy
 msgid ""
 "Class \"%s\" does not have an S3 data part, and so is of type \"S4\"; no S3 "
 "equivalent"
-msgstr "类别\"%s\"没有数据部分(.Data 槽)"
+msgstr "类别\"%s\"不包含S3数据部分，因此其种类为\"S4\"；不是S3同变类别"
 
 msgid ""
 "Class \"%s\" is VIRTUAL; not meaningful to create an S4 object from this "
 "class"
-msgstr ""
+msgstr "\"%s\"是虚拟类别；用这种类别来建立新的S4目标对象是没有意义的"
 
 msgid ""
 "Object must be a valid data part for class \"%s\"; not true of type \"%s\""
-msgstr ""
+msgstr "\"%s\"类别的目标对象必需包含有效的数据部分；但\"%s\"种类不是这样"
 
 msgid "Cannot specify matrix() arguments when specifying .Data"
-msgstr ""
+msgstr "在指定.Data时不能同时指定matrix()变元"
 
 msgid "Cannot specify array() arguments when specifying .Data"
-msgstr ""
+msgstr "在指定.Data时不能同时指定array()变元"
 
 msgid ""
 "methods may not be defined for primitive function \"%s\" in this version of R"
@@ -64,22 +65,22 @@ msgid ""
 "S3Part() is only defined for classes set up by setOldCLass(), basic classes "
 "or subclasses of these:  not true of class \"%s\""
 msgstr ""
+"S3Part()只适用于由setOldCLass()，基本类别，或基本类别这子类别所建立的类别\"%s"
+"\"类别不是这样"
 
 msgid ""
 "The S3Class argument must be a superclass of \"%s\":  not true of class \"%s"
 "\""
-msgstr ""
+msgstr "S3Class变元必需是\"%s\"的母类别: \"%s\"不是这样"
 
 msgid "Replacement value must extend class \"%s\", got  \"%s\""
-msgstr ""
+msgstr "替换值必需扩充\"%s\"类别，不是\"%s\""
 
-#, fuzzy
 msgid "Replacement value must be of class \""
-msgstr "替换值不是矩阵"
+msgstr "替换值的类别必需为"
 
-#, fuzzy
 msgid "\", got one of class \""
-msgstr "对象为类别"
+msgstr "\"，不能是类别"
 
 msgid "\""
 msgstr "\""
@@ -98,6 +99,8 @@ msgid ""
 "the computation: as(object,\"%s\") <- value is valid when object has class "
 "\"%s\" only if is(value, \"%s\") is TRUE (class(value) was \"%s\")"
 msgstr ""
+"运算出错：当object的类别是\"%2$s\"时，as(object,\"%1$s\") <- value只能在is"
+"(value, \"%3$s\")值为TRUE的时候才能用(class(value)的值不能是\"%4$s\")"
 
 msgid ""
 "there is no automatic definition for as(object, \"%s\") <- value when object "
@@ -120,7 +123,7 @@ msgid "unable to create union class:  could not set members %s"
 msgstr "无法建立併集类别: 无法设定%s成员"
 
 msgid "invalid argument \"name\": %s"
-msgstr ""
+msgstr "变元\"name\"无效: %s"
 
 msgid ""
 "\"%s\" is a primitive function;  methods can be defined, but the generic "
@@ -142,12 +145,16 @@ msgid ""
 "Restoring the implicit generic function for \"%s\" from package \"%s\" into "
 "package \"%s\"; the generic differs from the default conversion (%s)"
 msgstr ""
+"把隐含同属函数\"%s\"从程辑包\"%s\"恢复到\"%s\"；同属函数与缺省转换(%s) 不一样"
 
 msgid ""
 "Creating a generic for \"%s\" in package  \"%s\"\n"
 "    (the supplied definition differs from and overrides the implicit generic "
 "in package \"%s\": %s)"
 msgstr ""
+"在程辑包\"%2$s\"中为\"%1$s\"建立同属函数\n"
+"    (所提供的函数定义与程辑包\"%3$s\"中的隐含同属函数定义不相同，因此将之覆"
+"盖：%4$s)"
 
 msgid ""
 "No generic version of  \"%s\" on package \"%s\" is allowed; a new generic "
@@ -196,9 +203,8 @@ msgstr ""
 msgid "no existing definition for function \"%s\""
 msgstr "函数'%s'没有定义"
 
-#, fuzzy
 msgid "Creating a generic function from function \"%s\""
-msgstr "为'%1$s'里的'%2$s'建立新的同屬函数"
+msgstr "用函数\"%s\"来建立新的同屬函数"
 
 msgid "Creating a new generic function for \"%s\" in \"%s\""
 msgstr "为'%1$s'里的'%2$s'建立新的同屬函数"
@@ -215,11 +221,10 @@ msgid ""
 "defined"
 msgstr "函数'%s'的方法和'%s'标记都被封闭了，因此无法将之重新定义"
 
-#, fuzzy
 msgid ""
 "For function \"%s\", signature \"%s\": argument in method definition changed "
 "from (%s) to (%s)"
-msgstr "定义里的变元从(%s)改为(%s)"
+msgstr "\"%s\"函数，\"%s\"标记：方法定义中的变元从(%s)改变成(%s)"
 
 msgid ""
 "primitive functions cannot be methods; they must be enclosed in a regular "
@@ -243,11 +248,10 @@ msgid "no generic function \"%s\" found"
 msgstr "不存在'%s'这一同屬函数"
 
 msgid "no environment or package corresponding to argument where=%s"
-msgstr ""
+msgstr "找不到与where=%s变元相配的环境或程辑包"
 
-#, fuzzy
 msgid "No generic function found for \"%s\""
-msgstr "为'%s'找不到同屬函数"
+msgstr "找不到\"%s\"同屬函数"
 
 msgid "No method found for function \"%s\" and signature %s"
 msgstr "找不到适用于函数'%s'和标记%s的方法"
@@ -270,7 +274,7 @@ msgid "'file' must be a character string or a connection"
 msgstr "'file'必需是字符串或联结"
 
 msgid "No method for \"...\" matches class \"%s\""
-msgstr ""
+msgstr "\"...\"没有与\"%s\"类别对得上的方法"
 
 msgid "No method found for signature %s"
 msgstr "标记'%s'里不存在任何方法"
@@ -282,7 +286,7 @@ msgid "signature must be a vector of classes or an environment"
 msgstr "标记要么是个含类别的矢量，要么是个环境"
 
 msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
-msgstr ""
+msgstr "selectMethod():.SelectMethodOn - 过时了的东西 - 请报告"
 
 msgid "no unique method corresponding to this signature"
 msgstr "这一标记没有与之相对应的唯一方法"
@@ -351,17 +355,14 @@ msgstr ""
 "变元\"f\"要么是同屬函数要么是单一字符串；现在得到的却是类别为\"%s\"的目标对象"
 "对象"
 
-#, fuzzy
 msgid "non-generic function '%s' given to findMethods()"
-msgstr "findMethods()没有非同屬函数"
+msgstr "findMethods()不适用于非同屬函数'%s'"
 
-#, fuzzy
 msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
-msgstr "FALSE只对于继承类别有意义，当提供where时(得到了"
+msgstr "用'where'时，FALSE只对于'inherited'有意义，(得到了"
 
-#, fuzzy
 msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
-msgstr "f不对应同属函数，也没有指定程序包"
+msgstr "'%s'不是'%s'里的同属函数，{也没有设定'package'}"
 
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
@@ -531,11 +532,10 @@ msgstr ""
 "是设定类别\"%s\"时，所提供的数据部分类别, \"%s\"有错(必需是基本类别或组合多个"
 "基本类别的虛擬类别)"
 
-#, fuzzy
 msgid ""
 "No definition was found for superclass \"%s\" in the specification of class "
 "\"%s\""
-msgstr "在指定的%2$s这个位置不存在类别\"%1$s\"的定义, 定义在: %3$s"
+msgstr "在定义\"%2$s\"里不存在母类别\"%1$s\"的定义"
 
 msgid "class \"%s\" cannot be used as the data part of another class"
 msgstr "无法把类别\"%s\"当作另外一个类别的数据部分来用"
@@ -697,9 +697,8 @@ msgid ""
 "generic"
 msgstr "只有当'...'是同屬的变元时方法才能加变元"
 
-#, fuzzy
 msgid "Arguments of method and generic are not in the same order"
-msgstr "方法里的正式变元和函数两都的顺序不同"
+msgstr "方法里的变元和同属函数里的变元之顺序不同"
 
 msgid ""
 "arguments after '...' in the generic (%s) must appear in the method, in the "
@@ -803,22 +802,20 @@ msgid ""
 "function \""
 msgstr "\"没有这样的作用(警告，停止，一次，忽视) ；函数没有记录作用"
 
-#, fuzzy
 msgid "argument f must be a generic function with signature \"...\""
-msgstr "为变元\"f\"提供的函数必需是同属函数"
+msgstr "变元f必需是带\"...\"标记的同属函数"
 
-#, fuzzy
 msgid "No method or default matching the \"...\" arguments in %s"
-msgstr "没有可以用来強制转换\"%s\"成\"%s\"的方法或默认函数"
+msgstr "%s里没有同\"...\"变元相配的方法或默认函数"
 
 msgid "multiple direct matches:"
-msgstr ""
+msgstr "多个直接匹配："
 
 msgid "; using the first of these"
-msgstr ""
+msgstr "；用第一个"
 
 msgid "multiple equivalent inherited matches:"
-msgstr ""
+msgstr "多个等同继承匹配"
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr "\"%s\"的类别定义被封闭了，因此无法重新被定义"
@@ -912,6 +909,8 @@ msgid ""
 "Class \"%s\" is defined, with package \"%s\", but no corresponding metadata "
 "object was found (not exported?)"
 msgstr ""
+"\"%s\"类别已经在\"%s\"程序包里被定义过了，但没有与之相对应的元数据对象(有没有"
+"被出口过？)"
 
 msgid "no definition of \"%s\" to use for %s"
 msgstr "\"%s\"没有定义，不能为%s起作用"
@@ -1030,6 +1029,8 @@ msgid ""
 "found to revise %s information---not exported?  Making a copy in package \"%s"
 "\""
 msgstr ""
+"\"%s\"类别已经(在\"%s\"程序包槽里)被定义过了，但没有可用于修改%s信息的元数据"
+"对象--是不是出口了？在\"%s\"程序包里复制"
 
 msgid "class \"%s\" cannot extend class \"%s\""
 msgstr "类别\"%s\"无法擴充类别\"%s\""
@@ -1103,8 +1104,9 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"No simply inherited methds found for function \"%s\"; using non-simple method"
-msgstr "找不到适用于函数'%s'和标记%s的方法"
+"No simply inherited methods found for function \"%s\"; using non-simple "
+"method"
+msgstr "找不到适用于函数\"%s\"简单方法；用复杂方法"
 
 msgid "found"
 msgstr "找到了"
@@ -1132,9 +1134,8 @@ msgstr "找不到团体同属函数："
 msgid "Invalid group generic function in search for inherited method (class \""
 msgstr "在找继承方法时出现的同属函数不对"
 
-#, fuzzy
 msgid "Invalid methods table request"
-msgstr "方法子串列有错"
+msgstr "表要求方法出错"
 
 msgid "Trying to check signature length of group generic \""
 msgstr "检查团体同属的标记长度"
@@ -1160,20 +1161,16 @@ msgstr "好象有点不对：方法表字符里变元数目有矛盾"
 msgid "(using the largest value)"
 msgstr "(用最大值)"
 
-#, fuzzy
 msgid ""
 "No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
-msgstr "\"%s\"找不到方法列表，\"%s\"程序包可能过时了"
+msgstr "在\"%3$s\"程序包中，程序包\"%2$s\"里的同属\"%1$s\"没有方法列表"
 
 msgid "not allowed to have test==TRUE and an S4Class definition"
-msgstr ""
+msgstr "test==TRUE和S4Class定义不能同时存在"
 
-#, fuzzy
 msgid ""
 "argument S4Class must be a class definition:  got an object of class \"%s\""
-msgstr ""
-"变元'classDef'要么是个字串要么是个类别表现；现在得到的却是类别为\"%s\"的目标"
-"对象"
+msgstr "变元S4Class必需是类别定义：现在得到的却是类别为\"%s\"的目标对象"
 
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
@@ -1184,6 +1181,7 @@ msgid ""
 "The S3 class of the prototype, \"%s\", is undefined; only allowed when this "
 "is the S3 class being registered (\"%s\")"
 msgstr ""
+"S3类别的原型, \"%s\", 没有定义；只有在注册这个S3类别时才允许这种情况(\"%s\")"
 
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr "旧式类别(%s)的明确强制转换没有定义"
@@ -1202,11 +1200,12 @@ msgid ""
 "S3Class only defined for extensions of \"oldClass\" or classes with a data "
 "part:  not true of class \""
 msgstr ""
+"S3Class只能定义于\"oldClass\"的扩充类别或带数据部分的类别不适用于类别 \""
 
 msgid ""
 "S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
 "true of class \"%s\""
-msgstr ""
+msgstr "S3Class只能分配给扩充\"oldClass\"类别的S4目标对象；不适用于类别\"%s\""
 
 msgid "Created a package name, \"%s\", when none found"
 msgstr "建立了程輯包名: '%s'，因为没有找到其它名字"
@@ -1293,9 +1292,8 @@ msgstr "建立可追踪的类别"
 msgid "Environment of class \""
 msgstr "环境有类别"
 
-#, fuzzy
 msgid "\" is locked; using global environment for new class"
-msgstr "\"被锁住了；在新的类别上用基本环境"
+msgstr "\"被锁住了；在新的类别上用全局环境"
 
 msgid "not a package name: \"%s\""
 msgstr "不程輯包名: '%s'"

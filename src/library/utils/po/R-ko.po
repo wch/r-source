@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:17\n"
+"POT-Creation-Date: 2008-10-06 07:30\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -533,6 +533,12 @@ msgstr ""
 
 msgid "unable to access index for repository %s"
 msgstr "reposityory %s를 위한 인덱스에 액세스 할수 없습니다"
+
+msgid "invalid 'oldPkgs'; must be as result from old.packages()"
+msgstr ""
+
+msgid "illformed 'instPkgs' matrix"
+msgstr ""
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "'lib.loc=%s'를 위한 (무효?) 인스톨 된 패키지가 없습니다"
