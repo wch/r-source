@@ -1102,11 +1102,10 @@ msgstr ""
 "(使用显示的第一个标记)\n"
 "%s"
 
-#, fuzzy
 msgid ""
 "No simply inherited methods found for function \"%s\"; using non-simple "
 "method"
-msgstr "找不到适用于函数\"%s\"简单方法；用复杂方法"
+msgstr "找不到适用于函数\"%s\"的简单方法；用复杂方法"
 
 msgid "found"
 msgstr "找到了"
@@ -1438,3 +1437,4 @@ msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
 
 #~ msgid "trying to use new() on a virtual class"
 #~ msgstr "不能在虛擬类别上用new()这一函数"
+
