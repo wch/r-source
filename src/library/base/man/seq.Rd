@@ -57,8 +57,8 @@ seq(length.out= )
   The second form generates \code{from, from+by}, \ldots, up to the
   sequence value less than or equal to \code{to}.  Specifying
   \code{to - from} and \code{by} of opposite signs is an error.  Note
-  that the final value can go just beyond \code{to} to allow for
-  rounding error.
+  that the computed final value can go just beyond \code{to} to allow for
+  rounding error, but (as from \R 2.9.0) is truncated to \code{to}.
 
   The third generates a sequence of \code{length.out} equally spaced
   values from \code{from} to \code{to}.  (\code{length.out} is usually

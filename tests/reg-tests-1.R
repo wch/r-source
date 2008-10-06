@@ -5395,3 +5395,8 @@ try(text(1,1,"A",family="Japan1"))
 ## error instead of seg.fault
 
 
+## (Deliberate) overshot in seq(from, to, by) because of fuzz
+stopifnot(seq(0, 1, 0.00025+5e-16) <= 1, seq.int(0, 1, 0.00025+5e-16) <= 1)
+stopifnot(rev(seq(0, 1, 0.00025+5e-16))[1] == 1,
+          rev(seq.int(0, 1, 0.00025+5e-16))[1] == 1)
+# overshot by about 2e-12 in 2.8.x

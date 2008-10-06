@@ -18,6 +18,11 @@ NEW FEATURES
 	place text strings letter-by-letter, based on an idea and code
 	from Ei-ji Nakama.
 
+    o	seq.default() and seq.int() ensure that the result is within the
+	interval [from, to] even when the last value would previously
+	have been slightly out of range because of the allowance for
+	rounding error in computing the number of elements.
+
 
 DEPRECATED & DEFUNCT
 
