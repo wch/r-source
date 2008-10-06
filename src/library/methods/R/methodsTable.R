@@ -313,7 +313,7 @@
   if(simpleOnly && length(methods) == 0) {
       methods <- Recall(classes, fdef, mtable, table, excluded, useInherited,verbose, returnAll, FALSE)
       if(length(methods) > 0)
-        message(gettextf("No simply inherited methds found for function \"%s\"; using non-simple method",
+        message(gettextf("No simply inherited methods found for function \"%s\"; using non-simple method",
                       fdef@generic), domain = NA)
   }
   if(doMtable && length(methods) > 0) { ## Cache the newly found one
