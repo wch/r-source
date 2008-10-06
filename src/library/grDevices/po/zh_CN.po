@@ -422,19 +422,18 @@ msgid "unable to start device PicTeX"
 msgstr "无法启动PicTeX装置"
 
 #: devQuartz.c:622
-#, fuzzy, c-format
+#, c-format
 msgid "font \"%s\" could not be found for family \"%s\""
-msgstr "无法打开afm文本'%s'"
+msgstr "字体家族\"%s\"里没有\"%s\"这一字体"
 
 #: devQuartz.c:634
-#, fuzzy
 msgid "font family name is too long"
-msgstr "pdf文本名字太长"
+msgstr "字体家族名字太长"
 
 #: devQuartz.c:674
 #, c-format
 msgid "no font could be found for family \"%s\""
-msgstr ""
+msgstr "字体家族\"%s\"没有字体"
 
 #: devQuartz.c:1164
 msgid "invalid 'file' argument"
@@ -589,20 +588,18 @@ msgid "Impossible to open "
 msgstr "无法打开"
 
 #: devWindows.c:3215
-#, fuzzy
 msgid "invalid 'width' or 'height'"
-msgstr "devWindows的'width'或'height'值不对"
+msgstr "'width'或'height'的值不对"
 
 #: devWindows.c:3220 devWindows.c:3224 devWindows.c:3232 devWindows.c:3243
 #: devWindows.c:3249 devWindows.c:3256
-#, fuzzy, c-format
+#, c-format
 msgid "invalid value of '%s'"
-msgstr "devWindows的'bg'值不对"
+msgstr "'%s'的值不对"
 
 #: devWindows.c:3273
-#, fuzzy
 msgid "unable to start device"
-msgstr "无法启动pdf装置"
+msgstr "无法启动装置"
 
 #: devWindows.c:3343
 msgid "recursive use of getGraphicsEvent not supported"
@@ -611,7 +608,7 @@ msgstr "不支持getGraphicsEvent的遞迴使用"
 #: qdBitmap.c:79
 #, c-format
 msgid "QuartzBitmap_Output - unable to open file '%s'"
-msgstr ""
+msgstr " QuartzBitmap_Output - 打不开'%s'文件"
 
 #: qdBitmap.c:94
 msgid "Not a supported scheme, no image data written"

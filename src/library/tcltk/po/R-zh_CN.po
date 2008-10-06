@@ -92,7 +92,7 @@ msgid "Cancel"
 msgstr "取消"
 
 msgid "'pb' is not from class \"tkProgressBar\""
-msgstr ""
+msgstr "'pb'不属于\"tkProgressBar\"这一类别"
 
 msgid "Loading Tcl/Tk interface ..."
 msgstr "载入Tcl/Tk接口..."
@@ -105,3 +105,4 @@ msgstr "这个系统不支持Tcl/Tk"
 
 msgid "Tcl/Tk support files were not installed"
 msgstr "没有安装Tcl/Tk支持文件"
+

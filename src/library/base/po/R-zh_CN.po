@@ -70,20 +70,17 @@ msgstr "'kind' 必需是字符串，而且其长度只能为一(用RNG) 。"
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr "'%s'不是正当的RNG缩写"
 
-#, fuzzy
 msgid "'normal.kind' must be a character string of length 1"
 msgstr "'normal.kind'必需是字符串，而且其长度只能为一。"
 
 msgid "'%s' is not a valid choice"
 msgstr "%s'不是正当的选择"
 
-#, fuzzy
 msgid "Buggy version of Kinderman-Ramage generator used"
 msgstr "Kinderman-Ramage任意数产生器可能有虫。"
 
-#, fuzzy
 msgid "Buggy version of Kinderman-Ramage generator is not allowed"
-msgstr "Kinderman-Ramage任意数产生器可能有虫。"
+msgstr "不能用有虫的Kinderman-Ramage任意数产生器。"
 
 msgid "malformed version string"
 msgstr "版本字串格式有错"
@@ -345,10 +342,10 @@ msgid "invalid list argument: all variables should have the same length"
 msgstr "串列变元有错：所有变数的长度都应该是一样的"
 
 msgid "data frame with 0 columns and %d rows"
-msgstr ""
+msgstr "数据框没有列但有%d行"
 
 msgid "<0 rows> (or 0-length row.names)"
-msgstr ""
+msgstr "<0 行> (或0-长度的row.names)"
 
 msgid "non-numeric variable in data frame:"
 msgstr "数据框里有非数值的变元"
@@ -507,6 +504,10 @@ msgid ""
 "Offending lines start with:\n"
 "%s"
 msgstr ""
+"DCF格式不对。\n"
+"正则行必需含标签。\n"
+"不对行的开头为：\n"
+"%s"
 
 msgid ""
 "Invalid DCF format.\n"
@@ -514,6 +515,10 @@ msgid ""
 "Offending lines start with:\n"
 "%s"
 msgstr ""
+"DCF格式不对。\n"
+"连续行不能由记录开头。\n"
+"不对行的开头为：\n"
+"%s"
 
 msgid "'x' must be a square matrix"
 msgstr "'x'必需是正方形矩阵"
@@ -615,7 +620,6 @@ msgstr "鏈結时没有可以读的文件"
 msgid "no files/directory to link to"
 msgstr "鏈結时没有可以写的文件/目錄"
 
-#, fuzzy
 msgid "'x' must have length 1"
 msgstr "'x'的长度一定得为一"
 
@@ -625,13 +629,11 @@ msgstr "数字无效"
 msgid "'x' cannot be coerced to 'octmode'"
 msgstr "不能强迫把'x'改变成'octmode'"
 
-#, fuzzy
 msgid "'x' must be of length 1"
-msgstr "'to'的长度必需为一"
+msgstr "'x'的长度必需为一"
 
-#, fuzzy
 msgid "'x' cannot be coerced to hexmode"
-msgstr "不能强迫把'x'改变成'octmode'"
+msgstr "不能强迫把'x'改变成'hexmode'"
 
 msgid "'package' must be of length 1"
 msgstr "'package'的长度必需为一"
@@ -652,9 +654,8 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format'的值必需从{\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}中选一个"
 
-#, fuzzy
 msgid "'digits' reduced to"
-msgstr "'digits'被减少到50"
+msgstr "'digits'被减少到"
 
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag'只能含'0+- #'"
@@ -740,9 +741,8 @@ msgstr "从"
 msgid ":"
 msgstr ":"
 
-#, fuzzy
 msgid "invalid package name"
-msgstr "名字不对"
+msgstr "程辑包名字不对"
 
 msgid "package '%s' has been merged into '%s'"
 msgstr "程辑包'%s'已经被合并到'%s'"
@@ -1104,7 +1104,6 @@ msgstr "没有在环境/程辑包'%s': %s里找到所要求的'methods'对象"
 msgid "cannot add to exports of a sealed name space"
 msgstr "不能在封闭名字空间里的出口加入"
 
-#, fuzzy
 msgid "undefined exports:"
 msgstr "出口不存在："
 
@@ -1432,13 +1431,11 @@ msgstr "变元不对"
 msgid "invalid value"
 msgstr "无效值"
 
-#, fuzzy
 msgid "unary '%s' not defined for \"numeric_version\" objects"
-msgstr "对numeric_version对象没有定义"
+msgstr "一元算符'%s'对numeric_version对象没有定义"
 
-#, fuzzy
 msgid "'%s' not defined for \"numeric_version\" objects"
-msgstr "对numeric_version对象没有定义"
+msgstr "'%s'对numeric_version对象没有定义"
 
 msgid "not defined for numeric_version objects"
 msgstr "对numeric_version对象没有定义"
@@ -1486,10 +1483,9 @@ msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] "不存在叫这个名称的程辑包"
 
-#, fuzzy
 msgid "object %s not found"
 msgid_plural "objects %s not found"
-msgstr[0] "%s不存在"
+msgstr[0] "目标对象%s不存在"
 
 msgid "object '%s' is not exported by 'namespace:%s'"
 msgid_plural "objects '%s' are not exported by 'namespace:%s'"
@@ -1620,3 +1616,4 @@ msgstr[0] "警告信息：\n"
 
 #~ msgid "arguments 'r' and 'c' must have the same sums"
 #~ msgstr "变元'r'和'c'各自的和必需相等"
+

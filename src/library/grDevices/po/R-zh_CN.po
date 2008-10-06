@@ -280,9 +280,8 @@ msgstr "X11字体设置出了错:"
 msgid "no such device"
 msgstr "没有这样的装置"
 
-#, fuzzy
 msgid "can only copy from 'X11(type=\"*cairo\")' devices"
-msgstr "只能从'X11(type=\"cairo\")'装置拷贝"
+msgstr "只能从'X11(type=\"*cairo\")'装置拷贝"
 
 msgid "invalid value for 'rescale'"
 msgstr "'rescale'不对"
@@ -327,3 +326,4 @@ msgstr[0] "对数图里略过%d个小于等于零的z值"
 
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr "因为没有事件循环管理器，减少quartz()装置的交互能力"
+
