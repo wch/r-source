@@ -352,7 +352,7 @@ src/extra/bzip2/decompress.c
 src/extra/bzip2/huffman.c
 src/extra/bzip2/randtable.c
 
-   copyright (C) 1996-2007 Julian R Seward.
+   copyright (C) 1996-2008 Julian R Seward.
 
 
 src/library/tools/src/md5.[ch]
