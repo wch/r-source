@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:41+0100\n"
+"POT-Creation-Date: 2008-10-07 08:36+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -248,8 +248,8 @@ msgstr "태그가 부적절합니다"
 #: src/gnuwin32/extra.c:1787 src/main/character.c:837 src/main/colors.c:365
 #: src/main/connections.c:2913 src/main/context.c:543 src/main/context.c:562
 #: src/main/datetime.c:583 src/main/datetime.c:649 src/main/datetime.c:865
-#: src/main/dotcode.c:199 src/main/errors.c:874 src/main/errors.c:905
-#: src/main/errors.c:1006 src/main/errors.c:1031 src/main/errors.c:1036
+#: src/main/dotcode.c:199 src/main/errors.c:880 src/main/errors.c:911
+#: src/main/errors.c:1012 src/main/errors.c:1037 src/main/errors.c:1042
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
 #: src/main/platform.c:2065 src/main/plot.c:276 src/main/plot.c:470
@@ -433,19 +433,19 @@ msgstr "최초의 인수에는 문자열으로 예측되어 있습니다"
 msgid "character string expected as third argument"
 msgstr "세번째 인수에는 문자열으로 예측되어 있습니다"
 
-#: src/gnuwin32/system.c:118 src/main/errors.c:130
+#: src/gnuwin32/system.c:118 src/main/errors.c:136
 msgid "reached session elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:120 src/main/errors.c:132
+#: src/gnuwin32/system.c:120 src/main/errors.c:138
 msgid "reached elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:126 src/main/errors.c:138
+#: src/gnuwin32/system.c:126 src/main/errors.c:144
 msgid "reached session CPU time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:128 src/main/errors.c:140
+#: src/gnuwin32/system.c:128 src/main/errors.c:146
 msgid "reached CPU time limit"
 msgstr ""
 
@@ -1256,7 +1256,7 @@ msgstr "지정된 벡터의 사이즈가 너무 깁니다"
 msgid "use of NULL environment is defunct"
 msgstr ""
 
-#: src/main/builtin.c:159 src/main/debug.c:197 src/main/errors.c:1128
+#: src/main/builtin.c:159 src/main/debug.c:197 src/main/errors.c:1134
 msgid "invalid number of arguments"
 msgstr "인수의 개수가 부적절합니다"
 
@@ -1601,15 +1601,15 @@ msgstr ""
 msgid "read error on '%s'"
 msgstr "read error입니다"
 
-#: src/main/coerce.c:69 src/main/errors.c:1143
+#: src/main/coerce.c:69 src/main/errors.c:1149
 msgid "NAs introduced by coercion"
 msgstr "강제적인 변환에 의한 NA가 작성되었습니다"
 
-#: src/main/coerce.c:71 src/main/errors.c:1144
+#: src/main/coerce.c:71 src/main/errors.c:1150
 msgid "inaccurate integer conversion in coercion"
 msgstr "강제적인 변환에 정확하지 않는 정수 변환을 했습니다"
 
-#: src/main/coerce.c:73 src/main/errors.c:1145
+#: src/main/coerce.c:73 src/main/errors.c:1151
 msgid "imaginary parts discarded in coercion"
 msgstr "복소수의 허부는 결합이 없어졌습니다"
 
@@ -1771,7 +1771,7 @@ msgstr "rgb는 3행이 되어야만 합니다(내부적으로)"
 msgid "bad hsv to rgb color conversion"
 msgstr "bad hsv로부터 rgb에서 색 변경이 잘 되지 않습니다"
 
-#: src/main/colors.c:1277 src/main/errors.c:1129 src/main/logic.c:164
+#: src/main/colors.c:1277 src/main/errors.c:1135 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr "인수의 유형이 부적절합니다"
 
@@ -2747,7 +2747,7 @@ msgstr "ENCODING 인수는 단일 문자열이어야만 합니다"
 msgid "no arguments supplied"
 msgstr "인수가 제공되어 있지 않습니다"
 
-#: src/main/dotcode.c:750 src/main/seq.c:574
+#: src/main/dotcode.c:750 src/main/seq.c:579
 msgid "too many arguments"
 msgstr "인수의 수가 너무 많습니다"
 
@@ -3234,160 +3234,160 @@ msgstr "export된 심벌\"%s\"\"가 값을 가지고 있지 않습니다"
 msgid "truncating string with embedded nul: '%s'"
 msgstr ""
 
-#: src/main/errors.c:175 src/main/errors.c:212
+#: src/main/errors.c:181 src/main/errors.c:218
 msgid "interrupts suspended; signal ignored"
 msgstr "export된 심벌 \"%s\"가 값을 가지고 있지 않습니다"
 
-#: src/main/errors.c:307
+#: src/main/errors.c:313
 msgid "invalid option \"warning.expression\""
 msgstr "옵션 \"warning.expression\"는 부적절합니다"
 
-#: src/main/errors.c:337
+#: src/main/errors.c:343
 #, c-format
 msgid "(converted from warning) %s"
 msgstr "(경고로부터 변환되었습니다) %s"
 
-#: src/main/errors.c:348
+#: src/main/errors.c:354
 #, fuzzy, c-format
 msgid "Warning: %s\n"
 msgstr "경고:"
 
-#: src/main/errors.c:352 src/main/errors.c:355
+#: src/main/errors.c:358 src/main/errors.c:361
 #, fuzzy, c-format
 msgid "Warning in %s : %s\n"
 msgstr "%s에서 경고가 있었습니다"
 
-#: src/main/errors.c:357
+#: src/main/errors.c:363
 #, fuzzy, c-format
 msgid ""
 "Warning in %s :\n"
 "  %s\n"
 msgstr "%s에서 경고가 있었습니다"
 
-#: src/main/errors.c:421 src/main/errors.c:439 src/main/errors.c:569
+#: src/main/errors.c:427 src/main/errors.c:445 src/main/errors.c:575
 msgid "Lost warning messages\n"
 msgstr "경고 메시지가 잃게 되었습니다\n"
 
-#: src/main/errors.c:512
+#: src/main/errors.c:518
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr ""
 "%d건의 경고가 있었던 (경고를 보는것에는 warnings()를 사용해 주십시오)\n"
 
-#: src/main/errors.c:515
+#: src/main/errors.c:521
 msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
 msgstr ""
 "50건 이상의 경고가 있었던 (경고를 보기에는  warnings()를 사용해 주십시오)\n"
 
-#: src/main/errors.c:560
+#: src/main/errors.c:566
 msgid "Error during wrapup: "
 msgstr "wrapup동안에 에러가 발생했습니다"
 
-#: src/main/errors.c:585
+#: src/main/errors.c:591
 msgid "Error in "
 msgstr "이하에 에러"
 
-#: src/main/errors.c:613 src/main/errors.c:618
+#: src/main/errors.c:619 src/main/errors.c:624
 #, c-format
 msgid "Error: "
 msgstr "에러:"
 
-#: src/main/errors.c:637 src/main/errors.c:1260
+#: src/main/errors.c:643 src/main/errors.c:1266
 msgid "In addition: "
 msgstr "추가정보:"
 
-#: src/main/errors.c:758
+#: src/main/errors.c:764
 msgid "invalid option \"error\"\n"
 msgstr "옵션 \"error\"는 부적절합니다\n"
 
-#: src/main/errors.c:838
+#: src/main/errors.c:844
 msgid "Execution halted\n"
 msgstr "실행이 정지되었습니다\n"
 
-#: src/main/errors.c:973
+#: src/main/errors.c:979
 #, fuzzy, c-format
 msgid "invalid '%s' arguemnt"
 msgstr "'%s'인수가 부적절합니다"
 
-#: src/main/errors.c:975
+#: src/main/errors.c:981
 msgid "'msg1' must be a character string"
 msgstr "'msg1'는 문자열이어야만 합니다"
 
-#: src/main/errors.c:977
+#: src/main/errors.c:983
 msgid "'msg2' must be a character string"
 msgstr "'msg2'는 문자열이어야만 합니다"
 
-#: src/main/errors.c:1072
+#: src/main/errors.c:1078
 msgid " [invalid string in stop(.)]"
 msgstr "stop함수의 인수가 부적절한 문자열입니다"
 
-#: src/main/errors.c:1098
+#: src/main/errors.c:1104
 msgid " [invalid string in warning(.)]"
 msgstr "warning함수의 인수가 부적절한 문자열입니다"
 
-#: src/main/errors.c:1113
+#: src/main/errors.c:1119
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "\"\"%s\"에 인수의 개수가 올바르지 않습니다"
 
-#: src/main/errors.c:1119 src/main/errors.c:1134
+#: src/main/errors.c:1125 src/main/errors.c:1140
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "%s에서 실제 직용되지 않는 기능입니다"
 
-#: src/main/errors.c:1131
+#: src/main/errors.c:1137
 msgid "time-series/vector length mismatch"
 msgstr "시계열 또는 벡터의 길이가 일치하지 않습니다"
 
-#: src/main/errors.c:1132
+#: src/main/errors.c:1138
 msgid "incompatible arguments"
 msgstr "호환성이 없는 인수입니다"
 
-#: src/main/errors.c:1135
+#: src/main/errors.c:1141
 msgid "unknown error (report this!)"
 msgstr "알수 없는 에러입니다(이것을 보고해주십시오!)"
 
-#: src/main/errors.c:1147
+#: src/main/errors.c:1153
 msgid "unknown warning (report this!)"
 msgstr "알수 없는 경고 입니다(이것을 보고해주십시오!)"
 
-#: src/main/errors.c:1225
+#: src/main/errors.c:1231
 msgid "No function to return from, jumping to top level"
 msgstr "재귀해야 할 함수가 없기 때문에,top level에 점프합니다"
 
-#: src/main/errors.c:1241
+#: src/main/errors.c:1247
 msgid "top level inconsistency?"
 msgstr "top leval의 부적절합?"
 
-#: src/main/errors.c:1402
+#: src/main/errors.c:1408
 msgid "bad handler data"
 msgstr "핸들러 데이터(handler data)가 부적절합니다"
 
-#: src/main/errors.c:1553
+#: src/main/errors.c:1559
 msgid "error message not a string"
 msgstr "에러 메세지가 문자열이 아닙니다"
 
-#: src/main/errors.c:1628
+#: src/main/errors.c:1634
 msgid "handler or restart stack mismatch in old restart"
 msgstr "handler 또는 restart stack가 오랜된 restart와 일치하지 않습니다"
 
-#: src/main/errors.c:1654 src/main/errors.c:1670
+#: src/main/errors.c:1660 src/main/errors.c:1676
 msgid "bad error message"
 msgstr "부적절한 에러 메세지입니다"
 
-#: src/main/errors.c:1712
+#: src/main/errors.c:1718
 msgid "bad restart"
 msgstr "부적절한 재기동입니다"
 
-#: src/main/errors.c:1744
+#: src/main/errors.c:1750
 msgid "restart not on stack"
 msgstr "스택으로부터 아닌 재실행입니다"
 
-#: src/main/errors.c:1761
+#: src/main/errors.c:1767
 msgid "not in a try context"
 msgstr "트라이(try)문맥이 아닙니다"
 
-#: src/main/errors.c:1774
+#: src/main/errors.c:1780
 #, fuzzy
 msgid "error message must be a character string"
 msgstr "'msg1'는 문자열이어야만 합니다"
@@ -6211,12 +6211,12 @@ msgstr "벡터가 아니것을 복사하려고 합니다"
 msgid "'length.out' must be a non-negative number"
 msgstr "'gap'는  non-negative 정수가 아니면 안됩니다"
 
-#: src/main/seq.c:489 src/main/seq.c:528 src/main/seq.c:542
+#: src/main/seq.c:489 src/main/seq.c:533 src/main/seq.c:547
 #, fuzzy
 msgid "'from' must be finite"
 msgstr "'a'와 'b'는 유한하지 않으면 되지 않습니다"
 
-#: src/main/seq.c:491 src/main/seq.c:530 src/main/seq.c:560
+#: src/main/seq.c:491 src/main/seq.c:535 src/main/seq.c:565
 #, fuzzy
 msgid "'to' must be finite"
 msgstr "'a'와 'b'는 유한하지 않으면 되지 않습니다"
@@ -6235,12 +6235,12 @@ msgstr "'file' 인수가 너무 깁니다"
 msgid "wrong sign in 'by' argument"
 msgstr "'mode' 인수의 길이가 부적절합니다"
 
-#: src/main/seq.c:544 src/main/seq.c:562
+#: src/main/seq.c:549 src/main/seq.c:567
 #, fuzzy
 msgid "'by' must be finite"
 msgstr "'a'와 'b'는 유한하지 않으면 되지 않습니다"
 
-#: src/main/seq.c:602
+#: src/main/seq.c:607
 #, fuzzy
 msgid "argument must be non-negative"
 msgstr "인수는 환경이어야만 합니다"

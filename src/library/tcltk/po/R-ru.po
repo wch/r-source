@@ -4,15 +4,14 @@
 # Copyright (C) 2008 The R Foundation
 # Copyright (C) 2005 Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net>
 # Alexey Shipunov <dactylorhiza at gmail> 2008
-
 #
 # This file is distributed under the same license as the R package.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.7.0\n"
+"Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-04-05 10:50\n"
-"PO-Revision-Date: 2008-04-07 00:27-0500\n"
+"PO-Revision-Date: 2008-10-06 16:51-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"

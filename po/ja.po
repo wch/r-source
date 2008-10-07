@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:41+0100\n"
+"POT-Creation-Date: 2008-10-07 08:36+0100\n"
 "PO-Revision-Date: 2008-04-04 18:31+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -247,8 +247,8 @@ msgstr " タイムスタンプが不正です "
 #: src/gnuwin32/extra.c:1787 src/main/character.c:837 src/main/colors.c:365
 #: src/main/connections.c:2913 src/main/context.c:543 src/main/context.c:562
 #: src/main/datetime.c:583 src/main/datetime.c:649 src/main/datetime.c:865
-#: src/main/dotcode.c:199 src/main/errors.c:874 src/main/errors.c:905
-#: src/main/errors.c:1006 src/main/errors.c:1031 src/main/errors.c:1036
+#: src/main/dotcode.c:199 src/main/errors.c:880 src/main/errors.c:911
+#: src/main/errors.c:1012 src/main/errors.c:1037 src/main/errors.c:1042
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
 #: src/main/platform.c:2065 src/main/plot.c:276 src/main/plot.c:470
@@ -426,19 +426,19 @@ msgstr " 最初の引数には文字列が期待されています "
 msgid "character string expected as third argument"
 msgstr " 三番目の引数には文字列が期待されています "
 
-#: src/gnuwin32/system.c:118 src/main/errors.c:130
+#: src/gnuwin32/system.c:118 src/main/errors.c:136
 msgid "reached session elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:120 src/main/errors.c:132
+#: src/gnuwin32/system.c:120 src/main/errors.c:138
 msgid "reached elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:126 src/main/errors.c:138
+#: src/gnuwin32/system.c:126 src/main/errors.c:144
 msgid "reached session CPU time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:128 src/main/errors.c:140
+#: src/gnuwin32/system.c:128 src/main/errors.c:146
 msgid "reached CPU time limit"
 msgstr ""
 
@@ -1232,7 +1232,7 @@ msgstr " 指定されたベクトルのサイズが長すぎます "
 msgid "use of NULL environment is defunct"
 msgstr " NULL環境の使用は廃要素です "
 
-#: src/main/builtin.c:159 src/main/debug.c:197 src/main/errors.c:1128
+#: src/main/builtin.c:159 src/main/debug.c:197 src/main/errors.c:1134
 msgid "invalid number of arguments"
 msgstr " 引数の個数が不正です "
 
@@ -1569,15 +1569,15 @@ msgstr " 内部でアウトオブメモリーが発生しています "
 msgid "read error on '%s'"
 msgstr " \"%s\" の読み込みエラーです "
 
-#: src/main/coerce.c:69 src/main/errors.c:1143
+#: src/main/coerce.c:69 src/main/errors.c:1149
 msgid "NAs introduced by coercion"
 msgstr " 強制変換により NA が生成されました "
 
-#: src/main/coerce.c:71 src/main/errors.c:1144
+#: src/main/coerce.c:71 src/main/errors.c:1150
 msgid "inaccurate integer conversion in coercion"
 msgstr " 強制変換中に不正確な整数変換が行われました "
 
-#: src/main/coerce.c:73 src/main/errors.c:1145
+#: src/main/coerce.c:73 src/main/errors.c:1151
 msgid "imaginary parts discarded in coercion"
 msgstr " 複素数の虚部は，コネクションで捨てられました "
 
@@ -1735,7 +1735,7 @@ msgstr " rgb は3行なければなりません（内部的に） "
 msgid "bad hsv to rgb color conversion"
 msgstr " hsv から rgb への色の変換が上手くいきません "
 
-#: src/main/colors.c:1277 src/main/errors.c:1129 src/main/logic.c:164
+#: src/main/colors.c:1277 src/main/errors.c:1135 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr " 引数の型が不正です "
 
@@ -2700,7 +2700,7 @@ msgstr " ENCODING 引数は単一の文字列でなければなりません "
 msgid "no arguments supplied"
 msgstr " 引数が与えられていません "
 
-#: src/main/dotcode.c:750 src/main/seq.c:574
+#: src/main/dotcode.c:750 src/main/seq.c:579
 msgid "too many arguments"
 msgstr " 引数の数が多すぎます "
 
@@ -3172,30 +3172,30 @@ msgstr " エクスポートされたシンボル \"%s\" が値を持っていま
 msgid "truncating string with embedded nul: '%s'"
 msgstr ""
 
-#: src/main/errors.c:175 src/main/errors.c:212
+#: src/main/errors.c:181 src/main/errors.c:218
 msgid "interrupts suspended; signal ignored"
 msgstr " 割り込みが中断されました；シグナルは無視されました "
 
-#: src/main/errors.c:307
+#: src/main/errors.c:313
 msgid "invalid option \"warning.expression\""
 msgstr " オプション  \"warnig.expression\" は不正です "
 
-#: src/main/errors.c:337
+#: src/main/errors.c:343
 #, c-format
 msgid "(converted from warning) %s"
 msgstr " (警告から変換されました) %s "
 
-#: src/main/errors.c:348
+#: src/main/errors.c:354
 #, c-format
 msgid "Warning: %s\n"
 msgstr " 警告： %s \n"
 
-#: src/main/errors.c:352 src/main/errors.c:355
+#: src/main/errors.c:358 src/main/errors.c:361
 #, c-format
 msgid "Warning in %s : %s\n"
 msgstr " %s 中で警告がありました： %s \n"
 
-#: src/main/errors.c:357
+#: src/main/errors.c:363
 #, c-format
 msgid ""
 "Warning in %s :\n"
@@ -3204,129 +3204,129 @@ msgstr ""
 " %s 中で警告がありました： \n"
 " %s \n"
 
-#: src/main/errors.c:421 src/main/errors.c:439 src/main/errors.c:569
+#: src/main/errors.c:427 src/main/errors.c:445 src/main/errors.c:575
 msgid "Lost warning messages\n"
 msgstr " 警告メッセージが失われました \n"
 
-#: src/main/errors.c:512
+#: src/main/errors.c:518
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr " %d 件の警告がありました (警告を見るには warnings() を使って下さい) \n"
 
-#: src/main/errors.c:515
+#: src/main/errors.c:521
 msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
 msgstr ""
 " 50 件以上の警告がありました (警告を見るには warnings() を使って下さい) \n"
 
-#: src/main/errors.c:560
+#: src/main/errors.c:566
 msgid "Error during wrapup: "
 msgstr " wrapup 中にエラーが起こりました "
 
-#: src/main/errors.c:585
+#: src/main/errors.c:591
 msgid "Error in "
 msgstr " 以下にエラー "
 
-#: src/main/errors.c:613 src/main/errors.c:618
+#: src/main/errors.c:619 src/main/errors.c:624
 #, c-format
 msgid "Error: "
 msgstr " エラー： "
 
-#: src/main/errors.c:637 src/main/errors.c:1260
+#: src/main/errors.c:643 src/main/errors.c:1266
 msgid "In addition: "
 msgstr " 追加情報:  "
 
-#: src/main/errors.c:758
+#: src/main/errors.c:764
 msgid "invalid option \"error\"\n"
 msgstr " オプション \"error\" は不正です \n"
 
-#: src/main/errors.c:838
+#: src/main/errors.c:844
 msgid "Execution halted\n"
 msgstr " 実行が停止されました \n"
 
-#: src/main/errors.c:973
+#: src/main/errors.c:979
 #, c-format
 msgid "invalid '%s' arguemnt"
 msgstr " '%s' 引数が不正です "
 
-#: src/main/errors.c:975
+#: src/main/errors.c:981
 msgid "'msg1' must be a character string"
 msgstr " 'msg1' は文字列でなければなりません "
 
-#: src/main/errors.c:977
+#: src/main/errors.c:983
 msgid "'msg2' must be a character string"
 msgstr " 'msg2' は文字列でなければなりません "
 
-#: src/main/errors.c:1072
+#: src/main/errors.c:1078
 msgid " [invalid string in stop(.)]"
 msgstr " stop 関数の引数が不正な文字列です "
 
-#: src/main/errors.c:1098
+#: src/main/errors.c:1104
 msgid " [invalid string in warning(.)]"
 msgstr " warning 関数の引数が不正な文字列です "
 
-#: src/main/errors.c:1113
+#: src/main/errors.c:1119
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr " \"%s\" への引数の個数が正しくありません "
 
-#: src/main/errors.c:1119 src/main/errors.c:1134
+#: src/main/errors.c:1125 src/main/errors.c:1140
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr " %s 中の未実装の機能です "
 
-#: src/main/errors.c:1131
+#: src/main/errors.c:1137
 msgid "time-series/vector length mismatch"
 msgstr " 時系列またはベクトル の長さが合致しません "
 
-#: src/main/errors.c:1132
+#: src/main/errors.c:1138
 msgid "incompatible arguments"
 msgstr " 互換性のない引数です "
 
-#: src/main/errors.c:1135
+#: src/main/errors.c:1141
 msgid "unknown error (report this!)"
 msgstr " 未知のエラーです（報告して！） "
 
-#: src/main/errors.c:1147
+#: src/main/errors.c:1153
 msgid "unknown warning (report this!)"
 msgstr " 未知の警告です（報告して！） "
 
-#: src/main/errors.c:1225
+#: src/main/errors.c:1231
 msgid "No function to return from, jumping to top level"
 msgstr " 戻るべき関数がないので，トップレベルへジャンプします "
 
-#: src/main/errors.c:1241
+#: src/main/errors.c:1247
 msgid "top level inconsistency?"
 msgstr " トップレベルの不整合？ "
 
-#: src/main/errors.c:1402
+#: src/main/errors.c:1408
 msgid "bad handler data"
 msgstr " ハンドラーデータ（handler data）が不正です "
 
-#: src/main/errors.c:1553
+#: src/main/errors.c:1559
 msgid "error message not a string"
 msgstr " エラーメッセージが文字列ではありません "
 
-#: src/main/errors.c:1628
+#: src/main/errors.c:1634
 msgid "handler or restart stack mismatch in old restart"
 msgstr " handler stack か restart stack が，古い restart と一致しません "
 
-#: src/main/errors.c:1654 src/main/errors.c:1670
+#: src/main/errors.c:1660 src/main/errors.c:1676
 msgid "bad error message"
 msgstr " 不正なエラーメッセージです "
 
-#: src/main/errors.c:1712
+#: src/main/errors.c:1718
 msgid "bad restart"
 msgstr " 不正な再起動です "
 
-#: src/main/errors.c:1744
+#: src/main/errors.c:1750
 msgid "restart not on stack"
 msgstr " スタックからではない再実行です "
 
-#: src/main/errors.c:1761
+#: src/main/errors.c:1767
 msgid "not in a try context"
 msgstr " トライ (try) 文脈ではありません "
 
-#: src/main/errors.c:1774
+#: src/main/errors.c:1780
 msgid "error message must be a character string"
 msgstr " エラーメッセージは文字列であるに違いありません "
 
@@ -6124,11 +6124,11 @@ msgstr " ベクトルでないものを複製しようとしました "
 msgid "'length.out' must be a non-negative number"
 msgstr " 'length.out' は非負の数値でなくてはなりません "
 
-#: src/main/seq.c:489 src/main/seq.c:528 src/main/seq.c:542
+#: src/main/seq.c:489 src/main/seq.c:533 src/main/seq.c:547
 msgid "'from' must be finite"
 msgstr " 'from' は有限な値でなければなりません "
 
-#: src/main/seq.c:491 src/main/seq.c:530 src/main/seq.c:560
+#: src/main/seq.c:491 src/main/seq.c:535 src/main/seq.c:565
 msgid "'to' must be finite"
 msgstr " 'to' は有限な値でなければなりません "
 
@@ -6144,11 +6144,11 @@ msgstr " 'by' 引数があまりに小さすぎます "
 msgid "wrong sign in 'by' argument"
 msgstr " 'by' 引数中に誤った符号 "
 
-#: src/main/seq.c:544 src/main/seq.c:562
+#: src/main/seq.c:549 src/main/seq.c:567
 msgid "'by' must be finite"
 msgstr " 'by' は有限でなければなりません "
 
-#: src/main/seq.c:602
+#: src/main/seq.c:607
 msgid "argument must be non-negative"
 msgstr " 引数は非負でなければなりません "
 

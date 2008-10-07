@@ -8,10 +8,10 @@
 # This file is distributed under the same license as the R package.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.6.0\n"
+"Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:41+0100\n"
-"PO-Revision-Date: 2008-04-06 23:39-0500\n"
+"POT-Creation-Date: 2008-10-07 08:36+0100\n"
+"PO-Revision-Date: 2008-10-06 16:42-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -249,8 +249,8 @@ msgstr "неправильная временная метка"
 #: src/gnuwin32/extra.c:1787 src/main/character.c:837 src/main/colors.c:365
 #: src/main/connections.c:2913 src/main/context.c:543 src/main/context.c:562
 #: src/main/datetime.c:583 src/main/datetime.c:649 src/main/datetime.c:865
-#: src/main/dotcode.c:199 src/main/errors.c:874 src/main/errors.c:905
-#: src/main/errors.c:1006 src/main/errors.c:1031 src/main/errors.c:1036
+#: src/main/dotcode.c:199 src/main/errors.c:880 src/main/errors.c:911
+#: src/main/errors.c:1012 src/main/errors.c:1037 src/main/errors.c:1042
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
 #: src/main/platform.c:2065 src/main/plot.c:276 src/main/plot.c:470
@@ -428,21 +428,21 @@ msgstr "первый аргумент должен быть текстовой строкой"
 msgid "character string expected as third argument"
 msgstr "первый аргумент должен быть текстовой строкой"
 
-#: src/gnuwin32/system.c:118 src/main/errors.c:130
+#: src/gnuwin32/system.c:118 src/main/errors.c:136
 msgid "reached session elapsed time limit"
-msgstr ""
+msgstr "достигнуто сессионное ограничение времени операции"
 
-#: src/gnuwin32/system.c:120 src/main/errors.c:132
+#: src/gnuwin32/system.c:120 src/main/errors.c:138
 msgid "reached elapsed time limit"
-msgstr ""
+msgstr "достигнуто ограничение времени операции"
 
-#: src/gnuwin32/system.c:126 src/main/errors.c:138
+#: src/gnuwin32/system.c:126 src/main/errors.c:144
 msgid "reached session CPU time limit"
-msgstr ""
+msgstr "достигнуто сессионное ограничение времени ЦПУ"
 
-#: src/gnuwin32/system.c:128 src/main/errors.c:140
+#: src/gnuwin32/system.c:128 src/main/errors.c:146
 msgid "reached CPU time limit"
-msgstr ""
+msgstr "достигнуто ограничение времени ЦПУ"
 
 #: src/gnuwin32/system.c:148
 #, c-format
@@ -519,7 +519,7 @@ msgstr "не могу использовать -e вместе с -f или --file"
 
 #: src/gnuwin32/system.c:1094
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
-msgstr ""
+msgstr "создание временного файла не удалось -- установить подходящую TMPDIR?"
 
 #: src/gnuwin32/system.c:1113 src/unix/system.c:416
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
@@ -1007,9 +1007,8 @@ msgid "invalid time series parameters specified"
 msgstr "указаны неправильные параметры временного ряда"
 
 #: src/main/attrib.c:395
-#, fuzzy
 msgid "'tsp' attribute must be numeric"
-msgstr "атрибут 'tsp' должен быть числовым, длиной в 3"
+msgstr "атрибут 'tsp' должен быть числовым"
 
 #: src/main/attrib.c:401
 msgid "'tsp' attribute must be numeric of length three"
@@ -1226,7 +1225,7 @@ msgstr "указанный размер вектора слишком велик"
 msgid "use of NULL environment is defunct"
 msgstr "использование окружения NULL не одобряется"
 
-#: src/main/builtin.c:159 src/main/debug.c:197 src/main/errors.c:1128
+#: src/main/builtin.c:159 src/main/debug.c:197 src/main/errors.c:1134
 msgid "invalid number of arguments"
 msgstr "неправильное количество аргументов"
 
@@ -1318,9 +1317,9 @@ msgid "switch: EXPR must return a length 1 vector"
 msgstr "switch: EXPR должно вернуть вектор единичной длины"
 
 #: src/main/character.c:77 src/main/character.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' requires a character vector"
-msgstr "strtrim() требует текстового вектора"
+msgstr "'%s' требует текстового вектора"
 
 #: src/main/character.c:134 src/main/character.c:160 src/main/character.c:898
 #: src/main/character.c:2101
@@ -1563,15 +1562,15 @@ msgstr "внутренняя нехватка памяти"
 msgid "read error on '%s'"
 msgstr "ошибка чтения в '%s'"
 
-#: src/main/coerce.c:69 src/main/errors.c:1143
+#: src/main/coerce.c:69 src/main/errors.c:1149
 msgid "NAs introduced by coercion"
 msgstr "в результате преобразования созданы NA"
 
-#: src/main/coerce.c:71 src/main/errors.c:1144
+#: src/main/coerce.c:71 src/main/errors.c:1150
 msgid "inaccurate integer conversion in coercion"
 msgstr "вынужденное неточное целочисленное преобразование"
 
-#: src/main/coerce.c:73 src/main/errors.c:1145
+#: src/main/coerce.c:73 src/main/errors.c:1151
 msgid "imaginary parts discarded in coercion"
 msgstr "мнимые части убраны при преобразовании"
 
@@ -1731,7 +1730,7 @@ msgstr "rgb должен иметь 3 строки (внутренне)"
 msgid "bad hsv to rgb color conversion"
 msgstr "неправильная конвертация цвета из hsv в rgb"
 
-#: src/main/colors.c:1277 src/main/errors.c:1129 src/main/logic.c:164
+#: src/main/colors.c:1277 src/main/errors.c:1135 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr "неправильный тип аргумента"
 
@@ -1810,9 +1809,9 @@ msgstr "закрываю неиспользованное соединение %d (%s)\n"
 #: src/main/sysutils.c:587 src/main/sysutils.c:731 src/main/sysutils.c:746
 #: src/main/sysutils.c:833 src/main/sysutils.c:890 src/main/sysutils.c:900
 #: src/main/sysutils.c:1180
-#, fuzzy, c-format
+#, c-format
 msgid "unsupported conversion from '%s' to '%s'"
-msgstr "неподдерживаемая конвертация"
+msgstr "неподдерживаемая конвертация из '%s' в '%s'"
 
 #: src/main/connections.c:214 src/main/connections.c:230
 #: src/main/connections.c:392 src/main/connections.c:398
@@ -1888,9 +1887,8 @@ msgstr "не могу открыть стек '%s'"
 #: src/main/connections.c:1661 src/main/connections.c:1677
 #: src/main/connections.c:1965 src/main/connections.c:4514
 #: src/main/connections.c:4578
-#, fuzzy
 msgid "too large a block specified"
-msgstr "определено слишком много элементов"
+msgstr "определен слишком большой блок"
 
 #: src/main/connections.c:868 src/main/connections.c:872
 #: src/main/connections.c:878 src/main/connections.c:894
@@ -2015,27 +2013,24 @@ msgstr "размещение соединения с терминалом не удалось"
 #: src/main/connections.c:1942
 msgid "attempting to add too many elements to raw vector"
 msgstr ""
+"попытка добавления слишком большого количества элементов в простой вектор"
 
 #: src/main/connections.c:1993
-#, fuzzy
 msgid "attempt to seek outside the range of the raw connection"
-msgstr "попытка поиска вне области буфера обмена"
+msgstr "попытка поиска вне области простого соединения"
 
 #: src/main/connections.c:2004 src/main/connections.c:2008
 #: src/main/connections.c:2014 src/main/connections.c:2040
-#, fuzzy
 msgid "allocation of raw connection failed"
-msgstr "размещение url-соединения не удалось"
+msgstr "размещение простого соединения не удалось"
 
 #: src/main/connections.c:2094
-#, fuzzy
 msgid "'con' is not a rawConnection"
-msgstr "'con' не является соединением"
+msgstr "'con' не является rawConnection"
 
 #: src/main/connections.c:2097
-#, fuzzy
 msgid "'con' is not an output rawConnection"
-msgstr "'con' не является выходным текстовым соединением"
+msgstr "'con' не является выходным rawConnection"
 
 #: src/main/connections.c:2117
 msgid "cannot allocate memory for text connection"
@@ -2141,9 +2136,8 @@ msgid "incomplete string at end of file has been discarded"
 msgstr "неполная строка в конце файла пропущена"
 
 #: src/main/connections.c:3090
-#, fuzzy
 msgid "null terminator not found: breaking string at 10000 bytes"
-msgstr "ограничитель 'null' не найден: разбиваю строку по 10000 символов"
+msgstr "ограничитель 'null' не найден: разбиваю строку по 10000 байтов"
 
 #: src/main/connections.c:3153 src/main/saveload.c:2354
 msgid "can only read from a binary connection"
@@ -2366,9 +2360,8 @@ msgid "missing observations in cov/cor"
 msgstr "пропущенные наблюдения в cov/cor"
 
 #: src/main/cov.c:625
-#, fuzzy
 msgid "'x' is NULL"
-msgstr "'x' пусто"
+msgstr "'x' -- это NULL"
 
 #: src/main/cov.c:646 src/main/cov.c:652
 msgid "incompatible dimensions"
@@ -2428,12 +2421,12 @@ msgstr "не могу разместить память для 'read.dcf'"
 #: src/main/dcf.c:105
 #, c-format
 msgid "Found continuation line starting '%s ...' at begin of record."
-msgstr ""
+msgstr "Продолжение строки начинается с '%s ...' в начале записи."
 
 #: src/main/dcf.c:189
 #, c-format
 msgid "Line starting '%s ...' is malformed!"
-msgstr ""
+msgstr "Строка, начинающаяся с '%s ...', неправильно сформирована!"
 
 #: src/main/debug.c:40
 msgid "argument must be a closure"
@@ -2691,7 +2684,7 @@ msgstr "аргумент ENCODING должен быть простой текстовой строкой"
 msgid "no arguments supplied"
 msgstr "не заданы аргументы"
 
-#: src/main/dotcode.c:750 src/main/seq.c:574
+#: src/main/dotcode.c:750 src/main/seq.c:579
 msgid "too many arguments"
 msgstr "слишком много аргументов"
 
@@ -3158,32 +3151,32 @@ msgstr "экспортируемый символ '%s' не имеет значения"
 #: src/main/envir.c:3388
 #, c-format
 msgid "truncating string with embedded nul: '%s'"
-msgstr ""
+msgstr "обрезка строки с nul: '%s'"
 
-#: src/main/errors.c:175 src/main/errors.c:212
+#: src/main/errors.c:181 src/main/errors.c:218
 msgid "interrupts suspended; signal ignored"
 msgstr "прерывания сброшены; сигнал пропущен"
 
-#: src/main/errors.c:307
+#: src/main/errors.c:313
 msgid "invalid option \"warning.expression\""
 msgstr "неправильный параметр \"warning.expression\""
 
-#: src/main/errors.c:337
+#: src/main/errors.c:343
 #, c-format
 msgid "(converted from warning) %s"
 msgstr "(конвертировано из предупреждения) %s"
 
-#: src/main/errors.c:348
+#: src/main/errors.c:354
 #, c-format
 msgid "Warning: %s\n"
 msgstr "Предупреждение: %s\n"
 
-#: src/main/errors.c:352 src/main/errors.c:355
+#: src/main/errors.c:358 src/main/errors.c:361
 #, c-format
 msgid "Warning in %s : %s\n"
 msgstr "Предупреждение в %s : %s\n"
 
-#: src/main/errors.c:357
+#: src/main/errors.c:363
 #, c-format
 msgid ""
 "Warning in %s :\n"
@@ -3192,131 +3185,131 @@ msgstr ""
 "Предупреждение в %s :\n"
 "  %s\n"
 
-#: src/main/errors.c:421 src/main/errors.c:439 src/main/errors.c:569
+#: src/main/errors.c:427 src/main/errors.c:445 src/main/errors.c:575
 msgid "Lost warning messages\n"
 msgstr "Потерянные предупреждения\n"
 
-#: src/main/errors.c:512
+#: src/main/errors.c:518
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr "Было %d предупреждений (введите warnings() чтобы их посмотреть)\n"
 
-#: src/main/errors.c:515
+#: src/main/errors.c:521
 msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
 msgstr ""
 "Было 50 или более предупреждений (введите warnings() чтобы посмотреть первые "
 "50)\n"
 
-#: src/main/errors.c:560
+#: src/main/errors.c:566
 msgid "Error during wrapup: "
 msgstr "Ошибка во время создания сводки: "
 
-#: src/main/errors.c:585
+#: src/main/errors.c:591
 msgid "Error in "
 msgstr "Ошибка в "
 
-#: src/main/errors.c:613 src/main/errors.c:618
+#: src/main/errors.c:619 src/main/errors.c:624
 #, c-format
 msgid "Error: "
 msgstr "Ошибка: "
 
-#: src/main/errors.c:637 src/main/errors.c:1260
+#: src/main/errors.c:643 src/main/errors.c:1266
 msgid "In addition: "
 msgstr "Вдобавок: "
 
-#: src/main/errors.c:758
+#: src/main/errors.c:764
 msgid "invalid option \"error\"\n"
 msgstr "неправильный параметр \"error\"\n"
 
-#: src/main/errors.c:838
+#: src/main/errors.c:844
 msgid "Execution halted\n"
 msgstr "Выполнение остановлено\n"
 
-#: src/main/errors.c:973
+#: src/main/errors.c:979
 #, c-format
 msgid "invalid '%s' arguemnt"
 msgstr "неправильный аргумент '%s'"
 
-#: src/main/errors.c:975
+#: src/main/errors.c:981
 msgid "'msg1' must be a character string"
 msgstr "'msg1' должен быть текстовой строкой"
 
-#: src/main/errors.c:977
+#: src/main/errors.c:983
 msgid "'msg2' must be a character string"
 msgstr "'msg2' должен быть текстовой строкой"
 
-#: src/main/errors.c:1072
+#: src/main/errors.c:1078
 msgid " [invalid string in stop(.)]"
 msgstr " [неправильная строка в stop(.)]"
 
-#: src/main/errors.c:1098
+#: src/main/errors.c:1104
 msgid " [invalid string in warning(.)]"
 msgstr " [неправильная строка в warning(.)]"
 
-#: src/main/errors.c:1113
+#: src/main/errors.c:1119
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "у \"%s\" неправильное количество аргументов"
 
-#: src/main/errors.c:1119 src/main/errors.c:1134
+#: src/main/errors.c:1125 src/main/errors.c:1140
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "эта особенность в %s не разработана"
 
-#: src/main/errors.c:1131
+#: src/main/errors.c:1137
 msgid "time-series/vector length mismatch"
 msgstr "несоответствие длины временного ряда/вектора"
 
-#: src/main/errors.c:1132
+#: src/main/errors.c:1138
 msgid "incompatible arguments"
 msgstr "несовместимые аргументы"
 
-#: src/main/errors.c:1135
+#: src/main/errors.c:1141
 msgid "unknown error (report this!)"
 msgstr "неизвестная ошибка (сообщите о ней!)"
 
-#: src/main/errors.c:1147
+#: src/main/errors.c:1153
 msgid "unknown warning (report this!)"
 msgstr "неизвестное предупреждение (сообщите о нем!)"
 
-#: src/main/errors.c:1225
+#: src/main/errors.c:1231
 msgid "No function to return from, jumping to top level"
 msgstr "Нет функции для возврата, перехожу на верхний уровень"
 
-#: src/main/errors.c:1241
+#: src/main/errors.c:1247
 msgid "top level inconsistency?"
 msgstr "противоречивость верхнего уровня?"
 
-#: src/main/errors.c:1402
+#: src/main/errors.c:1408
 msgid "bad handler data"
 msgstr "неправильный управляющий данных"
 
-#: src/main/errors.c:1553
+#: src/main/errors.c:1559
 msgid "error message not a string"
 msgstr "сообщение об ошибке не является строкой"
 
-#: src/main/errors.c:1628
+#: src/main/errors.c:1634
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 "несоответствие управляющего или перезагрузочного стека в старой перезагрузке"
 
-#: src/main/errors.c:1654 src/main/errors.c:1670
+#: src/main/errors.c:1660 src/main/errors.c:1676
 msgid "bad error message"
 msgstr "неправильное сообщение об ошибке"
 
-#: src/main/errors.c:1712
+#: src/main/errors.c:1718
 msgid "bad restart"
 msgstr "неправильная перезагрузка"
 
-#: src/main/errors.c:1744
+#: src/main/errors.c:1750
 msgid "restart not on stack"
 msgstr "перезагрузка не в стеке"
 
-#: src/main/errors.c:1761
+#: src/main/errors.c:1767
 msgid "not in a try context"
 msgstr "не в контексте 'try'"
 
-#: src/main/errors.c:1774
+#: src/main/errors.c:1780
 msgid "error message must be a character string"
 msgstr "сообщение об ошибке должно быть текстовой строкой"
 
@@ -3510,9 +3503,8 @@ msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "Несовместимые методы (\"%s\", \"%s\") для \"%s\""
 
 #: src/main/eval.c:2167
-#, fuzzy
 msgid "dispatch error in group dispatch"
-msgstr "ошибка отправки"
+msgstr "ошибка отправки в групповой отправке"
 
 #: src/main/eval.c:2548
 msgid "node stack overflow"
@@ -3707,9 +3699,9 @@ msgid "EOF whilst reading MBCS char at line %d"
 msgstr "EOF во время чтения символа MBCS на строке %d"
 
 #: src/main/gram.y:119 src/main/gram.y:127
-#, fuzzy, c-format
+#, c-format
 msgid "invalid multibyte character in parser at line %d"
-msgstr "неправильный многобайтный символ в mbcs_get_next на строке %d"
+msgstr "неправильный многобайтный символ при обработке на строке %d"
 
 #: src/main/gram.y:380
 #, c-format
@@ -3790,7 +3782,7 @@ msgstr "не могу разместить буфер для длинной подстроки на строке %d"
 
 #: src/main/gram.y:1942
 msgid "'\\x' used without hex digits"
-msgstr ""
+msgstr "'\\x' использовано без шестнадцатиричных цифр"
 
 #: src/main/gram.y:1954
 #, c-format
@@ -3799,7 +3791,7 @@ msgstr "последовательности \\uxxxx не поддерживаются (строка %d)"
 
 #: src/main/gram.y:1974
 msgid "\\u used without hex digits"
-msgstr ""
+msgstr "\\u использовано без шестнадцатиричных цифр"
 
 #: src/main/gram.y:1984 src/main/gram.y:1997
 #, c-format
@@ -3818,7 +3810,7 @@ msgstr "последовательности \\uxxxx не поддерживаются (строка %d)"
 
 #: src/main/gram.y:2029
 msgid "\\U used without hex digits"
-msgstr ""
+msgstr "\\U использовано без шестнадцатиричных цифр"
 
 #: src/main/gram.y:2039 src/main/gram.y:2045
 #, c-format
@@ -4363,7 +4355,7 @@ msgstr "попытка использовать имя переменной нулевой длины"
 #: src/main/names.c:1098
 #, c-format
 msgid "variable names are limited to %d bytes"
-msgstr ""
+msgstr "имена переменных ограничены %d байтами"
 
 #: src/main/names.c:1127
 msgid "invalid .Internal() argument"
@@ -4665,9 +4657,8 @@ msgid "L-BFGS-B needs finite values of 'fn'"
 msgstr "для 'L-BFGS-B' нужны конечные значения 'fn'"
 
 #: src/main/optim.c:1105
-#, fuzzy
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
-msgstr "'REPORT' должен быть > 0 (method = \"BFGS\")"
+msgstr "трассировка, 'REPORT' должен быть >= 0 (method = \"SANN\")"
 
 #: src/main/optimize.c:53 src/main/optimize.c:137 src/main/optimize.c:386
 msgid "NA replaced by maximum positive value"
@@ -5246,9 +5237,8 @@ msgid "invalid fourth argument"
 msgstr "неправильный четвертый аргумент"
 
 #: src/main/plot.c:1754
-#, fuzzy
 msgid "cannot mix zero-length and non-zero-length coordinates"
-msgstr "не могу смешивать векторы нулевой длины с другими"
+msgstr "не могу смешивать координаты нулевой длины с ненулевыми"
 
 #: src/main/plot.c:1928
 msgid "invalid arrow head length"
@@ -5978,7 +5968,6 @@ msgid "error writing to connection"
 msgstr "ошибка записи в соединение"
 
 #: src/main/saveload.c:2360
-#, fuzzy
 msgid "connection not open for reading"
 msgstr "соединение не открыто для чтения"
 
@@ -6105,11 +6094,11 @@ msgstr "попытка размножить не-вектор"
 msgid "'length.out' must be a non-negative number"
 msgstr "'length.out' должен быть неотрицательным числом"
 
-#: src/main/seq.c:489 src/main/seq.c:528 src/main/seq.c:542
+#: src/main/seq.c:489 src/main/seq.c:533 src/main/seq.c:547
 msgid "'from' must be finite"
 msgstr "'from' должен быть конечным"
 
-#: src/main/seq.c:491 src/main/seq.c:530 src/main/seq.c:560
+#: src/main/seq.c:491 src/main/seq.c:535 src/main/seq.c:565
 msgid "'to' must be finite"
 msgstr "'to' должен быть конечным"
 
@@ -6125,11 +6114,11 @@ msgstr "аргумент 'by' слишком короток"
 msgid "wrong sign in 'by' argument"
 msgstr "неправильный знак аргумента 'by'"
 
-#: src/main/seq.c:544 src/main/seq.c:562
+#: src/main/seq.c:549 src/main/seq.c:567
 msgid "'by' must be finite"
 msgstr "'by' должен быть конечным"
 
-#: src/main/seq.c:602
+#: src/main/seq.c:607
 msgid "argument must be non-negative"
 msgstr "аргумент должен быть неотрицательным числом"
 
@@ -6467,9 +6456,9 @@ msgid "use format %d, %i, %x or %X for integer objects"
 msgstr "использование формата %d, %i, %x или %X для целочисленных объектов"
 
 #: src/main/sprintf.c:279
-#, fuzzy, c-format
+#, c-format
 msgid "use format %f, %e, %g or %a for numeric objects"
-msgstr "использование формата %f, %e или %g для числовых объектов"
+msgstr "использование формата %f, %e, %g или %a для числовых объектов"
 
 #: src/main/sprintf.c:313
 #, c-format
@@ -6510,9 +6499,8 @@ msgstr "в подгруппах присвоений NA не разрешены"
 
 #: src/main/subassign.c:465 src/main/subassign.c:735 src/main/subassign.c:1002
 #: src/main/subassign.c:1189
-#, fuzzy
 msgid "replacement has length zero"
-msgstr "аргумент нулевой длины"
+msgstr "замена имеет нулевую длину"
 
 #: src/main/subassign.c:467 src/main/subassign.c:737 src/main/subassign.c:1004
 #: src/main/subassign.c:1191
@@ -6791,14 +6779,12 @@ msgid "proc.time() is not implemented on this system"
 msgstr "'proc.time()' в этой системе не разработан"
 
 #: src/main/sysutils.c:1468
-#, fuzzy
 msgid "setTimelimit() is not implemented on this system"
-msgstr "gc.time() не разработана для этой системы"
+msgstr "setTimelimit() не разработан для этой системы"
 
 #: src/main/sysutils.c:1496
-#, fuzzy
 msgid "setSessionTimelimit() is not implemented on this system"
-msgstr "gc.time() не разработана для этой системы"
+msgstr "setSessionTimelimit() не разработан для этой системы"
 
 #: src/main/unique.c:284
 #, c-format
@@ -6954,9 +6940,8 @@ msgid "warning message truncated to 255 chars"
 msgstr "предупреждающее сообщение сокращено до 255 символов"
 
 #: src/main/util.c:1680
-#, fuzzy
 msgid "ICU is not supported on this build"
-msgstr "savePlot() не поддерживается в этой сборке"
+msgstr "ICU не поддерживается в этой сборке"
 
 #: src/main/version.c:39
 msgid ""
@@ -7249,6 +7234,7 @@ msgstr "ошибка [%d] из Lapack 'dgetrf()'"
 #, c-format
 msgid "exact singularity: U[%d,%d] = 0 in LU-decomposition {Lapack 'dgetrf()'}"
 msgstr ""
+"полная сингулярность: U[%d,%d] = 0 в LU-декомпозиции {Lapack 'dgetrf()'}"
 
 #: src/modules/lapack/Lapack.c:357
 #, c-format
@@ -7441,7 +7427,7 @@ msgstr "ошибка протокола X11: %s"
 #: src/modules/X11/devX11.c:1087
 #, c-format
 msgid "X11 I/O error while opening X11 connection to '%s'"
-msgstr ""
+msgstr "X11 ошибка ввода/вывода в момент открытия соединения X11 с '%s'"
 
 #: src/modules/X11/devX11.c:1105
 msgid "X11 fatal IO error: please save work and shut down R"
@@ -7507,16 +7493,16 @@ msgstr "не могу открыть соединение с экраном X11 '%s'"
 
 #: src/modules/X11/devX11.c:1281
 msgid "ignoring 'display' argument as an X11 device is already open"
-msgstr ""
+msgstr "пропускаю аргумент 'display', поскольку устройство X11 уже открыто"
 
 #: src/modules/X11/devX11.c:1292
 msgid "jpeg() does not support transparency: using white bg"
 msgstr "'jpeg()' не поддерживает прозрачность: использую белый цвет фона"
 
 #: src/modules/X11/devX11.c:1392
-#, fuzzy, c-format
+#, c-format
 msgid "unable to obtain information on display '%s'"
-msgstr "не могу открыть соединение с экраном X11 '%s'"
+msgstr "не могу получить информацию с экрана '%s'"
 
 #: src/modules/X11/devX11.c:1410
 msgid "unable to create X11 window"
@@ -7873,9 +7859,8 @@ msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: неизвестный gui '%s', не использую никакого\n"
 
 #: src/unix/system.c:368
-#, fuzzy
 msgid "creating temporary file for '-e' failed"
-msgstr "установить профильный таймер не удалось"
+msgstr "создать временный файл для '-e' не удалось"
 
 #: src/unix/system.c:449
 msgid "WARNING: Only editing the first in the list of files"

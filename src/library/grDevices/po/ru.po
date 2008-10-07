@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.7.0\n"
+"Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2008-10-06 20:40+0100\n"
-"PO-Revision-Date: 2008-04-07 00:03-0500\n"
+"PO-Revision-Date: 2008-10-06 16:49-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -437,19 +437,18 @@ msgid "unable to start device PicTeX"
 msgstr "не могу запустить устройство PicTeX"
 
 #: devQuartz.c:622
-#, fuzzy, c-format
+#, c-format
 msgid "font \"%s\" could not be found for family \"%s\""
-msgstr "afm-файл '%s' не открывается"
+msgstr "шрифт \"%s\" нельзя найти в семействе \"%s\""
 
 #: devQuartz.c:634
-#, fuzzy
 msgid "font family name is too long"
-msgstr "слишком длинное имя файла для pdf"
+msgstr "слишком длинное имя семейства шрифтов"
 
 #: devQuartz.c:674
 #, c-format
 msgid "no font could be found for family \"%s\""
-msgstr ""
+msgstr "нельзя найти шрифт семейства \"%s\""
 
 #: devQuartz.c:1164
 msgid "invalid 'file' argument"
@@ -606,20 +605,18 @@ msgid "Impossible to open "
 msgstr "Нельзя открыть "
 
 #: devWindows.c:3216
-#, fuzzy
 msgid "invalid 'width' or 'height'"
-msgstr "неправильная 'width' или 'height' в devWindows"
+msgstr "неправильная 'width' или 'height'"
 
 #: devWindows.c:3221 devWindows.c:3225 devWindows.c:3233 devWindows.c:3244
 #: devWindows.c:3250 devWindows.c:3257
-#, fuzzy, c-format
+#, c-format
 msgid "invalid value of '%s'"
-msgstr "неправильное значение 'bg' в devWindows"
+msgstr "неправильное значение '%s'"
 
 #: devWindows.c:3274
-#, fuzzy
 msgid "unable to start device"
-msgstr "не могу запустить устройство pdf"
+msgstr "не могу запустить устройство"
 
 #: devWindows.c:3344
 msgid "recursive use of getGraphicsEvent not supported"
@@ -628,7 +625,7 @@ msgstr "рекурсивное использование getGraphicsEvent не поддерживается"
 #: qdBitmap.c:79
 #, c-format
 msgid "QuartzBitmap_Output - unable to open file '%s'"
-msgstr ""
+msgstr "QuartzBitmap_Output - не могу открыть файл '%s'"
 
 #: qdBitmap.c:94
 msgid "Not a supported scheme, no image data written"

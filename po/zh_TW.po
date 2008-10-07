@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:41+0100\n"
+"POT-Creation-Date: 2008-10-07 08:36+0100\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -246,8 +246,8 @@ msgstr "時間截記不正確"
 #: src/gnuwin32/extra.c:1787 src/main/character.c:837 src/main/colors.c:365
 #: src/main/connections.c:2913 src/main/context.c:543 src/main/context.c:562
 #: src/main/datetime.c:583 src/main/datetime.c:649 src/main/datetime.c:865
-#: src/main/dotcode.c:199 src/main/errors.c:874 src/main/errors.c:905
-#: src/main/errors.c:1006 src/main/errors.c:1031 src/main/errors.c:1036
+#: src/main/dotcode.c:199 src/main/errors.c:880 src/main/errors.c:911
+#: src/main/errors.c:1012 src/main/errors.c:1037 src/main/errors.c:1042
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
 #: src/main/platform.c:2065 src/main/plot.c:276 src/main/plot.c:470
@@ -430,19 +430,19 @@ msgstr "第一個引數應當是字串"
 msgid "character string expected as third argument"
 msgstr "第三個引數應當是字串"
 
-#: src/gnuwin32/system.c:118 src/main/errors.c:130
+#: src/gnuwin32/system.c:118 src/main/errors.c:136
 msgid "reached session elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:120 src/main/errors.c:132
+#: src/gnuwin32/system.c:120 src/main/errors.c:138
 msgid "reached elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:126 src/main/errors.c:138
+#: src/gnuwin32/system.c:126 src/main/errors.c:144
 msgid "reached session CPU time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:128 src/main/errors.c:140
+#: src/gnuwin32/system.c:128 src/main/errors.c:146
 msgid "reached CPU time limit"
 msgstr ""
 
@@ -1239,7 +1239,7 @@ msgstr "指定的向量大小太大"
 msgid "use of NULL environment is defunct"
 msgstr "NULL 環境的使用已經廢止"
 
-#: src/main/builtin.c:159 src/main/debug.c:197 src/main/errors.c:1128
+#: src/main/builtin.c:159 src/main/debug.c:197 src/main/errors.c:1134
 msgid "invalid number of arguments"
 msgstr "引數數目不正確"
 
@@ -1577,15 +1577,15 @@ msgstr ""
 msgid "read error on '%s'"
 msgstr "讀取錯誤"
 
-#: src/main/coerce.c:69 src/main/errors.c:1143
+#: src/main/coerce.c:69 src/main/errors.c:1149
 msgid "NAs introduced by coercion"
 msgstr "強制變更過程中產生了 NA"
 
-#: src/main/coerce.c:71 src/main/errors.c:1144
+#: src/main/coerce.c:71 src/main/errors.c:1150
 msgid "inaccurate integer conversion in coercion"
 msgstr "強制變更造成整數不精確"
 
-#: src/main/coerce.c:73 src/main/errors.c:1145
+#: src/main/coerce.c:73 src/main/errors.c:1151
 msgid "imaginary parts discarded in coercion"
 msgstr "強制變更時丟棄了虛數部分"
 
@@ -1743,7 +1743,7 @@ msgstr "rgb 必須有三列 (內部)"
 msgid "bad hsv to rgb color conversion"
 msgstr "hsv 到 rgb 顏色轉換不正確"
 
-#: src/main/colors.c:1277 src/main/errors.c:1129 src/main/logic.c:164
+#: src/main/colors.c:1277 src/main/errors.c:1135 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr "引數類型不正確"
 
@@ -2704,7 +2704,7 @@ msgstr "ENCODING 引數必須是單字元字串"
 msgid "no arguments supplied"
 msgstr "沒有提供引數"
 
-#: src/main/dotcode.c:750 src/main/seq.c:574
+#: src/main/dotcode.c:750 src/main/seq.c:579
 msgid "too many arguments"
 msgstr "引數太多"
 
@@ -3182,158 +3182,158 @@ msgstr "導出的符號 '%s' 沒有值"
 msgid "truncating string with embedded nul: '%s'"
 msgstr ""
 
-#: src/main/errors.c:175 src/main/errors.c:212
+#: src/main/errors.c:181 src/main/errors.c:218
 msgid "interrupts suspended; signal ignored"
 msgstr "暫停被中斷; 信號忽略不用"
 
-#: src/main/errors.c:307
+#: src/main/errors.c:313
 msgid "invalid option \"warning.expression\""
 msgstr "\"warning.expression\" 選項不正確"
 
-#: src/main/errors.c:337
+#: src/main/errors.c:343
 #, c-format
 msgid "(converted from warning) %s"
 msgstr "(從警告轉換成) %s"
 
-#: src/main/errors.c:348
+#: src/main/errors.c:354
 #, fuzzy, c-format
 msgid "Warning: %s\n"
 msgstr "警告: "
 
-#: src/main/errors.c:352 src/main/errors.c:355
+#: src/main/errors.c:358 src/main/errors.c:361
 #, fuzzy, c-format
 msgid "Warning in %s : %s\n"
 msgstr "%s 中的警告: "
 
-#: src/main/errors.c:357
+#: src/main/errors.c:363
 #, fuzzy, c-format
 msgid ""
 "Warning in %s :\n"
 "  %s\n"
 msgstr "%s 中的警告: "
 
-#: src/main/errors.c:421 src/main/errors.c:439 src/main/errors.c:569
+#: src/main/errors.c:427 src/main/errors.c:445 src/main/errors.c:575
 msgid "Lost warning messages\n"
 msgstr "警告訊息遺失\n"
 
-#: src/main/errors.c:512
+#: src/main/errors.c:518
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr "共有 %d 個警告 (用 warnings() 來顯示)\n"
 
-#: src/main/errors.c:515
+#: src/main/errors.c:521
 msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
 msgstr "警告多於50個 (用 warnings() 來顯示最先的50個)\n"
 
-#: src/main/errors.c:560
+#: src/main/errors.c:566
 msgid "Error during wrapup: "
 msgstr "收捲時發生錯誤: "
 
-#: src/main/errors.c:585
+#: src/main/errors.c:591
 msgid "Error in "
 msgstr "錯誤在"
 
-#: src/main/errors.c:613 src/main/errors.c:618
+#: src/main/errors.c:619 src/main/errors.c:624
 #, c-format
 msgid "Error: "
 msgstr "錯誤: "
 
-#: src/main/errors.c:637 src/main/errors.c:1260
+#: src/main/errors.c:643 src/main/errors.c:1266
 msgid "In addition: "
 msgstr "此外: "
 
-#: src/main/errors.c:758
+#: src/main/errors.c:764
 msgid "invalid option \"error\"\n"
 msgstr "選項 \"error\" 不正確\n"
 
-#: src/main/errors.c:838
+#: src/main/errors.c:844
 msgid "Execution halted\n"
 msgstr "停止執行\n"
 
-#: src/main/errors.c:973
+#: src/main/errors.c:979
 #, fuzzy, c-format
 msgid "invalid '%s' arguemnt"
 msgstr "'%s' 引數不正確"
 
-#: src/main/errors.c:975
+#: src/main/errors.c:981
 msgid "'msg1' must be a character string"
 msgstr "'msg1' 必須是字串"
 
-#: src/main/errors.c:977
+#: src/main/errors.c:983
 msgid "'msg2' must be a character string"
 msgstr "'msg2' 必須是字串"
 
-#: src/main/errors.c:1072
+#: src/main/errors.c:1078
 msgid " [invalid string in stop(.)]"
 msgstr " [stop(.) 中的字串不正確]"
 
-#: src/main/errors.c:1098
+#: src/main/errors.c:1104
 msgid " [invalid string in warning(.)]"
 msgstr " [warning(.) 中的字串不正確]"
 
-#: src/main/errors.c:1113
+#: src/main/errors.c:1119
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "\"%s\" 中的引數數目不正確"
 
-#: src/main/errors.c:1119 src/main/errors.c:1134
+#: src/main/errors.c:1125 src/main/errors.c:1140
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "%s 中的功能尚未實作"
 
-#: src/main/errors.c:1131
+#: src/main/errors.c:1137
 msgid "time-series/vector length mismatch"
 msgstr "時間序列/向量長度不等"
 
-#: src/main/errors.c:1132
+#: src/main/errors.c:1138
 msgid "incompatible arguments"
 msgstr "不相容的引數"
 
-#: src/main/errors.c:1135
+#: src/main/errors.c:1141
 msgid "unknown error (report this!)"
 msgstr "不明錯誤 (請報告!)"
 
-#: src/main/errors.c:1147
+#: src/main/errors.c:1153
 msgid "unknown warning (report this!)"
 msgstr "不明警告 (請報告!)"
 
-#: src/main/errors.c:1225
+#: src/main/errors.c:1231
 msgid "No function to return from, jumping to top level"
 msgstr "沒有可回返的函數, 跳到最高層"
 
-#: src/main/errors.c:1241
+#: src/main/errors.c:1247
 msgid "top level inconsistency?"
 msgstr "最高層不一致？"
 
-#: src/main/errors.c:1402
+#: src/main/errors.c:1408
 msgid "bad handler data"
 msgstr "不當的控柄資料"
 
-#: src/main/errors.c:1553
+#: src/main/errors.c:1559
 msgid "error message not a string"
 msgstr "錯誤訊息不是字串"
 
-#: src/main/errors.c:1628
+#: src/main/errors.c:1634
 msgid "handler or restart stack mismatch in old restart"
 msgstr "舊重新啟動中的控柄或重新啟動堆疊不符合"
 
-#: src/main/errors.c:1654 src/main/errors.c:1670
+#: src/main/errors.c:1660 src/main/errors.c:1676
 msgid "bad error message"
 msgstr "不當的錯誤訊息"
 
-#: src/main/errors.c:1712
+#: src/main/errors.c:1718
 msgid "bad restart"
 msgstr "不當的重新啟動"
 
-#: src/main/errors.c:1744
+#: src/main/errors.c:1750
 msgid "restart not on stack"
 msgstr "未在堆疊上重新啟動"
 
-#: src/main/errors.c:1761
+#: src/main/errors.c:1767
 msgid "not in a try context"
 msgstr "不在 try 的上下文中"
 
-#: src/main/errors.c:1774
+#: src/main/errors.c:1780
 #, fuzzy
 msgid "error message must be a character string"
 msgstr "'msg1' 必須是字串"
@@ -6105,12 +6105,12 @@ msgstr "非向量不能被複製"
 msgid "'length.out' must be a non-negative number"
 msgstr "'gap' 必須是正整數"
 
-#: src/main/seq.c:489 src/main/seq.c:528 src/main/seq.c:542
+#: src/main/seq.c:489 src/main/seq.c:533 src/main/seq.c:547
 #, fuzzy
 msgid "'from' must be finite"
 msgstr "'a' 和 'b' 的值必須是有限的"
 
-#: src/main/seq.c:491 src/main/seq.c:530 src/main/seq.c:560
+#: src/main/seq.c:491 src/main/seq.c:535 src/main/seq.c:565
 #, fuzzy
 msgid "'to' must be finite"
 msgstr "'a' 和 'b' 的值必須是有限的"
@@ -6129,12 +6129,12 @@ msgstr "'file' 引數太長"
 msgid "wrong sign in 'by' argument"
 msgstr "'mode' 引數的長度不正確"
 
-#: src/main/seq.c:544 src/main/seq.c:562
+#: src/main/seq.c:549 src/main/seq.c:567
 #, fuzzy
 msgid "'by' must be finite"
 msgstr "'a' 和 'b' 的值必須是有限的"
 
-#: src/main/seq.c:602
+#: src/main/seq.c:607
 #, fuzzy
 msgid "argument must be non-negative"
 msgstr "引數必須是環境物件"
