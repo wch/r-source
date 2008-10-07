@@ -447,7 +447,10 @@ getOption(x)
 #endif
 #ifdef unix
       Possible values are \code{"source"} (the default except under the
-      CRAN Mac OS X build) and \code{"mac.binary"}.}
+      CRAN Mac OS X build) and \code{"mac.binary"}. The latter can
+      have a suffix if supported by a special build, such as
+      \code{"mac.binary.leopard"} to access the \code{"leopard"} tree
+      of repositories instead of the default \code{"universal"}.}
 #endif
 
     \item{\code{repos}:}{URLs of the repositories for use by

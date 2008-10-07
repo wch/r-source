@@ -1584,9 +1584,9 @@ win-builder.r-project.org}.
 On Mac OS X @code{install.packages} works as it does on other Unix-like
 systems, but there is an additional type @code{mac.binary} that can be
 passed to @code{install.packages} in order to download and install
-binary packages from a suitable repository, and is the default if
-running from the GUI console.  These Macintosh binary package files have
-the extension @samp{tgz}.  The @R{} GUI provides for installation of
+binary packages from a suitable repository, and is the default for
+CRAN builds of R.  These Macintosh binary package files have the
+extension @samp{tgz}.  The @R{} GUI provides for installation of
 either binary or source packages, from @acronym{CRAN} or local files.
 
 @node Customizing package compilation under Unix, Customizing package compilation under Windows, Mac OS X packages, Installing packages

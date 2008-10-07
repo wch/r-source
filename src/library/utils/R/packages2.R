@@ -170,7 +170,7 @@ install.packages <-
         ## -- will mess up UNC names, but they don't work
         pkgs <- gsub("\\\\", "/", pkgs)
     } else {
-        if(type == "mac.binary") {
+        if(substr(type, 1, 10) == "mac.binary") {
             if(!length(grep("darwin", R.version$platform)))
                 stop("cannot install MacOS X binary packages on this plaform")
             .install.macbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,

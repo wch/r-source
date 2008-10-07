@@ -519,7 +519,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 keep[duplicated(keep)] <- FALSE
                 ok[ok][!keep] <- FALSE
             }
-            if (length(grep("mac\\.binary\\..",type))) type <- "mac.binary"
+            if (substr(type, 1, 10) == "mac.binary") type <- "mac.binary"
             fn <- paste(p, "_", available[ok, "Version"],
                         switch(type,
                                "source" = ".tar.gz",
@@ -583,7 +583,7 @@ contrib.url <- function(repos, type = getOption("pkgType"))
     ver <- paste(R.version$major,
                  strsplit(R.version$minor, ".", fixed=TRUE)[[1]][1], sep = ".")
     mac.subtype <- "universal"
-    if (length(grep("mac\\.binary\\..",type))) {
+    if (substr(type, 1, 10) == "mac.binary") {
         mac.subtype <- substring(type, 12)
         type <- "mac.binary"
     }

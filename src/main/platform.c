@@ -150,9 +150,12 @@ static void Init_R_Platform(SEXP rho)
 #ifdef Win32
     SET_VECTOR_ELT(value, 5, mkString("win.binary"));
 #else /* not Win32 */
-#ifdef HAVE_AQUA
-    SET_VECTOR_ELT(value, 5, mkString("mac.binary"));
-#else /* not Win32 nor Aqua */
+/* pkgType should be "mac.binary" for CRAN build *only*, not for all
+   AQUA builds. Also we want to be able to use "mac.binary.leopard"
+   and similar for special builds. */
+#ifdef PLATFORM_PKGTYPE 
+    SET_VECTOR_ELT(value, 5, mkString(PLATFORM_PKGTYPE));
+#else /* unix default */
     SET_VECTOR_ELT(value, 5, mkString("source"));
 #endif
 #endif
