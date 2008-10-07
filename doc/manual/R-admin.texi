@@ -2369,10 +2369,10 @@ detected as @command{gcc}, @code{-std=gnu99} will be appended to
 @code{CC} unless it conflicts with a setting of @code{CFLAGS}.
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
-installed, including its headers and client libraries.  (On Fedora
-Core 3 and SuSE 9.x Linux this meant the @samp{xorg-x11-devel} and
-@samp{xorg-x11-libs} RPMs.  For Fedora Core 5 and 6 it means (at least)
-@samp{libX11}, @samp{libX11-devel}, @samp{libXt} and
+installed, including its headers and client libraries.  (On Fedora Core
+3 and SuSE 9.x Linux this meant the @samp{xorg-x11-devel} and
+@samp{xorg-x11-libs} RPMs.  For recent Fedora distributions it means (at
+least) @samp{libX11}, @samp{libX11-devel}, @samp{libXt} and
 @samp{libXt-devel}.  On Debian we recommend the meta-package
 @samp{xorg-dev}.)  If you really do not want these you will need to
 explicitly configure @R{} without X11, using @option{--with-x=no}.
@@ -2432,11 +2432,11 @@ sources will be used if no suitable external @code{gettext} is found.
 The `modern' version of @code{X11}, @code{jpeg()}, @code{png()} and
 @code{tiff()} uses the @code{cairo} and (optionally) @code{Pango}
 libraries.  Cairo version 1.0 or later is required@footnote{We recommend
-that people with cairo 1.0.x, e.g.@: on Fedora Core 5, install 1.4.x
-from the sources which works well}, and some features reguire 1.2 or
-later (and may not work before 1.4).  Pango needs to be at least version
-1.10, and 1.12 is the earliest version we have tested.  (For Fedora
-users we believe the @code{pango-devel} RPM and its dependencies
+that people with cairo 1.0.x, e.g.@: on Fedora Core 5, install 1.4.x or
+later from the sources, which works well}, and some features reguire 1.2
+or later (and may not work before 1.4).  Pango needs to be at least
+version 1.10, and 1.12 is the earliest version we have tested.  (For
+Fedora users we believe the @code{pango-devel} RPM and its dependencies
 suffice.)  @R{} checks for @command{pkg-config}, and uses that to check
 first that the @samp{pangocairo} package is installed (and if not,
 @samp{cairo}) and if additional flags are needed for the
@@ -2478,9 +2478,9 @@ enhancements to work with large file systems on 32-bit platforms.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
-Debian meta-package @samp{xorg-dev}), but some distributions have
-split this into smaller parts, so for example Fedora Core 5/6 require
-the @samp{libXmu} and @samp{libXmu-devel} RPMs.
+Debian meta-package @samp{xorg-dev}), but some distributions have split
+this into smaller parts, so for example recent versions of Fedora
+require the @samp{libXmu} and @samp{libXmu-devel} RPMs.
 
 Some systems (notably Mac OS X and at least some FreeBSD systems) have
 inadequate support for collation in multibyte locales.  It is possible
@@ -2902,8 +2902,7 @@ versions of the libraries: for example @code{libsunperf} from Sun Forte
 6.x was missing the entry point for @code{DLANGE} and @code{vecLib} has
 omitted the BLAS routine @code{LSAME}.  For problems compiling LAPACK
 using recent versions of @code{gcc} on @cputype{ix86} Linux, see
-@ref{New platforms}: these problems have surfaced in Fedora Core 3's
-distribution, for example.
+@ref{New platforms}.
 
 Please @strong{do} bear in mind that using @option{--with-lapack} is
 `definitely @strong{not} recommended': it is provided @strong{only}
@@ -3121,8 +3120,8 @@ On most platforms using @command{gcc}, having @samp{-O3} in
 @code{CFLAGS} and @code{FFLAGS} produces worthwhile performance gains.
 On systems using the GNU linker (especially those using @R{} as a shared
 library), it is likely that including @samp{-Wl,-O1} in @code{LDFLAGS}
-is worthwhile, and on recent systems@footnote{e.g.@: Fedora Core 6}
-@samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is recommended at
+is worthwhile, and on recent systems@footnote{e.g.@: Fedora Core 6 and
+later} @samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is recommended at
 @uref{http://lwn.net/Articles/192624/}.  Tuning compilation to a
 specific CPU family (e.g.@: @samp{-mtune=core2} for @command{gcc}) can
 give worthwhile performance gains, especially on older architectures
@@ -3378,7 +3377,7 @@ is reporting@footnote{for example, @code{X11 font at size 14 could not
 be loaded}.} missing font sizes, especially larger ones, it is likely
 that you are not using scalable fonts and have not installed the 100dpi
 versions of the X11 fonts.  The names and details differ by system, but
-will likely have something like Fedora Core 5's
+will likely have something like Fedora's
 @example
 xorg-x11-fonts-75dpi
 xorg-x11-fonts-100dpi
@@ -3498,15 +3497,6 @@ LDFLAGS="-L/usr/local/lib"
 LIBnn=lib
 @end example
 
-@noindent
-Fedora Core 3 also needed
-@example
---x-libraries=/usr/X11R6/lib
-@end example
-
-@noindent
-and various @cputype{i386} @samp{-devel} RPMs had to be added.
-
 64-bit versions of Linux are built with support for files > 2Gb, and
 32-bit versions will be if possible unless @option{--disable-largefile}
 is specified.
@@ -3522,16 +3512,6 @@ in @code{R_XTRA_CFLAGS} if required.
 There are known problems with several early versions of
 @command{gcc}@tie{}4, but @command{gcc}@tie{}4.1.0 and later seems to
 cause no special difficulties.
-@c Several Linux distributions have shipped unreleased versions of
-@c @command{gcc}@tie{}4.0.0 and its FORTRAN compiler @command{gfortran}
-@c (see the separate comments).  Some versions of @command{gcc}@tie{}4
-@c (such as that in Fedora Core 3) produce incorrect code.  In our
-@c experiments @command{gcc}@tie{}3.4.x always produced faster and more
-@c reliable code.  It seems that @command{gcc}@tie{}4.0.x cannot compile
-@c @file{src/main/plot.c} when building R as a shared library on
-@c @cputype{ix86} unless the optimization level is changed from the default
-@c @option{-O2} (@option{-O3} works, as does @command{gcc}@tie{}4.1.0 with
-@c the default settings).
 
 @c It has been reported that using @command{gcc}@tie{}4.0.3 on
 @c @cputype{ppc64} needed the compiler flag @option{-mminimal-toc} to avoid
@@ -3553,7 +3533,7 @@ FFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
 the additional flags being needed to problems linking against
 @file{libnmath.a} and when linking @R{} as a shared library.
 
-On some@footnote{e.g.@: Fedora Core 5} @code{glibc} systems,
+On some earlier@footnote{e.g.@: Fedora Core 5} @code{glibc} systems,
 @samp{-fgnu89-inline} needs to be added to @option{CFLAGS} when using
 @command{gcc}@tie{}4.3.x, since @file{wchar.h} is not set up properly
 for C99-style inlines.
