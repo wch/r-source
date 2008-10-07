@@ -124,7 +124,7 @@ void R_CheckUserInterrupt(void)
     R_ProcessEvents();
 #else
     R_PolledEvents();
-    /* the same code is in R_ProcessEvents on Windows */
+    /* the same code is in R_ProcessEvents on Windows and AQUA */
     if (cpuLimit > 0.0 || elapsedLimit > 0.0) {
 	double cpu, data[5];
 	R_getProcTime(data);
