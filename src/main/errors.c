@@ -107,6 +107,12 @@ void R_CheckStack(void)
 void R_CheckUserInterrupt(void)
 {
     R_CheckStack();
+
+    /* Don't do any processing of interrupts, timing limits, or other
+       asynchronous events if interrupts are suspended. */
+    if (R_interrupts_suspended)
+	return;
+
     /* This is the point where GUI systems need to do enough event
        processing to determine whether there is a user interrupt event
        pending.  Need to be careful not to do too much event
