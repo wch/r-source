@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.4.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2008-10-07 08:36+0100\n"
-"PO-Revision-Date: 2008-04-09 16:32+0100\n"
+"PO-Revision-Date: 2008-10-02 14:36+0100\n"
 "Last-Translator: Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language-Team: Spanish <RenEspanol@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -746,7 +746,7 @@ msgstr "Instalar paquetes(s)..."
 
 #: rui.c:894
 msgid "Update packages..."
-msgstr "Atualizar paquetes..."
+msgstr "Actualizar paquetes..."
 
 #: rui.c:897
 msgid "Install package(s) from local zip files..."
@@ -815,7 +815,7 @@ msgstr "Interpretar código fuente R..."
 
 #: rui.c:1081
 msgid "Display file(s)..."
-msgstr "Mostar archivo(s)..."
+msgstr "Mostrar archivo(s)..."
 
 #: rui.c:1083
 msgid "Load Workspace..."
