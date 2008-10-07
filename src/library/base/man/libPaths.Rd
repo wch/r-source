@@ -52,7 +52,8 @@
 
   By default \env{R\_LIBS} is unset, and \env{R\_LIBS\_USER} is set to
   directory \file{R/\var{R.version\$platform}-library/\var{x.y}}
-  of the home directory, for \R \var{x.y.z}.
+  of the home directory (or \file{Library/R/\var{x.y}/library} for
+  Mac OS X AQUA builds), for \R \var{x.y.z}.
 
   \code{.Library.site} can be set via the environment variable 
   \env{R\_LIBS\_SITE} (as a colon-separated list of library trees).
