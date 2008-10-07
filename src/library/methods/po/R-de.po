@@ -1309,7 +1309,6 @@ msgstr ""
 "(die erste der gezeigten Signaturen wird benutzt)\n"
 "%s"
 
-#, fuzzy
 msgid ""
 "No simply inherited methods found for function \"%s\"; using non-simple method"
 msgstr "Keine Methode für Funktion \"%s\" und Signatur %s gefunden"

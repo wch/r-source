@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:29+0100\n"
+"POT-Creation-Date: 2008-10-07 08:32+0100\n"
 "PO-Revision-Date: 2008-09-30 21:08+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -145,7 +145,7 @@ msgstr "problème lors de l'affichage de '%s'"
 #: src/main/envir.c:1777 src/main/envir.c:1781 src/main/envir.c:1977
 #: src/main/envir.c:2098 src/main/envir.c:2356 src/main/envir.c:2630
 #: src/main/envir.c:3164 src/main/eval.c:282 src/main/eval.c:1695
-#: src/main/eval.c:1719 src/main/eval.c:1723 src/main/memory.c:2964
+#: src/main/eval.c:1719 src/main/eval.c:1723 src/main/memory.c:2968
 #: src/main/model.c:1612 src/main/model.c:1620 src/main/optim.c:225
 #: src/main/paste.c:85 src/main/paste.c:344 src/main/paste.c:351
 #: src/main/paste.c:358 src/main/paste.c:363 src/main/paste.c:368
@@ -250,8 +250,8 @@ msgstr "marque (timestamp) incorrecte"
 #: src/gnuwin32/extra.c:1787 src/main/character.c:837 src/main/colors.c:365
 #: src/main/connections.c:2913 src/main/context.c:543 src/main/context.c:562
 #: src/main/datetime.c:583 src/main/datetime.c:649 src/main/datetime.c:865
-#: src/main/dotcode.c:199 src/main/errors.c:874 src/main/errors.c:905
-#: src/main/errors.c:1006 src/main/errors.c:1031 src/main/errors.c:1036
+#: src/main/dotcode.c:199 src/main/errors.c:880 src/main/errors.c:911
+#: src/main/errors.c:1012 src/main/errors.c:1037 src/main/errors.c:1042
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
 #: src/main/platform.c:2065 src/main/plot.c:276 src/main/plot.c:470
@@ -431,19 +431,19 @@ msgstr "chaîne de caractères attendue comme premier argument"
 msgid "character string expected as third argument"
 msgstr "chaîne de caractères attendue comme troisième argument"
 
-#: src/gnuwin32/system.c:118 src/main/errors.c:130
+#: src/gnuwin32/system.c:118 src/main/errors.c:136
 msgid "reached session elapsed time limit"
 msgstr "la limite de temps de la session est atteinte"
 
-#: src/gnuwin32/system.c:120 src/main/errors.c:132
+#: src/gnuwin32/system.c:120 src/main/errors.c:138
 msgid "reached elapsed time limit"
 msgstr "la limite de temps est atteinte"
 
-#: src/gnuwin32/system.c:126 src/main/errors.c:138
+#: src/gnuwin32/system.c:126 src/main/errors.c:144
 msgid "reached session CPU time limit"
 msgstr "la limite de temps processeur est atteinte"
 
-#: src/gnuwin32/system.c:128 src/main/errors.c:140
+#: src/gnuwin32/system.c:128 src/main/errors.c:146
 msgid "reached CPU time limit"
 msgstr "limite de temps processeur atteinte"
 
@@ -1253,7 +1253,7 @@ msgstr "la longueur choisie pour le vecteur est trop grande"
 msgid "use of NULL environment is defunct"
 msgstr "l'utilisation de l'environnement NULL n'est plus autorisée"
 
-#: src/main/builtin.c:159 src/main/debug.c:197 src/main/errors.c:1128
+#: src/main/builtin.c:159 src/main/debug.c:197 src/main/errors.c:1134
 msgid "invalid number of arguments"
 msgstr "nombre d'arguments incorrect"
 
@@ -1324,7 +1324,7 @@ msgid "cannot set length of non-vector"
 msgstr "impossible de modifier la longueur d'un objet qui n'est pas un vecteur"
 
 #: src/main/builtin.c:850 src/main/builtin.c:854 src/main/character.c:331
-#: src/main/coerce.c:2431
+#: src/main/coerce.c:2433
 msgid "invalid value"
 msgstr "valeur incorrecte"
 
@@ -1332,7 +1332,7 @@ msgstr "valeur incorrecte"
 msgid "missing value for 'length'"
 msgstr "valeur manquante pour 'length'"
 
-#: src/main/builtin.c:880 src/main/coerce.c:2194 src/main/coerce.c:2235
+#: src/main/builtin.c:880 src/main/coerce.c:2196 src/main/coerce.c:2237
 msgid "... used in an incorrect context"
 msgstr "... utilisé dans un contexte incorrect"
 
@@ -1595,15 +1595,15 @@ msgstr "condition interne, plus de mémoire disponible"
 msgid "read error on '%s'"
 msgstr "erreur de lecture sur '%s'"
 
-#: src/main/coerce.c:69 src/main/errors.c:1143
+#: src/main/coerce.c:69 src/main/errors.c:1149
 msgid "NAs introduced by coercion"
 msgstr "NAs introduits lors de la conversion automatique"
 
-#: src/main/coerce.c:71 src/main/errors.c:1144
+#: src/main/coerce.c:71 src/main/errors.c:1150
 msgid "inaccurate integer conversion in coercion"
 msgstr "conversion automatique d'entier approximative"
 
-#: src/main/coerce.c:73 src/main/errors.c:1145
+#: src/main/coerce.c:73 src/main/errors.c:1151
 msgid "imaginary parts discarded in coercion"
 msgstr "les parties imaginaires sont perdues lors de la conversion automatique"
 
@@ -1679,16 +1679,16 @@ msgstr "'what' doit être une chaîne de caractères ou une fonction"
 msgid "'envir' must be an environment"
 msgstr "'envir' doit être un environnement"
 
-#: src/main/coerce.c:2274
+#: src/main/coerce.c:2276
 msgid "invalid environment specified"
 msgstr "environnement spécifié incorrect"
 
-#: src/main/coerce.c:2353
+#: src/main/coerce.c:2355
 msgid "invalid replacement object to be a class string"
 msgstr ""
 "objet de remplacement incorrect, doit être de classe chaîne de caractères"
 
-#: src/main/coerce.c:2371
+#: src/main/coerce.c:2373
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -1696,7 +1696,7 @@ msgstr ""
 "\"%s\" peut être attribué comme classe seulement si l'objet est de ce type ; "
 "type trouvé : \"%s\""
 
-#: src/main/coerce.c:2387
+#: src/main/coerce.c:2389
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1705,18 +1705,18 @@ msgstr ""
 "impossible de définir la classe de l'objet comme matrice si son attribut de "
 "dimension n'est pas de longueur 2 (il est de %d)"
 
-#: src/main/coerce.c:2393
+#: src/main/coerce.c:2395
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
 "impossible de définir la classe de l'objet comme tableau, à moins que "
 "l'attribut de dimension ait une longueur > 0"
 
-#: src/main/coerce.c:2422
+#: src/main/coerce.c:2424
 msgid "'value' must be non-null character string"
 msgstr "'value' doit être une chaîne de caractères non nulle"
 
-#: src/main/coerce.c:2435
+#: src/main/coerce.c:2437
 msgid "invalid to change the storage mode of a factor"
 msgstr ""
 "la modification du mode de stockage d'un objet 'factor' n'est pas autorisée"
@@ -1769,7 +1769,7 @@ msgstr "rgb doit avoir 3 lignes (en interne)"
 msgid "bad hsv to rgb color conversion"
 msgstr "conversion de couleur hsv vers rgb incorrecte"
 
-#: src/main/colors.c:1277 src/main/errors.c:1129 src/main/logic.c:164
+#: src/main/colors.c:1277 src/main/errors.c:1135 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr "type de l'argument incorrect"
 
@@ -3228,30 +3228,30 @@ msgstr "le symbole exporté '%s' n'a pas de valeur associée"
 msgid "truncating string with embedded nul: '%s'"
 msgstr "une chaîne de caractère contenant 'nul' est tronquée: '%s'"
 
-#: src/main/errors.c:175 src/main/errors.c:212
+#: src/main/errors.c:181 src/main/errors.c:218
 msgid "interrupts suspended; signal ignored"
 msgstr "interruptions suspendues ; le signal est ignoré"
 
-#: src/main/errors.c:307
+#: src/main/errors.c:313
 msgid "invalid option \"warning.expression\""
 msgstr "option incorrecte \"warning.expression\""
 
-#: src/main/errors.c:337
+#: src/main/errors.c:343
 #, c-format
 msgid "(converted from warning) %s"
 msgstr "(converti depuis l'avis) %s"
 
-#: src/main/errors.c:348
+#: src/main/errors.c:354
 #, c-format
 msgid "Warning: %s\n"
 msgstr "Avis : %s\n"
 
-#: src/main/errors.c:352 src/main/errors.c:355
+#: src/main/errors.c:358 src/main/errors.c:361
 #, c-format
 msgid "Warning in %s : %s\n"
 msgstr "Avis dans %s : %s\n"
 
-#: src/main/errors.c:357
+#: src/main/errors.c:363
 #, c-format
 msgid ""
 "Warning in %s :\n"
@@ -3260,131 +3260,131 @@ msgstr ""
 "Avis dans %s :\n"
 "  %s\n"
 
-#: src/main/errors.c:421 src/main/errors.c:439 src/main/errors.c:569
+#: src/main/errors.c:427 src/main/errors.c:445 src/main/errors.c:575
 msgid "Lost warning messages\n"
 msgstr "messages d'avis perdus\n"
 
-#: src/main/errors.c:512
+#: src/main/errors.c:518
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr "Il y a eu %d avis (utilisez warnings() pour les visionner)\n"
 
-#: src/main/errors.c:515
+#: src/main/errors.c:521
 msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
 msgstr ""
 "Il y a eu 50 avis ou plus (utilisez warnings() pour voir les 50 premiers)\n"
 
-#: src/main/errors.c:560
+#: src/main/errors.c:566
 msgid "Error during wrapup: "
 msgstr "Erreur pendant l'emballage (wrapup) : "
 
-#: src/main/errors.c:585
+#: src/main/errors.c:591
 msgid "Error in "
 msgstr "Erreur dans "
 
-#: src/main/errors.c:613 src/main/errors.c:618
+#: src/main/errors.c:619 src/main/errors.c:624
 #, c-format
 msgid "Error: "
 msgstr "Erreur : "
 
-#: src/main/errors.c:637 src/main/errors.c:1260
+#: src/main/errors.c:643 src/main/errors.c:1266
 msgid "In addition: "
 msgstr "De plus : "
 
-#: src/main/errors.c:758
+#: src/main/errors.c:764
 msgid "invalid option \"error\"\n"
 msgstr "option \"error\" incorrecte\n"
 
-#: src/main/errors.c:838
+#: src/main/errors.c:844
 msgid "Execution halted\n"
 msgstr "Exécution arrêtée\n"
 
-#: src/main/errors.c:973
+#: src/main/errors.c:979
 #, c-format
 msgid "invalid '%s' arguemnt"
 msgstr "argument '%s' incorrect"
 
-#: src/main/errors.c:975
+#: src/main/errors.c:981
 msgid "'msg1' must be a character string"
 msgstr "'msg1' doit être une chaîne de caractères"
 
-#: src/main/errors.c:977
+#: src/main/errors.c:983
 msgid "'msg2' must be a character string"
 msgstr "'msg2' doit être une chaîne de caractères"
 
-#: src/main/errors.c:1072
+#: src/main/errors.c:1078
 msgid " [invalid string in stop(.)]"
 msgstr " [chaîne incorrecte dans stop(.)]"
 
-#: src/main/errors.c:1098
+#: src/main/errors.c:1104
 msgid " [invalid string in warning(.)]"
 msgstr " [chaîne incorrecte dans warning(.)]"
 
-#: src/main/errors.c:1113
+#: src/main/errors.c:1119
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "nombre d'arguments incorrect pour \"%s\""
 
-#: src/main/errors.c:1119 src/main/errors.c:1134
+#: src/main/errors.c:1125 src/main/errors.c:1140
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "fonction non implémentée dans %s"
 
-#: src/main/errors.c:1131
+#: src/main/errors.c:1137
 msgid "time-series/vector length mismatch"
 msgstr "longueurs incompatibles des séries temporelles / vecteurs"
 
-#: src/main/errors.c:1132
+#: src/main/errors.c:1138
 msgid "incompatible arguments"
 msgstr "arguments incompatibles"
 
-#: src/main/errors.c:1135
+#: src/main/errors.c:1141
 msgid "unknown error (report this!)"
 msgstr "erreur inconnue (veuillez signaler ceci aux développeurs !)"
 
-#: src/main/errors.c:1147
+#: src/main/errors.c:1153
 msgid "unknown warning (report this!)"
 msgstr "avis inconnu (veuillez signaler ceci aux développeurs !)"
 
-#: src/main/errors.c:1225
+#: src/main/errors.c:1231
 msgid "No function to return from, jumping to top level"
 msgstr "Aucun function d'où sortir, branchement vers le niveau le plus haut"
 
-#: src/main/errors.c:1241
+#: src/main/errors.c:1247
 msgid "top level inconsistency?"
 msgstr "niveau le plus haut incohérent ?"
 
-#: src/main/errors.c:1402
+#: src/main/errors.c:1408
 msgid "bad handler data"
 msgstr "mauvais manipulateur de données"
 
-#: src/main/errors.c:1553
+#: src/main/errors.c:1559
 msgid "error message not a string"
 msgstr "le message d'erreur n'est pas une chaîne de caractères"
 
-#: src/main/errors.c:1628
+#: src/main/errors.c:1634
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 "manipulateur de données ou pile de redémarrage incohérent dans l'ancien "
 "redémarrage"
 
-#: src/main/errors.c:1654 src/main/errors.c:1670
+#: src/main/errors.c:1660 src/main/errors.c:1676
 msgid "bad error message"
 msgstr "mauvais message d'erreur"
 
-#: src/main/errors.c:1712
+#: src/main/errors.c:1718
 msgid "bad restart"
 msgstr "mauvais redémarrage"
 
-#: src/main/errors.c:1744
+#: src/main/errors.c:1750
 msgid "restart not on stack"
 msgstr "le redémarrage n'est pas dans la pile"
 
-#: src/main/errors.c:1761
+#: src/main/errors.c:1767
 msgid "not in a try context"
 msgstr "vous n'êtes pas dans un contexte 'try'"
 
-#: src/main/errors.c:1774
+#: src/main/errors.c:1780
 msgid "error message must be a character string"
 msgstr "le message d'erreur doit être une chaîne de caractères"
 
@@ -4245,77 +4245,77 @@ msgstr "mémoires 'cons' épuisées (limite atteinte ?)"
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "impossible d'allouer un bloc de mémoire de taille %0.1f Go"
 
-#: src/main/memory.c:1876
+#: src/main/memory.c:1880
 msgid "negative length vectors are not allowed"
 msgstr "longueur de vecteurs négative non permise"
 
-#: src/main/memory.c:1898 src/main/memory.c:1909 src/main/memory.c:1920
-#: src/main/memory.c:1933
+#: src/main/memory.c:1902 src/main/memory.c:1913 src/main/memory.c:1924
+#: src/main/memory.c:1937
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "impossible d'allouer un vecteur de longueur %d"
 
-#: src/main/memory.c:1946
+#: src/main/memory.c:1950
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "type / longueur incorrect (%s / %d) dans l'allocation de vecteur"
 
-#: src/main/memory.c:2014
+#: src/main/memory.c:2018
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "impossible d'allouer un vecteur de taille %0.1f Go"
 
-#: src/main/memory.c:2018
+#: src/main/memory.c:2022
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "impossible d'allouer un vecteur de taille %0.1f Mo"
 
-#: src/main/memory.c:2022
+#: src/main/memory.c:2026
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "impossible d'allouer un vecteur de taille %0.f Ko"
 
-#: src/main/memory.c:2139
+#: src/main/memory.c:2143
 msgid "gc.time() is not implemented on this system"
 msgstr "gc.time() non implémenté sur ce système"
 
-#: src/main/memory.c:2307
+#: src/main/memory.c:2311
 msgid "protect(): protection stack overflow"
 msgstr "protect() : débordement vers le haut de protection de pile"
 
-#: src/main/memory.c:2323
+#: src/main/memory.c:2327
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect() : seulement %d éléments protégés"
 
-#: src/main/memory.c:2337
+#: src/main/memory.c:2341
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr : pointeur non trouvé"
 
-#: src/main/memory.c:2378
+#: src/main/memory.c:2382
 #, c-format
 msgid "Calloc could not allocate (%d of %d) memory"
 msgstr "Calloc ne peut allouer de la mémoire (%d de %d)"
 
-#: src/main/memory.c:2388
+#: src/main/memory.c:2392
 #, c-format
 msgid "Realloc could not re-allocate (size %d) memory"
 msgstr "Realloc ne peut réallouer de la mémoire (taille %d)"
 
-#: src/main/memory.c:2641
+#: src/main/memory.c:2645
 msgid "not safe to return vector pointer"
 msgstr "le renvoi d'un pointeur sur un vecteur n'est pas sûr"
 
-#: src/main/memory.c:2698 src/main/memory.c:2707 src/main/memory.c:2718
-#: src/main/memory.c:2731 src/main/memory.c:2747 src/main/memory.c:2764
+#: src/main/memory.c:2702 src/main/memory.c:2711 src/main/memory.c:2722
+#: src/main/memory.c:2735 src/main/memory.c:2751 src/main/memory.c:2768
 msgid "bad value"
 msgstr "mauvaise valeur"
 
-#: src/main/memory.c:2885
+#: src/main/memory.c:2889
 msgid "memory profiling is not available on this system"
 msgstr "le profilage de la mémoire n'est pas disponible sur ce système"
 
-#: src/main/memory.c:2950
+#: src/main/memory.c:2954
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: impossible d'ouvrir le fichier '%s'"

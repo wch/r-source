@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:29+0100\n"
+"POT-Creation-Date: 2008-10-07 08:32+0100\n"
 "PO-Revision-Date: 2008-04-04 18:31+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -144,7 +144,7 @@ msgstr " '%s'の表示に問題があります "
 #: src/main/envir.c:1777 src/main/envir.c:1781 src/main/envir.c:1977
 #: src/main/envir.c:2098 src/main/envir.c:2356 src/main/envir.c:2630
 #: src/main/envir.c:3164 src/main/eval.c:282 src/main/eval.c:1695
-#: src/main/eval.c:1719 src/main/eval.c:1723 src/main/memory.c:2964
+#: src/main/eval.c:1719 src/main/eval.c:1723 src/main/memory.c:2968
 #: src/main/model.c:1612 src/main/model.c:1620 src/main/optim.c:225
 #: src/main/paste.c:85 src/main/paste.c:344 src/main/paste.c:351
 #: src/main/paste.c:358 src/main/paste.c:363 src/main/paste.c:368
@@ -247,8 +247,8 @@ msgstr " タイムスタンプが不正です "
 #: src/gnuwin32/extra.c:1787 src/main/character.c:837 src/main/colors.c:365
 #: src/main/connections.c:2913 src/main/context.c:543 src/main/context.c:562
 #: src/main/datetime.c:583 src/main/datetime.c:649 src/main/datetime.c:865
-#: src/main/dotcode.c:199 src/main/errors.c:874 src/main/errors.c:905
-#: src/main/errors.c:1006 src/main/errors.c:1031 src/main/errors.c:1036
+#: src/main/dotcode.c:199 src/main/errors.c:880 src/main/errors.c:911
+#: src/main/errors.c:1012 src/main/errors.c:1037 src/main/errors.c:1042
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
 #: src/main/platform.c:2065 src/main/plot.c:276 src/main/plot.c:470
@@ -426,19 +426,19 @@ msgstr " 最初の引数には文字列が期待されています "
 msgid "character string expected as third argument"
 msgstr " 三番目の引数には文字列が期待されています "
 
-#: src/gnuwin32/system.c:118 src/main/errors.c:130
+#: src/gnuwin32/system.c:118 src/main/errors.c:136
 msgid "reached session elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:120 src/main/errors.c:132
+#: src/gnuwin32/system.c:120 src/main/errors.c:138
 msgid "reached elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:126 src/main/errors.c:138
+#: src/gnuwin32/system.c:126 src/main/errors.c:144
 msgid "reached session CPU time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:128 src/main/errors.c:140
+#: src/gnuwin32/system.c:128 src/main/errors.c:146
 msgid "reached CPU time limit"
 msgstr ""
 
@@ -1232,7 +1232,7 @@ msgstr " 指定されたベクトルのサイズが長すぎます "
 msgid "use of NULL environment is defunct"
 msgstr " NULL環境の使用は廃要素です "
 
-#: src/main/builtin.c:159 src/main/debug.c:197 src/main/errors.c:1128
+#: src/main/builtin.c:159 src/main/debug.c:197 src/main/errors.c:1134
 msgid "invalid number of arguments"
 msgstr " 引数の個数が不正です "
 
@@ -1303,7 +1303,7 @@ msgid "cannot set length of non-vector"
 msgstr " ベクトルでないものの長さは設定できません "
 
 #: src/main/builtin.c:850 src/main/builtin.c:854 src/main/character.c:331
-#: src/main/coerce.c:2431
+#: src/main/coerce.c:2433
 msgid "invalid value"
 msgstr "値が不正です "
 
@@ -1311,7 +1311,7 @@ msgstr "値が不正です "
 msgid "missing value for 'length'"
 msgstr " 'length' の値がありません "
 
-#: src/main/builtin.c:880 src/main/coerce.c:2194 src/main/coerce.c:2235
+#: src/main/builtin.c:880 src/main/coerce.c:2196 src/main/coerce.c:2237
 msgid "... used in an incorrect context"
 msgstr " ... が不適切な文脈で使われました "
 
@@ -1569,15 +1569,15 @@ msgstr " 内部でアウトオブメモリーが発生しています "
 msgid "read error on '%s'"
 msgstr " \"%s\" の読み込みエラーです "
 
-#: src/main/coerce.c:69 src/main/errors.c:1143
+#: src/main/coerce.c:69 src/main/errors.c:1149
 msgid "NAs introduced by coercion"
 msgstr " 強制変換により NA が生成されました "
 
-#: src/main/coerce.c:71 src/main/errors.c:1144
+#: src/main/coerce.c:71 src/main/errors.c:1150
 msgid "inaccurate integer conversion in coercion"
 msgstr " 強制変換中に不正確な整数変換が行われました "
 
-#: src/main/coerce.c:73 src/main/errors.c:1145
+#: src/main/coerce.c:73 src/main/errors.c:1151
 msgid "imaginary parts discarded in coercion"
 msgstr " 複素数の虚部は，コネクションで捨てられました "
 
@@ -1649,15 +1649,15 @@ msgstr " 'what'は、文字列または関数でなければならない "
 msgid "'envir' must be an environment"
 msgstr " 'envir' は環境でなくてはなりません "
 
-#: src/main/coerce.c:2274
+#: src/main/coerce.c:2276
 msgid "invalid environment specified"
 msgstr " 不正な環境指定です "
 
-#: src/main/coerce.c:2353
+#: src/main/coerce.c:2355
 msgid "invalid replacement object to be a class string"
 msgstr " クラス文字列とするには不正な置き換えオブジェクトです "
 
-#: src/main/coerce.c:2371
+#: src/main/coerce.c:2373
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -1665,7 +1665,7 @@ msgstr ""
 " \"%s\" はオブジェクトがこの型を持つ時だけクラスとして設定できます。\"%s\" が"
 "見つかりました "
 
-#: src/main/coerce.c:2387
+#: src/main/coerce.c:2389
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1674,16 +1674,16 @@ msgstr ""
 " 次元属性が長さ 2 でないかぎり(%d でした)、行列にクラスを設定するのは不正で"
 "す "
 
-#: src/main/coerce.c:2393
+#: src/main/coerce.c:2395
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr " 次元属性が長さ > 0 でないかぎり、配列にクラスを設定できません  "
 
-#: src/main/coerce.c:2422
+#: src/main/coerce.c:2424
 msgid "'value' must be non-null character string"
 msgstr " 'value' は NULL でない文字列でなければなりません "
 
-#: src/main/coerce.c:2435
+#: src/main/coerce.c:2437
 msgid "invalid to change the storage mode of a factor"
 msgstr "因子保管モードを変更するのは不正です "
 
@@ -1735,7 +1735,7 @@ msgstr " rgb は3行なければなりません（内部的に） "
 msgid "bad hsv to rgb color conversion"
 msgstr " hsv から rgb への色の変換が上手くいきません "
 
-#: src/main/colors.c:1277 src/main/errors.c:1129 src/main/logic.c:164
+#: src/main/colors.c:1277 src/main/errors.c:1135 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr " 引数の型が不正です "
 
@@ -3172,30 +3172,30 @@ msgstr " エクスポートされたシンボル \"%s\" が値を持っていま
 msgid "truncating string with embedded nul: '%s'"
 msgstr ""
 
-#: src/main/errors.c:175 src/main/errors.c:212
+#: src/main/errors.c:181 src/main/errors.c:218
 msgid "interrupts suspended; signal ignored"
 msgstr " 割り込みが中断されました；シグナルは無視されました "
 
-#: src/main/errors.c:307
+#: src/main/errors.c:313
 msgid "invalid option \"warning.expression\""
 msgstr " オプション  \"warnig.expression\" は不正です "
 
-#: src/main/errors.c:337
+#: src/main/errors.c:343
 #, c-format
 msgid "(converted from warning) %s"
 msgstr " (警告から変換されました) %s "
 
-#: src/main/errors.c:348
+#: src/main/errors.c:354
 #, c-format
 msgid "Warning: %s\n"
 msgstr " 警告： %s \n"
 
-#: src/main/errors.c:352 src/main/errors.c:355
+#: src/main/errors.c:358 src/main/errors.c:361
 #, c-format
 msgid "Warning in %s : %s\n"
 msgstr " %s 中で警告がありました： %s \n"
 
-#: src/main/errors.c:357
+#: src/main/errors.c:363
 #, c-format
 msgid ""
 "Warning in %s :\n"
@@ -3204,129 +3204,129 @@ msgstr ""
 " %s 中で警告がありました： \n"
 " %s \n"
 
-#: src/main/errors.c:421 src/main/errors.c:439 src/main/errors.c:569
+#: src/main/errors.c:427 src/main/errors.c:445 src/main/errors.c:575
 msgid "Lost warning messages\n"
 msgstr " 警告メッセージが失われました \n"
 
-#: src/main/errors.c:512
+#: src/main/errors.c:518
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr " %d 件の警告がありました (警告を見るには warnings() を使って下さい) \n"
 
-#: src/main/errors.c:515
+#: src/main/errors.c:521
 msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
 msgstr ""
 " 50 件以上の警告がありました (警告を見るには warnings() を使って下さい) \n"
 
-#: src/main/errors.c:560
+#: src/main/errors.c:566
 msgid "Error during wrapup: "
 msgstr " wrapup 中にエラーが起こりました "
 
-#: src/main/errors.c:585
+#: src/main/errors.c:591
 msgid "Error in "
 msgstr " 以下にエラー "
 
-#: src/main/errors.c:613 src/main/errors.c:618
+#: src/main/errors.c:619 src/main/errors.c:624
 #, c-format
 msgid "Error: "
 msgstr " エラー： "
 
-#: src/main/errors.c:637 src/main/errors.c:1260
+#: src/main/errors.c:643 src/main/errors.c:1266
 msgid "In addition: "
 msgstr " 追加情報:  "
 
-#: src/main/errors.c:758
+#: src/main/errors.c:764
 msgid "invalid option \"error\"\n"
 msgstr " オプション \"error\" は不正です \n"
 
-#: src/main/errors.c:838
+#: src/main/errors.c:844
 msgid "Execution halted\n"
 msgstr " 実行が停止されました \n"
 
-#: src/main/errors.c:973
+#: src/main/errors.c:979
 #, c-format
 msgid "invalid '%s' arguemnt"
 msgstr " '%s' 引数が不正です "
 
-#: src/main/errors.c:975
+#: src/main/errors.c:981
 msgid "'msg1' must be a character string"
 msgstr " 'msg1' は文字列でなければなりません "
 
-#: src/main/errors.c:977
+#: src/main/errors.c:983
 msgid "'msg2' must be a character string"
 msgstr " 'msg2' は文字列でなければなりません "
 
-#: src/main/errors.c:1072
+#: src/main/errors.c:1078
 msgid " [invalid string in stop(.)]"
 msgstr " stop 関数の引数が不正な文字列です "
 
-#: src/main/errors.c:1098
+#: src/main/errors.c:1104
 msgid " [invalid string in warning(.)]"
 msgstr " warning 関数の引数が不正な文字列です "
 
-#: src/main/errors.c:1113
+#: src/main/errors.c:1119
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr " \"%s\" への引数の個数が正しくありません "
 
-#: src/main/errors.c:1119 src/main/errors.c:1134
+#: src/main/errors.c:1125 src/main/errors.c:1140
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr " %s 中の未実装の機能です "
 
-#: src/main/errors.c:1131
+#: src/main/errors.c:1137
 msgid "time-series/vector length mismatch"
 msgstr " 時系列またはベクトル の長さが合致しません "
 
-#: src/main/errors.c:1132
+#: src/main/errors.c:1138
 msgid "incompatible arguments"
 msgstr " 互換性のない引数です "
 
-#: src/main/errors.c:1135
+#: src/main/errors.c:1141
 msgid "unknown error (report this!)"
 msgstr " 未知のエラーです（報告して！） "
 
-#: src/main/errors.c:1147
+#: src/main/errors.c:1153
 msgid "unknown warning (report this!)"
 msgstr " 未知の警告です（報告して！） "
 
-#: src/main/errors.c:1225
+#: src/main/errors.c:1231
 msgid "No function to return from, jumping to top level"
 msgstr " 戻るべき関数がないので，トップレベルへジャンプします "
 
-#: src/main/errors.c:1241
+#: src/main/errors.c:1247
 msgid "top level inconsistency?"
 msgstr " トップレベルの不整合？ "
 
-#: src/main/errors.c:1402
+#: src/main/errors.c:1408
 msgid "bad handler data"
 msgstr " ハンドラーデータ（handler data）が不正です "
 
-#: src/main/errors.c:1553
+#: src/main/errors.c:1559
 msgid "error message not a string"
 msgstr " エラーメッセージが文字列ではありません "
 
-#: src/main/errors.c:1628
+#: src/main/errors.c:1634
 msgid "handler or restart stack mismatch in old restart"
 msgstr " handler stack か restart stack が，古い restart と一致しません "
 
-#: src/main/errors.c:1654 src/main/errors.c:1670
+#: src/main/errors.c:1660 src/main/errors.c:1676
 msgid "bad error message"
 msgstr " 不正なエラーメッセージです "
 
-#: src/main/errors.c:1712
+#: src/main/errors.c:1718
 msgid "bad restart"
 msgstr " 不正な再起動です "
 
-#: src/main/errors.c:1744
+#: src/main/errors.c:1750
 msgid "restart not on stack"
 msgstr " スタックからではない再実行です "
 
-#: src/main/errors.c:1761
+#: src/main/errors.c:1767
 msgid "not in a try context"
 msgstr " トライ (try) 文脈ではありません "
 
-#: src/main/errors.c:1774
+#: src/main/errors.c:1780
 msgid "error message must be a character string"
 msgstr " エラーメッセージは文字列であるに違いありません "
 
@@ -4162,77 +4162,77 @@ msgstr " cons メモリが尽きました（限界に達したかも？） "
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr " サイズ %0.1f Gb のメモリブロックを割り当てることができません "
 
-#: src/main/memory.c:1876
+#: src/main/memory.c:1880
 msgid "negative length vectors are not allowed"
 msgstr " 負の長さのベクトルは許されません "
 
-#: src/main/memory.c:1898 src/main/memory.c:1909 src/main/memory.c:1920
-#: src/main/memory.c:1933
+#: src/main/memory.c:1902 src/main/memory.c:1913 src/main/memory.c:1924
+#: src/main/memory.c:1937
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr " 長さ %d のベクトルを割り当てることができません "
 
-#: src/main/memory.c:1946
+#: src/main/memory.c:1950
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr " ベクトル割り当てにおいて，型か長さ (%s か %d) が不正です "
 
-#: src/main/memory.c:2014
+#: src/main/memory.c:2018
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr " サイズ %0.1f Gb のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2018
+#: src/main/memory.c:2022
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr " サイズ %0.1f Mb のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2022
+#: src/main/memory.c:2026
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr " サイズ %0.f Kb のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2139
+#: src/main/memory.c:2143
 msgid "gc.time() is not implemented on this system"
 msgstr " このシステムでは gc.time 関数は実装されていません "
 
-#: src/main/memory.c:2307
+#: src/main/memory.c:2311
 msgid "protect(): protection stack overflow"
 msgstr " protect()：プロテクションスタックが溢れました "
 
-#: src/main/memory.c:2323
+#: src/main/memory.c:2327
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr " unprotect(): %d 個の保護された項目  "
 
-#: src/main/memory.c:2337
+#: src/main/memory.c:2341
 msgid "unprotect_ptr: pointer not found"
 msgstr " unprotect_ptr：ポインターがありません "
 
-#: src/main/memory.c:2378
+#: src/main/memory.c:2382
 #, c-format
 msgid "Calloc could not allocate (%d of %d) memory"
 msgstr " Calloc がメモリー (%d of %d) を割りあてられませんでした "
 
-#: src/main/memory.c:2388
+#: src/main/memory.c:2392
 #, c-format
 msgid "Realloc could not re-allocate (size %d) memory"
 msgstr " Realloc がメモリーを再確保できません (サイズは %d)  "
 
-#: src/main/memory.c:2641
+#: src/main/memory.c:2645
 msgid "not safe to return vector pointer"
 msgstr " ベクトルのポインタを返すのは安全ではありません "
 
-#: src/main/memory.c:2698 src/main/memory.c:2707 src/main/memory.c:2718
-#: src/main/memory.c:2731 src/main/memory.c:2747 src/main/memory.c:2764
+#: src/main/memory.c:2702 src/main/memory.c:2711 src/main/memory.c:2722
+#: src/main/memory.c:2735 src/main/memory.c:2751 src/main/memory.c:2768
 msgid "bad value"
 msgstr " 不適切な値です "
 
-#: src/main/memory.c:2885
+#: src/main/memory.c:2889
 msgid "memory profiling is not available on this system"
 msgstr " メモリプロファリングはこのシステムでは使えません "
 
-#: src/main/memory.c:2950
+#: src/main/memory.c:2954
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr " Rprofmem: ファイル '%s' を開くことができません "
