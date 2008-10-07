@@ -569,6 +569,9 @@ BUG FIXES
 	work properly when evaluated via method dispatch for internal
 	S3 generics.
 
+    o	The default pkgType option for non-CRAN builds of R on Mac OS X
+	is now correctly "source" as documented.
+
 
 
 
