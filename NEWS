@@ -572,6 +572,9 @@ BUG FIXES
     o	The default pkgType option for non-CRAN builds of R on Mac OS X
 	is now correctly "source" as documented.
 
+    o	The default R_LIBS_USER path in AQUA builds now matches the
+	Mac-specifc path used by the Mac GUI: ~/Library/R/x.y/library
+
 
 
 
