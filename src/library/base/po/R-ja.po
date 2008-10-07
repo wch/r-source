@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-09-08 14:13\n"
-"PO-Revision-Date: 2008-04-04 15:20+0900 \n"
+"PO-Revision-Date: 2008-09-30 10:48+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
@@ -66,20 +66,17 @@ msgstr " 'kind' は長さ 1 の文字列(使用されるべき RNG 名) でな�
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr " '%s' は RNG の有効な省略名ではありません "
 
-#, fuzzy
 msgid "'normal.kind' must be a character string of length 1"
 msgstr " 'normal.kind' は長さ 1 の文字列でなければなりません "
 
 msgid "'%s' is not a valid choice"
 msgstr " '%s' は有効な選択ではありません "
 
-#, fuzzy
 msgid "Buggy version of Kinderman-Ramage generator used"
 msgstr " Kinderman-Ramage の疑似乱数発生法のバギー版を使います "
 
-#, fuzzy
 msgid "Buggy version of Kinderman-Ramage generator is not allowed"
-msgstr " Kinderman-Ramage の疑似乱数発生法のバギー版を使います "
+msgstr " Kinderman-Ramage の疑似乱数発生法のバギー版は使えません "
 
 msgid "malformed version string"
 msgstr " 正しい書式のバージョン文字列ではありません "
@@ -347,10 +344,10 @@ msgid "invalid list argument: all variables should have the same length"
 msgstr " 無効なリストの引数です。全ての変数は同じ長さを持つべきです "
 
 msgid "data frame with 0 columns and %d rows"
-msgstr ""
+msgstr " 0列%d行のデータフレーム"
 
 msgid "<0 rows> (or 0-length row.names)"
-msgstr ""
+msgstr " <0 行> (または長さ0のrow.names) "
 
 msgid "non-numeric variable in data frame:"
 msgstr " 以下のデータフレーム中に数値でない変数があります： "
@@ -514,6 +511,8 @@ msgid ""
 "Offending lines start with:\n"
 "%s"
 msgstr ""
+"無効なDCF形式です。正規の行にはタグが必要です。不正な行は次の場所で始まってい"
+"ます:%s "
 
 msgid ""
 "Invalid DCF format.\n"
@@ -521,6 +520,10 @@ msgid ""
 "Offending lines start with:\n"
 "%s"
 msgstr ""
+"無効なDCF形式です。 \n"
+"連続する行はレコードで開始できません。 \n"
+" 不正な行は次の場所で始まっています: \n"
+" %s "
 
 msgid "'x' must be a square matrix"
 msgstr " 'x' は正方行列でなければなりません "
@@ -628,7 +631,6 @@ msgstr " リンクすべきファイルがありません "
 msgid "no files/directory to link to"
 msgstr " リンクすべきファイルもしくはディレクトリがありません "
 
-#, fuzzy
 msgid "'x' must have length 1"
 msgstr " 'x' は長さ 1 でなければなりません "
 
@@ -638,13 +640,11 @@ msgstr " 無効な桁数です "
 msgid "'x' cannot be coerced to 'octmode'"
 msgstr " 'x' は 'octmode' に強制変換できません "
 
-#, fuzzy
 msgid "'x' must be of length 1"
-msgstr " 'to' は長さ 1 でなければなりません "
+msgstr " 'x' は長さ 1 でなければなりません "
 
-#, fuzzy
 msgid "'x' cannot be coerced to hexmode"
-msgstr " 'x' は 'octmode' に強制変換できません "
+msgstr " 'x' は hexmode に強制変換できません "
 
 msgid "'package' must be of length 1"
 msgstr " 'package' は長さ 1 でなければなりません "
@@ -667,9 +667,8 @@ msgstr ""
 " 'format' は {\"f\",\"e\",\"E\",\"g\",\"G\",\"fg\",\"s\" } のいずれかでなけれ"
 "ばなりません "
 
-#, fuzzy
 msgid "'digits' reduced to"
-msgstr " 'digits' は50に縮小されました "
+msgstr " 'digits' は縮小されました "
 
 msgid "'flag' can contain only '0+- #'"
 msgstr " 'flag' は '0 + - #' だけを含むことができます "
@@ -757,9 +756,8 @@ msgstr " 以下からマスクされています "
 msgid ":"
 msgstr "  :  "
 
-#, fuzzy
 msgid "invalid package name"
-msgstr " 不当な名前です "
+msgstr " 不当なパッケージ名です "
 
 msgid "package '%s' has been merged into '%s'"
 msgstr " パッケージ '%s' は '%s' に併合されました "
@@ -1140,7 +1138,6 @@ msgstr ""
 msgid "cannot add to exports of a sealed name space"
 msgstr " 封印された名前空間のエクスポートへ加えることができません "
 
-#, fuzzy
 msgid "undefined exports:"
 msgstr " 未定義のエクスポートです： "
 
@@ -1477,13 +1474,11 @@ msgstr " 間違った引数です "
 msgid "invalid value"
 msgstr " 無効な値です "
 
-#, fuzzy
 msgid "unary '%s' not defined for \"numeric_version\" objects"
-msgstr " numeric_version オブジェクトに対しては定義されていません "
+msgstr "単項の'%s'はnumeric_version オブジェクトに対しては定義されていません "
 
-#, fuzzy
 msgid "'%s' not defined for \"numeric_version\" objects"
-msgstr " numeric_version オブジェクトに対しては定義されていません "
+msgstr " '%s'はnumeric_version オブジェクトに対しては定義されていません "
 
 msgid "not defined for numeric_version objects"
 msgstr " numeric_version オブジェクトに対しては定義されていません "
@@ -1532,7 +1527,6 @@ msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] "呼び出されたパッケージがありません "
 
-#, fuzzy
 msgid "object %s not found"
 msgid_plural "objects %s not found"
 msgstr[0] " %s を見付けることができません "
