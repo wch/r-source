@@ -351,6 +351,8 @@ NEW FEATURES
     o	Hexadecimal numerical constants (such as 0xab.cdp+12) may now
 	contain a decimal point.
 
+    o	PCRE has been updated to version 7.8 (mainly bug fixes).
+
 
 NEW FEATURES IN PACKAGE 'methods'
 
@@ -560,12 +562,12 @@ BUG FIXES
     o	pdf(family="Japan") [and other CIDfonts] no longer seg.faults
 	when writing "western" text strings.
 
-    o	as.list applied to an environment now forces promises and returns
-	values.
+    o 	as.list() applied to an environment now forces promises and
+	returns values.
 
-    o	Promises capturing calls to sys.parent and friends did not work
-	properly when evaluated via method dispatch for internal S3
-	generics.
+    o	Promises capturing calls to sys.parent() and friends did not
+	work properly when evaluated via method dispatch for internal
+	S3 generics.
 
 
 
