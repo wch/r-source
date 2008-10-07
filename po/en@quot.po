@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-10-07 08:36+0100\n"
-"PO-Revision-Date: 2008-10-07 08:36+0100\n"
+"POT-Creation-Date: 2008-10-07 22:41+0100\n"
+"PO-Revision-Date: 2008-10-07 22:41+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -168,16 +168,16 @@ msgstr "problem in displaying ‘%s’"
 #: src/main/paste.c:85 src/main/paste.c:344 src/main/paste.c:351
 #: src/main/paste.c:358 src/main/paste.c:363 src/main/paste.c:368
 #: src/main/paste.c:373 src/main/paste.c:376 src/main/paste.c:384
-#: src/main/paste.c:532 src/main/paste.c:537 src/main/platform.c:287
-#: src/main/platform.c:289 src/main/platform.c:291 src/main/platform.c:966
-#: src/main/platform.c:972 src/main/platform.c:1027 src/main/platform.c:1075
-#: src/main/platform.c:1078 src/main/platform.c:1081 src/main/platform.c:1084
-#: src/main/platform.c:1087 src/main/platform.c:1174 src/main/platform.c:1177
-#: src/main/platform.c:1330 src/main/platform.c:1333 src/main/platform.c:1369
-#: src/main/platform.c:1372 src/main/platform.c:1410 src/main/platform.c:1449
-#: src/main/platform.c:1451 src/main/platform.c:1509 src/main/platform.c:1600
-#: src/main/platform.c:1861 src/main/platform.c:1901 src/main/platform.c:2017
-#: src/main/platform.c:2045 src/main/plot.c:2951 src/main/plot.c:4085
+#: src/main/paste.c:532 src/main/paste.c:537 src/main/platform.c:290
+#: src/main/platform.c:292 src/main/platform.c:294 src/main/platform.c:969
+#: src/main/platform.c:975 src/main/platform.c:1030 src/main/platform.c:1078
+#: src/main/platform.c:1081 src/main/platform.c:1084 src/main/platform.c:1087
+#: src/main/platform.c:1090 src/main/platform.c:1177 src/main/platform.c:1180
+#: src/main/platform.c:1333 src/main/platform.c:1336 src/main/platform.c:1372
+#: src/main/platform.c:1375 src/main/platform.c:1413 src/main/platform.c:1452
+#: src/main/platform.c:1454 src/main/platform.c:1512 src/main/platform.c:1603
+#: src/main/platform.c:1864 src/main/platform.c:1904 src/main/platform.c:2020
+#: src/main/platform.c:2048 src/main/plot.c:2951 src/main/plot.c:4085
 #: src/main/plot.c:4089 src/main/plot.c:4092 src/main/plot3d.c:2464
 #: src/main/plot3d.c:2468 src/main/plot3d.c:2473 src/main/plot3d.c:2477
 #: src/main/plot3d.c:2481 src/main/plot3d.c:2485 src/main/print.c:175
@@ -270,7 +270,7 @@ msgstr "invalid timestamp"
 #: src/main/errors.c:1012 src/main/errors.c:1037 src/main/errors.c:1042
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
-#: src/main/platform.c:2065 src/main/plot.c:276 src/main/plot.c:470
+#: src/main/platform.c:2068 src/main/plot.c:276 src/main/plot.c:470
 #: src/main/plot.c:475 src/main/plot.c:2131 src/main/plot.c:2138
 #: src/main/plot.c:3164 src/main/plot.c:3166 src/main/plot.c:3168
 #: src/main/plot.c:3326 src/main/plot3d.c:1397 src/main/plot3d.c:2542
@@ -1280,8 +1280,8 @@ msgstr "‘parent’ is not an environment"
 msgid "cannot write to this connection"
 msgstr "cannot write to this connection"
 
-#: src/main/builtin.c:500 src/main/builtin.c:530 src/main/platform.c:348
-#: src/main/platform.c:351 src/main/plot3d.c:2556 src/main/plot3d.c:2560
+#: src/main/builtin.c:500 src/main/builtin.c:530 src/main/platform.c:351
+#: src/main/platform.c:354 src/main/plot3d.c:2556 src/main/plot3d.c:2560
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "invalid ‘%s’ specification"
@@ -1566,11 +1566,11 @@ msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "‘dirmark = TRUE’ is not supported on this platform"
 
 #: src/main/character.c:3177 src/main/character.c:3191
-#: src/main/platform.c:1340 src/main/platform.c:1384
+#: src/main/platform.c:1343 src/main/platform.c:1387
 msgid "internal out-of-memory condition"
 msgstr "internal out-of-memory condition"
 
-#: src/main/character.c:3187 src/main/platform.c:1380
+#: src/main/character.c:3187 src/main/platform.c:1383
 #, c-format
 msgid "read error on '%s'"
 msgstr "read error on ‘%s’"
@@ -4963,148 +4963,148 @@ msgstr "Impossible mode ( x )"
 msgid "atomic vector arguments only"
 msgstr "atomic vector arguments only"
 
-#: src/main/platform.c:285
+#: src/main/platform.c:288
 msgid "invalid filename specification"
 msgstr "invalid filename specification"
 
-#: src/main/platform.c:430 src/main/platform.c:477
+#: src/main/platform.c:433 src/main/platform.c:480
 msgid "write error during file append"
 msgstr "write error during file append"
 
-#: src/main/platform.c:444 src/main/platform.c:533 src/main/platform.c:571
+#: src/main/platform.c:447 src/main/platform.c:536 src/main/platform.c:574
 msgid "invalid first filename"
 msgstr "invalid first filename"
 
-#: src/main/platform.c:446 src/main/platform.c:573
+#: src/main/platform.c:449 src/main/platform.c:576
 msgid "invalid second filename"
 msgstr "invalid second filename"
 
-#: src/main/platform.c:448
+#: src/main/platform.c:451
 msgid "nothing to append to"
 msgstr "nothing to append to"
 
-#: src/main/platform.c:450
+#: src/main/platform.c:453
 msgid "'outFile' must be a single file"
 msgstr "‘outFile’ must be a single file"
 
-#: src/main/platform.c:506 src/main/platform.c:709
+#: src/main/platform.c:509 src/main/platform.c:712
 msgid "invalid filename argument"
 msgstr "invalid filename argument"
 
-#: src/main/platform.c:518
+#: src/main/platform.c:521
 #, c-format
 msgid "cannot create file '%s', reason '%s'"
 msgstr "cannot create file '%s', reason ‘%s’"
 
-#: src/main/platform.c:545
+#: src/main/platform.c:548
 #, c-format
 msgid "cannot remove file '%s', reason '%s'"
 msgstr "cannot remove file '%s', reason ‘%s’"
 
-#: src/main/platform.c:575
+#: src/main/platform.c:578
 msgid "nothing to link"
 msgstr "nothing to link"
 
-#: src/main/platform.c:601
+#: src/main/platform.c:604
 #, c-format
 msgid "cannot symlink '%s' to '%s', reason '%s'"
 msgstr "cannot symlink ‘%s’ to '%s', reason ‘%s’"
 
-#: src/main/platform.c:609
+#: src/main/platform.c:612
 msgid "symlinks are not supported on this platform"
 msgstr "symlinks are not supported on this platform"
 
-#: src/main/platform.c:632
+#: src/main/platform.c:635
 msgid "'source' must be a single string"
 msgstr "‘source’ must be a single string"
 
-#: src/main/platform.c:634
+#: src/main/platform.c:637
 msgid "'destination' must be a single string"
 msgstr "‘destination’ must be a single string"
 
-#: src/main/platform.c:638
+#: src/main/platform.c:641
 msgid "missing values are not allowed"
 msgstr "missing values are not allowed"
 
-#: src/main/platform.c:642 src/main/platform.c:652
+#: src/main/platform.c:645 src/main/platform.c:655
 msgid "expanded source name too long"
 msgstr "expanded source name too long"
 
-#: src/main/platform.c:646 src/main/platform.c:656
+#: src/main/platform.c:649 src/main/platform.c:659
 msgid "expanded destination name too long"
 msgstr "expanded destination name too long"
 
-#: src/main/platform.c:660
+#: src/main/platform.c:663
 #, c-format
 msgid "cannot rename file '%s' to '%s', reason '%s'"
 msgstr "cannot rename file ‘%s’ to '%s', reason ‘%s’"
 
-#: src/main/platform.c:873
+#: src/main/platform.c:876
 msgid "directory/folder path name too long"
 msgstr "directory/folder path name too long"
 
-#: src/main/platform.c:875
+#: src/main/platform.c:878
 #, c-format
 msgid "list.files: '%s' is not a readable directory"
 msgstr "list.files: ‘%s’ is not a readable directory"
 
-#: src/main/platform.c:982
+#: src/main/platform.c:985
 msgid "invalid 'pattern' regular expression"
 msgstr "invalid ‘pattern’ regular expression"
 
-#: src/main/platform.c:1009
+#: src/main/platform.c:1012
 msgid "unable to determine R home location"
 msgstr "unable to determine R home location"
 
-#: src/main/platform.c:1145
+#: src/main/platform.c:1148
 msgid "file choice cancelled"
 msgstr "file choice cancelled"
 
-#: src/main/platform.c:1147
+#: src/main/platform.c:1150
 msgid "file name too long"
 msgstr "file name too long"
 
-#: src/main/platform.c:1199
+#: src/main/platform.c:1202
 msgid "file.access() is not implemented on this system"
 msgstr "file.access() is not implemented on this system"
 
-#: src/main/platform.c:1481
+#: src/main/platform.c:1484
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "setting ‘LC_NUMERIC’ may cause R to function strangely"
 
-#: src/main/platform.c:1515
+#: src/main/platform.c:1518
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "OS reports request to set locale to “%s” cannot be honored"
 
-#: src/main/platform.c:1816
+#: src/main/platform.c:1819
 msgid "'hostname' must be a character vector of length 1"
 msgstr "‘hostname’ must be a character vector of length 1"
 
-#: src/main/platform.c:1822
+#: src/main/platform.c:1825
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() was unable to resolve host ‘%s’"
 
-#: src/main/platform.c:1829
+#: src/main/platform.c:1832
 msgid "unknown format returned by gethostbyname"
 msgstr "unknown format returned by gethostbyname"
 
-#: src/main/platform.c:1838
+#: src/main/platform.c:1841
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() is not supported on this platform"
 
-#: src/main/platform.c:1884 src/main/platform.c:1930
+#: src/main/platform.c:1887 src/main/platform.c:1933
 #, c-format
 msgid "'%s' already exists"
 msgstr "‘%s’ already exists"
 
-#: src/main/platform.c:1887
+#: src/main/platform.c:1890
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "cannot create dir '%s', reason ‘%s’"
 
-#: src/main/platform.c:2072
+#: src/main/platform.c:2075
 msgid "insufficient OS support on this platform"
 msgstr "insufficient OS support on this platform"
 

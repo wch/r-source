@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-10-06 07:30\n"
-"PO-Revision-Date: 2008-04-04 15:18+0900 \n"
+"PO-Revision-Date: 2008-10-02 13:51+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
@@ -284,9 +284,8 @@ msgstr ""
 " 指定されたパッケージやライブラリ中には '%s' に対するドキュメントはありませ"
 "ん "
 
-#, fuzzy
 msgid "you could try '??%s'"
-msgstr " 'help.search(\"%s\")' を使うべきだったかも知れません "
+msgstr " '??%s' を使うべきだったかも知れません "
 
 msgid ""
 "Help for topic '%s' is not in any loaded package but can be found in the "
@@ -651,7 +650,7 @@ msgid "no object named '%s' to show"
 msgstr " 表示すべき '%s' という名前のオブジェクトがありません "
 
 msgid "'pb' is not from class \"txtProgressBar\""
-msgstr ""
+msgstr " 'pb'はクラス\"txtProgressBar\"からではありません "
 
 msgid "cannot determine a usable name"
 msgstr " 利用可能な名前を決定することができません "
@@ -696,19 +695,23 @@ msgid "No DIF data on clipboard"
 msgstr " クリップボード上には如何なる DIF データもありません "
 
 msgid "file had no lines"
-msgstr ""
+msgstr "ファイルには1行もありません "
 
 msgid "row and column counts not found"
 msgstr " 行、列カウントが見付かりません "
 
 msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
 msgstr ""
+"ヘッダーで指定されたより多くの行があります; 'transpose=TRUE' を使うべきかもし"
+"れません "
 
 msgid "Unrecognized special data value"
 msgstr " 認識不能な特殊データ値です "
 
 msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
 msgstr ""
+"ヘッダーで指定されたより多くの列があります; 'transpose=TRUE' を使うべきかもし"
+"れません "
 
 msgid "Unrecognized value indicator"
 msgstr " 認識不能な値指示子です "
@@ -983,16 +986,14 @@ msgstr " HTML パッケージ記述を更新 "
 msgid "cannot update '%s'"
 msgstr " '%s' を更新出来ません "
 
-#, fuzzy
 msgid "winDialog() cannot be used non-interactively"
-msgstr " menu() は対話的にしか使用できません "
+msgstr " winDialog() は対話的にしか使用できません "
 
-#, fuzzy
 msgid "winDialogString() cannot be used non-interactively"
-msgstr " menu() は対話的にしか使用できません "
+msgstr " winDialogString() は対話的にしか使用できません "
 
 msgid "'pb' is not from class \"winProgressBar\""
-msgstr ""
+msgstr " 'pb'は\"winProgressBar\"クラスを継承していません "
 
 msgid "this function is intended to work with the Aqua GUI"
 msgstr " この関数は Aqua GUI で使うことを意図しています "

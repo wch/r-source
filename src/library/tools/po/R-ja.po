@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-09-08 14:13\n"
-"PO-Revision-Date: 2008-04-04 15:03+0900 \n"
-"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
+"PO-Revision-Date: 2008-10-06 22:01+0900 \n"
+"Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=utf-8 \n"
@@ -145,11 +145,12 @@ msgstr " 'package', 'dir' もしくは 'file' を指定しなければなりま�
 msgid "file '%s' does not exist"
 msgstr " ファイル '%s' が存在しません "
 
-#, fuzzy
 msgid ""
 "parse error in file '%s':\n"
 "%s"
-msgstr " ファイル '%s' 中に構文解析エラー "
+msgstr ""
+" ファイル '%s' 中に構文解析エラー : \n"
+" %s "
 
 msgid "Foreign function calls without 'PACKAGE' argument:"
 msgstr " 'PACKAGE' 引数のない外部言語関数コール: "
@@ -160,13 +161,11 @@ msgstr " 宣言された S3 メソッド '%s' が見付かりません "
 msgid "cannot check R code installed as image"
 msgstr " イメージとしてインストールされた R コードはチェックできません "
 
-#, fuzzy
 msgid "parse error in file '%s':"
-msgstr " ファイル '%s' 中に構文解析エラー "
+msgstr " ファイル '%s' 中に構文解析エラー: "
 
-#, fuzzy
 msgid "parse error in examples from file '%s':"
-msgstr " ファイル '%s' の例中に構文解析エラー "
+msgstr " ファイル '%s' の例中に構文解析エラー : "
 
 msgid "File '%s':"
 msgstr " ファイル '%s'： "
@@ -176,6 +175,7 @@ msgstr " %s 中に T/F が見つかりました "
 
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
+"パッケージ名 '%s' は無効のようです。代わりにディレクトリ名 '%s' を使います "
 
 msgid "Packages required but not available:"
 msgstr " パッケージが必要ですが，利用可能ではありません "
@@ -379,9 +379,8 @@ msgstr "オープンソースとして確認されています: %s "
 msgid "Non-portable flags in variable '%s':"
 msgstr " 変数 '%s' 中に non-portable なフラグ: "
 
-#, fuzzy
 msgid "package must be loaded"
-msgstr " 名前空間がロードされなければなりません "
+msgstr " パッケージがロードされなければなりません "
 
 msgid "Missing link(s) in documentation object '%s':"
 msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
@@ -400,36 +399,35 @@ msgstr ""
 " 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
 
 msgid "Generics g in env ="
-msgstr ""
+msgstr " env 中の Generics g = "
 
 msgid "where hasMethods(g, env) errors:"
-msgstr ""
+msgstr " hasMethods(g, env) のエラー： "
 
 msgid ","
 msgstr " , "
 
 msgid "May need something like"
-msgstr ""
+msgstr " 以下のようなものが必要なのでは: "
 
 msgid "importFrom("
-msgstr ""
+msgstr " importFrom( "
 
 msgid ")"
-msgstr ""
+msgstr " ) "
 
 msgid "in NAMESPACE."
-msgstr ""
+msgstr "名前空間の中に。 "
 
 msgid "Generics without methods in"
-msgstr ""
+msgstr "メソッドを伴わない Generics があります "
 
 msgid ":"
-msgstr ""
+msgstr " ： "
 
 msgid "argument 'lines' must be a character vector"
 msgstr " 引数 'lines' は文字列ベクトルでなければなりません "
 
-#, fuzzy
 msgid "encoding '%s' is not portable"
 msgstr " エンコーディング '%s' は移植出来ません "
 
@@ -532,11 +530,9 @@ msgstr " *** 誰かがパッケージ '%s' 中の Built 欄を壊しました **
 msgid "cannot open directory '%s'"
 msgstr " ディレクトリ '%s' を開くことが出来ません "
 
-#, fuzzy
 msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 msgstr " 警告：'Depends' 項目は多重依存性を持ちます "
 
-#, fuzzy
 msgid "only the first will be used in R < 2.7.0"
 msgstr "最初のものだけが使われます "
 
@@ -565,7 +561,6 @@ msgstr " '%s' 再エンコード出来ません "
 msgid "unable to copy INDEX to '%s'"
 msgstr " INDEX を '%s' にコピーすることが出来ません "
 
-#, fuzzy
 msgid ""
 "running Stangle on vignette '%s' failed with message:\n"
 "%s"
@@ -582,7 +577,6 @@ msgstr " 以下を処理中 ' "
 msgid "'"
 msgstr " , "
 
-#, fuzzy
 msgid ""
 "running Sweave on vignette '%s' failed with message:\n"
 "%s"
@@ -697,7 +691,6 @@ msgstr " 引数 'delim' は2つの文字を特定しなければいけません 
 msgid "only Rd syntax is currently supported"
 msgstr " 現在はRd構文のみがサポートされています "
 
-#, fuzzy
 msgid "Running 'texi2dvi' on '%s' failed."
 msgstr " 'texi2dvi' を '%s' に対して実行できませんでした "
 
@@ -708,13 +701,13 @@ msgid "unable to run %s on '%s'"
 msgstr " %s を '%s' に対して実行出来ません "
 
 msgid "File 'DESCRIPTION' is missing."
-msgstr ""
+msgstr "ファイル'DESCRIPTION'が見当たりません。 "
 
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
-msgstr ""
+msgstr "ファイル'DESCRIPTION'と'DESCRIPTION.in'が見当たりません。 "
 
 msgid "Bundle 'DESCRIPTION' is missing."
-msgstr ""
+msgstr " 'DESCRIPTION' バンドルが見当たりません。 "
 
 msgid "file '%s' is not in valid DCF format"
 msgstr " ファイル '%s' は有効な DCF フォーマットではありません "

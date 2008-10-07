@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2008-10-06 20:40+0100\n"
-"PO-Revision-Date: 2008-04-04 15:22+0900 \n"
+"PO-Revision-Date: 2008-09-30 10:56+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
@@ -443,19 +443,18 @@ msgid "unable to start device PicTeX"
 msgstr " PicTeX デバイスを開始できませんでした "
 
 #: devQuartz.c:622
-#, fuzzy, c-format
+#, c-format
 msgid "font \"%s\" could not be found for family \"%s\""
-msgstr " afm ファイル '%s' を開くことができませんでした "
+msgstr " フォント'%s'はフォントファミリー'%s'に対して見つかりません "
 
 #: devQuartz.c:634
-#, fuzzy
 msgid "font family name is too long"
-msgstr " pdf に対するファイル名が長すぎます "
+msgstr " フォントファミリーの名前が長すぎます "
 
 #: devQuartz.c:674
 #, c-format
 msgid "no font could be found for family \"%s\""
-msgstr ""
+msgstr "フォントファミリー'%s'に対してフォントが見つかりません "
 
 #: devQuartz.c:1164
 msgid "invalid 'file' argument"
@@ -610,20 +609,18 @@ msgid "Impossible to open "
 msgstr " オープンできません "
 
 #: devWindows.c:3216
-#, fuzzy
 msgid "invalid 'width' or 'height'"
-msgstr " devWindows 中に不正な幅か高さ "
+msgstr " 不正な幅か高さ "
 
 #: devWindows.c:3221 devWindows.c:3225 devWindows.c:3233 devWindows.c:3244
 #: devWindows.c:3250 devWindows.c:3257
-#, fuzzy, c-format
+#, c-format
 msgid "invalid value of '%s'"
-msgstr " devWindows 中の 'bg' の値が不正です "
+msgstr " '%s' の値が不正です "
 
 #: devWindows.c:3274
-#, fuzzy
 msgid "unable to start device"
-msgstr " pdf デバイスを開始できませんでした "
+msgstr "デバイスを開始できませんでした "
 
 #: devWindows.c:3344
 msgid "recursive use of getGraphicsEvent not supported"
@@ -632,7 +629,7 @@ msgstr " getGraphicsEvent の再帰的な使用はサポートされていませ
 #: qdBitmap.c:79
 #, c-format
 msgid "QuartzBitmap_Output - unable to open file '%s'"
-msgstr ""
+msgstr "QuartzBitmap_Output - ファイル'%s'を開けません "
 
 #: qdBitmap.c:94
 msgid "Not a supported scheme, no image data written"

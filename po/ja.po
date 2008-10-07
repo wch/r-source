@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-10-07 08:36+0100\n"
-"PO-Revision-Date: 2008-04-04 18:31+0900 \n"
-"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
+"POT-Creation-Date: 2008-10-07 22:41+0100\n"
+"PO-Revision-Date: 2008-10-07 01:38+0900 \n"
+"Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
@@ -149,16 +149,16 @@ msgstr " '%s'の表示に問題があります "
 #: src/main/paste.c:85 src/main/paste.c:344 src/main/paste.c:351
 #: src/main/paste.c:358 src/main/paste.c:363 src/main/paste.c:368
 #: src/main/paste.c:373 src/main/paste.c:376 src/main/paste.c:384
-#: src/main/paste.c:532 src/main/paste.c:537 src/main/platform.c:287
-#: src/main/platform.c:289 src/main/platform.c:291 src/main/platform.c:966
-#: src/main/platform.c:972 src/main/platform.c:1027 src/main/platform.c:1075
-#: src/main/platform.c:1078 src/main/platform.c:1081 src/main/platform.c:1084
-#: src/main/platform.c:1087 src/main/platform.c:1174 src/main/platform.c:1177
-#: src/main/platform.c:1330 src/main/platform.c:1333 src/main/platform.c:1369
-#: src/main/platform.c:1372 src/main/platform.c:1410 src/main/platform.c:1449
-#: src/main/platform.c:1451 src/main/platform.c:1509 src/main/platform.c:1600
-#: src/main/platform.c:1861 src/main/platform.c:1901 src/main/platform.c:2017
-#: src/main/platform.c:2045 src/main/plot.c:2951 src/main/plot.c:4085
+#: src/main/paste.c:532 src/main/paste.c:537 src/main/platform.c:290
+#: src/main/platform.c:292 src/main/platform.c:294 src/main/platform.c:969
+#: src/main/platform.c:975 src/main/platform.c:1030 src/main/platform.c:1078
+#: src/main/platform.c:1081 src/main/platform.c:1084 src/main/platform.c:1087
+#: src/main/platform.c:1090 src/main/platform.c:1177 src/main/platform.c:1180
+#: src/main/platform.c:1333 src/main/platform.c:1336 src/main/platform.c:1372
+#: src/main/platform.c:1375 src/main/platform.c:1413 src/main/platform.c:1452
+#: src/main/platform.c:1454 src/main/platform.c:1512 src/main/platform.c:1603
+#: src/main/platform.c:1864 src/main/platform.c:1904 src/main/platform.c:2020
+#: src/main/platform.c:2048 src/main/plot.c:2951 src/main/plot.c:4085
 #: src/main/plot.c:4089 src/main/plot.c:4092 src/main/plot3d.c:2464
 #: src/main/plot3d.c:2468 src/main/plot3d.c:2473 src/main/plot3d.c:2477
 #: src/main/plot3d.c:2481 src/main/plot3d.c:2485 src/main/print.c:175
@@ -251,7 +251,7 @@ msgstr " タイムスタンプが不正です "
 #: src/main/errors.c:1012 src/main/errors.c:1037 src/main/errors.c:1042
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
-#: src/main/platform.c:2065 src/main/plot.c:276 src/main/plot.c:470
+#: src/main/platform.c:2068 src/main/plot.c:276 src/main/plot.c:470
 #: src/main/plot.c:475 src/main/plot.c:2131 src/main/plot.c:2138
 #: src/main/plot.c:3164 src/main/plot.c:3166 src/main/plot.c:3168
 #: src/main/plot.c:3326 src/main/plot3d.c:1397 src/main/plot3d.c:2542
@@ -428,19 +428,19 @@ msgstr " 三番目の引数には文字列が期待されています "
 
 #: src/gnuwin32/system.c:118 src/main/errors.c:136
 msgid "reached session elapsed time limit"
-msgstr ""
+msgstr " セッション時間が経過して上限に達しました "
 
 #: src/gnuwin32/system.c:120 src/main/errors.c:138
 msgid "reached elapsed time limit"
-msgstr ""
+msgstr " 時間が経過して上限に達しました "
 
 #: src/gnuwin32/system.c:126 src/main/errors.c:144
 msgid "reached session CPU time limit"
-msgstr ""
+msgstr "  セッションCPU時間が経過して上限に達しました "
 
 #: src/gnuwin32/system.c:128 src/main/errors.c:146
 msgid "reached CPU time limit"
-msgstr ""
+msgstr " CPU時間が経過して上限に達しました "
 
 #: src/gnuwin32/system.c:148
 #, c-format
@@ -455,7 +455,8 @@ msgstr " '%s' というエンコーディングは認識できません "
 #: src/gnuwin32/system.c:332 src/unix/sys-std.c:845
 #, c-format
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
-msgstr " <エラー : エンコーディング '%s' からの変換に失敗しました> \n"
+msgstr ""
+" <エラー : エンコーディング '%s' からの再エンコーディングに失敗しました> \n"
 
 #: src/gnuwin32/system.c:542 src/gnuwin32/system.c:1019
 #: src/gnuwin32/system.c:1031 src/main/connections.c:509
@@ -479,7 +480,7 @@ msgstr " 警告: max-mem-size が与えられていません \n"
 #: src/gnuwin32/system.c:988
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
-msgstr " 警告: --max-mem-size 値が不正なので無視されました \n"
+msgstr " 警告: --max-mem-size 値が不正です : 無視されました \n"
 
 #: src/gnuwin32/system.c:990
 #, c-format
@@ -518,6 +519,7 @@ msgstr " -e は-f や --file と併用することはできません "
 #: src/gnuwin32/system.c:1094
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr ""
+" 一時ファイルの作成に失敗しました -- TMPDIRは正しく設定されていますか? "
 
 #: src/gnuwin32/system.c:1113 src/unix/system.c:416
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
@@ -1008,9 +1010,8 @@ msgid "invalid time series parameters specified"
 msgstr " 不正な時系列パラメータが指定されました "
 
 #: src/main/attrib.c:395
-#, fuzzy
 msgid "'tsp' attribute must be numeric"
-msgstr " 'tsp' 属性は長さ3の数値でなくてはなりません "
+msgstr " 'tsp' 属性は数値でなくてはなりません "
 
 #: src/main/attrib.c:401
 msgid "'tsp' attribute must be numeric of length three"
@@ -1274,8 +1275,8 @@ msgstr " 'parent' は環境ではありません "
 msgid "cannot write to this connection"
 msgstr " このコネクションには書き出せません "
 
-#: src/main/builtin.c:500 src/main/builtin.c:530 src/main/platform.c:348
-#: src/main/platform.c:351 src/main/plot3d.c:2556 src/main/plot3d.c:2560
+#: src/main/builtin.c:500 src/main/builtin.c:530 src/main/platform.c:351
+#: src/main/platform.c:354 src/main/plot3d.c:2556 src/main/plot3d.c:2560
 #, c-format
 msgid "invalid '%s' specification"
 msgstr " '%s' の指定が不正です "
@@ -1324,9 +1325,9 @@ msgid "switch: EXPR must return a length 1 vector"
 msgstr " switch：EXPRは長さ1のベクトルを返すべきです "
 
 #: src/main/character.c:77 src/main/character.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' requires a character vector"
-msgstr " strtrim 関数は文字ベクトルを要求します "
+msgstr " '%s'は文字ベクトルを要求します "
 
 #: src/main/character.c:134 src/main/character.c:160 src/main/character.c:898
 #: src/main/character.c:2101
@@ -1560,11 +1561,11 @@ msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr " 'dirmark  = TRUE' はこのプラットフォームではサポートされていません "
 
 #: src/main/character.c:3177 src/main/character.c:3191
-#: src/main/platform.c:1340 src/main/platform.c:1384
+#: src/main/platform.c:1343 src/main/platform.c:1387
 msgid "internal out-of-memory condition"
 msgstr " 内部でアウトオブメモリーが発生しています "
 
-#: src/main/character.c:3187 src/main/platform.c:1380
+#: src/main/character.c:3187 src/main/platform.c:1383
 #, c-format
 msgid "read error on '%s'"
 msgstr " \"%s\" の読み込みエラーです "
@@ -1814,9 +1815,9 @@ msgstr " 使われていないコネクション%d (%s) を閉じます \n"
 #: src/main/sysutils.c:587 src/main/sysutils.c:731 src/main/sysutils.c:746
 #: src/main/sysutils.c:833 src/main/sysutils.c:890 src/main/sysutils.c:900
 #: src/main/sysutils.c:1180
-#, fuzzy, c-format
+#, c-format
 msgid "unsupported conversion from '%s' to '%s'"
-msgstr " サポートされていない変換です "
+msgstr " '%s'から'%s'へのサポートされていない変換です "
 
 #: src/main/connections.c:214 src/main/connections.c:230
 #: src/main/connections.c:392 src/main/connections.c:398
@@ -1892,9 +1893,8 @@ msgstr " fifo ’%s’ を開くことができません "
 #: src/main/connections.c:1661 src/main/connections.c:1677
 #: src/main/connections.c:1965 src/main/connections.c:4514
 #: src/main/connections.c:4578
-#, fuzzy
 msgid "too large a block specified"
-msgstr "指定された要素数が多すぎます "
+msgstr "指定されたブロックが大きすぎます "
 
 #: src/main/connections.c:868 src/main/connections.c:872
 #: src/main/connections.c:878 src/main/connections.c:894
@@ -2019,28 +2019,24 @@ msgstr " ターミナル接続の割り当てに失敗しました "
 
 #: src/main/connections.c:1942
 msgid "attempting to add too many elements to raw vector"
-msgstr ""
+msgstr "ベクトルに追加しようとした要素が多すぎます "
 
 #: src/main/connections.c:1993
-#, fuzzy
 msgid "attempt to seek outside the range of the raw connection"
-msgstr " クリップボードの範囲を超えて探索しようとしました "
+msgstr " rawコネクションの範囲を超えて探索しようとしました "
 
 #: src/main/connections.c:2004 src/main/connections.c:2008
 #: src/main/connections.c:2014 src/main/connections.c:2040
-#, fuzzy
 msgid "allocation of raw connection failed"
-msgstr " url 接続の割り当てに失敗しました "
+msgstr " raw接続の割り当てに失敗しました "
 
 #: src/main/connections.c:2094
-#, fuzzy
 msgid "'con' is not a rawConnection"
-msgstr " 'con' はコネクションではありません "
+msgstr " 'con' はrawコネクションではありません "
 
 #: src/main/connections.c:2097
-#, fuzzy
 msgid "'con' is not an output rawConnection"
-msgstr " 'con' は出力テキストコネクションではありません "
+msgstr " 'con' は出力rawコネクションではありません "
 
 #: src/main/connections.c:2117
 msgid "cannot allocate memory for text connection"
@@ -2148,9 +2144,8 @@ msgid "incomplete string at end of file has been discarded"
 msgstr " ファイルの末尾の不完全な文字列は無視されています "
 
 #: src/main/connections.c:3090
-#, fuzzy
 msgid "null terminator not found: breaking string at 10000 bytes"
-msgstr " 文字列の終端（null）がありません、10000文字に切りつめました "
+msgstr " 終端（null）がありません、10000byteに切りつめました "
 
 #: src/main/connections.c:3153 src/main/saveload.c:2354
 msgid "can only read from a binary connection"
@@ -2373,7 +2368,6 @@ msgid "missing observations in cov/cor"
 msgstr " cov/cor 関数に欠損した観測値があります "
 
 #: src/main/cov.c:625
-#, fuzzy
 msgid "'x' is NULL"
 msgstr " 'x' が空です "
 
@@ -2436,12 +2430,12 @@ msgstr " 'read.dcf' のためのメモリを割り当てられませんでした
 #: src/main/dcf.c:105
 #, c-format
 msgid "Found continuation line starting '%s ...' at begin of record."
-msgstr ""
+msgstr "レコードの先頭で'%s ...'で始まっている継続行が見つかりました "
 
 #: src/main/dcf.c:189
 #, c-format
 msgid "Line starting '%s ...' is malformed!"
-msgstr ""
+msgstr " '%s...'で始まる行は不正です "
 
 #: src/main/debug.c:40
 msgid "argument must be a closure"
@@ -2488,7 +2482,7 @@ msgstr " deparse の 'cutoff' が不正です（デフォルトが使用され�
 
 #: src/main/deparse.c:232
 msgid "deparse of an S4 object will not be source()able"
-msgstr ""
+msgstr "S4オブジェクトの文字列化(deparse)はsource()できないでしょう "
 
 #: src/main/deparse.c:234
 msgid "deparse may be incomplete"
@@ -3170,7 +3164,7 @@ msgstr " エクスポートされたシンボル \"%s\" が値を持っていま
 #: src/main/envir.c:3388
 #, c-format
 msgid "truncating string with embedded nul: '%s'"
-msgstr ""
+msgstr "文字列をnullを入れて切り詰めました: '%s' "
 
 #: src/main/errors.c:181 src/main/errors.c:218
 msgid "interrupts suspended; signal ignored"
@@ -3511,7 +3505,7 @@ msgstr " '%s' 中の呼び出し名が長すぎます "
 #: src/main/eval.c:2073
 #, c-format
 msgid "generic name too long in '%s'"
-msgstr " '%s' のジェネリック名が長すぎます "
+msgstr " '%s' の総称名が長すぎます "
 
 #: src/main/eval.c:2105
 #, c-format
@@ -3519,9 +3513,8 @@ msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr " メソッド (\"%s\", \"%s\") は \"%s\" に対しては矛盾しています "
 
 #: src/main/eval.c:2167
-#, fuzzy
 msgid "dispatch error in group dispatch"
-msgstr " メソッド割り当てのエラーです "
+msgstr "グループディスパッチにディスパッチエラーがあります "
 
 #: src/main/eval.c:2548
 msgid "node stack overflow"
@@ -3718,9 +3711,9 @@ msgid "EOF whilst reading MBCS char at line %d"
 msgstr " MBCS 文字を読んでいる途中に EOF に遭遇しました(%d行) "
 
 #: src/main/gram.y:119 src/main/gram.y:127
-#, fuzzy, c-format
+#, c-format
 msgid "invalid multibyte character in parser at line %d"
-msgstr " mbcs_get_next 中に不正なマルチバイト文字列があります (%d行) "
+msgstr " 構文解析中に不正なマルチバイト文字列がありました (%d行) "
 
 #: src/main/gram.y:380
 #, c-format
@@ -3801,7 +3794,7 @@ msgstr "文字列が長すぎるためメモリ確保ができません  (%d行)
 
 #: src/main/gram.y:1942
 msgid "'\\x' used without hex digits"
-msgstr ""
+msgstr " 8進文字なしに'\\x'が使われています "
 
 #: src/main/gram.y:1954
 #, c-format
@@ -3810,7 +3803,7 @@ msgstr " \\uxxxx シーケンスはサポートされません   (%d行) "
 
 #: src/main/gram.y:1974
 msgid "\\u used without hex digits"
-msgstr ""
+msgstr " 8進文字なしに'\\u'が使われています "
 
 #: src/main/gram.y:1984 src/main/gram.y:1997
 #, c-format
@@ -3829,7 +3822,7 @@ msgstr " \\uxxxx シーケンスはサポートされません  (%d行) "
 
 #: src/main/gram.y:2029
 msgid "\\U used without hex digits"
-msgstr ""
+msgstr " 8進文字なしに\\Uが使われています "
 
 #: src/main/gram.y:2039 src/main/gram.y:2045
 #, c-format
@@ -4374,7 +4367,7 @@ msgstr " 長さ0の変数名を使おうとしました "
 #: src/main/names.c:1098
 #, c-format
 msgid "variable names are limited to %d bytes"
-msgstr ""
+msgstr " 変数名は%dバイトが上限です "
 
 #: src/main/names.c:1127
 msgid "invalid .Internal() argument"
@@ -4407,7 +4400,7 @@ msgstr " 'UseMethod' が不適切な仕方で使われています "
 
 #: src/main/objects.c:244
 msgid "Invalid generic function in 'usemethod'"
-msgstr " 'usemethod' 中に無効なジェネリック関数があります "
+msgstr " 'usemethod' 中に無効な総称関数があります "
 
 #: src/main/objects.c:335
 msgid "corrupt internals!"
@@ -4427,7 +4420,7 @@ msgstr " クロージャの外部から 'UseMethod' が呼び出されました 
 
 #: src/main/objects.c:395
 msgid "first argument must be a generic name"
-msgstr " 最初の引数はジェネリック名でなくてはなりません "
+msgstr " 最初の引数は総称名でなくてはなりません "
 
 #: src/main/objects.c:405
 #, c-format
@@ -4444,9 +4437,7 @@ msgstr " 'NextMethod' が匿名関数から呼ばれました "
 
 #: src/main/objects.c:490
 msgid "no calling generic was found: was a method called directly?"
-msgstr ""
-" 呼出したジェネリック関数が見つかりません。メソッドが直接呼び出されました"
-"か？ "
+msgstr " 呼出した総称関数が見つかりません。メソッドが直接呼び出されましたか？ "
 
 #: src/main/objects.c:493
 #, c-format
@@ -4532,8 +4523,7 @@ msgid ""
 "call to standardGeneric(\"%s\") apparently not from the body of that generic "
 "function"
 msgstr ""
-" 見たところジェネリックな関数の本体からではない standardGeneric(\"%s\") の呼"
-"出しです "
+" 見たところ総称関数の本体からではない standardGeneric(\"%s\") の呼出しです "
 
 #: src/main/objects.c:1004
 msgid "argument 'code' must be a character string"
@@ -4558,8 +4548,8 @@ msgid ""
 "the formal definition of a primitive generic must be a function object (got "
 "type '%s')"
 msgstr ""
-" primitive なジェネリック関数の形式的定義は関数オブジェクトでなければなりませ"
-"ん (型 '%s' です)  "
+" primitive な総称関数の形式的定義は関数オブジェクトでなければなりません (型 "
+"'%s' です)  "
 
 #: src/main/objects.c:1233
 msgid "invalid primitive operation given for dispatch"
@@ -4575,8 +4565,8 @@ msgid ""
 "primitive function \"%s\" has been set for methods but no generic function "
 "supplied"
 msgstr ""
-" primitive な関数 \"%s\" がメソッドに対して設定されましたが、ジェネリックな関"
-"数が与えられていません "
+" primitive な関数 \"%s\" がメソッドに対して設定されましたが、総称関数が与えら"
+"れていません "
 
 #: src/main/objects.c:1297
 msgid "C level MAKE_CLASS macro called with NULL string pointer"
@@ -4683,9 +4673,8 @@ msgid "L-BFGS-B needs finite values of 'fn'"
 msgstr " L-BFGS-B は有限な fn の値を必要とします "
 
 #: src/main/optim.c:1105
-#, fuzzy
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
-msgstr " REPORT は正の値でなければなりません (method = \"BFGS\") "
+msgstr " REPORT は正の値でなければなりません (method = \"SANN\") "
 
 #: src/main/optimize.c:53 src/main/optimize.c:137 src/main/optimize.c:386
 msgid "NA replaced by maximum positive value"
@@ -4996,149 +4985,149 @@ msgstr " 不可能なモード（x）です "
 msgid "atomic vector arguments only"
 msgstr " 引数はアトムであるベクトルのみです "
 
-#: src/main/platform.c:285
+#: src/main/platform.c:288
 msgid "invalid filename specification"
 msgstr " ファイル名の指定が不正です "
 
-#: src/main/platform.c:430 src/main/platform.c:477
+#: src/main/platform.c:433 src/main/platform.c:480
 msgid "write error during file append"
 msgstr " ファイル追加中に書き込みエラーが生じました "
 
-#: src/main/platform.c:444 src/main/platform.c:533 src/main/platform.c:571
+#: src/main/platform.c:447 src/main/platform.c:536 src/main/platform.c:574
 msgid "invalid first filename"
 msgstr " 一番目のファイル名が不正です "
 
-#: src/main/platform.c:446 src/main/platform.c:573
+#: src/main/platform.c:449 src/main/platform.c:576
 msgid "invalid second filename"
 msgstr " 二番目のファイル名が不正です "
 
-#: src/main/platform.c:448
+#: src/main/platform.c:451
 msgid "nothing to append to"
 msgstr " 付け足す（append）べきものがありません "
 
-#: src/main/platform.c:450
+#: src/main/platform.c:453
 msgid "'outFile' must be a single file"
 msgstr " 'outFile' は単一のファイルでなくてはなりません "
 
-#: src/main/platform.c:506 src/main/platform.c:709
+#: src/main/platform.c:509 src/main/platform.c:712
 msgid "invalid filename argument"
 msgstr " ファイル名引数が不正です "
 
-#: src/main/platform.c:518
+#: src/main/platform.c:521
 #, c-format
 msgid "cannot create file '%s', reason '%s'"
 msgstr " fife '%s' を作れません, 理由は'%s'です "
 
-#: src/main/platform.c:545
+#: src/main/platform.c:548
 #, c-format
 msgid "cannot remove file '%s', reason '%s'"
 msgstr " ファイル '%s' を削除できません, 理由は '%s' です "
 
-#: src/main/platform.c:575
+#: src/main/platform.c:578
 msgid "nothing to link"
 msgstr " リンクすべきものがありません "
 
-#: src/main/platform.c:601
+#: src/main/platform.c:604
 #, c-format
 msgid "cannot symlink '%s' to '%s', reason '%s'"
 msgstr " '%s'に対するシンボリックリンク'%s'を作成できません, 理由は '%s' です "
 
-#: src/main/platform.c:609
+#: src/main/platform.c:612
 msgid "symlinks are not supported on this platform"
 msgstr " このプラットフォームではシンボリックリンクはサポートされていません "
 
-#: src/main/platform.c:632
+#: src/main/platform.c:635
 msgid "'source' must be a single string"
 msgstr " 'source' は１つの文字列でなければなりません "
 
-#: src/main/platform.c:634
+#: src/main/platform.c:637
 msgid "'destination' must be a single string"
 msgstr " 'destination' は単一の文字列でなければなりません "
 
-#: src/main/platform.c:638
+#: src/main/platform.c:641
 msgid "missing values are not allowed"
 msgstr " 欠損値は認められていません "
 
-#: src/main/platform.c:642 src/main/platform.c:652
+#: src/main/platform.c:645 src/main/platform.c:655
 msgid "expanded source name too long"
 msgstr " 展開されたソース名が長すぎます "
 
-#: src/main/platform.c:646 src/main/platform.c:656
+#: src/main/platform.c:649 src/main/platform.c:659
 msgid "expanded destination name too long"
 msgstr " 展開された destination 名が長すぎます "
 
-#: src/main/platform.c:660
+#: src/main/platform.c:663
 #, c-format
 msgid "cannot rename file '%s' to '%s', reason '%s'"
 msgstr " ファイル名を '%s' から '%s' に変更できません, 理由は'%s'です "
 
-#: src/main/platform.c:873
+#: src/main/platform.c:876
 msgid "directory/folder path name too long"
 msgstr " ディレクトリまたはフォルダのパス名が長すぎます "
 
-#: src/main/platform.c:875
+#: src/main/platform.c:878
 #, c-format
 msgid "list.files: '%s' is not a readable directory"
 msgstr " list.files: '%s' は読めないディレクトリです "
 
-#: src/main/platform.c:982
+#: src/main/platform.c:985
 msgid "invalid 'pattern' regular expression"
 msgstr " 正規表現の 'pattern' が不正です "
 
-#: src/main/platform.c:1009
+#: src/main/platform.c:1012
 msgid "unable to determine R home location"
 msgstr " R のホームロケーションを決定できません "
 
-#: src/main/platform.c:1145
+#: src/main/platform.c:1148
 msgid "file choice cancelled"
 msgstr " ファイルの選択がキャンセルされました "
 
-#: src/main/platform.c:1147
+#: src/main/platform.c:1150
 msgid "file name too long"
 msgstr " ファイル名が長すぎます "
 
-#: src/main/platform.c:1199
+#: src/main/platform.c:1202
 msgid "file.access() is not implemented on this system"
 msgstr " このシステムには file.access 関数は実装されていません "
 
-#: src/main/platform.c:1481
+#: src/main/platform.c:1484
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr " 'LC_NUMERIC'をセットすると、Rは変に機能するかもしれません "
 
-#: src/main/platform.c:1515
+#: src/main/platform.c:1518
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 " ロケールを \"%s\" に設定せよとのOS のレポート要求は受け入れられません "
 
-#: src/main/platform.c:1816
+#: src/main/platform.c:1819
 msgid "'hostname' must be a character vector of length 1"
 msgstr " 'hostname' は長さ1の文字列ベクトルでなくてはなりません "
 
-#: src/main/platform.c:1822
+#: src/main/platform.c:1825
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr " nsl 関数はホスト '%s' を解決できませんでした "
 
-#: src/main/platform.c:1829
+#: src/main/platform.c:1832
 msgid "unknown format returned by gethostbyname"
 msgstr " gethostbyname が未知の書式を返しました "
 
-#: src/main/platform.c:1838
+#: src/main/platform.c:1841
 msgid "nsl() is not supported on this platform"
 msgstr " このプラットフォームでは nsl 関数はサポートされていません "
 
-#: src/main/platform.c:1884 src/main/platform.c:1930
+#: src/main/platform.c:1887 src/main/platform.c:1933
 #, c-format
 msgid "'%s' already exists"
 msgstr " '%s' はすでに存在します "
 
-#: src/main/platform.c:1887
+#: src/main/platform.c:1890
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "ディレクトリ '%s' を作れません, 理由は'%s'です "
 
-#: src/main/platform.c:2072
+#: src/main/platform.c:2075
 msgid "insufficient OS support on this platform"
 msgstr " このプラットフォームではOSのサポートが不十分です "
 
@@ -5262,9 +5251,8 @@ msgid "invalid fourth argument"
 msgstr " 四番目の引数が不正です "
 
 #: src/main/plot.c:1754
-#, fuzzy
 msgid "cannot mix zero-length and non-zero-length coordinates"
-msgstr " 他と0から始まるベクトルを混合できません "
+msgstr "長さ0と非0の座標は一緒に使えません "
 
 #: src/main/plot.c:1928
 msgid "invalid arrow head length"
@@ -5997,7 +5985,6 @@ msgid "error writing to connection"
 msgstr " コネクションへの書き込みエラーが発生しました "
 
 #: src/main/saveload.c:2360
-#, fuzzy
 msgid "connection not open for reading"
 msgstr " コネクションは読み込みのために開かれていません "
 
@@ -6226,7 +6213,7 @@ msgstr " このバージョンの R ではクラス参照は読めません "
 
 #: src/main/serialize.c:1401
 msgid "this version of R cannot read generic function references"
-msgstr " このバージョンの R ではジェネリック関数参照は読めません "
+msgstr " このバージョンの R では総称関数参照は読めません "
 
 #: src/main/serialize.c:1412
 #, c-format
@@ -6488,9 +6475,9 @@ msgid "use format %d, %i, %x or %X for integer objects"
 msgstr " 整数オブジェクトには %d, %i, %x または %X 書式を使ってください "
 
 #: src/main/sprintf.c:279
-#, fuzzy, c-format
+#, c-format
 msgid "use format %f, %e, %g or %a for numeric objects"
-msgstr " 数値オブジェクトには %f, %e または %g 書式を使ってください "
+msgstr " 数値オブジェクトには %f, %e , %g または %a 書式を使ってください "
 
 #: src/main/sprintf.c:313
 #, c-format
@@ -6531,9 +6518,8 @@ msgstr " 添え字付きの付値で NA は許されていません "
 
 #: src/main/subassign.c:465 src/main/subassign.c:735 src/main/subassign.c:1002
 #: src/main/subassign.c:1189
-#, fuzzy
 msgid "replacement has length zero"
-msgstr " 引数の長さが0です "
+msgstr " replacement(置き換え)の長さが0です "
 
 #: src/main/subassign.c:467 src/main/subassign.c:737 src/main/subassign.c:1004
 #: src/main/subassign.c:1191
@@ -6812,14 +6798,12 @@ msgid "proc.time() is not implemented on this system"
 msgstr " このシステムでは proc.time 関数は未実装です "
 
 #: src/main/sysutils.c:1468
-#, fuzzy
 msgid "setTimelimit() is not implemented on this system"
-msgstr " このシステムでは gc.time 関数は実装されていません "
+msgstr " このシステムでは setTimelimit()関数は実装されていません "
 
 #: src/main/sysutils.c:1496
-#, fuzzy
 msgid "setSessionTimelimit() is not implemented on this system"
-msgstr " このシステムでは gc.time 関数は実装されていません "
+msgstr " このシステムでは setSessionTimelimit() 関数は実装されていません "
 
 #: src/main/unique.c:284
 #, c-format
@@ -6976,9 +6960,8 @@ msgid "warning message truncated to 255 chars"
 msgstr " 警告メッセージは255文字に切り詰められました "
 
 #: src/main/util.c:1680
-#, fuzzy
 msgid "ICU is not supported on this build"
-msgstr " このビルドではsavePlot()はサポートされていません "
+msgstr " このビルドではICUはサポートされていません "
 
 #: src/main/version.c:39
 msgid ""
@@ -7001,9 +6984,9 @@ msgid ""
 "\n"
 msgstr ""
 "Rは多くの貢献者による共同プロジェクトです。 \n"
-"詳しくは'contributors()'と入力してください。 \n"
+" 詳しくは'contributors()'と入力してください。 \n"
 "また、RやRのパッケージを出版物で引用する際の形式については \n"
-"'citation()'と入力してください。 \n"
+" 'citation()'と入力してください。 \n"
 " \n"
 
 #: src/main/version.c:45
@@ -7013,10 +6996,10 @@ msgid ""
 "Type 'q()' to quit R.\n"
 "\n"
 msgstr ""
-"'demo()'と入力すればデモをみることができます。 \n"
-"'help()'とすればオンラインヘルプが出ます。 \n"
-"'help.start()'でHTMLブラウザによるヘルプがみられます。 \n"
-"'q()'と入力すればRを終了します。 \n"
+" 'demo()'と入力すればデモをみることができます。 \n"
+" 'help()'とすればオンラインヘルプが出ます。 \n"
+" 'help.start()'でHTMLブラウザによるヘルプがみられます。 \n"
+" 'q()'と入力すればRを終了します。 \n"
 "\n"
 
 #: src/main/vfonts.c:50
@@ -7274,6 +7257,7 @@ msgstr " Lapack ルーチン dgetrf()' からエラー[%d] が返されました
 #, c-format
 msgid "exact singularity: U[%d,%d] = 0 in LU-decomposition {Lapack 'dgetrf()'}"
 msgstr ""
+"LU-decomposition {Lapack 'dgetrf()'}の中のU[%d,%d] = 0 は正確に特異です "
 
 #: src/modules/lapack/Lapack.c:357
 #, c-format
@@ -7466,7 +7450,7 @@ msgstr " X11 プロトコルエラー：%s "
 #: src/modules/X11/devX11.c:1087
 #, c-format
 msgid "X11 I/O error while opening X11 connection to '%s'"
-msgstr ""
+msgstr " '%s'に対してX11コネクションを開くのにX11 I/Oエラーが発生しました "
 
 #: src/modules/X11/devX11.c:1105
 msgid "X11 fatal IO error: please save work and shut down R"
@@ -7532,16 +7516,16 @@ msgstr " X11 ディスプレイ '%s' へのコネクションを開くことが�
 
 #: src/modules/X11/devX11.c:1281
 msgid "ignoring 'display' argument as an X11 device is already open"
-msgstr ""
+msgstr "X11デバイスはすでに開いているので、'display'引数は無視されます "
 
 #: src/modules/X11/devX11.c:1292
 msgid "jpeg() does not support transparency: using white bg"
 msgstr " jpeg 関数は透明な背景はサポートしていません（bg に白を使います） "
 
 #: src/modules/X11/devX11.c:1392
-#, fuzzy, c-format
+#, c-format
 msgid "unable to obtain information on display '%s'"
-msgstr " X11 ディスプレイ '%s' へのコネクションを開くことができません "
+msgstr " X11 ディスプレイ '%s' の情報を得ることができません "
 
 #: src/modules/X11/devX11.c:1410
 msgid "unable to create X11 window"
@@ -7899,9 +7883,8 @@ msgid "WARNING: unknown gui '%s', using none\n"
 msgstr " 警告: \"%s\" は未知の gui です。何も使いません \n"
 
 #: src/unix/system.c:368
-#, fuzzy
 msgid "creating temporary file for '-e' failed"
-msgstr " プロファイルタイマーの設定に失敗しました "
+msgstr " '-e'に対して一時ファイルの作成は失敗しました "
 
 #: src/unix/system.c:449
 msgid "WARNING: Only editing the first in the list of files"
