@@ -117,16 +117,25 @@ int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 	       void (*intr)(void))
 {
     if (timeout != NULL && timeout->tv_sec == 0 && timeout->tv_usec == 0)
+	/* Is it right for select calls with a timeout to be
+	   non-interruptable? LT */
 	return select(n, readfds, writefds, exceptfds, timeout);
     else {
 	volatile sel_intr_handler_t myintr = intr != NULL ? intr : onintr;
+	volatile int old_interrupts_suspended = R_interrupts_suspended;
 	if (SIGSETJMP(seljmpbuf, 1)) {
 	    myintr();
+	    R_interrupts_suspended = old_interrupts_suspended;
 	    error(_("interrupt handler must not return"));
 	    return 0; /* not reached */
 	}
 	else {
 	    int val;
+
+	    /* make sure interrupts are enabled -- this will be
+	       restored if there is a LONGJMP from myintr() to another
+	       context. */
+	    R_interrupts_suspended = FALSE;
 
 	    /* install a temporary signal handler for breaking out of
 	       a blocking select */
@@ -142,6 +151,7 @@ int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 	       signal handler, and return the result of the select. */
 	    val = select(n, readfds, writefds, exceptfds, timeout);
 	    signal(SIGINT, oldSigintHandler);
+	    R_interrupts_suspended = old_interrupts_suspended;
 	    return val;
 	}
     }
