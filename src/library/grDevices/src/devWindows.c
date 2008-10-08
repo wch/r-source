@@ -2947,7 +2947,8 @@ SEXP savePlot(SEXP args)
     filename = CADR(args);
     if (!isString(filename) || LENGTH(filename) != 1)
 	error(_("invalid filename argument in savePlot"));
-    fn = CHAR(STRING_ELT(filename, 0));
+    /* in 2.8.0 this will always be passed as native, but be conserative */
+    fn = translateChar(STRING_ELT(filename, 0));
     type = CADDR(args);
     if (!isString(type) || LENGTH(type) != 1)
 	error(_("invalid type argument in 'savePlot'"));
