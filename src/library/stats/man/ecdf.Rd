@@ -13,7 +13,7 @@
 ecdf(x)
 
 \method{plot}{ecdf}(x, \dots, ylab="Fn(x)", verticals = FALSE,
-     col.01line = "gray70", pch=16)
+     col.01line = "gray70", pch = 19)
 
 \method{print}{ecdf}(x, digits= getOption("digits") - 2, \dots)
 
