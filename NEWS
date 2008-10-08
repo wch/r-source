@@ -353,6 +353,9 @@ NEW FEATURES
 
     o	PCRE has been updated to version 7.8 (mainly bug fixes).
 
+    o	plot.ecdf() now defaults to pch=19 so as to better convey the
+	left-closed line segments.
+
 
 NEW FEATURES IN PACKAGE 'methods'
 
