@@ -35,6 +35,7 @@ c(\dots, recursive=FALSE)
 }
 \value{
   \code{NULL} or an expression or a vector of an appropriate mode.
+  (With no arguments the value is \code{NULL}.)  
 }
 \section{S4 methods}{
   This function is S4 generic, but with argument list
