@@ -75,6 +75,8 @@ BUG FIXES
     o	The custom install options were not saved/restored when the
     	installer was run with /SAVEINF or /LOADINF respectively.
 
+    o	savePlot() expected 'filename' in the native encoding.
+
 
 
 	**************************************************
