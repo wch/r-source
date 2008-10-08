@@ -21,7 +21,7 @@ CSOURCES=\
 	dotcode.c dounzip.c dstruct.c duplicate.c \
 	engine.c envir.c errors.c eval.c \
 	format.c fourier.c \
-	gevents.c gram.c gram-ex.c graphics.c \
+	gevents.c gram.c gram-ex.c gramRd.c graphics.c \
 	identical.c inlined.c internet.c iosupport.c \
 	lapack.c list.c localecharset.c logic.c \
 	main.c mapply.c match.c memory.c mkdtemp.c model.c \
@@ -44,6 +44,11 @@ gram.c: gram.y
 	bison gram.y
 	$(SED) -e "s/gram.tab.c/gram.c/" gram.tab.c > gram.c
 	$(RM) gram.tab.c
+	
+gramRd.c: gramRd.y
+	bison gramRd.y
+	$(SED) -e "s/gramRd.tab.c/gramRd.c/" gramRd.tab.c > gramRd.c
+	$(RM) gramRd.tab.c	
 endif
 
 saveload-CPPFLAGS=-I../extra/xdr

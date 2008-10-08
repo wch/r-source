@@ -349,6 +349,7 @@ SEXP do_parentenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_parentenvgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_parentframe(SEXP, SEXP, SEXP, SEXP);
 SEXP do_parse(SEXP, SEXP, SEXP, SEXP);
+SEXP do_parseRd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_paste(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pathexpand(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pause(SEXP, SEXP, SEXP, SEXP);
