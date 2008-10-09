@@ -131,7 +131,7 @@ curve(f(x, deriv=3), 1, 10, col = 2, lwd = 1.5, n = 401)
 par(op)
 
 ## Manual spline evaluation --- demo the coefficients :
-.x <- get("ux", envir = environment(f))
+.x <- splinecoef$x
 u <- seq(3,6, by = 0.25)
 (ii <- findInterval(u, .x))
 dx <- u - .x[ii]
