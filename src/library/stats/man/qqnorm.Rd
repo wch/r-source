@@ -20,6 +20,7 @@ qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
 \alias{qqnorm.default}
 \alias{qqplot}
 \alias{qqline}
+\concept{normal probability plot} % PR#12095
 
 \arguments{
   \item{x}{The first sample for \code{qqplot}.}
