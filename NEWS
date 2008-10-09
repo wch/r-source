@@ -441,7 +441,7 @@ C-LEVEL FACILITIES
 	For now there is a compatibility define in GraphicsDevice.h,
 	but it will be removed in R 2.9.0.
 
-    o	PROTECT and UNPROTECT macros now work even with R_NO_REMAP
+    o	PROTECT and UNPROTECT macros now work even with R_NO_REMAP.
 
 
 BUG FIXES
@@ -541,6 +541,8 @@ BUG FIXES
     o	splinefun() with natural splines incorrectly evaluated derivatives
 	to the left of the first knot. (PR#13132, fix thanks to
 	Berwin Turlach)
+
+    o	anova(glm(..., y=FALSE)) now works.  (PR#13098)
 
 
 
