@@ -5405,6 +5405,12 @@ stopifnot(x1 == x1[1], x2 == 0, x3 == 0)
 ##
 
 
+## glm(y = FALSE), in part PR#1398
+fit <- glm(1:10 ~ I(1:10) + I((1:10)^2), y = FALSE)
+anova(fit)
+## obscure errors < 2.8.0
+
+
 ## (Deliberate) overshot in seq(from, to, by) because of fuzz
 stopifnot(seq(0, 1, 0.00025+5e-16) <= 1, seq.int(0, 1, 0.00025+5e-16) <= 1)
 stopifnot(rev(seq(0, 1, 0.00025+5e-16))[1] == 1,
