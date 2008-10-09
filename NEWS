@@ -10,13 +10,25 @@
 
 NEW FEATURES
 
-    o	Package 'Matrix' is now formally recommended. It provides S4
-	classes and methods for dense and sparse matrices, often by
-	using the numerical libraries Lapack, CHOLMOD and CSparse.
+    o	Package 'Matrix' is now a recommended package contained in the
+	basic R distribution.  It provides S4 classes and methods for
+	dense and sparse matrices, often by using the numerical
+	libraries Lapack, CHOLMOD and CSparse.
 
     o	pdf() and postscript() gain a 'forceLetterSpacing' argument to
-	place text strings letter-by-letter, based on an idea and code
+	place letters using kerning (which had previously been ignored
+	in display but not in strwidth), based on an idea and code
 	from Ei-ji Nakama.
+
+	The effect is subtly different in the two devices: for pdf()
+	it just adds kerning corrections, whereas for postscript() it
+	places each letter individually in strings which have kerned
+	pairs, and for all strings does justification in the driver
+	and not the viewer (and the latter may be more appropriate if
+	font substitution has occurred).
+
+	Kerning involving spaces is now ignored (it was previously
+	only used in the computation of string widths).
 
     o	seq.default() and seq.int() ensure that the result is within the
 	interval [from, to] even when the last value would previously

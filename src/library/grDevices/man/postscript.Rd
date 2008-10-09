@@ -112,8 +112,10 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     \code{"gray"} and \code{"cmyk"}.  Defaults to \code{"rgb"}.}
   \item{forceLetterSpacing}{logical.  If false (the default), the
     viewing application places letters in text strings in the natural
-    spacing of the font actually used.  If true, letters are placed
-    individually using the widths specified in the \code{afm} file.}
+    spacing of the font actually used (but in most viewers ignoring
+    kerning correction.  If true, letters are placed individually using
+    the widths (and kerning corrections) specified in the \code{afm}
+    file.}
 }
 \details{
   All arguments except \code{file} default to values given by

@@ -47,6 +47,7 @@ static void mbcsToSbcs(const char *in, char *out, const char *encoding, int enc)
 #define R_USE_PROTOTYPES 1
 #include <R_ext/GraphicsEngine.h>
 #include <R_ext/Error.h>
+#include <R_ext/RS.h>
 #include "Fileio.h"
 #include "grDevices.h"
 
@@ -803,13 +804,15 @@ static double
 
 	/* check for kerning adjustment */
 	p1 = p[0]; p2 = p[1];
-	for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
-	    /* second test is a safety check: should all start with p1  */
-	    if(metrics->KernPairs[i].c2 == p2 &&
-	       metrics->KernPairs[i].c1 == p1) {
-		sum += metrics->KernPairs[i].kern;
+	/* skip space kerning */
+	if (p1 != ' ' && p2 != ' ')
+	    for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
+		/* second test is a safety check: should all start with p1 */
+		if(metrics->KernPairs[i].c2 == p2 &&
+		   metrics->KernPairs[i].c1 == p1) {
+		    sum += metrics->KernPairs[i].kern;
 		break;
-	    }
+		}
     }
     return 0.001 * sum;
 }
@@ -2751,95 +2754,6 @@ static void PostScriptCircle(FILE *fp, double x, double y, double r)
     fprintf(fp, "%.2f %.2f %.2f c ", x, y, r);
 }
 
-/* added for 2.8.0 (donated by Ei-ji Nakama) : */
-#define KERNING_PS 0
-#define KERNING_PDF 1
-static void PostScriptWriteT1KerningString(FILE *fp, const char *str,
-					   const int mode,
-					   FontMetricInfo *metrics,
-					   const pGEcontext gc)
-{
-    const char *str1 = str;
-    unsigned char p1, p2;
-    int i,j;
-    double ary_buf[128], *ary;
-
-    if(strlen(str) > sizeof(ary_buf)/sizeof(double)){
-	ary = calloc(strlen(str),sizeof(double));
-	if(!ary)
-	    return;
-    }
-    else
-	ary = ary_buf;
-
-    for(i=0; str1[i] && str1[i+1]; i++){
-	ary[i] = 0.;
-	p1 = str1[i];
-	p2 = str1[i+1];
-#ifdef USE_HYPHEN
-	if (p1 == '-' && !isdigit((int)p2))
-	    p1 = (unsigned char)PS_hyphen;
-#endif
-	if(mode == KERNING_PS)
-	    ary[i]=(double) (metrics->CharInfo[p1].WX == NA_SHORT) ?
-		0 : metrics->CharInfo[p1].WX;
-	for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++) {
-	    if(metrics->KernPairs[j].c2 == p2 &&
-	       metrics->KernPairs[j].c1 == p1	) {
-		ary[i] += (double)metrics->KernPairs[j].kern;
-		break;
-	    }
-	}
-	if (mode == KERNING_PS)
-	    ary[i] *= 0.001 * floor(gc->cex * gc->ps + 0.5);
-    }
-
-    if(mode == KERNING_PDF)
-	fputc('[', fp);
-    fputc('(', fp);
-    for(i=0; str1[i]; i++) {
-	switch(str1[i]) {
-	case '\n':
-	    fprintf(fp, "\\n");
-	    break;
-	case '\\':
-	    fprintf(fp, "\\\\");
-	    break;
-	case '-':
-#ifdef USE_HYPHEN
-	    if (!isdigit((int)str1[i+1]))
-		fputc(PS_hyphen, fp);
-	    else
-#endif
-		fputc(str1[i], fp);
-	    break;
-	case '(':
-	case ')':
-	    fprintf(fp, "\\%c", str1[i]);
-	    break;
-	default:
-	    fputc(str1[i], fp);
-	    break;
-	}
-	if( mode == KERNING_PDF && (int)ary[i] != 0 && str1[i+1] )
-	    fprintf(fp, ") %d (", (int)(ary[i]*-1));
-    }
-    fputc(')', fp);
-    if(mode == KERNING_PDF)
-	fputc(']', fp);
-
-    fputc(' ', fp);
-
-    if(mode == KERNING_PS) {
-	fputc('[', fp);
-	for(i=0; str1[i] && str1[i+1]; i++)
-	    fprintf(fp, "%.2f ", ary[i]);
-	fprintf(fp, "0]"); /* newer GS (8.61) does not accept an empty array */
-    }
-    if(ary != ary_buf)
-	free(ary);
-}
-
 static void PostScriptWriteString(FILE *fp, const char *str)
 {
     fputc('(', fp);
@@ -2870,6 +2784,107 @@ static void PostScriptWriteString(FILE *fp, const char *str)
     fputc(')', fp);
 }
 
+/* added for 2.9.0 (donated by Ei-ji Nakama) : */
+#define KERNING_PS 0
+#define KERNING_PDF 1
+static Rboolean
+WriteT1KerningString(FILE *fp, const char *str,
+		     const int mode,
+		     FontMetricInfo *metrics,
+		     const pGEcontext gc)
+{
+    const char *str1 = str;
+    unsigned char p1, p2;
+    int i,j, n;
+    int ary_buf[128], *ary;
+    double fac = 0.001 * floor(gc->cex * gc->ps + 0.5);
+    Rboolean haveKerning = FALSE;
+
+    n = strlen(str);
+    if(n > sizeof(ary_buf)/sizeof(int))
+	ary = Calloc(strlen(str), int);
+    else ary = ary_buf;
+
+    for(i = 0; i < n-1; i++) {
+	ary[i] = 0.;
+	p1 = str1[i];
+	p2 = str1[i+1];
+#ifdef USE_HYPHEN
+	if (p1 == '-' && !isdigit((int)p2))
+	    p1 = (unsigned char)PS_hyphen;
+#endif
+	if(mode == KERNING_PS)
+	    ary[i] = (double) (metrics->CharInfo[p1].WX == NA_SHORT) ?
+		0 : metrics->CharInfo[p1].WX;
+	/* skip space kerning */
+	if (p1 != ' ' && p2 != ' ')
+	    for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++)
+		if(metrics->KernPairs[j].c2 == p2 &&
+		   metrics->KernPairs[j].c1 == p1) {
+		    ary[i] += metrics->KernPairs[j].kern;
+		    haveKerning = TRUE;
+		    break;
+		}
+    }
+
+    /* NB.  The meanng here is different: for postscript() the
+      advances are written in the file and override the font metrics.
+      For pdf() what is written here are additional negative advances.
+    */
+    if(haveKerning) {
+	if(mode == KERNING_PDF) fputc('[', fp);
+	fputc('(', fp);
+	for(i =  0; str1[i]; i++) {
+	    switch(str1[i]) {
+	    case '\n':
+		fprintf(fp, "\\n");
+		break;
+	    case '\\':
+		fprintf(fp, "\\\\");
+		break;
+	    case '-':
+#ifdef USE_HYPHEN
+		if (!isdigit((int)str1[i+1]))
+		    fputc(PS_hyphen, fp);
+		else
+#endif
+		    fputc(str1[i], fp);
+		break;
+	    case '(':
+	    case ')':
+		fprintf(fp, "\\%c", str1[i]);
+		break;
+	    default:
+		fputc(str1[i], fp);
+		break;
+	    }
+	    if( mode == KERNING_PDF && ary[i] != 0 && str1[i+1] )
+		fprintf(fp, ") %d (", -ary[i]);
+	}
+	fputc(')', fp);
+	if(mode == KERNING_PDF) fputc(']', fp);
+	fputc(' ', fp);
+
+	if(mode == KERNING_PS) {
+	    fputc('[', fp);
+	    /* Is this accurate enugh? These cumulate */
+	    for(i = 0; i < n-1; i++)
+		fprintf(fp, "%.3f ", fac * ary[i]);
+	    fprintf(fp, "0]"); /* GS (8.61) does not accept an empty array */
+	} else fprintf(fp, " TJ\n");
+    } else {
+	if(mode == KERNING_PDF) {
+	    PostScriptWriteString(fp, str);
+	    fprintf(fp, " Tj\n");
+	} else
+	    PostScriptWriteString(fp, str);
+    }
+
+    if(ary != ary_buf) Free(ary);
+    return haveKerning;
+}
+
+
 static FontMetricInfo *metricInfo(const char *, int, PostScriptDesc *);
 
 static void PostScriptText(FILE *fp, double x, double y,
@@ -2879,16 +2894,17 @@ static void PostScriptText(FILE *fp, double x, double y,
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
     int face = gc->fontface;
+    Rboolean useKerning = pd->lspace;
+
     if(face < 1 || face > 5) face = 1;
 
     fprintf(fp, "%.2f %.2f ", x, y);
 
     if (pd->lspace &&
 	isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont))
-       PostScriptWriteT1KerningString(fp, str,
-				      KERNING_PS,
-				      metricInfo(gc->fontfamily, face, pd),
-				      gc);
+	useKerning = WriteT1KerningString(fp, str, KERNING_PS,
+					  metricInfo(gc->fontfamily, face, pd),
+					  gc);
     else
        PostScriptWriteString(fp, str);
 
@@ -2906,8 +2922,7 @@ static void PostScriptText(FILE *fp, double x, double y,
     else if(rot == 90) fprintf(fp, " 90");
     else fprintf(fp, " %.2f", rot);
 
-    if (pd->lspace &&
-	isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont))
+    if (useKerning)
        fprintf(fp, " tk\n");
     else
        fprintf(fp, " t\n");
@@ -3422,6 +3437,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     /* GREset(.)  dd->gp.mkh = dd->gp.cra[0] * dd->gp.ipr[0]; */
 
     dd->canClip = TRUE;
+    /* We have to do this as the stringwidth operator ignores kerning */
     dd->canHAdj = pd->lspace ? 0 : 2;
     dd->canChangeGamma = FALSE;
 
@@ -6850,11 +6866,8 @@ static void PDFSimpleText(double x, double y, const char *str,
 	    a, b, -b, a, x, y);
     if (pd->lspace &&
 	isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
-       PostScriptWriteT1KerningString(pd->pdffp, str1,
-				      KERNING_PDF,
-				      PDFmetricInfo(gc->fontfamily, face, pd),
-				      gc);
-       fprintf(pd->pdffp, " TJ\n");
+       WriteT1KerningString(pd->pdffp, str1, KERNING_PDF,
+			    PDFmetricInfo(gc->fontfamily, face, pd), gc);
     } else {
        PostScriptWriteString(pd->pdffp, str1);
        fprintf(pd->pdffp, " Tj\n");
@@ -7015,13 +7028,9 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
 
     if (pd->lspace &&
 	isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
-       PostScriptWriteT1KerningString(pd->pdffp, str1,
-				      KERNING_PDF,
-				      PDFmetricInfo(gc->fontfamily, face, pd),
-				      gc);
-       fprintf(pd->pdffp, " TJ\n");
-    }
-    else{
+       WriteT1KerningString(pd->pdffp, str1, KERNING_PDF,
+			    PDFmetricInfo(gc->fontfamily, face, pd), gc);
+    } else{
        PostScriptWriteString(pd->pdffp, str1);
        fprintf(pd->pdffp, " Tj\n");
     }

@@ -72,10 +72,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \emph{via} the Dingbats font?  Defaults to true, which produces
     smaller and better output -- this is provided for those who insist
     on using broken PDF viewers.}
-  \item{forceLetterSpacing}{logical.  If false (the default), the
-    viewing application places letters in text strings in the natural
-    spacing of the font actually used.  If true, letters are placed
-    individually using the widths specified in the \code{afm} file.}
+  \item{forceLetterSpacing}{logical.  If false (the default, for
+    backwards compatibility), the viewing application is assumed to
+    handle kerning in strings (and most do not).  If true, explicit
+    kerning information is placed in the output file.}
 }
 \details{
   All arguments except \code{file} default to values given by
