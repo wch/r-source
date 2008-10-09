@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-parseRd <- function(file, srcfile = NULL, encoding = "unknown")
+parse_Rd <- function(file, srcfile = NULL, encoding = "unknown")
 {
     if(is.character(file))
         if(file == "") file <- stdin()
