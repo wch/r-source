@@ -966,11 +966,11 @@ static void deleteselected(ConsoleData p)
     }
 }
 
+/* cmd is in native encoding */
 void consolecmd(control c, const char *cmd)
 {
     ConsoleData p = getdata(c);
 
-    const char *ch;
     int i;
     if (p->sel) {
 	deleteselected(p);
@@ -980,7 +980,13 @@ void consolecmd(control c, const char *cmd)
     }
     storekey(c, BEGINLINE);
     storekey(c, KILLRESTOFLINE);
-    for (ch = cmd; *ch; ch++) storekey(c, *ch);
+    {
+	size_t sz = (strlen(cmd) + 1) * sizeof(wchar_t);
+	wchar_t *wcs = (wchar_t *) alloca(sz);
+	memset(wcs, 0, sz);
+	mbstowcs(wcs, cmd, sz-1);
+	for(i = 0; wcs[i]; i++) storekey(c, wcs[i]);
+    }
     storekey(c, '\n');
 /* if we are editing we save the actual line */
     if (p->r > -1) {
@@ -1605,7 +1611,7 @@ static void wcstobuf(char *buf, int len, const wchar_t *in)
     int used, tot = 0;
     char *p = buf, tmp[7];
     const wchar_t *wc = in;
-    
+
     for(; wc; wc++, p+=used, tot+=used) {
 	if(tot >= len - 2) break;
 	used = wctomb(p, *wc);
