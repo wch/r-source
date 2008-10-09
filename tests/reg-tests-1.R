@@ -5395,6 +5395,16 @@ try(text(1,1,"A",family="Japan1"))
 ## error instead of seg.fault
 
 
+## splinefun with derivatives evaluated to the left of first knot
+x <- 1:10; y <- sin(x)
+splfun <- splinefun(x,y, method='natural')
+x1 <- splfun( seq(0,1, 0.1), deriv=1 )
+x2 <- splfun( seq(0,1, 0.1), deriv=2 )
+x3 <- splfun( seq(0,1, 0.1), deriv=3 )
+stopifnot(x1 == x1[1], x2 == 0, x3 == 0)
+##
+
+
 ## (Deliberate) overshot in seq(from, to, by) because of fuzz
 stopifnot(seq(0, 1, 0.00025+5e-16) <= 1, seq.int(0, 1, 0.00025+5e-16) <= 1)
 stopifnot(rev(seq(0, 1, 0.00025+5e-16))[1] == 1,

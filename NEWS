@@ -578,6 +578,10 @@ BUG FIXES
     o	The default R_LIBS_USER path in AQUA builds now matches the
 	Mac-specifc path used by the Mac GUI: ~/Library/R/x.y/library
 
+    o	splinefun() with natural splines incorrectly evaluated derivatives
+	to the left of the first knot. (PR#13132, fix thanks to
+	Berwin Turlach)
+
 
 
 
