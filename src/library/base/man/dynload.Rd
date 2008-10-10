@@ -165,7 +165,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   \code{dlopen} has become the POSIX standard for doing this. Under
   Unix-alikes \code{dyn.load} uses the \code{dlopen} mechanism and
   should work on all platforms which support it.  On Windows it uses the
-  standard mechanism (\code{LoadLibrary} for loading DLLs.
+  standard mechanism (\code{LoadLibrary}) for loading DLLs.
 
   The original code for loading DLLs in Unix-alikes was provided by
   Heiner Schwarte.  The compatibility code for HP-UX was provided by
@@ -187,9 +187,8 @@ is.loaded(symbol, PACKAGE = "", type = "")
     \item Along the search path for executables given by the environment
     variable \env{PATH}.
   }
-  This means that for all but embedded uses of \R (but including use by
-  the RDCOM server), \file{iconv.dll} will be found in
-  \file{\var{\link[base:Rhome]{R\_HOME}}/bin}.
+  This means that for all but embedded uses of \R, \file{iconv.dll} will
+  be found in \file{\var{\link[base:Rhome]{R\_HOME}}/bin}.
 
   Packages often want to supply dependent DLLs in their \file{libs}
   directory, and do this by setting the \env{PATH} variable

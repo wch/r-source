@@ -61,6 +61,10 @@ library.dynam.unload(chname, libpath,
   If \code{\dots} does not include a named argument \code{Dllpath},
   \code{\link{dyn.load}} is called with \code{DLLpath} set to the
   package's \file{libs} directory.  (Currently only used under Windows.)
+#ifdef windows
+  See the \dQuote{Windows} section of the help on \code{\link{dyn.load}}
+  for how to control where dependent DLLs are found.
+#endif
   
   \code{library.dynam.unload} is designed for use in
   \code{\link{.Last.lib}} or \code{\link{.onUnload}}: it unloads the
