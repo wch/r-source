@@ -286,6 +286,8 @@ cat >> ${build_dir}/Rd2.tex <<EOF
 \\usepackage[${R_RD4DVI-ae}]{Rd}
 \\usepackage{makeidx}
 \\usepackage[@ENC@]{inputenc}
+% next is needed to get Cyrillic characters in UTF-8
+\\usepackage[T2A]{fontenc}
 \\makeindex{}
 \\begin{document}
 EOF

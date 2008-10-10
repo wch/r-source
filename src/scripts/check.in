@@ -2520,13 +2520,14 @@ sub check_pkg {
 	    open(MANUAL, "> ${pkgname}-manual.tex")
 	      or die("Error: cannot open file '${pkgname}-manual.tex'" .
 		     "for writing\n");
-	    print MANUAL "\\documentclass\{book\}\n" . $encs;
+	    print MANUAL "\\documentclass\{book\}\n";
 	    ## Use the same Rd.sty defaults as Rd2dvi.
 	    if($HAVE_PDFLATEX) {
 		print MANUAL "\\usepackage[times,hyper]\{Rd\}\n";
 	    } else {
 		print MANUAL "\\usepackage[ae]\{Rd\}\n";
 	    }
+	    print MANUAL $encs . "\\usepackage[T2A]{fontenc}\n";
 	    print MANUAL "\\begin\{document\}\n";
 	    foreach my $file (@tex_files) {
 		open(FILE, "< $file")
