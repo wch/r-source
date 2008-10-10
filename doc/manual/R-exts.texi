@@ -3716,7 +3716,10 @@ in finding non-@acronym{ASCII} bytes in the files.)
 
 For convenience, encoding names @samp{latin1} and @samp{latin2} are
 always recognized: these and @samp{UTF-8} are likely to work fairly
-widely.
+widely.  However, this does not mean that all characters in
+@samp{UTF-8} will be recognized, and the coverage of non-Latin
+characters@footnote{@R{} 2.8.0 added support for Cyrillic characters in
+@LaTeX{}.} is often low, especially when converting to @LaTeX{}.
 
 The @code{\enc} command (@pxref{Insertions}) can be used to provide
 transliterations which will be used in conversions that do not support
@@ -3740,10 +3743,11 @@ it might for example use
 
 @noindent
 (Use of @code{utf8} as an encoding requires @LaTeX{} dated 2003/12/01 or
-later.)
+later.  Also, the use of Cyrillic characters in @samp{UTF-8} appears to also
+need @samp{\usepackage[T2A]@{fontenc@}}.)
 
-Note that this mechanism works best with letters and for example the
-copyright symbol may be rendered as a subscript and the plus--minus
+Note that this mechanism works best with Latin letters and for example
+the copyright symbol may be rendered as a subscript and the plus--minus
 symbol cannot be used in text.
 
 

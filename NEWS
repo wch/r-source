@@ -482,6 +482,9 @@ UTILITIES
     o	R CMD check now also uses codetools' checks on the body of S4
         methods.
 
+    o	R CMD Rd2dvi and R CMD check are now able to cope with Cyrillic
+    	characters in UTF-8 (thanks to a hint from Alexey Shipunov).
+
 
 C-LEVEL FACILITIES
 
