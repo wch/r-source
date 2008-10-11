@@ -373,7 +373,7 @@ if test -z "${ENCS}"; then
       -e '/@CYRILLIC_SUPPORT@/d' \
     ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
 elif test -n "${UENCS}" ; then
-  % next is needed to get Cyrillic characters in UTF-8
+  # next is needed to get Cyrillic characters in UTF-8
   ${SED} -e s/^\\\\usepackage\\[@ENC@\\]/\\\\usepackage[${ENCS}]/ \
       -e 's/@CYRILLIC_SUPPORT@/\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}/' \
     ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
