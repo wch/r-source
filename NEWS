@@ -15,17 +15,10 @@ NEW FEATURES
 	dense and sparse matrices, often by using the numerical
 	libraries Lapack, CHOLMOD and CSparse.
 
-    o	pdf() and postscript() gain a 'forceLetterSpacing' argument to
-	place letters using kerning (which had previously been ignored
-	in display but not in strwidth), based on an idea and code
-	from Ei-ji Nakama.
-
-	The effect is subtly different in the two devices: for pdf()
-	it just adds kerning corrections, whereas for postscript() it
-	places each letter individually in strings which have kerned
-	pairs, and for all strings does justification in the driver
-	and not the viewer (and the latter may be more appropriate if
-	font substitution has occurred).
+    o	pdf() and postscript() gain a 'useKerning' argument to place
+	letters using kerning (which had previously been ignored in
+	display but not in strwidth), based on an idea and code from
+	Ei-ji Nakama.
 
 	Kerning involving spaces is now ignored (it was previously
 	only used in the computation of string widths).
@@ -44,6 +37,12 @@ DEPRECATED & DEFUNCT
 
     o	The compatibility define for graphics structure NewDevDesc in
 	GraphicsDevice.h has been removed.
+
+
+UTILITIES
+
+    o	R CMD Rd2dvi and R CMD check are now able to cope with Cyrillic
+    	characters in UTF-8 (thanks to a hint from Alexey Shipunov).
 
 
 BUG FIXES
@@ -481,9 +480,6 @@ UTILITIES
 
     o	R CMD check now also uses codetools' checks on the body of S4
         methods.
-
-    o	R CMD Rd2dvi and R CMD check are now able to cope with Cyrillic
-    	characters in UTF-8 (thanks to a hint from Alexey Shipunov).
 
 
 C-LEVEL FACILITIES
