@@ -5398,7 +5398,7 @@ include the directory from which the DLL was loaded.  On XP and later it
 is possible@footnote{and we provide an emulation on Windows 2000): see
 @samp{?dyn.oad}.} to add a single path with quite high priority via the
 @code{Dllpath} argument to @code{dyn.load}.  This is (by default) used
-by @code{library.dynam} to include the packages' @file{libs} directory
+by @code{library.dynam} to include the package's @file{libs} directory
 in the DLL search path.
 
 
@@ -5918,7 +5918,7 @@ and then installing package @pkg{packA} will make and use the import
 library for @file{exB.dll}.  (One way to prepare the exports file is to
 use @file{pexports.exe}.
 
-@item loading @code{packA.dll} which depends on @file{exB.dll}.
+@item loading @file{packA.dll} which depends on @file{exB.dll}.
 
 If @code{exB.dll} was used by package @pkg{packB} (because it is in fact
 @file{packB.dll} or @file{packB.dll} depends on it) and @pkg{packB} has
@@ -5931,7 +5931,8 @@ More generally, we can use the @code{Dllpath} argument to
 by setting
 
 @example
-library.dynam("packA", pkg, lib, Dllpath=system.file("libs", package="packB"))
+library.dynam("packA", pkg, lib, 
+              Dllpath = system.file("libs", package="packB"))
 @end example
 
 Note that @code{DLLpath} can only set one path, and so for linking to
