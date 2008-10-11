@@ -2527,7 +2527,11 @@ sub check_pkg {
 	    } else {
 		print MANUAL "\\usepackage[ae]\{Rd\}\n";
 	    }
-	    print MANUAL $encs . "\\usepackage[T2A]{fontenc}\n";
+	    if ($encs =~ /utf8/) {
+		print MANUAL $encs . "\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}\n";
+	    } else {
+		print MANUAL $encs;
+	    }
 	    print MANUAL "\\begin\{document\}\n";
 	    foreach my $file (@tex_files) {
 		open(FILE, "< $file")
