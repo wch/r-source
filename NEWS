@@ -17,8 +17,10 @@ NEW FEATURES
 
     o	pdf() and postscript() gain a 'useKerning' argument to place
 	letters using kerning (which had previously been ignored in
-	display but not in strwidth), based on an idea and code from
-	Ei-ji Nakama.
+	display but not in strwidth), based in part on an idea and
+	code from Ei-ji Nakama.  If this is FALSE, kerning in no
+	longer used in string width calculations.  [The default is
+	currently FALSE but it likely to be altered prior to release.]
 
 	Kerning involving spaces is now ignored (it was previously
 	only used in the computation of string widths).
@@ -49,6 +51,8 @@ BUG FIXES
 
     o	add1.glm() no longer warns if applied to a binomial glm with a
 	factor response.
+
+    o	The postscript() output for setting text is faster and smaller.
 
 
 

@@ -194,7 +194,7 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
                        onefile, family, title , fonts, encoding, bg, fg,
                        width, height, horizontal, pointsize,
                        paper, pagecentre, print.it, command, colormodel,
-                       forceLetterSpacing)
+                       useKerning)
 {
     ## do initialization if needed
     initPSandPDFfonts()
@@ -216,7 +216,7 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
     if(!missing(print.it)) new$print.it <- print.it
     if(!missing(command)) new$command <- command
     if(!missing(colormodel)) new$colormodel <- colormodel
-    if(!missing(forceLetterSpacing)) new$forceLetterSpacing <- forceLetterSpacing
+    if(!missing(useKerning)) new$useKerning <- useKerning
 
     old <- check.options(new, name.opt = ".PostScript.Options", envir = .PSenv)
 
@@ -263,7 +263,7 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
               onefile, old$pagecentre, old$print.it, old$command,
-              old$title, old$fonts, old$colormodel, old$forceLetterSpacing)
+              old$title, old$fonts, old$colormodel, old$useKerning)
     # if .ps.prolog is searched for and fails, NULL got returned.
     invisible()
 }
@@ -288,7 +288,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
 pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                 width, height, onefile, family, title, fonts, version,
                 paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
-                useDingbats, forceLetterSpacing)
+                useDingbats, useKerning)
 {
     ## do initialization if needed
     initPSandPDFfonts()
@@ -309,7 +309,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     if(!missing(pagecentre)) new$pagecentre <- pagecentre
     if(!missing(colormodel)) new$colormodel <- colormodel
     if(!missing(useDingbats)) new$useDingbats <- useDingbats
-    if(!missing(forceLetterSpacing)) new$forceLetterSpacing <- forceLetterSpacing
+    if(!missing(useKerning)) new$useKerning <- useKerning
 
     old <- check.options(new, name.opt = ".PDF.Options", envir = .PSenv)
 
@@ -359,7 +359,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$pointsize, onefile, old$pagecentre,
               old$title, old$fonts, version[1], version[2],
-              old$colormodel, old$useDingbats, old$forceLetterSpacing)
+              old$colormodel, old$useDingbats, old$useKerning)
     invisible()
 }
 
@@ -378,12 +378,12 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 "/p1  { stroke } def",
 "/p2  { gsave bg fill grestore newpath } def",
 "/p3  { gsave bg fill grestore stroke } def",
-"/t   { 6 -2 roll moveto gsave rotate",
-"       ps mul neg 0 2 1 roll rmoveto",
+"/t   { 5 -2 roll moveto gsave rotate",
 "       1 index stringwidth pop",
 "       mul neg 0 rmoveto show grestore } def",
-"/tk  { 7 -2 roll moveto gsave rotate",
-"       ps pop pop pop xshow grestore } def",
+"/ta  { 4 -2 roll moveto gsave rotate show } def",
+"/tb  { 2 -1 roll 0 rmoveto show } def",
+"/tc  { grestore } def",
 "/cl  { grestore gsave newpath 3 index 3 index moveto 1 index",
 "       4 -1 roll lineto  exch 1 index lineto lineto",
 "       closepath clip newpath } def",
@@ -630,7 +630,7 @@ assign(".PostScript.Options",
 	 print.it   = FALSE,
 	 command    = "default",
          colormodel = "rgb",
-         forceLetterSpacing = FALSE), envir = .PSenv)
+         useKerning = FALSE), envir = .PSenv)
 assign(".PostScript.Options.default",
        get(".PostScript.Options", envir = .PSenv),
        envir = .PSenv)
@@ -651,7 +651,7 @@ assign(".PDF.Options",
 	 pagecentre = TRUE,
          colormodel = "rgb",
          useDingbats = TRUE,
-         forceLetterSpacing = FALSE), envir = .PSenv)
+         useKerning = FALSE), envir = .PSenv)
 assign(".PDF.Options.default",
        get(".PDF.Options", envir = .PSenv),
        envir = .PSenv)
