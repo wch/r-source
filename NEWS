@@ -47,6 +47,9 @@ UTILITIES
 
 BUG FIXES
 
+    o	add1.glm() no longer warns if applied to a binomial glm with a
+	factor response.
+
 
 
 
