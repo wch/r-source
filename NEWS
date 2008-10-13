@@ -16,9 +16,9 @@ NEW FEATURES
 	libraries Lapack, CHOLMOD and CSparse.
 
     o	pdf() and postscript() gain a 'useKerning' argument to place
-	letters using kerning (which had previously been ignored in
+	strings using kerning (which had previously been ignored in
 	display but not in strwidth), based in part on an idea and
-	code from Ei-ji Nakama.  If this is FALSE, kerning in no
+	code from Ei-ji Nakama.  If this is FALSE, kerning is no
 	longer used in string width calculations.  [The default is
 	currently FALSE but it likely to be altered prior to release.]
 
