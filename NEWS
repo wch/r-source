@@ -30,6 +30,9 @@ NEW FEATURES
 	have been slightly out of range because of the allowance for
 	rounding error in computing the number of elements.
 
+    o	sum() now has a method for "difftime" objects (via the Summary
+	group).
+
 
 DEPRECATED & DEFUNCT
 

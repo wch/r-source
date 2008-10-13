@@ -581,7 +581,7 @@ Summary.difftime <- function (..., na.rm)
                          secs = x, mins = 60*x, hours = 60*60*x,
                          days = 60*60*24*x, weeks = 60*60*24*7*x))
     }
-    ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
+    ok <- switch(.Generic, max = , min = , sum=, range = TRUE, FALSE)
     if (!ok)
         stop(gettextf("'%s' not defined for \"difftime\" objects", .Generic),
              domain = NA)
