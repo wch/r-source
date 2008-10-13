@@ -15,6 +15,7 @@
 
 		CHANGES IN R VERSION 2.8.0
 
+
 NEW FEATURES
 
     o	Rterm --ess sets stdout to be unbuffered, as it would be for
