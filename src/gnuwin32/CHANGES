@@ -14,9 +14,17 @@
 
 		CHANGES IN R VERSION 2.9.0
 
+
 NEW FEATURES
 
     o	memory.size() and memory.limits() now return rounded values.
+
+
+BUGS
+
+    o	The windows() device now works around the total clipping of
+ 	semi-transparent rectangles and circles that extend outside
+ 	the device region.
 
 
 
@@ -29,6 +37,7 @@ NEW FEATURES
 
 
 		CHANGES IN R VERSION 2.8.0
+
 
 NEW FEATURES
 
