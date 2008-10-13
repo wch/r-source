@@ -376,6 +376,7 @@ static int GetKPX(char *buf, int nkp, FontMetricInfo *metrics,
 
     p = SkipToNextItem(p);
     sscanf(p, "%s %s %hd", c1, c2, &(metrics->KernPairs[nkp].kern));
+    if (streql(c1, "space") || streql(c2, "space")) return 0;
     for(i = 0; i < 256; i++) {
 	if (!strcmp(c1, charnames[i].cname)) {
 	    metrics->KernPairs[nkp].c1 = i;
@@ -806,15 +807,13 @@ static double
 	if(useKerning) {
 	    /* check for kerning adjustment */
 	    p1 = p[0]; p2 = p[1];
-	    /* skip space kerning */
-	    if (p1 != ' ' && p2 != ' ')
-		for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
-		    /* second test is a safety check: should all start with p1 */
-		    if(metrics->KernPairs[i].c2 == p2 &&
-		       metrics->KernPairs[i].c1 == p1) {
-			sum += metrics->KernPairs[i].kern;
-			break;
-		    }
+	    for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
+		/* second test is a safety check: should all start with p1 */
+		if(metrics->KernPairs[i].c2 == p2 &&
+		   metrics->KernPairs[i].c1 == p1) {
+		    sum += metrics->KernPairs[i].kern;
+		    break;
+		}
 	}
     }
     return 0.001 * sum;
@@ -2903,14 +2902,12 @@ PostScriptTextKern(FILE *fp, double x, double y,
 	if (p1 == '-' && !isdigit((int)p2))
 	    p1 = (unsigned char)PS_hyphen;
 #endif
-	/* skip space kerning */
-	if (p1 != ' ' && p2 != ' ')
-	    for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++)
-		if(metrics->KernPairs[j].c2 == p2 &&
-		   metrics->KernPairs[j].c1 == p1) {
-		    haveKerning = TRUE;
-		    break;
-		}
+	for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++)
+	    if(metrics->KernPairs[j].c2 == p2 &&
+	       metrics->KernPairs[j].c1 == p1) {
+		haveKerning = TRUE;
+		break;
+	    }
     }
 
     if(haveKerning) {
@@ -2935,19 +2932,17 @@ PostScriptTextKern(FILE *fp, double x, double y,
 	    if (p1 == '-' && !isdigit((int)p2))
 		p1 = (unsigned char)PS_hyphen;
 #endif
-	    /* skip space kerning */
-	    if (p1 != ' ' && p2 != ' ')
-		for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++)
-		    if(metrics->KernPairs[j].c2 == p2 &&
-		       metrics->KernPairs[j].c1 == p1) {
-			PostScriptText2(fp, x, y, str+nout, i+1-nout,
-					relative, rot, gc, dd);
-			nout = i+1;
-			w = metrics->KernPairs[j].kern;
-			x = fac*w; y = 0;
-			relative = TRUE;
-			break;
-		    }
+	    for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++)
+		if(metrics->KernPairs[j].c2 == p2 &&
+		   metrics->KernPairs[j].c1 == p1) {
+		    PostScriptText2(fp, x, y, str+nout, i+1-nout,
+				    relative, rot, gc, dd);
+		    nout = i+1;
+		    w = metrics->KernPairs[j].kern;
+		    x = fac*w; y = 0;
+		    relative = TRUE;
+		    break;
+		}
 	}
 	PostScriptText2(fp, x, y, str+nout, n-nout, relative, rot, gc, dd);
 	fprintf(fp, " gr\n");
@@ -6854,15 +6849,13 @@ static void PDFWriteT1KerningString(FILE *fp, const char *str,
 	if (p1 == '-' && !isdigit((int)p2))
 	    p1 = (unsigned char)PS_hyphen;
 #endif
-	/* skip space kerning */
-	if (p1 != ' ' && p2 != ' ')
-	    for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++)
-		if(metrics->KernPairs[j].c2 == p2 &&
-		   metrics->KernPairs[j].c1 == p1) {
-		    ary[i] += metrics->KernPairs[j].kern;
-		    haveKerning = TRUE;
-		    break;
-		}
+	for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++)
+	    if(metrics->KernPairs[j].c2 == p2 &&
+	       metrics->KernPairs[j].c1 == p1) {
+		ary[i] += metrics->KernPairs[j].kern;
+		haveKerning = TRUE;
+		break;
+	    }
     }
     if(haveKerning) {
 	fputc('[', fp); fputc('(', fp);
