@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/memory.size.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{memory.size}
@@ -38,7 +38,8 @@ memory.limit(size = NA)
   Memory limits can only be increased.
 }
 \value{
-  Size in Mb (1048576 bytes).
+  Size in Mb (1048576 bytes), rounded to 0.01 Mb for \code{memory.size}
+  and rounded down for \code{memory.limit}.
 }
 \seealso{
   \link{Memory-limits} for other limits.
@@ -46,8 +47,8 @@ memory.limit(size = NA)
   The rw-FAQ for more details and references.
 }
 \examples{
-round(memory.size(), 2)
-round(memory.size(TRUE), 2)
-round(memory.limit(), 2)
+memory.size()
+memory.size(TRUE)
+memory.limit()
 }
 \keyword{utilities}
