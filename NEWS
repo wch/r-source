@@ -8,6 +8,7 @@
 
 		CHANGES IN R VERSION 2.9.0
 
+
 NEW FEATURES
 
     o	Package 'Matrix' is now a recommended package contained in the
@@ -33,8 +34,9 @@ NEW FEATURES
     o	sum() now has a method for "difftime" objects (via the Summary
 	group).
 
-	max(), min() and range() applied to a single "difftime" object
-	now return a result in the original units.
+	max(), min() and range() applied to "difftime" object(s) now
+	return a result in the common units of the objects, if there
+	is one.
 
 
 DEPRECATED & DEFUNCT
