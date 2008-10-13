@@ -46,8 +46,8 @@ memory.limit(size = NA)
   The rw-FAQ for more details and references.
 }
 \examples{
-memory.size()
-memory.size(TRUE)
+round(memory.size(), 2)
+round(memory.size(TRUE), 2)
 round(memory.limit(), 2)
 }
 \keyword{utilities}
