@@ -585,8 +585,14 @@ Summary.difftime <- function (..., na.rm)
     if (!ok)
         stop(gettextf("'%s' not defined for \"difftime\" objects", .Generic),
              domain = NA)
-    args <- c(lapply(list(...), coerceTimeUnit), na.rm = na.rm)
-    structure(do.call(.Generic, args), units="secs", class="difftime")
+    if(length(list(...)) != 1) {
+        args <- c(lapply(list(...), coerceTimeUnit), na.rm = na.rm)
+        structure(do.call(.Generic, args), units="secs", class="difftime")
+    } else {
+        x <- list(...)[[1]]
+        structure(do.call(.Generic, list(as.vector(x), na.rm = na.rm)),
+                  units=attr(x, "units"), class="difftime")
+    }
 }
 
 

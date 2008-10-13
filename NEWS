@@ -33,6 +33,9 @@ NEW FEATURES
     o	sum() now has a method for "difftime" objects (via the Summary
 	group).
 
+	max(), min() and range() applied to a single "difftime" object
+	now return a result in the original units.
+
 
 DEPRECATED & DEFUNCT
 
