@@ -39,6 +39,9 @@ NEW FEATURES
 	return a result in the common units of the objects, if there
 	is one.
 
+    o	installed.packages() is now tolerant of malformed DESCRIPTION
+	files in installed packages (it ignores them, with a warning).
+
 
 DEPRECATED & DEFUNCT
 
