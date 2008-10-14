@@ -111,7 +111,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     currently allowed values as \code{"rgb"}, \code{"rgb-nogray"},
     \code{"gray"} and \code{"cmyk"}.  Defaults to \code{"rgb"}.}
   \item{useKerning}{logical.  Should kerning corrections be included in
-    setting text and calculating string widths?}
+    setting text and calculating string widths?  Defaults to \code{TRUE}.}
 }
 \details{
   All arguments except \code{file} default to values given by

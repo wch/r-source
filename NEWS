@@ -22,9 +22,7 @@ NEW FEATURES
     o	pdf() and postscript() gain a 'useKerning' argument to place
 	strings using kerning (which had previously been ignored in
 	display but not in strwidth), based in part on an idea and
-	code from Ei-ji Nakama.  If this is FALSE, kerning is no
-	longer used in string width calculations.  [The default is
-	currently FALSE but it likely to be altered prior to release.]
+	code from Ei-ji Nakama. The default is TRUE.
 
 	Kerning involving spaces is now ignored (it was previously
 	only used in the computation of string widths).

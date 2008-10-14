@@ -73,7 +73,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     smaller and better output -- this is provided for those who insist
     on using broken PDF viewers.}
   \item{useKerning}{logical.  Should kerning corrections be included in
-    setting text and calculating string widths?}
+    setting text and calculating string widths?  Defaults to \code{TRUE}.}
 }
 \details{
   All arguments except \code{file} default to values given by

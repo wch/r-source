@@ -629,7 +629,7 @@ assign(".PostScript.Options",
 	 print.it   = FALSE,
 	 command    = "default",
          colormodel = "rgb",
-         useKerning = FALSE), envir = .PSenv)
+         useKerning = TRUE), envir = .PSenv)
 assign(".PostScript.Options.default",
        get(".PostScript.Options", envir = .PSenv),
        envir = .PSenv)
@@ -650,7 +650,7 @@ assign(".PDF.Options",
 	 pagecentre = TRUE,
          colormodel = "rgb",
          useDingbats = TRUE,
-         useKerning = FALSE), envir = .PSenv)
+         useKerning = TRUE), envir = .PSenv)
 assign(".PDF.Options.default",
        get(".PDF.Options", envir = .PSenv),
        envir = .PSenv)
