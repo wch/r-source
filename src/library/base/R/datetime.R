@@ -751,13 +751,12 @@ cut.POSIXt <-
         breaks <- seq(start, end, paste(step * 3, "months"))
     } else {
         if (length(by2) == 2) incr <- incr * as.integer(by2[1])
-	    maxx <- max(x, na.rm = TRUE)
+        maxx <- max(x, na.rm = TRUE)
         breaks <- seq.int(start, maxx + incr, breaks)
-        breaks <- breaks[1:(1+max(which(breaks < maxx)))]
+        breaks <- breaks[1:(1+max(which(breaks <= maxx)))]
       }
     } else stop("invalid specification of 'breaks'")
-    res <- cut(unclass(x), unclass(breaks), labels = labels,
-               right = right, ...)
+    res <- cut(unclass(x), unclass(breaks), labels = labels, right = right, ...)
     if(is.null(labels)) levels(res) <- as.character(breaks[-length(breaks)])
     res
 }

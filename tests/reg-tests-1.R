@@ -5414,6 +5414,8 @@ anova(fit)
 ## boundary case in cut.Date (PR#13159)
 d <- as.Date("2008-07-07")
 cut(d, "weeks")
+d <- as.POSIXct("2008-07-07", tz="UTC")
+cut(d, "weeks")
 ## failed < 2.8.0
 
 
