@@ -3142,17 +3142,20 @@ The default settings for making the manuals are controlled by
 @section Using make
 @findex make
 
-To compile @R{}, you will most likely find it easiest to use GNU
-@command{make}.  On Solaris 2.6/7/8 in particular, you need a version of
-@acronym{GNU} @command{make} different from 3.77; 3.79.1 and later work
-fine, as does the Sun @command{make}.  The native @command{make} is
-reported to fail on SGI Irix 6.5 and Alpha/OSF1 (aka Tru64).
+At present GNU @command{make} is required to install the recommended
+package @pkg{Matrix}.
 
-To build in a separate directory you need a @command{make} that uses the
-@code{VPATH} variable, for example @acronym{GNU} @command{make}, or Sun
-@command{make} on Solaris 2.7 or later.
+@c To compile @R{}, you will most likely find it easiest to use GNU
+@c @command{make}.  On Solaris 2.6/7/8 in particular, you need a version of
+@c @acronym{GNU} @command{make} different from 3.77; 3.79.1 and later work
+@c fine, as does the Sun @command{make}.  The native @command{make} is
+@c reported to fail on SGI Irix 6.5 and Alpha/OSF1 (aka Tru64).
 
-@command{dmake} has also been used. e.g,@: on Solaris 10.
+@c To build in a separate directory you need a @command{make} that uses the
+@c @code{VPATH} variable, for example @acronym{GNU} @command{make}, or Sun
+@c @command{make} on Solaris 2.7 or later.
+
+@c @command{dmake} has also been used. e.g,@: on Solaris 10.
 
 If you want to use a @command{make} by another name, for example if your
 @acronym{GNU} @command{make} is called @samp{gmake}, you need to set the
@@ -3163,8 +3166,9 @@ variable @code{MAKE} at configure time, for example
 ./configure MAKE=gmake
 @end example
 
-Note the comment above about using a parallel @command{make}: this works
-for building @R{} but not for installing nor checking.
+Note the comment in @ref{Installation} about using a parallel
+@command{make}: this works for building @R{} but not for installing nor
+checking.
 
 @node Using FORTRAN, Compile and load flags, Using make, Configuration on Unix
 @section Using FORTRAN
