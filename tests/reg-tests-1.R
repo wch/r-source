@@ -5411,6 +5411,15 @@ anova(fit)
 ## obscure errors < 2.8.0
 
 
+## boundary case in cut.Date (PR#13159)
+d <- as.Date("2008-07-07")
+cut(d, "weeks")
+## failed < 2.8.0
+
+
+### end of tests added for 2.8.0
+
+
 ## (Deliberate) overshot in seq(from, to, by) because of fuzz
 stopifnot(seq(0, 1, 0.00025+5e-16) <= 1, seq.int(0, 1, 0.00025+5e-16) <= 1)
 stopifnot(rev(seq(0, 1, 0.00025+5e-16))[1] == 1,

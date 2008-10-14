@@ -610,6 +610,9 @@ BUG FIXES
 
     o	anova(glm(..., y=FALSE)) now works.  (PR#13098)
 
+    o	cut.Date(x, "weeks") could fail if x has only one unique value
+	which fell on a week boundary.  (PR#13159)
+
 
 
 
