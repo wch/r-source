@@ -145,6 +145,17 @@ install.packages <-
         } else stop("unable to install packages")
     }
 
+    ## check if we should infer repos=NULL
+    if(length(pkgs) == 1 && missing(repos) && missing(contriburl)) {
+        if((type == "source" && length(grep("\.tar.gz$", pkgs))) ||
+           (type == "win.binary" && length(grep("\.zip$", pkgs))) ||
+           (substr(type, 1, 10) == "mac.binary"
+            && length(grep("\.tgz$", pkgs)))) {
+            repos <- NULL
+            message("inferring 'repos = NULL' from the file name")
+        }
+    }
+
     if(.Platform$OS.type == "windows") {
         if(type == "mac.binary")
             stop("cannot install MacOS X binary packages on Windows")

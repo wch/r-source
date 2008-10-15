@@ -55,10 +55,10 @@
 
   If \code{[} returns a data frame it will have unique (and non-missing)
   row names, if necessary transforming the row names using
-  \code{\link{make.unique}}.  Similarly, column names will be
-  transformed to be unique if necessary (e.g. if columns are selected
-  more than once, or if more than one column of a given name is selected
-  if the data frame has duplicate columns).
+  \code{\link{make.unique}}.  Similarly, if columns are selected column
+  names will be transformed to be unique if necessary (e.g. if columns
+  are selected more than once, or if more than one column of a given
+  name is selected if the data frame has duplicate columns).
 
   When \code{drop = TRUE}, this is applied to the subsetting of any
   matrices contained in the data frame as well as to the data frame itself.
