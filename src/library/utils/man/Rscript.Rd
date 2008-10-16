@@ -1,6 +1,6 @@
 % File src/library/utils/man/Rscript.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Rscript}
@@ -31,9 +31,14 @@
   executable and takes \code{file} directly as an argument.  Options
   \code{--slave --no-restore} are always supplied: these imply
   \code{--no-save}.
+#ifdef windows
+  The standard Windows command line has no concept of \code{#!} scripts,
+  but Cygwin shells do.
+#endif
 
   \emph{Either} one or more \option{-e} options or \code{file} should
-  be supplied.
+  be supplied.  When using \option{-e} options be aware of the quoting
+  rules in the shell used: see the examples.
 
   Additional options accepted (before \code{file} or \code{args}) are
   \describe{
@@ -71,9 +76,20 @@
 }
 #endif
 \examples{\dontrun{
+#ifdef unix
 Rscript -e 'date()' -e 'format(Sys.time(), "\%a \%b \%d \%X \%Y")'
+#endif
+#ifdef windows
+# Note that Rscript is not by default in the PATH on Windows, so
+# either put it there or use an explicit path to Rscript.
 
-## example #! script
+# at the standard Windows command line
+Rscript -e "date()" -e "format(Sys.time(), \\"\%a \%b \%d \%X \%Y\\")"
+# in other shells, e.g. bash or tcsh, prefer
+Rscript -e 'date()' -e 'format(Sys.time(), "\%a \%b \%d \%X \%Y")'
+#endif
+
+## example #! script for a Unix-alike
 
 #! /path/to/Rscript --vanilla --default-packages=utils
 args <- commandArgs(TRUE)
