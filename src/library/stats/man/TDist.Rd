@@ -146,6 +146,6 @@ fake_qt <- function(p, df)
 qt(0.95, 3); fake_qt(0.95, 3)
 fake_qt(0.95, 0.7)
 # another workaround is
-qt(0.95, 0.7, ncp=1e-10)
+qt(0.95, 0.7, ncp=0)
 }
 \keyword{distribution}

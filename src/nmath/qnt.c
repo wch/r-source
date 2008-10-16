@@ -39,7 +39,7 @@ double qnt(double p, double df, double ncp, int lower_tail, int log_p)
      */
     if (df <= 0.0) ML_ERR_return_NAN;
     
-    if(ncp == 0.0) return qt(p, df, lower_tail, log_p);
+    if(ncp == 0.0 && df >= 1.0) return qt(p, df, lower_tail, log_p);
 
     R_Q_P01_boundaries(p, ML_NEGINF, ML_POSINF);
 
