@@ -29,7 +29,7 @@ rt(n, df, ncp)
     is taken to be the number required.}
   \item{df}{degrees of freedom (\eqn{> 0}, maybe non-integer).  \code{df
       = Inf} is allowed.  For \code{qt} only values of at least one are
-    currently supported.}
+    currently supported.: see the examples for a workaround.}
   \item{ncp}{non-centrality parameter \eqn{\delta};
     currently except for \code{rt()}, only for \code{abs(ncp) <= 37.62}.
     If omitted, use the central t distribution.}
@@ -138,5 +138,11 @@ persp(tt,ncp,ptn, zlim=0:1, r=2, phi=20, theta=200, main=t.tit,
 
 plot(function(x) dt(x, df = 3, ncp = 2), -3, 11, ylim = c(0, 0.32),
      main="Non-central t - Density", yaxs="i")
+
+## if X ~ t(df) then X^2 ~ F(1,df).  So for any df > 0
+fake_qt <- function(p, df)
+    sign(p-0.5) * sqrt(qf(2*min(p,1-p), 1, df, lower=FALSE))
+qt(0.95, 3); fake_qt(0.95, 3)
+fake_qt(0.95, 0.7)
 }
 \keyword{distribution}
