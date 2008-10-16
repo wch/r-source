@@ -1,0 +1,142 @@
+
+# Good idea to choose r as absolute unit or "snpc"
+roundrectGrob <- function(x=0.5, y=0.5, width=1, height=1,
+                          default.units="npc",
+                          r=unit(0.1, "snpc"),
+                          just="centre",
+                          name=NULL, gp=NULL, vp=NULL) {
+    if (!is.unit(x))
+        x <- unit(x, default.units)
+    if (!is.unit(y))
+        y <- unit(y, default.units)
+    if (!is.unit(width))
+        width <- unit(width, default.units)
+    if (!is.unit(height))
+        height <- unit(height, default.units)
+    grob(x=x, y=y, width=width, height=height, r=r,
+         name=name, gp=gp, vp=vp, cl="roundrect")
+}
+
+grid.roundrect <- function(...) {
+  grid.draw(roundrectGrob(...))
+}
+
+validDetails.roundrect <- function(x) {
+    if (!is.unit(x$x) ||
+        !is.unit(x$y) ||
+        !is.unit(x$width) ||
+        !is.unit(x$height))
+        stop("'x', 'y', 'width', and 'height' must be units")
+    if (!is.unit(x$r))
+        stop("'r' must be a unit object")
+    valid.just(x$just)
+    # Make sure that x and y are of length 1
+    if (length(x$x) != 1 | length(x$y) != 1 |
+        length(x$width) != 1 | length(x$height) != 1)
+        stop("'x', 'y', 'width', and 'height' must have length 1")
+    x
+}
+
+preDrawDetails.roundrect <- function(x) {
+  pushViewport(viewport(x$x, x$y, x$width, x$height, just=x$just),
+               recording=FALSE)
+}
+
+postDrawDetails.roundrect <- function(x) {
+  popViewport(recording=FALSE)
+}
+
+# x, y, is the real corner
+roundCorner <- function(num, x, y, r) {
+  n <- 10*4
+  t <- seq(0, 2*pi, length=n)
+  cost <- cos(t)
+  sint <- sin(t)
+  if (num == 1) {
+    xc <- x + r
+    yc <- y + r
+    subset <- (n/2):(3*n/4)
+  } else if (num == 2) {
+    xc <- x + r
+    yc <- y - r
+    subset <- (n/4):(n/2)
+  } else if (num == 3) {
+    xc <- x - r
+    yc <- y - r
+    subset <- 1:(n/4)
+  } else if (num == 4) {
+    xc <- x - r
+    yc <- y + r
+    subset <- (3*n/4):n
+  }
+  list(x=xc + (cost*r)[subset], y=yc + (sint*r)[subset])
+}
+
+rrpoints <- function(x) {
+  left <- 0
+  bottom <- 0
+  right <- convertX(unit(1, "npc"), "inches", valueOnly=TRUE)
+  top <- convertY(unit(1, "npc"), "inches", valueOnly=TRUE)
+  r <- min(convertWidth(x$r, "inches", valueOnly=TRUE),
+           convertHeight(x$r, "inches", valueOnly=TRUE))
+  corner1 <- roundCorner(1, left, bottom, r)
+  corner2 <- roundCorner(2, left, top, r)
+  corner3 <- roundCorner(3, right, top, r)
+  corner4 <- roundCorner(4, right, bottom, r)
+  xx <- unit(c(left + r, right - r, corner4$x,
+               right, right, corner3$x,
+               right - r, left + r, corner2$x,
+               left, left, corner1$x),
+             "inches")
+  yy <- unit(c(bottom, bottom, corner4$y,
+               bottom + r, top - r, corner3$y,
+               top, top, corner2$y,
+               top - r, bottom + r, corner1$y),
+             "inches")
+  list(x=xx, y=yy)
+}
+
+drawDetails.roundrect <- function(x, recording) {
+    boundary <- rrpoints(x)
+    grid.Call.graphics("L_polygon", boundary$x, boundary$y,
+                       list(as.integer(1:length(boundary$x))))
+}
+
+xDetails.roundrect <- function(x, theta) {
+    boundary <- rrpoints(x)
+    bounds <- grid.Call("L_locnBounds", boundary$x, boundary$y, theta)
+    if (is.null(bounds))
+        unit(0.5, "npc")
+    else
+        unit(bounds[1], "inches")
+}
+
+yDetails.roundrect <- function(x, theta) {
+    boundary <- rrpoints(x)
+    bounds <- grid.Call("L_locnBounds", boundary$x, boundary$y, theta)
+    if (is.null(bounds))
+        unit(0.5, "npc")
+    else
+        unit(bounds[2], "inches")
+}
+
+widthDetails.roundrect <- function(x) {
+    boundary <- rrpoints(x)
+    bounds <- grid.Call("L_locnBounds", boundary$x, boundary$y, 0)
+    if (is.null(bounds))
+        unit(0, "inches")
+    else
+        unit(bounds[3], "inches")
+}
+
+heightDetails.roundrect <- function(x) {
+    boundary <- rrpoints(x)
+    bounds <- grid.Call("L_locnBounds", boundary$x, boundary$y, 0)
+    if (is.null(bounds))
+        unit(0, "inches")
+    else
+        unit(bounds[4], "inches")
+}
+
+
+
