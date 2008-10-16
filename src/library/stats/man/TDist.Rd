@@ -29,7 +29,8 @@ rt(n, df, ncp)
     is taken to be the number required.}
   \item{df}{degrees of freedom (\eqn{> 0}, maybe non-integer).  \code{df
       = Inf} is allowed.  For \code{qt} only values of at least one are
-    currently supported.: see the examples for a workaround.}
+    currently supported unless \code{ncp} is supplied: see the examples
+    for a workaround.}
   \item{ncp}{non-centrality parameter \eqn{\delta};
     currently except for \code{rt()}, only for \code{abs(ncp) <= 37.62}.
     If omitted, use the central t distribution.}
@@ -144,5 +145,7 @@ fake_qt <- function(p, df)
     sign(p-0.5) * sqrt(qf(2*min(p,1-p), 1, df, lower=FALSE))
 qt(0.95, 3); fake_qt(0.95, 3)
 fake_qt(0.95, 0.7)
+# another workaround is
+qt(0.95, 0.7, ncp=1e-10)
 }
 \keyword{distribution}
