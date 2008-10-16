@@ -17,7 +17,7 @@ NEW FEATURES
 	libraries Lapack, CHOLMOD and CSparse.
 
 	Note that at least for the time being this requires GNU make
-	to been used to install R.
+	to have been used to install R.
 
     o	pdf() and postscript() gain a 'useKerning' argument to place
 	strings using kerning (which had previously been ignored in
