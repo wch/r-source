@@ -14,7 +14,8 @@ NEW FEATURES
     o	Package 'Matrix' is now a recommended package contained in the
 	basic R distribution.  It provides S4 classes and methods for
 	dense and sparse matrices, often by using the numerical
-	libraries Lapack, CHOLMOD and CSparse.
+	libraries Lapack and from the SuiteSparse collection CHOLMOD,
+	CSparse, and SPQR among others.
 
 	Note that at least for the time being this requires GNU make
 	to have been used to install R.
@@ -60,6 +61,8 @@ UTILITIES
 
     o	R CMD Rd2dvi and R CMD check are now able to cope with Cyrillic
     	characters in UTF-8 (thanks to a hint from Alexey Shipunov).
+
+    o	R CMD build now also uses a Makevars file for cleaning up src/.
 
 
 BUG FIXES
@@ -241,7 +244,7 @@ NEW FEATURES
 
     o	quantile.default() allows 'probs' to stray just beyond [0, 1],
 	to allow for computed values.
- 
+
     o	New functions rawConnection() and rawConnectionValue() allow
 	raw vectors to be treated as connections.
 

@@ -555,19 +555,26 @@ sub cleanup_pkg {
 	    if(-r "Makefile.win") {
 		R_system("${R::Vars::MAKE} -f Makefile.win clean");
 	    } else {
+		if(-r "Makevars.win") {
+		    R_system("${R::Vars::MAKE} -f Makevars.win clean");
+		}
 		foreach my $file (<*.o $pkgname.a $pkgname.dll $pkgname.def>) {
 		    unlink($file);
 		}
 		rmtree("_libs") if (-d "_libs");
 	    }
 	} else {
+	    my $makefiles = "-f " .
+		&shell_quote_file_path(&file_path(${R::Vars::R_HOME},
+						  "etc", "Makeconf"));
 	    if(-r "Makefile") {
-		my $makefiles = "-f " .
-		    &shell_quote_file_path(&file_path(${R::Vars::R_HOME},
-						      "etc", "Makeconf"));
 		$makefiles .= " -f Makefile";
 		R_system("${R::Vars::MAKE} $makefiles clean");
 	    } else {
+		if(-r "Makevars") {
+		    $makefiles .= " -f Makevars";
+		    R_system("${R::Vars::MAKE} $makefiles clean");
+		}
 		## Also cleanup possible Windows leftovers ...
 		unlink((<*.o *.s[lo] *.dylib>,
 			"$pkgname.a", "$pkgname.dll", "$pkgname.def"));
