@@ -1176,12 +1176,14 @@ All except @pkg{RODBC} are tied to one DBMS, but work is in progress
 towards a unified `front-end' package @pkg{DBI}
 (@uref{http://developer.r-project.org/db}) in conjuction with a
 `back-end', the most developed of which is @pkg{RMySQL}.  Also on CRAN
-are the back-ends @pkg{ROracle} and @pkg{RSQLite} (which works with the
-included DBMS @code{SQLite}, @uref{http://www.hwaci.com/sw/sqlite}).
+are the back-ends @pkg{ROracle}, @pkg{RPostgreSQL} and @pkg{RSQLite}
+(which works with the bundled DBMS @code{SQLite},
+@uref{http://www.hwaci.com/sw/sqlite}).
 
 Two earlier packages @pkg{RmSQL} and @pkg{RPgSQL} are now unsupported
-and in the development area on CRAN: the BioConductor project has
-@pkg{RdbiPgSQL}.  @pkg{PL/R} (@uref{http://www.joeconway.com/plr/,
+and in the archive area on CRAN: the BioConductor project has updated
+@pkg{RdbiPgSQL} (formerly on CRAN).  @pkg{PL/R}
+(@uref{http://www.joeconway.com/plr/,
 @code{http://@/www.joeconway.com/@/plr/}}) is a project to embed R into
 PostgreSQL.
 
@@ -1212,12 +1214,12 @@ on both Linux and Windows.
 @findex dbDriver
 @findex dbConnect
 @findex dbDisconnect
-The call @code{dbDriver("MySQL")} returns a database connection
-manager object, and then a call to @code{dbConnect} opens a database
-connection which can subsequently be closed by a call to the generic
-function @code{dbDisconnect}.
-Use @code{dbDriver("Oracle")} or @code{dbDriver("SQLite")} with those
-DBMSs and @pkg{ROracle} or @pkg{RSQLite} respectively.
+The call @code{dbDriver("MySQL")} returns a database connection manager
+object, and then a call to @code{dbConnect} opens a database connection
+which can subsequently be closed by a call to the generic function
+@code{dbDisconnect}.  Use @code{dbDriver("Oracle")},
+@code{dbdDriver("PostgreSQL")} or @code{dbDriver("SQLite")} with those
+DBMSs and @pkg{ROracle}, @pkg{PostgreSQL} or @pkg{RSQLite} respectively.
 
 @findex dbSendQuery
 @findex dbClearResult
@@ -2033,10 +2035,11 @@ argument.
 @acronym{DCOM} is a Windows protocol for communicating between different
 programs, possibly on different machines.  Thomas Baier's
 @code{StatConnector} program available from @acronym{CRAN} under
-Software->Other->Non-standard provides an interface to the proxy DLL
-which ships with the Windows version of @R{} and makes an @acronym{DCOM}
-server.  This can be used to pass simple objects (vectors and matrices)
-to and from @R{} and to submit commands to @R{}.
+Software->Other->Non-standard provides an interface to the proxy DLL in
+package @pkg{rscproxy} and makes an @acronym{DCOM} server.  This can be
+used to pass simple objects (vectors and matrices) to and from @R{} and
+to submit commands to @R{}.  (It is not clear if this is still
+functional: there is another version in the @pkg{RExcelInstaller} package.)
 
 The program comes with a Visual Basic demonstration and an Excel plug-in
 by Erich Neuwirth available.  This interface is in the other direction
