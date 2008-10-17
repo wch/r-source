@@ -25,7 +25,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
     after parsing, before evaluation.}
   \item{print.eval}{logical; if \code{TRUE}, the result of
     \code{eval(i)} is printed for each expression \code{i}; defaults
-    to \code{echo}.}
+    to the value of \code{echo}.}
   \item{verbose}{if \code{TRUE}, more diagnostics (than just
     \code{echo = TRUE}) are printed during parsing and evaluation of
     input, including extra info for \bold{each} expression.}
@@ -55,6 +55,19 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   chosen environment.
 }
 \details{
+  Note that running code via \code{source} differs in a few respects
+  from entering it at the \R command line.  Since expressions are not
+  executed at the top level, auto-printing is not done.  So you will
+  need to include explicit \code{print} calls for things you want to be
+  printed (and remember that this includes plotting by \pkg{lattice},
+  FAQ Q7.22).  Since the complete file is parsed before any of it is
+  run, syntax errors result in none of the code being run. If an error
+  occurs in running a syntactically correct script, anything assigned
+  into the workspace by code that has been run will be kept (just as
+  from the command line), but diagnostic information such as
+  \code{\link{traceback}()} will contain additional calls to
+  \code{eval.with.vis}, an undocumented internal function.
+
   All versions of \R accept input from a connection with end of line
   marked by LF (as used on Unix), CRLF (as used on DOS/Windows)
   or CR (as used on classic MacOS).  The final line can be incomplete, that
