@@ -159,7 +159,7 @@ NEW FEATURES
 
     o	quantile.default() allows 'probs' to stray just beyond [0, 1],
 	to allow for computed values.
- 
+
     o	New functions rawConnection() and rawConnectionValue() allow
 	raw vectors to be treated as connections.
 
