@@ -28,6 +28,8 @@
  *	Hill, G.W (1970) "Algorithm 396: Student's t-quantiles"
  *	CACM 13(10), 619-620.
  *
+ *	Supplemented by inversion for 0 < ndf < 1.
+ *
  *  ADDITIONS:
  *	- lower_tail, log_p
  *	- using	 expm1() : takes care of  Lozy (1979) "Remark on Algo.", TOMS
@@ -53,12 +55,44 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 
     R_Q_P01_boundaries(p, ML_NEGINF, ML_POSINF);
 
-    if (ndf < 1) /* FIXME:  not yet treated here */
-	ML_ERR_return_NAN;
+    if (ndf <= 0) ML_ERR_return_NAN;
 
-    /* FIXME: This test should depend on  ndf  AND p  !!
+    if (ndf < 1) { /* based on qnt */
+	const static double accu = 1e-13;
+	const static double Eps = 1e-11; /* must be > accu */
+
+	double ux, lx, nx, pp;
+
+	p = R_D_qIv(p);
+	if(!lower_tail) p = 1-p;
+
+	/* Invert pt(.) :
+	 * 1. finding an upper and lower bound */
+	if(p > 1 - DBL_EPSILON) return ML_POSINF;
+	pp = fmin2(1 - DBL_EPSILON, p * (1 + Eps));
+	for(ux = 1.0; ux < DBL_MAX && pt(ux, ndf, TRUE, FALSE) < pp; ux *= 2);
+	pp = p * (1 - Eps);
+	for(lx = -1.0; lx > -DBL_MAX && pt(lx, ndf, TRUE, FALSE) > pp; lx *= 2);
+
+	/* 2. interval (lx,ux)  halving : */
+	do {
+	    nx = 0.5 * (lx + ux);
+	    if (pt(nx, ndf, TRUE, FALSE) > p) ux = nx; else lx = nx;
+	}
+	while ((ux - lx) / fabs(nx) > accu);
+  
+	return 0.5 * (lx + ux);
+    }
+
+    /* Old coment:
+     *  "This test should depend on  ndf  AND p  !!
      * -----  and in fact should be replaced by
-     * something like Abramowitz & Stegun 26.7.5 (p.949)
+     * something like Abramowitz & Stegun 26.7.5 (p.949)"
+     *
+     * That would say that if the qnorm value is x then
+     * the result is about x + (x^3+x)/4df + (5x^5+16x^3+3x)/96df^2 
+     * The differences are tiny even if x ~ 1e5, and qnorm is not
+     * that accurate in the extreme tails.
      */
     if (ndf > 1e20) return qnorm(p, 0., 1., lower_tail, log_p);
 

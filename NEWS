@@ -46,6 +46,8 @@ NEW FEATURES
     o	install.packages() is able to infer that repos=NULL was
 	intended from the extension on the filename specified as 'pkgs'.
 
+    o	qt() now works for 0 < df < 1.
+
 
 DEPRECATED & DEFUNCT
 
@@ -80,7 +82,6 @@ BUG FIXES
     o	Subsetting a data frame with duplicate column names without
 	selecting columns (e.g. z[i,]) no longer makes the column
 	names unique.
-
 
 
 
