@@ -201,6 +201,7 @@ foreach my $pkg (@ARGV) {
 	open(RBUILDIGNORE, &file_path($pkgdir, ".Rbuildignore"));
 	while(<RBUILDIGNORE>) {
 	    chomp;
+	    s/\r$//;  # careless people get Windows files on other OSes
 	    push(@exclude_patterns, $_) if $_;
 	}
 	close(RBUILDIGNORE);
@@ -566,7 +567,8 @@ sub cleanup_pkg {
 	} else {
 	    my $makefiles = "-f " .
 		&shell_quote_file_path(&file_path(${R::Vars::R_HOME},
-						  "etc", "Makeconf"));
+						  "etc".$ENV{"R_ARCH"},
+						  "Makeconf"));
 	    if(-r "Makefile") {
 		$makefiles .= " -f Makefile";
 		R_system("${R::Vars::MAKE} $makefiles clean");
