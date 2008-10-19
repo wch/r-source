@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-parse_Rd <- function(file, srcfile = NULL, encoding = "unknown")
+parse_Rd <- function(file, srcfile = NULL, encoding = "unknown", verbose = FALSE)
 {
     if(is.character(file))
         if(file == "") file <- stdin()
@@ -24,7 +24,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown")
             file <- file(file, "r")
             on.exit(close(file))
         }
-    .Internal(parseRd(file, srcfile, encoding))
+    .Internal(parseRd(file, srcfile, encoding, verbose))
 }
 
 print.RdFile <- function(x, ...) {
@@ -32,9 +32,9 @@ print.RdFile <- function(x, ...) {
         spaces <- paste(rep(" ", indent), collapse="")
     	if (is.list(x)) {
     	    cat(spaces);
-    	    if (!is.null(header <- attr(x, "header"))) 
+    	    if (!is.null(header <- attr(x, "rdTag"))) 
     	    	cat(header);
-    	    if (!is.null(option <- attr(x, "option"))) {
+    	    if (!is.null(option <- attr(x, "rdOption"))) {
     	    	cat("[\n");
     	    	pr(option, indent + 2)
     	    	cat(spaces, "]\n", spaces, sep="");

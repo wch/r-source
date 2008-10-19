@@ -28,7 +28,6 @@
 #include "Parse.h"
 
 #define DEBUGVALS 0		/* 1 causes detailed internal state output to R console */	
-#define DEBUGTOKENS 0		/* 1 causes lexer output to R console */
 #define DEBUGMODE 0		/* 1 causes Bison output of parse state, to stdout or stderr */
 
 #define YYERROR_VERBOSE 1
@@ -71,9 +70,10 @@ static int	xxungetc(int);
 static int	xxlineno, xxcolno;
 static int	xxlastlinelen;
 static int	xxmode, xxitemType, xxbraceDepth;  /* context for lexer */
+static int	xxDebugTokens;  /* non-zero causes debug output to R console */
 static SEXP	Value;
 
-#define RLIKE 1
+#define RLIKE 1		/* Includes R strings; xxinRString holds the opening quote char, or 0 outside a string */
 #define LATEXLIKE 2
 #define VERBATIM 3
 #define INOPTION 4
@@ -138,6 +138,7 @@ static SEXP	xxlist(SEXP, SEXP);
 static SEXP	xxmarkup(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxmarkup2(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxOptionmarkup(SEXP, SEXP, SEXP, YYLTYPE *);
+static SEXP	xxtag(SEXP, int);
 static void	xxsavevalue(SEXP);
 
 static int	mkMarkup(int);
@@ -145,6 +146,7 @@ static int      mkIfdef(int);
 static int	mkCode(int);
 static int	mkText(int);
 static int	mkVerb(int);
+static int 	mkComment(int);
 
 #define YYSTYPE		SEXP
 
@@ -159,7 +161,7 @@ static int	mkVerb(int);
 %token		LISTSECTION ITEMIZE DESCRIPTION NOITEM
 %token		RCODEMACRO2 LATEXMACRO2 VERBMACRO2
 %token		IFDEF ENDIF
-%token		TEXT RCODE VERB UNKNOWN
+%token		TEXT RCODE VERB COMMENT UNKNOWN
 
 %%
 
@@ -176,13 +178,15 @@ Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, &@1); }
 	|	LISTSECTION    Item2Arg		{ $$ = xxmarkup($1, $2, &@1); }
 	|	SECTIONHEADER2 LatexArg LatexArg { $$ = xxmarkup2($1, $2, $3, &@1); }
 	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, &@1); UNPROTECT_PTR($4); } 
+	|	COMMENT				{ $$ = xxtag($1, COMMENT); }
 
 ArgItems:	Item				{ $$ = xxnewlist($1); }
 	|	ArgItems Item			{ $$ = xxlist($1, $2); }
 	
-Item:		TEXT
-	|	RCODE
-	|	VERB
+Item:		TEXT				{ $$ = xxtag($1, TEXT); }
+	|	RCODE				{ $$ = xxtag($1, RCODE); }
+	|	VERB				{ $$ = xxtag($1, VERB); }
+	|	COMMENT				{ $$ = xxtag($1, COMMENT); }
 	|	Markup				{ $$ = $1; }
 	
 Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@1); }
@@ -256,7 +260,7 @@ static SEXP xxpushMode(int newmode, int newitem)
 
 static void xxpopMode(SEXP oldmode) 
 {
-#if DEBUGMODE
+#if DEBUGVALS
     Rprintf("xxpopMode(%d, %s, %d) replaces %d, %s, %d\n", INTEGER(oldmode)[0], yytname[YYTRANSLATE(INTEGER(oldmode)[1])], INTEGER(oldmode)[2], 
     					xxmode, yytname[YYTRANSLATE(xxitemType)], xxbraceDepth);
 #endif
@@ -309,7 +313,7 @@ static SEXP xxmarkup(SEXP header, SEXP body, YYLTYPE *lloc)
 	PROTECT(ans = PairToVectorList(CDR(body)));
     	UNPROTECT_PTR(body);	
     }
-    setAttrib(ans, install("header"), header);
+    setAttrib(ans, install("rdTag"), header);
     if (SrcFile) 
     	setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     UNPROTECT_PTR(header);
@@ -327,9 +331,9 @@ static SEXP xxOptionmarkup(SEXP header, SEXP option, SEXP body, YYLTYPE *lloc)
 #endif
     PROTECT(ans = PairToVectorList(CDR(body)));
     UNPROTECT_PTR(body);	
-    setAttrib(ans, install("header"), header);
+    setAttrib(ans, install("rdTag"), header);
     UNPROTECT_PTR(header);
-    setAttrib(ans, install("option"), option);
+    setAttrib(ans, install("rdOption"), option);
     UNPROTECT_PTR(option);
     if (SrcFile) 
     	setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
@@ -352,7 +356,7 @@ static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, YYLTYPE *lloc)
     }
     SET_VECTOR_ELT(ans, 1, PairToVectorList(CDR(body2)));    
     UNPROTECT_PTR(body2);    
-    setAttrib(ans, install("header"), header);
+    setAttrib(ans, install("rdTag"), header);
     UNPROTECT_PTR(header);    
     if (SrcFile) 
     	setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
@@ -368,6 +372,12 @@ static void xxsavevalue(SEXP Rd)
     if (!isNull(Value))
     	setAttrib(Value, R_ClassSymbol, mkString("RdFile"));
     UNPROTECT_PTR(Rd);
+}
+
+static SEXP xxtag(SEXP item, int type)
+{
+    setAttrib(item, install("rdTag"), mkString(yytname[YYTRANSLATE(type)]));
+    return item;
 }
   
 /*----------------------------------------------------------------------------*/
@@ -585,57 +595,66 @@ struct {
 static keywords[] = {
     /* These sections contain Latex-like text */
     
-    { "\\name",    SECTIONHEADER },
-    { "\\docType", SECTIONHEADER },
-    { "\\title",   SECTIONHEADER },
-    { "\\description",SECTIONHEADER },
-    { "\\concept", SECTIONHEADER },
-    { "\\details", SECTIONHEADER },
-    { "\\format",  SECTIONHEADER },
-    { "\\references", SECTIONHEADER },
-    { "\\source",  SECTIONHEADER },
-    { "\\note",    SECTIONHEADER },
     { "\\author",  SECTIONHEADER },
-    { "\\seealso", SECTIONHEADER },
-    { "\\keyword", SECTIONHEADER },
+    { "\\concept", SECTIONHEADER },
+    { "\\description",SECTIONHEADER },
+    { "\\details", SECTIONHEADER },
+    { "\\docType", SECTIONHEADER },
+    
     { "\\encoding",SECTIONHEADER },
+    { "\\format",  SECTIONHEADER },
+    { "\\keyword", SECTIONHEADER },
+    { "\\name",    SECTIONHEADER },
+    { "\\note",    SECTIONHEADER },
+    
+    { "\\references", SECTIONHEADER },
     { "\\section", SECTIONHEADER2 },    
+    { "\\seealso", SECTIONHEADER },
+    { "\\source",  SECTIONHEADER },
+    { "\\title",   SECTIONHEADER },
 
     /* These sections contain R-like text */
     
-    { "\\usage",   RSECTIONHEADER },
     { "\\examples",RSECTIONHEADER },
+    { "\\usage",   RSECTIONHEADER },
     
-    /* These sections contain verbatim text */
+    /* This section contains verbatim text */
     
-    { "\\alias",   VSECTIONHEADER },    
+    { "\\alias",   VSECTIONHEADER }, 
+    { "\\synopsis",VSECTIONHEADER }, 
     
     /* These macros take no arguments.  One character non-alpha escapes get the
        same token value */
-    
+
+    { "\\cr",      ESCAPE },
     { "\\dots",    ESCAPE },
     { "\\ldots",   ESCAPE },
-    { "\\cr",      ESCAPE },
-    { "\\R",       ESCAPE },
+    { "\\R",       ESCAPE },    
     { "\\tab",     ESCAPE },
     
     /* These macros take one LaTeX-like argument. */
     
+    { "\\acronym", LATEXMACRO },
     { "\\bold",    LATEXMACRO },
-    { "\\emph",    LATEXMACRO },    
+    { "\\dfn",     LATEXMACRO },
     { "\\dQuote",  LATEXMACRO },
-    { "\\sQuote",  LATEXMACRO },
-    { "\\strong",  LATEXMACRO },
     { "\\email",   LATEXMACRO },
+    
+    { "\\emph",    LATEXMACRO },    
     { "\\file",    LATEXMACRO },
-    { "\\pkg",	   LATEXMACRO },
-    { "\\var",     LATEXMACRO },
     { "\\linkS4class", LATEXMACRO },
+    { "\\pkg",	   LATEXMACRO },
+    { "\\sQuote",  LATEXMACRO },
+    
+    { "\\strong",  LATEXMACRO },
+    
+    { "\\var",     LATEXMACRO },
     
     /* These are like SECTIONHEADER/LATEXMACRO, but they change the interpretation of \item */
 
     { "\\arguments",LISTSECTION },
     { "\\value",   LISTSECTION },
+    
     { "\\describe",DESCRIPTION },
     { "\\enumerate",ITEMIZE },
     { "\\itemize", ITEMIZE },
@@ -646,6 +665,7 @@ static keywords[] = {
     
     { "\\enc",     LATEXMACRO2 },
     { "\\method",  LATEXMACRO2 },
+    { "\\S3method",LATEXMACRO2 },
     { "\\S4method",LATEXMACRO2 },
     { "\\tabular", LATEXMACRO2 },
     
@@ -664,9 +684,12 @@ static keywords[] = {
     
     /* These macros take one verbatim arg and ignore everything except braces */
     
+    { "\\command", VERBMACRO },
     { "\\env",     VERBMACRO },
+    { "\\kbd", 	   VERBMACRO },	
     { "\\option",  VERBMACRO },
     { "\\preformatted", VERBMACRO },
+    
     { "\\samp",    VERBMACRO },
     { "\\special", VERBMACRO },
     { "\\url",     VERBMACRO },
@@ -798,13 +821,6 @@ static int SkipSpace(void)
     return c;
 }
 
-static int SkipComment(void)
-{
-    int c;
-    while ((c = xxgetc()) != '\n' && c != R_EOF) ;
-    return c;
-}
-
 #define TEXT_PUSH(c) do {                  \
 	unsigned int nc = bp - stext;       \
 	if (nc >= nstext - 1) {             \
@@ -833,7 +849,7 @@ static int token(void)
 	    c = SkipSpace();
     	else 
     	    c = xxgetc();
-   	if ( c == '%') c = SkipComment();
+   	if ( c == '%') return mkComment(c);
     } while (c == '\n');
     
     yylloc.first_line = xxlineno;
@@ -886,7 +902,6 @@ static int mkText(int c)
     char *stext = st0, *bp = st0, lookahead;
     
     while(1) {
-    	if (c == '%') c = SkipComment();
     	switch (c) {
     	case '\\': 
     	    lookahead = xxgetc();
@@ -896,6 +911,7 @@ static int mkText(int c)
     	    }
     	    xxungetc(lookahead);
     	    /* fall through to other cases ... */
+    	case '%':
     	case LBRACE:
     	case RBRACE:
     	case '\n':
@@ -904,9 +920,8 @@ static int mkText(int c)
     	    if (c != ']' || xxmode == INOPTION) { /* ']' only breaks in INOPTION mode */
     	    	xxungetc(c);
     	    	PROTECT(yylval = mkString2(stext,  bp - stext));
-#if DEBUGTOKENS
-            	Rprintf("mktext: %s\n", CHAR(STRING_ELT(yylval, 0)));    	    
-#endif
+		if (xxDebugTokens)
+            	    Rprintf("mktext: %s\n", CHAR(STRING_ELT(yylval, 0))); 
     	    	if(stext != st0) free(stext);
     	    	return TEXT;
     	    }
@@ -914,6 +929,19 @@ static int mkText(int c)
     	TEXT_PUSH(c);
     	c = xxgetc();
     };
+}
+
+static int mkComment(int c)
+{
+    char st0[INITBUFSIZE];
+    unsigned int nstext = INITBUFSIZE;
+    char *stext = st0, *bp = st0;
+    
+    do TEXT_PUSH(c);
+    while ((c = xxgetc()) != '\n' && c != R_EOF) ;
+    xxungetc(c);
+    PROTECT(yylval = mkString2(stext,  bp - stext));
+    return COMMENT;
 }
 
 static int mkCode(int c)
@@ -927,15 +955,35 @@ static int mkCode(int c)
     if (c == RBRACE) xxbraceDepth++; 
     
     while(1) {
+	int escaped = 0;
+    	if (c == '\\') {
+    	    int lookahead = xxgetc();
+    	    if (lookahead == '\\' || lookahead == '%') {
+    	         c = lookahead;
+    	         escaped = 1;
+    	    } else xxungetc(lookahead);
+    	}
+    	if ((!escaped && c == '%') || c == '\n' || c == R_EOF) break;
     	if (xxinRString) {
-    	    if (c == xxinRString) xxinRString = 0;
+    	    escaped = 0;
     	    if (c == '\\') {
-    	    	TEXT_PUSH(c);
-    	    	c = xxgetc();
+    		int lookahead = xxgetc();
+    		if (lookahead == '\\') { /* handle 4-tuples \\\\ and \\\% */
+    		    lookahead = xxgetc();
+    		    if (lookahead == xxinRString || lookahead == '\\') {	
+    	    	    	TEXT_PUSH(c);
+    	    	    	c = lookahead;
+    	    	    	escaped = 1;
+    	    	    } else xxungetc(lookahead);
+    	    	} else if (lookahead == xxinRString) {
+    	    	    TEXT_PUSH(c);
+    	    	    c = lookahead;
+    	    	    escaped = 1;
+    	    	} else xxungetc(lookahead);
     	    }
-    	    if (c == '\n' || c == R_EOF) break;
+    	    if (!escaped && c == xxinRString)
+    	    	xxinRString = 0;
     	} else {
-    	    if (c == '%') c = SkipComment();
     	    if (c == '#') {
     	    	do {
     	    	    TEXT_PUSH(c);
@@ -948,7 +996,7 @@ static int mkCode(int c)
     	    if (c == '\'' || c == '"' || c == '`') xxinRString = c;
     	    else if (c == '\\') {
     	    	int lookahead = xxgetc();
-    	    	if (lookahead == LBRACE || lookahead == RBRACE || lookahead == '%') {
+    	    	if (lookahead == LBRACE || lookahead == RBRACE) {
 		    c = lookahead;
 		} else if (isalpha(c)) {
     	    	    xxungetc(c);
@@ -970,9 +1018,9 @@ static int mkCode(int c)
     }
     xxungetc(c);
     PROTECT(yylval = mkString2(stext,  bp - stext));
-#if DEBUGTOKENS
-    Rprintf("mkCode:  %s\n", CHAR(STRING_ELT(yylval, 0)));
-#endif
+    if (xxDebugTokens) {
+    	Rprintf("mkCode:  %s\n", CHAR(STRING_ELT(yylval, 0)));
+    }
     if(stext != st0) free(stext);
     return RCODE; 
 }
@@ -1000,9 +1048,8 @@ static int mkMarkup(int c)
             retval = xxitemType;
     }
     PROTECT(yylval = mkString2(stext,  bp - stext - 1));
-#if DEBUGTOKENS
-    Rprintf("mkMarkup:  %s\n", CHAR(STRING_ELT(yylval, 0)));
-#endif
+    if (xxDebugTokens)
+    	Rprintf("mkMarkup:  %s\n", CHAR(STRING_ELT(yylval, 0)));
     if(stext != st0) free(stext);
     xxungetc(c);
     return retval;
@@ -1040,9 +1087,8 @@ static int mkIfdef(int c)
     	    break;
 	}
     }
-#if DEBUGTOKENS
-    Rprintf("mkIfdef:  %s\n", CHAR(STRING_ELT(yylval, 0)));
-#endif
+    if (xxDebugTokens)
+    	Rprintf("mkIfdef:  %s\n", CHAR(STRING_ELT(yylval, 0)));
     if(stext != st0) free(stext);
     return retval;
 }
@@ -1058,27 +1104,29 @@ static int mkVerb(int c)
     if (c == RBRACE) xxbraceDepth++;     
     
     while(1) {
-	if (c == LBRACE) 
+    	int escaped = 0;
+        if (c == '\\') {
+            int lookahead = xxgetc();
+            if (lookahead == '\\' || lookahead == '%' || lookahead == LBRACE || lookahead == RBRACE) {
+		c = lookahead;
+		escaped = 1;
+	    } else xxungetc(lookahead);
+        }
+    	if ((!escaped && c == '%') || c == '\n' || c == R_EOF) break;
+	if (!escaped && c == LBRACE) 
 	    xxbraceDepth++;
-    	else if (c == RBRACE) {
+    	else if (!escaped && c == RBRACE) {
 	    if (xxbraceDepth == 1) break;
 	    else xxbraceDepth--;
-	} else if (c == '\\') {
-	    int lookahead = xxgetc();
-	    if (lookahead == RBRACE || lookahead == LBRACE)
-	    	c = lookahead;
-	    else
-	    	xxungetc(lookahead);
-	} else if (c == R_EOF || c == '\n') 
+	} else if ((!escaped && c == '%') || c == R_EOF || c == '\n') 
 	    break;
     	TEXT_PUSH(c);
     	c = xxgetc();
     };
     xxungetc(c);
     PROTECT(yylval = mkString2(stext,  bp - stext));
-#if DEBUGTOKENS
-    Rprintf("mkverb:  %s\n", CHAR(STRING_ELT(yylval, 0)));  	    
-#endif
+    if (xxDebugTokens)
+    	Rprintf("mkverb:  %s\n", CHAR(STRING_ELT(yylval, 0)));
     if(stext != st0) free(stext);
     return VERB;  
 }
@@ -1093,17 +1141,18 @@ static int yylex(void)
 {
     int tok = token();
     
-#if DEBUGTOKENS    
-    Rprintf("%d:%d: %s\n", xxlineno, xxcolno, yytname[YYTRANSLATE(tok)]);
-#endif
-
+    if (xxDebugTokens) {  
+    	Rprintf("%d:%d: %s", xxlineno, xxcolno, yytname[YYTRANSLATE(tok)]);
+    	if (xxinRString) Rprintf("(in %c%c)", xxinRString, xxinRString);
+	Rprintf("\n");
+    }
     setlastloc();
     return tok;
 }
 
 /* "do_parseRd" 
 
- .Internal( parseRd(file, srcfile, encoding) )
+ .Internal( parseRd(file, srcfile, encoding, verbose) )
  If there is text then that is read and the other arguments are ignored.
 */
 
@@ -1117,7 +1166,7 @@ SEXP attribute_hidden do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *encoding;
     ParseStatus status;
 
-#if DEBUGTOKENS    
+#if DEBUGMODE
     yydebug = 1;
 #endif 
 
@@ -1132,10 +1181,13 @@ SEXP attribute_hidden do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     source = CAR(args);					args = CDR(args);
     if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("invalid '%s' value"), "encoding");
-    encoding = CHAR(STRING_ELT(CAR(args), 0)); /* ASCII */
+    encoding = CHAR(STRING_ELT(CAR(args), 0)); /* ASCII */ args = CDR(args);
     known_to_be_latin1 = known_to_be_utf8 = FALSE;
     if(streql(encoding, "latin1")) known_to_be_latin1 = TRUE;
     if(streql(encoding, "UTF-8"))  known_to_be_utf8 = TRUE;
+    if(!isLogical(CAR(args)) || LENGTH(CAR(args)) != 1)
+    	error(_("invalid '%s' value"), "verbose");
+    xxDebugTokens = asInteger(CAR(args));
 
     if (ifile >= 3) {/* file != "" */
 	if(!wasopen) {
