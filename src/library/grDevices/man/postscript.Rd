@@ -209,9 +209,9 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 
   Viewers and embedding applications frequently substitute fonts for
   those specified in the family, and the substitute will often have
-  slightly different font metrics.  Use \code{useKerning=TRUE}
-  to space the letters in the string exactly as for the intended family:
-  this may look uglier than the default. 
+  slightly different font metrics. \code{useKerning=TRUE} spaces the
+  letters in the string using kerning corrections for the intended
+  family: this may look uglier than \code{useKerning=FALSE}.
 }
 
 \section{Encodings}{
