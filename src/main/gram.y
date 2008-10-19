@@ -1807,6 +1807,15 @@ static int NumericValue(int c)
 	if(GenerateCode && seendot == 1 && seenexp == 0) 
 	    warning(_("integer literal %sL contains unnecessary decimal point"), yytext);
 	yylval = GenerateCode ? mkInt(yytext) : R_NilValue;
+#if 0  /* do this to make 123 integer not double */
+    } else if(!(seendot || seenexp)) {
+	if(c != 'L') xxungetc(c);
+	if (GenerateCode) {
+	    double a = R_atof(yytext);
+	    int b = (int) a; 
+	    yylval = (a != (double) b) ? mkFloat(yytext) : mkInt(yytext);
+	} else yylval = R_NilValue;
+#endif
     } else {
 	if(c != 'L')
 	    xxungetc(c);
