@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2008-03-18 r44795)
+R version 2.8.0 RC (2008-10-18 r46745)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -29,7 +29,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 1543
+[1] 1552
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
