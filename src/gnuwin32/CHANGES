@@ -21,13 +21,6 @@ NEW FEATURES
     o	memory.size() and memory.limits() now return rounded values.
 
 
-BUGS
-
-    o	The windows() device now works around the total clipping of
- 	semi-transparent rectangles and circles that extend outside
- 	the device region.
-
-
 
 
 	**************************************************
@@ -35,6 +28,17 @@ BUGS
 	*	       2.8 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 2.8.0 patched
+
+
+BUG FIXES
+
+    o	The windows() device now works around the total clipping of
+ 	semi-transparent rectangles and circles that extend outside
+ 	the device region.
+
 
 
 		CHANGES IN R VERSION 2.8.0

@@ -5419,7 +5419,7 @@ cut(d, "weeks")
 ## failed < 2.8.0
 
 
-### end of tests added for 2.8.0
+### end of tests added for 2.8.x
 
 
 ## (Deliberate) overshot in seq(from, to, by) because of fuzz

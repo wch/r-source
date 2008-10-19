@@ -33,20 +33,8 @@ NEW FEATURES
 	have been slightly out of range because of the allowance for
 	rounding error in computing the number of elements.
 
-    o	sum() now has a method for "difftime" objects (via the Summary
-	group).
-
-	max(), min() and range() applied to "difftime" object(s) now
-	return a result in the common units of the objects, if there
-	is one.
-
-    o	installed.packages() is now tolerant of malformed DESCRIPTION
-	files in installed packages (it ignores them, with a warning).
-
     o	install.packages() is able to infer that repos=NULL was
 	intended from the extension on the filename specified as 'pkgs'.
-
-    o	qt() now works for 0 < df < 1.
 
 
 DEPRECATED & DEFUNCT
@@ -69,15 +57,7 @@ UTILITIES
 
 BUG FIXES
 
-    o	add1.glm() no longer warns if applied to a binomial glm with a
-	factor response.
-
     o	The postscript() output for setting text is faster and smaller.
-
-    o	aggregate.data.frame() now does something sensible with a
-	zero-column 'x' rather than failing with an obscure error
-	message.  It gives an explicit error message if called with a
-	zero-row 'x'.
 
     o	Subsetting a data frame with duplicate column names without
 	selecting columns (e.g. z[i,]) no longer makes the column
@@ -90,6 +70,36 @@ BUG FIXES
 	*	       2.8 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 2.8.0 patched
+
+
+NEW FEATURES
+
+    o	sum() now has a method for "difftime" objects (via the Summary
+	group).
+
+	max(), min() and range() applied to "difftime" object(s) now
+	return a result in the common units of the objects, if there
+	is one.
+
+    o	installed.packages() is now tolerant of malformed DESCRIPTION
+	files in installed packages (it ignores them, with a warning).
+
+ 
+BUG FIXES
+
+    o	add1.glm() no longer warns if applied to a binomial glm with a
+	factor response.
+
+    o	aggregate.data.frame() now does something sensible with a
+	zero-column 'x' rather than failing with an obscure error
+	message.  It gives an explicit error message if called with a
+	zero-row 'x'.
+
+    o	qt() now works for 0 < df < 1.
+
 
 
 		CHANGES IN R VERSION 2.8.0
