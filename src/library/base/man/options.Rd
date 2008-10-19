@@ -83,12 +83,12 @@ getOption(x)
 
     \item{\code{digits}:}{controls the number of digits to print when
       printing numeric values.  It is a suggestion only.  Valid values
-      are 1\dots22 with default 7.  See the warning in
+      are 1\dots 22 with default 7.  See the warning in
       \code{\link{print.default}} about values greater than 15.}
 
     \item{\code{digits.secs}:}{controls the maximum number of digits to
       print when formatting time values in seconds.  Valid values
-      are 0\dots6 with default 0.  See \code{\link{strftime}}.}
+      are 0\dots 6 with default 0.  See \code{\link{strftime}}.}
 
     \item{\code{download.file.method}:}{Method to be used for
       \code{download.file}.  Currently download methods
@@ -119,7 +119,7 @@ getOption(x)
 
     \item{\code{expressions}:}{sets a limit on the number of nested
       expressions that will be evaluated.  Valid values are
-      25\dots500000 with default 5000.  If you increase it, you may
+      25\dots 500000 with default 5000.  If you increase it, you may
       also want to start \R with a larger protection stack;
       see \code{--max-ppsize} in \code{\link{Memory}}.  Note too that
       you may cause a segfault from overflow of the C stack, and on OSes
@@ -183,11 +183,12 @@ getOption(x)
       it defaults to
 #ifdef unix
       a value derived from the locale category \code{LC_PAPER}, or
-      if that is unavailable to a default set when \R was built.}
+      if that is unavailable to a default set when \R was built.
 #endif
 #ifdef windows
-      \code{"a4"}, or \code{"letter"} in US and Canadian locales.}
+      \code{"a4"}, or \code{"letter"} in US and Canadian locales.
 #endif
+      }
 
     \item{\code{printcmd}:}{the command used by \code{\link{postscript}}
       for printing; set by environment variable \env{R\_PRINTCMD} when
@@ -284,7 +285,7 @@ getOption(x)
 
     \item{\code{warning.length}:}{sets the truncation limit for error
       and warning messages.  A non-negative integer, with allowed values
-      100\dots8170, default 1000.}
+      100\dots 8170, default 1000.}
 
     \item{\code{width}:}{controls the maximum number of columns on a
       line used in printing vectors, matrices and arrays, and when
@@ -293,7 +294,7 @@ getOption(x)
       Columns are normally the same as characters except in CJK languages.
 
       You may want to change this if you re-size the window that \R is
-      running in.  Valid values are 10\dots10000 with default normally
+      running in.  Valid values are 10\dots 10000 with default normally
       80.  (The limits on valid values are in file \file{Print.h} and can be
       changed by re-compiling \R.)  Some \R consoles automatically change
       the value when they are resized.
@@ -443,15 +444,16 @@ getOption(x)
       and installed -- see \code{\link{install.packages}}.
 #ifdef windows
       Possible values are \code{"win.binary"} (the default) and
-      \code{"source"}.}
+      \code{"source"}.
 #endif
 #ifdef unix
       Possible values are \code{"source"} (the default except under the
       CRAN Mac OS X build) and \code{"mac.binary"}. The latter can
       have a suffix if supported by a special build, such as
       \code{"mac.binary.leopard"} to access the \code{"leopard"} tree
-      of repositories instead of the default \code{"universal"}.}
+      of repositories instead of the default \code{"universal"}.
 #endif
+    }
 
     \item{\code{repos}:}{URLs of the repositories for use by
       \code{\link{update.packages}}.  Defaults to
@@ -471,12 +473,13 @@ getOption(x)
 #ifdef unix
       Defaults to the value of \env{R\_UNZIPCMD}, which is set in
       \file{etc/Renviron} if an \code{unzip} command was found during
-      configuration.}
+      configuration.
 #endif
 #ifdef windows
       Defaults to \code{"internal"} when the internal unzip code is
-      used.}
+      used.
 #endif
+    }
   }
 }
 

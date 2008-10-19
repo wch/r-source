@@ -95,7 +95,7 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
   \item{x}{The original series}
   \item{alpha}{alpha used for filtering}
   \item{beta}{beta used for filtering}
-  \item(gamma){gamma used for filtering}
+  \item{gamma}{gamma used for filtering}
   \item{coefficients}{A vector with named components \code{a, b, s1, ..., sp}
     containing the estimated values for the level, trend and seasonal
     components}

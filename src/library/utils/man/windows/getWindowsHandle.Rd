@@ -7,7 +7,7 @@
 \alias{getWindowsHandle}
 \title{Get a Windows Handle}
 \description{
-  Get the Windows handle of a window or of the \R{} process.
+  Get the Windows handle of a window or of the \R process.
 }
 \usage{
 getWindowsHandle(which = "Console")
@@ -26,7 +26,7 @@ getWindowsHandle(which = "Console")
   A device number \tab The window handle of a graphics device 
  }
   These values are not normally useful to users, but may be used by 
-  developers making add-ons to \R{}.
+  developers making add-ons to \R.
   
   \code{NULL} is returned for the Frame handle if not running in MDI mode, 
   for the Console handle when running Rterm, for any unrecognized 

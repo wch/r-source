@@ -6,7 +6,7 @@
 \name{Paren}
 \alias{Paren}
 \alias{(}
-\alias{{}
+\alias{\{}
 \title{Parentheses and Braces}
 \usage{
 ( \dots )

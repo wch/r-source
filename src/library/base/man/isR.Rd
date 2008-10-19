@@ -18,12 +18,13 @@ is.R()
   of \R, S and S-PLUS.
   In order for code to be runnable in both \R and S dialects previous to
   S-PLUS 8.0, your code must either define \code{is.R} or use it as
-
-  \code{if (exists("is.R") && is.function(is.R) && is.R()) \{}\cr
-  \code{    }\emph{\#\# R-specific code}\cr
-  \code{\} else \{}\cr
-  \code{    }\emph{\#\# S-version of code}\cr
-  \code{\}}
+  \code{
+  if (exists("is.R") && is.function(is.R) && is.R()) {
+      ## R-specific code
+  } else {
+      ## S-version of code
+  }
+  }
 }
 \value{
   \code{is.R} returns \code{TRUE} if we are using \R and \code{FALSE}
