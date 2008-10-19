@@ -94,10 +94,10 @@ integrate(integrand, lower = 0, upper = 100000)
 integrate(integrand, lower = 0, upper = 1000000, stop.on.error = FALSE)
 
 ## some functions do not handle vector input properly
-f <- function(x) 2  
+f <- function(x) 2.0
 try(integrate(f, 0, 1)) 
 integrate(Vectorize(f), 0, 1)  ## correct
-integrate(function(x) rep(2, length(x)), 0, 1)  ## correct
+integrate(function(x) rep(2.0, length(x)), 0, 1)  ## correct
 
 ## integrate can fail if misused
 integrate(dnorm,0,2)
