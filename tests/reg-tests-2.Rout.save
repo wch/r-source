@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-09-11 r46529)
+R version 2.8.0 RC (2008-10-18 r46742)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6192,4 +6192,17 @@ In `[<-.data.frame`(`*tmp*`, , 3, value = list(a = 1:3, b = 2:4)) :
 4 11 6
 5 12 7
 > ## Second produced corrupt data frame in 2.7.1
+> 
+> 
+> ## aggregate on an empty data frame (PR#13167)
+> z <- data.frame(a=integer(0), b=numeric(0))
+> try(aggregate(z, by=z[1], FUN=sum))
+Error in aggregate.data.frame(z, by = z[1], FUN = sum) : 
+  no rows to aggregate
+> ## failed in unlist in 2.8.0, now gives explicit message.
+> aggregate(data.frame(a=1:10)[F], list(rep(1:2, each=5)), sum)
+  Group.1
+1       1
+2       2
+> ## used to fail obscurely.
 > 

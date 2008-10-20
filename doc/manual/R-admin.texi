@@ -3163,8 +3163,9 @@ variable @code{MAKE} at configure time, for example
 ./configure MAKE=gmake
 @end example
 
-Note the comment above about using a parallel @command{make}: this works
-for building @R{} but not for installing nor checking.
+Note the comment in @ref{Installation} about using a parallel
+@command{make}: this works for building @R{} but not for installing nor
+checking.
 
 @node Using FORTRAN, Compile and load flags, Using make, Configuration on Unix
 @section Using FORTRAN

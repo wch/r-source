@@ -61,6 +61,10 @@ static void Rintfn(double *x, int n, void *ex)
 
     if(length(resultsxp) != n)
 	error("evaluation of function gave a result of wrong length");
+    if(TYPEOF(resultsxp) == INTSXP) {
+	resultsxp = coerceVector(resultsxp, REALSXP);
+    } else if(TYPEOF(resultsxp) != REALSXP)
+	error("evaluation of function gave a result of wrong type");
     for(i = 0; i < n; i++) {
 	x[i] = REAL(resultsxp)[i];
 	if(!R_FINITE(x[i]))

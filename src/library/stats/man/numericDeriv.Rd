@@ -1,6 +1,6 @@
 % File src/library/stats/man/numericDeriv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{numericDeriv}
@@ -10,7 +10,7 @@
     \code{numericDeriv} numerically evaluates the gradient of an expression.
 }
 \usage{
-numericDeriv(expr, theta, rho = parent.frame(), dir = 1)
+numericDeriv(expr, theta, rho = parent.frame(), dir = 1.0)
 }
 \arguments{
   \item{expr}{The expression to be differentiated.  The value of this

@@ -13,6 +13,17 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.8.0 patched
+
+
+BUG FIXES
+
+    o	The windows() device now works around the total clipping of
+ 	semi-transparent rectangles and circles that extend outside
+ 	the device region.
+
+
+
 		CHANGES IN R VERSION 2.8.0
 
 

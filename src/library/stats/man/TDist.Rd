@@ -28,8 +28,7 @@ rt(n, df, ncp)
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
   \item{df}{degrees of freedom (\eqn{> 0}, maybe non-integer).  \code{df
-      = Inf} is allowed.  For \code{qt} only values of at least one are
-    currently supported unless \code{ncp} is supplied.}
+      = Inf} is allowed.}
   \item{ncp}{non-centrality parameter \eqn{\delta};
     currently except for \code{rt()}, only for \code{abs(ncp) <= 37.62}.
     If omitted, use the central t distribution.}

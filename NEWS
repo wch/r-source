@@ -6,6 +6,39 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.8.0 patched
+
+
+NEW FEATURES
+
+    o	sum() now has a method for "difftime" objects (via the Summary
+	group).
+
+	max(), min() and range() applied to "difftime" object(s) now
+	return a result in the common units of the objects, if there
+	is one.
+
+    o	installed.packages() is now tolerant of malformed DESCRIPTION
+	files in installed packages (it ignores them, with a warning).
+
+ 
+BUG FIXES
+
+    o	add1.glm() no longer warns if applied to a binomial glm with a
+	factor response.
+
+    o	aggregate.data.frame() now does something sensible with a
+	zero-column 'x' rather than failing with an obscure error
+	message.  It gives an explicit error message if called with a
+	zero-row 'x'.
+
+    o	qt() now works for 0 < df < 1.
+
+    o	integrate() now accepts integer results from f(): as
+	documented, but only double was accepted.
+
+
+
 		CHANGES IN R VERSION 2.8.0
 
 

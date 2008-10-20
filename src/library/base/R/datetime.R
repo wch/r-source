@@ -557,36 +557,35 @@ Math.difftime <- function (x, ...)
 }
 
 mean.difftime <- function (x, ..., na.rm = FALSE)
-{
-    coerceTimeUnit <- function(x)
-    {
-        as.vector(switch(attr(x,"units"),
-               secs = x, mins = 60*x, hours = 60*60*x,
-               days = 60*60*24*x, weeks = 60*60*24*7*x))
-    }
-    if(length(list(...))) {
-        args <- c(lapply(list(x, ...), coerceTimeUnit), na.rm = na.rm)
-        structure(do.call("mean", args), units="secs", class="difftime")
-    } else {
-        structure(mean(as.vector(x), na.rm = na.rm),
-                  units=attr(x, "units"), class="difftime")
-    }
-}
+    structure(mean(unclass(x), ...), units=attr(x, "units"), class="difftime")
 
 Summary.difftime <- function (..., na.rm)
 {
+    ## FIXME: this should return in the smallest of the units of the inputs.
     coerceTimeUnit <- function(x)
     {
         as.vector(switch(attr(x,"units"),
                          secs = x, mins = 60*x, hours = 60*60*x,
                          days = 60*60*24*x, weeks = 60*60*24*7*x))
     }
-    ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
+    ok <- switch(.Generic, max = , min = , sum=, range = TRUE, FALSE)
     if (!ok)
         stop(gettextf("'%s' not defined for \"difftime\" objects", .Generic),
              domain = NA)
-    args <- c(lapply(list(...), coerceTimeUnit), na.rm = na.rm)
-    structure(do.call(.Generic, args), units="secs", class="difftime")
+    x <- list(...)
+    Nargs <- length(x)
+    if(Nargs == 0) {
+        structure(do.call(.Generic), units="secs", class="difftime")
+    } else {
+        units <- sapply(x, function(x) attr(x, "units"))
+        if(all(units == units[1])) {
+            args <- c(lapply(x, as.vector), na.rm = na.rm)
+        } else {
+            args <- c(lapply(x, coerceTimeUnit), na.rm = na.rm)
+            units <- "secs"
+        }
+        structure(do.call(.Generic, args), units=units[[1]], class="difftime")
+    }
 }
 
 

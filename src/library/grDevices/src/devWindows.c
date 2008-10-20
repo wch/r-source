@@ -2315,13 +2315,23 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 	DRAW(gfillrect(_d, xd->fgcolor, r));
     } else if(R_ALPHA(gc->fill) > 0) {
 	if(xd->have_alpha) {
+	    rect cp = xd->clip;
 	    /* We are only working with the screen device here, so
 	       we can assume that x->bm is the current state.
 	       Copying from the screen window does not work. */
+	    /* Clip to the device region */
+	    rr = r;
+	    if (r.x < 0) {r.x = 0; r.width = r.width + rr.x;}
+	    if (r.y < 0) {r.y = 0; r.height = r.height + rr.y;}
+	    if (r.x + r.width > cp.x + cp.width)
+		r.width = cp.x + cp.width - r.x;
+	    if (r.y + r.height > cp.y + cp.height)
+		r.height = cp.y + cp.height - r.y;
 	    gsetcliprect(xd->bm, xd->clip);
 	    gcopy(xd->bm2, xd->bm, r);
-	    gfillrect(xd->bm2, xd->fgcolor, r);
+	    gfillrect(xd->bm2, xd->fgcolor, rr);
 	    DRAW2(gc->fill);
+	    r = rr;
 	} else WARN_SEMI_TRANS;
     }
 
@@ -2332,9 +2342,16 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 		       xd->ljoin, xd->lmitre));
     } else if(R_ALPHA(gc->col) > 0) {
 	if(xd->have_alpha) {
-	    int tol = xd->lwd; /* only half needed */
+	    int adj, tol = xd->lwd; /* only half needed */
+	    rect cp = xd->clip;
 	    rr = r;
 	    r.x -= tol; r.y -= tol; r.width += 2*tol; r.height += 2*tol;
+	    if (r.x < 0) {adj = r.x; r.x = 0; r.width = r.width + adj;}
+	    if (r.y < 0) {adj = r.y; r.y = 0; r.height = r.height + adj;}
+	    if (r.x + r.width > cp.x + cp.width)
+		r.width = cp.x + cp.width - r.x;
+	    if (r.y + r.height > cp.y + cp.height)
+		r.height = cp.y + cp.height - r.y;
 	    gsetcliprect(xd->bm, xd->clip);
 	    gcopy(xd->bm2, xd->bm, r);
 	    gdrawrect(xd->bm2, xd->lwd, xd->lty, xd->fgcolor, rr, 0, xd->lend,
@@ -2381,10 +2398,19 @@ static void GA_Circle(double x, double y, double radius,
 	DRAW(gfillellipse(_d, xd->fgcolor, rr));
     } else if(R_ALPHA(gc->fill) > 0) {
 	if (xd->have_alpha) {
+	    rect cp = xd->clip;
+	    /* Clip to the device region */
+	    if (r.x < 0) {r.x = 0; r.width = r.width + rr.x;}
+	    if (r.y < 0) {r.y = 0; r.height = r.height + rr.y;}
+	    if (r.x + r.width > cp.x + cp.width)
+		r.width = cp.x + cp.width - r.x;
+	    if (r.y + r.height > cp.y + cp.height)
+		r.height = cp.y + cp.height - r.y;
 	    gsetcliprect(xd->bm, xd->clip);
 	    gcopy(xd->bm2, xd->bm, r);
 	    gfillellipse(xd->bm2, xd->fgcolor, rr);
 	    DRAW2(gc->fill);
+	    r = rr;
 	} else WARN_SEMI_TRANS;
     }
 
@@ -2395,8 +2421,15 @@ static void GA_Circle(double x, double y, double radius,
 			  xd->ljoin, xd->lmitre));
     } else if(R_ALPHA(gc->col) > 0) {
 	if(xd->have_alpha) {
-	    int tol = xd->lwd; /* only half needed */
+	    int adj, tol = xd->lwd; /* only half needed */
+	    rect cp = xd->clip;
 	    r.x -= tol; r.y -= tol; r.width += 2*tol; r.height += 2*tol;
+	    if (r.x < 0) {adj = r.x; r.x = 0; r.width = r.width + adj;}
+	    if (r.y < 0) {adj = r.y; r.y = 0; r.height = r.height + adj;}
+	    if (r.x + r.width > cp.x + cp.width)
+		r.width = cp.x + cp.width - r.x;
+	    if (r.y + r.height > cp.y + cp.height)
+		r.height = cp.y + cp.height - r.y;
 	    gsetcliprect(xd->bm, xd->clip);
 	    gcopy(xd->bm2, xd->bm, r);
 	    gdrawellipse(xd->bm2, xd->lwd, xd->fgcolor, rr, 0, xd->lend,

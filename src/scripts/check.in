@@ -610,7 +610,11 @@ foreach my $pkg (@ARGV) {
 		   -f "$pkgdir/BinaryFiles") {
 		    my %bin;
 		    open FILE, "< $pkgdir/BinaryFiles";
-		    while (<FILE>) { chomp; $bin{$_} = $_; }
+		    while (<FILE>) { 
+			chomp; 
+			s/\r$//;  # careless people get Windows files on other OSes
+			$bin{$_} = $_;
+		    }
 		    close(FILE);
 		    my @exec_files0 = @exec_files;
 		    @exec_files = ();
@@ -645,7 +649,11 @@ foreach my $pkg (@ARGV) {
 		   -f "$pkgdir/BinaryFiles") {
 		    my %bin;
 		    open FILE, "< $pkgdir/BinaryFiles";
-		    while (<FILE>) { chomp; $bin{$_} = $_; }
+		    while (<FILE>) { 
+			chomp; 
+			s/\r$//;
+			$bin{$_} = $_;
+		    }
 		    close(FILE);
 		    my @exec_files0 = @exec_files;
 		    @exec_files = ();
@@ -964,6 +972,7 @@ sub check_pkg {
 	open(RBUILDIGNORE, "< $exclude_file");
 	while(<RBUILDIGNORE>) {
 	    chomp;
+	    s/\r$//;  # careless people get Windows files on other OSes
 	    push(@exclude_patterns, $_) if $_;
 	}
 	close(RBUILDIGNORE);
