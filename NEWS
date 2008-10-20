@@ -49,8 +49,6 @@ UTILITIES
     o	R CMD Rd2dvi and R CMD check are now able to cope with Cyrillic
     	characters in UTF-8 (thanks to a hint from Alexey Shipunov).
 
-    o	R CMD build now also uses a Makevars file for cleaning up src/.
-
 
 BUG FIXES
 
@@ -59,6 +57,7 @@ BUG FIXES
     o	Subsetting a data frame with duplicate column names without
 	selecting columns (e.g. z[i,]) no longer makes the column
 	names unique.
+
 
 
 
@@ -85,6 +84,11 @@ NEW FEATURES
 	files in installed packages (it ignores them, with a warning).
 
  
+UTILITIES
+
+    o	R CMD build now also uses a Makevars file for cleaning up src/.
+
+
 BUG FIXES
 
     o	add1.glm() no longer warns if applied to a binomial glm with a
@@ -238,6 +242,9 @@ NEW FEATURES
     o	plot.dendrogram() has new arguments (xlim, ylim) which allows
 	zooming into a hiearchical clustering dendrogram.
 
+    o	plot.ecdf() now defaults to pch=19 so as to better convey the
+	left-closed line segments.
+
     o	plot.histogram() gains an 'ann' argument. (Wish from Ben Bolker.)
 
     o	plot(<lm_obj>) now warns when it omits points with leverage one
@@ -290,7 +297,7 @@ NEW FEATURES
 	longer draws an axis line.
 
     o	save() (optionally, but by default) checks for the existence
-	of objects before opening the file/connections (wish of
+	of objects before opening the file/connection (wish of
 	PR#12543).
 
     o	segments(), arrows() and rect() allow zero-length
@@ -320,8 +327,7 @@ NEW FEATURES
 
     o	str()'s default method gains a 'formatNum' function argument which
 	is used for formatting numeric vectors.	 Note that this is very
-	slightly not backward compatible, and that its default may change
-	before release.
+	slightly not backward compatible.
 
     o	The summary() method for class "ecdf" now uses a print()
 	method rather than printing directly.
@@ -350,8 +356,9 @@ NEW FEATURES
 	which previously needed to be unlink("a\\[b").
 
     o	update.packages() gains an argument 'oldPkgs', where
-	new.packages() and old.packages() get 'instPkgs'.  These allow to
-	consider only subsets of packages instead of all installed ones.
+	new.packages() and old.packages() get 'instPkgs'.  These allow
+	consideration of only subsets of packages instead of all
+	installed ones.
 
     o	which(b) is somewhat faster now, notably for named vectors, thanks
 	to a suggestion by Henrik Bengtsson.
@@ -408,9 +415,6 @@ NEW FEATURES
 	contain a decimal point.
 
     o	PCRE has been updated to version 7.8 (mainly bug fixes).
-
-    o	plot.ecdf() now defaults to pch=19 so as to better convey the
-	left-closed line segments.
 
 
 NEW FEATURES IN PACKAGE 'methods'
@@ -628,7 +632,7 @@ BUG FIXES
 	work properly when evaluated via method dispatch for internal
 	S3 generics.
 
-    o	The default pkgType option for non-CRAN builds of R on Mac OS X
+    o	The default "pkgType" option for non-CRAN builds of R on Mac OS X
 	is now correctly "source" as documented.
 
     o	The default R_LIBS_USER path in AQUA builds now matches the
