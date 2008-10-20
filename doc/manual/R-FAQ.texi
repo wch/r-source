@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-09-17
+@set FAQ_DATE @value{FAQ_YEAR}-10-19
 @set REL_YEAR 2008
 @set REL_MAJOR 2
-@set REL_MINOR 7
-@set REL_PATCHLEVEL 2
+@set REL_MINOR 8
+@set REL_PATCHLEVEL 0
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -2337,6 +2337,8 @@ represented as the product of two matrices.
 Functions and datasets from the main package of Venables and Ripley,
 ``Modern Applied Statistics with S''.  Contained in the @file{VR}
 bundle.  @emph{Recommended}.
+@item MAclinical
+Class prediction based on microarray data and clinical parameters.
 @item MBA
 Multilevel @math{B}-spline Approximation.
 @item MBESS
@@ -2443,11 +2445,12 @@ Odds ratio based multivactor-dimensionality reduction method for
 detecting gene-gene interactions.
 @item Oarray
 Arrays with arbitrary offsets.
-@item PARccs
-Estimation of partial attributable risks (PAR) from case-control data.
 @item PASWR
 Data and functions for the book ``Probability and Statistics with R'' by
-M. D. Ugarte, A. F. Militino and A. T. Arnholt, 2008, Chapman & Hall/CRC.
+M. D. Ugarte, A. F. Militino and A. T. Arnholt, 2008, Chapman &
+Hall/CRC.
+@item PBSddesolve
+Solver for delay differential equations.
 @item PBSmapping
 Software evolved from fisheries research conducted at the Pacific
 Biological Station (PBS) in Nanaimo, British Columbia, Canada.  Draws
@@ -2538,6 +2541,8 @@ Functions for exporting R objects & graphics in an @HTML{} document.
 Running WinBUGS from R: call a BUGS model, summarize inferences and
 convergence in a table and graph, and save the simulations in arrays for
 easy access in R.
+@item R2jags
+Call JAGS from R.
 @item RArcInfo
 Functions to import Arc/Info V7.x coverages and data.
 @item RBGL
@@ -2576,6 +2581,8 @@ Hidden Markov Model simulations and estimations.
 @item RII
 Estimation of the relative index of inequality for interval-censored
 data using natural cubic splines.
+@item RItools
+Randomization inference tools.
 @item RJDBC
 Access to databases through the JDBC interface.
 @item RJaCGH
@@ -2608,6 +2615,8 @@ Optimally robust estimation for regression-type models.
 Oracle Database Interface driver for R.  Uses the ProC/C++ embedded SQL.
 @item RPMG
 Poor Man's Gui: create interactive R analysis sessions.
+@item RPostgreSQL
+R interface to the PostgreSQL database system.
 @item RPyGeo
 ArcGIS Geoprocessing in R via Python.
 @item RQuantLib
@@ -2773,6 +2782,9 @@ G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 Read and write SAS XPORT files.
 @item SDDA
 Stepwise Diagonal Discriminant Analysis.
+@item SGP
+Student growth percentile and percentile growth projection/trajectory
+functions.
 @item SIN
 A SINful approach to selection of Gaussian Graphical Markov Models.
 @item SLmisc
@@ -2784,6 +2796,9 @@ Sequential Monte Carlo (SMC) Algorithm.
 Data sets and a few functions for use with the practicals outlined in
 Appendix A of the book ``Statistical Models'' by Anthony Davison, 2003,
 Cambridge University Press.
+@item SMVar
+Structural Model for Variances to detect differentially expressed
+genes.
 @item SNPMaP
 SNP Microarrays and Pooling in R.
 @item SNPMaP.cdm
@@ -2844,6 +2859,8 @@ soil.
 Sparse logistic regression.
 @item SparseM
 Basic linear algebra for sparse matrices.
+@item SpatialExtremes
+Modeling spatial extremes.
 @item SpatialNP
 Multivariate nonparametric methods based on spatial signs and ranks.
 @item SpherWave
@@ -2855,6 +2872,8 @@ with R'' by C. Reimann, P. Filzmoser, R. G. Garrett, and R. Dutter,
 2008, John Wiley and Sons.
 @item StatDataML
 Read and write StatDataML.
+@item StatMatch
+Functions to perform statistical matching between two data sources.
 @c <COMMENT>
 @c Removed on 2007-11-17 due to license problems.
 @c @item StoppingRules
@@ -3066,6 +3085,8 @@ history trait modeling).
 @item asypow
 A set of routines that calculate power and related quantities utilizing
 asymptotic likelihood ratio methods.
+@item audio
+Audio interface for R.
 @item asuR
 Functions and data sets for a lecture in ``Advanced Statistics using
 R''.
@@ -3151,6 +3172,8 @@ Visualises bipartite networks and calculates some ecological indices.
 Dealing with very large datasets using BIRCH.
 @item bise
 Auxiliary functions for phenological data analysis.
+@item bit
+A class for vectors of 1-bit booleans.
 @item bitops
 Functions for Bitwise operations on integer vectors.
 @item bivpois
@@ -3195,9 +3218,12 @@ and parametrization using graph theory.
 Templating framework for report generation.
 @item brglm
 Bias-reduction in binomial-response GLMs.
-@item brlr
-Bias-reduced logistic regression: fits logistic regression models by
-maximum penalized likelihood.
+@c <COMMENT>
+@c Moved to the Archive on 2008-10-07 as requested by the maintainer.
+@c @item brlr
+@c Bias-reduced logistic regression: fits logistic regression models by
+@c maximum penalized likelihood.
+@c </COMMENT>
 @item bspec
 Bayesian inference on the (discrete) power spectrum of time series.
 @c <COMMENT>
@@ -3431,6 +3457,8 @@ regression models.
 Continuous time autoregressive models and the Kalman filter.
 @item ctv
 Server-side and client-side tools for @acronym{CRAN} task views.
+@item curvetest
+Test the equality of two curves, or one curve with 0.
 @item cwhmisc
 Miscellaneous functions by Christian W. Hoffmann.
 @item cyclones
@@ -3815,6 +3843,8 @@ R fortunes.
 @item forward
 Forward search approach to robust analysis in linear and generalized
 linear regression models.
+@item fossil
+Palaeoecological and palaeogeographical analysis tools.
 @item fpc
 Fixed point clusters, clusterwise regression and discriminant plots.
 @item fpca
@@ -3828,6 +3858,9 @@ Insightful fractal time series modeling and analysis.
 @item frailtypack
 Fit a shared gamma frailty model and Cox proportional hazards model
 using a Penalized Likelihood on the hazard function.
+@item frontier
+Maximum likelihood estimation of stochastic frontier production and cost
+functions.
 @item fso
 Fuzzy set ordination.
 @item ftnonpar
@@ -3948,6 +3981,8 @@ Functions for inference in generalised linear spatial models.
 Data for topographic and geologic mapping.
 @item geometry
 Mesh generation and surface tesselation, based on the Qhull library.
+@item geonames
+Interface to @url{www.geonames.org} web service.
 @item geozoo
 Definition of geometric objects and display via @strong{rggobi}.
 @item getopt
@@ -3955,8 +3990,13 @@ C-like getopt behavior for R scripts.
 @item ggm
 Functions for defining directed acyclic graphs and undirected graphs,
 finding induced graphs and fitting Gaussian Markov models.
+@c <COMMENT>
+@c Moved to the Archive on 2008-10-10 as requested by the maintainer.
+@c Resurrected on 2008-10-14 as meifly and DescribeDisplay depend on
+@c this.
 @item ggplot
 Grammar of graphics based plots for R.
+@c </COMMENT>
 @item ggplot2
 An implementation of the Grammar of Graphics in R.
 @item ghyp
@@ -3990,6 +4030,8 @@ Interface to the @acronym{GNU} Linear Programming Kit (GLPK).
 @item gmaps
 Wrapper and auxiliary functions for the @strong{maps} package to work
 with the grid graphics system.
+@item gmm
+Generalized Method of Moments.
 @item gmodels
 Various functions to manipulate models.
 @item gmp
@@ -4053,6 +4095,8 @@ Miscellaneous string utilities.
 @c interface and can be used to create R devices as embedded components in
 @c a @acronym{GUI} using a Gtk drawing area widget, e.g., using RGtk.
 @c </COMMENT>
+@item gtm
+Generative topographic mapping.
 @item gtools
 Various functions to help manipulate data.
 @item gumbel
@@ -4171,6 +4215,8 @@ Routines for simple graphs.
 Testing whether data is independent and identically distributed.
 @item impute
 Imputation for microarray data (currently KNN only).
+@item imputeMDR
+Multifactor Dimensionality Reduction (MDR) analysis for imcomplete data.
 @item ineq
 Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic).
@@ -4183,6 +4229,8 @@ Implementation of the Iterated Convex Minorant Algorithm for the Cox
 proportional hazard model for interval censored event data.
 @c  @item integrate
 @c  Adaptive quadrature in up to 20 dimensions.
+@item intervals
+Tools for working with points and intervals.
 @item iplots
 Interactive graphics for R.
 @item ipred
@@ -4429,6 +4477,9 @@ ESRI shapefiles.
 @item maptree
 Functions with example data for graphing and mapping models from
 hierarchical clustering and classification and regression trees.
+@item marelac
+Datasets, constants, conversion factors, utilities for the marine and
+lacustrine sciences.
 @item marginTree
 Margin trees for high-dimensional classification.
 @item marginalmodelplots
@@ -4498,6 +4549,8 @@ Multiple Fractional Polynomials.
 Routines for GAMs and other genralized ridge regression problems with
 multiple smoothing parameter selection by GCV or UBRE.
 @emph{Recommended}.
+@item mi
+Missing-data imputation and model checking.
 @c <COMMENT>
 @c Removed on 2006-10-11 as requested by the maintainer.
 @c @item micEcdat
@@ -4530,8 +4583,16 @@ continuous data.
 Mixtures of proportional hazard models.
 @item mixdist
 Finite mixture distribution models.
-@item mixnet
+@item mixer
 Random graph clustering via estimation of Erd@H{o}s-R@'enyi mixtures.
+@item mixlow
+Assessing drug synergism/antagonism.
+@c <COMMENT>
+@c Moved to the Archive on 2008-10-15 as suggested by the maintainer:
+@c replaced by package 'mixer'.
+@c @item mixnet
+@c Random graph clustering via estimation of Erd@H{o}s-R@'enyi mixtures.
+@c </COMMENT>
 @item mixreg
 Functions to fit mixtures of regressions.
 @item mixstock
@@ -4828,6 +4889,8 @@ named-entity detector, using the @url{http://maxent.sourceforge.net/,
 Maxent} Java package for training and using maximum entropy models.
 @item openNLPmodels
 English and spanish models for @strong{openNLP}.
+@item opentick
+Interface to opentick real time and historical market data.
 @item optmatch
 Functions to perform optimal matching, particularly full matching.
 @item orientlib
@@ -4846,11 +4909,15 @@ Ornstein-Uhlenbeck models for phylogenetic comparative hypotheses.
 A collection of some tests commonly used for identifying outliers.
 @item oz
 Functions for plotting Australia's coastline and state boundaries.
+@item pARccs
+Estimation of partial attributable risks from case-control data.
 @item pARtial
 (Partial) attributable risk estimates, corresponding variance estimates
 and confidence intervals.
 @item pack
 Create and manipulate raw vectors.
+@item packClassic
+Illustrate the tutorial ``S4: From Idea To Package''.
 @item pairwiseCI
 Calculate and plot unadjusted confidence intervals for two sample
 comparisons.
@@ -4971,6 +5038,8 @@ Regression (PCR).
 @c </COMMENT>
 @item plsgenomics
 PLS analyses for genomics.
+@item plyr
+Tools for splitting, applying and combining data.
 @item pmg
 Poor Man's @acronym{GUI}.
 @item pmml
@@ -5165,6 +5234,8 @@ Exact rate ratio test.
 @c @strong{date}), for use with @strong{survival4}.
 @item rattle
 A graphical user interface for data mining in R using GTK.
+@item rbounds
+Perform Rosenbaum bounds sensitivity tests for matched data.
 @item rbugs
 Functions to prepare files needed for running BUGS in batch mode, and
 running BUGS from R.  Support for Linux systems with Wine is emphasized.
@@ -5609,6 +5680,8 @@ Perform @acronym{SQL} selects on R data frames.
 @item ssanv
 Sample Size Adjusted for Nonadherence or Variability of input
 parameters.
+@item ssize.fdr
+Sample size calculations for microarray experiments.
 @item sspir
 State SPace models In R.
 @item sspline
@@ -5776,6 +5849,9 @@ Classification and regression trees.
 @c Stem analysis functions for volume increment and carbon uptake
 @c assessment from tree-rings.
 @c </COMMENT>
+@item treelet
+Treelet: a novel construction of multi-scale bases that extends wavelets
+to non-smooth signals.
 @item triangle
 Standard distribution functions for the triangle distribution.
 @item trimcluster
