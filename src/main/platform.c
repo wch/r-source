@@ -1654,7 +1654,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 # ifdef HAVE_X11
     int X11 = NA_LOGICAL;
 # else
-    int X11 = FALSE
+    int X11 = FALSE;
 # endif
 #endif
 
