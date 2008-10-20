@@ -247,7 +247,7 @@ struct _DevDesc {
      *
      */
 #if R_USE_PROTOTYPES
-    void (*close)();
+    void (*close)(pDevDesc dd);
 #else
     void (*close)();
 #endif
