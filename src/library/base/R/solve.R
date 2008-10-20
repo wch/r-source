@@ -41,7 +41,7 @@ solve.default <-
 	if(missing(b)) {
             if(nrow(a) != ncol(a))
                 stop("only square matrices can be inverted")
-	    b <- diag(1+0i, nrow(a))
+	    b <- diag(1.0+0.0i, nrow(a))
 	    colnames(b) <- rownames(a)
 	} else if(!is.complex(b)) b[] <- as.complex(b)
 	if(!is.complex(a)) a[] <- as.complex(a)
@@ -62,7 +62,7 @@ solve.default <-
 	if(missing(b)) {
             if(nrow(a) != ncol(a))
                 stop("only square matrices can be inverted")
-	    b <- diag(1, nrow(a))
+	    b <- diag(1.0, nrow(a))
 	    colnames(b) <- rownames(a)
 	} else storage.mode(b) <- "double"
 	storage.mode(a) <- "double"
