@@ -1483,7 +1483,8 @@ files for building source packages (which is the default), as well as
 the Windows toolset (see the ``R Installation and Administration''
 manual).  You may need to set @env{TMPDIR} to point to a suitable
 writeable directory with a path not containing spaces -- use forward
-slashes for the separators. 
+slashes for the separators.   Also, the directory needs to be on a
+case-honouring file system (some network-mounted file systems are not).
 @end quotation
 
 @node Customizing checking and building,  , Building packages, Checking and building packages
