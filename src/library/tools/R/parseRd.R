@@ -1,4 +1,4 @@
-#  File src/library/base/R/parse.R
+#  File src/library/tools/R/parseRd.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -31,18 +31,24 @@ print.RdFile <- function(x, ...) {
     pr <- function(x, indent) {
         spaces <- paste(rep(" ", indent), collapse="")
     	if (is.list(x)) {
-    	    cat(spaces);
-    	    if (!is.null(header <- attr(x, "rdTag"))) 
-    	    	cat(header);
-    	    if (!is.null(option <- attr(x, "rdOption"))) {
-    	    	cat("[\n");
-    	    	pr(option, indent + 2)
-    	    	cat(spaces, "]\n", spaces, sep="");
+    	    tag <- attr(x, "rdTag")
+    	    if (length(grep("^#", tag)) > 0) {
+		cat(tag, x[[1]][[1]], "\n")
+		x <- x[[2]]
+		for (i in seq_along(x)) pr(x[[i]], indent)
+		cat("#endif\n")
+    	    } else {
+		cat(spaces);
+		cat(tag);
+		if (!is.null(option <- attr(x, "rdOption"))) {
+		    cat("[\n");
+		    pr(option, indent + 2)
+		    cat(spaces, "]\n", spaces, sep="");
+		}
+		cat("{\n")
+		for (i in seq_along(x)) pr(x[[i]], indent + 2)
+		cat(spaces, "}\n", sep="")
     	    }
-    	    cat("{\n")
-    	    for (i in seq_along(x)) pr(x[[i]], indent + 2)
-    	    cat(spaces, "}\n", sep="")
-
     	} else cat(paste(strwrap(x, indent=indent, exdent=indent), "\n"),
     	           sep="")
     }
