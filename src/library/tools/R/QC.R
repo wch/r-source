@@ -3055,7 +3055,7 @@ function(dfile)
     ## These must be correct if present.
 
     val <- db[match(c("Depends", "Suggests", "Imports", "Enhances"),
-                    names(db), nomatch = 0)]
+                    names(db), nomatch = 0L)]
     if(length(val)) {
         depends <- .strip_whitespace(unlist(strsplit(val, ",")))
         bad_dep_entry <- bad_dep_op <- bad_dep_version <- character()

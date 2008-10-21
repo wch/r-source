@@ -139,9 +139,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         }
         fst <- TRUE
 	ipos <- seq_along(sp)[-c(lib.pos,
-				 match(c("Autoloads", "CheckExEnv"), sp, 0))]
+				 match(c("Autoloads", "CheckExEnv"), sp, 0L))]
         for (i in ipos) {
-            obj.same <- match(objects(i, all.names = TRUE), ob, nomatch = 0)
+            obj.same <- match(objects(i, all.names = TRUE), ob, nomatch = 0L)
             if (any(obj.same > 0)) {
                 same <- ob[obj.same]
                 same <- same[!(same %in% dont.mind)]

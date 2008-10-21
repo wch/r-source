@@ -75,7 +75,7 @@ getDepList <- function(depMtrx, instPkgs, recursive=TRUE,
 
 isSatisfied <- function(dep, instMtrx) {
     triplets <- apply(instMtrx,1,paste,collapse=":")
-    match(paste(dep,collapse=":"),triplets,nomatch=0) > 0
+    match(paste(dep,collapse=":"),triplets,nomatch=0L) > 0L
 }
 
 buildDepList <- function(depMtrx, instPkgs, recursive=TRUE,
@@ -165,7 +165,7 @@ installedDepends <- function(depMtrx, instPkgs) {
     pkgs <- depMtrx[,1]
     passPkgs <- character()
     if (length(pkgs) > 0) {
-        installed <- (match(pkgs, instPkgs[,"Package"], nomatch=0) > 0)
+        installed <- (match(pkgs, instPkgs[,"Package"], nomatch=0L) > 0L)
 
         curPkgs <- depMtrx[installed,,drop=FALSE]
         if (nrow(curPkgs) > 0) {
@@ -180,7 +180,7 @@ installedDepends <- function(depMtrx, instPkgs) {
             })
             passPkgs <- c(passPkgs,curPkgs[passVersReq,1])
 
-            return(which(match(depMtrx[,1],passPkgs,nomatch=0) > 0))
+            return(which(match(depMtrx[,1],passPkgs,nomatch=0L) > 0L))
         }
     }
 
