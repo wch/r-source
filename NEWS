@@ -42,6 +42,8 @@ BUG FIXES
     o	integrate() now accepts integer results from f(): as
 	documented, but only double was accepted.
 
+    o	contrib.url() produced incorrect URL for the type "mac.binary".
+
 
 
 		CHANGES IN R VERSION 2.8.0
