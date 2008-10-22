@@ -61,8 +61,6 @@ BUG FIXES
 	selecting columns (e.g. z[i,]) no longer makes the column
 	names unique.
 
-    o	contrib.url() produced incorrect URL for the type "mac.binary".
-
 
 
 
@@ -108,6 +106,8 @@ BUG FIXES
 
     o	integrate() now accepts integer results from f(): as
 	documented, but only double was accepted.
+
+    o	contrib.url() produced incorrect URL for the type "mac.binary".
 
 
 
