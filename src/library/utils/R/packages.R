@@ -589,7 +589,7 @@ contrib.url <- function(repos, type = getOption("pkgType"))
     ver <- paste(R.version$major,
                  strsplit(R.version$minor, ".", fixed=TRUE)[[1]][1], sep = ".")
     mac.subtype <- "universal"
-    if (substr(type, 1, 10) == "mac.binary") {
+    if (substr(type, 1, 11) == "mac.binary.") {
         mac.subtype <- substring(type, 12)
         type <- "mac.binary"
     }
