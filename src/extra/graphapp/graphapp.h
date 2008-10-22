@@ -559,6 +559,7 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define setredraw		GA_setredraw
 #define setresize		GA_setresize
 #define setrgb		GA_setrgb
+#define setrichtextbackground	GA_setrichtextbackground
 #define setstatus		GA_setstatus
 #define settextfont		GA_settextfont
 #define settimer		GA_settimer
@@ -1119,6 +1120,7 @@ field	  newpassword(const char *text, rect r);
 textbox	  newtextbox(const char *text, rect r);
 textbox	  newtextarea(const char *text, rect r);
 textbox	  newrichtextarea(const char *text, rect r);
+void	  setrichtextbackground(textbox obj, rgb bg);
 
 listbox	  newlistbox(const char *list[], rect r, scrollfn fn, actionfn dble);
 listbox	  newdroplist(const char *list[], rect r, scrollfn fn);

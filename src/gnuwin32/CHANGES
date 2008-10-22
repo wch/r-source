@@ -21,6 +21,9 @@ BUG FIXES
     o	The windows() device now works around the total clipping of
  	semi-transparent rectangles and circles that extend outside
  	the device region.
+ 	
+    o	The script editor did not respect user preferences for the
+	background colour.
 
 
 
@@ -1488,7 +1491,7 @@ UNCATEGORIZED
     o	Overwrite mode in the console now works for MBCS charsets.
 	(Patch contributed by Haruki Koyanagi.)
 
-    o	Input from the Rgui console was changing the letter 255 (ÿ in Latin-2)
+    o	Input from the Rgui console was changing the letter 255 ( in Latin-2)
 	in the character set to letter 1.
 
     o	R CMD REMOVE in 2.2.0 removed the package(s) but failed to remake the

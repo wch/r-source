@@ -122,11 +122,11 @@ void console_ctrlkeyin(control c, int key);
 void console_normalkeyin(control c, int k);
 void console_im(control c, font *f, point *pt);
 
-font consolefn;
-int fontsty, pointsize;
-int consoler, consolec;
-int pagerrow, pagercol;
-rgb consolebg, consolefg, consoleuser, pagerhighlight;
+extern font consolefn;
+extern int fontsty, pointsize;
+extern int consoler, consolec;
+extern int pagerrow, pagercol;
+extern rgb consolebg, consolefg, consoleuser, pagerhighlight;
 
 #define DIMLBUF 250000          /* console buffer size in chars */
 #define MLBUF   8000            /* console buffer size in lines */
