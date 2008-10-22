@@ -33,6 +33,9 @@ NEW FEATURES
     o	install.packages() is able to infer that repos=NULL was
 	intended from the extension on the filename specified as 'pkgs'.
 
+    o	boxplot() gains a simple 'matrix' method, enabling boxplot(mat)
+	instead of boxplot(data.frame(mat)).
+
 
 DEPRECATED & DEFUNCT
 
@@ -83,7 +86,7 @@ NEW FEATURES
     o	installed.packages() is now tolerant of malformed DESCRIPTION
 	files in installed packages (it ignores them, with a warning).
 
- 
+
 UTILITIES
 
     o	R CMD build now also uses a Makevars file for cleaning up src/.
