@@ -13,7 +13,17 @@
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.9.0
+		CHANGES IN R VERSION 2.9.0 patched
+
+
+BUG FIXES
+
+    o	The script editor did not respect user preferences for the background
+    	colour.
+	
+
+
+    		CHANGES IN R VERSION 2.9.0
 
 
 NEW FEATURES
