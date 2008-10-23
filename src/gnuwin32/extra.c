@@ -1106,13 +1106,13 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (!GetFullPathNameW(filenameToWchar(el, FALSE), MAX_PATH,
 			     wtmp, &wtmp2)
 	    	|| !GetLongPathNameW(wtmp, wlongpath, MAX_PATH))
-	    	errorcall(call, _("path[%d]: %s"), i+1, formatError(GetLastError()));
+	    	errorcall(call, "path[%d]: %s", i+1, formatError(GetLastError()));
 	    wcstoutf8(longpath, wlongpath, wcslen(wlongpath)+1);
 	    SET_STRING_ELT(ans, i, mkCharCE(longpath, CE_UTF8));
 	} else {
 	    if (!GetFullPathName(translateChar(el), MAX_PATH, tmp, &tmp2)
 	        || !GetLongPathName(tmp, longpath, MAX_PATH))
-	        errorcall(call, _("path[%d]: %s"), i+1, formatError(GetLastError()));
+	        errorcall(call, "path[%d]: %s", i+1, formatError(GetLastError()));
 	    SET_STRING_ELT(ans, i, mkChar(longpath));
 	}
     }
