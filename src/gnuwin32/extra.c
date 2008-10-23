@@ -1086,6 +1086,8 @@ SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarLogical(success);
 }
 
+const char *formatError(DWORD res);
+
 SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, paths = CAR(args), el;
@@ -1101,14 +1103,16 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	el = STRING_ELT(paths, i);
 	if(getCharCE(el) == CE_UTF8) {
-	    GetFullPathNameW(filenameToWchar(el, FALSE), MAX_PATH,
-			     wtmp, &wtmp2);
-	    GetLongPathNameW(wtmp, wlongpath, MAX_PATH);
+	    if (!GetFullPathNameW(filenameToWchar(el, FALSE), MAX_PATH,
+			     wtmp, &wtmp2)
+	    	|| !GetLongPathNameW(wtmp, wlongpath, MAX_PATH))
+	    	errorcall(call, "path[%d]: %s", i+1, formatError(GetLastError()));
 	    wcstoutf8(longpath, wlongpath, wcslen(wlongpath)+1);
 	    SET_STRING_ELT(ans, i, mkCharCE(longpath, CE_UTF8));
 	} else {
-	    GetFullPathName(translateChar(el), MAX_PATH, tmp, &tmp2);
-	    GetLongPathName(tmp, longpath, MAX_PATH);
+	    if (!GetFullPathName(translateChar(el), MAX_PATH, tmp, &tmp2)
+	        || !GetLongPathName(tmp, longpath, MAX_PATH))
+	        errorcall(call, "path[%d]: %s", i+1, formatError(GetLastError()));
 	    SET_STRING_ELT(ans, i, mkChar(longpath));
 	}
     }
