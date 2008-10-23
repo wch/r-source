@@ -41,6 +41,9 @@ BUG FIXES
  	
     o	The script editor did not respect user preferences for the
 	background colour.
+	
+    o	normalizePath() no longer returns a garbage string when the
+    	input is bad; it now signals an error. (PR#13199)
 
 
 
