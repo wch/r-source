@@ -107,7 +107,11 @@ BUG FIXES
     o	integrate() now accepts integer results from f(): as
 	documented, but only double was accepted.
 
-    o	contrib.url() produced incorrect URL for the type "mac.binary".
+    o	contrib.url() produced incorrect URL for the type
+        "mac.binary".
+
+    o   pairwise.wilcox.test() did not pass on the 'paired' argument
+        (caught by Matthias Kohl)
 
 
 
