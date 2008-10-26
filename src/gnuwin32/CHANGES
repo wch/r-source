@@ -19,6 +19,9 @@
 NEW FEATURES
 
     o	memory.size() and memory.limits() now return rounded values.
+    
+    o	The Rgui preferences dialog now allows more flexible colour
+    	settings, and shows a sample of what will be displayed.
 
 
 

@@ -68,20 +68,28 @@ static int cmatch(const char *col, const char **list)
 static const char *StyleList[] = {"normal", "bold", "italic", NULL};
 static const char *PointsList[] = {"6", "7", "8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "32", "36", NULL};
 static const char *FontsList[] = {"Courier", "Courier New", "FixedSys", "FixedFont", "Lucida Console", "Consolas", "Terminal", "BatangChe", "DotumChe", "GulimChe", "MingLiU", "MS Gothic", "MS Mincho", "NSimSun", NULL};
-
-
+static const char *GuiElementNames[numGuiColors+1] = {"background", "normaltext", "usertext",
+						"pagerbg", "pagertext", "highlight",
+						"dataeditbg", "dataedittext", "dataedituser",
+						"editorbg", "editortext", NULL};
 static window wconfig;
 static button bApply, bSave, bLoad, bOK, bCancel;
 static label l_mdi, l_mwin, l_font, l_point, l_style, l_lang, l_crows, l_ccols,
     l_cx, l_cy, l_prows, l_pcols, l_grx, l_gry,
-    l_cols, l_bgcol, l_fgcol, l_usercol, l_highlightcol, l_cbb, l_cbl;
+    l_cols, l_cbb, l_cbl;
 static radiogroup g_mwin;
 static radiobutton rb_mdi, rb_sdi, rb_mwin, rb_swin;
-static listbox f_font, f_style, d_point, bgcol, fgcol, usercol, highlightcol;
+static listbox f_font, f_style, d_point, guielement, guicolor;
 static checkbox toolbar, statusbar, tt_font, c_resize, c_buff;
 static field f_crows, f_ccols, f_prows, f_pcols, f_cx, f_cy, f_cbb,f_cbl,
     f_grx, f_gry, f_lang;
+static textbox guisample;
+static font samplefont = NULL;
+static int samplePointsize = 10;
+static int sampleStyle = Plain;
+static int sampleFontNum;
 
+static rgb dialogColors[numGuiColors];
 
 static void getChoices(Gui p)
 {
@@ -106,10 +114,9 @@ static void getChoices(Gui p)
     p->pcols = atoi(gettext(f_pcols));
     p->grx = atoi(gettext(f_grx));
     p->gry = atoi(gettext(f_gry));
-    p->bg = nametorgb(gettext(bgcol));
-    p->fg = nametorgb(gettext(fgcol));
-    p->user = nametorgb(gettext(usercol));
-    p->hlt = nametorgb(gettext(highlightcol));
+    dialogColors[cmatch(gettext(guielement),GuiElementNames)] = nametorgb(gettext(guicolor));
+    for (int i=0; i<numGuiColors; i++)
+	p->guiColors[i] = dialogColors[i];    
     /* MDIsize is not currently a choice in the dialog, only in the Rconsole file */
 }
 
@@ -120,10 +127,17 @@ void getDefaults(Gui gui)
     gui->cx = gui->cy = 0;
     gui->grx = Rwin_graphicsx;
     gui->gry = Rwin_graphicsy;
-    gui->bg = White;
-    gui->fg = DarkBlue;
-    gui->user = gaRed;
-    gui->hlt = DarkRed;
+    gui->guiColors[consolebg] = White;
+    gui->guiColors[consolefg] = DarkBlue;
+    gui->guiColors[consoleuser] = gaRed;
+    gui->guiColors[pagerbg] = White;
+    gui->guiColors[pagerfg] = DarkBlue;   
+    gui->guiColors[pagerhighlight] = DarkRed;
+    gui->guiColors[dataeditbg] = White;
+    gui->guiColors[dataeditfg] = DarkBlue;
+    gui->guiColors[dataedituser] = gaRed;    
+    gui->guiColors[editorbg] = White;
+    gui->guiColors[editorfg] = Black;    
     gui->prows = 25;
     gui->pcols = 80;
     gui->pagerMultiple = 0;
@@ -200,10 +214,8 @@ void getActive(Gui gui)
 	gui->gry = Rwin_graphicsy;
 
 	/* Font colours */
-	gui->bg = consolebg;
-	gui->fg = consolefg;
-	gui->user = consoleuser;
-	gui->hlt = pagerhighlight;
+	for (int i=0; i<numGuiColors; i++)
+	    gui->guiColors[i] = guiColors[i];
 
 	/* MDIsize is not currently a choice in the dialog, only in the Rconsole file, so is not set here */
     } else
@@ -212,7 +224,12 @@ void getActive(Gui gui)
 
 static int has_changed(Gui a, Gui b)
 {
-    return !a ||
+    Rboolean colorchange = FALSE;
+    if (a)
+	for (int i=0; i<numGuiColors; i++)
+    	    colorchange |= a->guiColors[i] != b->guiColors[i];
+    	
+    return !a || colorchange ||
 	a->MDI != b->MDI ||
 	a->toolbar != b->toolbar ||
 	a->statusbar != b->statusbar ||
@@ -232,11 +249,7 @@ static int has_changed(Gui a, Gui b)
 	a->prows != b->prows ||
 	a->pcols != b->pcols ||
 	a->grx != b->grx ||
-	a->gry != b->gry ||
-	a->bg != b->bg ||
-	a->fg != b->fg ||
-	a->user != b->user ||
-	a->hlt != b->hlt;
+	a->gry != b->gry ;
 }
 
 
@@ -257,10 +270,7 @@ static void cleanup(void)
     delobj(l_prows); delobj(f_prows); delobj(l_pcols); delobj(f_pcols);
     delobj(l_grx); delobj(f_grx); delobj(l_gry); delobj(f_gry);
     delobj(l_cols);
-    delobj(l_bgcol); delobj(bgcol);
-    delobj(l_fgcol); delobj(fgcol);
-    delobj(l_usercol); delobj(usercol);
-    delobj(l_highlightcol); delobj(highlightcol);
+    delobj(guielement); delobj(guicolor); delobj(guisample);
     delobj(bApply); delobj(bSave); delobj(bOK); delobj(bCancel);
     delobj(wconfig);
 }
@@ -325,7 +335,6 @@ void applyGUI(Gui newGUI)
 	FH = fontheight(p->f);
 	FW = fontwidth(p->f);
 	havenewfont = 1;
-	editorsetfont(consolefn);
     }
 
 /* resize console, possibly with new font */
@@ -343,12 +352,9 @@ void applyGUI(Gui newGUI)
 	xbufgrow(p->lbuf, newGUI->cbb, newGUI->cbl);
 
 /* Set colours and redraw */
-    p->fg = consolefg = newGUI->fg;
-    p->ufg = consoleuser = newGUI->user;
-    p->bg = consolebg = newGUI->bg;
+    for (int i=0; i<numGuiColors; i++)
+    	p->guiColors[i] = guiColors[i] = newGUI->guiColors[i];
     drawconsole(RConsole, r);
-    pagerhighlight = newGUI->hlt;
-
     if(haveusedapager &&
        (newGUI->prows != curGUI.prows || newGUI->pcols != curGUI.pcols))
 	askok(G_("Changes in pager size will not apply to any open pagers"));
@@ -454,10 +460,8 @@ static void save(button b)
 	    ischecked(rb_mwin) ? "multiplewindows" : "singlewindow");
 
     fprintf(fp, "## Colours for console and pager(s)\n# (see rwxxxx/etc/rgb.txt for the known colours).\n");
-    fprintf(fp, "background = %s\n", gettext(bgcol));
-    fprintf(fp, "normaltext = %s\n", gettext(fgcol));
-    fprintf(fp, "usertext = %s\n", gettext(usercol));
-    fprintf(fp, "highlight = %s\n", gettext(highlightcol));
+    for (int i=0; i<numGuiColors; i++)
+    	fprintf(fp, "%s = %s\n", GuiElementNames[i], rgbtoname(dialogColors[i]));
     fprintf(fp, "\n\n%s\n%s\nxgraphics = %s\nygraphics = %s\n",
 	    "## Initial position of the graphics window",
 	    "## (pixels, <0 values from opposite edge)",
@@ -618,34 +622,14 @@ int loadRconsole(Gui gui, const char *optf)
 		done = 1;
 	    }
 #endif
-	    if (!strcmp(opt[0], "background")) {
-		if (!strcmpi(opt[1], "Windows"))
-		    gui->bg = myGetSysColor(COLOR_WINDOW);
-		else gui->bg = nametorgb(opt[1]);
-		if (gui->bg != Transparent)
-		    done = 1;
-	    }
-	    if (!strcmp(opt[0], "normaltext")) {
-		if (!strcmpi(opt[1], "Windows"))
-		    gui->fg = myGetSysColor(COLOR_WINDOWTEXT);
-		else gui->fg = nametorgb(opt[1]);
-		if (gui->fg != Transparent)
-		    done = 1;
-	    }
-	    if (!strcmp(opt[0], "usertext")) {
-		if (!strcmpi(opt[1], "Windows"))
-		    gui->user = myGetSysColor(COLOR_ACTIVECAPTION);
-		else gui->user = nametorgb(opt[1]);
-		if (gui->user != Transparent)
-		    done = 1;
-	    }
-	    if (!strcmp(opt[0], "highlight")) {
-		if (!strcmpi(opt[1], "Windows"))
-		    gui->hlt = myGetSysColor(COLOR_ACTIVECAPTION);
-		else gui->hlt = nametorgb(opt[1]);
-		if (gui->hlt != Transparent)
-		    done = 1;
-	    }
+	    for (int i=0; i<numGuiColors; i++) 
+		if (!strcmp(opt[0], GuiElementNames[i])) {
+		    if (!strcmpi(opt[1], "Windows"))
+			gui->guiColors[i] = myGetSysColor(COLOR_WINDOW);
+		    else gui->guiColors[i] = nametorgb(opt[1]);
+		    if (gui->guiColors[i] != Transparent)
+		    	done = 1;
+		}
 	    if (!strcmp(opt[0], "setwidthonresize")) {
 		if (!strcmp(opt[1], "yes"))
 		    gui->setWidthOnResize = 1;
@@ -712,6 +696,63 @@ static void cSDI(button b)
     disable(statusbar);
 }
 
+static rgb whichbg[numGuiColors] = { consolebg, consolebg, consolebg,
+                                     pagerbg, pagerbg, pagerbg,
+                                     dataeditbg, dataeditbg, dataeditbg,
+                                     editorbg, editorbg };
+static rgb whichfg[numGuiColors] = { consolefg, consolefg, consoleuser,
+				     pagerfg, pagerfg, pagerhighlight,
+				     dataeditfg, dataeditfg, dataedituser,
+				     editorfg, editorfg };
+static void clickColor(control c, int argument)
+{
+    int element = cmatch(gettext(guielement), GuiElementNames);
+    dialogColors[element] = nametorgb(ColorName[argument]);
+    setforeground(guisample, dialogColors[whichfg[element]]);
+    setbackground(guisample, dialogColors[whichbg[element]]);
+}
+
+static void changeElement(control c, int argument)
+{   
+    int newcolor = rgbtonum(dialogColors[argument]);
+    setlistitem(guicolor, newcolor);
+    clickColor(guicolor, newcolor);
+}
+
+static void changeFont(control c)
+{
+    char fontname[LF_FACESIZE+1];
+    
+    if (samplefont) delobj(samplefont);
+    
+    if(ischecked(tt_font)) strcpy(fontname, "TT "); else strcpy(fontname, "");
+    strcat(fontname,  FontsList[sampleFontNum]);   	
+    
+    samplefont = gnewfont(NULL, fontname, sampleStyle, samplePointsize, 0.0, 1);
+    settextfont(guisample, samplefont);
+    clickColor(c, getlistitem(guicolor));
+}
+
+static void scrollFont(scrollbar s, int position)
+{
+    sampleFontNum = position;
+    changeFont(s);
+}
+
+static void scrollPoints(scrollbar s, int position)
+{
+    samplePointsize = atoi(PointsList[position]);
+    changeFont(s);
+}
+
+static void scrollStyle(scrollbar s, int position)
+{
+    sampleStyle = Plain;
+    if (!strcmp(gettext(f_style), "bold")) sampleStyle = Bold;
+    if (!strcmp(gettext(f_style), "italic")) sampleStyle = Italic;    
+    changeFont(s);
+}
+
 static void showDialog(Gui gui)
 {
     char buf[100];
@@ -749,17 +790,17 @@ static void showDialog(Gui gui)
 
     l_font = newlabel("Font", rect(10, 100, 40, 20), AlignLeft);
 
-    f_font = newdropfield(FontsList, rect(50, 100, 120, 20), NULL);
-    tt_font = newcheckbox("TrueType only", rect(180, 100, 110, 20), NULL);
+    f_font = newdropfield(FontsList, rect(50, 100, 120, 20), scrollFont);
+    tt_font = newcheckbox("TrueType only", rect(180, 100, 110, 20), changeFont);
     if (gui->tt_font) check(tt_font);
     settext(f_font, gui->font);
 
     l_point = newlabel("size", rect(310, 100, 30, 20), AlignLeft);
-    d_point = newdropfield(PointsList, rect(345, 100, 50, 20), NULL);
+    d_point = newdropfield(PointsList, rect(345, 100, 50, 20), scrollPoints);
     sprintf(buf, "%d", gui->pointsize);
     settext(d_point, buf);
     l_style = newlabel("style", rect(410, 100, 40, 20), AlignLeft);
-    f_style = newdroplist(StyleList, rect(450, 100, 80, 20), NULL);
+    f_style = newdroplist(StyleList, rect(450, 100, 80, 20), scrollStyle);
     setlistitem(f_style, cmatch(gui->style, StyleList));
 
 /* Console size, set widthonresize */
@@ -811,19 +852,19 @@ static void showDialog(Gui gui)
 /* Font colours */
     l_cols = newlabel("Console and Pager Colours",
 		      rect(10, 300, 520, 20), AlignCenter);
-    l_bgcol = newlabel("Background", rect(10, 330, 100, 20), AlignCenter);
-    bgcol = newlistbox(ColorName, rect(10, 350, 100, 50), NULL, NULL);
-    l_fgcol = newlabel("Output text", rect(150, 330, 100, 20), AlignCenter);
-    fgcol = newlistbox(ColorName, rect(150, 350, 100, 50), NULL, NULL);
-    l_usercol = newlabel("User input", rect(290, 330, 100, 20), AlignCenter);
-    usercol = newlistbox(ColorName, rect(290, 350, 100, 50), NULL, NULL);
-    l_highlightcol = newlabel("Titles in pager", rect(430, 330, 100, 20),
-			      AlignCenter);
-    highlightcol = newlistbox(ColorName, rect(430, 350, 100, 50), NULL, NULL);
-    setlistitem(bgcol, rgbtonum(gui->bg));
-    setlistitem(fgcol, rgbtonum(gui->fg));
-    setlistitem(usercol, rgbtonum(gui->user));
-    setlistitem(highlightcol, rgbtonum(gui->hlt));
+			      
+    guielement = newlistbox(GuiElementNames, rect(50, 320, 100, 80), changeElement, NULL);
+    guicolor = newlistbox(ColorName, rect(205, 320, 100, 80), clickColor, NULL);
+    guisample = newrichtextarea("Sample text", rect(350, 320, 150, 55));
+	
+    for (int i=0; i<numGuiColors; i++)
+    	dialogColors[i] = gui->guiColors[i];
+    	
+    setlistitem(guielement, 0);
+    changeElement(guielement, 0);
+    sampleFontNum = cmatch(gettext(f_font), FontsList);
+    samplePointsize = atoi(gettext(d_point));
+    scrollStyle(f_style, 0); /* the 0 is ignored */
 
     bApply = newbutton("Apply", rect(50, 410, 70, 25), apply);
     bSave = newbutton("Save...", rect(130, 410, 70, 25), save);

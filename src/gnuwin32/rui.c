@@ -801,7 +801,7 @@ void readconsolecfg()
     }
     setconsoleoptions(fn, sty, gui.pointsize, gui.crows, gui.ccols,
 		      gui.cx, gui.cy,
-		      gui.fg, gui.user, gui.bg, gui.hlt,
+		      gui.guiColors,
 		      gui.prows, gui.pcols, gui.pagerMultiple, gui.setWidthOnResize,
 		      gui.cbb, gui.cbl, gui.buffered);
 }

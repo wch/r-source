@@ -17,6 +17,8 @@
  *  along with this program; if not, a copy is available at
  *  http://www.r-project.org/Licenses/
  */
+ 
+#include "guicolors.h"
 
 /* xbuf */
 
@@ -42,7 +44,7 @@ struct structConsoleData {
     font  f;			/* font */
     int   fw, fh;
     int   top, right;           /* borders */
-    rgb   bg, fg, ufg;		/* colours */
+    rgb   guiColors[numGuiColors]; /* colours */
     int   fv, fc;		/* first line and first char visible */
     int   r, c;			/* cursor position */
     int   overwrite;		/* overwrite mode */
@@ -108,7 +110,7 @@ typedef struct structConsoleData *ConsoleData;
 
 ConsoleData newconsoledata(font f, int rows, int cols,
     int bufbytes, int buflines,
-    rgb fg, rgb ufg, rgb bg, int kind, int buffered);
+    rgb *guiColors, int kind, int buffered);
 
 void freeConsoleData(ConsoleData p);
 void setfirstvisible(control c, int fv);
@@ -126,7 +128,6 @@ extern font consolefn;
 extern int fontsty, pointsize;
 extern int consoler, consolec;
 extern int pagerrow, pagercol;
-extern rgb consolebg, consolefg, consoleuser, pagerhighlight;
 
 #define DIMLBUF 250000          /* console buffer size in chars */
 #define MLBUF   8000            /* console buffer size in lines */

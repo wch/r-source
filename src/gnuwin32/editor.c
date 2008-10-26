@@ -643,9 +643,9 @@ static editor neweditor(void)
     setdata(t, p);
 
     gsetcursor(c, ArrowCursor);
-    setforeground(c, consolefg);
-    setbackground(c, consolebg);
-    setrichtextbackground(t, consolebg);
+    setforeground(c, guiColors[editorfg]);
+    setbackground(c, guiColors[editorbg]);
+    setbackground(t, guiColors[editorbg]);
     
 #ifdef USE_MDI
     if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
@@ -752,6 +752,7 @@ static editor neweditor(void)
     RguiCommonHelp(m, p->hmenu);
 
     settextfont(t, editorfn);
+    setforeground(t, guiColors[editorfg]);    
     setresize(c, editorresize);
     setclose(c, editorclose);
     setdel(c, editordel);
