@@ -1001,14 +1001,6 @@ textbox newrichtextarea(const char *text, rect r)
     return obj;
 }
 
-void setrichtextbackground(textbox obj, rgb bg)
-{
-    COLORREF wincolour;
-    wincolour = RGB((bg&gaRed)>>16,(bg&gaGreen)>>8,(bg&gaBlue));
-    if (obj && obj->handle)
-	sendmessage(obj->handle, EM_SETBKGNDCOLOR, 0, wincolour);
-}
-
 static SCROLLINFO si;
 
 scrollbar newscrollbar(rect r, int max, int pagesize, scrollfn fn)

@@ -500,7 +500,7 @@ static int writeline(ConsoleData p, int i, int j)
     col1 = COLS - 1;
     insel = p->sel ? ((i - p->my0) * (i - p->my1)) : 1;
     if (insel < 0) {
-	WLHELPER(0, col1, White, DarkBlue);
+	WLHELPER(0, col1, p->bg, p->fg);
 	return len;
     }
     if ((USER(i) >= 0) && (USER(i) < FC + COLS)) {
@@ -579,7 +579,7 @@ static int writeline(ConsoleData p, int i, int j)
 	c2 = (x1 > FC + COLS) ? (COLS - 1) : (x1 - FC);
     } else
 	c2 = COLS - 1;
-    WLHELPER(c1, c2, White, DarkBlue);
+    WLHELPER(c1, c2, p->bg, p->fg);
     return len;
 }
 

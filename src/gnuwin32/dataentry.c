@@ -1321,9 +1321,10 @@ static void de_mousedown(control c, int buttons, point xy)
 		rr.width = (strlen(prev) + 2) * (DE->p->fw);
 	    addto(DE->de);
 	    DE->celledit = newfield_no_border(prev, rr);
+	    settextfont(DE->celledit, DE->p->f);
 	    setbackground(DE->celledit, DE->p->bg);
 	    setforeground(DE->celledit, DE->p->ufg);
-	    settextfont(DE->celledit, DE->p->f);
+
 	    show(DE->celledit);
 	    DE->CellEditable = TRUE;
 	} else if (buttons & LeftButton) {

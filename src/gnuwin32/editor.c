@@ -645,7 +645,7 @@ static editor neweditor(void)
     gsetcursor(c, ArrowCursor);
     setforeground(c, consolefg);
     setbackground(c, consolebg);
-    setrichtextbackground(t, consolebg);
+    setbackground(t, consolebg);
     
 #ifdef USE_MDI
     if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
