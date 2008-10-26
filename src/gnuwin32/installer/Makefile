@@ -79,7 +79,7 @@ endif
 #
 # files to make source packages
 	$(MKDIR) -p $(RPREFIX)/share \
-	  $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32
+	  $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32 $(RPREFIX)/share/sh
 	$(CP) $(R_HOME)/doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) $(R_HOME)/doc/KEYWORDS* $(RPREFIX)/doc
 	$(CP) -p $(foreach i,$(GW32_FILES),../$i) $(RPREFIX)/src/gnuwin32
@@ -90,6 +90,7 @@ endif
 	(cd ..; $(MAKE) --no-print-directory -C installer/$(RPREFIX)/src/gnuwin32/help clean)
 	$(CP) -pr $(R_HOME)/include $(RPREFIX)
 	$(CP) -pr $(foreach i,$(SHARE_DIRS),$(R_HOME)/share/$i) $(RPREFIX)/share
+	$(CP) -p $(R_HOME)/share/sh/dcf.sh $(RPREFIX)/share/sh/ 
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library
 #

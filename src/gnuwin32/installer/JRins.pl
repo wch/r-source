@@ -448,6 +448,7 @@ sub listFiles {
 		 || m/^share\\make/
 		 || m/^share\\perl/
 		 || m/^share\\R/
+		 || m/^share\\sh/
 		 || m/^share\\texmf/
 		 || m/^bin\\build/
 		 || m/^bin\\check/
