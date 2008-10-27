@@ -3049,7 +3049,7 @@ AC_DEFUN([R_BZLIB],
 [if test "x${use_system_bzlib}" = xyes; then
   AC_CHECK_LIB(bz2, BZ2_bzlibVersion, [have_bzlib=yes], [have_bzlib=no])
   if test "${have_bzlib}" = yes; then
-    AC_CHECK_HEADER(bzlib.h, [have_bzlib=yes], [have_bzlib=no])
+    AC_CHECK_HEADERS(bzlib.h, [have_bzlib=yes], [have_bzlib=no])
   fi
 else
   have_bzlib=no
