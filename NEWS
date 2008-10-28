@@ -52,6 +52,9 @@ UTILITIES
     o	R CMD Rd2dvi and R CMD check are now able to cope with Cyrillic
     	characters in UTF-8 (thanks to a hint from Alexey Shipunov).
 
+    o   New function rtags() in package 'utils' that provides etags-like
+	indexing capabilities for R code files.
+
 
 BUG FIXES
 
