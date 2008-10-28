@@ -96,6 +96,11 @@ int R_SaveAsPng(void  *d, int width, int height,
     if (scanline == NULL)
 	return 0;
 
+    if (fp == NULL) {
+	free(scanline);
+	return 0;
+    }
+
     /* Create and initialize the png_struct with the desired error handler
      * functions.  If you want to use the default stderr and longjump method,
      * you can supply NULL for the last three parameters.  We also check that
@@ -349,6 +354,11 @@ int R_SaveAsJpeg(void  *d, int width, int height,
     if (scanline == NULL)
 	return 0;
 
+    if (outfile == NULL) {
+	free(scanline);
+	return 0;
+    }
+
     /* Step 1: allocate and initialize JPEG compression object */
 
     /*
@@ -566,6 +576,9 @@ int R_SaveAsBmp(void  *d, int width, int height,
     int bfOffBits, bfSize, biBitCount, biClrUsed , pad;
     int lres;
     DECLARESHIFTS;
+
+    if (fp == NULL)
+	return 0;
 
     /* Have we less than 256 different colors? */
     ncols = mid = 0;

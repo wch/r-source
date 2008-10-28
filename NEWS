@@ -113,6 +113,11 @@ BUG FIXES
     o   pairwise.wilcox.test() did not pass on the 'paired' argument
         (caught by Matthias Kohl)
 
+    o	bmp(), jpeg(), and png() on unix with type="cairo" would segfault
+	on closure if the output file could not be opened.
+
+    o	tiff() on unix would not write the output file for the first page
+	when multiple pages were plotted.
 
 
 		CHANGES IN R VERSION 2.8.0
