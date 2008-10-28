@@ -51,6 +51,8 @@ BUG FIXES
     o	File share/sh/dcf.sh was not distributed with the binary
     	build. (PR#13200)
 
+    o	dir.create() did not print the path correctly in warning messages.
+
 
 
 		CHANGES IN R VERSION 2.8.0

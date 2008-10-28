@@ -1930,7 +1930,7 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     res = _wmkdir(dir);
     if (show && res && errno == EEXIST)
-	warning(_("'%s' already exists"), dir);
+	warning(_("'%ls' already exists"), dir);
 end:
     return ScalarLogical(res == 0);
 }
