@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-10-19
+@set FAQ_DATE @value{FAQ_YEAR}-10-28
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 8
@@ -2482,6 +2482,8 @@ equations.
 A multiway method to decompose a tensor (array) of any order, as a
 generalisation of SVD also supporting non-identity metrics and
 penalisations.  Also includes some other multiway methods.
+@item PairViz
+Visualization using Eulerian tours and Hamiltonian decompositions.
 @item Peaks
 Spectrum manipulation: background estimation, Markov smoothing,
 deconvolution and peaks search functions.
@@ -2554,6 +2556,8 @@ ColorBrewer palettes for drawing nice maps shaded according to a
 variable.
 @item RDieHarder
 R interface to the dieharder random number generator test suite.
+@item REQS
+R/EQS interface.
 @item RExcelInstaller
 Integration of R and Excel under MS Windows.
 @item RFA
@@ -2576,6 +2580,8 @@ Mouse/menu driven interactive plotting application.
 @item RGraphics
 Data and functions from the book ``R Graphics'' by Paul Murrell, 2005,
 Chapman & Hall/CRC.
+@item RHRV
+Heart rate variability analysis of ECG data.
 @item RHmm
 Hidden Markov Model simulations and estimations.
 @item RII
@@ -2712,6 +2718,8 @@ Classification and analysis of microbial community profiles.
 Provides small integer group functions.
 @item Rlab
 Functions and data sets for the NCSU ST370 class.
+@item Rlabkey
+Data retrieval from a Labkey database.
 @item Rlsf
 Interface to the LSF queuing system.
 @c <COMMENT>
@@ -2721,8 +2729,11 @@ Interface to the LSF queuing system.
 @c </COMMENT>
 @item Rmdr
 R-Multifactor Dimensionality Reduction.
-@item Rmetrics
-Financial engineering and computational finance.
+@c <COMMENT>
+@c Moved to the Archive on 2008-10-27 as requested by the maintainer.
+@c @item Rmetrics
+@c Financial engineering and computational finance.
+@c </COMMENT>
 @item Rmpi
 An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
 provides an interactive R slave environment in which distributed
@@ -2839,6 +2850,8 @@ Shared Hotelling @math{T^2} test for small sample microarray
 experiments.
 @item SiZer
 Significant Zero crossings.
+@item SimComp
+Simultaneous Comparisons for multiple endpoints.
 @item SimHap
 A comprehensive modeling framework for epidemiological outcomes and a
 multiple-imputation approach to haplotypic analysis of population-based
@@ -2964,6 +2977,8 @@ Reads in WIN pickfile and waveform files.
 Functions and datasets for the book ``Linear Mixed Models: A Practical
 Guide Using Statistical Software'' by B. West, K. Welch, and A. Galecki,
 2006, Chapman & Hall/CRC.
+@item WaveCGH
+Wavelet changepoint detection for array CGH.
 @item WeedMap
 Map of weed intensity.
 @item WhatIf
@@ -3082,6 +3097,8 @@ A suite of functions implementing smoothing splines.
 Functions and datasets for Aster modeling (forest graph exponential
 family conditional or unconditional canonical statistic models for life
 history trait modeling).
+@item asympTest
+Asymptotic testing.
 @item asypow
 A set of routines that calculate power and related quantities utilizing
 asymptotic likelihood ratio methods.
@@ -3512,6 +3529,8 @@ models on mixed categorical and continuous (time series) data.
 @item depmixS4
 Dependent Mixture Models: fit latent (hidden) Markov models on mixed
 categorical and continuous (time series) data.
+@item depth
+Depth functions tools for multivariate analysis.
 @item desirability
 Desirabiliy function optimization and ranking.
 @item dfcrm
@@ -4213,6 +4232,8 @@ Robust and classical versions of the inverse Gaussian distribution.
 Routines for simple graphs.
 @item iid.test
 Testing whether data is independent and identically distributed.
+@item imprProbEst
+Minimum distance estimation in an imprecise probability model.
 @item impute
 Imputation for microarray data (currently KNN only).
 @item imputeMDR
@@ -5457,6 +5478,8 @@ the group ``Statistical Complexity Reduction In Molecular Epidemiology''
 (SCRIME), with main focus on SNP data.
 @item scuba
 Scuba diving calculations and decompression models.
+@item sda
+Shrinkage Discriminant Analysis.
 @item sdcMicro
 Statistical Disclosure Control methods for the generation of public and
 scientific use files.
@@ -5547,6 +5570,8 @@ SIMulation of ECOLogical (and other) dynamic systems.
 SIMEX and MCSIMEX algorithms for measurement error models.
 @item similarityRichards
 Similarity of Richards curves.
+@item simone
+Statistical Inference for MOdular NEtworks (SIMoNe).
 @item simpleboot
 Simple bootstrap routines.
 @item singlecase
@@ -5805,6 +5830,10 @@ models.
 Hidden Markov Models for ChIP-on-Chip analysis.
 @item time
 Time tracking for developers.
+@item timeDate
+The Rmetrics module for ``Chronological and Calendarical Objects''.
+@item timeSeries
+The Rmetrics module for ``Financial Time Series Objects''.
 @item timereg
 Code and data sets for the book ``Dynamic Regression Models for Survival
 Data'' by T.  Martinussen and T. Scheike, 2006, Springer Verlag, plus
