@@ -122,6 +122,8 @@ BUG FIXES
     o	tiff() on unix would not write the output file for the first page
 	when multiple pages were plotted.
 
+    o   str(1 + structure(1, class = "test")) no longer recurses "infinitely".
+
 
 		CHANGES IN R VERSION 2.8.0
 

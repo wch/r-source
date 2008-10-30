@@ -5427,3 +5427,12 @@ stopifnot(seq(0, 1, 0.00025+5e-16) <= 1, seq.int(0, 1, 0.00025+5e-16) <= 1)
 stopifnot(rev(seq(0, 1, 0.00025+5e-16))[1] == 1,
           rev(seq.int(0, 1, 0.00025+5e-16))[1] == 1)
 # overshot by about 2e-12 in 2.8.x
+
+## str() with an "invalid object"
+ob <- structure(1, class = "test") # this is fine
+is.object(ob)# TRUE
+ob <- 1 + ob # << this is "broken"
+is.object(ob)# FALSE - hmm..
+identical(ob, unclass(ob)) # TRUE !
+stopifnot(grep("num 2", capture.output(str(ob))) == 1)
+## str(ob) lead to infinite recursion in R <= 2.8.0
