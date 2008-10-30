@@ -103,7 +103,9 @@ Commands:
   Sd2Rd			Convert S documentation to Rd format
   Stangle		Extract S/R code from Sweave documentation
   Sweave		Process Sweave documentation
-  config                Obtain configuration information about R
+  Rdiff			Diff R output ignoring headers etc
+  config		Obtain configuration information about R
+  javareconf		Update the Java configuration variables
 
 Please use 'R CMD command --help' to obtain further information about
 the usage of 'command'.
