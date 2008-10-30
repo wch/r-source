@@ -339,7 +339,16 @@ str.default <-
 	    cat("Class", if(length(cl) > 1) "es",
 		" '", paste(cl, collapse = "', '"), "' ", sep="")
 	    ## If there's a str.<method>, it should have been called before!
-	    str(unclass(object),
+	    uo <- unclass(object)
+	    if(!is.null(attributes(uo)$class)) {
+		## another irregular case
+		xtr <- c(if(identical(uo, object)) { # trap infinite loop
+		    class(uo) <- NULL
+		    "unclass()-immune"
+		} else if(!is.object(object)) "not-object")
+		if(!is.null(xtr)) cat("{",xtr,"} ", sep="")
+	    }
+	    str(uo,
 		max.level = max.level, vec.len = vec.len, digits.d = digits.d,
 		indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1,
 		nchar.max = nchar.max, give.attr = give.attr, width=width)
