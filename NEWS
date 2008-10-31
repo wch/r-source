@@ -36,6 +36,8 @@ NEW FEATURES
     o	boxplot() gains a simple 'matrix' method, enabling boxplot(mat)
 	instead of boxplot(data.frame(mat)).
 
+    o	zip.file.extract() gains an optional 'dir' argument.
+
 
 DEPRECATED & DEFUNCT
 
