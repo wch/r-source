@@ -1886,7 +1886,7 @@ locale needs to specify
 @itemize
 @item
 A human language.  These are generally specified by a lower-case two-character
-abbreviation following ISO 639.
+abbreviation following ISO 639 (see e.g.@: @url{http://en.wikipedia.org/wiki/ISO_639-1}).
 
 @item
 A `territory', used mainly to specify the currency. These are generally
