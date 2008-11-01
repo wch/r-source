@@ -25,6 +25,10 @@ getPackageName <- function(where = topenv(parent.frame()), create = TRUE) {
         pkg <- Sys.getenv("R_PACKAGE_NAME")
     env <- as.environment(where)
     envName <- environmentName(env)
+    if(nzchar(envName)) {
+        if(regexpr("package:", envName, fixed = TRUE) == 1)
+          pkg <- sub("package:","", envName, fixed = TRUE)
+    }
     if(!nzchar(pkg)) { ## is still ""
         if(identical(env, .GlobalEnv))
             pkg <- ".GlobalEnv"
