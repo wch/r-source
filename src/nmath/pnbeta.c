@@ -11,7 +11,7 @@
  *
  *  Auxiliary routines required:
  *	lgamma - log-gamma function
- *      pbeta  - incomplete-beta function
+ *      pbeta  - incomplete-beta function {nowadays: pbeta_raw() -> bratio()}
  */
 
 #include "nmath.h"
@@ -24,7 +24,7 @@ double pnbeta(double x, double a, double b, double ncp,
     /* change errmax and itrmax if desired;
      * original (AS 226, R84) had  (errmax; itrmax) = (1e-6; 100) */
     const static double errmax = 1.0e-9;
-    const int    itrmax = 10000;  /* 100 is not enough for pf(ncp=200) 
+    const int    itrmax = 10000;  /* 100 is not enough for pf(ncp=200)
 				     see PR#11277 */
 
     double a0, ax, lbeta, c, errbd, temp, x0;
