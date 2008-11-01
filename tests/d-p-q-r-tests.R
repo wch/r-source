@@ -675,5 +675,10 @@ mu <- 1e12 * 2^(0:20)
 stopifnot(all.equal(1/(1+mu), dnbinom(0, size = 1, mu = mu), tol=1e-13))
 ## was wrong in 2.7.2 (only)
 
+## Non-central F for large x
+x <- 1e16 * 1.1 ^ (0:20)
+dP <- diff(pf(x, df1=1, df2=1, ncp=20, lower.tail=FALSE, log=TRUE))
+stopifnot(-0.047 < dP, dP < -0.0455)
+## pf(*, log) jumped to -Inf prematurely in 2.8.0 and earlier
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

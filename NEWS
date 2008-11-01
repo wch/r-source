@@ -126,6 +126,9 @@ BUG FIXES
 
     o   str(1 + structure(1, class = "test")) no longer recurses "infinitely".
 
+    o	pf(x, .., ncp, lower.tail=FALSE, log=TRUE) is much more accurate
+	for large x now.
+
 
 		CHANGES IN R VERSION 2.8.0
 
