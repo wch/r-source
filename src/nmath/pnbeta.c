@@ -17,9 +17,10 @@
 #include "nmath.h"
 #include "dpq.h"
 
-double pnbeta(double x, double a, double b, double ncp,
-	      int lower_tail, int log_p)
+LDOUBLE attribute_hidden
+pnbeta_raw(double x, double o_x, double a, double b, double ncp)
 {
+    /* o_x  == 1 - x  but maybe more accurate */
 
     /* change errmax and itrmax if desired;
      * original (AS 226, R84) had  (errmax; itrmax) = (1e-6; 100) */
@@ -27,19 +28,15 @@ double pnbeta(double x, double a, double b, double ncp,
     const int    itrmax = 10000;  /* 100 is not enough for pf(ncp=200) 
 				     see PR#11277 */
 
-    double a0, ax, lbeta, c, errbd, temp, x0;
-    int j;
+    double a0, ax, lbeta, c, errbd, temp, x0, tmp_c;
+    int j, ierr;
+
     LDOUBLE ans, gx, q, sumq;
-
-
-#ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(ncp))
-	return x + a + b + ncp;
-#endif
 
     if (ncp < 0. || a <= 0. || b <= 0.) ML_ERR_return_NAN;
 
-    R_P_bounds_01(x, 0., 1.);
+    if(x < 0. || o_x > 1. || (x == 0. && o_x == 1.)) return 0.;
+    if(x > 1. || o_x < 0. || (x == 1. && o_x == 0.)) return 1.;
 
     c = ncp / 2.;
 
@@ -48,8 +45,11 @@ double pnbeta(double x, double a, double b, double ncp,
     x0 = floor(fmax2(c - 7. * sqrt(c), 0.));
     a0 = a + x0;
     lbeta = lgammafn(a0) + lgammafn(b) - lgammafn(a0 + b);
-    temp = pbeta_raw(x, a0, b, /* lower = */TRUE, FALSE);
-    gx = exp(a0 * log(x) + b * log1p(-x) - lbeta - log(a0));
+    /* temp = pbeta_raw(x, a0, b, TRUE, FALSE), but using (x, o_x): */
+    bratio(a0, b, x, o_x, &temp, &tmp_c, &ierr, FALSE);
+
+    gx = exp(a0 * log(x) + b * (x < .5 ? log1p(-x) : log(o_x))
+	     - lbeta - log(a0));
     if (a0 > a)
 	q = exp(-c + x0 * log(c) - lgammafn(x0 + 1.));
     else
@@ -77,8 +77,17 @@ double pnbeta(double x, double a, double b, double ncp,
     if (j >= itrmax + x0)
 	ML_ERROR(ME_NOCONV, "pnbeta");
 
-    /* return R_DT_val(ans);
-       We want to warn about cancellation here */
+    return ans;
+}
+
+double attribute_hidden
+pnbeta2(double x, double o_x, double a, double b, double ncp,
+	/* o_x  == 1 - x  but maybe more accurate */
+	int lower_tail, int log_p)
+{
+    LDOUBLE ans= pnbeta_raw(x, o_x, a,b, ncp);
+
+    /* return R_DT_val(ans), but we want to warn about cancellation here */
     if(lower_tail) return log_p	? log(ans) : ans;
     else {
 	if(ans > 1 - 1e-10) ML_ERROR(ME_PRECISION, "pnbeta");
@@ -87,3 +96,14 @@ double pnbeta(double x, double a, double b, double ncp,
     }
 }
 
+double pnbeta(double x, double a, double b, double ncp,
+	      int lower_tail, int log_p)
+{
+#ifdef IEEE_754
+    if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(ncp))
+	return x + a + b + ncp;
+#endif
+
+    R_P_bounds_01(x, 0., 1.);
+    return pnbeta2(x, 1-x, a, b, ncp, lower_tail, log_p);
+}
