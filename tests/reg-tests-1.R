@@ -5436,3 +5436,10 @@ is.object(ob)# FALSE - hmm..
 identical(ob, unclass(ob)) # TRUE !
 stopifnot(grep("num 2", capture.output(str(ob))) == 1)
 ## str(ob) lead to infinite recursion in R <= 2.8.0
+
+## getPackageName()  for "package:foo":
+require('methods')
+library(tools)
+oo <- options(warn=2)
+detach("package:tools", unload=TRUE); options(oo)
+## gave warning (-> Error) about creating package name
