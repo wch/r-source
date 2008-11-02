@@ -222,7 +222,6 @@ set the initial list of components: Components are named @samp{main},
 @samp{manuals/refman}, @samp{libdocs}, @samp{devel}, @samp{tcl},
 @samp{tcl/chm}, @samp{Rd}, @samp{latex} and @samp{trans}.
 @end table
-main,chtml,html,html/help,tcl,tcl/chm,manuals,manuals/basic,manuals/technical,manuals/refman,devel,libdocs,trans,latex,Rd
 
 @noindent
 It is also possible to save the settings used to a file and later
