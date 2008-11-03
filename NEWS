@@ -129,6 +129,9 @@ BUG FIXES
     o	pf(x, .., ncp, lower.tail=FALSE, log=TRUE) is much more accurate
 	for large x now.
 
+    o	dev2bitmap() failed in 2.8.0 if 'taa' and 'gaa' were both NA.
+
+
 
 		CHANGES IN R VERSION 2.8.0
 
