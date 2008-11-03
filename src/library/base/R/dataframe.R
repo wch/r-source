@@ -409,8 +409,10 @@ data.frame <-
         } # end of ncols[i] <= 1
 	if(missing(row.names) && nrows[i] > 0L) {
             rowsi <- attr(xi, "row.names")
-            ## old way to mark optional names
-            if(!(rowsi[[1L]] %in% ""))
+            ## Avoid all-blank names
+            nc <- nchar(rowsi, allowNA = FALSE)
+            nc <- nc[!is.na(nc)]
+            if(length(nc) > 0 && any(nc) > 0)
                 row.names <- data.row.names(row.names, rowsi, i)
         }
         nrows[i] <- abs(nrows[i])

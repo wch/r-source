@@ -5428,6 +5428,7 @@ stopifnot(rev(seq(0, 1, 0.00025+5e-16))[1] == 1,
           rev(seq.int(0, 1, 0.00025+5e-16))[1] == 1)
 # overshot by about 2e-12 in 2.8.x
 
+
 ## str() with an "invalid object"
 ob <- structure(1, class = "test") # this is fine
 is.object(ob)# TRUE
@@ -5437,9 +5438,23 @@ identical(ob, unclass(ob)) # TRUE !
 stopifnot(grep("num 2", capture.output(str(ob))) == 1)
 ## str(ob) lead to infinite recursion in R <= 2.8.0
 
+
 ## getPackageName()  for "package:foo":
 require('methods')
 library(tools)
 oo <- options(warn=2)
 detach("package:tools", unload=TRUE); options(oo)
 ## gave warning (-> Error) about creating package name
+
+
+## row.names(data.frame(matrixWithDimnames)) (PR#13230)
+rn0 <- c("","Row 2","Row 3")
+A <- matrix(1:6, nrow=3, ncol=2, dimnames=list(rn0, paste("Col",1:2)))
+rn <- row.names(data.frame(A))
+stopifnot(identical(rn, rn0))
+# was 1:3 in R 2.8.0, whereas
+rn0 <- c("Row 1","","Row 3")
+A <- matrix(1:6, nrow=3, ncol=2, dimnames=list(rn0, paste("Col",1:2)))
+rn <- row.names(data.frame(A))
+stopifnot(identical(rn, rn0))
+## used the names.

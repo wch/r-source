@@ -66,6 +66,10 @@ BUG FIXES
 	selecting columns (e.g. z[i,]) no longer makes the column
 	names unique.
 
+    o	data.frame() no longer ignores row names on objects if the
+	first name is empty.  (PR#13230: this has been the behaviour
+	for a long time, but apparently undocumented.)
+
 
 
 
