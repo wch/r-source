@@ -1,4 +1,4 @@
-#! /bin/sh
+#!@R_SHELL@
 
 ## config -- Simple shell script to get the values of basic R configure
 ## variables, or the header and library flags necessary for linking

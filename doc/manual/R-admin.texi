@@ -2927,6 +2927,7 @@ with @R{} built with @command{gfortran}, @pxref{Using gfortran}.
 * Configuration options::       
 * Internationalization support::  
 * Configuration variables::     
+* Setting the shell::           
 * Using make::                  
 * Using FORTRAN::               
 * Compile and load flags::      
@@ -3029,7 +3030,7 @@ in an English locale (but not the @code{C} locale) will include
 in the greeting on starting R.
 
 
-@node Configuration variables, Using make, Internationalization support, Configuration on Unix
+@node Configuration variables, Setting the shell, Internationalization support, Configuration on Unix
 @section Configuration variables
 
 @findex configure
@@ -3136,9 +3137,16 @@ such as @cputype{ix86}.
 The default settings for making the manuals are controlled by
 @env{R_RD4PDF}, @env{R_RD4DVI} and @env{R_PAPERSIZE}.
 
+@node Setting the shell, Using make, Configuration variables, Configuration on Unix
+@section Setting the shell
 
+By default the shell scripts such as @file{R} will be @samp{#!/bin/sh}
+scripts.  This is almost always satisfactory, but on a few systems
+@file{/bin/sh} is not a Bourne shell clone, and the shell to be used can
+be changed by setting the configure variable @env{R_SHELL} to a suitbale
+value (a full path to a shell, e.g. @file{/usr/local/bin/bash}).
 
-@node Using make, Using FORTRAN, Configuration variables, Configuration on Unix
+@node Using make, Using FORTRAN, Setting the shell, Configuration on Unix
 @section Using make
 @findex make
 
@@ -4260,6 +4268,9 @@ AR="ar -X64"
 CPPFLAGS="-I$LIBICONV/include -I/usr/lpp/X11/include/X11"
 LDFLAGS="-L$LIBICONV/lib -L/usr/lib -L/usr/X11R6/lib"
 @end example
+
+On one AIX 6.x system it was necessary to use @env{R_SHELL} to set the
+default shell to be Bash rather than Zsh.
 
 @node Cygwin, New platforms, AIX, Platform notes
 @section Cygwin

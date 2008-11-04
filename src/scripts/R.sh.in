@@ -1,4 +1,4 @@
-#!/bin/sh
+#!@R_SHELL@
 # Shell wrapper for R executable.
 
 R_HOME_DIR=

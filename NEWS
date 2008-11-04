@@ -58,6 +58,13 @@ UTILITIES
 	indexing capabilities for R code files.
 
 
+INSTALLATION
+
+    o	The shell used by the 'R' script and other shell scripts run
+	by 'R CMD foo' can be specified at installation time by
+	setting the (precious) configure variable R_SHELL.
+
+
 BUG FIXES
 
     o	The postscript() output for setting text is faster and smaller.

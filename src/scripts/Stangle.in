@@ -1,4 +1,4 @@
-#! /bin/sh
+#!@R_SHELL@
 
 revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
