@@ -77,7 +77,7 @@ config: $(srcdir)/config.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 f77_f2c: $(srcdir)/f77_f2c.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-javereconf: $(srcdir)/javareconf.in $(top_builddir)/config.status
+javareconf: $(srcdir)/javareconf.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 pager: $(srcdir)/pager.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
