@@ -2016,49 +2016,47 @@ static int StringValue(int c, Rboolean forSymbol)
 #ifndef SUPPORT_MBCS
 		error(_("\\Uxxxxxxxx sequences not supported (line %d)"), xxlineno);
 #else
-		{
-		    unsigned int val = 0; int i, ext; size_t res;
-		    char buff[MB_CUR_MAX+1]; /* could be variable, and hence not legal C90 */ 
-		    Rboolean delim = FALSE;
-		    if((c = xxgetc()) == '{') {
-			delim = TRUE;
-			CTEXT_PUSH(c);
-		    } else xxungetc(c);
-		    for(i = 0; i < 8; i++) {
-			c = xxgetc(); CTEXT_PUSH(c);
-			if(c >= '0' && c <= '9') ext = c - '0';
-			else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
-			else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
-			else {
-			    xxungetc(c); 
-			    CTEXT_POP();
-			    if (i == 0) { /* was just \x */
-				if(GenerateCode && R_WarnEscapes) {
-				    have_warned++;
-				    warningcall(R_NilValue, _("\\U used without hex digits"));
-				}
-				val = 'U';
+		unsigned int val = 0; int i, ext; size_t res;
+		char buff[MB_CUR_MAX+1]; /* could be variable, and hence not legal C90 */ 
+		Rboolean delim = FALSE;
+		if((c = xxgetc()) == '{') {
+		    delim = TRUE;
+		    CTEXT_PUSH(c);
+		} else xxungetc(c);
+		for(i = 0; i < 8; i++) {
+		    c = xxgetc(); CTEXT_PUSH(c);
+		    if(c >= '0' && c <= '9') ext = c - '0';
+		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
+		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
+		    else {
+			xxungetc(c); 
+			CTEXT_POP();
+			if (i == 0) { /* was just \x */
+			    if(GenerateCode && R_WarnEscapes) {
+				have_warned++;
+				warningcall(R_NilValue, _("\\U used without hex digits"));
 			    }
-			    break;
+			    val = 'U';
 			}
-			val = 16*val + ext;
+			break;
 		    }
-		    if(delim) {
-			if((c = xxgetc()) != '}')
-			    error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
-			else CTEXT_PUSH(c);
-		    }
-		    res = ucstomb(buff, val);
-		    if((int)res <= 0) {
-			if(delim)
-			    error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
-			else
-			    error(_("invalid \\Uxxxxxxxx sequence (line %d)"), xxlineno);
-		    }
-		    for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
-		    WTEXT_PUSH(val);
-		    continue;
+		    val = 16*val + ext;
 		}
+		if(delim) {
+		    if((c = xxgetc()) != '}')
+			error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
+		    else CTEXT_PUSH(c);
+		}
+		res = ucstomb(buff, val);
+		if((int)res <= 0) {
+		    if(delim)
+			error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
+		    else
+			error(_("invalid \\Uxxxxxxxx sequence (line %d)"), xxlineno);
+		}
+		for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
+		WTEXT_PUSH(val);
+		continue;
 #endif
 	    }
 	    else {
