@@ -53,6 +53,14 @@ BUG FIXES
 
     o	dir.create() did not print the path correctly in warning messages.
 
+    o	The C-level function consolecmd had been broken in non-Latin-1
+	single-byte locales in R 2.8.0 by changes intended to support
+	the Japanese IME.  This affected some menu items in Rgui
+	(e.g. to source R files with non-Latin-1 names) and submitting
+	commands from the script editor, but only in rarer languages
+	such as Central European, Greek and Cyrillic.  (PR#13195,
+	probably also PR#13120)
+
 
 
 		CHANGES IN R VERSION 2.8.0

@@ -293,7 +293,7 @@ static void xbuffixl(xbuf p)
 
 /* console */
 
-rgb guiColors[numGuiColors] = { 
+rgb guiColors[numGuiColors] = {
 	White, Black, gaRed, /* consolebg, consolefg, consoleuser, */
 	White, Black, gaRed, /* pagerbg, pagerfg, pagerhighlight,  */
 	White, Black, gaRed, /* dataeditbg, dataeditfg, dataedituser */
@@ -333,7 +333,7 @@ newconsoledata(font f, int rows, int cols, int bufbytes, int buflines,
     p->rows = rows;
     p->cols = cols;
     for (int i=0; i<numGuiColors; i++)
-    	p->guiColors[i] = guiColors[i];
+	p->guiColors[i] = guiColors[i];
     p->f = f;
     FH = fontheight(f);
     FW = fontwidth(f);
@@ -477,11 +477,11 @@ static int writeline(ConsoleData p, int i, int j)
     int   c1, c2, c3, x0, y0, x1, y1;
     rect r;
     int   bg, fg, highlight, base;
-    
+
     if (p->kind == CONSOLE) base = consolebg;
     else if (p->kind == PAGER) base = pagerbg;
     else base = dataeditbg;
-    
+
     bg = p->guiColors[base];
     fg = p->guiColors[base+1];
     highlight = p->guiColors[base+2];
@@ -605,9 +605,9 @@ void drawconsole(control c, rect r) /* r is unused here */
     if(!BM) return;;     /* This is a workaround for PR#1711.
 			    BM should never be null here */
     if (p->kind == PAGER)
-    	gfillrect(BM, p->guiColors[pagerbg], getrect(BM));
+	gfillrect(BM, p->guiColors[pagerbg], getrect(BM));
     else
-    	gfillrect(BM, p->guiColors[consolebg], getrect(BM));
+	gfillrect(BM, p->guiColors[consolebg], getrect(BM));
     if(!ll) return;;
     for (i = 0; i < ll; i++) {
 	wd = WRITELINE(NEWFV + i, i);
@@ -662,7 +662,7 @@ void setfirstvisible(control c, int fv)
 	gscroll(BM, pt(0, FH), RMLINES(0, ROWS - 1));
 	if (p->kind == PAGER)
 	    gfillrect(BM, p->guiColors[pagerbg], RLINE(0));
-	else	
+	else
 	    gfillrect(BM, p->guiColors[consolebg], RLINE(0));
 	WRITELINE(fv, 0);
     }
@@ -834,9 +834,9 @@ static void storekey(control c, int k)
     if (p->numkeys >= NKEYS) {
 	gabeep();
 	return;;
-     }
-     p->kbuf[(p->firstkey + p->numkeys) % NKEYS] = k;
-     p->numkeys++;
+    }
+    p->kbuf[(p->firstkey + p->numkeys) % NKEYS] = k;
+    p->numkeys++;
 }
 
 static void storetab(control c)
@@ -1001,15 +1001,19 @@ void consolecmd(control c, const char *cmd)
     }
     storekey(c, BEGINLINE);
     storekey(c, KILLRESTOFLINE);
-    {
+    if(isUnicodeWindow(c)) {
 	size_t sz = (strlen(cmd) + 1) * sizeof(wchar_t);
 	wchar_t *wcs = (wchar_t *) alloca(sz);
 	memset(wcs, 0, sz);
 	mbstowcs(wcs, cmd, sz-1);
 	for(i = 0; wcs[i]; i++) storekey(c, wcs[i]);
+    } else {
+	const char *ch;
+	for (ch = cmd; *ch; ch++) storekey(c, (unsigned char) *ch);
     }
     storekey(c, '\n');
-/* if we are editing we save the actual line */
+/* if we are editing we save the actual line
+   FIXME: not right if Unicode */
     if (p->r > -1) {
 	char buf[2000], *cp; /* maximum 2 bytes/char */
 	wchar_t *wc = &(p->lbuf->s[p->lbuf->ns - 1][prompt_len]);
@@ -1932,7 +1936,7 @@ setconsoleoptions(const char *fnname,int fnsty, int fnpoints,
     consolex = consx;
     consoley = consy;
     for (int i=0; i<numGuiColors; i++)
-    	guiColors[i] = nguiColors[i];
+	guiColors[i] = nguiColors[i];
     pagerrow = pgr;
     pagercol = pgc;
     pagerMultiple = multiplewindows;
