@@ -38,6 +38,11 @@ NEW FEATURES
 
     o	zip.file.extract() gains an optional 'dir' argument.
 
+    o	If the parser finds strings containing \uxxxx (or \Uxxxxxxxx)
+	escapes that are not valid in the current locale, the string
+	is encoded and marked in UTF-8.   In R 2.8.x this was only
+	done on Windows.
+
 
 DEPRECATED & DEFUNCT
 
