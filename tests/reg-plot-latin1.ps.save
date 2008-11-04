@@ -276,12 +276,12 @@ o
 /Font2 findfont 14 s
 0 setgray
 378.55 523.73 (te) 0 ta
--0.21 (xt\(...\) e) tb
--0.21 (xamples) tb gr
+-0.210 (xt\(...\) e) tb
+-0.210 (xamples) tb gr
 435.34 506.45 (~~~~~~~~~~~~~~) .5 0 t
 /Font1 findfont 12 s
 369.48 49.96 (R is GNU ©, b) 0 ta
--0.24 (ut not ® ...) tb gr
+-0.240 (ut not ® ...) tb gr
 435.34 64.36 (1:10) .5 0 t
 181.90 304.84 (1:10) .5 90 t
 168.94 45.64 672.94 549.64 cl
@@ -314,12 +314,12 @@ o
 /Font1 findfont 10 s
 0 setgray
 339.27 168.45 (the te) 0 ta
--0.30 (xt is CENTERED around \(x,y\) = \(6,2\) b) tb
--0.20 (y def) tb
--0.30 (ault) tb gr
+-0.300 (xt is CENTERED around \(x,y\) = \(6,2\) b) tb
+-0.200 (y def) tb
+-0.300 (ault) tb gr
 /Font1 findfont 12 s
 286.01 132.84 (or Left/Bottom - JUSTIFIED at \(2,1\) b) 0 ta
--0.24 (y 'adj = c\(0,0\)') tb gr
+-0.240 (y 'adj = c\(0,0\)') tb gr
 /Font5 findfont 12 s
 335.34 432.63 (b) 0 0 t
 /Font1 findfont 12 s
@@ -348,7 +348,7 @@ o
 401.35 432.63 (y) 0 0 t
 /Font1 findfont 9 s
 276.84 413.35 (e) 0 ta
--0.27 (xpression\(hat\(beta\) == \(X^t * X\)^{-1} * X^t * y\)) tb gr
+-0.270 (xpression\(hat\(beta\) == \(X^t * X\)^{-1} * X^t * y\)) tb gr
 /Font1 findfont 12 s
 352.21 359.10 (x) 0 0 t
 np
@@ -377,18 +377,18 @@ np
 7.77 0 l
 o
 253.94 481.43 (Le fr) 0 ta
--0.12 (ançais) tb
--0.18 (, c'est f) tb
--0.36 (açile: Règles) tb
--0.18 (, Liber) tb
-0.48 (té) tb
--0.18 (, Egalité) tb
--0.18 (, Fr) tb
--0.12 (ater) tb
-0.30 (nité) tb
--0.18 (...) tb gr
+-0.120 (ançais) tb
+-0.180 (, c'est f) tb
+-0.360 (açile: Règles) tb
+-0.180 (, Liber) tb
+0.480 (té) tb
+-0.180 (, Egalité) tb
+-0.180 (, Fr) tb
+-0.120 (ater) tb
+0.300 (nité) tb
+-0.180 (...) tb gr
 255.28 466.04 (Jetz no chli zür) 0 ta
-0.18 (itüütsch: \(noch ein bißchen Zürcher deutsch\)) tb gr
+0.180 (itüütsch: \(noch ein bißchen Zürcher deutsch\)) tb gr
 ep
 %%Trailer
 %%Pages: 2

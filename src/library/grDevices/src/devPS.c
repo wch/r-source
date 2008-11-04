@@ -2827,7 +2827,7 @@ static void PostScriptText2(FILE *fp, double x, double y,
     if(face < 1 || face > 5) face = 1;
 
     if(relative) {
-	fprintf(fp, "\n%.2f ", x);
+	fprintf(fp, "\n%.3f ", x);
 	PostScriptWriteString(fp, str, nb);
 	fprintf(fp, " tb");
     } else {

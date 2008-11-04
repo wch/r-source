@@ -166,7 +166,7 @@ o
 /Font1 findfont 12 s
 0 setgray
 420.67 36.72 (Inde) 0 ta
--0.36 (x) tb gr
+-0.360 (x) tb gr
 30.96 304.84 (0) .5 90 t
 ep
 %%Page: 2 2
@@ -239,9 +239,9 @@ o
 /Font2 findfont 14 s
 0 setgray
 285.19 542.73 (Centred c) 0 ta
--0.14 (har) tb
--0.21 (s in default c) tb
--0.14 (har set \(ISO Latin1\)) tb gr
+-0.140 (har) tb
+-0.210 (s in default c) tb
+-0.140 (har set \(ISO Latin1\)) tb gr
 221.95 91.44 648.74 518.24 cl
 0.8275 setgray
 0.75 setlinewidth
@@ -711,13 +711,13 @@ o
 /Font1 findfont 6 s
 0 setgray
 40.94 527.99 (Rur) 0 ta
--0.06 (al Male) tb gr
+-0.060 (al Male) tb gr
 40.94 404.73 (Rur) 0 ta
--0.06 (al F) tb
--0.18 (emale) tb gr
+-0.060 (al F) tb
+-0.180 (emale) tb gr
 40.94 281.48 (Urban Male) 0 0 t
 40.94 158.22 (Urban F) 0 ta
--0.18 (emale) tb gr
+-0.180 (emale) tb gr
 0.75 setlinewidth
 [] 0 setdash
 1 setlinecap
@@ -773,7 +773,7 @@ o
 /Font2 findfont 7 s
 0 setgray
 397.47 560.00 (Death Rates in Vir) 0 ta
--0.11 (ginia - 1940) tb gr
+-0.105 (ginia - 1940) tb gr
 ep
 %%Page: 4 4
 bp
@@ -915,13 +915,13 @@ o
 /Font1 findfont 18 s
 0 setgray
 63.36 469.38 (Rur) 0 ta
--0.18 (al Male) tb gr
+-0.180 (al Male) tb gr
 63.36 379.24 (Rur) 0 ta
--0.18 (al F) tb
--0.54 (emale) tb gr
+-0.180 (al F) tb
+-0.540 (emale) tb gr
 63.36 289.10 (Urban Male) 0 0 t
 63.36 198.96 (Urban F) 0 ta
--0.54 (emale) tb gr
+-0.540 (emale) tb gr
 0.75 setlinewidth
 [] 0 setdash
 1 setlinecap
@@ -977,7 +977,7 @@ o
 /Font2 findfont 22 s
 0 setgray
 324.47 525.10 (Death Rates in Vir) 0 ta
--0.33 (ginia - 1940) tb gr
+-0.330 (ginia - 1940) tb gr
 ep
 %%Page: 5 5
 bp
@@ -1671,7 +1671,7 @@ o
 /Font1 findfont 12 s
 0 setgray
 420.67 36.72 (Inde) 0 ta
--0.36 (x) tb gr
+-0.360 (x) tb gr
 30.96 304.84 (1:10) .5 90 t
 77.04 91.44 793.65 518.24 cl
 /bg { 1 1 0 rgb } def
@@ -1770,7 +1770,7 @@ o
 0 setgray
 435.34 36.72 (Height) .5 0 t
 30.96 284.50 (V) 90 ta
--0.96 (olume) tb gr
+-0.960 (olume) tb gr
 77.04 91.44 793.65 518.24 cl
 /bg { 0 0 1 rgb } def
 320.15 140.67 7.97 c p2
@@ -2867,7 +2867,7 @@ o
 /Font2 findfont 14 s
 0 setgray
 295.48 542.73 (mgp < 0: all tic) 0 ta
--0.28 (ks and labels inside `frame') tb gr
+-0.280 (ks and labels inside `frame') tb gr
 /Font1 findfont 12 s
 117.36 304.84 (x^2 - 1.2) .5 90 t
 77.04 91.44 793.65 518.24 cl
@@ -2959,7 +2959,7 @@ bp
 /Font2 findfont 14 s
 0 setgray
 380.51 542.73 (UCB) 0 ta
--0.42 (Admissions) tb gr
+-0.420 (Admissions) tb gr
 /Font1 findfont 12 s
 435.34 65.52 (Admit) .5 0 t
 59.76 304.84 (Gender) .5 90 t
@@ -2970,7 +2970,7 @@ bp
 579.92 510.65 (Rejected) .5 0 t
 89.89 372.86 (Male) .5 90 t
 89.89 137.47 (F) 90 ta
--0.24 (emale) tb gr
+-0.240 (emale) tb gr
 155.52 500.41 (A) .5 0 t
 233.23 500.41 (B) .5 0 t
 277.77 500.41 (C) .5 0 t
@@ -3141,7 +3141,7 @@ bp
 /Font2 findfont 14 s
 0 setgray
 380.51 542.73 (UCB) 0 ta
--0.42 (Admissions) tb gr
+-0.420 (Admissions) tb gr
 /Font1 findfont 12 s
 435.34 65.52 (x label) .5 0 t
 59.76 304.84 (YY) .5 90 t
@@ -3152,7 +3152,7 @@ bp
 579.92 510.65 (Rejected) .5 0 t
 89.89 372.86 (Male) .5 90 t
 89.89 137.47 (F) 90 ta
--0.24 (emale) tb gr
+-0.240 (emale) tb gr
 155.52 500.41 (A) .5 0 t
 233.23 500.41 (B) .5 0 t
 277.77 500.41 (C) .5 0 t
@@ -3356,7 +3356,7 @@ o
 /Font1 findfont 12 s
 0 setgray
 30.96 192.46 (tt <- tab) 90 ta
--0.24 (le\(c\(rep\(0, 7\), rep\(1, 4\), rep\(5, 3\)\)\)) tb gr
+-0.240 (le\(c\(rep\(0, 7\), rep\(1, 4\), rep\(5, 3\)\)\)) tb gr
 ep
 %%Page: 13 13
 bp
@@ -3690,7 +3690,7 @@ o
 /Font1 findfont 12 s
 0 setgray
 420.67 36.72 (Inde) 0 ta
--0.36 (x) tb gr
+-0.360 (x) tb gr
 30.96 304.84 (1:10) .5 90 t
 77.04 91.44 793.65 518.24 cl
 /Font1 findfont 12 s
@@ -3929,7 +3929,7 @@ np
 o
 /Font1 findfont 12 s
 224.57 65.52 (F) 0 ta
--0.36 (eb) tb gr
+-0.360 (eb) tb gr
 428.43 65.52 (Mar) .5 0 t
 642.70 65.52 (Apr) .5 0 t
 ep
@@ -4372,12 +4372,12 @@ np
 o
 /Font1 findfont 12 s
 59.76 96.91 (T) 90 ta
--1.44 (ue) tb gr
+-1.440 (ue) tb gr
 59.76 193.71 (W) 90 ta
--0.36 (ed) tb gr
+-0.360 (ed) tb gr
 59.76 304.84 (Thu) .5 90 t
 59.76 396.64 (Fr) 90 ta
-0.18 (i) tb gr
+0.180 (i) tb gr
 59.76 502.43 (Sat) .5 90 t
 np
 77.04 91.44 m
@@ -4454,12 +4454,12 @@ np
 o
 /Font1 findfont 12 s
 93.24 65.52 (T) 0 ta
--1.44 (ue) tb gr
+-1.440 (ue) tb gr
 257.13 65.52 (W) 0 ta
--0.36 (ed) tb gr
+-0.360 (ed) tb gr
 435.34 65.52 (Thu) .5 0 t
 594.23 65.52 (Fr) 0 ta
-0.18 (i) tb gr
+0.180 (i) tb gr
 767.11 65.52 (Sat) .5 0 t
 ep
 %%Page: 28 28
@@ -4507,12 +4507,12 @@ np
 o
 /Font1 findfont 12 s
 59.76 96.91 (T) 90 ta
--1.44 (ue) tb gr
+-1.440 (ue) tb gr
 59.76 193.71 (W) 90 ta
--0.36 (ed) tb gr
+-0.360 (ed) tb gr
 59.76 304.84 (Thu) .5 90 t
 59.76 396.64 (Fr) 90 ta
-0.18 (i) tb gr
+0.180 (i) tb gr
 59.76 502.43 (Sat) .5 90 t
 np
 77.04 91.44 m
