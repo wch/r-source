@@ -1,5 +1,3 @@
-#!/bin/sh
-#
 # ${RHOME}/tools/GETDISTNAME
 
 TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
