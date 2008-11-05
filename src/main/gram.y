@@ -190,6 +190,8 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 
 #define YYSTYPE		SEXP
 
+%}
+
 
 %token		END_OF_INPUT ERROR
 %token		STR_CONST NUM_CONST NULL_CONST SYMBOL FUNCTION 
