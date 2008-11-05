@@ -12,7 +12,6 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 R_SHARE_DIR = $(R_HOME)/share
 R_INCLUDE_DIR = $(R_HOME)/include
-SHELL = @R_SHELL@
 
 SOURCES_C = splines.c
 SOURCES_F =
@@ -33,7 +32,7 @@ Makedeps: Makefile $(DEPENDS)
 	@touch $@
 
 shlib: $(SHLIB)
-	@$(top_builddir)/bin/mkinstalldirs \
+	@$(MKINSTALLDIRS) \
 	  $(top_builddir)/library/$(pkg)/libs@R_ARCH@
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(SHLIB) \
 	  $(top_builddir)/library/$(pkg)/libs@R_ARCH@/$(SHLIB)

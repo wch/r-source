@@ -12,7 +12,6 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 R_SHARE_DIR = $(R_HOME)/share
 R_INCLUDE_DIR = $(R_HOME)/include
-SHELL = @R_SHELL@
 
 SOURCES_C = init.c kmeans.c \
   ansari.c bandwidths.c chisqsim.c d2x2xk.c fexact.c kendall.c ks.c \
@@ -58,7 +57,7 @@ Makedeps: Makefile $(DEPENDS)
 	@touch $@
 
 shlib: $(SHLIB)
-	@$(top_builddir)/bin/mkinstalldirs \
+	@$(MKINSTALLDIRS) \
 	  $(top_builddir)/library/$(pkg)/libs@R_ARCH@
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(SHLIB) \
 	  $(top_builddir)/library/$(pkg)/libs@R_ARCH@/$(SHLIB)
