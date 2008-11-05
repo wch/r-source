@@ -2440,6 +2440,7 @@ AC_CONFIG_FILES(
   src/scripts/config
   src/scripts/f77_f2c
   src/scripts/javareconf
+  src/scripts/mkinstalldirs
   src/scripts/pager
   src/unix/Makefile
   tests/Makefile

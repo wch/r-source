@@ -63,7 +63,8 @@ MAIN_LD = @MAIN_LD@
 MAIN_LDFLAGS = @MAIN_LDFLAGS@
 MAIN_LINK = $(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS)
 MAKEINDEX = @MAKEINDEX@
-MKINSTALLDIRS = $(SHELL) $(top_srcdir)/src/scripts/mkinstalldirs
+## need this for bootstrapping
+MKINSTALLDIRS = @R_SHELL@ $(top_srcdir)/src/scripts/mkinstalldirs.in
 PERL = @PERL@
 OBJC = @OBJC@
 OBJCFLAGS = @OBJCFLAGS@

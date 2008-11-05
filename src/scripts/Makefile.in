@@ -16,7 +16,7 @@ SCRIPTS_S = mkinstalldirs
 SCRIPTS_B_IN = BATCH.in LINK.in COMPILE.in INSTALL.in REMOVE.in \
   Rcmd.in Rdconv.in Rdiff.in Rd2dvi.in Rd2txt.in Rprof.in \
   SHLIB.in Sd2Rd.in Sweave.in Stangle.in build.in check.in config.in \
-  f77_f2c.in javareconf.in pager.in
+  f77_f2c.in javareconf.in mkinstalldirs.in pager.in
 SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 ## </NOTE>
 
@@ -79,6 +79,8 @@ f77_f2c: $(srcdir)/f77_f2c.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 javareconf: $(srcdir)/javareconf.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+makeinstalldirs: $(srcdir)/makeinstalldirs.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 pager: $(srcdir)/pager.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 ## The following target helps in automatically generating the above
@@ -130,9 +132,6 @@ installdirs:
 	@$(MKINSTALLDIRS) $(DESTDIR)$(bindir)
 install-cmds:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir)"
-	@for f in $(SCRIPTS_S); do \
-	  $(INSTALL_SCRIPT) $(srcdir)/$${f} "$(DESTDIR)$(Rexecbindir)"; \
-	done
 	@for f in $(SCRIPTS_B); do \
 	  $(INSTALL_SCRIPT) $${f} "$(DESTDIR)$(Rexecbindir)"; \
 	done
