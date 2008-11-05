@@ -62,14 +62,10 @@ com_util.h: ../gnuwin32/front-ends/com_util.h
 	@cp $< $@
 
 Rconfig.h: config.h $(R_HOME)/tools/GETCONFIG
-	@$(SED) -e 1d $(R_HOME)/tools/GETCONFIG > GC
-	@sh GC > Rconfig.h
-	@$(RM) GC
+	@sh $(R_HOME)/tools/GETCONFIG > Rconfig.h
 
 Rversion.h: $(R_HOME)/VERSION $(R_HOME)/SVN-REVISION $(R_HOME)/tools/GETVERSION
-	@$(SED) -e 1d $(R_HOME)/tools/GETVERSION > $(R_HOME)/tools/GV
-	@sh $(R_HOME)/tools/GV > $@
-	@$(RM) $(R_HOME)/tools/GV
+	@sh $(R_HOME)/tools/GETVERSION > $@
 
 Rmath.h0: Rmath.h0.in $(R_HOME)/VERSION
 	@$(SED) -e 's/@RMATH_HAVE_LOG1P@/# define HAVE_LOG1P 1/'  \
