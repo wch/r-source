@@ -81,7 +81,7 @@ static int	GenerateCode = 0;
 static int	EndOfFile = 0;
 static int	xxgetc();
 static int	xxungetc(int);
-static int	xxcharcount, xxcharsave;
+static int 	xxcharcount, xxcharsave;
 static int	xxlineno, xxcolno, xxlinesave, xxcolsave;
 static int	xxlastlinelen;
 
@@ -123,7 +123,7 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	    mbs_init(&mb_st);
 	    res = mbrtowc(wc, s, clen, &mb_st);
 	    if(res >= 0) break;
-	    if(res == -1)
+	    if(res == -1) 
 		error(_("invalid multibyte character in parser at line %d"), xxlineno);
 	    /* so res == -2 */
 	    c = xxgetc();
@@ -362,18 +362,18 @@ static int xxgetc(void)
 
     if(npush) c = pushback[--npush]; else  c = ptr_getc();
     if (c == EOF) {
-	EndOfFile = 1;
-	return R_EOF;
+        EndOfFile = 1;
+        return R_EOF;
     }
     R_ParseContextLast = (R_ParseContextLast + 1) % PARSE_CONTEXT_SIZE;
     R_ParseContext[R_ParseContextLast] = c;
-
+    
     if (c == '\n') {
-	xxlineno += 1;
-	xxlastlinelen = xxcolno;
-	xxcolno = 0;
+    	xxlineno += 1;
+    	xxlastlinelen = xxcolno; 
+    	xxcolno = 0;
     } else xxcolno++;
-
+    
     if ( KeepSource && GenerateCode && FunctionLevel > 0 ) {
 	if(SourcePtr <  FunctionSource + MAXFUNSIZE)
 	    *SourcePtr++ = c;
@@ -386,11 +386,11 @@ static int xxgetc(void)
 static int xxungetc(int c)
 {
     if (c == '\n') {
-	xxlineno -= 1;
-	xxcolno = xxlastlinelen; /* FIXME:  could we push back more than one line? */
-	xxlastlinelen = 0;
+    	xxlineno -= 1;
+    	xxcolno = xxlastlinelen; /* FIXME:  could we push back more than one line? */
+    	xxlastlinelen = 0;
     } else xxcolno--;
-
+    
     if ( KeepSource && GenerateCode && FunctionLevel > 0 )
 	SourcePtr--;
     xxcharcount--;
@@ -404,7 +404,7 @@ static int xxungetc(int c)
 static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
 {
     SEXP val;
-
+    
     PROTECT(val = allocVector(INTSXP, 4));
     INTEGER(val)[0] = lloc->first_line;
     INTEGER(val)[1] = lloc->first_column;
@@ -420,12 +420,12 @@ static SEXP attachSrcrefs(SEXP val, SEXP srcfile)
 {
     SEXP t, srval;
     int n;
-
+    
     PROTECT(val);
     t = CDR(SrcRefs);
     srval = allocVector(VECSXP, length(t));
     for (n = 0 ; n < LENGTH(srval) ; n++, t = CDR(t))
-	SET_VECTOR_ELT(srval, n, CAR(t));
+    	SET_VECTOR_ELT(srval, n, CAR(t));
     setAttrib(val, R_SrcrefSymbol, srval);
     setAttrib(val, R_SrcfileSymbol, srcfile);
     UNPROTECT(1);
@@ -436,9 +436,9 @@ static SEXP attachSrcrefs(SEXP val, SEXP srcfile)
 static int xxvalue(SEXP v, int k, YYLTYPE *lloc)
 {
     if (k > 2) {
-	if (SrcFile)
-	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
-	UNPROTECT_PTR(v);
+    	if (SrcFile)
+    	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
+    	UNPROTECT_PTR(v);
     }
     R_CurrentExpr = v;
     return k;
@@ -510,9 +510,9 @@ static SEXP xxexprlist0(void)
 	PROTECT(ans = NewList());
 	if (SrcFile) {
 	    setAttrib(ans, R_SrcrefSymbol, SrcRefs);
-	    REPROTECT(SrcRefs = NewList(), srindex);
-	}
-    }
+    	    REPROTECT(SrcRefs = NewList(), srindex);
+    	}
+    } 
     else
 	PROTECT(ans = R_NilValue);
     return ans;
@@ -525,9 +525,9 @@ static SEXP xxexprlist1(SEXP expr, YYLTYPE *lloc)
 	PROTECT(tmp = NewList());
 	if (SrcFile) {
 	    setAttrib(tmp, R_SrcrefSymbol, SrcRefs);
-	    REPROTECT(SrcRefs = NewList(), srindex);
-	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
-	}
+    	    REPROTECT(SrcRefs = NewList(), srindex);
+    	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
+    	}	
 	PROTECT(ans = GrowList(tmp, expr));
 	UNPROTECT_PTR(tmp);
     }
@@ -541,8 +541,8 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode) {
-	if (SrcFile)
-	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
+	if (SrcFile) 
+    	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);   
 	PROTECT(ans = GrowList(exprlist, expr));
     }
     else
@@ -789,7 +789,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 	    /*  If the function ends with an endline comment,  e.g.
 
 		function()
-		    print("Hey") # This comment
+	            print("Hey") # This comment
 
 		we need some special handling to keep it from getting
 		chopped off. Normally, we will have read one token too
@@ -892,7 +892,7 @@ static SEXP xxexprlist(SEXP a1, YYLTYPE *lloc, SEXP a2)
 {
     SEXP ans;
     SEXP prevSrcrefs;
-
+    
     EatLines = 0;
     if (GenerateCode) {
 	SET_TYPEOF(a2, LANGSXP);
@@ -900,14 +900,14 @@ static SEXP xxexprlist(SEXP a1, YYLTYPE *lloc, SEXP a2)
 	if (SrcFile) {
 	    PROTECT(prevSrcrefs = getAttrib(a2, R_SrcrefSymbol));
 	    REPROTECT(SrcRefs = Insert(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
-	    PROTECT(ans = attachSrcrefs(a2, SrcFile));
+	    PROTECT(ans = attachSrcrefs(a2, SrcFile));	    
 	    REPROTECT(SrcRefs = prevSrcrefs, srindex);
 	    /* SrcRefs got NAMED by being an attribute... */
 	    SET_NAMED(SrcRefs, 0);
 	    UNPROTECT_PTR(prevSrcrefs);
-	}
+	} 
 	else
-	    PROTECT(ans = a2);
+	    PROTECT(ans = a2);	
     }
     else
 	PROTECT(ans = R_NilValue);
@@ -921,7 +921,7 @@ static SEXP TagArg(SEXP arg, SEXP tag, YYLTYPE *lloc)
 {
     switch (TYPEOF(tag)) {
     case STRSXP:
-	tag = install(translateChar(STRING_ELT(tag, 0)));
+    	tag = install(translateChar(STRING_ELT(tag, 0)));
     case NILSXP:
     case SYMSXP:
 	return lang2(arg, tag);
@@ -1072,20 +1072,20 @@ static SEXP R_Parse1(ParseStatus *status)
 {
     switch(yyparse()) {
     case 0:                     /* End of file */
-	*status = PARSE_EOF;
-	if (EndOfFile == 2) *status = PARSE_INCOMPLETE;
-	break;
+        *status = PARSE_EOF;
+        if (EndOfFile == 2) *status = PARSE_INCOMPLETE;
+        break;
     case 1:                     /* Syntax error / incomplete */
-	*status = PARSE_ERROR;
-	if (EndOfFile) *status = PARSE_INCOMPLETE;
-	break;
+        *status = PARSE_ERROR;
+        if (EndOfFile) *status = PARSE_INCOMPLETE;
+        break;
     case 2:                     /* Empty Line */
-	*status = PARSE_NULL;
-	break;
+        *status = PARSE_NULL;
+        break;
     case 3:                     /* Valid expr '\n' terminated */
     case 4:                     /* Valid expr ';' terminated */
-	*status = PARSE_OK;
-	break;
+        *status = PARSE_OK;
+        break;
     }
     return R_CurrentExpr;
 }
@@ -1148,15 +1148,15 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
     ParseContextInit();
     savestack = R_PPStackTop;
     PROTECT(t = NewList());
-
+    
     xxlineno = 1;
-    xxcolno = 0;
+    xxcolno = 0;    
     if (!isNull(srcfile)) {
 	SrcFile = srcfile;
 	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
-    }
+    } 
     else SrcFile = NULL;
-
+    
     for(i = 0; ; ) {
 	if(n >= 0 && i >= n) break;
 	ParseInit();
@@ -1186,8 +1186,8 @@ finish:
     for (n = 0 ; n < LENGTH(rval) ; n++, t = CDR(t))
 	SET_VECTOR_ELT(rval, n, CAR(t));
     if (SrcFile) {
-	rval = attachSrcrefs(rval, SrcFile);
-	SrcFile = NULL;
+    	rval = attachSrcrefs(rval, SrcFile);
+        SrcFile = NULL;    
     }
     R_PPStackTop = savestack;
     *status = PARSE_OK;
@@ -1212,7 +1212,7 @@ static int con_getc(void)
 {
     int c;
     static int last=-1000;
-
+    
     c = Rconn_fgetc(con_parse);
     if (c == EOF && last != '\n') c = '\n';
     return (last = c);
@@ -1272,19 +1272,19 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
     bufp = buf;
     savestack = R_PPStackTop;
     PROTECT(t = NewList());
-
+    
     xxlineno = 1;
-    xxcolno = 0;
+    xxcolno = 0;      
     GenerateCode = 1;
     iob = buffer;
-    ptr_getc = buffer_getc;
+    ptr_getc = buffer_getc;    
 
     if (!isNull(srcfile)) {
 	SrcFile = srcfile;
 	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
-    }
+    }      
     else SrcFile = NULL;
-
+    
     for(i = 0; ; ) {
 	if(n >= 0 && i >= n) break;
 	if (!*bufp) {
@@ -1302,8 +1302,8 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
 	ParseInit();
 	ParseContextInit();
 	R_Parse1(status);
-	rval = R_CurrentExpr;
-
+        rval = R_CurrentExpr;
+    
 	switch(*status) {
 	case PARSE_NULL:
 	    break;
@@ -1329,9 +1329,9 @@ finish:
     for (n = 0 ; n < LENGTH(rval) ; n++, t = CDR(t))
 	SET_VECTOR_ELT(rval, n, CAR(t));
     if (SrcFile) {
-	rval = attachSrcrefs(rval, SrcFile);
-	SrcFile = NULL;
-    }
+    	rval = attachSrcrefs(rval, SrcFile);
+        SrcFile = NULL;    
+    }	
     R_PPStackTop = savestack;
     *status = PARSE_OK;
     return rval;
@@ -1367,11 +1367,11 @@ static void IfPush(void)
 	*contextp=='['    ||
 	*contextp=='('    ||
 	*contextp == 'i') {
-	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
+	if(contextp - contextstack >= CONTEXTSTACK_SIZE) 
 	    error(_("contextstack overflow"));
 	*++contextp = 'i';
     }
-
+    
 }
 
 static void ifpop(void)
@@ -1380,7 +1380,7 @@ static void ifpop(void)
 	*contextp-- = 0;
 }
 
-/* This is only called following ., so we only care if it is
+/* This is only called following ., so we only care if it is 
    an ANSI digit or not */
 static int typeofnext(void)
 {
@@ -1562,16 +1562,16 @@ static void yyerror(char *s)
        The first YYENGLISH from the right column are English to be translated,
        the rest are to be copied literally.  The #if 0 block below allows xgettext
        to see these.
-    */
+    */    
 #define YYENGLISH 8
-	"$undefined",	"input",
+	"$undefined",	"input", 	
 	"END_OF_INPUT",	"end of input",
-	"ERROR",	"input",
+	"ERROR",	"input", 	
 	"STR_CONST",	"string constant",
 	"NUM_CONST",	"numeric constant",
-	"SYMBOL",	"symbol",
-	"LEFT_ASSIGN",	"assignment",
-	"'\\n'",	"end of line",
+	"SYMBOL",	"symbol",	
+	"LEFT_ASSIGN",	"assignment",	
+	"'\\n'",	"end of line",	
 	"NULL_CONST",	"'NULL'",
 	"FUNCTION",	"'function'",
 	"EQ_ASSIGN",	"'='",
@@ -1604,43 +1604,43 @@ static void yyerror(char *s)
     char *expecting;
  #if 0
  /* these are just here to trigger the internationalization */
-    _("input");
+    _("input"); 	
     _("end of input");
     _("string constant");
     _("numeric constant");
-    _("symbol");
+    _("symbol");	
     _("assignment");
     _("end of line");
-#endif
-
+#endif 
+   
     R_ParseError = xxlineno;
     R_ParseErrorFile = SrcFile;
-
+    
     if (!strncmp(s, yyunexpected, sizeof yyunexpected -1)) {
 	int i;
-	/* Edit the error message */
-	expecting = strstr(s + sizeof yyunexpected -1, yyexpecting);
-	if (expecting) *expecting = '\0';
-	for (i = 0; yytname_translations[i]; i += 2) {
-	    if (!strcmp(s + sizeof yyunexpected - 1, yytname_translations[i])) {
-		sprintf(R_ParseErrorMsg, _("unexpected %s"),
-		    i/2 < YYENGLISH ? _(yytname_translations[i+1])
-				    : yytname_translations[i+1]);
-		return;
-	    }
-	}
-	sprintf(R_ParseErrorMsg, _("unexpected %s"), s + sizeof yyunexpected - 1);
+    	/* Edit the error message */    
+    	expecting = strstr(s + sizeof yyunexpected -1, yyexpecting);
+    	if (expecting) *expecting = '\0';
+    	for (i = 0; yytname_translations[i]; i += 2) {
+    	    if (!strcmp(s + sizeof yyunexpected - 1, yytname_translations[i])) {
+    	    	sprintf(R_ParseErrorMsg, _("unexpected %s"), 
+    	    	    i/2 < YYENGLISH ? _(yytname_translations[i+1])
+    	    	                    : yytname_translations[i+1]);
+    	    	return;
+    	    }
+    	}
+    	sprintf(R_ParseErrorMsg, _("unexpected %s"), s + sizeof yyunexpected - 1);
     } else {
-	strncpy(R_ParseErrorMsg, s, PARSE_ERROR_SIZE - 1);
-    }
+    	strncpy(R_ParseErrorMsg, s, PARSE_ERROR_SIZE - 1);
+    }	
 }
 
 static void CheckFormalArgs(SEXP formlist, SEXP _new, YYLTYPE *lloc)
 {
     while (formlist != R_NilValue) {
 	if (TAG(formlist) == _new) {
-	    error(_("Repeated formal argument '%s' on line %d"), CHAR(PRINTNAME(_new)),
-								 lloc->first_line);
+	    error(_("Repeated formal argument '%s' on line %d"), CHAR(PRINTNAME(_new)), 
+	                                                         lloc->first_line);
 	}
 	formlist = CDR(formlist);
     }
@@ -1657,7 +1657,7 @@ static char yytext[MAXELTSIZE];
 #define DECLARE_YYTEXT_BUFP(bp) char *bp = yytext
 #define YYTEXT_PUSH(c, bp) do { \
     if ((bp) - yytext >= sizeof(yytext) - 1) \
-	error(_("input buffer overflow at line %d"), xxlineno); \
+        error(_("input buffer overflow at line %d"), xxlineno); \
 	*(bp)++ = (c); \
 } while(0)
 
@@ -1667,7 +1667,7 @@ static int SkipSpace(void)
 
 #ifdef Win32
     if(!mbcslocale) { /* 0xa0 is NBSP in all 8-bit Windows locales */
-	while ((c = xxgetc()) == ' ' || c == '\t' || c == '\f' ||
+	while ((c = xxgetc()) == ' ' || c == '\t' || c == '\f' || 
 	       (unsigned int) c == 0xa0) ;
 	return c;
     } else {
@@ -1729,8 +1729,8 @@ static int NumericValue(int c)
     DECLARE_YYTEXT_BUFP(yyp);
     YYTEXT_PUSH(c, yyp);
     /* We don't care about other than ASCII digits */
-    while (isdigit(c = xxgetc()) || c == '.' || c == 'e' || c == 'E'
-	   || c == 'x' || c == 'X' || c == 'L')
+    while (isdigit(c = xxgetc()) || c == '.' || c == 'e' || c == 'E' 
+	   || c == 'x' || c == 'X' || c == 'L') 
     {
 	if (c == 'L') /* must be at the end.  Won't allow 1Le3 (at present). */
 	    break;
@@ -1752,7 +1752,7 @@ static int NumericValue(int c)
 		    YYTEXT_PUSH(c, yyp);
 		    c = xxgetc();
 		}
-		for(nd = 0; isdigit(c); c = xxgetc(), nd++)
+		for(nd = 0; isdigit(c); c = xxgetc(), nd++) 
 		    YYTEXT_PUSH(c, yyp);
 		if (nd == 0) return ERROR;
 	    }
@@ -1784,8 +1784,8 @@ static int NumericValue(int c)
     /* Make certain that things are okay. */
     if(c == 'L') {
 	double a = R_atof(yytext);
-	int b = (int) a;
-	/* We are asked to create an integer via the L, so we check that the
+	int b = (int) a; 
+	/* We are asked to create an integer via the L, so we check that the 
 	   double and int values are the same. If not, this is a problem and we
 	   will not lose information and so use the numeric value.
 	*/
@@ -1793,18 +1793,18 @@ static int NumericValue(int c)
 	    if(GenerateCode) {
 		if(seendot == 1 && seenexp == 0)
 		    warning(_("integer literal %sL contains decimal; using numeric value"), yytext);
-		else
+		else 
 		    warning(_("non-integer value %s qualified with L; using numeric value"), yytext);
 	    }
 	    asNumeric = 1;
 	    seenexp = 1;
 	}
     }
-
+    
     if(c == 'i') {
 	yylval = GenerateCode ? mkComplex(yytext) : R_NilValue;
     } else if(c == 'L' && asNumeric == 0) {
-	if(GenerateCode && seendot == 1 && seenexp == 0)
+	if(GenerateCode && seendot == 1 && seenexp == 0) 
 	    warning(_("integer literal %sL contains unnecessary decimal point"), yytext);
 	yylval = GenerateCode ? mkInt(yytext) : R_NilValue;
 #if 0  /* do this to make 123 integer not double */
@@ -1812,7 +1812,7 @@ static int NumericValue(int c)
 	if(c != 'L') xxungetc(c);
 	if (GenerateCode) {
 	    double a = R_atof(yytext);
-	    int b = (int) a;
+	    int b = (int) a; 
 	    yylval = (a != (double) b) ? mkFloat(yytext) : mkInt(yytext);
 	} else yylval = R_NilValue;
 #endif
@@ -1835,7 +1835,7 @@ static int NumericValue(int c)
 	unsigned int nc = bp - stext;       \
 	if (nc >= nstext - 1) {             \
 	    char *old = stext;              \
-	    nstext *= 2;                    \
+            nstext *= 2;                    \
 	    stext = malloc(nstext);         \
 	    if(!stext) error(_("unable to allocate buffer for long string at line %d"), xxlineno);\
 	    memmove(stext, old, nc);        \
@@ -1850,7 +1850,9 @@ static int NumericValue(int c)
    string.  Needs wide-char support.
 */
 #ifdef SUPPORT_MBCS
-# define USE_UTF8_IF_POSSIBLE
+# ifdef Win32
+#  define USE_UTF8_IF_POSSIBLE
+# endif
 #endif
 
 #ifdef USE_UTF8_IF_POSSIBLE
@@ -1861,7 +1863,7 @@ static SEXP mkStringUTF8(const wchar_t *wcs, int cnt)
     SEXP t;
     char *s;
     int nb;
-
+    
 /* NB: cnt includes the terminator */
 #ifdef Win32
     nb = cnt*4; /* UCS-2/UTF-16 so max 4 bytes per wchar_t */
@@ -1908,9 +1910,9 @@ static int StringValue(int c, Rboolean forSymbol)
 	if (c == '\n') {
 	    xxungetc(c);
 	    /* Fix by Mark Bravington to allow multiline strings
-	     * by pretending we've seen a backslash. Was:
+             * by pretending we've seen a backslash. Was:
 	     * return ERROR;
-	     */
+             */
 	    c = '\\';
 	}
 	if (c == '\\') {
@@ -1941,7 +1943,7 @@ static int StringValue(int c, Rboolean forSymbol)
 		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
 		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
 		    else {
-			xxungetc(c);
+			xxungetc(c); 
 			CTEXT_POP();
 			if (i == 0) { /* was just \x */
 			    if(GenerateCode && R_WarnEscapes) {
@@ -1961,10 +1963,10 @@ static int StringValue(int c, Rboolean forSymbol)
 		error(_("\\uxxxx sequences not supported (line %d)"), xxlineno);
 #else
 		unsigned int val = 0; int i, ext; size_t res;
-		char buff[MB_CUR_MAX+1]; /* could be variable, and hence not legal C90 */
+		char buff[MB_CUR_MAX+1]; /* could be variable, and hence not legal C90 */ 
 		Rboolean delim = FALSE;
 		if((c = xxgetc()) == '{') {
-		    delim = TRUE;
+		    delim = TRUE; 
 		    CTEXT_PUSH(c);
 		} else xxungetc(c);
 		for(i = 0; i < 4; i++) {
@@ -1973,7 +1975,7 @@ static int StringValue(int c, Rboolean forSymbol)
 		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
 		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
 		    else {
-			xxungetc(c);
+			xxungetc(c); 
 			CTEXT_POP();
 			if (i == 0) { /* was just \x */
 			    if(GenerateCode && R_WarnEscapes) {
@@ -2015,7 +2017,7 @@ static int StringValue(int c, Rboolean forSymbol)
 		error(_("\\Uxxxxxxxx sequences not supported (line %d)"), xxlineno);
 #else
 		unsigned int val = 0; int i, ext; size_t res;
-		char buff[MB_CUR_MAX+1]; /* could be variable, and hence not legal C90 */
+		char buff[MB_CUR_MAX+1]; /* could be variable, and hence not legal C90 */ 
 		Rboolean delim = FALSE;
 		if((c = xxgetc()) == '{') {
 		    delim = TRUE;
@@ -2027,7 +2029,7 @@ static int StringValue(int c, Rboolean forSymbol)
 		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
 		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
 		    else {
-			xxungetc(c);
+			xxungetc(c); 
 			CTEXT_POP();
 			if (i == 0) { /* was just \x */
 			    if(GenerateCode && R_WarnEscapes) {
@@ -2045,22 +2047,15 @@ static int StringValue(int c, Rboolean forSymbol)
 			error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
 		    else CTEXT_PUSH(c);
 		}
-		WTEXT_PUSH(val);
 		res = ucstomb(buff, val);
 		if((int)res <= 0) {
-#ifdef USE_UTF8_IF_POSSIBLE
-		    if(!forSymbol) {
-			use_wcs = TRUE;
-		    } else
-#endif
-		    {
-			if(delim)
-			    error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
-			else
-			    error(_("invalid \\Uxxxxxxxx sequence (line %d)"), xxlineno);
-		    }
-		} else
-		    for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
+		    if(delim)
+			error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
+		    else
+			error(_("invalid \\Uxxxxxxxx sequence (line %d)"), xxlineno);
+		}
+		for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
+		WTEXT_PUSH(val);
 		continue;
 #endif
 	    }
@@ -2106,22 +2101,22 @@ static int StringValue(int c, Rboolean forSymbol)
 	}
 #if defined(SUPPORT_MBCS)
        else if(mbcslocale) {
-	   int i, clen;
-	   wchar_t wc = L'\0';
+           int i, clen;
+           wchar_t wc = L'\0';
 	   /* We can't assume this is valid UTF-8 */
-	   clen = /* utf8locale ? utf8clen(c):*/ mbcs_get_next(c, &wc);
+           clen = /* utf8locale ? utf8clen(c):*/ mbcs_get_next(c, &wc);
 	   WTEXT_PUSH(wc);
-	   for(i = 0; i < clen - 1; i++){
-	       STEXT_PUSH(c);
-	       c = xxgetc();
-	       if (c == R_EOF) break;
+           for(i = 0; i < clen - 1; i++){
+               STEXT_PUSH(c);
+               c = xxgetc();
+               if (c == R_EOF) break;
 	       CTEXT_PUSH(c);
-	       if (c == '\n') {
-		   xxungetc(c); CTEXT_POP();
-		   c = '\\';
-	       }
-	   }
-	   if (c == R_EOF) break;
+               if (c == '\n') {
+                   xxungetc(c); CTEXT_POP();
+                   c = '\\';
+               }
+           }
+           if (c == R_EOF) break;
 	   STEXT_PUSH(c);
 	   continue;
        }
@@ -2228,7 +2223,7 @@ int isValidName(const char *name)
     if (strcmp(name, "...") == 0) return 1;
 
     for (i = 0; keywords[i].name != NULL; i++)
-	if (strcmp(keywords[i].name, name) == 0) return 0;
+        if (strcmp(keywords[i].name, name) == 0) return 0;
 
     return 1;
 }
@@ -2244,12 +2239,12 @@ static int SymbolValue(int c)
 	   /* We can't assume this is valid UTF-8 */
 	clen = /* utf8locale ? utf8clen(c) :*/ mbcs_get_next(c, &wc);
 	while(1) {
-	    /* at this point we have seen one char, so push its bytes
+	    /* at this point we have seen one char, so push its bytes 
 	       and get one more */
 	    for(i = 0; i < clen; i++) {
-		YYTEXT_PUSH(c, yyp);
-		c = xxgetc();
-	    }
+	        YYTEXT_PUSH(c, yyp);
+	        c = xxgetc();
+            }
 	    if(c == R_EOF) break;
 	    if(c == '.' || c == '_') {
 		clen = 1;
@@ -2262,7 +2257,7 @@ static int SymbolValue(int c)
 #endif
 	do {
 	    YYTEXT_PUSH(c, yyp);
-	} while ((c = xxgetc()) != R_EOF &&
+	} while ((c = xxgetc()) != R_EOF && 
 		 (isalnum(c) || c == '.' || c == '_'));
     xxungetc(c);
     YYTEXT_PUSH('\0', yyp);
@@ -2301,16 +2296,16 @@ static int token(void)
 	SavedLval = R_NilValue;
 	SavedToken = 0;
 	yylloc.first_line = xxlinesave;
-	yylloc.first_column = xxcolsave;
+	yylloc.first_column = xxcolsave;	
 	return c;
     }
     xxcharsave = xxcharcount; /* want to be able to go back one token */
 
     c = SkipSpace();
     if (c == '#') c = SkipComment();
-
+    
     yylloc.first_line = xxlineno;
-    yylloc.first_column = xxcolno;
+    yylloc.first_column = xxcolno;    
 
     if (c == R_EOF) return END_OF_INPUT;
 
@@ -2350,7 +2345,7 @@ static int token(void)
     } else
 #endif
 	if (isalpha(c)) return SymbolValue(c);
-
+ 
     /* compound tokens */
 
     switch (c) {
@@ -2409,7 +2404,7 @@ static int token(void)
 	return EQ_ASSIGN;
     case ':':
 	if (nextchar(':')) {
-	    if (nextchar(':')) {
+            if (nextchar(':')) {
 		yylval = install(":::");
 		return NS_GET_INT;
 	    }
@@ -2499,7 +2494,7 @@ static int yylex(void)
     int tok;
 
  again:
-
+    
     tok = token();
 
     /* Newlines must be handled in a context */
@@ -2545,7 +2540,7 @@ static int yylex(void)
 
 	    if (tok == ',') {
 		ifpop();
-		setlastloc();
+		setlastloc();		
 		return tok;
 	    }
 
@@ -2561,16 +2556,16 @@ static int yylex(void)
 	    if(tok == ELSE) {
 		EatLines = 1;
 		ifpop();
-		setlastloc();
+		setlastloc();		
 		return ELSE;
 	    }
 	    else {
 		ifpop();
 		SavedToken = tok;
 		xxlinesave = yylloc.first_line;
-		xxcolsave  = yylloc.first_column;
+		xxcolsave  = yylloc.first_column;	
 		SavedLval = yylval;
-		setlastloc();
+		setlastloc();		
 		return '\n';
 	    }
 	}
@@ -2682,7 +2677,7 @@ static int yylex(void)
 	break;
 
     case '(':
-	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
+	if(contextp - contextstack >= CONTEXTSTACK_SIZE) 
 	    error(_("contextstack overflow at line %d"), xxlineno);
 	*++contextp = tok;
 	break;
