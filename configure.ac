@@ -2323,7 +2323,7 @@ AC_SUBST(OSF_SH_BUG)
 
 ### shell for use in scripts: we allow R_SHELL to set the script,
 ### since some AIX systems have zsh as sh.
-: ${R_SHELL="/bin/sh"}
+: ${R_SHELL=${SHELL}}
 AC_SUBST(R_SHELL)
 
 

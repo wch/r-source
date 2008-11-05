@@ -3141,10 +3141,11 @@ The default settings for making the manuals are controlled by
 @section Setting the shell
 
 By default the shell scripts such as @file{R} will be @samp{#!/bin/sh}
-scripts.  This is almost always satisfactory, but on a few systems
-@file{/bin/sh} is not a Bourne shell clone, and the shell to be used can
-be changed by setting the configure variable @env{R_SHELL} to a suitbale
-value (a full path to a shell, e.g. @file{/usr/local/bin/bash}).
+scripts (or using the @env{SHELL} chosen by @file{configure}).  This is
+almost always satisfactory, but on a few systems @file{/bin/sh} is not a
+Bourne shell clone, and the shell to be used can be changed by setting
+the configure variable @env{R_SHELL} to a suitable value (a full path to
+a shell, e.g. @file{/usr/local/bin/bash}).
 
 @node Using make, Using FORTRAN, Setting the shell, Configuration on Unix
 @section Using make
