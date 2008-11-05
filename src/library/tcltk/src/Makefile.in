@@ -12,6 +12,7 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 R_SHARE_DIR = $(R_HOME)/share
 R_INCLUDE_DIR = $(R_HOME)/include
+SHELL = @R_SHELL@
 
 SOURCES_C = init.c tcltk.c tcltk_unix.c
 SOURCES_F =

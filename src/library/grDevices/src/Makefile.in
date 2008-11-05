@@ -12,6 +12,7 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 R_SHARE_DIR = $(R_HOME)/share
 R_INCLUDE_DIR = $(R_HOME)/include
+SHELL = @R_SHELL@
 
 SOURCES_C = chull.c devNull.c devPicTeX.c devPS.c devQuartz.c init.c @BUILD_AQUA_TRUE@ qdBitmap.c qdPDF.c
 SOURCES_M = @BUILD_AQUA_TRUE@ qdCocoa.m

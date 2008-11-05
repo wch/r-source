@@ -12,6 +12,7 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 R_SHARE_DIR = $(R_HOME)/share
 R_INCLUDE_DIR = $(R_HOME)/include
+SHELL = @R_SHELL@
 
 SOURCES_C = gpar.c grid.c just.c layout.c matrix.c register.c state.c \
   unit.c util.c viewport.c
