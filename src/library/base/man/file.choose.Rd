@@ -1,6 +1,6 @@
 % File src/library/base/man/file.choose.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{file.choose}
@@ -18,6 +18,10 @@ file.choose(new = FALSE)
 }
 \value{
   A character vector of length one giving the file path.
+#ifdef windows
+  This will be a marked UTF-8 string, as a Unicode file selection dialog
+  box is used.
+#endif
 }
 
 \seealso{\code{\link{list.files}} for non-interactive selection.
