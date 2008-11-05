@@ -40,7 +40,7 @@
 #include "rui.h"
 #include "preferences.h"
 #include <Fileio.h>
-
+void R_fixbackslash(char *s);
 
 #define gettext GA_gettext
 
@@ -387,6 +387,7 @@ static void save(button b)
 
     setuserfilter("All files (*.*)\0*.*\0\0");
     strcpy(buf, getenv("R_USER"));
+    R_fixbackslash(buf);
     file = askfilesavewithdir(G_("Select directory for file 'Rconsole'"),
 			      "Rconsole", buf);
     if(!file) return;
@@ -478,6 +479,7 @@ static void load(button b) /* button callback */
 
     setuserfilter("All files (*.*)\0*.*\0\0");
     strcpy(buf, getenv("R_USER"));
+    R_fixbackslash(buf);
     optf = askfilenamewithdir(G_("Select 'Rconsole' file"), "Rconsole", buf);
     if(!optf) return;
 

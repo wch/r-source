@@ -183,7 +183,7 @@ void askchangedir()
 	askok(msg);
     }
     /* in every case reset cod (to new directory if all went ok
-       or to old since user may have edited it */
+       or to old since user may have edited it) */
     GetCurrentDirectory(MAX_PATH, cod);
 }
 
@@ -196,7 +196,8 @@ char *askfilename(const char *title, const char *default_name)
 
 char *askfilenamewithdir(const char *title, const char *default_name, const char *dir)
 {
-    if (*askfilenames(title, default_name, 0, userfilter?userfilter:filter[0], 0,
+    if (*askfilenames(title, default_name, 0, 
+		      userfilter ? userfilter : filter[0], 0,
 		      strbuf, BUFSIZE, dir)) return strbuf;
     else return NULL;
 }
@@ -214,10 +215,7 @@ char *askfilenames(const char *title, const char *default_name, int multi,
     if (!default_name) default_name = "";
     strcpy(strbuf, default_name);
     GetCurrentDirectory(MAX_PATH, cwd);
-    if (!strcmp(cod, "")) {
-	if (!dir) strcpy(cod, cwd);
-	else strcpy(cod, dir);
-    }
+    if (!cod[0]) strcpy(cod, cwd);
 
     ofn.lStructSize     = sizeof(OPENFILENAME);
     ofn.hwndOwner       = current_window ? current_window->handle : 0;
@@ -230,7 +228,7 @@ char *askfilenames(const char *title, const char *default_name, int multi,
     ofn.nMaxFile        = bufsize;
     ofn.lpstrFileTitle  = NULL;
     ofn.nMaxFileTitle   = _MAX_FNAME + _MAX_EXT;
-    ofn.lpstrInitialDir = cod;
+    ofn.lpstrInitialDir = dir ? dir : cod;
     ofn.lpstrTitle      = title;
     ofn.Flags           = OFN_CREATEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
     if (multi) ofn.Flags |= OFN_ALLOWMULTISELECT;
@@ -242,12 +240,12 @@ char *askfilenames(const char *title, const char *default_name, int multi,
     ofn.lpTemplateName  = NULL;
 
     if (GetOpenFileName(&ofn) == 0) {
-	GetCurrentDirectory(MAX_PATH, cod);
+	if(!dir) GetCurrentDirectory(MAX_PATH, cod);
 	SetCurrentDirectory(cwd);
 	strbuf[0] = 0;
 	strbuf[1] = 0;
     } else {
-	GetCurrentDirectory(MAX_PATH, cod);
+	if(!dir) GetCurrentDirectory(MAX_PATH, cod);
 	SetCurrentDirectory(cwd);
 	for (i = 0; i <  10; i++) if (peekevent()) doevent();
     }
@@ -269,11 +267,12 @@ char *askfilesave(const char *title, const char *default_name)
     return askfilesavewithdir(title, default_name, NULL);
 }
 
-char *askfilesavewithdir(const char *title, const char *default_name, const char *dir)
+char *askfilesavewithdir(const char *title, const char *default_name, 
+			 const char *dir)
 {
     int i;
     OPENFILENAME ofn;
-    char *p, cwd[MAX_PATH], *defext = NULL;
+    char cwd[MAX_PATH], *defext = NULL;
 
     if (!default_name) default_name = "";
     else if(default_name[0] == '|') {
@@ -295,7 +294,7 @@ char *askfilesavewithdir(const char *title, const char *default_name, const char
     ofn.nMaxFileTitle   = _MAX_FNAME + _MAX_EXT;
     if(dir && strlen(dir) > 0) {
 	strcpy(cwd, dir);
-	for(p = cwd; *p; p++) if(*p == '/') *p = '\\';
+	/* This should have been set to use backslashes in the caller */
 	ofn.lpstrInitialDir = cwd;
     } else {
 	if (GetCurrentDirectory(MAX_PATH, cwd))
