@@ -167,3 +167,39 @@ void wgl_loadhistory(const char *file)
     }
     fclose(fp); 
 }
+
+void wgl_savehistoryW(const wchar_t *file, int size)
+{
+    FILE *fp;
+    int i, init;
+
+    if (wgl_init_done || !file || !hist_last) return;
+    fp = _wfopen(file, L"w");
+    if (!fp) {
+       char msg[256];
+       sprintf(msg, "Unable to open %ls", file);
+       R_ShowMessage(msg);
+       return;
+    }
+    init = hist_last - size;
+    init = (init < 0) ? 0 : init;
+    for (i = init; i < hist_last; i++)
+       fprintf(fp, "%ls\n", hist_buf[i]);
+    fclose(fp); 
+}
+
+void wgl_loadhistoryW(const wchar_t *file)
+{
+    FILE *fp;
+    int i;
+    wchar_t buf[1000];
+
+    if (wgl_init_done || !file) return;
+    fp = _wfopen(file, L"r");
+    if (!fp) return;
+    for(i = 0;; i++) {
+	if(!fgetws(buf, 1000, fp)) break;
+	wgl_histadd(buf);
+    }
+    fclose(fp); 
+}
