@@ -142,6 +142,12 @@ BUG FIXES
 
     o	dev2bitmap() failed in 2.8.0 if 'taa' and 'gaa' were both NA.
 
+    o	Under some very rare circumstances equality tests for
+    	character strings could fail to detect equality in 2.8.0.
+    	(This needed to have a string whose encoded was marked
+    	correctly and one that was marked as "unknown" but was
+    	actually in a known encoding.)
+
 
 
 		CHANGES IN R VERSION 2.8.0
