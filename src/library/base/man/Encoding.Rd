@@ -27,7 +27,9 @@ Encoding(x) <- value
   \code{Encoding}, which will return a character vector of values
   \code{"latin1"}, \code{"UTF-8"} or \code{"unknown"}, or set, when
   \code{value} is recycled as needed and other values are silently
-  treated as \code{"unknown"}.
+  treated as \code{"unknown"}.  As from \R 2.8.0, ASCII strings will
+  never be marked with a declared encoding, since their representation
+  is the same in all encodings.
 
   There are other ways for character strings to acquire a declared
   encoding apart from explicitly setting it.  Functions
@@ -53,13 +55,13 @@ Encoding(x) <- value
 
   As from \R 2.7.0 \code{\link{substr}} does preserve the encoding, and
   \code{\link{chartr}}, \code{\link{tolower}} and \code{\link{toupper}}
-  preserve UTF-8 encoding on systems with Unicode wide characters. With
+  preserve UTF-8 encoding on systems with Unicode wide characters.  With
   their \code{fixed} and \code{perl} options, \code{\link{strsplit}},
   \code{\link{sub}} and \code{gsub} will give a UTF-8 result if any of
   the inputs are UTF-8.
 
   As from \R 2.8.0 \code{\link{paste}} and \code{\link{sprintf}}
-  return a UTF-8 encoded element is any of the inputs to that element
+  return a UTF-8 encoded element if any of the inputs to that element
   are UTF-8.
 }
 \value{

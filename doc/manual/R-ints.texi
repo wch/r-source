@@ -1195,7 +1195,7 @@ even if this was known (and e.g.@: @code{scan} would not know the
 encoding of the file it was reading).  This lead to packages with data
 in French encoded in Latin-1 in @code{.rda} files which could not be
 read in other locales (and they would be able to be displayed in a
-French UTF-8 locale, if not in most Japanese locales).
+French UTF-8 locale, if not in non-UTF-8 Japanese locales).
 
 @R{} 2.5.0 introduced a limited means to indicate the encoding of a
 @code{CHARSXP} via two of the `general purpose' bits which are used to
@@ -1207,9 +1207,9 @@ display in hexadecimal bytes that are not valid in the current locale).
 Many (but not all) of the character manipulation functions will either
 preserve the declaration or re-encode the character string.
 
-Eventually strings that refer to the OS such as file names will need to
-be passed through a wide-character interface on some OSes
-(e.g. Windows), which is to a large extent done as from @R{} 2.7.0.
+Strings that refer to the OS such as file names need to be passed
+through a wide-character interface on some OSes (e.g. Windows), which is
+to a large extent done as from @R{} 2.7.0.
 
 When are character strings declared to be of known encoding?  One way is
 to do so directly via @code{Encoding}.  The parser declares the encoding
@@ -1219,8 +1219,9 @@ the @R{} command line.  (Other ways are recorded on the help page for
 @code{Encoding}.)
 
 It is not necessary to declare the encoding of ASCII strings as they
-will work in any locale, but the overhead in doing so is small since
-they will never be passed to @command{iconv} for translation.
+will work in any locale.  As from @R{} 2.8.0, ASCII strings should never
+have a marked encoding, as any encoding will be ignored when entering
+such strings into the @code{CHARSXP} cache.
 
 The rationale behind considering only UTF-8 and Latin-1 is that most
 systems are capable of producing UTF-8 strings and this is the nearest
@@ -1249,13 +1250,13 @@ Windows has no UTF-8 locales, but rather expects to work with
 UCS-2@footnote{or UTF-16 if support for surrogates is enabled in the OS,
 which it is not normally at least for Western versions of Windows,
 despite some claims to the contrary on the Microsoft site.} strings.
-@R{} (being written in standard C) will not work internally with UCS-2
+@R{} (being written in standard C) would not work internally with UCS-2
 without extensive changes.  As from @R{} 2.7.0 the @file{Rgui}
 console@footnote{but not the GraphApp toolkit.} uses UCS-2 internally,
 but communicates with the @R{} engine in the native encoding.  To allow
-UTF-8 strings to be printed in UTF-8, an escape convention is used (see
-header @file{rgui_UTF8.h}) which is used by @code{cat}, @code{print} and
-autoprinting.
+UTF-8 strings to be printed in UTF-8 in @file{Rgui.exe}, an escape
+convention is used (see header @file{rgui_UTF8.h}) which is used by
+@code{cat}, @code{print} and autoprinting.
 
 `Unicode' (UCS-2LE) files are common in the Windows world, and
 @code{readLines} and @code{scan} will read them into UTF-8 strings on
@@ -1282,9 +1283,18 @@ the cache.  @code{CHARSXP}s reloaded from the @code{save} formats of
 @R{} prior to 0.99.0 are not cached (since the code used is frozen and
 few examples still exist).  Prior to @R{} 2.8.0, @code{CHARSXP}s were
 used to hold the finalizer function of a C finalizer (uncached) -- now
-@code{RAWSXP}s are used.  Finally, user code could create
+@code{RAWSXP}s are used.  Finally, user code could create uncached
 @code{CHARSXP}s via @code{allocString} (removed in @R 2.8.0) and
-@code{allocVector(CHARSXP ...)} (deprecated in @R 2.8.0).
+@code{allocVector(CHARSXP ...)} (deprecated in @R 2.8.0, removed in @R{}
+2.9.0).
+
+@findex mkCharLenCE
+The cache records the encoding of the string as well as the bytes: all
+requests to create a @code{CHARSXP} should be @emph{via} a call to
+@code{mkCharLenCE}.  As from @R{} 2.8.0 any encoding given in
+@code{mkCharLenCE} call will be ignored if the string's bytes are all
+ASCII characters.
+
 
 @node Warnings and errors, S4 objects, The CHARSXP cache, R Internal Structures
 @section Warnings and errors
