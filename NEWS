@@ -33,6 +33,10 @@ NEW FEATURES
     o	install.packages() is able to infer that repos=NULL was
 	intended from the extension on the filename specified as 'pkgs'.
 
+    o	install.packages() on Mac OS X now supports local binary
+	packages with .tar.gz extension. Nonetheless .tgz remains the
+	preferred extension and is expected in repositories.
+
     o	boxplot() gains a simple 'matrix' method, enabling boxplot(mat)
 	instead of boxplot(data.frame(mat)).
 
