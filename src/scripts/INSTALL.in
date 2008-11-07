@@ -617,7 +617,7 @@ do_install_source () {
   system_makefile="${R_HOME}/etc${R_ARCH}/Makeconf"
   if test -d src && test "${fake}" != "true"; then
     message "libs"
-    if ! test -f "${R_INCLUDE_DIR}/R.h" ; then
+    if test ! -f "${R_INCLUDE_DIR}/R.h" ; then
       ## maybe even an error?  But installing Fortran-based packages should work
       warning "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
     fi
