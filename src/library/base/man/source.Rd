@@ -37,7 +37,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{chdir}{logical; if \code{TRUE} and \code{file} is a pathname,
     the \R working directory is temporarily changed to the directory
     containing \code{file} for evaluating.}
-  \item{encoding}{character vector.  The encoding(x) to be assumed when
+  \item{encoding}{character vector.  The encoding(s) to be assumed when
     \code{file} is a character string: see \code{\link{file}}.  A
     possible value is \code{"unknown"}: see the \sQuote{Details}.}
   \item{continue.echo}{character; gives the prompt to use on

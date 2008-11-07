@@ -174,7 +174,7 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     known_to_be_latin1 = known_to_be_utf8 = FALSE;
     if(streql(encoding, "latin1")) known_to_be_latin1 = TRUE;
     if(streql(encoding, "UTF-8"))  known_to_be_utf8 = TRUE;
-
+    
     if (prompt == R_NilValue)
 	PROTECT(prompt);
     else
