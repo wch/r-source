@@ -102,6 +102,8 @@ NEW FEATURES
     o	installed.packages() is now tolerant of malformed DESCRIPTION
 	files in installed packages (it ignores them, with a warning).
 
+    o	qt() now works for 0 < df < 1.
+
 
 UTILITIES
 
@@ -118,12 +120,10 @@ BUG FIXES
 	message.  It gives an explicit error message if called with a
 	zero-row 'x'.
 
-    o	qt() now works for 0 < df < 1.
+    o	integrate() now accepts integer results from f(): as documented,
+	but only double was accepted.
 
-    o	integrate() now accepts integer results from f(): as
-	documented, but only double was accepted.
-
-    o	contrib.url() produced incorrect URL for the type
+    o	contrib.url() produced an incorrect URL for the type
         "mac.binary".
 
     o   pairwise.wilcox.test() did not pass on the 'paired' argument
@@ -135,18 +135,21 @@ BUG FIXES
     o	tiff() on unix would not write the output file for the first page
 	when multiple pages were plotted.
 
-    o   str(1 + structure(1, class = "test")) no longer recurses "infinitely".
+    o   str(1 + structure(1, class = "test")) no longer recurses indefinitely.
 
     o	pf(x, .., ncp, lower.tail=FALSE, log=TRUE) is much more accurate
 	for large x now.
 
     o	dev2bitmap() failed in 2.8.0 if 'taa' and 'gaa' were both NA.
 
-    o	Under some very rare circumstances equality tests for
-    	character strings could fail to detect equality in 2.8.0.
-    	(This needed to have a string whose encoded was marked
-    	correctly and one that was marked as "unknown" but was
-    	actually in a known encoding.)
+    o	Under rare circumstances equality tests for character strings
+    	could fail to report equality in 2.8.0 in the same way as
+    	2.7.2.  (This needed a current encoding of Latin-1 or UTF-8,
+    	one string whose encoding was marked as that encoding and one
+    	that was marked as "unknown".  In that circumstance the two
+    	strings are not actually known to be equal, but earlier
+    	versions of R assumed that "unknown" meant the current
+    	encoding, and this is done once again.)
 
 
 
