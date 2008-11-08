@@ -46,6 +46,10 @@ BUG FIXES
 	with forwward slashes, and reset the current search directory
 	for other file open dialogs (e.g. for opening a script).
 
+    o	The installer would sometimes write the current version
+	information to the registry even if that option was not
+	checked.
+
 
 
 		CHANGES IN R VERSION 2.8.0
