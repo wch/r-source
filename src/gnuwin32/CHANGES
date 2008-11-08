@@ -83,6 +83,10 @@ BUG FIXES
 	start in the home directory failed if the latter was specified
 	with forwward slashes, and reset the current search directory
 	for other file open dialogs (e.g. for opening a script).
+	
+    o	The installer would sometimes write the current version
+	information to the registry even if that option was not
+	checked.
 
 
 
