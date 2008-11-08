@@ -1,6 +1,6 @@
 % File src/library/base/man/parse.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{parse}
@@ -29,9 +29,13 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
     \code{NULL} means to use \R's prompt, \code{getOption("prompt")}.}
   \item{srcfile}{\code{NULL}, or a \code{\link{srcfile}} object.  See
     the \sQuote{Details} section.}
-  \item{encoding}{encoding to be assumed for input strings.  It is
-    used to mark character strings as known to be in
-    Latin-1 or UTF-8: it is not used to re-encode the input.}
+  \item{encoding}{encoding to be assumed for input strings.  If the
+    value is \code{"latin1"} or \code{"UTF-8"} it is used to mark
+    character strings as known to be in Latin-1 or UTF-8: it is not used
+    to re-encode the input.  To do the latter, specify the encoding as
+    part of the connection \code{con} or \emph{via}
+    \code{\link{options}(encoding=)}: see the example under
+    \code{\link{file}}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

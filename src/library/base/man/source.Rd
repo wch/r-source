@@ -17,7 +17,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 \alias{source}
 \arguments{
   \item{file}{a connection or a character string giving the pathname
-    of the file or URL to read from.}
+    of the file or URL to read from.  \code{""} indicates the connection
+    \code{\link{stdin}()}.}
   \item{local}{if \code{local} is \code{FALSE}, the statements scanned
     are evaluated in the user's workspace (the global environment),
     otherwise in the environment calling \code{source}.}
@@ -39,7 +40,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
     containing \code{file} for evaluating.}
   \item{encoding}{character vector.  The encoding(s) to be assumed when
     \code{file} is a character string: see \code{\link{file}}.  A
-    possible value is \code{"unknown"}: see the \sQuote{Details}.}
+    possible value is \code{"unknown"} when the encoding is guesses: see
+    the \sQuote{Details}.}
   \item{continue.echo}{character; gives the prompt to use on
     continuation lines if \code{echo = TRUE}.}
   \item{skip.echo}{integer; how many comment lines at the start of the
@@ -83,10 +85,15 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   This paragraph applies if \code{file} is a filename (rather than a
   connection).  If \code{encoding = "unknown"}, an attempt is made to
   guess the encoding.  The result of \code{\link{localeToCharset}()} is
-  used as a guide.  If \code{encoding} has two or more elements, they are
-  tried in turn until the file/URL can be read without error in the
+  used as a guide.  If \code{encoding} has two or more elements, they
+  are tried in turn until the file/URL can be read without error in the
   trial encoding.
-
+  
+  If \code{file} is a connection (including one specified by \code{""},
+  it is not possible to re-encode the input inside \code{source}, and so
+  the \code{encoding} argument is just used to mark character strings in the
+  parsed input: see \code{\link{parse}}.
+  
   Unlike input from a console, lines in the file or on a connection can
   contain an unlimited number of characters.
   
