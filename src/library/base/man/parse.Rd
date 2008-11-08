@@ -35,7 +35,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
     to re-encode the input.  To do the latter, specify the encoding as
     part of the connection \code{con} or \emph{via}
     \code{\link{options}(encoding=)}: see the example under
-    \code{\link{file}}
+    \code{\link{file}}.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
