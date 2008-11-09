@@ -42,6 +42,14 @@ NEW FEATURES
 
     o	zip.file.extract() gains an optional 'dir' argument.
 
+    o	source() with 'encoding' specified (and not as "unknown") marks
+	the encoding of character strings in Latin-1 and UTF-8
+	locales.
+
+    o	parse(text=z) now marks the encodiing of character strings in
+	Latin-1 and UTF-8 locales if 'z' is of known encoding (that is
+	all elements are either ASCII or marked as Latin-1 or UTF-8).
+
 
 DEPRECATED & DEFUNCT
 

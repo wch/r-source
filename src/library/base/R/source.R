@@ -30,6 +30,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	.Internal(eval.with.vis(expr, envir, enclos))
 
     envir <- if (local) parent.frame() else .GlobalEnv
+    have_encoding <- !missing(encoding) && encoding != "unknown"
     if (!missing(echo)) {
 	if (!is.logical(echo))
 	    stop("'echo' must be logical")
@@ -74,9 +75,16 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    file <- file(file, "r", encoding = encoding)
 	    on.exit(close(file))
             from_file <- TRUE
-            ## We translated the file,
+            ## We translated the file (possibly via a quess),
             ## so don't want to mark the strings.as from that encoding
-            encoding <- "unknown"
+            ## but we might know what we have encoded to, so
+            loc <- localeToCharset()[1]
+            encoding <- if(have_encoding)
+                switch(localeToCharset()[1],
+                       "UTF-8" = "UTF-8",
+                       "ISO8859-1" = "latin1",
+                       "unknown")
+            else "unknown"
 	}
     }
     exprs <- .Internal(parse(file, n = -1, NULL, "?", srcfile, encoding))
