@@ -75,9 +75,9 @@ attr.all.equal(target, current,
     \code{character} vector.
 }
 \value{
-  Either \code{TRUE} or a vector of \code{\link{mode}}
-  \code{"character"} describing the differences between \code{target}
-  and \code{current}.
+  Either \code{TRUE} (\code{NULL} \code{attr.all.equal}) for or a vector
+  of \code{\link{mode}} \code{"character"} describing the differences
+  between \code{target} and \code{current}.
 }
 \references{
   Chambers, J. M. (1998)
