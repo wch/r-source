@@ -206,7 +206,6 @@ static SEXP	Value;
 #define INOPTION 4
 
 static SEXP     SrcFile = NULL;
-static SEXP	SrcRefs = NULL;
 
 #if defined(SUPPORT_MBCS)
 # include <R_ext/rlocale.h>
@@ -265,8 +264,8 @@ static SEXP	xxlist(SEXP, SEXP);
 static SEXP	xxmarkup(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxmarkup2(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxOptionmarkup(SEXP, SEXP, SEXP, YYLTYPE *);
-static SEXP	xxtag(SEXP, int);
-static void	xxsavevalue(SEXP);
+static SEXP	xxtag(SEXP, int, YYLTYPE *);
+static void	xxsavevalue(SEXP, YYLTYPE *);
 
 static int	mkMarkup(int);
 static int      mkIfdef(int);
@@ -322,7 +321,7 @@ typedef struct YYLTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 326 "gramRd.c"
+#line 325 "gramRd.c"
 
 #ifdef short
 # undef short
@@ -626,11 +625,11 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   168,   168,   169,   172,   173,   175,   176,   177,   178,
-     179,   180,   181,   183,   184,   186,   187,   188,   189,   190,
-     192,   193,   194,   195,   196,   197,   198,   199,   200,   201,
-     202,   203,   204,   206,   208,   210,   212,   214,   218,   220,
-     223,   225,   227,   229,   231,   233,   235,   237
+       0,   167,   167,   168,   171,   172,   174,   175,   176,   177,
+     178,   179,   180,   182,   183,   185,   186,   187,   188,   189,
+     191,   192,   193,   194,   195,   196,   197,   198,   199,   200,
+     201,   202,   203,   205,   207,   209,   211,   213,   217,   219,
+     222,   224,   226,   228,   230,   232,   234,   236
 };
 #endif
 
@@ -1650,238 +1649,238 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 168 "gramRd.y"
-    { xxsavevalue((yyvsp[(1) - (2)])); return 0; ;}
+#line 167 "gramRd.y"
+    { xxsavevalue((yyvsp[(1) - (2)]), &(yyloc)); return 0; ;}
     break;
 
   case 3:
-#line 169 "gramRd.y"
+#line 168 "gramRd.y"
     { PROTECT(Value = R_NilValue);  YYABORT; ;}
     break;
 
   case 4:
-#line 172 "gramRd.y"
+#line 171 "gramRd.y"
     { (yyval) = xxnewlist((yyvsp[(1) - (1)])); ;}
     break;
 
   case 5:
-#line 173 "gramRd.y"
+#line 172 "gramRd.y"
     { (yyval) = xxlist((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); ;}
     break;
 
   case 6:
-#line 175 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yylsp[(1) - (2)])); ;}
+#line 174 "gramRd.y"
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yyloc)); ;}
     break;
 
   case 7:
-#line 176 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yylsp[(1) - (2)])); ;}
+#line 175 "gramRd.y"
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yyloc)); ;}
     break;
 
   case 8:
-#line 177 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yylsp[(1) - (2)])); ;}
+#line 176 "gramRd.y"
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yyloc)); ;}
     break;
 
   case 9:
-#line 178 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yylsp[(1) - (2)])); ;}
+#line 177 "gramRd.y"
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yyloc)); ;}
     break;
 
   case 10:
-#line 179 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), &(yylsp[(1) - (3)])); ;}
+#line 178 "gramRd.y"
+    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), &(yyloc)); ;}
     break;
 
   case 11:
-#line 180 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), &(yylsp[(1) - (4)])); UNPROTECT_PTR((yyvsp[(4) - (4)])); ;}
+#line 179 "gramRd.y"
+    { (yyval) = xxmarkup2((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), &(yyloc)); UNPROTECT_PTR((yyvsp[(4) - (4)])); ;}
     break;
 
   case 12:
-#line 181 "gramRd.y"
-    { (yyval) = xxtag((yyvsp[(1) - (1)]), COMMENT); ;}
+#line 180 "gramRd.y"
+    { (yyval) = xxtag((yyvsp[(1) - (1)]), COMMENT, &(yyloc)); ;}
     break;
 
   case 13:
-#line 183 "gramRd.y"
+#line 182 "gramRd.y"
     { (yyval) = xxnewlist((yyvsp[(1) - (1)])); ;}
     break;
 
   case 14:
-#line 184 "gramRd.y"
+#line 183 "gramRd.y"
     { (yyval) = xxlist((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); ;}
     break;
 
   case 15:
-#line 186 "gramRd.y"
-    { (yyval) = xxtag((yyvsp[(1) - (1)]), TEXT); ;}
+#line 185 "gramRd.y"
+    { (yyval) = xxtag((yyvsp[(1) - (1)]), TEXT, &(yyloc)); ;}
     break;
 
   case 16:
-#line 187 "gramRd.y"
-    { (yyval) = xxtag((yyvsp[(1) - (1)]), RCODE); ;}
+#line 186 "gramRd.y"
+    { (yyval) = xxtag((yyvsp[(1) - (1)]), RCODE, &(yyloc)); ;}
     break;
 
   case 17:
-#line 188 "gramRd.y"
-    { (yyval) = xxtag((yyvsp[(1) - (1)]), VERB); ;}
+#line 187 "gramRd.y"
+    { (yyval) = xxtag((yyvsp[(1) - (1)]), VERB, &(yyloc)); ;}
     break;
 
   case 18:
-#line 189 "gramRd.y"
-    { (yyval) = xxtag((yyvsp[(1) - (1)]), COMMENT); ;}
+#line 188 "gramRd.y"
+    { (yyval) = xxtag((yyvsp[(1) - (1)]), COMMENT, &(yyloc)); ;}
     break;
 
   case 19:
-#line 190 "gramRd.y"
+#line 189 "gramRd.y"
     { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 20:
-#line 192 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yylsp[(1) - (2)])); ;}
+#line 191 "gramRd.y"
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yyloc)); ;}
     break;
 
   case 21:
-#line 193 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), &(yylsp[(1) - (3)])); ;}
+#line 192 "gramRd.y"
+    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), &(yyloc)); ;}
     break;
 
   case 22:
-#line 194 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yylsp[(1) - (2)])); ;}
+#line 193 "gramRd.y"
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yyloc)); ;}
     break;
 
   case 23:
-#line 195 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yylsp[(1) - (2)])); ;}
+#line 194 "gramRd.y"
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yyloc)); ;}
     break;
 
   case 24:
-#line 196 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), &(yylsp[(1) - (3)])); xxpopMode((yyvsp[(2) - (3)])); ;}
+#line 195 "gramRd.y"
+    { (yyval) = xxmarkup((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), &(yyloc)); xxpopMode((yyvsp[(2) - (3)])); ;}
     break;
 
   case 25:
-#line 197 "gramRd.y"
-    { (yyval) = xxOptionmarkup((yyvsp[(1) - (4)]), (yyvsp[(3) - (4)]), (yyvsp[(4) - (4)]), &(yylsp[(1) - (4)])); xxpopMode((yyvsp[(2) - (4)])); ;}
+#line 196 "gramRd.y"
+    { (yyval) = xxOptionmarkup((yyvsp[(1) - (4)]), (yyvsp[(3) - (4)]), (yyvsp[(4) - (4)]), &(yyloc)); xxpopMode((yyvsp[(2) - (4)])); ;}
     break;
 
   case 26:
-#line 198 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yylsp[(1) - (2)])); ;}
+#line 197 "gramRd.y"
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yyloc)); ;}
     break;
 
   case 27:
-#line 199 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(2) - (3)]), &(yylsp[(1) - (3)])); ;}
+#line 198 "gramRd.y"
+    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(2) - (3)]), &(yyloc)); ;}
     break;
 
   case 28:
-#line 200 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yylsp[(1) - (2)])); ;}
+#line 199 "gramRd.y"
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yyloc)); ;}
     break;
 
   case 29:
-#line 201 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yylsp[(1) - (2)])); ;}
+#line 200 "gramRd.y"
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), &(yyloc)); ;}
     break;
 
   case 30:
-#line 202 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), &(yylsp[(1) - (3)])); ;}
+#line 201 "gramRd.y"
+    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), &(yyloc)); ;}
     break;
 
   case 31:
-#line 203 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (1)]), R_NilValue, &(yylsp[(1) - (1)])); ;}
+#line 202 "gramRd.y"
+    { (yyval) = xxmarkup((yyvsp[(1) - (1)]), R_NilValue, &(yyloc)); ;}
     break;
 
   case 32:
-#line 204 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), &(yylsp[(1) - (4)])); UNPROTECT_PTR((yyvsp[(4) - (4)])); ;}
+#line 203 "gramRd.y"
+    { (yyval) = xxmarkup2((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), &(yyloc)); UNPROTECT_PTR((yyvsp[(4) - (4)])); ;}
     break;
 
   case 33:
-#line 206 "gramRd.y"
+#line 205 "gramRd.y"
     { xxpopMode((yyvsp[(1) - (4)])); (yyval) = (yyvsp[(3) - (4)]); ;}
     break;
 
   case 34:
-#line 208 "gramRd.y"
+#line 207 "gramRd.y"
     { xxpopMode((yyvsp[(1) - (4)])); (yyval) = (yyvsp[(3) - (4)]); ;}
     break;
 
   case 35:
-#line 210 "gramRd.y"
+#line 209 "gramRd.y"
     { xxpopMode((yyvsp[(1) - (4)])); (yyval) = (yyvsp[(3) - (4)]); ;}
     break;
 
   case 36:
-#line 212 "gramRd.y"
+#line 211 "gramRd.y"
     { xxpopMode((yyvsp[(1) - (4)])); (yyval) = (yyvsp[(3) - (4)]); ;}
     break;
 
   case 37:
-#line 214 "gramRd.y"
+#line 213 "gramRd.y"
     { xxpopMode((yyvsp[(1) - (4)])); (yyval) = (yyvsp[(3) - (4)]); ;}
     break;
 
   case 38:
-#line 218 "gramRd.y"
+#line 217 "gramRd.y"
     { xxpopMode((yyvsp[(2) - (4)])); (yyval) = (yyvsp[(3) - (4)]); ;}
     break;
 
   case 39:
-#line 220 "gramRd.y"
+#line 219 "gramRd.y"
     { xxpopMode((yyvsp[(1) - (2)])); (yyval) = xxnewlist((yyvsp[(2) - (2)]));  ;}
     break;
 
   case 40:
-#line 223 "gramRd.y"
+#line 222 "gramRd.y"
     { (yyval) = xxpushMode(LATEXLIKE, UNKNOWN); ;}
     break;
 
   case 41:
-#line 225 "gramRd.y"
+#line 224 "gramRd.y"
     { (yyval) = xxpushMode(RLIKE, UNKNOWN); ;}
     break;
 
   case 42:
-#line 227 "gramRd.y"
+#line 226 "gramRd.y"
     { (yyval) = xxpushMode(INOPTION, UNKNOWN); ;}
     break;
 
   case 43:
-#line 229 "gramRd.y"
+#line 228 "gramRd.y"
     { (yyval) = xxpushMode(VERBATIM, UNKNOWN); ;}
     break;
 
   case 44:
-#line 231 "gramRd.y"
+#line 230 "gramRd.y"
     { xxbraceDepth--; (yyval) = xxpushMode(VERBATIM, UNKNOWN); xxbraceDepth++; ;}
     break;
 
   case 45:
-#line 233 "gramRd.y"
+#line 232 "gramRd.y"
     { (yyval) = xxpushMode(LATEXLIKE, ESCAPE); ;}
     break;
 
   case 46:
-#line 235 "gramRd.y"
+#line 234 "gramRd.y"
     { (yyval) = xxpushMode(LATEXLIKE, LATEXMACRO2); ;}
     break;
 
   case 47:
-#line 237 "gramRd.y"
+#line 236 "gramRd.y"
     { (yyval) = (yyvsp[(2) - (3)]); ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1885 "gramRd.c"
+#line 1884 "gramRd.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2101,7 +2100,7 @@ yyreturn:
 }
 
 
-#line 239 "gramRd.y"
+#line 238 "gramRd.y"
 
 
 static SEXP xxpushMode(int newmode, int newitem)
@@ -2232,17 +2231,21 @@ static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, YYLTYPE *lloc)
     return ans;
 }
 
-static void xxsavevalue(SEXP Rd)
+static void xxsavevalue(SEXP Rd, YYLTYPE *lloc)
 {
     PROTECT(Value = PairToVectorList(CDR(Rd)));
     if (!isNull(Value))
     	setAttrib(Value, R_ClassSymbol, mkString("RdFile"));
+    if (SrcFile) 
+    	setAttrib(Value, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));    	
     UNPROTECT_PTR(Rd);
 }
 
-static SEXP xxtag(SEXP item, int type)
+static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
 {
     setAttrib(item, install("rdTag"), mkString(yytname[YYTRANSLATE(type)]));
+    if (SrcFile) 
+    	setAttrib(item, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     return item;
 }
   
@@ -2303,24 +2306,6 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
     setAttrib(val, R_SrcfileSymbol, srcfile);
     setAttrib(val, R_ClassSymbol, mkString("srcref"));
     UNPROTECT(1);
-    return val;
-}
-
-static SEXP attachSrcrefs(SEXP val, SEXP srcfile)
-{
-    SEXP t, srval;
-    int n;
-    
-    PROTECT(val);
-    t = CDR(SrcRefs);
-    srval = allocVector(VECSXP, length(t));
-    for (n = 0 ; n < LENGTH(srval) ; n++, t = CDR(t))
-    	SET_VECTOR_ELT(srval, n, CAR(t));
-    setAttrib(val, R_SrcrefSymbol, srval);
-    setAttrib(val, R_SrcfileSymbol, srcfile);
-    UNPROTECT(1);
-    UNPROTECT_PTR(SrcRefs);
-    SrcRefs = NULL;
     return val;
 }
 
@@ -2387,10 +2372,7 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile)
     xxlineno = 1;
     xxcolno = 0;    
     
-    if (!isNull(srcfile)) {
-	SrcFile = srcfile;
-	PROTECT(SrcRefs = NewList());
-    } 
+    if (!isNull(srcfile)) SrcFile = srcfile;
     else SrcFile = NULL;
     
     npush = 0;
@@ -2404,10 +2386,6 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile)
     if (yyparse()) *status = PARSE_ERROR;
     else *status = PARSE_OK;
 
-    if (SrcFile && !isNull(Value)) {
-    	Value = attachSrcrefs(Value, SrcFile);
-        SrcFile = NULL;    
-    }
 #if DEBUGVALS
     Rprintf("ParseRd result: %p\n", Value);    
 #endif    
@@ -2700,6 +2678,18 @@ static int SkipSpace(void)
 	*bp++ = (c);                        \
 } while(0)
 
+static void setfirstloc(void)
+{
+    yylloc.first_line = xxlineno;
+    yylloc.first_column = xxcolno;
+}
+
+static void setlastloc(void)
+{
+    yylloc.last_line = xxlineno;
+    yylloc.last_column = xxcolno;
+}
+
 /* Split the input stream into tokens. */
 /* This is the lowest of the parsing levels. */
 
@@ -2715,12 +2705,10 @@ static int token(void)
 	    c = SkipSpace();
     	else 
     	    c = xxgetc();
+    	setfirstloc();
    	if ( c == '%') return mkComment(c);
     } while (c == '\n');
     
-    yylloc.first_line = xxlineno;
-    yylloc.first_column = xxcolno;    
-
     if (c == R_EOF) return END_OF_INPUT;
 
     if (xxinRString) return mkCode(c);
@@ -2995,12 +2983,6 @@ static int mkVerb(int c)
     	Rprintf("mkverb:  %s\n", CHAR(STRING_ELT(yylval, 0)));
     if(stext != st0) free(stext);
     return VERB;  
-}
-
-static void setlastloc(void)
-{
-    yylloc.last_line = xxlineno;
-    yylloc.last_column = xxcolno;
 }
 
 static int yylex(void)

@@ -79,7 +79,6 @@ static SEXP	Value;
 #define INOPTION 4
 
 static SEXP     SrcFile = NULL;
-static SEXP	SrcRefs = NULL;
 
 #if defined(SUPPORT_MBCS)
 # include <R_ext/rlocale.h>
@@ -138,8 +137,8 @@ static SEXP	xxlist(SEXP, SEXP);
 static SEXP	xxmarkup(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxmarkup2(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxOptionmarkup(SEXP, SEXP, SEXP, YYLTYPE *);
-static SEXP	xxtag(SEXP, int);
-static void	xxsavevalue(SEXP);
+static SEXP	xxtag(SEXP, int, YYLTYPE *);
+static void	xxsavevalue(SEXP, YYLTYPE *);
 
 static int	mkMarkup(int);
 static int      mkIfdef(int);
@@ -165,43 +164,43 @@ static int 	mkComment(int);
 
 %%
 
-RdFile	:	SectionList END_OF_INPUT	{ xxsavevalue($1); return 0; }
+RdFile	:	SectionList END_OF_INPUT	{ xxsavevalue($1, &@$); return 0; }
 	|	error	 			{ PROTECT(Value = R_NilValue);  YYABORT; }
 	;
 
 SectionList:	Section				{ $$ = xxnewlist($1); }
 	|	SectionList Section		{ $$ = xxlist($1, $2); }
 	
-Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, &@1); }	
-	|	RSECTIONHEADER RLikeArg		{ $$ = xxmarkup($1, $2, &@1); }
-	|	SECTIONHEADER  LatexArg  	{ $$ = xxmarkup($1, $2, &@1); }
-	|	LISTSECTION    Item2Arg		{ $$ = xxmarkup($1, $2, &@1); }
-	|	SECTIONHEADER2 LatexArg LatexArg { $$ = xxmarkup2($1, $2, $3, &@1); }
-	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, &@1); UNPROTECT_PTR($4); } 
-	|	COMMENT				{ $$ = xxtag($1, COMMENT); }
+Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, &@$); }	
+	|	RSECTIONHEADER RLikeArg		{ $$ = xxmarkup($1, $2, &@$); }
+	|	SECTIONHEADER  LatexArg  	{ $$ = xxmarkup($1, $2, &@$); }
+	|	LISTSECTION    Item2Arg		{ $$ = xxmarkup($1, $2, &@$); }
+	|	SECTIONHEADER2 LatexArg LatexArg { $$ = xxmarkup2($1, $2, $3, &@$); }
+	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, &@$); UNPROTECT_PTR($4); } 
+	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
 
 ArgItems:	Item				{ $$ = xxnewlist($1); }
 	|	ArgItems Item			{ $$ = xxlist($1, $2); }
 	
-Item:		TEXT				{ $$ = xxtag($1, TEXT); }
-	|	RCODE				{ $$ = xxtag($1, RCODE); }
-	|	VERB				{ $$ = xxtag($1, VERB); }
-	|	COMMENT				{ $$ = xxtag($1, COMMENT); }
+Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
+	|	RCODE				{ $$ = xxtag($1, RCODE, &@$); }
+	|	VERB				{ $$ = xxtag($1, VERB, &@$); }
+	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
 	|	Markup				{ $$ = $1; }
 	
-Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@1); }
-	|	LATEXMACRO2 LatexArg LatexArg   { $$ = xxmarkup2($1, $2, $3, &@1); }
-	|	ITEMIZE     Item0Arg		{ $$ = xxmarkup($1, $2, &@1); }
-	|	DESCRIPTION Item2Arg		{ $$ = xxmarkup($1, $2, &@1); }
-	|	OPTMACRO    goOption LatexArg  	{ $$ = xxmarkup($1, $3, &@1); xxpopMode($2); }
-	|	OPTMACRO    goOption Option LatexArg { $$ = xxOptionmarkup($1, $3, $4, &@1); xxpopMode($2); }
-	|	RCODEMACRO  RLikeArg     	{ $$ = xxmarkup($1, $2, &@1); }
-	|	RCODEMACRO2 RLikeArg RLikeArg 	{ $$ = xxmarkup2($1, $2, $2, &@1); }
-	|	VERBMACRO   VerbatimArg		{ $$ = xxmarkup($1, $2, &@1); }
-	|	VERBMACRO2  VerbatimArg		{ $$ = xxmarkup($1, $2, &@1); }
-	|       VERBMACRO2  VerbatimArg VerbatimArg2 { $$ = xxmarkup2($1, $2, $3, &@1); }
-	|	ESCAPE				{ $$ = xxmarkup($1, R_NilValue, &@1); }
-	|	IFDEF IfDefTarget ArgItems ENDIF { $$ = xxmarkup2($1, $2, $3, &@1); UNPROTECT_PTR($4); } 
+Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@$); }
+	|	LATEXMACRO2 LatexArg LatexArg   { $$ = xxmarkup2($1, $2, $3, &@$); }
+	|	ITEMIZE     Item0Arg		{ $$ = xxmarkup($1, $2, &@$); }
+	|	DESCRIPTION Item2Arg		{ $$ = xxmarkup($1, $2, &@$); }
+	|	OPTMACRO    goOption LatexArg  	{ $$ = xxmarkup($1, $3, &@$); xxpopMode($2); }
+	|	OPTMACRO    goOption Option LatexArg { $$ = xxOptionmarkup($1, $3, $4, &@$); xxpopMode($2); }
+	|	RCODEMACRO  RLikeArg     	{ $$ = xxmarkup($1, $2, &@$); }
+	|	RCODEMACRO2 RLikeArg RLikeArg 	{ $$ = xxmarkup2($1, $2, $2, &@$); }
+	|	VERBMACRO   VerbatimArg		{ $$ = xxmarkup($1, $2, &@$); }
+	|	VERBMACRO2  VerbatimArg		{ $$ = xxmarkup($1, $2, &@$); }
+	|       VERBMACRO2  VerbatimArg VerbatimArg2 { $$ = xxmarkup2($1, $2, $3, &@$); }
+	|	ESCAPE				{ $$ = xxmarkup($1, R_NilValue, &@$); }
+	|	IFDEF IfDefTarget ArgItems ENDIF { $$ = xxmarkup2($1, $2, $3, &@$); UNPROTECT_PTR($4); } 
 	
 LatexArg:	goLatexLike '{' ArgItems  '}' 	{ xxpopMode($1); $$ = $3; }
 
@@ -366,17 +365,21 @@ static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, YYLTYPE *lloc)
     return ans;
 }
 
-static void xxsavevalue(SEXP Rd)
+static void xxsavevalue(SEXP Rd, YYLTYPE *lloc)
 {
     PROTECT(Value = PairToVectorList(CDR(Rd)));
     if (!isNull(Value))
     	setAttrib(Value, R_ClassSymbol, mkString("RdFile"));
+    if (SrcFile) 
+    	setAttrib(Value, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));    	
     UNPROTECT_PTR(Rd);
 }
 
-static SEXP xxtag(SEXP item, int type)
+static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
 {
     setAttrib(item, install("rdTag"), mkString(yytname[YYTRANSLATE(type)]));
+    if (SrcFile) 
+    	setAttrib(item, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     return item;
 }
   
@@ -437,24 +440,6 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
     setAttrib(val, R_SrcfileSymbol, srcfile);
     setAttrib(val, R_ClassSymbol, mkString("srcref"));
     UNPROTECT(1);
-    return val;
-}
-
-static SEXP attachSrcrefs(SEXP val, SEXP srcfile)
-{
-    SEXP t, srval;
-    int n;
-    
-    PROTECT(val);
-    t = CDR(SrcRefs);
-    srval = allocVector(VECSXP, length(t));
-    for (n = 0 ; n < LENGTH(srval) ; n++, t = CDR(t))
-    	SET_VECTOR_ELT(srval, n, CAR(t));
-    setAttrib(val, R_SrcrefSymbol, srval);
-    setAttrib(val, R_SrcfileSymbol, srcfile);
-    UNPROTECT(1);
-    UNPROTECT_PTR(SrcRefs);
-    SrcRefs = NULL;
     return val;
 }
 
@@ -521,10 +506,7 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile)
     xxlineno = 1;
     xxcolno = 0;    
     
-    if (!isNull(srcfile)) {
-	SrcFile = srcfile;
-	PROTECT(SrcRefs = NewList());
-    } 
+    if (!isNull(srcfile)) SrcFile = srcfile;
     else SrcFile = NULL;
     
     npush = 0;
@@ -538,10 +520,6 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile)
     if (yyparse()) *status = PARSE_ERROR;
     else *status = PARSE_OK;
 
-    if (SrcFile && !isNull(Value)) {
-    	Value = attachSrcrefs(Value, SrcFile);
-        SrcFile = NULL;    
-    }
 #if DEBUGVALS
     Rprintf("ParseRd result: %p\n", Value);    
 #endif    
@@ -834,6 +812,18 @@ static int SkipSpace(void)
 	*bp++ = (c);                        \
 } while(0)
 
+static void setfirstloc(void)
+{
+    yylloc.first_line = xxlineno;
+    yylloc.first_column = xxcolno;
+}
+
+static void setlastloc(void)
+{
+    yylloc.last_line = xxlineno;
+    yylloc.last_column = xxcolno;
+}
+
 /* Split the input stream into tokens. */
 /* This is the lowest of the parsing levels. */
 
@@ -849,12 +839,10 @@ static int token(void)
 	    c = SkipSpace();
     	else 
     	    c = xxgetc();
+    	setfirstloc();
    	if ( c == '%') return mkComment(c);
     } while (c == '\n');
     
-    yylloc.first_line = xxlineno;
-    yylloc.first_column = xxcolno;    
-
     if (c == R_EOF) return END_OF_INPUT;
 
     if (xxinRString) return mkCode(c);
@@ -1129,12 +1117,6 @@ static int mkVerb(int c)
     	Rprintf("mkverb:  %s\n", CHAR(STRING_ELT(yylval, 0)));
     if(stext != st0) free(stext);
     return VERB;  
-}
-
-static void setlastloc(void)
-{
-    yylloc.last_line = xxlineno;
-    yylloc.last_column = xxcolno;
 }
 
 static int yylex(void)
