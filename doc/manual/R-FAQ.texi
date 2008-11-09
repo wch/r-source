@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-10-28
+@set FAQ_DATE @value{FAQ_YEAR}-11-09
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 8
@@ -503,59 +503,60 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c Linux binaries as of 2008-06-24:
 @c
 @c debian
-@c   oldstable
+@c   sarge
 @c           i386   2.4.1  Johannes Ranke
 @c           amd64  2.4.1  Johannes Ranke
-@c   stable  i386   2.7.0  Johannes Ranke
-@c           amd64  2.7.0  Johannes Ranke
+@c   etch-cran
+@c           i386   2.8.0  Johannes Ranke
+@c           amd64  2.8.0  Johannes Ranke
 @c redhat
-@c   el4     i386   2.6.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c           x86_64 2.6.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c   el5     i386   2.6.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c           x86_64 2.6.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c   fedora7 i386   2.6.1  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c           x86_64 2.6.1  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c   fedora8 i386   2.6.1  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c           x86_64 2.6.1  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   el4     i386   2.8.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c           x86_64 2.8.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c   el5     i386   2.8.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c           x86_64 2.8.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c   fedora7 i386   2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c           x86_64 2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   fedora8 i386   2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c           x86_64 2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   fedora9 i386   2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c           x86_64 2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c suse
-@c   10.0    i586   2.7.0  Detlef Steuer <steuer@hsu-hh.de>
-@c           x86_64 2.7.0  Detlef Steuer <steuer@hsu-hh.de
-@c   10.1    i586   2.7.0  Detlef Steuer <steuer@hsu-hh.de>
-@c           x86_64 2.7.0  Detlef Steuer <steuer@hsu-hh.de>
-@c   10.2    i586   2.7.0  Detlef Steuer <steuer@hsu-hh.de>
-@c           x86_64 2.7.0  Detlef Steuer <steuer@hsu-hh.de>
-@c   10.3    i586   2.7.0  Detlef Steuer <steuer@hsu-hh.de>
-@c           x86_64 2.7.0  Detlef Steuer <steuer@hsu-hh.de>
+@c   10.2    i586   2.8.0  Detlef Steuer <steuer@hsu-hh.de>
+@c           x86_64 2.8.0  Detlef Steuer <steuer@hsu-hh.de>
+@c   10.3    i586   2.8.0  Detlef Steuer <steuer@hsu-hh.de>
+@c           x86_64 2.8.0  Detlef Steuer <steuer@hsu-hh.de>
+@c   11.0    i586   2.8.0  Detlef Steuer <steuer@hsu-hh.de>
+@c           x86_64 2.8.0  Detlef Steuer <steuer@hsu-hh.de>
 @c ubuntu
-@c   hardy   [Hardy Heron, 8.04]
-@c           i386   2.7.1  Vincent Goulet
-@c           amd64  2.7.1  Michael Rutter
-@c   gutsy   [Gutsy Gibbon, 7.10]
-@c           i386   2.7.1  Vincent Goulet
-@c           amd64  2.7.1  Michael Rutter
-@c   feisty  [Feisty Fawn,  7.04]
-@c           i386   2.7.1  Vincent Goulet
-@c           amd64  2.7.1  Michael Rutter
-@c   dapper  [Dapper Drake, 6.06]
-@c           i386   2.7.1  Vincent Goulet
-@c           amd64  2.7.1  Michael Rutter
+@c   intrepid [Intrepid Ibex, 8.10]
+@c           i386   2.8.0  Vincent Goulet
+@c           amd64  2.8.0  Michael Rutter
+@c   hardy [Hardy Heron, 8.04]
+@c           i386   2.8.0  Vincent Goulet
+@c           amd64  2.8.0  Michael Rutter
+@c   gutsy [Gutsy Gibbon, 7.10]
+@c           i386   2.8.0  Vincent Goulet
+@c           amd64  2.8.0  Michael Rutter
+@c   dapper [Dapper Drake, 6.06]
+@c           i386   2.8.0  Vincent Goulet
+@c           amd64  2.8.0  Michael Rutter
 
 The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
 
 @quotation
-@multitable {Red Hat} {i386/x86_64} {dapper/feisty/gutsy/hardy} {Martyn Plummer}
+@multitable {Red Hat} {i386/x86_64} {dapper/gutsy/hardy/intrepid} {Martyn Plummer}
 @headitem @tab CPU @tab Versions @tab Provider
-@item Debian   @tab i386/amd64 @tab stable/oldstable @tab Johannes Ranke
+@item Debian   @tab i386/amd64 @tab etch-cran/sarge @tab Johannes Ranke
 @c @item          @tab amd64 @tab stable/oldstable @tab Johannes Ranke
-@item Red Hat  @tab i386/x86_64 @tab fedora7/fedora8 @tab Martyn Plummer
+@item Red Hat  @tab i386/x86_64 @tab fedora7/fedora8/fedora9@tab Martyn Plummer
 @c @item          @tab x86_86 @tab fc5/fc6/fedora7/fedora8 @tab Martyn Plummer
 @item          @tab i386/x86_64 @tab el4/el5 @tab Bob Kinney
 @c @item          @tab x86_64 @tab Enterprise Linux @tab Matthew P. Cox
-@item SuSE     @tab i586/x86_64 @tab 10.0/10.1/10.2/10.3 @tab Detlef Steuer
+@item SuSE     @tab i586/x86_64 @tab 10.2/10.3/11.0 @tab Detlef Steuer
 @c @item          @tab x86_64 @tab 10.0/10.1/10.2/10.3 @tab Detlef Steuer
-@item Ubuntu   @tab i386   @tab dapper/feisty/gutsy/hardy @tab Vincent Goulet
-@item          @tab amd64  @tab dapper/feisty/gutsy/hardy @tab Michael Rutter
+@item Ubuntu   @tab i386   @tab dapper/gutsy/hardy/intrepid @tab Vincent Goulet
+@item          @tab amd64  @tab dapper/gutsy/hardy/intrepid @tab Michael Rutter
 @end multitable
 @end quotation
 
@@ -1924,6 +1925,8 @@ Very large numbers in R.
 @item BSDA
 Data sets for the book ``Basic Statistics and Data Analysis'' by
 L. J. Kitchens, 2003, Duxbury.
+@item BSagri
+Statistical methods for safety assessment in agricultural field trials.
 @item BsMD
 Bayes screening and model discrimination follow-up designs.
 @item CADStat
@@ -2100,7 +2103,9 @@ Fuzzy Knowledge Base Learning.
 @c </COMMENT>
 @item FTICRMS
 Analysis of Fourier Transform-Ion Cyclotron Resonance Mass Spectrometry
-data. 
+data.
+@item FactoClass
+Combination of factorial methods and cluster analysis.
 @item FactoMineR
 Factor analysis and data mining with R.
 @item Fahrmeir
@@ -2699,6 +2704,8 @@ quadratic) mixed integer programs.
 @c @item RcppTemplate
 @c An illustration of the use of the Rcpp R/C++ interface library.
 @c </COMMENT>
+@item Rcpp
+R/C++ interface library and package template.
 @item Read.isi
 Access old data saved in fixed-width format based on ISI-formatted
 codebooks.
@@ -2900,6 +2907,8 @@ Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
 maximum F ratio, the Pearson product moment correlation coefficiant,
 Johnson distributions, normal scores and generalized hypergeometric
 distributions).
+@item SweaveListingUtils
+Utilities for Sweave together with @TeX{} listings package.
 @item SwissAir
 Air quality data of Switzerland for one year in 30 min resolution.
 @item SyNet
@@ -2921,10 +2930,18 @@ Two Stage Hazard Rate Comparison.
 Time Series Database Interface extensions for MySQL.
 @item TSP
 Traveling Salesperson Problem (TSP).
+@item TSPostgreSQL
+Time Series Database Interface extensions for PostgreSQL.
 @item TSSQLite
 Time Series Database Interface extensions for SQLite.
 @item TSdbi
 Time Series Database Interface.
+@item TSfame
+Time Series Database Interface extensions for fame.
+@item TShistQuote
+Time Series Database Interface interface for get.hist.quote.
+@item TSodbc
+Time Series Database Interface extensions for ODBC.
 @item TSpadi
 Connect to a time series database (e.g., Fame) via PADI (Protocol for
 Application Database Interface), using the @strong{TSdbi}
@@ -3438,11 +3455,13 @@ Statistical methods to model and adjust for bias in meta-analysis.
 Classes of commonly used copulas (including elliptical and Archimedian),
 and methods for density, distribution, random number generators, and
 plotting.
+@item corcounts
+Generate correlated count random variables.
+@item corpcor
+Efficient estimation of covariance and (partial) correlation.
 @item corpora
 Utility functions for the statistical analysis of corpus frequency
 data.
-@item corpcor
-Efficient estimation of covariance and (partial) correlation.
 @item corrgram
 Plot a correlogram.
 @item corrperm
@@ -3843,6 +3862,9 @@ Flexible Mixture Modeling: a general framework for finite mixtures of
 regression models using the EM algorithm.
 @item fmri
 Functions for the analysis of fMRI experiments.
+@item foba
+Forward, backward, and foba sparse learning algorithms for ridge
+regression.
 @item forecasting
 A bundle with functions and datasets for forecasting.  Contains
 @strong{forecast} (time series forecasting), @strong{fma} (data sets
@@ -4254,6 +4276,9 @@ proportional hazard model for interval censored event data.
 Tools for working with points and intervals.
 @item iplots
 Interactive graphics for R.
+@item ipptoolbox
+Uncertainty quantification and propagation in the framework of
+Dempster-Shafer theory and imprecise probabilities.
 @item ipred
 Improved predictive models by direct and indirect bootstrap aggregation
 in classification and regression as well as resampling based estimators
@@ -4366,6 +4391,8 @@ Lattice graphics, an implementation of Trellis Graphics functions.
 @emph{Recommended}.
 @item latticeExtra
 Generic functions and standard methods for Trellis-based displays.
+@item latticist
+A Lattice-based tool for exploratory visualization.
 @item lawstat
 Statistical tests widely utilized in biostatistics, public policy and
 law.
@@ -4741,6 +4768,8 @@ Utilities to manipulate multivariate polynomials.
 @c </COMMENT>
 @item multtest
 Resampling-based multiple hypothesis testing.
+@item muscor
+Multi-stage Convex Relaxation.
 @item mvbutils
 Utilities by Mark V. Bravington for project organization, editing and
 backup, sourcing, documentation (formal and informal), package
@@ -5314,6 +5343,8 @@ predictors in a linear or generalized linear model.
 Various functions for regression in relative survival.
 @item repolr
 Repeated measures proportional odds logistic regression.
+@item reporttools
+Generate @LaTeX{} tables of descriptive statistics
 @item reshape
 Flexibly reshape data.
 @item resper
@@ -5680,6 +5711,8 @@ Interface between the GRASS 6.0 geographical information system and R.
 Geographically weighted regression.
 @item splancs
 Spatial and space-time point pattern analysis functions.
+@item spls
+Sparse Partial Least Squares (SPLS) regression.
 @item splus2R
 Insightful package providing missing S-PLUS functionality in R.
 @c <COMMENT>
@@ -6159,6 +6192,8 @@ Compute the combinations of choosing @math{r} items from @math{n}
 elements.
 @item IDocs
 Infrastructure for interactive documents.
+@item IDynDocs
+Interactive and dynamic Documents with @XML{}/@XSL{}.
 @item OOP
 OOP style classes and methods for R and @SPLUS{}.  Object references and
 class-based method definition are supported in the style of languages
@@ -6180,14 +6215,14 @@ per-record, aggregate and trigger functions.
 @item REventLoop
 An abstract event loop mechanism that is toolkit independent and can be
 used to to replace the R event loop.
-@item Rexif
-Extract meta-information from @acronym{JPEG} files.
 @item RGdkPixbuf
 S language functions to access the facilities in the GdkPixbuf library
 for manipulating images.
 @item RGnumeric
 A plugin for the Gnumeric spreadsheet that allows R functions to be
 called from cells within the sheet, automatic recalculation, etc.
+@item RGoogleDocs
+Initial, elementary interface to Google's Document API.
 @item RGtk
 Facilities in the S language for programming graphical interfaces using
 Gtk, the Gnome @acronym{GUI} toolkit.
@@ -6236,15 +6271,21 @@ to call Python functionality.
 An interface to call XLisp-Stat functions from within R.
 @item Rcompression
 In-memory decompression for @acronym{GNU} zip and bzip2 formats.
+@item Rexif
+Extract meta-information from @acronym{JPEG} files.
+@item Rflickr
+R interface to Flickr API.
 @item Rlibstree
 Suffix Trees in R via the libstree C library.
 @item Rstem
 Interface to Snowball implementation of Porter's word stemming
 algorithm.
+@item RwxDevice
+R graphics device using wxWidgets.
 @item RwxWidgets
 Facilities to program @acronym{GUI}s using wxWidgets in R.
-@item Ryacas
-R interface to yacas.
+@c @item Ryacas
+@c R interface to yacas.
 @item SASXML
 Example for reading @XML{} files in SAS 8.2 manner.
 @item SJava
@@ -6277,6 +6318,8 @@ An extension module for libxslt, the @XML{}-@XSL{} document translator,
 that allows @XSL{} functions to be implemented via R functions.
 @item XML
 Tools for reading @XML{} documents and DTDs.
+@item Zillow
+Simple interface to Zillow.com's house price estimate API.
 @end table
 
 @node Add-on packages from Bioconductor, Other add-on packages, Add-on packages from Omegahat, Which add-on packages exist for R?
@@ -6304,7 +6347,7 @@ Affymetrix GeneChip software compatibility
 Affymetrix quality assessment and analysis tool.
 @item AnnBuilder
 Processing annotation date from public data repositories and building
-annoation data packages or XML data documents using the source data.
+annoation data packages or @XML{} data documents using the source data.
 @item AnnotationDbi
 Annotation DataBase Interface.
 @item BAC
