@@ -169,6 +169,10 @@ BUG FIXES
     	versions of R assumed that "unknown" meant the current
     	encoding, and this is done once again.)
 
+    o	R CMD config could echo messages from GNU make if called from
+	within a Makefile (as e.g. package Rcpp does), especially from
+	within a parallel make run.
+
 
 
 		CHANGES IN R VERSION 2.8.0
