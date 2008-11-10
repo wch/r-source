@@ -135,6 +135,8 @@ if test "${R_OSTYPE}" = "windows"; then
 fi
 
 makefiles="-f ${R_HOME}/etc${R_ARCH}/Makeconf -f ${R_SHARE_DIR}/make/config.mk"
+## avoid passing down -jN
+export MAKEFLAGS=
 query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
 LIBR=`eval $query VAR=LIBR`
