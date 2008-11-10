@@ -26,6 +26,8 @@
       comand-line completion is not used.  (Not used by Mac OS GUI.)}
     \item{\code{R_DEFAULT_PACKAGES}:}{A comma-separated list of packages
       which are to be loaded in every session.  See \code{\link{options}}.}
+    \item{\code{R_DOC_DIR}:}{The location of the \R \file{doc} directory.}
+    \item{\code{R_DVIPSCMD}:}{The path to \code{dvips}.}
     \item{\code{R_ENVIRON}:}{Optional.  The path to the site environment
       file: see \link{Startup}.}
     \item{\code{R_GSCMD}:}{Optional.  The path to GhostScript.}
@@ -35,17 +37,26 @@
       file, in lines.}
     \item{\code{R_HOME}:}{The top-level directory of the \R
       installation.  Set by \R.}
+    \item{\code{R_INCLUDE_DIR}:}{The location of the \R \file{include}
+      directory.}
+    \item{\code{R_LATEXCMD}:}{The path to \code{latex}.}
     \item{\code{R_LIBS}:}{Optional.  Setting for \code{\link{.libPaths}}.}
     \item{\code{R_LIBS_SITE}:}{Optional.  Setting for \code{\link{.libPaths}}.}
     \item{\code{R_LIBS_USER}:}{Optional.  Setting for \code{\link{.libPaths}}.}
+    \item{\code{R_MAKEINDEXCMD}:}{The path to \code{makeindex}.}
     \item{\code{R_PAPERSIZE}:}{Optional.  The default papersize,
       e.g. for \code{\link{pdf}} and \code{\link{postscript}}.}
+    \item{\code{R_PDFLATEXCMD}:}{The path to \code{pdflatex}.}
     \item{\code{R_PROFILE}:}{Optional.  The path to the site profile
       file: see \link{Startup}.}
     \item{\code{R_RD4DVI}:}{Options for \code{latex} processing of
       \code{Rd} files.}
     \item{\code{R_RD4PDF}:}{Options for \code{pdflatex} processing of
       \code{Rd} files.}
+    \item{\code{R_SHARE_DIR}:}{The location of the \R \file{share}
+      directory.} 
+    \item{\code{R_UNZIPCMD}:}{The path to \code{unzip}.}
+    \item{\code{R_ZIPCMD}:}{The path to \code{zip}.}
     \item{\code{TMPDIR}, \code{TMP}, \code{TEMP}:}{Consulted (in that
       order) when setting the temporary directory.  See
       \code{\link{tempdir}}.}
@@ -62,25 +73,14 @@
   \describe{
     \item{\code{DISPLAY}:}{Optional: used by \code{\link{X11}}, Tk (in
       package \pkg{tcltk}), the data editor and various packages.}
-    \item{\code{EDITOR}:}{The path to default editor.}
-    \item{\code{PAGER}:}{The path to default pager.}
-    \item{\code{R_BROWSER}:}{The path to default browser.}
-    \item{\code{R_DOC_DIR}:}{The location of the \R \file{doc} directory.}
-    \item{\code{R_DVIPSCMD}:}{The path to \code{dvips}.}
-    \item{\code{R_INCLUDE_DIR}:}{The location of the \R \file{include}
-      directory.}
-    \item{\code{R_LATEXCMD}:}{The path to \code{latex}.}
-    \item{\code{R_PDFLATEXCMD}:}{The path to \code{pdflatex}.}
-    \item{\code{R_MAKEINDEXCMD}:}{The path to \code{makeindex}.}
-    \item{\code{R_PDFVIEWER}:}{The path to default PDF viewer.}
+    \item{\code{EDITOR}:}{The path to the default editor.}
+    \item{\code{PAGER}:}{The path to the default pager.}
+    \item{\code{R_BROWSER}:}{The path to the default browser.}
+    \item{\code{R_PDFVIEWER}:}{The path to the default PDF viewer.}
     \item{\code{R_PLATFORM}:}{The platform -- a string of the form
     \code{\var{cpu}-\var{vendor}-\var{os}}, see \code{\link{R.Version}}.}
     \item{\code{R_PRINTCMD}:}{Print command to be used by
       \code{\link{postscript}}.}
-    \item{\code{R_SHARE_DIR}:}{The location of the \R \file{share}
-      directory.} 
-    \item{\code{R_UNZIPCMD}:}{The path to \code{unzip}.}
-    \item{\code{R_ZIPCMD}:}{The path to \code{zip}.}
   }
 }
 #endif
