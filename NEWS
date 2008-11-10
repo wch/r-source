@@ -121,6 +121,12 @@ UTILITIES
 
     o	R CMD build now also uses a Makevars file for cleaning up src/.
 
+    o	R_PDFLATEXCMD is added to the environment variables set by
+    	'R CMD' and is used by R CMD Rd2dvi.
+
+	R CMD Rd2dvi now gives an explicit error message if latex (or
+	pdflatex) is not available.
+
 
 BUG FIXES
 

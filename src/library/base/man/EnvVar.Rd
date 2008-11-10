@@ -1,6 +1,6 @@
 % File src/library/base/man/EnvVar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2007 R Core Development Team
+% Copyright 2007-8 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{EnvVar}
@@ -70,6 +70,7 @@
     \item{\code{R_INCLUDE_DIR}:}{The location of the \R \file{include}
       directory.}
     \item{\code{R_LATEXCMD}:}{The path to \code{latex}.}
+    \item{\code{R_PDFLATEXCMD}:}{The path to \code{pdflatex}.}
     \item{\code{R_MAKEINDEXCMD}:}{The path to \code{makeindex}.}
     \item{\code{R_PDFVIEWER}:}{The path to default PDF viewer.}
     \item{\code{R_PLATFORM}:}{The platform -- a string of the form
