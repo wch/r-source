@@ -5,7 +5,7 @@
 
 \name{Box.test}
 \alias{Box.test}
-\concept(portmanteau}
+\concept{portmanteau}
 \title{Box-Pierce and Ljung-Box Tests}
 \description{
   Compute the Box--Pierce or Ljung--Box test statistic for examining the
