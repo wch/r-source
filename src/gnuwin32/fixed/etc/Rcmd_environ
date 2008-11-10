@@ -24,13 +24,13 @@ R_RD4PDF=${R_RD4PDF-'times,hyper'}
 R_UNZIPCMD=${R_UNZIPCMD-'unzip'}
 R_ZIPCMD=${R_ZIPCMD-'zip'}
 ## Default browser
-#R_BROWSER=${R_BROWSER-''}
+R_BROWSER=${R_BROWSER-'open'}
 ## Default editor
 #EDITOR=${EDITOR-${VISUAL-vi}}
 ## Default pager
 #PAGER=${PAGER-''}
 ## Default PDF viewer
-#R_PDFVIEWER=${R_PDFVIEWER-''}
+R_PDFVIEWER=${R_PDFVIEWER-'open'}
 ## Use configure values
 AWK=gawk
 GREP='grep -E'

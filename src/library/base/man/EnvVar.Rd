@@ -22,6 +22,7 @@
     \item{\code{LC_ALL}:}{(etc) Optional.  Use to set various aspects of
       the locale -- see \code{\link{Sys.getlocale}}.}
     \item{\code{R_BATCH}:}{Optional -- set in a batch session.}
+    \item{\code{R_BROWSER}:}{The path to the default browser.}
     \item{\code{R_COMPLETION}:}{Optional.  If set to \code{FALSE},
       comand-line completion is not used.  (Not used by Mac OS GUI.)}
     \item{\code{R_DEFAULT_PACKAGES}:}{A comma-separated list of packages
@@ -47,6 +48,9 @@
     \item{\code{R_PAPERSIZE}:}{Optional.  The default papersize,
       e.g. for \code{\link{pdf}} and \code{\link{postscript}}.}
     \item{\code{R_PDFLATEXCMD}:}{The path to \code{pdflatex}.}
+    \item{\code{R_PDFVIEWER}:}{The path to the default PDF viewer.}
+    \item{\code{R_PLATFORM}:}{The platform -- a string of the form
+      \code{\var{cpu}-\var{vendor}-\var{os}}, see \code{\link{R.Version}}.}
     \item{\code{R_PROFILE}:}{Optional.  The path to the site profile
       file: see \link{Startup}.}
     \item{\code{R_RD4DVI}:}{Options for \code{latex} processing of
@@ -75,10 +79,6 @@
       package \pkg{tcltk}), the data editor and various packages.}
     \item{\code{EDITOR}:}{The path to the default editor.}
     \item{\code{PAGER}:}{The path to the default pager.}
-    \item{\code{R_BROWSER}:}{The path to the default browser.}
-    \item{\code{R_PDFVIEWER}:}{The path to the default PDF viewer.}
-    \item{\code{R_PLATFORM}:}{The platform -- a string of the form
-    \code{\var{cpu}-\var{vendor}-\var{os}}, see \code{\link{R.Version}}.}
     \item{\code{R_PRINTCMD}:}{Print command to be used by
       \code{\link{postscript}}.}
   }
