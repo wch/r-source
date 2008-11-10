@@ -102,7 +102,11 @@ while test -n "${1}"; do
 	fi
       fi
       R_RD4DVI=${R_RD4PDF-"times,hyper"}
-      R_LATEXCMD=${PDFLATEX-pdflatex}
+      if test "${R_PDFLATEXCMD}" = false; then
+	echo "ERROR: 'pdflatex' needed but missing on your system."
+	exit 1
+      fi
+      R_LATEXCMD=${R_PDFLATEXCMD}
       ;;
     --title=*)
       title=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
@@ -131,6 +135,12 @@ while test -n "${1}"; do
   esac
   shift
 done
+
+## We already checked in the case of --pdf
+if test "${R_LATEXCMD}" = false; then
+  echo "ERROR: 'latex' needed but missing on your system."
+  exit 1
+fi
 
 if ${debug}; then set -x; fi
 
