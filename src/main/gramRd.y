@@ -245,6 +245,7 @@ static SEXP xxpushMode(int newmode, int newitem)
     INTEGER(ans)[0] = xxmode;		/* Lexer mode */
     INTEGER(ans)[1] = xxitemType;	/* What is \item? */
     INTEGER(ans)[2] = xxbraceDepth;	/* Brace depth used in RCODE and VERBATIM */
+    INTEGER(ans)[3] = xxinRString;      /* Quote char that started a string */
     
 #if DEBUGMODE
     Rprintf("xxpushMode(%d, %s) pushes %d, %s, %d\n", newmode, yytname[YYTRANSLATE(newitem)], 
@@ -253,6 +254,7 @@ static SEXP xxpushMode(int newmode, int newitem)
     xxmode = newmode;
     xxitemType = newitem;
     xxbraceDepth = 0;
+    xxinRString = 0;
     
     return ans;
 }
@@ -266,6 +268,8 @@ static void xxpopMode(SEXP oldmode)
     xxmode = INTEGER(oldmode)[0];
     xxitemType = INTEGER(oldmode)[1]; 
     xxbraceDepth = INTEGER(oldmode)[2];
+    xxinRString = INTEGER(oldmode)[3];
+    
     UNPROTECT_PTR(oldmode);
 }
 
@@ -845,18 +849,20 @@ static int token(void)
     
     if (c == R_EOF) return END_OF_INPUT;
 
-    if (xxinRString) return mkCode(c);
- 
     if (c == '\\') {
+    	int lookahead = xxgetc();
+    	xxungetc(lookahead);    	
     	if (xxmode == VERBATIM) {
-    	    int lookahead = xxgetc();
-    	    xxungetc(lookahead);
     	    if (lookahead == LBRACE || lookahead == RBRACE)
     	    	return mkVerb(c);
-    	}
-    	else
-    	    return mkMarkup(c);
+    	} else if (xxinRString && lookahead != 'l') 
+	    return mkCode(c);
+	    
+    	return mkMarkup(c);
     }
+    
+    if (xxinRString) return mkCode(c);
+ 
     if (c == '#' && xxcolno == 1) return mkIfdef(c);
     
     if (c == LBRACE) {
@@ -967,6 +973,9 @@ static int mkCode(int c)
     	    	    TEXT_PUSH(c);
     	    	    c = lookahead;
     	    	    escaped = 1;
+    	    	} else if (lookahead == 'l') { /* assume \link */
+    	    	    xxungetc(lookahead);
+    	    	    break;
     	    	} else xxungetc(lookahead);
     	    }
     	    if (!escaped && c == xxinRString)
@@ -986,8 +995,8 @@ static int mkCode(int c)
     	    	int lookahead = xxgetc();
     	    	if (lookahead == LBRACE || lookahead == RBRACE) {
 		    c = lookahead;
-		} else if (isalpha(c)) {
-    	    	    xxungetc(c);
+		} else if (isalpha(lookahead)) {
+    	    	    xxungetc(lookahead);
     	    	    c = '\\';
     	    	    break;
     	    	} else {
