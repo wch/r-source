@@ -5458,3 +5458,10 @@ A <- matrix(1:6, nrow=3, ncol=2, dimnames=list(rn0, paste("Col",1:2)))
 rn <- row.names(data.frame(A))
 stopifnot(identical(rn, rn0))
 ## used the names.
+
+
+## rounding error in windowing a time series (PR#13272)
+x <- ts(1:290, start=c(1984,10), freq=12)
+window(x, start=c(2008,9), end=c(2008,9), extend=FALSE)
+window(x, start=c(2008,9), end=c(2008,9), extend=TRUE)
+## second failed in 2.8.0

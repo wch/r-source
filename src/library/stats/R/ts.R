@@ -655,10 +655,11 @@ window.default <- function(x, start = NULL, end = NULL,
         attr(y, "tsp") <- c(ystart, yend, yfreq)
     } else {
         ## first adjust start and end to the time base
+        ## try to ensure that they are exactly n/xfreq
         stoff <- ceiling((start - xtsp[1]) * xfreq - ts.eps)
-        ystart <- xtsp[1] + stoff/xfreq
+        ystart <- (round(xtsp[1]*xfreq) + stoff)/xfreq
         enoff <- floor((end - xtsp[2]) * xfreq + ts.eps)
-        yend <- xtsp[2] + enoff/xfreq
+        yend <- (round(xtsp[2]*xfreq) + enoff)/xfreq
         nold <- round(xfreq*(xtsp[2] - xtsp[1])) + 1
         ## both start and end could be outside time base
         ## and indeed the new ad old ranges might not intersect.

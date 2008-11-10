@@ -173,6 +173,9 @@ BUG FIXES
 	within a Makefile (as e.g. package Rcpp does), especially from
 	within a parallel make run.
 
+    o	Runding error could affect window(extend=TRUE) when applied to
+	monthly series.  (PR#13272)
+
 
 
 		CHANGES IN R VERSION 2.8.0
