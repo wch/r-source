@@ -1,5 +1,3 @@
-#! /bin/sh
-
 ## Usage is
 ##   sh help-print.sh FILE TOPIC LATEX DVIPS
 ## see src/library/utils/R/unix/help.R.
