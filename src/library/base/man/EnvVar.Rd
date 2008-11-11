@@ -24,13 +24,13 @@
       the locale -- see \code{\link{Sys.getlocale}}.  Consulted at startup.}
     \item{\code{R_BATCH}:}{Optional -- set in a batch session.}
     \item{\code{R_BROWSER}:}{The path to the default browser.  Used to
-      set the default value of \code{\link{options}("browser").}
+      set the default value of \code{\link{options}("browser")}.}
     \item{\code{R_COMPLETION}:}{Optional.  If set to \code{FALSE},
       comand-line completion is not used.  (Not used by Mac OS GUI.)}
     \item{\code{R_DEFAULT_PACKAGES}:}{A comma-separated list of packages
       which are to be loaded in every session.  See \code{\link{options}}.}
     \item{\code{R_DOC_DIR}:}{The location of the \R \file{doc}
-      directory.  Set by \R.}}
+      directory.  Set by \R.}
     \item{\code{R_DVIPSCMD}:}{The path to \code{dvips}.  Defaults to
       the value of \env{DVIPS}, and if that is unset to a value
       determined when \R was built.
