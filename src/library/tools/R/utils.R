@@ -210,7 +210,8 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 {
     ## Run texi2dvi on a latex file, or emulate it.
 
-    if(is.null(texi2dvi)) texi2dvi <- Sys.which("texi2dvi")
+    if(is.null(texi2dvi) || !nzchar(texi2dvi))
+        texi2dvi <- Sys.which("texi2dvi")
 
     envSep <- .Platform$path.sep
     Rtexmf <- file.path(R.home(), "share", "texmf")
@@ -431,7 +432,7 @@ function()
 
 ## <NOTE>
 ## Should no longer be needed now that we have .eval_with_capture().
-## 
+##
 ## .capture_output_from_print <-
 ## function(x, ...)
 ## {
@@ -482,10 +483,10 @@ function(expr, type = NULL)
         on.exit(sink(type = "message"), add = capture_output)
     }
     on.exit({ close(outcon) ; close(msgcon) }, add = TRUE)
-    
+
     value <- eval(expr)
     list(value = value,
-         output = readLines(outcon, warn = FALSE), 
+         output = readLines(outcon, warn = FALSE),
          message = readLines(msgcon, warn = FALSE))
 }
 

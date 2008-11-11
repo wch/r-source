@@ -67,6 +67,10 @@ function(file, topic)
     file.append(con, file)
     cat("\\end{document}\n",
         file = con, append = TRUE)
+    if(!nzchar("latexcmd"))
+        stop("'latexcmd' is empty")
+    if(!nzchar("dvipscmd"))
+        stop("'dvipscmd' is empty")
     ## <FIXME>
     ## We now have help-print.sh in share/sh but we do not use the
     ## .Script mechanism because we play with the TEXINPUTS environment

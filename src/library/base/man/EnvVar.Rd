@@ -28,7 +28,9 @@
     \item{\code{R_DEFAULT_PACKAGES}:}{A comma-separated list of packages
       which are to be loaded in every session.  See \code{\link{options}}.}
     \item{\code{R_DOC_DIR}:}{The location of the \R \file{doc} directory.}
-    \item{\code{R_DVIPSCMD}:}{The path to \code{dvips}.}
+    \item{\code{R_DVIPSCMD}:}{The path to \code{dvips}. Defaults to
+      the value of \env{DVIPS}, and if that is unset to a value
+      determined when \R was built.}
     \item{\code{R_ENVIRON}:}{Optional.  The path to the site environment
       file: see \link{Startup}.}
     \item{\code{R_GSCMD}:}{Optional.  The path to GhostScript.}
@@ -40,14 +42,20 @@
       installation.  Set by \R.}
     \item{\code{R_INCLUDE_DIR}:}{The location of the \R \file{include}
       directory.}
-    \item{\code{R_LATEXCMD}:}{The path to \code{latex}.}
+    \item{\code{R_LATEXCMD}:}{The path to \code{latex}. Defaults to
+      the value of \env{LATEX}, and if that is unset to a value
+      determined when \R was built.}
     \item{\code{R_LIBS}:}{Optional.  Setting for \code{\link{.libPaths}}.}
     \item{\code{R_LIBS_SITE}:}{Optional.  Setting for \code{\link{.libPaths}}.}
     \item{\code{R_LIBS_USER}:}{Optional.  Setting for \code{\link{.libPaths}}.}
-    \item{\code{R_MAKEINDEXCMD}:}{The path to \code{makeindex}.}
+    \item{\code{R_MAKEINDEXCMD}:}{The path to \code{makeindex}. Defaults
+      to the value of \env{MAKEINDEX}, and if that is unset to a value
+      determined when \R was built.}
     \item{\code{R_PAPERSIZE}:}{Optional.  The default papersize,
       e.g. for \code{\link{pdf}} and \code{\link{postscript}}.}
-    \item{\code{R_PDFLATEXCMD}:}{The path to \code{pdflatex}.}
+    \item{\code{R_PDFLATEXCMD}:}{The path to \code{pdflatex}. Defaults
+      to the value of \code{PDFLATEX}, and if that is unset to a value
+      determined when \R was built.}
     \item{\code{R_PDFVIEWER}:}{The path to the default PDF viewer.}
     \item{\code{R_PLATFORM}:}{The platform -- a string of the form
       \code{\var{cpu}-\var{vendor}-\var{os}}, see \code{\link{R.Version}}.}
@@ -59,6 +67,9 @@
       \code{Rd} files.}
     \item{\code{R_SHARE_DIR}:}{The location of the \R \file{share}
       directory.} 
+    \item{\code{R_TEXI2DVICMD}:}{The path to \code{texi2dvi}. Defaults
+      to the value of \env{TEXI2DVI}, and if that is unset to a value
+      determined when \R was built.}
     \item{\code{R_UNZIPCMD}:}{The path to \code{unzip}.}
     \item{\code{R_ZIPCMD}:}{The path to \code{zip}.}
     \item{\code{TMPDIR}, \code{TMP}, \code{TEMP}:}{Consulted (in that

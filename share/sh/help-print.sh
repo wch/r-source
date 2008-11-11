@@ -13,10 +13,6 @@ if test "${LATEX}" = "false"; then
 fi
 shift 3
 DVIPS="${@}"
-if test "${DVIPS}" = "false"; then
-    echo "Cannot print, dvips seems to be unavailable"
-    exit 2
-fi
 ODIR=`pwd`
 cd `(dirname "${FILE}") 2>/dev/null || \
      echo "${FILE}" | ${SED=sed} -e 's,[^/]*$,,;s,/$,,;s,^$,.,'`

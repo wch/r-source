@@ -482,9 +482,13 @@ getOption(x)
 
 #ifdef unix
 \section{Options used on Unix only}{
+  These will be \code{""} if no suitable path is known.
   \describe{
     \item{\code{latexcmd, dvipscmd}:}{character strings giving commands
       to be used in off-line printing of help pages.}
+
+    \item{\code{texi2dvi}:}{character string giving the path 
+      \code{texi2dvi}.}
 
     \item{\code{pdfviewer}:}{default PDF viewer.  Set from the
       environment variable \env{R\_PDFVIEWER}.}

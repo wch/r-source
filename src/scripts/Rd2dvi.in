@@ -102,7 +102,7 @@ while test -n "${1}"; do
 	fi
       fi
       R_RD4DVI=${R_RD4PDF-"times,hyper"}
-      if test "${R_PDFLATEXCMD}" = false; then
+      if test -z "${R_PDFLATEXCMD}"; then
 	echo "ERROR: 'pdflatex' needed but missing on your system."
 	exit 1
       fi
@@ -136,11 +136,13 @@ while test -n "${1}"; do
   shift
 done
 
+## FIXME: default these to 'latex' and 'pdflatex'?
 ## We already checked in the case of --pdf
-if test "${R_LATEXCMD}" = false; then
+if test -z "${R_LATEXCMD}"; then
   echo "ERROR: 'latex' needed but missing on your system."
   exit 1
 fi
+## we don't really need makeindex, but default that?
 
 if ${debug}; then set -x; fi
 
@@ -411,7 +413,7 @@ echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
 ## R_LATEXCMD is redefined above for --pdf
 ${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
-${R_MAKEINDEXCMD-makeindex} Rd2
+${R_MAKEINDEXCMD} Rd2
 ${R_LATEXCMD} ${R_TEXOPTS} Rd2
 if test "${out_ext}" = pdf; then
   ${R_LATEXCMD} ${R_TEXOPTS} Rd2

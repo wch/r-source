@@ -156,9 +156,14 @@ fi])
 ## ------------
 AC_DEFUN([R_PROG_TEXMF],
 [AC_REQUIRE([R_PROG_PERL])
-AC_PATH_PROGS(DVIPS, [${DVIPS} dvips], false)
-AC_PATH_PROGS(TEX, [${TEX} tex], false)
-AC_PATH_PROGS(LATEX, [${LATEX} latex], false)
+## dvips is not used to make manuals, only in Rd2dvi and help-print.sh
+## the latter via options("dvipscmd"). Also sets R_DVIPSCMD.
+AC_PATH_PROGS(DVIPS, [${DVIPS} dvips], dvips)
+## TEX PDFTEX LATEX PDFLATEX MAKEINDEX TEXI2DVI are used to make manuals
+## LATEX is used for options("latexcmd") (used in help-print.sh).
+##  LATEX PDFLATEX MAKEINDEX set default for R_<foo>CMD in etc/Renviron
+AC_PATH_PROGS(TEX, [${TEX} tex], )
+AC_PATH_PROGS(LATEX, [${LATEX} latex], )
 if test -z "${ac_cv_path_TEX}" ; then
   warn_dvi="you cannot build DVI versions of the R manuals"
 elif test -z "${ac_cv_path_LATEX}"; then
@@ -167,9 +172,9 @@ fi
 if test -n "${warn_dvi}"; then
   AC_MSG_WARN([${warn_dvi}])
 fi
-AC_PATH_PROGS(MAKEINDEX, [${MAKEINDEX} makeindex], false)
-AC_PATH_PROGS(PDFTEX, [${PDFTEX} pdftex], false)
-AC_PATH_PROGS(PDFLATEX, [${PDFLATEX} pdflatex], false)
+AC_PATH_PROGS(MAKEINDEX, [${MAKEINDEX} makeindex], )
+AC_PATH_PROGS(PDFTEX, [${PDFTEX} pdftex], "")
+AC_PATH_PROGS(PDFLATEX, [${PDFLATEX} pdflatex], )
 if test -z "${ac_cv_path_PDFTEX}" ; then
   warn_pdf="you cannot build PDF versions of the R manuals"
 elif test -z "${ac_cv_path_PDFLATEX}" ; then
@@ -179,14 +184,7 @@ if test -n "${warn_pdf}"; then
   AC_MSG_WARN([${warn_pdf}])
 fi
 R_PROG_MAKEINFO
-AC_PATH_PROGS(TEXI2DVI, [${TEXI2DVI} texi2dvi], false)
-## This test admittedly looks a bit strange ... see R_PROG_PERL.
-if test "${PERL}" = "${FALSE}"; then
-  AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
-else
-  INSTALL_INFO="\$(PERL) \$(top_srcdir)/tools/install-info.pl"
-  AC_SUBST(INSTALL_INFO)
-fi
+AC_PATH_PROGS(TEXI2DVI, [${TEXI2DVI} texi2dvi], )
 : ${R_RD4DVI="ae"}
 AC_SUBST(R_RD4DVI)
 : ${R_RD4PDF="times,hyper"}
@@ -199,11 +197,18 @@ AC_DEFUN([R_PROG_MAKEINFO],
 [AC_PATH_PROGS(MAKEINFO, [${MAKEINFO} makeinfo])
 if test -n "${MAKEINFO}"; then
   _R_PROG_MAKEINFO_VERSION
+  ## This test admittedly looks a bit strange ... see R_PROG_PERL.
+  if test "${PERL}" = "${FALSE}"; then
+    AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
+  else
+    INSTALL_INFO="\$(PERL) \$(top_srcdir)/tools/install-info.pl"
+    AC_SUBST(INSTALL_INFO)
+  fi
 fi
 if test "${r_cv_prog_makeinfo_v4}" != yes; then
   warn_info="you cannot build info or HTML versions of the R manuals"
   AC_MSG_WARN([${warn_info}])
-  MAKEINFO=false
+  MAKEINFO=""
 else
   MAKEINFO="${MAKEINFO}"
 fi

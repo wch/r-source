@@ -69,6 +69,10 @@ UTILITIES
     o   New function rtags() in package 'utils' that provides etags-like
 	indexing capabilities for R code files.
 
+    o	New environment variable R_TEXI2DVICMD to hold the path (if any)
+	to 'texi2dvi' found at configure time: this now provides the
+	default to option("texi2dvi").
+
 
 INSTALLATION
 
@@ -83,7 +87,8 @@ BUG FIXES
 
     o	Subsetting a data frame with duplicate column names without
 	selecting columns (e.g. z[i,]) no longer makes the column
-	names unique.
+	names unique.  This was never documented, but some packages
+	have assumed it.
 
     o	data.frame() no longer ignores row names on objects if the
 	first name is empty.  (PR#13230: this has been the behaviour
