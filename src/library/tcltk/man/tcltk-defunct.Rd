@@ -35,7 +35,7 @@ tkread(...)
   \item{\dots}{Handled via \code{.Tcl.args}}
 }
 \details{
-  As from \R 2.0.0, \code{tkcmd} has been renamed to \code{tcl}.  The
+  At \R 2.0.0, \code{tkcmd} was renamed to \code{tcl}.  The
   file commands used to be \code{tkopen}, \code{tkclose}, etc., but
   since \code{open} and \code{close} do not belong to the Tk toolkit,
   the preferred names are now \code{tclopen}, etc.

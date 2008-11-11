@@ -10,19 +10,21 @@
 \alias{grobTree}
 \alias{childNames}
 \alias{gList}
+\alias{is.grob}
 \title{Create a Grid Graphical Object}
 \description{
   These functions create grid graphical objects.
 }
 \usage{
 grid.grob(list.struct, cl = NULL, draw = TRUE)
-grob(..., name = NULL, gp = NULL, vp = NULL, cl = NULL) 
+grob(..., name = NULL, gp = NULL, vp = NULL, cl = NULL)
 gTree(..., name = NULL, gp = NULL, vp = NULL, children = NULL, 
       childrenvp = NULL, cl = NULL)
 grobTree(..., name = NULL, gp = NULL, vp = NULL, 
          childrenvp = NULL, cl = NULL)
 childNames(gTree)
 gList(...)
+is.grob(x)
 }
 \arguments{
   \item{...}{ For \code{grob} and \code{gTree}, the
@@ -42,6 +44,7 @@ gList(...)
   \item{draw}{A logical value to indicate whether to produce
     graphical output.}
   \item{gTree}{A gTree object.}
+  \item{x}{ An R object. }
 }
 \details{
   These functions can be used to create a basic grob, gTree, or gList

@@ -70,18 +70,18 @@ R: Makefile
 docs: html
 
 .texi.dvi:
-	@if test "$(TEX)" = false; then \
+	@if test -z "$(TEX)"; then \
 	  $(ECHO) "ERROR: 'tex' needed but missing on your system."; \
 	  exit 1; \
 	fi
-	@if test "$(TEXI2DVI)" = false; then \
+	@if test -z "$(TEXI2DVI)"; then \
 	  $(ECHO) "ERROR: 'texi2dvi' needed but missing on your system."; \
 	  exit 1; \
 	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2DVI) $<
 
 .texi.html:
-	@if test "$(MAKEINFO)" = false; then \
+	@if test -z "$(MAKEINFO)"; then \
 	  $(ECHO) "'makeinfo' v4.7 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file $@ will be missing"; \
 	else \
@@ -90,18 +90,18 @@ docs: html
 	fi
 
 .texi.info:
-	@if test "$(MAKEINFO)" = false; then \
+	@if test -z "$(MAKEINFO)"; then \
 	  $(ECHO) "ERROR: 'makeinfo' v4.7 or later needed but missing on your system."; \
 	  exit 1; \
 	fi
 	$(MAKEINFO) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
 
 .texi.pdf:
-	@if test "$(PDFTEX)" = false; then \
+	@if test -z "$(PDFTEX)"; then \
 	  $(ECHO) "ERROR: 'pdftex' needed but missing on your system."; \
 	  exit 1; \
 	fi
-	@if test "$(TEXI2DVI)" = false; then \
+	@if test -z "$(TEXI2DVI)"; then \
 	  $(ECHO) "ERROR: 'texi2dvi' needed but missing on your system."; \
 	  exit 1; \
 	fi
@@ -115,7 +115,7 @@ R-admin.html: $(srcdir)/R-admin.texi
 	@if test -f "$(top_srcdir)/doc/html/R-admin.html" ; then \
 	  cp "$(top_srcdir)/doc/html/R-admin.html" R-admin.html ; \
 	else \
-	  if test "$(MAKEINFO)" = false; then \
+	  if test -z "$(MAKEINFO)"; then \
 	    $(ECHO) "'makeinfo' v4.7 or later needed to make HTML docs but missing on your system." ; \
 	    $(ECHO) "file $@ will be missing"; \
 	  else \
@@ -125,7 +125,7 @@ R-admin.html: $(srcdir)/R-admin.texi
 	fi
 
 R-FAQ.html: $(srcdir)/R-FAQ.texi
-	@if test "$(MAKEINFO)" = false; then \
+	@if test -z "$(MAKEINFO)"; then \
 	  $(ECHO) "'makeinfo' v4.7 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file $@ will be missing"; \
 	else \
@@ -135,7 +135,7 @@ R-FAQ.html: $(srcdir)/R-FAQ.texi
 
 dvi: refman.dvi $(OBJECTS_DVI)
 refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
-	@if test "$(LATEX)" = false; then \
+	@if test -z "$(LATEX)"; then \
 	  $(ECHO) "ERROR: 'latex' needed but missing on your system."; \
 	  exit 1; \
 	fi
@@ -193,7 +193,7 @@ $(texinputs_RECOMMENDED): FORCE
 	fi)
 
 fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
-	@if test "$(LATEX)" = false; then \
+	@if test -z "$(LATEX)"; then \
 	  $(ECHO) "ERROR: 'latex' needed but missing on your system."; \
 	  exit 1; \
 	fi
@@ -270,7 +270,7 @@ R-lang.info: $(texiincludes)
 
 pdf: refman.pdf $(OBJECTS_PDF)
 refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
-	@if test "$(PDFLATEX)" = false; then \
+	@if test -z "$(PDFLATEX)"; then \
 	  $(ECHO) "ERROR: 'pdflatex' needed but missing on your system."; \
 	  exit 1; \
 	fi
@@ -304,7 +304,7 @@ refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 stamp-refman-pdf: $(refman_TEXINPUTS)
 	@touch $@
 fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
-	@if test "$(PDFLATEX)" = false; then \
+	@if test -z "$(PDFLATEX)"; then \
 	  $(ECHO) "ERROR: 'pdflatex' needed but missing on your system."; \
 	  exit 1; \
 	fi
@@ -453,7 +453,7 @@ distdir: $(DISTFILES)
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
-	@if test "$(MAKEINFO)" = false; then \
+	@if test -z "$(MAKEINFO)"; then \
 	  $(ECHO) "ERROR: 'makeinfo' v4.7 or later needed but missing on your system."; \
 	  exit 1; \
 	fi

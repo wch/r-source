@@ -298,6 +298,7 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir)
     } else
 	if(!isEnvironment(rho))
 	    error(_("'rho' should be an environment"));
+    PROTECT(dir = coerceVector(dir, REALSXP));
     if(TYPEOF(dir) != REALSXP || LENGTH(dir) != LENGTH(theta))
 	error(_("'dir' is not a numeric vector of the correct length"));
     rDir = REAL(dir);
@@ -352,6 +353,6 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir)
 	}
     }
     setAttrib(ans, install("gradient"), gradient);
-    UNPROTECT(3);
+    UNPROTECT(4);
     return ans;
 }

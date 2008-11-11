@@ -72,7 +72,7 @@ function(x, g, p.adjust.method = p.adjust.methods, paired=FALSE, ...)
     compare.levels <- function(i, j) {
         xi <- x[as.integer(g) == i]
         xj <- x[as.integer(g) == j]
-        wilcox.test(xi, xj, ...)$p.value
+        wilcox.test(xi, xj, paired=paired, ...)$p.value
     }
     PVAL <- pairwise.table(compare.levels, levels(g), p.adjust.method)
     ans <- list(method = METHOD, data.name = DNAME,

@@ -29,7 +29,7 @@ int Rgui_Edit(const char *filename, int enc, const char *title, int modal);
 
 struct structEditorData {
     Rboolean file; /* is the editor associated with an existing file */
-    char *filename; /* corresponding file */
+    char *filename; /* corresponding file, in UTF-8 as from 2.9.0 */
     char *title;    /* window title */
     Rboolean stealconsole;  /* set when using fix() or edit(), so that no events are sent to console until this editor is closed */
     menuitem mcut, mcopy, mdelete, mfind, mreplace,

@@ -399,7 +399,7 @@ static void doHscroll(DEstruct DE, int oldcol)
 	for (i = oldcol; i < DE->colmin; i++) dw += BOXW(i);
 	copyH(DE, dw, DE->boxw[0], oldwindowWidth - dw + 1);
 	dw = oldwindowWidth - BOXW(oldcol) + 1;
-	cleararea(DE, dw, DE->hwidth, DE->p->w-dw, DE->p->h, DE->p->bg);
+	cleararea(DE, dw, DE->hwidth, DE->p->w-dw, DE->p->h, DE->p->guiColors[dataeditbg]);
 	/* oldnwide includes the row labels */
 	for (i = oldcol+oldnwide-1; i <= DE->colmax; i++) drawcol(DE, i);
     } else {
@@ -407,7 +407,7 @@ static void doHscroll(DEstruct DE, int oldcol)
 	dw = BOXW(DE->colmin);
 	copyH(DE, DE->boxw[0], DE->boxw[0] + dw, DE->windowWidth - dw + 1);
 	dw = DE->windowWidth + 1;
-	cleararea(DE, dw, DE->hwidth, DE->p->w-dw, DE->p->h, DE->p->bg);
+	cleararea(DE, dw, DE->hwidth, DE->p->w-dw, DE->p->h, DE->p->guiColors[dataeditbg]);
 	drawcol(DE, DE->colmin);
     }
     gchangescrollbar(DE->de, HWINSB, (DE->colmin - 1)/DE->xScrollbarScale,
@@ -564,7 +564,7 @@ static void drawcol(DEstruct DE, int whichcol)
     SEXP tmp;
 
     find_coords(DE, 0, col, &src_x, &src_y);
-    cleararea(DE, src_x, src_y, bw, DE->windowHeight, DE->p->bg);
+    cleararea(DE, src_x, src_y, bw, DE->windowHeight, DE->p->guiColors[dataeditbg]);
     cleararea(DE, src_x, src_y, bw, DE->box_h, bbg);
     for (i = 0; i < DE->nhigh; i++)
 	drawrectangle(DE, src_x, DE->hwidth + i * DE->box_h, bw, DE->box_h, 1, 1);
@@ -593,7 +593,7 @@ static void drawrow(DEstruct DE, int whichrow)
 
     find_coords(DE, row, 0, &src_x, &src_y);
     cleararea(DE, src_x, src_y, DE->windowWidth, DE->box_h,
-	      (whichrow > 0) ? DE->p->bg : bbg);
+	      (whichrow > 0) ? DE->p->guiColors[dataeditbg] : bbg);
     drawrectangle(DE, src_x, src_y, DE->boxw[0], DE->box_h, 1, 1);
 
     sprintf(rlab, DE->labform, whichrow);
@@ -908,7 +908,7 @@ static void printstring(DEstruct DE, const char *ibuf, int buflen,
     find_coords(DE, row, col, &x_pos, &y_pos);
     if (col == 0) bw = DE->boxw[0]; else bw = BOXW(col+DE->colmin-1);
     cleararea(DE, x_pos + 1, y_pos + 1, bw - 1, DE->box_h - 1,
-	      (row==0 || col==0) ? bbg:DE->p->bg);
+	      (row==0 || col==0) ? bbg:DE->p->guiColors[dataeditbg]);
     fw = min(BUFSIZE, (bw - 8)/(DE->p->fw));
     bufw = min(fw, buflen);
     strncpy(buf, ibuf, bufw);
@@ -932,7 +932,7 @@ static void clearrect(DEstruct DE)
 
     find_coords(DE, DE->crow, DE->ccol, &x_pos, &y_pos);
     cleararea(DE, x_pos, y_pos, BOXW(DE->ccol+DE->colmin-1),
-	      DE->box_h, DE->p->bg);
+	      DE->box_h, DE->p->guiColors[dataeditbg]);
 }
 
 /* handlechar has to be able to parse decimal numbers and strings,
@@ -1047,7 +1047,7 @@ static void cleararea(DEstruct DE,
 
 static void clearwindow(DEstruct DE)
 {
-    gfillrect(DE->de, DE->p->bg, rect(0, 0, DE->p->w, DE->p->h));
+    gfillrect(DE->de, DE->p->guiColors[dataeditbg], rect(0, 0, DE->p->w, DE->p->h));
 }
 
 
@@ -1056,14 +1056,14 @@ static void drawrectangle(DEstruct DE,
 			  int lwd, int fore)
 {
     /* only used on screen, so always fast */
-    gdrawrect(DE->de, lwd, 0, (fore==1)? DE->p->ufg: DE->p->bg,
+    gdrawrect(DE->de, lwd, 0, (fore==1)? DE->p->guiColors[dataedituser]: DE->p->guiColors[dataeditbg],
 	      rect(xpos, ypos, width, height), 1, PS_ENDCAP_SQUARE,
 	      PS_JOIN_BEVEL, 10);
 }
 
 static void de_drawtext(DEstruct DE, int xpos, int ypos, const char *text)
 {
-    gdrawstr(DE->de, DE->p->f, DE->p->fg, pt(xpos, ypos), text);
+    gdrawstr(DE->de, DE->p->f, DE->p->guiColors[dataeditfg], pt(xpos, ypos), text);
 }
 
 /* Keypress callbacks */
@@ -1321,9 +1321,10 @@ static void de_mousedown(control c, int buttons, point xy)
 		rr.width = (strlen(prev) + 2) * (DE->p->fw);
 	    addto(DE->de);
 	    DE->celledit = newfield_no_border(prev, rr);
-	    setbackground(DE->celledit, DE->p->bg);
-	    setforeground(DE->celledit, DE->p->ufg);
 	    settextfont(DE->celledit, DE->p->f);
+	    setbackground(DE->celledit, DE->p->guiColors[dataeditbg]);
+	    setforeground(DE->celledit, DE->p->guiColors[dataedituser]);
+
 	    show(DE->celledit);
 	    DE->CellEditable = TRUE;
 	} else if (buttons & LeftButton) {
@@ -1383,7 +1384,7 @@ static void deredraw(DEstruct DE)
     }
     printlabs(DE);
     for (i = DE->colmin; i <= DE->colmax; i++) drawcol(DE,i);
-    gfillrect(DE->de, DE->p->bg, rect(DE->windowWidth+1, DE->hwidth,
+    gfillrect(DE->de, DE->p->guiColors[dataeditbg], rect(DE->windowWidth+1, DE->hwidth,
 				      DE->p->w - DE->windowWidth-1,
 				      DE->p->h - DE->hwidth));
     highlightrect(DE);
@@ -1749,7 +1750,7 @@ static dataeditor newdataeditor(DEstruct DE, const char *title)
 
     DE->p = newconsoledata((consolefn) ? consolefn : FixedFont,
 			   pagerrow, pagercol, 0, 0,
-			   consolefg, consoleuser, consolebg,
+			   guiColors,
 			   DATAEDITOR, 0);
     if (!DE->p) return NULL;
 
@@ -1778,7 +1779,7 @@ static dataeditor newdataeditor(DEstruct DE, const char *title)
     DE->p->right = (DE->p->w - (DE->p->cols)*(DE->p->fw)) / 2;
     DE->p->top = (DE->p->h - (DE->p->rows)*(DE->p->fh)) / 2;
     gsetcursor(c, ArrowCursor);
-    setbackground(c, consolebg);
+    setbackground(c, guiColors[dataeditbg]);
     if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
 	/* blank toolbar to stop windows jumping around */
 	int btsize = 24;

@@ -29,11 +29,10 @@ as.expression.default <- function(x,...) .Internal(as.vector(x, "expression"))
 as.list <- function(x,...) UseMethod("as.list")
 as.list.default <- function (x, ...)
 {
-    if (typeof(x) == "list") return(x)
-    if (is.function(x))
-	return(c(formals(x), list(body(x))))
-    .Internal(as.vector(x, "list"))
+    if (typeof(x) == "list") x else .Internal(as.vector(x, "list"))
 }
+as.list.function <- function (x, ...) c(formals(x), list(body(x)))
+
 ## FIXME:  Really the above  as.vector(x, "list")  should work for data.frames!
 as.list.data.frame <- function(x,...) {
     x <- unclass(x)

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!@R_SHELL@
 
 if test -z "${R_HOME}"; then
     echo "This command can be executed via R CMD only!"

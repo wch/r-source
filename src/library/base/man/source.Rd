@@ -17,7 +17,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 \alias{source}
 \arguments{
   \item{file}{a connection or a character string giving the pathname
-    of the file or URL to read from.}
+    of the file or URL to read from.  \code{""} indicates the connection
+    \code{\link{stdin}()}.}
   \item{local}{if \code{local} is \code{FALSE}, the statements scanned
     are evaluated in the user's workspace (the global environment),
     otherwise in the environment calling \code{source}.}
@@ -25,7 +26,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
     after parsing, before evaluation.}
   \item{print.eval}{logical; if \code{TRUE}, the result of
     \code{eval(i)} is printed for each expression \code{i}; defaults
-    to \code{echo}.}
+    to the value of \code{echo}.}
   \item{verbose}{if \code{TRUE}, more diagnostics (than just
     \code{echo = TRUE}) are printed during parsing and evaluation of
     input, including extra info for \bold{each} expression.}
@@ -37,9 +38,10 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{chdir}{logical; if \code{TRUE} and \code{file} is a pathname,
     the \R working directory is temporarily changed to the directory
     containing \code{file} for evaluating.}
-  \item{encoding}{character vector.  The encoding(x) to be assumed when
+  \item{encoding}{character vector.  The encoding(s) to be assumed when
     \code{file} is a character string: see \code{\link{file}}.  A
-    possible value is \code{"unknown"}: see the \sQuote{Details}.}
+    possible value is \code{"unknown"} when the encoding is guesses: see
+    the \sQuote{Details}.}
   \item{continue.echo}{character; gives the prompt to use on
     continuation lines if \code{echo = TRUE}.}
   \item{skip.echo}{integer; how many comment lines at the start of the
@@ -55,6 +57,19 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   chosen environment.
 }
 \details{
+  Note that running code via \code{source} differs in a few respects
+  from entering it at the \R command line.  Since expressions are not
+  executed at the top level, auto-printing is not done.  So you will
+  need to include explicit \code{print} calls for things you want to be
+  printed (and remember that this includes plotting by \pkg{lattice},
+  FAQ Q7.22).  Since the complete file is parsed before any of it is
+  run, syntax errors result in none of the code being run. If an error
+  occurs in running a syntactically correct script, anything assigned
+  into the workspace by code that has been run will be kept (just as
+  from the command line), but diagnostic information such as
+  \code{\link{traceback}()} will contain additional calls to
+  \code{eval.with.vis}, an undocumented internal function.
+
   All versions of \R accept input from a connection with end of line
   marked by LF (as used on Unix), CRLF (as used on DOS/Windows)
   or CR (as used on classic MacOS).  The final line can be incomplete, that
@@ -70,10 +85,18 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   This paragraph applies if \code{file} is a filename (rather than a
   connection).  If \code{encoding = "unknown"}, an attempt is made to
   guess the encoding.  The result of \code{\link{localeToCharset}()} is
-  used as a guide.  If \code{encoding} has two or more elements, they are
-  tried in turn until the file/URL can be read without error in the
-  trial encoding.
-
+  used as a guide.  If \code{encoding} has two or more elements, they
+  are tried in turn until the file/URL can be read without error in the
+  trial encoding.  If an actual \code{encoding} is specified (rather than the
+  default or \code{"unknown"}) then character strings in the result will be
+  translated to the current encoding and marked as such (see
+  \code{\link{Encoding}}) in Latin-1 and UTF-8 locales.
+  
+  If \code{file} is a connection (including one specified by \code{""},
+  it is not possible to re-encode the input inside \code{source}, and so
+  the \code{encoding} argument is just used to mark character strings in the
+  parsed input: see \code{\link{parse}}.
+  
   Unlike input from a console, lines in the file or on a connection can
   contain an unlimited number of characters.
   

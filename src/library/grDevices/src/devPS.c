@@ -47,6 +47,7 @@ static void mbcsToSbcs(const char *in, char *out, const char *encoding, int enc)
 #define R_USE_PROTOTYPES 1
 #include <R_ext/GraphicsEngine.h>
 #include <R_ext/Error.h>
+#include <R_ext/RS.h>
 #include "Fileio.h"
 #include "grDevices.h"
 
@@ -375,6 +376,7 @@ static int GetKPX(char *buf, int nkp, FontMetricInfo *metrics,
 
     p = SkipToNextItem(p);
     sscanf(p, "%s %s %hd", c1, c2, &(metrics->KernPairs[nkp].kern));
+    if (streql(c1, "space") || streql(c2, "space")) return 0;
     for(i = 0; i < 256; i++) {
 	if (!strcmp(c1, charnames[i].cname)) {
 	    metrics->KernPairs[nkp].c1 = i;
@@ -738,6 +740,7 @@ extern int Ri18n_wcwidth(wchar_t c);
 static double
     PostScriptStringWidth(const unsigned char *str, int enc,
 			  FontMetricInfo *metrics,
+			  Rboolean useKerning,
 			  int face, const char *encoding)
 {
     int sum = 0, i;
@@ -801,15 +804,17 @@ static double
 	    warning(_("font width unknown for character 0x%x"), *p);
 	else sum += wx;
 
-	/* check for kerning adjustment */
-	p1 = p[0]; p2 = p[1];
-	for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
-	    /* second test is a safety check: should all start with p1  */
-	    if(metrics->KernPairs[i].c2 == p2 &&
-	       metrics->KernPairs[i].c1 == p1) {
-		sum += metrics->KernPairs[i].kern;
-		break;
-	    }
+	if(useKerning) {
+	    /* check for kerning adjustment */
+	    p1 = p[0]; p2 = p[1];
+	    for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
+		/* second test is a safety check: should all start with p1 */
+		if(metrics->KernPairs[i].c2 == p2 &&
+		   metrics->KernPairs[i].c1 == p1) {
+		    sum += metrics->KernPairs[i].kern;
+		    break;
+		}
+	}
     }
     return 0.001 * sum;
 }
@@ -2231,7 +2236,7 @@ typedef struct {
     Rboolean onefile;	/* EPSF header etc*/
     Rboolean paperspecial;	/* suppress %%Orientation */
     Rboolean warn_trans; /* have we warned about translucent cols? */
-    Rboolean lspace;
+    Rboolean useKern;
 
     /* This group of variables track the current device status.
      * They should only be set by routines that emit PostScript code. */
@@ -2685,7 +2690,7 @@ static void PostScriptSetLineMitre(FILE *fp, double linemitre)
 
 static void PostScriptSetFont(FILE *fp, int fontnum, double size)
 {
-    fprintf(fp, "/ps %.0f def /Font%d findfont %.0f s\n", size, fontnum, size);
+    fprintf(fp, "/Font%d findfont %.0f s\n", fontnum, size);
 }
 
 static void
@@ -2751,99 +2756,12 @@ static void PostScriptCircle(FILE *fp, double x, double y, double r)
     fprintf(fp, "%.2f %.2f %.2f c ", x, y, r);
 }
 
-/* added for 2.8.0 (donated by Ei-ji Nakama) : */
-#define KERNING_PS 0
-#define KERNING_PDF 1
-static void PostScriptWriteT1KerningString(FILE *fp, const char *str,
-					   const int mode,
-					   FontMetricInfo *metrics,
-					   const pGEcontext gc)
+static void PostScriptWriteString(FILE *fp, const char *str, int nb)
 {
-    const char *str1 = str;
-    unsigned char p1, p2;
-    int i,j;
-    double ary_buf[128], *ary;
+    int i;
 
-    if(strlen(str) > sizeof(ary_buf)/sizeof(double)){
-	ary = calloc(strlen(str),sizeof(double));
-	if(!ary)
-	    return;
-    }
-    else
-	ary = ary_buf;
-
-    for(i=0; str1[i] && str1[i+1]; i++){
-	ary[i] = 0.;
-	p1 = str1[i];
-	p2 = str1[i+1];
-#ifdef USE_HYPHEN
-	if (p1 == '-' && !isdigit((int)p2))
-	    p1 = (unsigned char)PS_hyphen;
-#endif
-	if(mode == KERNING_PS)
-	    ary[i]=(double) (metrics->CharInfo[p1].WX == NA_SHORT) ?
-		0 : metrics->CharInfo[p1].WX;
-	for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++) {
-	    if(metrics->KernPairs[j].c2 == p2 &&
-	       metrics->KernPairs[j].c1 == p1	) {
-		ary[i] += (double)metrics->KernPairs[j].kern;
-		break;
-	    }
-	}
-	if (mode == KERNING_PS)
-	    ary[i] *= 0.001 * floor(gc->cex * gc->ps + 0.5);
-    }
-
-    if(mode == KERNING_PDF)
-	fputc('[', fp);
     fputc('(', fp);
-    for(i=0; str1[i]; i++) {
-	switch(str1[i]) {
-	case '\n':
-	    fprintf(fp, "\\n");
-	    break;
-	case '\\':
-	    fprintf(fp, "\\\\");
-	    break;
-	case '-':
-#ifdef USE_HYPHEN
-	    if (!isdigit((int)str1[i+1]))
-		fputc(PS_hyphen, fp);
-	    else
-#endif
-		fputc(str1[i], fp);
-	    break;
-	case '(':
-	case ')':
-	    fprintf(fp, "\\%c", str1[i]);
-	    break;
-	default:
-	    fputc(str1[i], fp);
-	    break;
-	}
-	if( mode == KERNING_PDF && (int)ary[i] != 0 && str1[i+1] )
-	    fprintf(fp, ") %d (", (int)(ary[i]*-1));
-    }
-    fputc(')', fp);
-    if(mode == KERNING_PDF)
-	fputc(']', fp);
-
-    fputc(' ', fp);
-
-    if(mode == KERNING_PS) {
-	fputc('[', fp);
-	for(i=0; str1[i] && str1[i+1]; i++)
-	    fprintf(fp, "%.2f ", ary[i]);
-	fprintf(fp, "0]"); /* newer GS (8.61) does not accept an empty array */
-    }
-    if(ary != ary_buf)
-	free(ary);
-}
-
-static void PostScriptWriteString(FILE *fp, const char *str)
-{
-    fputc('(', fp);
-    for ( ; *str; str++)
+    for (i = 0 ; i < nb && *str; i++, str++)
 	switch(*str) {
 	case '\n':
 	    fprintf(fp, "\\n");
@@ -2870,47 +2788,56 @@ static void PostScriptWriteString(FILE *fp, const char *str)
     fputc(')', fp);
 }
 
+
 static FontMetricInfo *metricInfo(const char *, int, PostScriptDesc *);
 
 static void PostScriptText(FILE *fp, double x, double y,
-			   const char *str, double xc, double yc, double rot,
+			   const char *str, int nb, double xc, double rot,
 			   const pGEcontext gc,
 			   pDevDesc dd)
 {
-    PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
     int face = gc->fontface;
+
     if(face < 1 || face > 5) face = 1;
 
     fprintf(fp, "%.2f %.2f ", x, y);
 
-    if (pd->lspace &&
-	isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont))
-       PostScriptWriteT1KerningString(fp, str,
-				      KERNING_PS,
-				      metricInfo(gc->fontfamily, face, pd),
-				      gc);
-    else
-       PostScriptWriteString(fp, str);
+    PostScriptWriteString(fp, str, nb);
 
     if(xc == 0) fprintf(fp, " 0");
     else if(xc == 0.5) fprintf(fp, " .5");
     else if(xc == 1) fprintf(fp, " 1");
     else fprintf(fp, " %.2f", xc);
 
-    if(yc == 0) fprintf(fp, " 0");
-    else if(yc == 0.5) fprintf(fp, " .5");
-    else if(yc == 1) fprintf(fp, " 1");
-    else fprintf(fp, " %.2f", yc);
-
     if(rot == 0) fprintf(fp, " 0");
     else if(rot == 90) fprintf(fp, " 90");
     else fprintf(fp, " %.2f", rot);
 
-    if (pd->lspace &&
-	isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont))
-       fprintf(fp, " tk\n");
-    else
-       fprintf(fp, " t\n");
+    fprintf(fp, " t\n");
+}
+
+static void PostScriptText2(FILE *fp, double x, double y,
+			    const char *str, int nb,
+			    Rboolean relative, double rot,
+			    const pGEcontext gc,
+			    pDevDesc dd)
+{
+    int face = gc->fontface;
+
+    if(face < 1 || face > 5) face = 1;
+
+    if(relative) {
+	fprintf(fp, "\n%.3f ", x);
+	PostScriptWriteString(fp, str, nb);
+	fprintf(fp, " tb");
+    } else {
+	fprintf(fp, "%.2f %.2f ", x, y);
+	PostScriptWriteString(fp, str, nb);
+	if(rot == 0) fprintf(fp, " 0");
+	else if(rot == 90) fprintf(fp, " 90");
+	else fprintf(fp, " %.2f", rot);
+	fprintf(fp, " ta");
+    }
 }
 
 #ifdef SUPPORT_MBCS
@@ -2943,6 +2870,85 @@ static void PostScriptHexText(FILE *fp, double x, double y,
     fprintf(fp, " t\n");
 }
 #endif
+
+static void
+PostScriptTextKern(FILE *fp, double x, double y,
+		   const char *str, double xc, double rot,
+		   const pGEcontext gc,
+		   pDevDesc dd)
+{
+    PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
+    int face = gc->fontface;
+    FontMetricInfo *metrics;
+    int i, j, n, nout = 0, w;
+    unsigned char p1, p2;
+    double fac = 0.001 * floor(gc->cex * gc->ps + 0.5);
+    Rboolean relative = FALSE;
+    Rboolean haveKerning = FALSE;
+
+    /* check if this is T1 -- should be, but be safe*/
+    if(!isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont)) {
+	PostScriptText(fp, x, y, str, strlen(str), xc, rot, gc, dd);
+	return;
+    }
+    metrics = metricInfo(gc->fontfamily, face, pd);
+
+    n = strlen(str);
+    /* First check for any kerning */
+    for(i = 0; i < n-1; i++) {
+	p1 = str[i];
+	p2 = str[i+1];
+#ifdef USE_HYPHEN
+	if (p1 == '-' && !isdigit((int)p2))
+	    p1 = (unsigned char)PS_hyphen;
+#endif
+	for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++)
+	    if(metrics->KernPairs[j].c2 == p2 &&
+	       metrics->KernPairs[j].c1 == p1) {
+		haveKerning = TRUE;
+		break;
+	    }
+    }
+
+    if(haveKerning) {
+	/* We have to start at the left edge, as we are going
+	   to do this in pieces */
+	if (xc != 0) {
+	    double s = 0.0, rot1 = rot * M_PI/180.;
+	    int w = 0; short wx;
+	    for(i = 0; i < n; i++) {
+		unsigned char p1 = str[i];
+		wx = metrics->CharInfo[(int)p1].WX;
+		w += (wx == NA_SHORT) ? 0 : wx;
+	    }
+	    s = w * fac;
+	    x -= xc*fac*cos(rot1)*w;
+	    y -= xc*fac*sin(rot1)*w;
+	}
+	for(i = 0; i < n-1; i++) {
+	    p1 = str[i];
+	    p2 = str[i+1];
+#ifdef USE_HYPHEN
+	    if (p1 == '-' && !isdigit((int)p2))
+		p1 = (unsigned char)PS_hyphen;
+#endif
+	    for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++)
+		if(metrics->KernPairs[j].c2 == p2 &&
+		   metrics->KernPairs[j].c1 == p1) {
+		    PostScriptText2(fp, x, y, str+nout, i+1-nout,
+				    relative, rot, gc, dd);
+		    nout = i+1;
+		    w = metrics->KernPairs[j].kern;
+		    x = fac*w; y = 0;
+		    relative = TRUE;
+		    break;
+		}
+	}
+	PostScriptText2(fp, x, y, str+nout, n-nout, relative, rot, gc, dd);
+	fprintf(fp, " gr\n");
+    } else
+	PostScriptText(fp, x, y, str, strlen(str), xc, rot, gc, dd);
+}
 
 /* Device Driver Actions */
 
@@ -3069,7 +3075,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	       Rboolean horizontal, double ps,
 	       Rboolean onefile, Rboolean pagecentre, Rboolean printit,
 	       const char *cmd, const char *title, SEXP fonts,
-	       const char *colormodel, int lspace)
+	       const char *colormodel, int useKern)
 {
     /* If we need to bail out with some sort of "error"
        then we must free(dd) */
@@ -3103,7 +3109,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     strcpy(pd->papername, paper);
     strncpy(pd->title, title, 1024);
     strncpy(pd->colormodel, colormodel, 30);
-    pd->lspace = (lspace != 0);
+    pd->useKern = (useKern != 0);
 
     if(strlen(encoding) > PATH_MAX - 1) {
 	free(dd);
@@ -3422,7 +3428,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     /* GREset(.)  dd->gp.mkh = dd->gp.cra[0] * dd->gp.ipr[0]; */
 
     dd->canClip = TRUE;
-    dd->canHAdj = pd->lspace ? 0 : 2;
+    dd->canHAdj = 2;
     dd->canChangeGamma = FALSE;
 
     /*	Start the driver */
@@ -3810,20 +3816,19 @@ static double PS_StrWidth(const char *str,
 	return floor(gc->cex * gc->ps + 0.5) *
 	    PostScriptStringWidth((const unsigned char *)str, CE_NATIVE,
 				  metricInfo(gc->fontfamily, face, pd),
-				  face,
+				  pd->useKern, face,
 				  convname(gc->fontfamily, pd));
     } else { /* cidfont(gc->fontfamily, PostScriptFonts) */
 	if (face < 5) {
 	    return floor(gc->cex * gc->ps + 0.5) *
 		PostScriptStringWidth((const unsigned char *)str, CE_NATIVE,
-				      NULL,
-				      face, NULL);
+				      NULL, FALSE, face, NULL);
 	} else {
 	    return floor(gc->cex * gc->ps + 0.5) *
 		PostScriptStringWidth((const unsigned char *)str, CE_NATIVE,
 				      /* Send symbol face metric info */
 				      CIDsymbolmetricInfo(gc->fontfamily, pd),
-				      face, NULL);
+				      FALSE, face, NULL);
 	}
     }
 }
@@ -3841,20 +3846,19 @@ static double PS_StrWidthUTF8(const char *str,
 	return floor(gc->cex * gc->ps + 0.5) *
 	    PostScriptStringWidth((const unsigned char *)str, CE_UTF8,
 				  metricInfo(gc->fontfamily, face, pd),
-				  face,
+				  pd->useKern, face,
 				  convname(gc->fontfamily, pd));
     } else { /* cidfont(gc->fontfamily, PostScriptFonts) */
 	if (face < 5) {
 	    return floor(gc->cex * gc->ps + 0.5) *
 		PostScriptStringWidth((const unsigned char *)str, CE_UTF8,
-				      NULL,
-				      face, NULL);
+				      NULL, FALSE, face, NULL);
 	} else {
 	    return floor(gc->cex * gc->ps + 0.5) *
 		PostScriptStringWidth((const unsigned char *)str, CE_UTF8,
 				      /* Send symbol face metric info */
 				      CIDsymbolmetricInfo(gc->fontfamily, pd),
-				      face, NULL);
+				      FALSE, face, NULL);
 	}
     }
 }
@@ -4091,7 +4095,10 @@ static void drawSimpleText(double x, double y, const char *str,
     CheckAlpha(gc->col, pd);
     if(R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
-	PostScriptText(pd->psfp, x, y, str, hadj, 0.0, rot, gc, dd);
+	if(pd->useKern)
+	    PostScriptTextKern(pd->psfp, x, y, str, hadj, rot, gc, dd);
+	else
+	    PostScriptText(pd->psfp, x, y, str, strlen(str), hadj, rot, gc, dd);
     }
 }
 
@@ -5158,7 +5165,7 @@ static double XFig_StrWidth(const char *str,
     return floor(gc->cex * gc->ps + 0.5) *
 	PostScriptStringWidth((const unsigned char *)str, CE_NATIVE,
 			      &(pd->fonts->family->fonts[face-1]->metrics),
-			      face, "latin1");
+			      FALSE, face, "latin1");
 }
 
 static void XFig_MetricInfo(int c,
@@ -5253,7 +5260,7 @@ typedef struct {
     Rboolean inText;
     char title[1024];
     char colormodel[30];
-    Rboolean dingbats, lspace;
+    Rboolean dingbats, useKern;
 
     /*
      * Fonts and encodings used on the device
@@ -5392,7 +5399,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 		double ps, int onefile, int pagecentre,
 		const char *title, SEXP fonts,
 		int versionMajor, int versionMinor,
-		const char *colormodel, int dingbats, int lspace)
+		const char *colormodel, int dingbats, int useKern)
 {
     /* If we need to bail out with some sort of "error" */
     /* then we must free(dd) */
@@ -5443,7 +5450,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     memset(pd->fontUsed, 0, 100*sizeof(Rboolean));
     strncpy(pd->colormodel, colormodel, 30);
     pd->dingbats = (dingbats != 0);
-    pd->lspace = (lspace != 0);
+    pd->useKern = (useKern != 0);
 
     pd->width = width;
     pd->height = height;
@@ -6819,6 +6826,74 @@ static int PDFfontNumber(const char *family, int face, PDFDesc *pd)
     return num;
 }
 
+/* added for 2.9.0 (donated by Ei-ji Nakama) : */
+static void PDFWriteT1KerningString(FILE *fp, const char *str,
+				    FontMetricInfo *metrics,
+				    const pGEcontext gc)
+{
+    unsigned char p1, p2;
+    int i,j, n;
+    int ary_buf[128], *ary;
+    Rboolean haveKerning = FALSE;
+
+    n = strlen(str);
+    if(n > sizeof(ary_buf)/sizeof(int))
+	ary = Calloc(strlen(str), int);
+    else ary = ary_buf;
+
+    for(i = 0; i < n-1; i++) {
+	ary[i] = 0.;
+	p1 = str[i];
+	p2 = str[i+1];
+#ifdef USE_HYPHEN
+	if (p1 == '-' && !isdigit((int)p2))
+	    p1 = (unsigned char)PS_hyphen;
+#endif
+	for (j = metrics->KPstart[p1]; j < metrics->KPend[p1]; j++)
+	    if(metrics->KernPairs[j].c2 == p2 &&
+	       metrics->KernPairs[j].c1 == p1) {
+		ary[i] += metrics->KernPairs[j].kern;
+		haveKerning = TRUE;
+		break;
+	    }
+    }
+    if(haveKerning) {
+	fputc('[', fp); fputc('(', fp);
+	for(i =  0; str[i]; i++) {
+	    switch(str[i]) {
+	    case '\n':
+		fprintf(fp, "\\n");
+		break;
+	    case '\\':
+		fprintf(fp, "\\\\");
+		break;
+	    case '-':
+#ifdef USE_HYPHEN
+		if (!isdigit((int)str[i+1]))
+		    fputc(PS_hyphen, fp);
+		else
+#endif
+		    fputc(str[i], fp);
+		break;
+	    case '(':
+	    case ')':
+		fprintf(fp, "\\%c", str[i]);
+		break;
+	    default:
+		fputc(str[i], fp);
+		break;
+	    }
+	    if( ary[i] != 0 && str[i+1] ) fprintf(fp, ") %d (", -ary[i]);
+	}
+	fprintf(fp, ")] TJ\n");
+    } else {
+	PostScriptWriteString(fp, str, strlen(str));
+	fprintf(fp, " Tj\n");
+    }
+
+    if(ary != ary_buf) Free(ary);
+}
+
 static FontMetricInfo *PDFmetricInfo(const char *, int, PDFDesc *);
 static void PDFSimpleText(double x, double y, const char *str,
 			  double rot, double hadj,
@@ -6829,7 +6904,6 @@ static void PDFSimpleText(double x, double y, const char *str,
     int size = (int)floor(gc->cex * gc->ps + 0.5);
     int face = gc->fontface;
     double a, b, rot1;
-    const char *str1 = str;
 
     if(!R_VIS(gc->col)) return;
 
@@ -6848,16 +6922,13 @@ static void PDFSimpleText(double x, double y, const char *str,
     fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
 	    font,
 	    a, b, -b, a, x, y);
-    if (pd->lspace &&
+    if (pd->useKern &&
 	isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
-       PostScriptWriteT1KerningString(pd->pdffp, str1,
-				      KERNING_PDF,
-				      PDFmetricInfo(gc->fontfamily, face, pd),
-				      gc);
-       fprintf(pd->pdffp, " TJ\n");
+	PDFWriteT1KerningString(pd->pdffp, str,
+				PDFmetricInfo(gc->fontfamily, face, pd), gc);
     } else {
-       PostScriptWriteString(pd->pdffp, str1);
-       fprintf(pd->pdffp, " Tj\n");
+	PostScriptWriteString(pd->pdffp, str, strlen(str));
+	fprintf(pd->pdffp, " Tj\n");
     }
     textoff(pd); /* added in 2.8.0 */
 }
@@ -6886,8 +6957,8 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
     int size = (int) floor(gc->cex * gc->ps + 0.5);
     int face = gc->fontface;
     double a, b, rot1;
-    const char *str1 = str;
     char *buff;
+    const char *str1;
 
     if(!R_VIS(gc->col)) return;
 
@@ -7005,25 +7076,21 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
     fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
 	    PDFfontNumber(gc->fontfamily, face, pd),
 	    a, b, -b, a, x, y);
-    if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str1) && face < 5) {
+    if((enc == CE_UTF8 || mbcslocale) && !strIsASCII(str) && face < 5) {
 	/* face 5 handled above */
 	buff = alloca(strlen(str)+1); /* Output string cannot be longer */
 	R_CheckStack();
 	mbcsToSbcs(str, buff, PDFconvname(gc->fontfamily, pd), enc);
 	str1 = buff;
-    }
+    } else str1 = str;
 
-    if (pd->lspace &&
+    if (pd->useKern &&
 	isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
-       PostScriptWriteT1KerningString(pd->pdffp, str1,
-				      KERNING_PDF,
-				      PDFmetricInfo(gc->fontfamily, face, pd),
-				      gc);
-       fprintf(pd->pdffp, " TJ\n");
-    }
-    else{
-       PostScriptWriteString(pd->pdffp, str1);
-       fprintf(pd->pdffp, " Tj\n");
+	PDFWriteT1KerningString(pd->pdffp, str1,
+				PDFmetricInfo(gc->fontfamily, face, pd), gc);
+    } else{
+	PostScriptWriteString(pd->pdffp, str1, strlen(str1));
+	fprintf(pd->pdffp, " Tj\n");
     }
     textoff(pd); /* added in 2.8.0 */
 }
@@ -7189,20 +7256,19 @@ static double PDF_StrWidth(const char *str,
 	    PostScriptStringWidth((const unsigned char *)str, CE_NATIVE,
 				  PDFmetricInfo(gc->fontfamily,
 						gc->fontface, pd),
-				  gc->fontface,
+				  pd->useKern, gc->fontface,
 				  PDFconvname(gc->fontfamily, pd));
     } else { /* cidfont(gc->fontfamily) */
 	if (face < 5) {
 	    return floor(gc->cex * gc->ps + 0.5) *
 		PostScriptStringWidth((const unsigned char *)str, CE_NATIVE,
-				      NULL,
-				      gc->fontface, NULL);
+				      NULL, FALSE, gc->fontface, NULL);
 	} else {
 	    return floor(gc->cex * gc->ps + 0.5) *
 		PostScriptStringWidth((const unsigned char *)str, CE_NATIVE,
 				      PDFCIDsymbolmetricInfo(gc->fontfamily,
 							     pd),
-				      gc->fontface, NULL);
+				      FALSE, gc->fontface, NULL);
 	}
     }
 }
@@ -7221,20 +7287,19 @@ static double PDF_StrWidthUTF8(const char *str,
 	    PostScriptStringWidth((const unsigned char *)str, CE_UTF8,
 				  PDFmetricInfo(gc->fontfamily,
 						gc->fontface, pd),
-				  gc->fontface,
+				  pd->useKern, gc->fontface,
 				  PDFconvname(gc->fontfamily, pd));
     } else { /* cidfont(gc->fontfamily) */
 	if (face < 5) {
 	    return floor(gc->cex * gc->ps + 0.5) *
 		PostScriptStringWidth((const unsigned char *)str, CE_UTF8,
-				      NULL,
-				      gc->fontface, NULL);
+				      NULL, FALSE, gc->fontface, NULL);
 	} else {
 	    return floor(gc->cex * gc->ps + 0.5) *
 		PostScriptStringWidth((const unsigned char *)str, CE_UTF8,
 				      PDFCIDsymbolmetricInfo(gc->fontfamily,
 							     pd),
-				      gc->fontface, NULL);
+				      FALSE, gc->fontface, NULL);
 	}
     }
 }
@@ -7296,7 +7361,7 @@ SEXP PostScript(SEXP args)
     const char *file, *paper, *family=NULL, *bg, *fg, *cmd;
     const char *afms[5];
     const char *encoding, *title, call[] = "postscript", *colormodel;
-    int i, horizontal, onefile, pagecentre, printit, lspace;
+    int i, horizontal, onefile, pagecentre, printit, useKern;
     double height, width, ps;
     SEXP fam, fonts;
 
@@ -7332,8 +7397,8 @@ SEXP PostScript(SEXP args)
     title = translateChar(asChar(CAR(args)));  args = CDR(args);
     fonts = CAR(args);		      args = CDR(args);
     colormodel = CHAR(asChar(CAR(args)));  args = CDR(args);
-    lspace = asLogical(CAR(args));
-    if (lspace == NA_LOGICAL) lspace = 1;
+    useKern = asLogical(CAR(args));
+    if (useKern == NA_LOGICAL) useKern = 1;
     if (!isNull(fonts) && !isString(fonts))
 	error(_("invalid 'fonts' parameter in %s"), call);
 
@@ -7346,7 +7411,7 @@ SEXP PostScript(SEXP args)
 	if(!PSDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			   width, height, (double)horizontal, ps, onefile,
 			   pagecentre, printit, cmd, title, fonts,
-			   colormodel, lspace)) {
+			   colormodel, useKern)) {
 	    /* free(dev); No, dev freed inside PSDeviceDrive */
 	    error(_("unable to start device PostScript"));
 	}
@@ -7450,7 +7515,7 @@ SEXP PDF(SEXP args)
 	*bg, *fg, *title, call[] = "PDF", *colormodel;
     const char *afms[5];
     double height, width, ps;
-    int i, onefile, pagecentre, major, minor, dingbats, lspace;
+    int i, onefile, pagecentre, major, minor, dingbats, useKern;
     SEXP fam, fonts;
 
     vmax = vmaxget();
@@ -7483,8 +7548,8 @@ SEXP PDF(SEXP args)
     colormodel = CHAR(asChar(CAR(args))); args = CDR(args);
     dingbats = asLogical(CAR(args)); args = CDR(args);
     if (dingbats == NA_LOGICAL) dingbats = 1;
-    lspace = asLogical(CAR(args));
-    if (lspace == NA_LOGICAL) lspace = 1;
+    useKern = asLogical(CAR(args));
+    if (useKern == NA_LOGICAL) useKern = 1;
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -7495,7 +7560,7 @@ SEXP PDF(SEXP args)
 	if(!PDFDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			    width, height, ps, onefile, pagecentre,
 			    title, fonts, major, minor, colormodel,
-			    dingbats, lspace)) {
+			    dingbats, useKern)) {
 	    /* free(dev); PDFDeviceDriver now frees */
 	    error(_("unable to start device pdf"));
 	}

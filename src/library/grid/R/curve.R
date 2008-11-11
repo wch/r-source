@@ -324,9 +324,9 @@ calcCurveGrob <- function(x, debug) {
             # separately
             if (square && any(x1 == x2 | y1 == y2)) {
                 subset <- x1 == x2 | y1 == y2
-                straightCurve(x1[subset], y1[subset],
-                              x2[subset], y2[subset],
-                              arrow, gp, debug)
+                straightGrob <- straightCurve(x1[subset], y1[subset],
+                                               x2[subset], y2[subset],
+                                               arrow, gp, debug)
                 # Remove these from the curves to draw
                 x1 <- x1[!subset]
                 x2 <- x2[!subset]
@@ -334,10 +334,14 @@ calcCurveGrob <- function(x, debug) {
                 y2 <- y2[!subset]
                 arrow <- arrow[!subset]
                 gp <- gp[!subset]
+            } else {
+                straightGrob <- NULL
             }
             ncurve <- length(x1)
             # If nothing to draw, we're done
-            if (ncurve > 0) {
+            if (ncurve == 0) {
+                straightGrob
+            } else {
                 if (inflect) {
                     xm <- (x1 + x2)/2
                     ym <- (y1 + y2)/2
@@ -375,17 +379,23 @@ calcCurveGrob <- function(x, debug) {
                     }
 
                     idset <- 1:ncurve
-                    xsplineGrob(c(x1, cps1$x, xm, cps2$x, x2),
-                                c(y1, cps1$y, ym, cps2$y, y2),
-                                id=c(idset, rep(idset, each=ncp),
-                                  idset, rep(idset, each=ncp),
-                                  idset),
-                                default.units="inches",
-                                shape=c(rep(0, ncurve), shape1,
-                                  rep(0, ncurve), shape2,
-                                  rep(0, ncurve)),
-                                arrow=arrow, open=open,
-                                gp=gp)
+                    splineGrob <-
+                        xsplineGrob(c(x1, cps1$x, xm, cps2$x, x2),
+                                    c(y1, cps1$y, ym, cps2$y, y2),
+                                    id=c(idset, rep(idset, each=ncp),
+                                      idset, rep(idset, each=ncp),
+                                      idset),
+                                    default.units="inches",
+                                    shape=c(rep(0, ncurve), shape1,
+                                      rep(0, ncurve), shape2,
+                                      rep(0, ncurve)),
+                                    arrow=arrow, open=open,
+                                    gp=gp)
+                    if (is.null(straightGrob)) {
+                        splineGrob
+                    } else {
+                        gList(straightGrob, splineGrob)
+                    }
                 } else {
                     shape <- rep(rep(shape, length.out=ncp), ncurve)
                     if (square) {
@@ -408,14 +418,20 @@ calcCurveGrob <- function(x, debug) {
                     }
 
                     idset <- 1:ncurve
-                    xsplineGrob(c(x1, cps$x, x2),
-                                c(y1, cps$y, y2),
-                                id=c(idset, rep(idset, each=ncp), idset),
-                                default.units="inches",
-                                shape=c(rep(0, ncurve), shape,
-                                  rep(0, ncurve)),
-                                arrow=arrow, open=open,
-                                gp=gp)
+                    splineGrob <- xsplineGrob(c(x1, cps$x, x2),
+                                              c(y1, cps$y, y2),
+                                              id=c(idset,
+                                                rep(idset, each=ncp), idset),
+                                              default.units="inches",
+                                              shape=c(rep(0, ncurve), shape,
+                                                rep(0, ncurve)),
+                                              arrow=arrow, open=open,
+                                              gp=gp)
+                    if (is.null(straightGrob)) {
+                        splineGrob
+                    } else {
+                        gList(straightGrob, splineGrob)
+                    }
                 }
             }
         }

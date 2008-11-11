@@ -15,6 +15,7 @@ R_PAPERSIZE_USER=${R_PAPERSIZE}
 R_PAPERSIZE=${R_PAPERSIZE-'a4'}
 ## Default TeXMF stuff
 R_LATEXCMD=${R_LATEXCMD-${LATEX-'latex'}}
+R_PDFLATEXCMD=${R_PDFLATEXCMD-${PDFLATEX-'pdflatex'}}
 R_DVIPSCMD=${R_DVIPSCMD-${DVIPS-'dvips'}}
 R_MAKEINDEXCMD=${R_MAKEINDEX-${MAKEINDEX-'makeindex'}}
 R_RD4DVI=${R_RD4DVI-'ae'}
@@ -23,13 +24,13 @@ R_RD4PDF=${R_RD4PDF-'times,hyper'}
 R_UNZIPCMD=${R_UNZIPCMD-'unzip'}
 R_ZIPCMD=${R_ZIPCMD-'zip'}
 ## Default browser
-#R_BROWSER=${R_BROWSER-''}
+R_BROWSER=${R_BROWSER-'open'}
 ## Default editor
 #EDITOR=${EDITOR-${VISUAL-vi}}
 ## Default pager
 #PAGER=${PAGER-''}
 ## Default PDF viewer
-#R_PDFVIEWER=${R_PDFVIEWER-''}
+R_PDFVIEWER=${R_PDFVIEWER-'open'}
 ## Use configure values
 AWK=gawk
 GREP='grep -E'

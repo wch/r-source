@@ -18,9 +18,9 @@ grid.prompt(ask)
     is prompted before a new page of output is started. }
 }
 \details{
-  As from \R 2.7.0 this is deprecated in favour of
-  \code{\link{devAskNewPage}} as a single setting affects both the
-  base and grid graphics systems.
+  Yhis is deprecated in favour of \code{\link{devAskNewPage}} as a
+  single setting inside the device affects both the base and grid
+  graphics systems.
   
   The default value when a device is opened is taken from the
   setting of \code{\link{options}("device.ask.default")}.

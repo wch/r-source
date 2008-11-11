@@ -610,7 +610,11 @@ foreach my $pkg (@ARGV) {
 		   -f "$pkgdir/BinaryFiles") {
 		    my %bin;
 		    open FILE, "< $pkgdir/BinaryFiles";
-		    while (<FILE>) { chomp; $bin{$_} = $_; }
+		    while (<FILE>) { 
+			chomp; 
+			s/\r$//;  # careless people get Windows files on other OSes
+			$bin{$_} = $_;
+		    }
 		    close(FILE);
 		    my @exec_files0 = @exec_files;
 		    @exec_files = ();
@@ -645,7 +649,11 @@ foreach my $pkg (@ARGV) {
 		   -f "$pkgdir/BinaryFiles") {
 		    my %bin;
 		    open FILE, "< $pkgdir/BinaryFiles";
-		    while (<FILE>) { chomp; $bin{$_} = $_; }
+		    while (<FILE>) { 
+			chomp; 
+			s/\r$//;
+			$bin{$_} = $_;
+		    }
 		    close(FILE);
 		    my @exec_files0 = @exec_files;
 		    @exec_files = ();
@@ -964,6 +972,7 @@ sub check_pkg {
 	open(RBUILDIGNORE, "< $exclude_file");
 	while(<RBUILDIGNORE>) {
 	    chomp;
+	    s/\r$//;  # careless people get Windows files on other OSes
 	    push(@exclude_patterns, $_) if $_;
 	}
 	close(RBUILDIGNORE);
@@ -2520,12 +2529,17 @@ sub check_pkg {
 	    open(MANUAL, "> ${pkgname}-manual.tex")
 	      or die("Error: cannot open file '${pkgname}-manual.tex'" .
 		     "for writing\n");
-	    print MANUAL "\\documentclass\{book\}\n" . $encs;
+	    print MANUAL "\\documentclass\{book\}\n";
 	    ## Use the same Rd.sty defaults as Rd2dvi.
 	    if($HAVE_PDFLATEX) {
 		print MANUAL "\\usepackage[times,hyper]\{Rd\}\n";
 	    } else {
 		print MANUAL "\\usepackage[ae]\{Rd\}\n";
+	    }
+	    if ($encs =~ /utf8/) {
+		print MANUAL $encs . "\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}\n";
+	    } else {
+		print MANUAL $encs;
 	    }
 	    print MANUAL "\\begin\{document\}\n";
 	    foreach my $file (@tex_files) {

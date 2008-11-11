@@ -79,7 +79,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 % as seems to be the case in glibc.
 \section{Warning}{
   Setting \code{"LC_NUMERIC"} may cause \R to function
-  anomalously, so gives a warning.  As from \R 2.7.0 input conversions
+  anomalously, so gives a warning.  Input conversions
   in \R itself are unaffected, but the reading and writing of ASCII
   \code{\link{save}} files will be, as may packages.
 #ifdef unix

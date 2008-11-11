@@ -60,7 +60,7 @@ nlevels <- function(x) length(levels(x))
     if (is.list(value)) {
         nlevs <- rep.int(names(value), lapply(value, length))
         value <- unlist(value)
-        m <- match(value, xlevs, nomatch=0)
+        m <- match(value, xlevs, nomatch=0L)
         xlevs[m] <- nlevs[m > 0]
     } else {
         if (length(xlevs) > length(value))

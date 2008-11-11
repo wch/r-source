@@ -387,7 +387,13 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         if(file.access(pkgpath, 5)) next
         pkgpath <- file.path(pkgpath, "DESCRIPTION")
         if(file.access(pkgpath, 4)) next
-        desc <- read.dcf(pkgpath, fields = fields)[1,]
+        desc <- try(read.dcf(pkgpath, fields = fields), silent = TRUE)
+        if(inherits(desc, "try-error")) {
+            warning(gettextf("read.dcf() error on file '%s'", pkgpath),
+                    domain=NA, call.=FALSE)
+            next
+        }
+        desc <- desc[1,]
         Rver <- strsplit(strsplit(desc["Built"], ";")[[1]][1],
                          "[ \t]+")[[1]][2]
         desc["Built"] <- Rver
@@ -583,7 +589,7 @@ contrib.url <- function(repos, type = getOption("pkgType"))
     ver <- paste(R.version$major,
                  strsplit(R.version$minor, ".", fixed=TRUE)[[1]][1], sep = ".")
     mac.subtype <- "universal"
-    if (substr(type, 1, 10) == "mac.binary") {
+    if (substr(type, 1, 11) == "mac.binary.") {
         mac.subtype <- substring(type, 12)
         type <- "mac.binary"
     }

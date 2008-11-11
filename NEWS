@@ -8,20 +8,47 @@
 
 		CHANGES IN R VERSION 2.9.0
 
+
 NEW FEATURES
 
-    o	Package 'Matrix' is now formally recommended. It provides S4
-	classes and methods for dense and sparse matrices, often by
-	using the numerical libraries Lapack, CHOLMOD and CSparse.
+    o	Package 'Matrix' is now a recommended package contained in the
+	basic R distribution.  It provides S4 classes and methods for
+	dense and sparse matrices, often by using the numerical
+	libraries Lapack and from the SuiteSparse collection CHOLMOD,
+	CSparse, and SPQR among others.
 
-    o	pdf() and postscript() gain a 'forceLetterSpacing' argument to
-	place text strings letter-by-letter, based on an idea and code
-	from Ei-ji Nakama.
+    o	pdf() and postscript() gain a 'useKerning' argument to place
+	strings using kerning (which had previously been ignored in
+	display but not in strwidth), based in part on an idea and
+	code from Ei-ji Nakama. The default is TRUE.
+
+	Kerning involving spaces is now ignored (it was previously
+	only used in the computation of string widths).
 
     o	seq.default() and seq.int() ensure that the result is within the
 	interval [from, to] even when the last value would previously
 	have been slightly out of range because of the allowance for
 	rounding error in computing the number of elements.
+
+    o	install.packages() is able to infer that repos=NULL was
+	intended from the extension on the filename specified as 'pkgs'.
+
+    o	install.packages() on Mac OS X now supports local binary
+	packages with .tar.gz extension. Nonetheless .tgz remains the
+	preferred extension and is expected in repositories.
+
+    o	boxplot() gains a simple 'matrix' method, enabling boxplot(mat)
+	instead of boxplot(data.frame(mat)).
+
+    o	zip.file.extract() gains an optional 'dir' argument.
+
+    o	source() with 'encoding' specified (and not as "unknown") marks
+	the encoding of character strings in Latin-1 and UTF-8
+	locales.
+
+    o	parse(text=z) now marks the encodiing of character strings in
+	Latin-1 and UTF-8 locales if 'z' is of known encoding (that is
+	all elements are either ASCII or marked as Latin-1 or UTF-8).
 
 
 DEPRECATED & DEFUNCT
@@ -34,7 +61,38 @@ DEPRECATED & DEFUNCT
 	GraphicsDevice.h has been removed.
 
 
+UTILITIES
+
+    o	R CMD Rd2dvi and R CMD check are now able to cope with Cyrillic
+    	characters in UTF-8 (thanks to a hint from Alexey Shipunov).
+
+    o   New function rtags() in package 'utils' that provides etags-like
+	indexing capabilities for R code files.
+
+    o	New environment variable R_TEXI2DVICMD to hold the path (if any)
+	to 'texi2dvi' found at configure time: this now provides the
+	default to option("texi2dvi").
+
+
+INSTALLATION
+
+    o	The shell used by the 'R' script and other shell scripts run
+	by 'R CMD foo' can be specified at installation time by
+	setting the (precious) configure variable R_SHELL.
+
+
 BUG FIXES
+
+    o	The postscript() output for setting text is faster and smaller.
+
+    o	Subsetting a data frame with duplicate column names without
+	selecting columns (e.g. z[i,]) no longer makes the column
+	names unique.  This was never documented, but some packages
+	have assumed it.
+
+    o	data.frame() no longer ignores row names on objects if the
+	first name is empty.  (PR#13230: this has been the behaviour
+	for a long time, but apparently undocumented.)
 
 
 
@@ -44,6 +102,92 @@ BUG FIXES
 	*	       2.8 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 2.8.0 patched
+
+
+NEW FEATURES
+
+    o	sum() now has a method for "difftime" objects (via the Summary
+	group).
+
+	max(), min() and range() applied to "difftime" object(s) now
+	return a result in the common units of the objects, if there
+	is one.
+
+    o	installed.packages() is now tolerant of malformed DESCRIPTION
+	files in installed packages (it ignores them, with a warning).
+
+    o	qt() now works for 0 < df < 1.
+
+
+UTILITIES
+
+    o	R CMD build now also uses a Makevars file for cleaning up src/.
+
+    o	R_PDFLATEXCMD is added to the environment variables set by
+    	'R CMD' and is used by R CMD Rd2dvi.
+
+	R CMD Rd2dvi now gives an explicit error message if latex (or
+	pdflatex) is not available.
+
+
+BUG FIXES
+
+    o	add1.glm() no longer warns if applied to a binomial glm with a
+	factor response.
+
+    o	aggregate.data.frame() now does something sensible with a
+	zero-column 'x' rather than failing with an obscure error
+	message.  It gives an explicit error message if called with a
+	zero-row 'x'.
+
+    o	integrate() now accepts integer results from f(): as documented,
+	but only double was accepted.
+
+    o	contrib.url() produced an incorrect URL for the type
+        "mac.binary".
+
+    o   pairwise.wilcox.test() did not pass on the 'paired' argument
+        (caught by Matthias Kohl)
+
+    o	bmp(), jpeg(), and png() on unix with type="cairo" would segfault
+	on closure if the output file could not be opened.
+
+    o	tiff() on unix would not write the output file for the first page
+	when multiple pages were plotted.
+
+    o   str(1 + structure(1, class = "test")) no longer recurses indefinitely.
+
+    o	pf(x, .., ncp, lower.tail=FALSE, log=TRUE) is much more accurate
+	for large x now.
+
+    o	dev2bitmap() failed in 2.8.0 if 'taa' and 'gaa' were both NA.
+
+    o	Under rare circumstances equality tests for character strings
+    	could fail to report equality in 2.8.0 in the same way as
+    	2.7.2.  (This needed a current encoding of Latin-1 or UTF-8,
+    	one string whose encoding was marked as that encoding and one
+    	that was marked as "unknown".  In that circumstance the two
+    	strings are not actually known to be equal, but earlier
+    	versions of R assumed that "unknown" meant the current
+    	encoding, and this is done once again.)
+
+    o	R CMD config could echo messages from GNU make if called from
+	within a Makefile (as e.g. package Rcpp does), especially from
+	within a parallel make run.
+
+    o	Rounding error could affect window(extend=TRUE) when applied
+	to monthly series.  (PR#13272)
+
+    o	Offline help on a Unix-alike now works even if options
+	"latexcmd" and "dvipscmd" contain spaces 
+	(e.g. "dvips -Pmy_printer").
+
+	Informative error messages are given if running latex or dvips
+	fail.
+
 
 
 		CHANGES IN R VERSION 2.8.0
@@ -182,6 +326,9 @@ NEW FEATURES
     o	plot.dendrogram() has new arguments (xlim, ylim) which allows
 	zooming into a hiearchical clustering dendrogram.
 
+    o	plot.ecdf() now defaults to pch=19 so as to better convey the
+	left-closed line segments.
+
     o	plot.histogram() gains an 'ann' argument. (Wish from Ben Bolker.)
 
     o	plot(<lm_obj>) now warns when it omits points with leverage one
@@ -199,7 +346,7 @@ NEW FEATURES
 
     o	quantile.default() allows 'probs' to stray just beyond [0, 1],
 	to allow for computed values.
- 
+
     o	New functions rawConnection() and rawConnectionValue() allow
 	raw vectors to be treated as connections.
 
@@ -234,7 +381,7 @@ NEW FEATURES
 	longer draws an axis line.
 
     o	save() (optionally, but by default) checks for the existence
-	of objects before opening the file/connections (wish of
+	of objects before opening the file/connection (wish of
 	PR#12543).
 
     o	segments(), arrows() and rect() allow zero-length
@@ -264,8 +411,7 @@ NEW FEATURES
 
     o	str()'s default method gains a 'formatNum' function argument which
 	is used for formatting numeric vectors.	 Note that this is very
-	slightly not backward compatible, and that its default may change
-	before release.
+	slightly not backward compatible.
 
     o	The summary() method for class "ecdf" now uses a print()
 	method rather than printing directly.
@@ -294,8 +440,9 @@ NEW FEATURES
 	which previously needed to be unlink("a\\[b").
 
     o	update.packages() gains an argument 'oldPkgs', where
-	new.packages() and old.packages() get 'instPkgs'.  These allow to
-	consider only subsets of packages instead of all installed ones.
+	new.packages() and old.packages() get 'instPkgs'.  These allow
+	consideration of only subsets of packages instead of all
+	installed ones.
 
     o	which(b) is somewhat faster now, notably for named vectors, thanks
 	to a suggestion by Henrik Bengtsson.
@@ -478,7 +625,7 @@ C-LEVEL FACILITIES
 	For now there is a compatibility define in GraphicsDevice.h,
 	but it will be removed in R 2.9.0.
 
-    o	PROTECT and UNPROTECT macros now work even with R_NO_REMAP
+    o	PROTECT and UNPROTECT macros now work even with R_NO_REMAP.
 
 
 BUG FIXES
@@ -569,11 +716,20 @@ BUG FIXES
 	work properly when evaluated via method dispatch for internal
 	S3 generics.
 
-    o	The default pkgType option for non-CRAN builds of R on Mac OS X
+    o	The default "pkgType" option for non-CRAN builds of R on Mac OS X
 	is now correctly "source" as documented.
 
     o	The default R_LIBS_USER path in AQUA builds now matches the
 	Mac-specifc path used by the Mac GUI: ~/Library/R/x.y/library
+
+    o	splinefun() with natural splines incorrectly evaluated derivatives
+	to the left of the first knot. (PR#13132, fix thanks to
+	Berwin Turlach)
+
+    o	anova(glm(..., y=FALSE)) now works.  (PR#13098)
+
+    o	cut.Date(x, "weeks") could fail if x has only one unique value
+	which fell on a week boundary.  (PR#13159)
 
 
 

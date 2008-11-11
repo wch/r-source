@@ -85,5 +85,5 @@ function(topic, package = NULL, lib.loc = NULL,
 	cat("\nType  <Return>	 to start : ")
 	readline()
     }
-    source(available, echo = TRUE, max.deparse.length = 250, keep.source=TRUE)
+    source(available, echo = TRUE, max.deparse.length = Inf, keep.source=TRUE)
 }

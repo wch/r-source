@@ -1,4 +1,5 @@
-#  File src/library/graphics/R/boxplot.R
+
+                                        #  File src/library/graphics/R/boxplot.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -73,6 +74,19 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	invisible(z)
     }
     else z
+}
+
+boxplot.matrix <- function(x, use.cols = TRUE, ...)
+{
+  ## Purpose: Boxplot for each column or row [use.cols= TRUE / FALSE] of a matrix
+  ## -------------------------------------------------------------------------
+  ## Arguments: x: a numeric matrix; use.cols: logical, columns (T) or rows (F)
+  groups <- if(use.cols) split(x, rep.int(1:ncol(x),
+                                          rep.int(nrow(x), ncol(x))))
+  else split(x, seq(nrow(x)))
+  ## Make use of col/row names if present
+  if (0 < length(nam <- dimnames(x)[[1+use.cols]])) names(groups) <- nam
+  invisible(boxplot(groups, ...))
 }
 
 boxplot.formula <-

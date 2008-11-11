@@ -23,11 +23,12 @@ normalizePath(path)
 #endif
 #ifdef windows
   This converts relative paths to absolute paths, and converts short
-  names to long names.  It will always use backlashes as the path separator.
+  names to long names.  It will always use backslashes as the path separator.
 #endif
 
-  If the path is not a real path the result is undefined but will most
-  likely be the corresponding input element.
+  If the path is not a real path the result is undefined.
+On Unix-alikes, this will likely be the corresponding input element.
+On Windows, it will likely result in an error being signalled.
 }
 \value{
   A character vector.

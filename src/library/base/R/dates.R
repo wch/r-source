@@ -348,9 +348,9 @@ cut.Date <-
     } else {
         start <- .Internal(POSIXlt2Date(start))
         if (length(by2) == 2) incr <- incr * as.integer(by2[1])
-	    maxx <- max(x, na.rm = TRUE)
+        maxx <- max(x, na.rm = TRUE)
         breaks <- seq.int(start, maxx + incr, breaks)
-        breaks <- breaks[1:(1+max(which(breaks < maxx)))]
+        breaks <- breaks[1:(1+max(which(breaks <= maxx)))]
       }
     } else stop("invalid specification of 'breaks'")
     res <- cut(unclass(x), unclass(breaks), labels = labels,

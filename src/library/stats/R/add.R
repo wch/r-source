@@ -245,7 +245,8 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         wt <- model.weights(m)
 	x <- model.matrix(Terms, m, contrasts.arg = object$contrasts)
         oldn <- length(y)
-        y <- model.response(m, "numeric")
+        y <- model.response(m)
+        if(!is.factor(y)) storage.mode(y) <- "double"
         ## binomial case has adjusted y and weights
         if(NCOL(y) == 2) {
             n <- y[, 1] + y[, 2]
@@ -484,7 +485,10 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     dfs <- numeric(ns)
     dev <- numeric(ns)
     y <- object$y
-    if(is.null(y)) y <- model.response(model.frame(object), "numeric")
+    if(is.null(y)) {
+        y <- model.response(model.frame(object))
+        if(!is.factor(y)) storage.mode(y) <- "double"
+    }
 #    na.coef <- (1:length(object$coefficients))[!is.na(object$coefficients)]
     wt <- object$prior.weights
     if(is.null(wt)) wt <- rep.int(1, n)

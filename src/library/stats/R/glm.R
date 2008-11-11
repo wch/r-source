@@ -433,12 +433,19 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
 	method <- object$method
 	if(!is.function(method))
 	    method <- get(method, mode = "function", envir=parent.frame())
+        ## allow for 'y = FALSE' in the call (PR#13098)
+        y <- object$y
+        if(is.null(y)) { ## code from residuals.glm
+            mu.eta <- object$family$mu.eta
+            eta <- object$linear.predictors
+            y <-   object$fitted.values + object$residuals * mu.eta(eta)
+        }
 	for(i in 1:(nvars-1)) {
 	    ## explanatory variables up to i are kept in the model
 	    ## use method from glm to find residual deviance
 	    ## and df for each sequential fit
 	    fit <- method(x=x[, varseq <= i, drop = FALSE],
-			  y=object$y,
+			  y=y,
 			  weights=object$prior.weights,
 			  start	 =object$start,
 			  offset =object$offset,

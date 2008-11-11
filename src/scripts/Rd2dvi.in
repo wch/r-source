@@ -1,4 +1,4 @@
-#! /bin/sh
+#!@R_SHELL@
 
 ## Rd2dvi -- Convert man pages (*.Rd help files) via LaTeX to DVI/PDF.
 ##
@@ -102,7 +102,11 @@ while test -n "${1}"; do
 	fi
       fi
       R_RD4DVI=${R_RD4PDF-"times,hyper"}
-      R_LATEXCMD=${PDFLATEX-pdflatex}
+      if test -z "${R_PDFLATEXCMD}"; then
+	echo "ERROR: 'pdflatex' needed but missing on your system."
+	exit 1
+      fi
+      R_LATEXCMD="${R_PDFLATEXCMD}"
       ;;
     --title=*)
       title=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
@@ -131,6 +135,14 @@ while test -n "${1}"; do
   esac
   shift
 done
+
+## FIXME: default these to 'latex' and 'pdflatex'?
+## We already checked in the case of --pdf
+if test -z "${R_LATEXCMD}"; then
+  echo "ERROR: 'latex' needed but missing on your system."
+  exit 1
+fi
+## we don't really need makeindex, but default that?
 
 if ${debug}; then set -x; fi
 
@@ -286,6 +298,7 @@ cat >> ${build_dir}/Rd2.tex <<EOF
 \\usepackage[${R_RD4DVI-ae}]{Rd}
 \\usepackage{makeidx}
 \\usepackage[@ENC@]{inputenc}
+@CYRILLIC_SUPPORT@
 \\makeindex{}
 \\begin{document}
 EOF
@@ -358,20 +371,27 @@ cat >> ${build_dir}/Rd2.tex <<EOF
 EOF
 
 ## Look for encodings
-ENCS=`grep '^\\\\inputencoding' ${build_dir}/Rd2.tex | uniq |\
-  ${SED} -e 's/^\\\\inputencoding{\(.*\)}/\1/'`
-ENCS=`grep '^\\\\\inputencoding' ${build_dir}/Rd2.tex |  uniq | \
+ENCS=`grep '^\\\\\inputencoding' ${build_dir}/Rd2.tex | uniq | \
   ${SED} -e 's/^\\\\inputencoding{\(.*\)}/\1/' | \
   tr '\na-z0-9' ',a-z0-9' | ${SED} -e s/,$//`
+UENCS=`echo ${ENCS} | grep utf8`
 #echo "ENCS is ${ENCS}"
+#echo "UENCS is ${UENCS}"
 
 ## substitute for the encodings used
 mv ${build_dir}/Rd2.tex ${build_dir}/Rd2.tex.pre
 if test -z "${ENCS}"; then
   ${SED} -e '/^\\usepackage\[@ENC@\]{inputenc}$/d' \
+      -e '/@CYRILLIC_SUPPORT@/d' \
+    ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
+elif test -n "${UENCS}" ; then
+  # next is needed to get Cyrillic characters in UTF-8
+  ${SED} -e s/^\\\\usepackage\\[@ENC@\\]/\\\\usepackage[${ENCS}]/ \
+      -e 's/@CYRILLIC_SUPPORT@/\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}/' \
     ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
 else
   ${SED} -e s/^\\\\usepackage\\[@ENC@\\]/\\\\usepackage[${ENCS}]/ \
+      -e '/@CYRILLIC_SUPPORT@/d' \
     ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
 fi
 
@@ -393,7 +413,7 @@ echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
 ## R_LATEXCMD is redefined above for --pdf
 ${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
-${R_MAKEINDEXCMD-makeindex} Rd2
+${R_MAKEINDEXCMD} Rd2
 ${R_LATEXCMD} ${R_TEXOPTS} Rd2
 if test "${out_ext}" = pdf; then
   ${R_LATEXCMD} ${R_TEXOPTS} Rd2

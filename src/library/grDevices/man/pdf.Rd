@@ -18,7 +18,7 @@
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width, height, onefile, family, title, fonts, version,
     paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
-    useDingbats, forceLetterSpacing)
+    useDingbats, useKerning)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
@@ -72,10 +72,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \emph{via} the Dingbats font?  Defaults to true, which produces
     smaller and better output -- this is provided for those who insist
     on using broken PDF viewers.}
-  \item{forceLetterSpacing}{logical.  If false (the default), the
-    viewing application places letters in text strings in the natural
-    spacing of the font actually used.  If true, letters are placed
-    individually using the widths specified in the \code{afm} file.}
+  \item{useKerning}{logical.  Should kerning corrections be included in
+    setting text and calculating string widths?  Defaults to \code{TRUE}.}
 }
 \details{
   All arguments except \code{file} default to values given by

@@ -59,6 +59,7 @@ dev2bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
                          pointsize=pointsize, paper="special",
                          horizontal=FALSE, ...))
     dev.set(current.device)
+    extra <- ""
     if (!is.na(taa)) extra <- paste(" -dTextAlphaBits=", taa, sep="")
     if (!is.na(gaa)) extra <- paste(extra, " -dGraphicsAlphaBits=", gaa, sep="")
     cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,

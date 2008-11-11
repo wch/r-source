@@ -20,12 +20,12 @@ menu <- function(choices, graphics = FALSE, title = "")
     if(graphics) {
         if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
             res <- select.list(choices, multiple=FALSE, title=title)
-            return(match(res, choices, nomatch = 0))
+            return(match(res, choices, nomatch = 0L))
         } else if(.Platform$OS.type == "unix"
                 && capabilities("tcltk") && capabilities("X11")
                 && nzchar(Sys.getenv("DISPLAY"))) {
             res <- tcltk::tk_select.list(choices, multiple=FALSE, title=title)
-            return(match(res, choices, nomatch = 0))
+            return(match(res, choices, nomatch = 0L))
         }
     }
     nc <- length(choices)

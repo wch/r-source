@@ -38,7 +38,6 @@ splinefun <- function(x, y=NULL,
 	    y <- as.vector(tapply(y,x,ties))# as.v: drop dim & dimn.
 	    x <- sort(ux)
 	    nx <- length(x)
-	    rm(ux)
 	} else {
 	    o <- order(x)
 	    x <- x[o]
@@ -93,7 +92,7 @@ splinefun <- function(x, y=NULL,
 	    d=double(nx),
 	    e=double(if(iMeth == 1) nx else 0),
 	    PACKAGE="stats")
-    rm(x,y,nx,o,method,iMeth)
+    rm(x,y,nx,ux,o,method,iMeth)
     z$e <- NULL
     function(x, deriv = 0) {
 	deriv <- as.integer(deriv)
@@ -114,18 +113,25 @@ splinefun <- function(x, y=NULL,
         ##           where dx := (u[j]-x[i]); i such that x[i] <= u[j] <= x[i+1},
         ##                u[j]:= xout[j] (unless sometimes for periodic spl.)
         ##           and  d_i := d[i] unless for natural splines at left
-	.C("spline_eval",
-	   z$method,
-	   as.integer(length(x)),
-	   x=as.double(x),
-	   y=double(length(x)),
-	   z$n,
-	   z$x,
-	   z$y,
-	   z$b,
-	   z$c,
-	   z$d,
-	   PACKAGE="stats")$y
+	res <- .C("spline_eval",
+                  z$method,
+                  as.integer(length(x)),
+                  x=as.double(x),
+                  y=double(length(x)),
+                  z$n,
+                  z$x,
+                  z$y,
+                  z$b,
+                  z$c,
+                  z$d,
+                  PACKAGE="stats")$y
+
+        ## deal with points to the left of first knot if natural
+        ## splines are used  (Bug PR#13132)
+        if( deriv > 0 && z$method==2 && any(ind <- x<=z$x[1]) )
+          res[ind] <- ifelse(deriv == 1, z$y[1], 0)
+
+        res
     }
 }
 

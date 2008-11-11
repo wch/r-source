@@ -129,7 +129,7 @@ arima0(x, order = c(0, 0, 0),
   set of initial values (often obtainable from a fit with
   \code{transform.pars = TRUE}).
 
-  As from \R 1.5.0 missing values are allowed, but any missing values
+  Missing values are allowed, but any missing values
   will force \code{delta} to be ignored and full recursions used.
   Note that missing values will be propagated by differencing, so the
   procedure used in this function is not fully efficient in that case.

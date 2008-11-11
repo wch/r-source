@@ -2280,3 +2280,18 @@ within(abc, b<-NULL)
 within(abc,{d<-a+7;b<-NULL})
 within(abc,{a<-a+7;b<-NULL})
 ## Second produced corrupt data frame in 2.7.1
+
+
+## aggregate on an empty data frame (PR#13167)
+z <- data.frame(a=integer(0), b=numeric(0))
+try(aggregate(z, by=z[1], FUN=sum))
+## failed in unlist in 2.8.0, now gives explicit message.
+aggregate(data.frame(a=1:10)[F], list(rep(1:2, each=5)), sum)
+## used to fail obscurely.
+
+
+## subsetting data frames with duplicate rows
+z <- data.frame(a=1, a=2, b=3, check.names=FALSE)
+z[] # OK
+z[1, ]
+## had row names a, a.1, b in 2.8.0.

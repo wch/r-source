@@ -12,6 +12,7 @@
 \alias{as.list.data.frame}
 \alias{as.list.environment}
 \alias{as.list.factor}
+\alias{as.list.function}
 \alias{as.pairlist}
 \alias{is.list}
 \alias{is.pairlist}

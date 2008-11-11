@@ -42,6 +42,9 @@ Sys.getenv(x = NULL, unset = "")
   \code{\link{Sys.setenv}},
   \code{\link{Sys.getlocale}} for the locale in use,
   \code{\link{getwd}} for the working directory.
+
+  The help for \sQuote{\link{environment variables}} lists many of the
+  environment variables used by \R.
 }
 \examples{
 ## whether HOST is set will be shell-dependent e.g. Solaris' csh does not.

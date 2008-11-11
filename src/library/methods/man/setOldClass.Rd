@@ -199,7 +199,7 @@ new class to specify additional attributes (as described in the next
 section.)
 The first alternative call produces a non-virtual  class.
 
-\code{"setClass("B", contains = "A")}
+\code{setClass("B", contains = "A")}
 
 This creates a non-virtual class with the same slots and superclasses
 as class \code{"A"}.  However, class \code{"B"} is not included in
@@ -264,7 +264,7 @@ For another example, look at the S4 class definition for \code{"data.frame"}.
 
   One irregularity that is usually tolerated, however, is to
   optionally add other attributes to those guaranteed to exist (for
-  example, \code{"terms"} in \code{data.frame"} objects returned by
+  example, \code{"terms"} in \code{"data.frame"} objects returned by
  \code{\link{model.frame}}).  As of version 2.8.0, validity checks by
  \code{\link{validObject}} ignore extra attributes; even if this
  check is tightened in the future, classes extending S3 classes

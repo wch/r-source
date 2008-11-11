@@ -25,15 +25,15 @@ smooth.spline <-
 	## return reasonable sized knot sequence for INcreasing x[]:
 	n.kn <- function(n) {
 	    ## Number of inner knots
-	    if(n < 50) n
+	    if(n < 50L) n
 	    else trunc({
 		a1 <- log( 50, 2)
 		a2 <- log(100, 2)
 		a3 <- log(140, 2)
 		a4 <- log(200, 2)
-		if	(n < 200) 2^(a1+(a2-a1)*(n-50)/150)
-		else if (n < 800) 2^(a2+(a3-a2)*(n-200)/600)
-		else if (n < 3200)2^(a3+(a4-a3)*(n-800)/2400)
+		if	(n < 200L) 2^(a1+(a2-a1)*(n-50)/150)
+		else if (n < 800L) 2^(a2+(a3-a2)*(n-200)/600)
+		else if (n < 3200L)2^(a3+(a4-a3)*(n-800)/2400)
 		else  200 + (n-3200)^0.2
 	    })
 	}
@@ -42,7 +42,7 @@ smooth.spline <-
         else if(!is.numeric(nk)) stop("'nknots' must be numeric <= n")
         else if(nk > n)
             stop("cannot use more inner knots than unique 'x' values")
-	c(rep(x[1], 3), x[seq.int(1,n, length.out= nk)], rep(x[n], 3))
+	c(rep(x[1L], 3L), x[seq.int(1, n, length.out= nk)], rep(x[n], 3L))
     }
     contr.sp <- list(low = -1.5,## low = 0.      was default till R 1.3.x
                      high = 1.5,
@@ -50,7 +50,7 @@ smooth.spline <-
                      eps = 2e-8,## eps = 0.00244 was default till R 1.3.x
                      maxit = 500, trace = getOption("verbose"))
     contr.sp[(names(control.spar))] <- control.spar
-    if(!all(sapply(contr.sp[1:4],is.double)) ||
+    if(!all(sapply(contr.sp[1:4], is.numeric)) ||
        contr.sp$tol < 0 || contr.sp$eps <= 0 || contr.sp$maxit <= 0)
         stop("invalid 'control.spar'")
 
@@ -59,16 +59,16 @@ smooth.spline <-
     x <- xy$x
     n <- length(x)
     w <-
-	if(is.null(w)) rep(1, n)
+	if(is.null(w)) rep(1., n)
 	else {
 	    if(n != length(w)) stop("lengths of 'x' and 'w' must match")
-	    if(any(w < 0)) stop("all weights should be non-negative")
-	    if(all(w == 0)) stop("some weights should be positive")
-	    (w * sum(w > 0))/sum(w)
+	    if(any(w < 0.)) stop("all weights should be non-negative")
+	    if(all(w == 0.)) stop("some weights should be positive")
+	    (w * sum(w > 0.))/sum(w)
 	}# now sum(w) == #{obs. with weight > 0} == sum(w > 0)
 
     ## Replace y[] for same x[] (to 6 digits precision) by their mean :
-    x <- signif(x, 6)
+    x <- signif(x, 6L)
     ux <- unique(sort(x))
     ox <- match(x, ux)
     tmp <- matrix(unlist(tapply(seq_along(y), ox,
@@ -76,37 +76,37 @@ smooth.spline <-
 				c(sum(w[i]), sum(w[i]*y[i]),sum(w[i]*y[i]^2)),
 				y = y, w = w)),
 		  ncol = 3, byrow=TRUE)
-    wbar <- tmp[, 1]
-    ybar <- tmp[, 2]/ifelse(wbar > 0, wbar, 1)
-    yssw <- sum(tmp[, 3] - wbar*ybar^2) # will be added to RSS for GCV
+    wbar <- tmp[, 1L]
+    ybar <- tmp[, 2L]/ifelse(wbar > 0., wbar, 1.)
+    yssw <- sum(tmp[, 3L] - wbar*ybar^2) # will be added to RSS for GCV
     nx <- length(ux)
-    if(nx <= 3) stop("need at least four unique 'x' values")
+    if(nx <= 3L) stop("need at least four unique 'x' values")
     if(cv && nx < n)
         warning("crossvalidation with non-unique 'x' values seems doubtful")
-    r.ux <- ux[nx] - ux[1]
-    xbar <- (ux - ux[1])/r.ux           # scaled to [0,1]
+    r.ux <- ux[nx] - ux[1L]
+    xbar <- (ux - ux[1L])/r.ux           # scaled to [0,1]
     if(all.knots) {
-	knot <- c(rep(xbar[1], 3), xbar, rep(xbar[nx], 3))
-	nk <- nx + 2
+	knot <- c(rep(xbar[1L], 3L), xbar, rep(xbar[nx], 3L))
+	nk <- nx + 2L
     } else {
 	knot <- sknotl(xbar, nknots)
-	nk <- length(knot) - 4
+	nk <- length(knot) - 4L
     }
 
     ## ispar != 1 : compute spar (later)
     ispar <-
         if(is.null(spar) || missing(spar)) { ## || spar == 0
-            if(contr.sp$trace) -1 else 0
-        } else 1
-    spar <- if(ispar == 1) as.double(spar) else double(1)
+            if(contr.sp$trace) -1L else 0L
+        } else 1L
+    spar <- if(ispar == 1L) as.double(spar) else double(1)
     ## was <- if(missing(spar)) 0 else if(spar < 1.01e-15) 0 else  1
     ## icrit {../src/sslvrg.f}:
     ##		(0 = no crit,  1 = GCV ,  2 = ord.CV , 3 = df-matching)
-    icrit <- if(cv) 2 else  1
+    icrit <- if(cv) 2L else  1L
     dofoff <- df.offset
     if(!missing(df)) {
 	if(df > 1 && df <= nx) {
-	    icrit <- 3
+	    icrit <- 3L
 	    dofoff <- df
 	} else warning("you must supply 1 < df <= n,  n = #{unique x} = ", nx)
     }
@@ -134,7 +134,7 @@ smooth.spline <-
 		    spar = spar,
 		    parms = unlist(contr.sp[1:4]),
 		    isetup = as.integer(0),
-		    scrtch = double((17 + 0) * nk + 1),
+		    scrtch = double(17L * nk + 1L),
 		    ld4  = as.integer(4),
 		    ldnk = as.integer(1),
 		    ier = integer(1),
@@ -147,7 +147,7 @@ smooth.spline <-
     df <- sum(lev)
     if(is.na(df))
 	stop("NA lev[]; probably smoothing parameter 'spar' way too large!")
-    if(fit$ier > 0 ) {
+    if(fit$ier > 0L ) {
         sml <- fit$spar < 0.5
 	wtxt <- paste("smoothing parameter value too",
                       if(sml) "small" else "large")
@@ -224,8 +224,8 @@ print.smooth.spline <- function(x, digits = getOption("digits"), ...)
     cv <- cl$cv
     if(is.null(cv)) cv <- FALSE else if(is.name(cv)) cv <- eval(cv)
     cat("\nSmoothing Parameter  spar=", format(x$spar, digits=digits),
-        " lambda=",format(x$lambda, digits=digits),
-        if(ip["ispar"] != 1) paste("(",ip["iter"]," iterations)", sep=""),
+        " lambda=", format(x$lambda, digits=digits),
+        if(ip["ispar"] != 1L) paste("(", ip["iter"], " iterations)", sep=""),
         "\n")
     cat("Equivalent Degrees of Freedom (Df):", format(x$df,digits=digits),"\n")
     cat("Penalized Criterion:", format(x$pen.crit, digits=digits), "\n")
@@ -249,7 +249,7 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 {
     if(missing(x))
 	x <- seq.int(from = object$min, to = object$min + object$range,
-                     length.out = length(object$coef) - 4)
+                     length.out = length(object$coef) - 4L)
     xs <- (x - object$min)/object$range # x scaled to [0,1]
     extrap.left <- xs < 0
     extrap.right <- xs > 1
@@ -272,15 +272,15 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 	    end.object <- Recall(object, xrange)$y
 	    end.slopes <- Recall(object, xrange, 1)$y * object$range
 	    if(any(extrap.left))
-		y[extrap.left] <- end.object[1] +
-		    end.slopes[1] * (xs[extrap.left] - 0)
+		y[extrap.left] <- end.object[1L] +
+		    end.slopes[1L] * (xs[extrap.left] - 0)
 	    if(any(extrap.right))
 		y[extrap.right] <- end.object[2] +
-		    end.slopes[2] * (xs[extrap.right] - 1)
+		    end.slopes[2L] * (xs[extrap.right] - 1)
 	} else if(deriv == 1) {
 	    end.slopes <- Recall(object, xrange, 1)$y * object$range
-	    y[extrap.left] <- end.slopes[1]
-	    y[extrap.right] <- end.slopes[2]
+	    y[extrap.left] <- end.slopes[1L]
+	    y[extrap.right] <- end.slopes[2L]
 	}
 	else y[extrap] <- 0
     }
@@ -300,17 +300,17 @@ supsmu <-
 	stop("number of weights must match number of observations.")
     if(span < 0 || span > 1) stop("'span' must be between 0 and 1.")
     if(periodic) {
-	iper <- 2
+	iper <- 2L
 	xrange <- range(x)
-	if(xrange[1] < 0 || xrange[2] > 1)
+	if(xrange[1L] < 0 || xrange[2L] > 1)
 	    stop("'x' must be between 0 and 1 for periodic smooth")
-    } else iper <- 1
+    } else iper <- 1L
     okay <- is.finite(x + y + wt)
     ord <- order(x[okay], y[okay])
     ord <- cumsum(!okay)[okay][ord] + ord
     xo <- x[ord]
     leno <- length(ord)
-    if(leno == 0)
+    if(leno == 0L)
         stop("no finite observations")
     if(diff <- n - leno)
 	warning(diff, " observation(s) with NAs, NaNs and/or Infs deleted")
@@ -324,7 +324,7 @@ supsmu <-
 		    as.double(span),
 		    as.double(bass),
 		    smo=double(leno),
-		    double(n*7), double(1))$smo
+		    double(n*7L), double(1L))$smo
     ## eliminate duplicate xsort values and corresponding smoothed values
     dupx <- duplicated(xo)
     list(x = xo[!dupx], y = smo[!dupx])

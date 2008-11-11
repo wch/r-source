@@ -1,4 +1,4 @@
-#!/bin/sh
+#!@R_SHELL@
 #
 # ${R_HOME}/bin/BATCH
 

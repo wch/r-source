@@ -1,3 +1,19 @@
+Changes from grid_2.8.0 to grid_2.9.0:
+------------------------------------
+
+1.  Copied grid.roundRect() from 'RGraphics' package into 'grid'.
+
+    Renamed to grid.roundrect() and also used roundrectGrob()
+    rather than roundRect(), partly for more consistent naming,
+    partly to avoid namespace collision until original functions
+    get removed from 'RGraphics' package.
+
+2.  Fixed bug in grid.curve() when curve is horizontal or vertical
+    straight line.
+
+3.  Exposed is.grob() and valid.just() via the NAMESPACE.
+
+
 Changes from grid_2.7.0 to grid_2.8.0:
 ------------------------------------
 

@@ -1,4 +1,4 @@
-#! /bin/sh
+#!@R_SHELL@
 
 ## f77 -- Simple shell script wrapper to compile/link FORTRAN 77 code
 ## using the FORTRAN-to-C converter.

@@ -1,6 +1,6 @@
 % File src/library/base/man/c.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{c}
@@ -31,7 +31,9 @@ c(\dots, recursive=FALSE)
 
   \code{c} is sometimes used for its side effect of removing attributes
   except names, for example to turn an array into a vector.
-  \code{as.vector} is a more intuitive way to do this, but also drops names.
+  \code{as.vector} is a more intuitive way to do this, but also drops
+  names.  Note too that methods other than the default are not required
+  to do this (and they will almost certainly preserve a class attribute).
 }
 \value{
   \code{NULL} or an expression or a vector of an appropriate mode.

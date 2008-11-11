@@ -8,12 +8,99 @@
 
 	**************************************************
 	*						 *
+	*	       2.9 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+    		CHANGES IN R VERSION 2.9.0
+
+
+NEW FEATURES
+
+    o	memory.size() and memory.limits() now return rounded values.
+    
+    o	The Rgui preferences dialog now allows more flexible colour
+    	settings, and shows a sample of what will be displayed.
+
+    o	The file selection items on Rgui's File menu now work in
+	Unicode and so allow filenames not in the current encoding to
+	be selected.
+
+    o	file.choose() and choose.files() now work with Unicode file
+	names, so are able to select filenames not in the current
+	encoding.  (Note that we do not expect to handle directory
+	paths not in the current encoding and they will not be
+	retained as the current search directory.)
+
+    o	The script editor is now able to open files with names which are
+	not in the current encoding: however the title displayed will
+	replace invalid bytes by '?'.
+
+    o	file() and pipe() now open non-ASCII pathnames as Unicode:
+	this helps if R is running in a character set different from that
+	used by Windows.
+
+    o	help(topic, offline=TRUE) now creates a file called <topic>.tex,
+	rather than Rdoc.tex.
+
+
+
+
+	**************************************************
+	*						 *
 	*	       2.8 SERIES NEWS			 *
 	*						 *
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.8.0 patched
+
+
+NEW FEATURES
+
+    o	R_HOME/bin/helpPRINT.bat now contains an example of use with
+	MiKTeX to produce a PDF version of the help file.
+
+
+BUG FIXES
+
+    o	The windows() device now works around the total clipping of
+ 	semi-transparent rectangles and circles that extend outside
+ 	the device region.
+ 	
+    o	The script editor did not respect user preferences for the
+	background colour.
+	
+    o	normalizePath() no longer returns a garbage string when the
+    	input is bad; it now signals an error. (PR#13199)
+    	
+    o	File share/sh/dcf.sh was not distributed with the binary
+    	build. (PR#13200)
+
+    o	dir.create() did not print the path correctly in warning messages.
+
+    o	The C-level function consolecmd had been broken in non-Latin-1
+	single-byte locales in R 2.8.0 by changes intended to support
+	the Japanese IME.  This affected some menu items in Rgui
+	(e.g. to source R files with non-Latin-1 names) and submitting
+	commands from the script editor, but only in rarer encodings
+	such as Central European, Greek and Cyrillic.  (PR#13195,
+	probably also PR#13120)
+
+    o	The attenpt to make the 'Load' button in the GUI preferences
+	start in the home directory failed if the latter was specified
+	with forwward slashes, and reset the current search directory
+	for other file open dialogs (e.g. for opening a script).
+
+    o	The installer would sometimes write the current version
+	information to the registry even if that option was not
+	checked.
+
+
+
 		CHANGES IN R VERSION 2.8.0
+
 
 NEW FEATURES
 
@@ -74,6 +161,8 @@ BUG FIXES
     	
     o	The custom install options were not saved/restored when the
     	installer was run with /SAVEINF or /LOADINF respectively.
+
+    o	savePlot() expected 'filename' in the native encoding.
 
 
 

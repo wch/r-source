@@ -5395,8 +5395,73 @@ try(text(1,1,"A",family="Japan1"))
 ## error instead of seg.fault
 
 
+## splinefun with derivatives evaluated to the left of first knot
+x <- 1:10; y <- sin(x)
+splfun <- splinefun(x,y, method='natural')
+x1 <- splfun( seq(0,1, 0.1), deriv=1 )
+x2 <- splfun( seq(0,1, 0.1), deriv=2 )
+x3 <- splfun( seq(0,1, 0.1), deriv=3 )
+stopifnot(x1 == x1[1], x2 == 0, x3 == 0)
+##
+
+
+## glm(y = FALSE), in part PR#1398
+fit <- glm(1:10 ~ I(1:10) + I((1:10)^2), y = FALSE)
+anova(fit)
+## obscure errors < 2.8.0
+
+
+## boundary case in cut.Date (PR#13159)
+d <- as.Date("2008-07-07")
+cut(d, "weeks")
+d <- as.POSIXct("2008-07-07", tz="UTC")
+cut(d, "weeks")
+## failed < 2.8.0
+
+
+### end of tests added for 2.8.x
+
+
 ## (Deliberate) overshot in seq(from, to, by) because of fuzz
 stopifnot(seq(0, 1, 0.00025+5e-16) <= 1, seq.int(0, 1, 0.00025+5e-16) <= 1)
 stopifnot(rev(seq(0, 1, 0.00025+5e-16))[1] == 1,
           rev(seq.int(0, 1, 0.00025+5e-16))[1] == 1)
 # overshot by about 2e-12 in 2.8.x
+
+
+## str() with an "invalid object"
+ob <- structure(1, class = "test") # this is fine
+is.object(ob)# TRUE
+ob <- 1 + ob # << this is "broken"
+is.object(ob)# FALSE - hmm..
+identical(ob, unclass(ob)) # TRUE !
+stopifnot(grep("num 2", capture.output(str(ob))) == 1)
+## str(ob) lead to infinite recursion in R <= 2.8.0
+
+
+## getPackageName()  for "package:foo":
+require('methods')
+library(tools)
+oo <- options(warn=2)
+detach("package:tools", unload=TRUE); options(oo)
+## gave warning (-> Error) about creating package name
+
+
+## row.names(data.frame(matrixWithDimnames)) (PR#13230)
+rn0 <- c("","Row 2","Row 3")
+A <- matrix(1:6, nrow=3, ncol=2, dimnames=list(rn0, paste("Col",1:2)))
+rn <- row.names(data.frame(A))
+stopifnot(identical(rn, rn0))
+# was 1:3 in R 2.8.0, whereas
+rn0 <- c("Row 1","","Row 3")
+A <- matrix(1:6, nrow=3, ncol=2, dimnames=list(rn0, paste("Col",1:2)))
+rn <- row.names(data.frame(A))
+stopifnot(identical(rn, rn0))
+## used the names.
+
+
+## rounding error in windowing a time series (PR#13272)
+x <- ts(1:290, start=c(1984,10), freq=12)
+window(x, start=c(2008,9), end=c(2008,9), extend=FALSE)
+window(x, start=c(2008,9), end=c(2008,9), extend=TRUE)
+## second failed in 2.8.0

@@ -25,15 +25,15 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     emulation (see the \code{texi2dvi} argument) is used.}
   \item{texi2dvi}{character (or \code{NULL}).  Script or program used to
     compile a TeX file to dvi or PDF, respectively.
-    The default (selected by \code{NULL}) is to look for an executable
-    on the search path and otherwise emulate the script with
+    The default (selected by \code{""} or \code{NULL}) is to look for an
+    executable on the search path and otherwise emulate the script with
     \code{system} calls.}
   \item{texinputs}{\code{NULL} or a character vector of paths to add to
     the LaTeX and bibtex input search paths.}
 }
 \details{
   Despite the name, this is used in \R to compile LaTeX files,
-  specifically those generated from vignettes.  As from \R 2.7.1 it
+  specifically those generated from vignettes.  It
   ensures that the \file{\var{\link{R\_HOME}}/share/texmf} directory is
   in the \env{TEXINPUTS} path, so \R style files such as \file{Sweave}
   and \file{Rd} will be found.  The search path used is first the

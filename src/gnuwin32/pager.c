@@ -358,7 +358,7 @@ static pager pagercreate(void)
 
     p = newconsoledata((consolefn) ? consolefn : FixedFont,
 		       pagerrow, pagercol, 0, 0,
-		       consolefg, consoleuser, consolebg,
+		       guiColors,
 		       PAGER, 0);
     if (!p) return NULL;
 
@@ -417,7 +417,7 @@ static pager pagercreate(void)
     gsetcursor(c, ArrowCursor);
     gchangescrollbar(c, VWINSB, 0, 0, ROWS, 0);
     gchangescrollbar(c, HWINSB, 0, COLS-1, COLS, 1);
-    setbackground(c, consolebg);
+    setbackground(c, guiColors[pagerbg]);
 #ifdef USE_MDI
     if (ismdi()) {
 	int btsize = 24;

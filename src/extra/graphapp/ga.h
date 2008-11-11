@@ -86,6 +86,16 @@ char *  askfilenames(const char *title, const char *default_name, int multi,
 		     int bufsize, const char *dir);
 int     countFilenames(const char *strbuf); /* Note that first name is path when there are multiple names */
 
+void	setuserfilterW(const wchar_t *);
+wchar_t *askfilenameW(const char *title, const char *default_name);
+wchar_t *askfilenamesW(const wchar_t *title, const wchar_t *default_name,
+		       int multi,
+		       const wchar_t *filters, int filterindex,
+		       const wchar_t *dir);
+wchar_t *askfilesaveW(const char *title, const char *default_name);
+
+
+
 /*  rgb.c */
 rgb     nametorgb(const char *colourname);
 const char *  rgbtoname(rgb in);

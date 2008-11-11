@@ -26,7 +26,7 @@ any(\dots, na.rm = FALSE)
   unnamed, and dispatch is on the first argument.
 
   Coercion of types other than integer (raw, double, complex, character,
-  list) gives a warning as from \R 2.7.0, as this was often unintentional.
+  list) gives a warning as this is often unintentional.
 }
 \value{
   The value is a logical vector of length one.

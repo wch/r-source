@@ -71,7 +71,7 @@ matplot <- function(x, y, type = "p",
 	    paste(" col= (", paste.ch(col), ")", sep=''),
 	    paste(" pch= (", paste.ch(pch), ")", sep=''),
 	    " ...\n", domain=NA)
-    ii <- match("log", names(xargs <- list(...)), nomatch = 0)
+    ii <- match("log", names(xargs <- list(...)), nomatch = 0L)
     log <- if (ii != 0) xargs[[ii]]
     xy <- xy.coords(x, y, xlabel, ylabel, log=log)
     xlab <- if (is.null(xlab)) xy$xlab else xlab

@@ -1,8 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  file preferences.h
- *  Copyright (C) 2000  Guido Masarotto and Brian Ripley
- *                2004-7  R Core Development Team
+ *  file consolestructs.h
+ *  Copyright (C) 2008      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,33 +17,19 @@
  *  along with this program; if not, a copy is available at
  *  http://www.r-project.org/Licenses/
  */
- 
-#include "guicolors.h"
 
-/*                configuration editor                        */
 
-/* current state */
+#ifndef _GUICOLORS_H_
+#define	_GUICOLORS_H_
 
-struct structGUI
-{
-    int MDI;
-    int toolbar;
-    int statusbar;
-    int pagerMultiple;
-    char font[50];
-    int tt_font;
-    int pointsize;
-    char style[20];
-    int crows, ccols, cx, cy, setWidthOnResize, prows, pcols,
-	cbb, cbl, grx, gry;
-    rgb guiColors[numGuiColors];
-    rect MDIsize;
-    char language[20];
-    int buffered;
-};
-typedef struct structGUI *Gui;
+typedef enum {
+  consolebg, consolefg, consoleuser, 
+  pagerbg, pagerfg, pagerhighlight,
+  dataeditbg, dataeditfg, dataedituser,
+  editorbg, editorfg,
+  numGuiColors
+} GuiColorIndex;
 
-int loadRconsole(Gui gui, const char *optf);
-void getDefaults(Gui gui);
-void getActive(Gui gui);
-void applyGUI(Gui newGUI);
+extern rgb guiColors[numGuiColors];
+
+#endif

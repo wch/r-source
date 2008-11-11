@@ -439,7 +439,7 @@ setGrob <- function(gTree, gPath, newGrob, strict=FALSE, grep=FALSE) {
     # gPath must specify an existing child
     if (old.pos <- nameMatch(gPath$name, gTree$childrenOrder, grep)) {
       # newGrob name must match existing name
-      if (match(gTree$childrenOrder[old.pos], newGrob$name, nomatch=FALSE)) {
+      if (match(gTree$childrenOrder[old.pos], newGrob$name, nomatch=0L)) {
         gTree$children[[newGrob$name]] <- newGrob
       } else {
           stop(gettextf("New 'grob' name (%s) does not match 'gPath' (%s)",
@@ -631,7 +631,7 @@ nameMatch <- function(pathName, grobName, grep) {
     pos <- grep(pathName, grobName)
     (length(pos) > 0 && pos == 1)
   } else {
-    match(pathName, grobName, nomatch=FALSE)
+    match(pathName, grobName, nomatch=0L)
   }
 }
 
@@ -644,7 +644,7 @@ namePos <- function(pathName, names, grep) {
     if (length(pos) == 0)
       pos <- FALSE
   } else {
-    pos <- match(pathName, names, nomatch=FALSE)
+    pos <- match(pathName, names, nomatch=0L)
   }
   pos
 }
@@ -663,7 +663,7 @@ partialPathMatch <- function(pathsofar, path, strict=FALSE, grep) {
         if (grep[index])
           ok <- (grep(pathSoFarElts[index], pathElts[index]) == 1)
         else
-          ok <- match(pathSoFarElts[index], pathElts[index], nomatch=FALSE)
+          ok <- match(pathSoFarElts[index], pathElts[index], nomatch=0L)
         index <- index + 1
       }
       ok
@@ -683,7 +683,7 @@ fullPathMatch <- function(pathsofar, gPath, strict, grep) {
     path <- gPath$path
     if (!any(grep))
       if (strict)
-        match <- match(pathsofar, path, nomatch=FALSE)
+        match <- match(pathsofar, path, nomatch=0L)
       else
         match <- (length(grep(paste(path, "$", sep=""), pathsofar)) > 0)
     else {
@@ -704,8 +704,7 @@ fullPathMatch <- function(pathsofar, gPath, strict, grep) {
           if (grep[index])
             match <- (length(grep(pathElts[index], pathSoFarElts[index])) > 0)
           else
-            match <- match(pathSoFarElts[index], pathElts[index],
-                           nomatch=FALSE)
+            match <- match(pathSoFarElts[index], pathElts[index], nomatch=0L)
           index <- index + 1
         }
       }
@@ -892,7 +891,7 @@ setGrobFromGPath.grob <- function(grob, pathsofar, gPath, newGrob,
     NULL
   else {
     if (nameMatch(gPath$name, grob$name, grep))
-      if (match(grob$name, newGrob$name, nomatch=FALSE))
+      if (match(grob$name, newGrob$name, nomatch=0L))
         newGrob
       else
         NULL
@@ -920,7 +919,7 @@ setGTree <- function(gTree, pathsofar, gPath, newGrob, strict, grep) {
       # Just check for gPath$name amongst children and recurse if no match
       if (!strict && depth(gPath) == 1) {
         if (nameMatch(gPath$name, childName, grep)) {
-          if (match(childName, newGrob$name, nomatch=FALSE)) {
+          if (match(childName, newGrob$name, nomatch=0L)) {
             gTree$children[[newGrob$name]] <- newGrob
             found <- TRUE
           } else {
@@ -944,7 +943,7 @@ setGTree <- function(gTree, pathsofar, gPath, newGrob, strict, grep) {
         # NOTE: may be called directly with pathsofar=NULL
         if (fullPathMatch(pathsofar, gPath, strict, grep)) {
           if (nameMatch(gPath$name, childName, grep[depth(gPath)])) {
-            if (match(childName, newGrob$name, nomatch=FALSE)) {
+            if (match(childName, newGrob$name, nomatch=0L)) {
               gTree$children[[newGrob$name]] <- newGrob
               found <- TRUE
             }
@@ -979,7 +978,7 @@ setGrobFromGPath.gTree <- function(grob, pathsofar, gPath, newGrob,
                                    strict, grep) {
   if (depth(gPath) == 1) {
     if (nameMatch(gPath$name, grob$name, grep))
-      if (match(grob$name, newGrob$name, nomatch=FALSE))
+      if (match(grob$name, newGrob$name, nomatch=0L))
         newGrob
       else
         stop("The new 'grob' must have the same name as the old 'grob'")
@@ -1635,7 +1634,7 @@ findgrob.default <- function(x, name) {
 }
 
 findgrob.grob <- function(x, name) {
-  if (match(name, x$name, nomatch=FALSE))
+  if (match(name, x$name, nomatch=0L))
     x
   else
     NULL

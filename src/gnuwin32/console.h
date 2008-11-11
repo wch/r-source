@@ -29,7 +29,7 @@ typedef window editor;
 void
 setconsoleoptions(const char *fnname,int fnsty, int fnpoints,
 		  int rows, int cols, int consx, int consy,
-		  rgb nfg, rgb nufg, rgb nbg, rgb high,
+		  rgb *nguiColors,
 		  int pgr, int pgc, int multiplewindows, int widthonresize,
 		  int bufbytes, int buflines, int buffered);
 pager newpager(const char *title, const char *filename, int enc,
