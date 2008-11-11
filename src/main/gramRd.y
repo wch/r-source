@@ -855,10 +855,12 @@ static int token(void)
     	if (xxmode == VERBATIM) {
     	    if (lookahead == LBRACE || lookahead == RBRACE)
     	    	return mkVerb(c);
-    	} else if (xxinRString && lookahead != 'l') 
-	    return mkCode(c);
+    	} else {
+    	    if (xxinRString && lookahead != 'l') 
+		return mkCode(c);
 	    
-    	return mkMarkup(c);
+	    return mkMarkup(c);
+	}
     }
     
     if (xxinRString) return mkCode(c);
@@ -959,21 +961,22 @@ static int mkCode(int c)
     	}
     	if ((!escaped && c == '%') || c == '\n' || c == R_EOF) break;
     	if (xxinRString) {
-    	    escaped = 0;
+    	    /* This stuff is messy, because there are two levels of escaping:
+    	       The Rd escaping and the R code string escaping. */
     	    if (c == '\\') {
     		int lookahead = xxgetc();
-    		if (lookahead == '\\') { /* handle 4-tuples \\\\ and \\\% */
+    		if (lookahead == '\\') { /* This must be the 3rd backslash */
     		    lookahead = xxgetc();
     		    if (lookahead == xxinRString || lookahead == '\\') {	
     	    	    	TEXT_PUSH(c);
     	    	    	c = lookahead;
     	    	    	escaped = 1;
     	    	    } else xxungetc(lookahead);
-    	    	} else if (lookahead == xxinRString) {
+    	    	} else if (lookahead == xxinRString) { /* There could be one or two before this */
     	    	    TEXT_PUSH(c);
     	    	    c = lookahead;
     	    	    escaped = 1;
-    	    	} else if (lookahead == 'l') { /* assume \link */
+    	    	} else if (!escaped && lookahead == 'l') { /* assume \link */
     	    	    xxungetc(lookahead);
     	    	    break;
     	    	} else xxungetc(lookahead);
@@ -991,7 +994,7 @@ static int mkCode(int c)
     	    	if (c == RBRACE) xxbraceDepth++; /* avoid double counting */
     	    }
     	    if (c == '\'' || c == '"' || c == '`') xxinRString = c;
-    	    else if (c == '\\') {
+    	    else if (c == '\\' && !escaped) {
     	    	int lookahead = xxgetc();
     	    	if (lookahead == LBRACE || lookahead == RBRACE) {
 		    c = lookahead;
