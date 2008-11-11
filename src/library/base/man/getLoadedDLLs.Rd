@@ -11,7 +11,7 @@
 \title{Get DLLs Loaded in Current Session}
 \description{
   This function provides a way to get a list of all the DLLs (see
-  \code{\link{dyn.load}} that are currently loaded in the \R session.
+  \code{\link{dyn.load}}) that are currently loaded in the \R session.
 }
 \usage{
 getLoadedDLLs()
@@ -32,7 +32,7 @@ getLoadedDLLs()
     searches the entire symbol table of the DLL.}
   \item{handle}{a reference to the C-level data structure that
     provides access to the contents of the DLL.
-    This is an object of class \code{"DLLHandle}".}
+    This is an object of class \code{"DLLHandle"}.}
 
   Note that the class \code{DLLInfo} has an overloaded method for
   \code{$} which can be used to resolve native symbols within that

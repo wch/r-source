@@ -315,7 +315,7 @@ length(ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1))
 
 removeMethods("length")
 
-## methods for %*%, which isn't done by the same C code as other ops
+## methods for \%*\%, which isn't done by the same C code as other ops
 
 setClass("foo", representation(m="matrix"))
 m1 <- matrix(1:12,3,4)

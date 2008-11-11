@@ -79,7 +79,8 @@ rbeta(n, shape1, shape2, ncp = 0)
   Algorithm 708: Significant digit computation of the incomplete beta
   function ratios,
   \emph{ACM Transactions on Mathematical Software}, \bold{18}, 360--373.
-  (See also\crBrown, B. and Lawrence Levy, L. (1994)
+  (See also\cr 
+  Brown, B. and Lawrence Levy, L. (1994)
   Certification of algorithm 708: Significant digit computation of the
   incomplete beta,
   \emph{ACM Transactions on Mathematical Software}, \bold{20}, 393--397.)

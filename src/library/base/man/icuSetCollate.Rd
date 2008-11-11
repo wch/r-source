@@ -18,7 +18,7 @@ icuSetCollate(...)
   On other builds calling this function does nothing, with a warning.
   
   Possible arguments are
-  \itemize{
+  \describe{
     \item{\code{locale}:}{A character string such as \code{"da_DK"} giving the
       country whose collation rules are to be used.  If present, this
       should be the first argument.}
