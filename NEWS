@@ -181,6 +181,13 @@ BUG FIXES
     o	Rounding error could affect window(extend=TRUE) when applied
 	to monthly series.  (PR#13272)
 
+    o	Offline help on a Unix-alike now works even if options
+	"latexcmd" and "dvipscmd" contain spaces 
+	(e.g. "dvips -Pmy_printer").
+
+	Informative error messages are given if running latex or dvips
+	fail.
+
 
 
 		CHANGES IN R VERSION 2.8.0

@@ -67,28 +67,19 @@ function(file, topic)
     file.append(con, file)
     cat("\\end{document}\n",
         file = con, append = TRUE)
+    ## FIXME: should we try 'latex' and 'dvips' here?
     if(!nzchar(getOption("latexcmd")))
         stop("'latexcmd' is empty")
     if(!nzchar(getOption("dvipscmd")))
         stop("'dvipscmd' is empty")
-    ## <FIXME>
-    ## We now have help-print.sh in share/sh but we do not use the
-    ## .Script mechanism because we play with the TEXINPUTS environment
-    ## variable and the code goes back to a time when not all systems
-    ## could be assumed to support Sys.setenv().
-    ## Seems that now we can---rewrite this along the lines of
-    ## tools:::.install_package_vignettes().
-    system(paste(paste("TEXINPUTS=",
-                       file.path(R.home("share"), "texmf"),
-                       ":",
-                       "$TEXINPUTS",
-                       sep = ""),
-                 "/bin/sh",
+    Rtexmf <- file.path(R.home(), "share", "texmf")
+    if(.Platform$OS.type == "windows") Rtexmf <- gsub("\\\\", "/", Rtexmf)
+    system(paste("/bin/sh",
                  shQuote(file.path(R.home("share"), "sh", "help-print.sh")),
                  con,
                  topic,
-                 getOption("latexcmd"),
-                 getOption("dvipscmd")))
-    ## </FIXME>
+                 shQuote(getOption("latexcmd")),
+                 shQuote(getOption("dvipscmd")),
+                 Rtexmf))
     return(invisible())
 }
