@@ -73,7 +73,6 @@ function(file, topic)
     if(!nzchar(getOption("dvipscmd")))
         stop("'dvipscmd' is empty")
     Rtexmf <- file.path(R.home(), "share", "texmf")
-    if(.Platform$OS.type == "windows") Rtexmf <- gsub("\\\\", "/", Rtexmf)
     system(paste("/bin/sh",
                  shQuote(file.path(R.home("share"), "sh", "help-print.sh")),
                  con,

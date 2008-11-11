@@ -41,6 +41,9 @@ NEW FEATURES
 	this helps if R is running in a character set different from that
 	used by Windows.
 
+    o	help(topic, offline=TRUE) now creates a file called <topic>.tex,
+	rather than Rdoc.tex.
+
 
 
 
