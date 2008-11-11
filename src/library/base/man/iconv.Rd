@@ -58,8 +58,7 @@ iconvlist()
   are ignored: they will always be translated as if from \code{from}
   even if declared otherwise.
 
-  As from \R 2.7.0 \code{"UTF8"} will be accepted as meaning the (more
-  correct) \code{"UTF-8"}.
+  \code{"UTF8"} will be accepted as meaning the (more correct) \code{"UTF-8"}.
 }
 \value{
   A character vector of the same length and the same attributes as

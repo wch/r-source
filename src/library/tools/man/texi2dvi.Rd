@@ -33,7 +33,7 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 }
 \details{
   Despite the name, this is used in \R to compile LaTeX files,
-  specifically those generated from vignettes.  As from \R 2.7.1 it
+  specifically those generated from vignettes.  It
   ensures that the \file{\var{\link{R\_HOME}}/share/texmf} directory is
   in the \env{TEXINPUTS} path, so \R style files such as \file{Sweave}
   and \file{Rd} will be found.  The search path used is first the

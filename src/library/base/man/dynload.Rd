@@ -194,16 +194,15 @@ is.loaded(symbol, PACKAGE = "", type = "")
   directory, and do this by setting the \env{PATH} variable
   (\code{\link{library.dynam}} does that automatically in recent
   versions of \R), but the DLL search order means that DLLs in the
-  launch directory and in system directories will be preferred.  As from
-  \R 2.7.0 and on Windows XP SP1 and later there is a way to modify the
-  search order.  If argument \code{DLLpath} is supplied to
-  \code{dyn.load}, the latter makes use of the Windows system call
-  \code{SetDllDirectory} to insert the value of \code{DLLpath} in second
-  place, and removes the current directory, for the duration of that
-  \code{dyn.load} call.  (Note that only one directory can be inserted
-  in this way.)  On Windows 2000, the second item in the search order is
-  the current directory, and the current directory is changed
-  temporarily to implement \code{DLLpath}.
+  launch directory and in system directories will be preferred.  On
+  Windows XP SP1 and later there is a way to modify the search order.
+  If argument \code{DLLpath} is supplied to \code{dyn.load}, the latter
+  makes use of the Windows system call \code{SetDllDirectory} to insert
+  the value of \code{DLLpath} in second place, and removes the current
+  directory, for the duration of that \code{dyn.load} call.  (Note that
+  only one directory can be inserted in this way.)  On Windows 2000, the
+  second item in the search order is the current directory, and the
+  current directory is changed temporarily to implement \code{DLLpath}.
 }
 #endif
 \section{Warning}{

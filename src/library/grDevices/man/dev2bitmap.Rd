@@ -88,9 +88,8 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   pixels, the default resolution of 72dpi is always used.
 
 #ifdef windows
-  As from \R 2.5.0, paths for \code{file} and \env{R\_GSCMD} which
-  contain spaces are mapped to short names \emph{via}
-  \code{\link{shortPathName}}.
+  Paths for \code{file} and \env{R\_GSCMD} which contain spaces are
+  mapped to short names \emph{via} \code{\link{shortPathName}}.
 #endif  
 }
 \value{
