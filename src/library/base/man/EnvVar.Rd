@@ -15,7 +15,6 @@
 \alias{R_GSCMD}
 \alias{R_HISTFILE}
 \alias{R_HISTSIZE}
-\alias{R_HOME}
 \alias{R_INCLUDE_DIR}
 \alias{R_LATEXCMD}
 \alias{R_MAKEINDEXCMD}
