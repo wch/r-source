@@ -129,7 +129,7 @@ type?topic
 #endif
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path: this will be
-  input as a LaTeX style file after \code{Rd.sty}.  Some \link{nvironment
+  input as a LaTeX style file after \code{Rd.sty}.  Some \link{environment
   variables} are consulted, notably \env{R\_PAPERSIZE}
   (\emph{via} \code{getOption("papersize")}) and \env{R\_RD4DVI}
 
