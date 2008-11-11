@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.setenv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Sys.setenv}
@@ -68,6 +68,10 @@ Sys.unsetenv(x)
   variables for the \R session.
   
   \code{\link{setwd}} for the working directory.
+
+
+  The help for \sQuote{\link{environment variables}} lists many of the
+  environment variables used by \R.
 }
 \examples{
 print(Sys.setenv(R_TEST="testit", "A+C"=123))  # `A+C` could also be used
