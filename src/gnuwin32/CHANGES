@@ -57,6 +57,12 @@ NEW FEATURES
 		CHANGES IN R VERSION 2.8.0 patched
 
 
+NEW FEATURES
+
+    o	R_HOME/bin/helpPRINT.bat now contains an example of use with
+	MiKTeX to produce a PDF version of the help file.
+
+
 BUG FIXES
 
     o	The windows() device now works around the total clipping of
@@ -78,7 +84,7 @@ BUG FIXES
 	single-byte locales in R 2.8.0 by changes intended to support
 	the Japanese IME.  This affected some menu items in Rgui
 	(e.g. to source R files with non-Latin-1 names) and submitting
-	commands from the script editor, but only in rarer languages
+	commands from the script editor, but only in rarer encodings
 	such as Central European, Greek and Cyrillic.  (PR#13195,
 	probably also PR#13120)
 
@@ -86,7 +92,7 @@ BUG FIXES
 	start in the home directory failed if the latter was specified
 	with forwward slashes, and reset the current search directory
 	for other file open dialogs (e.g. for opening a script).
-	
+
     o	The installer would sometimes write the current version
 	information to the registry even if that option was not
 	checked.
