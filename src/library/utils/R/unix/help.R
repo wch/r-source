@@ -83,8 +83,9 @@ function(file, topic)
                  shQuote(file.path(R.home("share"), "sh", "help-print.sh")),
                  con,
                  topic,
-                 getOption("latexcmd"),
-                 getOption("dvipscmd")))
+                 shQuote(getOption("latexcmd")),
+                 shQuote(getOption("dvipscmd"))
+                 ))
     ## </FIXME>
     return(invisible())
 }

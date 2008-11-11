@@ -106,7 +106,7 @@ while test -n "${1}"; do
 	echo "ERROR: 'pdflatex' needed but missing on your system."
 	exit 1
       fi
-      R_LATEXCMD=${R_PDFLATEXCMD}
+      R_LATEXCMD="${R_PDFLATEXCMD}"
       ;;
     --title=*)
       title=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
