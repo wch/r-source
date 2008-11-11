@@ -403,7 +403,7 @@ echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
 ## R_LATEXCMD is redefined above for --pdf
 ${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
-${R_MAKEINDEXCMD-makeindex} Rd2
+${R_MAKEINDEXCMD} Rd2
 ${R_LATEXCMD} ${R_TEXOPTS} Rd2
 if test "${out_ext}" = pdf; then
   ${R_LATEXCMD} ${R_TEXOPTS} Rd2
