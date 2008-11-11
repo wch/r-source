@@ -32,6 +32,7 @@
 % R_PROFILE, R_ENVIRON are in ?Startup
 % R_LIBS* are in ?.libPaths
 % TZ, TZDIR are in ?Sys.timezone
+% R_HOME is in ?R.home.
 
 #ifdef unix
 \alias{DISPLAY}
@@ -101,11 +102,11 @@
 #ifdef windows
       For \code{Rgui} it controls the number of lines saved to the
       history file: the size of the history when in use is controlled by
-      the console customization.
+      the console customization: see \code{\link{Rconsole}}.
 #endif
     }
     \item{\code{R_HOME}:}{The top-level directory of the \R
-      installation.  Set by \R.}
+      installation: see \code{\link{R.home}}.  Set by \R.}
     \item{\code{R_INCLUDE_DIR}:}{The location of the \R \file{include}
       directory.  Set by \R.}
     \item{\code{R_LATEXCMD}:}{The path to \code{latex}. Defaults to
