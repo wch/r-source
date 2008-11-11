@@ -235,8 +235,8 @@ getOption(x)
     \item{\code{stringsAsFactors}:}{The default setting for arguments of
       \code{\link{data.frame}} and \code{\link{read.table}}.}
 
-    \item{\code{texi2dvi}:}{used by the unexported function
-      \code{texi2dvi} in name space \pkg{tools}.}
+    \item{\code{texi2dvi}:}{used by function
+      \code{\link{texi2dvi}} in package \pkg{tools}.}
 
     \item{\code{timeout}:}{integer.  The timeout for some Internet
       operations, in seconds.  Default 60 seconds.  See
@@ -404,9 +404,9 @@ getOption(x)
   is loaded if not already set.
   \describe{
     \item{\code{browser}:}{default HTML browser used by
-      \code{\link{help.start}()} on UNIX, or a non-default browser on
-      Windows.  Alternatively, a function that is called with a URL as
-      its argument. }
+      \code{\link{help.start}()} and \code{\link{browseURL}} on UNIX, or
+      a non-default browser on Windows.  Alternatively, an \R function that
+      is called with a URL as its argument.} 
 
     \item{\code{de.cellwidth}:}{integer: the cell widths (number of
       characters) to be used in the data editor \code{\link{dataentry}}.
@@ -482,6 +482,7 @@ getOption(x)
 
 #ifdef unix
 \section{Options used on Unix only}{
+  These will be \code{""} if no suitable path is known.
   \describe{
     \item{\code{latexcmd, dvipscmd}:}{character strings giving commands
       to be used in off-line printing of help pages.}
