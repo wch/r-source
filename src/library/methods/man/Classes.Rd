@@ -172,8 +172,8 @@
       ordinary kinds of data occurring in R.  For example,
       \code{"numeric"} is a class corresponding to numeric vectors.
       The other vector basic classes are \code{"logical"}, \code{"integer"}, 
-      \code{"complex"}, \code{"character"},  \code{"raw"}, \ code{"list"}
-      and \ code{"expression"}.
+      \code{"complex"}, \code{"character"},  \code{"raw"}, \code{"list"}
+      and \code{"expression"}.
       The prototypes for
       the vector classes are vectors of length 0 of the corresponding
       type.  Notice that basic classes are unusual in that the

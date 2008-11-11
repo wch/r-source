@@ -40,7 +40,7 @@ quartz.options(\dots, reset = FALSE)
   \item{bg}{the initial background colour to use for the device.  Default
     \code{"transparent"}.  An opaque colour such as \code{"white"} will
     normally be required on off-screen types that support transparency
-    such as \code{"png}" and \code{"tiff"}.}
+    such as \code{"png"} and \code{"tiff"}.}
   \item{canvas}{canvas colour to use for an on-screen device.  Default
     \code{"white"}, and will be forced to be an opaque colour.}
   \item{dpi}{resolution of the output.  The default (\code{NA_real_})
