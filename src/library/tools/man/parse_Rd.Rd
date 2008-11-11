@@ -26,7 +26,7 @@ in \url{http://developer.r-project.org/ParseRd.pdf}.  At the current writing, th
 is not identical to the rules used by other tools:  it is somewhat stricter.
 }
 \value{
-An object of class \code{"RdFile"}.  The internal format of this object is 
+An object of class \code{"Rd"}.  The internal format of this object is 
 subject to change.
 }
 \section{Warning}{

@@ -316,7 +316,7 @@ static SEXP xxmarkup(SEXP header, SEXP body, YYLTYPE *lloc)
 	PROTECT(ans = PairToVectorList(CDR(body)));
     	UNPROTECT_PTR(body);	
     }
-    setAttrib(ans, install("rdTag"), header);
+    setAttrib(ans, install("Rd_tag"), header);
     if (SrcFile) 
     	setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     UNPROTECT_PTR(header);
@@ -334,9 +334,9 @@ static SEXP xxOptionmarkup(SEXP header, SEXP option, SEXP body, YYLTYPE *lloc)
 #endif
     PROTECT(ans = PairToVectorList(CDR(body)));
     UNPROTECT_PTR(body);	
-    setAttrib(ans, install("rdTag"), header);
+    setAttrib(ans, install("Rd_tag"), header);
     UNPROTECT_PTR(header);
-    setAttrib(ans, install("rdOption"), option);
+    setAttrib(ans, install("Rd_option"), option);
     UNPROTECT_PTR(option);
     if (SrcFile) 
     	setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
@@ -359,7 +359,7 @@ static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, YYLTYPE *lloc)
     }
     SET_VECTOR_ELT(ans, 1, PairToVectorList(CDR(body2)));    
     UNPROTECT_PTR(body2);    
-    setAttrib(ans, install("rdTag"), header);
+    setAttrib(ans, install("Rd_tag"), header);
     UNPROTECT_PTR(header);    
     if (SrcFile) 
     	setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
@@ -373,7 +373,7 @@ static void xxsavevalue(SEXP Rd, YYLTYPE *lloc)
 {
     PROTECT(Value = PairToVectorList(CDR(Rd)));
     if (!isNull(Value))
-    	setAttrib(Value, R_ClassSymbol, mkString("RdFile"));
+    	setAttrib(Value, R_ClassSymbol, mkString("Rd"));
     if (SrcFile) 
     	setAttrib(Value, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));    	
     UNPROTECT_PTR(Rd);
@@ -381,7 +381,7 @@ static void xxsavevalue(SEXP Rd, YYLTYPE *lloc)
 
 static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
 {
-    setAttrib(item, install("rdTag"), mkString(yytname[YYTRANSLATE(type)]));
+    setAttrib(item, install("Rd_tag"), mkString(yytname[YYTRANSLATE(type)]));
     if (SrcFile) 
     	setAttrib(item, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     return item;
