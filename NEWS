@@ -129,8 +129,15 @@ UTILITIES
     o	R_PDFLATEXCMD is added to the environment variables set by
     	'R CMD' and is used by R CMD Rd2dvi.
 
+	R_LATEXCMD, R_PDFLATEXCMD, R_MAKEINDEXCMD and R_DVIPSCMD
+	default to 'latex', 'pdflatex', 'makeindex' and 'dvips'
+	respectively if no suitable executable was found at configure
+	time (since they might well be available at run time,
+	particularly for binary installations of R).  This affects
+	R CMD Rd2dvi and help(offline=TRUE).
+
 	R CMD Rd2dvi now gives an explicit error message if latex (or
-	pdflatex) is not available.
+	pdflatex) fails.
 
 
 BUG FIXES

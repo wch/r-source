@@ -159,32 +159,49 @@ AC_DEFUN([R_PROG_TEXMF],
 ## dvips is not used to make manuals, only in Rd2dvi and help-print.sh
 ## the latter via options("dvipscmd"). Also sets R_DVIPSCMD.
 AC_PATH_PROGS(DVIPS, [${DVIPS} dvips], dvips)
+DVIPSCMD=${ac_cv_path_DVIPS}
+if test -z "${DVIPSCMD}"; then
+  DVIPSCMD=dvips
+fi
+AC_SUBST(DVIPSCMD)
 ## TEX PDFTEX LATEX PDFLATEX MAKEINDEX TEXI2DVI are used to make manuals
-## LATEX is used for options("latexcmd") (used in help-print.sh).
-##  LATEX PDFLATEX MAKEINDEX set default for R_<foo>CMD in etc/Renviron
+## LATEXCMD is used for options("latexcmd") (used in help-print.sh).
+## LATEXCMD PDFLATEXCMD MAKEINDEXCMD TEXI2DVICMD set default for R_<foo> in etc/Renviron
 AC_PATH_PROGS(TEX, [${TEX} tex], )
 AC_PATH_PROGS(LATEX, [${LATEX} latex], )
+LATEXCMD=${ac_cv_path_LATEX}
 if test -z "${ac_cv_path_TEX}" ; then
-  warn_dvi="you cannot build DVI versions of the R manuals"
-elif test -z "${ac_cv_path_LATEX}"; then
-  warn_dvi="you cannot build DVI versions of all the help pages"
+  AC_MSG_WARN([you cannot build DVI versions of the R manuals])
 fi
-if test -n "${warn_dvi}"; then
-  AC_MSG_WARN([${warn_dvi}])
+if test -z "${ac_cv_path_LATEX}"; then
+  AC_MSG_WARN([you cannot build DVI versions of all the help pages])
+  LATEXCMD=latex
 fi
+AC_SUBST(LATEXCMD)
 AC_PATH_PROGS(MAKEINDEX, [${MAKEINDEX} makeindex], )
-AC_PATH_PROGS(PDFTEX, [${PDFTEX} pdftex], "")
+MAKEINDEXCMD=${ac_cv_path_MAKEINDEX}
+if test -z "${MAKEINDEXCMD}"; then
+  MAKEINDEXCMD=makeindex
+fi
+AC_SUBST(MAKEINDEXCMD)
+AC_PATH_PROGS(PDFTEX, [${PDFTEX} pdftex], )
 AC_PATH_PROGS(PDFLATEX, [${PDFLATEX} pdflatex], )
+PDFLATEXCMD=${ac_cv_path_PDFLATEX}
 if test -z "${ac_cv_path_PDFTEX}" ; then
-  warn_pdf="you cannot build PDF versions of the R manuals"
-elif test -z "${ac_cv_path_PDFLATEX}" ; then
-  warn_pdf="you cannot build PDF versions of all the help pages"
+  AC_MSG_WARN([you cannot build PDF versions of the R manuals])
 fi
-if test -n "${warn_pdf}"; then
-  AC_MSG_WARN([${warn_pdf}])
+if test -z "${ac_cv_path_PDFLATEX}" ; then
+  AC_MSG_WARN([you cannot build PDF versions of all the help pages])
+  PDFLATEXCMD=pdflatex
 fi
+AC_SUBST(PDFLATEXCMD)
 R_PROG_MAKEINFO
 AC_PATH_PROGS(TEXI2DVI, [${TEXI2DVI} texi2dvi], )
+TEXI2DVICMD=${ac_cv_path_TEXI2DVI}
+if test -z "${TEXI2DVICMD}"; then
+  TEXI2DVICMD=texi2dvi
+fi
+AC_SUBST(TEXI2DVICMD)
 : ${R_RD4DVI="ae"}
 AC_SUBST(R_RD4DVI)
 : ${R_RD4PDF="times,hyper"}
