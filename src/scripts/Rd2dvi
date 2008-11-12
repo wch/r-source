@@ -102,10 +102,6 @@ while test -n "${1}"; do
 	fi
       fi
       R_RD4DVI=${R_RD4PDF-"times,hyper"}
-      if test "${R_PDFLATEXCMD}" = false; then
-	echo "ERROR: 'pdflatex' needed but missing on your system."
-	exit 1
-      fi
       R_LATEXCMD="${R_PDFLATEXCMD}"
       ;;
     --title=*)
@@ -114,7 +110,7 @@ while test -n "${1}"; do
       if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then      
 	output="${2}"; shift
       else
-	${echo} "ERROR: option '${1}' requires an argument"
+	echo "ERROR: option '${1}' requires an argument"
 	exit 1
       fi
       ;;
@@ -136,15 +132,18 @@ while test -n "${1}"; do
   shift
 done
 
-## We already checked in the case of --pdf
-if test "${R_LATEXCMD}" = false; then
-  echo "ERROR: 'latex' needed but missing on your system."
-  exit 1
-fi
-
 if ${debug}; then set -x; fi
 
 . ${R_SHARE_DIR}/sh/dcf.sh	# get_dcf_field()
+
+
+do_cleanup () {
+  if ${clean}; then
+    rm -rf ${build_dir}
+  else
+    echo "You may want to clean up by 'rm -rf ${build_dir}'"
+  fi
+}
 
 Rdconv_dir_or_files_to_LaTeX () {
   ## Convert Rd files in a dir or a list of Rd files to LaTeX, appending
@@ -274,7 +273,7 @@ if test -z "${output}"; then
   output="Rd2.${out_ext}"
 fi
 if test -f ${output}; then
-  ${echo} "file '${output}' exists; please remove first"
+  echo "file '${output}' exists; please remove first"
   exit 1
 fi
 if test -d ${build_dir}; then
@@ -401,23 +400,54 @@ fi
 
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
-## R_LATEXCMD is redefined above for --pdf
-${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
-${R_MAKEINDEXCMD} Rd2
-${R_LATEXCMD} ${R_TEXOPTS} Rd2
 if test "${out_ext}" = pdf; then
-  ${R_LATEXCMD} ${R_TEXOPTS} Rd2
+  ${R_PDFLATEXCMD} ${R_TEXOPTS} Rd2 || status=1
+  if test $status -gt 0; then
+    echo "Error in running pdflatex command ('${R_PDFLATEXCMD}')"
+    do_cleanup
+    exit 1
+  fi
+  ## OK for R_MAKEINDEXCMD to fail.
+  ${R_MAKEINDEXCMD} Rd2
+  ${R_PDFLATEXCMD} ${R_TEXOPTS} Rd2 || status=1
+  if test $status -gt 0; then
+    echo "Error in running pdflatex command ('${R_PDFLATEXCMD}')"
+    do_cleanup
+    exit 1
+  fi
+  ${R_PDFLATEXCMD} ${R_TEXOPTS} Rd2 || status=1
+  if test $status -gt 0; then
+    echo "Error in running pdflatex command ('${R_PDFATEXCMD}')"
+    do_cleanup
+    exit 1
+  fi
+else
+  ${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
+  if test $status -gt 0; then
+    echo "Error in running latex command ('${R_LATEXCMD}')"
+    do_cleanup
+    exit 1
+  fi
+  ## OK for R_MAKEINDEXCMD to fail.
+  ${R_MAKEINDEXCMD} Rd2
+  ${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
+  if test $status -gt 0; then
+    echo "Error in running latex command ('${R_LATEXCMD}')"
+    do_cleanup
+    exit 1
+  fi
+fi
+if test ! -f Rd2.${out_ext}; then
+  echo "Error: no output file was created"
+  do_cleanup
+  exit 1
 fi
 cd ${start_dir}
-${echo} "Saving output to '${output}' ..."
+echo "Saving output to '${output}' ..."
 cp ${build_dir}/Rd2.${out_ext} ${output}
 echo "Done"
 
-if ${clean}; then
-  rm -rf ${build_dir}
-else
-  ${echo} "You may want to clean up by 'rm -rf ${build_dir}'"
-fi
+do_cleanup
 ${preview} ${output}
 exit ${status}
 
