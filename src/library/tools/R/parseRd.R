@@ -24,10 +24,10 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown", verbose = FALSE
             file <- file(file, "r")
             on.exit(close(file))
         }
-    .Internal(parseRd(file, srcfile, encoding, verbose))
+    .Internal(parse_Rd(file, srcfile, encoding, verbose))
 }
 
-print.RdFile <- function(x, ...) {
+print.Rd <- function(x, ...) {
     pr <- function(x, indent) {
         spaces <- paste(rep(" ", indent), collapse="")
     	if (is.list(x)) {

@@ -23,7 +23,7 @@ SOURCES_C = \
 	dotcode.c dounzip.c dstruct.c duplicate.c \
 	engine.c envir.c errors.c eval.c \
 	format.c fourier.c \
-	gevents.c gram.c gram-ex.c graphics.c \
+	gevents.c gram.c gram-ex.c gramRd.c graphics.c \
 	identical.c inlined.c internet.c iosupport.c \
 	lapack.c list.c localecharset.c logic.c \
 	main.c mapply.c match.c memory.c model.c \
@@ -67,7 +67,8 @@ DISTFILES = Makefile.in Makefile.win \
 	$(SOURCES_C) \
 	$(EXTRA_SOURCES_C) \
 	$(SOURCES_F) \
-	gram.y
+	gram.y \
+	gramRd.y
 
 ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
 BZLIB_CPPFLAGS = @BUILD_BZLIB_TRUE@ -I$(top_srcdir)/src/extra/bzip2
@@ -183,6 +184,11 @@ $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 	@$(ECHO) "re-making gram.c"
 	$(YACC) $(YFLAGS) $(srcdir)/gram.y
 	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gram.c
+	
+$(srcdir)/gramRd.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gramRd.y
+	@$(ECHO) "re-making gramRd.c"
+	$(YACC) $(YFLAGS) $(srcdir)/gramRd.y
+	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gramRd.c	
 
 install: installdirs
 	@$(MAKE) install-bin
@@ -223,7 +229,7 @@ distclean: clean
 maintainer-clean: distclean
 	@$(ECHO) "This command is intended for maintainers to use; it"
 	@$(ECHO) "deletes files that may need special rules to rebuild"
-	@-rm -f $(srcdir)/gram.c
+	@-rm -f $(srcdir)/gram.c $(srcdir)/gramRd.c
 
 tags: TAGS
 TAGS: $(SOURCES) $(EXTRA_SOURCES_C) $(HEADERS)

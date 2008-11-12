@@ -372,10 +372,11 @@ static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, YYLTYPE *lloc)
 static void xxsavevalue(SEXP Rd, YYLTYPE *lloc)
 {
     PROTECT(Value = PairToVectorList(CDR(Rd)));
-    if (!isNull(Value))
+    if (!isNull(Value)) {
     	setAttrib(Value, R_ClassSymbol, mkString("Rd"));
-    if (SrcFile) 
-    	setAttrib(Value, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));    	
+    	if (SrcFile) 
+    	    setAttrib(Value, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    }
     UNPROTECT_PTR(Rd);
 }
 
