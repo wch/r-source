@@ -168,13 +168,15 @@ AC_SUBST(DVIPSCMD)
 ## LATEXCMD is used for options("latexcmd") (used in help-print.sh).
 ## LATEXCMD PDFLATEXCMD MAKEINDEXCMD TEXI2DVICMD set default for R_<foo> in etc/Renviron
 AC_PATH_PROGS(TEX, [${TEX} tex], )
+if test -z "${ac_cv_path_TEX}" ; then
+  warn_dvi1="you cannot build DVI versions of the R manuals"
+  AC_MSG_WARN([${warn_dvi1}])
+fi
 AC_PATH_PROGS(LATEX, [${LATEX} latex], )
 LATEXCMD=${ac_cv_path_LATEX}
-if test -z "${ac_cv_path_TEX}" ; then
-  AC_MSG_WARN([you cannot build DVI versions of the R manuals])
-fi
 if test -z "${ac_cv_path_LATEX}"; then
-  AC_MSG_WARN([you cannot build DVI versions of all the help pages])
+  warn_dvi2="you cannot build DVI versions of all the help pages"
+  AC_MSG_WARN([${warn_dvi2}])
   LATEXCMD=latex
 fi
 AC_SUBST(LATEXCMD)
@@ -185,13 +187,15 @@ if test -z "${MAKEINDEXCMD}"; then
 fi
 AC_SUBST(MAKEINDEXCMD)
 AC_PATH_PROGS(PDFTEX, [${PDFTEX} pdftex], )
+if test -z "${ac_cv_path_PDFTEX}" ; then
+  warn_pdf1="you cannot build PDF versions of the R manuals"
+  AC_MSG_WARN([${warn_pdf1}])
+fi
 AC_PATH_PROGS(PDFLATEX, [${PDFLATEX} pdflatex], )
 PDFLATEXCMD=${ac_cv_path_PDFLATEX}
-if test -z "${ac_cv_path_PDFTEX}" ; then
-  AC_MSG_WARN([you cannot build PDF versions of the R manuals])
-fi
 if test -z "${ac_cv_path_PDFLATEX}" ; then
-  AC_MSG_WARN([you cannot build PDF versions of all the help pages])
+  warn_pdf2="you cannot build PDF versions of all the help pages"
+  AC_MSG_WARN([${warn_pdf2}])
   PDFLATEXCMD=pdflatex
 fi
 AC_SUBST(PDFLATEXCMD)

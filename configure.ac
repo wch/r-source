@@ -2614,14 +2614,20 @@ fi
 if test -n "${warn_perl5}"; then
   AC_MSG_WARN([${warn_perl5}])
 fi
-if test -n "${warn_dvi}"; then
-  AC_MSG_WARN([${warn_dvi}])
+if test -n "${warn_dvi1}"; then
+  AC_MSG_WARN([${warn_dvi1}])
+fi
+if test -n "${warn_dvi2}"; then
+  AC_MSG_WARN([${warn_dvi2}])
 fi
 if test -n "${warn_info}"; then
   AC_MSG_WARN([${warn_info}])
 fi
-if test -n "${warn_pdf}"; then
-  AC_MSG_WARN([${warn_pdf}])
+if test -n "${warn_pdf1}"; then
+  AC_MSG_WARN([${warn_pdf1}])
+fi
+if test -n "${warn_pdf2}"; then
+  AC_MSG_WARN([${warn_pdf2}])
 fi
 if test -n "${warn_pager}"; then
   AC_MSG_WARN([${warn_pager}])
