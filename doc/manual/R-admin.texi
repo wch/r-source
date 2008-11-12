@@ -1604,6 +1604,20 @@ reasonable amount of diagnostic messaging (``warnings'') when compiling,
 such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the Gnu
 Compiler Collection.
 
+Note that this mechanism can also be used when it necessary to change
+the optimization level for a particular package.  For example
+
+@example
+## for C code
+CFLAGS="-g -O"
+## for C++ code
+CXXFLAGS="-g -O"
+## for Fortran code
+FFLAGS="-g -O"
+## for Fortran 95 code
+FCFLAGS="-g -O"
+@end example
+
 @node Customizing package compilation under Windows,  , Customizing package compilation under Unix, Installing packages
 @subsection Customizing package compilation under Windows
 @findex MakeDll
