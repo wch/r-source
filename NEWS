@@ -49,6 +49,8 @@ NEW FEATURES
     o	parse(text=z) now marks the encodiing of character strings in
 	Latin-1 and UTF-8 locales if 'z' is of known encoding (that is
 	all elements are either ASCII or marked as Latin-1 or UTF-8).
+	
+    o	parse_Rd(), an experimental parser for Rd files, has been added.
 
 
 DEPRECATED & DEFUNCT

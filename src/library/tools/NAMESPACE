@@ -6,7 +6,7 @@ export("Rdindex",
        "codoc", "codocClasses", "codocData", "md5sum", "undoc",
        "file_path_as_absolute", "file_path_sans_ext",
        "list_files_with_exts", "list_files_with_type", "showNonASCII",
-       "delimMatch",
+       "delimMatch", "parse_Rd",
        "texi2dvi", "buildVignettes", "pkgVignettes", "pkgDepends",
        "getDepList", "installFoundDepends", "vignetteDepends",
        "write_PACKAGES", "xgettext", "xgettext2pot", "xngettext",
@@ -25,6 +25,7 @@ S3method("print", "checkVignettes")
 S3method("print", "codoc")
 S3method("print", "codocClasses")
 S3method("print", "codocData")
+S3method("print", "Rd")
 S3method("print", "subdir_tests")
 S3method("print", "undoc")
 S3method("print", "xgettext")
