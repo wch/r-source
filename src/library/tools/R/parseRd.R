@@ -31,7 +31,7 @@ print.Rd <- function(x, ...) {
     pr <- function(x, indent) {
         spaces <- paste(rep(" ", indent), collapse="")
     	if (is.list(x)) {
-    	    tag <- attr(x, "rdTag")
+    	    tag <- attr(x, "Rd_tag")
     	    if (length(grep("^#", tag)) > 0) {
 		cat(tag, x[[1]][[1]], "\n")
 		x <- x[[2]]
@@ -40,7 +40,7 @@ print.Rd <- function(x, ...) {
     	    } else {
 		cat(spaces);
 		cat(tag);
-		if (!is.null(option <- attr(x, "rdOption"))) {
+		if (!is.null(option <- attr(x, "Rd_option"))) {
 		    cat("[\n");
 		    pr(option, indent + 2)
 		    cat(spaces, "]\n", spaces, sep="");
