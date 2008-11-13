@@ -28,6 +28,15 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	  add.smooth = getOption("add.smooth"),
 	  label.pos = c(4,2), cex.caption = 1)
 {
+    dropInf <- function(x) {
+	if(any(isInf <- is.infinite(x))) {
+	    warning("Not plotting observations with leverage one:\n  ",
+		    paste(which(isInf), collapse=", "))
+	    x[isInf] <- NaN
+	}
+	x
+    }
+
     if (!inherits(x, "lm"))
 	stop("use only with \"lm\" objects")
     if(!is.numeric(which) || any(which < 1) || any(which > 6))
@@ -59,23 +68,15 @@ function (x, which = c(1:3,5), ## was which = 1:4,
     if (any(show[2:3])) {
 	ylab23 <- if(isGlm) "Std. deviance resid." else "Standardized residuals"
 	r.w <- if (is.null(w)) r else sqrt(w) * r
+	rs <- dropInf( r.w/(s * sqrt(1 - hii)) )
     }
     if (show[5]) {
         ylab5 <- if (isGlm) "Std. Pearson resid." else "Standardized residuals"
         r.w <- residuals(x, "pearson")
         if(!is.null(w)) r.w <- r.w[wind] # drop 0-weight cases
+ 	rsp <- dropInf( r.w/(s * sqrt(1 - hii)) )
     }
 
-    dropInf <- function(x) {
-	if(any(isInf <- is.infinite(x))) {
-	    warning("Not plotting observations with leverage one:\n  ",
-		    paste(which(isInf), collapse=", "))
-	    x[isInf] <- NaN
-	}
-	x
-    }
-    if (any(show[c(2:3,5)]))
-	rs <- dropInf( r.w/(s * sqrt(1 - hii)) )
     if(show[6])
 	g <- dropInf( hii/(1-hii) )
 
@@ -183,10 +184,10 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	    text.id(show.r, cook[show.r], show.r, adj.x=FALSE)
     }
     if (show[5]) {
-	ylim <- range(rs, na.rm = TRUE)
+	ylim <- range(rsp, na.rm = TRUE)
 	if (id.n > 0) {
 	    ylim <- extendrange(r= ylim, f = 0.08)
-	    show.r <- order(-cook)[iid]
+	    show.rsp <- order(-cook)[iid]
 	}
         do.plot <- TRUE
         if(isConst.hat) { ## leverages are all the same
@@ -214,7 +215,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
                 facval[ord] <- facval
                 xx <- facval # for use in do.plot section.
 
-                plot(facval, rs, xlim = c(-1/2, sum((nlev-1) * ff) + 1/2),
+                plot(facval, rsp, xlim = c(-1/2, sum((nlev-1) * ff) + 1/2),
                      ylim = ylim, xaxt = "n",
                      main = main, xlab = "Factor Level Combinations",
                      ylab = ylab5, type = "n", ...)
@@ -222,7 +223,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
                      labels= x$xlevels[[1]][order(sapply(split(yh,mf[,1]), mean))])
                 mtext(paste(facvars[1],":"), side = 1, line = 0.25, adj=-.05)
                 abline(v = ff[1]*(0:nlev[1]) - 1/2, col="gray", lty="F4")
-                panel(facval, rs, ...)
+                panel(facval, rsp, ...)
                 abline(h = 0, lty = 3, col = "gray")
             }
 	    else { # no factors
@@ -238,10 +239,10 @@ function (x, which = c(1:3,5), ## was which = 1:4,
             ## omit hatvalues of 1.
             xx[xx >= 1] <- NA
 
-            plot(xx, rs, xlim = c(0, max(xx, na.rm = TRUE)), ylim = ylim,
+            plot(xx, rsp, xlim = c(0, max(xx, na.rm = TRUE)), ylim = ylim,
                  main = main, xlab = "Leverage", ylab = ylab5, type = "n",
                  ...)
-            panel(xx, rs, ...)
+            panel(xx, rsp, ...)
             abline(h = 0, v = 0, lty = 3, col = "gray")
             if (one.fig)
                 title(sub = sub.caption, ...)
@@ -270,9 +271,9 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	if (do.plot) {
 	    mtext(getCaption(5), 3, 0.25, cex = cex.caption)
 	    if (id.n > 0) {
-		y.id <- rs[show.r]
+		y.id <- rsp[show.rsp]
 		y.id[y.id < 0] <- y.id[y.id < 0] - strheight(" ")/3
-		text.id(xx[show.r], y.id, show.r)
+		text.id(xx[show.rsp], y.id, show.rsp)
 	    }
 	}
     }

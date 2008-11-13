@@ -197,6 +197,10 @@ BUG FIXES
 	Informative error messages are given if running latex or dvips
 	fail.
 
+    o	Using plot.lm()  on a  "glm"  object since  2.7.1 with which=5
+	caused the  Pearson rather than deviance residuals to be used
+	in which=2 or 3 (including in the default case).
+
 
 
 		CHANGES IN R VERSION 2.8.0
