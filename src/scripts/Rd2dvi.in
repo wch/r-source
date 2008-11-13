@@ -102,10 +102,6 @@ while test -n "${1}"; do
 	fi
       fi
       R_RD4DVI=${R_RD4PDF-"times,hyper"}
-      if test -z "${R_PDFLATEXCMD}"; then
-	echo "ERROR: 'pdflatex' needed but missing on your system."
-	exit 1
-      fi
       R_LATEXCMD="${R_PDFLATEXCMD}"
       ;;
     --title=*)
@@ -114,7 +110,7 @@ while test -n "${1}"; do
       if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then      
 	output="${2}"; shift
       else
-	${echo} "ERROR: option '${1}' requires an argument"
+	echo "ERROR: option '${1}' requires an argument"
 	exit 1
       fi
       ;;
@@ -136,17 +132,19 @@ while test -n "${1}"; do
   shift
 done
 
-## FIXME: default these to 'latex' and 'pdflatex'?
-## We already checked in the case of --pdf
-if test -z "${R_LATEXCMD}"; then
-  echo "ERROR: 'latex' needed but missing on your system."
-  exit 1
-fi
-## we don't really need makeindex, but default that?
-
 if ${debug}; then set -x; fi
 
 . ${R_SHARE_DIR}/sh/dcf.sh	# get_dcf_field()
+
+
+do_cleanup () {
+  if ${clean}; then
+    cd ${start_dir}
+    rm -rf ${build_dir}
+  else
+    echo "You may want to clean up by 'rm -rf ${build_dir}'"
+  fi
+}
 
 Rdconv_dir_or_files_to_LaTeX () {
   ## Convert Rd files in a dir or a list of Rd files to LaTeX, appending
@@ -192,13 +190,14 @@ Rd_DESCRIPTION_to_LaTeX () {
   fields=`${SED} '/^[ 	]/d; s/^\([^:]*\):.*$/\1/' $1`
   ${echo} "\\begin{description}"
   ${echo} "\\raggedright{}"
+  ## this throws warnings on Solaris sed as input is missing newline
   for f in `${echo} "${fields}" | ${SED} '/Package/d; /Bundle/d;'`; do
     text=`get_dcf_field ${f} ${1} | \
       tr '\n' ' ' | \
       ${SED} "s/\"\([^\"]*\)\"/\\\`\\\`\\1''/g
                   s/\\\\\\\\/\\\\\\\\textbackslash /g
                   s/{/\\\\\\\\{/g
-		  s/}/\\\\\\\\}/g"`
+		  s/}/\\\\\\\\}/g" 2>/dev/null`
     ff=`echo ${f} | ${SED} s/_/\\\\\\\\_/g`
     ${echo} "\\item[${ff}] \\AsIs{${text}}"
   done
@@ -276,7 +275,7 @@ if test -z "${output}"; then
   output="Rd2.${out_ext}"
 fi
 if test -f ${output}; then
-  ${echo} "file '${output}' exists; please remove first"
+  echo "file '${output}' exists; please remove first"
   exit 1
 fi
 if test -d ${build_dir}; then
@@ -374,7 +373,7 @@ EOF
 ENCS=`grep '^\\\\\inputencoding' ${build_dir}/Rd2.tex | uniq | \
   ${SED} -e 's/^\\\\inputencoding{\(.*\)}/\1/' | \
   tr '\na-z0-9' ',a-z0-9' | ${SED} -e s/,$//`
-UENCS=`echo ${ENCS} | grep utf8`
+UENCS=`${echo} ${ENCS} | grep utf8`
 #echo "ENCS is ${ENCS}"
 #echo "UENCS is ${UENCS}"
 
@@ -411,23 +410,54 @@ fi
 
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
-## R_LATEXCMD is redefined above for --pdf
-${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
-${R_MAKEINDEXCMD} Rd2
-${R_LATEXCMD} ${R_TEXOPTS} Rd2
 if test "${out_ext}" = pdf; then
-  ${R_LATEXCMD} ${R_TEXOPTS} Rd2
+  ${R_PDFLATEXCMD} ${R_TEXOPTS} Rd2 || status=1
+  if test $status -gt 0; then
+    echo "Error in running pdflatex command ('${R_PDFLATEXCMD}')"
+    do_cleanup
+    exit 1
+  fi
+  ## OK for R_MAKEINDEXCMD to fail.
+  ${R_MAKEINDEXCMD} Rd2
+  ${R_PDFLATEXCMD} ${R_TEXOPTS} Rd2 || status=1
+  if test $status -gt 0; then
+    echo "Error in running pdflatex command ('${R_PDFLATEXCMD}')"
+    do_cleanup
+    exit 1
+  fi
+  ${R_PDFLATEXCMD} ${R_TEXOPTS} Rd2 || status=1
+  if test $status -gt 0; then
+    echo "Error in running pdflatex command ('${R_PDFATEXCMD}')"
+    do_cleanup
+    exit 1
+  fi
+else
+  ${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
+  if test $status -gt 0; then
+    echo "Error in running latex command ('${R_LATEXCMD}')"
+    do_cleanup
+    exit 1
+  fi
+  ## OK for R_MAKEINDEXCMD to fail.
+  ${R_MAKEINDEXCMD} Rd2
+  ${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
+  if test $status -gt 0; then
+    echo "Error in running latex command ('${R_LATEXCMD}')"
+    do_cleanup
+    exit 1
+  fi
+fi
+if test ! -f Rd2.${out_ext}; then
+  echo "Error: no output file was created"
+  do_cleanup
+  exit 1
 fi
 cd ${start_dir}
-${echo} "Saving output to '${output}' ..."
+echo "Saving output to '${output}' ..."
 cp ${build_dir}/Rd2.${out_ext} ${output}
 echo "Done"
 
-if ${clean}; then
-  rm -rf ${build_dir}
-else
-  ${echo} "You may want to clean up by 'rm -rf ${build_dir}'"
-fi
+do_cleanup
 ${preview} ${output}
 exit ${status}
 

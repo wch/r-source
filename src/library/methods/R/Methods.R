@@ -934,7 +934,10 @@ showMethods <-
 {
     if(missing(showEmpty))
 	showEmpty <- !missing(f)
-    con <- printTo
+    if(identical(printTo, FALSE))
+      con <- textConnection("txtOut", "w", local = TRUE)
+    else
+      con <- printTo
     ## must resolve showEmpty in line; using an equivalent default
     ## fails because R resets the "missing()" result for f later on (grumble)
     if(is(f, "function"))
@@ -954,12 +957,12 @@ showMethods <-
                 if(isGeneric(ff))
                   Recall(ff, classes=classes,
 		   includeDefs=includeDefs, inherited=inherited,
-		   showEmpty=showEmpty, printTo=printTo, fdef = ffdef)
+		   showEmpty=showEmpty, printTo=con, fdef = ffdef)
             }
             else if(isGeneric(ff, where)) {
                 Recall(ff, where=where, classes=classes,
 		   includeDefs=includeDefs, inherited=inherited,
-		   showEmpty=showEmpty, printTo=printTo, fdef = ffdef)
+		   showEmpty=showEmpty, printTo=con, fdef = ffdef)
             }
 	}
     }
@@ -976,7 +979,12 @@ showMethods <-
 				  classes = classes, showEmpty = showEmpty,
 				  printTo = con)
     }
-    invisible(printTo)
+    if(identical(printTo, FALSE)) {
+        close(con)
+        txtOut
+    }
+    else
+        invisible(printTo)
 }
 
 

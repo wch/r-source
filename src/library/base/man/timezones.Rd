@@ -1,6 +1,6 @@
 % File src/library/base/man/timezones.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{timezones}
@@ -8,6 +8,10 @@
 \alias{timezone}
 \alias{time zone}
 \alias{time zones}
+\alias{TZ}
+#ifdef windows
+\alias{TZDIR}
+#endif
 
 \title{Time Zones}
 \description{

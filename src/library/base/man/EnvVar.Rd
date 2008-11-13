@@ -5,6 +5,47 @@
 
 \name{EnvVar}
 \alias{environment variables}
+\alias{HOME}
+\alias{LANGUAGE}
+\alias{R_BATCH}
+\alias{R_BROWSER}
+\alias{R_COMPLETION}
+\alias{R_DOC_DIR}
+\alias{R_DVIPSCMD}
+\alias{R_GSCMD}
+\alias{R_HISTFILE}
+\alias{R_HISTSIZE}
+\alias{R_INCLUDE_DIR}
+\alias{R_LATEXCMD}
+\alias{R_MAKEINDEXCMD}
+\alias{R_PAPERSIZE}
+\alias{R_PDFLATEXCMD}
+\alias{R_PDFVIEWER}
+\alias{R_PLATFORM}
+\alias{R_RD4DVI}
+\alias{R_RD4PDF}
+\alias{R_SHARE_DIR}
+\alias{R_TEXI2DVICMD}
+\alias{R_UNZIPCMD}
+\alias{R_ZIPCMD}
+
+% R_PROFILE, R_ENVIRON are in ?Startup
+% R_LIBS* are in ?.libPaths
+% TZ, TZDIR are in ?Sys.timezone
+% R_HOME is in ?R.home.
+
+#ifdef unix
+\alias{DISPLAY}
+\alias{EDITOR}
+\alias{PAGER}
+\alias{R_PRINTCMD}
+#endif
+
+#ifdef windows
+\alias{GSC}
+\alias{R_USER}
+#endif
+
 
 \title{Environment Variables}
 \description{
@@ -61,11 +102,11 @@
 #ifdef windows
       For \code{Rgui} it controls the number of lines saved to the
       history file: the size of the history when in use is controlled by
-      the console customization.
+      the console customization: see \code{\link{Rconsole}}.
 #endif
     }
     \item{\code{R_HOME}:}{The top-level directory of the \R
-      installation.  Set by \R.}
+      installation: see \code{\link{R.home}}.  Set by \R.}
     \item{\code{R_INCLUDE_DIR}:}{The location of the \R \file{include}
       directory.  Set by \R.}
     \item{\code{R_LATEXCMD}:}{The path to \code{latex}. Defaults to
@@ -157,7 +198,7 @@
     \item{\code{R_USER}:}{The user's \sQuote{home} directory.  Set by
       \R.  (\env{HOME} will be set to the same value if not already set.)}
     \item{\code{TZDIR}:}{Optional. The top-level directory of the
-      timezone database.  See \code{\link{as.POSIXlt}}.}
+      timezone database.  See \code{\link{Sys.timezone}}.}
   }
 }
 #endif

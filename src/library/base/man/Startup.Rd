@@ -15,6 +15,11 @@
 \alias{.First.sys}
 \alias{.OptRequireMethods}
 \concept{environment variable}
+\alias{R_DEFAULT_PACKAGES}
+\alias{R_ENVIRON}
+\alias{R_ENVIRON_USER}
+\alias{R_PROFILE}
+\alias{R_PROFILE_USER}
 
 \title{Initialization at Start of an R Session}
 \usage{
