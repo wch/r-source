@@ -1309,7 +1309,7 @@ static Rboolean src2buff(SEXP sv, int k, LocalParseData *d)
     SEXP t;
     int i, n;
 
-    if (length(sv) > k && !isNull(t = VECTOR_ELT(sv, k))) {
+    if (TYPEOF(sv) == VECSXP && length(sv) > k && !isNull(t = VECTOR_ELT(sv, k))) {
 	PROTECT(t);
 
 	PROTECT(t = lang2(install("as.character"), t));
@@ -1339,9 +1339,11 @@ static void vec2buff(SEXP v, LocalParseData *d)
     nv = getAttrib(v, R_NamesSymbol);
     if (length(nv) == 0) nv = R_NilValue;
 
-    if (d->opts & USESOURCE)
+    if (d->opts & USESOURCE) {
 	sv = getAttrib(v, R_SrcrefSymbol);
-    else
+	if (TYPEOF(sv) != VECSXP)
+	    sv = R_NilValue;
+    } else
 	sv = R_NilValue;
 
     for(i = 0 ; i < n ; i++) {
