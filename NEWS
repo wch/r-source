@@ -52,6 +52,10 @@ NEW FEATURES
 	
     o	parse_Rd(), an experimental parser for Rd files, has been added.
 
+    o	sprintf() does stricter error checking on input formats to
+	avoid passing invalid formats to the OS (which have a tendency
+	to crash under such inputs).
+
 
 DEPRECATED & DEFUNCT
 

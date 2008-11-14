@@ -16,7 +16,7 @@
  *  along with this program; if not, a copy is available at
  *  http://www.r-project.org/Licenses/
  *
- * Originally written by Jonathan Rougier, email J.C.Rougier@durham.ac.uk
+ * Originally written by Jonathan Rougier
 */
 
 #ifdef HAVE_CONFIG_H
@@ -27,6 +27,52 @@
 #include "RBufferUtils.h"
 
 #define MAXLINE MAXELTSIZE
+
+/* 
+   This is passed a format that started with % and may include other
+   chars, e.g. '.2f abc'.  It's aim is to show that this is a valid
+   format from one of the types given in pattern. 
+*/
+
+static const char *findspec(const char *str)
+{
+    const char *p = str;
+
+    if(*p != '%') return p;
+    for(p++; ; p++) {
+	if(*p == '-' || *p == '+' || *p == ' ' || *p == '.' ) continue;
+	if((*p == '*' || (*p >= '0' && *p <= '9')) && *(p+1) == '.') {
+	    p++;
+	    continue;
+	}
+	if(*p == '.' && (*(p+1) == '*' || (*(p+1) >= '0' && *(p+1) <= '9'))) {
+	    p++;
+	    continue;
+	}
+	if(*p == '*' || (*p >= '0' && *p <= '9') ) {
+	    if(*(p+1) != '.') continue;
+	    if(*(p+2) == '*' || (*(p+2) >= '0' && *(p+2) <= '9') ) {
+		/* so have m.n pattern */
+		p += 2; /* for loop will skip third byte */
+		continue;
+	    }
+	}
+	break;
+    }
+    return p;
+}
+
+
+/*   FALSE is success, TRUE is an error. */
+static Rboolean checkfmt(const char *fmt, const char *pattern)
+{
+    const char *p =fmt;
+
+    if(*p != '%') return 1;
+    p = findspec(fmt);
+    return strcspn(p, pattern) != 0;
+}
+
 
 SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -195,7 +241,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			if(ns == 0) {
 			    /* Now let us see if some minimal coercion
 			       would be sensible, but only do so once. */
-			    switch(fmtp[strlen(fmtp) - 1]) {
+			    switch(*findspec(fmtp)) {
 			    case 'd':
 			    case 'i':
 			    case 'x':
@@ -246,7 +292,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			case LGLSXP:
 			    {
 				int x = LOGICAL(_this)[ns % thislen];
-				if (strcspn(fmtp, "di") >= strlen(fmtp))
+				if (checkfmt(fmtp, "di"))
 				    error("%s",
 					  _("use format %d or %i for logical objects"));
 				if (x == NA_LOGICAL) {
@@ -260,7 +306,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			case INTSXP:
 			    {
 				int x = INTEGER(_this)[ns % thislen];
-				if (strcspn(fmtp, "dixX") >= strlen(fmtp))
+				if (checkfmt(fmtp, "dixX"))
 				    error("%s",
 					  _("use format %d, %i, %x or %X for integer objects"));
 				if (x == NA_INTEGER) {
@@ -274,7 +320,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			case REALSXP:
 			    {
 				double x = REAL(_this)[ns % thislen];
-				if (strcspn(fmtp, "aAfeEgG") >= strlen(fmtp))
+				if (checkfmt(fmtp, "aAfeEgG"))
 				    error("%s",
 					  _("use format %f, %e, %g or %a for numeric objects"));
 				if (R_FINITE(x)) {
@@ -309,7 +355,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    }
 			case STRSXP:
 			    /* NA_STRING will be printed as 'NA' */
-			    if (strcspn(fmtp, "s") >= strlen(fmtp))
+			    if (checkfmt(fmtp, "s"))
 				error("%s", _("use format %s for character objects"));
 			    if (use_UTF8)
 				ss = translateCharUTF8(STRING_ELT(_this, ns % thislen));

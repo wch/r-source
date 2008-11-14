@@ -5465,3 +5465,8 @@ x <- ts(1:290, start=c(1984,10), freq=12)
 window(x, start=c(2008,9), end=c(2008,9), extend=FALSE)
 window(x, start=c(2008,9), end=c(2008,9), extend=TRUE)
 ## second failed in 2.8.0
+
+
+## invalid input in sprintf (PR#13283)
+try(sprintf("A %S %S %S XYZ", 1, 1, 1))
+## segfaulted on some systems in R 2.8.0
