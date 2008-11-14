@@ -197,9 +197,14 @@ BUG FIXES
 	Informative error messages are given if running latex or dvips
 	fail.
 
-    o	Using plot.lm()  on a  "glm"  object since  2.7.1 with which=5
-	caused the  Pearson rather than deviance residuals to be used
-	in which=2 or 3 (including in the default case).
+    o	Using plot.lm() on a "glm" object since 2.7.1 with which=5
+	caused the Pearson rather than deviance residuals to be used
+	in which=2 or 3 (including in the default case).  (Thanks to
+	Effie Greathouse and Greg Snow.)
+
+	plot.lm() did not report on omitting observations with
+	leverage one if they also had residual exactly zero.  This was
+	seen in example(occupationalStatus).
 
 
 

@@ -28,10 +28,11 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	  add.smooth = getOption("add.smooth"),
 	  label.pos = c(4,2), cex.caption = 1)
 {
-    dropInf <- function(x) {
-	if(any(isInf <- is.infinite(x))) {
+    dropInf <- function(x, h) {
+	if(any(isInf <- h >= 1.0)) {
 	    warning("Not plotting observations with leverage one:\n  ",
-		    paste(which(isInf), collapse=", "))
+		    paste(which(isInf), collapse=", "),
+                    call.=FALSE)
 	    x[isInf] <- NaN
 	}
 	x
@@ -68,21 +69,14 @@ function (x, which = c(1:3,5), ## was which = 1:4,
     if (any(show[2:3])) {
 	ylab23 <- if(isGlm) "Std. deviance resid." else "Standardized residuals"
 	r.w <- if (is.null(w)) r else sqrt(w) * r
-	rs <- dropInf( r.w/(s * sqrt(1 - hii)) )
+        ## NB: rs is already NaN if r=0, hii=1
+	rs <- dropInf( r.w/(s * sqrt(1 - hii)), hii )
     }
-    if (show[5]) {
-        ylab5 <- if (isGlm) "Std. Pearson resid." else "Standardized residuals"
-        r.w <- residuals(x, "pearson")
-        if(!is.null(w)) r.w <- r.w[wind] # drop 0-weight cases
- 	rsp <- dropInf( r.w/(s * sqrt(1 - hii)) )
-    }
-
-    if(show[6])
-	g <- dropInf( hii/(1-hii) )
 
     if (any(show[5:6])) { # using 'leverages'
         r.hat <- range(hii, na.rm = TRUE) # though should never have NA
-        isConst.hat <- all(r.hat == 0) || diff(r.hat) < 1e-10 * mean(hii)
+        isConst.hat <- all(r.hat == 0) ||
+            diff(r.hat) < 1e-10 * mean(hii, na.rm = TRUE)
     }
     if (any(show[c(1, 3)]))
 	l.fit <- if (isGlm) "Predicted values" else "Fitted values"
@@ -184,6 +178,10 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	    text.id(show.r, cook[show.r], show.r, adj.x=FALSE)
     }
     if (show[5]) {
+        ylab5 <- if (isGlm) "Std. Pearson resid." else "Standardized residuals"
+        r.w <- residuals(x, "pearson")
+        if(!is.null(w)) r.w <- r.w[wind] # drop 0-weight cases
+ 	rsp <- dropInf( r.w/(s * sqrt(1 - hii)), hii )
 	ylim <- range(rsp, na.rm = TRUE)
 	if (id.n > 0) {
 	    ylim <- extendrange(r= ylim, f = 0.08)
@@ -278,6 +276,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	}
     }
     if (show[6]) {
+	g <- dropInf( hii/(1-hii), hii )
 	ymx <- max(cook, na.rm = TRUE)*1.025
 	plot(g, cook, xlim = c(0, max(g, na.rm=TRUE)), ylim = c(0, ymx),
 	     main = main, ylab = "Cook's distance",
