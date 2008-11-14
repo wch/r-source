@@ -142,6 +142,12 @@ UTILITIES
 	pdflatex) fails.
 
 
+DEPRECATED & DEFUNCT
+
+    o	R CMD INSTALL --with-package-versions is deprecated (and
+	support has always been incomplete on Windows).
+
+
 BUG FIXES
 
     o	add1.glm() no longer warns if applied to a binomial glm with a

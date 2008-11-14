@@ -93,6 +93,11 @@ my $R_HOME = $ENV{'R_HOME'} ||
 
 usage() if $opt_help;
 
+if ($opt_with_package_versions) {
+    warn "\n  WARNING: --with-package-versions is deprecated:\n  suppport on Windows is incomplete, so use at your own risk\n\n"
+}
+
+
 ## ===== to allow to be converted for use when cross-compiling =====
 my $BUILD = "GCC4";
 my $Rversion;
@@ -381,8 +386,8 @@ foreach $pkg (@ARGV){
 	$opt = $opt . " DPKG=$dpkg";
 	$opt = $opt . " $pkgname-LAZYDATA=true" if $lazydata;
 	$opt = $opt . " $pkgname-LAZY=true" if $lazyload > 0;
-#	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $opt $helpflags $makecmd-$pkgname\n";
-    	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $opt $helpflags $makecmd-$pkgname");
+#	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir PKGNAME=$decpkgname RLIB=$library $opt $helpflags $makecmd-$pkgname\n";
+    	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir PKGNAME=$decpkgname RLIB=$library $opt $helpflags $makecmd-$pkgname");
 	if($res == 0) {
 	    ## add MD5 sums last of all
 	    my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";

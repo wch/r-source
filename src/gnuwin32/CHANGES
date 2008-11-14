@@ -97,6 +97,12 @@ BUG FIXES
 	information to the registry even if that option was not
 	checked.
 
+    o	Rcmd INSTALL --with-package-versions now works in a few more
+	cases (of lazy loading and lazy data), but still many of the
+	options are not supported (e.g. --use-zip).  Versioned
+	installs are now deprecated, so regard them as unsupported on
+	Windows (and a warning is given).  (PR#13284)
+
 
 
 		CHANGES IN R VERSION 2.8.0
