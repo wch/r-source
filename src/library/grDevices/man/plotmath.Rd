@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/plotmath.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{plotmath}
@@ -42,13 +42,11 @@
   for titles, subtitles and x- and y-axis labels (but not for axis
   labels on \code{persp} plots).
 
-  In most cases other language objects (names and calls) are coerced to
-  expressions and so can also be used.
-}
-\details{
-  A mathematical expression must obey the normal rules of syntax for any
-  \R expression, but it is interpreted according to very different rules
-  than for normal \R expressions.
+  In most cases other language objects (names and calls, including
+  formulas) are coerced to expressions and so can also be used.  }
+  \details{ A mathematical expression must obey the normal rules of
+  syntax for any \R expression, but it is interpreted according to very
+  different rules than for normal \R expressions.
 
   It is possible to produce many different mathematical symbols, generate
   sub- or superscripts, produce fractions, etc.
@@ -178,6 +176,42 @@
   The fonts used are taken from the current font family, and so can be
   set by \code{\link{par}(family=)} in base graphics, and
   \code{\link{gpar}(fontfamily=)} in package \pkg{grid}.
+}
+\section{Other symbols}{
+  On many OSes and some graphics devices many other symbols are available as
+  part of the standard text font, and all of the symbols in the Adobe
+  Symbol encoding are in principle available \emph{via} changing the
+  font face or (see \sQuote{Details}) plotmath: see the examples section
+  of \code{\link{points}} for a function to display them.  (\sQuote{In
+    principle} because some of the glyphs are missing from some
+  implementations of the symbol font.)  Unfortunately,
+  \code{\link{postscript}} and \code{\link{pdf}} have support for little
+  more than European and CJK characters and the Adobe Symbol encoding
+  (and in a few fonts, also Cyrillic characters).
+
+#ifdef unix
+  In a UTF-8 locale any Unicode character can be entered, perhaps as a
+  \code{\uxxxx} or \code{\Uxxxxxxxx} escape sequence, but the issue is
+  whether the graphics device is apply to display the character.  The
+  widest range of characters is likely to be available in the
+  \code{\link{X11}} device using cairo: see its help page for how
+  installing additional fonts can help.
+
+  In non-UTF-8 locales there is normally no support for symbols not in
+  the languages for which the current encoding was intended.
+#endif
+#ifdef windows
+  Any Unicode character can be entered into a text string \emph{via} a
+  \code{\uxxxx} escape, or used by number in a call to
+  \code{\link{points}}.  The \code{\link{windows}} family of devices can
+  display such characters if they are available in the font in use.  A good
+  way to both find out which characters are available in a font and to
+  determine the Unicode number is to use the \sQuote{Character Map}
+  accessory (usually on the \sQuote{Start} menu under
+  \sQuote{Accessories->System Tools}.  You can also copy-and-paste
+  characters from the \sQuote{Character Map} window to \code{Rgui} (but
+  not to \code{Rterm}).
+#endif
 }
 \references{
   Murrell, P. and Ihaka, R. (2000) An approach to providing
