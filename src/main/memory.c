@@ -115,7 +115,9 @@ extern SEXP framenames;
 	gc_inhibit_torture = 1 ; X ; gc_inhibit_torture = __t;}
 
 static void R_gc_internal(R_size_t size_needed);
+static void R_gc_full(R_size_t size_needed);
 static void mem_err_heap(R_size_t size);
+static void mem_err_malloc(R_size_t size);
 
 static SEXPREC UnmarkedNodeTemplate;
 #define NODE_IS_MARKED(s) (MARK(s)==1)
@@ -629,8 +631,12 @@ static void GetNewPage(int node_class)
     page_count = (R_PAGE_SIZE - sizeof(PAGE_HEADER)) / node_size;
 
     page = malloc(R_PAGE_SIZE);
-    if (page == NULL)
-	mem_err_heap((R_size_t) NodeClassSize[node_class]);
+    if (page == NULL) {
+	R_gc_full(0);
+	page = malloc(R_PAGE_SIZE);
+	if (page == NULL)
+	    mem_err_malloc((R_size_t) R_PAGE_SIZE);
+    }
 #ifdef R_MEMORY_PROFILING
     R_ReportNewPage();
 #endif
@@ -1536,6 +1542,11 @@ static void mem_err_cons(void)
     errorcall(R_NilValue, _("cons memory exhausted (limit reached?)"));
 }
 
+static void mem_err_malloc(R_size_t size)
+{
+    errorcall(R_NilValue, _("memory exhausted (limit reached?)"));
+}
+
 /* InitMemory : Initialise the memory to be used in R. */
 /* This includes: stack space, node space and vector space */
 
@@ -2001,7 +2012,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 		    /* If we are near the address space limit, we
 		       might be short of address space.  So return
 		       all unused objects to malloc and try again. */
-		    R_gc_internal(alloc_size);
+		    R_gc_full(alloc_size);
 		    s = malloc(sizeof(SEXPREC_ALIGN) + size * sizeof(VECREC));
 		}
 		if (s != NULL) success = TRUE;
@@ -2113,6 +2124,12 @@ SEXP allocS4Object(void)
 void R_gc(void)
 {
     R_gc_internal(0);
+}
+
+static void R_gc_full(R_size_t size_needed)
+{
+    num_old_gens_to_collect = NUM_OLD_GENERATIONS;
+    R_gc_internal(size_needed);
 }
 
 #ifdef _R_HAVE_TIMING_
