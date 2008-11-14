@@ -2,6 +2,7 @@
 RLIB=../../../library
 DPKG=$(RLIB)/$(PKG)
 SPKG=.
+PKGNAME=$(PKG)
 LAZY=false
 LAZYDATA=false
 
@@ -375,7 +376,7 @@ lazyload:
 	  if ! test -f $(DPKG)/R/$(PKG).rdb ; then \
 	    $(ECHO)  "  preparing package $(PKG) for lazy loading" ; \
             (if test -s $(SPKG0)/R_PROFILE.R; then cat $(SPKG0)/R_PROFILE.R; fi; \
-	      $(ECHO) "options(warn=1); invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); .getRequiredPackages(\"$(SPKG0)/DESCRIPTION\",useImports=TRUE); Sys.setenv('R_CROSS_BUILD'='$(R_X_BUILD)'); tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")") | \
+	      $(ECHO) "options(warn=1); invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); .getRequiredPackages(\"$(SPKG0)/DESCRIPTION\",useImports=TRUE); Sys.setenv('R_CROSS_BUILD'='$(R_X_BUILD)'); tools:::makeLazyLoading(\"$(PKGNAME)\", lib.loc=\"$(RLIB)\")") | \
 	      R_DEFAULT_PACKAGES=$(R_START_PACKAGES) \
 	      LC_ALL=C R_OSTYPE=windows $(REXE) > /dev/null || exit 1; \
 	    rm -f $(DPKG)/R/all.rda ; \
@@ -389,7 +390,7 @@ lazydata:
 	@if test -d $(DPKG)/data; then \
 	  if ! test -f $(DPKG)/data/Rdata.rdb ; then \
 	    $(ECHO)  "  preparing package $(PKG) for lazy data loading" ; \
-	    $(ECHO) "options(warn=1); invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); tools:::data2LazyLoadDB(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
+	    $(ECHO) "options(warn=1); invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); tools:::data2LazyLoadDB(\"$(PKGNAME)\", lib.loc=\"$(RLIB)\")" | \
 	      R_CROSS_BUILD=$(R_X_BUILD) R_DEFAULT_PACKAGES=$(R_START_PACKAGES) \
 	      LC_ALL=C R_OSTYPE=windows $(REXE) > /dev/null  || exit 1; \
 	  fi ; \

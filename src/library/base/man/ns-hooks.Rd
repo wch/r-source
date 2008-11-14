@@ -23,7 +23,7 @@
     the package defining the namespace was found.}
   \item{pkgname}{a character string giving the name of the package,
     including the version number if the package was installed with
-    \code{--with-package-versions}.}
+    \code{--with-package-versions} (deprecated).}
   \item{libpath}{a character string giving the complete path to the package.}
 }
 \details{

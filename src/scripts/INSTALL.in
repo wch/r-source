@@ -227,7 +227,9 @@ while test -n "${1}"; do
     -d|--debug)
       debug=true ;;
     --with-package-versions)
-      with_package_versions=true ;;
+      with_package_versions=true
+      warning "Use of --with-package-versions is deprecated"
+      ;;
     --no-configure)
       use_configure=false ;;
     --no-docs)
