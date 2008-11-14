@@ -101,7 +101,7 @@ text(x, \dots)
   People using Western European locales on Unix-alikes can probably
   select ISO-8895-15 (Latin-9) which has the Euro as character 165: this
   can also be used for \code{\link{postscript}} and \code{\link{pdf}}.
-  It is \code{\u20ac} in Unicode, which can be used in UTF-8 locales.
+  It is \samp{\u20ac} in Unicode, which can be used in UTF-8 locales.
 #ifdef unix
 
   The Euro should be rendered correctly by \code{\link{X11}} in UTF-8
@@ -112,7 +112,7 @@ text(x, \dots)
 #ifdef windows
 
   In all the European Windows encodings the Euro is symbol 128 and
-  \code{\u20ac} will work in all locales: however not all fonts will
+  \samp{\u20ac} will work in all locales: however not all fonts will
   include it.  It is not in the symbol font used for
   \code{\link{windows}} and related devices, including the Windows printer.
 #endif

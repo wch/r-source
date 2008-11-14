@@ -18,7 +18,7 @@
 }
 \details{
   Three types of quote are part of the syntax of \R: single and double
-  quotation marks and the backtick (or back quote, \code{`}).  In
+  quotation marks and the backtick (or back quote, \samp{`}).  In
   addition, backslash is used for quoting the following characters
   inside character constants.
 }
@@ -33,28 +33,28 @@
   Unless specified in the following table, an escaped character is
   interpreted as the character itself.  (Note that the parser will warn
   about most such uses, as they are most often erroneous, e.g.
-  using \code{\\.} where \code{\\\\.} was intended.)
+  using \samp{\\.} where \samp{\\\\.} was intended.)
   
   Single quotes need to be escaped by backslash in single-quoted
   strings, and double quotes in double-quoted strings.
 
   \tabular{ll}{
-    \code{\\n}\tab newline\cr
-    \code{\\r}\tab carriage return\cr
-    \code{\\t}\tab tab\cr
-    \code{\\b}\tab backspace\cr
-    \code{\\a}\tab alert (bell)\cr
-    \code{\\f}\tab form feed\cr
-    \code{\\v}\tab vertical tab\cr
-    \code{\\\\}\tab backslash \code{\\}\cr
-    \code{\\nnn}\tab character with given octal code (1, 2 or 3 digits)\cr
-    \code{\\xnn}\tab character with given hex code (1 or 2 hex digits)\cr
-    \code{\\unnnn}\tab Unicode character with given code (1--4 hex digits)\cr
-    \code{\\Unnnnnnnn}\tab Unicode character with given code (1--8 hex digits)\cr
+    \samp{\\n}\tab newline\cr
+    \samp{\\r}\tab carriage return\cr
+    \samp{\\t}\tab tab\cr
+    \samp{\\b}\tab backspace\cr
+    \samp{\\a}\tab alert (bell)\cr
+    \samp{\\f}\tab form feed\cr
+    \samp{\\v}\tab vertical tab\cr
+    \samp{\\\\}\tab backslash \samp{\\}\cr
+    \samp{\\nnn}\tab character with given octal code (1, 2 or 3 digits)\cr
+    \samp{\\xnn}\tab character with given hex code (1 or 2 hex digits)\cr
+    \samp{\\unnnn}\tab Unicode character with given code (1--4 hex digits)\cr
+    \samp{\\Unnnnnnnn}\tab Unicode character with given code (1--8 hex digits)\cr
   }
   The last two are only supported on versions of \R built with MBCS
   support: they are an error on other versions.  Alternative forms are
-  \code{\\u\{nnnn\}} and \code{\\U\{nnnnnnnn\}}.  All except the Unicode
+  \samp{\\u\{nnnn\}} and \samp{\\U\{nnnnnnnn\}}.  All except the Unicode
   escape sequences are also supported when reading character strings by
   \code{\link{scan}} and \code{\link{read.table}} if
   \code{allowEscapes = TRUE}.
@@ -63,7 +63,7 @@
   when outputting non-printable characters (including backslash).
 
   Embedded nuls are not allowed in character strings, so using escapes
-  (such as \code{\\0}) for a nul will result in the string being
+  (such as \samp{\\0}) for a nul will result in the string being
   truncated at that point (usually with a warning).
 }
 \section{Names and Identifiers}{
@@ -77,7 +77,7 @@
   Such identifiers are also known as \emph{syntactic names} and may be used
   directly in \R code.  Almost always, other names can be used
   provided they are quoted.  The preferred quote is the backtick
-  (\code{`}), and \code{\link{deparse}} will normally use it, but under
+  (\samp{`}), and \code{\link{deparse}} will normally use it, but under
   many circumstances single or double quotes can be used (as a character
   constant will often be converted to a name).  One place where
   backticks may be essential is to delimit variable names in formulae:

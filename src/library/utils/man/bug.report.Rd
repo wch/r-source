@@ -15,7 +15,7 @@ bug.report(subject = "",
 }
 \arguments{
   \item{subject}{Subject of the email. Please do not use single quotes
-    (\code{'}) in the subject! File separate bug reports for multiple bugs}
+    (\samp{'}) in the subject! File separate bug reports for multiple bugs}
   \item{ccaddress}{Optional email address for copies (default is current
     user).  Use \code{ccaddress = FALSE} for no copies.}
   \item{method}{Submission method, one of \code{"mailx"},

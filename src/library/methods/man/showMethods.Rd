@@ -100,10 +100,10 @@ require(graphics)
 ## print (without definitions) the methods that involve class "track":
 showMethods("plot", classes = "track")
 \dontrun{
-Function "plot":
-x = ANY, y = track
-x = track, y = missing
-x = track, y = ANY
+# Function "plot":
+# x = ANY, y = track
+# x = track, y = missing
+# x = track, y = ANY
 
 require("Matrix")# a CRAN package with much S4 functionality
 showMethods("\%*\%")# many!

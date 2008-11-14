@@ -162,15 +162,15 @@
   special symbol name, for example, the universal, or forall, symbol is
   \code{symbol("\\042")}.
 
-  Note to TeX users: TeX's \code{\Upsilon} is \code{Upsilon1}, TeX's
-  \code{\varepsilon} is close to \code{epsilon}, and there is no
-  equivalent of TeX's \code{\epsilon}.  TeX's \code{\varpi} is close to
+  Note to TeX users: TeX's \samp{\Upsilon} is \code{Upsilon1}, TeX's
+  \samp{\varepsilon} is close to \code{epsilon}, and there is no
+  equivalent of TeX's \samp{\epsilon}.  TeX's \samp{\varpi} is close to
   \code{omega1}.  \code{vartheta}, \code{varphi} and \code{varsigma} are
   allowed as synonyms for \code{theta1}, \code{phi1} and \code{sigma1}.
 
   \code{sigma1} is also known as \code{stigma}, its Unicode name.
 
-  Control characters (e.g. \code{\\n}) are not interpreted in character
+  Control characters (e.g. \samp{\\n}) are not interpreted in character
   strings in plotmath, unlike normal plotting.
 
   The fonts used are taken from the current font family, and so can be

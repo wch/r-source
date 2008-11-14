@@ -25,8 +25,8 @@ shell(cmd, shell, flag = "/c", intern = FALSE, wait = TRUE,
   \item{wait}{should the \R interpreter wait for the command to finish?
     The default is to wait, and the interpreter will always wait if
     \code{intern = TRUE}.}
-  \item{translate}{If \code{TRUE}, \code{"/"} in \code{cmd} is
-    translated to \code{"\\"}.}
+  \item{translate}{If \code{TRUE}, \samp{"/"} in \code{cmd} is
+    translated to \samp{"\\"}.}
   \item{mustWork}{a logical; if \code{TRUE} failure to run the command
     will give an \R error, if \code{FALSE} a warning and if \code{NA},
     no \R message.}

@@ -39,9 +39,9 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
 \details{
   These functions work with a general univariate state-space model
-  with state vector \code{a}, transitions \code{a <- T a + R e},
+  with state vector \samp{a}, transitions \samp{a <- T a + R e},
   \eqn{e \sim {\cal N}(0, \kappa Q)}{e \~ N(0, kappa Q)} and observation
-  equation \code{y = Z'a + eta},
+  equation \samp{y = Z'a + eta},
   \eqn{(eta\equiv\eta), \eta \sim {\cal N}(0, \kappa h)}{eta ~ N(0, \kappa h)}.
   The likelihood is a profile likelihood after estimation of \eqn{\kappa}.
 
@@ -50,7 +50,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
     \item{\code{T}}{the transition matrix}
     \item{\code{Z}}{the observation coefficients}
     \item{\code{h}}{the observation variance}
-    \item{\code{V}}{\code{RQR'}}
+    \item{\code{V}}{\samp{RQR'}}
     \item{\code{a}}{the current state estimate}
     \item{\code{P}}{the current estimate of the state uncertainty matrix}
     \item{\code{Pn}}{the estimate at time \eqn{t-1} of the state

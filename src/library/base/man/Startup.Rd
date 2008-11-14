@@ -211,7 +211,7 @@ local({
 FOOBAR="coo\bar"doh\\ex"abc\"def'"
 
 ## then we get
-> cat(Sys.getenv("FOOBAR"), "\n")
-coo\bardoh\exabc"def'
+# > cat(Sys.getenv("FOOBAR"), "\n")
+# coo\bardoh\exabc"def'
 }}
 \keyword{environment}

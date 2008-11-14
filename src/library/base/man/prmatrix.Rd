@@ -16,7 +16,7 @@ prmatrix(x, rowlab =, collab =,
     names respectively.  By default, these are taken from
     \code{\link{dimnames}(x)}.}
   \item{quote}{logical; if \code{TRUE} and \code{x} is of mode
-    \code{"character"}, \emph{quotes} (\code{"}) are used.} %"
+    \code{"character"}, \emph{quotes} (\samp{"}) are used.} %"
   \item{right}{ if \code{TRUE} and \code{x} is of mode
     \code{"character"}, the output columns are \emph{right}-justified.}
   \item{na.print}{how \code{NA}s are printed.  If this is non-null, its

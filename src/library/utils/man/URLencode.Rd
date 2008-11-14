@@ -21,16 +21,16 @@ URLdecode(URL)
 }
 \details{
   Characters in a URL other than the English alphanumeric characters and
-  \code{$ - _ . + ! * ' ( ) ,} should be encoded as \code{\%}
+  \samp{$ - _ . + ! * ' ( ) ,} should be encoded as \code{\%}
   plus a two-digit hexadecimal representation, and any single-byte
   character can be so encoded. (Multi-byte characters are encoded as
   byte-by-byte.)
 
-  In addition, \code{; / ? : @ = &} are reserved characters, and should
+  In addition, \samp{; / ? : @ = &} are reserved characters, and should
   be encoded unless used in their reserved sense, which is scheme
   specific.  The default in \code{URLencode} is to leave them alone, which
-  is appropriate for \code{file://} URLs, but probably not for
-  \code{http://} ones.
+  is appropriate for \samp{file://} URLs, but probably not for
+  \samp{http://} ones.
 }
 \value{
   A character string.

@@ -47,7 +47,7 @@
 \details{
   The default for printing \code{NA}s is to print \code{NA} (without
   quotes) unless this is a character \code{NA} \emph{and} \code{quote =
-    FALSE}, when \code{<NA>} is printed.
+    FALSE}, when \samp{<NA>} is printed.
 
   The same number of decimal places is used throughout a vector.  This
   means that \code{digits} specifies the minimum number of significant
@@ -77,11 +77,11 @@
 }
 \section{Single-byte locales}{
   If a non-printable character is encountered during output, it is
-  represented as one of the ANSI escape sequences (\code{\a}, \code{\b},
-  \code{\f}, \code{\n}, \code{\r}, \code{\t}, \code{\v}, \code{\\\\} and
-  \code{\0}: see \link{Quotes}), or failing that as a 3-digit octal
+  represented as one of the ANSI escape sequences (\samp{\a}, \samp{\b},
+  \samp{\f}, \samp{\n}, \samp{\r}, \samp{\t}, \samp{\v}, \samp{\\\\} and
+  \samp{\0}: see \link{Quotes}), or failing that as a 3-digit octal
   code: for example the UK currency pound sign in the C locale (if
-  implemented correctly) is printed as \code{\243}.  Which characters
+  implemented correctly) is printed as \samp{\243}.  Which characters
   are non-printable depends on the locale.
 #ifdef windows
   (Because some versions of Windows get this wrong, all bytes with the
@@ -89,21 +89,23 @@
   locale.)
 #endif
 }
+\section{
 #ifdef unix
-\section{Unicode and other multi-byte locales}{
+Unicode and other multi-byte locales
 #endif
 #ifdef windows
-\section{Multi-byte locales}{
+Multi-byte locales
 #endif
-  In all locales, the characters in the ASCII range (\code{0x00} to
-  \code{0x7f}) are printed in the same way, as-is if printable, otherwise
+}{
+  In all locales, the characters in the ASCII range (\samp{0x00} to
+  \samp{0x7f}) are printed in the same way, as-is if printable, otherwise
   via ANSI escape sequences or 3-digit octal escapes as described for
   single-byte locales.
 
   Multi-byte non-printing characters are printed as an escape sequence
-  of the form \code{\uxxxx}
+  of the form \samp{\uxxxx}
 #ifndef windows
-  or \code{\Uxxxxxxxx}
+  or \samp{\Uxxxxxxxx}
 #endif
   (in hexadecimal).
 #ifdef windows
@@ -121,7 +123,7 @@
   It is possible to have a character string in a character vector that
   is not valid in the current locale.  If a byte is encountered that is
   not part of a valid character it is printed in hex in the form
-  \code{\xab} and this is repeated until the start of a valid character.
+  \samp{\xab} and this is repeated until the start of a valid character.
 #ifdef unix
   (This will rapidly recover from minor errors in UTF-8.)
 #endif

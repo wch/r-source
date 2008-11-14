@@ -24,7 +24,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     (or whatever \code{\link{stdin}()} reads if input is redirected or
     \R is embedded).
     (In this case input can be terminated by a blank line or an EOF
-    signal, \code{Ctrl-D} on Unix and \code{Ctrl-Z} on Windows.)
+    signal, \samp{Ctrl-D} on Unix and \samp{Ctrl-Z} on Windows.)
 
     Otherwise, the file name is interpreted \emph{relative} to the
     current working directory (given by \code{\link{getwd}()}),
@@ -131,13 +131,13 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     turn off the interpretation of comments altogether (the default).}
 
   \item{allowEscapes}{logical.  Should C-style escapes such as
-    \code{\n} be processed (the default) or read verbatim?   Note that if
+    \samp{\n} be processed (the default) or read verbatim?   Note that if
     not within quotes these could be interpreted as a delimiter (but not
     as a comment character).
 
     The escapes which are interpreted are the control characters
-    \code{\a, \b, \f, \n, \r, \t, \v} and octal and
-    hexadecimal representations like \code{\040} and \code{\0x2A}.  Any
+    \samp{\a, \b, \f, \n, \r, \t, \v} and octal and
+    hexadecimal representations like \samp{\040} and \samp{\0x2A}.  Any
     other escaped character is treated as itself, including backslash.
   }
   \item{encoding}{encoding to be assumed for input strings.  If the
@@ -181,10 +181,10 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
   For an integer field the allowed input is optional whitespace,
   followed by either \code{NA} or an optional sign and one or more
-  digits (\code{0-9}): all out-of-range values are converted to
+  digits (\samp{0-9}): all out-of-range values are converted to
   \code{NA_integer_}.
 
-  If \code{sep} is the default (\code{""}), the character \code{\\}
+  If \code{sep} is the default (\code{""}), the character \samp{\\}
   in a quoted string escapes the following character, so quotes may be
   included in the string by escaping them.
 
@@ -243,7 +243,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   Using \code{scan} on an open connection to read partial lines can lose
   chars: use an explicit separator to avoid this.
 
-  Having \code{nul} bytes in fields (including \code{\0} if
+  Having \code{nul} bytes in fields (including \samp{\0} if
   \code{allowEscapes = TRUE}) may lead to interpretation of the
   field being terminated at the \code{nul}.  They not normally present
   in text files -- see \code{\link{readBin}}.
