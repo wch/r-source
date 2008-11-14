@@ -94,21 +94,25 @@ sort.int <-
 
 order <- function(..., na.last = TRUE, decreasing = FALSE)
 {
-    if(!is.na(na.last))
-        .Internal(order(na.last, decreasing, ...))
-    else{ ## remove nas
-        z <- list(...)
-        if(any(diff(sapply(z, length)) != 0))
-            stop("argument lengths differ")
-        ans <- sapply(z, is.na)
-        if(is.list(ans)) return(integer(0)) # happens for 0-length input
-        ok <- if(is.matrix(ans)) !apply(ans, 1, any) else !any(ans)
-        if(all(!ok)) return(integer(0))
-        z[[1]][!ok] <- NA
-        ans <- do.call("order", c(z, decreasing=decreasing))
-        keep <- seq_along(ok)[ok]
-        ans[ans %in% keep]
-    }
+    z <- list(...)
+    if(any(unlist(lapply(z, is.object)))) {
+        z <- lapply(z, function(x) if(is.object(x)) xtfrm(x) else x)
+        if(!is.na(na.last))
+            return(do.call("order", c(z, na.last=na.last,
+                                      decreasing=decreasing)))
+    } else if(!is.na(na.last))
+        return(.Internal(order(na.last, decreasing, ...)))
+    ## remove nas
+    if(any(diff(sapply(z, length)) != 0))
+        stop("argument lengths differ")
+    ans <- sapply(z, is.na)
+    if(is.list(ans)) return(integer(0)) # happens for 0-length input
+    ok <- if(is.matrix(ans)) !apply(ans, 1, any) else !any(ans)
+    if(all(!ok)) return(integer(0))
+    z[[1]][!ok] <- NA
+    ans <- do.call("order", c(z, decreasing=decreasing))
+    keep <- seq_along(ok)[ok]
+    ans[ans %in% keep]
 }
 
 sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
@@ -137,4 +141,23 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
     ## method == "shell"
     if(is.na(na.last)) .Internal(order(TRUE, decreasing, x[!is.na(x)]))
     else .Internal(order(na.last, decreasing, x))
+}
+
+xtfrm <- function(x) UseMethod("xtfrm")
+xtfrm.default <- function(x)
+    as.vector(rank(x, ties.method="min", na.last="keep"))
+xtfrm.factor <- function(x) as.integer(x) # primitive, so needs a wrapper
+xtfrm.Surv <- function(x)
+    if(ncol(x) == 2) order(x[,1], x[,2]) else order(x[,1], x[,2], x[,3]) # needed by 'party'
+
+.gt <- function(x, i, j)
+{
+    xi <- x[i]; xj <- x[j]
+    if (xi == xj) 0L else if(xi > xj) 1L else -1L;
+}
+
+.gtn <- function(x, strictly)
+{
+    n <- length(x)
+    if(strictly) all(x[-1] > x[-n]) else all(x[-1] >= x[-n])
 }

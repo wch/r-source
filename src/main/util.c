@@ -1141,6 +1141,8 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
     if(n <= 0 || !*s) return (size_t)0;
     used = mbrtowc(wc, s, n, ps);
     if((int) used < 0) {
+	/* This gets called from the menu setup in RGui */
+	if (!R_Is_Running) return -1;
 	/* let's try to print out a readable version */
 	char *err = alloca(4*strlen(s) + 1), *q;
 	const char *p;
@@ -1438,7 +1440,7 @@ int attribute_hidden Rf_AdobeSymbol2ucs2(int n)
 double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
 {
     LDOUBLE ans = 0.0, p10 = 10.0, fac = 1.0;
-    int n, expn = 0, sign = 1, ndigits = 0;
+    int n, expn = 0, sign = 1, ndigits = 0, exph = -1;
     const char *p = str;
 
     /* optional whitespace */
@@ -1478,7 +1480,9 @@ double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
 	    if('0' <= *p && *p <= '9') ans = 16*ans + (*p -'0');
 	    else if('a' <= *p && *p <= 'f') ans = 16*ans + (*p -'a' + 10);
 	    else if('A' <= *p && *p <= 'F') ans = 16*ans + (*p -'A' + 10);
+	    else if(*p == dec) {exph = 0; continue;}
 	    else break;
+	    if (exph >= 0) exph += 4;
 	}
 	if (*p == 'p' || *p == 'P') {
 	    int expsign = 1;
@@ -1490,6 +1494,7 @@ double R_strtod4(const char *str, char **endptr, char dec, Rboolean NA)
 	    }
 	    for (n = 0; *p >= '0' && *p <= '9'; p++) n = n * 10 + (*p - '0');
 	    expn += expsign * n;
+	    if(exph > 0) expn -= exph;
 	    if (expn < 0) {
 		for (n = -expn, fac = 1.0; n; n >>= 1, p2 *= p2)
 		    if (n & 1) fac *= p2;

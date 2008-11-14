@@ -150,7 +150,7 @@ plot.histogram <-
               sub = NULL,
 	      xlab = x$xname, ylab,
 	      xlim = range(x$breaks), ylim = NULL,
-	      axes = TRUE, labels = FALSE, add = FALSE, ...)
+	      axes = TRUE, labels = FALSE, add = FALSE, ann = TRUE, ...)
 {
     equidist <-
 	if(is.logical(x$equidist)) x$equidist
@@ -171,7 +171,7 @@ plot.histogram <-
 	    ylab <- if (!freq) "Density" else "Frequency"
 	plot.new()
 	plot.window(xlim, ylim, "")	#-> ylim's default from 'y'
-	title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
+	if(ann) title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
 	if(axes) {
 	    axis(1, ...)
 	    axis(2, ...)

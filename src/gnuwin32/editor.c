@@ -94,17 +94,32 @@ static void editor_set_title(editor c, const char *title)
 
 /*** FILE MANAGEMENT FUNCTIONS ***/
 
+FILE *R_wfopen(const wchar_t *filename, const wchar_t *mode);
+
 static void editor_load_file(editor c, const char *name, int enc)
 {
     textbox t = getdata(c);
     EditorData p = getdata(t);
     FILE *f;
     char *buffer = NULL, tmp[MAX_PATH+50];
+    const char *sname;
     long num = 1, bufsize;
 
-    /* we checked that file could be read in the caller */
-    f = R_fopen(name, "r");
-    if (f == NULL) return;
+    if(enc == CE_UTF8) {
+	wchar_t wname[MAX_PATH+1];
+	Rf_utf8towcs(wname, name, MAX_PATH+1);
+	f = R_wfopen(wname, L"r");
+	sname = reEnc(name, CE_UTF8, CE_NATIVE, 3);
+    } else {
+	f = R_fopen(name, "r");
+	sname = name;
+    }
+    if (f == NULL) {
+	snprintf(tmp, MAX_PATH+50, 
+		 G_("unable to open file %s for reading"), sname);
+	R_ShowMessage(tmp);
+	return;
+    }
     p->file = 1;
     strncpy(p->filename, name, MAX_PATH+1);
     bufsize = 0;
@@ -116,8 +131,8 @@ static void editor_load_file(editor c, const char *name, int enc)
 	    buffer[bufsize] = '\0';
 	}
 	else {
-	    snprintf(tmp, MAX_PATH+50, G_("Could not read from file '%s'"),
-		     name);
+	    snprintf(tmp, MAX_PATH+50, 
+		     G_("Could not read from file '%s'"), sname);
 	    askok(tmp);
 	}
     }
@@ -128,17 +143,27 @@ static void editor_load_file(editor c, const char *name, int enc)
     fclose(f);
 }
 
-static void editor_save_file(editor c, const char *name)
+static void editor_save_file(editor c, const char *name, int enc)
 {
     textbox t = getdata(c);
     FILE *f;
     char buf[MAX_PATH+30];
+    const char *sname;
+
     if (name == NULL)
 	return;
     else {
-	f = R_fopen(name, "w");
+	if(enc == CE_UTF8) {
+	    wchar_t wname[MAX_PATH+1];
+	    Rf_utf8towcs(wname, name, MAX_PATH+1);
+	    sname = reEnc(name, CE_UTF8, CE_NATIVE, 3);
+	    f = R_wfopen(wname, L"w");
+	} else {
+	    sname = name;
+	    f = R_fopen(sname, "w");
+	}
 	if (f == NULL) {
-	    snprintf(buf, MAX_PATH+30, G_("Could not save file '%s'"), name);
+	    snprintf(buf, MAX_PATH+30, G_("Could not save file '%s'"), sname);
 	    askok(buf);
 	    return;
 	}
@@ -151,18 +176,22 @@ static void editorsaveas(editor c)
 {
     textbox t = getdata(c);
     EditorData p = getdata(t);
-    char *current_name = (p->file ? p->filename : "");
-    char *name;
-    setuserfilter("R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
-    name = askfilesave(G_("Save script as"), current_name);
-    if (name == NULL)
+    wchar_t *wname;
+
+    setuserfilterW(L"R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
+    wname = askfilesaveW(G_("Save script as"), "");
+    if (wname == NULL)
 	return;
     else {
-	editor_save_file(c, name);
+	char name[4*MAX_PATH+1];
+	const char *tname;
+	wcstoutf8(name, wname, MAX_PATH);
+	tname = reEnc(name, CE_UTF8, CE_NATIVE, 3);
+	editor_save_file(c, name, CE_UTF8);
 	p->file = 1;
-	strncpy(p->filename, name, MAX_PATH+1);
+	strncpy(p->filename, tname, MAX_PATH+1);
 	gsetmodified(t, 0);
-	editor_set_title(c, name);
+	editor_set_title(c, tname);
 	show(c);
     }
 }
@@ -179,8 +208,7 @@ static void editorsave(editor c)
     textbox t = getdata(c);
     EditorData p = getdata(t);
     if (p->file) {  /* save existing file without prompt */
-	const char *current_name = p->filename;
-	editor_save_file(c, current_name);
+	editor_save_file(c, p->filename, CE_UTF8);
 	gsetmodified(t, 0);
     }
     /* if new file then prompt for name to save as */
@@ -338,11 +366,15 @@ void menueditornew(control m)
 
 static void editoropen(const char *default_name)
 {
-    char *name;
+    wchar_t *wname;
+    char name[4*MAX_PATH];
+    const char* title;
+
     int i; textbox t; EditorData p;
-    setuserfilter("R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
-    name = askfilename("Open script", default_name); /* returns NULL if open dialog cancelled */
-    if (name) {
+    setuserfilterW(L"R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
+    wname = askfilenameW(G_("Open script"), default_name); /* returns NULL if open dialog cancelled */
+    if (wname) {
+	wcstoutf8(name, wname, MAX_PATH);
 	/* check if file is already open in an editor. If so, close and open again */
 	for (i = 0; i < neditors; ++i) {
 	    t = getdata(REditors[i]);
@@ -352,7 +384,8 @@ static void editoropen(const char *default_name)
 		break;
 	    }
 	}
-	Rgui_Edit(name, CE_NATIVE, name, 0);
+	title = reEnc(name, CE_UTF8, CE_NATIVE, 3);
+	Rgui_Edit(name, CE_UTF8, title, 0);
     }
 }
 
@@ -643,8 +676,10 @@ static editor neweditor(void)
     setdata(t, p);
 
     gsetcursor(c, ArrowCursor);
-    setforeground(c, consolefg);
-    setbackground(c, consolebg);
+    setforeground(c, guiColors[editorfg]);
+    setbackground(c, guiColors[editorbg]);
+    setbackground(t, guiColors[editorbg]);
+    
 #ifdef USE_MDI
     if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
 	int btsize = 24;
@@ -750,6 +785,7 @@ static editor neweditor(void)
     RguiCommonHelp(m, p->hmenu);
 
     settextfont(t, editorfn);
+    setforeground(t, guiColors[editorfg]);    
     setresize(c, editorresize);
     setclose(c, editorclose);
     setdel(c, editordel);
@@ -795,7 +831,6 @@ static void eventloop(editor c)
 
 #include <unistd.h>
 
-/* FIXME UTF-8 */
 int Rgui_Edit(const char *filename, int enc, const char *title,
 	      int modal)
 {
@@ -812,10 +847,7 @@ int Rgui_Edit(const char *filename, int enc, const char *title,
 	return 1;
     }
     if (strlen(filename) > 0) {
-	if (!access(filename, R_OK))
-	    editor_load_file(c, filename, enc);
-	else
-	    R_ShowMessage(G_("Unable to open file for reading"));
+	editor_load_file(c, filename, enc);
 	editor_set_title(c, title);
     }
     else {

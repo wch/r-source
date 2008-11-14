@@ -310,7 +310,7 @@ extern int putenv(char *string);
 #endif
 
 #define HSIZE	   4119	/* The size of the hash table for symbols */
-#define MAXIDSIZE   256	/* Largest symbol size possible */
+#define MAXIDSIZE   256	/* Largest symbol size, in bytes excluding terminator */
 
 /* The type of the do_xxxx functions. */
 /* These are the built-in R functions. */
@@ -1122,7 +1122,7 @@ const char *EncodeReal2(double, int, int, int);
 
 /* main/sort.c */
 void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
-		  Rboolean decreasing);
+		  Rboolean decreasing, SEXP rho);
 
 /* main/subset.c */
 SEXP R_subset3_dflt(SEXP, SEXP, SEXP);

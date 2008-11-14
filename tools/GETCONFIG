@@ -1,5 +1,3 @@
-#!/bin/sh
-#
 # ${RHOME}/tools/GETCONFIG
 
 echo "/* Rconfig.h.  Generated automatically */"

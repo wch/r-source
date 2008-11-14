@@ -61,16 +61,21 @@ replicate(n, expr, simplify = TRUE)
   length is one the result is a vector, and if greater than one is a
   matrix with a column corresponding to each element of \code{X}.
 
-  The mode of the simplified answer is chosen to accommodate the modes of
-  all the values returned by the calls to \code{FUN}: see \code{\link{unlist}}.
-
-  If \code{X} has length 0, the return value of \code{sapply} is always
-  a 0-length list.
-
   Users of S4 classes should pass a list to \code{lapply}: the internal
   coercion is done by the system \code{as.list} in the base namespace
   and not one defined by a user (e.g. by setting S4 methods on the
   system function).
+}
+\value{
+  For \code{lapply} and \code{sapply(simplify=FALSE)}, a list.
+
+  For \code{sapply(simplify=TRUE)} and \code{replicate}: if \code{X} has
+  length zero or \code{n = 0}, an empty list.  Otherwise an atomic
+  vector or matrix or list of the same length as \code{X} (of length
+  \code{n} for \code{replicate}).  If simplification occurs, the output
+  type is determined from the highest type of the return values in the
+  hierarchy NULL < raw < logical < integer < real < complex < character
+  < list < expression, after coercion of pairlists tolists.
 }
 \note{
   \code{sapply(*, simplify = FALSE, USE.NAMES = FALSE)} is
@@ -87,6 +92,11 @@ replicate(n, expr, simplify = TRUE)
   that e.g. \code{lapply(ll, function(x) is.numeric(x))} is required in
   \R 2.7.1 to ensure that method dispatch for \code{is.numeric} occurs
   correctly.
+  
+  If \code{expr} is a function call, be aware of assumptions about where
+  it is evaluated, and in particular what \code{\dots} might refer to.
+  You can pass additional named arguments to a function call as
+  additional named arguments to \code{replicate}: see \sQuote{Examples}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -113,6 +123,13 @@ i39 <- sapply(3:9, seq) # list of vectors
 sapply(i39, fivenum)
 
 hist(replicate(100, mean(rexp(10))))
+
+## use of replicate() with parameters:
+% taken from PR#8472
+foo <- function(x=1, y=2) c(x,y)
+# does not work: bar <- function(n, ...) replicate(n, foo(...))
+bar <- function(n, x) replicate(n, foo(x=x))
+bar(5, x=3)
 }
 \keyword{iteration}
 \keyword{list}

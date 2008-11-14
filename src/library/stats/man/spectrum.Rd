@@ -1,6 +1,6 @@
 % File src/library/stats/man/spectrum.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{spectrum}
@@ -57,7 +57,7 @@ spectrum(x, \dots, method = c("pgram", "ar"))
   \code{spectrum} is a wrapper function which calls the methods
   \code{\link{spec.pgram}} and \code{\link{spec.ar}}.
   
-  The spectrum here is defined with scaling \code{1/frequency(x)},
+  The spectrum here is defined with scaling \code{1/\link{frequency}(x)},
   following S-PLUS.  This makes the spectral density a density over the
   range \code{(-frequency(x)/2, +frequency(x)/2]}, whereas a more common
   scaling is \eqn{2\pi} and range \eqn{(-0.5, 0.5]} (e.g., Bloomfield)

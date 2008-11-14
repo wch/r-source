@@ -90,6 +90,10 @@ nls(formula, data, start, control, algorithm,
   Arguments \code{subset} and \code{na.action} are supported only when
   all the variables in the formula taken from \code{data} are of the
   same length: other cases give a warning.
+
+  Note that the \code{\link{anova}} method does not check that the
+  models are nested: this cannot easily be done automatically, so use
+  with care.
 }
 \section{Warning}{
   \bold{Do not use \code{nls} on artificial "zero-residual" data.}

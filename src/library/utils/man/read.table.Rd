@@ -45,7 +45,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     \emph{relative} to the current working directory,
     \code{\link{getwd}()}. Tilde-expansion is performed where supported.
 
-    Alternatively, \code{file} can be a readable
+    Alternatively, \code{file} can be a readable text-mode
     \code{\link{connection}} (which will be opened for reading if
     necessary, and if so \code{\link{close}}d (and hence destroyed) at
     the end of the function call).  (If \code{\link{stdin}()} is used,
@@ -173,7 +173,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     This allows putting comments after the last field.}
 
   \item{stringsAsFactors}{logical: should character vectors be converted
-    to factors?}
+    to factors?  Note that this is overridden bu \code{as.is} and
+    \code{colClasses}, both of which allow finer control.}
 
   \item{encoding}{encoding to be assumed for input strings.  It is
     used to mark character strings as known to be in

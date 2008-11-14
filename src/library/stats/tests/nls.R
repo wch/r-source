@@ -19,7 +19,7 @@
 .proctime00 <- proc.time()
 library(stats)
 options(digits=5) # to avoid trivial printed differences
-
+options(show.signif.stars=FALSE) # avoid fancy quotes in o/p
 postscript("nls-test.ps")
 
 ## selfStart.default() w/ no parameters:
@@ -177,6 +177,7 @@ confint(profile(fm))
 
 
 ## more profiling with bounds
+op <- options(digits=3)
 npts <- 10
 set.seed(1001)
 a <- 2
@@ -200,6 +201,7 @@ m2 <- nls(y ~ gfun(a,b,x), algorithm = "port",
           lower = c(0, 0), upper=c(1.5, 1), start = c(a=1, b=1))
 profile(m2)
 confint(m2)
+options(op)
 
 ## scoping problems
 test <- function()

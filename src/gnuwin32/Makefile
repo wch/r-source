@@ -155,7 +155,7 @@ else
 endif
 	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-tools
 	@if ! test -f ../../library/tools/R/tools.rdb ; then \
-	  echo "preparing package tools for lazy loading" ; \
+	  echo "  preparing package tools for lazy loading" ; \
 	  (cat ../library/tools/R/makeLazyLoad.R; \
 	    echo "makeLazyLoading(\"tools\", lib.loc=\"$(RLIB)\")") | \
 	    R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --vanilla --slave > /dev/null ; \

@@ -289,6 +289,7 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_CLOENV(CAR(args), saveenv);
 	UNPROTECT(1);
     }
+    PROTECT(tval); /* against Rconn_printf */
     ifile = asInteger(CADR(args));
 
     wasopen = 1;
@@ -313,6 +314,7 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	       res < strlen(CHAR(STRING_ELT(tval, i))) + 1)
 		warning(_("wrote too few characters"));
 	}
+    UNPROTECT(1); /* tval */
     if (!wasopen) con->close(con);
     return (CAR(args));
 }
@@ -1097,9 +1099,10 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	break;
     case EXTPTRSXP:
     {
-	char tpb[12+sizeof(void *)];
+	char tpb[32]; /* need 12+2+2*sizeof(void*) */
 	d->sourceable = FALSE;
-	sprintf(tpb, "<pointer: %p>", R_ExternalPtrAddr(s));
+	snprintf(tpb, 32, "<pointer: %p>", R_ExternalPtrAddr(s));
+	tpb[31] = '\0';
 	print2buff(tpb, d);
     }
 	break;
@@ -1306,7 +1309,7 @@ static Rboolean src2buff(SEXP sv, int k, LocalParseData *d)
     SEXP t;
     int i, n;
 
-    if (length(sv) > k && !isNull(t = VECTOR_ELT(sv, k))) {
+    if (TYPEOF(sv) == VECSXP && length(sv) > k && !isNull(t = VECTOR_ELT(sv, k))) {
 	PROTECT(t);
 
 	PROTECT(t = lang2(install("as.character"), t));
@@ -1336,9 +1339,11 @@ static void vec2buff(SEXP v, LocalParseData *d)
     nv = getAttrib(v, R_NamesSymbol);
     if (length(nv) == 0) nv = R_NilValue;
 
-    if (d->opts & USESOURCE)
+    if (d->opts & USESOURCE) {
 	sv = getAttrib(v, R_SrcrefSymbol);
-    else
+	if (TYPEOF(sv) != VECSXP)
+	    sv = R_NilValue;
+    } else
 	sv = R_NilValue;
 
     for(i = 0 ; i < n ; i++) {

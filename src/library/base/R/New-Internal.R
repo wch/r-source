@@ -146,15 +146,15 @@ gc <- function(verbose = getOption("verbose"),	reset=FALSE)
 gcinfo <- function(verbose) .Internal(gcinfo(verbose))
 gctorture <- function(on=TRUE) invisible(.Internal(gctorture(on)))
 
-is.unsorted <- function(x, na.rm = FALSE) {
+is.unsorted <- function(x, na.rm = FALSE, strictly = FALSE)
+{
     if(is.null(x)) return(FALSE)
-    if(!is.atomic(x) ||
-       (!na.rm && any(is.na(x))))
+    if(!na.rm && any(is.na(x)))## "FIXME" is.na(<large>) is "too slow"
 	return(NA)
     ## else
     if(na.rm && any(ii <- is.na(x)))
 	x <- x[!ii]
-    .Internal(is.unsorted(x))
+    .Internal(is.unsorted(x, strictly))
 }
 
 mem.limits <- function(nsize=NA, vsize=NA)
@@ -192,11 +192,18 @@ memory.profile <- function() .Internal(memory.profile())
 
 capabilities <- function(what = NULL)
 {
-    z  <- .Internal(capabilities(what))
-    if(is.null(what)) return(z)
-    nm <- names(z)
-    i <- match(what, nm)
-    if(is.na(i)) logical(0) else z[i]
+    z  <- .Internal(capabilities())
+    if(!is.null(what))
+        z <- z[match(what, names(z), 0)]
+    if(.Platform$OS.type == "windows") return(z)
+    ## Now we need to deal with any NA entries if X11 is unknown.
+    nas <- names(z[is.na(z)])
+    if(any(nas %in% c("X11", "jpeg", "png", "tiff"))) {
+        ## This might throw an X11 error
+         z[nas] <- tryCatch(.Internal(capabilitiesX11()),
+                            error = function(e) FALSE)
+    }
+    z
 }
 
 inherits <- function(x, what, which = FALSE)

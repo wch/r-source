@@ -177,6 +177,10 @@ isIncomplete(con)
   the maximal allowed by the current setting of \code{umask} (see
   \code{\link{Sys.umask}}).
 #endif
+  
+  \code{gzfile} connections are an exception, as the file always has to
+  be opened in binary mode.  Thus modes such as \code{r} are binary, and
+  \code{rt} is needed to have a text-mode connection.
 
   \code{close} closes and destroys a connection.  Note that this will
   happen automatically in due course if there is no \R object referring
@@ -224,7 +228,8 @@ isIncomplete(con)
 #ifdef windows
   only supported if \code{--internet2} was used (to make use of Internet
   Explorer internals), and then only if the certificate is considered to
-  be valid.
+  be valid.  With that option only, the \code{http://user:pass@site}
+  notation for sites requiring authentication is also accepted.
 #endif
 }
 \value{
@@ -488,9 +493,9 @@ while(isIncomplete(con2)) {Sys.sleep(1); readLines(con2)}
 close(con2)
 
 ## examples of use of encodings
-cat(x, file = file("foo", "w", encoding="UTF-8"))
-# read a 'Windows Unicode' file including personal names
-A <- read.table(file("students", encoding="UCS-2LE"))
+cat(x, file = (con <- file("foo", "w", encoding="UTF-8"))); close(con)
+# read a 'Windows Unicode' file
+A <- read.table(con <- file("students", encoding="UCS-2LE")); close(con)
 }}
 \keyword{file}
 \keyword{connection}

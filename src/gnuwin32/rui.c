@@ -118,16 +118,38 @@ void closeconsole(control m)  /* can also be called from editor menus */
     R_CleanUp(SA_DEFAULT, 0, 1);
 }
 
+static void quote_fn(wchar_t *fn, char *s)
+{
+    char *p = s;
+    wchar_t *w;
+    int used;
+    for (w = fn; *w; w++) {
+	if(*w  == L'\\') {
+	    *p++ = '\\';
+	    *p++ = '\\';
+	} else {
+	    used = wctomb(p, *w);
+	    if(used > 0) p += used;
+	    else {
+		sprintf(p, "\\u%04x", (unsigned int) *w);
+		p += 6;
+	    }
+	}
+    }
+    *p = '\0';
+}
+
+
 static void menusource(control m)
 {
-    char *fn, local[MAX_PATH];
+    wchar_t *fn;
+    char local[MAX_PATH];
 
     if (!ConsoleAcceptCmd) return;
-    setuserfilter("R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
-    fn = askfilename(G_("Select file to source"), "");
-/*    show(RConsole); */
+    setuserfilterW(L"R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
+    fn = askfilenameW(G_("Select file to source"), "");
     if (fn) {
-	double_backslashes(fn, local);
+	quote_fn(fn, local);
 	snprintf(cmd, 1024, "source(\"%s\")", local);
 	consolecmd(RConsole, cmd);
     }
@@ -141,14 +163,14 @@ static void menudisplay(control m)
 
 static void menuloadimage(control m)
 {
-    char *fn, s[2*MAX_PATH];
+    wchar_t *fn;
+    char s[MAX_PATH];
 
     if (!ConsoleAcceptCmd) return;
-    setuserfilter("R images (*.RData)\0*.RData\0R images - old extension (*.rda)\0*.rda\0All files (*.*)\0*.*\0\0");
-    fn = askfilename(G_("Select image to load"), "");
-/*    show(RConsole); */
+    setuserfilterW(L"R images (*.RData)\0*.RData\0R images - old extension (*.rda)\0*.rda\0All files (*.*)\0*.*\0\0");
+    fn = askfilenameW(G_("Select image to load"), "");
     if (fn) {
-	double_backslashes(fn, s);
+	quote_fn(fn, s);
 	snprintf(cmd, 1024, "load(\"%s\")", s);
 	consolecmd(RConsole, cmd);
     }
@@ -156,14 +178,14 @@ static void menuloadimage(control m)
 
 static void menusaveimage(control m)
 {
-    char *fn, s[2*MAX_PATH];
+    wchar_t *fn;
+    char s[MAX_PATH];
 
     if (!ConsoleAcceptCmd) return;
-    setuserfilter("R images (*.RData)\0*.RData\0All files (*.*)\0*.*\0\0");
-    fn = askfilesave(G_("Save image in"), ".RData");
-/*    show(RConsole); */
+    setuserfilterW(L"R images (*.RData)\0*.RData\0All files (*.*)\0*.*\0\0");
+    fn = askfilesaveW(G_("Save image in"), ".RData");
     if (fn) {
-	double_backslashes(fn, s);
+	quote_fn(fn, s);
 	if (!strcmp(&s[strlen(s) - 2], ".*")) s[strlen(s) - 2] = '\0';
 	snprintf(cmd, 1024, "save.image(\"%s\")", s);
 	consolecmd(RConsole, cmd);
@@ -194,19 +216,16 @@ static void menusavehistory(control m)
 static void menuchangedir(control m)
 {
     askchangedir();
-/*    show(RConsole); */
 }
 
 static void menuprint(control m)
 {
     consoleprint(RConsole);
-/*    show(RConsole); */
 }
 
 static void menusavefile(control m)
 {
     consolesavefile(RConsole, 0);
-/*    show(RConsole); */
 }
 
 static void menuexit(control m)
@@ -618,6 +637,14 @@ static void menuhelpstart(control m)
     internal_shellexec("doc\\html\\index.html");
 }
 
+static void menuhelpsearchstart(control m)
+{
+/*    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole, "help.start()");
+    show(RConsole);*/
+    internal_shellexec("doc\\html\\search\\SearchEngine.html");
+}
+
 static void menuFAQ(control m)
 {
     internal_shellexec("doc\\manual\\R-FAQ.html");
@@ -793,7 +820,7 @@ void readconsolecfg()
     }
     setconsoleoptions(fn, sty, gui.pointsize, gui.crows, gui.ccols,
 		      gui.cx, gui.cy,
-		      gui.fg, gui.user, gui.bg, gui.hlt,
+		      gui.guiColors,
 		      gui.prows, gui.pcols, gui.pagerMultiple, gui.setWidthOnResize,
 		      gui.cbb, gui.cbl, gui.buffered);
 }
@@ -956,6 +983,9 @@ int RguiCommonHelp(menu m, HelpMenuItems hmenu)
 				      menuhelp));
     MCHECK(hmenu->mhelpstart = newmenuitem(G_("Html help"), 0, menuhelpstart));
     if (!check_doc_file("doc\\html\\index.html")) disable(hmenu->mhelpstart);
+    MCHECK(hmenu->mhelpsearchstart = newmenuitem(G_("Html search page"), 0, menuhelpsearchstart));
+    if (!check_doc_file("doc\\html\\search\\SearchEngine.html"))
+	disable(hmenu->mhelpsearchstart);
     MCHECK(hmenu->mhelpsearch = newmenuitem(G_("Search help..."), 0,
 					    menuhelpsearch));
     MCHECK(hmenu->msearchRsite = newmenuitem("search.r-project.org ...", 0,
@@ -1164,6 +1194,7 @@ int RgetMDIheight(void)
 }
 #endif
 
+#if 0
 extern int  CharacterMode;
 int DialogSelectFile(char *buf, int len)
 {
@@ -1179,6 +1210,7 @@ int DialogSelectFile(char *buf, int len)
 	strcpy(buf, "");
     return (strlen(buf));
 }
+#endif
 
 static menu *usermenus;
 static char **usermenunames;

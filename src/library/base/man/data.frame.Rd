@@ -37,7 +37,7 @@ default.stringsAsFactors()
   \item{stringsAsFactors}{logical: should character vectors be converted
     to factors?  The \sQuote{factory-fresh} default is \code{TRUE}, but
     this can be changed by setting \code{\link{options}(stringsAsFactors
-      = FALSE}.}
+      = FALSE)}.}
 }
 \value{
   A data frame, a matrix-like structure whose columns may be of

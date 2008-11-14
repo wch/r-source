@@ -9,19 +9,18 @@ SRC_HEADERS = R.h S.h Rdefines.h Rembedded.h Rinternals.h
 ## this deliberately does not include Rinterfaces.h, which is Unix-only
 OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
 GW32_HEADERS = iconv.h psignal.h
-RPROXY_HEADERS = SC_proxy.h SC_system.h rproxy.h bdx.h bdx_SEXP.h bdx_com.h bdx_util.h com_util.h
 
 all: fixh config.h
 	@echo 'installing C headers'
 	@mkdir -p $(R_HOME)/include/R_ext
-	@cp -p $(SRC_HEADERS) $(OBJ_HEADERS) $(RPROXY_HEADERS) iconv.h $(R_HOME)/include
+	@cp -p $(SRC_HEADERS) $(OBJ_HEADERS) iconv.h $(R_HOME)/include
 	@cp -p R_ext/*.h $(R_HOME)/include/R_ext
 	@cp -p ../extra/graphapp/graphapp.h ../extra/graphapp/ga.h \
 	  $(R_HOME)/include
 
 version: Rversion.h
 
-fixh: $(GW32_HEADERS) $(OBJ_HEADERS) $(RPROXY_HEADERS)
+fixh: $(GW32_HEADERS) $(OBJ_HEADERS)
 	@$(ECHO) done > fixh
 
 ifeq ($(strip $(WIN)),64)
@@ -63,14 +62,10 @@ com_util.h: ../gnuwin32/front-ends/com_util.h
 	@cp $< $@
 
 Rconfig.h: config.h $(R_HOME)/tools/GETCONFIG
-	@$(SED) -e 1d $(R_HOME)/tools/GETCONFIG > GC
-	@sh GC > Rconfig.h
-	@$(RM) GC
+	@sh $(R_HOME)/tools/GETCONFIG > Rconfig.h
 
 Rversion.h: $(R_HOME)/VERSION $(R_HOME)/SVN-REVISION $(R_HOME)/tools/GETVERSION
-	@$(SED) -e 1d $(R_HOME)/tools/GETVERSION > $(R_HOME)/tools/GV
-	@sh $(R_HOME)/tools/GV > $@
-	@$(RM) $(R_HOME)/tools/GV
+	@sh $(R_HOME)/tools/GETVERSION > $@
 
 Rmath.h0: Rmath.h0.in $(R_HOME)/VERSION
 	@$(SED) -e 's/@RMATH_HAVE_LOG1P@/# define HAVE_LOG1P 1/'  \
@@ -122,4 +117,3 @@ endif
 
 distclean:
 	$(RM) -f Rmath.h0 fixh
-	$(RM) $(RPROXY_HEADERS)

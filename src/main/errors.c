@@ -107,6 +107,12 @@ void R_CheckStack(void)
 void R_CheckUserInterrupt(void)
 {
     R_CheckStack();
+
+    /* Don't do any processing of interrupts, timing limits, or other
+       asynchronous events if interrupts are suspended. */
+    if (R_interrupts_suspended)
+	return;
+
     /* This is the point where GUI systems need to do enough event
        processing to determine whether there is a user interrupt event
        pending.  Need to be careful not to do too much event
@@ -118,7 +124,7 @@ void R_CheckUserInterrupt(void)
     R_ProcessEvents();
 #else
     R_PolledEvents();
-    /* the same code is in R_ProcessEvents on Windows */
+    /* the same code is in R_ProcessEvents on Windows and AQUA */
     if (cpuLimit > 0.0 || elapsedLimit > 0.0) {
 	double cpu, data[5];
 	R_getProcTime(data);
@@ -1783,3 +1789,14 @@ do_printDeferredWarnings(SEXP call, SEXP op, SEXP args, SEXP env)
     R_PrintDeferredWarnings();
     return R_NilValue;
 }
+
+SEXP attribute_hidden
+do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    int orig_value = R_interrupts_suspended;
+    if (args != R_NilValue) 
+	R_interrupts_suspended = asLogical(CAR(args));
+    return ScalarLogical(orig_value);
+}
+	
+	

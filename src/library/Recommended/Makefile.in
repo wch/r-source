@@ -82,6 +82,6 @@ distdir: $(DISTFILES)
 	done
 
 
-## Hardcoded dependencies (see 'share/make/vars.mk')
+## Hardcoded dependencies (see '../../../share/make/vars.mk')
 mgcv.ts: nlme.ts VR.ts
 nlme.ts: lattice.ts

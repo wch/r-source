@@ -14,8 +14,10 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
+xgettext <-
+function(dir, verbose = FALSE, asCall = TRUE)
 {
+    dir <- file_path_as_absolute(dir)
     bn <- basename(dir)
     dir <- file.path(dir, "R")
     exts <- .make_file_exts("code")
@@ -38,20 +40,20 @@ xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
             if(is.character(e)) {
                 if(!suppress) strings <<- c(strings, e)
             } else if(is.call(e)) {
-                if(is.name(e[[1]])
-                   && (as.character(e[[1]])
+                if(is.name(e[[1L]])
+                   && (as.character(e[[1L]])
                        %in% c("gettext", "gettextf"))) {
                     domain <- e[["domain"]]
                     suppress <- !is.null(domain) && !is.name(domain) && is.na(domain)
-                    if(as.character(e[[1]]) %in% "gettextf")
-                        e <- e[2] # just look at first arg
+                    if(as.character(e[[1L]]) %in% "gettextf")
+                        e <- e[2L] # just look at first arg
                 }
                 for(i in seq_along(e)) find_strings2(e[[i]], suppress)
             }
         }
         if(is.call(e)
-           && is.name(e[[1]])
-           && (as.character(e[[1]])
+           && is.name(e[[1L]])
+           && (as.character(e[[1L]])
                %in% c("warning", "stop", "message", "packageStartupMessage",
                       "gettext", "gettextf"))) {
              domain <- e[["domain"]]
@@ -60,7 +62,7 @@ xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
              if(!is.null(names(e)))
                  e <- e[!names(e) %in% c("call.", "immediate.", "domain")]
              if(asCall) {
-                 if(!suppress) strings <<- c(strings, as.character(e)[-1])
+                 if(!suppress) strings <<- c(strings, as.character(e)[-1L])
              } else for(i in seq_along(e)) find_strings2(e[[i]], suppress)
         } else if(is.recursive(e))
             for(i in seq_along(e)) Recall(e[[i]])
@@ -76,26 +78,30 @@ xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
         out[[f]] <- structure(unique(strings), class="xgettext")
     }
 
-    out[sapply(out, length) > 0]
+    out[sapply(out, length) > 0L]
 }
 
-print.xgettext <- function(x, ...)
+print.xgettext <-
+function(x, ...)
 {
     cat(x, sep="\n")
     invisible(x)
 }
 
-print.xngettext <- function(x, ...)
+print.xngettext <-
+function(x, ...)
 {
     lapply(x, function(x)
-           cat("\nmsgid        = ", x[1],
-               "\nmsgid_plural = ", x[2],
+           cat("\nmsgid        = ", x[1L],
+               "\nmsgid_plural = ", x[2L],
                "\n", sep=""))
     invisible(x)
 }
 
-xngettext <- function(dir, verbose = FALSE)
+xngettext <-
+function(dir, verbose = FALSE)
 {
+    dir <- file_path_as_absolute(dir)
     dir <- file.path(dir, "R")
     exts <- .make_file_exts("code")
     R_files <- list_files_with_exts(dir, exts)
@@ -108,8 +114,8 @@ xngettext <- function(dir, verbose = FALSE)
     names(out) <- R_files
 
     find_strings <- function(e) {
-        if(is.call(e) && is.name(e[[1]])
-           && as.character(e[[1]]) %in% "ngettext") {
+        if(is.call(e) && is.name(e[[1L]])
+           && as.character(e[[1L]]) %in% "ngettext") {
              domain <- e[["domain"]]
              ## remove named domain arg
              if(!is.null(names(e))) e <- e[!names(e) %in% "domain"]
@@ -128,12 +134,15 @@ xngettext <- function(dir, verbose = FALSE)
         out[[f]] <- structure(strings, class="xngettext")
     }
 
-    out[sapply(out, length) > 0]
+    out[sapply(out, length) > 0L]
 }
 
-xgettext2pot <- function(dir, potFile)
+xgettext2pot <-
+function(dir, potFile)
 {
-    if(missing(potFile)) potFile <- paste("R-", basename(dir), ".pot", sep="")
+    dir <- file_path_as_absolute(dir)
+    if(missing(potFile))
+        potFile <- paste("R-", basename(dir), ".pot", sep="")
     tmp <- unique(unlist(xgettext(dir, asCall = FALSE)))
     tmp <- tmp[nzchar(tmp)]
     tmp <- shQuote(encodeString(tmp), type="cmd")  # need to quote \n, \t etc
@@ -159,12 +168,12 @@ xgettext2pot <- function(dir, potFile)
     un <- unique(unlist(tmp, recursive=TRUE))
     for(ee in tmp)
         for(e in ee)
-            if(e[1] %in% un) {
+            if(e[1L] %in% un) {
                 writeLines(con=con, c('',
                            paste('msgid       ',
-                                 shQuote(encodeString(e[1]), type="cmd")),
+                                 shQuote(encodeString(e[1L]), type="cmd")),
                            paste('msgid_plural',
-                                 shQuote(encodeString(e[2]), type="cmd")),
+                                 shQuote(encodeString(e[2L]), type="cmd")),
                            'msgstr[0]    ""', 'msgstr[1]    ""')
                            )
                 un <- un[-match(e, un)]

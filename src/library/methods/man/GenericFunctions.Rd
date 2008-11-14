@@ -11,7 +11,6 @@
 % standardGeneric() is a .Primitive in 'base', not 'methods'
 %\alias{standardGeneric}
 \alias{getGenerics}
-\alias{allGenerics}%% << deprecated in 2.8.0
 \alias{dumpMethod}
 \alias{findFunction}
 \alias{dumpMethods}
@@ -41,7 +40,6 @@ removeMethods(f, where = topenv(parent.frame()), all = missing(where))
 setReplaceMethod(f, \dots, where = topenv(parent.frame()))
 
 getGenerics(where, searchForm = FALSE)
-%Deprecated: allGenerics(where, searchForm = FALSE)
 }
 \section{Summary of Functions}{
   \describe{
@@ -110,7 +108,6 @@ getGenerics(where, searchForm = FALSE)
       functions that have methods defined on \code{where}; this
       argument can be an environment or an index into the search
       list.  By default, the whole search list is used.
-      (\code{allGenerics()} is a \emph{deprecated} alias for \code{getGenerics}.)
 
       The methods definitions are stored with
       package qualifiers; for example, methods for function

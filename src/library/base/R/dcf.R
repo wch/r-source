@@ -97,7 +97,7 @@ function(file, fields = NULL, all = FALSE)
     ## Check that records start with tag lines.
     ind <- which(!line_has_tag[which(diff(nums) > 0L) + 1L])
     if(length(ind)) {
-        lines <- strtrim(lines[ind], 0.7 * getOption("width"))        
+        lines <- strtrim(lines[ind], 0.7 * getOption("width"))
         stop(gettextf("Invalid DCF format.\nContinuation lines must not start a record.\nOffending lines start with:\n%s",
                       paste("  ", lines, sep = "", collapse = "\n")),
              domain = NA)
@@ -143,7 +143,8 @@ function(x, file = "", append = FALSE,
     ## * We have to handle multiple fields per record.
 
     escape_paragraphs <- function(s)
-        gsub("\n[[:space:]]*\n", "\n .\n ", s)
+	gsub("\n \\.([^\n])","\n  .\\1",
+	     gsub("\n[[:space:]]*\n", "\n .\n ", s))
 
     if(!is.data.frame(x))
         x <- as.data.frame(x, stringsAsFactors = FALSE)

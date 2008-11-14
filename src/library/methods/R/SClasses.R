@@ -325,10 +325,8 @@ removeClass <-  function(Class, where = topenv(parent.frame())) {
     if(length(classDef@subclasses)>0) {
       subclasses <- names(classDef@subclasses)
       found <- sapply(subclasses, isClass, where = where)
-      if(any(found))
-        warning("The class to be removed  (\"", Class,
-    "\") has defined subclasses that should also be removed: (",
-                paste(as.character(subclasses[found]), collapse = ", "), ")")
+      for(what in subclasses[found])
+          .removeSuperClass(what, Class)
     }
     .removeSuperclassBackRefs(Class, classDef, classWhere)
     .uncacheClass(Class, classDef)

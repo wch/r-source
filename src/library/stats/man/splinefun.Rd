@@ -1,29 +1,38 @@
 % File src/library/stats/man/splinefun.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{splinefun}
 \alias{spline}
 \alias{splinefun}
+\alias{splinefunH}
 \title{Interpolating Splines}
 \description{
-  Perform cubic spline interpolation of given data points, returning
-  either a list of points obtained by the interpolation or a function
-  performing the interpolation.
+  Perform cubic (or Hermite) spline interpolation of given data points,
+  returning either a list of points obtained by the interpolation or a
+  \emph{function} performing the interpolation.
 }
 \usage{
-splinefun(x, y = NULL, method = "fmm", ties = mean)
+splinefun(x, y = NULL, method = c("fmm", "periodic", "natural", "monoH.FC"),
+          ties = mean)
 
 spline(x, y = NULL, n = 3*length(x), method = "fmm",
        xmin = min(x), xmax = max(x), xout, ties = mean)
+
+splinefunH(x, y, m)
 }
 \arguments{
   \item{x,y}{vectors giving the coordinates of the points to be
     interpolated.  Alternatively a single plotting structure can be
     specified: see \code{\link{xy.coords}.}}
+  \item{m}{(for \code{splinefunH()}): vector of \emph{slopes}
+    \eqn{m_i}{m[i]} at the points \eqn{(x_i,y_i)}{(x[i],y[i])}; these
+    together determine the \bold{H}ermite \dQuote{spline} which is
+    piecewise cubic, (only) \emph{once} differentiable continuously.}
   \item{method}{specifies the type of spline to be used.  Possible
-    values are \code{"fmm"}, \code{"natural"} and \code{"periodic"}.}
+    values are \code{"fmm"}, \code{"natural"}, \code{"periodic"} and
+    \code{"monoH.FC"}.}
   \item{n}{if \code{xout} is left unspecified, interpolation takes place
        at \code{n} equally spaced points spanning the interval
        [\code{xmin}, \code{xmax}].}
@@ -43,6 +52,12 @@ spline(x, y = NULL, n = 3*length(x), method = "fmm",
   end of the data, and this is used to determine the end conditions).
   Natural splines are used when \code{method = "natural"}, and periodic
   splines when \code{method = "periodic"}.
+
+  The new (R 2.8.0) method \code{"monoH.FC"} computes a \emph{monotone}
+  Hermite spline according to the method of Fritsch and Carlson.  It
+  does so by determining slopes such that the Hermite spline, determined
+  by \eqn{(x_i,y_i,m_i)}{(x[i],y[i],m[i])}, is monotone (increasing or
+  decreasing) \bold{iff} the data are.
 
   These interpolation splines can also be used for extrapolation, that is
   prediction at points outside the range of \code{x}.  Extrapolation
@@ -70,6 +85,10 @@ spline(x, y = NULL, n = 3*length(x), method = "fmm",
 
   Forsythe, G. E., Malcolm, M. A. and Moler, C. B. (1977)
   \emph{Computer Methods for Mathematical Computations}.
+
+  Fritsch, F. N. and Carlson, R. E. (1980)
+  Monotone piecewise cubic interpolation, \emph{SIAM Journal on
+  Numerical Analysis} \bold{17}, 238--246.
 }
 \seealso{
   \code{\link{approx}} and \code{\link{approxfun}} for constant and
@@ -112,7 +131,7 @@ curve(f(x, deriv=3), 1, 10, col = 2, lwd = 1.5, n = 401)
 par(op)
 
 ## Manual spline evaluation --- demo the coefficients :
-.x <- get("ux", envir = environment(f))
+.x <- splinecoef$x
 u <- seq(3,6, by = 0.25)
 (ii <- findInterval(u, .x))
 dx <- u - .x[ii]
@@ -129,6 +148,16 @@ tx <- table(x); mx <- as.numeric(names(tx[tx > 1]))
 ry <- matrix(unlist(tapply(y, match(x,mx), range, simplify=FALSE)),
              ncol=2, byrow=TRUE)
 segments(mx, ry[,1], mx, ry[,2], col = "blue", lwd = 2)
+
+## An example of  monotone  interpolation
+n <- 20
+set.seed(11)
+x. <- sort(runif(n)) ; y. <- cumsum(abs(rnorm(n)))
+plot(x.,y.)
+curve(splinefun(x.,y.)(x),                add=TRUE, col=2, n=1001)
+curve(splinefun(x.,y., method="mono")(x), add=TRUE, col=3, n=1001)
+legend("topleft", paste("splinefun( \"", c("fmm", "monoH.CS"), "\" )", sep=''),
+        col=2:3, lty=1)
 }
 \keyword{math}
 \keyword{dplot}

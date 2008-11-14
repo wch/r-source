@@ -302,8 +302,8 @@ predict.arima0 <-
             warning("seasonal MA part of model is not invertible")
     }
     storage.mode(data) <- "double"
-    G <- .Call(R_setup_starma, as.integer(arma), data, n, rep(0, n),
-               0, -1, 0, 0)
+    G <- .Call(R_setup_starma, as.integer(arma), data, n, rep(0., n),
+               0., -1., 0., 0.)
     on.exit(.Call(R_free_starma, G))
     .Call(R_Starma_method, G, TRUE)
     .Call(R_arma0fa, G, as.double(coefs))

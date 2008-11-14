@@ -24,7 +24,7 @@ elements for superclasses, but the recommended style is to use the
 \code{contains=} argument instead.}
   \item{prototype}{ an object providing the default
     data for the slots in this class.  Usually and preferably the
-    result of a call to \code{\llink{prototype}}. }
+    result of a call to \code{\link{prototype}}. }
   \item{contains}{ what classes does this class extend?  (These are
     called \emph{superclasses} in some languages.)  When these classes
     have slots, all their slots will be contained in the new class as

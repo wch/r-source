@@ -17,6 +17,7 @@
 \alias{getSubclasses}
 \alias{getVirtual}
 \alias{seemsS4Object}
+\alias{allGenerics}
 \title{Defunct Functions in the Methods Package}
 \description{
   Defunct functions in package \pkg{methods}.
@@ -38,6 +39,10 @@ removeMethodsObject(f, where)
 
 seemsS4Object(object)
 % </Removed 2.8.0>
+
+% Removed in 2.9.0
+allGenerics()
+% </Removed 2.9.0>
 }
 \details{
   The first block of functions should be replaced by direct access to
@@ -72,6 +77,8 @@ seemsS4Object(object)
 
   \code{seemsS4Object} was similar to \code{\link{isS4}} and superseded
   by the introduction of the S4 bit in \R 2.4.0.
+
+  \code{allGenerics} is superseded by \code{\link{getGenerics}}.
 }
 
 \seealso{

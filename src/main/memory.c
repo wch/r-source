@@ -1839,6 +1839,10 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
 #if VALGRIND_LEVEL > 2
     VALGRIND_MAKE_READABLE(s,sizeof(*s));
 #endif
+    /* precaution to ensure code does not get modified via
+       substitute() and the like */ 
+    if (NAMED(expr) < 2) SET_NAMED(expr, 2);
+
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(s) = PROMSXP;
     PRCODE(s) = expr;
@@ -1883,7 +1887,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	actual_size=length;
 	break;
     case CHARSXP:
-	warning("use of allocVector(CHARSXP ...) is deprecated\n");
+	error("use of allocVector(CHARSXP ...) is defunct\n");
     case intCHARSXP:
 	size = BYTE2VEC(length + 1);
 	actual_size=length+1;
@@ -3038,10 +3042,8 @@ int Seql(SEXP a, SEXP b)
 {
     if (a == b) return 1;
     if (LENGTH(a) != LENGTH(b)) return 0;
-    if (IS_CACHED(a) && IS_CACHED(b) &&
-	(!ENC_KNOWN(a) || !ENC_KNOWN(b) || 
-	 ENC_KNOWN(a) == ENC_KNOWN(b)))
-	return 0;
+    if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
+	 return 0;
     return !strcmp(translateCharUTF8(a), translateCharUTF8(b));
 }
 
@@ -3051,15 +3053,13 @@ int Seql(SEXP a, SEXP b)
 int Seql(SEXP a, SEXP b)
 {
     /* The only case where pointer comparisons do not suffice is where
-      we have two strings in different marked encodings, since in 
-      R > 2.8.0 ASCII strings in the cache are never marked.
-    */
+      we have two strings in different encodings (which must be
+      non-ASCII strings). Note that one of the strings could be marked
+      as unknown. */
     if (a == b) return 1;
     if (LENGTH(a) != LENGTH(b)) return 0;
     /* Leave this to compiler to optimize */
-    if (IS_CACHED(a) && IS_CACHED(b) &&
-	(!ENC_KNOWN(a) || !ENC_KNOWN(b) || 
-	 ENC_KNOWN(a) == ENC_KNOWN(b)))
+    if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
 	return 0;
     return !strcmp(translateChar(a), translateChar(b));
 }

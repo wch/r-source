@@ -139,6 +139,8 @@ lm(formula, data, subset, weights, na.action,
   \item{y}{if requested, the response used.}
   \item{x}{if requested, the model matrix used.}
   \item{model}{if requested (the default), the model frame used.}
+  \item{na.action}{(where relevant) information returned by
+    \code{\link{model.frame}} on the special handling of \code{NA}s.}
 
   In addition, non-null fits will have components \code{assign},
   \code{effects} and (unless not requested) \code{qr} relating to the linear

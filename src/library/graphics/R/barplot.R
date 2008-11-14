@@ -88,7 +88,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
     log.dat <- (logx && horiz) || (logy && !horiz)# log scale in data direction
     ## check height + offset if using log scale to prevent log(<=0) error
     if (log.dat) {
-	if (min(height + offset) <= 0)
+	if (min(height + offset, na.rm = TRUE) <= 0)
 	    stop("log scale error: at least one 'height + offset' value <= 0")
 	if (logx && !is.null(xlim) && min(xlim) <= 0)
 	    stop("log scale error: 'xlim' <= 0")
@@ -100,7 +100,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	rectbase <-
 	    if	    (logy && !horiz && !is.null(ylim))	ylim[1]
 	    else if (logx && horiz  && !is.null(xlim))	xlim[1]
-	    else 0.9 * min(height)
+	    else 0.9 * min(height, na.rm = TRUE)
     } else rectbase <- 0
 
     ## if stacked bar, set up base/cumsum levels, adjusting for log scale

@@ -115,7 +115,7 @@ png <- function(filename = "Rplot%03d.png",
     if(type == "quartz" && capabilities("aqua")) {
         width <- width/ifelse(is.na(res), 72, res);
         height <- height/ifelse(is.na(res), 72, res);
-        invisible(.External(CQuartz, "png", filename, width, height,
+        invisible(.External(CQuartz, "png", path.expand(filename), width, height,
                             pointsize, "Helvetica", TRUE, TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
@@ -157,7 +157,7 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
     if(type == "quartz" && capabilities("aqua")) {
         width <- width/ifelse(is.na(res), 72, res);
         height <- height/ifelse(is.na(res), 72, res);
-        invisible(.External(CQuartz, "jpeg", filename, width, height,
+        invisible(.External(CQuartz, "jpeg", path.expand(filename), width, height,
                             pointsize, "Helvetica", TRUE, TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
@@ -197,7 +197,7 @@ tiff <- function(filename = "Rplot%03d.tiff",
     if(type == "quartz" && capabilities("aqua")) {
         width <- width/ifelse(is.na(res), 72, res);
         height <- height/ifelse(is.na(res), 72, res);
-        invisible(.External(CQuartz, "tiff", filename, width, height,
+        invisible(.External(CQuartz, "tiff", path.expand(filename), width, height,
                             pointsize, "Helvetica", TRUE, TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
@@ -234,7 +234,7 @@ bmp <- function(filename = "Rplot%03d.bmp",
     if(type == "quartz" && capabilities("aqua")) {
         width <- width/ifelse(is.na(res), 72, res);
         height <- height/ifelse(is.na(res), 72, res);
-        invisible(.External(CQuartz, "bmp", filename, width, height,
+        invisible(.External(CQuartz, "bmp", path.expand(filename), width, height,
                             pointsize, "Helvetica", TRUE, TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))

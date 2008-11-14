@@ -118,7 +118,7 @@ isClassDef(object)
 validSlotNames(names)
 
 getDataPart(object)
-setDataPart(object, value)
+setDataPart(object, value, check = TRUE)
 
 }
 
@@ -364,8 +364,9 @@ setDataPart(object, value)
       only reserved slot name.)
     }
     \item{\code{getDataPart}, \code{setDataPart}:}{
-      Utilities called from the base C code to implement
-      \code{object@.Data}.
+      Utilities called to implement
+      \code{object@.Data}.  Calls to \code{setDataPart} are also used
+      to merge the data part of a superclass prototype.
     }
 
   }

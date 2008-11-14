@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-09-08 14:13\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -368,6 +368,10 @@ msgid "Non-portable flags in variable '%s':"
 msgstr ""
 
 #, fuzzy
+msgid "package must be loaded"
+msgstr "name space를 적재해서는 안됩니다"
+
+#, fuzzy
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "파일 '%s'에서 인덱스 정보를 읽을수가 없습니다"
 
@@ -408,9 +412,6 @@ msgid "Generics without methods in"
 msgstr ""
 
 msgid ":"
-msgstr ""
-
-msgid ".get_S4_methods_list(): *did* reduce list, dropping"
 msgstr ""
 
 msgid "argument 'lines' must be a character vector"

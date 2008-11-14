@@ -661,4 +661,24 @@ stopifnot(plnorm(-1:0, lower.tail=FALSE, log.p=TRUE) == 0,
 ## was wrongly == 'log.p=FALSE' up to R <= 2.7.1 (PR#11867)
 
 
+## pchisq(df=0) was wrong in 2.7.1
+stopifnot(pchisq(c(-1,0,1), df=0) == c(0,1,1),
+          pchisq(c(-1,0,1), df=0, lower.tail=FALSE) == c(1,0,0))
+
+## dnbinom for extreme  size and/or mu :
+mu <- 20
+d <- dnbinom(17, mu=mu, size = 1e11*2^(1:10)) - dpois(17, lambda=mu)
+stopifnot(d < 0, diff(d) > 0, d[1] < 1e-10)
+## was wrong up to 2.7.1
+## The fix to the above, for x = 0, had a new cancellation problem
+mu <- 1e12 * 2^(0:20)
+stopifnot(all.equal(1/(1+mu), dnbinom(0, size = 1, mu = mu), tol=1e-13))
+## was wrong in 2.7.2 (only)
+
+## Non-central F for large x
+x <- 1e16 * 1.1 ^ (0:20)
+dP <- diff(pf(x, df1=1, df2=1, ncp=20, lower.tail=FALSE, log=TRUE))
+stopifnot(-0.047 < dP, dP < -0.0455)
+## pf(*, log) jumped to -Inf prematurely in 2.8.0 and earlier
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

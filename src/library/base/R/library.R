@@ -139,9 +139,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         }
         fst <- TRUE
 	ipos <- seq_along(sp)[-c(lib.pos,
-				 match(c("Autoloads", "CheckExEnv"), sp, 0))]
+				 match(c("Autoloads", "CheckExEnv"), sp, 0L))]
         for (i in ipos) {
-            obj.same <- match(objects(i, all.names = TRUE), ob, nomatch = 0)
+            obj.same <- match(objects(i, all.names = TRUE), ob, nomatch = 0L)
             if (any(obj.same > 0)) {
                 same <- ob[obj.same]
                 same <- same[!(same %in% dont.mind)]
@@ -153,6 +153,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		    sapply(same, exists,
                            where = where, mode = "function", inherits = FALSE)
 		same <- same[same.isFn(i) == same.isFn(lib.pos)]
+                ## if a package imports, and re-exports, there's no problem
+		if(length(same))
+		    same <- same[sapply(same, function(.)
+					!identical(get(., i),
+						   get(., lib.pos)))]
                 if(length(same)) {
                     if (fst) {
                         fst <- FALSE

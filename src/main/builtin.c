@@ -159,7 +159,12 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall_return(call, _("invalid number of arguments"));
     }
     ctxt = R_GlobalContext;
-    while (ctxt != R_ToplevelContext && !(ctxt->callflag & CTXT_FUNCTION) )
+    /* Search for the context to which the on.exit action is to be
+       attached. Lexical scoping is implemented by searching for the
+       first closure call context with an environment matching the
+       expression evaluation environment. */
+    while (ctxt != R_ToplevelContext &&
+	   !((ctxt->callflag & CTXT_FUNCTION) && ctxt->cloenv == rho) )
 	ctxt = ctxt->nextcontext;
     if (ctxt->callflag & CTXT_FUNCTION)
     {
@@ -486,6 +491,8 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     file = CAR(args);
     ifile = asInteger(file);
     con = getConnection(ifile);
+    if(!con->canwrite) /* if it is not open, we may not know yet */
+	error(_("cannot write to this connection"));
     args = CDR(args);
 
     sepr = CAR(args);
@@ -525,7 +532,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     ci.wasopen = con->isopen;
 
     ci.changedcon = switch_stdout(ifile, 0);
-    /* will open new connection if required */
+    /* will open new connection if required, and check for writeable */
 
     ci.con = con;
 

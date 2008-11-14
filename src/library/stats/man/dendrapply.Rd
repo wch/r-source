@@ -9,7 +9,7 @@
 \description{
   Apply function \code{FUN} to each node of a \code{\link{dendrogram}}
   recursively.  When  \code{y <- dendrapply(x, fn)}, then \code{y} is a
-  dendrogram of the same graph structure as \code{x} and each for each node,
+  dendrogram of the same graph structure as \code{x} and for each node,
   \code{y.node[j] <- FUN( x.node[j], ...)} (where \code{y.node[j]} is an
   (invalid!) notation for the j-th node of y.
 }
@@ -33,7 +33,8 @@ dendrapply(X, FUN, ...)
 \note{this is still somewhat experimental, and suggestions for
   enhancements (or nice examples of usage) are very welcome.}
 \seealso{\code{\link{as.dendrogram}}, \code{\link{lapply}} for applying
-  a function to each component of a  \code{list}.
+  a function to each component of a \code{list}, \code{\link{rapply}}
+  for doing so to each non-list component of a nested list.
 }
 \examples{
 require(graphics)

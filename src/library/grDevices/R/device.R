@@ -119,7 +119,10 @@ dev.copy <- function(device, ..., which = dev.next())
 	    stop("'device' should be a function")
 	else device(...)
     }
+    ## protect against failure
+    on.exit(dev.set(old.device))
     .Internal(dev.copy(old.device))
+    on.exit()
     dev.cur()
 }
 

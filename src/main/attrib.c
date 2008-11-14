@@ -368,6 +368,9 @@ static void checkNames(SEXP x, SEXP s)
 	if (length(x) != length(s))
 	    error(_("'names' attribute [%d] must be the same length as the vector [%d]"), length(s), length(x));
     }
+    else if(IS_S4_OBJECT(x)) {
+      /* leave validity checks to S4 code */
+    }
     else error(_("names() applied to a non-vector"));
 }
 
@@ -386,6 +389,13 @@ SEXP tspgets(SEXP vec, SEXP val)
 
     if (vec == R_NilValue)
 	error(_("attempt to set an attribute on NULL"));
+
+    if(IS_S4_OBJECT(vec)) { /* leave validity checking to validObject */
+        if (!isNumeric(val)) /* but should have been checked */
+	    error(_("'tsp' attribute must be numeric")); 
+	installAttrib(vec, R_TspSymbol, val);
+	return vec;
+    }
 
     if (!isNumeric(val) || length(val) != 3)
 	error(_("'tsp' attribute must be numeric of length three"));
@@ -747,7 +757,7 @@ SEXP namesgets(SEXP vec, SEXP val)
 	    else
 		SET_TAG(s, R_NilValue);
     }
-    else if (isVector(vec))
+    else if (isVector(vec) || IS_S4_OBJECT(vec))
 	/* Normal case */
 	installAttrib(vec, R_NamesSymbol, val);
     else

@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/INSTALL.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{INSTALL}
@@ -35,7 +35,10 @@
   in other libraries).
 
   Windows Perl and the files for installing from source packages need to
-  be installed.
+  be installed.  It is possible that environment variable \env{TMPDIR}
+  will need to be set (although \code{R CMD} tries to set it suitably
+  otherwise): use forward slashes and no spaces for the path to a
+  writeable directory.
   
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names of directories.  \code{pkgs} may also contain

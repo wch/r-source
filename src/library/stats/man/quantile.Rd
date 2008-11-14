@@ -1,6 +1,6 @@
 % File src/library/stats/man/quantile.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{quantile}
@@ -22,7 +22,9 @@ quantile(x, \dots)
 \arguments{
   \item{x}{numeric vectors whose sample quantiles are wanted.  Missing
     values are ignored.}
-  \item{probs}{numeric vector of probabilities with values in \eqn{[0,1]}.}
+  \item{probs}{numeric vector of probabilities with values in
+    \eqn{[0,1]}.  (As from \R 2.8.0 values up to 2e-14 outside that
+    range are accepted and moved to the nearby endpoint.}
   \item{na.rm}{logical; if true, any \code{\link{NA}} and \code{NaN}'s
     are removed from \code{x} before the quantiles are computed.}
   \item{names}{logical; if true, the result has a \code{\link{names}}

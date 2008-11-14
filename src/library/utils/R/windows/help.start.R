@@ -15,11 +15,10 @@
 #  http://www.r-project.org/Licenses/
 
 help.start <- function(update = TRUE, gui = "irrelevant",
-                       browser = getOption("browser"))
+                       browser = getOption("browser"), searchEngine = FALSE)
 {
-    a <- file.path(R.home("doc"), "html", "index.html")
-    if(!file.exists(a))
-        a <- file.path(R.home("doc"), "html", "index.htm")
+    a <- if(searchEngine) file.path(R.home("doc"), "html", "index.html")
+    else file.path(R.home("doc"), "html", "search", "SearchEngine.html")
     if(!file.exists(a))
         stop("unable to find the HTML help")
     if(update) {
@@ -41,20 +40,21 @@ help.start <- function(update = TRUE, gui = "irrelevant",
     invisible("")
 }
 
-browseURL <- function(url, browser = getOption("browser"))
+browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
 {
     if(!is.character(url) || !(length(url) == 1) || !nzchar(url))
         stop("'url' must be a non-empty character string")
     if(is.null(browser))
         shell.exec(url)
     else if (is.function(browser))
-        return(invisible(browser(url)))
+        return(invisible(browser(if(encodeIfNeeded) URLencode(url) else url)))
     else {
         if(!is.character(browser)
            || !(length(browser) == 1)
            || !nzchar(browser))
         stop("'browser' must be a non-empty character string")
-        cmd <- paste('"', browser, '" ', url, sep="")
+        cmd <- paste('"', browser, '" ',
+                     if(encodeIfNeeded) URLencode(url) else url, sep="")
         system(cmd, wait=FALSE)
     }
 }

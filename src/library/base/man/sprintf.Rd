@@ -64,6 +64,25 @@ gettextf(fmt, \dots, domain = NULL)
       \code{\%E} format if the exponent is less than -4 or greater than or
       equal to the precision, and \code{\%f} format otherwise.
     }
+    \item{\code{a, A}}{Double precision value, in binary notation of the
+      form \code{[-]0xh.hhhp[+-]d}.  This is a binary fraction
+      expressed in hex multiplied by a (decimal) power of 2.  The number
+      of hex digits after the decimal point is specified by the precision:
+      the default is enough digits to represent exactly the internal
+      binary representation.  Non-finite values are converted to \code{NA},
+      \code{NaN} or (perhaps a sign followed by) \code{Inf}.  Format
+      \code{\%a} uses lower-case for \code{x}, \code{p} and the hex
+      values: format \code{\%A} uses upper-case.
+  
+      This might not be supported on all platforms as if is a feature of C99.
+      The format is not uniquely defined: although it would be possible
+      to make the leading \code{h} always zero or one, this is not
+      always done.  Most systems will suppress trailing zeros, but a few
+      do not. On a well-written platform, for normal numbers there will
+      be a leading one before the decimal point plus (by default) 13
+      hexadecimal digits, hence 53 bits.  (The treatment of denormalized
+      numbers is very platform-dependent.)
+    }
     \item{\code{s}}{Character string.   Character \code{NA}s are
       converted to \code{"NA"}.
     }
@@ -122,6 +141,13 @@ gettextf(fmt, \dots, domain = NULL)
   encoding.
 }
 
+\section{Warning}{
+  The format string is passed down the OS's \code{sprintf} function, and
+  incorrect formats can cause the latter to crash the \R process .  \R
+  does perform basic sanity checks on the format, but not all possible user
+  errors will be caught and some might be terminal.
+}
+
 \references{
   Kernighan, B. W. and Ritchie, D. M. (1988)
   \emph{The C Programming Language.} Second edition, Prentice Hall.
@@ -129,7 +155,7 @@ gettextf(fmt, \dots, domain = NULL)
 }
 
 \author{
-  Original code by Jonathan Rougier, \email{J.C.Rougier@durham.ac.uk}.
+  Original code by Jonathan Rougier.
 }
 
 \seealso{
@@ -200,6 +226,10 @@ sprintf("e with \%1$2d digits = \%2$.*1$g", n, exp(1))
 
 ## re-cycle arguments 
 sprintf("\%s \%d", "test", 1:3)
+
+## binary output showing rounding/representation errors
+x <- seq(0, 1.0, 0.1); y <- c(0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1)
+cbind(x, sprintf("\%a", x), sprintf("\%a", y))
 }
 \keyword{print}
 \keyword{character}

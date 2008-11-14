@@ -168,7 +168,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	if(do.lines)		w0 <- w0 + (2+x.off) * xchar
 	w <- ncol*w0 + .5* xchar
 	if (!is.null(title)
-	    && (tw <- strwidth(title, units="user", cex=cex) + 0.5*xchar) > w) {
+	    && (abs(tw <- strwidth(title, units="user", cex=cex) + 0.5*xchar)) > abs(w)) {
 	    xextra <- (tw - w)/2
 	    w <- tw
 	}

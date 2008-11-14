@@ -18,7 +18,7 @@ plot(x, y, \dots)
   \item{\dots}{Arguments to be passed to methods, such as graphical
     parameters (see \code{\link{par}}).
     Many methods will accept the following arguments:
-
+    \describe{
     \item{\code{type}}{what type of plot should be drawn.  Possible types are
       \itemize{
 	\item \code{"p"} for \bold{p}oints,
@@ -42,6 +42,7 @@ plot(x, y, \dots)
     \item{\code{ylab}}{a title for the y axis: see \code{\link{title}}.}
     \item{\code{asp}}{the \eqn{y/x} aspect ratio,
       see \code{\link{plot.window}}.}
+    }
   }
 }
 \description{

@@ -36,6 +36,8 @@
  */
 
 #include "internal.h"
+#include <richedit.h>
+
 # define alloca(x) __builtin_alloca((x))
 
 /*
@@ -599,8 +601,20 @@ void setforeground(control obj, rgb fg)
     if (! obj)
 	return;
     obj->fg = fg;
-    InvalidateRect(obj->handle, NULL, TRUE);
-    redraw(obj);
+    if (obj->kind == TextboxObject) {
+    	if (obj->handle) {    
+    	    CHARFORMAT format;
+    	    COLORREF wincolour = RGB((fg&gaRed)>>16,(fg&gaGreen)>>8,(fg&gaBlue)); 
+    	    format.cbSize = sizeof(format);
+    	    format.dwMask = CFM_COLOR;
+    	    format.crTextColor = wincolour;
+
+	    sendmessage(obj->handle, EM_SETCHARFORMAT, 0, (LPARAM)&format);
+	}
+    } else {
+    	InvalidateRect(obj->handle, NULL, TRUE);
+    	redraw(obj);
+    }
 }
 
 rgb getforeground(control obj)
@@ -613,22 +627,22 @@ rgb getforeground(control obj)
 
 void setbackground(control obj, rgb bg)
 {
-#if USE_NATIVE_CONTROLS
-    COLORREF wincolour;
+    COLORREF wincolour = RGB((bg&gaRed)>>16,(bg&gaGreen)>>8,(bg&gaBlue));
 
-    wincolour = RGB((bg&gaRed)>>16,(bg&gaGreen)>>8,(bg&gaBlue));
-
-    if (! obj)
-	return;
-    if (obj->bgbrush)
-	DeleteObject(obj->bgbrush);
-    obj->bgbrush = CreateSolidBrush(wincolour);
-#endif
     if (! obj)
 	return;
     obj->bg = bg;
-    InvalidateRect(obj->handle, NULL, TRUE);
-    redraw(obj);
+    if (obj->kind == TextboxObject) {
+    	if (obj->handle)
+	    sendmessage(obj->handle, EM_SETBKGNDCOLOR, 0, wincolour);
+    } else {
+    	if (obj->bgbrush)
+	    DeleteObject(obj->bgbrush);
+    	obj->bgbrush = CreateSolidBrush(wincolour);
+
+    	InvalidateRect(obj->handle, NULL, TRUE);
+    	redraw(obj);
+    }
 }
 
 rgb getbackground(control obj)

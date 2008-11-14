@@ -1,13 +1,15 @@
 % File src/library/stats/man/na.action.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{na.action}
 \title{NA Action}
+\description{
+  Extract information on the NA action used to create an object.
+}
 \usage{
 na.action(object, \dots)
-%na.action.default(object, \dots)
 }
 \alias{na.action}
 \alias{na.action.default}
@@ -15,13 +17,18 @@ na.action(object, \dots)
   \item{object}{any object whose \code{\link{NA}} action is given.}
   \item{\dots}{further arguments special methods could require.}
 }
-\description{
+\details{
   \code{na.action} is a generic function, and \code{na.action.default} its
-  default method (which extracts the \code{"na.action"} attribute).
+  default method.  The latter extracts the \code{"na.action"} component
+  of a list if present, otherwise the \code{"na.action"} attribute.
+
+  When \code{\link{model.frame}} is called, it records any information
+  on \code{NA} handling in a \code{"na.action"} attribute.  Most
+  model-fitting functions return this as a component of their result.
 }
 \value{
-  The action which will be applied to \code{object} whenever
-  \code{\link{NA}}s are not desired.
+  Information from the action which was applied to \code{object} if
+  \code{NA}s were handled specially, or \code{NULL}.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
@@ -33,7 +40,7 @@ na.action(object, \dots)
   \code{\link{na.fail}}, also for \code{na.exclude}, \code{na.pass}.
 }
 \examples{
-na.action(c(1, NA))
+na.action(na.omit(c(1, NA)))
 }
 \keyword{NA}
 \keyword{methods}

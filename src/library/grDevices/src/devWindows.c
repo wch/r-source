@@ -369,7 +369,8 @@ static void SaveAsPostscript(pDevDesc dd, const char *fn)
 		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 		       (double)0, ((gadesc*) dd->deviceSpecific)->basefontsize,
-		       0, 1, 0, "", "R Graphics Output", R_NilValue, "rgb"))
+		       0, 1, 0, "", "R Graphics Output", R_NilValue, "rgb", 
+		       TRUE))
 	/* horizontal=F, onefile=F, pagecentre=T, print.it=F */
 	PrivateCopyDevice(dd, ndd, "postscript");
 }
@@ -430,7 +431,7 @@ static void SaveAsPDF(pDevDesc dd, const char *fn)
 					 GE_INCHES, gdd),
 			((gadesc*) dd->deviceSpecific)->basefontsize,
 			1, 0, "R Graphics Output", R_NilValue, 1, 4, 
-			"rgb", TRUE))
+			"rgb", TRUE, TRUE))
 	PrivateCopyDevice(dd, ndd, "PDF");
 }
 
@@ -618,14 +619,13 @@ static void SetFont(pGEcontext gc, double rot, gadesc *xd)
 	    xd->font = gnewfont(xd->gawin,
 				fontfamily, fontstyle[face - 1],
 				size, rot, usePoints);
-	    if (xd->font)
-                strcpy(xd->fontfamily, gc->fontfamily);
 	} else {
             xd->font = gnewfont(xd->gawin,
 				fontname[face - 1], fontstyle[face - 1],
 				size, rot, usePoints);
 	}
 	if (xd->font) {
+            strcpy(xd->fontfamily, gc->fontfamily);	
 	    xd->fontface = face;
 	    xd->fontsize = size;
 	    xd->fontangle = rot;
@@ -1962,8 +1962,6 @@ static void GA_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
     r = rcanon(rpt(pt(x0, y0), pt(x1, y1)));
     r.width  += 1;
     r.height += 1;
-    r.width = r.width;
-    r.height = r.height;
     xd->clip = r;
 }
 
@@ -2318,13 +2316,23 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 	DRAW(gfillrect(_d, xd->fgcolor, r));
     } else if(R_ALPHA(gc->fill) > 0) {
 	if(xd->have_alpha) {
+	    rect cp = xd->clip;
 	    /* We are only working with the screen device here, so
 	       we can assume that x->bm is the current state.
 	       Copying from the screen window does not work. */
+	    /* Clip to the device region */
+	    rr = r;
+	    if (r.x < 0) {r.x = 0; r.width = r.width + rr.x;}
+	    if (r.y < 0) {r.y = 0; r.height = r.height + rr.y;}
+	    if (r.x + r.width > cp.x + cp.width)
+		r.width = cp.x + cp.width - r.x;
+	    if (r.y + r.height > cp.y + cp.height)
+		r.height = cp.y + cp.height - r.y;
 	    gsetcliprect(xd->bm, xd->clip);
 	    gcopy(xd->bm2, xd->bm, r);
-	    gfillrect(xd->bm2, xd->fgcolor, r);
+	    gfillrect(xd->bm2, xd->fgcolor, rr);
 	    DRAW2(gc->fill);
+	    r = rr;
 	} else WARN_SEMI_TRANS;
     }
 
@@ -2335,9 +2343,16 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 		       xd->ljoin, xd->lmitre));
     } else if(R_ALPHA(gc->col) > 0) {
 	if(xd->have_alpha) {
-	    int tol = xd->lwd; /* only half needed */
+	    int adj, tol = xd->lwd; /* only half needed */
+	    rect cp = xd->clip;
 	    rr = r;
 	    r.x -= tol; r.y -= tol; r.width += 2*tol; r.height += 2*tol;
+	    if (r.x < 0) {adj = r.x; r.x = 0; r.width = r.width + adj;}
+	    if (r.y < 0) {adj = r.y; r.y = 0; r.height = r.height + adj;}
+	    if (r.x + r.width > cp.x + cp.width)
+		r.width = cp.x + cp.width - r.x;
+	    if (r.y + r.height > cp.y + cp.height)
+		r.height = cp.y + cp.height - r.y;
 	    gsetcliprect(xd->bm, xd->clip);
 	    gcopy(xd->bm2, xd->bm, r);
 	    gdrawrect(xd->bm2, xd->lwd, xd->lty, xd->fgcolor, rr, 0, xd->lend,
@@ -2384,10 +2399,19 @@ static void GA_Circle(double x, double y, double radius,
 	DRAW(gfillellipse(_d, xd->fgcolor, rr));
     } else if(R_ALPHA(gc->fill) > 0) {
 	if (xd->have_alpha) {
+	    rect cp = xd->clip;
+	    /* Clip to the device region */
+	    if (r.x < 0) {r.x = 0; r.width = r.width + rr.x;}
+	    if (r.y < 0) {r.y = 0; r.height = r.height + rr.y;}
+	    if (r.x + r.width > cp.x + cp.width)
+		r.width = cp.x + cp.width - r.x;
+	    if (r.y + r.height > cp.y + cp.height)
+		r.height = cp.y + cp.height - r.y;
 	    gsetcliprect(xd->bm, xd->clip);
 	    gcopy(xd->bm2, xd->bm, r);
 	    gfillellipse(xd->bm2, xd->fgcolor, rr);
 	    DRAW2(gc->fill);
+	    r = rr;
 	} else WARN_SEMI_TRANS;
     }
 
@@ -2398,8 +2422,15 @@ static void GA_Circle(double x, double y, double radius,
 			  xd->ljoin, xd->lmitre));
     } else if(R_ALPHA(gc->col) > 0) {
 	if(xd->have_alpha) {
-	    int tol = xd->lwd; /* only half needed */
+	    int adj, tol = xd->lwd; /* only half needed */
+	    rect cp = xd->clip;
 	    r.x -= tol; r.y -= tol; r.width += 2*tol; r.height += 2*tol;
+	    if (r.x < 0) {adj = r.x; r.x = 0; r.width = r.width + adj;}
+	    if (r.y < 0) {adj = r.y; r.y = 0; r.height = r.height + adj;}
+	    if (r.x + r.width > cp.x + cp.width)
+		r.width = cp.x + cp.width - r.x;
+	    if (r.y + r.height > cp.y + cp.height)
+		r.height = cp.y + cp.height - r.y;
 	    gsetcliprect(xd->bm, xd->clip);
 	    gcopy(xd->bm2, xd->bm, r);
 	    gdrawellipse(xd->bm2, xd->lwd, xd->fgcolor, rr, 0, xd->lend,
@@ -2617,10 +2648,8 @@ static void GA_Text0(double x, double y, const char *str, int enc,
 	/*  it is too hard to get a correct bounding box */
 	if(xd->have_alpha) {
 	    rect r = xd->clip; 
-	    printf("r = %d %d %d %d\n", r.x, r.y, r.width, r.height);
 	    r = getregion(xd);
 	    gsetcliprect(xd->bm, xd->clip);
-	    printf("r = %d %d %d %d\n", r.x, r.y, r.width, r.height);
 	    gcopy(xd->bm2, xd->bm, r);
 	    if(gc->fontface != 5) {
 		wchar_t *wc; 
@@ -2952,7 +2981,8 @@ SEXP savePlot(SEXP args)
     filename = CADR(args);
     if (!isString(filename) || LENGTH(filename) != 1)
 	error(_("invalid filename argument in savePlot"));
-    fn = CHAR(STRING_ELT(filename, 0));
+    /* in 2.8.0 this will always be passed as native, but be conserative */
+    fn = translateChar(STRING_ELT(filename, 0));
     type = CADDR(args);
     if (!isString(type) || LENGTH(type) != 1)
 	error(_("invalid type argument in 'savePlot'"));

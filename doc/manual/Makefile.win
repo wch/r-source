@@ -116,6 +116,11 @@ R-admin.html: R-admin.texi
 	  $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@ ; \
 	fi
 
+R-FAQ.html: R-FAQ.texi
+	@$(ECHO) "creating doc/manual/$@"
+	@$(MAKEINFO) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@
+
+
 dvi: refman.dvi $(OBJECTS_DVI)
 $(OBJECTS_DVI): $(texiincludes) 
 

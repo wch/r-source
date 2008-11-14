@@ -46,3 +46,9 @@ removeMethodsObject <- function(f, where = topenv(parent.frame())) .Defunct()
 
 seemsS4Object <- function(object) .Defunct("isS4")
 
+## Deprecated in 2.8.0, defunct in 2.9.0
+
+allGenerics <- function(...)
+    ## this is used nowhere, and we already have too many functions
+    .Defunct("getGenerics")
+

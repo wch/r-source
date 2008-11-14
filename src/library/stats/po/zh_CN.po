@@ -46,7 +46,7 @@ msgstr "arima0里只能转换100个参数"
 
 #: arima.c:838
 msgid "maximum supported lag is 350"
-msgstr ""
+msgstr "滞后不能大于350"
 
 #: distance.c:152
 msgid "treating non-finite values as NA"

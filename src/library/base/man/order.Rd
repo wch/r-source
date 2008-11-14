@@ -73,7 +73,9 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
 }
-\seealso{\code{\link{sort}} and \code{\link{rank}}.}
+\seealso{
+  \code{\link{sort}}, \code{\link{rank}}, \code{\link{xtfrm}}.
+}
 \examples{
 require(stats)
 
@@ -81,11 +83,12 @@ require(stats)
 ## 6  5  2  1  7  4 10  8  3  9
 rbind(x,y,z)[,ii] # shows the reordering (ties via 2nd & 3rd arg)
 
-## Suppose we wanted descending order on y. A simple solution is
+## Suppose we wanted descending order on y.
+## A simple solution for numeric 'y' is
 rbind(x,y,z)[, order(x, -y, z)]
-## For character vectors we can make use of rank:
+## More generally we can make use of xtfrm
 cy <- as.character(y)
-rbind(x,y,z)[, order(x, -rank(cy), z)]
+rbind(x,y,z)[, order(x, -xtfrm(cy), z)]
 
 ## Sorting data frames:
 dd <- transform(data.frame(x,y,z),

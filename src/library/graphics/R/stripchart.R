@@ -22,15 +22,14 @@ stripchart.default <-
 function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	 group.names, add = FALSE, at = NULL,
 	 xlim=NULL, ylim=NULL, ylab=NULL, xlab=NULL, dlab="", glab="",
-	 log="", pch=0, col=par("fg"), cex=par("cex"), axes=TRUE, 
+	 log="", pch=0, col=par("fg"), cex=par("cex"), axes=TRUE,
 	 frame.plot=axes, ...)
 {
     method <- pmatch(method, c("overplot", "jitter", "stack"))[1]
     if(is.na(method) || method==0)
 	stop("invalid plotting method")
     groups <-
-	if(is.list(x)) x
-	else if(is.numeric(x)) list(x)
+	if(is.list(x)) x else if(is.numeric(x)) list(x)
     if(0 == (n <- length(groups)))
 	stop("invalid first argument")
     if(!missing(group.names))
@@ -74,9 +73,9 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 		if(n > 1) axis(2, at=at, labels=names(groups), ...)
 	    }
 	    if (is.null(xlab)) xlab <- dlab
-	    if (is.null(ylab)) ylab <- glab	    
-	}    
-	title(xlab=xlab, ylab=ylab)
+	    if (is.null(ylab)) ylab <- glab
+	}
+	title(xlab=xlab, ylab=ylab, ...)
     }
     csize <- cex*
 	if(vertical) xinch(par("cin")[1]) else yinch(par("cin")[2])

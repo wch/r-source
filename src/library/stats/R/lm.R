@@ -532,7 +532,7 @@ anova.lm <- function(object, ...)
     ssr <- sum(if(is.null(w)) object$residuals^2 else w*object$residuals^2)
     mss <- sum(if(is.null(w)) object$fitted.values^2 else w*object$fitted.values^2)
     if(ssr < 1e-10*mss)
-        warning("ANOVA on an essentially perfect fit is nonsense")
+        warning("ANOVA F-tests on an essentially perfect fit are unreliable")
     dfr <- df.residual(object)
     p <- object$rank
     if(p > 0L) {

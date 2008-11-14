@@ -2,6 +2,8 @@ postscript("reg-tests-1.ps", encoding = "ISOLatin1.enc")
 
 ## force standard handling for data frames
 options(stringsAsFactors=TRUE)
+## .Machine
+(Meps <- .Machine$double.eps)# and use it in this file
 
 ## regression test for PR#376
 aggregate(ts(1:20), nfreq=1/3)
@@ -130,12 +132,12 @@ stopifnot(all.equal(dcauchy(-1:4), 1 / (pi*(1 + (-1:4)^2))))
 ## chol
 ( m <- matrix(c(5,1,1,3),2,2) )
 ( cm <- chol(m) )
-stopifnot(abs(m	 -  t(cm) %*% cm) < 100* .Machine$double.eps)
+stopifnot(abs(m	 -  t(cm) %*% cm) < 100* Meps)
 
 ## check with pivoting
 ( m <- matrix(c(5,1,1,3),2,2) )
 ( cm <- chol(m, TRUE) )
-stopifnot(abs(m	 -  t(cm) %*% cm) < 100* .Machine$double.eps)
+stopifnot(abs(m	 -  t(cm) %*% cm) < 100* Meps)
 
 x <- matrix(c(1:5, (1:5)^2), 5, 2)
 m <- crossprod(x)
@@ -191,11 +193,10 @@ stopifnot(
  month.abb == substr(month.name, 1, 3)
 )
 
-eps <- .Machine$double.eps
-stopifnot(all.equal(pi, 4*atan(1), tol= 2*eps))
+stopifnot(all.equal(pi, 4*atan(1), tol= 2*Meps))
 
 # John Machin (1705) computed 100 decimals of pi :
-stopifnot(all.equal(pi/4, 4*atan(1/5) - atan(1/239), 4*eps))
+stopifnot(all.equal(pi/4, 4*atan(1/5) - atan(1/239), 4*Meps))
 ## end of moved from Constants.Rd
 
 
@@ -254,7 +255,6 @@ stopifnot(duplicated(iris)[143] == TRUE)
 
 
 ## eigen
-Meps <- .Machine$double.eps
 set.seed(321, kind = "default")	 # force a particular seed
 m <- matrix(round(rnorm(25),3), 5,5)
 sm <- m + t(m) #- symmetric matrix
@@ -328,10 +328,9 @@ it <- findInterval(tt, X)
 
 ## See that this is N * Fn(.) :
 tt <- c(tt,X)
-eps <- 100 * .Machine$double.eps
 stopifnot(it[c(1,203)] == c(0, 100),
 	  all.equal(N * stats::ecdf(X)(tt),
-		    findInterval(tt, X),  tol = eps),
+		    findInterval(tt, X),  tol = 100 * Meps),
 	  findInterval(tt,X) ==	 apply( outer(tt, X, ">="), 1, sum)
 	  )
 ## end of moved from findint.Rd
@@ -420,23 +419,22 @@ stopifnot(all.equal(as.vector(lmx), as.vector(glmx)),
 
 
 ## Hyperbolic
-Ceps <- .Machine$double.eps # ``Computer epsilon''
 x <- seq(-3, 3, len=200)
 stopifnot(
- abs(cosh(x) - (exp(x) + exp(-x))/2) < 20*Ceps,
- abs(sinh(x) - (exp(x) - exp(-x))/2) < 20*Ceps,
- Mod(cosh(x) - cos(1i*x))	< 20*Ceps,
- Mod(sinh(x) - sin(1i*x)/1i)	< 20*Ceps,
- abs(tanh(x)*cosh(x) - sinh(x)) < 20*Ceps
+ abs(cosh(x) - (exp(x) + exp(-x))/2) < 20*Meps,
+ abs(sinh(x) - (exp(x) - exp(-x))/2) < 20*Meps,
+ Mod(cosh(x) - cos(1i*x))	< 20*Meps,
+ Mod(sinh(x) - sin(1i*x)/1i)	< 20*Meps,
+ abs(tanh(x)*cosh(x) - sinh(x)) < 20*Meps
 )
 
-stopifnot(abs(asinh(sinh(x)) - x) < 20*Ceps)
-stopifnot(abs(acosh(cosh(x)) - abs(x)) < 1000*Ceps) #- imprecise for small x
-stopifnot(abs(atanh(tanh(x)) - x) < 100*Ceps)
+stopifnot(abs(asinh(sinh(x)) - x) < 20*Meps)
+stopifnot(abs(acosh(cosh(x)) - abs(x)) < 1000*Meps) #- imprecise for small x
+stopifnot(abs(atanh(tanh(x)) - x) < 100*Meps)
 
-stopifnot(abs(asinh(x) - log(x + sqrt(x^2 + 1))) < 100*Ceps)
+stopifnot(abs(asinh(x) - log(x + sqrt(x^2 + 1))) < 100*Meps)
 cx <- cosh(x)
-stopifnot(abs(acosh(cx) - log(cx + sqrt(cx^2 - 1))) < 1000*Ceps)
+stopifnot(abs(acosh(cx) - log(cx + sqrt(cx^2 - 1))) < 1000*Meps)
 ## end of moved from Hyperbolic.Rd
 
 
@@ -536,13 +534,13 @@ stopifnot(is.list(pl) && is.pairlist(pl),
 stopifnot(all.equal(log(1:10), log(1:10, exp(1))))
 stopifnot(all.equal(log10(30), log(30, 10)))
 stopifnot(all.equal(log2(2^pi), 2^log2(pi)))
-stopifnot(Mod(pi - log(exp(pi*1i)) / 1i) < 10*.Machine$double.eps)
-stopifnot(Mod(1+exp(pi*1i)) < 10*.Machine$double.eps)
+stopifnot(Mod(pi - log(exp(pi*1i)) / 1i) < 10* Meps)
+stopifnot(Mod(1+exp(pi*1i)) < 10* Meps)
 ## end of moved from Log.Rd
 
 
 ## logistic
-eps <- 100 * .Machine$double.eps
+eps <- 100 * Meps
 x <- c(0:4, rlogis(100))
 stopifnot(all.equal(plogis(x),	1 / (1 + exp(-x)), tol = eps))
 stopifnot(all.equal(plogis(x, lower=FALSE),  exp(-x)/ (1 + exp(-x)), tol = eps))
@@ -554,7 +552,7 @@ stopifnot(all.equal(dlogis(x), exp(x) * (1 + exp(x))^-2, tol = eps))
 
 ## Lognormal
 x <- rlnorm(1000)	# not yet always :
-stopifnot(abs(x	 -  qlnorm(plnorm(x))) < 1e4 * .Machine$double.eps * x)
+stopifnot(abs(x	 -  qlnorm(plnorm(x))) < 1e4 * Meps * x)
 ## end of moved from Lognormal.Rd
 
 
@@ -627,13 +625,13 @@ X <- qr.X(qrstr) # X == x
 stopifnot(all.equal(X,	as.matrix(x)))
 
 ## X == Q %*% R :
-stopifnot((1 - X /( Q %*% R))< 100*.Machine$double.eps)
+stopifnot((1 - X /( Q %*% R))< 100*Meps)
 
 dim(Qc <- qr.Q(qrstr, complete=TRUE)) # Square: dim(Qc) == rep(nrow(x),2)
-stopifnot((crossprod(Qc) - diag(nrow(x))) < 10*.Machine $double.eps)
+stopifnot((crossprod(Qc) - diag(nrow(x))) < 10*Meps)
 
 QD <- qr.Q(qrstr, D=1:p)      # QD == Q \%*\% diag(1:p)
-stopifnot(QD - Q %*% diag(1:p)	< 8* .Machine$double.eps)
+stopifnot(QD - Q %*% diag(1:p)	< 8* Meps)
 
 dim(Rc <- qr.R(qrstr, complete=TRUE)) # == dim(x)
 dim(Xc <- qr.X(qrstr, complete=TRUE)) # square: nrow(x) ^ 2
@@ -653,7 +651,7 @@ ox <- c(ox, ox[n]) #- such that ox[n+1] := ox[n]
 p <- c(0,1,runif(100))
 i <- floor(r <- 1 + (n-1)*p)
 f <- r - i
-stopifnot(abs(quantile(x,p) - ((1-f)*ox[i] + f*ox[i+1])) < 20*.Machine$double.eps)
+stopifnot(abs(quantile(x,p) - ((1-f)*ox[i] + f*ox[i+1])) < 20*Meps)
 ## end of moved from quantile.Rd
 
 
@@ -714,7 +712,7 @@ stopifnot(substr(x, 2, 5) == substring(x, 2, 5))
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 str(X <- hilbert(9)[,1:6])
 str(s <- svd(X))
-Eps <- 100 * .Machine$double.eps
+Eps <- 100 * Meps
 
 D <- diag(s$d)
 stopifnot(abs(X - s$u %*% D %*% t(s$v)) < Eps)#	 X = U D V'
@@ -736,15 +734,15 @@ x <- rnorm(99)
 stopifnot(all.equal( sin(-x), - sin(x)))
 stopifnot(all.equal( cos(-x), cos(x)))
 x <- abs(x); y <- abs(rnorm(x))
-stopifnot(abs(atan2(y, x) - atan(y/x)) < 10 * .Machine$double.eps)
-stopifnot(abs(atan2(y, x) - atan(y/x)) < 10 * .Machine$double.eps)
+stopifnot(abs(atan2(y, x) - atan(y/x)) < 10 * Meps)
+stopifnot(abs(atan2(y, x) - atan(y/x)) < 10 * Meps)
 
 x <- 1:99/100
-stopifnot(Mod(1 - (cos(x) + 1i*sin(x)) / exp(1i*x)) < 10 * .Machine$double.eps)
+stopifnot(Mod(1 - (cos(x) + 1i*sin(x)) / exp(1i*x)) < 10 * Meps)
 ## error is about 650* at x=0.01:
-stopifnot(abs(1 - x / acos(cos(x))) < 1000 * .Machine$double.eps)
-stopifnot(abs(1 - x / asin(sin(x))) <= 10 * .Machine$double.eps)
-stopifnot(abs(1 - x / atan(tan(x))) <= 10 *.Machine$double.eps)
+stopifnot(abs(1 - x / acos(cos(x))) < 1000 * Meps)
+stopifnot(abs(1 - x / asin(sin(x))) <= 10 * Meps)
+stopifnot(abs(1 - x / atan(tan(x))) <= 10 *Meps)
 ## end of moved from Trig.Rd
 
 ## Uniform
@@ -775,12 +773,10 @@ x <- -1:(4*6 + 1)
 fx <- dwilcox(x, 4, 6)
 stopifnot(fx == dwilcox(x, 6, 4))
 Fx <- pwilcox(x, 4, 6)
-stopifnot(abs(Fx - cumsum(fx)) < 10 * .Machine$double.eps)
+stopifnot(abs(Fx - cumsum(fx)) < 10 * Meps)
 ## end of moved from Wilcoxon.Rd
 
 
-## .Machine
-(Meps <- .Machine$double.eps)
 ## All the following relations must hold :
 stopifnot(
  1 +	 Meps != 1,
@@ -2635,7 +2631,7 @@ stopifnot(identical(names(z), c("x", "y", "z")))
 ## cor(mat, use = "pair") was plainly wrong
 # longley has no NA's -- hence all "use = " should give the same!
 X <- longley
-ep <- 32 * .Machine$double.eps
+ep <- 32 * Meps
 for(meth in eval(formals(cor)$method)) {
     cat("method = ", meth,"\n")
     Cl <- cor(X, method = meth)
@@ -5141,6 +5137,8 @@ if(.Platform$OS.type == "unix") {
     ## <FIXME> need build.package()
     Rcmd <- paste(file.path(R.home("bin"), "R"), "CMD")
     system(paste(Rcmd, "build", "myTst"))
+    # clean up any previous attempt (which might have left a 00LOCK)
+    system("rm -rf myLib")
     dir.create("myLib")
     install.packages("myTst", lib = "myLib", repos=NULL, type = "source") # with warnings
     stopifnot(require("myTst",lib = "myLib"))
@@ -5317,3 +5315,153 @@ nls(y~((g1)*exp((log(g2/g1))*(1-exp(-k*(x-Ta)))
     trace=TRUE, weights=weight)
 ## failed for find weights in R <= 2.7.1
 
+
+## barplot(log = "y") with NAs (PR#11585)
+dat <- matrix(1:25, 5)
+dat[2,3] <- NA
+barplot(dat, beside = TRUE, log = "y")
+## failed in 2.7.1
+
+
+## related to PR#12551
+unique("a", c("a", "b"))
+unique(1, 1:2)
+# could seqfault in 2.7.1 on some platforms
+stopifnot(!duplicated(rep("a", 3), "a"))
+## wrong answer in 2.7.1
+
+
+## drop1.lm() bug
+dd <- stackloss ; dd[1,3] <- NA
+rr <- lm(stack.loss ~ ., data=dd, na.action=na.exclude)
+drop1(rr)
+## failed in 2.7.x
+
+
+## explicit row.names=NULL in data.frame()
+stopifnot(identical(row.names(data.frame(x=c(a=1,b=2), row.names=NULL)),
+                    c("1", "2")))
+stopifnot(identical(row.names(data.frame(x=c(a=1,b=2))), c("a", "b")))
+## same as default in 2.5.0 <= R < 2.7.2
+
+stopifnot(all.equal(chol2inv(2), matrix(0.25, 1), tol = 4*Meps),
+	  all.equal(solve(chol2inv(chol(4))), matrix(4, 1), tol = 10*Meps))
+## chol2inv() did not accept non-matrices up to 2.7.*
+
+
+## seek should discard pushback. (PR#12640)
+cat(c("1\t2\t3", "4\t5\t6"), file="foo.txt", sep="\n")
+fd <- file("foo.txt",open="rt")
+scan(file=fd,what=double(),n=2)
+seek(con=fd,where=0,origin="start")
+z <- scan(file=fd,what=double(),n=2)
+close(fd)
+unlink("foo.txt")
+stopifnot(identical(z, c(1,2)))
+## changed in 2.7.2 patched
+
+## cov / cor / var etc with NAs :
+stopifnot(inherits(try(var(NULL)), "try-error"))## gave NA in 1.2.2
+v0 <- var(0[FALSE]) # gave "'x' is empty" in the past;  NA in 1.2.2
+x <- c(1:2,NA)
+v1 <- var(c(1,NA))
+v2 <- var(c(NA,0/0, Inf-Inf))
+sx <- sd(x)# sd() -> var()
+## all three gave "missing observations in cov/cor"  for a long time in the past
+is.NA <- function(x) is.na(x) & !is.nan(x)
+stopifnot(is.NA(v1), is.NA(v2), is.NA(sx),
+	  all.equal(0.5, var(x, na.rm=TRUE), tol=8*Meps)# should even be exact
+	  )
+
+## write.dcf() indenting for ".<foo>" (PR#12816)
+zz <- textConnection("foo", "w")
+write.dcf(list(Description = 'what a fat goat .haha'),
+          file = zz, indent=1, width=10)
+stopifnot(substring(foo[-1], 1,1) == " ", length(foo) == 4,
+          foo[4] == "  .haha")
+## was " .haha" (not according to DCF standard)
+
+
+## Pdf() with CIDfonts active
+pdf(family="Japan1") # << for CIDfonts, pd->fonts is NULL
+plot(1,1,pch="", axes=FALSE)
+text(1,1,"F.1", family="Helvetica"); dev.off()
+## text() seg.faulted up to 2.7.2 (and early 2.8.0-alpha)
+
+## PS mixing CIDfonts and Type1 - reverse case
+postscript(family="Helvetica")
+plot(1,1,pch="", axes=FALSE)
+try(text(1,1,"A",family="Japan1"))
+## error instead of seg.fault
+
+
+## splinefun with derivatives evaluated to the left of first knot
+x <- 1:10; y <- sin(x)
+splfun <- splinefun(x,y, method='natural')
+x1 <- splfun( seq(0,1, 0.1), deriv=1 )
+x2 <- splfun( seq(0,1, 0.1), deriv=2 )
+x3 <- splfun( seq(0,1, 0.1), deriv=3 )
+stopifnot(x1 == x1[1], x2 == 0, x3 == 0)
+##
+
+
+## glm(y = FALSE), in part PR#1398
+fit <- glm(1:10 ~ I(1:10) + I((1:10)^2), y = FALSE)
+anova(fit)
+## obscure errors < 2.8.0
+
+
+## boundary case in cut.Date (PR#13159)
+d <- as.Date("2008-07-07")
+cut(d, "weeks")
+d <- as.POSIXct("2008-07-07", tz="UTC")
+cut(d, "weeks")
+## failed < 2.8.0
+
+
+### end of tests added for 2.8.x
+
+
+## (Deliberate) overshot in seq(from, to, by) because of fuzz
+stopifnot(seq(0, 1, 0.00025+5e-16) <= 1, seq.int(0, 1, 0.00025+5e-16) <= 1)
+stopifnot(rev(seq(0, 1, 0.00025+5e-16))[1] == 1,
+          rev(seq.int(0, 1, 0.00025+5e-16))[1] == 1)
+# overshot by about 2e-12 in 2.8.x
+
+
+## str() with an "invalid object"
+ob <- structure(1, class = "test") # this is fine
+is.object(ob)# TRUE
+ob <- 1 + ob # << this is "broken"
+is.object(ob)# FALSE - hmm..
+identical(ob, unclass(ob)) # TRUE !
+stopifnot(grep("num 2", capture.output(str(ob))) == 1)
+## str(ob) lead to infinite recursion in R <= 2.8.0
+
+
+## getPackageName()  for "package:foo":
+require('methods')
+library(tools)
+oo <- options(warn=2)
+detach("package:tools", unload=TRUE); options(oo)
+## gave warning (-> Error) about creating package name
+
+
+## row.names(data.frame(matrixWithDimnames)) (PR#13230)
+rn0 <- c("","Row 2","Row 3")
+A <- matrix(1:6, nrow=3, ncol=2, dimnames=list(rn0, paste("Col",1:2)))
+rn <- row.names(data.frame(A))
+stopifnot(identical(rn, rn0))
+# was 1:3 in R 2.8.0, whereas
+rn0 <- c("Row 1","","Row 3")
+A <- matrix(1:6, nrow=3, ncol=2, dimnames=list(rn0, paste("Col",1:2)))
+rn <- row.names(data.frame(A))
+stopifnot(identical(rn, rn0))
+## used the names.
+
+
+## rounding error in windowing a time series (PR#13272)
+x <- ts(1:290, start=c(1984,10), freq=12)
+window(x, start=c(2008,9), end=c(2008,9), extend=FALSE)
+window(x, start=c(2008,9), end=c(2008,9), extend=TRUE)
+## second failed in 2.8.0

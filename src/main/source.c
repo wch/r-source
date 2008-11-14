@@ -149,8 +149,8 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP text, prompt, s, source;
     Rconnection con;
     Rboolean wasopen, old_latin1=known_to_be_latin1,
-	old_utf8=known_to_be_utf8;
-    int ifile, num;
+	old_utf8=known_to_be_utf8, allKnown = TRUE;
+    int ifile, num, i;
     const char *encoding;
     ParseStatus status;
 
@@ -172,8 +172,15 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' value"), "encoding");
     encoding = CHAR(STRING_ELT(CAR(args), 0)); /* ASCII */
     known_to_be_latin1 = known_to_be_utf8 = FALSE;
-    if(streql(encoding, "latin1")) known_to_be_latin1 = TRUE;
-    if(streql(encoding, "UTF-8"))  known_to_be_utf8 = TRUE;
+    /* allow 'encoding' to override declaration on 'text'. */
+    if(streql(encoding, "latin1")) {
+	known_to_be_latin1 = TRUE;
+	allKnown = FALSE;
+    }
+    if(streql(encoding, "UTF-8"))  {
+	known_to_be_utf8 = TRUE;
+	allKnown = FALSE;
+    }
 
     if (prompt == R_NilValue)
 	PROTECT(prompt);
@@ -181,14 +188,31 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(prompt = coerceVector(prompt, STRSXP));
 
     if (length(text) > 0) {
-	if (num == NA_INTEGER)
-	    num = -1;
+	/* If 'text' has known encoding then we can be sure it will be
+	   correctly re-encoded to the current encoding by
+	   translateChar in the parser and so could mark the result in
+	   a Latin-1 or UTF-8 locale.
+
+	   A small complication is that different elements could have
+	   different encodings, but all that matters is that all
+	   non-ASCII elements have known encoding.
+	*/
+	for(i = 0; i < length(text); i++)
+	    if(!ENC_KNOWN(STRING_ELT(text, i)) &&
+	       !strIsASCII(CHAR(STRING_ELT(text, i)))) {
+		allKnown = FALSE;
+		break;
+	    }
+	if(allKnown) {
+	    known_to_be_latin1 = old_latin1;
+	    known_to_be_utf8 = old_utf8;
+	}
+	if (num == NA_INTEGER) num = -1;
 	s = R_ParseVector(text, num, &status, source);
 	if (status != PARSE_OK) parseError(call, 0);
     }
     else if (ifile >= 3) {/* file != "" */
-	if (num == NA_INTEGER)
-	    num = -1;
+	if (num == NA_INTEGER) num = -1;
 	if(!wasopen) {
 	    if(!con->open(con)) error(_("cannot open the connection"));
 	    if(!con->canread) {
@@ -202,8 +226,7 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (status != PARSE_OK) parseError(call, R_ParseError);
     }
     else {
-	if (num == NA_INTEGER)
-	    num = 1;
+	if (num == NA_INTEGER) num = 1;
 	s = R_ParseBuffer(&R_ConsoleIob, num, &status, prompt, source);
 	if (status != PARSE_OK) parseError(call, 0);
     }

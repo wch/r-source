@@ -663,16 +663,17 @@ void * Riconv_open (const char* tocode, const char* fromcode)
 #if defined Win32 || __APPLE__
     const char *cp = "UTF-8";
 # ifdef Win32
-#  ifndef SUPPORT_UTF8_WIN32
-    cp = locale2charset(NULL);
+#  ifndef SUPPORT_UTF8_WIN32 /* Always, at present */
+    char to[20] = "";
+    if (localeCP > 0) {snprintf(to, 20, "CP%d", localeCP); cp = to;}
 #  endif
 # else /* __APPLE__ */
     if (latin1locale) cp = "ISO-8859-1";
     else if (!utf8locale) cp = locale2charset(NULL);
 # endif
     if (!*tocode && !*fromcode) return iconv_open(cp, cp);
-    if(strcmp(tocode, "") == 0)  return iconv_open(cp, fromcode);
-    else if(strcmp(fromcode, "") == 0) return iconv_open(tocode, cp);
+    if(!*tocode)  return iconv_open(cp, fromcode);
+    else if(!*fromcode) return iconv_open(tocode, cp);
     else return iconv_open(tocode, fromcode);
 #else
     return iconv_open(tocode, fromcode);
@@ -985,7 +986,17 @@ const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst)
     }
 
     switch(ce_out) {
+ #ifdef Win32
+    case CE_NATIVE:
+	{
+	    /* avoid possible misidentification of CP1250 as LATIN-2 */
+	    sprintf(buf, "CP%d", localeCP);
+	    tocode = buf;
+	    break;
+	}
+#else
     case CE_NATIVE: tocode = ""; break;
+#endif
     case CE_LATIN1: tocode = "latin1"; break;
     case CE_UTF8:   tocode = "UTF-8"; break;
     default: return x;
@@ -1023,6 +1034,14 @@ next_char:
 		goto top_of_loop;
 	    }
 	    *outbuf++ = '.'; inbuf++; outb--; inb--;
+	    goto next_char;
+	    break;
+	case 3: /* substitute ? */
+	    if(outb < 1) {
+		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+		goto top_of_loop;
+	    }
+	    *outbuf++ = '?'; inbuf++; outb--; inb--;
 	    goto next_char;
 	    break;
 	default: /* skip byte */

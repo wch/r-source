@@ -16,8 +16,32 @@
 
 ## assumes oldClass has been defined as a virtual class
 
-setOldClass <- function(Classes, prototype,
-                        where = topenv(parent.frame()), test = FALSE) {
+setOldClass <- function(Classes, prototype = NULL,
+                        where = topenv(parent.frame()), test = FALSE,
+                        S4Class) {
+    simpleCase <- is.null(prototype)
+    if(!missing(S4Class)) {
+        if(test)
+          stop("not allowed to have test==TRUE and an S4Class definition")
+        if(!is(S4Class, "classRepresentation")) {
+            if(is.character(S4Class)) {
+                clName <- S4Class
+                S4Class <- getClass(S4Class)
+                if(.identC(clName, Classes[[1]]))
+                  removeClass(clName, where = where) # so Recall() will work
+            }
+            else
+              stop(gettextf("argument S4Class must be a class definition:  got an object of class \"%s\"", class(S4Class)))
+        }
+        if(!is.null(prototype)) {
+            S4prototype <- S4Class@prototype
+            ## use the explicit attributes from the supplied argument, else S4prototype
+            S4Class@prototype <- .mergeAttrs(prototype, S4prototype)
+        }
+        ## register simple S3 class(es), including main class, if it's not defined already
+        Recall(Classes, where = where)
+        return(.S4OldClass(Classes[[1]], if(length(Classes) > 1) Classes[[2]] else "oldClass", S4Class, where))
+    }
     if(test)
         return(.setOldIs(Classes, where))
     mainClass <- Classes[[1]]
@@ -26,20 +50,26 @@ setOldClass <- function(Classes, prototype,
     for(cl in rev(Classes)) {
        S3Class <- c(cl, S3Class)
         if(isClass(cl, where)) {
-            if(!extends(cl, prevClass))
-                warning(gettextf("inconsistent old-style class information for \"%s\" (maybe mixing old and new classes?)", cl), domain = NA)
+            def <- getClass(cl, where)
+            if(!extends(def, prevClass))
+                stop(gettextf("inconsistent old-style class information for \"%s\" (maybe mixing old and new classes?)", cl), domain = NA)
+            prevP <- def@prototype
             if(missing(prototype))
-              prototype <- getClass(cl, where)@prototype
+              prototype <- prevP # keep track of inherited prototype for use in mainClass
+            prevS3Class <- attr(prevP, ".S3Class")
+            if(length(prevS3Class) > length(S3Class)) #implies cl is registered S3 class
+                S3Class <- prevS3Class
         }
         else {
             useP <- TRUE
-            if(cl != mainClass || missing(prototype))
+            if(cl != mainClass || simpleCase) {
                 setClass(cl, contains = c(prevClass, "VIRTUAL"), where = where)
+            }
             else if(isClass(class(prototype)))
                 setClass(cl, contains = prevClass, prototype = prototype, where = where)
             else { #exceptionally, we allow an S3 object from the S3 class as prototype
                 if(.class1(prototype) != mainClass)
-                  stop(gettextf('The class of the prototype, "%s", is undefined; only allowed for the S3 class being registered ("%s")', .class1(prototype), mainClass), domain = NA)
+                  stop(gettextf('The S3 class of the prototype, "%s", is undefined; only allowed when this is the S3 class being registered ("%s")', .class1(prototype), mainClass), domain = NA)
                 setClass(cl, contains = prevClass, where = where)
                 useP <- FALSE
             }
@@ -51,6 +81,28 @@ setOldClass <- function(Classes, prototype,
         }
        prevClass <- cl
     }
+}
+
+.S4OldClass <- function(class, prevClass, def,where) {
+    curDef <- getClassDef(class, where) # asserted to be defined
+    if(!identical(def@className, curDef@className))
+      def <- .renameClassDef(def, curDef@className)
+    def@slots <- c(def@slots, curDef@slots)
+    proto <- def@prototype
+    if(is.null(attr(proto, ".S3Class"))) { # no S3 clas slot, as will usually be true
+        attr(proto, ".S3Class") <- class
+        def@prototype <- proto
+    }
+    assignClassDef(class, def, where = where)
+    setIs(class, prevClass, classDef = def, where = where)
+    slotsMethod <- function(object) NULL
+    body(slotsMethod) <- substitute({LIST}, list(LIST = def@slots))
+    setMethod("slotsFromS3", class, slotsMethod, where = where)
+}
+
+##.initS3Classes will make this generic, with a method for "oldClass"
+slotsFromS3 <- function(object) {
+    list()
 }
 
 .oldTestFun <- function(object) CLASS %in% attr(object, "class")
@@ -130,3 +182,22 @@ S3Class <- function(object) {
       class(object) <- value
     object
 }
+
+## rename a class definition:  needs to change if any additional occurences of class
+## name are added, other than the className slot and the super/sub class names
+## in the contains, subclasses slots respectively.
+.renameClassDef <- function(def, className) {
+    oldName <- def@className
+    validObject(def) # to catch any non-SClassExtension objects
+    def@className <- className
+    comp <- def@contains
+    for(i in seq_along(comp))
+        comp[[i]]@subClass <- className
+    def@contains <- comp
+    comp <- def@subclasses
+    for(i in seq_along(comp))
+        comp[[i]]@superClass <- className
+    def@subclasses <- comp
+    def
+}
+    

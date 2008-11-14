@@ -1,6 +1,6 @@
 % File src/library/base/man/cbind.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{cbind}
@@ -25,9 +25,8 @@ rbind(\dots, deparse.level = 1)
   \item{\dots}{vectors or matrices.  These can be given as named
     arguments.  Other \R objects will be coerced as appropriate: see
     sections \sQuote{Details} and \sQuote{Value}.  (For the
-    \code{"data.frame"} method of
-    \code{cbind} these can be further arguments to
-    \code{\link{data.frame}} such as \code{stringsAsFactors}.)}
+    \code{"data.frame"} method of \code{cbind} these can be further
+    arguments to \code{\link{data.frame}} such as \code{stringsAsFactors}.)}
   \item{deparse.level}{integer controlling the construction of labels in
     the case of non-matrix-like arguments (for the default method):\cr
     \code{deparse.level = 0} constructs no labels; the default,
@@ -39,14 +38,16 @@ rbind(\dots, deparse.level = 1)
   methods for data frames.  The data frame method will be used if at
   least one argument is a data frame and the rest are vectors or
   matrices.  There can be other methods; in particular, there is one for
-  time series objects.  See the section on Dispatch for how the method
-  to be used is selected.
+  time series objects.  See the section on \sQuote{Dispatch} for how
+  the method to be used is selected.
 
   In the default method, all the vectors/matrices must be atomic (see
   \code{\link{vector}}) or lists.  Expressions are not allowed.
   Language objects (such as formulae and calls) and pairlists will be
   coerced to lists: other objects (such as names and external pointers)
-  will be included as elements in a list result.
+  will be included as elements in a list result.  Any classes the inputs
+  might have are discarded (in particular, factors are replaced by their
+  internal codes).
 
   If there are several matrix arguments, they must all have the same
   number of columns (or rows) and this will be the number of columns (or
@@ -71,7 +72,7 @@ rbind(\dots, deparse.level = 1)
   \code{\link{data.frame}(..., check.names = FALSE)}.  This means that
   it will split matrix columns in data frame arguments, and convert
   character columns to factors unless \code{stringsAsFactors = FALSE} is
-  passed.
+  specified.
 
   The \code{rbind} data frame method first drops all zero-column and
   zero-row arguments.  (If that leaves none, it returns the first
@@ -81,8 +82,8 @@ rbind(\dots, deparse.level = 1)
   position).  Factors have their levels expanded as necessary (in the
   order of the levels of the levelsets of the factors encountered) and
   the result is an ordered factor if and only if all the components were
-  ordered factors.  (The last point differs from S-PLUS.)  Categories
-  (integer vectors with levels) are promoted to factors.
+  ordered factors.  (The last point differs from S-PLUS.)  Old-style
+  categories (integer vectors with levels) are promoted to factors.
 }
 \value{
   For the default method, a matrix combining the \code{\dots} arguments
@@ -111,7 +112,7 @@ rbind(\dots, deparse.level = 1)
 \section{Dispatch}{
   The method dispatching is \emph{not} done via
   \code{\link{UseMethod}()}, but by C-internal dispatching.
-  Therefore, there is no need for, e.g., \code{rbind.default}.
+  Therefore there is no need for, e.g., \code{rbind.default}.
 
   The dispatch algorithm is described in the source file
   (\file{.../src/main/bind.c}) as

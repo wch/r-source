@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 help.start <- function (gui = "irrelevant", browser = getOption("browser"),
-			remote = NULL)
+			remote = NULL, searchEngine = FALSE)
 {
     if(is.null(browser))
 	stop("invalid browser name, check options(\"browser\").")
@@ -27,7 +27,8 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
     make.packages.html()
     tmpdir <- paste("file://", URLencode(tempdir()), "/.R", sep = "")
     url <- paste(if (is.null(remote)) tmpdir else remote,
-		 "/doc/html/index.html", sep = "")
+                 if(searchEngine) "/doc/html/search/SearchEngine.html"
+                 else "/doc/html/index.html", sep = "")
     if (is.character(browser)) {
         writeLines(strwrap(gettextf("If '%s' is already running, it is *not* restarted, and you must switch to its window.",
                                     browser),
@@ -38,7 +39,7 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
     options(htmlhelp = TRUE)
 }
 
-browseURL <- function(url, browser = getOption("browser"))
+browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
 {
     ## escape characters.  ' can occur in URLs, so we must use " to
     ## delimit the URL.  We need to escape $, but "`\ do not occur in
@@ -49,7 +50,7 @@ browseURL <- function(url, browser = getOption("browser"))
     if(!is.character(url) || !(length(url) == 1) || !nzchar(url))
         stop("'url' must be a non-empty character string")
     if (is.function(browser))
-        return(invisible(browser(url)))
+        return(invisible(browser(if(encodeIfNeeded) URLencode(url) else url)))
     if(!is.character(browser)
        || !(length(browser) == 1)
        || !nzchar(browser))
@@ -61,7 +62,7 @@ browseURL <- function(url, browser = getOption("browser"))
     else
       isLocal <- FALSE
 
-    quotedUrl <- shQuote(url)
+    quotedUrl <- shQuote(if(encodeIfNeeded) URLencode(url) else url)
     remoteCmd <- if(isLocal)
         switch(basename(browser),
                "gnome-moz-remote" =, "open" = quotedUrl,

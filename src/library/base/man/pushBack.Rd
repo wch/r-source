@@ -29,7 +29,7 @@ pushBackLength(connection)
   connection, by the normal text-reading functions such as
   \code{\link{readLines}} and \code{\link{scan}}.
 
-  Pushback is only allowed for readable connections.
+  Pushback is only allowed for readable connections in text mode.
 
   Not all uses of connections respect pushbacks, in particular the input
   connection is still wired directly, so for example parsing

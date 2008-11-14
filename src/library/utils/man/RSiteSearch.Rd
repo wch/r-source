@@ -35,9 +35,10 @@ RSiteSearch(string,
     \code{functions} for help pages.
     \code{R-devel} for R-devel mailing list.
     Use \code{c()} to specify more than one.}
-  \item{format}{\code{normal} or \code{short} (no excerpts); can be abbreviated.}
-  \item{sortby}{character string (can be abbreviated) indicating how to sort the search
-    results:\cr
+  \item{format}{\code{normal} or \code{short} (no excerpts); can be
+    abbreviated.}
+  \item{sortby}{character string (can be abbreviated) indicating how to
+    sort the search results:\cr
     (\code{score},
     \code{date:late} for sorting by date with latest results first,
     \code{date:early} for earliest first,
@@ -66,15 +67,18 @@ RSiteSearch(string,
 
   \code{\link{browseURL}} for how the help file is displayed.
 }
-\examples{\dontrun{ # need Internet connection
+\examples{\donttest{ # need Internet connection
 RSiteSearch("{logistic regression}") # matches exact phrase
-RSiteSearch("Baron Liaw", restr = "Rhelp02a")
+Sys.sleep(5) # allow browser to open, take a quick look
+RSiteSearch("Baron Liaw", restrict = "Rhelp02a")
 ## Search in R-devel archive and documents  (and store the query-string):
-fullquery <- RSiteSearch("S4", restr = c("R-dev", "docs"))
+Sys.sleep(5)
+fullquery <- RSiteSearch("S4", restrict = c("R-dev", "docs"))
 fullquery # a string of ~ 116 characters
-## the latest purported bug reports
+## the latest purported bug reports, responses ...
 %% FIXME: "/bug/ and other reg.exp.s seem to fail
-RSiteSearch("bug", restr = "R-devel", sortby = "date:late")
+Sys.sleep(5)
+RSiteSearch("bug", restrict = "R-devel", sortby = "date:late")
 }}
 \keyword{utilities}
 \keyword{documentation}

@@ -8,10 +8,10 @@
 \usage{
 var(x, y = NULL, na.rm = FALSE, use)
 
-cov(x, y = NULL, use = "all.obs",
+cov(x, y = NULL, use = "everything",
     method = c("pearson", "kendall", "spearman"))
 
-cor(x, y = NULL, use = "all.obs",
+cor(x, y = NULL, use = "everything",
      method = c("pearson", "kendall", "spearman"))
 
 cov2cor(V)
@@ -39,7 +39,8 @@ cov2cor(V)
   \item{use}{an optional character string giving a
     method for computing covariances in the presence
     of missing values.	This must be (an abbreviation of) one of the strings
-    \code{"all.obs"}, \code{"complete.obs"} or \code{"pairwise.complete.obs"}.}
+    \code{"everything"}, \code{"all.obs"}, \code{"complete.obs"},
+    \code{"na.or.complete"}, or \code{"pairwise.complete.obs"}.}
   \item{method}{a character string indicating which correlation
     coefficient (or covariance) is to be computed.  One of
     \code{"pearson"} (default), \code{"kendall"}, or \code{"spearman"},
@@ -57,27 +58,35 @@ cov2cor(V)
   \code{var} is just another interface to \code{cov}, where
   \code{na.rm} is used to determine the default for \code{use} when that
   is unspecified.  If \code{na.rm} is \code{TRUE} then the complete
-  observations (rows) are used (\code{use = "complete"}) to compute the
-  variance.  Otherwise (\code{use = "all"}), \code{var} will give an
-  error if there are missing values.
+  observations (rows) are used (\code{use = "na.or.complete"}) to
+  compute the variance.  Otherwise, by default \code{use = "everything"}.
 
+  If \code{use} is \code{"everything"}, \code{\link{NA}}s will
+  propagate conceptually, i.e., a resulting value will be \code{NA}
+  whenever one of its contributing observations is \code{NA}.\cr
   If \code{use} is \code{"all.obs"}, then the presence of missing
   observations will produce an error.  If \code{use} is
   \code{"complete.obs"} then missing values are handled by casewise
   deletion (and if there are no complete cases, that gives an error).
+  \cr
+  \code{"na.or.complete"} is the same unless there are no complete
+  cases, that gives \code{NA}.
   Finally, if \code{use} has the value \code{"pairwise.complete.obs"}
-  then the correlation between each pair of variables is computed using
-  all complete pairs of observations on those variables.  This can
-  result in covariance or correlation matrices which are not positive
+  then the correlation or covariance between each pair of variables is
+  computed using all complete pairs of observations on those variables.
+  This can result in covariance or correlation matrices which are not positive
   semi-definite, as well as \code{NA} entries if there are no complete
-  pairs for that pair of variables.    For \code{cov} and \code{var},
+  pairs for that pair of variables.   For \code{cov} and \code{var},
   \code{"pairwise.complete.obs"} only works with the \code{"pearson"}
   method.
+  Note that (the equivalent of) \code{var(double(0), use=*)} gives
+  \code{NA} for \code{use = "everything"} and \code{"na.or.complete"},
+  and gives an error in the other cases.
 
   The denominator \eqn{n - 1} is used which gives an unbiased estimator
   of the (co)variance for i.i.d. observations.
   These functions return \code{\link{NA}} when there is only one
-  observation (whereas S-PLUS has been returning \code{NaN}), and 
+  observation (whereas S-PLUS has been returning \code{NaN}), and
   fail if \code{x} has length zero.
 
   For \code{cor()}, if \code{method} is \code{"kendall"} or
@@ -107,7 +116,7 @@ cov2cor(V)
 }
 \seealso{
   \code{\link{cor.test}} for confidence intervals (and tests).
-  
+
   \code{\link{cov.wt}} for \emph{weighted} covariance computation.
 
   \code{\link{sd}} for standard deviation (vectors).

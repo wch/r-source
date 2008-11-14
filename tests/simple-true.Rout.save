@@ -255,3 +255,8 @@ Error in parse(text = "12iL") : unexpected symbol in "12iL"
 > all(rank(x, na.last = NA) == na.omit(rxK))
 [1] TRUE
 > 
+> ## as.list.function() instead of *.default():
+> identical(as.list(as.list),
++	  alist(x = , ... = , UseMethod("as.list")))
+[1] TRUE
+> 

@@ -114,7 +114,10 @@ edit.data.frame <-
     rn <- attr(name, "row.names")
 
     out <- .Internal(dataentry(datalist, modes))
-
+    if(length(out) == 0) {
+        ## e.g. started with 0-col data frame or NULL, and created no cols
+        return (name)
+    }
     lengths <- sapply(out, length)
     maxlength <- max(lengths)
     if (edit.row.names) rn <- out[[1]]

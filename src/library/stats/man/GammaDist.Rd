@@ -65,12 +65,15 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
   is \code{-pgamma(t, ..., lower = FALSE, log = TRUE)}.
 
-  Note that for smallish values of \code{shape} (and moderate scale) a large
-  parts of the mass of the Gamma distribution is on values of \eqn{x} so
-  near zero that they will be represented as zero in computer
-  arithmetic.  So \code{rgamma} can well return values which will be
-  represented as zero.  (This will also happen for very large values of
-  \code{scale} since the actual generation is done for \code{scale=1}.)
+  Note that for smallish values of \code{shape} (and moderate
+  \code{scale}) a large parts of the mass of the Gamma distribution is
+  on values of \eqn{x} so near zero that they will be represented as
+  zero in computer arithmetic.  So \code{rgamma} can well return values
+  which will be represented as zero.  (This will also happen for very
+  large values of \code{scale} since the actual generation is done for
+  \code{scale=1}.) Similarly, \code{qgamma} has a very hard job for
+  small \code{scale}, and warns of potential unreliability for
+  \code{scale < 1e-10}.
 }
 \note{
   The S parametrization is via \code{shape} and \code{rate}: S has no

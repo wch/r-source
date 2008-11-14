@@ -354,14 +354,14 @@ static int isDuplicated(SEXP x, int indx, HashData *d)
     return 0;
 }
 
-static void removeEntry(SEXP x, int indx, HashData *d)
+static void removeEntry(SEXP table, SEXP x, int indx, HashData *d)
 {
     int i, *h;
 
     h = INTEGER(d->HashTable);
     i = d->hash(x, indx, d);
     while (h[i] != NIL) {
-	if (d->equal(x, h[i], x, indx)) {
+	if (d->equal(table, h[i], x, indx)) {
 	    h[i] = NA_INTEGER;  /* < 0, only index values are inserted */
 	    return;
 	}
@@ -402,12 +402,11 @@ SEXP duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 {
     SEXP ans;
     int *h, *v;
-    int i, n;
+    int i, j, n,m;
     HashData data;
 
     if (!isVector(x))
 	error(_("'duplicated' applies only to vectors"));
-    PROTECT(incomp = coerceVector(incomp, TYPEOF(x)));
 
     n = LENGTH(x);
     HashTableSetup(x, &data);
@@ -418,13 +417,22 @@ SEXP duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
     v = LOGICAL(ans);
 
     for (i = 0; i < data.M; i++) h[i] = NIL;
-    for (i = 0; i < length(incomp); i++) removeEntry(incomp, i, &data);
-    UNPROTECT(1);
 
     if(from_last)
 	for (i = n-1; i >= 0; i--) v[i] = isDuplicated(x, i, &data);
     else
 	for (i = 0; i < n; i++) v[i] = isDuplicated(x, i, &data);
+
+    if(length(incomp)) {
+	PROTECT(incomp = coerceVector(incomp, TYPEOF(x)));
+	m = length(incomp);
+	for (i = 0; i < n; i++) 
+	    if(v[i]) {
+		for(j = 0; j < m; j++)
+		    if(data.equal(x, i, incomp, j)) {v[i] = 0; break;}
+	    }
+	UNPROTECT(1);
+    }
 
     return ans;
 }
@@ -530,13 +538,13 @@ static void DoHashing(SEXP table, HashData *d)
 }
 
 /* invalidate entries */
-static void UndoHashing(SEXP table, HashData *d)
+static void UndoHashing(SEXP x, SEXP table, HashData *d)
 {
     int *h, i, n;
 
-    n = LENGTH(table);
+    n = LENGTH(x);
     h = INTEGER(d->HashTable);
-    for (i = 0; i < n; i++) removeEntry(table, i, d);
+    for (i = 0; i < n; i++) removeEntry(table, x, i, d);
 }
 
 static int Lookup(SEXP table, SEXP x, int indx, HashData *d)
@@ -629,7 +637,7 @@ SEXP match4(SEXP itable, SEXP ix, int nmatch, SEXP incomp)
     HashTableSetup(table, &data);
     PROTECT(data.HashTable);
     DoHashing(table, &data);
-    UndoHashing(incomp, &data);
+    UndoHashing(incomp, itable, &data);
     ans = HashLookup(table, x, &data);
     UNPROTECT(4);
     return ans;

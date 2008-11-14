@@ -34,7 +34,7 @@ proc.time()
   OS.  Typically it is something like
 
   \emph{The \sQuote{user time} is the CPU time charged for the execution
-  of user instructions of the calling process. The \sQuote{system lime}
+  of user instructions of the calling process. The \sQuote{system time}
   is the CPU time charged for execution by the system on behalf of the
   calling process.}
  

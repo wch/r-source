@@ -1,6 +1,6 @@
 % File src/library/utils/man/relist.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{relist}
@@ -13,7 +13,7 @@
 \alias{is.relistable}
 \alias{unlist.relistable}
 %
-\title{Allow Re-Listing an unlisted() Object}
+\title{Allow Re-Listing an unlist()ed Object}
 \description{
   \code{relist()} is an S3 generic function with a few methods in order
   to allow easy inversion of \code{\link{unlist}(obj)} when that is used
@@ -33,8 +33,9 @@ is.relistable(x)
 }
 
 \arguments{
-  \item{flesh}{ .....}
-  \item{skeleton}{ .........}
+  \item{flesh}{a vector to be relisted}
+  \item{skeleton}{a list, the structure of which determines the structure
+    of the result}
   \item{x}{an \R object, typically a list (or vector).}
   \item{recursive}{logical.  Should unlisting be applied to list
     components of \code{x}?}
@@ -42,12 +43,12 @@ is.relistable(x)
 }
 \details{
   Some functions need many parameters, which are most easily represented in
-  complex structures.  Unfortunately, many mathematical functions in \R,
-  including \code{\link{optim}} and \code{\link{nlm}} can only operate on
-  functions whose domain is
-  a vector.  \R has \code{\link{unlist}()} to convert complex objects into a
-  vector representation.  \code{relist()}, it's methods and the
-  functionality mentioned here provide the inverse operation to convert
+  complex structures, e.g., nested lists.  Unfortunately, many
+  mathematical functions in \R, including \code{\link{optim}} and
+  \code{\link{nlm}} can only operate on functions whose domain is
+  a vector.  \R has \code{\link{unlist}()} to convert nested list
+  objects into a vector representation.  \code{relist()}, it's methods and
+  the functionality mentioned here provide the inverse operation to convert
   vectors back to the convenient structural representation.
   This allows structured functions (such as \code{optim()}) to have simple
   mathematical interfaces.
@@ -59,18 +60,19 @@ is.relistable(x)
   \preformatted{
       list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0))).
   }
-  However, \code{\link{optim}} cannot operate on functions that take lists as input; it
-  only likes numeric vectors.  The solution is conversion:
+  However, \code{\link{optim}} cannot operate on functions that take
+  lists as input; it only likes numeric vectors.  The solution is
+  conversion. Given a function \code{mvdnorm(x, mean, vcov, log=FALSE)}
+  which computes the required probability density, then
   \preformatted{
  	ipar <- list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0)))
  	initial.param <- as.relistable(ipar)
 
  	ll <- function(param.vector)
  	{
-	   param <- relist(param.vector)
-	   -sum(dnorm(x, mean = param$mean, vcov = param$vcov,
-		      log = TRUE))
-	   ## NB: dnorm() has no vcov... you should get the point
+	   param <- relist(param.vector, skeleton=ipar))
+	   -sum(mvdnorm(x, mean = param$mean, vcov = param$vcov,
+		        log = TRUE))
  	}
 
  	optim(unlist(initial.param), ll)
@@ -83,14 +85,16 @@ is.relistable(x)
   }
   will put the content of flesh on the skeleton.  You don't need to specify
   skeleton explicitly if the skeleton is stored as an attribute inside flesh.
-  In particular, flesh was created from some object obj with
+  In particular, if flesh was created from some object obj with
   \code{unlist(as.relistable(obj))}
-  then the skeleton attribute is automatically set.
+  then the skeleton attribute is automatically set.  (Note that this
+  does not apply to the example here, as \code{\link{optim}} is creating
+  a new vector to pass to \code{ll} and not its \code{par} argument.)
 
   As long as \code{skeleton} has the right shape, it should be a precise inverse
   of \code{\link{unlist}}.  These equalities hold:
   \preformatted{
-   relist(unlist(x), skeleton) == x
+   relist(unlist(x), x) == x
    unlist(relist(y, skeleton)) == y
 
    x <- as.relistable(x)
@@ -98,10 +102,13 @@ is.relistable(x)
   }
 }% details
 \value{
-.....................
+  an object of (S3) class \code{"relistable"} (and \code{"\link{list}"}).
 }
-\author{R Core, based on a code proposal by Andrew Clausen.}
-\seealso{\code{\link{unlist}}%, ..... MORE ?
+\author{
+  R Core, based on a code proposal by Andrew Clausen.
+}
+\seealso{
+  \code{\link{unlist}}%, ..... MORE ?
 }
 \examples{
  ipar <- list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0)))

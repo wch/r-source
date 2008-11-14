@@ -109,11 +109,10 @@ function(pattern, fields = c("alias", "concept", "title"),
     }
     if(rebuild) {
 	if(verbose) message("Rebuilding the data base ...")
-	## Check whether we can save the hsearch db lateron.
+	## Check whether we can save the hsearch db later on.
 	if(all(is.na(mem.limits()))) {
 	    save_db <- save_db_to_memory <- TRUE
-	}
-	else {
+	} else {
 	    save_db <- save_db_to_memory <- FALSE
 	    dir <- file.path(tempdir(), ".R")
 	    db_file <- file.path(dir, "hsearch.rds")
@@ -158,8 +157,6 @@ function(pattern, fields = c("alias", "concept", "title"),
         }
 
 	## Create the hsearch db.
-	contents_DCF_fields <-
-	    c("Entry", "Aliases", "Description", "Keywords")
 	np <- 0
 	if(verbose)
 	    message("Packages {.readRDS() sequentially}:")
@@ -262,14 +259,24 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    }
 	    if(verbose) message(" done")
 	}
-	## Let us be defensive about invalid multi-byte character data
-	## here.  We simple remove all Rd objects with at least one
-	## invalid entry, and warn in case we found one.
 	bad_IDs <-
 	    unlist(sapply(db,
 			  function(u)
 			  u[rowSums(is.na(nchar(u, "c", TRUE))) > 0, "ID"]))
-	if(length(bad_IDs)) {
+	if(length(bad_IDs) && capabilities("iconv")) { ## try latin1
+            for(i in seq_along(db)) {
+                ind <- db[[i]][, "ID"] %in% bad_IDs
+                db[[i]][ind, ] <- iconv(db[[i]][ind, ], "latin1", "")
+            }
+            bad_IDs <-
+                unlist(sapply(db,
+                              function(u)
+                              u[rowSums(is.na(nchar(u, "c", TRUE))) > 0, "ID"]))
+        }
+	## If there are any invalid multi-byte character data
+	## left, we simple remove all Rd objects with at least one
+	## invalid entry, and warn.
+        if(length(bad_IDs)) {
 	    warning("removing all entries with invalid multi-byte character data")
 	    for(i in seq_along(db)) {
 		ind <- db[[i]][, "ID"] %in% bad_IDs

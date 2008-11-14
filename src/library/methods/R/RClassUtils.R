@@ -61,9 +61,9 @@ makePrototypeFromClassDef <-
     ## try for a single superclass that is not virtual
     supers <- names(extends)
     virtual <- NA
-    dataPartDone <- length(slots)==0 || !is.na(match(".Data", snames))
-    dataPartClass <- if(dataPartDone) "ANY" else elNamed(slots, ".Data")
+    dataPartClass <- elNamed(slots, ".Data")
     prototype <- ClassDef@prototype
+    dataPartDone <- is.null(dataPartClass)  || is(prototype, dataPartClass)# don't look for data part in supreclasses
     ## check for a formal prototype object (TODO:  sometime ensure that this happens
     ## at setClass() time, so prototype slot in classRepresentation can have that class
     if(!.identC(class(prototype), className) && .isPrototype(prototype)) {
@@ -96,7 +96,7 @@ makePrototypeFromClassDef <-
                 for(slotName in slotsi) {
                     if(identical(slotName, ".Data")) {
                         if(!dataPartDone) {
-                            prototype <- setDataPart(prototype, getDataPart(pri))
+                            prototype <- setDataPart(prototype, getDataPart(pri), FALSE)
                             dataPartDone <- TRUE
                         }
                     }
@@ -108,8 +108,10 @@ makePrototypeFromClassDef <-
                     }
                 }
             }
-            else if(!dataPartDone && extends(cli, dataPartClass))
-                prototype <- setDataPart(prototype, pri)
+            else if(!dataPartDone && extends(cli, dataPartClass)) {
+                 prototype <- setDataPart(prototype, pri, FALSE)
+                 dataPartDone <- TRUE
+            }
         }
     }
     if(length(slots) == 0)
@@ -1159,13 +1161,15 @@ getDataPart <- function(object) {
     object
 }
 
-setDataPart <- function(object, value) {
-    classDef <- getClass(class(object))
-    dataClass <- elNamed(getSlots(classDef), ".Data")
-    if(is.null(dataClass))
-        stop(gettextf("class \"%s\" does not have a data part (a .Data slot) defined",
-                      class(object)), domain = NA)
-    value <- as(value, dataClass)
+setDataPart <- function(object, value, check = TRUE) {
+    if(check) {
+        classDef <- getClass(class(object))
+        dataClass <- elNamed(getSlots(classDef), ".Data")
+        if(is.null(dataClass))
+          stop(gettextf("class \"%s\" does not have a data part (a .Data slot) defined",
+                        class(object)), domain = NA)
+        value <- as(value, dataClass)
+    }
     .mergeAttrs(value, object)
 }
 
@@ -1833,3 +1837,46 @@ substituteFunctionArgs <-
         else
           NULL
     }
+
+## remove superclass from  definition of class in the cache & in environments
+## on search list
+.removeSuperClass <- function(class, superclass) {
+    cdef <- .getClassFromCache(class, where)
+    if(is.null(cdef)) {}
+    else {
+        newdef <- .deleteSuperClass(cdef, superclass)
+        if(!is.null(newdef))
+          .cacheClass(class, newdef, FALSE, where)
+    }
+    sig <- signature(from=class, to=superclass)
+    if(existsMethod("coerce", sig))
+      .removeCachedMethod("coerce", sig)
+    if(existsMethod("coerce<-", sig))
+      .removeCachedMethod("coerce<-", sig)
+    evv <- findClass(class, .GlobalEnv) # what about hidden classes?  how to find them?
+    mname <- classMetaName(class)
+    for(where in evv) {
+        if(exists(mname, envir = where, inherits = FALSE)) {
+            cdef <- get(mname, envir = where)
+            newdef <- .deleteSuperClass(cdef, superclass)
+            if(!is.null(newdef)) {
+              assignClassDef(class, newdef,  where, TRUE)
+              ## message("deleted ",superclass, " from ",class, "in environment")
+          }
+        }
+    }
+}
+
+.deleteSuperClass <- function(cdef, superclass) {
+        superclasses <- cdef@contains
+        ii <- match(superclass, names(superclasses), 0)
+        if(ii > 0) {
+            cdef@contains <- superclasses[-ii]
+            for(subclass in names(cdef@subclasses))
+              .removeSuperClass(subclass, superclass)
+            cdef
+        }
+        else
+          NULL
+    }
+

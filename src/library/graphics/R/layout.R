@@ -30,7 +30,7 @@ layout <-
     num.figures <- as.integer(max(mat))
     ## check that each value in 1..n is mentioned
     for (i in 1:num.figures)
-	if (match(i, mat, nomatch=0) == 0)
+	if (match(i, mat, nomatch=0L) == 0L)
 	    stop("layout matrix must contain at least one reference\nto each of the values {1..n}; here  n = ",
                  num.figures,"\n")
 

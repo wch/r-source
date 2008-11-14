@@ -45,12 +45,12 @@ as.Date.character <- function(x, format="", ...)
             if(is.na(xx)) f <- "%Y-%m-%d" # all NAs
         }
 	if(is.na(xx) ||
-	   !is.na(strptime(xx, f <- "%Y-%m-%d")) ||
-	   !is.na(strptime(xx, f <- "%Y/%m/%d"))
+	   !is.na(strptime(xx, f <- "%Y-%m-%d", tz="GMT")) ||
+	   !is.na(strptime(xx, f <- "%Y/%m/%d", tz="GMT"))
            ) return(strptime(x, f))
 	stop("character string is not in a standard unambiguous format")
     }
-    res <- if(missing(format)) fromchar(x) else strptime(x, format)
+    res <- if(missing(format)) fromchar(x) else strptime(x, format, tz="GMT")
     .Internal(POSIXlt2Date(res))
 }
 
@@ -348,9 +348,9 @@ cut.Date <-
     } else {
         start <- .Internal(POSIXlt2Date(start))
         if (length(by2) == 2) incr <- incr * as.integer(by2[1])
-	    maxx <- max(x, na.rm = TRUE)
+        maxx <- max(x, na.rm = TRUE)
         breaks <- seq.int(start, maxx + incr, breaks)
-        breaks <- breaks[1:(1+max(which(breaks < maxx)))]
+        breaks <- breaks[1:(1+max(which(breaks <= maxx)))]
       }
     } else stop("invalid specification of 'breaks'")
     res <- cut(unclass(x), unclass(breaks), labels = labels,
@@ -426,3 +426,5 @@ function(x, f, drop = FALSE, ...)
     for(i in seq_along(y)) class(y[[i]]) <- "Date"
     y
 }
+
+xtfrm.Date <- function(x) as.numeric(x)

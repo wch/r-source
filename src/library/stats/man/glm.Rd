@@ -200,8 +200,10 @@ glm.fit(x, y, weights = rep(1, nobs),
   \item{prior.weights}{the case weights initially supplied.}
   \item{df.residual}{the residual degrees of freedom.}
   \item{df.null}{the residual degrees of freedom for the null model.}
-  \item{y}{the \code{y} vector used. (It is a vector even for a binomial
-    model.)}
+  \item{y}{if requested (the default) the \code{y} vector
+    used. (It is a vector even for a binomial model.)}
+  \item{x}{(if requested, the model matrix.}
+  \item{model}{(if requested (the default), the model frame.}
   \item{converged}{logical. Was the IWLS algorithm judged to have converged?}
   \item{boundary}{logical. Is the fitted value on the boundary of the
     attainable values?}
@@ -216,6 +218,8 @@ glm.fit(x, y, weights = rep(1, nobs),
   \item{contrasts}{(where relevant) the contrasts used.}
   \item{xlevels}{(where relevant) a record of the levels of the factors
     used in fitting.}
+  \item{na.action}{(where relevant) information returned by
+    \code{\link{model.frame}} on the special handling of \code{NA}s.}
 
   In addition, non-empty fits will have components \code{qr}, \code{R}
   and \code{effects} relating to the final weighted linear fit.

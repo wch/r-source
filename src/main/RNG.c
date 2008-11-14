@@ -287,58 +287,61 @@ static void Randomize(RNGtype kind)
     RNG_Init(kind, seed);
 }
 
+static void GetRNGkind(SEXP seeds)
+{
+    /* Load RNG_kind, N01_kind from .Random.seed if present */
+    int tmp, *is;
+    RNGtype newRNG; N01type newN01;
+
+    if (isNull(seeds))
+	seeds = findVarInFrame(R_GlobalEnv, R_SeedsSymbol);
+    if (seeds == R_UnboundValue) return;
+    if (!isInteger(seeds)) {
+	if (seeds == R_MissingArg) /* How can this happen? */
+	    error(_(".Random.seed is a missing argument with no default"));
+	error(_(".Random.seed is not an integer vector but of type '%s'"),
+		type2char(TYPEOF(seeds)));
+    }
+    is = INTEGER(seeds);
+    tmp = is[0];
+    if (tmp == NA_INTEGER)
+	error(_(".Random.seed[1] is not a valid integer"));
+    newRNG = (RNGtype) (tmp % 100);
+    newN01 = (N01type) (tmp / 100);
+    if (newN01 < 0 || newN01 > KINDERMAN_RAMAGE)
+	error(_(".Random.seed[0] is not a valid Normal type"));
+    switch(newRNG) {
+    case WICHMANN_HILL:
+    case MARSAGLIA_MULTICARRY:
+    case SUPER_DUPER:
+    case MERSENNE_TWISTER:
+    case KNUTH_TAOCP:
+    case KNUTH_TAOCP2:
+	break;
+    case USER_UNIF:
+	if(!User_unif_fun)
+	    error(_(".Random.seed[1] = 5 but no user-supplied generator"));
+	break;
+    default:
+	error(_(".Random.seed[1] is not a valid RNG kind (code)"));
+    }
+    RNG_kind = newRNG; N01_kind = newN01;
+    return;
+}
+
 
 void GetRNGstate()
 {
     /* Get  .Random.seed  into proper variables */
-    int len_seed, j, tmp, *is;
+    int len_seed;
     SEXP seeds;
-    RNGtype newRNG; N01type newN01;
 
     /* look only in the workspace */
     seeds = findVarInFrame(R_GlobalEnv, R_SeedsSymbol);
     if (seeds == R_UnboundValue) {
 	Randomize(RNG_kind);
-    }
-    else {
-	if (seeds == R_MissingArg)
-	    error(_(".Random.seed is a missing argument with no default"));
-	if (!isInteger(seeds)) {
-	    warning(_(".Random.seed is not an integer vector but of type '%s'"),
-		    type2char(TYPEOF(seeds)));
-	    seeds = coerceVector(seeds, INTSXP);
-	    if(!isInteger(seeds))
-		error(_("unable to coerce .Random.seed to an integer vector"));
-	}
-	is = INTEGER(seeds);
-	tmp = is[0];
-	if (tmp == NA_INTEGER)
-	    error(_(".Random.seed[1] is not a valid integer"));
-	/* How using two integers, with names in the options to identify the types. */
-	newRNG = (RNGtype) (tmp % 100);
-	newN01 = (N01type) (tmp / 100);
-	/*if (RNG_kind > USER_UNIF || RNG_kind < 0) {
-	    warning(".Random.seed was invalid: re-initializing");
-	    RNG_kind = RNG_DEFAULT;
-	    }*/
-	if (newN01 < 0 || newN01 > KINDERMAN_RAMAGE)
-	    error(_(".Random.seed[0] is not a valid Normal type"));
-	switch(newRNG) {
-	case WICHMANN_HILL:
-	case MARSAGLIA_MULTICARRY:
-	case SUPER_DUPER:
-	case MERSENNE_TWISTER:
-	case KNUTH_TAOCP:
-	case KNUTH_TAOCP2:
-	    break;
-	case USER_UNIF:
-	    if(!User_unif_fun)
-		error(_(".Random.seed[1] = 5 but no user-supplied generator"));
-	    break;
-	default:
-	    error(_(".Random.seed[1] is not a valid RNG kind (code)"));
-	}
-	RNG_kind = newRNG; N01_kind = newN01;
+    } else {
+	GetRNGkind(seeds);
 	len_seed = RNG_Table[RNG_kind].n_seed;
 	/* Not sure whether this test is needed: wrong for USER_UNIF */
 	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1)
@@ -346,13 +349,9 @@ void GetRNGstate()
 	if(LENGTH(seeds) == 1 && RNG_kind != USER_UNIF)
 	    Randomize(RNG_kind);
 	else {
-	    for(j = 1; j <= len_seed; j++) {
-		tmp = is[j];
-/* Some generators can generate NA_INTEGER as a valid integer value */
-/*		if(tmp == NA_INTEGER)
-		error(".Random.seed[%d] is not a valid integer", j+1);*/
-		RNG_Table[RNG_kind].i_seed[j - 1] = tmp;
-	    }
+	    int j, *is = INTEGER(seeds);
+	    for(j = 1; j <= len_seed; j++)
+		RNG_Table[RNG_kind].i_seed[j - 1] = is[j];
 	    FixupSeeds(RNG_kind, 0);
 	}
     }
@@ -431,11 +430,13 @@ SEXP attribute_hidden do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, rng, norm;
 
     checkArity(op,args);
+    GetRNGstate(); /* might not be initialized */
     PROTECT(ans = allocVector(INTSXP, 2));
     INTEGER(ans)[0] = RNG_kind;
     INTEGER(ans)[1] = N01_kind;
     rng = CAR(args);
     norm = CADR(args);
+    GetRNGkind(R_NilValue); /* pull from .Random.seed if present */
     if(!isNull(rng)) { /* set a new RNG kind */
 	RNGkind((RNGtype) asInteger(rng));
     }
@@ -449,21 +450,20 @@ SEXP attribute_hidden do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_setseed (SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP skind;
+    SEXP skind, nkind;
     int seed;
-    RNGtype kind;
 
     checkArity(op,args);
     seed = asInteger(CAR(args));
     if (seed == NA_INTEGER)
 	error(_("supplied seed is not a valid integer"));
     skind = CADR(args);
-    if (!isNull(skind)) {
-	kind = (RNGtype) asInteger(skind);
-	RNGkind(kind);
-    } else
-	kind = RNG_kind;
-    RNG_Init(RNG_kind, (Int32) seed);
+    nkind = CADDR(args);
+    GetRNGkind(R_NilValue); /* pull RNG_kind, N01_kind from 
+			       .Random.seed if present */
+    if (!isNull(skind)) RNGkind((RNGtype) asInteger(skind));
+    if (!isNull(nkind)) Norm_kind((N01type) asInteger(nkind));
+    RNG_Init(RNG_kind, (Int32) seed); /* zaps BM history */
     PutRNGstate();
     return R_NilValue;
 }

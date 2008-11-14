@@ -28,10 +28,11 @@
 /p1  { stroke } def
 /p2  { gsave bg fill grestore newpath } def
 /p3  { gsave bg fill grestore stroke } def
-/t   { 6 -2 roll moveto gsave rotate
-       ps mul neg 0 2 1 roll rmoveto
+/t   { 5 -2 roll moveto gsave rotate
        1 index stringwidth pop
        mul neg 0 rmoveto show grestore } def
+/ta  { 4 -2 roll moveto gsave rotate show } def
+/tb  { 2 -1 roll 0 rmoveto show } def
 /cl  { grestore gsave newpath 3 index 3 index moveto 1 index
        4 -1 roll lineto  exch 1 index lineto lineto
        closepath clip newpath } def
@@ -111,12 +112,12 @@ np
 627.34 119.08 m
 0 -7.20 l
 o
-/ps 12 def /Font1 findfont 12 s
-243.34 93.16 (-1.0) .5 0 0 t
-339.34 93.16 (-0.5) .5 0 0 t
-435.34 93.16 (0.0) .5 0 0 t
-531.34 93.16 (0.5) .5 0 0 t
-627.34 93.16 (1.0) .5 0 0 t
+/Font1 findfont 12 s
+243.34 93.16 (-1.0) .5 0 t
+339.34 93.16 (-0.5) .5 0 t
+435.34 93.16 (0.0) .5 0 t
+531.34 93.16 (0.5) .5 0 t
+627.34 93.16 (1.0) .5 0 t
 np
 227.98 132.84 m
 0 344.00 l
@@ -141,11 +142,11 @@ np
 227.98 476.84 m
 -7.20 0 l
 o
-210.70 132.84 (-1.0) .5 0 90 t
-210.70 218.84 (-0.5) .5 0 90 t
-210.70 304.84 (0.0) .5 0 90 t
-210.70 390.84 (0.5) .5 0 90 t
-210.70 476.84 (1.0) .5 0 90 t
+210.70 132.84 (-1.0) .5 90 t
+210.70 218.84 (-0.5) .5 90 t
+210.70 304.84 (0.0) .5 90 t
+210.70 390.84 (0.5) .5 90 t
+210.70 476.84 (1.0) .5 90 t
 np
 227.98 119.08 m
 414.72 0 l
@@ -154,29 +155,29 @@ np
 0 -371.52 l
 o
 168.94 45.64 672.94 549.64 cl
-/ps 12 def /Font1 findfont 12 s
+/Font1 findfont 12 s
 0 setgray
-435.34 64.36 (Re) .5 0 0 t
-181.90 304.84 (Im) .5 0 90 t
+435.34 64.36 (Re) .5 0 t
+181.90 304.84 (Im) .5 90 t
 227.98 119.08 642.70 490.60 cl
-/ps 12 def /Font1 findfont 12 s
+/Font1 findfont 12 s
 1 0 0 rgb
-612.73 366.44 (1) .5 0 0 t
-571.11 422.24 (2) .5 0 0 t
-508.82 459.64 (3) .5 0 0 t
-435.34 472.62 (4) .5 0 0 t
-361.87 459.73 (5) .5 0 0 t
-299.58 422.36 (6) .5 0 0 t
-257.96 366.53 (7) .5 0 0 t
-243.34 300.73 (8) .5 0 0 t
-257.96 234.91 (9) .5 0 0 t
-299.58 179.11 (10) .5 0 0 t
-361.87 141.71 (11) .5 0 0 t
-435.34 128.62 (12) .5 0 0 t
-508.82 141.83 (13) .5 0 0 t
-571.11 179.00 (14) .5 0 0 t
-612.73 234.91 (15) .5 0 0 t
-627.34 300.73 (16) .5 0 0 t
+612.73 366.44 (1) .5 0 t
+571.11 422.24 (2) .5 0 t
+508.82 459.64 (3) .5 0 t
+435.34 472.62 (4) .5 0 t
+361.87 459.73 (5) .5 0 t
+299.58 422.36 (6) .5 0 t
+257.96 366.53 (7) .5 0 t
+243.34 300.73 (8) .5 0 t
+257.96 234.91 (9) .5 0 t
+299.58 179.11 (10) .5 0 t
+361.87 141.71 (11) .5 0 t
+435.34 128.62 (12) .5 0 t
+508.82 141.83 (13) .5 0 t
+571.11 179.00 (14) .5 0 t
+612.73 234.91 (15) .5 0 t
+627.34 300.73 (16) .5 0 t
 ep
 %%Page: 2 2
 bp
@@ -229,12 +230,12 @@ np
 627.34 119.08 m
 0 -7.20 l
 o
-/ps 12 def /Font1 findfont 12 s
-286.01 93.16 (2) .5 0 0 t
-371.34 93.16 (4) .5 0 0 t
-456.68 93.16 (6) .5 0 0 t
-542.01 93.16 (8) .5 0 0 t
-627.34 93.16 (10) .5 0 0 t
+/Font1 findfont 12 s
+286.01 93.16 (2) .5 0 t
+371.34 93.16 (4) .5 0 t
+456.68 93.16 (6) .5 0 t
+542.01 93.16 (8) .5 0 t
+627.34 93.16 (10) .5 0 t
 np
 227.98 171.06 m
 0 305.78 l
@@ -259,11 +260,11 @@ np
 227.98 476.84 m
 -7.20 0 l
 o
-210.70 171.06 (2) .5 0 90 t
-210.70 247.50 (4) .5 0 90 t
-210.70 323.95 (6) .5 0 90 t
-210.70 400.39 (8) .5 0 90 t
-210.70 476.84 (10) .5 0 90 t
+210.70 171.06 (2) .5 90 t
+210.70 247.50 (4) .5 90 t
+210.70 323.95 (6) .5 90 t
+210.70 400.39 (8) .5 90 t
+210.70 476.84 (10) .5 90 t
 np
 227.98 119.08 m
 414.72 0 l
@@ -272,18 +273,21 @@ np
 0 -371.52 l
 o
 168.94 45.64 672.94 549.64 cl
-/ps 14 def /Font2 findfont 14 s
+/Font2 findfont 14 s
 0 setgray
-435.34 523.73 (text\(...\) examples) .5 0 0 t
-435.34 506.45 (~~~~~~~~~~~~~~) .5 0 0 t
-/ps 12 def /Font1 findfont 12 s
-435.34 49.96 (R is GNU ©, but not ® ...) .5 0 0 t
-435.34 64.36 (1:10) .5 0 0 t
-181.90 304.84 (1:10) .5 0 90 t
+378.55 523.73 (te) 0 ta
+-0.210 (xt\(...\) e) tb
+-0.210 (xamples) tb gr
+435.34 506.45 (~~~~~~~~~~~~~~) .5 0 t
+/Font1 findfont 12 s
+369.48 49.96 (R is GNU ©, b) 0 ta
+-0.240 (ut not ® ...) tb gr
+435.34 64.36 (1:10) .5 0 t
+181.90 304.84 (1:10) .5 90 t
 168.94 45.64 672.94 549.64 cl
-/ps 12 def /Font1 findfont 12 s
+/Font1 findfont 12 s
 0 setgray
-435.34 493.48 («Latin-1 accented chars»: éè øØ å<Å æ<Æ) .5 0 0 t
+435.34 493.48 («Latin-1 accented chars»: éè øØ å<Å æ<Æ) .5 0 t
 227.98 119.08 642.70 490.60 cl
 1 0 0 rgb
 0.75 setlinewidth
@@ -307,68 +311,84 @@ np
 286.01 117.56 m
 0 30.55 l
 o
-/ps 10 def /Font1 findfont 10 s
+/Font1 findfont 10 s
 0 setgray
-456.68 168.45 (the text is CENTERED around \(x,y\) = \(6,2\) by default) .5 0 0 t
-/ps 12 def /Font1 findfont 12 s
-286.01 132.84 (or Left/Bottom - JUSTIFIED at \(2,1\) by 'adj = c\(0,0\)') 0 0 0 t
-/ps 12 def /Font5 findfont 12 s
-335.34 432.63 (b) 0 0 0 t
-/ps 12 def /Font1 findfont 12 s
-335.82 439.21 (^) 0 0 0 t
-/ps 12 def /Font5 findfont 12 s
-344.70 432.63 (=) 0 0 0 t
-/ps 15 def /Font5 findfont 15 s
-354.06 432.63 (\() 0 0 0 t
-/ps 12 def /Font1 findfont 12 s
-359.06 432.63 (X) 0 0 0 t
-/ps 8 def /Font1 findfont 8 s
-367.06 438.59 (t) 0 0 0 t
-/ps 12 def /Font1 findfont 12 s
-369.29 432.63 (X) 0 0 0 t
-/ps 15 def /Font5 findfont 15 s
-377.29 432.63 (\)) 0 0 0 t
-/ps 8 def /Font5 findfont 8 s
-382.29 438.59 (-) 0 0 0 t
-/ps 8 def /Font1 findfont 8 s
-386.68 438.59 (1) 0 0 0 t
-/ps 12 def /Font1 findfont 12 s
-391.13 432.63 (X) 0 0 0 t
-/ps 8 def /Font1 findfont 8 s
-399.13 438.59 (t) 0 0 0 t
-/ps 12 def /Font1 findfont 12 s
-401.35 432.63 (y) 0 0 0 t
-/ps 9 def /Font1 findfont 9 s
-371.34 413.35 (expression\(hat\(beta\) == \(X^t * X\)^{-1} * X^t * y\)) .5 0 0 t
-/ps 12 def /Font1 findfont 12 s
-352.21 359.10 (x) 0 0 0 t
+339.27 168.45 (the te) 0 ta
+-0.300 (xt is CENTERED around \(x,y\) = \(6,2\) b) tb
+-0.200 (y def) tb
+-0.300 (ault) tb gr
+/Font1 findfont 12 s
+286.01 132.84 (or Left/Bottom - JUSTIFIED at \(2,1\) b) 0 ta
+-0.240 (y 'adj = c\(0,0\)') tb gr
+/Font5 findfont 12 s
+335.34 432.63 (b) 0 0 t
+/Font1 findfont 12 s
+335.82 439.21 (^) 0 0 t
+/Font5 findfont 12 s
+344.70 432.63 (=) 0 0 t
+/Font5 findfont 15 s
+354.06 432.63 (\() 0 0 t
+/Font1 findfont 12 s
+359.06 432.63 (X) 0 0 t
+/Font1 findfont 8 s
+367.06 438.59 (t) 0 0 t
+/Font1 findfont 12 s
+369.29 432.63 (X) 0 0 t
+/Font5 findfont 15 s
+377.29 432.63 (\)) 0 0 t
+/Font5 findfont 8 s
+382.29 438.59 (-) 0 0 t
+/Font1 findfont 8 s
+386.68 438.59 (1) 0 0 t
+/Font1 findfont 12 s
+391.13 432.63 (X) 0 0 t
+/Font1 findfont 8 s
+399.13 438.59 (t) 0 0 t
+/Font1 findfont 12 s
+401.35 432.63 (y) 0 0 t
+/Font1 findfont 9 s
+276.84 413.35 (e) 0 ta
+-0.270 (xpression\(hat\(beta\) == \(X^t * X\)^{-1} * X^t * y\)) tb gr
+/Font1 findfont 12 s
+352.21 359.10 (x) 0 0 t
 np
 352.21 367.10 m
 6.00 0 l
 o
-/ps 12 def /Font5 findfont 12 s
-360.98 359.10 (=) 0 0 0 t
-/ps 15 def /Font5 findfont 15 s
-370.35 358.06 (å) 0 0 0 t
-/ps 8 def /Font1 findfont 8 s
-370.39 349.40 (i) 0 0 0 t
-/ps 8 def /Font5 findfont 8 s
-372.16 349.40 (=) 0 0 0 t
-/ps 8 def /Font1 findfont 8 s
-376.55 349.40 (1) 0 0 0 t
-373.47 370.63 (n) 0 0 0 t
-/ps 12 def /Font1 findfont 12 s
-382.71 369.06 (x) 0 0 0 t
-/ps 8 def /Font1 findfont 8 s
-388.71 366.87 (i) 0 0 0 t
-/ps 12 def /Font1 findfont 12 s
-383.26 349.47 (n) 0 0 0 t
+/Font5 findfont 12 s
+360.98 359.10 (=) 0 0 t
+/Font5 findfont 15 s
+370.35 358.06 (å) 0 0 t
+/Font1 findfont 8 s
+370.39 349.40 (i) 0 0 t
+/Font5 findfont 8 s
+372.16 349.40 (=) 0 0 t
+/Font1 findfont 8 s
+376.55 349.40 (1) 0 0 t
+373.47 370.63 (n) 0 0 t
+/Font1 findfont 12 s
+382.71 369.06 (x) 0 0 t
+/Font1 findfont 8 s
+388.71 366.87 (i) 0 0 t
+/Font1 findfont 12 s
+383.26 349.47 (n) 0 0 t
 np
 382.71 362.13 m
 7.77 0 l
 o
-414.01 481.43 (Le français, c'est façile: Règles, Liberté, Egalité, Fraternité...) .5 0 0 t
-414.01 466.04 (Jetz no chli züritüütsch: \(noch ein bißchen Zürcher deutsch\)) .5 0 0 t
+253.94 481.43 (Le fr) 0 ta
+-0.120 (ançais) tb
+-0.180 (, c'est f) tb
+-0.360 (açile: Règles) tb
+-0.180 (, Liber) tb
+0.480 (té) tb
+-0.180 (, Egalité) tb
+-0.180 (, Fr) tb
+-0.120 (ater) tb
+0.300 (nité) tb
+-0.180 (...) tb gr
+255.28 466.04 (Jetz no chli zür) 0 ta
+0.180 (itüütsch: \(noch ein bißchen Zürcher deutsch\)) tb gr
 ep
 %%Trailer
 %%Pages: 2

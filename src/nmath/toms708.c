@@ -10,6 +10,7 @@
 #undef max
 #define max(a,b) ((a > b)?a:b)
 
+#include <limits.h>
 #include "nmath.h"
 #include "dpq.h"
 /* <math.h> is included by above, with suitable defines in glibc systems
@@ -98,7 +99,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 
 /*  eps is a machine dependent constant: the smallest
  *      floating point number for which   1.0 + eps > 1.0 */
-    eps = 2.0 * Rf_d1mach(3);
+    eps = 2.0 * Rf_d1mach(3); /* == DBL_EPSILON (in R, Rmath) */
 
 /* ----------------------------------------------------------------------- */
     *w  = R_D__0;
@@ -1849,14 +1850,15 @@ static double psi(double x)
 /*     MACHINE DEPENDENT CONSTANTS ... */
 
 /* --------------------------------------------------------------------- */
-/*        XMAX1  = THE SMALLEST POSITIVE FLOATING POINT CONSTANT */
-/*                 WITH ENTIRELY INT REPRESENTATION.  ALSO USED */
-/*                 AS NEGATIVE OF LOWER BOUND ON ACCEPTABLE NEGATIVE */
-/*                 ARGUMENTS AND AS THE POSITIVE ARGUMENT BEYOND WHICH */
-/*                 PSI MAY BE REPRESENTED AS LOG(X). */
-    xmax1 = Rf_d1mach(4) - 1.0;
+/*	  XMAX1	 = THE SMALLEST POSITIVE FLOATING POINT CONSTANT
+		   WITH ENTIRELY INT REPRESENTATION.  ALSO USED
+		   AS NEGATIVE OF LOWER BOUND ON ACCEPTABLE NEGATIVE
+		   ARGUMENTS AND AS THE POSITIVE ARGUMENT BEYOND WHICH
+		   PSI MAY BE REPRESENTED AS LOG(X).
+ * Originally:  xmax1 = amin1(ipmpar(3), 1./spmpar(1))  */
+    xmax1 = (double) INT_MAX;
     d2 = 0.5 / Rf_d1mach(3);
-    xmax1 = min(xmax1, d2);
+    if(xmax1 > d2) xmax1 = d2;
 
 /* --------------------------------------------------------------------- */
 /*        XSMALL = ABSOLUTE ARGUMENT BELOW WHICH PI*COTAN(PI*X) */
@@ -1864,132 +1866,125 @@ static double psi(double x)
     xsmall = 1e-9;
 /* --------------------------------------------------------------------- */
     aug = 0.0;
-    if (x >= 0.5) {
-	goto L200;
-    }
+    if (x < 0.5) {
 /* --------------------------------------------------------------------- */
 /*     X < 0.5,  USE REFLECTION FORMULA */
 /*     PSI(1-X) = PSI(X) + PI * COTAN(PI*X) */
 /* --------------------------------------------------------------------- */
-    if (fabs(x) > xsmall) {
-	goto L100;
-    }
-    if (x == 0.0) {
-	goto L400;
-    }
+	if (fabs(x) <= xsmall) {
+
+	    if (x == 0.0) {
+		goto L_err;
+	    }
 /* --------------------------------------------------------------------- */
 /*     0 < ABS(X) <= XSMALL.  USE 1/X AS A SUBSTITUTE */
 /*     FOR  PI*COTAN(PI*X) */
 /* --------------------------------------------------------------------- */
-    aug = -1.0 / x;
-    goto L150;
+	    aug = -1.0 / x;
+	} else { /* |x| > xsmall */
 /* --------------------------------------------------------------------- */
 /*     REDUCTION OF ARGUMENT FOR COTAN */
 /* --------------------------------------------------------------------- */
-L100:
-    w = -x;
-    sgn = piov4;
-    if (w > 0.0) {
-	goto L120;
-    }
-    w = -w;
-    sgn = -sgn;
+	    /* L100: */
+	    w = -x;
+	    sgn = piov4;
+	    if (w <= 0.0) {
+		w = -w;
+		sgn = -sgn;
+	    }
 /* --------------------------------------------------------------------- */
-/*     MAKE AN ERROR EXIT IF X <= -XMAX1 */
+/*     MAKE AN ERROR EXIT IF |X| >= XMAX1 */
 /* --------------------------------------------------------------------- */
-L120:
-    if (w >= xmax1) {
-	goto L400;
-    }
-    nq = (int) w;
-    w -= (double) nq;
-    nq = (int) (w * 4.0);
-    w = (w - (double) nq * 0.25) * 4.0;
+	    if (w >= xmax1) {
+		goto L_err;
+	    }
+	    nq = (int) w;
+	    w -= (double) nq;
+	    nq = (int) (w * 4.0);
+	    w = (w - (double) nq * 0.25) * 4.0;
 /* --------------------------------------------------------------------- */
 /*     W IS NOW RELATED TO THE FRACTIONAL PART OF  4.0 * X. */
 /*     ADJUST ARGUMENT TO CORRESPOND TO VALUES IN FIRST */
 /*     QUADRANT AND DETERMINE SIGN */
 /* --------------------------------------------------------------------- */
-    n = nq / 2;
-    if (n + n != nq) {
-	w = 1.0 - w;
-    }
-    z = piov4 * w;
-    m = n / 2;
-    if (m + m != n) {
-	sgn = -sgn;
-    }
+	    n = nq / 2;
+	    if (n + n != nq) {
+		w = 1.0 - w;
+	    }
+	    z = piov4 * w;
+	    m = n / 2;
+	    if (m + m != n) {
+		sgn = -sgn;
+	    }
 /* --------------------------------------------------------------------- */
 /*     DETERMINE FINAL VALUE FOR  -PI*COTAN(PI*X) */
 /* --------------------------------------------------------------------- */
-    n = (nq + 1) / 2;
-    m = n / 2;
-    m += m;
-    if (m != n) {
-	goto L140;
-    }
+	    n = (nq + 1) / 2;
+	    m = n / 2;
+	    m += m;
+	    if (m == n) {
 /* --------------------------------------------------------------------- */
 /*     CHECK FOR SINGULARITY */
 /* --------------------------------------------------------------------- */
-    if (z == 0.0) {
-	goto L400;
-    }
+		if (z == 0.0) {
+		    goto L_err;
+		}
 /* --------------------------------------------------------------------- */
 /*     USE COS/SIN AS A SUBSTITUTE FOR COTAN, AND */
 /*     SIN/COS AS A SUBSTITUTE FOR TAN */
 /* --------------------------------------------------------------------- */
-    aug = sgn * (cos(z) / sin(z) * 4.0);
-    goto L150;
-L140:
-    aug = sgn * (sin(z) / cos(z) * 4.0);
-L150:
-    x = 1.0 - x;
-L200:
-    if (x > 3.0) {
-	goto L300;
+		aug = sgn * (cos(z) / sin(z) * 4.0);
+
+	    } else { /* L140: */
+		aug = sgn * (sin(z) / cos(z) * 4.0);
+	    }
+	}
+
+	x = 1.0 - x;
+
     }
+    /* L200: */
+    if (x <= 3.0) {
 /* --------------------------------------------------------------------- */
 /*     0.5 <= X <= 3.0 */
 /* --------------------------------------------------------------------- */
-    den = x;
-    upper = p1[0] * x;
+	den = x;
+	upper = p1[0] * x;
 
-    for (i = 1; i <= 5; ++i) {
-	den = (den + q1[i - 1]) * x;
-	upper = (upper + p1[i]) * x;
+	for (i = 1; i <= 5; ++i) {
+	    den = (den + q1[i - 1]) * x;
+	    upper = (upper + p1[i]) * x;
+	}
+
+	den = (upper + p1[6]) / (den + q1[5]);
+	xmx0 = x - dx0;
+	return den * xmx0 + aug;
     }
-
-    den = (upper + p1[6]) / (den + q1[5]);
-    xmx0 = x - dx0;
-    return den * xmx0 + aug;
 
 /* --------------------------------------------------------------------- */
 /*     IF X >= XMAX1, PSI = LN(X) */
 /* --------------------------------------------------------------------- */
-L300:
-    if (x >= xmax1) {
-	goto L350;
-    }
+    if (x < xmax1) {
 /* --------------------------------------------------------------------- */
 /*     3.0 < X < XMAX1 */
 /* --------------------------------------------------------------------- */
-    w = 1.0 / (x * x);
-    den = w;
-    upper = p2[0] * w;
+	w = 1.0 / (x * x);
+	den = w;
+	upper = p2[0] * w;
 
-    for (i = 1; i <= 3; ++i) {
-	den = (den + q2[i - 1]) * w;
-	upper = (upper + p2[i]) * w;
+	for (i = 1; i <= 3; ++i) {
+	    den = (den + q2[i - 1]) * w;
+	    upper = (upper + p2[i]) * w;
+	}
+
+	aug = upper / (den + q2[3]) - 0.5 / x + aug;
     }
-
-    aug = upper / (den + q2[3]) - 0.5 / x + aug;
-L350:
     return aug + log(x);
 
 /* --------------------------------------------------------------------- */
 /*     ERROR RETURN */
 /* --------------------------------------------------------------------- */
-L400:
+L_err:
     return 0.;
 } /* psi */
 

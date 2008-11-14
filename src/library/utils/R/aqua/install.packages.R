@@ -115,7 +115,8 @@
 
     pkgnames <- basename(pkgs)
     pkgnames <- sub("\\.tgz$", "", pkgnames)
-    pkgnames <- sub("_[0-9.-]+$", "", pkgnames)
+    pkgnames <- sub("\\.tar\\.gz$", "", pkgnames)
+    pkgnames <- sub("_.*$", "", pkgnames)
     ## there is no guarantee we have got the package name right:
     ## foo.zip might contain package bar or Foo or FOO or ....
     ## but we can't tell without trying to unpack it.

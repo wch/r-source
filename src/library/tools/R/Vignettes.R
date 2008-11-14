@@ -212,6 +212,10 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
         f <- list.files(all.files = TRUE)
         file.remove(f %w/o% c(".", "..", pdfs, origfiles))
     }
+
+    file.remove(".build.timestamp")
+    ## Might have been in origfiles ...
+
     invisible(NULL)
 }
 

@@ -162,3 +162,7 @@ all(rx == c(4.5, 3:2, 8, 6, 4.5, 9, 7, 1, 10))
 rxK <- rank(x, na.last = "keep")
 all(rx [rx <= 8]    == na.omit(rxK))
 all(rank(x, na.last = NA) == na.omit(rxK))
+
+## as.list.function() instead of *.default():
+identical(as.list(as.list),
+	  alist(x = , ... = , UseMethod("as.list")))

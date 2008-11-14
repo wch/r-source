@@ -46,7 +46,8 @@ packBits(x, type = c("raw", "integer"))
 
   \code{rawToBits} returns a raw vector of 8 times the length of a raw
   vector with entries 0 or 1.  \code{intToBits} returns a raw vector
-  of 32 times the length of an integer vector with entries 0 or 1. In
+  of 32 times the length of an integer vector with entries 0 or 1. 
+  (Non-integral numeric values are truncated to integers.) In
   both cases the unpacking is least-significant bit first.
 
   \code{packBits} packs its input (using only the lowest bit for raw or

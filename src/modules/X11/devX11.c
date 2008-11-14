@@ -70,6 +70,8 @@
 # endif */
 #endif
 
+typedef int (*X11IOhandler)(Display *);
+
 #include "devX11.h"
 
 #include <Rmodules/RX11.h>
@@ -99,6 +101,7 @@
 	 * with only one copy for all x11 devices */
 
 static Display *display;			/* Display */
+static char dspname[101]="";
 static int screen;				/* Screen */
 static Window rootwin;				/* Root Window */
 static Visual *visual;				/* Visual */
@@ -1077,6 +1080,14 @@ static int R_X11Err(Display *dsp, XErrorEvent *event)
     return 0;
 }
 
+static int R_X11IOErrSimple(Display *dsp)
+{
+    char *dn = XDisplayName(dspname);
+    strcpy(dspname, "");
+    error(_("X11 I/O error while opening X11 connection to '%s'"), dn);
+    return 0; /* but should never get here */
+}
+
 static int R_X11IOErr(Display *dsp)
 {
     int fd = ConnectionNumber(display);
@@ -1089,6 +1100,7 @@ static int R_X11IOErr(Display *dsp)
     /*
     XCloseDisplay(display);
     displayOpen = FALSE;
+    strcpy(dspname, "");
     */
     error(_("X11 fatal IO error: please save work and shut down R"));
     return 0; /* but should never get here */
@@ -1245,17 +1257,28 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     /* initialize the X11 device driver data structures. */
 
     if (!displayOpen) {
+	/* Bill Dunlap sees an error when tunneling to a non-existent
+	   X11 connection that BDR cannot reproduce.  We leave a handler set
+	   if we get an error, but that is rare.
+	*/
+	X11IOhandler old;
+	strncpy(dspname, p, 101);
+	dspname[100] = '\0';
+	old = XSetIOErrorHandler(R_X11IOErrSimple);
 	if ((display = XOpenDisplay(p)) == NULL) {
+	    XSetIOErrorHandler(old);
 	    warning(_("unable to open connection to X11 display '%s'"), p);
 	    return FALSE;
 	}
+	XSetIOErrorHandler(old);
 	DisplayOpened = TRUE;
 	Rf_setX11Display(display, gamma_fac, colormodel, maxcube, TRUE);
 	displayOpen = TRUE;
 	if(xd->handleOwnEvents == FALSE)
 	    addInputHandler(R_InputHandlers, ConnectionNumber(display),
 			    R_ProcessX11Events, XActivity);
-    }
+    } else if(strcmp(p, dspname))
+	warning(_("ignoring 'display' argument as an X11 device is already open"));
     whitepixel = GetX11Pixel(R_RED(canvascolor), R_GREEN(canvascolor),
 			     R_BLUE(canvascolor));
     blackpixel = GetX11Pixel(0, 0, 0);
@@ -1325,45 +1348,50 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 
 		app_con = XtCreateApplicationContext();
 		XtAppSetFallbackResources(app_con, x_fallback_resources);
-		xtdpy = XtOpenDisplay(app_con, dsp, "r_x11", "R_x11",
+		xtdpy = XtOpenDisplay(app_con, dspname, "r_x11", "R_x11",
 				      NULL, 0, &zero, NULL);
-		toplevel = XtAppCreateShell(NULL, "R_x11",
-					    applicationShellWidgetClass,
-					    xtdpy, NULL, 0);
-		XtGetApplicationResources(toplevel, (XtPointer) &xdev,
-					  x_resources,
-					  x_resource_count,
-					  NULL, 0);
-		if (xdev.geometry != NULL) {
-		    char gstr[40];
-		    int bitmask;
+		if(xtdpy) {
+		    toplevel = XtAppCreateShell(NULL, "R_x11",
+						applicationShellWidgetClass,
+						xtdpy, NULL, 0);
+		    XtGetApplicationResources(toplevel, (XtPointer) &xdev,
+					      x_resources,
+					      x_resource_count,
+					      NULL, 0);
+		    if (xdev.geometry != NULL) {
+			char gstr[40];
+			int bitmask;
 
-		    sprintf(gstr, "%dx%d+%d+%d", hint->width,
-			    hint->height, hint->x, hint->y);
-		    bitmask = XWMGeometry(display, DefaultScreen(display),
-					  xdev.geometry, gstr,
-					  1,
-					  hint,
-					  &hint->x, &hint->y,
-					  &hint->width, &hint->height,
-					  &hint->win_gravity);
+			sprintf(gstr, "%dx%d+%d+%d", hint->width,
+				hint->height, hint->x, hint->y);
+			bitmask = XWMGeometry(display, DefaultScreen(display),
+					      xdev.geometry, gstr,
+					      1,
+					      hint,
+					      &hint->x, &hint->y,
+					      &hint->width, &hint->height,
+					      &hint->win_gravity);
 
-		    if (bitmask & (XValue | YValue))
-			hint->flags |= USPosition;
-		    if (bitmask & (WidthValue | HeightValue))
-			hint->flags |= USSize;
-		    /* Restore user-specified settings */
-		    if(xpos != NA_INTEGER)
-			hint->x = (xpos >= 0) ? xpos :
-			    DisplayWidth(display, screen) - iw + xpos;
-		    if(ypos != NA_INTEGER)
-			hint->y = (ypos >= 0)? ypos :
-			    DisplayHeight(display, screen) - iw - ypos;
-		    if(!ISNA(w)) hint->width = iw;
-		    if(!ISNA(h)) hint->height = ih;
+			if (bitmask & (XValue | YValue))
+			    hint->flags |= USPosition;
+			if (bitmask & (WidthValue | HeightValue))
+			    hint->flags |= USSize;
+			/* Restore user-specified settings */
+			if(xpos != NA_INTEGER)
+			    hint->x = (xpos >= 0) ? xpos :
+				DisplayWidth(display, screen) - iw + xpos;
+			if(ypos != NA_INTEGER)
+			    hint->y = (ypos >= 0)? ypos :
+				DisplayHeight(display, screen) - iw - ypos;
+			if(!ISNA(w)) hint->width = iw;
+			if(!ISNA(h)) hint->height = ih;
+		    }
+		    XtDestroyWidget(toplevel);
+		    XtCloseDisplay(xtdpy);
+		} else {
+		    warning(_("unable to obtain information on display '%s'"),
+			    dsp);
 		}
-		XtDestroyWidget(toplevel);
-		XtCloseDisplay(xtdpy);
 		XtDestroyApplicationContext(app_con);
 	    }
 #endif
@@ -2821,7 +2849,11 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
     }
 #ifdef HAVE_TIFF
     else if(xd->type == TIFF) {
-	if (xd->npages > 1) BM_Close_bitmap(xd);
+	if (xd->npages > 1) {
+	    xd->npages--;
+	    BM_Close_bitmap(xd);
+	    xd->npages++;
+	}
     }
 #endif
 #ifdef HAVE_CAIRO_SVG
@@ -2950,6 +2982,8 @@ static void BM_Close(pDevDesc dd)
 	    char buf[PATH_MAX];
 	    snprintf(buf, PATH_MAX, xd->filename, xd->npages);
 	    res = cairo_surface_write_to_png(xd->cs, R_ExpandFileName(buf));
+	    if (res != CAIRO_STATUS_SUCCESS)
+		warning("cairo error '%s'", cairo_status_to_string(res));
 	}
     }
     if (xd->fp) fclose(xd->fp);
@@ -3160,13 +3194,21 @@ static SEXP in_do_cairo(SEXP call, SEXP op, SEXP args, SEXP env)
 static int in_R_X11_access(void)
 {
     char *p;
+    X11IOhandler old;
 
     if (displayOpen) return TRUE;
     if(!(p = getenv("DISPLAY"))) return FALSE;
+    /* Bill Dunlap sees an error when tunneling to a non-existent
+       X11 connection that BDR cannot reproduce.  We leave a handler set
+       if we get an error, but that is rare.
+    */
+    old = XSetIOErrorHandler(R_X11IOErrSimple);
     if ((display = XOpenDisplay(NULL)) == NULL) {
+	XSetIOErrorHandler(old);
 	return FALSE;
     } else {
 	XCloseDisplay(display);
+	XSetIOErrorHandler(old);
 	return TRUE;
     }
 }
@@ -3238,7 +3280,10 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
     }
     XDeleteProperty(display, clpwin, pty);
     XFree(buffer);
-    if (!displayOpen) XCloseDisplay(display);
+    if (!displayOpen) {
+	XCloseDisplay(display);
+	strcpy(dspname, "");
+    }
     return res;
 }
 

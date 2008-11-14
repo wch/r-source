@@ -17,10 +17,11 @@
 #### cor() , cov() and var() : Based on the same C code
 
 cor <-
-function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
+function(x, y=NULL, use="everything", method = c("pearson", "kendall", "spearman"))
 {
     na.method <-
-	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs"))
+	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
+		      "everything", "na.or.complete"))
     method <- match.arg(method)
     if(is.data.frame(y)) y <- as.matrix(y) else stopifnot(is.atomic(y))
     if(is.data.frame(x)) x <- as.matrix(x)
@@ -99,10 +100,11 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
 }
 
 cov <-
-function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
+function(x, y=NULL, use="everything", method = c("pearson", "kendall", "spearman"))
 {
     na.method <-
-	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs"))
+	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
+		      "everything", "na.or.complete"))
     method <- match.arg(method)
     if(is.data.frame(y)) y <- as.matrix(y) else stopifnot(is.atomic(y))
     if(is.data.frame(x)) x <- as.matrix(x)
@@ -114,28 +116,29 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
 	}
     }
     if(method == "pearson")
-        .Internal(cov(x, y, na.method, method == "kendall"))
+	.Internal(cov(x, y, na.method, method == "kendall"))
     else if (na.method != 3L) {
 	## Rank transform
 	Rank <- function(u) {
-            if(length(u) == 0) u else
-            if(is.matrix(u)) apply(u, 2, rank, na.last="keep")
-            else rank(u, na.last="keep")
-        }
+	    if(length(u) == 0) u else
+	    if(is.matrix(u)) apply(u, 2, rank, na.last="keep")
+	    else rank(u, na.last="keep")
+	}
 
 	x <- Rank(x)
 	if(!is.null(y)) y <- Rank(y)
-        .Internal(cov(x, y, na.method, method == "kendall"))
+	.Internal(cov(x, y, na.method, method == "kendall"))
     }
     else
-        stop("cannot handle 'pairwise.complete.obs'")
+	stop("cannot handle 'pairwise.complete.obs'")
 }
 
 var <- function(x, y = NULL, na.rm = FALSE, use) {
     if(missing(use))
-	use <- if(na.rm) "complete.obs" else "all.obs"
-    na.method <- pmatch(use, c("all.obs", "complete.obs",
-			       "pairwise.complete.obs"))
+	use <- if(na.rm) "na.or.complete" else "everything"
+    na.method <-
+	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
+		      "everything", "na.or.complete"))
     if (is.data.frame(x)) x <- as.matrix(x) else stopifnot(is.atomic(x))
     if (is.data.frame(y)) y <- as.matrix(y) else stopifnot(is.atomic(y))
     .Internal(cov(x, y, na.method, FALSE))

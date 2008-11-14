@@ -1,5 +1,5 @@
 
-R version 2.7.0 Under development (unstable) (2008-01-15 r44001)
+R version 2.8.0 Under development (unstable) (2008-08-28 r46446)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -36,7 +36,7 @@ Type 'q()' to quit R.
 > .proctime00 <- proc.time()
 > library(stats)
 > options(digits=5) # to avoid trivial printed differences
-> 
+> options(show.signif.stars=FALSE) # avoid fancy quotes in o/p
 > postscript("nls-test.ps")
 > 
 > ## selfStart.default() w/ no parameters:
@@ -89,8 +89,8 @@ Algorithm "port", convergence message: both X-convergence and relative convergen
 Waiting for profiling to be done...
      2.5%    97.5%
 a 1.00875 1.037847
-b 0.84147 0.915063
-c      NA 0.042693
+b 0.84138 0.914645
+c      NA 0.042807
 > 
 > 
 > ## weighted nls fit: unsupported < 2.3.0
@@ -109,11 +109,9 @@ Residuals:
 -0.01562 -0.00723 -0.00158  0.00403  0.02413 
 
 Coefficients:
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept)  0.00517    0.00764    0.68     0.52    
-x            0.99915    0.00119  841.38   <2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)  0.00517    0.00764    0.68     0.52
+x            0.99915    0.00119  841.38   <2e-16
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 Multiple R-squared:    1,	Adjusted R-squared:    1 
@@ -133,11 +131,9 @@ x -0.89
 Formula: yeps ~ a + b * x
 
 Parameters:
-  Estimate Std. Error t value Pr(>|t|)    
-a  0.00517    0.00764    0.68     0.52    
-b  0.99915    0.00119  841.37   <2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+  Estimate Std. Error t value Pr(>|t|)
+a  0.00517    0.00764    0.68     0.52
+b  0.99915    0.00119  841.37   <2e-16
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 
@@ -146,7 +142,7 @@ Correlation of Parameter Estimates:
 b -0.89
 
 Number of iterations to convergence: 1 
-Achieved convergence tolerance: 2.74e-06 
+Achieved convergence tolerance: 2.75e-06 
 
 > stopifnot(all.equal(residuals(fit), residuals(fit0), 1e5,
 +                     check.attributes = FALSE))
@@ -157,17 +153,15 @@ Achieved convergence tolerance: 2.74e-06
   0:     56.070572: 0.123450 0.543210
   1:     6.3964587:  1.34546 0.700840
   2: 0.00060639084: 0.00517053 0.999153
-  3: 0.00060639084: 0.00517052 0.999153
+  3: 0.00060639084: 0.00517051 0.999153
 > summary(fit2, cor = TRUE)
 
 Formula: yeps ~ a + b * x
 
 Parameters:
-  Estimate Std. Error t value Pr(>|t|)    
-a  0.00517    0.00764    0.68     0.52    
-b  0.99915    0.00119  841.38   <2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+  Estimate Std. Error t value Pr(>|t|)
+a  0.00517    0.00764    0.68     0.52
+b  0.99915    0.00119  841.38   <2e-16
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 
@@ -194,12 +188,10 @@ Algorithm "port", convergence message: both X-convergence and relative convergen
 Formula: density ~ SSlogis(log(conc), Asym, xmid, scal)
 
 Parameters:
-     Estimate Std. Error t value Pr(>|t|)    
-Asym   2.3350     0.0966    24.2  3.5e-12 ***
-xmid   1.4731     0.0947    15.6  8.8e-10 ***
-scal   1.0385     0.0304    34.1  4.2e-14 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+     Estimate Std. Error t value Pr(>|t|)
+Asym   2.3350     0.0966    24.2  3.5e-12
+xmid   1.4731     0.0947    15.6  8.8e-10
+scal   1.0385     0.0304    34.1  4.2e-14
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -216,17 +208,15 @@ Achieved convergence tolerance: 2.43e-06
 Formula: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
 
 Parameters:
-     Estimate Std. Error t value Pr(>|t|)    
-Asym   2.3350     0.0966    24.2  3.5e-12 ***
-xmid   1.4731     0.0947    15.6  8.8e-10 ***
-scal   1.0385     0.0304    34.1  4.2e-14 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+     Estimate Std. Error t value Pr(>|t|)
+Asym   2.3350     0.0966    24.2  3.5e-12
+xmid   1.4731     0.0947    15.6  8.8e-10
+scal   1.0385     0.0304    34.1  4.2e-14
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
 Number of iterations to convergence: 6 
-Achieved convergence tolerance: 1.34e-07 
+Achieved convergence tolerance: 1.04e-07 
 
 > stopifnot(all.equal(coef(summary(fm2)), coef(summary(fm1)), tol = 1e-6))
 > stopifnot(all.equal(residuals(fm2), residuals(fm1), tol = 1e-5))
@@ -251,17 +241,15 @@ Model 2: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
 Formula: 0 ~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))/scal)))
 
 Parameters:
-     Estimate Std. Error t value Pr(>|t|)    
-Asym   2.3350     0.0966    24.2  3.5e-12 ***
-xmid   1.4731     0.0947    15.6  8.8e-10 ***
-scal   1.0385     0.0304    34.1  4.2e-14 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+     Estimate Std. Error t value Pr(>|t|)
+Asym   2.3350     0.0966    24.2  3.5e-12
+xmid   1.4731     0.0947    15.6  8.8e-10
+scal   1.0385     0.0304    34.1  4.2e-14
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
 Number of iterations to convergence: 6 
-Achieved convergence tolerance: 1.29e-07 
+Achieved convergence tolerance: 1.73e-07 
 
 > stopifnot(all.equal(coef(summary(fm3)), coef(summary(fm1)), tol = 1e-6))
 > ft <- with(DNase1, density - fitted(fm3)/sqrt(wts))
@@ -290,17 +278,15 @@ Model 2: 0 ~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))/scal)))
 Formula: density ~ 1/(1 + exp((xmid - log(conc))/scal))
 
 Parameters:
-     Estimate Std. Error t value Pr(>|t|)    
-xmid   1.4731     0.0947    15.6  8.8e-10 ***
-scal   1.0385     0.0304    34.1  4.2e-14 ***
-.lin   2.3350     0.0966    24.2  3.5e-12 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+     Estimate Std. Error t value Pr(>|t|)
+xmid   1.4731     0.0947    15.6  8.8e-10
+scal   1.0385     0.0304    34.1  4.2e-14
+.lin   2.3350     0.0966    24.2  3.5e-12
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
 Number of iterations to convergence: 5 
-Achieved convergence tolerance: 8.48e-09 
+Achieved convergence tolerance: 3.73e-08 
 
 > cf <- coef(summary(fm4))[c(3,1,2), ]
 > rownames(cf)[2] <- "Asym"
@@ -330,12 +316,10 @@ Model 2: density ~ 1/(1 + exp((xmid - log(conc))/scal))
 Formula: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
 
 Parameters:
-     Estimate Std. Error t value Pr(>|t|)    
-Asym   2.3350     0.0966    24.2  3.5e-12 ***
-xmid   1.4731     0.0947    15.6  8.8e-10 ***
-scal   1.0385     0.0304    34.1  4.2e-14 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+     Estimate Std. Error t value Pr(>|t|)
+Asym   2.3350     0.0966    24.2  3.5e-12
+xmid   1.4731     0.0947    15.6  8.8e-10
+scal   1.0385     0.0304    34.1  4.2e-14
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -354,9 +338,9 @@ Algorithm "port", convergence message: relative convergence (4)
 > (c1 <- confint(fm1))
 Waiting for profiling to be done...
         2.5%  97.5%
-Asym 2.14936 2.5725
-xmid 1.28538 1.6967
-scal 0.97527 1.1068
+Asym 2.14936 2.5724
+xmid 1.28535 1.6966
+scal 0.97526 1.1068
 > (c4 <- confint(fm4, 1:2))
 Waiting for profiling to be done...
        2.5%  97.5%
@@ -394,7 +378,7 @@ Nonlinear regression model
  residual sum-of-squares: 2.39
 
 Number of iterations to convergence: 4 
-Achieved convergence tolerance: 2.81e-07 
+Achieved convergence tolerance: 2.80e-07 
 Waiting for profiling to be done...
    2.5%   97.5% 
 0.68704 0.70281 
@@ -442,12 +426,12 @@ Nonlinear regression model
  residual sum-of-squares: 2.44
 
 Number of iterations to convergence: 5 
-Achieved convergence tolerance: 3.43e-06 
+Achieved convergence tolerance: 3.16e-06 
 Waiting for profiling to be done...
          2.5%   97.5%
-a     0.35005 0.66045
-b     0.45122 0.91492
-logc -0.64620 0.40950
+a     0.35006 0.66057
+b     0.45107 0.91473
+logc -0.64627 0.40946
 Nonlinear regression model
   model:  y3 ~ a * (x + exp(logc))^b 
    data:  parent.frame() 
@@ -458,9 +442,9 @@ Nonlinear regression model
 Algorithm "port", convergence message: relative convergence (4) 
 Waiting for profiling to be done...
          2.5%   97.5%
-a     0.35005 0.66045
-b     0.45122 0.91492
-logc -0.64620 0.40950
+a     0.35006 0.66057
+b     0.45107 0.91473
+logc -0.64627 0.40946
 > 
 > fm <- nls(y2~x^b, start=c(b=1), algorithm="plinear")
 > confint(profile(fm))
@@ -469,11 +453,12 @@ logc -0.64620 0.40950
 > fm <- nls(y3 ~ (x+exp(logc))^b, start=c(b=1, logc=0), algorithm="plinear")
 > confint(profile(fm))
          2.5%   97.5%
-b     0.45121 0.91489
-logc -0.64628 0.40953
+b     0.45105 0.91471
+logc -0.64625 0.40933
 > 
 > 
 > ## more profiling with bounds
+> op <- options(digits=3)
 > npts <- 10
 > set.seed(1001)
 > a <- 2
@@ -488,37 +473,38 @@ logc -0.64628 0.40953
 +           lower = c(0,0), start = c(a=1, b=1))
 > (pr1 <- profile(m1))
 $a
-        tau par.vals.a par.vals.b
-1  -4.55943    0.61825    0.00000
-2  -3.69338    0.72777    0.00000
-3  -1.43894    1.02459    0.00000
-4   0.00000    1.53805    0.26331
-5   0.70536    2.05151    0.48084
-6   1.25688    2.65703    0.64972
-7   1.78274    3.57029    0.81653
-8   2.26362    5.01493    0.97638
-9   2.70180    7.51383    1.12707
-10  3.08992   12.25766    1.26434
-11  3.40458   22.42471    1.38476
+      tau par.vals.a par.vals.b
+1  -3.869      0.706      0.000
+2  -3.114      0.802      0.000
+3  -0.863      1.124      0.000
+4   0.000      1.538      0.263
+5   0.590      1.952      0.446
+6   1.070      2.423      0.592
+7   1.534      3.082      0.737
+8   1.969      4.034      0.878
+9   2.376      5.502      1.014
+10  2.751      7.929      1.144
+11  3.090     12.263      1.264
+12  3.375     20.845      1.373
 
 $b
-       tau par.vals.a par.vals.b
-1 -0.74662    1.17755    0.00000
-2  0.00000    1.53805    0.26331
-3  0.87566    2.14030    0.55601
-4  1.67482    3.03728    0.83406
-5  2.43255    4.61672    1.12347
-6  3.18042    7.90950    1.44117
-7  3.89865   23.13399    1.79455
-8  4.52605  166.09149    2.20381
+     tau par.vals.a par.vals.b
+1 -0.673     1.2087     0.0272
+2  0.000     1.5381     0.2633
+3  0.707     2.0026     0.4994
+4  1.365     2.6295     0.7236
+5  1.994     3.5762     0.9522
+6  2.611     5.1820     1.1962
+7  3.225     8.2162     1.4614
+8  3.820    17.3946     1.7512
 
 attr(,"original.fit")
 Nonlinear regression model
   model:  y ~ gfun(a, b, x) 
    data:  parent.frame() 
-      a       b 
-1.53805 0.26331 
- residual sum-of-squares: 0.38938
+    a     b 
+1.538 0.263 
+ residual sum-of-squares: 0.389
 
 Algorithm "port", convergence message: relative convergence (4) 
 attr(,"summary")
@@ -526,22 +512,20 @@ attr(,"summary")
 Formula: y ~ gfun(a, b, x)
 
 Parameters:
-  Estimate Std. Error t value Pr(>|t|)  
-a  1.53805    0.61727  2.4917  0.03742 *
-b  0.26331    0.35188  0.7483  0.47569  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+  Estimate Std. Error t value Pr(>|t|)
+a    1.538      0.617    2.49    0.037
+b    0.263      0.352    0.75    0.476
 
-Residual standard error: 0.22062 on 8 degrees of freedom
+Residual standard error: 0.221 on 8 degrees of freedom
 
 Algorithm "port", convergence message: relative convergence (4) 
 
 attr(,"class")
 [1] "profile.nls" "profile"    
 > confint(pr1)
-     2.5%  97.5%
-a 0.98596 5.2072
-b      NA 1.0733
+  2.5% 97.5%
+a 0.96  5.20
+b   NA  1.07
 > 
 > gfun <- function(a,b,x) {
 +     if(a < 0 || b < 0 || a > 1.5 || b > 1) stop("bounds violated")
@@ -551,27 +535,28 @@ b      NA 1.0733
 +           lower = c(0, 0), upper=c(1.5, 1), start = c(a=1, b=1))
 > profile(m2)
 $a
-      tau par.vals.a par.vals.b
-1 -4.4367    0.63351    0.00000
-2 -3.5758    0.74251    0.00000
-3 -1.5917    1.00251    0.00000
-4  0.0000    1.50000    0.24263
+     tau par.vals.a par.vals.b
+1 -3.681      0.729      0.000
+2 -2.945      0.823      0.000
+3 -0.977      1.099      0.000
+4  0.000      1.500      0.243
 
 $b
-       tau par.vals.a par.vals.b
-1 -0.74358    1.17755    0.00000
-2  0.00000    1.50000    0.24263
-3  1.95266    1.50000    0.53849
-4  2.54777    1.50000    0.66452
-5  3.23041    1.50000    0.84069
+     tau par.vals.a par.vals.b
+1 -0.733    1.18200    0.00395
+2  0.000    1.50000    0.24263
+3  1.645    1.50000    0.48132
+4  2.154    1.50000    0.57869
+5  2.727    1.50000    0.70706
+6  3.288    1.50000    0.85748
 
 attr(,"original.fit")
 Nonlinear regression model
   model:  y ~ gfun(a, b, x) 
    data:  parent.frame() 
-      a       b 
-1.50000 0.24263 
- residual sum-of-squares: 0.38958
+    a     b 
+1.500 0.243 
+ residual sum-of-squares: 0.390
 
 Algorithm "port", convergence message: relative convergence (4) 
 attr(,"summary")
@@ -579,13 +564,11 @@ attr(,"summary")
 Formula: y ~ gfun(a, b, x)
 
 Parameters:
-  Estimate Std. Error t value Pr(>|t|)  
-a  1.50000    0.59807  2.5080  0.03648 *
-b  0.24263    0.35567  0.6822  0.51438  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+  Estimate Std. Error t value Pr(>|t|)
+a    1.500      0.598    2.51    0.036
+b    0.243      0.356    0.68    0.514
 
-Residual standard error: 0.22068 on 8 degrees of freedom
+Residual standard error: 0.221 on 8 degrees of freedom
 
 Algorithm "port", convergence message: relative convergence (4) 
 
@@ -593,9 +576,10 @@ attr(,"class")
 [1] "profile.nls" "profile"    
 > confint(m2)
 Waiting for profiling to be done...
-     2.5%   97.5%
-a 0.90457      NA
-b      NA 0.61016
+   2.5% 97.5%
+a 0.907    NA
+b    NA 0.611
+> options(op)
 > 
 > ## scoping problems
 > test <- function()
@@ -623,7 +607,7 @@ Nonlinear regression model
  residual sum-of-squares: 26.5
 
 Number of iterations to convergence: 6 
-Achieved convergence tolerance: 7.45e-07 
+Achieved convergence tolerance: 7.17e-07 
 > ## failed to find n in 2.2.x
 > ## found wrong n in 2.3.x
 > ## finally worked in 2.4.0
@@ -648,18 +632,16 @@ Achieved convergence tolerance: 7.45e-07
 Formula: expsumNoisy ~ getExpmat(k, 1:100) %*% sp
 
 Parameters:
-    Estimate Std. Error t value Pr(>|t|)    
-k1  5.00e-02   3.07e-04   162.5   <2e-16 ***
-k2  4.99e-03   5.38e-05    92.8   <2e-16 ***
-sp1 1.00e+00   4.47e-03   224.0   <2e-16 ***
-sp2 9.99e-01   5.00e-03   199.8   <2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+    Estimate Std. Error t value Pr(>|t|)
+k1  5.00e-02   3.07e-04   162.5   <2e-16
+k2  4.99e-03   5.38e-05    92.8   <2e-16
+sp1 1.00e+00   4.47e-03   224.0   <2e-16
+sp2 9.99e-01   5.00e-03   199.8   <2e-16
 
 Residual standard error: 0.00205 on 96 degrees of freedom
 
 Number of iterations to convergence: 7 
-Achieved convergence tolerance: 1.98e-06 
+Achieved convergence tolerance: 2.08e-06 
 
 > 
 > ## didn't work with port in 2.4.1
@@ -670,13 +652,11 @@ Achieved convergence tolerance: 1.98e-06
 Formula: expsumNoisy ~ getExpmat(k, 1:100) %*% sp
 
 Parameters:
-    Estimate Std. Error t value Pr(>|t|)    
-k1  5.00e-02   3.07e-04   162.5   <2e-16 ***
-k2  4.99e-03   5.38e-05    92.8   <2e-16 ***
-sp1 1.00e+00   4.47e-03   224.0   <2e-16 ***
-sp2 9.99e-01   5.00e-03   199.8   <2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+    Estimate Std. Error t value Pr(>|t|)
+k1  5.00e-02   3.07e-04   162.5   <2e-16
+k2  4.99e-03   5.38e-05    92.8   <2e-16
+sp1 1.00e+00   4.47e-03   224.0   <2e-16
+sp2 9.99e-01   5.00e-03   199.8   <2e-16
 
 Residual standard error: 0.00205 on 96 degrees of freedom
 
@@ -685,5 +665,5 @@ Algorithm "port", convergence message: both X-convergence and relative convergen
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  7.453 0.057 7.515 0 0 
+Time elapsed:  2.928 0.011 2.94 0 0 
 > 

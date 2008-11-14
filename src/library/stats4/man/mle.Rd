@@ -40,10 +40,15 @@ mle(minuslogl, start = formals(minuslogl), method = "BFGS",
 \examples{
 x <- 0:10
 y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
+## This needs a constrained paramater space: most methods will accept NA
 ll <- function(ymax=15, xhalf=6)
-    -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE))
+    if(ymax > 0 && xhalf > 0) -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE)) else NA
 (fit <- mle(ll))
 mle(ll, fixed=list(xhalf=6))
+## alternative using bounds on optimization
+ll2 <- function(ymax=15, xhalf=6)
+    -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE))
+mle(ll2, method="L-BFGS-B", lower=rep(0, 2))
 
 summary(fit)
 logLik(fit)

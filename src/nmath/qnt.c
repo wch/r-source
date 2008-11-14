@@ -38,13 +38,12 @@ double qnt(double p, double df, double ncp, int lower_tail, int log_p)
      * if (df < 1 || ncp < 0) ML_ERR_return_NAN;
      */
     if (df <= 0.0) ML_ERR_return_NAN;
-    
-    if(ncp == 0.0) return qt(p, df, lower_tail, log_p);
+
+    if(ncp == 0.0 && df >= 1.0) return qt(p, df, lower_tail, log_p);
 
     R_Q_P01_boundaries(p, ML_NEGINF, ML_POSINF);
 
-    p = R_D_qIv(p);
-    if(!lower_tail) p = 1-p;
+    p = R_DT_qIv(p);
 
     /* Invert pnt(.) :
      * 1. finding an upper and lower bound */
@@ -64,6 +63,6 @@ double qnt(double p, double df, double ncp, int lower_tail, int log_p)
 	if (pnt(nx, df, ncp, TRUE, FALSE) > p) ux = nx; else lx = nx;
     }
     while ((ux - lx) / fabs(nx) > accu);
-  
+
     return 0.5 * (lx + ux);
 }

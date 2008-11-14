@@ -49,13 +49,26 @@ initialize(.Object, ...)
   regardless of the order in which the arguments appear.
 
   The \code{initialize} methods do not have to have \code{\dots} as
-  their second argument (see the examples), and generally it is better
-  design \emph{not} to have \code{\dots} as a formal argument, if only a
-  fixed set of arguments make sense.
+  their second argument (see the examples).  Initialize methods are
+  often written when the natural parameters describing the new object
+  are not the names of the slots.  If you do define such a method,
+  note the implications for future subclasses of your class.  If these
+  have additional slots, and your \code{initialize} method has
+  \code{\dots} as a formal argument, then your method should pass such
+  arguments along via \code{\link{callNextMethod}}.  If your method
+  does not have this argument, then either a subclass must have its
+  own method or else the added slots must be specified by users in
+  some way other than as arguments to \code{new}.
 
   For examples of \code{initialize} methods, see
   \code{\link{initialize-methods}} for existing methods for
   classes \code{"traceable"} and \code{"environment"}, among others.
+
+  Methods for \code{initialize} can be inherited only by simple
+  inheritance, since it is a requirement that the method return an
+  object from the target class.  See the
+  \code{simpleInheritanceOnly} argument to \code{\link{setGeneric}} and
+  the discussion in \code{\link{setIs}} for the general concept.
 
   Note that the basic vector classes, \code{"numeric"}, etc. are
   implicitly defined, so one can use \code{new} for these classes.
@@ -69,7 +82,8 @@ initialize(.Object, ...)
  \emph{Programming with Data}
  Springer (For the original S4 version.) 
 }
-\seealso{ \link{Classes} }
+\seealso{ \link{Classes} for an overview of defining class, and
+  \code{\link{setOldClass}} for the relation to S3 classes. }
 
 \examples{
 ## using the definition of class "track" from \link{Classes}

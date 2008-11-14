@@ -23,7 +23,7 @@
 ###            Nonlinear least squares for R
 ###
 
-numericDeriv <- function(expr, theta, rho = parent.frame(), dir=1)
+numericDeriv <- function(expr, theta, rho = parent.frame(), dir=1.0)
 {
     dir <- rep(dir, length.out = length(theta))
     val <- .Call(R_numeric_deriv, expr, theta, rho, dir)

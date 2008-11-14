@@ -121,19 +121,19 @@ Name: "{userappdata}\\Microsoft\\Internet Explorer\\Quick Launch\\R $RVER"; File
 [Registry] 
 Root: HKLM; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdmin
 Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdmin
-Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: IsAdmin
-Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: recordversion; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Tasks: recordversion; Check: IsAdmin
 
 Root: HKLM; Subkey: "Software\\R-core\\R\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: IsAdmin
-Root: HKLM; Subkey: "Software\\R-core\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\R-core\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: recordversion; Check: IsAdmin
 
 Root: HKCU; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: NonAdmin
 Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: NonAdmin
-Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: NonAdmin
-Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: recordversion; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Tasks: recordversion; Check: NonAdmin
 
 Root: HKCU; Subkey: "Software\\R-core\\R\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: NonAdmin
-Root: HKCU; Subkey: "Software\\R-core\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\R-core\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: recordversion; Check: NonAdmin
 
 Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWorkspace"; Flags: uninsdeletevalue; Tasks: associate; Check: IsAdmin
 Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey; Tasks: associate; Check: IsAdmin
@@ -179,6 +179,7 @@ var
   MDISDIPage: TInputOptionWizardPage;
   HelpStylePage: TInputOptionWizardPage;
   InternetPage: TInputOptionWizardPage;
+  INIFilename: String;
   
 function IsAdmin: boolean;
 begin
@@ -191,6 +192,9 @@ begin
 end;
 
 procedure InitializeWizard;
+var
+  option : String;
+  index : Integer;
 begin
   NoAdminPage := CreateOutputMsgPage(wpWelcome, SetupMessage(msgInformationTitle), 
     CustomMessage(\'adminprivilegesrequired\'), CustomMessage(\'adminexplanation\'));
@@ -221,28 +225,51 @@ begin
   InternetPage.Add(CustomMessage(\'Internet0\'));
   InternetPage.Add(CustomMessage(\'Internet1\'));    
 
-  case GetPreviousData(\'MDISDI\', \'\') of
-    \'MDI\': MDISDIPage.SelectedValueIndex := 0;
-    \'SDI\': MDISDIPage.SelectedValueIndex := 1;
-  else
-    MDISDIPage.SelectedValueIndex := ${MDISDI};
-  end;
-
-  case GetPreviousData(\'HelpStyle\', \'\') of
-    \'plain\': HelpStylePage.SelectedValueIndex := 0;
-    \'CHM\':   HelpStylePage.SelectedValueIndex := 1;
-    \'HTML\':  HelpStylePage.SelectedValueIndex := 2;
-  else
-    HelpStylePage.SelectedValueIndex := ${HelpStyle};
-  end;
+  INIFilename := ExpandConstant(\'{param:LOADINF}\');
+  if INIFilename <> \'\' then INIFilename := ExpandFilename(INIFilename);
   
-  case GetPreviousData(\'Internet\', \'\') of
-    \'Standard\': InternetPage.SelectedValueIndex := 0;
-    \'Internet2\': InternetPage.SelectedValueIndex := 1;
+  { From highest to lowest, priority is:
+    LOADINF value
+    PreviousData value
+    Default from build }
+  
+  option := GetPreviousData(\'MDISDI\', \'\');
+  if INIFilename <> '' then
+    option := GetIniString(\'R\', \'MDISDI\', option, INIFilename);
+  case option of
+    \'MDI\': index := 0;
+    \'SDI\': index := 1;
   else
-    InternetPage.SelectedValueIndex := ${Internet};
+    index := ${MDISDI};
   end;  
+  MDISDIPage.SelectedValueIndex := index;
+
+  option := GetPreviousData(\'HelpStyle\', \'\');
+  if INIFilename <> \'\' then
+    option := GetIniString(\'R\', \'HelpStyle\', option, INIFilename);  
+  case option of
+    \'plain\': index := 0;
+    \'CHM\':   index := 1;
+    \'HTML\':  index := 2;
+  else
+    index := ${HelpStyle};
+  end;
+  HelpStylePage.SelectedValueIndex := index;
   
+  option := GetPreviousData(\'Internet\', \'\');
+  if INIFilename <> \'\' then
+    option := GetIniString(\'R\', \'Internet\', option, INIFilename);
+  case option of
+    \'Standard\':  index := 0;
+    \'Internet2\': index := 1;
+  else
+    index := ${Internet};
+  end;
+  InternetPage.SelectedValueIndex := index;
+    
+  { Get the save name now, because the current dir might change }
+  INIFilename := ExpandConstant(\'{param:SAVEINF}\');
+  if INIFilename <> \'\' then INIFilename := ExpandFilename(INIFilename);    
 end;
 
 procedure RegisterPreviousData(PreviousDataKey: Integer);
@@ -251,23 +278,33 @@ var
   HelpStyle: String;
   Internet: String;
 begin
+
+  
   { Store the settings so we can restore them next time }
   case MDISDIPage.SelectedValueIndex of
     0: MDISDI := \'MDI\';
     1: MDISDI := \'SDI\';
   end;
   SetPreviousData(PreviousDataKey, \'MDISDI\', MDISDI);
+  if INIFilename <> \'\' then
+    SetIniString(\'R\', \'MDISDI\', MDISDI, INIFilename);
+    
   case HelpStylePage.SelectedValueIndex of
     0: HelpStyle := \'plain\';
     1: HelpStyle := \'CHM\';
     2: HelpStyle := \'HTML\';
   end;
   SetPreviousData(PreviousDataKey, \'HelpStyle\', HelpStyle);  
+  if INIFilename <> \'\' then
+    SetIniString(\'R\', \'HelpStyle\', HelpStyle, INIFilename);
+  
   case InternetPage.SelectedValueIndex of
     0: Internet := \'Standard\';
     1: Internet := \'Internet2\';
   end;
   SetPreviousData(PreviousDataKey, \'Internet\', Internet);
+  if INIFilename <> \'\' then
+    SetIniString(\'R\', \'Internet\', Internet, INIFilename);
 end;
 
 procedure SetCommentMarker(var lines: TArrayOfString; option: String; active: boolean);
@@ -411,6 +448,7 @@ sub listFiles {
 		 || m/^share\\make/
 		 || m/^share\\perl/
 		 || m/^share\\R/
+		 || m/^share\\sh/
 		 || m/^share\\texmf/
 		 || m/^bin\\build/
 		 || m/^bin\\check/

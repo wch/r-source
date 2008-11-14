@@ -23,7 +23,7 @@
   \code{L}.
 
   Hexadecimal constants start with \code{0x} or \code{0X} followed by
-  a nonempty sequence from \code{0-9 a-f A-F} which is interpreted as a
+  a nonempty sequence from \code{0-9 a-f A-F .} which is interpreted as a
   hexadecimal number, optionally followed by a binary exponent.  A binary
   exponent consists of an \code{P} or \code{p} followed by an optional
   plus or minus sign followed by a non-empty sequence of (decimal)

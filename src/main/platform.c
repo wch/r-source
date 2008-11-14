@@ -150,9 +150,12 @@ static void Init_R_Platform(SEXP rho)
 #ifdef Win32
     SET_VECTOR_ELT(value, 5, mkString("win.binary"));
 #else /* not Win32 */
-#ifdef HAVE_AQUA
-    SET_VECTOR_ELT(value, 5, mkString("mac.binary"));
-#else /* not Win32 nor Aqua */
+/* pkgType should be "mac.binary" for CRAN build *only*, not for all
+   AQUA builds. Also we want to be able to use "mac.binary.leopard"
+   and similar for special builds. */
+#ifdef PLATFORM_PKGTYPE 
+    SET_VECTOR_ELT(value, 5, mkString(PLATFORM_PKGTYPE));
+#else /* unix default */
     SET_VECTOR_ELT(value, 5, mkString("source"));
 #endif
 #endif
@@ -312,11 +315,7 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 	t = "";
     if (length(pg) >= 1 || !isNull(STRING_ELT(pg, 0))) {
 	SEXP pg0 = STRING_ELT(pg, 0);
-#ifdef Win32
-	pager = acopy_string(reEnc(CHAR(pg0), getCharCE(pg0), CE_UTF8, 1));
-#else
 	pager = acopy_string(CHAR(pg0));
-#endif
     } else
 	pager = "";
     R_ShowFiles(n, f, h, t, dl, pager);
@@ -1135,6 +1134,7 @@ SEXP attribute_hidden do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #define CHOOSEBUFSIZE 1024
 
+#ifndef Win32
 SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int _new, len;
@@ -1145,13 +1145,9 @@ SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("file choice cancelled"));
     if (len >= CHOOSEBUFSIZE - 1)
 	error(_("file name too long"));
-#ifdef WIn32
-    return mkString(reEnc(R_ExpandFileName(buf), CE_NATIVE, CE_UTF8, 1));
-#else
     return mkString(R_ExpandFileName(buf));
-#endif
 }
-
+#endif
 
 /* needed for access, and perhaps for realpath */
 #ifdef HAVE_UNISTD_H
@@ -1270,7 +1266,7 @@ void R_CleanTempDir(void)
     }
 }
 #else
-static int R_unlink(char *name, int recursive)
+static int R_unlink(const char *name, int recursive)
 {
     if (streql(name, ".") || streql(name, "..")) return 0;
     if (!R_FileExists(name)) return 0;
@@ -1354,9 +1350,10 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn;
-    int i, j, nfiles, res, failures = 0, recursive;
+    int i, nfiles, failures = 0, recursive;
     const char *names;
 #if defined(HAVE_GLOB)
+    int j, res;
     glob_t globbuf;
 #endif
 
@@ -1387,7 +1384,8 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 		globfree(&globbuf);
 	    } else failures++;
 #else /* HAVE_GLOB */
-	    failures += R_unlink(names, recursive);
+	        failures += R_unlink(names, recursive);
+	    } else failures++;
 #endif
 	}
     }
@@ -1631,42 +1629,32 @@ static Rboolean R_can_use_X11(void)
 }
 #endif
 
+/* only actually used on Unix */
+SEXP attribute_hidden do_capabilitiesX11(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+#ifdef Unix
+    return ScalarLogical(R_can_use_X11());
+#else
+    return ScalarLogical(FALSE);
+#endif
+}
 
 SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP what, ans, ansnames;
+    SEXP ans, ansnames;
     int i = 0;
 #ifdef Unix
-    int j = 0;
-    Rboolean X11 = FALSE;
+# ifdef HAVE_X11
+    int X11 = NA_LOGICAL;
+# else
+    int X11 = FALSE;
+# endif
 #endif
 
     checkArity(op, args);
-    what = CAR(args);
-    if (!isNull(what) && !isString(what))
-	error(_("invalid '%s' argument"), "what");
 
-#if defined(Unix) && defined(HAVE_X11)
-    /* Don't load the module and contact the X11 display
-       unless it is necessary.
-    */
-    if (isNull(what)) X11 = R_can_use_X11();
-    else
-	for (j = 0; j < LENGTH(what); j++)
-	    if (streql(CHAR(STRING_ELT(what, j)), "X11")
-#if defined HAVE_JPEG  & !defined HAVE_WORKING_CAIRO
-	       || streql(CHAR(STRING_ELT(what, j)), "jpeg")
-#endif
-#if defined HAVE_PNG  & !defined HAVE_WORKING_CAIRO
-	       || streql(CHAR(STRING_ELT(what, j)), "png")
-#endif
-		) {
-		X11 = R_can_use_X11();
-		break;
-	    }
-#endif
-    PROTECT(ans = allocVector(LGLSXP, 14));
-    PROTECT(ansnames = allocVector(STRSXP, 14));
+    PROTECT(ans = allocVector(LGLSXP, 15));
+    PROTECT(ansnames = allocVector(STRSXP, 15));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -1681,6 +1669,17 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("png"));
 #ifdef HAVE_PNG
+# if defined Unix && !defined HAVE_WORKING_CAIRO
+    LOGICAL(ans)[i++] = X11;
+# else /* Windows */
+    LOGICAL(ans)[i++] = TRUE;
+# endif
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("tiff"));
+#ifdef HAVE_TIFF
 # if defined Unix && !defined HAVE_WORKING_CAIRO
     LOGICAL(ans)[i++] = X11;
 # else /* Windows */
@@ -1908,6 +1907,11 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     while (*p == L'\\' && wcslen(dir) > 1 && *(p-1) != L':') *p-- = L'\0';
     if (recursive) {
 	p = dir;
+	/* skip leading \\share */
+	if (*p == L'\\' && *(p+1) == L'\\') {
+	    p += 2;
+	    p = wcschr(p, L'\\');
+	}
 	while ((p = wcschr(p+1, L'\\'))) {
 	    *p = L'\0';
 	    if (*(p-1) != L':') {
@@ -1919,7 +1923,7 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     res = _wmkdir(dir);
     if (show && res && errno == EEXIST)
-	warning(_("'%s' already exists"), dir);
+	warning(_("'%ls' already exists"), dir);
 end:
     return ScalarLogical(res == 0);
 }

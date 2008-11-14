@@ -21,7 +21,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	 max.deparse.length = 150, chdir = FALSE,
          encoding = getOption("encoding"),
          continue.echo = getOption("continue"),
-         skip.echo = 0)
+         skip.echo = 0, keep.source = getOption("keep.source"))
 {
     eval.with.vis <-
 	function (expr, envir = parent.frame(),
@@ -30,6 +30,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	.Internal(eval.with.vis(expr, envir, enclos))
 
     envir <- if (local) parent.frame() else .GlobalEnv
+    have_encoding <- !missing(encoding) && encoding != "unknown"
     if (!missing(echo)) {
 	if (!is.logical(echo))
 	    stop("'echo' must be logical")
@@ -69,13 +70,21 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         }
         if(file == "") file <- stdin()
         else {
-            srcfile <- srcfile(file, encoding = encoding)
+            if (isTRUE(keep.source))
+            	srcfile <- srcfile(file, encoding = encoding)
 	    file <- file(file, "r", encoding = encoding)
 	    on.exit(close(file))
             from_file <- TRUE
-            ## We translated the file,
+            ## We translated the file (possibly via a quess),
             ## so don't want to mark the strings.as from that encoding
-            encoding <- "unknown"
+            ## but we might know what we have encoded to, so
+            loc <- localeToCharset()[1]
+            encoding <- if(have_encoding)
+                switch(localeToCharset()[1],
+                       "UTF-8" = "UTF-8",
+                       "ISO8859-1" = "latin1",
+                       "unknown")
+            else "unknown"
 	}
     }
     exprs <- .Internal(parse(file, n = -1, NULL, "?", srcfile, encoding))
@@ -164,8 +173,12 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    cat(".... mode(ei[[1]])=", mode(ei[[1]]), "; paste(curr.fun)=")
 	    utils::str(paste(curr.fun))
 	}
-	if (print.eval && yy$visible)
-	    print(yy$value)
+	if (print.eval && yy$visible) {
+            if(isS4(yy$value))
+                methods::show(yy$value)
+            else
+                print(yy$value)
+        }
 	if (verbose)
 	    cat(" .. after ", sQuote(deparse(ei,
 	    	control = c("showAttributes","useSource"))), "\n", sep = "")

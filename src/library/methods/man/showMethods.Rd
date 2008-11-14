@@ -18,36 +18,34 @@ showMethods(f = character(), where = topenv(parent.frame()),
 }
 \arguments{
   \item{f}{one or more function names.  If omitted, all functions
-    will be shown that match the other arguments. }
-  \item{where}{Where to find the generic function, if not supplied as an argument.
- When \code{f} is missing, or length 0, this also
+    will be shown that match the other arguments.}
+  \item{where}{Where to find the generic function, if not supplied as an
+    argument. When \code{f} is missing, or length 0, this also
     determines which generic functions to examine.  If \code{where} is
     supplied, only the generic functions returned by
     \code{getGenerics(where)} are eligible for printing.  If
     \code{where} is also missing, all the cached generic functions are
     considered.}
-  \item{classes}{ If argument \code{classes} is supplied, it is a vector
+  \item{classes}{If argument \code{classes} is supplied, it is a vector
     of class names that restricts the displayed results to those methods
-    whose signatures include one or more of those classes. }
-  \item{includeDefs}{ If \code{includeDefs} is \code{TRUE}, include the
-    definitions of the individual methods in the printout. }
+    whose signatures include one or more of those classes.}
+  \item{includeDefs}{If \code{includeDefs} is \code{TRUE}, include the
+    definitions of the individual methods in the printout.}
   \item{inherited}{logical indicating if methods that have been found by
     inheritance, so far in the session, will be included and marked as
     inherited.  Note that an inherited method will not usually appear
-    until it has been used in this session.
-    See \code{\link{selectMethod}} if you want to know what method is
+    until it has been used in this session.  See
+    \code{\link{selectMethod}} if you want to know what method would be
     dispatched for particular classes of arguments.}
   \item{showEmpty}{logical indicating whether methods with no defined
     methods matching the other criteria should be shown at all.  By
     default, \code{TRUE} if and only if argument \code{f} is not
     missing.}
-  \item{printTo}{The connection on which the printed information will be
-    written; by default, standard output.  If \code{printTo} is
-    \code{FALSE}, the output will be collected as a character vector and
-    returned as the value of the call to \code{showMethod}.  See
-    \code{\link{show}}.
-  }
-  \item{fdef}{Optionally, the generic function definition to use; if missing, one is found, looking in \code{where} if that is specified.  See also comment on details below.}
+  \item{printTo}{The connection on which the information will be
+    shown; by default, on standard output.}
+  \item{fdef}{Optionally, the generic function definition to use; if
+    missing, one is found, looking in \code{where} if that is specified.
+    See also comment in \sQuote{Details}.}
 }
 \details{
   The name and package of the generic are followed by the list of
@@ -56,7 +54,11 @@ showMethods(f = character(), where = topenv(parent.frame()),
   refers to the source of the generic function.  Individual methods
   for that generic can come from other packages as well.
 
-When more than one generic function is involved, either as specified or because \code{f} was missing, the functions are found and \code{showMethods} is recalled for each, including the generic as the argument \code{fdef}.  In complicated situations, this can avoid some anomalous results.
+  When more than one generic function is involved, either as specified or
+  because \code{f} was missing, the functions are found and
+  \code{showMethods} is recalled for each, including the generic as the
+  argument \code{fdef}.  In complicated situations, this can avoid some
+  anomalous results.
 }
 \value{
   If \code{printTo} is \code{FALSE}, the character vector that would

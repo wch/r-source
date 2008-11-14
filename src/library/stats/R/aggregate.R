@@ -16,16 +16,24 @@
 
 aggregate <- function(x, ...) UseMethod("aggregate")
 
-aggregate.default <- function(x, ...) {
+aggregate.default <- function(x, ...)
+{
     if(is.ts(x))
         aggregate.ts(as.ts(x), ...)
     else
         aggregate.data.frame(as.data.frame(x), ...)
 }
 
-aggregate.data.frame <- function(x, by, FUN, ...) {
+aggregate.data.frame <- function(x, by, FUN, ...)
+{
     if(!is.data.frame(x))
         x <- as.data.frame(x)
+    if(NROW(x) == 0) stop("no rows to aggregate")
+    if(NCOL(x) == 0) {
+        ## fake it
+        x <- data.frame(x=rep(1, NROW(x)))
+        return(aggregate.data.frame(x, by, function(x) 0L)[seq_along(by)])
+    }
     if(!is.list(by))
         stop("'by' must be a list")
     if(is.null(names(by)))
@@ -36,8 +44,10 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
         names(by)[ind] <- paste("Group", ind, sep = ".")
     }
     y <- lapply(x, tapply, by, FUN, ..., simplify = FALSE)
-    if(any(sapply(unlist(y, recursive = FALSE), length) > 1L))
-        stop("'FUN' must always return a scalar")
+    ## not sapply as might be of length zero, and results will be of
+    ## length zero for an empty group.
+    lens <-  unlist(lapply(unlist(y, recursive = FALSE), length))
+    if(any(lens > 1L)) stop("'FUN' must always return a scalar")
     z <- y[[1L]]
     d <- dim(z)
     w <- vector("list", length(d))

@@ -22,12 +22,14 @@ isoreg <- function(x, y=NULL)
     x <- xy$x
     if(any(is.na(x)) || any(is.na(xy$y)))
 	stop("missing values not allowed")
-    isOrd <- (!is.null(xy$xlab) && xy$xlab == "Index") || !is.unsorted(x)
+    isOrd <- ((!is.null(xy$xlab) && xy$xlab == "Index")
+              || !is.unsorted(x, strictly = TRUE))
     if(!isOrd) {
-        ord <- order(x)
-	yo <- xy$y[ord]
+	y <- xy$y
+	ord <- order(x, -y) ## 'increasing in x, decreasing in y'
+	y <- y[ord]
     }
-    z <- .Call("R_isoreg", if(isOrd)xy$y else yo, PACKAGE = "stats")
+    z <- .Call("R_isoreg", if(isOrd)xy$y else y, PACKAGE = "stats")
     structure(c(xy[c("x","y")], z[c("yf","yc","iKnots")],
                 list(isOrd = isOrd, ord = if(!isOrd) ord,
                      call = match.call())),
@@ -47,7 +49,7 @@ print.isoreg <- function(x, digits = getOption("digits"), ...)
   cat("Isotonic regression from ", deparse(x$call), ",\n", sep="")
   cat("  with", length(x$iKnots), "knots / breaks at obs.nr.", x$iKnots, ";\n")
   if(x$isOrd) cat("  initially ordered 'x'\n")
-  else { cat("  x ordering:"); str(x$ord) }
+  else { cat("  (x,y) ordering:"); str(x$ord) }
   cat("  and further components ")
   str(x[1:4], digits.d = 3 + max(0,digits - 7))
   invisible(x)
@@ -96,7 +98,8 @@ plot.isoreg <-
     ##Dbg    warning("x$iKnots differs from which(i[-1]) ..")
 
     ## Plot of "Data" + Fit
-    plot(x0, c(NA,x$y), ..., xlab = xlab, ylab = ylab, main = if(!both) main)
+    plot(x0, c(NA, if(x$isOrd) x$y else x$y[x$ord]), ...,
+	 xlab = xlab, ylab = ylab, main = if(!both) main)
     lines (xx, x$yf, col = par.fit$col, lwd = par.fit$lwd, type = "S")
     points(xx[x$iKnots], x$yf[x$iKnots], col = par.fit$col,
            cex = par.fit$cex, pch = par.fit$pch)

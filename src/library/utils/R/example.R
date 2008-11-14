@@ -101,5 +101,5 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
            prompt.echo = paste(prompt.prefix, getOption("prompt"), sep=""),
            continue.echo = paste(prompt.prefix, getOption("continue"), sep=""),
            verbose = verbose, max.deparse.length = Inf, encoding = encoding,
-    	   skip.echo = skips)
+    	   skip.echo = skips, keep.source=TRUE)
 }

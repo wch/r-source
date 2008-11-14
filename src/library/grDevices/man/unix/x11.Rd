@@ -25,7 +25,8 @@ X11.options(\dots, reset = FALSE)
 \arguments{
   \item{display}{the display on which the graphics window will appear.
     The default is to use the value in the user's environment variable
-    \env{DISPLAY}.}
+    \env{DISPLAY}.  This is ignored (with a warning) if an X11 device is
+    already open on another display.}
   \item{width, height}{the width and height of the plotting window, in
     inches.  If \code{NA}, taken from the resources and if
     not specified there defaults to \code{7} inches.  See also
@@ -92,10 +93,16 @@ X11.options(\dots, reset = FALSE)
     in non-UTF-8 locales).  The output should be locale-independent.
   }
   \code{type = "nbcairo"} is the same device as \code{type="cairo"}
-  without buffering: which is faster will depend on the the X11
+  without buffering: which is faster will depend on the X11
   connection.  Both will be slower than \code{type = "Xlib"}, especially
   on a slow X11 connection as all the rendering is done on the machine
   running \R rather than in the X server.
+
+  All devices which use an X11 server (including the \code{type =
+    "Xlib"} versions of bitmap devices such as \code{\link{png}}) share
+  internal structures, which means that they must use the same
+  \code{display} and visual.  If you want to change display, first close
+  all such devices.
 }
 \section{X11 Fonts}{
   This section applies only to \code{type = "Xlib"}.

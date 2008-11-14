@@ -843,6 +843,9 @@ static size_t fifo_read(void *ptr, size_t size, size_t nitems,
 {
     Rfifoconn this = (Rfifoconn)con->private;
 
+    /* uses 'size_t' for len */
+    if ((double) size * (double) nitems > SSIZE_MAX)
+	error(_("too large a block specified"));
     return read(this->fd, ptr, size * nitems)/size;
 }
 
@@ -851,6 +854,9 @@ static size_t fifo_write(const void *ptr, size_t size, size_t nitems,
 {
     Rfifoconn this = (Rfifoconn)con->private;
 
+    /* uses 'size_t' for len */
+    if ((double) size * (double) nitems > SSIZE_MAX)
+	error(_("too large a block specified"));
     return write(this->fd, ptr, size * nitems)/size;
 }
 
@@ -1061,12 +1067,16 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
     if(length(scmd) > 1)
 	warning(_("only first element of 'description' argument used"));
 #ifdef Win32
-    ienc = getCharCE(STRING_ELT(scmd, 0));
-    if(ienc == CE_UTF8)
-	file = CHAR(STRING_ELT(scmd, 0));
-    else
-#endif
+    if( !strIsASCII(CHAR(STRING_ELT(scmd, 0))) ) {
+	ienc = CE_UTF8;
+	file = translateCharUTF8(STRING_ELT(scmd, 0));
+    } else {
+	ienc = CE_NATIVE;
 	file = translateChar(STRING_ELT(scmd, 0));
+    }
+#else
+    file = translateChar(STRING_ELT(scmd, 0));
+#endif
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
@@ -1122,10 +1132,11 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 static Rboolean gzfile_open(Rconnection con)
 {
     gzFile fp;
-    char mode[6];
+    char mode[6], *p;
 
     strcpy(mode, con->mode);
-    if(!strchr(mode, 'b')) strcat(mode, "b");
+    /* Must open as binary */
+    if((p = strchr(mode, 't'))) *p = 'b';
 
     fp = gzopen(R_ExpandFileName(con->description), mode);
     if(!fp) {
@@ -1196,6 +1207,9 @@ static size_t gzfile_read(void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
     gzFile fp = ((Rgzfileconn)(con->private))->fp;
+    /* uses 'unsigned' for len */
+    if ((double) size * (double) nitems > UINT_MAX)
+	error(_("too large a block specified"));
     return gzread(fp, ptr, size*nitems)/size;
 }
 
@@ -1203,6 +1217,9 @@ static size_t gzfile_write(const void *ptr, size_t size, size_t nitems,
 			   Rconnection con)
 {
     gzFile fp = ((Rgzfileconn)(con->private))->fp;
+    /* uses 'unsigned' for len */
+    if ((double) size * (double) nitems > UINT_MAX)
+	error(_("too large a block specified"));
     return gzwrite(fp, (voidp)ptr, size*nitems)/size;
 }
 
@@ -1225,7 +1242,10 @@ static Rconnection newgzfile(const char *description, const char *mode,
     }
     init_con(new, description, CE_NATIVE, "");
     strncpy(new->mode, mode, 1);
-    sprintf(new->mode+1, "b%1d", compress);
+    if(strlen(mode) > 1 && mode[1] == 't')
+	sprintf(new->mode+1, "t%1d", compress);
+    else
+	sprintf(new->mode+1, "b%1d", compress);
 
     new->canseek = TRUE;
     new->open = &gzfile_open;
@@ -1379,6 +1399,9 @@ static size_t bzfile_read(void *ptr, size_t size, size_t nitems,
     BZFILE* bfp = (BZFILE *)((Rbzfileconn)(con->private))->bfp;
     int bzerror;
 
+    /* uses 'int' for len */
+    if ((double) size * (double) nitems > INT_MAX)
+	error(_("too large a block specified"));
     return BZ2_bzRead(&bzerror, bfp, ptr, size*nitems)/size;
 }
 
@@ -1388,6 +1411,9 @@ static size_t bzfile_write(const void *ptr, size_t size, size_t nitems,
     BZFILE* bfp = (BZFILE *)((Rbzfileconn)(con->private))->bfp;
     int bzerror;
 
+    /* uses 'int' for len */
+    if ((double) size * (double) nitems > INT_MAX)
+	error(_("too large a block specified"));
     BZ2_bzWrite(&bzerror, bfp, (voidp)ptr, size*nitems);
     if(bzerror != BZ_OK) return 0;
     else return nitems;
@@ -1635,6 +1661,8 @@ static size_t clp_read(void *ptr, size_t size, size_t nitems,
 {
     Rclpconn this = con->private;
     int available = this->len - this->pos, request = size*nitems, used;
+    if ((double) size * (double) nitems > INT_MAX)
+	error(_("too large a block specified"));
     used = (request < available) ? request : available;
     strncpy(ptr, this->buff, used);
     return (size_t) used/size;
@@ -1649,6 +1677,8 @@ static size_t clp_write(const void *ptr, size_t size, size_t nitems,
 
     if(!con->canwrite)
 	error(_("clipboard connection is open for reading only"));
+    if ((double) size * (double) nitems > INT_MAX)
+	error(_("too large a block specified"));
 
     for(i = 0; i < len; i++) {
 	if(this->pos >= this->len) break;
@@ -1861,14 +1891,16 @@ SEXP attribute_hidden do_stderr(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- raw connections --------------------- */
 
+/* Possible future redesign: store nbytes as TRUELENGTH */
+
 /* copy a raw vector into a buffer */
 static void raw_init(Rconnection con, SEXP raw)
 {
     Rrawconn this = (Rrawconn) con->private;
-	
-    this->data = NAMED(raw) ? duplicate(raw) : raw;    
+
+    this->data = NAMED(raw) ? duplicate(raw) : raw;
     R_PreserveObject(this->data);
-    this->nbytes = length(this->data);
+    this->nbytes = LENGTH(this->data);
     this->pos = 0;
 }
 
@@ -1889,12 +1921,15 @@ static void raw_destroy(Rconnection con)
     free(this);
 }
 
-static void raw_resize(Rrawconn this, int needed)
+static void raw_resize(Rrawconn this, size_t needed)
 {
+    size_t nalloc = 64;
     SEXP tmp;
 
-    /* NB: this does not set the size on the connection: raw_write does */
-    PROTECT(tmp = lengthgets(this->data, needed));
+    if (needed > 8192) nalloc = 1.2*needed; /* 20% over-allocation */
+    else while(nalloc < needed) nalloc *= 2;  /* use powers of 2 if small */
+    PROTECT(tmp = allocVector(RAWSXP, nalloc));
+    memcpy(RAW(tmp), RAW(this->data), this->nbytes);
     R_ReleaseObject(this->data);
     this->data = tmp;
     R_PreserveObject(this->data);
@@ -1905,14 +1940,16 @@ static size_t raw_write(const void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
     Rrawconn this = (Rrawconn) con->private;
-    int freespace = LENGTH(this->data) - this->pos;
-    int bytes = size*nitems;    
+    size_t freespace = LENGTH(this->data) - this->pos, bytes = size*nitems;
 
+    if ((double) size * (double) nitems + (double) this->pos > R_LEN_T_MAX)
+	error(_("attempting to add too many elements to raw vector"));
     /* resize may fail, when this will give an error */
     if(bytes >= freespace) raw_resize(this, bytes + this->pos);
-    memmove(RAW(this->data) + this->pos, ptr, bytes); 
+    /* the source just might be this raw vector */
+    memmove(RAW(this->data) + this->pos, ptr, bytes);
     this->pos += bytes;
-    if (this->pos > this->nbytes) this->nbytes = this->pos;    
+    if(this->nbytes < this->pos) this->nbytes = this->pos;
     return nitems;
 }
 
@@ -1926,10 +1963,13 @@ static size_t raw_read(void *ptr, size_t size, size_t nitems,
 		       Rconnection con)
 {
     Rrawconn this = (Rrawconn) con->private;
-    int available = this->nbytes - this->pos, request = size*nitems, used;
+    size_t available = this->nbytes - this->pos, request = size*nitems, used;
+
+    if ((double) size * (double) nitems + (double) this->pos > R_LEN_T_MAX)
+	error(_("too large a block specified"));
     used = (request < available) ? request : available;
     memmove(ptr, RAW(this->data) + this->pos, used);
-    return (size_t) used/size;
+    return used/size;
 }
 
 static int raw_fgetc(Rconnection con)
@@ -1942,18 +1982,20 @@ static int raw_fgetc(Rconnection con)
 static double raw_seek(Rconnection con, double where, int origin, int rw)
 {
     Rrawconn this = (Rrawconn) con->private;
-    int newpos, oldpos = this->pos;
+    double newpos;
+    size_t oldpos = this->pos;
 
-    if(ISNA(where)) return oldpos;
+    if(ISNA(where)) return (double) oldpos;
 
+    /* Do the calculations here as double to avoid integer overflow */
     switch(origin) {
-    case 2: newpos = this->pos + (int) where; break;
-    case 3: newpos = this->nbytes + (int) where; break;
+    case 2: newpos = this->pos + where; break;
+    case 3: newpos = this->nbytes + where; break;
     default: newpos = where;
     }
     if(newpos < 0 || newpos > this->nbytes)
 	error(_("attempt to seek outside the range of the raw connection"));
-    else this->pos = newpos;
+    else this->pos = (size_t) newpos;
 
     return (double) oldpos;
 }
@@ -2057,13 +2099,10 @@ SEXP attribute_hidden do_rawconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
     con = getConnection(asInteger(CAR(args)));
     if(!con->canwrite)
 	error(_("'con' is not an output rawConnection"));
-    this = (Rrawconn)con->private;
-    PROTECT(ans = lengthgets(this->data, this->nbytes));    
-    R_ReleaseObject(this->data);
-    this->data = ans;
-    R_PreserveObject(this->data);
-    UNPROTECT(1);
-    return this->data;
+    this = (Rrawconn) con->private;
+    ans = allocVector(RAWSXP, this->nbytes); /* later, use TRUELENGTH? */
+    memcpy(RAW(ans), RAW(this->data), this->nbytes);
+    return ans;
 }
 
 /* ------------------- text connections --------------------- */
@@ -2726,6 +2765,13 @@ SEXP attribute_hidden do_seek(SEXP call, SEXP op, SEXP args, SEXP env)
     where = asReal(CADR(args));
     origin = asInteger(CADDR(args));
     rw = asInteger(CADDDR(args));
+    if(!ISNAN(where) && con->nPushBack > 0) {
+	/* clear pushback */
+	int j;
+	for(j = 0; j < con->nPushBack; j++) free(con->PushBack[j]);
+	free(con->PushBack);
+	con->nPushBack = 0;	
+    }
     return ScalarReal(con->seek(con, where, origin, rw));
 }
 
@@ -4181,12 +4227,19 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("only first element of 'description' argument used"));
     url = CHAR(STRING_ELT(scmd, 0)); /* ASCII */
 #ifdef Win32
-    ienc = getCharCE(STRING_ELT(scmd, 0));
-    if(ienc == CE_UTF8)
-	url = CHAR(STRING_ELT(scmd, 0));
-    else
-#endif
+    if(PRIMVAL(op) && !strIsASCII(CHAR(STRING_ELT(scmd, 0))) ) {
+	ienc = CE_UTF8;
+	url = translateCharUTF8(STRING_ELT(scmd, 0));
+    } else {
+	ienc = getCharCE(STRING_ELT(scmd, 0));
+	if(ienc == CE_UTF8)
+	    url = CHAR(STRING_ELT(scmd, 0));
+	else
+	    url = translateChar(STRING_ELT(scmd, 0));
+    }
+#else
 	url = translateChar(STRING_ELT(scmd, 0));
+#endif
 #ifdef HAVE_INTERNET
     if (strncmp(url, "http://", 7) == 0) type = HTTPsh;
     else if (strncmp(url, "ftp://", 6) == 0) type = FTPsh;
@@ -4467,6 +4520,9 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 
     if (priv->z_err == Z_STREAM_END) return 0;  /* EOF */
 
+    /* wrapped connection only needs to handle INT_MAX */
+    if ((double) size * (double) nitems > INT_MAX)
+	error(_("too large a block specified"));
     if (priv->nsaved >= 0) { /* non-compressed mode */
 	size_t len = size*nitems;
 	int i, nsaved = priv->nsaved;
@@ -4520,7 +4576,7 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 	if (priv->z_err != Z_OK || priv->z_eof) break;
     }
     priv->crc = crc32(priv->crc, start, (uInt)(priv->s.next_out - start));
-    return (int)(size*nitems - priv->s.avail_out)/size;
+    return (size_t)(size*nitems - priv->s.avail_out)/size;
 }
 
 static size_t gzcon_write(const void *ptr, size_t size, size_t nitems,
@@ -4529,6 +4585,8 @@ static size_t gzcon_write(const void *ptr, size_t size, size_t nitems,
     Rgzconn priv = (Rgzconn)con->private;
     Rconnection icon = priv->con;
 
+    if ((double) size * (double) nitems > INT_MAX)
+	error(_("too large a block specified"));
     priv->s.next_in = (Bytef*)ptr;
     priv->s.avail_in = size*nitems;
 
@@ -4546,7 +4604,7 @@ static size_t gzcon_write(const void *ptr, size_t size, size_t nitems,
 	if (priv->z_err != Z_OK) break;
     }
     priv->crc = crc32(priv->crc, (const Bytef *)ptr, size*nitems);
-    return (int)(size*nitems - priv->s.avail_in)/size;
+    return (size_t)(size*nitems - priv->s.avail_in)/size;
 }
 
 static int gzcon_fgetc(Rconnection con)

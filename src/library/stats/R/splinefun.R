@@ -17,15 +17,14 @@
 #### 'spline' and 'splinefun' are very similar --- keep in sync!
 ####  also consider ``compatibility'' with  'approx' and 'approxfun'
 
-splinefun <- function(x, y=NULL, method = "fmm", ties = mean)
+splinefun <- function(x, y=NULL,
+                      method = c("fmm", "periodic", "natural", "monoH.FC"),
+                      ties = mean)
 {
     x <- xy.coords(x, y)
     y <- x$y
     x <- x$x
     nx <- length(x)
-    method <- pmatch(method, c("periodic", "natural", "fmm"))
-    if(is.na(method))
-	stop("invalid interpolation method")
     if(any(o <- is.na(x) | is.na(y))) {
 	o <- !o
 	x <- x[o]
@@ -39,7 +38,6 @@ splinefun <- function(x, y=NULL, method = "fmm", ties = mean)
 	    y <- as.vector(tapply(y,x,ties))# as.v: drop dim & dimn.
 	    x <- sort(ux)
 	    nx <- length(x)
-	    rm(ux)
 	} else {
 	    o <- order(x)
 	    x <- x[o]
@@ -47,21 +45,54 @@ splinefun <- function(x, y=NULL, method = "fmm", ties = mean)
 	}
     }
     if(nx == 0) stop("zero non-NA points")
-    if(method == 1 && y[1] != y[nx]) { # periodic
+    method <- match.arg(method)
+    if(method == "periodic" && y[1] != y[nx]) {
 	warning("spline: first and last y values differ - using y[1] for both")
 	y[nx] <- y[1]
     }
+    if(method == "monoH.FC") {
+        n1 <- nx - 1L
+        ## - - - "Data preprocessing" - - -
+
+        dy <- y[-1] - y[-nx]            # = diff(y)
+        i0 <- dy == 0                   # or |dy| < eps ?? fixme ??
+        dx <- x[-1] - x[-nx]            # = diff(x)
+        Sx <- dy / dx # 2. \Delta_k = (y_{k+1} - y_k)/(x_{k+1} - x_k), k=1:n1
+        m <- c(Sx[1], (Sx[-1] + Sx[-n1])/2, Sx[n1]) ## 1.
+        if(any(i0)) {
+            ## m0[k] := i0[k] or i0[k-1]
+            m0 <- c(i0,FALSE) | c(FALSE,i0)
+            m[m0] <- 0
+        }
+        if(any(ip <- !i0)) {
+            alpha <- m[-nx][ip] / Sx[ip]
+            beta  <- m[-1][ip] / Sx[ip]
+            a2b3 <- 2*alpha + beta - 3
+            ab23 <- alpha + 2*beta - 3
+            if(any(ok <- (a2b3 > 0 & ab23 > 0)) &&
+               any(ok <- ok & (alpha * (a2b3 + ab23) < a2b3^2))) {
+                ## correcting sum(ok) slopes m[] for monotonicity
+                tau <- 3 / sqrt(alpha[ok]^2 + beta[ok]^2)
+                m[-nx][ip][ok] <- tau * alpha[ok] * Sx[ip][ok]
+                m[-1][ip][ok] <- tau *  beta[ok] * Sx[ip][ok]
+            }
+        }
+        ## Hermite spline with (x,y,m) :
+        return(splinefunH0(x = x, y = y, m = m, dx = dx))
+    }
+    ## else
+    iMeth <- match(method, c("periodic", "natural", "fmm", "monoH.FC"))
     z <- .C("spline_coef",
-	    method=as.integer(method),
+	    method=as.integer(iMeth),
 	    n=as.integer(nx),
 	    x=x,
 	    y=y,
 	    b=double(nx),
 	    c=double(nx),
 	    d=double(nx),
-	    e=double(if(method == 1) nx else 0),
+	    e=double(if(iMeth == 1) nx else 0),
 	    PACKAGE="stats")
-    rm(x,y,nx,o,method)
+    rm(x,y,nx,ux,o,method,iMeth)
     z$e <- NULL
     function(x, deriv = 0) {
 	deriv <- as.integer(deriv)
@@ -82,17 +113,113 @@ splinefun <- function(x, y=NULL, method = "fmm", ties = mean)
         ##           where dx := (u[j]-x[i]); i such that x[i] <= u[j] <= x[i+1},
         ##                u[j]:= xout[j] (unless sometimes for periodic spl.)
         ##           and  d_i := d[i] unless for natural splines at left
-	.C("spline_eval",
-	   z$method,
-	   as.integer(length(x)),
-	   x=as.double(x),
-	   y=double(length(x)),
-	   z$n,
-	   z$x,
-	   z$y,
-	   z$b,
-	   z$c,
-	   z$d,
-	   PACKAGE="stats")$y
+	res <- .C("spline_eval",
+                  z$method,
+                  as.integer(length(x)),
+                  x=as.double(x),
+                  y=double(length(x)),
+                  z$n,
+                  z$x,
+                  z$y,
+                  z$b,
+                  z$c,
+                  z$d,
+                  PACKAGE="stats")$y
+
+        ## deal with points to the left of first knot if natural
+        ## splines are used  (Bug PR#13132)
+        if( deriv > 0 && z$method==2 && any(ind <- x<=z$x[1]) )
+          res[ind] <- ifelse(deriv == 1, z$y[1], 0)
+
+        res
     }
+}
+
+## hidden : The exported user function is splinefunH()
+splinefunH0 <- function(x, y, m, dx = x[-1L] - x[-length(x)])
+{
+    function(u, deriv=0, extrapol = c("linear","cubic"))
+    {
+	extrapol <- match.arg(extrapol)
+	deriv <- as.integer(deriv)
+	if (deriv < 0 || deriv > 2)
+	    stop("'deriv' must be between 0 and 2")
+	i <- findInterval(u, x, all.inside = (extrapol == "cubic"))
+	if(deriv == 0)
+	    interp <- function(u, i) {
+		h <- dx[i]
+		t <- (u - x[i]) / h
+		## Compute the 4 Hermite (cubic) polynomials h00, h01,h10, h11
+		t1 <- t-1
+		h01 <- t*t*(3 - 2*t)
+		h00 <- 1 - h01
+		tt1 <- t*t1
+		h10 <- tt1 * t1
+		h11 <- tt1 * t
+		y[i]  * h00 + h*m[i]  * h10 +
+		y[i+1]* h01 + h*m[i+1]* h11
+	    }
+	else if(deriv == 1)
+	    interp <- function(u, i) {
+		h <- dx[i]
+		t <- (u - x[i]) / h
+		## 1st derivative of Hermite polynomials h00, h01,h10, h11
+		t1 <- t-1
+		h01 <- -6*t*t1 # h00 = - h01
+		h10 <- (3*t - 1) * t1
+		h11 <- (3*t - 2) * t
+		(y[i+1] - y[i])/h * h01 + m[i] * h10 + m[i+1]* h11
+	    }
+	else ## deriv == 2
+	    interp <- function(u, i) {
+		h <- dx[i]
+		t <- (u - x[i]) / h
+		## 2nd derivative of Hermite polynomials h00, h01,h10, h11
+		h01 <- 6*(1-2*t) # h00 = - h01
+		h10 <- 2*(3*t - 2)
+		h11 <- 2*(3*t - 1)
+		((y[i+1] - y[i])/h * h01 + m[i] * h10 + m[i+1]* h11) / h
+	    }
+
+
+	if(extrapol == "linear" &&
+	   any(iXtra <- (iL <- (i == 0)) | (iR <- (i == (n <- length(x)))))) {
+	    ##	do linear extrapolation
+	    r <- u
+	    if(any(iL)) r[iL] <- if(deriv == 0) y[1] + m[1]*(u[iL] - x[1]) else
+				  if(deriv == 1) m[1] else 0
+	    if(any(iR)) r[iR] <- if(deriv == 0) y[n] + m[n]*(u[iR] - x[n]) else
+				  if(deriv == 1) m[n] else 0
+	    ## For internal values, compute "as normal":
+	    ini <- !iXtra
+	    r[ini] <- interp(u[ini], i[ini])
+	    r
+	}
+        else { ## use cubic Hermite polynomials, even for extrapolation
+            interp(u, i)
+        }
+
+    }
+}
+
+splinefunH <- function(x, y, m)
+{
+    ## Purpose: "Cubic Hermite Spline"
+    ## ----------------------------------------------------------------------
+    ## Arguments: (x,y): points;  m: slope at points,  all of equal length
+    ## ----------------------------------------------------------------------
+    ## Author: Martin Maechler, Date:  9 Jan 2008
+    n <- length(x)
+    stopifnot(is.numeric(x), is.numeric(y), is.numeric(m),
+              length(y) == n, length(m) == n)
+    if(is.unsorted(x)) {
+        i <- sort.list(x)
+        x <- x[i]
+        y <- y[i]
+        m <- m[i]
+    }
+    dx <- x[-1L] - x[-n]
+    if(any(is.na(dx)) || any(dx == 0))
+        stop("'x' must be *strictly* increasing (non - NA)")
+    splinefunH0(x, y, m, dx=dx)
 }

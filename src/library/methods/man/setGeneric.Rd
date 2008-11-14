@@ -15,7 +15,7 @@
 \usage{
 setGeneric(name, def= , group=list(), valueClass=character(),
            where= , package= , signature= , useAsDefault= ,
-           genericFunction= )
+           genericFunction= , simpleInheritanceOnly = )
 
 setGroupGeneric(name, def= , group=list(), valueClass=character(),
                 knownMembers=list(), package= , where= )
@@ -60,12 +60,23 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
     Optionally, the vector of names, from among the formal arguments
     to the  function, that can
    appear in the signature of methods for this function, in calls to
-   \code{\link{setMethod}}. By default, the signature is all the
+   \code{\link{setMethod}}. If \dots is one of the
+   formal arguments, it is treated specially. Starting with version
+   2.8.0 of \R, \dots may be signature of the generic function.
+   Methods will then be selected if their signature matches all the
+   \dots arguments.  See the documentation for topic
+   \link{dotsMethods} for details.  In the present version, it is not
+   possible to mix \dots and other arguments in the signature (this
+   restriction may be lifted in later versions).
+
+   By default, the signature is inferred from the implicit generic
+   function corresponding to a  non-generic function.  If no implicit generic function has been defined,  the default is all the
    formal arguments except \dots, in the order they appear in the
-   function definition.  See the \dQuote{Implicit
+   function definition. In the case that
+   \dots is the only formal argument, that is also the default signature.  To use \dots as the signature
+   in a function that has any other arguments, you must supply the
+   signature argument explicitly.  See the \dQuote{Implicit
       Generic} section below for more details.
-  }
-  \item{genericFunction}{ Don't use; for (possible) internal use only.
   }
   \item{useAsDefault}{
     Override the usual choice of default argument (an existing
@@ -78,6 +89,22 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
     \code{TRUE} says to use the existing function as default,
     unconditionally (hardly ever needed as an explicit argument).
     See the section on details.
+  }
+  \item{simpleInheritanceOnly}{
+      Supply this argument as \code{TRUE} to require that methods
+      selected be inherited through simple inheritance only; that is,
+      from superclasses specified in the \code{contains=} argument to
+      \code{\link{setClass}}, or by simple inheritance to a class
+      union or other virtual class.  Generic functions should require
+      simple inheritance if they need to be assured that they get the
+      complete original object, not one that has been transformed.
+      Examples of functions requiring simple inheritance are
+      \code{\link{initialize}}, because by definition it must return
+      an object from the same class as its argument, and
+      \code{\link{show}}, because it claims to give a full description
+      of the object provided as its argument.
+    }
+  \item{genericFunction}{ Don't use; for (possible) internal use only.
   }
 
   \item{knownMembers}{
@@ -319,8 +346,9 @@ removeGeneric("increment")
 }
 }
 \seealso{
-  \code{\link{Methods}} for a discussion of other functions to specify
-  and manipulate the methods of generic functions.
+  \code{\link{Methods}} and the links there for a general discussion,
+  \code{\link{dotsMethods}} for methods that dispatch on
+  \dQuote{\dots}, and \code{\link{setMethod}} for method definitions.
 }
 \keyword{ programming }
 \keyword{ methods }

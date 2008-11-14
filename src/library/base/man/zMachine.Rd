@@ -1,6 +1,6 @@
 % File src/library/base/man/zMachine.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{.Machine}
@@ -20,24 +20,27 @@
   \item{double.eps}{the smallest positive floating-point number
     \code{x} such that \code{1 + x != 1}.  It equals
     \code{base^ulp.digits} if either \code{base} is 2 or \code{rounding}
-    is 0;  otherwise, it is \code{(base^ulp.digits) / 2}.}
+    is 0;  otherwise, it is \code{(base^ulp.digits) / 2}.  Normally
+    \code{2.220446e-16}.}
   \item{double.neg.eps}{a small positive floating-point number \code{x}
     such that \code{1 - x != 1}.  It equals \code{base^neg.ulp.digits}
     if \code{base} is 2 or \code{round} is 0;  otherwise, it is
-    \code{(base^neg.ulp.digits) / 2}.
+    \code{(base^neg.ulp.digits) / 2}.  Normally \code{1.110223e-16}.
     As \code{neg.ulp.digits} is bounded below by \code{-(digits + 3)},
     \code{neg.eps} may not be the smallest number that can alter 1 by
     subtraction.}
   \item{double.xmin}{the smallest non-vanishing normalized
-    floating-point power of the radix, i.e., \code{base^min.exp}.}
+    floating-point power of the radix, i.e., \code{base^min.exp}.
+    Normally \code{2.225074e-308}.}
   \item{double.xmax}{the largest finite floating-point number.
     Typically, it is equal to \code{(1 - neg.eps) * base^max.exp}, but
     on some machines it is only the second, or perhaps third, largest
     number, being too small by 1 or 2 units in the last digit of the
-    significand.}
-  \item{double.base}{the radix for the floating-point representation}
+    significand.  Normally \code{1.797693e+308}.}
+  \item{double.base}{the radix for the floating-point representation:
+    normally \code{2}.}
   \item{double.digits}{the number of base digits in the floating-point
-    significand}
+    significand: normally \code{53}.}
   \item{double.rounding}{the rounding action. \cr
     0 if floating-point addition chops; \cr
     1 if floating-point addition rounds, but not in the IEEE style; \cr
@@ -46,7 +49,7 @@
     4 if floating-point addition rounds, but not in the IEEE style, and
     there is partial underflow; \cr
     5 if floating-point addition rounds in the IEEE style, and there is
-    partial underflow}
+    partial underflow.  Normally \code{5}.}
   \item{double.guard}{the number of guard digits for multiplication
     with truncating arithmetic.  It is 1 if floating-point arithmetic
     truncates and more than \code{digits} base \code{base} digits
@@ -54,30 +57,40 @@
     significand in multiplication, and 0 otherwise.}
   \item{double.ulp.digits}{the largest negative integer \code{i} such
     that \code{1 + base^i != 1}, except that it is bounded below by
-    \code{-(digits + 3)}.}
+    \code{-(digits + 3)}.  Normally \code{-52}.}
   \item{double.neg.ulp.digits}{the largest negative integer \code{i}
     such that \code{1 - base^i != 1}, except that it is bounded below by
-    \code{-(digits + 3)}.}
+    \code{-(digits + 3)}. Normally \code{-53}.}
   \item{double.exponent}{
     the number of bits (decimal places if \code{base} is 10) reserved
     for the representation of the exponent (including the bias or sign)
-    of a floating-point number}
+    of a floating-point number.  Normally \code{11}.}
   \item{double.min.exp}{
     the largest in magnitude negative integer \code{i} such that
-    \code{base ^ i} is positive and normalized.}
+    \code{base ^ i} is positive and normalized.  Normally \code{-1022}.}
   \item{double.max.exp}{
-    the smallest positive power of \code{base} that overflows.}
-  \item{integer.max}{the largest integer which can be represented.}
-  \item{sizeof.long}{the number of bytes in a C \code{long} type.}
+    the smallest positive power of \code{base} that overflows.  Normally
+    \code{1024}.}
+  \item{integer.max}{the largest integer which can be represented.
+    Always \code{2147483647}.}
+  \item{sizeof.long}{the number of bytes in a C \code{long} type:
+    \code{4} or \code{8} (most 64-bit systems, but not Windows).}
   \item{sizeof.longlong}{the number of bytes in a C \code{long long}
-    type. Will be zero if there is no such type.}
+    type.  Will be zero if there is no such type, otherwise usually
+    \code{8}.}
   \item{sizeof.longdouble}{the number of bytes in a C \code{long double}
-    type. Will be zero if there is no such type.}
+    type.  Will be zero if there is no such type, otherwise possibly
+    \code{12} (Windows, 32-bit Linux/Solaris) or \code{16} (64-bit
+    Linux/Solaris, Intel Mac OS X).}
   \item{sizeof.pointer}{the number of bytes in a C \code{SEXP}
-    type.}
+    type.  Will be \code{4} on 32-bit builds and \code{8} on 64-bit
+    builds of \R.}
 }
 \details{
-  The algorithm is based on Cody's (1988) subroutine MACHAR.
+  The algorithm is based on Cody's (1988) subroutine MACHAR.  As almost
+  all current inplements of \R use 32-bit integers and IEC 60059
+  floating-point (double precision) arithmetic, most of these values are
+  the same for almost all \R builds.
 
   Note that on most platforms smaller positive values than
   \code{.Machine$double.xmin} can occur.  On a typical \R platform the

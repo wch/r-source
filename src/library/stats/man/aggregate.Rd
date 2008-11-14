@@ -1,6 +1,6 @@
 % File src/library/stats/man/aggregate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{aggregate}
@@ -47,7 +47,8 @@ aggregate(x, \dots)
   to a data frame and calls the data frame method.
 
   \code{aggregate.data.frame} is the data frame method.  If \code{x}
-  is not a data frame, it is coerced to one.  Then, each of the
+  is not a data frame, it is coerced to one, which must have a non-zero
+  number of rows.  Then, each of the
   variables (columns) in \code{x} is split into subsets of cases
   (rows) of identical combinations of the components of \code{by}, and
   \code{FUN} is applied to each such subset with further arguments in

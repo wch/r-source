@@ -367,15 +367,18 @@ The  \code{"target"} slot starts off equal to the \code{"defined"}
  Chambers, John M. (2008)
  \emph{Software for Data Analysis: Programming with R}
   Springer.  (For the R version: see section 10.6 for method
-  selection and section 13.4 for generic functions).
+  selection and section 10.5 for generic functions).
 
  Chambers, John M. (1998)
  \emph{Programming with Data}
  Springer (For the original S4 version.)
 }
 \seealso{
+For more specific information, see
   \code{\link{setGeneric}}, \code{\link{setMethod}}, and
   \code{\link{setClass}}.
+
+For the use of \dots in methods, see  \link{dotsMethods}.
 }
 \keyword{programming}
 \keyword{classes}

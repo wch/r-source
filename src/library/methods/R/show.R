@@ -18,8 +18,7 @@ showDefault <- function(object, oldMethods = TRUE)
 {
     clDef <- getClass(cl <- class(object), .Force=TRUE)
     cl <- classLabel(cl)
-    if(!is.null(clDef) && is.na(match(clDef@className, .BasicClasses)) &&
-       !extends(clDef, "oldClass")) {
+    if(!is.null(clDef) && isS4(object) && is.na(match(clDef@className, .BasicClasses)) ) {
         cat("An object of class ", cl, "\n", sep="")
         slots <- slotNames(clDef)
         if(!is.na(match(".Data", slots))) {
@@ -37,34 +36,34 @@ showDefault <- function(object, oldMethods = TRUE)
             cat("\n")
         }
     }
-    else if(isS4(object) && isClass(clDef) && extends(clDef, "oldClass") &&
-            length(slotNames(clDef)) > 0) {
-        ## print the old-style object
-        cat("An object of class ", cl, "\n", sep="")
-        slots <- slotNames(clDef)
-        i <- match(".S3Class", slots)
-        if(is.na(i)) { } # but should not happen with new objects
-        else {
-            S3Class <- object@.S3Class
-            slots <- slots[-i]
-            if(!identical(cl, S3Class)) {
-                if(length(S3Class) > 1)
-                  cat("  (S3 class: c(", paste('"', S3Class, '"', sep="", collapse = ", "), "))\n", sep="")
-                else
-                  cat("  (S3 class: \"",S3Class, "\")\n", sep = "")
-            }
-        }
-        for( cl2 in rev(extends(clDef)))
-            if(!.identC(cl2, "oldClass") && extends(cl2, "oldClass")) {
-                print(as(object, cl2), useS4 = FALSE) # see comment NBB below
-                break
-            }
-        for(what in slots) {
-            cat("Slot \"",what, "\":\n", sep="")
-            print(slot(object, what))
-            cat("\n")
-        }
-    }
+##     else if(isS4(object) && isClass(clDef) && extends(clDef, "oldClass") &&
+##             length(slotNames(clDef)) > 0) {
+##         ## print the old-style object
+##         cat("An object of class ", cl, "\n", sep="")
+##         slots <- slotNames(clDef)
+##         i <- match(".S3Class", slots)
+##         if(is.na(i)) { } # but should not happen with new objects
+##         else {
+##             S3Class <- classLabel(object@.S3Class)
+##             slots <- slots[! slots %in% names(slotsFromS3(object))]
+##             if(!identical(cl, S3Class)) {
+##                 if(length(S3Class) > 1)
+##                   cat("  (S3 class: c(", paste('"', S3Class, '"', sep="", collapse = ", "), "))\n", sep="")
+##                 else
+##                   cat("  (S3 class: \"",S3Class, "\")\n", sep = "")
+##             }
+##         }
+##         for( cl2 in rev(extends(clDef)))
+##             if(!.identC(cl2, "oldClass") && extends(cl2, "oldClass")) {
+##                 print(as(object, cl2), useS4 = FALSE) # see comment NBB below
+##                 break
+##             }
+##         for(what in slots) {
+##             cat("Slot \"",what, "\":\n", sep="")
+##             print(slot(object, what))
+##             cat("\n")
+##         }
+##     }
     else
         ## NBB:  This relies on the delicate fact (as of version 1.7 at least)
         ## that print will NOT recursively call show if it gets more than one argument!
@@ -78,7 +77,7 @@ show <- function(object)
 
 .InitShowMethods <- function(envir) {
     if(!isGeneric("show", envir))
-        setGeneric("show", where = envir)
+        setGeneric("show", where = envir, simpleInheritanceOnly = TRUE)
     setMethod("show", "MethodDefinition",
               function(object) {
                   cl <- class(object)
@@ -117,6 +116,8 @@ show <- function(object)
                       paste(object@signature, collapse=", "), "\n",
 			    "Use  showMethods(\"", object@generic,
 			    "\")  for currently available ones.\n", sep="")
+                  if(.simpleInheritanceGeneric(object))
+                      cat("(This generic function excludes non-simple inheritance; see ?setIs)\n");
               },
               where = envir)
     setMethod("show", "classRepresentation",

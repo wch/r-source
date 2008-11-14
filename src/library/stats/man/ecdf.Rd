@@ -13,7 +13,7 @@
 ecdf(x)
 
 \method{plot}{ecdf}(x, \dots, ylab="Fn(x)", verticals = FALSE,
-     col.01line = "gray70")
+     col.01line = "gray70", pch = 19)
 
 \method{print}{ecdf}(x, digits= getOption("digits") - 2, \dots)
 
@@ -22,12 +22,13 @@ ecdf(x)
 \arguments{
   \item{x, object}{numeric vector of the observations for \code{ecdf};  for
     the methods, an object inheriting from class \code{"ecdf"}.}
-  \item{\dots}{arguments to be passed to subsequent methods, i.e.,
+  \item{\dots}{arguments to be passed to subsequent methods, e.g.,
     \code{\link{plot.stepfun}} for the \code{plot} method.}
   \item{ylab}{label for the y-axis.}
   \item{verticals}{see \code{\link{plot.stepfun}}.}
   \item{col.01line}{numeric or character specifying the color of the
     horizontal lines at y = 0 and 1, see \code{\link{colors}}.}
+  \item{pch}{plotting character.}
   \item{digits}{number of significant digits to use, see
     \code{\link{print}}.}
 }

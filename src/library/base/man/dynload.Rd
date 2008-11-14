@@ -165,7 +165,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   \code{dlopen} has become the POSIX standard for doing this. Under
   Unix-alikes \code{dyn.load} uses the \code{dlopen} mechanism and
   should work on all platforms which support it.  On Windows it uses the
-  standard mechanism (\code{LoadLibrary} for loading DLLs.
+  standard mechanism (\code{LoadLibrary}) for loading DLLs.
 
   The original code for loading DLLs in Unix-alikes was provided by
   Heiner Schwarte.  The compatibility code for HP-UX was provided by
@@ -187,24 +187,22 @@ is.loaded(symbol, PACKAGE = "", type = "")
     \item Along the search path for executables given by the environment
     variable \env{PATH}.
   }
-  This means that for all but embedded uses of \R (but including use by
-  the RDCOM server), \file{iconv.dll} will be found in
-  \file{\var{\link[base:Rhome]{R\_HOME}}/bin}.
+  This means that for all but embedded uses of \R, \file{iconv.dll} will
+  be found in \file{\var{\link[base:Rhome]{R\_HOME}}/bin}.
 
   Packages often want to supply dependent DLLs in their \file{libs}
   directory, and do this by setting the \env{PATH} variable
   (\code{\link{library.dynam}} does that automatically in recent
   versions of \R), but the DLL search order means that DLLs in the
-  launch directory and in system directories will be preferred.  As from
-  \R 2.7.0 and on Windows XP SP1 and later there is a way to modify the
-  search order.  If argument \code{DLLpath} is supplied to
-  \code{dyn.load}, the latter makes use of the Windows system call
-  \code{SetDllDirectory} to insert the value of \code{DLLpath} in second
-  place, and removes the current directory, for the duration of that
-  \code{dyn.load} call.  (Note that only one directory can be inserted
-  in this way.)  On Windows 2000, the second item in the search order is
-  the current directory, and the current directory is changed
-  temporarily to implement \code{DLLpath}.
+  launch directory and in system directories will be preferred.  On
+  Windows XP SP1 and later there is a way to modify the search order.
+  If argument \code{DLLpath} is supplied to \code{dyn.load}, the latter
+  makes use of the Windows system call \code{SetDllDirectory} to insert
+  the value of \code{DLLpath} in second place, and removes the current
+  directory, for the duration of that \code{dyn.load} call.  (Note that
+  only one directory can be inserted in this way.)  On Windows 2000, the
+  second item in the search order is the current directory, and the
+  current directory is changed temporarily to implement \code{DLLpath}.
 }
 #endif
 \section{Warning}{

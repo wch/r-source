@@ -136,6 +136,8 @@ function(x, base = NULL)
     structure(x, base = base, lens = lens, .classes = classes)
 }
 
+xtfrm.numeric_version <- function(x) .encode_numeric_version(x)
+
 ## <NOTE>
 ## Currently unused.
 ## Is there any point in having a 'base' argument?
@@ -289,10 +291,11 @@ rep.numeric_version <-
 function(x, ...)
     structure(NextMethod("rep"), class = oldClass(x))
 
-sort.numeric_version <-
-function(x, decreasing = FALSE, na.last = NA, ...)
-    x[order(.encode_numeric_version(x),
-            na.last = na.last, decreasing = decreasing)]
+## not needed: duplicates xtfrm method
+## sort.numeric_version <-
+## function(x, decreasing = FALSE, na.last = NA, ...)
+##     x[order(.encode_numeric_version(x),
+##             na.last = na.last, decreasing = decreasing)]
 
 unique.numeric_version <-
 function(x, incomparables = FALSE, ...)

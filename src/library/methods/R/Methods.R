@@ -29,7 +29,8 @@ setGeneric <-
     function(name, def = NULL, group = list(), valueClass = character(),
              where = topenv(parent.frame()),
              package = NULL, signature = NULL,
-             useAsDefault = NULL, genericFunction = NULL)
+             useAsDefault = NULL, genericFunction = NULL,
+             simpleInheritanceOnly = NULL)
 {
     if(is.character(.isSingleName(name)))
         stop(gettextf('invalid argument "name": %s',
@@ -52,7 +53,7 @@ setGeneric <-
         }
     }
     simpleCall <- nargs() < 2 || all(missing(def), missing(group), missing(valueClass),
-               missing(package), missing(signature), missing(useAsDefault), missing(genericFunction))
+               missing(package), missing(signature), missing(useAsDefault), missing(genericFunction), missing(simpleInheritanceOnly))
     stdGenericBody <- substitute(standardGeneric(NAME), list(NAME = name))
     ## get the current function which may already be a generic
     if(is.null(package))
@@ -122,7 +123,8 @@ setGeneric <-
             fdeflt <- .derivedDefaultMethod(fdeflt)
         fdef <- makeGeneric(name, fdef, fdeflt, group=group, valueClass=valueClass,
                             package = package, signature = signature,
-                            genericFunction = genericFunction)
+                            genericFunction = genericFunction,
+                            simpleInheritanceOnly = simpleInheritanceOnly)
     }
     if(!identical(package, thisPackage)) {
         ## setting a generic for a function in another package.
@@ -138,7 +140,7 @@ setGeneric <-
             }  # go ahead silently
             else if(is.function(implicit)) {
                 ## choose the implicit unless an explicit def was given
-                if(is.null(def)) {
+                if(is.null(def) && is.null(signature)) {
                     message(gettextf(
                        "Restoring the implicit generic function for \"%s\" from package \"%s\" into package \"%s\"; the generic differs from the default conversion (%s)",
                                      name, package, thisPackage, cmp), domain = NA)
@@ -162,6 +164,8 @@ setGeneric <-
             }
         }
     }
+    if(identical(fdef@signature, "..."))
+      fdef <- .dotsGeneric(fdef)
     if(doUncache)
       .uncacheGeneric(name, oldDef)
     groups <- fdef@group
@@ -380,11 +384,6 @@ setMethod <-
 	     where = topenv(parent.frame()), valueClass = NULL,
 	     sealed = FALSE)
 {
-    ischar <- tryCatch(is.character(f), error = NULL)
-    funcName <- if(is.null(ischar)) deparse(substitute(f)) else f
-    if(is(funcName, "standardGeneric") || is(funcName, "MethodDefinition"))
-	funcName <- funcName@generic
-
     ## Methods are stored in metadata in database where.  A generic function will be
     ## assigned if there is no current generic, and the function is NOT a primitive.
     ## Primitives are dispatched from the main C code, and an explicit generic NEVER
@@ -488,8 +487,8 @@ setMethod <-
 		   ## fix up arg name for single-argument generics
 		   ## useful for e.g. '!'
 		   if(length(fnames) == length(mnames) && length(mnames) == 1) {
-		       warning(gettextf("argument in method definition changed from (%s) to (%s)",
-					mnames, fnames), domain = NA, call. = FALSE)
+		       warning(gettextf("For function \"%s\", signature \"%s\": argument in method definition changed from (%s) to (%s)",
+					f, signature, mnames, fnames), domain = NA, call. = FALSE)
 		       formals(definition) <- formals(fdef)
 		       ll <- list(as.name(formalArgs(fdef))); names(ll) <- mnames
 		       body(definition) <- substituteDirect(body(definition), ll)
@@ -526,7 +525,7 @@ setMethod <-
     nSig <- .getGenericSigLength(fdef, fenv, TRUE)
     signature <- .matchSigLength(signature, fdef, fenv, TRUE)
     margs <- (fdef@signature)[seq_along(signature)]
-    definition <- asMethodDefinition(definition, signature, sealed, funcName)
+    definition <- asMethodDefinition(definition, signature, sealed, fdef)
     if(is(definition, "MethodDefinition"))
         definition@generic <- fdef@generic
     is.not.base <- !identical(where, baseenv())
@@ -773,6 +772,14 @@ selectMethod <-
             cat("* mlist environment with", length(mlist),"potential methods\n")
         if(length(signature) < nsig)
             signature[(length(signature)+1):nsig] <- "ANY"
+        if(identical(fdef@signature, "...")) {
+            method <- .selectDotsMethod(signature, mlist,
+                 if(useInherited) getMethodsForDispatch(fdef, inherited = TRUE) else NULL)
+            if(is.null(method) && !optional)
+              stop(gettextf("No method for \"...\" matches class \"%s\"", signature),
+                   domain = NA)
+            return(method)
+        }
         method <- .findMethodInTable(signature, mlist, fdef)
 	if(is.null(method)) {
 	    if(missing(useInherited))
@@ -927,7 +934,10 @@ showMethods <-
 {
     if(missing(showEmpty))
 	showEmpty <- !missing(f)
-    con <- printTo
+    if(identical(printTo, FALSE))
+      con <- textConnection("txtOut", "w", local = TRUE)
+    else
+      con <- printTo
     ## must resolve showEmpty in line; using an equivalent default
     ## fails because R resets the "missing()" result for f later on (grumble)
     if(is(f, "function"))
@@ -947,12 +957,12 @@ showMethods <-
                 if(isGeneric(ff))
                   Recall(ff, classes=classes,
 		   includeDefs=includeDefs, inherited=inherited,
-		   showEmpty=showEmpty, printTo=printTo, fdef = ffdef)
+		   showEmpty=showEmpty, printTo=con, fdef = ffdef)
             }
             else if(isGeneric(ff, where)) {
                 Recall(ff, where=where, classes=classes,
 		   includeDefs=includeDefs, inherited=inherited,
-		   showEmpty=showEmpty, printTo=printTo, fdef = ffdef)
+		   showEmpty=showEmpty, printTo=con, fdef = ffdef)
             }
 	}
     }
@@ -969,7 +979,12 @@ showMethods <-
 				  classes = classes, showEmpty = showEmpty,
 				  printTo = con)
     }
-    invisible(printTo)
+    if(identical(printTo, FALSE)) {
+        close(con)
+        txtOut
+    }
+    else
+        invisible(printTo)
 }
 
 

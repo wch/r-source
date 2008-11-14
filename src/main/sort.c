@@ -78,7 +78,7 @@ static int scmp(SEXP x, SEXP y, Rboolean nalast)
     return Scollate(x, y);
 }
 
-Rboolean isUnsorted(SEXP x)
+Rboolean isUnsorted(SEXP x, Rboolean strictly)
 {
     int n, i;
 
@@ -91,27 +91,55 @@ Rboolean isUnsorted(SEXP x)
 	    /* NOTE: x must have no NAs {is.na(.) in R};
 	       hence be faster than `rcmp()', `icmp()' for these two cases */
 
+	    /* The only difference between strictly and not is '>' vs '>='
+	       but we want the if() outside the loop */
 	case LGLSXP:
 	case INTSXP:
-	    for(i = 0; i+1 < n ; i++)
-		if(INTEGER(x)[i] > INTEGER(x)[i+1])
-		    return TRUE;
+	    if(strictly) {
+		for(i = 0; i+1 < n ; i++)
+		    if(INTEGER(x)[i] >= INTEGER(x)[i+1])
+			return TRUE;
+
+	    } else {
+		for(i = 0; i+1 < n ; i++)
+		    if(INTEGER(x)[i] > INTEGER(x)[i+1])
+			return TRUE;
+	    }
 	    break;
 	case REALSXP:
-	    for(i = 0; i+1 < n ; i++)
-		if(REAL(x)[i] > REAL(x)[i+1])
-		    return TRUE;
+	    if(strictly) {
+		for(i = 0; i+1 < n ; i++)
+		    if(REAL(x)[i] >= REAL(x)[i+1])
+			return TRUE;
+	    } else {
+		for(i = 0; i+1 < n ; i++)
+		    if(REAL(x)[i] > REAL(x)[i+1])
+			return TRUE;
+	    }
 	    break;
 	case CPLXSXP:
-	    for(i = 0; i+1 < n ; i++)
-		if(ccmp(COMPLEX(x)[i], COMPLEX(x)[i+1], TRUE) > 0)
-		    return TRUE;
+	    if(strictly) {
+		for(i = 0; i+1 < n ; i++)
+		    if(ccmp(COMPLEX(x)[i], COMPLEX(x)[i+1], TRUE) >= 0)
+			return TRUE;
+	    } else {
+		for(i = 0; i+1 < n ; i++)
+		    if(ccmp(COMPLEX(x)[i], COMPLEX(x)[i+1], TRUE) > 0)
+			return TRUE;
+	    }
 	    break;
 	case STRSXP:
-	    for(i = 0; i+1 < n ; i++)
-		if(scmp(STRING_ELT(x, i ),
-			STRING_ELT(x,i+1), TRUE) > 0)
-		    return TRUE;
+	    if(strictly) {
+		for(i = 0; i+1 < n ; i++)
+		    if(scmp(STRING_ELT(x, i ),
+			    STRING_ELT(x,i+1), TRUE) >= 0)
+			return TRUE;
+	    } else {
+		for(i = 0; i+1 < n ; i++)
+		    if(scmp(STRING_ELT(x, i ),
+			    STRING_ELT(x,i+1), TRUE) > 0)
+			return TRUE;
+	    }
 	    break;
 	default:
 	    UNIMPLEMENTED_TYPE("isUnsorted", x);
@@ -121,8 +149,28 @@ Rboolean isUnsorted(SEXP x)
 
 SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    int strictly, n;
+    SEXP x, ans;
+    int res = TRUE;
+
     checkArity(op, args);
-    return ScalarLogical(isUnsorted(CAR(args)));
+    x = CAR(args);
+    strictly = asLogical(CADR(args));
+    if(strictly == NA_LOGICAL)
+	errorcall(call, _("invalid '%s' argument"), "strictly");
+    n = length(x);
+    if(n < 2) return ScalarLogical(FALSE);
+    if(isVectorAtomic(x))
+	return ScalarLogical(isUnsorted(x, strictly));
+    if(isObject(x)) {
+	/* try dispatch */
+	SEXP call;
+	PROTECT(call = lang3(install(".gtn"), x, CADR(args)));
+	ans = eval(call, rho);
+	UNPROTECT(1);
+	return ans;
+    } else res = NA_LOGICAL;
+    return ScalarLogical(res);
 }
 
 
@@ -364,7 +412,7 @@ static void ssort2(SEXP *x, int n, Rboolean decreasing)
 void sortVector(SEXP s, Rboolean decreasing)
 {
     int n = LENGTH(s);
-    if (n >= 2 && (decreasing || isUnsorted(s)))
+    if (n >= 2 && (decreasing || isUnsorted(s, FALSE)))
 	switch (TYPEOF(s)) {
 	case LGLSXP:
 	case INTSXP:
@@ -532,54 +580,75 @@ SEXP attribute_hidden do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 			/*--- Part IV : Rank & Order ---*/
 
-static int equal(int i, int j, SEXP x, Rboolean nalast)
+static int equal(int i, int j, SEXP x, Rboolean nalast, SEXP rho)
 {
     int c=-1;
 
-    switch (TYPEOF(x)) {
-    case LGLSXP:
-    case INTSXP:
-	c = icmp(INTEGER(x)[i], INTEGER(x)[j], nalast);
-	break;
-    case REALSXP:
-	c = rcmp(REAL(x)[i], REAL(x)[j], nalast);
-	break;
-    case CPLXSXP:
-	c = ccmp(COMPLEX(x)[i], COMPLEX(x)[j], nalast);
-	break;
-    case STRSXP:
-	c = scmp(STRING_ELT(x, i), STRING_ELT(x, j), nalast);
-	break;
-    default:
-	UNIMPLEMENTED_TYPE("equal", x);
-	break;
+    if (isObject(x) && !isNull(rho)) { /* so never any NAs */
+	/* evaluate .gt(x, i, j) */
+	SEXP si, sj, call;
+	si = ScalarInteger(i+1);
+	sj = ScalarInteger(j+1);
+	PROTECT(call = lang4(install(".gt"), x, si, sj));
+	c = asInteger(eval(call, rho));
+	UNPROTECT(1);
+    } else {
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	case INTSXP:
+	    c = icmp(INTEGER(x)[i], INTEGER(x)[j], nalast);
+	    break;
+	case REALSXP:
+	    c = rcmp(REAL(x)[i], REAL(x)[j], nalast);
+	    break;
+	case CPLXSXP:
+	    c = ccmp(COMPLEX(x)[i], COMPLEX(x)[j], nalast);
+	    break;
+	case STRSXP:
+	    c = scmp(STRING_ELT(x, i), STRING_ELT(x, j), nalast);
+	    break;
+	default:
+	    UNIMPLEMENTED_TYPE("equal", x);
+	    break;
+	}
     }
     if (c == 0)
 	return 1;
     return 0;
 }
 
-static int greater(int i, int j, SEXP x, Rboolean nalast, Rboolean decreasing)
+static int greater(int i, int j, SEXP x, Rboolean nalast, Rboolean decreasing,
+		   SEXP rho)
 {
     int c = -1;
 
-    switch (TYPEOF(x)) {
-    case LGLSXP:
-    case INTSXP:
-	c = icmp(INTEGER(x)[i], INTEGER(x)[j], nalast);
-	break;
-    case REALSXP:
-	c = rcmp(REAL(x)[i], REAL(x)[j], nalast);
-	break;
-    case CPLXSXP:
-	c = ccmp(COMPLEX(x)[i], COMPLEX(x)[j], nalast);
-	break;
-    case STRSXP:
-	c = scmp(STRING_ELT(x, i), STRING_ELT(x, j), nalast);
-	break;
-    default:
-	UNIMPLEMENTED_TYPE("greater", x);
-	break;
+    if (isObject(x) && !isNull(rho)) { /* so never any NAs */
+	/* evaluate .gt(x, i, j) */
+	SEXP si, sj, call;
+	si = ScalarInteger(i+1);
+	sj = ScalarInteger(j+1);
+	PROTECT(call = lang4(install(".gt"), x, si, sj));
+	c = asInteger(eval(call, rho));
+	UNPROTECT(1);
+    } else {
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	case INTSXP:
+	    c = icmp(INTEGER(x)[i], INTEGER(x)[j], nalast);
+	    break;
+	case REALSXP:
+	    c = rcmp(REAL(x)[i], REAL(x)[j], nalast);
+	    break;
+	case CPLXSXP:
+	    c = ccmp(COMPLEX(x)[i], COMPLEX(x)[j], nalast);
+	    break;
+	case STRSXP:
+	    c = scmp(STRING_ELT(x, i), STRING_ELT(x, j), nalast);
+	    break;
+	default:
+	    UNIMPLEMENTED_TYPE("greater", x);
+	    break;
+	}
     }
     if (decreasing) c = -c;
     if (c > 0 || (c == 0 && j < i)) return 1; else return 0;
@@ -655,13 +724,15 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 
 
 /* Needs indx set to 1...n initially.
-   Also used by do_options.
+   Also used by do_options, src/gnuwin32/extra.c
+   Called with rho != R_NilValue only from do_rank, when NAs are not involved.
  */
 void attribute_hidden
-orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing)
+orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
+	     SEXP rho)
 {
     int c, i, j, h, t, lo = 0, hi = n-1;
-    int itmp, *isna, numna = 0;
+    int itmp, *isna = NULL, numna = 0;
     int *ix = NULL /* -Wall */;
     double *x = NULL /* -Wall */;
     Rcomplex *cx = NULL /* -Wall */;
@@ -683,42 +754,44 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing)
 	break;
     }
 
-    /* First sort NAs to one end */
-    isna = (int *) malloc(n * sizeof(int));
-    switch (TYPEOF(key)) {
-    case LGLSXP:
-    case INTSXP:
-	for (i = 0; i < n; i++) isna[i] = (ix[i] == NA_INTEGER);
-	break;
-    case REALSXP:
-	for (i = 0; i < n; i++) isna[i] = ISNAN(x[i]);
-	break;
-    case STRSXP:
-	for (i = 0; i < n; i++) isna[i] = (sx[i] == NA_STRING);
-	break;
-    case CPLXSXP:
-	for (i = 0; i < n; i++) isna[i] = ISNAN(cx[i].r) || ISNAN(cx[i].i);
-	break;
-    default:
-	UNIMPLEMENTED_TYPE("orderVector1", key);
-    }
-    for (i = 0; i < n; i++) numna += isna[i];
-
-    if(numna)
+    if(isNull(rho)) {
+	/* First sort NAs to one end */
+	isna = (int *) malloc(n * sizeof(int));
 	switch (TYPEOF(key)) {
 	case LGLSXP:
 	case INTSXP:
+	    for (i = 0; i < n; i++) isna[i] = (ix[i] == NA_INTEGER);
+	    break;
 	case REALSXP:
+	    for (i = 0; i < n; i++) isna[i] = ISNAN(x[i]);
+	    break;
 	case STRSXP:
+	    for (i = 0; i < n; i++) isna[i] = (sx[i] == NA_STRING);
+	    break;
 	case CPLXSXP:
-	    if (!nalast) for (i = 0; i < n; i++) isna[i] = !isna[i];
-	    for (t = 0; incs[t] > n; t++);
-#define less(a, b) (isna[a] > isna[b] || (isna[a] == isna[b] && a > b))
-	    sort2_with_index
-#undef less
-	    if(nalast) hi -= numna; else lo += numna;
+	    for (i = 0; i < n; i++) isna[i] = ISNAN(cx[i].r) || ISNAN(cx[i].i);
+	    break;
+	default:
+	    UNIMPLEMENTED_TYPE("orderVector1", key);
 	}
+	for (i = 0; i < n; i++) numna += isna[i];
 
+	if(numna)
+	    switch (TYPEOF(key)) {
+	    case LGLSXP:
+	    case INTSXP:
+	    case REALSXP:
+	    case STRSXP:
+	    case CPLXSXP:
+		if (!nalast) for (i = 0; i < n; i++) isna[i] = !isna[i];
+		for (t = 0; incs[t] > n; t++);
+#define less(a, b) (isna[a] > isna[b] || (isna[a] == isna[b] && a > b))
+		sort2_with_index
+#undef less
+		    if(nalast) hi -= numna; else lo += numna;
+	    }
+    }
+    
     /* Shell sort isn't stable, so add test on index */
     for (t = 0; incs[t] > hi-lo+1; t++);
     switch (TYPEOF(key)) {
@@ -766,12 +839,12 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing)
 	    sort2_with_index
 #undef less
 	break;
-    default:
-#define less(a, b) greater(a, b, key, nalast^decreasing, decreasing)
+    default:  /* only reached from do_rank */
+#define less(a, b) greater(a, b, key, nalast^decreasing, decreasing, rho)
 	sort2_with_index
 #undef less
     }
-    free(isna);
+    if(isna) free(isna);
 }
 
 /* FUNCTION order(...) */
@@ -804,7 +877,8 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n != 0) {
 	for (i = 0; i < n; i++) INTEGER(ans)[i] = i;
 	if(narg == 1)
-	    orderVector1(INTEGER(ans), n, CAR(args), nalast, decreasing);
+	    orderVector1(INTEGER(ans), n, CAR(args), nalast, decreasing, 
+			 R_NilValue);
 	else
 	    orderVector(INTEGER(ans), n, args, nalast, decreasing, listgreater);
 	for (i = 0; i < n; i++) INTEGER(ans)[i]++;
@@ -816,8 +890,8 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rank, indx, x;
-    int *in;
-    double *rk;
+    int *in, *ik = NULL /* -Wall */;
+    double *rk = NULL /* -Wall */;
     int i, j, k, n;
     const char *ties_str;
     enum {AVERAGE, MAX, MIN} ties_kind = AVERAGE;
@@ -826,46 +900,43 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (args == R_NilValue)
 	return R_NilValue;
     x = CAR(args);
-    if (!isVectorAtomic(x))
-	error(_("argument is not an atomic vector"));
+//    if (!isVectorAtomic(x))
+//	error(_("argument is not an atomic vector"));
     if(TYPEOF(x) == RAWSXP)
 	error(_("raw vectors cannot be sorted"));
     n = LENGTH(x);
-    PROTECT(indx = allocVector(INTSXP, n));
-    PROTECT(rank = allocVector(REALSXP, n));
-    UNPROTECT(2);
     ties_str = CHAR(asChar(CADR(args)));
     if(!strcmp(ties_str, "average"))	ties_kind = AVERAGE;
     else if(!strcmp(ties_str, "max"))	ties_kind = MAX;
     else if(!strcmp(ties_str, "min"))	ties_kind = MIN;
     else error(_("invalid ties.method for rank() [should never happen]"));
+    PROTECT(indx = allocVector(INTSXP, n));
+    if (ties_kind == AVERAGE) {
+	PROTECT(rank = allocVector(REALSXP, n));
+	rk = REAL(rank);
+    } else {
+	PROTECT(rank = allocVector(INTSXP, n));
+	ik = INTEGER(rank);
+    }
     if (n > 0) {
 	in = INTEGER(indx);
-	rk = REAL(rank);
-	for (i = 0; i < n; i++)
-	    in[i] = i;
-	orderVector1(in, n, x, TRUE, FALSE);
-	i = 0;
-	while (i < n) {
+	for (i = 0; i < n; i++) in[i] = i;
+	orderVector1(in, n, x, TRUE, FALSE, rho);
+	for (i = 0; i < n; i = j+1) {
 	    j = i;
-	    while ((j < n - 1) && equal(in[j], in[j + 1], x, TRUE))
-		j++;
-	    if (i != j) { /* ties */
-		switch(ties_kind) {
-		    case AVERAGE:
-			for (k = i; k <= j; k++)
-			    rk[in[k]] = (i + j + 2) / 2.; break;
-		    case MAX:
-			for (k = i; k <= j; k++) rk[in[k]] = j+1; break;
-		    case MIN:
-			for (k = i; k <= j; k++) rk[in[k]] = i+1; break;
-		}
+	    while ((j < n - 1) && equal(in[j], in[j + 1], x, TRUE, rho)) j++;
+	    switch(ties_kind) {
+	    case AVERAGE:
+		for (k = i; k <= j; k++)
+		    rk[in[k]] = (i + j + 2) / 2.; break;
+	    case MAX:
+		for (k = i; k <= j; k++) ik[in[k]] = j+1; break;
+	    case MIN:
+		for (k = i; k <= j; k++) ik[in[k]] = i+1; break;
 	    }
-	    else
-		rk[in[i]] = i + 1;
-	    i = j + 1;
 	}
     }
+    UNPROTECT(2);
     return rank;
 }
 

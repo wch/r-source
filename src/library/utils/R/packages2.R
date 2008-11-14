@@ -145,6 +145,17 @@ install.packages <-
         } else stop("unable to install packages")
     }
 
+    ## check if we should infer repos=NULL
+    if(length(pkgs) == 1 && missing(repos) && missing(contriburl)) {
+        if((type == "source" && length(grep("\\.tar.gz$", pkgs))) ||
+           (type == "win.binary" && length(grep("\\.zip$", pkgs))) ||
+           (substr(type, 1, 10) == "mac.binary"
+            && length(grep("\\.tgz$", pkgs)))) {
+            repos <- NULL
+            message("inferring 'repos = NULL' from the file name")
+        }
+    }
+
     if(.Platform$OS.type == "windows") {
         if(type == "mac.binary")
             stop("cannot install MacOS X binary packages on Windows")
@@ -170,7 +181,7 @@ install.packages <-
         ## -- will mess up UNC names, but they don't work
         pkgs <- gsub("\\\\", "/", pkgs)
     } else {
-        if(type == "mac.binary") {
+        if(substr(type, 1, 10) == "mac.binary") {
             if(!length(grep("darwin", R.version$platform)))
                 stop("cannot install MacOS X binary packages on this plaform")
             .install.macbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,

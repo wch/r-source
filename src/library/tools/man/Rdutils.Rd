@@ -56,6 +56,9 @@ Rd_parse(file, text = NULL)
   These functions are still experimental.  Names, interfaces and values
   might change in future versions.
 }
+\seealso{
+  \code{\link{parse_Rd}}, an experimental parser.
+}
 \examples{
 ## Build the Rd db for the (installed) base package.
 db <- Rd_db("base")

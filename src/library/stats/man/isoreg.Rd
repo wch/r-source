@@ -1,6 +1,6 @@
 % File src/library/stats/man/isoreg.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{isoreg}
@@ -77,6 +77,14 @@ cat(sprintf("R^2 = \%.2f\n",
 
 ## If you are interested in the knots alone :
 with(ir4, cbind(iKnots, yf[iKnots]))
+
+## Example of unordered x[] with ties:
+x <- sample((0:30)/8)
+y <- exp(x)
+x. <- round(x) # ties!
+plot(m <- isoreg(x., y))
+stopifnot(all.equal(with(m, yf[iKnots]),
+		    as.vector(tapply(y, x., mean))))
 }
 \keyword{regression}
 \keyword{smooth}

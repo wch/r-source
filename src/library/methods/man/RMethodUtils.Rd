@@ -61,8 +61,9 @@ getGroupMembers(group, recursive = FALSE, character = TRUE)
 getMethodsMetaData(f, where)
 assignMethodsMetaData (f, value, fdef, where, deflt)
 
-makeGeneric(f, fdef, fdefault, group=list(), valueClass=character(),
-            package, signature = NULL, genericFunction = NULL)
+makeGeneric(f, fdef, fdefault =, group=list(), valueClass=character(),
+            package =, signature = NULL, genericFunction = NULL,
+            simpleInheritanceOnly = NULL)
 
 makeStandardGeneric(f, fdef)
 
@@ -97,7 +98,7 @@ sigToEnv(signature, generic)
 rematchDefinition(definition, generic, mnames, fnames, signature)
 unRematchDefinition(definition)
 
-asMethodDefinition(def, signature, sealed = FALSE, functionName)
+asMethodDefinition(def, signature, sealed = FALSE, fdef)
 
 addNextMethod(method, f, mlist, optional, envir)
 }

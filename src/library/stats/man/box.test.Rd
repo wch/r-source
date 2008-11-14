@@ -5,10 +5,12 @@
 
 \name{Box.test}
 \alias{Box.test}
+\concept{portmanteau}
 \title{Box-Pierce and Ljung-Box Tests}
 \description{
   Compute the Box--Pierce or Ljung--Box test statistic for examining the
-  null hypothesis of independence in a given time series.
+  null hypothesis of independence in a given time series.  These are
+  sometimes known as \sQuote{portmanteau} tests.
 }
 \usage{
 Box.test(x, lag = 1, type = c("Box-Pierce", "Ljung-Box"), fitdf = 0)

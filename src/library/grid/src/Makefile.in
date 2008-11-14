@@ -36,11 +36,12 @@ Makedeps: Makefile $(DEPENDS)
 	@touch $@
 
 shlib: $(SHLIB)
-	@$(SHELL) $(top_srcdir)/src/scripts/mkinstalldirs \
+	@$(MKINSTALLDIRS) \
 	  $(top_builddir)/library/$(pkg)/libs@R_ARCH@
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(SHLIB) \
 	  $(top_builddir)/library/$(pkg)/libs@R_ARCH@/$(SHLIB)
 
+## next includes etc/Makeconf
 include $(top_srcdir)/share/make/shlib.mk
 
 mostlyclean: clean

@@ -144,26 +144,37 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
 #undef COV_PAIRWISE_BODY
 
 
-/* ----- method = "complete" : ----- */
-
+/* method = "complete" or "all.obs" (only difference: na_fail):
+ *           --------      -------
+*/
 #define ANS(I,J)  ans[I + J * ncx]
 
-#define COV_init(_ny_)				\
+#define COV_ini_0				\
     LDOUBLE sum, tmp, xxm, yym;			\
     double *xx, *yy;				\
-    int i, j, k, nobs, n1=-1;/* -Wall */	\
+    int i, j, k, n1=-1/* -Wall */
+
+#define COV_n_le_1(_n_,_k_)			\
+    if (_n_ <= 1) {/* too many missing */	\
+	for (i = 0 ; i < ncx ; i++)		\
+	    for (j = 0 ; j < _k_ ; j++)		\
+		ANS(i,j) = NA_REAL;		\
+	return;					\
+    }
+
+#define COV_init(_ny_)				\
+    COV_ini_0; int nobs;			\
 						\
     /* total number of complete observations */	\
     nobs = 0;					\
     for(k = 0 ; k < n ; k++) {			\
 	if (ind[k] != 0) nobs++;		\
     }						\
-    if (nobs <= 1) {/* too many missing */	\
-	for (i = 0 ; i < ncx ; i++)		\
-	    for (j = 0 ; j < _ny_ ; j++)	\
-		ANS(i,j) = NA_REAL;		\
-	return;					\
-    }
+    COV_n_le_1(nobs, _ny_)
+
+#define COV_ini_na(_ny_)			\
+    COV_ini_0; 					\
+    COV_n_le_1(n, _ny_)
 
 
 /* This uses two passes for better accuracy */
@@ -182,6 +193,28 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
 		if(ind[k] != 0)			\
 		    sum += (xx[k] - tmp);	\
 	     tmp = tmp + sum / nobs;		\
+	}					\
+	_X_##m [i] = tmp;			\
+    }
+
+/* This uses two passes for better accuracy */
+#define MEAN_(_X_,_HAS_NA_)			\
+    /* variable means (has_na) */		\
+    for (i = 0 ; i < nc##_X_ ; i++) {		\
+	if(_HAS_NA_[i])				\
+	    tmp = NA_REAL;			\
+	else {					\
+	    xx = &_X_[i * n];			\
+	    sum = 0.;				\
+	    for (k = 0 ; k < n ; k++)		\
+		sum += xx[k];			\
+	    tmp = sum / n;			\
+	    if(R_FINITE((double)tmp)) {		\
+		sum = 0.;			\
+		for (k = 0 ; k < n ; k++)	\
+		    sum += (xx[k] - tmp);	\
+		tmp = tmp + sum / n;		\
+	    }					\
 	}					\
 	_X_##m [i] = tmp;			\
     }
@@ -222,7 +255,7 @@ cov_complete1(int n, int ncx, double *x, double *xm,
 			for (n1 = 0 ; n1 < n ; n1++)
 			    if (ind[n1] != 0)
 				sum += sign(xx[k] - xx[n1])
-				    * sign(yy[k] - yy[n1]);
+				     * sign(yy[k] - yy[n1]);
 		ANS(j,i) = ANS(i,j) = sum;
 	    }
 	}
@@ -246,7 +279,77 @@ cov_complete1(int n, int ncx, double *x, double *xm,
 	    ANS(i,i) = 1.0;
 	}
     }
-}
+} /* cov_complete1 */
+
+static void
+cov_na_1(int n, int ncx, double *x, double *xm,
+	 int *has_na, double *ans, Rboolean *sd_0, Rboolean cor,
+	 Rboolean kendall)
+{
+
+    COV_ini_na(ncx);
+
+    if(!kendall) {
+	MEAN_(x, has_na);/* -> xm[] */
+	n1 = n - 1;
+    }
+    for (i = 0 ; i < ncx ; i++) {
+	if(has_na[i]) {
+	    for (j = 0 ; j <= i ; j++)
+		ANS(j,i) = ANS(i,j) = NA_REAL;
+	}
+	else {
+	    xx = &x[i * n];
+
+	    if(!kendall) {
+		xxm = xm[i];
+		for (j = 0 ; j <= i ; j++)
+		    if(has_na[j]) {
+			ANS(j,i) = ANS(i,j) = NA_REAL;
+		    } else {
+			yy = &x[j * n];
+			yym = xm[j];
+			sum = 0.;
+			for (k = 0 ; k < n ; k++)
+			    sum += (xx[k] - xxm) * (yy[k] - yym);
+			ANS(j,i) = ANS(i,j) = sum / n1;
+		    }
+	    }
+	    else { /* Kendall's tau */
+		for (j = 0 ; j <= i ; j++)
+		    if(has_na[j]) {
+			ANS(j,i) = ANS(i,j) = NA_REAL;
+		    } else {
+			yy = &x[j * n];
+			sum = 0.;
+			for (k = 0 ; k < n ; k++)
+			    for (n1 = 0 ; n1 < n ; n1++)
+				sum += sign(xx[k] - xx[n1]) * sign(yy[k] - yy[n1]);
+			ANS(j,i) = ANS(i,j) = sum;
+		    }
+	    }
+	}
+    }
+
+    if (cor) {
+	for (i = 0 ; i < ncx ; i++)
+	    if(!has_na[i]) xm[i] = sqrt(ANS(i,i));
+	for (i = 0 ; i < ncx ; i++) {
+	    if(!has_na[i]) for (j = 0 ; j < i ; j++) {
+		if (xm[i] == 0 || xm[j] == 0) {
+		    *sd_0 = TRUE;
+		    ANS(j,i) = ANS(i,j) = NA_REAL;
+		}
+		else {
+		    sum = ANS(i,j) / (xm[i] * xm[j]);
+		    if(sum > 1.) sum = 1.;
+		    ANS(j,i) = ANS(i,j) = sum;
+		}
+	    }
+	    ANS(i,i) = 1.0;
+	}
+    }
+} /* cov_na_1() */
 
 static void
 cov_complete2(int n, int ncx, int ncy, double *x, double *y,
@@ -283,7 +386,7 @@ cov_complete2(int n, int ncx, int ncy, double *x, double *y,
 			for (n1 = 0 ; n1 < n ; n1++)
 			    if (ind[n1] != 0)
 				sum += sign(xx[k] - xx[n1])
-				    * sign(yy[k] - yy[n1]);
+ 				    * sign(yy[k] - yy[n1]);
 		ANS(i,j) = sum;
 	    }
 	}
@@ -292,7 +395,7 @@ cov_complete2(int n, int ncx, int ncy, double *x, double *y,
     if (cor) {
 
 #define COV_SDEV(_X_)							\
-	for (i = 0 ; i < nc##_X_ ; i++) { /* Var(X[j]) */		\
+	for (i = 0 ; i < nc##_X_ ; i++) { /* Var(X[i]) */		\
 	    xx = &_X_[i * n];						\
 	    sum = 0.;							\
 	    if(!kendall) {						\
@@ -328,10 +431,104 @@ cov_complete2(int n, int ncx, int ncy, double *x, double *y,
     }/* cor */
 
 }/* cov_complete2 */
+#undef COV_SDEV
+
+static void
+cov_na_2(int n, int ncx, int ncy, double *x, double *y,
+	 double *xm, double *ym, int *has_na_x, int *has_na_y,
+	 double *ans, Rboolean *sd_0, Rboolean cor, Rboolean kendall)
+{
+    COV_ini_na(ncy);
+
+    if(!kendall) {
+	MEAN_(x, has_na_x);/* -> xm[] */
+	MEAN_(y, has_na_y);/* -> ym[] */
+	n1 = n - 1;
+    }
+    for (i = 0 ; i < ncx ; i++) {
+	if(has_na_x[i]) {
+	    for (j = 0 ; j < ncy; j++)
+		ANS(i,j) = NA_REAL;
+	}
+	else {
+	    xx = &x[i * n];
+	    if(!kendall) {
+		xxm = xm[i];
+		for (j = 0 ; j < ncy ; j++)
+		    if(has_na_y[j]) {
+			ANS(i,j) = NA_REAL;
+		    } else {
+			yy = &y[j * n];
+			yym = ym[j];
+			sum = 0.;
+			for (k = 0 ; k < n ; k++)
+			    sum += (xx[k] - xxm) * (yy[k] - yym);
+			ANS(i,j) = sum / n1;
+		    }
+	    }
+	    else { /* Kendall's tau */
+		for (j = 0 ; j < ncy ; j++)
+		    if(has_na_y[j]) {
+			ANS(i,j) = NA_REAL;
+		    } else {
+			yy = &y[j * n];
+			sum = 0.;
+			for (k = 0 ; k < n ; k++)
+			    for (n1 = 0 ; n1 < n ; n1++)
+				sum += sign(xx[k] - xx[n1]) * sign(yy[k] - yy[n1]);
+			ANS(i,j) = sum;
+		    }
+	    }
+	}
+    }
+
+    if (cor) {
+
+#define COV_SDEV(_X_)							\
+	for (i = 0 ; i < nc##_X_ ; i++) 				\
+	    if(!has_na_##_X_[i]) { /* Var(X[j]) */			\
+		xx = &_X_[i * n];					\
+		sum = 0.;						\
+		if(!kendall) {						\
+		    xxm = _X_##m [i];					\
+		    for (k = 0 ; k < n ; k++)				\
+			sum += (xx[k] - xxm) * (xx[k] - xxm);		\
+		    sum /= n1;						\
+		}							\
+		else { /* Kendall's tau */				\
+		    for (k = 0 ; k < n ; k++)				\
+			for (n1 = 0 ; n1 < n ; n1++)			\
+			    if (xx[k] != xx[n1])			\
+				sum ++; /* = sign(. - .)^2 */		\
+		}							\
+		_X_##m [i] = sqrt(sum);					\
+	    }
+
+	COV_SDEV(x); /* -> xm[.] */
+	COV_SDEV(y); /* -> ym[.] */
+
+	for (i = 0 ; i < ncx ; i++)
+	    if(!has_na_x[i]) {
+		for (j = 0 ; j < ncy ; j++)
+		    if(!has_na_y[j]) {
+			if (xm[i] == 0. || ym[j] == 0.) {
+			    *sd_0 = TRUE;
+			    ANS(i,j) = NA_REAL;
+			}
+			else {
+			    ANS(i,j) /= (xm[i] * ym[j]);
+			    if(ANS(i,j) > 1.) ANS(i,j) = 1.;
+			}
+		    }
+	    }
+    }/* cor */
+
+}/* cov_na_2 */
 
 #undef ANS
 #undef COV_init
 #undef MEAN
+#undef MEAN_
 #undef COV_SDEV
 
 /* This might look slightly inefficient, but it is designed to
@@ -370,17 +567,52 @@ complete2(int n, int ncx, int ncy, double *x, double *y, int *ind, Rboolean na_f
 	NA_LOOP
     }
 }
+
+#define NA_CHECK(_HAS_NA_)			\
+    for (i = 0 ; i < n ; i++)			\
+	if (ISNAN(z[i])) {			\
+	    _HAS_NA_[j] = 1; break;		\
+	}
+
+#define HAS_NA_1(_X_,_HAS_NA_)			\
+    for (j = 0 ; j < nc##_X_ ; j++) {		\
+	z = &_X_[j * n];			\
+        _HAS_NA_[j] = 0;			\
+	NA_CHECK(_HAS_NA_)			\
+    }
+
+
+static void find_na_1(int n, int ncx, double *x, int *has_na)
+{
+    double *z;
+    int i, j;
+    HAS_NA_1(x, has_na)
+}
+
+static void
+find_na_2(int n, int ncx, int ncy, double *x, double *y, int *has_na_x, int *has_na_y)
+{
+    double *z;
+    int i, j;
+    HAS_NA_1(x, has_na_x)
+    HAS_NA_1(y, has_na_y)
+}
+
 #undef NA_LOOP
 #undef COMPLETE_1
+#undef NA_CHECK
+#undef HAS_NA_1
 
-/* cov | cor( x, y, use = {1,		2,		3}
-			"all.obs", "complete.obs", "pairwise.complete.obs",
-		    kendall = TRUE/FALSE) */
+/* co[vr](x, y, use =
+	{ 1,		2,		3,		   4,		5  }
+  "all.obs", "complete.obs", "pairwise.complete", "everything", "na.or.complete"
+	  kendall = TRUE/FALSE)
+*/
 SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, ans, xm, ym, ind;
-    Rboolean cor, kendall, pair, na_fail, sd_0;
-    int i, ansmat, method, n, ncx, ncy;
+    Rboolean cor, ansmat, kendall, pair, na_fail, everything, sd_0, empty_err;
+    int i, method, n, ncx, ncy;
 
     checkArity(op, args);
 
@@ -389,7 +621,9 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     cor = PRIMVAL(op);
 
     /* Arg.1: x */
-    if (isNull(CAR(args)) || !LENGTH(CAR(args))) error(_("'x' is empty"));
+    if(isNull(CAR(args))) /* never allowed */
+	error(_("'x' is NULL"));
+    /* length check of x -- only if(empty_err) --> below */
     x = SETCAR(args, coerceVector(CAR(args), REALSXP));
     if ((ansmat = isMatrix(x))) {
 	n = nrows(x);
@@ -411,7 +645,7 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (nrows(y) != n)
 		error(_("incompatible dimensions"));
 	    ncy = ncols(y);
-	    ansmat = (1);
+	    ansmat = TRUE;
 	}
 	else {
 	    if (length(y) != n)
@@ -428,7 +662,7 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     kendall = asLogical(CAR(args));
 
     /* "default: complete" (easier for -Wall) */
-    na_fail = FALSE;
+    na_fail = FALSE; everything = FALSE; empty_err = TRUE;
     pair = FALSE;
     switch(method) {
     case 1:		/* use all :  no NAs */
@@ -439,22 +673,44 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     case 3:		/* pairwise.complete */
 	pair = TRUE;
 	break;
+    case 4:		/* "everything": NAs are propagated */
+	everything = TRUE;
+	empty_err = FALSE;
+	break;
+    case 5:		/* "na.or.complete": NAs are propagated */
+	empty_err = FALSE;
+	break;
     default:
 	error(_("invalid 'use' (computational method)"));
     }
+    if (empty_err && !LENGTH(x))
+	error(_("'x' is empty"));
+
     if (ansmat) PROTECT(ans = allocMatrix(REALSXP, ncx, ncy));
     else PROTECT(ans = allocVector(REALSXP, ncx * ncy));
     sd_0 = FALSE;
     if (isNull(y)) {
-	if (!pair) { /* all | complete "var" */
-	    Rboolean indany = FALSE;
+	if (everything) { /* NA's are propagated */
+	    PROTECT(xm = allocVector(REALSXP, ncx));
+	    PROTECT(ind = allocVector(LGLSXP, ncx));
+	    find_na_1(n, ncx, REAL(x), /* --> has_na[] = */ LOGICAL(ind));
+	    cov_na_1 (n, ncx, REAL(x), REAL(xm), LOGICAL(ind), REAL(ans), &sd_0, cor, kendall);
+
+	    UNPROTECT(2);
+	}
+	else if (!pair) { /* all | complete "var" */
 	    PROTECT(xm = allocVector(REALSXP, ncx));
 	    PROTECT(ind = allocVector(INTSXP, n));
 	    complete1(n, ncx, REAL(x), INTEGER(ind), na_fail);
 	    cov_complete1(n, ncx, REAL(x), REAL(xm),
 			  INTEGER(ind), REAL(ans), &sd_0, cor, kendall);
-	    for(i = 0; i < n; i++) if(INTEGER(ind)[i] == 1) indany = TRUE;
-	    if(!indany) error(_("no complete element pairs"));
+	    if(empty_err) {
+		Rboolean indany = FALSE;
+		for(i = 0; i < n; i++) {
+		    if(INTEGER(ind)[i] == 1) { indany = TRUE; break; }
+		}
+		if(!indany) error(_("no complete element pairs"));
+	    }
 	    UNPROTECT(2);
 	}
 	else {		/* pairwise "var" */
@@ -462,16 +718,32 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     else { /* Co[vr] (x, y) */
-	if (!pair) { /* all | complete */
-	    Rboolean indany = FALSE;
+	if (everything) {
+	    SEXP has_na_y;
+	    PROTECT(xm = allocVector(REALSXP, ncx));
+	    PROTECT(ym = allocVector(REALSXP, ncy));
+	    PROTECT(ind      = allocVector(LGLSXP, ncx));
+	    PROTECT(has_na_y = allocVector(LGLSXP, ncy));
+
+	    find_na_2(n, ncx, ncy, REAL(x), REAL(y), INTEGER(ind), INTEGER(has_na_y));
+	    cov_na_2 (n, ncx, ncy, REAL(x), REAL(y), REAL(xm), REAL(ym),
+		      INTEGER(ind), INTEGER(has_na_y), REAL(ans), &sd_0, cor, kendall);
+	    UNPROTECT(4);
+	}
+	else if (!pair) { /* all | complete */
 	    PROTECT(xm = allocVector(REALSXP, ncx));
 	    PROTECT(ym = allocVector(REALSXP, ncy));
 	    PROTECT(ind = allocVector(INTSXP, n));
 	    complete2(n, ncx, ncy, REAL(x), REAL(y), INTEGER(ind), na_fail);
 	    cov_complete2(n, ncx, ncy, REAL(x), REAL(y), REAL(xm), REAL(ym),
 			  INTEGER(ind), REAL(ans), &sd_0, cor, kendall);
-	    for(i = 0; i < n; i++) if(INTEGER(ind)[i] == 1) indany = TRUE;
-	    if(!indany) error(_("no complete element pairs"));
+	    if(empty_err) {
+		Rboolean indany = FALSE;
+		for(i = 0; i < n; i++) {
+		    if(INTEGER(ind)[i] == 1) { indany = TRUE; break; }
+		}
+		if(!indany) error(_("no complete element pairs"));
+	    }
 	    UNPROTECT(3);
 	}
 	else {		/* pairwise */
@@ -479,7 +751,7 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 			  &sd_0, cor, kendall);
 	}
     }
-    if (ansmat) {
+    if (ansmat) { /* set dimnames() when applicable */
 	if (isNull(y)) {
 	    x = getAttrib(x, R_DimNamesSymbol);
 	    if (!isNull(x) && !isNull(VECTOR_ELT(x, 1))) {

@@ -351,10 +351,10 @@ SEXP attribute_hidden do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* colorname, "#rrggbb" or "col.number" to (r,g,b) conversion */
+
     SEXP colors, ans, names, dmns;
     unsigned int col, bg;
     int n, i, i4;
-    Rboolean bg_needed = FALSE;
 
     checkArity(op, args);
     colors = CAR(args);
@@ -381,19 +381,18 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
     setAttrib(ans, R_DimNamesSymbol, dmns);
 
     /* avoid looking up the background unless we will need it;
-       this may avoid opening a new window */
+       this may avoid opening a new window.  Unfortunately, there is no
+       unavailable colour, so */
 
-    bg_needed = !isString(colors);
-    for (i = 0; !bg_needed && i < n; i++)
-	bg_needed = isdigit((int)CHAR(STRING_ELT(colors, i))[0]);
-    if (bg_needed)
-	bg = dpptr(GEcurrentDevice())->bg;
-    else
-	bg = R_TRANWHITE;
+#define BG_NEEDED NA_INTEGER
+
+    bg = BG_NEEDED;
 
     if(isString(colors)) {
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
 	    col = str2col(CHAR(STRING_ELT(colors, i)), bg);
+	    if (col == BG_NEEDED)
+	    	col = bg = dpptr(GEcurrentDevice())->bg;
 	    INTEGER(ans)[i4 +0] = R_RED(col);
 	    INTEGER(ans)[i4 +1] = R_GREEN(col);
 	    INTEGER(ans)[i4 +2] = R_BLUE(col);
@@ -402,7 +401,11 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
 	    col = INTEGER(colors)[i];
-	    col =  (col > 0) ? R_ColorTable[(col-1) % R_ColorTableSize] : bg;
+	    if      (col == NA_INTEGER) col = R_TRANWHITE;
+	    else if (col == 0)          col = bg;
+	    else 		        col = R_ColorTable[(col-1) % R_ColorTableSize];
+	    if (col == BG_NEEDED)
+	    	col = bg = dpptr(GEcurrentDevice())->bg;	    
 	    INTEGER(ans)[i4 +0] = R_RED(col);
 	    INTEGER(ans)[i4 +1] = R_GREEN(col);
 	    INTEGER(ans)[i4 +2] = R_BLUE(col);

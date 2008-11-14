@@ -477,7 +477,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     if(lout == NA_INTEGER) {
-	double rfrom = asReal(from), rto = asReal(to), rby = asReal(by);
+	double rfrom = asReal(from), rto = asReal(to), rby = asReal(by), *ra;
 	if(from == R_MissingArg) rfrom = 1.0;
 	if(to == R_MissingArg) rto = 1.0;
 	if(by == R_MissingArg)
@@ -513,8 +513,13 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		errorcall(call, _("wrong sign in 'by' argument"));
 	    nn = (int)(n + FLT_EPSILON);
 	    ans = allocVector(REALSXP, nn+1);
+	    ra = REAL(ans);
 	    for(i = 0; i <= nn; i++)
-		REAL(ans)[i] = rfrom + i * rby;
+		ra[i] = rfrom + i * rby;
+	    /* Added in 2.9.0 */
+	    if (nn > 0)
+		if((rby > 0 && ra[nn] > rto) || (rby < 0 && ra[nn] < rto))
+		    ra[nn] = rto;
 	}
     } else if (lout == 0) {
 	ans = allocVector(INTSXP, 0);

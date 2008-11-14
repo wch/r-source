@@ -53,6 +53,8 @@ LIBS =  -lm
 LIBnn = lib
 LIBTOOL =
 LDFLAGS =
+# don't have this: would 'mkdir -p' do?
+# MKINSTALLDIRS = $(R_HOME)/bin/mkinstalldirs
 # OBJC =
 OBJCFLAGS = -O2
 OBJC_LIBS = -lobjc

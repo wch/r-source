@@ -200,7 +200,7 @@ if test ${r_cv_java_works} = yes; then
 	   done
 	   if test -z "${jmdinc}"; then
 	     # ultima-ratio: use find and pray that it works
-	     jmdinc=`find "${jinc}/" -name jni_md.h 2>dev/null |head -n 1 2>/dev/null`
+	     jmdinc=`find "${jinc}/" -name jni_md.h 2>/dev/null |head -n 1 2>/dev/null`
 	     if test -n "${jmdinc}"; then jmdinc=`dirname "${jmdinc}"`; fi
 	   fi
 	   if test -n "${jmdinc}"; then

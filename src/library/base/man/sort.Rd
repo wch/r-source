@@ -1,6 +1,6 @@
 % File src/library/base/man/sort.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sort}
@@ -8,7 +8,6 @@
 \alias{sort.default}
 \alias{sort.POSIXlt}
 \alias{sort.int}
-\alias{is.unsorted}
 \title{Sorting or Ordering Vectors}
 \description{
   Sort (or \emph{order}) a vector or factor (partially) into
@@ -22,13 +21,11 @@ sort(x, decreasing = FALSE, \dots)
 
 sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
          method = c("shell", "quick"), index.return = FALSE)
-
-is.unsorted(x, na.rm = FALSE)
 }
 \arguments{
-  \item{x}{for \code{sort}, an R object with a class or a numeric,
-    complex, character or logical vector.  For \code{sort.int}, a
-    numeric, complex, character or logical vector, or a factor.}
+  \item{x}{for \code{sort} an \R object with a class or a numeric,
+         complex, character or logical vector.  For \code{sort.int}, a
+         numeric, complex, character or logical vector, or a factor.}
   \item{decreasing}{logical.  Should the sort be increasing or decreasing?
      Not available for partial sorting.}
   \item{\dots}{arguments to be passed to or from methods or (for the
@@ -42,13 +39,16 @@ is.unsorted(x, na.rm = FALSE)
   \item{index.return}{logical indicating if the ordering index vector should
     be returned as well; this is only available for a few cases, the default
     \code{na.last = NA} and full sorting of non-factors.}
-  \item{na.rm}{logical.  Should missing values be removed?}
 }
 \details{
   \code{sort} is a generic function for which methods can be written,
   and \code{sort.int} is the internal method which is compatible
   with S if only the first three arguments are used.
   
+  The default \code{sort} method makes use of \code{\link{order}} for
+  objects with classes, which in turn makes use of the generic function
+  \code{\link{xtfrm}}.
+
   If \code{partial} is not \code{NULL}, it is taken to contain indices
   of elements of \code{x} which are to be placed in their correct
   positions by partial sorting.  After the sort, the values specified in
@@ -63,15 +63,11 @@ is.unsorted(x, na.rm = FALSE)
 
   Complex values are sorted first by the real part, then the imaginary
   part.
-  
+
   The sort order for character vectors will depend on the collating
   sequence of the locale in use: see \code{\link{Comparison}}.
   The sort order for factors is the order of their levels (which is
   particularly appropriate for ordered factors).
-
-  \code{is.unsorted} returns a logical indicating if \code{x} is sorted
-  increasingly, i.e., \code{is.unsorted(x)} is true if \code{any(x !=
-    sort(x))} (and there are no \code{NA}s).
 
   Method \code{"shell"} uses Shellsort (an \eqn{O(n^{4/3})} variant
   from Sedgewick (1996)).  If \code{x} has names a stable sort is used,
@@ -94,7 +90,7 @@ is.unsorted(x, na.rm = FALSE)
     ...)]}: this depends on the class having a suitable method for
   \code{[} (and also that \code{\link{order}} will work, which is not
   the case for a class based on a list).
- 
+
   For \code{sort.int} the sorted vector unless
   \code{index.return} is true, when the result is
   a list with components named \code{x} and \code{ix} containing the
@@ -125,7 +121,7 @@ is.unsorted(x, na.rm = FALSE)
 \seealso{
   \code{\link{order}} for sorting on or reordering multiple variables.
 
-  \code{\link{rank}}.
+  \code{\link{is.unsorted}}. \code{\link{rank}}.
 }
 \examples{
 require(stats)
@@ -142,6 +138,10 @@ sort(c(10:3,2:12), method = "qu", index.return=TRUE) # is not
 ## $x : 2  3  3  4  4  5  5  6  6  7  7  8  8  9  9 10 10 11 12
 ## $ix: 9 10  8  7 11  6 12  5 13  4 14  3 15 16  2 17  1 18 19
 ##        ^^^^^
+
+x <- c(1:3, 3:5, 10)
+is.unsorted(x)                #-> FALSE: is sorted
+is.unsorted(x, strictly=TRUE) #-> TRUE : is not (and cannot be) sorted strictly
 
 \dontrun{## Small speed comparison simulation:
 N <- 2000

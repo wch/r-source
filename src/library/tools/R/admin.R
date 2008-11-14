@@ -398,7 +398,9 @@ function(dir, outDir)
     .write_contents_as_RDS(contents,
                            file.path(outDir, "Meta", "Rd.rds"))
 
-    .saveRDS(.build_hsearch_index(contents, packageName),
+    defaultEncoding <- as.vector(.readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION["Encoding"])
+    if(is.na(defaultEncoding)) defaultEncoding <- NULL
+    .saveRDS(.build_hsearch_index(contents, packageName, defaultEncoding),
              file.path(outDir, "Meta", "hsearch.rds"))
 
     .write_contents_as_DCF(contents, packageName,
@@ -705,7 +707,7 @@ function(dir, packages)
         if(is.na(tmp)) return(invisible())
         pkgs <- tmp
     }
-    pkgs <- strsplit(pkgs[1L], ",[:blank]*")[[1L]]
+    pkgs <- strsplit(pkgs[1L], ",[[:blank:]]*")[[1L]]
     paths <- .find.package(pkgs, lib.loc, quiet=TRUE)
     if(length(paths))
         cat(paste(paste('-I"', paths, '/include"', sep=""), collapse=" "))

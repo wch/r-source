@@ -27,12 +27,12 @@ arima <- function(x, order = c(0, 0, 0),
     {
         p <- length(phi); q <- length(theta)
         mod$phi <- phi; mod$theta <- theta
-        r <- max(p, q + 1)
-        if(p > 0) mod$T[1:p, 1] <- phi
-        if(r > 1)
-            mod$Pn[1:r, 1:r] <- .Call(R_getQ0, phi, theta)
+        r <- max(p, q + 1L)
+        if(p > 0) mod$T[1L:p, 1L] <- phi
+        if(r > 1L)
+            mod$Pn[1L:r, 1L:r] <- .Call(R_getQ0, phi, theta)
         else if (p > 0)
-            mod$Pn[1, 1] <- 1/(1 - phi^2)
+            mod$Pn[1L, 1L] <- 1/(1 - phi^2)
         else
             mod$Pn[1,1] <- 1
         # End change
@@ -52,8 +52,8 @@ arima <- function(x, order = c(0, 0, 0),
         par <- coef
         par[mask] <- p
         trarma <- .Call(R_ARIMA_transPars, par, arma, trans)
-        Z <- upARIMA(mod, trarma[[1]], trarma[[2]])
-        if(ncxreg > 0) x <- x - xreg %*% par[narma + (1:ncxreg)]
+        Z <- upARIMA(mod, trarma[[1L]], trarma[[2L]])
+        if(ncxreg > 0) x <- x - xreg %*% par[narma + (1L:ncxreg)]
         ## next call changes objects a, P, Pn so beware!
         res <- .Call(R_ARIMA_Like, x, Z$phi, Z$theta, Z$Delta,
                      Z$a, Z$P, Z$Pn, as.integer(0), FALSE)
@@ -66,8 +66,8 @@ arima <- function(x, order = c(0, 0, 0),
         par <- as.double(fixed)
         par[mask] <- p
         trarma <- .Call(R_ARIMA_transPars, par, arma, FALSE)
-        if(ncxreg > 0) x <- x - xreg %*% par[narma + (1:ncxreg)]
-        res <- .Call(R_ARIMA_CSS, x, arma, trarma[[1]], trarma[[2]],
+        if(ncxreg > 0) x <- x - xreg %*% par[narma + (1L:ncxreg)]
+        res <- .Call(R_ARIMA_CSS, x, arma, trarma[[1L]], trarma[[2L]],
                      as.integer(ncond), FALSE)
         0.5 * log(res)
     }
@@ -76,27 +76,27 @@ arima <- function(x, order = c(0, 0, 0),
     {
         p <- max(which(c(1, -ar) != 0)) - 1
         if(!p) return(TRUE)
-        all(Mod(polyroot(c(1, -ar[1:p]))) > 1)
+        all(Mod(polyroot(c(1, -ar[1L:p]))) > 1)
     }
 
     maInvert <- function(ma)
     {
         ## polyroot can't cope with leading zero.
         q <- length(ma)
-        q0 <- max(which(c(1,ma) != 0)) - 1
+        q0 <- max(which(c(1,ma) != 0)) - 1L
         if(!q0) return(ma)
-        roots <- polyroot(c(1, ma[1:q0]))
+        roots <- polyroot(c(1, ma[1L:q0]))
         ind <- Mod(roots) < 1
         if(all(!ind)) return(ma)
-        if(q0 == 1) return(c(1/ma[1], rep(0, q - q0)))
+        if(q0 == 1) return(c(1/ma[1L], rep(0, q - q0)))
         roots[ind] <- 1/roots[ind]
         x <- 1
         for (r in roots) x <- c(x, 0) - c(0, x)/r
-        c(Re(x[-1]), rep(0, q - q0))
+        c(Re(x[-1L]), rep(0, q - q0))
     }
 
     series <- deparse(substitute(x))
-    if(NCOL(x) > 1)
+    if(NCOL(x) > 1L)
         stop("only implemented for univariate time series")
     method <- match.arg(method)
 
@@ -108,37 +108,37 @@ arima <- function(x, order = c(0, 0, 0),
     n <- length(x)
 
     if(!missing(order))
-        if(!is.numeric(order) || length(order) != 3 || any(order < 0))
+        if(!is.numeric(order) || length(order) != 3L || any(order < 0))
             stop("'order' must be a non-negative numeric vector of length 3")
     if(!missing(seasonal))
         if(is.list(seasonal)) {
             if(is.null(seasonal$order))
                 stop("'seasonal' must be a list with component 'order'")
-            if(!is.numeric(seasonal$order) || length(seasonal$order) != 3
-               || any(seasonal$order < 0))
+            if(!is.numeric(seasonal$order) || length(seasonal$order) != 3L
+               || any(seasonal$order < 0L))
                 stop("'seasonal$order' must be a non-negative numeric vector of length 3")
         } else if(is.numeric(order)) {
-            if(length(order) == 3) seasonal <- list(order=seasonal)
+            if(length(order) == 3L) seasonal <- list(order=seasonal)
             else ("'seasonal' is of the wrong length")
         } else stop("'seasonal' must be a list with component 'order'")
 
     if (is.null(seasonal$period) || is.na(seasonal$period)
         ||seasonal$period == 0) seasonal$period <- frequency(x)
-    arma <- as.integer(c(order[-2], seasonal$order[-2], seasonal$period,
-                         order[2], seasonal$order[2]))
-    narma <- sum(arma[1:4])
+    arma <- as.integer(c(order[-2L], seasonal$order[-2L], seasonal$period,
+                         order[2L], seasonal$order[2L]))
+    narma <- sum(arma[1L:4L])
 
     xtsp <- tsp(x)
     tsp(x) <- NULL
-    Delta <- 1
-    for(i in seq_len(order[2])) Delta <- Delta %+% c(1, -1)
-    for(i in seq_len(seasonal$order[2]))
+    Delta <- 1.
+    for(i in seq_len(order[2L])) Delta <- Delta %+% c(1., -1.)
+    for(i in seq_len(seasonal$order[2L]))
         Delta <- Delta %+% c(1, rep(0, seasonal$period-1), -1)
-    Delta <- - Delta[-1]
-    nd <- order[2] + seasonal$order[2]
+    Delta <- - Delta[-1L]
+    nd <- order[2L] + seasonal$order[2L]
     n.used <- sum(!is.na(x)) - length(Delta)
     if (is.null(xreg)) {
-        ncxreg <- 0
+        ncxreg <- 0L
     } else {
         nmxreg <- deparse(substitute(xreg))
         if (NROW(xreg) != n) stop("lengths of 'x' and 'xreg' do not match")
@@ -147,12 +147,12 @@ arima <- function(x, order = c(0, 0, 0),
         storage.mode(xreg) <- "double"
     }
     class(xreg) <- NULL
-    if (ncxreg > 0 && is.null(colnames(xreg)))
+    if (ncxreg > 0L && is.null(colnames(xreg)))
         colnames(xreg) <-
-            if(ncxreg == 1) nmxreg else paste(nmxreg, 1:ncxreg, sep = "")
-    if (include.mean && (nd == 0)) {
+            if(ncxreg == 1L) nmxreg else paste(nmxreg, 1L:ncxreg, sep = "")
+    if (include.mean && (nd == 0L)) {
         xreg <- cbind(intercept = rep(1, n), xreg = xreg)
-        ncxreg <- ncxreg + 1
+        ncxreg <- ncxreg + 1L
     }
     if(method == "CSS-ML") {
         anyna <- any(is.na(x))
@@ -161,8 +161,8 @@ arima <- function(x, order = c(0, 0, 0),
     }
 
     if (method == "CSS" || method == "CSS-ML") {
-        ncond <- order[2] + seasonal$order[2] * seasonal$period
-        ncond1 <- order[1] + seasonal$period * seasonal$order[1]
+        ncond <- order[2L] + seasonal$order[2L] * seasonal$period
+        ncond1 <- order[1L] + seasonal$period * seasonal$order[1L]
         ncond <- if (!missing(n.cond)) ncond + max(n.cond, ncond1)
         else ncond + ncond1
     } else ncond <- 0
@@ -174,8 +174,8 @@ arima <- function(x, order = c(0, 0, 0),
     no.optim <- !any(mask)
     if(no.optim) transform.pars <- FALSE
     if(transform.pars) {
-        ind <- arma[1] + arma[2] + seq_len(arma[3])
-        if (any(!mask[seq_len(arma[1])]) || any(!mask[ind])) {
+        ind <- arma[1L] + arma[2L] + seq_len(arma[3L])
+        if (any(!mask[seq_len(arma[1L])]) || any(!mask[ind])) {
             warning("some AR parameters were fixed: setting transform.pars = FALSE")
             transform.pars <- FALSE
         }
@@ -184,7 +184,7 @@ arima <- function(x, order = c(0, 0, 0),
     parscale <- rep(1, narma)
     if (ncxreg) {
         cn <- colnames(xreg)
-        orig.xreg <- (ncxreg == 1) || any(!mask[narma + 1:ncxreg])
+        orig.xreg <- (ncxreg == 1L) || any(!mask[narma + 1L:ncxreg])
         if (!orig.xreg) {
             S <- svd(na.omit(xreg))
             xreg <- xreg %*% S$v
@@ -192,7 +192,7 @@ arima <- function(x, order = c(0, 0, 0),
         fit <- lm(x ~ xreg - 1, na.action = na.omit)
         n.used <- sum(!is.na(resid(fit))) - length(Delta)
         init0 <- c(init0, coef(fit))
-        ses <- summary(fit)$coefficients[, 2]
+        ses <- summary(fit)$coefficients[, 2L]
         parscale <- c(parscale, 10 * ses)
     }
     if (n.used <= 0) stop("too few non-missing observations")
@@ -203,11 +203,11 @@ arima <- function(x, order = c(0, 0, 0),
         if(any(ind <- is.na(init))) init[ind] <- init0[ind]
         if(method == "ML") {
             ## check stationarity
-            if(arma[1] > 0)
-                if(!arCheck(init[1:arma[1]]))
+            if(arma[1L] > 0)
+                if(!arCheck(init[1L:arma[1L]]))
                     stop("non-stationary AR part")
-            if(arma[3] > 0)
-                if(!arCheck(init[sum(arma[1:2]) + 1:arma[3]]))
+            if(arma[3L] > 0)
+                if(!arCheck(init[sum(arma[1L:2L]) + 1L:arma[3L]]))
                     stop("non-stationary seasonal AR part")
             if(transform.pars)
                 init <- .Call(R_ARIMA_Invtrans, as.double(init), arma)
@@ -220,7 +220,7 @@ arima <- function(x, order = c(0, 0, 0),
 
     if(method == "CSS") {
         res <- if(no.optim)
-            list(convergence=0,par=numeric(0),value=armaCSS(numeric(0)))
+            list(convergence=0,par=numeric(0),value=armaCSS(numeric(0L)))
         else
             optim(init[mask], armaCSS,  method = "BFGS", hessian = TRUE,
                   control = optim.control)
@@ -230,12 +230,12 @@ arima <- function(x, order = c(0, 0, 0),
         coef[mask] <- res$par
         ## set model for predictions
         trarma <- .Call(R_ARIMA_transPars, coef, arma, FALSE)
-        mod <- makeARIMA(trarma[[1]], trarma[[2]], Delta, kappa)
-        if(ncxreg > 0) x <- x - xreg %*% coef[narma + (1:ncxreg)]
+        mod <- makeARIMA(trarma[[1L]], trarma[[2L]], Delta, kappa)
+        if(ncxreg > 0) x <- x - xreg %*% coef[narma + (1L:ncxreg)]
         arimaSS(x, mod)
-        val <- .Call(R_ARIMA_CSS, x, arma, trarma[[1]], trarma[[2]],
+        val <- .Call(R_ARIMA_CSS, x, arma, trarma[[1L]], trarma[[2L]],
                      as.integer(ncond), TRUE)
-        sigma2 <- val[[1]]
+        sigma2 <- val[[1L]]
         var <- if(no.optim) numeric(0) else solve(res$hessian * n.used)
     } else {
         if(method == "CSS-ML") {
@@ -246,31 +246,31 @@ arima <- function(x, order = c(0, 0, 0),
                       hessian = FALSE, control = optim.control)
             if(res$convergence == 0) init[mask] <- res$par
             ## check stationarity
-            if(arma[1] > 0)
-                if(!arCheck(init[1:arma[1]]))
+            if(arma[1L] > 0)
+                if(!arCheck(init[1L:arma[1L]]))
                     stop("non-stationary AR part from CSS")
-            if(arma[3] > 0)
-                if(!arCheck(init[sum(arma[1:2]) + 1:arma[3]]))
+            if(arma[3L] > 0)
+                if(!arCheck(init[sum(arma[1L:2L]) + 1L:arma[3L]]))
                     stop("non-stationary seasonal AR part from CSS")
-            ncond <- 0
+            ncond <- 0L
         }
         if(transform.pars) {
             init <- .Call(R_ARIMA_Invtrans, init, arma)
             ## enforce invertibility
-            if(arma[2] > 0) {
-                ind <- arma[1] + 1:arma[2]
+            if(arma[2L] > 0) {
+                ind <- arma[1L] + 1L:arma[2L]
                 init[ind] <- maInvert(init[ind])
             }
-            if(arma[4] > 0) {
-                ind <- sum(arma[1:3]) + 1:arma[4]
+            if(arma[4L] > 0) {
+                ind <- sum(arma[1L:3L]) + 1L:arma[4L]
                 init[ind] <- maInvert(init[ind])
             }
         }
         trarma <- .Call(R_ARIMA_transPars, init, arma, transform.pars)
-        mod <- makeARIMA(trarma[[1]], trarma[[2]], Delta, kappa)
+        mod <- makeARIMA(trarma[[1L]], trarma[[2L]], Delta, kappa)
         res <- if(no.optim)
-            list(convergence = 0, par = numeric(0),
-                 value = armafn(numeric(0), as.logical(transform.pars)))
+            list(convergence = 0, par = numeric(0L),
+                 value = armafn(numeric(0L), as.logical(transform.pars)))
         else
             optim(init[mask], armafn,  method = "BFGS",
                   hessian = TRUE, control = optim.control,
@@ -281,13 +281,13 @@ arima <- function(x, order = c(0, 0, 0),
         coef[mask] <- res$par
         if(transform.pars) {
             ## enforce invertibility
-            if(arma[2] > 0) {
-                ind <- arma[1] + 1:arma[2]
+            if(arma[2L] > 0L) {
+                ind <- arma[1L] + 1L:arma[2L]
                 if(all(mask[ind]))
                     coef[ind] <- maInvert(coef[ind])
             }
-            if(arma[4] > 0) {
-                ind <- sum(arma[1:3]) + 1:arma[4]
+            if(arma[4L] > 0L) {
+                ind <- sum(arma[1L:3L]) + 1L:arma[4L]
                 if(all(mask[ind]))
                     coef[ind] <- maInvert(coef[ind])
             }
@@ -307,25 +307,25 @@ arima <- function(x, order = c(0, 0, 0),
             A <- A[mask, mask]
             var <- t(A) %*% solve(res$hessian * n.used) %*% A
             coef <- .Call(R_ARIMA_undoPars, coef, arma)
-        } else var <- if(no.optim) numeric(0) else solve(res$hessian * n.used)
+        } else var <- if(no.optim) numeric(0L) else solve(res$hessian * n.used)
         trarma <- .Call(R_ARIMA_transPars, coef, arma, FALSE)
-        mod <- makeARIMA(trarma[[1]], trarma[[2]], Delta, kappa)
-        val <- if(ncxreg > 0)
-            arimaSS(x - xreg %*% coef[narma + (1:ncxreg)], mod)
+        mod <- makeARIMA(trarma[[1L]], trarma[[2L]], Delta, kappa)
+        val <- if(ncxreg > 0L)
+            arimaSS(x - xreg %*% coef[narma + (1L:ncxreg)], mod)
         else arimaSS(x, mod)
-        sigma2 <- val[[1]][1]/n.used
+        sigma2 <- val[[1L]][1L]/n.used
     }
     value <- 2 * n.used * res$value + n.used + n.used * log(2 * pi)
     aic <- if(method != "CSS") value + 2*sum(mask) + 2 else NA
     nm <- NULL
-    if (arma[1] > 0) nm <- c(nm, paste("ar", 1:arma[1], sep = ""))
-    if (arma[2] > 0) nm <- c(nm, paste("ma", 1:arma[2], sep = ""))
-    if (arma[3] > 0) nm <- c(nm, paste("sar", 1:arma[3], sep = ""))
-    if (arma[4] > 0) nm <- c(nm, paste("sma", 1:arma[4], sep = ""))
-    if (ncxreg > 0) {
+    if (arma[1L] > 0L) nm <- c(nm, paste("ar", 1L:arma[1L], sep = ""))
+    if (arma[2L] > 0L) nm <- c(nm, paste("ma", 1L:arma[2L], sep = ""))
+    if (arma[3L] > 0L) nm <- c(nm, paste("sar", 1L:arma[3L], sep = ""))
+    if (arma[4L] > 0L) nm <- c(nm, paste("sma", 1L:arma[4L], sep = ""))
+    if (ncxreg > 0L) {
         nm <- c(nm, cn)
         if(!orig.xreg) {
-            ind <- narma + 1:ncxreg
+            ind <- narma + 1L:ncxreg
             coef[ind] <- S$v %*% coef[ind]
             A <- diag(narma + ncxreg)
             A[ind, ind] <- S$v
@@ -335,7 +335,7 @@ arima <- function(x, order = c(0, 0, 0),
     }
     names(coef) <- nm
     if(!no.optim) dimnames(var) <- list(nm[mask], nm[mask])
-    resid <- val[[2]]
+    resid <- val[[2L]]
     tsp(resid) <- xtsp
     class(resid) <- "ts"
     res <- list(coef = coef, sigma2 = sigma2, var.coef = var, mask = mask,
@@ -351,7 +351,7 @@ print.Arima <-
     function (x, digits = max(3, getOption("digits") - 3), se = TRUE, ...)
 {
     cat("\nCall:", deparse(x$call, width.cutoff = 75), "", sep = "\n")
-    if (length(x$coef) > 0) {
+    if (length(x$coef) > 0L) {
         cat("Coefficients:\n")
         coef <- round(x$coef, digits = digits)
         if (se && nrow(x$var.coef)) {
@@ -365,8 +365,8 @@ print.Arima <-
     cm <- x$call$method
     if(is.null(cm) || cm != "CSS")
         cat("\nsigma^2 estimated as ", format(x$sigma2, digits = digits),
-            ":  log likelihood = ", format(round(x$loglik, 2)),
-            ",  aic = ", format(round(x$aic, 2)), "\n", sep = "")
+            ":  log likelihood = ", format(round(x$loglik, 2L)),
+            ",  aic = ", format(round(x$aic, 2L)), "\n", sep = "")
     else
         cat("\nsigma^2 estimated as ",
             format(x$sigma2, digits = digits),
@@ -391,34 +391,34 @@ predict.Arima <-
     n <- length(rsd)
     arma <- object$arma
     coefs <- object$coef
-    narma <- sum(arma[1:4])
+    narma <- sum(arma[1L:4L])
     if (length(coefs) > narma) {
-        if (names(coefs)[narma + 1] == "intercept") {
+        if (names(coefs)[narma + 1L] == "intercept") {
             xreg <- cbind(intercept = rep(1, n), xreg)
             newxreg <- cbind(intercept = rep(1, n.ahead), newxreg)
-            ncxreg <- ncxreg + 1
+            ncxreg <- ncxreg + 1L
         }
         xm <- if(narma == 0) drop(as.matrix(newxreg) %*% coefs)
-        else drop(as.matrix(newxreg) %*% coefs[-(1:narma)])
+        else drop(as.matrix(newxreg) %*% coefs[-(1L:narma)])
     }
     else xm <- 0
-    if (arma[2] > 0) {
-        ma <- coefs[arma[1] + 1:arma[2]]
+    if (arma[2L] > 0L) {
+        ma <- coefs[arma[1L] + 1L:arma[2L]]
         if (any(Mod(polyroot(c(1, ma))) < 1))
             warning("MA part of model is not invertible")
     }
-    if (arma[4] > 0) {
-        ma <- coefs[sum(arma[1:3]) + 1:arma[4]]
+    if (arma[4L] > 0L) {
+        ma <- coefs[sum(arma[1L:3L]) + 1L:arma[4L]]
         if (any(Mod(polyroot(c(1, ma))) < 1))
             warning("seasonal MA part of model is not invertible")
     }
     z <- KalmanForecast(n.ahead, object$model)
-    pred <- ts(z[[1]] + xm, start = xtsp[2] + deltat(rsd),
-               frequency = xtsp[3])
+    pred <- ts(z[[1L]] + xm, start = xtsp[2L] + deltat(rsd),
+               frequency = xtsp[3L])
     if (se.fit) {
-        se <- ts(sqrt(z[[2]] * object$sigma2),
-                 start = xtsp[2] + deltat(rsd),
-                 frequency = xtsp[3])
+        se <- ts(sqrt(z[[2L]] * object$sigma2),
+                 start = xtsp[2L] + deltat(rsd),
+                 frequency = xtsp[3L])
         return(list(pred=pred, se=se))
     }
     else return(pred)
@@ -427,31 +427,31 @@ predict.Arima <-
 makeARIMA <- function(phi, theta, Delta, kappa = 1e6)
 {
     p <- length(phi); q <- length(theta)
-    r <- max(p, q + 1); d <- length(Delta)
+    r <- max(p, q + 1L); d <- length(Delta)
     rd <- r + d
-    Z <- c(1, rep(0, r-1), Delta)
-    T <- matrix(0, rd, rd)
-    if(p > 0) T[1:p, 1] <- phi
-    if(r > 1) {
+    Z <- c(1., rep(0., r-1L), Delta)
+    T <- matrix(0., rd, rd)
+    if(p > 0) T[1L:p, 1L] <- phi
+    if(r > 1L) {
         ind <- 2:r
-        T[cbind(ind-1, ind)]<- 1
+        T[cbind(ind-1L, ind)]<- 1
     }
-    if(d > 0) {
-        T[r+1, ] <- Z
-        if(d > 1) {
+    if(d > 0L) {
+        T[r+1L, ] <- Z
+        if(d > 1L) {
             ind <- r + 2:d
             T[cbind(ind, ind-1)]<- 1
         }
     }
-    if(q < r - 1) theta <- c(theta, rep(0, r-1-q))
+    if(q < r - 1L) theta <- c(theta, rep(0, r-1L-q))
     R <- c(1, theta, rep(0, d))
     V <- R %o% R
-    h <- 0
-    a <- rep(0, rd)
-    Pn <- P <- matrix(0, rd, rd)
-    if(r > 1) Pn[1:r, 1:r] <- .Call(R_getQ0, phi, theta)
-    else Pn[1, 1] <- if(p > 0) 1/(1 - phi^2) else 1
-    if(d > 0) Pn[cbind(r+1:d, r+1:d)] <- kappa
+    h <- 0.
+    a <- rep(0., rd)
+    Pn <- P <- matrix(0., rd, rd)
+    if(r > 1L) Pn[1L:r, 1L:r] <- .Call(R_getQ0, phi, theta)
+    else Pn[1L, 1L] <- if(p > 0) 1/(1 - phi^2) else 1
+    if(d > 0L) Pn[cbind(r+1L:d, r+1L:d)] <- kappa
     return(list(phi=phi, theta=theta, Delta=Delta, Z=Z, a=a, P=P, T=T, V=V,
                 h=h, Pn=Pn))
 }
@@ -462,7 +462,7 @@ vcov.Arima <- function (object, ...) object$var.coef
 
 logLik.Arima <- function (object, ...) {
     res <- if(is.na(object$aic)) NA
-    else structure(object$loglik, df=sum(object$mask)  + 1)
+    else structure(object$loglik, df=sum(object$mask) + 1)
     class(res) <- "logLik"
     res
 }

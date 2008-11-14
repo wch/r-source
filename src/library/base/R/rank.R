@@ -15,29 +15,34 @@
 #  http://www.r-project.org/Licenses/
 
 rank <- function(x, na.last = TRUE,
-                 ties.method=c("average", "first", "random", "max", "min"))
+		 ties.method=c("average", "first", "random", "max", "min"))
 {
     nas <- is.na(x)
+    nm <- names(x)
     ties.method <- match.arg(ties.method)
+    ## To preserve past behaviour
+    if(is.factor(x)) x <- as.integer(x)
     y <- switch(ties.method,
-                "average"= , "min"= , "max" =
-                .Internal(rank(   x[!nas], ties.method)),
-                "first" = sort.list(sort.list(x[!nas])),
-                "random" = sort.list(order(   x[!nas],
-                stats::runif(sum(!nas)))))
+		"average"= , "min"= , "max" =
+		.Internal(rank(x[!nas], ties.method)),
+		"first" = sort.list(sort.list(x[!nas])),
+		"random" = sort.list(order(x[!nas], stats::runif(sum(!nas)))))
     if(!is.na(na.last) && any(nas)) {
 	## the internal code has ranks in [1, length(y)]
-	storage.mode(x) <- "double"
+	yy <- integer(length(x))
+	storage.mode(yy) <- storage.mode(y) # integer or double
+	yy <- NA
 	NAkeep <- (na.last == "keep")
 	if(NAkeep || na.last) {
-	    x[!nas] <- y
-	    if(!NAkeep) x[nas] <- (length(y) + 1L):length(x)
+	    yy[!nas] <- y
+	    if(!NAkeep) yy[nas] <- (length(y) + 1L) : length(yy)
 	} else {
 	    len <- sum(nas)
-	    x[!nas] <- y + len
-	    x[nas] <- 1 : len
+	    yy[!nas] <- y + len
+	    yy[nas] <- 1 : len
 	}
-	y <- x
-    } else names(y) <- names(x)[!nas]
+	y <- yy
+	names(y) <- nm
+    } else names(y) <- nm[!nas]
     y
 }

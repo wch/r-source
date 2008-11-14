@@ -14,9 +14,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-memory.size <- function(max = FALSE) .Internal(memory.size(max))
+memory.size <- function(max = FALSE) round(.Internal(memory.size(max)), 2)
 
-memory.limit <- function(size = NA) .Internal(memory.size(size))
+memory.limit <- function(size = NA) trunc(.Internal(memory.size(size)))
 
 DLL.version <- function(path) .Internal(DLL.version(path))
 
@@ -72,5 +72,5 @@ menuShowCRAN <- function()
 shortPathName <- function(path) .Internal(shortPathName(path))
 
 readRegistry <-
-    function(key, hive=c("HLM", "HCR", "HCU", "HU", "HCC, HPD"), maxdepth = 1)
+    function(key, hive=c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"), maxdepth = 1)
     .Internal(readRegistry(key, match.arg(hive), maxdepth))

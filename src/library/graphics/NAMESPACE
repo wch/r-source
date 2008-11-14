@@ -14,7 +14,8 @@ export(abline, arrows, assocplot, axTicks, Axis, axis, axis.Date,
        title, xinch, xspline, xyinch, yinch)
 
 # leave most of the default methods visible as people seem to call them.
-export(barplot.default, boxplot.default, contour.default, image.default,
+export(barplot.default, boxplot.default, boxplot.matrix,
+       contour.default, image.default,
        pairs.default, plot.default, points.default, text.default)
 
 #defunct

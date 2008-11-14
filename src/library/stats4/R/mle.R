@@ -276,7 +276,7 @@ function (object, parm, level = 0.95, ...)
     if (missing(parm))
         parm <- seq_along(pnames)
     if (is.character(parm))
-        parm <- match(parm, pnames, nomatch = 0)
+        parm <- match(parm, pnames, nomatch = 0L)
     a <- (1 - level)/2
     a <- c(a, 1 - a)
     pct <- paste(round(100 * a, 1), "%")

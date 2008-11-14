@@ -8,15 +8,121 @@
 
 	**************************************************
 	*						 *
+	*	       2.9 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+    		CHANGES IN R VERSION 2.9.0
+
+
+NEW FEATURES
+
+    o	memory.size() and memory.limits() now return rounded values.
+    
+    o	The Rgui preferences dialog now allows more flexible colour
+    	settings, and shows a sample of what will be displayed.
+
+    o	The file selection items on Rgui's File menu now work in
+	Unicode and so allow filenames not in the current encoding to
+	be selected.
+
+    o	file.choose() and choose.files() now work with Unicode file
+	names, so are able to select filenames not in the current
+	encoding.  (Note that we do not expect to handle directory
+	paths not in the current encoding and they will not be
+	retained as the current search directory.)
+
+    o	The script editor is now able to open files with names which are
+	not in the current encoding: however the title displayed will
+	replace invalid bytes by '?'.
+
+    o	file() and pipe() now open non-ASCII pathnames as Unicode:
+	this helps if R is running in a character set different from that
+	used by Windows.
+
+    o	help(topic, offline=TRUE) now creates a file called <topic>.tex,
+	rather than Rdoc.tex.
+
+
+
+
+	**************************************************
+	*						 *
 	*	       2.8 SERIES NEWS			 *
 	*						 *
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.8.0 patched
+
+
+NEW FEATURES
+
+    o	R_HOME/bin/helpPRINT.bat now contains an example of use with
+	MiKTeX to produce a PDF version of the help file.
+
+
+BUG FIXES
+
+    o	The windows() device now works around the total clipping of
+ 	semi-transparent rectangles and circles that extend outside
+ 	the device region.
+ 	
+    o	The script editor did not respect user preferences for the
+	background colour.
+	
+    o	normalizePath() no longer returns a garbage string when the
+    	input is bad; it now signals an error. (PR#13199)
+    	
+    o	File share/sh/dcf.sh was not distributed with the binary
+    	build. (PR#13200)
+
+    o	dir.create() did not print the path correctly in warning messages.
+
+    o	The C-level function consolecmd had been broken in non-Latin-1
+	single-byte locales in R 2.8.0 by changes intended to support
+	the Japanese IME.  This affected some menu items in Rgui
+	(e.g. to source R files with non-Latin-1 names) and submitting
+	commands from the script editor, but only in rarer encodings
+	such as Central European, Greek and Cyrillic.  (PR#13195,
+	probably also PR#13120)
+
+    o	The attenpt to make the 'Load' button in the GUI preferences
+	start in the home directory failed if the latter was specified
+	with forwward slashes, and reset the current search directory
+	for other file open dialogs (e.g. for opening a script).
+
+    o	The installer would sometimes write the current version
+	information to the registry even if that option was not
+	checked.
+
+
+
 		CHANGES IN R VERSION 2.8.0
 
 
-OTHER
+NEW FEATURES
+
+    o	Rterm --ess sets stdout to be unbuffered, as it would be for
+	output to a terminal.
+
+    o	windows() gains a new argument 'clickToConfirm', default TRUE,
+	which controls if new-frame confirmation is done via clicking
+	(or ENTER) on the window (the recent default) or via a
+	question in the console (the default for other interactive
+	devices).  The non-default behaviour may be useful when R is
+	driven indirectly (e.g. via ESS) and for some Rterm users.
+
+    o	If the HOME environment variable is not set, Rgui and Rterm
+	will set it to match R_USER (as Rcmd does).
+
+    o	The graphics devices bmp, jpeg, png, tiff and win.metafile
+	perform tilde-expansion on their 'filename' argument.  Also
+	savePlot.
+
+
+UTILITIES
 
     o	Rcmd sets many more enviroment variables, including all those
 	set by R CMD under a Unix-alike which make sense on Windows.
@@ -38,21 +144,25 @@ OTHER
     	C locale but in the current locale (although LANGUAGE=en is
     	used).
 
-    o	Rterm --ess sets stdout to be unbuffered, as it would be for
-	output to a terminal.
-
-    o	windows() gains a new argument 'clickToConfirm', default TRUE,
-	which controls if new-frame confirmation is done via clicking
-	(or ENTER) on the window (the recent default) or via a
-	question in the console (the default for other interactive
-	devices).  The non-default behaviour may be useful when R is
-	driven indirectly (e.g. via ESS) and for some Rterm users.
+    o	Rproxy.dll is no longer part of the R distribution: it has
+	been replaced by CRAN package rscproxy.
 
 
 BUG FIXES
 
     o	winDialog() and winDialogString() check that they are being
 	used in an interactive session.
+
+    o	The Korean translation of the RGui menus has been corrected
+    	and restored.  (Thanks to June Kim and Seung-ho Kang.)
+    	
+    o	The list of hives in the readRegistry() defaults contained
+    	a typo; error messages were incomplete. (PR#12937)
+    	
+    o	The custom install options were not saved/restored when the
+    	installer was run with /SAVEINF or /LOADINF respectively.
+
+    o	savePlot() expected 'filename' in the native encoding.
 
 
 
@@ -63,7 +173,47 @@ BUG FIXES
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.7.1 patched
+		CHANGES IN R VERSION 2.7.2 patched
+
+
+BUG FIXES
+
+    o	iconv() was incorrectly identifying R running in an Eastern
+	European locale as using ISO-8859-2 (aka Latin-2) rather than
+	CP1250: they differ in the positions of some characters,
+	notably s and z with caron.  This was seen in tcltk output
+	from Rcmdr in 2.7.x, but might have occurred elsewhere (and
+	earlier).
+
+	This also affected localeToCharset() which incorrectly
+	returned "ISO8859-2".
+
+	The same issue seems to have caused problems with starting
+	R 2.7.x in the Chinese (Hong Kong S.A.R.) locale on some
+	systems (e.g. PR#12658): the problems were with locale names
+	which contained periods.
+
+    o	dir.create(recursive = TRUE) was not working on //server/share
+	paths.
+
+    o	The clip region was sometimes wrong when printing from the
+	menu on a windows() graphics device (in 2.7.2 only).
+
+    o	The windows() device would sometimes ignore font family
+    	requests (PR#12931).	
+
+
+
+		CHANGES IN R VERSION 2.7.2
+
+
+NEW FEATURES
+
+    o	Rgui has a new menu item 'Html search page' on the Help menu,
+	which goes directly to the HTML search form.  This is needed
+	by users of Firefox 3, which generates incorrect links in
+	search results when the page is accessed via the 'Html help'
+	menu item (or via help.start()).
 
 
 BUG FIXES
@@ -81,7 +231,7 @@ BUG FIXES
 
     o	glob (used by Sys.glob() and unlink()) was not working correctly
     	on some filename patterns including non-ASCII characters.
-    	Part of the problem was specific to 2.7.x, part has existed
+    	Part of the problem was specific to 2.7.[01], part has existed
     	since 2.5.0.
 
     o	Sys.glob() returned a UTF-8 result in 2.7.[01] but failed to
@@ -100,6 +250,11 @@ BUG FIXES
 	device region, and the windows() device now intersects the two
 	when setting the clipping region.  Once an invalid region was
 	set, semi-transparent text and lines might have been omitted.
+
+    o	Some (but not all) Korean users have been having problems with
+	Korean translations of the RGui menus.  These had not been
+	updated for a long time, and have now been removed.
+
 
 
 		CHANGES IN R VERSION 2.7.1

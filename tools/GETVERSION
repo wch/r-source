@@ -1,5 +1,3 @@
-#!/bin/sh
-#
 # ${RHOME}/tools/GETVERSION
 
 TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`

@@ -1,9 +1,211 @@
 			Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       2.9 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.9.0
+
+
+NEW FEATURES
+
+    o	Package 'Matrix' is now a recommended package contained in the
+	basic R distribution.  It provides S4 classes and methods for
+	dense and sparse matrices, often by using the numerical
+	libraries Lapack and from the SuiteSparse collection CHOLMOD,
+	CSparse, and SPQR among others.
+
+    o	pdf() and postscript() gain a 'useKerning' argument to place
+	strings using kerning (which had previously been ignored in
+	display but not in strwidth), based in part on an idea and
+	code from Ei-ji Nakama. The default is TRUE.
+
+	Kerning involving spaces is now ignored (it was previously
+	only used in the computation of string widths).
+
+    o	seq.default() and seq.int() ensure that the result is within the
+	interval [from, to] even when the last value would previously
+	have been slightly out of range because of the allowance for
+	rounding error in computing the number of elements.
+
+    o	install.packages() is able to infer that repos=NULL was
+	intended from the extension on the filename specified as 'pkgs'.
+
+    o	install.packages() on Mac OS X now supports local binary
+	packages with .tar.gz extension. Nonetheless .tgz remains the
+	preferred extension and is expected in repositories.
+
+    o	boxplot() gains a simple 'matrix' method, enabling boxplot(mat)
+	instead of boxplot(data.frame(mat)).
+
+    o	zip.file.extract() gains an optional 'dir' argument.
+
+    o	source() with 'encoding' specified (and not as "unknown") marks
+	the encoding of character strings in Latin-1 and UTF-8
+	locales.
+
+    o	parse(text=z) now marks the encodiing of character strings in
+	Latin-1 and UTF-8 locales if 'z' is of known encoding (that is
+	all elements are either ASCII or marked as Latin-1 or UTF-8).
+	
+    o	parse_Rd(), an experimental parser for Rd files, has been added.
+
+
+DEPRECATED & DEFUNCT
+
+    o	allGenerics() is defunct.
+
+    o	Use of allocVector(CHARSXP ...) is defunct and gives an error.
+
+    o	The compatibility define for graphics structure NewDevDesc in
+	GraphicsDevice.h has been removed.
+
+
+UTILITIES
+
+    o	R CMD Rd2dvi and R CMD check are now able to cope with Cyrillic
+    	characters in UTF-8 (thanks to a hint from Alexey Shipunov).
+
+    o   New function rtags() in package 'utils' that provides etags-like
+	indexing capabilities for R code files.
+
+    o	New environment variable R_TEXI2DVICMD to hold the path (if any)
+	to 'texi2dvi' found at configure time: this now provides the
+	default to option("texi2dvi").
+
+
+INSTALLATION
+
+    o	The shell used by the 'R' script and other shell scripts run
+	by 'R CMD foo' can be specified at installation time by
+	setting the (precious) configure variable R_SHELL.
+
+
+BUG FIXES
+
+    o	The postscript() output for setting text is faster and smaller.
+
+    o	Subsetting a data frame with duplicate column names without
+	selecting columns (e.g. z[i,]) no longer makes the column
+	names unique.  This was never documented, but some packages
+	have assumed it.
+
+    o	data.frame() no longer ignores row names on objects if the
+	first name is empty.  (PR#13230: this has been the behaviour
+	for a long time, but apparently undocumented.)
+
+
+
+
+	**************************************************
+	*						 *
 	*	       2.8 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 2.8.0 patched
+
+
+NEW FEATURES
+
+    o	sum() now has a method for "difftime" objects (via the Summary
+	group).
+
+	max(), min() and range() applied to "difftime" object(s) now
+	return a result in the common units of the objects, if there
+	is one.
+
+    o	installed.packages() is now tolerant of malformed DESCRIPTION
+	files in installed packages (it ignores them, with a warning).
+
+    o	qt() now works for 0 < df < 1.
+
+
+UTILITIES
+
+    o	R CMD build now also uses a Makevars file for cleaning up src/.
+
+    o	R_PDFLATEXCMD is added to the environment variables set by
+    	'R CMD' and is used by R CMD Rd2dvi.
+
+	R_LATEXCMD, R_PDFLATEXCMD, R_MAKEINDEXCMD and R_DVIPSCMD
+	default to 'latex', 'pdflatex', 'makeindex' and 'dvips'
+	respectively if no suitable executable was found at configure
+	time (since they might well be available at run time,
+	particularly for binary installations of R).  This affects
+	R CMD Rd2dvi and help(offline=TRUE).
+
+	R CMD Rd2dvi now gives an explicit error message if latex (or
+	pdflatex) fails.
+
+
+BUG FIXES
+
+    o	add1.glm() no longer warns if applied to a binomial glm with a
+	factor response.
+
+    o	aggregate.data.frame() now does something sensible with a
+	zero-column 'x' rather than failing with an obscure error
+	message.  It gives an explicit error message if called with a
+	zero-row 'x'.
+
+    o	integrate() now accepts integer results from f(): as documented,
+	but only double was accepted.
+
+    o	contrib.url() produced an incorrect URL for the type
+        "mac.binary".
+
+    o   pairwise.wilcox.test() did not pass on the 'paired' argument
+        (caught by Matthias Kohl)
+
+    o	bmp(), jpeg(), and png() on unix with type="cairo" would segfault
+	on closure if the output file could not be opened.
+
+    o	tiff() on unix would not write the output file for the first page
+	when multiple pages were plotted.
+
+    o   str(1 + structure(1, class = "test")) no longer recurses indefinitely.
+
+    o	pf(x, .., ncp, lower.tail=FALSE, log=TRUE) is much more accurate
+	for large x now.
+
+    o	dev2bitmap() failed in 2.8.0 if 'taa' and 'gaa' were both NA.
+
+    o	Under rare circumstances equality tests for character strings
+    	could fail to report equality in 2.8.0 in the same way as
+    	2.7.2.  (This needed a current encoding of Latin-1 or UTF-8,
+    	one string whose encoding was marked as that encoding and one
+    	that was marked as "unknown".  In that circumstance the two
+    	strings are not actually known to be equal, but earlier
+    	versions of R assumed that "unknown" meant the current
+    	encoding, and this is done once again.)
+
+    o	R CMD config could echo messages from GNU make if called from
+	within a Makefile (as e.g. package Rcpp does), especially from
+	within a parallel make run.
+
+    o	Rounding error could affect window(extend=TRUE) when applied
+	to monthly series.  (PR#13272)
+
+    o	Offline help on a Unix-alike now works even if options
+	"latexcmd" and "dvipscmd" contain spaces 
+	(e.g. "dvips -Pmy_printer").
+
+	Informative error messages are given if running latex or dvips
+	fail.
+
+    o	Using plot.lm() on a "glm" object since 2.7.1 with which=5
+	caused the Pearson rather than deviance residuals to be used
+	in which=2 or 3 (including in the default case).  (Thanks to
+	Effie Greathouse and Greg Snow.)
+
+	plot.lm() did not report on omitting observations with
+	leverage one if they also had residual exactly zero.  This was
+	seen in example(occupationalStatus).
+
 
 
 		CHANGES IN R VERSION 2.8.0
@@ -11,8 +213,239 @@
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
+    o	var(), cov(), cor(), sd() etc now by default (when 'use' is not
+	specified) return NA in many cases where they signalled an
+	error before.
+
 
 NEW FEATURES
+
+    o	abbreviate() gains an optional argument 'strict' allowing cheap
+	and fast strict abbrevation.
+
+    o	The "lm" methods of add1(), anova() and drop1() warn if they are
+	mis-used on an essentially exact fit.
+
+    o	as.array() is now generic, gains a '...' argument.
+
+    o	New function as.hexmode() for converting integers in hex format.
+	format.hexmode() and as.character.hexmode() gain an 'upper.case'
+	argument.
+
+    o	bitmap() and dev2bitmap() gain support for anti-aliasing.
+	The default type has been changed to 'png16m', which supports
+	anti-aliasing.
+
+    o	Box.test() gains a 'fitdf' argument to adjust the degrees of
+	freedom if applied to residuals.
+
+    o	browseURL() has a new argument 'encodeIfNeeded' to use
+	URLencode() in cases where it seems likely that would be
+	helpful.  (Unfortunately, those are hard to guess.)
+
+    o	by() gains a 'simplify' argument, passed to tapply().
+
+    o	capabilities() gains a new argument "tiff" to report if tiff()
+	is operational.
+
+    o	chol2inv() now treats <numeric(1)> as a [1 x 1]-matrix.
+
+    o	cov() and cor() have the option 'use = "everything"' as default,
+	and so does var() with its default 'na.rm = FALSE'.  This
+	returns NA instead of signalling an error for NA observations.
+	Another new option is 'use = "na.or.complete"' which is the default
+	for var(*, na.rm=FALSE).
+	var(double(0), na.rm= L) now returns NA instead of signalling an error,
+	for both L = TRUE or FALSE, as one consequence of these changes.
+
+    o	data.matrix() now tries harder to convert non-numeric columns,
+	via as.numeric() or as(, "numeric").
+
+    o	dev.interactive() is able to recognize the standard screen
+	devices if getOption("device") is a function (as well as by name).
+
+    o	dev.new() gains a '...' argument which can be used to pass
+	named arguments which will be used if appropriate to the
+	device selected.
+
+    o	dimnames(x) <- value extends 'value' if it a list and too
+	short, and 'x' is an array.  This allows constructions such as
+	dimnames(x)[[1]] <- 1:3 to work whether or not 'x' already has
+	dimnames.
+
+    o	format(), formatC() and prettyNum() gain a new argument
+	'drop0trailing' which can be used to suppress trailing "0"s.
+
+    o	format() now works for environments; also print(env) and str(env)
+	share the same code for environments.
+
+    o	It is now possible to create and open a text-mode gzfile()
+	connection by explicitly using e.g. open="rt".
+
+    o	New help.request() function for compiling an e-mail to R-help
+	according to "the rules". It is built on the new utility,
+	create.post() on which also bug.report() is based now; both
+	thanks to a contribution by Heather Turner.
+
+    o	help.search() now assumes that non-ASCII items are in latin1
+	if that makes sense (all known examples on CRAN are).
+
+    o	HoltWinters() and decompose() use a (statistically) more
+	efficient computation for seasonal fits (they used to waste
+	one period).
+
+    o	intToUtf8() and intToBits() now accept numeric vectors,
+	truncating them to integers.
+
+    o	is.unsorted() gains an argument 'strictly'.  It now works for
+	classed objects with a >= or > method (as incorrectly
+	documented earlier).
+
+    o	library() no longer warns about the masking objects that are
+	identical(.,.) to those they mask.
+
+    o	lockBinding(), unlockBinding(), lockEnvironment() and
+	makeActiveBinding() now all return invisibly (they always
+	return NULL).
+
+    o	mood.test() now behaves better in the presence of ties.
+
+    o	na.action() now works on fits of classes "lm", "glm", ....
+
+    o	optim(.., method="SANN", .., trace=TRUE) is now customizable via
+	the 'REPORT' control argument, thanks to code proposals by
+	Thomas Petzoldt.
+
+    o	The 'factory-fresh' defaults for options("device") have been
+	changed to refer to the devices as functions in the grDevices
+	namespace and not as names.  This makes it more likely that
+	the incorrect (since R 2.5.0) assumption in packages that
+	get(getOption("device"))() will work will catch users of those
+	packages.
+
+    o	pch=16 now has no border (for consistency with 15, 17, 18) and
+	hence is now different from pch=19.
+
+    o	pdf() has new arguments 'useDingbats' (set this to FALSE for use
+	with broken viewers) and 'colormodel'.	It now only references
+	the ZapfDingbats font if it is used (for small opaque circles).
+
+	The default PDF version is now 1.4, since viewers that do not
+	accept that are now rare.
+
+	Different viewers were rendering consecutive text() calls on a
+	pdf() device in different ways where translucency was
+	involved.  The PDF generated has been changed to force each
+	call to be rendered separately (which is the way xpdf or
+	ghostscript was rendering, but Acrobat was forming a
+	transparency group), which is consistent with other graphics
+	devices supporting semi-transparency.
+
+    o	plot.dendrogram() has new arguments (xlim, ylim) which allows
+	zooming into a hiearchical clustering dendrogram.
+
+    o	plot.ecdf() now defaults to pch=19 so as to better convey the
+	left-closed line segments.
+
+    o	plot.histogram() gains an 'ann' argument. (Wish from Ben Bolker.)
+
+    o	plot(<lm_obj>) now warns when it omits points with leverage one
+	from a plot.
+
+    o	Plotmath now recognizes 'aleph' and 'nabla' (the Adobe Symbol
+	'gradient' glyph) as symbol names.
+
+    o	polyroot() no longer has a maximum degree.
+
+    o	The alpha/alphamax argument of the 'nls' and 'mle' profile()
+	methods is used to compute confidence limits for univariate
+	t-statistics rather than a confidence region for all the
+	parameters (and not just those being profiled).
+
+    o	quantile.default() allows 'probs' to stray just beyond [0, 1],
+	to allow for computed values.
+
+    o	New functions rawConnection() and rawConnectionValue() allow
+	raw vectors to be treated as connections.
+
+    o	read.dcf() now consistently gives an error for malformed DCF.
+
+    o	read.fwf() no longer passes its default for 'as.is' to
+	read.table(): this allows the latter's default to be used.
+
+    o	readBin(), writeBin(), readChar() and writeChar() now open a
+	connection which was not already open in an appropriate binary
+	mode rather than the default mode.
+
+	readLines(), cat() and sink() now open a connection which was
+	not already open in an appropriate text mode rather than the
+	default mode.
+
+    o	readCitationFile() (and hence citation) now reads a package's
+	CITATION file in the package's declared encoding (if there is one).
+
+    o	The behaviour of readLines() for incomplete final lines on
+	binary-mode connections has been changed to be like blocking
+	rather than non-blocking text-mode connections.
+
+    o	A new reorder.character() method has been added.  This allows
+	use of 'reorder(x, ...)' as a shorthand for
+	'reorder(factor(x), ...)' when 'x' is a character vector.
+
+    o	round() now computes in long doubles where possible so the
+	results are more likely to be correct to representation error.
+
+    o	rug() now uses axis()'s new arguments from 2.7.2, hence no
+	longer draws an axis line.
+
+    o	save() (optionally, but by default) checks for the existence
+	of objects before opening the file/connection (wish of
+	PR#12543).
+
+    o	segments(), arrows() and rect() allow zero-length
+	coordinates.  (Wish of PR#11192)
+
+    o	set.seed(kind=NULL) now takes 'kind' from a saved seed if the
+	workspace has been restored or .Random.seed has been set in
+	some other way.  Previously it took the 'currently used' value,
+	which was "default" unless random numbers had been used in
+	the current session.  Similarly for the values reported by
+	RNGkind().  (Related to PR#12567.)
+
+	set.seed() gains a 'normal.kind' argument.
+
+    o	setEPS() and setPS() gain '...' to allow other arguments to be
+	passed to ps.options(), including overriding 'width' and 'height'.
+
+    o	setTimeLimit() function to set limits on the CPU
+	and/or elapsed time for each top-level computation, and
+	setSessionLimit() to set limits for the rest of the session.
+
+    o	splinefun() has a new method = "monoH.FC" for monotone Hermite
+	spline interpolation.
+
+    o	sprintf() optionally supports the %a/%A notation of C99 (if the
+	platform does, including under Windows).
+
+    o	str()'s default method gains a 'formatNum' function argument which
+	is used for formatting numeric vectors.	 Note that this is very
+	slightly not backward compatible.
+
+    o	The summary() method for class "ecdf" now uses a print()
+	method rather than printing directly.
+
+    o	summary.manova() uses a stabler computation of the test
+	statistics, and gains a 'tol' argument to allow highly
+	correlated responses to be explored (with probable loss of
+	accuracy).  Similar changes have been made to anova.mlm() and
+	anova.mlmlist().
+
+    o	Sweave() now writes concordance information inside a
+	\Sconcordance LaTeX macro, which allows it to be inserted into
+	PDF output.
+
+    o	system.time() now uses lazy evaluation rather than
+	eval/substitute, which results in more natural scoping. (PR#11169)
 
     o   In table(), 'exclude=NULL' now does something also for factor
 	arguments. A new 'useNA' argument allows you to control
@@ -20,44 +453,40 @@ NEW FEATURES
 	in data. A new convenience function addNA() gives similar
 	functionality by adding NA levels to individual factors.
 
+    o	unlink() tries the literal pattern if it does not match with
+	wildcards interpreted -- this helps with e.g. unlink("a[b")
+	which previously needed to be unlink("a\\[b").
+
+    o	update.packages() gains an argument 'oldPkgs', where
+	new.packages() and old.packages() get 'instPkgs'.  These allow
+	consideration of only subsets of packages instead of all
+	installed ones.
+
+    o	which(b) is somewhat faster now, notably for named vectors, thanks
+	to a suggestion by Henrik Bengtsson.
+
+    o	New generic function xtfrm() as an auxiliary helper for
+	sort(), order() and rank().  This should return a numeric
+	vector that sorts in the same way as its input.  The default
+	method supports any class with ==, > and is.na() methods but
+	specific methods can be much faster.
+
+	As a side-effect, rank() will now work better on classed
+	objects, although possibly rather slowly.
+
+    o	X11() and capabilities("X11") now catch some X11 I/O errors that
+	previously terminated R.  These were rare and have only be
+	seen with a misconfigured X11 setup on some versions of X11.
+
+
     o	The handling of nuls in character strings has been changed --
 	they are no longer allowed, and attempting to create such a
 	string now gives a truncation warning (unless
 	options("warnEscapes") is false).
 
-    o	format(), formatC() and prettyNum() gain a new argument
-	'drop0trailing' which can be used to suppress trailing "0"s.
-
-    o	Experimental setTimeLimit() function to set limits on the CPU
-	and/or elapsed time for each top-level computation, and
-	setSessionLimit() to set limits for the rest of the session.
-
     o	The user environment and profile files can now be specified via
 	environment variables 'R_ENVIRON_USER' and 'R_PROFILE_USER',
 	respectively.
-
-    o	optim(.., method="SANN", .., trace=TRUE) is now customizable via
-	the 'REPORT' control argument, thanks to code proposals by
-	Thomas Petzoldt.
-
-    o	setEPS() and setPS() gain '...' to allow other arguments to be
-	passed to ps.options(), including overriding 'width' and 'height'.
-
-    o	by() gains a 'simplify' argument, passed to tapply().
-
-    o	segments(), arrows() and rect() allow zero-length
-	coordinates.  (Wish of PR#11192)
-
-    o	pdf() has new arguments 'useDingbats' (set to FALSE for use
-	with broken viewers) and 'colormodel'.	It now only references
-	the ZapfDingbats font if it is used (for small opaque circles).
-
-	The default PDF version is now 1.4, since viewers that do not
-	accept that are now rare.
-
-    o	The behaviour of readLines() for incomplete final lines on
-	binary-mode connections has been changed to be like blocking
-	rather than non-blocking text-mode connections.
 
     o	?pkg::topic and ?pkg:::topic now find help on 'topic' from
 	package 'pkg' (and not help on :: or :::).
@@ -71,22 +500,9 @@ NEW FEATURES
 	Function icuSetCollate() allows the collation rules (including
 	the locale) to be tuned.  [Experimental]
 
-    o	New function as.hexmode() for converting integers in hex format.
-	format.hexmode() and as.character.hexmode() gain an 'upper.case'
-	argument.
-
-    o	bitmap() and dev2bitmap() gain support for anti-aliasing.
-	The default type has been changed to 'png16m', which supports
-	anti-aliasing.
-
-    o	readCitationFile() (and hence citation) now reads a package's
-	CITATION file in the package's declared encoding (if there is one).
-
     o	If S4 method dispatch is on and S4 objects are found as
 	attributes, show() rather than print() is used to print the
 	S4 attributes.
-
-    o	as.array() is now generic, gains a '...' argument.
 
     o	Starting package tcltk without access to Tk (e.g. no available
 	display) is now a warning rather than an error, as Tcl
@@ -94,8 +510,16 @@ NEW FEATURES
 	inhibit Tk by not having DISPLAY set, but not on Windows nor
 	Mac OS X builds with --with-aqua.)
 
-    o	format() now works for environments; also print(env) and str(env)
-	share the same code for environments.
+    o	Using $ on a non-subsettable object (such as a function) is
+	now an error (rather than returning NULL).
+
+    o	Hexadecimal numerical constants (such as 0xab.cdp+12) may now
+	contain a decimal point.
+
+    o	PCRE has been updated to version 7.8 (mainly bug fixes).
+
+
+NEW FEATURES IN PACKAGE 'methods'
 
     o	S3 classes that are registered by a call to setOldClass() now
 	have the S3 class as a special slot, and therefore so do
@@ -109,143 +533,26 @@ NEW FEATURES
 	treatment of these objects in the base code, to allow other
 	classes to contain them.  See class?ts.
 
-    o	str()'s default method gains a 'formatNum' function argument which
-	is used for formatting numeric vectors.	 Note that this is very
-	slightly not backward compatible, and that its default may change
-	before release.
+	A general feature added to implement "ts" and also
+	"data.frame" as S4 classes is that an S4 class definition can
+	be supplied to setOldClass() when the S3 class has known
+	attributes of known class.
 
-    o	The 'factory-fresh' defaults for options("device") have been
-	changed to refer to the devices as functions in the grDevices
-	namespace and not as names.  This makes it more likely that
-	the incorrect (since R 2.5.0) assumption in packages that
-	get(getOption("device"))() will work will catch users of those
-	packages.
+	setOldClass() now saves all the S3 inheritance, allowing the
+	calls to be built up in stages, rather than including all the
+	S3 classes in each call.  Also allows as(x,"S3") to generate
+	valid S3 inheritance from the stored definition.  See ?S3.
 
-    o	dev.new() gains a '...' argument which can be used to passed
-	named arguments which will be used if appropriate to the
-	device selected.
-
-    o	plot(<lm_obj>) now warns when it omits points with leverage one
-	from a plot.
-
-    o	dimnames(x) <- value extends 'value' if it a list and too
-	short, and 'x' is an array.  This allows constructions such as
-	dimnames(x)[[1]] <- 1:3 to work whether or not 'x' already has
-	dimnames.
-
-    o	Box.test() gains a 'fitdf' argument to adjust the degrees of
-	freedom if applied to residuals.
-
-    o	HoltWinters() and decompose() use a (statistically) more
-	efficient computation for seasonal fits (they used to waste
-	one period).
-
-    o	polyroot() no longer has a maximum degree.
-
-    o	dev.interactive() is able to recognize the standard screen
-	devices if getOption("device") is a function (as well as by name).
-
-    o	pch=16 now has no border (for consistency with 15, 17, 18) and
-	hence is now different from pch=19.
-
-    o	A new reorder.character() method has been added.  This allows
-	use of 'reorder(x, ...)' as a shorthand for
-	'reorder(factor(x), ...)' when 'x' is a character vector.
-
-    o	read.dcf() now consistently gives an error for malformed DCF.
-
-    o	sprintf() returns elements of the result in UTF-8 when the
-	format or any character input has a corresponding element
-	declared as UTF-8.  Similarly for paste(), elements of the
-	result are in UTF-8 when any input to that element is declared
-	as UTF-8.
-
-    o	The undocumented limit of 8191 bytes on comments (from # to
-	the end of the line) in R code has been removed.
-
-    o	show(<class definition>) now also shows the class name.
-
-    o	Plotmath now recognizes 'aleph' and 'nabla' (the Adobe Symbol
-	'gradient' glyph) as symbol names.
-
-    o	readBin(), writeBin(), readChar() and writeChar() now open a
-	connection which was not already open in an appropriate binary
-	mode rather than the default mode.
-
-	readLines(), cat() and sink() now open a connection which was
-	not already open in an appropriate text mode rather than the
-	default mode.
-
-    o	mood.test() now behaves better in the presence of ties.
-
-    o	unlink() tries the literal pattern if it does not match with
-	wildcards interpreted -- this helps with e.g. unlink("a[b")
-	which previously needed to be unlink("a\\[b").
-
-    o	abbreviate() gains an optional argument 'strict' allowing cheap and
-	fast strict abbrevation.
-
-    o	lockBinding(), unlockBinding(), lockEnvironment() and
-	makeActiveBinding() now all return invisibly (they always
-	return NULL).
-
-    o	The summary() method for class "ecdf" now uses a print()
-	method rather than printing directly.
-
-    o	plot.dendrogram() has new arguments (xlim, ylim) which allows
-	zooming into a hiearchical clustering dendrogram.
-
-    o	Different viewers were rendering consecutive text() calls on a
-	pdf() device in different ways where translucency was
-	involved.  The PDF generated has been changed to force each
-	call to be rendered separately (which is the way xpdf or
-	ghostscript was rendering, but Acrobat was forming a
-	transparency group), which is consistent with other graphics
-	devices supporting semi-transparency.
-
-    o	Using $ on a non-subsettable object (such as a function) is
-	now an error (rather than returning NULL).
-
-    o	axis() has new arguments 'col.ticks' and 'lwd.ticks' to allow
-	the colour and line width of ticks to be set separately from
-	that of the line (e.g. to set one or the other to transparent
-	or zero width).
-
-	This now used by rug(), which no longer draws an axis line.
-
-    o	legend() has a new argument 'box.col' to set the colour of the
-	enclosing box.
-
-    o	The alpha/alphamax argument of the 'nls' and 'mle' profile()
-    	methods is used to compute confidence limits for univariate
-    	t-statistics rather than a confidence region for all the
-    	parameters (and not just those being profiled).
-
-    o	data.matrix() now tries harder to convert non-numeric columns,
-    	via as.numeric() or as(, "numeric").
-
-    o	legend() gains a 'xpd' argument to make it easier to place a
-	legend in the margins or outer margins.
-
-    o	system.time() now uses lazy evaluation rather than
-	eval/substitute, which results in more natural scoping.
-	(PR#11169)
-
-    o	The "lm" methods of add1(), anova() and drop1() warn if they are
-	mis-used on an essentialy exact fit.
-
-    o	New functions rawConnection() and rawConnectionValue() allow
-    	raw vectors to be treated as connections.
+    o	S4 methods may now be defined corresponding to "...", by
+        creating a generic function that has "..." as its signature.
+        A method will be selected and called if all the arguments
+        matching "..." are from this class or a subclass.  See ?dotsMethods.
 
     o	New functions S3Part() and S3Class() provide access to the
 	corresponding S3 object and class for S4 classes that extend
 	either an S3 class or a basic R object type.
 
-    o	which(b) is somewhat faster now, notably for named vectors, thanks
-        to a suggestion by Henrik Bengtsson.
-
-    o	Sweave() now writes concordance information inside a \Sconcordance
-    	LaTeX macro, which allows it to be inserted into PDF output.
+    o	show(<class definition>) now also shows the class name.
 
 
 INSTALLATION
@@ -289,7 +596,11 @@ DEPRECATED & DEFUNCT
 	mlistMetaName(), removeMethodsObject() and seemsS4Object() are
 	defunct.
 
-    o	allGenerics(), getMethodsMetaData() are deprecated.
+    o	Use of a non-integer .Random.seed is now an error.  (R itself
+	has never generated such values, but user code has, and
+	R >= 2.6.0 has given a warning.)
+
+    o	methods::allGenerics() is deprecated.
 
     o	In package installation, SaveImage: yes is now ignored, and
 	any use of the field will give a warning.
@@ -318,6 +629,9 @@ UTILITIES
 	appear in a source package), using a suitable 'file' if
 	available, else by name.
 
+    o	R CMD check now also uses codetools' checks on the body of S4
+        methods.
+
 
 C-LEVEL FACILITIES
 
@@ -326,8 +640,10 @@ C-LEVEL FACILITIES
 	front-ends should check that they do not have a smaller limit.
 
     o	Graphics structure NewDevDesc has been renamed to DevDesc.
-	For now there is a compatibility define in GraphicDevice.h,
+	For now there is a compatibility define in GraphicsDevice.h,
 	but it will be removed in R 2.9.0.
+
+    o	PROTECT and UNPROTECT macros now work even with R_NO_REMAP.
 
 
 BUG FIXES
@@ -360,9 +676,78 @@ BUG FIXES
 	logical column index works again even if columns with NA names
 	are selected.
 
-    o	The default methods of drop1() and add1() now re-evaluate in the
-	object's formula environment, rather than simply in the parent
-	(informal bug report by Werner Stahel).
+    o	on.exit() has been fixed to use lexical scope in determining
+        where to evaluate the exit action when the on.exit expression
+        appears in a function argument.
+
+    o	rank() now consistently returns a double result for
+	ties.method = "average" and an integer result otherwise.
+	Previously the storage mode depended on 'na.last' and if any
+	NAs were present.
+
+    o	The "lm" methods of add1(), and drop1() now also work on a model
+	fit with  na.action = na.exclude.
+
+    o	median(c(x = NA_real_)) no longer has spurious names().
+
+    o	isoreg(x, y) now returns the correct result also when x has ties,
+	in all cases.
+
+    o	What na.action() does is now correctly documented.
+
+    o	source() with echo=TRUE now behaves like ordinary automatic
+	printing, by using methods::show() for S4 objects.
+
+    o	Several bugs fixed in `?` with topics: it previously died trying
+	to construct some error messages; for S4 methods, class "ANY"
+	should be used for omitted arguments and default methods.
+
+    o	trace() should create missing traceable classes in the global
+	environment, not in baseenv() where other classes will not be
+	found.
+
+    o	Class inheritance using explicit coerce= methods via setIs()
+        failed  to coerce the argument in method dispatch.  With this
+        fixed, a mechanism was needed to prohibit such inheritance
+        when it would break the generic function (e.g.,
+        initialize). See ?setIs and ?setGeneric.
+
+    o	RSiteSearch() encodes its query (it seems this is occasionally
+	needed on some platforms, but encoding other fields is harmful).
+
+    o	'incomparables' in match() was looking up indices in the wrong
+	table.
+
+    o	write.dcf() did not escape "." according to Debian policy
+	(PR#12816).
+
+    o	col2rgb() sometimes opened a graphics device unnecessarily, and
+	col2rgb(NA) did not return a transparent color, as documented.
+
+    o	pdf(family="Japan") [and other CIDfonts] no longer seg.faults
+	when writing "western" text strings.
+
+    o 	as.list() applied to an environment now forces promises and
+	returns values.
+
+    o	Promises capturing calls to sys.parent() and friends did not
+	work properly when evaluated via method dispatch for internal
+	S3 generics.
+
+    o	The default "pkgType" option for non-CRAN builds of R on Mac OS X
+	is now correctly "source" as documented.
+
+    o	The default R_LIBS_USER path in AQUA builds now matches the
+	Mac-specifc path used by the Mac GUI: ~/Library/R/x.y/library
+
+    o	splinefun() with natural splines incorrectly evaluated derivatives
+	to the left of the first knot. (PR#13132, fix thanks to
+	Berwin Turlach)
+
+    o	anova(glm(..., y=FALSE)) now works.  (PR#13098)
+
+    o	cut.Date(x, "weeks") could fail if x has only one unique value
+	which fell on a week boundary.  (PR#13159)
 
 
 
@@ -374,7 +759,64 @@ BUG FIXES
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.7.1 patched
+
+		CHANGES IN R VERSION 2.7.2 patched
+
+
+BUG FIXES
+
+    o	within(<dataframe>, { ... }) now also works when '...' removes
+	more than one column.
+
+    o	Attempting to open an X11() device on a non-existent display
+ 	when one is already open on another display now gives a
+ 	warning rather than terminating R via a fatal X11 error.
+	(PR#12628)
+
+    o	source() did not respect the setting of options("keep.source")
+	when setting source references.
+
+    o	seek() now clears the pushback on a text-mode connection if
+ 	used to set a new position.  (PR#12640)
+
+    o	quartz() would segfault if asked to create a file for bitmap
+	output which could not be created.  This applied also to the
+	type="quartz" versions of bmp(), jpeg(), png() and tiff().
+
+    o	dnbinom(0, size, mu = <large>) suffered from cancellation in 2.7.2
+	only.
+
+
+
+		CHANGES IN R VERSION 2.7.2
+
+
+NEW FEATURES
+
+    o	sprintf() returns elements of the result in UTF-8 when the
+	format or any character input has a corresponding element
+	declared as UTF-8.  Similarly for paste(), elements of the
+	result are in UTF-8 when any input to that element is declared
+	as UTF-8.
+
+    o	axis() has new arguments 'col.ticks' and 'lwd.ticks' to allow
+	the colour and line width of ticks to be set separately from
+	that of the line (e.g. to set one or the other to transparent
+	or zero width).
+
+    o	legend() has a new argument 'box.col' to set the colour of the
+	enclosing box.
+
+    o	legend() gains a 'xpd' argument to make it easier to place a
+	legend in the margins or outer margins.
+
+    o	stripchart() now passes '...' to title() (as well as to
+	plot.default() and axis()). (Wish of PR#12202)
+
+    o	help.search() has new argument 'searchEngine' to go
+	directly to the search form: this is needed by users of
+	Firefox 3 to workaround a bug in interpreting the search
+	results pages.
 
 
 BUG FIXES
@@ -428,18 +870,18 @@ BUG FIXES
     o	Closing an X11 View() or dataentry window via its frame's
 	close control now works better on some window managers.
 
-    o	Calling lapply() with certain primitives was not handling method
-	dispatch correctly for is.numeric(), is.matrix(), is.array(),
-	log() and the Math2 group.  This affected data.matrix() which
-	incorrectly regarded "Date" and "POSIXct" objects as numeric,
-	and has been adjusted to still do so.
+    o	Calling lapply() was not handling method dispatch correctly for
+	is.numeric(), is.matrix(), is.array(), log() and the Math2
+	group.  This affected data.matrix() which incorrectly regarded
+	"Date" and "POSIXct" objects as numeric, and has been adjusted
+	to do so as exceptions.
 
     o	package.skeleton() was not looking for non-function objects in
-    	its 'environment' argument.
+	its 'environment' argument.
 
     o	nls() was only finding its 'weights' argument in the case when
-    	all the variables in the formula were of the same length and
-    	hence that model.frame() could be used.
+	all the variables in the formula were of the same length and
+	hence that model.frame() could be used.
 
 	It was silently ignoring 'subset' and 'na.action' except in
 	that case.  Now they are ignored only if 'data' is a list and
@@ -455,6 +897,61 @@ BUG FIXES
     o	dev.print() and dev.copy2{eps,pdf}() now ensure that the current
 	device is restored as the active device even if an error
 	occurs. (PR#9801)
+
+    o	as.Date() could fail to convert character strings representing
+	days on which midnight did not exist in the current timezone
+	(as happened in parts of Africa on 1960-01-01).
+
+    o	The automatic placement of legend() with 'title' and a
+	reversed 'x' axis was incorrect. (PR#12019)
+
+    o	The use of multiple packages in 'LinkingTo' works again, and
+	now works when the dependent packages are in the library to be
+	installed to (but not in the library path seen by R --vanilla).
+
+    o	bxp() (and hence boxplot) now respects in-line graphical
+	parameters 'xaxp'/'yaxp' as appropriate.  (PR#11463)
+
+    o	barplot(log = "y") failed if there were NAs in the 'height'
+	argument.  (PR#11585)
+
+    o	pbeta() is more accurate in some cases with extreme values of
+	'ncp'.  (PR#11277).
+
+    o	edit.data.frame() no longer fails if called on a 0-column
+	data frame and no column is created.
+
+    o	pchisq(x, df=0) was always one even for x < 0; similarly for
+	pgamma(x, alpha=0).
+
+    o	add1() and drop1() now return a P-value of NaN in cases with
+	df=0 for test="Chisq" (they gave NaN until pchisq was altered
+	in R 2.6.2).
+
+    o	The default methods of drop1() and add1() now re-evaluate in the
+	object's formula environment, rather than simply in the parent
+	(informal bug report by Werner Stahel).
+
+    o	The undocumented limit of 8191 bytes on comments (from # to
+	the end of the line) in R code has been removed.
+
+    o	qgamma() warns if used with shape < 1e-10, when it may be
+ 	unreliable.  (PR#12324)
+
+    o	Installing a source package was not using the package's declared
+	encoding (if any) as a default encoding for the help.search()
+	database in Meta/hsearch.rds.  This could cause packages with
+	a default encoding to have some of their entries rejected by
+	help.search() in a multi-byte locale (such as a UTF-8 locale).
+
+    o	duplicated() and unique() now handle 'incomparables' better,
+	and avoid occasional segfaults (PR#12551).
+
+    o	plot(isoreg(x, y)) now plots the points correctly when 'x'
+	is unssorted.
+
+    o	data.frame(row.names=NULL) once again behaves differently from
+	the default (as documented).
 
 
 
@@ -678,7 +1175,7 @@ BUG FIXES
 	more arguments.
 
     o	symbol() in plotmath expressions works again with non-ASCII
-    	input on devices that use UTF-8 for the symbol font.
+	input on devices that use UTF-8 for the symbol font.
 
 
 

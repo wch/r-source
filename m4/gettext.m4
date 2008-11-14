@@ -5,6 +5,8 @@
 ## size_max.m4 stdint_h.m4 uintmax_t.m4 ulonglong.m4 visibility.m4 
 ## wchar_t.m4 wint_t.m4 xsize.m4 > .../m4/gettext.m4
 
+## Then disable testing for libiconv prefix
+
 # gettext.m4 serial 59 (gettext-0.16.1)
 dnl Copyright (C) 1995-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -502,7 +504,7 @@ AC_DEFUN([AM_ICONV_LINKFLAGS_BODY],
 
   dnl Search for libiconv and define LIBICONV, LTLIBICONV and INCICONV
   dnl accordingly.
-  AC_LIB_LINKFLAGS_BODY([iconv])
+  dnl AC_LIB_LINKFLAGS_BODY([iconv])
 ])
 
 AC_DEFUN([AM_ICONV_LINK],
@@ -512,7 +514,7 @@ AC_DEFUN([AM_ICONV_LINK],
 
   dnl Search for libiconv and define LIBICONV, LTLIBICONV and INCICONV
   dnl accordingly.
-  AC_REQUIRE([AM_ICONV_LINKFLAGS_BODY])
+  dnl AC_REQUIRE([AM_ICONV_LINKFLAGS_BODY])
 
   dnl Add $INCICONV to CPPFLAGS before performing the following checks,
   dnl because if the user has installed libiconv and not disabled its use

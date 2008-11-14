@@ -1923,11 +1923,27 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
 
 	if (pt == NULL || strcmp(pt,".default")) {
 	    RCNTXT cntxt;
-	    SEXP pargs;
+	    SEXP pargs, rho1;
 	    PROTECT(pargs = promiseArgs(args, rho)); nprotect++;
+	    /* The context set up here is needed because of the way
+	       usemethod() is written.  DispatchGroup() repeats some
+	       internal usemethod() code and avoids the need for a
+	       context; perhaps the usemethod() code should be
+	       refactored so the contexts around the usemethod() calls
+	       in this file can be removed.
+
+	       Using rho for current and calling environment can be
+	       confusing for things like sys.parent() calls captured
+	       in promises (Gabor G had an example of this).  Also,
+	       since the context is established without a SETJMP using
+	       an R-accessible environment allows a segfault to be
+	       triggered (by something very obscure, but still).
+	       Hence here and in the other usemethod() uses below a
+	       new environment rho1 is created and used.  LT */
+	    PROTECT(rho1 = NewEnvironment(R_NilValue, R_NilValue, rho)); nprotect++;
 	    SET_PRVALUE(CAR(pargs), x);
-	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs, op);
-	    if(usemethod(generic, x, call, pargs, rho, rho, R_BaseEnv, ans))
+	    begincontext(&cntxt, CTXT_RETURN, call, rho1, rho, pargs, op);
+	    if(usemethod(generic, x, call, pargs, rho1, rho, R_BaseEnv, ans))
 	    {
 		endcontext(&cntxt);
 		UNPROTECT(nprotect);
@@ -2639,16 +2655,18 @@ typedef int BCODE;
 static int tryDispatch(char *generic, SEXP call, SEXP x, SEXP rho, SEXP *pv)
 {
   RCNTXT cntxt;
-  SEXP pargs;
+  SEXP pargs, rho1;
   int dispatched = FALSE;
 
   PROTECT(pargs = promiseArgs(CDR(call), rho));
+  /* See comment at first usemethod() call in this file. LT */
+  PROTECT(rho1 = NewEnvironment(R_NilValue, R_NilValue, rho));
   SET_PRVALUE(CAR(pargs), x);
-  begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs, R_NilValue);/**** FIXME: put in op */
-  if (usemethod(generic, x, call, pargs, rho, rho, R_BaseEnv, pv))
+  begincontext(&cntxt, CTXT_RETURN, call, rho1, rho, pargs, R_NilValue);/**** FIXME: put in op */
+  if (usemethod(generic, x, call, pargs, rho1, rho, R_BaseEnv, pv))
     dispatched = TRUE;
   endcontext(&cntxt);
-  UNPROTECT(1);
+  UNPROTECT(2);
   return dispatched;
 }
 
@@ -3321,16 +3339,18 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP x = R_BCNodeStackTop[-1];
 	if (isObject(x)) {
 	  RCNTXT cntxt;
-	  SEXP pargs, str;
+	  SEXP pargs, str, rho1;
 	  PROTECT(pargs = promiseArgs(CDR(call), rho));
+	  /* See comment at first usemethod() call in this file. LT */
+	  PROTECT(rho1 = NewEnvironment(R_NilValue, R_NilValue, rho));
 	  SET_PRVALUE(CAR(pargs), x);
 	  str = ScalarString(PRINTNAME(symbol));
 	  SET_PRVALUE(CADR(pargs), str);
-	  begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs, R_NilValue);/**** FIXME: put in op */
-	  if (usemethod("$", x, call, pargs, rho, rho, R_BaseEnv, &value))
+	  begincontext(&cntxt, CTXT_RETURN, call, rho1, rho, pargs, R_NilValue);/**** FIXME: put in op */
+	  if (usemethod("$", x, call, pargs, rho1, rho, R_BaseEnv, &value))
 	    dispatched = TRUE;
 	  endcontext(&cntxt);
-	  UNPROTECT(1);
+	  UNPROTECT(2);
 	}
 	if (dispatched)
 	  R_BCNodeStackTop[-1] = value;
@@ -3347,17 +3367,19 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	value = R_BCNodeStackTop[-2];
 	if (isObject(x)) {
 	  RCNTXT cntxt;
-	  SEXP pargs, str;
+	  SEXP pargs, str, rho1;
 	  PROTECT(pargs = promiseArgs(CDR(call), rho));
+	  /* See comment at first usemethod() call in this file. LT */
+	  PROTECT(rho1 = NewEnvironment(R_NilValue, R_NilValue, rho));
 	  SET_PRVALUE(CAR(pargs), x);
 	  str = ScalarString(PRINTNAME(symbol));
 	  SET_PRVALUE(CADR(pargs), str);
 	  SET_PRVALUE(CADDR(pargs), value);
-	  begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs, R_NilValue);/**** FIXME: put in op */
-	  if (usemethod("$<-", x, call, pargs, rho, rho, R_BaseEnv, &value))
+	  begincontext(&cntxt, CTXT_RETURN, call, rho1, rho, pargs, R_NilValue);/**** FIXME: put in op */
+	  if (usemethod("$<-", x, call, pargs, rho1, rho, R_BaseEnv, &value))
 	    dispatched = TRUE;
 	  endcontext(&cntxt);
-	  UNPROTECT(1);
+	  UNPROTECT(2);
 	}
 	R_BCNodeStackTop--;
 	if (dispatched)

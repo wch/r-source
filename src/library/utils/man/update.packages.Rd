@@ -22,18 +22,20 @@ update.packages(lib.loc = NULL, repos = getOption("repos"),
                 contriburl = contrib.url(repos, type),
                 method, instlib = NULL,
                 ask = TRUE, available = NULL,
-                \dots, checkBuilt = FALSE,
-                type = getOption("pkgType"))
+                oldPkgs = NULL, \dots,
+                checkBuilt = FALSE, type = getOption("pkgType"))
 
 available.packages(contriburl = contrib.url(getOption("repos")),
                    method, fields = NULL)
 
 old.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos),
+             instPkgs = installed.packages(lib.loc = lib.loc),
              method, available = NULL, checkBuilt = FALSE)
 
 new.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
+             instPkgs = installed.packages(lib.loc = lib.loc),
              method, available = NULL, ask = FALSE, \dots,
              type = getOption("pkgType"))
 
@@ -59,23 +61,14 @@ contrib.url(repos, type = getOption("pkgType"))
     to use, i.e., the URL of the CRAN master such as
     \code{"http://cran.r-project.org"} or its Statlib mirror,
     \code{"http://lib.stat.cmu.edu/R/CRAN"}.
-#ifdef unix
-    Can be \code{NULL} to install from local \file{.tar.gz} files.
-#endif
-#ifdef windows
-    Can be \code{NULL} to install from local files.
-#endif
+    Can be \code{NULL} to install from local files
+    (\file{.tar.gz} for source packages).
   }
   \item{contriburl}{URL(s) of the contrib sections of the
     repositories.  Use this argument only if your repository mirror is
     incomplete, e.g., because you burned only the \file{contrib} section on a
     CD.  Overrides argument \code{repos}.
-#ifdef unix
-    Can also be \code{NULL} to install from local \file{.tar.gz} files.
-#endif
-#ifdef windows
-    Can also be \code{NULL} to install from local files.
-#endif
+    As \code{repos}, can also be \code{NULL} to install from local files.
   }
   \item{method}{Download method, see \code{\link{download.file}}.}
   \item{pkgs}{character vector of the short names of packages/bundles whose
@@ -119,7 +112,9 @@ contrib.url(repos, type = getOption("pkgType"))
     packages on which these packages depend/suggest/import
     (and so on recursively).  Not used if \code{repos = NULL}.
     Can also be a character vector, a subset of
-    \code{c("Depends", "Imports", "Suggests")}.
+    \code{c("Depends", "Imports", "Suggests")}.  Note that only if the
+    dependent package is \emph{installed} is checked, not if it meets
+    the version requirements.
 
     Only supported if \code{lib} is of length one (or missing),
     so it is unambiguous where to install the dependent packages.
@@ -141,6 +136,16 @@ contrib.url(repos, type = getOption("pkgType"))
     allows multi-element character strings for each package
     which are concatenated to a single string to be used as the
     value for \code{--configure-args}.
+  }
+  \item{oldPkgs}{
+    if specified as non-NULL, \code{update.packages()} only considers
+    these packages for updating. 
+  }
+  \item{instPkgs}{
+    by default all installed packages,
+    \code{\link{installed.packages}(lib.loc=lib.loc)}.  A subset can be 
+    specified; currently this must be in the same (character matrix)
+    format as returned by \code{installed.packages()}.
   }
   \item{\dots}{
     (for \code{update.packages}).  Arguments such as \code{destdir},
@@ -191,8 +196,8 @@ contrib.url(repos, type = getOption("pkgType"))
   requirements are met by the running version of \R.
   
   \code{old.packages} compares the information from
-  \code{available.packages} with that from
-  \code{\link{installed.packages}} and reports installed
+  \code{available.packages} with that from \code{instPkgs}
+  (\code{\link{installed.packages}} by default) and reports installed
   packages/bundles that have newer versions on the repositories or, if
   \code{checkBuilt = TRUE}, that were built under an earlier minor
   version of \R (for example built under 2.0.x when running \R 2.1.1).
@@ -309,6 +314,10 @@ contrib.url(repos, type = getOption("pkgType"))
   for it is unclear where new dependencies should be installed.  The
   current implementation will only allow it if all the packages to be
   updated are in a single library, when that library will be used.
+
+  You are advised to run \code{update.packages} before
+  \code{install.packages} to ensure that any installed dependencies have
+  their latest versions.
 }
 #ifdef unix
 \note{

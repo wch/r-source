@@ -506,7 +506,6 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
      */
 
 
-/* As from R 2.7.0 we assume file[i] and pager are in UTF-8 */
 extern FILE *R_wfopen(const wchar_t *filename, const wchar_t *mode);
 extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 
@@ -515,7 +514,6 @@ int R_ShowFiles(int nfile, const char **file, const char **headers,
 {
     int   i;
     char  buf[1024];
-    wchar_t wfn[PATH_MAX+1];
 
     if (nfile > 0) {
 	if (pager == NULL || strlen(pager) == 0)
@@ -523,19 +521,18 @@ int R_ShowFiles(int nfile, const char **file, const char **headers,
 	for (i = 0; i < nfile; i++) {
 	    if(!access(file[i], R_OK)) {
 		if (!strcmp(pager, "internal")) {
-		    newpager(wtitle, file[i], CE_UTF8, headers[i], del);
+		    newpager(wtitle, file[i], CE_NATIVE, headers[i], del);
 		} else if (!strcmp(pager, "console")) {
 		    size_t len;
 		    FILE *f;
-		    Rf_utf8towcs(wfn, file[i], PATH_MAX+1);
-		    f = R_wfopen(wfn, L"rt");
+		    f = R_fopen(file[i], "rt");
 		    if(f) {
 			while((len = fread(buf, 1, 1023, f))) {
 			    buf[len] = '\0';
 			    R_WriteConsole(buf, strlen(buf));
 			}
 			fclose(f);
-			if (del) DeleteFileW(wfn);
+			if (del) DeleteFile(file[i]);
 		    }
 		    else {
 			snprintf(buf, 1024,
@@ -604,6 +601,7 @@ int R_EditFiles(int nfile, const char **file, const char **title,
     return 1;
 }
 
+#if 0
 /* Prompt the user for a file name.  Return the length of */
 /* the name typed.  On Gui platforms, this should bring up */
 /* a dialog box so a user can choose files that way. */
@@ -614,6 +612,7 @@ int R_ChooseFile(int new, char *buf, int len)
 {
     return DialogSelectFile(buf, len);
 }
+#endif
 
 /* code for R_ShowMessage, R_YesNoCancel */
 
@@ -692,6 +691,12 @@ void R_SetWin32(Rstart Rp)
     strcpy(UserRHome, "R_USER=");
     strcat(UserRHome, Rp->home);
     putenv(UserRHome);
+    
+    if( !getenv("HOME") ) {
+	strcpy(UserRHome, "HOME=");
+	strcat(UserRHome, getRUser());
+	putenv(UserRHome);
+    }    
 
     /* Rterm and Rgui set CharacterMode during startup, then set Rp->CharacterMode
        from it in cmdlineoptions().  Rproxy never calls cmdlineoptions, so we need the
