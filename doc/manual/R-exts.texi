@@ -4227,6 +4227,7 @@ The daemon must be started as root, e.g.
 @example
 % su
 % opcontrol --no-vmlinux
+% (optional, some platforms) opcontrol --callgraph=5
 % opcontrol --start
 % exit
 @end example
@@ -4265,7 +4266,8 @@ samples  %        symbol name
 Shutting down the profiler and clearing the records needs to be done as
 root.  You can use @command{opannotate} to annotate the source code with
 the times spent in each section, if the appropriate source code was
-compiled with debugging support.
+compiled with debugging support, and @command{opreport -c} to generate a
+callgraph (if collection was enabled and the platform supports this).
 
 @node Solaris, MacOS X, Linux, Profiling compiled code
 @subsection Solaris
