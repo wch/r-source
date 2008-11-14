@@ -2590,18 +2590,18 @@ explicitly in calls to @code{stop}, @code{warning}, @code{message},
 @node CITATION files, Package types, Internationalization, Creating R packages
 @section CITATION files
 
-An installed file named @file{CTIATION} will be used by the
+An installed file named @file{CITATION} will be used by the
 @code{citation()} function.  (To be installed, it needed to be in the
 @file{inst} subdirectory of the package sources.)
 
-The @file{CTIATION} file is parsed as @R{} code, currently in Latin-1.
+The @file{CITATION} file is parsed as @R{} code, currently in Latin-1.
 (This will change once there is a means to declare an encoding.)  If no
 such file is present, @code{citation} generates a standard contents, and
-an example of what that would look like as a @file{CTIATION} file can be
+an example of what that would look like as a @file{CITATION} file can be
 seen in recommended package @pkg{nlme} (see below): recommended packages
 @pkg{boot}, @pkg{cluster} and @pkg{mgcv} have further examples.
 
-A @file{CTIATION} file will contain calls to the functions
+A @file{CITATION} file will contain calls to the functions
 @code{citHeader}, @code{citEntry} and (optionally)
 @code{citFooter}. Here is that for @pkg{nlme}, re-formatted:
 
