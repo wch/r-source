@@ -141,6 +141,13 @@ gettextf(fmt, \dots, domain = NULL)
   encoding.
 }
 
+\section{Warning}{
+  The format string is passed down the OS's \code{sprintf} function, and
+  incorrect formats can cause the latter to crash the \R process .  \R
+  does perform basic sanity checks on the format, but not all possible user
+  errors will be caught and some might be terminal.
+}
+
 \references{
   Kernighan, B. W. and Ritchie, D. M. (1988)
   \emph{The C Programming Language.} Second edition, Prentice Hall.
@@ -148,7 +155,7 @@ gettextf(fmt, \dots, domain = NULL)
 }
 
 \author{
-  Original code by Jonathan Rougier, \email{J.C.Rougier@durham.ac.uk}.
+  Original code by Jonathan Rougier.
 }
 
 \seealso{
