@@ -36,27 +36,17 @@
 
 static const char *findspec(const char *str)
 {
+    /* This is not strict about checking where '.' is allowed.
+       It should allow  - + ' ' 0 as flags
+       m m. .n n.m as width/precision
+    */
     const char *p = str;
 
     if(*p != '%') return p;
     for(p++; ; p++) {
 	if(*p == '-' || *p == '+' || *p == ' ' || *p == '.' ) continue;
-	if((*p == '*' || (*p >= '0' && *p <= '9')) && *(p+1) == '.') {
-	    p++;
-	    continue;
-	}
-	if(*p == '.' && (*(p+1) == '*' || (*(p+1) >= '0' && *(p+1) <= '9'))) {
-	    p++;
-	    continue;
-	}
-	if(*p == '*' || (*p >= '0' && *p <= '9') ) {
-	    if(*(p+1) != '.') continue;
-	    if(*(p+2) == '*' || (*(p+2) >= '0' && *(p+2) <= '9') ) {
-		/* so have m.n pattern */
-		p += 2; /* for loop will skip third byte */
-		continue;
-	    }
-	}
+	/* '*' will currently have got substituted before this */
+	if(*p == '*' || (*p >= '0' && *p <= '9')) continue;
 	break;
     }
     return p;
