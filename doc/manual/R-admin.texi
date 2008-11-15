@@ -4442,12 +4442,12 @@ become inactive if you return to it: to work around this you can open
 a link in a new tab or window.
 
 @c https://stat.ethz.ch/pipermail/r-help/2008-July/169521.html
-There is a known issue with Firefox 3 (and 3.0.1).  The links in the
-results page may point to the wrong directory level.  This is a bug in
-the way Firefox is interpreting relative URLs, and can be circumvented
-by opening the HTML search page (@file{.../doc/html/SearchEngine.html})
-directly rather than from @file{.../doc/html/index.html} as shown by
-@code{help.start()}.
+There is a known issue with Firefox 3.0.x (at least for x <= 4).  The
+links in the results page may point to the wrong directory level.  This
+is a bug in the way Firefox is interpreting relative URLs, and can be
+circumvented by opening the HTML search page
+(@file{.../doc/html/SearchEngine.html}) directly rather than from
+@file{.../doc/html/index.html} as shown by @code{help.start()}.
 
 Many thanks to Marc Schwartz in tracking down many of these issues with
 enabling the Java search engine.
