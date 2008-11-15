@@ -139,9 +139,11 @@ release.
 
 Versions of R as from 2.7.0 will only run on Windows 2000 or later.  (R
 2.6.2 was the last version for Windows 95. 98, ME and NT4.)  There is no
-specific version for x64 Windows, but the standard 32-bit version works
-well enough.  We only test on versions of Windows currently supported by
-Microsoft, mainly on XP, Vista x64 and Windows Server 2003.
+specific binary@footnote{See @ref{How can I compile R from source?} for
+the possibility of building one from the sources.} version for x64
+Windows, but the standard 32-bit version works well enough.  We only
+test on versions of Windows currently supported by Microsoft, mainly on
+XP SP3, Vista x64 and Windows Server 2003.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
@@ -160,15 +162,13 @@ form of help during the install @strong{not} to be Compiled HTML help:
 network share (a filepath starting with @code{\\machine\...}) is not
 supported: such paths will need to mapped to a network drive.
 
-To install use @samp{@RWVER@-win32.exe}.  Just double-click on the
-icon and follow the instructions.  If you installed R this way you can
-uninstall it from the Control Panel or Start Menu (unless you
-suppressed making a group for R).  If you have an account with
-Administrator privileges you will be able to install R in the @file{Program
-Files} area and to set all the optional registry entries; otherwise
-you will only be able to install R in your own file area.  On Windows
-Vista you may need to confirm that you want to proceed with
-installing a program from an `unidentified publisher'.
+To install use @samp{@RWVER@-win32.exe}.  Just double-click on the icon
+and follow the instructions.  If you have an account with Administrator
+privileges you will be able to install R in the @file{Program Files}
+area and to set all the optional registry entries; otherwise you will
+only be able to install R in your own file area.  On recent versions of
+Windows you may need to confirm that you want to proceed with installing
+a program from an `unidentified publisher'.
 
 After installation you should choose a working directory for R.  You
 will have a shortcut to @file{@RWVER@\bin\Rgui.exe} on your desktop
@@ -282,9 +282,9 @@ Normally you can do this from the R group on the Start Menu or from the
 Vista} in the Control Panel.  If it does not appear there or if you want
 to remove an old version, run @file{unins000.exe} in the top-level
 installation directory.  (There should be a separate uninstall item in
-the R group for each installed version of R. On Windows Vista, you may
-well be asked to confirm that you wish to run a program from an
-`unidentified publisher'.)
+the R group for each installed version of R.  On recent versions of
+Windows you may well be asked to confirm that you wish to run a program
+from an `unidentified publisher'.)
 
 Uninstalling R only removes files from the initial installation, not
 (for example) packages you have installed or updated.
@@ -1453,10 +1453,12 @@ It has been possible to cross-build R for Windows x64 using
 @code{binutils} and @code{gcc} with the @samp{x86_64-pc-mingw32} target,
 using suitable settings in @file{src/gnuwin32/MkRules} (see the comments
 there).  However, that toolchain is experimental and the support for
-Unicode file functions needed for R 2.7.x is at present incomplete.
+Unicode file functions needed for R 2.7.0 and later was incomplete.
  
-You are of course welcome to try a commercial compiler, but we will not
-be distributing a port to which users cannot easily add packages.
+You are of course welcome to try a commercial compiler@footnote{such as
+those from Intel and PGI: there is no Fortran compiler in the Microsoft
+set, but @code{f2c} could be used.}, but we will not be distributing a
+binary port to which users cannot easily add packages.
 
 @node Can I use a fast BLAS?, How do I include compiled C code?, How can I compile R from source?, Building from Source
 @section  Can I use a fast BLAS?
