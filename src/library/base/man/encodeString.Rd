@@ -31,12 +31,12 @@ encodeString(x, width = 0, quote = "", na.encode = TRUE,
     consistency with \code{format.default}.}
 }
 \details{
-  This escapes backslash and the control characters \samp{\a} (bell),
-  \samp{\b} (backspace), \samp{\f} (formfeed), \samp{\n} (line feed),
-  \samp{\r} (carriage return), \samp{\t} (tab) and \samp{\v} (vertical tab)
+  This escapes backslash and the control characters \samp{\\a} (bell),
+  \samp{\\b} (backspace), \samp{\\f} (formfeed), \samp{\\n} (line feed),
+  \samp{\\r} (carriage return), \samp{\\t} (tab) and \samp{\\v} (vertical tab)
   as well as any non-printable characters in a
   single-byte locale, which are printed in octal notation
-  (\samp{\xyz} with leading zeroes).
+  (\samp{\\xyz} with leading zeroes).
 #ifdef unix
   (Which characters are non-printable depends on the current locale.)
 #endif

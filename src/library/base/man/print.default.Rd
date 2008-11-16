@@ -77,11 +77,11 @@
 }
 \section{Single-byte locales}{
   If a non-printable character is encountered during output, it is
-  represented as one of the ANSI escape sequences (\samp{\a}, \samp{\b},
-  \samp{\f}, \samp{\n}, \samp{\r}, \samp{\t}, \samp{\v}, \samp{\\\\} and
-  \samp{\0}: see \link{Quotes}), or failing that as a 3-digit octal
+  represented as one of the ANSI escape sequences (\samp{\\a}, \samp{\\b},
+  \samp{\\f}, \samp{\\n}, \samp{\\r}, \samp{\\t}, \samp{\\v}, \samp{\\\\} and
+  \samp{\\0}: see \link{Quotes}), or failing that as a 3-digit octal
   code: for example the UK currency pound sign in the C locale (if
-  implemented correctly) is printed as \samp{\243}.  Which characters
+  implemented correctly) is printed as \samp{\\243}.  Which characters
   are non-printable depends on the locale.
 #ifdef windows
   (Because some versions of Windows get this wrong, all bytes with the
@@ -103,9 +103,9 @@ Multi-byte locales
   single-byte locales.
 
   Multi-byte non-printing characters are printed as an escape sequence
-  of the form \samp{\uxxxx}
+  of the form \samp{\\uxxxx}
 #ifndef windows
-  or \samp{\Uxxxxxxxx}
+  or \samp{\\Uxxxxxxxx}
 #endif
   (in hexadecimal).
 #ifdef windows
@@ -123,7 +123,7 @@ Multi-byte locales
   It is possible to have a character string in a character vector that
   is not valid in the current locale.  If a byte is encountered that is
   not part of a valid character it is printed in hex in the form
-  \samp{\xab} and this is repeated until the start of a valid character.
+  \samp{\\xab} and this is repeated until the start of a valid character.
 #ifdef unix
   (This will rapidly recover from minor errors in UTF-8.)
 #endif

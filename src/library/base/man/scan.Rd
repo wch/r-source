@@ -131,13 +131,13 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     turn off the interpretation of comments altogether (the default).}
 
   \item{allowEscapes}{logical.  Should C-style escapes such as
-    \samp{\n} be processed (the default) or read verbatim?   Note that if
+    \samp{\\n} be processed (the default) or read verbatim?   Note that if
     not within quotes these could be interpreted as a delimiter (but not
     as a comment character).
 
     The escapes which are interpreted are the control characters
-    \samp{\a, \b, \f, \n, \r, \t, \v} and octal and
-    hexadecimal representations like \samp{\040} and \samp{\0x2A}.  Any
+    \samp{\\a, \\b, \\f, \\n, \\r, \\t, \\v} and octal and
+    hexadecimal representations like \samp{\\040} and \samp{\\0x2A}.  Any
     other escaped character is treated as itself, including backslash.
   }
   \item{encoding}{encoding to be assumed for input strings.  If the
@@ -243,7 +243,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   Using \code{scan} on an open connection to read partial lines can lose
   chars: use an explicit separator to avoid this.
 
-  Having \code{nul} bytes in fields (including \samp{\0} if
+  Having \code{nul} bytes in fields (including \samp{\\0} if
   \code{allowEscapes = TRUE}) may lead to interpretation of the
   field being terminated at the \code{nul}.  They not normally present
   in text files -- see \code{\link{readBin}}.
