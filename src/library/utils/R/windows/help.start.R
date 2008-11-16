@@ -17,7 +17,7 @@
 help.start <- function(update = TRUE, gui = "irrelevant",
                        browser = getOption("browser"), searchEngine = FALSE)
 {
-    a <- if(searchEngine) file.path(R.home("doc"), "html", "index.html")
+    a <- if(!searchEngine) file.path(R.home("doc"), "html", "index.html")
     else file.path(R.home("doc"), "html", "search", "SearchEngine.html")
     if(!file.exists(a))
         stop("unable to find the HTML help")
