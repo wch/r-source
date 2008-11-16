@@ -192,7 +192,7 @@
 #ifdef unix
   In a UTF-8 locale any Unicode character can be entered, perhaps as a
   \code{\uxxxx} or \code{\Uxxxxxxxx} escape sequence, but the issue is
-  whether the graphics device is apply to display the character.  The
+  whether the graphics device is able to display the character.  The
   widest range of characters is likely to be available in the
   \code{\link{X11}} device using cairo: see its help page for how
   installing additional fonts can help.
@@ -208,7 +208,7 @@
   way to both find out which characters are available in a font and to
   determine the Unicode number is to use the \sQuote{Character Map}
   accessory (usually on the \sQuote{Start} menu under
-  \sQuote{Accessories->System Tools}.  You can also copy-and-paste
+  \sQuote{Accessories->System Tools}).  You can also copy-and-paste
   characters from the \sQuote{Character Map} window to \code{Rgui} (but
   not to \code{Rterm}).
 #endif
