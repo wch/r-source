@@ -66,6 +66,10 @@ DEPRECATED & DEFUNCT
     o	The compatibility define for graphics structure NewDevDesc in
 	GraphicsDevice.h has been removed.
 
+    o	install.packages(installWithVers = TRUE) is now defunct, as is
+	versioned installs on Windows (and likely on all platforms by
+	release).
+
 
 UTILITIES
 
@@ -150,6 +154,8 @@ DEPRECATED & DEFUNCT
 
     o	R CMD INSTALL --with-package-versions is deprecated (and
 	support has always been incomplete on Windows).
+
+	So is install.packages(installWithVers = TRUE).
 
 
 BUG FIXES

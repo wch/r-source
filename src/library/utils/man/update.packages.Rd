@@ -102,8 +102,6 @@ contrib.url(repos, type = getOption("pkgType"))
     \code{\link{select.list}}, and is otherwise equivalent to \code{ask
       = TRUE}.
   }
-  \item{installWithVers}{If \code{TRUE}, will invoke the install of the
-    package such that it can be referenced by package version.}
   \item{checkBuilt}{If \code{TRUE}, a package built under an earlier
     minor version of \R is considered to be \sQuote{old}.}
   \item{instlib}{character string giving the library directory where to

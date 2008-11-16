@@ -21,7 +21,7 @@
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type="mac.binary"),
              method, available = NULL, destdir = NULL,
-             installWithVers = FALSE, dependencies = FALSE, ...)
+             dependencies = FALSE, ...)
 {
     link.html.help<-function(verbose = FALSE, ...)
     {
@@ -42,7 +42,7 @@
                     domain = NA, call. = FALSE)
     }
 
-    unpackPkg <- function(pkg, pkgname, lib, installWithVers = FALSE)
+    unpackPkg <- function(pkg, pkgname, lib)
     {
         ## Create a temporary directory and unpack the zip to it
         ## then get the real package & version name, copying the
@@ -85,10 +85,7 @@
         for (curPkg in pkgs) {
             desc <- read.dcf(file.path(curPkg, "DESCRIPTION"),
                              c("Package", "Version"))
-            if (installWithVers) {
-                instPath <- file.path(lib, paste(desc[1,1], desc[1,2], sep="_"))
-            }
-            else instPath <- file.path(lib, desc[1,1])
+            instPath <- file.path(lib, desc[1,1])
 
             ## If the package is already installed w/ this
             ## instName, remove it.  If it isn't there, the unlink call will
@@ -122,7 +119,7 @@
     ## but we can't tell without trying to unpack it.
     if(is.null(contriburl)) {
         for(i in seq(along=pkgs))
-            unpackPkg(pkgs[i], pkgnames[i], lib, installWithVers)
+            unpackPkg(pkgs[i], pkgnames[i], lib)
         link.html.help(verbose=TRUE)
         return(invisible())
     }
@@ -217,8 +214,7 @@
             {
                 okp <- p == foundpkgs[, 1]
                 if(any(okp))
-                    unpackPkg(foundpkgs[okp, 2], foundpkgs[okp, 1], lib,
-                              installWithVers)
+                    unpackPkg(foundpkgs[okp, 2], foundpkgs[okp, 1], lib)
             }
         }
         if(!is.null(tmpd) && is.null(destdir))

@@ -17,8 +17,7 @@
 install.packages <-
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
-             method, available = NULL, destdir = NULL,
-             installWithVers = FALSE, dependencies = NA,
+             method, available = NULL, destdir = NULL, dependencies = NA,
              type = getOption("pkgType"), configure.args = character(0),
              clean = FALSE, ...)
 {
@@ -164,7 +163,6 @@ install.packages <-
             .install.winbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
                                method = method, available = available,
                                destdir = destdir,
-                               installWithVers = installWithVers,
                                dependencies = dependencies, ...)
             return(invisible())
         }
@@ -187,7 +185,6 @@ install.packages <-
             .install.macbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
                                method = method, available = available,
                                destdir = destdir,
-                               installWithVers = installWithVers,
                                dependencies = dependencies, ...)
             return(invisible())
         }
@@ -218,8 +215,6 @@ install.packages <-
     if(is.null(repos) & missing(contriburl)) {
         ## install from local source tarballs
         update <- cbind(path.expand(pkgs), lib) # for side-effect of recycling to same length
-        if (installWithVers)
-            cmd0 <- paste(cmd0, "--with-package-versions")
         if (is.character(clean))
             cmd0 <- paste(cmd0, clean)
 
@@ -339,8 +334,6 @@ install.packages <-
             ## can't use update[p0, ] due to possible multiple matches
             update <- update[sort.list(match(pkgs, p0)), ]
         }
-        if (installWithVers)
-            cmd0 <- paste(cmd0, "--with-package-versions")
         if (is.character(clean))
             cmd0 <- paste(cmd0, clean)
 

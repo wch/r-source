@@ -18,16 +18,15 @@
 # .install.winbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
 #                    method = method, available = available,
 #                    destdir = destdir,
-#                    installWithVers = installWithVers,
 #                    dependencies = dependencies)
 
 .install.winbinary <-
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos),
              method, available = NULL, destdir = NULL,
-             installWithVers = FALSE, dependencies = FALSE, ...)
+             dependencies = FALSE, ...)
 {
-    unpackPkg <- function(pkg, pkgname, lib, installWithVers = FALSE)
+    unpackPkg <- function(pkg, pkgname, lib)
     {
         ## Create a temporary directory and unpack the zip to it
         ## then get the real package & version name, copying the
@@ -115,11 +114,7 @@
                     }
                 }
              } else {
-                if (installWithVers) {
-                    instPath <- file.path(lib,
-                                          paste(desc[1,1], desc[1,2], sep="_"))
-                }
-                else instPath <- file.path(lib, desc[1,1])
+                instPath <- file.path(lib, desc[1,1])
 
                 ## If the package is already installed w/ this
                 ## instName, remove it.  If it isn't there, the unlink call will
@@ -179,7 +174,7 @@
 
     if(is.null(contriburl)) {
         for(i in seq_along(pkgs))
-            unpackPkg(pkgs[i], pkgnames[i], lib, installWithVers)
+            unpackPkg(pkgs[i], pkgnames[i], lib)
         link.html.help(verbose=TRUE)
         return(invisible())
     }
@@ -275,8 +270,7 @@
             {
                 okp <- p == foundpkgs[, 1]
                 if(any(okp))
-                    unpackPkg(foundpkgs[okp, 2], foundpkgs[okp, 1], lib,
-                              installWithVers)
+                    unpackPkg(foundpkgs[okp, 2], foundpkgs[okp, 1], lib)
             }
         }
         if(!is.null(tmpd) && is.null(destdir))

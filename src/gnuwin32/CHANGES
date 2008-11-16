@@ -45,6 +45,12 @@ NEW FEATURES
 	rather than Rdoc.tex.
 
 
+DEFUNCT
+
+    o	'R CMD INSTRLL --with-package-versions' is defunct and a
+	non-versioned install is done.
+
+
 
 
 	**************************************************

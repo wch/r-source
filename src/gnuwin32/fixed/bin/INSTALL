@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2000-7  R Development Core Team
+# Copyright (C) 2000-8  R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,8 +42,6 @@ sub Cleanup {
     if(defined @bundlepkgs) {
 	if($is_bundle) { # back out the whole bundle
 	    for $pkgname (@bundlepkgs) {
-		$pkgname .= "_" . $description->{"Version"}
-		if $opt_with_package_versions;
 		rmtree($library . "/" . $pkgname);
 		$dppkg = $lockdir . "/" . $pkgname;
 		system("mv $dppkg $library") if ($safe && -d $dppkg);
@@ -52,7 +50,7 @@ sub Cleanup {
 	    print "Removing '$dpkg'\n";
 	    rmtree($dpkg);
 	    # move back any previously installed package
-	    $dppkg = $lockdir . "/" . $decpkgname;
+	    $dppkg = $lockdir . "/" . $pkgname;
 	    if ($safe && -d $dppkg) {
 		print "Restoring previous '$dpkg'\n";
 		system("mv $dppkg $library");
@@ -94,7 +92,7 @@ my $R_HOME = $ENV{'R_HOME'} ||
 usage() if $opt_help;
 
 if ($opt_with_package_versions) {
-    warn "\n  WARNING: --with-package-versions is deprecated:\n  suppport on Windows is incomplete, so use at your own risk\n\n"
+    warn "\n  WARNING: --with-package-versions is defunct: it will be ignored\n\n"
 }
 
 
@@ -319,12 +317,7 @@ foreach $pkg (@ARGV){
     my $res;
     ## loop over pkgs in the bundle
     for $pkgname (@bundlepkgs) {
-	if($opt_with_package_versions) {
-	    $decpkgname = $pkgname . "_" . $description->{"Version"};
-	} else {
-	    $decpkgname = $pkgname;
-	}
-	$dpkg = $library. "/" . $decpkgname;
+	$dpkg = $library. "/" . $pkgname;
 	# if exists, move existing installation to $lockdir
 	system("mv $dpkg $lockdir") if ($safe && -d $dpkg);
 	system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library pkgclean-$pkgname") if ($opt_preclean);
@@ -386,12 +379,12 @@ foreach $pkg (@ARGV){
 	$opt = $opt . " DPKG=$dpkg";
 	$opt = $opt . " $pkgname-LAZYDATA=true" if $lazydata;
 	$opt = $opt . " $pkgname-LAZY=true" if $lazyload > 0;
-#	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir PKGNAME=$decpkgname RLIB=$library $opt $helpflags $makecmd-$pkgname\n";
-    	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir PKGNAME=$decpkgname RLIB=$library $opt $helpflags $makecmd-$pkgname");
+#	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir PKGNAME=$pkgname RLIB=$library $opt $helpflags $makecmd-$pkgname\n";
+    	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir PKGNAME=$pkgname RLIB=$library $opt $helpflags $makecmd-$pkgname");
 	if($res == 0) {
 	    ## add MD5 sums last of all
 	    my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";
-	    $cmd .= "BUILD=$BUILD RHOME=$R_HOME DPKG=$library/$decpkgname md5sums";
+	    $cmd .= "BUILD=$BUILD RHOME=$R_HOME DPKG=$library/$pkgname md5sums";
 #	    print "$cmd\n";
 	    $res = system($cmd);
 
@@ -405,8 +398,6 @@ foreach $pkg (@ARGV){
 	if($res) {
 	    if($is_bundle) { # back out the whole bundle
 		for $pkgname (@bundlepkgs) {
-		    $pkgname .= "_" . $description->{"Version"}
-		    if $opt_with_package_versions;
 		    rmtree($library . "/" . $pkgname);
 		    $dppkg = $lockdir . "/" . $pkgname;
 		    system("mv $dppkg $library") if ($safe && -d $dppkg);
@@ -415,7 +406,7 @@ foreach $pkg (@ARGV){
 		print "Removing '$dpkg'\n";
 		rmtree($dpkg);
 		# move back any previously installed package
-		$dppkg = $lockdir . "/" . $decpkgname;
+		$dppkg = $lockdir . "/" . $pkgname;
 		if ($safe && -d $dppkg) {
 		    print "Restoring previous '$dpkg'\n";
 		    system("mv $dppkg $library");
@@ -481,8 +472,6 @@ Options:
   -d, --debug		[x] turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
   --docs=TYPE	        type(s) of documentation to build and install
-  --with-package-versions
-			allow for multiple versions of the same package
   --use-zip-data	collect data files in zip archive
   --use-zip-help	collect help and examples into zip archives
   --use-zip		combine '--use-zip-data' and '--use-zip-help'
