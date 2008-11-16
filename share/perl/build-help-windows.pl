@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2007 R Development Core Team
+# Copyright (C) 1997-2008 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,14 +26,12 @@ use R::Dcf;
 fileparse_set_fstype; # Unix, in case one gets anything else.
 
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
-		 "dosnames", "chm", "index");
+		 "chm", "index");
 GetOptions (@knownoptions) || usage();
 
 $OSdir = "windows";
 
 $dir_mod = 0755;#- Permission ('mode') of newly created directories.
-
-if($opt_dosnames){ $HTML=".htm"; } else { $HTML=".html"; }
 
 my $current = cwd();
 if($opt_rhome){
@@ -178,7 +176,7 @@ foreach $manfile (@mandir) {
 	if($opt_html){
 	    my $targetfile = $filenm{$manfilebase};
 	    $misslink = "";
-	    $destfile = file_path($dest, "html", $targetfile.$HTML);
+	    $destfile = file_path($dest, "html", $targetfile.".html");
 	    if(fileolder($destfile, $manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
@@ -212,8 +210,8 @@ foreach $manfile (@mandir) {
 	if($opt_chm){
 	    my $targetfile = $filenm{$manfilebase};
 	    $misslink = "";
-	    $destfile = "../chm/$targetfile$HTML";
-	    print hhpfile "$targetfile$HTML\n";
+	    $destfile = "../chm/$targetfile.html";
+	    print hhpfile "$targetfile.html\n";
 	    if(fileolder($destfile,$manage)) {
 		$chmflag = "chm";
 		print "\t$destfile" if $opt_debug;
@@ -295,7 +293,7 @@ if($opt_chm){
 sub usage {
     print "Usage:  build-help-windows.pl [--rhome dir] [--html] [--txt]\n" .
       "                   [--latex] [--example] [--chm]\n" .
-      "                   [--dosnames] [--debug] [--index]\n" .
+      "                   [--debug] [--index]\n" .
       "                   [pkg] [lib]\n";
 
     exit 0;

@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2007 R Development Core Team
+# Copyright (C) 1997-2008 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ $version = $1;
 ($name = $0) =~ s|.*/||;
 
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
-		 "dosnames", "help|h", "version|v", "os|OS:s", 
+		 "help|h", "version|v", "os|OS:s", 
 		 "index");
 GetOptions (@knownoptions) || usage();
 &R_version($name, $version) if $opt_version;
@@ -44,8 +44,6 @@ $OSdir = $opt_os if $opt_os;
 $AQUAdir = "aqua" if($ENV{"R_USE_AQUA_SUBDIRS"} eq "yes");
 
 $dir_mod = 0755;#- Permission ('mode') of newly created directories.
-
-if($opt_dosnames){ $HTML=".htm"; } else { $HTML=".html"; }
 
 my $current = cwd();
 if($opt_rhome){
@@ -173,7 +171,7 @@ foreach $manfile (@mandir) {
 	if($opt_html){
 	    my $targetfile = $filenm{$manfilebase};
 	    $misslink = "";
-	    $destfile = file_path($dest, "html", $targetfile.$HTML);
+	    $destfile = file_path($dest, "html", $targetfile.".html");
 	    if(fileolder($destfile, $manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
@@ -276,7 +274,6 @@ Options:
   --txt                 build text files    (default is all)
   --latex               build LaTeX files   (default is all)
   --example             build example files (default is all)
-  --dosnames            use 8.3 filenames
   --index               build index file only
 
 
