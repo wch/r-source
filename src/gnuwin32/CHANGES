@@ -47,7 +47,7 @@ NEW FEATURES
 
 DEFUNCT
 
-    o	'R CMD INSTRLL --with-package-versions' is defunct and a
+    o	'R CMD INSTALL --with-package-versions' is defunct and a
 	non-versioned install is done.
 
 
