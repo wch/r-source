@@ -56,6 +56,10 @@ NEW FEATURES
 	avoid passing invalid formats to the OS (which have a tendency
 	to crash under such inputs).
 
+    o	expand.grid() gains a 'stringsAsFactor' argument to suppress the
+	conversion of character vectors to factors (which has happened
+	for many years but was not previously documented).
+
 
 DEPRECATED & DEFUNCT
 
