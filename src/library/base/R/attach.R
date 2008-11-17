@@ -91,7 +91,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
     invisible(value)
 }
 
-detach <- function(name, pos=2, version, unload=FALSE)
+detach <- function(name, pos=2, unload=FALSE)
 {
     if(!missing(name)) {
         name <- substitute(name)# when a name..
@@ -101,8 +101,6 @@ detach <- function(name, pos=2, version, unload=FALSE)
 	    else {
                 if (!is.character(name))
                     name <- deparse(name)
-                if (!missing(version))
-                    name <- manglePackageName(name, version)
                 match(name, search())
             }
 	if(is.na(pos))

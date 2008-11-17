@@ -253,27 +253,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             return(if (logical.return) TRUE else invisible(.packages()))
         }
 
-	if (!missing(version)) {
-	     package <- manglePackageName(package, version)
-        } else { # Need to find the package version to install
-            ## this throws a warning if lib.loc has not been cleaned.
-            pkgDirs <- list.files(lib.loc, pattern = paste0("^", package))
-            ## See if any directories in lib.loc match the pattern of
-            ## 'package', if none do, just continue as it will get caught
-            ## below.  Otherwise, if there is actually a 'package', use
-            ## that, and if not, then use the highest versioned dir.
-            if (length(pkgDirs) > 0) {
-                if (!(package %in% pkgDirs)) {
-                    ## Need to find the highest version available
-                    vers <- unlist(lapply(pkgDirs, libraryPkgVersion))
-                    vpos <- libraryMaxVersPos(vers)
-                    if (length(vpos) > 0) package <- pkgDirs[vpos]
-                }
-            }
-        }
-
-        ## NB from this point on `package' is either the original name or
-        ## something like ash_1.0-8
 	pkgname <- paste("package", package, sep = ":")
 	newpackage <- is.na(match(pkgname, search()))
 	if(newpackage) {
@@ -682,15 +661,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 {
     if( !character.only )
         package <- as.character(substitute(package)) # allowing "require(eda)"
-    if (missing(version)) {
-        pkgName <- package
-        ## dont' care about versions, so accept any
-        s <- sub("_[0-9.-]*", "", search())
-        loaded <- paste("package", pkgName, sep = ":") %in% s
-    } else {
-        pkgName <- manglePackageName(package, version)
-        loaded <- paste("package", pkgName, sep = ":") %in% search()
-    }
+    loaded <- paste("package", package, sep = ":") %in% search()
 
     if (!loaded) {
 	if (!quietly)
@@ -1025,9 +996,6 @@ print.packageInfo <- function(x, ...)
               title = gettextf("Documentation for package '%s'", x$name))
     invisible(x)
 }
-
-manglePackageName <- function(pkgName, pkgVersion)
-    paste(pkgName, "_", pkgVersion, sep = "")
 
 .getRequiredPackages <-
     function(file="DESCRIPTION", quietly = FALSE, useImports = FALSE)

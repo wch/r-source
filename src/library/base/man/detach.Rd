@@ -1,12 +1,12 @@
 % File src/library/base/man/detach.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{detach}
 \title{Detach Objects from the Search Path}
 \usage{
-detach(name, pos = 2, version, unload = FALSE)
+detach(name, pos = 2, unload = FALSE)
 }
 \alias{detach}
 \arguments{
@@ -19,10 +19,6 @@ detach(name, pos = 2, version, unload = FALSE)
     Index position in \code{\link{search}()} of database to
     detach.  When \code{name} is a number, \code{pos = name}
     is used.
-  }
-  \item{version}{A character string denoting a version number of the
-    package to be removed.  This should be used only with a versioned
-    installation of the package: see \code{\link{library}}.
   }
   \item{unload}{A logical value indicating whether or not to attempt to
     unload the namespace and S4 methods when a package is being
@@ -43,10 +39,6 @@ detach(name, pos = 2, version, unload = FALSE)
   This most commonly used with a single number argument referring to a
   position on the search list, and can also be used with a unquoted or
   quoted name of an item on the search list such as \code{package:tools}.
-
-  When a package have been loaded with an explicit version number it can
-  be detached using the name shown by \code{\link{search}} or by
-  supplying \code{name} and \code{version}: see the examples.
 
   If a package has a namespace, detaching it does not by default unload
   the namespace (and may not even with \code{unload=TRUE}), and
@@ -99,12 +91,5 @@ attach_and_detach <- function(db, pos=2)
    eval(substitute(detach(n), list(n=name)))
 }
 attach_and_detach(women, pos=3)
-
-\dontrun{## Using a versioned install
-library(ash, version="1.0-9")  # or perhaps just library(ash)
-# then one of
-detach("package:ash", version="1.0-9")
-# or
-detach("package:ash_1.0-9")
-}}
+}
 \keyword{data}

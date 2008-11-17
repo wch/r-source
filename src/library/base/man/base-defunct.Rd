@@ -51,6 +51,7 @@
 \alias{symbol.For}
 \alias{unix}
 \alias{gammaCody}
+\alias{manglePackageName}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -131,6 +132,9 @@ unix(call, intern = FALSE)
 % Removed in 2.8.0
 gammaCody(x)
 % </Removed 2.8.0>
+% Removed in 2.9.0
+manglePackageName(pkgName, pkgVersion)
+% </Removed 2.9.0>
 }
 \details{
   \code{category} has been an old-S function before there were factors;
@@ -223,6 +227,9 @@ gammaCody(x)
   somewhat faster but less precise and/or robust than \R's standard
   \code{\link{gamma}}.  Re R-level interface  was here for experimental
   purposes.
+
+  \code{manglePackageName} was part of the defunct support for versioned
+  installs.
 }
 \seealso{
   \code{\link{Defunct}}, \code{\link{base-deprecated}}

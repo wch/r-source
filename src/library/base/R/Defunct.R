@@ -159,3 +159,9 @@ unix <- function(call, intern = FALSE) .Defunct("system")
 ## Defunct in 2.8.0
 gammaCody <- function(x) .Defunct("gamma")
 ## </entry>
+
+## <entry>
+## Deprecated inter alia in 2.8.1
+## Defunct in 2.9.0
+manglePackageName <- function (pkgName, pkgVersion) .Defunct()
+## </entry>

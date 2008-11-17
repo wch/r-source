@@ -38,8 +38,6 @@ Options:
   -l, --library=LIB	install packages to library tree LIB
       --no-configure    do not use the package's configure script
       --no-docs		do not build and install documentation
-      --with-package-versions
-                        allow for multiple versions of the same package
       --use-zip-data	collect data files in zip archive
       --use-zip-help	collect help and examples into zip archives
       --use-zip		combine '--use-zip-data' and '--use-zip-help'
@@ -200,7 +198,6 @@ use_zip_data=
 use_zip_help=
 configure_args=
 configure_vars=
-with_package_versions=false
 fake=false
 lazy=true
 lazy_data=false
@@ -227,8 +224,7 @@ while test -n "${1}"; do
     -d|--debug)
       debug=true ;;
     --with-package-versions)
-      with_package_versions=true
-      warning "Use of --with-package-versions is deprecated"
+      error "Use of --with-package-versions is defunct"
       ;;
     --no-configure)
       use_configure=false ;;
@@ -962,18 +958,8 @@ do_install () {
   ## Set R_PACKAGE_DIR here at the top level.  If a version is being
   ## specified, tack that on.
   version=""
-  if ${with_package_versions}; then
-    version=`get_dcf_field Version DESCRIPTION`
-    if test -z "${version}"; then
-      error "no 'Version' field in 'DESCRIPTION'"
-      do_exit_on_error no
-    fi
-    R_PACKAGE_NAME="${pkg_name}_${version}"
-    R_PACKAGE_DIR="${lib}/${pkg_name}_${version}"
-  else
-    R_PACKAGE_NAME="${pkg_name}"
-    R_PACKAGE_DIR="${lib}/${pkg_name}"
-  fi
+  R_PACKAGE_NAME="${pkg_name}"
+  R_PACKAGE_DIR="${lib}/${pkg_name}"
   export R_PACKAGE_DIR
   export R_PACKAGE_NAME
 
@@ -1035,9 +1021,6 @@ do_exit_on_error () {
       bundlepkg=${pkg_name}
     fi
     for p in ${bundlepkg}; do
-      if ${with_package_versions}; then
-	p=${p}_${version}
-      fi
       pkgdir="${lib}/$p"
       if test "${remove_R_package_dir}" = yes && test -n "${pkgdir}"; then
 	message "Removing '${pkgdir}'"
