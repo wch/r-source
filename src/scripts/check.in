@@ -2620,7 +2620,7 @@ sub check_pkg {
 	}
 	else { # no latex dir
 	    if($HAVE_LATEX) {
-		my $Rd2dvi_opts = "--batch --no-preview";
+		my $Rd2dvi_opts = "--batch --no-preview --no-index";
 		my $fmt;
 		if($HAVE_PDFLATEX) {
 		    $Rd2dvi_opts = $Rd2dvi_opts . " --pdf";

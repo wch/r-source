@@ -149,6 +149,10 @@ UTILITIES
 	R CMD Rd2dvi now gives an explicit error message if latex (or
 	pdflatex) fails.
 
+	R CMD Rd2dvi gains a --no-index argument: processing some
+	special characters on PDF indices gave errors which used to be
+	ignored.
+
 
 DEPRECATED & DEFUNCT
 
