@@ -47,8 +47,7 @@ download.packages(pkgs, destdir, available = NULL,
 install.packages(pkgs, lib, repos = getOption("repos"),
                  contriburl = contrib.url(repos, type),
                  method, available = NULL, destdir = NULL,
-		 installWithVers = FALSE, dependencies = NA,
-                 type = getOption("pkgType"),
+		 dependencies = NA, type = getOption("pkgType"),
                  configure.args = character(0),
                  clean = FALSE, \dots)
 
