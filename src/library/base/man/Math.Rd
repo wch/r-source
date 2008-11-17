@@ -3,7 +3,7 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
-\name{Math}
+\name{MathFun}
 \title{Miscellaneous Mathematical Functions}
 \usage{
 abs(x)

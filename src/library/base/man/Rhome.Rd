@@ -3,7 +3,7 @@
 % Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
-\name{R.home}
+\name{Rhome}
 \alias{R.home}
 \alias{R_HOME}
 \alias{R\_HOME} % to allow \file{\var{\link{R\_HOME}}/Tcl/doc}
