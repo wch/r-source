@@ -7,7 +7,6 @@
 \title{Factors}
 \alias{factor}
 \alias{ordered}
-\alias{addNA}
 \alias{is.factor}
 \alias{is.ordered}
 \alias{as.factor}
