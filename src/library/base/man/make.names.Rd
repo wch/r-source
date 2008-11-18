@@ -27,7 +27,10 @@ make.names(names, unique = FALSE, allow_ = TRUE)
   A syntactically valid name consists of letters, numbers and the dot or
   underline characters and starts with a letter or the dot not followed
   by a number.  Names such as \code{".2way"} are not valid, and neither
-  are the reserved words.
+  are the \link{reserved} words.
+
+  The definition of a \emph{letter} depends on the current locale, but
+  only ASCII digits are considered to be digits.
 
   The character \code{"X"} is prepended if necessary.
   All invalid characters are translated to \code{"."}.  A missing value

@@ -19,7 +19,7 @@
   \code{Inf} and \code{-Inf} are positive and negative infinity
   whereas \code{NaN} means \sQuote{Not a Number}.  (These apply to numeric
   values and real and imaginary parts of complex values but not to
-  values of integer vectors.)  All are \code{reserved} words in the \R
+  values of integer vectors.)  All are \link{reserved} words in the \R
   language.
 }
 \usage{
