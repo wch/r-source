@@ -28,6 +28,12 @@ install.packages <-
         dependencies <- if(!missing(lib) && length(lib) > 1) FALSE
         else c("Depends", "Imports")
 
+    if (installWithVers) {
+        if(.Platform$OS.type == "windows")
+            warning("support for version installs is incomplete and is being withdrawn")
+        else
+            warning("support for version installs is being withdrawn")
+    }
     explode_bundles <- function(a)
     {
         contains <- .find_bundles(a, FALSE)

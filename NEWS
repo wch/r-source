@@ -51,6 +51,8 @@ DEPRECATED & DEFUNCT
     o	R CMD INSTALL --with-package-versions is deprecated (and
 	support has always been incomplete on Windows).
 
+	So is install.packages(installWithVers = TRUE).
+
 
 BUG FIXES
 
