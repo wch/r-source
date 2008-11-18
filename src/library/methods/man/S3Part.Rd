@@ -1,4 +1,9 @@
-\name{S3}
+% File src/library/methods/man/S3Part.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2008 R Core Development Team
+% Distributed under GPL 2 or later
+
+\name{S3Part}
 \alias{S3Part}
 \alias{S3Part<-}
 \alias{S3Class}

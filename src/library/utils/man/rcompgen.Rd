@@ -1,3 +1,8 @@
+% File src/library/utils/man/rcompgen.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2008 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{rcompgen}
 \alias{rcompgen}
 \alias{rc.settings}

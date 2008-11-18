@@ -19,7 +19,7 @@
   \code{\link{NA}} \code{\link{NA_integer_}} \code{\link{NA_real_}}
   \code{\link{NA_complex_}} \code{\link{NA_character_}}
 
-  \code{\dots} and \code{..1}, \code{..2} etc, used to refer to
+  \code{\dots} and \code{..1}, \code{..2} etc, which are used to refer to
   arguments passed down from an enclosing function.
 }
 \details{

@@ -1,3 +1,8 @@
+% File src/library/graphics/man/convertXY.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2008 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{convertXY}
 \alias{grconvertX}
 \alias{grconvertY}

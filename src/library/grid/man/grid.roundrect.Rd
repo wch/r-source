@@ -1,3 +1,8 @@
+% File src/library/grid/man/grid.roundrect.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2008 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{roundrect}
 \alias{roundrect}
 \alias{grid.roundrect}

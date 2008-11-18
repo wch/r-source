@@ -1,3 +1,8 @@
+% File src/library/graphics/man/boxplot.matrix.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2008 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{boxplot.matrix}
 \alias{boxplot.matrix}
 \title{Draw a Boxplot for each Column (Row) of a Matrix}
