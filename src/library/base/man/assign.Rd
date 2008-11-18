@@ -16,7 +16,7 @@ assign(x, value, pos = -1, envir = as.environment(pos),
 \arguments{
   \item{x}{a variable name, given as a character string.  No coercion is
     done, and the first element of a character vector of length greater
-    than one will be used, with a warning }
+    than one will be used, with a warning.}
   \item{value}{a value to be assigned to \code{x}.}
   \item{pos}{where to do the assignment.  By default, assigns into the
     current environment.  See the details for other possibilities.}
@@ -26,6 +26,9 @@ assign(x, value, pos = -1, envir = as.environment(pos),
   \item{immediate}{an ignored compatibility feature.}
 }
 \details{
+  There are no restrictions on \code{name}: it can be a non-syntactic
+  name (see \code{\link{make.names}}).
+  
   The \code{pos} argument can specify the  environment in which to assign
   the object in any of several ways:
   as an integer (the position in the \code{\link{search}} list); as
@@ -39,7 +42,8 @@ assign(x, value, pos = -1, envir = as.environment(pos),
   used to set elements of vectors, names, attributes, etc.
 
   Note that assignment to an attached list or data frame changes the
-  attached copy and not the original object: see \code{\link{attach}}.
+  attached copy and not the original object: see \code{\link{attach}}
+  and \code{\link{with}}.
 }
 \value{
   This function is invoked for its side effect, which is assigning

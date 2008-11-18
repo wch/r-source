@@ -45,7 +45,8 @@ is.data.frame(x)
   \item{row.names}{\code{NULL} or a character vector giving the row
     names for the data frame.  Missing values are not allowed.}
   \item{optional}{logical. If \code{TRUE}, setting row names and
-    converting column names (to syntactic names) is optional.}
+    converting column names (to syntactic names: see
+    \code{\link{make.names}}) is optional.}
   \item{\dots}{additional arguments to be passed to or from methods.}
   \item{stringsAsFactors}{logical: should the character vector be converted
     to a factor?}

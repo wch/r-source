@@ -69,7 +69,8 @@
 \section{Names and Identifiers}{
   Identifiers consist of a sequence of letters, digits, the period
   (\code{.}) and the underscore.  They must not start with a digit nor
-  underscore, nor with a period followed by a digit.
+  underscore, nor with a period followed by a digit.  \link{Reserved}
+  words are not valid identifiers.
 
   The definition of a \emph{letter} depends on the current locale, but
   only ASCII digits are considered to be digits.
