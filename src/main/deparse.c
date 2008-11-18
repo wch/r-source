@@ -217,7 +217,6 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
     }
     PROTECT(svec = allocVector(STRSXP, localData.linenumber));
     deparse2(call, svec, &localData);
-    UNPROTECT(1);
     if (abbrev) {
 	char data[14];
 	strncpy(data, CHAR(STRING_ELT(svec, 0)), 10);
@@ -227,6 +226,9 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
     } else if(need_ellipses) {
 	SET_STRING_ELT(svec, R_BrowseLines, mkChar("  ..."));
     }
+    if(nlines > 0 && localData.linenumber < nlines)
+	svec = lengthgets(svec, localData.linenumber);
+    UNPROTECT(1); /* new version does not need to be protected */
     R_print.digits = savedigits;
     if ((opts & WARNINCOMPLETE) && localData.isS4)
 	warning(_("deparse of an S4 object will not be source()able"));
