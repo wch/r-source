@@ -5465,3 +5465,8 @@ x <- ts(1:290, start=c(1984,10), freq=12)
 window(x, start=c(2008,9), end=c(2008,9), extend=FALSE)
 window(x, start=c(2008,9), end=c(2008,9), extend=TRUE)
 ## second failed in 2.8.0
+
+
+## deparse(nlines=) should shrink the result (PR#13299)
+stopifnot(length(deparse(quote(foo(1,2,3)), width.cutoff = 20, nlines=7)) ==1)
+## was 7.

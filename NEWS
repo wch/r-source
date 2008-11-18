@@ -229,6 +229,9 @@ BUG FIXES
 	leverage one if they also had residual exactly zero.  This was
 	seen in example(occupationalStatus).
 
+    o	deparse(nlines=) no longer pads short results with blank
+	lines. (PR#13299)
+
 
 
 		CHANGES IN R VERSION 2.8.0
