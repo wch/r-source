@@ -63,8 +63,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   \describe{
     \item{echo:}{logical (\code{TRUE}). Include S code in the
       output file?}
-    \item{keep.source:}{logical (\code{FALSE}).  When echoing, if \code{keep.source == TRUE}
-      the original source is copied to the file.  Otherwise, deparsed source is echoed.}
+    \item{keep.source:}{logical (\code{FALSE}).  When echoing, if
+      \code{keep.source == TRUE} the original source is copied to the file.
+      Otherwise, deparsed source is echoed.}
     \item{eval:}{logical (\code{TRUE}). If \code{FALSE}, the code chunk is not
       evaluated, and hence no text or graphical output produced.}
     \item{results:}{character string (\code{verbatim}).
@@ -101,12 +102,14 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       chunk produces 
       graphical output. Note that only one figure per code chunk can be
       processed this way.}
-    \item{eps:}{logical (\code{TRUE}), indicating whether EPS figures shall be
+    \item{eps:}{logical (\code{TRUE}), indicating whether EPS figures should be
       generated. Ignored if \code{fig = FALSE}.} 
-    \item{pdf:}{logical (\code{TRUE}), indicating whether PDF figures shall be
+    \item{pdf:}{logical (\code{TRUE}), indicating whether PDF figures should be
       generated. Ignored if \code{fig = FALSE}.}
-    \item{width:}{numeric (6), width of figures in inch.}
-    \item{height:}{numeric (6), height of figures in inch.}
+    \item{pdf.version, pdf.encoding:}{passed to \code{\link{pdf}} to set
+      the version and encoding.  Defaults taken fron \code{pdf.options()}.}
+    \item{width:}{numeric (6), width of figures in inches.}
+    \item{height:}{numeric (6), height of figures in inches.}
     \item{expand:}{logical (\code{TRUE}).  Expand references to other chunks
       so that only R code appears in the output file.  If \code{FALSE}, the
       chunk reference (e.g. \code{<<chunkname>>}) will appear.  The 
