@@ -106,7 +106,7 @@ barplot(height, \dots)
   \item{add}{logical specifying if bars should be added to an already
     existing plot; defaults to \code{FALSE}.}
   \item{args.legend}{list of additional arguments to pass to
-    \code{\link{legend()}}; names of the list are used as argument
+    \code{\link{legend}()}; names of the list are used as argument
     names.  Only used if \code{legend.text} is supplied.}
   \item{\dots}{arguments to be passed to/from other methods.  For the
     default method these can include further arguments (such as
