@@ -9,6 +9,7 @@
 %\alias{coef.Arima}
 %\alias{vcov.Arima}
 %\alias{logLik.Arima}
+\concept{ARMA}
 \title{ARIMA Modelling of Time Series}
 \description{
   Fit an ARIMA model to a univariate time series.
