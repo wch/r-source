@@ -340,11 +340,10 @@ RweaveLatex <- function()
 }
 
 RweaveLatexSetup <-
-    function(file, syntax,
-             output=NULL, quiet=FALSE, debug=FALSE, echo=TRUE,
-             eval=TRUE, keep.source=FALSE, split=FALSE,
-             stylepath, pdf=TRUE, eps=TRUE)
+    function(file, syntax, output=NULL, quiet=FALSE, debug=FALSE,
+             stylepath, ...)
 {
+    dots <- list(...)
     if(is.null(output)) {
         prefix.string <- basename(sub(syntax$extension, "", file))
         output <- paste(prefix.string, "tex", sep=".")
@@ -369,14 +368,15 @@ RweaveLatexSetup <-
     } else styfile <- "Sweave"
 
     options <- list(prefix=TRUE, prefix.string=prefix.string,
-                    engine="R", print=FALSE, eval=eval,
-                    fig=FALSE, pdf=pdf, eps=eps,
+                    engine="R", print=FALSE, eval=TRUE,
+                    fig=FALSE, pdf=TRUE, eps=TRUE,
                     width=6, height=6, term=TRUE,
-                    echo=echo, keep.source=keep.source, results="verbatim",
-                    split=split, strip.white="true", include=TRUE,
+                    echo=TRUE, keep.source=FALSE, results="verbatim",
+                    split=FALSE, strip.white="true", include=TRUE,
                     pdf.version=pdf.options()$version,
                     pdf.encoding=pdf.options()$encoding,
                     concordance=FALSE, expand=TRUE)
+    options[names(dots)] <- dots
 
     ## to be on the safe side: see if defaults pass the check
     options <- RweaveLatexOptions(options)

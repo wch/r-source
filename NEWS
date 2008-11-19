@@ -66,6 +66,10 @@ NEW FEATURES
     o	barplot() gains a 'args.legend' argument.  (Wish of PR#13265).
 
 
+    o	RweaveLatexSetup() now accepts all (and not just some) options
+	passed through from Sweave() 
+
+
 DEPRECATED & DEFUNCT
 
     o	allGenerics() is defunct.

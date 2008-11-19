@@ -15,9 +15,7 @@
 RweaveLatex()
 
 RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
-                 debug = FALSE, echo = TRUE, eval = TRUE,
-                 keep.source = FALSE, split = FALSE,
-                 stylepath, pdf = TRUE, eps = TRUE)
+                 debug = FALSE, stylepath, \dots)
 }
 \arguments{
   \item{file}{Name of Sweave source file.}
@@ -31,13 +29,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   \item{debug}{If \code{TRUE}, input and output of all code
     chunks is copied to the console.}
   \item{stylepath}{See \sQuote{Details}.}
-  \item{echo}{set default for option \code{echo}, see details below.}
-  \item{eval}{set default for option \code{eval}, see details below.}
-  \item{keep.source}{set default for option \code{keep.source}, see
-    details below.}
-  \item{split}{set default for option \code{split}, see details below.}
-  \item{pdf}{set default for option \code{pdf}, see details below.}
-  \item{eps}{set default for option \code{eps}, see details below.}
+  \item{\dots}{named values for the options listed in \sQuote{Supported
+      Options}.}
 }
 \details{
   The LaTeX file generated needs to contain
