@@ -374,7 +374,8 @@ RweaveLatexSetup <-
                     width=6, height=6, term=TRUE,
                     echo=echo, keep.source=keep.source, results="verbatim",
                     split=split, strip.white="true", include=TRUE,
-                    pdf.version="1.1", pdf.encoding="default",
+                    pdf.version=pdf.options()$version,
+                    pdf.encoding=pdf.options()$encoding,
                     concordance=FALSE, expand=TRUE)
 
     ## to be on the safe side: see if defaults pass the check
