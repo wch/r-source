@@ -5,6 +5,7 @@
 
 \name{arima.sim}
 \alias{arima.sim}
+\concept{autoregression}
 \title{Simulate from an ARIMA Model}
 \description{
   Simulate from an ARIMA model.
