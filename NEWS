@@ -232,6 +232,11 @@ BUG FIXES
     o	deparse(nlines=) no longer pads short results with blank
 	lines. (PR#13299)
 
+    o	legend(xpd=) now restores 'xpd' correctly.  (PR#12756)
+
+    o	The "formula" method for lines() now works if 'subset' is
+	supplied and no 'data' argument (as that for points() did).
+
 
 
 		CHANGES IN R VERSION 2.8.0

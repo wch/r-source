@@ -35,7 +35,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 
     if(!missing(xpd)) {
         op <- par("xpd")
-        on.exit(par(op))
+        on.exit(par(xpd=op))
         par(xpd=xpd)
     }
     title <- as.graphicsAnnot(title)

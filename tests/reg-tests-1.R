@@ -5470,3 +5470,20 @@ window(x, start=c(2008,9), end=c(2008,9), extend=TRUE)
 ## deparse(nlines=) should shrink the result (PR#13299)
 stopifnot(length(deparse(quote(foo(1,2,3)), width.cutoff = 20, nlines=7)) ==1)
 ## was 7.
+
+
+## legend did not reset xpd correctly (PR#12756)
+par(xpd = FALSE)
+plot(1)
+legend("top", legend="Tops", xpd=NA, inset=-0.1)
+stopifnot(identical(par("xpd"), FALSE))
+## left xpd as NA
+
+
+## lines.formula with 'subset' and no 'data' needed a tweak
+## (R-help, John Field, 20008-11-14)
+x <- 1:5
+y <- c(1,3,NA,2,5)
+plot(y ~ x, type="n")
+lines(y ~ x, subset = !is.na(y), col="red")
+## error in 2.8.0
