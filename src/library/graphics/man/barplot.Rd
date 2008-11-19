@@ -22,7 +22,7 @@ barplot(height, \dots)
         axes = TRUE, axisnames = TRUE,
         cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
         inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0,
-        add = FALSE, \dots)
+        add = FALSE, args.legend = NULL, \dots)
 }
 \arguments{
   \item{height}{either a vector or matrix of values describing the
@@ -105,6 +105,9 @@ barplot(height, \dots)
     relative to the x axis.}
   \item{add}{logical specifying if bars should be added to an already
     existing plot; defaults to \code{FALSE}.}
+  \item{args.legend}{list of additional arguments to pass to
+    \code{\link{legend()}}; names of the list are used as argument
+    names.  Only used if \code{legend.text} is supplied.}
   \item{\dots}{arguments to be passed to/from other methods.  For the
     default method these can include further arguments (such as
     \code{axes}, \code{asp} and \code{main}) and graphical
@@ -183,5 +186,15 @@ barplot(VADeaths, border = "dark blue") % lwd = 2 << not passed
 # log scales (not much sense here):
 barplot(tN, col=heat.colors(12), log = "y")
 barplot(tN, col=gray.colors(20), log = "xy")
+
+# args.legend
+barplot(height = cbind(x = c(465, 91) / 465 * 100,
+                       y = c(840, 200) / 840 * 100,
+                       z = c(37, 17) / 37 * 100),
+        beside = FALSE,
+        width = c(465, 840, 37),
+        col = c(1, 2),
+        legend.text = c("A", "B"),
+        args.legend = list(x = "topleft"))
 }
 \keyword{hplot}

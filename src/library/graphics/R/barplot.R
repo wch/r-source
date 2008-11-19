@@ -25,8 +25,9 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	 xlim = NULL, ylim = NULL, xpd = TRUE, log = "",
 	 axes = TRUE, axisnames = TRUE,
 	 cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
-	 inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0, add = FALSE, ...)
-{
+         inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0, add = FALSE,
+         args.legend = NULL, ...)
+ {
     if (!missing(inside)) .NotYetUsed("inside", error = FALSE)# -> help(.)
 
     if (is.null(space))
@@ -176,9 +177,19 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 		angle <- rev(angle)
 	    }
 	    xy <- par("usr")
-	    legend(xy[2] - xinch(0.1), xy[4] - yinch(0.1),
-		   legend = legend.text, angle = angle, density = density,
-		   fill = legend.col, xjust = 1, yjust = 1)
+            if(is.null(args.legend)) {
+                legend(xy[2] - xinch(0.1), xy[4] - yinch(0.1),
+                       legend = legend.text, angle = angle, density = density,
+                       fill = legend.col, xjust = 1, yjust = 1)
+            } else {
+                args.legend1 <- list(x = xy[2] - xinch(0.1),
+                                     y = xy[4] - yinch(0.1),
+                                     legend = legend.text,
+                                     angle = angle, density = density,
+                                     fill = legend.col, xjust = 1, yjust = 1)
+                args.legend1[names(args.legend)] <- args.legend
+                do.call("legend", args.legend1)
+            }
 	}
 	title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
 	if(axes) axis(if(horiz) 1 else 2, cex.axis = cex.axis, ...)

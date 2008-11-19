@@ -194,9 +194,8 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	z$group <- integer()
     if(is.null(pars$ylim))
 	ylim <- range(z$stats[is.finite(z$stats)],
-		      z$out  [is.finite(z$out)],
-		      if(notch)
-		      z$conf [is.finite(z$conf)])
+		      if(outline) z$out  [is.finite(z$out)],
+		      if(notch) z$conf [is.finite(z$conf)])
     else {
 	ylim <- pars$ylim
 	pars$ylim <- NULL

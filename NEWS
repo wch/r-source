@@ -60,6 +60,11 @@ NEW FEATURES
 	conversion of character vectors to factors (which has happened
 	for many years but was not previously documented).
 
+    o	bxp() now coputes the 'ylim' including the outliers only if
+	'outline = TRUE'.  (Wish of PR#13196)
+
+    o	barplot() gains a 'args.legend' argument.  (Wish of PR#13265).
+
 
 DEPRECATED & DEFUNCT
 
