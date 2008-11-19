@@ -124,7 +124,7 @@ type?topic
   produced by running the LaTeX version of the help page through
   \code{latex}.  You will need to customize the file
   \file{\var{\link[base:Rhome]{R\_HOME}}/bin/helpPRINT.bat} which
-  examples.  A TeX file named \file{\Rdoc.tex} is created in the
+  examples.  A TeX file named \file{Rdoc.tex} is created in the
   current working directory and passed as an argument to \file{helpPRINT.bat}.
 #endif
   The appearance of the output can be customized through a file
