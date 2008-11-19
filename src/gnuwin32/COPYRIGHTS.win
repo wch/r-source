@@ -47,17 +47,9 @@ Based on files which are
 	http://www.ede.com/free/u2nt
 
 
-src/gnuwin32/front-ends/SC_*.h, bdx*.[ch], com_util.[ch], rproxy*.[ch]
-
-	Copyright (C) 1999-2005 Thomas Baier
-	Distributed under the GNU Library General Public License
-	version 2 or later.
-
-
-
 R_HOME/Tcl:
 
-Files compiled and installed from Tcl 8.4.15 and Tk 8.4.15.
+Files compiled and installed from Tcl 8.5.2 and Tk 8.5.2.
 see R_HOME/Tcl/license.terms for the license.
 
     This software is copyrighted by the Regents of the University of
@@ -80,9 +72,9 @@ From trio-1.12 (http://daniel.haxx.se/projects/trio/)
  CONTRIBUTORS ACCEPT NO RESPONSIBILITY IN ANY CONCEIVABLE MANNER.
 
 
-src/gnuwin32/dos_glob.[ch]
+src/gnuwin32/dos_wglob.[ch]
 
-Modified from perl's ext/File/Glob/bsd_glob.[ch].
+(Very much) modified from perl's ext/File/Glob/bsd_glob.[ch].
 
 /*
  * Copyright (c) 1989, 1993
