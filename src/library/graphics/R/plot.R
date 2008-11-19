@@ -229,7 +229,14 @@ function(formula,  data = parent.frame(), ..., subset)
     mf <- eval(m, parent.frame())
     if (!missing(subset)) {
 	s <- eval(m$subset, data, parent.frame())
-	l <- nrow(data)
+        ## need the number of points before subsetting
+	if(!missing(data)) {
+            l <- nrow(data)
+        } else {
+            mtmp <- m
+            mtmp$subset <- NULL
+            l <- nrow(eval(mtmp, parent.frame()))
+        }
 	dosub <- function(x) if (length(x) == l) x[s] else x
 	dots <- lapply(dots, dosub)
     }
