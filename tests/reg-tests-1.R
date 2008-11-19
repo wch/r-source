@@ -5487,3 +5487,13 @@ y <- c(1,3,NA,2,5)
 plot(y ~ x, type="n")
 lines(y ~ x, subset = !is.na(y), col="red")
 ## error in 2.8.0
+
+
+## prettyNum(*, drop0trailing) erronously dropped 0 in '1e10':
+cn <- c("1.107", "2.3120", "3.14e+0", "4.2305400", "120.0",
+        "5.31e-01", "6.3333e-20", "8.1e100", "9.9e+00", "10.1e-0")
+d <- cn != (pcn <- prettyNum(cn, drop0trailing=TRUE))
+stopifnot(identical(pcn[d],
+		    c("2.312", "3.14", "4.23054","120","9.9","10.1")),
+	  identical("-3", prettyNum("-3.0",drop0trailing=TRUE)) )
+## first failed, e.g. for 8.1e100

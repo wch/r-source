@@ -49,7 +49,7 @@ NEW FEATURES
     o	parse(text=z) now marks the encodiing of character strings in
 	Latin-1 and UTF-8 locales if 'z' is of known encoding (that is
 	all elements are either ASCII or marked as Latin-1 or UTF-8).
-	
+
     o	parse_Rd(), an experimental parser for Rd files, has been added.
 
     o	sprintf() does stricter error checking on input formats to
@@ -67,7 +67,7 @@ NEW FEATURES
 
 
     o	RweaveLatexSetup() now accepts all (and not just some) options
-	passed through from Sweave() 
+	passed through from Sweave()
 
 
 DEPRECATED & DEFUNCT
@@ -223,7 +223,7 @@ BUG FIXES
 	to monthly series.  (PR#13272)
 
     o	Offline help on a Unix-alike now works even if options
-	"latexcmd" and "dvipscmd" contain spaces 
+	"latexcmd" and "dvipscmd" contain spaces
 	(e.g. "dvips -Pmy_printer").
 
 	Informative error messages are given if running latex or dvips
@@ -248,6 +248,9 @@ BUG FIXES
 
     o	Sweave() now takes the defaults for the options 'pdf.version'
 	and 'pdf.encoding' of its RweaveLatex driver from pdf.options().
+
+    o	prettyNum(x, drop0trailing=TRUE) wrongly treated "1.1e20"
+	and hence str() did as well, in 2.8.0 only.
 
 
 

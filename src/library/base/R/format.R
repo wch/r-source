@@ -332,10 +332,12 @@ prettyNum <-
 			  P0("\\1",small.mark), A.[i.sml])
     }
     if(drop0trailing) {
-## Actually it may make sense:
-## 	if(preserve.width == "common" && length(x) > 1)
-## 	    warning("Dubious 'drop0trailing = TRUE' when 'preserve.width' is \"common\"")
-	A.[!iN] <- sub("(e[+-])?0+$", '', A.[!iN]) # also drop "e+00"
+	a <- A.[!iN]
+	if(length(hasE <- grep("e", a, fixed=TRUE))) {
+	    a[ hasE] <- sub("e[+-]0+$", '', a[ hasE]) # also drop "e+00"
+	    a[-hasE] <- sub("0+$",	'', a[-hasE])
+	} else a <- sub("0+$", '', a)
+	A.[!iN] <- a
 	## iN := TRUE for those A.[]  which are ""
 	iN <- !nzchar(A.)
     }
