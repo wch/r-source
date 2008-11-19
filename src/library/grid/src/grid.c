@@ -484,8 +484,18 @@ SEXP L_downviewport(SEXP name, SEXP strict)
 	 * list works 
 	 */
 	setGridStateElement(dd, GSS_VP, vp);
+        UNPROTECT(1);    
+    } else {
+        /* Important to have an error here, rather than back in
+         * R code AFTER this point.  Otherwise, an unsuccessful
+         * downViewport() will be recorded on the engine DL!
+         */
+        char msg[1024];
+        sprintf(msg, "Viewport '%s' was not found", 
+                CHAR(STRING_ELT(name, 0)));
+        UNPROTECT(1);    
+        error(_(msg));
     }
-    UNPROTECT(1);    
     return VECTOR_ELT(found, 0);    
 }
 
@@ -618,8 +628,19 @@ SEXP L_downvppath(SEXP path, SEXP name, SEXP strict)
 	 * list works 
 	 */
 	setGridStateElement(dd, GSS_VP, vp);
+        UNPROTECT(1);    
+    } else {
+        /* Important to have an error here, rather than back in
+         * R code AFTER this point.  Otherwise, an unsuccessful
+         * downViewport() will be recorded on the engine DL!
+         */
+        char msg[1024];
+        sprintf(msg, "Viewport '%s' was not found", 
+                CHAR(STRING_ELT(name, 0)));
+        UNPROTECT(1);    
+        error(_(msg));
     }
-    UNPROTECT(1);    
+    return VECTOR_ELT(found, 0);    
     return VECTOR_ELT(found, 0);    
 }
 

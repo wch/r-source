@@ -1520,6 +1520,14 @@ SEXP attribute_hidden do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
      * If there is an error or user-interrupt in the above
      * evaluation, dd->recordGraphics is set to TRUE
      * on all graphics devices (see GEonExit(); called in errors.c)
+     * 
+     * NOTE: if someone uses try() around this call and there
+     * is an error, then dd->recordGraphics stays FALSE, so
+     * subsequent pages of graphics output are NOT saved on
+     * the display list.  A workaround is to deliberately
+     * force an error in a graphics call (e.g., a grid popViewport()
+     * while in the ROOT viewport) which will reset dd->recordGraphics
+     * to TRUE as per the comment above.
      */
     dd->recordGraphics = record;
     if (GErecording(call, dd)) {
@@ -1542,6 +1550,14 @@ SEXP attribute_hidden do_dotcallgr(SEXP call, SEXP op, SEXP args, SEXP env)
      * If there is an error or user-interrupt in the above
      * evaluation, dd->recordGraphics is set to TRUE
      * on all graphics devices (see GEonExit(); called in errors.c)
+     * 
+     * NOTE: if someone uses try() around this call and there
+     * is an error, then dd->recordGraphics stays FALSE, so
+     * subsequent pages of graphics output are NOT saved on
+     * the display list.  A workaround is to deliberately
+     * force an error in a graphics call (e.g., a grid popViewport()
+     * while in the ROOT viewport) which will reset dd->recordGraphics
+     * to TRUE as per the comment above.
      */
     dd->recordGraphics = record;
     if (GErecording(call, dd)) {

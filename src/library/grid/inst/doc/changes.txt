@@ -13,6 +13,14 @@ Changes from grid_2.8.0 to grid_2.9.0:
 
 3.  Exposed is.grob() and valid.just() via the NAMESPACE.
 
+4.  Fixed bug in downViewport(), which meant that unsuccessful
+    downViewport()s were still being recorded on the graphics
+    engine display list.  This could cause interesting results
+    when a window is resized (i.e., when the display list is 
+    replayed).  
+
+    Bug reported by Felix Andrews.
+
 
 Changes from grid_2.7.0 to grid_2.8.0:
 ------------------------------------

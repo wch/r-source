@@ -138,11 +138,14 @@ downViewport.default <- function(name, strict=FALSE, recording=TRUE) {
 }
 
 downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
-  if (name$n == 1)
-    result <- grid.Call.graphics("L_downviewport", name$name, strict)
-  else
-    result <- grid.Call.graphics("L_downvppath", name$path, name$name, strict)
-  if (result) {
+    if (name$n == 1)
+        result <- grid.Call.graphics("L_downviewport", name$name, strict)
+    else
+        result <- grid.Call.graphics("L_downvppath",
+                                     name$path, name$name, strict)
+    # If the downViewport() fails, there is an error in C code
+    # so none of the following code will be run
+  
     # Enforce the gpar settings for the viewport
     pvp <- grid.Call("L_currentViewport")
     # Do not call set.gpar because set.gpar accumulates cex
@@ -153,11 +156,7 @@ downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
         attr(name, "depth") <- result
         record(name)
     }
-  } else {
-    stop(gettextf("Viewport '%s' was not found", as.character(name)),
-         domain = NA)
-  }
-  invisible(result)
+    invisible(result)
 }
 
 # Similar to down.viewport() except it starts searching from the
