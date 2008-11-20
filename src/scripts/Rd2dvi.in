@@ -13,7 +13,7 @@ version="Rd2dvi ${version}
 
 Copyright (C) 2000-2008 The R Core Development Team.
 This is free software; see the GNU General Public License version 2
-or later for copying conditions.  There is NO warranty." 
+or later for copying conditions.  There is NO warranty."
 
 usage="Usage: R CMD Rd2dvi [options] files
 
@@ -99,7 +99,7 @@ while test -n "${1}"; do
 	    preview=${R_PDFVIEWER}
 	elif test "${R_OSTYPE}" = "windows"; then
 	    preview=open
-        else
+	else
 	    preview=false
 	fi
       fi
@@ -109,7 +109,7 @@ while test -n "${1}"; do
     --title=*)
       title=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     -o)
-      if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then      
+      if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then
 	output="${2}"; shift
       else
 	echo "ERROR: option '${1}' requires an argument"
@@ -165,10 +165,10 @@ Rdconv_dir_or_files_to_LaTeX () {
   if test -d ${1}; then
     if ${only_meta}; then
       files=
-    else  
+    else
       files=`ls ${1}/*.[Rr]d`
       if test -d ${1}/${OSdir}; then
-        files="${files} `ls ${1}/${OSdir}/*.[Rr]d`"
+	files="${files} `ls ${1}/${OSdir}/*.[Rr]d`"
       fi
       files=`LC_ALL=C ${echo} ${files} | sort`
     fi
@@ -190,8 +190,8 @@ Rd_DESCRIPTION_to_LaTeX () {
   ## list.
   ## Usage:
   ##   Rd_DESCRIPTION_to_LaTeX FILE
-  
-  fields=`${SED} '/^[ 	]/d; s/^\([^:]*\):.*$/\1/' $1`
+
+  fields=`${SED} '/^[	]/d; s/^\([^:]*\):.*$/\1/' $1`
   ${echo} "\\begin{description}"
   ${echo} "\\raggedright{}"
   ## this throws warnings on Solaris sed as input is missing newline
@@ -199,8 +199,8 @@ Rd_DESCRIPTION_to_LaTeX () {
     text=`get_dcf_field ${f} ${1} | \
       tr '\n' ' ' | \
       ${SED} "s/\"\([^\"]*\)\"/\\\`\\\`\\1''/g
-                  s/\\\\\\\\/\\\\\\\\textbackslash /g
-                  s/{/\\\\\\\\{/g
+		  s/\\\\\\\\/\\\\\\\\textbackslash /g
+		  s/{/\\\\\\\\{/g
 		  s/}/\\\\\\\\}/g" 2>/dev/null`
     ff=`echo ${f} | ${SED} s/_/\\\\\\\\_/g`
     ${echo} "\\item[${ff}] \\AsIs{${text}}"
@@ -237,7 +237,9 @@ if test -d "${1}"; then
     package_name=`get_dcf_field Package "${1}/DESCRIPTION.in"`
     title=${title-"Package \`${package_name}'"}
     dir=${1}/man
-    test -z "${output}" && output="`basename ${1}`.${out_ext}"    
+    test -z "${output}" && output="`basename ${1}`.${out_ext}"
+    ## base package has things like %in% that sometimes cause trouble
+    test ${package_name} == "base" && index=false
   else
     if test -d ${1}/man; then
       dir=${1}/man
@@ -270,7 +272,7 @@ title=${title-$title1}
 if test "${enc}"="unknown"; then
   if test -n "$pkg_enc"; then
     enc=${pkg_enc}
-    ${verbose} "using package encoding ${enc}" 
+    ${verbose} "using package encoding ${enc}"
   fi
 fi
 
@@ -341,7 +343,7 @@ EOF
 \\end{titlepage}
 EOF
 fi
-  
+
 ## Rd2.tex part 2: body
 if test "${is_bundle}" = no; then
   ${only_meta} || ${echo} ${toc} >> ${build_dir}/Rd2.tex
@@ -359,7 +361,7 @@ EOF
     ${echo} "\\chapter{Package \`${p}'}" >> ${build_dir}/Rd2.tex
     if test -f ${1}/${p}/DESCRIPTION.in; then
       Rd_DESCRIPTION_to_LaTeX ${1}/${p}/DESCRIPTION.in \
-        >> ${build_dir}/Rd2.tex
+	>> ${build_dir}/Rd2.tex
     fi
     Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${1}/${p}/man
     ${echo} "\\clearpage{}" >> ${build_dir}/Rd2.tex
