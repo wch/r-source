@@ -39,7 +39,7 @@ $version = $1;
 $OSdir = $R::Vars::OSTYPE;
 ## </NOTE>
 
-my @knownoptions = ("debug|d", "type|t:s", "h|help", "v|version", 
+my @knownoptions = ("debug|d", "type|t:s", "h|help", "v|version",
 		    "o|output:s", "os|OS=s" => \$OSdir, "encoding=s");
 GetOptions (@knownoptions) || &usage();
 &R_version($name, $version) if $opt_v;
@@ -61,7 +61,7 @@ $enc = $opt_encoding if $opt_encoding;
 
 my %types_and_exts = ("txt", "",
 		      "html", ".html",
-		      "latex", ".tex",		      
+		      "latex", ".tex",
 		      "Sd", ".d",
 		      "Ssgm", ".sgml",
 		      "example", ".R");
@@ -108,7 +108,7 @@ and 'example' (extract R code in the examples).
 The default is to send output to stdout, which is also given by '-o -'.
 Using '-o ""' will choose an output filename by removing a '.Rd'
 extension from FILE and adding a suitable extension.
-  
+
 Email bug reports to <r-bugs\@r-project.org>.
 END
   exit 0;

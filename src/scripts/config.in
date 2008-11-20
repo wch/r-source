@@ -40,37 +40,37 @@ Options:
   -h, --help            print short help message and exit
   -v, --version         print 'config' version info and exit
       --cppflags        print pre-processor flags required to compile
-                        a program using R as a library
+			a program using R as a library
       --ldflags         print linker flags needed for linking against
-                        the R library
+			the R library
 
 Variables:
-  BLAS_LIBS     flags needed for linking against external BLAS libraries 
+  BLAS_LIBS     flags needed for linking against external BLAS libraries
   CC            C compiler command
   CFLAGS        C compiler flags
   CPICFLAGS     special flags for compiling C code to be turned into a
-                shared library 
+		shared library
   CPP           C preprocessor
   CPPFLAGS      C/C++ preprocessor flags, e.g. -I<dir> if you have
-                headers in a nonstandard directory <dir> 
+		headers in a nonstandard directory <dir>
   CXX           C++ compiler command
   CXXCPP        C++ preprocessor
   CXXFLAGS      C++ compiler flags
   CXXPICFLAGS   special flags for compiling C++ code to be turned into a
-                shared library
+		shared library
   DYLIB_LD      command for linking dynamic libraries which contain
-                object files from a C or Fortran compiler only
+		object files from a C or Fortran compiler only
   DYLIB_LDFLAGS
-                special flags used by DYLIB_LD
+		special flags used by DYLIB_LD
   F77           Fortran 77 compiler command
   FFLAGS        Fortran 77 compiler flags
   FLIBS         linker flags needed to link Fortran code
   FPICFLAGS     special flags for compiling Fortran code to be turned
-                into a shared library 
+		into a shared library
   FC            Fortran 9x compiler command
   FCFLAGS       Fortran 9x compiler flags
   FCPICFLAGS    special flags for compiling Fortran 9x code to be turned
-                into a shared library 
+		into a shared library
   JAR           Java archive tool command
   JAVA          Java interpreter command
   JAVAC         Java compiler command
@@ -81,25 +81,25 @@ Variables:
   LAPACK_LIBS   flags needed for linking against external LAPACK libraries
   LIBnn         location for libraries, e.g. 'lib' or 'lib64' on this platform
   LDFLAGS       linker flags, e.g. -L<dir> if you have libraries in a
-                nonstandard directory <dir> 
+		nonstandard directory <dir>
   OBJC          Objective C compiler command
   OBJCFLAGS     Objective C compiler flags
   MAKE          Make command
   SAFE_FFLAGS   Safe (as conformant as possible) Fortran 77 compiler flags
   SHLIB_CFLAGS  additional CFLAGS used when building shared libraries
   SHLIB_CXXLD   command for linking shared libraries which contain
-                object files from a C++ compiler 
+		object files from a C++ compiler
   SHLIB_CXXLDFLAGS
-                special flags used by SHLIB_CXXLD
-  SHLIB_FFLAGS  additional FFLAGS used when building shared libraries 
+		special flags used by SHLIB_CXXLD
+  SHLIB_FFLAGS  additional FFLAGS used when building shared libraries
   SHLIB_LD      command for linking shared libraries which contain
-                object files from a C or Fortran compiler only 
+		object files from a C or Fortran compiler only
   SHLIB_LDFLAGS
-                special flags used by SHLIB_LD
+		special flags used by SHLIB_LD
   SHLIB_FCLD, SHLIB_FCLDFLAGS
-                ditto when using Fortran 9x
+		ditto when using Fortran 9x
   TCLTK_CPPFLAGS
-                flags needed for finding the tcl.h and tk.h headers
+		flags needed for finding the tcl.h and tk.h headers
   TCLTK_LIBS    flags needed for linking against the Tcl and Tk libraries
 
 Report bugs to <r-bugs@r-project.org>."
@@ -157,34 +157,34 @@ while test -n "${1}"; do
       echo "${version}"; exit 0 ;;
     --cppflags)
       if test -z "${LIBR}"; then
-        if test -z "${STATIC_LIBR}"; then
-          echo "R was not built as a library" >&2
+	if test -z "${STATIC_LIBR}"; then
+	  echo "R was not built as a library" >&2
 	else
-          echo "${includes}"
-        fi
+	  echo "${includes}"
+	fi
       else
-        echo "${includes}"
+	echo "${includes}"
       fi
       exit 0
       ;;
     --ldflags)
       if test -z "${LIBR}"; then
-        if test -z "${STATIC_LIBR}"; then
-          echo "R was not built as a library" >&2
+	if test -z "${STATIC_LIBR}"; then
+	  echo "R was not built as a library" >&2
 	else
-          echo "${STATIC_LIBR}"
-        fi
+	  echo "${STATIC_LIBR}"
+	fi
       else
-        echo "${LIBR}"
+	echo "${LIBR}"
       fi
       exit 0
       ;;
     *)
       if test -z "${var}"; then
-        var="${1}"
+	var="${1}"
       else
-        echo "ERROR: cannot query more than one variable" >&2
-        exit 1
+	echo "ERROR: cannot query more than one variable" >&2
+	exit 1
       fi
       ;;
   esac
@@ -206,8 +206,8 @@ ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn"
 
 var_ok=no
 for v in ${ok_c_vars} ${ok_cxx_vars} ${ok_dylib_vars} ${ok_f77_vars} \
-         ${ok_objc_vars} ${ok_java_vars} \
-         ${ok_ld_vars} ${ok_shlib_vars} ${ok_tcltk_vars} \
+	 ${ok_objc_vars} ${ok_java_vars} \
+	 ${ok_ld_vars} ${ok_shlib_vars} ${ok_tcltk_vars} \
 	 ${ok_other_vars}; do
   if test "${var}" = "${v}"; then
     var_ok=yes

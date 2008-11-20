@@ -28,10 +28,10 @@ Options:
   -h, --help		print short help message and exit
   -v, --version		print INSTALL version info and exit
       --configure-args=ARGS
-                        set arguments for the package's configure script
+			set arguments for the package's configure script
 			(if any)
       --configure-vars=VARS
-                        set variables for the configure script (if any)
+			set variables for the configure script (if any)
   -c, --clean		remove files created during installation
       --preclean	remove files created during a previous run
   -d, --debug		turn on shell and build-help debugging
@@ -43,8 +43,8 @@ Options:
       --use-zip		combine '--use-zip-data' and '--use-zip-help'
       --fake		do minimal install for testing purposes
       --no-lock		install on top of any existing installation
-                        without using a lock directory
-      --libs-only      	only install the libs directory
+			without using a lock directory
+      --libs-only	only install the libs directory
       --build           build binary tarball(s) of the installed package(s)
 
 Report bugs to <r-bugs@r-project.org>."
@@ -132,7 +132,7 @@ get_packages () {
       if test -d "${1}/${p}"; then
 	bundle_pkgs="${bundle_pkgs} \"`cd "${1}/${p}" && ${GETWD}`\""
       else
-        warning "incorrect Contains metadata for bundle '${bundle_name}': there is no package '${p}'"
+	warning "incorrect Contains metadata for bundle '${bundle_name}': there is no package '${p}'"
 	warning "skipping installation of bundle '${bundle_name}'"
 	bundle_pkgs=
 	break
@@ -142,7 +142,7 @@ get_packages () {
       ## Create the package level DESCRIPTION files from the bundle
       ## level DESCRIPTION and the package level DESCRIPTION.in ones.
       echo "tools:::.vcreate_bundle_package_descriptions(\"${1}\", \"${contains}\")" | \
-        R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
+	R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
       ## Should really check on the exit status ...
       pkgs="${pkgs} ${bundle_pkgs}"
     fi
@@ -218,7 +218,7 @@ while test -n "${1}"; do
       shargs="${shargs} ${1}"
       ;;
     --preclean)
-      preclean=true 
+      preclean=true
       shargs="${shargs} --preclean"
       ;;
     -d|--debug)
@@ -298,7 +298,7 @@ while test -n "${1}"; do
 	fi
       elif test -f "${1}/DESCRIPTION"; then
 	##DBG echo " in 'R INSTALL' -f DESCRIPTION --> 'get_packages ${1}'"
-        get_packages "${1}"
+	get_packages "${1}"
       else
 	warning "invalid package '${1}'"
       fi
@@ -474,7 +474,7 @@ do_install_source () {
     fi
     export R_LIBS
   fi
-  
+
 
   Type=`get_dcf_field Type DESCRIPTION`
   if test "$Type" = "Frontend" ; then
@@ -491,7 +491,7 @@ do_install_source () {
 	fi
       elif test -f ./configure ; then
 	error "'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'"
-        do_exit_on_error
+	do_exit_on_error
       fi
     fi
     if test -f ./Makefile ; then
@@ -538,24 +538,24 @@ do_install_source () {
       mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
     else
       if ${more_than_libs}; then
-        ## this is only used for recommended packages installed from .tgz
-        rm -rf "${R_PACKAGE_DIR}"
+	## this is only used for recommended packages installed from .tgz
+	rm -rf "${R_PACKAGE_DIR}"
       fi
     fi
     ${MKDIR_P} "${R_PACKAGE_DIR}"
     ## Preserve man pages to speed up installation?  Only makes sense
     ## if we install from a non-temporary directory.
     if ${lock} && test "`cd .. && ${GETWD}`" != \
-            "`cd \"${tmpdir}\" && ${GETWD}`"; then
+	    "`cd \"${tmpdir}\" && ${GETWD}`"; then
       (cd "${lockdir}/${R_PACKAGE_NAME}" \
-          && ${TAR} cf - R-ex help html latex 2>/dev/null) | \
+	  && ${TAR} cf - R-ex help html latex 2>/dev/null) | \
 	(cd "${R_PACKAGE_DIR}" && ${TAR} xf -)
     fi
     ## check if we are in a bundle so we can back out the whole bundle
     if grep "^Bundle:" DESCRIPTION >/dev/null; then
       if ${tar_up} ; then
-        error "cannot build (nor INSTALL) binary versions of bundles"
-        do_exit_on_error
+	error "cannot build (nor INSTALL) binary versions of bundles"
+	do_exit_on_error
       fi
       bundlepkg=`get_dcf_field Contains ../DESCRIPTION`
     else
@@ -567,10 +567,10 @@ do_install_source () {
     if test -d src; then
       cd src
       if test -f Makefile; then
-        ${MAKE} clean
+	${MAKE} clean
       else
 	## we will be using SHLIB --preclean
-        rm -f *@SHLIB_EXT@
+	rm -f *@SHLIB_EXT@
       fi
       cd ..
     fi
@@ -638,7 +638,7 @@ do_install_source () {
       fi
       eval ${MAKE} ${makefiles} \
 	&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
-        || has_error=true; \
+	|| has_error=true; \
       cd ..
     else
       cd src;
@@ -647,7 +647,7 @@ do_install_source () {
       if test -r Makevars; then
 	allfiles="Makevars ${srcs}"
       else
-        allfiles=${srcs}
+	allfiles=${srcs}
       fi
       archs=`(cd ${R_HOME}/bin/exec; ls)`
       R_ARCH_keep=${R_ARCH}
@@ -663,7 +663,7 @@ do_install_source () {
 	    && cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
 	    || has_error=true;
 	  chmod 755 "${R_PACKAGE_DIR}/libs${R_ARCH}/"*
-        else
+	else
 	  for arch in ${archs}; do
 	    rm -f *.o *.so *.sl *.dylib
 	    if test "${arch}" = "R"; then
@@ -686,7 +686,7 @@ do_install_source () {
 	    fi
 	  done
 	  R_ARCH=${R_ARCH_keep}
-        fi
+	fi
       else
 	warning "no source files found"
       fi
@@ -707,22 +707,22 @@ do_install_source () {
       rm -f "${R_PACKAGE_DIR}/R/"*
       ## this uses the locale to find a suitable charset
       echo "tools:::.install_package_code_files(\".\", \"${R_PACKAGE_DIR}\")" | \
-        R_DEFAULT_PACKAGES=NULL LC_COLLATE=C "${R_EXE}" --vanilla >/dev/null
+	R_DEFAULT_PACKAGES=NULL LC_COLLATE=C "${R_EXE}" --vanilla >/dev/null
       if test ${?} -ne 0; then
-        error "unable to collate files for package '${pkg_name}'"
-        do_exit_on_error
+	error "unable to collate files for package '${pkg_name}'"
+	do_exit_on_error
       fi
     if test -f "R/sysdata.rda"; then
       echo "tools:::sysdata2LazyLoadDB(\"R/sysdata.rda\", \"${R_PACKAGE_DIR}/R\")" | \
-        R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla > /dev/null ; \
+	R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla > /dev/null ; \
       if test ${?} -ne 0; then \
-        error "unable to build sysdata DB for package '${pkg_name}'" ; \
-        do_exit_on_error ; \
+	error "unable to build sysdata DB for package '${pkg_name}'" ; \
+	do_exit_on_error ; \
       fi ; \
     fi
     if ${fake}; then
       if test -f NAMESPACE; then
-        (echo; echo ".onLoad <- .onAttach <- function(lib, pkg) NULL") >> \
+	(echo; echo ".onLoad <- .onAttach <- function(lib, pkg) NULL") >> \
 	  "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
 	## <NOTE>
 	## Tweak fake installation to provide an 'empty' useDynLib() for
@@ -733,10 +733,10 @@ do_install_source () {
 	## really meant to work ...
 	${SED} -e 's/useDynLib.*/useDynLib("")/' NAMESPACE > \
 	  "${R_PACKAGE_DIR}/NAMESPACE"
-        ## </NOTE>
+	## </NOTE>
       else
-        (echo; echo ".First.lib <- function(lib, pkg) NULL") >> \
-          "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
+	(echo; echo ".First.lib <- function(lib, pkg) NULL") >> \
+	  "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
       fi
     fi
   fi
@@ -758,7 +758,7 @@ do_install_source () {
       ## code in the package, so ensure the package we have just
       ## installed is on the library path.
       echo "options(warn=1); invisible(.libPaths(c(\"${lib}\", .libPaths()))); tools:::data2LazyLoadDB(\"${R_PACKAGE_NAME}\", \"${lib}\")" | \
-        R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" --vanilla > /dev/null
+	R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" --vanilla > /dev/null
     if test ${?} -ne 0; then
       error "lazydata failed for package '${pkg_name}'"
       do_exit_on_error
@@ -799,13 +799,13 @@ do_install_source () {
     message "inst"
     cp -r inst/* "${R_PACKAGE_DIR}" || \
       (cd inst && ${TAR} cf - . | \
-        (cd "${R_PACKAGE_DIR}" && ${TAR} xf -))
+	(cd "${R_PACKAGE_DIR}" && ${TAR} xf -))
   fi
 
-  if test -r install.R; then 
+  if test -r install.R; then
       warning "use of install.R is no longer supported"
   fi
-  if test -r R_PROFILE.R; then 
+  if test -r R_PROFILE.R; then
       warning "use of R_PROFILE.R is no longer supported"
   fi
   parse_description_field SaveImage
@@ -866,12 +866,12 @@ do_install_source () {
 	  if test -d R-ex; then
 	    (cd R-ex; ${R_ZIPCMD} -q -m Rex *.R)
 	  fi
-          if test -d help; then
+	  if test -d help; then
 	    (cd help; ${R_ZIPCMD} -q -m Rhelp * -x AnIndex);
 	  fi
 	  if test -d latex; then
-            (cd latex; ${R_ZIPCMD} -q -m Rhelp *.tex)
-          fi)
+	    (cd latex; ${R_ZIPCMD} -q -m Rhelp *.tex)
+	  fi)
       fi
     fi
   else
@@ -889,7 +889,7 @@ do_install_source () {
   ## Install a dump of the parsed NAMESPACE file
   if test -f NAMESPACE && test "${fake}" != "true"; then
       echo "tools:::.install_package_namespace_info(\".\", \"${R_PACKAGE_DIR}\")" | \
-        R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
+	R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
     if test ${?} -ne 0; then
       error "installing namespace metadata failed"
       do_exit_on_error
@@ -913,10 +913,10 @@ do_install_source () {
     if test -d src; then
       cd src
       if test -f Makefile; then
-        ${MAKE} clean
+	${MAKE} clean
       else
 	## we used SHLIB --clean
-        rm -f *@SHLIB_EXT@
+	rm -f *@SHLIB_EXT@
       fi
       cd ..
     fi
@@ -1047,10 +1047,10 @@ do_cleanup () {
     chmod 644 "${lib}/R.css" 2>/dev/null
     if test "${lib}" = "`cd \"${R_HOME}/library\" && ${GETWD}`"; then
       cat "${R_HOME}"/library/*/CONTENTS \
-        > "${R_DOC_DIR}"/html/search/index.txt
+	> "${R_DOC_DIR}"/html/search/index.txt
       if ${build_help} && test "${NO_PERL5}" = "false"; then
-        echo "tools:::unix.packages.html(.Library, docdir=\"${R_DOC_DIR}\")" | \
-          R_DEFAULT_PACKAGES=NULL LC_COLLATE=C "${R_EXE}" --vanilla >/dev/null
+	echo "tools:::unix.packages.html(.Library, docdir=\"${R_DOC_DIR}\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C "${R_EXE}" --vanilla >/dev/null
       fi
     fi
   fi

@@ -55,7 +55,7 @@ while test -n "${1}"; do
     *=*)
       argn=`echo "${1}" | sed -e 's/=.*//'`
       argv=`echo "${1}" | \
-        sed -e 's/[^=]*=//; s/^\\"//; s/\\"$//; s/\\"/\\\\"/g'`
+	sed -e 's/[^=]*=//; s/^\\"//; s/\\"$//; s/\\"/\\\\"/g'`
       MAKEFLAGS="${MAKEFLAGS} ${argn}=\"${argv}\""
       ;;
     *)

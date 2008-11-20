@@ -61,10 +61,10 @@ fi
 
 if test -d "${lib}" -a -w "${lib}"; then
   lib=`cd "${lib}" && ${GETWD}`
-else    
+else
   echo "ERROR: cannot cd to or remove from directory '${lib}'"
   exit 2
-fi    
+fi
 
 cd "${lib}"
 for pkg in ${pkgs}; do

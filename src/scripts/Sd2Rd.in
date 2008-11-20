@@ -39,12 +39,12 @@ Options:
   -v, --version		print Sd2Rd version info and exit
   -n			render examples non-executable by wrapping them
 			into a \\dontrun{} environment
-  -x			(S3 docs) interpret all single-quoted names 
-                        as code names
+  -x			(S3 docs) interpret all single-quoted names
+			as code names
 
 Email bug reports to <r-bugs\@r-project.org>.
 END
-  exit 0; 
+  exit 0;
 }
 
 @knownoptions = ("v|version", "h|help", "n", "x");
@@ -57,7 +57,7 @@ GetOptions(@knownoptions) || &usage();
 ## S3-style (nroff) or S4-style (SGML spec).
 if(@lines[0] =~ /^<!doctype/) { doS4(); } else { doS3(); }
 exit 0;
- 
+
 sub doS3 {
   $braceLevel = 0;
   $inReferences = 0;
@@ -77,7 +77,7 @@ sub doS3 {
     my @word = split;
 
     if (/^\s*$/) { &output("\n"); }
-    if (/^[^.]/) { 
+    if (/^[^.]/) {
       if ($underlineNext) {
 	$_ = "\\emph{" . $_ ."}";
 	$underlineNext = 0;
@@ -133,7 +133,7 @@ sub doS3 {
       push(@aliases, $word[1]);
     }
     if (/^\.(IP|PP)/) { &output("\n"); }
-    if (/^\.KW/) { 
+    if (/^\.KW/) {
       if ($braceLevel > 0) {
 	&section(0, "");
 	$braceLevel = 0;
@@ -146,7 +146,7 @@ sub doS3 {
     }
     if (/^\.RC/) {
       if ($needVal) {
-	$needVal = 0;	    
+	$needVal = 0;
 	&section(0, "\\value\{\n$output\n");
 	$doprint = 1;
       }
@@ -280,7 +280,7 @@ sub substitute {
       $inCode = 1;
     }
     s/\`([^\']*)\'$/\\code{$1}/g;
-    s/\`([^\']*)\'([^\'])/\\code{$1}$2/g;  
+    s/\`([^\']*)\'([^\'])/\\code{$1}$2/g;
   }
   if ($inReferences) {
     s/([0-9])-([0-9])/$1--$2/g;
@@ -295,19 +295,19 @@ sub section {
     print("\\value\{\n$output\n\}\n");
     $needVal = 0;
   }
-  print("$text\n") if $text;    
+  print("$text\n") if $text;
   $braceLevel = $level + 1;
   $inReferences = 0;
   $inVerbatim = 0;
   $inSeeAlso = 0;
-  $doprint = 1;    
+  $doprint = 1;
 }
 
 sub paragraph {
   my($name) = @_;
   &output("\n\\bold\{$name.\} ");
 }
-    
+
 sub output {
   my($text) = @_;
   if ($doprint) {
@@ -369,7 +369,7 @@ sub get_group
     my $body;
     my $rest;
 
-    die "not at beginning of a group in |$text|" unless 
+    die "not at beginning of a group in |$text|" unless
 	$text =~ /^\s*<s-(.+?)>/s;
     my $type = $1;
     my $tt = $type;
@@ -377,7 +377,7 @@ sub get_group
     if($text =~ /^\s*<s-\Q$type\E>(.*?)<\/s-$tt>(.*)/s) {
 	$body = $1;
 	$rest = $2;
-    } else { 
+    } else {
 	warn "no match for 's-$tt'";
 	$text =~ /^\s*<s-\Q$type\E>\s*(.*)/s;
 	$body = $1;
@@ -405,7 +405,7 @@ sub process_group {
 	print "\\title{\n  $text\n}\n";
 
     } elsif ($type eq "description") {
-	print "\\description{\n", sub4($text), "\n}\n";	
+	print "\\description{\n", sub4($text), "\n}\n";
 
     } elsif ($type eq "usage") {
 	## new-style usage is not catered for here: no examples seen
@@ -413,9 +413,9 @@ sub process_group {
 	if ($text =~ /^\s*<s-old-style-usage>\s*(.*?)\s*<\/s-old-style-usage>/s) {
 	    $text = $1;
 	}
-	print "\\usage{\n$text\n}\n";	
+	print "\\usage{\n$text\n}\n";
 
-    } elsif ($type eq "args" || $type eq "args-optional" 
+    } elsif ($type eq "args" || $type eq "args-optional"
 	     || $type eq "args-required" ) {
 	if(!$InArgs) {
 	    print "\\arguments{\n";
@@ -452,10 +452,10 @@ sub process_group {
 	print "}\n";
 
     } elsif ($type eq "details") {
-	print "\\details{\n", sub4($text), "\n}\n";	
+	print "\\details{\n", sub4($text), "\n}\n";
 
     } elsif ($type eq "see") {
- 	print "\\seealso{\n", makelinks($text), "\n}\n";	
+	print "\\seealso{\n", makelinks($text), "\n}\n";
 
     } elsif ($type eq "examples") {
 	print "\\examples{\n";
@@ -465,33 +465,33 @@ sub process_group {
 	print "}\n";
 
     } elsif ($type eq "note" || $type eq "notes") {
-	print "\\note{\n", sub4($text), "\n}\n";	
+	print "\\note{\n", sub4($text), "\n}\n";
 
     } elsif ($type eq "bugs") {
- 	print "\\section{Bugs}{\n", sub4($text), "\n}\n";	
+	print "\\section{Bugs}{\n", sub4($text), "\n}\n";
 
     } elsif ($type eq "references") {
-	print "\\references{\n", inref(sub4($text)), "\n}\n";	
+	print "\\references{\n", inref(sub4($text)), "\n}\n";
 
     } elsif ($type =~ /^section\s+name\s*=\s*(.*)/) {
 	my $name = $1;
 	$name =~ s/\s*\"(.*?)\"/$1/o;
 	$name =~ s/^\s*//o;
 	if ($name =~ /^reference$/io) {
-	    print "\\references{\n", inref(sub4($text)), "\n}\n";	
+	    print "\\references{\n", inref(sub4($text)), "\n}\n";
 	} elsif ($name =~ /^source$/io) {
-	    print "\\source{\n", inref(sub4($text)), "\n}\n";	
+	    print "\\source{\n", inref(sub4($text)), "\n}\n";
 	} elsif ($name =~ /^note$/io) {
-	    print "\\note{\n", sub4($text), "\n}\n";	
+	    print "\\note{\n", sub4($text), "\n}\n";
 	} elsif ($name =~ /^summary$/io) {
-	    print "\\description{\n", sub4($text), "\n}\n";	
+	    print "\\description{\n", sub4($text), "\n}\n";
 	} elsif ($name =~ /^data description$/io) {
 	    print "\\usage{\ndata($fun)\n}\n";
-	    print "\\format{\n", sub4($text), "\n}\n";	
+	    print "\\format{\n", sub4($text), "\n}\n";
 	} else {
 	    $name = lc($name);
 	    $name =~ s/^([a-z])/\U$1/;
-	    print "\\section{$name}{\n", sub4($text), "\n}\n";	
+	    print "\\section{$name}{\n", sub4($text), "\n}\n";
 	}
 
     } elsif ($type eq "docclass") {
@@ -501,16 +501,16 @@ sub process_group {
 	process_sub_groups($text, "warning");
 
     } elsif ($type eq "warning") {
-	print "\\section{Warning}{\n", sub4($text), "\n}\n";	
+	print "\\section{Warning}{\n", sub4($text), "\n}\n";
 
     } elsif ($type eq "background") {
-	print "\\section{Background}{\n", sub4($text), "\n}\n";	
+	print "\\section{Background}{\n", sub4($text), "\n}\n";
 
     } elsif ($type eq "side-effects") {
-	print "\\section{Side Effects}{\n", sub4($text), "\n}\n";	
+	print "\\section{Side Effects}{\n", sub4($text), "\n}\n";
 
     } elsif ($type eq "author") {
-	print "\\author{\n", sub4($text), "\n}\n";	
+	print "\\author{\n", sub4($text), "\n}\n";
 
     } elsif ($type eq "keywords") {
 	process_sub_groups($text, "keyword");
@@ -522,7 +522,7 @@ sub process_group {
 }
 
 sub process_sub_groups {
-  
+
     my $text = $_[0];
     my $topic = $_[1];
 
@@ -534,7 +534,7 @@ sub process_sub_groups {
 }
 
 sub process_sub_group {
-  
+
     my $topic = $_[0];
     my $text = $_[1];
 
@@ -549,7 +549,7 @@ sub process_sub_group {
 	}
 	print "\\alias{$text}\n";
     } elsif ($type eq "warning") {
-	print "\\section{Warning}{\n", sub4($text), "\n}\n";	
+	print "\\section{Warning}{\n", sub4($text), "\n}\n";
     } elsif ($type eq "keyword") {
 	print "\\keyword{$text}\n";
     } elsif ($type =~ /^example/) {
@@ -561,7 +561,7 @@ sub process_sub_group {
 	$name =~ s/\s*\"(.*?)\"/$1/o;
 	$name =~ s/\s*(\w*)\s*/$1/o;
 	$name =~ s/\.\.\./\\dots/;
-	print "\\item{$name}{\n", sub4($text), "\n}\n";	
+	print "\\item{$name}{\n", sub4($text), "\n}\n";
     } else {
 	warn "unknown SGML entity '$type'";
 	print "%type:\n%$text\n";

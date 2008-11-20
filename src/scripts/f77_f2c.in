@@ -49,7 +49,7 @@ Report bugs to <r-bugs@r-project.org>."
 : ${CPP='cpp'}
 CFLAGS=
 
-## 
+##
 rc=0
 tmp_stderr_file=${TMPDIR-/tmp}/f77_stderr.${$}
 trap "rm -f ${tmp_stderr_file}; exit \$rc" 0
@@ -113,7 +113,7 @@ for f in ${*}; do
 	    b=`basename ${f} .F`
 	    ${CPP} $1 >$b.i
 	    rc=$?
-	    case $rc in 
+	    case $rc in
 		0)
 		    ${verbose} ${F2C} ${F2CFLAGS} <$b.i >$b.c
 		    ${F2C} ${F2CFLAGS} <$b.i >$b.c
