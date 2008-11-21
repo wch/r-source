@@ -191,7 +191,7 @@ Rd_DESCRIPTION_to_LaTeX () {
   ## Usage:
   ##   Rd_DESCRIPTION_to_LaTeX FILE
 
-  fields=`${SED} '/^[	]/d; s/^\([^:]*\):.*$/\1/' $1`
+  fields=`${SED} '/^[  \t]/d; s/^\([^:]*\):.*$/\1/' $1`
   ${echo} "\\begin{description}"
   ${echo} "\\raggedright{}"
   ## this throws warnings on Solaris sed as input is missing newline
