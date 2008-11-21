@@ -8,6 +8,10 @@
 
 		CHANGES IN R VERSION 2.9.0
 
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o	expand.grid() by default no longer coerces strings into factors.
+
 
 NEW FEATURES
 

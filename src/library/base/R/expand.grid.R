@@ -14,20 +14,22 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE,
-                        stringsAsFactors = default.stringsAsFactors())
+expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = FALSE)
 {
     ## x should either be a list or a set of vectors or factors
     nargs <- length(args <- list(...))
-    if(! nargs) return(as.data.frame(list()))
-    if(nargs == 1L && is.list(a1 <- args[[1L]]))
+    if(!nargs) return(as.data.frame(list()))
+    if(nargs == 1 && is.list(a1 <- args[[1]]))
 	nargs <- length(args <- a1)
-    if(nargs == 0L) return(as.data.frame(list()))
+    if(nargs == 0) return(as.data.frame(list()))
     cargs <- args
-    nmc <- paste("Var", 1L:nargs, sep="")
+    iArgs <- seq_len(nargs)
+    nmc <- paste("Var", iArgs, sep="")
     nm <- names(args)
-    if(is.null(nm)) nm <- nmc
-    else if(any(ng0 <- nzchar(nm))) nmc[ng0] <- nm[ng0]
+    if(is.null(nm))
+	nm <- nmc
+    else if(any(ng0 <- nzchar(nm)))
+	nmc[ng0] <- nm[ng0]
     names(cargs) <- nmc
     rep.fac <- 1
     d <- sapply(args, length)
@@ -36,10 +38,10 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE,
 	names(dn) <- nmc
     }
     orep <- prod(d)
-    if(orep == 0L) {
-        for(i in seq_len(nargs)) cargs[[i]] <- args[[i]][FALSE]
+    if(orep == 0) {
+        for(i in iArgs) cargs[[i]] <- args[[i]][FALSE]
     } else {
-        for(i in seq_len(nargs)) {
+        for(i in iArgs) {
             x <- args[[i]]
             if(KEEP.OUT.ATTRS)
                 dn[[i]] <- paste(nmc[i], "=", if(is.numeric(x)) format(x) else x,
@@ -49,7 +51,8 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE,
             x <- x[rep.int(rep.int(seq_len(nx),
                                    rep.int(rep.fac, nx)), orep)]
             ## avoid sorting the levels of character variates
-            if(!is.factor(x) && is.character(x)) x <- factor(x, levels = unique(x))
+	    if(!is.factor(x) && is.character(x))
+		x <- factor(x, levels = unique(x))
             cargs[[i]] <- x
             rep.fac <- rep.fac * nx
         }

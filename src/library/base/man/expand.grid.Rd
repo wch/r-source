@@ -6,8 +6,7 @@
 \name{expand.grid}
 \title{Create a Data Frame from All Combinations of Factors}
 \usage{
-expand.grid(\dots, KEEP.OUT.ATTRS = TRUE,
-            stringsAsFactors = default.stringsAsFactors())
+expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = FALSE)
 }
 \alias{expand.grid}
 \arguments{
@@ -15,7 +14,9 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE,
   \item{KEEP.OUT.ATTRS}{a logical indicating the \code{"out.attrs"}
     attribute (see below) should be computed and returned.}
   \item{stringsAsFactors}{if true, character vectors are converted to
-    factors (the \sQuote{factory fresh default}).}
+    factors.  \code{TRUE} used to be the \emph{implicit} default in \R
+    versions older than 2.9.0; the new default \code{FALSE} is
+    considered to be the typical user expectation.}
 }
 \description{
   Create a data frame from all combinations of the supplied vectors or
