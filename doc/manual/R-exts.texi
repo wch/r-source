@@ -1064,7 +1064,7 @@ than dependencies)
 
 There are two another targets, @samp{before} and @samp{after}, which by
 default have neither dependencies nor commands so can be overridden in a
-@file{Makevars.win}.  See the example in @ref{Linking to other packages on Windows}.
+@file{Makevars.win}.  See the example in @ref{Linking to other packages}.
 
 
 
@@ -5085,7 +5085,7 @@ $7 = 5
 * Creating shared objects::     
 * Interfacing C++ code::        
 * Fortran I/O::                 
-* Linking to other packages on Windows::  
+* Linking to other packages::   
 * Handling R objects in C::     
 * Interface functions .Call and .External::  
 * Evaluating R expressions from C::  
@@ -5402,7 +5402,7 @@ environment variable, but with lowest priority: note that it does not
 include the directory from which the DLL was loaded.  On XP and later it
 is possible@footnote{and we provide an emulation on Windows 2000): see
 @samp{?dyn.oad}.} to add a single path with quite high priority via the
-@code{Dllpath} argument to @code{dyn.load}.  This is (by default) used
+@code{DLLpath} argument to @code{dyn.load}.  This is (by default) used
 by @code{library.dynam} to include the package's @file{libs} directory
 in the DLL search path.
 
@@ -5843,7 +5843,7 @@ some @R{} headers as they in turn include C header files that may cause
 conflicts---if this happens, define @samp{NO_C_HEADERS} before including
 the @R{} headers, and include the appropriate headers yourself.
 
-@node Fortran I/O, Linking to other packages on Windows, Interfacing C++ code, System and foreign language interfaces
+@node Fortran I/O, Linking to other packages, Interfacing C++ code, System and foreign language interfaces
 @section Fortran I/O
 
 We have already warned against the use of C++ iostreams not least
@@ -5864,22 +5864,99 @@ when running under the Windows GUI console (@code{Rgui}) would hang the
 @R{} session.  This is now avoided by ensuring that the Fortran output
 is written to a file (@file{fort.6} in the working directory).
 
-@node Linking to other packages on Windows, Handling R objects in C, Fortran I/O, System and foreign language interfaces
-@section Linking to other packages on Windows
+@node Linking to other packages, Handling R objects in C, Fortran I/O, System and foreign language interfaces
+@section Linking to other packages
 
-It is not in general possible to link a DLL in package @pkg{packA} to
-a DLL provided by package @pkg{packB} (for the security reasons
-mentioned in the previous section), but it is on Windows.  This DLL can
-be either the package's DLL @file{packB/libs/packB.dll} or some other
-DLL provided for other packages to link to (and perhaps also for
-@file{packB.dll} to link to).
+It is not in general possible to link a DLL in package @pkg{packA} to a
+DLL provided by package @pkg{packB} (for the security reasons mentioned
+in @ref{dyn.load and dyn.unload}, and also because some platforms
+distinguish between shared and dynamic libraries), but it is on Windows.
 
-To reiterate: the ideas of this section are not portable to any other OS.
+Note that there can be tricky versioning issues here, as package
+@pkg{packB} could be re-installed after package @pkg{packA} --- it is
+desirable that the API provided by package @pkg{packB} remains
+backwards-compatible.
+
+@menu
+* Unix-alikes::                 
+* Windows::                     
+@end menu
+
+@node Unix-alikes, Windows, Linking to other packages, Linking to other packages
+@subsection Unix-alikes
+
+It is possible to link a shared object in package @pkg{packA} to a
+library provided by package @pkg{packB} under limited circumstances
+on a Unix-alke OS.  There are severe portability issues, so this is not
+recommended for a distributed package.
+
+This is easiest if @pkg{packB} provides a static library
+@file{packB/libs/libpackB.a}.  (This will need to be comiled with
+@code{PIC} flags on platforms where it matters.)  Then as the code from
+package @pkg{packB} is incorporated when package @pkg{packA} is
+installed, we only need to find the static library at install time for
+package @pkg{packB}.  The only issue is to find package @pkg{packB}, and
+for that we can ask @R{} by something like
+
+@example
+PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
+ | R --vanilla --slave`
+PKG_LIBS=$(PKGB_PATH)/libpackB.a
+@end example
+
+@noindent
+(If @file{libpackB.a} itself depends on other libraries these will need
+to be included in @code{PKG_LIBS}.)
+
+For a dynamic library @file{packB/libs/libpackB.so}
+(@file{packB/libs/libpackB.dylib} on Mac OS X) we could use
+
+@example
+PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
+ | R --vanilla --slave`
+PKG_LIBS=-L"$(PKGB_PATH)" -lpackB 
+@end example
+
+@noindent
+This will work for installation, but very likely not when package
+@code{packB} is loaded, as the path to package @pkg{packB}'s @file{libs}
+directory is not in the @command{ld.so}@footnote{@command{dyld} on Mac
+OS X, and @env{DYLD_LIBRARY_PATHS} below.}  search path.  You can
+arrange to put it there @strong{before} @R{} is launched by setting (on
+some platforms) @env{LD_RUN_PATH} or @env{LD_LIBRARY_PATH} or adding to
+the @command{ld.so} cache (see @command{ldconfig}).  On platforms that
+support it, the path to the dynamic library can be hardcoded at install
+time (which assumes that the location of package @pkg{packB} will not be
+changed).  On systems with the GNU linker (e.g.@: Linux) and some others
+(e.g.@: Mac OS X) this can be done by
+
+@example
+PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
+ | R --vanilla --slave`
+PKG_LIBS=-L"$(PKGB_PATH)" -rpath "$(PKGB_PATH)" -lpackB 
+@end example
+
+@noindent
+and on some other systems (e.g.@: Solaris with its native linker) use
+@code{-R} rather than @code{-rpath}.
+
+It may be possible to figure out what is required semi-automatically
+from the result of @command{R CMD libtool --config} (look for
+@samp{hardode}).
+
+Making headers provided by package @pkg{packB} available to the code to
+be compiled in package @pkg{packA} can be done by the @code{LinkingTo}
+mechanism (@pxref{Registering native routines}).
+
+
+@node Windows,  , Unix-alikes, Linking to other packages
+@subsection Windows
 
 Suppose package @pkg{packA} wants to make use of compiled code provided
-by @pkg{packB} in DLL @file{packB/libs/exB.dll}.  (This can be extended
-to linking to more than one package in the same way.)  There are three
-issues to be addressed:
+by @pkg{packB} in DLL @file{packB/libs/exB.dll}, possibly the package's
+DLL @file{packB/libs/packB.dll}.  (This can be extended to linking to
+more than one package in a similar way.)  There are three issues to be
+addressed:
 
 @itemize
 
@@ -5903,7 +5980,7 @@ installed @file{pkgB/libs} directory.  To find that we need to ask @R{}
 where it is by something like
 
 @example
-PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))'
+PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
  | rterm --vanilla --slave`
 PKG_LIBS= -L"$(PKGB_PATH)" -lexB
 @end example
@@ -5931,13 +6008,13 @@ been loaded before @pkg{packA}, then nothing more needs to be done as
 @file{exB.dll} will already be loaded into the @R{} executable.  (This
 is the most common scenario).
 
-More generally, we can use the @code{Dllpath} argument to
+More generally, we can use the @code{DLLpath} argument to
 @code{library.dynam} to ensure that @code{exB.dll} is found, for example
 by setting
 
 @example
 library.dynam("packA", pkg, lib, 
-              Dllpath = system.file("libs", package="packB"))
+              DLLpath = system.file("libs", package="packB"))
 @end example
 
 Note that @code{DLLpath} can only set one path, and so for linking to
@@ -5945,7 +6022,7 @@ two or more packages you would need to resort to setting @env{PATH}.
 
 @end itemize
 
-@node Handling R objects in C, Interface functions .Call and .External, Linking to other packages on Windows, System and foreign language interfaces
+@node Handling R objects in C, Interface functions .Call and .External, Linking to other packages, System and foreign language interfaces
 @section Handling R objects in C
 @cindex Handling R objects in C
 
