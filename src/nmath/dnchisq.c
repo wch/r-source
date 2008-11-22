@@ -2,7 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000-8 The R Development Core Team
- *  Copyright (C) 2004   The R Foundation
+ *  Copyright (C) 2004-8 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ double dnchisq(double x, double df, double ncp, int give_log)
 {
     const static double eps = 5e-15;
 
-    double i, ncp2, q, mid, dfmid, imax, errorbound;
+    double i, ncp2, q, mid, dfmid, imax;
     LDOUBLE sum, term;
 
 #ifdef IEEE_754
@@ -48,40 +48,53 @@ double dnchisq(double x, double df, double ncp, int give_log)
 	return ML_POSINF;
     if(ncp == 0)
 	return dchisq(x, df, give_log);
+    if(x == ML_POSINF) return R_D__0;
 
     ncp2 = 0.5 * ncp;
 
     /* find max element of sum */
     imax = ceil((-(2+df) +sqrt((2-df) * (2-df) + 4 * ncp * x))/4);
     if (imax < 0) imax = 0;
-    dfmid = df + 2 * imax;
-    mid = dpois_raw(imax, ncp2, FALSE) * dchisq(x, dfmid, FALSE);
+    if(R_FINITE(imax)) {
+	dfmid = df + 2 * imax;
+	mid = dpois_raw(imax, ncp2, FALSE) * dchisq(x, dfmid, FALSE);
+    } else /* imax = Inf */
+	mid = 0;
+
+    if(mid == 0) {
+	/* underflow to 0 -- maybe numerically correct; maybe can be more accurate,
+	 * particularly when  give_log = TRUE */
+	/* Use  central-chisq approximation formula when appropriate;
+	 * ((FIXME: the optimal cutoff also depends on (x,df);  use always here? )) */
+	if(give_log || ncp > 1000.) {
+	    double nl = df + ncp, ic = nl/(nl + ncp);/* = "1/(1+b)" Abramowitz & St.*/
+	    return dchisq(x*ic, nl*ic, give_log);
+	} else
+	    return R_D__0;
+    }
 
     sum = mid;
+
+    /* errorbound := term * q / (1-q)  now subsumed in while() / if() below: */
+
     /* upper tail */
-    term = mid;
-    i = imax;
-    df = dfmid;
+    term = mid; df = dfmid; i = imax;
     do {
 	i++;
 	q = x * ncp2 / i / df;
 	df += 2;
-	term = q * term;
+	term *= q;
 	sum += term;
-	errorbound = term * q / (1-q);
-    } while (errorbound > eps || q >= 1);
+    } while (q >= 1 || term * q > (1-q)*eps);
     /* lower tail */
-    term = mid;
-    df = dfmid;
-    i = imax;
+    term = mid; df = dfmid; i = imax;
     while ( i ){
 	df -= 2;
 	q = i * df / x / ncp2;
 	i--;
-	term = q * term;
+	term *= q;
 	sum += term;
-	errorbound = term * q / (1-q);
-	if (errorbound <= eps && q < 1) break;
+	if (q < 1 && term * q <= (1-q)*eps) break;
     }
     return R_D_val(sum);
 }
