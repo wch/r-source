@@ -261,6 +261,9 @@ BUG FIXES
     o	prettyNum(x, drop0trailing=TRUE) wrongly treated "1.1e20"
 	and hence str() did as well, in 2.8.0 only.
 
+    o	dchisq(x, df, ncp) now longer hands for large x and ncp > 0,
+	and is more accurate in some cases (PR#13309).
+
 
 
 		CHANGES IN R VERSION 2.8.0
