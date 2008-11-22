@@ -8,6 +8,7 @@
 
 		CHANGES IN R VERSION 2.9.0
 
+
 SIGNIFICANT USER-VISIBLE CHANGES
 
     o	expand.grid() by default no longer coerces strings into factors.
@@ -60,15 +61,15 @@ NEW FEATURES
 	avoid passing invalid formats to the OS (which have a tendency
 	to crash under such inputs).
 
-    o	expand.grid() gains a 'stringsAsFactor' argument to suppress the
-	conversion of character vectors to factors (which has happened
-	for many years but was not previously documented).
+    o	expand.grid() gains a 'stringsAsFactor' argument to ask for
+	automatic conversion of character vectors to factors (which
+	happened for many years but was not previously documented, and
+	is no longer the default).
 
     o	bxp() now coputes the 'ylim' including the outliers only if
 	'outline = TRUE'.  (Wish of PR#13196)
 
     o	barplot() gains a 'args.legend' argument.  (Wish of PR#13265).
-
 
     o	RweaveLatexSetup() now accepts all (and not just some) options
 	passed through from Sweave()
