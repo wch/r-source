@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -28,7 +28,8 @@
 static SEXP cumsum(SEXP x, SEXP s)
 {
     int i;
-    double sum = 0.0, *rx = REAL(x), *rs = REAL(s);
+    LDOUBLE sum = 0.;
+    double *rx = REAL(x), *rs = REAL(s);
     for (i = 0 ; i < length(x) ; i++) {
 	if (ISNAN(rx[i])) break;
 	sum += rx[i];
@@ -72,7 +73,8 @@ static SEXP ccumsum(SEXP x, SEXP s)
 static SEXP cumprod(SEXP x, SEXP s)
 {
     int i;
-    double prod, *rx = REAL(x), *rs = REAL(s);
+    LDOUBLE prod;
+    double *rx = REAL(x), *rs = REAL(s);
     prod = 1.0;
     for (i = 0 ; i < length(x) ; i++) {
 	prod *= rx[i];

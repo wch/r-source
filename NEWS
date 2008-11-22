@@ -74,6 +74,10 @@ NEW FEATURES
     o	RweaveLatexSetup() now accepts all (and not just some) options
 	passed through from Sweave()
 
+    o	cumsum(x) and cumprod(x) for double precision x now use a long
+	double accumulator where available and so more closely match
+	sum() and prod() in potentially being more accurate.
+
 
 DEPRECATED & DEFUNCT
 
