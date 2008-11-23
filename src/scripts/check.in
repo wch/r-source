@@ -2457,6 +2457,7 @@ sub check_pkg {
 	    ## packages, or just base?
 	    $Rcmd .= "checkVignettes(dir = '$pkgoutdir', workdir='src'";
 	    $Rcmd .= ", weave = FALSE" unless $R_check_weave_vignettes;
+	    $Rcmd .= ", tangle = FALSE" if $R_check_weave_vignettes;
 	    $Rcmd .= ", latex = TRUE" if $R_check_latex_vignettes;
 	    $Rcmd .= ")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
@@ -2697,7 +2698,7 @@ sub check_pkg {
 			"$pkgdir"));
 	if(R_system($cmd)) {
 	    $log->warning();
-	    $log->print("Problems when creating \U$ext\E version of DESCRIPTION.");
+	    $log->print("Problems when creating \U$ext\E version of DESCRIPTION.\n");
 	    ## If possible, indicate the problems found.
 	    my $latex_log = &file_path($build_dir, "Rd2.log");
 	    ## Note that Rd2dvi works on 'Rd2.tex'.
