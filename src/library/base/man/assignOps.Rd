@@ -9,6 +9,7 @@
 \alias{<<-}
 \alias{->}
 \alias{->>}
+\alias{assignOps}
 \title{Assignment Operators}
 \description{
   Assign a value to a name.
@@ -30,7 +31,7 @@ x = value
   have leftwards and rightwards forms.
 
   The operators \code{<-} and \code{=} assign into the environment in
-  which they are evaluated.  The  operator\code{<-} can be used
+  which they are evaluated.  The  operator \code{<-} can be used
   anywhere, whereas the operator \code{=} is only allowed at the top
   level (e.g., in the complete expression typed at the command prompt)
   or as one of the subexpressions in a braced list of expressions.
