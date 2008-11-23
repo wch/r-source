@@ -13,10 +13,8 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = FALSE)
   \item{\dots}{vectors, factors or a list containing these. }
   \item{KEEP.OUT.ATTRS}{a logical indicating the \code{"out.attrs"}
     attribute (see below) should be computed and returned.}
-  \item{stringsAsFactors}{if true, character vectors are converted to
-    factors.  \code{TRUE} used to be the \emph{implicit} default in \R
-    versions older than 2.9.0; the new default \code{FALSE} is
-    considered to be the typical user expectation.}
+  \item{stringsAsFactors}{If true, character vectors are converted to
+    factors.}
 }
 \description{
   Create a data frame from all combinations of the supplied vectors or
@@ -32,6 +30,11 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = FALSE)
   Attribute \code{"out.attrs"} is a list which gives the dimension and
   dimnames for use by \code{\link{predict}} methods.
   %% currently, from "base R", only predict.loess() makes use of it.
+}
+\note{
+  Prior to \R 2.9.0 character vectors were always converted to factors
+  (and this was not documented).  \code{stringsAsFactors = TRUE} gives
+  the earlier behaviour.
 }
 
 \references{
