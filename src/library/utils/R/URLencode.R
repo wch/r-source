@@ -25,7 +25,8 @@ URLencode <- function(URL, reserved = FALSE)
     z <- grep(OK, x)
     if(length(z)) {
         y <- sapply(x[z], function(x)
-                    paste("%", as.character(charToRaw(x)), sep=""))
+                    paste("%", as.character(charToRaw(x)), sep="",
+                          collapse = ""))
         x[z] <- y
     }
     paste(x, collapse="")
