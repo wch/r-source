@@ -45,6 +45,7 @@ function(package, dir, lib.loc = NULL,
         if(!keepfiles) unlink(tmpd, recursive = TRUE)
     })
 
+    file.create(".check.timestamp")
     result <- list(tangle = list(), weave = list(),
                    source = list(), latex = list())
 
@@ -62,15 +63,18 @@ function(package, dir, lib.loc = NULL,
     }
 
     if(tangle) {
-        for(f in list_files_with_exts(getwd(), c("r", "s", "R", "S")))
+        ## Tangling can create several source files if splitting is on.
+        sources <- list_files_with_exts(getwd(), c("r", "s", "R", "S"))
+        sources <- sources[file_test("-nt", sources, ".check.timestamp")]
+        for(f in sources)
             .eval_with_capture(tryCatch(source(f),
                                         error = function(e)
                                         result$source[[f]] <<-
                                         conditionMessage(e)))
     }
-    if(tangle && weave && latex) {
-        if(! "makefile" %in% tolower(list.files(vigns$dir))) {
-            ## <FIXME>
+    if(weave && latex) {
+        if(!("makefile" %in% tolower(list.files(vigns$dir)))) {
+            ## <NOTE>
             ## This used to run texi2dvi on *all* vignettes, including
             ## the ones already known from the above to give trouble.
             ## In addition, texi2dvi errors were not caught, so that in
@@ -83,7 +87,7 @@ function(package, dir, lib.loc = NULL,
             ##   running checkVignettes().
             ## (For the future, maybe keep this output and provide it as
             ## additional diagnostics ...)
-            ## </FIXME>
+            ## </NOTE>
             bad_vignettes <- as.character(names(unlist(result)))
             bad_vignettes <- file_path_sans_ext(basename(bad_vignettes))
             for(f in vigns$docs) {
@@ -100,6 +104,7 @@ function(package, dir, lib.loc = NULL,
         }
     }
 
+    file.remove(".check.timestamp")    
     class(result) <- "checkVignettes"
     result
 }
