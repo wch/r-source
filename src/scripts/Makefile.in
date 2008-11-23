@@ -40,7 +40,7 @@ R: $(SCRIPTS_B) R.fe
 ## rules ('%:%.in') are not portable, and some versions of Make do not
 ## allow separated dependencies for single suffix rules.
 BATCH: $(srcdir)/BATCH.in $(top_builddir)/config.status
-	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 COMPILE: $(srcdir)/COMPILE.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 INSTALL: $(srcdir)/INSTALL.in $(top_builddir)/config.status
