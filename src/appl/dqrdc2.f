@@ -65,13 +65,16 @@ c        jpvt    jpvt(k) contains the index of the column of the
 c                original matrix that has been interchanged into
 c                the k-th column.
 c
+c     original (dqrdc.f) linpack version dated 08/14/78 .
+c     g.w. stewart, university of maryland, argonne national lab.
+c
 c     this version dated 22 august 1995
 c     ross ihaka
 c
 c     bug fixes 29 September 1999 BDR (p > n case, inaccurate ranks)
 c
 c
-c     dqrdc uses the following functions and subprograms.
+c     dqrdc2 uses the following functions and subprograms.
 c
 c     blas daxpy,ddot,dscal,dnrm2
 c     fortran dabs,dmax1,min0,dsqrt
