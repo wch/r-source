@@ -78,6 +78,9 @@ NEW FEATURES
 	double accumulator where available and so more closely match
 	sum() and prod() in potentially being more accurate.
 
+    o	plot() methods for "stepfun" (and hence "ecdf") gain an 'col'
+	argument, allowing to set all three colors simultaneously.
+
 
 DEPRECATED & DEFUNCT
 

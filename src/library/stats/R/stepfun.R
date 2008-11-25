@@ -98,8 +98,9 @@ plot.stepfun <-
     function(x, xval, xlim, ylim = range(c(y,Fn.kn)),
 	     xlab = "x", ylab = "f(x)", main = NULL,
 	     add = FALSE, verticals = TRUE, do.points = TRUE,
-	     pch = par("pch"), col.points=par("col"), cex.points=par("cex"),
-	     col.hor = par("col"), col.vert= par("col"),
+	     pch = par("pch"), col = par("col"),
+             col.points = col, cex.points = par("cex"),
+	     col.hor = col, col.vert = col,
 	     lty = par("lty"), lwd = par("lwd"),
 	     ...)
 {
