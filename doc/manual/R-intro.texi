@@ -1815,15 +1815,16 @@ the command
 
 @noindent
 would use @code{h} to set up @math{3} by @math{4} by @math{2} array in
-@code{Z}.  If the size of @code{h} is exactly 24 the result is the same
-as
+@code{Z}.  If the size of @code{h} is exactly 24 the result is the same as
 
 @example
-> dim(Z) <- c(3,4,2)
+> Z <- h ; dim(Z) <- c(3,4,2)
 @end example
 
 However if @code{h} is shorter than 24, its values are recycled from the
-beginning again to make it up to size 24 (@pxref{The recycling rule}).
+beginning again to make it up to size 24 (@pxref{The recycling rule})
+but @code{dim(h) <- c(3,4,2)} would signal an error about mismatching
+length.
 As an extreme but common example
 
 @example

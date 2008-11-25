@@ -162,7 +162,12 @@ all(N == table(blocks,varieties))
 
 h <- 1:17
 Z <- array(h, dim=c(3,4,2))
-dim(Z) <- c(3,4,2)
+## If the size of  'h' is exactly 24
+h <- rep(h, length = 24)
+Z. <- Z ## the result is the same as
+Z <- h; dim(Z) <- c(3,4,2)
+stopifnot(identical(Z., Z))
+
 Z <- array(0, c(3,4,2))
 
 ## So if @code{A}, @code{B} and @code{C} are all similar arrays
