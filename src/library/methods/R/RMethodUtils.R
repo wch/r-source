@@ -1498,8 +1498,10 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
     eval(.dotsCall, env)
 }
 
+
+.quoteCall <- quote(.Method(...))
 .makeDotsCall <- function(formals) {
-    call <- quote(.Method(...))
+    call <- methods:::.quoteCall
     if(length(formals)  > 1) {
         idots <- match("...", formals)
         for(what in formals[-idots]) {
