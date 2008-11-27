@@ -2292,13 +2292,28 @@ void GEMetricInfo(int c, const pGEcontext gc,
 	   any char metrics available but also in plotmath.  So we
 	   cache that value.  Depends on the context through cex, ps,
 	   fontface, family, and also on the device.
+
+           PAUL 2008-11-27
+           The point of checking dd == last_dd is to check for
+           a different TYPE of device (e.g., PDF vs. PNG).
+           Checking just the pGEDevDesc pointer is not a good enough 
+           test;  it is possible for that to be the same when one
+           device is closed and a new one is opened (I have seen 
+           it happen!). 
+           So, ALSO compare dd->dev->close function pointer
+           which really should be different for different devices.
 	*/
 	static pGEDevDesc last_dd= NULL;
+#if R_USE_PROTOTYPES
+        static void (*last_close)(pDevDesc dd);
+#else
+        static void (*last_close)();
+#endif
 	static int last_face = 1;
 	static double last_cex = 0.0, last_ps = 0.0,
 	    a = 0.0 , d = 0.0, w = 0.0;
 	static char last_family[201];
-	if (dd == last_dd && abs(c) == 77
+	if (dd == last_dd && dd->dev->close == last_close && abs(c) == 77
 	    && gc->cex == last_cex && gc->ps == last_ps
 	    && gc->fontface == last_face
 	    && streql(gc->fontfamily, last_family)) {
@@ -2306,7 +2321,8 @@ void GEMetricInfo(int c, const pGEcontext gc,
 	}
 	dd->dev->metricInfo(c, gc, ascent, descent, width, dd->dev);
 	if(abs(c) == 77) {
-	    last_dd = dd;  last_cex = gc->cex; last_ps = gc->ps;
+	    last_dd = dd;  last_close = dd->dev->close;
+            last_cex = gc->cex; last_ps = gc->ps;
 	    last_face = gc->fontface;
 	    strcpy(last_family, gc->fontfamily);
 	    a = *ascent; d = *descent; w = *width;
