@@ -267,6 +267,9 @@ BUG FIXES
     o	dchisq(x, df, ncp) no longer hangs for large x and ncp > 0,
 	and is more accurate in some cases (PR#13309).
 
+    o	installed.packages(lib.loc = D, priority="NA") now also works when
+	D contains one single package only.  (PR#13332)
+
 
 
 		CHANGES IN R VERSION 2.8.0
