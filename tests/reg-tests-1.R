@@ -5141,6 +5141,7 @@ if(.Platform$OS.type == "unix") {
     system("rm -rf myLib")
     dir.create("myLib")
     install.packages("myTst", lib = "myLib", repos=NULL, type = "source") # with warnings
+    print(installed.packages(lib.loc= "myLib", priority= "NA"))## (PR#13332)
     stopifnot(require("myTst",lib = "myLib"))
     sm <- getMethods(show, where= as.environment("package:myTst"))
     stopifnot(names(sm@methods) == "foo")

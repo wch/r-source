@@ -445,7 +445,7 @@ installed.packages <-
     if(length(mat) && !is.null(priority)) {
 	keep <- !is.na(pmatch(mat[,"Priority"], priority,
 			      duplicates.ok = TRUE))
-	mat <- mat[keep, ]
+	mat <- mat[keep, , drop=FALSE]
     }
     if (length(mat)) {
 	rownames(mat) <- mat[, "Package"]
