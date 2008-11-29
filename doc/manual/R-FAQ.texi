@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-11-09
+@set FAQ_DATE @value{FAQ_YEAR}-11-29
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 8
@@ -950,11 +950,12 @@ Please always use the @acronym{URL} of the master site when referring to
 @node Can I use R for commercial purposes?, Why is R named R?, What is CRAN?, R Basics
 @section Can I use R for commercial purposes?
 
-R is released under the @url{http://www.gnu.org/copyleft/gpl.html,,
-@acronym{GNU} General Public License (GPL)}.  If you have any questions
-regarding the legality of using R in any particular situation you should
-bring it up with your legal counsel.  We are in no position to offer
-legal advice.
+R is released under the
+@url{http://www.gnu.org/licenses/old-licenses/gpl-2.0.html,,
+@acronym{GNU} General Public License (GPL), version 2}.  If you have any
+questions regarding the legality of using R in any particular situation
+you should bring it up with your legal counsel.  We are in no position
+to offer legal advice.
 
 It is the opinion of the R Core Team that one can use R for commercial
 purposes (e.g., in business or in consulting).  The GPL, like all Open
@@ -2314,6 +2315,8 @@ the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
 Heat maps of linkage disequilibrium measures.
 @item LDtests
 Exact tests for linkage disequilibrium and Hardy-Weinberg equilibrium.
+@item LIM
+Linear Inverse Model examples and solution methods.
 @item LIStest
 Longest increasing subsequence independence test.
 @item LLAhclust
@@ -2692,10 +2695,14 @@ Rcmdr plug-in for the @strong{FactoMineR} package.
 Rcmdr support for the introductory course at Temple University.
 @item RcmdrPlugin.IPSUR
 Rcmdr plugin for ``Introduction to Probability and Statistics Using R''.
+@item RcmdrPlugin.SurvivalT
+Rcmdr survival plug-in.
 @item RcmdrPlugin.TeachingDemos
 Rcmdr Teaching Demos plug-in.
 @item RcmdrPlugin.epack
 Rcmdr epack demos plug-in.
+@item RcmdrPlugin.orloca
+Rcmdr orloca plug-in.
 @item Rcplex
 R interface to CPLEX solvers for linear, quadratic, and (linear and
 quadratic) mixed integer programs.
@@ -2892,6 +2899,8 @@ with R'' by C. Reimann, P. Filzmoser, R. G. Garrett, and R. Dutter,
 2008, John Wiley and Sons.
 @item StatDataML
 Read and write StatDataML.
+@item StatFingerprints
+Processing and statistical analysis of molecular fingerprint profiles.
 @item StatMatch
 Functions to perform statistical matching between two data sources.
 @c <COMMENT>
@@ -2901,6 +2910,8 @@ Functions to perform statistical matching between two data sources.
 @c </COMMENT>
 @item StreamMetabolism
 Calculation of single station metabolism from diurnal oxygen curves.
+@item SubpathwayMiner
+Annotation and identification of metabolic sub-pathways and pathways.
 @item SuppDists
 Ten distributions supplementing those built into R (Inverse Gauss,
 Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
@@ -3126,6 +3137,8 @@ Functions and data sets for a lecture in ``Advanced Statistics using
 R''.
 @item aws
 Functions to perform adaptive weights smoothing.
+@item aylmer
+A generalization of Fisher's exact test.
 @item backfitRichards
 Backfitted independent values of Richards curves.
 @item backtest
@@ -3154,6 +3167,8 @@ Modifications and extensions of @strong{stats4} MLE code.
 @item bcp
 Bayesian Change Point based on the Barry and Hartigan product partition
 model.
+@item beanplot
+Visualization via beanplots.
 @item bear
 Bioavability and bioequivalence data analysis with crossover design.
 @item benchden
@@ -3217,6 +3232,8 @@ Function for drawing the coastline of the United Kingdom.
 @item blockTools
 Block, randomly assign, and diagnose potential problems between units in
 randomized experiments.
+@item blockmodeling
+Generalized and classical blockmodeling of valued networks.
 @item blockrand
 Randomization for block random clinical trials.
 @item bmd
@@ -3607,6 +3624,8 @@ Tools for quality checks of georeferenced plant species accessions.
 Dive analysis and calibration.
 @item dlm
 Maximum likelihood and Bayesian analysis of Dynamic Linear Models.
+@item dlmap
+Detection Localization Mapping for QTL.
 @item doBy
 Facilities for groupwise computations.
 @item dplR
@@ -3761,6 +3780,8 @@ the Streitberg/Roehmel shift algorithm.
 @item exactmaxsel
 Exact methods for maximally selected statistics for binary response
 variables.
+@item exams
+Automatic generation of simple (statistical) exams.
 @item experiment
 Designing and analyzing randomized experiments.
 @item expert
@@ -4115,6 +4136,8 @@ Regression models for grouped and coarse data, under the Coarsened At
 Random assumption.
 @item grplasso
 Fit user specified models with group lasso penalty.
+@item grpreg
+Regularization paths for regression models with grouped covariates.
 @item gsarima
 functions for Generalized SARIMA time series simulation.
 @item gsl
@@ -4230,6 +4253,8 @@ Hybrid hierarchical clustering via mutual clusters.
 Groundwater data presentation and interpretation.
 @item hydrosanity
 Graphical user interface for exploring hydrological time series.
+@item hyperdirichlet
+Routines for the hyperdirichlet distribution.
 @item hypergeo
 The hypergeometric function over the whole complex plane.
 @item ibdreg
@@ -4434,6 +4459,8 @@ Fit smoothing spline terms in Gaussian linear and nonlinear
 mixed-effects models.
 @item lmm
 Linear mixed models.
+@item lmodel2
+Model II simple linear regression.
 @item lmom
 @math{L}-moments.
 @item lmomco
@@ -4616,6 +4643,8 @@ Mutual Information NETwork.
 R interface for two functions from the MINPACK least squares
 optimization library, solving the nonlinear least squares problem by a
 modification of the Levenberg-Marquardt algorithm.
+@item minxent
+Entropy optimization distribution under constraints.
 @item misc3d
 A collection of miscellaneous 3d plots, including rgl-based isosurfaces.
 @item mirf
@@ -5132,6 +5161,8 @@ Classes for analyzing and implementing portfolios.
 Framework for simulating equity portfolio strategies.
 @item powell
 Optimizes a function using Powell's UObyQA algorithm.
+@item powerGWASinteraction
+Power calculations for interactions for GWAS.
 @item powerpkg
 Power analyses for the affected sib pair and the TDT design.
 @item ppc
@@ -5303,6 +5334,8 @@ Completion generator for R.  @emph{Recommended} for R 2.5.0 or 2.6.0.
 @c @item rcompletion
 @c TAB completion for R using Readline.
 @c </COMMENT>
+@item rconifers
+Interface to the CONIFERS forest growth model.
 @item rda
 Shrunken Centroids Regularized Discriminant Analysis.
 @item rdetools
@@ -5539,6 +5572,8 @@ Segmentation and segmentation/clustering.
 @item segmented
 Functions to estimate break-points of segmented relationships in
 regression models (GLMs).
+@item selectiongain
+Calculate the gain from a model selection.
 @item sem
 Functions for fitting general linear Structural Equation Models (with
 observed and unobserved variables) by the method of maximum likelihood
@@ -6045,6 +6080,8 @@ Export data to @LaTeX{} and @HTML{} tables.
 Extensible time series.
 @item yaImpute
 Performs popular nearest neighbor routines.
+@item yacca
+Yet Another Canonical Correlation Analysis package.
 @item yaml
 Methods to convert R to YAML and back.
 @item yest
@@ -7962,7 +7999,7 @@ or
 
 @example
 eval(substitute(lm(y ~ x + variable),
-                list(variable = as.name(varname[1]))
+                list(variable = as.name(varname[1]))))
 @end example
 
 @noindent
