@@ -270,6 +270,9 @@ BUG FIXES
     o	installed.packages(lib.loc = D, priority="NA") now also works when
 	D contains one single package only.  (PR#13332)
 
+    o	legend(...., merge=TRUE) now warns and has no effect in the
+	case where no line segments are drawn.  (PR#13340)
+
 
 
 		CHANGES IN R VERSION 2.8.0

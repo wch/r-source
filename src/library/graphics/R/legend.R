@@ -126,6 +126,11 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	    1
 	} else ceiling(n.leg / ncol)
 
+    if(do.lines) {
+	x.off <- if(merge) -0.7 else 0
+    } else if(merge)
+	warning("'merge = TRUE' has no effect when no line segments are drawn")
+
     if(has.pch <- !missing(pch) && length(pch) > 0) {
 	if(is.character(pch) && !is.na(pch[1]) &&
            nchar(pch[1], type="c") > 1) {
@@ -134,9 +139,8 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	    np <- nchar(pch[1], type="c")
 	    pch <- substr(rep.int(pch[1], np), 1:np, 1:np)
 	}
-	if(!merge) dx.pch <- x.intersp/2 * xchar
+##D	if(!merge) dx.pch <- x.intersp/2 * xchar
     }
-    x.off <- if(merge) -0.7 else 0
 
     if (is.na(auto)) {
 	##- Adjust (x,y) :
@@ -164,7 +168,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	h <- (n.legpercol + !is.null(title)) * ychar + yc
 	w0 <- text.width + (x.intersp + 1) * xchar
 	if(mfill)	w0 <- w0 + dx.fill
-	if(has.pch && !merge)	w0 <- w0 + dx.pch
+##D	if(has.pch && !merge)	w0 <- w0 + dx.pch
 	if(do.lines)		w0 <- w0 + (2+x.off) * xchar
 	w <- ncol*w0 + .5* xchar
 	if (!is.null(title)
@@ -242,14 +246,14 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	pt.cex<- rep(pt.cex, length.out = n.leg)
 	pt.lwd<- rep(pt.lwd, length.out = n.leg)
 	ok <- !is.na(pch) & (is.character(pch) | pch >= 0)
-	x1 <- (if(merge) xt-(seg.len/2)*xchar else xt)[ok]
+	x1 <- (if(merge && do.lines) xt-(seg.len/2)*xchar else xt)[ok]
 	y1 <- yt[ok]
 	if(trace)
 	    catn("  points2(", x1,",", y1,", pch=", pch[ok],", ...)")
 	if(plot)
 	    points2(x1, y1, pch = pch[ok], col = col[ok],
 		    cex = pt.cex[ok], bg = pt.bg[ok], lwd = pt.lwd[ok])
-	if (!merge) xt <- xt + dx.pch
+##D	if (!merge) xt <- xt + dx.pch
     }
 
     xt <- xt + x.intersp * xchar
