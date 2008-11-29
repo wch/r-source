@@ -126,6 +126,13 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	    1
 	} else ceiling(n.leg / ncol)
 
+    if(do.lines) {
+	x.off <- if(merge) -0.7 else 0
+    } else if(merge) {
+	warning("'merge = TRUE' has no effect when no line segments are drawn")
+        merge <- FALSE # only in R 2.8.1
+    }
+
     if(has.pch <- !missing(pch) && length(pch) > 0) {
 	if(is.character(pch) && !is.na(pch[1]) &&
            nchar(pch[1], type="c") > 1) {
@@ -136,7 +143,6 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	}
 	if(!merge) dx.pch <- x.intersp/2 * xchar
     }
-    x.off <- if(merge) -0.7 else 0
 
     if (is.na(auto)) {
 	##- Adjust (x,y) :
