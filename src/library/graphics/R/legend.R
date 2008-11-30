@@ -126,6 +126,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	    1
 	} else ceiling(n.leg / ncol)
 
+    has.pch <- !missing(pch) && length(pch) > 0 # -> default 'merge' is available
     if(do.lines) {
 	x.off <- if(merge) -0.7 else 0
     } else if(merge) {
@@ -133,7 +134,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
         merge <- FALSE # only in R 2.8.1
     }
 
-    if(has.pch <- !missing(pch) && length(pch) > 0) {
+    if(has.pch) {
 	if(is.character(pch) && !is.na(pch[1]) &&
            nchar(pch[1], type="c") > 1) {
 	    if(length(pch) > 1)
