@@ -81,11 +81,9 @@ NEW FEATURES
     o	plot() methods for "stepfun" (and hence "ecdf") gain an 'col'
 	argument, allowing to set all three colors simultaneously.
 
-    o   iterating in a for loop over a factor now coerces to a character
-        vector
+    o	Iterating over a factor in a for loop now coerces to a character
+	vector (rather than using the integer codes).
 
-    o   a C level helper function, asCharacterFactor, converts from factors
-        to character vectors
 
 DEPRECATED & DEFUNCT
 
@@ -118,6 +116,12 @@ INSTALLATION
     o	The shell used by the 'R' script and other shell scripts run
 	by 'R CMD foo' can be specified at installation time by
 	setting the (precious) configure variable R_SHELL.
+
+
+C-LEVEL FACILITIES
+
+    o	A helper function, asCharacterFactor(), converts from factors to
+	character vectors.
 
 
 BUG FIXES

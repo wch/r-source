@@ -1,6 +1,6 @@
 % File src/library/base/man/Control.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Control}
@@ -37,7 +37,8 @@ next
   }
   \item{var}{A syntactical name for a variable.}
   \item{seq}{An expression evaluating to a vector (including a list and
-    an \link{expression}) or to a \link{pairlist} or \code{NULL}.}
+    an \link{expression}) or to a \link{pairlist} or \code{NULL}.  A
+    factor value will be coerced to a character vector.}
   \item{expr, cons.expr, alt.expr}{
     An \emph{expression} in a formal sense.  This is either a
     simple expression or a so called \emph{compound expression}, usually
@@ -61,9 +62,8 @@ next
 
   The index \code{seq} in a \code{for} loop is evaluated at the start of
   the loop; changing it subsequently does not affect the loop.  The
-  variable \code{var} has the same type as \code{seq}, and is read-only:
-  assigning to it does not alter \code{seq}.  If \code{seq} is a factor
-  then it is coerced to a character vector first.
+  variable \code{var} has the same type as \code{seq}: assigning to it
+  inside the loop does not alter \code{seq}.
 }
 \value{
   \code{if} returns the value of the expression evaluated, or
