@@ -51,7 +51,7 @@ NEW FEATURES
 	the encoding of character strings in Latin-1 and UTF-8
 	locales.
 
-    o	parse(text=z) now marks the encodiing of character strings in
+    o	parse(text=z) now marks the encoding of character strings in
 	Latin-1 and UTF-8 locales if 'z' is of known encoding (that is
 	all elements are either ASCII or marked as Latin-1 or UTF-8).
 
@@ -81,6 +81,11 @@ NEW FEATURES
     o	plot() methods for "stepfun" (and hence "ecdf") gain an 'col'
 	argument, allowing to set all three colors simultaneously.
 
+    o   iterating in a for loop over a factor now coerces to a character
+        vector
+
+    o   a C level helper function, asCharacterFactor, converts from factors
+        to character vectors
 
 DEPRECATED & DEFUNCT
 

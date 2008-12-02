@@ -1001,6 +1001,17 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(rho);
     PROTECT(val = eval(val, rho));
     defineVar(sym, R_NilValue, rho);
+
+    /* deal with the case where we are iterating over a factor
+       we need to coerce to character - then iterate */
+
+    if( inherits(val, "factor") ) {
+        PROTECT(ans = asCharacterFactor(val));
+	val = ans;
+	UNPROTECT(2);
+        PROTECT(val);
+    }
+
     if (isList(val) || isNull(val)) {
 	n = length(val);
 	PROTECT_WITH_INDEX(v = R_NilValue, &vpi);

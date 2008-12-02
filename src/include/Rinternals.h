@@ -543,6 +543,7 @@ SEXP Rf_asChar(SEXP);
 SEXP Rf_coerceVector(SEXP, SEXPTYPE);
 SEXP Rf_PairToVectorList(SEXP x);
 SEXP Rf_VectorToPairList(SEXP x);
+SEXP Rf_asCharacterFactor(SEXP x);
 int Rf_asLogical(SEXP x);
 int Rf_asInteger(SEXP x);
 double Rf_asReal(SEXP x);
@@ -830,6 +831,7 @@ int R_system(const char *);
 #define applyClosure		Rf_applyClosure
 #define arraySubscript		Rf_arraySubscript
 #define asChar			Rf_asChar
+#define asCharacterFactor	Rf_asCharacterFactor
 #define asComplex		Rf_asComplex
 #define asInteger		Rf_asInteger
 #define asLogical		Rf_asLogical

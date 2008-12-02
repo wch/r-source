@@ -1232,6 +1232,27 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
     return u;/* -Wall */
 }
 
+SEXP asCharacterFactor(SEXP x)
+{
+    SEXP ans;
+
+    if( !inherits(x, "factor") )
+        error(_("attempting to coerce non-factor"));
+
+    int i, n = LENGTH(x);
+    SEXP labels = getAttrib(x, install("levels"));
+    PROTECT(ans = allocVector(STRSXP, n));
+    for(i = 0; i < n; i++) {
+      int ii = INTEGER(x)[i];
+      SET_STRING_ELT(ans, i,
+		   (ii == NA_INTEGER) ? NA_STRING
+		   : STRING_ELT(labels, ii - 1));
+    }
+    UNPROTECT(1);
+    return ans;
+}
+
+
 /* A historical anomaly: as.character is primitive, the other ops are not */
 SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
