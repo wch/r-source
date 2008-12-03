@@ -165,28 +165,33 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 	SET_NAMED(result, 2);
 
     PROTECT(result = ExtractSubset(x, result, indx, call));
-    if (result != R_NilValue &&
-	(
+    if (result != R_NilValue) {
+	if (
 	    ((attrib = getAttrib(x, R_NamesSymbol)) != R_NilValue) ||
 	    ( /* here we might have an array.  Use row names if 1D */
 		isArray(x) && LENGTH(getAttrib(x, R_DimNamesSymbol)) == 1 &&
 		(attrib = getAttrib(x, R_DimNamesSymbol)) != R_NilValue &&
 		(attrib = GetRowNames(attrib)) != R_NilValue
 		)
-	    )) {
-	nattrib = allocVector(TYPEOF(attrib), n);
-	PROTECT(nattrib); /* seems unneeded */
-	nattrib = ExtractSubset(attrib, nattrib, indx, call);
-	setAttrib(result, R_NamesSymbol, nattrib);
-	UNPROTECT(1);
-    }
-    if (result != R_NilValue && (attrib = getAttrib(x, R_SrcrefSymbol)) != R_NilValue
-        && TYPEOF(attrib) == VECSXP) {
-	nattrib = allocVector(VECSXP, n);
-	PROTECT(nattrib); /* seems unneeded */
-	nattrib = ExtractSubset(attrib, nattrib, indx, call);
-	setAttrib(result, R_SrcrefSymbol, nattrib);
-	UNPROTECT(1);
+	    ) {
+	    nattrib = allocVector(TYPEOF(attrib), n);
+	    PROTECT(nattrib); /* seems unneeded */
+	    nattrib = ExtractSubset(attrib, nattrib, indx, call);
+	    setAttrib(result, R_NamesSymbol, nattrib);
+	    UNPROTECT(1);
+	}
+	if ((attrib = getAttrib(x, R_SrcrefSymbol)) != R_NilValue &&
+	    TYPEOF(attrib) == VECSXP) {
+	    nattrib = allocVector(VECSXP, n);
+	    PROTECT(nattrib); /* seems unneeded */
+	    nattrib = ExtractSubset(attrib, nattrib, indx, call);
+	    setAttrib(result, R_SrcrefSymbol, nattrib);
+	    UNPROTECT(1);
+	}
+	if(IS_S4_OBJECT(x)) { /* e.g. contains = "list" */
+	    setAttrib(result, R_ClassSymbol, getAttrib(x, R_ClassSymbol));
+	    SET_S4_OBJECT(result);
+	}
     }
     UNPROTECT(3);
     return result;
@@ -668,7 +673,8 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(nsubs < 2) {
 	SEXP dim = getAttrib(x, R_DimSymbol);
 	int ndim = length(dim);
-	ans = VectorSubset(ax, (nsubs == 1 ? CAR(subs) : R_MissingArg), call);
+	PROTECT(ans = VectorSubset(ax, (nsubs == 1 ? CAR(subs) : R_MissingArg),
+				   call));
 	/* one-dimensional arrays went through here, and they should
 	   have their dimensions dropped only if the result has
 	   length one and drop == TRUE
@@ -678,7 +684,6 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    int len = length(ans);
 
 	    if(!drop || len > 1) {
-		PROTECT(ans);
 		PROTECT(attr = allocVector(INTSXP, 1));
 		INTEGER(attr)[0] = length(ans);
 		setAttrib(ans, R_DimSymbol, attr);
@@ -692,7 +697,6 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    setAttrib(ans, R_NamesSymbol, R_NilValue);
 		    UNPROTECT(1);
 		}
-		UNPROTECT(1);
 	    }
 	}
     } else {
@@ -702,8 +706,8 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    ans = MatrixSubset(ax, subs, call, drop);
 	else
 	    ans = ArraySubset(ax, subs, call, drop);
+	PROTECT(ans);
     }
-    PROTECT(ans);
 
     /* Note: we do not coerce back to pair-based lists. */
     /* They are "defunct" in this version of R. */
@@ -725,7 +729,8 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (ATTRIB(ans) != R_NilValue) {
 	setAttrib(ans, R_TspSymbol, R_NilValue);
-	setAttrib(ans, R_ClassSymbol, R_NilValue);
+	if(!IS_S4_OBJECT(x))
+	    setAttrib(ans, R_ClassSymbol, R_NilValue);
     }
     UNPROTECT(4);
     return ans;
@@ -1113,7 +1118,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
     }
     else if( IS_S4_OBJECT(x) ){
 	errorcall(call, "$ operator not defined for this S4 class");
-    } 
+    }
     else /* e.g. a function */
 	errorcall(call, R_MSG_ob_nonsub, type2char(TYPEOF(x)));
     UNPROTECT(2);
