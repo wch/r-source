@@ -445,6 +445,9 @@ plot.ts <-
 		  pch = par("pch"), cex = par("cex"),
 		  lty = par("lty"), lwd = par("lwd"),
 		  axes = TRUE, frame.plot = axes, ann = par("ann"),
+                  cex.lab = par("cex.lab"), col.lab = par("col.lab"),
+                  font.lab = par("font.lab"), cex.axis = par("cex.axis"),
+                  col.axis = par("col.axis"), font.axis = par("font.axis"),
 		  main = NULL, ...)
     {
 	plot.type <- match.arg(plot.type)
@@ -477,14 +480,18 @@ plot.ts <-
 		y.side <- if (i %% 2 || !yax.flip) 2 else 4
 		do.xax <- i %% nr == 0 || i == nser
 		if(axes) {
-		    axis(y.side, xpd = NA)
+		    axis(y.side, xpd = NA, cex.axis = cex.axis,
+                         col.axis = col.axis, font.axis = font.axis)
 		    if(do.xax)
-			axis(1, xpd = NA)
+			axis(1, xpd = NA, cex.axis = cex.axis,
+                             col.axis = col.axis, font.axis = font.axis)
 		}
 		if(ann) {
-		    mtext(nm[i], y.side, line=3, ...)
+		    mtext(nm[i], y.side, line=3, cex=cex.lab, col=col.lab,
+                          font=font.lab, ...)
 		    if(do.xax)
-			mtext(xlab, side=1, line=3, ...)
+			mtext(xlab, side=1, line=3, cex=cex.lab, col=col.lab,
+                          font=font.lab, ...)
 		}
 	    }
 	    if(ann && !is.null(main)) {

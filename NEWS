@@ -87,6 +87,9 @@ NEW FEATURES
     o	data.frame() now recycles columns of list arguments, not just
 	vectors and factors.
 
+    o	plot.ts(plot.type="multiple") now makes use of *.lab and
+	*.axis graphical parameters (wish of PR#13134 and 13135)
+
 
 DEPRECATED & DEFUNCT
 
