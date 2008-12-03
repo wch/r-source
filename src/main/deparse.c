@@ -366,6 +366,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (CAR(o) == R_UnboundValue) continue;
 		obj_name = translateChar(STRING_ELT(names, i));
 		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
+		/* FIXME: should not use backticks when deparsing for S */
 		Rprintf(/* figure out if we need to quote the name */
 			isValidName(obj_name) ? "%s <-\n" : "`%s` <-\n",
 			obj_name);
@@ -391,6 +392,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (CAR(o) == R_UnboundValue) continue;
 		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
 		s = translateChar(STRING_ELT(names, i));
+		/* FIXME: should not use backticks when deparsing for S */
 		res = Rconn_printf(con, "`%s` <-\n", s);
 		if(!havewarned && res < strlen(s) + 6)
 		    warning(_("wrote too few characters"));
@@ -884,7 +886,11 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		case PP_RETURN:
 		    if (isValidName(CHAR(PRINTNAME(op)))) /* ASCII */
 			print2buff(CHAR(PRINTNAME(op)), d);
-		    else {
+		    else if (d->backtick) {
+			print2buff("`", d);
+			print2buff(CHAR(PRINTNAME(op)), d);
+			print2buff("`", d);
+		    } else {
 			print2buff("\"", d);
 			print2buff(CHAR(PRINTNAME(op)), d);
 			print2buff("\"", d);
@@ -1003,6 +1009,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff("next", d);
 		    break;
 		case PP_SUBASS:
+		  /* FIXME: should not use backticks when deparsing for S */
 		    print2buff("`", d);
 		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    print2buff("`(", d);
@@ -1055,7 +1062,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 			if ( isSymbol(CAR(s)) ){
 			    const char *ss = CHAR(PRINTNAME(CAR(s)));
 			    if ( !isValidName(ss) ){
-
+			      /* FIXME: should not use backticks when deparsing for S */
 				print2buff("`", d);
 				print2buff(ss, d);
 				print2buff("`", d);
@@ -1357,7 +1364,11 @@ static void vec2buff(SEXP v, LocalParseData *d)
 	    /* d->opts = SIMPLEDEPARSE; This seems pointless */
 	    if( isValidName(translateChar(STRING_ELT(nv, i))) )
 		deparse2buff(STRING_ELT(nv, i), d);
-	    else {
+	    else if(d->backtick) {
+		print2buff("`", d);
+		deparse2buff(STRING_ELT(nv, i), d);
+		print2buff("`", d);
+	    } else {
 		print2buff("\"", d);
 		deparse2buff(STRING_ELT(nv, i), d);
 		print2buff("\"", d);
@@ -1385,7 +1396,11 @@ static void args2buff(SEXP arglist, int lineb, int formals, LocalParseData *d)
 	    const char *ss = CHAR(PRINTNAME(s));
 	    if( s == R_DotsSymbol || isValidName(ss) )
 		print2buff(ss, d);
-	    else {
+	    else if(d->backtick) {
+		print2buff("`", d);
+		print2buff(ss, d);
+		print2buff("`", d);
+	    } else {
 		print2buff("\"", d);
 		print2buff(ss, d);
 		print2buff("\"", d);

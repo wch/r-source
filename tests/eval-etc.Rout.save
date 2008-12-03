@@ -1,6 +1,6 @@
 
-R version 2.5.0 Under development (unstable) (2006-11-11 r39849)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.8.0 Patched (2008-12-03 r47040)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -22,7 +22,7 @@ Type 'q()' to quit R.
 > ##- Date: 20 Jan 1999 14:56:24 +0100
 > e1 <- parse(text='c(F=(f <- .3), "Tail area" = 2 * if(f < 1) 30 else 90)')[[1]]
 > e1
-c(F = (f <- 0.3), "Tail area" = 2 * if (f < 1) 30 else 90)
+c(F = (f <- 0.3), `Tail area` = 2 * if (f < 1) 30 else 90)
 > str(eval(e1))
  Named num [1:2] 0.3 60
  - attr(*, "names")= chr [1:2] "F" "Tail area"
@@ -33,15 +33,15 @@ c(F = (f <- 0.3), "Tail area" = 2 * if (f < 1) 30 else 90)
 c(a = 1, b = 2)
 > names(e2)[2] <- "a b c"
 > e2
-c("a b c" = 1, b = 2)
+c(`a b c` = 1, b = 2)
 > parse(text=deparse(e2))
-expression(c("a b c" = 1, b = 2))
+expression(c(`a b c` = 1, b = 2))
 > 
 > ##- From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 > ##- Date: 22 Jan 1999 11:47
 > 
 > ( e3 <- quote(c(F=1,"tail area"=pf(1,1,1))) )
-c(F = 1, "tail area" = pf(1, 1, 1))
+c(F = 1, `tail area` = pf(1, 1, 1))
 > eval(e3)
         F tail area 
       1.0       0.5 
@@ -50,7 +50,7 @@ c(F = 1, "tail area" = pf(1, 1, 1))
 > 
 > names(e3)[2] <- "Variance ratio"
 > e3
-c("Variance ratio" = 1, "tail area" = pf(1, 1, 1))
+c(`Variance ratio` = 1, `tail area` = pf(1, 1, 1))
 > eval(e3)
 Variance ratio      tail area 
            1.0            0.5 
