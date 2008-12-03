@@ -1415,11 +1415,11 @@ static SEXP DeleteOneVectorListItem(SEXP x, int which)
     return x;
 }
 
-/* The [[<- operator, it should be fast. */
-/* args[1] = object being subscripted */
-/* args[2] = list of subscripts */
-/* args[3] = replacement values */
-
+/* The [[<- operator; should be fast.
+ *     ====
+ * args[1] = object being subscripted
+ * args[2] = list of subscripts
+ * args[3] = replacement values */
 SEXP attribute_hidden do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
