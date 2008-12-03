@@ -421,18 +421,18 @@ data.frame <-
     nr <- max(nrows)
     for(i in seq_len(n)[nrows < nr]) {
 	xi <- vlist[[i]]
-	if(length(xi) == 1L && nrows[i] > 0L && nr %% nrows[i] == 0L) {
-            xi1 <- xi[[1L]]
-            if(is.vector(xi1) || is.factor(xi1)) {
-                vlist[[i]] <- list(rep(xi1, length.out = nr))
-                next
+	if(nrows[i] > 0L && (nr %% nrows[i] == 0L)) {
+            xi <- unclass(xi) # avoid data-frame methods
+            for(j in seq_along(xi)) {
+                xi1 <- xi[[j]]
+                if(is.vector(xi1) || is.factor(xi1))
+                    xi[[j]] <- rep(xi1, length.out = nr)
+                else if(is.character(xi1) && class(xi1) == "AsIs")
+                    xi[[j]] <- structure(rep(xi1, length.out = nr),
+                                         class = class(xi1))
             }
-            if(is.character(xi1) && class(xi1) == "AsIs") {
-                ## simple char vectors only
-                cl <- class(xi1) # `methods' adds a class -- Eh?
-                vlist[[i]] <- list(structure(rep(xi1, length.out = nr), class=cl))
-                next
-            }
+            vlist[[i]] <- xi
+            next
         }
 	stop("arguments imply differing number of rows: ",
              paste(unique(nrows), collapse = ", "))

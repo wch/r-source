@@ -84,6 +84,9 @@ NEW FEATURES
     o	Iterating over a factor in a for loop now coerces to a character
 	vector (rather than using the integer codes).
 
+    o	data.frame() now recycles columns of list arguments, not just
+	vectors and factors.
+
 
 DEPRECATED & DEFUNCT
 
