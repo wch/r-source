@@ -152,7 +152,8 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    ;
 	}
     }
-    if(!isNull(dimnames)) ans = dimnamesgets(ans, dimnames);
+    if(!isNull(dimnames)&& length(dimnames) > 0) 
+	ans = dimnamesgets(ans, dimnames);
     UNPROTECT(1);
     return ans;
 }
