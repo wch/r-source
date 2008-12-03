@@ -148,6 +148,8 @@ BUG FIXES
 
     o	deparse(control="S_compatible") now never uses backticks.
 
+    o	0^NA is now NA, not Inf., consistent with x^NA, x!=1.
+
 
 
 

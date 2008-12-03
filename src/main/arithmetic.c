@@ -199,7 +199,8 @@ double R_pow(double x, double y) /* = x ^ y */
 	return(1.);
     if(x == 0.) {
 	if(y > 0.) return(0.);
-	/* y < 0 */ return(R_PosInf);
+	else if(y < 0) return(R_PosInf);
+	else return(y); /* NA or NaN, we assert */
     }
     if (R_FINITE(x) && R_FINITE(y))
 /* work around a bug in May 2007 snapshots of gcc pre-4.3.0, also
