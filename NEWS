@@ -293,9 +293,11 @@ BUG FIXES
     o 	transform.data.frame() works better when two or more columns are
 	added.
 
-    o	Deparsing argument lists with non-syntactic names
-	(e.g. 'transform') now uses backticks rather than double quotes to
-	produce syntacticaly valid output.
+    o	Deparsing argument lists with non-syntactic names (e.g. that for
+	transform()) now uses backticks rather than double quotes to
+	produce syntactically valid output.
+
+    o	matrix() failed to check for 0-length 'dimnames'.  (PR#13361)
 
 
 

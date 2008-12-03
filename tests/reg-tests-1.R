@@ -5508,3 +5508,7 @@ transform(mtcars, t1=3, t2=4)
 ## deparsing transform failed
 parse(text = deparse(transform))
 ## failed in 2.8.0
+
+## crashed on some systems (PR#13361)
+try(matrix(1:4, nrow=2, dimnames=list()))
+##
