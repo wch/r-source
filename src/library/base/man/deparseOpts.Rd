@@ -70,7 +70,7 @@
     \item{\code{S_compatible}}{
       Make deparsing as far as possible compatible with S and \R < 2.5.0.
       For compatibility with S, integer values of double vectors are
-      deparsed with a trailing decimal point.
+      deparsed with a trailing decimal point.  Backticks are not used.
     }
   }
   For the most readable (but perhaps incomplete) display, use
