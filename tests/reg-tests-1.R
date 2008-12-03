@@ -5498,3 +5498,8 @@ stopifnot(identical(pcn[d],
 		    c("2.312", "3.14", "4.23054","120","9.9","10.1")),
 	  identical("-3", prettyNum("-3.0",drop0trailing=TRUE)) )
 ## first failed, e.g. for 8.1e100
+
+
+## (R-help, 2008-12-01)
+transform(mtcars, t1=3, t2=4)
+## failed in 2.8.0 since extra columns were passed as a list.

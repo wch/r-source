@@ -282,6 +282,9 @@ BUG FIXES
     o	legend(...., merge=TRUE) now warns and has no effect in the
 	case where no line segments are drawn.  (PR#13340)
 
+    o 	transform.data.frame() works better when two or more columns are
+	added.
+
 
 
 		CHANGES IN R VERSION 2.8.0
