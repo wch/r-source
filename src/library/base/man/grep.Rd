@@ -102,7 +102,7 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
 
   For \code{sub} and \code{gsub} a character vector of the same length
   and with the same attributes as \code{x} (after possible coercion).
-  Elements of character vectors \code{x} which are not subsituted will
+  Elements of character vectors \code{x} which are not substituted will
   be return unchanged (including any declared encoding).  If
   \code{useBytes = FALSE}, either \code{perl = TRUE} or \code{fixed =
     TRUE} and any element of \code{pattern}, \code{replacement} and
