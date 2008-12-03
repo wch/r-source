@@ -288,6 +288,10 @@ BUG FIXES
     o 	transform.data.frame() works better when two or more columns are
 	added.
 
+    o	Deparsing argument lists with non-syntactic names
+	(e.g. 'transform') now uses backticks rather than double quotes to
+	produce syntacticaly valid output.
+
 
 
 		CHANGES IN R VERSION 2.8.0

@@ -5503,3 +5503,8 @@ stopifnot(identical(pcn[d],
 ## (R-help, 2008-12-01)
 transform(mtcars, t1=3, t2=4)
 ## failed in 2.8.0 since extra columns were passed as a list.
+
+
+## deparsing transform failed
+parse(text = deparse(transform))
+## failed in 2.8.0
