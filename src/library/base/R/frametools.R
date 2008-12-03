@@ -55,7 +55,7 @@ subset.matrix <- function(x, subset, select, drop = FALSE, ...)
     x[subset & !is.na(subset), vars, drop = drop]
 }
 
-### Notice use of "illegal" variable name for the first argument
+### Notice use of non-syntactic variable name for the first argument
 ### This used to be "x", but then you couldn't create a variable
 ### called "x"...
 
@@ -69,8 +69,8 @@ transform.data.frame <- function (`_data`, ...)
 	`_data`[inx[matched]] <- e[matched]
 	`_data` <- data.frame(`_data`)
     }
-    if (!all(matched))
-	data.frame(`_data`, e[!matched])
+    if (!all(matched))  # add as separate arguments to get replication
+	do.call("data.frame", c(list(`_data`), e[!matched]))
     else `_data`
 }
 
