@@ -300,12 +300,16 @@ BUG FIXES
 	transform()) now uses backticks rather than double quotes to
 	produce syntactically valid output.
 
-    o	matrix() failed to check for 0-length 'dimnames'.  (PR#13361)
+    o	matrix() failed to check for 0-length 'dimnames': it now
+	treats them as NULL (as array did).  (PR#13361)
 
-    o	0^NA is now NA, not Inf., consistent with x^NA, x!=1.
+    o	For consistency with matrix() and array(), dimnames(x) <-
+	list() removes the dimnames (as assigning NULL would do).
 
-    o   anova.mlm did not work if T had only one row (including
-        e.g. the case M=~1)
+    o	0^NA is now NA, not Inf, consistent with x^NA, x!=1.
+
+    o	anova.mlm did not work if T had only one row (including
+	e.g. the case M=~1)
 
 
 
