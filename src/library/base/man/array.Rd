@@ -22,11 +22,14 @@ is.array(x)
   \item{dim}{the dim attribute for the array to be created, that is a
     vector of length one or more giving the maximal indices in
     each dimension.}
-  \item{dimnames}{the names for the dimensions. This is a list with one
-    component for each dimension, either NULL or a character vector of
-    the length given by \code{dim} for that dimension.  The list can be
-    names, and the names will be used as names for the dimensions.}
-  \item{x}{an \R object.}
+  \item{dimnames}{either \code{NULL} or the names for the
+    dimensions. This is a list with one component for each dimension,
+    either \code{NULL} or a character vector of the length given by
+    \code{dim} for that dimension.  The list can be named, and the list names
+    will be used as names for the dimensions.  If the list is shorter
+    than the number of dimensions, it is extended by \code{NULL}s to the
+    length required}
+  \Item{x}{an \R object.}
   \item{\dots}{additional arguments to be passed to or from methods.}
 }
 \value{
