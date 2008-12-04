@@ -175,6 +175,10 @@ NEW FEATURES
 
     o	qt() now works for 0 < df < 1.
 
+    o	For consistency with matrix() and array(), dimnames(x) <-
+	list() removes the dimnames (as assigning NULL would do).
+	It was previously an error.
+
 
 UTILITIES
 
@@ -281,14 +285,14 @@ BUG FIXES
     o	Sweave() now takes the defaults for the options 'pdf.version'
 	and 'pdf.encoding' of its RweaveLatex driver from pdf.options().
 
-    o	prettyNum(x, drop0trailing=TRUE) wrongly treated "1.1e20"
+    o	prettyNum(x, drop0trailing=TRUE) treated "1.1e20" as "1.1e2"
 	and hence str() did as well, in 2.8.0 only.
 
     o	dchisq(x, df, ncp) no longer hangs for large x and ncp > 0,
 	and is more accurate in some cases (PR#13309).
 
     o	installed.packages(lib.loc = D, priority="NA") now also works when
-	D contains one single package only.  (PR#13332)
+	D contains a single package.  (PR#13332)
 
     o	legend(...., merge=TRUE) now warns and has no effect in the
 	case where no line segments are drawn.  (PR#13340)
@@ -303,13 +307,10 @@ BUG FIXES
     o	matrix() failed to check for 0-length 'dimnames': it now
 	treats them as NULL (as array did).  (PR#13361)
 
-    o	For consistency with matrix() and array(), dimnames(x) <-
-	list() removes the dimnames (as assigning NULL would do).
-
     o	0^NA is now NA, not Inf, consistent with x^NA, x!=1.
 
-    o	anova.mlm did not work if T had only one row (including
-	e.g. the case M=~1)
+    o	anova.mlm() did not work if T had only one row (including
+	e.g. the case M = ~1).
 
 
 
