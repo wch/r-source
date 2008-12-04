@@ -294,8 +294,8 @@ anova.mlm <-
             ## Try to distinguish bad scaling and near-perfect fit
             ## Notice that we must transform by T before scaling
             sc <- sqrt(diag(T %*% ssd$SSD %*% t(T)))
-            D <- sqrt(sc^2 + rowSums(sapply(ss, function(X)
-                                            diag(T %*% X %*% t(T)))))
+            D <- sqrt(sc^2 + rowSums(as.matrix(sapply(ss, function(X)
+                                            diag(T %*% X %*% t(T))))))
             sc <- ifelse(sc/D < 1e-6, 1, 1/sc)
             scm <- tcrossprod(sc)
 
