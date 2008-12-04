@@ -448,3 +448,13 @@ for(bcl in c("list","integer","numeric")) {
     x <- new("C", 1:3); x <- x[2:3] ; stopifnot(is(x, "C"))
 }
 ## used to drop the class in 2.8.0 and earlier
+
+##From "Michael Lawrence" <....@fhcrc.org>  To r-devel@r-project, 25 Nov 2008:
+setGeneric("order", signature="...",
+	   function (..., na.last=TRUE, decreasing=FALSE)
+	   standardGeneric("order"))
+stopifnot(identical(rbind(1), matrix(1,1,1)))
+setGeneric("rbind", function(..., deparse.level=1)
+	   standardGeneric("rbind"), signature = "...")
+stopifnot(identical(rbind(1), matrix(1,1,1)))
+## gave Error in .Method( .... in R 2.8.0
