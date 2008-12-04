@@ -139,9 +139,6 @@ BUG FIXES
 	names unique.  This was never documented, but some packages
 	have assumed it.
 
-    o   anova.mlm did not work if T had only one row (including
-        e.g. the case M=~1)
-
     o	data.frame() no longer ignores row names on objects if the
 	first name is empty.  (PR#13230: this has been the behaviour
 	for a long time, but apparently undocumented.)
@@ -306,6 +303,9 @@ BUG FIXES
     o	matrix() failed to check for 0-length 'dimnames'.  (PR#13361)
 
     o	0^NA is now NA, not Inf., consistent with x^NA, x!=1.
+
+    o   anova.mlm did not work if T had only one row (including
+        e.g. the case M=~1)
 
 
 
