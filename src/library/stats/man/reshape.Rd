@@ -52,14 +52,14 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   \item{new.row.names}{logical; if \code{TRUE} and \code{direction="wide"},
     create new row names in long format from the values of the id and
     time variables.}
-  \item{sep} {A character vector of length 1, indicating a separating
+  \item{sep}{A character vector of length 1, indicating a separating
     character in the variable names in the wide format. This is used for
     guessing \code{v.names} and \code{times} arguments based on the
     names in \code{varying}. If \code{sep==""}, the split is just before
     the first numeral that follows an alphabetic character.} 
-    \item{split}{A list with three components, \code{regexp},
-      \code{include}, and (optionally) \code{fixed}. This allows an
-      extended interface to variable name splitting. See below for details.}
+  \item{split}{A list with three components, \code{regexp},
+    \code{include}, and (optionally) \code{fixed}. This allows an
+    extended interface to variable name splitting. See below for details.}
 }
 \details{
   The arguments to this function are described in terms of longitudinal
