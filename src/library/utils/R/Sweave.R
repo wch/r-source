@@ -373,8 +373,8 @@ RweaveLatexSetup <-
                     width=6, height=6, term=TRUE,
                     echo=TRUE, keep.source=FALSE, results="verbatim",
                     split=FALSE, strip.white="true", include=TRUE,
-                    pdf.version=pdf.options()$version,
-                    pdf.encoding=pdf.options()$encoding,
+                    pdf.version=grDevices::pdf.options()$version,
+                    pdf.encoding=grDevices::pdf.options()$encoding,
                     concordance=FALSE, expand=TRUE)
     options[names(dots)] <- dots
 
