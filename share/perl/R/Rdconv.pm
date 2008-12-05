@@ -449,7 +449,7 @@ sub get_sections {
 	  $text =~ /\\section($ID)/){
 	my $id = $1;
 	my ($endid, $section, $body)
-	    = get_arguments("section", $text, 2);
+	    = get_arguments_check("section", $text, 2);
 	print STDERR "found: $section\n" if $debug;
 
 	## remove leading and trailing whitespace
@@ -478,6 +478,24 @@ sub get_arguments {
     ## Returns a list with the id of the last closing bracket and the
     ## arguments.
 
+    if($text =~ /\\($command)(\[[^\]]+\])?($ID)/){
+	$id = $3;
+	$text =~ s/$id(.*)$id/$id/s;
+	$retval[1] = $1;
+	my $k = 2;
+	while(($k <= $nargs) && ($text =~ /$id($ID)/)){
+	    $id = $1;
+	    $text =~ s/$id\s*(.*)$id/$id/s;
+	    $retval[$k++] = $1;
+	}
+    }
+    $retval[0] = $id;
+    @retval;
+}
+
+sub get_arguments_check {
+
+    my ($command, $text, $nargs) = @_;
     $keep = $text;
     if($text =~ /\\($command)(\[[^\]]+\])?($ID)/){
 	$warn = 0;
@@ -494,9 +512,10 @@ sub get_arguments {
     }
     $retval[0] = $id;
     if ($warn) {
+	$keep =~ s/\n/ /g;
 	$keep =~ /(.*\s$id.*$id)/;
 	$keep = unmark_brackets($1);
-	warn "WARNING: invalid whitespace before brace at '$keep'\n";
+	warn "WARNING: invalid whitespace before brace in file '$Rdname.Rd' at '$keep'\n";
     }
     @retval;
 }
@@ -1136,7 +1155,7 @@ sub text2html {
     $text = replace_command($text, "describe", "<dl>", "</dl>");
     while(checkloop($loopcount++, $text, "\\item")
 	  && $text =~ /\\itemnormal/s) {
-	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+	my ($id, $arg, $desc)  = get_arguments_check("item", $text, 2);
 	my $descitem;
 	$descitem = "<dt>" . text2html($arg, 0, $inarglist) . "</dt>";
 	$descitem .= "<dd>" . text2html($desc, 0, $inarglist) . "</dd>";
@@ -1313,7 +1332,7 @@ sub html_print_argblock {
 	    while(checkloop($loopcount++, $text, "\\item")
 		  && $text =~ /\\item/s) {
 		my ($id, $arg, $desc)  =
-		    get_arguments("item", $text, 2);
+		    get_arguments_check("item", $text, 2);
 		print $htmlout ("<tr valign=\"top\"><td><code>",
 				text2html($arg, 1, 1),
 				"</code></td>\n<td>\n",
@@ -1759,7 +1778,7 @@ sub text2txt {
 			    "\n\n.in -$INDENTDD\n");
     while(checkloop($loopcount++, $text, "\\item")
 	  && $text =~ /\\itemnormal/s) {
-	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+	my ($id, $arg, $desc)  = get_arguments_check("item", $text, 2);
 	my $descitem = text2txt($arg);
 	my $ll = length($desc);
 	$descitem =~ s/\n/ /go;  # no NLs in items
@@ -2100,7 +2119,7 @@ sub txt_print_argblock {
 	    my $loopcount = 0;
 	    while(checkloop($loopcount++, $text, "\\item") &&
 		  $text =~ /\\item/s){
-		my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+		my ($id, $arg, $desc)  = get_arguments_check("item", $text, 2);
 		$arg = text2txt($arg);
 		$arg =~ s/\\&//go;
 		$desc = text2txt($desc);
@@ -2292,7 +2311,7 @@ sub Sd_print_argblock {
 	    my $loopcount = 0;
 	    while(checkloop($loopcount++, $text, "\\item") &&
 		  $text =~ /\\item/s){
-		my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+		my ($id, $arg, $desc)  = get_arguments_check("item", $text, 2);
 		$arg = text2nroff($arg);
 		$desc = text2nroff($desc);
 		print $Sdout ".AG ", $arg, "\n";
@@ -2458,7 +2477,7 @@ sub text2nroff {
 			    "\n.in -$INDENT\n");
     while(checkloop($loopcount++, $text, "\\item")
 	  && $text =~ /\\itemnormal/s) {
-	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+	my ($id, $arg, $desc)  = get_arguments_check("item", $text, 2);
 	$arg = text2nroff($arg);
 	$descitem = ".IP \"\" $TAGOFF\n".
 	    ".ti -\\w\@" . $arg .
@@ -2799,7 +2818,7 @@ sub text2latex {
     $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\item")
 	  && $text =~ /\\itemnormal/s) {
-	my ($id, $arg, $desc) = get_arguments("item", $text, 2);
+	my ($id, $arg, $desc) = get_arguments_check("item", $text, 2);
 	$descitem = "\\DITEM[" .
 	    text2latex($arg, 1) . "] " . text2latex($desc, 1);
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
@@ -2967,7 +2986,7 @@ sub latex_print_argblock {
 	    my $loopcount = 0;
 	    while(checkloop($loopcount++, $text, "\\item")
 		  &&  $text =~ /\\item/s){
-		my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+		my ($id, $arg, $desc)  = get_arguments_check("item", $text, 2);
 		print $latexout "\\item\[";
 		print $latexout &latex_code_cmd(code2latex($arg,1,1));
 		print $latexout "\] ";
@@ -3378,7 +3397,7 @@ sub text2Ssgm {
     $text = replace_command($text, "describe", "<descrip>", "</descrip>\n");
     while(checkloop($loopcount++, $text, "\\item")
 	  && $text =~ /\\itemnormal/s) {
-	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+	my ($id, $arg, $desc)  = get_arguments_check("item", $text, 2);
 	$descitem = "<tag/" . text2Ssgm($arg, 0, $inarglist) . "/";
 	$descitem .= text2Ssgm($desc, 0, $inarglist);
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
@@ -3529,7 +3548,7 @@ sub Ssgm_print_argblock {
 	    while(checkloop($loopcount++, $text, "\\item")
 		  && $text =~ /\\item/s) {
 		my ($id, $arg, $desc)  =
-		    get_arguments("item", $text, 2);
+		    get_arguments_check("item", $text, 2);
 		print $sgmlout ("<s-arg name=\"",
 				text2Ssgm($arg, 1, 1),
 				"\">\n",
@@ -3568,7 +3587,7 @@ sub Ssgm_print_valueblock {
 	    while(checkloop($loopcount++, $text, "\\item")
 		  && $text =~ /\\item/s) {
 		my ($id, $arg, $desc)  =
-		    get_arguments("item", $text, 2);
+		    get_arguments_check("item", $text, 2);
 		print $sgmlout ("<s-return-component name=\"",
 				text2Ssgm($arg, 1, 1),
 				"\">\n",

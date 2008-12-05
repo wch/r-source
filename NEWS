@@ -94,11 +94,10 @@ NEW FEATURES
 	file directive'exportClassPattern' which has the same syntax
 	as 'exportPattern'.
 
-    o 	The Rd converter now detects and gives a warning on illegal
-	whitespace between arguments after the first, e.g.
-	\item{foo} {some value}, including for \item, \section,
-	\tabular, \eqn and \degn.  Previously arguments after
-	whitespace were ignored.
+    o	The Rd converter now detects and gives a warning on invalid
+	whitespace between arguments after the first, e.g.  \item{foo}
+	{some value} for \item and \section.  Previously arguments
+	after silently whitespace were ignored.
 
 
 DEPRECATED & DEFUNCT
