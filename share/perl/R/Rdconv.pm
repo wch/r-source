@@ -480,21 +480,24 @@ sub get_arguments {
 
     $keep = $text;
     if($text =~ /\\($command)(\[[^\]]+\])?($ID)/){
+	$warn = 0;
 	$id = $3;
 	$text =~ s/$id(.*)$id/$id/s;
 	$retval[1] = $1;
 	my $k = 2;
 	while(($k <= $nargs) && ($text =~ /$id(\s*)($ID)/)){
-	    if (length($1) > 0) {
-		$keep = unmark_brackets($keep);
-		die "ERROR: invalid whitespace before brace at '$keep'\n";
-	    }
+	    $warn = 1 if (length($1) > 0);
 	    $id = $2;
 	    $text =~ s/$id\s*(.*)$id/$id/s;
 	    $retval[$k++] = $1;
 	}
     }
     $retval[0] = $id;
+    if ($warn) {
+	$keep =~ s/$id.*$//;
+	$keep = unmark_brackets($keep);
+	warn "WARNING: invalid whitespace before brace at '$keep'\n";
+    }
     @retval;
 }
 
