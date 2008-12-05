@@ -388,17 +388,18 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		error(_("cannot write to this connection"));
 	    for (i = 0, nout = 0; i < nobjs; i++) {
 		const char *s;
+		int extra = 6;
 		if (CAR(o) == R_UnboundValue) continue;
 		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
 		s = translateChar(STRING_ELT(names, i));
-		if(isValidName(s))
-		    res = Rconn_printf(con, "`%s` <-\n", s);
-		else if(opts & S_COMPAT)
+		if(isValidName(s)) {
+		    extra = 4;
+		    res = Rconn_printf(con, "%s <-\n", s);
+		} else if(opts & S_COMPAT)
 		    res = Rconn_printf(con, "\"%s\" <-\n", s);
 		else
 		    res = Rconn_printf(con, "`%s` <-\n", s);
-		res = Rconn_printf(con, "`%s` <-\n", s);
-		if(!havewarned && res < strlen(s) + 6)
+		if(!havewarned && res < strlen(s) + extra)
 		    warning(_("wrote too few characters"));
 		tval = deparse1(CAR(o), 0, opts);
 		for (j = 0; j < LENGTH(tval); j++) {
