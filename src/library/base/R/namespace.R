@@ -436,7 +436,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             expClasses <- nsInfo$exportClasses
             ##we take any pattern, but check to see if the matches are classes
             pClasses <- character(0)
-            aClasses <- getClasses(ns)            
+            aClasses <- methods::getClasses(ns)            
             for (p in nsInfo$exportClassPatterns) {
                 pClasses <- c(aClasses[grep(p, aClasses)], pClasses)
             }
