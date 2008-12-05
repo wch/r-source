@@ -2999,7 +2999,9 @@ Description of the function's arguments, using an entry of the form
 
 @noindent
 for each element of the argument list.  There may be optional text
-before and after these entries.
+before and after these entries.  (Note that there is no whitespace
+between the three parts of the entry.)
+
 
 @item \details@{@dots{}@}
 @findex \details
@@ -3296,7 +3298,8 @@ For example
 @noindent
 For consistency with the pre-assigned sections, the section name (the
 first argument to @code{\section}) should be capitalized (but not all
-upper case).
+upper case).  Note that there is no whitespace between the first and
+second braced expressions.
 
 Note that additional named sections are always inserted at a fixed
 position in the output (before @code{\note}, @code{\seealso} and the
@@ -3453,7 +3456,8 @@ For example:
 @noindent
 There must be the same number of fields on each line as there are
 alignments in the first argument, and they must be non-empty (but can
-contain only spaces).
+contain only spaces).  (There is no whitespace between @code{\tabular}
+and the first argument, nor between the two arguments.)
 
 @node Cross-references, Mathematics, Lists and tables, Writing R documentation files
 @section Cross-references
@@ -3519,7 +3523,8 @@ is used for ``inline'' formulae (corresponding to @TeX{}'s
 
 Both commands can also be used as @code{\eqn@{@var{latexascii}@}} (only
 @emph{one} argument) which then is used for both @var{latex} and
-@var{ascii}.
+@var{ascii}.  No whitespace is allowed between command and the first
+argument, nor between the first and second arguments.
 
 The following example is from @file{Poisson.Rd}:
 

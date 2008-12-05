@@ -90,8 +90,14 @@ NEW FEATURES
     o	plot.ts(plot.type="multiple") now makes use of *.lab and
 	*.axis graphical parameters (wish of PR#13134 and 13135)
 
-    o	Classes can be exported from a namespace using exportClassPattern
-	which has the same syntax as exportPattern.
+    o	Classes can be exported from a namespace using the NAMESPACE
+	file directive'exportClassPattern' which has the same syntax
+	as 'exportPattern'.
+
+    o 	The Rd convertor now detects and gives an error on illegal
+	whitespace between arguments after the first, e.g.
+	\item{foo} {some value}, including for \item, \section,
+	\tabular, \eqn and \degn.
 
 
 DEPRECATED & DEFUNCT

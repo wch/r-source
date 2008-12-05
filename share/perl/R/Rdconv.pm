@@ -478,13 +478,18 @@ sub get_arguments {
     ## Returns a list with the id of the last closing bracket and the
     ## arguments.
 
+    $keep = $text;
     if($text =~ /\\($command)(\[[^\]]+\])?($ID)/){
 	$id = $3;
 	$text =~ s/$id(.*)$id/$id/s;
 	$retval[1] = $1;
-	my $k=2;
-	while(($k<=$nargs) && ($text =~ /$id($ID)/)){
-	    $id = $1;
+	my $k = 2;
+	while(($k <= $nargs) && ($text =~ /$id(\s*)($ID)/)){
+	    if (length($1) > 0) {
+		$keep = unmark_brackets($keep);
+		die "ERROR: invalid whitespace before brace at '$keep'\n";
+	    }
+	    $id = $2;
 	    $text =~ s/$id\s*(.*)$id/$id/s;
 	    $retval[$k++] = $1;
 	}
