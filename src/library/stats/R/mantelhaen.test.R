@@ -77,7 +77,14 @@ function(x, y = NULL, z = NULL,
                           sum(apply(rbind(s.x, s.y), 2, prod)
                               / (n^2 * (n - 1))))
             PARAMETER <- 1
-            PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
+            if (alternative == "two.sided")
+                PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
+            else {
+                z <- sign(DELTA) * sqrt(STATISTIC)
+                PVAL <- pnorm(z, lower.tail = (alternative == "less"))
+            }
+
+
             names(STATISTIC) <- "Mantel-Haenszel X-squared"
             names(PARAMETER) <- "df"
             METHOD <- paste("Mantel-Haenszel chi-squared test",
