@@ -29,10 +29,10 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
         sc <- 60
         if(missing(format)) format <- "%M:%S"
     } else if (d < 1.1*60*60*24) {# hours
-        sc <- 60*24
+        sc <- 60*60
         if(missing(format)) format <- "%H:%M"
     } else if (d < 2*60*60*24) {
-        sc <- 60*24
+        sc <- 60*60
         if(missing(format)) format <- "%a %H:%M"
     } else if (d < 7*60*60*24) {# days of a week
         sc <- 60*60*24
