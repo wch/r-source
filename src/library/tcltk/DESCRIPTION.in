@@ -5,4 +5,4 @@ Title: Tcl/Tk Interface
 Author: R Development Core Team
 Maintainer: R Core Team <R-core@r-project.org>
 Description: Interface and language bindings to Tcl/Tk GUI elements
-License: GPL (>= 2)
+License: Part of R @VERSION@
