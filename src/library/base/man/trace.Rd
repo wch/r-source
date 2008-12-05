@@ -82,12 +82,12 @@ tracingState(on = NULL)
     tracing state is \code{FALSE}, none of the trace actions will
     actually occur (used, for example, by debugging functions to shut
     off tracing during debugging).}
-  \item{expr, msg}{ arguments to the support function \code{.doTrace}, calls to
+  \item{expr, msg}{arguments to the support function \code{.doTrace}, calls to
     which are inserted into the modified function or method:
     \code{expr} is the tracing action (such as a call to
     \code{browser()}, and \code{msg} is a string identifying the
     place where the trace action occurs.
-  }XS
+  }
 }
 \details{
   The \code{trace} function operates by constructing a revised version
