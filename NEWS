@@ -81,7 +81,7 @@ NEW FEATURES
     o	plot() methods for "stepfun" (and hence "ecdf") gain an 'col'
 	argument, allowing to set all three colors simultaneously.
 
-    o	Iterating over a factor in a for loop now coerces to a character
+    o	iterating over a factor in a for loop now coerces to a character
 	vector (rather than using the integer codes).
 
     o	data.frame() now recycles columns of list arguments, not just
@@ -90,6 +90,8 @@ NEW FEATURES
     o	plot.ts(plot.type="multiple") now makes use of *.lab and
 	*.axis graphical parameters (wish of PR#13134 and 13135)
 
+    o   Classes can be exported from a namespace using exportClassPattern
+        which has the same syntax as exportPattern
 
 DEPRECATED & DEFUNCT
 

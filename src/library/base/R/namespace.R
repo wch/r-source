@@ -434,6 +434,18 @@ loadNamespace <- function (package, lib.loc = NULL,
             methods:::cacheMetaData(ns, TRUE, ns) 
             ## process class definition objects
             expClasses <- nsInfo$exportClasses
+            ##we take any pattern, but check to see if the matches are classes
+            pClasses <- character(0)
+            aClasses <- getClasses(ns)            
+            for (p in nsInfo$exportClassPatterns) {
+                pClasses <- c(aClasses[grep(p, aClasses)], pClasses)
+            }
+            pClasses <- unique(pClasses)
+            if( length(pClasses) > 0 ) {
+                good <- sapply(pClasses, methods:::isClass, where = ns)
+                if( !any(good) ) warning(gettextf("exportClassPattern specified but no matching classes in %s", package))
+                expClasses <- c(expClasses, pClasses[good])
+            }
             if(length(expClasses) > 0) {
                 missingClasses <-
                     !sapply(expClasses, methods:::isClass, where = ns)
@@ -988,6 +1000,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
     exports <- character(0)
     exportPatterns <- character(0)
     exportClasses <- character(0)
+    exportClassPatterns <- character(0)
     exportMethods <- character(0)
     imports <- list()
     importMethods <- list()
@@ -1025,6 +1038,10 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                exportPattern = {
                    pat <- asChar(e[-1])
                    exportPatterns <<- c(pat, exportPatterns)
+               },
+               exportClassPattern = {
+                   pat <- asChar(e[-1])
+                   exportClassPatterns <<- c(pat, exportClassPatterns)
                },
                exportClass = , exportClasses = {
                    exportClasses <<- c(asChar(e[-1]), exportClasses)
@@ -1166,7 +1183,8 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
     dynlibs <- unique(dynlibs)
     list(imports = imports, exports = exports, exportPatterns = exportPatterns,
          importClasses = importClasses, importMethods = importMethods,
-         exportClasses = exportClasses, exportMethods = exportMethods,
+         exportClasses = exportClasses,  exportMethods = exportMethods,
+         exportClassPatterns = exportClassPatterns, 
          dynlibs = dynlibs, nativeRoutines = nativeRoutines,
          S3methods = S3methods[seq_len(nS3), ,drop = FALSE])
 } ## end{parseNamespaceFile}

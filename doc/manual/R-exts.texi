@@ -2150,11 +2150,12 @@ export(AIC)
 
 @noindent
 All formal classes need to be listed in an @code{exportClasses}
-directive.  Generics for which formal methods are defined need to be
-declared in an @code{exportMethods} directive, and where the generics
-are formed by taking over existing functions, those functions need to be
-imported (explicitly unless they are defined in the @code{base} name
-space).
+directive. Alternatively, a pattern can be specified using
+@code{exportClassPattern}. Generics for which formal methods are defined
+need to be declared in an @code{exportMethods} directive, and where the
+generics are formed by taking over existing functions, those functions
+need to be imported (explicitly unless they are defined in the
+@code{base} name space).
 
 Note that exporting methods on a generic in the namespace will also
 export the generic, and exporting a generic in the namespace will also
