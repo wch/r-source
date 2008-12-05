@@ -1,45 +1,29 @@
 % File src/library/utils/man/aqua/browse.pkgs.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{browse.pkgs}
 \alias{browse.pkgs}
-\alias{browse.install.pkgs}
 \title{Download R packages}
 \description{
-    Visual browsers for downloading R binary or source packages from a
-  repository, usually invoked from the Packages menu. \code{browse.pkgs}
-  shows all available packages, \code{browse.update.pkgs} shows only
-  installed packages with different version numbers on the repository.
+  Visual browser for downloading \R binary or source packages from a
+  repository, usually invoked from the \sQuote{Packages} menu of
+  \samp{R.app}.
 }
 \usage{
-browse.pkgs(where = c("CRAN", "BIOC"), type = c("binary", "source"),
-            contriburl, global = FALSE)
-
-browse.update.pkgs(where = c("CRAN", "BIOC"), type = c("binary","source"),
-                   in.place = TRUE)
+browse.pkgs(repos = getOption("repos"),
+            contriburl = contrib.url(repos, type),
+            type = getOption("pkgType"))
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{where}{Browse \code{"CRAN"} or \code{"BIOConductor"}}
-  \item{type}{Type of package to download}
-  \item{contriburl}{Different URL to browse. Overrides \code{where}}
-  \item{global}{Not implemented}
-  \item{in.place}{Put the new package in the same directory as the old version}
-}
-\details{
-  The \code{CRAN} and \code{BIOC} URLs are set in R with Aqua GUI
-  Preferences. Packages are install in \code{.libPaths()[1]}, which is
-  typically \file{~/Library/R/library}.
-}
-\value{
-  Used for its side effects
+  \item{repos}{repository: see \code{\link{install.packages}}.}
+  \item{contriburl}{alternative to \code{repos} and \code{type}: see
+    \code{\link{install.packages}}.}
+  \item{type}{type of package: see \code{\link{install.packages}}.}
 }
 \seealso{
-  \code{install.binaries},
-  \code{install.packages},
-  \code{update}.
+  \code{install.packages}
 }
 \keyword{connection}
 \keyword{utilities}
