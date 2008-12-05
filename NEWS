@@ -324,6 +324,10 @@ BUG FIXES
     o	axis.POSIXct() mislabelled for some time ranges of a few hours
 	(reported by Martin Becker).
 
+    o   mantelhaen.test() with 'exact=FALSE' was not respecting
+        'alternative'. It now does one-sided tests similarly to
+        prop.test().  
+
 
 
 		CHANGES IN R VERSION 2.8.0
