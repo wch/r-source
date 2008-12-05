@@ -494,8 +494,8 @@ sub get_arguments {
     }
     $retval[0] = $id;
     if ($warn) {
-	$keep =~ s/$id.*$//;
-	$keep = unmark_brackets($keep);
+	$keep =~ /(.*\s$id.*$id)/;
+	$keep = unmark_brackets($1);
 	warn "WARNING: invalid whitespace before brace at '$keep'\n";
     }
     @retval;
