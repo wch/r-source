@@ -29,7 +29,7 @@ is.array(x)
     will be used as names for the dimensions.  If the list is shorter
     than the number of dimensions, it is extended by \code{NULL}s to the
     length required}
-  \Item{x}{an \R object.}
+  \item{x}{an \R object.}
   \item{\dots}{additional arguments to be passed to or from methods.}
 }
 \value{
