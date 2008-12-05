@@ -445,7 +445,8 @@ stopifnot(identical(m,			as(nf, "matrix")),
 ## "[" subsetting of "simple S4" classes:
 for(bcl in c("list","integer","numeric")) {
     setClass("C", contains= bcl)
-    x <- new("C", 1:3); x <- x[2:3] ; stopifnot(is(x, "C"))
+    x <- new("C", 1:3); x <- x[2:3]
+    stopifnot(is(x, "C"), is(rep(x, 3), "C"), is(rep.int(x, 2), "C"))
 }
 ## used to drop the class in 2.8.0 and earlier
 
