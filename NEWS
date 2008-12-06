@@ -188,6 +188,9 @@ NEW FEATURES
 	list() removes the dimnames (as assigning NULL would do).
 	It was previously an error.
 
+    o	nlminb() copies names from 'start' to the parameter vector
+	used (for consistency with optim()).
+
 
 UTILITIES
 
