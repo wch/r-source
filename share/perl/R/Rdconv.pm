@@ -221,6 +221,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	@section_body  = @section_body [@nonempty];
 	$max_section = scalar(@section_title);
 	
+	$issue_warnings = 1;
 	rdoc2html($htmlfile, $def_encoding)	if $type =~ /html/i;
 	rdoc2txt($txtfile, $def_encoding)	if $type =~ /txt/i;
 	rdoc2Sd($Sdfile)	if $type =~ /Sd/;
@@ -511,7 +512,7 @@ sub get_arguments_check {
 	}
     }
     $retval[0] = $id;
-    if ($warn) {
+    if ($warn && $issue_warnings) {
 	$keep =~ s/\n/ /g;
 	$keep =~ /(.*\s$id.*$id)/;
 	$keep = unmark_brackets($1);
@@ -918,6 +919,7 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
     html_print_codeblock("examples", "Examples");
 
     print $htmlout (html_functionfoot($pkgname, $version));
+    $issue_warnings = 0;
 }
 
 sub html_striptitle {
@@ -1588,6 +1590,7 @@ sub rdoc2txt { # (filename, def_encoding); 0 for STDOUT
 
     print $txtout "\n";
     if($_[0]) { close $txtout; }
+    $issue_warnings = 0;
 }
 
 sub txt_striptitle {
@@ -2768,6 +2771,7 @@ sub rdoc2latex {# (filename)
     latex_print_exampleblock("examples", "Examples");
 
     print $latexout "\n";
+    $issue_warnings = 0;
 }
 
 ## The basic translator for 'normal text'
