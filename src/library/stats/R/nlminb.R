@@ -19,7 +19,9 @@ nlminb <-
              scale = 1, control = list(), lower =  - Inf, upper = Inf)
 {
     ## Establish the working vectors and check and set options
-    n <- length(par <- as.double(start))
+    par <- as.double(start)
+    names(par) <- names(start)
+    n <- length(par)
     iv <- integer(78 + 3 * n)
     v <- double(130 + (n * (n + 27)) / 2)
     .Call(R_port_ivset, 2, iv, v)

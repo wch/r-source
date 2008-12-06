@@ -1,6 +1,6 @@
 % File src/library/stats/man/nlminb.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{nlminb}
@@ -46,6 +46,10 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
   }
 }
 \details{
+  Any names of \code{start} are (as from \R 2.8.1) passed
+  on to \code{objective} and where applicable, \code{gradient} and
+  \code{hessian}.  The parameter vector will be coerced to double.
+  
   The PORT documentation is at
   \url{http://netlib.bell-labs.com/cm/cs/cstr/153.pdf}.
 }
