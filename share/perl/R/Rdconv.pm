@@ -202,7 +202,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	## Remove empty sections.
 	foreach my $key (keys %blocks) {
 	    if($blocks{$key} =~ /^[[:space:]]*$/) {
-		warn "Note: removing empty section \\${key}\n";
+		warn "Note: removing empty section \\${key} in file '$Rdname.Rd'\n";
 		delete $blocks{$key};
 	    }
 	}
@@ -210,7 +210,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	for($section = 0; $section < $max_section; $section++) {
 	    if($section_body[$section] =~ /^[[:space:]]*$/) {
 		$title = $section_title[$section];
-		warn "Note: removing empty section \\section\{$title\}\n";
+		warn "Note: removing empty section \\section\{$title\} in file '$Rdname.Rd'\n";
 	    }
 	    else {
 		push(@nonempty, $section);
@@ -280,7 +280,7 @@ sub mark_brackets {
 		    "mismatched or missing braces")
 	  && $complete_text =~ /{([^{}]*)}/s) {
 	my $id = $NB . ++$max_bracket . $BN;
-	die "too many pairs of braces in this file"
+	die "too many pairs of braces in file '$Rdname.Rd'"
 	  if $max_bracket > $MAXLOOPS;
 	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
 	print STDERR "." if $debug;
@@ -395,7 +395,7 @@ sub get_blocks {
 	    # no formatting commands allowed in the title string
 	    if($block =~ /title/) {
 		if($blocks{"title"} =~ /$ID/){
-		    die("\nERROR: Environment ".
+		    die("\nERROR in file '$Rdname.Rd': Environment ".
 			"(text enclosed in \{\}) found in \\title\{...\}.\n".
 			"The title must be plain text!\n\n");
 		}
@@ -433,7 +433,8 @@ sub get_multi {
 	$text =~ s/\\$name//s;
     }
     print STDERR "\n---\n" if $debug;
-    warn "Note: ignoring empty \\${name} entries\n" if($any);
+    warn "Note: ignoring empty \\${name} entries in file '$Rdname.Rd'\n"
+	if($any);
     @res;
 }
 
@@ -760,7 +761,7 @@ sub transform_S3method {
 	    $str .= "$args[0] $fun $args[1]";
 	}
 	else {
-	    warn "Warning: arity problem for \\$method{$fun}{$cls}?\n";
+	    warn "Warning: arity problem for \\$method{$fun}{$cls} in file '$Rdname.Rd'?\n";
 	    $str .= "`$fun`($lst)";
 	}
 	$text =~ s/$S3method_RE/$str/s;
@@ -1009,7 +1010,7 @@ sub text2html {
 	my $argkey = $dest;
 	$argkey =~ s/&lt;/</go;
 	$argkey =~ s/&gt;/>/go;
-	die "\nERROR: command (e.g. \\url) inside \\link\n"
+	die "\nERROR in file '$Rdname.Rd': command (e.g. \\url) inside \\link\n"
 	    if $arg =~ normal-bracket;
 	$htmlfile = $main::htmlindex{$argkey};
 	if($htmlfile && !length($opt)){
@@ -1413,7 +1414,7 @@ sub html_tables {
 		$colformat[$k] = "center";
 	    }
 	    else{
-		die("Error: unknown identifier \{$cf\} in" .
+		die("Error in file '$Rdname.Rd': unknown identifier \{$cf\} in" .
 		    " tabular format \{$format\}\n");
 	    }
 	}
@@ -1424,7 +1425,7 @@ sub html_tables {
 	for($k=0; $k<=$#rows;$k++){
 	    $table .= "<tr>\n";
 	    my @cols = split(/\\tab/, $rows[$k]);
-	    die("Error:\n  $rows[$k]\\cr\n" .
+	    die("Error in file '$Rdname.Rd':\n  $rows[$k]\\cr\n" .
 		"does not fit tabular format \{$format\}\n")
 		if ($#cols != $#colformat);
 	    for($l=0; $l<=$#cols; $l++){
@@ -1759,7 +1760,7 @@ sub text2txt {
 	    $descitem = "\n.tide " . $descitem . " \n". text2txt($desc);
 	} else {
 	    warn "Warning: missing text for item '$descitem' " .
-		"in \\describe\n";
+		"in \\describe in file '$Rdname.Rd'\n";
 	    $descitem = "\n.tide " . $descitem . " \n \n"
 	}
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
@@ -1973,7 +1974,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
 	    my $tmp, $line = "";
 	    for($k = 0; $k <= $#rows; $k++){
 		my @cols = split(/\\tab/, $rows[$k]);
-		die("Error:\n  $rows[$k]\\cr\n" .
+		die("Error in file '$Rdname.Rd':\n  $rows[$k]\\cr\n" .
 		    "does not fit tabular format \{$format\}\n")
 		    if ($#cols != $#colformat);
 		for($l = 0; $l <= $#cols; $l++){
@@ -2184,7 +2185,7 @@ sub txt_tables {
 		$colformat[$k] = "c";
 	    }
 	    else{
-		die("Error: unknown identifier \{$cf\} in" .
+		die("Error in file '$Rdname.Rd': unknown identifier \{$cf\} in" .
 		    " tabular format \{$format\}\n");
 	    }
 	}
@@ -2545,7 +2546,7 @@ sub nroff_tables {
 		$colformat[$k] = "c";
 	    }
 	    else{
-		die("Error: unknown identifier \{$cf\} in" .
+		die("Error in file '$Rdname.Rd': unknown identifier \{$cf\} in" .
 		    " tabular format \{$format\}\n");
 	    }
 	}
@@ -2560,7 +2561,7 @@ sub nroff_tables {
 	my @rows = split(/\\cr/, $arg);
 	for($k=0; $k<=$#rows;$k++){
 	    my @cols = split(/\\tab/, $rows[$k]);
-	    die("Error:\n  $rows[$k]\\cr\n" .
+	    die("Error in file '$Rdname.Rd':\n  $rows[$k]\\cr\n" .
 		"does not fit tabular format \{$format\}\n")
 		if ($#cols != $#colformat);
 	    for($l=0; $l<$#cols; $l++){
@@ -3670,7 +3671,7 @@ sub Ssgm_tables {
 		$colformat[$k] = "center";
 	    }
 	    else{
-		die("Error: unknown identifier \{$cf\} in" .
+		die("Error in file '$Rdname.Rd': unknown identifier \{$cf\} in" .
 		    " tabular format \{$format\}\n");
 	    }
 	}
@@ -3681,7 +3682,7 @@ sub Ssgm_tables {
 	for($k=0; $k<=$#rows;$k++){
 	    $table .= "    ";
 	    my @cols = split(/\\tab/, $rows[$k]);
-	    die("Error:\n  $rows[$k]\\cr\n" .
+	    die("Error in file '$Rdname.Rd':\n  $rows[$k]\\cr\n" .
 		"does not fit tabular format \{$format\}\n")
 		if ($#cols != $#colformat);
 	    $table .= $cols[0];
