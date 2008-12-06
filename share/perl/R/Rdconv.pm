@@ -97,6 +97,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	## filename = 0	  ==>	use stdout
 	$htmlfile = $txtfile = $Sdfile = $latexfile = $Exfile =
 	  $chmfile = $_[3];
+	$Rdname = basename($Rdname, (".Rd", ".rd"));
     } else {
 	## Have ',' in $type: Multiple types with multiple output files
 	$dirname = $_[3]; # The super-directory, such as
@@ -299,14 +300,10 @@ sub mark_brackets {
 		my $extra_info = "\'$1\'" ;
 		$extra_info = "\'$1\'" if $line =~ /(\\\w+{)/ ; # }
 		if( $extra_info =~ /^'}'$/ ) {
-		    my $Rd = $Rdname;
-		    $Rd =~ s/\.Rd$//;
-		    warn "Note: unmatched right brace in file '$Rd.Rd'".
+		    warn "Note: unmatched right brace in file '$Rdname.Rd'".
 			" on or after line $badlineno\n";
 		} elsif(! ($extra_info =~ /\\alias{/) ) { # }
-		    my $Rd = $Rdname;
-		    $Rd =~ s/\.Rd$//;
-		    warn "Warning: unmatched brace ($extra_info) in file '$Rd.Rd'".
+		    warn "Warning: unmatched brace ($extra_info) in file '$Rdname.Rd'".
 			" on or after line $badlineno\n"; 
 		}
 	    }
