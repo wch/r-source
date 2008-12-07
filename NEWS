@@ -331,6 +331,10 @@ BUG FIXES
         'alternative'. It now does one-sided tests similarly to
         prop.test().  
 
+    o	anova.mlm() had trouble with some designs where near-zero rows
+        of the tranformation matrix were not removed (caught by Nils 
+        Skutara).
+
 
 
 		CHANGES IN R VERSION 2.8.0

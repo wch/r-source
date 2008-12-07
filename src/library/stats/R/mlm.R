@@ -92,14 +92,21 @@ proj.matrix <- function(X, orth=FALSE){
     if (orth) diag(nrow=nrow(X)) - P else P
 }
 
-Rank  <- function(X, tol=1e-7) qr(X, tol=tol, LAPACK=FALSE)$rank
+## qr() will miss the cases where a row has all near-zeros,
+## sensibly in some ways, annoying in others...
+
+Rank  <- function(X, tol=1e-7)
+    qr(zapsmall(X, digits=-log10(tol)+5),
+       tol=tol, LAPACK=FALSE)$rank
 
 Thin.row <- function(X, tol=1e-7) {
+    X <- zapsmall(X, digits=-log10(tol)+5)
     QR <- qr(t(X), tol=tol, LAPACK=FALSE)
     X[QR$pivot[seq_len(QR$rank)],,drop=FALSE]
 }
 
 Thin.col <- function(X, tol=1e-7) {
+    X <- zapsmall(X, digits=-log10(tol)+5)
     QR <- qr(X, tol=tol, LAPACK=FALSE)
     X[,QR$pivot[seq_len(QR$rank)],drop=FALSE]
 }
