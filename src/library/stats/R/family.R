@@ -363,6 +363,8 @@ binomial <- function (link = "logit")
 	    ## added BDR 29/5/98
 	    if (is.factor(y)) y <- y != levels(y)[1]
 	    n <- rep.int(1, nobs)
+            ## anything, e.g. NA/NaN, for cases with zero weight is OK.
+            y[weights == 0] <- 0
 	    if (any(y < 0 | y > 1))
 		stop("y values must be 0 <= y <= 1")
             mustart <- (weights * y + 0.5)/(weights + 1)
