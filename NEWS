@@ -157,6 +157,15 @@ BUG FIXES
 
     o	deparse(control="S_compatible") now never uses backticks.
 
+    o   xspline() now listens to inline par settings (it was ignoring,
+        e.g., lty settings).
+
+    o   xspline() now handles the special case of only two control 
+        points (it was giving an error "reached MAXNUMPTS").
+
+    o   xspline() now handles splines with control points that are
+        located well outside the device (e.g., a zoomed view of a
+        larger curve).  This was failing with error "reached MAXNUMPTS".
 
 
 
