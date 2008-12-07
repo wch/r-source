@@ -340,6 +340,12 @@ BUG FIXES
 	immediately followed by a right brace) incorrectly, sometimes
 	giving a spurious warning about 'missing text'.
 
+    o	R CMD INSTALL used the C locale to install the DESCRIPTION
+	file, and so escaped non-ASCII characters in packages with a
+	declared encoding of "latin1" or "UTF-8".  (However, the
+	installed DESCRIPTION file was rarely used since the dumped
+	metadata are available.)
+
 
 
 		CHANGES IN R VERSION 2.8.0
