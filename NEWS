@@ -327,13 +327,18 @@ BUG FIXES
     o	axis.POSIXct() mislabelled for some time ranges of a few hours
 	(reported by Martin Becker).
 
-    o   mantelhaen.test() with 'exact=FALSE' was not respecting
-        'alternative'. It now does one-sided tests similarly to
-        prop.test().  
+    o	mantelhaen.test() with 'exact=FALSE' was not respecting
+	'alternative'.  It now does one-sided tests similarly to
+	prop.test().
 
     o	anova.mlm() had trouble with some designs where near-zero rows
-        of the tranformation matrix were not removed (caught by Nils 
-        Skutara).
+	of the tranformation matrix were not removed (caught by Nils 
+	Skutara).
+
+    o	Rd conversion was handling expressions like
+	'\item{foo}{see \eqn{x}}' (with one argument to \eqn
+	immediately followed by a right brace) incorrectly, sometimes
+	giving a spurious warning about 'missing text'.
 
 
 
