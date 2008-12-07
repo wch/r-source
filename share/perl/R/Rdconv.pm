@@ -480,9 +480,13 @@ sub get_arguments {
 	$id = $3;
 	$text =~ s/$id(.*)$id/$id/s;
 	$retval[1] = $1;
-	my $k=2;
-	while(($k<=$nargs) && ($text =~ /$id($ID)/)){
-	    $id = $1;
+	my $k = 2;
+	while(($k <= $nargs) && ($text =~ /$id($ID)/)){
+	    ## this merely checked for a left or right brace: 
+	    ## we need a left brace starting a pair for \eqn and \deqn
+	    $ie = $1;
+	    if($command =~ /eqn/) {last unless $text =~ /$id.*$ie.*$ie/s ;}
+	    $id = $ie;
 	    $text =~ s/$id\s*(.*)$id/$id/s;
 	    $retval[$k++] = $1;
 	}
