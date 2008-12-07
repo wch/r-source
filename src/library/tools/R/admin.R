@@ -38,7 +38,11 @@ function(dir, outDir)
              call. = FALSE)
     }
 
+    ## This reads (in C locale) byte-by-byte, declares latin1 or UTF-8
+    ## Maybe it would be better to re-encode others (there are none at
+    ## present, at least in a UTF-8 locale?
     db <- .read_description(file.path(dir, "DESCRIPTION"))
+
     ## should not have a Built: field, so ignore it if it is there
     nm <- names(db)
     if("Built" %in% nm) {
@@ -79,8 +83,11 @@ function(dir, outDir)
     ## simplified to
     ##   db["Built"] <- Built
     ##   write.dcf(rbind(db), file.path(outDir, "DESCRIPTION"))
+
+    ## Avoid declared encodings
+    dbn <- db; Encoding(dbn) <- "unknown"
     outConn <- file(file.path(outDir, "DESCRIPTION"), open = "w")
-    write.dcf(rbind(db), outConn)
+    write.dcf(rbind(dbn), outConn)
     writeLines(paste("Built", Built, sep = ": "), outConn)
     close(outConn)
 
