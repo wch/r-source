@@ -16,7 +16,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
        adj = c(0, 0.5), text.width = NULL, text.col = par("col"),
        merge = do.lines && has.pch, trace = FALSE,
        plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
-       inset = 0, xpd)
+       inset = 0, xpd, title.col = text.col)
 }
 \description{
   This function can be used to add legends to plots.  Note that a call
@@ -52,7 +52,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   \item{pt.bg}{the background color for the \code{\link{points}},
     corresponding to its argument \code{bg}.}
   \item{cex}{character expansion factor \bold{relative} to current
-    \code{par("cex")}.}
+    \code{par("cex")}.  Used for text, and provides the default for
+    \code{pt.cex} and \code{title.cex}.}
   \item{pt.cex}{expansion factor(s) for the points.}
   \item{pt.lwd}{line width for the points, defaults to the one for
     lines, or if that is not set, to \code{par("lwd")}.}
@@ -87,6 +88,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     plot region when legend is placed by keyword.}
   \item{xpd}{if supplied, a value of the graphical parameter \code{xpd}
     to be used while the legend is being drawn.}
+  \item{title.col}{color for \code{title}.}
 }
 \details{
   Arguments \code{x, y, legend} are interpreted in a non-standard way to
