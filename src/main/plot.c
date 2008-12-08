@@ -3956,7 +3956,6 @@ SEXP attribute_hidden do_xspline(SEXP call, SEXP op, SEXP args, SEXP env)
 
     SEXP originalArgs = args;
     pGEDevDesc dd = GEcurrentDevice();
-    gcontextFromGP(&gc, dd);
 
     GCheckState(dd);
 
@@ -3986,6 +3985,10 @@ SEXP attribute_hidden do_xspline(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GSavePars(dd);
     ProcessInlinePars(args, dd, call);
+    /* Paul 2008-12-05
+     * Convert GP to gcontext AFTER ProcessInlinePars
+     */
+    gcontextFromGP(&gc, dd);
 
     GMode(1, dd);
 

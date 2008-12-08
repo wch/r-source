@@ -185,6 +185,8 @@ BUG FIXES
 	installed DESCRIPTION file was rarely used since the dumped
 	metadata are available.)
 
+    o   xspline() now respects inline par settings.
+
 
 
 		CHANGES IN R VERSION 2.8.0
