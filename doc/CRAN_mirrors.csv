@@ -12,7 +12,7 @@ Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Associat
 Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana@mat.puc.cl>",1,cl
 China,China,"Hong Kong",http://mirrors.geoexpat.com/cran/,GeoExpat.Com,shri@geoexpat.com,1,cn
 Croatia,Croatia,Zagreb,http://imago.irb.hr/r/,"Rudjer Boskovic Institute",matko.bosnjak@irb.hr,1,hr
-"Czech Republic","Czech Republic",Brno,http://cran.biokontakt.cz/,"Biokontakt Brno",Tomas.Kaplan@biokontakt.cz,1,cz
+"Czech Republic","Czech Republic",Brno,http://cran.biokontakt.cz/,"Biokontakt Brno",Tomas.Kaplan@biokontakt.cz,0,cz
 Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirror@dotsrc.org,1,dk
 "France (Toulouse)",France,Toulouse,http://cran.fr.r-project.org/,"CICT, Toulouse","David Allouche <allouche@tlse.toulouse.inra.fr>",1,fr
 "France (Lyon)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse@univ-lyon1.fr>",1,fr
@@ -20,7 +20,7 @@ Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirr
 "Germany (Goettingen)",Germany,Goettingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Goettingen","Eberhard Moenkeberg <emoenke@gwdg.de>",1,de
 "Germany (Muenchen)",Germany,Muenchen,http://cran.rakanu.com/,"Rakanu.com, Muenchen","Carsten Zedler <info@rakanu.com>",1,de
 "India (Kolkata)",India,Kolkata,http://mirror.wbut.ac.in/CRAN/,"West Bengal University of Technology",indradg@gmail.com,0,in
-India,India,Pune,http://cms.unipune.ernet.in/computing/cran/,"University of Pune",webmaster@cms.unipune.ernet.in,1,in
+India,India,Pune,http://cms.unipune.ernet.in/computing/cran/,"University of Pune",webmaster@cms.unipune.ernet.in,0,in
 Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet, Dublin","Brian McArdle <brian.mcardle@heanet.ie>",1,ie
 "Italy (Ferrara)",Italy,Ferrara,http://microarrays.unife.it/CRAN/,"Universita di Ferrara","Stefano Volinia <s.volinia@unife.it>",0,it
 "Italy (Milano)",Italy,Milano,http://rm.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano",mirror-service@garr.it,1,it
@@ -32,7 +32,7 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 Korea,Korea,Seoul,http://bibs.snu.ac.kr/R/,"Seoul National University","SungGON Yi <skonmeme@gmail.com>",1,kr
 Mexico,Mexico,Cuernavaca,http://www2.uaem.mx/r-mirror/,"Universidad Autonoma del Estado de Morelos","Sandra Espinoza Lopez <sandrae@buzon.uaem.mx>",1,mx
 "Netherlands (Amsterdam 2)",Netherlands,Amsterdam,http://cran.nedmirror.nl/,"Nedmirror, Amsterdam",mirror@nedmirror.nl,1,nl
-"Netherlands (Amsterdam)",Netherlands,Amsterdam,http://cran.dsmirror.nl/,"Dsmirror, Amsterdam","Webmaster Dsmirror <webmaster@dsmirror.nl>",1,nl
+"Netherlands (Amsterdam)",Netherlands,Amsterdam,http://cran.dsmirror.nl/,"Dsmirror, Amsterdam","Webmaster Dsmirror <webmaster@dsmirror.nl>",0,nl
 "Netherlands (Utrecht)",Netherlands,Utrecht,http://cran-mirror.cs.uu.nl/,"Utrecht University",webmaster@cs.uu.nl,1,nl
 "New Zealand","New Zealand",Auckland,http://cran.stat.auckland.ac.nz/,"University of Auckland",w.schmidt@auckland.ac.nz,1,nz
 Norway,Norway,Bergen,http://cran.ii.uib.no/,"University of Bergen",webmaster@ii.uib.no,1,no
@@ -54,7 +54,6 @@ Thailand,Thailand,Bangkok,http://mirror.kapook.com/cran/,"Kapook.com, Bangkok",t
 "UK (Bristol)",UK,Bristol,http://cran.uk.r-project.org/,"University of Bristol","Guy Nason <G.P.Nason@bristol.ac.uk>",1,uk
 "USA (CA 1)",USA,Berkeley,http://cran.cnr.Berkeley.edu,"University of California, Berkeley, CA",casterln@nature.berkeley.edu,1,us
 "USA (CA 3)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA","Jose Hales-Garcia <jose@stat.ucla.edu>",1,us
-"USA (FL)",USA,Tampa,http://cran.hostingzero.net/,"HostingZero.net, Tampa, FL",marin.m@smsup.net,1,us
 "USA (IA)",USA,Ames,http://streaming.stat.iastate.edu/CRAN/,"Iowa State University, Ames, IA","Ted Peterson <cpterson@iastate.edu>",1,us
 "USA (MI)",USA,Houghton,http://cran.mtu.edu/,"Michigan Technological University, Houghton, MI","Robert Froese <froese@mtu.edu>",1,us
 "USA (MO)",USA,"St. Louis",http://cran.wustl.edu/,"Washington University, St. Louis, MO",admartin@wustl.edu,1,us
