@@ -23,7 +23,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	 text.width = NULL, text.col = par("col"),
 	 merge = do.lines && has.pch, trace = FALSE,
 	 plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
-	 inset = 0, xpd)
+	 inset = 0, xpd, title.col = text.col)
 {
     ## the 2nd arg may really be `legend'
     if(missing(legend) && !missing(y) &&
@@ -259,8 +259,9 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 
     xt <- xt + x.intersp * xchar
     if(plot) {
-	if (!is.null(title)) text2(left + w/2, top - ymax, labels = title,
-				  adj = c(0.5, 0), cex = cex, col = text.col)
+	if (!is.null(title))
+            text2(left + w/2, top - ymax, labels = title,
+                  adj = c(0.5, 0), cex = cex, col = title.col)
 
 	text2(xt, yt, labels = legend, adj = adj, cex = cex, col = text.col)
     }

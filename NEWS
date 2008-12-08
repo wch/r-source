@@ -197,6 +197,10 @@ NEW FEATURES
     o	nlminb() copies names from 'start' to the parameter vector
 	used (for consistency with optim()).
 
+    o	legend() gains a 'title.col' argument: the title colour was
+	previously set from the first element of 'text.col' (which
+	remains the default).
+
 
 UTILITIES
 
