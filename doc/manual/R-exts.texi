@@ -2748,6 +2748,7 @@ exchanging information between developers and/or interested useRs.
 * Platform-specific sections::  
 * Encoding::                    
 * Processing Rd format::        
+* Back-compatibility issues::   
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation files, Writing R documentation files
@@ -3022,7 +3023,10 @@ form
 
 @noindent
 for each component of the list returned.  Optional text may precede this
-list (see the introductory example for @code{rle}).
+list (see the introductory example for @code{rle}).  Note that
+@code{\value} is implicitly a @code{\itemize} environment, so that
+environment should not be used for listing components, just individual
+@code{\item} entries.
 
 @item \references@{@dots{}@}
 @findex \references
@@ -3561,6 +3565,9 @@ for x = 0, 1, 2, ....
 @end cartouche
 @end quotation
 
+See @ref{Back-compatibility issues} for earlier problems with @code{\eqn}
+with one argument immediately followed by a right brace.
+
 @c  For historic reasons mostly, the @TeX{}/@LaTeX{} commands @code{\alpha},
 @c  @code{\Alpha}, @code{\beta}, @code{\Gamma}, @code{\epsilon},
 @c  @code{\lambda}, @code{\mu}, @code{\pi}, @code{\sigma}, @code{\left(} and
@@ -3761,7 +3768,7 @@ symbol cannot be used in text.
 
 
 
-@node Processing Rd format,  , Encoding, Writing R documentation files
+@node Processing Rd format, Back-compatibility issues, Encoding, Writing R documentation files
 @section Processing Rd format
 @cindex Processing Rd format
 
@@ -3812,6 +3819,39 @@ files in the @R{} binary Windows distribution for installing source
 packages (this is true for a default installation), and for @code{R CMD
 Rd2dvi} also the tools to build packages from source as described in the
 ``R Installation and Administration'' manual.
+
+@node Back-compatibility issues,  , Processing Rd format, Writing R documentation files
+@section Back-compatibility issues
+
+Packages that are intended to work with earlier versions of @R{} need to
+be written in a rather stricter dialect, and some notes follow.
+
+Versions of @R{} prior to 2.8.1 failed to process correctly
+constructions such as
+
+@example
+\item@{name@}@{some text \eqn@{x@}@}
+@end example
+
+@noindent
+the problem being the one- or two-argument command @code{\eqn}
+immediately followed by a right brace.  In many cases this can be
+resolved by adding punctuation, and even space before the final brace
+sufficed.
+
+It was never intended to allow whitespace between arguments to
+two-argument commands, e.g.
+
+@example
+\item@{name@} @{some text@}
+@end example
+
+@noindent
+has always been an error.  However, prior to @R{} 2.9.0 this error wass
+not looked for and resulted in incorrect output (often by omitting
+entirely the text for the item, sometimes with a warning).  Current
+versions of @R{} detect and fixup most cases of this error, with a
+warning.
 
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
