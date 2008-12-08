@@ -157,9 +157,6 @@ BUG FIXES
 
     o	deparse(control="S_compatible") now never uses backticks.
 
-    o   xspline() now listens to inline par settings (it was ignoring,
-        e.g., lty settings).
-
     o   xspline() now handles the special case of only two control 
         points (it was giving an error "reached MAXNUMPTS").
 
@@ -354,6 +351,8 @@ BUG FIXES
 	declared encoding of "latin1" or "UTF-8".  (However, the
 	installed DESCRIPTION file was rarely used since the dumped
 	metadata are available.)
+
+    o   xspline() now respects inline par settings.
 
 
 
