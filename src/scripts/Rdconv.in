@@ -29,6 +29,10 @@ my $revision = ' $Rev$ ';
 my $version;
 my $name;
 
+## switch on autoflushing for STDOUT.  We want this as we
+## write to both STDERR (warnings) and STDOUT.
+$| = 1;
+
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;

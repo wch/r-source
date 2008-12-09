@@ -25,6 +25,10 @@ use R::Dcf;
 
 fileparse_set_fstype; # Unix, in case one gets anything else.
 
+## switch on autoflushing for STDOUT.  We want this as we
+## write to both STDERR (warnings) and STDOUT.
+$| = 1;
+
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
 		 "dosnames", "chm", "index");
 GetOptions (@knownoptions) || usage();
