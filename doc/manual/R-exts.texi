@@ -1637,7 +1637,7 @@ packages to @acronym{CRAN}.
 
 Before submitting a package @pkg{mypkg}, do run the following steps to
 test it is complete and will install properly.  (Unix procedures only,
-run from the directory containing @file{mypkg} as a subdirectory.)
+run from the directory containing @file{@var{mypkg}} as a subdirectory.)
 
 @enumerate
 @item
@@ -1652,13 +1652,36 @@ diagnostic messaging (``warnings'') when compiling, such as e.g.@:
 @option{-Wall -pedantic} for tools from GCC, the Gnu Compiler
 Collection.  (If @R{} was not configured accordingly, one can achieve
 this e.g.@: via @code{PKG_CFLAGS} and related variables.)
+
+@item
+Look for any problems with help file conversions.  For example, you
+should
+@itemize
+@item
+Read through the PDF manual that was produced by @code{R CMD check} at
+@file{@var{mypkg}.Rcheck/@var{mypkg}-manual.pdf}, or produce another copy by
+@code{R CMD Rd2dvi --pdf @var{mypkg}}.
+
+@item
+Check for any left-over internal constructs by
+@example
+grep -r 'normal-bracket' @var{mypkg}/man
+@end example
+
+@noindent
+If any occurrences are found these almost always indicate errors in the
+help files, some of which are discussed in the next chapter.
+@end itemize
+
 @end enumerate
 
 @noindent
 Please ensure that you can run through the complete procedure with only
 warnings that you understand and have reasons not to eliminate.  In
 principle, packages must pass @code{R CMD check} without warnings to be
-admitted to the main @acronym{CRAN} package area.
+admitted to the main @acronym{CRAN} package area.  If there are warnings
+you cannot eliminate (for example because you believe them to be
+spurious) send an explanatory note with your submission.
 
 When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to

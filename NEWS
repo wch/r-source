@@ -198,6 +198,10 @@ NEW FEATURES
 	previously set from the first element of 'text.col' (which
 	remains the default).
 
+    o	In an Rd file, use of top-level \itemize{} inside a \value{}
+	block is incorrect and almost always gave a faulty conversion,
+	silently.  It is now detected and gives a warning.
+
 
 UTILITIES
 
