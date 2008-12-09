@@ -1665,7 +1665,7 @@ Read through the PDF manual that was produced by @code{R CMD check} at
 @item
 Check for any left-over internal constructs by
 @example
-grep -r 'normal-bracket' @var{mypkg}/man
+grep -r 'normal-bracket' @var{mypkg}.Rcheck/@var{mypkg}/help
 @end example
 
 @noindent
