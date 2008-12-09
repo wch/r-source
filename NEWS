@@ -202,6 +202,9 @@ NEW FEATURES
 	block is incorrect and almost always gave a faulty conversion,
 	silently.  It is now detected and gives a warning.
 
+	Also, use of \code{} inside a code block such as \examples{}
+	is an error that is now detected and warned against.
+
 
 UTILITIES
 

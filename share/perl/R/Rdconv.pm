@@ -1301,8 +1301,12 @@ sub html_print_codeblock {
     my ($block,$title) = @_;
 
     if(defined $blocks{$block}){
+	my $ntext = $blocks{$block};
+	if ($ntext =~ /$ECODE/) {
+	    warn "WARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
+	}
 	print $htmlout (html_title3($title), "<pre>" ,
-			code2html($blocks{$block}), "</pre>\n\n");
+			code2html($ntext), "</pre>\n\n");
     }
 }
 
@@ -2097,6 +2101,9 @@ sub txt_print_codeblock {
 	print $txtout "\n";
 	print $txtout txt_header($title), ":\n" if $title;
 	$ntext = code2txt($blocks{$block});
+	if ($ntext =~ /$ECODE/) {
+	    warn "WARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
+	}
 	# make sure there is precisely one leading "\n"
 	$ntext =~ s/^[\n]*//go;
 	$ntext = "\n". $ntext;
@@ -2313,6 +2320,9 @@ sub Sd_print_codeblock {
 
     if(defined $blocks{$block}){
 	$ntext = code2txt($blocks{$block});
+	if ($ntext =~ /$ECODE/) {
+	    warn "WARNING: \\code inside code block in file '$Rdfile'\n"; 
+	}
 	# make sure there is precisely one leading "\n"
 	$ntext =~ s/^[\n]*//go;
 	$ntext = "\n". $ntext;
@@ -2971,7 +2981,11 @@ sub latex_print_codeblock {
     if(defined $blocks{$block}){
 	print $latexout "\\begin\{$env\}\n";
 	print $latexout "\\begin\{verbatim\}";
-	my $out = &code2latex($blocks{$block},0,1);
+	my $ntext = $blocks{$blocK};
+	if ($ntext =~ /$ECODE/) {
+	    warn "WARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
+	}
+	my $out = &code2latex($ntext, 0, 1);
 	$out =~ s/\\\\/\\/go;
 	print $latexout $out;
 	print $latexout "\\end\{verbatim\}\n";
@@ -3000,7 +3014,12 @@ sub latex_print_exampleblock {
     if(defined $blocks{$block}){
 	print $latexout "\\begin\{$env\}\n";
 	print $latexout "\\begin\{ExampleCode\}";
-	my $out = &code2latex($blocks{$block},0,0);
+	my $ntext = $blocks{$block};
+	if ($ntext =~ /$ECODE/) {
+	    warn "WARNING: \\code inside \\examples in file '$Rdfile'\n" 
+		if $issue_warnings; 
+	}
+	my $out = &code2latex($ntext,0,0);
 	$out =~ s/\\\\/\\/go;
 	print $latexout $out;
 	print $latexout "\\end\{ExampleCode\}\n";
