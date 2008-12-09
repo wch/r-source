@@ -3853,6 +3853,11 @@ entirely the text for the item, sometimes with a warning).  Current
 versions of @R{} detect and fixup most cases of this error, with a
 warning.
 
+A @code{\value} block is implicitly a @code{\itemize} environemnt, but
+quite a few package writers have ignored this.  As from @R{} 2.9.0 this
+is detected, and the @code{\itemize} command (but not its contents)
+removed, with a warning.
+
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
 @chapter Tidying and profiling R code
