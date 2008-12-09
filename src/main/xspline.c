@@ -209,7 +209,7 @@ point_adding(double *A_blend, double *px, double *py,
 static void
 point_computing(double *A_blend,
 		double *px, double *py,
-		int *x, int *y)
+		double *x, double *y)
 {
   double weights_sum;
 
@@ -226,8 +226,8 @@ step_computing(int k,
 	       float precision)
 {
   double A_blend[4];
-  int    xstart, ystart, xend, yend, xmid, ymid, xlength, ylength;
-  int    start_to_end_dist, number_of_steps;
+  double xstart, ystart, xend, yend, xmid, ymid, xlength, ylength;
+  double start_to_end_dist, number_of_steps;
   float  step, angle_cos, scal_prod, xv1, xv2, yv1, yv2, sides_length_prod;
 
   /* This function computes the step used to draw the segment (p1, p2)
@@ -319,6 +319,7 @@ step_computing(int k,
 
   if ((step > MAX_SPLINE_STEP) || (step == 0))
     step = MAX_SPLINE_STEP;
+
   return (step);
 }
 
@@ -468,7 +469,10 @@ compute_open_spline(int n, double *x, double *y, double *s,
 
       for (k = 0 ; ; k++) {
 	  SPLINE_SEGMENT_LOOP(k, px, py, ps[1], ps[2], precision);
-	  if (k + 3 == n)
+          /* Paul 2008-12-05
+           * >= rather than == to handle special case of n == 2
+           */
+	  if (k + 3 >= n)
 	      break;
 	  NEXT_CONTROL_POINTS(k, n);
       }

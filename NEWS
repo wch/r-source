@@ -189,7 +189,13 @@ BUG FIXES
 	installed DESCRIPTION file was rarely used since the dumped
 	metadata are available.)
 
-    o   xspline() now respects inline par settings.
+    o	xspline() now respects inline par settings.
+
+	It and grid.xspline() now handle the special case of only two
+	control points, and splines with control points that are
+	located well outside the device (e.g., a zoomed view of a
+	larger curve).  (Both cases were giving the error "reached
+	MAXNUMPTS").
 
 
 
