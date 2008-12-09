@@ -3848,6 +3848,11 @@ results in incorrect output (often by omitting entirely the text for the
 item, sometimes with a warning).  Future versions of @R{} will detect
 and fixup most cases of this error, with a warning.
 
+A @code{\value} block is implicitly a @code{\itemize} environemnt, but
+quite a few package writers have ignored this.  As from @R{} 2.8.1 this
+is detected and a warning given.  Future versions of @R{} will remove
+such @code{\itemize} commands.
+
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
 @chapter Tidying and profiling R code

@@ -221,6 +221,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	@section_body  = @section_body [@nonempty];
 	$max_section = scalar(@section_title);
 	
+	$issue_warnings = 1;
 	rdoc2html($htmlfile, $def_encoding)	if $type =~ /html/i;
 	rdoc2txt($txtfile, $def_encoding)	if $type =~ /txt/i;
 	rdoc2Sd($Sdfile)	if $type =~ /Sd/;
@@ -893,6 +894,7 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
     html_print_codeblock("examples", "Examples");
 
     print $htmlout (html_functionfoot($pkgname, $version));
+    $issue_warnings = 0;
 }
 
 sub html_striptitle {
@@ -1294,6 +1296,11 @@ sub html_print_argblock {
 
 	my $text = $blocks{$block};
 
+	## some people have put \itemize inside \value.
+	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
+	    warn "WARNING: found \\itemize inside \\$block in file '$Rdname.Rd'\n" if $issue_warnings;
+	}
+
 	if($text =~ /\\item/s){
 	    $text =~ /^(.*)(\\item.*)*/s;
 	    my ($begin, $rest) = split(/\\item/, $text, 2);
@@ -1563,6 +1570,7 @@ sub rdoc2txt { # (filename, def_encoding); 0 for STDOUT
 
     print $txtout "\n";
     if($_[0]) { close $txtout; }
+    $issue_warnings = 0;
 }
 
 sub txt_striptitle {
@@ -2084,6 +2092,11 @@ sub txt_print_argblock {
 
 	my $text = $blocks{$block};
 
+	## some people have put \itemize inside \value.
+	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
+	    warn "WARNING: found \\itemize inside \\$block in file '$Rdname.Rd'\n" if $issue_warnings;
+	}
+
 	if($text =~ /\\item/s){
 	    $text =~ /^(.*)(\\item.*)*/s;
 	    my ($begin, $rest) = split(/\\item/, $text, 2);
@@ -2275,6 +2288,12 @@ sub Sd_print_argblock {
     if(defined $blocks{$block}){
 	print $Sdout $macro, "\n" if $macro;
 	my $text = $blocks{$block};
+
+	## some people have put \itemize inside \value.
+	## as from R 2.9.0, strip with a warning, providing not after \item{
+	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
+	    warn "WARNING: found \\itemize inside \\$block in file '$Rdname.Rd'\n";
+	}
 
 	if($text =~ /\\item/s){
 	    $text =~ /^(.*)(\\item.*)*/s;
@@ -2743,6 +2762,7 @@ sub rdoc2latex {# (filename)
     latex_print_exampleblock("examples", "Examples");
 
     print $latexout "\n";
+    $issue_warnings = 0;
 }
 
 ## The basic translator for 'normal text'
@@ -2949,6 +2969,11 @@ sub latex_print_argblock {
 	print $latexout "\\begin\{$env\}\n";
 
 	my $text = $blocks{$block};
+
+	## some people have put \itemize inside \value.
+	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
+	    warn "WARNING: found \\itemize inside \\$block in file '$Rdname.Rd'\n" if $issue_warnings;
+	}
 
 	if($text =~ /\\item/s){#-- if there is >= 1 "\item":  ldescription
 	    $text =~ /^(.*)(\\item.*)*/s;
@@ -3549,6 +3574,11 @@ sub Ssgm_print_valueblock {
 	print $sgmlout "<s-value>\n";
 
 	my $text = $blocks{$block};
+
+	## some people have put \itemize inside \value.
+	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
+	    warn "WARNING: found \\itemize inside \\$block in file '$Rdname.Rd'\n";
+	}
 
 	if($text =~ /\\item/s){
 	    $text =~ /^(.*)(\\item.*)*/s;
