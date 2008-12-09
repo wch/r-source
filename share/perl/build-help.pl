@@ -31,6 +31,10 @@ $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
 
+## switch on autoflushing for STDOUT.  We want this as we
+## write to both STDERR (warnings) and STDOUT.
+$| = 1;
+
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
 		 "help|h", "version|v", "os|OS:s", 
 		 "index");
@@ -73,12 +77,6 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example){
 }
 
 ($pkg, $version, $lib, @mandir) = buildinit();
-
-
-## !!! Attempting to create the ability to have packages stored in a 
-## !!! location other than lib/pkg.  There are obviously better ways
-## !!! of doing this, but trying to do it in a manner which will not
-## !!! interfere with other things calling this besides INSTALL. JG
 $dest = $ARGV[2];
 if (!$dest) {$dest = file_path($lib, $pkg);}
 

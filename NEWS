@@ -205,6 +205,10 @@ NEW FEATURES
 	Also, use of \code{} inside a code block such as \examples{}
 	is an error that is now detected and warned against.
 
+    o	Autoflushing of stdout is turned on when Rd processing, so
+	warnings/error are likely to appear in the right place in
+	redirected output (such as that from R CMD check).
+
 
 UTILITIES
 
