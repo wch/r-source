@@ -335,12 +335,11 @@ BUG FIXES
 	(reported by Martin Becker).
 
     o	mantelhaen.test() with 'exact=FALSE' was not respecting
-	'alternative'.  It now does one-sided tests similarly to
+	'alternative'. It now does one-sided tests similarly to
 	prop.test().
 
-    o	anova.mlm() had trouble with some designs where near-zero rows
-	of the tranformation matrix were not removed (caught by Nils 
-	Skutara).
+    o	anova.mlm() had trouble with some designs where near-zero rows of
+	the tranformation matrix were not removed (caught by Nils Skutara).
 
     o	Rd conversion was handling expressions like
 	'\item{foo}{see \eqn{x}}' (with one argument to \eqn
@@ -358,8 +357,10 @@ BUG FIXES
 	It and grid.xspline() now handle the special case of only two
 	control points, and splines with control points that are
 	located well outside the device (e.g., a zoomed view of a
-	larger curve).  (Both cases were giving the error "reached
+	larger curve).	(Both cases were giving the error "reached
 	MAXNUMPTS").
+
+    o	median.default() now also works for "numeric"-like vectors.
 
 
 

@@ -459,3 +459,21 @@ setGeneric("rbind", function(..., deparse.level=1)
 	   standardGeneric("rbind"), signature = "...")
 stopifnot(identical(rbind(1), matrix(1,1,1)))
 ## gave Error in .Method( .... in R 2.8.0
+
+## median.default( <simple S4> )
+## FIXME: if we use "C" instead of "L", this fails because of caching
+setClass("L", contains = "list")
+## {simplistic, just for the sake of testing here} :
+setMethod("Compare", signature(e1="L", e2="ANY"),
+          function(e1,e2) sapply(e1, .Generic, e2=e2))
+setMethod("Summary", "L",
+	  function(x, ..., na.rm=FALSE) {x <- unlist(x); callNextMethod()})
+setMethod("[", signature(x="L", i="ANY", j="missing",drop="missing"),
+          function(x,i,j,drop) new("L", x@.Data[i]))
+x <- new("L", 1:3); x2 <- x[-2]
+stopifnot(unlist(x2) == (1:3)[-2],
+	  is(mx <- median(x), "L"), mx == 2,
+	  identical(mx, quantile(x, 0.5, names=FALSE)),
+	  ## median of two -> sum()
+	  median(x2) == 2)
+## median.default(x) was too stringent on x
