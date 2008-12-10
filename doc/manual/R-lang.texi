@@ -1715,7 +1715,7 @@ named @code{"aa"} and @code{"aabb"} is the only name which has prefix
 @code{exact} argument which defaults to @code{NA} indicating that
 partial matching is allowed, but should result in a warning when it
 occurs.  Setting @code{exact} to @code{TRUE} prevents partial matching
-from occuring, a @code{FALSE} value allows it and does not issue any
+from occurring, a @code{FALSE} value allows it and does not issue any
 warnings.  Note that @code{[} always requires an exact match.  The string
 @code{""} is treated specially: it indicates `no name' and matches no
 element (not even those without a name).  Note that partial matching is

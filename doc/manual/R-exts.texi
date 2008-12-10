@@ -1533,7 +1533,7 @@ positives).
 Default: true.
 @item $R_check_Rd_style
 If true, check whether Rd usage entries for S3 methods use the full
-function name rather than the appropiate @code{\method} markup.
+function name rather than the appropriate @code{\method} markup.
 Default: true.
 @item $R_check_Rd_xrefs
 If true, check the cross-references in @file{.Rd} files.
@@ -2860,7 +2860,7 @@ particular, functions) are given in this subsection.
 @findex \name
 @var{name} typically@footnote{There can be exceptions: for example Rd
 files are not allowed to start with a dot, and have to be uniquely named
-on a case-insensitve file system.} is the basename of the Rd file
+on a case-insensitive file system.} is the basename of the Rd file
 containing the documentation.  It is the ``name'' of the Rd object
 represented by the file and has to be unique in a package.
 @c and must not contain @LaTeX{}
@@ -3876,7 +3876,7 @@ entirely the text for the item, sometimes with a warning).  Current
 versions of @R{} detect and fixup most cases of this error, with a
 warning.
 
-A @code{\value} block is implicitly a @code{\itemize} environemnt, but
+A @code{\value} block is implicitly a @code{\itemize} environment, but
 quite a few package writers have ignored this.  As from @R{} 2.9.0 this
 is detected, and the @code{\itemize} command (but not its contents)
 removed, with a warning.
@@ -4953,7 +4953,7 @@ the first.
 
 Another cause of a `crash' is to overrun the C stack.  @R{} tries to
 track that in its own code, but it may happen in third-party compiled
-code.  For modern POSIX-compilant OSes we can safely catch that and
+code.  For modern POSIX-compliant OSes we can safely catch that and
 return to the top-level prompt.
 
 @example
@@ -7868,7 +7868,7 @@ encoding (Latin-1 or UTF-8).  This is mainly intended for human-readable
 output, and most packages can just treat such @code{CHARSXP}s as a
 whole.  However, if they need to be interpreted as characters or output
 at C level then it would normally be correct to ensure that they are
-converted to the encoding of the currrent locale: this can be done by
+converted to the encoding of the current locale: this can be done by
 accessing the data in the @code{CHARSXP} by @code{translateChar} rather
 than by @code{CHAR}.  If re-encoding is needed this allocates memory
 with @code{R_alloc} which thus persists to the end of the

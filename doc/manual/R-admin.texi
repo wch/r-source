@@ -306,7 +306,7 @@ functionality,@footnote{for example, if you configured @R{} with
 should look carefully at any reported discrepancies.  (Some non-fatal
 errors are expected in locales that do not support Latin-1, in
 particular in true @code{C} locales and non-UTF-8 non-European locales.)
-A falure in @file{tests/ok-errors.R} may indicate inadequate resource
+A failure in @file{tests/ok-errors.R} may indicate inadequate resource
 limits (@pxref{Running R}).
 
 To re-run the tests including those successfully run you would need
@@ -735,7 +735,7 @@ sessions in which packages are to be installed, even if that is the only
 version of @R{} installed (since this tells the package installation
 code the architecture needed).
 
-At present there is a protential problem with packages using Java, as
+At present there is a potential problem with packages using Java, as
 the post-install for a @cputype{i386} RPM on @cputype{x86_64} Linux
 reconfigures Java and will find the @cputype{x86_64} Java.  If you know
 where a 32-bit Java is installed you may be able to run (as root)
@@ -2378,7 +2378,7 @@ knows about, but you may have to set @code{CC} or @code{CFLAGS}
 suitably.  For recent versions of @command{gcc} with @code{glibc} this
 means including @option{-std=gnu99}@footnote{@option{-std=c99}
 excludes POSIX functionality, but @file{config.h} will turn on all GNU
-extensions include the POSIX functuonality.}.  If the compiler is
+extensions include the POSIX functionality.}.  If the compiler is
 detected as @command{gcc}, @code{-std=gnu99} will be appended to
 @code{CC} unless it conflicts with a setting of @code{CFLAGS}.
 
@@ -2447,7 +2447,7 @@ The `modern' version of @code{X11}, @code{jpeg()}, @code{png()} and
 @code{tiff()} uses the @code{cairo} and (optionally) @code{Pango}
 libraries.  Cairo version 1.0 or later is required@footnote{We recommend
 that people with cairo 1.0.x, e.g.@: on Fedora Core 5, install 1.4.x or
-later from the sources, which works well}, and some features reguire 1.2
+later from the sources, which works well}, and some features require 1.2
 or later (and may not work before 1.4).  Pango needs to be at least
 version 1.10, and 1.12 is the earliest version we have tested.  (For
 Fedora users we believe the @code{pango-devel} RPM and its dependencies
@@ -3733,7 +3733,7 @@ If you use the X window manager and prefer @code{Terminal.app} to
 @enindex DISPLAY
 the existence of a @env{DISPLAY} environment variable to determine
 whether an X system is running.  This affects the default graphics
-device for the commmand-line version of R and the behaviour of the
+device for the command-line version of R and the behaviour of the
 @code{png} and @code{jpeg} devices.
 
 
