@@ -161,6 +161,10 @@ BUG FIXES
 
     o	deparse(control="S_compatible") now never uses backticks.
 
+    o   The pdf() device can now handle the case where an image
+        uses a very large number of colours with different levels
+        of semi-transparency (alpha-values).  It used to segfault.
+
 
 
 	**************************************************
