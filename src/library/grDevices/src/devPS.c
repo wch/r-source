@@ -5312,7 +5312,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     pd->versionMajor = versionMajor;
     pd->versionMinor = versionMinor;
 
-    pd->pos = (int *) calloc(350, sizeof(int));
+    pd->pos = (int *) calloc(1150, sizeof(int));
     if(!pd->pos) {
 	free(pd); free(dd);
 	error(_("cannot allocate pd->pos"));
@@ -6408,7 +6408,7 @@ static void PDF_NewPage(const pGEcontext gc,
 	pd->pageobj = (int *)
 	    realloc(pd->pageobj, 2*pd->pagemax * sizeof(int));
 	pd->pos = (int *) realloc(pd->pos,
-				  (6*pd->pagemax + 50) * sizeof(int));
+				  (6*pd->pagemax + 550) * sizeof(int));
 	if(!pd->pos || !pd->pageobj)
 	    error(_("unable to increase page limit: please shutdown the pdf device"));
 	pd->pagemax *= 2;

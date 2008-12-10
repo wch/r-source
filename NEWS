@@ -209,6 +209,10 @@ BUG FIXES
 
     o	median.default() now also works for "numeric"-like vectors.
 
+    o	The pdf() device can now handle the case where an image
+	uses a very large number of colours with different levels
+	of semi-transparency (alpha-values).  It used to segfault.
+
 
 
 		CHANGES IN R VERSION 2.8.0
