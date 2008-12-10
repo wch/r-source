@@ -2295,3 +2295,9 @@ z <- data.frame(a=1, a=2, b=3, check.names=FALSE)
 z[] # OK
 z[1, ]
 ## had row names a, a.1, b in 2.8.0.
+
+
+## incorrect warning due to lack of fuzz.
+TS <-  ts(co2[1:192], freq=24)
+tmp2 <- window(TS, start(TS), end(TS))
+## warned in 2.8.0

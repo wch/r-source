@@ -1,5 +1,5 @@
 
-R version 2.9.0 Under development (unstable) (2008-10-14 r46714)
+R version 2.9.0 Under development (unstable) (2008-12-10 r47134)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6216,4 +6216,10 @@ Error in aggregate.data.frame(z, by = z[1], FUN = sum) :
   a a b
 1 1 2 3
 > ## had row names a, a.1, b in 2.8.0.
+> 
+> 
+> ## incorrect warning due to lack of fuzz.
+> TS <-  ts(co2[1:192], freq=24)
+> tmp2 <- window(TS, start(TS), end(TS))
+> ## warned in 2.8.0
 > 

@@ -628,7 +628,7 @@ window.default <- function(x, start = NULL, end = NULL,
 		start,
 		start[1] + (start[2] - 1)/xfreq,
 		stop("bad value for 'start'"))
-    if(start < xtsp[1] && !extend) {
+    if(start < xtsp[1]-ts.eps/xfreq && !extend) {
 	start <- xtsp[1]
 	warning("'start' value not changed")
     }
@@ -639,7 +639,7 @@ window.default <- function(x, start = NULL, end = NULL,
 		end,
 		end[1] + (end[2] - 1)/xfreq,
 		stop("bad value for 'end'"))
-    if(end > xtsp[2] && !extend) {
+    if(end > xtsp[2]+ts.eps/xfreq && !extend) {
 	end <- xtsp[2]
 	warning("'end' value not changed")
     }

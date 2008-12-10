@@ -377,6 +377,10 @@ BUG FIXES
 
     o	median.default() now also works for "numeric"-like vectors.
 
+    o	window() failed to apply a fuzz to 'start' or 'end' and so
+	sometimes warned incorrectly for time series with 'freq' not a
+	power of two (e.g. 12 or 24).
+
 
 
 		CHANGES IN R VERSION 2.8.0
