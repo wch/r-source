@@ -90,6 +90,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
     $version = $_[5];
     $def_encoding = $_[6];
     $def_encoding = "unknown" unless $def_encoding;
+    $Rdfile = basename($Rdname);
 
     if($type !~ /,/) {
 	## Trivial (R 0.62 case): Only 1 $type at a time ==> one
@@ -203,7 +204,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	## Remove empty sections.
 	foreach my $key (keys %blocks) {
 	    if($blocks{$key} =~ /^[[:space:]]*$/) {
-		warn "Note: removing empty section \\${key} in file '$Rdname.Rd'\n";
+		warn "Note: removing empty section \\${key} in file '$Rdfile'\n";
 		delete $blocks{$key};
 	    }
 	}
@@ -211,7 +212,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	for($section = 0; $section < $max_section; $section++) {
 	    if($section_body[$section] =~ /^[[:space:]]*$/) {
 		$title = $section_title[$section];
-		warn "Note: removing empty section \\section\{$title\} in file '$Rdname.Rd'\n";
+		warn "Note: removing empty section \\section\{$title\} in file '$Rdfile'\n";
 	    }
 	    else {
 		push(@nonempty, $section);
@@ -282,7 +283,7 @@ sub mark_brackets {
 		    "mismatched or missing braces")
 	  && $complete_text =~ /{([^{}]*)}/s) {
 	my $id = $NB . ++$max_bracket . $BN;
-	die "too many pairs of braces in file '$Rdname.Rd'"
+	die "too many pairs of braces in file '$Rdfile'"
 	  if $max_bracket > $MAXLOOPS;
 	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
 	print STDERR "." if $debug;
@@ -301,10 +302,10 @@ sub mark_brackets {
 		my $extra_info = "\'$1\'" ;
 		$extra_info = "\'$1\'" if $line =~ /(\\\w+{)/ ; # }
 		if( $extra_info =~ /^'}'$/ ) {
-		    warn "Note: unmatched right brace in file '$Rdname.Rd'".
+		    warn "Note: unmatched right brace in file '$Rdfile'".
 			" on or after line $badlineno\n";
 		} elsif(! ($extra_info =~ /\\alias{/) ) { # }
-		    warn "Warning: unmatched brace ($extra_info) in file '$Rdname.Rd'".
+		    warn "Warning: unmatched brace ($extra_info) in file '$Rdfile'".
 			" on or after line $badlineno\n"; 
 		}
 	    }
@@ -393,7 +394,7 @@ sub get_blocks {
 	    # no formatting commands allowed in the title string
 	    if($block =~ /title/) {
 		if($blocks{"title"} =~ /$ID/){
-		    die("\nERROR in file '$Rdname.Rd': Environment ".
+		    die("\nERROR in file '$Rdfile': Environment ".
 			"(text enclosed in \{\}) found in \\title\{...\}.\n".
 			"The title must be plain text!\n\n");
 		}
@@ -431,7 +432,7 @@ sub get_multi {
 	$text =~ s/\\$name//s;
     }
     print STDERR "\n---\n" if $debug;
-    warn "Note: ignoring empty \\${name} entries in file '$Rdname.Rd'\n"
+    warn "Note: ignoring empty \\${name} entries in file '$Rdfile'\n"
 	if($any);
     @res;
 }
@@ -763,7 +764,7 @@ sub transform_S3method {
 	    $str .= "$args[0] $fun $args[1]";
 	}
 	else {
-	    warn "Warning: arity problem for \\$method{$fun}{$cls} in file '$Rdname.Rd'?\n";
+	    warn "Warning: arity problem for \\$method{$fun}{$cls} in file '$Rdfile'?\n";
 	    $str .= "`$fun`($lst)";
 	}
 	$text =~ s/$S3method_RE/$str/s;
@@ -1013,7 +1014,7 @@ sub text2html {
 	my $argkey = $dest;
 	$argkey =~ s/&lt;/</go;
 	$argkey =~ s/&gt;/>/go;
-	die "\nERROR in file '$Rdname.Rd': command (e.g. \\url) inside \\link\n"
+	die "\nERROR in file '$Rdfile': command (e.g. \\url) inside \\link\n"
 	    if $arg =~ normal-bracket;
 	$htmlfile = $main::htmlindex{$argkey};
 	if($htmlfile && !length($opt)){
@@ -1275,7 +1276,7 @@ sub html_print_codeblock {
     if(defined $blocks{$block}){
 	my $ntext = $blocks{$block};
 	if ($ntext =~ /$ECODE/) {
-	    warn "WARNING: \\code inside code block in file '$Rdname.Rd'\n" if $issue_warnings; 
+	    warn "WARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
 	}
 	print $htmlout (html_title3($title), "<pre>" ,
 			code2html($ntext), "</pre>\n\n");
@@ -1302,7 +1303,7 @@ sub html_print_argblock {
 
 	## some people have put \itemize inside \value.
 	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
-	    warn "WARNING: found \\itemize inside \\$block in file '$Rdname.Rd'\n" if $issue_warnings;
+	    warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
 	}
 
 	if($text =~ /\\item/s){
@@ -1426,7 +1427,7 @@ sub html_tables {
 		$colformat[$k] = "center";
 	    }
 	    else{
-		die("Error in file '$Rdname.Rd': unknown identifier \{$cf\} in" .
+		die("Error in file '$Rdfile': unknown identifier \{$cf\} in" .
 		    " tabular format \{$format\}\n");
 	    }
 	}
@@ -1437,7 +1438,7 @@ sub html_tables {
 	for($k=0; $k<=$#rows;$k++){
 	    $table .= "<tr>\n";
 	    my @cols = split(/\\tab/, $rows[$k]);
-	    die("Error in file '$Rdname.Rd':\n  $rows[$k]\\cr\n" .
+	    die("Error in file '$Rdfile':\n  $rows[$k]\\cr\n" .
 		"does not fit tabular format \{$format\}\n")
 		if ($#cols != $#colformat);
 	    for($l=0; $l<=$#cols; $l++){
@@ -1773,7 +1774,7 @@ sub text2txt {
 	    $descitem = "\n.tide " . $descitem . " \n". text2txt($desc);
 	} else {
 	    warn "Warning: missing text for item '$descitem' " .
-		"in \\describe in file '$Rdname.Rd'\n";
+		"in \\describe in file '$Rdfile'\n";
 	    $descitem = "\n.tide " . $descitem . " \n \n"
 	}
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
@@ -1987,7 +1988,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
 	    my $tmp, $line = "";
 	    for($k = 0; $k <= $#rows; $k++){
 		my @cols = split(/\\tab/, $rows[$k]);
-		die("Error in file '$Rdname.Rd':\n  $rows[$k]\\cr\n" .
+		die("Error in file '$Rdfile':\n  $rows[$k]\\cr\n" .
 		    "does not fit tabular format \{$format\}\n")
 		    if ($#cols != $#colformat);
 		for($l = 0; $l <= $#cols; $l++){
@@ -2067,7 +2068,7 @@ sub txt_print_codeblock {
 	print $txtout txt_header($title), ":\n" if $title;
 	$ntext = code2txt($blocks{$block});
 	if ($ntext =~ /$ECODE/) {
-	    warn "WARNING: \\code inside code block in file '$Rdname.Rd'\n" if $issue_warnings; 
+	    warn "WARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
 	}
 	# make sure there is precisely one leading "\n"
 	$ntext =~ s/^[\n]*//go;
@@ -2101,7 +2102,7 @@ sub txt_print_argblock {
 
 	## some people have put \itemize inside \value.
 	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
-	    warn "WARNING: found \\itemize inside \\$block in file '$Rdname.Rd'\n" if $issue_warnings;
+	    warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
 	}
 
 	if($text =~ /\\item/s){
@@ -2206,7 +2207,7 @@ sub txt_tables {
 		$colformat[$k] = "c";
 	    }
 	    else{
-		die("Error in file '$Rdname.Rd': unknown identifier \{$cf\} in" .
+		die("Error in file '$Rdfile': unknown identifier \{$cf\} in" .
 		    " tabular format \{$format\}\n");
 	    }
 	}
@@ -2279,7 +2280,7 @@ sub Sd_print_codeblock {
     if(defined $blocks{$block}){
 	$ntext = code2txt($blocks{$block});
 	if ($ntext =~ /$ECODE/) {
-	    warn "WARNING: \\code inside code block in file '$Rdname.Rd'\n"; 
+	    warn "WARNING: \\code inside code block in file '$Rdfile'\n"; 
 	}
 	# make sure there is precisely one leading "\n"
 	$ntext =~ s/^[\n]*//go;
@@ -2302,7 +2303,7 @@ sub Sd_print_argblock {
 	## some people have put \itemize inside \value.
 	## as from R 2.9.0, strip with a warning, providing not after \item{
 	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
-	    warn "WARNING: found \\itemize inside \\$block in file '$Rdname.Rd'\n";
+	    warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n";
 	}
 
 	if($text =~ /\\item/s){
@@ -2576,7 +2577,7 @@ sub nroff_tables {
 		$colformat[$k] = "c";
 	    }
 	    else{
-		die("Error in file '$Rdname.Rd': unknown identifier \{$cf\} in" .
+		die("Error in file '$Rdfile': unknown identifier \{$cf\} in" .
 		    " tabular format \{$format\}\n");
 	    }
 	}
@@ -2591,7 +2592,7 @@ sub nroff_tables {
 	my @rows = split(/\\cr/, $arg);
 	for($k=0; $k<=$#rows;$k++){
 	    my @cols = split(/\\tab/, $rows[$k]);
-	    die("Error in file '$Rdname.Rd':\n  $rows[$k]\\cr\n" .
+	    die("Error in file '$Rdfile':\n  $rows[$k]\\cr\n" .
 		"does not fit tabular format \{$format\}\n")
 		if ($#cols != $#colformat);
 	    for($l=0; $l<$#cols; $l++){
@@ -2935,7 +2936,7 @@ sub latex_print_codeblock {
 	print $latexout "\\begin\{verbatim\}";
 	my $ntext = $blocks{$blocK};
 	if ($ntext =~ /$ECODE/) {
-	    warn "WARNING: \\code inside code block in file '$Rdname.Rd'\n" if $issue_warnings; 
+	    warn "WARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
 	}
 	my $out = &code2latex($ntext, 0, 1);
 	$out =~ s/\\\\/\\/go;
@@ -2968,7 +2969,7 @@ sub latex_print_exampleblock {
 	print $latexout "\\begin\{ExampleCode\}";
 	my $ntext = $blocks{$block};
 	if ($ntext =~ /$ECODE/) {
-	    warn "WARNING: \\code inside \\examples in file '$Rdname.Rd'\n" 
+	    warn "WARNING: \\code inside \\examples in file '$Rdfile'\n" 
 		if $issue_warnings; 
 	}
 	my $out = &code2latex($ntext,0,0);
@@ -2991,7 +2992,7 @@ sub latex_print_argblock {
 
 	## some people have put \itemize inside \value.
 	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
-	    warn "WARNING: found \\itemize inside \\$block in file '$Rdname.Rd'\n" if $issue_warnings;
+	    warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
 	}
 
 	if($text =~ /\\item/s){#-- if there is >= 1 "\item":  ldescription
@@ -3596,7 +3597,7 @@ sub Ssgm_print_valueblock {
 
 	## some people have put \itemize inside \value.
 	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
-	    warn "WARNING: found \\itemize inside \\$block in file '$Rdname.Rd'\n";
+	    warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n";
 	}
 
 	if($text =~ /\\item/s){
@@ -3721,7 +3722,7 @@ sub Ssgm_tables {
 		$colformat[$k] = "center";
 	    }
 	    else{
-		die("Error in file '$Rdname.Rd': unknown identifier \{$cf\} in" .
+		die("Error in file '$Rdfile': unknown identifier \{$cf\} in" .
 		    " tabular format \{$format\}\n");
 	    }
 	}
@@ -3732,7 +3733,7 @@ sub Ssgm_tables {
 	for($k=0; $k<=$#rows;$k++){
 	    $table .= "    ";
 	    my @cols = split(/\\tab/, $rows[$k]);
-	    die("Error in file '$Rdname.Rd':\n  $rows[$k]\\cr\n" .
+	    die("Error in file '$Rdfile':\n  $rows[$k]\\cr\n" .
 		"does not fit tabular format \{$format\}\n")
 		if ($#cols != $#colformat);
 	    $table .= $cols[0];
