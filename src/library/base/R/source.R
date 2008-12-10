@@ -78,9 +78,9 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             ## We translated the file (possibly via a quess),
             ## so don't want to mark the strings.as from that encoding
             ## but we might know what we have encoded to, so
-            loc <- localeToCharset()[1]
+            loc <- utils::localeToCharset()[1]
             encoding <- if(have_encoding)
-                switch(localeToCharset()[1],
+                switch(loc,
                        "UTF-8" = "UTF-8",
                        "ISO8859-1" = "latin1",
                        "unknown")
