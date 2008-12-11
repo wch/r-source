@@ -1329,7 +1329,7 @@ sub html_print_argblock {
 	my $text = $blocks{$block};
 
 	## some people have put \itemize inside \value.
-	## as from R 2.9.0, strip with a warning, providing not after \item{
+	## as from R 2.8.1, strip with a warning, providing not after \item{
 	if($text =~ /\\item(ize|$ID)/) {
 	    if($1 eq "ize") {
 		warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
@@ -2135,7 +2135,7 @@ sub txt_print_argblock {
 	my $text = $blocks{$block};
 
 	## some people have put \itemize inside \value.
-	## as from R 2.9.0, strip with a warning, providing not after \item{
+	## as from R 2.8.1, strip with a warning, providing not after \item{
 	if($text =~ /\\item(ize|$ID)/) {
 	    if($1 eq "ize") {
 		warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
@@ -2342,7 +2342,7 @@ sub Sd_print_argblock {
 	my $text = $blocks{$block};
 
 	## some people have put \itemize inside \value.
-	## as from R 2.9.0, strip with a warning, providing not after \item{
+	## as from R 2.8.1, strip with a warning, providing not after \item{
 	if($text =~ /\\item(ize|$ID)/) {
 	    if($1 eq "ize") {
 		warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n";
@@ -3038,7 +3038,7 @@ sub latex_print_argblock {
 	my $text = $blocks{$block};
 
 	## some people have put \itemize inside \value.
-	## as from R 2.9.0, strip with a warning, providing not after \item{
+	## as from R 2.8.1, strip with a warning, providing not after \item{
 	if($text =~ /\\item(ize|$ID)/) {
 	    if($1 eq "ize") {
 		warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
@@ -3650,7 +3650,7 @@ sub Ssgm_print_valueblock {
 	my $text = $blocks{$block};
 
 	## some people have put \itemize inside \value.
-	## as from R 2.9.0, strip with a warning, providing not after \item{
+	## as from R 2.8.1, strip with a warning, providing not after \item{
 	if($text =~ /\\item(ize|$ID)/) {
 	    if($1 eq "ize") {
 		warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n";

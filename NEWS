@@ -99,10 +99,6 @@ NEW FEATURES
 	{some value} for \item and \section.  Previously arguments
 	after silently whitespace were ignored.
 
-	Use of top-level \itemize inside a \value block is incorrect
-	and gave a faulty conversion.  It is now detected and removed,
-	with a warning.
-
     o	strftime() now converts its first argment with as.POSIXlt()
 	and so is no longer an alias for format.POSIXLt.
 
@@ -207,11 +203,14 @@ NEW FEATURES
 	remains the default).
 
     o	In an Rd file, use of top-level \itemize{} inside a \value{}
-	block is incorrect and almost always gave a faulty conversion,
-	silently.  It is now detected and gives a warning.
+	block is unnecessary and almost always gave a faulty
+	conversion.  Most cases are now detected and corrected, but
+	give a warning as such code will not work correctly in earlier
+	versins of R.
 
 	Also, use of \code{} inside a code block such as \examples{}
-	is an error that is now detected and warned against.
+	will give a erroneous conversion that is now detected and
+	warned against.
 
     o	Autoflushing of stdout is turned on when Rd processing, so
 	warnings/error are likely to appear in the right place in
