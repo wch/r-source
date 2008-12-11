@@ -123,6 +123,9 @@ DEPRECATED & DEFUNCT
 
 UTILITIES
 
+    o R CMD build now also uses a Makevars[.win] file for cleaning up
+      src/.
+
     o	R CMD Rd2dvi and R CMD check are now able to cope with Cyrillic
     	characters in UTF-8 (thanks to a hint from Alexey Shipunov).
 
@@ -213,8 +216,6 @@ NEW FEATURES
 
 
 UTILITIES
-
-    o	R CMD build now also uses a Makevars file for cleaning up src/.
 
     o	R_PDFLATEXCMD is added to the environment variables set by
     	'R CMD' and is used by R CMD Rd2dvi.

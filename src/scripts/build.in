@@ -556,6 +556,8 @@ sub cleanup_pkg {
 	    if(-r "Makefile.win") {
 		R_system("${R::Vars::MAKE} -f Makefile.win clean");
 	    } else {
+		## FIXME: there need not be a 'clean' target.
+		## FIXME: why not use 'Makevars' if Makevars.win does not exist?
 		if(-r "Makevars.win") {
 		    R_system("${R::Vars::MAKE} -f Makevars.win clean");
 		}
@@ -574,6 +576,11 @@ sub cleanup_pkg {
 		R_system("${R::Vars::MAKE} $makefiles clean");
 	    } else {
 		if(-r "Makevars") {
+		    ## ensure we do have a 'clean' target.
+		    $makefiles .= " -f " .
+			&shell_quote_file_path(&file_path(${R::Vars::R_HOME},
+							  "share", "make",
+							  "clean.mk"));
 		    $makefiles .= " -f Makevars";
 		    R_system("${R::Vars::MAKE} $makefiles clean");
 		}
