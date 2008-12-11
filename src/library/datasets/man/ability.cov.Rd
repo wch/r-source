@@ -28,10 +28,10 @@
 }
 \usage{ability.cov}
 \source{
-  Barthlomew, D. J. (1987) \emph{Latent Variable Analysis and Factor
+  Bartholomew, D. J. (1987) \emph{Latent Variable Analysis and Factor
     Analysis.} Griffin.  
 
-  Barthlomew, D. J.  and Knott, M. (1990) \emph{Latent Variable Analysis
+  Bartholomew, D. J.  and Knott, M. (1990) \emph{Latent Variable Analysis
     and Factor Analysis.} Second Edition, Arnold.  
 }
 \references{

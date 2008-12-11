@@ -90,7 +90,7 @@ parent.frame(n = 1)
   \emph{context} of the parent interpreted function.  So internal
   functions (which may or may not set contexts and so may or may not
   appear on the call stack) are not counted, and S3 methods can also do
-  suprising things.
+  surprising things.
 }
 \value{
   \code{sys.call} returns a call, \code{sys.function} a function

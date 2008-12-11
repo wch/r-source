@@ -41,7 +41,7 @@ Sys.timezone()
   history: over the last 100 years places have changed their affiliation
   between major time zones, have opted out of (or in to) DST in
   various years or adopted rule changes late or not at all.  This often
-  involves tiny administative units in the US/Canada: Iowa had 23
+  involves tiny administrative units in the US/Canada: Iowa had 23
   different implementations of DST in the 1960's!
 
   Time zones did not come into use until the second half of the

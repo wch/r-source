@@ -29,7 +29,7 @@ packageEvent(pkgname,
     will be stripped).}
   \item{event}{character string: an event for the package}
   \item{value}{A function, or for \code{action="replace"}, \code{NULL}.}
-  \item{action}{The action to be taken.  The names can be appreviated.}
+  \item{action}{The action to be taken.  The names can be abbreviated.}
 }
 
 \details{

@@ -35,7 +35,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   \item{kind}{character or \code{NULL}.  If \code{kind} is a character
     string, set \R's RNG to the kind desired.  Use \code{"default"} to
     return to the \R default.  See \sQuote{Details} for the
-    intepretation of \code{NULL}.}
+    interpretation of \code{NULL}.}
   \item{normal.kind}{character string or \code{NULL}.  If it is a character
     string, set the method of Normal generation.  Use \code{"default"}
     to return to the \R default.  \code{NULL} makes no change.}

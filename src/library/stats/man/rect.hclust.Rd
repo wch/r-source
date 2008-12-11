@@ -20,7 +20,7 @@ rect.hclust(tree, k = NULL, which = NULL, x = NULL, h = NULL,
  \item{k, h}{Scalar. Cut the dendrogram such that either exactly
    \code{k} clusters are produced or by cutting at height \code{h}.}
  \item{which, x}{A vector selecting the clusters around which a
-   rectangle should be drawn. \code{which} seleccts clusters by number
+   rectangle should be drawn. \code{which} selects clusters by number
    (from left to right in the tree), \code{x} selects clusters
    containing the respective horizontal coordinates. Default is
    \code{which = 1:k}.}

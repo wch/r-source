@@ -193,7 +193,7 @@ prcomp(m1)
 factanal(~v1+v2+v3+v4+v5+v6, factors = 3,
          scores = "Bartlett")$scores
 
-## a realistic example from Barthlomew (1987, pp. 61-65)
+## a realistic example from Bartholomew (1987, pp. 61-65)
 utils::example(ability.cov)
 }
 \keyword{multivariate}

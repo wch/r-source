@@ -152,7 +152,7 @@ coplot(breaks ~ Index | wool * tension, data = warpbreaks,
 with(data.frame(state.x77), {
 coplot(Life.Exp ~ Income | Illiteracy * state.region, number = 3,
        panel = function(x, y, ...) panel.smooth(x, y, span = .8, ...))
-## y ~ factor -- not really sensical, but 'show off':
+## y ~ factor -- not really sensible, but 'show off':
 coplot(Life.Exp ~ state.region | Income * state.division,
        panel = panel.smooth)
 })

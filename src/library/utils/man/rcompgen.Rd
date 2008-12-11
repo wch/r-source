@@ -42,7 +42,7 @@ rc.options(\dots)
       \item{\code{ops}:}{activates completion after the \code{$} and
 	\code{@} operators}
 
-      \item{\code{ns}:}{controls namespace related completions}
+      \item{\code{ns}:}{controls name space related completions}
 
       \item{\code{args}:}{enables completion of function arguments}
 
@@ -130,20 +130,20 @@ rc.options(\dots)
       \code{[}, \code{$}, etc \emph{do not} inhibit evaluation).
     }
 
-    \item{\bold{Completion inside namespaces}:}{
+    \item{\bold{Completion inside name spaces}:}{
       When the \code{ns} setting is turned on, completion inside
-      namespaces is attempted when a token is preceded by the \code{::}
+      name spaces is attempted when a token is preceded by the \code{::}
       or \code{:::} operators.  Additionally, the basic completion
-      mechanism is extended to include attached namespaces, or more
+      mechanism is extended to include attached name spaces, or more
       precisely, \code{foopkg::} becomes a valid completion of
       \code{foo} if the return value of \code{\link{search}()} includes
       the string \code{"package:foopkg"}.
 
-      The completion of package namespaces applies only to attached
+      The completion of package name spaces applies only to attached
       packages, i.e. if \code{MASS} is not attached (whether or not it
       is loaded), \code{MAS} will not complete to \code{MASS::}.
-      However, attempted completion \emph{inside} an apparent namespace
-      will attempt to load the namespace if it is not already loaded,
+      However, attempted completion \emph{inside} an apparent name space
+      will attempt to load the name space if it is not already loaded,
       e.g. trying to complete on \code{MASS::fr} will load \code{MASS}
       (but not necessarily attach it) even if it is not already loaded.
     }
@@ -183,7 +183,7 @@ rc.options(\dots)
       of completion are also appropriate whenever argument completion
       is.  Since there are usually many many more visible objects than
       formal arguments of any particular function, possible argument
-      completions are often buried in a bunch of other possibilites.
+      completions are often buried in a bunch of other possibilities.
       However, recall that basic completion is suppressed for blank
       tokens.  This can be useful to list possible arguments of a
       function.  For example, trying to complete \code{seq([TAB]} and

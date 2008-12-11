@@ -20,7 +20,7 @@ delimMatch(x, delim = c("{", "}"), syntax = "Rd")
   \item{syntax}{currently, always the string \code{"Rd"} indicating Rd
     syntax (i.e., \samp{\%} starts a comment extending till the end of
     the line, and \samp{\\} escapes).  Future versions might know about
-    other syntaxes, perhaps via \sQuote{syntax tables} allowing to
+    other syntax, perhaps via \sQuote{syntax tables} allowing to
     flexibly specify comment, escape, and quote characters.}
 }
 \value{

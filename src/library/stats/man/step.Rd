@@ -87,7 +87,7 @@ step(object, scope, scale = 0,
   The right-hand-side of its \code{lower} component is always included
   in the model, and right-hand-side of the model is included in the
   \code{upper} component.  If \code{scope} is a single formula, it
-  specifes the \code{upper} component, and the \code{lower} model is
+  specifies the \code{upper} component, and the \code{lower} model is
   empty.  If \code{scope} is missing, the initial model is used as the
   \code{upper} model.
 

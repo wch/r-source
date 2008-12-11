@@ -31,7 +31,7 @@ retracemem(x, previous = NULL)
   left in code during development).
   
   When an object is traced any copying of the object by the C function
-  \code{duplicate} or by arithmetic or mathmetical operations produces a
+  \code{duplicate} or by arithmetic or mathematical operations produces a
   message to standard output.  The message consists of the string
   \code{tracemem}, the identifying strings for the object being copied and
   the new object being created, and a stack trace showing where the

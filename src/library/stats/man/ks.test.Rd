@@ -18,7 +18,7 @@ ks.test(x, y, \dots,
   \item{x}{a numeric vector of data values.}
   \item{y}{either a numeric vector of data values, or a character string
     naming a cumulative distribution function or an actual cumulative
-    distribtution function such as \code{pnorm}.}
+    distribution function such as \code{pnorm}.}
   \item{\dots}{parameters of the distribution specified (as a character
     string) by \code{y}.}
   \item{alternative}{indicates the alternative hypothesis and must be

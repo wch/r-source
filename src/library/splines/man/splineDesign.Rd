@@ -19,7 +19,7 @@ spline.des(knots, x, ord = 4, derivs, outer.ok = FALSE)
   \item{knots}{a numeric vector of knot positions with non-decreasing
     values.}
   \item{x}{a numeric vector of values at which to evaluate the B-spline
-    functions or derivatives.  Unless \code{outer.ok} is truee, the
+    functions or derivatives.  Unless \code{outer.ok} is true, the
     values in \code{x} must be between \code{knots[ord]} and
     \code{knots[ length(knots) + 1 - ord ]}.}
   \item{ord}{a positive integer giving the order of the spline function.
