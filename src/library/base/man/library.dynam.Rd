@@ -54,9 +54,7 @@ library.dynam.unload(chname, libpath,
   \code{\link{.First.lib}} or \code{\link{.onLoad}}.  The
   system-specific extension for DLLs (e.g., \file{.so} or \file{.sl} on
   Unix systems, \file{.so} on Mac OS X, \file{.dll} on Windows) should
-  not be added.  Note that to allow for versioned installs, the
-  \code{chname} argument should not be set to the \code{pkgname}
-  argument of \code{.First.lib} or \code{.onLoad}.
+  not be added.
 
   If \code{\dots} does not include a named argument \code{Dllpath},
   \code{\link{dyn.load}} is called with \code{DLLpath} set to the

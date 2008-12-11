@@ -285,7 +285,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             pfile <- system.file("Meta", "package.rds", package = package,
                                  lib.loc = which.lib.loc)
             if(!nzchar(pfile))
-            	stop(gettextf("'%s' is not a valid package -- installed < 2.0.0?",
+            	stop(gettextf("'%s' is not a valid installed package",
                      libraryPkgName(package)), domain = NA)
             pkgInfo <- .readRDS(pfile)
             testRversion(pkgInfo, package, pkgpath)
@@ -495,7 +495,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     txt["Title"]
                 } else NA
                 if(is.na(title))
-                    title <- " ** No title available (pre-2.0.0 install?)  ** "
+                    title <- " ** No title available ** "
                 db <- rbind(db, cbind(i, lib, title))
             }
             if(length(a) == 0)
@@ -733,37 +733,14 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
         for(lib in lib.loc) {
             a <- list.files(lib, all.files = FALSE, full.names = FALSE)
             for(nam in a) {
-                ## match .find.packages as to what is a package
-                if(!file.exists(file.path(lib, nam, "DESCRIPTION")))
-                    next
-                ## ("If there is no 'DESCRIPTION' file, it ain't a
-                ## package.  And that's the only check we have ...")
-                ## <FIXME PRE-R-NG>
-                ## All packages usable in R-ng must have 'package.rds'.
-                ## (And we do not need to validate these metadata.)
-                ## Should be simply ignore the others?
-                ## (See also above ...)
                 pfile <- file.path(lib, nam, "Meta", "package.rds")
-                info <- if(file.exists(pfile))
-                    .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
-                else
-                    try(read.dcf(file.path(lib, nam, "DESCRIPTION"),
-                                 c("Package", "Version"))[1, ],
-                        silent = TRUE)
-                ## In principle, info from 'package.rds' should be
-                ## validated, but we already had counterexamples ...
-                ## <FIXME>
-                ## Shouldn't we warn about packages with bad metadata?
-                if(inherits(info, "try-error")
-                   || (length(info) != 2)
-                   || any(is.na(info)))
-                    next
+                if(file.exists(pfile))
+                    info <- .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
+                else next
+                if( (length(info) != 2) || any(is.na(info)) ) next
                 if(regexpr(valid_package_version_regexp,
-                           info["Version"]) == -1)
-                    next
-                ## </FIXME>
+                           info["Version"]) == -1) next
                 ans <- c(ans, nam)
-                ## </FIXME>
             }
         }
         return(unique(ans))
@@ -871,23 +848,13 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
             dirs <- dirs[!sapply(dirs, is.null)]
             paths <- c(as.character(dirs), paths)
         }
-        ## As an extra safety measure, only use the paths we found if
-        ## their DESCRIPTION file registers the given package and has a
-        ## valid version.  Actually, we should really exclude all
-        ## candidates with "bad" DESCRIPTION metadata, but we cannot use
-        ## tools:::.check_package_description() for a full check here.
-        ## (But then packages installed with R 2.0.0 or later must have
-        ## valid DESCRIPTION metadata anyways.)
         if(length(paths)) {
             paths <- unique(paths)
             valid_package_version_regexp <-
                 .standard_regexps()$valid_package_version
             db <- lapply(paths, function(p) {
-                ## <FIXME PRE-R-NG>
-                ## All packages usable in R-ng must have 'package.rds'.
-                ## (And we do not need to validate these metadata.)
-                ## Should be simply ignore the others?
-                ## (See also above ...)
+                ## Note that this is sometimes used for source
+                ## packages, e.g. by promptPackage from package.skeleton
                 pfile <- file.path(p, "Meta", "package.rds")
                 info <- if(file.exists(pfile))
                     .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
@@ -895,15 +862,12 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                     try(read.dcf(file.path(p, "DESCRIPTION"),
                                  c("Package", "Version"))[1, ],
                         silent = TRUE)
-                ## In principle, info from 'package.rds' should be
-                ## validated, but we already had counterexamples ...
                 if(inherits(info, "try-error")
                    || (length(info) != 2)
                    || any(is.na(info)))
-                    c(Package=NA, Version=NA) # need dimnames below
+                    c(Package = NA, Version = NA) # need dimnames below
                 else
                     info
-                ## </FIXME>
             })
             db <- do.call("rbind", db)
             ok <- (apply(!is.na(db), 1, all)

@@ -135,16 +135,11 @@ function(pattern, fields = c("alias", "concept", "title"),
             for (lib in lib.loc) {
                 a <- list.files(lib, all.files = FALSE, full.names = FALSE)
                 for (nam in a) {
-                    if (!file.exists(file.path(lib, nam, "DESCRIPTION")))
-                        next
-                pfile <- file.path(lib, nam, "Meta", "package.rds")
-                    info <- if (file.exists(pfile))
-                        .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
-                    else try(read.dcf(file.path(lib, nam, "DESCRIPTION"),
-                                      c("Package", "Version"))[1, ],
-                             silent = TRUE)
-                    if (inherits(info, "try-error") || (length(info) != 2) ||
-                        any(is.na(info))) next
+                    pfile <- file.path(lib, nam, "Meta", "package.rds")
+                    if (file.exists(pfile))
+                        info <- .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
+                    else next
+                    if ( (length(info) != 2) || any(is.na(info)) ) next
                     if (regexpr(valid_package_version_regexp, info["Version"]) == -1) next
                     ans <- c(ans, nam)
                     paths <- c(paths, file.path(lib, nam))

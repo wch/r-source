@@ -1,6 +1,6 @@
 % File src/library/base/man/zpackages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{zpackages}
@@ -24,11 +24,9 @@
   attached packages \emph{invisibly} whereas
   \code{.packages(all.available = TRUE)} gives (visibly) \emph{all}
   packages available in the library location path \code{lib.loc}.
-  If versioned installs have been used, the names returned will be of the
-  form \code{pkgname_version}. 
   
-  For a package to be regarded as being available it must have a
-  \file{DESCRIPTION} file containing a valid \code{version} field.
+  For a package to be regarded as being available it must have valid
+  metadata (and hence be an installed package).
 }
 \value{
   A character vector of package base names, invisible unless

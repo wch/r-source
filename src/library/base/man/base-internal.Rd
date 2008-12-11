@@ -106,24 +106,20 @@ lazyLoadDBfetch(key, file, compressed, hook)
 
   \code{.find.package} returns the paths to the locations where the
   given packages can be found.  If \code{lib.loc} is \code{NULL}, then
-  then attached packages are searched before the libraries.  If a
-  package is found more than once, the first match is used.  Unless
-  \code{quiet = TRUE} a warning will be given about the named packages
-  which are not found, and an error if none are.  If \code{verbose} is
-  true, warnings about packages found more than once are given.  It does
-  know about versioned installs of packages, and for a package to be
+  attached packages are searched before the libraries.  If a package is
+  found more than once, the first match is used.  Unless \code{quiet =
+  TRUE} a warning will be given about the named packages which are not
+  found, and an error if none are.  If \code{verbose} is true, warnings
+  about packages found more than once are given.  For a package to be
   returned it must have a \file{DESCRIPTION} file containing a valid
-  \code{version} field.  Where more than one versioned match is found to
-  a unversioned name (and no exact match), the highest-numbered version
-  is selected.
+  \code{version} field, but it need not be installed.
 
   \code{.path.package} returns the paths from which the named packages
   were loaded, or if none were named, for all currently loaded packages.
   Unless \code{quiet = TRUE} it will warn if some of the packages named
   are not loaded, and given an error if none are.  This function is not
   meant to be called by users, and its interface might change in future
-  versions.  Note that currently \code{package} must include the
-  version number if versioned installs are used.
+  versions.
 
   \code{.getRequiredPackages2} attaches all the packages mentioned in the
   \code{Depends} field: failure to find a package is an error.  It also

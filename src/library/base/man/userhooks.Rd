@@ -23,10 +23,7 @@ packageEvent(pkgname,
 }
 \arguments{
   \item{hookName}{character string: the hook name}
-  \item{pkgname}{character string: the package/name space name.
-    If versioned install has been used, \code{pkgname} should be
-    the unversioned name of the package (but any version information
-    will be stripped).}
+  \item{pkgname}{character string: the package/name space name.}
   \item{event}{character string: an event for the package}
   \item{value}{A function, or for \code{action="replace"}, \code{NULL}.}
   \item{action}{The action to be taken.  The names can be abbreviated.}
