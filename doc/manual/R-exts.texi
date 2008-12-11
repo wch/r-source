@@ -1066,7 +1066,8 @@ There are two another targets, @samp{before} and @samp{after}, which by
 default have neither dependencies nor commands so can be overridden in a
 @file{Makevars.win}.  See the example in @ref{Linking to other packages}.
 
-
+It is sometimes useful to have a target @samp{clean} in @file{Makevars}
+or @file{Makevars.win}: this will be used by @command{R CMD build}.
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example

@@ -554,12 +554,23 @@ sub cleanup_pkg {
 	    ## $(RHOME)/src/gnuwin32/MkRules.
 	    $ENV{RHOME} = $ENV{R_HOME};
 	    if(-r "Makefile.win") {
+		## FIXME: why not use 'Makefile' if Makefile.win does not exist?
 		R_system("${R::Vars::MAKE} -f Makefile.win clean");
 	    } else {
-		## FIXME: there need not be a 'clean' target.
-		## FIXME: why not use 'Makevars' if Makevars.win does not exist?
 		if(-r "Makevars.win") {
-		    R_system("${R::Vars::MAKE} -f Makevars.win clean");
+		    my $makefiles = " -f " .
+			&shell_quote_file_path(&file_path(${R::Vars::R_HOME},
+							  "share", "make",
+							  "clean.mk"));
+		    $makefiles .= " -f Makevars.win";
+		    R_system("${R::Vars::MAKE} $makefiles clean");
+		} elsif (-r "Makevars") {
+		    my $makefiles = " -f " .
+			&shell_quote_file_path(&file_path(${R::Vars::R_HOME},
+							  "share", "make",
+							  "clean.mk"));
+		    $makefiles .= " -f Makevars";
+		    R_system("${R::Vars::MAKE} $makefiles clean");
 		}
 		foreach my $file (<*.o $pkgname.a $pkgname.dll $pkgname.def>) {
 		    unlink($file);
