@@ -160,7 +160,10 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
     .Internal(format.POSIXlt(x, format, usetz))
 }
 
-strftime <- format.POSIXlt
+## prior to 2.9.0 the same as format.POSIXlt.
+## now more or less the same as format.POSIXct but also works for Dates.
+strftime <- function(x, format = "", tz = "", usetz = FALSE, ...)
+    format(as.POSIXlt(x, tz = tz), format = format, usetz = usetz, ...)
 
 strptime <- function(x, format, tz = "")
     .Internal(strptime(as.character(x), format, tz))

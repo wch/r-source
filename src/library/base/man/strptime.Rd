@@ -23,7 +23,7 @@
 
 \method{as.character}{POSIXt}(x, \dots)
 
-strftime(x, format="", usetz = FALSE, \dots)
+strftime(x, format="", tz = "", usetz = FALSE, \dots)
 strptime(x, format, tz = "")
 
 ISOdatetime(year, month, day, hour, min, sec, tz = "")
@@ -57,7 +57,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   string is processed as far as necessary for the format specified: any
   trailing characters are ignored.
 
-  \code{strftime} is an alias for \code{format.POSIXlt}, and
+  \code{strftime} is a wrapper for \code{format.POSIXlt}, and it and
   \code{format.POSIXct} first converts to class \code{"POSIXlt"} by
   calling \code{\link{as.POSIXlt}}.  Note that only that conversion
   depends on the time zone.

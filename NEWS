@@ -88,7 +88,7 @@ NEW FEATURES
 	vectors and factors.
 
     o	plot.ts(plot.type="multiple") now makes use of *.lab and
-	*.axis graphical parameters (wish of PR#13134 and 13135)
+	*.axis graphical parameters (wish of PR#13134 and 13135).
 
     o	Classes can be exported from a namespace using the NAMESPACE
 	file directive'exportClassPattern' which has the same syntax
@@ -102,6 +102,9 @@ NEW FEATURES
 	Use of top-level \itemize inside a \value block is incorrect
 	and gave a faulty conversion.  It is now detected and removed,
 	with a warning.
+
+    o	strftime() now converts its first argment with as.POSIXlt()
+	and so is no longer an alias for format.POSIXLt.
 
 
 DEPRECATED & DEFUNCT
