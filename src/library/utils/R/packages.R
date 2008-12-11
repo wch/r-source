@@ -454,7 +454,7 @@ installed.packages <-
 }
 
 
-remove.packages <- function(pkgs, lib, version)
+remove.packages <- function(pkgs, lib)
 {
     updateIndices <- function(lib) {
         ## This should eventually be made public, as it could also be
@@ -467,7 +467,6 @@ remove.packages <- function(pkgs, lib, version)
 
     if(!length(pkgs)) return(invisible())
 
-    hv <- !missing(version)
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         warning(gettextf("argument 'lib' is missing: using %s", lib),
@@ -476,16 +475,8 @@ remove.packages <- function(pkgs, lib, version)
     have <- installed.packages(lib.loc=lib)
     is_bundle <- pkgs %in% have[, "Bundle"]
     pkgs0 <- pkgs; pkgs <- pkgs[!is_bundle]
-    if(hv) {
-        names(version) <- pkgs0
-        if(length(pkgs)) pkgs <- manglePackageName(pkgs, version[!is_bundle])
-    }
     for(p in pkgs0[is_bundle]) {
-        ## for consistency with packages, need unversioned names
-        ## and let .find.packages() figure out what to do.
         add <- have[have[, "Bundle"] %in% p, "Package"]
-        add <- unique(sub("_[0-9.-]*$", "", add))
-        if(hv) add <- manglePackageName(add, version[p])
         pkgs <- c(pkgs, add)
     }
 

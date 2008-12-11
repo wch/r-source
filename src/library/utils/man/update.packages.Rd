@@ -210,8 +210,7 @@ contrib.url(repos, type = getOption("pkgType"))
   give warnings about incompletely installed bundles (provided the
   information is available) and bundles whose contents has changed.
   If \code{ask != FALSE} it asks which packages should be installed
-  in the first element of \code{lib.loc}.  NB: versioned installs are
-  not installs of a named package.
+  in the first element of \code{lib.loc}.
 
   \code{download.packages} takes a list of package/bundle names and a
   destination directory, downloads the newest versions and saves them in
