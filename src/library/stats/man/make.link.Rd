@@ -19,7 +19,7 @@ make.link(link)
 }
 \arguments{
   \item{link}{character or numeric; one of \code{"logit"},
-    \code{"probit"}, \code{"cloglog"}, \code{"identity"},
+    \code{"probit"}, \code{"cauchit"}, code{"cloglog"}, \code{"identity"},
     \code{"log"},  \code{"sqrt"},  \code{"1/mu^2"},
     \code{"inverse"}, or (deprecated) a non-negative number,
     say \eqn{\lambda}{lambda} resulting

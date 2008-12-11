@@ -35,22 +35,22 @@ quasipoisson(link = "log")
     \code{\link{make.link}}) provided it is not specified
     \emph{via} one of the standard names given next.
 
-    The \code{gaussian} family accepts the links \code{"identity"},
-    \code{"log"} and \code{"inverse"};
-    the \code{binomial} family the links \code{"logit"},
-    \code{"probit"}, \code{"cauchit"}, (corresponding to logistic,
-    normal and Cauchy CDFs respectively) \code{"log"} and
-    \code{"cloglog"} (complementary log-log);
-    the \code{Gamma} family the links \code{"inverse"}, \code{"identity"}
-     and \code{"log"};
-    the \code{poisson} family the links \code{"log"}, \code{"identity"}, 
-    and \code{"sqrt"} and the \code{inverse.gaussian} family the links
-    \code{"1/mu^2"}, \code{"inverse"}, \code{"identity"}
-    and \code{"log"}.
+    The \code{gaussian} family accepts the links (as names)
+    \code{identity}, \code{log} and \code{inverse};
+    the \code{binomial} family the links \code{logit},
+    \code{probit}, \code{cauchit}, (corresponding to logistic,
+    normal and Cauchy CDFs respectively) \code{log} and
+    \code{cloglog} (complementary log-log);
+    the \code{Gamma} family the links \code{inverse}, \code{identity}
+     and \code{log};
+    the \code{poisson} family the links \code{log}, \code{identity}, 
+    and \code{sqrt} and the \code{inverse.gaussian} family the links
+    \code{1/mu^2}, \code{inverse}, \code{identity}
+    and \code{log}.
     
-    The \code{quasi} family accepts the links \code{"logit"}, \code{"probit"},
-    \code{"cloglog"},  \code{"identity"}, \code{"inverse"},
-    \code{"log"}, \code{"1/mu^2"} and \code{"sqrt"}, and
+    The \code{quasi} family accepts the links \code{logit}, \code{probit},
+    \code{cloglog},  \code{identity}, \code{inverse},
+    \code{log}, \code{1/mu^2} and \code{sqrt}, and
     the function \code{\link{power}} can be used to create a
     power link function.
   }
@@ -94,7 +94,10 @@ quasipoisson(link = "log")
   them is as quoted character strings, but they can also be supplied
   unquoted (as names or expressions).  In addition, they can also be
   supplied as a length-one character vector giving the name of one of
-  the options, or as a list (for \code{link}, of class \code{"link-glm"}).
+  the options, or as a list (for \code{link}, of class
+  \code{"link-glm"}).  The restrictions apply only to links given as
+  names: when given as a character string all the links known to
+  \code{\link{make.link}} are accepted.
 
   This is potentially ambiguous: supplying \code{link=logit} could mean
   the unquoted name of a link or the value of object \code{logit}.  It
