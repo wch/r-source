@@ -160,9 +160,6 @@ BUG FIXES
 	first name is empty.  (PR#13230: this has been the behaviour
 	for a long time, but apparently undocumented.)
 
-    o	In setClass("C", contains="list"); x <- new("C", 1:3), x[2:3] now
-        remains of class "C".  So does rep(x, 2) or rep.int(x, 3).
-
     o	deparse(control="S_compatible") now never uses backticks.
 
 
@@ -375,6 +372,9 @@ BUG FIXES
 	located well outside the device (e.g., a zoomed view of a
 	larger curve).	(Both cases were giving the error "reached
 	MAXNUMPTS").
+
+    o	In setClass("C", contains="list"); x <- new("C", 1:3), x[2:3] now
+        remains of class "C".  So does rep(x, 2) or rep.int(x, 3).
 
     o	median.default() now also works for "numeric"-like vectors.
 
