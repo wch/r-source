@@ -739,8 +739,12 @@ compareVersion <- function(a, b)
     if(is.null(available))
         stop(gettextf("'%s' must be supplied", available), domain = NA)
     info <- available[pkgs, c("Depends", "Imports"), drop = FALSE]
-    x <- apply(info, 1, .clean_up_dependencies)
-    if(length(pkgs) == 1) {x <- list(as.vector(x)); names(x) <- pkgs}
+    ## we always want a list here, but apply can simplify to a matrix.
+    ## x <- apply(info, 1, .clean_up_dependencies)
+    ## if(length(pkgs) == 1) {x <- list(as.vector(x)); names(x) <- pkgs}
+    x <- vector("list", length(pkgs)); names(x) <- pkgs
+    for (i in seq_along(pkgs))
+        x[[i]] <- .clean_up_dependencies(info[i, ])
     bundles <- .find_bundles(available)
     x <- lapply(x, function(x) if(length(x)) {
         for(bundle in names(bundles))

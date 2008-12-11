@@ -392,6 +392,10 @@ BUG FIXES
     o	unique.default() now preserves the "tzone" attribute on
 	"POSIXct" objects.
 
+    o	If all the packages had dependency list of equal lengths,
+	occasionally install.packages() would compute an incorrect
+	sort order.
+
 
 
 		CHANGES IN R VERSION 2.8.0
