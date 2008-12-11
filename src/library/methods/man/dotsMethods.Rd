@@ -155,7 +155,7 @@ stopifnot(identical(cc(), c())) # no arguments implies the default method
 setGeneric("numMax", function(...)standardGeneric("numMax"))
 
 setMethod("numMax", "numeric", function(...)max(...)) # won't work for complex data
-setMethod("numMax", "Number", function(...) paste(...)) # should not be selected w/o clomplex args
+setMethod("numMax", "Number", function(...) paste(...)) # should not be selected w/o complex args
 
 stopifnot(identical(numMax(1:10, pi, 1+1i), paste(1:10, pi, 1+1i)))
 stopifnot(identical(numMax(1:10, pi, 1), max(1:10, pi, 1)))
