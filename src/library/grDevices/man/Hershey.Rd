@@ -158,7 +158,7 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
       fontindex.  Alternatively they can be specified via an octal code
       in the range 300 to 337 for lower case characters or 340 to 377 for
       upper case characters.  The fifth table in \code{demo(Hershey)} shows the
-      octal codes for the available cyrillic characters.
+      octal codes for the available Cyrillic characters.
 
       Cyrillic has to be selected via a \code{("serif", fontindex)} pair
       rather than via a font family.

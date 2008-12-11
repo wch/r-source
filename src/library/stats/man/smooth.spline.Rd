@@ -159,7 +159,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   \item{crit}{the criterion value minimized in the underlying
     \code{.Fortran} routine \file{sslvrg}.}
   \item{df}{equivalent degrees of freedom used.  Note that (currently)
-    this value may become quite unprecise when the true \code{df} is
+    this value may become quite imprecise when the true \code{df} is
     between and 1 and 2.
   }
   \item{spar}{the value of \code{spar} computed or given.}

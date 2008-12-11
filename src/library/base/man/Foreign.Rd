@@ -74,7 +74,7 @@
   the C code as a sequence of \R objects.  It is included to provide
   compatibility with S version 4.
 
-  Specifying \code{ENCODING} overrrides any declared encodings (see
+  Specifying \code{ENCODING} overrides any declared encodings (see
   \code{link{Encoding}}) which are otherwise used to translate to the
   current locale before passing the strings to the compiled code.
  

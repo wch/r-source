@@ -25,7 +25,7 @@ dim(x) <- value
 
   \code{dim} has a method for \code{\link{data.frame}}s, which returns
   the lengths of the \code{row.names} attribute of \code{x} and
-  of \code{x} (as the numbers of rows and columns respecitvely).
+  of \code{x} (as the numbers of rows and columns respectitvely).
 }
 \value{
   For an array (and hence in particular, for a matrix) \code{dim} retrieves

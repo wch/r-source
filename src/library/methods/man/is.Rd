@@ -92,7 +92,7 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
     intermediate coercions have to be valid.)}
   \item{where}{
     In a call to \code{setIs}, where to store the metadata defining the relationship. Default is
-    the global environment for calls from the top level of the session or a source file evaluated there.  When the call occurs in the top level of a file in the source of a package, the default will be the namespace or environment of the package.  Other uses are tricky and not usually a good idea, unless you really know what you are doing.}
+    the global environment for calls from the top level of the session or a source file evaluated there.  When the call occurs in the top level of a file in the source of a package, the default will be the name space or environment of the package.  Other uses are tricky and not usually a good idea, unless you really know what you are doing.}
   \item{classDef}{
     Optional class definition for \code{class} , required internally
     when \code{setIs} is called during the initial definition of the
@@ -359,7 +359,7 @@ levels(as(ld, "factor"))
 
 levels(ld) # will be NULL--see comment in section on inheritance above.
 
-## In contrast, a class that simply extends "factor" has no such amiguities
+## In contrast, a class that simply extends "factor" has no such ambiguities
 
 setClass("factorDated", contains = "factor", representation(stamp="POSIXt"))
 

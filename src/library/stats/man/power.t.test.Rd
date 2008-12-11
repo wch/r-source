@@ -47,7 +47,7 @@ power.t.test(n = NULL, delta = NULL, sd = 1, sig.level = 0.05,
 }
 
 \author{Peter Dalgaard.  Based on previous work by Claus
-  \enc{Ekstrøm}{Ekstrom}}
+  \enc{Ekstrøm}{Ekstroem}}
 
 \note{
   \code{uniroot} is used to solve power equation for unknowns, so

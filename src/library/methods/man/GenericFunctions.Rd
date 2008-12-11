@@ -127,13 +127,13 @@ getGenerics(where, searchForm = FALSE)
 
 \arguments{
   \item{f}{ The character string naming the function. }
-  \item{where}{ The environment, namespace, or search-list position
+  \item{where}{ The environment, name space, or search-list position
   from which to search for objects.  By default, start at the
   top-level environment of the calling function, typically the global
-  environment (i.e., use the search list), or the namespace of a
+  environment (i.e., use the search list), or the name space of a
   package from which the call came.  It is important to supply this
   argument when calling any of these functions indirectly.  With
-  package namespaces, the default is likely to be wrong in such calls.}
+  package name spaces, the default is likely to be wrong in such calls.}
 
   \item{signature}{ The class signature of the relevant method.  A
     signature is a named or unnamed vector of character strings.  If

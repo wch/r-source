@@ -299,7 +299,7 @@ musc.1 <- nls(Length ~ cbind(1, exp(-Conc/th)), muscle,
 summary(musc.1)
 
 ## Then we use nls' indexing feature for parameters in non-linear
-## models to use the convential algorithm to fit a model in which
+## models to use the conventional algorithm to fit a model in which
 ## alpha and beta vary with Strip.  The starting values are provided
 ## by the previously fitted model.
 ## Note that with indexed parameters, the starting values must be
