@@ -32,7 +32,7 @@ library <-
 function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          logical.return = FALSE, warn.conflicts = TRUE,
          keep.source = getOption("keep.source.pkgs"),
-         verbose = getOption("verbose"), version)
+         verbose = getOption("verbose"))
 {
     paste0 <- function(...) paste(..., sep="")
     testRversion <- function(pkgInfo, pkgname, pkgpath)
@@ -657,7 +657,7 @@ function(chname, libpath, verbose = getOption("verbose"),
 require <-
 function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
          keep.source = getOption("keep.source.pkgs"),
-         character.only = FALSE, version, save = TRUE)
+         character.only = FALSE, save = TRUE)
 {
     if( !character.only )
         package <- as.character(substitute(package)) # allowing "require(eda)"
@@ -670,7 +670,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 	value <- library(package, lib.loc = lib.loc, character.only = TRUE,
                          logical.return = TRUE,
                          warn.conflicts = warn.conflicts,
-                         keep.source = keep.source, version = version)
+                         keep.source = keep.source)
     } else value <- TRUE
 
     if(identical(save, FALSE)) {}
