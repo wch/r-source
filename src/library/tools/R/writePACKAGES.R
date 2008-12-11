@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 write_PACKAGES <-
-function(dir, fields = NULL,
+function(dir = ".", fields = NULL,
          type = c("source", "mac.binary", "win.binary"),
          verbose = FALSE, unpacked = FALSE, subdirs = FALSE)
 {

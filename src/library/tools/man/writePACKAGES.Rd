@@ -11,7 +11,7 @@
   repository of source or Mac/Windows binary packages.
 }
 \usage{
-write_PACKAGES(dir, fields = NULL,
+write_PACKAGES(dir = ".", fields = NULL,
                type = c("source", "mac.binary", "win.binary"),
                verbose = FALSE, unpacked = FALSE, subdirs = FALSE)
 }
