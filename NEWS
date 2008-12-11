@@ -116,6 +116,10 @@ DEPRECATED & DEFUNCT
     o	Support for versioned installs (R CMD INSTALL --with-package-versions
 	and install.packages(installWithVers = TRUE)) has been removed.
 
+    o	The numeric and power(0.5) forms of argument to make.link()
+	which were deprecated in 2.4.0 are now defunct: use power()
+	directly.
+
 
 UTILITIES
 
