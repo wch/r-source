@@ -7,6 +7,9 @@
 \alias{dyn.load}
 \alias{dyn.unload}
 \alias{is.loaded}
+#ifdef windows
+\alias{DLLpath}
+#endif
 \title{Foreign Function Interface}
 \description{
   Load or unload DLLs (also known as shared objects), and test whether a
