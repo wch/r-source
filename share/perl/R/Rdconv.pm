@@ -1302,8 +1302,15 @@ sub html_print_argblock {
 	my $text = $blocks{$block};
 
 	## some people have put \itemize inside \value.
-	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
-	    warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
+	## as from R 2.8.1, strip with a warning, providing not after \item{
+	if($text =~ /\\item(ize|$ID)/) {
+	    if($1 eq "ize") {
+		warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
+		$text =~ /\\itemize($ID)/;
+		$id = $1;
+		$text =~  s/\\itemize$id//;
+		$text =~ s/$id//;
+	    }
 	}
 
 	if($text =~ /\\item/s){
@@ -2101,8 +2108,15 @@ sub txt_print_argblock {
 	my $text = $blocks{$block};
 
 	## some people have put \itemize inside \value.
-	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
-	    warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
+	## as from R 2.8.1, strip with a warning, providing not after \item{
+	if($text =~ /\\item(ize|$ID)/) {
+	    if($1 eq "ize") {
+		warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
+		$text =~ /\\itemize($ID)/;
+		$id = $1;
+		$text =~  s/\\itemize$id//;
+		$text =~ s/$id//;
+	    }
 	}
 
 	if($text =~ /\\item/s){
@@ -2301,9 +2315,15 @@ sub Sd_print_argblock {
 	my $text = $blocks{$block};
 
 	## some people have put \itemize inside \value.
-	## as from R 2.9.0, strip with a warning, providing not after \item{
-	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
-	    warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n";
+	## as from R 2.8.1, strip with a warning, providing not after \item{
+	if($text =~ /\\item(ize|$ID)/) {
+	    if($1 eq "ize") {
+		warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n";
+		$text =~ /\\itemize($ID)/;
+		$id = $1;
+		$text =~  s/\\itemize$id//;
+		$text =~ s/$id//;
+	    }
 	}
 
 	if($text =~ /\\item/s){
@@ -2991,8 +3011,15 @@ sub latex_print_argblock {
 	my $text = $blocks{$block};
 
 	## some people have put \itemize inside \value.
-	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
-	    warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
+	## as from R 2.8.1, strip with a warning, providing not after \item{
+	if($text =~ /\\item(ize|$ID)/) {
+	    if($1 eq "ize") {
+		warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
+		$text =~ /\\itemize($ID)/;
+		$id = $1;
+		$text =~  s/\\itemize$id//;
+		$text =~ s/$id//;
+	    }
 	}
 
 	if($text =~ /\\item/s){#-- if there is >= 1 "\item":  ldescription
@@ -3596,8 +3623,15 @@ sub Ssgm_print_valueblock {
 	my $text = $blocks{$block};
 
 	## some people have put \itemize inside \value.
-	if($text =~ /\\(item|itemize)$ID/ && $1 eq "itemize") {
-	    warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n";
+	## as from R 2.8.1, strip with a warning, providing not after \item{
+	if($text =~ /\\item(ize|$ID)/) {
+	    if($1 eq "ize") {
+		warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n";
+		$text =~ /\\itemize($ID)/;
+		$id = $1;
+		$text =~  s/\\itemize$id//;
+		$text =~ s/$id//;
+	    }
 	}
 
 	if($text =~ /\\item/s){
