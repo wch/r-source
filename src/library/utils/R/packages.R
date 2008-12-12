@@ -731,6 +731,53 @@ compareVersion <- function(a, b)
     unique(sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1" , x))
 }
 
+.clean_up_dependencies2 <- function(x, installed, available)
+{
+    ## x is a character vector of Depends / Suggests / Imports entries
+    ## Returns a list of length 2, a character vector of all the
+    ## package dependencies mentioned that are not already satisfied
+    ## and one of those which cannot be satisfied.
+    x <- x[!is.na(x)]
+    if(!length(x)) return(x)
+    ## This gets a list of components (name [op, version])
+    xx <- tools:::.split_dependencies(x)
+    ## First remove dependencies on R
+    keep <- sapply(xx, function(x) x[[1]] != "R"); xx <- xx[keep]
+    if(!length(xx)) return(list(character(0), character(0)))
+    ## Then check for those we already have satisfied
+    pkgs <- installed[, "Package"]
+    have <- sapply(xx, function(x) {
+        if(length(x) == 3) {
+            if (! x[[1]] %in% pkgs ) return(FALSE)
+            if(x[[2]] != ">=") return(TRUE)
+            ## we may have the package installed more than once
+            current <- as.package_version(installed[pkgs == x[[1]], "Version"])
+            target <- as.package_version(x[[3]])
+            eval(parse(text = paste("any(current", x$op, "target)")))
+        } else x[[1]] %in% pkgs
+    })
+    xx <- xx[!have]
+    if(!length(xx)) return(list(character(0), character(0)))
+    ## now check if we can satisfy the missing dependencies
+    pkgs <- row.names(available)
+    canget <- miss <- character(0)
+    for (i in seq_along(xx)) {
+        x <- xx[[i]]
+        if(length(x) == 3) {
+            if (! x[[1]] %in% pkgs ) { miss <- c(miss, x[[1]]); next }
+            if(x[[2]] != ">=") { canget <- c(canget, x[[1]]); next }
+            ## we may have the package available more than once
+            current <- as.package_version(available[pkgs == x[[1]], "Version"])
+            target <- as.package_version(x[[3]])
+            res <- eval(parse(text = paste("any(current", x$op, "target)")))
+            if(res) canget <- c(canget, x[[1]])
+            else  miss <- c(miss, paste(x[[1]], " (>= ", x[[3]], ")", sep=""))
+        } else if(x[[1]] %in% pkgs) canget <- c(canget, x[[1]])
+        else miss <- c(miss, x[[1]])
+    }
+    list(canget, miss)
+}
+
 .make_dependency_list <- function(pkgs, available)
 {
     ## given a character vector of packages,

@@ -102,6 +102,11 @@ NEW FEATURES
     o	strftime() now converts its first argment with as.POSIXlt()
 	and so is no longer an alias for format.POSIXLt.
 
+    o	install.packages() now checks >= version dependencies for
+	dependent packages, and so will install a newer version of a
+	dependency if needed and available on the repositories.
+	[Currently only for type="source".]
+
 
 DEPRECATED & DEFUNCT
 
