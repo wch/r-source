@@ -405,6 +405,9 @@ BUG FIXES
 	if x had no column (row) names.  It was documented
 	incorrectly, and now returns a matrix factor.
 
+    o	setRepositories() failed if "pkgType" was set to
+	"mac.binary.leopard".
+
 
 
 		CHANGES IN R VERSION 2.8.0

@@ -634,7 +634,9 @@ setRepositories <-
         p <- file.path(R.home("etc"), "repositories")
     a <- read.delim(p, header=TRUE, comment.char="#",
                     colClasses=c(rep("character", 3), rep("logical", 4)))
-    thisType <- a[[getOption("pkgType")]]
+    pkgType <- getOption("pkgType")
+    if(length(grep("^mac\\.binary", pkgType))) pkgType <- "mac.binary"
+    thisType <- a[[pkgType]]
     a <- a[thisType, 1:3]
     repos <- getOption("repos")
     ## Now look for CRAN and any others in getOptions("repos")
