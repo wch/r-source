@@ -1,6 +1,6 @@
 % File src/library/base/man/warning.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{warning}
@@ -22,7 +22,7 @@ suppressWarnings(expr)
   \item{call.}{logical, indicating if the call should become part of the
     warning message.}
   \item{immediate.}{logical, indicating if the call should be output
-    immediately, even if \code{\link{getOption}(warn) <= 0}.}
+    immediately, even if \code{\link{getOption}("warn") <= 0}.}
   \item{expr}{expression to evaluate.}
   \item{domain}{see \code{\link{gettext}}. If \code{NA}, messages will
     not be translated.}
