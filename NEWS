@@ -146,6 +146,8 @@ INSTALLATION
 	by 'R CMD foo' can be specified at installation time by
 	setting the (precious) configure variable R_SHELL.
 
+    o	libtool has been updated to 2.2.6a.
+
 
 C-LEVEL FACILITIES
 
