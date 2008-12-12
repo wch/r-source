@@ -21,8 +21,8 @@ row(x, as.factor = FALSE)
     rather than as numbers.}
 }
 \value{
-  An integer matrix with the same dimensions as \code{x} and whose
-  \code{ij}-th element is equal to \code{i}.
+  An integer (or factor) matrix with the same dimensions as \code{x} and whose
+  \code{ij}-th element is equal to \code{i} (or the \code{i}-th row label).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
