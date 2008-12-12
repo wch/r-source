@@ -71,8 +71,10 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
         if(missing(format)) format <- "%Y"
     }
     if(!mat) z <- x[is.finite(x)] # override changes
-    z <- z[z >= range[1] & z <= range[2]]
-    if (identical(labels, TRUE))
+    keep <- z >= range[1] & z <= range[2]
+    z <- z[keep]
+    if (!is.logical(labels)) labels <- labels[keep]
+    else if (identical(labels, TRUE))
 	labels <- format(z, format = format)
     else if (identical(labels, FALSE))
 	labels <- rep("", length(z)) # suppress labelling of ticks
@@ -249,9 +251,11 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
         if(missing(format)) format <- "%Y"
     }
     if(!mat) z <- x[is.finite(x)] # override changes
-    z <- z[z >= range[1] & z <= range[2]]
+    keep <- z >= range[1] & z <= range[2]
+    z <- z[keep]
     z <- sort(unique(z)); class(z) <- "Date"
-    if (identical(labels, TRUE))
+    if (!is.logical(labels)) labels <- labels[keep]
+    else if (identical(labels, TRUE))
 	labels <- format.Date(z, format = format)
     else if (identical(labels, FALSE))
 	labels <- rep("", length(z)) # suppress labelling of ticks
