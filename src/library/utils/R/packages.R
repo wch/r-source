@@ -26,20 +26,20 @@ available.packages <-
 	stopifnot(is.character(fields))
 	fields <- unique(c(requiredFields, fields))
     }
-    res <- matrix(NA_character_, 0, length(fields) + 1,
+    res <- matrix(NA_character_, 0, length(fields) + 1L,
 		  dimnames = list(NULL, c(fields, "Repository")))
     for(repos in contriburl) {
-        localcran <- length(grep("^file:", repos)) > 0
+        localcran <- length(grep("^file:", repos)) > 0L
         if(localcran) {
             ## see note in download.packages
-            if(substring(repos, 1, 8) == "file:///") {
-                tmpf <- paste(substring(repos, 8), "PACKAGES", sep = "/")
+            if(substring(repos, 1L, 8L) == "file:///") {
+                tmpf <- paste(substring(repos, 8L), "PACKAGES", sep = "/")
                 if(.Platform$OS.type == "windows") {
                     if(length(grep("^/[A-Za-z]:", tmpf)))
-                        tmpf <- substring(tmpf, 2)
+                        tmpf <- substring(tmpf, 2L)
                 }
             } else {
-                tmpf <- paste(substring(repos, 6), "PACKAGES", sep = "/")
+                tmpf <- paste(substring(repos, 6L), "PACKAGES", sep = "/")
             }
             res0 <- read.dcf(file = tmpf)
             if(length(res0)) rownames(res0) <- res0[, "Package"]
@@ -54,7 +54,7 @@ available.packages <-
                 tmpf <- tempfile()
                 on.exit(unlink(tmpf))
                 op <- options("warn")
-                options(warn = -1)
+                options(warn = -1L)
                 ## This is a binary file
                 z <- try(download.file(url=paste(repos, "PACKAGES.gz", sep = "/"),
                                        destfile = tmpf, method = method,
@@ -109,11 +109,11 @@ available.packages <-
             zs <- xx[names(xx) == "R"]
             r <- TRUE
             for(z in zs)
-                if(length(z) > 1)
+                if(length(z) > 1L)
                     r <- r & eval(parse(text=paste("currentR", z$op, "z$version")))
             r
         }
-        res <- res[apply(res, 1, .checkRversion), , drop=FALSE]
+        res <- res[apply(res, 1L, .checkRversion), , drop=FALSE]
     }
     ## and those that do not fit our OS
     if(length(res)) {
@@ -122,7 +122,7 @@ available.packages <-
             xx <- x["OS_type"]
             is.na(xx) || xx == current
         }
-        res <- res[apply(res, 1, .checkOStype), , drop=FALSE]
+        res <- res[apply(res, 1L, .checkOStype), , drop=FALSE]
     }
     res
 }
@@ -131,10 +131,10 @@ available.packages <-
 ## unexported helper function
 simplifyRepos <- function(repos, type)
 {
-    tail <- substring(contrib.url("---", type), 4)
+    tail <- substring(contrib.url("---", type), 4L)
     ind <- regexpr(tail, repos, fixed=TRUE)
-    ind <- ifelse(ind > 0, ind-1, nchar(repos, type="c"))
-    substr(repos, 1, ind)
+    ind <- ifelse(ind > 0, ind-1L, nchar(repos, type="c"))
+    substr(repos, 1L, ind)
 }
 
 update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
@@ -156,7 +156,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                 "Version", old[k, "ReposVer"], "available at",
                 simplifyRepos(old[k, "Repository"], type))
             cat("\n")
-            answer <- substr(readline("Update (y/N/c)?  "), 1, 1)
+            answer <- substr(readline("Update (y/N/c)?  "), 1L, 1L)
             if(answer == "c" | answer == "C") {
                 cat("cancelled by user\n")
                 return(invisible())
@@ -187,13 +187,13 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(is.character(ask) && ask == "graphics") {
         if(.Platform$OS.type == "unix" && .Platform$GUI != "AQUA"
            && capabilities("tcltk") && capabilities("X11")) {
-            k <- tcltk::tk_select.list(oldPkgs[,1], oldPkgs[,1], multiple = TRUE,
+            k <- tcltk::tk_select.list(oldPkgs[,1L], oldPkgs[,1L], multiple = TRUE,
                                        title = "Packages to be updated")
             update <- oldPkgs[match(k, oldPkgs[,1]), , drop=FALSE]
         } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
             k <- select.list(oldPkgs[,1], oldPkgs[,1], multiple = TRUE,
                              title = "Packages to be updated")
-            update <- oldPkgs[match(k, oldPkgs[,1]), , drop=FALSE]
+            update <- oldPkgs[match(k, oldPkgs[,1L]), , drop=FALSE]
         } else update <- text.select(oldPkgs)
         if(nrow(update) == 0) return(invisible())
     } else if(is.logical(ask) && ask) update <- text.select(oldPkgs)
@@ -237,7 +237,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         if(!is.na(b))
             for (w in unique(instPkgs[, "LibPath"])) {
                 ok <- which(instPkgs[, "Bundle"] == b & instPkgs[, "LibPath"] == w)
-                if(length(ok) > 1) instPkgs <- instPkgs[-ok[-1], ]
+                if(length(ok) > 1L) instPkgs <- instPkgs[-ok[-1L], ]
             }
     }
 
@@ -250,7 +250,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     update <- NULL
 
     currentR <- minorR <- getRversion()
-    minorR[[c(1,3)]] <- 0 # set patchlevel to 0
+    minorR[[c(1,3)]] <- 0L # set patchlevel to 0
     for(k in 1:nrow(instPkgs)) {
         if (instPkgs[k, "Priority"] %in% "base") next
         z <- match(instPkgs[k, "Package"], available[,"Package"])
@@ -347,14 +347,14 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         install.packages(update, lib = lib.loc[1], contriburl = contriburl,
                          method = method, available = available, ...)
         # Now check if they were installed and update 'res'
-        dirs <- list.files(lib.loc[1])
+        dirs <- list.files(lib.loc[1L])
         updated <- update[update %in% dirs]
         # Need to check separately for bundles
         av <- available[update, , drop = FALSE]
         bundles <- av[!is.na(av[, "Contains"]), , drop=FALSE]
         for(bundle in rownames(bundles)) {
             contains <- strsplit(bundles[bundle, "Contains"],
-                                 "[[:space:]]+")[[1]]
+                                 "[[:space:]]+")[[1L]]
             if(all(contains %in% dirs)) updated <- c(updated, bundle)
         }
         res <- res[!res %in% updated]
@@ -381,12 +381,12 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 ##' Read Packages Description and aggregate 'fields' into character matrix
 .readPkgDesc <- function(lib, fields, pkgs = list.files(lib)) {
     ## to be used in installed.packages() and similar
-    ret <- matrix(NA_character_, length(pkgs), 2+length(fields))
+    ret <- matrix(NA_character_, length(pkgs), 2L+length(fields))
     for(i in seq_along(pkgs)) {
         pkgpath <- file.path(lib, pkgs[i])
-        if(file.access(pkgpath, 5)) next
+        if(file.access(pkgpath, 5L)) next
         pkgpath <- file.path(pkgpath, "DESCRIPTION")
-        if(file.access(pkgpath, 4)) next
+        if(file.access(pkgpath, 4L)) next
         desc <- try(read.dcf(pkgpath, fields = fields), silent = TRUE)
         if(inherits(desc, "try-error")) {
             warning(gettextf("read.dcf() error on file '%s'", pkgpath),
@@ -394,12 +394,12 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
             next
         }
         desc <- desc[1,]
-        Rver <- strsplit(strsplit(desc["Built"], ";")[[1]][1],
-                         "[ \t]+")[[1]][2]
+        Rver <- strsplit(strsplit(desc["Built"], ";")[[1L]][1L],
+                         "[ \t]+")[[1L]][2L]
         desc["Built"] <- Rver
         ret[i, ] <- c(sub("_.*", "", pkgs[i]), lib, desc)
     }
-    ret[!is.na(ret[,1]), ]
+    ret[!is.na(ret[, 1L]), ]
 }
 
 installed.packages <-
@@ -416,7 +416,7 @@ installed.packages <-
     }
 
     fields <- .instPkgFields(fields)
-    retval <- matrix("", 0, 2 + length(fields))
+    retval <- matrix("", 0L, 2L + length(fields))
     for(lib in lib.loc) {
 	dest <- file.path(tempdir(),
 			  paste("libloc_", URLencode(lib, TRUE),
@@ -501,7 +501,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
     if(is.null(available))
         available <- available.packages(contriburl=contriburl, method=method)
 
-    retval <- matrix(character(0), 0, 2)
+    retval <- matrix(character(0L), 0L, 2L)
     for(p in unique(pkgs))
     {
         ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
@@ -510,13 +510,13 @@ download.packages <- function(pkgs, destdir, available = NULL,
             warning(gettextf("no package '%s' at the repositories", p),
                     domain = NA, immediate. = TRUE)
         else {
-            if(sum(ok) > 1) { # have multiple copies
+            if(sum(ok) > 1L) { # have multiple copies
                 vers <- package_version(available[ok, "Version"])
                 keep <- vers == max(vers)
                 keep[duplicated(keep)] <- FALSE
                 ok[ok][!keep] <- FALSE
             }
-            if (substr(type, 1, 10) == "mac.binary") type <- "mac.binary"
+            if (substr(type, 1L, 10L) == "mac.binary") type <- "mac.binary"
             fn <- paste(p, "_", available[ok, "Version"],
                         switch(type,
                                "source" = ".tar.gz",
@@ -524,20 +524,20 @@ download.packages <- function(pkgs, destdir, available = NULL,
                                "win.binary" = ".zip"),
                         sep="")
             repos <- available[ok, "Repository"]
-            if(length(grep("^file:", repos)) > 0) { # local repository
+            if(length(grep("^file:", repos)) > 0L) { # local repository
                 ## This could be file: + file path or a file:/// URL.
-                if(substring(repos, 1, 8) == "file:///") {
+                if(substring(repos, 1L, 8L) == "file:///") {
                     ## We need to derive the file name from the URL
                     ## This is tricky as so many forms have been allowed,
                     ## and indeed external methods may do even more.
-                    fn <- paste(substring(repos, 8), fn, sep = "/")
+                    fn <- paste(substring(repos, 8L), fn, sep = "/")
                     ## This leaves a path beginning with /
                     if(.Platform$OS.type == "windows") {
                         if(length(grep("^/[A-Za-z]:", fn)))
-                            fn <- substring(fn, 2)
+                            fn <- substring(fn, 2L)
                     }
                 } else {
-                    fn <- paste(substring(repos, 6), fn, sep = "/")
+                    fn <- paste(substring(repos, 6L), fn, sep = "/")
                 }
                 if(file.exists(fn))
                     retval <- rbind(retval, c(p, fn))
@@ -549,7 +549,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 destfile <- file.path(destdir, fn)
 
                 res <- try(download.file(url, destfile, method, mode="wb", ...))
-                if(!inherits(res, "try-error") && res == 0)
+                if(!inherits(res, "try-error") && res == 0L)
                     retval <- rbind(retval, c(p, destfile))
                 else
                     warning(gettextf("download of package '%s' failed", p),
@@ -578,10 +578,10 @@ contrib.url <- function(repos, type = getOption("pkgType"))
     if("@CRAN@" %in% repos) stop("trying to use CRAN without setting a mirror")
 
     ver <- paste(R.version$major,
-                 strsplit(R.version$minor, ".", fixed=TRUE)[[1]][1], sep = ".")
+                 strsplit(R.version$minor, ".", fixed=TRUE)[[1L]][1L], sep = ".")
     mac.subtype <- "universal"
-    if (substr(type, 1, 11) == "mac.binary.") {
-        mac.subtype <- substring(type, 12)
+    if (substr(type, 1L, 11L) == "mac.binary.") {
+        mac.subtype <- substring(type, 12L)
         type <- "mac.binary"
     }
     res <- switch(type,
@@ -614,11 +614,11 @@ chooseCRANmirror <- function(graphics = getOption("menu.graphics"))
 {
     if(!interactive()) stop("cannot choose a CRAN mirror non-interactively")
     m <- getCRANmirrors(all=FALSE, local.only=FALSE)
-    res <- menu(m[,1], graphics, "CRAN mirror")
-    if(res > 0) {
+    res <- menu(m[, 1L], graphics, "CRAN mirror")
+    if(res > 0L) {
         URL <- m[res, "URL"]
         repos <- getOption("repos")
-        repos["CRAN"] <- gsub("/$", "", URL[1])
+        repos["CRAN"] <- gsub("/$", "", URL[1L])
         options(repos = repos)
     }
     invisible()
@@ -633,7 +633,7 @@ setRepositories <-
     if(!file.exists(p))
         p <- file.path(R.home("etc"), "repositories")
     a <- read.delim(p, header=TRUE, comment.char="#",
-                    colClasses=c(rep("character", 3), rep("logical", 4)))
+                    colClasses=c(rep("character", 3L), rep("logical", 4L)))
     pkgType <- getOption("pkgType")
     if(length(grep("^mac\\.binary", pkgType))) pkgType <- "mac.binary"
     thisType <- a[[pkgType]]
@@ -662,25 +662,26 @@ setRepositories <-
         if(graphics) {
             ## return a list of row numbers.
             if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
-                res <- match(select.list(a[, 1], a[default, 1], multiple = TRUE,
-                                         "Repositories"), a[, 1])
+                res <- match(select.list(a[, 1L], a[default, 1L], multiple = TRUE,
+                                         "Repositories"), a[, 1L])
             else if(.Platform$OS.type == "unix" &&
                     capabilities("tcltk") && capabilities("X11"))
-                res <- match(tcltk::tk_select.list(a[, 1], a[default, 1],
+                res <- match(tcltk::tk_select.list(a[, 1L], a[default, 1L],
                                                    multiple = TRUE, "Repositories"),
-                             a[, 1])
+                             a[, 1L])
         }
         if(!length(res)) {
             ## text-mode fallback
             cat(gettext("--- Please select repositories for use in this session ---\n"))
             nc <- length(default)
             cat("", paste(seq_len(nc), ": ",
-                          ifelse(default, "+", " "), " ", a[, 1],
+                          ifelse(default, "+", " "), " ", a[, 1L],
                           sep=""),
                 "", sep="\n")
             cat(gettext("Enter one or more numbers separated by spaces\n"))
-            res <- scan("", what=0, quiet=TRUE, nlines=1)
-            if(!length(res) || (length(res) == 1 && !res[1])) return(invisible())
+            res <- scan("", what=0, quiet=TRUE, nlines=1L)
+            if(!length(res) || (length(res) == 1L && !res[1]))
+                return(invisible())
             res <- res[1 <= res && res <= nc]
         }
     }
@@ -697,18 +698,18 @@ normalizePath <- function(path) .Internal(normalizePath(path))
 ## used in some BioC packages and their support in tools.
 compareVersion <- function(a, b)
 {
-    if(is.na(a)) return(-1)
-    if(is.na(b)) return(1)
+    if(is.na(a)) return(-1L)
+    if(is.na(b)) return(1L)
     a <- as.integer(strsplit(a, "[\\.-]")[[1]])
     b <- as.integer(strsplit(b, "[\\.-]")[[1]])
     for(k in 1:length(a)) {
         if(k <= length(b)) {
-            if(a[k] > b[k]) return(1) else if(a[k] < b[k]) return(-1)
+            if(a[k] > b[k]) return(1) else if(a[k] < b[k]) return(-1L)
         } else {
-            return(1)
+            return(1L)
         }
     }
-    if(length(b) > length(a)) return(-1) else return(0)
+    if(length(b) > length(a)) return(-1L) else return(0L)
 }
 
 ## ------------- private functions --------------------
@@ -740,42 +741,42 @@ compareVersion <- function(a, b)
     ## package dependencies mentioned that are not already satisfied
     ## and one of those which cannot be satisfied.
     x <- x[!is.na(x)]
-    if(!length(x)) return(x)
+    if(!length(x)) return(list(character(0L), character(0L)))
     ## This gets a list of components (name [op, version])
     xx <- tools:::.split_dependencies(x)
     ## First remove dependencies on R
-    keep <- sapply(xx, function(x) x[[1]] != "R"); xx <- xx[keep]
-    if(!length(xx)) return(list(character(0), character(0)))
+    keep <- sapply(xx, function(x) x[[1L]] != "R"); xx <- xx[keep]
+    if(!length(xx)) return(list(character(0L), character(0L)))
     ## Then check for those we already have satisfied
     pkgs <- installed[, "Package"]
     have <- sapply(xx, function(x) {
-        if(length(x) == 3) {
-            if (! x[[1]] %in% pkgs ) return(FALSE)
-            if(x[[2]] != ">=") return(TRUE)
+        if(length(x) == 3L) {
+            if (! x[[1L]] %in% pkgs ) return(FALSE)
+            if(x[[2L]] != ">=") return(TRUE)
             ## we may have the package installed more than once
-            current <- as.package_version(installed[pkgs == x[[1]], "Version"])
-            target <- as.package_version(x[[3]])
+            current <- as.package_version(installed[pkgs == x[[1L]], "Version"])
+            target <- as.package_version(x[[3L]])
             eval(parse(text = paste("any(current", x$op, "target)")))
-        } else x[[1]] %in% pkgs
+        } else x[[1L]] %in% pkgs
     })
     xx <- xx[!have]
     if(!length(xx)) return(list(character(0), character(0)))
     ## now check if we can satisfy the missing dependencies
     pkgs <- row.names(available)
-    canget <- miss <- character(0)
+    canget <- miss <- character(0L)
     for (i in seq_along(xx)) {
         x <- xx[[i]]
-        if(length(x) == 3) {
-            if (! x[[1]] %in% pkgs ) { miss <- c(miss, x[[1]]); next }
-            if(x[[2]] != ">=") { canget <- c(canget, x[[1]]); next }
+        if(length(x) == 3L) {
+            if (! x[[1L]] %in% pkgs ) { miss <- c(miss, x[[1L]]); next }
+            if(x[[2L]] != ">=") { canget <- c(canget, x[[1L]]); next }
             ## we may have the package available more than once
-            current <- as.package_version(available[pkgs == x[[1]], "Version"])
-            target <- as.package_version(x[[3]])
+            current <- as.package_version(available[pkgs == x[[1L]], "Version"])
+            target <- as.package_version(x[[3L]])
             res <- eval(parse(text = paste("any(current", x$op, "target)")))
-            if(res) canget <- c(canget, x[[1]])
-            else  miss <- c(miss, paste(x[[1]], " (>= ", x[[3]], ")", sep=""))
-        } else if(x[[1]] %in% pkgs) canget <- c(canget, x[[1]])
-        else miss <- c(miss, x[[1]])
+            if(res) canget <- c(canget, x[[1L]])
+            else  miss <- c(miss, paste(x[[1L]], " (>= ", x[[3L]], ")", sep=""))
+        } else if(x[[1L]] %in% pkgs) canget <- c(canget, x[[1L]])
+        else miss <- c(miss, x[[1L]])
     }
     list(canget, miss)
 }
@@ -813,11 +814,11 @@ compareVersion <- function(a, b)
     ## dependencies apply to those being got from CRAN.
     DL <- lapply(DL, function(x) x[x %in% pkgs])
     lens <- sapply(DL, length)
-    if(all(lens > 0)) {
+    if(all(lens > 0L)) {
         warning("every package depends on at least one other")
         return(pkgs)
     }
-    done <- names(DL[lens == 0]); DL <- DL[lens > 0]
+    done <- names(DL[lens == 0L]); DL <- DL[lens > 0L]
     while(length(DL)) {
         OK <- sapply(DL, function(x) all(x %in% done))
         if(!any(OK)) {

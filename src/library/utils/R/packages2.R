@@ -24,7 +24,7 @@ install.packages <-
     if (is.logical(clean) && clean)
         clean <- "--clean"
     if(is.logical(dependencies) && is.na(dependencies))
-        dependencies <- if(!missing(lib) && length(lib) > 1) FALSE
+        dependencies <- if(!missing(lib) && length(lib) > 1L) FALSE
         else c("Depends", "Imports")
 
     explode_bundles <- function(a)
@@ -32,7 +32,7 @@ install.packages <-
         contains <- .find_bundles(a, FALSE)
         extras <- unlist(lapply(names(contains), function(x)
                                 paste(contains[[x]], " (", x, ")", sep="")))
-        sort(as.vector(c(a[, 1], extras)))
+        sort(as.vector(c(a[, 1L], extras)))
     }
 
     implode_bundles <- function(pkgs)
@@ -60,8 +60,8 @@ install.packages <-
         pkg <- gsub("_\\.(zip|tar\\.gz)", "",
                     gsub(.standard_regexps()$valid_package_version, "", basename(pkg)))
 
-        if(length(pkgs) == 1 && length(configure.args) &&
-           length(names(configure.args)) == 0)
+        if(length(pkgs) == 1L && length(configure.args) &&
+           length(names(configure.args)) == 0L)
             return(paste("--configure-args=",
                          shQuote(paste(configure.args, collapse = " ")),
                          sep = ""))
@@ -99,7 +99,7 @@ install.packages <-
 
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
-        if(length(.libPaths()) > 1)
+        if(length(.libPaths()) > 1L)
             warning(gettextf("argument 'lib' is missing: using '%s'", lib),
                     immediate. = TRUE, domain = NA)
     }
@@ -123,7 +123,7 @@ install.packages <-
             else unlink(fn, recursive = TRUE)
         }
     }
-    if(length(lib) == 1 && !ok) {
+    if(length(lib) == 1L && !ok) {
         warning(gettextf("'lib = \"%s\"' is not writable", lib),
                 domain = NA, immediate. = TRUE)
         userdir <- unlist(strsplit(Sys.getenv("R_LIBS_USER"),
@@ -135,7 +135,8 @@ install.packages <-
                 if(ans != "YES") stop("unable to install packages")
             } else {
                 ans <- readline(paste(sprintf(msg, userdir), " (y/n) "))
-                if(substr(ans, 1, 1) == "n") stop("unable to install packages")
+                if(substr(ans, 1L, 1L) == "n")
+                    stop("unable to install packages")
             }
             if(!dir.create(userdir, recursive = TRUE))
                 stop("unable to create ", sQuote(userdir))
@@ -145,10 +146,10 @@ install.packages <-
     }
 
     ## check if we should infer repos=NULL
-    if(length(pkgs) == 1 && missing(repos) && missing(contriburl)) {
+    if(length(pkgs) == 1L && missing(repos) && missing(contriburl)) {
         if((type == "source" && length(grep("\\.tar.gz$", pkgs))) ||
            (type == "win.binary" && length(grep("\\.zip$", pkgs))) ||
-           (substr(type, 1, 10) == "mac.binary"
+           (substr(type, 1L, 10L) == "mac.binary"
             && length(grep("\\.tgz$", pkgs)))) {
             repos <- NULL
             message("inferring 'repos = NULL' from the file name")
@@ -179,7 +180,7 @@ install.packages <-
         ## -- will mess up UNC names, but they don't work
         pkgs <- gsub("\\\\", "/", pkgs)
     } else {
-        if(substr(type, 1, 10) == "mac.binary") {
+        if(substr(type, 1L, 10L) == "mac.binary") {
             if(!length(grep("darwin", R.version$platform)))
                 stop("cannot install MacOS X binary packages on this plaform")
             .install.macbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
@@ -218,19 +219,19 @@ install.packages <-
         if (is.character(clean))
             cmd0 <- paste(cmd0, clean)
 
-        for(i in 1:nrow(update)) {
-            cmd <- paste(cmd0, "-l", shQuote(update[i, 2]),
-                          getConfigureArgs(update[i, 1]),
-                         shQuote(update[i, 1]))
-            if(system(cmd) > 0)
+        for(i in 1L:nrow(update)) {
+            cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
+                          getConfigureArgs(update[i, 1L]),
+                         shQuote(update[i, 1L]))
+            if(system(cmd) > 0L)
                 warning(gettextf(
                  "installation of package '%s' had non-zero exit status",
-                                update[i, 1]), domain = NA)
+                                update[i, 1L]), domain = NA)
         }
         return(invisible())
     }
 
-    oneLib <- length(lib) == 1
+    oneLib <- length(lib) == 1L
     tmpd <- destdir
     nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
     if(is.null(destdir) && nonlocalcran) {
@@ -282,8 +283,8 @@ install.packages <-
 	repeat {
 	    deps <- as.vector(available[p1, dependencies])
 	    res <- .clean_up_dependencies2(deps, installed, available)
-            not_avail <- c(not_avail, res[[2]])
-            deps <- unique(res[[1]])
+            not_avail <- c(not_avail, res[[2L]])
+            deps <- unique(res[[1L]])
 	    if(!length(deps)) break
 	    pkgs <- c(deps, pkgs)
 	    p1 <- deps
@@ -323,11 +324,11 @@ install.packages <-
     if(length(foundpkgs)) {
         update <- unique(cbind(pkgs, lib))
         colnames(update) <- c("Package", "LibPath")
-        found <- pkgs %in% foundpkgs[, 1]
-        files <- foundpkgs[match(pkgs[found], foundpkgs[, 1]), 2]
+        found <- pkgs %in% foundpkgs[, 1L]
+        files <- foundpkgs[match(pkgs[found], foundpkgs[, 1L]), 2L]
         update <- cbind(update[found, , drop=FALSE], file = files)
-        if(nrow(update) > 1) {
-            upkgs <- unique(pkgs <- update[, 1])
+        if(nrow(update) > 1L) {
+            upkgs <- unique(pkgs <- update[, 1L])
             DL <- .make_dependency_list(upkgs, available)
             p0 <- .find_install_order(upkgs, DL)
             ## can't use update[p0, ] due to possible multiple matches
@@ -336,20 +337,20 @@ install.packages <-
         if (is.character(clean))
             cmd0 <- paste(cmd0, clean)
 
-        for(i in 1:nrow(update)) {
-            cmd <- paste(cmd0, "-l", shQuote(update[i, 2]),
-                          getConfigureArgs(update[i, 3]), update[i, 3])
+        for(i in 1L:nrow(update)) {
+            cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
+                          getConfigureArgs(update[i, 3L]), update[i, 3L])
             status <- system(cmd)
-            if(status > 0)
+            if(status > 0L)
                 warning(gettextf(
                  "installation of package '%s' had non-zero exit status",
-                                 update[i, 1]), domain = NA)
+                                 update[i, 1L]), domain = NA)
         }
         if(!is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded packages are in\n\t%s",
                                normalizePath(tmpd)), "\n", sep = "")
         ## update packages.html on Unix only if .Library was installed into
-        libs_used <- unique(update[, 2])
+        libs_used <- unique(update[, 2L])
         if(.Platform$OS.type == "unix" && .Library %in% libs_used)
             link.html.help(verbose = TRUE)
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)

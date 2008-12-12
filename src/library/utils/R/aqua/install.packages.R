@@ -85,13 +85,13 @@
         for (curPkg in pkgs) {
             desc <- read.dcf(file.path(curPkg, "DESCRIPTION"),
                              c("Package", "Version"))
-            instPath <- file.path(lib, desc[1,1])
+            instPath <- file.path(lib, desc[1L,1L])
 
             ## If the package is already installed w/ this
             ## instName, remove it.  If it isn't there, the unlink call will
             ## still return success.
             ret <- unlink(instPath, recursive=TRUE)
-            if (ret == 0) {
+            if (ret == 0L) {
                 ## Move the new package to the install lib and
                 ## remove our temp dir
                 ret <- file.rename(file.path(tmpDir, curPkg), instPath)
@@ -108,7 +108,7 @@
     }
 
     if(!length(pkgs)) return(invisible())
-    oneLib <- length(lib) == 1
+    oneLib <- length(lib) == 1L
 
     pkgnames <- basename(pkgs)
     pkgnames <- sub("\\.tgz$", "", pkgnames)
@@ -118,7 +118,7 @@
     ## foo.zip might contain package bar or Foo or FOO or ....
     ## but we can't tell without trying to unpack it.
     if(is.null(contriburl)) {
-        for(i in seq(along=pkgs))
+        for(i in seq_along(pkgs))
             unpackPkg(pkgs[i], pkgnames[i], lib)
         link.html.help(verbose=TRUE)
         return(invisible())
@@ -160,27 +160,25 @@
 
     if(depends) { # check for dependencies, recursively
         p1 <- p0 # this is ok, as 1 lib only
-        have <- .packages(all.available = TRUE)
-        not_avail <- character(0)
+        ## where should we be looking?
+        ## should this add the library we are installing to?
+        installed <- installed.packages(fields = c("Package", "Version"))
+        not_avail <- character(0L)
 	repeat {
-	    if(any(miss <- ! p1 %in% row.names(available))) {
-                not_avail <- c(not_avail, p1[miss])
-                p1 <- p1[!miss]
-	    }
 	    deps <- as.vector(available[p1, dependencies])
-	    deps <- .clean_up_dependencies(deps, available)
+	    res <- .clean_up_dependencies2(deps, installed, available)
+            not_avail <- c(not_avail, res[[2L]])
+            deps <- unique(res[[1L]])
 	    if(!length(deps)) break
-	    toadd <- deps[! deps %in% c("R", have, pkgs)]
-	    if(length(toadd) == 0) break
-	    pkgs <- c(toadd, pkgs)
-	    p1 <- toadd
+	    pkgs <- c(deps, pkgs)
+	    p1 <- deps
 	}
         if(length(not_avail)) {
             warning(sprintf(ngettext(length(not_avail),
                                      "dependency %s is not available",
                                      "dependencies %s are not available"),
                             paste(sQuote(not_avail), collapse=", ")),
-                    domain = NA, call. = FALSE)
+                    domain = NA, call. = FALSE, immediate. = TRUE)
             flush.console()
         }
 
@@ -212,9 +210,9 @@
             oklib <- lib==update[,"LibPath"]
             for(p in update[oklib, "Package"])
             {
-                okp <- p == foundpkgs[, 1]
+                okp <- p == foundpkgs[, 1L]
                 if(any(okp))
-                    unpackPkg(foundpkgs[okp, 2], foundpkgs[okp, 1], lib)
+                    unpackPkg(foundpkgs[okp, 2L], foundpkgs[okp, 1L], lib)
             }
         }
         if(!is.null(tmpd) && is.null(destdir))
