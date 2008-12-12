@@ -1,6 +1,6 @@
 % File src/library/base/man/row.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{row}
@@ -8,7 +8,7 @@
 \title{Row Indexes}
 \description{
   Returns a matrix of integers indicating their row number in a
-  matrix-like object.
+  matrix-like object, or a factor indicating the row labels.
 }
 \usage{
 row(x, as.factor = FALSE)
@@ -17,7 +17,8 @@ row(x, as.factor = FALSE)
   \item{x}{a matrix-like object, that is one with a two-dimensional
     \code{dim}.} 
   \item{as.factor}{a logical value indicating whether the value should
-    be returned as a factor rather than as numeric.}
+    be returned as a factor of row labels (created if necessary)
+    rather than as numbers.}
 }
 \value{
   An integer matrix with the same dimensions as \code{x} and whose
