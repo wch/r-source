@@ -387,9 +387,10 @@ BUG FIXES
 
     o	median.default() now also works for "numeric"-like vectors.
 
-    o	The pdf() device can now handle the case where an image
-	uses a very large number of colours with different levels
-	of semi-transparency (alpha-values).  It used to segfault.
+    o	The pdf() device can now handle the case where an image uses a
+	very large number of colours with different levels of
+	semi-transparency (alpha-values).  It used to segfault.
+	(Also PR#13264)
 
     o	window() failed to apply a fuzz to 'start' or 'end' and so
 	sometimes warned incorrectly for time series with 'freq' not a
