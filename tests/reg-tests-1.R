@@ -5509,10 +5509,17 @@ transform(mtcars, t1=3, t2=4)
 parse(text = deparse(transform))
 ## failed in 2.8.0
 
+
 ## crashed on some systems (PR#13361)
 matrix(1:4, nrow=2, dimnames=list())
 ##
 
+
 ## col(as.factor=TRUE) failed
 col(matrix(0, 5, 5), as.factor=TRUE)
 ## failed in 2.8.0
+
+
+## qt failure in R-devel in early Dec 2008
+stopifnot(!is.nan(qt(0.1, 0.1)))
+##

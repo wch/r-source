@@ -61,7 +61,9 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	const static double accu = 1e-13;
 	const static double Eps = 1e-11; /* must be > accu */
 
-	double ux, lx, nx, pp, pu, pl;
+	double ux, lx, nx, pp;
+	
+	int iter = 0;
 
 	p = R_DT_qIv(p);
 
@@ -69,21 +71,19 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	 * 1. finding an upper and lower bound */
 	if(p > 1 - DBL_EPSILON) return ML_POSINF;
 	pp = fmin2(1 - DBL_EPSILON, p * (1 + Eps));
-	for(ux = 1.; ux < DBL_MAX && (pu = pt(ux, ndf, TRUE, FALSE)) < pp; ux *= 2);
+	for(ux = 1.; ux < DBL_MAX && pt(ux, ndf, TRUE, FALSE) < pp; ux *= 2);
 	pp = p * (1 - Eps);
-	for(lx =-1.; lx > -DBL_MAX&& (pl = pt(lx, ndf, TRUE, FALSE)) > pp; lx *= 2);
+	for(lx =-1.; lx > -DBL_MAX && pt(lx, ndf, TRUE, FALSE) > pp; lx *= 2);
 
-	/* 2. interval (lx,ux)  halving : nx = 0.5 * (lx + ux);
-	 *    faster: use regula falsi: */
+	/* 2. interval (lx,ux)  halving
+	   regula falsi failed on qt(0.1, 0.1)
+	 */
 	do {
-	    nx = lx + (ux - lx)* (p - pl)/(pu - pl);
-	    if ((pp = pt(nx, ndf, TRUE, FALSE)) > p) {
-		ux = nx; pu = pp;
-	    } else {
-		lx = nx; pl = pp;
-	    }
-	}
-	while ((ux - lx) / fabs(nx) > accu);
+	    nx = 0.5 * (lx + ux);
+	    if (pt(nx, ndf, TRUE, FALSE) > p) ux = nx; else lx = nx;
+	} while ((ux - lx) / fabs(nx) > accu && ++iter < 1000);
+
+	if(iter >= 1000) ML_ERROR(ME_PRECISION, "qt");
 
 	return 0.5 * (lx + ux);
     }
