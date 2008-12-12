@@ -105,7 +105,7 @@ NEW FEATURES
     o	install.packages() now checks >= version dependencies for
 	dependent packages, and so will install a newer version of a
 	dependency if needed and available on the repositories.
-	[Currently only for type="source".]
+	[Currently only for type="source"  and type="win.binary".]
 
 
 DEPRECATED & DEFUNCT

@@ -294,7 +294,7 @@ install.packages <-
                                      "dependency %s is not available",
                                      "dependencies %s are not available"),
                             paste(sQuote(not_avail), collapse=", ")),
-                    domain = NA)
+                    domain = NA, call. = FALSE, immediate. = TRUE)
             flush.console()
         }
 

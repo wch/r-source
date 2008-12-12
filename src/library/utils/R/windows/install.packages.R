@@ -216,27 +216,25 @@
 
     if(depends) { # check for dependencies, recursively
         p1 <- p0 # this is ok, as 1 lib only
-        have <- .packages(all.available = TRUE)
+        ## where should we be looking?
+        ## should this add the library we are installing to?
+        installed <- installed.packages(fields = c("Package", "Version"))
         not_avail <- character(0)
 	repeat {
-	    if(any(miss <- ! p1 %in% row.names(available))) {
-                not_avail <- c(not_avail, p1[miss])
-                p1 <- p1[!miss]
-	    }
 	    deps <- as.vector(available[p1, dependencies])
-	    deps <- .clean_up_dependencies(deps, available)
+	    res <- .clean_up_dependencies2(deps, installed, available)
+            not_avail <- c(not_avail, res[[2]])
+            deps <- unique(res[[1]])
 	    if(!length(deps)) break
-	    toadd <- deps[! deps %in% c("R", have, pkgs)]
-	    if(length(toadd) == 0) break
-	    pkgs <- c(toadd, pkgs)
-	    p1 <- toadd
+	    pkgs <- c(deps, pkgs)
+	    p1 <- deps
 	}
         if(length(not_avail)) {
             warning(sprintf(ngettext(length(not_avail),
                                      "dependency %s is not available",
                                      "dependencies %s are not available"),
                             paste(sQuote(not_avail), collapse=", ")),
-                    domain = NA, call. = FALSE)
+                    domain = NA, call. = FALSE, immediate. = TRUE)
             flush.console()
         }
 
