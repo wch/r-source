@@ -9,14 +9,6 @@ another front end.  To build it
 
 - to make with gcc,  make -f make.rtest
 
-- to make with VC++,
-
-	copy ..\R.dll and ..\..\..\Rblas.dll to this directory
-	(cd ..; make R.exp)
-	lib /def:..\R.exp /machine:ix86 /out:Rdll.lib
-	cl /MT /Ox /I..\..\include /I.. rtest.c Rdll.lib
-
-
 This provides an rterm-like test front end. The main loop is in the
 main program here: R_ReplDLLdo1() parses one line (up to ; or \n) and
 returns 1 if complete, 2 if incomplete as an R expression.
