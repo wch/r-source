@@ -5512,3 +5512,7 @@ parse(text = deparse(transform))
 ## crashed on some systems (PR#13361)
 matrix(1:4, nrow=2, dimnames=list())
 ##
+
+## col(as.factor=TRUE) failed
+col(matrix(0, 5, 5), as.factor=TRUE)
+## failed in 2.8.0

@@ -99,13 +99,21 @@ colnames <- function(x, do.NULL = TRUE, prefix = "col")
 }
 
 row <- function(x, as.factor=FALSE) {
-    if(as.factor) factor(.Internal(row(dim(x))), labels=rownames(x))
-    else .Internal(row(dim(x)))
+    if(as.factor) {
+        labs <- rownames(x, do.NULL=FALSE, prefix="")
+        res <- factor(.Internal(row(dim(x))), labels=labs)
+        dim(res) <- dim(x)
+        res
+    } else .Internal(row(dim(x)))
 }
 
 col <- function(x, as.factor=FALSE) {
-    if(as.factor) factor(.Internal(col(dim(x))), labels=colnames(x))
-    else .Internal(col(dim(x)))
+    if(as.factor) {
+        labs <- colnames(x, do.NULL=FALSE, prefix="")
+        res <- factor(.Internal(col(dim(x))), labels=labs)
+        dim(res) <- dim(x)
+        res
+    } else .Internal(col(dim(x)))
 }
 
 crossprod <- function(x, y=NULL) .Internal(crossprod(x,y))

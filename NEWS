@@ -397,9 +397,13 @@ BUG FIXES
     o	unique.default() now preserves the "tzone" attribute on
 	"POSIXct" objects.
 
-    o	If all the packages had dependency list of equal lengths,
+    o	If all the packages had dependency lists of equal lengths,
 	occasionally install.packages() would compute an incorrect
 	sort order.
+
+    o	col(x, as.factor=TRUE) and row(x, as.factor=TRUE) would fail
+	if x had no column (row) names.  It was documented
+	incorrectly, and now returns a matrix factor.
 
 
 
