@@ -229,7 +229,11 @@ par(\dots, no.readonly = FALSE)
       which \emph{multiplies} this graphical parameter, and some
       functions such as \code{\link{points}} accept a vector of values
       which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.}
+      a vector of length greater than one is supplied.
+
+      This starts as \code{1} when a device is opened, and is reset when
+      the layout is changed, e.g. by setting \code{mfrow}.
+    }
     \item{\code{cex.axis}}{The magnification to be used for axis
       annotation relative to the current setting of \code{cex}.}
     \item{\code{cex.lab}}{The magnification to be used for x and y
@@ -400,6 +404,9 @@ par(\dots, no.readonly = FALSE)
       not change the font size, rather specifies the size of font (as a
       multiple of \code{csi}) used to convert between \code{mar} and
       \code{mai}, and between \code{oma} and \code{omi}.
+
+      This starts as \code{1} when the device is opened, and is reset
+      when the layout is changed (alongside resetting \code{cex}).
     }
     \item{\code{mfcol, mfrow}}{A vector of the form \code{c(nr, nc)}.
       Subsequent figures will be drawn in an \code{nr}-by-\code{nc}
@@ -409,6 +416,9 @@ par(\dots, no.readonly = FALSE)
       In a layout with exactly two rows and columns the base value of
       \code{"cex"} is reduced by a factor of 0.83: if there are three or
       more of either rows or columns, the reduction factor is 0.66.
+
+      Setting a layout resets the base value of \code{cex} and that of
+      \code{mex} to \code{1}.
 
       If either of these is queried it will give the current layout, so
       querying cannot tell you the order the array will be filled.
