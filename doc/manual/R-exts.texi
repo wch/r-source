@@ -10140,9 +10140,8 @@ directory of the sources.  You may need to ensure that
 @file{@var{R_HOME}/bin} is in your @env{PATH} so the @R{} DLLs are found.
 
 Examples of calling @file{R.dll} directly are provided in the directory
-@file{src/@/gnuwin32/@/front-ends}, including @file{Rproxy.dll} used by
-@code{StatConnector} and a simple command-line front end @file{rtest.c}
-whose code is
+@file{src/@/gnuwin32/@/front-ends}, including a simple command-line
+front end @file{rtest.c} whose code is
 
 @smallexample
 #define Win32
@@ -10153,7 +10152,7 @@ whose code is
 #include <Rembedded.h>
 #include <R_ext/RStartup.h>
 /* for askok and askyesnocancel */
-#include <graphapp/graphapp.h>
+#include <graphapp.h>
 
 /* for signal-handling code */
 #include <psignal.h>
@@ -10176,7 +10175,7 @@ void myWriteConsole(const char *buf, int len)
     printf("%s", buf);
 @}
 
-void myCallBack()
+void myCallBack(void)
 @{
     /* called during i/o, eval, graphics in ProcessEvents */
 @}

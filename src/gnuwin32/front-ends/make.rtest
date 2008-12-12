@@ -11,9 +11,9 @@ endif
 
 CFLAGS=-Wall -O2 -pedantic
 
-rtest-CFLAGS=-I.. -I../../include -I../../extra $(DEBUGFLAG)
+rtest-CFLAGS=-I.. -I../../include -I../../../include $(DEBUGFLAG)
 Rtest.exe: rtest.o
-	$(CC) $(LINKFLAGS) -o $@ rtest.o -L../../../bin -lR -lgraphapp
+	$(CC) $(LINKFLAGS) -o $@ rtest.o -L../../../bin -lR -lRgraphapp
 
 rtest.c: ../../include/Rversion.h
 
