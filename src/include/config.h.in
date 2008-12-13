@@ -76,6 +76,9 @@
 /* Define to 1 if the compiler understands __builtin_expect. */
 #undef HAVE_BUILTIN_EXPECT
 
+/* Define to 1 if you have the <bzlib.h> header file. */
+#undef HAVE_BZLIB_H
+
 /* Define this if you have support for C99 complex types. */
 #undef HAVE_C99_COMPLEX
 
