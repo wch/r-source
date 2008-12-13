@@ -5523,3 +5523,9 @@ col(matrix(0, 5, 5), as.factor=TRUE)
 ## qt failure in R-devel in early Dec 2008
 stopifnot(!is.nan(qt(0.1, 0.1)))
 ##
+
+## formals<- gave wrong result for list body
+f <- f0 <- function(x) list(pi)
+formals(f) <- formals(f)
+stopifnot(identical(body(f), body(f)))
+## had body 'pi' < 2.8.1

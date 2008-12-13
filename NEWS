@@ -410,6 +410,9 @@ BUG FIXES
     o	setRepositories() failed if "pkgType" was set to
 	"mac.binary.leopard".
 
+    o	formals<-() changed the body of the function if this was a
+    	length-one list.
+
 
 
 		CHANGES IN R VERSION 2.8.0

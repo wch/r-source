@@ -36,5 +36,7 @@ alist <- function (...) as.list(sys.call())[-1]
 `formals<-` <- function (fun, envir = environment(fun), value)
 {
     bd <- body(fun)
-    as.function(c(value, if(is.null(bd)) list(bd) else bd), envir)
+    as.function(c(value,
+                  if(is.null(bd) || is.list(bd)) list(bd) else bd),
+                envir)
 }
