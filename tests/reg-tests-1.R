@@ -5524,6 +5524,7 @@ col(matrix(0, 5, 5), as.factor=TRUE)
 stopifnot(!is.nan(qt(0.1, 0.1)))
 ##
 
+
 ## formals<- gave wrong result for list body
 f <- f0 <- function(x) list(pi)
 formals(f) <- formals(f)
@@ -5536,3 +5537,14 @@ f <- function() {pi}
 body(f) <- 2
 f
 ## Failed < 2.8.1
+
+
+## body<- with value a list
+f <- function(x) NULL
+body(f) <- list(pi)
+stopifnot(is.list(body(f))) # was 'pi'
+body(f) <- b0 <- list(a=1, b=2)
+stopifnot(identical(body(f), b0)) # 'a' became an argument
+f <- function(x) NULL
+body(f) <- list(1, 2, 3) # was error
+## pre-2.9.0 behaviour was erratic.

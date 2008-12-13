@@ -34,7 +34,7 @@ alist <- function (...) as.list(sys.call())[-1]
             warning("using the first element of 'value' of type expression")
         value <- value[[1]]
     }
-    as.function(c(as.list(formals(fun)), value), envir)
+    as.function(c(as.list(formals(fun)), list(value)), envir)
 }
 
 `formals<-` <- function (fun, envir = environment(fun), value)

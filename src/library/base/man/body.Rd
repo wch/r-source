@@ -26,8 +26,9 @@ body(fun, envir = environment(fun)) <- value
   parent environment.  If it is not specified, the function calling
   \code{body} is used.
 
-  To set the value to a list call the replacement function with
-  \code{value} a length-one list containing the desired value.
+  The bodies of all but the simplest are braced expressions, that is
+  calls to \code{\{}: see the \sQuote{Examples} section for how to
+  create such a call.
 }
 \value{
   \code{body} returns the body of the function specified.  This is
@@ -37,9 +38,13 @@ body(fun, envir = environment(fun)) <- value
   The replacement form sets the body of a function to the
   object on the right hand side, and (potentially) resets the
   environment of the function.  If \code{value} is of class
-  \code{"\link{expression}"} or a length-one list, the first
-  element is used as the body.  For expressions (but not lists) any
+  \code{"\link{expression}"} the first element is used as the body:  any
   additional elements are ignored, with a warning.
+}
+\note{
+  Prior to \R 2.9.0, list values of \code{value} needed to be supplied
+  as a single-element list of the list: this was undocumented prior to
+  \R 2.8.1 so is unlikely to actually occur.
 }
 \seealso{
   \code{\link{alist}},
@@ -49,9 +54,15 @@ body(fun, envir = environment(fun)) <- value
 \examples{
 body(body)
 f <- function(x) x^5
-body(f) <- expression(5^x)
-## or equivalently  body(f) <- list(quote(5^x))
+body(f) <- quote(5^x)
+## or equivalently  body(f) <- expression(5^x)
 f(3) # = 125
 body(f)
+
+## creating a multi-expression body
+e <- expression(y <- x^2, return(y)) # or a list
+body(f) <- as.call(c(as.name("\{"), e))
+f
+f(8)
 }
-\Keyword{programming}
+\keyword{programming}
