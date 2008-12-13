@@ -54,4 +54,4 @@ body(f) <- expression(5^x)
 f(3) # = 125
 body(f)
 }
-\Keyword{programming}
+\keyword{programming}
