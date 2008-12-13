@@ -29,8 +29,12 @@ body <- function(fun = sys.function(sys.parent())) {
 alist <- function (...) as.list(sys.call())[-1]
 
 `body<-` <- function (fun, envir = environment(fun), value) {
-    if (is.expression(value)) value <- value[[1]]
-    as.function(c(formals(fun), value), envir)
+    if (is.expression(value)) {
+        if (length(value) > 1)
+            warning("using the first element of 'value' of type expression")
+        value <- value[[1]]
+    }
+    as.function(c(as.list(formals(fun)), value), envir)
 }
 
 `formals<-` <- function (fun, envir = environment(fun), value)
