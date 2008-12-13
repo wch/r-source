@@ -285,6 +285,8 @@ install.packages <-
 	    res <- .clean_up_dependencies2(deps, installed, available)
             not_avail <- c(not_avail, res[[2L]])
             deps <- unique(res[[1L]])
+            ## R should not get to here, but be safe
+            deps <- deps[!deps %in% c("R", pkgs)]
 	    if(!length(deps)) break
 	    pkgs <- c(deps, pkgs)
 	    p1 <- deps
