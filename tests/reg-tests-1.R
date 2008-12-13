@@ -5529,3 +5529,10 @@ f <- f0 <- function(x) list(pi)
 formals(f) <- formals(f)
 stopifnot(identical(body(f), body(f)))
 ## had body 'pi' < 2.8.1
+
+
+## body<- failed on a function with no arguments.
+f <- function() {pi}
+body(f) <- 2
+f
+## Failed < 2.8.1
