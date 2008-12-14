@@ -59,12 +59,12 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
         stop("'z' must be a matrix")
     if (length(x) > 1 && length(x) == nrow(z)) { # midpoints
         dx <- 0.5*diff(x)
-        x <- c(x[1] - dx[1], x[-length(x)]+dx,
+        x <- c(x[1L] - dx[1L], x[-length(x)]+dx,
                x[length(x)]+dx[length(x)-1])
     }
     if (length(y) > 1 && length(y) == ncol(z)) { # midpoints
         dy <- 0.5*diff(y)
-        y <- c(y[1] - dy[1], y[-length(y)]+dy,
+        y <- c(y[1L] - dy[1L], y[-length(y)]+dy,
                y[length(y)]+dy[length(y)-1])
     }
 
@@ -73,9 +73,9 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
         if (!missing(zlim) && (any(!is.finite(zlim)) || diff(zlim) < 0))
             stop("invalid z limits")
         if (diff(zlim) == 0)
-            zlim <- if (zlim[1] == 0) c(-1, 1)
-                    else zlim[1] + c(-.4, .4)*abs(zlim[1])
-        z <- (z - zlim[1])/diff(zlim)
+            zlim <- if (zlim[1L] == 0) c(-1, 1)
+                    else zlim[1L] + c(-.4, .4)*abs(zlim[1L])
+        z <- (z - zlim[1L])/diff(zlim)
         zi <- if (oldstyle) floor((nc - 1) * z + 0.5)
               else floor((nc - 1e-5) * z + 1e-7)
         zi[zi < 0 | zi >= nc] <- NA
@@ -93,7 +93,7 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
 	plot(NA, NA, xlim = xlim, ylim = ylim, type = "n", xaxs = xaxs,
 	     yaxs = yaxs, xlab = xlab, ylab = ylab, ...)
     ## need plot set up before we do this
-    if (length(x) <= 1) x <- par("usr")[1:2]
+    if (length(x) <= 1) x <- par("usr")[1L:2]
     if (length(y) <= 1) y <- par("usr")[3:4]
     if (length(x) != nrow(z)+1 || length(y) != ncol(z)+1)
         stop("dimensions of z are not length(x)(-1) times length(y)(-1)")

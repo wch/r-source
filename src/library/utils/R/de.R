@@ -50,7 +50,7 @@ de.setup <- function(ilist, list.names, incols)
 	k <- k+1
 	if( is.list(telt) ) {
 	    y <- names(telt)
-	    for( j in 1:length(telt) ) {
+	    for( j in 1L:length(telt) ) {
 		ivec[[i]] <- telt[[j]]
 		if( is.null(y) || y[j]=="" )
 		    inames[[i]] <- paste("var", i, sep="")
@@ -64,8 +64,8 @@ de.setup <- function(ilist, list.names, incols)
 	    i <- i+1
 	}
 	else if( is.matrix(telt) ) {
-	    y <- dimnames(telt)[[2]]
-	    for( j in 1:ncol(telt) ) {
+	    y <- dimnames(telt)[[2L]]
+	    for( j in 1L:ncol(telt) ) {
 		ivec[[i]] <- telt[, j]
 		if( is.null(y) || y[j]=="" )
 		    inames[[i]] <- paste("var", i, sep="")
@@ -88,12 +88,12 @@ de.restore <- function(inlist, ncols, coltypes, argnames, args)
     rnames <- vector("character", length=p)
     j <- 1
     lnames <- names(inlist)
-    if(p) for(i in 1:p) {
+    if(p) for(i in 1L:p) {
 	if(coltypes[i]==2) {
 	    tlen <- length(inlist[[j]])
 	    x <- matrix(0, nrow=tlen, ncol=ncols[i])
 	    cnames <- vector("character", ncol(x))
-	    for( ind1 in 1:ncols[i]) {
+	    for( ind1 in 1L:ncols[i]) {
 		if(tlen != length(inlist[[j]]) ) {
 		    warning("could not restore type information")
 		    return(inlist)
@@ -103,7 +103,7 @@ de.restore <- function(inlist, ncols, coltypes, argnames, args)
 		j <- j+1
 	    }
 	    if( nrow(x) == nrow(args[[i]]) )
-		rn <- dimnames(args[[i]])[[1]]
+		rn <- dimnames(args[[i]])[[1L]]
 	    else rn <- NULL
 	    if( any(cnames!="") )
 		dimnames(x) <- list(rn, cnames)
@@ -113,7 +113,7 @@ de.restore <- function(inlist, ncols, coltypes, argnames, args)
 	else if(coltypes[i]==3) {
 	    x <- vector("list", length=ncols[i])
 	    cnames <- vector("character", ncols[i])
-	    for( ind1 in 1:ncols[i]) {
+	    for( ind1 in 1L:ncols[i]) {
 		x[[ind1]] <- inlist[[j]]
 		cnames[ind1] <- lnames[j]
 		j <- j+1
@@ -136,7 +136,7 @@ de.restore <- function(inlist, ncols, coltypes, argnames, args)
 de <- function(..., Modes=list(), Names=NULL)
 {
     sdata <- list(...)
-    snames <- as.character(substitute(list(...))[-1])
+    snames <- as.character(substitute(list(...))[-1L])
     if( is.null(sdata) ) {
 	if( is.null(Names) ) {
 	    odata <- vector("list", length=max(1,length(Modes)))

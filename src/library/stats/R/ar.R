@@ -85,7 +85,7 @@ ar.yw.default <-
             EA <<- (diag(nser) - KA %*% KB) %*% EA
             Aold <- A
             Bold <- B
-            for (i in 1:(m + 1)) {
+            for (i in 1L:(m + 1)) {
                 A[i + 1, , ] <<- Aold[i + 1, , ] + KA %*% Bold[m + 2 - i, , ]
                 B[i + 1, , ] <<- Bold[i + 1, , ] + KB %*% Aold[m + 2 - i, , ]
             }
@@ -105,7 +105,7 @@ ar.yw.default <-
         order <- 0
         for (m in 0:order.max) {
             xaic[m + 1] <- cal.aic()
-            if (!aic || xaic[m + 1] == min(xaic[1:(m + 1)])) {
+            if (!aic || xaic[m + 1] == min(xaic[1L:(m + 1)])) {
                 ar <- A
                 order <- m
                 var.pred <- EA * n.used/(n.used - nser * (m + 1))
@@ -120,11 +120,11 @@ ar.yw.default <-
         resid <- cal.resid()
         if(order > 0 ) {
             ar <- -ar[2:(order + 1), , , drop = FALSE]
-            dimnames(ar) <- list(1:order, snames, snames)
+            dimnames(ar) <- list(1L:order, snames, snames)
         } else ar <- array(0, dim=c(0, nser, nser),
                            dimnames=list(NULL, snames, snames))
         dimnames(var.pred) <- list(snames, snames)
-        dimnames(partialacf) <- list(1:order.max, snames, snames)
+        dimnames(partialacf) <- list(1L:order.max, snames, snames)
         colnames(resid) <- colnames(x)
     } else {
         ## univariate case
@@ -137,12 +137,12 @@ ar.yw.default <-
                       double(order.max))
         coefs <- matrix(z$coefs, order.max, order.max)
         partialacf <- array(diag(coefs), dim=c(order.max, 1, 1))
-        var.pred <- c(r[1], z$vars)
+        var.pred <- c(r[1L], z$vars)
         xaic <- n.used * log(var.pred) + 2 * (0:order.max) + 2 * demean
         xaic <- xaic - min(xaic)
         names(xaic) <- 0:order.max
         order <- if (aic) (0:order.max)[xaic == 0] else order.max
-        ar <- if (order > 0) coefs[order, 1:order] else numeric(0)
+        ar <- if (order > 0) coefs[order, 1L:order] else numeric(0)
         var.pred <- var.pred[order+1]
         ## Splus compatibility fix
         var.pred <- var.pred * n.used/(n.used - (order + 1))
@@ -203,7 +203,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
     nser <- NCOL(newdata)
     ar <- object$ar
     p <- object$order
-    st <- tsp(as.ts(newdata))[2]
+    st <- tsp(as.ts(newdata))[2L]
     dt <- deltat(newdata)
     xfreq <- frequency(newdata)
     tsp(newdata) <- NULL
@@ -217,12 +217,12 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
         x <- rbind(sweep(newdata, 2, object$x.mean, check.margin=FALSE),
                    matrix(rep(0, nser), n.ahead, nser, byrow=TRUE))
         if(p > 0) {
-            for(i in 1:n.ahead) {
+            for(i in 1L:n.ahead) {
                 x[n+i,] <- ar[1,,] %*% x[n+i-1,] + xint
                 if(p > 1) for(j in 2:p)
                     x[n+i,] <- x[n+i,] + ar[j,,] %*% x[n+i-j,]
             }
-            pred <- x[n+(1:n.ahead), ]
+            pred <- x[n+(1L:n.ahead), ]
         } else {
             pred <- matrix(xint, n.ahead, nser, byrow=TRUE)
         }
@@ -237,18 +237,18 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
         else xint <- object$x.intercept
         x <- c(newdata - object$x.mean, rep(0, n.ahead))
         if(p > 0) {
-            for(i in 1:n.ahead) {
-                x[n+i] <- sum(ar * x[n+i - (1:p)]) + xint
+            for(i in 1L:n.ahead) {
+                x[n+i] <- sum(ar * x[n+i - (1L:p)]) + xint
             }
-            pred <- x[n+(1:n.ahead)]
+            pred <- x[n+(1L:n.ahead)]
             if(se.fit) {
                 npsi <- n.ahead - 1
                 psi <- .C(R_artoma,
                         as.integer(object$order), as.double(ar),
                         psi = double(npsi+object$order+1),
-                        as.integer(npsi+object$order+1))$psi[1:npsi]
+                        as.integer(npsi+object$order+1))$psi[1L:npsi]
                 vars <- cumsum(c(1, psi^2))
-                se <- sqrt(object$var.pred*vars)[1:n.ahead]
+                se <- sqrt(object$var.pred*vars)[1L:n.ahead]
             }
         } else {
             pred <- rep(xint, n.ahead)

@@ -107,7 +107,7 @@ smoothEnds <- function(y, k = 3)
 
     med.odd <- function(x, n = length(x))
     {
-        ##  == median(x[1:n]) IFF n is odd, slightly more efficient
+        ##  == median(x[1L:n]) IFF n is odd, slightly more efficient
         half <- (n + 1) %/% 2
         sort(x, partial = half)[half]
     }
@@ -117,11 +117,11 @@ smoothEnds <- function(y, k = 3)
         stop("bandwidth 'k' must be >= 1 and odd!")
     k <- k %/% 2
     if (k < 1) return(y)
-    ## else: k >= 1: do something
+    ## else: k >= 1L: do something
     n <- length(y)
     sm <- y
     if (k >= 2) {
-        sm [2]  <- med3(y[1],y [2], y [3])
+        sm [2L]  <- med3(y[1L],y [2L], y [3L])
         sm[n-1] <- med3(y[n],y[n-1],y[n-2])
 
         ## Here, could use Stuetzle's strategy for MUCH BIGGER EFFICIENCY
@@ -132,15 +132,15 @@ smoothEnds <- function(y, k = 3)
         if (k >= 3) {
             for (i in 3:k) {
                 j <- 2*i - 1
-                sm  [i]   <- med.odd( y [1:j] ,     j) #- left border
+                sm  [i]   <- med.odd( y [1L:j] ,     j) #- left border
                 sm[n-i+1] <- med.odd( y[(n+1-j):n], j) #- right border
             }
         }
     }
 
     ##--- For the very first and last pt.:  Use Tukey's end-point rule: ---
-    ## Ysm[1]:= Median(Ysm[2],X1,Z_0), where Z_0 is extrapol. from Ysm[2],Ysm[3]
-    sm[1] <- med3(y[1], sm [2] , 3*sm [2]  - 2*sm [3])
+    ## Ysm[1L]:= Median(Ysm[2L],X1,Z_0), where Z_0 is extrapol. from Ysm[2L],Ysm[3L]
+    sm[1L] <- med3(y[1L], sm [2L] , 3*sm [2L]  - 2*sm [3L])
     sm[n] <- med3(y[n], sm[n-1], 3*sm[n-1] - 2*sm[n-2])
     return(sm)
 }

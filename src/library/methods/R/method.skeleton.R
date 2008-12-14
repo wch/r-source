@@ -50,7 +50,7 @@ method.skeleton <- function (generic, signature, file, external = FALSE,
     else {
         if(is(external, "character") )
             methodName <- toString(external)
-        method[[1]] <- paste0("`", methodName, "` <- ", method[[1]])
+        method[[1L]] <- paste0("`", methodName, "` <- ", method[[1L]])
         output <- c(method, "", output, paste0("  `", methodName, "`)"))
     }
     writeLines(output, file)

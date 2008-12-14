@@ -67,7 +67,7 @@ gridListDL <- function(x, grobs=TRUE, viewports=FALSE,
                        fullNames=FALSE, recursive=TRUE) {
     display.list <- grid.Call("L_getDisplayList")
     dl.index <- grid.Call("L_getDLindex")
-    result <- lapply(display.list[1:dl.index], gridList,
+    result <- lapply(display.list[1L:dl.index], gridList,
                      grobs=grobs, viewports=viewports,
                      fullNames=fullNames, recursive=recursive)
     names(result) <- NULL
@@ -244,7 +244,7 @@ gridList.vpList <- function(x, grobs=TRUE, viewports=FALSE,
             result <- character()
             class(result) <- "gridListing"
         } else if (length(x) == 1) {
-            result <- gridList(x[[1]],
+            result <- gridList(x[[1L]],
                               grobs=grobs, viewports=viewports,
                               fullNames=fullNames,
                               recursive=recursive)
@@ -275,17 +275,17 @@ gridList.vpStack <- function(x, grobs=TRUE, viewports=FALSE,
             result <- character()
             class(result) <- "gridListing"
         } else if (length(x) == 1 || !recursive) {
-            result <- gridList(x[[1]], 
+            result <- gridList(x[[1L]], 
                                grobs=grobs, viewports=viewports,
                                fullNames=fullNames, recursive=recursive)
         } else {
-            theRest <- x[-1]
+            theRest <- x[-1L]
             class(theRest) <- "vpStack"
             result <- gridList(theRest, 
                                grobs=grobs, viewports=viewports,
                                fullNames=fullNames,
                                recursive=recursive)
-            result <- list(parent=gridList(x[[1]],
+            result <- list(parent=gridList(x[[1L]],
                              grobs=grobs, viewports=viewports,
                              fullNames=fullNames,
                              recursive=recursive),
@@ -369,11 +369,11 @@ gridList.vpPath <- function(x, grobs=TRUE, viewports=FALSE,
                                "gridListing")
         } else {
             path <- explodePath(x$path)
-            result <- gridList(vpPathFromVector(c(path[-1], x$name)), 
+            result <- gridList(vpPathFromVector(c(path[-1L], x$name)), 
                                grobs=grobs, viewports=viewports,
                                fullNames=fullNames,
                                recursive=recursive)
-            result <- list(parent=gridList(vpPath(path[1]),
+            result <- list(parent=gridList(vpPath(path[1L]),
                              grobs=grobs, viewports=viewports,
                              fullNames=fullNames,
                              recursive=recursive),
@@ -488,14 +488,14 @@ incPath <- function(oldpath, addition) {
 }
 
 decrPath <- function(oldpath, x) {
-    bits <- strsplit(oldpath, .grid.pathSep)[[1]]
+    bits <- strsplit(oldpath, .grid.pathSep)[[1L]]
     n <- as.numeric(gsub("^.+\\[", "",
                          gsub("\\]$", "",
                               as.character(x))))
     if ((length(bits) - n) == 0) {
         ""
     } else {
-        paste(bits[1:(length(bits) - n)], collapse=.grid.pathSep)
+        paste(bits[1L:(length(bits) - n)], collapse=.grid.pathSep)
     }
 }
 
@@ -553,7 +553,7 @@ flatListing.gridListing <- function(x, gDepth=0, vpDepth=0,
              vpDepth=vpDepth,
              gPath=gPath,
              vpPath=vpPath,
-             type=class(x)[1])
+             type=class(x)[1L])
     } else {
         list(name=character(),
              gDepth=numeric(),
@@ -574,7 +574,7 @@ flatListing.gTreeListing <- function(x, gDepth=0, vpDepth=0,
          vpDepth=c(vpDepth, flatChildren$vpDepth),
          gPath=c(gPath, flatChildren$gPath),
          vpPath=c(vpPath, flatChildren$vpPath),
-         type=c(class(x)[1], flatChildren$type))
+         type=c(class(x)[1L], flatChildren$type))
 }
 
 flatListing.vpTreeListing <- function(x, gDepth=0, vpDepth=0,
@@ -587,7 +587,7 @@ flatListing.vpTreeListing <- function(x, gDepth=0, vpDepth=0,
          vpDepth=c(vpDepth, flatChildren$vpDepth),
          gPath=c(gPath, flatChildren$gPath),
          vpPath=c(vpPath, flatChildren$vpPath),
-         type=c(class(x)[1], flatChildren$type))
+         type=c(class(x)[1L], flatChildren$type))
 }
 
 flatListing.gridListListing <- function(x, gDepth=0, vpDepth=0,
@@ -599,7 +599,7 @@ flatListing.gridListListing <- function(x, gDepth=0, vpDepth=0,
                         gPath=character(),
                         vpPath=character(),
                         type=character())
-    for (i in 1:n) {
+    for (i in 1L:n) {
         componentListing <- flatListing(x[[i]], gDepth, vpDepth,
                                         gPath, vpPath)
         listListing$name <- c(listListing$name,
@@ -675,7 +675,7 @@ pathListing <- function(x, gvpSep=" | ", gAlign=TRUE) {
 
     if (!inherits(x, "flatGridListing"))
         stop("Invalid listing")
-    vpListings <- (1:length(x$name)) %in% grep("^vp", x$type)
+    vpListings <- (1L:length(x$name)) %in% grep("^vp", x$type)
     paths <- x$vpPath
     maxLen <- max(nchar(paths))
     # Only if viewport listings

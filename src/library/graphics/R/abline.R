@@ -34,16 +34,16 @@ abline <- function(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
 	noInt <- if(islm) !as.logical(attr(stats::terms(a), "intercept")) else p == 1
 	if (noInt) {
 	    a <- 0
-	    b <- coefa[1]
+	    b <- coefa[1L]
 	} else {
-	    a <- coefa[1]
-	    b <- if (p >= 2) coefa[2] else 0
+	    a <- coefa[1L]
+	    b <- if (p >= 2) coefa[2L] else 0
 	}
     }
     if(!is.null(coef)) {
 	if(!is.null(a)) warning("'a' and 'b' are overridden by 'coef'")
-	a <- coef[1]
-	b <- coef[2]
+	a <- coef[1L]
+	b <- coef[2L]
     }
     int_abline(a=a, b=b, h=h, v=v, untf=untf, ...)
     invisible()

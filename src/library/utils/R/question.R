@@ -23,12 +23,12 @@
      	type <- substitute(e1)
      	topicExpr <- substitute(e2)
     } 	
-    if (is.call(topicExpr) && topicExpr[[1]] == "?") {
+    if (is.call(topicExpr) && topicExpr[[1L]] == "?") {
             # ??foo is parsed as `?`(`?`(foo))
             	search <- TRUE
-            	topicExpr <- topicExpr[[2]]
-            	if (is.call(topicExpr) && topicExpr[[1]] == "?"
-            	    && is.call(topicExpr[[2]]) && topicExpr[[2]][[1]] == "?") {
+            	topicExpr <- topicExpr[[2L]]
+            	if (is.call(topicExpr) && topicExpr[[1L]] == "?"
+            	    && is.call(topicExpr[[2L]]) && topicExpr[[2L]][[1L]] == "?") {
             	     cat("Contacting Delphi...")
             	     flush.console()
             	     Sys.sleep(2+rpois(1,2))
@@ -38,9 +38,9 @@
             } else 
             	search <- FALSE
 
-    if (is.call(topicExpr) && (topicExpr[[1]] == "::" || topicExpr[[1]] == ":::")) {
-		package <- as.character(topicExpr[[2]])
-		topicExpr <- topicExpr[[3]]
+    if (is.call(topicExpr) && (topicExpr[[1L]] == "::" || topicExpr[[1L]] == ":::")) {
+		package <- as.character(topicExpr[[2L]])
+		topicExpr <- topicExpr[[3L]]
 	    } else 
 		package <- NULL
 
@@ -93,13 +93,13 @@
 topicName <- function(type, topic)
 {
     if((length(type) == 0) || (length(topic) == 0))
-        character(0)
+        character(0L)
     else
         paste(paste(topic, collapse = ","), type, sep = "-")
 }
 
 .helpForCall <- function(expr, envir, doEval = TRUE) {
-    f <- expr[[1]]                      # the function specifier
+    f <- expr[[1L]]                      # the function specifier
     where <- topenv(envir)              # typically .GlobalEnv
     if(is.name(f))
         f <- as.character(f)

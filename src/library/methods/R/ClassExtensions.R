@@ -74,7 +74,7 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
     if(oldClassCase) {
         if(defltS3Class)
             S3Class <- .S3Class(object)
-        keepSlots <- slotNames(S3Class[[1]])
+        keepSlots <- slotNames(S3Class[[1L]])
      }
     else {
         if(all(is.na(match(extends(classDef), .BasicClasses))))
@@ -86,7 +86,7 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
             keepSlots <- character()
         }
         else
-          keepSlots <- slotNames(S3Class[[1]])
+          keepSlots <- slotNames(S3Class[[1L]])
     }
     if(!(defltS3Class || extends(classDef, S3Class)))
       stop(gettextf("The S3Class argument must be a superclass of \"%s\":  not true of class \"%s\"", class(object), S3Class), domain = NA)
@@ -101,15 +101,15 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
         class(object) <- S3Class
     }
     else
-      class(object) <- S3Class[[1]]
+      class(object) <- S3Class[[1L]]
     object
 }
 
 "S3Part<-" <- function(object, strictS3 = FALSE, needClass = .S3Class(object) , value) {
     S3Class <- .S3Class(value)
-    def <- getClassDef(S3Class[[1]])
-    if(is.null(def) || !extends(def, needClass[[1]]))
-      stop(gettextf("Replacement value must extend class \"%s\", got  \"%s\"", needClass, S3Class[[1]]), domain = NA)
+    def <- getClassDef(S3Class[[1L]])
+    if(is.null(def) || !extends(def, needClass[[1L]]))
+      stop(gettextf("Replacement value must extend class \"%s\", got  \"%s\"", needClass, S3Class[[1L]]), domain = NA)
     slots <- slotNames(class(object))
     if(!strictS3) {
         fromValue <- names(attributes(value))
@@ -137,7 +137,7 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
         from
     }
     else
-      stop("Replacement value must be of class \"", CLASS, "\", got one of class \"", class(value)[[1]], "\"")
+      stop("Replacement value must be of class \"", CLASS, "\", got one of class \"", class(value)[[1L]], "\"")
 }
 
 .S3coerce <- function(from, to) {
@@ -347,7 +347,7 @@ makeExtends <- function(Class, to,
 .S3Extends <- function(ClassDef, exts, where) {
     superClasses <- names(exts)
     S3Class <- attr(ClassDef@prototype, ".S3Class")
-    need <- S3Class[[1]]
+    need <- S3Class[[1L]]
     for(i in seq_along(exts)) {
         exti <- exts[[i]]
         if(exti@distance == 1)

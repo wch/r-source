@@ -249,7 +249,7 @@ function(file)
     ## \VignetteDepends
     depends <- .get_vignette_metadata(lines, "Depends")
     if(length(depends))
-        depends <- unlist(strsplit(depends[1], ", *"))
+        depends <- unlist(strsplit(depends[1L], ", *"))
     ## \VignetteKeyword and old-style \VignetteKeywords
     keywords <- .get_vignette_metadata(lines, "Keywords")
     keywords <- if(!length(keywords)) {
@@ -288,7 +288,7 @@ function(vignetteDir)
         contents[i, ] <- vignetteInfo(vignetteFiles[i])
     colnames(contents) <- c("File", "Title", "Depends", "Keywords")
 
-    ## (Note that paste(character(0), ".pdf") does not do what we want.)
+    ## (Note that paste(character(0L), ".pdf") does not do what we want.)
     vignettePDFs <- sub("$", ".pdf", file_path_sans_ext(vignetteFiles))
 
     vignetteTitles <- unlist(contents[, "Title"])

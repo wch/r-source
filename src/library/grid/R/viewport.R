@@ -316,7 +316,7 @@ vpPathFromVector <- function(names) {
   if (!all(is.character(names)))
     stop("Invalid viewport name(s)")
   path <- list(path=if (n==1) NULL else
-               paste(names[1:(n-1)], collapse=.grid.pathSep),
+               paste(names[1L:(n-1)], collapse=.grid.pathSep),
                name=names[n],
                n=n)
   class(path) <- c("vpPath", "path")
@@ -363,9 +363,9 @@ explodePath <- function(path) {
 # Create a viewport with margins given in number of lines
 plotViewport <- function(margins=c(5.1, 4.1, 4.1, 2.1), ...) {
   margins <- rep(as.numeric(margins), length.out=4)
-  viewport(x=unit(margins[2], "lines"),
+  viewport(x=unit(margins[2L], "lines"),
            width=unit(1, "npc") - unit(sum(margins[c(2,4)]), "lines"),
-           y=unit(margins[1], "lines"),
+           y=unit(margins[1L], "lines"),
            height=unit(1, "npc") - unit(sum(margins[c(1,3)]), "lines"),
            just=c("left", "bottom"),
            ...)
@@ -381,12 +381,12 @@ dataViewport <- function(xData = NULL, yData = NULL,
     if (is.null(xscale)) {
         if (is.null(xData))
             stop("Must specify at least one of 'x' or 'xscale'")
-        xscale <- extendrange(xData, f = extension[1])
+        xscale <- extendrange(xData, f = extension[1L])
     }
     if (is.null(yscale)) {
         if (is.null(yData))
             stop("Must specify at least one of 'y' or 'yscale'")
-        yscale <- extendrange(yData, f = extension[2])
+        yscale <- extendrange(yData, f = extension[2L])
     }
     viewport(xscale = xscale, yscale = yscale, ...)
 }

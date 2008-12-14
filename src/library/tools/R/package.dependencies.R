@@ -25,7 +25,7 @@ package.dependencies <-
         x <- matrix(x, nrow = 1, dimnames = list(NULL, names(x)))
 
     deps <- list()
-    for(k in 1:nrow(x)){
+    for(k in 1L:nrow(x)){
         z <- x[k, depLevel]
         if(!is.na(z) & z != ""){
             ## split dependencies, remove leading and trailing whitespace
@@ -53,7 +53,7 @@ package.dependencies <-
 
     if(check){
         z <- rep.int(TRUE, nrow(x))
-        for(k in 1:nrow(x)) {
+        for(k in 1L:nrow(x)) {
             ## currently we only check the version of R itself
             if(!is.na(deps[[k]]) &&
                any(ok <- deps[[k]][,1] == "R")) {
@@ -64,13 +64,13 @@ package.dependencies <-
                     op <- deps[[k]][ok,2]
                     x1 <- rep(0, 6)
                     y <- c(R.version$major,
-                           strsplit(R.version$minor, ".", fixed=TRUE)[[1]])
+                           strsplit(R.version$minor, ".", fixed=TRUE)[[1L]])
                     x1[seq_along(y)] <- y
-                    y <- strsplit(deps[[k]][ok,3], ".", fixed=TRUE)[[1]]
+                    y <- strsplit(deps[[k]][ok,3], ".", fixed=TRUE)[[1L]]
                     x1[3+seq_along(y)] <- y
                     x1 <- format(x1, justify="right")
                     x2 <- paste(x1[4:6], collapse=".")
-                    x1 <- paste(x1[1:3], collapse=".")
+                    x1 <- paste(x1[1L:3], collapse=".")
                     comptext <- paste("'", x1, "' ", op,
                                       " '", x2, "'", sep = "")
                     compres <- try(eval(parse(text = comptext)))

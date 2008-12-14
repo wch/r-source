@@ -31,14 +31,14 @@ diffinv.vector <- function (x, lag = 1, differences = 1, xi, ...)
         x <- as.double(x)
         xi <- as.double(xi)
         n <- length(x)
-        y <- c(xi[1:lag], double(n))
+        y <- c(xi[1L:lag], double(n))
         .C("R_intgrt_vec",
            x, y=y, as.integer(lag), n, PACKAGE="stats")$y
     }
     else
         diffinv.vector(diffinv.vector(x, lag, differences-1,
                                       diff(xi, lag=lag, differences=1)),
-                       lag, 1, xi[1:lag])
+                       lag, 1, xi[1L:lag])
 }
 
 diffinv.default <- function (x, lag = 1, differences = 1, xi, ...)
@@ -51,7 +51,7 @@ diffinv.default <- function (x, lag = 1, differences = 1, xi, ...)
             if(missing(xi)) xi <- matrix(0.0, lag*differences, m)
             if(NROW(xi) != lag*differences || NCOL(xi) != m)
                 stop("incorrect dimensions for 'xi'")
-            for (i in 1:m)
+            for (i in 1L:m)
                 y[,i] <- diffinv.vector(as.vector(x[,i]), lag, differences,
                                         as.vector(xi[,i]))
         }

@@ -123,7 +123,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 		       nos, "$", sep = "")
     }
     srcrefs <- attr(exprs, "srcref")
-    for (i in 1:Ne) {
+    for (i in 1L:Ne) {
 	if (verbose)
 	    cat("\n>>>> eval(expression_nr.", i, ")\n\t	 =================\n")
 	ei <- exprs[i]
@@ -143,7 +143,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    	leading <- srcref[1L]-lastshown
 	    	lastshown <- srcref[3L]
 	    	while (length(dep) && length(grep("^[[:blank:]]*$", dep[1L]))) {
-	    	    dep <- dep[-1]
+	    	    dep <- dep[-1L]
 	    	    leading <- leading - 1
 	    	}
 	    	dep <- paste(rep.int(c(prompt.echo, continue.echo), c(leading, length(dep)-leading)),

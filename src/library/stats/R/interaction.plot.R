@@ -20,7 +20,7 @@ interaction.plot <-
              trace.label=deparse(substitute(trace.factor)), fixed=FALSE,
              xlab = deparse(substitute(x.factor)), ylab = ylabel,
              ylim = range(cells, na.rm=TRUE),
-             lty = nc:1, col = 1, pch = c(1:9, 0, letters),
+             lty = nc:1, col = 1, pch = c(1L:9, 0, letters),
              xpd = NULL, leg.bg = par("bg"), leg.bty = "n",
              xtick = FALSE, xaxt = par("xaxt"), axes = TRUE, ...)
 {
@@ -29,7 +29,7 @@ interaction.plot <-
     type <- match.arg(type)
     cells <- tapply(response, list(x.factor, trace.factor), fun)
     nr <- nrow(cells); nc <- ncol(cells)
-    xvals <- 1:nr
+    xvals <- 1L:nr
     ## See if the x.factor labels are a sensible scale
     if(is.ordered(x.factor)) {
         wn <- getOption("warn")
@@ -42,9 +42,9 @@ interaction.plot <-
     ylabs <- colnames(cells)
     nch <- max(sapply(ylabs, nchar, type="width"))
     if(is.null(xlabs)) xlabs <- as.character(xvals)
-    if(is.null(ylabs)) ylabs <- as.character(1:nc)
+    if(is.null(ylabs)) ylabs <- as.character(1L:nc)
     xlim <- range(xvals)
-    xleg <- xlim[2] + 0.05 * diff(xlim)
+    xleg <- xlim[2L] + 0.05 * diff(xlim)
     xlim <- xlim + c(-0.2/nr, if(legend) 0.2 + 0.02*nch else 0.2/nr) * diff(xlim)
     matplot(xvals, cells, ..., type = type, xlim = xlim, ylim = ylim,
             xlab = xlab, ylab = ylab, axes = axes, xaxt = "n",
@@ -53,19 +53,19 @@ interaction.plot <-
 	## swallow ... arguments intended for matplot():
 	axisInt <- function(x, main, sub, lwd, bg, log, asp, ...)
 	    axis(1, x, ...)
-	mgp. <- par("mgp") ; if(!xtick) mgp.[2] <- 0
+	mgp. <- par("mgp") ; if(!xtick) mgp.[2L] <- 0
 	axisInt(1, at = xvals, labels = xlabs, tick = xtick, mgp = mgp.,
 		xaxt = xaxt, ...)
     }
     if(legend) {
         yrng <- diff(ylim)
-        yleg <- ylim[2] - 0.1 * yrng
+        yleg <- ylim[2L] - 0.1 * yrng
         if(!is.null(xpd) || { xpd. <- par("xpd")
                               !is.na(xpd.) && !xpd. && (xpd <- TRUE)}) {
             op <- par(xpd = xpd)
             on.exit(par(op))
         }
-        text(xleg, ylim[2] - 0.05 * yrng, paste("  ", trace.label), adj = 0)
+        text(xleg, ylim[2L] - 0.05 * yrng, paste("  ", trace.label), adj = 0)
         if(!fixed) {
             ## sort them on the value at the last level of x.factor
             ord <- sort.list(cells[nr,  ], decreasing = TRUE)

@@ -138,8 +138,8 @@ relist.matrix <- function(flesh, skeleton=attr(flesh, "skeleton"))
     m <- ncol(skeleton)
     result <- skeleton
     ind <- 1
-    for (j in 1:m)
-	for (i in 1:n) {
+    for (j in 1L:m)
+	for (i in 1L:n) {
 	    size <- length(unlist(skeleton[[i, j]]))
 	    result[[i, j]] <- relist(flesh[ind:(ind + size - 1)],
 				     skeleton[[i, j]])

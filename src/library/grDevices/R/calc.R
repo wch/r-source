@@ -28,13 +28,13 @@ boxplot.stats <- function(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
     if(coef == 0)
 	do.out <- FALSE
     else { ## coef > 0
-	out <- if(!is.na(iqr)) { x < (stats[2] - coef * iqr) |
-				 x > (stats[4] + coef * iqr)
+	out <- if(!is.na(iqr)) { x < (stats[2L] - coef * iqr) |
+				 x > (stats[4L] + coef * iqr)
 			     } else !is.finite(x)
 	if(any(out[nna], na.rm = TRUE))
 	    stats[c(1, 5)] <- range(x[!out], na.rm = TRUE)
     }
-    conf <- if(do.conf) stats[3] + c(-1.58, 1.58) * iqr / sqrt(n)
+    conf <- if(do.conf) stats[3L] + c(-1.58, 1.58) * iqr / sqrt(n)
     list(stats = stats, n = n, conf = conf,
 	 out = if(do.out) x[out & nna] else numeric(0))
 }
@@ -78,18 +78,18 @@ chull <- function(x, y = NULL)
     X <- xy.coords(x, y, recycle = TRUE)
     x <- cbind(X$x, X$y)
     n <- nrow(x)
-    if(n == 0) return(integer(0))
+    if(n == 0) return(integer(0L))
     z <- .C(R_chull,
 	    n = as.integer(n),
 	    as.double(x),
 	    as.integer(n),
-	    as.integer(1:n),
+	    as.integer(1L:n),
 	    integer(n),
 	    integer(n),
 	    ih = integer(n),
 	    nh = integer(1),
 	    il = integer(n))
-    rev(z$ih[1:z$nh])
+    rev(z$ih[1L:z$nh])
 }
 
 nclass.Sturges <- function(x) ceiling(log2(length(x)) + 1)
@@ -125,12 +125,12 @@ xyTable <- function(x, y = NULL, digits)
 	    orderxy <- order(x, y)
 	    x <- x[orderxy]
 	    y <- y[orderxy]
-	    first <- c(TRUE, (x[-1] != x[-n]) | (y[-1] != y[-n]))
+	    first <- c(TRUE, (x[-1L] != x[-n]) | (y[-1L] != y[-n]))
 	    x <- x[first]
 	    y <- y[first]
-	    diff(c((1:n)[first], n + 1L))
+	    diff(c((1L:n)[first], n + 1L))
 	}
-	else integer(0)
+	else integer(0L)
 
     list(x = x, y = y, number = number)
 }

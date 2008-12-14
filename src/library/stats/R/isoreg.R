@@ -51,7 +51,7 @@ print.isoreg <- function(x, digits = getOption("digits"), ...)
   if(x$isOrd) cat("  initially ordered 'x'\n")
   else { cat("  (x,y) ordering:"); str(x$ord) }
   cat("  and further components ")
-  str(x[1:4], digits.d = 3 + max(0,digits - 7))
+  str(x[1L:4], digits.d = 3 + max(0,digits - 7))
   invisible(x)
 }
 
@@ -81,7 +81,7 @@ plot.isoreg <-
     if(both) {
 	col.wise <- plot.type == "col.wise"
 	if(!is.null(main)) main.wid <- 2
-	op <- par(mfcol = if(col.wise) 1:2 else 2:1,
+	op <- par(mfcol = if(col.wise) 1L:2 else 2:1,
 		  oma = c(0,0, main.wid, 0), mar = mar, mgp = mgp)
     } else
 	op <- par(mar = mar, mgp = mgp)
@@ -89,13 +89,13 @@ plot.isoreg <-
     on.exit(par(op))
 
     xx <- if(x$isOrd) x$x else x$x[x$ord]
-    x0 <- c(xx[1] - mean(diff(xx)), xx)# 1 pt left
+    x0 <- c(xx[1L] - mean(diff(xx)), xx)# 1 pt left
     cy <- x$yc # = cumsum(c(0, x$y[ordered]))
     cf <- cumsum(c(0, x$yf))
 
     ##Dbg i <- abs(cy - cf) < 1e-10 * abs(cy + cf)## cy == cf
-    ##Dbg if(!identical(which(i[-1]), x$iKnots))
-    ##Dbg    warning("x$iKnots differs from which(i[-1]) ..")
+    ##Dbg if(!identical(which(i[-1L]), x$iKnots))
+    ##Dbg    warning("x$iKnots differs from which(i[-1L]) ..")
 
     ## Plot of "Data" + Fit
     plot(x0, c(NA, if(x$isOrd) x$y else x$y[x$ord]), ...,
@@ -117,7 +117,7 @@ plot.isoreg <-
 	    abline(v = x0[i], col = Agrid$col, lty = Agrid$lty,
                    xpd = !col.wise)
 	}
-	points(x0[-1], cy[-1])# over draw
+	points(x0[-1L], cy[-1L])# over draw
 	if(!is.null(main2))
 	    mtext(main2, cex = par("cex.main"),
 		  col = par("col.main"), font = par("font.main"))

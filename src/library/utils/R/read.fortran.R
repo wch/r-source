@@ -59,10 +59,10 @@ read.fortran<-function(file, format, ...,as.is=TRUE, colClasses=NA){
        decimals<-do.call("c",lapply(ff,"[[",3))
      } else {
        ff<-processFormat(format)
-       widths<-ff[[1]]
+       widths<-ff[[1L]]
        if (is.na(colClasses))
-         colClasses<-ff[[2]]
-       decimals<-ff[[3]]
+         colClasses<-ff[[2L]]
+       decimals<-ff[[3L]]
      }
 
      rval<-read.fwf(file,widths=widths, ..., colClasses=colClasses)

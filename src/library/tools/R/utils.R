@@ -329,7 +329,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## and set the path to R's style files.
         ## -I works in MiKTeX >= 2.4, at least
         ver <- system(paste(shQuote(texi2dvi), "--version"), intern = TRUE)
-        if(length(grep("MiKTeX", ver[1]))) {
+        if(length(grep("MiKTeX", ver[1L]))) {
             paths <- paste ("-I", shQuote(texinputs))
             extra <- paste(extra, paste(paths, collapse = " "))
         }
@@ -393,7 +393,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             stop(gettextf("unable to run %s on '%s'", latex, file), domain = NA)
         nmiss <- length(grep("^LaTeX Warning:.*Citation.*undefined",
                              readLines(paste(base, ".log", sep = ""))))
-        for(iter in 1:10) { ## safety check
+        for(iter in 1L:10) { ## safety check
             ## This might fail as the citations have been included in the Rnw
             if(nmiss) system(paste(shQuote(bibtex), shQuote(base)))
             nmiss_prev <- nmiss

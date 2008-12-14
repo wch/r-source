@@ -27,7 +27,7 @@ subset.data.frame <- function (x, subset, select, drop = FALSE, ...)
     if(missing(select))
 	vars <- TRUE
     else {
-	nl <- as.list(1:ncol(x))
+	nl <- as.list(1L:ncol(x))
 	names(nl) <- names(x)
 	vars <- eval(substitute(select), nl, parent.frame())
     }
@@ -46,7 +46,7 @@ subset.matrix <- function(x, subset, select, drop = FALSE, ...)
     if(missing(select))
 	vars <- TRUE
     else {
-	nl <- as.list(1:ncol(x))
+	nl <- as.list(1L:ncol(x))
 	names(nl) <- colnames(x)
 	vars <- eval(substitute(select), nl, parent.frame())
     }

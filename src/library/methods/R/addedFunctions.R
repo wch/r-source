@@ -71,7 +71,7 @@ el <-
   ##
   ## the definition allows indexing beyond current length of vector
   ## (consistent with [[]] in S but not in R).
-  object[where][[1]]
+  object[where][[1L]]
 
 "el<-" <-
   ## set the element of a vector; numeric index only.

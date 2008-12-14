@@ -127,7 +127,7 @@ function(x, ...)
                                     indent = 22))))
     } else {
         if(length(paths) > 1) {
-            file <- paths[1]
+            file <- paths[1L]
             p <- paths
             msg <- gettextf("Help on topic '%s' was found in the following packages:",
                             topic)

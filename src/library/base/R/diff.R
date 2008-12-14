@@ -26,13 +26,13 @@ diff.default <- function(x, lag = 1, differences = 1, ...)
     if (lag * differences >= xlen)
 	return(x[0]) # empty of proper mode
     r <- unclass(x)  # don't want class-specific subset methods
-    i1 <- -1:-lag
+    i1 <- -1L:-lag
     if (ismat)
-	for (i in 1:differences)
+	for (i in 1L:differences)
 	    r <- r[i1, , drop = FALSE] -
                 r[-nrow(r):-(nrow(r)-lag+1), , drop = FALSE]
     else
-        for (i in 1:differences)
+        for (i in 1L:differences)
             r <- r[i1] - r[-length(r):-(length(r)-lag+1)]
     class(r) <- oldClass(x)
     r

@@ -107,7 +107,7 @@ print.Date <- function(x, ...)
 
 summary.Date <- function(object, digits = 12, ...)
 {
-    x <- summary.default(unclass(object), digits = digits, ...)[1:6]# not NA's
+    x <- summary.default(unclass(object), digits = digits, ...)[1L:6]# not NA's
     class(x) <- oldClass(object)
     x
 }
@@ -350,7 +350,7 @@ cut.Date <-
         if (length(by2) == 2) incr <- incr * as.integer(by2[1L])
         maxx <- max(x, na.rm = TRUE)
         breaks <- seq.int(start, maxx + incr, breaks)
-        breaks <- breaks[1:(1+max(which(breaks <= maxx)))]
+        breaks <- breaks[1L:(1+max(which(breaks <= maxx)))]
       }
     } else stop("invalid specification of 'breaks'")
     res <- cut(unclass(x), unclass(breaks), labels = labels,

@@ -35,7 +35,7 @@ backsolve <- function(r, x, k=ncol(r), upper.tri = TRUE, transpose = FALSE)
 	    b  = x, ldb= k,	  nb = nb,
 	    x  = matrix(0, k, nb),
 	    job = job,
-	    info = integer(1),
+	    info = integer(1L),
 	    DUP = FALSE, PACKAGE = "base")[c("x","info")]
     if(z$info != 0)
 	stop(gettextf("singular matrix in 'backsolve'. First zero in diagonal [%d]", z$info), domain = NA)

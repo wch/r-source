@@ -2,7 +2,7 @@ txtProgressBar <-
     function(min = 0, max = 1, initial = 0, char = "=",
              width = NA, title, label, style = 1)
 {
-    if(! style %in% 1:3) style <- 1L
+    if(! style %in% 1L:3) style <- 1L
     .val <- initial
     .killed <- FALSE
     .nb <- 0

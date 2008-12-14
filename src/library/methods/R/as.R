@@ -404,7 +404,7 @@ canCoerce <- function(object, Class) {
     fdef <-
 	if(replace) quote(function(from, to = TO, value) NULL)
 	else	    quote(function(from, to = TO, strict = TRUE) NULL)
-    fdef[[2]]$to <- sig[[2]]
+    fdef[[2L]]$to <- sig[[2L]]
     fdef <- eval(fdef)
     body(fdef, environment(def)) <- body(def)
     attr(fdef, "source") <- deparse(fdef) # because it's wrong from the quote()

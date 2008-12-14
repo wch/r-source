@@ -36,9 +36,9 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
         p <- ncol(x)
         d <- dimnames(x)
         if(is.null(d)) d <- list(NULL, NULL)
-        if(is.null(d[[1]]) && makeRownames) d[[1]] <- seq_len(nrow(x))
-        if(is.null(d[[2]]) && makeColnames && p > 0)
-            d[[2]] <- paste("V", 1:p, sep="")
+        if(is.null(d[[1L]]) && makeRownames) d[[1L]] <- seq_len(nrow(x))
+        if(is.null(d[[2L]]) && makeColnames && p > 0)
+            d[[2L]] <- paste("V", 1L:p, sep="")
         if(qset)
             quote <- if(is.character(x)) seq_len(p) else numeric(0)
     } else { ## data.frame
@@ -48,12 +48,12 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
                                     is.character(x) || is.factor(x))))
             else numeric(0)
         ## fix up embedded matrix columns into separate cols:
-        if(any(sapply(x, function(z) length(dim(z)) == 2 && dim(z)[2] > 1))) {
+        if(any(sapply(x, function(z) length(dim(z)) == 2 && dim(z)[2L] > 1))) {
             c1 <- names(x)
 	    x <- as.matrix(x, rownames.force = makeRownames)
 	    d <- dimnames(x)
 	    if(qset) {
-		ord <- match(c1, d[[2]], 0)
+		ord <- match(c1, d[[2L]], 0)
 		quote <- ord[quote]; quote <- quote[quote > 0]
 	    }
         }
@@ -75,7 +75,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     rn <- FALSE
     rnames <- NULL
     if(is.logical(row.names)) {
-	if(row.names) {rnames <- as.character(d[[1]]); rn <- TRUE}
+	if(row.names) {rnames <- as.character(d[[1L]]); rn <- TRUE}
     } else {
 	rnames <- as.character(row.names)
         rn <- TRUE
@@ -88,8 +88,8 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     if(is.logical(col.names)) {
         if(!rn && is.na(col.names))
             stop("col.names = NA makes no sense when row.names = FALSE")
-        col.names <- if(is.na(col.names) && rn) c("", d[[2]])
-        else if(col.names) d[[2]] else NULL
+        col.names <- if(is.na(col.names) && rn) c("", d[[2L]])
+        else if(col.names) d[[2L]] else NULL
     } else {
 	col.names <- as.character(col.names)
 	if(length(col.names) != p)
@@ -149,7 +149,7 @@ write.csv <- function(...)
     Call$sep <- ","
     Call$dec <- "."
     Call$qmethod <- "double"
-    Call[[1]] <- as.name("write.table")
+    Call[[1L]] <- as.name("write.table")
     eval.parent(Call)
 }
 
@@ -165,6 +165,6 @@ write.csv2 <- function(...)
     Call$sep <- ";"
     Call$dec <- ","
     Call$qmethod <- "double"
-    Call[[1]] <- as.name("write.table")
+    Call[[1L]] <- as.name("write.table")
     eval.parent(Call)
 }

@@ -131,7 +131,7 @@
             if(!identical(class(value), class(.Object))) {
                 cv <- class(value)
                 co <- class(.Object)
-                if(.identC(cv[[1]], co)) {
+                if(.identC(cv[[1L]], co)) {
                   ## ignore S3 with multiple classes  or basic classes
                     if(is.na(match(cv, .BasicClasses)) &&
                        length(cv) == 1) {

@@ -94,7 +94,7 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 	nl <- length(ll <- levels(cat))
 	dims <- c(dims, nl)
 	dn <- c(dn, list(ll))
-	## requiring   all(unique(as.integer(cat)) == 1:nlevels(cat))  :
+	## requiring   all(unique(as.integer(cat)) == 1L:nlevels(cat))  :
 	bin <- bin + pd * (as.integer(cat) - 1L)
 	pd <- pd * nl
     }
@@ -150,7 +150,7 @@ summary.table <- function(object, ...)
     if(n.vars > 1) {
 	m <- vector("list", length = n.vars)
 	relFreqs <- object / n.cases
-	for(k in 1:n.vars)
+	for(k in 1L:n.vars)
 	    m[[k]] <- apply(relFreqs, k, sum)
 	expected <- apply(do.call("expand.grid", m), 1, prod) * n.cases
 	statistic <- sum((c(object) - expected)^2 / expected)

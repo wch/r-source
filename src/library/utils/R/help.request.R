@@ -81,9 +81,9 @@ help.request <- function (subject = "",
     }
 
     man <- url("http://cran.r-project.org/manuals.html")
-    ver <- scan(man, what = character(0), sep = "\n", skip = 13, nlines = 1,
+    ver <- scan(man, what = character(0L), sep = "\n", skip = 13, nlines = 1,
 		quiet = TRUE)
-    ver <- strsplit(ver, " ")[[1]][3]
+    ver <- strsplit(ver, " ")[[1L]][3L]
     if (getRversion() < numeric_version(ver)) {
 	update <- readMyLine("Your R version is out-of-date,",
 			     "would you like to update now?")

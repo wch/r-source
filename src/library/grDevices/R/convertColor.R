@@ -27,7 +27,7 @@ white.points <- cbind(A = c(x = 0.44757, y = 0.40745),
                       D65 = c(x = 0.3137, y = 0.3291),
                       E = c(x = 1/3, y = 1/3))
 ## converting these:
-c2to3 <- function(col) c(col[1]/col[2], 1, (1 - sum(col))/col[2])
+c2to3 <- function(col) c(col[1L]/col[2L], 1, (1 - sum(col))/col[2L])
 
 ## http://www.brucelindbloom.com/index.html?Equations.html
 
@@ -57,7 +57,7 @@ make.rgb <-
     toXYZ <- function(rgb,...) { dogamma(rgb) %*% M }
     toRGB <- function(xyz,...) { ungamma(xyz %*% solve(M)) }
 
-    if (is.null(name)) name <- deparse(sys.call())[1]
+    if (is.null(name)) name <- deparse(sys.call())[1L]
     rval <- list(toXYZ = toXYZ, fromXYZ = toRGB, gamma = gamma,
                  reference.white = white, name = name)
     class(rval) <- c("RGBcolorConverter", "colorConverter")
@@ -133,19 +133,19 @@ colorspaces <-
              xyzr <- XYZ/white
              fxyz <- ifelse(xyzr <= epsilon, (kappa*xyzr+16)/116, xyzr^(1/3))
 
-             c(L = 116*fxyz[2]-16,
-               a = 500*(fxyz[1]-fxyz[2]),
-               b = 200*(fxyz[2]-fxyz[3]))
+             c(L = 116*fxyz[2L]-16,
+               a = 500*(fxyz[1L]-fxyz[2L]),
+               b = 200*(fxyz[2L]-fxyz[3L]))
          },
          toXYZ = function(Lab,white) {
 
              epsilon <- 216/24389
              kappa <- 24389/27
 
-             yr <- ifelse(Lab[1] < kappa*epsilon, Lab[1]/kappa, ((Lab[1]+16)/116)^3)
-             fy <- ifelse(yr <= epsilon, (kappa*yr+16)/116, (Lab[1]+16)/116)
-             fx <- Lab[2]/500+fy
-             fz <- fy-Lab[3]/200
+             yr <- ifelse(Lab[1L] < kappa*epsilon, Lab[1L]/kappa, ((Lab[1L]+16)/116)^3)
+             fy <- ifelse(yr <= epsilon, (kappa*yr+16)/116, (Lab[1L]+16)/116)
+             fx <- Lab[2L]/500+fy
+             fz <- fy-Lab[3L]/200
 
              zr <- ifelse(fz^3 <= epsilon, (116*fz-16)/kappa, fz^3)
              xr <- ifelse(fx^3 <= epsilon, (116*fx-16)/kappa, fx^3)
@@ -159,15 +159,15 @@ colorspaces <-
              epsilon <- 216/24389
              kappa <- 24389/27
 
-             yr <- XYZ[2]/white[2]
+             yr <- XYZ[2L]/white[2L]
 
              denom <- sum(XYZ*c(1,15,3))
              wdenom <- sum(white*c(1,15,3))
 
-             u1 <- ifelse(denom == 0,1,4*XYZ[1]/denom)
-             v1 <- ifelse(denom == 0,1,9*XYZ[2]/denom)
-             ur <- 4*white[1]/wdenom
-             vr <- 9*white[2]/wdenom
+             u1 <- ifelse(denom == 0,1,4*XYZ[1L]/denom)
+             v1 <- ifelse(denom == 0,1,9*XYZ[2L]/denom)
+             ur <- 4*white[1L]/wdenom
+             vr <- 9*white[2L]/wdenom
 
              L <- ifelse(yr <= epsilon, kappa*yr, 116*(yr^(1/3))-16)
              c(L = L, u = 13*L*(u1-ur), v = 13*L*(v1-vr))
@@ -175,17 +175,17 @@ colorspaces <-
              epsilon <- 216/24389
              kappa <- 24389/27
 
-             if(Luv[1] == 0) return(c(0,0,0))
+             if(Luv[1L] == 0) return(c(0,0,0))
 
-             u0 <- 4*white[1]/(white[1]+15*white[2]+3*white[3])
-             v0 <- 9*white[2]/(white[1]+15*white[2]+3*white[3])
+             u0 <- 4*white[1L]/(white[1L]+15*white[2L]+3*white[3L])
+             v0 <- 9*white[2L]/(white[1L]+15*white[2L]+3*white[3L])
 
-             Y <- ifelse(Luv[1] <= kappa*epsilon,
-                         Luv[1]/kappa, ((Luv[1]+16)/116)^3)
-             a <- (52*Luv[1]/(Luv[2]+13*Luv[1]*u0)-1)/3
+             Y <- ifelse(Luv[1L] <= kappa*epsilon,
+                         Luv[1L]/kappa, ((Luv[1L]+16)/116)^3)
+             a <- (52*Luv[1L]/(Luv[2L]+13*Luv[1L]*u0)-1)/3
              b <- -5*Y
              c <- -1/3
-             d <- Y*(39*Luv[1]/(Luv[3]+13*Luv[1]*v0)-5)
+             d <- Y*(39*Luv[1L]/(Luv[3L]+13*Luv[1L]*v0)-5)
 
              X <- (d-b)/(a-c)
              Z <- X*a+b

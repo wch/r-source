@@ -44,7 +44,7 @@ arima <- function(x, order = c(0, 0, 0),
     {
         ## next call changes objects a, P, Pn so beware!
         .Call(R_ARIMA_Like, y, mod$phi, mod$theta, mod$Delta,
-              mod$a, mod$P, mod$Pn, as.integer(0), TRUE)
+              mod$a, mod$P, mod$Pn, as.integer(0L), TRUE)
     }
 
     armafn <- function(p, trans)
@@ -56,9 +56,9 @@ arima <- function(x, order = c(0, 0, 0),
         if(ncxreg > 0) x <- x - xreg %*% par[narma + (1L:ncxreg)]
         ## next call changes objects a, P, Pn so beware!
         res <- .Call(R_ARIMA_Like, x, Z$phi, Z$theta, Z$Delta,
-                     Z$a, Z$P, Z$Pn, as.integer(0), FALSE)
-        s2 <- res[1]/res[3]
-        0.5*(log(s2) + res[2]/res[3])
+                     Z$a, Z$P, Z$Pn, as.integer(0L), FALSE)
+        s2 <- res[1L]/res[3L]
+        0.5*(log(s2) + res[2L]/res[3L])
     }
 
     armaCSS <- function(p)

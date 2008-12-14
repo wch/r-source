@@ -113,9 +113,9 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	if(simulate.p.value) {
 	    setMETH()
 	    nx <- length(x)
-	    sm <- matrix(sample(1:nx,B*n,TRUE,prob=p),nrow=n)
+	    sm <- matrix(sample(1L:nx,B*n,TRUE,prob=p),nrow=n)
 	    ss <- apply(sm, 2, function(x,E,k) {
-		sum((table(factor(x, levels=1:k)) - E)^2 / E)
+		sum((table(factor(x, levels=1L:k)) - E)^2 / E)
 	    }, E = E, k = nx)
 	    PARAMETER <- NA
 	    PVAL <- (1 + sum(ss >= almost.1 * STATISTIC))/(B + 1)

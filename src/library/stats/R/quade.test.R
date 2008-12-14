@@ -59,7 +59,7 @@ function(y, groups, blocks, ...)
         STATISTIC <- (b - 1) * B / (A - B)
         ## The same as 2-way ANOVA on the scores S.
         PARAMETER <- c(k - 1, (b-1) * (k-1))
-        PVAL <- pf(STATISTIC, PARAMETER[1], PARAMETER[2], lower.tail = FALSE)
+        PVAL <- pf(STATISTIC, PARAMETER[1L], PARAMETER[2L], lower.tail = FALSE)
     }
     names(STATISTIC) <- "Quade F"
     names(PARAMETER) <- c("num df", "denom df")
@@ -81,18 +81,18 @@ function(formula, data, subset, na.action, ...)
     ## Maybe put this into an internal rewriteTwoWayFormula() when
     ## adding support for strata()
     if((length(formula) != 3)
-       || (length(formula[[3]]) != 3)
-       || (formula[[3]][[1]] != as.name("|"))
-       || (length(formula[[3]][[2]]) != 1)
-       || (length(formula[[3]][[3]]) != 1))
+       || (length(formula[[3L]]) != 3)
+       || (formula[[3L]][[1L]] != as.name("|"))
+       || (length(formula[[3L]][[2L]]) != 1)
+       || (length(formula[[3L]][[3L]]) != 1))
         stop("incorrect specification for 'formula'")
-    formula[[3]][[1]] <- as.name("+")
+    formula[[3L]][[1L]] <- as.name("+")
     ## </FIXME>
     m <- match.call(expand.dots = FALSE)
     m$formula <- formula
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
-    m[[1]] <- as.name("model.frame")
+    m[[1L]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
     DNAME <- paste(names(mf), collapse = " and ")
     names(mf) <- NULL

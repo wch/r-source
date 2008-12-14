@@ -36,7 +36,7 @@ AIC.default <- function(object, ..., k = 2)
 	names(val) <- c("df", "AIC")
         Call <- match.call()
         Call$k <- NULL
-	row.names(val) <- as.character(Call[-1])
+	row.names(val) <- as.character(Call[-1L])
 	val
     } else AIC(ll(object), k = k)
 }

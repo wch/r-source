@@ -32,7 +32,7 @@ xtabs <- function(formula = ~., data = parent.frame(), subset,
     if(is.matrix(eval(m$data, parent.frame())))
 	m$data <- as.data.frame(data)
     m$... <- m$exclude <- m$drop.unused.levels <- NULL
-    m[[1]] <- as.name("model.frame")
+    m[[1L]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
     if(length(formula) == 2) {
 	by <- mf
@@ -55,8 +55,8 @@ xtabs <- function(formula = ~., data = parent.frame(), subset,
 	else {
 	    z <- lapply(as.data.frame(y), tapply, by, sum)
 	    array(unlist(z),
-		  dim = c(dim(z[[1]]), length(z)),
-		  dimnames = c(dimnames(z[[1]]), list(names(z))))
+		  dim = c(dim(z[[1L]]), length(z)),
+		  dimnames = c(dimnames(z[[1L]]), list(names(z))))
 	}
     x[is.na(x)] <- 0
     class(x) <- c("xtabs", "table")

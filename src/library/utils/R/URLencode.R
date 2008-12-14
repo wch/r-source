@@ -21,7 +21,7 @@ URLencode <- function(URL, reserved = FALSE)
     OK <- paste("[^-ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 		"abcdefghijklmnopqrstuvwxyz0123456789$_.+!*'(),",
 		if(!reserved) ";/?:@=&", "]", sep="")
-    x <- strsplit(URL, "")[[1]]
+    x <- strsplit(URL, "")[[1L]]
     z <- grep(OK, x)
     if(length(z)) {
         y <- sapply(x[z], function(x)
@@ -43,7 +43,7 @@ URLdecode <- function(URL)
             out <- c(out, x[i])
             i <- i + 1
         } else {
-            y <- as.integer(x[i+1:2])
+            y <- as.integer(x[i+1L:2])
             y[y > 96] <- y[y > 96] - 32 # a-f -> A-F
             y[y > 57] <- y[y > 57] - 7  # A-F
             y <- sum((y - 48) * c(16, 1))

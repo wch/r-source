@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-addTaskCallback <- function(f, data = NULL, name = character(0))
+addTaskCallback <- function(f, data = NULL, name = character(0L))
 {
     if(!is.function(f))
         stop("handler must be a function")
@@ -97,7 +97,7 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
     remove <- function(which)
     {
         if(is.character(which)) {
-            tmp <- (1:length(handlers))[!is.na(match(which, names(handlers)))]
+            tmp <- (1L:length(handlers))[!is.na(match(which, names(handlers)))]
             if(length(tmp))
                 stop(gettextf("no such element '%s'", which), domain = NA)
             which <- tmp

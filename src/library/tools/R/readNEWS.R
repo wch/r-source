@@ -35,7 +35,7 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 	n <- length(cvec); if(n <= 1) return(cvec)
 	## else	 n >= 2
 	empty <- grep("^[\t ]*$", cvec)
-	cvec[if(any(!empty)) which(!empty)[1] else 1]
+	cvec[if(any(!empty)) which(!empty)[1L] else 1]
     }
 
     chopPara <- function(cvec) {
@@ -43,11 +43,11 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 	## else	 n >= 2
 	empty <- grep("^[\t ]*$", cvec)
 	## the first non-empty ``from the right''
-	nm <- 1:n %nIN% (n + 1 - rev(empty))
+	nm <- 1L:n %nIN% (n + 1 - rev(empty))
 	if(any(nm))
-	    cvec[1:(n - (which(nm)[1] - 1))]
+	    cvec[1L:(n - (which(nm)[1L] - 1))]
 	else ## all are empty; return just one
-	    cvec[1]
+	    cvec[1L]
     }
 
 ### FIXME: default for 'chop' should be (something like) "dropEmptyTrail"
@@ -57,7 +57,7 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
     chop <- match.arg(chop)
     chopFun <- switch(chop,
 		      "first" = chop1st,
-		      "1" = function(x) x[1],
+		      "1" = function(x) x[1L],
 		      "par1" = chopPara,
 		      "keepAll" = function(x)x)
 
@@ -66,7 +66,7 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 	## Purpose: parse a single NEWS entry
 	## Arguments: ll: lines of text (character vector)
 	nl <- length(ll)
-	ll[1] <- sub(E.prefix, '', ll[1])
+	ll[1L] <- sub(E.prefix, '', ll[1L])
 
 	##cat("	    entry with",nl, " lines of text")
 	chv <- collapseWSpace(ll)

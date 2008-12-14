@@ -69,7 +69,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
     correct <- as.logical(correct)
 
     ESTIMATE <- x/n
-    names(ESTIMATE) <- if (k == 1) "p" else paste("prop", 1:l)[OK]
+    names(ESTIMATE) <- if (k == 1) "p" else paste("prop", 1L:l)[OK]
     NVAL <- p
     CINT <- NULL
     YATES <- ifelse(correct && (k <= 2), .5, 0)
@@ -92,7 +92,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 		       "less" = c(0, min(p.u, 1)))
     }
     else if ((k == 2) & is.null(p)) {
-	DELTA <- ESTIMATE[1] - ESTIMATE[2]
+	DELTA <- ESTIMATE[1L] - ESTIMATE[2L]
 	YATES <- min(YATES, abs(DELTA) / sum(1/n))
 	WIDTH <- (switch(alternative,
 			 "two.sided" = qnorm((1 + conf.level) / 2),

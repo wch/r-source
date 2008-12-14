@@ -181,5 +181,5 @@ genericForPrimitive <- function(f, where = topenv(parent.frame())) {
     if(length(allWhere) == 0)
         as.environment("package:methods")
     else
-        as.environment(allWhere[[1]])
+        as.environment(allWhere[[1L]])
 }

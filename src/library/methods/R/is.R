@@ -23,7 +23,7 @@ function(object, class2)
     cl <- class(object)
     S3Case <- length(cl) > 1
     if(S3Case)
-      cl <- cl[[1]]
+      cl <- cl[[1L]]
     if(missing(class2))
         return(extends(cl))
     class1Def <- getClassDef(cl)
@@ -60,7 +60,7 @@ extends <-
 {
     if(is.character(class1)) {
         if(length(class1)>1)
-            class1 <- class1[[1]]
+            class1 <- class1[[1L]]
 	classDef1 <- getClassDef(class1)
     } else if(is(class1, "classRepresentation")) {
 	classDef1 <- class1
@@ -86,8 +86,8 @@ extends <-
     }
     value <- NULL
     if(is.character(class2) && length(class2) == 1) { ## fast first checks
-	## the [[1]] below handles old-style classes & throws away package attributes
-	if(.identC(class1[[1]], class2) || .identC(class2, "ANY"))
+	## the [[1L]] below handles old-style classes & throws away package attributes
+	if(.identC(class1[[1L]], class2) || .identC(class2, "ANY"))
           return(TRUE)
         if(!is.null(classDef1) && class2 %in% names(classDef1@contains))
 	    value <- classDef1@contains[[class2]]
@@ -178,7 +178,7 @@ setIs <-
 .findOrCopyClass <- function(class, classDef, where, purpose) {
     whereIs <- findClass(classDef, where)
     if(length(whereIs) > 0)
-      whereIs[[1]]
+      whereIs[[1L]]
     else {
         warning(gettextf("Class \"%s\" is defined (with package slot \"%s\") but no metadata object found to revise %s information---not exported?  Making a copy in package \"%s\"",
                  class, classDef@package, purpose, getPackageName(where, FALSE)), domain = NA)

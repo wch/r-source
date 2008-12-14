@@ -24,7 +24,7 @@ princomp.formula <- function(formula, data = NULL, subset, na.action, ...)
     cl <- match.call()
     mf <- match.call(expand.dots = FALSE)
     mf$... <- NULL
-    mf[[1]] <- as.name("model.frame")
+    mf[[1L]] <- as.name("model.frame")
     mf <- eval.parent(mf)
     ## this is not a `standard' model-fitting function,
     ## so no need to consider contrasts or levels
@@ -36,7 +36,7 @@ princomp.formula <- function(formula, data = NULL, subset, na.action, ...)
     x <- model.matrix(mt, mf)
     res <- princomp.default(x, ...)
     ## fix up call to refer to the generic, but leave arg name as `formula'
-    cl[[1]] <- as.name("princomp")
+    cl[[1L]] <- as.name("princomp")
     res$call <- cl
     if(!is.null(na.act)) {
         res$na.action <- na.act # not currently used
@@ -51,7 +51,7 @@ princomp.default <-
              subset = rep(TRUE, nrow(as.matrix(x))), ...)
 {
     cl <- match.call()
-    cl[[1]] <- as.name("princomp")
+    cl[[1L]] <- as.name("princomp")
     if(!missing(x) && !missing(covmat))
         warning("both 'x' and 'covmat' were supplied: 'x' will be ignored")
     z <- if(!missing(x)) as.matrix(x)[subset, , drop = FALSE]
@@ -67,7 +67,7 @@ princomp.default <-
         cen <- NULL
     } else if(is.null(covmat)){
         dn <- dim(z)
-        if(dn[1] < dn[2])
+        if(dn[1L] < dn[2L])
             stop("'princomp' can only be used with more units than variables")
         covmat <- cov.wt(z)             # returns list, cov() does not
         n.obs <- covmat$n.obs
@@ -85,15 +85,15 @@ princomp.default <-
     ev <- edc$values
     if (any(neg <- ev < 0)) { # S-PLUS sets all := 0
         ## 9 * : on Solaris found case where 5.59 was needed (MM)
-        if (any(ev[neg] < - 9 * .Machine$double.eps * ev[1]))
+        if (any(ev[neg] < - 9 * .Machine$double.eps * ev[1L]))
             stop("covariance matrix is not non-negative definite")
         else
             ev[neg] <- 0
     }
-    cn <- paste("Comp.", 1:ncol(cv), sep = "")
+    cn <- paste("Comp.", 1L:ncol(cv), sep = "")
     names(ev) <- cn
     dimnames(edc$vectors) <- if(missing(x))
-        list(dimnames(cv)[[2]], cn) else list(dimnames(x)[[2]], cn)
+        list(dimnames(cv)[[2L]], cn) else list(dimnames(x)[[2L]], cn)
     sdev <- sqrt(ev)
     sc <- if (cor) sds else rep(1, ncol(cv))
     names(sc) <- colnames(cv)

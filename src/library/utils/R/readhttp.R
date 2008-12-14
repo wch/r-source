@@ -43,7 +43,7 @@ makeUserAgent <- function(format = TRUE) {
       stop(sQuote("HTTPUserAgent"),
            " option must be a length one character vector or NULL")
     if (format)
-      paste("User-Agent: ", agent[1], "\r\n", sep = "")
+      paste("User-Agent: ", agent[1L], "\r\n", sep = "")
     else
-      agent[1]
+      agent[1L]
 }

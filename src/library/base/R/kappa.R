@@ -60,7 +60,7 @@ kappa.lm <- function(z, ...) kappa.qr(z$qr, ...)
 kappa.qr <- function(z, ...)
 {
     qr <- z$qr
-    R <- qr[1:min(dim(qr)), , drop = FALSE]
+    R <- qr[1L:min(dim(qr)), , drop = FALSE]
     R[lower.tri(R)] <- 0
     kappa.tri(R, ...)
 }
@@ -89,7 +89,7 @@ kappa.tri <- function(z, exact = FALSE, LINPACK = TRUE, norm=NULL, ...)
 			 p,
 			 k = double(1),
 			 double(p),
-			 as.integer(1),
+			 1L,
 			 PACKAGE="base")$k
 	}
 	else { ## Lapack

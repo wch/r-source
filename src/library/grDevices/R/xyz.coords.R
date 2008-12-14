@@ -22,10 +22,10 @@ xy.coords <- function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE
 	ylab <- xlab
 	if(is.language(x)) {
 	    if (inherits(x, "formula") && length(x) == 3) {
-		ylab <- deparse(x[[2]])
-		xlab <- deparse(x[[3]])
-		y <- eval(x[[2]], environment(x), parent.frame())
-		x <- eval(x[[3]], environment(x), parent.frame())
+		ylab <- deparse(x[[2L]])
+		xlab <- deparse(x[[3L]])
+		y <- eval(x[[2L]], environment(x), parent.frame())
+		x <- eval(x[[3L]], environment(x), parent.frame())
 	    }
 	    else stop("invalid first argument")
 	}
@@ -48,14 +48,14 @@ xy.coords <- function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE
 		x <- seq_along(y)
 	    }
 	    else {
-		colnames <- dimnames(x)[[2]]
+		colnames <- dimnames(x)[[2L]]
 		if(is.null(colnames)) {
 		    xlab <- paste(ylab, "[,1]", sep="")
 		    ylab <- paste(ylab, "[,2]", sep="")
 		}
 		else {
-		    xlab <- colnames[1]
-		    ylab <- colnames[2]
+		    xlab <- colnames[1L]
+		    ylab <- colnames[2L]
 		}
 		y <- x[,2]
 		x <- x[,1]
@@ -89,7 +89,7 @@ xy.coords <- function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE
     }
 
     if(length(log) && log != "") {
-	log <- strsplit(log, NULL)[[1]]
+	log <- strsplit(log, NULL)[[1L]]
 	if("x" %in% log && any(ii <- x <= 0 & !is.na(x))) {
 	    n <- as.integer(sum(ii))
 	    warning(sprintf(ngettext(n,
@@ -117,14 +117,14 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
     if(is.null(y)) {
 	if (is.language(x)) {
 	    if (inherits(x, "formula") && length(x) == 3
-		&& length(rhs <- x[[3]]) == 3) {
-		zlab <- deparse(x[[2]])
-		ylab <- deparse(rhs[[3]])
-		xlab <- deparse(rhs[[2]])
+		&& length(rhs <- x[[3L]]) == 3) {
+		zlab <- deparse(x[[2L]])
+		ylab <- deparse(rhs[[3L]])
+		xlab <- deparse(rhs[[2L]])
 		pf <- parent.frame()
-		z <- eval(x[[2]],   environment(x), pf)
-		y <- eval(rhs[[3]], environment(x), pf)
-		x <- eval(rhs[[2]], environment(x), pf)
+		z <- eval(x[[2L]],   environment(x), pf)
+		y <- eval(rhs[[3L]], environment(x), pf)
+		x <- eval(rhs[[2L]], environment(x), pf)
 	    }
 	    else stop("invalid first argument [bad language object]")
 	}
@@ -138,16 +138,16 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
 		x <- seq_along(y)
 	    }
 	    else { ## >= 3 columns
-		colnames <- dimnames(x)[[2]]
+		colnames <- dimnames(x)[[2L]]
 		if(is.null(colnames)) {
 		    zlab <- paste(xlab,"[,3]",sep="")
 		    ylab <- paste(xlab,"[,2]",sep="")
 		    xlab <- paste(xlab,"[,1]",sep="")
 		}
 		else {
-		    xlab <- colnames[1]
-		    ylab <- colnames[2]
-		    zlab <- colnames[3]
+		    xlab <- colnames[1L]
+		    ylab <- colnames[2L]
+		    zlab <- colnames[3L]
 		}
 		y <- x[,2]
 		z <- x[,3]
@@ -205,7 +205,7 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
 
     ## log
     if(length(log) && log != "") {
-	log <- strsplit(log, NULL)[[1]]
+	log <- strsplit(log, NULL)[[1L]]
 	if("x" %in% log && any(ii <- x <= 0 & !is.na(x))) {
 	    n <- sum(ii)
             warning(sprintf(ngettext(n,

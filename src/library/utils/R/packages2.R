@@ -18,7 +18,7 @@ install.packages <-
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
              method, available = NULL, destdir = NULL, dependencies = NA,
-             type = getOption("pkgType"), configure.args = character(0),
+             type = getOption("pkgType"), configure.args = character(0L),
              clean = FALSE, ...)
 {
     if (is.logical(clean) && clean)
@@ -72,7 +72,7 @@ install.packages <-
                             shQuote(paste(configure.args[[ pkg ]], collapse = " ")),
                             sep = "")
         else
-            config <- character(0)
+            config <- character(0L)
 
         config
     }
@@ -98,7 +98,7 @@ install.packages <-
     }
 
     if(missing(lib) || is.null(lib)) {
-        lib <- .libPaths()[1]
+        lib <- .libPaths()[1L]
         if(length(.libPaths()) > 1L)
             warning(gettextf("argument 'lib' is missing: using '%s'", lib),
                     immediate. = TRUE, domain = NA)
@@ -127,7 +127,7 @@ install.packages <-
         warning(gettextf("'lib = \"%s\"' is not writable", lib),
                 domain = NA, immediate. = TRUE)
         userdir <- unlist(strsplit(Sys.getenv("R_LIBS_USER"),
-                                   .Platform$path.sep))[1]
+                                   .Platform$path.sep))[1L]
         if(interactive() && !file.exists(userdir)) {
             msg <- gettext("Would you like to create a personal library\n'%s'\nto install packages into?")
             if(.Platform$OS.type == "windows") {
@@ -279,7 +279,7 @@ install.packages <-
         ## where should we be looking?
         ## should this add the library we are installing to?
         installed <- installed.packages(fields = c("Package", "Version"))
-        not_avail <- character(0)
+        not_avail <- character(0L)
 	repeat {
 	    deps <- apply(available[p1, dependencies, drop = FALSE],
                           1L, paste, collapse=", ")

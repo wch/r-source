@@ -87,7 +87,7 @@
           stop("no suitable arguments to dispatch methods in this function")
       attr(signature, "simpleOnly") <- simpleInheritanceOnly # usually NULL
       value@signature <- signature
-      name <- signature[[1]]
+      name <- signature[[1L]]
       if(is.null(fdefault))
           methods <- MethodsList(name)
       else {
@@ -165,7 +165,7 @@ makeGeneric <-
 ###--------
       slot(value, "signature", FALSE) <- signature
 ###--------
-      name <- signature[[1]]
+      name <- signature[[1L]]
       if(is.null(fdefault))
           methods <- MethodsList(name)
       else
@@ -217,7 +217,7 @@ generic.skeleton <-
     ## any arguments after "..." have to be named
     dots <- match("...", anames)
     if(!is.na(dots) && dots < length(anames)) {
-      anames[1:dots] <- ""
+      anames[1L:dots] <- ""
       names(skeleton) <- c("", anames)
     }
     if(is.null(fdefault)) {
@@ -226,7 +226,7 @@ generic.skeleton <-
           gettextf("invalid call in method dispatch to \"%s\" (no default method)", name)))
       environment(fdefault) <- baseenv()
     }
-    skeleton[[1]] <- fdefault
+    skeleton[[1L]] <- fdefault
     as.call(skeleton)
  }
 
@@ -385,10 +385,10 @@ unRematchDefinition <- function(definition) {
     ## would be to include the "as given to setMethod" definition as a slot
     bdy <- body(definition)
     if(.identC(class(bdy),"{") && length(bdy) > 1) {
-        bdy <- bdy[[2]]
+        bdy <- bdy[[2L]]
         if(.identC(class(bdy), "<-") &&
-           identical(bdy[[2]], as.name(".local")))
-            definition <- bdy[[3]]
+           identical(bdy[[2L]], as.name(".local")))
+            definition <- bdy[[3L]]
     }
     definition
 }
@@ -526,7 +526,7 @@ getGeneric <-
         if(length(prev) == 0)
           return(remove(list = name, envir = table))
         else if(length(prev) == 1)
-          prev <- prev[[1]]
+          prev <- prev[[1L]]
         assign(name, prev, envir  = table)
     }
 }
@@ -735,7 +735,7 @@ getGenerics <- function(where, searchForm = FALSE)
        length(these[substr(these, 1, 6) == ".__M__"])>0)
       warning(gettextf(
       "Package \"%s\" seems to have out-of-date methods; need to reinstall from source",
-                       getPackageName(where[[1]])))
+                       getPackageName(where[[1L]])))
     packageNames <- gsub(".__T__(.*):([^:]+(.*))", "\\2", these)
     attr(funNames, "package") <- packageNames
     ## Would prefer following, but may be trouble bootstrapping methods
@@ -870,7 +870,7 @@ findUnique <- function(what, message, where = topenv(parent.frame()))
                 sprintf(" found on: %s; using the first one",
                         paste(sQuote(where), collapse = ", ")),
                 domain = NA)
-            where <- where[1]
+            where <- where[1L]
     }
     where
 }
@@ -907,7 +907,7 @@ missingArg <- function(symbol, envir = parent.frame(), eval = FALSE)
     .Call("R_missingArg", if(eval) symbol else substitute(symbol), envir, PACKAGE = "methods")
 
 balanceMethodsList <- function(mlist, args, check = TRUE) {
-    moreArgs <- args[-1]
+    moreArgs <- args[-1L]
     if(length(moreArgs) == 0)
         return(mlist)
     methods <- mlist@methods
@@ -915,13 +915,13 @@ balanceMethodsList <- function(mlist, args, check = TRUE) {
         ## check whether the current depth is enough (i.e.,
         ## whether a method with this no. of args or more was set before
         depth <- 0
-        el <- methods[[1]]
+        el <- methods[[1L]]
         while(is(el, "MethodsList")) {
             mm <- el@methods
             if(length(mm) == 0)
                 break
             depth <- depth+1
-            el <- mm[[1]]
+            el <- mm[[1L]]
         }
         if(depth >= length(args))
             ## already balanced to this length: An assertion
@@ -974,7 +974,7 @@ methodSignatureMatrix <- function(object, sigSlots = c("target", "defined")) {
         allSlots <- lapply(sigSlots, slot, object = object)
         mm <- unlist(allSlots)
         mm <- matrix(mm, nrow = length(allSlots), byrow = TRUE)
-        dimnames(mm) <- list(sigSlots, names(allSlots[[1]]))
+        dimnames(mm) <- list(sigSlots, names(allSlots[[1L]]))
         mm
     }
     else matrix(character(), 0, 0)
@@ -995,7 +995,7 @@ methodSignatureMatrix <- function(object, sigSlots = c("target", "defined")) {
 .getOrMakeMethodsList <- function(f, where, genericFun) {
     allMethods <- getMethodsMetaData(f, where = where)
     if(is.null(allMethods)) {
-        argName <- genericFun@signature[[1]]
+        argName <- genericFun@signature[[1L]]
         allMethods <- new("MethodsList", argument = as.name(argName))
 #         other <- getMethodsMetaData(f)
 #         if(is.null(other))
@@ -1070,11 +1070,11 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE) {
 
 .recursiveCallTest <- function(x, fname) {
     if(is(x, "call")) {
-        if(identical(x[[1]], quote(standardGeneric))) {
-            if(!identical(x[[2]], fname))
+        if(identical(x[[1L]], quote(standardGeneric))) {
+            if(!identical(x[[2L]], fname))
                 warning(gettextf("the body of the generic function for \"%s\" calls 'standardGeneric' to dispatch on a different name (\"%s\")!",
                                  fname,
-                                 paste(as.character(x[[2]]), collapse = "\n")),
+                                 paste(as.character(x[[2L]]), collapse = "\n")),
                         domain = NA)
             TRUE
         }
@@ -1516,7 +1516,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
     if(all(direct)) {
         if(length(classes) > 1) {
             warning("multiple direct matches: ", .pasteC(classes), "; using the first of these")
-            classes <- classes[1]
+            classes <- classes[1L]
         }
         else if(length(classes) == 0)
           return( if(is.na(match("ANY", methods))) NULL else get("ANY", envir = mtable))
@@ -1562,7 +1562,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
         classes <- found[which.min(distances)]
         if(length(classes) > 1) {
             warning("multiple equivalent inherited matches: ", .pasteC(classes), "; using the first of these")
-            classes <- classes[1]
+            classes <- classes[1L]
         }
         method <- get(classes,envir = mtable)
     }

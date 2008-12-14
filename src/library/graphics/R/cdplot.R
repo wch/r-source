@@ -33,7 +33,7 @@ function(formula, data = list(),
     m <- match.call(expand.dots = FALSE)
     m <- m[c(1, match(c("formula", "data", "subset"), names(m), 0))]
     require(stats, quietly=TRUE)
-    m[[1]] <- as.name("model.frame")
+    m[[1L]] <- as.name("model.frame")
     mf <- eval.parent(m)
     if(NCOL(mf) != 2)
         stop("'formula' should specify exactly two variables")
@@ -47,8 +47,8 @@ function(formula, data = list(),
         stop("explanatory variable should be numeric")
 
     ## graphical parameters
-    if(is.null(xlab)) xlab <- names(mf)[2]
-    if(is.null(ylab)) ylab <- names(mf)[1]
+    if(is.null(xlab)) xlab <- names(mf)[2L]
+    if(is.null(ylab)) ylab <- names(mf)[1L]
     if(is.null(yaxlabels)) yaxlabels <- levels(y)
 
     ## call default interface
@@ -93,13 +93,13 @@ function(x, y,
     ## setup return value
     rval <- list()
 
-    for(i in 1:(ny-1)) {
-        dxi <- stats::density(x[y %in% levels(y)[1:i]], bw = dx$bw, n = n,
+    for(i in 1L:(ny-1)) {
+        dxi <- stats::density(x[y %in% levels(y)[1L:i]], bw = dx$bw, n = n,
                               from = min(dx$x), to = max(dx$x), ...)
         y1[i,] <- dxi$y/dx$y * yprop[i]
         rval[[i]] <- stats::approxfun(x1, y1[i,], rule = 2)
     }
-    names(rval) <- levels(y)[1:(ny-1)]
+    names(rval) <- levels(y)[1L:(ny-1)]
 
     ## use known ranges
     y1 <- rbind(0, y1, 1)
@@ -117,7 +117,7 @@ function(x, y,
     if(plot) {
         plot(0, 0, xlim = xlim, ylim = ylim, type = "n", axes = FALSE,
              xaxs = "i", yaxs = "i", xlab = xlab, ylab = ylab, main = main)
-        for(i in 1:(NROW(y1)-1))
+        for(i in 1L:(NROW(y1)-1))
             polygon(c(x1, rev(x1)), c(y1[i+1,], rev(y1[i,])), col = col[i],
                     border = border)
         axis(1)

@@ -191,7 +191,7 @@ function(x, ..., exact = NA)
 }
 
 ## allowed forms
-## x[[i]] <- "1.2.3"; x[[i]] <- 1:3; x[[c(i,j)]] <- <single integer>
+## x[[i]] <- "1.2.3"; x[[i]] <- 1L:3; x[[c(i,j)]] <- <single integer>
 ## x[[i,j]] <- <single integer>
 `[[<-.numeric_version` <-
 function(x, ..., value)

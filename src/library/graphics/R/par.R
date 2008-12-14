@@ -47,15 +47,15 @@ par <- function (..., no.readonly = FALSE)
 	if (all(unlist(lapply(args, is.character))))
 	    args <- as.list(unlist(args))
 	if (length(args) == 1) {
-	    if (is.list(args[[1]]) | is.null(args[[1]]))
-		args <- args[[1]]
+	    if (is.list(args[[1L]]) | is.null(args[[1L]]))
+		args <- args[[1L]]
 	    else
 		if(is.null(names(args)))
 		    single <- TRUE
 	}
     }
     value <- .Internal(par(args))
-    if(single) value <- value[[1]]
+    if(single) value <- value[[1L]]
     if(!is.null(names(args))) invisible(value) else value
 }
 

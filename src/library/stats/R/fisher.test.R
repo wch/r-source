@@ -131,7 +131,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
                        nr,
                        as.double(-1),#  expect < 0 : exact
                        as.double(100),
-                       as.double(0),
+                       as.double(0L),
                        double(1),#   prt
                        p = double(1),
                        as.integer(workspace),

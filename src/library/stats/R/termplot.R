@@ -58,13 +58,13 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
     pf <- envir
     carrier <- function(term) { # used for non-factor ones
 	if (length(term) > 1)
-	    carrier(term[[2]])
+	    carrier(term[[2L]])
 	else
 	    eval(term, data, enclos = pf)
     }
     carrier.name <- function(term){
       	if (length(term) > 1)
-	    carrier.name(term[[2]])
+	    carrier.name(term[[2L]])
 	else
 	    as.character(term)
     }
@@ -96,12 +96,12 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
                    tms - 1.05*2*terms$se.fit,
                    na.rm = TRUE)
         if (partial.resid) ylims <- range(ylims, pres, na.rm = TRUE)
-        if (rug) ylims[1] <- ylims[1] - 0.07*diff(ylims)
+        if (rug) ylims[1L] <- ylims[1L] - 0.07*diff(ylims)
     }
 
     ##---------- Do the individual plots : ----------
 
-    for (i in 1:n.tms) {
+    for (i in 1L:n.tms) {
         if(identical(ylim, "free")) {
             ylims <- range(tms[, i], na.rm = TRUE)
             if (se)
@@ -112,7 +112,7 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
             if (partial.resid)
                 ylims <- range(ylims, pres[, i], na.rm = TRUE)
             if (rug)
-                ylims[1] <- ylims[1] - 0.07*diff(ylims)
+                ylims[1L] <- ylims[1L] - 0.07*diff(ylims)
         }
 	if (is.fac[i]) {
 	    ff <- mf[,nmt[i]]
@@ -122,8 +122,8 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
 	    xlims <- range(seq_along(ll)) + c(-.5, .5)
             xx <- as.numeric(ff) ##need if rug or partial
 	    if(rug) {
-		xlims[1] <- xlims[1] - 0.07*diff(xlims)
-		xlims[2] <- xlims[2] + 0.03*diff(xlims)
+		xlims[1L] <- xlims[1L] - 0.07*diff(xlims)
+		xlims[2L] <- xlims[2L] + 0.03*diff(xlims)
 	    }
 	    plot(1, 0, type = "n", xlab = xlabs[i], ylab = ylabs[i],
                  xlim = xlims, ylim = ylims, main = main[i], xaxt="n", ...)
@@ -143,7 +143,7 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
             if (!is.null(use.rows)) xx <- xx[use.rows]
 	    xlims <- range(xx, na.rm = TRUE)
 	    if(rug)
-		xlims[1] <- xlims[1] - 0.07*diff(xlims)
+		xlims[1L] <- xlims[1L] - 0.07*diff(xlims)
 	    oo <- order(xx)
 	    plot(xx[oo], tms[oo, i], type = "l",
                  xlab = xlabs[i], ylab = ylabs[i],
@@ -163,9 +163,9 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
             n <- length(xx)
             ## Fixme: Isn't this a kludge for segments() ?
 	    lines(rep.int(jitter(xx), rep.int(3, n)),
-                  rep.int(ylims[1] + c(0, 0.05, NA)*diff(ylims), n))
+                  rep.int(ylims[1L] + c(0, 0.05, NA)*diff(ylims), n))
 	    if (partial.resid)
-		lines(rep.int(xlims[1] + c(0, 0.05, NA)*diff(xlims), n),
+		lines(rep.int(xlims[1L] + c(0, 0.05, NA)*diff(xlims), n),
                       rep.int(pres[, i], rep.int(3, n)))
 	}
     }

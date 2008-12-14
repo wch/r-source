@@ -65,7 +65,7 @@ lm.influence <- function (model, do.coef = TRUE)
                         model$qr$qraux,
                         wt.res = e,
                         hat = double(n),
-                        coefficients= if(do.coef) matrix(0, n, k) else double(0),
+                        coefficients= if(do.coef) matrix(0, n, k) else double(0L),
                         sigma = double(n),
                         tol = 10 * .Machine$double.eps,
                         DUP = FALSE, PACKAGE="stats"
@@ -229,7 +229,7 @@ influence.measures <- function(model)
 	if(n <= k)
 	    stop("too few cases, n < k")
 	absmat <- abs(infmat)
-	result <- cbind(absmat[, 1:k] > 1, # |dfbetas| > 1
+	result <- cbind(absmat[, 1L:k] > 1, # |dfbetas| > 1
 			absmat[, k + 1] > 3 * sqrt(k/(n - k)), # |dffit| > ..
 			abs(1 - infmat[, k + 2]) > (3*k)/(n - k),# |1-cov.r| >..
 			pf(infmat[, k + 3], k, n - k) > 0.5,# "P[cook.d..]" > .5
@@ -289,9 +289,9 @@ summary.infl <- function(object, digits = max(2, getOption("digits") - 5), ...)
 	deparse(object$call),":\n")
     if(any(is.star)) {
 	imat <- object $ infmat[is.star,, drop = FALSE]
-	if(is.null(rownam <- dimnames(object $ infmat)[[1]]))
+	if(is.null(rownam <- dimnames(object $ infmat)[[1L]]))
 	    rownam <- format(seq(is.star))
-	dimnames(imat)[[1]] <- rownam[is.star]
+	dimnames(imat)[[1L]] <- rownam[is.star]
 	chmat <- format(round(imat, digits = digits))
 	cat("\n")
 	print(array(paste(chmat,c("","_*")[1+is.inf], sep=''),

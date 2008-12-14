@@ -26,13 +26,13 @@ cpgram <- function(ts, taper=0.1,
     x <- x[!is.na(x)]
     x <- spec.taper(scale(x, TRUE, FALSE), p=taper)
     y <- Mod(fft(x))^2/length(x)
-    y[1] <- 0
+    y[1L] <- 0
     n <- length(x)
     x <- (0:(n/2))*frequency(ts)/n
     if(length(x)%%2==0) {
 	n <- length(x)-1
-	y <- y[1:n]
-	x <- x[1:n]
+	y <- y[1L:n]
+	x <- x[1L:n]
     } else y <- y[seq_along(x)]
     xm <- frequency(ts)/2
     mp <- length(x)-1

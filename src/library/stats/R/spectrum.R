@@ -36,7 +36,7 @@ spec.taper <- function (x, p = 0.1)
     else if (length(p) != nc)
         stop("length of 'p' must be 1 or equal the number of columns of 'x'")
     nr <- nrow(x)
-    for (i in 1:nc) {
+    for (i in 1L:nc) {
         m <- floor(nr * p[i])
         if(m == 0) next
         w <- 0.5 * (1 - cos(pi * seq.int(1, 2 * m - 1, by = 2)/(2 * m)))
@@ -62,7 +62,7 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
             stop("'x' must be a time series or an ar() fit")
         series <- x$series
         xfreq <- x$frequency
-        if(is.array(x$ar)) nser <- dim(x$ar)[2] else nser <- 1
+        if(is.array(x$ar)) nser <- dim(x$ar)[2L] else nser <- 1
     }
     order <- x$order
     if(missing(n.freq)) n.freq <- 500
@@ -70,8 +70,8 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
     if (nser == 1) {
         coh <- phase <- NULL
         if(order >= 1) {
-            cs <- outer(freq, 1:order, function(x, y) cos(2*pi*x*y)) %*% x$ar
-            sn <- outer(freq, 1:order, function(x, y) sin(2*pi*x*y)) %*% x$ar
+            cs <- outer(freq, 1L:order, function(x, y) cos(2*pi*x*y)) %*% x$ar
+            sn <- outer(freq, 1L:order, function(x, y) sin(2*pi*x*y)) %*% x$ar
             spec <- x$var.pred/(xfreq*((1 - cs)^2 + sn^2))
         } else
             spec <- rep(x$var.pred/(xfreq), length(freq))
@@ -108,9 +108,9 @@ spec.pgram <-
     if(!is.null(kernel) && !is.tskernel(kernel))
         stop("must specify 'spans' or a valid kernel")
     if (detrend) {
-        t <- 1:N - (N + 1)/2
+        t <- 1L:N - (N + 1)/2
         sumt2 <- N * (N^2 - 1)/12
-        for (i in 1:ncol(x))
+        for (i in 1L:ncol(x))
             x[, i] <- x[, i] - mean(x[, i]) - sum(x[, i] * t) * t/sumt2
     }
     else if (demean) {
@@ -133,15 +133,15 @@ spec.pgram <-
     freq <- seq.int(from = xfreq/N, by = xfreq/N, length.out = Nspec)
     xfft <- mvfft(x)
     pgram <- array(NA, dim = c(N, ncol(x), ncol(x)))
-    for (i in 1:ncol(x)) {
-        for (j in 1:ncol(x)) { # N0 = #{non-0-padded}
+    for (i in 1L:ncol(x)) {
+        for (j in 1L:ncol(x)) { # N0 = #{non-0-padded}
             pgram[, i, j] <- xfft[, i] * Conj(xfft[, j])/(N0*xfreq)
             ## value at zero is invalid as mean has been removed, so interpolate:
             pgram[1, i, j] <- 0.5*(pgram[2, i, j] + pgram[N, i, j])
         }
     }
     if(!is.null(kernel)) {
-	for (i in 1:ncol(x)) for (j in 1:ncol(x))
+	for (i in 1L:ncol(x)) for (j in 1L:ncol(x))
 	    pgram[, i, j] <- kernapply(pgram[, i, j], kernel, circular = TRUE)
 	df <- df.kernel(kernel)
 	bandwidth <- bandwidth.kernel(kernel)
@@ -154,12 +154,12 @@ spec.pgram <-
     bandwidth <- bandwidth * xfreq/N
     pgram <- pgram[2:(Nspec+1),,, drop=FALSE]
     spec <- matrix(NA, nrow = Nspec, ncol = nser)
-    for (i in 1:nser) spec[, i] <- Re(pgram[1:Nspec, i, i])
+    for (i in 1L:nser) spec[, i] <- Re(pgram[1L:Nspec, i, i])
     if (nser == 1) {
         coh <- phase <- NULL
     } else {
         coh <- phase <- matrix(NA, nrow = Nspec, ncol = nser * (nser - 1)/2)
-        for (i in 1:(nser - 1)) {
+        for (i in 1L:(nser - 1)) {
             for (j in (i + 1):nser) {
                 coh[, i + (j - 1) * (j - 2)/2] <-
                     Mod(pgram[, i, j])^2/(spec[, i] * spec[, j])
@@ -168,7 +168,7 @@ spec.pgram <-
         }
     }
     ## correct for tapering
-    for (i in 1:nser) spec[, i] <- spec[, i]/u2
+    for (i in 1L:nser) spec[, i] <- spec[, i]/u2
     spec <- drop(spec)
     spg.out <-
         list(freq = freq, spec = spec, coh = coh, phase = phase,
@@ -211,12 +211,12 @@ plot.spec <-
     log <- match.arg(log)
     m <- match.call()
     if(plot.type == "coherency") {
-        m[[1]] <- as.name("plot.spec.coherency")
+        m[[1L]] <- as.name("plot.spec.coherency")
         m$plot.type <- m$log <- m$add <- NULL
         return(eval(m, parent.frame()))
     }
     if(plot.type == "phase") {
-        m[[1]] <- as.name("plot.spec.phase")
+        m[[1L]] <- as.name("plot.spec.phase")
         m$plot.type <- m$log <- m$add <- NULL
         return(eval(m, parent.frame()))
     }
@@ -244,7 +244,7 @@ plot.spec <-
             conf.lim <- spec.ci(x, coverage = ci)
             if(log=="dB") {
                 conf.lim <- 10*log10(conf.lim)
-                conf.y <- max(x$spec) - conf.lim[2]
+                conf.y <- max(x$spec) - conf.lim[2L]
                 conf.x <- max(x$freq) - x$bandwidth
                 lines(rep(conf.x, 2), conf.y + conf.lim, col=ci.col)
                 lines(conf.x + c(-0.5, 0.5) * x$bandwidth, rep(conf.y, 2),
@@ -254,7 +254,7 @@ plot.spec <-
                                        collapse = ","), ")dB", sep="")
             } else {
                 ci.text <- ""
-                conf.y <- max(x$spec) / conf.lim[2]
+                conf.y <- max(x$spec) / conf.lim[2L]
                 conf.x <- max(x$freq) - x$bandwidth
                 lines(rep(conf.x, 2), conf.y * conf.lim, col=ci.col)
                 lines(conf.x + c(-0.5, 0.5) * x$bandwidth, rep(conf.y, 2),
@@ -299,7 +299,7 @@ plot.spec.coherency <-
                     oma = c(4, 4, 6, 4))
         on.exit(par(opar))
         plot.new()
-        for (j in 2:nser) for (i in 1:(j-1)) {
+        for (j in 2:nser) for (i in 1L:(j-1)) {
             par(mfg=c(j-1,i, nser-1, nser-1))
             ind <- i + (j - 1) * (j - 2)/2
             plot(x$freq, x$coh[, ind], type=type, ylim=ylim, axes=FALSE,
@@ -347,7 +347,7 @@ plot.spec.phase <-
                     oma = c(4, 4, 6, 4))
         on.exit(par(opar))
         plot.new()
-        for (j in 2:nser) for (i in 1:(j-1)) {
+        for (j in 2:nser) for (i in 1L:(j-1)) {
             par(mfg=c(j-1,i, nser-1, nser-1))
             ind <- i + (j - 1) * (j - 2)/2
             plot(x$freq, x$phase[, ind], type=type, ylim=ylim, axes=FALSE,

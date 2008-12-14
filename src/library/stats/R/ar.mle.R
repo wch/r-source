@@ -42,18 +42,18 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         xm <- if(demean) mean(x) else 0
         coefs[1, 1] <- xm
         var0 <- sum((x-xm)^2)/n.used
-        var.pred[1] <- var0
-        xaic[1] <- n.used * log(var0) + 2 * demean + 2 + n.used + n.used * log(2 * pi)
-        for(i in 1:order.max) {
+        var.pred[1L] <- var0
+        xaic[1L] <- n.used * log(var0) + 2 * demean + 2 + n.used + n.used * log(2 * pi)
+        for(i in 1L:order.max) {
             fit <- arima0(x, order=c(i, 0, 0), include.mean=demean)
-            coefs[i+1, 1:(i+demean)] <- fit$coef[1:(i+demean)]
+            coefs[i+1, 1L:(i+demean)] <- fit$coef[1L:(i+demean)]
             xaic[i+1] <- fit$aic
             var.pred[i+1] <- fit$sigma2
         }
         xaic <- xaic - min(xaic)
         names(xaic) <- 0:order.max
         order <- (0:order.max)[xaic == 0]
-        ar <- coefs[order+1, 1:order]
+        ar <- coefs[order+1, 1L:order]
         x.mean <- coefs[order+1, order+1]
         var.pred <- var.pred[order+1]
     } else {

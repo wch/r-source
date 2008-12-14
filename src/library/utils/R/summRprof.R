@@ -23,7 +23,7 @@ summaryRprof<-function(filename = "Rprof.out", chunksize=5000,
     filename<-file(filename, "rt")
     on.exit(close(filename))
     firstline<-readLines(filename,n=1)
-    sample.interval<-as.numeric(strsplit(firstline,"=")[[1]][2])/1e6
+    sample.interval<-as.numeric(strsplit(firstline,"=")[[1L]][2L])/1e6
     memory.profiling<-substr(firstline,1,6)=="memory"
 
     memory<-match.arg(memory)
@@ -55,7 +55,7 @@ summaryRprof<-function(filename = "Rprof.out", chunksize=5000,
            if (memory=="both"){
                memstuff<-substr(chunk,2,memprefix-1)
                memcounts<-pmax(apply(sapply(strsplit(memstuff,":"),as.numeric),1,diff),0)
-               memcounts<-c(0,rowSums(memcounts[,1:3]))
+               memcounts<-c(0,rowSums(memcounts[,1L:3]))
                rm(memstuff)
            }
            chunk<-substr(chunk,memprefix+1,nchar(chunk, "c"))
@@ -75,7 +75,7 @@ summaryRprof<-function(filename = "Rprof.out", chunksize=5000,
        new.utable<-table(newuniques)
        new.ftable<-table(factor(newfirsts,levels=names(new.utable)))
        if (memory=="both"){
-           new.umem<-rowsum(memcounts[rep.int(1:length(memcounts),ulen)],newuniques)
+           new.umem<-rowsum(memcounts[rep.int(1L:length(memcounts),ulen)],newuniques)
        }
 
        fcounts<-rowsum( c(as.vector(new.ftable),fcounts),
@@ -157,19 +157,19 @@ Rprof_memory_summary<-function(filename, chunksize=5000,
        firsts<-c(firsts,newfirsts)
 
        if (!aggregate && length(label)){
-           for(i in 1:length(label)){
+           for(i in 1L:length(label)){
 
                if (label[i]==1)
                    labels[[i]]<-c(labels[[i]],newfirsts)
                else if (label[i]>1){
                    labels[[i]]<-c(labels[[i]], sapply(chunk,
                                                       function(line)
-                                                      paste(rev(line)[1:min(label[i],length(line))],
+                                                      paste(rev(line)[1L:min(label[i],length(line))],
                                                             collapse=":")))
                } else {
                    labels[[i]]<-c(labels[[i]], sapply(chunk,
                                                       function(line)
-                                                      paste(line[1:min(-label[i],length(line))],
+                                                      paste(line[1L:min(-label[i],length(line))],
                                                             collapse=":")))
                }
            }
@@ -177,13 +177,13 @@ Rprof_memory_summary<-function(filename, chunksize=5000,
            if (aggregate>0){
                index<-c(index, sapply(chunk,
                                       function(line)
-                                      paste(rev(line)[1:min(aggregate,length(line))],
+                                      paste(rev(line)[1L:min(aggregate,length(line))],
                                             collapse=":")))
 
            } else {
                index<-c(index, sapply(chunk,
                                       function(line)
-                                      paste(line[1:min(-aggregate,length(line))],
+                                      paste(line[1L:min(-aggregate,length(line))],
                                             collapse=":")))
            }
        }
@@ -201,13 +201,13 @@ Rprof_memory_summary<-function(filename, chunksize=5000,
     memcounts<-as.data.frame(memcounts)
     names(memcounts)<-c("vsize.small","vsize.large","nodes","duplications")
     if (!aggregate){
-        rownames(memcounts)<-(1:nrow(memcounts))*sample.interval
+        rownames(memcounts)<-(1L:nrow(memcounts))*sample.interval
         names(labels)<-paste("stack",label,sep=":")
         memcounts<-cbind(memcounts,labels)
     }
 
     if (diff)
-        memcounts[-1,1:3]<-pmax(0,apply(memcounts[,1:3],2,diff))
+        memcounts[-1,1L:3]<-pmax(0,apply(memcounts[,1L:3],2,diff))
 
     if (aggregate)
         memcounts<-by(memcounts, index,

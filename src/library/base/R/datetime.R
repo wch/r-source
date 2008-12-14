@@ -143,12 +143,12 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
     if(!inherits(x, "POSIXlt")) stop("wrong class")
     if(format == "") {
         ## need list [ method here.
-        times <- unlist(unclass(x)[1:3])
+        times <- unlist(unclass(x)[1L:3])
         secs <- x$sec; secs <- secs[!is.na(secs)]
         np <- getOption("digits.secs")
         if(is.null(np)) np <- 0 else np <- min(6, np)
         if(np >= 1) {
-            for (i in (1:np)- 1) if(all( abs(secs - round(secs, i)) < 1e-6 )) {
+            for (i in (1L:np)- 1) if(all( abs(secs - round(secs, i)) < 1e-6 )) {
                 np <- i
                 break
             }
@@ -191,7 +191,7 @@ print.POSIXlt <- function(x, ...)
 
 summary.POSIXct <- function(object, digits=15, ...)
 {
-    x <- summary.default(unclass(object), digits=digits, ...)[1:6]# no NA's
+    x <- summary.default(unclass(object), digits=digits, ...)[1L:6]# no NA's
     class(x) <- oldClass(object)
     attr(x, "tzone") <- attr(object, "tzone")
     x
@@ -756,7 +756,7 @@ cut.POSIXt <-
         if (length(by2) == 2) incr <- incr * as.integer(by2[1L])
         maxx <- max(x, na.rm = TRUE)
         breaks <- seq.int(start, maxx + incr, breaks)
-        breaks <- breaks[1:(1+max(which(breaks <= maxx)))]
+        breaks <- breaks[1L:(1+max(which(breaks <= maxx)))]
       }
     } else stop("invalid specification of 'breaks'")
     res <- cut(unclass(x), unclass(breaks), labels = labels, right = right, ...)
@@ -870,10 +870,10 @@ diff.POSIXt <- function (x, lag = 1, differences = 1, ...)
         stop("'lag' and 'differences' must be integers >= 1")
     if (lag * differences >= xlen)
         return(structure(numeric(0L), class="difftime", units="secs"))
-    i1 <- -1:-lag
-    if (ismat) for (i in 1:differences) r <- r[i1, , drop = FALSE] -
+    i1 <- -1L:-lag
+    if (ismat) for (i in 1L:differences) r <- r[i1, , drop = FALSE] -
             r[-nrow(r):-(nrow(r) - lag + 1), , drop = FALSE]
-    else for (i in 1:differences)
+    else for (i in 1L:differences)
         r <- r[i1] - r[-length(r):-(length(r) - lag + 1)]
     r
 }

@@ -36,6 +36,6 @@ identify.default <-
     }
     z <- .Internal(identify(x, y, as.character(labels), n, plot, offset,
                             tolerance, atpen))
-    i <- seq.int(z[[1]])[z[[1]]]
-    if(pos) list(ind = i, pos = z[[2]][z[[1]]]) else i
+    i <- seq.int(z[[1L]])[z[[1L]]]
+    if(pos) list(ind = i, pos = z[[2L]][z[[1L]]]) else i
 }

@@ -221,25 +221,25 @@ format.data.frame <- function(x, ..., justify = "none")
     nr <- dims[1L]
     nc <- dims[2L]
     rval <- vector("list", nc)
-    for(i in 1:nc)
+    for(i in 1L:nc)
 	rval[[i]] <- format(x[[i]], ..., justify = justify)
     lens <- sapply(rval, NROW)
     if(any(lens != nr)) { # corrupt data frame, must have at least one column
 	warning("corrupt data frame: columns will be truncated or padded with NAs")
-	for(i in 1:nc) {
+	for(i in 1L:nc) {
 	    len <- NROW(rval[[i]])
 	    if(len == nr) next
 	    if(length(dim(rval[[i]])) == 2) {
 		rval[[i]] <- if(len < nr)
 		    rbind(rval[[i]], matrix(NA, nr-len, ncol(rval[[i]])))
-		else rval[[i]][1:nr,]
+		else rval[[i]][1L:nr,]
 	    } else {
 		rval[[i]] <- if(len < nr) c(rval[[i]], rep.int(NA, nr-len))
-		else rval[[i]][1:nr]
+		else rval[[i]][1L:nr]
 	    }
 	}
     }
-    for(i in 1:nc) {
+    for(i in 1L:nc) {
 	if(is.character(rval[[i]]) && class(rval[[i]]) == "character")
 	    oldClass(rval[[i]]) <- "AsIs"
     }
@@ -262,7 +262,7 @@ format.AsIs <- function(x, width = 12, ...)
     if(is.null(width)) width = 12
     n <- length(x)
     rvec <- rep.int(NA_character_, n)
-    for(i in 1:n) {
+    for(i in 1L:n) {
         y <- x[[i]]
         ## need to remove class AsIs to avoid an infinite loop.
         cl <- oldClass(y)

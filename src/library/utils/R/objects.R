@@ -29,22 +29,22 @@ findGeneric <- function(fname, envir)
             warning(gettextf("'%s' is a formal generic function; S3 methods will not likely be found", fname), domain = NA)
     }
     isUMEbrace <- function(e) {
-        for (ee in as.list(e[-1]))
+        for (ee in as.list(e[-1L]))
             if (nzchar(res <- isUME(ee))) return(res)
         ""
     }
     isUMEif <- function(e) {
-        if (length(e) == 3) isUME(e[[3]])
+        if (length(e) == 3) isUME(e[[3L]])
         else {
-            if (nzchar(res <- isUME(e[[3]]))) res
-            else if (nzchar(res <- isUME(e[[4]]))) res
+            if (nzchar(res <- isUME(e[[3L]]))) res
+            else if (nzchar(res <- isUME(e[[4L]]))) res
             else ""
         }
     }
     isUME <- function(e) {
-        if (is.call(e) && (is.name(e[[1]]) || is.character(e[[1]]))) {
-            switch(as.character(e[[1]]),
-                   UseMethod = as.character(e[[2]]),
+        if (is.call(e) && (is.name(e[[1L]]) || is.character(e[[1L]]))) {
+            switch(as.character(e[[1L]]),
+                   UseMethod = as.character(e[[2L]]),
                    "{" = isUMEbrace(e),
                    "if" = isUMEif(e),
                    "")
@@ -65,7 +65,7 @@ methods <- function (generic.function, class)
         if(n == 0) return(dnew)
         ## else
         keep <- !duplicated(c(rownames(df), rownames(dnew)))
-        rbind(df  [keep[1:n] , ],
+        rbind(df  [keep[1L:n] , ],
               dnew[keep[(n+1):(n+n2)] , ])
     }
 
@@ -294,7 +294,7 @@ fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
 getAnywhere <- function(x)
 {
     x <- as.character(substitute(x))
-    objs <- list(); where <- character(0); visible <- logical(0)
+    objs <- list(); where <- character(0L); visible <- logical(0L)
     ## first look on search path
     if(length(pos <- find(x, numeric = TRUE))) {
         objs <- lapply(pos, function(pos, x) get(x, pos=pos), x=x)
@@ -303,9 +303,9 @@ getAnywhere <- function(x)
     }
     ## next look for methods
     if(length(grep(".", x, fixed=TRUE))) {
-        np <- length(parts <- strsplit(x, ".", fixed=TRUE)[[1]])
+        np <- length(parts <- strsplit(x, ".", fixed=TRUE)[[1L]])
         for(i in 2:np) {
-            gen <- paste(parts[1:(i-1)], collapse=".")
+            gen <- paste(parts[1L:(i-1)], collapse=".")
             cl <- paste(parts[i:np], collapse=".")
             if (gen == "" || cl == "") next
             if(!is.null(f <- getS3method(gen, cl, TRUE))) {
@@ -339,7 +339,7 @@ getAnywhere <- function(x)
     })
     if(ln > 1)
         for(i in 2:ln)
-            for(j in 1:(i-1))
+            for(j in 1L:(i-1))
                 if(identical(objs2[[i]], objs2[[j]])) {
                     dups[i] <- TRUE
                     break
@@ -359,7 +359,7 @@ print.getAnywhere <- function(x, ...)
         cat("It was found in the following places\n")
         cat(paste("  ", x$where, sep=""), sep="\n")
         cat("with value\n\n")
-        print(x$objs[[1]])
+        print(x$objs[[1L]])
     } else {
         cat(n, "differing objects matching", sQuote(x$name),
             "were found\n")
@@ -385,5 +385,5 @@ argsAnywhere <- function(x) {
         if (sum(!fs$dups)>1)
             sapply(fs$objs[!fs$dups],
                    function(f) if (is.function(f)) args(f))
-        else args(fs$objs[[1]])
+        else args(fs$objs[[1L]])
 }

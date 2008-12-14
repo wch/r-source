@@ -21,7 +21,7 @@ addTclPath <- function(path = ".")
     if(.Platform$OS.type == "windows")
         path <- gsub("\\\\", "/", path)
     a <- tclvalue(tcl("set", "auto_path"))
-    paths <- strsplit(a, " ", fixed=TRUE)[[1]]
+    paths <- strsplit(a, " ", fixed=TRUE)[[1L]]
     if (! path %in% paths)
         tcl("lappend", "auto_path", path)
     invisible(paths)

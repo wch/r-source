@@ -30,7 +30,7 @@ fixPre1.8 <- function(names, where = topenv(parent.frame())) {
             warning(gettextf("object \"%s\" not found", what), domain = NA)
             next
         }
-        objWhere <- objWhere[[1]]
+        objWhere <- objWhere[[1L]]
         obj <- get(what, objWhere)
         ## don't fix up basic datatypes with no explicit class
         if(is.null(attr(obj, "class")))

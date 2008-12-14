@@ -33,7 +33,7 @@ function(formula, data = list(),
     m <- match.call(expand.dots = FALSE)
     m <- m[c(1, match(c("formula", "data", "subset"), names(m), 0))]
     require(stats, quietly=TRUE)
-    m[[1]] <- as.name("model.frame")
+    m[[1L]] <- as.name("model.frame")
     mf <- eval.parent(m)
     if(NCOL(mf) != 2)
         stop("'formula' should specify exactly two variables")
@@ -45,8 +45,8 @@ function(formula, data = list(),
     x <- mf[,2]
 
     ## graphical parameters
-    if(is.null(xlab)) xlab <- names(mf)[2]
-    if(is.null(ylab)) ylab <- names(mf)[1]
+    if(is.null(xlab)) xlab <- names(mf)[2L]
+    if(is.null(ylab)) ylab <- names(mf)[1L]
 
     ## call default interface
     spineplot(x, y, breaks = breaks, tol.ylab = tol.ylab, off = off, ylevels = NULL,
@@ -70,10 +70,10 @@ function(x, y = NULL,
             stop("a 2-way table has to be specified")
         tab <- x
         x.categorical <- TRUE
-        if(is.null(xlab)) xlab <- names(dimnames(tab))[1]
-        if(is.null(ylab)) ylab <- names(dimnames(tab))[2]
-        xnam <- dimnames(tab)[[1]]
-        ynam <- dimnames(tab)[[2]]
+        if(is.null(xlab)) xlab <- names(dimnames(tab))[1L]
+        if(is.null(ylab)) ylab <- names(dimnames(tab))[2L]
+        xnam <- dimnames(tab)[[1L]]
+        ynam <- dimnames(tab)[[2L]]
         ny <- NCOL(tab)
         nx <- NROW(tab)
     } else {
@@ -142,7 +142,7 @@ function(x, y = NULL,
     ## compute coordinates
     ybottom <- as.vector(yat[-(ny+1),])
     ytop <- as.vector(yat[-1,])
-    xleft <- rep(xat[1:nx], rep(ny, nx))
+    xleft <- rep(xat[1L:nx], rep(ny, nx))
     xright <- rep(xat[2:(nx+1)] - off, rep(ny, nx))
     col <- rep(col, nx)
 
@@ -150,9 +150,9 @@ function(x, y = NULL,
     rect(xleft, ybottom, xright, ytop, col = col, ...)
 
     ## axes
-    ## 1: either numeric or level names
+    ## 1L: either numeric or level names
     if(x.categorical)
-        axis(1, at = (xat[1:nx] + xat[2:(nx+1)] - off)/2, labels = xaxlabels, tick = FALSE)
+        axis(1, at = (xat[1L:nx] + xat[2:(nx+1)] - off)/2, labels = xaxlabels, tick = FALSE)
     else
         axis(1, at = xat, labels = xaxlabels)
 
@@ -160,7 +160,7 @@ function(x, y = NULL,
     yat <- yat[,1]
     equidist <- any(diff(yat) < tol.ylab)
     yat <- if(equidist) seq.int(1/(2*ny), 1-1/(2*ny), by = 1/ny)
-    else (yat[-1] + yat[-length(yat)])/2
+    else (yat[-1L] + yat[-length(yat)])/2
     axis(2, at = yat, labels = yaxlabels, tick = FALSE)
 
     ## 3: none

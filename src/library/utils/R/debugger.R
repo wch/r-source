@@ -52,7 +52,7 @@ debugger <- function(dump = last.dump)
     calls <- names(dump)
     repeat {
         cat(gettext("Available environments had calls:\n"))
-        cat(paste(1:n, ": ", calls,  sep=""), sep="\n")
+        cat(paste(1L:n, ": ", calls,  sep=""), sep="\n")
         cat(gettext("\nEnter an environment number, or 0 to exit  "))
         repeat {
             ind <- .Internal(menu(as.character(calls)))
@@ -91,9 +91,9 @@ recover <-
     ## this level.
     for(i in rev(seq_len(n))) {
         calli <- calls[[i]]
-        fname <- calli[[1]]
+        fname <- calli[[1L]]
         ## deparse can use more than one line
-        if(!is.na(match(deparse(fname)[1],
+        if(!is.na(match(deparse(fname)[1L],
                         c("methods::.doTrace", ".doTrace")))) {
             from <- i-1
             break
@@ -104,7 +104,7 @@ recover <-
     if(from == 0)
       for(i in rev(seq_len(n))) {
         calli <- calls[[i]]
-        fname <- calli[[1]]
+        fname <- calli[[1L]]
         if(!is.name(fname) ||
            is.na(match(as.character(fname), c("recover", "stop", "Stop")))) {
             from <- i
@@ -119,7 +119,7 @@ recover <-
         }
         else if(identical(getOption("show.error.messages"), FALSE)) # from try(silent=TRUE)?
             return(NULL)
-        calls <- limitedLabels(calls[1:from])
+        calls <- limitedLabels(calls[1L:from])
         repeat {
             which <- menu(calls,
                           title="\nEnter a frame number, or 0 to exit  ")

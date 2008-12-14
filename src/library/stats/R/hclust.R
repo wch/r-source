@@ -89,8 +89,8 @@ hclust <- function(d, method="complete", members=NULL)
 		      iia = integer(n),
 		      iib = integer(n), PACKAGE="stats")
 
-    tree <- list(merge = cbind(hcass$iia[1:(n-1)], hcass$iib[1:(n-1)]),
-		 height= hcl$crit[1:(n-1)],
+    tree <- list(merge = cbind(hcass$iia[1L:(n-1)], hcass$iib[1L:(n-1)]),
+		 height= hcl$crit[1L:(n-1)],
 		 order = hcass$order,
 		 labels=attr(d, "Labels"),
                  method=METHODS[method],
@@ -118,7 +118,7 @@ plot.hclust <-
     labels <-
 	if(missing(labels) || is.null(labels)) {
 	    if (is.null(x$labels))
-		paste(1:(n+1))
+		paste(1L:(n+1))
 	    else
 		as.character(x$labels)
 	} else {
@@ -137,9 +137,9 @@ plot.hclust <-
         box(...)
     if (ann) {
         if(!is.null(cl <- x$call) && is.null(sub))
-            sub <- paste(deparse(cl[[1]])," (*, \"", x$method,"\")",sep="")
+            sub <- paste(deparse(cl[[1L]])," (*, \"", x$method,"\")",sep="")
         if(is.null(xlab) && !is.null(cl))
-            xlab <- deparse(cl[[2]])
+            xlab <- deparse(cl[[2L]])
         title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
     }
     invisible()
@@ -172,7 +172,7 @@ as.hclust.default <- function(x, ...) {
 	stop(gettext("argument 'x' cannot be coerced to class \"hclust\""),
              if(!is.null(oldClass(x)))
              gettextf("\n Consider providing an as.hclust.%s() method",
-                      oldClass(x)[1]), domain = NA)
+                      oldClass(x)[1L]), domain = NA)
 }
 
 as.hclust.twins <- function(x, ...)
@@ -214,8 +214,8 @@ function(x)
     out <- matrix(0, nrow = nobs, ncol = nobs)
     for(i in 1 : (nobs - 1)) {
         inds <- x$merge[i,]
-        ids1 <- if(inds[1] < 0) -inds[1] else ilist[[inds[1]]]
-        ids2 <- if(inds[2] < 0) -inds[2] else ilist[[inds[2]]]
+        ids1 <- if(inds[1L] < 0) -inds[1L] else ilist[[inds[1L]]]
+        ids2 <- if(inds[2L] < 0) -inds[2L] else ilist[[inds[2L]]]
         ilist[[i]] <- c(ids1, ids2)
         out[cbind(rep.int(ids1, rep.int(length(ids2), length(ids1))),
                   rep.int(ids2, length(ids1)))] <- x$height[i]

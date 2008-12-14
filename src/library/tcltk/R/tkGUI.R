@@ -102,7 +102,7 @@ tkStartGUI <- function() {
         txtvar <- tclVar()
         entry <- tkentry(Toolbar,textvariable=txtvar)
         showhelp <-  function() {
-            s <- as.character(tclObj(txtvar))[1]
+            s <- as.character(tclObj(txtvar))[1L]
             if (length(s) == 0) return
             nm <- as.name(s)
             print(eval(substitute(help(nm))))
@@ -128,11 +128,11 @@ tkStartGUI <- function() {
           menu=helpPDFMenu)
     pdfBase <- file.path(R.home("doc"), "manual")
     apply(manuals, 1, function(x) {
-	f <- file.path(pdfBase, paste(x[1], ".pdf", sep="") )
+	f <- file.path(pdfBase, paste(x[1L], ".pdf", sep="") )
         cmd <- function() system(paste(shQuote(getOption("pdfviewer")),
                                        shQuote(f)),
                                  wait = FALSE)
-	tkadd(helpPDFMenu, "command", label=x[2], command=cmd,
+	tkadd(helpPDFMenu, "command", label=x[2L], command=cmd,
               state=if (file.exists(f)) "normal" else "disabled")
     })
     #tkadd(helpMenu,"command", label=gettext("Help on topic..."), command=topicHelp)

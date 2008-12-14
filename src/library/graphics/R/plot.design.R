@@ -44,19 +44,19 @@ plot.design <-
 	plot(c(0,k+1), ylim, type = "n", axes = axes, xaxt = "n",
              xlab = xlab, ylab = ylab, main = main, adj = 0.5, ...)
 	segments(0.5, tot, k+0.5, tot, ...)
-	for(i in 1:k) {
+	for(i in 1L:k) {
             si <- stats[[i]]
 	    segments(i, min(si, na.rm = TRUE),
 		     i, max(si, na.rm = TRUE), ...)
-	    for(j in 1:(length(si))) {
+	    for(j in 1L:(length(si))) {
                 sij <- si[j]
 		segments(i-0.05, sij, i+0.05, sij, ...)
 		text(i-0.1, sij, labels = names(sij), adj = 1, ...)
 	    }
 	}
         if(axes && xaxt != "n")
-            axis(1, at = 1:k, names(stats), xaxt= xaxt, tick = xtick,
-                 mgp = {p <- par("mgp"); c(p[1], if(xtick) p[2] else 0, 0)},
+            axis(1, at = 1L:k, names(stats), xaxt= xaxt, tick = xtick,
+                 mgp = {p <- par("mgp"); c(p[1L], if(xtick) p[2L] else 0, 0)},
                  ...)
     } ## .plot.des()
 
@@ -75,7 +75,7 @@ plot.design <-
 	else if(is.numeric(y)) {
 	    x <- cbind(y,x[,sapply(x, is.factor)])
 	    tmpname <- match.call()
-	    names(x) <- as.character(c(tmpname[[3]],names(x[,-1])))
+	    names(x) <- as.character(c(tmpname[[3L]],names(x[,-1])))
 	}
 	else if(is.character(y)) {
 	    ynames <- y
@@ -116,6 +116,6 @@ plot.design <-
 	oask <- devAskNewPage(ask)
 	on.exit(devAskNewPage(oask))
     }
-    for(j in 1:nResp)
+    for(j in 1L:nResp)
 	.plot.des(xf, ydata[,j], fun = fun, ylab = ylab[j], ylim = ylim, ...)
 }

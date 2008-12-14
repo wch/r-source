@@ -27,11 +27,11 @@ rect <-
         }
         n <- range(length(xleft), length(xright),
                    length(ybottom), length(ytop))
-        if (n[1] == 0)
+        if (n[1L] == 0)
             stop("invalid rectangle specification")
-        n <- n[2]
-        x <- rbind(rep.int(NA, n), xleft, xright, xright, xleft)[-1]
-        y <- rbind(rep.int(NA, n), ybottom, ybottom, ytop, ytop)[-1]
+        n <- n[2L]
+        x <- rbind(rep.int(NA, n), xleft, xright, xright, xleft)[-1L]
+        y <- rbind(rep.int(NA, n), ybottom, ybottom, ytop, ytop)[-1L]
         polygon(x, y, col = col, border = border, lty = lty, lwd = lwd,
                 density = density, angle = angle, ...)
     }

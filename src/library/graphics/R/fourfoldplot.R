@@ -58,7 +58,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     }
     if(length(dim(x)) != 3)
         stop("'x' must be 2- or 3-dimensional")
-    if(any(dim(x)[1:2] != 2))
+    if(any(dim(x)[1L:2] != 2))
         stop("table for each stratum must be 2 by 2")
     dnx <- dimnames(x)
     if(is.null(dnx))
@@ -72,7 +72,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     if(any(i))
         names(dnx)[i] <- c("Row", "Col", "Strata")[i]
     dimnames(x) <- dnx
-    k <- dim(x)[3]
+    k <- dim(x)[3L]
 
     if(!((length(conf.level) == 1) && is.finite(conf.level) &&
          (conf.level >= 0) && (conf.level < 1)))
@@ -85,9 +85,9 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     findTableWithOAM <- function(or, tab) {
         ## Find a 2x2 table with given odds ratio 'or' and the margins
         ## of a given 2x2 table 'tab'.
-        m <- rowSums(tab)[1]
-        n <- rowSums(tab)[2]
-        t <- colSums(tab)[1]
+        m <- rowSums(tab)[1L]
+        n <- rowSums(tab)[2L]
+        t <- colSums(tab)[1L]
         if(or == 1)
             x <- t * n / (m + n)
         else if(or == Inf)
@@ -139,7 +139,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
             k <- 1
         }
         else
-            k <- dim(x)[3]
+            k <- dim(x)[3L]
         or <- double(k)
         se <- double(k)
         for(i in 1 : k) {
@@ -163,12 +163,12 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
 
     byrow <- FALSE
     if(!is.null(mfrow)) {
-        nr <- mfrow[1]
-        nc <- mfrow[2]
+        nr <- mfrow[1L]
+        nc <- mfrow[2L]
     }
     else if(!is.null(mfcol)) {
-        nr <- mfcol[1]
-        nc <- mfcol[2]
+        nr <- mfcol[1L]
+        nc <- mfcol[2L]
         byrow <- TRUE
     }
     else {
@@ -226,35 +226,35 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
         u <- 1 + space / 2
         adjCorr <- 0.2
         text(0, u,
-             paste(names(dimnames(x))[1],
-                   dimnames(x)[[1]][1],
+             paste(names(dimnames(x))[1L],
+                   dimnames(x)[[1L]][1L],
                    sep = ": "),
              adj = c(0.5, 0.5 - adjCorr),
              cex = scale)
         text(-u, 0,
-             paste(names(dimnames(x))[2],
-                   dimnames(x)[[2]][1],
+             paste(names(dimnames(x))[2L],
+                   dimnames(x)[[2L]][1L],
                    sep = ": "),
              adj = c(0.5, 0.5 - adjCorr),
              cex = scale,
              srt = 90)
         text(0, -u,
-             paste(names(dimnames(x))[1],
-                   dimnames(x)[[1]][2],
+             paste(names(dimnames(x))[1L],
+                   dimnames(x)[[1L]][2L],
                    sep = ": "),
              adj = c(0.5, 0.5 + adjCorr),
              cex = scale)
         text(u, 0,
-             paste(names(dimnames(x))[2],
-                   dimnames(x)[[2]][2],
+             paste(names(dimnames(x))[2L],
+                   dimnames(x)[[2L]][2L],
                    sep = ": "),
              adj = c(0.5, 0.5 + adjCorr),
              cex = scale,
              srt = 90)
         if(k > 1) {
             text(0, 1 + (1 + gamma / 2) * space,
-                 paste(names(dimnames(x))[3],
-                       dimnames(x)[[3]][i],
+                 paste(names(dimnames(x))[3L],
+                       dimnames(x)[[3L]][i],
                        sep = ": "),
                  cex = gamma * scale)
         }

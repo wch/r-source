@@ -46,7 +46,7 @@ function(object, filename = NULL, name = NULL,
             if(is.name(name))
                 as.character(name)
             else if(is.call(name)
-                    && (as.character(name[[1]]) %in%
+                    && (as.character(name[[1L]]) %in%
                         c("::", ":::", "getAnywhere"))) {
                 name <- as.character(name)
                 name[length(name)]
@@ -340,7 +340,7 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
     	         description = c("\\description{","}"),
     	         details = c("\\details{","}"),
     	         author = c("\\author{","}"),
-    	         references = character(0),
+    	         references = character(0L),
 
     	         keywords = c("\\keyword{ package }")
     	     )
@@ -351,7 +351,7 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
     	info <- library(help = package, lib.loc = lib.loc,
                         character.only = TRUE)
 
-    	if (!length(grep(paste0("^", package, " "), info$info[[2]])))
+    	if (!length(grep(paste0("^", package, " "), info$info[[2L]])))
     	    Rdtxt$aliases <- c(Rdtxt$aliases, paste0("\\alias{", package, "}"))
 
         insert1("title", desc$Title)
@@ -364,15 +364,15 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
 
 	insert1("details", tabular(paste0(names(desc), ":"), unlist(desc)))
 
-	if (!is.null(info$info[[2]]))
+	if (!is.null(info$info[[2L]]))
 	    insert1("details",  c("", identity("Index:"), "\\preformatted{",
-	                          info$info[[2]], "}"))
-	if (!is.null(info$info[[3]]))
+	                          info$info[[2L]], "}"))
+	if (!is.null(info$info[[3L]]))
 	    insert1("details",
                     c("",
         identity("Further information is available in the following vignettes:"),
-                      tabular(paste0("\\code{", info$info[[3]][,1], "}"),
-                              info$info[[3]][,2])))
+                      tabular(paste0("\\code{", info$info[[3L]][,1], "}"),
+                              info$info[[3L]][,2])))
     }
 
     if (!final) {

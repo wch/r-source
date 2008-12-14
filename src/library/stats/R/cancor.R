@@ -51,12 +51,12 @@ cancor <- function(x, y, xcenter=TRUE, ycenter=TRUE)
     dx <- qx$rank;	if(!dx) stop("'x' has rank 0")
     dy <- qy$rank;	if(!dy) stop("'y' has rank 0")
     ## compute svd(Qx'Qy)
-    z <- svd(qr.qty(qx, qr.qy(qy, diag(1, nr, dy)))[1:dx,, drop = FALSE],
+    z <- svd(qr.qty(qx, qr.qy(qy, diag(1, nr, dy)))[1L:dx,, drop = FALSE],
              dx, dy)
-    xcoef <- backsolve((qx$qr)[1:dx, 1:dx, drop = FALSE], z$u)
-    rownames(xcoef) <- colnames(x)[qx$pivot][1:dx]
-    ycoef <-  backsolve((qy$qr)[1:dy, 1:dy, drop = FALSE], z$v)
-    rownames(ycoef) <- colnames(y)[qy$pivot][1:dy]
+    xcoef <- backsolve((qx$qr)[1L:dx, 1L:dx, drop = FALSE], z$u)
+    rownames(xcoef) <- colnames(x)[qx$pivot][1L:dx]
+    ycoef <-  backsolve((qy$qr)[1L:dy, 1L:dy, drop = FALSE], z$v)
+    rownames(ycoef) <- colnames(y)[qy$pivot][1L:dy]
     list(cor = z$d, xcoef = xcoef, ycoef = ycoef, xcenter = xcenter,
 	 ycenter = ycenter)
 }

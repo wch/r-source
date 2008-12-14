@@ -16,7 +16,7 @@
 
 ## Constructor for  Step Functions:
 
-## Given x[1] .. x[n] ;	 y[0] .. y[n]  (one value more !)
+## Given x[1L] .. x[n] ;	 y[0] .. y[n]  (one value more !)
 ## For 'cadlag' functions :  f(t) = y[i]  iff  t in  ( x[i], x[i+1] ],
 ##     where  x[0] := - Inf
 ##
@@ -32,7 +32,7 @@ stepfun <-
     n1 <- n + 1L
     if(length(y) != n1) stop("'y' must be one longer than 'x'")
     rval <- approxfun(x, y[- if(right)n1 else 1], method = "constant",
-		      yleft = y[1], yright = y[n1], f = f, ties = ties)
+		      yleft = y[1L], yright = y[n1], f = f, ties = ties)
     class(rval) <- c("stepfun", class(rval))
     attr(rval, "call") <- sys.call()
     rval
@@ -55,8 +55,8 @@ knots.stepfun <- function(Fn, ...) eval(expression(x), envir=environment(Fn))
 print.stepfun <- function (x, digits = getOption("digits") - 2, ...)
 {
     numform <- function(x) paste(formatC(x, digits = digits), collapse=", ")
-    i1 <- function(n) 1:min(3, n)
-    i2 <- function(n) if(n >= 4) max(4, n-1):n else integer(0)
+    i1 <- function(n) 1L:min(3, n)
+    i2 <- function(n) if(n >= 4) max(4, n-1):n else integer(0L)
     cat("Step function\nCall: ")
     print(attr(x, "call"), ...)
     env <- environment(x)
@@ -130,12 +130,12 @@ plot.stepfun <-
 
     } else dr <- diff(xlim)
 
-    knF <- knF[xlim[1]-dr <= knF & knF <= xlim[2]+dr]
+    knF <- knF[xlim[1L]-dr <= knF & knF <= xlim[2L]+dr]
 
     ## Careful for heights of horizontals -- these depend on f
-    ti <- c(xlim[1]-dr, knF, xlim[2]+dr)
+    ti <- c(xlim[1L]-dr, knF, xlim[2L]+dr)
     ti.l <- ti[-length(ti)]
-    ti.r <- ti[-1]
+    ti.r <- ti[-1L]
     y <- x(0.5*(ti.l + ti.r))
     n <- length(y)
     Fn.kn <- x(knF)
@@ -155,7 +155,7 @@ plot.stepfun <-
 	points(knF, Fn.kn, pch=pch, col=col.points, cex=cex.points)
 
     if(verticals)
-	segments(knF, y[-n], knF, y[-1], col=col.vert, lty=lty, lwd=lwd)
+	segments(knF, y[-n], knF, y[-1L], col=col.vert, lty=lty, lwd=lwd)
     invisible(list(t = ti, y = y))
 }
 

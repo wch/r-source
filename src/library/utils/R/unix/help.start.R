@@ -103,7 +103,7 @@ make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
         out <- file(f.tg, open="a")
         search <- file(searchindex, open="w")
     }
-    known <- character(0)
+    known <- character(0L)
     for (lib in lib.loc) {
         if(packages)
             cat("<p><h3>Packages in ", lib,

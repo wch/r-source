@@ -80,7 +80,7 @@ logLik.lm <- function(object, REML = FALSE, ...)
     if(REML) N <- N - p
     val <- .5* (sum(log(w)) - N * (log(2 * pi) + 1 - log(N) +
                                    log(sum(w*res^2))))
-    if(REML) val <- val - sum(log(abs(diag(object$qr$qr)[1:p])))
+    if(REML) val <- val - sum(log(abs(diag(object$qr$qr)[1L:p])))
     attr(val, "nall") <- N0
     attr(val, "nobs") <- N
     attr(val, "df") <- p + 1

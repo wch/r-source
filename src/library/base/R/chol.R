@@ -28,9 +28,9 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
 	    stop("non-square matrix in 'chol'")
 	n <- nrow(x)
     } else {
-	if(length(x) != 1)
+	if(length(x) != 1L)
 	    stop("non-matrix argument to 'chol'")
-	n <- as.integer(1)
+	n <- 1L
     }
     if(!pivot && !LINPACK)
         return(.Call("La_chol", as.matrix(x), PACKAGE = "base"))
@@ -45,9 +45,9 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
                       n,
                       n,
                       double(n),
-                      piv = as.integer(rep.int(0, n)),
+                      piv = rep.int(0L, n),
                       as.integer(pivot),
-                      rank = integer(1),
+                      rank = integer(1L),
                       DUP = FALSE, PACKAGE = "base")
         if (z$rank < n)
             if(!pivot) stop("matrix not positive definite")
@@ -66,7 +66,7 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
                       n,
                       n,
                       v = matrix(0, nrow=n, ncol=n),
-                      info = integer(1),
+                      info = integer(1L),
                       DUP = FALSE, PACKAGE = "base")
         if(z$info)
             stop("non-positive definite matrix in 'chol'")
@@ -86,10 +86,10 @@ chol2inv <- function(x, size=NCOL(x), LINPACK=FALSE)
     }
     else {
 	nr <- length(x)
-	nc <- as.integer(1)
+	nc <- 1L
     }
     size <- as.integer(size)
-    if(size <= 0 || size > nr || size > nc)
+    if(size <= 0L || size > nr || size > nc)
 	stop("invalid 'size' argument in 'chol2inv'")
     if(!is.double(x)) storage.mode(x) <- "double"
     z <- .Fortran("ch2inv",
@@ -97,7 +97,7 @@ chol2inv <- function(x, size=NCOL(x), LINPACK=FALSE)
 		  nr,
 		  size,
 		  v=matrix(0, nrow=size, ncol=size),
-		  info=integer(1),
+		  info=integer(1L),
 		  DUP=FALSE, PACKAGE="base")
     if(z$info)
 	stop("singular matrix in 'chol2inv'")

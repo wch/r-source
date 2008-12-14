@@ -26,7 +26,7 @@ assocplot <- function(x, col = c("black", "red"), space = 0.3,
     if(length(col) != 2)
         stop("incorrect 'col': must be length 2")
 
-    f <- x[ , rev(1:NCOL(x))]           # rename for convenience;
+    f <- x[ , rev(1L:NCOL(x))]           # rename for convenience;
                                         # f is observed freqs
                                         # reverse to be consistent with
                                         # mosaicplot().
@@ -57,9 +57,9 @@ assocplot <- function(x, col = c("black", "red"), space = 0.3,
     ndn <- names(dimnames(f))
     if(length(ndn) == 2) {
         if(is.null(xlab))
-            xlab <- ndn[1]
+            xlab <- ndn[1L]
         if(is.null(ylab))
-            ylab <- ndn[2]
+            ylab <- ndn[2L]
     }
     title(main = main, xlab = xlab, ylab = ylab)
 }

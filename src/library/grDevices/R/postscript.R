@@ -157,7 +157,7 @@ guessEncoding <- function(family)
     }  else {
         switch(.Platform$OS.type,
                "windows" = {
-                   switch(utils::localeToCharset()[1],
+                   switch(utils::localeToCharset()[1L],
                           "ISO8859-2" = "CP1250.enc",
                           "ISO8859-7" = "CP1253.enc", # Greek
                           "ISO8859-13" = "CP1257.enc",
@@ -176,8 +176,8 @@ guessEncoding <- function(family)
                             "KOI8-R" = "KOI8-R.enc",
                             "KOI8-U" = "KOI8-U.enc",
                             "ISOLatin1.enc")
-                 else if(lc[1] == "UTF-8" && capabilities("iconv"))
-                     switch(lc[2],
+                 else if(lc[1L] == "UTF-8" && capabilities("iconv"))
+                     switch(lc[2L],
                             "ISO8859-1" = "ISOLatin1.enc", # what about Euro?
                             "ISO8859-2" = "ISOLatin2.enc",
                             "ISO8859-5" = "Cyrillic.enc",
@@ -248,7 +248,7 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
             ## and pass in a device-independent font name.
             ## NOTE that in order to match, we need both family name
             ## and encoding to match.
-            pf <- postscriptFonts(family)[[1]]
+            pf <- postscriptFonts(family)[[1L]]
             if(is.null(pf))
               stop(gettextf("unknown family '%s'", family), domain = NA)
             matchFont(pf, old$encoding)
@@ -337,7 +337,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
             ## and pass in a device-independent font name.
             ## NOTE that in order to match, we need both family name
             ## and encoding to match.
-            pf <- pdfFonts(family)[[1]]
+            pf <- pdfFonts(family)[[1L]]
             if(is.null(pf))
               stop(gettextf("unknown family '%s'", family), domain = NA)
             matchFont(pf, old$encoding)
@@ -349,7 +349,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     version <- old$version
     versions <- c("1.1", "1.2", "1.3", "1.4", "1.5", "1.6")
     if (version %in% versions)
-        version <- as.integer(strsplit(version, "[.]")[[1]])
+        version <- as.integer(strsplit(version, "[.]")[[1L]])
     else
         stop("invalid PDF version")
 
@@ -358,7 +358,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     .External(PDF,
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$pointsize, onefile, old$pagecentre,
-              old$title, old$fonts, version[1], version[2],
+              old$title, old$fonts, version[1L], version[2L],
               old$colormodel, old$useDingbats, old$useKerning)
     invisible()
 }

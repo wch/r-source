@@ -51,13 +51,13 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
 	if(nx == 0) stop("zero non-NA points")
     }
     if (missing(yleft))
-	yleft <- if (rule == 1) NA else y[1]
+	yleft <- if (rule == 1) NA else y[1L]
     if (missing(yright))
 	yright <- if (rule == 1) NA else y[length(y)]
     if (missing(xout)) {
 	if (n <= 0)
 	    stop("'approx' requires n >= 1")
-	xout <- seq.int(x[1], x[nx], length.out = n)
+	xout <- seq.int(x[1L], x[nx], length.out = n)
     }
     y <- .C("R_approx", as.double(x), as.double(y), as.integer(nx),
 	    xout = as.double(xout), as.integer(length(xout)),
@@ -102,7 +102,7 @@ approxfun <- function(x, y = NULL, method = "linear",
 	if(n == 0) stop("zero non-NA points")
     }
     if (missing(yleft))
-	yleft <- if(rule == 1) NA else y[1]
+	yleft <- if(rule == 1) NA else y[1L]
     if (missing(yright))
 	yright <- if(rule == 1) NA else y[length(y)]
     force(f)

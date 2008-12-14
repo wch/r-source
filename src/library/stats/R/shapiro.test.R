@@ -21,7 +21,7 @@ shapiro.test <- function(x) {
     n <- length(x) # *is* integer
     if(n < 3 || n > 5000)
 	stop("sample size must be between 3 and 5000")
-    rng <- x[n] - x[1]
+    rng <- x[n] - x[1L]
     if(rng == 0)
 	stop("all 'x' values are identical")
     if(rng < 1e-10)
@@ -37,7 +37,7 @@ shapiro.test <- function(x) {
 	     a = single(n2),
 	     w	= double(1),
 	     pw = double(1),
-	     ifault = integer(1))
+	     ifault = integer(1L))
     if (sw$ifault && sw$ifault != 7)# 7 *does* happen (Intel Linux)
 	stop(gettextf("ifault=%d. This should not happen", sw$ifault),
              domain = NA)

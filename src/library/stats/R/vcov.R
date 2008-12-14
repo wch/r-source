@@ -33,7 +33,7 @@ vcov.lm <- function(object, ...)
 
 vcov.mlm <- function(object, ...)
 {
-    so <- summary.mlm(object, corr=FALSE)[[1]]
+    so <- summary.mlm(object, corr=FALSE)[[1L]]
     kronecker(estVar(object), so$cov.unscaled, make.dimnames = TRUE)
 }
 

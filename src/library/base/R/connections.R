@@ -152,13 +152,13 @@ summary.connection <- function(object, ...)
 showConnections <- function(all = FALSE)
 {
     set <- getAllConnections()
-    if(!all) set <- set[set > 2]
-    ans <- matrix("", length(set), 7)
+    if(!all) set <- set[set > 2L]
+    ans <- matrix("", length(set), 7L)
     for(i in seq_along(set)) ans[i, ] <- unlist(summary.connection(set[i]))
     rownames(ans) <- set
     colnames(ans) <- c("description", "class", "mode", "text", "isopen",
                        "can read", "can write")
-    if(!all) ans[ans[, 5] == "opened", , drop = FALSE]
+    if(!all) ans[ans[, 5L] == "opened", , drop = FALSE]
     else ans[, , drop = FALSE]
 }
 
@@ -171,13 +171,13 @@ closeAllConnections <- function()
 {
     # first re-divert any diversion of stderr.
     i <- sink.number(type = "message")
-    if(i > 0) sink(stderr(), type = "message")
+    if(i > 0L) sink(stderr(), type = "message")
     # now unwind the sink diversion stack.
     n <- sink.number()
-    if(n > 0) for(i in 1:n) sink()
+    if(n > 0L) for(i in 1L:n) sink()
     # get all the open connections.
     set <- getAllConnections()
-    set <- set[set > 2]
+    set <- set[set > 2L]
     # and close all user connections.
     for(i in seq_along(set)) close(getConnection(set[i]))
     invisible()

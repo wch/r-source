@@ -130,9 +130,9 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 switch(alternative, two.sided = {
                     cci(alpha)
                 }, greater= {
-                    c(cci(alpha*2)[1], Inf)
+                    c(cci(alpha*2)[1L], Inf)
                 }, less= {
-                    c(0, cci(alpha*2)[2])
+                    c(0, cci(alpha*2)[2L])
                 })
             }
             attr(cint, "conf.level") <- conf.level
@@ -205,8 +205,8 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 ccia <- function(alpha) {
                     ## Check if the statistic exceeds both quantiles
                     ## first.
-                    statu <- ab2(srange[1], zq=qnorm(alpha/2))
-                    statl <- ab2(srange[2], zq=qnorm(alpha/2, lower.tail=FALSE))
+                    statu <- ab2(srange[1L], zq=qnorm(alpha/2))
+                    statl <- ab2(srange[2L], zq=qnorm(alpha/2, lower.tail=FALSE))
                     if (statu > 0 || statl < 0) {
                         warning("samples differ in location: cannot compute confidence set, returning NA")
                         return(c(NA, NA))
@@ -223,14 +223,14 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 cint <- switch(alternative, two.sided = {
                     ccia(alpha)
                 }, greater= {
-                    c(ccia(alpha*2)[1], Inf)
+                    c(ccia(alpha*2)[1L], Inf)
                 }, less= {
-                    c(0, ccia(alpha*2)[2])
+                    c(0, ccia(alpha*2)[2L])
                 })
                 attr(cint, "conf.level") <- conf.level
                 ## Check if the statistic exceeds both quantiles first.
-                statu <- ab2(srange[1], zq=0)
-                statl <- ab2(srange[2], zq=0)
+                statu <- ab2(srange[1L], zq=0)
+                statl <- ab2(srange[2L], zq=0)
                 if (statu > 0 || statl < 0) {
                     ESTIMATE <- NA
                     warning("cannot compute estimate, returning NA")
@@ -270,7 +270,7 @@ function(formula, data, subset, na.action, ...)
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
-    m[[1]] <- as.name("model.frame")
+    m[[1L]] <- as.name("model.frame")
     m$... <- NULL
     mf <- eval(m, parent.frame())
     DNAME <- paste(names(mf), collapse = " by ")

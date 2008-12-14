@@ -32,7 +32,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     {
         p <- max(which(c(1, -ar) != 0)) - 1
         if(!p) return(TRUE)
-        all(Mod(polyroot(c(1, -ar[1:p]))) > 1)
+        all(Mod(polyroot(c(1, -ar[1L:p]))) > 1)
     }
 
     maInvert <- function(ma)
@@ -41,15 +41,15 @@ arima0 <- function(x, order = c(0, 0, 0),
         q <- length(ma)
         q0 <- max(which(c(1,ma) != 0)) - 1
         if(!q0) return(ma)
-        roots <- polyroot(c(1, ma[1:q0]))
+        roots <- polyroot(c(1, ma[1L:q0]))
         ind <- Mod(roots) < 1
         if(all(!ind)) return(ma)
         warning("converting non-invertible initial MA values")
-        if(q0 == 1) return(c(1/ma[1], rep(0, q-q0)))
+        if(q0 == 1) return(c(1/ma[1L], rep(0, q-q0)))
         roots[ind] <- 1/roots[ind]
         x <- 1
         for(r in roots) x <- c(x, 0) - c(0, x)/r
-        c(Re(x[-1]), rep(0, q-q0))
+        c(Re(x[-1L]), rep(0, q-q0))
     }
 
     series <- deparse(substitute(x))
@@ -80,17 +80,17 @@ arima0 <- function(x, order = c(0, 0, 0),
     if(is.null(seasonal$period) || is.na(seasonal$period)
        || seasonal$period == 0) seasonal$period <- frequency(x)
     arma <- c(order[-2], seasonal$order[-2], seasonal$period,
-              order[2], seasonal$order[2])
-    narma <- sum(arma[1:4])
-    if(d <- order[2]) x <- diff(x, 1, d)
-    if(d <- seasonal$order[2]) x <- diff(x, seasonal$period, d)
+              order[2L], seasonal$order[2L])
+    narma <- sum(arma[1L:4])
+    if(d <- order[2L]) x <- diff(x, 1, d)
+    if(d <- seasonal$order[2L]) x <- diff(x, seasonal$period, d)
     xtsp <- tsp(x)
     tsp(x) <- NULL
-    nd <- order[2] + seasonal$order[2]
+    nd <- order[2L] + seasonal$order[2L]
     n.used <- length(x)
     ncond <- n - n.used
     if(method == "CSS") {
-        ncond1 <- order[1] + seasonal$period * seasonal$order[1]
+        ncond1 <- order[1L] + seasonal$period * seasonal$order[1L]
         ncond <- if(!missing(n.cond)) ncond + max(n.cond, ncond1)
         else ncond + ncond1
     }
@@ -103,7 +103,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     class(xreg) <- NULL
     if(include.mean && (nd == 0)) {
         if(is.matrix(xreg) && is.null(colnames(xreg)))
-            colnames(xreg) <- paste("xreg", 1:ncxreg, sep = "")
+            colnames(xreg) <- paste("xreg", 1L:ncxreg, sep = "")
         xreg <- cbind(intercept = rep(1, n), xreg = xreg)
         ncxreg <- ncxreg + 1
     }
@@ -112,18 +112,18 @@ arima0 <- function(x, order = c(0, 0, 0),
     else if(length(fixed) != narma + ncxreg) stop("wrong length for 'fixed'")
     mask <- is.na(fixed)
     if(!any(mask)) stop("all parameters were fixed")
-    if(transform.pars && any(!mask[1:narma])) {
+    if(transform.pars && any(!mask[1L:narma])) {
         warning("some ARMA parameters were fixed: setting transform.pars = FALSE")
         transform.pars <- FALSE
     }
 
     if(ncxreg) {
-        if(d <- order[2]) xreg <- diff(xreg, 1, d)
-        if(d <- seasonal$order[2]) xreg <- diff(xreg, seasonal$period, d)
+        if(d <- order[2L]) xreg <- diff(xreg, 1, d)
+        if(d <- seasonal$order[2L]) xreg <- diff(xreg, seasonal$period, d)
         xreg <- as.matrix(xreg)
         if(qr(na.omit(xreg))$rank < ncol(xreg)) stop("'xreg' is collinear")
         if(is.null(cn <- colnames(xreg)))
-            cn <- paste("xreg", 1:ncxreg, sep = "")
+            cn <- paste("xreg", 1L:ncxreg, sep = "")
     }
     if(any(is.na(x)) || (ncxreg && any(is.na(xreg))))
         ## only exact recursions handle NAs
@@ -135,7 +135,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     init0 <- rep(0, narma)
     parscale <- rep(1, narma)
     if (ncxreg) {
-        orig.xreg <- (ncxreg == 1) || any(!mask[narma + 1:ncxreg])
+        orig.xreg <- (ncxreg == 1) || any(!mask[narma + 1L:ncxreg])
         if(!orig.xreg) {
             S <- svd(na.omit(xreg))
             xreg <- xreg %*% S$v
@@ -158,22 +158,22 @@ arima0 <- function(x, order = c(0, 0, 0),
             stop("'init' is of the wrong length")
         if(any(ind <- is.na(init))) init[ind] <- init0[ind]
         if(transform.pars) {
-            if(any(!mask[1:narma]))
+            if(any(!mask[1L:narma]))
                 warning("transformed ARMA parameters were fixed")
             ## check stationarity
-            if(arma[1] > 0)
-                if(!arCheck(init[1:arma[1]]))
+            if(arma[1L] > 0)
+                if(!arCheck(init[1L:arma[1L]]))
                     stop("non-stationary AR part")
-            if(arma[3] > 0)
-                if(!arCheck(init[sum(arma[1:2]) + 1:arma[3]]))
+            if(arma[3L] > 0)
+                if(!arCheck(init[sum(arma[1L:2]) + 1L:arma[3L]]))
                     stop("non-stationary seasonal AR part")
             ## enforce invertibility
-            if(arma[2] > 0) {
-                ind <- arma[1] + 1:arma[2]
+            if(arma[2L] > 0) {
+                ind <- arma[1L] + 1L:arma[2L]
                 init[ind] <- maInvert(init[ind])
             }
-            if(arma[4] > 0) {
-                ind <- sum(arma[1:3]) + 1:arma[4]
+            if(arma[4L] > 0) {
+                ind <- sum(arma[1L:3]) + 1L:arma[4L]
                 init[ind] <- maInvert(init[ind])
             }
             init <- .Call(R_Invtrans, G, as.double(init))
@@ -207,15 +207,15 @@ arima0 <- function(x, order = c(0, 0, 0),
     class(resid) <- "ts"
     n.used <- sum(!is.na(resid))
     nm <- NULL
-    if(arma[1] > 0) nm <- c(nm, paste("ar", 1:arma[1], sep = ""))
-    if(arma[2] > 0) nm <- c(nm, paste("ma", 1:arma[2], sep = ""))
-    if(arma[3] > 0) nm <- c(nm, paste("sar", 1:arma[3], sep = ""))
-    if(arma[4] > 0) nm <- c(nm, paste("sma", 1:arma[4], sep = ""))
+    if(arma[1L] > 0) nm <- c(nm, paste("ar", 1L:arma[1L], sep = ""))
+    if(arma[2L] > 0) nm <- c(nm, paste("ma", 1L:arma[2L], sep = ""))
+    if(arma[3L] > 0) nm <- c(nm, paste("sar", 1L:arma[3L], sep = ""))
+    if(arma[4L] > 0) nm <- c(nm, paste("sma", 1L:arma[4L], sep = ""))
     fixed[mask] <- coef
     if(ncxreg > 0) {
         nm <- c(nm, cn)
         if(!orig.xreg) {
-            ind <- narma + 1:ncxreg
+            ind <- narma + 1L:ncxreg
             fixed[ind] <- S$v %*% fixed[ind]
             A <- diag(narma + ncxreg)
             A[ind, ind] <- S$v
@@ -280,24 +280,24 @@ predict.arima0 <-
     n <- length(data)
     arma <- object$arma
     coefs <- object$coef
-    narma <- sum(arma[1:4])
+    narma <- sum(arma[1L:4])
     if(length(coefs) > narma) {
         if(names(coefs)[narma+1] == "intercept") {
             xreg <- cbind(intercept = rep(1, n), xreg)
             newxreg <- cbind(intercept = rep(1, n.ahead), newxreg)
             ncxreg <- ncxreg+1
         }
-        data <- data - as.matrix(xreg) %*% coefs[-(1:narma)]
-        xm <- drop(as.matrix(newxreg) %*% coefs[-(1:narma)])
+        data <- data - as.matrix(xreg) %*% coefs[-(1L:narma)]
+        xm <- drop(as.matrix(newxreg) %*% coefs[-(1L:narma)])
     } else xm <- 0
     ## check invertibility of MA part(s)
-    if(arma[2] > 0) {
-        ma <- coefs[arma[1] + 1:arma[2]]
+    if(arma[2L] > 0) {
+        ma <- coefs[arma[1L] + 1L:arma[2L]]
         if(any(Mod(polyroot(c(1, ma))) < 1))
             warning("MA part of model is not invertible")
     }
-    if(arma[4] > 0) {
-        ma <- coefs[sum(arma[1:3]) + 1:arma[4]]
+    if(arma[4L] > 0) {
+        ma <- coefs[sum(arma[1L:3]) + 1L:arma[4L]]
         if(any(Mod(polyroot(c(1, ma))) < 1))
             warning("seasonal MA part of model is not invertible")
     }
@@ -308,11 +308,11 @@ predict.arima0 <-
     .Call(R_Starma_method, G, TRUE)
     .Call(R_arma0fa, G, as.double(coefs))
     z <- .Call(R_arma0_kfore, G, arma[6], arma[7], n.ahead)
-    pred <- ts(z[[1]] + xm, start = xtsp[2] + deltat(data),
-               frequency = xtsp[3])
+    pred <- ts(z[[1L]] + xm, start = xtsp[2L] + deltat(data),
+               frequency = xtsp[3L])
     if(se.fit) {
-        se <- ts(sqrt(z[[2]]),
-                 start = xtsp[2] + deltat(data), frequency = xtsp[3])
+        se <- ts(sqrt(z[[2L]]),
+                 start = xtsp[2L] + deltat(data), frequency = xtsp[3L])
         return(list(pred=pred, se=se))
     } else return(pred)
 }
@@ -332,8 +332,8 @@ tsdiag.Arima <- tsdiag.arima0 <- function(object, gof.lag = 10, ...)
         na.action = na.pass)
     nlag <- gof.lag
     pval <- numeric(nlag)
-    for(i in 1:nlag) pval[i] <- Box.test(rs, i, type="Ljung-Box")$p.value
-    plot(1:nlag, pval, xlab = "lag", ylab = "p value", ylim = c(0,1),
+    for(i in 1L:nlag) pval[i] <- Box.test(rs, i, type="Ljung-Box")$p.value
+    plot(1L:nlag, pval, xlab = "lag", ylab = "p value", ylim = c(0,1),
          main = "p values for Ljung-Box statistic")
     abline(h = 0.05, lty = 2, col = "blue")
 }

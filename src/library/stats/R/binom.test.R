@@ -27,7 +27,7 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
     if(length(x) == 2) {
         ## x gives successes and failures
         n <- sum(x)
-        x <- x[1]
+        x <- x[1L]
     }
     else if(length(x) == 1) {
         ## x gives successes, n gives trials

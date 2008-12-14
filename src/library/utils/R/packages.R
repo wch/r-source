@@ -251,7 +251,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
     currentR <- minorR <- getRversion()
     minorR[[c(1,3)]] <- 0L # set patchlevel to 0
-    for(k in 1:nrow(instPkgs)) {
+    for(k in 1L:nrow(instPkgs)) {
         if (instPkgs[k, "Priority"] %in% "base") next
         z <- match(instPkgs[k, "Package"], available[,"Package"])
         if(is.na(z)) next
@@ -304,13 +304,13 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
             if(!is.na(b)) {
                 if(! b %in% rownames(available)) next
                 ok1 <- which(instPkgs[, "Bundle"] == b)
-                contains <- instPkgs[ok1[1], "Contains"]
+                contains <- instPkgs[ok1[1L], "Contains"]
                 if(!is.na(contains)) {
-                    contains <- strsplit(contains, "[[:space:]]+")[[1]]
+                    contains <- strsplit(contains, "[[:space:]]+")[[1L]]
                     if(!all(contains %in% instPkgs[ok1, "Package"]))
                         warning(gettextf("bundle '%s' is incompletely installed", b), domain = NA)
                 }
-                new <- setdiff(strsplit(available[b, "Contains"], "[[:space:]]+")[[1]],
+                new <- setdiff(strsplit(available[b, "Contains"], "[[:space:]]+")[[1L]],
                                instPkgs[ok1, "Package"])
                 if(length(new))
                     warning(gettextf("bundle '%s' has extra contents %s", b,
@@ -327,7 +327,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(.Platform$OS.type == "unix" &&
        file.exists(paste(R.home(), "/bin/exec", Sys.getenv("R_ARCH"), "/Rgnome", sep=""))) res <- setdiff(res, "gnomeGUI")
 
-    update <- character(0)
+    update <- character(0L)
     if(is.character(ask) && ask == "graphics") {
         if(.Platform$OS.type == "unix"
            && capabilities("tcltk") && capabilities("X11")) {
@@ -344,7 +344,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                                         title = "New packages to be installed")
                             , res)]
     if(length(update)) {
-        install.packages(update, lib = lib.loc[1], contriburl = contriburl,
+        install.packages(update, lib = lib.loc[1L], contriburl = contriburl,
                          method = method, available = available, ...)
         # Now check if they were installed and update 'res'
         dirs <- list.files(lib.loc[1L])
@@ -468,7 +468,7 @@ remove.packages <- function(pkgs, lib)
     if(!length(pkgs)) return(invisible())
 
     if(missing(lib) || is.null(lib)) {
-        lib <- .libPaths()[1]
+        lib <- .libPaths()[1L]
         warning(gettextf("argument 'lib' is missing: using %s", lib),
                 immediate. = TRUE, domain = NA)
     }
@@ -637,7 +637,7 @@ setRepositories <-
     pkgType <- getOption("pkgType")
     if(length(grep("^mac\\.binary", pkgType))) pkgType <- "mac.binary"
     thisType <- a[[pkgType]]
-    a <- a[thisType, 1:3]
+    a <- a[thisType, 1L:3]
     repos <- getOption("repos")
     ## Now look for CRAN and any others in getOptions("repos")
     if("CRAN" %in% row.names(a) && !is.na(CRAN <- repos["CRAN"]))
@@ -658,7 +658,7 @@ setRepositories <-
 
     if(length(ind)) res <- as.integer(ind)
     else {
-        res <- integer(0)
+        res <- integer(0L)
         if(graphics) {
             ## return a list of row numbers.
             if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
@@ -680,7 +680,7 @@ setRepositories <-
                 "", sep="\n")
             cat(gettext("Enter one or more numbers separated by spaces\n"))
             res <- scan("", what=0, quiet=TRUE, nlines=1L)
-            if(!length(res) || (length(res) == 1L && !res[1]))
+            if(!length(res) || (length(res) == 1L && !res[1L]))
                 return(invisible())
             res <- res[1 <= res && res <= nc]
         }
@@ -700,9 +700,9 @@ compareVersion <- function(a, b)
 {
     if(is.na(a)) return(-1L)
     if(is.na(b)) return(1L)
-    a <- as.integer(strsplit(a, "[\\.-]")[[1]])
-    b <- as.integer(strsplit(b, "[\\.-]")[[1]])
-    for(k in 1:length(a)) {
+    a <- as.integer(strsplit(a, "[\\.-]")[[1L]])
+    b <- as.integer(strsplit(b, "[\\.-]")[[1L]])
+    for(k in 1L:length(a)) {
         if(k <= length(b)) {
             if(a[k] > b[k]) return(1) else if(a[k] < b[k]) return(-1L)
         } else {
@@ -777,7 +777,7 @@ compareVersion <- function(a, b)
         } else x[[1L]] %in% pkgs
     })
     xx <- xx[!have]
-    if(!length(xx)) return(list(character(0), character(0)))
+    if(!length(xx)) return(list(character(0L), character(0L)))
     ## now check if we can satisfy the missing dependencies
     pkgs <- row.names(available)
     canget <- miss <- character(0L)

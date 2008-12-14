@@ -22,7 +22,7 @@ acf <-
     type <- match.arg(type)
     if(type == "partial") {
         m <- match.call()
-        m[[1]] <- as.name("pacf")
+        m[[1L]] <- as.name("pacf")
         m$type <- NULL
         return(eval(m, parent.frame()))
     }
@@ -80,7 +80,7 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
         lag <- matrix(1, nser, nser)
         lag[lower.tri(lag)] <- -1
         pacf <- ar.yw(x, order.max = lag.max)$partialacf
-        lag <- outer(1:lag.max, lag/x.freq)
+        lag <- outer(1L:lag.max, lag/x.freq)
         snames <- colnames(x)
     } else {
         x <- scale(x, TRUE, FALSE)
@@ -91,7 +91,7 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
                          pacf = double(lag.max),
                          as.integer(lag.max))$pacf,
                       dim=c(lag.max,1,1))
-        lag <- array((1:lag.max)/x.freq, dim=c(lag.max,1,1))
+        lag <- array((1L:lag.max)/x.freq, dim=c(lag.max,1,1))
         snames <- NULL
     }
 
@@ -126,7 +126,7 @@ plot.acf <-
                        covariance = "ACF (cov)",
                        partial = "Partial ACF")
     if (is.null(snames <- x$snames))
-        snames <- paste("Series ", if (nser == 1) x$series else 1:nser)
+        snames <- paste("Series ", if (nser == 1) x$series else 1L:nser)
 
     with.ci <- ci > 0 && x$type != "covariance"
     with.ci.ma <- with.ci && ci.type == "ma" && x$type == "correlation"
@@ -160,20 +160,20 @@ plot.acf <-
 
     if (is.null(ylim)) {
         ## Calculate a common scale
-        ylim <- range(x$acf[, 1:nser, 1:nser], na.rm = TRUE)
+        ylim <- range(x$acf[, 1L:nser, 1L:nser], na.rm = TRUE)
         if (with.ci) ylim <- range(c(-clim0, clim0, ylim))
         if (with.ci.ma) {
-	    for (i in 1:nser) {
+	    for (i in 1L:nser) {
                 clim <- clim0 * sqrt(cumsum(c(1, 2*x$acf[-1, i, i]^2)))
                 ylim <- range(c(-clim, clim, ylim))
             }
         }
     }
 
-    for (I in 1:Npgs) for (J in 1:Npgs) {
+    for (I in 1L:Npgs) for (J in 1L:Npgs) {
         ## Page [ I , J ] : Now do   nr x nr  'panels' on this page
-        iind <- (I-1)*nr + 1:nr
-        jind <- (J-1)*nr + 1:nr
+        iind <- (I-1)*nr + 1L:nr
+        jind <- (J-1)*nr + 1L:nr
         if(verbose)
             message("Page [",I,",",J,"]: i =",
                     paste(iind,collapse=","),"; j =",
@@ -216,7 +216,7 @@ ccf <- function(x, y, lag.max = NULL,
     if(is.matrix(x) || is.matrix(y))
         stop("univariate time series only")
     X <- na.action(ts.intersect(as.ts(x), as.ts(y)))
-    colnames(X) <- c(deparse(substitute(x))[1], deparse(substitute(y))[1])
+    colnames(X) <- c(deparse(substitute(x))[1L], deparse(substitute(y))[1L])
     acf.out <- acf(X, lag.max = lag.max, plot = FALSE, type = type)
     lag <- c(rev(acf.out$lag[-1,2,1]), acf.out$lag[,1,2])
     y   <- c(rev(acf.out$acf[-1,2,1]), acf.out$acf[,1,2])

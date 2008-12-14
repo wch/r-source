@@ -93,7 +93,7 @@ setMethod("summary", "mle", function(object, ...){
 })
 
 setMethod("profile", "mle",
-          function (fitted, which = 1:p, maxsteps = 100,
+          function (fitted, which = 1L:p, maxsteps = 100,
                     alpha = 0.01, zmax = sqrt(qchisq(1 - alpha, 1L)),
                     del = zmax/5, trace = FALSE, ...)
 {
@@ -211,10 +211,10 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
             bsp <- splines:: backSpline(sp)
             ## </FIXME>
             xlim <- predict(bsp, c(-mlev, mlev))$y
-            if (is.na(xlim[1]))
-                xlim[1] <- min(obj[[i]]$par.vals[, i])
-            if (is.na(xlim[2]))
-                xlim[2] <- max(obj[[i]]$par.vals[, i])
+            if (is.na(xlim[1L]))
+                xlim[1L] <- min(obj[[i]]$par.vals[, i])
+            if (is.na(xlim[2L]))
+                xlim[2L] <- max(obj[[i]]$par.vals[, i])
             plot(abs(z) ~ par.vals[, i], data = obj[[i]], xlab = i,
                 ylim = c(0, mlev), xlim = xlim, ylab = expression(abs(z)),
                 type = "n")
@@ -245,10 +245,10 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
             ## </FIXME>
             xlim <- predict(bsp, c(-mlev, mlev))$y
             x0 <- predict(bsp, 0)$y
-            if (is.na(xlim[1]))
-                xlim[1] <- min(obj[[i]]$par.vals[, i])
-            if (is.na(xlim[2]))
-                xlim[2] <- max(obj[[i]]$par.vals[, i])
+            if (is.na(xlim[1L]))
+                xlim[1L] <- min(obj[[i]]$par.vals[, i])
+            if (is.na(xlim[2L]))
+                xlim[2L] <- max(obj[[i]]$par.vals[, i])
             plot(z ~ par.vals[, i], data = obj[[i]], xlab = i,
                 ylim = c(-mlev, mlev), xlim = xlim, ylab = expression(z),
                 type = "n")
@@ -258,8 +258,8 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
                 pred <- predict(bsp, c(-lev, lev))$y
                 lines(pred, c(-lev, lev), type = "h", col = 6, lty = 2)
                 pred <- ifelse(is.na(pred), xlim, pred)
-                lines(c(x0,pred[2]), rep(lev, 2), type = "l", col = 6, lty = 2)
-                lines(c(pred[1],x0), rep(-lev, 2), type = "l", col = 6, lty = 2)
+                lines(c(x0,pred[2L]), rep(lev, 2), type = "l", col = 6, lty = 2)
+                lines(c(pred[1L],x0), rep(-lev, 2), type = "l", col = 6, lty = 2)
             }
         }
     }

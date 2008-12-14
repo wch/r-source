@@ -50,7 +50,7 @@ dev.list <- function()
     n <- unlist(n)
     i <- seq_along(n)[n != ""]
     names(i) <- n[i]
-    i <- i[-1]
+    i <- i[-1L]
     if(length(i) == 0) NULL else i
 }
 
@@ -129,14 +129,14 @@ dev.copy <- function(device, ..., which = dev.next())
 dev.print <- function(device = postscript, ...)
 {
     current.device <- dev.cur()
-    nm <- names(current.device)[1]
+    nm <- names(current.device)[1L]
     if(nm == "null device") stop("no device to print from")
     if(!dev.displaylist())
         stop("can only print from screen device")
     oc <- match.call()
-    oc[[1]] <- as.name("dev.copy")
+    oc[[1L]] <- as.name("dev.copy")
     oc$device <- device
-    din <- graphics::par("din"); w <- din[1]; h <- din[2]
+    din <- graphics::par("din"); w <- din[1L]; h <- din[2L]
     if(missing(device)) { ## safe way to recognize postscript
         if(is.null(oc$file)) oc$file <- ""
         hz0 <- oc$horizontal
@@ -166,7 +166,7 @@ dev.print <- function(device = postscript, ...)
         }
         if(is.null(oc$pointsize)) {
             pt <- ps.options()$pointsize
-            oc$pointsize <- pt * w/din[1]
+            oc$pointsize <- pt * w/din[1L]
         }
         if(is.null(hz0)) oc$horizontal <- hz
         if(is.null(oc$width)) oc$width <- w
@@ -189,18 +189,18 @@ dev.print <- function(device = postscript, ...)
 dev.copy2eps <- function(...)
 {
     current.device <- dev.cur()
-    nm <- names(current.device)[1]
+    nm <- names(current.device)[1L]
     if(nm == "null device") stop("no device to print from")
     if(!dev.displaylist())
         stop("can only print from a screen device")
     oc <- match.call()
-    oc[[1]] <- as.name("dev.copy")
+    oc[[1L]] <- as.name("dev.copy")
     oc$device <- postscript
     oc$onefile <- FALSE
     oc$horizontal <- FALSE
     if(is.null(oc$paper))
         oc$paper <- "special"
-    din <- dev.size("in"); w <- din[1]; h <- din[2]
+    din <- dev.size("in"); w <- din[1L]; h <- din[2L]
     if(is.null(oc$width))
         oc$width <- if(!is.null(oc$height)) w/h * eval.parent(oc$height) else w
     if(is.null(oc$height))
@@ -215,12 +215,12 @@ dev.copy2pdf <- function(..., out.type = "pdf")
 {
     out.type <- match.arg(out.type, c("pdf", "quartz", "cairo"))
     current.device <- dev.cur()
-    nm <- names(current.device)[1]
+    nm <- names(current.device)[1L]
     if(nm == "null device") stop("no device to print from")
     if(!dev.displaylist())
         stop("can only print from a screen device")
     oc <- match.call()
-    oc[[1]] <- as.name("dev.copy")
+    oc[[1L]] <- as.name("dev.copy")
     if(out.type == "quartz" && capabilities("aqua")) {
         oc$device <- quartz
         oc$type <- "pdf"
@@ -234,7 +234,7 @@ dev.copy2pdf <- function(..., out.type = "pdf")
         oc$onefile <- FALSE
         if(is.null(oc$paper)) oc$paper <- "special"
     }
-    din <- dev.size("in"); w <- din[1]; h <- din[2]
+    din <- dev.size("in"); w <- din[1L]; h <- din[2L]
     if(is.null(oc$width))
         oc$width <- if(!is.null(oc$height)) w/h * eval.parent(oc$height) else w
     if(is.null(oc$height))
@@ -295,20 +295,20 @@ dev.new <- function(...)
     if(identical(dev, pdf)) {
         ## Take care not to open device on top of another.
         if(is.null(a[["file"]]) && file.exists("Rplots.pdf")) {
-            fe <- file.exists(tmp <- paste("Rplots", 1:999, ".pdf", sep=""))
+            fe <- file.exists(tmp <- paste("Rplots", 1L:999, ".pdf", sep=""))
             if(all(fe)) stop("no suitable unused file name for pdf()")
-            message(gettextf("dev.new(): using pdf(file=\"%s\")", tmp[!fe][1]),
+            message(gettextf("dev.new(): using pdf(file=\"%s\")", tmp[!fe][1L]),
                     domain=NA)
-            a$file <- tmp[!fe][1]
+            a$file <- tmp[!fe][1L]
         }
     } else if(identical(dev, postscript)) {
         ## Take care not to open device on top of another.
         if(is.null(a[["file"]]) && file.exists("Rplots.ps")) {
-            fe <- file.exists(tmp <- paste("Rplots", 1:999, ".ps", sep=""))
+            fe <- file.exists(tmp <- paste("Rplots", 1L:999, ".ps", sep=""))
             if(all(fe)) stop("no suitable unused file name for postscript()")
             message(gettextf("dev.new(): using postscript(file=\"%s\")",
-                             tmp[!fe][1]), domain=NA)
-            a$file <- tmp[!fe][1]
+                             tmp[!fe][1L]), domain=NA)
+            a$file <- tmp[!fe][1L]
         }
     } else if (!is.null(a[["width"]]) && !is.null(a[["height"]]) &&
                (identical(dev, png) || identical(dev, jpeg) ||

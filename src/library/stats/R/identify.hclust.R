@@ -45,12 +45,12 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
         if(!is.null(which))
             stop("specify exactly one of 'which' and 'x'")
         which <- x
-        for(n in 1:length(x))
+        for(n in 1L:length(x))
             which[n] <- max(which(m<x[n]))
     }
     else
         if(is.null(which))
-            which <- 1:k
+            which <- 1L:k
 
     if(any(which>k))
         stop(gettextf("all elements of 'which' must be between 1 and %d", k),
@@ -59,8 +59,8 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
     border <- rep(border, length.out = length(which))
 
     retval <- list()
-    for(n in 1:length(which)){
-        rect(m[which[n]]+0.66, par("usr")[3],
+    for(n in 1L:length(which)){
+        rect(m[which[n]]+0.66, par("usr")[3L],
              m[which[n]+1]+0.33, mean(rev(tree$height)[(k-1):k]),
              border = border[n])
         retval[[n]] <- which(cluster==as.integer(names(clustab)[which[n]]))
@@ -78,7 +78,7 @@ identify.hclust <- function(x, FUN = NULL, N = 20, MAXCLUSTER = 20,
     oldx <- NULL
     DEV.x <- grDevices::dev.cur()
 
-    for(n in 1:N){
+    for(n in 1L:N){
 
         grDevices::dev.set(DEV.x)
         X <- locator(1)

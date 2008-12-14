@@ -128,7 +128,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	} else {
             ## local version of .packages(all.available = TRUE),
             ## recording paths
-            ans <- character(0); paths <- character(0)
+            ans <- character(0L); paths <- character(0L)
             lib.loc <- lib.loc[file.exists(lib.loc)]
             valid_package_version_regexp <-
                 .standard_regexps()$valid_package_version
@@ -190,9 +190,9 @@ function(pattern, fields = c("alias", "concept", "title"),
 		hDB <- .readRDS(hs_file)
 		if(!is.null(hDB)) {
 		    ## Fill up possibly missing information.
-		    if(is.na(match("Encoding", colnames(hDB[[1]]))))
-			hDB[[1]] <- cbind(hDB[[1]], Encoding = "")
-		    hDB[[1]][, "LibPath"] <- path
+		    if(is.na(match("Encoding", colnames(hDB[[1L]]))))
+			hDB[[1L]] <- cbind(hDB[[1L]], Encoding = "")
+		    hDB[[1L]][, "LibPath"] <- path
 		    ## Put the hsearch index for the np-th package into the
 		    ## np-th row of the matrix used for aggregating.
 		    dbMat[np, seq_along(hDB)] <- hDB
@@ -313,7 +313,7 @@ function(pattern, fields = c("alias", "concept", "title"),
         ## This should not happen for R >= 2.4.0
 	if(any(pos_in_hsearch_db) == 0)
 	    stop(gettextf("no information in the data base for package '%s': need 'rebuild = TRUE'?",
-			  package[pos_in_hsearch_db == 0][1]), domain = NA)
+			  package[pos_in_hsearch_db == 0][1L]), domain = NA)
 	db <-
 	    lapply(db,
 		   function(x) {

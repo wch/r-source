@@ -40,12 +40,12 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	attr(groups, "names") <- names
     else {
 	if(is.null(attr(groups, "names")))
-	    attr(groups, "names") <- 1:n
+	    attr(groups, "names") <- 1L:n
 	names <- attr(groups, "names")
     }
-    cls <- sapply(groups, function(x) class(x)[1])
-    cl <- if(all(cls == cls[1])) cls[1] else NULL
-    for(i in 1:n)
+    cls <- sapply(groups, function(x) class(x)[1L])
+    cl <- if(all(cls == cls[1L])) cls[1L] else NULL
+    for(i in 1L:n)
 	groups[i] <- list(boxplot.stats(unclass(groups[[i]]), range)) # do.conf=notch)
     stats <- matrix(0, nrow=5, ncol=n)
     conf  <- matrix(0, nrow=2, ncol=n)
@@ -81,7 +81,7 @@ boxplot.matrix <- function(x, use.cols = TRUE, ...)
   ## Purpose: Boxplot for each column or row [use.cols= TRUE / FALSE] of a matrix
   ## -------------------------------------------------------------------------
   ## Arguments: x: a numeric matrix; use.cols: logical, columns (T) or rows (F)
-  groups <- if(use.cols) split(x, rep.int(1:ncol(x),
+  groups <- if(use.cols) split(x, rep.int(1L:ncol(x),
                                           rep.int(nrow(x), ncol(x))))
   else split(x, seq(nrow(x)))
   ## Make use of col/row names if present
@@ -100,7 +100,7 @@ boxplot.formula <-
     m$... <- NULL
     m$na.action <- na.action # force use of default for this method
     require(stats, quietly = TRUE)
-    m[[1]] <- as.name("model.frame")
+    m[[1L]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
     response <- attr(attr(mf, "terms"), "response")
     boxplot(split(mf[[response]], mf[-response]), ...)
@@ -129,12 +129,12 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	    wid <- wid/2
 	    if (notch) {
                 ## check for overlap of notches and hinges
-                ok <- stats[2] <= conf[1] && conf[2] <= stats[4]
+                ok <- stats[2L] <= conf[1L] && conf[2L] <= stats[4L]
 
 		xx <- xP(x, wid * c(-1, 1, 1, notch.frac, 1,
 				    1, -1,-1,-notch.frac,-1))
-		yy <- c(stats[c(2, 2)], conf[1], stats[3], conf[2],
-			stats[c(4, 4)], conf[2], stats[3], conf[1])
+		yy <- c(stats[c(2, 2)], conf[1L], stats[3L], conf[2L],
+			stats[c(4, 4)], conf[2L], stats[3L], conf[1L])
 	    }
 	    else {
 		xx <- xP(x, wid * c(-1, 1, 1, -1))
@@ -146,10 +146,10 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	    ## the box filling over which to draw the rest:
 	    xypolygon(xx, yy, lty = "blank", col = boxfill[i])
 	    ## Median
-	    xysegments(xP(x, -wntch), stats[3],
-		       xP(x, +wntch), stats[3],
+	    xysegments(xP(x, -wntch), stats[3L],
+		       xP(x, +wntch), stats[3L],
 		       lty = medlty[i], lwd = medlwd[i], col = medcol[i])
-	    xypoints(x, stats[3],
+	    xypoints(x, stats[3L],
 		     pch = medpch[i], cex = medcex[i], col= medcol[i], bg = medbg[i])
 	    ## Whiskers
 	    xysegments(rep.int(x, 2), stats[c(1,5)],
@@ -184,7 +184,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     if(!is.list(z) || 0 == (n <- length(z$n)))
 	stop("invalid first argument")
     if(is.null(at))
-	at <- 1:n
+	at <- 1L:n
     else if(length(at) != n)
 	stop("'at' must have same length as 'z$n', i.e. ", n)
     ## just for compatibility with S
@@ -277,7 +277,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     }
 
     ok <- TRUE
-    for(i in 1:n)
+    for(i in 1L:n)
 	ok <- ok & bplt(at[i], wid = width[i],
 			stats= z$stats[,i],
 			out  = z$out[z$group==i],

@@ -33,12 +33,12 @@ valid.layout <- function(nrow, ncol, widths, heights, respect, just) {
     }
   if (is.matrix(respect)) {
     respect.mat <- matrix(as.integer(respect),
-                          dim(respect)[1],
-                          dim(respect)[2])
+                          dim(respect)[1L],
+                          dim(respect)[2L])
     respect <- 2
   }
   else {
-    respect.mat <- matrix(as.integer(0), nrow, ncol)
+    respect.mat <- matrix(as.integer(0L), nrow, ncol)
   }
   valid.just <- valid.just(just)
   l <- list(nrow = nrow, ncol = ncol,
@@ -104,10 +104,10 @@ layoutRegion <- function(layout.pos.row=1, layout.pos.col=1) {
                       else as.integer(rep(layout.pos.row, length.out=2)),
                       if (is.null(layout.pos.col)) layout.pos.col
                       else as.integer(rep(layout.pos.col, length.out=2)))
-  list(left=unit(region[1], "npc"),
-       bottom=unit(region[2], "npc"),
-       width=unit(region[3], "npc"),
-       height=unit(region[4], "npc"))
+  list(left=unit(region[1L], "npc"),
+       bottom=unit(region[2L], "npc"),
+       width=unit(region[3L], "npc"),
+       height=unit(region[4L], "npc"))
 }
 
 ####################

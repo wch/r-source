@@ -21,8 +21,8 @@ KalmanLike <- function(y, mod, nit = 0, fast=TRUE)
     x <- .Call("KalmanLike", y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
                mod$Pn, as.integer(nit), FALSE, fast=fast, PACKAGE = "stats")
     names(x) <- c("ssq", "sumlog")
-    s2 <- x[1]/length(y)
-    list(Lik = 0.5*(log(x[1]/length(y)) + x[2]/length(y)), s2 = s2)
+    s2 <- x[1L]/length(y)
+    list(Lik = 0.5*(log(x[1L]/length(y)) + x[2L]/length(y)), s2 = s2)
 }
 
 KalmanRun <- function(y, mod, nit = 0, fast=TRUE)
@@ -32,8 +32,8 @@ KalmanRun <- function(y, mod, nit = 0, fast=TRUE)
                mod$Pn, as.integer(nit), TRUE, fast=fast, PACKAGE = "stats")
     names(z) <- c("values", "resid", "states")
     x <- z$values
-    s2 <- x[1]/length(y)
-    z[[1]] <- c(Lik = 0.5*(log(x[1]/length(y)) + x[2]/length(y)), s2 = s2)
+    s2 <- x[1L]/length(y)
+    z[[1L]] <- c(Lik = 0.5*(log(x[1L]/length(y)) + x[2L]/length(y)), s2 = s2)
     z
 }
 

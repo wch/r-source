@@ -73,7 +73,7 @@ aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
                          ts.eps = getOption("ts.eps"), ...)
 {
     x <- as.ts(x)
-    ofrequency <- tsp(x)[3]
+    ofrequency <- tsp(x)[3L]
     ## Set up the new frequency, and make sure it is an integer.
     if(missing(nfrequency))
         nfrequency <- 1 / ndeltat
@@ -94,9 +94,9 @@ aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
     len <- ofrequency %/% nfrequency
     mat <- is.matrix(x)
     if(mat) cn <- colnames(x)
-#    nstart <- ceiling(tsp(x)[1] * nfrequency) / nfrequency
+#    nstart <- ceiling(tsp(x)[1L] * nfrequency) / nfrequency
 #    x <- as.matrix(window(x, start = nstart))
-    nstart <- tsp(x)[1]
+    nstart <- tsp(x)[1L]
     # Can't use nstart <- start(x) as this causes problems if
     # you get a vector of length 2.
     x <- as.matrix(x)

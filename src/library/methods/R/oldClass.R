@@ -27,7 +27,7 @@ setOldClass <- function(Classes, prototype = NULL,
             if(is.character(S4Class)) {
                 clName <- S4Class
                 S4Class <- getClass(S4Class)
-                if(.identC(clName, Classes[[1]]))
+                if(.identC(clName, Classes[[1L]]))
                   removeClass(clName, where = where) # so Recall() will work
             }
             else
@@ -40,11 +40,11 @@ setOldClass <- function(Classes, prototype = NULL,
         }
         ## register simple S3 class(es), including main class, if it's not defined already
         Recall(Classes, where = where)
-        return(.S4OldClass(Classes[[1]], if(length(Classes) > 1) Classes[[2]] else "oldClass", S4Class, where))
+        return(.S4OldClass(Classes[[1L]], if(length(Classes) > 1) Classes[[2L]] else "oldClass", S4Class, where))
     }
     if(test)
         return(.setOldIs(Classes, where))
-    mainClass <- Classes[[1]]
+    mainClass <- Classes[[1L]]
     prevClass <- "oldClass"
     S3Class <- character()  #will accumulate the S3 classes inherited
     for(cl in rev(Classes)) {
@@ -112,7 +112,7 @@ slotsFromS3 <- function(object) {
     from
 }
 .oldReplaceFun <- function(from, to, value)
-    stop(gettextf("explicit replacement not defined for as(x, \"%s\") <- value for old-style class \"%s\"", to, class(from)[1]), domain = NA)
+    stop(gettextf("explicit replacement not defined for as(x, \"%s\") <- value for old-style class \"%s\"", to, class(from)[1L]), domain = NA)
 
 .setOldIs <- function(Classes, where) {
     if(length(Classes) != 2)
@@ -125,8 +125,8 @@ slotsFromS3 <- function(object) {
         else
             setClass(cl, representation("oldClass", "VIRTUAL"), where = where)
     }
-    Class1 <- Classes[[1]]
-    for(cl in Classes[-1]) {
+    Class1 <- Classes[[1L]]
+    for(cl in Classes[-1L]) {
         tfun <- .oldTestFun
         body(tfun, envir = environment(tfun)) <-
             substitute(CLASS %in% attr(object, "class"), list(CLASS = cl))

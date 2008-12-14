@@ -17,7 +17,7 @@
 manova <- function(...)
 {
     Call <- fcall <- match.call()
-    fcall[[1]] <- as.name("aov")
+    fcall[[1L]] <- as.name("aov")
     result <- eval(fcall, parent.frame())
     if(inherits(result, "aovlist")) {
         for(i in seq_along(result)) {
@@ -42,7 +42,7 @@ summary.manova <-
         stop("object must be of class \"manova\" or \"maov\"")
     test <- match.arg(test)
 
-    asgn <- object$assign[object$qr$pivot[1:object$rank]]
+    asgn <- object$assign[object$qr$pivot[1L:object$rank]]
     uasgn <- unique(asgn)
     nterms <- length(uasgn)
     effects <- object$effects
@@ -59,7 +59,7 @@ summary.manova <-
     if (is.null(effects)) {
         df <- nterms <- 0
         ss <- list(0)
-        nmrows <- character(0)
+        nmrows <- character(0L)
     } else {
         df <- numeric(nterms)
         ss <- list(nterms)
@@ -107,7 +107,7 @@ summary.manova <-
             for(i in seq_len(nterms)[ok]) {
                 A1 <- qr.coef(rss.qr, D %*% ss[[i]] %*% D)
                 eigs[i, ] <- Re(eigen(A1, symmetric = FALSE)$values)
-                stats[i, 1:4] <-
+                stats[i, 1L:4] <-
                     switch(test,
                            "Pillai" = Pillai(eigs[i,  ], df[i], df[nt]),
                            "Wilks" = Wilks(eigs[i,  ], df[i], df[nt]),

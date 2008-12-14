@@ -69,11 +69,11 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 		  p,
 		  double(n),
 		  as.integer(job),
-		  info=integer(1),
+		  info=integer(1L),
 		  DUP=FALSE, PACKAGE="base")[c("d","u","v","info")]
     if(z$info)
 	stop(gettextf("error %d in 'dsvdc'", z$info), domain = NA)
-    z$d <- z$d[1:mn]
-    if(nv && nv < p) z$v <- z$v[, 1:nv, drop = FALSE]
+    z$d <- z$d[1L:mn]
+    if(nv && nv < p) z$v <- z$v[, 1L:nv, drop = FALSE]
     z[c("d", if(nu) "u", if(nv) "v")]
 }

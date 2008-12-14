@@ -82,7 +82,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  dbl.n,
 			  dbl.n,
 			  double(2*n),
-			  ierr = integer(1),
+			  ierr = integer(1L),
                           PACKAGE="base")
 	    if (z$ierr)
 		stop(gettextf("'ch' returned code %d in 'eigen'", z$ierr),
@@ -101,7 +101,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  vectors = x,
 			  dbl.n,
 			  dbl.n,
-			  ierr = integer(1),
+			  ierr = integer(1L),
                           PACKAGE="base")
 	    if (z$ierr)
 		stop(gettextf("'rs' returned code %d in 'eigen'", z$ierr),
@@ -126,7 +126,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  dbl.n,
 			  dbl.n,
 			  dbl.n,
-			  ierr = integer(1),
+			  ierr = integer(1L),
                           PACKAGE="base")
 	    if (z$ierr)
 		stop(gettextf("'cg' returned code %d in 'eigen'", z$ierr),
@@ -147,7 +147,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  vectors = x,
 			  integer(n),
 			  dbl.n,
-			  ierr = integer(1),
+			  ierr = integer(1L),
                           PACKAGE="base")
 	    if (z$ierr)
 		stop(gettextf("'rg' returned code %d in 'eigen'", z$ierr),

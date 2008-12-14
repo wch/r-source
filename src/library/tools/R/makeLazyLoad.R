@@ -90,10 +90,10 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
             ans <- .readRDS(sv)
         } else if(file.exists(sv <- file.path(dataDir, "datalist"))) {
             ans <- strsplit(readLines(sv), ":")
-            nms <- lapply(ans, function(x) x[1])
+            nms <- lapply(ans, function(x) x[1L])
             ans <- lapply(ans, function(x)
-                          if(length(x)==1) x[1] else
-                          strsplit(x[2], " +")[[1]][-1])
+                          if(length(x)==1) x[1L] else
+                          strsplit(x[2L], " +")[[1L]][-1L])
             names(ans) <- nms
         } else {
             files <- list_files_with_type(dataDir, "data")
@@ -136,7 +136,7 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
             files <- unique(basename(file_path_sans_ext(files)))
             dlist <- vector("list", length(files))
             names(dlist) <- files
-            loaded <- character(0)
+            loaded <- character(0L)
             for(f in files) {
                 utils::data(list = f, package = package, lib.loc = lib.loc,
                         envir = dataEnv)
@@ -179,7 +179,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
     envtable <- function() {
         idx <- 0
         envs <- NULL
-        enames <- character(0)
+        enames <- character(0L)
         find <- function(v, keys, vals)
             for (i in seq_along(keys))
                 if (identical(v, keys[[i]]))
@@ -206,7 +206,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
 
     lazyLoadDBinsertVariable <- function(n, e, file, ascii, compress, hook) {
         x <- .Call("R_getVarsFromFrame", n, e, FALSE, PACKAGE="base")
-       .Call("R_lazyLoadDBinsertValue", x[[1]], file, ascii, compress, hook,
+       .Call("R_lazyLoadDBinsertValue", x[[1L]], file, ascii, compress, hook,
               PACKAGE = "base")
     }
 

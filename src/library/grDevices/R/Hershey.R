@@ -27,6 +27,6 @@ Hershey <-
 ## (via max{#}) in    FixupVFont() ../../../main/plot.c
 ## The basic "table" really is in  ../../../modules/vfonts/g_fontdb.c
 
-         allowed = rbind(cbind(1, 1:7), cbind(2, 1:4), cbind(3,1:3),
-                         cbind(4:6, 1), cbind(7, 1:4), cbind(8,1:2))
+         allowed = rbind(cbind(1, 1L:7), cbind(2, 1L:4), cbind(3,1L:3),
+                         cbind(4:6, 1), cbind(7, 1L:4), cbind(8,1L:2))
          )

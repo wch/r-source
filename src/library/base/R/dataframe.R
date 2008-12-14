@@ -19,7 +19,7 @@
 ## attr(, "row.names") will return either character or integer.
 ##
 ## Do not assume that the internal representation is either, since
-## 1:n is stored as the integer vector c(NA, n) to save space (and
+## 1L:n is stored as the integer vector c(NA, n) to save space (and
 ## the C-level code to get/set the attribute makes the appropriate
 ## translations.
 ##

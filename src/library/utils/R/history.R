@@ -32,7 +32,7 @@ history <- function(max.show = 25, reverse = FALSE, pattern, ...)
     if(nlines) {
         inds <- max(1, nlines-max.show):nlines
         if(reverse) inds <- rev(inds)
-    } else inds <- integer(0)
+    } else inds <- integer(0L)
     file2 <- tempfile("hist")
     writeLines(rawhist[inds], file2)
     file.show(file2, title = "R History", delete.file = TRUE)

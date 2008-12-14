@@ -58,7 +58,7 @@ close.socket <- function(socket, ...)
 {
     if(length(port <- as.integer(socket$socket)) != 1)
 	stop("invalid 'socket' argument")
-    as.logical(.C("Rsockclose", port, PACKAGE="base")[[1]])
+    as.logical(.C("Rsockclose", port, PACKAGE="base")[[1L]])
 }
 
 read.socket <- function(socket, maxlen=256, loop=FALSE)
@@ -80,9 +80,9 @@ write.socket <- function(socket, string)
 {
     if(length(port <- as.integer(socket$socket)) != 1)
 	stop("invalid 'socket' argument")
-    strlen <- length(strsplit(string,NULL)[[1]])
+    strlen <- length(strsplit(string,NULL)[[1L]])
     invisible(.C("Rsockwrite", port, string,
-		 as.integer(0), strlen, strlen, PACKAGE="base")[[5]])
+		 as.integer(0L), strlen, strlen, PACKAGE="base")[[5]])
 }
 
 

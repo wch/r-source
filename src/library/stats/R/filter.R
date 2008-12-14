@@ -30,7 +30,7 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
         if(nfilt > n) stop("'filter' is longer than time series")
         if(sides != 1 && sides != 2)
             stop("argument 'sides' must be 1 or 2")
-        for (i in 1:nser)
+        for (i in 1L:nser)
             y[, i] <- .C("filter1",
                          as.double(x[,i]),
                          as.integer(n),
@@ -52,7 +52,7 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
                      domain = NA)
             if(!is.matrix(init)) init <- matrix(init, nfilt, nser)
         }
-        for (i in 1:nser)
+        for (i in 1L:nser)
             y[, i] <- .C("filter2",
                          as.double(x[,i]),
                          as.integer(n),
@@ -60,7 +60,7 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
                          as.integer(nfilt),
                          out=as.double(c(rev(init[, i]), double(n))),
                          NAOK=TRUE,
-                         PACKAGE = "stats")$out[-(1:nfilt)]
+                         PACKAGE = "stats")$out[-(1L:nfilt)]
     }
     y <- drop(y)
     tsp(y) <- xtsp

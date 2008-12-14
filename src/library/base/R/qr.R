@@ -44,9 +44,9 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
 	     n,
 	     p,
 	     as.double(tol),
-	     rank=integer(1),
+	     rank=integer(1L),
 	     qraux = double(p),
-	     pivot = as.integer(1:p),
+	     pivot = as.integer(1L:p),
 	     double(2*p),
 	     PACKAGE="base")[c(1,6,7,8)]# c("qr", "rank", "qraux", "pivot")
     if(!is.null(cn <- colnames(x)))
@@ -93,12 +93,12 @@ qr.coef <- function(qr, y)
 		  y,
 		  ny,
 		  coef=matrix(0, nrow=k,ncol=ny),
-		  info=integer(1),
+		  info=integer(1L),
 		  NAOK = TRUE, PACKAGE="base")[c("coef","info")]
     if(z$info != 0) stop("exact singularity in 'qr.coef'")
     if(k < p) {
 	coef <- matrix(NA_real_, nrow=p, ncol=ny)
-	coef[qr$pivot[1:k],] <- z$coef
+	coef[qr$pivot[1L:k],] <- z$coef
     }
     else coef <- z$coef
 
@@ -231,7 +231,7 @@ qr.Q <- function (qr, complete = FALSE,
 	if (complete) diag(Dvec, dqr[1L])
 	else {
 	    ncols <- min(dqr)
-	    diag(Dvec[1:ncols], nrow = dqr[1L], ncol = ncols)
+	    diag(Dvec[1L:ncols], nrow = dqr[1L], ncol = ncols)
 	}
     qr.qy(qr, D)
 }
@@ -257,10 +257,10 @@ qr.X <- function (qr, complete = FALSE,
     cmplx <- mode(R) == "complex"
     p <- dim(R)[2L]
     if (ncol < p)
-	R <- R[, 1:ncol, drop = FALSE]
+	R <- R[, 1L:ncol, drop = FALSE]
     else if (ncol > p) {
 	tmp <- diag(if (!cmplx) 1 else 1 + 0i, nrow(R), ncol)
-	tmp[, 1:p] <- R
+	tmp[, 1L:p] <- R
 	R <- tmp
     }
     res <- qr.qy(qr, R)

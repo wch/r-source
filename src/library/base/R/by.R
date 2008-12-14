@@ -31,7 +31,7 @@ by.default <- function(data, INDICES, FUN, ..., simplify = TRUE)
         } else IND <- INDICES
         FUNx <- function(x) FUN(dd[x,], ...)
         nd <- nrow(dd)
-        ans <- eval(substitute(tapply(1:nd, IND, FUNx, simplify = simplify)),
+        ans <- eval(substitute(tapply(1L:nd, IND, FUNx, simplify = simplify)),
                     dd)
         attr(ans, "call") <- match.call()
         class(ans) <- "by"

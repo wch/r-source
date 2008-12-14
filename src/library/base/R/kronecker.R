@@ -30,7 +30,7 @@ kronecker <- function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
     else if (ld > 0)
 	dY <- dim(Y) <- c(dY, rep.int(1, ld))
     opobj <- outer(X, Y, FUN, ...)
-    dp <- as.vector(t(matrix(1:(2*length(dX)), ncol = 2)[, 2:1]))
+    dp <- as.vector(t(matrix(1L:(2*length(dX)), ncol = 2)[, 2:1]))
     opobj <- aperm(opobj, dp)
     dim(opobj) <- dX * dY
 
@@ -51,7 +51,7 @@ kronecker <- function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
 
 	k <- length(dim(opobj))
 	dno <- vector("list", k)
-	for (i in 1:k) {
+	for (i in 1L:k) {
 	    tmp <- outer(dnx[[i]], dny[[i]], FUN="paste", sep=":")
 	    dno[[i]] <- as.vector(t(tmp))
 	}

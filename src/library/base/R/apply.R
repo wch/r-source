@@ -23,7 +23,7 @@ apply <- function(X, MARGIN, FUN, ...)
     dl <- length(d)
     if(dl == 0)
 	stop("dim(X) must have a positive length")
-    ds <- 1:dl
+    ds <- 1L:dl
     if(length(oldClass(X)) > 0)
 	X <- if(dl == 2) as.matrix(X) else as.array(X)
     ## now recompute things as coercion can change dims
@@ -60,12 +60,12 @@ apply <- function(X, MARGIN, FUN, ...)
     ans <- vector("list", d2)
     if(length(d.call) < 2) {# vector
         if (length(dn.call)) dimnames(newX) <- c(dn.call, list(NULL))
-        for(i in 1:d2) {
+        for(i in 1L:d2) {
             tmp <- FUN(newX[,i], ...)
             if(!is.null(tmp)) ans[[i]] <- tmp
         }
     } else
-       for(i in 1:d2) {
+       for(i in 1L:d2) {
            tmp <- FUN(array(newX[,i], d.call, dn.call), ...)
            if(!is.null(tmp)) ans[[i]] <- tmp
         }

@@ -120,7 +120,7 @@ function(compare.levels, level.names, p.adjust.method)
 {
     ix <- seq_along(level.names)
     names(ix) <- level.names
-    pp <- outer(ix[-1], ix[-length(ix)],function(ivec, jvec)
+    pp <- outer(ix[-1L], ix[-length(ix)],function(ivec, jvec)
           sapply(seq_along(ivec), function(k) {
               i<-ivec[k]
               j<-jvec[k]

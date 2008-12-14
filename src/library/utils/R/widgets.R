@@ -33,7 +33,7 @@ select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
                     ifelse(def, "+", " "), " ", list, sep="")
         if(nc > 10) {
             fop <- format(op)
-            nw <- nchar(fop[1], "w") + 2
+            nw <- nchar(fop[1L], "w") + 2
             ncol <- getOption("width") %/% nw
             if(ncol > 1)
                 op <- paste(fop, c(rep("  ", ncol - 1), "\n"),
@@ -46,7 +46,7 @@ select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
 	    if(!inherits(res, "try-error")) break
 	    cat(gettext("Invalid input, please try again\n"))
 	}
-        if(!length(res) || (length(res) == 1 && !res[1])) return(character(0))
+        if(!length(res) || (length(res) == 1 && !res[1L])) return(character(0L))
         res <- sort(res[1 <= res && res <= nc])
         return(list[res])
     }

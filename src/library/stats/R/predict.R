@@ -21,9 +21,9 @@ predict <- function(object,...) UseMethod("predict")
 if(FALSE)
 predict.default <- function (object, ...) {
     namelist <- list(...)
-    names(namelist) <- substitute(list(...))[-1]
+    names(namelist) <- substitute(list(...))[-1L]
     m <- length(namelist)
-    X <- as.matrix(namelist[[1]])
+    X <- as.matrix(namelist[[1L]])
     if (m > 1)
 	for (i in (2:m)) X <- cbind(X, namelist[[i]])
     if (object$intercept)
@@ -34,8 +34,8 @@ predict.default <- function (object, ...) {
 	stop("wrong number of predictors")
     predictor <- X %*% object$coefficients
     ip <- numeric(n)
-    names(ip) <- paste("P", 1:n, sep = "")
-    for (i in 1:n)
+    names(ip) <- paste("P", 1L:n, sep = "")
+    for (i in 1L:n)
 	ip[i] <- sum(X[i, ] * (object$covmat %*% X[i, ]))
     stderr1 <- sqrt(ip)
     stderr2 <- sqrt(object$rms^2 + ip)

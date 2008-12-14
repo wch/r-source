@@ -52,18 +52,18 @@ function (x = seq(0, 1, length.out = nrow(z)),
     mar.orig <- (par.orig <- par(c("mar","las","mfrow")))$mar
     on.exit(par(par.orig))
 
-    w <- (3 + mar.orig[2]) * par('csi') * 2.54
+    w <- (3 + mar.orig[2L]) * par('csi') * 2.54
     layout(matrix(c(2, 1), ncol=2), widths=c(1, lcm(w)))
     par(las = las)
 
     ## Plot the 'plot key' (scale):
     mar <- mar.orig
-    mar[4] <- mar[2]
-    mar[2] <- 1
+    mar[4L] <- mar[2L]
+    mar[2L] <- 1
     par(mar = mar)
     plot.new()
     plot.window(xlim=c(0,1), ylim=range(levels), xaxs="i", yaxs="i")
-    rect(0, levels[-length(levels)], 1, levels[-1], col = col)
+    rect(0, levels[-length(levels)], 1, levels[-1L], col = col)
     if (missing(key.axes)) {
         if (axes)
             axis(4)
@@ -75,7 +75,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
 
     ## Plot contour-image::
     mar <- mar.orig
-    mar[4] <- 1
+    mar[4L] <- 1
     par(mar=mar)
     plot.new()
     plot.window(xlim, ylim, "", xaxs=xaxs, yaxs=yaxs, asp=asp)

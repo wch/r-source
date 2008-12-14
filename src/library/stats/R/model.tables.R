@@ -282,7 +282,7 @@ replications <- function(formula, data = NULL, na.action)
 	formula <- as.formula(formula)
 	if(length(formula) < 3) {
 	    f <- y ~ x
-	    f[[3]] <- formula[[2]]
+	    f[[3L]] <- formula[[2L]]
 	    formula <- f
 	}
 	formula <- terms(formula, data = data)
@@ -298,7 +298,7 @@ replications <- function(formula, data = NULL, na.action)
     f <- attr(formula, "factors")
     o <- attr(formula, "order")
     labels <- attr(formula, "term.labels")
-    vars <- as.character(attr(formula, "variables"))[-1]
+    vars <- as.character(attr(formula, "variables"))[-1L]
     if(is.null(data)) {
 	v <- c(as.name("data.frame"), attr(formula, "variables"))
 	data <- eval(as.call(v), parent.frame())
@@ -366,10 +366,10 @@ print.tables_aov <- function(x, digits = 4, ...)
 		dim.t <- dim(ctable)
 		d <- length(dim.t)
 		ctable <- aperm(ctable, c(1, d, 2:(d - 1)))
-		dim(ctable) <- c(dim.t[1] * dim.t[d], dim.t[-c(1, d)])
+		dim(ctable) <- c(dim.t[1L] * dim.t[d], dim.t[-c(1, d)])
 		dimnames(ctable) <-
-		    c(list(format(c(rownames(table), rep.int("rep", dim.t[1])))),
-                      dimnames(table)[-1])
+		    c(list(format(c(rownames(table), rep.int("rep", dim.t[1L])))),
+                      dimnames(table)[-1L])
 		ctable <- eval(parse(text = paste(
 				     "ctable[as.numeric(t(matrix(seq(nrow(ctable)),ncol=2)))", paste(rep.int(", ", d - 2), collapse = " "), "]")))
 		names(dimnames(ctable)) <- names(dimnames(table))
@@ -400,7 +400,7 @@ print.tables_aov <- function(x, digits = 4, ...)
 		dimnames(se) <- list(c(i, rn), "")
 		print(se, digits = digits, ...)
 	    } else {		## different se
-		dimnames(se)[[1]] <- ""
+		dimnames(se)[[1L]] <- ""
 		cat("\n", i, "\n")
 		cat("When comparing means with same levels of:\n")
 		print(se, digits, ...)
@@ -414,14 +414,14 @@ print.tables_aov <- function(x, digits = 4, ...)
 eff.aovlist <- function(aovlist)
 {
     Terms <- terms(aovlist)
-    if(names(aovlist)[[1]] == "(Intercept)") aovlist <- aovlist[-1]
+    if(names(aovlist)[[1L]] == "(Intercept)") aovlist <- aovlist[-1L]
     pure.error.strata <- sapply(aovlist, function(x) is.null(x$qr))
     aovlist <- aovlist[!pure.error.strata]
     s.labs <- names(aovlist)
     ## find which terms are in which strata
     s.terms <-
         lapply(aovlist, function(x) {
-            asgn <- x$assign[x$qr$pivot[1:x$rank]]
+            asgn <- x$assign[x$qr$pivot[1L:x$rank]]
             attr(terms(x), "term.labels")[asgn]
         })
     t.labs <- attr(Terms, "term.labels")
@@ -437,7 +437,7 @@ eff.aovlist <- function(aovlist)
     pl <-
 	lapply(aovlist, function(x)
 	   {
-	       asgn <- x$assign[x$qr$pivot[1:x$rank]]
+	       asgn <- x$assign[x$qr$pivot[1L:x$rank]]
 	       sp <- split(seq_along(asgn), attr(terms(x), "term.labels")[asgn])
                sp <- sp[names(sp) %in% nm]
 	       sapply(sp, function(x, y) {
@@ -467,7 +467,7 @@ model.frame.aovlist <- function(formula, data = NULL, ...)
     form <- update.formula(Terms,
                            paste(". ~ .-", deparse(errorterm, width.cutoff=500,
                                                    backtick = TRUE),
-                                 "+", deparse(errorterm[[2]], width.cutoff=500,
+                                 "+", deparse(errorterm[[2L]], width.cutoff=500,
                                               backtick = TRUE)))
     nargs <- as.list(call)
     oargs <- as.list(oc)

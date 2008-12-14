@@ -94,8 +94,8 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
     else if(!is.numeric(text.width) || text.width < 0)
 	stop("'text.width' must be numeric, >= 0")
 
-    xc <- Cex * xinch(cin[1], warn.log=FALSE)# [uses par("usr") and "pin"]
-    yc <- Cex * yinch(cin[2], warn.log=FALSE)
+    xc <- Cex * xinch(cin[1L], warn.log=FALSE)# [uses par("usr") and "pin"]
+    yc <- Cex * yinch(cin[2L], warn.log=FALSE)
     if(xc < 0) text.width <- -text.width
 
     xchar  <- xc
@@ -133,12 +133,12 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	warning("'merge = TRUE' has no effect when no line segments are drawn")
 
     if(has.pch) {
-	if(is.character(pch) && !is.na(pch[1]) &&
-           nchar(pch[1], type="c") > 1) {
+	if(is.character(pch) && !is.na(pch[1L]) &&
+           nchar(pch[1L], type="c") > 1) {
 	    if(length(pch) > 1)
-		warning("not using pch[2..] since pch[1] has multiple chars")
-	    np <- nchar(pch[1], type="c")
-	    pch <- substr(rep.int(pch[1], np), 1:np, 1:np)
+		warning("not using pch[2..] since pch[1L] has multiple chars")
+	    np <- nchar(pch[1L], type="c")
+	    pch <- substr(rep.int(pch[1L], np), 1L:np, 1L:np)
 	}
 ##D	if(!merge) dx.pch <- x.intersp/2 * xchar
     }
@@ -152,8 +152,8 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	## (x,y) are specifiying OPPOSITE corners of the box
 	x <- sort(x)
 	y <- sort(y)
-	left <- x[1]
-	top  <- y[2]
+	left <- x[1L]
+	top  <- y[2L]
 	w <- diff(x)# width
 	h <- diff(y)# height
 	w0 <- w/ncol # column width
@@ -186,16 +186,16 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	} else {
 	    usr <- par("usr")
 	    inset <- rep(inset, length.out = 2)
-	    insetx <- inset[1]*(usr[2] - usr[1])
+	    insetx <- inset[1L]*(usr[2L] - usr[1L])
 	    left <- switch(auto, "bottomright"=,
-			   "topright"=, "right" = usr[2] - w - insetx,
-			   "bottomleft"=, "left"=, "topleft"= usr[1] + insetx,
-			   "bottom"=, "top"=, "center"= (usr[1] + usr[2] - w)/2)
-	    insety <- inset[2]*(usr[4] - usr[3])
+			   "topright"=, "right" = usr[2L] - w - insetx,
+			   "bottomleft"=, "left"=, "topleft"= usr[1L] + insetx,
+			   "bottom"=, "top"=, "center"= (usr[1L] + usr[2L] - w)/2)
+	    insety <- inset[2L]*(usr[4L] - usr[3L])
 	    top <- switch(auto, "bottomright"=,
-			  "bottom"=, "bottomleft"= usr[3] + h + insety,
-			  "topleft"=, "top"=, "topright" = usr[4] - insety,
-			  "left"=, "right"=, "center" = (usr[3] + usr[4] + h)/2)
+			  "bottom"=, "bottomleft"= usr[3L] + h + insety,
+			  "topleft"=, "top"=, "topright" = usr[4L] - insety,
+			  "left"=, "right"=, "center" = (usr[3L] + usr[4L] + h)/2)
 	}
     }
 
@@ -208,9 +208,9 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 
     ## (xt[],yt[]) := `current' vectors of (x/y) legend text
     xt <- left + xchar + xextra +
-	(w0 * rep.int(0:(ncol-1), rep.int(n.legpercol,ncol)))[1:n.leg]
+	(w0 * rep.int(0:(ncol-1), rep.int(n.legpercol,ncol)))[1L:n.leg]
     yt <- top -	0.5 * yextra - ymax -
-	(rep.int(1:n.legpercol,ncol)[1:n.leg] - 1 + !is.null(title)) * ychar
+	(rep.int(1L:n.legpercol,ncol)[1L:n.leg] - 1 + !is.null(title)) * ychar
 
     if (mfill) {		#- draw filled boxes -------------
 	if(plot) {

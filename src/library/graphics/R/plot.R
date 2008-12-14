@@ -36,8 +36,8 @@ plot.function <- function(x, y = 0, to = 1, from = y, xlim = NULL, ...)
     if(is.null(xlim)) {
 	if(is.null(from)) from <- 0
     } else {
-	if(is.null(from)) from <- xlim[1]
-	if(missing(to))	  to   <- xlim[2]
+	if(is.null(from)) from <- xlim[1L]
+	if(missing(to))	  to   <- xlim[2L]
     }
     curve(x, from, to, xlim = xlim, ...)
 }
@@ -114,7 +114,7 @@ plot.table <-
 	stop("invalid table 'x'")
     if(rnk == 1) {
 	dn <- dimnames(x)
-	nx <- dn[[1]]
+	nx <- dn[[1L]]
 	if(is.null(xlab)) xlab <- names(dn)
 	if(is.null(xlab)) xlab <- ""
 	if(is.null(ylab)) ylab <- xnam
@@ -162,7 +162,7 @@ function(formula, data = parent.frame(), ..., subset,
     m$subset <- NULL
     ## FIXME: model.frame is in stats
     require(stats, quietly=TRUE)
-    m[[1]] <- as.name("model.frame")
+    m[[1L]] <- as.name("model.frame")
     m <- as.call(c(as.list(m), list(na.action = NULL)))
     mf <- eval(m, parent.frame())
     if (!missing(subset)) {
@@ -224,7 +224,7 @@ function(formula,  data = parent.frame(), ..., subset)
     dots <- m$...
     dots <- lapply(dots, eval, data, parent.frame())
     m$... <- NULL
-    m[[1]] <- as.name("model.frame")
+    m[[1L]] <- as.name("model.frame")
     m <- as.call(c(as.list(m), list(na.action = NULL)))
     mf <- eval(m, parent.frame())
     if (!missing(subset)) {
@@ -265,7 +265,7 @@ function(formula, data = parent.frame(), ..., subset)
     dots <- m$...
     dots <- lapply(dots, eval, data, parent.frame())
     m$... <- NULL
-    m[[1]] <- as.name("model.frame")
+    m[[1L]] <- as.name("model.frame")
     m <- as.call(c(as.list(m), list(na.action = NULL)))
     mf <- eval(m, parent.frame())
     if (!missing(subset)) {
@@ -319,13 +319,13 @@ plot.window <- function(xlim, ylim, log = "", asp = NA, ...)
 
 plot.data.frame <- function (x, ...)
 {
-    plot2 <- function(x, xlab=names(x)[1], ylab=names(x)[2], ...)
-        plot(x[[1]], x[[2]], xlab=xlab, ylab=ylab, ...)
+    plot2 <- function(x, xlab=names(x)[1L], ylab=names(x)[2L], ...)
+        plot(x[[1L]], x[[2L]], xlab=xlab, ylab=ylab, ...)
 
     if(!is.data.frame(x))
 	stop("'plot.data.frame' applied to non data frame")
     if(ncol(x) == 1) {
-        x1 <- x[[1]]
+        x1 <- x[[1L]]
         cl <- class(x1)
         if(cl %in% c("integer", "numeric"))  stripchart(x1, ...)
         else plot(x1, ...) # factor, ts, complex ...
@@ -340,8 +340,8 @@ plot.data.frame <- function (x, ...)
 ## .newplot.hook <- function()
 ## {
 ##     pp <- par(c("mfg","mfcol","oma","mar"))
-##     if(all(pp$mfg[1:2] == c(1, pp$mfcol[2]))) {
-## 	outer <- (oma4 <- pp$oma[4]) > 0; mar4 <- pp$mar[4]
+##     if(all(pp$mfg[1L:2] == c(1, pp$mfcol[2L]))) {
+## 	outer <- (oma4 <- pp$oma[4L]) > 0; mar4 <- pp$mar[4L]
 ## 	mtext(paste("help(", ..nameEx, ")"), side = 4,
 ##               line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
 ##               outer = outer, adj = 1, cex = .8, col = "orchid", las=3)

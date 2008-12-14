@@ -100,7 +100,7 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
     }
 
     if(drop & length(fields)==1)
-        return(retval[[1]])
+        return(retval[[1L]])
 
     class(retval) <- "packageDescription"
     if(!is.null(fields)) attr(retval, "fields") <- fields

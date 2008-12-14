@@ -42,7 +42,7 @@ shorten.to.string <-
     function(line, token)
 {
     if (FALSE) {
-        ans <- regexpr(strsplit("token", ",", fixed = TRUE)[[1]][1],
+        ans <- regexpr(strsplit("token", ",", fixed = TRUE)[[1L]][1L],
                        line, fixed = TRUE)
         if (ans == -1) line
         else substr(line, 1L, ans + attr(ans, "match.length") - 1L)
@@ -116,15 +116,15 @@ expr2token <-
     id <- ""
     value <-
         if ((length(x) > 1) &&
-            (length(token <- as.character(x[[2]])) == 1) &&
-            (length(id <- as.character(x[[1]])) == 1) &&
+            (length(token <- as.character(x[[2L]])) == 1) &&
+            (length(id <- as.character(x[[1L]])) == 1) &&
             (id %in% ok)) token
         else
-            character(0)
+            character(0L)
     if (extended && identical(id, "setMethod")) 
     {
         ## try to add the signature, comma separated
-        sig <- try(eval(x[[3]]), silent = TRUE)
+        sig <- try(eval(x[[3L]]), silent = TRUE)
         if (!inherits(sig, "try-error") && is.character(sig))
             value <- paste(c(value, sig), collapse=",")
     }

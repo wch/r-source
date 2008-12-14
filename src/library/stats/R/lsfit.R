@@ -23,7 +23,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     xnames <- colnames(x)
     if( is.null(xnames) ) {
 	if(ncol(x)==1) xnames <- "X"
-	else xnames <- paste("X", 1:ncol(x), sep="")
+	else xnames <- paste("X", 1L:ncol(x), sep="")
     }
     if( intercept ) {
 	x <- cbind(1, x)
@@ -32,7 +32,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
 
     ## find names of y variables (responses)
 
-    if(is.null(yname) && ncol(y) > 1) yname <- paste("Y", 1:ncol(y), sep="")
+    if(is.null(yname) && ncol(y) > 1) yname <- paste("Y", 1L:ncol(y), sep="")
 
     ## remove missing values
 
@@ -89,8 +89,8 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
 		  coefficients=mat.or.vec(ncx, ncy),
 		  residuals=mat.or.vec(nrx, ncy),
 		  effects=mat.or.vec(nrx, ncy),
-		  rank=integer(1),
-		  pivot=as.integer(1:ncx),
+		  rank=integer(1L),
+		  pivot=as.integer(1L:ncx),
 		  qraux=double(ncx),
 		  work=double(2*ncx),
                   PACKAGE="base")
@@ -108,7 +108,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
 	z$residuals <- z$residuals*invmult
     }
     resids[good, ] <- z$residuals
-    if(dimy[2] == 1 && is.null(yname)) {
+    if(dimy[2L] == 1 && is.null(yname)) {
 	resids <- as.vector(resids)
 	names(z$coefficients) <- xnames
     }
@@ -134,7 +134,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     ## return weights if necessary
 
     if (!is.null(wt) ) {
-	weights <- rep.int(NA, dimy[1])
+	weights <- rep.int(NA, dimy[1L])
 	weights[good] <- wt
 	output <- c(output, list(wt=weights))
     }
@@ -203,7 +203,7 @@ ls.diag <- function(ls.out)
 
     ## calculate unscaled covariance matrix
 
-    qr <- as.matrix(ls.out$qr$qr[1:p, 1:p])
+    qr <- as.matrix(ls.out$qr$qr[1L:p, 1L:p])
     qr[row(qr)>col(qr)] <- 0
     qrinv <- solve(qr)
     covmat.unscaled <- qrinv%*%t(qrinv)
@@ -248,7 +248,7 @@ ls.print <- function(ls.out, digits=4, print.it=TRUE)
     if(ls.out$intercept) {
 	if(is.matrix(lsqr$qt))
 	    totss <- colSums(lsqr$qt[-1, ]^2)
-	else totss <- sum(lsqr$qt[-1]^2)
+	else totss <- sum(lsqr$qt[-1L]^2)
 	degfree <- p - 1
     } else {
 	totss <- colSums(as.matrix(lsqr$qt^2))
@@ -276,17 +276,17 @@ ls.print <- function(ls.out, digits=4, print.it=TRUE)
     dimnames(summary) <- list(Ynames,
 			      c("Mean Sum Sq", "R Squared",
 				"F-value", "Df 1", "Df 2", "Pr(>F)"))
-    mat <- as.matrix(lsqr$qr[1:p, 1:p])
+    mat <- as.matrix(lsqr$qr[1L:p, 1L:p])
     mat[row(mat)>col(mat)] <- 0
     qrinv <- solve(mat)
 
     ## construct coef table
 
     m.y <- ncol(resids)
-    coef.table <- as.list(1:m.y)
+    coef.table <- as.list(1L:m.y)
     if(m.y==1) coef <- matrix(ls.out$coefficients, ncol=1)
     else coef <- ls.out$coefficients
-    for(i in 1:m.y) {
+    for(i in 1L:m.y) {
 	covmat <- (resss[i]/(n[i]-p)) * (qrinv%*%t(qrinv))
 	se <- diag(covmat)^.5
 	coef.table[[i]] <- cbind(coef[, i], se, coef[, i]/se,

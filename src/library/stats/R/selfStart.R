@@ -76,20 +76,20 @@ getInitial.formula <-
         return(attr(data, "parameters"))
     }
     #obj <- object                       # kluge to create a copy inside this
-    #object[[1]] <- as.name("~")	 # function. match.call() is misbehaving
+    #object[[1L]] <- as.name("~")	 # function. match.call() is misbehaving
     switch (length(object),
             stop("argument 'object' has an impossible length"),
         {				# one-sided formula
-	    func <- get(as.character(object[[2]][[1]]))
+	    func <- get(as.character(object[[2L]][[1L]]))
 	    getInitial(func, data,
-		       mCall = as.list(match.call(func, call = object[[2]])),
+		       mCall = as.list(match.call(func, call = object[[2L]])),
                        ...)
         },
         {				# two-sided formula
-	    func <- get(as.character(object[[3]][[1]]))
+	    func <- get(as.character(object[[3L]][[1L]]))
 	    getInitial(func, data,
-		       mCall = as.list(match.call(func, call = object[[3]])),
-		       LHS = object[[2]], ...)
+		       mCall = as.list(match.call(func, call = object[[3L]])),
+		       LHS = object[[2L]], ...)
         })
 }
 
@@ -130,11 +130,11 @@ sortedXyData.default <-
     ## that can be evaluated in data
     #data <- as.data.frame(data)
     if (is.language(x) || ((length(x) == 1) && is.character(x))) {
-        x <- eval(asOneSidedFormula(x)[[2]], data)
+        x <- eval(asOneSidedFormula(x)[[2L]], data)
     }
     x <- as.numeric(x)
     if (is.language(y) || ((length(y) == 1) && is.character(y))) {
-        y <- eval(asOneSidedFormula(y)[[2]], data)
+        y <- eval(asOneSidedFormula(y)[[2L]], data)
     }
     y <- as.numeric(y)
     y.avg <- tapply(y, x, mean, na.rm = TRUE)
@@ -189,9 +189,9 @@ NLSstRtAsymptote.sortedXyData <-
     ## Estimate the asymptote as the largest (smallest) response
     ## value plus (minus) 1/8 of the range.
     if(match(min(last.dif), last.dif) == 2) {
-        return(in.range[2] + diff(in.range)/8)
+        return(in.range[2L] + diff(in.range)/8)
     }
-    in.range[1] - diff(in.range)/8
+    in.range[1L] - diff(in.range)/8
 }
 
 NLSstLfAsymptote <-
@@ -204,13 +204,13 @@ NLSstLfAsymptote.sortedXyData <-
     ## Is the first response value closest to the minimum or to
     ## the maximum?
     in.range <- range(xy$y)
-    first.dif <- abs(in.range - xy$y[1])
+    first.dif <- abs(in.range - xy$y[1L])
     ## Estimate the asymptote as the largest (smallest) response
     ## value plus (minus) 1/8 of the range.
     if(match(min(first.dif), first.dif) == 2) {
-        return(in.range[2] + diff(in.range)/8)
+        return(in.range[2L] + diff(in.range)/8)
     }
-    in.range[1] - diff(in.range)/8
+    in.range[1L] - diff(in.range)/8
 }
 
 NLSstAsymptotic <-
@@ -227,7 +227,7 @@ NLSstAsymptotic.sortedXyData <-
                       data = xy,
                       start = list(lrc =
                       as.vector(log(-coef(lm(log(abs(y - rt)) ~ x,
-                                             data = xy))[2]))),
+                                             data = xy))[2L]))),
                       algorithm = "plinear"))[c(2, 3, 1)]
     names(value) <- c("b0", "b1", "lrc")
     value

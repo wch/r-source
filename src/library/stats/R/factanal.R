@@ -67,7 +67,7 @@ factanal <-
             names(mf)[names(mf) == "x"] <- "formula"
             mf$factors <- mf$covmat <- mf$scores <- mf$start <-
                 mf$rotation <- mf$control <- mf$... <- NULL
-            mf[[1]] <- as.name("model.frame")
+            mf[[1L]] <- as.name("model.frame")
             mf <- eval.parent(mf)
             na.act <- attr(mf, "na.action")
             if (.check_vars_numeric(mf))
@@ -113,15 +113,15 @@ factanal <-
     if(nc < 1) stop("no starting values supplied")
 
     best <- Inf
-    for (i in 1:nc) {
+    for (i in 1L:nc) {
         nfit <- factanal.fit.mle(cv, factors, start[, i],
                                  max(cn$lower, 0), cn$opt)
         if(cn$trace)
-            cat("start", i, "value:", format(nfit$criteria[1]),
+            cat("start", i, "value:", format(nfit$criteria[1L]),
                 "uniqs:", format(as.vector(round(nfit$uniquenesses, 4))), "\n")
-        if(nfit$converged && nfit$criteria[1] < best) {
+        if(nfit$converged && nfit$criteria[1L] < best) {
             fit <- nfit
-            best <- fit$criteria[1]
+            best <- fit$criteria[1L]
         }
     }
     if(best == Inf) stop("unable to optimize from these starting value(s)")
@@ -170,8 +170,8 @@ factanal.fit.mle <-
         sc <- diag(1/sqrt(Psi))
         Sstar <- sc %*% S %*% sc
         E <- eigen(Sstar, symmetric = TRUE)
-        L <- E$vectors[, 1:q, drop = FALSE]
-        load <- L %*% diag(sqrt(pmax(E$values[1:q] - 1, 0)), q)
+        L <- E$vectors[, 1L:q, drop = FALSE]
+        load <- L %*% diag(sqrt(pmax(E$values[1L:q] - 1, 0)), q)
         diag(sqrt(Psi)) %*% load
     }
     FAfn <- function(Psi, S, q)
@@ -179,7 +179,7 @@ factanal.fit.mle <-
         sc <- diag(1/sqrt(Psi))
         Sstar <- sc %*% S %*% sc
         E <- eigen(Sstar, symmetric = TRUE, only.values = TRUE)
-        e <- E$values[-(1:q)]
+        e <- E$values[-(1L:q)]
         e <- sum(log(e) - e) - q + nrow(S)
 ##        print(round(c(Psi, -e), 5))  # for tracing
         -e
@@ -189,8 +189,8 @@ factanal.fit.mle <-
         sc <- diag(1/sqrt(Psi))
         Sstar <- sc %*% S %*% sc
         E <- eigen(Sstar, symmetric = TRUE)
-        L <- E$vectors[, 1:q, drop = FALSE]
-        load <- L %*% diag(sqrt(pmax(E$values[1:q] - 1, 0)), q)
+        L <- E$vectors[, 1L:q, drop = FALSE]
+        load <- L %*% diag(sqrt(pmax(E$values[1L:q] - 1, 0)), q)
         load <- diag(sqrt(Psi)) %*% load
         g <- load %*% t(load) + diag(Psi) - S
         diag(g)/Psi^2
@@ -204,8 +204,8 @@ factanal.fit.mle <-
                  parscale = rep(0.01, length(start))), control),
                  q = factors, S = cmat)
     Lambda <- FAout(res$par, cmat, factors)
-    dimnames(Lambda) <- list(dimnames(cmat)[[1]],
-                             paste("Factor", 1:factors, sep = ""))
+    dimnames(Lambda) <- list(dimnames(cmat)[[1L]],
+                             paste("Factor", 1L:factors, sep = ""))
     p <- ncol(cmat)
     dof <- 0.5 * ((p - factors)^2 - p - factors)
     un <- res$par
@@ -227,14 +227,14 @@ print.loadings <- function(x, digits = 3, cutoff = 0.1, sort = FALSE, ...)
     factors <- ncol(Lambda)
     if (sort) {
         mx <- max.col(abs(Lambda))
-        ind <- cbind(1:p, mx)
+        ind <- cbind(1L:p, mx)
         mx[abs(Lambda[ind]) < 0.5] <- factors + 1
-        Lambda <- Lambda[order(mx, 1:p),]
+        Lambda <- Lambda[order(mx, 1L:p),]
     }
     cat("\nLoadings:\n")
     fx <- format(round(Lambda, digits))
     names(fx) <- NULL
-    nc <- nchar(fx[1], type="c")
+    nc <- nchar(fx[1L], type="c")
     fx[abs(Lambda) < cutoff] <- paste(rep(" ", nc), collapse = "")
     print(fx, quote = FALSE, ...)
     vx <- colSums(x^2)
@@ -281,7 +281,7 @@ varimax <- function(x, normalize = TRUE, eps = 1e-5)
     p <- nrow(x)
     TT <- diag(nc)
     d <- 0
-    for(i in 1:1000) {
+    for(i in 1L:1000) {
         z <- x %*% TT
         B  <- t(x) %*% (z^3 - z %*% diag(drop(rep(1, p) %*% z^2))/p)
         sB <- La.svd(B)

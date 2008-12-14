@@ -118,7 +118,7 @@ summary.stl <- function(object, digits = getOption("digits"), ...)
     if(all(object$weights == 1)) cat(" all == 1\n")
     else { cat("\n"); print(summary(object$weights, digits = digits, ...)) }
     cat("\n Other components: ")
-    str(object[-(1:3)], give.attr = FALSE)
+    str(object[-(1L:3)], give.attr = FALSE)
     invisible(object)
 }
 
@@ -141,17 +141,17 @@ plot.stl <- function(x, labels = colnames(X),
 	on.exit(par(oldpar))
 	do.call("par", set.pars)
     }
-    for(i in 1:nplot) {
+    for(i in 1L:nplot) {
 	plot(X[, i], type = if(i < nplot) "l" else "h",
 	     xlab = "", ylab = "", axes = FALSE, ...)
 	if(range.bars) {
-	    dx <- 1/64 * diff(ux <- par("usr")[1:2])
+	    dx <- 1/64 * diff(ux <- par("usr")[1L:2])
 	    y <- mean(rx[,i])
-	    rect(ux[2] - dx, y + mx/2, ux[2] - 0.4*dx, y - mx/2,
+	    rect(ux[2L] - dx, y + mx/2, ux[2L] - 0.4*dx, y - mx/2,
 		 col = col.range, xpd = TRUE)
 	}
 	if(i == 1 && !is.null(main))
-	    title(main, line = 2, outer = par("oma")[3] > 0)
+	    title(main, line = 2, outer = par("oma")[3L] > 0)
 	if(i == nplot) abline(h=0)
 	box()
 	right <- i %% 2 == 0

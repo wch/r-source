@@ -137,7 +137,7 @@ validDetails.lines <- function(x) {
 
 drawDetails.lines <- function(x, recording=TRUE) {
     grid.Call.graphics("L_lines", x$x, x$y,
-                       list(as.integer(1:max(length(x$x), length(x$y)))),
+                       list(as.integer(1L:max(length(x$x), length(x$y)))),
                        x$arrow)
 }
 
@@ -146,7 +146,7 @@ xDetails.lines <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[1], "inches")
+        unit(bounds[1L], "inches")
 }
 
 yDetails.lines <- function(x, theta) {
@@ -154,7 +154,7 @@ yDetails.lines <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[2], "inches")
+        unit(bounds[2L], "inches")
 }
 
 widthDetails.lines <- function(x) {
@@ -162,7 +162,7 @@ widthDetails.lines <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[3], "inches")
+    unit(bounds[3L], "inches")
 }
 
 heightDetails.lines <- function(x) {
@@ -170,7 +170,7 @@ heightDetails.lines <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[4], "inches")
+    unit(bounds[4L], "inches")
 }
 
 linesGrob <- function(x=unit(c(0, 1), "npc"),
@@ -230,17 +230,17 @@ validDetails.polyline <- function(x) {
 drawDetails.polyline <- function(x, recording=TRUE) {
     if (is.null(x$id) && is.null(x$id.lengths))
         grid.Call.graphics("L_lines", x$x, x$y,
-                           list(as.integer(1:length(x$x))),
+                           list(as.integer(1L:length(x$x))),
                            x$arrow)
     else {
         if (is.null(x$id)) {
             n <- length(x$id.lengths)
-            id <- rep(1:n, x$id.lengths)
+            id <- rep(1L:n, x$id.lengths)
         } else {
             n <- length(unique(x$id))
             id <- x$id
         }
-        index <- split(as.integer(1:length(x$x)), id)
+        index <- split(as.integer(1L:length(x$x)), id)
         grid.Call.graphics("L_lines", x$x, x$y, index, x$arrow)
     }
 }
@@ -250,7 +250,7 @@ xDetails.polyline <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[1], "inches")
+        unit(bounds[1L], "inches")
 }
 
 yDetails.polyline <- function(x, theta) {
@@ -258,7 +258,7 @@ yDetails.polyline <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[2], "inches")
+        unit(bounds[2L], "inches")
 }
 
 widthDetails.polyline <- function(x) {
@@ -266,7 +266,7 @@ widthDetails.polyline <- function(x) {
     if (is.null(bounds))
         unit(0, "inches")
     else
-        unit(bounds[3], "inches")
+        unit(bounds[3L], "inches")
 }
 
 heightDetails.polyline <- function(x) {
@@ -274,7 +274,7 @@ heightDetails.polyline <- function(x) {
     if (is.null(bounds))
         unit(0, "inches")
     else
-        unit(bounds[4], "inches")
+        unit(bounds[4L], "inches")
 }
 
 polylineGrob <- function(x=unit(c(0, 1), "npc"),
@@ -319,7 +319,7 @@ xDetails.segments <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[1], "inches")
+        unit(bounds[1L], "inches")
 }
 
 yDetails.segments <- function(x, theta) {
@@ -329,7 +329,7 @@ yDetails.segments <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[2], "inches")
+        unit(bounds[2L], "inches")
 }
 
 widthDetails.segments <- function(x) {
@@ -339,7 +339,7 @@ widthDetails.segments <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[3], "inches")
+    unit(bounds[3L], "inches")
 }
 
 heightDetails.segments <- function(x) {
@@ -349,7 +349,7 @@ heightDetails.segments <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[4], "inches")
+    unit(bounds[4L], "inches")
 }
 
 segmentsGrob <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
@@ -428,14 +428,14 @@ drawDetails.arrows <- function(x, recording=TRUE) {
       n <- max(length(lineThing$x),
                length(lineThing$y))
       xx <- rep(lineThing$x, length.out=2)
-      x1 <- xx[1]
-      x2 <- xx[2]
+      x1 <- xx[1L]
+      x2 <- xx[2L]
       xx <- rep(lineThing$x, length.out=n)
       xnm1 <- xx[n - 1]
       xn <- xx[n]
       yy <- rep(lineThing$y, length.out=2)
-      y1 <- yy[1]
-      y2 <- yy[2]
+      y1 <- yy[1L]
+      y2 <- yy[2L]
       yy <- rep(lineThing$y, length.out=n)
       ynm1 <- yy[n - 1]
       yn <- yy[n]
@@ -453,19 +453,19 @@ drawDetails.arrows <- function(x, recording=TRUE) {
     # x or y may be recycled
     n <- max(length(x$x), length(x$y))
     xx <- rep(x$x, length.out=2)
-    x1 <- xx[1]
-    x2 <- xx[2]
+    x1 <- xx[1L]
+    x2 <- xx[2L]
     xx <- rep(x$x, length.out=n)
     xnm1 <- xx[n - 1]
     xn <- xx[n]
     yy <- rep(x$y, length.out=2)
-    y1 <- yy[1]
-    y2 <- yy[2]
+    y1 <- yy[1L]
+    y2 <- yy[2L]
     yy <- rep(x$y, length.out=n)
     ynm1 <- yy[n - 1]
     yn <- yy[n]
     grid.Call.graphics("L_lines", x$x, x$y,
-                       list(as.integer(1:n)),
+                       list(as.integer(1L:n)),
                        NULL)
   }
   grid.Call.graphics("L_arrows", x1, x2, xnm1, xn, y1, y2, ynm1, yn,
@@ -483,7 +483,7 @@ widthDetails.arrows <- function(x) {
     if (is.null(bounds))
       unit(0, "inches")
     else
-      unit(bounds[3], "inches")
+      unit(bounds[3L], "inches")
   }
 }
 
@@ -498,7 +498,7 @@ heightDetails.arrows <- function(x) {
     if (is.null(bounds))
       unit(0, "inches")
     else
-      unit(bounds[4], "inches")
+      unit(bounds[4L], "inches")
   }
 }
 
@@ -578,16 +578,16 @@ validDetails.polygon <- function(x) {
 drawDetails.polygon <- function(x, recording=TRUE) {
   if (is.null(x$id) && is.null(x$id.lengths))
     grid.Call.graphics("L_polygon", x$x, x$y,
-                       list(as.integer(1:length(x$x))))
+                       list(as.integer(1L:length(x$x))))
   else {
     if (is.null(x$id)) {
       n <- length(x$id.lengths)
-      id <- rep(1:n, x$id.lengths)
+      id <- rep(1L:n, x$id.lengths)
     } else {
       n <- length(unique(x$id))
       id <- x$id
     }
-    index <- split(as.integer(1:length(x$x)), id)
+    index <- split(as.integer(1L:length(x$x)), id)
     grid.Call.graphics("L_polygon", x$x, x$y, index)
   }
 }
@@ -597,7 +597,7 @@ xDetails.polygon <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[1], "inches")
+        unit(bounds[1L], "inches")
 }
 
 yDetails.polygon <- function(x, theta) {
@@ -605,7 +605,7 @@ yDetails.polygon <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[2], "inches")
+        unit(bounds[2L], "inches")
 }
 
 widthDetails.polygon <- function(x) {
@@ -613,7 +613,7 @@ widthDetails.polygon <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[3], "inches")
+    unit(bounds[3L], "inches")
 }
 
 heightDetails.polygon <- function(x) {
@@ -621,7 +621,7 @@ heightDetails.polygon <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[4], "inches")
+    unit(bounds[4L], "inches")
 }
 
 polygonGrob <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
@@ -690,16 +690,16 @@ validDetails.xspline <- function(x) {
 
 xsplineIndex <- function(x) {
   if (is.null(x$id) && is.null(x$id.lengths))
-      list(as.integer(1:length(x$x)))
+      list(as.integer(1L:length(x$x)))
   else {
     if (is.null(x$id)) {
       n <- length(x$id.lengths)
-      id <- rep(1:n, x$id.lengths)
+      id <- rep(1L:n, x$id.lengths)
     } else {
       n <- length(unique(x$id))
       id <- x$id
     }
-    split(as.integer(1:length(x$x)), id)
+    split(as.integer(1L:length(x$x)), id)
   }
 }
 
@@ -714,7 +714,7 @@ xDetails.xspline <- function(x, theta) {
   if (is.null(bounds))
     unit(0.5, "npc")
   else
-    unit(bounds[1], "inches")
+    unit(bounds[1L], "inches")
 }
 
 yDetails.xspline <- function(x, theta) {
@@ -723,25 +723,25 @@ yDetails.xspline <- function(x, theta) {
   if (is.null(bounds))
     unit(0.5, "npc")
   else
-    unit(bounds[2], "inches")
+    unit(bounds[2L], "inches")
 }
 
 widthDetails.xspline <- function(x) {
   bounds <- grid.Call("L_xsplineBounds", x$x, x$y, x$shape, x$open, x$arrow,
-                      x$repEnds, list(as.integer(1:length(x$x))), 0)
+                      x$repEnds, list(as.integer(1L:length(x$x))), 0)
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[3], "inches")
+    unit(bounds[3L], "inches")
 }
 
 heightDetails.xspline <- function(x) {
   bounds <- grid.Call("L_xsplineBounds", x$x, x$y, x$shape, x$open, x$arrow,
-                      x$repEnds, list(as.integer(1:length(x$x))), 0)
+                      x$repEnds, list(as.integer(1L:length(x$x))), 0)
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[4], "inches")
+    unit(bounds[4L], "inches")
 }
 
 xsplineGrob <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
@@ -783,7 +783,7 @@ xDetails.circle <- function(x, theta) {
   if (is.null(bounds))
     unit(0.5, "npc")
   else
-    unit(bounds[1], "inches")
+    unit(bounds[1L], "inches")
 }
 
 yDetails.circle <- function(x, theta) {
@@ -791,7 +791,7 @@ yDetails.circle <- function(x, theta) {
   if (is.null(bounds))
     unit(0.5, "npc")
   else
-    unit(bounds[2], "inches")
+    unit(bounds[2L], "inches")
 }
 
 widthDetails.circle <- function(x) {
@@ -799,7 +799,7 @@ widthDetails.circle <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[3], "inches")
+    unit(bounds[3L], "inches")
 }
 
 heightDetails.circle <- function(x) {
@@ -807,7 +807,7 @@ heightDetails.circle <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[4], "inches")
+    unit(bounds[4L], "inches")
 }
 
 circleGrob <- function(x=0.5, y=0.5, r=0.5,
@@ -864,7 +864,7 @@ xDetails.rect <- function(x, theta) {
   if (is.null(bounds))
     unit(0.5, "npc")
   else
-    unit(bounds[1], "inches")
+    unit(bounds[1L], "inches")
 }
 
 yDetails.rect <- function(x, theta) {
@@ -875,7 +875,7 @@ yDetails.rect <- function(x, theta) {
   if (is.null(bounds))
     unit(0.5, "npc")
   else
-    unit(bounds[2], "inches")
+    unit(bounds[2L], "inches")
 }
 
 widthDetails.rect <- function(x) {
@@ -886,7 +886,7 @@ widthDetails.rect <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[3], "inches")
+    unit(bounds[3L], "inches")
 }
 
 heightDetails.rect <- function(x) {
@@ -897,7 +897,7 @@ heightDetails.rect <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[4], "inches")
+    unit(bounds[4L], "inches")
 }
 
 rectGrob <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
@@ -970,7 +970,7 @@ xDetails.text <- function(x, theta) {
   if (is.null(bounds))
     unit(0.5, "npc")
   else
-    unit(bounds[1], "inches")
+    unit(bounds[1L], "inches")
 }
 
 yDetails.text <- function(x, theta) {
@@ -982,7 +982,7 @@ yDetails.text <- function(x, theta) {
   if (is.null(bounds))
     unit(0.5, "npc")
   else
-    unit(bounds[2], "inches")
+    unit(bounds[2L], "inches")
 }
 
 widthDetails.text <- function(x) {
@@ -994,7 +994,7 @@ widthDetails.text <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[3], "inches")
+    unit(bounds[3L], "inches")
 }
 
 heightDetails.text <- function(x) {
@@ -1006,7 +1006,7 @@ heightDetails.text <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[4], "inches")
+    unit(bounds[4L], "inches")
 }
 
 textGrob <- function(label, x=unit(0.5, "npc"), y=unit(0.5, "npc"),
@@ -1042,10 +1042,10 @@ grid.text <- function(label, x=unit(0.5, "npc"), y=unit(0.5, "npc"),
 # POINTS primitive
 ######################################
 valid.pch <- function(pch) {
-  if (length(pch) == 0)
+  if (length(pch) == 0L)
     stop("zero-length 'pch'")
   if (is.null(pch))
-    pch <- as.integer(1)
+    pch <- 1L
   else if (!is.character(pch))
     pch <- as.integer(pch)
   pch
@@ -1072,7 +1072,7 @@ xDetails.points <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[1], "inches")
+        unit(bounds[1L], "inches")
 }
 
 yDetails.points <- function(x, theta) {
@@ -1080,7 +1080,7 @@ yDetails.points <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[2], "inches")
+        unit(bounds[2L], "inches")
 }
 
 widthDetails.points <- function(x) {
@@ -1088,7 +1088,7 @@ widthDetails.points <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[3], "inches")
+    unit(bounds[3L], "inches")
 }
 
 heightDetails.points <- function(x) {
@@ -1096,7 +1096,7 @@ heightDetails.points <- function(x) {
   if (is.null(bounds))
     unit(0, "inches")
   else
-    unit(bounds[4], "inches")
+    unit(bounds[4L], "inches")
 }
 
 pointsGrob <- function(x=stats::runif(10),
@@ -1201,7 +1201,7 @@ xDetails.null <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[1], "inches")
+        unit(bounds[1L], "inches")
 }
 
 yDetails.null <- function(x, theta) {
@@ -1209,7 +1209,7 @@ yDetails.null <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[2], "inches")
+        unit(bounds[2L], "inches")
 }
 
 # Deliberately ZERO

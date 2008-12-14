@@ -161,7 +161,7 @@ density.default <-
                         ifelse(abs(kords) < a, pi/4*cos(pi*kords/(2*a))/a, 0)}
                     )
     kords <- fft( fft(y)* Conj(fft(kords)), inverse=TRUE)
-    kords <- pmax.int(0, Re(kords)[1:n]/length(y))
+    kords <- pmax.int(0, Re(kords)[1L:n]/length(y))
     xords <- seq.int(lo, up, length.out = n)
 #    keep <- (xords >= from) & (xords <= to)
     x <- seq.int(from, to, length.out = n.user)

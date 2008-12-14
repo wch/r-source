@@ -35,17 +35,17 @@ summary.default <-
 	nas <- is.na(object)
 	object <- object[!nas]
 	qq <- stats::quantile(object)
-	qq <- signif(c(qq[1:3], mean(object), qq[4:5]), digits)
+	qq <- signif(c(qq[1L:3L], mean(object), qq[4L:5L]), digits)
 	names(qq) <- c("Min.", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max.")
 	if(any(nas))
 	    c(qq, "NA's" = sum(nas))
 	else qq
     } else if(is.recursive(object) && !is.language(object) &&
 	      (n <- length(object))) {
-	sumry <- array("", c(n, 3), list(names(object),
+	sumry <- array("", c(n, 3L), list(names(object),
 					 c("Length", "Class", "Mode")))
 	ll <- numeric(n)
-	for(i in 1:n) {
+	for(i in 1L:n) {
 	    ii <- object[[i]]
 	    ll[i] <- length(ii)
 	    cls <- oldClass(ii)
@@ -91,7 +91,7 @@ summary.data.frame <-
     nm <- names(object)
     lw <- numeric(nv)
     nr <- max(unlist(lapply(z, NROW)))
-    for(i in 1:nv) {
+    for(i in 1L:nv) {
         sms <- z[[i]]
         if(is.matrix(sms)) {
             ## need to produce a single column, so collapse matrix
@@ -121,7 +121,7 @@ summary.data.frame <-
     }
     z <- unlist(z, use.names=TRUE)
     dim(z) <- c(nr, nv)
-    blanks <- paste(character(max(lw) + 2), collapse = " ")
+    blanks <- paste(character(max(lw) + 2L), collapse = " ")
     pad <- floor(lw-nchar(nm, type="w")/2)
     nm <- paste(substring(blanks, 1, pad), nm, sep = "")
     dimnames(z) <- list(rep.int("", nr), nm)

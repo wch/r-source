@@ -40,7 +40,7 @@ languageEl <-
     if(is.character(which))
         data[[which]]
     else if(typeof(object) == "language") {
-        if(isGrammarSymbol(data[[1]]))
+        if(isGrammarSymbol(data[[1L]]))
             data[[which + 1]]
         else
             data[[which]]               ## other calls
@@ -81,7 +81,7 @@ languageEl <-
     else if(type == "language") {
         if(is.character(which))
             data[[which]] <- value
-        else if(isGrammarSymbol(data[[1]]))
+        else if(isGrammarSymbol(data[[1L]]))
             data[[which+1]] <- value
         else {
             if(identical(which, 1) && is.character(value))

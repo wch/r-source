@@ -72,8 +72,8 @@ makeMethodsList <- function(object, level=1)
 
 SignatureMethod <-
   ## construct a MethodsList object containing (only) this method, corresponding
-  ## to the signature; i.e., such that signature[[1]] is the match for the first
-  ## argument, signature[[2]] for the second argument, and so on.  The string
+  ## to the signature; i.e., such that signature[[1L]] is the match for the first
+  ## argument, signature[[2L]] for the second argument, and so on.  The string
   ## "missing" means a match for a missing argument, and "ANY" means use this as the
   ## default setting at this level.
   ##
@@ -102,11 +102,11 @@ insertMethod <-
 {
     ## Checks for assertions about valid calls.
     ## See rev. 1.17 for the code before the assertions added.
-    if(identical(args[1], "...") && !identical(names(signature), "...")) {
-        if(identical(signature[[1]], "ANY"))
-           stop(gettextf("inserting method with invalid signature matching argument '...' to class \"%s\"", signature[[1]]), domain = NA)
-        args <- args[-1]
-        signature <- signature[-1]
+    if(identical(args[1L], "...") && !identical(names(signature), "...")) {
+        if(identical(signature[[1L]], "ANY"))
+           stop(gettextf("inserting method with invalid signature matching argument '...' to class \"%s\"", signature[[1L]]), domain = NA)
+        args <- args[-1L]
+        signature <- signature[-1L]
         if(length(signature) == 0)
             return(mlist)
     }
@@ -151,12 +151,12 @@ insertMethod <-
     }
     else { ## recursively merge, initializing current if necessary
         if(is.null(current))
-            current <- new("MethodsList", argument = as.name(args[2]))
+            current <- new("MethodsList", argument = as.name(args[2L]))
         else if(is.function(current))
-            current <- new("MethodsList", argument = as.name(args[2]),
+            current <- new("MethodsList", argument = as.name(args[2L]),
 			   methods = list(ANY = current))
         elNamed(methods, Class) <-
-            Recall(current, signature[-1], args[-1], def, cacheOnly)
+            Recall(current, signature[-1L], args[-1L], def, cacheOnly)
     }
     mlist@allMethods <- methods
     if(!cacheOnly)
@@ -342,11 +342,11 @@ emptyMethodsList <- function(mlist, thisClass = "ANY", sublist = list()) {
 insertMethodInEmptyList <- function(mlist, def) {
     value <- new("MethodsList", argument = mlist@argument)
     sublist <- mlist@sublist
-    submethods <- sublist[[1]]
+    submethods <- sublist[[1L]]
     if(is.null(submethods))
-        sublist[[1]] <- def
+        sublist[[1L]] <- def
     else
-        sublist[[1]] <- Recall(submethods, def)
+        sublist[[1L]] <- Recall(submethods, def)
     value@allMethods <- sublist
     value
 }
@@ -475,12 +475,12 @@ matchSignature <-
         formals(fmatch, envir = environment(fun)) <- ff
         smatch <- match.call(fmatch, fcall)
     }
-    snames <- names(smatch)[-1]
+    snames <- names(smatch)[-1L]
     which <- match(snames, anames)
     ## Assertion:  match.call has permuted the args into the order of formal args,
     ## and carried along the values.  Get the supplied classes in that
     ## order, from the matched args in the call object.
-    sigClasses <- as.character(smatch)[-1]
+    sigClasses <- as.character(smatch)[-1L]
     if(any(is.na(which)))
         stop(gettextf("in the method signature for function \"%s\" invalid argument names in the signature: %s",
                       fun@generic,
@@ -530,14 +530,14 @@ function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgName
    n <- length(methods)
     labels <- character(n)
     if(useArgNames) {
-      for(i in 1:n) {
+      for(i in 1L:n) {
         sigi <- signatures[[i]]
         labels[[i]] <- paste(args[[i]], " = \"", sigi, "\"",
                              sep = "", collapse = ", ")
       }
     }
     else {
-      for(i in 1:n)
+      for(i in 1L:n)
         labels[[i]] <- paste(signatures[[i]], collapse = ", ")
     }
     for(i in seq_along(methods)) {
@@ -732,7 +732,7 @@ listFromMlist <-
                             newDefs[[j]])
     }
     else {
-        def <- .addMethodFrom(def, argName[1], Class[1], fromClass)
+        def <- .addMethodFrom(def, argName[1L], Class[1L], fromClass)
         mlist <- insertMethod(mlist, Class, argName, def, TRUE)
     }
     mlist

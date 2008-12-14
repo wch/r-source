@@ -20,11 +20,11 @@
 
 stars <-
 function(x, full = TRUE, scale = TRUE, radius = TRUE,
-	 labels = dimnames(x)[[1]], locations = NULL,
+	 labels = dimnames(x)[[1L]], locations = NULL,
          nrow = NULL, ncol = NULL, len = 1,
-         key.loc = NULL, key.labels = dimnames(x)[[2]], key.xpd = TRUE,
+         key.loc = NULL, key.labels = dimnames(x)[[2L]], key.xpd = TRUE,
          xlim = NULL, ylim = NULL, flip.labels = NULL,
-         draw.segments = FALSE, col.segments = 1:n.seg,
+         draw.segments = FALSE, col.segments = 1L:n.seg,
          col.stars = NA,
          axes = FALSE, frame.plot = axes,
          main = NULL, sub = NULL, xlab = "", ylab = "",
@@ -51,7 +51,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
         if(nrow * ncol < n.loc)
             stop("nrow * ncol <  number of observations")
         ff <- if(!is.null(labels)) 2.3 else 2.1
-        locations <- expand.grid(ff * 1:ncol, ff * nrow:1)[1:n.loc, ]
+        locations <- expand.grid(ff * 1L:ncol, ff * nrow:1)[1L:n.loc, ]
         if(!is.null(labels) && (missing(flip.labels) ||
                                 !is.logical(flip.labels)))
             flip.labels <- ncol * mean(nchar(labels, type="c")) > 30
@@ -59,8 +59,8 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
     else {
         if (is.numeric(locations) && length(locations) == 2) {
             ## all stars around the same origin
-            locations <- cbind(rep.int(locations[1],n.loc),
-                               rep.int(locations[2],n.loc))
+            locations <- cbind(rep.int(locations[1L],n.loc),
+                               rep.int(locations[2L],n.loc))
             if(!missing(labels) && n.loc > 1)
                 warning("labels do not make sense for a single location")
             else labels <- NULL
@@ -121,9 +121,9 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 
     if ( draw.segments ) {
         aangl <- c(angles, if(full)2*pi else pi)
-	for (i in 1:n.loc) { ## for each location, draw a segment diagram
+	for (i in 1L:n.loc) { ## for each location, draw a segment diagram
 	    px <- py <- numeric()
-	    for (j in 1:n.seg) {
+	    for (j in 1L:n.seg) {
 		k <- seq.int(from = aangl[j], to = aangl[j+1], by = 1*deg)
 		px <- c(px, xloc[i], s.x[i,j], x[i,j]*cos(k) + xloc[i], NA)
 		py <- c(py, yloc[i], s.y[i,j], x[i,j]*sin(k) + yloc[i], NA)
@@ -133,7 +133,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
     } # Segment diagrams
 
     else { # Draw stars instead
-	for (i in 1:n.loc) {
+	for (i in 1L:n.loc) {
 	    polygon(s.x[i,], s.y[i,], lwd=lwd, lty=lty, col = col.stars[i])
 	    if (radius)
 		segments(rep.int(xloc[i],n.seg),
@@ -146,8 +146,8 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
         ## vertical text offset from center
         y.off <- mx * (if(full) 1 else 0.1)
         if(flip.labels)
-            y.off <- y.off + cex*par("cxy")[2] *
-                ((1:n.loc)%%2 - if(full) .4 else 0)
+            y.off <- y.off + cex*par("cxy")[2L] *
+                ((1L:n.loc)%%2 - if(full) .4 else 0)
         ##DBG cat("mx=",format(mx),"y.off:"); str(y.off)
         text(xloc, yloc - y.off, labels, cex=cex, adj=c(0.5, 1))
     }
@@ -156,31 +156,31 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 
         ## usually allow drawing outside plot region:
         par(xpd = key.xpd) # had `xpd' already above
-        key.x <- len * cos(angles) + key.loc[1]
-        key.y <- len * sin(angles) + key.loc[2]
+        key.x <- len * cos(angles) + key.loc[1L]
+        key.y <- len * sin(angles) + key.loc[2L]
 	if (draw.segments) {
 	    px <- py <- numeric()
-	    for (j in 1:n.seg) {
+	    for (j in 1L:n.seg) {
 		k <- seq.int(from = aangl[j], to = aangl[j+1], by = 1*deg)
-		px <- c(px, key.loc[1], key.x[j], len * cos(k) + key.loc[1], NA)
-		py <- c(py, key.loc[2], key.y[j], len * sin(k) + key.loc[2], NA)
+		px <- c(px, key.loc[1L], key.x[j], len * cos(k) + key.loc[1L], NA)
+		py <- c(py, key.loc[2L], key.y[j], len * sin(k) + key.loc[2L], NA)
 	    }
 	    polygon(px, py, col = col.segments, lwd=lwd, lty=lty)
 	}
 	else { # draw unit star
 	    polygon(key.x, key.y, lwd=lwd, lty=lty)
 	    if (radius)
-		segments(rep.int(key.loc[1],n.seg), rep.int(key.loc[2],n.seg),
+		segments(rep.int(key.loc[1L],n.seg), rep.int(key.loc[2L],n.seg),
 			 key.x, key.y, lwd=lwd, lty=lty)
 	}
 
         ## Radial Labeling -- should this be a standalone function ?
 	lab.angl <- angles +
-            if(draw.segments) (angles[2] - angles[1]) / 2 else 0
-	label.x <- 1.1 * len * cos(lab.angl) + key.loc[1]
-	label.y <- 1.1 * len * sin(lab.angl) + key.loc[2]
+            if(draw.segments) (angles[2L] - angles[1L]) / 2 else 0
+	label.x <- 1.1 * len * cos(lab.angl) + key.loc[1L]
+	label.y <- 1.1 * len * sin(lab.angl) + key.loc[2L]
         ## Maybe do the following without loop {need not use adj but ..)!
-	for (k in 1:n.seg) {
+	for (k in 1L:n.seg) {
 	    text.adj <-
                 c(## horizontal
                   if      (lab.angl[k] < 90*deg || lab.angl[k] > 270*deg) 0

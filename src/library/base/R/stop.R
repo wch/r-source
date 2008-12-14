@@ -35,7 +35,7 @@ stopifnot <- function(...)
     if(n == 0)
 	return(invisible())
     mc <- match.call()
-    for(i in 1:n)
+    for(i in 1L:n)
 	if(!(is.logical(r <- ll[[i]]) && !any(is.na(r)) && all(r))) {
 	    ch <- deparse(mc[[i+1]], width.cutoff = 60)
 	    if(length(ch) > 1) ch <- paste(ch[1L], "....")

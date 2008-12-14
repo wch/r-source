@@ -25,7 +25,7 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	 log="", pch=0, col=par("fg"), cex=par("cex"), axes=TRUE,
 	 frame.plot=axes, ...)
 {
-    method <- pmatch(method, c("overplot", "jitter", "stack"))[1]
+    method <- pmatch(method, c("overplot", "jitter", "stack"))[1L]
     if(is.na(method) || method==0)
 	stop("invalid plotting method")
     groups <-
@@ -35,9 +35,9 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
     if(!missing(group.names))
 	attr(groups, "names") <- group.names
     else if(is.null(attr(groups, "names")))
-	attr(groups, "names") <- 1:n
+	attr(groups, "names") <- 1L:n
     if(is.null(at))
-	at <- 1:n
+	at <- 1L:n
     else if(length(at) != n)
 	stop(gettextf("'at' must have length equal to the number %d of groups",
                       n), domain = NA)
@@ -78,8 +78,8 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	title(xlab=xlab, ylab=ylab, ...)
     }
     csize <- cex*
-	if(vertical) xinch(par("cin")[1]) else yinch(par("cin")[2])
-    for(i in 1:n) {
+	if(vertical) xinch(par("cin")[1L]) else yinch(par("cin")[2L])
+    for(i in 1L:n) {
 	x <- groups[[i]]
 	y <- rep.int(at[i], length(x))
 	if(method == 2) ## jitter
@@ -111,7 +111,7 @@ stripchart.formula <-
     m$x <- NULL
     m$na.action <- na.action # force use of default for this method
     require(stats, quietly = TRUE)
-    m[[1]] <- as.name("model.frame")
+    m[[1L]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
     response <- attr(attr(mf, "terms"), "response")
     if (is.null(dlab)) dlab <- names(mf)[response]

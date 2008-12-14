@@ -25,7 +25,7 @@ bw.nrd0 <- function (x)
     if(length(x) < 2) stop("need at least 2 data points")
     hi <- sd(x)
     if(!(lo <- min(hi, IQR(x)/1.34)))# qnorm(.75) - qnorm(.25) = 1.34898
-        (lo <- hi) || (lo <- abs(x[1])) || (lo <- 1.)
+        (lo <- hi) || (lo <- abs(x[1L])) || (lo <- 1.)
     0.9 * lo * length(x)^(-0.2)
 }
 
@@ -33,7 +33,7 @@ bw.nrd <- function (x)
 {
     if(length(x) < 2) stop("need at least 2 data points")
     r <- quantile(x, c(0.25, 0.75))
-    h <- (r[2] - r[1])/1.34
+    h <- (r[2L] - r[1L])/1.34
     1.06 * min(sqrt(var(x)), h) * length(x)^(-1/5)
 }
 

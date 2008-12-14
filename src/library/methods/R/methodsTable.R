@@ -169,7 +169,7 @@
   ## after updating a methods table, the maximum no. of arguments in
   ## the signature increased to n.  Reassign any objects whose label
   ## does not match n classes from the defined slot
-  anyLabel <- rep("ANY", n); seqN <- 1:n
+  anyLabel <- rep("ANY", n); seqN <- 1L:n
   labels <- objects(table, all.names = TRUE)
   for(what in labels) {
     method <- get(what, envir = table)
@@ -243,7 +243,7 @@
     label <- .sigLabel(classes)
     direct <- .getGroupMethods(label, groupGenerics, FALSE)
     if(length(direct) > 0 && doMtable) {
-        assign(label, direct[[1]], envir = mtable)
+        assign(label, direct[[1L]], envir = mtable)
         if(verbose) cat("* found (and cached) direct group method for", label,"\n")
         return(direct)
 ##M	  ## else must be returnAll, so include the group direct method
@@ -251,14 +251,14 @@
     }
     ## else, continue because we may want all defined methods
   }
-  def <- getClass(classes[[1]], .Force = TRUE)
+  def <- getClass(classes[[1L]], .Force = TRUE)
   labels <-
-      if(missing(useInherited) || useInherited[[1]])
-          c(classes[[1]], .eligibleSuperClasses(def@contains, simpleOnly), "ANY")
-      else classes[[1]]
+      if(missing(useInherited) || useInherited[[1L]])
+          c(classes[[1L]], .eligibleSuperClasses(def@contains, simpleOnly), "ANY")
+      else classes[[1L]]
   if(nargs > 1) {
       classDefs <- vector("list", nargs)
-      classDefs[[1]] <- def
+      classDefs[[1L]] <- def
       for(i in 2:nargs) {
           cc <- classDefs[[i]] <- getClass(classes[[i]], .Force = TRUE)
           allLabels <- if(missing(useInherited) || useInherited[[i]])
@@ -267,7 +267,7 @@
       }
   }
   if(!returnAll)
-    labels <- labels[-1] # drop exact match
+    labels <- labels[-1L] # drop exact match
   labels <- unique(labels) # only needed while contains slot can have duplicates(!)
   allMethods <- objects(table, all.names=TRUE)
   found <- match(labels, allMethods, 0) > 0
@@ -308,7 +308,7 @@
 			 fdef@generic, .sigLabel(classes),
 			 paste("   ", names(methods), collapse = "\n")),
                 domain = NA, call. = FALSE)
-      methods <- methods[1]
+      methods <- methods[1L]
   }
   if(simpleOnly && length(methods) == 0) {
       methods <- Recall(classes, fdef, mtable, table, excluded, useInherited,verbose, returnAll, FALSE)
@@ -318,14 +318,14 @@
   }
   if(doMtable && length(methods) > 0) { ## Cache the newly found one
     tlabel <- .sigLabel(classes)
-    m <- methods[[1]]
+    m <- methods[[1L]]
     if(is(m, "MethodDefinition"))  { # else, a primitive
       m@target <- .newSignature(classes, fdef@signature)
       ## if any of the inheritance is not simple, must insert coerce's in method body
       coerce <- .inheritedArgsExpression(m@target, m@defined, body(m))
       if(!is.null(coerce))
         body(m) <- coerce
-      methods[[1]] <- m
+      methods[[1L]] <- m
     }
     assign(tlabel, m, envir = mtable)
   }
@@ -375,7 +375,7 @@
   if(length(methods)>1)
     warning("found ", length(methods), " equally good next methods") #todo: better message
   ## excluded slot is a list, but with methods tables, elements are just labels
-  new("MethodWithNext", method, nextMethod = methods[[1]], excluded =as.list(excluded))
+  new("MethodWithNext", method, nextMethod = methods[[1L]], excluded =as.list(excluded))
 }
 
 
@@ -384,7 +384,7 @@
 .InheritForDispatch <- function(classes, fdef, mtable) {
   methods <- .findInheritedMethods(classes, fdef, mtable)
   if(length(methods)==1)
-    return(methods[[1]]) # the method
+    return(methods[[1L]]) # the method
   else if(length(methods)==0) {
     cnames <- paste("\"", sapply(classes, as.character), "\"", sep = "", collapse = ", ")
     stop("unable to find an inherited method for function \"", fdef@generic,
@@ -426,7 +426,7 @@
     dist <- rep(0, n)
     nArg <- length(classDefs)
     defClasses <- matrix("ANY", nArg, n)
-    for(j in 1:n) {
+    for(j in 1L:n) {
 	cl <- methods[[j]]@defined@.Data
 	defClasses[seq_along(cl), j] <- cl
     }
@@ -434,7 +434,7 @@
     maxDist <- max(unlist(containsDist), na.rm = TRUE) + 1
     if(verbose) { cat("** individual arguments' distances:\n"); print(containsDist) }
     ## add up the inheritance distances for each argument (row of defClasses)
-    for(i in 1:nArg) {
+    for(i in 1L:nArg) {
 	ihi <- containsDist[[i]]
 	ihi[is.na(ihi)] <- maxDist
 	cli <- defClasses[i,]
@@ -733,7 +733,7 @@ outerLabels <- function(labels, new) {
     ## and so must change if that does (e.g. to include package)
     n <- length(labels)
     m <- length(new)
-    paste(labels[rep(1:n, rep(m,n))], new[rep(1:m,n)], sep ="#")
+    paste(labels[rep(1L:n, rep(m,n))], new[rep(1L:m,n)], sep ="#")
 }
 
 
@@ -896,7 +896,7 @@ listFromMethods <- function(generic, where, table) {
         for(i in seq(along = mlists))
           mlists[[i]] <- .makeMlist1(arg2, mlists[[i]], jNext)
     }
-    new("MethodsList", argument = as.name(args[[1]]), methods = mlists, allMethods = mlists)
+    new("MethodsList", argument = as.name(args[[1L]]), methods = mlists, allMethods = mlists)
 }
 
 .makeMlistFromTable <- function(generic, where = NULL) {
@@ -931,7 +931,7 @@ listFromMethods <- function(generic, where, table) {
     }
     length(argNames) <- nargs # the number of args used
     if(nargs == 1)
-        .makeMlist1(as.name(argNames[[1]]), .getAll(allNames, table))
+        .makeMlist1(as.name(argNames[[1L]]), .getAll(allNames, table))
     else
       .makeMlist2(argNames, .getAll(allNames, table))
  }

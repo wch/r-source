@@ -28,10 +28,10 @@ ARMAacf <- function(ar = numeric(0), ma = numeric(0), lag.max = r,
                 p <- r
             }
             A <- matrix(0, p + 1, 2 * p + 1)
-            ind <- as.matrix(expand.grid(1:(p + 1), 1:(p+1)))[, 2:1]
+            ind <- as.matrix(expand.grid(1L:(p + 1), 1L:(p+1)))[, 2:1]
             ind[, 2] <- ind[, 1] + ind[, 2] - 1
             A[ind] <- c(1, -ar)
-            A[,  1:p] <- A[, 1:p] + A[, (2 * p + 1):(p + 2)]
+            A[,  1L:p] <- A[, 1L:p] + A[, (2 * p + 1):(p + 2)]
             rhs <- c(1, rep(0,p))
             if(q > 0) {
                 psi <- c(1, ARMAtoMA(ar, ma, q))
@@ -40,18 +40,18 @@ ARMAacf <- function(ar = numeric(0), ma = numeric(0), lag.max = r,
             }
             ind <- (p+1):1
             Acf <- solve(A[ind, ind], rhs)
-	    Acf <- Acf[-1]/Acf[1]
+	    Acf <- Acf[-1L]/Acf[1L]
         } else Acf <- ar
         if(lag.max > p) {
             xx <- rep(0, lag.max - p)
             Acf <- c(Acf, filter(xx, ar, "recursive", init = rev(Acf)))
         }
-        Acf <- c(1, Acf[1:lag.max])
+        Acf <- c(1, Acf[1L:lag.max])
     } else if(q > 0) {
         x <- c(1, ma)
-        Acf <- filter(c(x, rep(0, q)), rev(x), sides=1)[-(1:q)]
+        Acf <- filter(c(x, rep(0, q)), rev(x), sides=1)[-(1L:q)]
         if(lag.max > q) Acf <- c(Acf, rep(0, lag.max - q))
-        Acf <- Acf/Acf[1]
+        Acf <- Acf/Acf[1L]
     }
     names(Acf) <- 0:lag.max
     if(pacf) .C(R_uni_pacf, as.double(Acf), pacf = double(lag.max),
@@ -67,8 +67,8 @@ acf2AR <- function(acf)
     z <- .Fortran(R_eureka, as.integer(order.max), r, r,
                   coefs = double(order.max^2), vars = double(order.max),
                   double(order.max))
-    nm <- paste("ar(",1:order.max, ")", sep="")
-    matrix(z$coefs, order.max, order.max, dimnames=list(nm, 1:order.max))
+    nm <- paste("ar(",1L:order.max, ")", sep="")
+    matrix(z$coefs, order.max, order.max, dimnames=list(nm, 1L:order.max))
 }
 
 ARMAtoMA <- function(ar = numeric(0), ma = numeric(0), lag.max)

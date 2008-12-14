@@ -152,9 +152,9 @@ as.person.default <- function(x)
     if(length(name)==1)
         z <- person(last=name, email=email)
     else if(length(name)==2)
-        z <- person(first=name[1], last=name[2], email=email)
+        z <- person(first=name[1L], last=name[2L], email=email)
     else
-        z <- person(first=name[1],
+        z <- person(first=name[1L],
                     last=name[length(name)],
                     middle=paste(name[-c(1, length(name))], collapse=" "),
                     email=email)
@@ -298,7 +298,7 @@ function(package = "base", lib.loc = NULL)
 
     author <- as.character(z$author)
     if(length(author) > 1L)
-        author <- paste(paste(author[1:(length(author)-1)], collapse=", "),
+        author <- paste(paste(author[1L:(length(author)-1)], collapse=", "),
                         author[length(author)], sep=" and ")
 
     attr(z, "textVersion") <-

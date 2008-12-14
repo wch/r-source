@@ -24,7 +24,7 @@ function(formula, data = NULL, ..., subset, na.action = stats::na.pass)
         m$data <- as.data.frame(data)
     m$... <- NULL
     m$na.action <- na.action # force in even if  default
-    m[[1]] <- as.name("model.frame")
+    m[[1L]] <- as.name("model.frame")
     require(stats, quietly=TRUE)
     mf <- eval(m, parent.frame())
     pairs(mf, ...)
@@ -94,20 +94,20 @@ function (x, labels, panel = points, ...,
     has.labs <- TRUE
     if (missing(labels)) {
         labels <- colnames(x)
-        if (is.null(labels)) labels <- paste("var", 1:nc)
+        if (is.null(labels)) labels <- paste("var", 1L:nc)
     }
     else if(is.null(labels)) has.labs <- FALSE
     oma <- if("oma" %in% nmdots) dots$oma else NULL
     main <- if("main" %in% nmdots) dots$main else NULL
     if (is.null(oma)) {
         oma <- c(4, 4, 4, 4)
-        if (!is.null(main)) oma[3] <- 6
+        if (!is.null(main)) oma[3L] <- 6
     }
     opar <- par(mfrow = c(nc, nc), mar = rep.int(gap/2, 4), oma = oma)
     on.exit(par(opar))
 
-    for (i in if(row1attop) 1:nc else nc:1)
-        for (j in 1:nc) {
+    for (i in if(row1attop) 1L:nc else nc:1)
+        for (j in 1L:nc) {
             localPlot(x[, j], x[, i], xlab = "", ylab = "",
                       axes = FALSE, type = "n", ...)
             if(i == j || (i < j && has.lower) || (i > j && has.upper) ) {

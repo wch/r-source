@@ -43,9 +43,9 @@
 	if (is.name(x))
 	    x <- eval(x, e)
 	if (is.call(x)){
-	    if(identical(x[[1]], as.name("break")))
+	    if(identical(x[[1L]], as.name("break")))
 		return("break")
-	    if(identical(x[[1]], as.name("function")))
+	    if(identical(x[[1L]], as.name("function")))
                 x <- eval(x, e)
         }
 	.Tcl.callback(x, e)
@@ -123,9 +123,9 @@
 	if (is.name(x))
 	    x <- eval(x, e)
 	if (is.call(x)){
-	    if(identical(x[[1]], as.name("break")))
+	    if(identical(x[[1L]], as.name("break")))
 		return("break")
-	    if(identical(x[[1]], as.name("function")))
+	    if(identical(x[[1L]], as.name("function")))
                 x <- eval(x, e)
         }
 	.Tcl.callback(x, e)

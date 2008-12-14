@@ -24,9 +24,9 @@ summary.mlm <- function(object, ...)
     fitted <- object$fitted.values
     ynames <- colnames(coef)
     if(is.null(ynames)) {
-	lhs <- object$terms[[2]]
-	if(mode(lhs) == "call" && lhs[[1]] == "cbind")
-	    ynames <- as.character(lhs)[-1]
+	lhs <- object$terms[[2L]]
+	if(mode(lhs) == "call" && lhs[[1L]] == "cbind")
+	    ynames <- as.character(lhs)[-1L]
 	else ynames <- paste("Y", seq_len(ny), sep = "")
     }
     ## we need to ensure that _all_ responses are named
@@ -36,7 +36,7 @@ summary.mlm <- function(object, ...)
     value <- vector("list", ny)
     names(value) <- paste("Response", ynames)
     cl <- oldClass(object)
-    class(object) <- cl[match("mlm", cl):length(cl)][-1]
+    class(object) <- cl[match("mlm", cl):length(cl)][-1L]
     for(i in seq(ny)) {
 	object$coefficients <- coef[, i]
         ## if there is one coef, above drops names
@@ -44,7 +44,7 @@ summary.mlm <- function(object, ...)
 	object$residuals <- resid[, i]
 	object$fitted.values <- fitted[, i]
 	object$effects <- effects[, i]
-	object$call$formula[[2]] <- object$terms[[2]] <- as.name(ynames[i])
+	object$call$formula[[2L]] <- object$terms[[2L]] <- as.name(ynames[i])
 	value[[i]] <- summary(object, ...)
     }
     class(value) <- "listof"
@@ -215,7 +215,7 @@ anova.mlm <-
 {
     if(length(list(object, ...)) > 1){
         cl <- match.call()
-        cl[[1]] <- anova.mlmlist
+        cl[[1L]] <- anova.mlmlist
         return(eval.parent(cl))
     } else {
         p <- ncol(SSD(object)$SSD)
@@ -253,7 +253,7 @@ anova.mlm <-
         rk <- object$rank
         pp <- nrow(T)
         if(rk > 0) {
-            p1 <- 1:rk
+            p1 <- 1L:rk
             comp <- object$effects[p1, , drop=FALSE]
             asgn <- object$assign[object$qr$pivot][p1]
             nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
@@ -267,7 +267,7 @@ anova.mlm <-
         } else {
 #            ss <- ssr
 #            df <- dfr
-#            tlabels <- character(0)
+#            tlabels <- character(0L)
         }
         test <- match.arg(test)
         nmodels <- length(ss)
@@ -283,10 +283,10 @@ anova.mlm <-
             stats <- matrix(NA, nmodels+1, 6)
             colnames(stats) <- c("F", "num Df", "den Df",
                                  "Pr(>F)", "G-G Pr", "H-F Pr")
-            for(i in 1:nmodels) {
+            for(i in 1L:nmodels) {
                 s2 <- Tr(solve(Psi,T %*% ss[[i]] %*% t(T)))/pp/df[i]
                 Fval <- s2/sph$sigma
-                stats[i,1:3] <- abs(c(Fval, df[i]*pp, df.res*pp))
+                stats[i,1L:3] <- abs(c(Fval, df[i]*pp, df.res*pp))
             }
             stats[,4] <- pf(stats[,1], stats[,2], stats[,3], lower.tail=FALSE)
             stats[,5] <- pf(stats[,1],
@@ -316,11 +316,11 @@ anova.mlm <-
             colnames(stats) <- c(test, "approx F", "num Df", "den Df",
                                        "Pr(>F)")
 
-            for(i in 1:nmodels) {
+            for(i in 1L:nmodels) {
                 eigs[i, ] <- Re(eigen(qr.coef(rss.qr,
                                               (T %*% ss[[i]] %*% t(T)) * scm),
                                       symmetric = FALSE)$values)
-                stats[i, 1:4] <-
+                stats[i, 1L:4] <-
                     switch(test,
                            "Pillai" = Pillai(eigs[i,  ],
                            df[i], df.res),
@@ -352,7 +352,7 @@ anova.mlm <-
 #                                c("Df","Sum Sq", "Mean Sq", "F value", "Pr(>F)"))
 #        if(attr(object$terms,"intercept")) table <- table[-1, ]
 #        structure(table, heading = c("Analysis of Variance Table\n",
-#                         paste("Response:", deparse(formula(object)[[2]]))),
+#                         paste("Response:", deparse(formula(object)[[2L]]))),
 #                  class= c("anova", "data.frame"))# was "tabular"
     }
 }
@@ -425,8 +425,8 @@ anova.mlmlist <- function (object, ...,
     }
     pp <- nrow(T)
     responses <- as.character(lapply(objects,
-				     function(x) deparse(x$terms[[2]])))
-    sameresp <- responses == responses[1]
+				     function(x) deparse(x$terms[[2L]])))
+    sameresp <- responses == responses[1L]
     if (!all(sameresp)) {
 	objects <- objects[sameresp]
 	warning("models with response ",
@@ -435,7 +435,7 @@ anova.mlmlist <- function (object, ...,
     }
 
     ns <- sapply(objects, function(x) length(x$residuals))
-    if(any(ns != ns[1]))
+    if(any(ns != ns[1L]))
         stop("models were not all fitted to the same size of dataset")
 
     ## calculate the number of models
@@ -449,7 +449,7 @@ anova.mlmlist <- function (object, ...,
     df <- c(NA,diff(resdf))
     resssd <- lapply(objects, SSD)
     deltassd <- mapply(function(x,y) y$SSD - x$SSD,
-                       resssd[-nmodels], resssd[-1], SIMPLIFY=FALSE)
+                       resssd[-nmodels], resssd[-1L], SIMPLIFY=FALSE)
     resdet <- sapply(resssd,
                      function(x) det(T %*% (x$SSD/x$df) %*% t(T))^(1/pp))
 
@@ -459,11 +459,11 @@ anova.mlmlist <- function (object, ...,
     table <- data.frame(resdf, df, resdet)
     variables <- lapply(objects, function(x)
                         paste(deparse(formula(x)), collapse="\n") )
-    dimnames(table) <- list(1:nmodels,
+    dimnames(table) <- list(1L:nmodels,
                             c("Res.Df", "Df", "Gen.var."))
 
     title <- "Analysis of Variance Table\n"
-    topnote <- paste("Model ", format(1:nmodels),": ",
+    topnote <- paste("Model ", format(1L:nmodels),": ",
 		     variables, sep="", collapse="\n")
     transformnote <- if (!missing(T))
         c("\nContrast matrix", apply(format(T),1,paste, collapse=" "))
@@ -486,7 +486,7 @@ anova.mlmlist <- function (object, ...,
 
     test <- match.arg(test)
     if(test == "Spherical"){
-	bigmodel <- order(resdf)[1]
+	bigmodel <- order(resdf)[1L]
         df.res <- resdf[bigmodel]
         sph <- sphericity(resssd[[bigmodel]],T=T,Sigma=Sigma)
         epsnote <- c(paste(format(c("Greenhouse-Geisser epsilon:",
@@ -496,13 +496,13 @@ anova.mlmlist <- function (object, ...,
 
         Psi <- T %*% Sigma %*% t(T)
         stats <- matrix(NA, nmodels, 6)
-        dimnames(stats) <-  list(1:nmodels,
+        dimnames(stats) <-  list(1L:nmodels,
                                  c("F", "num Df", "den Df",
                                    "Pr(>F)", "G-G Pr", "H-F Pr"))
         for(i in 2:nmodels) {
             s2 <- Tr(solve(Psi,T %*% deltassd[[i-1]] %*% t(T)))/pp/df[i]
             Fval <- s2/sph$sigma
-            stats[i,1:3] <- abs(c(Fval, df[i]*pp, df.res*pp))
+            stats[i,1L:3] <- abs(c(Fval, df[i]*pp, df.res*pp))
         }
         stats[,4] <- pf(stats[,1], stats[,2], stats[,3], lower.tail=FALSE)
         stats[,5] <- pf(stats[,1],
@@ -515,7 +515,7 @@ anova.mlmlist <- function (object, ...,
         table <- cbind(table, stats)
     }
     else if(!is.null(test)) {
-	bigmodel <- order(resdf)[1]
+	bigmodel <- order(resdf)[1L]
         df.res <- resdf[bigmodel]
 
         ## Try to distinguish bad scaling and near-perfect fit
@@ -535,7 +535,7 @@ anova.mlmlist <- function (object, ...,
             stop("residuals have rank ", rss.qr$rank," < ", pp)
         eigs <- array(NA, c(nmodels, pp))
         stats <- matrix(NA, nmodels, 5)
-        dimnames(stats) <-  list(1:nmodels,
+        dimnames(stats) <-  list(1L:nmodels,
                                  c(test, "approx F", "num Df", "den Df",
                                    "Pr(>F)"))
 
@@ -545,7 +545,7 @@ anova.mlmlist <- function (object, ...,
                                           sg * (T %*% deltassd[[i-1]] %*%
                                           t(T)) * scm),
                                   symmetric = FALSE)$values)
-            stats[i, 1:4] <-
+            stats[i, 1L:4] <-
                 switch(test,
                        "Pillai" = Pillai(eigs[i,  ],
                        sg * df[i], resdf[bigmodel]),

@@ -44,7 +44,7 @@ constrOptim<-function(theta,f,grad,ui,ci,mu=0.0001,control=list(),
         stop("initial value not feasible")
     obj<-f(theta,...)
     r<-R(theta,theta,...)
-    for(i in 1:outer.iterations){
+    for(i in 1L:outer.iterations){
         obj.old<-obj
         r.old<-r
         theta.old<-theta

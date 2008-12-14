@@ -24,7 +24,7 @@ medpolish <-
     r <- numeric(nr)
     c <- numeric(nc)
     oldsum <- 0
-    for(iter in 1:maxiter) {
+    for(iter in 1L:maxiter) {
 	rdelta <- apply(z, 1, median, na.rm = na.rm)
 	z <- z - matrix(rdelta, nrow=nr, ncol=nc)
 	r <- r + rdelta

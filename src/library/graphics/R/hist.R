@@ -112,7 +112,7 @@ hist.default <-
     if (sum(counts) < n)
 	stop("some 'x' not counted; maybe 'breaks' do not span range of 'x'")
     dens <- counts/(n*h)
-    mids <- 0.5 * (breaks[-1] + breaks[-nB])
+    mids <- 0.5 * (breaks[-1L] + breaks[-nB])
     r <- structure(list(breaks = breaks, counts = counts,
 			intensities = dens,
 			density = dens, mids = mids,
@@ -177,7 +177,7 @@ plot.histogram <-
 	    axis(2, ...)
 	}
     }
-    rect(x$breaks[-nB], 0, x$breaks[-1], y,
+    rect(x$breaks[-nB], 0, x$breaks[-1L], y,
 	 col = col, border = border,
 	 angle = angle, density = density, lty = lty)
     if((logl <- is.logical(labels) && labels) || is.character(labels))

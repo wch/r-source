@@ -16,7 +16,7 @@
 
 capture.output <- function(..., file=NULL, append=FALSE)
 {
-    args <- substitute(list(...))[-1]
+    args <- substitute(list(...))[-1L]
 
     rval <- NULL; closeit <- TRUE
     if (is.null(file))

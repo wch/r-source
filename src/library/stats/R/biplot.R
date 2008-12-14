@@ -61,7 +61,7 @@ biplot.default <-
     op <- par(pty = "s")
     if(!is.null(main))
         op <- c(op, par(mar = par("mar")+c(0,0,1,0)))
-    plot(x, type = "n", xlim = xlim, ylim = ylim, col = col[1],
+    plot(x, type = "n", xlim = xlim, ylim = ylim, col = col[1L],
          xlab = xlab, ylab = ylab, sub = sub, main = main, ...)
     text(x, xlabs, cex = cex[1L], col = col[1L], ...)
     par(new = TRUE)
@@ -76,7 +76,7 @@ biplot.default <-
     invisible()
 }
 
-biplot.princomp <- function(x, choices = 1:2, scale = 1, pc.biplot=FALSE, ...)
+biplot.princomp <- function(x, choices = 1L:2, scale = 1, pc.biplot=FALSE, ...)
 {
     if(length(choices) != 2) stop("length of choices must be 2")
     if(!length(scores <- x$scores))
@@ -93,7 +93,7 @@ biplot.princomp <- function(x, choices = 1:2, scale = 1, pc.biplot=FALSE, ...)
     invisible()
 }
 
-biplot.prcomp <- function(x, choices = 1:2, scale = 1, pc.biplot=FALSE, ...)
+biplot.prcomp <- function(x, choices = 1L:2, scale = 1, pc.biplot=FALSE, ...)
 {
     if(length(choices) != 2) stop("length of choices must be 2")
     if(!length(scores <- x$x))

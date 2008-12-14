@@ -34,11 +34,11 @@ monthplot.ts <-
     if (is.null(labels)) {
         if (missing(phase)) {
             f <- frequency(x)
-            if (f == 4) labels <- paste("Q", 1:4, sep = "")
+            if (f == 4) labels <- paste("Q", 1L:4, sep = "")
             else if (f == 12)
                 labels <- c("J", "F", "M", "A", "M", "J", "J",
                   "A", "S", "O", "N", "D")
-            else labels <- 1:f
+            else labels <- 1L:f
         }
     }
     monthplot.default(x, labels = labels, times = times, phase = phase,
@@ -46,9 +46,9 @@ monthplot.ts <-
 }
 
 monthplot.default <-
-    function (x, labels = 1:12,
+    function (x, labels = 1L:12,
               ylab = deparse(substitute(x)),
-              times = 1:length(x),
+              times = 1L:length(x),
               phase = (times - 1)%%length(labels) + 1, base = mean,
               axes = TRUE, type = c("l", "h"), box = TRUE, add = FALSE, ...)
 {
@@ -63,7 +63,7 @@ monthplot.default <-
         means <- tapply(x, phase, base)
     if (!add) {
         Call <- match.call()
-        Call[[1]] <- as.name("plot")
+        Call[[1L]] <- as.name("plot")
         Call$x <- NA
         Call$y <- NA
         Call$axes <- FALSE
@@ -75,15 +75,15 @@ monthplot.default <-
             Call$type <- Call$box <- Call$add <- NULL
         eval(Call)
         if (axes) {
-            axis(1, at = 1:f, labels = labels, ...)
+            axis(1, at = 1L:f, labels = labels, ...)
             axis(2, ...)
         }
         if (!is.null(base))
-            segments(1:f - 0.45, means, 1:f + 0.45, means)
+            segments(1L:f - 0.45, means, 1L:f + 0.45, means)
     }
     y <- as.numeric(times)
     scale <- 1 / diff(range(y, na.rm = TRUE)) * 0.9
-    for (i in 1:f) {
+    for (i in 1L:f) {
         sub <- phase == i
         if (type != "h")
             lines((y[sub] - min(y)) * scale - 0.45 + i, x[sub],

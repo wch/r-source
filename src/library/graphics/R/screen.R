@@ -47,12 +47,12 @@ split.screen <-
     if (!is.matrix(figs)) {
 	if (!is.vector(figs))
 	    stop("'figs' must be a vector or a matrix with 4 columns")
-	nr <- figs[1]
-	nc <- figs[2]
+	nr <- figs[1L]
+	nc <- figs[2L]
 	x <- seq.int(0, 1, length.out=nc+1)
 	y <- seq.int(1, 0, length.out=nr+1)
-	figs <- matrix(c(rep.int(x[-(nc+1)], nr), rep.int(x[-1], nr),
-			 rep.int(y[-1], rep.int(nc, nr)),
+	figs <- matrix(c(rep.int(x[-(nc+1)], nr), rep.int(x[-1L], nr),
+			 rep.int(y[-1L], rep.int(nc, nr)),
 			 rep.int(y[-(nr+1)], rep.int(nc, nr))),
 		       ncol = 4)
     }
@@ -70,7 +70,7 @@ split.screen <-
 	.SSassign("sp.saved.pars", split.saved.pars)
 	## set up the screen information
 	split.screens <- vector(mode="list", length=num.screens)
-	new.screens <- 1:num.screens
+	new.screens <- 1L:num.screens
 	for (i in new.screens) {
 	    split.screens[[i]] <- par(get("par.list", envir=.SSenv))
 	    split.screens[[i]]$fig <- figs[i,]
@@ -87,10 +87,10 @@ split.screen <-
 	total <- c(0,1,0,1)
 	if (screen > 0)
 	    total <- split.screens[[screen]]$fig
-	for (i in 1:num.screens)
+	for (i in 1L:num.screens)
 	    figs[i,] <- total[c(1,1,3,3)] +
-		figs[i,]*rep.int(c(total[2]-total[1],
-                                   total[4]-total[3]),
+		figs[i,]*rep.int(c(total[2L]-total[1L],
+                                   total[4L]-total[3L]),
                                  c(2,2))
 	new.screens <- (max.screen+1):new.max.screen
 	for (i in new.screens) {

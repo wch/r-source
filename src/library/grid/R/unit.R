@@ -16,7 +16,7 @@
 
 
 # Create an object of class "unit"
-# Simple units are of the form 'unit(1, "cm")' or 'unit(1:3, "cm")' or
+# Simple units are of the form 'unit(1, "cm")' or 'unit(1L:3, "cm")' or
 # 'unit(c(1,3,6), c("cm", "inch", "npc"))'
 # More complicated units are of the form 'unit(1, "string", "a string")'
 # or 'unit(1, "grob", a.grob)'
@@ -172,14 +172,14 @@ valid.data <- function(units, data) {
     n <- length(units)
     str.units <- stringUnit(units)
     if (any(str.units))
-        for (i in (1:n)[str.units])
+        for (i in (1L:n)[str.units])
             if (!(length(data) >= i &&
                   (is.character(data[[i]]) || is.language(data[[i]]))))
                 stop("No string supplied for 'strwidth/height' unit")
     # Make sure that a grob has been specified
     grob.units <- grobUnit(units)
     if (any(grob.units))
-        for (i in (1:n)[grob.units]) {
+        for (i in (1L:n)[grob.units]) {
             if (!(length(data) >= i &&
                   (is.grob(data[[i]]) || inherits(data[[i]], "gPath") ||
                    is.character(data[[i]]))))
@@ -222,8 +222,8 @@ Ops.unit <- function(e1, e2) {
          domain = NA)
   if (.Generic == "*")
     # can only multiply a unit by a scalar
-    if (nzchar(.Method[1])) {
-      if (nzchar(.Method[2]))
+    if (nzchar(.Method[1L])) {
+      if (nzchar(.Method[2L]))
         stop("Only one operand may be a unit")
       else if (is.numeric(e2))
         # NOTE that we always put the scalar first
@@ -240,7 +240,7 @@ Ops.unit <- function(e1, e2) {
     }
   else
     # Check that both arguments are units
-    if (nzchar(.Method[1]) && nzchar(.Method[2]))
+    if (nzchar(.Method[1L]) && nzchar(.Method[2L]))
       unit.arithmetic(.Generic, e1, e2)
     else
       stop("Both operands must be units")
@@ -288,7 +288,7 @@ unit.pmax <- function(...) {
     stop("Zero arguments where at least one expected")
   # how long will the result be?
   maxlength <- 0
-  for (i in 1:numargs)
+  for (i in 1L:numargs)
     if (length(x[[i]]) > maxlength)
       maxlength <- length(x[[i]])
   # maxlength guaranteed >= 1
@@ -310,7 +310,7 @@ unit.pmin <- function(...) {
     stop("Zero arguments where at least one expected")
   # how long will the result be?
   maxlength <- 0
-  for (i in 1:numargs)
+  for (i in 1L:numargs)
     if (length(x[[i]]) > maxlength)
       maxlength <- length(x[[i]])
   # maxlength guaranteed >= 1
@@ -379,7 +379,7 @@ print.unit <- function(x, ...) {
 "[.unit" <- function(x, index, top=TRUE, ...) {
   this.length <- length(x)
   if (is.logical(index))
-    index <- (1:this.length)[index]
+    index <- (1L:this.length)[index]
   if (top && index > this.length)
     stop("Index out of bounds (unit subsetting)")
   cl <- class(x)
@@ -404,7 +404,7 @@ print.unit <- function(x, ...) {
 "[.unit.arithmetic" <- function(x, index, top=TRUE, ...) {
   this.length <- length(x)
   if (is.logical(index))
-    index <- (1:this.length)[index]
+    index <- (1L:this.length)[index]
   if (top && index > this.length)
     stop("Index out of bounds (unit arithmetic subsetting)")
   switch(x$fname,
@@ -423,7 +423,7 @@ print.unit <- function(x, ...) {
 "[.unit.list" <- function(x, index, top=TRUE, ...) {
   this.length <- length(x)
   if (is.logical(index))
-    index <- (1:this.length)[index]
+    index <- (1L:this.length)[index]
   if (top && index > this.length)
     stop("Index out of bounds (unit list subsetting)")
   cl <- class(x)
@@ -511,7 +511,7 @@ rep.unit.list <- function(x, times=1, length.out, ...) {
 
     # Make use of the subsetting code to replicate the unit list
     # top=FALSE allows the subsetting to go beyond the original length
-    "["(x, 1:(length(x)*times), top=FALSE)
+    "["(x, 1L:(length(x)*times), top=FALSE)
 }
 
 rep.unit <- function(x, ...) {
@@ -571,7 +571,7 @@ stringWidth <- function(string) {
     n <- length(string)
     if (is.language(string)) {
         data <- vector("list", n)
-        for (i in 1:n)
+        for (i in 1L:n)
             data[[i]] <- string[i]
     } else {
         data <- as.list(as.character(string))
@@ -583,7 +583,7 @@ stringHeight <- function(string) {
     n <- length(string)
     if (is.language(string)) {
         data <- vector("list", n)
-        for (i in 1:n)
+        for (i in 1L:n)
             data[[i]] <- string[i]
     } else {
         data <- as.list(as.character(string))
@@ -711,8 +711,8 @@ absolute.units <- function(unit) {
 
 absolute.units.unit <- function(unit) {
   n <- length(unit)
-  if (absolute(unit[1]))
-    abs.unit <- unit[1]
+  if (absolute(unit[1L]))
+    abs.unit <- unit[1L]
   else
     abs.unit <- unit(1, "null")
   new.unit <- abs.unit

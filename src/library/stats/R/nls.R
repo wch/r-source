@@ -33,7 +33,7 @@ numericDeriv <- function(expr, theta, rho = parent.frame(), dir=1.0)
             valDim <- valDim[-length(valDim)]
         if(length(valDim) > 1)
             dim(attr(val, "gradient")) <- c(valDim,
-                                            dim(attr(val, "gradient"))[-1])
+                                            dim(attr(val, "gradient"))[-1L])
     }
     val
 }
@@ -52,9 +52,9 @@ nlsModel.plinear <- function(form, data, start, wts)
         ind[[i]] <- p2 + seq_along(start[[i]])
         p2 <- p2 + length(start[[i]])
     }
-    lhs <- eval(form[[2]], envir = env)
+    lhs <- eval(form[[2L]], envir = env)
     storage.mode(lhs) <- "double"
-    rhs <- eval(form[[3]], envir = env)
+    rhs <- eval(form[[3L]], envir = env)
     storage.mode(rhs) <- "double"
     .swts <- if(!missing(wts) && (length(wts) != 0))
         sqrt(wts) else rep(1, length.out=NROW(rhs))
@@ -67,11 +67,11 @@ nlsModel.plinear <- function(form, data, start, wts)
     useParams <- rep(TRUE, p2)
     if(is.null(attr(rhs, "gradient"))) {
         getRHS.noVarying <- function()
-            numericDeriv(form[[3]], names(ind), env)
+            numericDeriv(form[[3L]], names(ind), env)
         getRHS <- getRHS.noVarying
         rhs <- getRHS()
     } else {
-        getRHS.noVarying <- function() eval(form[[3]], envir = env)
+        getRHS.noVarying <- function() eval(form[[3L]], envir = env)
         getRHS <- getRHS.noVarying
     }
     dimGrad <- dim(attr(rhs, "gradient"))
@@ -85,15 +85,15 @@ nlsModel.plinear <- function(form, data, start, wts)
         gradSetArgs <- vector("list", 2)
         useParams <- rep(TRUE, length(attr(rhs, "gradient")))
     }
-    gradSetArgs[[1]] <- (~attr(ans, "gradient"))[[2]]
+    gradSetArgs[[1L]] <- (~attr(ans, "gradient"))[[2L]]
     gradCall <-
         switch(length(gradSetArgs) - 1,
-               call("[", gradSetArgs[[1]], gradSetArgs[[2]]),
-               call("[", gradSetArgs[[1]], gradSetArgs[[2]], gradSetArgs[[2]]),
-               call("[", gradSetArgs[[1]], gradSetArgs[[2]], gradSetArgs[[2]],
-                    gradSetArgs[[3]]),
-               call("[", gradSetArgs[[1]], gradSetArgs[[2]], gradSetArgs[[2]],
-                    gradSetArgs[[3]], gradSetArgs[[4]]))
+               call("[", gradSetArgs[[1L]], gradSetArgs[[2L]]),
+               call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]]),
+               call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]],
+                    gradSetArgs[[3L]]),
+               call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]],
+                    gradSetArgs[[3L]], gradSetArgs[[4L]]))
     getRHS.varying <- function()
     {
         ans <- getRHS.noVarying()
@@ -155,17 +155,17 @@ nlsModel.plinear <- function(form, data, start, wts)
              lhs = function() lhs,
              gradient = function() attr(rhs, "gradient"),
              conv = function() {
-                 assign("cc", c(topzero, qr.qty(QR.rhs, .swts * lhs)[ -(1:p1)]),
+                 assign("cc", c(topzero, qr.qty(QR.rhs, .swts * lhs)[ -(1L:p1)]),
                         envir = thisEnv)
                  rr <- qr.qy(QR.rhs, cc)
                  B <- qr.qty(QR.rhs, .swts * ddot(attr(rhs, "gradient"), lin))
-                 B[1:p1, ] <- dtdot(.swts * attr(rhs, "gradient"), rr)
-                 R <- t( qr.R(QR.rhs)[1:p1, ] )
+                 B[1L:p1, ] <- dtdot(.swts * attr(rhs, "gradient"), rr)
+                 R <- t( qr.R(QR.rhs)[1L:p1, ] )
                  if(p1 == 1) B[1, ] <- B[1, ]/R
-                 else B[1:p1, ] <- forwardsolve(R, B[1:p1, ])
+                 else B[1L:p1, ] <- forwardsolve(R, B[1L:p1, ])
                  assign("QR.B", qr(B), envir = thisEnv)
                  rr <- qr.qty(QR.B, cc)
-                 sqrt( fac*sum(rr[1:p1]^2) / sum(rr[-(1:p1)]^2) )
+                 sqrt( fac*sum(rr[1L:p1]^2) / sum(rr[-(1L:p1)]^2) )
              },
              incr = function() qr.solve(QR.B, cc),
              setVarying = function(vary = rep(TRUE, length(useParams))) {
@@ -213,7 +213,7 @@ nlsModel.plinear <- function(form, data, start, wts)
              Rmat = function()
              qr.R(qr(.swts * cbind(ddot(attr(rhs, "gradient"), lin), rhs))),
              predict = function(newdata = list(), qr = FALSE)
-             getPred(eval(form[[3]], as.list(newdata), env))
+             getPred(eval(form[[3L]], as.list(newdata), env))
              )
     class(m) <- c("nlsModel.plinear", "nlsModel")
     m$conv()
@@ -242,8 +242,8 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
 
     if(!is.null(upper)) upper <- rep(upper, length.out = parLength)
     useParams <- rep(TRUE, parLength)
-    lhs <- eval(form[[2]], envir = env)
-    rhs <- eval(form[[3]], envir = env)
+    lhs <- eval(form[[2L]], envir = env)
+    rhs <- eval(form[[3L]], envir = env)
     .swts <- if(!missing(wts) && (length(wts) != 0))
         sqrt(wts) else rep(1, length.out=length(rhs))
     assign(".swts", .swts, envir = env)
@@ -252,15 +252,15 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     if(is.null(attr(rhs, "gradient"))) {
         getRHS.noVarying <- function() {
             if(is.null(upper))
-                numericDeriv(form[[3]], names(ind), env)
+                numericDeriv(form[[3L]], names(ind), env)
             else
-                numericDeriv(form[[3]], names(ind), env,
+                numericDeriv(form[[3L]], names(ind), env,
                              ifelse(internalPars < upper, 1, -1))
         }
         getRHS <- getRHS.noVarying
         rhs <- getRHS()
     } else {
-        getRHS.noVarying <- function() eval(form[[3]], envir = env)
+        getRHS.noVarying <- function() eval(form[[3L]], envir = env)
         getRHS <- getRHS.noVarying
     }
     dimGrad <- dim(attr(rhs, "gradient"))
@@ -275,16 +275,16 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
         useParams <- rep(TRUE, length(attr(rhs, "gradient")))
     }
     npar <- length(useParams)
-    gradSetArgs[[1]] <- (~attr(ans, "gradient"))[[2]]
+    gradSetArgs[[1L]] <- (~attr(ans, "gradient"))[[2L]]
     gradCall <-
         switch(length(gradSetArgs) - 1,
-               call("[", gradSetArgs[[1]], gradSetArgs[[2]], drop = FALSE),
-               call("[", gradSetArgs[[1]], gradSetArgs[[2]], gradSetArgs[[2]],
+               call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], drop = FALSE),
+               call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]],
                     drop = FALSE),
-               call("[", gradSetArgs[[1]], gradSetArgs[[2]], gradSetArgs[[2]],
-                    gradSetArgs[[3]], drop = FALSE),
-               call("[", gradSetArgs[[1]], gradSetArgs[[2]], gradSetArgs[[2]],
-                    gradSetArgs[[3]], gradSetArgs[[4]]), drop = FALSE)
+               call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]],
+                    gradSetArgs[[3L]], drop = FALSE),
+               call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]],
+                    gradSetArgs[[3L]], gradSetArgs[[4L]]), drop = FALSE)
     getRHS.varying <- function()
     {
         ans <- getRHS.noVarying()
@@ -325,7 +325,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
 	     conv = function() {
 		 if(npar == 0) return(0)
 		 rr <- qr.qty(QR, resid) # rotated residual vector
-		 sqrt( sum(rr[1:npar]^2) / sum(rr[-(1:npar)]^2))
+		 sqrt( sum(rr[1L:npar]^2) / sum(rr[-(1L:npar)]^2))
 	     },
 	     incr = function() qr.coef(QR, resid),
 	     setVarying = function(vary = rep(TRUE, length(useParams))) {
@@ -350,7 +350,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
 		     assign("setPars", setPars.varying, envir = thisEnv)
 		     assign("getPars", getPars.varying, envir = thisEnv)
 		     assign("getRHS", getRHS.varying, envir = thisEnv)
-		     assign("npar", length((1:length(useParams))[useParams]),
+		     assign("npar", length((1L:length(useParams))[useParams]),
 			    envir = thisEnv)
 		 }
 	     },
@@ -370,7 +370,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
 	     trace = function() cat(format(dev),": ", format(getPars()), "\n"),
 	     Rmat = function() qr.R(QR),
 	     predict = function(newdata = list(), qr = FALSE)
-	     eval(form[[3]], as.list(newdata), env)
+	     eval(form[[3L]], as.list(newdata), env)
 	     )
 
     class(m) <- "nlsModel"
@@ -421,7 +421,7 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
         low <- rep(as.double(lower), length.out = length(par))
         upp <- rep(as.double(upper), length.out = length(par))
         if(any(start < low || start > upp)) {
-            iv[1] <- 300
+            iv[1L] <- 300
             return(iv)
         }
     }
@@ -430,7 +430,7 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
         .Call(R_port_nlsb, m,
               d = rep(as.double(scale), length.out = length(par)),
               df = m$gradient(), iv, v, low, upp)
-    } else iv[1] <- 6
+    } else iv[1L] <- 6
     iv
 }
 
@@ -451,11 +451,11 @@ nls <-
     varNames <- all.vars(formula) # parameter and variable names from formula
     ## adjust a one-sided model formula by using 0 as the response
     if (length(formula) == 2) {
-        formula[[3]] <- formula[[2]]
-        formula[[2]] <- 0
+        formula[[3L]] <- formula[[2L]]
+        formula[[2L]] <- 0
     }
     ## for prediction we will need to know those which are in RHS
-    form2 <- formula; form2[[2]] <- 0
+    form2 <- formula; form2[[2L]] <- 0
     varNamesRHS <- all.vars(form2)
     mWeights <- missing(weights)
 
@@ -466,9 +466,9 @@ nls <-
 		names(attr(data, "parameters"))
 	    } else { ## try selfStart - like object
 		cll <- formula[[length(formula)]]
-		func <- get(as.character(cll[[1]]))
+		func <- get(as.character(cll[[1L]]))
 		if(!is.null(pn <- attr(func, "pnames")))
-		    as.character(as.list(match.call(func, call = cll))[-1][pn])
+		    as.character(as.list(match.call(func, call = cll))[-1L][pn])
 	    }
 	} else
 	    names(start)
@@ -518,7 +518,7 @@ nls <-
 	    message("fitting parameters ",
 		    paste(sQuote(pnames[np == -1]), collapse=", "),
 		    " without any variables")
-            n <- integer(0)
+            n <- integer(0L)
         }
 	else
 	    stop("no parameters to fit")
@@ -527,7 +527,7 @@ nls <-
     ## If its length is a multiple of the response or LHS of the formula,
     ## then it is probably a variable.
     ## This may fail (e.g. when LHS contains parameters):
-    respLength <- length(eval(formula[[2]], data, env))
+    respLength <- length(eval(formula[[2L]], data, env))
 
     if(length(n) > 0) {
 	varIndex <- n %% respLength == 0
@@ -543,7 +543,7 @@ nls <-
 	    startEnv <- new.env(parent = environment(formula))
 	    for (i in names(start))
 		assign(i, start[[i]], envir = startEnv)
-	    rhs <- eval(formula[[3]], data, startEnv)
+	    rhs <- eval(formula[[3L]], data, startEnv)
 	    n <- NROW(rhs)
             ## mimic what model.frame.default does
             wts <- if (mWeights) rep(1, n) else
@@ -555,7 +555,7 @@ nls <-
                            env = environment(formula))
             mf$start <- mf$control <- mf$algorithm <- mf$trace <- mf$model <- NULL
             mf$lower <- mf$upper <- NULL
-            mf[[1]] <- as.name("model.frame")
+            mf[[1L]] <- as.name("model.frame")
             mf <- eval.parent(mf)
             n <- nrow(mf)
             mf <- as.list(mf)
@@ -567,7 +567,7 @@ nls <-
     else {
         ## length(n) == 0 : Some problems might have no official varNames
         ##                  but still parameters to fit
-        varIndex <- logical(0)
+        varIndex <- logical(0L)
         mf <- list(0)
         wts <- numeric(0)
     }
@@ -601,9 +601,9 @@ nls <-
 	iv <- nls_port_fit(m, start, lower, upper, control, trace)
 	nls.out <- list(m = m, data = substitute(data), call = match.call())
         ## FIXME: this is really a logical for  *NON*convergence:
-	nls.out$convergence <- as.integer(if (iv[1] %in% 3:6) 0 else 1)
+	nls.out$convergence <- as.integer(if (iv[1L] %in% 3:6) 0 else 1)
 	nls.out$message <-
-	    switch(as.character(iv[1]),
+	    switch(as.character(iv[1L]),
 		   "3" = "X-convergence (3)",
 		   "4" = "relative convergence (4)",
 		   "5" = "both X-convergence and relative convergence (5)",
@@ -622,7 +622,7 @@ nls <-
 		   "300" = "initial par violates constraints")
 	if (is.null(nls.out$message))
 	    nls.out$message <-
-		paste("See PORT documentation.	Code (", iv[1], ")", sep = "")
+		paste("See PORT documentation.	Code (", iv[1L], ")", sep = "")
 	if (nls.out$convergence) {
             msg <- paste("Convergence failure:", nls.out$message)
             if(ctrl$warnOnly) {
@@ -728,7 +728,7 @@ print.summary.nls <-
     cat("\nFormula: ")
     cat(paste(deparse(x$formula), sep = "\n", collapse = "\n"), "\n", sep = "")
     df <- x$df
-    rdf <- df[2]
+    rdf <- df[2L]
     cat("\nParameters:\n")
     printCoefmat(x$coefficients, digits = digits, signif.stars = signif.stars,
                  ...)
@@ -840,8 +840,8 @@ anovalist.nls <- function (object, ..., test = NULL)
 {
     objects <- list(object, ...)
     responses <- as.character(lapply(objects,
-				     function(x) formula(x)[[2]]))
-    sameresp <- responses == responses[1]
+				     function(x) formula(x)[[2L]]))
+    sameresp <- responses == responses[1L]
     if (!all(sameresp)) {
 	objects <- objects[sameresp]
 	warning("models with response ",
@@ -876,11 +876,11 @@ anovalist.nls <- function (object, ..., test = NULL)
 	}
     }
     table <- data.frame(df.r,ss.r,df,ss,f,p)
-    dimnames(table) <- list(1:nmodels, c("Res.Df", "Res.Sum Sq", "Df",
+    dimnames(table) <- list(1L:nmodels, c("Res.Df", "Res.Sum Sq", "Df",
 					 "Sum Sq", "F value", "Pr(>F)"))
     ## construct table and title
     title <- "Analysis of Variance Table\n"
-    topnote <- paste("Model ", format(1:nmodels),": ",
+    topnote <- paste("Model ", format(1L:nmodels),": ",
 		     models, sep="", collapse="\n")
 
     ## calculate test statistic if needed

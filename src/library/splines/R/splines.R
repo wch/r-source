@@ -24,7 +24,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
         x <- x[!nax]
     if(!missing(Boundary.knots)) {
         Boundary.knots <- sort(Boundary.knots)
-        outside <- (ol <- x < Boundary.knots[1]) | (or <- x > Boundary.knots[2])
+        outside <- (ol <- x < Boundary.knots[1L]) | (or <- x > Boundary.knots[2L])
     }
     else outside <- FALSE #rep(FALSE, length = length(x))
 
@@ -47,17 +47,17 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
     if(any(outside)) {
         warning("some 'x' values beyond boundary knots may cause ill-conditioned bases")
         derivs <- 0:degree
-        scalef <- gamma(1:ord)# factorials
+        scalef <- gamma(1L:ord)# factorials
         basis <- array(0, c(length(x), length(Aknots) - degree - 1))
         if(any(ol)) {
-            k.pivot <- Boundary.knots[1]
-            xl <- cbind(1, outer(x[ol] - k.pivot, 1:degree, "^"))
+            k.pivot <- Boundary.knots[1L]
+            xl <- cbind(1, outer(x[ol] - k.pivot, 1L:degree, "^"))
             tt <- spline.des(Aknots, rep(k.pivot, ord), ord, derivs)$design
             basis[ol,  ] <- xl %*% (tt/scalef)
         }
         if(any(or)) {
-            k.pivot <- Boundary.knots[2]
-            xr <- cbind(1, outer(x[or] - k.pivot, 1:degree, "^"))
+            k.pivot <- Boundary.knots[2L]
+            xr <- cbind(1, outer(x[or] - k.pivot, 1L:degree, "^"))
             tt <- spline.des(Aknots, rep(k.pivot, ord), ord, derivs)$design
             basis[or,  ] <- xr %*% (tt/scalef)
         }
@@ -73,7 +73,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
         nmat[!nax,  ] <- basis
         basis <- nmat
     }
-    dimnames(basis) <- list(nx, 1:n.col)
+    dimnames(basis) <- list(nx, 1L:n.col)
     a <- list(degree = degree, knots = if(is.null(knots)) numeric(0) else knots,
               Boundary.knots = Boundary.knots, intercept = intercept)
     attributes(basis) <- c(attributes(basis), a)
@@ -91,7 +91,7 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         x <- x[!nax]
     if(!missing(Boundary.knots)) {
         Boundary.knots <- sort(Boundary.knots)
-        outside <- (ol <- x < Boundary.knots[1]) | (or <- x > Boundary.knots[2])
+        outside <- (ol <- x < Boundary.knots[1L]) | (or <- x > Boundary.knots[2L])
     }
     else outside <- FALSE # rep(FALSE, length = length(x))
     if(!missing(df) && missing(knots)) {
@@ -111,13 +111,13 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
     if(any(outside)) {
         basis <- array(0, c(length(x), nIknots + 4))
         if(any(ol)) {
-            k.pivot <- Boundary.knots[1]
+            k.pivot <- Boundary.knots[1L]
             xl <- cbind(1, x[ol] - k.pivot)
             tt <- spline.des(Aknots, rep(k.pivot, 2), 4, c(0, 1))$design
             basis[ol,  ] <- xl %*% tt
         }
         if(any(or)) {
-            k.pivot <- Boundary.knots[2]
+            k.pivot <- Boundary.knots[2L]
             xr <- cbind(1, x[or] - k.pivot)
             tt <- spline.des(Aknots, rep(k.pivot, 2), 4, c(0, 1))$design
             basis[or,  ] <- xr %*% tt
@@ -132,14 +132,14 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         basis <- basis[, -1 , drop = FALSE]
     }
     qr.const <- qr(t(const))
-    basis <- as.matrix((t(qr.qty(qr.const, t(basis))))[,  - (1:2), drop = FALSE])
+    basis <- as.matrix((t(qr.qty(qr.const, t(basis))))[,  - (1L:2), drop = FALSE])
     n.col <- ncol(basis)
     if(nas) {
         nmat <- matrix(NA, length(nax), n.col)
         nmat[!nax, ] <- basis
         basis <- nmat
     }
-    dimnames(basis) <- list(nx, 1:n.col)
+    dimnames(basis) <- list(nx, 1L:n.col)
     a <- list(degree = 3, knots = if(is.null(knots)) numeric(0) else knots,
               Boundary.knots = Boundary.knots, intercept = intercept)
     attributes(basis) <- c(attributes(basis), a)
@@ -169,18 +169,18 @@ predict.ns <- function(object, newx, ...)
 
 makepredictcall.ns <- function(var, call)
 {
-    if(as.character(call)[1] != "ns") return(call)
+    if(as.character(call)[1L] != "ns") return(call)
     at <- attributes(var)[c("knots", "Boundary.knots", "intercept")]
-    xxx <- call[1:2]
+    xxx <- call[1L:2]
     xxx[names(at)] <- at
     xxx
 }
 
 makepredictcall.bs <- function(var, call)
 {
-    if(as.character(call)[1] != "bs") return(call)
+    if(as.character(call)[1L] != "bs") return(call)
     at <- attributes(var)[c("degree", "knots", "Boundary.knots", "intercept")]
-    xxx <- call[1:2]
+    xxx <- call[1L:2]
     xxx[names(at)] <- at
     xxx
 }

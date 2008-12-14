@@ -64,7 +64,7 @@ function(file, widths, header = FALSE, sep = "\t",
         raw <- readLines(file, n = thisblock)
         nread <- length(raw)
         if (recordlength > 1 &&  nread %% recordlength) {
-            raw<-raw[1:(nread-nread %% recordlength)]
+            raw<-raw[1L:(nread-nread %% recordlength)]
             warning(gettextf("last record incomplete, %d lines discarded",
                              nread %% recordlength), domain = NA)
         }

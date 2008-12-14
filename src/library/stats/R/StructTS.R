@@ -130,7 +130,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     states <- z$states
     if(type == "BSM") states <- states[, 1L:3L]
     dimnames(states) <- list(time(x), cn)
-    states <- ts(states, start = xtsp[1], frequency = nf)
+    states <- ts(states, start = xtsp[1L], frequency = nf)
 
     coef <- coef*vx
     names(coef) <- switch(type,

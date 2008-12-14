@@ -42,7 +42,7 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
     m <- as.integer(m)
     e <- 0
     h <- m
-    a <- 1:m
+    a <- 1L:m
     nofun <- is.null(FUN)
     if(!nofun && !is.function(FUN))
 	stop("'FUN' must be a function or NULL")
@@ -72,19 +72,19 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
 ##S	else {
 ##S	    if(count > 1) {
 ##S		out <- vector(storage.mode(r), len.r * count)
-##S		out[1] <- r
+##S		out[1L] <- r
 ##S	    }
 ##S	    else out <- r
 ##S	}
     }
     else {
 	out <- vector("list", count)
-	out[[1]] <- r
+	out[[1L]] <- r
     }
 
     i <- 2L
     nmmp1 <- n - m + 1L # using 1L to keep integer arithmetic
-    while(a[1] != nmmp1) {
+    while(a[1L] != nmmp1) {
 	if(e < n - h) {
 	    h <- 1L
 	    e <- a[m]
@@ -93,7 +93,7 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
 	else {
 	    e <- a[m - h]
 	    h <- h + 1L
-	    j <- 1:h
+	    j <- 1L:h
 	}
 	a[m - h + j] <- e + j
 	r <- if(nofun) x[a] else FUN(x[a], ...)

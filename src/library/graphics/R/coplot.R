@@ -54,8 +54,8 @@ coplot <-
 {
     deparen <- function(expr) {
 	while (is.language(expr) && !is.name(expr) &&
-               deparse(expr[[1]])[1] == "(")
-	    expr <- expr[[2]]
+               deparse(expr[[1L]])[1L] == "(")
+	    expr <- expr[[2L]]
 	expr
     }
     bad.formula <- function() stop("invalid conditioning formula")
@@ -66,17 +66,17 @@ coplot <-
     formula <- deparen(formula)
     if (!inherits(formula, "formula"))
 	bad.formula()
-    y <- deparen(formula[[2]])
-    rhs <- deparen(formula[[3]])
-    if (deparse(rhs[[1]])[1] != "|")
+    y <- deparen(formula[[2L]])
+    rhs <- deparen(formula[[3L]])
+    if (deparse(rhs[[1L]])[1L] != "|")
 	bad.formula()
-    x <- deparen(rhs[[2]])
-    rhs <- deparen(rhs[[3]])
+    x <- deparen(rhs[[2L]])
+    rhs <- deparen(rhs[[3L]])
     if (is.language(rhs) && !is.name(rhs)
-	&& (deparse(rhs[[1]])[1] == "*" || deparse(rhs[[1]])[1] == "+")) {
+	&& (deparse(rhs[[1L]])[1L] == "*" || deparse(rhs[[1L]])[1L] == "+")) {
 	have.b <- TRUE
-	a <- deparen(rhs[[2]])
-	b <- deparen(rhs[[3]])
+	a <- deparen(rhs[[2L]])
+	b <- deparen(rhs[[3L]])
     } else {
 	have.b <- FALSE
 	a <- rhs
@@ -125,7 +125,7 @@ coplot <-
 		i <- seq_along(a.levels <- levels(a))
 		a <- as.numeric(a)
 		cbind(i - 0.5, i + 0.5)
-	    } else co.intervals(unclass(a), number=number[1], overlap=overlap[1])
+	    } else co.intervals(unclass(a), number=number[1L], overlap=overlap[1L])
 	b.intervals <-
 	    if (have.b) {
 		if(b.is.fac) {
@@ -136,7 +136,7 @@ coplot <-
 		else {
 		    if(length(number)==1) number  <- rep.int(number,2)
 		    if(length(overlap)==1)overlap <- rep.int(overlap,2)
-		    co.intervals(unclass(b), number=number[2], overlap=overlap[2])
+		    co.intervals(unclass(b), number=number[2L], overlap=overlap[2L])
 		}
 	    }
     } else {
@@ -144,7 +144,7 @@ coplot <-
 	    given.values <- list(given.values)
 	if(length(given.values) != (if(have.b) 2 else 1))
 	    bad.givens()
-	a.intervals <- given.values[[1]]
+	a.intervals <- given.values[[1L]]
 	if(a.is.fac) {
 	    a.levels <- levels(a)
 	    if (is.character(a.intervals))
@@ -158,7 +158,7 @@ coplot <-
 		a.intervals <- cbind(a.intervals - 0.5, a.intervals + 0.5)
 	}
 	if(have.b) {
-	    b.intervals <- given.values[[2]]
+	    b.intervals <- given.values[[2L]]
 	    if(b.is.fac) {
 		b.levels <- levels(b)
 		if (is.character(b.intervals))
@@ -201,19 +201,19 @@ coplot <-
     total.columns <- columns
     total.rows <- rows
     f.col <- f.row <- 1
-    if(show.given[1]) {
+    if(show.given[1L]) {
 	total.rows <- rows + 1
 	f.row <- rows/total.rows
     }
-    if(have.b && show.given[2]) {
+    if(have.b && show.given[2L]) {
 	total.columns <- columns + 1
 	f.col <- columns/total.columns
     }
 
     mar <- if(have.b) rep.int(0, 4) else c(0.5, 0, 0.5, 0)
     oma <- c(5, 6, 5, 4)
-    if(have.b) { oma[2] <- 5 ; if(!b.is.fac) oma[4] <- 5 }
-    if(a.is.fac && show.given[1]) oma[3] <- oma[3] - 1
+    if(have.b) { oma[2L] <- 5 ; if(!b.is.fac) oma[4L] <- 5 }
+    if(a.is.fac && show.given[1L]) oma[3L] <- oma[3L] - 1
 
     ## Start Plotting only now
     opar <- par(mfrow = c(total.rows, total.columns),
@@ -266,8 +266,8 @@ coplot <-
 
     if(have.b) {
 	count <- 1
-	for(i in 1:rows) {
-	    for(j in 1:columns) {
+	for(i in 1L:rows) {
+	    for(j in 1L:columns) {
 		id <- ((a.intervals[j,1] <= a) & (a <= a.intervals[j,2]) &
 		       (b.intervals[i,1] <= b) & (b <= b.intervals[i,2]))
 		do.panel(count, subscripts, id)
@@ -275,20 +275,20 @@ coplot <-
 	    }
 	}
     } else {
-	for (i in 1:nplots) {
+	for (i in 1L:nplots) {
 	    id <- ((a.intervals[i,1] <= a) & (a <= a.intervals[i,2]))
 	    do.panel(i, subscripts, id)
 	}
     }
-    mtext(xlab[1], side = 1, at = 0.5*f.col, outer = TRUE, line = 3.5,
+    mtext(xlab[1L], side = 1, at = 0.5*f.col, outer = TRUE, line = 3.5,
           xpd = NA, font = par("font.lab"), cex = par("cex.lab"))
-    mtext(ylab[1], side = 2, at = 0.5*f.row, outer = TRUE, line = 3.5,
+    mtext(ylab[1L], side = 2, at = 0.5*f.row, outer = TRUE, line = 3.5,
           xpd = NA, font = par("font.lab"), cex = par("cex.lab"))
 
     if(length(xlab) == 1)
         xlab <- c(xlab, paste("Given :", a.name))
     ##mar <- par("mar")
-    if(show.given[1]) {
+    if(show.given[1L]) {
 	par(fig = c(0, f.col, f.row, 1),
             mar = mar + c(3+ !a.is.fac, 0, 0, 0), new=TRUE)
 	plot.new()
@@ -296,28 +296,28 @@ coplot <-
         a.range <- range(a.intervals, finite=TRUE)
         ## 3% correction because axs = "r" extends by 4% :
 	plot.window(a.range + c(.03,-.03)*diff(a.range), 0.5 + c(0, nint))
-	rect(a.intervals[, 1], 1:nint - 0.3,
-	     a.intervals[, 2], 1:nint + 0.3,
+	rect(a.intervals[, 1], 1L:nint - 0.3,
+	     a.intervals[, 2], 1L:nint + 0.3,
 	     col = bar.bg[if(a.is.fac) "fac" else "num"])
 	if(a.is.fac) {
-	    text(apply(a.intervals, 1, mean), 1:nint, a.levels)
+	    text(apply(a.intervals, 1, mean), 1L:nint, a.levels)
         }
         else {
             Axis(a, side = 3, xpd=NA)
             axis(1, labels=FALSE)
         }
 	box()
-	mtext(xlab[2], 3, line = 3 - a.is.fac, at=mean(par("usr")[1:2]),
+	mtext(xlab[2L], 3, line = 3 - a.is.fac, at=mean(par("usr")[1L:2]),
               xpd=NA, font = par("font.lab"), cex = par("cex.lab"))
     }
     else { ## i. e. !show.given
-	mtext(xlab[2], 3, line = 3.25, outer= TRUE, at= 0.5*f.col, xpd=NA,
+	mtext(xlab[2L], 3, line = 3.25, outer= TRUE, at= 0.5*f.col, xpd=NA,
               font = par("font.lab"), cex = par("cex.lab"))
     }
     if(have.b) {
 	if(length(ylab) == 1)
             ylab <- c(ylab, paste("Given :", b.name))
-	if(show.given[2]) {
+	if(show.given[2L]) {
 	    par(fig = c(f.col, 1, 0, f.row),
                 mar = mar + c(0, 3+ !b.is.fac, 0, 0), new=TRUE)
 	    plot.new()
@@ -325,23 +325,23 @@ coplot <-
             b.range <- range(b.intervals, finite=TRUE)
             ## 3% correction (see above)
             plot.window(0.5 + c(0, nint), b.range+ c(.03,-.03)*diff(b.range))
-	    rect(1:nint - 0.3, b.intervals[, 1],
-                 1:nint + 0.3, b.intervals[, 2],
+	    rect(1L:nint - 0.3, b.intervals[, 1],
+                 1L:nint + 0.3, b.intervals[, 2],
                  col = bar.bg[if(b.is.fac)"fac" else "num"])
 	    if(b.is.fac) {
-                text(1:nint, apply(b.intervals, 1, mean), b.levels, srt = 90)
+                text(1L:nint, apply(b.intervals, 1, mean), b.levels, srt = 90)
             }
             else {
                 Axis(b, side=4, xpd=NA)
                 axis(2, labels=FALSE)
             }
 	    box()
-	    mtext(ylab[2], 4, line = 3 - b.is.fac,
+	    mtext(ylab[2L], 4, line = 3 - b.is.fac,
                   at = mean(par("usr")[3:4]), xpd = NA,
                   font = par("font.lab"), cex = par("cex.lab"))
 	}
 	else {
-	    mtext(ylab[2], 4, line = 3.25, at=0.5*f.row, outer = TRUE,
+	    mtext(ylab[2L], 4, line = 3.25, at=0.5*f.row, outer = TRUE,
                   xpd = NA, font = par("font.lab"), cex = par("cex.lab"))
 	}
     }

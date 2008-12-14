@@ -55,7 +55,7 @@ PP.test <- function (x, lshort = TRUE)
     yt <- z[,1]
     yt1 <- z[,2]
     n <- length (yt)
-    tt <- (1:n)-n/2
+    tt <- (1L:n)-n/2
     res <- lm (yt~1+tt+yt1)
     if (res$rank < 3)
         stop ("singularities in regression")
@@ -72,8 +72,8 @@ PP.test <- function (x, lshort = TRUE)
     ssqrtl <- ssqrtl$trm
     n2 <- n^2
     trm1 <- n2*(n2-1)*sum(yt1^2)/12
-    trm2 <- n*sum(yt1*(1:n))^2
-    trm3 <- n*(n+1)*sum(yt1*(1:n))*sum(yt1)
+    trm2 <- n*sum(yt1*(1L:n))^2
+    trm3 <- n*(n+1)*sum(yt1*(1L:n))*sum(yt1)
     trm4 <- (n*(n+1)*(2*n+1)*sum(yt1)^2)/6
     Dx <- trm1-trm2+trm3-trm4
     STAT <- sqrt(ssqru)/sqrt(ssqrtl)*tstat-(n^3)/(4*sqrt(3)*sqrt(Dx)*sqrt(ssqrtl))*(ssqrtl-ssqru)
@@ -86,11 +86,11 @@ PP.test <- function (x, lshort = TRUE)
                    c(0.50,0.58,0.62,0.64,0.65,0.66),
                    c(0.15,0.24,0.28,0.31,0.32,0.33))
     table <- -table
-    tablen <- dim(table)[2]
+    tablen <- dim(table)[2L]
     tableT <- c(25,50,100,250,500,100000)
     tablep <- c(0.01,0.025,0.05,0.10,0.90,0.95,0.975,0.99)
     tableipl <- numeric(tablen)
-    for (i in (1:tablen))
+    for (i in (1L:tablen))
         tableipl[i] <- approx (tableT,table[,i],n,rule=2)$y
     PVAL <- approx (tableipl,tablep,STAT,rule=2)$y
     PARAMETER <- l

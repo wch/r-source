@@ -55,9 +55,9 @@ function (x,
         ## non-seasonal Holt-Winters
         expsmooth <- !is.null(beta) && (beta == 0)
         if(is.null(l.start))
-            l.start <- if(expsmooth) x[1] else x[2]
+            l.start <- if(expsmooth) x[1L] else x[2L]
         if(is.null(b.start))
-            if(is.null(beta) || beta > 0) b.start <- x[2] - x[1]
+            if(is.null(beta) || beta > 0) b.start <- x[2L] - x[1L]
         start.time <- 3 - expsmooth
         s.start    <- 0
     } else {
@@ -66,15 +66,15 @@ function (x,
         wind       <- start.periods * f
 
         ## decompose series
-        st <- decompose(ts(x[1:wind], start = start(x), frequency = f),
+        st <- decompose(ts(x[1L:wind], start = start(x), frequency = f),
                         seasonal)
 
         ## level & intercept
         dat <- na.omit(st$trend)
-        m   <- lm(dat ~ c(1:length(dat)))
+        m   <- lm(dat ~ c(1L:length(dat)))
 
-        if (is.null(l.start)) l.start <- as.vector(coef(m)[1])
-        if (is.null(b.start)) b.start <- as.vector(coef(m)[2])
+        if (is.null(l.start)) l.start <- as.vector(coef(m)[1L])
+        if (is.null(b.start)) b.start <- as.vector(coef(m)[2L])
         if (is.null(s.start)) s.start <- st$figure
     }
 
@@ -95,7 +95,7 @@ function (x,
            s = as.double(s.start),
 
 	   ## return values
-           SSE = as.double(0),
+           SSE = as.double(0L),
            level = double(len + 1),
            trend = double(len + 1),
            seasonal = double(len + f),
@@ -112,36 +112,36 @@ function (x,
         if (is.null(beta)) {
         ## optimize beta
           ## --> optimize alpha, beta, and gamma
-          error <- function (p) hw(p[1], p[2], p[3])$SSE
+          error <- function (p) hw(p[1L], p[2L], p[3L])$SSE
           sol   <- optim(optim.start, error, method = "L-BFGS-B",
                          lower = c(0, 0, 0), upper = c(1, 1, 1),
                          control = optim.control)
-          alpha <- sol$par[1]
-          beta  <- sol$par[2]
-          gamma <- sol$par[3]
+          alpha <- sol$par[1L]
+          beta  <- sol$par[2L]
+          gamma <- sol$par[3L]
         } else {
         ## !optimize beta
           ## --> optimize alpha and gamma
-          error <- function (p) hw(p[1], beta, p[2])$SSE
+          error <- function (p) hw(p[1L], beta, p[2L])$SSE
           sol   <- optim(c(optim.start["alpha"], optim.start["gamma"]),
                          error, method = "L-BFGS-B",
                          lower = c(0, 0), upper = c(1, 1),
                          control = optim.control)
-          alpha <- sol$par[1]
-          gamma <- sol$par[2]
+          alpha <- sol$par[1L]
+          gamma <- sol$par[2L]
         }
       } else {
       ## !optimize alpha
         if (is.null(beta)) {
         ## optimize beta
           ## --> optimize beta and gamma
-          error <- function (p) hw(alpha, p[1], p[2])$SSE
+          error <- function (p) hw(alpha, p[1L], p[2L])$SSE
           sol   <- optim(c(optim.start["beta"], optim.start["gamma"]),
                          error, method = "L-BFGS-B",
                          lower = c(0, 0), upper = c(1, 1),
                          control = optim.control)
-          beta  <- sol$par[1]
-          gamma <- sol$par[2]
+          beta  <- sol$par[1L]
+          gamma <- sol$par[2L]
         } else {
         ## !optimize beta
           ## --> optimize gamma
@@ -156,13 +156,13 @@ function (x,
         if (is.null(beta)) {
         ## optimize beta
           ## --> optimize alpha and beta
-          error <- function (p) hw(p[1], p[2], gamma)$SSE
+          error <- function (p) hw(p[1L], p[2L], gamma)$SSE
           sol   <- optim(c(optim.start["alpha"], optim.start["beta"]),
                          error, method = "L-BFGS-B",
                          lower = c(0, 0), upper = c(1, 1),
                          control = optim.control)
-          alpha <- sol$par[1]
-          beta  <- sol$par[2]
+          alpha <- sol$par[1L]
+          beta  <- sol$par[2L]
         } else {
         ## !optimize beta
           ## --> optimize alpha
@@ -187,7 +187,7 @@ function (x,
     fitted <- ts(cbind(xhat   = final.fit$level[-len-1],
                        level  = final.fit$level[-len-1],
                        trend  = if (beta > 0) final.fit$trend[-len-1],
-                       season = if (gamma > 0) final.fit$seasonal[1:len]),
+                       season = if (gamma > 0) final.fit$seasonal[1L:len]),
                  start = start(lag(x, k = 1 - start.time)),
                  frequency  = frequency(x)
                  )
@@ -204,7 +204,7 @@ function (x,
                    gamma     = gamma,
                    coefficients = c(a = final.fit$level[len + 1],
                                     b = if (beta > 0) final.fit$trend[len + 1],
-                                    s = if (gamma > 0) final.fit$seasonal[len + 1:f]),
+                                    s = if (gamma > 0) final.fit$seasonal[len + 1L:f]),
                    seasonal  = seasonal,
                    SSE       = final.fit$SSE,
                    call      = match.call()
@@ -225,7 +225,7 @@ predict.HoltWinters <-
             object$alpha * (1 + j * object$beta) +
                 (j %% f == 0) * object$gamma * (1 - object$alpha)
         var(residuals(object)) * if (object$seasonal == "additive")
-            sum(1, (h > 1) * sapply(1:(h-1), function(j) crossprod(psi(j))))
+            sum(1, (h > 1) * sapply(1L:(h-1), function(j) crossprod(psi(j))))
         else {
             rel <- 1 + (h - 1) %% f
             sum(sapply(0:(h-1), function(j) crossprod (psi(j) * object$coefficients[2 + rel] / object$coefficients[2 + (rel - j) %% f])))
@@ -234,22 +234,22 @@ predict.HoltWinters <-
 
     ## compute predictions
     # level
-    fit <- rep(as.vector(object$coefficients[1]),n.ahead)
+    fit <- rep(as.vector(object$coefficients[1L]),n.ahead)
     # trend
     if (object$beta > 0)
-        fit <- fit + as.vector((1:n.ahead)*object$coefficients[2])
+        fit <- fit + as.vector((1L:n.ahead)*object$coefficients[2L])
         # seasonal component
     if (object$gamma > 0)
         if (object$seasonal == "additive")
-            fit <- fit + rep(object$coefficients[-(1:(1+(object$beta>0)))],
+            fit <- fit + rep(object$coefficients[-(1L:(1+(object$beta>0)))],
                              length.out=length(fit))
         else
-            fit <- fit * rep(object$coefficients[-(1:(1+(object$beta>0)))],
+            fit <- fit * rep(object$coefficients[-(1L:(1+(object$beta>0)))],
                              length.out=length(fit))
 
     ## compute prediction intervals
     if (prediction.interval)
-      int <- qnorm((1 + level) / 2) * sqrt(sapply(1:n.ahead,vars))
+      int <- qnorm((1 + level) / 2) * sqrt(sapply(1L:n.ahead,vars))
     ts(
        cbind(fit = fit,
              upr = if(prediction.interval) fit + int,
@@ -355,7 +355,7 @@ function (x, type = c("additive", "multiplicative"), filter = NULL)
     periods <- l%/%f
     index <- c(0, cumsum(rep(f, periods - 2)))
     figure <- numeric(f)
-    for (i in 1:f) figure[i] <- mean(season[index + i])
+    for (i in 1L:f) figure[i] <- mean(season[index + i])
 
     ## normalize figure
     figure <- if (type == "additive")

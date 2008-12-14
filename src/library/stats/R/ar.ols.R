@@ -66,7 +66,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
             if (m > 0) X <- y[, (nser+1):ncol(y)]
             else X <- matrix(0, nrow(y), 0)
         }
-        Y <- t(y[, 1:nser])
+        Y <- t(y[, 1L:nser])
         N <- ncol(Y)
         XX <- t(X)%*%X
         rank <- qr(XX)$rank
@@ -107,7 +107,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         xint <- NULL
         ar <- AA
     }
-    Y <- t(y[, 1:nser, drop=FALSE])
+    Y <- t(y[, 1L:nser, drop=FALSE])
     YH <- AA %*% t(X)
     E <- drop(rbind(matrix(NA, m, nser), t(Y - YH)))
 
@@ -117,8 +117,8 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     ar <- aperm(ar, c(3,1,2))
     ses <- seA[[m - order.min + 1]]
     if(intercept) {
-        sem <- ses[1:nser]
-        ses <- ses[-(1:nser)]
+        sem <- ses[1L:nser]
+        ses <- ses[-(1L:nser)]
     } else sem <- rep(0, nser)
     dim(ses) <- c(nser, nser, m)
     ses <- aperm(ses, c(3,1,2))
@@ -138,12 +138,12 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         if(!is.null(xint)) xint <- xint * sc
         aa <- outer(sc, 1/sc)
         if(nser > 1 && m > 0)
-            for(i in 1:m) ar[i,,] <- ar[i,,]*aa
+            for(i in 1L:m) ar[i,,] <- ar[i,,]*aa
         var.pred <- var.pred * outer(sc, sc)
         E <- E * rep(sc, rep(NROW(E), nser))
         sem <- sem*sc
         if(m > 0)
-            for(i in 1:m) ses[i,,] <- ses[i,,]*aa
+            for(i in 1L:m) ses[i,,] <- ses[i,,]*aa
     }
     res <- list(order = m, ar = ar, var.pred = var.pred,
                 x.mean = xm, x.intercept = xint, aic = aic,

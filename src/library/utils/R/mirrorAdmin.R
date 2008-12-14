@@ -34,7 +34,7 @@ mirror2html <- function(mirrors = NULL, file="mirrors.html",
                "<dd>",
                "<table border=0 width=90%>")
 
-        for(k in 1:nrow(m)){
+        for(k in 1L:nrow(m)){
             z <- c(z, "<tr>",
                    "<td width=45%>",
                    "<a href=\"", m$URL[k], "\" target=\"_top\">",

@@ -142,7 +142,7 @@ show <- function(object)
 ## an informative string label for a class
 classLabel <- function(Class) {
     if(is.character(Class) && length(Class) > 0) {
-        className <- Class[[1]]
+        className <- Class[[1L]]
         packageName <- attr(Class, "package")
     }
     else {

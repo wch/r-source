@@ -44,7 +44,7 @@ str.POSIXt <- function(object, ...) {
     cl <- oldClass(object)
     ## be careful to be fast for large object:
     n <- length(object)
-    if(n >= 1000) object <- object[1:1000]
+    if(n >= 1000) object <- object[1L:1000]
 
     give.length <- TRUE ## default
     ## use 'give.length' when specified, else default = give.head
@@ -185,7 +185,7 @@ str.default <-
 	    if(is.d.f) std.attr <- c(std.attr, "class", "row.names")
 	    else cat(" ", if(i.pl)"pair", "list()\n",sep="")
 	} else { # list, length >= 1 :
-	    if(irregCl <- has.class && identical(object[[1]], object)) {
+	    if(irregCl <- has.class && identical(object[[1L]], object)) {
 		le <- length(object <- unclass(object))
 		std.attr <- c(std.attr, "class")
 	    }
@@ -207,7 +207,7 @@ str.default <-
 		    else { max.ncnam <- max(nchar(nam.ob, type="w"))
 			   format(nam.ob, width = max.ncnam, justify="left")
 		       }
-		for(i in 1:le) {
+		for(i in 1L:le) {
 		    cat(indent.str, comp.str, nam.ob[i], ":", sep="")
 		    envir <- # pass envir for 'promise' components:
 			if(typeof(object[[i]]) == "promise") {
@@ -233,7 +233,7 @@ str.default <-
 		mod <- substr(mode(object), 1, 4)
 		if     (mod == "nume")
 		    mod <- if(is.integer(object)) "int"
-		    else if(has.class) cl[1] else "num"
+		    else if(has.class) cl[1L] else "num"
 		else if(mod == "char") { mod <- "chr"; char.like <- TRUE }
 		else if(mod == "comp") mod <- "cplx" #- else: keep 'logi'
 		if(is.array(object)) {
@@ -290,8 +290,8 @@ str.default <-
 #	    std.attr <- c(std.attr, "tspar")
 	} else if(stats::is.ts(object)) {
 	    tsp.a <- stats::tsp(object)
-	    str1 <- P0(" Time-Series ", le.str, " from ", format(tsp.a[1]),
-		       " to ", format(tsp.a[2]), ":")
+	    str1 <- P0(" Time-Series ", le.str, " from ", format(tsp.a[1L]),
+		       " to ", format(tsp.a[2L]), ":")
 	    std.attr <- c("tsp","class") #- "names"
 	} else if (is.factor(object)) {
 	    nl <- length(lev.att <- levels(object))
@@ -305,8 +305,8 @@ str.default <-
 		## as from 2.1.0, quotes are included ==> '-2':
 		lenl <- cumsum(3 + (nchar(lev.att, type="w") - 2))# level space
 		ml <- if(nl <= 1 || lenl[nl] <= 13)
-		    nl else which(lenl > 13)[1]
-		lev.att <- maybe_truncate(lev.att[1:ml])
+		    nl else which(lenl > 13)[1L]
+		lev.att <- maybe_truncate(lev.att[1L:ml])
 ##		if((d <- lenl[ml] - if(ml>1)18 else 14) >= 3)# truncate last
 ##		    lev.att[ml] <-
 ##			P0(substring(lev.att[ml],1, nchar(lev.att[ml])-d), "..")
@@ -393,10 +393,10 @@ str.default <-
 		le <- length(object) # is > 1 e.g. for {A;B} language
 		format.fun <- function(x)x
 		v.len <- round(.5 * v.len)
-		if(le > 1 && typ=="language" && object[1] == "{" && object[le]=="}") {
+		if(le > 1 && typ=="language" && object[1L] == "{" && object[le]=="}") {
 		    v.len <- v.len + 2
 		    if(le >= 3) {
-			object <- c(object[1],
+			object <- c(object[1L],
 				    paste(sub("^ +", " ", object[2:(le-1)]),
 					  collapse = ";"),
 				    object[le])
@@ -431,7 +431,7 @@ str.default <-
 		le <- length(object <- as.character(object))
 	    if(int.surv || (all(ao > 1e-10 | ao==0) && all(ao < 1e10| ao==0) &&
 			    all(abs(ob - signif(ob, digits.d)) <= 9e-16*ao))) {
-		if(!iSurv || di.[2] == 2) # "Surv" : implemented as matrix
+		if(!iSurv || di.[2L] == 2) # "Surv" : implemented as matrix
 		    ## use integer-like length
 		    v.len <- iv.len
 		format.fun <- formatNum
@@ -450,7 +450,7 @@ str.default <-
 	if(char.like) {
 	    ## if object is very long, drop the rest which won't be used anyway:
 	    max.len <- max(100, width %/% 3 + 1, if(!missing(vec.len)) vec.len)
-	    if(le > max.len) object <- object[1:max.len]
+	    if(le > max.len) object <- object[1L:max.len]
 	    encObj <- encodeString(object, quote= '"', na.encode= FALSE)
 					#O: encodeString(object)
 	    v.len <-
@@ -461,7 +461,7 @@ str.default <-
 		else round(v.len)
 	    ile <- min(le, v.len)
 	    if(ile >= 1) ## truncate if LONG char:
-		object <- maybe_truncate(encObj[1:ile])
+		object <- maybe_truncate(encObj[1L:ile])
 					#O: encodeString(object, quote= '"', na.encode= FALSE)
 	    formObj <- function(x) paste(as.character(x), collapse=" ")
 	}
@@ -475,7 +475,7 @@ str.default <-
 	}
 
 	cat(if(give.head) P0(str1, " "),
-	    formObj(if(ile >= 1) object[1:ile] else if(v.len > 0) object),
+	    formObj(if(ile >= 1) object[1L:ile] else if(v.len > 0) object),
 	    if(le > v.len) " ...", "\n", sep="")
 
     } ## else (not function nor list)----------------------------------------

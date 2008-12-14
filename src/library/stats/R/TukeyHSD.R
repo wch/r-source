@@ -31,7 +31,7 @@ TukeyHSD.aov <-
     mm <- model.tables(x, "means")
     if(is.null(mm$n))
         stop("no factors in the fitted model")
-    tabs <- mm$tables[-1]
+    tabs <- mm$tables[-1L]
     tabs <- tabs[which]
     ## mm$n need not be complete -- factors only -- so index by names
     nn <- mm$n[names(tabs)]
@@ -70,7 +70,7 @@ TukeyHSD.aov <-
         est <- center/(sqrt((MSE/2) * outer(1/n, 1/n, "+"))[keep])
         pvals <- ptukey(abs(est),length(means),x$df.residual,lower.tail=FALSE)
         dnames <- list(NULL, c("diff", "lwr", "upr","p adj"))
-        if (!is.null(nms)) dnames[[1]] <- outer(nms, nms, paste, sep = "-")[keep]
+        if (!is.null(nms)) dnames[[1L]] <- outer(nms, nms, paste, sep = "-")[keep]
         out[[nm]] <- array(c(center, center - width, center + width,pvals),
                            c(length(width), 4), dnames)
     }
@@ -106,7 +106,7 @@ plot.TukeyHSD <- function (x, ...)
         plot(c(xi[, "lwr"], xi[, "upr"]), rep.int(yvals, 2), type = "n",
              axes = FALSE, xlab = "", ylab = "", ...)
         axis(1, ...)
-        axis(2, at = nrow(xi):1, labels = dimnames(xi)[[1]],
+        axis(2, at = nrow(xi):1, labels = dimnames(xi)[[1L]],
              srt = 0, ...)
         abline(h = yvals, lty = 1, lwd = 0, col = "lightgray")
         abline(v = 0, lty = 2, lwd = 0, ...)

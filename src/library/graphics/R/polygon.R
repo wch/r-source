@@ -57,14 +57,14 @@ polygon <-
             ## cross[i] is -1,0, or 1 as segment (x[i], y[i]) -- (x[i+1], y[i+1])
             ##   crosses right-to-left, doesn't cross, or crosses left-to-right
 
-            cross <- halfplane[-1] - halfplane[-length(halfplane)]
+            cross <- halfplane[-1L] - halfplane[-length(halfplane)]
             does.cross <- cross != 0
             if (!any(does.cross)) return(invisible(FALSE)) # nothing to draw?
 
             ## calculate where crossings occur
 
             x1 <- x[-length(x)][does.cross]; y1 <- y[-length(y)][does.cross]
-            x2 <- x[-1][does.cross]; y2 <- y[-1][does.cross]
+            x2 <- x[-1L][does.cross]; y2 <- y[-1L][does.cross]
 
             ## t[i] is "timepoint" on line at which segment (x1, y1)--(x2, y2)
             ##   crosses such that (x0,y0) + t*(xd,yd) is point of intersection
@@ -89,7 +89,7 @@ polygon <-
             lx <- x0 + xd * tsort
             ly <- y0 + yd * tsort
             lx1 <- lx[-length(lx)][drawline]; ly1 <- ly[-length(ly)][drawline]
-            lx2 <- lx[-1][drawline]; ly2 <- ly[-1][drawline]
+            lx2 <- lx[-1L][drawline]; ly2 <- ly[-1L][drawline]
             segments(lx1, ly1, lx2, ly2, ...)
         }
 
@@ -103,8 +103,8 @@ polygon <-
             ##  density,angle - of hatching
             ##  ... - other parameters to pass to "segments"
 
-            x <- c(x, x[1])
-            y <- c(y, y[1])
+            x <- c(x, x[1L])
+            y <- c(y, y[1L])
             angle <- angle %% 180
 
             if (par("xlog") || par("ylog")) {
@@ -115,18 +115,18 @@ polygon <-
 
             ## usr coords per inch
 
-            upi <- c(usr[2] - usr[1], usr[4] - usr[3]) / pin
+            upi <- c(usr[2L] - usr[1L], usr[4L] - usr[3L]) / pin
 
             ## handle "flipped" usr coords
 
-            if (upi[1] < 0) angle <- 180 - angle
-            if (upi[2] < 0) angle <- 180 - angle
+            if (upi[1L] < 0) angle <- 180 - angle
+            if (upi[2L] < 0) angle <- 180 - angle
             upi <- abs(upi)
 
             ## usr-coords direction vector for hatching
 
-            xd <- cos(angle / 180 * pi) * upi[1]
-            yd <- sin(angle / 180 * pi) * upi[2]
+            xd <- cos(angle / 180 * pi) * upi[1L]
+            yd <- sin(angle / 180 * pi) * upi[2L]
 
             ## to generate candidate hatching lines for polygon.onehatch,
             ##   we generate those lines necessary to cover the rectangle
@@ -154,7 +154,7 @@ polygon <-
 
                 ## y.shift is vertical shift between parallel hatching lines
 
-                y.shift <- upi[2] / density / abs(cos(angle / 180 * pi))
+                y.shift <- upi[2L] / density / abs(cos(angle / 180 * pi))
 
                 ## choose line origin (of first line) to align hatching
                 ##   with usr origin
@@ -189,7 +189,7 @@ polygon <-
 
                 ## x.shift is horizontal shift between parallel hatching lines
 
-                x.shift <- upi[1] / density / abs(sin(angle / 180 * pi))
+                x.shift <- upi[1L] / density / abs(sin(angle / 180 * pi))
 
                 ## choose line origin to align with usr origin
 
@@ -223,7 +223,7 @@ polygon <-
         ## process multiple polygons separated by NAs
 
         start <- 1
-        ends <- c((1:length(xy$x))[is.na(xy$x) | is.na(xy$y)], length(xy$x) + 1)
+        ends <- c((1L:length(xy$x))[is.na(xy$x) | is.na(xy$y)], length(xy$x) + 1)
 
         num.polygons <- length(ends)
         col <- rep(col, length.out = num.polygons)
@@ -275,6 +275,6 @@ xspline <-
 {
     xy <- xy.coords(x, y)
     s <- rep.int(shape, length(xy$x))
-    if(open) s[1] <- s[length(x)] <- 0
+    if(open) s[1L] <- s[length(x)] <- 0
     .Internal(xspline(xy$x, xy$y, s, open, repEnds, draw, col, border, ...))
 }

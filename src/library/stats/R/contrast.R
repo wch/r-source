@@ -26,11 +26,11 @@ contrasts <-
     if (is.null(ctr)) {
         ctrname <- getOption("contrasts")[[if (is.ordered(x)) 2 else 1]]
 	ctr <- get(ctrname, mode="function", envir=parent.frame())(levels(x), contrasts = contrasts)
-	dimnames(ctr) <- list(levels(x), dimnames(ctr)[[2]])
+	dimnames(ctr) <- list(levels(x), dimnames(ctr)[[2L]])
     }
     else if (is.character(ctr))
 	ctr <- get(ctr, mode="function", envir=parent.frame())(levels(x), contrasts = contrasts)
-    #if(ncol(ctr)==1) dimnames(ctr) <- list(dimnames(ctr)[[1]], "")
+    #if(ncol(ctr)==1) dimnames(ctr) <- list(dimnames(ctr)[[1L]], "")
     ctr
 }
 
@@ -55,11 +55,11 @@ contrasts <-
 	    cm <- qr(cbind(1,value))
 	    if(cm$rank != nc+1) stop("singular contrast matrix")
 	    cm <- qr.qy(cm, diag(nlevs))[,2:nlevs]
-	    cm[,1:nc] <- value
+	    cm[,1L:nc] <- value
 	    dimnames(cm) <- list(levels(x),NULL)
-	    if(!is.null(nmcol <- dimnames(value)[[2]]))
-		dimnames(cm)[[2]] <- c(nmcol, rep.int("", n1-nc))
-	} else cm <- value[, 1:n1, drop=FALSE]
+	    if(!is.null(nmcol <- dimnames(value)[[2L]]))
+		dimnames(cm)[[2L]] <- c(nmcol, rep.int("", n1-nc))
+	} else cm <- value[, 1L:n1, drop=FALSE]
     }
     else if(is.character(value)) cm <- value
     else if(is.null(value)) cm <- NULL
@@ -72,14 +72,14 @@ contr.helmert <-
     function (n, contrasts=TRUE)
 {
     if (length(n) <= 1) {
-	if(is.numeric(n) && length(n) == 1 && n > 1) levels <- 1:n
+	if(is.numeric(n) && length(n) == 1 && n > 1) levels <- 1L:n
 	else stop("not enough degrees of freedom to define contrasts")
     } else levels <- n
     lenglev <- length(levels)
     if (contrasts) {
 	cont <- array(-1, c(lenglev, lenglev-1), list(levels, NULL))
 	cont[col(cont) <= row(cont) - 2] <- 0
-	cont[col(cont) == row(cont) - 1] <- 1:(lenglev-1)
+	cont[col(cont) == row(cont) - 1] <- 1L:(lenglev-1)
     } else {
 	cont <- array(0, c(lenglev, lenglev), list(levels, levels))
 	cont[col(cont) == row(cont)] <- 1
@@ -91,7 +91,7 @@ contr.treatment <-
     function(n, base = 1, contrasts = TRUE)
 {
     if(is.numeric(n) && length(n) == 1) {
-	if(n > 1) levs <- 1:n
+	if(n > 1) levs <- 1L:n
 	else stop("not enough degrees of freedom to define contrasts")
     } else {
 	levs <- n
@@ -115,7 +115,7 @@ contr.sum <-
 {
     if (length(n) <= 1) {
 	if (is.numeric(n) && length(n) == 1 && n > 1)
-	    levels <- 1:n
+	    levels <- 1L:n
 	else stop("not enough degrees of freedom to define contrasts")
     } else levels <- n
     lenglev <- length(levels)

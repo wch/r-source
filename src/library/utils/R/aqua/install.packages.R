@@ -70,7 +70,7 @@
             if (is.na(conts))
                 stop("malformed bundle DESCRIPTION file, no Contains field")
             else
-                pkgs <- strsplit(conts," ")[[1]]
+                pkgs <- strsplit(conts," ")[[1L]]
             ## now check the MD5 sums
             res <- TRUE
             for (curPkg in pkgs) res <- res &

@@ -48,7 +48,7 @@ SSasymp <- # selfStart(~ Asym + (R0 - Asym) * exp(-exp(lrc) * input),
               if(nrow(xy) > 3) {
                   xy$ydiff <- abs(xy$y - NLSstRtAsymptote(xy))
                   xy <- data.frame(xy)
-                  lrc <- log( - coef(lm(log(ydiff) ~ x, data = xy))[2])
+                  lrc <- log( - coef(lm(log(ydiff) ~ x, data = xy))[2L])
                   names(lrc) <- NULL
                   ## This gives an estimate of the log (rate constant).  Use that
                   ## with a partially linear nls algorithm
@@ -64,16 +64,16 @@ SSasymp <- # selfStart(~ Asym + (R0 - Asym) * exp(-exp(lrc) * input),
                       stop("cannot fit an asymptotic regression model to these data")
                   }
                   avg.resp <- xy$y
-                  frac <- (avg.resp[3] - avg.resp[1])/(avg.resp[2] - avg.resp[1])
+                  frac <- (avg.resp[3L] - avg.resp[1L])/(avg.resp[2L] - avg.resp[1L])
                   xunique <- unique(xy$x)
                   xdiff <- diff(xunique)
-                  if(xdiff[1] == xdiff[2]) {	# equal spacing - can use a shortcut
+                  if(xdiff[1L] == xdiff[2L]) {	# equal spacing - can use a shortcut
                       expmRd <- frac - 1
-                      rc <-  - log(expmRd)/xdiff[1]
+                      rc <-  - log(expmRd)/xdiff[1L]
                       lrc <- log(rc)
-                      expmRx1 <- exp( - rc * xunique[1])
-                      bma <- ydiff[1]/(expmRx1 * (expmRd - 1))
-                      Asym <- avg.resp[1] - bma * expmRx1
+                      expmRx1 <- exp( - rc * xunique[1L])
+                      bma <- ydiff[1L]/(expmRx1 * (expmRd - 1))
+                      Asym <- avg.resp[1L] - bma * expmRx1
                       pars <- c(lrc = lrc, Asym = Asym, R0 = bma + Asym)
                   }
                   else {
@@ -81,7 +81,7 @@ SSasymp <- # selfStart(~ Asym + (R0 - Asym) * exp(-exp(lrc) * input),
                   }
               }
               names(pars) <- NULL
-              val <- list(pars[2], pars[3], pars[1])
+              val <- list(pars[2L], pars[3L], pars[1L])
               names(val) <- mCall[c("Asym", "R0", "lrc")]
               val
           },
@@ -119,11 +119,11 @@ SSasympOff <- # selfStart(~ Asym *( 1 - exp(-exp(lrc) * (input - c0) ) ),
               }
               xy$ydiff <- abs(xy$y - NLSstRtAsymptote(xy))
               xy <- data.frame(xy)
-              lrc <- log( - coef(lm(log(ydiff) ~ x, data = xy))[2]) # log( rate constant)
+              lrc <- log( - coef(lm(log(ydiff) ~ x, data = xy))[2L]) # log( rate constant)
               pars <- as.vector(coef(nls(y ~ cbind(1, exp(- exp(lrc) * x)),
                                          data = xy, algorithm = "plinear",
                                          start = list(lrc = lrc))))
-              val <- list(pars[2], pars[1], exp(-pars[1]) * log(-pars[3]/pars[2]))
+              val <- list(pars[2L], pars[1L], exp(-pars[1L]) * log(-pars[3L]/pars[2L]))
               names(val) <- mCall[c("Asym", "lrc", "c0")]
               val
           }, parameters = c("Asym", "lrc", "c0"))
@@ -165,7 +165,7 @@ SSasympOrig <- # selfStart(~ Asym * (1 - exp(-exp(lrc) * input)),
                                          data = xy,
                                          start = list(lrc = lrc),
                                          algorithm = "plinear")))
-              value <- c(pars[2], pars[1])
+              value <- c(pars[2L], pars[1L])
               names(value) <- mCall[c("Asym", "lrc")]
               value
           }, parameters = c("Asym", "lrc"))
@@ -206,16 +206,16 @@ SSbiexp <-
               nlast <- max(3, round(ndistinct/2))		# take at least half the data
               dlast <- xy[(ndistinct + 1 - nlast):ndistinct, ]
               pars2 <- coef(lm(log(y) ~ x, data = dlast))
-              lrc2 <- log(abs(pars2[2]))		# log of the slope
-              xy[["res"]] <- xy[["y"]] - exp(pars2[1]) * exp(-exp(lrc2)*xy[["x"]])
-              dfirst <- xy[1:(ndistinct - nlast), ]
+              lrc2 <- log(abs(pars2[2L]))		# log of the slope
+              xy[["res"]] <- xy[["y"]] - exp(pars2[1L]) * exp(-exp(lrc2)*xy[["x"]])
+              dfirst <- xy[1L:(ndistinct - nlast), ]
               pars1 <- coef(lm(log(abs(res)) ~ x, data = dfirst))
-              lrc1 <- log(abs(pars1[2]))
+              lrc1 <- log(abs(pars1[2L]))
               pars <- coef(nls(y ~ cbind(exp(-exp(lrc1)*x), exp(-exp(lrc2)*x)),
                                data = xy,
                                start = list(lrc1 = lrc1, lrc2 = lrc2),
                                algorithm = "plinear"))
-              value <- c(pars[3], pars[1], pars[4], pars[2])
+              value <- c(pars[3L], pars[1L], pars[4L], pars[2L])
               names(value) <- mCall[c("A1", "lrc1", "A2", "lrc2")]
               value
           }, parameters = c("A1", "lrc1", "A2", "lrc2"))
@@ -283,15 +283,15 @@ SSfol <-
                                               exp(-input*exp(lKa))))/(exp(lKa) - exp(lKe)),
                               data = data.frame(list(resp = resp, input = input,
                               Dose = Dose)),
-                              start = list(lKa = pars[1],lKe = lKe),
+                              start = list(lKa = pars[1L],lKe = lKe),
                               algorithm = "plinear")
               pars <- coef(cond.lin)
               names(pars) <- NULL
-              lKa <- pars[1]
-              lKe <- pars[2]
+              lKa <- pars[1L]
+              lKe <- pars[2L]
               Ka <- exp(lKa)
               Ke <- exp(lKe)
-              value <- list(lKe, lKa, log((Ke * Ka)/(pars[3])))
+              value <- list(lKe, lKa, log((Ke * Ka)/(pars[3L])))
               names(value) <- as.character(mCall)[4:6]
               value
           }, parameters = c("lKe", "lKa", "lCl"))
@@ -331,16 +331,16 @@ SSfpl <- # selfStart(~ A + (B - A)/(1 + exp((xmid - input)/scal)),
               }
               ## convert the response to a proportion (i.e. contained in (0,1))
               rng <- range(xy$y); drng <- diff(rng)
-              xy$prop <- (xy$y - rng[1] + 0.05 * drng)/(1.1 * drng)
+              xy$prop <- (xy$y - rng[1L] + 0.05 * drng)/(1.1 * drng)
               ## inverse regression of the x values on the proportion
               ir <- as.vector(coef(lm(x ~ I(log(prop/(1-prop))), data = xy)))
               pars <- as.vector(coef(nls(y ~ cbind(1, 1/(1 + exp((xmid - x)/
                                                                  exp(lscal)))),
                                          data = xy,
-                                         start = list(xmid = ir[1],
-                                                      lscal = log(abs(ir[2]))),
+                                         start = list(xmid = ir[1L],
+                                                      lscal = log(abs(ir[2L]))),
                                          algorithm = "plinear")))
-              value <- c(pars[3], pars[3] + pars[4], pars[1], exp(pars[2]))
+              value <- c(pars[3L], pars[3L] + pars[4L], pars[1L], exp(pars[2L]))
               names(value) <- mCall[c("A", "B", "xmid", "scal")]
               value
           }, parameters = c("A", "B", "xmid", "scal"))
@@ -381,9 +381,9 @@ SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
               aux <- coef(lm(x ~ z, xy))
               pars <- as.vector(coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
                                          data = xy,
-                                         start = list(xmid = aux[1], scal = aux[2]),
+                                         start = list(xmid = aux[1L], scal = aux[2L]),
                                          algorithm = "plinear")))
-              value <- c(pars[3], pars[1], pars[2])
+              value <- c(pars[3L], pars[1L], pars[2L])
               names(value) <- mCall[c("Asym", "xmid", "scal")]
               value
           }, parameters = c("Asym", "xmid", "scal"))
@@ -419,9 +419,9 @@ SSmicmen <- # selfStart(~ Vm * input/(K + input),
               ## use the partially linear form to converge quickly
               pars <- as.vector(coef(nls(y ~ x/(K + x),
                                          data = xy,
-                                         start = list(K = abs(pars[2]/pars[1])),
+                                         start = list(K = abs(pars[2L]/pars[1L])),
                                          algorithm = "plinear")))
-              value <- c(pars[2], pars[1])
+              value <- c(pars[2L], pars[1L])
               names(value) <- mCall[c("Vm", "K")]
               value
           }, parameters = c("Vm", "K"))
@@ -504,7 +504,7 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
               val <- coef(nls(y ~ cbind(1, -exp(-exp(lrc)*x^pwr)),
                                data = xy,
                                algorithm = "plinear",
-                               start = c(lrc = pars[[1]], pwr = pars[[2]])))[
+                               start = c(lrc = pars[[1L]], pwr = pars[[2L]])))[
                                                          c(3,4,1,2)]
               names(val) <- mCall[c("Asym", "Drop", "lrc", "pwr")]
               val

@@ -43,7 +43,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 
     if(add) { ## solve the additive constant problem
         ## it is c* = largest eigenvalue of 2 x 2 (n x n) block matrix Z:
-        i2 <- n + (i <- 1:n)
+        i2 <- n + (i <- 1L:n)
         Z <- matrix(0, 2*n, 2*n)
         Z[cbind(i2,i)] <- -1
         Z[ i, i2] <- -x
@@ -56,11 +56,11 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
         x[non.diag] <- (d[non.diag] + add.c)^2
     }
     e <- eigen(-x/2, symmetric = TRUE)
-    ev <- e$values[1:k]
+    ev <- e$values[1L:k]
     if(any(ev < 0))
         warning(gettextf("some of the first %d eigenvalues are < 0", k),
                 domain = NA)
-    points <- e$vectors[, 1:k, drop = FALSE] %*% diag(sqrt(ev), k)
+    points <- e$vectors[, 1L:k, drop = FALSE] %*% diag(sqrt(ev), k)
     dimnames(points) <- list(rn, NULL)
     if (eig || x.ret || add) {
         evalus <- e$values[-n]

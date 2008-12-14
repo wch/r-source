@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 plot.lm <-
-function (x, which = c(1:3,5), ## was which = 1:4,
+function (x, which = c(1L:3,5), ## was which = 1L:4,
 	  caption = list("Residuals vs Fitted", "Normal Q-Q",
 	  "Scale-Location", "Cook's distance",
 	  "Residuals vs Leverage",
@@ -41,7 +41,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
     if (!inherits(x, "lm"))
 	stop("use only with \"lm\" objects")
     if(!is.numeric(which) || any(which < 1) || any(which > 6))
-	stop("'which' must be in 1:6")
+	stop("'which' must be in 1L:6")
     isGlm <- inherits(x, "glm")
     show <- rep(FALSE, 6)
     show[which] <- TRUE
@@ -56,43 +56,43 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	labels.id <- labels.id[wind]
     }
     n <- length(r)
-    if (any(show[2:6])) {
+    if (any(show[2L:6L])) {
 	s <- if (inherits(x, "rlm")) x$s
         else if(isGlm) sqrt(summary(x)$dispersion)
         else sqrt(deviance(x)/df.residual(x))
 	hii <- lm.influence(x, do.coef = FALSE)$hat
-	if (any(show[4:6])) {
+	if (any(show[4L:6L])) {
 	    cook <- if (isGlm) cooks.distance(x)
             else cooks.distance(x, sd = s, res = r)
 	}
     }
-    if (any(show[2:3])) {
+    if (any(show[2L:3L])) {
 	ylab23 <- if(isGlm) "Std. deviance resid." else "Standardized residuals"
 	r.w <- if (is.null(w)) r else sqrt(w) * r
         ## NB: rs is already NaN if r=0, hii=1
 	rs <- dropInf( r.w/(s * sqrt(1 - hii)), hii )
     }
 
-    if (any(show[5:6])) { # using 'leverages'
+    if (any(show[5L:6L])) { # using 'leverages'
         r.hat <- range(hii, na.rm = TRUE) # though should never have NA
         isConst.hat <- all(r.hat == 0) ||
             diff(r.hat) < 1e-10 * mean(hii, na.rm = TRUE)
     }
-    if (any(show[c(1, 3)]))
+    if (any(show[c(1L, 3L)]))
 	l.fit <- if (isGlm) "Predicted values" else "Fitted values"
     if (is.null(id.n))
 	id.n <- 0
     else {
 	id.n <- as.integer(id.n)
-	if(id.n < 0 || id.n > n)
+	if(id.n < 0L || id.n > n)
 	    stop(gettextf("'id.n' must be in {1,..,%d}", n), domain = NA)
     }
-    if(id.n > 0) { ## label the largest residuals
+    if(id.n > 0L) { ## label the largest residuals
 	if(is.null(labels.id))
-	    labels.id <- paste(1:n)
-	iid <- 1:id.n
+	    labels.id <- paste(1L:n)
+	iid <- 1L:id.n
 	show.r <- sort.list(abs(r), decreasing = TRUE)[iid]
-	if(any(show[2:3]))
+	if(any(show[2L:3L]))
 	    show.rs <- sort.list(abs(rs), decreasing = TRUE)[iid]
 	text.id <- function(x, y, ind, adj.x = TRUE) {
 	    labpos <-
@@ -108,13 +108,13 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	cal <- x$call
 	if (!is.na(m.f <- match("formula", names(cal)))) {
 	    cal <- cal[c(1, m.f)]
-	    names(cal)[2] <- "" # drop	" formula = "
+	    names(cal)[2L] <- "" # drop	" formula = "
 	}
 	cc <- deparse(cal, 80) # (80, 75) are ``parameters''
-	nc <- nchar(cc[1], "c")
+	nc <- nchar(cc[1L], "c")
 	abbr <- length(cc) > 1 || nc > 75
 	sub.caption <-
-	    if(abbr) paste(substr(cc[1], 1, min(75,nc)), "...") else cc[1]
+	    if(abbr) paste(substr(cc[1L], 1, min(75,nc)), "...") else cc[1L]
     }
     one.fig <- prod(par("mfcol")) == 1
     if (ask) {
@@ -122,7 +122,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	on.exit(devAskNewPage(oask))
     }
     ##---------- Do the individual plots : ----------
-    if (show[1]) {
+    if (show[1L]) {
 	ylim <- range(r, na.rm=TRUE)
 	if(id.n > 0)
 	    ylim <- extendrange(r= ylim, f = 0.08)
@@ -139,9 +139,9 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	}
 	abline(h = 0, lty = 3, col = "gray")
     }
-    if (show[2]) { ## Normal
+    if (show[2L]) { ## Normal
 	ylim <- range(rs, na.rm=TRUE)
-	ylim[2] <- ylim[2] + diff(ylim) * 0.075
+	ylim[2L] <- ylim[2L] + diff(ylim) * 0.075
 	qq <- qqnorm(rs, main = main, ylab = ylab23, ylim = ylim, ...)
 	if (qqline) qqline(rs, lty = 3, col = "gray50")
 	if (one.fig)
@@ -150,7 +150,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	if(id.n > 0)
 	    text.id(qq$x[show.rs], qq$y[show.rs], show.rs)
     }
-    if (show[3]) {
+    if (show[3L]) {
 	sqrtabsr <- sqrt(abs(rs))
 	ylim <- c(0, max(sqrtabsr, na.rm=TRUE))
 	yl <- as.expression(substitute(sqrt(abs(YL)), list(YL=as.name(ylab23))))
@@ -164,10 +164,10 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	if(id.n > 0)
 	    text.id(yhn0[show.rs], sqrtabsr[show.rs], show.rs)
     }
-    if (show[4]) {
+    if (show[4L]) {
 	if(id.n > 0) {
 	    show.r <- order(-cook)[iid]# index of largest 'id.n' ones
-	    ymx <- cook[show.r[1]] * 1.075
+	    ymx <- cook[show.r[1L]] * 1.075
 	} else ymx <- max(cook, na.rm = TRUE)
 	plot(cook, type = "h", ylim = c(0, ymx), main = main,
 	     xlab = "Obs. number", ylab = "Cook's distance", ...)
@@ -177,7 +177,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	if(id.n > 0)
 	    text.id(show.r, cook[show.r], show.r, adj.x=FALSE)
     }
-    if (show[5]) {
+    if (show[5L]) {
         ylab5 <- if (isGlm) "Std. Pearson resid." else "Standardized residuals"
         r.w <- residuals(x, "pearson")
         if(!is.null(w)) r.w <- r.w[wind] # drop 0-weight cases
@@ -217,10 +217,10 @@ function (x, which = c(1:3,5), ## was which = 1:4,
                      ylim = ylim, xaxt = "n",
                      main = main, xlab = "Factor Level Combinations",
                      ylab = ylab5, type = "n", ...)
-                axis(1, at = ff[1]*(1:nlev[1] - 1/2) - 1/2,
-                     labels= x$xlevels[[1]][order(sapply(split(yh,mf[,1]), mean))])
-                mtext(paste(facvars[1],":"), side = 1, line = 0.25, adj=-.05)
-                abline(v = ff[1]*(0:nlev[1]) - 1/2, col="gray", lty="F4")
+                axis(1, at = ff[1L]*(1L:nlev[1L] - 1/2) - 1/2,
+                     labels= x$xlevels[[1L]][order(sapply(split(yh,mf[,1]), mean))])
+                mtext(paste(facvars[1L],":"), side = 1, line = 0.25, adj=-.05)
+                abline(v = ff[1L]*(0:nlev[1L]) - 1/2, col="gray", lty="F4")
                 panel(facval, rsp, ...)
                 abline(h = 0, lty = 3, col = "gray")
             }
@@ -247,7 +247,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
             if(length(cook.levels)) {
                 p <- length(coef(x))
                 usr <- par("usr")
-                hh <- seq.int(min(r.hat[1], r.hat[2]/100), usr[2],
+                hh <- seq.int(min(r.hat[1L], r.hat[2L]/100), usr[2L],
                               length.out = 101)
                 for(crit in cook.levels) {
                     cl.h <- sqrt(crit*p*(1-hh)/hh)
@@ -256,7 +256,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
                 }
                 legend("bottomleft", legend = "Cook's distance",
                        lty = 2, col = 2, bty = "n")
-                xmax <- min(0.99, usr[2])
+                xmax <- min(0.99, usr[2L])
                 ymult <- sqrt(p*(1-xmax)/xmax)
                 aty <- c(-sqrt(rev(cook.levels))*ymult,
                          sqrt(cook.levels)*ymult)
@@ -275,7 +275,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	    }
 	}
     }
-    if (show[6]) {
+    if (show[6L]) {
 	g <- dropInf( hii/(1-hii), hii )
 	ymx <- max(cook, na.rm = TRUE)*1.025
 	plot(g, cook, xlim = c(0, max(g, na.rm=TRUE)), ylim = c(0, ymx),
@@ -292,9 +292,9 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	bval <- pretty(sqrt(p*cook/g), 5)
 
 	usr <- par("usr")
-	xmax <- usr[2]
-	ymax <- usr[4]
-	for(i in 1:length(bval)) {
+	xmax <- usr[2L]
+	ymax <- usr[4L]
+	for(i in 1L:length(bval)) {
 	    bi2 <- bval[i]^2
 	    if(ymax > bi2*xmax) {
 		xi <- xmax + strwidth(" ")/3
@@ -319,7 +319,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
         }
     }
 
-    if (!one.fig && par("oma")[3] >= 1)
+    if (!one.fig && par("oma")[3L] >= 1)
 	mtext(sub.caption, outer = TRUE, cex = 1.25)
     invisible()
 }

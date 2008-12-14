@@ -202,7 +202,7 @@ getClassDef <-
 	    classMetaName(if(length(Class) > 1)
 			  ## S3 class; almost certainly has no packageSlot,
 			  ## but we'll continue anyway
-			  Class[[1]] else Class)
+			  Class[[1L]] else Class)
 	## a string with a package slot strongly implies the class definition
 	## should be in that package.
 	if(identical(nzchar(package), TRUE)) {
@@ -318,7 +318,7 @@ removeClass <-  function(Class, where = topenv(parent.frame())) {
         }
         if(length(classWhere) > 1)
             warning(gettextf("class \"%s\" has multiple definitions visible; only the first removed", Class), domain = NA)
-        classWhere <- classWhere[[1]]
+        classWhere <- classWhere[[1L]]
     }
     else classWhere <- where
     classDef <- getClassDef(Class, where=classWhere)
@@ -514,7 +514,7 @@ resetClass <- function(Class, classDef, where) {
         else {
             if(missing(where)) {
                 if(missing(classDef))
-                    where <- findClass(Class, unique = "resetting the definition")[[1]]
+                    where <- findClass(Class, unique = "resetting the definition")[[1L]]
                 else
                     where <- .classDefEnv(classDef)
             }
@@ -564,7 +564,7 @@ initialize <- function(.Object, ...) {
                 obj <- el(supers, i)
                 Classi <- class(obj)
                 if(length(Classi)>1)
-                    Classi <- Classi[[1]] #possible S3 inheritance
+                    Classi <- Classi[[1L]] #possible S3 inheritance
                 ## test some cases that let information be copied into the
                 ## object, ordered from more to less:  all the slots in the
                 ## first two cases, some in the 3rd, just the data part in 4th
@@ -579,13 +579,13 @@ initialize <- function(.Object, ...) {
                 else {
                     ## is there a class to which we can coerce obj
                     ## that is then among the superclasses of Class?
-                    extendsi <- extends(Classi)[-1]
+                    extendsi <- extends(Classi)[-1L]
                     ## look for the common extensions, choose the first
                     ## one in the extensions of Class
                     which <- match(thisExtends, extendsi)
                     which <- seq_along(which)[!is.na(which)]
                     if(length(which) >0 ) {
-                        Classi <- thisExtends[which[1]]
+                        Classi <- thisExtends[which[1L]]
 ###                    was:    as(.Object, Classi) <- as(obj, Classi, strict = FALSE)
                         ## but   as<- does an as(....) to its value argument                   
                         as(.Object, Classi) <- obj
@@ -677,10 +677,10 @@ findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
                 }
             }
             else if(nzchar(unique)) {
-                where <- where[1]
+                where <- where[1L]
                 ## problem: 'unique'x is text passed in, so do not translate
                 warning(sprintf("multiple definitions of class \"%s\" visible; using the definition on package \"%s\" for %s",
-                                 Class, getPackageName(where[[1]]), unique),
+                                 Class, getPackageName(where[[1L]]), unique),
                         domain = NA)
             }
             ## else returns a list of >1 places, for the caller to sort out (e.g., .findOrCopyClass)

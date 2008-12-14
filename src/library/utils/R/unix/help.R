@@ -27,7 +27,7 @@ function(file, topic)
     lnkfile <-
         file.path(tempdir(), ".R", "library", third_base_name)
     if(any(ex <- file.exists(lnkfile))) {
-        file <- lnkfile[ex][1]          # could be more than one
+        file <- lnkfile[ex][1L]          # could be more than one
     }
     if(file == ofile) {
         msg <- gettext("Using non-linked HTML file: hyperlinks may be incorrect")

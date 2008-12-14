@@ -58,7 +58,7 @@ data.manager <- function()
     x$results[,4] -> desc
     len <- NROW(dt)
     url <- character(len)
-    for(i in 1:len) {
+    for(i in 1L:len) {
         tmp <- as.character(help(dt[i], package = pkg[i], htmlhelp=TRUE))
         if(length(tmp)>0)
             url[i] <- tmp
@@ -115,7 +115,7 @@ print.hsearch <- function(x,...)
                                      "matching\n\n")))
         } else {
             url = character(rows)
-            for(i in 1:rows){
+            for(i in 1L:rows){
                 tmp <- as.character(help(db[i,"topic"], package = db[i,"Package"], htmlhelp=TRUE))
                 if(length(tmp)>0)
                     url[i] <- tmp
@@ -137,12 +137,12 @@ Rapp.updates <- function()
     readLines("http://cran.r-project.org/bin/macosx/VERSION") -> cran.ver
 
     strsplit(cran.ver,"\\.") -> ver
-    cran.ver <- as.numeric(ver[[1]])
+    cran.ver <- as.numeric(ver[[1L]])
 
     paste(R.Version()$major,".",R.version$minor,sep="") -> rapp.ver
 
     strsplit(rapp.ver,"\\.") -> ver
-    rapp.ver <- as.numeric(ver[[1]])
+    rapp.ver <- as.numeric(ver[[1L]])
 
     this.ver <- sum(rapp.ver * c(10000,100,1))
     new.ver <- sum(cran.ver * c(10000,100,1))

@@ -40,7 +40,7 @@ function(dir = ".", fields = NULL,
                                              unpacked)
 
         if(length(desc)) {
-            fields <- names(desc[[1]])
+            fields <- names(desc[[1L]])
             desc <- matrix(unlist(desc), ncol = length(fields), byrow = TRUE)
             colnames(desc) <- fields
             ## bundles do not have a Package entry in the DESCRIPTION,

@@ -39,7 +39,7 @@ dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE, p=2)
 	    p = as.double(p),
 	    DUP = FALSE, NAOK=TRUE, PACKAGE="stats")$d
     attr(d, "Size") <- N
-    attr(d, "Labels") <- dimnames(x)[[1]]
+    attr(d, "Labels") <- dimnames(x)[[1L]]
     attr(d, "Diag") <- diag
     attr(d, "Upper") <- upper
     attr(d, "method") <- METHODS[method]
@@ -59,7 +59,7 @@ as.matrix.dist <- function(x, ...)
     df <- df + t(df)
     labels <- attr(x, "Labels")
     dimnames(df) <-
-	if(is.null(labels)) list(1:size,1:size) else list(labels,labels)
+	if(is.null(labels)) list(1L:size,1L:size) else list(labels,labels)
     df
 }
 

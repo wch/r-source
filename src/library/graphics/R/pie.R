@@ -23,7 +23,7 @@ pie <-
     if (!is.numeric(x) || any(is.na(x) | x < 0))
 	stop("'x' values must be positive.")
     if (is.null(labels))
-	labels <- as.character(1:length(x))
+	labels <- as.character(1L:length(x))
     else labels <- as.graphicsAnnot(labels)
     x <- c(0, cumsum(x)/sum(x))
     dx <- diff(x)
@@ -34,8 +34,8 @@ pie <-
     # PREVIOUS plot region size
     pin <- par("pin")
     xlim <- ylim <- c(-1, 1)
-    if (pin[1] > pin[2]) xlim <- (pin[1]/pin[2]) * xlim
-    else ylim <- (pin[2]/pin[1]) * ylim
+    if (pin[1L] > pin[2L]) xlim <- (pin[1L]/pin[2L]) * xlim
+    else ylim <- (pin[2L]/pin[1L]) * ylim
     plot.window(xlim, ylim, "", asp = 1)
     if (is.null(col))
         col <- if(is.null(density))
@@ -52,7 +52,7 @@ pie <-
         t2p <- twopi*t + init.angle * pi/180
         list(x = radius * cos(t2p), y = radius * sin(t2p))
     }
-    for (i in 1:nx) {
+    for (i in 1L:nx) {
 	n <- max(2, floor(edges * dx[i]))
 	P <- t2xy(seq.int(x[i], x[i + 1], length.out = n))
 	polygon(c(P$x, 0), c(P$y, 0), density = density[i], angle = angle[i],

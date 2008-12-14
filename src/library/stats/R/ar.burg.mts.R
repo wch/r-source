@@ -49,7 +49,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
             pacf = double((1 + order.max) * nser * nser),
             var = double((1 + order.max) * nser * nser),
             aic = double(1 + order.max),
-            order = integer(1),
+            order = integer(1L),
             as.integer(aic),
             as.integer(var.method))
     partialacf <- aperm(array(z$pacf, dim = c(nser, nser, order.max +
@@ -66,7 +66,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     var.pred <- var.pred[order + 1, , , drop = TRUE]
     resid <- matrix(z$resid, nrow = n.used, ncol = nser)
     if (order > 0)
-        resid[1:order, ] <- NA
+        resid[1L:order, ] <- NA
     if (ists) {
         attr(resid, "tsp") <- xtsp
         attr(resid, "class") <- "mts"
@@ -75,7 +75,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     colnames(resid) <- snames
     dimnames(ar) <- list(seq_len(order), snames, snames)
     dimnames(var.pred) <- list(snames, snames)
-    dimnames(partialacf) <- list(1:order.max, snames, snames)
+    dimnames(partialacf) <- list(1L:order.max, snames, snames)
     res <- list(order = order, ar = ar, var.pred = var.pred,
         x.mean = x.mean, aic = xaic, n.used = n.used, order.max = order.max,
         partialacf = partialacf, resid = resid, method = ifelse(var.method ==

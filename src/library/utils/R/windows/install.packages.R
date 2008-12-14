@@ -55,7 +55,7 @@
             if (is.na(conts))
                 stop("malformed bundle DESCRIPTION file, no Contains field")
             else
-                pkgs <- strsplit(conts," ")[[1]]
+                pkgs <- strsplit(conts," ")[[1L]]
             ## now check the MD5 sums
             res <- TRUE
             for (curPkg in pkgs) res <- res &
@@ -219,13 +219,13 @@
         ## where should we be looking?
         ## should this add the library we are installing to?
         installed <- installed.packages(fields = c("Package", "Version"))
-        not_avail <- character(0)
+        not_avail <- character(0L)
 	repeat {
 	    deps <- apply(available[p1, dependencies, drop = FALSE],
                           1L, paste, collapse=", ")
 	    res <- .clean_up_dependencies2(deps, installed, available)
-            not_avail <- c(not_avail, res[[2]])
-            deps <- unique(res[[1]])
+            not_avail <- c(not_avail, res[[2L]])
+            deps <- unique(res[[1L]])
             ## R should not get to here, but be safe
             deps <- deps[!deps %in% c("R", pkgs)]
 	    if(!length(deps)) break
@@ -286,13 +286,13 @@
 
 menuInstallPkgs <- function(type = getOption("pkgType"))
 {
-    install.packages(NULL, .libPaths()[1], dependencies=NA, type = type)
+    install.packages(NULL, .libPaths()[1L], dependencies=NA, type = type)
 }
 
 menuInstallLocal <- function()
 {
     install.packages(choose.files('',filters=Filters[c('zip','All'),]),
-                     .libPaths()[1], repos = NULL)
+                     .libPaths()[1L], repos = NULL)
 }
 
 ### the following function supports .install.winbinaries()

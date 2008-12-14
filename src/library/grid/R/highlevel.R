@@ -27,7 +27,7 @@ grid.strip <- function(label="whatever", range.full=c(0, 1),
   if (!is.null(vp))
     pushViewport(vp)
   grid.rect(gp=gpar(col=NULL, fill=fill))
-  grid.rect((range.thumb[1] - range.full[1])/diff.full, 0,
+  grid.rect((range.thumb[1L] - range.full[1L])/diff.full, 0,
             diff.thumb/diff.full, 1,
             just=c("left", "bottom"),
             gp=gpar(col=NULL, fill=thumb))
@@ -89,15 +89,15 @@ grid.multipanel <- function(x = stats::runif(90), y = stats::runif(90),
     if((missing(nrow) || missing(ncol)) && !missing(nplots)) {
         ## determine 'smart' default ones
         rowcol <- grDevices::n2mfrow(nplots)
-        nrow <- rowcol[1]
-        ncol <- rowcol[2]
+        nrow <- rowcol[1L]
+        ncol <- rowcol[2L]
     }
     temp.vp <- viewport(layout = grid.layout(nrow, ncol))
     pushViewport(temp.vp)
     xscale <- extendrange(x)
     yscale <- extendrange(y)
     breaks <- seq.int(min(z), max(z), length.out = nplots + 1)
-    for (i in 1:nplots) {
+    for (i in 1L:nplots) {
         col <- (i - 1) %% ncol + 1
         row <- (i - 1) %/% ncol + 1
         panel.vp <- viewport(layout.pos.row = row,
@@ -143,8 +143,8 @@ grid.show.layout <- function(l, newpage=TRUE,
   pushViewport(vp.mid)
   grid.rect(gp=gpar(fill="white"))
   gp.red <- gpar(col=unit.col)
-  for (i in 1:l$nrow)
-    for (j in 1:l$ncol) {
+  for (i in 1L:l$nrow)
+    for (j in 1L:l$ncol) {
       vp.inner <- viewport(layout.pos.row=i, layout.pos.col=j)
       pushViewport(vp.inner)
       grid.rect(gp=gpar(col=cell.border, fill=cell.fill))
@@ -277,7 +277,7 @@ function(pch, labels, frame=TRUE,
   if (length(vgap) != 1)
     stop("'vgap' must be single unit")
   gf <- grid.frame(layout=grid.layout(nkeys, 2), vp=vp, gp=gp, draw=FALSE)
-  for (i in 1:nkeys) {
+  for (i in 1L:nkeys) {
     if (i==1) {
       symbol.border <- unit.c(vgap, hgap, vgap, hgap)
       text.border <- unit.c(vgap, unit(0, "npc"), vgap, hgap)
@@ -326,7 +326,7 @@ function(pch, labels, frame=TRUE,
                 heights=unit.pmax(unit(2, "lines"),
                   vgap + unit(rep(1, nkeys), "strheight", as.list(labels))))
   fg <- frameGrob(layout=legend.layout, vp=vp, gp=gp)
-  for (i in 1:nkeys) {
+  for (i in 1L:nkeys) {
     fg <- placeGrob(fg, pointsGrob(.5, .5, pch=pch[i]), col=1, row=i)
     fg <- placeGrob(fg, textGrob(labels[i], x=0, y=.5,
                                  just=c("left", "centre")),
@@ -345,7 +345,7 @@ grid.plot.and.legend <- function() {
   x <- stats::runif(10)
   y1 <- stats::runif(10)
   y2 <- stats::runif(10)
-  pch <- 1:3
+  pch <- 1L:3
   labels <- c("Girls", "Boys", "Other")
   lf <- frameGrob()
   plot <- gTree(children=gList(rectGrob(),

@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-prop.trend.test <- function (x, n, score = 1:length(x))
+prop.trend.test <- function (x, n, score = 1L:length(x))
 {
     method <- "Chi-squared Test for Trend in Proportions"
     dname <- paste(deparse(substitute(x)), "out of", deparse(substitute(n)))

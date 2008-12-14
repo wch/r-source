@@ -34,7 +34,7 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
 	if (is.null(labels))
 	    labels <- rownames(x)
 	if (is.null(labels))
-	    labels <- as.character(1:nrow(x))
+	    labels <- as.character(1L:nrow(x))
 	labels <- rep(labels, length.out = n)
 	if (is.null(groups))
 	    groups <- col(x, as.factor = TRUE)
@@ -60,12 +60,12 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
     }
     if (!(is.null(labels) && is.null(glabels))) {
 	nmai <- par("mai")
-	nmai[2] <- nmai[4] + max(linch + goffset, ginch) + 0.1
+	nmai[2L] <- nmai[4L] + max(linch + goffset, ginch) + 0.1
 	par(mai = nmai)
     }
 
     if (is.null(groups)) {
-	o <- 1:n
+	o <- 1L:n
 	y <- o
 	ylim <- c(0, n + 1)
     }
@@ -76,12 +76,12 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
 	color <- rep(color, length.out=length(groups))[o]
 	lcolor <- rep(lcolor, length.out=length(groups))[o]
 	offset <- cumsum(c(0, diff(as.numeric(groups)) != 0))
-	y <- 1:n + 2 * offset
+	y <- 1L:n + 2 * offset
 	ylim <- range(0, y + 2)
     }
 
     plot.window(xlim = xlim, ylim = ylim, log = "")
-#    xmin <- par("usr")[1]
+#    xmin <- par("usr")[1L]
     lheight <- par("csi")
     if (!is.null(labels)) {
 	linch <- max(strwidth(labels, "inch"), na.rm = TRUE)

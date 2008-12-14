@@ -26,11 +26,11 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
 
     modified.daniell.kernel <- function (m)
     {
-        if(length(m) == 1)
+        if(length(m) == 1L)
             k <- kernel(c(rep(1, m), 0.5)/(2*m), m)
         else {
-            k <- Recall(m[1])
-            for(i in 2:length(m)) k <- kernapply(k,  Recall(m[i]))
+            k <- Recall(m[1L])
+            for(i in 2L:length(m)) k <- kernapply(k,  Recall(m[i]))
         }
         attr(k,"name") <- mkName("mDaniell", m)
         k
@@ -38,11 +38,11 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
 
     daniell.kernel <- function (m)
     {
-        if(length(m) == 1)
+        if(length(m) == 1L)
             k <- kernel(rep(1/(2*m+1),m+1), m)
         else {
-            k <- Recall(m[1])
-            for(i in 2:length(m)) k <- kernapply(k,  Recall(m[i]))
+            k <- Recall(m[1L])
+            for(i in 2L:length(m)) k <- kernapply(k,  Recall(m[i]))
         }
         attr(k,"name") <- mkName("Daniell", m)
         k
@@ -50,14 +50,14 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
 
     fejer.kernel <- function (m, r)
     {
-        if (r < 1) stop ("'r' is less than 1")
-        if (m < 1) stop ("'m' is less than 1")
-        n <- 2*m+1
-        wn <- double(m+1)
-        wj <- 2*pi*(1:m)/n
-        wn[2:(m+1)] <- sin(r*wj/2)^2 / sin(wj/2)^2 / r
-        wn[1] <- r
-        wn <- wn / (wn[1] + 2*sum(wn[2:(m+1)]))
+        if (r < 1L) stop ("'r' is less than 1")
+        if (m < 1L) stop ("'m' is less than 1")
+        n <- 2L*m+1L
+        wn <- double(m+1L)
+        wj <- 2*pi*(1L:m)/n
+        wn[2L:(m+1L)] <- sin(r*wj/2)^2 / sin(wj/2)^2 / r
+        wn[1L] <- r
+        wn <- wn / (wn[1L] + 2*sum(wn[2L:(m+1L)]))
         kernel(wn, m, name = mkName("Fejer", c(m,r)))
     }
 
@@ -65,17 +65,17 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
     {
         if (r < 0) stop ("'r' is less than 0")
         if (m < 1) stop ("'m' is less than 1")
-        n <- 2*m+1
-        wn <- double(m+1)
-        wj <- 2*pi*(1:m)/n
-        wn[2:(m+1)] <- sin((r+0.5)*wj) / sin(wj/2)
-        wn[1] <- 2*r+1
-        wn <- wn / (wn[1] + 2*sum(wn[2:(m+1)]))
+        n <- 2L*m+1L
+        wn <- double(m+1L)
+        wj <- 2*pi*(1L:m)/n
+        wn[2L:(m+1)] <- sin((r+0.5)*wj) / sin(wj/2)
+        wn[1L] <- 2*r+1
+        wn <- wn / (wn[1L] + 2*sum(wn[2L:(m+1L)]))
         kernel(wn, m, name = mkName("Dirichlet", c(m,r)))
     }
 
     if(!missing(m))
-	if(!is.numeric(m) || length(m) < 1 || m != round(m) || any(m < 0))
+	if(!is.numeric(m) || length(m) < 1L || m != round(m) || any(m < 0L))
 	    stop("'m' must be numeric with non-negative integers")
 
     if(is.character(coef)) {
@@ -131,8 +131,8 @@ bandwidth.kernel <- function (k)
 
 "[.tskernel" <- function (k, i)
 {
-    m1 <- k$m + 1
-    y <- k$coef[c(m1:2, 1:m1)]
+    m1 <- k$m + 1L
+    y <- k$coef[c(m1:2L, 1L:m1)]
     y[i+m1]
 }
 
@@ -151,20 +151,20 @@ kernapply.vector <- function (x, k, circular = FALSE, ...)
     if (!is.vector(x)) stop ("'x' is not a vector")
     if (!is.tskernel(k)) stop ("'k' is not a kernel")
     m <- k$m
-    if (length(x) <= 2*m)
+    if (length(x) <= 2L*m)
         stop ("'x' is shorter than kernel 'k'")
-    if (m == 0)
+    if (m == 0L)
         return (x)
     else
     {
         n <- length(x)
-        w <- c(k[0:m], rep(0,n-2*m-1), k[-m:-1])
+        w <- c(k[0L:m], rep(0,n-2L*m-1L), k[-m:-1L])
         y <- fft(fft(x)*fft(w), inverse = TRUE)/n
         if (is.numeric(x)) y <- Re(y)
         if (circular)
             return (y)
         else
-            return (y[(1+m):(n-m)])
+            return (y[(1L+m):(n-m)])
     }
 }
 
@@ -183,7 +183,7 @@ kernapply.ts <- function (x, k, circular = FALSE, ...)
     if (!is.matrix(x))
         y <- kernapply.vector(as.vector(x), k, circular=circular)
     else
-        y <- apply(x, MARGIN=2, FUN=kernapply, k, circular=circular)
+        y <- apply(x, MARGIN=2L, FUN=kernapply, k, circular=circular)
     ts (y, end=end(x), frequency=frequency(x))
 }
 
@@ -196,8 +196,8 @@ kernapply.tskernel <- function (x, k, ...)
     n <- k$m
     xx <- c(rep(0,n), x[-x$m:x$m], rep(0,n))
     coef <- kernapply(xx, k, circular = TRUE)
-    m <- length(coef)%/%2
-    kernel(coef[(m+1):length(coef)],m,
+    m <- length(coef)%/%2L
+    kernel(coef[(m+1L):length(coef)],m,
            paste("Composite(", attr(x, "name"), ",",
                  attr(k, "name"), ")", sep=""))
 }

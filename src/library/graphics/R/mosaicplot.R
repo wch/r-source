@@ -48,50 +48,50 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         ##
         ## explicitly relying on (1,1000)^2 user coordinates.
         p <- ncol(X) - 2
-        if (dir[1] == "v") {            # split here on the X-axis.
-            xdim <- maxdim[1]
+        if (dir[1L] == "v") {            # split here on the X-axis.
+            xdim <- maxdim[1L]
             XP <- rep.int(0, xdim)
-            for (i in 1:xdim) {
+            for (i in 1L:xdim) {
                 XP[i] <- sum(X[X[,1]==i,p]) / sum(X[,p])
             }
             if(any(is.na(XP))) stop("missing values in contingency table")
-            white <- off[1] * (x2 - x1) / max(1, xdim-1)
+            white <- off[1L] * (x2 - x1) / max(1, xdim-1)
             x.l <- x1
-            x.r <- x1 + (1 - off[1]) * XP[1] * (x2 - x1)
+            x.r <- x1 + (1 - off[1L]) * XP[1L] * (x2 - x1)
             if (xdim > 1) {
                 for (i in 2:xdim) {
                     x.l <- c(x.l, x.r[i-1] + white)
                     x.r <- c(x.r, x.r[i-1] + white +
-                             (1 - off[1]) * XP[i] * (x2 - x1))
+                             (1 - off[1L]) * XP[i] * (x2 - x1))
                 }
             }
             if (lablevx > 0) {
                 this.lab <-
-                    if (is.null(label[[1]][1])) {
+                    if (is.null(label[[1L]][1L])) {
                         paste(rep.int(as.character(currlev),
                                       length(currlev)),
-                              as.character(1:xdim), sep=".")
-                    } else label[[1]]
+                              as.character(1L:xdim), sep=".")
+                    } else label[[1L]]
                 text(x= x.l + (x.r - x.l) / 2,
                      y= 965 + 22 * (lablevx - 1),
                      srt=srt.x, adj=adj.x, cex=cex.axis, this.lab)
             }
             if (p > 2) {                # recursive call.
-                for (i in 1:xdim) {
+                for (i in 1L:xdim) {
                     if (XP[i] > 0) {
                         Recall(X[X[,1]==i, 2:(p+2) , drop=FALSE],
                                x.l[i], y1, x.r[i], y2,
                                srt.x, srt.y, adj.x, adj.y,
-                               off[-1], dir[-1], color,
+                               off[-1L], dir[-1L], color,
                                lablevx-1, (i==1)*lablevy,
-                               maxdim[-1], currlev+1, label[2:p])
+                               maxdim[-1L], currlev+1, label[2:p])
                     } else {
                         segments(rep.int(x.l[i],3), y1+(y2-y1)*c(0,2,4)/5,
                                  rep.int(x.l[i],3), y1+(y2-y1)*c(1,3,5)/5)
                     }
                 }
             } else { # ncol(X) <= 1 : final split polygon and segments.
-                for (i in 1:xdim) {
+                for (i in 1L:xdim) {
                     if (XP[i] > 0) {
                         polygon(c(x.l[i], x.r[i], x.r[i], x.l[i]),
                                 c(y1, y1, y2, y2),
@@ -104,48 +104,48 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                 }
             }
         } else {                        # split here on the Y-axis.
-            ydim <- maxdim[1]
+            ydim <- maxdim[1L]
             YP <- rep.int(0, ydim)
-            for (j in 1:ydim) {
+            for (j in 1L:ydim) {
                 YP[j] <- sum(X[X[,1]==j,p]) / sum(X[,p])
             }
-            white <- off[1] * (y2 - y1) / (max(1, ydim - 1))
-            y.b <- y2 - (1 - off[1]) * YP[1] * (y2 - y1)
+            white <- off[1L] * (y2 - y1) / (max(1, ydim - 1))
+            y.b <- y2 - (1 - off[1L]) * YP[1L] * (y2 - y1)
             y.t <- y2
             if (ydim > 1) {
                 for (j in 2:ydim) {
                     y.b <- c(y.b, y.b[j-1] - white -
-                             (1 - off[1]) * YP[j] * (y2 - y1))
+                             (1 - off[1L]) * YP[j] * (y2 - y1))
                     y.t <- c(y.t, y.b[j-1] - white)
                 }
             }
             if (lablevy > 0) {
                 this.lab <-
-                    if (is.null(label[[1]][1])) {
+                    if (is.null(label[[1L]][1L])) {
                         paste(rep.int(as.character(currlev),
                                       length(currlev)),
-                              as.character(1:ydim), sep=".")
-                    } else label[[1]]
+                              as.character(1L:ydim), sep=".")
+                    } else label[[1L]]
                 text(x= 35 - 20 * (lablevy - 1),
                      y= y.b + (y.t - y.b) / 2,
                      srt=srt.y, adj=adj.y, cex=cex.axis, this.lab)
             }
             if (p > 2) {                # recursive call.
-                for (j in 1:ydim) {
+                for (j in 1L:ydim) {
                     if (YP[j] > 0) {
                         Recall(X[X[,1]==j, 2:(p+2) , drop=FALSE],
                                x1, y.b[j], x2, y.t[j],
                                srt.x, srt.y, adj.x, adj.y,
-                               off[-1], dir[-1], color,
+                               off[-1L], dir[-1L], color,
                                (j==1)*lablevx, lablevy-1,
-                               maxdim[-1], currlev+1, label[2:p])
+                               maxdim[-1L], currlev+1, label[2:p])
                     } else {
                         segments(x1+(x2-x1)*c(0,2,4)/5, rep.int(y.b[j],3),
                                  x1+(x2-x1)*c(1,3,5)/5, rep.int(y.b[j],3))
                     }
                 }
-            } else { # ncol(X) <= 1: final split polygon and segments.
-                for (j in 1:ydim) {
+            } else { # ncol(X) <= 1L: final split polygon and segments.
+                for (j in 1L:ydim) {
                     if (YP[j] > 0) {
                         polygon(c(x1,x2,x2,x1),
                                 c(y.b[j],y.b[j],y.t[j],y.t[j]),
@@ -178,13 +178,13 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                          paste(sQuote(names(list(...))), collapse = ", ")),
                 domain = NA)
     ##-- Set up 'Ind' matrix : to contain indices and data
-    Ind <- 1:dx[1]
+    Ind <- 1L:dx[1L]
     if(dimd > 1) {
         Ind <- rep.int(Ind, prod(dx[2:dimd]))
         for (i in 2:dimd) {
             Ind <- cbind(Ind,
-                         c(matrix(1:dx[i], byrow=TRUE,
-                                  nrow = prod(dx[1:(i-1)]),
+                         c(matrix(1L:dx[i], byrow=TRUE,
+                                  nrow = prod(dx[1L:(i-1)]),
                                   ncol = prod(dx[i:dimd]))))
         }
     }
@@ -215,7 +215,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                    hsv(4/6,             # blue
                        s = seq.int(0, to = 1, length.out = length(shade) + 1)))
         if(is.null(margin))
-            margin <- as.list(1:dimd)
+            margin <- as.list(1L:dimd)
         ## Fit the loglinear model.
         E <- stats::loglin(x, margin, fit = TRUE, print = FALSE)$fit
         ## Compute the residuals.
@@ -239,8 +239,8 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     ##############################################################
     ### MOVED by JWE to below.
     ## nam.dn <- names(label)
-    ## if(is.null(xlab)) xlab <- nam.dn[1]
-    ## if(is.null(ylab)) ylab <- nam.dn[2]
+    ## if(is.null(xlab)) xlab <- nam.dn[1L]
+    ## if(is.null(ylab)) ylab <- nam.dn[2L]
     ##############################################################
 
     ## Initialize spacing.
@@ -258,7 +258,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         if(length(sort) != dimd)
             stop("length of 'sort' does not conform to 'dim(x)'")
         ## Sort columns.
-        Ind[,1:dimd] <- Ind[,sort]
+        Ind[,1L:dimd] <- Ind[,sort]
         off <- off[sort]
         dir <- dir[sort]
         label <- label[sort]
@@ -284,7 +284,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     if(!extended && ((is.null(color) || length(color) != ncolors))) {
         color <-
             if(is.logical(color))
-                if(color[1])
+                if(color[1L])
                     grey.colors(ncolors)
                 else
                     rep.int(0, ncolors)
@@ -312,15 +312,15 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         ## more than 1/12 of the of the plot region horizontally and not
         ## more than 1/4 vertically.
         rtxtCex <- min(1,
-                       pin[1] / (strheight(rtxt, units = "inches") * 12),
-                       pin[2] / (strwidth (rtxt, units = "inches") / 4))
+                       pin[1L] / (strheight(rtxt, units = "inches") * 12),
+                       pin[2L] / (strwidth (rtxt, units = "inches") / 4))
         rtxtWidth <- 0.1                # unconditionally ..
         ## We put the legend to the right of the third axis.
         opar <- par(usr = c(1, 1000 * (1.1 + rtxtWidth), 1, 1000),
                     mgp = c(1, 1, 0))
         on.exit(par(opar))
         rtxtHeight <-
-            strwidth(rtxt, units = "i", cex = rtxtCex) / pin[2]
+            strwidth(rtxt, units = "i", cex = rtxtCex) / pin[2L]
         text(1000 * (1.05 + 0.5 * rtxtWidth), 0, labels = rtxt,
              adj = c(0, 0.25), srt = 90, cex = rtxtCex)
         ## 'len' is the number of positive or negative intervals of
@@ -343,7 +343,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         brks <- round(breaks, 2)
         y.m <- y.b + 1000 * 0.4 * bh
         text(1000 * (1.05 + rtxtWidth), y.m,
-             c(paste("<", brks[2], sep = ""),
+             c(paste("<", brks[2L], sep = ""),
                paste(brks[2 : (2 * len - 1)],
                      brks[3 : (2 * len)],
                      sep = ":"),
@@ -377,7 +377,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                 srt.x = srt.x, srt.y = srt.y, adj.x = adj.x,
                 adj.y = adj.y, off = off / 100, dir = dir,
                 color = color, lablevx = 2, lablevy = 2,
-                maxdim = apply(as.matrix(Ind[,1:dimd]), 2, max),
+                maxdim = apply(as.matrix(Ind[,1L:dimd]), 2, max),
                 currlev = 1, label = label)
 }
 
@@ -403,7 +403,7 @@ function(formula, data = NULL, ...,
             m$data <- as.data.frame(data)
         m$main <- m$... <- NULL
         m$na.action <- na.action
-        m[[1]] <- as.name("model.frame")
+        m[[1L]] <- as.name("model.frame")
         mf <- eval(m, parent.frame())
         mosaicplot(table(mf), main = main, ...)
     }

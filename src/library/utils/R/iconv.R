@@ -50,7 +50,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
     }
     if(locale %in% c("C", "POSIX")) return("ASCII")
     if(.Platform$OS.type == "windows") {
-        x <- strsplit(locale, ".", fixed=TRUE)[[1]]
+        x <- strsplit(locale, ".", fixed=TRUE)[[1L]]
         if(length(x) != 2) return(NA_character_)
         ## PUTTY suggests mapping Windows code pages as
         ## 1250 -> ISO 8859-2
@@ -61,7 +61,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
         ## 1255 -> ISO 8859-8
         ## 1256 -> ISO 8859-6
         ## 1257 -> ISO 8859-13
-        switch(x[2],
+        switch(x[2L],
               # this is quite wrong "1250" = return("ISO8859-2"),
               # this is quite wrong "1251" = return("KOI8-U"),
                "1252" = return("ISO8859-1"),
@@ -71,11 +71,11 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
               # "1256" = return("ISO8859-6"),
                "1257" = return("ISO8859-13")
                )
-        return(paste("CP", x[2], sep=""))
+        return(paste("CP", x[2L], sep=""))
     } else {
         ## Assume locales are like  en_US[.utf8[@euro]]
-        x <- strsplit(locale, ".", fixed=TRUE)[[1]]
-        enc <- if(length(x) == 2) gsub("@.*$o", "", x[2]) else ""
+        x <- strsplit(locale, ".", fixed=TRUE)[[1L]]
+        enc <- if(length(x) == 2) gsub("@.*$o", "", x[2L]) else ""
         if(enc == "UTF-8") enc <- "utf8" # for AIX
         if(nzchar(enc) && enc != "utf8") {
             enc <- tolower(enc)
@@ -111,8 +111,8 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
                 return(sub("cp-([0-9]+)", "CP\\1", enc))
             if(enc == "EUC") {
                 ## let's hope it is a ll_* name.
-                if(length(grep("^[[:alpha:]]{2}_", x[1]))) {
-                    ll <- substr(x[1], 1, 2)
+                if(length(grep("^[[:alpha:]]{2}_", x[1L]))) {
+                    ll <- substr(x[1L], 1, 2)
                     return(switch(ll, "jp"="EUC-JP", "kr"="EUC-KR",
                                   "zh"="GB2312"))
                 }
@@ -124,8 +124,8 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
 	## locales (why is this duplicated in R code anyway?)
 	if (length(grep("darwin",R.version$os))) return("UTF-8")
         ## let's hope it is a ll_* name.
-        if(length(grep("^[[:alpha:]]{2}_", x[1]))) {
-            ll <- substr(x[1], 1, 2)
+        if(length(grep("^[[:alpha:]]{2}_", x[1L]))) {
+            ll <- substr(x[1L], 1, 2)
             if(enc == "utf8") return(c("UTF-8", guess(ll)))
             else return(guess(ll))
         }

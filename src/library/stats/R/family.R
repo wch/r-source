@@ -352,7 +352,7 @@ binomial <- function (link = "logit")
 	if (NCOL(y) == 1) {
 	    ## allow factors as responses
 	    ## added BDR 29/5/98
-	    if (is.factor(y)) y <- y != levels(y)[1]
+	    if (is.factor(y)) y <- y != levels(y)[1L]
 	    n <- rep.int(1, nobs)
             ## anything, e.g. NA/NaN, for cases with zero weight is OK.
             y[weights == 0] <- 0
@@ -428,7 +428,7 @@ quasibinomial <- function (link = "logit")
     aic <- function(y, n, mu, wt, dev) NA
     initialize <- expression({
 	if (NCOL(y) == 1) {
-	    if (is.factor(y)) y <- y != levels(y)[1]
+	    if (is.factor(y)) y <- y != levels(y)[1L]
 	    n <- rep.int(1, nobs)
 	    if (any(y < 0 | y > 1))
 		stop("y values must be 0 <= y <= 1")

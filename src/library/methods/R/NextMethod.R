@@ -43,7 +43,7 @@ callNextMethod <- function(...) {
             nextMethod <- get(".nextMethod", envir = callEnv)
         f <- get(".Generic", envir = methodEnv)
     }
-    else if(identical(mcall[[1]], dotNextMethod)) {
+    else if(identical(mcall[[1L]], dotNextMethod)) {
         ## a call from another callNextMethod()
         nextMethodEnv <- parent.frame(i+1)
         nextMethod <- get(".nextMethod", nextMethodEnv)
@@ -51,7 +51,7 @@ callNextMethod <- function(...) {
     }
     else {
         ## may be a method call for a primitive; not available as .Method
-        f <- as.character(mcall[[1]])
+        f <- as.character(mcall[[1L]])
         fdef <- genericForPrimitive(f)
         ## check that this could be a basic function with methods
         if(is.null(fdef))
@@ -93,7 +93,7 @@ callNextMethod <- function(...) {
     subsetCase <- !is.na(match(f, .BasicSubsetFunctions))
     if(nargs()>0) {
       call <- sys.call()
-      call[[1]] <- as.name(".nextMethod")
+      call[[1L]] <- as.name(".nextMethod")
       eval(call, callEnv)
       }
     else {

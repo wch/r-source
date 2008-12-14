@@ -128,7 +128,7 @@ getDepMtrx <- function(pkg, instPkgs, local=TRUE) {
     ## Need to see if pkg is installed - if not, get online
     row <- match(pkg,instPkgs[,"Package"])
     if (!is.na(row))                    # package is installed
-        pkgDeps <- package.dependencies(instPkgs[row,])[[1]]
+        pkgDeps <- package.dependencies(instPkgs[row,])[[1L]]
     else {
         if (local)
             pkgDeps <- NULL
@@ -151,7 +151,7 @@ getRemotePkgDepends <- function(pkg, contriburl=getOption("repos")) {
     cran <- utils::available.packages(contriburl=contriburl)
     whichRow <- which(pkg == cran[,"Package"])
     if (length(whichRow) > 0) {
-        return(package.dependencies(cran[whichRow,])[[1]])
+        return(package.dependencies(cran[whichRow,])[[1L]])
     }
     else
         NULL
@@ -170,10 +170,10 @@ installedDepends <- function(depMtrx, instPkgs) {
         curPkgs <- depMtrx[installed,,drop=FALSE]
         if (nrow(curPkgs) > 0) {
             passVersReq <- apply(curPkgs, 1, function(x) {
-                pkgVers <- instPkgs[instPkgs[,1]==x[1],"Version"]
-                if (is.na(x[2])||
+                pkgVers <- instPkgs[instPkgs[,1]==x[1L],"Version"]
+                if (is.na(x[2L])||
                     (compareDependsPkgVersion(pkgVers,
-                                              x[2], x[3]) >= 0))
+                                              x[2L], x[3L]) >= 0))
                     TRUE
                 else
                     FALSE
@@ -197,12 +197,12 @@ foundDepends <- function(depMtrx, contriburl=getOption("repos")) {
                                  BIOC = getOption("BIOC")))
 
 
-    for (j in 1:length(contriburl)) {
+    for (j in 1L:length(contriburl)) {
         cur <- character()
         cran <- utils::available.packages(contriburl=contriburl[j])
 
         if (nrow(depMtrx) > 0) {
-            for (i in 1:nrow(depMtrx)) {
+            for (i in 1L:nrow(depMtrx)) {
                 found <- FALSE
                 cranRow <- which(depMtrx[i,1] == cran[,1])
                 if (length(cranRow) > 0) {
@@ -259,7 +259,7 @@ reduceDepends <- function(depMtrx, quietly=TRUE) {
             if (nrow(gts) > 0) {
                maxGts <- gts[1,3]
                outRow <- 1
-               for (i in 1:nrow(gts)) {
+               for (i in 1L:nrow(gts)) {
                    if (utils::compareVersion(gts[i,3], maxGts) > 0) {
                        maxGts <- gts[i,3]
                        outRow <- i
@@ -272,7 +272,7 @@ reduceDepends <- function(depMtrx, quietly=TRUE) {
             if (nrow(lts) > 0) {
                 minLts <- lts[1,3]
                 minRow <- 1
-                for (i in 1:nrow(lts)) {
+                for (i in 1L:nrow(lts)) {
                     if (utils::compareVersion(lts[i,3], minLts) < 0) {
                         minLts <- lts[i,3]
                         minRow <- i
@@ -300,10 +300,10 @@ reduceDepends <- function(depMtrx, quietly=TRUE) {
 depMtrxToStrings <- function(depMtrx) {
     if (length(depMtrx) > 0) {
         apply(depMtrx, 1, function(x){
-            if (is.na(x[2]))
-                x[1]
+            if (is.na(x[2L]))
+                x[1L]
             else
-                paste(x[1]," (",x[2]," ",x[3],")",sep="")
+                paste(x[1L]," (",x[2L]," ",x[3L],")",sep="")
         })
     }
     else

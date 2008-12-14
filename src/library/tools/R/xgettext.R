@@ -121,8 +121,8 @@ function(dir, verbose = FALSE)
              if(!is.null(names(e))) e <- e[!names(e) %in% "domain"]
              ## for now, take second and third remaining args.
              ## <FIXME> emulate full arg-matching
-             if(is.character(e[[3]]) && is.character(e[[4]]))
-                 strings <<- c(strings, list(c(msg1=e[[3]], msg2=e[[4]])))
+             if(is.character(e[[3L]]) && is.character(e[[4L]]))
+                 strings <<- c(strings, list(c(msg1=e[[3L]], msg2=e[[4L]])))
         } else if(is.recursive(e))
             for(i in seq_along(e)) Recall(e[[i]])
     }
@@ -174,7 +174,7 @@ function(dir, potFile)
                                  shQuote(encodeString(e[1L]), type="cmd")),
                            paste('msgid_plural',
                                  shQuote(encodeString(e[2L]), type="cmd")),
-                           'msgstr[0]    ""', 'msgstr[1]    ""')
+                           'msgstr[0]    ""', 'msgstr[1L]    ""')
                            )
                 un <- un[-match(e, un)]
             }

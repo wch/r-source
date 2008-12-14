@@ -29,7 +29,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 
     ##--------------- Argument checking -----------------------------
     if(length(x) == 0)
-	return(noquote(if(is.null(d <- dim(x)))character(0) else array("", dim=d)))
+	return(noquote(if(is.null(d <- dim(x)))character(0L) else array("", dim=d)))
     has.na <- any(nax <- is.na(x))
     if(numeric.x) {
 	force(corr) # missingness..
@@ -41,7 +41,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
                  else gettext("'cutpoints' must be unique, but are = "),
                  paste(format(cutpoints), collapse="|"), domain = NA)
 	nc <- length(cutpoints)
-	minc <- cutpoints[1]
+	minc <- cutpoints[1L]
 	maxc <- cutpoints[nc]
 	range.msg <- if(corr) gettext("'x' must be between -1 and 1")
         else gettextf("'x' must be between %s and %s",
@@ -65,7 +65,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	iS <- cut(x, breaks=cutpoints, include.lowest=TRUE, labels= FALSE)
 	if(any(ii <- is.na(iS))) {
 	    ##-- can get 0, if x[i]== minc  --- only case ?
-	    iS[which(ii)[!is.na(x[ii]) & (abs(x[ii] - minc) < eps)]] <- 1#-> symbol[1]
+	    iS[which(ii)[!is.na(x[ii]) & (abs(x[ii] - minc) < eps)]] <- 1#-> symbol[1L]
 	}
     }
 ##     else if(!is.logical(x))
@@ -95,16 +95,16 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	if(!has.colnames) {
 	    dimnames(ans) <- vector("list",rank)
 	} else {
-	    has.colnames <- length(dimnames(ans)[[2]]) > 0
+	    has.colnames <- length(dimnames(ans)[[2L]]) > 0
 	}
 	if((is.logical(abbr.colnames) || is.numeric(abbr.colnames))
 	   && abbr.colnames) {
-	    dimnames(ans)[[2]] <-
-		abbreviate(dimnames(ans)[[2]], minlength= abbr.colnames)
+	    dimnames(ans)[[2L]] <-
+		abbreviate(dimnames(ans)[[2L]], minlength= abbr.colnames)
 	    ## dropped further abbrev. depending on getOption("width")
 	}
-	else if(is.null(abbr.colnames) || is.null(dimnames(ans)[[2]]))
-	    dimnames(ans)[[2]] <- rep("", dim(ans)[2])
+	else if(is.null(abbr.colnames) || is.null(dimnames(ans)[[2L]]))
+	    dimnames(ans)[[2L]] <- rep("", dim(ans)[2L])
 	else if(!is.logical(abbr.colnames)) stop("invalid 'abbr.colnames'")
     }
     if(legend) {

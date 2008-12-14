@@ -56,17 +56,17 @@ colorRamp<-function(colors, bias=1, space=c("rgb","Lab"),
     if (space=="Lab"){
 
         function(x) {
-            roundcolor(convertColor(cbind(palette[[1]](x),
-                                          palette[[2]](x),
-                                          palette[[3]](x)),from="Lab",to="sRGB"))*255
+            roundcolor(convertColor(cbind(palette[[1L]](x),
+                                          palette[[2L]](x),
+                                          palette[[3L]](x)),from="Lab",to="sRGB"))*255
         }
 
     } else {
 
         function(x) {
-            roundcolor(cbind(palette[[1]](x),
-                             palette[[2]](x),
-                             palette[[3]](x)))*255
+            roundcolor(cbind(palette[[1L]](x),
+                             palette[[2L]](x),
+                             palette[[3L]](x)))*255
         }
 
     }

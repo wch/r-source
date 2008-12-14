@@ -27,10 +27,10 @@ expand.model.frame <- function(model, extras,
     if (is.call(extras))
         gg <- extras
     else
-        gg <- parse(text=paste("~", paste(extras, collapse="+")))[[1]]
-    ff[[2]] <- f[[2]]
-    ff[[3]][[2]] <- f[[3]]
-    ff[[3]][[3]] <- gg[[2]]
+        gg <- parse(text=paste("~", paste(extras, collapse="+")))[[1L]]
+    ff[[2L]] <- f[[2L]]
+    ff[[3L]][[2L]] <- f[[3L]]
+    ff[[3L]][[3L]] <- gg[[2L]]
 
     if (!na.expand){
         naa <- model$call$na.action

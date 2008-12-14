@@ -61,7 +61,7 @@ interleave <- function(ncp, ncurve, val, sval, eval, e) {
     eval <- rep(eval, length.out=ncurve)
     result <- matrix(NA, ncol=ncurve, nrow=ncp+1)
     m <- matrix(val, ncol=ncurve)
-    for (i in 1:ncurve) {
+    for (i in 1L:ncurve) {
         if (e[i])
             result[,i] <- c(m[,i], eval[i])
         else
@@ -378,7 +378,7 @@ calcCurveGrob <- function(x, debug) {
                         cbDiagram(xm, ym, x2, y2, cps2)
                     }
 
-                    idset <- 1:ncurve
+                    idset <- 1L:ncurve
                     splineGrob <-
                         xsplineGrob(c(x1, cps1$x, xm, cps2$x, x2),
                                     c(y1, cps1$y, ym, cps2$y, y2),
@@ -417,7 +417,7 @@ calcCurveGrob <- function(x, debug) {
                         cbDiagram(x1, y1, x2, y2, cps)
                     }
 
-                    idset <- 1:ncurve
+                    idset <- 1L:ncurve
                     splineGrob <- xsplineGrob(c(x1, cps$x, x2),
                                               c(y1, cps$y, y2),
                                               id=c(idset,

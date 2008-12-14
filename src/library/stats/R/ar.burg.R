@@ -55,7 +55,7 @@ ar.burg.default <-
     xaic <- xaic - min(xaic)
     names(xaic) <- 0:order.max
     order <- if (aic) (0:order.max)[xaic == 0] else order.max
-    ar <- if (order > 0) coefs[order, 1:order] else numeric(0)
+    ar <- if (order > 0) coefs[order, 1L:order] else numeric(0)
     var.pred <- var.pred[order+1]
     if(order > 0)
         resid <- c(rep(NA, order), embed(x, order+1) %*% c(1, -ar))

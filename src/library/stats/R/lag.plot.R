@@ -24,7 +24,7 @@
 ## 4) R has  ask = par("ask") where S-plus has  ask = FALSE,
 ## ....
 
-lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1:lags,
+lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1L:lags,
                      main = NULL, asp = 1,
                      diag = TRUE, diag.col = "gray", type = "p", oma = NULL,
                      ask = NULL, do.lines = (n <= 150), labels = do.lines, ...)
@@ -62,21 +62,21 @@ lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1:lags,
         if(is.null(cex.main)) cex.main <- par("cex.main")
         if(is.null(oma)) {
             oma <- rep(2, 4)
-            if (!is.null(main)) oma[3] <- oma[3] + 3*cex.main
+            if (!is.null(main)) oma[3L] <- oma[3L] + 3*cex.main
         }
         opar <- par(mfrow = layout,
                     mar = c(1.1, 1.1, 0.5, 0.5) + is.mat*c(0, 0.5, 0, 0.5),
                     oma = oma, ask = ask)
         on.exit(par(opar))
     }
-    nR <- layout[1]
-    nC <- layout[2]
+    nR <- layout[1L]
+    nC <- layout[2L]
 
     ii <- jj <- 0 ## current row and column in the layout
-    for(i in 1:nser) {
+    for(i in 1L:nser) {
         X <-  x[,i]
         xl <- range(X)
-        nam <- if(is.mat) dimnames(x)[[2]][i] else xnam
+        nam <- if(is.mat) dimnames(x)[[2L]][i] else xnam
         newX <- is.mat
 
         for (ll in set.lags) {

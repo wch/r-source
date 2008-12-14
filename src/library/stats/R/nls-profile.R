@@ -60,15 +60,15 @@ profiler.nls <- function(fitted, ...)
                      }
                      if(!missing(varying)) {
                          if(is.numeric(varying)) {
-                             if(!all(varying %in% (1:length(fittedPars))))
-                                 stop("'varying' must be in 1:length(pars)")
-                             varying <- !((1:length(fittedPars)) %in% varying)
+                             if(!all(varying %in% (1L:length(fittedPars))))
+                                 stop("'varying' must be in 1L:length(pars)")
+                             varying <- !((1L:length(fittedPars)) %in% varying)
                          } else if(is.logical(varying)) {
                              if(length(varying) != length(fittedPars))
                                  stop("'varying' has wrong length")
                          } else if(is.character(varying)) {
                              if(!all(varying %in% names(fittedPars)))
-                                 stop("'varying' must be in 1:length(pars)")
+                                 stop("'varying' must be in 1L:length(pars)")
                              varying <- !(names(fittedPars) %in% varying)
                          } else stop("'varying' must be logical, integer or character")
                          assign("defaultVary", varying, envir = thisEnv)
@@ -81,14 +81,14 @@ profiler.nls <- function(fitted, ...)
                  if(length(args) == 0) {
                      vary <- defaultVary
                      startPars <- defaultPars
-                 } else if(length(args) == 2 && is.logical(args[[1]])) {
-                     vary <- args[[1]]
-                     params <- unlist(args[[2]])
+                 } else if(length(args) == 2 && is.logical(args[[1L]])) {
+                     vary <- args[[1L]]
+                     params <- unlist(args[[2L]])
                      startPars <- defaultPars
                      startPars[!vary] <- params
                  } else {
-                     if(length(args) == 1 && is.list(args[[1]])) {
-                         params <- unlist(args[[1]])
+                     if(length(args) == 1 && is.list(args[[1L]])) {
+                         params <- unlist(args[[1L]])
                      } else if(all(sapply(args, is.numeric))) {
                          params <- unlist(args)
                      } else stop("invalid argument to 'getProfile'")
@@ -109,7 +109,7 @@ profiler.nls <- function(fitted, ...)
 		 } else {
 		     iv <- nls_port_fit(fittedModel, startPars[vary],
 					lower[vary], upper[vary], ctrl, trace)
-		     dev <- if(!iv[1] %in% 3:6)
+		     dev <- if(!iv[1L] %in% 3:6)
 			NA_real_
 		     else
 			fittedModel$deviance()
@@ -128,7 +128,7 @@ profiler.nls <- function(fitted, ...)
 }
 
 profile.nls <-
-  function(fitted, which = 1:npar, maxpts = 100, alphamax = 0.01,
+  function(fitted, which = 1L:npar, maxpts = 100, alphamax = 0.01,
            delta.t = cutoff/5, ...)
 {
     f.summary <- summary(fitted)
@@ -156,7 +156,7 @@ profile.nls <-
         varying[par] <- FALSE
         tau <- double(2 * maxpts)
         par.vals <- array(0, c(2 * maxpts, npar), list(NULL, names(pars)))
-        tau[1] <- 0
+        tau[1L] <- 0
         par.vals[1,  ] <- pars
         base <- pars[par]
         profile.par.inc <- delta.t * std.err[par]
@@ -173,7 +173,7 @@ profile.nls <-
             if(abs(newtau - tau[count]) < 0.1) break
             count <- count + 1
             tau[count] <- newtau
-            par.vals[count, ] <- pars <- ans$parameters[1:npar]
+            par.vals[count, ] <- pars <- ans$parameters[1L:npar]
             if(abs(tau[count]) > cutoff) break
             pars <- pars + ((pars - par.vals[count - 1,  ]) * delta.t)/
                 abs(tau[count] - tau[count - 1])
@@ -198,7 +198,7 @@ profile.nls <-
             if(abs(newtau - tau[count]) < 0.1) break
             count <- count + 1
             tau[count] <- newtau
-            par.vals[count, ] <- pars <- ans$parameters[1:npar]
+            par.vals[count, ] <- pars <- ans$parameters[1L:npar]
             if(abs(tau[count]) > cutoff) break
             pars <- pars + ((pars - par.vals[count - 1,  ]) * delta.t)/
                 abs(tau[count] - tau[count - 1])
@@ -225,7 +225,7 @@ plot.profile.nls <-
     function(x, levels, conf = c(99, 95, 90, 80, 50)/100, absVal = TRUE, ...)
 {
     obj <- x
-    dfres <- attr(obj, "summary")$df[2]
+    dfres <- attr(obj, "summary")$df[2L]
     if(missing(levels))
         levels <- sqrt(qf(pmax(0, pmin(1, conf)), 1, dfres))
     if(any(levels <= 0)) {
@@ -240,8 +240,8 @@ plot.profile.nls <-
             sp <- splines::interpSpline(obj[[i]]$par.vals[,i], obj[[i]]$tau)
             bsp <- splines::backSpline(sp)
             xlim <- predict(bsp, c(-mlev, mlev))$y
-            if (is.na(xlim[1])) xlim[1] <- min(x[[i]]$par.vals[, i])
-            if (is.na(xlim[2])) xlim[2] <- max(x[[i]]$par.vals[, i])
+            if (is.na(xlim[1L])) xlim[1L] <- min(x[[i]]$par.vals[, i])
+            if (is.na(xlim[2L])) xlim[2L] <- max(x[[i]]$par.vals[, i])
             plot(abs(tau) ~ par.vals[, i], data = obj[[i]], xlab = i,
                  ylim = c(0, mlev), xlim = xlim, ylab = expression(abs(tau)),
                  type = "n")
@@ -262,8 +262,8 @@ plot.profile.nls <-
             sp <- splines::interpSpline(obj[[i]]$par.vals[,i], obj[[i]]$tau)
             bsp <- splines::backSpline(sp)
             xlim <- predict(bsp, c(-mlev, mlev))$y
-            if (is.na(xlim[1])) xlim[1] <- min(x[[i]]$par.vals[, i])
-            if (is.na(xlim[2])) xlim[2] <- max(x[[i]]$par.vals[, i])
+            if (is.na(xlim[1L])) xlim[1L] <- min(x[[i]]$par.vals[, i])
+            if (is.na(xlim[2L])) xlim[2L] <- max(x[[i]]$par.vals[, i])
             plot(tau ~ par.vals[, i], data = obj[[i]], xlab = i,
                  ylim = c(-mlev, mlev), xlim = xlim, ylab = expression(tau),
                  type = "n")

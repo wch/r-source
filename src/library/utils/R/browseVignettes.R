@@ -28,7 +28,7 @@ browseVignettes <- function(package = NULL, lib.loc = NULL, all = TRUE)
     })
     names(vignettes) <- basename(paths)
     getVinfo <- function(db) {
-        dir <- dirname(dirname(db[1]))
+        dir <- dirname(dirname(db[1L]))
         entries <- NULL
         if (file.exists(INDEX <- file.path(dir, "Meta", "vignette.rds")))
             entries <- .readRDS(INDEX)
@@ -63,7 +63,7 @@ print.browseVignettes <- function(x, ...)
     }
     oneLink <- function(s)
     {
-        if (length(s) == 0) return(character(0))
+        if (length(s) == 0) return(character(0L))
         title <- s[, "Title"]
         src <- file.path(s[, "Dir"], "doc", s[, "File"])
         pdf <- ifelse(s[, "PDF"] != "", # or nzchar(s[, "PDF"]),

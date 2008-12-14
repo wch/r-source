@@ -46,19 +46,19 @@ splinefun <- function(x, y=NULL,
     }
     if(nx == 0) stop("zero non-NA points")
     method <- match.arg(method)
-    if(method == "periodic" && y[1] != y[nx]) {
-	warning("spline: first and last y values differ - using y[1] for both")
-	y[nx] <- y[1]
+    if(method == "periodic" && y[1L] != y[nx]) {
+	warning("spline: first and last y values differ - using y[1L] for both")
+	y[nx] <- y[1L]
     }
     if(method == "monoH.FC") {
         n1 <- nx - 1L
         ## - - - "Data preprocessing" - - -
 
-        dy <- y[-1] - y[-nx]            # = diff(y)
+        dy <- y[-1L] - y[-nx]            # = diff(y)
         i0 <- dy == 0                   # or |dy| < eps ?? fixme ??
-        dx <- x[-1] - x[-nx]            # = diff(x)
-        Sx <- dy / dx # 2. \Delta_k = (y_{k+1} - y_k)/(x_{k+1} - x_k), k=1:n1
-        m <- c(Sx[1], (Sx[-1] + Sx[-n1])/2, Sx[n1]) ## 1.
+        dx <- x[-1L] - x[-nx]            # = diff(x)
+        Sx <- dy / dx # 2. \Delta_k = (y_{k+1} - y_k)/(x_{k+1} - x_k), k=1L:n1
+        m <- c(Sx[1L], (Sx[-1L] + Sx[-n1])/2, Sx[n1]) ## 1.
         if(any(i0)) {
             ## m0[k] := i0[k] or i0[k-1]
             m0 <- c(i0,FALSE) | c(FALSE,i0)
@@ -66,7 +66,7 @@ splinefun <- function(x, y=NULL,
         }
         if(any(ip <- !i0)) {
             alpha <- m[-nx][ip] / Sx[ip]
-            beta  <- m[-1][ip] / Sx[ip]
+            beta  <- m[-1L][ip] / Sx[ip]
             a2b3 <- 2*alpha + beta - 3
             ab23 <- alpha + 2*beta - 3
             if(any(ok <- (a2b3 > 0 & ab23 > 0)) &&
@@ -74,7 +74,7 @@ splinefun <- function(x, y=NULL,
                 ## correcting sum(ok) slopes m[] for monotonicity
                 tau <- 3 / sqrt(alpha[ok]^2 + beta[ok]^2)
                 m[-nx][ip][ok] <- tau * alpha[ok] * Sx[ip][ok]
-                m[-1][ip][ok] <- tau *  beta[ok] * Sx[ip][ok]
+                m[-1L][ip][ok] <- tau *  beta[ok] * Sx[ip][ok]
             }
         }
         ## Hermite spline with (x,y,m) :
@@ -128,8 +128,8 @@ splinefun <- function(x, y=NULL,
 
         ## deal with points to the left of first knot if natural
         ## splines are used  (Bug PR#13132)
-        if( deriv > 0 && z$method==2 && any(ind <- x<=z$x[1]) )
-          res[ind] <- ifelse(deriv == 1, z$y[1], 0)
+        if( deriv > 0 && z$method==2 && any(ind <- x<=z$x[1L]) )
+          res[ind] <- ifelse(deriv == 1, z$y[1L], 0)
 
         res
     }
@@ -186,8 +186,8 @@ splinefunH0 <- function(x, y, m, dx = x[-1L] - x[-length(x)])
 	   any(iXtra <- (iL <- (i == 0)) | (iR <- (i == (n <- length(x)))))) {
 	    ##	do linear extrapolation
 	    r <- u
-	    if(any(iL)) r[iL] <- if(deriv == 0) y[1] + m[1]*(u[iL] - x[1]) else
-				  if(deriv == 1) m[1] else 0
+	    if(any(iL)) r[iL] <- if(deriv == 0) y[1L] + m[1L]*(u[iL] - x[1L]) else
+				  if(deriv == 1) m[1L] else 0
 	    if(any(iR)) r[iR] <- if(deriv == 0) y[n] + m[n]*(u[iR] - x[n]) else
 				  if(deriv == 1) m[n] else 0
 	    ## For internal values, compute "as normal":

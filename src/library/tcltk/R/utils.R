@@ -75,7 +75,7 @@ tk_select.list <-
         tkpack(box, side="left", fill="both")
     }
     preselect <- match(preselect, list)
-    ans.select_list <- character(0) # avoid name conflicts
+    ans.select_list <- character(0L) # avoid name conflicts
     for(i in preselect[preselect > 0])
         tkselection.set(box, i - 1) # 0-based
 

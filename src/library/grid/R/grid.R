@@ -57,9 +57,9 @@ push.vp.vpList <- function(vp, recording) {
     upViewport(depth(vp), recording)
   }
   if (length(vp) == 1)
-    push.vp(vp[[1]], recording)
+    push.vp(vp[[1L]], recording)
   else {
-    lapply(vp[1:(length(vp) - 1)], push.vp.parallel, recording)
+    lapply(vp[1L:(length(vp) - 1)], push.vp.parallel, recording)
     push.vp(vp[[length(vp)]], recording)
   }
 }
@@ -344,7 +344,7 @@ inc.display.list <- function() {
   if (dl.index > (n - 1)) {
     temp <- display.list
     display.list <- vector("list", n+100)
-    display.list[1:n] <- temp
+    display.list[1L:n] <- temp
   }
   grid.Call("L_setDisplayList", display.list)
   grid.Call("L_setDLindex", as.integer(dl.index))
@@ -357,7 +357,7 @@ grid.display.list <- function(on=TRUE) {
   grid.Call("L_setDLon", as.logical(on))
   if (on) {
     grid.Call("L_setDisplayList", vector("list", 100))
-    grid.Call("L_setDLindex", as.integer(0))
+    grid.Call("L_setDLindex", as.integer(0L))
   }
   else
     grid.Call("L_setDisplayList", NULL)

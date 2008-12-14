@@ -62,16 +62,16 @@ sunflowerplot <-
         points(x[ n.is1], y[ n.is1], pch=pch, col=col, bg=bg, cex= cex)
     if(any(!n.is1)) {
         points(x[!n.is1], y[!n.is1], pch=pch, col=col, bg=bg, cex= cex/cex.fact)
-        i.multi <- (1:n)[number > 1]
+        i.multi <- (1L:n)[number > 1]
         ppin <- par("pin")
         pusr <- par("usr")
-        xr <- size * abs(pusr[2] - pusr[1])/ppin[1]
-        yr <- size * abs(pusr[4] - pusr[3])/ppin[2]
+        xr <- size * abs(pusr[2L] - pusr[1L])/ppin[1L]
+        yr <- size * abs(pusr[4L] - pusr[3L])/ppin[2L]
 
         i.rep <- rep.int(i.multi, number[number > 1])
         z <- numeric()
         for(i in i.multi)
-            z <- c(z, 1:number[i] + if(rotate) stats::runif(1) else 0)
+            z <- c(z, 1L:number[i] + if(rotate) stats::runif(1) else 0)
         deg <- (2 * pi * z)/number[i.rep]
         segments(x[i.rep], y[i.rep],
                  x[i.rep] + xr * sin(deg),

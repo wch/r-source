@@ -31,6 +31,6 @@ relevel.factor <- function(x, ref, ...)
         stop("'ref' must be an existing level")
     nlev <- length(lev)
     if(ref < 1 || ref > nlev)
-        stop(gettextf("ref = %d must be in 1:%d", ref, nlev), domain = NA)
+        stop(gettextf("ref = %d must be in 1L:%d", ref, nlev), domain = NA)
     factor(x, levels = lev[c(ref, seq_along(lev)[-ref])])
 }

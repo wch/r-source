@@ -251,7 +251,7 @@ completeClassDefinition <-
         ## an explicit coerce (we can't conclude anything about slots, etc. from them)
         if(length(ext) > 0) {
             superProps <- vector("list", length(ext)+1)
-            superProps[[1]] <- properties
+            superProps[[1L]] <- properties
             for(i in seq_along(ext)) {
                 eClass <- ext[[i]]
                 if(isClass(eClass, where = where))
@@ -274,7 +274,7 @@ completeClassDefinition <-
 #                                 paste(dataPartClasses, collapse = ", "),
 #                                 "): coercion to some may fail")
 #                     ## remove all but the first .Data
-#                     properties <- properties[-dataParts[-1]]
+#                     properties <- properties[-dataParts[-1L]]
 #                 }
 #                 if(length(dupNames)>0) {
 #                     dupClasses <- logical(length(superProps))
@@ -530,8 +530,8 @@ newBasic <-
                else structure(NA, .Tsp = c(1, 1, 1), class = "ts")),
                   {
                       args <- list(...)
-                      if(length(args) == 1 && is(args[[1]], Class)) {
-                          value <- as(args[[1]], Class)
+                      if(length(args) == 1 && is(args[[1L]], Class)) {
+                          value <- as(args[[1L]], Class)
                       }
                       else if(is.na(match(Class, .BasicClasses)))
                           msg <- paste("Calling new() on an undefined and non-basic class (\"",
@@ -862,7 +862,7 @@ possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
     function(class1, class2, ClassDef1 = getClassDef(class1),
              ClassDef2 = getClassDef(class2, where = .classEnv(ClassDef1)))
 {
-    if(.identC(class1[[1]], class2) || .identC(class2, "ANY"))
+    if(.identC(class1[[1L]], class2) || .identC(class2, "ANY"))
         return(TRUE)
     ext <- TRUE # may become a list of extends definitions
     if(is.null(ClassDef1)) # class1 not defined
@@ -1346,11 +1346,11 @@ setDataPart <- function(object, value, check = TRUE) {
     sameSlots <- (length(fromSlots) == length(toSlots) &&
 		  !any(is.na(match(fromSlots, toSlots))))
     if(sameSlots)
-	substitute({class(from)[[1]] <- CLASS; from}, list(CLASS = toClass))
+	substitute({class(from)[[1L]] <- CLASS; from}, list(CLASS = toClass))
     else if(length(toSlots)==0) {
 	## either a basic class or something with the same representation
 	if(is.na(match(toClass, .BasicClasses)))
-	    substitute({ attributes(from) <- NULL; class(from)[[1]] <- CLASS; from},
+	    substitute({ attributes(from) <- NULL; class(from)[[1L]] <- CLASS; from},
 		       list(CLASS = toClass))
 	else if(isVirtualClass(toDef))
 	    quote(from)
@@ -1419,7 +1419,7 @@ newClassRepresentation <- function(...) {
     if(!is(expr, "{"))
         expr <- substitute({EXPR}, list(EXPR = expr))
     expr[3:(length(expr)+1)] <- expr[2:length(expr)]
-    expr[[2]] <- el
+    expr[[2L]] <- el
     expr
 }
 
@@ -1429,7 +1429,7 @@ newClassRepresentation <- function(...) {
 .class1 <- function(x) {
     cl <- class(x)
     if(length(cl)>1)
-        cl[[1]]
+        cl[[1L]]
     else
         cl
 }
@@ -1694,7 +1694,7 @@ substituteFunctionArgs <-
         if(length(prev) == 0)
           return(remove(list = name, envir = .classTable))
         else if(length(prev) == 1)
-          prev <- prev[[1]]
+          prev <- prev[[1L]]
         assign(name, prev, envir  = .classTable)
     }
 }
@@ -1783,7 +1783,7 @@ substituteFunctionArgs <-
         for(what in superclasses) {
             superWhere <- findClass(what, classWhere)
             if(length(superWhere)>0) {
-                superWhere <- superWhere[[1]]
+                superWhere <- superWhere[[1L]]
                 .removeSubClass(what, Class, superWhere)
             }
             else

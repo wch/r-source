@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 addmargins <-
-    function(A, margin = 1:length(dim(A)), FUN = sum, quiet = FALSE)
+    function(A, margin = 1L:length(dim(A)), FUN = sum, quiet = FALSE)
 {
 ### The workhorse for this margin-expansion is the function
 ### expand.one, which is defined and called at the bottom.
@@ -52,10 +52,10 @@ addmargins <-
 	{
 	    n <- names(thelist)
 	    if (is.null(n)) n <- rep("", length(thelist))
-	    for (i in seq_along(thelist)[-1]) {
+	    for (i in seq_along(thelist)[-1L]) {
 		if (!is.call(thelist[[i]])) {
 		    if (n[i] == "") n[i] <- as.character(thelist[[i]])
-		} else if (as.character(thelist[[i]][[1]]) == "list")
+		} else if (as.character(thelist[[i]][[1L]]) == "list")
 		    thelist[[i]] <- add.names(thelist[[i]])
 	    }
 	    names(thelist) <- n
@@ -135,7 +135,7 @@ addmargins <-
 
 	## The positions in the vector-version of the new table
 	## where the original table values goes, as a logical vector
-	skip <- prod(d[1:margin])
+	skip <- prod(d[1L:margin])
 	runl <- skip / d[margin]
 	apos <- rep(c(rep(TRUE, skip), rep(FALSE, n.mar*runl)),
 		    n.new/(skip+n.mar*runl))
@@ -147,9 +147,9 @@ addmargins <-
 	values[apos] <- as.vector(A)
 
 	## Then sucessively compute and fill in the required margins
-	for(i in 1:n.mar) {
+	for(i in 1L:n.mar) {
 	    mtab <- if(n.dim > 1) {
-		apply(A, (1:n.dim)[-margin], FUN[[i]])
+		apply(A, (1L:n.dim)[-margin], FUN[[i]])
 	    } else FUN[[i]](A)
 	    ## Vector the same length as the number of margins
 	    select <- rep(FALSE, n.mar)
@@ -172,7 +172,7 @@ addmargins <-
 
     ## Once defined, we can use the expand.one function repeatedly
     new.A <- A
-    for(i in 1:n.sid)
+    for(i in 1L:n.sid)
 	new.A <- expand.one(A = new.A, margin = margin[i], FUN = FUN[[i]],
 			    fnames = fnames[[i]])
 
@@ -180,7 +180,7 @@ addmargins <-
     ##
     if(!quiet && !miss.FUN  && n.sid > 1) {
 	cat("Margins computed over dimensions\nin the following order:\n")
-	for(i in 1:n.sid)
+	for(i in 1L:n.sid)
 	    cat(paste(i), ": ", names(dimnames(A))[margin[i]], "\n", sep="")
     }
     new.A

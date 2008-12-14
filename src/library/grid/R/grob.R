@@ -41,7 +41,7 @@ grobName <- function(grob=NULL, prefix="GRID") {
         if (!is.grob(grob))
             stop("Invalid 'grob' argument")
         else
-            grobAutoName(prefix, class(grob)[1])
+            grobAutoName(prefix, class(grob)[1L])
     }
 }
 
@@ -67,7 +67,7 @@ checkvpSlot <- function(vp) {
 checkNameSlot <- function(x) {
   # Supply a default name if one is not given
   if (is.null(x$name))
-    grobAutoName(suffix=class(x)[1])
+    grobAutoName(suffix=class(x)[1L])
   else
     as.character(x$name)
 }
@@ -126,7 +126,7 @@ is.grob <- function(x) {
 }
 
 as.character.grob <- function(x, ...) {
-  paste(class(x)[1], "[", x$name, "]", sep="")
+  paste(class(x)[1L], "[", x$name, "]", sep="")
 }
 
 print.grob <- function(x, ...) {
@@ -147,7 +147,7 @@ gPathFromVector <- function(names) {
   if (!all(is.character(names)))
     stop("Invalid 'grob' name(s)")
   path <- list(path=if (n==1) NULL else
-               paste(names[1:(n-1)], collapse=.grid.pathSep),
+               paste(names[1L:(n-1)], collapse=.grid.pathSep),
                name=names[n],
                n=n)
   class(path) <- c("gPath", "path")
@@ -338,7 +338,7 @@ getName <- function(elt) {
 }
 
 getNames <- function() {
-  dl <- grid.Call("L_getDisplayList")[1:grid.Call("L_getDLindex")]
+  dl <- grid.Call("L_getDisplayList")[1L:grid.Call("L_getDLindex")]
   names <- sapply(dl, getName)
   names[nzchar(names)]
 }

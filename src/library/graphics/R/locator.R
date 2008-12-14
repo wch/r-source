@@ -21,7 +21,7 @@ locator <- function(n = 512, type="n", ...)
         on.exit(par(opar))
     }
     z <- .Internal(locator(n, type=type))# n <= 0 gives error
-    x <- z[[1]]
-    y <- z[[2]]
-    if((n <- z[[3]]) > 0) list(x=x[1:n], y=y[1:n])
+    x <- z[[1L]]
+    y <- z[[2L]]
+    if((n <- z[[3L]]) > 0) list(x=x[1L:n], y=y[1L:n])
 }

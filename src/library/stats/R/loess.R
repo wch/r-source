@@ -28,14 +28,14 @@ function(formula, data, weights, subset, na.action, model = FALSE,
     mf$model <- mf$span <- mf$enp.target <- mf$degree <-
 	mf$parametric <- mf$drop.square <- mf$normalize <- mf$family <-
 	    mf$method <- mf$control <- mf$... <- NULL
-    mf[[1]] <- as.name("model.frame")
+    mf[[1L]] <- as.name("model.frame")
     mf <- eval(mf, parent.frame())
     if (match.arg(method) == "model.frame") return(mf)
     mt <- attr(mf, "terms")
     y <- model.response(mf, "numeric")
     w <- model.weights(mf)
     if(is.null(w)) w <- rep(1, length(y))
-    nmx <- as.character(attr(mt, "variables"))[-(1:2)]
+    nmx <- as.character(attr(mt, "variables"))[-(1L:2)]
     x <- mf[, nmx, drop=FALSE]
     if(any(sapply(x, is.factor))) stop("predictors must all be numeric")
     x <- as.matrix(x)
@@ -122,7 +122,7 @@ simpleLoess <-
     if(sum.parametric == D) stop("specified parametric for all predictors")
 
     if(iterations)
-    for(j in 1:iterations) {
+    for(j in 1L:iterations) {
 	robust <- weights * robust
 	if(j > 1) statistics <- "none"
 	else if(surface == "interpolate" && statistics == "approximate")
@@ -172,8 +172,8 @@ simpleLoess <-
 	pars <- z$parameter
 	names(pars) <- c("d", "n", "vc", "nc", "nv", "liv", "lv")
 	enough <- (D + 1) * pars["nv"]
-	fit.kd <- list(parameter=pars, a=z$a[1:pars[4]], xi=z$xi[1:pars[4]],
-		       vert=z$vert, vval=z$vval[1:enough])
+	fit.kd <- list(parameter=pars, a=z$a[1L:pars[4L]], xi=z$xi[1L:pars[4L]],
+		       vert=z$vert, vval=z$vval[1L:enough])
     }
     if(iterations > 1) {
 	pseudovalues <- .Fortran(R_lowesp,
@@ -208,7 +208,7 @@ simpleLoess <-
 		trL = double(1),
 		delta1 = double(1),
 		delta2 = double(1),
-		as.integer(0))
+		as.integer(0L))
 	pseudo.resid <- pseudovalues - zz$temp
     }
     sum.squares <- if(iterations <= 1) sum(weights * fitted.residuals^2)
@@ -472,8 +472,8 @@ anova.loess <- function(object, ...)
 {
     objects <- list(object, ...)
     responses <- as.character(lapply(objects,
-				     function(x) as.character(x$terms[[2]])))
-    sameresp <- responses == responses[1]
+				     function(x) as.character(x$terms[[2L]])))
+    sameresp <- responses == responses[1L]
     ## calculate the number of models
     if (!all(sameresp)) {
 	objects <- objects[sameresp]
@@ -484,7 +484,7 @@ anova.loess <- function(object, ...)
     nmodels <- length(objects)
     if(nmodels <= 1) stop("no models to compare")
     models <- as.character(lapply(objects, function(x) x$call))
-    descr <- paste("Model ", format(1:nmodels), ": ", models,
+    descr <- paste("Model ", format(1L:nmodels), ": ", models,
 		   sep = "", collapse = "\n")
     ## extract statistics
     delta1 <- sapply(objects, function(x) x$one.delta)

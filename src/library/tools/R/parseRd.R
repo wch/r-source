@@ -33,8 +33,8 @@ print.Rd <- function(x, ...) {
     	if (is.list(x)) {
     	    tag <- attr(x, "Rd_tag")
     	    if (length(grep("^#", tag)) > 0) {
-		cat(tag, x[[1]][[1]], "\n")
-		x <- x[[2]]
+		cat(tag, x[[1L]][[1L]], "\n")
+		x <- x[[2L]]
 		for (i in seq_along(x)) pr(x[[i]], indent)
 		cat("#endif\n")
     	    } else {

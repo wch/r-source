@@ -26,7 +26,7 @@ proj.default <- function(object, onedf = TRUE, ...)
 	    rep.int(0, nrow(object$qr$qr) - object$rank))
     prj <- as.matrix(qr.Q(object$qr, Dvec = RB))
     DN <- dimnames(object$qr$qr)
-    dimnames(prj) <- list(DN[[1]], DN[[2]][seq(ncol(prj))])
+    dimnames(prj) <- list(DN[[1L]], DN[[2L]][seq(ncol(prj))])
     prj
 }
 
@@ -36,12 +36,12 @@ proj.lm <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 	stop("'proj' is not implemented for \"mlm\" fits")
     rank <- object$rank
     if(rank > 0) {
-	prj <- proj.default(object, onedf = TRUE)[, 1:rank, drop = FALSE]
+	prj <- proj.default(object, onedf = TRUE)[, 1L:rank, drop = FALSE]
 	if(onedf) {
 	    df <- rep.int(1, rank)
 	    result <- prj
 	} else {
-	    asgn <- object$assign[object$qr$pivot[1:object$rank]]
+	    asgn <- object$assign[object$qr$pivot[1L:object$rank]]
 	    uasgn <- unique(asgn)
 	    nmeffect <- c("(Intercept)",
 			  attr(object$terms, "term.labels"))[1 + uasgn]
@@ -74,9 +74,9 @@ proj.lm <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 	    result <- c(result, if(use.wt) object$residuals * sqrt(wt)
 			else object$residuals)
 	    dim(result) <- d + c(0, 1)
-	    dn[[1]] <- names(object$residuals)
+	    dn[[1L]] <- names(object$residuals)
 	    names(result) <- NULL
-	    dn[[2]] <- c(dn[[2]], "Residuals")
+	    dn[[2L]] <- c(dn[[2L]], "Residuals")
 	    dimnames(result) <- dn
 	}
 	df <- c(df, object$df.residual)
@@ -168,7 +168,7 @@ proj.aovlist <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
     i <- attr(Terms, "specials")$Error
     t <- attr(Terms, "variables")[[1 + i]]
     error <- Terms
-    error[[3]] <- t[[2]]
+    error[[3L]] <- t[[2L]]
     e.factor <- attr(terms(formula(error)), "factors")
     n <- nrow(err.qr$qr)
     n.object <- length(object)

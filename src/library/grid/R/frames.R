@@ -145,8 +145,8 @@ cellViewport <- function(col, row, border) {
   vp <- viewport(layout.pos.col=col, layout.pos.row=row)
   if (!is.null(border))
     vp <- vpStack(vp,
-                  viewport(x=border[2],
-                           y=border[1],
+                  viewport(x=border[2L],
+                           y=border[1L],
                            width=unit(1, "npc") - sum(border[c(2,4)]),
                            height=unit(1, "npc") - sum(border[c(1,3)]),
                            just=c("left", "bottom")))
@@ -172,16 +172,16 @@ postDrawDetails.cellGrob <- function(x) {
 # recalculate cell sizes
 widthDetails.cellGrob <- function(x) {
   if (x$dynamic)
-    unit(1, "grobwidth", gPath(x$children[[1]]$name))
+    unit(1, "grobwidth", gPath(x$children[[1L]]$name))
   else
-    unit(1, "grobwidth", x$children[[1]])
+    unit(1, "grobwidth", x$children[[1L]])
 }
 
 heightDetails.cellGrob <- function(x) {
   if (x$dynamic)
-    unit(1, "grobheight", gPath(x$children[[1]]$name))
+    unit(1, "grobheight", gPath(x$children[[1L]]$name))
   else
-    unit(1, "grobheight", x$children[[1]])
+    unit(1, "grobheight", x$children[[1L]])
 }
 
 # Get the cellvp slot to show up in grid.ls() output
@@ -215,15 +215,15 @@ placeGrob <- function(frame, grob,
     stop("Invalid 'grob'")
   dim <- frameDim(frame)
   if (is.null(row))
-    row <- c(1, dim[1])
+    row <- c(1, dim[1L])
   if (is.null(col))
-    col <- c(1, dim[2])
+    col <- c(1, dim[2L])
   if (length(row) == 1)
     row <- rep(row, 2)
   if (length(col) == 1)
     col <- rep(col, 2)
-  if (min(row) < 1 || max(row) > dim[1] ||
-      min(col) < 1 || max(col) > dim[2])
+  if (min(row) < 1 || max(row) > dim[1L] ||
+      min(col) < 1 || max(col) > dim[2L])
     stop("Invalid 'row' and/or 'col' (no such cell in frame layout)")
   cgrob <- cellGrob(col, row, NULL, grob, FALSE,
                     cellViewport(col, row, NULL))
@@ -262,7 +262,7 @@ new.col <- function(side, col, col.before, col.after, ncol) {
   if (!is.null(col)) {
     # It is an error to specify a range for col which is outside 1..ncol
     if (length(col) == 2)
-      if (col[1] < 1 || col[2] > ncol)
+      if (col[1L] < 1 || col[2L] > ncol)
         stop("'col' can only be a range of existing columns")
       else
         result <- FALSE
@@ -305,7 +305,7 @@ new.row <- function(side, row, row.before, row.after, nrow) {
   if (!is.null(row)) {
     # It is an error to specify a range for row which is outside 1..nrow
     if (length(row) == 2)
-      if (row[1] < 1 || row[2] > nrow)
+      if (row[1L] < 1 || row[2L] > nrow)
         stop("'row' can only be a range of existing rows")
       else
         result <- FALSE
@@ -327,7 +327,7 @@ mod.dims <- function(dim, dims, index, new.index, nindex, force) {
     else if (index == nindex)
       dims <- unit.c(dims, dim)
     else
-      dims <- unit.c(dims[1:(index-1)], dim, dims[index:nindex])
+      dims <- unit.c(dims[1L:(index-1)], dim, dims[index:nindex])
   # Otherwise, if force=TRUE, we override previous width/heights for the
   # row/col, otherotherwise, the width/height of the existing row/col
   # is the maximum of the previous width/height and the new width/height
@@ -340,9 +340,9 @@ mod.dims <- function(dim, dims, index, new.index, nindex, force) {
       else
         dims <- unit.c(dim, dims[2:nindex])
     else if (index==nindex)
-      dims <- unit.c(dims[1:(nindex-1)], dim)
+      dims <- unit.c(dims[1L:(nindex-1)], dim)
     else
-      dims <- unit.c(dims[1:(index-1)], dim, dims[(index+1):nindex])
+      dims <- unit.c(dims[1L:(index-1)], dim, dims[(index+1):nindex])
   }
   dims
 }
@@ -351,8 +351,8 @@ updateCol <- function(col, added.col) {
   old.col <- col
   # If grob$col is a range ...
   if (length(old.col) == 2) {
-    if (added.col <= old.col[2])
-      col <- c(old.col[1], old.col[2] + 1)
+    if (added.col <= old.col[2L])
+      col <- c(old.col[1L], old.col[2L] + 1)
   }
   else
     if (added.col <= old.col)
@@ -364,8 +364,8 @@ updateRow <- function(row, added.row) {
   old.row <- row
   # If grob$row is a range ...
   if (length(old.row) == 2) {
-    if (added.row <= old.row[2])
-      row <- c(old.row[1], old.row[2] + 1)
+    if (added.row <= old.row[2L])
+      row <- c(old.row[1L], old.row[2L] + 1)
   }
   else
     if (added.row <= old.row)
@@ -495,8 +495,8 @@ packGrob <- function(frame, grob,
         height <- unit(1, "grobheight", cgrob)
   # If there is a border, include it in the width/height
   if (!is.null(border)) {
-    width <- sum(border[2], width, border[4])
-    height <- sum(border[1], height, border[3])
+    width <- sum(border[2L], width, border[4L])
+    height <- sum(border[1L], height, border[3L])
   }
 
   # (iv) Update the frame.vp of the frame (possibly add new row/col,

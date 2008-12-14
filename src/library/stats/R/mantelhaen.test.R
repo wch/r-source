@@ -51,9 +51,9 @@ function(x, y = NULL, z = NULL,
     if(any(apply(x, 3, sum) < 2))
         stop("sample size in each stratum must be > 1")
 
-    I <- dim(x)[1]
-    J <- dim(x)[2]
-    K <- dim(x)[3]
+    I <- dim(x)[1L]
+    J <- dim(x)[2L]
+    K <- dim(x)[3L]
 
     if((I == 2) && (J == 2)) {
         ## 2 x 2 x K case

@@ -31,7 +31,7 @@ asOneSidedFormula <-
   ## to a one-sided formula
   function(object)
 {
-    if ((mode(object) == "call") && (object[[1]] == "~")) {
+    if ((mode(object) == "call") && (object[[1L]] == "~")) {
         object <- eval(object)
     }
     if (inherits(object, "formula")) {
@@ -47,7 +47,7 @@ asOneSidedFormula <-
                         numeric = ,
                         call = object,
                         character = as.name(object),
-                        expression = object[[1]],
+                        expression = object[[1L]],
                         stop(gettextf("'%s' cannot be of mode '%s'",
                                       substitute(object), mode(object)),
                              domain = NA)

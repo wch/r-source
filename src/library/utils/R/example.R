@@ -22,7 +22,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 {
     topic <- substitute(topic)
     if(!is.character(topic))
-	topic <- deparse(topic)[1]
+	topic <- deparse(topic)[1L]
     INDICES <- .find.package(package, lib.loc, verbose = verbose)
     file <- index.search(topic, INDICES, "AnIndex", "R-ex")
     if(file == "") {
@@ -31,10 +31,10 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     }
     packagePath <- dirname(dirname(file))
     if(length(file) > 1) {
-	packagePath <- packagePath[1]
+	packagePath <- packagePath[1L]
 	warning(gettextf("more than one help file found: using package '%s'",
 		basename(packagePath)), domain = NA)
-	file <- file[1]
+	file <- file[1L]
     }
     pkg <- basename(packagePath)
     lib <- dirname(packagePath)
@@ -54,7 +54,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	    on.exit(assign(".Random.seed", oldSeed, envir = .GlobalEnv))
 	} else {
 	    oldRNG <- RNGkind()
-	    on.exit(RNGkind(oldRNG[1], oldRNG[2]))
+	    on.exit(RNGkind(oldRNG[1L], oldRNG[2L]))
 	}
 	## set RNG
 	if(is.logical(setRNG)) { # i.e. == TRUE: use the same as R CMD check

@@ -135,7 +135,7 @@
     for(i in seq_along(.OldClassesPrototypes)) {
       el <- .OldClassesPrototypes[[i]]
       if(is.list(el) && length(el) > 1)
-        setOldClass(el[[1]], prototype = el[[2]],  where = envir)
+        setOldClass(el[[1L]], prototype = el[[2L]],  where = envir)
        else
         warning("OOPS: something wrong with line ",i, " in .OldClassesPrototypes")
     }
@@ -188,7 +188,7 @@
         }
         cl <- as.character(class(object))
         S3Class <- object@.S3Class
-        if(length(S3Class)) S3Class <- S3Class[[1]]
+        if(length(S3Class)) S3Class <- S3Class[[1L]]
         else S3Class <- "oldClass" # or error?
         cat("Object of class \"", cl, "\"\n", sep = "")
         print(S3Part(object, strict = TRUE))
@@ -209,7 +209,7 @@
          S3Class <- attr(ClassDef@prototype, ".S3Class")
          if(is.null(S3Class)) # not a class set up by setOldClass()
              return(callNextMethod())
-        S3ClassP <- S3Class[[1]]
+        S3ClassP <- S3Class[[1L]]
          args <- list(...)
         ## separate the slots, superclass objects
         snames <- allNames(args)

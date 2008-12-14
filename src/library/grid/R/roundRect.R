@@ -63,7 +63,7 @@ roundCorner <- function(num, x, y, r) {
   } else if (num == 3) {
     xc <- x - r
     yc <- y - r
-    subset <- 1:(n/4)
+    subset <- 1L:(n/4)
   } else if (num == 4) {
     xc <- x - r
     yc <- y + r
@@ -99,7 +99,7 @@ rrpoints <- function(x) {
 drawDetails.roundrect <- function(x, recording) {
     boundary <- rrpoints(x)
     grid.Call.graphics("L_polygon", boundary$x, boundary$y,
-                       list(as.integer(1:length(boundary$x))))
+                       list(as.integer(1L:length(boundary$x))))
 }
 
 xDetails.roundrect <- function(x, theta) {
@@ -108,7 +108,7 @@ xDetails.roundrect <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[1], "inches")
+        unit(bounds[1L], "inches")
 }
 
 yDetails.roundrect <- function(x, theta) {
@@ -117,7 +117,7 @@ yDetails.roundrect <- function(x, theta) {
     if (is.null(bounds))
         unit(0.5, "npc")
     else
-        unit(bounds[2], "inches")
+        unit(bounds[2L], "inches")
 }
 
 widthDetails.roundrect <- function(x) {
@@ -126,7 +126,7 @@ widthDetails.roundrect <- function(x) {
     if (is.null(bounds))
         unit(0, "inches")
     else
-        unit(bounds[3], "inches")
+        unit(bounds[3L], "inches")
 }
 
 heightDetails.roundrect <- function(x) {
@@ -135,7 +135,7 @@ heightDetails.roundrect <- function(x) {
     if (is.null(bounds))
         unit(0, "inches")
     else
-        unit(bounds[4], "inches")
+        unit(bounds[4L], "inches")
 }
 
 

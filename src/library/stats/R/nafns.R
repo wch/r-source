@@ -40,7 +40,7 @@ na.omit.default <- function(object, ...)
     omit <- seq_along(object)[is.na(object)]
     if (length(omit) == 0) return(object)
     if (length(d)){
-        omit <- unique(((omit-1) %% d[1]) + 1L)
+        omit <- unique(((omit-1) %% d[1L]) + 1L)
         nm <- rownames(object)
         object <- object[-omit, , drop=FALSE]
     } else {
@@ -70,7 +70,7 @@ na.omit.data.frame <- function(object, ...)
 	if(is.null(d) || length(d) != 2)
 	    omit <- omit | x
 	else # matrix
-	    for(ii in 1:d[2])
+	    for(ii in 1L:d[2L])
 		omit <- omit | x[, ii]
     }
     xx <- object[!omit, , drop = FALSE]
@@ -94,7 +94,7 @@ na.exclude.default <- function(object, ...)
     omit <- seq_along(object)[is.na(object)]
     if (length(omit) == 0) return(object)
     if (length(d)){
-        omit <- unique(((omit-1) %% d[1]) + 1L)
+        omit <- unique(((omit-1) %% d[1L]) + 1L)
         nm <- rownames(object)
         object <- object[-omit, , drop=FALSE]
     } else {
@@ -124,7 +124,7 @@ na.exclude.data.frame <- function(object, ...)
 	if(is.null(d) || length(d) != 2)
 	    omit <- omit | x
 	else # matrix
-	    for(ii in 1:d[2])
+	    for(ii in 1L:d[2L])
 		omit <- omit | x[, ii]
     }
     xx <- object[!omit, , drop = FALSE]
@@ -151,7 +151,7 @@ naresid.exclude <- function(omit, x, ...)
     if (is.matrix(x)) {
 	n <- nrow(x)
 	keep <- rep.int(NA, n+length(omit))
-	keep[-omit] <- 1:n
+	keep[-omit] <- 1L:n
 	x <- x[keep, , drop=FALSE]
 	temp <- rownames(x)
 	if (length(temp)) {
@@ -161,7 +161,7 @@ naresid.exclude <- function(omit, x, ...)
     } else {# vector *or* data.frame !
 	n <- length(x)
 	keep <- rep.int(NA, n+length(omit))
-	keep[-omit] <- 1:n
+	keep[-omit] <- 1L:n
 	x <- x[keep]
 	temp <- names(x)
 	if (length(temp)) {

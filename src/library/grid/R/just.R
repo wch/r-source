@@ -34,20 +34,20 @@
 valid.charjust <- function(just) {
   if (length(just) == 1) {
     # single value may be any valid just
-    just <- as.integer(match(just[1], c("left", "right", "bottom", "top",
+    just <- as.integer(match(just[1L], c("left", "right", "bottom", "top",
                                         "centre", "center")) - 1)
     if (any(is.na(just)))
       stop("Invalid justification")
   } else if (length(just) > 1) {
     # first value must be one of "left", "right", "centre", or "center"
-    just[1] <- as.integer(match(just[1], c("left", "right", "bottom", "top",
+    just[1L] <- as.integer(match(just[1L], c("left", "right", "bottom", "top",
                                            "centre", "center")) - 1)
-    if (!(just[1] %in% c(0, 1, 4, 5)))
+    if (!(just[1L] %in% c(0, 1, 4, 5)))
       stop("Invalid horizontal justification")
     # second value must be one of "bottom", "top", "centre", or "center"
-    just[2] <- as.integer(match(just[2], c("left", "right", "bottom", "top",
+    just[2L] <- as.integer(match(just[2L], c("left", "right", "bottom", "top",
                                            "centre", "center")) - 1)
-    if (!(just[2] %in% c(2, 3, 4, 5)))
+    if (!(just[2L] %in% c(2, 3, 4, 5)))
       stop("Invalid vertical justification")
     just <- as.integer(just)
   }
@@ -56,7 +56,7 @@ valid.charjust <- function(just) {
     if (length(just) == 0)
       just <- c(4, 4)
     else
-      just <- switch (just[1] + 1,
+      just <- switch (just[1L] + 1,
                       c(0, 4), # left
                       c(1, 4), # right
                       c(4, 2), # bottom
@@ -65,8 +65,8 @@ valid.charjust <- function(just) {
                       c(4, 4)) # center
   }
   # Convert to numeric
-  just <- c(switch(just[1] + 1, 0, 1, NA, NA, 0.5, 0.5),
-            switch(just[2] + 1, NA, NA, 0, 1, 0.5, 0.5))
+  just <- c(switch(just[1L] + 1, 0, 1, NA, NA, 0.5, 0.5),
+            switch(just[2L] + 1, NA, NA, 0, 1, 0.5, 0.5))
   # Final paranoid check
   if (any(is.na(just)))
     stop("Invalid justification")
@@ -95,14 +95,14 @@ valid.just <- function(just) {
 
 resolveHJust <- function(just, hjust) {
   if (is.null(hjust) || length(hjust) == 0)
-    valid.just(just)[1]
+    valid.just(just)[1L]
   else
     hjust
 }
 
 resolveVJust <- function(just, vjust) {
   if (is.null(vjust) || length(vjust) == 0)
-    valid.just(just)[2]
+    valid.just(just)[2L]
   else
     vjust
 }

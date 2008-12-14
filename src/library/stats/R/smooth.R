@@ -39,7 +39,7 @@ smooth <- function(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
               as.double(x),
               y = double(n),
               n, iend,
-              iter = integer(1),
+              iter = integer(1L),
               DUP=FALSE,
 	      PACKAGE = "stats")[c("y","iter")]
 

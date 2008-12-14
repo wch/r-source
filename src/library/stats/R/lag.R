@@ -24,6 +24,6 @@ lag.default <- function(x, k = 1, ...)
     }
     x <- hasTsp(x)
     p <- tsp(x)
-    tsp(x) <- p - (k/p[3]) * c(1, 1, 0)
+    tsp(x) <- p - (k/p[3L]) * c(1, 1, 0)
     x
 }

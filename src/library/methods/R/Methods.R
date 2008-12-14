@@ -434,7 +434,7 @@ setMethod <-
         if(any(generics)) {
             ## try to add method to the existing generic, but if the corresponding
             ## environment is sealed, must create a new generic in where
-            gwhere <- as.environment(allWhere[generics][[1]])
+            gwhere <- as.environment(allWhere[generics][[1L]])
             if(.lockedForMethods(fdef, gwhere)) {
                 if(identical(as.environment(where), gwhere))
                     stop(gettextf("the 'where' environment (%s) is a locked namespace; cannot assign methods there",
@@ -667,8 +667,8 @@ getMethod <-
         if(!identical(argNames[[i]], as.character(mlist@argument)))
             stop(gettextf("apparent inconsistency in the methods for function \"%s\"; argument \"%s\" in the signature corresponds to \"%s\" in the methods list object",
                           .genericName(f), argNames[[i]], as.character(mlist@argument)), domain = NA)
-        Class <- signature[[1]]
-        signature <- signature[-1]
+        Class <- signature[[1L]]
+        signature <- signature[-1L]
         methods <- slot(mlist, "methods")
         mlist <- elNamed(methods, Class)# may be function, MethodsList or NULL
         i <- i + 1
@@ -801,7 +801,7 @@ selectMethod <-
 		## else list() : just look in the direct table
 
 	    if(length(methods) > 0)
-		return(methods[[1]])
+		return(methods[[1L]])
 	    else if(optional)
 		return(NULL)
 	    else stop(gettextf("No method found for signature %s",
@@ -1020,7 +1020,7 @@ removeMethods <-
     oldMetaName <- methodsPackageMetaName("M",fdef@generic, fdef@package)
     allWhere <- .findAll(fMetaName, where)
     if(!all)
-        allWhere <- allWhere[1]
+        allWhere <- allWhere[1L]
     value <- rep(TRUE, length(allWhere))
     ## cacheGenericsMetaData is called to clear primitive methods if there
     ## are none for this generic on other databases.
@@ -1141,10 +1141,10 @@ callGeneric <- function(...)
     if(exists(".Generic", envir = envir, inherits = FALSE))
 	fname <- get(".Generic", envir = envir)
     else { # in a local method (special arguments), or	an error
-        localArgs <- identical(as.character(call[[1]]), ".local")
+        localArgs <- identical(as.character(call[[1L]]), ".local")
 	if(localArgs)
 	    call <- sys.call(sys.parent(2))
-	fname <- as.character(call[[1]])
+	fname <- as.character(call[[1L]])
     }
     fdef <- get(fname, envir = envir)
 
@@ -1163,7 +1163,7 @@ callGeneric <- function(...)
         f <- get(".Generic", env, inherits = FALSE)
         fname <- as.name(f)
         if(nargs() == 0) {
-            call[[1]] <- as.name(fname) # in case called from .local
+            call[[1L]] <- as.name(fname) # in case called from .local
             ## if ... appears as an arg name, must be a nested callGeneric()
             ##  or callNextMethod?  If so, leave alone so "..." will be evaluated
             if("..." %in% names(call)) {  }
@@ -1205,13 +1205,13 @@ isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = whe
     if(length(signature)==0)
         TRUE # default method for primitive
     else {
-        sealed <- !is.na(match(signature[[1]], .BasicClasses))
+        sealed <- !is.na(match(signature[[1L]], .BasicClasses))
         if(sealed &&
            (!is.na(match("Ops", c(f, getGroup(f, TRUE))))
             || !is.na(match(f, c("%*%", "crossprod")))))
             ## Ops methods are only sealed if both args are basic classes
             sealed <- sealed && (length(signature) > 1) &&
-                      !is.na(match(signature[[2]], .BasicClasses))
+                      !is.na(match(signature[[2L]], .BasicClasses))
         sealed
     }
 }
@@ -1475,13 +1475,13 @@ findMethodSignatures <- function(..., target = TRUE, methods = findMethods(...))
         what <- lapply(methods[!prims], function(x)  names(x@target))
         lens <- sapply(what, length)
         if(length(unique(lens)) == 1) # asserted to be true for legit. method tables
-            what <- what[[1]]
+            what <- what[[1L]]
         else
-            what <- what[lens == max(lens)][[1]]
+            what <- what[lens == max(lens)][[1L]]
     }
     else
         ## uses the hack that args() returns a function if its argument is a primitve!
-        what <- names(formals(args(methods[[1]])))
+        what <- names(formals(args(methods[[1L]])))
     if(target)
         sigs <- strsplit(names(methods), "#", fixed = TRUE)
     else {
@@ -1518,7 +1518,7 @@ hasMethods <- function(f, where, package)
 	    else if(is.primitive(fdef))
 		package <- "base"
 	    else if(length(ff <- findFunction(f, where = where)) == 1) {
-		package <- getPackageName(ff[[1]],  FALSE)
+		package <- getPackageName(ff[[1L]],  FALSE)
                 if(!nzchar(package))
                   return(FALSE) # not in a package
             }
@@ -1546,7 +1546,7 @@ hasMethods <- function(f, where, package)
 .isSingleName <- function(x) {
     paste0 <- function(...)paste(..., sep="")
     if(!is.character(x))
-      return(paste0('required to be a character vector, got an object of class "', class(x)[[1]], '"'))
+      return(paste0('required to be a character vector, got an object of class "', class(x)[[1L]], '"'))
     if(length(x) != 1)
       return(paste0("required to be a character vector of length 1, got length ",length(x)))
     if(is.na(x) || !nzchar(x))

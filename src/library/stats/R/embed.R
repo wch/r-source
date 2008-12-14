@@ -27,7 +27,7 @@ embed <- function (x, dimension = 1)
         if ((dimension < 1) | (dimension > n))
             stop ("wrong embedding dimension")
         y <- matrix(0.0, n - dimension + 1, dimension * m)
-        for (i in (1:m))
+        for (i in (1L:m))
             y[, seq.int(i, by = m, length.out = dimension)] <-
                 Recall (as.vector(x[,i]), dimension)
         return (y)
@@ -36,7 +36,7 @@ embed <- function (x, dimension = 1)
         if ((dimension < 1) | (dimension > n))
             stop ("wrong embedding dimension")
         m <- n - dimension + 1
-        data <- x[1:m + rep.int(dimension:1, rep.int(m, dimension)) - 1]
+        data <- x[1L:m + rep.int(dimension:1, rep.int(m, dimension)) - 1]
         dim(data) <- c(m, dimension)
         return(data)
     } else
