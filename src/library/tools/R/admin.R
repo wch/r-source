@@ -389,10 +389,11 @@ function(dir, outDir)
     newestRd <- max(file.info(allRd)$mtime)
     ## these files need not exist, which gives NA.
     upToDate <- file.info(file.path(outDir, indices))$mtime >= newestRd
-    if(file_test("-d", dataDir)) {
+    if(file_test("-d", dataDir)
+       && length(dataFiles <- list.files(dataDir))) {
         ## Note that the data index is computed from both the package's
         ## Rd files and the data sets actually available.
-        newestData <- max(file.info(list.files(dataDir))$mtime)
+        newestData <- max(file.info(dataFiles)$mtime)
         upToDate <- c(upToDate,
               file.info(file.path(outDir, "Meta", "data.rds"))$mtime >=
                         max(newestRd, newestData))
