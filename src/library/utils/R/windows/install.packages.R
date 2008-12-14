@@ -221,7 +221,8 @@
         installed <- installed.packages(fields = c("Package", "Version"))
         not_avail <- character(0)
 	repeat {
-	    deps <- as.vector(available[p1, dependencies])
+	    deps <- apply(available[p1, dependencies, drop = FALSE],
+                          1L, paste, collapse=", ")
 	    res <- .clean_up_dependencies2(deps, installed, available)
             not_avail <- c(not_avail, res[[2]])
             deps <- unique(res[[1]])

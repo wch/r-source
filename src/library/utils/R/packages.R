@@ -736,24 +736,41 @@ compareVersion <- function(a, b)
 
 .clean_up_dependencies2 <- function(x, installed, available)
 {
-    ## x is a character vector of Depends / Suggests / Imports entries
-    ## Returns a list of length 2, a character vector of all the
-    ## package dependencies mentioned that are not already satisfied
-    ## and one of those which cannot be satisfied.
+    ## x is a character vector of Depends / Suggests / Imports entries.
+    ## Returns a list of length 2, a character vector of the names of
+    ## all the package dependencies mentioned that are not already
+    ## satisfied and one of those which cannot be satisfied (possibly
+    ## of the form "pkg (>= ver)')
+
+    .split_dependencies <- function(x) {
+        .split2 <- function(x) {
+            x <- unique(sub("^[[:space:]]*(.*)[[:space:]]*$", "\\1" , x))
+            names(x) <- sub("^([[:alnum:].]+).*$", "\\1" , x)
+            x <- x[names(x) != "R"]
+            ## FIXME: a better way to handle duplicates.
+            ## However, there should not be any, and if there are
+            ## Depends: should be the first.
+            x <- x[!duplicated(names(x))]
+            lapply(x, tools:::.split_op_version)
+        }
+        ## given one of more concatenations of Depends/Imports/Suggests fields,
+        ## return a named list of list(name, [op, version])
+        if(!length(x)) return(list())
+        unlist(lapply(strsplit(x, ","), .split2), FALSE, FALSE)
+    }
     x <- x[!is.na(x)]
     if(!length(x)) return(list(character(0L), character(0L)))
-    ## This gets a list of components (name [op, version])
-    xx <- tools:::.split_dependencies(x)
-    ## First remove dependencies on R
-    keep <- sapply(xx, function(x) x[[1L]] != "R"); xx <- xx[keep]
+    xx <- .split_dependencies(x)
     if(!length(xx)) return(list(character(0L), character(0L)))
-    ## Then check for those we already have satisfied
+    ## Then check for those we already have installed
     pkgs <- installed[, "Package"]
     have <- sapply(xx, function(x) {
         if(length(x) == 3L) {
             if (! x[[1L]] %in% pkgs ) return(FALSE)
             if(x[[2L]] != ">=") return(TRUE)
-            ## we may have the package installed more than once
+            ## We may have the package installed more than once
+            ## which we get will depend on the .libPaths() order,
+            ## so for now just see if any installed version will do.
             current <- as.package_version(installed[pkgs == x[[1L]], "Version"])
             target <- as.package_version(x[[3L]])
             eval(parse(text = paste("any(current", x$op, "target)")))
@@ -770,6 +787,7 @@ compareVersion <- function(a, b)
             if (! x[[1L]] %in% pkgs ) { miss <- c(miss, x[[1L]]); next }
             if(x[[2L]] != ">=") { canget <- c(canget, x[[1L]]); next }
             ## we may have the package available more than once
+            ## install.packages() will find the highest version.
             current <- as.package_version(available[pkgs == x[[1L]], "Version"])
             target <- as.package_version(x[[3L]])
             res <- eval(parse(text = paste("any(current", x$op, "target)")))

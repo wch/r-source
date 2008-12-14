@@ -346,21 +346,22 @@ format conforming to the ISO standard.
 The optional @samp{Depends} field gives a comma-separated list of
 package names which this package depends on.  The package name may be
 optionally followed by a comment in parentheses.  The comment should
-contain a comparison operator (only @samp{>=} and @samp{<=} were
-supported prior to @R{} 2.7.0), whitespace and a valid version number).
-(List @emph{package} names even if they are part of a bundle.)  You can
-also use the special package name @samp{R} if your package depends on a
-certain version of @R{}.  E.g., if the package works only with @R{}
-version 2.4.0 or newer, include @samp{R (>= 2.4.0)} in the
-@samp{Depends} field.  Both @code{library} and the @R{} package checking
-facilities use this field, hence it is an error to use improper syntax
-or misuse the @samp{Depends} field for comments on other software that
-might be needed.  Other dependencies (external to the @R{} system)
+contain a comparison operator@footnote{only @samp{>=} and @samp{<=} were
+supported prior to @R{} 2.7.0, and only @samp{>=} is supported for
+package versions by @code{install.packages}.}, whitespace and a valid
+version number).  (List @emph{package} names even if they are part of a
+bundle.)  You can also use the special package name @samp{R} if your
+package depends on a certain version of @R{}.  E.g., if the package
+works only with @R{} version 2.4.0 or newer, include @samp{R (>= 2.4.0)}
+in the @samp{Depends} field.  Both @code{library} and the @R{} package
+checking facilities use this field, hence it is an error to use improper
+syntax or misuse the @samp{Depends} field for comments on other software
+that might be needed.  Other dependencies (external to the @R{} system)
 should be listed in the @samp{SystemRequirements} field or a separate
 @file{README} file.  The @R{} @command{INSTALL} facilities check if the
 version of @R{} used is recent enough for the package being installed,
 and the list of packages which is specified will be attached (after
-checking version dependencies) before the current package, both when
+checking version requirements) before the current package, both when
 @code{library} is called and when saving an image of the package's code
 or preparing for lazy-loading.
 
@@ -376,7 +377,9 @@ or in @samp{Suggests} or @samp{Enhances} (see below).  Ideally this
 field will include all the standard packages, and it is important to
 include S4-using packages (as their class definitions can change and the
 @file{DESCRIPTION} file is used to decide which packages to re-install
-when this happens).
+when this happens).  Packages declared in the @samp{Depends} field
+should not also be in the @samp{Imports} field.  Versions can be
+specified, but will not be checked when the namespace is loaded.
 
 The optional @samp{Suggests} field uses the same syntax as
 @samp{Depends} and lists packages that are not necessarily needed.  This
@@ -397,11 +400,11 @@ The general rules are
 @item
 Packages whose name space only is needed to load the package using
 @code{library(@var{pkgname})} must be listed in the @samp{Imports}
-field.
+field and not in the @samp{Depends} field.
 @item
 Packages that need to be attached to successfully load the package using
 @code{library(@var{pkgname})} must be listed in the @samp{Depends}
-field.
+field, only.
 @item
 All packages that are needed to successfully run @code{R CMD check} on
 the package must be listed in one of @samp{Depends} or @samp{Suggests}
@@ -412,6 +415,12 @@ or @samp{Imports}.
 In particular, large packages providing ``only'' data for examples or
 vignettes should be listed in @samp{Suggests} rather than @samp{Depends}
 in order to make lean installations possible.
+
+Prior to @R{} 2.9.0, adding version dependencies for packages only made
+sense for the @samp{Depends} field, as only @code{library} checks
+version requirements, and only for the packages it loads via the
+@samp{Depends} field.  As from @R{} 2.9.0 other dependencies are used by
+@code{install.packages}.
 
 The optional @samp{URL} field may give a list of @acronym{URL}s
 separated by commas or whitespace, for example the homepage of the
@@ -3871,14 +3880,14 @@ two-argument commands, e.g.
 @end example
 
 @noindent
-has always been an error.  However, prior to @R{} 2.9.0 this error wass
+has always been an error.  However, prior to @R{} 2.9.0 this error was
 not looked for and resulted in incorrect output (often by omitting
 entirely the text for the item, sometimes with a warning).  Current
 versions of @R{} detect and fixup most cases of this error, with a
 warning.
 
 A @code{\value} block is implicitly a @code{\itemize} environment, but
-quite a few package writers have ignored this.  As from @R{} 2.9.0 this
+quite a few package writers have ignored this.  As from @R{} 2.8.1 this
 is detected, and the @code{\itemize} command (but not its contents)
 removed, with a warning.
 
