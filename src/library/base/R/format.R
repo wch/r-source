@@ -178,7 +178,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 	     )
     ## sanity check for flags added 2.1.0
     flag <- as.character(flag)
-    nf <- strsplit(flag, "")[[1]]
+    nf <- strsplit(flag, "")[[1L]]
     if(!all(nf %in% c("0", "+", "-", " ", "#")))
 	stop("'flag' can contain only '0+- #'")
     if(digits > 0 && any(nf == "#"))
@@ -218,8 +218,8 @@ format.factor <- function (x, ...)
 format.data.frame <- function(x, ..., justify = "none")
 {
     dims <- dim(x)
-    nr <- dims[1]
-    nc <- dims[2]
+    nr <- dims[1L]
+    nc <- dims[2L]
     rval <- vector("list", nc)
     for(i in 1:nc)
 	rval[[i]] <- format(x[[i]], ..., justify = justify)
@@ -244,12 +244,12 @@ format.data.frame <- function(x, ..., justify = "none")
 	    oldClass(rval[[i]]) <- "AsIs"
     }
     dn <- dimnames(x)
-    cn <- dn[[2]]
+    cn <- dn[[2L]]
     m <- match(c("row.names", "check.rows", "check.names"), cn, 0)
     if(any(m > 0)) cn[m] <- paste("..dfd.", cn[m], sep="")
     names(rval) <- cn
     rval$check.names <- FALSE
-    rval$row.names <- dn[[1]]
+    rval$row.names <- dn[[1L]]
     x <- do.call("data.frame", rval)
     ## x will have more cols than rval if there are matrix/data.frame cols
     if(any(m > 0)) names(x) <- sub("^..dfd.", "", names(x))

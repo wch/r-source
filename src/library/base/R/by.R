@@ -26,8 +26,8 @@ by.default <- function(data, INDICES, FUN, ..., simplify = TRUE)
     else {
         if(!is.list(INDICES)) {        # record the names for print.by
             IND <- vector("list", 1)
-            IND[[1]] <- INDICES
-            names(IND) <- deparse(substitute(INDICES))[1]
+            IND[[1L]] <- INDICES
+            names(IND) <- deparse(substitute(INDICES))[1L]
         } else IND <- INDICES
         FUNx <- function(x) FUN(dd[x,], ...)
         nd <- nrow(dd)
@@ -42,13 +42,13 @@ by.default <- function(data, INDICES, FUN, ..., simplify = TRUE)
 by.data.frame <- function(data, INDICES, FUN, ..., simplify = TRUE)
 {
     if(!is.list(INDICES)) { # record the names for print.by
-        IND <- vector("list", 1)
-        IND[[1]] <- INDICES
-        names(IND) <- deparse(substitute(INDICES))[1]
+        IND <- vector("list", 1L)
+        IND[[1L]] <- INDICES
+        names(IND) <- deparse(substitute(INDICES))[1L]
     } else IND <- INDICES
     FUNx <- function(x) FUN(data[x,, drop=FALSE], ...) # (PR#10506)
     nd <- nrow(data)
-    ans <- eval(substitute(tapply(1:nd, IND, FUNx, simplify = simplify)), data)
+    ans <- eval(substitute(tapply(1L:nd, IND, FUNx, simplify = simplify)), data)
     attr(ans, "call") <- match.call()
     class(ans) <- "by"
     ans

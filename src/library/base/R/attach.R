@@ -128,7 +128,7 @@ detach <- function(name, pos=2, unload=FALSE)
     ## Check for detaching a  package required by another package (not
     ## by .GlobalEnv because detach() can't currently fix up the
     ## .required there)
-    for(pkgs in search()[-1]) {
+    for(pkgs in search()[-1L]) {
         if(!isNamespace(as.environment(pkgs)) &&
            exists(".required", pkgs, inherits = FALSE) &&
            packageName %in% paste("package:", get(".required", pkgs, inherits = FALSE),sep=""))

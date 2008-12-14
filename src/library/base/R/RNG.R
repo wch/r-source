@@ -49,7 +49,7 @@ RNGkind <- function(kind = NULL, normal.kind = NULL)
          if(normal.kind == length(n.kinds) - 1) normal.kind <- -1L
     }
     r <- 1 + .Internal(RNGkind(i.knd, normal.kind))
-    r <- c(kinds[r[1]], n.kinds[r[2]])
+    r <- c(kinds[r[1L]], n.kinds[r[2L]])
     if(do.set || !is.null(normal.kind)) invisible(r) else r
 }
 
@@ -88,12 +88,12 @@ set.seed <- function(seed, kind = NULL, normal.kind = NULL)
 
 RNGversion <- function(vstr)
 {
-    vnum <- as.numeric(strsplit(vstr,".", fixed=TRUE)[[1]])
+    vnum <- as.numeric(strsplit(vstr,".", fixed=TRUE)[[1L]])
     if (length(vnum) < 2)
 	stop("malformed version string")
-    if (vnum[1] == 0 && vnum[2] < 99)
+    if (vnum[1L] == 0 && vnum[2L] < 99)
         RNGkind("Wichmann-Hill", "Buggy Kinderman-Ramage")
-    else if (vnum[1] == 0 || vnum[1] == 1 && vnum[2] <= 6)
+    else if (vnum[1L] == 0 || vnum[1L] == 1 && vnum[2L] <= 6)
 	RNGkind("Marsaglia-Multicarry", "Buggy Kinderman-Ramage")
     else
 	RNGkind("Mersenne-Twister", "Inversion")

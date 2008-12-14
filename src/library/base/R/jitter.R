@@ -25,7 +25,7 @@ jitter <- function(x, factor = 1, amount=NULL)
     if(!is.numeric(x))
         stop("'x' must be numeric")
     z <- diff(r <- range(x[is.finite(x)]))
-    if(z == 0) z <- abs(r[1])
+    if(z == 0) z <- abs(r[1L])
     if(z == 0) z <- 1
 
     if(is.null(amount)) {		# default: Find 'necessary' amount

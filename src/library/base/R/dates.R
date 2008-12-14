@@ -38,7 +38,7 @@ as.Date.factor <- function(x, ...) as.Date(as.character(x), ...)
 as.Date.character <- function(x, format="", ...)
 {
     fromchar <- function(x) {
-	xx <- x[1]
+	xx <- x[1L]
         if(is.na(xx)) {
             j <- 1
             while(is.na(xx) && (j <- j+1) <= length(x)) xx <- x[j]
@@ -86,7 +86,7 @@ as.Date.dates <- function(x, ...)
         z <- attr(x, "origin")
         x <- trunc(as.numeric(x))
         if(length(z) == 3 && is.numeric(z))
-            x  <- x + as.numeric(as.Date(paste(z[3], z[1], z[2], sep="/")))
+            x  <- x + as.numeric(as.Date(paste(z[3L], z[1L], z[2L], sep="/")))
         return(structure(x, class = "Date"))
     } else stop(gettextf("'%s' is not a \"dates\" object",
                          deparse(substitute(x)) ))
@@ -170,7 +170,7 @@ Summary.Date <- function (..., na.rm)
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if (!ok) stop(.Generic, " not defined for Date objects")
     val <- NextMethod(.Generic)
-    class(val) <- oldClass(list(...)[[1]])
+    class(val) <- oldClass(list(...)[[1L]])
     val
 }
 
@@ -244,7 +244,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
         by <- switch(attr(by,"units"), secs = 1/86400, mins = 1/1440,
                      hours = 1/24, days = 1, weeks = 7) * unclass(by)
     } else if(is.character(by)) {
-        by2 <- strsplit(by, " ", fixed=TRUE)[[1]]
+        by2 <- strsplit(by, " ", fixed=TRUE)[[1L]]
         if(length(by2) > 2 || length(by2) < 1)
             stop("invalid 'by' string")
         valid <- pmatch(by2[length(by2)],
@@ -252,9 +252,9 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
         if(is.na(valid)) stop("invalid string for 'by'")
         if(valid <= 2) {
             by <- c(1, 7)[valid]
-            if (length(by2) == 2) by <- by * as.integer(by2[1])
+            if (length(by2) == 2) by <- by * as.integer(by2[1L])
         } else
-            by <- if(length(by2) == 2) as.integer(by2[1]) else 1
+            by <- if(length(by2) == 2) as.integer(by2[1L]) else 1
     } else if(!is.numeric(by)) stop("invalid mode for 'by'")
     if(is.na(by)) stop("'by' is NA")
 
@@ -305,7 +305,7 @@ cut.Date <-
     } else if(is.numeric(breaks) && length(breaks) == 1) {
 	## specified number of breaks
     } else if(is.character(breaks) && length(breaks) == 1) {
-        by2 <- strsplit(breaks, " ", fixed=TRUE)[[1]]
+        by2 <- strsplit(breaks, " ", fixed=TRUE)[[1L]]
         if(length(by2) > 2 || length(by2) < 1)
             stop("invalid specification of 'breaks'")
 	valid <-
@@ -322,7 +322,7 @@ cut.Date <-
     if(valid == 3) {
         start$mday <- 1
         end <- as.POSIXlt(max(x, na.rm = TRUE))
-        step <- ifelse(length(by2) == 2, as.integer(by2[1]), 1)
+        step <- ifelse(length(by2) == 2, as.integer(by2[1L]), 1)
         end <- as.POSIXlt(end + (31 * step * 86400))
         end$mday <- 1
         breaks <- as.Date(seq(start, end, breaks))
@@ -330,7 +330,7 @@ cut.Date <-
         start$mon <- 0
         start$mday <- 1
         end <- as.POSIXlt(max(x, na.rm = TRUE))
-        step <- ifelse(length(by2) == 2, as.integer(by2[1]), 1)
+        step <- ifelse(length(by2) == 2, as.integer(by2[1L]), 1)
         end <- as.POSIXlt(end + (366 * step * 86400))
         end$mon <- 0
         end$mday <- 1
@@ -340,14 +340,14 @@ cut.Date <-
         start$mon <- qtr[start$mon + 1]
         start$mday <- 1
         end <- as.POSIXlt(max(x, na.rm = TRUE))
-        step <- ifelse(length(by2) == 2, as.integer(by2[1]), 1)
+        step <- ifelse(length(by2) == 2, as.integer(by2[1L]), 1)
         end <- as.POSIXlt(end + (93 * step * 86400))
         end$mon <- qtr[end$mon + 1]
         end$mday <- 1
         breaks <- as.Date(seq(start, end, paste(step * 3, "months")))
     } else {
         start <- .Internal(POSIXlt2Date(start))
-        if (length(by2) == 2) incr <- incr * as.integer(by2[1])
+        if (length(by2) == 2) incr <- incr * as.integer(by2[1L])
         maxx <- max(x, na.rm = TRUE)
         breaks <- seq.int(start, maxx + incr, breaks)
         breaks <- breaks[1:(1+max(which(breaks <= maxx)))]
@@ -399,17 +399,17 @@ rep.Date <- function(x, ...)
 diff.Date <- function (x, lag = 1, differences = 1, ...)
 {
     ismat <- is.matrix(x)
-    xlen <- if (ismat) dim(x)[1] else length(x)
-    if (length(lag) > 1 || length(differences) > 1 || lag < 1 || differences < 1)
+    xlen <- if (ismat) dim(x)[1L] else length(x)
+    if (length(lag) > 1L || length(differences) > 1L || lag < 1L || differences < 1L)
         stop("'lag' and 'differences' must be integers >= 1")
     if (lag * differences >= xlen)
-        return(structure(numeric(0), class="difftime", units="days"))
+        return(structure(numeric(0L), class="difftime", units="days"))
     r <- x
-    i1 <- -1:-lag
-    if (ismat) for (i in 1:differences) r <- r[i1, , drop = FALSE] -
-            r[-nrow(r):-(nrow(r) - lag + 1), , drop = FALSE]
-    else for (i in 1:differences)
-        r <- r[i1] - r[-length(r):-(length(r) - lag + 1)]
+    i1 <- -1L:-lag
+    if (ismat) for (i in 1L:differences) r <- r[i1, , drop = FALSE] -
+            r[-nrow(r):-(nrow(r) - lag + 1L), , drop = FALSE]
+    else for (i in 1L:differences)
+        r <- r[i1] - r[-length(r):-(length(r) - lag + 1L)]
     r
 }
 

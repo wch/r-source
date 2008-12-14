@@ -31,14 +31,14 @@ print.warnings <- function(x, ...)
             ind <- if(n == 1) "" else paste(i, ": ", sep="")
             out <- if(length(x[[i]])) {
                 ## deparse can overshoot cutoff
-                temp <- deparse(x[[i]], width.cutoff = 50, nlines = 2)
+                temp <- deparse(x[[i]], width.cutoff = 50L, nlines = 2L)
                 ## Put on one line if narrow enough.
-                sm <- strsplit(msgs[i], "\n")[[1]]
-                nl <- if(nchar(ind, "w") + nchar(temp[1], "w") +
-                         nchar(sm[1], "w") <= 75)
+                sm <- strsplit(msgs[i], "\n")[[1L]]
+                nl <- if(nchar(ind, "w") + nchar(temp[1L], "w") +
+                         nchar(sm[1L], "w") <= 75L)
                     " " else "\n  "
                 paste(ind, "In ",
-                      temp[1], if(length(temp) > 1) " ...",
+                      temp[1L], if(length(temp) > 1L) " ...",
                       " :", nl, msgs[i], sep = "")
             } else paste(ind, msgs[i], sep = "")
             do.call("cat", c(list(out), attr(x, "dots"), fill=TRUE))

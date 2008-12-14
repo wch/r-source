@@ -23,7 +23,7 @@ srcfile <- function(filename, encoding = getOption("encoding")) {
 
     e$wd <- getwd()
     e$filename <- filename
-    
+
     # If filename is a URL, this will return NA
     e$timestamp <- file.info(filename)[1,"mtime"]
     e$encoding <- encoding
@@ -121,7 +121,7 @@ open.srcfilecopy <- function(con, line, ...) {
 }
 
 getSrcLines <- function(srcfile, first, last) {
-    if (first > last) return(character(0))
+    if (first > last) return(character(0L))
     if (!.isOpen(srcfile)) on.exit(close(srcfile))
     conn <- open(srcfile, first)
     lines <- readLines(conn, n=last-first+1, warn=FALSE)
@@ -134,22 +134,22 @@ getSrcLines <- function(srcfile, first, last) {
 # all are inclusive
 
 srcref <- function(srcfile, lloc) {
-    stopifnot(inherits(srcfile, "srcfile"), length(lloc) == 4)
+    stopifnot(inherits(srcfile, "srcfile"), length(lloc) == 4L)
     structure(as.integer(lloc), srcfile=srcfile, class="srcref")
 }
 
 as.character.srcref <- function(x, useSource = TRUE, ...)
 {
     srcfile <- attr(x, "srcfile")
-    if (useSource) lines <- try(getSrcLines(srcfile, x[1], x[3]), TRUE)
+    if (useSource) lines <- try(getSrcLines(srcfile, x[1L], x[3L]), TRUE)
     if (!useSource || inherits(lines, "try-error"))
     	lines <- paste("<srcref: file \"", srcfile$filename, "\" chars ",
-                       x[1],":",x[2], " to ",x[3],":",x[4], ">", sep="")
+                       x[1L],":",x[2L], " to ",x[3L],":",x[4L], ">", sep="")
     else {
-        if (length(lines) < x[3] - x[1] + 1) 
-            x[4] <- .Machine$integer.max
-    	lines[length(lines)] <- substring(lines[length(lines)], 1, x[4])
-    	lines[1] <- substring(lines[1], x[2])
+        if (length(lines) < x[3L] - x[1L] + 1L)
+            x[4L] <- .Machine$integer.max
+    	lines[length(lines)] <- substring(lines[length(lines)], 1L, x[4L])
+    	lines[1L] <- substring(lines[1L], x[2L])
     }
     lines
 }

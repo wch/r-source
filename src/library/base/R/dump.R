@@ -21,7 +21,7 @@ dump <- function (list, file = "dumpdata.R", append = FALSE,
     if(is.character(file)) {
 	## avoid opening a file if there is nothing to dump
 	ex <- sapply(list, exists, envir=envir)
-	if(!any(ex)) return(invisible(character(0)))
+	if(!any(ex)) return(invisible(character(0L)))
 	if(nzchar(file)) {
 	    file <- file(file, ifelse(append, "a", "w"))
 	    on.exit(close(file), add = TRUE)

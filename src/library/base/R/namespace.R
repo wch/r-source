@@ -26,7 +26,7 @@ getNamespace <- function(name) {
 		  ## This assignment is needed because 'name' contains
 		  ## version as second component when called from internal
 		  ## serialization code
-		  name <- name[1]
+		  name <- name[1L]
 		  if (name %in% c("ctest","eda","modreg","mva","nls",
 				  "stepfun","ts")) {
 		      old <- "stats"
@@ -69,7 +69,7 @@ getNamespaceImports <- function(ns) {
 
 getNamespaceUsers <- function(ns) {
     nsname <- getNamespaceName(asNamespace(ns))
-    users <- character(0)
+    users <- character(0L)
     for (n in loadedNamespaces()) {
         inames <- names(getNamespaceImports(n))
         if (match(nsname, inames, 0))
@@ -147,7 +147,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                            keep.source = getOption("keep.source.pkgs"),
                            partial = FALSE, declarativeOnly = FALSE) {
     ## eventually allow version as second component; ignore for now.
-    package <- as.character(package)[[1]]
+    package <- as.character(package)[[1L]]
 
     ## check for cycles
     dynGet <- function(name,
@@ -241,7 +241,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                       function(type) {
                           lapply(type,
                                  function(sym) {
-                                     varName <- paste(fixes[1], sym$name, fixes[2], sep = "")
+                                     varName <- paste(fixes[1L], sym$name, fixes[2L], sep = "")
                                      if(exists(varName, envir = env))
                                        warning("failed to assign RegisteredNativeSymbol for ",
                                                sym$name,
@@ -345,18 +345,18 @@ loadNamespace <- function (package, lib.loc = NULL,
                 namespaceImport(ns, loadNamespace(i, c(lib.loc, .libPaths())))
             else
                 namespaceImportFrom(ns,
-                                    loadNamespace(i[[1]],
+                                    loadNamespace(i[[1L]],
                                                   c(lib.loc, .libPaths())),
-                                    i[[2]])
+                                    i[[2L]])
         }
         for(imp in nsInfo$importClasses)
-            namespaceImportClasses(ns, loadNamespace(imp[[1]],
+            namespaceImportClasses(ns, loadNamespace(imp[[1L]],
                                                      c(lib.loc, .libPaths())),
-                                   imp[[2]])
+                                   imp[[2L]])
         for(imp in nsInfo$importMethods)
-            namespaceImportMethods(ns, loadNamespace(imp[[1]],
+            namespaceImportMethods(ns, loadNamespace(imp[[1L]],
                                                      c(lib.loc, .libPaths())),
-                                   imp[[2]])
+                                   imp[[2L]])
 
 
 
@@ -372,7 +372,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         assign(".packageName", package, envir = env)
 
         ## load the code
-        codename <- strsplit(package, "_", fixed = TRUE)[[1]][1]
+        codename <- strsplit(package, "_", fixed = TRUE)[[1L]][1L]
         codeFile <- file.path(pkgpath, "R", codename)
         if (file.exists(codeFile)) {
             res <- try(sys.source(codeFile, env, keep.source = keep.source))
@@ -426,17 +426,17 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         for (p in nsInfo$exportPatterns)
             exports <- c(ls(env, pattern = p, all.names = TRUE), exports)
-        ## 
+        ##
         if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(ns) &&
            !identical(package, "methods") ) {
             ## cache generics, classes in this namespace (but not methods itself,
             ## which pre-cached at install time
-            methods:::cacheMetaData(ns, TRUE, ns) 
+            methods:::cacheMetaData(ns, TRUE, ns)
             ## process class definition objects
             expClasses <- nsInfo$exportClasses
             ##we take any pattern, but check to see if the matches are classes
-            pClasses <- character(0)
-            aClasses <- methods::getClasses(ns)            
+            pClasses <- character(0L)
+            aClasses <- methods::getClasses(ns)
             for (p in nsInfo$exportClassPatterns) {
                 pClasses <- c(aClasses[grep(p, aClasses)], pClasses)
             }
@@ -517,7 +517,7 @@ loadNamespace <- function (package, lib.loc = NULL,
 			if(length(ii) > 1) {
 			    warning("Multiple methods tables found for '",
 				    mi, "'", call. = FALSE)
-			    ii <- ii[1]
+			    ii <- ii[1L]
 			}
                         expTables[[i]] <- allMethodTables[ii]
                         if(exists(allMethodLists[[ii]], envir = ns))
@@ -629,7 +629,7 @@ unloadNamespace <- function(ns) {
     if (dynGet("__NamespaceDeclarativeOnly__", FALSE))
         stop("imperative name space directives are disabled")
     envir <- parent.frame()
-    names <- as.character(substitute(list(...)))[-1]
+    names <- as.character(substitute(list(...)))[-1L]
     for (n in names)
         namespaceImportFrom(envir, n)
 }
@@ -649,7 +649,7 @@ unloadNamespace <- function(ns) {
         stop("imperative name space directives are disabled")
     envir <- parent.frame()
     name <-  as.character(substitute(name))
-    names <- as.character(substitute(list(...)))[-1]
+    names <- as.character(substitute(list(...)))[-1L]
     namespaceImportFrom(envir, name, names)
 }
 
@@ -672,7 +672,7 @@ unloadNamespace <- function(ns) {
     else if (! isNamespace(ns))
         stop("can only export from a name space")
     else {
-        names <- as.character(substitute(list(...)))[-1]
+        names <- as.character(substitute(list(...)))[-1L]
         namespaceExport(ns, names)
     }
 }
@@ -874,8 +874,8 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
              domain = NA)
     }
     expnames <- unlist(lapply(expnames, get, envir = exports, inherits = FALSE))
-    if (is.null(impnames)) impnames <- character(0)
-    if (is.null(expnames)) expnames <- character(0)
+    if (is.null(impnames)) impnames <- character(0L)
+    if (is.null(expnames)) expnames <- character(0L)
     .Internal(importIntoEnv(impenv, impnames, expenv, expnames))
 }
 
@@ -959,7 +959,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
         ## Creates a new NativeRoutineMap.
         function(useRegistration, symbolNames, fixes) {
             proto <- list(useRegistration = FALSE,
-                          symbolNames = character(0))
+                          symbolNames = character(0L))
             class(proto) <- "NativeRoutineMap"
 
             mergeNativeRoutineMaps(proto, useRegistration, symbolNames, fixes)
@@ -970,7 +970,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
         function(map, useRegistration, symbolNames, fixes) {
             if(!useRegistration)
                 names(symbolNames) <-
-                    paste(fixes[1],  names(symbolNames), fixes[2], sep = "")
+                    paste(fixes[1L],  names(symbolNames), fixes[2L], sep = "")
             else
                 map$registrationFixes <- fixes
             map$useRegistration <- map$useRegistration || useRegistration
@@ -997,15 +997,15 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
         stop(gettextf("package '%s' has no NAMESPACE file", package),
              domain = NA)
     else directives <- NULL
-    exports <- character(0)
-    exportPatterns <- character(0)
-    exportClasses <- character(0)
-    exportClassPatterns <- character(0)
-    exportMethods <- character(0)
+    exports <- character(0L)
+    exportPatterns <- character(0L)
+    exportClasses <- character(0L)
+    exportClassPatterns <- character(0L)
+    exportMethods <- character(0L)
     imports <- list()
     importMethods <- list()
     importClasses <- list()
-    dynlibs <- character(0)
+    dynlibs <- character(0L)
     S3methods <- matrix(NA_character_, 500, 3)
     nativeRoutines <- list()
     nS3 <- 0
@@ -1015,60 +1015,60 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
 	    r <- as.character(cc)
 	    if(any(r == ""))
 		stop(gettextf("empty name in directive '%s' in NAMESPACE file",
-			      as.character(e[[1]])),
+			      as.character(e[[1L]])),
 		     domain = NA)
 	    r
 	}
-        switch(as.character(e[[1]]),
-               "if" = if (eval(e[[2]], .GlobalEnv))
-               parseDirective(e[[3]])
-               else if (length(e) == 4)
-               parseDirective(e[[4]]),
-               "{" =  for (ee in as.list(e[-1])) parseDirective(ee),
+        switch(as.character(e[[1L]]),
+               "if" = if (eval(e[[2L]], .GlobalEnv))
+               parseDirective(e[[3L]])
+               else if (length(e) == 4L)
+               parseDirective(e[[4L]]),
+               "{" =  for (ee in as.list(e[-1L])) parseDirective(ee),
                "=", "<-" = {
-                   parseDirective(e[[3]])
-                   if(as.character(e[[3]][[1]]) == "useDynLib")
-                       names(dynlibs)[length(dynlibs)] <<- asChar(e[[2]])
+                   parseDirective(e[[3L]])
+                   if(as.character(e[[3L]][[1L]]) == "useDynLib")
+                       names(dynlibs)[length(dynlibs)] <<- asChar(e[[2L]])
                },
                export = {
-                   exp <- e[-1]
+                   exp <- e[-1L]
                    exp <- structure(asChar(exp), names = names(exp))
                    exports <<- c(exports, exp)
                },
                exportPattern = {
-                   pat <- asChar(e[-1])
+                   pat <- asChar(e[-1L])
                    exportPatterns <<- c(pat, exportPatterns)
                },
                exportClassPattern = {
-                   pat <- asChar(e[-1])
+                   pat <- asChar(e[-1L])
                    exportClassPatterns <<- c(pat, exportClassPatterns)
                },
                exportClass = , exportClasses = {
-                   exportClasses <<- c(asChar(e[-1]), exportClasses)
+                   exportClasses <<- c(asChar(e[-1L]), exportClasses)
                },
                exportMethods = {
-                   exportMethods <<- c(asChar(e[-1]), exportMethods)
+                   exportMethods <<- c(asChar(e[-1L]), exportMethods)
                },
-               import = imports <<- c(imports,as.list(asChar(e[-1]))),
+               import = imports <<- c(imports,as.list(asChar(e[-1L]))),
                importFrom = {
-                   imp <- e[-1]
-                   ivars <- imp[-1]
+                   imp <- e[-1L]
+                   ivars <- imp[-1L]
                    inames <- names(ivars)
-                   imp <- list(asChar(imp[1]),
+                   imp <- list(asChar(imp[1L]),
                                structure(asChar(ivars), names = inames))
                    imports <<- c(imports, list(imp))
                },
                importClassFrom = , importClassesFrom = {
-                   imp <- asChar(e[-1])
-                   pkg <- imp[[1]]
-                   impClasses <- imp[-1]
+                   imp <- asChar(e[-1L])
+                   pkg <- imp[[1L]]
+                   impClasses <- imp[-1L]
                    imp <- list(asChar(pkg), asChar(impClasses))
                    importClasses <<- c(importClasses, list(imp))
                },
                importMethodsFrom = {
-                   imp <- asChar(e[-1])
-                   pkg <- imp[[1]]
-                   impMethods <- imp[-1]
+                   imp <- asChar(e[-1L])
+                   pkg <- imp[[1L]]
+                   impMethods <- imp[-1L]
                    imp <- list(asChar(pkg), asChar(impMethods))
                    importMethods <<- c(importMethods, list(imp))
                },
@@ -1081,17 +1081,17 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                    ## of symbols to R variable names.
 
                    ## The name is the second element after useDynLib
-                   dyl <- as.character(e[2])
+                   dyl <- as.character(e[2L])
                    ## We ensure uniqueness at the end.
                    dynlibs <<-
                        structure(c(dynlibs, dyl),
                                  names = c(names(dynlibs),
                                  ifelse(!is.null(names(e)) &&
-                                        names(e)[2] != "", names(e)[2], "" )))
-                   if (length(e) > 2) {
+                                        names(e)[2L] != "", names(e)[2L], "" )))
+                   if (length(e) > 2L) {
                        ## Author has specified some mappings for the symbols
 
-                       symNames <- as.character(e[-c(1, 2)])
+                       symNames <- as.character(e[-c(1L, 2L)])
                        names(symNames) <- names(e[-c(1, 2)])
 
                        ## If there are no names, then use the names of
@@ -1130,7 +1130,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                            ## e.g. c("pre", "post") or a regular name
                            ## as the prefix.
                            if(symNames[idx] != "") {
-                               e <- parse(text = symNames[idx])[[1]]
+                               e <- parse(text = symNames[idx])[[1L]]
                                if(is.call(e))
                                    val <- eval(e)
                                else
@@ -1163,15 +1163,15 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                    }
                },
                S3method = {
-                   spec <- e[-1]
-                   if (length(spec) != 2 && length(spec) != 3)
+                   spec <- e[-1L]
+                   if (length(spec) != 2L && length(spec) != 3L)
                        stop(gettextf("bad 'S3method' directive: %s",
                                      deparse(e)),
                             call. = FALSE, domain = NA)
-                   nS3 <<- nS3 + 1
-                   if(nS3 > 500)
+                   nS3 <<- nS3 + 1L
+                   if(nS3 > 500L)
                        stop("too many 'S3method' directives", call. = FALSE)
-                   S3methods[nS3, 1:length(spec)] <<- asChar(spec)
+                   S3methods[nS3, 1L:length(spec)] <<- asChar(spec)
                },
                stop(gettextf("unknown namespace directive: %s", deparse(e)),
                     call. = FALSE, domain = NA)
@@ -1184,7 +1184,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
     list(imports = imports, exports = exports, exportPatterns = exportPatterns,
          importClasses = importClasses, importMethods = importMethods,
          exportClasses = exportClasses,  exportMethods = exportMethods,
-         exportClassPatterns = exportClassPatterns, 
+         exportClassPatterns = exportClassPatterns,
          dynlibs = dynlibs, nativeRoutines = nativeRoutines,
          S3methods = S3methods[seq_len(nS3), ,drop = FALSE])
 } ## end{parseNamespaceFile}

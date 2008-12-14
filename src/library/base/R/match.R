@@ -36,12 +36,12 @@ match.arg <- function (arg, choices, several.ok = FALSE)
 	formal.args <- formals(sys.function(sys.parent()))
 	choices <- eval(formal.args[[deparse(substitute(arg))]])
     }
-    if (is.null(arg)) return(choices[1])
+    if (is.null(arg)) return(choices[1L])
     else if(!is.character(arg))
 	stop("'arg' must be NULL or a character vector")
     if (!several.ok) { # most important (default) case:
         ## the arg can be the whole of choices as a default argument.
-        if(identical(arg, choices)) return(arg[1])
+        if(identical(arg, choices)) return(arg[1L])
         if(length(arg) > 1) stop("'arg' must be of length 1")
     } else if(length(arg) == 0) stop("'arg' must be of length >= 1")
 

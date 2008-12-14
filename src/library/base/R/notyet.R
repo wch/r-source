@@ -16,7 +16,7 @@
 
 .NotYetImplemented <- function ()
     stop(gettextf("'%s' is not implemented yet",
-                  as.character(sys.call(sys.parent())[[1]])), call. = FALSE)
+                  as.character(sys.call(sys.parent())[[1L]])), call. = FALSE)
 
 .NotYetUsed <- function(arg, error = TRUE) {
     msg <- gettextf("argument '%s' is not used (yet)", arg)

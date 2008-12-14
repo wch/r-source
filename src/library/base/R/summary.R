@@ -27,8 +27,8 @@ summary.default <-
     value <- if(is.logical(object))# scalar or array!
 	c(Mode = "logical",
           {tb <- table(object, exclude=NULL)# incl. NA s
-           if(!is.null(n <- dimnames(tb)[[1]]) && any(iN <- is.na(n)))
-               dimnames(tb)[[1]][iN] <- "NA's"
+           if(!is.null(n <- dimnames(tb)[[1L]]) && any(iN <- is.na(n)))
+               dimnames(tb)[[1L]][iN] <- "NA's"
            tb
            })
     else if(is.numeric(object)) {
@@ -49,7 +49,7 @@ summary.default <-
 	    ii <- object[[i]]
 	    ll[i] <- length(ii)
 	    cls <- oldClass(ii)
-	    sumry[i, 2] <- if(length(cls)>0) cls[1] else "-none-"
+	    sumry[i, 2] <- if(length(cls)>0) cls[1L] else "-none-"
 	    sumry[i, 3] <- mode(ii)
 	}
 	sumry[, 1] <- format(as.integer(ll))
@@ -67,7 +67,7 @@ summary.factor <- function(object, maxsum = 100, ...)
     if(any(nas)) maxsum <- maxsum - 1
     tbl <- table(object)
     tt <- c(tbl) # names dropped ...
-    names(tt) <- dimnames(tbl)[[1]]
+    names(tt) <- dimnames(tbl)[[1L]]
     if(length(ll) > maxsum) {
 	drop <- maxsum:length(ll)
 	o <- sort.list(tt, decreasing = TRUE)
@@ -114,7 +114,7 @@ summary.data.frame <-
             lbs <- format(names(sms))
             sms <- paste(lbs, ":", format(sms, digits = digits), "  ",
                          sep = "")
-            lw[i] <- nchar(lbs[1], type="w")
+            lw[i] <- nchar(lbs[1L], type="w")
             length(sms) <- nr
             z[[i]] <- sms
         }

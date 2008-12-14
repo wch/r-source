@@ -78,7 +78,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             ## We translated the file (possibly via a quess),
             ## so don't want to mark the strings.as from that encoding
             ## but we might know what we have encoded to, so
-            loc <- utils::localeToCharset()[1]
+            loc <- utils::localeToCharset()[1L]
             encoding <- if(have_encoding)
                 switch(loc,
                        "UTF-8" = "UTF-8",
@@ -138,11 +138,11 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             		     sep="")
 		nd <- nchar(dep, "c") - 1
 	    } else {
-	    	if (i == 1) lastshown <- min(skip.echo, srcref[3]-1)
-	    	dep <- getSrcLines(srcfile, lastshown+1, srcref[3])
-	    	leading <- srcref[1]-lastshown
-	    	lastshown <- srcref[3]
-	    	while (length(dep) && length(grep("^[[:blank:]]*$", dep[1]))) {
+	    	if (i == 1) lastshown <- min(skip.echo, srcref[3L]-1)
+	    	dep <- getSrcLines(srcfile, lastshown+1, srcref[3L])
+	    	leading <- srcref[1L]-lastshown
+	    	lastshown <- srcref[3L]
+	    	while (length(dep) && length(grep("^[[:blank:]]*$", dep[1L]))) {
 	    	    dep <- dep[-1]
 	    	    leading <- leading - 1
 	    	}
@@ -160,17 +160,17 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    }
 	}
 	yy <- eval.with.vis(ei, envir)
-	i.symbol <- mode(ei[[1]]) == "name"
+	i.symbol <- mode(ei[[1L]]) == "name"
 	if (!i.symbol) {
-	    ## ei[[1]] : the function "<-" or other
-	    curr.fun <- ei[[1]][[1]]
+	    ## ei[[1L]] : the function "<-" or other
+	    curr.fun <- ei[[1L]][[1L]]
 	    if (verbose) {
 		cat("curr.fun:")
 		utils::str(curr.fun)
 	    }
 	}
 	if (verbose >= 2) {
-	    cat(".... mode(ei[[1]])=", mode(ei[[1]]), "; paste(curr.fun)=")
+	    cat(".... mode(ei[[1L]])=", mode(ei[[1L]]), "; paste(curr.fun)=")
 	    utils::str(paste(curr.fun))
 	}
 	if (print.eval && yy$visible) {

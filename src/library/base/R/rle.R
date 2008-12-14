@@ -19,9 +19,9 @@ rle <- function(x)
     if (!is.vector(x) && !is.list(x))
         stop("'x' must be an atomic vector")
     n <- length(x)
-    if (n == 0)
-        return(list(lengths = integer(0), values = x))
-    y <- x[-1] != x[-n]
+    if (n == 0L)
+        return(list(lengths = integer(0L), values = x))
+    y <- x[-1L] != x[-n]
     i <- c(which(y | is.na(y)), n)
     structure(list(lengths = diff(c(0L, i)), values = x[i]),
               class = "rle")

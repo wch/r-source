@@ -23,22 +23,22 @@ try <- function(expr, silent = FALSE) {
             ## Patch up the call to produce nicer result for testing as
             ## try(stop(...)).  This will need adjusting if the
             ## implementation of tryCatch changes.
-            ## Use identical() since call[[1]] can be non-atomic.
-            if (identical(call[[1]], quote(doTryCatch)))
-                call <- sys.call(-4)
-            dcall <- deparse(call)[1]
+            ## Use identical() since call[[1L]] can be non-atomic.
+            if (identical(call[[1L]], quote(doTryCatch)))
+                call <- sys.call(-4L)
+            dcall <- deparse(call)[1L]
             prefix <- paste("Error in", dcall, ": ")
-            LONG <- 75 # to match value in errors.c
+            LONG <- 75L # to match value in errors.c
             msg <- conditionMessage(e)
-            sm <- strsplit(msg, "\n")[[1]]
-            if (14 + nchar(dcall, type="w") + nchar(sm[1], type="w") > LONG)
+            sm <- strsplit(msg, "\n")[[1L]]
+            if (14L + nchar(dcall, type="w") + nchar(sm[1L], type="w") > LONG)
                 prefix <- paste(prefix, "\n  ", sep = "")
         }
         else prefix <- "Error : "
         msg <- paste(prefix, conditionMessage(e), "\n", sep="")
         ## Store the error message for legacy uses of try() with
         ## geterrmessage().
-        .Internal(seterrmessage(msg[1]))
+        .Internal(seterrmessage(msg[1L]))
         if (! silent && identical(getOption("show.error.messages"), TRUE)) {
             cat(msg, file = stderr())
             .Internal(printDeferredWarnings())
@@ -71,8 +71,8 @@ R.Version <- function().Internal(Version())
 commandArgs <- function(trailingOnly = FALSE) {
     args <- .Internal(commandArgs())
     if(trailingOnly) {
-        m <- match("--args", args, 0)
-        if(m) args[-(1:m)] else character(0)
+        m <- match("--args", args, 0L)
+        if(m) args[-seq_len(m)] else character(0L)
     } else args
 }
 
@@ -105,8 +105,8 @@ rbind <- function(..., deparse.level = 1)
                               "deparse options %s are not recognized"),
                      paste(sQuote(control[is.na(opts)]), collapse=", ")),
              call. = FALSE, domain = NA)
-    if (any(opts == 1))
-        opts <- unique(c(opts[opts != 1], 2,3,4,5,6,8))# not (7,9)
+    if (any(opts == 1L))
+        opts <- unique(c(opts[opts != 1L], 2L,3L,4L,5L,6L,8L)) # not (7,9)
     return(sum(2^(opts-2)))
 }
 
@@ -137,11 +137,11 @@ format.info <- function(x, digits=NULL, nsmall=0)
 gc <- function(verbose = getOption("verbose"),	reset=FALSE)
 {
     res <- .Internal(gc(verbose, reset))
-    res <- matrix(res, 2, 7,
+    res <- matrix(res, 2L, 7L,
 		  dimnames = list(c("Ncells","Vcells"),
 		  c("used", "(Mb)", "gc trigger", "(Mb)",
 		    "limit (Mb)", "max used", "(Mb)")))
-    if(all(is.na(res[, 5]))) res[, -5] else res
+    if(all(is.na(res[, 5L]))) res[, -5L] else res
 }
 gcinfo <- function(verbose) .Internal(gcinfo(verbose))
 gctorture <- function(on=TRUE) invisible(.Internal(gctorture(on)))
@@ -172,7 +172,7 @@ searchpaths <- function()
 {
     s <- search()
     paths <-
-        lapply(1:length(s), function(i) attr(as.environment(i), "path"))
+        lapply(seq_along(s), function(i) attr(as.environment(i), "path"))
     paths[[length(s)]] <- system.file()
     m <- grep("^package:", s)
     if(length(m)) paths[-m] <- as.list(s[-m])
@@ -214,11 +214,11 @@ NextMethod <- function(generic=NULL, object=NULL, ...)
 
 data.class <- function(x) {
     if (length(cl <- oldClass(x)))
-	cl[1]
+	cl[1L]
     else {
 	l <- length(dim(x))
-	if (l == 2)	"matrix"
-	else if (l > 0)	"array"
+	if (l == 2L)	"matrix"
+	else if (l > 0L) "array"
 	else mode(x)
     }
 }
@@ -234,13 +234,14 @@ encodeString <- function(x, width = 0, quote = "", na.encode = TRUE,
     attributes(x) <- at  # preserve names, dim etc
     oldClass(x) <- NULL  # but not class
     justify <- match(match.arg(justify),
-                     c("left", "right", "centre", "none")) - 1
+                     c("left", "right", "centre", "none")) - 1L
     .Internal(encodeString(x, width, quote, justify, na.encode))
 }
 
 l10n_info <- function() .Internal(l10n_info())
 
-iconv <- function(x, from = "", to = "", sub = NA) {
+iconv <- function(x, from = "", to = "", sub = NA)
+{
     if(!is.character(x)) x <- as.character(x)
     .Internal(iconv(x, from, to, as.character(sub)))
 }

@@ -23,8 +23,8 @@ mapply <- function(FUN,..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
                     PACKAGE = "base")
 
     if (USE.NAMES && length(dots)) {
-	if (is.null(names1 <- names(dots[[1]])) && is.character(dots[[1]]))
-	    names(answer) <- dots[[1]]
+	if (is.null(names1 <- names(dots[[1L]])) && is.character(dots[[1L]]))
+	    names(answer) <- dots[[1L]]
 	else if (!is.null(names1))
 	    names(answer) <- names1
     }
@@ -35,7 +35,7 @@ mapply <- function(FUN,..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
         else if (common.len > 1)
             array(unlist(answer, recursive = FALSE),
                   dim = c(common.len, max(sapply(dots,length))),
-                  dimnames = list(names(answer[[1]]), names(answer)))
+                  dimnames = list(names(answer[[1L]]), names(answer)))
         else answer
     }
     else answer
@@ -56,7 +56,7 @@ Vectorize <- function(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
     	stop("must specify formal argument names to vectorize")
 
     FUNV <- function() { ## will set the formals below
-        args <- lapply(as.list(match.call())[-1], eval, parent.frame())
+        args <- lapply(as.list(match.call())[-1L], eval, parent.frame())
         names <- if(is.null(names(args))) character(length(args))
         else names(args)
         dovec <- names %in% vectorize.args

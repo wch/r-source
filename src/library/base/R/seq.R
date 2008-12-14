@@ -20,14 +20,14 @@ seq.default <-
     function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
              length.out = NULL, along.with = NULL, ...)
 {
-    if((One <- nargs() == 1) && !missing(from)) {
+    if((One <- nargs() == 1L) && !missing(from)) {
 	lf <- length(from)
-	return(if(mode(from) == "numeric" && lf == 1) 1:from else
-	       if(lf) 1:lf else integer(0))
+	return(if(mode(from) == "numeric" && lf == 1L) 1L:from else
+	       if(lf) 1L:lf else integer(0L))
     }
     if(!missing(along.with)) {
 	length.out <- length(along.with)
-	if(One) return(if(length.out) 1:length.out else integer(0))
+	if(One) return(if(length.out) 1L:length.out else integer(0L))
     }
     else if(!missing(length.out))
 	length.out <- ceiling(length.out)
@@ -43,7 +43,7 @@ seq.default <-
 		    return(from)
 		stop("invalid (to - from)/by in seq(.)")
 	    }
-	    if(n < 0)
+	    if(n < 0L)
 		stop("wrong sign in 'by' argument")
 	    if(n > .Machine$integer.max)
 		stop("'by' argument is much too small")
@@ -51,31 +51,31 @@ seq.default <-
 	    dd <- abs(del)/max(abs(to), abs(from))
 	    if (dd < 100*.Machine$double.eps) return(from)
 	    n <- as.integer(n + 1e-7)
-	    x <- from + (0:n) * by
+	    x <- from + (0L:n) * by
             ## correct for overshot because of fuzz
             if(by > 0) pmin(x, to) else pmax(x, to)
 	}
-    else if(!is.finite(length.out) || length.out < 0)
+    else if(!is.finite(length.out) || length.out < 0L)
 	stop("length must be non-negative number")
     else if(length.out == 0)
-	integer(0)
+	integer(0L)
     else if (One) 1:length.out
     else if(missing(by)) {
 	# if(from == to || length.out < 2) by <- 1
 	if(missing(to))
-	    to <- from + length.out - 1
+	    to <- from + length.out - 1L
 	if(missing(from))
-	    from <- to - length.out + 1
-	if(length.out > 2)
+	    from <- to - length.out + 1L
+	if(length.out > 2L)
 	    if(from == to)
 		rep.int(from, length.out)
-	    else as.vector(c(from, from + (1:(length.out - 2)) * by, to))
+	    else as.vector(c(from, from + (1L:(length.out - 2L)) * by, to))
 	else as.vector(c(from, to))[1:length.out]
     }
     else if(missing(to))
-	from + (0:(length.out - 1)) * by
+	from + (0L:(length.out - 1L)) * by
     else if(missing(from))
-	to - ((length.out - 1):0) * by
+	to - ((length.out - 1L):0L) * by
     else stop("too many arguments")
 }
 

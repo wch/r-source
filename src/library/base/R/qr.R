@@ -65,7 +65,7 @@ qr.coef <- function(qr, y)
     im <- is.matrix(y)
     if (!im) y <- as.matrix(y)
     ny <- ncol(y)
-    if (p == 0) return( if (im) matrix(0,p,ny) else numeric(0) )
+    if (p == 0) return( if (im) matrix(0,p,ny) else numeric(0L) )
     if(is.complex(qr$qr)) {
 	if(!is.complex(y)) y[] <- as.complex(y)
 	coef <- matrix(NA_complex_, nrow = p, ncol = ny)
@@ -228,10 +228,10 @@ qr.Q <- function (qr, complete = FALSE,
     dqr <- dim(qr$qr)
     cmplx <- mode(qr$qr) == "complex"
     D <-
-	if (complete) diag(Dvec, dqr[1])
+	if (complete) diag(Dvec, dqr[1L])
 	else {
 	    ncols <- min(dqr)
-	    diag(Dvec[1:ncols], nrow = dqr[1], ncol = ncols)
+	    diag(Dvec[1:ncols], nrow = dqr[1L], ncol = ncols)
 	}
     qr.qy(qr, D)
 }
@@ -255,7 +255,7 @@ qr.X <- function (qr, complete = FALSE,
     if(pivoted && ncol < length(qr$pivot))
         stop("need larger value of 'ncol' as pivoting occurred")
     cmplx <- mode(R) == "complex"
-    p <- dim(R)[2]
+    p <- dim(R)[2L]
     if (ncol < p)
 	R <- R[, 1:ncol, drop = FALSE]
     else if (ncol > p) {

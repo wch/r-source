@@ -123,7 +123,7 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
                                         # 3='...', 3=#lev, 1=extra
                 lenl <- cumsum(nchar(lev, "w") + nchar(colsep, "w"))
                 if(n <= 1 || lenl[n] <= width) n
-                else max(1, which(lenl > width)[1] - 1)
+                else max(1, which(lenl > width)[1L] - 1)
             }
         drop <- n > maxl
         cat(if(drop)paste(format(n),""), T0,
@@ -158,11 +158,11 @@ Ops.factor <- function(e1, e2)
 	}
 	r
     }
-    if (nzchar(.Method[1])) { # e1 *is* a factor
+    if (nzchar(.Method[1L])) { # e1 *is* a factor
 	l1 <- noNA.levels(e1)
 	e1 <- l1[e1]
     }
-    if (nzchar(.Method[2])) { # e2 *is* a factor
+    if (nzchar(.Method[2L])) { # e2 *is* a factor
 	l2 <- noNA.levels(e2)
 	e2 <- l2[e2]
     }
@@ -233,11 +233,11 @@ function (e1, e2)
     nas <- is.na(e1) | is.na(e2)
     ord1 <- FALSE
     ord2 <- FALSE
-    if (nzchar(.Method[1])) {
+    if (nzchar(.Method[1L])) {
 	l1 <- levels(e1)
 	ord1 <- TRUE
     }
-    if (nzchar(.Method[2])) {
+    if (nzchar(.Method[2L])) {
 	l2 <- levels(e2)
 	ord2 <- TRUE
     }

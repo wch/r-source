@@ -175,19 +175,19 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     }
 
     libraryPkgName <- function(pkgName, sep = "_")
-	unlist(strsplit(pkgName, sep, fixed=TRUE))[1]
+	unlist(strsplit(pkgName, sep, fixed=TRUE))[1L]
 
     libraryPkgVersion <- function(pkgName, sep = "_")
     {
         splitName <- unlist(strsplit(pkgName, sep, fixed=TRUE))
-	if (length(splitName) > 1) splitName[2] else NULL
+	if (length(splitName) > 1) splitName[2L] else NULL
     }
 
     libraryMaxVersPos <- function(vers)
     {
 	## Takes in a character vector of version numbers
         ## returns the position of the maximum version.
-        if(length(vers) == 0) return(integer(0))
+        if(length(vers) == 0) return(integer(0L))
         vers <- package_version(vers)
         min(which(vers == max(vers)))
     }
@@ -418,7 +418,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     else if(!missing(help)) {
 	if(!character.only)
 	    help <- as.character(substitute(help))
-        pkgName <- help[1]              # only give help on one package
+        pkgName <- help[1L]              # only give help on one package
         pkgPath <- .find.package(pkgName, lib.loc, verbose = verbose)
         docFiles <- c(file.path(pkgPath, "Meta", "package.rds"),
                       file.path(pkgPath, "INDEX"))
@@ -470,8 +470,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	## library():
         if(is.null(lib.loc))
             lib.loc <- .libPaths()
-        db <- matrix(character(0), nrow = 0, ncol = 3)
-        nopkgs <- character(0)
+        db <- matrix(character(0L), nrow = 0L, ncol = 3L)
+        nopkgs <- character(0L)
 
         for(lib in lib.loc) {
             a <- .packages(all.available = TRUE, lib.loc = lib)
@@ -726,7 +726,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
     if(all.available) {
-	ans <- character(0)
+	ans <- character(0L)
         lib.loc <- lib.loc[file.exists(lib.loc)]
         valid_package_version_regexp <-
             .standard_regexps()$valid_package_version
@@ -752,7 +752,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 .path.package <- function(package = NULL, quiet = FALSE)
 {
     if(is.null(package)) package <- .packages()
-    if(length(package) == 0) return(character(0))
+    if(length(package) == 0) return(character(0L))
     s <- search()
     searchpaths <-
         lapply(1:length(s), function(i) attr(as.environment(i), "path"))
@@ -804,8 +804,8 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
 
     if(!length(package)) return(character())
 
-    bad <- character(0)
-    out <- character(0)
+    bad <- character(0L)
+    out <- character(0L)
 
     for(pkg in package) {
         if(length(grep("_", pkg))) {
@@ -892,14 +892,14 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
             ##   resolvable dependencies against the current version of
             ##   R ...)
             paths <- if(pkg_has_version) {
-                paths[1]
+                paths[1L]
             }
             else if(length(pos <- which(basename(paths) == pkg)))
-                paths[pos][1]
+                paths[pos][1L]
             else {
                 versions <- package_version(db[ok, "Version"])
                 pos <- min(which(versions == max(versions)))
-                paths <- paths[pos][1]
+                paths <- paths[pos][1L]
             }
             if(verbose)
                 warning(gettextf("package '%s' found more than once,\nusing the one found in '%s'",

@@ -18,7 +18,7 @@ duplicated <- function(x, incomparables = FALSE, ...) UseMethod("duplicated")
 
 duplicated.default <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
 {
-    if(is.na(fromLast <- as.logical(fromLast[1])))
+    if(is.na(fromLast <- as.logical(fromLast[1L])))
         stop("'fromLast' must be TRUE or FALSE")
     .Internal(duplicated(x, incomparables, fromLast))
 }
@@ -52,7 +52,7 @@ unique <- function(x, incomparables = FALSE, ...) UseMethod("unique")
 ## so it needs to handle some other cases.
 unique.default <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
 {
-    if(is.na(fromLast <- as.logical(fromLast[1])))
+    if(is.na(fromLast <- as.logical(fromLast[1L])))
         stop("'fromLast' must be TRUE or FALSE")
     z <- .Internal(unique(x, incomparables, fromLast))
     if(is.factor(x))

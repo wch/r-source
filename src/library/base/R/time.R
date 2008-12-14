@@ -17,11 +17,11 @@
 system.time <- function(expr, gcFirst = TRUE)
 {
     ppt <- function(y) {
-        if(!is.na(y[4])) y[1] <- y[1] + y[4]
-        if(!is.na(y[5])) y[2] <- y[2] + y[5]
+        if(!is.na(y[4L])) y[1L] <- y[1L] + y[4L]
+        if(!is.na(y[5L])) y[2L] <- y[2L] + y[5L]
         y[1:3]
     }
-    if(!exists("proc.time")) return(rep(NA_real_, 5))
+    if(!exists("proc.time")) return(rep(NA_real_, 5L))
     if(gcFirst)  gc(FALSE)
     time <- proc.time()
     ## need on.exit after 'time' has been set:
@@ -39,9 +39,9 @@ date <- function() .Internal(date())
 print.proc_time <- function(x, ...)
 {
     y <- x
-    if(!is.na(y[4])) y[1] <- y[1] + y[4]
-    if(!is.na(y[5])) y[2] <- y[2] + y[5]
-    y <- y[1:3]
+    if(!is.na(y[4L])) y[1L] <- y[1L] + y[4L]
+    if(!is.na(y[5L])) y[2L] <- y[2L] + y[5L]
+    y <- y[1L:3L]
     names(y) <- c(gettext("user"), gettext("system"), gettext("elapsed"))
     print(y, ...)
     invisible(x)

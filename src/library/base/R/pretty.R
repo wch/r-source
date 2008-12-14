@@ -22,7 +22,7 @@ pretty <- function(x, n=5, min.n= n %/% 3, shrink.sml = 0.75,
     if(length(x)==0)
 	return(x)
     x <- x[is.finite(x)]
-    if(is.na(n <- as.integer(n[1])) || n < 0)# n=0 !!
+    if(is.na(n <- as.integer(n[1L])) || n < 0L)# n=0 !!
 	stop("invalid 'n' value")
     if(!is.numeric(shrink.sml) || shrink.sml <= 0)
 	stop("'shrink.sml' must be numeric > 0")
@@ -32,7 +32,7 @@ pretty <- function(x, n=5, min.n= n %/% 3, shrink.sml = 0.75,
 	stop("'high.u.bias' must be non-negative numeric")
     if(!is.numeric(u5.bias) || u5.bias < 0)
 	stop("'u5.bias' must be non-negative numeric")
-    if((eps.correct <- as.integer(eps.correct)) < 0 || eps.correct > 2)
+    if((eps.correct <- as.integer(eps.correct)) < 0L || eps.correct > 2L)
 	stop("'eps.correct' must be 0, 1, or 2")
     z <- .C("R_pretty", l=as.double(min(x)), u=as.double(max(x)),
             n = n,

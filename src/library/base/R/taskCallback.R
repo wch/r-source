@@ -125,7 +125,7 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
         {
             if(suspended)
                 return(TRUE)
-            discard <- character(0)
+            discard <- character(0L)
             for(i in names(handlers)) {
                 h <- handlers[[i]]
                 if(length(h) > 1) {

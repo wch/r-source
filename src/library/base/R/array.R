@@ -40,14 +40,14 @@ function(x, MARGIN)
         d <- length(x)
     n <- length(d)
 
-    if((length(MARGIN) > 1) || (MARGIN < 1) || (MARGIN > n))
+    if((length(MARGIN) > 1L) || (MARGIN < 1L) || (MARGIN > n))
         stop("incorrect value for 'MARGIN'")
 
-    if(any(d == 0)) return(array(integer(0), d))
+    if(any(d == 0L)) return(array(integer(0L), d))
 
-    y <- rep.int(rep.int(1:d[MARGIN],
-			 prod(d[seq_len(MARGIN - 1)]) * rep.int(1, d[MARGIN])),
-		 prod(d[seq.int(from = MARGIN + 1, length.out = n - MARGIN)]))
+    y <- rep.int(rep.int(1L:d[MARGIN],
+			 prod(d[seq_len(MARGIN - 1L)]) * rep.int(1L, d[MARGIN])),
+		 prod(d[seq.int(from = MARGIN + 1L, length.out = n - MARGIN)]))
     dim(y) <- d
     y
 }

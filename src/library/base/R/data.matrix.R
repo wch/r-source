@@ -21,9 +21,9 @@ data.matrix <- function(frame, rownames.force = NA)
     d <- dim(frame)
     rn <- if(rownames.force %in% FALSE) NULL
     else if(rownames.force %in% TRUE) row.names(frame)
-    else {if(.row_names_info(frame) <= 0) NULL else row.names(frame)}
+    else {if(.row_names_info(frame) <= 0L) NULL else row.names(frame)}
 
-    for(i in seq_len(d[2])) {
+    for(i in seq_len(d[2L])) {
         xi <- frame[[i]]
         ## at present is.numeric suffices, but let's be cautious
         if(is.integer(xi) || is.numeric(xi)) next
@@ -37,8 +37,8 @@ data.matrix <- function(frame, rownames.force = NA)
     ## it makes sense to find the type needed first.
     intOK <- all(unlist(lapply(frame, is.integer)))
     x <- matrix(if(intOK) NA_integer_ else NA_real_,
-                nrow = d[1], ncol = d[2],
+                nrow = d[1L], ncol = d[2L],
 		dimnames = list(rn, names(frame)) )
-    for(i in seq_len(d[2])) x[, i] <- frame[[i]]
+    for(i in seq_len(d[2L])) x[, i] <- frame[[i]]
     x
 }

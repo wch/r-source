@@ -19,7 +19,7 @@
 .Deprecated <- function(new, package = NULL, msg) {
     if( missing(msg) ) {
        msg <- gettextf("'%s' is deprecated.\n",
-                       as.character(sys.call(sys.parent()))[1] )
+                       as.character(sys.call(sys.parent()))[1L] )
       if(!missing(new))
 	msg <- c(msg, gettextf("Use '%s' instead.\n", new))
       msg <- c(msg,

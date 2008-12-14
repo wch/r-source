@@ -21,7 +21,7 @@ isSymmetric.matrix <- function(object, tol = 100*.Machine$double.eps, ...) {
     if(!is.matrix(object)) return(FALSE) ## we test for  symmetric *matrix*
     ## cheap pretest: is it square?
     d <- dim(object)
-    if(d[1] != d[2]) return(FALSE)
+    if(d[1L] != d[2L]) return(FALSE)
     test <-
         if(is.complex(object))
             all.equal.numeric(object, Conj(t(object)), tolerance = tol, ...)

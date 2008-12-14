@@ -19,7 +19,7 @@ autoload <- function(name, package, reset=FALSE, ...)
     if (!reset && exists(name, envir = .GlobalEnv, inherits = FALSE))
 	stop("an object with that name already exists")
     m <- match.call()
-    m[[1]] <- as.name("list")
+    m[[1L]] <- as.name("list")
     newcall <- eval(m, parent.frame())
     newcall <- as.call(c(as.name("autoloader"), newcall))
     newcall$reset <- NULL
@@ -36,7 +36,7 @@ autoloader <- function (name, package, ...)
     rm(list = name, envir = .AutoloadEnv, inherits = FALSE)
     m <- match.call()
     m$name <- NULL
-    m[[1]] <- as.name("library")
+    m[[1L]] <- as.name("library")
     ## load the package
     eval(m, .GlobalEnv)
     ## reset the autoloader

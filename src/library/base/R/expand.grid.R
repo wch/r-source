@@ -19,9 +19,9 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = FALSE)
     ## x should either be a list or a set of vectors or factors
     nargs <- length(args <- list(...))
     if(!nargs) return(as.data.frame(list()))
-    if(nargs == 1 && is.list(a1 <- args[[1]]))
+    if(nargs == 1L && is.list(a1 <- args[[1L]]))
 	nargs <- length(args <- a1)
-    if(nargs == 0) return(as.data.frame(list()))
+    if(nargs == 0L) return(as.data.frame(list()))
     cargs <- args
     iArgs <- seq_len(nargs)
     nmc <- paste("Var", iArgs, sep="")
@@ -31,14 +31,14 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = FALSE)
     else if(any(ng0 <- nzchar(nm)))
 	nmc[ng0] <- nm[ng0]
     names(cargs) <- nmc
-    rep.fac <- 1
+    rep.fac <- 1L
     d <- sapply(args, length)
     if(KEEP.OUT.ATTRS) {
 	dn <- vector("list", nargs)
 	names(dn) <- nmc
     }
     orep <- prod(d)
-    if(orep == 0) {
+    if(orep == 0L) {
         for(i in iArgs) cargs[[i]] <- args[[i]][FALSE]
     } else {
         for(i in iArgs) {

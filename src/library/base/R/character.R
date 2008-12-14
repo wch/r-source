@@ -129,7 +129,7 @@ sQuote <- function(x) {
                     before <- "\x91"; after <- "\x92"
                 } else {
                     z <- iconv(c("\xe2\x80\x98", "\xe2\x80\x99"), "UTF-8", "")
-                    before <- z[1]; after <- z[2]
+                    before <- z[1L]; after <- z[2L]
                 }
             }
         }
@@ -139,8 +139,8 @@ sQuote <- function(x) {
         if(identical(q, "UTF-8")) {
             before <- "\xe2\x80\x98"; after <- "\xe2\x80\x99"
         }
-        if(is.character(q) && length(q) >= 4) {
-            before <- q[1]; after <- q[2]
+        if(is.character(q) && length(q) >= 4L) {
+            before <- q[1L]; after <- q[2L]
         }
         ## we do not want these strings marked as in the encoding
         ## R was built under
@@ -162,7 +162,7 @@ dQuote <- function(x) {
                     before <- "\x93"; after <- "\x94"
                 } else {
                     z <- iconv(c("\xe2\x80\x9c", "\xe2\x80\x9d"), "UTF-8", "")
-                    before <- z[1]; after <- z[2]
+                    before <- z[1L]; after <- z[2L]
                 }
             }
         }
@@ -172,8 +172,8 @@ dQuote <- function(x) {
         if(identical(q, "UTF-8")) {
             before <- "\xe2\x80\x9c"; after <- "\xe2\x80\x9d"
         }
-        if(is.character(q) && length(q) >= 4) {
-            before <- q[3]; after <- q[4]
+        if(is.character(q) && length(q) >= 4L) {
+            before <- q[3L]; after <- q[4L]
         }
         Encoding(before) <- Encoding(after) <- "unknown"
     }

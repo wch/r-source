@@ -22,8 +22,8 @@ Sys.getenv <- function(x = NULL, unset = "")
 	x <- strsplit(.Internal(Sys.getenv(character(), "")), "=", fixed=TRUE)
 	v <- n <- character(LEN <- length(x))
 	for (i in 1:LEN) {
-	    n[i] <- x[[i]][1]
-	    v[i] <- paste(x[[i]][-1], collapse = "=")
+	    n[i] <- x[[i]][1L]
+	    v[i] <- paste(x[[i]][-1L], collapse = "=")
 	}
 	structure(v, names = n)[sort.list(n)]
     } else {

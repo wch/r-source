@@ -51,7 +51,7 @@ apply <- function(X, MARGIN, FUN, ...)
         newX <- array(vector(typeof(X), 1), dim = c(prod(d.call), 1))
         ans <- FUN(if(length(d.call) < 2) newX[,1] else
                    array(newX[,1], d.call, dn.call), ...)
-        return(if(is.null(ans)) ans else if(length(d.ans) < 2) ans[1][-1]
+        return(if(is.null(ans)) ans else if(length(d.ans) < 2) ans[1L][-1L]
                else array(ans, d.ans, dn.ans))
     }
     ## else
@@ -72,10 +72,10 @@ apply <- function(X, MARGIN, FUN, ...)
 
     ## answer dims and dimnames
 
-    ans.list <- is.recursive(ans[[1]])
-    l.ans <- length(ans[[1]])
+    ans.list <- is.recursive(ans[[1L]])
+    l.ans <- length(ans[[1L]])
 
-    ans.names <- names(ans[[1]])
+    ans.names <- names(ans[[1L]])
     if(!ans.list)
 	ans.list <- any(unlist(lapply(ans, length)) != l.ans)
     if(!ans.list && length(ans.names)) {
@@ -84,7 +84,7 @@ apply <- function(X, MARGIN, FUN, ...)
     }
     len.a <- if(ans.list) d2 else length(ans <- unlist(ans, recursive = FALSE))
     if(length(MARGIN) == 1 && len.a == d2) {
-	names(ans) <- if(length(dn.ans[[1]])) dn.ans[[1]] # else NULL
+	names(ans) <- if(length(dn.ans[[1L]])) dn.ans[[1L]] # else NULL
 	return(ans)
     }
     if(len.a == d2)

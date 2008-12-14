@@ -30,7 +30,7 @@ rowsum.default <- function(x, group, reorder=TRUE, na.rm = FALSE, ...)
     rval <- .Call("Rrowsum_matrix", x, NCOL(x), group, ugroup, na.rm,
                   PACKAGE="base")
 
-    dimnames(rval) <- list(as.character(ugroup),dimnames(x)[[2]])
+    dimnames(rval) <- list(as.character(ugroup),dimnames(x)[[2L]])
     rval
 }
 

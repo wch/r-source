@@ -17,7 +17,7 @@
 mode <- function(x) {
     if(is.expression(x)) return("expression")
     if(is.call(x))
-	return(switch(deparse(x[[1]])[1],
+	return(switch(deparse(x[[1L]])[1L],
 		      "(" = "(",
 		      ## otherwise
 		      "call"))

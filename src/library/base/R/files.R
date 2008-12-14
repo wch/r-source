@@ -170,7 +170,7 @@ as.octmode <- function(x)
     if(is.double(x) && x == as.integer(x)) x <- as.integer(x)
     if(is.integer(x)) return(structure(x, class="octmode"))
     if(is.character(x)) {
-        xx <- strsplit(x, "")[[1]]
+        xx <- strsplit(x, "")[[1L]]
         if(!all(xx %in% 0:7)) stop("invalid digits")
         z <- as.numeric(xx) * 8^(rev(seq_along(xx)-1))
         return(structure(sum(z), class="octmode"))
@@ -230,7 +230,7 @@ function(x)
     }
     stop("'x' cannot be coerced to hexmode")
 }
-        
+
 system.file <-
 function(..., package = "base", lib.loc = NULL)
 {

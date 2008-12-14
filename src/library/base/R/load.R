@@ -41,7 +41,7 @@ load <-
     .Internal(loadFromConn2(con, envir))
 }
 
-save <- function(..., list = character(0),
+save <- function(..., list = character(0L),
                  file = stop("'file' must be specified"),
                  ascii = FALSE, version = NULL, envir = parent.frame(),
                  compress = !ascii, eval.promises = TRUE, precheck = TRUE)
@@ -55,7 +55,7 @@ save <- function(..., list = character(0),
     if (!is.null(version) && version < 2)
         warning("Use of save versions prior to 2 is deprecated")
 
-    names <- as.character( substitute( list(...)))[-1]
+    names <- as.character( substitute( list(...)))[-1L]
     list<- c(list, names)
     if (! is.null(version) && version == 1)
         invisible(.Internal(save(list, file, ascii, version, envir,

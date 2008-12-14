@@ -26,7 +26,7 @@ tryCatch <- function(expr, ..., finally) {
                                      handlers[-nh]),
 			names[nh], parentenv, handlers[[nh]])
 	else if (nh == 1)
-	    tryCatchOne(expr, names, parentenv, handlers[[1]])
+	    tryCatchOne(expr, names, parentenv, handlers[[1L]])
 	else expr
     }
     tryCatchOne <- function(expr, name, parentenv, handler) {
@@ -40,16 +40,16 @@ tryCatch <- function(expr, ..., finally) {
 	# the handler is invoked; we only get to this point if the handler
 	# is invoked.  If we get here then the handler will have been
 	# popped off the internal handler stack.
-	if (is.null(value[[1]])) {
+	if (is.null(value[[1L]])) {
 	    # a simple error; message is stored internally
 	    # and call is in result; this defers all allocs until
 	    # after the jump
 	    msg <- .Internal(geterrmessage())
-	    call <- value[[2]]
+	    call <- value[[2L]]
 	    cond <- simpleError(msg, call)
 	}
-	else cond <- value[[1]]
-	value[[3]](cond)
+	else cond <- value[[1L]]
+	value[[3L]](cond)
     }
     if (! missing(finally))
         on.exit(finally)
@@ -106,7 +106,7 @@ conditionCall.condition <- function(c) c$call
 print.condition <- function(x, ...) {
     msg <- conditionMessage(x)
     call <- conditionCall(x)
-    cl <- class(x)[1]
+    cl <- class(x)[1L]
     if (! is.null(call))
         cat("<", cl, " in ", deparse(call), ": ", msg, ">\n", sep="")
     else
@@ -117,9 +117,9 @@ print.condition <- function(x, ...) {
 as.character.condition <- function(x, ...) {
     msg <- conditionMessage(x)
     call <- conditionCall(x)
-    cl <- class(x)[1]
+    cl <- class(x)[1L]
     if (! is.null(call))
-        paste(cl, " in ", deparse(call)[1], ": ", msg, "\n", sep="")
+        paste(cl, " in ", deparse(call)[1L], ": ", msg, "\n", sep="")
     else
         paste(cl, ": ", msg, "\n", sep="")
 }
@@ -128,7 +128,7 @@ as.character.error <- function(x, ...) {
     msg <- conditionMessage(x)
     call <- conditionCall(x)
     if (! is.null(call))
-        paste("Error in ", deparse(call)[1], ": ", msg, "\n", sep="")
+        paste("Error in ", deparse(call)[1L], ": ", msg, "\n", sep="")
     else
         paste("Error: ", msg, "\n", sep="")
 }
@@ -150,7 +150,7 @@ restartDescription <- function(r) r$description
 restartFormals <- function(r) formals(r$handler)
 
 print.restart <- function(x, ...) {
-    cat(paste("<restart:", x[[1]], ">\n"))
+    cat(paste("<restart:", x[[1L]], ">\n"))
     invisible(x)
 }
 
@@ -162,7 +162,7 @@ findRestart <- function(name, cond = NULL) {
         r <- .Internal(.getRestart(i))
         if (is.null(r))
             return(NULL)
-        else if (name == r[[1]] &&
+        else if (name == r[[1L]] &&
                  (is.null(cond) || is.null(r$test) || r$test(cond)))
             return(r)
         else i <- i + 1
@@ -280,14 +280,14 @@ withRestarts <- function(expr, ...) {
 	    withOneRestart(withRestartList(expr, restarts[-nr]),
                            restarts[[nr]])
 	else if (nr == 1)
-	    withOneRestart(expr, restarts[[1]])
+	    withOneRestart(expr, restarts[[1L]])
 	else expr
     }
     restarts <- makeRestartList(...)
     if (length(restarts) == 0)
         expr
     else if (length(restarts) == 1)
-        withOneRestart(expr, restarts[[1]])
+        withOneRestart(expr, restarts[[1L]])
     else withRestartList(expr, restarts)
 }
 

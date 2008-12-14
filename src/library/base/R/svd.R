@@ -19,8 +19,8 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
     x <- as.matrix(x)
     if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
     dx <- dim(x)
-    n <- dx[1]
-    p <- dx[2]
+    n <- dx[1L]
+    p <- dx[2L]
     if(!n || !p) stop("0 extent dimensions")
     if (is.complex(x)) {
         res <- La.svd(x, nu, nv)
@@ -35,7 +35,7 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 
     if(nu == 0) {
 	job <- 0
-	u <- double(0)
+	u <- double(0L)
     }
     else if(nu == n) {
 	job <- 10
@@ -52,7 +52,7 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 	if(nv == 0) 0 else if(nv == p || nv == n) 1 else
     stop("'nv' must be 0 or ncol(x)")
 
-    v <- if(job == 0) double(0) else matrix(0, p, p)
+    v <- if(job == 0) double(0L) else matrix(0, p, p)
 
     mn <- min(n,p)
     mm <- min(n+1,p)

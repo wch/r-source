@@ -36,7 +36,7 @@
 })
 
 .libPaths <- local({
-    .lib.loc <- character(0)            # Profiles need to set this.
+    .lib.loc <- character(0L)            # Profiles need to set this.
     function(new) {
         if(!missing(new)) {
             new <- Sys.glob(path.expand(new))

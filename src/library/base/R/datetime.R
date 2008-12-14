@@ -30,7 +30,7 @@ as.POSIXlt.date <- as.POSIXlt.dates <- function(x, ...)
 as.POSIXlt.POSIXct <- function(x, tz = "", ...)
 {
     tzone <- attr(x, "tzone")
-    if(missing(tz) && !is.null(tzone)) tz <- tzone[1]
+    if(missing(tz) && !is.null(tzone)) tz <- tzone[1L]
     .Internal(as.POSIXlt(x, tz))
 }
 
@@ -44,7 +44,7 @@ as.POSIXlt.character <- function(x, tz = "", format, ...)
         if(nzchar(tz)) attr(res, "tzone") <- tz
         return(res)
     }
-    xx <- x[1]
+    xx <- x[1L]
     if(is.na(xx)) {
         j <- 1
         while(is.na(xx) && (j <- j+1) <= length(x))
@@ -104,8 +104,8 @@ as.POSIXct.dates <- function(x, ...)
     if(inherits(x, "dates")) {
         z <- attr(x, "origin")
         x <- as.numeric(x) * 86400
-        if(length(z) == 3 && is.numeric(z))
-            x  <- x + as.numeric(ISOdate(z[3], z[1], z[2], 0))
+        if(length(z) == 3L && is.numeric(z))
+            x  <- x + as.numeric(ISOdate(z[3L], z[1L], z[2L], 0))
         return(structure(x, class = c("POSIXt", "POSIXct")))
     } else stop(gettextf("'%s' is not a \"dates\" object",
                          deparse(substitute(x)) ))
@@ -114,7 +114,7 @@ as.POSIXct.dates <- function(x, ...)
 as.POSIXct.POSIXlt <- function(x, tz = "", ...)
 {
     tzone <- attr(x, "tzone")
-    if(missing(tz) && !is.null(tzone)) tz <- tzone[1]
+    if(missing(tz) && !is.null(tzone)) tz <- tzone[1L]
     structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct"),
               tzone = tz)
 }
@@ -271,7 +271,7 @@ check_tzones <- function(...)
     tzs <- tzs[tzs != ""]
     if(length(tzs) > 1)
         warning("'tzone' attributes are inconsistent")
-    if(length(tzs)) tzs[1] else NULL
+    if(length(tzs)) tzs[1L] else NULL
 }
 
 Summary.POSIXct <- function (..., na.rm)
@@ -283,7 +283,7 @@ Summary.POSIXct <- function (..., na.rm)
     args <- list(...)
     tz <- do.call("check_tzones", args)
     val <- NextMethod(.Generic)
-    class(val) <- oldClass(args[[1]])
+    class(val) <- oldClass(args[[1L]])
     attr(val, "tzone") <- tz
     val
 }
@@ -581,13 +581,13 @@ Summary.difftime <- function (..., na.rm)
         structure(do.call(.Generic), units="secs", class="difftime")
     } else {
         units <- sapply(x, function(x) attr(x, "units"))
-        if(all(units == units[1])) {
+        if(all(units == units[1L])) {
             args <- c(lapply(x, as.vector), na.rm = na.rm)
         } else {
             args <- c(lapply(x, coerceTimeUnit), na.rm = na.rm)
             units <- "secs"
         }
-        structure(do.call(.Generic, args), units=units[[1]], class="difftime")
+        structure(do.call(.Generic, args), units=units[[1L]], class="difftime")
     }
 }
 
@@ -631,7 +631,7 @@ seq.POSIXt <-
         by <- switch(attr(by,"units"), secs = 1, mins = 60, hours = 3600,
                      days = 86400, weeks = 7*86400) * unclass(by)
     } else if(is.character(by)) {
-        by2 <- strsplit(by, " ", fixed=TRUE)[[1]]
+        by2 <- strsplit(by, " ", fixed=TRUE)[[1L]]
         if(length(by2) > 2 || length(by2) < 1)
             stop("invalid 'by' string")
         valid <- pmatch(by2[length(by2)],
@@ -640,9 +640,9 @@ seq.POSIXt <-
         if(is.na(valid)) stop("invalid string for 'by'")
         if(valid <= 5) {
             by <- c(1, 60, 3600, 86400, 7*86400)[valid]
-            if (length(by2) == 2) by <- by * as.integer(by2[1])
+            if (length(by2) == 2) by <- by * as.integer(by2[1L])
         } else
-            by <- if(length(by2) == 2) as.integer(by2[1]) else 1
+            by <- if(length(by2) == 2) as.integer(by2[1L]) else 1
     } else if(!is.numeric(by)) stop("invalid mode for 'by'")
     if(is.na(by)) stop("'by' is NA")
 
@@ -706,7 +706,7 @@ cut.POSIXt <-
     } else if(is.numeric(breaks) && length(breaks) == 1) {
 	## specified number of breaks
     } else if(is.character(breaks) && length(breaks) == 1) {
-        by2 <- strsplit(breaks, " ", fixed=TRUE)[[1]]
+        by2 <- strsplit(breaks, " ", fixed=TRUE)[[1L]]
         if(length(by2) > 2 || length(by2) < 1)
             stop("invalid specification of 'breaks'")
 	valid <-
@@ -729,7 +729,7 @@ cut.POSIXt <-
     if(valid == 6) {
         start$mday <- 1
         end <- as.POSIXlt(max(x, na.rm = TRUE))
-        step <- ifelse(length(by2) == 2, as.integer(by2[1]), 1)
+        step <- ifelse(length(by2) == 2, as.integer(by2[1L]), 1)
         end <- as.POSIXlt(end + (31 * step * 86400))
         end$mday <- 1
         breaks <- seq(start, end, breaks)
@@ -737,7 +737,7 @@ cut.POSIXt <-
         start$mon <- 0
         start$mday <- 1
         end <- as.POSIXlt(max(x, na.rm = TRUE))
-        step <- ifelse(length(by2) == 2, as.integer(by2[1]), 1)
+        step <- ifelse(length(by2) == 2, as.integer(by2[1L]), 1)
         end <- as.POSIXlt(end + (366 * step* 86400))
         end$mon <- 0
         end$mday <- 1
@@ -747,13 +747,13 @@ cut.POSIXt <-
         start$mon <- qtr[start$mon + 1]
         start$mday <- 1
         end <- as.POSIXlt(max(x, na.rm = TRUE))
-        step <- ifelse(length(by2) == 2, as.integer(by2[1]), 1)
+        step <- ifelse(length(by2) == 2, as.integer(by2[1L]), 1)
         end <- as.POSIXlt(end + (93 * step * 86400))
         end$mon <- qtr[end$mon + 1]
         end$mday <- 1
         breaks <- seq(start, end, paste(step * 3, "months"))
     } else {
-        if (length(by2) == 2) incr <- incr * as.integer(by2[1])
+        if (length(by2) == 2) incr <- incr * as.integer(by2[1L])
         maxx <- max(x, na.rm = TRUE)
         breaks <- seq.int(start, maxx + incr, breaks)
         breaks <- breaks[1:(1+max(which(breaks <= maxx)))]
@@ -842,7 +842,7 @@ as.data.frame.POSIXlt <- function(x, row.names = NULL, optional = FALSE, ...)
 {
     value <- as.data.frame.POSIXct(as.POSIXct(x), row.names, optional, ...)
     if (!optional)
-        names(value) <- deparse(substitute(x))[[1]]
+        names(value) <- deparse(substitute(x))[[1L]]
     value
 }
 
@@ -865,11 +865,11 @@ diff.POSIXt <- function (x, lag = 1, differences = 1, ...)
 {
     ismat <- is.matrix(x)
     r <- if(inherits(x, "POSIXlt")) as.POSIXct(x) else x
-    xlen <- if (ismat) dim(x)[1] else length(r)
+    xlen <- if (ismat) dim(x)[1L] else length(r)
     if (length(lag) > 1 || length(differences) > 1 || lag < 1 || differences < 1)
         stop("'lag' and 'differences' must be integers >= 1")
     if (lag * differences >= xlen)
-        return(structure(numeric(0), class="difftime", units="secs"))
+        return(structure(numeric(0L), class="difftime", units="secs"))
     i1 <- -1:-lag
     if (ismat) for (i in 1:differences) r <- r[i1, , drop = FALSE] -
             r[-nrow(r):-(nrow(r) - lag + 1), , drop = FALSE]

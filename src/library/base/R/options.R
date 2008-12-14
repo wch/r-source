@@ -16,5 +16,5 @@
 
 options <- function(...) .Internal(options(...))
 
-getOption <- function(x) options(x)[[1]]
+getOption <- function(x) options(x)[[1L]]
 

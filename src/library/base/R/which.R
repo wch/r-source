@@ -26,12 +26,12 @@ which <- function(x, arr.ind = FALSE)
     else { ##-- return a matrix  length(wh) x rank
         m <- length(wh)
         rank <- length(dl)
-        wh1 <- wh - 1
-        wh <- 1 + wh1 %% dl[1]
+        wh1 <- wh - 1L
+        wh <- 1L + wh1 %% dl[1L]
         wh <- matrix(wh, nrow = m, ncol = rank,
                      dimnames =
-                     list(dimnames(x)[[1]][wh],
-                          if(rank == 2) c("row", "col")# for matrices
+                     list(dimnames(x)[[1L]][wh],
+                          if(rank == 2L) c("row", "col")# for matrices
                           else paste("dim", 1:rank, sep="")))
         if(rank >= 2) {
             denom <- 1

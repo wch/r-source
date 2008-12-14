@@ -28,13 +28,13 @@ merge.data.frame <-
     fix.by <- function(by, df)
     {
         ## fix up 'by' to be a valid set of cols by number: 0 is row.names
-        if(is.null(by)) by <- numeric(0)
+        if(is.null(by)) by <- numeric(0L)
         by <- as.vector(by)
         nc <- ncol(df)
         if(is.character(by))
             by <- match(by, c("row.names", names(df))) - 1L
         else if(is.numeric(by)) {
-            if(any(by < 0) || any(by > nc))
+            if(any(by < 0L) || any(by > nc))
                 stop("'by' must match numbers of columns")
         } else if(is.logical(by)) {
             if(length(by) != nc) stop("'by' must match number of columns")
@@ -49,30 +49,30 @@ merge.data.frame <-
     by.y <- fix.by(by.y, y)
     if((l.b <- length(by.x)) != length(by.y))
         stop("'by.x' and 'by.y' specify different numbers of columns")
-    if(l.b == 0) {
+    if(l.b == 0L) {
         ## was: stop("no columns to match on")
         ## return the cartesian product of x and y, fixing up common names
         nm <- nm.x <- names(x)
         nm.y <- names(y)
         has.common.nms <- any(cnm <- nm.x %in% nm.y)
         if(has.common.nms) {
-            names(x)[cnm] <- paste(nm.x[cnm], suffixes[1], sep="")
+            names(x)[cnm] <- paste(nm.x[cnm], suffixes[1L], sep="")
             cnm <- nm.y %in% nm
-            names(y)[cnm] <- paste(nm.y[cnm], suffixes[2], sep="")
+            names(y)[cnm] <- paste(nm.y[cnm], suffixes[2L], sep="")
         }
-        if (nx == 0 || ny == 0) {
+        if (nx == 0L || ny == 0L) {
             res <- cbind(x[FALSE, ], y[FALSE, ])
         } else {
             ij <- expand.grid(seq_len(nx), seq_len(ny))
-            res <- cbind(x[ij[,1], , drop = FALSE], y[ij[,2], , drop = FALSE])
+            res <- cbind(x[ij[, 1L], , drop = FALSE], y[ij[, 2L], , drop = FALSE])
         }
     }
     else {
-        if(any(by.x == 0)) {
+        if(any(by.x == 0L)) {
             x <- cbind(Row.names = I(row.names(x)), x)
             by.x <- by.x + 1L
         }
-        if(any(by.y == 0)) {
+        if(any(by.y == 0L)) {
             y <- cbind(Row.names = I(row.names(y)), y)
             by.y <- by.y + 1L
         }
@@ -91,26 +91,26 @@ merge.data.frame <-
             bx <- bz[seq_len(nx)]
             by <- bz[nx + seq_len(ny)]
         }
-        comm <- match(bx, by, 0)
-        bxy <- bx[comm > 0]             # the keys which are in both
-        xinds <- match(bx, bxy, 0, incomparables)
+        comm <- match(bx, by, 0L)
+        bxy <- bx[comm > 0L]             # the keys which are in both
+        xinds <- match(bx, bxy, 0L, incomparables)
         yinds <- match(by, bxy, 0, incomparables)
-        if(nx > 0 && ny > 0)
+        if(nx > 0L && ny > 0L)
             m <- .Internal(merge(xinds, yinds, all.x, all.y))
         else
-            m <- list(xi=integer(0), yi=integer(0),
+            m <- list(xi=integer(0L), yi=integer(0L),
                       x.alone=seq_len(nx), y.alone=seq_len(ny))
         nm <- nm.x <- names(x)[-by.x]
         nm.by <- names(x)[by.x]
         nm.y <- names(y)[-by.y]
         ncx <- ncol(x)
-        if(all.x) all.x <- (nxx <- length(m$x.alone)) > 0
-        if(all.y) all.y <- (nyy <- length(m$y.alone)) > 0
+        if(all.x) all.x <- (nxx <- length(m$x.alone)) > 0L
+        if(all.y) all.y <- (nyy <- length(m$y.alone)) > 0L
         lxy <- length(m$xi)             # == length(m$yi)
         ## x = [ by | x ] :
         has.common.nms <- any(cnm <- nm.x %in% nm.y)
         if(has.common.nms)
-            nm.x[cnm] <- paste(nm.x[cnm], suffixes[1], sep="")
+            nm.x[cnm] <- paste(nm.x[cnm], suffixes[1L], sep="")
         x <- x[c(m$xi, if(all.x) m$x.alone),
                c(by.x, seq_len(ncx)[-by.x]), drop=FALSE]
         names(x) <- c(nm.by, nm.x)
@@ -128,7 +128,7 @@ merge.data.frame <-
         ## y (w/o 'by'):
         if(has.common.nms) {
             cnm <- nm.y %in% nm
-            nm.y[cnm] <- paste(nm.y[cnm], suffixes[2], sep="")
+            nm.y[cnm] <- paste(nm.y[cnm], suffixes[2L], sep="")
         }
         y <- y[c(m$yi, if(all.x) rep.int(1L, nxx), if(all.y) m$y.alone),
                -by.y, drop = FALSE]
@@ -141,7 +141,7 @@ merge.data.frame <-
         res <- cbind(x, y)
 
         if (sort)
-            res <- res[if(all.x || all.y)## does NOT work
+            res <- res[if(all.x || all.y) ## does NOT work
                        do.call("order", x[, seq_len(l.b), drop=FALSE])
             else sort.list(bx[m$xi]),, drop=FALSE]
     }

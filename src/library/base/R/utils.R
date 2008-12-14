@@ -17,7 +17,7 @@
 shQuote <- function(string, type = c("sh", "csh", "cmd"))
 {
     cshquote <- function(x) {
-        xx <- strsplit(x, "'", fixed = TRUE)[[1]]
+        xx <- strsplit(x, "'", fixed = TRUE)[[1L]]
         paste(paste("'", xx, "'", sep = ""), collapse="\"'\"")
     }
     if(missing(type) && .Platform$OS.type == "windows") type <- "cmd"

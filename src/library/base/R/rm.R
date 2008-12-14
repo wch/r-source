@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 rm <-
-    function (..., list = character(0), pos = -1, envir = as.environment(pos),
+    function (..., list = character(0L), pos = -1, envir = as.environment(pos),
               inherits = FALSE)
 {
     dots <- match.call(expand.dots=FALSE)$...

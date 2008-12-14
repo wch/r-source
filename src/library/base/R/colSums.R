@@ -70,7 +70,7 @@ rowSums <- function(x, na.rm = FALSE, dims = 1)
     if(length(dn) > 1) {
         dim(z) <- dn
         dimnames(z) <- dimnames(x)[1:dims]
-    } else  names(z) <- dimnames(x)[[1]]
+    } else  names(z) <- dimnames(x)[[1L]]
     z
 }
 
@@ -90,6 +90,6 @@ rowMeans <- function(x, na.rm = FALSE, dims = 1)
     if(length(dn) > 1) {
         dim(z) <- dn
         dimnames(z) <- dimnames(x)[1:dims]
-    } else  names(z) <- dimnames(x)[[1]]
+    } else  names(z) <- dimnames(x)[[1L]]
     z
 }
