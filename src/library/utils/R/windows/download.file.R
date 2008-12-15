@@ -31,9 +31,9 @@ download.file <- function(url, destfile, method,
         else if(length(grep("^file:", url))) {
             method <- "internal"
             url <- URLdecode(url)
-        } else if(system("wget --help", invisible=TRUE)==0)
+        } else if(system("wget --help", invisible=TRUE) == 0L)
             method <- "wget"
-        else if(shell("lynx -help", invisible=TRUE)==0)
+        else if(shell("lynx -help", invisible=TRUE) == 0L)
             method <- "lynx"
         else
             stop("no download method found")
@@ -49,9 +49,8 @@ download.file <- function(url, destfile, method,
         status <- shell(paste("lynx -dump", url, ">",
                               path.expand(destfile)))
 
-    if(status > 0)
+    if(status > 0L)
         warning("download had nonzero exit status")
 
     invisible(status)
 }
-

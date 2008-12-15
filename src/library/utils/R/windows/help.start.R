@@ -50,7 +50,7 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
         return(invisible(browser(if(encodeIfNeeded) URLencode(url) else url)))
     else {
         if(!is.character(browser)
-           || !(length(browser) == 1)
+           || !(length(browser) == 1L)
            || !nzchar(browser))
         stop("'browser' must be a non-empty character string")
         cmd <- paste('"', browser, '" ',
