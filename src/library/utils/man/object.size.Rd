@@ -11,9 +11,16 @@
 }
 \usage{
 object.size(x)
+
+\method{print}{object_size}(x, quote = FALSE,
+      units = c("b", "auto", "Kb", "Mb", "Gb"), \dots)
 }
 \arguments{
   \item{x}{An \R object.}
+  \item{quote}{logical, indicating whether or not the result should be
+    printed with surrounding quotes.}
+  \item{units}{The units to be used in printing the size.}
+  \item{\dots}{Arguments to be passed to or from other methods.}
 }
 \details{
   Exactly which parts of the memory allocation should be attributed to
@@ -35,7 +42,8 @@ object.size(x)
   length and pointer size.
 }
 \value{
-  An estimate of the memory allocation attributable to the object, in bytes.
+  An object of class \code{"object.size"} with a length-one double value,
+  an estimate of the memory allocation attributable to the object in bytes.
 }
 \seealso{
   \code{\link{Memory-limits}} for the design limitations on object size.
@@ -44,6 +52,7 @@ object.size(x)
 \examples{
 object.size(letters)
 object.size(ls)
+print(object.size(library), units = "auto")
 ## find the 10 largest objects in the base package
 z <- sapply(ls("package:base"), function(x)
             object.size(get(x, envir = baseenv())))

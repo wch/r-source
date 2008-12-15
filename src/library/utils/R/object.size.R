@@ -14,4 +14,25 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-object.size <- function(x) .Internal(object.size(x))
+object.size <- function(x)
+    structure(.Internal(object.size(x)), class="object_size")
+
+print.object_size <-
+    function(x, quote = FALSE, units = c("b", "auto", "Kb", "Mb", "Gb"), ...)
+{
+    units <- match.arg(units)
+    if (units == "auto") {
+        if (x >= 1024^3) units <- "Gb"
+        else if (x >= 1024^2) units <- "Mb"
+        else if (x >= 1024) units <- "Kb"
+        else units <- "b"
+    }
+    y <- switch(units,
+                "b" = paste(x, "bytes"),
+                "Kb" = paste(round(x/1024, 1L), "Kb"),
+                "Mb" = paste(round(x/1024^2, 1L), "Mb"),
+                "Gb" = paste(round(x/1024^3, 1L), "Gb")
+                )
+    if(quote) print.default(y, ...) else cat(y, "\n", sep="")
+    invisible(x)
+}

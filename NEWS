@@ -111,6 +111,9 @@ NEW FEATURES
 
     o	option("pdfbrowser") is now set on Windows as well as on Unix-alikes.
 
+    o	object.size() now returns an object of class "object_size" and
+    	has a print() method.
+
 
 DEPRECATED & DEFUNCT
 
