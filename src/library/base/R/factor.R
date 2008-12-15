@@ -26,7 +26,7 @@ factor <- function (x = character(), levels = sort(unique.default(x),
     attr(f, "levels") <-
 	if (nl == length(levels))
 	    as.character(labels)
-	else if(nl == 1)
+	else if(nl == 1L)
 	    paste(labels, seq_along(levels), sep = "")
 	else
 	    stop(gettextf("invalid labels; length %d should be 1 or %d",
@@ -60,8 +60,8 @@ nlevels <- function(x) length(levels(x))
     if (is.list(value)) {
         nlevs <- rep.int(names(value), lapply(value, length))
         value <- unlist(value)
-        m <- match(value, xlevs, nomatch=0L)
-        xlevs[m] <- nlevs[m > 0]
+        m <- match(value, xlevs, nomatch = 0L)
+        xlevs[m] <- nlevs[m > 0L]
     } else {
         if (length(xlevs) > length(value))
             stop("number of levels differs")
@@ -119,11 +119,11 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
         T0 <- "Levels: "
         if(is.logical(maxl))
             maxl <- { ## smart default
-                width <- width - (nchar(T0, "w") + 3 + 1 + 3)
+                width <- width - (nchar(T0, "w") + 3L + 1L + 3L)
                                         # 3='...', 3=#lev, 1=extra
                 lenl <- cumsum(nchar(lev, "w") + nchar(colsep, "w"))
-                if(n <= 1 || lenl[n] <= width) n
-                else max(1, which(lenl > width)[1L] - 1)
+                if(n <= 1L || lenl[n] <= width) n
+                else max(1L, which(lenl > width)[1L] - 1L)
             }
         drop <- n > maxl
         cat(if(drop)paste(format(n),""), T0,
@@ -200,6 +200,7 @@ Ops.factor <- function(e1, e2)
     class(x) <- cx
     x
 }
+
 "[[.factor" <- function(x, ...)
 {
     y <- NextMethod("[[")

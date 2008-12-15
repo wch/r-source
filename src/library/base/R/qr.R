@@ -65,7 +65,7 @@ qr.coef <- function(qr, y)
     im <- is.matrix(y)
     if (!im) y <- as.matrix(y)
     ny <- ncol(y)
-    if (p == 0) return( if (im) matrix(0,p,ny) else numeric(0L) )
+    if (p == 0L) return( if (im) matrix(0, p, ny) else numeric(0L) )
     if(is.complex(qr$qr)) {
 	if(!is.complex(y)) y[] <- as.complex(y)
 	coef <- matrix(NA_complex_, nrow = p, ncol = ny)
@@ -81,7 +81,7 @@ qr.coef <- function(qr, y)
             .Call("qr_coef_real", qr, y, PACKAGE = "base")[seq_len(p)]
 	return(if(im) coef else c(coef))
     }
-    if (k == 0) return( if (im) matrix(NA, p, ny) else rep.int(NA, p))
+    if (k == 0L) return( if (im) matrix(NA, p, ny) else rep.int(NA, p))
 
     storage.mode(y) <- "double"
     if( nrow(y) != n )
@@ -95,7 +95,7 @@ qr.coef <- function(qr, y)
 		  coef=matrix(0, nrow=k,ncol=ny),
 		  info=integer(1L),
 		  NAOK = TRUE, PACKAGE="base")[c("coef","info")]
-    if(z$info != 0) stop("exact singularity in 'qr.coef'")
+    if(z$info) stop("exact singularity in 'qr.coef'")
     if(k < p) {
 	coef <- matrix(NA_real_, nrow=p, ncol=ny)
 	coef[qr$pivot[1L:k],] <- z$coef

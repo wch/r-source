@@ -21,7 +21,7 @@ apply <- function(X, MARGIN, FUN, ...)
     ## Ensure that X is an array object
     d <- dim(X)
     dl <- length(d)
-    if(dl == 0)
+    if(dl == 0L)
 	stop("dim(X) must have a positive length")
     ds <- 1L:dl
     if(length(oldClass(X)))

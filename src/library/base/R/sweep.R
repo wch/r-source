@@ -28,11 +28,11 @@ sweep <- function(x, MARGIN, STATS, FUN = "-", check.margin=TRUE, ...)
             cumDim <- c(1, cumprod(dimmargin))
             upper <- min(cumDim[cumDim >= lstats])
             lower <- max(cumDim[cumDim <= lstats])
-            if (lstats && (upper %% lstats != 0 || lstats %% lower != 0))
+            if (lstats && (upper %% lstats != 0L || lstats %% lower != 0L))
                 warning("STATS does not recycle exactly across MARGIN")
         } else {
-            dimmargin <- dimmargin[dimmargin > 1]
-            dimstats <- dimstats[dimstats > 1]
+            dimmargin <- dimmargin[dimmargin > 1L]
+            dimstats <- dimstats[dimstats > 1L]
             if (length(dimstats) != length(dimmargin) ||
                 any(dimstats != dimmargin))
                 warning("length(STATS) or dim(STATS) do not match dim(x)[MARGIN]")

@@ -37,7 +37,9 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
     if(n > 0) c(NA_integer_, -n) else integer(0L)
 
 "row.names<-" <- function(x, value) UseMethod("row.names<-")
-"row.names<-.data.frame" <- function(x, value) {
+
+"row.names<-.data.frame" <- function(x, value)
+{
     if (!is.data.frame(x)) x <- as.data.frame(x)
     n <- .row_names_info(x, 2L)
     if(is.null(value)) { # set automatic row.names
@@ -93,7 +95,8 @@ print.AsIs <- function (x, ...)
 }
 
 
-t.data.frame <- function(x) {
+t.data.frame <- function(x)
+{
     x <- as.matrix(x)
     NextMethod("t")
 }
@@ -117,7 +120,8 @@ dimnames.data.frame <- function(x) list(row.names(x), names(x))
     x
 }
 
-as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...) {
+as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...)
+{
     if(is.null(x))			# can't assign class to NULL
 	return(as.data.frame(list()))
     UseMethod("as.data.frame")
@@ -156,13 +160,13 @@ as.data.frame.list <-
     cn <- names(x)
     m <- match(c("row.names", "check.rows", "check.names", "stringsAsFactors"),
                cn, 0L)
-    if(any(m > 0L)) {
+    if(any(m)) {
         cn[m] <- paste("..adfl.", cn[m], sep="")
         names(x) <- cn
     }
     x <- eval(as.call(c(expression(data.frame), x, check.names = !optional,
                         stringsAsFactors = stringsAsFactors)))
-    if(any(m > 0L)) names(x) <- sub("^\\.\\.adfl\\.", "", names(x))
+    if(any(m)) names(x) <- sub("^\\.\\.adfl\\.", "", names(x))
     if(!is.null(row.names)) {
 	# row.names <- as.character(row.names)
 	if(length(row.names) != dim(x)[[1L]])
@@ -176,7 +180,7 @@ as.data.frame.list <-
 as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...)
 {
     nrows <- length(x)
-    nm <- paste(deparse(substitute(x), width.cutoff = 500), collapse=" ")
+    nm <- paste(deparse(substitute(x), width.cutoff = 500L), collapse=" ")
     if(is.null(row.names)) {
 	if (nrows == 0L)
 	    row.names <- character(0L)
@@ -308,7 +312,7 @@ as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE, ...)
 	as.data.frame.model.matrix(x, row.names, optional)
     else { # as.data.frame.vector without removing names
         nrows <- length(x)
-        nm <- paste(deparse(substitute(x), width.cutoff=500), collapse=" ")
+        nm <- paste(deparse(substitute(x), width.cutoff=500L), collapse=" ")
         if(is.null(row.names)) {
             if (nrows == 0L)
                 row.names <- character(0L)
@@ -396,7 +400,7 @@ data.frame <-
 	    else vnames[[i]] <- paste(vnames[[i]], namesi, sep=".")
 	}
 	else {
-            if(length(namesi) > 0L) vnames[[i]] <- namesi
+            if(length(namesi)) vnames[[i]] <- namesi
             else if (no.vn[[i]]) {
                 tmpname <- deparse(object[[i]])[1L]
                 if( substr(tmpname, 1L, 2L) == "I(" ) {
@@ -412,7 +416,7 @@ data.frame <-
             ## Avoid all-blank names
             nc <- nchar(rowsi, allowNA = FALSE)
             nc <- nc[!is.na(nc)]
-            if(length(nc) > 0 && any(nc) > 0)
+            if(length(nc) && any(nc))
                 row.names <- data.row.names(row.names, rowsi, i)
         }
         nrows[i] <- abs(nrows[i])
@@ -490,7 +494,7 @@ data.frame <-
     Narg <- nargs() - !mdrop  # number of arg from x,i,j that were specified
     has.j <- !missing(j)
 
-    if(Narg < 3) {  # list-like indexing or matrix indexing
+    if(Narg < 3L) {  # list-like indexing or matrix indexing
         if(!mdrop) warning("drop argument will be ignored")
 	if(missing(i)) return(x)
 	if(is.matrix(i))
@@ -631,7 +635,7 @@ data.frame <-
     ## use in-line functions to refer to the 1st and 2nd ... arguments
     ## explicitly. Also will check for wrong number or empty args
     na <- nargs() - !missing(exact)
-    if(na < 3)
+    if(na < 3L)
 	(function(x, i, exact)
 	  if(is.matrix(i)) as.matrix(x)[[i]]
  	  else .subset2(x, i, exact=exact))(x, ..., exact=exact)
@@ -647,11 +651,11 @@ data.frame <-
 "[<-.data.frame" <- function(x, i, j, value)
 {
     nA <- nargs() # value is never missing, so 3 or 4.
-    if(nA == 4) { ## df[,] or df[i,] or df[, j] or df[i,j]
+    if(nA == 4L) { ## df[,] or df[i,] or df[, j] or df[i,j]
 	has.i <- !missing(i)
 	has.j <- !missing(j)
     }
-    else if(nA == 3) {
+    else if(nA == 3L) {
         ## this collects both df[] and df[ind]
         if(is.atomic(value)) names(value) <- NULL
         if(missing(i) && missing(j)) { # case df[]
@@ -900,7 +904,7 @@ data.frame <-
     class(x) <- NULL
     nrows <- .row_names_info(x, 2L)
     if(is.atomic(value)) names(value) <- NULL
-    if(nargs() < 4) {
+    if(nargs() < 4L) {
 	## really ambiguous, but follow common use as if list
         nc <- length(x)
 	if(!is.null(value)) {
@@ -1141,7 +1145,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
                 xij <- xi[[j]]
                 if(is.null(pi) || is.na(jj <- pi[[j]])) jj <- j
                 if(facCol[jj]) {
-                    if(length(lij <- levels(xij)) > 0L) {
+                    if(length(lij <- levels(xij))) {
                         all.levs[[jj]] <- unique(c(all.levs[[jj]], lij))
                         ordCol[jj] <- ordCol[jj] & is.ordered(xij)
                     } else if(is.character(xij))
@@ -1169,7 +1173,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		}
 	    }
 	}
-	else if(length(xi) > 0L) {
+	else if(length(xi)) {
 	    rows[[i]] <- nrow <- nrow + 1L
 	    rlabs[[i]] <- if(nzchar(nmi)) nmi else as.integer(nrow)
 	}
@@ -1191,7 +1195,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
     }
     names(value) <- clabs
     for(j in pseq)
-	if(length(lij <- all.levs[[j]]) > 0L)
+	if(length(lij <- all.levs[[j]]))
             value[[j]] <-
                 factor(as.vector(value[[j]]), lij, ordered = ordCol[j])
     if(any(has.dim)) {
@@ -1272,7 +1276,7 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
     dm <- dim(x)
     rn <- if(rownames.force %in% FALSE) NULL
     else if(rownames.force %in% TRUE) row.names(x)
-    else {if(.row_names_info(x) <= 0) NULL else row.names(x)}
+    else {if(.row_names_info(x) <= 0L) NULL else row.names(x)}
     dn <- list(rn, names(x))
     if(any(dm == 0L))
 	return(array(NA, dim = dm, dimnames = dn))

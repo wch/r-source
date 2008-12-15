@@ -14,9 +14,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-conflicts <- function(where=search(), detail = FALSE)
+conflicts <- function(where = search(), detail = FALSE)
 {
-    if(length(where) < 1) stop("argument 'where' of length 0")
+    if(length(where) < 1L) stop("argument 'where' of length 0")
     z <- vector(length(where), mode="list")
     names(z) <- where
     for(i in seq_along(where)) z[[i]] <- objects(pos = where[i])
@@ -25,7 +25,7 @@ conflicts <- function(where=search(), detail = FALSE)
     dups <- all[dups]
     if(detail) {
 	for(i in where) z[[i]] <- z[[i]][match(dups, z[[i]], 0L)]
-	z[sapply(z, function(x) length(x)==0)] <- NULL
+	z[sapply(z, function(x) length(x) == 0L)] <- NULL
 	z
     } else dups
 }

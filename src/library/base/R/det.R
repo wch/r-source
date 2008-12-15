@@ -32,7 +32,7 @@ determinant.matrix <- function(x, logarithm = TRUE, ...)
 {
     if ((n <- ncol(x)) != nrow(x))
         stop("'x' must be a square matrix")
-    if (n < 1)
+    if (n < 1L)
 	return(structure(list(modulus =
 			      structure(if(logarithm) 0 else 1,
 					logarithm = logarithm),

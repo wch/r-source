@@ -29,4 +29,3 @@ max.col <- function(m, ties.method=c("random", "first", "last"))
        DUP  = FALSE,
        PACKAGE = "base")$rmax
 }
-

@@ -60,7 +60,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
                 if(length(same)) {
                     cat("\n\tThe following object(s) are masked",
                         if (i < db.pos) "_by_" else "from", sp[i],
-                        if (sum(sp == sp[i]) > 1) paste("( position", i, ")"),
+                        if (sum(sp == sp[i]) > 1L) paste("( position", i, ")"),
                         ":\n\n\t", same, "\n\n")
                 }
             }

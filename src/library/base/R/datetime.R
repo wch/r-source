@@ -46,8 +46,8 @@ as.POSIXlt.character <- function(x, tz = "", format, ...)
     }
     xx <- x[1L]
     if(is.na(xx)) {
-        j <- 1
-        while(is.na(xx) && (j <- j+1) <= length(x))
+        j <- 1L
+        while(is.na(xx) && (j <- j+1L) <= length(x))
             xx <- x[j]
         if(is.na(xx)) f <- "%Y-%m-%d" # all NAs
     }
@@ -148,13 +148,13 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
         np <- getOption("digits.secs")
         if(is.null(np)) np <- 0 else np <- min(6, np)
         if(np >= 1) {
-            for (i in (1L:np)- 1) if(all( abs(secs - round(secs, i)) < 1e-6 )) {
+            for (i in (1L:np)- 1L) if(all( abs(secs - round(secs, i)) < 1e-6 )) {
                 np <- i
                 break
             }
         }
         format <- if(all(times[!is.na(times)] == 0)) "%Y-%m-%d"
-        else if(np == 0) "%Y-%m-%d %H:%M:%S"
+        else if(np == 0L) "%Y-%m-%d %H:%M:%S"
         else paste("%Y-%m-%d %H:%M:%OS", np, sep="")
     }
     .Internal(format.POSIXlt(x, format, usetz))
@@ -613,7 +613,7 @@ seq.POSIXt <-
         length.out <- ceiling(length.out)
     }
     status <- c(!missing(to), !missing(by), !is.null(length.out))
-    if(sum(status) != 2)
+    if(sum(status) != 2L)
         stop("exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified")
     if (missing(by)) {
         from <- unclass(cfrom)
@@ -626,7 +626,7 @@ seq.POSIXt <-
     }
 
     if (length(by) != 1L) stop("'by' must be of length 1")
-    valid <- 0
+    valid <- 0L
     if (inherits(by, "difftime")) {
         by <- switch(attr(by,"units"), secs = 1, mins = 60, hours = 3600,
                      days = 86400, weeks = 7*86400) * unclass(by)
@@ -638,7 +638,7 @@ seq.POSIXt <-
                         c("secs", "mins", "hours", "days", "weeks",
                           "months", "years", "DSTdays"))
         if(is.na(valid)) stop("invalid string for 'by'")
-        if(valid <= 5) {
+        if(valid <= 5L) {
             by <- c(1, 60, 3600, 86400, 7*86400)[valid]
             if (length(by2) == 2L) by <- by * as.integer(by2[1L])
         } else
@@ -646,7 +646,7 @@ seq.POSIXt <-
     } else if(!is.numeric(by)) stop("invalid mode for 'by'")
     if(is.na(by)) stop("'by' is NA")
 
-    if(valid <= 5) {
+    if(valid <= 5L) {
         from <- unclass(as.POSIXct(from))
         if(!is.null(length.out))
             res <- seq.int(from, by=by, length.out=length.out)
@@ -658,7 +658,7 @@ seq.POSIXt <-
         return(structure(res, class=c("POSIXt", "POSIXct"), tzone=tz))
     } else {  # months or years or DSTdays
         r1 <- as.POSIXlt(from)
-        if(valid == 7) {
+        if(valid == 7L) {
             if(missing(to)) { # years
                 yr <- seq.int(r1$year, by = by, length.out = length.out)
             } else {
@@ -666,9 +666,9 @@ seq.POSIXt <-
                 yr <- seq.int(r1$year, to$year, by)
             }
             r1$year <- yr
-            r1$isdst <- -1
+            r1$isdst <- -1L
             res <- as.POSIXct(r1)
-        } else if(valid == 6) { # months
+        } else if(valid == 6L) { # months
             if(missing(to)) {
                 mon <- seq.int(r1$mon, by = by, length.out = length.out)
             } else {
@@ -678,14 +678,14 @@ seq.POSIXt <-
             r1$mon <- mon
             r1$isdst <- -1
             res <- as.POSIXct(r1)
-        } else if(valid == 8) { # DSTdays
+        } else if(valid == 8L) { # DSTdays
             if(!missing(to)) {
                 ## We might have a short day, so need to over-estimate.
                 length.out <- 2L + floor((unclass(as.POSIXct(to)) -
                                           unclass(as.POSIXct(from)))/86400)
             }
             r1$mday <- seq.int(r1$mday, by = by, length.out = length.out)
-            r1$isdst <- -1
+            r1$isdst <- -1L
             res <- as.POSIXct(r1)
             ## now correct if necessary.
             if(!missing(to)) res <- res[res <= as.POSIXct(to)]
@@ -716,41 +716,41 @@ cut.POSIXt <-
 	if(is.na(valid)) stop("invalid specification of 'breaks'")
 	start <- as.POSIXlt(min(x, na.rm=TRUE))
 	incr <- 1
-	if(valid > 1) { start$sec <- 0; incr <- 59.99 }
-	if(valid > 2) { start$min <- 0; incr <- 3600 - 1 }
-	if(valid > 3) { start$hour <- 0; incr <- 86400 - 1 }
-	if(valid == 5) {
+	if(valid > 1L) { start$sec <- 0L; incr <- 59.99 }
+	if(valid > 2L) { start$min <- 0L; incr <- 3600 - 1 }
+	if(valid > 3L) { start$hour <- 0L; incr <- 86400 - 1 }
+	if(valid == 5L) {
 	    start$mday <- start$mday - start$wday
 	    if(start.on.monday)
-		start$mday <- start$mday + ifelse(start$wday > 0, 1, -6)
+		start$mday <- start$mday + ifelse(start$wday > 0L, 1L, -6L)
 	    incr <- 7*86400
 	}
-    if(valid == 8) incr <- 25*3600
-    if(valid == 6) {
-        start$mday <- 1
+    if(valid == 8L) incr <- 25*3600
+    if(valid == 6L) {
+        start$mday <- 1L
         end <- as.POSIXlt(max(x, na.rm = TRUE))
         step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
         end <- as.POSIXlt(end + (31 * step * 86400))
-        end$mday <- 1
+        end$mday <- 1L
         breaks <- seq(start, end, breaks)
-    } else if(valid == 7) {
-        start$mon <- 0
-        start$mday <- 1
+    } else if(valid == 7L) {
+        start$mon <- 0L
+        start$mday <- 1L
         end <- as.POSIXlt(max(x, na.rm = TRUE))
         step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
         end <- as.POSIXlt(end + (366 * step* 86400))
-        end$mon <- 0
-        end$mday <- 1
+        end$mon <- 0L
+        end$mday <- 1L
         breaks <- seq(start, end, breaks)
-    } else if(valid == 9) {
-        qtr <- rep(c(0, 3, 6, 9), each = 3)
-        start$mon <- qtr[start$mon + 1]
-        start$mday <- 1
+    } else if(valid == 9L) {
+        qtr <- rep(c(0L, 3L, 6L, 9L), each = 3L)
+        start$mon <- qtr[start$mon + 1L]
+        start$mday <- 1L
         end <- as.POSIXlt(max(x, na.rm = TRUE))
         step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
         end <- as.POSIXlt(end + (93 * step * 86400))
-        end$mon <- qtr[end$mon + 1]
-        end$mday <- 1
+        end$mon <- qtr[end$mon + 1L]
+        end$mday <- 1L
         breaks <- seq(start, end, paste(step * 3, "months"))
     } else {
         if (length(by2) == 2L) incr <- incr * as.integer(by2[1L])
@@ -801,8 +801,8 @@ trunc.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"), ...)
 	switch(units,
 	       "secs" = {x$sec <- trunc(x$sec)},
 	       "mins" = {x$sec <- 0},
-	       "hours"= {x$sec <- 0; x$min <- 0},
-	       "days" = {x$sec <- 0; x$min <- 0; x$hour <- 0; x$isdst <- -1}
+	       "hours"= {x$sec <- 0; x$min <- 0L},
+	       "days" = {x$sec <- 0; x$min <- 0L; x$hour <- 0L; x$isdst <- -1L}
 	       )
     x
 }

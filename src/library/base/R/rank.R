@@ -39,7 +39,7 @@ rank <- function(x, na.last = TRUE,
 	} else {
 	    len <- sum(nas)
 	    yy[!nas] <- y + len
-	    yy[nas] <- 1 : len
+	    yy[nas] <- 1L : len
 	}
 	y <- yy
 	names(y) <- nm

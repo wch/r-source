@@ -84,7 +84,7 @@ function(object, filename = NULL, name = NULL,
         Call <- paste0(Call, arg.names[i],
                        if(!is.missing.arg(argls[[i]]))
                        paste0(" = ",
-                              paste(deparse(argls[[i]], width.cutoff= 500),
+                              paste(deparse(argls[[i]], width.cutoff= 500L),
                                     collapse="\n")))
         if(i != n) Call <- paste0(Call, ", ")
     }

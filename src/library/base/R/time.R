@@ -19,7 +19,7 @@ system.time <- function(expr, gcFirst = TRUE)
     ppt <- function(y) {
         if(!is.na(y[4L])) y[1L] <- y[1L] + y[4L]
         if(!is.na(y[5L])) y[2L] <- y[2L] + y[5L]
-        y[1L:3]
+        y[1L:3L]
     }
     if(!exists("proc.time")) return(rep(NA_real_, 5L))
     if(gcFirst)  gc(FALSE)

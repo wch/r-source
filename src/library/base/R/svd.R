@@ -33,29 +33,29 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
     if(!is.numeric(x))
 	stop("argument to 'svd' must be numeric")
 
-    if(nu == 0) {
-	job <- 0
+    if(nu == 0L) {
+	job <- 0L
 	u <- double(0L)
     }
     else if(nu == n) {
-	job <- 10
+	job <- 10L
 	u <- matrix(0, n, n)
     }
     else if(nu == p) {
-	job <- 20
+	job <- 20L
 	u <- matrix(0, n, p)
     }
     else
 	stop("'nu' must be 0, nrow(x) or ncol(x)")
 
     job <- job +
-	if(nv == 0) 0 else if(nv == p || nv == n) 1 else
+	if(nv == 0L) 0L else if(nv == p || nv == n) 1L else
     stop("'nv' must be 0 or ncol(x)")
 
-    v <- if(job == 0) double(0L) else matrix(0, p, p)
+    v <- if(job == 0L) double(0L) else matrix(0, p, p)
 
     mn <- min(n,p)
-    mm <- min(n+1,p)
+    mm <- min(n+1L,p)
     z <- .Fortran("dsvdc",
 		  as.double(x),
 		  n,

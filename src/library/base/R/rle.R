@@ -44,4 +44,3 @@ inverse.rle <- function(x, ...)
         stop("invalid 'rle' structure")
     rep(v, le)
 }
-

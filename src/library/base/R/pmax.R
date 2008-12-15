@@ -36,13 +36,13 @@ pmax <- function (..., na.rm = FALSE)
                 each <- rep(each, length.out=m)
             nas <- cbind(is.na(mmm), is.na(each))
             if(has.na || (has.na <- any(nas))) {
-                mmm[nas[,1]] <- each[nas[,1]]
-                each[nas[,2]] <- mmm[nas[,2]]
+                mmm[nas[, 1L]] <- each[nas[, 1L]]
+                each[nas[, 2L]] <- mmm[nas[, 2L]]
             }
             change <- mmm < each
             change <- change & !is.na(change)
             mmm[change] <- each[change]
-            if (has.na && !na.rm) mmm[nas[,1] | nas[,2]] <- NA
+            if (has.na && !na.rm) mmm[nas[, 1L] | nas[, 2L]] <- NA
         }
     }
     mostattributes(mmm) <- attributes(elts[[1L]])
@@ -67,13 +67,13 @@ pmin <- function (..., na.rm = FALSE)
                 each <- rep(each, length.out=m)
             nas <- cbind(is.na(mmm), is.na(each))
             if(has.na || (has.na <- any(nas))) {
-                mmm[nas[,1]] <- each[nas[,1]]
-                each[nas[,2]] <- mmm[nas[,2]]
+                mmm[nas[, 1L]] <- each[nas[, 1L]]
+                each[nas[, 2L]] <- mmm[nas[, 2L]]
             }
             change <- mmm > each
             change <- change & !is.na(change)
             mmm[change] <- each[change]
-            if (has.na && !na.rm) mmm[nas[,1] | nas[,2]] <- NA
+            if (has.na && !na.rm) mmm[nas[, 1L] | nas[, 2L]] <- NA
         }
     }
     mostattributes(mmm) <- attributes(elts[[1L]])

@@ -16,11 +16,12 @@
 
 besselI <- function(x, nu, expon.scaled = FALSE)
 {
-    .Internal(besselI(x,nu, 1+ as.logical(expon.scaled)))
+    ## Oddly, this is passed as a double to fit Math3 semantics
+    .Internal(besselI(x,nu, 1 + as.logical(expon.scaled)))
 }
 besselK <- function(x, nu, expon.scaled = FALSE)
 {
-    .Internal(besselK(x,nu, 1+ as.logical(expon.scaled)))
+    .Internal(besselK(x,nu, 1 + as.logical(expon.scaled)))
 }
 besselJ <- function(x, nu) .Internal(besselJ(x,nu))
 besselY <- function(x, nu) .Internal(besselY(x,nu))

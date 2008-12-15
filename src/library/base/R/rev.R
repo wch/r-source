@@ -16,4 +16,4 @@
 
 rev <- function(x) UseMethod("rev")
 
-rev.default <- function(x) if (length(x)) x[length(x):1] else x
+rev.default <- function(x) if (length(x)) x[length(x):1L] else x

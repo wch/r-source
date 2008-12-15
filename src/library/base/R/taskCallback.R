@@ -20,8 +20,7 @@ addTaskCallback <- function(f, data = NULL, name = character(0L))
         stop("handler must be a function")
     val <- .Call("R_addTaskCallback", f, data, !missing(data),
                  as.character(name), PACKAGE="base")
-
-    val + 1
+    val + 1L
 }
 
 removeTaskCallback <- function(id)
@@ -173,4 +172,3 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
          handlers
          )
 }
-

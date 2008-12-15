@@ -146,13 +146,13 @@ formatC <- function (x, digits = NULL, width = NULL,
 	x[!Ok] <- as.vector(0, mode = mode)
     }
     if(is.null(width) && is.null(digits))
-	width <- 1
+	width <- 1L
     if (is.null(digits))
-	digits <- if (mode == "integer") 2 else 4
-    else if(digits < 0)
-	digits <- 6
+	digits <- if (mode == "integer") 2L else 4L
+    else if(digits < 0L)
+	digits <- 6L
     else {
-	maxDigits <- { if(format != "f") 50 else
+	maxDigits <- { if(format != "f") 50L else
 		       ceiling(-(.Machine$double.neg.ulp.digits +
 				 .Machine$double.min.exp) / log2(10)) }
 	if (digits > maxDigits) {
@@ -160,8 +160,8 @@ formatC <- function (x, digits = NULL, width = NULL,
 	    digits <- maxDigits
 	}
     }
-    if(is.null(width))	width <- digits + 1
-    else if (width == 0) width <- digits
+    if(is.null(width))	width <- digits + 1L
+    else if (width == 0L) width <- digits
     i.strlen <-
 	pmax(abs(width),
 	     if(format == "fg" || format == "f") {
@@ -174,14 +174,14 @@ formatC <- function (x, digits = NULL, width = NULL,
 			     ifelse(flag != "", nchar(flag, "b"), 0) + 1
 		     }
 	     } else # format == "g" or "e":
-	     rep.int(digits+8, n)
+	     rep.int(digits+8L, n)
 	     )
     ## sanity check for flags added 2.1.0
     flag <- as.character(flag)
     nf <- strsplit(flag, "")[[1L]]
     if(!all(nf %in% c("0", "+", "-", " ", "#")))
 	stop("'flag' can contain only '0+- #'")
-    if(digits > 0 && any(nf == "#"))
+    if(digits > 0L && any(nf == "#"))
 	digits <- -digits # C-code will notice "do not drop trailing zeros"
 
     attr(x, "Csingle") <- NULL	# avoid interpreting as.single
@@ -245,8 +245,8 @@ format.data.frame <- function(x, ..., justify = "none")
     }
     dn <- dimnames(x)
     cn <- dn[[2L]]
-    m <- match(c("row.names", "check.rows", "check.names"), cn, 0)
-    if(any(m > 0)) cn[m] <- paste("..dfd.", cn[m], sep="")
+    m <- match(c("row.names", "check.rows", "check.names"), cn, 0L)
+    if(any(m)) cn[m] <- paste("..dfd.", cn[m], sep="")
     names(rval) <- cn
     rval$check.names <- FALSE
     rval$row.names <- dn[[1L]]

@@ -48,7 +48,7 @@ RNGkind <- function(kind = NULL, normal.kind = NULL)
             warning("Buggy version of Kinderman-Ramage generator used")
          if(normal.kind == length(n.kinds) - 1L) normal.kind <- -1L
     }
-    r <- 1 + .Internal(RNGkind(i.knd, normal.kind))
+    r <- 1L + .Internal(RNGkind(i.knd, normal.kind))
     r <- c(kinds[r[1L]], n.kinds[r[2L]])
     if(do.set || !is.null(normal.kind)) invisible(r) else r
 }

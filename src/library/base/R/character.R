@@ -24,7 +24,7 @@ substr <- function(x, start, stop)
     .Internal(substr(x, as.integer(start), as.integer(stop)))
 }
 
-substring <- function(text,first,last=1000000)
+substring <- function(text,first,last=1000000L)
 {
     if(!is.character(text)) x <- as.character(text)
     n <- max(lt <- length(text), length(first), length(last))
@@ -35,7 +35,7 @@ substring <- function(text,first,last=1000000)
 `substr<-` <- function(x, start, stop, value)
     .Internal(`substr<-`(x, as.integer(start), as.integer(stop), value))
 
-`substring<-` <- function(text, first, last=1000000, value)
+`substring<-` <- function(text, first, last=1000000L, value)
     `substr<-`(text, first, last, value)
 
 abbreviate <-
@@ -121,11 +121,11 @@ sQuote <- function(x) {
         if(identical(q, TRUE)) {
             li <- l10n_info()
             if(li$"UTF-8") q <- "UTF-8"
-            if(!is.null(li$codepage) && li$codepage > 0) {
+            if(!is.null(li$codepage) && li$codepage > 0L) {
                 ## we can't just use iconv, as that seems to think
                 ## it is in latin1 in CP1252
-                if(li$codepage >= 1250 && li$codepage <= 1258
-                   || li$codepage == 874) {
+                if(li$codepage >= 1250L && li$codepage <= 1258L
+                   || li$codepage == 874L) {
                     before <- "\x91"; after <- "\x92"
                 } else {
                     z <- iconv(c("\xe2\x80\x98", "\xe2\x80\x99"), "UTF-8", "")
@@ -156,9 +156,9 @@ dQuote <- function(x) {
         if(identical(q, TRUE)) {
             li <- l10n_info()
             if(li$"UTF-8") q <- "UTF-8"
-            if(!is.null(li$codepage) && li$codepage > 0) {
-                if(li$codepage >= 1250 && li$codepage <= 1258
-                    || li$codepage == 874) {
+            if(!is.null(li$codepage) && li$codepage > 0L) {
+                if(li$codepage >= 1250L && li$codepage <= 1258L
+                    || li$codepage == 874L) {
                     before <- "\x93"; after <- "\x94"
                 } else {
                     z <- iconv(c("\xe2\x80\x9c", "\xe2\x80\x9d"), "UTF-8", "")

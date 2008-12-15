@@ -40,8 +40,8 @@ as.Date.character <- function(x, format="", ...)
     fromchar <- function(x) {
 	xx <- x[1L]
         if(is.na(xx)) {
-            j <- 1
-            while(is.na(xx) && (j <- j+1) <= length(x)) xx <- x[j]
+            j <- 1L
+            while(is.na(xx) && (j <- j+1L) <= length(x)) xx <- x[j]
             if(is.na(xx)) f <- "%Y-%m-%d" # all NAs
         }
 	if(is.na(xx) ||
@@ -107,7 +107,7 @@ print.Date <- function(x, ...)
 
 summary.Date <- function(object, digits = 12, ...)
 {
-    x <- summary.default(unclass(object), digits = digits, ...)[1L:6]# not NA's
+    x <- summary.default(unclass(object), digits = digits, ...)[1L:6L]# not NA's
     class(x) <- oldClass(object)
     x
 }
@@ -239,7 +239,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
     }
 
     if (length(by) != 1L) stop("'by' must be of length 1")
-    valid <- 0
+    valid <- 0L
     if (inherits(by, "difftime")) {
         by <- switch(attr(by,"units"), secs = 1/86400, mins = 1/1440,
                      hours = 1/24, days = 1, weeks = 7) * unclass(by)
@@ -258,7 +258,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
     } else if(!is.numeric(by)) stop("invalid mode for 'by'")
     if(is.na(by)) stop("'by' is NA")
 
-    if(valid <= 2) {
+    if(valid <= 2L) {
         from <- unclass(as.Date(from))
         if(!is.null(length.out))
             res <- seq.int(from, by=by, length.out=length.out)
@@ -270,7 +270,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
         return(structure(res, class="Date"))
     } else {  # months or years or DSTdays
         r1 <- as.POSIXlt(from)
-        if(valid == 4) {
+        if(valid == 4L) {
             if(missing(to)) { # years
                 yr <- seq.int(r1$year, by = by, length.out = length.out)
             } else {
@@ -279,7 +279,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
             }
             r1$year <- yr
             res <- .Internal(POSIXlt2Date(r1))
-        } else if(valid == 3) { # months
+        } else if(valid == 3L) { # months
             if(missing(to)) {
                 mon <- seq.int(r1$mon, by = by, length.out = length.out)
             } else {
@@ -312,39 +312,39 @@ cut.Date <-
 	    pmatch(by2[length(by2)], c("days", "weeks", "months", "years", "quarters"))
 	if(is.na(valid)) stop("invalid specification of 'breaks'")
 	start <- as.POSIXlt(min(x, na.rm=TRUE))
-	if(valid == 1) incr <- 1
-	if(valid == 2) {
+	if(valid == 1L) incr <- 1L
+	if(valid == 2L) {
 	    start$mday <- start$mday - start$wday
 	    if(start.on.monday)
-		start$mday <- start$mday + ifelse(start$wday > 0, 1, -6)
-	    incr <- 7
+		start$mday <- start$mday + ifelse(start$wday > 0L, 1L, -6L)
+	    incr <- 7L
 	}
-    if(valid == 3) {
-        start$mday <- 1
+    if(valid == 3L) {
+        start$mday <- 1L
         end <- as.POSIXlt(max(x, na.rm = TRUE))
         step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
         end <- as.POSIXlt(end + (31 * step * 86400))
-        end$mday <- 1
+        end$mday <- 1L
         breaks <- as.Date(seq(start, end, breaks))
-    } else if(valid == 4) {
-        start$mon <- 0
-        start$mday <- 1
+    } else if(valid == 4L) {
+        start$mon <- 0L
+        start$mday <- 1L
         end <- as.POSIXlt(max(x, na.rm = TRUE))
         step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
         end <- as.POSIXlt(end + (366 * step * 86400))
-        end$mon <- 0
-        end$mday <- 1
+        end$mon <- 0L
+        end$mday <- 1L
         breaks <- as.Date(seq(start, end, breaks))
-    } else if(valid == 5) {
-        qtr <- rep(c(0, 3, 6, 9), each = 3)
-        start$mon <- qtr[start$mon + 1]
-        start$mday <- 1
+    } else if(valid == 5L) {
+        qtr <- rep(c(0L, 3L, 6L, 9L), each = 3L)
+        start$mon <- qtr[start$mon + 1L]
+        start$mday <- 1L
         end <- as.POSIXlt(max(x, na.rm = TRUE))
         step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
         end <- as.POSIXlt(end + (93 * step * 86400))
-        end$mon <- qtr[end$mon + 1]
-        end$mday <- 1
-        breaks <- as.Date(seq(start, end, paste(step * 3, "months")))
+        end$mon <- qtr[end$mon + 1L]
+        end$mday <- 1L
+        breaks <- as.Date(seq(start, end, paste(step * 3L, "months")))
     } else {
         start <- .Internal(POSIXlt2Date(start))
         if (length(by2) == 2L) incr <- incr * as.integer(by2[1L])
@@ -373,8 +373,8 @@ months.Date <- function(x, abbreviate = FALSE)
 
 quarters.Date <- function(x, ...)
 {
-    x <- (as.POSIXlt(x)$mon) %/% 3
-    paste("Q", x+1, sep = "")
+    x <- (as.POSIXlt(x)$mon) %/% 3L
+    paste("Q", x+1L, sep = "")
 }
 
 ## These only make sense for negative digits, but still ...

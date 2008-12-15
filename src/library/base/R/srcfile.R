@@ -52,12 +52,12 @@ open.srcfile <- function(con, line, ...) {
 	if (!is.na(srcfile$timestamp) && ( is.na(timestamp) || timestamp != srcfile$timestamp) )
 	    warning("Timestamp of '",srcfile$filename,"' has changed", call.=FALSE)
 	srcfile$conn <- conn <- file(srcfile$filename, open="rt", encoding=srcfile$encoding)
-	srcfile$line <- 1
-	oldline <- 1
+	srcfile$line <- 1L
+	oldline <- 1L
     } else if (!isOpen(conn)) {
 	open(conn, open="rt")
 	srcfile$line <- 1
-	oldline <- 1
+	oldline <- 1L
     }
     if (oldline < line) {
 	readLines(conn, line-oldline, warn=FALSE)
@@ -101,12 +101,12 @@ open.srcfilecopy <- function(con, line, ...) {
     conn <- srcfile$conn
     if (is.null(conn)) {
 	srcfile$conn <- conn <- textConnection(srcfile$lines, open="r")
-	srcfile$line <- 1
-	oldline <- 1
+	srcfile$line <- 1L
+	oldline <- 1L
     } else if (!isOpen(conn)) {
 	open(conn, open="r")
-	srcfile$line <- 1
-	oldline <- 1
+	srcfile$line <- 1L
+	oldline <- 1L
     }
     if (oldline < line) {
 	readLines(conn, line-oldline, warn=FALSE)
@@ -124,7 +124,7 @@ getSrcLines <- function(srcfile, first, last) {
     if (first > last) return(character(0L))
     if (!.isOpen(srcfile)) on.exit(close(srcfile))
     conn <- open(srcfile, first)
-    lines <- readLines(conn, n=last-first+1, warn=FALSE)
+    lines <- readLines(conn, n=last-first+1L, warn=FALSE)
     srcfile$line <- first + length(lines)
     return(lines)
 }

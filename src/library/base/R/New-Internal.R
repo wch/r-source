@@ -48,9 +48,9 @@ try <- function(expr, silent = FALSE) {
 }
 
 comment <- function(x).Internal(comment(x))
-"comment<-" <- function(x,value).Internal("comment<-"(x,value))
+"comment<-" <- function(x,value).Internal("comment<-"(x, value))
 
-logb <- function(x, base=exp(1)) if(missing(base)) log(x) else log(x,base)
+logb <- function(x, base=exp(1)) if(missing(base)) log(x) else log(x, base)
 
 atan2 <- function(y, x).Internal(atan2(y, x))
 
@@ -111,10 +111,10 @@ rbind <- function(..., deparse.level = 1)
 }
 
 deparse <-
-    function(expr, width.cutoff = 60,
+    function(expr, width.cutoff = 60L,
 	     backtick = mode(expr) %in% c("call", "expression", "(", "function"),
 	     control = c("keepInteger", "showAttributes", "keepNA"),
-             nlines = -1)
+             nlines = -1L)
     .Internal(deparse(expr, width.cutoff, backtick,
                       .deparseOpts(control), nlines))
 
@@ -131,7 +131,7 @@ do.call <- function(what, args, quote = FALSE, envir = parent.frame())
 
 drop <- function(x).Internal(drop(x))
 
-format.info <- function(x, digits=NULL, nsmall=0)
+format.info <- function(x, digits = NULL, nsmall = 0)
     .Internal(format.info(x, digits, nsmall))
 
 gc <- function(verbose = getOption("verbose"),	reset=FALSE)
@@ -217,14 +217,9 @@ data.class <- function(x) {
 	cl[1L]
     else {
 	l <- length(dim(x))
-	if (l == 2L)	"matrix"
-	else if (l > 0L) "array"
-	else mode(x)
+        if (l == 2L) "matrix" else if(l) "array" else mode(x)
     }
 }
-
-## is.numeric.factor <- function(x) FALSE # internal in 2.5.0
-## is.integer.factor <- function(x) FALSE # internal in 2.5.0
 
 encodeString <- function(x, width = 0, quote = "", na.encode = TRUE,
                          justify = c("left", "right", "centre", "none"))

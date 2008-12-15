@@ -240,7 +240,7 @@ arima0 <- function(x, order = c(0, 0, 0),
 print.arima0 <- function(x, digits = max(3, getOption("digits") - 3),
                          se = TRUE, ...)
 {
-    cat("\nCall:", deparse(x$call, width.cutoff = 75), "", sep = "\n")
+    cat("\nCall:", deparse(x$call, width.cutoff = 75L), "", sep = "\n")
     cat("Coefficients:\n")
     coef <- round(x$coef, digits = digits)
     if (se && nrow(x$var.coef)) {

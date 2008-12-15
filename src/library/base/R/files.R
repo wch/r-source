@@ -223,7 +223,7 @@ function(x)
     if(is.integer(x)) return(structure(x, class = "hexmode"))
     if(is.character(x)) {
         xx <- strsplit(tolower(x), "")[[1L]]
-        pos <- match(xx, c(0 : 9, letters[1L:6L]))
+        pos <- match(xx, c(0L:9L, letters[1L:6L]))
         if(any(is.na(pos))) stop("invalid digits")
         z <- (pos - 1L) * 16 ^ (rev(seq_along(xx) - 1))
         return(structure(as.integer(sum(z)), class = "hexmode"))

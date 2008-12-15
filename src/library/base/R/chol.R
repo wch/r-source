@@ -45,7 +45,7 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, ...)
                       n,
                       n,
                       double(n),
-                      piv = rep.int(0L, n),
+                      piv = integer(n),
                       as.integer(pivot),
                       rank = integer(1L),
                       DUP = FALSE, PACKAGE = "base")

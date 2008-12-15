@@ -24,7 +24,7 @@ function(x = NULL, max.lines = getOption("deparse.max.lines"))
         cat(gettext("No traceback available"), "\n")
     else {
         for(i in 1L:n) {
-            label <- paste(n-i+1, ": ", sep="")
+            label <- paste(n-i+1L, ": ", sep="")
             m <- length(x[[i]])
             if(m > 1)
                 label <- c(label, rep(substr("          ", 1L,

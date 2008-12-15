@@ -29,10 +29,10 @@ mapply <- function(FUN,..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
 	    names(answer) <- names1
     }
     if (SIMPLIFY && length(answer) &&
-        length(common.len <- unique(unlist(lapply(answer, length)))) == 1) {
-        if (common.len == 1)
+        length(common.len <- unique(unlist(lapply(answer, length)))) == 1L) {
+        if (common.len == 1L)
             unlist(answer, recursive = FALSE)
-        else if (common.len > 1)
+        else if (common.len > 1L)
             array(unlist(answer, recursive = FALSE),
                   dim = c(common.len, max(sapply(dots,length))),
                   dimnames = list(names(answer[[1L]]), names(answer)))

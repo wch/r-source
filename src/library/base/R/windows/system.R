@@ -26,16 +26,16 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
         cat(input, file = f, sep="\n")
     }
     if (intern)
-        flag <- 3
+        flag <- 3L
     else {
         if  (wait)
-            flag <- ifelse(show.output.on.console, 2, 1)
+            flag <- ifelse(show.output.on.console, 2L, 1L)
         else
-            flag <- 0
+            flag <- 0L
     }
-    if (invisible) flag <- 20 + flag
-    else if (minimized) flag <- 10 + flag
-    if(ignore.stderr) flag <- flag + 100
+    if (invisible) flag <- 20L + flag
+    else if (minimized) flag <- 10L + flag
+    if(ignore.stderr) flag <- flag + 100L
     .Internal(system(command, as.integer(flag), f))
 }
 
@@ -55,14 +55,14 @@ shell <- function(cmd, shell, flag = "/c", intern = FALSE,
     if(!is.null(shell)) cmd <- paste(shell, flag, cmd)
     res <- system(cmd, intern = intern, wait = wait | intern,
                   show.output.on.console = wait, ...)
-    if(!intern && res !=0 && !is.na(mustWork))
+    if(!intern && res && !is.na(mustWork))
         if(mustWork)
-            if(res == -1)
+            if(res == -1L)
                 stop(gettextf("'%s' could not be run", cmd0), domain = NA)
             else stop(gettextf("'%s' execution failed with error code %d",
                                cmd0, res), domain = NA)
         else
-            if(res == -1)
+            if(res == -1L)
                 warning(gettextf("'%s' could not be run", cmd0), domain = NA)
             else warning(gettextf("'%s' execution failed with error code %d",
                                   cmd0, res), domain = NA)
@@ -75,7 +75,7 @@ Sys.timezone <- function()
 {
     z <- as.POSIXlt(Sys.time())
     zz <- attr(z, "tzone")
-    if(length(zz) == 3) zz[2 + z$isdst] else zz[1]
+    if(length(zz) == 3L) zz[2 + z$isdst] else zz[1L]
 }
 
 Sys.which <- function(names) .Internal(Sys.which(as.character(names)))

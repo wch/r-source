@@ -26,13 +26,13 @@ findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
     if(is.unsorted(vec))
 	stop("'vec' must be sorted non-decreasingly")
     ## deal with NA's in x:
-    if(has.na <- any(ix <- is.na(x)))
-	x <- x[!ix]
+    if(has.na <- any(ix <- is.na(x))) x <- x[!ix]
     nx <- length(x)
     index <- integer(nx)
+    ## lengths are always integer
     .C("find_interv_vec",
-       xt = as.double(vec), n = as.integer(length(vec)),
-       x  = as.double(x),  nx = as.integer(nx),
+       xt = as.double(vec), n = length(vec),
+       x  = as.double(x),  nx = nx,
        as.logical(rightmost.closed),
        as.logical(all.inside),
        index, DUP = FALSE, NAOK = TRUE, # NAOK: 'Inf' only

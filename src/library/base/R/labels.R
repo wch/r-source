@@ -29,4 +29,3 @@ labels.default <- function(object, ...)
     }
     nt
 }
-

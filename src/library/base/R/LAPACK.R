@@ -26,7 +26,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
     if(!n || !p) stop("0 extent dimensions")
 
     if(is.complex(x)) {
-        if(nu == 0) {
+        if(nu == 0L) {
             jobu <- 'N'
             u <- matrix(0+0i, 1L, 1L)  # dim is checked
         }
@@ -41,7 +41,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
         else
             stop("'nu' must be 0, nrow(x) or ncol(x)")
 
-        if (nv == 0) {
+        if (nv == 0L) {
             jobv <- 'N'
             v <- matrix(0+0i, 1L, 1L) # dim is checked
         }
@@ -59,7 +59,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
                      u, v, PACKAGE = "base")
         return(res[c("d", if(nu) "u", if(nv) "vt")])
     } else {
-        if(nu > 0 || nv > 0) {
+        if(nu || nv) {
             np <- min(n, p)
             if(nu <= np && nv <= np) {
                 jobu <- 'S'

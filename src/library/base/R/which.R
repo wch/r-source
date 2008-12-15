@@ -33,12 +33,12 @@ which <- function(x, arr.ind = FALSE)
                      list(dimnames(x)[[1L]][wh],
                           if(rank == 2L) c("row", "col")# for matrices
                           else paste("dim", 1L:rank, sep="")))
-        if(rank >= 2) {
-            denom <- 1
-            for (i in 2:rank) {
+        if(rank >= 2L) {
+            denom <- 1L
+            for (i in 2L:rank) {
                 denom <- denom * dl[i-1]
                 nextd1 <- wh1 %/% denom# (next dim of elements) - 1
-                wh[,i] <- 1 + nextd1 %% dl[i]
+                wh[,i] <- 1L + nextd1 %% dl[i]
             }
         }
         storage.mode(wh) <- "integer"
@@ -48,4 +48,3 @@ which <- function(x, arr.ind = FALSE)
 
 which.min <- function(x) .Internal(which.min(x))
 which.max <- function(x) .Internal(which.max(x))
-

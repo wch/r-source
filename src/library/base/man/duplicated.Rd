@@ -21,7 +21,7 @@ duplicated(x, incomparables = FALSE, \dots)
 \method{duplicated}{default}(x, incomparables = FALSE,
            fromLast = FALSE, \dots)
 
-\method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1,
+\method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1L,
            fromLast = FALSE, \dots)
 }
 \arguments{

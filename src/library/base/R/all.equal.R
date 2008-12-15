@@ -123,8 +123,8 @@ all.equal.character <-
     }
     ne <- !nas & (target != current)
     if(!any(ne) && is.null(msg)) TRUE
-    else if(sum(ne) == 1) c(msg, paste("1 string mismatch"))
-    else if(sum(ne) > 1) c(msg, paste(sum(ne), "string mismatches"))
+    else if(sum(ne) == 1L) c(msg, paste("1 string mismatch"))
+    else if(sum(ne) > 1L) c(msg, paste(sum(ne), "string mismatches"))
     else msg
 }
 
@@ -137,9 +137,9 @@ all.equal.factor <- function(target, current, check.attributes = TRUE, ...)
     nax <- is.na(target)
     nay <- is.na(current)
     n <- sum(nax != nay)
-    if(n > 1)
+    if(n > 1L)
 	msg <- c(msg, paste(n, "NA mismatches"))
-    else if (n == 1)
+    else if (n == 1L)
         msg <- c(msg, paste("1, NA mismatch"))
     else {
 	target <- levels(target)[target[!nax]]
@@ -248,8 +248,8 @@ all.equal.raw <-
     }
     ne <- !nas & (target != current)
     if(!any(ne) && is.null(msg)) TRUE
-    else if(sum(ne) == 1) c(msg, paste("1 element mismatch"))
-    else if(sum(ne) > 1) c(msg, paste(sum(ne), "element mismatches"))
+    else if(sum(ne) == 1L) c(msg, paste("1 element mismatch"))
+    else if(sum(ne) > 1L) c(msg, paste(sum(ne), "element mismatches"))
     else msg
 }
 
@@ -292,4 +292,3 @@ attr.all.equal <- function(target, current,
     }
     msg # NULL or character
 }
-

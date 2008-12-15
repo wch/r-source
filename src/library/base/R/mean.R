@@ -27,7 +27,7 @@ mean.default <- function(x, trim = 0, na.rm = FALSE, ...)
     if(!is.numeric(trim) || length(trim) != 1L)
         stop("'trim' must be numeric of length one")
     n <- length(x)
-    if(trim > 0 && n > 0) {
+    if(trim > 0 && n) {
 	if(is.complex(x))
 	    stop("trimmed means are not defined for complex data")
 	if(trim >= 0.5) return(stats::median(x, na.rm=FALSE))

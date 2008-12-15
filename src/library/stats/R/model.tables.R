@@ -465,9 +465,9 @@ model.frame.aovlist <- function(formula, data = NULL, ...)
     indError <- attr(Terms, "specials")$Error
     errorterm <-  attr(Terms, "variables")[[1 + indError]]
     form <- update.formula(Terms,
-                           paste(". ~ .-", deparse(errorterm, width.cutoff=500,
+                           paste(". ~ .-", deparse(errorterm, width.cutoff=500L,
                                                    backtick = TRUE),
-                                 "+", deparse(errorterm[[2L]], width.cutoff=500,
+                                 "+", deparse(errorterm[[2L]], width.cutoff=500L,
                                               backtick = TRUE)))
     nargs <- as.list(call)
     oargs <- as.list(oc)

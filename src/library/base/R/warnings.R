@@ -28,7 +28,7 @@ print.warnings <- function(x, ...)
         cat(ngettext(n, "Warning message:\n", "Warning messages:\n"))
         msgs <- names(x)
         for(i in seq_len(n)) {
-            ind <- if(n == 1) "" else paste(i, ": ", sep="")
+            ind <- if(n == 1L) "" else paste(i, ": ", sep="")
             out <- if(length(x[[i]])) {
                 ## deparse can overshoot cutoff
                 temp <- deparse(x[[i]], width.cutoff = 50L, nlines = 2L)

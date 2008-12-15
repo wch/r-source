@@ -31,7 +31,7 @@ duplicated.data.frame <- function(x, incomparables = FALSE, fromLast = FALSE, ..
 }
 
 duplicated.matrix <- duplicated.array <-
-    function(x, incomparables = FALSE , MARGIN = 1, fromLast = FALSE, ...)
+    function(x, incomparables = FALSE , MARGIN = 1L, fromLast = FALSE, ...)
 {
     if(!is.logical(incomparables) || incomparables)
 	.NotYetUsed("incomparables != FALSE")

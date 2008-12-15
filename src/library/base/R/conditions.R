@@ -21,11 +21,11 @@
 tryCatch <- function(expr, ..., finally) {
     tryCatchList <- function(expr, names, parentenv, handlers) {
 	nh <- length(names)
-	if (nh > 1)
+	if (nh > 1L)
 	    tryCatchOne(tryCatchList(expr, names[-nh], parentenv,
                                      handlers[-nh]),
 			names[nh], parentenv, handlers[[nh]])
-	else if (nh == 1)
+	else if (nh == 1L)
 	    tryCatchOne(expr, names, parentenv, handlers[[1L]])
 	else expr
     }
@@ -157,7 +157,7 @@ print.restart <- function(x, ...) {
 isRestart <- function(x) inherits(x, "restart")
 
 findRestart <- function(name, cond = NULL) {
-    i <- 1
+    i <- 1L
     repeat {
         r <- .Internal(.getRestart(i))
         if (is.null(r))
@@ -165,20 +165,20 @@ findRestart <- function(name, cond = NULL) {
         else if (name == r[[1L]] &&
                  (is.null(cond) || is.null(r$test) || r$test(cond)))
             return(r)
-        else i <- i + 1
+        else i <- i + 1L
     }
 }
 
 computeRestarts <- function(cond = NULL) {
     val <- NULL
-    i <- 1
+    i <- 1L
     repeat {
         r <- .Internal(.getRestart(i))
         if (is.null(r))
             return(val)
         else if (is.null(cond) || is.null(r$test) || r$test(cond))
             val <- c(val, list(r))
-        i <- i + 1
+        i <- i + 1L
     }
 }
 
@@ -276,10 +276,10 @@ withRestarts <- function(expr, ...) {
     }
     withRestartList <- function(expr, restarts) {
 	nr <- length(restarts)
-	if (nr > 1)
+	if (nr > 1L)
 	    withOneRestart(withRestartList(expr, restarts[-nr]),
                            restarts[[nr]])
-	else if (nr == 1)
+	else if (nr == 1L)
 	    withOneRestart(expr, restarts[[1L]])
 	else expr
     }

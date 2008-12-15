@@ -26,7 +26,7 @@ sink <- function(file=NULL, append = FALSE, type = c("output", "message"),
         .Internal(sink(file, FALSE, TRUE, FALSE))
     } else {
         closeOnExit <- FALSE
-        if(is.null(file)) file <- -1
+        if(is.null(file)) file <- -1L
         else if(is.character(file)) {
             file <- file(file, ifelse(append, "a", "w"))
             closeOnExit <- TRUE

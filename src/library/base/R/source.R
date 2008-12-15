@@ -144,7 +144,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    	lastshown <- srcref[3L]
 	    	while (length(dep) && length(grep("^[[:blank:]]*$", dep[1L]))) {
 	    	    dep <- dep[-1L]
-	    	    leading <- leading - 1
+	    	    leading <- leading - 1L
 	    	}
 	    	dep <- paste(rep.int(c(prompt.echo, continue.echo), c(leading, length(dep)-leading)),
 	    		     dep, sep="", collapse="\n")

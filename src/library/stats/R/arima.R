@@ -350,7 +350,7 @@ arima <- function(x, order = c(0, 0, 0),
 print.Arima <-
     function (x, digits = max(3, getOption("digits") - 3), se = TRUE, ...)
 {
-    cat("\nCall:", deparse(x$call, width.cutoff = 75), "", sep = "\n")
+    cat("\nCall:", deparse(x$call, width.cutoff = 75L), "", sep = "\n")
     if (length(x$coef)) {
         cat("Coefficients:\n")
         coef <- round(x$coef, digits = digits)
