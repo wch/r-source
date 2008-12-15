@@ -5548,3 +5548,9 @@ stopifnot(identical(body(f), b0)) # 'a' became an argument
 f <- function(x) NULL
 body(f) <- list(1, 2, 3) # was error
 ## pre-2.9.0 behaviour was erratic.
+
+
+## PR#13305
+qr.solve(cbind(as.complex(1:11), as.complex(1)),
+         as.complex(2*(20:30)))
+## failed in 2.8.1

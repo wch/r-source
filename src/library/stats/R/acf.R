@@ -193,8 +193,9 @@ plot.acf <-
                 if (with.ci && ci.type == "white")
                     abline(h = c(clim, -clim), col = ci.col, lty = 2)
                 else if (with.ci.ma && i == j) {
-                    lines(x$lag[, i, j], clim, col = ci.col, lty = 2)
-                    lines(x$lag[, i, j], -clim, col = ci.col, lty = 2)
+                    clim <- clim[-length(clim)]
+                    lines(x$lag[-1, i, j], clim, col = ci.col, lty = 2)
+                    lines(x$lag[-1, i, j], -clim, col = ci.col, lty = 2)
                 }
                 title(if (!is.null(main)) main else
                       if (i == j) snames[i]

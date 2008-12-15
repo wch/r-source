@@ -424,6 +424,15 @@ BUG FIXES
     o	body<-() failed if the function had no arguments.  It now
 	warns if discarding elements from a 'value' of type "expression".
 
+    o	qr.coef() failed in the complex case for non-square systems.
+    	(PR#13305)
+
+    o	plot.dendrogram(horizontal=TRUE) did not not plot 'edgetext'
+	at the correct locations.  (PR#13313)
+
+    o	The starting point for plot.acf(ci.type="ma") was lag 0 when it
+	should have been lag 1.  (PR#13071)
+
 
 
 		CHANGES IN R VERSION 2.8.0

@@ -69,7 +69,7 @@ qr.coef <- function(qr, y)
     if(is.complex(qr$qr)) {
 	if(!is.complex(y)) y[] <- as.complex(y)
 	coef <- matrix(NA_complex_, nrow = p, ncol = ny)
-	coef[qr$pivot,] <- .Call("qr_coef_cmplx", qr, y, PACKAGE = "base")
+	coef[qr$pivot,] <- .Call("qr_coef_cmplx", qr, y, PACKAGE = "base")[1:p,]
 	return(if(im) coef else c(coef))
     }
     ## else {not complex} :
