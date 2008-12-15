@@ -15,7 +15,7 @@ papersize <- Sys.getenv("R_PAPERSIZE_USER")
 if(!nchar(papersize)) {
     lcpaper <- Sys.getlocale("LC_PAPER") # might be null: OK as nchar is 0
     papersize <- if(nchar(lcpaper))
-        if(length(grep("(_US|_CA)", lcpaper)) > 0) "letter" else "a4"
+        if(length(grep("(_US|_CA)", lcpaper))) "letter" else "a4"
     else Sys.getenv("R_PAPERSIZE")
 }
 options(papersize = as.vector(papersize),

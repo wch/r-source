@@ -6,7 +6,7 @@
 .Library.site <- if(!nchar(.Library.site)) file.path(R.home(), "site-library") else unlist(strsplit(.Library.site, ";"))
 .Library.site <- .Library.site[file.exists(.Library.site)]
 
-if(nchar(Sys.getenv("R_LIBS_USER")) == 0)
+if(!nzchar(Sys.getenv("R_LIBS_USER")))
     Sys.setenv(R_LIBS_USER=
                file.path(Sys.getenv("R_USER"), "R",
                          "win-library",
@@ -19,7 +19,7 @@ invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ";")),
                       unlist(strsplit(Sys.getenv("R_LIBS_USER"), ";"))
                       )))
 
-if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) {
+if(nzchar(Sys.getenv("R_PAPERSIZE"))) {
     options(papersize = as.vector(Sys.getenv("R_PAPERSIZE")))
 } else {
     if(length(grep("united.states", Sys.getlocale("LC_MONETARY"), TRUE)) ||
@@ -30,6 +30,7 @@ if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) {
 
 options(pager = if(length(grep("--ess", commandArgs()))) "console" else "internal")
 options(useFancyQuotes = (.Platform$GUI == "Rgui"))
+options(pdfviewer = file.path(R.home(), "bin", "open.exe"))
 
 if(.Platform$GUI == "Rgui") {
     Sys.setenv(GFORTRAN_STDOUT_UNIT= "-1")

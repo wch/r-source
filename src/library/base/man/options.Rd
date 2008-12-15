@@ -189,6 +189,15 @@ getOption(x)
       \code{"a4"}, or \code{"letter"} in US and Canadian locales.}
 #endif
 
+    \item{\code{pdfviewer}:}{default PDF viewer.
+#ifdef unix
+      The default is set from the environment variable \env{R\_PDFVIEWER}.
+#endif
+#ifdef windows
+      Defaults to the full path to \samp{open.exe}, a utility supplied with \R
+#endif
+    }
+    
     \item{\code{printcmd}:}{the command used by \code{\link{postscript}}
       for printing; set by environment variable \env{R\_PRINTCMD} when
       \R is started.  This should be a command that expects either input
@@ -490,9 +499,6 @@ getOption(x)
   \describe{
     \item{\code{latexcmd, dvipscmd}:}{character strings giving commands
       to be used in off-line printing of help pages.}
-
-    \item{\code{pdfviewer}:}{default PDF viewer.  Set from the
-      environment variable \env{R\_PDFVIEWER}.}
   }
 }
 #endif

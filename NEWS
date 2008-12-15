@@ -109,6 +109,8 @@ NEW FEATURES
     o	body<-() now treats list values consistently with other
 	types: they no longer need to be wrapped in a list() call.
 
+    o	option("pdfbrowser") is now set on Windows as well as on Unix-alikes.
+
 
 DEPRECATED & DEFUNCT
 
