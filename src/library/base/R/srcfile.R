@@ -17,7 +17,7 @@
 # a srcfile is a file with a timestamp
 
 srcfile <- function(filename, encoding = getOption("encoding")) {
-    stopifnot(is.character(filename), length(filename) == 1)
+    stopifnot(is.character(filename), length(filename) == 1L)
 
     e <- new.env(parent=emptyenv())
 
@@ -79,7 +79,7 @@ close.srcfile <- function(con, ...) {
 # srcfilecopy saves a copy of lines from a file
 
 srcfilecopy <- function(filename, lines) {
-    stopifnot(is.character(filename), length(filename) == 1)
+    stopifnot(is.character(filename), length(filename) == 1L)
 
     e <- new.env(parent=emptyenv())
 

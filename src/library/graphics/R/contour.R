@@ -43,7 +43,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
     }
     if (any(diff(x) <= 0) || any(diff(y) <= 0))
 	stop("increasing 'x' and 'y' values expected")
-    if (!is.matrix(z) || nrow(z) <= 1 || ncol(z) <= 1)
+    if (!is.matrix(z) || nrow(z) <= 1L || ncol(z) <= 1L)
 	stop("no proper 'z' matrix specified")
     if (!add) {
         localPlotWindow <-

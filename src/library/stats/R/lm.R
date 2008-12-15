@@ -52,7 +52,7 @@ lm <- function (formula, data, subset, weights, na.action,
     if (is.empty.model(mt)) {
 	x <- NULL
 	z <- list(coefficients = if (is.matrix(y))
-                    matrix(,0,3) else numeric(0), residuals = y,
+                    matrix(,0,3) else numeric(0L), residuals = y,
 		  fitted.values = 0 * y, weights = w, rank = 0L,
 		  df.residual = if (is.matrix(y)) nrow(y) else length(y))
         if(!is.null(offset)) {
@@ -92,7 +92,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
     p <- ncol(x)
     if (p == 0L) {
         ## oops, null model
-        return(list(coefficients = numeric(0), residuals = y,
+        return(list(coefficients = numeric(0L), residuals = y,
                     fitted.values = 0 * y, rank = 0,
                     df.residual = length(y)))
     }
@@ -188,7 +188,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     p <- ncol(x)
     if (p == 0) {
         ## oops, null model
-        return(list(coefficients = numeric(0), residuals = y,
+        return(list(coefficients = numeric(0L), residuals = y,
                     fitted.values = 0 * y, weights = w, rank = 0L,
                     df.residual = length(y)))
     }
@@ -367,7 +367,7 @@ print.summary.lm <-
     if (rdf > 5L) {
 	nam <- c("Min", "1Q", "Median", "3Q", "Max")
 	rq <- if (length(dim(resid)) == 2)
-	    structure(apply(t(resid), 1, quantile),
+	    structure(apply(t(resid), 1L, quantile),
 		      dimnames = list(nam, dimnames(resid)[[2L]]))
 	else  structure(quantile(resid), names = nam)
 	print(rq, digits = digits, ...)
@@ -759,7 +759,7 @@ predict.lm <-
                     ip <- ip[, terms, drop = FALSE]
             }
         } else { # no terms
-            predictor <- ip <- matrix(0, n,0)
+            predictor <- ip <- matrix(0, n, 0L)
         }
 	attr(predictor, 'constant') <- if (hasintercept) termsconst else 0
     }

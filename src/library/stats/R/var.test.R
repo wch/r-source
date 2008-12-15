@@ -21,12 +21,12 @@ function(x, y, ratio = 1,
          alternative = c("two.sided", "less", "greater"),
          conf.level = 0.95, ...)
 {
-    if (!((length(ratio) == 1) && is.finite(ratio) && (ratio > 0)))
+    if (!((length(ratio) == 1L) && is.finite(ratio) && (ratio > 0)))
         stop("'ratio' must be a single positive number")
 
     alternative <- match.arg(alternative)
 
-    if (!((length(conf.level) == 1) && is.finite(conf.level) &&
+    if (!((length(conf.level) == 1L) && is.finite(conf.level) &&
           (conf.level > 0) && (conf.level < 1)))
         stop("'conf.level' must be a single number between 0 and 1")
 
@@ -39,12 +39,12 @@ function(x, y, ratio = 1,
         V.y <- sum(y$residuals^2) / DF.y
     } else {
         x <- x[is.finite(x)]
-        DF.x <- length(x) - 1
-        if (DF.x < 1)
+        DF.x <- length(x) - 1L
+        if (DF.x < 1L)
             stop("not enough 'x' observations")
         y <- y[is.finite(y)]
-        DF.y <- length(y) - 1
-        if (DF.y < 1)
+        DF.y <- length(y) - 1L
+        if (DF.y < 1L)
             stop("not enough 'y' observations")
         V.x <- var(x)
         V.y <- var(y)
@@ -87,8 +87,8 @@ var.test.formula <-
 function(formula, data, subset, na.action, ...)
 {
     if(missing(formula)
-       || (length(formula) != 3)
-       || (length(attr(terms(formula[-2]), "term.labels")) != 1))
+       || (length(formula) != 3L)
+       || (length(attr(terms(formula[-2L]), "term.labels")) != 1L))
         stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))

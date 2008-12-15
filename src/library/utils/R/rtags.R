@@ -44,7 +44,7 @@ shorten.to.string <-
     if (FALSE) {
         ans <- regexpr(strsplit("token", ",", fixed = TRUE)[[1L]][1L],
                        line, fixed = TRUE)
-        if (ans == -1) line
+        if (ans == -1L) line
         else substr(line, 1L, ans + attr(ans, "match.length") - 1L)
     }
     else {
@@ -69,9 +69,9 @@ write.etags <-
     ## extra 1 for newline
     shorten.lines <- match.arg(shorten.lines)
     offsets <- (cumsum(nchars + 1L) - (nchars + 1L))[startlines]
-    lines <- 
+    lines <-
         switch(shorten.lines,
-               none = lines, 
+               none = lines,
                simple = sapply(strsplit(lines, "function", fixed = TRUE), "[", 1),
                token = mapply(shorten.to.string, lines, tokens))
     tag.lines <-
@@ -115,13 +115,13 @@ expr2token <-
 {
     id <- ""
     value <-
-        if ((length(x) > 1) &&
-            (length(token <- as.character(x[[2L]])) == 1) &&
-            (length(id <- as.character(x[[1L]])) == 1) &&
+        if ((length(x) > 1L) &&
+            (length(token <- as.character(x[[2L]])) == 1L) &&
+            (length(id <- as.character(x[[1L]])) == 1L) &&
             (id %in% ok)) token
         else
             character(0L)
-    if (extended && identical(id, "setMethod")) 
+    if (extended && identical(id, "setMethod"))
     {
         ## try to add the signature, comma separated
         sig <- try(eval(x[[3L]]), silent = TRUE)
@@ -146,10 +146,10 @@ rtags.file <-
     if (length(elist) == 0) return(invisible())
     lines <- readLines(src)
     tokens <- lapply(elist, expr2token)
-    startlines <- sapply(attr(elist, "srcref"), "[", 1)
+    startlines <- sapply(attr(elist, "srcref"), "[", 1L)
     if (length(tokens) != length(startlines))
         stop("length mismatch: bug in code!")
-    keep <- sapply(tokens, length) == 1
+    keep <- sapply(tokens, length) == 1L
     if (!any(keep)) return(invisible())
     tokens <- unlist(tokens[keep])
     startlines <- startlines[keep]
@@ -200,7 +200,7 @@ if (FALSE)
 
     ## to tag all .[RrSs] files under /path/to/src/repository/ that
     ## have "/R/" in the full path
-    
+
 
 }
 

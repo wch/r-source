@@ -245,7 +245,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         opt_quiet <- if(quiet) "--quiet" else ""
         opt_extra <- ""
         out <- .shell_with_capture(paste(shQuote(texi2dvi), "--help"))
-        if(length(grep("--no-line-error", out$stdout) > 0L))
+        if(length(grep("--no-line-error", out$stdout)))
             opt_extra <- "--no-line-error"
         ## (Maybe change eventually: the current heuristics for finding
         ## error messages in log files should work for both regular and

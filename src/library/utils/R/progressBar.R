@@ -2,15 +2,15 @@ txtProgressBar <-
     function(min = 0, max = 1, initial = 0, char = "=",
              width = NA, title, label, style = 1)
 {
-    if(! style %in% 1L:3) style <- 1L
+    if(! style %in% 1L:3L) style <- 1
     .val <- initial
     .killed <- FALSE
-    .nb <- 0
-    .pc <- 0
+    .nb <- 0L
+    .pc <- 0L
     nw <- nchar(char, "w")
     if(is.na(width)) {
         width <- getOption("width")
-        if(style == 3) width <- width - 10
+        if(style == 3L) width <- width - 10L
         width <- trunc(width/nw)
     }
 

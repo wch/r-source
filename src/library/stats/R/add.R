@@ -43,9 +43,9 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 #     data <- model.frame(update(object, newform)) # remove NAs
 #     object <- update(object, data = data)
     ns <- length(scope)
-    ans <- matrix(nrow = ns + 1, ncol = 2,
+    ans <- matrix(nrow = ns + 1L, ncol = 2L,
                   dimnames = list(c("<none>", scope), c("df", "AIC")))
-    ans[1, ] <- extractAIC(object, scale, k = k, ...)
+    ans[1L,  ] <- extractAIC(object, scale, k = k, ...)
     n0 <- length(object$residuals)
     env <- environment(formula(object))
     for(i in seq(ns)) {
@@ -57,16 +57,16 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	nfit <- update(object, as.formula(paste("~ . +", tt)),
                        evaluate = FALSE)
 	nfit <- eval(nfit, envir=env) # was  eval.parent(nfit)
-	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
+	ans[i+1L, ] <- extractAIC(nfit, scale, k = k, ...)
         if(length(nfit$residuals) != n0)
             stop("number of rows in use has changed: remove missing values?")
     }
-    dfs <- ans[,1] - ans[1,1]
+    dfs <- ans[, 1L] - ans[1L, 1L]
     dfs[1L] <- NA
-    aod <- data.frame(Df = dfs, AIC = ans[,2])
+    aod <- data.frame(Df = dfs, AIC = ans[, 2L])
     test <- match.arg(test)
     if(test == "Chisq") {
-	dev <- ans[,2] - k*ans[, 1]
+	dev <- ans[, 2L] - k*ans[, 1L]
 	dev <- dev[1L] - dev; dev[1L] <- NA
 	nas <- !is.na(dev)
 	P <- dev
@@ -152,7 +152,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     n <- nrow(x)
     Terms <- attr(Terms, "term.labels")
     asgn <- attr(x, "assign")
-    ousex <- match(asgn, match(oTerms, Terms), 0) > 0
+    ousex <- match(asgn, match(oTerms, Terms), 0L) > 0L
     if(int) ousex[1L] <- TRUE
     iswt <- !is.null(wt)
     X <- x[, ousex, drop = FALSE]
@@ -166,7 +166,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
                      function(x) paste(sort(x), collapse=":"))
     for(tt in scope) {
         stt <- paste(sort(strsplit(tt, ":")[[1L]]), collapse=":")
-	usex <- match(asgn, match(stt, sTerms), 0) > 0
+	usex <- match(asgn, match(stt, sTerms), 0L) > 0L
 	X <- x[, usex|ousex, drop = FALSE]
 	z <- if(iswt) lm.wfit(X, y, wt, offset=offset)
         else lm.fit(X, y, offset=offset)
@@ -267,7 +267,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     if(is.null(wt)) wt <- rep.int(1, n)
     Terms <- attr(Terms, "term.labels")
     asgn <- attr(x, "assign")
-    ousex <- match(asgn, match(oTerms, Terms), 0) > 0
+    ousex <- match(asgn, match(oTerms, Terms), 0L) > 0L
     if(int) ousex[1L] <- TRUE
     X <- x[, ousex, drop = FALSE]
     z <-  glm.fit(X, y, wt, offset=offset,
@@ -279,7 +279,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
                      function(x) paste(sort(x), collapse=":"))
     for(tt in scope) {
         stt <- paste(sort(strsplit(tt, ":")[[1L]]), collapse=":")
-	usex <- match(asgn, match(stt, sTerms), 0) > 0
+	usex <- match(asgn, match(stt, sTerms), 0L) > 0L
 	X <- x[, usex|ousex, drop = FALSE]
 	z <-  glm.fit(X, y, wt, offset=offset,
 		      family=object$family, control=object$control)
@@ -344,7 +344,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 #    data <- model.frame(object) # remove NAs
 #    object <- update(object, data = data)
     ns <- length(scope)
-    ans <- matrix(nrow = ns + 1, ncol = 2,
+    ans <- matrix(nrow = ns + 1L, ncol = 2L,
                   dimnames =  list(c("<none>", scope), c("df", "AIC")))
     ans[1, ] <- extractAIC(object, scale, k = k, ...)
     n0 <- length(object$residuals)
@@ -362,12 +362,12 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
         if(length(nfit$residuals) != n0)
             stop("number of rows in use has changed: remove missing values?")
     }
-    dfs <- ans[1,1] - ans[,1]
+    dfs <- ans[1L , 1L] - ans[, 1L]
     dfs[1L] <- NA
     aod <- data.frame(Df = dfs, AIC = ans[,2])
     test <- match.arg(test)
     if(test == "Chisq") {
-        dev <- ans[, 2] - k*ans[, 1]
+        dev <- ans[, 2L] - k*ans[, 1L]
         dev <- dev - dev[1L] ; dev[1L] <- NA
         nas <- !is.na(dev)
         P <- dev
@@ -563,7 +563,7 @@ add.scope <- function(terms1, terms2)
 drop.scope <- function(terms1, terms2)
 {
     terms1 <- terms(terms1)
-    f2 <- if(missing(terms2)) numeric(0)
+    f2 <- if(missing(terms2)) numeric(0L)
     else attr(terms(terms2), "factors")
     factor.scope(attr(terms1, "factors"), list(drop = f2))$drop
 }
@@ -584,7 +584,7 @@ factor.scope <- function(factor, scope)
                              function(x) paste(sort(x), collapse=":"))
             nmdrop0 <- sapply(strsplit(nmdrop, ":", fixed=TRUE),
                              function(x) paste(sort(x), collapse=":"))
-	    where <- match(nmdrop0, nmfac0, 0)
+	    where <- match(nmdrop0, nmfac0, 0L)
 	    if(any(!where))
                 stop(gettextf("lower scope has term(s) %s not included in model",
                               paste(sQuote(nmdrop[where==0]), collapse=", ")),
@@ -612,10 +612,10 @@ factor.scope <- function(factor, scope)
                              function(x) paste(sort(x), collapse=":"))
             nmadd0 <- sapply(strsplit(nmadd, ":", fixed=TRUE),
                              function(x) paste(sort(x), collapse=":"))
-	    where <- match(nmfac0, nmadd0, 0)
+	    where <- match(nmfac0, nmadd0, 0L)
 	    if(any(!where))
                 stop(gettextf("upper scope does not include model term(s) %s",
-                              paste(sQuote(nmfac[where==0]), collapse=", ")),
+                              paste(sQuote(nmfac[where==0L]), collapse=", ")),
                      domain = NA)
 	    nmadd <- nmadd[-where]
 	    add <- add[, -where, drop = FALSE]
@@ -706,7 +706,7 @@ step <- function(object, scope, scale = 0,
     backward <- direction == "both" | direction == "backward"
     forward  <- direction == "both" | direction == "forward"
     if(missing(scope)) {
-	fdrop <- numeric(0)
+	fdrop <- numeric(0L)
         fadd <- attr(Terms, "factors")
         if(md) forward <- FALSE
     }
@@ -714,14 +714,14 @@ step <- function(object, scope, scale = 0,
 	if(is.list(scope)) {
 	    fdrop <- if(!is.null(fdrop <- scope$lower))
 		attr(terms(update.formula(object, fdrop)), "factors")
-	    else numeric(0)
+	    else numeric(0L)
 	    fadd <- if(!is.null(fadd <- scope$upper))
 		attr(terms(update.formula(object, fadd)), "factors")
 	}
         else {
 	    fadd <- if(!is.null(fadd <- scope))
 		attr(terms(update.formula(object, scope)), "factors")
-	    fdrop <- numeric(0)
+	    fdrop <- numeric(0L)
 	}
     }
     models <- vector("list", steps)
@@ -785,7 +785,7 @@ step <- function(object, scope, scale = 0,
 	    if(o[1L] == 1) break
 	    change <- rownames(aod)[o[1L]]
 	}
-	usingCp <- match("Cp", names(aod), 0) > 0
+	usingCp <- match("Cp", names(aod), 0L) > 0L
         ## may need to look for a `data' argument in parent
 	fit <- update(fit, paste("~ .", change), evaluate = FALSE)
         fit <- eval.parent(fit)

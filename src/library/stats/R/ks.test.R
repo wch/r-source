@@ -34,7 +34,7 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
     DNAME <- deparse(substitute(x))
     x <- x[!is.na(x)]
     n <- length(x)
-    if(n < 1)
+    if(n < 1L)
         stop("not enough 'x' data")
     PVAL <- NULL
 
@@ -43,7 +43,7 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
         y <- y[!is.na(y)]
         n.x <- as.double(n)             # to avoid integer overflow
         n.y <- length(y)
-        if(n.y < 1)
+        if(n.y < 1L)
             stop("not enough 'y' data")
         if(is.null(exact))
             exact <- (n.x * n.y < 10000)
@@ -122,7 +122,7 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
         p <- rep(0, length(x))
         p[is.na(x)] <- NA
         IND <- which(!is.na(x) & (x > 0))
-        if(length(IND) > 0) {
+        if(length(IND)) {
             p[IND] <- .C("pkstwo",
                          as.integer(length(x[IND])),
                          p = as.double(x[IND]),

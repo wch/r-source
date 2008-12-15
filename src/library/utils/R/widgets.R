@@ -22,7 +22,7 @@ select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
     ## simple text-based alternatives.
     if(!multiple) {
         res <- menu(list, , title)
-        if(res < 1 || res > length(list)) return("")
+        if(res < 1L || res > length(list)) return("")
         else return(list[res])
     } else {
         nc <- length(list)
@@ -31,11 +31,11 @@ select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
         else list %in% preselect
         op <- paste(format(seq_len(nc)), ": ",
                     ifelse(def, "+", " "), " ", list, sep="")
-        if(nc > 10) {
+        if(nc > 10L) {
             fop <- format(op)
             nw <- nchar(fop[1L], "w") + 2
             ncol <- getOption("width") %/% nw
-            if(ncol > 1)
+            if(ncol > 1L)
                 op <- paste(fop, c(rep("  ", ncol - 1), "\n"),
                             sep ="", collapse="")
             cat("", op, sep="\n")
@@ -46,7 +46,7 @@ select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
 	    if(!inherits(res, "try-error")) break
 	    cat(gettext("Invalid input, please try again\n"))
 	}
-        if(!length(res) || (length(res) == 1 && !res[1L])) return(character(0L))
+        if(!length(res) || (length(res) == 1L && !res[1L])) return(character(0L))
         res <- sort(res[1 <= res && res <= nc])
         return(list[res])
     }

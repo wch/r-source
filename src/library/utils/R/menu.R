@@ -31,11 +31,11 @@ menu <- function(choices, graphics = FALSE, title = "")
     nc <- length(choices)
     if(length(title) && nzchar(title[1L])) cat(title[1L], "\n")
     op <- paste(format(seq_len(nc)), ": ", choices, sep="")
-    if(nc > 10) {
+    if(nc > 10L) {
         fop <- format(op)
         nw <- nchar(fop[1L], "w") + 2
         ncol <- getOption("width") %/% nw  # might be 0
-        if(ncol > 1)
+        if(ncol > 1L)
             op <- paste(fop, c(rep("  ", ncol - 1), "\n"), sep="", collapse="")
         cat("", op, "", sep="\n")
     } else cat("", op, "", sep="\n")

@@ -44,7 +44,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
     if(add) { ## solve the additive constant problem
         ## it is c* = largest eigenvalue of 2 x 2 (n x n) block matrix Z:
         i2 <- n + (i <- 1L:n)
-        Z <- matrix(0, 2*n, 2*n)
+        Z <- matrix(0, 2L*n, 2L*n)
         Z[cbind(i2,i)] <- -1
         Z[ i, i2] <- -x
         Z[i2, i2] <- .C(R_dblcen, x = 2*d, as.integer(n))$x

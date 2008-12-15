@@ -22,7 +22,7 @@
     } else {
      	type <- substitute(e1)
      	topicExpr <- substitute(e2)
-    } 	
+    }
     if (is.call(topicExpr) && topicExpr[[1L]] == "?") {
             # ??foo is parsed as `?`(`?`(foo))
             	search <- TRUE
@@ -35,18 +35,18 @@
             	     cat("the oracle is unavailable.\nWe apologize for any inconvenience.\n")
             	     return(invisible())
             	 }
-            } else 
+            } else
             	search <- FALSE
 
     if (is.call(topicExpr) && (topicExpr[[1L]] == "::" || topicExpr[[1L]] == ":::")) {
 		package <- as.character(topicExpr[[2L]])
 		topicExpr <- topicExpr[[3L]]
-	    } else 
+	    } else
 		package <- NULL
 
     if (search) {
 	if (is.null(type))
-	    return(eval(substitute(help.search(TOPIC, package = PACKAGE), 
+	    return(eval(substitute(help.search(TOPIC, package = PACKAGE),
 							list(TOPIC = as.character(topicExpr),
 							      PACKAGE = package))))
 	else
@@ -62,13 +62,13 @@
 	    	topic <- as.character(topicExpr)
 	    else
 	    	topic <- e1
-	    return(eval(substitute(help(TOPIC, package = PACKAGE), 
+	    return(eval(substitute(help(TOPIC, package = PACKAGE),
 							list(TOPIC = topic,
 							      PACKAGE = package))))
 	} else {
 	    ## interpret e1 as a type, but to allow customization, do NOT
             ## force arbitrary expressions to be single character strings
-            ## (so that methods can be defined for topicName).	    
+            ## (so that methods can be defined for topicName).
             if (is.name(type))
 		type <- as.character(type)
 	    else
@@ -92,7 +92,7 @@
 
 topicName <- function(type, topic)
 {
-    if((length(type) == 0) || (length(topic) == 0))
+    if((length(type) == 0L) || (length(topic) == 0L))
         character(0L)
     else
         paste(paste(topic, collapse = ","), type, sep = "-")
@@ -104,7 +104,7 @@ topicName <- function(type, topic)
     if(is.name(f))
         f <- as.character(f)
     if(!.isMethodsDispatchOn() || !methods::isGeneric(f, where = where)) {
-        if(!is.character(f) || length(f) != 1)
+        if(!is.character(f) || length(f) != 1L)
             stop(gettextf("the object of class \"%s\" in the function call '%s' could not be used as a documentation topic",
                           class(f), deparse(expr)), domain = NA)
         h <- .tryHelp(f)

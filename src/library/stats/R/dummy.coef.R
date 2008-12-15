@@ -32,7 +32,7 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
     names(nxl) <- vars
     tmp <- unlist(lapply(xl, length))
     nxl[names(tmp)] <- tmp
-    lterms <- apply(facs, 2, function(x) prod(nxl[x > 0]))
+    lterms <- apply(facs, 2L, function(x) prod(nxl[x > 0]))
     nl <- sum(lterms)
     args <- vector("list", length(vars))
     names(args) <- vars
@@ -55,7 +55,7 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
 	    tmp <- expand.grid(xl[ifac])
 	    dummy[ pos+1L:lterms[j], ifac ] <- tmp
 	    rnn[ pos+1L:lterms[j] ] <-
-		apply(as.matrix(tmp), 1, function(x) paste(x, collapse=":"))
+		apply(as.matrix(tmp), 1L, function(x) paste(x, collapse=":"))
 	}
 	pos <- pos + lterms[j]
     }
@@ -102,7 +102,7 @@ dummy.coef.aovlist <- function(object, use.na = FALSE, ...)
     names(nxl) <- vars
     tmp <- unlist(lapply(xl, length))
     nxl[names(tmp)] <- tmp
-    lterms <- apply(facs, 2, function(x) prod(nxl[x > 0]))
+    lterms <- apply(facs, 2L, function(x) prod(nxl[x > 0]))
     nl <- sum(lterms)
     args <- vector("list", length(vars))
     names(args) <- vars
@@ -125,7 +125,7 @@ dummy.coef.aovlist <- function(object, use.na = FALSE, ...)
 	    tmp <- expand.grid(xl[ifac])
 	    dummy[ pos+1L:lterms[j], ifac ] <- tmp
 	    rnn[ pos+1L:lterms[j] ] <-
-		apply(as.matrix(tmp), 1, function(x) paste(x, collapse=":"))
+		apply(as.matrix(tmp), 1L, function(x) paste(x, collapse=":"))
 	}
 	pos <- pos + lterms[j]
     }
@@ -166,8 +166,8 @@ print.dummy_coef <- function(x, ..., title)
     terms <- names(x)
     n <- length(x)
     nm <- max(sapply(x, length))
-    ans <- matrix("", 2*n, nm)
-    rn <- rep.int("", 2*n)
+    ans <- matrix("", 2L*n, nm)
+    rn <- rep.int("", 2L*n)
     line <- 0
     for (j in seq(n)) {
 	this <- x[[j]]

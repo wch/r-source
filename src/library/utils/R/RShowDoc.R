@@ -31,7 +31,7 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
     }
 
     type <- match.arg(type)
-    if(missing(what) || length(what) != 1 || !is.character(what)) {
+    if(missing(what) || length(what) != 1L || !is.character(what)) {
         message("   RShowDoc() should be used with a character string argument specifying\n   a documentation file")
         return(invisible())
     }
@@ -125,8 +125,8 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
         rdocdir <- R.home("doc")
         docs <- dir(rdocdir, full.names=TRUE)
         docs <- docs[sapply(docs, function(x) file_test("-f", x))]
-        m <- match(what, basename(docs), 0)
-        if(m > 0) {
+        m <- match(what, basename(docs), 0L)
+        if(m > 0L) {
             file.show(docs[m])
             return(invisible(docs[m]))
         }

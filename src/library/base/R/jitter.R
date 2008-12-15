@@ -20,7 +20,7 @@
 
 jitter <- function(x, factor = 1, amount=NULL)
 {
-    if(length(x) == 0)
+    if(length(x) == 0L)
 	return(x)
     if(!is.numeric(x))
         stop("'x' must be numeric")

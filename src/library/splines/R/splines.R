@@ -48,7 +48,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
         warning("some 'x' values beyond boundary knots may cause ill-conditioned bases")
         derivs <- 0:degree
         scalef <- gamma(1L:ord)# factorials
-        basis <- array(0, c(length(x), length(Aknots) - degree - 1))
+        basis <- array(0, c(length(x), length(Aknots) - degree - 1L))
         if(any(ol)) {
             k.pivot <- Boundary.knots[1L]
             xl <- cbind(1, outer(x[ol] - k.pivot, 1L:degree, "^"))
@@ -66,7 +66,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
     }
     else basis <- spline.des(Aknots, x, ord)$design
     if(!intercept)
-        basis <- basis[, -1 , drop = FALSE]
+        basis <- basis[, -1L , drop = FALSE]
     n.col <- ncol(basis)
     if(nas) {
         nmat <- matrix(NA, length(nax), n.col)
@@ -74,7 +74,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
         basis <- nmat
     }
     dimnames(basis) <- list(nx, 1L:n.col)
-    a <- list(degree = degree, knots = if(is.null(knots)) numeric(0) else knots,
+    a <- list(degree = degree, knots = if(is.null(knots)) numeric(0L) else knots,
               Boundary.knots = Boundary.knots, intercept = intercept)
     attributes(basis) <- c(attributes(basis), a)
     class(basis) <- c("bs", "basis")
@@ -103,23 +103,23 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         }
         knots <- if(nIknots > 0) {
             knots <- seq.int(0, 1,
-                             length.out = nIknots + 2)[-c(1, nIknots + 2)]
+                             length.out = nIknots + 2L)[-c(1L, nIknots + 2L)]
             stats::quantile(x[!outside], knots)
         } ## else  NULL
     } else nIknots <- length(knots)
-    Aknots <- sort(c(rep(Boundary.knots, 4), knots))
+    Aknots <- sort(c(rep(Boundary.knots, 4L), knots))
     if(any(outside)) {
-        basis <- array(0, c(length(x), nIknots + 4))
+        basis <- array(0, c(length(x), nIknots + 4L))
         if(any(ol)) {
             k.pivot <- Boundary.knots[1L]
             xl <- cbind(1, x[ol] - k.pivot)
-            tt <- spline.des(Aknots, rep(k.pivot, 2), 4, c(0, 1))$design
+            tt <- spline.des(Aknots, rep(k.pivot, 2L), 4, c(0, 1))$design
             basis[ol,  ] <- xl %*% tt
         }
         if(any(or)) {
             k.pivot <- Boundary.knots[2L]
             xr <- cbind(1, x[or] - k.pivot)
-            tt <- spline.des(Aknots, rep(k.pivot, 2), 4, c(0, 1))$design
+            tt <- spline.des(Aknots, rep(k.pivot, 2L), 4, c(0, 1))$design
             basis[or,  ] <- xr %*% tt
         }
         if(any(inside <- !outside))
@@ -132,7 +132,7 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         basis <- basis[, -1 , drop = FALSE]
     }
     qr.const <- qr(t(const))
-    basis <- as.matrix((t(qr.qty(qr.const, t(basis))))[,  - (1L:2), drop = FALSE])
+    basis <- as.matrix((t(qr.qty(qr.const, t(basis))))[,  - (1L:2L), drop = FALSE])
     n.col <- ncol(basis)
     if(nas) {
         nmat <- matrix(NA, length(nax), n.col)

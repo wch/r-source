@@ -31,7 +31,7 @@ numericDeriv <- function(expr, theta, rho = parent.frame(), dir=1.0)
     if (!is.null(valDim)) {
         if (valDim[length(valDim)] == 1)
             valDim <- valDim[-length(valDim)]
-        if(length(valDim) > 1)
+        if(length(valDim) > 1L)
             dim(attr(val, "gradient")) <- c(valDim,
                                             dim(attr(val, "gradient"))[-1L])
     }
@@ -56,7 +56,7 @@ nlsModel.plinear <- function(form, data, start, wts)
     storage.mode(lhs) <- "double"
     rhs <- eval(form[[3L]], envir = env)
     storage.mode(rhs) <- "double"
-    .swts <- if(!missing(wts) && (length(wts) != 0))
+    .swts <- if(!missing(wts) && length(wts))
         sqrt(wts) else rep(1, length.out=NROW(rhs))
     assign(".swts", .swts, envir = env)
     p1 <- if(is.matrix(rhs)) ncol(rhs) else 1
@@ -87,7 +87,7 @@ nlsModel.plinear <- function(form, data, start, wts)
     }
     gradSetArgs[[1L]] <- (~attr(ans, "gradient"))[[2L]]
     gradCall <-
-        switch(length(gradSetArgs) - 1,
+        switch(length(gradSetArgs) - 1L,
                call("[", gradSetArgs[[1L]], gradSetArgs[[2L]]),
                call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]]),
                call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]],
@@ -117,8 +117,8 @@ nlsModel.plinear <- function(form, data, start, wts)
             dtdot <- function(A, b) t(A) %*% b
         }
     } else {
-        ddot <- function(A, b) apply(A, MARGIN = 3, FUN="%*%", b)
-        dtdot <- function(A, b) apply(A, MARGIN = c(2,3), FUN = "%*%", b)
+        ddot <- function(A, b) apply(A, MARGIN = 3L, FUN="%*%", b)
+        dtdot <- function(A, b) apply(A, MARGIN = c(2L,3L), FUN = "%*%", b)
     }
 
     getPars.noVarying <- function()
@@ -244,7 +244,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     useParams <- rep(TRUE, parLength)
     lhs <- eval(form[[2L]], envir = env)
     rhs <- eval(form[[3L]], envir = env)
-    .swts <- if(!missing(wts) && (length(wts) != 0))
+    .swts <- if(!missing(wts) && length(wts))
         sqrt(wts) else rep(1, length.out=length(rhs))
     assign(".swts", .swts, envir = env)
     resid <- .swts * (lhs - rhs)
@@ -265,9 +265,9 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     }
     dimGrad <- dim(attr(rhs, "gradient"))
     marg <- length(dimGrad)
-    if(marg > 0) {
+    if(marg > 0L) {
         gradSetArgs <- vector("list", marg+1)
-        for(i in 2:marg)
+        for(i in 2L:marg)
             gradSetArgs[[i]] <- rep(TRUE, dimGrad[i-1])
         useParams <- rep(TRUE, dimGrad[marg])
     } else {
@@ -277,7 +277,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     npar <- length(useParams)
     gradSetArgs[[1L]] <- (~attr(ans, "gradient"))[[2L]]
     gradCall <-
-        switch(length(gradSetArgs) - 1,
+        switch(length(gradSetArgs) - 1L,
                call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], drop = FALSE),
                call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]],
                     drop = FALSE),
@@ -340,7 +340,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
 			else {
 			    vary
 			}, envir = thisEnv)
-		 gradCall[[length(gradCall) - 1]] <<- useParams
+		 gradCall[[length(gradCall) - 1L]] <<- useParams
 		 if(all(useParams)) {
 		     assign("setPars", setPars.noVarying, envir = thisEnv)
 		     assign("getPars", getPars.noVarying, envir = thisEnv)
@@ -386,8 +386,8 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
 {
     ## Establish the working vectors and check and set options
     p <- length(par <- as.double(unlist(start)))
-    iv <- integer(4*p + 82)
-    v <- double(105 + (p * (2 * p + 20)))
+    iv <- integer(4L*p + 82L)
+    v <- double(105L + (p * (2L * p + 20L)))
     .Call(R_port_ivset, 1, iv, v)
     if (length(control)) {
 	if (!is.list(control) || is.null(nms <- names(control)))
@@ -450,7 +450,7 @@ nls <-
     mf <- match.call()                  # for creating the model frame
     varNames <- all.vars(formula) # parameter and variable names from formula
     ## adjust a one-sided model formula by using 0 as the response
-    if (length(formula) == 2) {
+    if (length(formula) == 2L) {
         formula[[3L]] <- formula[[2L]]
         formula[[2L]] <- 0
     }
@@ -569,7 +569,7 @@ nls <-
         ##                  but still parameters to fit
         varIndex <- logical(0L)
         mf <- list(0)
-        wts <- numeric(0)
+        wts <- numeric(0L)
     }
 
     ## set up iteration
@@ -809,7 +809,7 @@ logLik.nls <- function(object, REML = FALSE, ...)
     if(is.null(w <- object$weights)) w <- rep(1, N)
     val <-  -N * (log(2 * pi) + 1 - log(N) - sum(log(w)) + log(sum(w*res^2)))/2
     ## the formula here corresponds to estimating sigma^2.
-    attr(val, "df") <- 1 + length(coef(object))
+    attr(val, "df") <- 1L + length(coef(object))
     attr(val, "nobs") <- attr(val, "nall") <- N
     class(val) <- "logLik"
     val
@@ -850,7 +850,7 @@ anovalist.nls <- function (object, ..., test = NULL)
     }
     ## calculate the number of models
     nmodels <- length(objects)
-    if (nmodels == 1)
+    if (nmodels == 1L)
         stop("'anova' is only defined for sequences of \"nls\" objects")
 
     models <- as.character(lapply(objects, function(x) formula(x)))

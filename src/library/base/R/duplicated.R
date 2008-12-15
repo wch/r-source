@@ -78,7 +78,7 @@ unique.matrix <- unique.array <-
     if(!is.logical(incomparables) || incomparables)
 	.NotYetUsed("incomparables != FALSE")
     ndim <- length(dim(x))
-    if (length(MARGIN) > 1 || any(MARGIN > ndim))
+    if (length(MARGIN) > 1L || any(MARGIN > ndim))
         stop("MARGIN = ", MARGIN, " is invalid for dim = ", dim(x))
     temp <- apply(x, MARGIN, function(x) paste(x, collapse = "\r"))
     args <- rep(alist(a=), ndim)

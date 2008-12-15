@@ -206,7 +206,7 @@ invokeRestartInteractively <- function(r) {
     if (is.null(r$interactive)) {
         pars <- names(restartFormals(r))
         args <- NULL
-        if (length(pars) > 0) {
+        if (length(pars)) {
             cat("Enter values for restart arguments:\n\n")
             for (p in pars) {
             if (p == "...") {
@@ -227,7 +227,7 @@ invokeRestartInteractively <- function(r) {
 withRestarts <- function(expr, ...) {
     docall <- function(fun, args) {
 	enquote <- function(x) as.call(list(as.name("quote"), x))
-	if ((is.character(fun) && length(fun) == 1) || is.name(fun))
+	if ((is.character(fun) && length(fun) == 1L) || is.name(fun))
 	    fun <- get(as.character(fun), envir = parent.frame(),
                        mode = "function")
 	do.call("fun", lapply(args, enquote))
@@ -284,9 +284,9 @@ withRestarts <- function(expr, ...) {
 	else expr
     }
     restarts <- makeRestartList(...)
-    if (length(restarts) == 0)
+    if (length(restarts) == 0L)
         expr
-    else if (length(restarts) == 1)
+    else if (length(restarts) == 1L)
         withOneRestart(expr, restarts[[1L]])
     else withRestartList(expr, restarts)
 }

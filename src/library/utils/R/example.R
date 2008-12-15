@@ -30,7 +30,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	return(invisible())
     }
     packagePath <- dirname(dirname(file))
-    if(length(file) > 1) {
+    if(length(file) > 1L) {
 	packagePath <- packagePath[1L]
 	warning(gettextf("more than one help file found: using package '%s'",
 		basename(packagePath)), domain = NA)
@@ -64,21 +64,21 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	} else eval(setRNG)
     }
     encoding <-
-	if(length(enc <- localeToCharset()) > 1)
+	if(length(enc <- localeToCharset()) > 1L)
 	    c(enc[-length(enc)], "latin1")
 	else ""
     ## peek at the file, but note we can't usefully translate to C.
     zz <- readLines(zfile, n=1)
-    if(length(grep("^### Encoding: ", zz)) > 0 &&
+    if(length(grep("^### Encoding: ", zz))  &&
        !identical(Sys.getlocale("LC_CTYPE"), "C"))
-	encoding <- substring(zz, 15)
-    skips <- 0
+	encoding <- substring(zz, 15L)
+    skips <- 0L
     if (echo) {
 	## skip over header
 	zcon <- file(zfile, open="rt")
 	while(length(zz) && !length(grep("^### \\*\\*", zz))) {
-	    skips <- skips + 1
-	    zz <- readLines(zcon, n=1)
+	    skips <- skips + 1L
+	    zz <- readLines(zcon, n=1L)
 	}
 	close(zcon)
     }

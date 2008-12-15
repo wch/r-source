@@ -53,7 +53,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
     on.exit(par(par.orig))
 
     w <- (3 + mar.orig[2L]) * par('csi') * 2.54
-    layout(matrix(c(2, 1), ncol=2), widths=c(1, lcm(w)))
+    layout(matrix(c(2, 1), ncol=2L), widths=c(1, lcm(w)))
     par(las = las)
 
     ## Plot the 'plot key' (scale):
@@ -80,7 +80,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
     plot.new()
     plot.window(xlim, ylim, "", xaxs=xaxs, yaxs=yaxs, asp=asp)
 
-    if (!is.matrix(z) || nrow(z) <= 1 || ncol(z) <= 1)
+    if (!is.matrix(z) || nrow(z) <= 1L || ncol(z) <= 1L)
         stop("no proper 'z' matrix specified")
     if (!is.double(z))
         storage.mode(z) <- "double"

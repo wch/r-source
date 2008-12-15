@@ -19,7 +19,7 @@ pretty <- function(x, n=5, min.n= n %/% 3, shrink.sml = 0.75,
                    eps.correct = 0)
 {
     x <- as.numeric(x)
-    if(length(x)==0)
+    if(length(x)==0L)
 	return(x)
     x <- x[is.finite(x)]
     if(is.na(n <- as.integer(n[1L])) || n < 0L)# n=0 !!

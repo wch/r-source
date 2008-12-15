@@ -25,7 +25,7 @@ page <- function(x, method = c("dput", "print"), ...)
     local.print <- function(x, title, delete.file, pager, ...)
         print(x, ...)
 
-    if(is.character(x) && length(x) == 1) {
+    if(is.character(x) && length(x) == 1L) {
         subx <- x
         parent <- parent.frame()
         if(exists(subx, envir = parent)) # inherits=TRUE is default

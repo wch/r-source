@@ -106,7 +106,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 
     ## if stacked bar, set up base/cumsum levels, adjusting for log scale
     if (!beside)
-	height <- rbind(rectbase, apply(height, 2, cumsum))
+	height <- rbind(rectbase, apply(height, 2L, cumsum))
 
     rAdj <- offset + (if (log.dat) 0.9 * height else -0.01 * height)
 

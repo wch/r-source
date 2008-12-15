@@ -84,7 +84,7 @@
     val <- list(...)
     nm <- names(val)
 
-    if (length(val) == 0) return("")
+    if (length(val) == 0L) return("")
     nm <- if (is.null(nm))
         rep("", length(val))
     else
@@ -231,7 +231,7 @@ tclvalue.tclObj <- function(x) .External("RTcl_StringFromObj", x,
                                          PACKAGE="tcltk")
 print.tclObj <- function(x,...) {
     z <- tclvalue(x)
-    if (length(z) > 0) cat("<Tcl>", z, "\n")
+    if (length(z)) cat("<Tcl>", z, "\n")
     invisible(x)
 }
 
@@ -608,7 +608,7 @@ tkpager <- function(file, header, title, delete.file)
         zfile <- file[[i]]
         tt <- tktoplevel()
         tkwm.title(tt, if (length(title))
-                   title[(i-1) %% length(title)+1] else "")
+                   title[(i-1L) %% length(title)+1L] else "")
 ###        courier font comes out awfully small on some systems
 ###        txt <- tktext(tt, bg="grey90", font="courier")
         txt <- tktext(tt, bg="grey90")

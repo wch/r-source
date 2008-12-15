@@ -23,7 +23,7 @@ print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
 {
     noOpt <- missing(digits) && missing(quote) && missing(na.print) &&
 	missing(print.gap) && missing(right) && missing(max) &&
-	missing(useSource) && length(list(...)) == 0
+	missing(useSource) && length(list(...)) == 0L
     .Internal(print.default(x, digits, quote, na.print, print.gap, right, max,
 			    useSource, noOpt))
 }
@@ -61,7 +61,7 @@ print.noquote <- function(x, ...) {
     if(!is.null(cl <- attr(x, "class"))) {
 	cl <- cl[cl != "noquote"]
         attr(x, "class") <-
-          (if(length(cl)>0) cl else NULL)
+          (if(length(cl)) cl else NULL)
       }
     print(x, quote = FALSE, ...)
 }

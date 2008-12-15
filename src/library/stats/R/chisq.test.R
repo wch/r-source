@@ -114,7 +114,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	    setMETH()
 	    nx <- length(x)
 	    sm <- matrix(sample(1L:nx,B*n,TRUE,prob=p),nrow=n)
-	    ss <- apply(sm, 2, function(x,E,k) {
+	    ss <- apply(sm, 2L, function(x,E,k) {
 		sum((table(factor(x, levels=1L:k)) - E)^2 / E)
 	    }, E = E, k = nx)
 	    PARAMETER <- NA

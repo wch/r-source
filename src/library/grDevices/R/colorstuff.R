@@ -52,7 +52,7 @@ rgb <- function(red, green, blue, alpha, names = NULL, maxColorValue = 1)
         result <- .Internal(rgb(red, green, blue, alpha, maxColorValue, names))
     ## If alpha not specified only return #RRGGBB
     if (!alphaspec)
-        structure(substr(result, 1, 7), names=names(result))
+        structure(substr(result, 1L, 7L), names=names(result))
     else result
 }
 
@@ -62,7 +62,7 @@ hsv <- function(h=1, s=1, v=1, gamma = 1, alpha = 1)
     result <- .Internal(hsv(h, s, v, gamma, alpha))
     ## If alpha not specified only return #RRGGBB
     if (!alphaspec)
-        structure(substr(result, 1, 7), names=names(result))
+        structure(substr(result, 1L, 7L), names=names(result))
     else result
 }
 
@@ -72,7 +72,7 @@ function (h = 0, c = 35, l = 85, alpha = 1, fixup = TRUE)
     alphaspec <- !missing(alpha)
     result <- .Internal(hcl(h, c, l, alpha, fixup))
     if (!alphaspec)
-        structure(substr(result, 1, 7), names=names(result))
+        structure(substr(result, 1L, 7L), names=names(result))
     else result
 }
 

@@ -31,7 +31,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     n.used <- nrow(x)
     nser <- ncol(x)
     if(rescale) {
-        sc <- sqrt(drop(apply(x, 2, var)))
+        sc <- sqrt(drop(apply(x, 2L, var)))
         x <- x/rep(sc, rep(n.used, nser))
     } else sc <- rep(1, nser)
 
@@ -85,7 +85,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         varE[[m - order.min + 1]] <- E %*% t(E)/N
         varA <- P %x% (varE[[m - order.min + 1]])
         seA[[m - order.min+1]] <- if(ncol(varA) > 0) sqrt(diag(varA))
-        else numeric(0)
+        else numeric(0L)
         aic[m - order.min+1] <-
             n.used*log(det(varE[[m-order.min+1]]))+2*nser*(nser*m+intercept)
     }

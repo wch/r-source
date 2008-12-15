@@ -42,7 +42,7 @@ function(x, strict = TRUE, regexp, classes = NULL)
     x <- as.character(x)
     y <- rep.int(list(integer()), length(x))
     valid_numeric_version_regexp <- sprintf("^%s$", regexp)
-    if(length(x) > 0) {
+    if(length(x)) {
         ok <- (regexpr(valid_numeric_version_regexp, x) > -1L)
         if(!all(ok) && strict)
             stop("invalid version specification", call. = FALSE)

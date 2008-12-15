@@ -58,7 +58,7 @@ debugger <- function(dump = last.dump)
             ind <- .Internal(menu(as.character(calls)))
             if(ind <= n) break
         }
-        if(ind == 0) return(invisible())
+        if(ind == 0L) return(invisible())
         debugger.look(ind)
     }
 }
@@ -82,11 +82,11 @@ recover <-
     }
     ## find an interesting environment to start from
     calls <- sys.calls()
-    from <- 0
+    from <- 0L
     n <- length(calls)
     if(identical(sys.function(n), recover))
         ## options(error=recover) produces a call to this function as an object
-        n <- n - 1
+        n <- n - 1L
     ## look for a call inserted by trace() (and don't show frames below)
     ## this level.
     for(i in rev(seq_len(n))) {
@@ -95,13 +95,13 @@ recover <-
         ## deparse can use more than one line
         if(!is.na(match(deparse(fname)[1L],
                         c("methods::.doTrace", ".doTrace")))) {
-            from <- i-1
+            from <- i-1L
             break
         }
     }
   ## if no trace, look for the first frame from the bottom that is not
     ## stop or recover
-    if(from == 0)
+    if(from == 0L)
       for(i in rev(seq_len(n))) {
         calli <- calls[[i]]
         fname <- calli[[1L]]
@@ -111,7 +111,7 @@ recover <-
             break
         }
     }
-    if(from > 0) {
+    if(from > 0L) {
         if(!interactive()) {
             try(dump.frames())
             cat(gettext("recover called non-interactively; frames dumped, use debugger() to view\n"))
@@ -123,7 +123,7 @@ recover <-
         repeat {
             which <- menu(calls,
                           title="\nEnter a frame number, or 0 to exit  ")
-            if(which > 0)
+            if(which)
                 eval(quote(browser()), envir = sys.frame(which))
             else
                 break

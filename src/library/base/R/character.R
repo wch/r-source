@@ -74,7 +74,7 @@ abbreviate <-
 		if(!any(dup2 <- duplicated(x))) break
 	    }
 	    minlength <- minlength+1
-	    dup2 <- dup2 | match(x, x[dup2], 0)
+	    dup2 <- dup2 | match(x, x[dup2], 0L)
 	    these <- names.arg[dup2]
 	}
     }

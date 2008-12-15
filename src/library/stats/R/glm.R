@@ -44,7 +44,7 @@ glm <- function(formula, family = gaussian, data, weights,
 #     mf$model <- mf$method <- mf$x <- mf$y <- mf$contrasts <- NULL
 #     mf$... <- NULL
     m <- match(c("formula", "data", "subset", "weights", "na.action",
-                 "etastart", "mustart", "offset"), names(mf), 0)
+                 "etastart", "mustart", "offset"), names(mf), 0L)
     mf <- mf[c(1, m)]
     mf$drop.unused.levels <- TRUE
     mf[[1L]] <- as.name("model.frame")
@@ -58,13 +58,13 @@ glm <- function(formula, family = gaussian, data, weights,
 
     Y <- model.response(mf, "any") # e.g. factors are allowed
     ## avoid problems with 1D arrays, but keep names
-    if(length(dim(Y)) == 1) {
+    if(length(dim(Y)) == 1L) {
         nm <- rownames(Y)
         dim(Y) <- NULL
         if(!is.null(nm)) names(Y) <- nm
     }
     ## null model support
-    X <- if (!is.empty.model(mt)) model.matrix(mt, mf, contrasts) else matrix(,NROW(Y),0)
+    X <- if (!is.empty.model(mt)) model.matrix(mt, mf, contrasts) else matrix(,NROW(Y), 0L)
     ## avoid any problems with 1D or nx1 arrays by as.vector.
     weights <- as.vector(model.weights(mf))
     if(!is.null(weights) && !is.numeric(weights))
@@ -74,7 +74,7 @@ glm <- function(formula, family = gaussian, data, weights,
     if( !is.null(weights) && any(weights < 0) )
 	stop("negative weights not allowed")
     if(!is.null(offset)) {
-        if(length(offset) == 1) offset <- rep(offset, NROW(Y))
+        if(length(offset) == 1L) offset <- rep(offset, NROW(Y))
         else if(length(offset) != NROW(Y))
             stop(gettextf("number of offsets is %d should equal %d (number of observations)", length(offset), NROW(Y)), domain = NA)
     }
@@ -97,7 +97,7 @@ glm <- function(formula, family = gaussian, data, weights,
     ## observations, so we allow the null deviance to be forced to be
     ## re-calculated by setting an offset (provided there is an intercept).
     ## Prior to 2.4.0 this was only done for non-zero offsets.
-    if(length(offset) && attr(mt, "intercept") > 0) {
+    if(length(offset) && attr(mt, "intercept") > 0L) {
 	fit$null.deviance <-
 	    glm.fit(x = X[,"(Intercept)",drop=FALSE], y = Y, weights = weights,
                     offset = offset, family = family,
@@ -184,8 +184,8 @@ glm.fit <-
         residuals <- (y - mu)/mu.eta(eta)
         good <- rep(TRUE, length(residuals))
         boundary <- conv <- TRUE
-        coef <- numeric(0)
-        iter <- 0
+        coef <- numeric(0L)
+        iter <- 0L
     } else {
         coefold <- NULL
         eta <-
@@ -383,7 +383,7 @@ print.glm <- function(x, digits= max(3, getOption("digits") - 3), ...)
         cat("Coefficients")
         if(is.character(co <- x$contrasts))
             cat("  [contrasts: ",
-                apply(cbind(names(co),co), 1, paste, collapse="="), "]")
+                apply(cbind(names(co),co), 1L, paste, collapse="="), "]")
         cat(":\n")
         print.default(format(x$coefficients, digits=digits),
                       print.gap = 2, quote = FALSE)
@@ -410,7 +410,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
     dotargs <- dotargs[!named]
     is.glm <- unlist(lapply(dotargs,function(x) inherits(x,"glm")))
     dotargs <- dotargs[is.glm]
-    if (length(dotargs) > 0)
+    if (length(dotargs))
 	return(anova.glmlist(c(list(object), dotargs),
 			     dispersion = dispersion, test=test))
 
@@ -419,7 +419,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
     varlist <- attr(object$terms, "variables")
     ## must avoid partial matching here.
     x <-
-	if (n <- match("x", names(object), 0))
+	if (n <- match("x", names(object), 0L))
 	    object[[n]]
 	else model.matrix(object)
     varseq <- attr(x, "assign")
@@ -466,7 +466,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
     table <- data.frame(c(NA, -diff(resdf)),
 			c(NA, pmax(0, -diff(resdev))), resdf, resdev)
     tl <- attr(object$terms, "term.labels")
-    if (length(tl) == 0) table <- table[1,,drop=FALSE] # kludge for null model
+    if (length(tl) == 0L) table <- table[1,,drop=FALSE] # kludge for null model
     dimnames(table) <- list(c("NULL", tl),
 			    c("Df", "Deviance", "Resid. Df", "Resid. Dev"))
     title <- paste("Analysis of Deviance Table", "\n\nModel: ",
@@ -619,10 +619,10 @@ summary.glm <- function(object, dispersion = NULL,
         }
         df.f <- NCOL(Qr$qr)
     } else {
-        coef.table <- matrix(, 0, 4)
+        coef.table <- matrix(, 0L, 4L)
         dimnames(coef.table) <-
             list(NULL, c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
-        covmat.unscaled <- covmat <- matrix(, 0, 0)
+        covmat.unscaled <- covmat <- matrix(, 0L, 0L)
         df.f <- length(aliased)
     }
     ## return answer
@@ -630,7 +630,7 @@ summary.glm <- function(object, dispersion = NULL,
     ## these need not all exist, e.g. na.action.
     keep <- match(c("call","terms","family","deviance", "aic",
 		      "contrasts", "df.residual","null.deviance","df.null",
-                      "iter", "na.action"), names(object), 0)
+                      "iter", "na.action"), names(object), 0L)
     ans <- c(object[keep],
 	     list(deviance.resid = residuals(object, type = "deviance"),
 		  coefficients = coef.table,
@@ -665,7 +665,7 @@ print.summary.glm <-
     print.default(x$deviance.resid, digits=digits, na.print = "",
                   print.gap = 2)
 
-    if(length(x$aliased) == 0) {
+    if(length(x$aliased) == 0L) {
         cat("\nNo Coefficients\n")
     } else {
         ## df component added in 1.8.0
@@ -678,7 +678,7 @@ print.summary.glm <-
         coefs <- x$coefficients
         if(!is.null(aliased <- x$aliased) && any(aliased)) {
             cn <- names(aliased)
-            coefs <- matrix(NA, length(aliased), 4,
+            coefs <- matrix(NA, length(aliased), 4L,
                             dimnames=list(cn, colnames(coefs)))
             coefs[!aliased, ] <- x$coefficients
         }
@@ -694,7 +694,7 @@ print.summary.glm <-
 			   digits= max(5, digits+1)), " on",
 		    format(unlist(x[c("df.null","df.residual")])),
 		    " degrees of freedom\n"),
-	      1, paste, collapse=" "), sep="")
+	      1L, paste, collapse=" "), sep="")
     if(nzchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
     cat("AIC: ", format(x$aic, digits= max(4, digits+1)),"\n\n",
 	"Number of Fisher Scoring iterations: ", x$iter,
@@ -773,7 +773,7 @@ residuals.glm <-
 model.frame.glm <- function (formula, ...)
 {
     dots <- list(...)
-    nargs <- dots[match(c("data", "na.action", "subset"), names(dots), 0)]
+    nargs <- dots[match(c("data", "na.action", "subset"), names(dots), 0L)]
     if (length(nargs) || is.null(formula$model)) {
 	fcall <- formula$call
 	fcall$method <- "model.frame"

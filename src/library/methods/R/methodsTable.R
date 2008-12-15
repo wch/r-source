@@ -218,11 +218,11 @@
     else
       stop("Trying to find a methods table in a non-generic function")
   }
-  hasGroup <- length(fdef@group) > 0
+  hasGroup <- length(fdef@group) > 0L
   if(hasGroup)
       groupGenerics <- .getAllGroups(list(fdef))
   doMtable <- is.environment(mtable)
-  doExcluded <- length(excluded) > 0
+  doExcluded <- length(excluded) > 0L
   nargs <- length(classes)
   if(verbose)
       cat(sprintf("* .findInheritedMethods():%s nargs=%d, returnAll=%s\n",
@@ -242,7 +242,7 @@
     ## inherited in the nextMethod sense, since they have the same signature
     label <- .sigLabel(classes)
     direct <- .getGroupMethods(label, groupGenerics, FALSE)
-    if(length(direct) > 0 && doMtable) {
+    if(length(direct) && doMtable) {
         assign(label, direct[[1L]], envir = mtable)
         if(verbose) cat("* found (and cached) direct group method for", label,"\n")
         return(direct)
@@ -270,7 +270,7 @@
     labels <- labels[-1L] # drop exact match
   labels <- unique(labels) # only needed while contains slot can have duplicates(!)
   allMethods <- objects(table, all.names=TRUE)
-  found <- match(labels, allMethods, 0) > 0
+  found <- match(labels, allMethods, 0L) > 0L
   for(label in labels[found])
       methods[[label]] <- get(label, envir = table)
   if(hasGroup) {
@@ -285,24 +285,24 @@
   if(verbose) cat(sprintf("* %d preliminary methods:", length(methods)),
 		  strwrap(paste(names(methods), collapse=", ")), sep="\n  ")
   ## remove default if its not the only method
-  if(length(methods) > 1 && !returnAll) {
+  if(length(methods) > 1L && !returnAll) {
       defaultLabel <- paste(rep("ANY", nargs), collapse = "#")
-      i <- match(defaultLabel, names(methods), 0)
-      if(i > 0) {
+      i <- match(defaultLabel, names(methods), 0L)
+      if(i > 0L) {
           methods <- methods[-i]
           fromGroup <- fromGroup[-i]
       }
   }
   if(doExcluded)
     methods <- methods[is.na(match(names(methods), as.character(excluded)))]
-  if(length(methods) > 1 && !returnAll) {
-      if(nargs == 1)
+  if(length(methods) > 1L && !returnAll) {
+      if(nargs == 1L)
           classDefs <- list(def)
       ## else, defined before
       if(verbose) cat("* getting best methods, reducing from remaining preliminary",
 		      length(methods),"ones\n")
       methods <- .getBestMethods(methods, classDefs, fromGroup, verbose = verbose)
-      if(length(methods) > 1)
+      if(length(methods) > 1L)
 	warning(gettextf(paste("Ambiguous method selection for \"%s\", target \"%s\"",
                                "(the first of the signatures shown will be used)\n%s\n"),
 			 fdef@generic, .sigLabel(classes),
@@ -310,13 +310,13 @@
                 domain = NA, call. = FALSE)
       methods <- methods[1L]
   }
-  if(simpleOnly && length(methods) == 0) {
+  if(simpleOnly && length(methods) == 0L) {
       methods <- Recall(classes, fdef, mtable, table, excluded, useInherited,verbose, returnAll, FALSE)
-      if(length(methods) > 0)
+      if(length(methods) > 0L)
         message(gettextf("No simply inherited methods found for function \"%s\"; using non-simple method",
                       fdef@generic), domain = NA)
   }
-  if(doMtable && length(methods) > 0) { ## Cache the newly found one
+  if(doMtable && length(methods)) { ## Cache the newly found one
     tlabel <- .sigLabel(classes)
     m <- methods[[1L]]
     if(is(m, "MethodDefinition"))  { # else, a primitive
@@ -338,7 +338,7 @@
 
 .eligibleSuperClasses <- function(contains, simpleOnly) {
     what <- names(contains)
-    if(simpleOnly && length(what) > 0) {
+    if(simpleOnly && length(what)) {
         eligible <- sapply(contains, function(x) (is.logical(x) && x) || x@simple)
         what[eligible]
     }
@@ -370,9 +370,9 @@
     defined <-  new("signature", fdef, c(defined@.Data, rep("ANY", n-m)))
   excluded <- c(prev, .sigLabel(defined))
   methods <- .findInheritedMethods(defined, fdef, mtable = NULL, excluded = excluded)
-  if(length(methods)==0) # use default method, maybe recursively.
+  if(length(methods) == 0L) # use default method, maybe recursively.
     methods <- list(finalDefaultMethod(fdef@default)) #todo: put a label on it?
-  if(length(methods)>1)
+  if(length(methods) > 1L)
     warning("found ", length(methods), " equally good next methods") #todo: better message
   ## excluded slot is a list, but with methods tables, elements are just labels
   new("MethodWithNext", method, nextMethod = methods[[1L]], excluded =as.list(excluded))
@@ -383,9 +383,9 @@
 
 .InheritForDispatch <- function(classes, fdef, mtable) {
   methods <- .findInheritedMethods(classes, fdef, mtable)
-  if(length(methods)==1)
+  if(length(methods) == 1L)
     return(methods[[1L]]) # the method
-  else if(length(methods)==0) {
+  else if(length(methods) == 0L) {
     cnames <- paste("\"", sapply(classes, as.character), "\"", sep = "", collapse = ", ")
     stop("unable to find an inherited method for function \"", fdef@generic,
          "\", for signature ", cnames)
@@ -399,8 +399,8 @@
   if(is(fdef, "genericFunction"))
     signature <- .matchSigLength(signature, fdef, environment(fdef), FALSE)
   label <- .sigLabel(signature)
-  found <- match(label, allMethods, 0)
-  if(found>0)
+  found <- match(label, allMethods, 0L)
+  if(found > 0L)
     get(label, envir = table)
   else
     NULL
@@ -505,7 +505,7 @@
                        generic@generic, generic@package), domain=NA)
     }
   }
-  if(length(generic@group)>0) {
+  if(length(generic@group)) {
       groups <- as.list(generic@group)
       generics <- vector("list", length(groups))
       for(i in seq_along(groups))
@@ -559,12 +559,12 @@
     if(is.null(p)) p <- "base"
     deflt <- new("signature", generic, "ANY")
     labels <- objects(table, all.names = TRUE)
-    if(!is.null(classes) && length(labels) > 0) {
+    if(!is.null(classes) && length(labels)) {
 	sigL <- strsplit(labels, split = "#")
 	keep <- !sapply(sigL, function(x, y) all(is.na(match(x, y))), classes)
 	labels <- labels[keep]
     }
-    if(length(labels) == 0) {
+    if(length(labels) == 0L) {
 	if(showEmpty) {
 	    doFun(f,p)
 	    cf("<No methods>\n\n")
@@ -577,15 +577,15 @@
 	m <- get(what, envir = table)
 	if( is(m, "MethodDefinition")) {
 	    t <- m@target
-	    if(length(t) == 0)
+	    if(length(t) == 0L)
 		t <- deflt
 	    d <- m@defined
-	    if(length(d) == 0)
+	    if(length(d) == 0L)
 		d <- deflt
 	    cf(sigString(t), "\n")
 	    if(!identical(t, d))
 		cf("    (inherited from: ", sigString(d), ")\n")
-            if(!.identC(m@generic, f) && length(m@generic) == 1 &&
+            if(!.identC(m@generic, f) && length(m@generic) == 1L &&
                nzchar(m@generic))
 		cf("    (definition from function \"", m@generic, "\")\n")
 	}
@@ -642,7 +642,7 @@ useMTable <- function(onOff = NA)
     ## TODO:  possible for .SigLength to differ between group &
     ## members.  Requires expanding labels to max. length
     newFound <- rep(FALSE, length(found))
-    newFound[!found] <- (match(labels[!found], allMethods, 0)>0)
+    newFound[!found] <- (match(labels[!found], allMethods, 0L) > 0L)
     found <- found | newFound
     for(what in labels[newFound])
       methods[[what]] <- get(what, envir = table)
@@ -681,7 +681,7 @@ useMTable <- function(onOff = NA)
               what, "\", but it is not a group generic")
       next
     }
-    if(length(fdef@group) > 0)  {# push up the check one level
+    if(length(fdef@group))  {# push up the check one level
       gnames[[i]] <- fdef@group
       generics[[i]] <- lapply(fdef@group, getGeneric)
       recall <- TRUE
@@ -693,7 +693,7 @@ useMTable <- function(onOff = NA)
     return(Recall(unlist(gnames, FALSE), unlist(generics, FALSE)))
   funs <- unique(funs)
   fdefs <- lapply(funs, function(x) {
-    if(is.character(x) && length(x) == 1) getGeneric(x)
+    if(is.character(x) && length(x) == 1L) getGeneric(x)
     else x})
   ## now compare the sig lengths
   sigs <- rep(0,length(funs))
@@ -920,12 +920,12 @@ listFromMethods <- function(generic, where, table) {
         table <- new.env()
     value <- new("MethodsList", argument = generic@default@argument)
     allNames <- objects(table, all.names = TRUE)
-    if(length(allNames) == 0)
+    if(length(allNames) == 0L)
       return(value)
     argNames <- generic@signature
     ## USES THE PATTERN OF class#class#.... in the methods tables
     nargs <- nchar(unique(gsub("[^#]","", allNames)))+1
-    if(length(nargs) > 1) {
+    if(length(nargs) > 1L) {
         warning("Something weird:  inconsistent number of args in methods table strings:", paste(nargs,collapse = ", ")," (using the largest value)")
         nargs <- max(nargs)
     }
@@ -961,12 +961,12 @@ listFromMethods <- function(generic, where, table) {
     for(i in seq_along(defined)) {
         ei <- extends(target[[i]], defined[[i]], fullInfo = TRUE)
         if(is(ei, "SClassExtension")  && !ei@simple)
-          expr[[length(expr)+1]] <-
+          expr[[length(expr) + 1L]] <-
             substitute(ARG <- as(ARG, DEFINED, strict = FALSE),
                        list(ARG = as.name(args[[i]]), DEFINED = as.character(defined[[i]])))
     }
-    if(length(expr) > 1) {
-       expr[[length(expr)+1]] <- body
+    if(length(expr) > 1L) {
+       expr[[length(expr) + 1L]] <- body
        expr
    }
     else

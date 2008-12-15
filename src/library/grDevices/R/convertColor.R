@@ -82,7 +82,7 @@ chromaticAdaptation <- function(xyz, from, to) {
     ## bradford scaling algorithm
     Ma <- matrix(c( 0.40024, -0.22630, 0.,
                     0.70760,  1.16532, 0.,
-                   -0.08081,  0.04570, 0.91822), nrow = 3, byrow = TRUE)
+                   -0.08081,  0.04570, 0.91822), nrow = 3L, byrow = TRUE)
     nWhite <- colnames(white.points)
     from <- c2to3(white.points[, match.arg(from, nWhite)])
     to   <- c2to3(white.points[, match.arg(to,   nWhite)])
@@ -240,7 +240,7 @@ convertColor <-
   to.ref.white   <- c2to3(white.points[, to.ref.white])
 
   if (is.null(nrow(color)))
-    color <- matrix(color,nrow = 1)
+    color <- matrix(color, nrow = 1L)
 
   if (!is.null(scale.in))
       color <- color/scale.in
@@ -256,10 +256,10 @@ convertColor <-
       rgb
   }
 
-  xyz <- apply(color, 1, from$toXYZ, from.ref.white)
+  xyz <- apply(color, 1L, from$toXYZ, from.ref.white)
 
   if (is.null(nrow(xyz)))
-    xyz <- matrix(xyz, nrow = 1)
+    xyz <- matrix(xyz, nrow = 1L)
 
   if (!isTRUE(all.equal(from.ref.white, to.ref.white))) {
       mc <- match.call()
@@ -268,7 +268,7 @@ convertColor <-
       xyz <- chromaticAdaptation(xyz, from.ref.white, to.ref.white)
   }
 
-  rval <- apply(xyz, 2, to$fromXYZ, to.ref.white)
+  rval <- apply(xyz, 2L, to$fromXYZ, to.ref.white)
 
   if (inherits(to,"RGBcolorConverter"))
       rval <- trim(rval)

@@ -71,7 +71,7 @@ summary.manova <-
             ss[[i]] <- crossprod(effects[ai, , drop=FALSE])
         }
     }
-    pm <- pmatch("(Intercept)", nmrows, 0)
+    pm <- pmatch("(Intercept)", nmrows, 0L)
     if (!intercept && pm > 0) {
         nterms <- nterms - 1
         df <- df[-pm]

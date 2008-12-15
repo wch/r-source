@@ -49,10 +49,10 @@ summary.default <-
 	    ii <- object[[i]]
 	    ll[i] <- length(ii)
 	    cls <- oldClass(ii)
-	    sumry[i, 2] <- if(length(cls)>0) cls[1L] else "-none-"
-	    sumry[i, 3] <- mode(ii)
+	    sumry[i, 2L] <- if(length(cls)) cls[1L] else "-none-"
+	    sumry[i, 3L] <- mode(ii)
 	}
-	sumry[, 1] <- format(as.integer(ll))
+	sumry[, 1L] <- format(as.integer(ll))
 	sumry
     }
     else c(Length= length(object), Class= class(object), Mode= mode(object))
@@ -100,14 +100,14 @@ summary.data.frame <-
             tmp <- format(sms)
             if(nrow(sms) < nr)
                 tmp <- rbind(tmp, matrix("", nr - nrow(sms), ncol(sms)))
-            sms <- apply(tmp, 1, function(x) paste(x, collapse="  "))
+            sms <- apply(tmp, 1L, function(x) paste(x, collapse="  "))
             ## produce a suitable colname: undoing padding
-            wid <- sapply(tmp[1,], nchar, type="w")
+            wid <- sapply(tmp[1L, ], nchar, type="w")
             blanks <- paste(character(max(wid)), collapse = " ")
             pad0 <- floor((wid-nchar(cn, type="w"))/2)
             pad1 <- wid - nchar(cn, type="w") - pad0
-            cn <- paste(substring(blanks, 1, pad0), cn,
-                        substring(blanks, 1, pad1), sep = "")
+            cn <- paste(substring(blanks, 1L, pad0), cn,
+                        substring(blanks, 1L, pad1), sep = "")
             nm[i] <- paste(cn, collapse="  ")
             z[[i]] <- sms
         } else {

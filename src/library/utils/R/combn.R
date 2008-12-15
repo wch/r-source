@@ -29,12 +29,12 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
     ##	unchanged to function given by argument FUN,  if any.
 
     ##S : Change if (simplify = TRUE) return an array/matrix {not a 'vector'}
-    stopifnot(length(m) == 1)
+    stopifnot(length(m) == 1L)
     if(m < 0)
 	stop("m < 0")
     if(m == 0)
-	return(if(simplify) vector(mode(x), 0) else list())
-    if(is.numeric(x) && length(x) == 1 && x > 0 && trunc(x) == x)
+	return(if(simplify) vector(mode(x), 0L) else list())
+    if(is.numeric(x) && length(x) == 1L && x > 0 && trunc(x) == x)
 	x <- seq.int(x)
     n <- length(x)
     if(n < m)
@@ -55,9 +55,9 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
 		c(m, count) # matrix also when count = 1
 	    else {
 		d <- dim(r)
-		if(length(d) > 1)
+		if(length(d) > 1L)
 		    c(d, count)
-		else if(len.r > 1)
+		else if(len.r > 1L)
 		    c(len.r, count)
 		else # MM: *still* a matrix - a la "drop = FALSE"
 		    c(d, count)
@@ -98,11 +98,9 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
 	a[m - h + j] <- e + j
 	r <- if(nofun) x[a] else FUN(x[a], ...)
 	if(simplify) ##S if(use.arr)
-	    out[,i] <- r else out[[i]] <- r
+	    out[, i] <- r else out[[i]] <- r
 	i <- i + 1L
     }
     if(simplify) ##S if(use.arr)
 	array(out, dim.use) else out
 }
-
-

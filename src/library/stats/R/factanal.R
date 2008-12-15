@@ -28,7 +28,7 @@ factanal <-
     {
         cn <- colnames(Lambda)
         Phi <- attr(Lambda, "covariance")
-        ssq <- apply(Lambda, 2, function(x) -sum(x^2))
+        ssq <- apply(Lambda, 2L, function(x) -sum(x^2))
         Lambda <- Lambda[, order(ssq), drop = FALSE]
         colnames(Lambda) <- cn
         neg <- colSums(Lambda) < 0
@@ -275,7 +275,7 @@ varimax <- function(x, normalize = TRUE, eps = 1e-5)
     nc <- ncol(x)
     if(nc < 2) return(x)
     if(normalize) {
-        sc <- sqrt(drop(apply(x, 1, function(x) sum(x^2))))
+        sc <- sqrt(drop(apply(x, 1L, function(x) sum(x^2))))
         x <- x/sc
     }
     p <- nrow(x)

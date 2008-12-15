@@ -38,7 +38,7 @@ tapply <- function (X, INDEX, FUN=NULL, ..., simplify=TRUE)
     if (is.null(FUN)) return(group)
     ans <- lapply(split(X, group), FUN, ...)
     index <- as.integer(names(ans))
-    if (simplify && all(unlist(lapply(ans, length)) == 1)) {
+    if (simplify && all(unlist(lapply(ans, length)) == 1L)) {
 	ansmat <- array(dim=extent, dimnames=namelist)
 	ans <- unlist(ans, recursive = FALSE)
     } else {

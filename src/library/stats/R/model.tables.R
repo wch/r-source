@@ -116,7 +116,7 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
 	    efficiency <- eff.aovlist(x)
 	    ## Elect to use the effects from the lowest stratum:
 	    ##	usually expect this to be highest efficiency
-	    eff.used <- apply(efficiency, 2,
+	    eff.used <- apply(efficiency, 2L,
 			      function(x, ind = seq_len(x)) {
 				  temp <- (x > 0)
 				  if(sum(temp) == 1) temp
@@ -205,7 +205,7 @@ make.tables.aovproj <-
 	terms <- proj.cols[[i]]
         terms <- terms[terms %in% colnames(prjs)]
 	data <-
-	    if(length(terms) == 1) prjs[, terms]
+	    if(length(terms) == 1L) prjs[, terms]
 	    else prjs[, terms] %*% as.matrix(rep.int(1, length(terms)))
 	tables[[i]] <- tapply(data, mf[mf.cols[[i]]],
                               get(fun, mode="function"))
@@ -227,7 +227,7 @@ make.tables.aovprojlist <-
 	    terms <- proj.cols[[i]]
 	    if(all(is.na(eff.i <- match(terms, names(eff)))))
 		eff.i <- rep.int(1, length(terms))
-	    if(length(terms) == 1)
+	    if(length(terms) == 1L)
 		data <- projections[[strata.cols[i]]][, terms]/ eff[eff.i]
 	    else {
 		if(length(strata <- unique(strata.cols[terms])) == 1)
@@ -250,9 +250,9 @@ make.tables.aovprojlist <-
 	}
     } else for(i in seq_along(tables)) {
 	terms <- proj.cols[[i]]
-	if(length(terms) == 1) data <- projections[[strata.cols[i]]][, terms]
+	if(length(terms) == 1L) data <- projections[[strata.cols[i]]][, terms]
 	else {
-	    if(length(strata <- unique(strata.cols[terms])) == 1)
+	    if(length(strata <- unique(strata.cols[terms])) == 1L)
 		data <- projections[[strata]][, terms] %*%
 		    as.matrix(rep.int(1, length(terms)))
 	    else {
@@ -280,7 +280,7 @@ replications <- function(formula, data = NULL, na.action)
     }
     if(!inherits(formula, "terms")) {
 	formula <- as.formula(formula)
-	if(length(formula) < 3) {
+	if(length(formula) < 3L) {
 	    f <- y ~ x
 	    f[[3L]] <- formula[[2L]]
 	    formula <- f
@@ -314,17 +314,17 @@ replications <- function(formula, data = NULL, na.action)
     balance <- TRUE
     for(i in seq_len(n)) {
 	l <- labels[i]
-	if(o[i] < 1 || substring(l, 1, 5) == "Error") { z[[l]] <- NULL; next }
+	if(o[i] < 1 || substring(l, 1L, 5L) == "Error") { z[[l]] <- NULL; next }
 	select <- vars[f[, i] > 0]
 	if(any(nn <- notfactor[select])) {
 	    warning("non-factors ignored: ",
                     paste(names(nn), collapse = ", "))
 	    next
 	}
-	if(length(select) > 0)
+	if(length(select))
 	    tble <- tapply(dummy, unclass(data[select]), length)
 	nrep <- unique(as.vector(tble))
-	if(length(nrep) > 1) {
+	if(length(nrep) > 1L) {
 	    balance <- FALSE
 	    tble[is.na(tble)] <- 0
 	    z[[l]] <- tble
@@ -342,7 +342,7 @@ print.tables_aov <- function(x, digits = 4, ...)
     switch(type,
 	   effects = cat("Tables of effects\n"),
 	   means = cat("Tables of means\n"),
-	   residuals = if(length(tables.aov) > 1) cat(
+	   residuals = if(length(tables.aov) > 1L) cat(
 	   "Table of residuals from each stratum\n"))
     if(!is.na(ii <- match("Grand mean", names(tables.aov)))) {
 	cat("Grand mean\n")
@@ -357,7 +357,7 @@ print.tables_aov <- function(x, digits = 4, ...)
 	    print.mtable(table, digits = digits, ...)
 	else {
 	    n <- n.aov[[i]]
-	    if(length(dim(table)) < 2) {
+	    if(length(dim(table)) < 2L) {
 		table <- rbind(table, n)
 		rownames(table) <- c("", "rep")
 		print(table, digits = digits, ...)
@@ -395,7 +395,7 @@ print.tables_aov <- function(x, digits = 4, ...)
 	    print(se.aov, quote=FALSE, right=TRUE, ...)
 	} else for(i in names(se.aov)) {
 	    se <- se.aov[[i]]
-	    if(length(se) == 1) { ## single se
+	    if(length(se) == 1L) { ## single se
 		se <- rbind(se, n.aov[i])
 		dimnames(se) <- list(c(i, rn), "")
 		print(se, digits = digits, ...)
@@ -492,7 +492,7 @@ print.mtable <-
     a <- a[!is.na(a.ind)]
     class(x) <- attributes(x) <- NULL
     attributes(x) <- a
-#    if(length(nn) > 1)
+#    if(length(nn) > 1L)
 #	cat(paste("Dim ",paste(seq(length(nn)), "=", nn, collapse= ", "),"\n"))
     if(length(x) == 1 && is.null(names(x)) && is.null(dimnames(x)))
 	names(x) <- rep("", length(x))

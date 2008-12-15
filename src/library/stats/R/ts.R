@@ -47,12 +47,12 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
     if(frequency > 1 && abs(frequency - round(frequency)) < ts.eps)
 	frequency <- round(frequency)
 
-    if(length(start) > 1) {
+    if(length(start) > 1L) {
 ## strange: this never checked for < 1!  commented for 1.7.0
 ##	if(start[2L] > frequency) stop("invalid start")
 	start <- start[1L] + (start[2L] - 1)/frequency
     }
-    if(length(end) > 1) {
+    if(length(end) > 1L) {
 ##	if(end[2L] > frequency) stop("invalid end")
 	end <- end[1L] + (end[2L] - 1)/frequency
     }
@@ -118,10 +118,10 @@ as.ts.default <- function(x, ...)
     nulls <- sapply(sers, is.null)
     sers <- sers[!nulls]
     nser <- length(sers)
-    if(nser == 0) return(NULL)
-    if(nser == 1)
+    if(nser == 0L) return(NULL)
+    if(nser == 1L)
         if(dframe) return(as.data.frame(sers[[1L]])) else return(sers[[1L]])
-    tsser <-  sapply(sers, function(x) length(tsp(x)) > 0)
+    tsser <-  sapply(sers, function(x) length(tsp(x)) > 0L)
     if(!any(tsser))
         stop("no time series supplied")
     sers <- lapply(sers, as.ts)
@@ -268,7 +268,7 @@ na.omit.ts <- function(object, ...)
     xfreq <- frequency(object)
     ## drop initial and final NAs
     if(is.matrix(object))
-        good <- which(apply(!is.na(object), 1, all))
+        good <- which(apply(!is.na(object), 1L, all))
     else  good <- which(!is.na(object))
     if(!length(good)) stop("all times contain an NA")
     omit <- integer(0L)
@@ -353,7 +353,7 @@ print.ts <- function(x, calendar, ...)
     x <- as.ts(x)
     fr.x <- frequency(x)
     if(missing(calendar))
-	calendar <- any(fr.x == c(4,12)) && length(start(x)) == 2
+	calendar <- any(fr.x == c(4,12)) && length(start(x)) == 2L
     ## sanity check
     Tsp <- tsp(x)
     if(is.null(Tsp)) {
@@ -390,7 +390,7 @@ print.ts <- function(x, calendar, ...)
                     ## not more than one period
                     dn1 <- start(x)[1L]
                     dn2 <- dn2[1 + (start(x)[2L] - 2 + seq_along(x))%%fr.x]
-                    x <- matrix(format(x, ...), nrow = 1 , byrow = TRUE,
+                    x <- matrix(format(x, ...), nrow = 1L , byrow = TRUE,
                                 dimnames = list(dn1, dn2))
                 } else { # more than one period
                     start.pad <- start(x)[2L] - 1
@@ -548,7 +548,7 @@ plot.ts <-
 
 	if(missing(ylab)) {
 	    ylab <- colnames(x)
-	    if(length(ylab) != 1)
+	    if(length(ylab) != 1L)
 		ylab <- xlabel
 	}
 	## using xy.coords() mainly for the log treatment
@@ -567,11 +567,11 @@ plot.ts <-
 	if(is.matrix(x)) {
 	    for(i in seq_len(k))
 		lines.default(xy$x, x[,i],
-			      col = col[(i-1) %% length(col) + 1],
-			      lty = lty[(i-1) %% length(lty) + 1],
-			      lwd = lwd[(i-1) %% length(lwd) + 1],
-			      bg  = bg [(i-1) %% length(bg) + 1],
-			      pch = pch[(i-1) %% length(pch) + 1],
+			      col = col[(i-1L) %% length(col) + 1L],
+			      lty = lty[(i-1L) %% length(lty) + 1L],
+			      lwd = lwd[(i-1L) %% length(lwd) + 1L],
+			      bg  = bg [(i-1L) %% length(bg) + 1L],
+			      pch = pch[(i-1L) %% length(pch) + 1L],
 			      type = type)
 	}
 	else {
@@ -715,9 +715,9 @@ window.ts <- function (x, ...) as.ts(window.default(x, ...))
     val_len <- length(value)
     if(!val_len) stop("no replacement values supplied")
     if(val_len > len) stop("too many replacement values supplied")
-    if(val_len > 1 && (len %% val_len))
+    if(val_len > 1L && (len %% val_len))
         stop("number of values supplied is not a sub-multiple of the number of values to be replaced")
-    if(NCOL(x) == 1) x[ind] <- value else x[ind, ] <- value
+    if(NCOL(x) == 1L) x[ind] <- value else x[ind, ] <- value
     x
 }
 
@@ -795,7 +795,7 @@ arima.sim <- function(model, n, rand.gen = rnorm,
     if(n.start < p + q) stop("burn-in 'n.start' must be as long as 'ar + ma'")
     d <- 0
     if(!is.null(ord <- model$order)) {
-        if(length(ord) != 3) stop("'model$order' must be of length 3")
+        if(length(ord) != 3L) stop("'model$order' must be of length 3")
         if(p != ord[1L]) stop("inconsistent specification of 'ar' order")
         if(q != ord[3L]) stop("inconsistent specification of 'ma' order")
         d <- ord[2L]

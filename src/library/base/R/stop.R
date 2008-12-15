@@ -17,9 +17,9 @@
 stop <- function(..., call. = TRUE, domain = NULL)
 {
     args <- list(...)
-    if (length(args) == 1 && inherits(args[[1L]], "condition")) {
+    if (length(args) == 1L && inherits(args[[1L]], "condition")) {
         cond <- args[[1L]]
-        if(nargs() > 1)
+        if(nargs() > 1L)
             warning("additional arguments ignored in stop()")
         message <- conditionMessage(cond)
         call <- conditionCall(cond)
@@ -32,14 +32,14 @@ stop <- function(..., call. = TRUE, domain = NULL)
 stopifnot <- function(...)
 {
     n <- length(ll <- list(...))
-    if(n == 0)
+    if(n == 0L)
 	return(invisible())
     mc <- match.call()
     for(i in 1L:n)
 	if(!(is.logical(r <- ll[[i]]) && !any(is.na(r)) && all(r))) {
 	    ch <- deparse(mc[[i+1]], width.cutoff = 60)
-	    if(length(ch) > 1) ch <- paste(ch[1L], "....")
-	    stop(paste(ch, " is not ", if(length(r) > 1)"all ", "TRUE", sep=''),
+	    if(length(ch) > 1L) ch <- paste(ch[1L], "....")
+	    stop(paste(ch, " is not ", if(length(r) > 1L)"all ", "TRUE", sep=''),
 		 call.= FALSE)
 	}
 }
@@ -47,9 +47,9 @@ stopifnot <- function(...)
 warning <- function(..., call. = TRUE, immediate. = FALSE, domain = NULL)
 {
     args <- list(...)
-    if (length(args) == 1 && inherits(args[[1L]], "condition")) {
+    if (length(args) == 1L && inherits(args[[1L]], "condition")) {
         cond <- args[[1L]]
-        if(nargs() > 1)
+        if(nargs() > 1L)
             cat(gettext("additional arguments ignored in warning()"),
                 "\n", sep="", file = stderr())
         message <- conditionMessage(cond)

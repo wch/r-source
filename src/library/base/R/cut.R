@@ -21,8 +21,8 @@ cut.default <-
               right = TRUE, dig.lab = 3, ordered_result = FALSE, ...)
 {
     if (!is.numeric(x)) stop("'x' must be numeric")
-    if (length(breaks) == 1) {
-	if (is.na(breaks) | breaks < 2)
+    if (length(breaks) == 1L) {
+	if (is.na(breaks) | breaks < 2L)
 	    stop("invalid number of intervals")
 	nb <- as.integer(breaks + 1)# one more than #{intervals}
 	dx <- diff(rx <- range(x,na.rm=TRUE))
@@ -51,7 +51,7 @@ cut.default <-
         }
     } else if (is.logical(labels) && !labels)
         codes.only <- TRUE
-    else if (length(labels) != nb-1)
+    else if (length(labels) != nb - 1L)
         stop("labels/breaks length conflict")
     code <- .C("bincode",
 	       x =     	as.double(x),

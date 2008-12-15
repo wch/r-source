@@ -35,7 +35,7 @@ reshape <-
         if (drop)
             nn <- do.call("rbind",strsplit(nms, re, fixed=fixed))
         else
-            nn <- cbind(substr(nms, 1, regexpr(re,nms)),
+            nn <- cbind(substr(nms, 1L, regexpr(re,nms)),
                         substr(nms, regexpr(re,nms)+1, 10000))
 
         if (ncol(nn) != 2)

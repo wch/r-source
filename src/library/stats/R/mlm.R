@@ -155,16 +155,16 @@ mauchly.test.SSD <- function(object, Sigma=diag(nrow=p),
     Pr2 <- pchisq(z, f+4, lower.tail=FALSE)
     pval <- Pr1 + w2 * (Pr2 - Pr1)
     transformnote <- if (!missing(T))
-        c("\nContrast matrix", apply(format(T),1,paste, collapse=" "))
+        c("\nContrast matrix", apply(format(T), 1L, paste, collapse=" "))
     else
         c(
           if (!Xmis)
           c("\nContrasts orthogonal to",
-            if (is.matrix(orig.X))  apply(format(X), 2,paste, collapse=" ")
+            if (is.matrix(orig.X))  apply(format(X), 2L, paste, collapse=" ")
             else deparse(formula(orig.X)),"",
             if (!Mmis)
             c("\nContrasts spanned by",
-              if (is.matrix(orig.M))  apply(format(M), 2,paste, collapse=" ")
+              if (is.matrix(orig.M))  apply(format(M), 2L, paste, collapse=" ")
               else deparse(formula(orig.M)),""
               )
             )
@@ -231,18 +231,18 @@ anova.mlm <-
         }
         title <- "Analysis of Variance Table\n"
         transformnote <- if (!missing(T))
-            c("\nContrast matrix", apply(format(T),1,paste, collapse=" "))
+            c("\nContrast matrix", apply(format(T), 1L, paste, collapse=" "))
         else
             c(
               if (!Xmis)
               c("\nContrasts orthogonal to",
                 if (is.matrix(orig.X))
-                apply(format(X), 2,paste, collapse=" ")
+                apply(format(X), 2L, paste, collapse=" ")
                 else deparse(formula(orig.X)),"",
                 if (!Mmis)
                 c("\nContrasts spanned by",
                   if (is.matrix(orig.M))
-                  apply(format(M), 2,paste, collapse=" ")
+                  apply(format(M), 2L, paste, collapse=" ")
                   else deparse(formula(orig.M)),""
                   )
                 )
@@ -280,7 +280,7 @@ anova.mlm <-
                          "")
 
             Psi <- T %*% Sigma %*% t(T)
-            stats <- matrix(NA, nmodels+1, 6)
+            stats <- matrix(NA, nmodels+1, 6L)
             colnames(stats) <- c("F", "num Df", "den Df",
                                  "Pr(>F)", "G-G Pr", "H-F Pr")
             for(i in 1L:nmodels) {
@@ -312,7 +312,7 @@ anova.mlm <-
             if(rss.qr$rank < pp)
                 stop("residuals have rank ", rss.qr$rank," < ", pp)
             eigs <- array(NA, c(nmodels, pp))
-            stats <- matrix(NA, nmodels+1, 5)
+            stats <- matrix(NA, nmodels+1L, 5L)
             colnames(stats) <- c(test, "approx F", "num Df", "den Df",
                                        "Pr(>F)")
 
@@ -466,16 +466,16 @@ anova.mlmlist <- function (object, ...,
     topnote <- paste("Model ", format(1L:nmodels),": ",
 		     variables, sep="", collapse="\n")
     transformnote <- if (!missing(T))
-        c("\nContrast matrix", apply(format(T),1,paste, collapse=" "))
+        c("\nContrast matrix", apply(format(T), 1L, paste, collapse=" "))
     else
         c(
           if (!Xmis)
           c("\nContrasts orthogonal to",
-            if (is.matrix(orig.X))  apply(format(X), 2,paste, collapse=" ")
+            if (is.matrix(orig.X))  apply(format(X), 2L, paste, collapse=" ")
             else deparse(formula(orig.X)),"",
             if (!Mmis)
             c("\nContrasts spanned by",
-              if (is.matrix(orig.M))  apply(format(M), 2,paste, collapse=" ")
+              if (is.matrix(orig.M))  apply(format(M), 2L, paste, collapse=" ")
               else deparse(formula(orig.M)),""
               )
             )
@@ -495,7 +495,7 @@ anova.mlmlist <- function (object, ...,
                      "")
 
         Psi <- T %*% Sigma %*% t(T)
-        stats <- matrix(NA, nmodels, 6)
+        stats <- matrix(NA, nmodels, 6L)
         dimnames(stats) <-  list(1L:nmodels,
                                  c("F", "num Df", "den Df",
                                    "Pr(>F)", "G-G Pr", "H-F Pr"))
@@ -534,7 +534,7 @@ anova.mlmlist <- function (object, ...,
         if(rss.qr$rank < pp)
             stop("residuals have rank ", rss.qr$rank," < ", pp)
         eigs <- array(NA, c(nmodels, pp))
-        stats <- matrix(NA, nmodels, 5)
+        stats <- matrix(NA, nmodels, 5L)
         dimnames(stats) <-  list(1L:nmodels,
                                  c(test, "approx F", "num Df", "den Df",
                                    "Pr(>F)"))

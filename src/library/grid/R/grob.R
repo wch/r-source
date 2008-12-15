@@ -142,7 +142,7 @@ print.grob <- function(x, ...) {
 
 gPathFromVector <- function(names) {
   n <- length(names)
-  if (n < 1)
+  if (n < 1L)
     stop("A 'grob' path must contain at least one 'grob' name")
   if (!all(is.character(names)))
     stop("Invalid 'grob' name(s)")
@@ -194,7 +194,7 @@ as.gList <- function(x) {
 
 gList <- function(...) {
     gl <- list(...)
-    if (length(gl) == 0 ||
+    if (length(gl) == 0L ||
         all(sapply(gl, okGListelt, simplify=TRUE))) {
         # Ensure gList is "flat"
         # Don't want gList containing gList ...
@@ -222,7 +222,7 @@ addToGList.grob <- function(x, gList) {
   if (is.null(gList))
     gList(x)
   else {
-    gList[[length(gList) + 1]] <- x
+    gList[[length(gList) + 1L]] <- x
     return(gList)
   }
 }
@@ -270,7 +270,7 @@ setChildren <- function(x, children) {
     children <- children[!sapply(children, is.null)]
     class(children) <- cl
   }
-  if (length(children) > 0) {
+  if (length(children)) {
     x$children <- children
     childNames <- sapply(children, childName)
     names(x$children) <- childNames
@@ -629,7 +629,7 @@ editDetails.gTree <- function(x, specs) {
 nameMatch <- function(pathName, grobName, grep) {
   if (grep) {
     pos <- grep(pathName, grobName)
-    (length(pos) > 0 && pos == 1)
+    (length(pos) && pos == 1)
   } else {
     match(pathName, grobName, nomatch=0L)
   }
@@ -641,7 +641,7 @@ nameMatch <- function(pathName, grobName, grep) {
 namePos <- function(pathName, names, grep) {
   if (grep) {
     pos <- grep(pathName, names)
-    if (length(pos) == 0)
+    if (length(pos) == 0L)
       pos <- FALSE
   } else {
     pos <- match(pathName, names, nomatch=0L)
@@ -652,7 +652,7 @@ namePos <- function(pathName, names, grep) {
 partialPathMatch <- function(pathsofar, path, strict=FALSE, grep) {
   if (strict) {
     if (!any(grep))
-      length(grep(paste("^", pathsofar, sep=""), path)) > 0
+      length(grep(paste("^", pathsofar, sep=""), path)) > 0L
     else {
       pathSoFarElts <- explodePath(pathsofar)
       pathElts <- explodePath(path)
@@ -685,7 +685,7 @@ fullPathMatch <- function(pathsofar, gPath, strict, grep) {
       if (strict)
         match <- match(pathsofar, path, nomatch=0L)
       else
-        match <- (length(grep(paste(path, "$", sep=""), pathsofar)) > 0)
+        match <- (length(grep(paste(path, "$", sep=""), pathsofar)) > 0L)
     else {
       pathSoFarElts <- explodePath(pathsofar)
       pathElts <- explodePath(path)
@@ -702,9 +702,9 @@ fullPathMatch <- function(pathsofar, gPath, strict, grep) {
         }
         while (match && index <= npe) {
           if (grep[index])
-            match <- (length(grep(pathElts[index], pathSoFarElts[index])) > 0)
+            match <- (length(grep(pathElts[index], pathSoFarElts[index])) > 0L)
           else
-            match <- match(pathSoFarElts[index], pathElts[index], nomatch=0L)
+            match <- match(pathSoFarElts[index], pathElts[index], nomatch = 0L)
           index <- index + 1
         }
       }
@@ -1359,7 +1359,7 @@ removeFromGTree <- function(gTree, name, grep) {
     stop("It is only valid to remove a child from a 'gTree'")
   if (grep) {
     old.pos <- grep(name, gTree$childrenOrder)
-    if (length(old.pos) == 0)
+    if (length(old.pos) == 0L)
       old.pos <- 0
   } else {
     old.pos <- match(name, gTree$childrenOrder, nomatch=0)

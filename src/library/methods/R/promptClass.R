@@ -25,7 +25,7 @@ function (clName, filename = NULL, type = "class",
 	if(is.null(mlist))
 	    return(NULL)
 	tmp <- listFromMlist(mlist)
-	if ((lt <- length(tmp[[1L]])) == 0)
+	if ((lt <- length(tmp[[1L]])) == 0L)
 	    NULL
 	else if (lt == 1)
 	    unlist(tmp[[1L]])
@@ -61,12 +61,12 @@ function (clName, filename = NULL, type = "class",
 	for(j in rev(seq_along(extds))) {
 	    i <- extds[[j]]
 	    slotsi <- getSlots(getClass(i))
-	    if(length(slotsi) > 0)
+	    if(length(slotsi))
 		allslots[names(slotsi)] <- paste0("\"", as.character(slotsi),
 						  "\", from class \"", i, "\"")
 	}
 	slotsi <- getSlots(clDef)
-	if(length(slotsi) > 0)
+	if(length(slotsi))
 	    allslots[names(slotsi)] <- paste0("\"", as.character(slotsi),"\"")
 	allslots
     }
@@ -85,10 +85,10 @@ function (clName, filename = NULL, type = "class",
       whereClass <- where
     else {
         whereClass <- find(classMetaName(clName))
-        if(length(whereClass) == 0)
+        if(length(whereClass) == 0L)
           stop(gettextf("no definition of class \"%s\" found", clName),
                domain = NA)
-        else if(length(whereClass) > 1) {
+        else if(length(whereClass) > 1L) {
             if(identical(where, topenv(parent.frame()))) {
                 whereClass <- whereClass[[1L]]
                 warning(gettextf("multiple definitions of \"%s\" found; using the one on %s",
@@ -144,7 +144,7 @@ function (clName, filename = NULL, type = "class",
     else
 	.slots <- character()
     .extends <- clDef@contains
-    if(length(.extends) > 0) {
+    if(length(.extends)) {
 	.extends <- showExtends(.extends, printTo = FALSE)
 	.extends <-
 	    c("\\section{Extends}{",

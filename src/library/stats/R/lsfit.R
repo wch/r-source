@@ -239,7 +239,7 @@ ls.print <- function(ls.out, digits=4, print.it=TRUE)
 	    warning("observations with 0 weights not used")
 	resids <- resids * ls.out$wt^0.5
     }
-    n <- apply(resids, 2, length)-colSums(is.na(resids))
+    n <- apply(resids, 2L, length)-colSums(is.na(resids))
     lsqr <- ls.out$qr
     p <- lsqr$rank
 

@@ -56,7 +56,7 @@ function(..., domain = NULL, appendLF = TRUE)
 .makeMessage <- function(..., domain = NULL, appendLF = FALSE)
  {
     args <- list(...)
-    if(length(args) > 0) {
+    if(length(args)) {
         args <- lapply(list(...), as.character)
         if(is.null(domain) || !is.na(domain))
             args <- .Internal(gettext(domain, unlist(args)))

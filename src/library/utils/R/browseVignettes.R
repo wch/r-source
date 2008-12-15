@@ -42,7 +42,7 @@ browseVignettes <- function(package = NULL, lib.loc = NULL, all = TRUE)
         }
         else NULL
     }
-    vinfo <- lapply(vignettes[sapply(vignettes, length) > 0], getVinfo)
+    vinfo <- lapply(vignettes[sapply(vignettes, length) > 0L], getVinfo)
     attr(vinfo, "call") <- sys.call()
     attr(vinfo, "footer") <-
         if (all) ""
@@ -56,14 +56,14 @@ browseVignettes <- function(package = NULL, lib.loc = NULL, all = TRUE)
 
 print.browseVignettes <- function(x, ...)
 {
-    if (length(x) == 0) {
+    if (length(x) == 0L) {
         message("No vignettes found by ",
                 paste(deparse(attr(x, "call")), collapse=" "))
         return(invisible(x))
     }
     oneLink <- function(s)
     {
-        if (length(s) == 0) return(character(0L))
+        if (length(s) == 0L) return(character(0L))
         title <- s[, "Title"]
         src <- file.path(s[, "Dir"], "doc", s[, "File"])
         pdf <- ifelse(s[, "PDF"] != "", # or nzchar(s[, "PDF"]),
@@ -115,5 +115,3 @@ print.browseVignettes <- function(x, ...)
     ## browseURL(file)
     invisible(x)
 }
-
-

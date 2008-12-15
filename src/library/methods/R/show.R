@@ -26,7 +26,7 @@ showDefault <- function(object, oldMethods = TRUE)
             show(dataPart)
             slots <- slots[is.na(match(slots, ".Data"))]
         }
-        else if(length(slots) == 0)
+        else if(length(slots) == 0L)
             show(unclass(object))
         for(what in slots) {
             if(identical(what, ".Data"))
@@ -104,10 +104,10 @@ show <- function(object)
                   cat(class(object)," for \"", object@generic,
                       "\" defined from package \"", object@package,
                       "\"\n", sep = "")
-                  if(length(object@group) > 0)
+                  if(length(object@group))
                       cat("  belonging to group(s):",
                           paste(unlist(object@group), collapse =", "), "\n")
-                  if(length(object@valueClass) > 0)
+                  if(length(object@valueClass))
                       cat("  defined with value class: \"", object@valueClass,
                           "\"\n", sep="")
                   cat("\n")
@@ -141,7 +141,7 @@ show <- function(object)
 
 ## an informative string label for a class
 classLabel <- function(Class) {
-    if(is.character(Class) && length(Class) > 0) {
+    if(is.character(Class) && length(Class)) {
         className <- Class[[1L]]
         packageName <- attr(Class, "package")
     }

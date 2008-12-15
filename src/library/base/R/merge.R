@@ -94,7 +94,7 @@ merge.data.frame <-
         comm <- match(bx, by, 0L)
         bxy <- bx[comm > 0L]             # the keys which are in both
         xinds <- match(bx, bxy, 0L, incomparables)
-        yinds <- match(by, bxy, 0, incomparables)
+        yinds <- match(by, bxy, 0L, incomparables)
         if(nx > 0L && ny > 0L)
             m <- .Internal(merge(xinds, yinds, all.x, all.y))
         else

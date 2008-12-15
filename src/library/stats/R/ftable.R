@@ -27,7 +27,7 @@ ftable.default <- function(..., exclude = c(NA, NaN),
     else if(inherits(x, "ftable")) {
         x <- as.table(x)
     }
-    else if(!(is.array(x) && (length(dim(x)) > 1))) {
+    else if(!(is.array(x) && (length(dim(x)) > 1L))) {
         x <- table(..., exclude = exclude)
     }
     dn <- dimnames(x)
@@ -203,8 +203,8 @@ format.ftable <- function(x, quote = TRUE, digits = getOption("digits"), ...)
     DATA <- rbind(if(length(xcv)) t(makeLabels(xcv)),
                   rep("", times = ncol(x)),
                   format(unclass(x), digits = digits))
-    cbind(apply(LABS, 2, format, justify = "left"),
-	  apply(DATA, 2, format, justify = "right"))
+    cbind(apply(LABS, 2L, format, justify = "left"),
+	  apply(DATA, 2L, format, justify = "right"))
 }
 
 write.ftable <- function(x, file = "", quote = TRUE, append = FALSE,

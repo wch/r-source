@@ -93,9 +93,8 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 
     ## Missing values are treated as 0
     if (scale) {
-        x <- apply(x, 2, function(x)
+        x <- apply(x, 2L, function(x)
                    (x - min(x, na.rm = TRUE))/diff(range(x, na.rm = TRUE)))
-#	x <- sweep(x,2,apply(x,2,max), FUN="/")
     }
     ## Missing values are treated as 0
     x[is.na(x)] <- 0

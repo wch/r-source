@@ -28,7 +28,7 @@ valid.layout <- function(nrow, ncol, widths, heights, respect, just) {
   # make sure we're dealing with a unit object
   if (!is.logical(respect)) {
     respect <- as.matrix(respect)
-    if (!is.matrix(respect) || any(dim(respect) != c(nrow, ncol))) 
+    if (!is.matrix(respect) || any(dim(respect) != c(nrow, ncol)))
       stop("'respect' must be logical or an 'nrow' by 'ncol' matrix")
     }
   if (is.matrix(respect)) {
@@ -67,11 +67,11 @@ layout.torture <- function() {
   grid.show.layout(grid.layout(3,2, respect=TRUE), vp=top.vp)
   do.label("All dimensions relative -- full respect")
   # (1) with partial respect
-  grid.show.layout(grid.layout(3,2,respect=matrix(c(1,0,0,0,0,0), 3, 2, TRUE)),
+  grid.show.layout(grid.layout(3,2,respect=matrix(c(1,0,0,0,0,0), 3L, 2L, TRUE)),
                    vp=top.vp)
   do.label("All dimensions relative -- only top-left cell respected")
   # (1) with slightly weirder partial respect
-  grid.show.layout(grid.layout(3,2,respect=matrix(c(1,0,0,0,0,1), 3, 2, TRUE)),
+  grid.show.layout(grid.layout(3,2,respect=matrix(c(1,0,0,0,0,1), 3L, 2L, TRUE)),
                    vp=top.vp)
   do.label("All relative -- top-left, bottom-right respected")
   # 2 = combination of absolute and relative widths and heights
@@ -81,16 +81,16 @@ layout.torture <- function() {
                    vp=top.vp)
   do.label("Absolute and relative -- no respect")
   # (2) with full respect
-  grid.show.layout(grid.layout(2, 3, 
+  grid.show.layout(grid.layout(2, 3,
                        widths=unit(c(2,4,1), c("null", "cm", "null")),
                        heights=unit(c(6,4), c("cm", "null")), respect=TRUE),
                    vp=top.vp)
   do.label("Absolute and relative -- full respect")
   # (2) with partial respect
-  grid.show.layout(grid.layout(2, 3, 
+  grid.show.layout(grid.layout(2, 3,
                        widths=unit(c(2,4,1), c("null", "cm", "null")),
                        heights=unit(c(6,4), c("cm", "null")),
-                       respect=matrix(c(0,0,0,0,0,1), 2, 3, TRUE)),
+                       respect=matrix(c(0,0,0,0,0,1), 2L, 3L, TRUE)),
                    vp=top.vp)
   do.label("Absolute and relative -- bottom-right respected")
 }
@@ -141,7 +141,7 @@ layout.respect <- function(lay) {
 # Public constructor function
 ####################
 grid.layout <- function (nrow = 1, ncol = 1,
-                         widths = unit(rep(1, ncol), "null"), 
+                         widths = unit(rep(1, ncol), "null"),
                          heights = unit(rep(1, nrow), "null"),
                          default.units = "null",
                          respect = FALSE,
@@ -150,7 +150,7 @@ grid.layout <- function (nrow = 1, ncol = 1,
   if (!is.unit(widths))
     widths <- unit(widths, default.units)
   if (!is.unit(heights))
-    heights <- unit(heights, default.units) 
+    heights <- unit(heights, default.units)
   valid.layout(nrow, ncol, widths, heights, respect, just)
 }
 

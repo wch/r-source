@@ -155,7 +155,7 @@ profile.nls <-
         varying <- rep.int(TRUE, npar)
         varying[par] <- FALSE
         tau <- double(2 * maxpts)
-        par.vals <- array(0, c(2 * maxpts, npar), list(NULL, names(pars)))
+        par.vals <- array(0, c(2L * maxpts, npar), list(NULL, names(pars)))
         tau[1L] <- 0
         par.vals[1,  ] <- pars
         base <- pars[par]

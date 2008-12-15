@@ -26,7 +26,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
     if(debugMe) { cat("envir= "); print(envir)
 		  cat("objlist =\n"); print(objlist) }
     n <- length(objlist)
-    if(n == 0) {
+    if(n == 0L) {
 	cat("Empty environment, nothing to do!\n")
 	return(invisible())
     }
@@ -35,7 +35,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 	md <- mode(obj)
 	lg <- length(obj)
 	objdim <- dim(obj)
-	if(length(objdim) == 0)
+	if(length(objdim) == 0L)
 	    dim.field <- paste("length:", lg)
 	else{
 	    dim.field <- "dim:"
@@ -53,7 +53,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 	list(type = md, dim.field = dim.field)
     }
 
-    N <- 0
+    N <- 0L
     M <- n
     IDS <- rep.int(NA,n)
     NAMES <- rep.int(NA,n)
@@ -66,7 +66,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
     ParentID <- rep.int(-1,n)
 
     for( objNam in objlist ){
-	N <- N+1
+	N <- N+1L
 	if(debugMe) cat("  ", N,":", objNam)
 	obj    <- get(objNam, envir = envir)
 
@@ -82,15 +82,15 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 
 	if(is.recursive(obj) && !is.function(obj) && !is.environment(obj)
 	    ## includes "list", "expression", also "data.frame", ..
-	   && (lg <- length(obj)) > 0) {
+	   && (lg <- length(obj))) {
 	    Container[N] <- TRUE
 	    ItemsPerContainer[N] <- lg
 	    nm <- names(obj)
-	    if(is.null(nm)) nm <- paste("[[",format(1L:lg),"]]", sep="")
+	    if(is.null(nm)) nm <- paste("[[", format(1L:lg), "]]", sep="")
 	    for(i in 1L:lg) {
 		M <- M+1
 		ParentID[M] <- N
-		if(nm[i] == "") nm[i] <- paste("[[",i,"]]", sep="")
+		if(nm[i] == "") nm[i] <- paste("[[", i, "]]", sep="")
 
 		s.l <- str1(obj[[i]])
 		##cat("	   objname:",nm[i],", type=",md.l,",",dim.field.l,"\n")
@@ -109,17 +109,17 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 		if(length(names(obj.nms)) >0)
 		    nm <- names(obj.nms)
 		else
-		    nm <- rep.int("",lg)
+		    nm <- rep.int("", lg)
 		Container[N] <- TRUE
 		ItemsPerContainer[N] <- lg
 		for(i in 1L:lg){
-		    M <- M+1
+		    M <- M+1L
 		    ParentID[M] <- N
 		    if(nm[i] == "") nm[i] = paste("[[",i,"]]",sep="")
 		    md.l  <- mode(obj.nms[[i]])
 		    objdim.l <- dim(obj.nms[[i]])
-		    if(length(objdim.l) == 0)
-			dim.field.l <- paste("length:",length(obj.nms[[i]]))
+		    if(length(objdim.l) == 0L)
+			dim.field.l <- paste("length:", length(obj.nms[[i]]))
 		    else{
 			dim.field.l <- "dim:"
 			for(j in 1L:length(objdim.l))
@@ -140,7 +140,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 		Container[N] <- TRUE
 		ItemsPerContainer[N] <- lg
 		for(i in 1L:lg){
-		    M <- M+1
+		    M <- M+1L
 		    ParentID[M] <- N
 		    md.l  <- mode(obj[[i]])
 		    dim.field.l <- paste("length:",dim(obj)[1L])
@@ -226,7 +226,7 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
 	"<H1>",main,"</H1>\n",
 	if(is.character(props)) Par(props),
 	"<table border=1>\n", file = Hfile)
-    nCol <- if(expanded) 4 else 3
+    nCol <- if(expanded) 4L else 3L
     catRow(entry(bold("Object")),
 	   if(expanded) entry(bold(ital("(components)"))),
 	   entry(bold("Type")),
@@ -256,7 +256,7 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
 	   windows = , ## do we need anything here?
 	   unix = { url <- fname },
 	   )
-    if(substr(url, 1,1) != "/")
+    if(substr(url, 1L, 1L) != "/")
 	url <- paste("/", url, sep = "")
     url <- paste("file://", URLencode(url), sep = "")
 

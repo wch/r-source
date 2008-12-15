@@ -47,7 +47,7 @@ outer <- function (X, Y, FUN = "*", ...)
         Y <- rep(Y, rep.int(length(X), length(Y)))
         ##  length.out is not an argument of the generic rep()
         ##  X <- rep(X, length.out = length(Y))
-        if(length(X) > 0)
+        if(length(X))
             X <- rep(X, times = ceiling(length(Y)/length(X)))
         robj <- FUN(X, Y, ...)
         dim(robj) <- c(dX, dY) # careful not to lose class here

@@ -194,7 +194,7 @@ capabilities <- function(what = NULL)
 {
     z  <- .Internal(capabilities())
     if(!is.null(what))
-        z <- z[match(what, names(z), 0)]
+        z <- z[match(what, names(z), 0L)]
     if(.Platform$OS.type == "windows") return(z)
     ## Now we need to deal with any NA entries if X11 is unknown.
     nas <- names(z[is.na(z)])

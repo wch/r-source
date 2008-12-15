@@ -16,7 +16,7 @@
 
 pkgDepends <- function(pkg, recursive=TRUE, local=TRUE,
                        reduce=TRUE, lib.loc=NULL) {
-    if (length(pkg) != 1)
+    if (length(pkg) != 1L)
         stop("argument 'pkg' must be of length 1")
 
     instPkgs <- utils::installed.packages(lib.loc=lib.loc)
@@ -49,7 +49,7 @@ getDepList <- function(depMtrx, instPkgs, recursive=TRUE,
         if (reduce)
             toFind <- reduceDepends(toFind)
 
-        if (length(toFind) > 0) {
+        if (length(toFind)) {
             found <- foundDepends(toFind)
             out$Found <- found$Found
             mtrxList$NotFound <- found$NotFound
@@ -74,20 +74,20 @@ getDepList <- function(depMtrx, instPkgs, recursive=TRUE,
 }
 
 isSatisfied <- function(dep, instMtrx) {
-    triplets <- apply(instMtrx,1,paste,collapse=":")
-    match(paste(dep,collapse=":"),triplets,nomatch=0L) > 0L
+    triplets <- apply(instMtrx, 1L, paste, collapse=":")
+    match(paste(dep,collapse=":"), triplets, nomatch=0L) > 0L
 }
 
 buildDepList <- function(depMtrx, instPkgs, recursive=TRUE,
                          lib.loc=NULL) {
-    mtrxList <- list(Depends=matrix(nrow=0,ncol=3),
-                     Installed=matrix(nrow=0,ncol=3), R=matrix(nrow=0,ncol=3))
+    mtrxList <- list(Depends=matrix(nrow=0L,ncol=3L),
+                     Installed=matrix(nrow=0L,ncol=3L), R=matrix(nrow=0L,ncol=3L))
 
 
     ## First check to see if there is a dependency on R
     ## If there is, then check it
     whichR <- which(depMtrx[,1] == "R")
-    if (length(whichR) > 0) {
+    if (length(whichR)) {
         mtrxList$R <- depMtrx[whichR,,drop=FALSE]
         depMtrx <- depMtrx[-whichR,,drop=FALSE]
     }
@@ -150,7 +150,7 @@ getRemotePkgDepends <- function(pkg, contriburl=getOption("repos")) {
 
     cran <- utils::available.packages(contriburl=contriburl)
     whichRow <- which(pkg == cran[,"Package"])
-    if (length(whichRow) > 0) {
+    if (length(whichRow)) {
         return(package.dependencies(cran[whichRow,])[[1L]])
     }
     else
@@ -164,12 +164,12 @@ installedDepends <- function(depMtrx, instPkgs) {
 
     pkgs <- depMtrx[,1]
     passPkgs <- character()
-    if (length(pkgs) > 0) {
+    if (length(pkgs)) {
         installed <- (match(pkgs, instPkgs[,"Package"], nomatch=0L) > 0L)
 
         curPkgs <- depMtrx[installed,,drop=FALSE]
-        if (nrow(curPkgs) > 0) {
-            passVersReq <- apply(curPkgs, 1, function(x) {
+        if (nrow(curPkgs)) {
+            passVersReq <- apply(curPkgs, 1L, function(x) {
                 pkgVers <- instPkgs[instPkgs[,1]==x[1L],"Version"]
                 if (is.na(x[2L])||
                     (compareDependsPkgVersion(pkgVers,
@@ -205,7 +205,7 @@ foundDepends <- function(depMtrx, contriburl=getOption("repos")) {
             for (i in 1L:nrow(depMtrx)) {
                 found <- FALSE
                 cranRow <- which(depMtrx[i,1] == cran[,1])
-                if (length(cranRow) > 0) {
+                if (length(cranRow)) {
                     ## Found it in repos
                     if (is.na(depMtrx[i,2])) # no version, automatically okay
                         found <- TRUE
@@ -221,7 +221,7 @@ foundDepends <- function(depMtrx, contriburl=getOption("repos")) {
             }
         }
 
-        if (length(cur) > 0)
+        if (length(cur))
             out$Found[contriburl[j]] <- cur
     }
 
@@ -247,7 +247,7 @@ reduceDepends <- function(depMtrx, quietly=TRUE) {
 
     pkgList <- split(depMtrx, depMtrx[,1])
     out <- lapply(pkgList, function(x, quietly) {
-        pkgMtrx <- matrix(x,ncol=3)
+        pkgMtrx <- matrix(x,ncol=3L)
         ## there are no version requirements so just return
         ## the pkg name
         if (all(is.na(pkgMtrx[,2])))
@@ -294,12 +294,12 @@ reduceDepends <- function(depMtrx, quietly=TRUE) {
 	pkgMtrx[outRow,]
     }, quietly)
 
-    matrix(unlist(out), ncol=3, byrow=TRUE)
+    matrix(unlist(out), ncol=3L, byrow=TRUE)
 }
 
 depMtrxToStrings <- function(depMtrx) {
-    if (length(depMtrx) > 0) {
-        apply(depMtrx, 1, function(x){
+    if (length(depMtrx)) {
+        apply(depMtrx, 1L, function(x){
             if (is.na(x[2L]))
                 x[1L]
             else
@@ -313,7 +313,7 @@ depMtrxToStrings <- function(depMtrx) {
 installFoundDepends <- function(depPkgList, ...) {
     urls <- names(depPkgList)
     for (i in seq_along(depPkgList)) {
-        if (length(depPkgList[[i]]) > 0)
+        if (length(depPkgList[[i]]))
             utils::install.packages(depPkgList[[i]],
                                     contriburl = urls[i],
                                     ...)

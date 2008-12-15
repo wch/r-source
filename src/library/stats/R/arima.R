@@ -220,7 +220,7 @@ arima <- function(x, order = c(0, 0, 0),
 
     if(method == "CSS") {
         res <- if(no.optim)
-            list(convergence=0,par=numeric(0),value=armaCSS(numeric(0L)))
+            list(convergence=0L, par=numeric(0L), value=armaCSS(numeric(0L)))
         else
             optim(init[mask], armaCSS,  method = "BFGS", hessian = TRUE,
                   control = optim.control)
@@ -236,11 +236,11 @@ arima <- function(x, order = c(0, 0, 0),
         val <- .Call(R_ARIMA_CSS, x, arma, trarma[[1L]], trarma[[2L]],
                      as.integer(ncond), TRUE)
         sigma2 <- val[[1L]]
-        var <- if(no.optim) numeric(0) else solve(res$hessian * n.used)
+        var <- if(no.optim) numeric(0L) else solve(res$hessian * n.used)
     } else {
         if(method == "CSS-ML") {
             res <- if(no.optim)
-                list(convergence=0,par=numeric(0),value=armaCSS(numeric(0)))
+                list(convergence=0L, par=numeric(0L), value=armaCSS(numeric(0L)))
             else
                 optim(init[mask], armaCSS,  method = "BFGS",
                       hessian = FALSE, control = optim.control)
@@ -351,13 +351,13 @@ print.Arima <-
     function (x, digits = max(3, getOption("digits") - 3), se = TRUE, ...)
 {
     cat("\nCall:", deparse(x$call, width.cutoff = 75), "", sep = "\n")
-    if (length(x$coef) > 0L) {
+    if (length(x$coef)) {
         cat("Coefficients:\n")
         coef <- round(x$coef, digits = digits)
         if (se && nrow(x$var.coef)) {
             ses <- rep(0, length(coef))
             ses[x$mask] <- round(sqrt(diag(x$var.coef)), digits = digits)
-            coef <- matrix(coef, 1, dimnames = list(NULL, names(coef)))
+            coef <- matrix(coef, 1L, dimnames = list(NULL, names(coef)))
             coef <- rbind(coef, s.e. = ses)
         }
         print.default(coef, print.gap = 2)

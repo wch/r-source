@@ -25,8 +25,8 @@ read.fortran<-function(file, format, ...,as.is=TRUE, colClasses=NA){
        lengths<-as.numeric(sub(template, "\\3", format))
        decimals<-as.numeric(sub(template, "\\4", format))
 
-       reps[is.na(reps)]<-1
-       lengths[is.na(lengths) & types=="X"]<-1
+       reps[is.na(reps)]<-1L
+       lengths[is.na(lengths) & types=="X"]<-1L
 
        charskip<-types=="X"
        lengths[charskip]<-reps[charskip]*lengths[charskip]
@@ -40,23 +40,23 @@ read.fortran<-function(file, format, ...,as.is=TRUE, colClasses=NA){
        decimals<-rep(decimals,reps)
        types<- match(types, c("F","D","X","A","I"))
 
-       if (any(!is.na(decimals) & types>2))
+       if (any(!is.na(decimals) & types>2L))
          stop("invalid format")
        colClasses <- c("numeric", "numeric", NA,
                        if(as.is) "character" else NA, "integer")[types]
-       colClasses <- colClasses[!(types==3)]
-       decimals <-   decimals  [!(types==3)]
-       lengths[types==3]<- -lengths[types==3]
+       colClasses <- colClasses[!(types==3L)]
+       decimals <-   decimals  [!(types==3L)]
+       lengths[types==3]<- -lengths[types==3L]
 
        list(lengths,colClasses,decimals)
      }
 
      if(is.list(format)){
        ff<-lapply(format,processFormat)
-       widths<-lapply(ff,"[[",1)
+       widths<-lapply(ff,"[[",1L)
        if (is.na(colClasses))
-         colClasses<-do.call("c",lapply(ff,"[[",2))
-       decimals<-do.call("c",lapply(ff,"[[",3))
+         colClasses<-do.call("c",lapply(ff,"[[",2L))
+       decimals<-do.call("c",lapply(ff,"[[",3L))
      } else {
        ff<-processFormat(format)
        widths<-ff[[1L]]
@@ -64,13 +64,8 @@ read.fortran<-function(file, format, ...,as.is=TRUE, colClasses=NA){
          colClasses<-ff[[2L]]
        decimals<-ff[[3L]]
      }
-
      rval<-read.fwf(file,widths=widths, ..., colClasses=colClasses)
-
-     for(i in which(!is.na(decimals))){
+     for(i in which(!is.na(decimals)))
        rval[,i]<-rval[,i]*(10^-decimals[i])
-     }
-
      rval
-
 }

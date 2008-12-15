@@ -66,7 +66,7 @@ proj.lm <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 	if(!is.matrix(result)) {
 	    if(use.wt) result <- object$residuals * sqrt(wt)
 	    else result <- object$residuals
-	    result <- matrix(result, length(result), 1, dimnames
+	    result <- matrix(result, length(result), 1L, dimnames
 			     = list(names(result), "Residuals"))
 	} else {
 	    dn <- dimnames(result)
@@ -141,7 +141,7 @@ proj.aovlist <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 				strata = FALSE, efactor = FALSE)
     {
 	if(!is.na(int <- match("(Intercept)", pnames))) pnames <- pnames[-int]
-	tnames <- apply(tfactor, 2, function(x, nms)
+	tnames <- apply(tfactor, 2L, function(x, nms)
 			nms[as.logical(x)], rownames(tfactor))
 	if(!missing(efactor)) {
 	    enames <- NULL

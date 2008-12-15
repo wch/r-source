@@ -28,7 +28,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
     ## Martin Maechler, 21 Jan 1994; Dedicated to Benjamin Schaad, born that day
 
     ##--------------- Argument checking -----------------------------
-    if(length(x) == 0)
+    if(length(x) == 0L)
 	return(noquote(if(is.null(d <- dim(x)))character(0L) else array("", dim=d)))
     has.na <- any(nax <- is.na(x))
     if(numeric.x) {
@@ -71,7 +71,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 ##     else if(!is.logical(x))
 ## 	stop("'x' must be numeric or logical")
     else  { ## assume logical x : no need for cut(points)
-	if(!missing(symbols) && length(symbols) != 2)
+	if(!missing(symbols) && length(symbols) != 2L)
 	    stop("must have 2 'symbols' for logical 'x' argument")
 	iS <- x + 1 # F = 1,  T = 2
     }
@@ -90,12 +90,12 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
     if(lower.triangular && is.matrix(x))
 	ans[!lower.tri(x, diag = diag.lower.tri)] <- ""
     attributes(ans) <- attributes(x)
-    if(is.array(ans)&& (rank <- length(dim(x))) >= 2) { # `fix' column names
+    if(is.array(ans)&& (rank <- length(dim(x))) >= 2L) { # `fix' column names
 	has.colnames <- !is.null(dimnames(ans))
 	if(!has.colnames) {
 	    dimnames(ans) <- vector("list",rank)
 	} else {
-	    has.colnames <- length(dimnames(ans)[[2L]]) > 0
+	    has.colnames <- length(dimnames(ans)[[2L]]) > 0L
 	}
 	if((is.logical(abbr.colnames) || is.numeric(abbr.colnames))
 	   && abbr.colnames) {

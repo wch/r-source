@@ -124,7 +124,7 @@ findFunction <-
 }
 
 existsFunction <- function(f, generic=TRUE, where = topenv(parent.frame()))
-    length(findFunction(f, generic, where)) > 0
+    length(findFunction(f, generic, where)) > 0L
 
 Quote <- base::quote #was get("quote" , mode = "function")
 

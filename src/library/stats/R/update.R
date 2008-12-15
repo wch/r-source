@@ -23,7 +23,7 @@ update.default <-
     extras <- match.call(expand.dots = FALSE)$...
     if (!missing(formula.))
 	call$formula <- update.formula(formula(object), formula.)
-    if(length(extras) > 0) {
+    if(length(extras)) {
 	existing <- !is.na(match(names(extras), names(call)))
 	## do these individually to allow NULL to remove entries.
 	for (a in names(extras)[existing]) call[[a]] <- extras[[a]]

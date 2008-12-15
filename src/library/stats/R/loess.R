@@ -42,9 +42,9 @@ function(formula, data, weights, subset, na.action, model = FALSE,
     D <- ncol(x)
     nmx <- colnames(x)
     names(nmx) <- nmx
-    drop.square <- match(nmx, nmx[drop.square], 0) > 0
-    parametric <- match(nmx, nmx[parametric], 0) > 0
-    if(!match(degree, 0:2, 0)) stop("'degree' must be 0, 1 or 2")
+    drop.square <- match(nmx, nmx[drop.square], 0L) > 0L
+    parametric <- match(nmx, nmx[parametric], 0L) > 0L
+    if(!match(degree, 0L:2L, 0L)) stop("'degree' must be 0, 1 or 2")
     iterations <- if(family == "gaussian") 1 else control$iterations
     if(!missing(enp.target))
 	if(!missing(span))
@@ -102,11 +102,11 @@ simpleLoess <-
     max.kd <-  max(N, 200)
     robust <- rep(1, N)
     divisor<- rep(1, D)
-    if(normalize && D > 1) {
+    if(normalize && D > 1L) {
 	trim <- ceiling(0.1 * N)
 	divisor <-
-	    sqrt(apply(apply(x, 2, sort)[seq(trim+1, N-trim), , drop = FALSE],
-		       2, var))
+	    sqrt(apply(apply(x, 2L, sort)[seq(trim+1, N-trim), , drop = FALSE],
+		       2L, var))
 	x <- x/rep(divisor, rep(N, D))
     }
     sum.drop.sqr <- sum(drop.square)
@@ -315,7 +315,7 @@ predLoess <-
     else { ## interpolate
 	## need to eliminate points outside original range - not in pred_
 	inside <- matrix(FALSE, M, ncol = D)
-	ranges <- apply(x, 2, range)
+	ranges <- apply(x, 2L, range)
 	inside <- (x.evaluate <= rep(ranges[2,], rep(M, D))) &
 	(x.evaluate >= rep(ranges[1,], rep(M, D)))
 	inside <- inside %*% rep(1, D) == D
@@ -438,7 +438,7 @@ loess.smooth <-
     new.x <- seq.int(min(x[notna]), max(x[notna]), length.out = evaluation)
 
     control <- loess.control(...)
-    ##	x <- matrix(x, ncol = 1)
+    ##	x <- matrix(x, ncol = 1L)
     ##	n <- length(y)
     x <- x[notna]; y <- y[notna]
     w <- rep(1, length(y))

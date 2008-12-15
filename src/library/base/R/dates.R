@@ -85,7 +85,7 @@ as.Date.dates <- function(x, ...)
     if(inherits(x, "dates")) {
         z <- attr(x, "origin")
         x <- trunc(as.numeric(x))
-        if(length(z) == 3 && is.numeric(z))
+        if(length(z) == 3L && is.numeric(z))
             x  <- x + as.numeric(as.Date(paste(z[3L], z[1L], z[2L], sep="/")))
         return(structure(x, class = "Date"))
     } else stop(gettextf("'%s' is not a \"dates\" object",
@@ -217,15 +217,15 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
 {
     if (missing(from)) stop("'from' must be specified")
     if (!inherits(from, "Date")) stop("'from' must be a Date object")
-        if(length(as.Date(from)) != 1) stop("'from' must be of length 1")
+        if(length(as.Date(from)) != 1L) stop("'from' must be of length 1")
     if (!missing(to)) {
         if (!inherits(to, "Date")) stop("'to' must be a Date object")
-        if (length(as.Date(to)) != 1) stop("'to' must be of length 1")
+        if (length(as.Date(to)) != 1L) stop("'to' must be of length 1")
     }
     if (!missing(along.with)) {
         length.out <- length(along.with)
     }  else if (!is.null(length.out)) {
-        if (length(length.out) != 1) stop("'length.out' must be of length 1")
+        if (length(length.out) != 1L) stop("'length.out' must be of length 1")
         length.out <- ceiling(length.out)
     }
     status <- c(!missing(to), !missing(by), !is.null(length.out))
@@ -238,23 +238,23 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
         return(structure(res, class = "Date"))
     }
 
-    if (length(by) != 1) stop("'by' must be of length 1")
+    if (length(by) != 1L) stop("'by' must be of length 1")
     valid <- 0
     if (inherits(by, "difftime")) {
         by <- switch(attr(by,"units"), secs = 1/86400, mins = 1/1440,
                      hours = 1/24, days = 1, weeks = 7) * unclass(by)
     } else if(is.character(by)) {
         by2 <- strsplit(by, " ", fixed=TRUE)[[1L]]
-        if(length(by2) > 2 || length(by2) < 1)
+        if(length(by2) > 2L || length(by2) < 1L)
             stop("invalid 'by' string")
         valid <- pmatch(by2[length(by2)],
                         c("days", "weeks", "months", "years"))
         if(is.na(valid)) stop("invalid string for 'by'")
         if(valid <= 2) {
             by <- c(1, 7)[valid]
-            if (length(by2) == 2) by <- by * as.integer(by2[1L])
+            if (length(by2) == 2L) by <- by * as.integer(by2[1L])
         } else
-            by <- if(length(by2) == 2) as.integer(by2[1L]) else 1
+            by <- if(length(by2) == 2L) as.integer(by2[1L]) else 1
     } else if(!is.numeric(by)) stop("invalid mode for 'by'")
     if(is.na(by)) stop("'by' is NA")
 
@@ -302,11 +302,11 @@ cut.Date <-
 
     if (inherits(breaks, "Date")) {
 	breaks <- as.Date(breaks)
-    } else if(is.numeric(breaks) && length(breaks) == 1) {
+    } else if(is.numeric(breaks) && length(breaks) == 1L) {
 	## specified number of breaks
-    } else if(is.character(breaks) && length(breaks) == 1) {
+    } else if(is.character(breaks) && length(breaks) == 1L) {
         by2 <- strsplit(breaks, " ", fixed=TRUE)[[1L]]
-        if(length(by2) > 2 || length(by2) < 1)
+        if(length(by2) > 2L || length(by2) < 1L)
             stop("invalid specification of 'breaks'")
 	valid <-
 	    pmatch(by2[length(by2)], c("days", "weeks", "months", "years", "quarters"))
@@ -322,7 +322,7 @@ cut.Date <-
     if(valid == 3) {
         start$mday <- 1
         end <- as.POSIXlt(max(x, na.rm = TRUE))
-        step <- ifelse(length(by2) == 2, as.integer(by2[1L]), 1)
+        step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
         end <- as.POSIXlt(end + (31 * step * 86400))
         end$mday <- 1
         breaks <- as.Date(seq(start, end, breaks))
@@ -330,7 +330,7 @@ cut.Date <-
         start$mon <- 0
         start$mday <- 1
         end <- as.POSIXlt(max(x, na.rm = TRUE))
-        step <- ifelse(length(by2) == 2, as.integer(by2[1L]), 1)
+        step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
         end <- as.POSIXlt(end + (366 * step * 86400))
         end$mon <- 0
         end$mday <- 1
@@ -340,14 +340,14 @@ cut.Date <-
         start$mon <- qtr[start$mon + 1]
         start$mday <- 1
         end <- as.POSIXlt(max(x, na.rm = TRUE))
-        step <- ifelse(length(by2) == 2, as.integer(by2[1L]), 1)
+        step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
         end <- as.POSIXlt(end + (93 * step * 86400))
         end$mon <- qtr[end$mon + 1]
         end$mday <- 1
         breaks <- as.Date(seq(start, end, paste(step * 3, "months")))
     } else {
         start <- .Internal(POSIXlt2Date(start))
-        if (length(by2) == 2) incr <- incr * as.integer(by2[1L])
+        if (length(by2) == 2L) incr <- incr * as.integer(by2[1L])
         maxx <- max(x, na.rm = TRUE)
         breaks <- seq.int(start, maxx + incr, breaks)
         breaks <- breaks[1L:(1+max(which(breaks <= maxx)))]
@@ -361,7 +361,7 @@ cut.Date <-
 
 julian.Date <- function(x, origin = as.Date("1970-01-01"), ...)
 {
-    if(length(origin) != 1) stop("'origin' must be of length one")
+    if(length(origin) != 1L) stop("'origin' must be of length one")
     structure(unclass(x) - unclass(origin), "origin" = origin)
 }
 

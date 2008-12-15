@@ -34,8 +34,8 @@ assocplot <- function(x, col = c("black", "red"), space = 0.3,
                                         # e is expected freqs
     d <- (f - e) / sqrt(e)              # Pearson residuals
     e <- sqrt(e)
-    x.w <- apply(e, 1, max)             # the widths of the x columns
-    y.h <- apply(d, 2, max) - apply(d, 2, min)
+    x.w <- apply(e, 1L, max)             # the widths of the x columns
+    y.h <- apply(d, 2L, max) - apply(d, 2L, min)
                                         # the heights of the y rows
     x.delta <- mean(x.w) * space
     y.delta <- mean(y.h) * space
@@ -46,7 +46,7 @@ assocplot <- function(x, col = c("black", "red"), space = 0.3,
     x.r <- cumsum(x.w + x.delta)
     x.m <- (c(0, x.r[-NROW(f)]) + x.r) / 2
     y.u <- cumsum(y.h + y.delta)
-    y.m <- y.u - apply(pmax(d, 0), 2, max) - y.delta / 2
+    y.m <- y.u - apply(pmax(d, 0), 2L, max) - y.delta / 2
     z <- expand.grid(x.m, y.m)
     rect(z[, 1] - e / 2, z[, 2],
          z[, 1] + e / 2, z[, 2] + d,
@@ -55,7 +55,7 @@ assocplot <- function(x, col = c("black", "red"), space = 0.3,
     axis(2, at = y.m, labels = colnames(f), tick = FALSE)
     abline(h = y.m, lty = 2)
     ndn <- names(dimnames(f))
-    if(length(ndn) == 2) {
+    if(length(ndn) == 2L) {
         if(is.null(xlab))
             xlab <- ndn[1L]
         if(is.null(ylab))

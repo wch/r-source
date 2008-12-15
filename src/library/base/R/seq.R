@@ -57,7 +57,7 @@ seq.default <-
 	}
     else if(!is.finite(length.out) || length.out < 0L)
 	stop("length must be non-negative number")
-    else if(length.out == 0)
+    else if(length.out == 0L)
 	integer(0L)
     else if (One) 1L:length.out
     else if(missing(by)) {

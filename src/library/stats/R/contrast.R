@@ -77,7 +77,7 @@ contr.helmert <-
     } else levels <- n
     lenglev <- length(levels)
     if (contrasts) {
-	cont <- array(-1, c(lenglev, lenglev-1), list(levels, NULL))
+	cont <- array(-1, c(lenglev, lenglev-1L), list(levels, NULL))
 	cont[col(cont) <= row(cont) - 2] <- 0
 	cont[col(cont) == row(cont) - 1] <- 1L:(lenglev-1)
     } else {
@@ -120,7 +120,7 @@ contr.sum <-
     } else levels <- n
     lenglev <- length(levels)
     if (contrasts) {
-	cont <- array(0, c(lenglev, lenglev - 1), list(levels, NULL))
+	cont <- array(0, c(lenglev, lenglev - 1L), list(levels, NULL))
 	cont[col(cont) == row(cont)] <- 1
 	cont[lenglev, ] <- -1
     } else {

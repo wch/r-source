@@ -27,7 +27,7 @@ help.request <- function (subject = "",
         stopifnot(sapply(pkgDescs, inherits, what="packageDescription"))
         fields <- .instPkgFields(NULL)
 	n <- length(pkgDescs)
-	iPkgs <- matrix(NA_character_, n, 2 + length(fields),
+	iPkgs <- matrix(NA_character_, n, 2L + length(fields),
 		      dimnames=list(NULL, c("Package", "LibPath", fields)))
 	for(i in seq_len(n)) {
 	    desc <- c(unlist(pkgDescs[[i]]),
@@ -81,7 +81,7 @@ help.request <- function (subject = "",
     }
 
     man <- url("http://cran.r-project.org/manuals.html")
-    ver <- scan(man, what = character(0L), sep = "\n", skip = 13, nlines = 1,
+    ver <- scan(man, what = character(0L), sep = "\n", skip = 13L, nlines = 1L,
 		quiet = TRUE)
     ver <- strsplit(ver, " ")[[1L]][3L]
     if (getRversion() < numeric_version(ver)) {

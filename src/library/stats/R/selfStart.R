@@ -188,7 +188,7 @@ NLSstRtAsymptote.sortedXyData <-
     last.dif <- abs(in.range - xy$y[nrow(xy)])
     ## Estimate the asymptote as the largest (smallest) response
     ## value plus (minus) 1/8 of the range.
-    if(match(min(last.dif), last.dif) == 2) {
+    if(match(min(last.dif), last.dif) == 2L) {
         return(in.range[2L] + diff(in.range)/8)
     }
     in.range[1L] - diff(in.range)/8
@@ -207,7 +207,7 @@ NLSstLfAsymptote.sortedXyData <-
     first.dif <- abs(in.range - xy$y[1L])
     ## Estimate the asymptote as the largest (smallest) response
     ## value plus (minus) 1/8 of the range.
-    if(match(min(first.dif), first.dif) == 2) {
+    if(match(min(first.dif), first.dif) == 2L) {
         return(in.range[2L] + diff(in.range)/8)
     }
     in.range[1L] - diff(in.range)/8

@@ -26,11 +26,11 @@ package.skeleton <-
 	    stop(gettextf("cannot create directory '%s'", path), domain = NA)
     }
 
-    if(!is.logical(namespace) || length(namespace) != 1)
+    if(!is.logical(namespace) || length(namespace) != 1L)
         stop("'namespace' must be a single logical")
     if(!is.character(code_files))
         stop("'code_files' must be a character vector")
-    use_code_files <- length(code_files) > 0
+    use_code_files <- length(code_files) > 0L
 
     envIsMissing <- missing(environment) # before R clobbers this information
 
@@ -57,7 +57,7 @@ package.skeleton <-
     else { # nobody should  specify classes or methods as object names!
         classesList <- methodsList <- character()
     }
-    usingS4 <- length(classesList) > 0 || length(methodsList) > 0
+    usingS4 <- length(classesList) > 0L || length(methodsList) > 0L
 
     ## we need to test in the C locale
     curLocale <- Sys.getlocale("LC_CTYPE")
@@ -114,11 +114,11 @@ package.skeleton <-
         message("Creating NAMESPACE ...")
         out <- file(file.path(dir, "NAMESPACE"), "wt")
         writeLines("exportPattern(\"^[[:alpha:]]+\")", out)
-        if(length(methodsList)>0) {
+        if(length(methodsList)) {
             cat("exportMethods(\n    ", file = out)
             cat(paste('"', methodsList, '"', sep="", collapse = ",\n    "), "\n)\n", file = out)
         }
-        if(length(classesList)>0) {
+        if(length(classesList)) {
             cat("exportClasses(\n    ", file = out)
             cat(paste('"', classesList, '"', sep="", collapse = ",\n     "), "\n)\n", file = out)
         }
@@ -194,7 +194,7 @@ package.skeleton <-
     message("Making help files ...")
     if(!namespace && length(internalObjInds)) {
         notNeeded <- grep(methods:::.methodsPackageMetaNamePattern, internalObjs)
-        notNeeded <- c(notNeeded, match(".packageName", internalObjs, 0))
+        notNeeded <- c(notNeeded, match(".packageName", internalObjs, 0L))
         if(length(notNeeded) < length(internalObjs)) {
             internalObjs <- internalObjs[-notNeeded]
             Rdfile <- file(file.path(docs_dir,
@@ -257,9 +257,9 @@ package.skeleton <-
 	stop(yy)
 
     ## Now we may have created an empty data or R directory
-    if(length(list.files(code_dir)) == 0)
+    if(length(list.files(code_dir)) == 0L)
         unlink(code_dir, recursive = TRUE)
-    if(length(list.files(data_dir)) == 0)
+    if(length(list.files(data_dir)) == 0L)
         unlink(data_dir, recursive = TRUE)
 
     message("Done.")
@@ -276,7 +276,7 @@ package.skeleton <-
         ## If we use given code files, we could still check whether
         ## these file are valid across platforms ...
         ## </NOTE>
-        if(length(list) == 0) return(list)
+        if(length(list) == 0L) return(list)
         list0 <- gsub("[[:cntrl:]\"*/:<>?\\|]", "_", list)
         wrong <- grep("^(con|prn|aux|clock\\$|nul|lpt[1-3]|com[1-4])(\\..*|)$",
                       list0)

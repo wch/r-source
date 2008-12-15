@@ -47,8 +47,8 @@ getPackageName <- function(where = topenv(parent.frame()), create = TRUE) {
                 pkg <- environmentName(env)
             else
                 pkg <- as.character(where)
-            if(identical(substr(pkg, 1, 8), "package:"))
-                pkg <- substr(pkg, 9, nchar(pkg, "c"))
+            if(identical(substr(pkg, 1L, 8L), "package:"))
+                pkg <- substr(pkg, 9L, nchar(pkg, "c"))
         }
 #  Problem:  the library() function should now be putting .packageName in package environments
 #   but namespace makes them invisible from outside.

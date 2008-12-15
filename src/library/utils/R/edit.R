@@ -69,7 +69,7 @@ edit.data.frame <-
             return (edit.default(name, ...))
 
     is.vector.unclass <- function(x) is.vector(unclass(x))
-    if (length(name) > 0 && !all(sapply(name, is.vector.unclass)
+    if (length(name) && !all(sapply(name, is.vector.unclass)
                                  | sapply(name, is.factor)))
         stop("can only handle vector and factor elements")
 
@@ -84,17 +84,17 @@ edit.data.frame <-
 
     attrlist <- lapply(name, attributes)
     datalist <- lapply(name, as.num.or.char)
-    factors <- if (length(name) > 0)
+    factors <- if (length(name))
         which(sapply(name, is.factor))
     else
-        numeric(0)
+        numeric(0L)
 
-    logicals <- if (length(name) > 0)
+    logicals <- if (length(name))
     	which(sapply(name, is.logical))
     else
-    	numeric(0)
+    	numeric(0L)
 
-    if(length(name) > 0) {
+    if(length(name)) {
         has_class <-
             sapply(name, function(x) (is.object(x) || isS4(x)) && !is.factor(x))
         if(any(has_class))
@@ -114,7 +114,7 @@ edit.data.frame <-
     rn <- attr(name, "row.names")
 
     out <- .Internal(dataentry(datalist, modes))
-    if(length(out) == 0) {
+    if(length(out) == 0L) {
         ## e.g. started with 0-col data frame or NULL, and created no cols
         return (name)
     }
@@ -142,7 +142,7 @@ edit.data.frame <-
 	    attributes(o) <- a
         } else {
             o <- out[[i]]
-            if (any(new <- is.na(match(o, c(a$levels, NA))))) {
+            if (any(new <- is.na(match(o, c(a$levels, NA_integer_))))) {
                 new <- unique(o[new])
                 warning(gettextf("added factor levels in '%s'", names(out)[i]),
                         domain = NA)
@@ -208,7 +208,7 @@ edit.matrix <-
     if (edit.row.names) {
         out <- out[-1L]
         if((ln <- length(rn)) < maxlength)
-            rn <- c(rn, paste("row", (ln+1):maxlength, sep=""))
+            rn <- c(rn, paste("row", (ln+1L):maxlength, sep=""))
     }
     out <- do.call("cbind", out)
     if (edit.row.names)

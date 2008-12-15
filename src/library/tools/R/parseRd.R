@@ -32,7 +32,7 @@ print.Rd <- function(x, ...) {
         spaces <- paste(rep(" ", indent), collapse="")
     	if (is.list(x)) {
     	    tag <- attr(x, "Rd_tag")
-    	    if (length(grep("^#", tag)) > 0) {
+    	    if (length(grep("^#", tag))) {
 		cat(tag, x[[1L]][[1L]], "\n")
 		x <- x[[2L]]
 		for (i in seq_along(x)) pr(x[[i]], indent)

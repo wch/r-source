@@ -114,7 +114,7 @@ coplot <-
     ## generate the given value intervals
 
     number <- as.integer(number)
-    if(length(number) == 0 || any(number < 1))
+    if(length(number) == 0L || any(number < 1))
         stop("'number' must be integer >= 1")
     if(any(overlap >= 1)) stop("'overlap' must be < 1 (and typically >= 0).")
 
@@ -134,15 +134,15 @@ coplot <-
 		    cbind(i - 0.5, i + 0.5)
 		}
 		else {
-		    if(length(number)==1) number  <- rep.int(number,2)
-		    if(length(overlap)==1)overlap <- rep.int(overlap,2)
+		    if(length(number) == 1L) number  <- rep.int(number,2)
+		    if(length(overlap) == 1L) overlap <- rep.int(overlap,2)
 		    co.intervals(unclass(b), number=number[2L], overlap=overlap[2L])
 		}
 	    }
     } else {
 	if(!is.list(given.values))
 	    given.values <- list(given.values)
-	if(length(given.values) != (if(have.b) 2 else 1))
+	if(length(given.values) != (if(have.b) 2L else 1L))
 	    bad.givens()
 	a.intervals <- given.values[[1L]]
 	if(a.is.fac) {
@@ -182,7 +182,7 @@ coplot <-
 	rows	<- nrow(b.intervals)
 	columns <- nrow(a.intervals)
 	nplots <- rows * columns
-	if(length(show.given) < 2) show.given <- rep.int(show.given, 2)
+	if(length(show.given) < 2L) show.given <- rep.int(show.given, 2L)
     }
     else {
 	nplots <- nrow(a.intervals)
@@ -285,7 +285,7 @@ coplot <-
     mtext(ylab[1L], side = 2, at = 0.5*f.row, outer = TRUE, line = 3.5,
           xpd = NA, font = par("font.lab"), cex = par("cex.lab"))
 
-    if(length(xlab) == 1)
+    if(length(xlab) == 1L)
         xlab <- c(xlab, paste("Given :", a.name))
     ##mar <- par("mar")
     if(show.given[1L]) {
@@ -300,7 +300,7 @@ coplot <-
 	     a.intervals[, 2], 1L:nint + 0.3,
 	     col = bar.bg[if(a.is.fac) "fac" else "num"])
 	if(a.is.fac) {
-	    text(apply(a.intervals, 1, mean), 1L:nint, a.levels)
+	    text(apply(a.intervals, 1L, mean), 1L:nint, a.levels)
         }
         else {
             Axis(a, side = 3, xpd=NA)
@@ -315,7 +315,7 @@ coplot <-
               font = par("font.lab"), cex = par("cex.lab"))
     }
     if(have.b) {
-	if(length(ylab) == 1)
+	if(length(ylab) == 1L)
             ylab <- c(ylab, paste("Given :", b.name))
 	if(show.given[2L]) {
 	    par(fig = c(f.col, 1, 0, f.row),
@@ -329,7 +329,7 @@ coplot <-
                  1L:nint + 0.3, b.intervals[, 2],
                  col = bar.bg[if(b.is.fac)"fac" else "num"])
 	    if(b.is.fac) {
-                text(1L:nint, apply(b.intervals, 1, mean), b.levels, srt = 90)
+                text(1L:nint, apply(b.intervals, 1L, mean), b.levels, srt = 90)
             }
             else {
                 Axis(b, side=4, xpd=NA)
@@ -345,7 +345,7 @@ coplot <-
                   xpd = NA, font = par("font.lab"), cex = par("cex.lab"))
 	}
     }
-    if (length(missingrows) > 0) {
+    if (length(missingrows)) {
 	cat("\n", gettext("Missing rows"), ": ",  missingrows, "\n", sep ="")
 	invisible(missingrows)
     }

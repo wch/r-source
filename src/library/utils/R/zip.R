@@ -17,7 +17,7 @@
 zip.file.extract <- function(file, zipname = "R.zip",
 			     unzip = getOption("unzip"), dir = tempdir())
 {
-    if(!is.character(unzip) || length(unzip) != 1)
+    if(!is.character(unzip) || length(unzip) != 1L)
         stop("'unzip' must be a single character string")
     if(!nzchar(unzip)) unzip <- "internal"
     path <- dirname(file)
@@ -33,7 +33,7 @@ zip.file.extract <- function(file, zipname = "R.zip",
             if(!res) file <- file.path(dir, topic)
         } else {
             rc <- .Internal(int.unzip(file.path(path, zipname), topic, dir))
-            if (rc == 0)
+            if (rc == 0L)
                 file <- file.path(dir, topic)
         }
     }

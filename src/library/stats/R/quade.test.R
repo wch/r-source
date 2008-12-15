@@ -42,7 +42,7 @@ function(y, groups, blocks, ...)
     y <- matrix(unlist(split(y, blocks)), ncol = k, byrow = TRUE)
     y <- y[complete.cases(y), ]
 #    n <- nrow(y)
-    r <- t(apply(y, 1, rank))
+    r <- t(apply(y, 1L, rank))
     q <- rank(apply(y, 1, function(u) max(u) - min(u)))
     s <- q * (r - (k+1)/2)
     ## S is a matrix of ranks within blocks (minus the average rank)

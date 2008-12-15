@@ -163,7 +163,7 @@ function(x, file = "", append = FALSE,
         else {
             ## Should be a list ...
             nmxj <- nmx[j]
-            i <- !sapply(xj, function(s) (length(s) == 1) && is.na(s))
+            i <- !sapply(xj, function(s) (length(s) == 1L) && is.na(s))
             out[i, j] <-
                 sapply(xj[i],
                        function(s) {

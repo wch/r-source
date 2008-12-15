@@ -100,7 +100,7 @@ ps.options <- function(..., reset = FALSE, override.check = FALSE)
                envir = .PSenv)
     }
     l... <- length(new <- list(...))
-    if(m <- match("append", names(new), 0)) {
+    if(m <- match("append", names(new), 0L)) {
         warning("argment 'append' is for back-compatibility and will be ignored",
                 immediate. = TRUE)
         new <- new[-m]
@@ -165,7 +165,7 @@ guessEncoding <- function(family)
                           "WinAnsi.enc")
                },
                { lc <- utils::localeToCharset()
-                 if(length(lc) == 1)
+                 if(length(lc) == 1L)
                      switch(lc,
                             "ISO8859-1" = "ISOLatin1.enc",
                             "ISO8859-2" = "ISOLatin2.enc",
@@ -238,11 +238,11 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
     ## handle family separately as length can be 1, 4, or 5
     if(!missing(family)) {
         # Case where family is a set of AFMs
-        if(length(family) == 4) {
+        if(length(family) == 4L) {
             family <- c(family, "Symbol.afm")
-        } else if (length(family) == 5) {
+        } else if (length(family) == 5L) {
             ## nothing to do
-        } else if (length(family) == 1) {
+        } else if (length(family) == 1L) {
             ## If family has been specified, match with a font in the
             ## font database (see postscriptFonts())
             ## and pass in a device-independent font name.
@@ -327,11 +327,11 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     ## handle family separately as length can be 1, 4, or 5
     if(!missing(family)) {
         # Case where family is a set of AFMs
-        if(length(family) == 4) {
+        if(length(family) == 4L) {
             family <- c(family, "Symbol.afm")
-        } else if (length(family) == 5) {
+        } else if (length(family) == 5L) {
             ## nothing to do
-        } else if (length(family) == 1) {
+        } else if (length(family) == 1L) {
             ## If family has been specified, match with a font in the
             ## font database (see postscriptFonts())
             ## and pass in a device-independent font name.
@@ -411,10 +411,10 @@ checkFont.Type1Font <- function(font) {
     if (is.null(font$family) || !is.character(font$family))
         stop("invalid family name in font specification")
     if (is.null(font$metrics) || !is.character(font$metrics) ||
-        length(font$metrics) < 4)
+        length(font$metrics) < 4L)
         stop("invalid metric information in font specification")
         ## Add default symbol font metric if none provided
-    if (length(font$metrics) == 4)
+    if (length(font$metrics) == 4L)
         font$metrics <- c(font$metrics, "Symbol.afm")
     if (is.null(font$encoding) || !is.character(font$encoding))
         stop("invalid encoding in font specification")
@@ -431,10 +431,10 @@ checkFont.CIDFont <- function(font) {
     if (is.null(font$family) || !is.character(font$family))
         stop("invalid family name in font specification")
     if (is.null(font$metrics) || !is.character(font$metrics) ||
-        length(font$metrics) < 4)
+        length(font$metrics) < 4L)
         stop("invalid metric information in font specification")
         ## Add default symbol font metric if none provided
-    if (length(font$metrics) == 4)
+    if (length(font$metrics) == 4L)
         font$metrics <- c(font$metrics, "Symbol.afm")
     if (is.null(font$cmap) || !is.character(font$cmap))
         stop("invalid CMap name in font specification")
@@ -497,12 +497,12 @@ postscriptFonts <- function(...)
     ## do initialization if needed: not recursive
     initPSandPDFfonts()
     ndots <- length(fonts <- list(...))
-    if (ndots == 0)
+    if (ndots == 0L)
         get(".PostScript.Fonts", envir=.PSenv)
     else {
         fontNames <- names(fonts)
         nnames <- length(fontNames)
-        if (nnames == 0) {
+        if (nnames == 0L) {
             if (!all(sapply(fonts, is.character)))
                 stop(gettextf("invalid arguments in '%s' (must be font names)",
                               "postscriptFonts"), domain = NA)
@@ -557,12 +557,12 @@ pdfFonts <- function(...)
     ## do initialization if needed: not recursive
     initPSandPDFfonts()
     ndots <- length(fonts <- list(...))
-    if (ndots == 0)
+    if (ndots == 0L)
         get(".PDF.Fonts", envir=.PSenv)
     else {
         fontNames <- names(fonts)
         nnames <- length(fontNames)
-        if (nnames == 0) {
+        if (nnames == 0L) {
             if (!all(sapply(fonts, is.character)))
                 stop(gettextf("invalid arguments in '%s' (must be font names)",
                               "pdfFonts"), domain = NA)
@@ -923,7 +923,7 @@ embedFonts <- function(file, # The ps or pdf file to convert
                        options = "" # Additional options to ghostscript
                        )
 {
-    if(!is.character(file) || length(file) != 1 || !nzchar(file))
+    if(!is.character(file) || length(file) != 1L || !nzchar(file))
         stop("'file' must be a non-empty character string")
     suffix <- gsub(".+[.]", "", file)
     if (missing(format)) {
@@ -943,10 +943,10 @@ embedFonts <- function(file, # The ps or pdf file to convert
                         unix = "gs",
                         windows = "gswin32c.exe")
     } else if(.Platform$OS.type == "windows" &&
-              length(grep(" ", gsexe, fixed=TRUE))> 0)
+              length(grep(" ", gsexe, fixed=TRUE)))
         gsexe <- shortPathName(gsexe)
     tmpfile <- tempfile("Rembed")
-    if (length(fontpaths) > 0)
+    if (length(fontpaths))
         fontpaths <- paste("-sFONTPATH=",
                            paste(fontpaths, collapse=.Platform$path.sep),
                            sep="")

@@ -74,7 +74,7 @@ function(object, filename = NULL, name = NULL,
     ## </FIXME>
 
     n <- length(argls <- formals(x))
-    if(n > 0) {
+    if(n) {
         arg.names <- arg.n <- names(argls)
         arg.n[arg.n == "..."] <- "\\dots"
     }
@@ -93,7 +93,7 @@ function(object, filename = NULL, name = NULL,
     x.def <- attr(x, "source")
     if(is.null(x.def))
         x.def <- deparse(x)
-    if(any(br <- substr(x.def, 1, 1) == "}"))
+    if(any(br <- substr(x.def, 1L, 1L) == "}"))
         x.def[br] <- paste(" ", x.def[br])
 
     ## escape "%" :
@@ -148,7 +148,7 @@ function(object, filename = NULL, name = NULL,
              "\\keyword{ ~kwd1 }",
              "\\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line"))
 
-    Rdtxt$arguments <- if(n > 0)
+    Rdtxt$arguments <- if(n)
         c("\\arguments{",
           paste0("  \\item{", arg.n, "}{",
                  " ~~Describe \\code{", arg.n, "} here~~ }"),

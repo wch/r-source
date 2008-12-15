@@ -21,7 +21,7 @@ as.dendrogram.dendrogram <- function(object, ...) object
 as.dendrogram.hclust <- function (object, hang = -1, ...)
 ## hang = 0.1  is default for plot.hclust
 {
-    stopifnot(length(object$order) > 0)
+    stopifnot(length(object$order) > 0L)
     if (is.null(object$labels))
 	object$labels <- 1L:length(object$order)
     z <- list()
@@ -504,7 +504,7 @@ reorder.dendrogram <- function(x, wts, agglo.FUN = sum, ...)
 	    return(x)
 	}
         k <- length(x)
-        if(k == 0) stop("invalid (length 0) node in dendrogram")
+        if(k == 0L) stop("invalid (length 0) node in dendrogram")
         vals <- numeric(k)
         for(j in 1L:k) {
             ## insert/compute 'wts' recursively down the branches:
@@ -580,7 +580,7 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     nc <- di[2L]
     if(nr <= 1 || nc <= 1)
 	stop("'x' must have at least 2 rows and 2 columns")
-    if(!is.numeric(margins) || length(margins) != 2)
+    if(!is.numeric(margins) || length(margins) != 2L)
 	stop("'margins' must be a numeric vector of length 2")
 
     doRdend <- !identical(Rowv,NA)
@@ -637,14 +637,14 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	else labCol[colInd]
 
     if(scale == "row") {
-	x <- sweep(x, 1, rowMeans(x, na.rm = na.rm), check.margin=FALSE)
-	sx <- apply(x, 1, sd, na.rm = na.rm)
-	x <- sweep(x, 1, sx, "/", check.margin=FALSE)
+	x <- sweep(x, 1L, rowMeans(x, na.rm = na.rm), check.margin=FALSE)
+	sx <- apply(x, 1L, sd, na.rm = na.rm)
+	x <- sweep(x, 1L, sx, "/", check.margin=FALSE)
     }
     else if(scale == "column") {
-	x <- sweep(x, 2, colMeans(x, na.rm = na.rm), check.margin=FALSE)
-	sx <- apply(x, 2, sd, na.rm = na.rm)
-	x <- sweep(x, 2, sx, "/", check.margin=FALSE)
+	x <- sweep(x, 2L, colMeans(x, na.rm = na.rm), check.margin=FALSE)
+	sx <- apply(x, 2L, sd, na.rm = na.rm)
+	x <- sweep(x, 2L, sx, "/", check.margin=FALSE)
     }
 
     ## Calculate the plot layout

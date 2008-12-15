@@ -26,13 +26,13 @@ win.packages.html <-
     file.append(f.tg, f.hd)
     out <- file(f.tg, open="a")
     rh <- chartr("\\", "/", R.home())
-    drive <- substring(rh, 1, 2)
+    drive <- substring(rh, 1L, 2L)
     for (lib in lib.loc) {
         pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
         ## use relative indexing for .Library
         if(is.na(pmatch(rh, lib))) {
             libname <- chartr("/", "\\", lib)
-            lib0 <- if(substring(lib, 2, 2) != ":")
+            lib0 <- if(substring(lib, 2L, 2L) != ":")
                 paste(drive, lib, sep="") else lib
             lib0 <- paste("file:///", lib0, sep="")
         } else {

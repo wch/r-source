@@ -72,7 +72,7 @@ isS4 <- function(object)
 
 asS4 <- function(object, value = TRUE) {
     value <- methods::as(value, "logical")
-    if(length(value) != 1 || is.na(value))
+    if(length(value) != 1L || is.na(value))
       stop("Expected a single logical value for the S4 object state")
     .Call("R_setS4Object", object, value, PACKAGE = "base")
   }
@@ -83,7 +83,7 @@ asS4 <- function(object, value = TRUE) {
         on.exit(tracingState(TRUE)) # restore on exit, keep off during trace
         if(!missing(msg)) {
             call <- deparse(sys.call(sys.parent(1L)))
-            if(length(call)>1)
+            if(length(call) > 1L)
               call <- paste(call[[1L]], "....")
             cat("Tracing", call, msg, "\n")
         }

@@ -114,7 +114,7 @@ function (x, which = c(1L:3,5), ## was which = 1L:4,
 	nc <- nchar(cc[1L], "c")
 	abbr <- length(cc) > 1 || nc > 75
 	sub.caption <-
-	    if(abbr) paste(substr(cc[1L], 1, min(75,nc)), "...") else cc[1L]
+	    if(abbr) paste(substr(cc[1L], 1L, min(75L, nc)), "...") else cc[1L]
     }
     one.fig <- prod(par("mfcol")) == 1
     if (ask) {

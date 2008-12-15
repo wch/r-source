@@ -229,7 +229,7 @@ format.data.frame <- function(x, ..., justify = "none")
 	for(i in 1L:nc) {
 	    len <- NROW(rval[[i]])
 	    if(len == nr) next
-	    if(length(dim(rval[[i]])) == 2) {
+	    if(length(dim(rval[[i]])) == 2L) {
 		rval[[i]] <- if(len < nr)
 		    rbind(rval[[i]], matrix(NA, nr-len, ncol(rval[[i]])))
 		else rval[[i]][1L:nr,]
@@ -294,7 +294,7 @@ prettyNum <-
     ## else
     if(!is.null(zero.print) && any(i0 <- as.numeric(x) == 0)) {
 	## print zeros according to 'zero.print' (logical or string):
-	if(length(zero.print) > 1) stop("'zero.print' has length > 1")
+	if(length(zero.print) > 1L) stop("'zero.print' has length > 1")
 	if(is.logical(zero.print))
 	    zero.print <- if(zero.print) "0" else " "
 	if(!is.character(zero.print))

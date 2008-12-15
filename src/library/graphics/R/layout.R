@@ -47,7 +47,7 @@ layout <-
 	    v <- c(v, rep.int(1, len-ll))
 	if (is.character(v)) {
 	    wcm <- v[cm.v]
-	    v[cm.v] <- substring(wcm, 1, nchar(wcm, type="c") - 3)
+	    v[cm.v] <- substring(wcm, 1L, nchar(wcm, type="c") - 3)
             v <- chartr(getOption("OutDec"), ".", v)
 	}
 	as.numeric(v)

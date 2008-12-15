@@ -58,7 +58,7 @@ function()
                unlist(subset(license_db, Version != "",
                              c("Name", "Abbrev")),
                       use.names = FALSE))
-    
+
     operators <- c("<", "<=", ">", ">=", "==", "!=")
     re_for_numeric_version <- .standard_regexps()$valid_numeric_version
     re_for_single_version_spec <-
@@ -127,7 +127,7 @@ license_regexps <- .make_license_regexps()
       "CeCILL 2 (GNU GPL 2 compatible)",
       "LGPL version 2.1 or newer (the releases)",
       "Standard GNU public license",
-      "The Gnu general public liscense, current version, 2/12/2004.", 
+      "The Gnu general public liscense, current version, 2/12/2004.",
       "Unlimited distribution.",
       ## It is really GNU Library General Public License 2
       ## and GNU Lesser General Public License 2.1.
@@ -135,14 +135,14 @@ license_regexps <- .make_license_regexps()
       ## These are variants of GPL 2.0 which does not exist:
       "GNU GPL v2.0 or greater",
       "GNU General Public License 2.0.",
-      "GNU Public Licence 2.0 or above at your convenience", 
+      "GNU Public Licence 2.0 or above at your convenience",
       "GNU-license 2.0 or newer",
       "GPL (Version 2.0 or later)",
       "GPL (version 2.0 or later)",
-      "GPL 2.0", 
+      "GPL 2.0",
       "GPL 2.0 or above",
       "GPL 2.0 or higher",
-      "GPL 2.0 or later", 
+      "GPL 2.0 or later",
       "GPL 2.0 or newer",
       "GPL version 2.0",
       "GPL version 2.0 or later",
@@ -154,63 +154,63 @@ license_regexps <- .make_license_regexps()
       ## (http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt).
       "CeCILL-2.0",
       ## </NOTE>
-      "GNU GPL (version 2 or any later version)", 
+      "GNU GPL (version 2 or any later version)",
       "GNU GPL (version 2 or later)",
-      "GNU GPL (version 2 or later); see the file COPYING for details", 
+      "GNU GPL (version 2 or later); see the file COPYING for details",
       "GNU GPL Version 2",
       "GNU GPL Version 2 (or later)",
-      "GNU GPL Version 2 or newer.", 
-      "GNU GPL version 2", 
+      "GNU GPL Version 2 or newer.",
+      "GNU GPL version 2",
       "GNU GPL version 2 or newer",
       "GNU GPL version 2.",
-      "GNU General Public License Version 2 or higher.", 
+      "GNU General Public License Version 2 or higher.",
       "GNU General Public License version 2 or newer",
       "GNU Public License",
-      "GPL version 2 or later", 
+      "GPL version 2 or later",
       "GPL ( version 2 or later)",
       "GPL (GNU Public Licence), Version 2 or later",
-      "GPL (Version 2 or above)", 
+      "GPL (Version 2 or above)",
       "GPL (Version 2 or later)",
       "GPL (version 2 or higher)",
       "GPL (version 2 or later)",
       "GPL (version 2 or later, see the included file GPL)",
-      "GPL (version 2 or newer)", 
+      "GPL (version 2 or newer)",
       "GPL (version 2)",
       "GPL 2",
-      "GPL 2 or above", 
+      "GPL 2 or above",
       "GPL 2 or later",
-      "GPL 3.0 Affero (with attribution)", 
+      "GPL 3.0 Affero (with attribution)",
       "GPL AFFERO 3.0 (with citation)",
       "GPL Version 2",
-      "GPL Version 2 or higher", 
+      "GPL Version 2 or higher",
       "GPL Version 2 or later",
       "GPL Version 2 or later.",
-      "GPL Version 2 or newer", 
+      "GPL Version 2 or newer",
       "GPL Version 2 or newer.",
       "GPL Version 2.",
-      "GPL Version 2. See the LICENSE file for details.", 
+      "GPL Version 2. See the LICENSE file for details.",
       "GPL or LGPL by your choice",
       "GPL v2",
-      "GPL v2 (but not later)", 
+      "GPL v2 (but not later)",
       "GPL v2 or later",
       "GPL version 2",
-      "GPL version 2 (June, 1991)", 
+      "GPL version 2 (June, 1991)",
       "GPL version 2 (June, 1991) or later",
       "GPL version 2 (or newer)",
       "GPL version 2 or later (June, 1991)",
       "GPL version 2 or later.",
       "GPL version 2 or newer",
-      "GPL version 2 or newer (http://www.gnu.org/copyleft/gpl.html)", 
+      "GPL version 2 or newer (http://www.gnu.org/copyleft/gpl.html)",
       "GPL version 2 or newer (see README).",
-      "GPL version 2 or newer.", 
-      "GPL version 2 or newer. http://www.gnu.org/copyleft/gpl.html", 
+      "GPL version 2 or newer.",
+      "GPL version 2 or newer. http://www.gnu.org/copyleft/gpl.html",
       "GPL version 2, or, at your option, any newer version.",
-      "GPL version 2.", 
+      "GPL version 2.",
       "GPL version 3 or newer",
       "GPL vesion 2 or newer",
-      "GPL2", 
+      "GPL2",
       "Gnu GPL",
-      "LGPL (see <http://www.opensource.org/licenses/lgpl-license.php>).", 
+      "LGPL (see <http://www.opensource.org/licenses/lgpl-license.php>).",
       "LGPL 2.1",
       "LGPL >= 2.0",
       "LGPL Version 2 or later.",
@@ -218,7 +218,7 @@ license_regexps <- .make_license_regexps()
       "LGPL version 2 or newer",
       "LGPL version 2.1 or later",
       "LGPL2",
-      "Mozilla Public License 1.1 (http://www.mozilla.org/MPL/)", 
+      "Mozilla Public License 1.1 (http://www.mozilla.org/MPL/)",
       "The Artistic License, Version 2.0",
       "X11 (http://www.x.org/Downloads_terms.html)",
       "use under GPL2, or see file LICENCE",
@@ -263,7 +263,7 @@ function(x)
     ## Try splitting into the individual components.
     components <-
         .strip_whitespace(unlist(strsplit(x, "|", fixed = TRUE)))
-    
+
     ## Now analyze the individual components.
     ok <- regexpr(license_regexps$re_for_component, components) > -1L
 
@@ -309,11 +309,11 @@ build_license_db <-
 function(dir, unpacked = FALSE)
 {
     ## Note that currently (2007-10-20), the license info is *NOT*
-    ## written into the repository db (file 'PACKAGES') anymore. 
-    
+    ## written into the repository db (file 'PACKAGES') anymore.
+
     CRAN <- getOption("repos")["CRAN"]
-    if(missing(dir) && substring(CRAN, 1, 7) == "file://")
-        dir <- file.path(substring(CRAN, 8), "src", "contrib")
+    if(missing(dir) && substring(CRAN, 1L, 7L) == "file://")
+        dir <- file.path(substring(CRAN, 8L), "src", "contrib")
 
     fields <- c("License", "Maintainer")
     db <- .build_repository_package_db(dir, fields, unpacked = unpacked)
@@ -324,7 +324,7 @@ function(dir, unpacked = FALSE)
     db <- do.call("rbind", db)
     is_bundle <- is.na(db[, "Package"])
     db[is_bundle, "Package"] <- db[is_bundle, "Bundle"]
-    
+
     ## Retain what is needed ...
     data.frame(db[ , c("Package", "Version", fields)],
                stringsAsFactors = FALSE)
@@ -348,7 +348,7 @@ function(dir, unpacked = FALSE, full = TRUE)
                                  m <- max(as.numeric_version(e$Version))
                                  e[which(e$Version == m)[1L], ]
                              }))
-    }        
+    }
     analyze_licenses_in_license_db(db)
 }
 

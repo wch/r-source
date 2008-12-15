@@ -29,11 +29,11 @@ read.DIF <- function(file, header = FALSE, dec = ".",
     } else {
 	lines <- readLines(file)
     }
-    if(length(lines) < 1) stop("file had no lines")
+    if(length(lines) < 1L) stop("file had no lines")
     topic <- ""
     nrow <- NA
     ncol <- NA
-    i <- 1
+    i <- 1L
     ## Read header info :
     while (topic != "DATA") {
 	topic <- lines[i]
@@ -41,7 +41,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
 	num <- as.numeric(sub("^.*,","",vnum))
 	## v <- as.numeric(sub(",.*$","",vnum))
 	## value <- lines[i+2]
-	i <- i + 3
+	i <- i + 3L
 	if (topic == "VECTORS")
 	    if(transpose) nrow <- num else ncol <- num
 	else if (topic == "TUPLES")
@@ -52,26 +52,26 @@ read.DIF <- function(file, header = FALSE, dec = ".",
     data <- matrix("", nrow, ncol)
     types <- matrix(NA_character_, nrow, ncol)
 
-    row <- 0
+    row <- 0L
     while (i < length(lines)) {
 	typenum <- lines[i]
 	type <- as.numeric(sub(",.*$","",typenum))
 	num <- as.numeric(sub("^.*,","",typenum))
 	stringval <- lines[i+1]
-	i <- i + 2
-	if (type == -1) {
+	i <- i + 2L
+	if (type == -1L) {
 	    if (stringval == "BOT") {
-		row <- row + 1
+		row <- row + 1L
                 if(row > nrow)
                     stop("More rows than specified in header; maybe use 'transpose=TRUE'")
-		col <- 0
+		col <- 0L
 	    } else if (stringval == "EOD") break
 	    else stop("Unrecognized special data value")
 	} else {
-	    col <- col + 1
+	    col <- col + 1L
             if(col > ncol)
                 stop("More columns than specified in header; maybe use 'transpose=TRUE'")
-            if (type == 0) {
+            if (type == 0L) {
                 types[row, col] <- "numeric"
                 if (stringval == "V") data[row, col] <- num
                 else if (stringval == "NA") data[row, col] <- NA
@@ -85,7 +85,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
                     types[row, col] <- "logical"
                 }
                 else stop("Unrecognized value indicator")
-            } else if (type == 1) {
+            } else if (type == 1L) {
                 types[row, col] <- "character"
                 stringval <- sub("^\"", "", stringval)
                 stringval <- sub("\"$", "", stringval)
@@ -94,7 +94,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
         }
     }
 
-    if(skip > 0) data <- data[-(1L:skip),]
+    if(skip > 0L) data <- data[-(1L:skip),]
 
     ## determine header, no of cols.
     nlines <- nrow(data)
@@ -109,7 +109,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
             return(tmp)
         }
     }
-    first <- data[1,]
+    first <- data[1L, ]
     if (first[1L] == "") first <- first[-1L]
 
     col1 <- if(missing(col.names)) length(first) else length(col.names)
@@ -117,14 +117,14 @@ read.DIF <- function(file, header = FALSE, dec = ".",
 
     ##	basic column counting and header determination;
     ##	rlabp (logical) := it looks like we have column names
-    rlabp <- all(types[1,][-1L] == "character") && data[1,1] == ""
+    rlabp <- all(types[1L, ][-1L] == "character") && data[1L, 1L] == ""
     if(rlabp && missing(header))
 	header <- TRUE
     if(!header) rlabp <- FALSE
 
     if (header) {
-    	data <- data[-1,] # skip over header
-    	types <- types[-1,]
+    	data <- data[-1L,] # skip over header
+    	types <- types[-1L, ]
         if(missing(col.names)) col.names <- first
         else if(length(first) != length(col.names))
             warning("header and 'col.names' are of different lengths")
@@ -133,9 +133,9 @@ read.DIF <- function(file, header = FALSE, dec = ".",
 	col.names <- paste("V", 1L:cols, sep = "")
     if(length(col.names) + rlabp < cols)
         stop("more columns than column names")
-    if(cols > 0 && length(col.names) > cols)
+    if(cols > 0L && length(col.names) > cols)
         stop("more column names than columns")
-    if(cols == 0) stop("rows are empty: giving up")
+    if(cols == 0L) stop("rows are empty: giving up")
 
 
     if(check.names) col.names <- make.names(col.names, unique = TRUE)
@@ -148,10 +148,10 @@ read.DIF <- function(file, header = FALSE, dec = ".",
         } else {
             tmp <- rep(NA_character_, length.out=cols)
             names(tmp) <- col.names
-            i <- match(nmColClasses, col.names, 0)
-            if(any(i <= 0))
+            i <- match(nmColClasses, col.names, 0L)
+            if(any(i <= 0L))
                 warning("not all columns named in 'colClasses' exist")
-            tmp[ i[i > 0] ] <- colClasses
+            tmp[ i[i > 0L] ] <- colClasses
             colClasses <- tmp
         }
 
@@ -163,7 +163,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
                 c("logical", "integer", "numeric", "complex", "character")
     keep <- !(colClasses %in% "NULL")
 
-    if (blank.lines.skip) data <- data[apply(data, 1, function(x) !all(x == "")),]
+    if (blank.lines.skip) data <- data[apply(data, 1L, function(x) !all(x == "")),]
     if (nrows > -1 && nrows < nrow(data)) data <- data[seq_len(nrows),]
     nlines <- nrow(data)
 
@@ -191,10 +191,10 @@ read.DIF <- function(file, header = FALSE, dec = ".",
 	i[as.is] <- TRUE
 	as.is <- i
     } else if(is.character(as.is)) {
-        i <- match(as.is, col.names, 0)
-        if(any(i <= 0))
+        i <- match(as.is, col.names, 0L)
+        if(any(i <= 0L))
             warning("not all columns named in 'as.is' exist")
-        i <- i[i > 0]
+        i <- i[i > 0L]
         as.is <- rep.int(FALSE, cols)
         as.is[i] <- TRUE
     } else if (length(as.is) != cols)
@@ -232,13 +232,13 @@ read.DIF <- function(file, header = FALSE, dec = ".",
 	row.names <- .set_row_names(as.integer(nlines))
     } else if (is.character(row.names)) {
         compactRN <- FALSE
-	if (length(row.names) == 1) {
-	    rowvar <- (1L:cols)[match(col.names, row.names, 0) == 1]
+	if (length(row.names) == 1L) {
+	    rowvar <- (1L:cols)[match(col.names, row.names, 0L) == 1L]
 	    row.names <- data[[rowvar]]
 	    data <- data[-rowvar]
             keep <- keep[-rowvar]
 	}
-    } else if (is.numeric(row.names) && length(row.names) == 1) {
+    } else if (is.numeric(row.names) && length(row.names) == 1L) {
         compactRN <- FALSE
 	rlabp <- row.names
 	row.names <- data[[rlabp]]

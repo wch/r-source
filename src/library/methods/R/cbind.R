@@ -95,15 +95,15 @@ cbind <- function(..., deparse.level = 1)
     r <- cbind2(..1, r)
     if(deparse.level == 0)
 	return(r)
-    ism1 <- !is.null(d1 <- dim(..1)) && length(d1) == 2
-    ism2 <- !is.null(d2)	     && length(d2) == 2 && !fix.na
+    ism1 <- !is.null(d1 <- dim(..1)) && length(d1) == 2L
+    ism2 <- !is.null(d2)	     && length(d2) == 2L && !fix.na
     if(ism1 && ism2) ## two matrices
 	return(r)
 
     ## else -- Setting colnames correctly
     ##	       when one was not a matrix [needs some diligence!]
     Ncol <- function(x) {
-	d <- dim(x); if(length(d) == 2) d[2L] else as.integer(length(x) > 0) }
+	d <- dim(x); if(length(d) == 2L) d[2L] else as.integer(length(x) > 0L) }
     nn1 <- !is.null(N1 <- if((l1 <- Ncol(..1)) && !ism1) Nms(1)) # else NULL
     nn2 <- !is.null(N2 <- if(na == 2 && Ncol(..2) && !ism2) Nms(2))
     if(nn1 || nn2 || fix.na) {

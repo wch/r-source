@@ -36,19 +36,19 @@ URLdecode <- function(URL)
 {
     x <- charToRaw(URL)
     pc <- charToRaw("%")
-    out <- raw(0)
-    i <- 1
+    out <- raw(0L)
+    i <- 1L
     while(i <= length(x)) {
         if(x[i] != pc) {
             out <- c(out, x[i])
-            i <- i + 1
+            i <- i + 1L
         } else {
             y <- as.integer(x[i+1L:2])
-            y[y > 96] <- y[y > 96] - 32 # a-f -> A-F
-            y[y > 57] <- y[y > 57] - 7  # A-F
-            y <- sum((y - 48) * c(16, 1))
+            y[y > 96L] <- y[y > 96L] - 32L # a-f -> A-F
+            y[y > 57L] <- y[y > 57L] - 7L  # A-F
+            y <- sum((y - 48L) * c(16L, 1L))
             out <- c(out, as.raw(as.character(y)))
-            i <- i + 3
+            i <- i + 3L
         }
     }
     rawToChar(out)

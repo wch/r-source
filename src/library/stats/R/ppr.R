@@ -31,7 +31,7 @@ function(formula, data, weights, subset,
     m[[1L]] <- as.name("model.frame")
     m <- eval(m, parent.frame())
     Terms <- attr(m, "terms")
-    attr(Terms, "intercept") <- 0
+    attr(Terms, "intercept") <- 0L
     X <- model.matrix(Terms, m, contrasts)
     Y <- model.response(m)
     w <- model.weights(m)
@@ -93,9 +93,9 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
     smod <- Z$smod
     ys <- smod[q+6]
     tnames <- paste("term", 1L:mu)
-    alpha <- matrix(smod[q+6 + 1L:(p*mu)],p, mu,
+    alpha <- matrix(smod[q+6L + 1L:(p*mu)],p, mu,
 		    dimnames=list(xnames, tnames))
-    beta <- matrix(smod[q+6+p*ml + 1L:(q*mu)], q, mu,
+    beta <- matrix(smod[q+6L+p*ml + 1L:(q*mu)], q, mu,
 		   dimnames=list(ynames, tnames))
     fitted <- drop(matrix(.Fortran(R_pppred,
 				   as.integer(nrow(x)),

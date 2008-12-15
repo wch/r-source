@@ -121,7 +121,7 @@ function(x, y=NULL, use="everything", method = c("pearson", "kendall", "spearman
 	## Rank transform
 	Rank <- function(u) {
 	    if(length(u) == 0) u else
-	    if(is.matrix(u)) apply(u, 2, rank, na.last="keep")
+	    if(is.matrix(u)) apply(u, 2L, rank, na.last="keep")
 	    else rank(u, na.last="keep")
 	}
 

@@ -110,7 +110,7 @@ summary.stl <- function(object, digits = getOption("digits"), ...)
     cat(" IQR:\n")
     iqr <- apply(cbind(STL = object$time.series,
                        data = object$time.series %*% rep(1,3)),
-		 2, IQR)
+		 2L, IQR)
     print(rbind(format(iqr, digits = max(2, digits - 3)),
 		"   %"= format(round(100 * iqr / iqr["data"], 1))),
 	  quote = FALSE)

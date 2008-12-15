@@ -146,7 +146,7 @@ upgrade.packageStatus <- function(object, ask=TRUE, ...)
 {
     update <- NULL
     old <- which(object$inst$Status == "upgrade")
-    if(length(old) == 0) {
+    if(length(old) == 0L) {
         cat("Nothing to do!\n")
         return(invisible())
     }
@@ -168,7 +168,7 @@ upgrade.packageStatus <- function(object, ask=TRUE, ...)
             cat(pkg, ":\n")
             askprint(object$inst[k,c("Version", "LibPath")])
             askprint(object$avail[pkg, c("Version", "Repository")])
-            answer <- substr(readline("Update (y/N/x)?  "), 1, 1)
+            answer <- substr(readline("Update (y/N/x)?  "), 1L, 1L)
             if(answer == "c" | answer == "c") {
                 cat("cancelled by user\n")
                 return(invisible())
@@ -187,7 +187,7 @@ upgrade.packageStatus <- function(object, ask=TRUE, ...)
         update <- update[old, , drop=FALSE]
     }
 
-    if(length(update) > 0) {
+    if(length(update)) {
         for(repo in unique(update[,3])) {
             ok <- update[, 3] == repo
             install.packages(update[ok, 1], update[ok, 2], contriburl = repo)

@@ -22,7 +22,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 {
     alternative <- match.arg(alternative)
     if(conf.int) {
-        if(!((length(conf.level) == 1)
+        if(!((length(conf.level) == 1L)
              && is.finite(conf.level)
              && (conf.level > 0)
              && (conf.level < 1)))
@@ -92,7 +92,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
               ## Check if the statistic exceeds both quantiles first.
               uci <- NULL
               lci <- NULL
-              if(length(u[u >= 0]) == 0 || length(l[l > 0]) == 0) {
+              if(length(u[u >= 0]) == 0L || length(l[l > 0]) == 0L) {
                   warning("samples differ in location: cannot compute confidence set, returning NA")
                   return(c(NA, NA))
               }
@@ -117,7 +117,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                c(uci, lci)
             }
 
-            cint <- if(length(sigma) < 1) {
+            cint <- if(length(sigma) < 1L) {
                 warning("cannot compute confidence set, returning NA")
                 c(NA, NA)
             }
@@ -138,10 +138,10 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
             attr(cint, "conf.level") <- conf.level
             u <- absigma - qansari(0.5, m, n)
             sgr <- sigma[u <= 0]
-            if (length(sgr) == 0) sgr <- NA
+            if (length(sgr) == 0L) sgr <- NA
             else sgr <- max(sgr)
             sle <- sigma[u > 0]
-            if (length(sle) == 0) sle <- NA
+            if (length(sle) == 0L) sle <- NA
             else sle <- min(sle)
             ESTIMATE <- mean(c(sle, sgr))
         }
@@ -264,8 +264,8 @@ ansari.test.formula <-
 function(formula, data, subset, na.action, ...)
 {
     if(missing(formula)
-       || (length(formula) != 3)
-       || (length(attr(terms(formula[-2]), "term.labels")) != 1))
+       || (length(formula) != 3L)
+       || (length(attr(terms(formula[-2L]), "term.labels")) != 1L))
         stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))

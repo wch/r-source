@@ -72,7 +72,7 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
 
       # generate default name if none supplied
             if(is.null(name))
-                name <- as.character(length(handlers) + 1)
+                name <- as.character(length(handlers) + 1L)
 
       # Add to handlers, replacing any element with that name
       # if needed.
@@ -128,7 +128,7 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
             discard <- character(0L)
             for(i in names(handlers)) {
                 h <- handlers[[i]]
-                if(length(h) > 1) {
+                if(length(h) > 1L) {
                     val <- h[["f"]](expr, value, ok, visible, i[["data"]])
                 } else {
                     val <- h[["f"]](expr, value, ok, visible)
@@ -137,7 +137,7 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
                     discard <- c(discard, i)
                 }
             }
-            if(length(discard) > 0) {
+            if(length(discard)) {
                 if(.verbose)
                     cat(gettext("Removing"), paste(discard, collapse=", "), "\n")
                 idx <- is.na(match(names(handlers), discard))

@@ -104,7 +104,7 @@ function(package, dir, lib.loc = NULL,
         }
     }
 
-    file.remove(".check.timestamp")    
+    file.remove(".check.timestamp")
     class(result) <- "checkVignettes"
     result
 }
@@ -113,7 +113,7 @@ print.checkVignettes <-
 function(x, ...)
 {
     mycat <- function(y, title) {
-        if(length(y) > 0L){
+        if(length(y)){
             cat("\n", title, "\n\n", sep = "")
             for(k in seq_along(y)) {
                 cat("File", names(y)[k], ":\n")
@@ -368,7 +368,7 @@ vignetteDepends <-
 function(vignette, recursive = TRUE, reduce = TRUE,
          local = TRUE, lib.loc = NULL)
 {
-    if (length(vignette) != 1)
+    if (length(vignette) != 1L)
         stop("argument 'vignette' must be of length 1")
     if (!file.exists(vignette))
         stop(gettextf("file '%s' not found", vignette),
@@ -386,7 +386,7 @@ getVigDepMtrx <-
 function(vigDeps)
 {
     ## Taken almost directly out of 'package.dependencies'
-    if (length(vigDeps) > 0) {
+    if (length(vigDeps)) {
         z <- unlist(strsplit(vigDeps, ",", fixed=TRUE))
         z <- sub("^[[:space:]]*(.*)", "\\1", z)
         z <- sub("(.*)[[:space:]]*$", "\\1", z)

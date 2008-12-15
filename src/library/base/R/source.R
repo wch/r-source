@@ -52,7 +52,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
                 enc <- utils::localeToCharset()
                 encoding <- enc[length(enc)]
             } else enc <- encoding
-            if(length(enc) > 1) {
+            if(length(enc) > 1L) {
                 encoding <- NA
                 owarn <- options("warn"); options(warn = 2)
                 for(e in enc) {
@@ -99,7 +99,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	return(invisible())
     if (chdir){
         if(is.character(ofile)) {
-            isURL <- length(grep("^(ftp|http|file)://", ofile)) > 0
+            isURL <- length(grep("^(ftp|http|file)://", ofile)) > 0L
             if(isURL)
                 warning("'chdir = TRUE' makes no sense for a URL")
             if(!isURL && (path <- dirname(ofile)) != ".") {
@@ -152,7 +152,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    }
 	    if (nd) {
 		do.trunc <- nd > max.deparse.length
-		dep <- substr(dep, 1, if (do.trunc) max.deparse.length else nd)
+		dep <- substr(dep, 1L, if (do.trunc) max.deparse.length else nd)
 		cat("\n", dep, if (do.trunc)
 		    paste(if (length(grep(sd, dep)) && length(grep(oddsd, dep)))
 		      " ...\" ..."
@@ -196,7 +196,7 @@ function(file, envir = baseenv(), chdir = FALSE,
 		   topLevelEnvironment = as.environment(envir))
     on.exit(options(oop))
     exprs <- parse(n = -1, file = file)
-    if (length(exprs) == 0)
+    if (length(exprs) == 0L)
 	return(invisible())
     if (chdir && (path <- dirname(file)) != ".") {
 	owd <- getwd()

@@ -32,7 +32,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	    rep(FALSE, length.out = length(args))
     ## pars <- c(args[namedargs], pars)
     groups <- if(is.list(x)) x else args[!namedargs]
-    if(0 == (n <- length(groups)))
+    if(0L == (n <- length(groups)))
 	stop("invalid first argument")
     if(length(class(groups)))
 	groups <- unclass(groups)
@@ -47,9 +47,9 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
     cl <- if(all(cls == cls[1L])) cls[1L] else NULL
     for(i in 1L:n)
 	groups[i] <- list(boxplot.stats(unclass(groups[[i]]), range)) # do.conf=notch)
-    stats <- matrix(0, nrow=5, ncol=n)
-    conf  <- matrix(0, nrow=2, ncol=n)
-    ng <- out <- group <- numeric(0)
+    stats <- matrix(0, nrow=5L, ncol=n)
+    conf  <- matrix(0, nrow=2L, ncol=n)
+    ng <- out <- group <- numeric(0L)
     ct <- 1
     for(i in groups) {
 	stats[,ct] <- i$stats
@@ -85,14 +85,14 @@ boxplot.matrix <- function(x, use.cols = TRUE, ...)
                                           rep.int(nrow(x), ncol(x))))
   else split(x, seq(nrow(x)))
   ## Make use of col/row names if present
-  if (0 < length(nam <- dimnames(x)[[1+use.cols]])) names(groups) <- nam
+  if (length(nam <- dimnames(x)[[1+use.cols]])) names(groups) <- nam
   invisible(boxplot(groups, ...))
 }
 
 boxplot.formula <-
     function(formula, data = NULL, ..., subset, na.action = NULL)
 {
-    if(missing(formula) || (length(formula) != 3))
+    if(missing(formula) || (length(formula) != 3L))
 	stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
@@ -161,7 +161,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	    ## finally the box borders
 	    xypolygon(xx, yy, lty= boxlty[i], lwd= boxlwd[i], border= boxcol[i])
 
-	    if ((nout <- length(out)) > 0) { ## Outliers
+	    if ((nout <- length(out))) { ## Outliers
 		xysegments(rep(x - wid * outwex, nout), out,
 			   rep(x + wid * outwex, nout), out,
 			   lty = outlty[i], lwd = outlwd[i], col = outcol[i])
@@ -181,7 +181,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
         return(ok)
     } ## bplt
 
-    if(!is.list(z) || 0 == (n <- length(z$n)))
+    if(!is.list(z) || 0L == (n <- length(z$n)))
 	stop("invalid first argument")
     if(is.null(at))
 	at <- 1L:n
@@ -208,7 +208,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	pars$xlim <- NULL
     }
 
-    if(length(border) == 0) border <- par("fg")
+    if(length(border) == 0L) border <- par("fg")
 
     if (!add) {
 	plot.new()

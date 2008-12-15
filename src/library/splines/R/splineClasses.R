@@ -247,7 +247,7 @@ polySpline.bSpline <- function(object, ...)
     knots <- splineKnots(object)
     if(any(diff(knots) < 0))
 	stop("knot positions must be non-decreasing")
-    knots <- knots[ord:(length(knots) + 1 - ord)]
+    knots <- knots[ord:(length(knots) + 1L - ord)]
     coeff <- array(0, c(length(knots), ord))
     coeff[, 1] <- asVector(predict(object, knots))
     if(ord > 1) {
@@ -384,7 +384,7 @@ predict.nbSpline <- function(object, x, nseg = 50, deriv = 0, ...)
     ord <- splineOrder(object)
     ncoeff <- length(coef(object))
     bKn <- knots[c(ord,ncoeff + 1)]
-    coeff <- array(0, c(2, ord))
+    coeff <- array(0, c(2L, ord))
     ## Extrapolate using a + b*(x - boundary.knot) (ord=4 specific?)
     coeff[,1] <- asVector(predict(object, bKn))
     coeff[,2] <- asVector(predict(object, bKn, deriv = 1))
@@ -546,30 +546,30 @@ backSpline.npolySpline <- function(object)
     bcoeff[, 1] <- knots
     bcoeff[, 2] <- 1/coeff[, 2]
     a <- array(c(adiff^2, 2 * adiff, adiff^3, 3 * adiff^2),
-	       c(nkm1, 2, 2))
-    b <- array(c(kdiff - adiff * bcoeff[ - nk, 2],
-		 bcoeff[-1, 2] - bcoeff[ - nk, 2]), c(nkm1, 2))
+	       c(nkm1, 2L, 2L))
+    b <- array(c(kdiff - adiff * bcoeff[ - nk, 2L],
+		 bcoeff[-1L, 2L] - bcoeff[ - nk, 2L]), c(nkm1, 2))
     for(i in 1L:(nkm1))
-	bcoeff[i, 3:4] <- solve(a[i,  ,	 ], b[i,  ])
-    bcoeff[nk, 2:4] <- NA
-    if(nk > 2) {
-	bcoeff[1, 4] <- bcoeff[nkm1, 4] <- 0
-	bcoeff[1, 2:3] <- solve(array(c(adiff[1L], 1, adiff[1L]^2,
-					2 * adiff[1L]), c(2, 2)),
-				c(kdiff[1L], 1/coeff[2, 2]))
-	bcoeff[nkm1, 3] <- (kdiff[nkm1] - adiff[nkm1] *
-			    bcoeff[nkm1, 2])/adiff[nkm1]^2
+	bcoeff[i, 3L:4L] <- solve(a[i,, ], b[i,  ])
+    bcoeff[nk, 2L:4L] <- NA
+    if(nk > 2L) {
+	bcoeff[1L, 4L] <- bcoeff[nkm1, 4L] <- 0
+	bcoeff[1L, 2L:3L] <- solve(array(c(adiff[1L], 1, adiff[1L]^2,
+                                           2 * adiff[1L]), c(2L, 2L)),
+                                   c(kdiff[1L], 1/coeff[2L, 2L]))
+	bcoeff[nkm1, 3L] <- (kdiff[nkm1] - adiff[nkm1] *
+			    bcoeff[nkm1, 2L])/adiff[nkm1]^2
     }
-    if(bcoeff[1, 3] > 0) {
-	bcoeff[1, 3] <- 0
-	bcoeff[1, 2] <- kdiff[1L]/adiff[1L]
+    if(bcoeff[1L, 3L] > 0) {
+	bcoeff[1L, 3L] <- 0
+	bcoeff[1L, 2L] <- kdiff[1L]/adiff[1L]
     }
-    if(bcoeff[nkm1, 3] < 0) {
-	bcoeff[nkm1, 3] <- 0
-	bcoeff[nkm1, 2] <- kdiff[nkm1]/adiff[nkm1]
+    if(bcoeff[nkm1, 3L] < 0) {
+	bcoeff[nkm1, 3L] <- 0
+	bcoeff[nkm1, 2L] <- kdiff[nkm1]/adiff[nkm1]
     }
     value <- list(knots = bknots, coefficients = bcoeff)
-    attr(value, "formula") <- do.call("~", as.list(attr(object, "formula"))[3:2])
+    attr(value, "formula") <- do.call("~", as.list(attr(object, "formula"))[3L:2L])
     class(value) <- c("polySpline", "spline")
     value
 }

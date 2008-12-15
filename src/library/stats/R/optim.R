@@ -22,7 +22,7 @@ optim <- function(par, fn, gr = NULL, ...,
     fn1 <- function(par) fn(par,...)
     gr1 <- if (!is.null(gr)) function(par) gr(par,...)
     method <- match.arg(method)
-    if((length(lower) > 1 || length(upper) > 1 ||
+    if((length(lower) > 1L || length(upper) > 1L ||
        lower[1L] != -Inf || upper[1L] != Inf)
        && method != "L-BFGS-B") {
         warning("bounds can only be used with method L-BFGS-B")
@@ -44,7 +44,7 @@ optim <- function(par, fn, gr = NULL, ...,
 	con$REPORT <- 100
     }
     con[(namc <- names(control))] <- control
-    if(length(noNms <- namc[!namc %in% nmsC]) > 0)
+    if(length(noNms <- namc[!namc %in% nmsC]))
         warning("unknown names in control: ", paste(noNms,collapse=", "))
     if(con$trace < 0)
         warning("read the documentation for 'trace' more carefully")

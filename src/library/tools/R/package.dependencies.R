@@ -22,7 +22,7 @@ package.dependencies <-
     depLevel <- match.arg(depLevel)
 
     if(!is.matrix(x))
-        x <- matrix(x, nrow = 1, dimnames = list(NULL, names(x)))
+        x <- matrix(x, nrow = 1L, dimnames = list(NULL, names(x)))
 
     deps <- list()
     for(k in 1L:nrow(x)){

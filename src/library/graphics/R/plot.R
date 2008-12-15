@@ -110,9 +110,9 @@ plot.table <-
 {
     xnam <- deparse(substitute(x))
     rnk <- length(dim(x))
-    if(rnk == 0)
+    if(rnk == 0L)
 	stop("invalid table 'x'")
-    if(rnk == 1) {
+    if(rnk == 1L) {
 	dn <- dimnames(x)
 	nx <- dn[[1L]]
 	if(is.null(xlab)) xlab <- names(dn)
@@ -196,11 +196,11 @@ function(formula, data = parent.frame(), ..., subset,
 	}
 	if( is.null(funname) )
 	    funname <- "plot"
-	if (length(varnames) > 2) {
+	if (length(varnames) > 2L) {
             oask <- devAskNewPage(ask)
             on.exit(devAskNewPage(oask))
 	}
-        if(length(xn) > 0) {
+        if(length(xn)) {
             if( !is.null(xlab<- dots[["xlab"]]) )
                 dots <- dots[-match("xlab", names(dots))]
             for (i in xn) {
@@ -244,10 +244,10 @@ function(formula,  data = parent.frame(), ..., subset)
     if (response) {
 	varnames <- names(mf)
 	y <- mf[[response]]
-	if (length(varnames) > 2)
+	if (length(varnames) > 2L)
 	    stop("cannot handle more than one 'x' coordinate")
 	xn <- varnames[-response]
-	if (length(xn) == 0)
+	if (length(xn) == 0L)
 	    do.call("lines", c(list(y), dots))
 	else
 	    do.call("lines", c(list(mf[[xn]], y), dots))
@@ -285,10 +285,10 @@ function(formula, data = parent.frame(), ..., subset)
     if (response) {
 	varnames <- names(mf)
 	y <- mf[[response]]
-	if (length(varnames) > 2)
+	if (length(varnames) > 2L)
 	    stop("cannot handle more than one 'x' coordinate")
 	xn <- varnames[-response]
-	if (length(xn) == 0)
+	if (length(xn) == 0L)
 	    do.call("points", c(list(y), dots))
 	else
 	    do.call("points", c(list(mf[[xn]], y), dots))

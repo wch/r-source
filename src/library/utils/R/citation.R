@@ -55,7 +55,7 @@ readCitationFile <- function(file, meta = NULL)
     on.exit(close(con))
     pcf <- parse(con)
     z <- list()
-    k <- 0
+    k <- 0L
     envir <- new.env()
     ## Make the package metadata available to the citation entries.
     assign("meta", meta, envir = envir)
@@ -63,7 +63,7 @@ readCitationFile <- function(file, meta = NULL)
     for(expr in pcf) {
         x <- eval(expr, envir = envir)
         if(class(x) == "citation")
-            z[[k <- k+1]] <- x
+            z[[k <- k+1L]] <- x
         else if(class(x) == "citationHeader")
             attr(z, "header") <- c(attr(z, "header"), x)
         else if(class(x) == "citationFooter")
@@ -137,7 +137,7 @@ as.person.default <- function(x)
 
     x <- as.character(x)
 
-    if(length(grep("<.*>", x))>0)
+    if(length(grep("<.*>", x)))
         email <- sub(".*<([^>]*)>.*", "\\1", x)
     else
         email <- NULL
@@ -146,7 +146,7 @@ as.person.default <- function(x)
     name = unlist(strsplit(name, "[[:space:]]"))
 
     ## fix for email address only
-    if(length(name)==0) name = ""
+    if(length(name) == 0L) name = ""
 
     ## and now create appropriate person objects
     if(length(name)==1)
@@ -255,7 +255,7 @@ function(package = "base", lib.loc = NULL)
     }
 
     ## Auto-generate citation info.
-    
+
     ## Base packages without a CITATION file use the base citation.
     if((!is.null(meta$Priority)) && (meta$Priority == "base")) {
     	cit <- citation("base")
@@ -298,7 +298,7 @@ function(package = "base", lib.loc = NULL)
 
     author <- as.character(z$author)
     if(length(author) > 1L)
-        author <- paste(paste(author[1L:(length(author)-1)], collapse=", "),
+        author <- paste(paste(author[1L:(length(author)-1L)], collapse=", "),
                         author[length(author)], sep=" and ")
 
     attr(z, "textVersion") <-

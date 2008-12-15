@@ -152,10 +152,10 @@ summary.table <- function(object, ...)
 	relFreqs <- object / n.cases
 	for(k in 1L:n.vars)
 	    m[[k]] <- apply(relFreqs, k, sum)
-	expected <- apply(do.call("expand.grid", m), 1, prod) * n.cases
+	expected <- apply(do.call("expand.grid", m), 1L, prod) * n.cases
 	statistic <- sum((c(object) - expected)^2 / expected)
 	parameter <-
-	    prod(sapply(m, length)) - 1 - sum(sapply(m, length) - 1)
+	    prod(sapply(m, length)) - 1L - sum(sapply(m, length) - 1L)
 	y <- c(y, list(statistic = statistic,
 		       parameter = parameter,
 		       approx.ok = all(expected >= 5),

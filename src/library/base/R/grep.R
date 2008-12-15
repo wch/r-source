@@ -69,7 +69,7 @@ function(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1,
             return(rep.int(NA, length(x)))
     }
 
-    if(!is.character(pattern) || length(pattern) != 1 || !nzchar(pattern))
+    if(!is.character(pattern) || length(pattern) != 1L || !nzchar(pattern))
         stop("'pattern' must be a non-empty character string")
 
     n <- nchar(pattern, "c")

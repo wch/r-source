@@ -51,10 +51,10 @@ grid.convert <- function(x, unitTo, axisFrom="x", typeFrom="location",
 convertUnit <- function(x, unitTo, axisFrom="x", typeFrom="location",
                         axisTo=axisFrom, typeTo=typeFrom,
                         valueOnly=FALSE) {
-  whatfrom <- match(axisFrom, c("x", "y")) - 1 +
-    2*(match(typeFrom, c("location", "dimension")) - 1)
-  whatto <- match(axisTo, c("x", "y")) - 1 +
-    2*(match(typeTo, c("location", "dimension")) - 1)
+  whatfrom <- match(axisFrom, c("x", "y")) - 1L +
+    2L*(match(typeFrom, c("location", "dimension")) - 1L)
+  whatto <- match(axisTo, c("x", "y")) - 1L +
+    2L*(match(typeTo, c("location", "dimension")) - 1L)
   if (!is.unit(x))
     stop("'x' argument must be a unit object")
   if (is.na(whatfrom) || is.na(whatto))

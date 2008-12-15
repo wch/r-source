@@ -28,20 +28,20 @@
 }
 \usage{
 head(x, \dots)
-\method{head}{default}(x, n = 6, \dots)
-\method{head}{data.frame}(x, n = 6, \dots)
-\method{head}{matrix}(x, n = 6, \dots)
-\method{head}{ftable}(x, n = 6, \dots)
-\method{head}{table}(x, n = 6, \dots)
-\method{head}{function}(x, n = 6, \dots)
+\method{head}{default}(x, n = 6L, \dots)
+\method{head}{data.frame}(x, n = 6L, \dots)
+\method{head}{matrix}(x, n = 6L, \dots)
+\method{head}{ftable}(x, n = 6L, \dots)
+\method{head}{table}(x, n = 6L, \dots)
+\method{head}{function}(x, n = 6L, \dots)
 
 tail(x, \dots)
-\method{tail}{default}(x, n = 6, \dots)
-\method{tail}{data.frame}(x, n = 6, \dots)
-\method{tail}{matrix}(x, n = 6, addrownums = TRUE, \dots)
-\method{tail}{ftable}(x, n = 6, addrownums = FALSE, \dots)
-\method{tail}{table}(x, n = 6, addrownums = TRUE, \dots)
-\method{tail}{function}(x, n = 6, \dots)
+\method{tail}{default}(x, n = 6L, \dots)
+\method{tail}{data.frame}(x, n = 6L, \dots)
+\method{tail}{matrix}(x, n = 6L, addrownums = TRUE, \dots)
+\method{tail}{ftable}(x, n = 6L, addrownums = FALSE, \dots)
+\method{tail}{table}(x, n = 6L, addrownums = TRUE, \dots)
+\method{tail}{function}(x, n = 6L, \dots)
 }
 \arguments{
   \item{x}{an object}
@@ -76,13 +76,13 @@ tail(x, \dots)
 
 \examples{
 head(letters)
-head(letters, n = -6)
+head(letters, n = -6L)
 
-head(freeny.x, n = 10)
+head(freeny.x, n = 10L)
 head(freeny.y)
 
 tail(letters)
-tail(letters, n = -6)
+tail(letters, n = -6L)
 
 tail(freeny.x)
 tail(freeny.y)

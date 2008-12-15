@@ -30,9 +30,9 @@ identify.default <-
     y <- xy$y
     if (length(x)==0) {
         if (pos)
-            return(list(ind=numeric(0), pos=numeric(0)))
+            return(list(ind=numeric(0L), pos=numeric(0L)))
         else
-            return(numeric(0))
+            return(numeric(0L))
     }
     z <- .Internal(identify(x, y, as.character(labels), n, plot, offset,
                             tolerance, atpen))

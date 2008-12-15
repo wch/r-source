@@ -19,8 +19,8 @@ cat <- function(..., file = "", sep = " ", fill = FALSE,
 {
     if(is.character(file))
         if(file == "") file <- stdout()
-        else if(substring(file, 1, 1) == "|") {
-            file <- pipe(substring(file, 2), "w")
+        else if(substring(file, 1L, 1L) == "|") {
+            file <- pipe(substring(file, 2L), "w")
             on.exit(close(file))
         } else {
             file <- file(file, ifelse(append, "a", "w"))

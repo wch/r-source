@@ -48,7 +48,7 @@ open.connection <- function(con, open = "r", blocking = TRUE, ...)
 
 isOpen <- function(con, rw = "")
 {
-    rw <- pmatch(rw, c("read", "write"), 0)
+    rw <- pmatch(rw, c("read", "write"), 0L)
     .Internal(isOpen(con, rw))
 }
 
@@ -119,7 +119,7 @@ seek <- function(con, ...)
 seek.connection <- function(con, where = NA, origin = "start", rw = "", ...)
 {
     origin <- pmatch(origin, c("start", "current", "end"))
-    rw <- pmatch(rw, c("read", "write"), 0)
+    rw <- pmatch(rw, c("read", "write"), 0L)
     if(is.na(origin))
         stop("'origin' must be one of 'start', 'current' or 'end'")
     .Internal(seek(con, as.double(where), origin, rw))
@@ -191,7 +191,7 @@ readBin <- function(con, what, n = 1, size = NA_integer_, signed = TRUE,
         on.exit(close(con))
     }
     swap <- endian != .Platform$endian
-    if(!is.character(what) || length(what) != 1
+    if(!is.character(what) || length(what) != 1L
     	|| !(what %in% c("numeric", "double", "integer", "int", "logical",
                          "complex", "character", "raw")))
         what <- typeof(what)

@@ -29,7 +29,7 @@ SSasymp <- # selfStart(~ Asym + (R0 - Asym) * exp(-exp(lrc) * input),
               .actualArgs <- as.list(match.call()[c("Asym", "R0", "lrc")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
-                  .grad <- array(0, c(length(.value), 3),
+                  .grad <- array(0, c(length(.value), 3L),
                                  list(NULL, c("Asym", "R0", "lrc")))
                   .grad[, "Asym"] <- 1 - .expr5
                   .grad[, "R0"] <- .expr5
@@ -102,7 +102,7 @@ SSasympOff <- # selfStart(~ Asym *( 1 - exp(-exp(lrc) * (input - c0) ) ),
               .actualArgs <- as.list(match.call()[c("Asym", "lrc", "c0")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
-                  .grad <- array(0, c(length(.value), 3), list(NULL, c("Asym", "lrc", "c0")))
+                  .grad <- array(0, c(length(.value), 3L), list(NULL, c("Asym", "lrc", "c0")))
                   .grad[, "Asym"] <- .expr6
                   .grad[, "lrc"] <- Asym * (.expr5 * (.expr1 * .expr3))
                   .grad[, "c0"] <-  - (Asym * (.expr5 * .expr1))
@@ -141,7 +141,7 @@ SSasympOrig <- # selfStart(~ Asym * (1 - exp(-exp(lrc) * input)),
               .actualArgs <- as.list(match.call()[c("Asym", "lrc")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
-                  .grad <- array(0, c(length(.value), 2), list(NULL, c("Asym", "lrc")))
+                  .grad <- array(0, c(length(.value), 2L), list(NULL, c("Asym", "lrc")))
                   .grad[, "Asym"] <- .expr5
                   .grad[, "lrc"] <- Asym * (.expr4 * (.expr1 * input))
                   dimnames(.grad) <- list(NULL, .actualArgs)
@@ -185,7 +185,7 @@ SSbiexp <-
               .actualArgs <- as.list(match.call()[c("A1", "lrc1", "A2", "lrc2")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
-                  .grad <- array(0, c(length(.value), 4),
+                  .grad <- array(0, c(length(.value), 4L),
                                  list(NULL, c("A1", "lrc1", "A2", "lrc2")))
                   .grad[, "A1"] <- .expr4
                   .grad[, "lrc1"] <-  - (A1 * (.expr4 * (.expr1 * input)))
@@ -241,7 +241,7 @@ SSfol <-
               .actualArgs <- as.list(match.call()[c("lKe", "lKa", "lCl")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
-                  .grad <- array(0, c(length(.value), 3), list(NULL, c("lKe", "lKa", "lCl")))
+                  .grad <- array(0, c(length(.value), 3L), list(NULL, c("lKe", "lKa", "lCl")))
                   .grad[, "lKe"] <- ((.expr14 - (.expr4 * (.expr8 * (.expr5 * input))))/
                                      .expr15) + ((.expr14 * .expr5)/.expr23)
                   .grad[, "lKa"] <- ((.expr14 + (.expr4 * (.expr12 * (.expr9 * input))))/
@@ -312,7 +312,7 @@ SSfpl <- # selfStart(~ A + (B - A)/(1 + exp((xmid - input)/scal)),
               .actualArgs <- as.list(match.call()[c("A", "B", "xmid", "scal")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
-                  .grad <- array(0, c(length(.value), 4),
+                  .grad <- array(0, c(length(.value), 4L),
                                  list(NULL, c("A", "B", "xmid", "scal")))
                   .grad[, "A"] <- 1 - .expr8
                   .grad[, "B"] <- .expr8
@@ -359,7 +359,7 @@ SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
               .actualArgs <- as.list(match.call()[c("Asym", "xmid", "scal")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
-                  .grad <- array(0, c(length(.value), 3), list(NULL, c("Asym", "xmid", "scal")))
+                  .grad <- array(0, c(length(.value), 3L), list(NULL, c("Asym", "xmid", "scal")))
                   .grad[, "Asym"] <- 1/.expr4
                   .grad[, "xmid"] <-  - ((Asym * (.expr3 * (1/scal)))/.expr10)
                   .grad[, "scal"] <- (Asym * (.expr3 * (.expr1/(scal^2))))/.expr10
@@ -400,7 +400,7 @@ SSmicmen <- # selfStart(~ Vm * input/(K + input),
               .actualArgs <- as.list(match.call()[c("Vm", "K")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
-                  .grad <- array(0, c(length(.value), 2), list(NULL, c("Vm", "K")))
+                  .grad <- array(0, c(length(.value), 2L), list(NULL, c("Vm", "K")))
                   .grad[, "Vm"] <- input/.expr2
                   .grad[, "K"] <-  - (.expr1/(.expr2^2))
                   dimnames(.grad) <- list(NULL, .actualArgs)
@@ -436,7 +436,7 @@ SSgompertz <- #    selfStart( ~ Asym * exp(-b2*b3^x),
               .actualArgs <- as.list(match.call()[c("Asym", "b2", "b3")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
-                  .grad <- array(0, c(length(.value), 3),
+                  .grad <- array(0, c(length(.value), 3L),
                                  list(NULL, c("Asym", "b2", "b3")))
                   .grad[, "Asym"] <- .expr4
                   .grad[, "b2"] <- -Asym * (.expr4 * .expr2)
@@ -477,7 +477,7 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
               .actualArgs <- as.list(match.call()[c("Asym", "Drop", "lrc", "pwr")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
-                  .grad <- array(0, c(length(.value), 4),
+                  .grad <- array(0, c(length(.value), 4L),
                                  list(NULL, c("Asym", "Drop", "lrc", "pwr")))
                   .grad[, "Asym"] <- 1
                   .grad[, "Drop"] <- -.expr5

@@ -58,9 +58,9 @@ mle <- function(minuslogl, start=formals(minuslogl), method="BFGS",
     }
     oout <- if (length(start))
         optim(start, f, method=method, hessian=TRUE, ...)
-    else list(par=numeric(0),value=f(start))
+    else list(par=numeric(0L),value=f(start))
     coef <- oout$par
-    vcov <- if(length(coef)) solve(oout$hessian) else matrix(numeric(0),0,0)
+    vcov <- if(length(coef)) solve(oout$hessian) else matrix(numeric(0L), 0L, 0L)
     min <-  oout$value
     fullcoef[nm] <- coef
     new("mle", call=call, coef=coef, fullcoef=unlist(fullcoef), vcov=vcov,
@@ -165,10 +165,10 @@ setMethod("profile", "mle",
                     z <- onestep(step - 1 + dstep)
                     if(is.na(z) || abs(z) > zmax) break
                 }
-            } else if(length(zi) < 5) { # try smaller steps
-                mxstep <- step - 1
+            } else if(length(zi) < 5L) { # try smaller steps
+                mxstep <- step - 1L
                 step <- 0.5
-                while ((step <- step + 1) < mxstep) onestep(step)
+                while ((step <- step + 1L) < mxstep) onestep(step)
             }
         }
         si <- order(pvi[, i])
@@ -280,14 +280,14 @@ function (object, parm, level = 0.95, ...)
     a <- (1 - level)/2
     a <- c(a, 1 - a)
     pct <- paste(round(100 * a, 1), "%")
-    ci <- array(NA, dim = c(length(parm), 2),
+    ci <- array(NA, dim = c(length(parm), 2L),
                 dimnames = list(pnames[parm], pct))
     cutoff <- qnorm(a)
     for (pm in parm) {
         pro <- object@profile[[pnames[pm]]]
-        sp <- if (length(pnames) > 1)
-            spline(x = pro[, "par.vals"][, pm], y = pro[, 1])
-        else spline(x = pro[, "par.vals"], y = pro[, 1])
+        sp <- if (length(pnames) > 1L)
+            spline(x = pro[, "par.vals"][, pm], y = pro[, 1L])
+        else spline(x = pro[, "par.vals"], y = pro[, 1L])
         ci[pnames[pm], ] <- approx(sp$y, sp$x, xout = cutoff)$y
     }
     drop(ci)
@@ -317,7 +317,7 @@ setMethod("update", "mle", function (object, ..., evaluate = TRUE)
 {
     call <- object@call
     extras <- match.call(expand.dots = FALSE)$...
-    if (length(extras) > 0) {
+    if (length(extras) ) {
         existing <- !is.na(match(names(extras), names(call)))
         for (a in names(extras)[existing]) call[[a]] <- extras[[a]]
         if (any(!existing)) {

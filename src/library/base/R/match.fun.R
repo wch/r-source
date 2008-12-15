@@ -21,7 +21,7 @@ match.fun <- function (FUN, descend = TRUE)
 {
     if ( is.function(FUN) )
         return(FUN)
-    if (!(is.character(FUN) && length(FUN) == 1 || is.symbol(FUN))) {
+    if (!(is.character(FUN) && length(FUN) == 1L || is.symbol(FUN))) {
         ## Substitute in parent
         FUN <- eval.parent(substitute(substitute(FUN)))
         if (!is.symbol(FUN))

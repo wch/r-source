@@ -36,7 +36,7 @@ function(topic, offline = FALSE, package = NULL, lib.loc = NULL,
         return(help("help", package = "utils", lib.loc = .Library))
     }
 
-    ischar <- try(is.character(topic) && length(topic) == 1, silent = TRUE)
+    ischar <- try(is.character(topic) && length(topic) == 1L, silent = TRUE)
     if(inherits(ischar, "try-error")) ischar <- FALSE
     ## if this was not a length-one character vector, try for the name.
     if(!ischar) {
@@ -126,7 +126,7 @@ function(x, ...)
                                       dirname(paths)),
                                     indent = 22))))
     } else {
-        if(length(paths) > 1) {
+        if(length(paths) > 1L) {
             file <- paths[1L]
             p <- paths
             msg <- gettextf("Help on topic '%s' was found in the following packages:",
@@ -134,7 +134,7 @@ function(x, ...)
             paths <- dirname(dirname(paths))
             txt <- formatDL(c("Package", basename(paths)),
                             c("Library", dirname(paths)),
-                            indent = 22)
+                            indent = 22L)
             writeLines(c(strwrap(msg), "", paste(" ", txt), ""))
             if(interactive()) {
                 fp <- file.path(paths, "Meta", "Rd.rds")
@@ -192,8 +192,8 @@ function(x, ...)
         else if(type == "help") {
             zfile <- zip.file.extract(file, "Rhelp.zip")
             if(file.exists(zfile)) {
-                first <- readLines(zfile, n = 1)
-                enc <- if(length(grep("\\(.*\\)$", first)) > 0)
+                first <- readLines(zfile, n = 1L)
+                enc <- if(length(grep("\\(.*\\)$", first)))
                     sub("[^(]*\\((.*)\\)$", "\\1", first) else ""
                 if(enc == "utf8") enc <- "UTF-8"
                 ## allow for 'smart' quotes on Windows, which work
@@ -223,7 +223,7 @@ function(x, ...)
                                     paste(pkgname, "Rd.gz", sep="."))
                 if(file.exists(Rdpath)) {
                     ans <- readline("No latex file is available: shall I try to create it? (y/n) ")
-                    if (substr(ans, 1, 1) == "y") {
+                    if (substr(ans, 1L, 1L) == "y") {
                         lines <- tools:::extract_Rd_file(Rdpath, topic)
                         tf <- tempfile("Rd")
                         tf2 <- tempfile("Rlatex")

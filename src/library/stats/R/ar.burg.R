@@ -35,9 +35,9 @@ ar.burg.default <-
     } else x.mean <- 0
     n.used <- length(x)
     order.max <- if (is.null(order.max))
-	min(n.used-1, floor(10 * log10(n.used)))
+	min(n.used-1L, floor(10 * log10(n.used)))
     else floor(order.max)
-    if (order.max < 1) stop("'order.max' must be >= 1")
+    if (order.max < 1L) stop("'order.max' must be >= 1")
     else if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
     xaic <- numeric(order.max + 1)
     z <- .C(R_burg,
@@ -49,15 +49,15 @@ ar.burg.default <-
             var2=double(1+order.max)
             )
     coefs <- matrix(z$coefs, order.max, order.max)
-    partialacf <- array(diag(coefs), dim = c(order.max, 1, 1))
-    var.pred <- if(var.method == 1) z$var1 else z$var2
-    xaic <- n.used * log(var.pred) + 2 * (0:order.max) + 2 * demean
+    partialacf <- array(diag(coefs), dim = c(order.max, 1L, 1L))
+    var.pred <- if(var.method == 1L) z$var1 else z$var2
+    xaic <- n.used * log(var.pred) + 2 * (0L:order.max) + 2 * demean
     xaic <- xaic - min(xaic)
-    names(xaic) <- 0:order.max
-    order <- if (aic) (0:order.max)[xaic == 0] else order.max
-    ar <- if (order > 0) coefs[order, 1L:order] else numeric(0)
-    var.pred <- var.pred[order+1]
-    if(order > 0)
+    names(xaic) <- 0L:order.max
+    order <- if (aic) (0L:order.max)[xaic == 0] else order.max
+    ar <- if (order > 0L) coefs[order, 1L:order] else numeric(0L)
+    var.pred <- var.pred[order+1L]
+    if(order > 0L)
         resid <- c(rep(NA, order), embed(x, order+1) %*% c(1, -ar))
     else resid <- as.vector(x)
     if(ists) {
@@ -67,9 +67,9 @@ ar.burg.default <-
     res <- list(order = order, ar = ar, var.pred = var.pred, x.mean = x.mean,
                 aic = xaic, n.used = n.used, order.max = order.max,
                 partialacf = partialacf, resid = resid,
-                method = ifelse(var.method==1,"Burg","Burg2"),
+                method = ifelse(var.method==1L,"Burg","Burg2"),
                 series = series, frequency = xfreq, call = match.call())
-    if(order > 0) {
+    if(order > 0L) {
         xacf <- acf(x, type = "covariance", lag.max = order, plot=FALSE)$acf
         res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq_len(order)]))*var.pred/n.used
     }

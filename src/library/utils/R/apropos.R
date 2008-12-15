@@ -38,7 +38,7 @@ apropos <- function (what, where = FALSE, ignore.case = TRUE, mode = "any")
 find <- function(what, mode = "any", numeric = FALSE, simple.words=TRUE)
 {
     stopifnot(is.character(what))
-    if(length(what) > 1) {
+    if(length(what) > 1L) {
         warning("elements of 'what' after the first will be ignored")
         what <- what[1L]
     }
@@ -65,7 +65,7 @@ find <- function(what, mode = "any", numeric = FALSE, simple.words=TRUE)
                     warning(gettextf("%d occurrences in %s", ll, sp[i]),
                             domain = NA)
             }
-            ind[i] <- ll > 0
+            ind[i] <- ll > 0L
         }
     }
     ## found name in  search()[ ind ]

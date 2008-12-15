@@ -47,7 +47,7 @@ function(y, groups, blocks, ...)
     y <- matrix(unlist(split(y, blocks)), ncol = k, byrow = TRUE)
     y <- y[complete.cases(y), ]
     n <- nrow(y)
-    r <- t(apply(y, 1, rank))
+    r <- t(apply(y, 1L, rank))
     TIES <- tapply(r, row(r), table)
     STATISTIC <- ((12 * sum((colSums(r) - n * (k + 1) / 2)^2)) /
                   (n * k * (k + 1)

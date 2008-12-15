@@ -36,7 +36,7 @@ boxplot.stats <- function(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
     }
     conf <- if(do.conf) stats[3L] + c(-1.58, 1.58) * iqr / sqrt(n)
     list(stats = stats, n = n, conf = conf,
-	 out = if(do.out) x[out & nna] else numeric(0))
+	 out = if(do.out) x[out & nna] else numeric(0L))
 }
 
 ## Contour lines

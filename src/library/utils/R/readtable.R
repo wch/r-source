@@ -56,9 +56,9 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         on.exit(close(file))
     }
 
-    if(skip > 0) readLines(file, skip)
+    if(skip > 0L) readLines(file, skip)
     ## read a few lines to determine header, no of cols.
-    nlines <- n0lines <- if (nrows < 0) 5 else min(5, (header + nrows))
+    nlines <- n0lines <- if (nrows < 0L) 5 else min(5L, (header + nrows))
 
     lines <- .Internal(readTableHead(file, nlines, comment.char,
                                      blank.lines.skip, quote, sep))
@@ -69,7 +69,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         cols <- length(col.names)
     } else {
         if(all(!nzchar(lines))) stop("empty beginning of file")
-        if(nlines < n0lines && file == 0)  { # stdin() has reached EOF
+        if(nlines < n0lines && file == 0L)  { # stdin() has reached EOF
             pushBack(c(lines, lines, ""), file)
             on.exit(.Internal(clearPushBack(stdin())))
         } else pushBack(c(lines, lines), file)
@@ -80,8 +80,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                       comment.char = comment.char, allowEscapes = allowEscapes,
                       encoding = encoding)
         col1 <- if(missing(col.names)) length(first) else length(col.names)
-        col <- numeric(nlines - 1)
-        if (nlines > 1)
+        col <- numeric(nlines - 1L)
+        if (nlines > 1L)
             for (i in seq_along(col))
                 col[i] <- length(scan(file, what = "", sep = sep,
                                       quote = quote,
@@ -95,13 +95,13 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         ##	basic column counting and header determination;
         ##	rlabp (logical) := it looks like we have column names
 
-        rlabp <- (cols - col1) == 1
+        rlabp <- (cols - col1) == 1L
         if(rlabp && missing(header))
             header <- TRUE
         if(!header) rlabp <- FALSE
 
         if (header) {
-            readLines(file, 1)          # skip over header
+            readLines(file, 1L)          # skip over header
             if(missing(col.names)) col.names <- first
             else if(length(first) != length(col.names))
                 warning("header and 'col.names' are of different lengths")
@@ -112,9 +112,9 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
             stop("more columns than column names")
         if(fill && length(col.names) > cols)
             cols <- length(col.names)
-        if(!fill && cols > 0 && length(col.names) > cols)
+        if(!fill && cols > 0L && length(col.names) > cols)
             stop("more column names than columns")
-        if(cols == 0) stop("first five rows are empty: giving up")
+        if(cols == 0L) stop("first five rows are empty: giving up")
     }
 
     if(check.names) col.names <- make.names(col.names, unique = TRUE)
@@ -127,10 +127,10 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         } else {
             tmp <- rep(NA_character_, length.out=cols)
             names(tmp) <- col.names
-            i <- match(nmColClasses, col.names, 0)
-            if(any(i <= 0))
+            i <- match(nmColClasses, col.names, 0L)
+            if(any(i <= 0L))
                 warning("not all columns named in 'colClasses' exist")
-            tmp[ i[i > 0] ] <- colClasses
+            tmp[ i[i > 0L] ] <- colClasses
             colClasses <- tmp
         }
 
@@ -178,10 +178,10 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 	i[as.is] <- TRUE
 	as.is <- i
     } else if(is.character(as.is)) {
-        i <- match(as.is, col.names, 0)
-        if(any(i <= 0))
+        i <- match(as.is, col.names, 0L)
+        if(any(i <= 0L))
             warning("not all columns named in 'as.is' exist")
-        i <- i[i > 0]
+        i <- i[i > 0L]
         as.is <- rep.int(FALSE, cols)
         as.is[i] <- TRUE
     } else if (length(as.is) != cols)
@@ -216,13 +216,13 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 	row.names <- .set_row_names(as.integer(nlines))
     } else if (is.character(row.names)) {
         compactRN <- FALSE
-	if (length(row.names) == 1) {
-	    rowvar <- (1L:cols)[match(col.names, row.names, 0) == 1]
+	if (length(row.names) == 1L) {
+	    rowvar <- (1L:cols)[match(col.names, row.names, 0L) == 1L]
 	    row.names <- data[[rowvar]]
 	    data <- data[-rowvar]
             keep <- keep[-rowvar]
 	}
-    } else if (is.numeric(row.names) && length(row.names) == 1) {
+    } else if (is.numeric(row.names) && length(row.names) == 1L) {
         compactRN <- FALSE
 	rlabp <- row.names
 	row.names <- data[[rlabp]]

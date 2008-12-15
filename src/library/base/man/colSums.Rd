@@ -13,17 +13,17 @@
   Form row and column sums and means for numeric arrays.
 }
 \usage{
-colSums (x, na.rm = FALSE, dims = 1)
-rowSums (x, na.rm = FALSE, dims = 1)
-colMeans(x, na.rm = FALSE, dims = 1)
-rowMeans(x, na.rm = FALSE, dims = 1)
+colSums (x, na.rm = FALSE, dims = 1L)
+rowSums (x, na.rm = FALSE, dims = 1L)
+colMeans(x, na.rm = FALSE, dims = 1L)
+rowMeans(x, na.rm = FALSE, dims = 1L)
 }
 \arguments{
   \item{x}{an array of two or more dimensions, containing numeric,
     complex, integer or logical values, or a numeric data frame.}
   \item{na.rm}{logical. Should missing values (including \code{NaN})
     be omitted from the calculations?}
-  \item{dims}{Which dimensions are regarded as \sQuote{rows} or
+  \item{dims}{integer: Which dimensions are regarded as \sQuote{rows} or
     \sQuote{columns} to sum over.  For \code{row*}, the sum or mean is
     over dimensions \code{dims+1, \dots}; for \code{col*} it is over
     dimensions \code{1:dims}.}

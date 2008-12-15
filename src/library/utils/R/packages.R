@@ -26,7 +26,7 @@ available.packages <-
 	stopifnot(is.character(fields))
 	fields <- unique(c(requiredFields, fields))
     }
-    res <- matrix(NA_character_, 0, length(fields) + 1L,
+    res <- matrix(NA_character_, 0L, length(fields) + 1L,
 		  dimnames = list(NULL, c(fields, "Repository")))
     for(repos in contriburl) {
         localcran <- length(grep("^file:", repos)) > 0L
@@ -54,7 +54,7 @@ available.packages <-
                 tmpf <- tempfile()
                 on.exit(unlink(tmpf))
                 op <- options("warn")
-                options(warn = -1L)
+                options(warn = -1)
                 ## This is a binary file
                 z <- try(download.file(url=paste(repos, "PACKAGES.gz", sep = "/"),
                                        destfile = tmpf, method = method,
@@ -133,7 +133,7 @@ simplifyRepos <- function(repos, type)
 {
     tail <- substring(contrib.url("---", type), 4L)
     ind <- regexpr(tail, repos, fixed=TRUE)
-    ind <- ifelse(ind > 0, ind-1L, nchar(repos, type="c"))
+    ind <- ifelse(ind > 0L, ind-1L, nchar(repos, type="c"))
     substr(repos, 1L, ind)
 }
 
@@ -189,13 +189,13 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
            && capabilities("tcltk") && capabilities("X11")) {
             k <- tcltk::tk_select.list(oldPkgs[,1L], oldPkgs[,1L], multiple = TRUE,
                                        title = "Packages to be updated")
-            update <- oldPkgs[match(k, oldPkgs[,1]), , drop=FALSE]
+            update <- oldPkgs[match(k, oldPkgs[,1L]), , drop=FALSE]
         } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
             k <- select.list(oldPkgs[,1], oldPkgs[,1], multiple = TRUE,
                              title = "Packages to be updated")
             update <- oldPkgs[match(k, oldPkgs[,1L]), , drop=FALSE]
         } else update <- text.select(oldPkgs)
-        if(nrow(update) == 0) return(invisible())
+        if(nrow(update) == 0L) return(invisible())
     } else if(is.logical(ask) && ask) update <- text.select(oldPkgs)
     else update <- oldPkgs
 
@@ -222,7 +222,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         if(!is.matrix(instPkgs) || !is.character(instPkgs[,"Package"]))
             stop("illformed 'instPkgs' matrix")
     }
-    if(NROW(instPkgs) == 0) return(NULL)
+    if(NROW(instPkgs) == 0L) return(NULL)
     ##    stop(gettextf("no installed packages for (invalid?) 'lib.loc=%s'",
     ##                  lib.loc), domain = NA)
     if(is.null(available))
@@ -250,7 +250,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     update <- NULL
 
     currentR <- minorR <- getRversion()
-    minorR[[c(1,3)]] <- 0L # set patchlevel to 0
+    minorR[[c(1L, 3L)]] <- 0L # set patchlevel to 0
     for(k in 1L:nrow(instPkgs)) {
         if (instPkgs[k, "Priority"] %in% "base") next
         z <- match(instPkgs[k, "Package"], available[,"Package"])
@@ -263,7 +263,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         deps <- onRepos["Depends"]
         if(!is.na(deps)) {
             Rdeps <- tools:::.split_dependencies(deps)[["R", exact=TRUE]]
-            if(length(Rdeps) > 1) {
+            if(length(Rdeps) > 1L) {
                 target <- Rdeps$version
                 res <- eval(parse(text=paste("currentR", Rdeps$op, "target")))
                 if(!res) next
@@ -637,7 +637,7 @@ setRepositories <-
     pkgType <- getOption("pkgType")
     if(length(grep("^mac\\.binary", pkgType))) pkgType <- "mac.binary"
     thisType <- a[[pkgType]]
-    a <- a[thisType, 1L:3]
+    a <- a[thisType, 1L:3L]
     repos <- getOption("repos")
     ## Now look for CRAN and any others in getOptions("repos")
     if("CRAN" %in% row.names(a) && !is.na(CRAN <- repos["CRAN"]))
@@ -808,7 +808,7 @@ compareVersion <- function(a, b)
         stop(gettextf("'%s' must be supplied", available), domain = NA)
     info <- available[pkgs, c("Depends", "Imports"), drop = FALSE]
     ## we always want a list here, but apply can simplify to a matrix.
-    ## x <- apply(info, 1, .clean_up_dependencies)
+    ## x <- apply(info, 1L, .clean_up_dependencies)
     ## if(length(pkgs) == 1) {x <- list(as.vector(x)); names(x) <- pkgs}
     x <- vector("list", length(pkgs)); names(x) <- pkgs
     for (i in seq_along(pkgs))

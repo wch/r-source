@@ -24,7 +24,7 @@ apply <- function(X, MARGIN, FUN, ...)
     if(dl == 0)
 	stop("dim(X) must have a positive length")
     ds <- 1L:dl
-    if(length(oldClass(X)) > 0)
+    if(length(oldClass(X)))
 	X <- if(dl == 2) as.matrix(X) else as.array(X)
     ## now recompute things as coercion can change dims
     ## (e.g. when a data frame contains a matrix).
@@ -44,21 +44,21 @@ apply <- function(X, MARGIN, FUN, ...)
     ## do the calls
 
     d2 <- prod(d.ans)
-    if(d2 == 0) {
+    if(d2 == 0L) {
         ## arrays with some 0 extents: return ``empty result'' trying
         ## to use proper mode and dimension:
         ## The following is still a bit `hackish': use non-empty X
-        newX <- array(vector(typeof(X), 1), dim = c(prod(d.call), 1))
-        ans <- FUN(if(length(d.call) < 2) newX[,1] else
-                   array(newX[,1], d.call, dn.call), ...)
-        return(if(is.null(ans)) ans else if(length(d.ans) < 2) ans[1L][-1L]
+        newX <- array(vector(typeof(X), 1L), dim = c(prod(d.call), 1L))
+        ans <- FUN(if(length(d.call) < 2L) newX[,1] else
+                   array(newX[, 1L], d.call, dn.call), ...)
+        return(if(is.null(ans)) ans else if(length(d.ans) < 2L) ans[1L][-1L]
                else array(ans, d.ans, dn.ans))
     }
     ## else
     newX <- aperm(X, c(s.call, s.ans))
     dim(newX) <- c(prod(d.call), d2)
     ans <- vector("list", d2)
-    if(length(d.call) < 2) {# vector
+    if(length(d.call) < 2L) {# vector
         if (length(dn.call)) dimnames(newX) <- c(dn.call, list(NULL))
         for(i in 1L:d2) {
             tmp <- FUN(newX[,i], ...)
@@ -83,13 +83,13 @@ apply <- function(X, MARGIN, FUN, ...)
         if (!all(all.same)) ans.names <- NULL
     }
     len.a <- if(ans.list) d2 else length(ans <- unlist(ans, recursive = FALSE))
-    if(length(MARGIN) == 1 && len.a == d2) {
+    if(length(MARGIN) == 1L && len.a == d2) {
 	names(ans) <- if(length(dn.ans[[1L]])) dn.ans[[1L]] # else NULL
 	return(ans)
     }
     if(len.a == d2)
 	return(array(ans, d.ans, dn.ans))
-    if(len.a > 0 && len.a %% d2 == 0) {
+    if(len.a && len.a %% d2 == 0L) {
         if(is.null(dn.ans)) dn.ans <- vector(mode="list", length(d.ans))
         dn.ans <- c(list(ans.names), dn.ans)
 	return(array(ans, c(len.a %/% d2, d.ans),

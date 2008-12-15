@@ -101,7 +101,7 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
                           width = getOption("width"), ...)
 {
     ord <- is.ordered(x)
-    if (length(x) <= 0)
+    if (length(x) == 0L)
         cat(if(ord)"ordered" else "factor", "(0)\n", sep = "")
     else {
         ## The idea here is to preserve all relevant attributes such as

@@ -45,8 +45,8 @@ acf <-
     acf <- array(.C(R_acf,
                     as.double(x), as.integer(sampleT), as.integer(nser),
                     as.integer(lag.max), as.integer(type=="correlation"),
-                    acf=double((lag.max+1) * nser * nser), NAOK = TRUE
-                    )$acf, c(lag.max + 1, nser, nser))
+                    acf=double((lag.max+1L) * nser * nser), NAOK = TRUE
+                    )$acf, c(lag.max + 1L, nser, nser))
     lag <- outer(0:lag.max, lag/x.freq)
     acf.out <- structure(.Data = list(acf = acf, type = type,
         n.used = sampleT, lag = lag, series = series, snames = colnames(x)),
@@ -90,8 +90,8 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
                          as.double(acf),
                          pacf = double(lag.max),
                          as.integer(lag.max))$pacf,
-                      dim=c(lag.max,1,1))
-        lag <- array((1L:lag.max)/x.freq, dim=c(lag.max,1,1))
+                      dim=c(lag.max,1L,1L))
+        lag <- array((1L:lag.max)/x.freq, dim=c(lag.max,1L,1L))
         snames <- NULL
     }
 
@@ -220,8 +220,8 @@ ccf <- function(x, y, lag.max = NULL,
     acf.out <- acf(X, lag.max = lag.max, plot = FALSE, type = type)
     lag <- c(rev(acf.out$lag[-1,2,1]), acf.out$lag[,1,2])
     y   <- c(rev(acf.out$acf[-1,2,1]), acf.out$acf[,1,2])
-    acf.out$acf <- array(y, dim=c(length(y),1,1))
-    acf.out$lag <- array(lag, dim=c(length(y),1,1))
+    acf.out$acf <- array(y, dim=c(length(y),1L,1L))
+    acf.out$lag <- array(lag, dim=c(length(y),1L,1L))
     acf.out$snames <- paste(acf.out$snames, collapse = " & ")
     if (plot) {
         plot(acf.out, ...)

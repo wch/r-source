@@ -127,7 +127,7 @@ tkStartGUI <- function() {
     tkadd(helpMenu,"cascade", label=gettext("Manuals in PDF format"),
           menu=helpPDFMenu)
     pdfBase <- file.path(R.home("doc"), "manual")
-    apply(manuals, 1, function(x) {
+    apply(manuals, 1L, function(x) {
 	f <- file.path(pdfBase, paste(x[1L], ".pdf", sep="") )
         cmd <- function() system(paste(shQuote(getOption("pdfviewer")),
                                        shQuote(f)),

@@ -103,7 +103,7 @@ aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
     nend <- floor(nrow(x) / len) * len
     x <- apply(array(c(x[1 : nend, ]),
                      dim = c(len, nend / len, ncol(x))),
-               MARGIN = c(2, 3), FUN = FUN, ...)
+               MARGIN = c(2L, 3L), FUN = FUN, ...)
     if(!mat) x <- as.vector(x)
     else colnames(x) <- cn
     ts(x, start = nstart, frequency = nfrequency)

@@ -24,7 +24,7 @@ density.default <-
 	     give.Rkern = FALSE,
 	     n = 512, from, to, cut = 3, na.rm = FALSE, ...)
 {
-    if(length(list(...)) > 0)
+    if(length(list(...)))
 	warning("non-matched further arguments are disregarded")
     if(!missing(window) && missing(kernel))
 	kernel <- window
@@ -135,7 +135,7 @@ density.default <-
 	    y = double(2 * n),
 	    ny = as.integer(n),
             PACKAGE = "stats" )$y * totMass
-    kords <- seq.int(0, 2*(up-lo), length.out = 2 * n)
+    kords <- seq.int(0, 2*(up-lo), length.out = 2L * n)
     kords[(n + 2):(2 * n)] <- -kords[n:2]
     kords <- switch(kernel,
 		    gaussian = dnorm(kords, sd = bw),

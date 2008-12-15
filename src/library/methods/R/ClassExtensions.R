@@ -154,7 +154,7 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
     if(is.null(value)) ## not possible with methods package?
         character()
     else
-        value[-match("class", value, 0)]
+        value[-match("class", value, 0L)]
 }
 
 makeExtends <- function(Class, to,
@@ -192,7 +192,7 @@ makeExtends <- function(Class, to,
                 substitute({
                     if(strict) S3Part(from, S3Class = S3CLASS)
                     else from
-                }, list(S3CLASS =  to)) 
+                }, list(S3CLASS =  to))
         }
         else if(!isVirtualClass(classDef2))
             body(coerce, envir = packageEnv) <-
@@ -337,7 +337,7 @@ makeExtends <- function(Class, to,
 .S4inherits <- function(x, what, which) {
     superClasses <- extends(getClass(class(x)))
     if(which)
-       match(what, superClasses, 0)
+       match(what, superClasses, 0L)
     else
       what %in% superClasses
 }
@@ -361,7 +361,7 @@ makeExtends <- function(Class, to,
         body(coerce, environment(coerce))<- body(.S3coerce)
         exti@coerce <- coerce
         replace <- exti@replace
-        pos <- match(what, S3Class, 0)
+        pos <- match(what, S3Class, 0L)
         if(pos > 1) # not the complete S3 class, probably an error
           body(replace, environment(replace)) <-
             substituteDirect(body(.S3replace2), list(CLASS = what, NEED = need))

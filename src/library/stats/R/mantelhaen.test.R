@@ -48,7 +48,7 @@ function(x, y = NULL, z = NULL,
             x <- table(x, y, z[OK])
     }
 
-    if(any(apply(x, 3, sum) < 2))
+    if(any(apply(x, 3L, sum) < 2))
         stop("sample size in each stratum must be > 1")
 
     I <- dim(x)[1L]
@@ -68,13 +68,13 @@ function(x, y = NULL, z = NULL,
 
         if(!exact) {
             ## Classical Mantel-Haenszel 2 x 2 x K test
-            s.x <- apply(x, c(1, 3), sum)
-            s.y <- apply(x, c(2, 3), sum)
-            n <- apply(x, 3, sum)
+            s.x <- apply(x, c(1L, 3L), sum)
+            s.y <- apply(x, c(2L, 3L), sum)
+            n <- apply(x, 3L, sum)
             DELTA <- abs(sum(x[1, 1, ] - s.x[1, ] * s.y[1, ] / n))
             YATES <- ifelse(correct && (DELTA >= .5), .5, 0)
             STATISTIC <- ((DELTA - YATES)^2 /
-                          sum(apply(rbind(s.x, s.y), 2, prod)
+                          sum(apply(rbind(s.x, s.y), 2L, prod)
                               / (n^2 * (n - 1))))
             PARAMETER <- 1
             if (alternative == "two.sided")
@@ -132,9 +132,9 @@ function(x, y = NULL, z = NULL,
 
             METHOD <- paste("Exact conditional test of independence",
                             "in 2 x 2 x k tables")
-            m <- apply(x, c(2, 3), sum)[1, ]
-            n <- apply(x, c(2, 3), sum)[2, ]
-            t <- apply(x, c(1, 3), sum)[1, ]
+            m <- apply(x, c(2L, 3L), sum)[1, ]
+            n <- apply(x, c(2L, 3L), sum)[2, ]
+            t <- apply(x, c(1L, 3L), sum)[1, ]
             s <- sum(x[1, 1, ])
             lo <- sum(pmax(0, t - n))
             hi <- sum(pmin(m, t))
@@ -282,9 +282,9 @@ function(x, y = NULL, z = NULL,
         for (k in 1 : K) {
             f <- x[ , , k]              # frequencies in stratum k
             ntot <- sum(f)              # n_{..k}
-            rowsums <- apply(f, 1, sum)[-I]
+            rowsums <- apply(f, 1L, sum)[-I]
                                         # n_{i.k}, i = 1 to I-1
-            colsums <- apply(f, 2, sum)[-J]
+            colsums <- apply(f, 2L, sum)[-J]
                                         # n_{.jk}, j = 1 to J-1
             n <- n + c(f[-I, -J])
             m <- m + c(outer(rowsums, colsums, "*")) / ntot

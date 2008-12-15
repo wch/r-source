@@ -28,7 +28,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
     if(is.complex(x)) {
         if(nu == 0) {
             jobu <- 'N'
-            u <- matrix(0+0i, 1, 1)  # dim is checked
+            u <- matrix(0+0i, 1L, 1L)  # dim is checked
         }
         else if(nu == n) {
             jobu <- ifelse(n > p, 'A', 'S')
@@ -43,7 +43,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
 
         if (nv == 0) {
             jobv <- 'N'
-            v <- matrix(0+0i, 1, 1) # dim is checked
+            v <- matrix(0+0i, 1L, 1L) # dim is checked
         }
         else if (nv == n) {
             jobv <- ifelse(n > p, 'A', 'S')
@@ -73,8 +73,8 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
         } else {
             jobu <- 'N'
             # these dimensions _are_ checked, but unused
-            u <- matrix(0, 1, 1)
-            v <- matrix(0, 1, 1)
+            u <- matrix(0, 1L, 1L)
+            v <- matrix(0, 1L, 1L)
         }
         jobv <- ''
         res <- .Call("La_svd", jobu, jobv, x, double(min(n,p)), u, v,

@@ -59,7 +59,7 @@ getNativeSymbolInfo <- function(name, PACKAGE, unlist = TRUE,
 	v
     })
 
-   if(length(name) == 1 && unlist)
+   if(length(name) == 1L && unlist)
      syms <- syms[[1L]]
    else
      names(syms) <- name

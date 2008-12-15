@@ -85,15 +85,15 @@ rbind <- function(..., deparse.level = 1)
     r <- rbind2(..1, r)
     if(deparse.level == 0)
 	return(r)
-    ism1 <- !is.null(d1 <- dim(..1)) && length(d1) == 2
-    ism2 <- !is.null(d2)	     && length(d2) == 2 && !fix.na
+    ism1 <- !is.null(d1 <- dim(..1)) && length(d1) == 2L
+    ism2 <- !is.null(d2)	     && length(d2) == 2L && !fix.na
     if(ism1 && ism2) ## two matrices
 	return(r)
 
     ## else -- Setting rownames correctly
     ##	       when one was not a matrix [needs some diligence!]
     Nrow <- function(x) {
-	d <- dim(x); if(length(d) == 2) d[1L] else as.integer(length(x) > 0) }
+	d <- dim(x); if(length(d) == 2L) d[1L] else as.integer(length(x) > 0L) }
     nn1 <- !is.null(N1 <- if((l1 <- Nrow(..1)) && !ism1) Nms(1)) # else NULL
     nn2 <- !is.null(N2 <- if(na == 2 && Nrow(..2) && !ism2) Nms(2))
     if(nn1 || nn2 || fix.na) {

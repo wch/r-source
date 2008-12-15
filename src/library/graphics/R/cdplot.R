@@ -31,7 +31,7 @@ function(formula, data = list(),
 {
     ## extract x, y from formula
     m <- match.call(expand.dots = FALSE)
-    m <- m[c(1, match(c("formula", "data", "subset"), names(m), 0))]
+    m <- m[c(1L, match(c("formula", "data", "subset"), names(m), 0L))]
     require(stats, quietly=TRUE)
     m[[1L]] <- as.name("model.frame")
     mf <- eval.parent(m)

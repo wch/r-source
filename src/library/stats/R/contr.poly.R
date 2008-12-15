@@ -24,7 +24,7 @@ contr.poly <- function (n, scores = 1L:n, contrasts = TRUE)
 	z <- QR$qr
 	z <- z *(row(z) == col(z))
 	raw <- qr.qy(QR, z)
-	Z <- sweep(raw, 2, apply(raw, 2, function(x) sqrt(sum(x^2))), "/",
+	Z <- sweep(raw, 2L, apply(raw, 2L, function(x) sqrt(sum(x^2))), "/",
 		   check.margin=FALSE)
 	colnames(Z) <- paste("^", 1L:n - 1, sep="")
 	Z
@@ -155,7 +155,7 @@ polym <- function(..., degree = 1, raw = FALSE)
     res <- cbind(1, poly(dots[[1L]], degree, raw = raw))[, 1 + z[, 1]]
     for(i in 2:nd)
         res <- res * cbind(1, poly(dots[[i]], degree, raw = raw))[, 1 + z[, i]]
-    colnames(res) <- apply(z, 1, function(x) paste(x, collapse = "."))
+    colnames(res) <- apply(z, 1L, function(x) paste(x, collapse = "."))
     attr(res, "degree") <- as.vector(s)
     res
 }

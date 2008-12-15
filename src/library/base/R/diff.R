@@ -20,8 +20,8 @@ diff.default <- function(x, lag = 1, differences = 1, ...)
 {
     ismat <- is.matrix(x)
     xlen <- if(ismat) dim(x)[1L] else length(x)
-    if (length(lag) > 1 || length(differences) > 1 ||
-        lag < 1 || differences < 1)
+    if (length(lag) > 1L || length(differences) > 1L ||
+        lag < 1L || differences < 1L)
 	stop("'lag' and 'differences' must be integers >= 1")
     if (lag * differences >= xlen)
 	return(x[0]) # empty of proper mode

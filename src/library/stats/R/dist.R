@@ -99,7 +99,7 @@ print.dist <-
     function(x, diag = NULL, upper = NULL,
 	     digits = getOption("digits"), justify = "none", right = TRUE, ...)
 {
-    if(length(x) > 0) {
+    if(length(x)) {
 	if(is.null(diag))
 	    diag <-	 if(is.null(a <- attr(x, "Diag"))) FALSE else a
 	if(is.null(upper))

@@ -240,7 +240,7 @@
                     .Object <- .mergeAttrs(obj, .Object)
                 }
                 else stop(gettextf("unnamed argument must extend either the S3 class or the class of the data part; not true of class \"%s\"", Classi), domain = NA)
-                    
+
             }
         }
         ## named slots are done as in the default method, which will also call validObject()
@@ -252,7 +252,7 @@
            validObject(.Object)
          .Object
     }
-    setMethod("initialize", "oldClass", .initS3, where = envir)        
+    setMethod("initialize", "oldClass", .initS3, where = envir)
     ## Next, miscellaneous S3 classes.
     for(cl in .OldClassesList)
         setOldClass(cl, where = envir)
@@ -298,7 +298,7 @@
                       pr <- classDef@prototype
                       value <- new(cl)
                       slots <- classDef@slots
-                      if(match(".Data", names(slots), 0) > 0) {
+                      if(match(".Data", names(slots), 0L) > 0L) {
                           data <- unclass(from)
                           if(!is(data, slots[[".Data"]]))
                             stop(gettextf("Object must be a valid data part for class \"%s\"; not true of type \"%s\"", cl, class(data)),

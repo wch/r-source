@@ -1624,7 +1624,7 @@ function(package, dir, lib.loc = NULL)
         ## the generic function ... hence substr().
         name <- paste(g, ".", sep = "")
         methods <-
-            functions_in_code[substr(functions_in_code, 1,
+            functions_in_code[substr(functions_in_code, 1L,
                                      nchar(name, type="c")) == name]
         ## </FIXME>
         methods <- methods %w/o% methods_stop_list
@@ -2124,7 +2124,7 @@ function(package, dir, lib.loc = NULL)
         ## of the generic function ... hence substr().
         name <- paste(g, ".", sep = "")
         methods <-
-            functions_in_code[substr(functions_in_code, 1,
+            functions_in_code[substr(functions_in_code, 1L,
                                      nchar(name, type="c")) == name]
         ## </FIXME>
         methods <- methods %w/o% methods_stop_list
@@ -2808,8 +2808,8 @@ function(x, ...)
                                           tags[ind])
                 tags[!ind] <- "Preceding all sections"
                 vals <- as.character(bad[[i]])
-                long <- nchar(vals, type="c") >= 128  # Why 128?  Why not?
-                vals <- paste(sapply(substr(vals, 1, 127), deparse, 128),
+                long <- nchar(vals, type="c") >= 128L  # Why 128?  Why not?
+                vals <- paste(sapply(substr(vals, 1L, 127L), deparse, 128L),
                               ifelse(long, " [truncated]", ""), sep = "")
                 writeLines(c(paste(tags, vals, sep = c(":\n", "\n")), ""))
             }

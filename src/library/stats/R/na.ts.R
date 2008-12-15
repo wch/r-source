@@ -22,7 +22,7 @@ na.contiguous.default <- function(object, ...)
     xfreq <- frequency(object)
     ## use (first) maximal contiguous length of non-NAs
     if(is.matrix(object))
-        good <- apply(!is.na(object), 1, all)
+        good <- apply(!is.na(object), 1L, all)
     else  good <- !is.na(object)
     if(!sum(good)) stop("all times contain an NA")
     tt <- cumsum(!good)
