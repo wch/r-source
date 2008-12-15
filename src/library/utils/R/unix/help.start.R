@@ -47,17 +47,17 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
     shQuote <- function(string)
         paste('"', gsub("\\$", "\\\\$", string), '"', sep="")
 
-    if(!is.character(url) || !(length(url) == 1) || !nzchar(url))
+    if(!is.character(url) || length(url) != 1L|| !nzchar(url))
         stop("'url' must be a non-empty character string")
     if (is.function(browser))
         return(invisible(browser(if(encodeIfNeeded) URLencode(url) else url)))
     if(!is.character(browser)
-       || !(length(browser) == 1)
+       || length(browser) != 1L
        || !nzchar(browser))
         stop("'browser' must be a non-empty character string")
 
     if (.Platform$GUI == "AQUA" ||
-        length(grep("^(localhost|):", Sys.getenv("DISPLAY"))) > 0)
+        length(grep("^(localhost|):", Sys.getenv("DISPLAY"))) )
       isLocal <- TRUE
     else
       isLocal <- FALSE
@@ -117,7 +117,7 @@ make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
         for (i in pg) {
             ## links are set up to break ties of package names
             before <- sum(i %in% known)
-            link <- if(before == 0) i else paste(i, before, sep=".")
+            link <- if(before == 0L) i else paste(i, before, sep=".")
             from <- file.path(lib, i)
             to <- file.path(tempdir(), ".R", "library", link)
             file.symlink(from, to)

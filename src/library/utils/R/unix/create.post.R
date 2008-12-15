@@ -7,7 +7,6 @@ create.post <- function(instructions = "\\n",
                         file = "R.post")
 {
     methods <- c("mailx", "gnudoit", "none", "ess")
-
     method <-
 	if(is.null(method)) "none"
 	else methods[pmatch(method, methods)]
@@ -38,9 +37,7 @@ create.post <- function(instructions = "\\n",
 		     "(end-of-line)'",
 		     sep="")
 	system(cmd)
-    }
-    else if(method=="none"){
-
+    } else if(method=="none") {
         disclaimer <-
             paste("# Your mailer is set to \"none\" (default on Windows),\n",
                   "# hence we cannot send the, ", description, " directly from R.\n",
@@ -50,16 +47,13 @@ create.post <- function(instructions = "\\n",
                   "######################################################\n",
                   "\n\n", sep = "")
 
-
         cat(disclaimer, file=file)
 	body <- gsub("\\\\n", "\n", body)
 	cat(body, file=file, append=TRUE)
         cat("The", description, "is being opened for you to edit.\n")
 	system(paste(getOption("editor"), file))
         cat("The unsent", description, "can be found in file", file, "\n")
-    }
-    else if(method == "mailx"){
-
+    } else if(method == "mailx") {
         if(missing(subject)) stop("'subject' missing")
 
 	body <- gsub("\\\\n", "\n", body)
@@ -75,33 +69,29 @@ create.post <- function(instructions = "\\n",
             cmdargs <- paste("-s '", subject, "'", address, "<",
                              file, "2>/dev/null")
 
-        status <- 1
-
+        status <- 1L
         answer <- readline(paste("Email the ", description, " now? (yes/no) ",
                                  sep = ""))
         answer <- grep("yes", answer, ignore.case=TRUE)
-        if(length(answer)>0){
+        if(length(answer)) {
             cat("Sending email ...\n")
             status <- system(paste("mailx", cmdargs))
-            if(status > 0)
+            if(status)
                 status <- system(paste("Mail", cmdargs))
-            if(status > 0)
+            if(status)
                 status <- system(paste("/usr/ucb/mail", cmdargs))
 
-            if(status==0) unlink(file)
+            if(status == 0L) unlink(file)
             else{
                 cat("Sending email failed!\n")
                 cat("The unsent", description, "can be found in file",
                     file, "\n")
             }
-
-        }
-        else
+        } else
             cat("The unsent", description, "can be found in file",
                 file, "\n")
-
     }
-    else if(method=="ess"){
+    else if(method == "ess") {
 	body <- gsub("\\\\n", "\n", body)
 	cat(body)
     }

@@ -48,8 +48,7 @@ download.file <- function(url, destfile, method,
         status <- system(paste("lynx -dump ", shQuote(url), " > ",
                                path.expand(destfile), sep=""))
 
-    if(status > 0)
-        warning("download had nonzero exit status")
+    if(status) warning("download had nonzero exit status")
 
     invisible(status)
 }
