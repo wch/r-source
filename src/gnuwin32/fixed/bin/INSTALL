@@ -73,7 +73,7 @@ my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
 		    "clean|c", "preclean", "docs:s",
 		    "with-package-versions",
 		    "use-zip", "use-zip-data", "use-zip-help",
-		    "auto-zip", "build", "fake", "unsafe");
+		    "auto-zip", "build", "fake", "unsafe", "pkglock");
 
 ##   	topLevelFiles will be files that sit in the top level of a
 ##      zip/tarball along with any included directories.
@@ -177,7 +177,8 @@ if($opt_docs) {
 
 $safe = 1;
 $safe = 0 if $opt_unsafe;
-    print " *** safe is $safe ***\n" if $opt_debug;
+$safe = 2 if $opt_pkglock;
+print " *** safe is $safe ***\n" if $opt_debug;
 
 if((-e "$R_HOME/doc/html/R.css") && !(-e "$library/R.css")) {
     printf "installing R.css in $library\n";
@@ -298,7 +299,12 @@ foreach $pkg (@ARGV){
     }
     ## Now we are ready to install
     if($safe) {
-	$lockdir = $library . "/" . "00LOCK";
+	if($safe == 2) {
+	    $lockdir = $library . "/" . "00LOCK-" . $pkgname;
+	    printf "Using lock directory $lockdir\n" if $opt_debug;
+	} else {
+	    $lockdir = $library . "/" . "00LOCK";
+	}
 	if(-d $lockdir || -f $lockdir) {
 	    print "Failed to lock directory '${library}' for modifying\n";
 	    print "Try removing '${lockdir}'\n";
@@ -307,7 +313,7 @@ foreach $pkg (@ARGV){
 	}
 	mkpath($lockdir);
 	if(! -d $lockdir) {
-	    print "Failed to lock directory '${library}' for modifying\n";
+	    print "Failed to create lock directory '${library}'\n";
 	    print "Permission problem?\n";
 	    if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
 	    exit 3;
@@ -478,6 +484,7 @@ Options:
   --auto-zip	        select whether to zip automatically
   --fake		do minimal install for testing purposes
   --unsafe		install on top of any existing installation
+  --pkglock		use a per-package lock directory
   --build		zip-up the installation.  Implies --auto-zip
 
 
