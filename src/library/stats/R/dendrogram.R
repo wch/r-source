@@ -394,9 +394,19 @@ plotNode <-
 		vlm <- strheight(c(edgeText,"h"), cex = t.cex)/2
 		hlm <- strwidth (c(edgeText,"m"), cex = t.cex)/2
 		hl3 <- c(hlm[1], hlm[1] + hlm[2], hlm[1])
-                polygon(mx+ c(-hl3, hl3), my + sum(vlm)*c(-1L:1L, 1L:-1L),
-                        col = p.col, border= p.border, lty = p.lty, lwd = p.lwd)
-		text(mx, my, edgeText, cex = t.cex, col = t.col, font = t.font)
+                if(horiz) {
+                    polygon(my+ c(-hl3, hl3), mx + sum(vlm)*c(-1L:1L, 1L:-1L),
+                            col = p.col, border= p.border,
+                            lty = p.lty, lwd = p.lwd)
+                    text(my, mx, edgeText, cex = t.cex, col = t.col,
+                         font = t.font)
+                } else {
+                    polygon(mx+ c(-hl3, hl3), my + sum(vlm)*c(-1L:1L, 1L:-1L),
+                            col = p.col, border= p.border,
+                            lty = p.lty, lwd = p.lwd)
+                    text(mx, my, edgeText, cex = t.cex, col = t.col,
+                         font = t.font)
+                }
 	    }
 	    plotNode(bx$limit[k], bx$limit[k + 1], subtree = child,
 		     type, center, leaflab, dLeaf, nodePar, edgePar, horiz)
