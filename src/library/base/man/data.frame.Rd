@@ -42,12 +42,26 @@ default.stringsAsFactors()
 \value{
   A data frame, a matrix-like structure whose columns may be of
   differing types (numeric, logical, factor and character and so on).
+  
+  How the names of the data frame are created is complex, and the rest
+  of this paragraph is only the basic story.  If the arguments are all
+  named and simple objects (not lists, matrices of data frames) then the
+  argument names give the column names.  For an unnamed simple argument,
+  a deparsed version of the argument is used as the name (with an
+  enclosing \code{I(...)} removed).  For a named matrix/list/data frame
+  argument with ore than one named column, the names of the columns are
+  the name of the argument followed by a dot and the column name inside
+  the argument: if the argument is unnamed, the argument's column names
+  are used.  For a named or unnamed matrix/list/data frame argument that
+  contains a single column, the column name in the result is the column
+  name in the argument.  Finally, the names are adjusted to be unique
+  and syntactically valid unless \code{check.names = FALSE}.
 }
+
 \details{
   A data frame is a list of variables of the same length with unique row
   names, given class \code{"data.frame"}.  If there are zero variables,
   the row names determine the number of rows.
-
 
   Duplicate column names are allowed, but you need to use
   \code{check.names=FALSE} for \code{data.frame} to generate such a data
