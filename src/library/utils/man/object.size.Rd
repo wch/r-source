@@ -5,6 +5,7 @@
 
 \name{object.size}
 \alias{object.size}
+\alias{print.object_size}
 \title{Report the Space Allocated for an Object}
 \description{
   Provides an estimate of the memory that is being used to store an \R object.
