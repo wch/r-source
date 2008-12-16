@@ -137,8 +137,8 @@ DEPRECATED & DEFUNCT
 
 UTILITIES
 
-    o R CMD build now also uses a Makevars[.win] file for cleaning up
-      src/.
+    o	R CMD build now also uses a Makevars[.win] file for cleaning
+	up src/.
 
     o	R CMD Rd2dvi and R CMD check are now able to cope with Cyrillic
     	characters in UTF-8 (thanks to a hint from Alexey Shipunov).
