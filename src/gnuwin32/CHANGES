@@ -97,9 +97,9 @@ BUG FIXES
 	such as Central European, Greek and Cyrillic.  (PR#13195,
 	probably also PR#13120)
 
-    o	The attenpt to make the 'Load' button in the GUI preferences
+    o	The attempt to make the 'Load' button in the GUI preferences
 	start in the home directory failed if the latter was specified
-	with forwward slashes, and reset the current search directory
+	with forward slashes, and reset the current search directory
 	for other file open dialogs (e.g. for opening a script).
 
     o	The installer would sometimes write the current version
