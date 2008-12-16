@@ -97,7 +97,7 @@ NEW FEATURES
     o	The Rd converter now detects and gives a warning on invalid
 	whitespace between arguments after the first, e.g.  \item{foo}
 	{some value} for \item and \section.  Previously arguments
-	after silently whitespace were ignored.
+	after whitespace were silently ignored.
 
     o	strftime() now converts its first argment with as.POSIXlt()
 	and so is no longer an alias for format.POSIXLt.
@@ -114,8 +114,8 @@ NEW FEATURES
     o	object.size() now returns an object of class "object_size" and
     	has a print() method.
 
-    o	[col/row]Sums(), *Means() now have an additional '...' argument, so
-	that they can more easily be turned into generic functions.
+    o	[col/row]Sums(), *Means() now have an additional '...' argument,
+	so that they can more easily be turned into generic functions.
 
 
 DEPRECATED & DEFUNCT
