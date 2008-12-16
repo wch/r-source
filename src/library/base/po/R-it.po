@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:13\n"
+"POT-Creation-Date: 2008-12-16 12:59\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -682,6 +682,9 @@ msgstr "'vec' contiene NA"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' deve essere ordinato in ordine non decrescente"
 
+msgid "using the first element of 'value' of type expression"
+msgstr ""
+
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
 msgstr "'mode' deve essere \"double\" (\"real\") o \"integer\""
 
@@ -810,8 +813,9 @@ msgstr "non c'è alcun pacchetto chiamato '%s'"
 msgid "no library trees found in 'lib.loc'"
 msgstr ""
 
-msgid "'%s' is not a valid package -- installed < 2.0.0?"
-msgstr "'%s' non è un pacchetto valido -- installato < 2.0.0?"
+#, fuzzy
+msgid "'%s' is not a valid installed package"
+msgstr "'%s' non è una scelta valida"
 
 msgid "'%s' not found on search path, using pos = 2"
 msgstr "'%s' non trovato nel percorso di ricerca, uso pos = 2"
@@ -1093,6 +1097,9 @@ msgstr ""
 
 msgid "package '%s' does not have a name space"
 msgstr "il pacchetto '%s' non ha un namespace"
+
+msgid "exportClassPattern specified but no matching classes in %s"
+msgstr ""
 
 msgid "in '%s' classes for export not defined: %s"
 msgstr "in '%s', classi da esportare non definite: %s"
@@ -1592,6 +1599,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#~ msgid "'%s' is not a valid package -- installed < 2.0.0?"
+#~ msgstr "'%s' non è un pacchetto valido -- installato < 2.0.0?"
 
 #~ msgid "non-numeric data type in frame"
 #~ msgstr "dati in frame non di tipo numeric"

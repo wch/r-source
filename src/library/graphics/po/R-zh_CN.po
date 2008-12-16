@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-02-08 14:26\n"
+"POT-Creation-Date: 2008-12-16 12:57\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -40,7 +40,8 @@ msgstr "'x'里至少要有一个值是正数"
 msgid "incorrect 'col': must be length 2"
 msgstr "'col'不对: 长度必需为二"
 
-msgid "'side' must be in {1:4}"
+#, fuzzy
+msgid "'side' must be in {1L:4}"
 msgstr "'side'的值必需在{1:4}中"
 
 msgid "invalid 'axp'"
@@ -49,7 +50,8 @@ msgstr "'axp'不对"
 msgid "invalid 'log'"
 msgstr "'log'不对"
 
-msgid "invalid positive 'axp[3]'"
+#, fuzzy
+msgid "invalid positive 'axp[3L]'"
 msgstr "正数'axp[3]'不对"
 
 msgid "invalid 'usr'"
@@ -243,7 +245,11 @@ msgstr "'text.width'必需为大于等于零的数值"
 msgid "horizontal specification overrides: Number of columns :="
 msgstr "水平定义超越其它的定义： 列的数目为 :="
 
-msgid "not using pch[2..] since pch[1] has multiple chars"
+msgid "'merge = TRUE' has no effect when no line segments are drawn"
+msgstr ""
+
+#, fuzzy
+msgid "not using pch[2..] since pch[1L] has multiple chars"
 msgstr "pch[2..] 没用，因为pch[1] 包含多个字符"
 
 msgid "must specify at least one of 'x' and 'y'"
@@ -400,4 +406,3 @@ msgstr[0] "boxplot%2$d里没有画离群值(%1$s)"
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "没有用%s这个变元"
-

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:13\n"
-"PO-Revision-Date: 2008-09-08 14:13\n"
+"POT-Creation-Date: 2008-12-16 12:59\n"
+"PO-Revision-Date: 2008-12-16 12:59\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -664,6 +664,9 @@ msgstr "‘vec’ contains NAs"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "‘vec’ must be sorted non-decreasingly"
 
+msgid "using the first element of 'value' of type expression"
+msgstr "using the first element of ‘value’ of type expression"
+
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
 msgstr "‘mode’ must be “double” (“real”) or “integer”"
 
@@ -784,8 +787,8 @@ msgstr "there is no package called ‘%s’"
 msgid "no library trees found in 'lib.loc'"
 msgstr "no library trees found in ‘lib.loc’"
 
-msgid "'%s' is not a valid package -- installed < 2.0.0?"
-msgstr "‘%s’ is not a valid package -- installed < 2.0.0?"
+msgid "'%s' is not a valid installed package"
+msgstr "‘%s’ is not a valid installed package"
 
 msgid "'%s' not found on search path, using pos = 2"
 msgstr "‘%s’ not found on search path, using pos = 2"
@@ -1057,6 +1060,9 @@ msgstr "failed to assign NativeSymbolInfo for"
 
 msgid "package '%s' does not have a name space"
 msgstr "package ‘%s’ does not have a name space"
+
+msgid "exportClassPattern specified but no matching classes in %s"
+msgstr "exportClassPattern specified but no matching classes in %s"
 
 msgid "in '%s' classes for export not defined: %s"
 msgstr "in ‘%s’ classes for export not defined: %s"

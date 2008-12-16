@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:30\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
 "PO-Revision-Date: 2008-10-08 18:27+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -518,6 +518,9 @@ msgstr "包袱'%s'没有完全被装好"
 msgid "bundle '%s' has extra contents %s"
 msgstr "包袱'%s'里有多余的内容%s"
 
+msgid "read.dcf() error on file '%s'"
+msgstr ""
+
 msgid "'priority' must be character or NULL"
 msgstr "'priority'的值要么是字符要么为NULL"
 
@@ -586,6 +589,9 @@ msgstr "无法安装程序包"
 
 msgid "unable to create"
 msgstr "无法建立"
+
+msgid "inferring 'repos = NULL' from the file name"
+msgstr ""
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "无法在Windows下安装MacOS X二元程序包"
@@ -764,6 +770,12 @@ msgstr "无法将'x'转变成罗马数"
 msgid "Invalid roman numeral(s): %s"
 msgstr "罗马数字不对：%S"
 
+msgid "length mismatch: bug in code!"
+msgstr ""
+
+msgid "Processing file"
+msgstr ""
+
 msgid "no valid packages were specified"
 msgstr "没有设定程序包"
 
@@ -863,6 +875,12 @@ msgstr "用非联接文件：超联结有可能出错"
 
 msgid "options(\"browser\") not set"
 msgstr "options(\"browser\")没有设好"
+
+msgid "'latexcmd' is empty"
+msgstr ""
+
+msgid "'dvipscmd' is empty"
+msgstr ""
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "浏览器的名字不对，请检查options(\"browser\")的设置。"
@@ -1058,4 +1076,3 @@ msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
 
 #~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
 #~ msgstr "可以从其他文件/KEYWORDS中任选其他关键字，每行一个"
-

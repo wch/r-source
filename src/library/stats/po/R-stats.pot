@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-26 09:07\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,6 +126,9 @@ msgid "'A' must be an array or table"
 msgstr ""
 
 msgid "length of FUN, %d,\n does not match the length of the margins, %d"
+msgstr ""
+
+msgid "no rows to aggregate"
 msgstr ""
 
 msgid "'by' must be a list"
@@ -1478,7 +1481,7 @@ msgstr ""
 msgid "'params' has wrong length"
 msgstr ""
 
-msgid "'varying' must be in 1:length(pars)"
+msgid "'varying' must be in 1L:length(pars)"
 msgstr ""
 
 msgid "'varying' has wrong length"
@@ -1592,13 +1595,13 @@ msgstr ""
 msgid "too few groups"
 msgstr ""
 
+msgid "Not plotting observations with leverage one:"
+msgstr ""
+
 msgid "use only with \"lm\" objects"
 msgstr ""
 
-msgid "'which' must be in 1:6"
-msgstr ""
-
-msgid "Not plotting observations with leverage one:"
+msgid "'which' must be in 1L:6"
 msgstr ""
 
 msgid "'id.n' must be in {1,..,%d}"
@@ -1742,7 +1745,7 @@ msgstr ""
 msgid "'ref' must be an existing level"
 msgstr ""
 
-msgid "ref = %d must be in 1:%d"
+msgid "ref = %d must be in 1L:%d"
 msgstr ""
 
 msgid "Failed to guess time-varying variables from their names"
@@ -1890,6 +1893,9 @@ msgid "spline: first and last y values differ - using y[1] for both"
 msgstr ""
 
 msgid "'spline' requires n >= 1"
+msgstr ""
+
+msgid "spline: first and last y values differ - using y[1L] for both"
 msgstr ""
 
 msgid "'deriv' must be between 0 and 3"

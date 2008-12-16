@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:13\n"
+"POT-Creation-Date: 2008-12-16 12:59\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -644,6 +644,9 @@ msgstr "'vec'内有NA值"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec'的顺序一定得从小到大"
 
+msgid "using the first element of 'value' of type expression"
+msgstr ""
+
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
 msgstr "'mode'的值必需是\"double\" (\"real\")或者 \"integer\"中的一个"
 
@@ -765,8 +768,9 @@ msgstr "不存在叫'%s'这个名字的程辑包"
 msgid "no library trees found in 'lib.loc'"
 msgstr "在'lib.loc'里找不到常式庫树"
 
-msgid "'%s' is not a valid package -- installed < 2.0.0?"
-msgstr "'%s'不是正当的程辑包--是不是在R版本2.0.0之前装的？"
+#, fuzzy
+msgid "'%s' is not a valid installed package"
+msgstr "%s'不是正当的选择"
 
 msgid "'%s' not found on search path, using pos = 2"
 msgstr "在搜索路径上找不到'%s'，用pos=2"
@@ -1034,6 +1038,9 @@ msgstr "不能分配NativeSymbolInfo给"
 
 msgid "package '%s' does not have a name space"
 msgstr "程辑包'%s'没有名字空间"
+
+msgid "exportClassPattern specified but no matching classes in %s"
+msgstr ""
 
 msgid "in '%s' classes for export not defined: %s"
 msgstr "用于出口的'%s'类别不存在：%s"
@@ -1503,6 +1510,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 
+#~ msgid "'%s' is not a valid package -- installed < 2.0.0?"
+#~ msgstr "'%s'不是正当的程辑包--是不是在R版本2.0.0之前装的？"
+
 #~ msgid "non-numeric data type in frame"
 #~ msgstr "框里有非数值的数据类"
 
@@ -1616,4 +1626,3 @@ msgstr[0] "警告信息：\n"
 
 #~ msgid "arguments 'r' and 'c' must have the same sums"
 #~ msgstr "变元'r'和'c'各自的和必需相等"
-

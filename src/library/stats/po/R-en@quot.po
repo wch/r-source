@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-26 09:07\n"
-"PO-Revision-Date: 2008-09-26 09:07\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
+"PO-Revision-Date: 2008-12-16 13:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -153,6 +153,9 @@ msgid ""
 msgstr ""
 "length of FUN, %d,\n"
 " does not match the length of the margins, %d"
+
+msgid "no rows to aggregate"
+msgstr "no rows to aggregate"
 
 msgid "'by' must be a list"
 msgstr "‘by’ must be a list"
@@ -1548,8 +1551,8 @@ msgstr "Logical ‘hessian’ argument not allowed.  See documentation."
 msgid "'params' has wrong length"
 msgstr "‘params’ has wrong length"
 
-msgid "'varying' must be in 1:length(pars)"
-msgstr "‘varying’ must be in 1:length(pars)"
+msgid "'varying' must be in 1L:length(pars)"
+msgstr "‘varying’ must be in 1L:length(pars)"
 
 msgid "'varying' has wrong length"
 msgstr "‘varying’ has wrong length"
@@ -1664,14 +1667,14 @@ msgstr "‘x’ and ‘n’ must have the same length"
 msgid "too few groups"
 msgstr "too few groups"
 
+msgid "Not plotting observations with leverage one:"
+msgstr "Not plotting observations with leverage one:"
+
 msgid "use only with \"lm\" objects"
 msgstr "use only with “lm” objects"
 
-msgid "'which' must be in 1:6"
-msgstr "‘which’ must be in 1:6"
-
-msgid "Not plotting observations with leverage one:"
-msgstr "Not plotting observations with leverage one:"
+msgid "'which' must be in 1L:6"
+msgstr "‘which’ must be in 1L:6"
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "‘id.n’ must be in {1,..,%d}"
@@ -1824,8 +1827,8 @@ msgstr "‘relevel’ only for factors"
 msgid "'ref' must be an existing level"
 msgstr "‘ref’ must be an existing level"
 
-msgid "ref = %d must be in 1:%d"
-msgstr "ref = %d must be in 1:%d"
+msgid "ref = %d must be in 1L:%d"
+msgstr "ref = %d must be in 1L:%d"
 
 msgid "Failed to guess time-varying variables from their names"
 msgstr "Failed to guess time-varying variables from their names"
@@ -1977,6 +1980,9 @@ msgstr "spline: first and last y values differ - using y[1] for both"
 
 msgid "'spline' requires n >= 1"
 msgstr "‘spline’ requires n >= 1"
+
+msgid "spline: first and last y values differ - using y[1L] for both"
+msgstr "spline: first and last y values differ - using y[1L] for both"
 
 msgid "'deriv' must be between 0 and 3"
 msgstr "‘deriv’ must be between 0 and 3"

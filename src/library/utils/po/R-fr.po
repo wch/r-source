@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:30\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
 "PO-Revision-Date: 2008-09-30 19:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -546,6 +546,9 @@ msgstr "le bundle '%s' n'est pas installé complètement"
 msgid "bundle '%s' has extra contents %s"
 msgstr "le bundle '%s' possède un contenu surnuméraire %s"
 
+msgid "read.dcf() error on file '%s'"
+msgstr ""
+
 msgid "'priority' must be character or NULL"
 msgstr "'priority' doit être de type caractère ou NULL"
 
@@ -614,6 +617,9 @@ msgstr "impossible d'installer les packages"
 
 msgid "unable to create"
 msgstr "impossible de créer"
+
+msgid "inferring 'repos = NULL' from the file name"
+msgstr ""
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "impossible d'installer les packages MacOS X binaire sous Windows"
@@ -807,6 +813,12 @@ msgstr "impossible de convertir 'x' en roman"
 msgid "Invalid roman numeral(s): %s"
 msgstr "Nombre(s) roman(s) incorrect(s) : %s"
 
+msgid "length mismatch: bug in code!"
+msgstr ""
+
+msgid "Processing file"
+msgstr ""
+
 msgid "no valid packages were specified"
 msgstr "aucun package valide n'a été spécifié"
 
@@ -908,6 +920,12 @@ msgstr ""
 
 msgid "options(\"browser\") not set"
 msgstr "options(\"browser\") non fixée"
+
+msgid "'latexcmd' is empty"
+msgstr ""
+
+msgid "'dvipscmd' is empty"
+msgstr ""
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "nom de navigateur incorrect, vérifiez options(\"browser\")."

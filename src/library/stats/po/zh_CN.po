@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16+0100\n"
+"POT-Creation-Date: 2008-12-16 13:00+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -143,20 +143,20 @@ msgstr "NULL环境不再有用了"
 msgid "'rho' should be an environment"
 msgstr "'rho'必需为环境"
 
-#: nls.c:302
+#: nls.c:303
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir'这个数字向量的长度不对"
 
-#: nls.c:319 nls.c:347
+#: nls.c:320 nls.c:348
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "在计算模型的时候产生了缺省值或无限值"
 
-#: nls.c:325
+#: nls.c:326
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "变量'%s'应该为整数，不能是数值"
 
-#: nls.c:327
+#: nls.c:328
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "变量'%s'不是数值"

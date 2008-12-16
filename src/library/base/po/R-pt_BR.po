@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:13\n"
+"POT-Creation-Date: 2008-12-16 12:59\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -678,6 +678,9 @@ msgstr "'vec' contem NAs"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' deve ser ordenado de forma não-decrescente"
 
+msgid "using the first element of 'value' of type expression"
+msgstr ""
+
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
 msgstr "'mode' deve ser \"double\" (\"real\") ou \"integer\""
 
@@ -807,8 +810,9 @@ msgstr "não há nenhum pacote chamado '%s'"
 msgid "no library trees found in 'lib.loc'"
 msgstr "nenhuma biblioteca encontrada em 'lib.loc'"
 
-msgid "'%s' is not a valid package -- installed < 2.0.0?"
-msgstr "'%s' não é um pacote válido -- instalado antes do R 2.0.0?"
+#, fuzzy
+msgid "'%s' is not a valid installed package"
+msgstr "'%s' não é uma escolha válida"
 
 msgid "'%s' not found on search path, using pos = 2"
 msgstr "'%s' não encontrado no caminho de procura, usando pos = 2"
@@ -1090,6 +1094,9 @@ msgstr "falha na atribuição de NativeSymbolInfo para"
 
 msgid "package '%s' does not have a name space"
 msgstr "pacote '%s' não tem um espaõ de nomes"
+
+msgid "exportClassPattern specified but no matching classes in %s"
+msgstr ""
 
 msgid "in '%s' classes for export not defined: %s"
 msgstr "em '%s' classes para expor~tação não definidas: %s"
@@ -1586,6 +1593,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "'%s' is not a valid package -- installed < 2.0.0?"
+#~ msgstr "'%s' não é um pacote válido -- instalado antes do R 2.0.0?"
 
 #~ msgid "non-numeric data type in frame"
 #~ msgstr "tipo de dados não numérico no frame"

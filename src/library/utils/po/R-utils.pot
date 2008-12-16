@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:30\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -479,6 +479,9 @@ msgstr ""
 msgid "bundle '%s' has extra contents %s"
 msgstr ""
 
+msgid "read.dcf() error on file '%s'"
+msgstr ""
+
 msgid "'priority' must be character or NULL"
 msgstr ""
 
@@ -540,6 +543,9 @@ msgid "unable to install packages"
 msgstr ""
 
 msgid "unable to create"
+msgstr ""
+
+msgid "inferring 'repos = NULL' from the file name"
 msgstr ""
 
 msgid "cannot install MacOS X binary packages on Windows"
@@ -701,6 +707,12 @@ msgstr ""
 msgid "Invalid roman numeral(s): %s"
 msgstr ""
 
+msgid "length mismatch: bug in code!"
+msgstr ""
+
+msgid "Processing file"
+msgstr ""
+
 msgid "no valid packages were specified"
 msgstr ""
 
@@ -795,6 +807,12 @@ msgid "Using non-linked HTML file: hyperlinks may be incorrect"
 msgstr ""
 
 msgid "options(\"browser\") not set"
+msgstr ""
+
+msgid "'latexcmd' is empty"
+msgstr ""
+
+msgid "'dvipscmd' is empty"
 msgstr ""
 
 msgid "invalid browser name, check options(\"browser\")."

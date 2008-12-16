@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16+0100\n"
+"POT-Creation-Date: 2008-12-16 13:00+0000\n"
 "PO-Revision-Date: 2008-09-30 19:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -36,16 +36,11 @@ msgstr "approx() : méthode d'interpolation incorrecte"
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx() : tentative d'interpolation de valeurs NA"
 
-#: arima.c:69
-#: arima.c:183
-#: arima.c:359
+#: arima.c:69 arima.c:183 arima.c:359
 msgid "invalid argument type"
 msgstr "type d'argument incorrect"
 
-#: arima.c:418
-#: arima.c:502
-#: pacf.c:308
-#: pacf.c:348
+#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
 msgid "can only transform 100 pars in arima0"
 msgstr "impossible de transformer plus de 100 pars dans arima0"
 
@@ -70,15 +65,12 @@ msgstr "distance() : distance incorrecte"
 msgid "Value %d out of range (0, 1)"
 msgstr "Valeur %d hors plage (0, 1)"
 
-#: family.c:42
-#: family.c:56
-#: family.c:74
+#: family.c:42 family.c:56 family.c:74
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "L'argument %s doit être un vecteur numérique non vide"
 
-#: family.c:107
-#: family.c:110
+#: family.c:107 family.c:110
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "l'argument %s doit être un vecteur numérique de longueur 1 ou %d"
@@ -115,17 +107,8 @@ msgstr "'control' doit être une liste"
 msgid "'m' must be a list"
 msgstr "'m' doit être une liste"
 
-#: nls.c:111
-#: nls.c:116
-#: nls.c:121
-#: nls.c:126
-#: nls.c:131
-#: nls.c:172
-#: nls.c:177
-#: nls.c:182
-#: nls.c:187
-#: nls.c:192
-#: nls.c:197
+#: nls.c:111 nls.c:116 nls.c:121 nls.c:126 nls.c:131 nls.c:172 nls.c:177
+#: nls.c:182 nls.c:187 nls.c:192 nls.c:197
 #, c-format
 msgid "'%s' absent"
 msgstr "'%s' absent"
@@ -152,8 +135,7 @@ msgstr "convergence obtenue"
 msgid "'theta' should be of type character"
 msgstr "'theta' doit être de type caractère"
 
-#: nls.c:296
-#: port.c:380
+#: nls.c:296 port.c:380
 msgid "use of NULL environment is defunct"
 msgstr "l'utilisation de l'environnement NULL n'est plus autorisée"
 
@@ -161,21 +143,21 @@ msgstr "l'utilisation de l'environnement NULL n'est plus autorisée"
 msgid "'rho' should be an environment"
 msgstr "'rho' doit être un environnement"
 
-#: nls.c:302
+#: nls.c:303
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir' n'est pas un vecteur numérique de longueur correcte"
 
-#: nls.c:319
-#: nls.c:347
+#: nls.c:320 nls.c:348
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Valeur manquante ou infinie obtenue au cours du calcul du modèle"
 
-#: nls.c:325
+#: nls.c:326
 #, c-format
 msgid "variable '%s' is integer, not numeric"
-msgstr "la variable '%s' est une valeur entière, non un nombre à virgule flottante"
+msgstr ""
+"la variable '%s' est une valeur entière, non un nombre à virgule flottante"
 
-#: nls.c:327
+#: nls.c:328
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "la variable '%s' n'est pas numérique"
@@ -206,19 +188,20 @@ msgstr "Rf_divset : alg = %d doit être 1, 2, 3, ou 4"
 #: port.c:324
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
-msgstr "la fonction de gradient doit renvoyer un vecteur numérique de longueur %d"
+msgstr ""
+"la fonction de gradient doit renvoyer un vecteur numérique de longueur %d"
 
 #: port.c:334
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr "la function Hessian doit renvoyer une matrice carrée numérique d'ordre %d"
+msgstr ""
+"la function Hessian doit renvoyer une matrice carrée numérique d'ordre %d"
 
 #: port.c:384
 msgid "'rho' must be an environment"
 msgstr "'rho' doit être un environnement"
 
-#: port.c:386
-#: port.c:537
+#: port.c:386 port.c:537
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' doit être un vecteur numérique non vide"
 
@@ -229,7 +212,9 @@ msgstr "Qaund Hessian est défini, un gradient doit l'être aussi"
 #: port.c:391
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
-msgstr "l'environnement 'rho' doit contenir un vecteur numérique '.par' de longueur %d"
+msgstr ""
+"l'environnement 'rho' doit contenir un vecteur numérique '.par' de longueur %"
+"d"
 
 #: port.c:405
 msgid "'lower' and 'upper' must be numeric vectors"
@@ -252,7 +237,9 @@ msgstr "'gradient' doit être une matrice numérique de dimension (%d, %d)"
 #: port.c:506
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
-msgstr "'fcn' a produit un mode %d de longueur %d - il fallait un mode %d de longueur %d"
+msgstr ""
+"'fcn' a produit un mode %d de longueur %d - il fallait un mode %d de "
+"longueur %d"
 
 #: port.c:519
 msgid "invalid type for eval_check_store"
@@ -275,8 +262,7 @@ msgstr "règle finale incorrecte pour une médiane mobile de 3 : %d"
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "erreur d'allocation dans smooth(*, '3RSR')."
 
-#: smooth.c:244
-#: smooth.c:254
+#: smooth.c:244 smooth.c:254
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "erreur d'allocation dans smooth(*, '3RSS')."
 
@@ -288,4 +274,3 @@ msgstr "erreur d'allocation dans smooth(*, '3R')."
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "valeur manquante dans les %d dernières observations"
-

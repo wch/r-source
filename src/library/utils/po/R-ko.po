@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:30\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -549,6 +549,9 @@ msgstr "bundle '%s'는 불완전하게 인스톨됩니다"
 msgid "bundle '%s' has extra contents %s"
 msgstr "bundle '%s'는 여분의 내용 %s를 가지고 있습니다"
 
+msgid "read.dcf() error on file '%s'"
+msgstr ""
+
 msgid "'priority' must be character or NULL"
 msgstr "'prority'는 문자 또는 NULL이어야만 합니다"
 
@@ -623,6 +626,9 @@ msgstr "패키지 '%s'를 검색할수 가 없었습니다"
 #, fuzzy
 msgid "unable to create"
 msgstr "'%s'를 작성하는데 실패 되었습니다"
+
+msgid "inferring 'repos = NULL' from the file name"
+msgstr ""
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "windows에 MacOs의 X 2진법의 패키지를 인스톨 할수 없습니다"
@@ -815,6 +821,12 @@ msgstr ""
 msgid "Invalid roman numeral(s): %s"
 msgstr ""
 
+msgid "length mismatch: bug in code!"
+msgstr ""
+
+msgid "Processing file"
+msgstr ""
+
 #, fuzzy
 msgid "no valid packages were specified"
 msgstr "패키지는 지정되지 않았습니다"
@@ -920,6 +932,12 @@ msgstr ""
 
 msgid "options(\"browser\") not set"
 msgstr "세트 되지않는 옵션(\"browser\")입니다"
+
+msgid "'latexcmd' is empty"
+msgstr ""
+
+msgid "'dvipscmd' is empty"
+msgstr ""
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "무효의 browser명, 체크 옵션(\"browser\")입니다"

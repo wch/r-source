@@ -174,7 +174,7 @@ function(dir, potFile)
                                  shQuote(encodeString(e[1L]), type="cmd")),
                            paste('msgid_plural',
                                  shQuote(encodeString(e[2L]), type="cmd")),
-                           'msgstr[0]    ""', 'msgstr[1L]    ""')
+                           'msgstr[0]    ""', 'msgstr[1]    ""')
                            )
                 un <- un[-match(e, un)]
             }

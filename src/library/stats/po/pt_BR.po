@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16+0100\n"
+"POT-Creation-Date: 2008-12-16 13:00+0000\n"
 "PO-Revision-Date: 2005-12-17 10:57-0200\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -148,21 +148,21 @@ msgstr "uso do ambiente NULL é obsoleto"
 msgid "'rho' should be an environment"
 msgstr "'rho' deve ser um ambiente"
 
-#: nls.c:302
+#: nls.c:303
 #, fuzzy
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "argumento %s deve ser um vetor numérico com comprimento 1 ou %d"
 
-#: nls.c:319 nls.c:347
+#: nls.c:320 nls.c:348
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Obtido valor faltante ou infinito quando avaliando o modelo"
 
-#: nls.c:325
+#: nls.c:326
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "variável '%s' é inteira, não numérica"
 
-#: nls.c:327
+#: nls.c:328
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "variável '%s' não é numérica"

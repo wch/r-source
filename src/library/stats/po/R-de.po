@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-26 09:07\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
 "PO-Revision-Date: 2008-09-19 10:49+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -138,6 +138,10 @@ msgid ""
 "length of FUN, %d,\n"
 " does not match the length of the margins, %d"
 msgstr "Länge von FUN, %d,\\n entspricht nicht der Länge der Ränder, %d"
+
+#, fuzzy
+msgid "no rows to aggregate"
+msgstr "keine Modelle zum Vergleich"
 
 msgid "'by' must be a list"
 msgstr "'by' muss eine Liste sein"
@@ -1564,7 +1568,8 @@ msgstr "Boolesches 'hessian' Argument nicht erlaubt. Siehe Dokumentation'"
 msgid "'params' has wrong length"
 msgstr "'params' hat falsche Länge"
 
-msgid "'varying' must be in 1:length(pars)"
+#, fuzzy
+msgid "'varying' must be in 1L:length(pars)"
 msgstr "'varying' muss in 1:length(pars) liegen"
 
 msgid "'varying' has wrong length"
@@ -1683,14 +1688,15 @@ msgstr "'x' und 'n' müssen gleich lang sein"
 msgid "too few groups"
 msgstr "zu wenig Gruppen"
 
+msgid "Not plotting observations with leverage one:"
+msgstr "Kein Plot der Beobachtungen mit Leverage 1:"
+
 msgid "use only with \"lm\" objects"
 msgstr "nur mit \"lm\" Objekten benutzen"
 
-msgid "'which' must be in 1:6"
+#, fuzzy
+msgid "'which' must be in 1L:6"
 msgstr "'which' muss in 1:6 liegen"
-
-msgid "Not plotting observations with leverage one:"
-msgstr "Kein Plot der Beobachtungen mit Leverage 1:"
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' muss in {1,...,%d} liegen"
@@ -1846,7 +1852,8 @@ msgstr "'relevel' nur für Faktoren"
 msgid "'ref' must be an existing level"
 msgstr "'ref' muss eine exisiterende Faktorstufe sein"
 
-msgid "ref = %d must be in 1:%d"
+#, fuzzy
+msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d muss in 1:%d liegen"
 
 msgid "Failed to guess time-varying variables from their names"
@@ -2000,6 +2007,11 @@ msgstr ""
 
 msgid "'spline' requires n >= 1"
 msgstr "'spline' erwartet n >= 1"
+
+#, fuzzy
+msgid "spline: first and last y values differ - using y[1L] for both"
+msgstr ""
+"spline: erster und letzter y Wert unterscheiden sich - benutze y[1] für beide"
 
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv' muss zwischen 0 und 3 liegen"

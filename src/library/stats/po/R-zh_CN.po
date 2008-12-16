@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-26 08:39\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -136,6 +136,10 @@ msgid ""
 msgstr ""
 "FUN的长度, %d,\n"
 "与边缘的长度, %d不相符"
+
+#, fuzzy
+msgid "no rows to aggregate"
+msgstr "没有可用来比较的模型"
 
 msgid "'by' must be a list"
 msgstr "'by'必需是串列"
@@ -1516,7 +1520,8 @@ msgstr "不能有逻辑值的`hessian'变元。请参考说明书。' "
 msgid "'params' has wrong length"
 msgstr "'params'的长度不对"
 
-msgid "'varying' must be in 1:length(pars)"
+#, fuzzy
+msgid "'varying' must be in 1L:length(pars)"
 msgstr "'varying'必需在1:length(pars) 之间"
 
 msgid "'varying' has wrong length"
@@ -1631,14 +1636,15 @@ msgstr "'x'和'n'的长度必需相等"
 msgid "too few groups"
 msgstr "组数不够"
 
+msgid "Not plotting observations with leverage one:"
+msgstr "不对杠杆效果为一的点绘图"
+
 msgid "use only with \"lm\" objects"
 msgstr "只对\"lm\"对象适用"
 
-msgid "'which' must be in 1:6"
+#, fuzzy
+msgid "'which' must be in 1L:6"
 msgstr "'which'必需在1:6之间"
-
-msgid "Not plotting observations with leverage one:"
-msgstr "不对杠杆效果为一的点绘图"
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n'必需在{1,..,%d}中"
@@ -1788,7 +1794,8 @@ msgstr "'relevel'只适用于因子"
 msgid "'ref' must be an existing level"
 msgstr "'ref'必需是存在的层次"
 
-msgid "ref = %d must be in 1:%d"
+#, fuzzy
+msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d必需在1:%d里"
 
 msgid "Failed to guess time-varying variables from their names"
@@ -1939,6 +1946,10 @@ msgstr "spline: 第一个和最后一个y的值不相等-两个用y[1]"
 
 msgid "'spline' requires n >= 1"
 msgstr "'spline'需要n大于等于一"
+
+#, fuzzy
+msgid "spline: first and last y values differ - using y[1L] for both"
+msgstr "spline: 第一个和最后一个y的值不相等-两个用y[1]"
 
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv'必需在零和三之间"
@@ -2278,4 +2289,3 @@ msgstr[0] "参数%s没有在模型公式里出现过"
 #~ msgstr ""
 #~ "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \", "
 #~ "\"\"probit\"和\"cloglog\""
-

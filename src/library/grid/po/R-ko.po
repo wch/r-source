@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
 "PO-Revision-Date: 2005-05-25 16:34+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -130,9 +130,6 @@ msgstr "viewports를 push하는 것만이 유효합니다"
 
 msgid "Must specify at least one viewport"
 msgstr "적어도 1개의 viewport를 지정하지 않으면 안됩니다"
-
-msgid "Viewport '%s' was not found"
-msgstr "Viewport '%s'가 검색되지 않습니다"
 
 msgid "Must pop at least one viewport"
 msgstr "적어도 1개의 viewport를 pop하지 않으면 안됩니다"
@@ -380,6 +377,16 @@ msgstr ""
 msgid "'x' and 'y' must all be units of length 1"
 msgstr "'x' 그리고 'y'는 길이 1이 아니면 안됩니다"
 
+#, fuzzy
+msgid "'r' must be a unit object"
+msgstr "'length'는 unit 오브젝트가 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "'x', 'y', 'width', and 'height' must have length 1"
+msgstr ""
+"'x', 'y', 'width' 그리고 'height'는 모두 길이 1의 units가 나오지 않으면 되지 "
+"않습니다"
+
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x'  그리고 'units'는 0보다 큰 길이가 나오지 않으면 되지 않습니다"
 
@@ -496,6 +503,9 @@ msgstr "'x' 또는 'xscale' 중 적어도 하나를 지정하지 않으면 되�
 
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "'y' 또는 'yscale' 중 적어도 하나를 지정하지 않으면 되지 않습니다"
+
+#~ msgid "Viewport '%s' was not found"
+#~ msgstr "Viewport '%s'가 검색되지 않습니다"
 
 #, fuzzy
 #~ msgid "Invalid"

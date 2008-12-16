@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-02-08 14:26\n"
+"POT-Creation-Date: 2008-12-16 12:57\n"
 "PO-Revision-Date: 2008-10-06 16:47-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -19,7 +19,8 @@ msgstr ""
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "'a' is overridden by 'reg'"
 msgstr "'a' отвергнут в пользу 'reg'"
@@ -45,7 +46,8 @@ msgstr "как минимум одна запись в 'x' должна быть положительной"
 msgid "incorrect 'col': must be length 2"
 msgstr "неправильный параметр 'col': должен быть длиной 2"
 
-msgid "'side' must be in {1:4}"
+#, fuzzy
+msgid "'side' must be in {1L:4}"
 msgstr "'side' должен быть в пределах {1:4}"
 
 msgid "invalid 'axp'"
@@ -54,7 +56,8 @@ msgstr "неправильный 'axp'"
 msgid "invalid 'log'"
 msgstr "неправильный 'log'"
 
-msgid "invalid positive 'axp[3]'"
+#, fuzzy
+msgid "invalid positive 'axp[3L]'"
 msgstr "неправильный положительный 'axp[3]'"
 
 msgid "invalid 'usr'"
@@ -64,10 +67,12 @@ msgid "'height' must be a vector or a matrix"
 msgstr "'height' должен быть вектором или матрицей"
 
 msgid "Cannot use shading lines in bars when log scale is used"
-msgstr "Не могу затенять линии в столбиках, если используется логарифмическая шкала"
+msgstr ""
+"Не могу затенять линии в столбиках, если используется логарифмическая шкала"
 
 msgid "log scale error: at least one 'height + offset' value <= 0"
-msgstr "Ошибка логарифмической шкалы: at least one 'height + offset' значение <= 0"
+msgstr ""
+"Ошибка логарифмической шкалы: at least one 'height + offset' значение <= 0"
 
 msgid "log scale error: 'xlim' <= 0"
 msgstr "Ошибка логарифмической шкалы: 'xlim' <= 0"
@@ -91,7 +96,9 @@ msgid "invalid boxplot widths"
 msgstr "неправильные ширины у ящиков-с-усами"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
-msgstr "некоторые notches ушли за пределы hinges ('box'): наверное, надо сделать notch=FALSE"
+msgstr ""
+"некоторые notches ушли за пределы hinges ('box'): наверное, надо сделать "
+"notch=FALSE"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula' должна определять в точности две переменные"
@@ -103,7 +110,8 @@ msgid "explanatory variable should be numeric"
 msgstr "независимая переменная должна быть числовой"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
-msgstr "ось y -- в шкале суммарной вероятности, 'ylim' должен быть в пределах [0,1]"
+msgstr ""
+"ось y -- в шкале суммарной вероятности, 'ylim' должен быть в пределах [0,1]"
 
 msgid "no 'z' matrix specified"
 msgstr "не указана матрица 'z'"
@@ -196,7 +204,8 @@ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 msgstr "негативные 'counts'. Внутренняя ошибка C-кода для \"bincount\""
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
-msgstr "некоторые 'x' не подсчитаны; возможно, 'breaks' не занимают всего размаха 'x'"
+msgstr ""
+"некоторые 'x' не подсчитаны; возможно, 'breaks' не занимают всего размаха 'x'"
 
 msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
 msgstr "Неправильные AREAS на графике -- используйте лучше freq=FALSE"
@@ -226,7 +235,9 @@ msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr "размерность z не является произведением length(x)(-1) на length(y)(-1)"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
-msgstr "'respect' должен быть логическим или матрицей с той же размерностью, что и 'mat'"
+msgstr ""
+"'respect' должен быть логическим или матрицей с той же размерностью, что и "
+"'mat'"
 
 msgid ""
 "layout matrix must contain at least one reference\n"
@@ -250,7 +261,11 @@ msgstr "'text.width' должен быть числовым и >= 0"
 msgid "horizontal specification overrides: Number of columns :="
 msgstr "горизонтальное указание превышено: Число колонок :="
 
-msgid "not using pch[2..] since pch[1] has multiple chars"
+msgid "'merge = TRUE' has no effect when no line segments are drawn"
+msgstr ""
+
+#, fuzzy
+msgid "not using pch[2..] since pch[1L] has multiple chars"
 msgstr "не используется pch[2..], поскольку pch[1] имеет много символов"
 
 msgid "must specify at least one of 'x' and 'y'"
@@ -260,10 +275,12 @@ msgid "'x' and 'y' must have same number of rows"
 msgstr "'x' и 'y' должны иметь одинаковое количество строк"
 
 msgid "'x' and 'y' must have only 1 or the same number of columns"
-msgstr "'x' и 'y' должны иметь только 1 колонку или одинаковое количество колонок"
+msgstr ""
+"'x' и 'y' должны иметь только 1 колонку или одинаковое количество колонок"
 
 msgid "default 'pch' is smaller than number of columns and hence recycled"
-msgstr "умалчиваемое значение 'pch' меньше количества колонок и поэтому повторяется"
+msgstr ""
+"умалчиваемое значение 'pch' меньше количества колонок и поэтому повторяется"
 
 msgid "missing values in contingency table"
 msgstr "пропущенные значения в таблице сопряженности"
@@ -347,7 +364,8 @@ msgid "a 2-way table has to be specified"
 msgstr "надо указать двумерную таблицу"
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
-msgstr "ось х -- в шкале суммарной вероятности, 'xlim' должен быть в пределах [0,1]"
+msgstr ""
+"ось х -- в шкале суммарной вероятности, 'xlim' должен быть в пределах [0,1]"
 
 msgid "'x' must be a matrix or a data frame"
 msgstr "'x' должен быть матрицей или таблицей данных"
@@ -414,4 +432,3 @@ msgstr[2] "аргументы %s не для использования"
 
 #~ msgid "argument 'col' is deprecated in favour of 'boxfill'"
 #~ msgstr "аргумент 'col' не одобряется, пользуйтесь 'boxfill'"
-

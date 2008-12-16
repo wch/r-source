@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:30\n"
-"PO-Revision-Date: 2008-10-06 07:30\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
+"PO-Revision-Date: 2008-12-16 13:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -541,6 +541,9 @@ msgstr "bundle ‘%s’ is incompletely installed"
 msgid "bundle '%s' has extra contents %s"
 msgstr "bundle ‘%s’ has extra contents %s"
 
+msgid "read.dcf() error on file '%s'"
+msgstr "read.dcf() error on file ‘%s’"
+
 msgid "'priority' must be character or NULL"
 msgstr "‘priority’ must be character or NULL"
 
@@ -609,6 +612,9 @@ msgstr "unable to install packages"
 
 msgid "unable to create"
 msgstr "unable to create"
+
+msgid "inferring 'repos = NULL' from the file name"
+msgstr "inferring ‘repos = NULL’ from the file name"
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "cannot install MacOS X binary packages on Windows"
@@ -791,6 +797,12 @@ msgstr "cannot coerce ‘x’ to roman"
 msgid "Invalid roman numeral(s): %s"
 msgstr "Invalid roman numeral(s): %s"
 
+msgid "length mismatch: bug in code!"
+msgstr "length mismatch: bug in code!"
+
+msgid "Processing file"
+msgstr "Processing file"
+
 msgid "no valid packages were specified"
 msgstr "no valid packages were specified"
 
@@ -890,6 +902,12 @@ msgstr "Using non-linked HTML file: hyperlinks may be incorrect"
 
 msgid "options(\"browser\") not set"
 msgstr "options(“browser”) not set"
+
+msgid "'latexcmd' is empty"
+msgstr "‘latexcmd’ is empty"
+
+msgid "'dvipscmd' is empty"
+msgstr "‘dvipscmd’ is empty"
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "invalid browser name, check options(“browser”)."

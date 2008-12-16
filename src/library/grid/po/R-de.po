@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-08-01 09:16\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
 "PO-Revision-Date: 2008-09-18 16:30+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -128,9 +128,6 @@ msgstr "Viewports dürfen nur ge\"pushed\" werden"
 
 msgid "Must specify at least one viewport"
 msgstr "es muss zumindest ein Viewport angegeben werden"
-
-msgid "Viewport '%s' was not found"
-msgstr "Viewport '%s' nicht gefunden"
 
 msgid "Must pop at least one viewport"
 msgstr "es muss zumindest ein Viewport von Stacke geholt werden"
@@ -369,6 +366,14 @@ msgstr "'x', 'y', 'width' und 'height' müssen alle Einheiten der Länge 1 sein"
 msgid "'x' and 'y' must all be units of length 1"
 msgstr "'x' und 'y' müssen alle Einheiten der Länge 1 sein"
 
+#, fuzzy
+msgid "'r' must be a unit object"
+msgstr "'length' muss ein unit-Objekt sein"
+
+#, fuzzy
+msgid "'x', 'y', 'width', and 'height' must have length 1"
+msgstr "'x', 'y', 'width' und 'height' müssen alle Einheiten der Länge 1 sein"
+
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' und 'units' müssen Länge > 0 haben"
 
@@ -486,6 +491,9 @@ msgstr "Mindestens 'x' oder 'xscale' muss angegeben werden"
 
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "Mindestens 'y' oder 'yscale' muss angegeben werden"
+
+#~ msgid "Viewport '%s' was not found"
+#~ msgstr "Viewport '%s' nicht gefunden"
 
 #~ msgid "Invalid"
 #~ msgstr "ungültig"

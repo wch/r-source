@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:30\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
 "PO-Revision-Date: 2008-10-02 13:51+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -534,6 +534,9 @@ msgstr " バンドル '%s' のインストールが不完全です "
 msgid "bundle '%s' has extra contents %s"
 msgstr " バンドル '%s' は余計な内容 %s を持ちます "
 
+msgid "read.dcf() error on file '%s'"
+msgstr ""
+
 msgid "'priority' must be character or NULL"
 msgstr " 'priority' は文字か NULL で無ければなりません "
 
@@ -603,6 +606,9 @@ msgstr " パッケージをインストール出来ませんでした "
 
 msgid "unable to create"
 msgstr " 生成できませんでした "
+
+msgid "inferring 'repos = NULL' from the file name"
+msgstr ""
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr ""
@@ -801,6 +807,12 @@ msgstr " 'x' をローマンに変換できません "
 msgid "Invalid roman numeral(s): %s"
 msgstr " 不正なローマ数字です: %s "
 
+msgid "length mismatch: bug in code!"
+msgstr ""
+
+msgid "Processing file"
+msgstr ""
+
 msgid "no valid packages were specified"
 msgstr " 有効なパッケージが指定されませんでした "
 
@@ -902,6 +914,12 @@ msgstr " リンクなしHTMLを使います: ハイパーリンクは壊れて�
 
 msgid "options(\"browser\") not set"
 msgstr " options(\"browser\") が設定されていません "
+
+msgid "'latexcmd' is empty"
+msgstr ""
+
+msgid "'dvipscmd' is empty"
+msgstr ""
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr " 不正なブラウザー名です、 options(\"browser\") をチェックして下さい "

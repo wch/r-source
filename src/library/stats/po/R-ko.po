@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-26 09:07\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -140,6 +140,10 @@ msgid ""
 "length of FUN, %d,\n"
 " does not match the length of the margins, %d"
 msgstr "FUN 길이 %d는 마진의 길이%d와 match하지 않습니다"
+
+#, fuzzy
+msgid "no rows to aggregate"
+msgstr "비교해야할 모델이 없습니다"
 
 msgid "'by' must be a list"
 msgstr "'by'는 list가 아니면 되지 않습니다"
@@ -1601,7 +1605,8 @@ msgstr ""
 msgid "'params' has wrong length"
 msgstr "'parames'는 잘못한 길이입니다"
 
-msgid "'varying' must be in 1:length(pars)"
+#, fuzzy
+msgid "'varying' must be in 1L:length(pars)"
 msgstr "'varying'는 1:length(pars)에 없으면 되지 않습니다"
 
 msgid "'varying' has wrong length"
@@ -1729,14 +1734,15 @@ msgstr "'x'와 'n'는 동일 길이가 나오지 않으면 되지 않습니다"
 msgid "too few groups"
 msgstr "그룹이 너무 적습니다"
 
+msgid "Not plotting observations with leverage one:"
+msgstr ""
+
 msgid "use only with \"lm\" objects"
 msgstr "\"lm\" 오브젝트에 대해서만 사용해주십시오"
 
-msgid "'which' must be in 1:6"
+#, fuzzy
+msgid "'which' must be in 1L:6"
 msgstr "'which'는 1:4에서 없으면 되지 않습니다"
-
-msgid "Not plotting observations with leverage one:"
-msgstr ""
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' {1,..,%d}에서 없으면 되지 않습니다"
@@ -1897,7 +1903,8 @@ msgstr "'relevel'는 인자 전용입니다"
 msgid "'ref' must be an existing level"
 msgstr "'ref'는 기존의 수준이 아니면 되지 않습니다"
 
-msgid "ref = %d must be in 1:%d"
+#, fuzzy
+msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d는 1:%d에 없으면 되지 않습니다"
 
 msgid "Failed to guess time-varying variables from their names"
@@ -2056,6 +2063,10 @@ msgstr "spline: 최초와 마지막 y값이 다른 y[1]을 양쪽 모두를 위�
 #, fuzzy
 msgid "'spline' requires n >= 1"
 msgstr "'approx'는 n >= 1 인것을 필요로 합니다"
+
+#, fuzzy
+msgid "spline: first and last y values differ - using y[1L] for both"
+msgstr "spline: 최초와 마지막 y값이 다른 y[1]을 양쪽 모두를 위해서 사용합니다"
 
 #, fuzzy
 msgid "'deriv' must be between 0 and 3"

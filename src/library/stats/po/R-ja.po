@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-26 09:07\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
 "PO-Revision-Date: 2008-10-02 13:49+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -134,6 +134,10 @@ msgid ""
 msgstr ""
 " FUNの長さ %d は \n"
 "  マージンの長さ %d と合致しません "
+
+#, fuzzy
+msgid "no rows to aggregate"
+msgstr " 比較すべきモデルがありません "
 
 msgid "'by' must be a list"
 msgstr " 'by' はリストでなければなりません "
@@ -1550,7 +1554,8 @@ msgstr " 論理値の `hessian' は許されません。ドキュメントを見
 msgid "'params' has wrong length"
 msgstr " 'params' は 誤った長さです "
 
-msgid "'varying' must be in 1:length(pars)"
+#, fuzzy
+msgid "'varying' must be in 1L:length(pars)"
 msgstr " 'varying' は 1:length(pars) 中になければなりません "
 
 msgid "'varying' has wrong length"
@@ -1669,14 +1674,15 @@ msgstr " 'x' と 'n' は同じ長さでなければなりません "
 msgid "too few groups"
 msgstr " グループが少なすぎます "
 
+msgid "Not plotting observations with leverage one:"
+msgstr "てこ比1の観測データはプロットしません "
+
 msgid "use only with \"lm\" objects"
 msgstr " \"lm\" オブジェクトに対してだけ使用してください "
 
-msgid "'which' must be in 1:6"
+#, fuzzy
+msgid "'which' must be in 1L:6"
 msgstr " 'which' は 1:6 中になければなりません "
-
-msgid "Not plotting observations with leverage one:"
-msgstr "てこ比1の観測データはプロットしません "
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr " 'id.n' は {1,..,%d} 中になければなりません "
@@ -1830,7 +1836,8 @@ msgstr " 'relevel' は因子専用です "
 msgid "'ref' must be an existing level"
 msgstr " 'ref' は既存の水準でなければなりません "
 
-msgid "ref = %d must be in 1:%d"
+#, fuzzy
+msgid "ref = %d must be in 1L:%d"
 msgstr " ref = %d は 1:%d 中になければなりません: "
 
 msgid "Failed to guess time-varying variables from their names"
@@ -1985,6 +1992,11 @@ msgstr ""
 
 msgid "'spline' requires n >= 1"
 msgstr " 'spline' は n > = 1 であることを必要とします "
+
+#, fuzzy
+msgid "spline: first and last y values differ - using y[1L] for both"
+msgstr ""
+" spline: 最初と最後の y 値が異なります ‐ y[1] を双方のために使用します "
 
 msgid "'deriv' must be between 0 and 3"
 msgstr " 'deriv' は 0 と 3 の間になければなりません "

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:30\n"
+"POT-Creation-Date: 2008-12-16 13:00\n"
 "PO-Revision-Date: 2008-10-06 17:04-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -532,6 +532,9 @@ msgstr "связка пакетов '%s' установлена не полностью"
 msgid "bundle '%s' has extra contents %s"
 msgstr "связка пакетов '%s' имеет дополнительное содержание %s"
 
+msgid "read.dcf() error on file '%s'"
+msgstr ""
+
 msgid "'priority' must be character or NULL"
 msgstr "'priority' должен быть текстом или NULL"
 
@@ -601,6 +604,9 @@ msgstr "не могу установить пакеты"
 
 msgid "unable to create"
 msgstr "не удалось создать"
+
+msgid "inferring 'repos = NULL' from the file name"
+msgstr ""
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "не могу установить бинарные пакеты MacOS X под Windows"
@@ -787,6 +793,12 @@ msgstr "не могу перевести 'x' в римскую"
 msgid "Invalid roman numeral(s): %s"
 msgstr "Неправильные римские номер(а): %s"
 
+msgid "length mismatch: bug in code!"
+msgstr ""
+
+msgid "Processing file"
+msgstr ""
+
 msgid "no valid packages were specified"
 msgstr "правильные пакеты не указаны"
 
@@ -887,6 +899,12 @@ msgstr ""
 
 msgid "options(\"browser\") not set"
 msgstr "options(\"browser\") не установлены"
+
+msgid "'latexcmd' is empty"
+msgstr ""
+
+msgid "'dvipscmd' is empty"
+msgstr ""
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "неправильное имя броузера, проверьте options(\"browser\")."
