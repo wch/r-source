@@ -17,15 +17,15 @@
 format <- function(x, ...) UseMethod("format")
 
 format.default <-
-    function(x, trim = FALSE, digits = NULL, nsmall = 0,
+    function(x, trim = FALSE, digits = NULL, nsmall = 0L,
 	     justify = c("left", "right", "centre", "none"),
 	     width = NULL, na.encode = TRUE, scientific = NA,
-	     big.mark = "", big.interval = 3,
-	     small.mark = "", small.interval = 5, decimal.mark = ".",
+	     big.mark = "", big.interval = 3L,
+	     small.mark = "", small.interval = 5L, decimal.mark = ".",
 	     zero.print = NULL, drop0trailing = FALSE, ...)
 {
     justify <- match.arg(justify)
-    adj <- match(justify, c("left", "right", "centre", "none")) - 1
+    adj <- match(justify, c("left", "right", "centre", "none")) - 1L
     if(is.list(x)) {
 	## do it this way to force evaluation of args
 	if(missing(trim)) trim <- TRUE
@@ -48,7 +48,7 @@ format.default <-
 	       raw = as.character(x),
 	       ## else: logical, numeric, complex, .. :
 	       prettyNum(.Internal(format(x, trim, digits, nsmall, width,
-					  3, na.encode, scientific)),
+					  3L, na.encode, scientific)),
 			 big.mark = big.mark, big.interval = big.interval,
 			 small.mark = small.mark,
 			 small.interval = small.interval,
@@ -98,20 +98,20 @@ format.pval <- function(pv, digits = max(1, getOption("digits")-2),
 ## Martin Maechler <maechler@stat.math.ethz.ch> , 1994-1998 :
 formatC <- function (x, digits = NULL, width = NULL,
 		     format = NULL, flag = "", mode = NULL,
-		     big.mark = "", big.interval = 3,
-		     small.mark = "", small.interval = 5,
+		     big.mark = "", big.interval = 3L,
+		     small.mark = "", small.interval = 5L,
 		     decimal.mark = ".", preserve.width = "individual",
                      zero.print = NULL, drop0trailing = FALSE)
 {
     format.char <- function (x, width, flag)
     {
-	if(is.null(width)) width <- 0
-	else if(width < 0) { flag <- "-"; width <- -width }
+	if(is.null(width)) width <- 0L
+	else if(width < 0L) { flag <- "-"; width <- -width }
 	format.default(x, width=width,
 		       justify = if(flag=="-") "left" else "right")
     }
     blank.chars <- function(no)
-	sapply(no+1, function(n) paste(character(n), collapse=" "))
+	sapply(no+1L, function(n) paste(character(n), collapse=" "))
 
     if (!(n <- length(x))) return("")
     if (is.null(mode))	  mode <- storage.mode(x)
@@ -152,9 +152,7 @@ formatC <- function (x, digits = NULL, width = NULL,
     else if(digits < 0L)
 	digits <- 6L
     else {
-	maxDigits <- { if(format != "f") 50L else
-		       ceiling(-(.Machine$double.neg.ulp.digits +
-				 .Machine$double.min.exp) / log2(10)) }
+	maxDigits <- if(format != "f") 50L else ceiling(-(.Machine$double.neg.ulp.digits + .Machine$double.min.exp) / log2(10))
 	if (digits > maxDigits) {
 	    warning("'digits' reduced to ", maxDigits)
 	    digits <- maxDigits
@@ -168,20 +166,20 @@ formatC <- function (x, digits = NULL, width = NULL,
 		 xEx <- as.integer(floor(log10(abs(x+ifelse(x==0,1,0)))))
 		 as.integer(x < 0 | flag!="") + digits +
 		     if(format == "f") {
-			 2 + pmax(xEx,0)
+			 2L + pmax(xEx, 0L)
 		     } else {# format == "fg"
-			 pmax(xEx, digits,digits+(-xEx)+1) +
-			     ifelse(flag != "", nchar(flag, "b"), 0) + 1
+			 pmax(xEx, digits,digits+(-xEx)+1L) +
+			     ifelse(flag != "", nchar(flag, "b"), 0L) + 1L
 		     }
 	     } else # format == "g" or "e":
-	     rep.int(digits+8L, n)
+	     rep.int(digits + 8L, n)
 	     )
     ## sanity check for flags added 2.1.0
     flag <- as.character(flag)
     nf <- strsplit(flag, "")[[1L]]
     if(!all(nf %in% c("0", "+", "-", " ", "#")))
 	stop("'flag' can contain only '0+- #'")
-    if(digits > 0L && any(nf == "#"))
+    if(digits > 0 && any(nf == "#"))
 	digits <- -digits # C-code will notice "do not drop trailing zeros"
 
     attr(x, "Csingle") <- NULL	# avoid interpreting as.single
@@ -217,9 +215,8 @@ format.factor <- function (x, ...)
 
 format.data.frame <- function(x, ..., justify = "none")
 {
-    dims <- dim(x)
-    nr <- dims[1L]
-    nc <- dims[2L]
+    nr <- .row_names_info(x, 2L)
+    nc <- length(x)
     rval <- vector("list", nc)
     for(i in 1L:nc)
 	rval[[i]] <- format(x[[i]], ..., justify = justify)
@@ -243,30 +240,29 @@ format.data.frame <- function(x, ..., justify = "none")
 	if(is.character(rval[[i]]) && class(rval[[i]]) == "character")
 	    oldClass(rval[[i]]) <- "AsIs"
     }
-    dn <- dimnames(x)
-    cn <- dn[[2L]]
+    cn <- names(x)
     m <- match(c("row.names", "check.rows", "check.names"), cn, 0L)
     if(any(m)) cn[m] <- paste("..dfd.", cn[m], sep="")
     names(rval) <- cn
     rval$check.names <- FALSE
-    rval$row.names <- dn[[1L]]
+    rval$row.names <- row.names(x)
     x <- do.call("data.frame", rval)
     ## x will have more cols than rval if there are matrix/data.frame cols
-    if(any(m > 0)) names(x) <- sub("^..dfd.", "", names(x))
+    if(any(m)) names(x) <- sub("^..dfd.", "", names(x))
     x
 }
 
 format.AsIs <- function(x, width = 12, ...)
 {
     if(is.character(x)) return(format.default(x, ...))
-    if(is.null(width)) width = 12
+    if(is.null(width)) width = 12L
     n <- length(x)
     rvec <- rep.int(NA_character_, n)
     for(i in 1L:n) {
         y <- x[[i]]
         ## need to remove class AsIs to avoid an infinite loop.
         cl <- oldClass(y)
-        if(m <- match("AsIs", cl, 0)) oldClass(y) <- cl[-m]
+        if(m <- match("AsIs", cl, 0L)) oldClass(y) <- cl[-m]
         rvec[i] <- toString(y, width = width, ...)
     }
     ## AsIs might be around a matrix, which is not a class.
@@ -277,8 +273,8 @@ format.AsIs <- function(x, width = 12, ...)
 
 prettyNum <-
     function(x,
-	     big.mark = "", big.interval = 3,
-	     small.mark = "", small.interval = 5,
+	     big.mark = "", big.interval = 3L,
+	     small.mark = "", small.interval = 5L,
 	     decimal.mark = ".",
 	     preserve.width = c("common", "individual", "none"),
 	     zero.print = NULL, drop0trailing = FALSE, ...)
@@ -314,19 +310,19 @@ prettyNum <-
     P0 <- function(...) paste(..., sep="")
     revStr <- function(cc)
 	sapply(lapply(strsplit(cc,NULL), rev), paste, collapse="")
-    B. <- sapply(x.sp, `[`, 1)	    # Before "."
+    B. <- sapply(x.sp, `[`, 1L)	    # Before "."
     A. <- sapply(x.sp, `[`, 2)	    # After  "." ; empty == NA
     if(any(iN <- is.na(A.))) A.[iN] <- ""
 
     if(nzchar(big.mark) &&
-       length(i.big <- grep(P0("[0-9]{", big.interval + 1,",}"), B.))
+       length(i.big <- grep(P0("[0-9]{", big.interval + 1L,",}"), B.))
        ) { ## add 'big.mark' in decimals before "." :
 	B.[i.big] <-
 	    revStr(gsub(P0("([0-9]{",big.interval,"})\\B"),
 			P0("\\1",big.mark), revStr(B.[i.big])))
     }
     if(nzchar(small.mark) &&
-       length(i.sml <- grep(P0("[0-9]{", small.interval + 1,",}"), A.))
+       length(i.sml <- grep(P0("[0-9]{", small.interval + 1L,",}"), A.))
        ) { ## add 'small.mark' in decimals after "."  -- but *not* trailing
 	A.[i.sml] <- gsub(P0("([0-9]{",small.interval,"}\\B)"),
 			  P0("\\1",small.mark), A.[i.sml])
@@ -346,7 +342,7 @@ prettyNum <-
     if(preserve.width != "none") {
 	nnc <- nchar(A., "c")
 	d.len <- nnc - nchar(x, "c") # extra space added by 'marks' above
-	if(any(ii <- d.len > 0)) {
+	if(any(ii <- d.len > 0L)) {
 	    switch(preserve.width,
 		   "individual" = {
 		       ## drop initial blanks preserving original width

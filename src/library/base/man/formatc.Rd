@@ -14,13 +14,13 @@
 \usage{
 formatC(x, digits = NULL, width = NULL,
         format = NULL, flag = "", mode = NULL,
-        big.mark = "", big.interval = 3,
-      small.mark = "", small.interval = 5,
+        big.mark = "", big.interval = 3L,
+      small.mark = "", small.interval = 5L,
     decimal.mark = ".", preserve.width = "individual",
         zero.print = NULL, drop0trailing = FALSE)
 
-prettyNum(x, big.mark = "",   big.interval = 3,
-          small.mark = "", small.interval = 5,
+prettyNum(x, big.mark = "",   big.interval = 3L,
+          small.mark = "", small.interval = 5L,
           decimal.mark = ".",
           preserve.width = c("common", "individual", "none"),
           zero.print = NULL, drop0trailing = FALSE, \dots)
