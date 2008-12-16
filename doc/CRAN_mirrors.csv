@@ -12,16 +12,13 @@ Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Associat
 Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana@mat.puc.cl>",1,cl
 China,China,"Hong Kong",http://mirrors.geoexpat.com/cran/,GeoExpat.Com,shri@geoexpat.com,1,cn
 Croatia,Croatia,Zagreb,http://imago.irb.hr/r/,"Rudjer Boskovic Institute",matko.bosnjak@irb.hr,1,hr
-"Czech Republic","Czech Republic",Brno,http://cran.biokontakt.cz/,"Biokontakt Brno",Tomas.Kaplan@biokontakt.cz,0,cz
 Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirror@dotsrc.org,1,dk
 "France (Toulouse)",France,Toulouse,http://cran.fr.r-project.org/,"CICT, Toulouse","David Allouche <allouche@tlse.toulouse.inra.fr>",1,fr
 "France (Lyon)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse@univ-lyon1.fr>",1,fr
 "France (Paris)",France,Paris,http://cran.miroir-francais.fr/,"Miroir-Francais, Paris","Kurt LeClerc <kurt@miroir-francais.fr>",1,fr
 "Germany (Goettingen)",Germany,Goettingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Goettingen","Eberhard Moenkeberg <emoenke@gwdg.de>",1,de
 "Germany (Muenchen)",Germany,Muenchen,http://cran.rakanu.com/,"Rakanu.com, Muenchen","Carsten Zedler <info@rakanu.com>",1,de
-"India (Kolkata)",India,Kolkata,http://mirror.wbut.ac.in/CRAN/,"West Bengal University of Technology",indradg@gmail.com,0,in
 Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet, Dublin","Brian McArdle <brian.mcardle@heanet.ie>",1,ie
-"Italy (Ferrara)",Italy,Ferrara,http://microarrays.unife.it/CRAN/,"Universita di Ferrara","Stefano Volinia <s.volinia@unife.it>",0,it
 "Italy (Milano)",Italy,Milano,http://rm.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano",mirror-service@garr.it,1,it
 "Italy (Padua)",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua",cran@stat.unipd.it,1,it
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","elio.mineo@dssm.unipa.it, alf@dssm.unipa.it",1,it
@@ -31,11 +28,9 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 Korea,Korea,Seoul,http://bibs.snu.ac.kr/R/,"Seoul National University","SungGON Yi <skonmeme@gmail.com>",1,kr
 Mexico,Mexico,Cuernavaca,http://www2.uaem.mx/r-mirror/,"Universidad Autonoma del Estado de Morelos","Sandra Espinoza Lopez <sandrae@buzon.uaem.mx>",1,mx
 "Netherlands (Amsterdam 2)",Netherlands,Amsterdam,http://cran.nedmirror.nl/,"Nedmirror, Amsterdam",mirror@nedmirror.nl,1,nl
-"Netherlands (Amsterdam)",Netherlands,Amsterdam,http://cran.dsmirror.nl/,"Dsmirror, Amsterdam","Webmaster Dsmirror <webmaster@dsmirror.nl>",0,nl
 "Netherlands (Utrecht)",Netherlands,Utrecht,http://cran-mirror.cs.uu.nl/,"Utrecht University",webmaster@cs.uu.nl,1,nl
 "New Zealand","New Zealand",Auckland,http://cran.stat.auckland.ac.nz/,"University of Auckland",w.schmidt@auckland.ac.nz,1,nz
 Norway,Norway,Bergen,http://cran.ii.uib.no/,"University of Bergen",webmaster@ii.uib.no,1,no
-"Poland (Lublin)",Poland,Lublin,http://novum.am.lublin.pl/CRAN/,"Skubiszewski Medical University, Lublin","Lukasz Komsta <luke@novum.am.lublin.pl>",0,pl
 "Poland (Oswiecim)",Poland,Oswiecim,http://piotrkosoft.net/pub/mirrors/CRAN/,"Piotrkosoft - Data Storage Center","Piotr Maluty <piotr.maluty@gmail.com>",1,pl
 "Poland (Wroclaw)",Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Paweł Netzel <netzel@meteo.uni.wroc.pl>",1,pl
 Portugal,Portugal,Porto,http://cran.pt.r-project.org/,"Universidade do Porto",neacm@fe.up.pt,1,pt
@@ -59,4 +54,5 @@ Thailand,Thailand,Bangkok,http://mirror.kapook.com/cran/,"Kapook.com, Bangkok",t
 "USA (NC)",USA,"Chapel Hill",http://www.ibiblio.org/pub/languages/R/CRAN/,"University of North Carolina, Chapel Hill, NC","""Nancy C. Wilson"" <nancy@metalab.unc.edu>",1,us
 "USA (PA 2)",USA,Pittsburgh,http://cran.mirrors.hoobly.com,"Hoobly Classifieds","Peter Grigor <pgrigor@hoobly.com>",1,us
 "USA (PA)",USA,Pittsburgh,http://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA",,1,us
+"USA (TX)",USA,"San Antonio"," http://www.revolution-computing.com/cran/","Revolution Computing","David Smith <david@revolution-computing.com>",1,us
 "USA (WA)",USA,Seattle,http://cran.fhcrc.org/,"Fred Hutchinson Cancer Research Center, Seattle, WA",sfalcon@fhcrc.org,1,us
