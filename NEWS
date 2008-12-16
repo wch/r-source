@@ -114,6 +114,9 @@ NEW FEATURES
     o	object.size() now returns an object of class "object_size" and
     	has a print() method.
 
+    o	[col/row]Sums(), *Means() now have an additional '...' argument, so
+	that they can more easily be turned into generic functions.
+
 
 DEPRECATED & DEFUNCT
 

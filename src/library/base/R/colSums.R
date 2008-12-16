@@ -14,13 +14,22 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-colSums <- function(x, na.rm = FALSE, dims = 1L)
+
+## "FIXME": The '...' arguments are not really needed,
+##          unless for calling setGeneric() on these.
+## When 'methods' where closer to 'base', we'd rather want
+## to use something like implicitGeneric() on these ..
+
+colSums <- function(x, na.rm = FALSE, dims = 1L, ...)
 {
     if(is.data.frame(x)) x <- as.matrix(x)
     if(!is.array(x) || length(dn <- dim(x)) < 2L)
         stop("'x' must be an array of at least two dimensions")
     if(dims < 1L || dims > length(dn) - 1L)
         stop("invalid 'dims'")
+    if(length(list(...)))
+	warning("extra arguments ignored: ",
+		substr(format(substitute(list(...))), 5,1000))
     n <- prod(dn[1L:dims])
     dn <- dn[-(1L:dims)]
     z <- if(is.complex(x))
@@ -34,13 +43,16 @@ colSums <- function(x, na.rm = FALSE, dims = 1L)
     z
 }
 
-colMeans <- function(x, na.rm = FALSE, dims = 1L)
+colMeans <- function(x, na.rm = FALSE, dims = 1L, ...)
 {
     if(is.data.frame(x)) x <- as.matrix(x)
     if(!is.array(x) || length(dn <- dim(x)) < 2L)
         stop("'x' must be an array of at least two dimensions")
     if(dims < 1L || dims > length(dn) - 1L)
         stop("invalid 'dims'")
+    if(length(list(...)))
+	warning("extra arguments ignored: ",
+		substr(format(substitute(list(...))), 5,1000))
     n <- prod(dn[1L:dims])
     dn <- dn[-(1L:dims)]
     z <- if(is.complex(x))
@@ -54,13 +66,16 @@ colMeans <- function(x, na.rm = FALSE, dims = 1L)
     z
 }
 
-rowSums <- function(x, na.rm = FALSE, dims = 1L)
+rowSums <- function(x, na.rm = FALSE, dims = 1L, ...)
 {
     if(is.data.frame(x)) x <- as.matrix(x)
     if(!is.array(x) || length(dn <- dim(x)) < 2L)
         stop("'x' must be an array of at least two dimensions")
     if(dims < 1L || dims > length(dn) - 1L)
         stop("invalid 'dims'")
+    if(length(list(...)))
+	warning("extra arguments ignored: ",
+		substr(format(substitute(list(...))), 5,1000))
     p <- prod(dn[-(1L:dims)])
     dn <- dn[1L:dims]
     z <- if(is.complex(x))
@@ -74,13 +89,16 @@ rowSums <- function(x, na.rm = FALSE, dims = 1L)
     z
 }
 
-rowMeans <- function(x, na.rm = FALSE, dims = 1L)
+rowMeans <- function(x, na.rm = FALSE, dims = 1L, ...)
 {
     if(is.data.frame(x)) x <- as.matrix(x)
     if(!is.array(x) || length(dn <- dim(x)) < 2L)
         stop("'x' must be an array of at least two dimensions")
     if(dims < 1L || dims > length(dn) - 1L)
         stop("invalid 'dims'")
+    if(length(list(...)))
+	warning("extra arguments ignored: ",
+		substr(format(substitute(list(...))), 5,1000))
     p <- prod(dn[-(1L:dims)])
     dn <- dn[1L:dims]
     z <- if(is.complex(x))
