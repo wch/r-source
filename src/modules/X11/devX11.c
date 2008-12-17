@@ -3018,7 +3018,6 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     dps *= res0/72.0;
 #endif
     xd->pointsize = dps;
-    printf("pointsize %f, res %d\n",  xd->pointsize, res);
     xd->bg = bg;
     xd->res_dpi = res;
     switch(antialias){
