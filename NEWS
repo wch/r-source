@@ -181,6 +181,10 @@ BUG FIXES
 
     o	deparse(control="S_compatible") now never uses backticks.
 
+    o	grid-based plots no longer reset the base text size to the
+	default 96dpi in cairo-based bitmap devices.
+
+
 
 
 
