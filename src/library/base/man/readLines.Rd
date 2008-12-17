@@ -1,6 +1,6 @@
 % File src/library/base/man/readLines.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{readLines}
@@ -10,14 +10,14 @@
   Read some or all text lines from a connection.
 }
 \usage{
-readLines(con = stdin(), n = -1, ok = TRUE, warn = TRUE,
+readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
           encoding = "unknown")
 }
 \arguments{
   \item{con}{a connection object or a character string.}
   \item{n}{integer.  The (maximal) number of lines to
     read.  Negative values indicate that one should read up to the end of
-    the connection.}
+    input on the connection.}
   \item{ok}{logical.  Is it OK to reach the end of the connection before
     \code{n > 0} lines are read?  If not, an error will be generated.}
   \item{warn}{logical.  Warn if a text file is missing a final EOL.}

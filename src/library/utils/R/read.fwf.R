@@ -50,7 +50,7 @@ function(file, widths, header = FALSE, sep = "\t",
 
     if (skip) readLines(file, n=skip)
     if (header) {
-        headerline <- readLines(file, n=1)
+        headerline <- readLines(file, n=1L)
         cat(file=FILE, headerline, "\n")
     }
 

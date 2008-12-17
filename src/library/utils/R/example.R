@@ -68,7 +68,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	    c(enc[-length(enc)], "latin1")
 	else ""
     ## peek at the file, but note we can't usefully translate to C.
-    zz <- readLines(zfile, n=1)
+    zz <- readLines(zfile, n=1L)
     if(length(grep("^### Encoding: ", zz))  &&
        !identical(Sys.getlocale("LC_CTYPE"), "C"))
 	encoding <- substring(zz, 15L)

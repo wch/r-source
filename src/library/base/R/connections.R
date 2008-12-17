@@ -18,7 +18,7 @@ stdin <- function() .Internal(stdin())
 stdout <- function() .Internal(stdout())
 stderr <- function() .Internal(stderr())
 
-readLines <- function(con = stdin(), n = -1, ok = TRUE, warn = TRUE,
+readLines <- function(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
                       encoding = "unknown")
 {
     if(is.character(con)) {
@@ -183,7 +183,7 @@ closeAllConnections <- function()
     invisible()
 }
 
-readBin <- function(con, what, n = 1, size = NA_integer_, signed = TRUE,
+readBin <- function(con, what, n = 1L, size = NA_integer_, signed = TRUE,
                     endian = .Platform$endian)
 {
     if(is.character(con)) {
