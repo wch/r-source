@@ -444,8 +444,6 @@ model.offset <- function(x) {
 
 model.matrix <- function(object, ...) UseMethod("model.matrix")
 
-fitted.default <- function(object, ...)
-    napredict(object$na.action, object$fitted)
 model.matrix.default <- function(object, data = environment(object),
 				 contrasts.arg = NULL, xlev = NULL, ...)
 {
