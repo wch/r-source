@@ -28,7 +28,7 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
     supplying contrasts for factors only in the \code{Error} term will give
     a warning.}
   \item{\dots}{Arguments to be passed to \code{lm}, such as \code{subset}
-    or \code{na.action}.}
+    or \code{na.action}.  See \sQuote{Details} about \code{weights}.}
 }
 \details{
   This provides a wrapper to \code{lm} for fitting linear models to

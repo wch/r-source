@@ -125,6 +125,8 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
 	}
     }
     if(any(efficiency)) {
+        if(is.list(eff.used))
+            stop("design is unbalanced so cannot proceed")
 	which <- match(outer(rownames(efficiency),
 			     colnames(efficiency), paste)[eff.used],
 		       paste(dn.strata, dn.proj))

@@ -39,10 +39,12 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         fit$call <- Call
         return(fit)
     } else {
-        ##  helmert contrasts can be helpful: do we want to force them?
+        if(pmatch("weights", names(list(...)), 0L))
+            stop("weights are not supported in a multistratum aov() fit")
+        ##  Helmert contrasts can be helpful: do we want to force them?
         ##  this version does for the Error model.
         opcons <- options("contrasts")
-        options(contrasts=c("contr.helmert", "contr.poly"))
+        options(contrasts = c("contr.helmert", "contr.poly"))
         on.exit(options(opcons))
         allTerms <- Terms
         errorterm <-  attr(Terms, "variables")[[1 + indError]]
