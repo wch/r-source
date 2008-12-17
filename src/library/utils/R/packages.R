@@ -755,7 +755,7 @@ compareVersion <- function(a, b)
         }
         ## given one of more concatenations of Depends/Imports/Suggests fields,
         ## return a named list of list(name, [op, version])
-        if(!length(x)) return(list())
+        if(!nzchar(x)) return(list())
         unlist(lapply(strsplit(x, ","), .split2), FALSE, FALSE)
     }
     x <- x[!is.na(x)]
