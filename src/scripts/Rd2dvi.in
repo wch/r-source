@@ -51,6 +51,9 @@ The PDF previewer is set by the environment variable R_PDFVIEWER.
 
 Report bugs to <r-bugs@r-project.org>."
 
+## workaround the export of CDPATH, which may cause 'cd ${build_dir}' to echo
+unset CDPATH
+
 start_dir=`pwd`
 build_dir=".Rd2dvi${$}"
 

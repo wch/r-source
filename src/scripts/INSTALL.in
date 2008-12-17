@@ -62,6 +62,9 @@ Report bugs to <r-bugs@r-project.org>."
 
 umask 022
 
+## workaround the export of CDPATH, which may cause 'cd' to echo
+unset CDPATH
+
 R_VERSION='@VERSION@'
 GETWD='@GETWD@'
 R_GZIPCMD='@R_GZIPCMD@'

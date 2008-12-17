@@ -77,6 +77,9 @@ for pkg in ${pkgs}; do
   fi
 done
 
+## Not sure why we do this: R_HOME should be absolute path.
+## But unset CDPATH in case it is not.
+unset CDPATH
 if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
   echo "tools:::unix.packages.html(.Library, docdir=\"${R_DOC_DIR}\")" | \
     R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_HOME}/bin/R" --vanilla >/dev/null
