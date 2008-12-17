@@ -162,7 +162,7 @@ INSTALLATION
 
 C-LEVEL FACILITIES
 
-    o	A helper function, asCharacterFactor(), converts from factors to
+    o	A helper function, asCharacterFactor, converts from factors to
 	character vectors.
 
 
@@ -183,6 +183,9 @@ BUG FIXES
 
     o	grid-based plots no longer reset the base text size to the
 	default 96dpi in cairo-based bitmap devices.
+
+    o	Rd conversion was incorrectly parsing \\\* and \\\{ (and other
+	cases with an odd number of backslashes greater than one).
 
 
 

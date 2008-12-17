@@ -160,7 +160,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	next if /^\s*%/o;	# completely drop full comment lines
 	my $loopcount = 0;
 	while(checkloop($loopcount++, $_, "\\%")
-	      && s/^\\%|([^\\])\\%/$1escaped_percent_sign/go) {};
+	      && s/^\\%|([^\\])((\\\\)*)\\%/$1$2escaped_percent_sign/go) {};
 	s/^([^%]*)%.*$/$1/o;
 	s/escaped_percent_sign/\\%/go;
 	$complete_text .= $_;
@@ -274,8 +274,8 @@ sub macro_subs { # does macro substitution on $complete_text
 ## Idea and original code from latex2html
 sub mark_brackets {
 
-    $complete_text =~ s/^\\{|([^\\])\\{/$1$EOB/gso;
-    $complete_text =~ s/^\\}|([^\\])\\}/$1$ECB/gso;
+    $complete_text =~ s/^\\{|([^\\])((\\\\)*)\\{/$1$2$EOB/gso;
+    $complete_text =~ s/^\\}|([^\\])((\\\\)*)\\}/$1$2$ECB/gso;
 
     print STDERR "\n-- mark_brackets:" if $debug;
     my $loopcount = 0;
