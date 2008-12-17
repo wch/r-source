@@ -17,6 +17,17 @@ capabilities(what = NULL)
   \item{what}{character vector or \code{NULL}, specifying
     required components.  \code{NULL} implies that all are required.}
 }
+#ifdef unix
+\section{Note to Mac OS X users}{
+  Capabilities \code{"jpeg"}, \code{"png"} and \code{"tiff"} refer to
+  the X11-based versions of these devices.  If
+  \code{capabilities("aqua")} is true, then these devices with
+  \code{type="quartz"} will be available, and out-of-the-box will be the
+  default type.  Thus for example the \code{\link{tiff}} device will be
+  available if \code{capabilities("aqua") || capabilities("tiff")} if
+  the defaults are unchanged.
+}
+#endif
 \value{
   A named logical vector. Current components are
     \item{jpeg}{Is the \code{\link{jpeg}} function operational?}
