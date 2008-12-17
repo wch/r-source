@@ -80,54 +80,6 @@ static SEXP	Value;
 
 static SEXP     SrcFile = NULL;
 
-#if defined(SUPPORT_MBCS)
-# include <R_ext/rlocale.h>
-/* # include <sys/param.h> what was this for? */
-#ifdef HAVE_LANGINFO_CODESET
-# include <langinfo.h>
-#endif
-
-
-static int mbcs_get_next(int c, wchar_t *wc)
-{
-    int i, res, clen = 1; char s[9];
-    mbstate_t mb_st;
-
-    s[0] = c;
-    /* This assumes (probably OK) that all MBCS embed ASCII as single-byte
-       lead bytes, including control chars */
-    if((unsigned int) c < 0x80) {
-	*wc = (wchar_t) c;
-	return 1;
-    }
-    if(utf8locale) {
-	clen = utf8clen(c);
-	for(i = 1; i < clen; i++) {
-	    s[i] = xxgetc();
-	    if(s[i] == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), xxlineno);
-	}
-	res = mbrtowc(wc, s, clen, NULL);
-	if(res == -1) error(_("invalid multibyte character in parser at line %d"), xxlineno);
-    } else {
-	/* This is not necessarily correct for stateful MBCS */
-	while(clen <= MB_CUR_MAX) {
-	    mbs_init(&mb_st);
-	    res = mbrtowc(wc, s, clen, &mb_st);
-	    if(res >= 0) break;
-	    if(res == -1) 
-		error(_("invalid multibyte character in parser at line %d"), xxlineno);
-	    /* so res == -2 */
-	    c = xxgetc();
-	    if(c == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), xxlineno);
-	    s[clen++] = c;
-	} /* we've tried enough, so must be complete or invalid by now */
-    }
-    for(i = clen - 1; i > 0; i--) xxungetc(s[i]);
-    return clen;
-}
-
-#endif
-
 /* Routines used to build the parse tree */
 
 static SEXP	xxpushMode(int, int);
@@ -146,6 +98,7 @@ static int	mkCode(int);
 static int	mkText(int);
 static int	mkVerb(int);
 static int 	mkComment(int);
+static int	mkWhitespace(int);
 
 #define YYSTYPE		SEXP
 
@@ -160,7 +113,7 @@ static int 	mkComment(int);
 %token		LISTSECTION ITEMIZE DESCRIPTION NOITEM
 %token		RCODEMACRO2 LATEXMACRO2 VERBMACRO2
 %token		IFDEF ENDIF
-%token		TEXT RCODE VERB COMMENT UNKNOWN
+%token		TEXT RCODE VERB COMMENT UNKNOWN WHITESPACE
 
 %%
 
@@ -178,6 +131,7 @@ Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, &@$); }
 	|	SECTIONHEADER2 LatexArg LatexArg { $$ = xxmarkup2($1, $2, $3, &@$); }
 	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, &@$); UNPROTECT_PTR($4); } 
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
+	|	WHITESPACE			{ $$ = xxtag($1, WHITESPACE, &@$); }
 
 ArgItems:	Item				{ $$ = xxnewlist($1); }
 	|	ArgItems Item			{ $$ = xxlist($1, $2); }
@@ -186,6 +140,7 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 	|	RCODE				{ $$ = xxtag($1, RCODE, &@$); }
 	|	VERB				{ $$ = xxtag($1, VERB, &@$); }
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
+	|	WHITESPACE			{ $$ = xxtag($1, WHITESPACE, &@$); }
 	|	Markup				{ $$ = $1; }
 	
 Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@$); }
@@ -216,7 +171,7 @@ VerbatimArg:	goVerbatim '{' ArgItems  '}' 	{ xxpopMode($1); $$ = $3; }
 
 VerbatimArg2:   '{' goVerbatim2 ArgItems '}'    { xxpopMode($2); $$ = $3; }
 
-IfDefTarget:	goLatexLike TEXT 		{ xxpopMode($1); $$ = xxnewlist($2);  }
+IfDefTarget:	goLatexLike WHITESPACE TEXT	{ xxpopMode($1); $$ = xxnewlist($3); UNPROTECT_PTR($2); }
 
 
 goLatexLike:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, UNKNOWN); }
@@ -761,49 +716,6 @@ static void yyerror(char *s)
     }	
 }
 
-static int SkipSpace(void)
-{
-    int c;
-
-#ifdef Win32
-    if(!mbcslocale) { /* 0xa0 is NBSP in all 8-bit Windows locales */
-	while ((c = xxgetc()) == ' ' || c == '\t' || c == '\f' || 
-	       (unsigned int) c == 0xa0) ;
-	return c;
-    } else {
-	int i, clen;
-	wchar_t wc;
-	while (1) {
-	    c = xxgetc();
-	    if (c == ' ' || c == '\t' || c == '\f') continue;
-	    if (c == '\n' || c == R_EOF) break;
-	    if ((unsigned int) c < 0x80) break;
-	    clen = mbcs_get_next(c, &wc);  /* always 2 */
-	    if(! Ri18n_iswctype(wc, Ri18n_wctype("blank")) ) break;
-	    for(i = 1; i < clen; i++) c = xxgetc();
-	}
-	return c;
-    }
-#endif
-#if defined(SUPPORT_MBCS) && defined(__STDC_ISO_10646__)
-    if(mbcslocale) { /* wctype functions need Unicode wchar_t */
-	int i, clen;
-	wchar_t wc;
-	while (1) {
-	    c = xxgetc();
-	    if (c == ' ' || c == '\t' || c == '\f') continue;
-	    if (c == '\n' || c == R_EOF) break;
-	    if ((unsigned int) c < 0x80) break;
-	    clen = mbcs_get_next(c, &wc);
-	    if(! Ri18n_iswctype(wc, Ri18n_wctype("blank")) ) break;
-	    for(i = 1; i < clen; i++) c = xxgetc();
-	}
-    } else
-#endif
-	while ((c = xxgetc()) == ' ' || c == '\t' || c == '\f') ;
-    return c;
-}
-
 #define TEXT_PUSH(c) do {                  \
 	unsigned int nc = bp - stext;       \
 	if (nc >= nstext - 1) {             \
@@ -836,18 +748,27 @@ static int token(void)
 {
     int c;
     int outsideLiteral;
+    int val;
 
-    /* outside of literals (RLIKE and VERBATIM) skip white space; inside, just skip empty lines */
-    /* in both places, skip % comments */
+    /* skip empty lines */
     do {
-    	if( (outsideLiteral = (xxmode == LATEXLIKE || xxmode == INOPTION || xxbraceDepth == 0)) ) 
-	    c = SkipSpace();
-    	else 
-    	    c = xxgetc();
+    	c = xxgetc();
     	setfirstloc();
-   	if ( c == '%') return mkComment(c);
     } while (c == '\n');
+   	
+    /* % comments are active everywhere */
     
+    if ( c == '%') return mkComment(c);    
+    
+    /* white space is part of the text in verbatim and code-like sections, but 
+       initial white space is returned separately otherwise. */
+       
+    if ((outsideLiteral = (xxmode == LATEXLIKE || xxmode == INOPTION || xxbraceDepth == 0))) {
+    	if ((val = mkWhitespace(c)))
+    	    return val;
+    	c = xxgetc();
+    }
+    	
     if (c == R_EOF) return END_OF_INPUT;
 
     if (c == '\\') {
@@ -918,7 +839,7 @@ static int mkText(int c)
     	    	xxungetc(c);
     	    	PROTECT(yylval = mkString2(stext,  bp - stext));
 		if (xxDebugTokens)
-            	    Rprintf("mktext: %s\n", CHAR(STRING_ELT(yylval, 0))); 
+            	    Rprintf("mkText: %s\n", CHAR(STRING_ELT(yylval, 0))); 
     	    	if(stext != st0) free(stext);
     	    	return TEXT;
     	    }
@@ -935,10 +856,34 @@ static int mkComment(int c)
     char *stext = st0, *bp = st0;
     
     do TEXT_PUSH(c);
-    while ((c = xxgetc()) != '\n' && c != R_EOF) ;
+    while ((c = xxgetc()) != '\n' && c != R_EOF);
     xxungetc(c);
     PROTECT(yylval = mkString2(stext,  bp - stext));
+    if (xxDebugTokens)
+	Rprintf("mkComment: %s\n", CHAR(STRING_ELT(yylval, 0))); 
+    if(stext != st0) free(stext);    
     return COMMENT;
+}
+
+static int mkWhitespace(int c)
+{
+    char st0[INITBUFSIZE];
+    unsigned int nstext = INITBUFSIZE;
+    char *stext = st0, *bp = st0;
+    
+    while (c == ' ' || c == '\t' || c == '\f') {
+	TEXT_PUSH(c);
+	c = xxgetc();
+    }
+    xxungetc(c);
+    if (bp > stext) {
+    	PROTECT(yylval = mkString2(stext,  bp - stext));
+	if (xxDebugTokens)
+      	    Rprintf("mkWhitespace: %s\n", CHAR(STRING_ELT(yylval, 0))); 
+    	if(stext != st0) free(stext);
+    	return WHITESPACE;
+    } else
+    	return 0;
 }
 
 static int mkCode(int c)
@@ -1047,6 +992,17 @@ static int mkMarkup(int c)
         retval = KeywordLookup(stext);
         if (retval == NOITEM) 
             retval = xxitemType;
+        else if (retval == ESCAPE && c == LBRACE) { /* include following {} for escapes */
+            int lookahead = xxgetc();
+            if (lookahead == RBRACE) {
+            	bp--;
+            	TEXT_PUSH(LBRACE);
+            	TEXT_PUSH(RBRACE);
+            	TEXT_PUSH('\0');
+            	c = xxgetc();
+            } else
+            	xxungetc(lookahead);
+        }
     }
     PROTECT(yylval = mkString2(stext,  bp - stext - 1));
     if (xxDebugTokens)
