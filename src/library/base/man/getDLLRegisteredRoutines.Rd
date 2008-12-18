@@ -78,7 +78,7 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
   "Writing R Extensions Manual" for symbol registration.
   R News, Volume 1/3, September 2001.   "In search of C/C++ \& Fortran Symbols"
 }
-\author{Duncan Temple Lang <duncan@wald.ucdavis.edu>}
+\author{Duncan Temple Lang \email{duncan@wald.ucdavis.edu}}
 
 \seealso{
   \code{\link{getLoadedDLLs}}
