@@ -449,6 +449,9 @@ BUG FIXES
     o	The starting point for plot.acf(ci.type="ma") was lag 0 when it
 	should have been lag 1.  (PR#13071)
 
+    o   There was an obscure bug with srcrefs, which could put the
+        parser into a condition giving "Error: bad value" on any input
+
 
 
 		CHANGES IN R VERSION 2.8.0
