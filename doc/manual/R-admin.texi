@@ -3635,9 +3635,11 @@ SHLIB_CXXLD=icpc
 @end example
 
 @noindent
-@command{configure} will add @samp{-c99} to @code{CC} for C99-compliance.
-@R{} will add @samp{-mp} in @code{R_XTRA_@{C,F,CXX@}FLAGS} to maintain
-correct @acronym{IEC}@tie{}60559 arithmetic.  The flag @option{-wd188}
+@command{configure} will add @samp{-c99} to @code{CC} for
+C99-compliance.  This causes warnings with @code{icc} 10, so use
+@code{CC="icc -std=c99"} there.  @R{} will add @samp{-mp} in
+@code{R_XTRA_@{C,F,CXX@}FLAGS} to maintain correct
+@acronym{IEC}@tie{}60559 arithmetic.  The flag @option{-wd188}
 suppresses a large number of warnings about the enumeration type
 @samp{Rboolean}.  Because the Intel C compiler sets @samp{__GNUC__}
 without complete emulation of @command{gcc}, we suggest adding
