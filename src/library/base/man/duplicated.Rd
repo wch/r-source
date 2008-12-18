@@ -64,7 +64,7 @@ duplicated(x, incomparables = FALSE, \dots)
   not be efficient for a very large set.
 }
 \value{
-  For a vector input, a logical vector of the same lemgth as
+  For a vector input, a logical vector of the same length as
   \code{x}.  For a data frame, a logical vector with one element for
   each row.  For a matrix or array, a logical array with the same
   dimensions and dimnames.
