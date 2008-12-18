@@ -76,6 +76,9 @@ DEPRECATED & DEFUNCT
 
 	So is install.packages(installWithVers = TRUE).
 
+    o	Rd conversion to Sd and Ssgm is now deprecated as we no longer
+	have any means to check the results (and Sd is long obsolete).
+
 
 BUG FIXES
 
