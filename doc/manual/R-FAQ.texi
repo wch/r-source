@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-11-29
+@set FAQ_DATE @value{FAQ_YEAR}-12-18
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 8
-@set REL_PATCHLEVEL 0
+@set REL_PATCHLEVEL 1
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -567,20 +567,12 @@ install r-base r-recommended} to install the R environment and
 recommended packages.  If you also want to build R packages from source,
 also run @code{apt-get install r-base-dev} to obtain the additional
 tools required for this.  So-called ``backports'' of the current R
-packages for the @dfn{stable} distribution of Debian are provided by
-Johannes Ranke, and available from CRAN.  Simply add the line
-
-@example
-deb http://CRAN.R-project.org/bin/linux/debian stable/
-@end example
-
-@noindent
-(feel free to use a @CRAN{} mirror instead of the master) to the file
-@file{/etc/apt/sources.list}, and install as usual.  More details on
-installing and administering R on Debian Linux can be found at
-@url{http://CRAN.R-project.org/bin/linux/debian/README}.  These
-backports should also be suitable for other Debian derivatives.  Native
-backports for Ubuntu are provided by Vincent Goulet and Michael Rutter.
+packages for at least the @dfn{stable} distribution of Debian are
+provided by Johannes Ranke, and available from CRAN.  See
+@url{http://CRAN.R-project.org/bin/linux/debian/README} for details on R
+Debian packages and installing the backports, which should also be
+suitable for other Debian derivatives.  Native backports for Ubuntu are
+provided by Vincent Goulet and Michael Rutter.
 
 On SUSE, you can set up an installation source for R within Yast by
 setting (e.g.)
@@ -2196,6 +2188,8 @@ statistical model.
 Interactive exploratory spatial data analysis.
 @item GillespieSSA
 Gillespie's Stochastic Simulation Algorithm (SSA).
+@item GridR
+Executes functions on remote hosts, clusters or grids.
 @item GroupSeq
 Computations related to group-seqential boundaries.
 @item HAPim
@@ -2355,6 +2349,8 @@ Methods for the Behavioral, Educational, and Social Sciences.
 Weather and air pollution data, risk estimates, and other information
 from the Medicare Air Pollution Study (MCAPS) of 204 U.S. counties,
 1999--2002.
+@item MCE
+Tools for evaluating Monte Carlo Error.
 @item MCMCpack
 Markov chain Monte Carlo (MCMC) package: functions for posterior
 simulation for a number of statistical models.
@@ -2805,6 +2801,9 @@ examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 @item SASxport
 Read and write SAS XPORT files.
+@item SDaA
+Functions and data sets from ``Sampling: Design and Analysis'' by
+S. Lohr, 1999, Duxbury.
 @item SDDA
 Stepwise Diagonal Discriminant Analysis.
 @item SGP
@@ -3060,6 +3059,8 @@ Adaptive Wavelet transforms for signal denoising.
 Spatial point patterns analysis.
 @item agce
 Analysis of growth curve experiments.
+@item agreement
+Analyze the agreement between two measurement methods.
 @item agricolae
 Statistical procedures for agricultural research.
 @item agsemisc
@@ -3073,6 +3074,8 @@ Methods and data to accompany the textbook ``Applied Linear Regression''
 by S. Weisberg, 2005, Wiley.
 @item amap
 Another Multidimensional Analysis Package.
+@item amei
+Adaptive Management of Epidemiological Interventions.
 @item anacor
 Simple and Canonical Correspondence Analysis.
 @item analogue
@@ -3100,6 +3103,8 @@ various approaches.
 Another PLot PACKage: stem.leaf, bagplot, faces, spin3R, @dots{}.
 @item apsrtable
 American Political Science Review style table formatting.
+@item archetypes
+Archetypal analysis.
 @item argosfilter
 Argos locations filter.
 @item arm
@@ -3495,6 +3500,9 @@ Robust Estimation in the Cox proportional hazards regression model.
 Routine for the multivariate nonparametric Cramer test.
 @item crank
 Functions for completing and recalculating rankings.
+@item crawl
+(C)orrelated (RA)ndom (W)alk (L)ibrary for fitting continuous-time
+correlated random walk models for animal movement data.
 @item crossdes
 Functions for the construction and randomization of balanced carryover
 balanced designs, to check given designs for balance, and for simulation
@@ -4123,6 +4131,8 @@ Binary grading functions.
 Graphical Analysis of Variance.
 @item graph
 Handling of graph data structures.
+@item graphicsQC
+Quality Control for graphics in R.
 @item grasp
 Generalized Regression Analysis and Spatial Predictions for R.
 @item gregmisc
@@ -4205,6 +4215,8 @@ Functions for the fitting and summarizing of heteroscedastic
 t-regression.
 @item hexView
 Viewing binary files.
+@item hexbin
+Hexagonal binning routines.
 @item hier.part
 Hierarchical Partitioning: variance partition of a multivariate data
 set.
@@ -4496,6 +4508,10 @@ Logspline density estimation.
 @item lokern
 Kernel regression smoothing with adaptive local or global plug-in
 bandwidth selection.
+@item longRPart
+Recursive partitioning of longitudinal data using mixed-effects models.
+@item longitudinal
+Analysis of multiple time course data.
 @item longmemo
 Datasets and Functionality from the textbook ``Statistics for
 Long-Memory Processes'' by J. Beran, 1994, Chapman & Hall.
@@ -5185,6 +5201,8 @@ selection bias corrected.
 @item predmixcor
 Classification rule based on Bayesian mixture models with feature
 selection bias corrected.
+@item prefmod
+Utilities to fit paired comparison models for preferences.
 @item prettyR
 Pretty descriptive stats.
 @item prim
@@ -5476,6 +5494,8 @@ Random Recursive Partitioning.
 @c </COMMENT>
 @item rscproxy
 A portable C-style interface to R (StatConnector).
+@item rsm
+Response-Surface Models.
 @item rsprng
 Provides interface to SPRNG (Scalable Parallel Random Number Generators)
 APIs, and examples and documentation for its use.
@@ -5518,8 +5538,11 @@ Insightful Spectral Analysis for Physical Applications.
 Semiparametric Bayesian Gaussian copula estimation.
 @item sca
 Simple Component Analysis.
-@item scagnostics
-Compute scagnostics.
+@c <COMMENT>
+@c Moved to the Archive on 2008-12-04 as requested by the maintainer.
+@c @item scagnostics
+@c Compute scagnostics.
+@c </COMMENT>
 @item scaleboot
 Approximately unbiased @math{p}-values via multiscale bootstrap.
 @item scape
@@ -5536,6 +5559,8 @@ Functions and datasets for math used in school.
 Scientific graphing functions for factorial designs.
 @item scope
 Data manipulation using arbitrary row and column criteria.
+@item scout
+Scout method for covariance-regularized regression.
 @item scrime
 Tools for the analysis of high-dimensional data developed/implemented at
 the group ``Statistical Complexity Reduction In Molecular Epidemiology''
@@ -5962,6 +5987,8 @@ movement from archival tags and satellite fixes.
 A constrained two-dimensional Delaunay triangulation package.
 @item truncgof
 Goodness-of-fit tests allowing for left truncated data.
+@item truncnorm
+Truncated normal distribution.
 @item trust
 Local optimization using two derivatives and trust regions.
 @item tsDyn
@@ -6039,6 +6066,9 @@ Violin plots, which are a combination of a box plot and a kernel density
 plot.
 @item vrtest
 Variance ratio tests for weak-form market efficiency.
+@item wasim
+Tools for data processing and visualization of results of the WASIM-ETH
+hydrological model.
 @item waveclock
 Time-frequency analysis of cycling cell luminescence data.
 @item waved
