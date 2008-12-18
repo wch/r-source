@@ -2843,9 +2843,24 @@ sub text2latex {
     $text =~ s/\\enumerate/\\Enumerate/go;
     $text =~ s/\\tabular/\\Tabular/go;
     my $loopcount = 0;
+
+    ## convert specials while [d]eqn is still escaped.
+    $text =~ s/\^/escaped-textcircum/go;
+    $text =~ s/~/escaped-texttilde/go;
+    $text =~ s/</escaped-textless/go;
+    $text =~ s/>/escaped-textgreater/go;
+    $text =~ s/\|/escaped-textbar/go;
+    ## need to handle \_ \\_ etc, possibly elsewhere
+    ## $text =~ s/_/escaped-textunderscore/go;
     while(checkloop($loopcount++, $text, "\\eqn")
 	  &&  $text =~ /\\eqn/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
+	$eqn =~ s/escaped-textcircum/^/go;
+	$eqn =~ s/escaped-texttilde/~/go;
+	$eqn =~ s/escaped-textless/</go;
+	$eqn =~ s/escaped-textgreater/</go;
+	$eqn =~ s/escaped-textbar/|/go;
+	## $eqn =~ s/escaped-textunderscore/\\_/go;
 	## $ascii may be empty
 	$text =~ s/\\eqn.*$id/\\eeeeqn\{$eqn\}\{$ascii\}/s;
     }
@@ -2854,8 +2869,20 @@ sub text2latex {
     while(checkloop($loopcount++, $text, "\\deqn")
 	  && $text =~ /\\deqn/) {
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
+	$eqn =~ s/escaped-textcircum/^/go;
+	$eqn =~ s/escaped-texttilde/~/go;
+	$eqn =~ s/escaped-textless/</go;
+	$eqn =~ s/escaped-textgreater/</go;
+	$eqn =~ s/escaped-textbar/|/go;
+	## $eqn =~ s/escaped-textunderscore/\\_/go;
 	$text =~ s/\\deqn.*$id/\\dddeqn\{$eqn\}\{$ascii\}/s;
     }
+    $text =~ s/escaped-textcircum/\\textasciicircum{}/go;
+    $text =~ s/escaped-texttilde/\\textasciitilde{}/go;
+    $text =~ s/escaped-textless/\\textless{}/go;
+    $text =~ s/escaped-textgreater/\\textgreater{}/go;
+    $text =~ s/escaped-textbar/\\textbar{}/go;
+    ## $text =~ s/escaped-textunderscore/\\textunderscore{}/go;
 
     ## Handle encoded text:
     my $loopcount = 0;

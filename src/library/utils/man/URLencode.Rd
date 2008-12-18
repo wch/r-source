@@ -21,7 +21,7 @@ URLdecode(URL)
 }
 \details{
   Characters in a URL other than the English alphanumeric characters and
-  \code{$ - _ . + ! * ' ( ) ,} should be encoded as \code{\%}
+  \samp{\$ - \_ . + ! * ' ( ) ,} should be encoded as \code{\%}
   plus a two-digit hexadecimal representation, and any single-byte
   character can be so encoded. (Multi-byte characters are encoded as
   byte-by-byte.)

@@ -117,6 +117,9 @@ NEW FEATURES
     o	[col/row]Sums(), *Means() now have an additional '...' argument,
 	so that they can more easily be turned into generic functions.
 
+    o	Rd conversion now handles ^ ~ < > | correctly in non-code
+	environments (such as \samp).
+
 
 DEPRECATED & DEFUNCT
 
@@ -267,6 +270,9 @@ DEPRECATED & DEFUNCT
 	support has always been incomplete on Windows).
 
 	So is install.packages(installWithVers = TRUE).
+
+    o	Rd conversion to Sd and Ssgm is now deprecated as we no longer
+	have any means to check the results (and Sd is long obsolete).
 
 
 BUG FIXES
