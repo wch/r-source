@@ -1171,6 +1171,7 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
 	case PARSE_INCOMPLETE:
 	case PARSE_ERROR:
 	    R_PPStackTop = savestack;
+	    SrcFile = NULL;
 	    return R_NilValue;
 	    break;
 	case PARSE_EOF:
@@ -1315,6 +1316,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
 	case PARSE_ERROR:
 	    R_IoBufferWriteReset(buffer);
 	    R_PPStackTop = savestack;
+	    SrcFile = NULL;
 	    return R_NilValue;
 	    break;
 	case PARSE_EOF:
