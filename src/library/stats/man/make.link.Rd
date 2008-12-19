@@ -19,7 +19,7 @@ make.link(link)
 }
 \arguments{
   \item{link}{character; one of \code{"logit"},
-    \code{"probit"}, \code{"cauchit"}, code{"cloglog"}, \code{"identity"},
+    \code{"probit"}, \code{"cauchit"}, \code{"cloglog"}, \code{"identity"},
     \code{"log"},  \code{"sqrt"},  \code{"1/mu^2"}, \code{"inverse"}.
   }
 }
