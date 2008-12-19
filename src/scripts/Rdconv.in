@@ -3,7 +3,7 @@
 ## Convert R documentation into HTML, LaTeX and text format
 
 # Copyright (C) 1997 Friedrich Leisch
-# Copyright (C) 2000-4 The R Core Development Team
+# Copyright (C) 2000-8 The R Core Development Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -66,8 +66,6 @@ $enc = $opt_encoding if $opt_encoding;
 my %types_and_exts = ("txt", "",
 		      "html", ".html",
 		      "latex", ".tex",
-		      "Sd", ".d",
-		      "Ssgm", ".sgml",
 		      "example", ".R");
 
 my $opt_type_ok = 0;
@@ -106,7 +104,6 @@ Options:
       --OS=NAME		the same as '--os'
 
 Possible format specifications are 'txt' (plain text), 'html', 'latex',
-'Sd' (old S documentation format), 'Ssgm' (new S documentation format),
 and 'example' (extract R code in the examples).
 
 The default is to send output to stdout, which is also given by '-o -'.

@@ -138,6 +138,8 @@ DEPRECATED & DEFUNCT
 	which were deprecated in 2.4.0 are now defunct: use power()
 	directly.
 
+    o	Conversion to Sd and Ssgm by R CMD Rdconv is now defunct.	
+
 
 UTILITIES
 
@@ -185,6 +187,22 @@ BUG FIXES
 
     o	deparse(control="S_compatible") now never uses backticks.
 
+
+
+
+
+	**************************************************
+	*						 *
+	*	       2.8 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.8.1 patched
+
+
+BUGS FIXES
+
     o	grid-based plots no longer reset the base text size to the
 	default 96dpi in cairo-based bitmap devices.
 
@@ -199,14 +217,6 @@ BUG FIXES
 	versions of R).
 
 
-
-
-
-	**************************************************
-	*						 *
-	*	       2.8 SERIES NEWS			 *
-	*						 *
-	**************************************************
 
 
 		CHANGES IN R VERSION 2.8.1
