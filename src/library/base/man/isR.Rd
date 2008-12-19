@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{is.R}
+\Rdversion{1.1}
 \title{Are we using R, rather than S?}
 \usage{
 is.R()
@@ -20,9 +21,9 @@ is.R()
   S-PLUS 8.0, your code must either define \code{is.R} or use it as
 
   \code{if (exists("is.R") && is.function(is.R) && is.R()) \{}\cr
-  \code{    }\emph{\#\# R-specific code}\cr
+  \code{    }\emph{## R-specific code}\cr
   \code{\} else \{}\cr
-  \code{    }\emph{\#\# S-version of code}\cr
+  \code{    }\emph{## S-version of code}\cr
   \code{\}}
 }
 \value{

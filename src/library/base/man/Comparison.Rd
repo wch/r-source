@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Comparison}
+\Rdversion{1.1}
 \alias{<}
 \alias{<=}
 \alias{==}
@@ -36,7 +37,7 @@ x != y
   Comparison of strings in character vectors is lexicographic within the
   strings using the collating sequence of the locale in use: see
   \code{\link{locales}}.  The collating sequence of locales such as
-  \samp{en\_US} is normally different from \samp{C} (which should use
+  \samp{en_US} is normally different from \samp{C} (which should use
   ASCII) and can be surprising.  Beware of making \emph{any} assumptions
   about the collation order: e.g. in Estonian \code{Z} comes between
   \code{S} and \code{T}, and collation is not necessarily

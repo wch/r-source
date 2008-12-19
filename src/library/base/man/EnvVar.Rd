@@ -194,7 +194,7 @@
   Some Windows-specific variables are
   \describe{
     \item{\code{GSC}:}{Optional: the path to GhostScript, used if
-      \env{R\_GSCMD} is not set.}
+      \env{R_GSCMD} is not set.}
     \item{\code{R_USER}:}{The user's \sQuote{home} directory.  Set by
       \R.  (\env{HOME} will be set to the same value if not already set.)}
     \item{\code{TZDIR}:}{Optional. The top-level directory of the

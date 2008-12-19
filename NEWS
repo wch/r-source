@@ -94,11 +94,6 @@ NEW FEATURES
 	file directive'exportClassPattern' which has the same syntax
 	as 'exportPattern'.
 
-    o	The Rd converter now detects and gives a warning on invalid
-	whitespace between arguments after the first, e.g.  \item{foo}
-	{some value} for \item and \section.  Previously arguments
-	after whitespace were silently ignored.
-
     o	strftime() now converts its first argment with as.POSIXlt()
 	and so is no longer an alias for format.POSIXLt.
 
@@ -116,10 +111,6 @@ NEW FEATURES
 
     o	[col/row]Sums(), *Means() now have an additional '...' argument,
 	so that they can more easily be turned into generic functions.
-
-    o	Rd conversion now handles ^ ~ < > | correctly in non-code
-	environments (such as \samp), and # and _ even in latex
-	conversion (but for now $ still needs to be escaped).
 
 
 DEPRECATED & DEFUNCT
@@ -155,6 +146,32 @@ UTILITIES
     o	New environment variable R_TEXI2DVICMD to hold the path (if any)
 	to 'texi2dvi' found at configure time: this now provides the
 	default to option("texi2dvi").
+
+
+Rd CONVERSION
+
+    o	Rd files have an optional \Rdversion{} section, which if
+	missing defaults to 1.0.  There is support for version 1.1, a
+	slightly modified version with the following changes.
+
+	- The warnings for \code{} inside example are suppressed.
+
+	- Whitespace between arguments in \item and \section is
+          accepted (see below).
+
+	- $ is treated literally in text, even for latex conversions.
+
+    o	Rd conversion now handles ^ ~ < > | correctly in non-code
+	environments (such as \samp), and # and _ even in latex
+	conversion (but $ still needs to be escaped in version 1.0).
+
+    o	Whitespace between first and second arguments is now accepted
+	for \item and \section, e.g.  \item{foo} {some value}.
+	Previously arguments after whitespace were silently ignored,
+	and a warning is given for version 1.0 files.
+
+    o	The Rd files created by prompt() and friends are declared to be
+	version 1.1.
 
 
 INSTALLATION
@@ -210,9 +227,9 @@ BUGS FIXES
 	cases with an odd number of backslashes greater than one).
 
 	Text conversion of \code{\ etc} was incorrect (a single
-	blackslash stands for itself inside \code).
+	backslash stands for itself inside \code).
 
-	\code{} inside \examples is now fixed up (but the warning
+	\code{} inside \examples{} is now fixed up (but the warning
 	remains, since it will be handled incorrectly in earlier
 	versions of R).
 

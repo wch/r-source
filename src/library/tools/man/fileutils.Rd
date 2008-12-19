@@ -1,9 +1,10 @@
 % File src/library/tools/man/fileutils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{fileutils}
+\Rdversion{1.1}
 \alias{file_path_as_absolute}
 \alias{file_path_sans_ext}
 \alias{list_files_with_exts}
@@ -37,7 +38,7 @@ list_files_with_type(dir, type, all.files = FALSE,
   \item{OS_subdirs}{a character vector with the names of OS-specific
     subdirectories to possibly include in the listing of R code and
     documentation files.  By default, the value of the environment
-    variable \env{R\_OSTYPE}, or if this is empty, the value of
+    variable \env{R_OSTYPE}, or if this is empty, the value of
     \code{\link{.Platform}$OS.type}, is used.}
 }
 \details{

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{xgettext}
+\Rd_vesion{1.1}
 \alias{xgettext}
 \alias{xngettext}
 \alias{xgettext2pot}
@@ -51,7 +52,7 @@ xgettext2pot(dir, potFile)
   manual).
 
   If applied to the \pkg{base} package, this also looks in the \file{.R}
-  files in \file{\var{\link[base:Rhome]{R\_HOME}}/share/R}.
+  files in \file{\var{\link[base:Rhome]{R_HOME}}/share/R}.
 }
 \value{
   For \code{xgettext}, a list of objects of class \code{"xgettext"}

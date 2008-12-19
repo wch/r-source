@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{clipboard}
+\Rdversion{1.1}
 \alias{getClipboardFormats}
 \alias{readClipboard}
 \alias{writeClipboard}
@@ -31,23 +32,23 @@ writeClipboard(str, format = 1)
 
   The standard formats include
   \tabular{lrl}{
-  CF\_TEXT	 \tab 	1  \tab Text in the machine's locale\cr
-  CF\_BITMAP	 \tab 	2  \tab \cr
-  CF\_METAFILEPICT \tab	3  \tab Metafile picture\cr
-  CF\_SYLK	 \tab 	4  \tab Sumbolic link\cr
-  CF\_DIF	 \tab 	5  \tab Data Interchange Fornat\cr
-  CF\_TIFF	 \tab 	6  \tab Tagged-Image File Format\cr
-  CF\_OEMTEXT	 \tab 	7  \tab Text in the OEM codepage\cr
-  CF\_DIB	 \tab 	8  \tab Device-Independent Bitmap\cr
-  CF\_PALETTE	 \tab 	9  \tab \cr
-  CF\_PENDATA	 \tab 	10 \tab \cr
-  CF\_RIFF	 \tab 	11 \tab Audio data\cr
-  CF\_WAVE	 \tab 	12 \tab Audio data\cr
-  CF\_UNICODETEXT \tab 	13 \tab Text in Unicode (UCS-2)\cr
-  CF\_ENHMETAFILE \tab 	14 \tab Enhanced metafile\cr
-  CF\_HDROP	 \tab 	15 \tab Drag-and-drop data\cr
-  CF\_LOCALE	 \tab 	16 \tab Locale for the text on the clipboard\cr
-  CF\_MAX	 \tab 	17 \tab Shell-oriented formats\cr
+  CF_TEXT	 \tab 	1  \tab Text in the machine's locale\cr
+  CF_BITMAP	 \tab 	2  \tab \cr
+  CF_METAFILEPICT \tab	3  \tab Metafile picture\cr
+  CF_SYLK	 \tab 	4  \tab Sumbolic link\cr
+  CF_DIF	 \tab 	5  \tab Data Interchange Fornat\cr
+  CF_TIFF	 \tab 	6  \tab Tagged-Image File Format\cr
+  CF_OEMTEXT	 \tab 	7  \tab Text in the OEM codepage\cr
+  CF_DIB	 \tab 	8  \tab Device-Independent Bitmap\cr
+  CF_PALETTE	 \tab 	9  \tab \cr
+  CF_PENDATA	 \tab 	10 \tab \cr
+  CF_RIFF	 \tab 	11 \tab Audio data\cr
+  CF_WAVE	 \tab 	12 \tab Audio data\cr
+  CF_UNICODETEXT \tab 	13 \tab Text in Unicode (UCS-2)\cr
+  CF_ENHMETAFILE \tab 	14 \tab Enhanced metafile\cr
+  CF_HDROP	 \tab 	15 \tab Drag-and-drop data\cr
+  CF_LOCALE	 \tab 	16 \tab Locale for the text on the clipboard\cr
+  CF_MAX	 \tab 	17 \tab Shell-oriented formats\cr
   }
   Applications normally make data available in one or more of these and
   possibly additional private formats.  Use \code{raw = TRUE} to read binary

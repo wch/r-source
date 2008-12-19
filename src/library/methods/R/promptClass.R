@@ -193,6 +193,7 @@ function (clName, filename = NULL, type = "class",
 
     Rdtxt <-
 	list(name = .name,
+             version = "\\Rdversion{1.1}",
 	     type = .type,
 	     aliases = .alias,
 	     methAliases = .methAliases,

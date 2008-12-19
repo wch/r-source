@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Rscript}
+\Rdversion{1.1}
 \alias{Rscript}
 \title{Scripting Front-End for R}
 \description{
@@ -46,7 +47,7 @@
       doing.  Also passed on to \R.}
     \item{\code{--default-packages=list}}{where \code{list} is a
       comma-separated list of package names or \code{NULL}.  Sets the
-      environment variable \env{R\_DEFAULT\_PACKAGES} which determines the
+      environment variable \env{R_DEFAULT_PACKAGES} which determines the
       packages loaded on startup.  The default for \code{Rscript} omits
       \pkg{methods} as it takes about 60\% of the startup time.
     }

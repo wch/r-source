@@ -1,9 +1,10 @@
 % File src/library/utils/man/zip.file.extract.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{zip.file.extract}
+\Rdversion{1.1}
 \alias{zip.file.extract}
 \title{Extract File from a Zip Archive}
 \usage{
@@ -26,7 +27,7 @@ zip.file.extract(file, zipname = "R.zip",
 \details{
   All platforms support an \code{"internal"} unzip: this is the default
   under Windows and the fall-back under Unix if no \code{unzip} program
-  was found during configuration and \env{R\_UNZIPCMD} is not set.
+  was found during configuration and \env{R_UNZIPCMD} is not set.
 
   The file will be extracted if it is in the archive and any required
   \code{unzip} utility is available.  It will be extracted to the

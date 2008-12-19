@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{dev2bitmap}
+\Rdversion{1.1}
 \alias{dev2bitmap}
 \alias{bitmap}
 \title{Graphics Device for Bitmap Files via GhostScript}
@@ -46,7 +47,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   and post-processing the output as \sQuote{printing}.
 
   You will need \code{ghostscript}: the full path to the executable can
-  be set by the environment variable \env{R\_GSCMD}.
+  be set by the environment variable \env{R_GSCMD}.
 #ifdef unix
   (If this is unset the command \code{"gs"} is used, which will work if
   it is in your path.)
@@ -88,7 +89,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   pixels, the default resolution of 72dpi is always used.
 
 #ifdef windows
-  Paths for \code{file} and \env{R\_GSCMD} which contain spaces are
+  Paths for \code{file} and \env{R_GSCMD} which contain spaces are
   mapped to short names \emph{via} \code{\link{shortPathName}}.
 #endif  
 }

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Startup}
+\Rdversion{1.1}
 \alias{Startup}
 \alias{Rprofile}
 \alias{.Rprofile}
@@ -33,10 +34,10 @@
   Unless \option{--no-environ} was given on the command line, \R
   searches for site and user files to process for setting environment
   variables.  The name of the site file is the one pointed to by the
-  environment variable \env{R\_ENVIRON}; if this is unset or empty,
-  \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron.site} is used (if it exists, which it
+  environment variable \env{R_ENVIRON}; if this is unset or empty,
+  \file{\var{\link[base:Rhome]{R_HOME}}/etc/Renviron.site} is used (if it exists, which it
   does not in a \sQuote{factory-fresh} installation).
-  The name of the user file can be specified by the \env{R\_ENVIRON\_USER}
+  The name of the user file can be specified by the \env{R_ENVIRON_USER}
   environment variable; if this is unset, the user files searched for are
   \file{.Renviron} in the current or in the user's home directory (in
   that order).
@@ -47,9 +48,9 @@
 
   Then \R searches for the site-wide startup profile unless the command
   line option \option{--no-site-file} was given.  The name of this file
-  is taken from the value of the \env{R\_PROFILE} environment variable.
+  is taken from the value of the \env{R_PROFILE} environment variable.
   If this variable is unset, the default is
-  \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Rprofile.site}, which is used if it exists
+  \file{\var{\link[base:Rhome]{R_HOME}}/etc/Rprofile.site}, which is used if it exists
 #ifdef unix
   (which it does not in a \sQuote{factory-fresh} installation).
 #endif
@@ -64,7 +65,7 @@
 
   Then, unless \option{--no-init-file} was given, \R searches for a user
   profile file.  The name of this file can be specified by the
-  \env{R\_PROFILE\_USER} environment variable.  If this is unset, a file
+  \env{R_PROFILE_USER} environment variable.  If this is unset, a file
   called \file{.Rprofile} in the current directory or in the user's
   home directory (in that order) is searched for.  The user profile is
   sourced into the user workspace.
@@ -99,7 +100,7 @@
   \code{R_DEFAULT_PACKAGES=""} enforces the R \emph{system} default.
 
   On front-ends which support it, the commands history is read from the
-  file specified by the environment variable \env{R\_HISTFILE} (default
+  file specified by the environment variable \env{R_HISTFILE} (default
   \file{.Rhistory}) unless \option{--no-restore-history} was specified
   (or \option{--no-restore}).
 
@@ -135,17 +136,17 @@
 }
 \note{
 #ifdef unix
-  The file \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron} is
+  The file \file{\var{\link[base:Rhome]{R_HOME}}/etc/Renviron} is
   always read very early in the start-up processing.  It contains
   environment variables set by \R in the configure process.  Values in
   that file can be overridden in site or user environment files: do not
-  change \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron} itself.
+  change \file{\var{\link[base:Rhome]{R_HOME}}/etc/Renviron} itself.
   Note that this is distinct from
-  \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron.site}.
+  \file{\var{\link[base:Rhome]{R_HOME}}/etc/Renviron.site}.
 #endif
 #ifdef windows
   Unix versions of \R have a file
-  \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron}
+  \file{\var{\link[base:Rhome]{R_HOME}}/etc/Renviron}
   which is read very early in the start-up processing.  It contains
   environment variables set by \R in the configure process, and is not
   used on \R for Windows.

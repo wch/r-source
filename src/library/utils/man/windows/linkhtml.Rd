@@ -1,9 +1,10 @@
 % File src/library/utils/man/windows/linkhtml.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{link.html.help}
+\Rdversion{1.1}
 \alias{link.html.help}
 \alias{make.packages.html}
 \alias{make.search.html}
@@ -55,12 +56,13 @@ fixup.libraries.URLs(lib.loc = .libPaths())
   logical showing if they succeeded.
   
   The files
-  \file{\var{\link[base:Rhome]{R\_HOME}}\\doc\\html\\packages.html} and
-  \file{\var{\link[base:Rhome]{R\_HOME}}\\doc\\html\\search\\index.txt} are (re-)created by
+  \file{\var{\link[base:Rhome]{R_HOME}}\\doc\\html\\packages.html} and
+  \file{\var{\link[base:Rhome]{R_HOME}}\\doc\\html\\search\\index.txt} are (re-)created by
   \code{make.packages.html} and \code{make.search.html} respectively.
 }
 \note{
-  You will need write permission in the \file{\var{\link[base:Rhome]{R\_HOME}}\\doc\\html}
+  You will need write permission in the
+  \file{\var{\link[base:Rhome]{R_HOME}}\\doc\\html}
   directory to use any of the first three functions, and in the
   appropriate library trees to use the last two.
 }

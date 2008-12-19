@@ -1,9 +1,10 @@
 % File src/library/utils/man/help.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{help}
+\Rdversion{1.1}
 \alias{help}
 \alias{?}
 \title{Documentation}
@@ -117,21 +118,21 @@ type?topic
   file.  If the programs are in non-standard locations and hence were
   not found at compile time, you can either set the options
   \code{latexcmd} and \code{dvipscmd}, or the environment variables
-  \env{R\_LATEXCMD} and \env{R\_DVIPSCMD} appropriately.
+  \env{R_LATEXCMD} and \env{R_DVIPSCMD} appropriately.
 #endif
 #ifdef windows
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is
   produced by running the LaTeX version of the help page through
   \code{latex}.  You will need to customize the file
-  \file{\var{\link[base:Rhome]{R\_HOME}}/bin/helpPRINT.bat} which
+  \file{\var{\link[base:Rhome]{R_HOME}}/bin/helpPRINT.bat} which
   examples.  A TeX file named \file{\var{topic}.tex} is created in the
   current working directory and passed as an argument to \file{helpPRINT.bat}.
 #endif
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path: this will be
   input as a LaTeX style file after \code{Rd.sty}.  Some 
-  \link{environment variables} are consulted, notably \env{R\_PAPERSIZE}
-  (\emph{via} \code{getOption("papersize")}) and \env{R\_RD4DVI}
+  \link{environment variables} are consulted, notably \env{R_PAPERSIZE}
+  (\emph{via} \code{getOption("papersize")}) and \env{R_RD4DVI}
 
   If LaTeX versions of help pages were not built at the installation of
   the package, the \code{print} method will ask if conversion with

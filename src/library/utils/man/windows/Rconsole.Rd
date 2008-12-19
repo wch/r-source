@@ -1,9 +1,10 @@
 % File src/library/utils/man/windows/Rconsole.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Rwin configuration}
+\Rdversion{1.1}
 \alias{Rconsole}
 \alias{Rdevga}
 \alias{loadRconsole}
@@ -50,12 +51,12 @@
   defaults.  It returns no useful value.
 }
 \details{
-  There are system copies of these files in \file{\var{\link[base:Rhome]{R\_HOME}}\\etc}.  Users
+  There are system copies of these files in \file{\var{\link[base:Rhome]{R_HOME}}\\etc}.  Users
   can have personal copies of the files: these are looked for in the
-  location given by the environment variable \env{R\_USER}. The system
+  location given by the environment variable \env{R_USER}. The system
   files are read only if a corresponding personal file is not found.
 
-  If the environment variable \env{R\_USER} is not set, the \R system
+  If the environment variable \env{R_USER} is not set, the \R system
   sets it to \env{HOME} if that is set (stripping any trailing slash),
   otherwise to the Windows \sQuote{personal}  directory, 
   otherwise to \code{{HOMEDRIVE}{HOMEPATH}} if \code{HOMEDRIVE} and

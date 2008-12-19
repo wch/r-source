@@ -1,9 +1,10 @@
 % File src/library/grDevices/man/contourLines.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{contourLines}
+\Rdversion{1.1}
 \alias{contourLines}
 \title{Calculate Contour Lines}
 \description{
@@ -34,7 +35,7 @@ contourLines(x = seq(0, 1, length.out = nrow(z)),
   \code{contourLines} draws nothing, but returns a set of contour lines.
   
   There is currently no documentation about the algorithm.
-  The source code is in \file{\var{\link[base:Rhome]{R\_HOME}}/src/main/plot3d.c}.
+  The source code is in \file{\var{\link[base:Rhome]{R_HOME}}/src/main/plot3d.c}.
 }
 \value{
   A list of contours.

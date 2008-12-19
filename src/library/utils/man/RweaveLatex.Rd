@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{RweaveLatex}
+\Rdversion{1.1}
 \alias{RweaveLatex}
 \alias{RweaveLatexSetup}
 \title{R/LaTeX Driver for Sweave}
@@ -46,7 +47,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 
   The default in \R prior to 2.7.0 was \code{stylepath = TRUE}.  It is
   now taken from the environment variable
-  \env{SWEAVE\_STYLEPATH\_DEFAULT}, or is \code{FALSE} it that is unset or
+  \env{SWEAVE_STYLEPATH_DEFAULT}, or is \code{FALSE} it that is unset or
   empty.  If set, it should be exactly \code{TRUE} or \code{FALSE}: any
   other values are taken as \code{FALSE}.
 }

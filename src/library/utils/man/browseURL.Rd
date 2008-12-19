@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{browseURL}
+\Rdversion{1.1}
 \alias{browseURL}
 \title{Load URL into a WWW Browser}
 \description{
@@ -34,8 +35,8 @@ browseURL(url, browser = getOption("browser"), encodeIfNeeded = FALSE)
 #ifdef unix
 \details{
   The default browser is set by option \code{"browser"}, in turn set by
-  the environment variable \env{R\_BROWSER} which is by default set
-  in file \file{\var{\link[base:Rhome]{R\_HOME}}/etc/Renviron} to a choice made manually or
+  the environment variable \env{R_BROWSER} which is by default set
+  in file \file{\var{\link[base:Rhome]{R_HOME}}/etc/Renviron} to a choice made manually or
   automatically when \R was configured.  (See \code{\link{Startup}} for
   where to override that default value.)
 

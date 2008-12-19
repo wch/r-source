@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{libPaths}
+\Rdversion{1.1}
 \title{Search Paths for Packages}
 \alias{.Library}
 \alias{.Library.site}
@@ -30,11 +31,11 @@
 }
 \details{
   \code{.Library} is a character string giving the location of the
-  default library, the \file{library} subdirectory of \env{R\_HOME}.
+  default library, the \file{library} subdirectory of \env{R_HOME}.
 
   \code{.Library.site} is a (possibly empty) character vector giving the
   locations of the site libraries, by default the \file{site-library}
-  subdirectory of \env{R\_HOME} (which may not exist).
+  subdirectory of \env{R_HOME} (which may not exist).
 
   \code{.libPaths} is used for getting or setting the library trees that
   \R knows about (and hence uses when looking for packages).  If called
@@ -45,35 +46,35 @@
 
 #ifdef unix
   The library search path is initialized at startup from the environment
-  variable \env{R\_LIBS} (which should be a colon-separated list of
+  variable \env{R_LIBS} (which should be a colon-separated list of
   directories at which \R library trees are rooted) followed by those in
-  environment variable \env{R\_LIBS\_USER}.  Only directories which exist
+  environment variable \env{R_LIBS_USER}.  Only directories which exist
   at the time will be included.
 
-  By default \env{R\_LIBS} is unset, and \env{R\_LIBS\_USER} is set to
-  directory \file{R/\var{R.version\$platform}-library/\var{x.y}}
+  By default \env{R_LIBS} is unset, and \env{R_LIBS_USER} is set to
+  directory \file{R/\var{R.version$platform}-library/\var{x.y}}
   of the home directory (or \file{Library/R/\var{x.y}/library} for
   Mac OS X AQUA builds), for \R \var{x.y.z}.
 
   \code{.Library.site} can be set via the environment variable 
-  \env{R\_LIBS\_SITE} (as a colon-separated list of library trees).
+  \env{R_LIBS_SITE} (as a colon-separated list of library trees).
 #endif
 #ifdef windows
   The library search path is initialized at startup from the environment
-  variable \env{R\_LIBS} (which should be a semicolon-separated list of
+  variable \env{R_LIBS} (which should be a semicolon-separated list of
   directories at which \R library trees are rooted) followed by those in
-  environment variable \env{R\_LIBS\_USER}.  Only directories which exist
+  environment variable \env{R_LIBS_USER}.  Only directories which exist
   at the time will be included.
 
-  By default \env{R\_LIBS} is unset, and \env{R\_LIBS\_USER} is set to
+  By default \env{R_LIBS} is unset, and \env{R_LIBS_USER} is set to
   subdirectory \file{R/win-library/\var{x.y}} of the home directory,
   for \R \var{x.y.z}.
 
   \code{.Library.site} can be set via the environment variable
-  \env{R\_LIBS\_SITE} (as a semicolon-separated list of library trees).
+  \env{R_LIBS_SITE} (as a semicolon-separated list of library trees).
 #endif
 
-  Both \env{R\_LIBS\_USER} and \env{R\_LIBS\_SITE} feature possible
+  Both \env{R_LIBS_USER} and \env{R_LIBS_SITE} feature possible
   expansion of specifiers for \R version specific information as part of
   the startup process.  The possible conversion specifiers all start
   with a \samp{\%} and are followed by a single letter (use \samp{\%\%}

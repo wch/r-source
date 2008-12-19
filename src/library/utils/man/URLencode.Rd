@@ -1,9 +1,10 @@
 % File src/library/utils/man/URLencode.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{URLencode}
+\Rdversion{1.1}
 \alias{URLencode}
 \alias{URLdecode}
 \title{Encode or Decode a (partial) URL}
@@ -21,7 +22,7 @@ URLdecode(URL)
 }
 \details{
   Characters in a URL other than the English alphanumeric characters and
-  \samp{\$ - \_ . + ! * ' ( ) ,} should be encoded as \code{\%}
+  \samp{$ - _ . + ! * ' ( ) ,} should be encoded as \code{\%}
   plus a two-digit hexadecimal representation, and any single-byte
   character can be so encoded. (Multi-byte characters are encoded as
   byte-by-byte.)

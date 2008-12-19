@@ -40,7 +40,7 @@ if($main::opt_dosnames) { $HTML = ".htm"; } else { $HTML = ".html"; }
 @blocknames = ("name", "title", "usage", "arguments", "format",
 	       "description", "details", "value", "references",
 	       "source", "seealso", "examples", "author", "note",
-	       "synopsis", "docType", "encoding");
+	       "synopsis", "docType", "encoding", "Rdversion");
 
 ## These may appear multiply but are of simple structure:
 @multiblocknames = ("alias", "keyword");
@@ -91,6 +91,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
     $def_encoding = $_[6];
     $def_encoding = "unknown" unless $def_encoding;
     $Rdfile = basename($Rdname);
+    $Rdversion = "1.0";  # the default
 
     if($type !~ /,/) {
 	## Trivial (R 0.62 case): Only 1 $type at a time ==> one
@@ -185,6 +186,10 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	@keywords= get_multi($complete_text,"keyword");
 
 	get_blocks($complete_text);
+	## these are intentionally global
+	$Rdversion = $blocks{"Rdversion"} if defined $blocks{"Rdversion"};
+	$verbatimdollar = $Rdversion >= 1.1;
+	print STDERR "-- Rd version is $Rdversion\n" if $debug;
 
 	if($type =~ /html/i || $type =~ /txt/i || $type =~ /tex/i || $type =~ /chm/i ) {
 
@@ -218,6 +223,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	$max_section = scalar(@section_title);
 	
 	$issue_warnings = 1;
+	$issue_warnings = 0 if $Rdversion  >= 1.1;
 	rdoc2html($htmlfile, $def_encoding)	if $type =~ /html/i;
 	rdoc2txt($txtfile, $def_encoding)	if $type =~ /txt/i;
 	rdoc2latex($latexfile, $def_encoding)	if $type =~ /tex/i;
@@ -2456,7 +2462,7 @@ sub text2latex {
 	$text =~ s/</escaped-textless/go;
 	$text =~ s/>/escaped-textgreater/go;
 	$text =~ s/\|/escaped-textbar/go;
-#	$text =~ s/\$/escaped-textdollar/go;
+	$text =~ s/\$/escaped-textdollar/go if $verbatimdollar;
 	$text =~ s/\#/escaped-texthash/go;
 	$text =~ s/_/escaped-textunderscore/go;
 	while(checkloop($loopcount++, $text, "\\eqn")
@@ -2469,7 +2475,7 @@ sub text2latex {
 	    $eqn =~ s/escaped-textless/</go;
 	    $eqn =~ s/escaped-textgreater/>/go;
 	    $eqn =~ s/escaped-textbar/|/go;
-#	    $eqn =~ s/escaped-textdollar/\$/go;
+	    $eqn =~ s/escaped-textdollar/\$/go if $verbatimdollar;
 	    $eqn =~ s/escaped-texthash/\#/go;
 	    $eqn =~ s/escaped-textunderscore/_/go;
 	    ## $ascii may be empty
@@ -2487,7 +2493,7 @@ sub text2latex {
 	    $eqn =~ s/escaped-textless/</go;
 	    $eqn =~ s/escaped-textgreater/>/go;
 	    $eqn =~ s/escaped-textbar/|/go;
-#	    $eqn =~ s/escaped-textdollar/\$/go;
+	    $eqn =~ s/escaped-textdollar/\$/go if $verbatimdollar;
 	    $eqn =~ s/escaped-texthash/\#/go;
 	    $eqn =~ s/escaped-textunderscore/_/go;
 	    $text =~ s/\\deqn.*$id/\\dddeqn\{$eqn\}\{\}/s;
@@ -2502,7 +2508,7 @@ sub text2latex {
 	    $url =~ s/escaped-textless/</go;
 	    $url =~ s/escaped-textgreater/>/go;
 	    $url =~ s/escaped-textbar/|/go;
-#	    $url =~ s/escaped-textdollar/\$/go;
+	    $url =~ s/escaped-textdollar/\$/go if $verbatimdollar;
 	    $url =~ s/escaped-texthash/\#/go;
 	    $url =~ s/escaped-textunderscore/_/go;
 	    $text =~ s/\\url.*$id/\\uuuurl\{$url\}/s;
@@ -2514,10 +2520,10 @@ sub text2latex {
 	$text =~ s/escaped-textbar/\\textbar{}/go;
 	## interpret \$ and $ as dollar, possibly preceded by multiple \
 	## This works for $ \$ and \\$ but not \\\$ -- implausible in text.
-#	$text =~ s/^\\escaped-textdollar|((\\\\)*)\\escaped-textdollar/$1$2\\\$/go;
+	$text =~ s/^\\escaped-textdollar|((\\\\)*)\\escaped-textdollar/$1$2\\\$/go if $verbatimdollar;
 	$text =~ s/^\\escaped-texthash|((\\\\)*)\\escaped-texthash/$1$2\\\#/go;
 	$text =~ s/^\\escaped-textunderscore|((\\\\)*)\\escaped-textunderscore/$1$2\\_/go;
-#	$text =~ s/escaped-textdollar/\\\$/go;
+	$text =~ s/escaped-textdollar/\\\$/go if $verbatimdollar;
 	$text =~ s/escaped-texthash/\\\#/go;
 	$text =~ s/escaped-textunderscore/\\_/go;
     }

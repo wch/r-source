@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{postscript}
+\Rdversion{1.1}
 \alias{postscript}
 \alias{.ps.prolog}
 \concept{encoding}
@@ -285,7 +286,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   comprehensive but incomplete coverage of the glyphs covered by the
   Adobe symbol font in other families.  This is achieved by
   special-casing the postscript code generated from the supplied
-  \file{CM\_symbol\_10.afm}.
+  \file{CM_symbol_10.afm}.
 }
 \section{Color models}{
   The default color model is RGB, with pure gray colors expressed as

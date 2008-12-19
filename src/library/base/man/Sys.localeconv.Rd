@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{localeconv}
+\Rdversion{1.1}
 \alias{localeconv}
 \alias{Sys.localeconv}
 \title{Find Details of the Numerical and Monetary Representations
@@ -17,12 +18,12 @@ Sys.localeconv()
 }
 \details{
   These settings are usually controlled by the environment variables
-  \env{LC\_NUMERIC} and \env{LC\_MONETARY} and if not set the values of
-  \env{LC\_ALL} or \env{LANG}.
+  \env{LC_NUMERIC} and \env{LC_MONETARY} and if not set the values of
+  \env{LC_ALL} or \env{LANG}.
 
-  Normally \R is run without looking at the value of \env{LC\_NUMERIC},
+  Normally \R is run without looking at the value of \env{LC_NUMERIC},
   so the decimal point remains '\code{.}'.  So the first three of these
-  values will not be useful unless you have set \env{LC\_NUMERIC} in
+  values will not be useful unless you have set \env{LC_NUMERIC} in
   the current \R session.
 }
 \value{

@@ -181,13 +181,13 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
 
       It is also possible to use the hexadecimal code directly.  This works
       for all non-EUC fonts by specifying an escape sequence of the form
-      \code{\\\\#J1234}.  For example, the first Hiragana character is produced
-      by \code{\\\\#J2421}.
+      \code{\\\#J1234}.  For example, the first Hiragana character is produced
+      by \code{\\\#J2421}.
 
       The Kanji characters may be specified in a third way, using the
       so-called "Nelson Index", by specifying an escape sequence of the form
-      \code{\\\\#N1234}.  For example, the (obsolete) Kanji for \sQuote{one} is
-      produced by \code{\\\\#N0001}.
+      \code{\\\#N1234}.  For example, the (obsolete) Kanji for \sQuote{one} is
+      produced by \code{\\\#N0001}.
     
       \code{demo(Japanese)} shows the available Japanese characters.
     }
@@ -195,8 +195,8 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
     \item{Raw Hershey Glyphs:}{all of the characters in the Hershey fonts
       are stored in a large array.  Some characters are not accessible in
       any of the Hershey fonts.  These characters can only be accessed via
-      an escape sequence of the form \code{\\\\#H1234}.  For example, the
-      fleur-de-lys is produced by \code{\\\\#H0746}.  The sixth and seventh
+      an escape sequence of the form \code{\\\#H1234}.  For example, the
+      fleur-de-lys is produced by \code{\\\#H0746}.  The sixth and seventh
       tables of \code{demo(Hershey)} shows all of the available raw
       glyphs.
     }

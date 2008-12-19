@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{timezones}
+\Rd_conversion{1.1}
 \alias{Sys.timezone}
 \alias{timezone}
 \alias{time zone}
@@ -107,11 +108,11 @@ Sys.timezone()
 
   \R under Windows uses the Olson database.  The current version of the
   database will be given in file
-  \file{\var{\link[base:Rhome]{R\_HOME}}/share/zoneinfo/VERSION}.
+  \file{\var{\link[base:Rhome]{R_HOME}}/share/zoneinfo/VERSION}.
   Environment variable \env{TZDIR} can be used to point to a later
   \file{zoneinfo} directory. A file listing most known time zones can be
   found at
-  \file{\var{\link[base:Rhome]{R\_HOME}}/share/zoneinfo/zone.tab} (see
+  \file{\var{\link[base:Rhome]{R_HOME}}/share/zoneinfo/zone.tab} (see
   \sQuote{Examples}).
 
   An attempt is made (once only per session) to map Windows' idea of

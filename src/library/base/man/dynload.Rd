@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{dyn.load}
+\Rdversion{1.1}
 \alias{dyn.load}
 \alias{dyn.unload}
 \alias{is.loaded}
@@ -116,7 +117,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   options are used.  This is done by setting either of the options
   \code{verbose} or \code{warn} to be non-zero via the
   \code{\link{options}} function.  Currently, we know of only 2
-  platforms that do not provide a value for local load (RTLD\_LOCAL).
+  platforms that do not provide a value for local load (RTLD_LOCAL).
   These are IRIX6.4 and unpatched versions of Solaris 2.5.1.
 
   There is a short discussion of these additional arguments with some
@@ -191,7 +192,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
     variable \env{PATH}.
   }
   This means that for all but embedded uses of \R, \file{iconv.dll} will
-  be found in \file{\var{\link[base:Rhome]{R\_HOME}}/bin}.
+  be found in \file{\var{\link[base:Rhome]{R_HOME}}/bin}.
 
   Packages often want to supply dependent DLLs in their \file{libs}
   directory, and do this by setting the \env{PATH} variable

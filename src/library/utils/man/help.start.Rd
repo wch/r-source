@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{help.start}
+\Rdversion{1.1}
 \title{Hypertext Documentation}
 \alias{help.start}
 \description{
@@ -29,7 +30,7 @@ help.start(update = TRUE, gui = "irrelevant",
   }
 #ifdef unix  
   \item{remote}{A character giving a valid URL for the
-    \file{\var{\link[base:Rhome]{R\_HOME}}} directory on a remote location.}
+    \file{\var{\link[base:Rhome]{R_HOME}}} directory on a remote location.}
 #endif
 #ifdef windows  
   \item{update}{logical: should this attempt to update the indices to

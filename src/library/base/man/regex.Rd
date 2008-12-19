@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{regex}
+\Rdversion{1.1}
 \alias{regex}
 \alias{regexp}
 \alias{regular expression}
@@ -49,7 +50,7 @@
   metacharacter with special meaning may be quoted by preceding it with
   a backslash.  (Escaping other characters with a backslash is
   undefined in POSIX but gives the character in the \R implementation.)
-  The metacharacters in EREs are \samp{. \\ | ( ) [ \{ ^ \$ * + ?}, but
+  The metacharacters in EREs are \samp{. \\ | ( ) [ \{ ^ $ * + ?}, but
   note that whether these have a special meaning depends on the context.
 
   A \emph{character class} is a list of characters enclosed between
@@ -109,7 +110,7 @@
       Printable characters: \samp{[:alnum:]}, \samp{[:punct:]} and space.}
 
     \item{\samp{[:punct:]}}{Punctuation characters:
-      \samp{! " \# \$ \% & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ \_ ` \{ | \} ~}.}
+      \samp{! " # $ \% & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` \{ | \} ~}.}
 %'"`  keep Emacs Rd mode happy
 
     \item{\samp{[:space:]}}{
@@ -139,7 +140,7 @@
   \samp{\\W} is its negation.  However, \samp{\\w} also
   matches underscore in the GNU grep code used in \R.
 
-  The caret \samp{^} and the dollar sign \samp{\$} are metacharacters
+  The caret \samp{^} and the dollar sign \samp{$} are metacharacters
   that respectively match the empty string at the beginning and end of a
   line.  The symbols \samp{\\<} and \samp{\\>} respectively match the
   empty string at the beginning and end of a word.  The symbol \samp{\\b}
@@ -197,7 +198,7 @@
   \samp{\{}, \samp{|}, \samp{(}, and \samp{)} lose their special meaning;
   instead use the backslashed versions \samp{\\?}, \samp{\\+},
   \samp{\\ \{}, \samp{\\|}, \samp{\\(}, and \samp{\\)}.  Thus the
-  metacharacters are \samp{. \\ [ ^ \$ *}.
+  metacharacters are \samp{. \\ [ ^ $ *}.
 }
 \section{Perl Regular Expressions}{
   The \code{perl = TRUE} argument to \code{grep}, \code{regexpr},
@@ -246,9 +247,9 @@
 
   If you want to remove the special meaning from a sequence of
   characters, you can do so by putting them between \samp{\\Q} and
-  \samp{\\E}. This is different from Perl in that \samp{\$} and \samp{@} are
+  \samp{\\E}. This is different from Perl in that \samp{$} and \samp{@} are
   handled as literals in \samp{\\Q...\\E} sequences in PCRE, whereas in
-  Perl, \samp{\$} and \samp{@} cause variable interpolation.
+  Perl, \samp{$} and \samp{@} cause variable interpolation.
 
   The escape sequences \samp{\\d}, \samp{\\s} and \samp{\\w} represent any
   decimal digit, space character and \sQuote{word} character
@@ -291,12 +292,12 @@
   \sQuote{ungreedy}, that is as short as possible rather than as long as
   possible (unless the meanings are reversed by the \samp{(?U)} option.)
 
-  The sequence \samp{(?\#} marks the start of a comment which continues
+  The sequence \samp{(?#} marks the start of a comment which continues
   up to the next closing parenthesis.  Nested parentheses are not
   permitted.  The characters that make up a comment play no part at all in
   the pattern matching.
 
-  If the extended option is set, an unescaped \samp{\#} character outside
+  If the extended option is set, an unescaped \samp{#} character outside
   a character class introduces a comment that continues up to the next
   newline character in the pattern.
 

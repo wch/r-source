@@ -90,7 +90,7 @@
       force, zero if not, negative if unknown.}
   }
   The classes correspond to the POSIX/C99 constructs of \sQuote{calendar
-    time} (the \code{time\_t} data type) and \sQuote{local time} (or
+    time} (the \code{time_t} data type) and \sQuote{local time} (or
   broken-down time, the \code{struct tm} data type), from which they
   also inherit their names.
 

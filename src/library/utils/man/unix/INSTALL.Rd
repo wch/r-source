@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{INSTALL}
+\Rdversion{1.1}
 \alias{INSTALL}
 \title{Install Add-on Packages}
 \description{Utility for installing add-on packages.}
@@ -31,14 +32,14 @@
 
   To install into the library tree \code{lib}, use
   \code{R CMD INSTALL -l lib pkgs}.  This prepends \code{lib} to
-  \env{R\_LIBS} for duration of the install, so required packages in the
+  \env{R_LIBS} for duration of the install, so required packages in the
   installation directory will be found (and used in preference to those
   in other libraries).
 
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names of directories.  \code{pkgs} may also contain
   names of package/bundle archive files of the form
-  \file{pkg\_version.tar.gz} as obtained from CRAN: these are then
+  \file{pkg_version.tar.gz} as obtained from CRAN: these are then
   extracted in a temporary directory.  Finally, binary package/bundle
   archive files (as created by \code{R CMD build --binary} can be supplied.
 

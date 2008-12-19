@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{RShowDoc}
+\Rdversion{1.1}
 \alias{RShowDoc}
 \title{Show R Manuals and Other Documentation}
 \description{
@@ -23,7 +24,7 @@ RShowDoc(what, type = c("pdf", "html", "txt"), package)
   including the \R manuals (\code{R-admin}, \code{R-data}, \code{R-exts},
   \code{R-intro}, \code{R-ints}, \code{R-lang}), \code{NEWS},
   \code{COPYING} (the GPL licence), \code{FAQ} (also available as
-  \code{R-FAQ}), and the files in \file{\var{\link[base:Rhome]{R\_HOME}}/doc}.
+  \code{R-FAQ}), and the files in \file{\var{\link[base:Rhome]{R_HOME}}/doc}.
 #ifdef windows
   The \R for Windows FAQ is specified by \code{rw-FAQ}.
 #endif
