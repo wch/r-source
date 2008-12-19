@@ -52,7 +52,8 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
   New York: Wiley, p. 506f.
 }
 \seealso{
-  \code{\link{qr}}, \code{\link{svd}}.
+  % Avoid Matrix's grab of qr.
+  \code{\link[stats]{qr}}, \code{\link{svd}}.
 }
 \examples{
 pop <- LifeCycleSavings[, 2:3]

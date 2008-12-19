@@ -201,7 +201,7 @@ optim(par, fn, gr = NULL, \dots,
 
   The code for method \code{"L-BFGS-B"} is based on Fortran code by Zhu,
   Byrd, Lu-Chen and Nocedal obtained from Netlib (file
-  \file{opt/lbfgs\_bcm.shar}: another version is in \file{toms/778}).
+  \file{opt/lbfgs_bcm.shar}: another version is in \file{toms/778}).
 
   The code for method \code{"SANN"} was contributed by A. Trapletti.
 }
