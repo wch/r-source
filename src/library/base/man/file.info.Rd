@@ -47,7 +47,7 @@ file.info(\dots)
   \item{mode}{integer of class \code{"octmode"}.  The file permissions,
     printed in octal, for example \code{644}.}
   \item{mtime, ctime, atime}{integer of class \code{"POSIXct"}:
-    file modification, creation and last access times.}
+    file modification, \sQuote{last status change} and last access times.}
 #ifdef unix
   \item{uid}{integer: the user ID of the file's owner.}
   \item{gid}{integer: the group ID of the file's group.}
@@ -68,6 +68,9 @@ file.info(\dots)
   The \code{uid}, \code{gid}, \code{uname} and \code{grname} columns
   may not be supplied on a non-POSIX Unix system.
 #endif
+
+  What is meant by the three file times depends on the OS and file
+  system.  On Windows \code{ctime} is the creation time.
 }
 #ifdef unix
 \note{
