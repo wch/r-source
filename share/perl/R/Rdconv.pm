@@ -1305,8 +1305,9 @@ sub html_print_codeblock {
 	if ($ntext =~ /$ECODE/) {
 	    warn "WARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
 	}
-	print $htmlout (html_title3($title), "<pre>" ,
-			code2html($ntext), "</pre>\n\n");
+	my $ntext = code2html($ntext);
+	$ntext = html_unescape_codes($ntext);
+	print $htmlout (html_title3($title), "<pre>" , $ntext, "</pre>\n\n");
     }
 }
 
@@ -1525,7 +1526,7 @@ sub html_functionfoot
 	$retval .= "\n\n<hr><div align=\"center\">[Package";
  	$retval .= " <em>$pkgname</em>" if $pkgname ne "unknown";
 	$retval .= " version $version" if $version ne "";
-	$retval .= " <a href=\"00Index$HTML\">Index]</a></div>\n\n";
+	$retval .= " <a href=\"00Index$HTML\">Index</a>]</div>\n\n";
     }
 
     $retval .= "</body></html>\n";
@@ -1944,6 +1945,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
     $text =~ s/\\#/#/go;
     $text =~ s/\\%/%/go;
     $text =~ s/\\bsl{}/\\/go;
+    $text =~ s/escaped-code-backslash/\\/go;
 
     my @paras = split /\n\n/, $text;
     $indent1 = $pre1; $indent2 = $indent;
@@ -2108,6 +2110,7 @@ sub txt_print_codeblock {
 	$ntext =~ s/^[\n]*//go;
 	$ntext = "\n". $ntext;
 	$ntext =~ s/\\&\././go;
+	$ntext = txt_unescape_codes($ntext);
 	foreach $line (split /\n/, $ntext) {
 	    $line =~ s/\\\\/\\/go;
 	    $line =~ s/^\t/        /o;
@@ -2200,6 +2203,8 @@ sub txt_unescape_codes {
 	  && $text =~ /$ECODE($ID)/) {
 	my $id = $1;
 	my $ec = code2txt($ecodes{$id});
+	## in code, \ means itself, \\ means \
+	$ec =~ s/\\\\/escaped-code-backslash/go;
 	$text =~ s/$ECODE$id/\'$ec\'/;
     }
 
@@ -2737,6 +2742,7 @@ sub code2examp {
     $text =~ s/\\\\/\\/g;
 
     $text = unmark_brackets($text);
+    $text = txt_unescape_codes($text);
 
     $text = transform_S3method($text);
     $text = transform_S4method($text);
@@ -2844,45 +2850,78 @@ sub text2latex {
     $text =~ s/\\tabular/\\Tabular/go;
     my $loopcount = 0;
 
-    ## convert specials while [d]eqn is still escaped.
-    $text =~ s/\^/escaped-textcircum/go;
-    $text =~ s/~/escaped-texttilde/go;
-    $text =~ s/</escaped-textless/go;
-    $text =~ s/>/escaped-textgreater/go;
-    $text =~ s/\|/escaped-textbar/go;
-    ## need to handle \_ \\_ etc, possibly elsewhere
-    ## $text =~ s/_/escaped-textunderscore/go;
-    while(checkloop($loopcount++, $text, "\\eqn")
-	  &&  $text =~ /\\eqn/){
-	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
-	$eqn =~ s/escaped-textcircum/^/go;
-	$eqn =~ s/escaped-texttilde/~/go;
-	$eqn =~ s/escaped-textless/</go;
-	$eqn =~ s/escaped-textgreater/</go;
-	$eqn =~ s/escaped-textbar/|/go;
-	## $eqn =~ s/escaped-textunderscore/\\_/go;
-	## $ascii may be empty
-	$text =~ s/\\eqn.*$id/\\eeeeqn\{$eqn\}\{$ascii\}/s;
+    if(!$recursive) {
+	## convert specials while [d]eqn is still escaped.
+	$text =~ s/\^/escaped-textcircum/go;
+	$text =~ s/~/escaped-texttilde/go;
+	$text =~ s/</escaped-textless/go;
+	$text =~ s/>/escaped-textgreater/go;
+	$text =~ s/\|/escaped-textbar/go;
+#	$text =~ s/\$/escaped-textdollar/go;
+	$text =~ s/\#/escaped-texthash/go;
+	$text =~ s/_/escaped-textunderscore/go;
+	while(checkloop($loopcount++, $text, "\\eqn")
+	      &&  $text =~ /\\eqn/){
+	    my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
+	    $eqn = latex_unescape_codes($eqn);
+	    $eqn = unmark_brackets($eqn);
+	    $eqn =~ s/escaped-textcircum/^/go;
+	    $eqn =~ s/escaped-texttilde/~/go;
+	    $eqn =~ s/escaped-textless/</go;
+	    $eqn =~ s/escaped-textgreater/>/go;
+	    $eqn =~ s/escaped-textbar/|/go;
+#	    $eqn =~ s/escaped-textdollar/\$/go;
+	    $eqn =~ s/escaped-texthash/\#/go;
+	    $eqn =~ s/escaped-textunderscore/_/go;
+	    ## $ascii may be empty
+	    $text =~ s/\\eqn.*$id/\\eeeeqn\{$eqn\}\{\}/s;
+	}
+	
+	$loopcount = 0;
+	while(checkloop($loopcount++, $text, "\\deqn")
+	      && $text =~ /\\deqn/) {
+	    my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
+	    $eqn = latex_unescape_codes($eqn);
+	    $eqn = unmark_brackets($eqn);
+	    $eqn =~ s/escaped-textcircum/^/go;
+	    $eqn =~ s/escaped-texttilde/~/go;
+	    $eqn =~ s/escaped-textless/</go;
+	    $eqn =~ s/escaped-textgreater/>/go;
+	    $eqn =~ s/escaped-textbar/|/go;
+#	    $eqn =~ s/escaped-textdollar/\$/go;
+	    $eqn =~ s/escaped-texthash/\#/go;
+	    $eqn =~ s/escaped-textunderscore/_/go;
+	    $text =~ s/\\deqn.*$id/\\dddeqn\{$eqn\}\{\}/s;
+	}
+	## URLs need to be verbatim
+	$loopcount = 0;
+	while(checkloop($loopcount++, $text, "\\url")
+	      && $text =~ /\\url/) {
+	    my ($id, $url) = get_arguments("url", $text, 1);
+	    $url =~ s/escaped-textcircum/^/go;
+	    $url =~ s/escaped-texttilde/~/go;
+	    $url =~ s/escaped-textless/</go;
+	    $url =~ s/escaped-textgreater/>/go;
+	    $url =~ s/escaped-textbar/|/go;
+#	    $url =~ s/escaped-textdollar/\$/go;
+	    $url =~ s/escaped-texthash/\#/go;
+	    $url =~ s/escaped-textunderscore/_/go;
+	    $text =~ s/\\url.*$id/\\uuuurl\{$url\}/s;
+	}
+	$text =~ s/escaped-textcircum/\\textasciicircum{}/go;
+	$text =~ s/escaped-texttilde/\\textasciitilde{}/go;
+	$text =~ s/escaped-textless/\\textless{}/go;
+	$text =~ s/escaped-textgreater/\\textgreater{}/go;
+	$text =~ s/escaped-textbar/\\textbar{}/go;
+	## interpret \$ and $ as dollar, possibly preceded by multiple \
+	## This works for $ \$ and \\$ but not \\\$ -- implausible in text.
+#	$text =~ s/^\\escaped-textdollar|((\\\\)*)\\escaped-textdollar/$1$2\\\$/go;
+	$text =~ s/^\\escaped-texthash|((\\\\)*)\\escaped-texthash/$1$2\\\#/go;
+	$text =~ s/^\\escaped-textunderscore|((\\\\)*)\\escaped-textunderscore/$1$2\\_/go;
+#	$text =~ s/escaped-textdollar/\\\$/go;
+	$text =~ s/escaped-texthash/\\\#/go;
+	$text =~ s/escaped-textunderscore/\\_/go;
     }
-
-    $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\deqn")
-	  && $text =~ /\\deqn/) {
-	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
-	$eqn =~ s/escaped-textcircum/^/go;
-	$eqn =~ s/escaped-texttilde/~/go;
-	$eqn =~ s/escaped-textless/</go;
-	$eqn =~ s/escaped-textgreater/</go;
-	$eqn =~ s/escaped-textbar/|/go;
-	## $eqn =~ s/escaped-textunderscore/\\_/go;
-	$text =~ s/\\deqn.*$id/\\dddeqn\{$eqn\}\{$ascii\}/s;
-    }
-    $text =~ s/escaped-textcircum/\\textasciicircum{}/go;
-    $text =~ s/escaped-texttilde/\\textasciitilde{}/go;
-    $text =~ s/escaped-textless/\\textless{}/go;
-    $text =~ s/escaped-textgreater/\\textgreater{}/go;
-    $text =~ s/escaped-textbar/\\textbar{}/go;
-    ## $text =~ s/escaped-textunderscore/\\textunderscore{}/go;
 
     ## Handle encoded text:
     my $loopcount = 0;
@@ -2907,6 +2946,7 @@ sub text2latex {
     $text =~ s/\\eeeeqn/\\eqn/go;
     $text =~ s/\\dddeqn/\\deqn/og;
     $text =~ s/\\DITEM/\\item/og;
+    $text =~ s/\\uuuurl/\\url/go;
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "escaped preformat")
@@ -3013,6 +3053,7 @@ sub latex_print_codeblock {
 	    warn "WARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
 	}
 	my $out = &code2latex($ntext, 0, 1);
+	$out = latex_unescape_codes($out);
 	$out =~ s/\\\\/\\/go;
 	print $latexout $out;
 	print $latexout "\\end\{verbatim\}\n";
@@ -3047,6 +3088,7 @@ sub latex_print_exampleblock {
 		if $issue_warnings; 
 	}
 	my $out = &code2latex($ntext,0,0);
+	$out = latex_unescape_codes($out);
 	$out =~ s/\\\\/\\/go;
 	print $latexout $out;
 	print $latexout "\\end\{ExampleCode\}\n";

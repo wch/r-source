@@ -118,7 +118,8 @@ NEW FEATURES
 	so that they can more easily be turned into generic functions.
 
     o	Rd conversion now handles ^ ~ < > | correctly in non-code
-	environments (such as \samp).
+	environments (such as \samp), and # and _ even in latex
+	conversion (but for now $ still needs to be escaped).
 
 
 DEPRECATED & DEFUNCT
@@ -189,6 +190,13 @@ BUG FIXES
 
     o	Rd conversion was incorrectly parsing \\\* and \\\{ (and other
 	cases with an odd number of backslashes greater than one).
+
+	Text conversion of \code{\ etc} was incorrect (a single
+	blackslash stands for itself inside \code).
+
+	\code{} inside \examples is now fixed up (but the warning
+	remains, since it will be handled incorrectly in earlier
+	versions of R).
 
 
 

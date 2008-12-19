@@ -3643,19 +3643,21 @@ examples section in the file @file{Paren.Rd} for an example.}
 for backslash and needs to be when there two or more adjacent
 backslashes).  Inside the verbatim-like commands (@code{usage},
 @code{\code}, @code{\preformatted} and @code{\examples}), no other
-characters are special.  Note that @code{\file} is @strong{not} a
-verbatim-like command.
+characters are special.  As from @R{} 2.9.0, all of @samp{% @{ @} \}
+should be escaped in non-verbatim-like text: for the time being @samp{$}
+also needs to be escaped in non-verbatim-like text.
 
-In ``regular'' text (not verbatim-like, no @code{\eqn}, @dots{}), you
-currently must escape most @LaTeX{} special characters, i.e., besides
-@samp{%}, @samp{@{}, and @samp{@}}, the specials @samp{$}, @samp{#}, and
-@samp{_} are produced by preceding each with a @samp{\}.  (@samp{&} can
-also be escaped, but need not be.)  Further, enter @samp{^} as
+For @R{} prior to 2.9.0, in ``regular'' text (not verbatim-like, no
+@code{\eqn}, @dots{}), you needed to escape most @LaTeX{} special
+characters, i.e., besides @samp{%}, @samp{@{}, and @samp{@}}, the
+specials @samp{$}, @samp{#}, and @samp{_} are produced by preceding each
+with a @samp{\}.  (@samp{&} can also be escaped, but need not be.)
+Further, enter @samp{^} as
 @code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
 @code{\eqn@{\mbox@{\textasciitilde@}@}@{~@}} or @code{\eqn@{\sim@}@{~@}}
 (for a short and long tilde respectively).  Also, @samp{<}, @samp{>},
-and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
-@code{\deqn}.
+and @samp{|} could only be used safely in math mode, i.e., within
+@code{\eqn} or @code{\deqn}.
 
 @findex \enc
 Text which might need to be represented differently in different
