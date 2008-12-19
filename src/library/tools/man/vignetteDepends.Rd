@@ -33,13 +33,14 @@ vignetteDepends(vignette, recursive = TRUE, reduce = TRUE,
   If \code{local} is \code{TRUE}, the system will only look at the
   user's local machine and not online to find dependencies.
 
-  If \code{reduce} is \code{TRUE}, the system will collapse the fields
-  in the \code{DependsList} to the minimal set of dependencies (for
-  instance if the dependencies were ('foo', 'foo (>= 1.0.0)', 
-  'foo (>= 1.3.0)'), the return value would be 'foo (>= 1.3.0)').
+  If \code{reduce} is \code{TRUE}, the system will collapse the fields in the
+  \code{DependsList} object such that a minimal set of dependencies
+  are specified (for instance if there was
+  \samp{foo, foo (>= 1.0.0), foo (>= 1.3.0}, it would only return
+  \samp{foo (>= 1.3.0)}).
 }
 \value{
-  An object of class \code{DependsList}
+  An object of class \code{"DependsList"}.
 }
 \author{ Jeff Gentry }
 \seealso{\code{\link{pkgDepends}}}
