@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-12-18
+@set FAQ_DATE @value{FAQ_YEAR}-12-19
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 8
@@ -660,105 +660,56 @@ is a guide to R's internal structures.
 (Added in R 2.4.0.)
 @end itemize
 
-Books on R include
+An annotated bibliography (Bib@TeX{} format) of R-related publications
+can be found at
+
+@display
+@url{http://www.R-project.org/doc/bib/R.bib}
+@end display
+
+Books on R by R Core Team members include
 
 @quotation
-P. Dalgaard (2002), ``Introductory Statistics with R'', Springer: New
-York, ISBN 0-387-95475-9, @url{http://www.biostat.ku.dk/~pd/ISwR.html}.
+John M. Chambers (2008), ``Software for Data Analysis: Programming with
+R''.  Springer, New York, ISBN 978-0-387-75935-7,
+@url{http://stat.stanford.edu/~jmc4/Rbook/}.
 
-J. Fox (2002), ``An R and @SPLUS{} Companion to Applied Regression'',
-Sage Publications, ISBN 0-761-92280-6 (softcover) or 0-761-92279-2
-(hardcover),
-@url{http://socserv.socsci.mcmaster.ca/jfox/Books/Companion/}.
+Peter Dalgaard (2008), ``Introductory Statistics with R'', 2nd edition.
+Springer, ISBN 978-0-387-79053-4,
+@url{http://www.biostat.ku.dk/~pd/ISwR.html}.
 
-J. Maindonald and J. Braun (2003), ``Data Analysis and Graphics Using R:
-An Example-Based Approach'', Cambridge University Press, ISBN
-0-521-81336-0, @url{http://wwwmaths.anu.edu.au/~johnm/}.
+Robert Gentleman (2008), ``R Programming for Bioinformatics''.  Chapman
+& Hall/CRC, Boca Raton, FL, ISBN 978-1-420-06367-7,
+@url{http://www.bioconductor.org/pub/RBioinf/}.
 
-S. M. Iacus and G. Masarotto (2002), ``Laboratorio di statistica con
-R'', McGraw-Hill, ISBN 88-386-6084-0 (in Italian),@*
-@url{http://www.ateneonline.it/LibroAteneo.asp?item_id=1436}.
+Stefano M. Iacus (2008), ``Simulation and Inference for Stochastic
+Differential Equations: With R Examples''. Springer, New York, ISBN
+978-0-387-75838-1.
+
+Deepayan Sarkar (2007), ``Lattice: Multivariate Data Visualization with
+R''. Springer, New York, ISBN 978-0-387-75968-5.
+
+W. John Braun and Duncan J. Murdoch (2007), ``A First Course in
+Statistical Programming with R''.  Cambridge University Press,
+Cambridge, ISBN 978-0521872652.
 
 P. Murrell (2005), ``R Graphics'', Chapman & Hall/CRC, ISBN:
 1-584-88486-X,
 @url{http://www.stat.auckland.ac.nz/~paul/RGraphics/rgraphics.html}.
 
+William N. Venables and Brian D. Ripley (2002), ``Modern Applied
+Statistics with S'' (4th edition).  Springer, ISBN 0-387-95457-0,
+@url{http://www.stats.ox.ac.uk/pub/MASS4/}.
+
+Jose C. Pinheiro and Douglas M. Bates (2000), ``Mixed-Effects Models in
+S and S-Plus''. Springer, ISBN 0-387-98957-0.
 @end quotation
-
-@noindent
-The book
-
-@quotation
-W. N. Venables and B. D. Ripley (2002), ``Modern Applied Statistics with
-S'' (4th edition).  Springer, ISBN 0-387-95457-0
-@end quotation
-
-@noindent
-has a home page at @url{http://www.stats.ox.ac.uk/pub/MASS4/} providing
-additional material.  Its companion is
-
-@quotation
-W. N. Venables and B. D. Ripley (2000), ``S Programming''.  Springer,
-ISBN 0-387-98966-8
-@end quotation
-
-@noindent
-and provides an in-depth guide to writing software in the S language
-which forms the basis of both the commercial @SPLUS{} and the Open
-Source R data analysis software systems.  See
-@url{http://www.stats.ox.ac.uk/pub/MASS3/Sprog/} for more information.
-
-In addition to material written specifically or explicitly for R,
-documentation for S/@SPLUS{} (see @ref{R and S}) can be used in
-combination with this @acronym{FAQ} (@pxref{What are the differences
-between R and S?}).  Introductory books include
-
-@quotation
-P. Spector (1994), ``An introduction to S and @SPLUS{}'', Duxbury Press.
-
-A. Krause and M. Olsen (2005), ``The Basics of @SPLUS{}'' (4th edition).
-Springer, ISBN 0-387-26109-5.
-@end quotation
-
-The book
-
-@quotation
-J. C. Pinheiro and D. M. Bates (2000), ``Mixed-Effects Models in S and
-@SPLUS{}'', Springer, ISBN 0-387-98957-0
-@end quotation
-
-@noindent
-provides a comprehensive guide to the use of the @strong{nlme} package
-for linear and nonlinear mixed-effects models.
-@c This has a home page at @url{http://nlme.stat.wisc.edu/MEMSS/}.
-
-As an example of how R can be used in teaching an advanced introductory
-statistics course, see
-
-@quotation
-D. Nolan and T. Speed (2000), ``Stat Labs: Mathematical Statistics
-Through Applications'', Springer Texts in Statistics, ISBN
-0-387-98974-9
-@end quotation
-
-@noindent
-This integrates theory of statistics with the practice of statistics
-through a collection of case studies (``labs''), and uses R to analyze
-the data.  More information can be found at
-@url{http://www.stat.Berkeley.EDU/users/statlabs/}.
 
 Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in Ihaka & Gentleman (1996), ``R: A Language
 for Data Analysis and Graphics'',
 @url{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
 Computational and Graphical Statistics}}, @strong{5}, 299--314.
-
-An annotated bibliography (Bib@TeX{} format) of R-related publications
-which includes most of the above references can be found at
-
-@display
-@url{http://www.R-project.org/doc/bib/R.bib}
-@end display
 
 @node Citing R, What mailing lists exist for R?, What documentation exists for R?, R Basics
 @section Citing R
