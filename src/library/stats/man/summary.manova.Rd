@@ -25,7 +25,7 @@
   
   % Avoid Matrix's grab of qr.
   \item{tol}{tolerance to be used in deciding if the residuals are
-    rank-deficient: see \code{\link[stats]{qr}}.}
+    rank-deficient: see \code{\link[base]{qr}}.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{

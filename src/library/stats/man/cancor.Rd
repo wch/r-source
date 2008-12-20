@@ -53,7 +53,7 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
 }
 \seealso{
   % Avoid Matrix's grab of qr.
-  \code{\link[stats]{qr}}, \code{\link{svd}}.
+  \code{\link[base]{qr}}, \code{\link{svd}}.
 }
 \examples{
 pop <- LifeCycleSavings[, 2:3]
