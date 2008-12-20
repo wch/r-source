@@ -125,12 +125,14 @@ print "\n";
 %anindex = read_anindex($lib);
 if($opt_html){
     %htmlindex = read_htmlindex($lib);
-    if ($lib ne $mainlib) {
-	%basehtmlindex = read_htmlindex($mainlib);
-	foreach $topic (keys %htmlindex) {
-	    $basehtmlindex{$topic} = $htmlindex{$topic};
+    # avoid takeover by packages with functions of the same name, 
+    # e.g. documented S4 generics for plot, qr.
+    foreach $pkg ("base", "utils", "graphics", "grDevices", "stats", 
+		  "datasets", "methods") {
+	my %pkghtmlindex = read_htmlpkgindex($mainlib, $pkg);
+	foreach $topic (keys %pkghtmlindex) {
+	    $htmlindex{$topic} = $pkghtmlindex{$topic};
 	}
-	%htmlindex = %basehtmlindex;
     }
     # make sure that references are resolved first to this package
     my %thishtmlindex = read_htmlpkgindex($lib, $pkg);

@@ -50,16 +50,15 @@ $NB = "normal-bracket";
 $BN = "bracket-normal";
 $EOB = "escaped-opening-bracket";
 $ECB = "escaped-closing-bracket";
-$ID = "$NB\\d+$BN";
+$ID = "$NB\\d+$BN"; ## regex for escaped {...}
 
 $EPREFORMAT = "this-is-preformat-code";
 $ECODE = "this-is-escaped-code";
 
 $LATEX_SPEC = '\$\^&~_#';#-- these **should** be escaped in  text2latex(.)
 $LATEX_SPECIAL = $LATEX_SPEC . '%\{\}\\\\';
-$LATEX_DO_MATH = '-+\*/\|<>=!' . $LATEX_SPECIAL;
-$MD = ',,,Math,del;;;'; #-- should NOT contain any characters from $LATEX_..
-$Math_del = "\$"; #UNquoted '$'
+## $MD = ',,,Math,del;;;'; #-- should NOT contain any characters from $LATEX_..
+## $Math_del = "\$"; #UNquoted '$'
 $MAXLOOPS = 10000;
 
 my $EDASH = "escaped-dash";	# maybe something better?
@@ -2593,10 +2592,6 @@ sub text2latex {
 	$text =~ s/\\link(\[.*\])?$id.*$id/\\LinkA{$arg}{$mapped_name}/s;
     }
 
-
-    ##-- We should escape $LATEX_SPEC  unless within 'eqn' above ...
-    ##-- this would escape them EVERYWHERE:
-    ## $text =~ s/[$LATEX_SPEC]/\\$&/go;  #- escape them (not the "bsl" \)
     $text = latex_unescape_codes($text);
     unmark_brackets($text);
 }
@@ -2838,8 +2833,6 @@ sub latex_code_trans {
 	$c =~ s/\\\\/$BSL/go;
 	$c =~ s/\\([$LATEX_SPECIAL])/$1/go; #- unescape them (should not be escaped)
 	$c =~ s/[$LATEX_SPECIAL]/\\$&/go; #- escape them
-#	$c =~ s/\\\^/\$\\,\\hat{\\,}\$/go;# ^ is SPECIAL
-#	$c =~ s/\\~/\$\\,\\tilde{\\,}\$/go;
 	$c =~ s/\\\^/\\textasciicircum{}/go;# ^ is SPECIAL
 	$c =~ s/\\~/\\textasciitilde{}/go;
 	$c =~ s/$BSL/\\bsl{}/go;

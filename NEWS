@@ -189,6 +189,13 @@ INSTALLATION
     o	libtool has been updated to 2.2.6a.
 
 
+PACKAGE INSTALLATION
+
+    o	HTML links will be resolved first to the standard packages: this
+	avoids other installed packages diverting help on e.g. qr and plot
+	to themselves.
+
+
 C-LEVEL FACILITIES
 
     o	A helper function, asCharacterFactor, converts from factors to
