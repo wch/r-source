@@ -199,7 +199,7 @@ lm(formula, data, subset, weights, na.action,
   Chambers, J. M. (1992)
   \emph{Linear models.}
   Chapter 4 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 
   Wilkinson, G. N. and Rogers, C. E. (1973)
   Symbolic descriptions of factorial models for analysis of variance.
@@ -208,7 +208,7 @@ lm(formula, data, subset, weights, na.action,
 \author{
   The design was inspired by the S function of the same name described
   in Chambers (1992).  The implementation of model formula by Ross Ihaka
-  was based on Wilkinson \& Rogers (1973).
+  was based on Wilkinson & Rogers (1973).
 }
 
 \note{

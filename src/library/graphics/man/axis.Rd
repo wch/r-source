@@ -139,7 +139,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \examples{
 require(stats) # for rnorm

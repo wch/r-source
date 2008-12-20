@@ -68,7 +68,7 @@ anova.lmlist(object, \dots, scale = 0, test = "F")
   Chambers, J. M. (1992)
   \emph{Linear models.}
   Chapter 4 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 }
 \seealso{
   The model fitting function \code{\link{lm}}, \code{\link{anova}}.

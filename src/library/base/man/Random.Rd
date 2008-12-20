@@ -197,7 +197,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
 
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole. (\code{set.seed}, storing in \code{.Random.seed}.)
+  Wadsworth & Brooks/Cole. (\code{set.seed}, storing in \code{.Random.seed}.)
 
   Box, G. E. P. and Muller, M. E. (1958) A note on the generation of normal
   random deviates. \emph{Annals of Mathmatical Statistics} \bold{29},

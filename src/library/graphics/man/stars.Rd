@@ -110,7 +110,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \note{
   This code started life as spatial star plots by David A. Andrews.

@@ -32,7 +32,7 @@ chull(x, y = NULL)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Eddy, W. F. (1977) A new convex hull algorithm for planar sets.
   \emph{ACM Transactions on Mathematical Software}, \bold{3}, 398--403.

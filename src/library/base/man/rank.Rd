@@ -26,7 +26,7 @@ rank(x, na.last = TRUE,
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \details{
   If all components are different (and no \code{NA}s), the ranks are

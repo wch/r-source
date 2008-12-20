@@ -83,7 +83,7 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   MacQueen, J. (1967)  Some methods for classification and analysis of
   multivariate observations. In \emph{Proceedings of the Fifth Berkeley
     Symposium on  Mathematical Statistics and  Probability},
-  eds L. M. Le Cam \& J. Neyman,
+  eds L. M. Le Cam & J. Neyman,
   \bold{1}, pp. 281--297. Berkeley, CA: University of California Press.
 }
 \examples{

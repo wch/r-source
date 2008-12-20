@@ -75,7 +75,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Smith, B. T, Boyle, J. M., Dongarra, J. J., Garbow, B. S., Ikebe,Y.,
   Klema, V., and  Moler, C. B. (1976).

@@ -79,7 +79,7 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \seealso{
   \code{\link{title}}, \code{\link{text}}, \code{\link{plot}},

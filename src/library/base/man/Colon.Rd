@@ -41,7 +41,7 @@ from:to
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.\cr
+  Wadsworth & Brooks/Cole.\cr
   (for numeric arguments: S does not have \code{:} for factors.)
 }
 \seealso{

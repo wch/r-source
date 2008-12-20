@@ -43,7 +43,7 @@ do.call(what, args, quote = FALSE, envir = parent.frame())
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \seealso{
   \code{\link{call}} which creates an unevaluated call.

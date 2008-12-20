@@ -27,7 +27,7 @@ cutree(tree, k = NULL, h = NULL)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \value{
   \code{cutree} returns a vector with group memberships if \code{k} or

@@ -189,6 +189,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	## these are intentionally global
 	$Rdversion = $blocks{"Rdversion"} if defined $blocks{"Rdversion"};
 	$verbatimdollar = $Rdversion >= 1.1;
+	$unescape_amp =  $Rdversion < 1.1;
 	print STDERR "-- Rd version is $Rdversion\n" if $debug;
 
 	if($type =~ /html/i || $type =~ /txt/i || $type =~ /tex/i || $type =~ /chm/i ) {
@@ -971,21 +972,23 @@ sub text2html {
 	$text =~ s/\\dots/.../go;
 	$text =~ s/\\ldots/.../go;
 
-	$text =~ s/\\Gamma/&Gamma;/go;
-	$text =~ s/\\alpha/&alpha;/go;
-	$text =~ s/\\Alpha/&Alpha;/go;
-	$text =~ s/\\pi/&pi;/go;
-	$text =~ s/\\mu/&mu;/go;
-	$text =~ s/\\sigma/&sigma;/go;
-	$text =~ s/\\Sigma/&Sigma;/go;
-	$text =~ s/\\lambda/&lambda;/go;
-	$text =~ s/\\beta/&beta;/go;
-	$text =~ s/\\epsilon/&epsilon;/go;
-	$text =~ s/\\left\(/\(/go;
-	$text =~ s/\\right\)/\)/go;
-	$text =~ s/\\le/&lt;=/go;# \le *after* \left !
-	$text =~ s/\\ge/&gt;=/go;
-	$text =~ s/\\R/<font face=\"Courier New,Courier\" color=\"\#666666\"><b>R<\/b><\/font>/go;
+	if($Rdversion < 1.1) {
+	    $text =~ s/\\Gamma/&Gamma;/go;
+	    $text =~ s/\\alpha/&alpha;/go;
+	    $text =~ s/\\Alpha/&Alpha;/go;
+	    $text =~ s/\\pi/&pi;/go;
+	    $text =~ s/\\mu/&mu;/go;
+	    $text =~ s/\\sigma/&sigma;/go;
+	    $text =~ s/\\Sigma/&Sigma;/go;
+	    $text =~ s/\\lambda/&lambda;/go;
+	    $text =~ s/\\beta/&beta;/go;
+	    $text =~ s/\\epsilon/&epsilon;/go;
+	    $text =~ s/\\left\(/\(/go;
+	    $text =~ s/\\right\)/\)/go;
+	    $text =~ s/\\le/&lt;=/go;# \le *after* \left !
+	    $text =~ s/\\ge/&gt;=/go;
+	}
+	$text =~ s/^\\R|([^\\])((\\\\)*)\\R/$1$2<font face=\"Courier New,Courier\" color=\"\#666666\"><b>R<\/b><\/font>/go;
 	foreach my $cmd (@special_commands) {
 	    $text = transform_command($text, $cmd, $ECMD . $cmd,
 				      "-", "$EDASH");
@@ -1166,11 +1169,14 @@ sub text2html {
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
     }
     if($outerpass) {
-	$text =~ s/\\([^\\])/$1/go; #-drop single "\" (as in '\R')
+	if($Rdversion < 1.1) {
+	    $text =~ s/\\([^\\])/$1/go; #-drop single "\" (as in '\R')
+	}
 	$text =~ s/\\\\/\\/go;
 	$text = html_unescape_codes($text);
 	$text = unmark_brackets($text);
-    }
+ 	$text =~ s/(^[\\])\\R(\{\})?/$1<font face=\"Courier New,Courier\" color=\"\#666666\"><b>R<\/b><\/font>/go unless $unesape_amp;
+   }
     $text;
 }
 
@@ -1680,21 +1686,23 @@ sub text2txt {
     $text =~ s/\\%/%/sgo;
     $text =~ s/\\\$/\$/sgo;
 
-    $text =~ s/\\Gamma/Gamma/go;
-    $text =~ s/\\alpha/alpha/go;
-    $text =~ s/\\Alpha/Alpha/go;
-    $text =~ s/\\pi/pi/go;
-    $text =~ s/\\mu/mu/go;
-    $text =~ s/\\sigma/sigma/go;
-    $text =~ s/\\Sigma/Sigma/go;
-    $text =~ s/\\lambda/lambda/go;
-    $text =~ s/\\beta/beta/go;
-    $text =~ s/\\epsilon/epsilon/go;
-    $text =~ s/\\left\(/\(/go;
-    $text =~ s/\\right\)/\)/go;
-    $text =~ s/\\le/<=/go;
-    $text =~ s/\\ge/>=/go;
-    $text =~ s/\\R/R/go;
+    if ($Rdversion < 1.1) {
+	$text =~ s/\\Gamma/Gamma/go;
+	$text =~ s/\\alpha/alpha/go;
+	$text =~ s/\\Alpha/Alpha/go;
+	$text =~ s/\\pi/pi/go;
+	$text =~ s/\\mu/mu/go;
+	$text =~ s/\\sigma/sigma/go;
+	$text =~ s/\\Sigma/Sigma/go;
+	$text =~ s/\\lambda/lambda/go;
+	$text =~ s/\\beta/beta/go;
+	$text =~ s/\\epsilon/epsilon/go;
+	$text =~ s/\\left\(/\(/go;
+	$text =~ s/\\right\)/\)/go;
+	$text =~ s/\\le/<=/go;
+	$text =~ s/\\ge/>=/go;
+    }
+    $text =~ s/\\R/R/go if $unescape_amp;
 
     foreach my $cmd (@special_commands) {
 	$text = transform_command($text, $cmd, $ECMD . $cmd,
@@ -1815,7 +1823,9 @@ sub text2txt {
     }
 
     $text = txt_unescape_codes($text);
-    unmark_brackets($text);
+    $text = unmark_brackets($text);
+    $text =~ s/\\R(\{\})?/R/go unless $unescape_amp;
+    $text;
 }
 
 
@@ -1937,11 +1947,11 @@ sub txt_fill { # pre1, base, "text to be formatted"
     $text =~ s/\\\\/\\bsl{}/go;
     $text =~ s/\\&\./\./go; # unescape code pieces
     ## A mess:  map  & \& \\& \\\& to  & & \& \&
-    $text =~ s/\\&/&/go;
+    $text =~ s/\\&/&/go if $unescape_amp;
     $text =~ s/\\ / /go;
-    $text =~ s/\\_/_/go;
-    $text =~ s/\\$/\$/go;
-    $text =~ s/\\#/#/go;
+    $text =~ s/\\_/_/go if $unescape_amp;
+    $text =~ s/\\$/\$/go if $unescape_amp;
+    $text =~ s/\\#/#/go if $unescape_amp;
     $text =~ s/\\%/%/go;
     $text =~ s/\\bsl{}/\\/go;
     $text =~ s/escaped-code-backslash/\\/go;
@@ -2361,6 +2371,10 @@ sub code2examp {
 sub ltxstriptitle { # text
     my $text = $_[0];
     $text =~ s/\\R/\\R\{\}/go;
+    ## escape unescaped latex specials
+    $text =~ s/([^\\])([\$\#_&])/$1\\$2/go;
+    $text =~ s/\^/\\textasciicircum{}/go;
+    $text =~ s/~/\\textasciitilde{}/go;
     return $text;
 }
 sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}

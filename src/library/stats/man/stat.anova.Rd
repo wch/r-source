@@ -31,7 +31,7 @@ stat.anova(table, test = c("Chisq", "F", "Cp"), scale, df.scale, n)
   Hastie, T. J. and Pregibon, D. (1992)
   \emph{Generalized linear models.}
   Chapter 6 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 }
 \seealso{\code{\link{anova.lm}}, \code{\link{anova.glm}}.}
 \examples{

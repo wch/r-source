@@ -54,7 +54,7 @@ polym(\dots, degree = 1, raw = FALSE)
   
   The orthogonal polynomial is summarized by the coefficients, which can
   be used to evaluate it via the three-term recursion given in Kennedy
-  \& Gentle (1980, pp. 343--4), and used in the \code{predict} part of
+  & Gentle (1980, pp. 343--4), and used in the \code{predict} part of
   the code.
 }
 \note{
@@ -65,7 +65,7 @@ polym(\dots, degree = 1, raw = FALSE)
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
   \emph{Statistical Models in S}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Kennedy, W. J. Jr and Gentle, J. E. (1980)
   \emph{Statistical Computing} Marcel Dekker.

@@ -73,7 +73,7 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   Chambers, J. M. (1992)
   \emph{Linear models.}
   Chapter 4 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 }
 \author{
   The design was inspired by (but differs considerably from)

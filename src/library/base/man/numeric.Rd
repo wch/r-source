@@ -86,7 +86,7 @@ is.numeric(x)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \examples{
 as.numeric(c("-.1"," 2.7 ","B")) # (-0.1, 2.7, NA)  +  warning

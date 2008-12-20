@@ -40,7 +40,7 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = FALSE)
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
   \emph{Statistical Models in S.}
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \seealso{
   \code{\link[utils]{combn}} (package \code{utils}) for the generation

@@ -8,7 +8,7 @@
 \alias{AirPassengers}
 \title{Monthly Airline Passenger Numbers 1949-1960}
 \description{
- The classic Box \& Jenkins airline data.  Monthly totals of
+ The classic Box & Jenkins airline data.  Monthly totals of
  international airline passengers, 1949 to 1960.
 }
 \usage{AirPassengers}

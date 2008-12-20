@@ -119,7 +119,7 @@ quantile(x, \dots)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Hyndman, R. J. and Fan, Y. (1996) Sample quantiles in statistical
   packages, \emph{American Statistician}, \bold{50}, 361--365.

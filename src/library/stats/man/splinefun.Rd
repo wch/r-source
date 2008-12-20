@@ -81,7 +81,7 @@ splinefunH(x, y, m)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Forsythe, G. E., Malcolm, M. A. and Moler, C. B. (1977)
   \emph{Computer Methods for Mathematical Computations}.

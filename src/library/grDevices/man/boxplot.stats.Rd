@@ -75,7 +75,7 @@ boxplot.stats(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
     Analysis}, eds. D. C. Hoaglin, F. Mosteller and J. W. Tukey.  Wiley.
 
   Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
-  \emph{Graphical Methods for Data Analysis.}  Wadsworth \& Brooks/Cole.
+  \emph{Graphical Methods for Data Analysis.}  Wadsworth & Brooks/Cole.
 }
 \seealso{
   \code{\link{fivenum}}, \code{\link{boxplot}}, \code{\link{bxp}}.

@@ -63,7 +63,7 @@ methods(generic.function, class)
   Chambers, J. M. (1992)
   \emph{Classes and methods: object-oriented programming in S.}
   Appendix A of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 }
 \examples{
 require(stats)

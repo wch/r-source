@@ -25,7 +25,7 @@ If necessary, the values in \code{values} are recycled.
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \note{
   \code{x} is unchanged: remember to assign the result.

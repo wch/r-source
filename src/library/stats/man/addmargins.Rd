@@ -57,7 +57,7 @@
   printed.
 }
 \author{
-  Bendix Carstensen, Steno Diabetes Center \& Department of
+  Bendix Carstensen, Steno Diabetes Center & Department of
   Biostatistics, University of Copenhagen,
   \url{http://www.biostat.ku.dk/~bxc}, autumn 2003.
   Margin naming enhanced by Duncan Murdoch.

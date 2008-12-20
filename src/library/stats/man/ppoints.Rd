@@ -37,7 +37,7 @@ ppoints(n, a = ifelse(n <= 10, 3/8, 1/2))
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Blom, G. (1958)
   \emph{Statistical Estimates and Transformed Beta Variables.}

@@ -66,7 +66,7 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Cleveland, W. S. (1985)
   \emph{The elements of graphing data}.

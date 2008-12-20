@@ -36,7 +36,7 @@ glm.control(epsilon = 1e-8, maxit = 25, trace = FALSE)
   Hastie, T. J. and Pregibon, D. (1992)
   \emph{Generalized linear models.}
   Chapter 6 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 }
 \seealso{\code{\link{glm.fit}}, the fitting procedure used by
   \code{\link{glm}}.}

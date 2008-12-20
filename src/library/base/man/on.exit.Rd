@@ -46,7 +46,7 @@ on.exit(expr, add = FALSE)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \seealso{
   \code{\link{sys.on.exit}} which returns the expression stored for use

@@ -91,7 +91,7 @@ expm1(x)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
   (for \code{log}, \code{log10} and \code{exp}.)
 
   Chambers, J. M. (1998)

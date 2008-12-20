@@ -58,7 +58,7 @@ objects(name, pos= -1, envir = as.environment(pos),
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \seealso{
   \code{\link{glob2rx}} for converting wildcard patterns to regular

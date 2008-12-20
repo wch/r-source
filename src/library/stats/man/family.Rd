@@ -144,11 +144,11 @@ quasipoisson(link = "log")
   Hastie, T. J. and Pregibon, D. (1992)
   \emph{Generalized linear models.}
   Chapter 6 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 }
 \author{
   The design was inspired by S functions of the same names described
-  in Hastie \& Pregibon (1992) (except \code{quasibinomial} and
+  in Hastie & Pregibon (1992) (except \code{quasibinomial} and
   \code{quasipoisson}).
 }
 \seealso{

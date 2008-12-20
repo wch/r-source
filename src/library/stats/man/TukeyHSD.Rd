@@ -71,7 +71,7 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
 
   Yandell, B. S. (1997)
   \emph{Practical Data Analysis for Designed Experiments}.
-  Chapman \& Hall.
+  Chapman & Hall.
 }
 \author{
   Douglas Bates

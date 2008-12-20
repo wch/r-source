@@ -111,7 +111,7 @@ prcomp(x, \dots)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Mardia, K. V., J. T. Kent, and J. M. Bibby (1979)
   \emph{Multivariate Analysis}, London: Academic Press.

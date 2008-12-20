@@ -49,7 +49,7 @@ jitter(x, factor=1, amount = NULL)
 
   Chambers, J. M. and Hastie, T. J. (1992)
   \emph{Statistical Models in S.}
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \author{Werner Stahel and Martin Maechler, ETH Zurich}
 \seealso{

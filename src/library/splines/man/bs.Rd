@@ -60,7 +60,7 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
   Hastie, T. J. (1992)
   Generalized additive models.
   Chapter 7 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 }
 \examples{
 require(stats); require(graphics)

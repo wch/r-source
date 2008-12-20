@@ -152,14 +152,20 @@ Rd CONVERSION
 
     o	Rd files have an optional \Rdversion{} section, which if
 	missing defaults to 1.0.  There is support for version 1.1, a
-	slightly modified version with the following changes.
+	slightly modified version with the following changes:
 
 	- The warnings for \code{} inside example are suppressed.
 
 	- Whitespace between arguments in \item and \section is
-          accepted (see below).
+          accepted without a warning (see below).
 
 	- $ is treated literally in text, even for latex conversions.
+
+	- \ is only an escape before % { } \ .
+
+	- \R{} is accepted as an alternative to \R in all formats.
+
+	- The obsolete interpretation of \Alpha etc is no longer done.
 
     o	Rd conversion now handles ^ ~ < > | correctly in non-code
 	environments (such as \samp), and # and _ even in latex

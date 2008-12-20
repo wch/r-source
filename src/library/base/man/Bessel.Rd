@@ -42,7 +42,7 @@ besselY(x, nu)
   If \code{expon.scaled = TRUE}, \eqn{e^{-x} I_{\nu}(x)}{exp(-x) I(x;nu)},
   or \eqn{e^{x} K_{\nu}(x)}{exp(x) K(x;nu)} are returned.
 
-  For \eqn{\nu < 0}{nu < 0}, formulae 9.1.2 and 9.6.2 from Abramowitz \&
+  For \eqn{\nu < 0}{nu < 0}, formulae 9.1.2 and 9.6.2 from Abramowitz &
   Stegun  are applied (which is probably suboptimal), except for
   \code{besselK} which is symmetric in \code{nu}.
 }

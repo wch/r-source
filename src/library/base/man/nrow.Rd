@@ -27,7 +27,7 @@ NROW(x)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole (\code{ncol} and \code{nrow}.)
+  Wadsworth & Brooks/Cole (\code{ncol} and \code{nrow}.)
 }
 \seealso{
   \code{\link{dim}} which returns \emph{all} dimensions;

@@ -61,7 +61,7 @@ lowess(x, y = NULL, f = 2/3, iter = 3,
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Cleveland, W. S. (1979)
   Robust locally weighted regression and smoothing scatterplots.

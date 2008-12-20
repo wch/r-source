@@ -99,7 +99,7 @@ close.screen(n, all.screens = FALSE)
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
   \emph{Statistical Models in S}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }

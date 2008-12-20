@@ -276,6 +276,7 @@
   subject. and \samp{\\G} matches at first matching position in a
   subject (which is subtly different from Perl's end of the previous
   match).  \samp{\\C} matches a single byte. including a newline.
+  % pro tem \samp{\\R} matches \R.
   In a UTF-8 locale, \samp{\\R} matches any Unicode newline character
   (not just CR), and \samp{\\X} matches any number of Unicode characters
   that form an extended Unicode sequence.

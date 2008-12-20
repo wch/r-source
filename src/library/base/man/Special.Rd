@@ -110,7 +110,7 @@ lfactorial(x)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole. (For \code{gamma} and \code{lgamma}.)
+  Wadsworth & Brooks/Cole. (For \code{gamma} and \code{lgamma}.)
 
   Abramowitz, M. and Stegun, I. A. (1972)
   \emph{Handbook of Mathematical Functions.} New York: Dover.

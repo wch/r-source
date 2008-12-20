@@ -110,7 +110,7 @@ library.dynam.unload(chname, libpath,
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \examples{
 ## Which DLLs were "dynamically loaded" by packages?

@@ -123,7 +123,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Shea, B. L. (1988)
   Algorithm AS 239,  Chi-squared and incomplete Gamma integral,

@@ -120,7 +120,7 @@ text(x, \dots)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }

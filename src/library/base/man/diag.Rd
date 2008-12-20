@@ -46,7 +46,7 @@ diag(x) <- value
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \seealso{
 \code{\link{upper.tri}}, \code{\link{lower.tri}}, \code{\link{matrix}}.

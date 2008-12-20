@@ -38,7 +38,7 @@ rug(x, ticksize = 0.03, side = 1, lwd = 0.5, col = par("fg"),
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
   \emph{Statistical Models in S.}
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \seealso{\code{\link{jitter}} which you may want for ties in \code{x}.}
 \examples{

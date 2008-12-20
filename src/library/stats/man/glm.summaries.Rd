@@ -26,7 +26,7 @@
   \code{summary.glm} objects.
 }
 \details{
-  The references define the types of residuals: Davison \& Snell is a
+  The references define the types of residuals: Davison & Snell is a
   good reference for the usages of each.
   
   The partial residuals are a matrix of working residuals, with each
@@ -57,12 +57,12 @@
   Davison, A. C. and Snell, E. J. (1991)
   \emph{Residuals and diagnostics.}  In: Statistical Theory
   and Modelling. In Honour of Sir David Cox, FRS, eds.
-  Hinkley, D. V., Reid, N. and Snell, E. J., Chapman \& Hall.
+  Hinkley, D. V., Reid, N. and Snell, E. J., Chapman & Hall.
   
   Hastie, T. J. and Pregibon, D. (1992)
   \emph{Generalized linear models.}
   Chapter 6 of \emph{Statistical Models in S}
-  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+  eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 
   McCullagh P. and Nelder, J. A. (1989)
   \emph{Generalized Linear Models.}

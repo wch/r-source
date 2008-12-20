@@ -124,10 +124,10 @@ boxplot(x, \dots)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
-  \emph{Graphical Methods for Data Analysis.}  Wadsworth \& Brooks/Cole.
+  \emph{Graphical Methods for Data Analysis.}  Wadsworth & Brooks/Cole.
 
   Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 

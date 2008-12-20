@@ -21,7 +21,7 @@
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Campbell, M. J.and A. M.  Walker (1977).  A Survey of
   statistical work on the Mackenzie River series of annual

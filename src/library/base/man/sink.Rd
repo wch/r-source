@@ -86,7 +86,7 @@ sink.number(type = c("output", "message"))
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Chambers, J. M. (1998)
   \emph{Programming with Data. A Guide to the S Language}.

@@ -93,7 +93,7 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \seealso{
   \code{\link{plot}}, \code{\link{points}}, \code{\link{lines}},

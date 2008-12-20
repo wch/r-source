@@ -60,7 +60,7 @@
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \note{
   Files for all 182 districts in 1888 and other years have been available at

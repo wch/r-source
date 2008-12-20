@@ -51,7 +51,7 @@ traceback(x = NULL, max.lines = getOption("deparse.max.lines"))
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \examples{
 foo <- function(x) { print(1); bar(2) }

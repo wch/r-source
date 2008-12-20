@@ -58,7 +58,7 @@ summary(object, \dots)
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
   \emph{Statistical Models in S}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 }
 \examples{
 summary(attenu, digits = 4) #-> summary.data.frame(...), default precision

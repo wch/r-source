@@ -108,7 +108,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth & Brooks/Cole.
 
   Sedgewick, R. (1986)
   A new upper bound for Shell sort.
