@@ -3624,7 +3624,7 @@ with one argument immediately followed by a right brace.
 
 @findex \R
 Use @code{\R} for the @R{} system
-itself@footnote{Rd version 1.1 also allows @code{\R\@{@}}.  Use
+itself@footnote{Rd version 1.1 also allows @code{\R\@{@}}}.  Use
 @code{\dots}
 @findex \dots
 for the dots in function argument lists @samp{@dots{}}, and
