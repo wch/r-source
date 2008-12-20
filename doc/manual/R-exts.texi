@@ -252,11 +252,12 @@ URL: http://www.r-project.org, http://www.another.url
 @end quotation
 
 @noindent
-Continuation lines (for example, for descriptions longer than one line)
-start with a space or tab.  The @samp{Package}, @samp{Version},
-@samp{License}, @samp{Description}, @samp{Title}, @samp{Author}, and
-@samp{Maintainer} fields are mandatory, the remaining fields
-(@samp{Date}, @samp{Depends}, @samp{URL}, @dots{}) are optional.
+The format is that of a `Debian Control File' (see the help for
+@samp{read.dcf}).  Continuation lines (for example, for descriptions
+longer than one line) start with a space or tab.  The @samp{Package},
+@samp{Version}, @samp{License}, @samp{Description}, @samp{Title},
+@samp{Author}, and @samp{Maintainer} fields are mandatory, the remaining
+fields (@samp{Date}, @samp{Depends}, @samp{URL}, @dots{}) are optional.
 
 The @file{DESCRIPTION} file should be written entirely in
 @acronym{ASCII} for maximal portability.
@@ -1867,9 +1868,9 @@ but not exported.
 However, packages with name spaces @emph{do} use the @code{.Last.lib}
 function.  There is also a hook @code{.onUnload} which is called when
 the name space is unloaded (via a call to @code{unloadNamespace}) with
-argument the full path to the directory in which the package was
-installed.  @code{.onUnload} should be defined in the name space and not
-exported, but @code{.Last.lib} does need to be exported.
+argument the full path to the installed package's directory.
+@code{.onUnload} should be defined in the name space and not exported,
+but @code{.Last.lib} does need to be exported.
 
 Packages are not likely to need @code{.onAttach} (except perhaps for a
 start-up banner); code to set options and load shared objects should be
