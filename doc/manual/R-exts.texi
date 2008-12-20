@@ -7782,14 +7782,12 @@ Clearing a pointer sets its value to the C @code{NULL} pointer.
 @cindex finalizer
 An external pointer object can have a @emph{finalizer}, a piece of code
 to be run when the object is garbage collected.  This can be @R{} code
-or C code, and the various interfaces are
+or C code, and the various interfaces are, respectively.
 
 @example
-void R_RegisterFinalizer(SEXP s, SEXP fun);
 void R_RegisterFinalizerEx(SEXP s, SEXP fun, Rboolean onexit);
 
 typedef void (*R_CFinalizer_t)(SEXP);
-void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun);
 void R_RegisterCFinalizerEx(SEXP s, R_CFinalizer_t fun, Rboolean onexit);
 @end example
 
@@ -7845,8 +7843,64 @@ A toy example of the use of weak references can be found at
 @uref{http://www.stat.uiowa.edu/~luke/R/references/weakfinex.html,
 @code{www.@/stat.@/uiowa.@/edu/@/~luke/@/R/references/@/weakfinex.html}},
 but that is used to add finalizers to external pointers which can now be
-done more directly.
+done more directly.  At the time of writing no CRAN or Bioconductor
+package uses weak references.
 
+
+@menu
+* An external pointer example::  
+@end menu
+
+@node An external pointer example,  , External pointers and weak references, External pointers and weak references
+@subsection An example
+
+Package @pkg{RODBC} uses external pointers to maintain its
+@emph{channels}, connections to databases.  There can be several
+connections open at once, and the status information for each is stored
+in a C structure (pointed to by @code{this_handle}) in the code extract
+below) that is returned via an external pointer as part of the RODBC
+`channel' (as the @code{"handle_ptr"} attribute).  The external pointer
+is created by
+
+@example
+    SEXP ans, ptr;
+    PROTECT(ans = allocVector(INTSXP, 1));
+    ptr = R_MakeExternalPtr(thisHandle, install("RODBC_channel"), R_NilValue);
+    PROTECT(ptr);
+    R_RegisterCFinalizerEx(ptr, chanFinalizer, TRUE);
+            ...
+    /* return the channel no */
+    INTEGER(ans)[0] = nChannels;
+    /* and the connection string as an attribute */
+    setAttrib(ans, install("connection.string"), constr);
+    setAttrib(ans, install("handle_ptr"), ptr);
+    UNPROTECT(3);
+    return ans;
+@end example
+
+@noindent
+Note the symbol given to identify the usage of the external pointer, and
+the use of the finalizer.  Since the final argument when registering the
+finalizer is @code{TRUE}, the finalizer will be run at the the of the
+@R{} session (unless it crashes).  This is used to close and clean up
+the connection to the database.  The finalizer code is simply
+
+@example
+static void chanFinalizer(SEXP ptr)
+@{
+    if(!R_ExternalPtrAddr(ptr)) return;
+    inRODBCClose(R_ExternalPtrAddr(ptr));
+    R_ClearExternalPtr(ptr); /* not really needed */
+@}
+@end example
+
+@noindent
+Clearing the pointer and checking for a @code{NULL} pointer avoids any
+possibility of attempting to close an already-closed channel.
+
+@R{}'s connections provide another example of using external pointers,
+in that case purely to be able to us a finalizer to close and destroy the
+connection if it is no longer is use.
 
 @node Vector accessor functions, Character encoding issues, External pointers and weak references, System and foreign language interfaces
 @section Vector accessor functions 
