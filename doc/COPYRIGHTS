@@ -165,7 +165,7 @@ src/library/stats/src/Trunmed.c
 
 	In part Copyright (C) 1995 Berwin A. Turlach
 
-src/library/tcltk/exec/*.tcl
+src/library/tcltk/exec/{hierarchy,util*,widget}.tcl
 
 	Copyright (c) various dates Jeffrey Hobbs
 
