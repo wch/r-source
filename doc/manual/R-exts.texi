@@ -2808,6 +2808,7 @@ As an example, let us look at the file
 @cartouche
 @smallexample
 \name@{load@}
+\Rdversion@{1.1@}
 \alias@{load@}
 \title@{Reload Saved Datasets@}
 \description@{
@@ -2852,6 +2853,15 @@ footer are mandatory.
 See the @uref{http://developer.r-project.org/Rds.html, ``Guidelines for Rd
 files''} for guidelines for writing documentation in Rd format which
 should be useful for package writers.
+
+Note that there have been a number of changes to the Rd format over the
+years, which can be important if a package is intended to be used with
+earlier versions of @R{}.  The @code{\Rdversion@{@}} block was
+introduced in @R{} 2.9.0 to allow help files to identify the version
+they follow: files without such a block are implicitly version 1.0.
+New files created by e.g.@: @code{prompt} in @R{} 2.9.0 and later are
+marked as version 1.1.  See @ref{Back-compatibility issues} for notes on
+earlier versions of the Rd format.
 
 @menu
 * Documenting functions::       
@@ -3337,7 +3347,7 @@ For example
 For consistency with the pre-assigned sections, the section name (the
 first argument to @code{\section}) should be capitalized (but not all
 upper case).  Note that there is no whitespace between the first and
-second braced expressions.
+second braced expressions (it is allowed in Rd version 1.1 and later).
 
 Note that additional named sections are always inserted at a fixed
 position in the output (before @code{\note}, @code{\seealso} and the
@@ -3562,7 +3572,7 @@ is used for ``inline'' formulae (corresponding to @TeX{}'s
 Both commands can also be used as @code{\eqn@{@var{latexascii}@}} (only
 @emph{one} argument) which then is used for both @var{latex} and
 @var{ascii}.  No whitespace is allowed between command and the first
-argument, nor between the first and second arguments.
+argument, nor (prior to Rd version 1.1) between the first and second arguments.
 
 The following example is from @file{Poisson.Rd}:
 
@@ -3646,20 +3656,7 @@ for backslash and needs to be when there two or more adjacent
 backslashes).  Inside the verbatim-like commands (@code{usage},
 @code{\code}, @code{\preformatted} and @code{\examples}), no other
 characters are special.  As from @R{} 2.9.0, all of @samp{% @{ @} \}
-should be escaped in non-verbatim-like text: for the time being @samp{$}
-also needs to be escaped in non-verbatim-like text.
-
-For @R{} prior to 2.9.0, in ``regular'' text (not verbatim-like, no
-@code{\eqn}, @dots{}), you needed to escape most @LaTeX{} special
-characters, i.e., besides @samp{%}, @samp{@{}, and @samp{@}}, the
-specials @samp{$}, @samp{#}, and @samp{_} are produced by preceding each
-with a @samp{\}.  (@samp{&} can also be escaped, but need not be.)
-Further, enter @samp{^} as
-@code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
-@code{\eqn@{\mbox@{\textasciitilde@}@}@{~@}} or @code{\eqn@{\sim@}@{~@}}
-(for a short and long tilde respectively).  Also, @samp{<}, @samp{>},
-and @samp{|} could only be used safely in math mode, i.e., within
-@code{\eqn} or @code{\deqn}.
+should be escaped in non-verbatim-like text.
 
 @findex \enc
 Text which might need to be represented differently in different
@@ -3863,6 +3860,72 @@ Rd2dvi} also the tools to build packages from source as described in the
 Packages that are intended to work with earlier versions of @R{} need to
 be written in a rather stricter dialect, and some notes follow.
 
+Some package authors have included arbitrary pieces of @LaTeX{}
+mathematical notation into text descriptions, e.g.@: @samp{$\mu$g} and
+@samp{$^\circ$C}.  Whether this works even in latex conversion depends
+on the version of @R{}, and it has always given ugly results in other
+conversions.  If mathematical notation is necessary (and it seems it is
+not in the examples given), use @code{\eqn}.
+
+@menu
+* Changes in version 1.1::      
+* Unnumbered versions::         
+@end menu
+
+@node Changes in version 1.1, Unnumbered versions, Back-compatibility issues, Back-compatibility issues
+@subsection Changes in version 1.1
+
+Rd version 1.1 was introduced in @R{} 2.9.0.  The main changes were
+
+@itemize
+@item
+@samp{$} is treated literally in text, even for latex conversion.
+
+@item
+@samp{\} is only an escape before @samp{% @{ @} \}, and these should
+always be escaped (although paired braces inside @code{\code} will be
+still be handled if unescaped).  @samp{#}, @samp{_} and @samp{&} must
+not be escaped.
+
+@item
+@samp{\R@{@}} is accepted as an alternative to @samp{\R}.
+
+@item
+Whitespace is allowed between the first and second arguments of
+@code{\item} and @code{\section}.
+
+@item
+Interpretation of @samp{\Alpha} etc is no longer done.
+@end itemize
+
+@node Unnumbered versions,  , Changes in version 1.1, Back-compatibility issues
+@subsection Unnumbered versions
+
+In version 1.0 @samp{$} needs to be escaped by backslash in ``regular''
+text (not verbatim-like, not in the first argument of @code{\eqn},
+@dots{}), and @samp{#}, @samp{_} and @samp{&} can be.
+
+For historic reasons mostly, the @TeX{}/@LaTeX{} commands @code{\alpha},
+@code{\Alpha}, @code{\beta}, @code{\Gamma}, @code{\epsilon},
+@code{\lambda}, @code{\mu}, @code{\pi}, @code{\sigma}, @code{\Sigma},
+@code{\le}, @code{\ge}, @code{\left(} and @code{\right)} were accepted,
+and interpreted in text and HTML conversions.  The preferred way to
+handle these is as part of @code{\eqn} or @code{\deqn}.
+
+
+For @R{} prior to 2.9.0, in ``regular'' text you needed to escape the
+specials @samp{$}, @samp{#} and @samp{_}: @samp{&} could also be
+escaped, but need not be.
+
+Further, @samp{^}, @samp{~}, @samp{<}, @samp{>} and @samp{|} are not in
+general safe to use in non-verbatim text.  Enter @samp{^} as
+@code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
+@code{\eqn@{\mbox@{\textasciitilde@}@}@{~@}} or @code{\eqn@{\sim@}@{~@}}
+(for a short and long tilde respectively).  Also, @samp{<}, @samp{>},
+and @samp{|} could only be used safely in math mode, i.e., within the
+first argument of @code{\eqn} or @code{\deqn}.
+
+
 Versions of @R{} prior to 2.8.1 failed to process correctly
 constructions such as
 
@@ -3884,11 +3947,11 @@ two-argument commands, e.g.
 @end example
 
 @noindent
-has always been an error.  However, prior to @R{} 2.9.0 this error was
+had always been an error.  However, prior to @R{} 2.9.0 this error was
 not looked for and resulted in incorrect output (often by omitting
-entirely the text for the item, sometimes with a warning).  Current
-versions of @R{} detect and fixup most cases of this error, with a
-warning.
+entirely the text for the item, sometimes with a warning).  
+@R{} 2.9.0 and later detect and fixup most cases of this error, with a
+warning unless the file is declared as version 1.1 or later.
 
 A @code{\value} block is implicitly a @code{\itemize} environment, but
 quite a few package writers have ignored this.  As from @R{} 2.8.1 this
