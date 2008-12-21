@@ -1,5 +1,5 @@
 
-R version 2.8.0 Under development (unstable) (2008-04-21 r45415)
+R version 2.9.0 Under development (unstable) (2008-12-20 r47264)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -607,4 +607,26 @@ climb   1 320.99
 [1] 1.001
 > ## 2.4.1 gave  1.001000000000000
 > ## 2.5.0 errs on the side of caution.
+> 
+> 
+> ## as.matrix.data.frame with coercion
+> library(survival)
+> soa <- Surv(1:5, c(0, 0, 1, 0, 1))
+> df.soa <- data.frame(soa)
+> as.matrix(df.soa) # numeric result
+     soa.time soa.status
+[1,]        1          0
+[2,]        2          0
+[3,]        3          1
+[4,]        4          0
+[5,]        5          1
+> df.soac <- data.frame(soa, letters[1:5])
+> as.matrix(df.soac) # character result
+     soa  letters.1.5.
+[1,] "1+" "a"         
+[2,] "2+" "b"         
+[3,] "3 " "c"         
+[4,] "4+" "d"         
+[5,] "5 " "e"         
+> ## failed in 2.8.1
 > 

@@ -84,3 +84,13 @@ if(require(MASS)) {
 print(1.001, digits=16)
 ## 2.4.1 gave  1.001000000000000
 ## 2.5.0 errs on the side of caution.
+
+
+## as.matrix.data.frame with coercion
+library(survival)
+soa <- Surv(1:5, c(0, 0, 1, 0, 1))
+df.soa <- data.frame(soa)
+as.matrix(df.soa) # numeric result
+df.soac <- data.frame(soa, letters[1:5])
+as.matrix(df.soac) # character result
+## failed in 2.8.1

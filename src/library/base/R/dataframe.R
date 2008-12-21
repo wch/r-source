@@ -1283,22 +1283,15 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
     p <- dm[2L]
     pseq <- seq_len(p)
     n <- dm[1L]
-    collabs <- as.list(dn[[2L]])
     X <- x # will contain the result;
     ## the "big question" is if we return a numeric or a character matrix
     class(X) <- NULL
     non.numeric <- non.atomic <- FALSE
     all.logical <- TRUE
     for (j in pseq) {
-	xj <- X[[j]]
-	if(length(dj <- dim(xj)) == 2L && dj[2L] > 1L) {# matrix with >=2 col
-	    if(inherits(xj, "data.frame"))
-		xj <- X[[j]] <- as.matrix(X[[j]])
-	    dnj <- dimnames(xj)[[2L]]
-	    collabs[[j]] <- paste(collabs[[j]],
-				  if(length(dnj) > 0L) dnj else seq_len(dj[2L]),
-				  sep = ".")
-	}
+        if(inherits(X[[j]], "data.frame") && ncol(xj) > 1L)
+            X[[j]] <- as.matrix(X[[j]])
+        xj <- X[[j]]
         j.logic <- is.logical(xj)
         if(all.logical && !j.logic) all.logical <- FALSE
 	if(length(levels(xj)) > 0L || !(j.logic || is.numeric(xj) || is.complex(xj))
@@ -1327,6 +1320,20 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
             X[[j]] <- xj
 	}
     }
+    ## These coercions could have changed the number of columns
+    ## (e.g. class "Surv" coerced to character),
+    ## so only now can we compute collabs.
+    collabs <- as.list(dn[[2L]])
+    for (j in pseq) {
+        xj <- X[[j]]
+        dj <- dim(xj)
+	if(length(dj) == 2L && dj[2L] > 1L) { # matrix with >=2 col
+	    dnj <- colnames(xj)
+	    collabs[[j]] <- paste(collabs[[j]],
+				  if(length(dnj)) dnj else seq_len(dj[2L]),
+				  sep = ".")
+	}
+     }
     X <- unlist(X, recursive = FALSE, use.names = FALSE)
     dim(X) <- c(n, length(X)/n)
     dimnames(X) <- list(dn[[1L]], unlist(collabs, use.names = FALSE))
