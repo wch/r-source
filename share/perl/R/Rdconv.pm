@@ -2542,7 +2542,7 @@ sub text2latex {
     }
 
     ## Handle encoded text:
-    my $loopcount = 0;
+    $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\enc") &&  $text =~ /\\enc/){
 	my ($id, $enc, $ascii) = get_arguments("enc", $text, 2);
 	if($encoding eq "unknown") { # \enc without \encoding
@@ -2585,8 +2585,9 @@ sub text2latex {
     }
 
     ## we need to convert \links's
+    $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
-	  &&  $text =~ /\\link/){
+	  &&  $text =~ /\\link$ID/){
 	my ($id, $arg, $dest, $opt) = get_link($text);
 	my $mapped_name = &latex_link_trans0($dest);
 	$text =~ s/\\link(\[.*\])?$id.*$id/\\LinkA{$arg}{$mapped_name}/s;
@@ -2664,7 +2665,7 @@ sub latex_print_codeblock {
 	print $latexout "\\begin\{verbatim\}";
 	my $ntext = $blocks{$blocK};
 	if ($ntext =~ /$ECODE/) {
-	    warn "WARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
+	    warn "\nWARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
 	}
 	my $out = &code2latex($ntext, 0, 1);
 	$out = latex_unescape_codes($out);
@@ -2698,7 +2699,7 @@ sub latex_print_exampleblock {
 	print $latexout "\\begin\{ExampleCode\}";
 	my $ntext = $blocks{$block};
 	if ($ntext =~ /$ECODE/) {
-	    warn "WARNING: \\code inside \\examples in file '$Rdfile'\n" 
+	    warn "\nWARNING: \\code inside \\examples in file '$Rdfile'\n" 
 		if $issue_warnings; 
 	}
 	my $out = &code2latex($ntext,0,0);
