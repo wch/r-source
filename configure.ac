@@ -2442,6 +2442,7 @@ AC_CONFIG_FILES(
   src/scripts/javareconf
   src/scripts/mkinstalldirs
   src/scripts/pager
+  src/scripts/rtags
   src/unix/Makefile
   tests/Makefile
   tests/Embedding/Makefile

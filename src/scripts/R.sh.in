@@ -106,6 +106,7 @@ Commands:
   Rdiff			Diff R output ignoring headers etc
   config		Obtain configuration information about R
   javareconf		Update the Java configuration variables
+  rtags                 Create Emacs-style tag files from C, R, and Rd files
 
 Please use 'R CMD command --help' to obtain further information about
 the usage of 'command'.

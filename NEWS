@@ -147,6 +147,9 @@ UTILITIES
 	to 'texi2dvi' found at configure time: this now provides the
 	default to option("texi2dvi").
 
+    o   New front-end script R CMD rtags provides an interface to the
+    	rtags() function (see R CMD rtags --help for details).
+
 
 Rd CONVERSION
 
