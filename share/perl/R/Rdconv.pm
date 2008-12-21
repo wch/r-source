@@ -413,7 +413,7 @@ sub get_multi {
     my $loopcount = 0;
     my $any = 0;
     while(checkloop($loopcount++, $text, "\\name")
-	  && $text =~ /\\$name($ID)/) {
+	  && $text =~ /\\$name$ID/) {
 	my $id = $1;
 	my ($endid, $arg) =
 	    get_arguments($name, $text, 1);
@@ -445,7 +445,7 @@ sub get_sections {
     print STDERR "--- Sections\n" if $debug;
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\section") &&
-	  $text =~ /\\section($ID)/){
+	  $text =~ /\\section$ID/){
 	my $id = $1;
 	my ($endid, $section, $body)
 	    = get_arguments_check("section", $text, 2);
@@ -1036,7 +1036,7 @@ sub text2html {
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
-	  &&  $text =~ /\\link/){
+	  &&  $text =~ /\\link(\[.*\])?$ID/){
 	my ($id, $arg, $dest, $opt) = get_link($text);
 	## fix conversions in key of htmlindex:
 	my $argkey = $dest;
@@ -1116,14 +1116,14 @@ sub text2html {
 
     $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\email")
-	  &&  $text =~ /\\email/){
+	  &&  $text =~ /\\email$ID/){
 	my ($id, $arg)	= get_arguments("email", $text, 1);
 	$text =~ s/\\email$id.*$id/<a href=\"mailto:$arg\">$arg<\/a>/s;
     }
 
     $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\url")
-	  &&  $text =~ /\\url/){
+	  &&  $text =~ /\\url$ID/){
 	my ($id, $arg)	= get_arguments("url", $text, 1);
 	$text =~ s/\\url.*$id/<a href=\"$arg\">$arg<\/a>/s;
     }
@@ -1131,7 +1131,7 @@ sub text2html {
     ## Handle equations:
     $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\eqn")
-	  &&  $text =~ /\\eqn/){
+	  &&  $text =~ /\\eqn$ID/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
 	$eqn = $ascii if $ascii;
 	$text =~ s/\\eqn(.*)$id/<i>$eqn<\/i>/s;
@@ -1139,7 +1139,7 @@ sub text2html {
 
     $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\deqn")
-	  &&  $text =~ /\\deqn/){
+	  &&  $text =~ /\\deqn$ID/){
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$eqn = $ascii if $ascii;
 	$text =~ s/\\deqn(.*)$id/<\/p><p align="center"><i>$eqn<\/i><\/p><p>/s;
@@ -1147,7 +1147,7 @@ sub text2html {
 
     ## Handle encoded text:
     $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\enc") &&  $text =~ /\\enc/){
+    while(checkloop($loopcount++, $text, "\\enc") &&  $text =~ /\\enc$ID/){
 	my ($id, $enc, $ascii) = get_arguments("enc", $text, 2);
 	$text =~ s/\\enc(.*)$id/$enc/s;
     }
@@ -1195,7 +1195,7 @@ sub code2html {
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
-	  &&  $text =~ /\\link/){
+	  &&  $text =~ /\\link(\[.*\])?$ID/){
 	my ($id, $arg, $dest, $opt) = get_link($text);
 
 	## fix conversions in key of htmlindex:
@@ -1760,7 +1760,7 @@ sub text2txt {
 
     ## Handle equations:
     my $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\eqn") &&  $text =~ /\\eqn/){
+    while(checkloop($loopcount++, $text, "\\eqn") &&  $text =~ /\\eqn$ID/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
 	$eqn = $ascii if $ascii;
 	$eqn =~ s/\\([^&])/$1/go;
@@ -1768,7 +1768,7 @@ sub text2txt {
     }
 
     $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\deqn") && $text =~ /\\deqn/) {
+    while(checkloop($loopcount++, $text, "\\deqn") && $text =~ /\\deqn$ID/) {
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$eqn = $ascii if $ascii;
 	$eqn =~ s/\\([^&])/$1/go;
@@ -1779,7 +1779,7 @@ sub text2txt {
 
     ## Handle encoded text:
     my $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\enc") &&  $text =~ /\\enc/){
+    while(checkloop($loopcount++, $text, "\\enc") &&  $text =~ /\\enc$ID/){
 	my ($id, $enc, $ascii) = get_arguments("enc", $text, 2);
 	$enc = $ascii if $ascii;
 	$enc =~ s/\\([^&])/$1/go;
@@ -2587,7 +2587,7 @@ sub text2latex {
     ## we need to convert \links's
     $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
-	  &&  $text =~ /\\link$ID/){
+	  &&  $text =~ /\\link(\[.*\])?$ID/){
 	my ($id, $arg, $dest, $opt) = get_link($text);
 	my $mapped_name = &latex_link_trans0($dest);
 	$text =~ s/\\link(\[.*\])?$id.*$id/\\LinkA{$arg}{$mapped_name}/s;
@@ -2612,7 +2612,7 @@ sub code2latex {
     if($hyper) {
 	my $loopcount = 0;
 	while(checkloop($loopcount++, $text, "\\link")
-	      && $text =~ /\\link/) {
+	      && $text =~ /\\link(\[.*\])?$ID/) {
 	    my ($id, $arg, $dest, $opt) = get_link($text);
 	    $text =~ s/\\link(\[.*\])?$id.*$id/HYPERLINK($arg)($dest)/s;
 	}
