@@ -73,6 +73,8 @@ DISTFILES = Makefile.in Makefile.win README \
 	WinUnicode.dat \
 	testit.Rd testit.txt.save testit.html.save \
 	testit.tex.save testit-Ex.R.save \
+	ver10.Rd ver10.txt.save ver10.html.save ver10.tex.save ver10-Ex.R.save \
+	ver11.Rd ver11.txt.save ver11.html.save ver11.tex.save ver11-Ex.R.save \
 	R-intro.Rout.save
 SUBDIRS = Embedding Examples Native
 
@@ -308,7 +310,7 @@ test-Standalone:
 	-@(cd $(top_builddir)/src/nmath/standalone; $(MAKE) check)
 ## </NOTE>
 
-test-Rd: $(srcdir)/testit.Rd
+test-Rd: $(srcdir)/testit.Rd $(srcdir)/ver10.Rd $(srcdir)/ver11.Rd
 	@$(ECHO) "testing Rd conversion"
 	@$(RDCONV) -t txt $(srcdir)/testit.Rd > testit.txt
 	@diff -bw testit.txt $(srcdir)/testit.txt.save
@@ -318,6 +320,22 @@ test-Rd: $(srcdir)/testit.Rd
 	@diff -bw testit.tex $(srcdir)/testit.tex.save
 	@$(RDCONV) -t example $(srcdir)/testit.Rd > testit-Ex.R
 	@diff -bw testit-Ex.R $(srcdir)/testit-Ex.R.save
+	@$(RDCONV) -t txt $(srcdir)/ver11.Rd > ver11.txt
+	@diff -bw ver11.txt $(srcdir)/ver11.txt.save
+	@$(RDCONV) -t html $(srcdir)/ver11.Rd > ver11.html
+	@diff -bw ver11.html $(srcdir)/ver11.html.save
+	@$(RDCONV) -t latex $(srcdir)/ver11.Rd > ver11.tex
+	@diff -bw ver11.tex $(srcdir)/ver11.tex.save
+	@$(RDCONV) -t example $(srcdir)/ver11.Rd > ver11-Ex.R
+	@diff -bw ver11-Ex.R $(srcdir)/ver11-Ex.R.save
+	@$(RDCONV) -t txt $(srcdir)/ver10.Rd > ver10.txt 2>&1
+	@diff -bw ver10.txt $(srcdir)/ver10.txt.save
+	@$(RDCONV) -t html $(srcdir)/ver10.Rd > ver10.html 2>&1
+	@diff -bw ver10.html $(srcdir)/ver10.html.save
+	@$(RDCONV) -t latex $(srcdir)/ver10.Rd > ver10.tex 2>&1
+	@diff -bw ver10.tex $(srcdir)/ver10.tex.save
+	@$(RDCONV) -t example $(srcdir)/ver10.Rd > ver10-Ex.R
+	@diff -bw ver10-Ex.R $(srcdir)/ver10-Ex.R.save
 
 test-DocFiles:
 	@$(ECHO) "checking Rd usage sections"
@@ -438,6 +456,8 @@ clean:
 	  R-exts.* R-intro.R R-intro.Rout \
 	  FALSE* .R .tex mirrors.html
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R
+	-@rm -f ver10.txt ver10.html ver10.tex ver10-Ex.R
+	-@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R
 	-@rm -rf anRpackage myTst* myLib
 distclean: clean
 	-@for d in $(SUBDIRS); do \

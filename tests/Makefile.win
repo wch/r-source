@@ -218,7 +218,7 @@ test-Standalone:
 	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win all test || exit 1
 	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win clean
 
-test-Rd: testit.Rd
+test-Rd: testit.Rd ver10.Rd ver11.Rd
 	@echo "testing Rd conversion"
 	@$(RDCONV) -t txt testit.Rd > testit.txt
 	@diff -bw testit.txt testit.txt.save
@@ -228,6 +228,22 @@ test-Rd: testit.Rd
 	@diff -bw testit.tex testit.tex.save
 	@$(RDCONV) -t example testit.Rd > testit-Ex.R
 	@diff -bw testit-Ex.R testit-Ex.R.save
+	@$(RDCONV) -t txt ver11.Rd > ver11.txt
+	@diff -bw ver11.txt ver11.txt.save
+	@$(RDCONV) -t html ver11.Rd > ver11.html
+	@diff -bw ver11.html ver11.html.save
+	@$(RDCONV) -t latex ver11.Rd > ver11.tex
+	@diff -bw ver11.tex ver11.tex.save
+	@$(RDCONV) -t example ver11.Rd > ver11-Ex.R
+	@diff -bw ver11-Ex.R ver11-Ex.R.save
+	@$(RDCONV) -t txt ver10.Rd > ver10.txt 2>&1
+	@diff -bw ver10.txt ver10.txt.save
+	@$(RDCONV) -t html ver10.Rd > ver10.html 2>&1
+	@diff -bw ver10.html ver10.html.save
+	@$(RDCONV) -t latex ver10.Rd > ver10.tex 2>&1
+	@diff -bw ver10.tex ver10.tex.save
+	@$(RDCONV) -t example ver10.Rd > ver10-Ex.R
+	@diff -bw ver10-Ex.R ver10-Ex.R.save
 
 clean:
 	@rm -f *.Rout *.Rout.fail internet.Rout2 Rplots.ps reg-plot.ps \
@@ -236,4 +252,6 @@ clean:
 	@rm -rf *.Rcheck myTst* myLib
 	@rm -f FALSE* .R .tex mirrors.html Rplots*.pdf
 	@rm -f testit.txt testit.html testit.tex testit-Ex.R
+	@rm -f ver10.txt ver10.html ver10.tex ver10-Ex.R
+	@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R
 	@$(MAKE) -C Embedding -f Makefile.win clean
