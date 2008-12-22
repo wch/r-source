@@ -6,10 +6,38 @@ RdTags <- function(Rd) {
 htmlify <- function(x) {
     x <- gsub("&", "&amp;", x)
     x <- gsub("<", "&lt;", x)
-    x <- gsub(">", "&gt;", x)
-    x <- gsub("\n[[:blank:]]*\n", "\n</p>\n<p>\n", x)
+    gsub(">", "&gt;", x)
 }
 
+addParaBreaks <- function(x) 
+    gsub("\n[[:blank:]]*\n", "\n</p>\n<p>\n", x)
+    
+preprocessRd <- function(blocks, defines) {
+    # Process ifdef's.
+    tags <- RdTags(blocks)
+    while (length(ifdef <- which(tags %in% c("#ifdef", "#ifndef")))) {
+	ifdef <- ifdef[1]
+	target <- blocks[[ifdef]][[1]][[1]]
+	# The target may have picked up some whitespace or newlines
+	target <- gsub("[[:blank:][:cntrl:]]*", "", target)
+	all <- 1:length(tags)
+	before <- all[all < ifdef]
+	after <- all[all > ifdef]
+
+	if ((target %in% defines) == (tags[ifdef] == "#ifdef")) {
+	    browser()
+	    tags <- c(tags[before], RdTags(blocks[[ifdef]][[2]]), tags[after])
+	    blocks <- c(blocks[before], blocks[[ifdef]][[2]], blocks[after])
+	} else {
+	    tags <- c(tags[before], tags[after])
+	    blocks <- c(blocks[before], blocks[after])
+	}
+    } 
+    # Save the tags
+    attr(blocks, "RdTags") <- tags
+    blocks
+}    
+    
 sectionOrder <- c("\\title"=1, "\\name"=2, "\\description"=3, "\\usage"=4, "\\synopsis"=4,
                    "\\arguments"=5, "\\format"=5, "\\details"=6, "\\value"=7, "\\note"=7, "\\section"=7,
                    "\\author" = 8, "\\references"=8, "\\source"=8, "\\seealso"=9, "\\examples"=10)
@@ -59,25 +87,7 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
                    "\\sQuote"="&rsquo;",
                    "\\dQuote"="&rdquo;")
                   
-    
-    processIfdefs <- function(blocks, tags) {
-    	# Process ifdef's.
-    	while (length(ifdef <- which(tags %in% c("#ifdef", "#ifndef")))) {
-    	    ifdef <- ifdef[1]
-    	    target <- blocks[[ifdef]][[1]]
-    	    all <- 1:length(tags)
-    	    before <- all[all < ifdef]
-    	    after <- all[all > ifdef]
-    	    if ((target %in% defines) == (tags[ifdef] == "#ifdef")) {
-    		tags <- c(tags[before], RdTags(blocks[[ifdef]][[2]]), tags[after])
-    		blocks <- c(blocks[before], blocks[[ifdef]][[2]], blocks[after])
-    	    } else {
-    	    	tags <- c(tags[before], tags[after])
-    		blocks <- c(blocks[before], blocks[after])
-    	    }
-	} 
-	return(list(blocks, tags))
-    }
+
     
     writeWrapped <- function(tag, block) {
     	cat("<", HTMLTags[tag],">", sep="", file=con)
@@ -108,9 +118,9 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     
     writeBlock <- function(block, tag, blocktag) {
 	switch(tag,
-	VERB =,
-	RCODE =, 
-	TEXT = cat(htmlify(block), sep="", file=con),
+	VERB = ,
+	RCODE = cat(htmlify(block), file=con), 
+	TEXT = cat(addParaBreaks(htmlify(block)), file=con),
 	COMMENT = {},
 	WHITESPACE = cat(block, file=con),
 	"\\describe"=,
@@ -198,10 +208,8 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     	    stop("Unrecognized \\tabular format: ", table[[1]][[1]])
         format <- c(l="left", c="center", r="right")[format]
         
-        tags <- RdTags(content)        
-        content <- processIfdefs(content, tags)
-        tags <- content[[2]]
-        content <- content[[1]]
+        content <- preprocessRd(content, defines)
+        tags <- attr(content, "RdTags")
 
         cat('\n</p>\n<table summary="Rd table">\n', file=con)
         newrow <- TRUE
@@ -241,11 +249,9 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
             
     writeContent <- function(blocks, blocktag) {
         inlist <- FALSE
-        tags <- RdTags(blocks)
         
-	blocks <- processIfdefs(blocks, tags)
-	tags <- blocks[[2]]
-	blocks <- blocks[[1]]
+	blocks <- preprocessRd(blocks, defines)
+	tags <- attr(blocks, "RdTags")
 	
 	for (i in seq_along(tags)) {
             tag <- tags[i]
@@ -341,12 +347,9 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
 	}
     }
     
-    sections <- RdTags(Rd)
-    
     # Process top level ifdef's.
-    Rd <- processIfdefs(Rd, sections)
-    sections <- Rd[[2]]
-    Rd <- Rd[[1]]
+    Rd <- preprocessRd(Rd, defines)
+    sections <- attr(Rd, "RdTags")
 
     # Print initial comments
     # for (i in seq_along(sections)) {
@@ -354,9 +357,15 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     #	writeComment(Rd[[i]])
     #}
     
+    version <- which(sections == "\\Rdversion")
+    if (length(version) == 1 && as.numeric(version[[1]]) < 2)
+    	warning("Rd2HTML is designed for Rd version 2 or higher.")
+    else if (length(version) > 1)
+    	stop("Only one \\Rdversion declaration is allowed")
+    
     # Drop all the parts that are not rendered
     drop <- sections %in% c("COMMENT", "WHITESPACE", "\\concept", "\\docType", "\\encoding", 
-                            "\\keyword", "\\alias")
+                            "\\keyword", "\\alias", "\\Rdversion")
     Rd <- Rd[!drop]
     sections <- sections[!drop]
     
