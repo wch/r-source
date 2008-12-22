@@ -7,6 +7,7 @@ htmlify <- function(x) {
     x <- gsub("&", "&amp;", x)
     x <- gsub("<", "&lt;", x)
     x <- gsub(">", "&gt;", x)
+    x <- gsub("\n[[:blank:]]*\n", "\n</p>\n<p>\n", x)
 }
 
 sectionOrder <- c("\\title"=1, "\\name"=2, "\\description"=3, "\\usage"=4, "\\synopsis"=4,
@@ -240,21 +241,7 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
 	tags <- blocks[[2]]
 	blocks <- blocks[[1]]
 	
-	while (length(ifdef <- which(tags %in% c("#ifdef", "#ifndef")))) {
-	    ifdef <- ifdef[1]
-	    target <- blocks[[ifdef]][[1]]
-	    all <- 1:length(tags)
-	    before <- all[all < ifdef]
-	    after <- all[all > ifdef]
-	    if ((target %in% defines) == (tags[ifdef] == "#ifdef")) {
-		tags <- c(tags[before], RdTags(blocks[[ifdef]][[2]]), tags[after])
-		blocks <- c(blocks[before], blocks[[ifdef]][[2]], blocks[after])
-	    } else {
-	    	tags <- c(tags[before], tags[after])
-		blocks <- c(blocks[before], blocks[after])
-	    }
-	}        
-        for (i in seq_along(tags)) {
+	for (i in seq_along(tags)) {
             tag <- tags[i]
             # eat whitespace following dots
     	    if (i > 1 && tag == "WHITESPACE"
@@ -264,7 +251,7 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
             "\\item" = {
     	    	if (!inlist) {
     	    	    switch(blocktag,
-    	    	    "\\arguments"=,
+    	    	    "\\arguments"=cat('\n<table summary="R argblock">\n', file=con),
     	    	    "\\value"=,
     	    	    "\\itemize"=cat("<ul>\n", file=con),
     	    	    "\\enumerate"=cat("<ol>\n", file=con),
@@ -272,7 +259,13 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     	    	    inlist <- TRUE
     		}
     		switch(blocktag,
-    		"\\arguments"=,
+    		"\\arguments"={
+    		    cat('<tr valign="top"><td><code>', file=con)
+    		    writeContent(block[[1]], tag)
+    		    cat('</code></td>\n<td>\n', file=con)
+    		    writeContent(block[[2]], tag)
+    		    cat('</td></tr>', file=con)
+    		},
     		"\\value"=,
     		"\\describe"= {
     		    cat("<dt>", file=con)
@@ -293,7 +286,7 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     	    { # default
     	    	if (inlist) {
     	    	    switch(blocktag,
-    	    	    "\\arguments"=,
+    	    	    "\\arguments"=cat("</table>\n", file=con),
     	    	    "\\value"=,
     	    	    "\\itemize"=cat("</ul>\n", file=con),
     	    	    "\\enumerate"=cat("</ol>\n", file=con),
@@ -305,7 +298,7 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
 	}
 	if (inlist)
 	    switch(blocktag,
-		"\\arguments"=,
+		"\\arguments"=cat("</table>\n", file=con),
 		"\\value"=,
 		"\\itemize"=cat("</ul>\n", file=con),
 		"\\enumerate"=cat("</ol>\n", file=con),
@@ -327,9 +320,9 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     	if (tag %in% c("\\examples","\\synopsis","\\usage"))
     	    para <- "pre" else para <- "p"
     	   
-    	cat("\n<h3>", title, "</h3>\n\n<", para, ">", sep="", file=con)
+    	cat("\n\n<h3>", title, "</h3>\n\n<", para, ">", sep="", file=con)
     	writeContent(section, tag)
-    	cat("\n</", para, ">\n", sep="", file=con)
+    	cat("</", para, ">\n", sep="", file=con)
     }
     
     if (is.character(Rd)) Rd <- parse_Rd(Rd)
@@ -350,10 +343,10 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     Rd <- Rd[[1]]
 
     # Print initial comments
-    for (i in seq_along(sections)) {
-    	if (sections[i] != "COMMENT") break
-        writeComment(Rd[[i]])
-    }
+    # for (i in seq_along(sections)) {
+    # 	if (sections[i] != "COMMENT") break
+    #	writeComment(Rd[[i]])
+    #}
     
     # Drop all the parts that are not rendered
     drop <- sections %in% c("COMMENT", "WHITESPACE", "\\concept", "\\docType", "\\encoding", 
@@ -384,7 +377,7 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     name <- htmlify(name[[1]])
     
     cat('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
-        '<html><head><title>', title, '</title>\n',
+        '<html><head><title>R: ', title, '</title>\n',
         '<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">\n',
         '<link rel="stylesheet" type="text/css" href="../../R.css">\n',
         '</head><body>\n\n',
