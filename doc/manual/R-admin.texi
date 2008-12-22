@@ -3352,7 +3352,7 @@ special flags for compiling C code to be turned into a shared library
 special flags for compiling Fortran code to be turned into a shared library
 @item CXXPICFLAGS
 special flags for compiling C++ code to be turned into a shared library
-@item FPICFLAGS
+@item FCPICFLAGS
 special flags for compiling Fortran 95 code to be turned into a shared library
 @item DEFS
 defines to be used when compiling C code in R itself
