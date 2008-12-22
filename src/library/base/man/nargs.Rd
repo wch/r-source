@@ -16,7 +16,7 @@
   The count includes empty (missing) arguments, so that \code{foo(x,,z)}
   will be considered to have three arguments (see \sQuote{Examples}).
   This can occur in rather indirect ways, so for example \code{x[]}
-  might dispatch a call to \code{`[.some_method`(x, )`} which is
+  might dispatch a call to \code{`[.some_method`(x, )} which is
   considered to have two arguments.
 }
 \references{

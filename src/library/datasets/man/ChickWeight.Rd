@@ -43,7 +43,7 @@
 }
 \source{
   Crowder, M. and Hand, D. (1990), \emph{Analysis of Repeated Measures},
-  {Chapman and Hall} (example 5.3)
+  Chapman and Hall (example 5.3)
 
   Hand, D. and Crowder, M. (1996), \emph{Practical Longitudinal Data
     Analysis}, Chapman and Hall (table A.2)
