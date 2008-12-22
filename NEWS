@@ -18,9 +18,9 @@ BUGS FIXES
 	cases with an odd number of backslashes greater than one).
 
 	Text conversion of \code{\ etc} was incorrect (a single
-	blackslash stands for itself inside \code).
+	backslash stands for itself inside \code).
 
-	\code{} inside \examples is now fixed up (but the warning
+	\code{} inside \examples{} is now fixed up (but the warning
 	remains, since it will be handled incorrectly in earlier
 	versions of R).
 
