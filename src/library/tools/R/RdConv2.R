@@ -11,11 +11,11 @@ htmlify <- function(x) {
 }
 
 sectionOrder <- c("\\title"=1, "\\name"=2, "\\description"=3, "\\usage"=4, "\\synopsis"=4,
-                   "\\arguments"=5, "\\details"=6, "\\value"=7, "\\note"=7, "\\section"=7,
+                   "\\arguments"=5, "\\format"=5, "\\details"=6, "\\value"=7, "\\note"=7, "\\section"=7,
                    "\\author" = 8, "\\references"=8, "\\source"=8, "\\seealso"=9, "\\examples"=10)
                    
 sectionTitles <- c("\\description"="Description", "\\usage"="Usage", "\\synopsis"="Usage",
-                   "\\arguments"="Arguments", "\\details"="Details", "\\note"="Note",
+                   "\\arguments"="Arguments", "\\format"="Format", "\\details"="Details", "\\note"="Note",
                    "\\section"="section", "\\author"="Author(s)", "\\references"="References", "\\source"="Source", 
                    "\\seealso"="See Also", "\\examples"="Examples", "\\value"="Value")
                    
@@ -85,12 +85,15 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     	cat("</", HTMLTags[tag],">", sep="", file=con)
     }
     
-    writeLink <- function(block) {
+    writeLink <- function(tag, block) { # FIXME This doesn't handle aliases, and 
+                                        # doesn't cover all variations
     	option <- attr(block, "Rd_option")
     	cat('<a href="', file=con)
     	if (!is.null(option))
     	    cat('../../', option, '/html/', sep="", file=con)
     	writeContent(block)
+    	if (tag == "\\linkS4class")
+    	    cat('-class', file=con)
     	cat('.html">', file=con)
     	writeContent(block)
     	cat('</a>', file=con)
@@ -124,7 +127,8 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
 	"\\special"=,
 	"\\strong"=,
 	"\\var"= writeWrapped(tag, block),
-	"\\link" = writeLink(block),
+	"\\linkS4class" =,
+	"\\link" = writeLink(tag, block),
 	"\\email" = cat('<a href="mailto:', block[[1]], '">', htmlify(block[[1]]), '</a>', sep="", file=con),
 	"\\url" = cat('<a href="', block[[1]], '">', htmlify(block[[1]]), '</a>', sep="", file=con),
 	"\\cr" =,
@@ -149,6 +153,8 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
 	    writeContent(block)
 	    cat(HTMLRight[tag], file=con)
 	},
+	"\\enc" =  # FIXME:  this should sometimes use the first arg 
+	    writeContent(block[[2]]),
 	"\\eqn" = {
 	    if (is.null(RdTags(block)))  # the two arg form has no tags
 	   	block <- block[[2]]
