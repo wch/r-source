@@ -250,7 +250,7 @@ BUGS FIXES
 	versions of R).
 
     o	as.matrix.data.frame() could fail if coercion changed the
-	dimension of one the columns (as e.g. the coercion of a "Surv"
+	dimension of one of the columns (as e.g. the coercion of a "Surv"
 	object to a character vector does).
 
 
