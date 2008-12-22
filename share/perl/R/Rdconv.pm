@@ -160,7 +160,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
 	next if /^\s*%/o;	# completely drop full comment lines
 	my $loopcount = 0;
 	while(checkloop($loopcount++, $_, "\\%")
-	      && s/^\\%|([^\\])\\%/$1escaped_percent_sign/go) {};
+	      && s/^\\%|([^\\])((\\\\)*)\\%/$1$2escaped_percent_sign/go) {};
 	s/^([^%]*)%.*$/$1/o;
 	s/escaped_percent_sign/\\%/go;
 	$complete_text .= $_;
@@ -274,8 +274,8 @@ sub macro_subs { # does macro substitution on $complete_text
 ## Idea and original code from latex2html
 sub mark_brackets {
 
-    $complete_text =~ s/^\\{|([^\\])\\{/$1$EOB/gso;
-    $complete_text =~ s/^\\}|([^\\])\\}/$1$ECB/gso;
+    $complete_text =~ s/^\\{|([^\\])((\\\\)*)\\{/$1$2$EOB/gso;
+    $complete_text =~ s/^\\}|([^\\])((\\\\)*)\\}/$1$2$ECB/gso;
 
     print STDERR "\n-- mark_brackets:" if $debug;
     my $loopcount = 0;
@@ -1278,8 +1278,9 @@ sub html_print_codeblock {
 	if ($ntext =~ /$ECODE/) {
 	    warn "WARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
 	}
-	print $htmlout (html_title3($title), "<pre>" ,
-			code2html($ntext), "</pre>\n\n");
+	my $ntext = code2html($ntext);
+	$ntext = html_unescape_codes($ntext);
+	print $htmlout (html_title3($title), "<pre>" , $ntext, "</pre>\n\n");
     }
 }
 
@@ -1498,7 +1499,7 @@ sub html_functionfoot
 	$retval .= "\n\n<hr><div align=\"center\">[Package";
  	$retval .= " <em>$pkgname</em>" if $pkgname ne "unknown";
 	$retval .= " version $version" if $version ne "";
-	$retval .= " <a href=\"00Index$HTML\">Index]</a></div>\n\n";
+	$retval .= " <a href=\"00Index$HTML\">Index</a>]</div>\n\n";
     }
 
     $retval .= "</body></html>\n";
@@ -1917,6 +1918,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
     $text =~ s/\\#/#/go;
     $text =~ s/\\%/%/go;
     $text =~ s/\\bsl{}/\\/go;
+    $text =~ s/escaped-code-backslash/\\/go;
 
     my @paras = split /\n\n/, $text;
     $indent1 = $pre1; $indent2 = $indent;
@@ -2081,6 +2083,7 @@ sub txt_print_codeblock {
 	$ntext =~ s/^[\n]*//go;
 	$ntext = "\n". $ntext;
 	$ntext =~ s/\\&\././go;
+	$ntext = txt_unescape_codes($ntext);
 	foreach $line (split /\n/, $ntext) {
 	    $line =~ s/\\\\/\\/go;
 	    $line =~ s/^\t/        /o;
@@ -2173,6 +2176,8 @@ sub txt_unescape_codes {
 	  && $text =~ /$ECODE($ID)/) {
 	my $id = $1;
 	my $ec = code2txt($ecodes{$id});
+	## in code, \ means itself, \\ means \
+	$ec =~ s/\\\\/escaped-code-backslash/go;
 	$text =~ s/$ECODE$id/\'$ec\'/;
     }
 
@@ -2710,6 +2715,7 @@ sub code2examp {
     $text =~ s/\\\\/\\/g;
 
     $text = unmark_brackets($text);
+    $text = txt_unescape_codes($text);
 
     $text = transform_S3method($text);
     $text = transform_S4method($text);
@@ -2820,14 +2826,14 @@ sub text2latex {
 	  &&  $text =~ /\\eqn/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
 	## $ascii may be empty
-	$text =~ s/\\eqn.*$id/\\eeeeqn\{$eqn\}\{$ascii\}/s;
+	$text =~ s/\\eqn.*$id/\\eeeeqn\{$eqn\}\{\}/s;
     }
 
     $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\deqn")
 	  && $text =~ /\\deqn/) {
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
-	$text =~ s/\\deqn.*$id/\\dddeqn\{$eqn\}\{$ascii\}/s;
+	$text =~ s/\\deqn.*$id/\\dddeqn\{$eqn\}\{\}/s;
     }
 
     ## Handle encoded text:
@@ -2959,6 +2965,7 @@ sub latex_print_codeblock {
 	    warn "WARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
 	}
 	my $out = &code2latex($ntext, 0, 1);
+	$out = latex_unescape_codes($out);
 	$out =~ s/\\\\/\\/go;
 	print $latexout $out;
 	print $latexout "\\end\{verbatim\}\n";
@@ -2993,6 +3000,7 @@ sub latex_print_exampleblock {
 		if $issue_warnings; 
 	}
 	my $out = &code2latex($ntext,0,0);
+	$out = latex_unescape_codes($out);
 	$out =~ s/\\\\/\\/go;
 	print $latexout $out;
 	print $latexout "\\end\{ExampleCode\}\n";

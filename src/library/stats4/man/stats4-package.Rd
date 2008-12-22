@@ -22,7 +22,7 @@
 \author{
 R Development Core Team and contributors worldwide
 
-Maintainer: R Core Team <R-core@r-project.org>
+Maintainer: R Core Team \email{R-core@r-project.org}
 }
 \keyword{ package }
 \keyword{ models }

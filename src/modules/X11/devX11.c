@@ -2399,6 +2399,7 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
     dd->canChangeGamma = FALSE;
 
     dd->startps = ps;
+    xd->fontscale = 1.0;
     dd->startcol = xd->col;
     dd->startfill = xd->fill;
     dd->startlty = LTY_SOLID;
@@ -3077,7 +3078,8 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     /* rescale points to pixels */
     dd->cra[0] = 0.9 * ps * res0/72.0;
     dd->cra[1] = 1.2 * ps * res0/72.0;
-    dd->startps = dps;
+    dd->startps = ps;
+    xd->fontscale = dps/ps;
     dd->ipr[0] = dd->ipr[1] = 1.0/res0;
     xd->lwdscale = res0/96.0;
     dd->xCharOffset = 0.4900;

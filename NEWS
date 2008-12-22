@@ -6,6 +6,31 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.8.1 patched
+
+
+BUGS FIXES
+
+    o	grid-based plots no longer reset the base text size to the
+	default 96dpi in cairo-based bitmap devices.
+
+    o	Rd conversion was incorrectly parsing \\\* and \\\{ (and other
+	cases with an odd number of backslashes greater than one).
+
+	Text conversion of \code{\ etc} was incorrect (a single
+	blackslash stands for itself inside \code).
+
+	\code{} inside \examples is now fixed up (but the warning
+	remains, since it will be handled incorrectly in earlier
+	versions of R).
+
+    o	as.matrix.data.frame() could fail if coercion changed the
+	dimension of one of the columns (as e.g. the coercion of a "Surv"
+	object to a character vector does).
+
+
+
+
 		CHANGES IN R VERSION 2.8.1
 
 

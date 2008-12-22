@@ -152,6 +152,8 @@ typedef struct {
     cairo_surface_t *cs, *xcs;
     cairo_antialias_t antialias;
 #endif
+
+    double fontscale;
 } X11Desc;
 
 typedef X11Desc* pX11Desc;
