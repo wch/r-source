@@ -44,7 +44,7 @@ deriv3(expr, \dots)
     variables in result.}
   \item{hessian}{a logical value indicating whether the second derivatives
     should be calculated and incorporated in the return value.}
-  \item{\dots}{arguments to tbe passed to or from methods.}
+  \item{\dots}{arguments to be passed to or from methods.}
 }
 \details{
   \code{D} is modelled after its S namesake for taking simple symbolic

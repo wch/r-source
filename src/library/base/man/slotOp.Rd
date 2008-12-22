@@ -7,7 +7,7 @@
 \title{Extract Slots}
 \alias{@}
 \description{
-  Extract tbe contents of a slot in a object with a formal (S4) class
+  Extract the contents of a slot in a object with a formal (S4) class
   structure.
 }
 \usage{
