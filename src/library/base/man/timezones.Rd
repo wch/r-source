@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{timezones}
-\Rd_conversion{1.1}
+\Rdversion{1.1}
 \alias{Sys.timezone}
 \alias{timezone}
 \alias{time zone}
