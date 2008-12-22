@@ -2439,6 +2439,7 @@ static keywords[] = {
     
     { "\\alias",   VSECTIONHEADER }, 
     { "\\synopsis",VSECTIONHEADER }, 
+    { "\\Rdversion",VSECTIONHEADER }, 
     
     /* These macros take no arguments.  One character non-alpha escapes get the
        same token value */
