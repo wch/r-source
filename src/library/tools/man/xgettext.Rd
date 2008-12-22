@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{xgettext}
-\Rd_vesion{1.1}
+\Rdversion{1.1}
 \alias{xgettext}
 \alias{xngettext}
 \alias{xgettext2pot}
