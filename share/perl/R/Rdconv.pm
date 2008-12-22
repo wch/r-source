@@ -2371,7 +2371,11 @@ sub ltxstriptitle { # text
     my $text = $_[0];
     $text =~ s/\\R/\\R\{\}/go;
     ## escape unescaped latex specials
-    $text =~ s/([^\\])([\$\#_&])/$1\\$2/go;
+    if ($Rdversion >= 1.1) {
+	$text =~ s/([^\\])([\$\#_&])/$1\\$2/go;
+    } else {
+	$text =~ s/([^\\])([\#_&])/$1\\$2/go;
+    }
     $text =~ s/\^/\\textasciicircum{}/go;
     $text =~ s/~/\\textasciitilde{}/go;
     return $text;

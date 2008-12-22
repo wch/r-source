@@ -44,7 +44,8 @@ Markus Kuhn, \dQuote{ASCII and Unicode quotation marks}.
 An escape is needed in \email{Micah\_Altman@harvard.edu} in \R{} \textless{} 2.9.0
 \end{Section}
 \begin{Examples}
-\begin{ExampleCode}WARNING: \code inside \examples in file 'ver10.Rd'
+\begin{ExampleCode}
+WARNING: \code inside \examples in file 'ver10.Rd'
 
 Code such as \code{foo} inside \examples iused to be garbled.
 
