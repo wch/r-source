@@ -764,6 +764,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, dims, dimnames, indx, subs, x;
     int i, ndims, nsubs, offset = 0;
     int drop = 1, pok, exact = -1;
+    int named_x;
 
     PROTECT(args);
     ExtractDropArg(args, &drop);
@@ -820,6 +821,8 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!(isVector(x) || isList(x) || isLanguage(x)))
 	errorcall(call, R_MSG_ob_nonsub, type2char(TYPEOF(x)));
 
+    named_x = NAMED(x);  /* x may change below; save this now.  See PR#13411 */
+    
     if(nsubs == 1) { /* vector indexing */
 	SEXP thesub = CAR(subs);
 	int i = -1, len = length(thesub);
@@ -879,13 +882,13 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(isPairList(x)) {
 	ans = CAR(nthcdr(x, offset));
-	if (NAMED(x) > NAMED(ans))
-	    SET_NAMED(ans, NAMED(x));
+	if (named_x > NAMED(ans))
+	    SET_NAMED(ans, named_x);
     } else if(isVectorList(x)) {
 	/* did unconditional duplication before 2.4.0 */
 	ans = VECTOR_ELT(x, offset);
-	if (NAMED(x) > NAMED(ans))
-	    SET_NAMED(ans, NAMED(x));
+	if (named_x > NAMED(ans))
+	    SET_NAMED(ans, named_x);
     } else {
 	ans = allocVector(TYPEOF(x), 1);
 	switch (TYPEOF(x)) {
