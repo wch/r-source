@@ -828,24 +828,27 @@ static int mkText(int c)
     	    	break;
     	    }
     	    xxungetc(lookahead);
-    	    /* fall through to other cases ... */
+    	    goto stop;
+    	case ']':
+    	    if (xxmode == INOPTION) goto stop;
+            break;
     	case '%':
     	case LBRACE:
     	case RBRACE:
     	case R_EOF:
-    	case ']':
-    	    if (c != ']' || xxmode == INOPTION) { /* ']' only breaks in INOPTION mode */
-    	    	xxungetc(c);
-    	    	PROTECT(yylval = mkString2(stext,  bp - stext));
-		if (xxDebugTokens)
-            	    Rprintf("mkText: %s\n", CHAR(STRING_ELT(yylval, 0))); 
-    	    	if(stext != st0) free(stext);
-    	    	return TEXT;
-    	    }
+    	    goto stop;
     	}
     	TEXT_PUSH(c);
+    	if (c == '\n') goto stop;
     	c = xxgetc();
     };
+stop:
+    if (c != '\n') xxungetc(c); /* newline causes a break, but we keep it */
+    PROTECT(yylval = mkString2(stext,  bp - stext));
+    if (xxDebugTokens)
+	Rprintf("mkText: %s\n", CHAR(STRING_ELT(yylval, 0))); 
+    if(stext != st0) free(stext);
+    return TEXT;
 }
 
 static int mkComment(int c)
@@ -959,9 +962,10 @@ static int mkCode(int c)
     	    } else if (c == R_EOF) break;
     	}
     	TEXT_PUSH(c);
+    	if (c == '\n') break;
     	c = xxgetc();
     }
-    xxungetc(c);
+    if (c != '\n') xxungetc(c);
     PROTECT(yylval = mkString2(stext,  bp - stext));
     if (xxDebugTokens) {
     	Rprintf("mkCode:  %s\n", CHAR(STRING_ELT(yylval, 0)));
@@ -1077,9 +1081,10 @@ static int mkVerb(int c)
 	} else if ((!escaped && c == '%') || c == R_EOF) 
 	    break;
     	TEXT_PUSH(c);
+    	if (c == '\n') break;
     	c = xxgetc();
     };
-    xxungetc(c);
+    if (c != '\n') xxungetc(c);
     PROTECT(yylval = mkString2(stext,  bp - stext));
     if (xxDebugTokens)
     	Rprintf("mkverb:  %s\n", CHAR(STRING_ELT(yylval, 0)));

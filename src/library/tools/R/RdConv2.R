@@ -10,7 +10,7 @@ htmlify <- function(x) {
 }
 
 addParaBreaks <- function(x) 
-    gsub("\n[[:blank:]]*\n", "\n</p>\n<p>\n", x)
+    sub("\n", "\n</p>\n<p>\n", x)
     
 preprocessRd <- function(blocks, defines) {
     # Process ifdef's.
@@ -25,7 +25,6 @@ preprocessRd <- function(blocks, defines) {
 	after <- all[all > ifdef]
 
 	if ((target %in% defines) == (tags[ifdef] == "#ifdef")) {
-	    browser()
 	    tags <- c(tags[before], RdTags(blocks[[ifdef]][[2]]), tags[after])
 	    blocks <- c(blocks[before], blocks[[ifdef]][[2]], blocks[after])
 	} else {
@@ -46,7 +45,14 @@ sectionTitles <- c("\\description"="Description", "\\usage"="Usage", "\\synopsis
                    "\\arguments"="Arguments", "\\format"="Format", "\\details"="Details", "\\note"="Note",
                    "\\section"="section", "\\author"="Author(s)", "\\references"="References", "\\source"="Source", 
                    "\\seealso"="See Also", "\\examples"="Examples", "\\value"="Value")
-                   
+
+RCodeMacros <- c("\\examples", "\\usage", "\\code", "\\dontrun", "\\donttest", "\\dontshow", 
+                 "\\testonly")
+                 
+VerbMacros <-  c("\\alias", "\\synopsis", "\\Rdversion", "\\command", "\\env", 
+                 "\\kbd", "\\option", "\\preformatted", "\\samp", "\\special", "\\url",
+                 "\\eqn", "\\deqn")
+                 
 Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     # These correspond to HTML wrappers
     HTMLTags <- c("\\bold"="B",
@@ -86,12 +92,10 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
                    "\\samp"="</span>",
                    "\\sQuote"="&rsquo;",
                    "\\dQuote"="&rdquo;")
-                  
 
-    
     writeWrapped <- function(tag, block) {
     	cat("<", HTMLTags[tag],">", sep="", file=con)
-    	writeContent(block)
+    	writeContent(block, tag)
     	cat("</", HTMLTags[tag],">", sep="", file=con)
     }
     
@@ -101,11 +105,11 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     	cat('<a href="', file=con)
     	if (!is.null(option))
     	    cat('../../', option, '/html/', sep="", file=con)
-    	writeContent(block)
+    	writeContent(block, tag)
     	if (tag == "\\linkS4class")
     	    cat('-class', file=con)
     	cat('.html">', file=con)
-    	writeContent(block)
+    	writeContent(block, tag)
     	cat('</a>', file=con)
     }
     
@@ -119,10 +123,15 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     writeBlock <- function(block, tag, blocktag) {
 	switch(tag,
 	VERB = ,
-	RCODE = cat(htmlify(block), file=con), 
-	TEXT = cat(addParaBreaks(htmlify(block)), file=con),
+	RCODE = , 
+	TEXT = cat(htmlify(block), file=con),
 	COMMENT = {},
-	WHITESPACE = cat(block, file=con),
+	WHITESPACE = {
+	    if (blocktag %in% c(RCodeMacros, VerbMacros))
+	    	cat(block, file=con)
+	    else
+	    	cat(addParaBreaks(block), file=con)
+	},
 	"\\describe"=,
 	"\\enumerate"=,
 	"\\itemize"=writeContent(block, tag),
@@ -160,23 +169,23 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
 	"\\sQuote" =,
 	"\\dQuote" = {
 	    cat(HTMLLeft[tag], file=con)
-	    writeContent(block)
+	    writeContent(block, tag)
 	    cat(HTMLRight[tag], file=con)
 	},
 	"\\enc" =  # FIXME:  this should sometimes use the first arg 
-	    writeContent(block[[2]]),
+	    writeContent(block[[2]], tag),
 	"\\eqn" = {
 	    if (is.null(RdTags(block)))  # the two arg form has no tags
 	   	block <- block[[2]]
 	    cat("<i>", file=con)
-	    writeContent(block)
+	    writeContent(block, tag)
 	    cat("</i>", file=con)
 	},
 	"\\deqn" = {
 	    if (is.null(RdTags(block)))  # the two arg form has no tags
 	   	block <- block[[2]]
 	    cat('</p><p align="center"><i>', file=con)
-	    writeContent(block)
+	    writeContent(block, tag)
 	    cat('</i></p><p>', file=con)
 	},
 	"\\dontshow" =,
@@ -184,15 +193,15 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
 	"\\method" =,
 	"\\S3method" = {
 	    cat('## S3 method for class &lsquo;', file=con)
-	    writeContent(block[[2]])
+	    writeContent(block[[2]], tag)
 	    cat('&rsquo;:\n', file=con)
-	    writeContent(block[[1]])
+	    writeContent(block[[1]], tag)
 	},
 	"\\S4method" = {
 	    cat('## S4 method for signature &lsquo;', file=con)
-	    writeContent(block[[2]])
+	    writeContent(block[[2]], tag)
 	    cat('&rsquo;:\n', file=con)
-	    writeContent(block[[1]])
+	    writeContent(block[[1]], tag)
 	},
 	"\\tabular" = writeTabular(block),
         stop("Tag ", tag, " not recognized."))
@@ -322,17 +331,18 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     	if (tag == "\\section") {
     	    title <- section[[1]]
     	    tags <- RdTags(title)
-    	    if (length(tags) != 1 || tags != "TEXT") 
+    	    if (!all(tags %in% c("WHITESPACE", "TEXT"))) 
     	    	stop("Section title must be simple text")
-    	    title <- title[[1]]
     	    section <- section[[2]]
     	} else 
-    	    title <- sectionTitles[tag]
+    	    title <- list(structure(sectionTitles[tag], Rd_tag="TEXT"))
     	    
     	if (tag %in% c("\\examples","\\synopsis","\\usage"))
     	    para <- "pre" else para <- "p"
     	   
-    	cat("\n\n<h3>", title, "</h3>\n\n<", para, ">", sep="", file=con)
+    	cat("\n\n<h3>", file=con)
+    	writeContent(title, tag)
+    	cat("</h3>\n\n<", para, ">", sep="", file=con)
     	writeContent(section, tag)
     	cat("</", para, ">\n", sep="", file=con)
     }
@@ -380,25 +390,26 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     
     title <- Rd[[1]]
     tags <- RdTags(title)
-    title <- Rd[ tags != "WHITESPACE" ]
-    tags <- tags[ tags != "WHITESPACE" ]
-    if (!identical(tags, "TEXT")) stop("\\title section must only contain text.")
+    if (!all(tags %in% c("WHITESPACE", "TEXT"))) stop("\\title section must only contain text.")
     
     name <- Rd[[2]]
     tags <- RdTags(name)
     if (!identical(tags, "TEXT")) stop("\\name must only contain text.")
     
-    title <- htmlify(title[[1]])
     name <- htmlify(name[[1]])
     
     cat('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
-        '<html><head><title>R: ', title, '</title>\n',
+        '<html><head><title>R: ', sep="", file=con)
+    writeContent(title, "\\title")
+    cat('</title>\n',
         '<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">\n',
         '<link rel="stylesheet" type="text/css" href="../../R.css">\n',
         '</head><body>\n\n',
         '<table width="100%" summary="page for ', name, ' {', package, 
         '}"><tr><td>',name,' {', package, '}</td><td align="right">R Documentation</td></tr></table>\n',
-        '<h2>', title, '</h2>\n', sep="", file=con)
+        '<h2>', sep="", file=con)
+    writeContent(title, "\\title")
+    cat('</h2>\n', file=con)
     
     for (i in seq_along(sections)[-(1:2)])
     	writeSection(Rd[[i]], sections[i])
