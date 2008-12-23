@@ -1305,17 +1305,19 @@ expand the @R{} sources and configure @R{} appropriately, for example
 @example
 tar zxvf R-@value{VERSIONno}.tar.gz
 cd R-@value{VERSIONno}
-./configure --with-blas='-framework vecLib' --with-lapack \
+./configure --with-blas='-framework vecLib' --with-lapack --with-ICU \
   --with-aqua --enable-R-framework
 make
 @end example
 
 @noindent
 and then sit back and wait.  The first two options are the default (and
-strongly recommended), and with some toolsets have been essential.  The
-second line of options is also default on Mac OS X, but needed only if
-you want to build @R{} for use with @code{R.app} Console, and imply
-@option{--enable-R-shlib} to build @R{} as a shared/dynamic library.
+strongly recommended), and with some toolsets have been essential.
+Selecting @option{--with-ICU} replaces Apple's @code{wcscoll} with ohe
+that works correctly in UTF-8 locales.  The second line of options is
+also default on Mac OS X, but needed only if you want to build @R{} for
+use with @code{R.app} Console, and imply @option{--enable-R-shlib} to
+build @R{} as a shared/dynamic library.
 
 These options configure @R{} to be built and installed as a framework
 called @file{R.framework}.  The default path for @file{R.framework} is

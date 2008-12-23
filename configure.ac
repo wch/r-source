@@ -1954,32 +1954,41 @@ R_MBCS
 
 ## support for ICU
 if test "$use_ICU" = yes ; then
-  ## FIXME: later, warn not error
-  AC_CHECK_LIB(icui18n, ucol_open_4_0, [], [
-    AC_CHECK_LIB(icui18n, ucol_open_3_8, [], [
-      AC_CHECK_LIB(icui18n, ucol_open_3_6, [], [
-        AC_CHECK_LIB(icui18n, ucol_open_3_4, [], 
-          [AC_MSG_ERROR([library 'icui18n' is required for ICU])])
+case "${host_os}" in
+  darwin*)
+    AC_CHECK_LIB(icucore, ucol_open, [],
+            [AC_MSG_ERROR([library 'icucore' is required for ICU])])
+    AC_DEFINE_UNQUOTED([USE_ICU_APPLE], 1, [Define to use Apple's ICU.])
+  ;;
+  *)
+    ## FIXME: later, warn not error
+    AC_CHECK_LIB(icui18n, ucol_open_4_0, [], [
+      AC_CHECK_LIB(icui18n, ucol_open_3_8, [], [
+        AC_CHECK_LIB(icui18n, ucol_open_3_6, [], [
+          AC_CHECK_LIB(icui18n, ucol_open_3_4, [], 
+            [AC_MSG_ERROR([library 'icui18n' is required for ICU])])
+        ])
       ])
     ])
-  ])
-  AC_CHECK_LIB(icuuc, ucnv_fromUChars_4_0, [], [
-    AC_CHECK_LIB(icuuc, ucnv_fromUChars_3_8, [], [
-      AC_CHECK_LIB(icuuc, ucnv_fromUChars_3_6, [], [
-        AC_CHECK_LIB(icuuc, ucnv_fromUChars_3_4, [], 
-          [AC_MSG_ERROR([library 'icuuc' is required for ICU])])
+    AC_CHECK_LIB(icuuc, ucnv_fromUChars_4_0, [], [
+      AC_CHECK_LIB(icuuc, ucnv_fromUChars_3_8, [], [
+        AC_CHECK_LIB(icuuc, ucnv_fromUChars_3_6, [], [
+          AC_CHECK_LIB(icuuc, ucnv_fromUChars_3_4, [], 
+            [AC_MSG_ERROR([library 'icuuc' is required for ICU])])
+        ])
       ])
     ])
-  ])
-  if test "$use_ICU" = yes ; then
-    AC_CHECK_HEADER(unicode/utypes.h, [], 
-      [AC_MSG_ERROR([header file <unicode/utypes.h> is required for ICU])])
-  fi
+    if test "$use_ICU" = yes ; then
+      AC_CHECK_HEADER(unicode/utypes.h, [], 
+        [AC_MSG_ERROR([header file <unicode/utypes.h> is required for ICU])])
+    fi
+  esac
 fi
 if test "$use_ICU" = yes ; then
   AC_DEFINE_UNQUOTED([USE_ICU], 1, [Define to use ICU for collation.])
 fi
 AC_SUBST(USE_ICU)
+AC_SUBST(USE_ICU_APPLE)
 
 
 ## X11.

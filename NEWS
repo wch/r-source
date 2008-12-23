@@ -195,6 +195,8 @@ INSTALLATION
 
     o	libtool has been updated to 2.2.6a.
 
+    o	--with-ICU is now supported (and recommended) on Mac OS X.
+
 
 PACKAGE INSTALLATION
 
