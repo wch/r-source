@@ -426,7 +426,9 @@ data.frame <-
     for(i in seq_len(n)[nrows < nr]) {
 	xi <- vlist[[i]]
 	if(nrows[i] > 0L && (nr %% nrows[i] == 0L)) {
+            ## make some attempt to recycle column i
             xi <- unclass(xi) # avoid data-frame methods
+            fixed <- TRUE
             for(j in seq_along(xi)) {
                 xi1 <- xi[[j]]
                 if(is.vector(xi1) || is.factor(xi1))
@@ -434,9 +436,17 @@ data.frame <-
                 else if(is.character(xi1) && class(xi1) == "AsIs")
                     xi[[j]] <- structure(rep(xi1, length.out = nr),
                                          class = class(xi1))
+                else if(inherits(xi1, "Date") || inherits(xi1, "POSIXct"))
+                    xi[[j]] <-rep(xi1, length.out = nr)
+                else {
+                    fixed <- FALSE
+                    break
+                }
             }
-            vlist[[i]] <- xi
-            next
+            if (fixed) {
+                vlist[[i]] <- xi
+                next
+            }
         }
 	stop("arguments imply differing number of rows: ",
              paste(unique(nrows), collapse = ", "))
