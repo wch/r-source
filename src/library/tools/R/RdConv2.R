@@ -9,8 +9,11 @@ htmlify <- function(x) {
     gsub(">", "&gt;", x)
 }
 
-addParaBreaks <- function(x) 
-    sub("\n", "\n</p>\n<p>\n", x)
+addParaBreaks <- function(x) {
+    if (attr(x, "srcref")[2] == 0)  # Starts in column 1
+    	x <- sub("^[[:blank:]]*\n", "\n</p>\n<p>\n", x)
+    x
+}
     
 preprocessRd <- function(blocks, defines) {
     # Process ifdef's.
@@ -18,7 +21,7 @@ preprocessRd <- function(blocks, defines) {
     while (length(ifdef <- which(tags %in% c("#ifdef", "#ifndef")))) {
 	ifdef <- ifdef[1]
 	target <- blocks[[ifdef]][[1]][[1]]
-	# The target may have picked up some whitespace or newlines
+	# The target will have picked up some whitespace and a newline
 	target <- gsub("[[:blank:][:cntrl:]]*", "", target)
 	all <- 1:length(tags)
 	before <- all[all < ifdef]
@@ -46,13 +49,6 @@ sectionTitles <- c("\\description"="Description", "\\usage"="Usage", "\\synopsis
                    "\\section"="section", "\\author"="Author(s)", "\\references"="References", "\\source"="Source", 
                    "\\seealso"="See Also", "\\examples"="Examples", "\\value"="Value")
 
-RCodeMacros <- c("\\examples", "\\usage", "\\code", "\\dontrun", "\\donttest", "\\dontshow", 
-                 "\\testonly")
-                 
-VerbMacros <-  c("\\alias", "\\synopsis", "\\Rdversion", "\\command", "\\env", 
-                 "\\kbd", "\\option", "\\preformatted", "\\samp", "\\special", "\\url",
-                 "\\eqn", "\\deqn")
-                 
 Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     # These correspond to HTML wrappers
     HTMLTags <- c("\\bold"="B",
@@ -123,15 +119,9 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     writeBlock <- function(block, tag, blocktag) {
 	switch(tag,
 	VERB = ,
-	RCODE = , 
-	TEXT = cat(htmlify(block), file=con),
+	RCODE = cat(htmlify(block), file=con),
+	TEXT = cat(addParaBreaks(htmlify(block)), file=con), 
 	COMMENT = {},
-	WHITESPACE = {
-	    if (blocktag %in% c(RCodeMacros, VerbMacros))
-	    	cat(block, file=con)
-	    else
-	    	cat(addParaBreaks(block), file=con)
-	},
 	"\\describe"=,
 	"\\enumerate"=,
 	"\\itemize"=writeContent(block, tag),
@@ -264,9 +254,6 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
 	
 	for (i in seq_along(tags)) {
             tag <- tags[i]
-            # eat whitespace following dots
-    	    if (i > 1 && tag == "WHITESPACE"
-    	              && tags[i-1] %in% c("\\dots", "\\ldots")) next            
             block <- blocks[[i]]
             switch(tag,
             "\\item" = {
@@ -302,8 +289,6 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     		    cat("</li>", file=con)
     		})
     	    },
-    	    COMMENT=,
-    	    WHITESPACE=writeBlock(block, tag, blocktag),
     	    { # default
     	    	if (inlist) {
     	    	    switch(blocktag,
@@ -327,21 +312,15 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     }
     
     writeSection <- function(section, tag) {
-        
+    	cat("\n\n<h3>", file=con)    	
     	if (tag == "\\section") {
     	    title <- section[[1]]
-    	    tags <- RdTags(title)
-    	    if (!all(tags %in% c("WHITESPACE", "TEXT"))) 
-    	    	stop("Section title must be simple text")
     	    section <- section[[2]]
+    	    writeContent(title, tag)
     	} else 
-    	    title <- list(structure(sectionTitles[tag], Rd_tag="TEXT"))
-    	    
+    	    cat(sectionTitles[tag], file=con)
     	if (tag %in% c("\\examples","\\synopsis","\\usage"))
-    	    para <- "pre" else para <- "p"
-    	   
-    	cat("\n\n<h3>", file=con)
-    	writeContent(title, tag)
+    	    para <- "pre" else para <- "p"     	
     	cat("</h3>\n\n<", para, ">", sep="", file=con)
     	writeContent(section, tag)
     	cat("</", para, ">\n", sep="", file=con)
@@ -373,8 +352,12 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     else if (length(version) > 1)
     	stop("Only one \\Rdversion declaration is allowed")
     
+    # Give error for nonblank text outside a section
+    if (length(grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]))))
+    	stop("All text must be in a section")
+    	
     # Drop all the parts that are not rendered
-    drop <- sections %in% c("COMMENT", "WHITESPACE", "\\concept", "\\docType", "\\encoding", 
+    drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding", 
                             "\\keyword", "\\alias", "\\Rdversion")
     Rd <- Rd[!drop]
     sections <- sections[!drop]
@@ -389,12 +372,9 @@ Rd2HTML <- function(Rd, con="", package="", defines="windows") {
     	stop("Sections \\title, \\name and \\description must exist and be unique in Rd files.")
     
     title <- Rd[[1]]
-    tags <- RdTags(title)
-    if (!all(tags %in% c("WHITESPACE", "TEXT"))) stop("\\title section must only contain text.")
-    
     name <- Rd[[2]]
     tags <- RdTags(name)
-    if (!identical(tags, "TEXT")) stop("\\name must only contain text.")
+    if (length(tags) > 1 || tags != "TEXT") stop("\\name must only contain simple text.")
     
     name <- htmlify(name[[1]])
     

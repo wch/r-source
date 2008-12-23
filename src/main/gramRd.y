@@ -98,7 +98,6 @@ static int	mkCode(int);
 static int	mkText(int);
 static int	mkVerb(int);
 static int 	mkComment(int);
-static int	mkWhitespace(int);
 
 #define YYSTYPE		SEXP
 
@@ -113,7 +112,7 @@ static int	mkWhitespace(int);
 %token		LISTSECTION ITEMIZE DESCRIPTION NOITEM
 %token		RCODEMACRO2 LATEXMACRO2 VERBMACRO2
 %token		IFDEF ENDIF
-%token		TEXT RCODE VERB COMMENT UNKNOWN WHITESPACE
+%token		TEXT RCODE VERB COMMENT UNKNOWN
 
 %%
 
@@ -131,7 +130,7 @@ Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, &@$); }
 	|	SECTIONHEADER2 LatexArg LatexArg { $$ = xxmarkup2($1, $2, $3, &@$); }
 	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, &@$); UNPROTECT_PTR($4); } 
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
-	|	WHITESPACE			{ $$ = xxtag($1, WHITESPACE, &@$); }
+	|	TEXT				{ $$ = xxtag($1, TEXT, &@$); } /* must be whitespace */
 
 ArgItems:	Item				{ $$ = xxnewlist($1); }
 	|	ArgItems Item			{ $$ = xxlist($1, $2); }
@@ -140,7 +139,6 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 	|	RCODE				{ $$ = xxtag($1, RCODE, &@$); }
 	|	VERB				{ $$ = xxtag($1, VERB, &@$); }
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
-	|	WHITESPACE			{ $$ = xxtag($1, WHITESPACE, &@$); }
 	|	Markup				{ $$ = $1; }
 	
 Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@$); }
@@ -171,7 +169,7 @@ VerbatimArg:	goVerbatim '{' ArgItems  '}' 	{ xxpopMode($1); $$ = $3; }
 
 VerbatimArg2:   '{' goVerbatim2 ArgItems '}'    { xxpopMode($2); $$ = $3; }
 
-IfDefTarget:	goLatexLike WHITESPACE TEXT	{ xxpopMode($1); $$ = xxnewlist($3); UNPROTECT_PTR($2); }
+IfDefTarget:	goLatexLike TEXT	{ xxpopMode($1); $$ = xxnewlist($2); }
 
 
 goLatexLike:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, UNKNOWN); }
@@ -750,25 +748,16 @@ static void setlastloc(void)
 
 static int token(void)
 {
-    int c = xxgetc();
-    int outsideLiteral;
-    int val;
+    int c;
+    int outsideLiteral = xxmode == LATEXLIKE || xxmode == INOPTION || xxbraceDepth == 0;
     	
     setfirstloc();
-   	
+    c = xxgetc();
+    
     /* % comments are active everywhere */
     
     if ( c == '%') return mkComment(c);    
-    
-    /* white space is part of the text in verbatim and code-like sections, but 
-       initial white space is returned separately otherwise. */
-       
-    if ((outsideLiteral = (xxmode == LATEXLIKE || xxmode == INOPTION || xxbraceDepth == 0))) {
-    	if ((val = mkWhitespace(c)))
-    	    return val;
-    	c = xxgetc();
-    }
-    	
+
     if (c == R_EOF) return END_OF_INPUT;
 
     if (c == '\\') {
@@ -865,27 +854,6 @@ static int mkComment(int c)
 	Rprintf("mkComment: %s\n", CHAR(STRING_ELT(yylval, 0))); 
     if(stext != st0) free(stext);    
     return COMMENT;
-}
-
-static int mkWhitespace(int c)
-{
-    char st0[INITBUFSIZE];
-    unsigned int nstext = INITBUFSIZE;
-    char *stext = st0, *bp = st0;
-    
-    while (c == ' ' || c == '\t' || c == '\f' || c == '\n') {
-	TEXT_PUSH(c);
-	c = xxgetc();
-    }
-    xxungetc(c);
-    if (bp > stext) {
-    	PROTECT(yylval = mkString2(stext,  bp - stext));
-	if (xxDebugTokens)
-      	    Rprintf("mkWhitespace: %s\n", CHAR(STRING_ELT(yylval, 0))); 
-    	if(stext != st0) free(stext);
-    	return WHITESPACE;
-    } else
-    	return 0;
 }
 
 static int mkCode(int c)
