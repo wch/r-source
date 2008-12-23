@@ -55,7 +55,8 @@ NEW FEATURES
 	Latin-1 and UTF-8 locales if 'z' is of known encoding (that is
 	all elements are either ASCII or marked as Latin-1 or UTF-8).
 
-    o	parse_Rd(), an experimental parser for Rd files, has been added.
+    o	parse_Rd(), an experimental parser for Rd files, and Rd2HTML(),
+    	an experimental converter to HTML, have been added.
 
     o	sprintf() does stricter error checking on input formats to
 	avoid passing invalid formats to the OS (which have a tendency

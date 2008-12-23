@@ -98,7 +98,6 @@ static int	mkCode(int);
 static int	mkText(int);
 static int	mkVerb(int);
 static int 	mkComment(int);
-static int	mkWhitespace(int);
 
 #define YYSTYPE		SEXP
 
@@ -113,7 +112,7 @@ static int	mkWhitespace(int);
 %token		LISTSECTION ITEMIZE DESCRIPTION NOITEM
 %token		RCODEMACRO2 LATEXMACRO2 VERBMACRO2
 %token		IFDEF ENDIF
-%token		TEXT RCODE VERB COMMENT UNKNOWN WHITESPACE
+%token		TEXT RCODE VERB COMMENT UNKNOWN
 
 %%
 
@@ -131,7 +130,7 @@ Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, &@$); }
 	|	SECTIONHEADER2 LatexArg LatexArg { $$ = xxmarkup2($1, $2, $3, &@$); }
 	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, &@$); UNPROTECT_PTR($4); } 
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
-	|	WHITESPACE			{ $$ = xxtag($1, WHITESPACE, &@$); }
+	|	TEXT				{ $$ = xxtag($1, TEXT, &@$); } /* must be whitespace */
 
 ArgItems:	Item				{ $$ = xxnewlist($1); }
 	|	ArgItems Item			{ $$ = xxlist($1, $2); }
@@ -140,7 +139,6 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 	|	RCODE				{ $$ = xxtag($1, RCODE, &@$); }
 	|	VERB				{ $$ = xxtag($1, VERB, &@$); }
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
-	|	WHITESPACE			{ $$ = xxtag($1, WHITESPACE, &@$); }
 	|	Markup				{ $$ = $1; }
 	
 Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@$); }
@@ -171,7 +169,7 @@ VerbatimArg:	goVerbatim '{' ArgItems  '}' 	{ xxpopMode($1); $$ = $3; }
 
 VerbatimArg2:   '{' goVerbatim2 ArgItems '}'    { xxpopMode($2); $$ = $3; }
 
-IfDefTarget:	goLatexLike WHITESPACE TEXT	{ xxpopMode($1); $$ = xxnewlist($3); UNPROTECT_PTR($2); }
+IfDefTarget:	goLatexLike TEXT	{ xxpopMode($1); $$ = xxnewlist($2); }
 
 
 goLatexLike:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, UNKNOWN); }
@@ -577,6 +575,7 @@ static keywords[] = {
     
     { "\\acronym", LATEXMACRO },
     { "\\bold",    LATEXMACRO },
+    { "\\cite",    LATEXMACRO },
     { "\\dfn",     LATEXMACRO },
     { "\\dQuote",  LATEXMACRO },
     { "\\email",   LATEXMACRO },
@@ -750,28 +749,15 @@ static void setlastloc(void)
 static int token(void)
 {
     int c;
-    int outsideLiteral;
-    int val;
-
-    /* skip empty lines */
-    do {
-    	c = xxgetc();
-    	setfirstloc();
-    } while (c == '\n');
-   	
+    int outsideLiteral = xxmode == LATEXLIKE || xxmode == INOPTION || xxbraceDepth == 0;
+    	
+    setfirstloc();
+    c = xxgetc();
+    
     /* % comments are active everywhere */
     
     if ( c == '%') return mkComment(c);    
-    
-    /* white space is part of the text in verbatim and code-like sections, but 
-       initial white space is returned separately otherwise. */
-       
-    if ((outsideLiteral = (xxmode == LATEXLIKE || xxmode == INOPTION || xxbraceDepth == 0))) {
-    	if ((val = mkWhitespace(c)))
-    	    return val;
-    	c = xxgetc();
-    }
-    	
+
     if (c == R_EOF) return END_OF_INPUT;
 
     if (c == '\\') {
@@ -831,25 +817,27 @@ static int mkText(int c)
     	    	break;
     	    }
     	    xxungetc(lookahead);
-    	    /* fall through to other cases ... */
+    	    goto stop;
+    	case ']':
+    	    if (xxmode == INOPTION) goto stop;
+            break;
     	case '%':
     	case LBRACE:
     	case RBRACE:
-    	case '\n':
     	case R_EOF:
-    	case ']':
-    	    if (c != ']' || xxmode == INOPTION) { /* ']' only breaks in INOPTION mode */
-    	    	xxungetc(c);
-    	    	PROTECT(yylval = mkString2(stext,  bp - stext));
-		if (xxDebugTokens)
-            	    Rprintf("mkText: %s\n", CHAR(STRING_ELT(yylval, 0))); 
-    	    	if(stext != st0) free(stext);
-    	    	return TEXT;
-    	    }
+    	    goto stop;
     	}
     	TEXT_PUSH(c);
+    	if (c == '\n') goto stop;
     	c = xxgetc();
     };
+stop:
+    if (c != '\n') xxungetc(c); /* newline causes a break, but we keep it */
+    PROTECT(yylval = mkString2(stext,  bp - stext));
+    if (xxDebugTokens)
+	Rprintf("mkText: %s\n", CHAR(STRING_ELT(yylval, 0))); 
+    if(stext != st0) free(stext);
+    return TEXT;
 }
 
 static int mkComment(int c)
@@ -860,33 +848,12 @@ static int mkComment(int c)
     
     do TEXT_PUSH(c);
     while ((c = xxgetc()) != '\n' && c != R_EOF);
-    xxungetc(c);
+    if (c == R_EOF) xxungetc(c);
     PROTECT(yylval = mkString2(stext,  bp - stext));
     if (xxDebugTokens)
 	Rprintf("mkComment: %s\n", CHAR(STRING_ELT(yylval, 0))); 
     if(stext != st0) free(stext);    
     return COMMENT;
-}
-
-static int mkWhitespace(int c)
-{
-    char st0[INITBUFSIZE];
-    unsigned int nstext = INITBUFSIZE;
-    char *stext = st0, *bp = st0;
-    
-    while (c == ' ' || c == '\t' || c == '\f') {
-	TEXT_PUSH(c);
-	c = xxgetc();
-    }
-    xxungetc(c);
-    if (bp > stext) {
-    	PROTECT(yylval = mkString2(stext,  bp - stext));
-	if (xxDebugTokens)
-      	    Rprintf("mkWhitespace: %s\n", CHAR(STRING_ELT(yylval, 0))); 
-    	if(stext != st0) free(stext);
-    	return WHITESPACE;
-    } else
-    	return 0;
 }
 
 static int mkCode(int c)
@@ -908,7 +875,7 @@ static int mkCode(int c)
     	         escaped = 1;
     	    } else xxungetc(lookahead);
     	}
-    	if ((!escaped && c == '%') || c == '\n' || c == R_EOF) break;
+    	if ((!escaped && c == '%') || c == R_EOF) break;
     	if (xxinRString) {
     	    /* This stuff is messy, because there are two levels of escaping:
     	       The Rd escaping and the R code string escaping. */
@@ -960,12 +927,13 @@ static int mkCode(int c)
     	    } else if (c == RBRACE) {
     	    	if (xxbraceDepth == 1) break;
     	    	else xxbraceDepth--;
-    	    } else if (c == '\n' || c == R_EOF) break;
+    	    } else if (c == R_EOF) break;
     	}
     	TEXT_PUSH(c);
+    	if (c == '\n') break;
     	c = xxgetc();
     }
-    xxungetc(c);
+    if (c != '\n') xxungetc(c);
     PROTECT(yylval = mkString2(stext,  bp - stext));
     if (xxDebugTokens) {
     	Rprintf("mkCode:  %s\n", CHAR(STRING_ELT(yylval, 0)));
@@ -1072,18 +1040,19 @@ static int mkVerb(int c)
 		escaped = 1;
 	    } else xxungetc(lookahead);
         }
-    	if ((!escaped && c == '%') || c == '\n' || c == R_EOF) break;
+    	if ((!escaped && c == '%') || c == R_EOF) break;
 	if (!escaped && c == LBRACE) 
 	    xxbraceDepth++;
     	else if (!escaped && c == RBRACE) {
 	    if (xxbraceDepth == 1) break;
 	    else xxbraceDepth--;
-	} else if ((!escaped && c == '%') || c == R_EOF || c == '\n') 
+	} else if ((!escaped && c == '%') || c == R_EOF) 
 	    break;
     	TEXT_PUSH(c);
+    	if (c == '\n') break;
     	c = xxgetc();
     };
-    xxungetc(c);
+    if (c != '\n') xxungetc(c);
     PROTECT(yylval = mkString2(stext,  bp - stext));
     if (xxDebugTokens)
     	Rprintf("mkverb:  %s\n", CHAR(STRING_ELT(yylval, 0)));
