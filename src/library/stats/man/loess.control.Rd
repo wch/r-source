@@ -31,11 +31,11 @@ loess.control(surface = c("interpolate", "direct"),
 }
 \value{
   A list with components
-  \item{surface}{}
-  \item{statistics}{}
-  \item{trace.hat}{}
-  \item{cell}{}
-  \item{iterations}{}
+  \item{surface}{ }
+  \item{statistics}{ }
+  \item{trace.hat}{ }
+  \item{cell}{ }
+  \item{iterations}{ }
   with meanings as explained under \sQuote{Arguments}.
 }
 \seealso{\code{\link{loess}}}

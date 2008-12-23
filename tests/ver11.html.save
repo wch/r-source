@@ -25,7 +25,7 @@ newline, then item 3</td></tr>
 <h3>Details</h3>
 
 <p>
-<font face="Courier New,Courier" color="#666666"><b>R</b></font> <font face="Courier New,Courier" color="#666666"><b>R</b></font>{} \R \Alpha\beta\Gamma
+<font face="Courier New,Courier" color="#666666"><b>R</b></font> <font face="Courier New,Courier" color="#666666"><b>R</b></font> \R \Alpha\beta\Gamma
 </p>
 <p>
 In code, all that needs to be escaped is percent, backslash and unpaired

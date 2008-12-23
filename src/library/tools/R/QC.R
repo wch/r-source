@@ -2617,7 +2617,7 @@ function(db, def_enc = FALSE)
         c("name", "title", "description", "usage", "arguments",
           "format", "details", "value", "references", "source",
           "seealso", "examples", "note", "author", "synopsis",
-          "docType", "encoding")
+          "docType", "encoding", "Rdversion")
     known_tags <- c(unique_tags,
                     "section",
                     ## Allow for empty keywords (these do not make it

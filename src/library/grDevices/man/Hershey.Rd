@@ -130,7 +130,7 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
     \item{ISO Latin-1:}{further escape sequences of the form
       \code{\\\\ab} are provided for producing ISO Latin-1 characters.
       Another option is to use the appropriate octal code.  The
-      (non-ASCII) ISO Latin-1 characters are in the range 241\dots377.
+      (non-ASCII) ISO Latin-1 characters are in the range 241\dots{}377.
       For example, \code{\\366} produces the character \code{o} with an
       umlaut.  The third table in \code{demo(Hershey)} shows all of the
       ISO Latin-1 escape sequences.

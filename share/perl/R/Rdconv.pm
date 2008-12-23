@@ -166,6 +166,9 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
     ## don't want encoding unless non-ASCII
     $def_encoding = "unknown" unless &isNonASCII($complete_text);
 
+    ## extract Rdversion early
+    $complete_text =~ /\\Rdversion\{([0-9.]+)\}/;
+    $Rdversion = $1;
     macro_subs();
     mark_brackets();
     ##HARD Debug:print "$complete_text\n"; exit;
@@ -265,6 +268,7 @@ sub checkloop {
 
 sub macro_subs { # does macro substitution on $complete_text
     print STDERR "\n-- macro_subs:" if $debug;
+    $complete_text =~ s/\\(R|dots|ldots)\{\}/\\$1/go if $Rdversion >= 1.1;
     $complete_text =~ s/\\linkS4class\{([^}]*)\}/\\link[=$1-class]{$1}/g;
 }
 
@@ -1701,7 +1705,7 @@ sub text2txt {
 	$text =~ s/\\le/<=/go;
 	$text =~ s/\\ge/>=/go;
     }
-    $text =~ s/\\R/R/go if $unescape_amp;
+    $text =~ s/\\R/R/go;
 
     foreach my $cmd (@special_commands) {
 	$text = transform_command($text, $cmd, $ECMD . $cmd,
@@ -1823,7 +1827,6 @@ sub text2txt {
 
     $text = txt_unescape_codes($text);
     $text = unmark_brackets($text);
-    $text =~ s/\\R(\{\})?/R/go unless $unescape_amp;
     $text;
 }
 

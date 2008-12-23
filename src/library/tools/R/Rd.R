@@ -744,7 +744,9 @@ function(lines, kind) {
                      sep = "")
     lines <- grep(pattern, lines, value = TRUE)
     lines <- sub(pattern, "\\1", lines)
-    lines <- gsub("\\\\%", "%", lines)
+    lines <- gsub("\\%", "%", lines, fixed = TRUE)
+    if(kind == "alias")
+        lines <- sub("\\{", "{", lines, fixed = TRUE)
     lines
 }
 

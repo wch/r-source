@@ -210,7 +210,7 @@
   For complete details please consult the man pages for PCRE, especially
   \command{man pcrepattern} and \command{man pcreapi}), on your system or from
   the sources at \url{http://www.pcre.org}. If PCRE support was compiled
-  from the sources within \R, the PCRE version is 7.7 as described here
+  from the sources within \R, the PCRE version is 7.8 as described here
   (version \eqn{\ge}{>=} 7.6 is required if \R is configured to use the
   system's PCRE library).
 

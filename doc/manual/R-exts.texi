@@ -2894,7 +2894,8 @@ The @code{\alias} entries specify all ``topics'' the file documents.
 This information is collected into index data bases for lookup by the
 on-line (plain text and @HTML{}) help systems.  The @var{topic} can
 contain spaces, but (for historical reasons) leading and trailing spaces
-will be stripped.
+will be stripped.  Percent has always needed to be escaped by backslash,
+and as from @R{} 2.9.0 a left brace should be.
 
 There may be several @code{\alias} entries.  Quite often it is
 convenient to document several @R{} objects in one file.  For example,
@@ -3634,13 +3635,15 @@ with one argument immediately followed by a right brace.
 
 @findex \R
 Use @code{\R} for the @R{} system
-itself@footnote{Rd version 1.1 also allows @code{\R\@{@}}}.  Use
+itself.  Use
 @code{\dots}
 @findex \dots
 for the dots in function argument lists @samp{@dots{}}, and
 @code{\ldots}
 @findex \ldots
-for ellipsis dots in ordinary text.
+for ellipsis dots in ordinary text.  In the current Rd version 1.1 these
+can optionally be followed by @code{@{@}}, and it is recommended that
+they are unless followed by whitespace.
 
 After a @samp{%}, you can put your own comments regarding the help text.
 The rest of the line will be completely disregarded, normally.

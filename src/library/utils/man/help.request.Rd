@@ -21,7 +21,7 @@ help.request(subject = "",
 }
 \arguments{
   \item{subject}{subject of the email.  Please do not use single quotes
-    (\code{'}) in the subject!  Post separate help requests for multiple
+    (\kbd{'}) in the subject!  Post separate help requests for multiple
     queries.}
   \item{ccaddress}{optional email address for copies (default is current
     user).  Use \code{ccaddress = FALSE} for no copies.}

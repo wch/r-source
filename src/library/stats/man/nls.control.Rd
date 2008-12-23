@@ -36,19 +36,21 @@ nls.control(maxiter = 50, tol = 1e-05, minFactor = 1/1024,
 }
 \value{
   A \code{list} with exactly five components:
-  \item{maxiter}{}
-  \item{tol}{}
-  \item{minFactor}{}
-  \item{printEval}{}
-  \item{warnOnly}{}
+  \item{maxiter}{ }
+  \item{tol}{ }
+  \item{minFactor}{ }
+  \item{printEval}{ }
+  \item{warnOnly}{ }
   with meanings as explained under \sQuote{Arguments}.
 }
 \references{
-  Bates and Watts (1988),
+  Bates, D. M. and Watts, D. G. (1988),
   \emph{Nonlinear Regression Analysis and Its Applications}, Wiley.
 }
 \author{Douglas Bates and Saikat DebRoy}
-\seealso{\code{\link{nls}}}
+\seealso{
+  \code{\link{nls}}
+}
 \examples{
 nls.control(minFactor = 1/2048)
 }

@@ -334,6 +334,8 @@ sub build_index { # lib, dest, version, [chmdir]
 		$alias = $1;
 		$alias =~ s/\\%/%/g;
 		$alias =~ s/\s*$//;
+		## As from 2.9.0 treat \{ as \{
+		$alias =~ s/\\\{/\{/;
 		if ($internal) {
 		    $internal{$alias} = 1;
 		}

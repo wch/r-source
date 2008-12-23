@@ -166,7 +166,8 @@ Rd CONVERSION
 
 	- \ is only an escape before % { } \ .
 
-	- \R{} is accepted as an alternative to \R in all formats.
+	- \R, \dots and \ldots can be followed by {}, and it is
+          recommended that they when not followed by whitespace.
 
 	- The obsolete interpretation of \Alpha etc is no longer done.
 
@@ -181,6 +182,9 @@ Rd CONVERSION
 
     o	The Rd files created by prompt() and friends are declared to be
 	version 1.1.
+
+    o	\alias now supports the escaping of { as well as of %, and this
+	is recommended.
 
 
 INSTALLATION
