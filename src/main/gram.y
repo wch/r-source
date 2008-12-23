@@ -395,8 +395,9 @@ static int xxungetc(int c)
     if ( KeepSource && GenerateCode && FunctionLevel > 0 )
 	SourcePtr--;
     xxcharcount--;
-    R_ParseContext[R_ParseContextLast--] = '\0';
-    R_ParseContextLast = R_ParseContextLast % PARSE_CONTEXT_SIZE;
+    R_ParseContext[R_ParseContextLast] = '\0';
+    /* precaution as to how % is implemented for < 0 numbers */
+    R_ParseContextLast = (R_ParseContextLast + PARSE_CONTEXT_SIZE -1) % PARSE_CONTEXT_SIZE;
     if(npush >= 16) return EOF;
     pushback[npush++] = c;
     return c;
