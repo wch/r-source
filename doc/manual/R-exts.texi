@@ -3071,7 +3071,7 @@ for each component of the list returned.  Optional text may precede this
 list (see the introductory example for @code{rle}).  Note that
 @code{\value} is implicitly a @code{\describe} environment, so that
 environment should not be used for listing components, just individual
-@code{\item{}{}} entries.
+@code{\item@{@}@{@}} entries.
 
 @item \references@{@dots{}@}
 @findex \references

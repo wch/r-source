@@ -1313,7 +1313,7 @@ make
 @noindent
 and then sit back and wait.  The first two options are the default (and
 strongly recommended), and with some toolsets have been essential.
-Selecting @option{--with-ICU} replaces Apple's @code{wcscoll} with ohe
+Selecting @option{--with-ICU} replaces Apple's @code{wcscoll} with one
 that works correctly in UTF-8 locales.  The second line of options is
 also default on Mac OS X, but needed only if you want to build @R{} for
 use with @code{R.app} Console, and imply @option{--enable-R-shlib} to
