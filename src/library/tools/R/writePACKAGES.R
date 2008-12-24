@@ -173,3 +173,25 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
     names(db) <- basename(paths)
     db
 }
+
+dependsOnPkgs <- function(pkgs,
+                          dependencies = c("Depends", "Imports"),
+                          recursive = TRUE,
+                          lib.loc = NULL,
+                          installed = installed.packages(lib.loc))
+{
+    need <- apply(installed[, dependencies], 1,
+                  function(x) any(pkgs %in% utils:::.clean_up_dependencies(x)) )
+    uses <- rownames(installed)[need]
+    if(recursive) {
+        p <- pkgs
+        repeat {
+            p <- unique(c(p, uses))
+            need <- apply(installed[, dependencies], 1L,
+                          function(x) any(p %in% utils:::.clean_up_dependencies(x)) )
+            uses <- unique(c(p, rownames(installed)[need]))
+            if(length(uses) <= length(p)) break
+        }
+    }
+    setdiff(uses, pkgs)
+}

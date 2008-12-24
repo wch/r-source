@@ -113,6 +113,9 @@ NEW FEATURES
     o	[col/row]Sums(), *Means() now have an additional '...' argument,
 	so that they can more easily be turned into generic functions.
 
+    o	Package 'tools' contains dependsOnPkgs() to compute reverse
+	dependencies.
+
 
 DEPRECATED & DEFUNCT
 
