@@ -1,6 +1,6 @@
 useDynLib(tools, .registration = TRUE)
 
-export("Rdindex",
+export("Rd2HTML", "Rdindex",
        "checkDocFiles", "checkDocStyle", "checkFF", "checkMD5sums",
        "checkReplaceFuns", "checkS3methods", "checkTnF", "checkVignettes",
        "codoc", "codocClasses", "codocData", "md5sum", "undoc",
