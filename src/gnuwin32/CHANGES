@@ -44,11 +44,7 @@ NEW FEATURES
     o	help(topic, offline=TRUE) now creates a file called <topic>.tex,
 	rather than Rdoc.tex.
 
-
-DEFUNCT
-
-    o	'R CMD INSTALL --with-package-versions' is defunct and a
-	non-versioned install is done.
+    o	The trio library has been updated to version 1.13.
 
 
 

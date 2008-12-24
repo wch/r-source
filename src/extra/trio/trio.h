@@ -1,6 +1,6 @@
 /*************************************************************************
  *
- * $Id: trio.h,v 1.17 2005/05/29 11:58:14 breese Exp $
+ * $Id: trio.h,v 1.18 2008/11/09 10:52:26 breese Exp $
  *
  * Copyright (C) 1998 Bjorn Reese and Daniel Stenberg.
  *
@@ -32,15 +32,9 @@
 # include <config.h>
 #endif
 
-#include "triodef.h"
+#include "triop.h"
 
 #include <stdio.h>
-#include <stdlib.h>
-#if defined(TRIO_COMPILER_ANCIENT)
-# include <varargs.h>
-#else
-# include <stdarg.h>
-#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -110,8 +104,10 @@ int trio_snprintfcat TRIO_PROTO((char *buffer, size_t max, TRIO_CONST char *form
 int trio_vsnprintfcat TRIO_PROTO((char *buffer, size_t bufferSize, TRIO_CONST char *format,
                       va_list args));
 
+#if defined(TRIO_DEPRECATED)
 char *trio_aprintf TRIO_PROTO((TRIO_CONST char *format, ...));
 char *trio_vaprintf TRIO_PROTO((TRIO_CONST char *format, va_list args));
+#endif
 
 int trio_asprintf TRIO_PROTO((char **ret, TRIO_CONST char *format, ...));
 int trio_vasprintf TRIO_PROTO((char **ret, TRIO_CONST char *format, va_list args));

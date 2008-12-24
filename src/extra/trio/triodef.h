@@ -1,6 +1,6 @@
 /*************************************************************************
  *
- * $Id: triodef.h,v 1.31 2006/08/18 11:34:19 breese Exp $
+ * $Id: triodef.h,v 1.32 2007/04/17 19:23:05 breese Exp $
  *
  * Copyright (C) 2001 Bjorn Reese <breese@users.sourceforge.net>
  *
@@ -116,6 +116,10 @@
 
 #if defined(TRIO_COMPILER_MSVC) || defined(WIN32) || defined(_WIN32)
 # define TRIO_PLATFORM_WIN32
+#endif
+
+#if defined(_WIN32_WCE)
+# define TRIO_PLATFORM_WINCE
 #endif
 
 #if defined(mpeix) || defined(__mpexl)

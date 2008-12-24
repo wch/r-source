@@ -1,6 +1,6 @@
 /*************************************************************************
  *
- * $Id: triop.h,v 1.15 2005/03/24 15:43:03 breese Exp $
+ * $Id: triop.h,v 1.16 2008/11/09 10:52:26 breese Exp $
  *
  * Copyright (C) 2000 Bjorn Reese and Daniel Stenberg.
  *
@@ -139,6 +139,16 @@ extern "C" {
  */
 #if !defined(TRIO_EXTENSION)
 # define TRIO_EXTENSION 1
+#endif
+
+/*
+ * TRIO_DEPRECATED (=0 or =1)
+ *
+ * Define this to 0 to disable deprecated functionality, or define
+ * to 1 to enable them.
+ */
+#if !defined(TRIO_DEPRECATED)
+# define TRIO_DEPRECATED 1
 #endif
 
 /*************************************************************************
