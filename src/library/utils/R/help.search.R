@@ -204,7 +204,7 @@ help.search <-
 	}
 
 	if(verbose)  {
-	    message(ifelse(npL %% 5L == 0L, "\n", "\n\n"),
+	    message(ifelse(np %% 5L == 0L, "\n", "\n\n"),
                     sprintf("Built dbMat[%d,%d]", nrow(dbMat), ncol(dbMat)),
                     domain = NA)
             ## DEBUG save(dbMat, file="~/R/hsearch_dbMat.rda", compress=TRUE)
