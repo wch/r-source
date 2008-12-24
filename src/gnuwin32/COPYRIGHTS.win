@@ -58,7 +58,7 @@ see R_HOME/Tcl/license.terms for the license.
 
 src/extra/trio/* (except compat.c)
 
-From trio-1.12 (http://daniel.haxx.se/projects/trio/)
+From trio-1.13 (http://daniel.haxx.se/projects/trio/)
 
  Copyright (C) 1998-2001 by Bjorn Reese and Daniel Stenberg.
 
