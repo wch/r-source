@@ -77,7 +77,8 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
   \code{cex = 1} corresponds to a square of side 1/72 inch.  
 
   Windows users can make use of WinFIG
-  (\url{http://www.schmidt-web-berlin.de/WinFIG.htm}, shareware).
+  (\url{http://www.schmidt-web-berlin.de/WinFIG.htm}, shareware), or
+  XFig under Cygwin.
 }
 \note{
   Only some line textures (\code{0 <= lty < 4}) are used.  Eventually this
