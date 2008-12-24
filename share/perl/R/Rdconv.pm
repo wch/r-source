@@ -1625,7 +1625,7 @@ sub txt_striptitle {
     ## Call striptitle(), and handle LaTeX style single/double quotes.
     my ($text) = @_;
     $text = striptitle($text);
-    if(($R::Vars::OSTYPE eq "windows") && 
+    if(($R::Vars::OSTYPE eq "windows") && $ENV{"LC_ALL"} ne "C"  && 
        ($encoding eq "unknown" || $encoding eq "latin1")) {
 	$text =~ s/\`\`/\x93/g;
 	$text =~ s/\'\'/\x94/g;
@@ -1750,7 +1750,7 @@ sub text2txt {
     $text = undefine_command($text, "var");
     ## </FIXME>
 
-    if(($R::Vars::OSTYPE eq "windows") && 
+    if(($R::Vars::OSTYPE eq "windows") && $ENV{"LC_ALL"} ne "C" &&
        ($encoding eq "unknown" || $encoding eq "latin1")) {
 	$text = replace_command($text, "sQuote", "\x91", "\x92");
 	$text = replace_command($text, "dQuote", "\x93", "\x94");

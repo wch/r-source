@@ -14,7 +14,8 @@ R= $(RHOME)/bin/Rterm --vanilla LC_ALL=C SRCDIR=. R_DEFAULT_PACKAGES=
 R2= $(RHOME)/bin/Rterm --vanilla SRCDIR=. R_DEFAULT_PACKAGES=
 RDIFF = $(RHOME)/bin/R CMD Rdiff
 RVAL_IF_DIFF=0
-RDCONV = $(RHOME)/bin/Rcmd Rdconv
+## suppress fancy quotes for diff-ing
+RDCONV = LC_ALL=C $(RHOME)/bin/Rcmd Rdconv
 
 test-src-gct = \
 	eval-etc.R \
