@@ -2452,9 +2452,12 @@ function(x, ...)
 			package_name, dir_name))
 	package_name <- dir_name
     }
-    depends <- .get_requires_from_package_db(db, "Depends")
-    imports <- .get_requires_from_package_db(db, "Imports")
-    suggests <- .get_requires_from_package_db(db, "Suggests")
+    ldepends <- .get_requires_with_version_from_package_db(db, "Depends")
+    limports <- .get_requires_with_version_from_package_db(db, "Imports")
+    lsuggests <- .get_requires_with_version_from_package_db(db, "Suggests")
+    depends <- sapply(ldepends, `[[`, 1L)
+    imports <- sapply(limports, `[[`, 1L)
+    suggests <- sapply(lsuggests, `[[`, 1L)
     ## Need this to handle bundles ...
     contains <- .get_contains_from_package_db(db)
 
@@ -2464,26 +2467,48 @@ function(x, ...)
 
     ## Are all packages listed in Depends/Suggests/Imports installed?
     ## Need to treat specially the former stub packages.
-    reqs <- unique(c(depends,
-                     imports,
-                     if(!identical(as.logical(Sys.getenv("_R_CHECK_FORCE_SUGGESTS_")),
-                                   FALSE))
-                     suggests))
+    lreqs <- c(ldepends,
+               limports,
+               if(!identical(as.logical(Sys.getenv("_R_CHECK_FORCE_SUGGESTS_")), FALSE)) lsuggests)
+    reqs <- unique(sapply(lreqs, `[[`, 1L))
+    ## this was changed for speed.
     ## installed <-  utils::installed.packages()[ , "Package"]
     installed <- character(0L)
+    installed_in <- character(0L)
     for(lib in .libPaths()) {
         pkgs <- list.files(lib)
         pkgs <- pkgs[file.access(file.path(lib, pkgs, "DESCRIPTION"), 4) == 0]
         installed <- c(pkgs, installed)
+        installed_in <- c(rep.int(lib, length(pkgs)), installed_in)
     }
-    installed <- sub("_.*", "", installed)
+    installed <- sub("_.*", "", installed) # obsolete versioned installs.
     reqs <- reqs %w/o% installed
     m <- reqs %in% standard_package_names$stubs
     if(length(reqs[!m]))
         bad_depends$required_but_not_installed <- reqs[!m]
     if(length(reqs[m]))
         bad_depends$required_but_stub <- reqs[m]
-
+    ## now check versions
+    have_ver <- sapply(lreqs, function(x) length(x) == 3)
+    lreqs3 <- lreqs[have_ver]
+    if(length(lreqs3)) {
+        bad <- character(0)
+        for (r in lreqs3) {
+            pkg <- r[[1]]
+            op <- r[[2]]
+            where <- which(installed == pkg)
+            if(!length(where)) next
+            ## want the first one
+            desc <- .readRDS(file.path(installed_in[where[1]], pkg,
+                                       "Meta", "package.rds"))
+            current <- desc$DESCRIPTION["Version"]
+            target <- as.package_version(r[[3]])
+            if(eval(parse(text = paste("!(current", op, "target)"))))
+                bad <- c(bad, pkg)
+        }
+        if(length(bad))
+            bad_depends$required_but_obsolete <- bad
+    }
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
     vignette_dir <- file.path(dir, "inst", "doc")
@@ -2528,6 +2553,11 @@ function(x, ...)
 {
     if(length(bad <- x$required_but_not_installed)) {
         writeLines(gettext("Packages required but not available:"))
+        .pretty_print(bad)
+        writeLines("")
+    }
+    if(length(bad <- x$required_but_obsolete)) {
+        writeLines(gettext("Packages required and available but unsuitable version:"))
         .pretty_print(bad)
         writeLines("")
     }
