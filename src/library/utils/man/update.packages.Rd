@@ -56,7 +56,8 @@ contrib.url(repos, type = getOption("pkgType"))
 }
 \arguments{
   \item{lib.loc}{character vector describing the location of R
-    library trees to search through (and update packages therein).}
+    library trees to search through (and update packages therein), or
+    \code{NULL} for all known trees (see \code{\link{.libPaths}}).}
   \item{repos}{character vector, the base URL(s) of the repositories
     to use, i.e., the URL of the CRAN master such as
     \code{"http://cran.r-project.org"} or its Statlib mirror,
@@ -112,9 +113,9 @@ contrib.url(repos, type = getOption("pkgType"))
     packages on which these packages depend/suggest/import
     (and so on recursively).  Not used if \code{repos = NULL}.
     Can also be a character vector, a subset of
-    \code{c("Depends", "Imports", "Suggests")}.  Note that only if the
-    dependent package is \emph{installed} is checked, not if it meets
-    the version requirements.
+    \code{c("Depends", "Imports", "Suggests", "Enhances")}.  Note that
+    only if the dependent package is \emph{installed} is checked, not if
+    it meets the version requirements. 
 
     Only supported if \code{lib} is of length one (or missing),
     so it is unambiguous where to install the dependent packages.
