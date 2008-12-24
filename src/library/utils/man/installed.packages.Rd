@@ -17,7 +17,8 @@ installed.packages(lib.loc = NULL, priority = NULL,
 \arguments{
   \item{lib.loc}{
     character vector describing the location of \R library trees to
-    search through.
+    search through, or \code{NULL} for all known trees
+    (see \code{\link{.libPaths}}).
   }
   \item{priority}{
     character vector or \code{NULL} (default).  If non-null, used to

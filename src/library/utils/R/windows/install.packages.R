@@ -141,7 +141,7 @@
     }
 
     if(!length(pkgs)) return(invisible())
-    oneLib <- length(lib) == 1
+    oneLib <- length(lib) == 1L
 
 
     ## look for packages/bundles in use.
@@ -188,77 +188,12 @@
                  domain = NA)
     }
 
-    depends <- is.character(dependencies) ||
-    (is.logical(dependencies) && dependencies)
-    if(depends && is.logical(dependencies))
-        dependencies <-  c("Depends", "Imports", "Suggests")
-    if(depends && !oneLib) {
-        warning("Do not know which element of 'lib' to install dependencies into\nskipping dependencies")
-        depends <- FALSE
-    }
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
-    bundles <- .find_bundles(available)
-    for(bundle in names(bundles))
-        pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
-    p0 <- unique(pkgs)
-    miss <-  !p0 %in% row.names(available)
-    if(sum(miss)) {
-        warning(sprintf(ngettext(sum(miss),
-                                 "package %s is not available",
-                                 "packages %s are not available"),
-                        paste(sQuote(p0[miss]), collapse=", ")),
-                domain = NA, call. = FALSE)
-        flush.console()
-    }
-    p0 <- p0[!miss]
+    pkgs <- getDependencies(pkgs, dependencies, available, oneLib)
 
-    if(depends) { # check for dependencies, recursively
-        p1 <- p0 # this is ok, as 1 lib only
-        ## where should we be looking?
-        ## should this add the library we are installing to?
-        installed <- installed.packages(fields = c("Package", "Version"))
-        not_avail <- character(0L)
-	repeat {
-	    deps <- apply(available[p1, dependencies, drop = FALSE],
-                          1L, function(x) paste(x[!is.na(x)], collapse=", "))
-	    res <- .clean_up_dependencies2(deps, installed, available)
-            not_avail <- c(not_avail, res[[2L]])
-            deps <- unique(res[[1L]])
-            ## R should not get to here, but be safe
-            deps <- deps[!deps %in% c("R", pkgs)]
-	    if(!length(deps)) break
-	    pkgs <- c(deps, pkgs)
-	    p1 <- deps
-	}
-        if(length(not_avail)) {
-            warning(sprintf(ngettext(length(not_avail),
-                                     "dependency %s is not available",
-                                     "dependencies %s are not available"),
-                            paste(sQuote(not_avail), collapse=", ")),
-                    domain = NA, call. = FALSE, immediate. = TRUE)
-            flush.console()
-        }
-
-        for(bundle in names(bundles))
-            pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
-        pkgs <- unique(pkgs)
-        pkgs <- pkgs[pkgs %in% row.names(available)]
-        if(length(pkgs) > length(p0)) {
-            added <- setdiff(pkgs, p0)
-            message(sprintf(ngettext(length(added),
-                                     "also installing the dependency %s",
-                                     "also installing the dependencies %s"),
-                            paste(sQuote(added), collapse=", ")),
-                    "\n", domain = NA)
-            flush.console()
-            pkgnames <- pkgs # not zips, now
-        }
-        p0 <- pkgs
-    }
-
-    foundpkgs <- download.packages(p0, destdir = tmpd, available = available,
+    foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
                                    type = "win.binary", ...)
 
@@ -269,9 +204,9 @@
             oklib <- lib==update[,"LibPath"]
             for(p in update[oklib, "Package"])
             {
-                okp <- p == foundpkgs[, 1]
+                okp <- p == foundpkgs[, 1L]
                 if(any(okp))
-                    unpackPkg(foundpkgs[okp, 2], foundpkgs[okp, 1], lib)
+                    unpackPkg(foundpkgs[okp, 2L], foundpkgs[okp, 1L], lib)
             }
         }
         if(!is.null(tmpd) && is.null(destdir))

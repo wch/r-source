@@ -724,7 +724,7 @@ compareVersion <- function(a, b)
     ans
 }
 
-.clean_up_dependencies <- function(x, available)
+.clean_up_dependencies <- function(x, available = NULL)
 {
     ## x is a character vector of Depends / Suggests / Imports entries
     ## returns a character vector of all the package dependencies mentioned
