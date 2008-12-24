@@ -2,17 +2,21 @@ RdTags <- function(Rd) {
     sapply(Rd, function(element) attr(element, "Rd_tag"))
 }
 
-# FIXME: what other substitutions do we need?
-htmlify <- function(x) {
-    x <- gsub("&", "&amp;", x)
-    x <- gsub("<", "&lt;", x)
-    gsub(">", "&gt;", x)
-}
+isBlankRd <- function(x)
+    length(grep("^[[:blank:]]*\n?$", x)) == length(x) # newline optional
 
-addParaBreaks <- function(x) {
-    if (attr(x, "srcref")[2] == 0)  # Starts in column 1
-    	x <- sub("^[[:blank:]]*\n", "\n</p>\n<p>\n", x)
-    x
+isBlankLineRd <- function(x) 
+    attr(x, "srcref")[2] == 0 &&  # Starts in column 1
+    length(grep("^[[:blank:]]*\n", x)) == length(x)   # newline required
+    
+stopRd <- function(block, ...) {
+    srcref <- attr(block, "srcref")
+    if (is.null(srcref)) stop(...)
+    else {
+    	loc <- paste(basename(attr(srcref, "srcfile")$filename),":",srcref[1],sep="")
+    	if (srcref[1] != srcref[3]) loc <- paste(loc, "-", srcref[3], sep="")
+    	stop(call.=FALSE, loc,":",...)
+    }
 }
     
 preprocessRd <- function(blocks, defines) {
@@ -88,6 +92,18 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
                    "\\samp"="</span>",
                    "\\sQuote"="&rsquo;",
                    "\\dQuote"="&rdquo;")
+                   
+    addParaBreaks <- function(x) {
+	if (isBlankLineRd(x)) x <- "\n</p>\n<p>\n"
+	x
+    }
+    
+    # FIXME: what other substitutions do we need?
+    htmlify <- function(x) {
+	x <- gsub("&", "&amp;", x)
+	x <- gsub("<", "&lt;", x)
+	gsub(">", "&gt;", x)
+    }
 
     writeWrapped <- function(tag, block) {
     	cat("<", HTMLTags[tag],">", sep="", file=con)
@@ -118,10 +134,12 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     
     writeBlock <- function(block, tag, blocktag) {
 	switch(tag,
+	UNKNOWN = ,
 	VERB = ,
 	RCODE = cat(htmlify(block), file=con),
 	TEXT = cat(addParaBreaks(htmlify(block)), file=con), 
 	COMMENT = {},
+	LIST =,
 	"\\describe"=,
 	"\\enumerate"=,
 	"\\itemize"=writeContent(block, tag),
@@ -144,10 +162,6 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
 	"\\dots" =,
 	"\\ldots" =,
 	"\\R" = cat(HTMLEscapes[tag], file=con),
-	"\\cr{}" =,
-	"\\dots{}" =,
-	"\\ldots{}" =,
-	"\\R{}" = cat(HTMLEscapes[sub("..$", "", tag)], file=con),
 	"\\acronym" =,
 	"\\dontrun" =,
 	"\\donttest" =,
@@ -194,17 +208,17 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
 	    writeContent(block[[1]], tag)
 	},
 	"\\tabular" = writeTabular(block),
-        stop("Tag ", tag, " not recognized."))
+        stopRd(block, "Tag ", tag, " not recognized."))
     }
     
     writeTabular <- function(table) {
     	format <- table[[1]]
     	content <- table[[2]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
-    	    stop("\\tabular format must be simple text")
+    	    stopRd(table, "\\tabular format must be simple text")
     	format <- strsplit(format[[1]], "")[[1]]
     	if (!all(format %in% c("l", "c", "r")))
-    	    stop("Unrecognized \\tabular format: ", table[[1]][[1]])
+    	    stopRd(table, "Unrecognized \\tabular format: ", table[[1]][[1]])
         format <- c(l="left", c="center", r="right")[format]
         
         content <- preprocessRd(content, defines)
@@ -222,7 +236,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
             if (newcol) {
                 col <- col + 1
                 if (col > length(format))
-                    stop("Only ", length(format), " columns allowed in this table.")                    
+                    stopRd(table, "Only ", length(format), " columns allowed in this table.")                    
             	cat('<td align="', format[col], '">', sep="", file=con)
             	newcol <- FALSE
             }
@@ -289,7 +303,8 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     		"\\itemize"= cat("<li>", file=con))
     	    },
     	    { # default
-    	    	if (inlist && !(blocktag %in% c("\\itemize", "\\enumerate"))) {
+    	    	if (inlist && !(blocktag %in% c("\\itemize", "\\enumerate"))
+    	    	           && !(tag == "TEXT" && isBlankRd(block))) {
     	    	    switch(blocktag,
     	    	    "\\arguments"=cat("</table>\n", file=con),
     	    	    "\\value"=,
@@ -350,11 +365,11 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     if (length(version) == 1 && as.numeric(version[[1]]) < 2)
     	warning("Rd2HTML is designed for Rd version 2 or higher.")
     else if (length(version) > 1)
-    	stop("Only one \\Rdversion declaration is allowed")
+    	stopRd(Rd[[version[2]]], "Only one \\Rdversion declaration is allowed")
     
     # Give error for nonblank text outside a section
-    if (length(grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]))))
-    	stop("All text must be in a section")
+    if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]))))
+    	stopRd(Rd[sections == "TEXT"][[bad[1]]], "All text must be in a section")
     	
     # Drop all the parts that are not rendered
     drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding", 
@@ -363,18 +378,18 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     sections <- sections[!drop]
     
     sortorder <- sectionOrder[sections]
-    if (any(is.na(sortorder)))
-    	stop("Section ", sections[which(is.na(sortorder))], " unrecognized.")
+    if (any(bad <- is.na(sortorder)))
+    	stopRd(Rd[[which(bad)[1]]], "Section ", sections[which(bad)[1]], " unrecognized.")
     sortorder <- order(sortorder)
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
     if (!identical(sections[1:3],c("\\title", "\\name", "\\description"))) 
-    	stop("Sections \\title, \\name and \\description must exist and be unique in Rd files.")
+    	stopRd(Rd, "Sections \\title, \\name and \\description must exist and be unique in Rd files.")
     
     title <- Rd[[1]]
     name <- Rd[[2]]
     tags <- RdTags(name)
-    if (length(tags) > 1 || tags != "TEXT") stop("\\name must only contain simple text.")
+    if (length(tags) > 1 || tags != "TEXT") stopRd(name, "\\name must only contain simple text.")
     
     name <- htmlify(name[[1]])
     

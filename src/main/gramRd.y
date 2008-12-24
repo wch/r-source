@@ -139,8 +139,10 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 	|	RCODE				{ $$ = xxtag($1, RCODE, &@$); }
 	|	VERB				{ $$ = xxtag($1, VERB, &@$); }
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
-	|	Markup				{ $$ = $1; }
-	
+	|	UNKNOWN				{ $$ = xxtag($1, UNKNOWN, &@$); }
+	|	Arg				{ $$ = xxmarkup(R_NilValue, $1, &@$); }
+	|	Markup				{ $$ = $1; }	
+
 Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@$); }
 	|	LATEXMACRO2 LatexArg LatexArg   { $$ = xxmarkup2($1, $2, $3, &@$); }
 	|	ITEMIZE     Item0Arg		{ $$ = xxmarkup($1, $2, &@$); }
@@ -155,19 +157,20 @@ Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@$); }
 	|	ESCAPE				{ $$ = xxmarkup($1, R_NilValue, &@$); }
 	|	IFDEF IfDefTarget ArgItems ENDIF { $$ = xxmarkup2($1, $2, $3, &@$); UNPROTECT_PTR($4); } 
 	
-LatexArg:	goLatexLike '{' ArgItems  '}' 	{ xxpopMode($1); $$ = $3; }
+LatexArg:	goLatexLike Arg		 	{ xxpopMode($1); $$ = $2; }
 
-Item0Arg:	goItem0 '{' ArgItems  '}' 	{ xxpopMode($1); $$ = $3; }
+Item0Arg:	goItem0 Arg		 	{ xxpopMode($1); $$ = $2; }
 
-Item2Arg:	goItem2 '{' ArgItems  '}'	{ xxpopMode($1); $$ = $3; }
+Item2Arg:	goItem2 Arg			{ xxpopMode($1); $$ = $2; }
 
-RLikeArg:	goRLike '{' ArgItems  '}'	{ xxpopMode($1); $$ = $3; }
+RLikeArg:	goRLike Arg			{ xxpopMode($1); $$ = $2; }
 
-VerbatimArg:	goVerbatim '{' ArgItems  '}' 	{ xxpopMode($1); $$ = $3; }
+VerbatimArg:	goVerbatim Arg		 	{ xxpopMode($1); $$ = $2; }
 
 /* This one executes the push after seeing the brace starting the optional second arg */
 
 VerbatimArg2:   '{' goVerbatim2 ArgItems '}'    { xxpopMode($2); $$ = $3; }
+	|	'{' goVerbatim2 '}'		{ xxpopMode($2); $$ = xxnewlist(NULL); }
 
 IfDefTarget:	goLatexLike TEXT	{ xxpopMode($1); $$ = xxnewlist($2); }
 
@@ -185,6 +188,9 @@ goVerbatim2:    /* empty */			{ xxbraceDepth--; $$ = xxpushMode(VERBATIM, UNKNOW
 goItem0:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, ESCAPE); }
 
 goItem2:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, LATEXMACRO2); }
+
+Arg:		'{' ArgItems  '}'		{ $$ = $2; }
+	|	'{' '}'				{ $$ = xxnewlist(NULL); }
 
 Option:		'[' Item ']'			{ $$ = $2; }	
 		
@@ -233,9 +239,11 @@ static SEXP xxnewlist(SEXP item)
     Rprintf("xxnewlist(item=%p)", item);
 #endif    
     PROTECT(tmp = NewList());
-    PROTECT(ans = GrowList(tmp, item));
-    UNPROTECT_PTR(tmp);
-    UNPROTECT_PTR(item);
+    if (item) {
+    	PROTECT(ans = GrowList(tmp, item));
+    	UNPROTECT_PTR(tmp);
+    	UNPROTECT_PTR(item);
+    } else ans = tmp;
 #if DEBUGVALS
     Rprintf(" result: %p is length %d\n", ans, length(ans));
 #endif
@@ -269,6 +277,9 @@ static SEXP xxmarkup(SEXP header, SEXP body, YYLTYPE *lloc)
 	PROTECT(ans = PairToVectorList(CDR(body)));
     	UNPROTECT_PTR(body);	
     }
+    if (isNull(header))
+    	PROTECT(header = mkString("LIST"));
+    	
     setAttrib(ans, install("Rd_tag"), header);
     if (SrcFile) 
     	setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
@@ -347,9 +358,12 @@ static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
 static int (*ptr_getc)(void);
 
 /* Private pushback, since file ungetc only guarantees one byte.
-   We need up to one MBCS-worth and one almost #ifndef match */
+   We need up to one MBCS-worth and one failed #ifdef or one numeric
+   garbage markup match */
 
-static int pushback[20];
+#define PUSHBACK_BUFSIZE 30
+
+static int pushback[PUSHBACK_BUFSIZE];
 static unsigned int npush = 0;
 
 static int xxgetc(void)
@@ -383,7 +397,7 @@ static int xxungetc(int c)
     /* Mac OS X requires us to keep this non-negative */
     R_ParseContextLast = (R_ParseContextLast + PARSE_CONTEXT_SIZE - 1) 
 	% PARSE_CONTEXT_SIZE;
-    if(npush >= 16) return EOF;
+    if(npush >= PUSHBACK_BUFSIZE - 2) return EOF;
     pushback[npush++] = c;
     return c;
 }
@@ -947,32 +961,32 @@ static int mkMarkup(int c)
     char st0[INITBUFSIZE];
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
-    int retval;
+    int retval, attempt = 0;
     
     TEXT_PUSH(c);
     while (isalnum((c = xxgetc()))) TEXT_PUSH(c);
     
-    /* character escapes are processed as text, not markup */
-    if (bp == stext+1) {
-        TEXT_PUSH(c);
-        TEXT_PUSH('\0');
-        retval = TEXT;
-        c = xxgetc();
-    } else {
-        TEXT_PUSH('\0');
-        retval = KeywordLookup(stext);
-        if (retval == NOITEM) 
-            retval = xxitemType;
-        else if (retval == ESCAPE && c == LBRACE) { /* include following {} for escapes */
-            int lookahead = xxgetc();
-            if (lookahead == RBRACE) {
-            	bp--;
-            	TEXT_PUSH(LBRACE);
-            	TEXT_PUSH(RBRACE);
-            	TEXT_PUSH('\0');
-            	c = xxgetc();
-            } else
-            	xxungetc(lookahead);
+    while (attempt++ < 2) {
+    	/* character escapes are processed as text, not markup */
+    	if (bp == stext+1) {
+    	    TEXT_PUSH(c);
+    	    TEXT_PUSH('\0');
+    	    retval = TEXT;
+    	    c = xxgetc();
+    	} else {
+    	    TEXT_PUSH('\0');
+    	    retval = KeywordLookup(stext);
+    	    if (retval == UNKNOWN && attempt == 1) { /* try again, non-digits only */
+    	    	bp--; 				     /* pop the \0 */
+    	        while (isdigit(*(bp-1))) {
+            	    xxungetc(c);
+    	            c = *(--bp);                     /* pop the last letter into c */
+            	}
+            } else {
+            	if (retval == NOITEM) 
+    	    	    retval = xxitemType;
+    	    	break;
+    	    }
         }
     }
     PROTECT(yylval = mkString2(stext,  bp - stext - 1));
