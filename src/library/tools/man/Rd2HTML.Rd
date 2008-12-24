@@ -32,7 +32,7 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type)
   value is the name of that page.
 }
 \author{ Duncan Murdoch }
-\references{ \url{http://developer.r-project.org/ParseRd.pdf} }
+\references{ \url{http://developer.r-project.org/parseRd.pdf} }
 \seealso{ \code{\link{parse_Rd}} }
 \examples{
   \dontrun{
