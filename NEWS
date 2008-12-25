@@ -199,14 +199,20 @@ INSTALLATION
 
     o	libtool has been updated to 2.2.6a.
 
-    o	--with-ICU is now supported (and recommended) on Mac OS X.
+    o	--with-ICU is now supported (and recommended) on Mac OS X using
+	Apple's supplied port.  [Currently only tested on i386
+	Leopard.]
+
+	Configure supports a wider range of ICU versions on other
+	OSes: version 3.0 should suffice, and 3.2, 3.8 and 4.0 have
+	been tested.
 
 
 PACKAGE INSTALLATION
 
     o	HTML links will be resolved first to the standard packages: this
-	avoids other installed packages diverting help on e.g. qr and plot
-	to themselves.
+	avoids other installed packages diverting help on e.g. qr()
+	and plot() to themselves.
 
 
 C-LEVEL FACILITIES
