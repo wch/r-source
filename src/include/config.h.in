@@ -379,12 +379,6 @@
 /* Define to 1 if you have the `icucore' library (-licucore). */
 #undef HAVE_LIBICUCORE
 
-/* Define to 1 if you have the `icui18n' library (-licui18n). */
-#undef HAVE_LIBICUI18N
-
-/* Define to 1 if you have the `icuuc' library (-licuuc). */
-#undef HAVE_LIBICUUC
-
 /* Define to 1 if you have the `m' library (-lm). */
 #undef HAVE_LIBM
 

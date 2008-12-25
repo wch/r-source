@@ -39779,820 +39779,100 @@ echo "$as_me: error: library 'icucore' is required for ICU" >&2;}
 fi
 
 
-cat >>confdefs.h <<_ACEOF
+cat >>confdefs.h <<\_ACEOF
 #define USE_ICU_APPLE 1
+_ACEOF
+
+
+cat >>confdefs.h <<\_ACEOF
+#define USE_ICU 1
 _ACEOF
 
   ;;
   *)
-    ## FIXME: later, warn not error
-
-{ echo "$as_me:$LINENO: checking for ucol_open_4_0 in -licui18n" >&5
-echo $ECHO_N "checking for ucol_open_4_0 in -licui18n... $ECHO_C" >&6; }
-if test "${ac_cv_lib_icui18n_ucol_open_4_0+set}" = set; then
+    { echo "$as_me:$LINENO: checking for ICU" >&5
+echo $ECHO_N "checking for ICU... $ECHO_C" >&6; }
+if test "${r_cv_icu+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-licui18n  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
+  r_save_LIBS="${LIBS}"
+LIBS="${LIBS} -licuuc -licui18n"
+if test "$cross_compiling" = yes; then
+  r_cv_icu=no
+else
+  cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char ucol_open_4_0 ();
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-return ucol_open_4_0 ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext &&
-       $as_test_x conftest$ac_exeext; then
-  ac_cv_lib_icui18n_ucol_open_4_0=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_lib_icui18n_ucol_open_4_0=no
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_lib_icui18n_ucol_open_4_0" >&5
-echo "${ECHO_T}$ac_cv_lib_icui18n_ucol_open_4_0" >&6; }
-if test $ac_cv_lib_icui18n_ucol_open_4_0 = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBICUI18N 1
-_ACEOF
-
-  LIBS="-licui18n $LIBS"
-
-else
-
-
-{ echo "$as_me:$LINENO: checking for ucol_open_3_8 in -licui18n" >&5
-echo $ECHO_N "checking for ucol_open_3_8 in -licui18n... $ECHO_C" >&6; }
-if test "${ac_cv_lib_icui18n_ucol_open_3_8+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-licui18n  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char ucol_open_3_8 ();
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-return ucol_open_3_8 ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext &&
-       $as_test_x conftest$ac_exeext; then
-  ac_cv_lib_icui18n_ucol_open_3_8=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_lib_icui18n_ucol_open_3_8=no
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_lib_icui18n_ucol_open_3_8" >&5
-echo "${ECHO_T}$ac_cv_lib_icui18n_ucol_open_3_8" >&6; }
-if test $ac_cv_lib_icui18n_ucol_open_3_8 = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBICUI18N 1
-_ACEOF
-
-  LIBS="-licui18n $LIBS"
-
-else
-
-
-{ echo "$as_me:$LINENO: checking for ucol_open_3_6 in -licui18n" >&5
-echo $ECHO_N "checking for ucol_open_3_6 in -licui18n... $ECHO_C" >&6; }
-if test "${ac_cv_lib_icui18n_ucol_open_3_6+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-licui18n  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char ucol_open_3_6 ();
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-return ucol_open_3_6 ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext &&
-       $as_test_x conftest$ac_exeext; then
-  ac_cv_lib_icui18n_ucol_open_3_6=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_lib_icui18n_ucol_open_3_6=no
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_lib_icui18n_ucol_open_3_6" >&5
-echo "${ECHO_T}$ac_cv_lib_icui18n_ucol_open_3_6" >&6; }
-if test $ac_cv_lib_icui18n_ucol_open_3_6 = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBICUI18N 1
-_ACEOF
-
-  LIBS="-licui18n $LIBS"
-
-else
-
-
-{ echo "$as_me:$LINENO: checking for ucol_open_3_4 in -licui18n" >&5
-echo $ECHO_N "checking for ucol_open_3_4 in -licui18n... $ECHO_C" >&6; }
-if test "${ac_cv_lib_icui18n_ucol_open_3_4+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-licui18n  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char ucol_open_3_4 ();
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-return ucol_open_3_4 ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext &&
-       $as_test_x conftest$ac_exeext; then
-  ac_cv_lib_icui18n_ucol_open_3_4=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_lib_icui18n_ucol_open_3_4=no
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_lib_icui18n_ucol_open_3_4" >&5
-echo "${ECHO_T}$ac_cv_lib_icui18n_ucol_open_3_4" >&6; }
-if test $ac_cv_lib_icui18n_ucol_open_3_4 = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBICUI18N 1
-_ACEOF
-
-  LIBS="-licui18n $LIBS"
-
-else
-  { { echo "$as_me:$LINENO: error: library 'icui18n' is required for ICU" >&5
-echo "$as_me: error: library 'icui18n' is required for ICU" >&2;}
-   { (exit 1); exit 1; }; }
-fi
-
-
-fi
-
-
-fi
-
-
-fi
-
-
-{ echo "$as_me:$LINENO: checking for ucnv_fromUChars_4_0 in -licuuc" >&5
-echo $ECHO_N "checking for ucnv_fromUChars_4_0 in -licuuc... $ECHO_C" >&6; }
-if test "${ac_cv_lib_icuuc_ucnv_fromUChars_4_0+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-licuuc  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char ucnv_fromUChars_4_0 ();
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-return ucnv_fromUChars_4_0 ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext &&
-       $as_test_x conftest$ac_exeext; then
-  ac_cv_lib_icuuc_ucnv_fromUChars_4_0=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_lib_icuuc_ucnv_fromUChars_4_0=no
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_lib_icuuc_ucnv_fromUChars_4_0" >&5
-echo "${ECHO_T}$ac_cv_lib_icuuc_ucnv_fromUChars_4_0" >&6; }
-if test $ac_cv_lib_icuuc_ucnv_fromUChars_4_0 = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBICUUC 1
-_ACEOF
-
-  LIBS="-licuuc $LIBS"
-
-else
-
-
-{ echo "$as_me:$LINENO: checking for ucnv_fromUChars_3_8 in -licuuc" >&5
-echo $ECHO_N "checking for ucnv_fromUChars_3_8 in -licuuc... $ECHO_C" >&6; }
-if test "${ac_cv_lib_icuuc_ucnv_fromUChars_3_8+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-licuuc  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char ucnv_fromUChars_3_8 ();
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-return ucnv_fromUChars_3_8 ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext &&
-       $as_test_x conftest$ac_exeext; then
-  ac_cv_lib_icuuc_ucnv_fromUChars_3_8=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_lib_icuuc_ucnv_fromUChars_3_8=no
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_lib_icuuc_ucnv_fromUChars_3_8" >&5
-echo "${ECHO_T}$ac_cv_lib_icuuc_ucnv_fromUChars_3_8" >&6; }
-if test $ac_cv_lib_icuuc_ucnv_fromUChars_3_8 = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBICUUC 1
-_ACEOF
-
-  LIBS="-licuuc $LIBS"
-
-else
-
-
-{ echo "$as_me:$LINENO: checking for ucnv_fromUChars_3_6 in -licuuc" >&5
-echo $ECHO_N "checking for ucnv_fromUChars_3_6 in -licuuc... $ECHO_C" >&6; }
-if test "${ac_cv_lib_icuuc_ucnv_fromUChars_3_6+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-licuuc  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char ucnv_fromUChars_3_6 ();
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-return ucnv_fromUChars_3_6 ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext &&
-       $as_test_x conftest$ac_exeext; then
-  ac_cv_lib_icuuc_ucnv_fromUChars_3_6=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_lib_icuuc_ucnv_fromUChars_3_6=no
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_lib_icuuc_ucnv_fromUChars_3_6" >&5
-echo "${ECHO_T}$ac_cv_lib_icuuc_ucnv_fromUChars_3_6" >&6; }
-if test $ac_cv_lib_icuuc_ucnv_fromUChars_3_6 = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBICUUC 1
-_ACEOF
-
-  LIBS="-licuuc $LIBS"
-
-else
-
-
-{ echo "$as_me:$LINENO: checking for ucnv_fromUChars_3_4 in -licuuc" >&5
-echo $ECHO_N "checking for ucnv_fromUChars_3_4 in -licuuc... $ECHO_C" >&6; }
-if test "${ac_cv_lib_icuuc_ucnv_fromUChars_3_4+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-licuuc  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char ucnv_fromUChars_3_4 ();
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-return ucnv_fromUChars_3_4 ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext &&
-       $as_test_x conftest$ac_exeext; then
-  ac_cv_lib_icuuc_ucnv_fromUChars_3_4=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_lib_icuuc_ucnv_fromUChars_3_4=no
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_lib_icuuc_ucnv_fromUChars_3_4" >&5
-echo "${ECHO_T}$ac_cv_lib_icuuc_ucnv_fromUChars_3_4" >&6; }
-if test $ac_cv_lib_icuuc_ucnv_fromUChars_3_4 = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBICUUC 1
-_ACEOF
-
-  LIBS="-licuuc $LIBS"
-
-else
-  { { echo "$as_me:$LINENO: error: library 'icuuc' is required for ICU" >&5
-echo "$as_me: error: library 'icuuc' is required for ICU" >&2;}
-   { (exit 1); exit 1; }; }
-fi
-
-
-fi
-
-
-fi
-
-
-fi
-
-    if test "$use_ICU" = yes ; then
-      if test "${ac_cv_header_unicode_utypes_h+set}" = set; then
-  { echo "$as_me:$LINENO: checking for unicode/utypes.h" >&5
-echo $ECHO_N "checking for unicode/utypes.h... $ECHO_C" >&6; }
-if test "${ac_cv_header_unicode_utypes_h+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_header_unicode_utypes_h" >&5
-echo "${ECHO_T}$ac_cv_header_unicode_utypes_h" >&6; }
-else
-  # Is the header compilable?
-{ echo "$as_me:$LINENO: checking unicode/utypes.h usability" >&5
-echo $ECHO_N "checking unicode/utypes.h usability... $ECHO_C" >&6; }
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-$ac_includes_default
 #include <unicode/utypes.h>
+#include <unicode/ucol.h>
+#include <unicode/uloc.h>
+#include <unicode/uiter.h>
+
+#include <stdlib.h>
+
+int main () {
+    UErrorCode  status = U_ZERO_ERROR;
+    UCollator *collator;
+    collator = ucol_open(NULL, &status);
+    if (U_FAILURE(status))  exit(1);
+    exit(0);
+}
+
 _ACEOF
-rm -f conftest.$ac_objext
-if { (ac_try="$ac_compile"
+rm -f conftest$ac_exeext
+if { (ac_try="$ac_link"
 case "(($ac_try" in
   *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
   *) ac_try_echo=$ac_try;;
 esac
 eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_compile") 2>conftest.er1
+  (eval "$ac_link") 2>&5
   ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest.$ac_objext; then
-  ac_header_compiler=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_header_compiler=no
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-{ echo "$as_me:$LINENO: result: $ac_header_compiler" >&5
-echo "${ECHO_T}$ac_header_compiler" >&6; }
-
-# Is the header present?
-{ echo "$as_me:$LINENO: checking unicode/utypes.h presence" >&5
-echo $ECHO_N "checking unicode/utypes.h presence... $ECHO_C" >&6; }
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-#include <unicode/utypes.h>
-_ACEOF
-if { (ac_try="$ac_cpp conftest.$ac_ext"
-case "(($ac_try" in
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (case "(($ac_try" in
   *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
   *) ac_try_echo=$ac_try;;
 esac
 eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_cpp conftest.$ac_ext") 2>conftest.er1
+  (eval "$ac_try") 2>&5
   ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } >/dev/null && {
-	 test -z "$ac_c_preproc_warn_flag$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       }; then
-  ac_header_preproc=yes
+  (exit $ac_status); }; }; then
+  r_cv_icu=yes
 else
-  echo "$as_me: failed program was:" >&5
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-  ac_header_preproc=no
+( exit $ac_status )
+r_cv_icu=no
 fi
-
-rm -f conftest.err conftest.$ac_ext
-{ echo "$as_me:$LINENO: result: $ac_header_preproc" >&5
-echo "${ECHO_T}$ac_header_preproc" >&6; }
-
-# So?  What about this header?
-case $ac_header_compiler:$ac_header_preproc:$ac_c_preproc_warn_flag in
-  yes:no: )
-    { echo "$as_me:$LINENO: WARNING: unicode/utypes.h: accepted by the compiler, rejected by the preprocessor!" >&5
-echo "$as_me: WARNING: unicode/utypes.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:$LINENO: WARNING: unicode/utypes.h: proceeding with the compiler's result" >&5
-echo "$as_me: WARNING: unicode/utypes.h: proceeding with the compiler's result" >&2;}
-    ac_header_preproc=yes
-    ;;
-  no:yes:* )
-    { echo "$as_me:$LINENO: WARNING: unicode/utypes.h: present but cannot be compiled" >&5
-echo "$as_me: WARNING: unicode/utypes.h: present but cannot be compiled" >&2;}
-    { echo "$as_me:$LINENO: WARNING: unicode/utypes.h:     check for missing prerequisite headers?" >&5
-echo "$as_me: WARNING: unicode/utypes.h:     check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:$LINENO: WARNING: unicode/utypes.h: see the Autoconf documentation" >&5
-echo "$as_me: WARNING: unicode/utypes.h: see the Autoconf documentation" >&2;}
-    { echo "$as_me:$LINENO: WARNING: unicode/utypes.h:     section \"Present But Cannot Be Compiled\"" >&5
-echo "$as_me: WARNING: unicode/utypes.h:     section \"Present But Cannot Be Compiled\"" >&2;}
-    { echo "$as_me:$LINENO: WARNING: unicode/utypes.h: proceeding with the preprocessor's result" >&5
-echo "$as_me: WARNING: unicode/utypes.h: proceeding with the preprocessor's result" >&2;}
-    { echo "$as_me:$LINENO: WARNING: unicode/utypes.h: in the future, the compiler will take precedence" >&5
-echo "$as_me: WARNING: unicode/utypes.h: in the future, the compiler will take precedence" >&2;}
-    ( cat <<\_ASBOX
-## ----------------------------------- ##
-## Report this to r-bugs@R-project.org ##
-## ----------------------------------- ##
-_ASBOX
-     ) | sed "s/^/$as_me: WARNING:     /" >&2
-    ;;
-esac
-{ echo "$as_me:$LINENO: checking for unicode/utypes.h" >&5
-echo $ECHO_N "checking for unicode/utypes.h... $ECHO_C" >&6; }
-if test "${ac_cv_header_unicode_utypes_h+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_cv_header_unicode_utypes_h=$ac_header_preproc
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_header_unicode_utypes_h" >&5
-echo "${ECHO_T}$ac_cv_header_unicode_utypes_h" >&6; }
-
-fi
-if test $ac_cv_header_unicode_utypes_h = yes; then
-  :
-else
-  { { echo "$as_me:$LINENO: error: header file <unicode/utypes.h> is required for ICU" >&5
-echo "$as_me: error: header file <unicode/utypes.h> is required for ICU" >&2;}
-   { (exit 1); exit 1; }; }
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
 fi
 
 
-    fi
-  esac
-fi
-if test "$use_ICU" = yes ; then
+LIBS="${r_save_LIBS}"
 
-cat >>confdefs.h <<_ACEOF
+fi
+{ echo "$as_me:$LINENO: result: $r_cv_icu" >&5
+echo "${ECHO_T}$r_cv_icu" >&6; }
+if test "x${r_cv_icu}" = xyes; then
+
+cat >>confdefs.h <<\_ACEOF
 #define USE_ICU 1
 _ACEOF
 
+  LIBS="${LIBS} -licuuc -licui18n"
+else
+  use_ICU=no
+fi
+
+  esac
 fi
 
 
@@ -48772,11 +48052,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48775: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48055: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:48779: \$? = $ac_status" >&5
+   echo "$as_me:48059: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -48871,11 +48151,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48874: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48154: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:48878: \$? = $ac_status" >&5
+   echo "$as_me:48158: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -48923,11 +48203,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48926: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48206: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:48930: \$? = $ac_status" >&5
+   echo "$as_me:48210: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

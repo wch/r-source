@@ -3748,6 +3748,39 @@ if test "${r_cv_mktime_errno}" = yes; then
 fi
 ])# R_MKTIME_ERRNO
 
+## R_ICU
+## -----
+AC_DEFUN([R_ICU],
+[AC_CACHE_CHECK([for ICU], [r_cv_icu],
+[r_save_LIBS="${LIBS}"
+LIBS="${LIBS} -licuuc -licui18n"
+AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <unicode/utypes.h>
+#include <unicode/ucol.h>
+#include <unicode/uloc.h>
+#include <unicode/uiter.h>
+
+#include <stdlib.h>
+
+int main () {
+    UErrorCode  status = U_ZERO_ERROR;
+    UCollator *collator;
+    collator = ucol_open(NULL, &status);
+    if (U_FAILURE(status))  exit(1);
+    exit(0);
+}
+]])],
+[r_cv_icu=yes], [r_cv_icu=no], [r_cv_icu=no])
+LIBS="${r_save_LIBS}"
+])
+if test "x${r_cv_icu}" = xyes; then
+  AC_DEFINE(USE_ICU, 1, [Define to use ICU for collation.])
+  LIBS="${LIBS} -licuuc -licui18n"
+else
+  use_ICU=no
+fi
+])# R_ICU
+
 
 ### Local variables: ***
 ### mode: outline-minor ***
