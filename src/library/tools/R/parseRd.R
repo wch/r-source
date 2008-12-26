@@ -14,17 +14,55 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-parse_Rd <- function(file, srcfile = NULL, encoding = "unknown", verbose = FALSE)
+parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
+                     verbose = FALSE)
 {
-    if(is.character(file))
-        if(file == "") file <- stdin()
-        else {
-            if (missing(srcfile) && isTRUE(getOption("keep.source")))
-        	srcfile <- srcfile(file)
-            file <- file(file, "r")
-            on.exit(close(file))
+    if(is.character(file)) {
+        file0 <- file
+        if(file == "") {
+            file <- stdin()
+        } else {
+            ## encoding issues here:
+            ## if (missing(srcfile) && isTRUE(getOption("keep.source")))
+            ##	 srcfile <- srcfile(file)
         }
-    .Internal(parse_Rd(file, srcfile, encoding, verbose))
+    } else file0 <- "<connection>"
+    lines <- readLines(file, warn = FALSE)
+    ## remove old-style marking for data, keep line nos
+    lines[lines == "\\non_function{}"] <- ""
+    ## extract the encoding if marked in the file:
+    ## do this in two steps to minimize warnings in MBCS locales
+    ## Note this is required to be on a line by itself,
+    ## although the author of 'resper' can't RTFM.
+    enc <- grep("\\encoding{", lines, fixed = TRUE, useBytes=TRUE)
+    enc <- grep("^\\\\encoding\\{([^}]*)\\}.*", lines[enc], value=TRUE)
+    if(length(enc)) {
+        if(length(enc) > 1)
+            warning("multiple \\encoding lines in file ", file0)
+        ## keep first one
+        enc <- enc[1]
+        enc <- sub("^\\\\encoding\\{([^}]*)\\}.*", "\\1", enc)
+        if(verbose) message("found encoding ", enc)
+        if(enc %in% c("UTF-8", "utf-8", "utf8")) {
+            encoding <- "UTF-8"
+        } else if(enc == "latin1") {
+            encoding <- enc
+        } else {
+            if(encoding == "unknown") encoding <- "UTF-8"
+            lines <- iconv(lines, enc, encoding, sub = "byte")
+        }
+    }
+    ## The parser is fine with encodings in which ASCII bytes mean ASCII
+    ## All known 8-bit encodings and UTF-8 meet that requirement
+    l10n <- l10n_info()
+    if(encoding == "unknown" && l10n[["MBCS"]] && !l10n[["UTF-8"]]) {
+        warning("non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8")
+        encoding <- "UTF-8"
+        lines <- iconv(lines, enc, encoding, sub = "byte")
+    }
+    tcon <- textConnection(lines)
+    on.exit(close(tcon))
+    .Internal(parse_Rd(tcon, srcfile, encoding, verbose))
 }
 
 print.Rd <- function(x, ...) {
