@@ -15,8 +15,9 @@
 #  http://www.r-project.org/Licenses/
 
 getDependencies <-
-    function(pkgs, dependencies, available = NULL, oneLib = TRUE)
+    function(pkgs, dependencies, available = NULL, lib)
 {
+    oneLib <- length(lib) == 1L
     depends <- is.character(dependencies) ||
     (is.logical(dependencies) && dependencies)
     if(depends && is.logical(dependencies))
@@ -49,9 +50,12 @@ getDependencies <-
 
     if(depends) { # check for dependencies, recursively
         p1 <- p0 # this is ok, as 1 lib only
-        ## where should we be looking?
-        ## should this add the library we are installing to?
-        installed <- installed.packages(fields = c("Package", "Version"))
+        ## INSTALL prepends 'lib' to the libpath
+        ## Here we are slightly more conservative
+        libpath <- .libPaths()
+        if(!lib %in% libpath) libpath <- c(lib, libpath)
+        installed <- installed.packages(lib.loc = libpath,
+                                        fields = c("Package", "Version"))
         not_avail <- character(0L)
 	repeat {
 	    deps <- apply(available[p1, dependencies, drop = FALSE],
@@ -310,7 +314,6 @@ install.packages <-
         return(invisible())
     }
 
-    oneLib <- length(lib) == 1L
     tmpd <- destdir
     nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
     if(is.null(destdir) && nonlocalcran) {
@@ -323,7 +326,7 @@ install.packages <-
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
-    pkgs <- getDependencies(pkgs, dependencies, available, oneLib)
+    pkgs <- getDependencies(pkgs, dependencies, available, lib)
 
     foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,

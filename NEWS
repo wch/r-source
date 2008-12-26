@@ -102,6 +102,10 @@ NEW FEATURES
 	dependent packages, and so will install a newer version of a
 	dependency if needed and available on the repositories.
 
+	The library being installed into is considered when looking
+	for installed packages if it is not already part of
+	.libPaths() (as INSTALL already does).
+
     o	body<-() now treats list values consistently with other
 	types: they no longer need to be wrapped in a list() call.
 

@@ -108,7 +108,6 @@
     }
 
     if(!length(pkgs)) return(invisible())
-    oneLib <- length(lib) == 1L
 
     if(is.null(contriburl)) {
         pkgnames <- basename(pkgs)
@@ -135,7 +134,7 @@
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
-    pkgs <- getDependencies(pkgs, dependencies, available, oneLib)
+    pkgs <- getDependencies(pkgs, dependencies, available, lib)
 
     foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
