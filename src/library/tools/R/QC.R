@@ -2470,7 +2470,7 @@ function(x, ...)
     lreqs <- c(ldepends,
                limports,
                if(!identical(as.logical(Sys.getenv("_R_CHECK_FORCE_SUGGESTS_")), FALSE)) lsuggests)
-    if(length(reqs)) {
+    if(length(lreqs)) {
         reqs <- unique(sapply(lreqs, `[[`, 1L))
         ## this was changed for speed.
         ## installed <-  utils::installed.packages()[ , "Package"]
