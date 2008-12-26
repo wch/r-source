@@ -1612,8 +1612,16 @@ typedef enum {
       UCOL_ATTRIBUTE_COUNT
 } UColAttribute;
 
-struct UCharIterator;
-typedef struct UCharIterator *UCharIterator;
+/* UCharIterator struct has to be defined sice we use its instances as
+   local variables, but we don't acutally use any of its members. */
+typedef struct UCharIterator {
+  const void *context;
+  int32_t length, start, index, limit, reservedField;
+  void *fns[16]; /* we overshoot here (there is just 10 fns in ICU 3.6),
+		    but we have to make sure that enough stack space
+		    is allocated when used as a local var in future
+		    versions */
+} UCharIterator;
 
 UCollator* ucol_open(const char *loc, UErrorCode *status);
 void ucol_close(UCollator *coll);
