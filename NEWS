@@ -277,6 +277,9 @@ BUG FIXES
     	with a vector index, the extracted part was not marked for
     	duplication on change. (PR#13411)
 
+    o	Assigning an additional element to a pairlist/language element
+ 	by x[["foo"]] <- value did not name the additional element.
+
 
 
 

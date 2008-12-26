@@ -2301,3 +2301,9 @@ z[1, ]
 TS <-  ts(co2[1:192], freq=24)
 tmp2 <- window(TS, start(TS), end(TS))
 ## warned in 2.8.0
+
+## failed to add tag
+Call <- call("foo", 1)
+Call[["bar"]] <- 2
+Call
+## unnamed call in 2.8.1

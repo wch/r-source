@@ -1,5 +1,5 @@
 
-R version 2.9.0 Under development (unstable) (2008-12-10 r47134)
+R version 2.9.0 Under development (unstable) (2008-12-26 r47335)
 Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6222,4 +6222,11 @@ Error in aggregate.data.frame(z, by = z[1], FUN = sum) :
 > TS <-  ts(co2[1:192], freq=24)
 > tmp2 <- window(TS, start(TS), end(TS))
 > ## warned in 2.8.0
+> 
+> ## failed to add tag
+> Call <- call("foo", 1)
+> Call[["bar"]] <- 2
+> Call
+foo(1, bar = 2)
+> ## unnamed call in 2.8.1
 > 

@@ -1153,7 +1153,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     return x;
 }
 
-
+/* This is only used for [[<-, so only adding one element */
 static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 {
     SEXP indx, xi, yi, yp;
@@ -1191,7 +1191,15 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	error(_("number of items to replace is not a multiple of replacement length"));
 
     if (stretch) {
+	SEXP t = CAR(s);
 	yi = allocList(stretch - nx);
+	/* This is general enough for only usage */
+	if(isString(t) && length(t) == stretch - nx) {
+	    SEXP z = yi;
+	    int i;
+	    for(i = 0; i < LENGTH(t); i++, z = CDR(z))
+		SET_TAG(z, install(translateChar(STRING_ELT(t, i))));
+	}
 	PROTECT(x = listAppend(x, yi));
 	nx = stretch;
     }
@@ -1461,9 +1469,9 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Ensure that the LHS is a local variable. */
     /* If it is not, then make a local copy. */
 
-    if (NAMED(x) == 2) {
+    if (NAMED(x) == 2)
 	SETCAR(args, x = duplicate(x));
-    }
+
     xtop = xup = x; /* x will be the element which is assigned to */
 
     dims = getAttrib(x, R_DimSymbol);
@@ -1474,7 +1482,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( TYPEOF(x) == ENVSXP) {
       if( nsubs!=1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
 	error(_("wrong args for environment subassignment"));
-      defineVar(install(translateChar(STRING_ELT(CAR(subs),0))), y, x);
+      defineVar(install(translateChar(STRING_ELT(CAR(subs), 0))), y, x);
       UNPROTECT(1);
       return(x);
     }
@@ -1720,6 +1728,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		offset = (offset + INTEGER(indx)[i]) * INTEGER(dims)[i - 1];
 	    offset += INTEGER(indx)[0];
 	    SETCAR(nthcdr(x, offset), duplicate(y));
+	    /* FIXME: add name */
 	    UNPROTECT(1);
 	}
 	xtop = x;
