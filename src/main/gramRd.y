@@ -64,7 +64,7 @@ static SEXP     makeSrcref(YYLTYPE *, SEXP);
 
 /* Internal lexer / parser state variables */
 
-static int 	xxinRString;
+static int 	xxinRString, xxQuoteLine, xxQuoteCol;
 static int	xxgetc();
 static int	xxungetc(int);
 static int	xxlineno, xxcolno;
@@ -199,12 +199,14 @@ Option:		'[' Item ']'			{ $$ = $2; }
 static SEXP xxpushMode(int newmode, int newitem)
 {
     SEXP ans;
-    PROTECT(ans = allocVector(INTSXP, 3));
+    PROTECT(ans = allocVector(INTSXP, 6));
     
     INTEGER(ans)[0] = xxmode;		/* Lexer mode */
     INTEGER(ans)[1] = xxitemType;	/* What is \item? */
     INTEGER(ans)[2] = xxbraceDepth;	/* Brace depth used in RCODE and VERBATIM */
     INTEGER(ans)[3] = xxinRString;      /* Quote char that started a string */
+    INTEGER(ans)[4] = xxQuoteLine;      /* Where the quote was */
+    INTEGER(ans)[5] = xxQuoteCol;       /*           "         */
     
 #if DEBUGMODE
     Rprintf("xxpushMode(%d, %s) pushes %d, %s, %d\n", newmode, yytname[YYTRANSLATE(newitem)], 
@@ -228,6 +230,8 @@ static void xxpopMode(SEXP oldmode)
     xxitemType = INTEGER(oldmode)[1]; 
     xxbraceDepth = INTEGER(oldmode)[2];
     xxinRString = INTEGER(oldmode)[3];
+    xxQuoteLine = INTEGER(oldmode)[4];
+    xxQuoteCol  = INTEGER(oldmode)[5];
     
     UNPROTECT_PTR(oldmode);
 }
@@ -687,13 +691,26 @@ static void yyerror(char *s)
        the rest are to be copied literally.  The #if 0 block below allows xgettext
        to see these.
     */    
-#define YYENGLISH 7
+#define YYENGLISH 16
 	"$undefined",	"input", 	
-	"SECTIONHEADER","text section header",
-	"RSECTIONHEADER","code section header", 	
-	"RCODEMACRO",	"code macro",
-	"LATEXMACRO",	"text macro",
-	"TEXT", 	"text",
+	"SECTIONHEADER","macro",
+	"RSECTIONHEADER","macro",
+	"VSECTIONHEADER","macro",
+	"LISTSECTION",	"macro",
+	
+	"LATEXMACRO",	"macro",
+	"LATEXMACRO2",  "macro",
+	"RCODEMACRO",	"macro",
+	"VERBMACRO",    "macro",
+	"VERBMACRO2",	"macro",
+	
+	"ESCAPE",	"macro",
+	"ITEMIZE",	"macro",
+	"IFDEF",	"conditional",
+	"SECTIONHEADER2","macro",
+	"OPTMACRO",	"macro",
+	
+	"DESCRIPTION",	"macro",
 	0
     };
     static char const yyunexpected[] = "syntax error, unexpected ";
@@ -702,12 +719,8 @@ static void yyerror(char *s)
  #if 0
  /* these are just here to trigger the internationalization */
     _("input"); 	
-    _("text section header");
-    _("code section header");
-    _("code macro");
-    _("text macro");	
-    _("code");
-    _("text");
+    _("macro");
+    _("conditional");
 #endif 
    
     R_ParseError = xxlineno;
@@ -770,9 +783,7 @@ static int token(void)
     
     /* % comments are active everywhere */
     
-    if ( c == '%') return mkComment(c);    
-
-    if (c == R_EOF) return END_OF_INPUT;
+    if ( c == '%') return mkComment(c);
 
     if (c == '\\') {
     	int lookahead = xxgetc();
@@ -788,8 +799,15 @@ static int token(void)
 	}
     }
     
-    if (xxinRString) return mkCode(c);
- 
+    if (xxinRString) {
+    	if (c == R_EOF) 
+    	    error(_("Unexpected end of input (in %c quoted string opened at %d:%d)"), 
+    	            xxinRString, xxQuoteLine, xxQuoteCol);
+    	return mkCode(c);
+    }
+    
+    if (c == R_EOF) return END_OF_INPUT; 
+
     if (c == '#' && xxcolno == 1) return mkIfdef(c);
     
     if (c == LBRACE) {
@@ -848,8 +866,6 @@ static int mkText(int c)
 stop:
     if (c != '\n') xxungetc(c); /* newline causes a break, but we keep it */
     PROTECT(yylval = mkString2(stext,  bp - stext));
-    if (xxDebugTokens)
-	Rprintf("mkText: %s\n", CHAR(STRING_ELT(yylval, 0))); 
     if(stext != st0) free(stext);
     return TEXT;
 }
@@ -864,8 +880,6 @@ static int mkComment(int c)
     while ((c = xxgetc()) != '\n' && c != R_EOF);
     if (c == R_EOF) xxungetc(c);
     PROTECT(yylval = mkString2(stext,  bp - stext));
-    if (xxDebugTokens)
-	Rprintf("mkComment: %s\n", CHAR(STRING_ELT(yylval, 0))); 
     if(stext != st0) free(stext);    
     return COMMENT;
 }
@@ -923,8 +937,11 @@ static int mkCode(int c)
     	    	} while (c != '\n' && c != R_EOF && xxbraceDepth > 0);
     	    	if (c == RBRACE) xxbraceDepth++; /* avoid double counting */
     	    }
-    	    if (c == '\'' || c == '"' || c == '`') xxinRString = c;
-    	    else if (c == '\\' && !escaped) {
+    	    if (c == '\'' || c == '"' || c == '`') {
+    	    	xxinRString = c;
+    	    	xxQuoteLine = xxlineno;
+    	    	xxQuoteCol  = xxcolno;
+    	    } else if (c == '\\' && !escaped) {
     	    	int lookahead = xxgetc();
     	    	if (lookahead == LBRACE || lookahead == RBRACE) {
 		    c = lookahead;
@@ -949,9 +966,6 @@ static int mkCode(int c)
     }
     if (c != '\n') xxungetc(c);
     PROTECT(yylval = mkString2(stext,  bp - stext));
-    if (xxDebugTokens) {
-    	Rprintf("mkCode:  %s\n", CHAR(STRING_ELT(yylval, 0)));
-    }
     if(stext != st0) free(stext);
     return RCODE; 
 }
@@ -991,8 +1005,6 @@ static int mkMarkup(int c)
         }
     }
     PROTECT(yylval = mkString2(stext,  bp - stext - 1));
-    if (xxDebugTokens)
-    	Rprintf("mkMarkup:  %s\n", CHAR(STRING_ELT(yylval, 0)));
     if(stext != st0) free(stext);
     xxungetc(c);
     return retval;
@@ -1030,8 +1042,6 @@ static int mkIfdef(int c)
     	    break;
 	}
     }
-    if (xxDebugTokens)
-    	Rprintf("mkIfdef:  %s\n", CHAR(STRING_ELT(yylval, 0)));
     if(stext != st0) free(stext);
     return retval;
 }
@@ -1069,8 +1079,6 @@ static int mkVerb(int c)
     };
     if (c != '\n') xxungetc(c);
     PROTECT(yylval = mkString2(stext,  bp - stext));
-    if (xxDebugTokens)
-    	Rprintf("mkverb:  %s\n", CHAR(STRING_ELT(yylval, 0)));
     if(stext != st0) free(stext);
     return VERB;  
 }
@@ -1079,9 +1087,11 @@ static int yylex(void)
 {
     int tok = token();
     
-    if (xxDebugTokens) {  
-    	Rprintf("%d:%d: %s", xxlineno, xxcolno, yytname[YYTRANSLATE(tok)]);
+    if (xxDebugTokens) {
+        Rprintf("%d:%d: %s", yylloc.first_line, yylloc.first_column+1, yytname[YYTRANSLATE(tok)]);
     	if (xxinRString) Rprintf("(in %c%c)", xxinRString, xxinRString);
+    	if (tok > 255 && tok != END_OF_INPUT) 
+    	    Rprintf(": %s", CHAR(STRING_ELT(yylval, 0)));
 	Rprintf("\n");
     }
     setlastloc();

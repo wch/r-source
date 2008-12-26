@@ -73,7 +73,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     		     "\\ldots"="...")
     # These correspond to idiosyncratic wrappers
     HTMLLeft <- c("\\acronym"='<acronym><span class="acronym">',
-    		  "\\dontrun"='## Not run:\n',
+    		  "\\dontrun"='## Not run:',
     		  "\\donttest"="",
     		  "\\env"='<span class="env">',    		  
                   "\\file"='&lsquo;<span class="file">',
@@ -417,4 +417,190 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
         sep='', file=con)
     return(out)
 }
+
+checkRd <- function(Rd, defines=.Platform$OS.type, unknownOkay = FALSE, listOkay = FALSE) {
+
+    checkWrapped <- function(tag, block) {
+    	checkContent(block, tag)
+    }
     
+    checkLink <- function(tag, block) { # FIXME This doesn't handle aliases, and 
+                                        # doesn't cover all variations
+    	option <- attr(block, "Rd_option")
+    	checkContent(option, tag)
+    	checkContent(block, tag)
+    }
+    
+    checkBlock <- function(block, tag, blocktag) {
+	switch(tag,
+	UNKNOWN = if (!unknownOkay) stopRd(block, "Unrecognized macro ", block[[1]]),
+	VERB = ,
+	RCODE = ,
+	TEXT = , 
+	COMMENT = {},
+	LIST = if (!listOkay && length(block)) stopRd(block, "Unnecessary braces"),
+	"\\describe"=,
+	"\\enumerate"=,
+	"\\itemize"=,
+	"\\bold"=,
+	"\\cite"=,
+	"\\code"=, 
+	"\\command"=,
+	"\\dfn"=,
+	"\\emph"=, 
+	"\\kbd"=,
+	"\\preformatted"=,
+	"\\special"=,
+	"\\strong"=,
+	"\\var"= checkContent(tag, block),
+	"\\linkS4class" =,
+	"\\link" = checkLink(tag, block),
+	"\\email" =,
+	"\\url" =,
+	"\\cr" =,
+	"\\dots" =,
+	"\\ldots" =,
+	"\\R" = {},
+	"\\acronym" =,
+	"\\dontrun" =,
+	"\\donttest" =,
+	"\\env" =,
+	"\\file" =,
+	"\\option" =,
+	"\\pkg" =,
+	"\\samp" =,
+	"\\sQuote" =,
+	"\\dQuote" = checkContent(block, tag),
+	"\\method" =,
+	"\\S3method" =,
+	"\\S4method" =,
+	"\\enc" = {
+	    checkContent(block[[1]], tag)
+	    checkContent(block[[2]], tag)
+	},
+	"\\eqn" =,
+	"\\deqn" = {
+	    if (is.null(RdTags(block))) { # the two arg form has no tags
+	        checkContent(block[[1]])
+	   	checkContent(block[[2]])
+	    } else checkContent(block, tag)
+	},
+	"\\dontshow" =,
+	"\\testonly" = checkContent(block, tag),
+	"\\tabular" = checkTabular(block),
+        stopRd(block, "Tag ", tag, " not recognized."))
+    }
+    
+    checkTabular <- function(table) {
+    	format <- table[[1]]
+    	content <- table[[2]]
+    	if (length(format) != 1 || RdTags(format) != "TEXT")
+    	    stopRd(table, "\\tabular format must be simple text")
+    	format <- strsplit(format[[1]], "")[[1]]
+    	if (!all(format %in% c("l", "c", "r")))
+    	    stopRd(table, "Unrecognized \\tabular format: ", table[[1]][[1]])
+        content <- preprocessRd(content, defines)
+        tags <- attr(content, "RdTags")
+
+        newrow <- TRUE
+        for (i in seq_along(tags)) {
+            if (newrow) {
+            	newrow <- FALSE
+            	col <- 0
+            	newcol <- TRUE
+            }
+            if (newcol) {
+                col <- col + 1
+                if (col > length(format))
+                    stopRd(table, "Only ", length(format), " columns allowed in this table.")                    
+            	newcol <- FALSE
+            }
+            switch(tags[i],
+            "\\tab" = {
+            	newcol <- TRUE
+            },
+            "\\cr" = {
+            	newrow <- TRUE
+            },
+            checkBlock(content[[i]], tags[i], "\\tabular"))
+        }
+    }        
+            
+    checkContent <- function(blocks, blocktag) {
+        inlist <- FALSE
+        
+	blocks <- preprocessRd(blocks, defines)
+	tags <- attr(blocks, "RdTags")
+	
+	for (i in seq_along(tags)) {
+            tag <- tags[i]
+            block <- blocks[[i]]
+            switch(tag,
+            "\\item" = {
+    	    	if (!inlist) inlist <- TRUE
+    		switch(blocktag,
+    		"\\arguments"={
+    		    checkContent(block[[1]], tag)
+    		    checkContent(block[[2]], tag)
+    		},
+    		"\\value"=,
+    		"\\describe"= {
+    		    checkContent(block[[1]], tag)
+    		    checkContent(block[[2]], tag)
+    		},
+    		"\\enumerate"=,
+    		"\\itemize"= {})
+    	    },
+    	    { # default
+    	    	if (inlist && !(blocktag %in% c("\\itemize", "\\enumerate"))
+    	    	           && !(tag == "TEXT" && isBlankRd(block))) {   	    
+    		    inlist <- FALSE
+    		}
+    		checkBlock(block, tag, blocktag)
+    	    })
+	}
+    }
+    
+    checkSection <- function(section, tag) {
+    	if (tag == "\\section") {
+    	    title <- section[[1]]
+    	    section <- section[[2]]
+    	    checkContent(title, tag)
+    	}
+    	checkContent(section, tag)
+    }
+    
+    checkUnique <- function(tag) {
+    	which <- which(sections == tag)
+    	if (length(which) < 1)
+    	    stopRd(Rd, "Must have a ", tag)
+    	else if (length(which) > 1)
+    	    stopRd(Rd[[which[2]]], "Only one ", tag, " is allowed")
+    }
+    
+    if (is.character(Rd)) Rd <- parse_Rd(Rd)
+    
+    # Process top level ifdef's.
+    Rd <- preprocessRd(Rd, defines)
+    sections <- attr(Rd, "RdTags")
+
+    version <- which(sections == "\\Rdversion")
+    if (length(version) == 1 && as.numeric(version[[1]]) < 2)
+    	warning("Rd2HTML is designed for Rd version 2 or higher.")
+    else if (length(version) > 1)
+    	stopRd(Rd[[version[2]]], "Only one \\Rdversion declaration is allowed")
+    	
+    checkUnique("\\title")
+    checkUnique("\\name")
+    checkUnique("\\description")
+    
+    name <- Rd[[which(sections == "\\name")]]
+    tags <- RdTags(name)
+    if (length(tags) > 1 || tags != "TEXT") stopRd(name, "\\name must only contain simple text.")
+
+    for (i in seq_along(sections))
+    	checkSection(Rd[[i]], sections[i])
+    
+    TRUE
+}
+   

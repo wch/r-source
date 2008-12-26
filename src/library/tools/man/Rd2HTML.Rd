@@ -1,23 +1,28 @@
 \name{Rd2HTML}
 \Rdversion{1.1}
 \alias{Rd2HTML}
-\title{ Write HTML page from an Rd object }
+\alias{checkRd}
+\title{ Work with an Rd object }
 \description{
-This experimental function takes the output of the \code{\link{parse_Rd}} function
-and produces an HTML help page from it.  Its interface (and existence!) are subject
+These experimental functions take the output of the \code{\link{parse_Rd}} function
+and check it or produce an HTML help page from it.  Their interfaces (and existence!) are subject
 to change.
 }
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type)
+checkRd(Rd, defines=.Platform$OS.type, unknownOkay = FALSE, listOkay = FALSE) {
 }
 \arguments{
   \item{Rd}{ the \code{Rd} object }
   \item{out}{ a filename or connection object to which to write the output }
   \item{package}{ the package to list in the output }
   \item{defines}{ strings to use in \code{"#ifdef"} tests }
+  \item{unknownOkay}{ unrecognized macros are treated as errors if \code{TRUE}}
+  \item{listOkay}{ unnecessary non-empty braces (e.g. around text, not as an argument)
+                   are treated as errors if \code{TRUE}}
 }
 \details{
-  This parser is still in development, and currently has the following known
+  The \code{Rd2HTML} converter is still in development, and currently has the following known
   deficiencies:
   \itemize{
   \item \code{"\\link"} macros are not generated properly.
@@ -28,8 +33,11 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type)
   }
 }
 \value{
-  This function is executed mainly for the side effect of writing the HTML page.  Its
+  \code{Rd2HTML} is executed mainly for the side effect of writing the HTML page.  Its
   value is the name of that page.
+  
+  \code{checkRd} returns \code{TRUE} if the file has no errors; it generates an R error
+  otherwise.
 }
 \author{ Duncan Murdoch }
 \references{ \url{http://developer.r-project.org/parseRd.pdf} }
@@ -41,6 +49,7 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type)
     infile <- file.path(Rsrc, "library","tools","man", "Rd2HTML.Rd")
     outfile <- paste(tempfile(), ".html", sep="")
     browseURL(Rd2HTML(infile, outfile, package="tools"))
+    checkRd(infile) # A stricter test than Rd2HTML uses
   }
 }
 \keyword{ documentation }
