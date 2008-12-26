@@ -36,11 +36,11 @@ nls.control(maxiter = 50, tol = 1e-05, minFactor = 1/1024,
 }
 \value{
   A \code{list} with exactly five components:
-  \item{maxiter}{ }
-  \item{tol}{ }
-  \item{minFactor}{ }
-  \item{printEval}{ }
-  \item{warnOnly}{ }
+  \item{maxiter}{}
+  \item{tol}{}
+  \item{minFactor}{}
+  \item{printEval}{}
+  \item{warnOnly}{}
   with meanings as explained under \sQuote{Arguments}.
 }
 \references{
