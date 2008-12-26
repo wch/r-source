@@ -204,8 +204,7 @@ INSTALLATION
     o	libtool has been updated to 2.2.6a.
 
     o	--with-ICU is now supported (and recommended) on Mac OS X using
-	Apple's supplied port.  [Currently only tested on i386
-	Leopard.]
+	Apple's supplied port.
 
 	Configure supports a wider range of ICU versions on other
 	OSes: version 3.0 should suffice, and 3.2, 3.8 and 4.0 have
