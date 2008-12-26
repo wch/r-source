@@ -2479,8 +2479,8 @@ function(x, ...)
         for(lib in .libPaths()) {
             pkgs <- list.files(lib)
             pkgs <- pkgs[file.access(file.path(lib, pkgs, "DESCRIPTION"), 4) == 0]
-            installed <- c(pkgs, installed)
-            installed_in <- c(rep.int(lib, length(pkgs)), installed_in)
+            installed <- c(installed, pkgs)
+            installed_in <- c(installed_in, rep.int(lib, length(pkgs)))
         }
         installed <- sub("_.*", "", installed) # obsolete versioned installs.
         reqs <- reqs %w/o% installed
