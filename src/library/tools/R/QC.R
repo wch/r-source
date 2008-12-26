@@ -2472,6 +2472,8 @@ function(x, ...)
                if(!identical(as.logical(Sys.getenv("_R_CHECK_FORCE_SUGGESTS_")), FALSE)) lsuggests)
     if(length(lreqs)) {
         reqs <- unique(sapply(lreqs, `[[`, 1L))
+        ## some have had trailing space!
+        reqs <- sub('[[:space:]]+$', '', reqs)
         ## this was changed for speed.
         ## installed <-  utils::installed.packages()[ , "Package"]
         installed <- character(0L)
