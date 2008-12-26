@@ -153,13 +153,17 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
             next;
         }
         next if $skip_level > 0;
-	next if /^\s*%/o;	# completely drop full comment lines
-	my $loopcount = 0;
-	while(checkloop($loopcount++, $_, "\\%")
-	      && s/^\\%|([^\\])((\\\\)*)\\%/$1$2escaped_percent_sign/go) {};
-	s/^([^%]*)%.*$/$1/o;
-	s/escaped_percent_sign/\\%/go;
-	$complete_text .= $_;
+	if (/^\s*%/o) {
+	    ## replace comment lines by blank lines, to keep line nos.
+	    $complete_text .= "\n";
+	} else {
+	    my $loopcount = 0;
+	    while(checkloop($loopcount++, $_, "\\%")
+		  && s/^\\%|([^\\])((\\\\)*)\\%/$1$2escaped_percent_sign/go) {};
+	    s/^([^%]*)%.*$/$1/o;
+	    s/escaped_percent_sign/\\%/go;
+	    $complete_text .= $_;
+	}
     }
     printf STDERR "-- read file '%s';\n",$_[0] if $debug;
 
@@ -293,11 +297,10 @@ sub mark_brackets {
     }
     # Any remaining brackets must be unmatched ones.
     # However, unmatched brackets are sometimes legal,
-    # (e.g. \alias{{}), so only warn. # matching } for editors
+    # (e.g. \alias{{}), so only warn.            # matching } for editors
+    # But as from R 2.9.0 they are not needed and parse_Rd does not allow them,
+    # so increase Note to Warning.
     if ($complete_text =~ /([{}])/s) {
-        # Would like to tell which which line has unmatched { or },
-        # but lines starting with % have already been removed.
-        # Hence the 'on or after' in the message.
         my $badlineno = 0 ;
 	foreach my $line (split /\n/, $complete_text) {
 	    $badlineno++;
@@ -305,11 +308,11 @@ sub mark_brackets {
 		my $extra_info = "\'$1\'" ;
 		$extra_info = "\'$1\'" if $line =~ /(\\\w+{)/ ; # }
 		if( $extra_info =~ /^'}'$/ ) {
-		    warn "Note: unmatched right brace in file '$Rdfile'".
-			" on or after line $badlineno\n";
+		    warn "Warning: unmatched right brace in file '$Rdfile'".
+			" on line $badlineno\n";
 		} elsif(! ($extra_info =~ /\\alias{/) ) { # }
 		    warn "Warning: unmatched brace ($extra_info) in file '$Rdfile'".
-			" on or after line $badlineno\n"; 
+			" on line $badlineno\n"; 
 		}
 	    }
  	}
@@ -522,7 +525,7 @@ sub get_arguments_check {
 	$keep =~ s/\n/ /g;
 	$keep =~ /(.*\s$id.*$id)/;
 	$keep = unmark_brackets($1);
-	warn "WARNING: invalid whitespace before brace in file '$Rdfile' at '$keep'\n";
+	warn "Warning: invalid whitespace before brace in file '$Rdfile' at '$keep'\n";
     }
     @retval;
 }
@@ -1311,7 +1314,7 @@ sub html_print_codeblock {
     if(defined $blocks{$block}){
 	my $ntext = $blocks{$block};
 	if ($ntext =~ /$ECODE/) {
-	    warn "WARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
+	    warn "Warning: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
 	}
 	my $ntext = code2html($ntext);
 	$ntext = html_unescape_codes($ntext);
@@ -1341,7 +1344,7 @@ sub html_print_argblock {
 	## as from R 2.8.1, strip with a warning, providing not after \item{
 	if($text =~ /\\item(ize|$ID)/) {
 	    if($1 eq "ize") {
-		warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
+		warn "Warning: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
 		$text =~ /\\itemize($ID)/;
 		$id = $1;
 		$text =~  s/\\itemize$id//;
@@ -2115,7 +2118,7 @@ sub txt_print_codeblock {
 	print $txtout txt_header($title), ":\n" if $title;
 	$ntext = code2txt($blocks{$block});
 	if ($ntext =~ /$ECODE/) {
-	    warn "WARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
+	    warn "Warning: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
 	}
 	# make sure there is precisely one leading "\n"
 	$ntext =~ s/^[\n]*//go;
@@ -2152,7 +2155,7 @@ sub txt_print_argblock {
 	## as from R 2.8.1, strip with a warning, providing not after \item{
 	if($text =~ /\\item(ize|$ID)/) {
 	    if($1 eq "ize") {
-		warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
+		warn "Warning: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
 		$text =~ /\\itemize($ID)/;
 		$id = $1;
 		$text =~  s/\\itemize$id//;
@@ -2672,7 +2675,7 @@ sub latex_print_codeblock {
 	print $latexout "\\begin\{verbatim\}";
 	my $ntext = $blocks{$blocK};
 	if ($ntext =~ /$ECODE/) {
-	    warn "\nWARNING: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
+	    warn "\nWarning: \\code inside code block in file '$Rdfile'\n" if $issue_warnings; 
 	}
 	my $out = &code2latex($ntext, 0, 1);
 	$out = latex_unescape_codes($out);
@@ -2706,7 +2709,7 @@ sub latex_print_exampleblock {
 	print $latexout "\\begin\{ExampleCode\}";
 	my $ntext = $blocks{$block};
 	if ($ntext =~ /$ECODE/) {
-	    warn "\nWARNING: \\code inside \\examples in file '$Rdfile'\n" 
+	    warn "\nWarning: \\code inside \\examples in file '$Rdfile'\n" 
 		if $issue_warnings; 
 	}
 	my $out = &code2latex($ntext,0,0);
@@ -2732,7 +2735,7 @@ sub latex_print_argblock {
 	## as from R 2.8.1, strip with a warning, providing not after \item{
 	if($text =~ /\\item(ize|$ID)/) {
 	    if($1 eq "ize") {
-		warn "WARNING: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
+		warn "\nWarning: found \\itemize inside \\$block in file '$Rdfile'\n" if $issue_warnings;
 		$text =~ /\\itemize($ID)/;
 		$id = $1;
 		$text =~  s/\\itemize$id//;
