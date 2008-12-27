@@ -4417,6 +4417,32 @@ function(cfile)
         writeLines(conditionMessage(out))
 }
 
+### * .check_package_parseRd
+
+.check_package_parseRd <-
+function(dir, silent = FALSE)
+{
+    enc <- read.dcf(file.path(dir, "DESCRIPTION"))["Encoding"]
+    if(is.na(enc)) encoding <- "unknown"
+    pg <- c(Sys.glob(file.path(dir, "man", "*.Rd")),
+            Sys.glob(file.path(dir, "man/*", "*.Rd")))
+    bad <- character(0)
+    for (f in pg) {
+        tmp <- try(parse_Rd(f, encoding = enc), silent=TRUE)
+        if(inherits(tmp, "try-error")) {
+	    bad <- c(bad, f)
+            if(!silent)  {
+                message("*** error on file ", f)
+                message(geterrmessage())
+            }
+        }
+    }
+    bad <- sub(".*/","", bad)
+    if(length(bad))
+        cat("problems found in ", paste(bad, collapse=", "), "\n", sep="")
+    invisible()
+}
+
 ### * .find_charset
 
 .find_charset <-

@@ -129,6 +129,8 @@ my $R_check_executables =
     &R_getenv("_R_CHECK_EXECUTABLES_", "TRUE");
 my $R_check_executables_exclusions =
     &R_getenv("_R_CHECK_EXECUTABLES_EXCLUSIONS_", "TRUE");
+my $R_check_Rd_parse =
+    &R_getenv("_R_CHECK_RD_PARSE_", "FALSE");
 
 ## Maybe move basic configuration (and documentation) to
 ##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
@@ -173,6 +175,8 @@ $R_check_executables =
     &config_val_to_logical($R_check_executables);
 $R_check_executables_exclusions =
     &config_val_to_logical($R_check_executables_exclusions);
+$R_check_Rd_parse =
+    &config_val_to_logical($R_check_Rd_parse);
 ## <NOTE>
 ## This looks a bit strange, but tools:::.check_package_depends()
 ## currently gets the information about forcing suggests via an
@@ -1789,6 +1793,10 @@ sub check_pkg {
       = ("See the chapter 'Writing R documentation files'",
 	 "in manual 'Writing R Extensions'.\n");
 
+    my @msg2_writing_Rd
+      = ("The Rdversion 2 parser is experimental.",
+	 "There are some false positives, but most reports are correct.\n");
+
     if(-d "man") {
 	$log->checking("Rd files");
 	my $def_enc = 0;
@@ -1815,6 +1823,21 @@ sub check_pkg {
 	}
 	else {
 	    $log->result("OK");
+	}
+	if($R_check_Rd_parse) {
+	    $log->checking("Rd files against version 2 parser");
+	    my $Rcmd = "tools:::.check_package_parseRd('.')\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
+	    @out = grep(!/^\>/, @out);
+	    if(scalar(@out) > 0) {
+		$log->warning();
+		$log->print(join("\n", @out) . "\n");
+		$log->print(wrap("", "", @msg2_writing_Rd));
+	    }
+	    else {
+		$log->result("OK");
+	    }
 	}
     }
 
