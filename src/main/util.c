@@ -1566,10 +1566,85 @@ double R_atof(const char *str)
 }
 
 #ifdef USE_ICU
+#ifdef USE_ICU_APPLE
+/* Mac OS X is missing the headers */
+typedef int UErrorCode; /* really an enum these days */
+struct UCollator;
+typedef struct UCollator UCollator;
+
+typedef enum {
+  UCOL_EQUAL    = 0,
+  UCOL_GREATER    = 1,
+  UCOL_LESS    = -1
+} UCollationResult ;
+
+typedef enum {
+  UCOL_DEFAULT = -1,
+  UCOL_PRIMARY = 0,
+  UCOL_SECONDARY = 1,
+  UCOL_TERTIARY = 2,
+  UCOL_DEFAULT_STRENGTH = UCOL_TERTIARY,
+  UCOL_CE_STRENGTH_LIMIT,
+  UCOL_QUATERNARY=3,
+  UCOL_IDENTICAL=15,
+  UCOL_STRENGTH_LIMIT,
+  UCOL_OFF = 16,
+  UCOL_ON = 17,
+  UCOL_SHIFTED = 20,
+  UCOL_NON_IGNORABLE = 21,
+  UCOL_LOWER_FIRST = 24,
+  UCOL_UPPER_FIRST = 25,
+  UCOL_ATTRIBUTE_VALUE_COUNT
+} UColAttributeValue;
+
+typedef UColAttributeValue UCollationStrength;
+
+typedef enum {
+      UCOL_FRENCH_COLLATION, 
+      UCOL_ALTERNATE_HANDLING, 
+      UCOL_CASE_FIRST, 
+      UCOL_CASE_LEVEL,
+      UCOL_NORMALIZATION_MODE, 
+      UCOL_DECOMPOSITION_MODE = UCOL_NORMALIZATION_MODE,
+      UCOL_STRENGTH,
+      UCOL_HIRAGANA_QUATERNARY_MODE,
+      UCOL_NUMERIC_COLLATION, 
+      UCOL_ATTRIBUTE_COUNT
+} UColAttribute;
+
+/* UCharIterator struct has to be defined sice we use its instances as
+   local variables, but we don't acutally use any of its members. */
+typedef struct UCharIterator {
+  const void *context;
+  int32_t length, start, index, limit, reservedField;
+  void *fns[16]; /* we overshoot here (there is just 10 fns in ICU 3.6),
+		    but we have to make sure that enough stack space
+		    is allocated when used as a local var in future
+		    versions */
+} UCharIterator;
+
+UCollator* ucol_open(const char *loc, UErrorCode *status);
+void ucol_close(UCollator *coll);
+void ucol_setAttribute(UCollator *coll, UColAttribute attr, 
+		       UColAttributeValue value, UErrorCode *status);
+void ucol_setStrength(UCollator *coll, UCollationStrength strength);
+UCollationResult ucol_strcollIter(const UCollator *coll,
+				  UCharIterator *sIter,
+				  UCharIterator *tIter,
+				  UErrorCode *status);
+void uiter_setUTF8(UCharIterator *iter, const char *s, int32_t length);
+
+void uloc_setDefault(const char* localeID, UErrorCode* status);
+
+#define U_ZERO_ERROR 0
+#define U_FAILURE(x) ((x)>U_ZERO_ERROR)
+
+#else
 #include <unicode/utypes.h>
 #include <unicode/ucol.h>
 #include <unicode/uloc.h>
 #include <unicode/uiter.h>
+#endif
 
 static UCollator *collator = NULL;
 

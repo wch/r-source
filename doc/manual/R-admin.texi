@@ -1305,17 +1305,19 @@ expand the @R{} sources and configure @R{} appropriately, for example
 @example
 tar zxvf R-@value{VERSIONno}.tar.gz
 cd R-@value{VERSIONno}
-./configure --with-blas='-framework vecLib' --with-lapack \
+./configure --with-blas='-framework vecLib' --with-lapack --with-ICU \
   --with-aqua --enable-R-framework
 make
 @end example
 
 @noindent
 and then sit back and wait.  The first two options are the default (and
-strongly recommended), and with some toolsets have been essential.  The
-second line of options is also default on Mac OS X, but needed only if
-you want to build @R{} for use with @code{R.app} Console, and imply
-@option{--enable-R-shlib} to build @R{} as a shared/dynamic library.
+strongly recommended), and with some toolsets have been essential.
+Selecting @option{--with-ICU} replaces Apple's @code{wcscoll} with one
+that works correctly in UTF-8 locales.  The second line of options is
+also default on Mac OS X, but needed only if you want to build @R{} for
+use with @code{R.app} Console, and imply @option{--enable-R-shlib} to
+build @R{} as a shared/dynamic library.
 
 These options configure @R{} to be built and installed as a framework
 called @file{R.framework}.  The default path for @file{R.framework} is
@@ -1979,15 +1981,17 @@ This can be overridden first by the setting of the environment variable
 @enindex LC_ALL
 @enindex LC_MESSAGES
 @enindex LANG
-@env{LANGUAGE} and then by the environment variables @env{LC_ALL},
-@env{LC_MESSAGES} and @env{LANG}. (The last three are normally used to
-set the locale and so should not be needed, but the first is only used
-to select the language for messages.)  The code tries hard to map
-locales to languages, but on some systems (notably Windows) the locale
-names needed for the environment variable @env{LC_ALL} do not all
-correspond to XPG language names and so @env{LANGUAGE} may need to be
-set.  (One example is @samp{LC_ALL=es} on Windows which sets the locale
-to Estonian and the language to Spanish.)
+@env{LANGUAGE} and then@footnote{On some systems setting
+@env{LC_ALL} or @env{LC_MESSAGES} to @samp{C} disables @env{LANGUAGE}.}
+by the environment variables @env{LC_ALL}, @env{LC_MESSAGES} and
+@env{LANG}. (The last three are normally used to set the locale and so
+should not be needed, but the first is only used to select the language
+for messages.)  The code tries hard to map locales to languages, but on
+some systems (notably Windows) the locale names needed for the
+environment variable @env{LC_ALL} do not all correspond to XPG language
+names and so @env{LANGUAGE} may need to be set.  (One example is
+@samp{LC_ALL=es} on Windows which sets the locale to Estonian and the
+language to Spanish.)
 
 It is usually possible to change the language once @R{} is running
 @emph{via} (not Windows) @code{Sys.setlocale("LC_MESSAGES",
