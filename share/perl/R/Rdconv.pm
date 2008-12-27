@@ -155,7 +155,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
         next if $skip_level > 0;
 	if (/^\s*%/o) {
 	    ## replace comment lines by blank lines, to keep line nos.
-	    $complete_text .= "\n";
+	    $complete_text .= "%blank_line\n";
 	} else {
 	    my $loopcount = 0;
 	    while(checkloop($loopcount++, $_, "\\%")
@@ -175,6 +175,8 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_en
     $Rdversion = $1;
     macro_subs();
     mark_brackets();
+    ## now remove comment-only lines
+    $complete_text =~ s/%blank_line\n//sgo;
     ##HARD Debug:print "$complete_text\n"; exit;
     escape_preformats();
     escape_codes();
