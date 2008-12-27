@@ -72,7 +72,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	nanbug.rda \
 	WinUnicode.dat \
 	testit.Rd testit.txt.save testit.html.save \
-	testit.tex.save testit-Ex.R.save \
+	testit.tex.save testit-Ex.R.save ver20.Rd \
 	ver10.Rd ver10.txt.save ver10.html.save ver10.tex.save ver10-Ex.R.save \
 	ver11.Rd ver11.txt.save ver11.html.save ver11.tex.save ver11-Ex.R.save \
 	R-intro.Rout.save

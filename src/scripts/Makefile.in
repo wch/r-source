@@ -10,7 +10,7 @@ subdir = src/scripts
 
 include $(top_builddir)/Makeconf
 
-SCRIPTS_S = mkinstalldirs
+SCRIPTS_S =
 ## <NOTE>
 ## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.
 SCRIPTS_B_IN = BATCH.in LINK.in COMPILE.in INSTALL.in REMOVE.in \
