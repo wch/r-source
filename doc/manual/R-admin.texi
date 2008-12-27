@@ -1981,15 +1981,17 @@ This can be overridden first by the setting of the environment variable
 @enindex LC_ALL
 @enindex LC_MESSAGES
 @enindex LANG
-@env{LANGUAGE} and then by the environment variables @env{LC_ALL},
-@env{LC_MESSAGES} and @env{LANG}. (The last three are normally used to
-set the locale and so should not be needed, but the first is only used
-to select the language for messages.)  The code tries hard to map
-locales to languages, but on some systems (notably Windows) the locale
-names needed for the environment variable @env{LC_ALL} do not all
-correspond to XPG language names and so @env{LANGUAGE} may need to be
-set.  (One example is @samp{LC_ALL=es} on Windows which sets the locale
-to Estonian and the language to Spanish.)
+@env{LANGUAGE} and then@footnote{On some systems setting
+@env{LC_ALL} or @env{LC_MESSAGES} to @samp{C} disables @env{LANGUAGE}.}
+by the environment variables @env{LC_ALL}, @env{LC_MESSAGES} and
+@env{LANG}. (The last three are normally used to set the locale and so
+should not be needed, but the first is only used to select the language
+for messages.)  The code tries hard to map locales to languages, but on
+some systems (notably Windows) the locale names needed for the
+environment variable @env{LC_ALL} do not all correspond to XPG language
+names and so @env{LANGUAGE} may need to be set.  (One example is
+@samp{LC_ALL=es} on Windows which sets the locale to Estonian and the
+language to Spanish.)
 
 It is usually possible to change the language once @R{} is running
 @emph{via} (not Windows) @code{Sys.setlocale("LC_MESSAGES",

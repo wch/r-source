@@ -78,7 +78,8 @@ DISTFILES = Makefile.in Makefile.win README \
 	R-intro.Rout.save
 SUBDIRS = Embedding Examples Native
 
-R = LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
+## GNU gettext disables LANGUAGE if LC_ALL=C, but other systems might not.
+R = LANGUAGE=en LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 R2 = R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 RDIFF = $(top_builddir)/bin/R CMD Rdiff
 RDCONV = $(top_builddir)/bin/R CMD Rdconv
