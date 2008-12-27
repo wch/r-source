@@ -46,6 +46,10 @@ NEW FEATURES
 
     o	The trio library has been updated to version 1.13.
 
+    o	New function msgWindow() to allow a windows() device or the
+	Rgui console to be minimized, maximize or restored and (not
+	the console) hidden, and to have recording turned on or off.
+
 
 
 

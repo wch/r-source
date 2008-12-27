@@ -20,8 +20,8 @@ bringToTop(which = dev.cur(), stay = FALSE)
 
 \description{
   \code{bringToTop} brings the specified screen device's window to the
-  front of the window stack (and gives it focus).  With argument
-  \code{-1}, it brings the console to the top.
+  front of the window stack (and gives it focus).  With first argument
+  \code{-1} it brings the console to the top.
   
   If \code{stay =  TRUE}, the window is designated as a topmost window,
   i.e. it will stay on top of any regular window.  \code{stay} may only be used
@@ -30,7 +30,7 @@ bringToTop(which = dev.cur(), stay = FALSE)
 }
 
 \seealso{
-  \code{\link{windows}}
+  \code{\link{msgWindow}}, \code{\link{windows}}
 }
 
 \keyword{device}

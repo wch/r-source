@@ -1440,6 +1440,37 @@ SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+SEXP do_msgwindow(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    int dev, type;
+    pGEDevDesc gdd;
+    gadesc *xd;
+
+    checkArity(op, args);
+    dev = asInteger(CAR(args));
+    type = asInteger(CADR(args));
+
+    if(dev == -1) { /* console */
+	if(CharacterMode == RGui) GA_msgWindow(RConsole, type);
+    } else {
+	if(dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER)
+	    errorcall(call, _("invalid '%s' argument"), "which");
+	gdd = GEgetDevice(dev - 1);
+	if(!gdd) errorcall(call, _("invalid device"));
+	xd = (gadesc *) gdd->dev->deviceSpecific;
+	if(!xd) errorcall(call, _("invalid device"));
+	if(type == 5) {
+	    xd->recording = TRUE;
+	    check(xd->mrec);
+	} else if(type == 6) {
+	    xd-> recording = FALSE;
+	    uncheck(xd->mrec);
+	} else
+	    GA_msgWindow(xd->gawin, type);
+    }
+    return R_NilValue;
+}
+
 static void * getDeviceHandle(int dev)
 {
     pGEDevDesc gdd;

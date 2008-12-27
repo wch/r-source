@@ -922,3 +922,22 @@ void BringToTop(window c, int stay) /* stay=0 for regular, 1 for topmost, 2 for 
     TopmostDialogs &= !MB_TOPMOST;
     apply_to_list(c->parent->child, setMessageBoxTopmost);
 }
+
+/* type = 1 minimize
+          2 restore
+	  3 maximize
+	  4 hide
+*/
+void GA_msgWindow(window c, int type)
+{
+    int state = -1;
+    switch(type){
+    case 1: state = SW_MINIMIZE; break;
+    case 2: state = SW_SHOWNOACTIVATE; break;
+    case 3: state = SW_MAXIMIZE; break;
+    case 4: state = SW_HIDE; break;
+    default: break;
+    }
+    if (state >= 0) ShowWindow(c->handle, state);
+
+}

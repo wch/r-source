@@ -43,7 +43,7 @@ S3method("matchEncoding", "Type1Font")
 S3method("matchEncoding", "CIDFont")
 
 if(tools:::.OStype() == "windows") {
-    export(bringToTop, win.graph, win.metafile, win.print,
+    export(bringToTop, msgWindow, win.graph, win.metafile, win.print,
            windows, windows.options, windowsFont, windowsFonts)
 
     S3method("[", SavedPlots)

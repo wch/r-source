@@ -192,6 +192,8 @@ int   devicepixelsy(drawing dev);
 int	isTopmost(window w);
 void	BringToTop(window w, int stay); /* stay=0 for regular, 1 for topmost, 2 for toggle */
 void *	getHandle(window w);
+void 	GA_msgWindow(window c, int type);
+
 
 /* gbuttons.c */
 /* horizontal, vertical and control scrollbar */

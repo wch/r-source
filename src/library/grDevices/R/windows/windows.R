@@ -213,6 +213,20 @@ bringToTop <- function(which = dev.cur(), stay = FALSE)
     invisible(.Internal(bringToTop(as.integer(which), as.logical(stay))))
 }
 
+msgWindow <-
+    function(type = c("minimize", "restore", "maximize", "hide", "recordOn", "recordOff"),
+             which = dev.cur())
+{
+    type <- match.arg(type)
+    itype <- match(type, c("minimize", "restore", "maximize", "hide", "recordOn", "recordOff"), 0L)
+    if(which == -1 && itype > 3)
+        stop("'type' not applicable to the R console")
+    if(!exists(".Devices")) .Devices <- list("null device")
+    if(which > 0 && .Devices[[which]] != "windows")
+        stop("can only manipulate windows devices")
+    invisible(.Internal(msgWindow(as.integer(which), as.integer(itype))))
+}
+
 savePlot <- function(filename = "Rplot",
                      type = c("wmf", "emf", "png", "jpg", "jpeg", "bmp",
                      "tif", "tiff", "ps", "eps", "pdf"),
