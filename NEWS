@@ -55,9 +55,6 @@ NEW FEATURES
 	Latin-1 and UTF-8 locales if 'z' is of known encoding (that is
 	all elements are either ASCII or marked as Latin-1 or UTF-8).
 
-    o	parse_Rd(), an experimental parser for Rd files, and Rd2HTML(),
-    	an experimental converter to HTML, have been added.
-
     o	sprintf() does stricter error checking on input formats to
 	avoid passing invalid formats to the OS (which have a tendency
 	to crash under such inputs).
@@ -193,6 +190,13 @@ Rd CONVERSION
 
     o	\alias now supports the escaping of { as well as of %, and this
 	is recommended.
+
+    o	parse_Rd(), an experimental parser for Rd files, and Rd2HTML(),
+    	an experimental converter to HTML, have been added to package
+    	'tools'.
+
+    o	R CMD check optionally (by setting _R_CHECK_RD_PARSE_) runs the
+	package's Rd files through parse_Rd() for a stricter syntax check.
 
 
 INSTALLATION

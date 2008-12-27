@@ -3873,6 +3873,7 @@ not in the examples given), use @code{\eqn}.
 @menu
 * Changes in version 1.1::      
 * Unnumbered versions::         
+* Planned changes::             
 @end menu
 
 @node Changes in version 1.1, Unnumbered versions, Back-compatibility issues, Back-compatibility issues
@@ -3901,7 +3902,7 @@ Whitespace is allowed between the first and second arguments of
 Interpretation of @samp{\Alpha} etc is no longer done.
 @end itemize
 
-@node Unnumbered versions,  , Changes in version 1.1, Back-compatibility issues
+@node Unnumbered versions, Planned changes, Changes in version 1.1, Back-compatibility issues
 @subsection Unnumbered versions
 
 In version 1.0 @samp{$} needs to be escaped by backslash in ``regular''
@@ -3961,6 +3962,55 @@ quite a few package writers have ignored this.  As from @R{} 2.8.1 this
 is detected, and the @code{\itemize} command (but not its contents)
 removed, with a warning.
 
+@node Planned changes,  , Unnumbered versions, Back-compatibility issues
+@subsection Planned changes
+
+It is planned in due course to convert @file{.Rd} files in @R{} (rather
+than in Perl).  As a first step, a parser function @code{parse_Rd} is
+available in package @pkg{tools} as from @R{} 2.9.0, and this can be run
+over a package's help files as part of @command{R CMD check} by setting
+the environment variable @env{_R_CHECK_RD_PARSE_} to @samp{TRUE}.
+Sometimes the reported error is actually the result of a previous error,
+and running
+
+@example
+tools::parse_Rd(@var{filename}, verbose = TRUE)
+@end example
+
+@noindent
+will give a more comprehensive view of the problems.
+
+@code{parse_Rd} is still under development, but targets a stricter
+version of the Rd format which will become version 2.  Current
+differences from version 1.1 include
+
+@itemize
+
+@item
+Unmatched right braces are an error, not just a warning.
+
+@item
+No space is allowed bewteen the first and second arguments of a macro
+such as @code{\item}.
+
+@item
+@code{\code} is intended @emph{only} for @R{} code, and as such it
+argument must be syntactically valid once macros such as @code{\link}
+and @code{\var} have been substituted.  This means that quotes must
+balance.  Use @code{\samp} or @code{\kbd} for code snippets and code in
+other languages.
+
+@item
+@code{\examples} is intended for valid @R{} code even within
+@code{\dontrun} sections, which must have @code{%} escaped and balancing
+quotes.
+
+@item
+Zero-argument macros such as @samp{\R}, @samp{\dots} and @samp{\ldots}
+should be followed by whitespace or @samp{@{@}}: they are no longer
+recognized if followed by a digit.
+
+@end itemize
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
 @chapter Tidying and profiling R code
