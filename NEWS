@@ -158,6 +158,9 @@ UTILITIES
     o	massage-Examples.pl has been replaced by an R script
 	share/R/massage-examples.R .
 
+    o	R CMD REMOVE now uses remove.packages() and hence removes all
+	members of a bundle.
+
 
 Rd CONVERSION
 
