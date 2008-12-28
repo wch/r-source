@@ -2210,20 +2210,20 @@ sub check_pkg {
 	    }
         }
         if($WINDOWS) {
-            ## avoid Rcmd as line may be too long after expansion.
             ## We've forced R_HOME and Rexdir to have no spaces already.
-            $cmd = "perl ${R::Vars::R_HOME}/bin/massage-Examples ".
-  		     "${pkgname} ${Rexdir} ".
-  		     "> ${pkgname}-Ex.R";
+            $cmd = "${R::Vars::R_HOME}/bin/Rterm --slave". 
+		"-f ${R::Vars::R_HOME}/share/R/massage-examples.R ".
+		"--args ${pkgname} ${Rexdir} ".
+		"> ${pkgname}-Ex.R";
         } else {
 	    $cmd =
 		join(" ",
 		     (&shell_quote_file_path(${R::Vars::R_EXE}),
-		      "CMD perl",
+		      "--slave -f",
 		      &shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
-							"perl",
-							"massage-Examples.pl")),
-		      "${pkgname}",
+							"R",
+							"massage-examples.R")),
+		      "--args", "${pkgname}",
 		      &shell_quote_file_path(${Rexdir}),
 		      "> ${pkgname}-Ex.R"));
         }
