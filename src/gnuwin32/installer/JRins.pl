@@ -374,7 +374,6 @@ my %develfiles=("doc\\html\\logo.jpg" => 1,
 		"README.packages" => 1,
 		"COPYING.LIB" => 1,
 		"bin\\INSTALL" => 1,
-		"bin\\REMOVE" => 1,
 		"bin\\SHLIB" => 1,
 		"bin\\build" => 1,
 		"bin\\check" => 1,
@@ -456,7 +455,6 @@ sub listFiles {
 		 || m/^bin\\Rd2txt/
 		 || m/^bin\\Rdconv/
 		 || m/^bin\\Rdiff.sh/
-		 || m/^bin\\REMOVE/
 		 || m/^bin\\Rprof/
 		 || m/^bin\\Sd2Rd/
 		 || m/^bin\\SHLIB/

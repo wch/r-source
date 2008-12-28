@@ -136,7 +136,8 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	return(0);
     }
 
-    if (cmdarg > 0 && argc > cmdarg && strcmp(argv[cmdarg], "BATCH") == 0) {
+    if (cmdarg > 0 && argc > cmdarg && 
+	strcmp(argv[cmdarg], "BATCH") == 0) {
 	/* handle Rcmd BATCH internally */
 	char infile[MAX_PATH], outfile[MAX_PATH], *p, cmd_extra[CMD_LEN];
 	DWORD ret;
@@ -250,9 +251,33 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	}
 	CloseHandle(pi.hThread);
 	return(pwait(pi.hProcess));
+    } else if (cmdarg > 0 && argc > cmdarg && 
+	      strcmp(argv[cmdarg], "REMOVE") == 0) {
+	/* handle Rcmd REMOVE internally */
+	snprintf(cmd, CMD_LEN, 
+		 "%s/bin/Rterm.exe -f \"%s/share/R/REMOVE.R\" R_DEFAULT_PACKAGES=NULL --slave --args",
+		 getRHOME(), getRHOME());
+	for (i = cmdarg + 1; i < argc; i++){
+	    strcat(cmd, " ");
+	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
+		fprintf(stderr, "command line too long\n");
+		return(27);
+	    }
+	    /* Library names could contain spaces */
+	    if(strchr(argv[i], ' ')) {
+		strcat(cmd, "\"");
+		strcat(cmd, argv[i]);
+		strcat(cmd, "\"");
+	    } else strcat(cmd, argv[i]);
+	}
+	printf("cmd is %s\n", cmd);
+	status = system(cmd);
+	return(status);
     } else {
 	RHome = getRHOME();
-	if (argc > cmdarg+1 && strcmp(argv[cmdarg+1], "RHOME") == 0) {	    fprintf(stdout, "%s", RHome);
+	if (argc > cmdarg+1 && 
+	    strcmp(argv[cmdarg+1], "RHOME") == 0) {
+	    fprintf(stdout, "%s", RHome);
 	    return(0);
 	}
 	strcpy(RHOME, "R_HOME=");
