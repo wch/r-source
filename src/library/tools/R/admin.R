@@ -67,9 +67,16 @@
     if(!nzchar(lib)) {
         lib <- .libPaths()[1]
         message("Removing from libary ", sQuote(lib))
+    } else {
+        ## lib is allowed to be a relative path.
+        cwd <- try(setwd(lib), silent = TRUE)
+        if(inherits(cwd, "try-error"))
+            stop("ERROR: cannot cd to directory ", sQuote(lib), call. = FALSE)
+        lib <- getwd()
+        setwd(cwd)
     }
     if(!file_test("-d", lib) || file.access(lib, 2L))
-        stop("ERROR: cannot cd to or remove from directory ", sQuote(lib),
+        stop("ERROR: no permission to remove from directory ", sQuote(lib),
              call. = FALSE)
     utils::remove.packages(pkgs, lib)
     invisible()

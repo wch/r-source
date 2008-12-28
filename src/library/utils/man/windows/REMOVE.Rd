@@ -1,23 +1,25 @@
 % File src/library/utils/man/windows/REMOVE.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{REMOVE}
-\title{Remove Add-on Packages}
 \alias{REMOVE}
+\title{Remove Add-on Packages}
+\description{Utility for removing add-on packages.}
 \usage{
-\special{R CMD REMOVE [-l lib] pkgs}
+\special{R CMD REMOVE [options] [-l lib] pkgs}
 }
 \arguments{
-  \item{pkgs}{a list with the names of the packages to be removed.}
+  \item{pkgs}{a space-separated list with the names of the bundles or
+    packages to be removed.}
   \item{lib}{the path name of the \R library tree to remove from.  May
-    be absolute or relative.} 
-}
-\description{
-  Utility to remove add-on packages.
+    be absolute or relative.  Also accepted in the form \samp{--library=lib}.}
+  \item{options}{further options for help or version.}
 }
 \details{
+  If the name of a bundle is given, the whole bundle will be removed.
+  
   If used as \code{R CMD REMOVE pkgs} without explicitly specifying
   \code{lib}, packages are removed from the library tree rooted at the
   first directory in the library path which would be used by \R run in
