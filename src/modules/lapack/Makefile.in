@@ -107,7 +107,7 @@ mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
 	@-rm -f Makedeps *.d *.o *.a *.lo *.la \
-	  lapack$(SHLIB_EXT) @USE_EXTERNAL_LAPACK_FALSE@ libRlapack$(DYLIB_EXT)
+	  lapack$(SHLIB_EXT) libRlapack$(DYLIB_EXT)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

@@ -149,6 +149,7 @@ distclean: clean
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(NON_SVN_INSTFILES); \
 	fi
+	-@rm -rf libconftest.dSYM
 	-@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
 	  config.cache config.log config.status libtool \
 	  $(ACLOCAL_M4) acinclude.m4 $(distdir).tar.gz

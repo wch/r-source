@@ -101,11 +101,12 @@ test-out-regexp = $(test-src-regexp:.R=.Rout)
 test-out-reg3 = $(test-src-reg3:.R=.Rout)
 test-out-segfault = $(test-src-segfault:.R=.Rout)
 
-## This macro is used only for dependencies
+## This macro is used only for dependencies and for distclean
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) \
 	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
-	$(test-out-segfault) $(test-out-isas)
+	$(test-out-segfault) $(test-out-isas) \
+	$(test-out-primitive) utf8-regex.Rout
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct

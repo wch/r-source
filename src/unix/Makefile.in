@@ -58,7 +58,7 @@ libunix.a: $(OBJECTS)
 
 mostlyclean: clean
 clean:
-	@-rm -rf .libs _libs
+	@-rm -rf .libs _libs Rscript.dSYM
 	@-rm -f Makedeps *.d *.o *.a *.lo *.la stamp-lo
 distclean: clean
 	@-rm -f Makefile Rscript
