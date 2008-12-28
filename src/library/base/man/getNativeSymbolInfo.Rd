@@ -7,6 +7,7 @@
 \alias{getNativeSymbolInfo}
 \alias{NativeSymbolInfo} % the class
 \alias{NativeSymbol} % the class
+\alias{RegisteredNativeSymbol} % the class
 \title{
   Obtain a Description of one or more Native (C/Fortran) Symbols
 }

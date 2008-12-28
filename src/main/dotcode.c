@@ -799,8 +799,7 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(symbol.symbol.external->numArgs != length(args))
 	    errorcall(call,
 		      _("Incorrect number of arguments (%d), expecting %d for %s"),
-		      length(args), symbol.symbol.external->numArgs,
-		      translateChar(STRING_ELT(CAR(args), 0)));
+		      length(args), symbol.symbol.external->numArgs, buf);
     }
 #endif
 
@@ -842,8 +841,7 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(symbol.symbol.call->numArgs != nargs)
 	    errorcall(call,
 		      _("Incorrect number of arguments (%d), expecting %d for %s"),
-		      nargs, symbol.symbol.call->numArgs,
-		      translateChar(STRING_ELT(nm, 0)));
+		      nargs, symbol.symbol.call->numArgs, buf);
     }
 
     retval = R_NilValue;	/* -Wall */
