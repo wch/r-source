@@ -292,6 +292,10 @@ BUG FIXES
     o	Assigning an additional element to a pairlist/language element
  	by x[["foo"]] <- value did not name the additional element.
 
+    o	.Call() and .External() were not accepting "NativeSymbolInfo"
+	and "NativeSymbol" objects as claimed. (Patch from Olaf
+	Mersmann.)
+
 
 
 
