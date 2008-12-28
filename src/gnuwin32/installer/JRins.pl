@@ -378,7 +378,6 @@ my %develfiles=("doc\\html\\logo.jpg" => 1,
 		"bin\\SHLIB" => 1,
 		"bin\\build" => 1,
 		"bin\\check" => 1,
-		"bin\\massage-Examples" => 1,
 		"bin\\Rd2dvi.sh" => 1,
 		"bin\\Rd2txt" => 1,
 		"bin\\Rdconv" => 1,
@@ -453,7 +452,6 @@ sub listFiles {
 		 || m/^bin\\build/
 		 || m/^bin\\check/
 		 || m/^bin\\INSTALL/
-		 || m/^bin\\massage-Examples/
 		 || m/^bin\\Rd2dvi.sh/
 		 || m/^bin\\Rd2txt/
 		 || m/^bin\\Rdconv/

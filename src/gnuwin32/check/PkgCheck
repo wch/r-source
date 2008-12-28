@@ -32,14 +32,14 @@ run: $(PKG)-Ex.R
 	fi
 
 
-$(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/* $(RHOME)/bin/massage-Examples
+$(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/* $(RHOME)/share/R/massage-examples.R
 	@$(ECHO) "Massaging examples into '$(PKG)-Ex.R' ..."
 	@if test -f $(RLIB)/$(PKG)/R-ex/Rex.zip; then \
 	  (cd $(RLIB)/$(PKG)/R-ex; unzip -oq Rex); \
-	  perl $(RHOME)/bin/massage-Examples $(PKG) $(RLIB)/$(PKG)/R-ex/*.R > $@; \
+	  LC_ALL=C $(RHOME)/bin/rterm --slave < $(RHOME)/share/R/massage-examples.R --args $(PKG) $(RLIB)/$(PKG)/R-ex/*.R > $@; \
 	  (cd $(RLIB)/$(PKG)/R-ex; $(RM) -f *.R); \
 	else \
-	  perl $(RHOME)/bin/massage-Examples $(PKG) $(RLIB)/$(PKG)/R-ex/*.R > $@; \
+	  LC_ALL=C $(RHOME)/bin/rterm --slave < $(RHOME)/share/R/massage-examples.R --args $(PKG) $(RLIB)/$(PKG)/R-ex/*.R > $@; \
 	fi
 
 test-src-1=$(shell ls *.R 2> /dev/null)

@@ -34,6 +34,8 @@ if(length(args) > 1 && file_test("-d", args[2])) {
 
 lines <- readLines(file.path(R.home(), "share", "R", "examples-header.R"))
 cat(sub("@PKG@", pkg, lines), sep = "\n")
+if(.Platform$OS.type == "windows")
+    cat("options(pager = \"console\")\n")
 
 if(pkg == "tcltk") {
     cat("require('tcltk') || q()\n\n")
