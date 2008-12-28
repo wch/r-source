@@ -130,7 +130,7 @@ foreach my $file (@Rfiles) {
     my $nm;
 
     $nm = basename $file, (".R");
-    $nm =~ s/[^- .a-zA-Z0-9]/./g;
+    $nm =~ s/[^- .a-zA-Z0-9_]/./g;
 
     if ($PKG eq "graphics" && $file =~ /[^m]text\.R$/) { next; }
     open(FILE, "< $file") or die "file $file cannot be opened";

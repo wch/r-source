@@ -1,6 +1,6 @@
 % File src/library/base/man/zScript.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{.Script}
@@ -32,9 +32,9 @@
     when invoking the interpreter on the script.}
 }
 \note{This function is for R internal use only.}
-\examples{
+\examples{\dontrun{
 ## not useful on Windows, where the help is zipped.
 .Script("perl", "massage-Examples.pl",
         paste("tools", system.file("R-ex", package = "tools")))
-}
+}}
 \keyword{interface}

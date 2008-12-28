@@ -143,17 +143,20 @@ UTILITIES
 	up src/.
 
     o	R CMD Rd2dvi and R CMD check are now able to cope with Cyrillic
-    	characters in UTF-8 (thanks to a hint from Alexey Shipunov).
+	characters in UTF-8 (thanks to a hint from Alexey Shipunov).
 
-    o   New function rtags() in package 'utils' that provides etags-like
+    o	New function rtags() in package 'utils' that provides etags-like
 	indexing capabilities for R code files.
+
+	New front-end script R CMD rtags provides an interface to the
+	rtags() function (see R CMD rtags --help for details).
 
     o	New environment variable R_TEXI2DVICMD to hold the path (if any)
 	to 'texi2dvi' found at configure time: this now provides the
 	default to option("texi2dvi").
 
-    o   New front-end script R CMD rtags provides an interface to the
-    	rtags() function (see R CMD rtags --help for details).
+    o	massage-Examples.pl has been replaced by an R script
+	share/R/massage-examples.R .
 
 
 Rd CONVERSION
@@ -2051,7 +2054,7 @@ UTILITIES
     o	R CMD check now warns if spaces or non-ASCII characters are
 	used in file paths, since these are not in general portable.
 
-    o	R CMD check (via massage-examples.pl) now checks all examples
+    o	R CMD check (via massage-Examples.pl) now checks all examples
 	with a 7 inch square device region on A4 paper, for
 	locale-independence and to be similar to viewing examples on
 	an on-screen device.

@@ -431,7 +431,9 @@ test-undoc:
 	  fi; \
 	done
 
+## There is a potential name clash here on case-insensitive Mac OS X
 test-Packages-Recommended:
+	@rm -f PACKAGES
 	@test -d Packages || mkdir Packages
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
 	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
@@ -455,7 +457,7 @@ clean:
 	-@rm -f stamp-R Makedeps Rplot* Rprof.out data dumpdata.R \
 	  reg-plot-latin1.ps reg-plot.ps reg-tests-?.ps \
 	  R-exts.* R-intro.R R-intro.Rout \
-	  FALSE* .R .tex mirrors.html
+	  FALSE* .R .tex mirrors.html PACKAGES*
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	-@rm -f ver10.txt ver10.html ver10.tex ver10-Ex.R
 	-@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R

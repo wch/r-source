@@ -79,7 +79,7 @@ R:
 
 ## <NOTE>
 ## We need to update an ex_in file if it is older than any Rd file it
-## contains examples from, or older than massage-Examples.R.  As we do
+## contains examples from, or older than massage-examples.R.  As we do
 ## not have the Rd files as explicit dependencies (which would currently
 ## be impossible for recommended packages), we cannot use Make to figure
 ## out the need to update ex_in files ... hence we do things ourselves,
@@ -93,7 +93,7 @@ R:
 ## </NOTE>
 $(EX_IN_BASE): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
-	if find $@ -newer $(top_srcdir)/share/R/massage-Examples.R \
+	if find $@ -newer $(top_srcdir)/share/R/massage-examples.R \
 	    -print 2> /dev/null | grep $@ > /dev/null; then \
 	  target_is_newer_than_massage_Ex=yes; \
 	else \
@@ -112,7 +112,7 @@ $(EX_IN_BASE): FORCE
 	    OPTS="--txt --example" $(MAKE) R_PKGS_BASE="$${pkg}" Rdfiles); \
 	  f=$${TMPDIR-/tmp}/R$$$$; \
 	  LC_ALL=C $(top_builddir)/bin/R --slave \
-	    < $(top_srcdir)/share/R/massage-Examples.R --args $${pkg} \
+	    < $(top_srcdir)/share/R/massage-examples.R --args $${pkg} \
 	    $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} $@; \
 	  touch $@; \
@@ -120,7 +120,7 @@ $(EX_IN_BASE): FORCE
 
 $(EX_IN_RECOMMENDED): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
-	if find $@ -newer $(top_srcdir)/share/R/massage-Examples.R \
+	if find $@ -newer $(top_srcdir)/share/R/massage-examples.R \
 	    -print 2> /dev/null | grep $@ > /dev/null; then \
 	  target_is_newer_than_massage_Ex=yes; \
 	else \
@@ -137,7 +137,7 @@ $(EX_IN_RECOMMENDED): FORCE
 	  $(ECHO) "collecting examples for package '$${pkg}' ..."; \
 	  f=$${TMPDIR-/tmp}/R$$$$; \
 	  LC_ALL=C $(top_builddir)/bin/R --slave \
-	    < $(top_srcdir)/share/R/massage-Examples.R --args $${pkg} \
+	    < $(top_srcdir)/share/R/massage-examples.R --args $${pkg} \
 	    $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} $@; \
 	  touch $@; \
