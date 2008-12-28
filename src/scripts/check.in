@@ -2211,15 +2211,16 @@ sub check_pkg {
         }
         if($WINDOWS) {
             ## We've forced R_HOME and Rexdir to have no spaces already.
-            $cmd = "${R::Vars::R_HOME}/bin/Rterm --slave". 
+            $cmd = "LC_ALL=C ${R::Vars::R_HOME}/bin/Rterm --slave --vanilla ". 
 		"-f ${R::Vars::R_HOME}/share/R/massage-examples.R ".
 		"--args ${pkgname} ${Rexdir} ".
 		"> ${pkgname}-Ex.R";
         } else {
 	    $cmd =
 		join(" ",
-		     (&shell_quote_file_path(${R::Vars::R_EXE}),
-		      "--slave -f",
+		     ("LC_ALL=C",
+		      &shell_quote_file_path(${R::Vars::R_EXE}),
+		      "--slave --vanilla -f",
 		      &shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
 							"R",
 							"massage-examples.R")),
