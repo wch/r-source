@@ -2,8 +2,7 @@
 #
 # ${R_HOME}/bin/REMOVE for removing add-on packages
 
-echo "tools:::.remove_packages()" | \
-  R_DEFAULT_PACKAGES=NULL ${R_HOME}/bin/R --slave --args $@
+R_DEFAULT_PACKAGES=NULL "${R_HOME}/bin/R" -f "${R_HOME}/share/R/REMOVE.R" --slave --args $@
 
 ### Local Variables: ***
 ### mode: sh ***

@@ -1,2 +1,62 @@
-tools:::.remove_packages()
+Usage <- function() {
+    cat("Usage: R CMD REMOVE [options] pkgs",
+        "",
+        "Remove the add-on packages specified by pkgs.  The library tree to",
+        "remove from can be specified via '--library'.  By default, packages are",
+        "removed from the library tree rooted at the first directory in",
+        ".libPaths() for an R session run in the current environment.",
+        "",
+        "Options:",
+        "  -h, --help		print short help message and exit",
+        "  -v, --version		print REMOVE version info and exit",
+        "  -l, --library=LIB	remove packages from library tree LIB",
+        "",
+        "Report bugs to <r-bugs@r-project.org>.", sep="\n")
+}
 
+options(showErrorCalls=FALSE)
+pkgs <- character(0)
+lib <- ""
+args <- commandArgs(TRUE)
+while(length(args)) {
+    a <- args[1]
+    if(a %in% c("-h", "--help")) {
+        Usage()
+        return(invisible())
+    }
+    else if(a %in% c("-v", "--version")) {
+        cat("R add-on package remover ", R.version[["svn rev"]], "\n", sep = "")
+        cat("",
+            "Copyright (C) 2000-2008 The R Core Development Team.",
+            "This is free software; see the GNU General Public License version 2",
+            "or later for copying conditions.  There is NO warranty.",
+            sep="\n")
+        return(invisible())
+    }
+    else if(a == "-l") {
+        if(length(args) >= 2) {lib <- args[2]; args <- args[-1]}
+        else stop("-l option without value", call. = FALSE)
+    } else if(substr(a, 1, 10) == "--library=")
+        lib <- substr(a, 11, 1000)
+    else pkgs <- c(pkgs, a)
+    args <- args[-1]
+}
+if(!length(pkgs))
+    stop("ERROR: no packages specified", call.=FALSE)
+if(!nzchar(lib)) {
+    lib <- .libPaths()[1]
+    message("Removing from libary ", sQuote(lib))
+} else {
+    ## lib is allowed to be a relative path.
+    ## should be OK below, but be sure.
+    cwd <- try(setwd(lib), silent = TRUE)
+    if(inherits(cwd, "try-error"))
+        stop("ERROR: cannot cd to directory ", sQuote(lib), call. = FALSE)
+    lib <- getwd()
+    setwd(cwd)
+}
+if(!utils::file_test("-d", lib) || file.access(lib, 2L))
+    stop("ERROR: no permission to remove from directory ", sQuote(lib),
+         call. = FALSE)
+utils::remove.packages(pkgs, lib)
+q("no")
