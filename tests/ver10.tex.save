@@ -3,7 +3,7 @@
 \begin{ldescription}
 \item[\code{foo}] item 1
 \item[\code{bar}] space, the item 2
-WARNING: invalid whitespace before brace in file 'ver10.Rd' at ' \item{bah} {newline, then item 3}'
+Warning: invalid whitespace before brace in file 'ver10.Rd' at ' \item{bah} {newline, then item 3}'
 \item[\code{bah}] newline, then item 3
 \end{ldescription}
 \end{Arguments}
@@ -45,7 +45,7 @@ An escape is needed in \email{Micah\_Altman@harvard.edu} in \R{} \textless{} 2.9
 \end{Section}
 \begin{Examples}
 \begin{ExampleCode}
-WARNING: \code inside \examples in file 'ver10.Rd'
+Warning: \code inside \examples in file 'ver10.Rd'
 
 Code such as \code{foo} inside \examples iused to be garbled.
 

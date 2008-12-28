@@ -17,7 +17,7 @@ item 1</td></tr>
 <tr valign="top"><td><code>bar</code></td>
 <td>
 space, the item 2</td></tr>
-WARNING: invalid whitespace before brace in file 'ver10.Rd' at ' \item{bah} {newline, then item 3}'
+Warning: invalid whitespace before brace in file 'ver10.Rd' at ' \item{bah} {newline, then item 3}'
 <tr valign="top"><td><code>bah</code></td>
 <td>
 newline, then item 3</td></tr>
@@ -70,7 +70,7 @@ Markus Kuhn, &ldquo;ASCII and Unicode quotation marks&rdquo;.
 An escape is needed in <a href="mailto:Micah_Altman@harvard.edu">Micah_Altman@harvard.edu</a> in <font face="Courier New,Courier" color="#666666"><b>R</b></font> &lt; 2.9.0
 </p>
 
-WARNING: \code inside code block in file 'ver10.Rd'
+Warning: \code inside code block in file 'ver10.Rd'
 
 <h3>Examples</h3>
 

@@ -7,7 +7,7 @@ _A_r_g_u_m_e_n_t_s:
      foo: item 1
 
      bar: space, the item 2
-WARNING: invalid whitespace before brace in file 'ver10.Rd' at ' \item{bah} {newline, then item 3}'
+Warning: invalid whitespace before brace in file 'ver10.Rd' at ' \item{bah} {newline, then item 3}'
 
      bah: newline, then item 3
 
@@ -54,7 +54,7 @@ _U_R_L_s _a_n_d _e_m_a_i_l_s:
      An escape is needed in Micah_Altman@harvard.edu in R < 2.9.0
 
 _E_x_a_m_p_l_e_s:
-WARNING: \code inside code block in file 'ver10.Rd'
+Warning: \code inside code block in file 'ver10.Rd'
 
      Code such as 'foo' inside \examples iused to be garbled.
 
