@@ -1566,6 +1566,9 @@ double R_atof(const char *str)
 }
 
 #ifdef USE_ICU
+# ifdef HAVE_LOCALE_H
+#  include <locale.h>
+# endif
 #ifdef USE_ICU_APPLE
 /* Mac OS X is missing the headers */
 typedef int UErrorCode; /* really an enum these days */
