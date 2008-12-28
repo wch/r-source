@@ -1313,11 +1313,13 @@ make
 @noindent
 and then sit back and wait.  The first two options are the default (and
 strongly recommended), and with some toolsets have been essential.
-Selecting @option{--with-ICU} replaces Apple's @code{wcscoll} with one
-that works correctly in UTF-8 locales.  The second line of options is
-also default on Mac OS X, but needed only if you want to build @R{} for
-use with @code{R.app} Console, and imply @option{--enable-R-shlib} to
-build @R{} as a shared/dynamic library.
+Selecting @option{--with-ICU} replaces Apple's @code{wcscoll} with
+one@footnote{It makes use of an Apple-supplied modified ICU library, and
+is known to work with Mac OS >= 10.4.}  that works correctly in UTF-8
+locales, and is the default as from @R{} 2.9.0.  The second line of
+options is also default on Mac OS X, but needed only if you want to
+build @R{} for use with @code{R.app} Console, and imply
+@option{--enable-R-shlib} to build @R{} as a shared/dynamic library.
 
 These options configure @R{} to be built and installed as a framework
 called @file{R.framework}.  The default path for @file{R.framework} is
@@ -2507,7 +2509,8 @@ Components for Unicode, @uref{http://www.icu-project.org}), and this
 provides much more precise control over collation on all systems.  ICU
 is available as sources and as binary distributions for (at least) most
 Linux distributions, Solaris 9/10, AIX and Windows, usually as @code{libicu} or
-@code{icu4c}.
+@code{icu4c}.  It will be used by default where available (including on
+Mac OS X >= 10.4).
 
 @menu
 * Tcl/Tk::                      

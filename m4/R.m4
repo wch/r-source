@@ -1404,13 +1404,10 @@ AC_DEFUN([R_PROG_OBJCXX],
 [AC_BEFORE([AC_PROG_CXX], [$0])
 AC_BEFORE([AC_PROG_OBJC], [$0])
 
-r_cached_objcxx=yes
-AC_MSG_CHECKING([for cached ObjC++ compiler])
+AC_MSG_CHECKING([for Objective C++ compiler])
 AC_CACHE_VAL([r_cv_OBJCXX],[
- AC_MSG_RESULT([none])
- r_cached_objcxx=no
+AC_MSG_RESULT([trying some possibilities])
 if test -n "${OBJCXX}"; then
-  AC_MSG_RESULT([defining OBJCXX to be ${OBJCXX}])
   R_PROG_OBJCXX_WORKS(${OBJCXX},,OBJCXX='')
 fi
 # try the sequence $OBJCXX, $CXX, $OBJC
@@ -1421,18 +1418,14 @@ if test -z "${OBJCXX}"; then
     fi
   )
 fi
-AC_MSG_CHECKING([for Objective C++ compiler])
+r_cv_OBJCXX="${OBJCXX}"
+])
+OBJCXX="${r_cv_OBJCXX}"
 if test -z "${OBJCXX}"; then
   AC_MSG_RESULT([no working compiler found])
 else
   AC_MSG_RESULT([${OBJCXX}])
 fi
-r_cv_OBJCXX="${OBJCXX}"
-if test "${r_cached_objcxx}" = yes; then
-  AC_MSG_RESULT(["${r_cv_OBJCXX}"])
-fi
-])
-OBJCXX="${r_cv_OBJCXX}"
 AC_SUBST(OBJCXX)
 ])# R_PROG_OBJCXX
 

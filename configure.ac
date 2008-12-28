@@ -415,9 +415,9 @@ AC_ARG_WITH([iconv],
 
 ## ICU
 AC_ARG_WITH([ICU],
-[AS_HELP_STRING([--with-ICU],[use ICU library @<:@no@:>@])],
+[AS_HELP_STRING([--with-ICU],[use ICU library @<:@yes@:>@])],
 [R_ARG_USE(ICU)],
-[use_ICU=no])
+[use_ICU=yes])
 
 
 ### ** Precious variables.
@@ -1954,16 +1954,19 @@ R_MBCS
 
 ## support for ICU
 if test "$use_ICU" = yes ; then
-case "${host_os}" in
-  darwin*)
-    AC_CHECK_LIB(icucore, ucol_open, [],
+  R_ICU
+  if test "$use_ICU" = no ; then
+    case "${host_os}" in
+      ## darwin has ICU 3.2 in 10.4, 3.6 in 10.5
+      darwin*)
+        AC_CHECK_LIB(icucore, ucol_open, [],
             [AC_MSG_ERROR([library 'icucore' is required for ICU])])
-    AC_DEFINE(USE_ICU_APPLE, 1, [Define to use Apple's ICU.])
-    AC_DEFINE(USE_ICU, 1, [Define to use ICU for collation.])
-  ;;
-  *)
-    R_ICU
-  esac
+        AC_DEFINE(USE_ICU_APPLE, 1, [Define to use Apple's ICU.])
+        AC_DEFINE(USE_ICU, 1, [Define to use ICU for collation.])
+	use_ICU=yes
+      ;;
+    esac
+  fi
 fi
 AC_SUBST(USE_ICU)
 AC_SUBST(USE_ICU_APPLE)
@@ -2316,6 +2319,7 @@ AC_SUBST(OSF_SH_BUG)
 ### since some AIX systems have zsh as sh.
 : ${R_SHELL=${SHELL}}
 AC_SUBST(R_SHELL)
+AC_MSG_RESULT([using as R_SHELL for scripts ... ${R_SHELL}])
 
 
 ### * Win32 overrides

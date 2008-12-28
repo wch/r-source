@@ -207,12 +207,8 @@ INSTALLATION
 
     o	libtool has been updated to 2.2.6a.
 
-    o	--with-ICU is now supported (and recommended) on Mac OS X using
-	Apple's supplied port.
-
-	Configure supports a wider range of ICU versions on other
-	OSes: version 3.0 should suffice, and 3.2, 3.8 and 4.0 have
-	been tested.
+    o	--with-ICU is now the default: this means that ICU will be
+	used on Mac OS >= 10.4.
 
 
 PACKAGE INSTALLATION
@@ -255,6 +251,16 @@ BUG FIXES
 
 
 		CHANGES IN R VERSION 2.8.1 patched
+
+
+INSTALLATION
+
+    o	--with-ICU is now supported (and recommended) on Mac OS X using
+	Apple's supplied port.
+
+	Configure supports a wider range of ICU versions on other
+	OSes: version 3.0 should suffice, and 3.2, 3.8 and 4.0 have
+	been tested.
 
 
 BUG FIXES
