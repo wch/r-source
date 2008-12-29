@@ -3969,9 +3969,9 @@ It is planned in due course to convert @file{.Rd} files in @R{} (rather
 than in Perl).  As a first step, a parser function @code{parse_Rd} is
 available in package @pkg{tools} as from @R{} 2.9.0, and this can be run
 over a package's help files as part of @command{R CMD check} by setting
-the environment variable @env{_R_CHECK_RD_PARSE_} to @samp{TRUE}.
-Sometimes the reported error is actually the result of a previous error,
-and running
+the environment variable @env{_R_CHECK_RD_PARSE_} to @samp{TRUE} (which
+is currently the default).  Sometimes the reported error is actually the
+result of a previous error, and running
 
 @example
 tools::parse_Rd(@var{filename}, verbose = TRUE)

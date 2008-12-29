@@ -130,7 +130,7 @@ my $R_check_executables =
 my $R_check_executables_exclusions =
     &R_getenv("_R_CHECK_EXECUTABLES_EXCLUSIONS_", "TRUE");
 my $R_check_Rd_parse =
-    &R_getenv("_R_CHECK_RD_PARSE_", "FALSE");
+    &R_getenv("_R_CHECK_RD_PARSE_", "TRUE");
 
 ## Maybe move basic configuration (and documentation) to
 ##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
@@ -1795,7 +1795,7 @@ sub check_pkg {
 
     my @msg2_writing_Rd
       = ("The Rdversion 2 parser is experimental.",
-	 "There are some false positives, but most reports are correct.\n");
+	 "There are some false positives, but almost all reports are correct.\n");
 
     if(-d "man") {
 	$log->checking("Rd files");

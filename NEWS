@@ -204,8 +204,9 @@ Rd CONVERSION
     	an experimental converter to HTML, have been added to package
     	'tools'.
 
-    o	R CMD check optionally (by setting _R_CHECK_RD_PARSE_) runs the
-	package's Rd files through parse_Rd() for a stricter syntax check.
+    o	R CMD check runs the package's Rd files through parse_Rd() for a
+	stricter syntax check.  This can be suppressed by setting
+	_R_CHECK_RD_PARSE_ to FALSE.
 
 
 INSTALLATION
