@@ -49,7 +49,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
                  method, available = NULL, destdir = NULL,
 		 dependencies = NA, type = getOption("pkgType"),
                  configure.args = character(0),
-                 clean = FALSE, \dots)
+                 clean = FALSE, Ncpus = getOption("Ncpus"), \dots)
 
 contrib.url(repos, type = getOption("pkgType"))
 }
@@ -172,6 +172,12 @@ contrib.url(repos, type = getOption("pkgType"))
     to add the \code{--clean} flag to the call to \code{R CMD INSTALL}.
     This is sometimes used to perform additional operations at the end
     of the package installation in addition to removing intermediate files.
+  }
+  \item{Ncpus}{The number of parallel processes to use for a parellel
+    install of source packages.  Values geater than one are supported
+    only if GNU \command{make} is in use (more precisely, if
+    \command{make -j \var{Ncpus}} works).  Defaults to \code{1} is the
+    option is unset.
   }
   \item{fields}{a character vector giving the fields to extract from
     the \code{PACKAGES} file(s) in addition to the default ones, or

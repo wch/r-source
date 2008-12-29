@@ -102,7 +102,7 @@ install.packages <-
              contriburl = contrib.url(repos, type),
              method, available = NULL, destdir = NULL, dependencies = NA,
              type = getOption("pkgType"), configure.args = character(0L),
-             clean = FALSE, ...)
+             clean = FALSE, Ncpus = getOption("Ncpus"), ...)
 {
     if (is.logical(clean) && clean)
         clean <- "--clean"
@@ -350,14 +350,55 @@ install.packages <-
         if (is.character(clean))
             cmd0 <- paste(cmd0, clean)
 
-        for(i in seq_len(nrow(update))) {
-            cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
-                          getConfigureArgs(update[i, 3L]), update[i, 3L])
-            status <- system(cmd)
+        if (is.null(Ncpus)) Ncpus <- 1L
+        if (Ncpus > 1L && nrow(update) > 1L) {
+            cmd0 <- paste(cmd0, "--pkglock")
+            tmpd <- file.path(tempdir(), "make_packages")
+            if (!file.exists(tmpd) && !dir.create(tmpd))
+                stop(gettextf("unable to create temporary directory '%s'", tmpd),
+                     domain = NA)
+            mfile <- file.path(tmpd, "Makefile")
+            conn <- file(mfile, "wt")
+            cat("all: ", paste(paste(update[, 1L], ".ts", sep=""),
+                               collapse=" "),
+                "\n", sep = "", file = conn)
+            for(i in seq_len(nrow(update))) {
+                pkg <- update[i, 1L]
+                cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
+                             getConfigureArgs(update[i, 3L]), update[i, 3L],
+                             ">", paste(pkg, ".ts", sep=""), "2>&1")
+                deps <- DL[[pkg]]
+                deps <- deps[deps %in% pkgs]
+                deps <- if(length(deps))
+                    paste(paste(deps, ".ts", sep=""), collapse=" ") else ""
+                cat(paste(pkg, ".ts: ", deps, sep=""),
+                    paste("\t@echo installing package", pkg),
+                    paste("\t@", cmd, sep=""),
+                    paste("\t@cat ", pkg, ".ts", sep=""),
+                    "", sep="\n", file = conn)
+            }
+            close(conn)
+            ## system(paste("cat ", mfile))
+            cwd <- setwd(tmpd)
+            on.exit(setwd(cwd))
+            ## MAKE will be set by sourcing Renviron, but in case not
+            make <- Sys.getenv("MAKE")
+            if(!nzchar(make)) make <- "make"
+            status <- system(paste(make, "-j", Ncpus))
             if(status > 0L)
-                warning(gettextf(
-                 "installation of package '%s' had non-zero exit status",
-                                 update[i, 1L]), domain = NA)
+                warning(gettext("installation of one of more packages failed"),
+                        domain = NA)
+            setwd(cwd); on.exit()
+            unlink(tmpd, recursive = TRUE)
+        } else {
+            for(i in seq_len(nrow(update))) {
+                cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
+                             getConfigureArgs(update[i, 3L]), update[i, 3L])
+                status <- system(cmd)
+                if(status > 0L)
+                    warning(gettextf("installation of package '%s' had non-zero exit status",
+                                     update[i, 1L]), domain = NA)
+            }
         }
         if(!is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded packages are in\n\t%s",

@@ -117,6 +117,9 @@ NEW FEATURES
     o	Package 'tools' contains dependsOnPkgs() to compute reverse
 	dependencies.
 
+    o	install.packages() has a new argument 'Ncpus' to support
+	parallel installs of source packages.
+
 
 DEPRECATED & DEFUNCT
 

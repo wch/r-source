@@ -44,6 +44,7 @@ Options:
       --fake		do minimal install for testing purposes
       --no-lock		install on top of any existing installation
 			without using a lock directory
+      --pkglock		use a per-package lock directory
       --libs-only	only install the libs directory
       --build           build binary tarball(s) of the installed package(s)
 
@@ -205,6 +206,8 @@ fake=false
 lazy=true
 lazy_data=false
 lock=true
+pkglock=false
+pkglockname=
 libs_only=false
 tar_up=false
 shargs=
@@ -263,6 +266,8 @@ while test -n "${1}"; do
       fake=true ;;
     --no-lock)
       lock=false ;;
+    --pkglock)
+      pkglock=true ;;
     --libs-only)
       libs_only=true ;;
     --build)
@@ -304,6 +309,14 @@ while test -n "${1}"; do
 	get_packages "${1}"
       else
 	warning "invalid package '${1}'"
+      fi
+      if ${pkglock} ; then
+        if test -z "${pkglockname}" ; then
+	  pkglockname=${pkgs}
+        else
+          pkglock=false
+          warning "--pkglock applies only to a single bundle/package"
+        fi
       fi
       ;;
   esac
@@ -369,7 +382,11 @@ else
   exit 2
 fi
 if ${lock} ; then
-  lockdir="${lib}/00LOCK"
+  if ${pkglock} ; then
+    lockdir="${lib}/00LOCK-${pkgname}"
+  else
+    lockdir="${lib}/00LOCK"
+  fi
   if ${debug} ; then  echo "   before checking lockdir= '${lockdir}'" ; fi
   if test -d "${lockdir}" || test -f "${lockdir}"; then
     error "failed to lock directory '${lib}' for modifying"
