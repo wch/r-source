@@ -16,6 +16,9 @@ HelpStyle = 1
 ## Default internet connection, 0=Standard, 1=Internet2
 Internet = 0
 
+## Used to set Registry entries
+Producer = R-core
+
 FULLVERSION=`cat ../../../VERSION`
 RPREFIX = $(shell $(PERL) ../fixed/rwver.pl $(R_HOME)/VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) $(EXTRA_PKGS), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
@@ -114,7 +117,7 @@ fixups:
 
 R.iss: JRins.pl CustomMsg.txt imagedir fixups md5sums \
   ../../../VERSION ../../../SVN-REVISION
-	$(PERL) JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet)
+	$(PERL) JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
 
 $(RPREFIX)-win32.exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1
@@ -157,5 +160,5 @@ myR:
 	@(cd $(IMAGEDIR); echo "tools:::.installMD5sums(\".\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
 	  bin/Rterm.exe --vanilla --slave)
-	$(PERL) JRins.pl $(RPREFIX) $(IMAGEDIR) $(MDISDI) $(HelpStyle) $(Internet)
+	$(PERL) JRins.pl $(RPREFIX) $(IMAGEDIR) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
 	"$(ISDIR)/iscc" R.iss > myR.log

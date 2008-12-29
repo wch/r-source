@@ -51,6 +51,23 @@ NEW FEATURES
 	the console) hidden, and to have recording turned on or off.
 
 
+INSTALLATIOM
+
+    o	The installer now checks for Windows 2000 or later.
+
+
+UTILITIES
+
+    o	RSetReg's name for the version-specific Registry entry in
+	development versions of R now matches that of the R installer.
+
+
+CUSTOMIZATION
+
+    o	The name of the producer can be changed in installer/Makefile
+	and front-ends/RSetReg.c.
+
+
 
 
 	**************************************************

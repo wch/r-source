@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-7  R Development Core Team
+ *  Copyright (C) 2001-8  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 #include <stdlib.h>		/* for exit */
 #include <Rversion.h>
 
-#define REG_KEY_NAME "Software\\R-core\\R"
+#define PRODUCER "R-core"
 
 extern char *getRHOMElong(void); /* in ../rhome.c */
 
@@ -31,16 +31,21 @@ int main (int argc, char **argv)
     int status = 0;
     DWORD subkeys = 0;
   
-    char *RHome, version[40];
+    char *RHome, version[40], keyname[60];
     LONG rc;
     HKEY hkey, hkey2;
     
+    snprintf(keyname, 60, "Software\\%s\\R", PRODUCER);
 
-    snprintf(version, 40, "%s.%s %s", R_MAJOR, R_MINOR, R_STATUS);
+    /* Needs to match JRins.pl */
+    if(strncmp(R_STATUS, "Under ", 6) == 0)
+	snprintf(version, 40, "%s.%s Pre-release", R_MAJOR, R_MINOR);
+    else
+	snprintf(version, 40, "%s.%s %s", R_MAJOR, R_MINOR, R_STATUS);
 
     if(argc > 1) { /* remove the keys */
 	printf("unregistering R ... ");
-	if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_KEY_NAME, 0, 
+	if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, keyname, 0, 
 			       KEY_SET_VALUE, &hkey)) == ERROR_SUCCESS) {
 	    RegDeleteValue(hkey, "InstallPath");
 	    RegDeleteValue(hkey, "Current Version");
@@ -54,7 +59,7 @@ int main (int argc, char **argv)
 	       RegCloseKey(hkey);
 	       if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software", 0, 
 				      KEY_SET_VALUE, &hkey)) == ERROR_SUCCESS) {
-		   RegDeleteKey(hkey, "R-core");
+		   RegDeleteKey(hkey, PRODUCER);
 		   RegCloseKey(hkey);
 	       }
 	   }
@@ -65,10 +70,10 @@ int main (int argc, char **argv)
 	}
     } else {
     	RHome = getRHOMElong();
-	if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_KEY_NAME, 0, 
+	if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, keyname, 0, 
 			       KEY_ALL_ACCESS, &hkey)) != ERROR_SUCCESS) {
 	    /* failed to open key, so try to create it */
-	    rc = RegCreateKey(HKEY_LOCAL_MACHINE, REG_KEY_NAME, &hkey);
+	    rc = RegCreateKey(HKEY_LOCAL_MACHINE, keyname, &hkey);
 	}
 	if(rc == ERROR_SUCCESS) {
 	    rc = RegSetValueEx(hkey, "InstallPath", 0, REG_SZ,
@@ -77,9 +82,9 @@ int main (int argc, char **argv)
 		rc = RegSetValueEx(hkey, "Current Version", 0, REG_SZ,
 				   (CONST BYTE *)version, lstrlen(version)+1);
 
-	    if (rc == ERROR_SUCCESS) 
+	    if (rc == ERROR_SUCCESS)
 	    	rc = RegCreateKey(hkey, version, &hkey2);
-	    	
+	    
 	    if (rc == ERROR_SUCCESS) {
 	    	rc = RegSetValueEx(hkey2, "InstallPath", 0, REG_SZ,
 	    			(CONST BYTE *)RHome, lstrlen(RHome)+1);
