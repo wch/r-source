@@ -1574,7 +1574,7 @@ SEXP attribute_hidden do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    tenv = CDR(tenv);
 	}
 	if (!done)
-	    warning(_("variable \"%s\" was not found"),
+	    warning(_("object '%s' not found"),
 		    CHAR(PRINTNAME(tsym)));
     }
     return R_NilValue;
@@ -1656,10 +1656,10 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 		  CHAR(PRINTNAME(t1)));
 	if (rval == R_UnboundValue) {
 	    if (gmode == ANYSXP)
-		error(_("variable \"%s\" was not found"),
+		error(_("object '%s' not found"),
 		      CHAR(PRINTNAME(t1)));
 	    else
-		error(_("variable \"%s\" of mode \"%s\" was not found"),
+		error(_("object '%s' of mode '%s' was not found"),
 		      CHAR(PRINTNAME(t1)),
 		      CHAR(STRING_ELT(CAR(CDDR(args)), 0))); /* ASCII */
 	}

@@ -645,7 +645,7 @@ SEXP attribute_hidden do_D(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static void InvalidExpression(char *where)
 {
-    error(_("invalid expression in \"%s\""), where);
+    error(_("invalid expression in '%s'"), where);
 }
 
 static int equal(SEXP expr1, SEXP expr2)

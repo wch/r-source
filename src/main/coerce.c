@@ -376,7 +376,7 @@ static SEXP coerceToSymbol(SEXP v)
     SEXP ans = R_NilValue;
     int warn = 0;
     if (length(v) <= 0)
-	error(_("invalid data of mode \"%s\" (too short)"),
+	error(_("invalid data of mode '%s' (too short)"),
 	      type2char(TYPEOF(v)));
     PROTECT(v);
     switch(TYPEOF(v)) {
