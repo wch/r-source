@@ -58,7 +58,7 @@ OutputBaseFilename=${RW}-win32
 PrivilegesRequired=none
 MinVersion=0,5.0
 END
-print "ArchitecturesInstallIn64BitMode=x64\nArchitecturesInstallIn64BitMode=x64" if $mode64bit;
+print "ArchitecturesInstallIn64BitMode=x64\nArchitectures=x64Allowed" if $mode64bit;
 
 my $lines=<<END;
 AppName=R for Windows $RVER
