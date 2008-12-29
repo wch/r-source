@@ -184,11 +184,12 @@ getOption(x)
       it defaults to
 #ifdef unix
       a value derived from the locale category \code{LC_PAPER}, or
-      if that is unavailable to a default set when \R was built.}
+      if that is unavailable to a default set when \R was built.
 #endif
 #ifdef windows
-      \code{"a4"}, or \code{"letter"} in US and Canadian locales.}
+      \code{"a4"}, or \code{"letter"} in US and Canadian locales.
 #endif
+    }
 
     \item{\code{pdfviewer}:}{default PDF viewer.
 #ifdef unix
@@ -457,16 +458,17 @@ getOption(x)
       and installed -- see \code{\link{install.packages}}.
 #ifdef windows
       Possible values are \code{"win.binary"} (the default) and
-      \code{"source"}.}
+      \code{"source"}.
 #endif
 #ifdef unix
       Possible values are \code{"source"} (the default except under the
       CRAN Mac OS X build) and \code{"mac.binary"}. The latter can
       have a suffix if supported by a special build, such as
       \code{"mac.binary.leopard"} to access the \code{"leopard"} tree
-      of repositories instead of the default \code{"universal"}.}
+      of repositories instead of the default \code{"universal"}.
 #endif
-
+    }
+    
     \item{\code{repos}:}{URLs of the repositories for use by
       \code{\link{update.packages}}.  Defaults to
       \code{c(CRAN="@CRAN@")}, a value that causes some utilities to
@@ -485,12 +487,13 @@ getOption(x)
 #ifdef unix
       Defaults to the value of \env{R_UNZIPCMD}, which is set in
       \file{etc/Renviron} if an \code{unzip} command was found during
-      configuration.}
+      configuration.
 #endif
 #ifdef windows
       Defaults to \code{"internal"} when the internal unzip code is
-      used.}
+      used.
 #endif
+    }
   }
 }
 
