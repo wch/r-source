@@ -4422,8 +4422,10 @@ function(cfile)
 .check_package_parseRd <-
 function(dir, silent = FALSE)
 {
-    enc <- read.dcf(file.path(dir, "DESCRIPTION"))["Encoding"]
-    if(is.na(enc)) encoding <- "unknown"
+    if(file.exists(file.path(dir, "DESCRIPTION"))) {
+        enc <- read.dcf(file.path(dir, "DESCRIPTION"))["Encoding"]
+        if(is.na(enc)) enc <- "unknown"
+    } else enc <- "unknown"
     pg <- c(Sys.glob(file.path(dir, "man", "*.Rd")),
             Sys.glob(file.path(dir, "man/*", "*.Rd")))
     bad <- character(0)
@@ -4438,8 +4440,10 @@ function(dir, silent = FALSE)
         }
     }
     bad <- sub(".*/","", bad)
-    if(length(bad))
+    if(length(bad) > 1L)
         cat("problems found in ", paste(bad, collapse=", "), "\n", sep="")
+    else if(length(bad))
+        cat("problem found in ", bad, "\n", sep="")
     invisible()
 }
 
