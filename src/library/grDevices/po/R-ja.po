@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:48\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2008-09-30 10:49+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -288,6 +288,13 @@ msgstr " 'rescale' の値が不正です "
 
 msgid "can only bring windows devices to the front"
 msgstr " windows デバイスしか正面にもってくることが出来ません "
+
+msgid "'type' not applicable to the R console"
+msgstr ""
+
+#, fuzzy
+msgid "can only manipulate windows devices"
+msgstr " 'windows' デバイスからしかコピーできません "
 
 msgid "can only copy from 'windows' devices"
 msgstr " 'windows' デバイスからしかコピーできません "

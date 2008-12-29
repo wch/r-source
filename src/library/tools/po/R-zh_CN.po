@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:13\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -140,7 +140,7 @@ msgstr "不存在'%s'这一文件"
 msgid ""
 "parse error in file '%s':\n"
 "%s"
-msgstr "" 
+msgstr ""
 "文件'%s'里句法分析有错：\n"
 "%s"
 
@@ -169,6 +169,10 @@ msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr "程辑包的名字'%s'好象有问题；用文件目录名'%s'替代"
 
 msgid "Packages required but not available:"
+msgstr "需要有程辑包但它却不存在:"
+
+#, fuzzy
+msgid "Packages required and available but unsuitable version:"
 msgstr "需要有程辑包但它却不存在:"
 
 msgid "Former standard packages required but now defunct:"
@@ -376,6 +380,10 @@ msgstr "'::'或':::'引进没有被声明:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "'library'或'require'调用没有被声明:"
 
+#, fuzzy
+msgid "*** error on file"
+msgstr "文件'%s'里句法分析有错:"
+
 msgid "Generics g in env ="
 msgstr "同属函数g在env="
 
@@ -471,6 +479,9 @@ msgstr "无法使用缺少或有空白名字的Rd对象"
 
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "Rd文件里缺少或有空白的\\name域"
+
+msgid "Rd2HTML is designed for Rd version 2 or higher."
+msgstr ""
 
 msgid "unable to create temp directory"
 msgstr "无法建立temp目录"
@@ -617,6 +628,16 @@ msgstr "'DESCRIPTION'有'encoding'这个域，却无法重新编码"
 msgid "cannot create HTML package index"
 msgstr "无法建立HTML程辑包索引"
 
+msgid "multiple \\encoding lines in file"
+msgstr ""
+
+#, fuzzy
+msgid "found encoding"
+msgstr "没有这种编码"
+
+msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
+msgstr ""
+
 msgid "argument 'pkg' must be of length 1"
 msgstr "变元'pkg'的长度必需是一"
 
@@ -710,4 +731,3 @@ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 
 #~ msgid "unable to run pdflatex on '%s'"
 #~ msgstr "无法在'%s'上调用pdflatex"
-

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 13:00\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -205,6 +205,9 @@ msgstr "'formula'가 없거나 부정확합니다"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "그룹화 인자는 꼭 2 levels을 가지지 않으면 안됩니다"
+
+msgid "weights are not supported in a multistratum aov() fit"
+msgstr ""
 
 msgid "Error() model is singular"
 msgstr "Error()모델은 특이합니다"
@@ -1474,6 +1477,12 @@ msgstr ""
 "'cterms' 파라미터는 모델 오브젝트중의 항에 적합하지 않으면 되지 않습니다"
 
 msgid "Design is unbalanced - use se.contrast() for se's"
+msgstr ""
+"설계는 균형을 잃게 할 수 있습니다. se를 위해서 \n"
+"se.contrast()를 사용합니다"
+
+#, fuzzy
+msgid "design is unbalanced so cannot proceed"
 msgstr ""
 "설계는 균형을 잃게 할 수 있습니다. se를 위해서 \n"
 "se.contrast()를 사용합니다"

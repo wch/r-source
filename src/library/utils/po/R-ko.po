@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 13:00\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -600,6 +600,13 @@ msgstr "모든 패키지는 적어도 1개의 다른것에 의존합니다"
 msgid "packages %s are mutually dependent"
 msgstr "패키지%s는 서로 의존합니다"
 
+msgid ""
+"Do not know which element of 'lib' to install dependencies into\n"
+"skipping dependencies"
+msgstr ""
+"모르는 어느'lib' 요소가 의존성의 스킵에\n"
+"의존성을 설치합니다"
+
 msgid "no packages were specified"
 msgstr "패키지는 지정되지 않았습니다"
 
@@ -653,13 +660,6 @@ msgstr "패키지 '%s'의 설치는 zero이 아닌 exit 상태를 가지고 있�
 #, fuzzy
 msgid "unable to create temporary directory '%s'"
 msgstr "일시적 디렉토리 '%s'를 작성할수가 없습니다"
-
-msgid ""
-"Do not know which element of 'lib' to install dependencies into\n"
-"skipping dependencies"
-msgstr ""
-"모르는 어느'lib' 요소가 의존성의 스킵에\n"
-"의존성을 설치합니다"
 
 msgid ""
 "The downloaded packages are in\n"
@@ -1058,11 +1058,6 @@ msgstr[0] ""
 "검색되지 않는 objects '%s' 입니다"
 
 #, fuzzy
-msgid "'lib' element '%s'  is not a writable directory"
-msgid_plural "'lib' elements '%s' are not writable directories"
-msgstr[0] "'destdir'는 디렉토리가 아닙니다"
-
-#, fuzzy
 msgid "package %s is not available"
 msgid_plural "packages %s are not available"
 msgstr[0] ""
@@ -1082,6 +1077,11 @@ msgid_plural "also installing the dependencies %s"
 msgstr[0] ""
 "한층 더 dependency를 인스톨 합니다\n"
 "한층 더 depengencies를 인스톨 합니다"
+
+#, fuzzy
+msgid "'lib' element '%s'  is not a writable directory"
+msgid_plural "'lib' elements '%s' are not writable directories"
+msgstr[0] "'destdir'는 디렉토리가 아닙니다"
 
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"

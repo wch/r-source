@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:13\n"
-"PO-Revision-Date: 2008-09-08 14:13\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
+"PO-Revision-Date: 2008-12-29 14:43\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -188,6 +188,9 @@ msgstr "package name ‘%s’ seems invalid; using directory name ‘%s’ inste
 
 msgid "Packages required but not available:"
 msgstr "Packages required but not available:"
+
+msgid "Packages required and available but unsuitable version:"
+msgstr "Packages required and available but unsuitable version:"
 
 msgid "Former standard packages required but now defunct:"
 msgstr "Former standard packages required but now defunct:"
@@ -399,6 +402,9 @@ msgstr "‘::’ or ‘:::’ imports not declared from:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "‘library’ or ‘require’ calls not declared from:"
 
+msgid "*** error on file"
+msgstr "*** error on file"
+
 msgid "Generics g in env ="
 msgstr "Generics g in env ="
 
@@ -495,6 +501,9 @@ msgstr "cannot deal with Rd objects with missing/empty names"
 
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "missing/empty \\name field in Rd file(s)"
+
+msgid "Rd2HTML is designed for Rd version 2 or higher."
+msgstr "Rd2HTML is designed for Rd version 2 or higher."
 
 msgid "unable to create temp directory"
 msgstr "unable to create temp directory"
@@ -641,6 +650,15 @@ msgstr "‘DESCRIPTION’ has ‘Encoding’ field and re-encoding is not possib
 
 msgid "cannot create HTML package index"
 msgstr "cannot create HTML package index"
+
+msgid "multiple \\encoding lines in file"
+msgstr "multiple \\encoding lines in file"
+
+msgid "found encoding"
+msgstr "found encoding"
+
+msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
+msgstr "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "argument ‘pkg’ must be of length 1"

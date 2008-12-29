@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-12-16 12:56+0000\n"
-"PO-Revision-Date: 2008-12-16 12:56+0000\n"
+"POT-Creation-Date: 2008-12-29 14:43+0000\n"
+"PO-Revision-Date: 2008-12-29 14:43+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -113,105 +113,106 @@ msgstr "problem in displaying ‘%s’"
 #: src/gnuwin32/extra.c:324 src/gnuwin32/extra.c:348 src/gnuwin32/extra.c:356
 #: src/gnuwin32/extra.c:503 src/gnuwin32/extra.c:523 src/gnuwin32/extra.c:564
 #: src/gnuwin32/extra.c:740 src/gnuwin32/extra.c:824 src/gnuwin32/extra.c:827
-#: src/gnuwin32/extra.c:832 src/gnuwin32/extra.c:1432 src/main/apply.c:192
-#: src/main/apply.c:194 src/main/apply.c:197 src/main/array.c:73
-#: src/main/array.c:1026 src/main/array.c:1159 src/main/array.c:1161
-#: src/main/array.c:1162 src/main/attrib.c:193 src/main/builtin.c:155
-#: src/main/builtin.c:508 src/main/builtin.c:524 src/main/builtin.c:702
-#: src/main/character.c:105 src/main/character.c:108 src/main/character.c:167
-#: src/main/character.c:3091 src/main/character.c:3095
-#: src/main/character.c:3158 src/main/character.c:3162
-#: src/main/character.c:3224 src/main/connections.c:911
-#: src/main/connections.c:917 src/main/connections.c:920
-#: src/main/connections.c:924 src/main/connections.c:1066
-#: src/main/connections.c:1082 src/main/connections.c:1087
-#: src/main/connections.c:1278 src/main/connections.c:1284
-#: src/main/connections.c:1288 src/main/connections.c:1291
-#: src/main/connections.c:1469 src/main/connections.c:1475
-#: src/main/connections.c:1479 src/main/connections.c:2061
-#: src/main/connections.c:2066 src/main/connections.c:2069
-#: src/main/connections.c:2072 src/main/connections.c:2433
-#: src/main/connections.c:2438 src/main/connections.c:2444
-#: src/main/connections.c:2448 src/main/connections.c:2463
-#: src/main/connections.c:2514 src/main/connections.c:2519
-#: src/main/connections.c:2523 src/main/connections.c:2527
-#: src/main/connections.c:2531 src/main/connections.c:2537
-#: src/main/connections.c:2583 src/main/connections.c:2589
-#: src/main/connections.c:2593 src/main/connections.c:2644
-#: src/main/connections.c:2647 src/main/connections.c:2907
-#: src/main/connections.c:2910 src/main/connections.c:2913
-#: src/main/connections.c:3008 src/main/connections.c:3014
-#: src/main/connections.c:3163 src/main/connections.c:3166
-#: src/main/connections.c:3170 src/main/connections.c:3173
-#: src/main/connections.c:3280 src/main/connections.c:3383
-#: src/main/connections.c:3697 src/main/connections.c:3720
-#: src/main/connections.c:3753 src/main/connections.c:3771
-#: src/main/connections.c:3791 src/main/connections.c:3931
-#: src/main/connections.c:3935 src/main/connections.c:4061
-#: src/main/connections.c:4063 src/main/connections.c:4065
-#: src/main/connections.c:4097 src/main/connections.c:4225
-#: src/main/connections.c:4251 src/main/connections.c:4255
-#: src/main/connections.c:4259 src/main/context.c:497 src/main/context.c:506
-#: src/main/context.c:510 src/main/datetime.c:647 src/main/datetime.c:722
-#: src/main/datetime.c:724 src/main/datetime.c:728 src/main/datetime.c:861
-#: src/main/datetime.c:863 src/main/datetime.c:1009 src/main/debug.c:208
-#: src/main/deparse.c:344 src/main/devices.c:581 src/main/dounzip.c:180
-#: src/main/dounzip.c:186 src/main/envir.c:1463 src/main/envir.c:1466
-#: src/main/envir.c:1555 src/main/envir.c:1560 src/main/envir.c:1626
-#: src/main/envir.c:1642 src/main/envir.c:1648 src/main/envir.c:1742
-#: src/main/envir.c:1750 src/main/envir.c:1757 src/main/envir.c:1771
-#: src/main/envir.c:1777 src/main/envir.c:1781 src/main/envir.c:1977
-#: src/main/envir.c:2098 src/main/envir.c:2356 src/main/envir.c:2630
-#: src/main/envir.c:3164 src/main/eval.c:282 src/main/eval.c:1706
-#: src/main/eval.c:1730 src/main/eval.c:1734 src/main/memory.c:2985
-#: src/main/model.c:1612 src/main/model.c:1620 src/main/optim.c:225
-#: src/main/paste.c:85 src/main/paste.c:344 src/main/paste.c:351
-#: src/main/paste.c:358 src/main/paste.c:363 src/main/paste.c:368
-#: src/main/paste.c:373 src/main/paste.c:376 src/main/paste.c:384
-#: src/main/paste.c:532 src/main/paste.c:537 src/main/platform.c:290
-#: src/main/platform.c:292 src/main/platform.c:294 src/main/platform.c:965
-#: src/main/platform.c:971 src/main/platform.c:1026 src/main/platform.c:1074
-#: src/main/platform.c:1077 src/main/platform.c:1080 src/main/platform.c:1083
-#: src/main/platform.c:1086 src/main/platform.c:1170 src/main/platform.c:1173
-#: src/main/platform.c:1326 src/main/platform.c:1329 src/main/platform.c:1365
-#: src/main/platform.c:1368 src/main/platform.c:1406 src/main/platform.c:1445
-#: src/main/platform.c:1447 src/main/platform.c:1505 src/main/platform.c:1596
-#: src/main/platform.c:1857 src/main/platform.c:1897 src/main/platform.c:2013
-#: src/main/platform.c:2041 src/main/plot.c:2951 src/main/plot.c:4088
-#: src/main/plot.c:4092 src/main/plot.c:4095 src/main/plot3d.c:2464
-#: src/main/plot3d.c:2468 src/main/plot3d.c:2473 src/main/plot3d.c:2477
-#: src/main/plot3d.c:2481 src/main/plot3d.c:2485 src/main/print.c:175
-#: src/main/print.c:181 src/main/print.c:203 src/main/print.c:209
-#: src/main/print.c:215 src/main/random.c:469 src/main/random.c:473
-#: src/main/random.c:475 src/main/random.c:477 src/main/saveload.c:1975
-#: src/main/saveload.c:1978 src/main/saveload.c:1981 src/main/saveload.c:2098
-#: src/main/saveload.c:2266 src/main/saveload.c:2271 src/main/saveload.c:2274
-#: src/main/saveload.c:2368 src/main/saveload.c:2418 src/main/scan.c:672
-#: src/main/scan.c:839 src/main/scan.c:852 src/main/scan.c:856
-#: src/main/scan.c:858 src/main/scan.c:869 src/main/scan.c:896
-#: src/main/scan.c:899 src/main/scan.c:952 src/main/scan.c:991
-#: src/main/scan.c:995 src/main/scan.c:1005 src/main/scan.c:1221
-#: src/main/scan.c:1497 src/main/scan.c:1509 src/main/scan.c:1513
-#: src/main/scan.c:1519 src/main/scan.c:1747 src/main/scan.c:1748
-#: src/main/scan.c:1750 src/main/scan.c:1751 src/main/scan.c:1752
-#: src/main/scan.c:1753 src/main/scan.c:1754 src/main/scan.c:1755
-#: src/main/seq.c:360 src/main/seq.c:364 src/main/seq.c:382 src/main/seq.c:386
-#: src/main/seq.c:392 src/main/seq.c:400 src/main/sort.c:160
-#: src/main/sysutils.c:563 src/main/sysutils.c:565 src/main/sysutils.c:567
-#: src/main/unique.c:704 src/main/unique.c:951 src/main/unique.c:1011
-#: src/main/unique.c:1018 src/main/util.c:558 src/main/util.c:561
-#: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
-#: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
-#: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
-#: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:633
-#: src/modules/lapack/Lapack.c:729 src/modules/lapack/Lapack.c:786
-#: src/modules/lapack/Lapack.c:1044 src/modules/X11/devX11.c:2686
-#: src/modules/X11/devX11.c:2689 src/modules/X11/devX11.c:2692
-#: src/modules/X11/devX11.c:2725 src/modules/X11/devX11.c:3127
-#: src/modules/X11/devX11.c:3132 src/modules/X11/devX11.c:3136
-#: src/modules/X11/devX11.c:3140 src/modules/X11/devX11.c:3144
-#: src/modules/X11/devX11.c:3155 src/modules/X11/devX11.c:3159
-#: src/unix/sys-std.c:1195 src/unix/sys-std.c:1218
+#: src/gnuwin32/extra.c:832 src/gnuwin32/extra.c:1432
+#: src/gnuwin32/extra.c:1457 src/main/apply.c:192 src/main/apply.c:194
+#: src/main/apply.c:197 src/main/array.c:73 src/main/array.c:1026
+#: src/main/array.c:1159 src/main/array.c:1161 src/main/array.c:1162
+#: src/main/attrib.c:193 src/main/builtin.c:155 src/main/builtin.c:508
+#: src/main/builtin.c:524 src/main/builtin.c:702 src/main/character.c:105
+#: src/main/character.c:108 src/main/character.c:167 src/main/character.c:3091
+#: src/main/character.c:3095 src/main/character.c:3158
+#: src/main/character.c:3162 src/main/character.c:3224
+#: src/main/connections.c:911 src/main/connections.c:917
+#: src/main/connections.c:920 src/main/connections.c:924
+#: src/main/connections.c:1066 src/main/connections.c:1082
+#: src/main/connections.c:1087 src/main/connections.c:1278
+#: src/main/connections.c:1284 src/main/connections.c:1288
+#: src/main/connections.c:1291 src/main/connections.c:1469
+#: src/main/connections.c:1475 src/main/connections.c:1479
+#: src/main/connections.c:2061 src/main/connections.c:2066
+#: src/main/connections.c:2069 src/main/connections.c:2072
+#: src/main/connections.c:2433 src/main/connections.c:2438
+#: src/main/connections.c:2444 src/main/connections.c:2448
+#: src/main/connections.c:2463 src/main/connections.c:2514
+#: src/main/connections.c:2519 src/main/connections.c:2523
+#: src/main/connections.c:2527 src/main/connections.c:2531
+#: src/main/connections.c:2537 src/main/connections.c:2583
+#: src/main/connections.c:2589 src/main/connections.c:2593
+#: src/main/connections.c:2644 src/main/connections.c:2647
+#: src/main/connections.c:2907 src/main/connections.c:2910
+#: src/main/connections.c:2913 src/main/connections.c:3008
+#: src/main/connections.c:3014 src/main/connections.c:3163
+#: src/main/connections.c:3166 src/main/connections.c:3170
+#: src/main/connections.c:3173 src/main/connections.c:3280
+#: src/main/connections.c:3383 src/main/connections.c:3697
+#: src/main/connections.c:3720 src/main/connections.c:3753
+#: src/main/connections.c:3771 src/main/connections.c:3791
+#: src/main/connections.c:3931 src/main/connections.c:3935
+#: src/main/connections.c:4061 src/main/connections.c:4063
+#: src/main/connections.c:4065 src/main/connections.c:4097
+#: src/main/connections.c:4225 src/main/connections.c:4251
+#: src/main/connections.c:4255 src/main/connections.c:4259
+#: src/main/context.c:497 src/main/context.c:506 src/main/context.c:510
+#: src/main/datetime.c:647 src/main/datetime.c:722 src/main/datetime.c:724
+#: src/main/datetime.c:728 src/main/datetime.c:861 src/main/datetime.c:863
+#: src/main/datetime.c:1009 src/main/debug.c:208 src/main/deparse.c:344
+#: src/main/devices.c:581 src/main/dounzip.c:180 src/main/dounzip.c:186
+#: src/main/envir.c:1463 src/main/envir.c:1466 src/main/envir.c:1555
+#: src/main/envir.c:1560 src/main/envir.c:1626 src/main/envir.c:1642
+#: src/main/envir.c:1648 src/main/envir.c:1742 src/main/envir.c:1750
+#: src/main/envir.c:1757 src/main/envir.c:1771 src/main/envir.c:1777
+#: src/main/envir.c:1781 src/main/envir.c:1977 src/main/envir.c:2098
+#: src/main/envir.c:2356 src/main/envir.c:2630 src/main/envir.c:3164
+#: src/main/eval.c:282 src/main/eval.c:1706 src/main/eval.c:1730
+#: src/main/eval.c:1734 src/main/memory.c:2985 src/main/model.c:1612
+#: src/main/model.c:1620 src/main/optim.c:225 src/main/paste.c:85
+#: src/main/paste.c:344 src/main/paste.c:351 src/main/paste.c:358
+#: src/main/paste.c:363 src/main/paste.c:368 src/main/paste.c:373
+#: src/main/paste.c:376 src/main/paste.c:384 src/main/paste.c:532
+#: src/main/paste.c:537 src/main/platform.c:290 src/main/platform.c:292
+#: src/main/platform.c:294 src/main/platform.c:965 src/main/platform.c:971
+#: src/main/platform.c:1026 src/main/platform.c:1074 src/main/platform.c:1077
+#: src/main/platform.c:1080 src/main/platform.c:1083 src/main/platform.c:1086
+#: src/main/platform.c:1170 src/main/platform.c:1173 src/main/platform.c:1326
+#: src/main/platform.c:1329 src/main/platform.c:1365 src/main/platform.c:1368
+#: src/main/platform.c:1406 src/main/platform.c:1445 src/main/platform.c:1447
+#: src/main/platform.c:1505 src/main/platform.c:1596 src/main/platform.c:1857
+#: src/main/platform.c:1897 src/main/platform.c:2013 src/main/platform.c:2041
+#: src/main/plot.c:2951 src/main/plot.c:4088 src/main/plot.c:4092
+#: src/main/plot.c:4095 src/main/plot3d.c:2464 src/main/plot3d.c:2468
+#: src/main/plot3d.c:2473 src/main/plot3d.c:2477 src/main/plot3d.c:2481
+#: src/main/plot3d.c:2485 src/main/print.c:175 src/main/print.c:181
+#: src/main/print.c:203 src/main/print.c:209 src/main/print.c:215
+#: src/main/random.c:469 src/main/random.c:473 src/main/random.c:475
+#: src/main/random.c:477 src/main/saveload.c:1975 src/main/saveload.c:1978
+#: src/main/saveload.c:1981 src/main/saveload.c:2098 src/main/saveload.c:2266
+#: src/main/saveload.c:2271 src/main/saveload.c:2274 src/main/saveload.c:2368
+#: src/main/saveload.c:2418 src/main/scan.c:672 src/main/scan.c:839
+#: src/main/scan.c:852 src/main/scan.c:856 src/main/scan.c:858
+#: src/main/scan.c:869 src/main/scan.c:896 src/main/scan.c:899
+#: src/main/scan.c:952 src/main/scan.c:991 src/main/scan.c:995
+#: src/main/scan.c:1005 src/main/scan.c:1221 src/main/scan.c:1497
+#: src/main/scan.c:1509 src/main/scan.c:1513 src/main/scan.c:1519
+#: src/main/scan.c:1747 src/main/scan.c:1748 src/main/scan.c:1750
+#: src/main/scan.c:1751 src/main/scan.c:1752 src/main/scan.c:1753
+#: src/main/scan.c:1754 src/main/scan.c:1755 src/main/seq.c:360
+#: src/main/seq.c:364 src/main/seq.c:382 src/main/seq.c:386 src/main/seq.c:392
+#: src/main/seq.c:400 src/main/sort.c:160 src/main/sysutils.c:563
+#: src/main/sysutils.c:565 src/main/sysutils.c:567 src/main/unique.c:704
+#: src/main/unique.c:951 src/main/unique.c:1011 src/main/unique.c:1018
+#: src/main/util.c:558 src/main/util.c:561 src/modules/internet/internet.c:283
+#: src/modules/internet/internet.c:289 src/modules/internet/internet.c:295
+#: src/modules/internet/internet.c:298 src/modules/internet/internet.c:302
+#: src/modules/lapack/Lapack.c:151 src/modules/lapack/Lapack.c:241
+#: src/modules/lapack/Lapack.c:633 src/modules/lapack/Lapack.c:729
+#: src/modules/lapack/Lapack.c:786 src/modules/lapack/Lapack.c:1044
+#: src/modules/X11/devX11.c:2687 src/modules/X11/devX11.c:2690
+#: src/modules/X11/devX11.c:2693 src/modules/X11/devX11.c:2726
+#: src/modules/X11/devX11.c:3129 src/modules/X11/devX11.c:3134
+#: src/modules/X11/devX11.c:3138 src/modules/X11/devX11.c:3142
+#: src/modules/X11/devX11.c:3146 src/modules/X11/devX11.c:3157
+#: src/modules/X11/devX11.c:3161 src/unix/sys-std.c:1195
+#: src/unix/sys-std.c:1218
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "invalid ‘%s’ argument"
@@ -261,9 +262,9 @@ msgstr "‘loadhistory’ can only be used in Rgui and Rterm"
 msgid "invalid timestamp"
 msgstr "invalid timestamp"
 
-#: src/gnuwin32/extra.c:659 src/gnuwin32/extra.c:1616
-#: src/gnuwin32/extra.c:1792 src/gnuwin32/extra.c:1795
-#: src/gnuwin32/extra.c:1798 src/main/character.c:837 src/main/colors.c:365
+#: src/gnuwin32/extra.c:659 src/gnuwin32/extra.c:1647
+#: src/gnuwin32/extra.c:1823 src/gnuwin32/extra.c:1826
+#: src/gnuwin32/extra.c:1829 src/main/character.c:837 src/main/colors.c:365
 #: src/main/connections.c:2917 src/main/context.c:543 src/main/context.c:562
 #: src/main/datetime.c:583 src/main/datetime.c:649 src/main/datetime.c:865
 #: src/main/dotcode.c:199 src/main/errors.c:880 src/main/errors.c:911
@@ -278,11 +279,11 @@ msgstr "invalid timestamp"
 #: src/main/seq.c:248 src/main/seq.c:251 src/main/sort.c:859
 #: src/main/sort.c:957 src/main/source.c:172 src/main/summary.c:977
 #: src/main/sysutils.c:229 src/main/util.c:875 src/main/util.c:880
-#: src/main/util.c:887 src/main/util.c:890 src/modules/X11/devX11.c:2592
-#: src/modules/X11/devX11.c:2619 src/modules/X11/devX11.c:2624
-#: src/modules/X11/devX11.c:2629 src/modules/X11/devX11.c:2639
-#: src/modules/X11/devX11.c:2644 src/modules/X11/devX11.c:2648
-#: src/modules/X11/devX11.c:3148 src/unix/sys-std.c:1291
+#: src/main/util.c:887 src/main/util.c:890 src/modules/X11/devX11.c:2593
+#: src/modules/X11/devX11.c:2620 src/modules/X11/devX11.c:2625
+#: src/modules/X11/devX11.c:2630 src/modules/X11/devX11.c:2640
+#: src/modules/X11/devX11.c:2645 src/modules/X11/devX11.c:2649
+#: src/modules/X11/devX11.c:3150 src/unix/sys-std.c:1291
 #, c-format
 msgid "invalid '%s' value"
 msgstr "invalid ‘%s’ value"
@@ -356,7 +357,8 @@ msgid "'which' must be length 1"
 msgstr "‘which’ must be length 1"
 
 #: src/gnuwin32/extra.c:1434 src/gnuwin32/extra.c:1436
-#: src/gnuwin32/extra.c:1476
+#: src/gnuwin32/extra.c:1459 src/gnuwin32/extra.c:1461
+#: src/gnuwin32/extra.c:1507
 msgid "invalid device"
 msgstr "invalid device"
 
@@ -364,24 +366,24 @@ msgstr "invalid device"
 msgid "requires SDI mode"
 msgstr "requires SDI mode"
 
-#: src/gnuwin32/extra.c:1470
+#: src/gnuwin32/extra.c:1501
 msgid "invalid graphical device number"
 msgstr "invalid graphical device number"
 
-#: src/gnuwin32/extra.c:1480
+#: src/gnuwin32/extra.c:1511
 msgid "bad device"
 msgstr "bad device"
 
-#: src/gnuwin32/extra.c:1802
+#: src/gnuwin32/extra.c:1833
 #, c-format
 msgid "Registry key '%s' not found"
 msgstr "Registry key ‘%s’ not found"
 
-#: src/gnuwin32/extra.c:1866 src/gnuwin32/extra.c:1874
+#: src/gnuwin32/extra.c:1897 src/gnuwin32/extra.c:1905
 msgid "invalid input in Rmbstowcs"
 msgstr "invalid input in Rmbstowcs"
 
-#: src/gnuwin32/extra.c:1896 src/main/platform.c:1145
+#: src/gnuwin32/extra.c:1927 src/main/platform.c:1145
 msgid "file choice cancelled"
 msgstr "file choice cancelled"
 
@@ -561,7 +563,7 @@ msgid "Non-numeric argument to mathematical function"
 msgstr "Non-numeric argument to mathematical function"
 
 #: src/include/Errormsg.h:35 src/main/builtin.c:848 src/main/devices.c:366
-#: src/main/scan.c:1446 src/main/util.c:1614
+#: src/main/scan.c:1446 src/main/util.c:1692
 msgid "invalid argument"
 msgstr "invalid argument"
 
@@ -1122,7 +1124,7 @@ msgid "exactly one attribute 'which' must be given"
 msgstr "exactly one attribute ‘which’ must be given"
 
 #: src/main/attrib.c:1187 src/main/attrib.c:1205 src/main/subscript.c:208
-#: src/main/subscript.c:212 src/main/subset.c:1042 src/main/subset.c:1092
+#: src/main/subscript.c:212 src/main/subset.c:1045 src/main/subset.c:1095
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "partial match of ‘%s’ to ‘%s’"
@@ -1305,8 +1307,8 @@ msgstr "vector: zero-length ‘type’ argument"
 
 #: src/main/builtin.c:724
 #, c-format
-msgid "vector: cannot make a vector of mode \"%s\"."
-msgstr "vector: cannot make a vector of mode “%s”."
+msgid "vector: cannot make a vector of mode '%s'."
+msgstr "vector: cannot make a vector of mode '%s'."
 
 #: src/main/builtin.c:749
 msgid "cannot set length of non-vector"
@@ -1597,8 +1599,8 @@ msgstr "out-of-range values treated as 0 in coercion to raw"
 
 #: src/main/coerce.c:379
 #, c-format
-msgid "invalid data of mode \"%s\" (too short)"
-msgstr "invalid data of mode “%s” (too short)"
+msgid "invalid data of mode '%s' (too short)"
+msgstr "invalid data of mode ‘%s’ (too short)"
 
 #: src/main/coerce.c:907
 #, c-format
@@ -1986,11 +1988,11 @@ msgstr "file ‘%s’ appears not to be compressed by bzip2"
 msgid "allocation of bzfile connection failed"
 msgstr "allocation of bzfile connection failed"
 
-#: src/main/connections.c:1549 src/modules/X11/devX11.c:3277
+#: src/main/connections.c:1549 src/modules/X11/devX11.c:3279
 msgid "memory allocation to copy clipboard failed"
 msgstr "memory allocation to copy clipboard failed"
 
-#: src/main/connections.c:1554 src/modules/X11/devX11.c:3265
+#: src/main/connections.c:1554 src/modules/X11/devX11.c:3267
 msgid "clipboard cannot be opened or contains no text"
 msgstr "clipboard cannot be opened or contains no text"
 
@@ -2512,10 +2514,12 @@ msgstr "zero length argument"
 msgid "'opts' should be small non-negative integer"
 msgstr "‘opts’ should be small non-negative integer"
 
-#: src/main/deparse.c:358 src/main/eval.c:2632
+#: src/main/deparse.c:358 src/main/envir.c:1577 src/main/envir.c:1659
+#: src/main/eval.c:420 src/main/eval.c:876 src/main/eval.c:2632
+#: src/main/saveload.c:2003 src/main/saveload.c:2313 src/main/serialize.c:2267
 #, c-format
-msgid "Object \"%s\" not found"
-msgstr "Object “%s” not found"
+msgid "object '%s' not found"
+msgstr "object ‘%s’ not found"
 
 #: src/main/deparse.c:1414
 msgid "badly formed function expression"
@@ -2540,8 +2544,8 @@ msgstr "only the first element is used as variable name"
 
 #: src/main/deriv.c:648
 #, c-format
-msgid "invalid expression in \"%s\""
-msgstr "invalid expression in “%s”"
+msgid "invalid expression in '%s'"
+msgstr "invalid expression in ‘%s’"
 
 #: src/main/deriv.c:931 src/main/model.c:1322
 msgid "invalid variable names"
@@ -2584,7 +2588,7 @@ msgstr "symbol ‘%s’ is too long"
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr "‘name’ must be a string (of length 1) or native symbol reference"
 
-#: src/main/dotcode.c:201 src/main/dotcode.c:837
+#: src/main/dotcode.c:201 src/main/dotcode.c:836
 msgid "too many arguments in foreign function call"
 msgstr "too many arguments in foreign function call"
 
@@ -2698,46 +2702,46 @@ msgstr "no arguments supplied"
 msgid "too many arguments"
 msgstr "too many arguments"
 
-#: src/main/dotcode.c:801 src/main/dotcode.c:844 src/main/dotcode.c:1685
+#: src/main/dotcode.c:801 src/main/dotcode.c:843 src/main/dotcode.c:1683
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for %s"
 msgstr "Incorrect number of arguments (%d), expecting %d for %s"
 
-#: src/main/dotcode.c:1502 src/main/dotcode.c:2319
+#: src/main/dotcode.c:1500 src/main/dotcode.c:2317
 msgid "too many arguments, sorry"
 msgstr "too many arguments, sorry"
 
-#: src/main/dotcode.c:1535 src/main/dotcode.c:1565
+#: src/main/dotcode.c:1533 src/main/dotcode.c:1563
 msgid "Invalid graphics state"
 msgstr "Invalid graphics state"
 
-#: src/main/dotcode.c:1638
+#: src/main/dotcode.c:1636
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "NULL value for DLLInfoReference when looking for DLL"
 
-#: src/main/dotcode.c:1711
+#: src/main/dotcode.c:1709
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "Wrong type for argument %d in call to %s"
 
-#: src/main/dotcode.c:2413
+#: src/main/dotcode.c:2411
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "type “%s” not supported in interlanguage calls"
 
-#: src/main/dotcode.c:2425
+#: src/main/dotcode.c:2423
 msgid "invalid function in call_R"
 msgstr "invalid function in call_R"
 
-#: src/main/dotcode.c:2427
+#: src/main/dotcode.c:2425
 msgid "invalid argument count in call_R"
 msgstr "invalid argument count in call_R"
 
-#: src/main/dotcode.c:2429
+#: src/main/dotcode.c:2427
 msgid "invalid return value count in call_R"
 msgstr "invalid return value count in call_R"
 
-#: src/main/dotcode.c:2472
+#: src/main/dotcode.c:2470
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "mode ‘%s’ is not supported in call_R"
@@ -3011,15 +3015,10 @@ msgstr "cannot remove variables from the empty environment"
 msgid "cannot remove variables from this database"
 msgstr "cannot remove variables from this database"
 
-#: src/main/envir.c:1577 src/main/envir.c:1659
-#, c-format
-msgid "variable \"%s\" was not found"
-msgstr "variable “%s” was not found"
-
 #: src/main/envir.c:1662
 #, c-format
-msgid "variable \"%s\" of mode \"%s\" was not found"
-msgstr "variable “%s” of mode “%s” was not found"
+msgid "object '%s' of mode '%s' was not found"
+msgstr "object ‘%s’ of mode ‘%s’ was not found"
 
 #: src/main/envir.c:1729
 #, c-format
@@ -3357,11 +3356,6 @@ msgstr ""
 msgid "'...' used in an incorrect context"
 msgstr "‘...’ used in an incorrect context"
 
-#: src/main/eval.c:420 src/main/eval.c:876
-#, c-format
-msgid "object \"%s\" not found"
-msgstr "object “%s” not found"
-
 #: src/main/eval.c:426 src/main/eval.c:2636
 msgid "argument is missing, with no default"
 msgstr "argument is missing, with no default"
@@ -3536,7 +3530,7 @@ msgid "not a simple vector"
 msgstr "not a simple vector"
 
 #: src/main/eval.c:2801 src/main/eval.c:2849 src/main/subassign.c:972
-#: src/main/subset.c:798
+#: src/main/subset.c:799
 msgid "incorrect number of subscripts"
 msgstr "incorrect number of subscripts"
 
@@ -3712,126 +3706,126 @@ msgstr "invalid multibyte character in parser at line %d"
 msgid "function is too long to keep source (at line %d)"
 msgstr "function is too long to keep source (at line %d)"
 
-#: src/main/gram.y:930
+#: src/main/gram.y:931
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "incorrect tag type at line %d"
 
-#: src/main/gram.y:1374
+#: src/main/gram.y:1375
 msgid "contextstack overflow"
 msgstr "contextstack overflow"
 
-#: src/main/gram.y:1610
+#: src/main/gram.y:1611
 msgid "input"
 msgstr "input"
 
-#: src/main/gram.y:1611
+#: src/main/gram.y:1612
 msgid "end of input"
 msgstr "end of input"
 
-#: src/main/gram.y:1612
+#: src/main/gram.y:1613
 msgid "string constant"
 msgstr "string constant"
 
-#: src/main/gram.y:1613
+#: src/main/gram.y:1614
 msgid "numeric constant"
 msgstr "numeric constant"
 
-#: src/main/gram.y:1614
+#: src/main/gram.y:1615
 msgid "symbol"
 msgstr "symbol"
 
-#: src/main/gram.y:1615
+#: src/main/gram.y:1616
 msgid "assignment"
 msgstr "assignment"
 
-#: src/main/gram.y:1616
+#: src/main/gram.y:1617
 msgid "end of line"
 msgstr "end of line"
 
-#: src/main/gram.y:1629 src/main/gram.y:1635
+#: src/main/gram.y:1630 src/main/gram.y:1636
 #, c-format
 msgid "unexpected %s"
 msgstr "unexpected %s"
 
-#: src/main/gram.y:1645
+#: src/main/gram.y:1646
 #, c-format
 msgid "Repeated formal argument '%s' on line %d"
 msgstr "Repeated formal argument ‘%s’ on line %d"
 
-#: src/main/gram.y:1663
+#: src/main/gram.y:1664
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "input buffer overflow at line %d"
 
-#: src/main/gram.y:1798
+#: src/main/gram.y:1799
 #, c-format
 msgid "integer literal %sL contains decimal; using numeric value"
 msgstr "integer literal %sL contains decimal; using numeric value"
 
-#: src/main/gram.y:1800
+#: src/main/gram.y:1801
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "non-integer value %s qualified with L; using numeric value"
 
-#: src/main/gram.y:1811
+#: src/main/gram.y:1812
 #, c-format
 msgid "integer literal %sL contains unnecessary decimal point"
 msgstr "integer literal %sL contains unnecessary decimal point"
 
-#: src/main/gram.y:1843
+#: src/main/gram.y:1844
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "unable to allocate buffer for long string at line %d"
 
-#: src/main/gram.y:1954
+#: src/main/gram.y:1955
 msgid "'\\x' used without hex digits"
 msgstr "‘\\x’ used without hex digits"
 
-#: src/main/gram.y:1966
+#: src/main/gram.y:1967
 #, c-format
 msgid "\\uxxxx sequences not supported (line %d)"
 msgstr "\\uxxxx sequences not supported (line %d)"
 
-#: src/main/gram.y:1986
+#: src/main/gram.y:1987
 msgid "\\u used without hex digits"
 msgstr "\\u used without hex digits"
 
-#: src/main/gram.y:1996 src/main/gram.y:2009
+#: src/main/gram.y:1997 src/main/gram.y:2010
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "invalid \\u{xxxx} sequence (line %d)"
 
-#: src/main/gram.y:2011
+#: src/main/gram.y:2012
 #, c-format
 msgid "invalid \\uxxxx sequence (line %d)"
 msgstr "invalid \\uxxxx sequence (line %d)"
 
-#: src/main/gram.y:2020
+#: src/main/gram.y:2021
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported (line %d)"
 msgstr "\\Uxxxxxxxx sequences not supported (line %d)"
 
-#: src/main/gram.y:2040
+#: src/main/gram.y:2041
 msgid "\\U used without hex digits"
 msgstr "\\U used without hex digits"
 
-#: src/main/gram.y:2050 src/main/gram.y:2056
+#: src/main/gram.y:2051 src/main/gram.y:2057
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "invalid \\U{xxxxxxxx} sequence (line %d)"
 
-#: src/main/gram.y:2058
+#: src/main/gram.y:2059
 #, c-format
 msgid "invalid \\Uxxxxxxxx sequence (line %d)"
 msgstr "invalid \\Uxxxxxxxx sequence (line %d)"
 
-#: src/main/gram.y:2099
+#: src/main/gram.y:2100
 #, c-format
 msgid "'\\%c' is an unrecognized escape in a character string"
 msgstr "‘\\%c’ is an unrecognized escape in a character string"
 
-#: src/main/gram.y:2151
+#: src/main/gram.y:2152
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3840,20 +3834,20 @@ msgstr ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 1000 chars)"
 
-#: src/main/gram.y:2160
+#: src/main/gram.y:2161
 #, c-format
 msgid "unrecognized escape removed from \"%s\""
 msgid_plural "unrecognized escapes removed from \"%s\""
 msgstr[0] "unrecognized escape removed from “%s”"
 msgstr[1] "unrecognized escapes removed from “%s”"
 
-#: src/main/gram.y:2270
+#: src/main/gram.y:2271
 #, c-format
 msgid "functions nested too deeply in source code at line %d"
 msgstr "functions nested too deeply in source code at line %d"
 
-#: src/main/gram.y:2664 src/main/gram.y:2671 src/main/gram.y:2677
-#: src/main/gram.y:2684
+#: src/main/gram.y:2665 src/main/gram.y:2672 src/main/gram.y:2678
+#: src/main/gram.y:2685
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "contextstack overflow at line %d"
@@ -4344,32 +4338,32 @@ msgstr "complex variables are not currently allowed in model matrices"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "variables of type ‘%s’ are not allowed in model matrices"
 
-#: src/main/names.c:974
+#: src/main/names.c:975
 msgid "string argument required"
 msgstr "string argument required"
 
-#: src/main/names.c:982
+#: src/main/names.c:983
 msgid "no such primitive function"
 msgstr "no such primitive function"
 
-#: src/main/names.c:1097
+#: src/main/names.c:1098
 msgid "attempt to use zero-length variable name"
 msgstr "attempt to use zero-length variable name"
 
-#: src/main/names.c:1099
+#: src/main/names.c:1100
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "variable names are limited to %d bytes"
 
-#: src/main/names.c:1128
+#: src/main/names.c:1129
 msgid "invalid .Internal() argument"
 msgstr "invalid .Internal() argument"
 
-#: src/main/names.c:1131
+#: src/main/names.c:1132
 msgid "invalid internal function"
 msgstr "invalid internal function"
 
-#: src/main/names.c:1133
+#: src/main/names.c:1134
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "no internal function “%s”"
@@ -5906,11 +5900,6 @@ msgstr ""
 msgid "first argument must be a character vector"
 msgstr "first argument must be a character vector"
 
-#: src/main/saveload.c:2003 src/main/saveload.c:2313 src/main/serialize.c:2267
-#, c-format
-msgid "object '%s' not found"
-msgstr "object ‘%s’ not found"
-
 #: src/main/saveload.c:2037
 msgid "not a valid named list"
 msgstr "not a valid named list"
@@ -6519,63 +6508,63 @@ msgstr "incompatible types (from %s to %s) in array subset assignment"
 msgid "invalid number of subscripts to list assign"
 msgstr "invalid number of subscripts to list assign"
 
-#: src/main/subassign.c:1263
+#: src/main/subassign.c:1271
 msgid "SubAssignArgs: invalid number of arguments"
 msgstr "SubAssignArgs: invalid number of arguments"
 
-#: src/main/subassign.c:1374
+#: src/main/subassign.c:1382
 msgid "result is zero-length and so cannot be a language object"
 msgstr "result is zero-length and so cannot be a language object"
 
-#: src/main/subassign.c:1476
+#: src/main/subassign.c:1484
 msgid "wrong args for environment subassignment"
 msgstr "wrong args for environment subassignment"
 
-#: src/main/subassign.c:1486 src/main/subassign.c:1508
+#: src/main/subassign.c:1494 src/main/subassign.c:1516
 msgid "more elements supplied than there are to replace"
 msgstr "more elements supplied than there are to replace"
 
-#: src/main/subassign.c:1488
+#: src/main/subassign.c:1496
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]] with missing subscript"
 
-#: src/main/subassign.c:1496 src/main/subset.c:831
+#: src/main/subassign.c:1504 src/main/subset.c:834
 #, c-format
 msgid "recursive indexing failed at level %d\n"
 msgstr "recursive indexing failed at level %d\n"
 
-#: src/main/subassign.c:1501 src/main/subset.c:835
+#: src/main/subassign.c:1509 src/main/subset.c:838
 #, c-format
 msgid "no such index at level %d\n"
 msgstr "no such index at level %d\n"
 
-#: src/main/subassign.c:1518 src/main/subassign.c:1535
+#: src/main/subassign.c:1526 src/main/subassign.c:1543
 msgid "[[ ]] subscript out of bounds"
 msgstr "[[ ]] subscript out of bounds"
 
-#: src/main/subassign.c:1524 src/main/subassign.c:1706
+#: src/main/subassign.c:1532 src/main/subassign.c:1714
 msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] improper number of subscripts"
 
-#: src/main/subassign.c:1668
+#: src/main/subassign.c:1676
 #, c-format
 msgid "incompatible types (from %s to %s) in [[ assignment"
 msgstr "incompatible types (from %s to %s) in [[ assignment"
 
-#: src/main/subassign.c:1716
+#: src/main/subassign.c:1724
 #, c-format
 msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] subscript (%d) out of bounds"
 
-#: src/main/subassign.c:1758 src/main/subscript.c:133 src/main/subscript.c:135
+#: src/main/subassign.c:1767 src/main/subscript.c:133 src/main/subscript.c:135
 #: src/main/subscript.c:239 src/main/subscript.c:241 src/main/subscript.c:562
 #: src/main/subscript.c:564 src/main/subscript.c:663 src/main/subscript.c:665
-#: src/main/subset.c:970
+#: src/main/subset.c:973
 #, c-format
 msgid "invalid subscript type '%s'"
 msgstr "invalid subscript type ‘%s’"
 
-#: src/main/subassign.c:1848
+#: src/main/subassign.c:1857
 msgid "Coercing LHS to a list"
 msgstr "Coercing LHS to a list"
 
@@ -6636,11 +6625,11 @@ msgstr "array subscripting not handled for this type"
 msgid "incorrect number of dimensions"
 msgstr "incorrect number of dimensions"
 
-#: src/main/subset.c:794
+#: src/main/subset.c:795
 msgid "no index specified"
 msgstr "no index specified"
 
-#: src/main/subset.c:803
+#: src/main/subset.c:804
 msgid "wrong arguments for subsetting an environment"
 msgstr "wrong arguments for subsetting an environment"
 
@@ -6857,12 +6846,12 @@ msgstr "invalid tag in name extraction"
 
 #: src/main/util.c:442
 #, c-format
-msgid "\"nthcdr\" list shorter than %d"
-msgstr "“nthcdr” list shorter than %d"
+msgid "'nthcdr' list shorter than %d"
+msgstr "‘nthcdr’ list shorter than %d"
 
 #: src/main/util.c:447
-msgid "\"nthcdr\" needs a list to CDR down"
-msgstr "“nthcdr” needs a list to CDR down"
+msgid "'nthcdr' needs a list to CDR down"
+msgstr "‘nthcdr’ needs a list to CDR down"
 
 #: src/main/util.c:563
 msgid "'all.x' must be TRUE or FALSE"
@@ -6931,7 +6920,7 @@ msgstr "error message truncated to 255 chars"
 msgid "warning message truncated to 255 chars"
 msgstr "warning message truncated to 255 chars"
 
-#: src/main/util.c:1680
+#: src/main/util.c:1758
 msgid "ICU is not supported on this build"
 msgstr "ICU is not supported on this build"
 
@@ -7515,7 +7504,7 @@ msgstr "font family not found in X11 font database"
 msgid "invalid use of %d < 0 in '%s'"
 msgstr "invalid use of %d < 0 in ‘%s’"
 
-#: src/modules/X11/devX11.c:1772 src/modules/X11/devX11.c:2840
+#: src/modules/X11/devX11.c:1772 src/modules/X11/devX11.c:2841
 #, c-format
 msgid "could not open file '%s'"
 msgstr "could not open file ‘%s’"
@@ -7524,77 +7513,77 @@ msgstr "could not open file ‘%s’"
 msgid "type=\"cairo\" is not supported on this build -- using \"Xlib\""
 msgstr "type=“cairo” is not supported on this build -- using “Xlib”"
 
-#: src/modules/X11/devX11.c:2537
+#: src/modules/X11/devX11.c:2538
 msgid "invalid string argument"
 msgstr "invalid string argument"
 
-#: src/modules/X11/devX11.c:2563
+#: src/modules/X11/devX11.c:2564
 #, c-format
 msgid "unable to start device %s"
 msgstr "unable to start device %s"
 
-#: src/modules/X11/devX11.c:2588
+#: src/modules/X11/devX11.c:2589
 msgid "invalid 'width' or 'height'"
 msgstr "invalid ‘width’ or ‘height’"
 
-#: src/modules/X11/devX11.c:2595
+#: src/modules/X11/devX11.c:2596
 msgid "invalid colortype passed to X11 driver"
 msgstr "invalid colortype passed to X11 driver"
 
-#: src/modules/X11/devX11.c:2609
+#: src/modules/X11/devX11.c:2610
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "unknown X11 color/colour model -- using monochrome"
 
-#: src/modules/X11/devX11.c:2694
+#: src/modules/X11/devX11.c:2695
 msgid "no plot on device to save"
 msgstr "no plot on device to save"
 
-#: src/modules/X11/devX11.c:2696
+#: src/modules/X11/devX11.c:2697
 msgid "not an open X11cairo device"
 msgstr "not an open X11cairo device"
 
-#: src/modules/X11/devX11.c:2707
+#: src/modules/X11/devX11.c:2708
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "cannot open file ‘%s’"
 
-#: src/modules/X11/devX11.c:2720 src/modules/X11/devX11.c:2722
+#: src/modules/X11/devX11.c:2721 src/modules/X11/devX11.c:2723
 #, c-format
 msgid "type = \"%s\" requires cairo >= 1.2: try \"png\""
 msgstr "type = “%s” requires cairo >= 1.2: try “png”"
 
-#: src/modules/X11/devX11.c:2731
+#: src/modules/X11/devX11.c:2732
 msgid "savePlot() is not supported on this build"
 msgstr "savePlot() is not supported on this build"
 
-#: src/modules/X11/devX11.c:2768 src/modules/X11/devX11.c:2941
-#: src/modules/X11/devX11.c:2952
+#: src/modules/X11/devX11.c:2769 src/modules/X11/devX11.c:2942
+#: src/modules/X11/devX11.c:2953
 msgid "unimplemented cairo-based device"
 msgstr "unimplemented cairo-based device"
 
-#: src/modules/X11/devX11.c:3163
+#: src/modules/X11/devX11.c:3165
 msgid "'type = \"cairo\"' requires cairo >= 1.2 : try 'type = \"cairo1\"'"
 msgstr "‘type = “cairo”’ requires cairo >= 1.2 : try ‘type = “cairo1”’"
 
-#: src/modules/X11/devX11.c:3165
+#: src/modules/X11/devX11.c:3167
 #, c-format
 msgid "device '%s' requires cairo >= 1.2"
 msgstr "device ‘%s’ requires cairo >= 1.2"
 
-#: src/modules/X11/devX11.c:3177
+#: src/modules/X11/devX11.c:3179
 #, c-format
 msgid "unable to start device '%s'"
 msgstr "unable to start device ‘%s’"
 
-#: src/modules/X11/devX11.c:3189
+#: src/modules/X11/devX11.c:3191
 msgid "cairo-based devices are not supported on this build"
 msgstr "cairo-based devices are not supported on this build"
 
-#: src/modules/X11/devX11.c:3228
+#: src/modules/X11/devX11.c:3230
 msgid "unable to contact X11 display"
 msgstr "unable to contact X11 display"
 
-#: src/modules/X11/devX11.c:3299
+#: src/modules/X11/devX11.c:3301
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "cannot allocate memory for X11Routines structure"
 

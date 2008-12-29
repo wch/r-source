@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 12:59\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -177,6 +177,10 @@ msgstr "'x' deve ser um array de pelo menos duas dimensões"
 
 msgid "invalid 'dims'"
 msgstr "'dims' inválido"
+
+#, fuzzy
+msgid "extra arguments ignored:"
+msgstr "argumento 'drop' será ignorado"
 
 msgid "bad handler specification"
 msgstr "especificação de handler inválido"
@@ -1538,6 +1542,41 @@ msgstr "'cmd' não pôde ser executado"
 #, fuzzy
 msgid "'%s' execution failed with error code %d"
 msgstr "execução de 'cmd' falhou com erro código %d"
+
+msgid "-l option without value"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: no packages specified"
+msgstr "nenhum pacote encontrado"
+
+msgid "Removing from libary"
+msgstr ""
+
+msgid "ERROR: cannot cd to directory"
+msgstr ""
+
+msgid "ERROR: no permission to remove from directory"
+msgstr ""
+
+msgid "T used instead of TRUE"
+msgstr ""
+
+msgid "F used instead of FALSE"
+msgstr ""
+
+msgid "items"
+msgstr ""
+
+#, fuzzy
+msgid "have been removed from the search path"
+msgstr "'%s' não encontrado no caminho de procura, usando pos = 2"
+
+msgid "file"
+msgstr ""
+
+msgid "cannot be opened"
+msgstr ""
 
 msgid "cannot find name space environment"
 msgstr "não foi possível encontrar o ambiente de espaço de nomes"

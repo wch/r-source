@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 13:00\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -527,6 +527,9 @@ msgstr ""
 msgid "packages %s are mutually dependent"
 msgstr ""
 
+msgid "Do not know which element of 'lib' to install dependencies into\nskipping dependencies"
+msgstr ""
+
 msgid "no packages were specified"
 msgstr ""
 
@@ -564,9 +567,6 @@ msgid "installation of package '%s' had non-zero exit status"
 msgstr ""
 
 msgid "unable to create temporary directory '%s'"
-msgstr ""
-
-msgid "Do not know which element of 'lib' to install dependencies into\nskipping dependencies"
 msgstr ""
 
 msgid "The downloaded packages are in\n\t%s"
@@ -918,11 +918,6 @@ msgid_plural "objects '%s' not found"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "'lib' element '%s'  is not a writable directory"
-msgid_plural "'lib' elements '%s' are not writable directories"
-msgstr[0]    ""
-msgstr[1]    ""
-
 msgid        "package %s is not available"
 msgid_plural "packages %s are not available"
 msgstr[0]    ""
@@ -935,6 +930,11 @@ msgstr[1]    ""
 
 msgid        "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "'lib' element '%s'  is not a writable directory"
+msgid_plural "'lib' elements '%s' are not writable directories"
 msgstr[0]    ""
 msgstr[1]    ""
 

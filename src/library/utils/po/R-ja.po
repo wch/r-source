@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 13:00\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2008-10-02 13:51+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -583,6 +583,13 @@ msgstr " どのパッケージも少なくとも1つの他のパッケージに�
 msgid "packages %s are mutually dependent"
 msgstr " パッケージ %s は相互に依存します "
 
+msgid ""
+"Do not know which element of 'lib' to install dependencies into\n"
+"skipping dependencies"
+msgstr ""
+" 'lib' のどの要素を依存関係のインストールに使うかわかりません \n"
+" 依存関係のインストールをスキップします "
+
 msgid "no packages were specified"
 msgstr " 如何なるパッケージも指定されませんでした "
 
@@ -637,13 +644,6 @@ msgstr " パッケージ '%s' のインストールは、ゼロでない終了�
 
 msgid "unable to create temporary directory '%s'"
 msgstr " 一時的ディレクトリ '%s' を作ることが出来ません "
-
-msgid ""
-"Do not know which element of 'lib' to install dependencies into\n"
-"skipping dependencies"
-msgstr ""
-" 'lib' のどの要素を依存関係のインストールに使うかわかりません \n"
-" 依存関係のインストールをスキップします "
 
 msgid ""
 "The downloaded packages are in\n"
@@ -1030,10 +1030,6 @@ msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] " オブジェクト '%s' が見付かりません "
 
-msgid "'lib' element '%s'  is not a writable directory"
-msgid_plural "'lib' elements '%s' are not writable directories"
-msgstr[0] " 'lib' の要素 '%s'' は書き込み可能なディレクトリではありません "
-
 msgid "package %s is not available"
 msgid_plural "packages %s are not available"
 msgstr[0] " パッケージ %s が利用できません "
@@ -1045,6 +1041,10 @@ msgstr[0] " 依存対象(dependency) %s が利用できません "
 msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
 msgstr[0] " 依存対象(dependency)　%s もインストールします "
+
+msgid "'lib' element '%s'  is not a writable directory"
+msgid_plural "'lib' elements '%s' are not writable directories"
+msgstr[0] " 'lib' の要素 '%s'' は書き込み可能なディレクトリではありません "
 
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"

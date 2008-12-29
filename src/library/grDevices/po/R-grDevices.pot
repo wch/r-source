@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 13:00\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -282,6 +282,12 @@ msgid "invalid value for 'rescale'"
 msgstr ""
 
 msgid "can only bring windows devices to the front"
+msgstr ""
+
+msgid "'type' not applicable to the R console"
+msgstr ""
+
+msgid "can only manipulate windows devices"
 msgstr ""
 
 msgid "can only copy from 'windows' devices"

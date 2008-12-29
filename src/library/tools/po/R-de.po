@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:13\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2008-09-19 10:57+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -171,6 +171,10 @@ msgstr ""
 "Paketname '%s' scheint unzulässig; verwende stattdessen Verzeichnisname '%s'"
 
 msgid "Packages required but not available:"
+msgstr "Benötigte, aber nicht verfügbare Pakete:"
+
+#, fuzzy
+msgid "Packages required and available but unsuitable version:"
 msgstr "Benötigte, aber nicht verfügbare Pakete:"
 
 msgid "Former standard packages required but now defunct:"
@@ -388,6 +392,10 @@ msgstr "'::' oder ':::' importieren unangemeldet aus:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 
+#, fuzzy
+msgid "*** error on file"
+msgstr "Parse-Fehler in Datei '%s'"
+
 msgid "Generics g in env ="
 msgstr "Generische g in env ="
 
@@ -485,6 +493,9 @@ msgstr "kann mit Rd Objekten mit fehlendem bzw. leerem Namen nicht umgehen"
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "fehlendes bzw. leeres \\name Feld in Rd Datei(en)"
 
+msgid "Rd2HTML is designed for Rd version 2 or higher."
+msgstr ""
+
 msgid "unable to create temp directory"
 msgstr "kann kein temp Verzeichnis erzeugen"
 
@@ -548,7 +559,8 @@ msgid ""
 "running Stangle on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
-"Stangle auf der Vignette '%s' auszuführen mit folgender Diagnose fehlgeschlagen:\n"
+"Stangle auf der Vignette '%s' auszuführen mit folgender Diagnose "
+"fehlgeschlagen:\n"
 "%s"
 
 msgid "cannot create directory '%s'"
@@ -564,7 +576,8 @@ msgid ""
 "running Sweave on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
-"Sweave auf der Vignette '%s' auszuführen mit folgender Diagnose fehlgeschlagen:\n"
+"Sweave auf der Vignette '%s' auszuführen mit folgender Diagnose "
+"fehlgeschlagen:\n"
 "%s"
 
 msgid "file '%s' was not created"
@@ -629,6 +642,16 @@ msgstr "'DESCRIPTION' hat ein 'Encoding' Feld und rekodieren ist nicht möglich"
 
 msgid "cannot create HTML package index"
 msgstr "kann den HTML Paketindex nicht erzeugen"
+
+msgid "multiple \\encoding lines in file"
+msgstr ""
+
+#, fuzzy
+msgid "found encoding"
+msgstr "Unbekannte Kodierung"
+
+msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
+msgstr ""
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "Argument 'pkg' muss Länge 1 haben"

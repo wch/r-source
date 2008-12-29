@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:13\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -176,6 +176,9 @@ msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 
 msgid "Packages required but not available:"
+msgstr ""
+
+msgid "Packages required and available but unsuitable version:"
 msgstr ""
 
 msgid "Former standard packages required but now defunct:"
@@ -387,6 +390,10 @@ msgstr ""
 msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 
+#, fuzzy
+msgid "*** error on file"
+msgstr "파일 '%s'에 있어서 에러를 해석합니다"
+
 msgid "Generics g in env ="
 msgstr ""
 
@@ -487,6 +494,9 @@ msgstr "실패 또는 비어있는 이름을 구성된 Rd 오브젝트에 대처
 
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "Rd 파일에서 실패한 필드 또는 비어 있는 필드가 있습니다"
+
+msgid "Rd2HTML is designed for Rd version 2 or higher."
+msgstr ""
 
 msgid "unable to create temp directory"
 msgstr "temp 디렉토리를 작성할수가 없습니다"
@@ -636,6 +646,15 @@ msgstr ""
 #, fuzzy
 msgid "cannot create HTML package index"
 msgstr "source은 code로 패키지 할수가 없습니다"
+
+msgid "multiple \\encoding lines in file"
+msgstr ""
+
+msgid "found encoding"
+msgstr ""
+
+msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
+msgstr ""
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "인수 'pkg'가 1 길이어야만 합니다"

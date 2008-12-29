@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 13:00\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -200,6 +200,9 @@ msgstr "没有'formula'或有错"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "分组因子只能有两层"
+
+msgid "weights are not supported in a multistratum aov() fit"
+msgstr ""
 
 msgid "Error() model is singular"
 msgstr "Error()模型奇异"
@@ -1400,6 +1403,10 @@ msgid "'cterms' argument must match terms in model object"
 msgstr "'cterms'变元必需同模型对象里的项相配"
 
 msgid "Design is unbalanced - use se.contrast() for se's"
+msgstr "设计不平衡 - 用se.contrast()算标准误"
+
+#, fuzzy
+msgid "design is unbalanced so cannot proceed"
 msgstr "设计不平衡 - 用se.contrast()算标准误"
 
 msgid ""

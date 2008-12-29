@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 13:00\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2008-09-30 21:11+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -215,6 +215,9 @@ msgstr "'formula' manquante ou incorrecte"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "le facteur de regroupement doit avoir exactement 2 niveaux"
+
+msgid "weights are not supported in a multistratum aov() fit"
+msgstr ""
 
 msgid "Error() model is singular"
 msgstr "le modèle Error() est singulier"
@@ -1484,6 +1487,11 @@ msgid "'cterms' argument must match terms in model object"
 msgstr "l'argument 'cterms' doit correspondre aux termes de l'objet modèle"
 
 msgid "Design is unbalanced - use se.contrast() for se's"
+msgstr ""
+"Le plan n'est pas équilibré - utilisez se.contrast() pour les erreur-types"
+
+#, fuzzy
+msgid "design is unbalanced so cannot proceed"
 msgstr ""
 "Le plan n'est pas équilibré - utilisez se.contrast() pour les erreur-types"
 

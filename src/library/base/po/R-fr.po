@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 12:59\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2008-09-30 18:51+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -175,6 +175,10 @@ msgstr "'x' doit être un tableau ayant au moins 2 dimensions"
 
 msgid "invalid 'dims'"
 msgstr "'dims' incorrect"
+
+#, fuzzy
+msgid "extra arguments ignored:"
+msgstr "l'argument 'drop' sera ignoré"
 
 msgid "bad handler specification"
 msgstr "mauvaise définition de manipulateur (handler)"
@@ -1531,6 +1535,41 @@ msgstr "'%s' ne peut être exécuté"
 
 msgid "'%s' execution failed with error code %d"
 msgstr "l'exécution de '%s' a échoué avec le code d'erreur %d"
+
+msgid "-l option without value"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: no packages specified"
+msgstr "aucun package trouvé"
+
+msgid "Removing from libary"
+msgstr ""
+
+msgid "ERROR: cannot cd to directory"
+msgstr ""
+
+msgid "ERROR: no permission to remove from directory"
+msgstr ""
+
+msgid "T used instead of TRUE"
+msgstr ""
+
+msgid "F used instead of FALSE"
+msgstr ""
+
+msgid "items"
+msgstr ""
+
+#, fuzzy
+msgid "have been removed from the search path"
+msgstr "n'est pas trouvé dans le chemin de recherche"
+
+msgid "file"
+msgstr ""
+
+msgid "cannot be opened"
+msgstr ""
 
 msgid "cannot find name space environment"
 msgstr "impossible de trouver l'espace de noms de l'environnement"

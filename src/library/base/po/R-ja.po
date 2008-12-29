@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 12:59\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2008-09-30 10:48+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -167,6 +167,10 @@ msgstr " 'x' は少なくとも二次元の配列でなければなりません 
 
 msgid "invalid 'dims'"
 msgstr " 無効な 'dims' です "
+
+#, fuzzy
+msgid "extra arguments ignored:"
+msgstr " drop 引数は無視されます "
 
 msgid "bad handler specification"
 msgstr " 誤ったハンドラーの指定です "
@@ -1509,6 +1513,41 @@ msgstr " '%s' を実行できませんでした "
 
 msgid "'%s' execution failed with error code %d"
 msgstr " '%s' の実行は失敗しました(エラーコード %d) "
+
+msgid "-l option without value"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: no packages specified"
+msgstr " いかなるパッケージも見付かりませんでした "
+
+msgid "Removing from libary"
+msgstr ""
+
+msgid "ERROR: cannot cd to directory"
+msgstr ""
+
+msgid "ERROR: no permission to remove from directory"
+msgstr ""
+
+msgid "T used instead of TRUE"
+msgstr ""
+
+msgid "F used instead of FALSE"
+msgstr ""
+
+msgid "items"
+msgstr ""
+
+#, fuzzy
+msgid "have been removed from the search path"
+msgstr " 検索パス上にありません "
+
+msgid "file"
+msgstr ""
+
+msgid "cannot be opened"
+msgstr ""
 
 msgid "cannot find name space environment"
 msgstr " 名前空間環境を見つけられません "

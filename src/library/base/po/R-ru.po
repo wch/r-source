@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 12:59\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2008-10-06 16:47-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -175,6 +175,10 @@ msgstr "'x' должен быть матрицей по крайней мере с двумя измерениями"
 
 msgid "invalid 'dims'"
 msgstr "неправильные 'dims'"
+
+#, fuzzy
+msgid "extra arguments ignored:"
+msgstr "аргумент 'drop' не будет учтен"
 
 msgid "bad handler specification"
 msgstr "неправильное указание обработчика"
@@ -1485,6 +1489,41 @@ msgstr "'%s' не запускается"
 
 msgid "'%s' execution failed with error code %d"
 msgstr "выполнение '%s' прекращено: ошибка с кодом %d"
+
+msgid "-l option without value"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: no packages specified"
+msgstr "пакетов не найдено"
+
+msgid "Removing from libary"
+msgstr ""
+
+msgid "ERROR: cannot cd to directory"
+msgstr ""
+
+msgid "ERROR: no permission to remove from directory"
+msgstr ""
+
+msgid "T used instead of TRUE"
+msgstr ""
+
+msgid "F used instead of FALSE"
+msgstr ""
+
+msgid "items"
+msgstr ""
+
+#, fuzzy
+msgid "have been removed from the search path"
+msgstr "не найден в пути поиска"
+
+msgid "file"
+msgstr ""
+
+msgid "cannot be opened"
+msgstr ""
 
 msgid "cannot find name space environment"
 msgstr "не могу найти окружение пространства имен"

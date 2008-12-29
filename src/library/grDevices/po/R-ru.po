@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:48\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2008-10-06 16:47-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -17,7 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "'coef' must not be negative"
 msgstr "'coef'  не должен быть отрицательным"
@@ -152,7 +153,8 @@ msgid "NOT changing"
 msgstr "НЕ изменяется"
 
 msgid "argment 'append' is for back-compatibility and will be ignored"
-msgstr "аргумент 'append' предназначен для обратной совместимости и будет пропущен"
+msgstr ""
+"аргумент 'append' предназначен для обратной совместимости и будет пропущен"
 
 msgid "unknown family '%s'"
 msgstr "неизвестное семейство '%s'"
@@ -292,6 +294,13 @@ msgstr "неправильное значение 'rescale'"
 msgid "can only bring windows devices to the front"
 msgstr "могу лишь переместить устройства windows на первый план"
 
+msgid "'type' not applicable to the R console"
+msgstr ""
+
+#, fuzzy
+msgid "can only manipulate windows devices"
+msgstr "могу копировать лишь с 'windows'-устройств"
+
 msgid "can only copy from 'windows' devices"
 msgstr "могу копировать лишь с 'windows'-устройств"
 
@@ -341,4 +350,3 @@ msgstr[2] "%d значения z <= 0 пропущены на логарифмическом графике"
 #~ msgstr ""
 #~ "устройство quartz() интерактивно сокращено без использования обработчика "
 #~ "циклов"
-

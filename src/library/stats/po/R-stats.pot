@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 13:00\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -189,6 +189,9 @@ msgid "'formula' missing or incorrect"
 msgstr ""
 
 msgid "grouping factor must have exactly 2 levels"
+msgstr ""
+
+msgid "weights are not supported in a multistratum aov() fit"
 msgstr ""
 
 msgid "Error() model is singular"
@@ -1365,6 +1368,9 @@ msgid "'cterms' argument must match terms in model object"
 msgstr ""
 
 msgid "Design is unbalanced - use se.contrast() for se's"
+msgstr ""
+
+msgid "design is unbalanced so cannot proceed"
 msgstr ""
 
 msgid "Standard error information not returned as design is unbalanced. \nStandard errors can be obtained through 'se.contrast'."

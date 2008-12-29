@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-09-08 14:13\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2008-10-06 22:01+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -178,6 +178,10 @@ msgstr ""
 "パッケージ名 '%s' は無効のようです。代わりにディレクトリ名 '%s' を使います "
 
 msgid "Packages required but not available:"
+msgstr " パッケージが必要ですが，利用可能ではありません "
+
+#, fuzzy
+msgid "Packages required and available but unsuitable version:"
 msgstr " パッケージが必要ですが，利用可能ではありません "
 
 msgid "Former standard packages required but now defunct:"
@@ -398,6 +402,10 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 " 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
 
+#, fuzzy
+msgid "*** error on file"
+msgstr " ファイル '%s' 中に構文解析エラー: "
+
 msgid "Generics g in env ="
 msgstr " env 中の Generics g = "
 
@@ -501,6 +509,9 @@ msgid "missing/empty \\name field in Rd file(s)"
 msgstr ""
 " Rd ファイル中に欠損もしくは空の  \n"
 " ame 欄 "
+
+msgid "Rd2HTML is designed for Rd version 2 or higher."
+msgstr ""
 
 msgid "unable to create temp directory"
 msgstr " 仮ディレクトリを生成することが出来ません "
@@ -651,6 +662,16 @@ msgstr " 'DESCRIPTION' は 'Encoding' 欄を持ち、再エンコーディング
 
 msgid "cannot create HTML package index"
 msgstr " HTMLパッケージのインデックスを生成することが出来ません "
+
+msgid "multiple \\encoding lines in file"
+msgstr ""
+
+#, fuzzy
+msgid "found encoding"
+msgstr " 未知のエンコードです "
+
+msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
+msgstr ""
 
 msgid "argument 'pkg' must be of length 1"
 msgstr " 引数 'pkg' は長さ1でなければなりません "

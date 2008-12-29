@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 12:59\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2008-09-18 16:26+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -172,6 +172,10 @@ msgstr "'x' muss ein Array mit mindestens zwei Dimensionen sein"
 
 msgid "invalid 'dims'"
 msgstr "ungültige 'dims'"
+
+#, fuzzy
+msgid "extra arguments ignored:"
+msgstr "drop Argument wird ignoriert"
 
 msgid "bad handler specification"
 msgstr "schlechte handler Spezifikation"
@@ -1493,6 +1497,41 @@ msgstr "'%s' konnte nicht ausgeführt werden"
 
 msgid "'%s' execution failed with error code %d"
 msgstr "'%s' Ausführung mit Fehlerkode %d fehlgeschlagen"
+
+msgid "-l option without value"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: no packages specified"
+msgstr "keine Pakete gefunden"
+
+msgid "Removing from libary"
+msgstr ""
+
+msgid "ERROR: cannot cd to directory"
+msgstr ""
+
+msgid "ERROR: no permission to remove from directory"
+msgstr ""
+
+msgid "T used instead of TRUE"
+msgstr ""
+
+msgid "F used instead of FALSE"
+msgstr ""
+
+msgid "items"
+msgstr ""
+
+#, fuzzy
+msgid "have been removed from the search path"
+msgstr "ist nicht im Suchpfad "
+
+msgid "file"
+msgstr ""
+
+msgid "cannot be opened"
+msgstr ""
 
 msgid "cannot find name space environment"
 msgstr "kann keine Namensraum-Umgebung finden"

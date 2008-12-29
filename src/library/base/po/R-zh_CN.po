@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 12:59\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -171,6 +171,10 @@ msgstr "'x'必需是阵列，而且至少得有两个维度"
 
 msgid "invalid 'dims'"
 msgstr "'dims'不对"
+
+#, fuzzy
+msgid "extra arguments ignored:"
+msgstr "忽略drop变元"
 
 msgid "bad handler specification"
 msgstr "处置器柄规格不对"
@@ -1467,6 +1471,41 @@ msgstr "无法運行'%s'"
 
 msgid "'%s' execution failed with error code %d"
 msgstr "'%s'运行失败，错误码为%d"
+
+msgid "-l option without value"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: no packages specified"
+msgstr "找不到程辑包"
+
+msgid "Removing from libary"
+msgstr ""
+
+msgid "ERROR: cannot cd to directory"
+msgstr ""
+
+msgid "ERROR: no permission to remove from directory"
+msgstr ""
+
+msgid "T used instead of TRUE"
+msgstr ""
+
+msgid "F used instead of FALSE"
+msgstr ""
+
+msgid "items"
+msgstr ""
+
+#, fuzzy
+msgid "have been removed from the search path"
+msgstr "'%s'不在搜索路径上"
+
+msgid "file"
+msgstr ""
+
+msgid "cannot be opened"
+msgstr ""
 
 msgid "cannot find name space environment"
 msgstr "找不到名字空间环境"

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 12:59\n"
-"PO-Revision-Date: 2008-12-16 12:59\n"
+"POT-Creation-Date: 2008-12-29 14:43\n"
+"PO-Revision-Date: 2008-12-29 14:43\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -188,6 +188,9 @@ msgstr "‘x’ must be an array of at least two dimensions"
 
 msgid "invalid 'dims'"
 msgstr "invalid ‘dims’"
+
+msgid "extra arguments ignored:"
+msgstr "extra arguments ignored:"
 
 msgid "bad handler specification"
 msgstr "bad handler specification"
@@ -1492,6 +1495,39 @@ msgstr "‘%s’ could not be run"
 
 msgid "'%s' execution failed with error code %d"
 msgstr "‘%s’ execution failed with error code %d"
+
+msgid "-l option without value"
+msgstr "-l option without value"
+
+msgid "ERROR: no packages specified"
+msgstr "ERROR: no packages specified"
+
+msgid "Removing from libary"
+msgstr "Removing from libary"
+
+msgid "ERROR: cannot cd to directory"
+msgstr "ERROR: cannot cd to directory"
+
+msgid "ERROR: no permission to remove from directory"
+msgstr "ERROR: no permission to remove from directory"
+
+msgid "T used instead of TRUE"
+msgstr "T used instead of TRUE"
+
+msgid "F used instead of FALSE"
+msgstr "F used instead of FALSE"
+
+msgid "items"
+msgstr "items"
+
+msgid "have been removed from the search path"
+msgstr "have been removed from the search path"
+
+msgid "file"
+msgstr "file"
+
+msgid "cannot be opened"
+msgstr "cannot be opened"
 
 msgid "cannot find name space environment"
 msgstr "cannot find name space environment"
