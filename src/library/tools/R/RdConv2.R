@@ -6,7 +6,8 @@ isBlankRd <- function(x)
     length(grep("^[[:blank:]]*\n?$", x)) == length(x) # newline optional
 
 isBlankLineRd <- function(x)
-    attr(x, "srcref")[2] == 0 &&  # Starts in column 1
+    !is.null(src <- attr(x, "srcref")) &&
+    src[2] == 0                        &&             # Starts in column 1
     length(grep("^[[:blank:]]*\n", x)) == length(x)   # newline required
 
 stopRd <- function(block, ...) {
