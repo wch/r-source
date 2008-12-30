@@ -22,9 +22,10 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
         if(file == "") {
             file <- stdin()
         } else {
-            ## encoding issues here:
-            ## if (missing(srcfile) && isTRUE(getOption("keep.source")))
-            ##	 srcfile <- srcfile(file)
+            ## keep.source is FALSE in batch use
+            ## encoding issues here, for now use file encoding
+            if (missing(srcfile)) ## && isTRUE(getOption("keep.source")))
+                srcfile <- srcfile(file)
         }
     } else file0 <- "<connection>"
     lines <- readLines(file, warn = FALSE)
