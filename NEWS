@@ -218,7 +218,7 @@ INSTALLATION
     o	libtool has been updated to 2.2.6a.
 
     o	--with-ICU is now the default: this means that ICU will be
-	used on Mac OS >= 10.4.
+	used for collation on Mac OS >= 10.4.
 
 
 PACKAGE INSTALLATION
