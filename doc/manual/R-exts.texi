@@ -3123,7 +3123,7 @@ text inside @code{\examples@{@}} will be displayed in the output of the
 help page and run by @code{example()} and by @code{R CMD check}.  You
 can use @code{\dontrun@{@}}
 @findex \dontrun
-for commands that should only be shown, but not run, and
+for text that should only be shown, but not run, and
 @code{\dontshow@{@}}
 @findex \dontshow
 for extra commands for testing that should not be shown to users, but
@@ -3143,8 +3143,9 @@ x <- runif(10)       # @r{Shown and run.}
 Thus, example code not included in @code{\dontrun} must be executable!
 In addition, it should not use any system-specific features or require
 special facilities (such as Internet access or write permission to
-specific directories).  Code included in @code{\dontrun} is indicated by
-comments in the processed help files.
+specific directories).  Text included in @code{\dontrun} is indicated by
+comments in the processed help files: it need not be valid @R{} code but
+the escapes must still be used for @code{% \} and unpaired braces.
 
 Data needed for making the examples executable can be obtained by random
 number generation (for example, @code{x <- rnorm(100)}), or by using
