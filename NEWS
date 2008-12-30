@@ -227,6 +227,10 @@ PACKAGE INSTALLATION
 	avoids other installed packages diverting help on e.g. qr()
 	and plot() to themselves.
 
+    o	A check is done that the R files can be parsed: this both
+	prevents a broken package without lazy-loading from being
+	installed and gives better diagnostics.
+
 
 C-LEVEL FACILITIES
 

@@ -294,13 +294,17 @@ function(dir, outDir)
                outFile)
     enc <- as.vector(db["Encoding"])
     need_enc <- !is.na(enc) # Encoding was specified
-    ## assume that if locale if 'C' we can used 8-bit encodings unchanged.
+    ## assume that if locale is 'C' we can used 8-bit encodings unchanged.
     if(need_enc && capabilities("iconv") &&
        !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))
        ) {
         con <- file(outFile, "a")
         on.exit(close(con))  # Windows does not like files left open
+        op <- options(encoding = enc, showErrorCalls=FALSE)
+        on.exit(op, add = TRUE)
         for(f in codeFiles) {
+            ## syntax check: see below
+            eval(substitute(parse(f), list(f=f)))
             tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "")
             if(any(is.na(tmp)))
                stop(gettextf("unable to re-encode '%s'", basename(f)),
@@ -308,6 +312,12 @@ function(dir, outDir)
             writeLines(tmp, con)
         }
     } else {
+        ## A syntax check here, both so that we do not install a
+        ## broken package and that we get better diagnostics.
+        op <- options(showErrorCalls=FALSE)
+        on.exit(op)
+        for(f in codeFiles)
+            eval(substitute(parse(f), list(f=f)))
         ## <NOTE>
         ## It may be safer to do
         ##   writeLines(sapply(codeFiles, readLines), outFile)
