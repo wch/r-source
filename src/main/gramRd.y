@@ -635,7 +635,7 @@ static keywords[] = {
     /* These markup macros require an R-like text argument */
     
     { "\\code",    RCODEMACRO },
-    { "\\dontrun", RCODEMACRO },
+    { "\\dontrun", VERBMACRO }, /* at least for now */
     { "\\dontshow",RCODEMACRO },
     { "\\donttest",RCODEMACRO },
     { "\\testonly",RCODEMACRO },
