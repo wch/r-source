@@ -65,6 +65,7 @@ static SEXP     makeSrcref(YYLTYPE *, SEXP);
 /* Internal lexer / parser state variables */
 
 static int 	xxinRString, xxQuoteLine, xxQuoteCol;
+static int	xxQuiet;
 static int	xxgetc();
 static int	xxungetc(int);
 static int	xxlineno, xxcolno;
@@ -492,6 +493,7 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile)
     xxitemType = UNKNOWN;
     xxbraceDepth = 0;
     xxinRString = 0;
+    xxQuiet = 0;     /* FIXME:  set this in the parse_Rd call? */
     
     Value = R_NilValue;
     
@@ -560,10 +562,9 @@ static keywords[] = {
     { "\\encoding",SECTIONHEADER },
     { "\\format",  SECTIONHEADER },
     { "\\keyword", SECTIONHEADER },
-    { "\\name",    SECTIONHEADER },
-    { "\\note",    SECTIONHEADER },
-    
+    { "\\note",    SECTIONHEADER },    
     { "\\references", SECTIONHEADER },
+    
     { "\\section", SECTIONHEADER2 },    
     { "\\seealso", SECTIONHEADER },
     { "\\source",  SECTIONHEADER },
@@ -577,6 +578,7 @@ static keywords[] = {
     /* This section contains verbatim text */
     
     { "\\alias",   VSECTIONHEADER }, 
+    { "\\name",    VSECTIONHEADER },
     { "\\synopsis",VSECTIONHEADER }, 
     { "\\Rdversion",VSECTIONHEADER }, 
     
@@ -635,7 +637,6 @@ static keywords[] = {
     /* These markup macros require an R-like text argument */
     
     { "\\code",    RCODEMACRO },
-    { "\\dontrun", VERBMACRO }, /* at least for now */
     { "\\dontshow",RCODEMACRO },
     { "\\donttest",RCODEMACRO },
     { "\\testonly",RCODEMACRO },
@@ -643,6 +644,7 @@ static keywords[] = {
     /* These macros take one verbatim arg and ignore everything except braces */
     
     { "\\command", VERBMACRO },
+    { "\\dontrun", VERBMACRO }, /* at least for now */    
     { "\\env",     VERBMACRO },
     { "\\kbd", 	   VERBMACRO },	
     { "\\option",  VERBMACRO },
@@ -962,7 +964,13 @@ static int mkCode(int c)
     	    } else if (c == R_EOF) break;
     	}
     	TEXT_PUSH(c);
-    	if (c == '\n') break;
+    	if (c == '\n') {
+    	    if (xxinRString && !xxQuiet) {
+    	    	warning(_("newline within quoted string at line %d"), xxlineno-1);
+    	    	xxQuiet = 1;
+    	    }
+    	    break;
+    	}
     	c = xxgetc();
     }
     if (c != '\n') xxungetc(c);

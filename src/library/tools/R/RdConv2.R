@@ -407,7 +407,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     title <- Rd[[1]]
     name <- Rd[[2]]
     tags <- RdTags(name)
-    if (length(tags) > 1 || tags != "TEXT") stopRd(name, "\\name must only contain simple text.")
+    if (length(tags) > 1) stopRd(name, "\\name must only contain simple text.")
 
     name <- htmlify(name[[1]])
 
@@ -623,7 +623,7 @@ checkRd <-
 
     name <- Rd[[which(sections == "\\name")]]
     tags <- RdTags(name)
-    if (length(tags) > 1 || tags != "TEXT") stopRd(name, "\\name must only contain simple text.")
+    if (length(tags) > 1) stopRd(name, "\\name must only contain simple text.")
 
     for (i in seq_along(sections))
     	checkSection(Rd[[i]], sections[i])
