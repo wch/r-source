@@ -24,19 +24,19 @@ substr <- function(x, start, stop)
     .Internal(substr(x, as.integer(start), as.integer(stop)))
 }
 
-substring <- function(text,first,last=1000000L)
+substring <- function(text, first, last=1000000L)
 {
     if(!is.character(text)) x <- as.character(text)
     n <- max(lt <- length(text), length(first), length(last))
     if(lt && lt < n) text <- rep(text, length.out = n)
-    substr(text, first, last)
+    .Internal(substr(text, as.integer(first), as.integer(last)))
 }
 
 `substr<-` <- function(x, start, stop, value)
     .Internal(`substr<-`(x, as.integer(start), as.integer(stop), value))
 
 `substring<-` <- function(text, first, last=1000000L, value)
-    `substr<-`(text, first, last, value)
+    .Internal(`substr<-`(text, as.integer(first), as.integer(last), value))
 
 abbreviate <-
     function(names.arg, minlength = 4, use.classes = TRUE, dot = FALSE,
