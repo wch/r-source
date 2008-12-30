@@ -434,7 +434,7 @@ test-undoc:
 
 ## There is a potential name clash here on case-insensitive Mac OS X
 test-Packages-Recommended:
-	@rm -f PACKAGES
+	-@rm -rf PACKAGES
 	@test -d Packages || mkdir Packages
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
 	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
