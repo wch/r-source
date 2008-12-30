@@ -38,7 +38,7 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE)
   At present files which are marked as Latin-1 or UTF-8 or where
   \code{encoding} has one of those values result in text marked in the
   encoding. In a non-UTF-8 MBCS locale the result will be marked as
-  UTF-8.  In all other cases are assumed to be in the native encoding.
+  UTF-8.  In all other cases files are assumed to be in the native encoding.
 }
 \section{Warning}{
   These functions are still experimental.  Names, interfaces and values
@@ -49,7 +49,7 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE)
 \seealso{
   \code{\link{Rd2HTML}}.
   
-  \code{\link{Rd_parse}}, the function for used for parsing 
+  \code{\link{Rd_parse}}, the function used for parsing 
   Rd files by \command{R CMD check}.
 }
 \examples{
