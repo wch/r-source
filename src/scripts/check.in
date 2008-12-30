@@ -1794,8 +1794,8 @@ sub check_pkg {
 	 "in manual 'Writing R Extensions'.\n");
 
     my @msg2_writing_Rd
-      = ("The Rdversion 2 parser is experimental.",
-	 "There are some false positives, but almost all reports are correct.\n");
+      = ("The Rdversion 2 parser is experimental,",
+	 "but almost all reports are correct.\n");
 
     if(-d "man") {
 	$log->checking("Rd files");

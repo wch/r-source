@@ -16,16 +16,18 @@
 }
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type)
-checkRd(Rd, defines=.Platform$OS.type, unknownOkay = FALSE, listOkay = FALSE)
+checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
+        unknownOkay = FALSE, listOkay = FALSE)
 }
 \arguments{
-  \item{Rd}{ the \code{Rd} object }
-  \item{out}{ a filename or connection object to which to write the output }
-  \item{package}{ the package to list in the output }
-  \item{defines}{ strings to use in \code{"#ifdef"} tests }
-  \item{unknownOkay}{ unrecognized macros are treated as errors if \code{TRUE}}
+  \item{Rd}{ the \code{Rd} object. }
+  \item{out}{ a filename or connection object to which to write the output. }
+  \item{package}{ the package to list in the output. }
+  \item{defines}{ string(s) to use in \code{"#ifdef"} tests. }
+  \item{unknownOkay}{ unrecognized macros are treated as errors if
+    \code{TRUE}. }
   \item{listOkay}{ unnecessary non-empty braces (e.g. around text, not
-    as an argument) are treated as errors if \code{TRUE}}
+    as an argument) are treated as errors if \code{TRUE}. }
 }
 \details{
   The \code{Rd2HTML} converter is still in development, and currently
@@ -34,7 +36,8 @@ checkRd(Rd, defines=.Platform$OS.type, unknownOkay = FALSE, listOkay = FALSE)
     \item \code{"\\link"} macros are not generated properly.
     \item \code{"\\enc"} and \code{"\\encoding"} are not supported.
     \item Error messages are not as informative as they could be.  Often
-    using \code{parse_Rd(..., verbose=TRUE)} will give an idea of what is wrong.
+    using \code{parse_Rd(\dots, verbose = TRUE)} will give a better idea
+    of what is wrong.
     \item Formatting is not always optimal.
   }
 }

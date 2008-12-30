@@ -5,10 +5,10 @@ RdTags <- function(Rd) {
 isBlankRd <- function(x)
     length(grep("^[[:blank:]]*\n?$", x)) == length(x) # newline optional
 
-isBlankLineRd <- function(x) 
+isBlankLineRd <- function(x)
     attr(x, "srcref")[2] == 0 &&  # Starts in column 1
     length(grep("^[[:blank:]]*\n", x)) == length(x)   # newline required
-    
+
 stopRd <- function(block, ...) {
     srcref <- attr(block, "srcref")
     if (is.null(srcref)) stop(...)
@@ -18,7 +18,7 @@ stopRd <- function(block, ...) {
     	stop(call.=FALSE, loc,":",...)
     }
 }
-    
+
 preprocessRd <- function(blocks, defines) {
     # Process ifdef's.
     tags <- RdTags(blocks)
@@ -38,29 +38,29 @@ preprocessRd <- function(blocks, defines) {
 	    tags <- c(tags[before], tags[after])
 	    blocks <- c(blocks[before], blocks[after])
 	}
-    } 
+    }
     # Save the tags
     attr(blocks, "RdTags") <- tags
     blocks
-}    
-    
+}
+
 sectionOrder <- c("\\title"=1, "\\name"=2, "\\description"=3, "\\usage"=4, "\\synopsis"=4,
                    "\\arguments"=5, "\\format"=5, "\\details"=6, "\\value"=7, "\\note"=7, "\\section"=7,
                    "\\author" = 8, "\\references"=8, "\\source"=8, "\\seealso"=9, "\\examples"=10)
-                   
+
 sectionTitles <- c("\\description"="Description", "\\usage"="Usage", "\\synopsis"="Usage",
                    "\\arguments"="Arguments", "\\format"="Format", "\\details"="Details", "\\note"="Note",
-                   "\\section"="section", "\\author"="Author(s)", "\\references"="References", "\\source"="Source", 
+                   "\\section"="section", "\\author"="Author(s)", "\\references"="References", "\\source"="Source",
                    "\\seealso"="See Also", "\\examples"="Examples", "\\value"="Value")
 
 Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     # These correspond to HTML wrappers
     HTMLTags <- c("\\bold"="B",
     	          "\\cite"="CITE",
-                  "\\code"="code", 
+                  "\\code"="code",
                   "\\command"="CODE",
                   "\\dfn"="DFN",
-                  "\\emph"="EM", 
+                  "\\emph"="EM",
                   "\\kbd"="KBD",
                   "\\preformatted"="PRE",
                   "\\special"="PRE",
@@ -75,7 +75,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     HTMLLeft <- c("\\acronym"='<acronym><span class="acronym">',
     		  "\\dontrun"='## Not run:',
     		  "\\donttest"="",
-    		  "\\env"='<span class="env">',    		  
+    		  "\\env"='<span class="env">',
                   "\\file"='&lsquo;<span class="file">',
                   "\\option"='<span class="option">',
                   "\\pkg"='<span class="pkg">',
@@ -92,12 +92,12 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
                    "\\samp"="</span>",
                    "\\sQuote"="&rsquo;",
                    "\\dQuote"="&rdquo;")
-                   
+
     addParaBreaks <- function(x) {
 	if (isBlankLineRd(x)) x <- "\n</p>\n<p>\n"
 	x
     }
-    
+
     # FIXME: what other substitutions do we need?
     htmlify <- function(x) {
 	x <- gsub("&", "&amp;", x)
@@ -110,8 +110,8 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     	writeContent(block, tag)
     	cat("</", HTMLTags[tag],">", sep="", file=con)
     }
-    
-    writeLink <- function(tag, block) { # FIXME This doesn't handle aliases, and 
+
+    writeLink <- function(tag, block) { # FIXME This doesn't handle aliases, and
                                         # doesn't cover all variations
     	option <- attr(block, "Rd_option")
     	cat('<a href="', file=con)
@@ -124,20 +124,20 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     	writeContent(block, tag)
     	cat('</a>', file=con)
     }
-    
+
     writeComment <- function(txt) {
        	txt <- sub("^%", "", txt)
        	txt <- gsub("--", "- - ", txt)
        	txt <- gsub(">", "&gt;", txt)
 	cat("<!-- ", txt, " -->\n", file=con)
     }
-    
+
     writeBlock <- function(block, tag, blocktag) {
 	switch(tag,
 	UNKNOWN = ,
 	VERB = ,
 	RCODE = cat(htmlify(block), file=con),
-	TEXT = cat(addParaBreaks(htmlify(block)), file=con), 
+	TEXT = cat(addParaBreaks(htmlify(block)), file=con),
 	COMMENT = {},
 	LIST =,
 	"\\describe"=,
@@ -145,10 +145,10 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
 	"\\itemize"=writeContent(block, tag),
 	"\\bold"=,
 	"\\cite"=,
-	"\\code"=, 
+	"\\code"=,
 	"\\command"=,
 	"\\dfn"=,
-	"\\emph"=, 
+	"\\emph"=,
 	"\\kbd"=,
 	"\\preformatted"=,
 	"\\special"=,
@@ -176,7 +176,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
 	    writeContent(block, tag)
 	    cat(HTMLRight[tag], file=con)
 	},
-	"\\enc" =  # FIXME:  this should sometimes use the first arg 
+	"\\enc" =  # FIXME:  this should sometimes use the first arg
 	    writeContent(block[[2]], tag),
 	"\\eqn" = {
 	    if (is.null(RdTags(block)))  # the two arg form has no tags
@@ -210,7 +210,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
 	"\\tabular" = writeTabular(block),
         stopRd(block, "Tag ", tag, " not recognized."))
     }
-    
+
     writeTabular <- function(table) {
     	format <- table[[1]]
     	content <- table[[2]]
@@ -220,7 +220,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     	if (!all(format %in% c("l", "c", "r")))
     	    stopRd(table, "Unrecognized \\tabular format: ", table[[1]][[1]])
         format <- c(l="left", c="center", r="right")[format]
-        
+
         content <- preprocessRd(content, defines)
         tags <- attr(content, "RdTags")
 
@@ -236,7 +236,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
             if (newcol) {
                 col <- col + 1
                 if (col > length(format))
-                    stopRd(table, "Only ", length(format), " columns allowed in this table.")                    
+                    stopRd(table, "Only ", length(format), " columns allowed in this table.")
             	cat('<td align="', format[col], '">', sep="", file=con)
             	newcol <- FALSE
             }
@@ -258,14 +258,14 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
         if (!newrow)
             cat('\n</tr>\n', file=con)
         cat('\n</table><p>\n', file=con)
-    }        
-            
+    }
+
     writeContent <- function(blocks, blocktag) {
         inlist <- FALSE
-        
+
 	blocks <- preprocessRd(blocks, defines)
 	tags <- attr(blocks, "RdTags")
-	
+
 	for (i in seq_along(tags)) {
             tag <- tags[i]
             block <- blocks[[i]]
@@ -308,7 +308,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     	    	    switch(blocktag,
     	    	    "\\arguments"=cat("</table>\n", file=con),
     	    	    "\\value"=,
-    	    	    "\\describe"=cat("</dl>\n", file=con))    	    
+    	    	    "\\describe"=cat("</dl>\n", file=con))
     		    inlist <- FALSE
     		}
     		writeBlock(block, tag, blocktag)
@@ -320,26 +320,26 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
 		"\\itemize"=cat("</ul>\n", file=con),
 		"\\enumerate"=cat("</ol>\n", file=con),
 		"\\value"=,
-		"\\describe"=cat("</dl>\n", file=con))  
+		"\\describe"=cat("</dl>\n", file=con))
     }
-    
+
     writeSection <- function(section, tag) {
-    	cat("\n\n<h3>", file=con)    	
+    	cat("\n\n<h3>", file=con)
     	if (tag == "\\section") {
     	    title <- section[[1]]
     	    section <- section[[2]]
     	    writeContent(title, tag)
-    	} else 
+    	} else
     	    cat(sectionTitles[tag], file=con)
     	if (tag %in% c("\\examples","\\synopsis","\\usage"))
-    	    para <- "pre" else para <- "p"     	
+    	    para <- "pre" else para <- "p"
     	cat("</h3>\n\n<", para, ">", sep="", file=con)
     	writeContent(section, tag)
     	cat("</", para, ">\n", sep="", file=con)
     }
-    
+
     if (is.character(Rd)) Rd <- parse_Rd(Rd)
-    
+
     if (is.character(out)) {
         if(out == "") con <- stdout()
         else {
@@ -350,7 +350,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     	con <- out
     	out <- summary(con)$description
     }
-    
+
     # Process top level ifdef's.
     Rd <- preprocessRd(Rd, defines)
     sections <- attr(Rd, "RdTags")
@@ -360,39 +360,39 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     # 	if (sections[i] != "COMMENT") break
     #	writeComment(Rd[[i]])
     #}
-    
+
     version <- which(sections == "\\Rdversion")
     if (length(version) == 1 && as.numeric(version[[1]]) < 2)
     	warning("Rd2HTML is designed for Rd version 2 or higher.")
     else if (length(version) > 1)
     	stopRd(Rd[[version[2]]], "Only one \\Rdversion declaration is allowed")
-    
+
     # Give error for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]))))
     	stopRd(Rd[sections == "TEXT"][[bad[1]]], "All text must be in a section")
-    	
+
     # Drop all the parts that are not rendered
-    drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding", 
+    drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding",
                             "\\keyword", "\\alias", "\\Rdversion")
     Rd <- Rd[!drop]
     sections <- sections[!drop]
-    
+
     sortorder <- sectionOrder[sections]
     if (any(bad <- is.na(sortorder)))
     	stopRd(Rd[[which(bad)[1]]], "Section ", sections[which(bad)[1]], " unrecognized.")
     sortorder <- order(sortorder)
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
-    if (!identical(sections[1:3],c("\\title", "\\name", "\\description"))) 
+    if (!identical(sections[1:3],c("\\title", "\\name", "\\description")))
     	stopRd(Rd, "Sections \\title, \\name and \\description must exist and be unique in Rd files.")
-    
+
     title <- Rd[[1]]
     name <- Rd[[2]]
     tags <- RdTags(name)
     if (length(tags) > 1 || tags != "TEXT") stopRd(name, "\\name must only contain simple text.")
-    
+
     name <- htmlify(name[[1]])
-    
+
     cat('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
         '<html><head><title>R: ', sep="", file=con)
     writeContent(title, "\\title")
@@ -400,43 +400,46 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
         '<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">\n',
         '<link rel="stylesheet" type="text/css" href="../../R.css">\n',
         '</head><body>\n\n',
-        '<table width="100%" summary="page for ', name, ' {', package, 
+        '<table width="100%" summary="page for ', name, ' {', package,
         '}"><tr><td>',name,' {', package, '}</td><td align="right">R Documentation</td></tr></table>\n',
         '<h2>', sep="", file=con)
     writeContent(title, "\\title")
     cat('</h2>\n', file=con)
-    
+
     for (i in seq_along(sections)[-(1:2)])
     	writeSection(Rd[[i]], sections[i])
-    
+
     version <- packageDescription(package, fields="Version")
     cat('\n',
-        '<hr><div align="center">[Package <em>', package, 
+        '<hr><div align="center">[Package <em>', package,
         '</em> version ', version, ' <a href="00Index.html">Index]</a></div>\n',
         '</body></html>\n',
         sep='', file=con)
     return(out)
 }
 
-checkRd <- function(Rd, defines=.Platform$OS.type, unknownOkay = FALSE, listOkay = FALSE) {
+checkRd <-
+    function(Rd, defines=.Platform$OS.type, encoding = "unknown",
+             unknownOkay = FALSE, listOkay = FALSE)
+{
 
     checkWrapped <- function(tag, block) {
     	checkContent(block, tag)
     }
-    
-    checkLink <- function(tag, block) { # FIXME This doesn't handle aliases, and 
+
+    checkLink <- function(tag, block) { # FIXME This doesn't handle aliases, and
                                         # doesn't cover all variations
     	option <- attr(block, "Rd_option")
     	checkContent(option, tag)
     	checkContent(block, tag)
     }
-    
+
     checkBlock <- function(block, tag, blocktag) {
 	switch(tag,
 	UNKNOWN = if (!unknownOkay) stopRd(block, "Unrecognized macro ", block[[1]]),
 	VERB = ,
 	RCODE = ,
-	TEXT = , 
+	TEXT = ,
 	COMMENT = {},
 	LIST = if (!listOkay && length(block)) stopRd(block, "Unnecessary braces"),
 	"\\describe"=,
@@ -444,10 +447,10 @@ checkRd <- function(Rd, defines=.Platform$OS.type, unknownOkay = FALSE, listOkay
 	"\\itemize"=,
 	"\\bold"=,
 	"\\cite"=,
-	"\\code"=, 
+	"\\code"=,
 	"\\command"=,
 	"\\dfn"=,
-	"\\emph"=, 
+	"\\emph"=,
 	"\\kbd"=,
 	"\\preformatted"=,
 	"\\special"=,
@@ -490,7 +493,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, unknownOkay = FALSE, listOkay
 	"\\tabular" = checkTabular(block),
         stopRd(block, "Tag ", tag, " not recognized."))
     }
-    
+
     checkTabular <- function(table) {
     	format <- table[[1]]
     	content <- table[[2]]
@@ -512,7 +515,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, unknownOkay = FALSE, listOkay
             if (newcol) {
                 col <- col + 1
                 if (col > length(format))
-                    stopRd(table, "Only ", length(format), " columns allowed in this table.")                    
+                    stopRd(table, "Only ", length(format), " columns allowed in this table.")
             	newcol <- FALSE
             }
             switch(tags[i],
@@ -524,14 +527,14 @@ checkRd <- function(Rd, defines=.Platform$OS.type, unknownOkay = FALSE, listOkay
             },
             checkBlock(content[[i]], tags[i], "\\tabular"))
         }
-    }        
-            
+    }
+
     checkContent <- function(blocks, blocktag) {
         inlist <- FALSE
-        
+
 	blocks <- preprocessRd(blocks, defines)
 	tags <- attr(blocks, "RdTags")
-	
+
 	for (i in seq_along(tags)) {
             tag <- tags[i]
             block <- blocks[[i]]
@@ -553,14 +556,14 @@ checkRd <- function(Rd, defines=.Platform$OS.type, unknownOkay = FALSE, listOkay
     	    },
     	    { # default
     	    	if (inlist && !(blocktag %in% c("\\itemize", "\\enumerate"))
-    	    	           && !(tag == "TEXT" && isBlankRd(block))) {   	    
+    	    	           && !(tag == "TEXT" && isBlankRd(block))) {
     		    inlist <- FALSE
     		}
     		checkBlock(block, tag, blocktag)
     	    })
 	}
     }
-    
+
     checkSection <- function(section, tag) {
     	if (tag == "\\section") {
     	    title <- section[[1]]
@@ -569,7 +572,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, unknownOkay = FALSE, listOkay
     	}
     	checkContent(section, tag)
     }
-    
+
     checkUnique <- function(tag) {
     	which <- which(sections == tag)
     	if (length(which) < 1)
@@ -577,9 +580,9 @@ checkRd <- function(Rd, defines=.Platform$OS.type, unknownOkay = FALSE, listOkay
     	else if (length(which) > 1)
     	    stopRd(Rd[[which[2]]], "Only one ", tag, " is allowed")
     }
-    
-    if (is.character(Rd)) Rd <- parse_Rd(Rd)
-    
+
+    if (is.character(Rd)) Rd <- parse_Rd(Rd, encoding = encoding)
+
     # Process top level ifdef's.
     Rd <- preprocessRd(Rd, defines)
     sections <- attr(Rd, "RdTags")
@@ -589,18 +592,18 @@ checkRd <- function(Rd, defines=.Platform$OS.type, unknownOkay = FALSE, listOkay
     	warning("Rd2HTML is designed for Rd version 2 or higher.")
     else if (length(version) > 1)
     	stopRd(Rd[[version[2]]], "Only one \\Rdversion declaration is allowed")
-    	
+
     checkUnique("\\title")
     checkUnique("\\name")
     checkUnique("\\description")
-    
+
     name <- Rd[[which(sections == "\\name")]]
     tags <- RdTags(name)
     if (length(tags) > 1 || tags != "TEXT") stopRd(name, "\\name must only contain simple text.")
 
     for (i in seq_along(sections))
     	checkSection(Rd[[i]], sections[i])
-    
+
     TRUE
 }
-   
+
