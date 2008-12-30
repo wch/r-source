@@ -17,17 +17,18 @@
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type)
 checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
-        unknownOkay = FALSE, listOkay = FALSE)
+        unknownOK = FALSE, listOK = ERROR)
 }
 \arguments{
   \item{Rd}{ the \code{Rd} object. }
   \item{out}{ a filename or connection object to which to write the output. }
   \item{package}{ the package to list in the output. }
   \item{defines}{ string(s) to use in \code{"#ifdef"} tests. }
-  \item{unknownOkay}{ unrecognized macros are treated as errors if
-    \code{TRUE}. }
-  \item{listOkay}{ unnecessary non-empty braces (e.g. around text, not
-    as an argument) are treated as errors if \code{TRUE}. }
+  \item{encoding}{ encoding to use if the file does not specify one. }
+  \item{unknownOK}{ unrecognized macros are treated as errors if
+    \code{FALSE}, otherwise warnings. }
+  \item{listOK}{ unnecessary non-empty braces (e.g. around text, not
+    as an argument) are treated as errors if \code{FALSE}, otherwise warnings. }
 }
 \details{
   The \code{Rd2HTML} converter is still in development, and currently

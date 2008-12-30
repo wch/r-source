@@ -4430,7 +4430,7 @@ function(dir, silent = FALSE)
             Sys.glob(file.path(dir, "man/*", "*.Rd")))
     bad <- character(0)
     for (f in pg) {
-        tmp <- try(parse_Rd(f, encoding = enc), silent=TRUE)
+        tmp <- try(checkRd(f, encoding = enc), silent=TRUE)
         if(inherits(tmp, "try-error")) {
 	    bad <- c(bad, f)
             if(!silent)  {
@@ -4439,7 +4439,7 @@ function(dir, silent = FALSE)
             }
         }
     }
-    bad <- sub(".*/","", bad)
+    if(length(bad)) bad <- sQuote(sub(".*/","", bad))
     if(length(bad) > 1L)
         cat("problems found in ", paste(bad, collapse=", "), "\n", sep="")
     else if(length(bad))

@@ -1,6 +1,5 @@
-RdTags <- function(Rd) {
+RdTags <- function(Rd)
     sapply(Rd, function(element) attr(element, "Rd_tag"))
-}
 
 isBlankRd <- function(x)
     length(grep("^[[:blank:]]*\n?$", x)) == length(x) # newline optional
@@ -10,18 +9,36 @@ isBlankLineRd <- function(x)
     src[2] == 0                        &&             # Starts in column 1
     length(grep("^[[:blank:]]*\n", x)) == length(x)   # newline required
 
-stopRd <- function(block, ...) {
+stopRd <- function(block, ...)
+{
     srcref <- attr(block, "srcref")
-    if (is.null(srcref)) stop(...)
+    if (is.null(srcref)) stop(..., call. = FALSE, domain = NA)
     else {
-    	loc <- paste(basename(attr(srcref, "srcfile")$filename),":",srcref[1],sep="")
+    	loc <- paste(basename(attr(srcref, "srcfile")$filename),
+                     ":", srcref[1], sep = "")
     	if (srcref[1] != srcref[3]) loc <- paste(loc, "-", srcref[3], sep="")
-    	stop(call.=FALSE, loc,":",...)
+    	stop(call.=FALSE, loc, ": ", ..., domain = NA)
     }
 }
 
-preprocessRd <- function(blocks, defines) {
-    # Process ifdef's.
+warnRd <- function(block, Rdfile, ...)
+{
+    srcref <- attr(block, "srcref")
+    if (is.null(srcref))
+        warning("file '", Rdfile, "': ", ...,
+                call. = FALSE, domain = NA, immediate. = TRUE)
+    else {
+    	loc <- paste(basename(attr(srcref, "srcfile")$filename),
+                     ":", srcref[1], sep = "")
+    	if (srcref[1] != srcref[3]) loc <- paste(loc, "-", srcref[3], sep="")
+    	warning(loc, ": ", ..., call. = FALSE, domain = NA, immediate. = TRUE)
+    }
+}
+
+preprocessRd <- function(blocks, defines)
+{
+    if (is.null(blocks)) return(blocks)
+    ## Process ifdef's.
     tags <- RdTags(blocks)
     while (length(ifdef <- which(tags %in% c("#ifdef", "#ifndef")))) {
 	ifdef <- ifdef[1]
@@ -421,8 +438,9 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
 
 checkRd <-
     function(Rd, defines=.Platform$OS.type, encoding = "unknown",
-             unknownOkay = FALSE, listOkay = FALSE)
+             unknownOK = FALSE, listOK = TRUE)
 {
+    Rdfile <- "not known"
 
     checkWrapped <- function(tag, block) {
     	checkContent(block, tag)
@@ -431,18 +449,20 @@ checkRd <-
     checkLink <- function(tag, block) { # FIXME This doesn't handle aliases, and
                                         # doesn't cover all variations
     	option <- attr(block, "Rd_option")
-    	checkContent(option, tag)
+    	if(!is.null(option)) checkContent(option, tag)
     	checkContent(block, tag)
     }
 
     checkBlock <- function(block, tag, blocktag) {
 	switch(tag,
-	UNKNOWN = if (!unknownOkay) stopRd(block, "Unrecognized macro ", block[[1]]),
+	UNKNOWN = if (!unknownOK) stopRd(block, "Unrecognized macro ", block[[1]]) else warnRd(block, Rdfile, "Unrecognized macro ", block[[1]]),
 	VERB = ,
 	RCODE = ,
 	TEXT = ,
 	COMMENT = {},
-	LIST = if (!listOkay && length(block)) stopRd(block, "Unnecessary braces"),
+	LIST = if (length(block)) if(!listOK)
+               stopRd(block, "Unnecessary braces at '{", block, "}'")
+               else warnRd(block, Rdfile, "Unnecessary braces at '{", block, "}'"),
 	"\\describe"=,
 	"\\enumerate"=,
 	"\\itemize"=,
@@ -582,7 +602,10 @@ checkRd <-
     	    stopRd(Rd[[which[2]]], "Only one ", tag, " is allowed")
     }
 
-    if (is.character(Rd)) Rd <- parse_Rd(Rd, encoding = encoding)
+    if (is.character(Rd)) {
+        Rdfile <- Rd
+        Rd <- parse_Rd(Rd, encoding = encoding)
+    }
 
     # Process top level ifdef's.
     Rd <- preprocessRd(Rd, defines)
