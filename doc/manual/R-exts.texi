@@ -3156,13 +3156,13 @@ number generation (for example, @code{x <- rnorm(100)}), or by using
 standard data sets listed by @code{data()} (see @code{?data} for more
 info).
 
-Finally, there is @code{\donttest}, used to mark code that should be run
-by @code{examples()} but not by @code{R CMD check}.  This should be
-needed only occasionally but can be used for code which might fail in
-circumstances that are hard to test for, for example in some locales.
-(Use e.g. @code{capabilities()} to test for features needed in the
-examples wherever possible, and you can also use @code{try()} or
-@code{trycatch()}.)
+Finally, there is @code{\donttest}, used (at the beginning of af a
+separate line) to mark code that should be run by @code{examples()} but
+not by @code{R CMD check}.  This should be needed only occasionally but
+can be used for code which might fail in circumstances that are hard to
+test for, for example in some locales.  (Use e.g. @code{capabilities()}
+to test for features needed in the examples wherever possible, and you
+can also use @code{try()} or @code{trycatch()}.)
 
 @findex \keyword
 @item \keyword@{@var{key}@}
