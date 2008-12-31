@@ -356,7 +356,8 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     	cat("</", para, ">\n", sep="", file=con)
     }
 
-    if (is.character(Rd) || inherits(Rd, "connection")) Rd <- parse_Rd(Rd)
+    if (is.character(Rd) || inherits(Rd, "connection"))
+        Rd <- parse_Rd(Rd)
 
     if (is.character(out)) {
         if(out == "") con <- stdout()
@@ -605,9 +606,13 @@ checkRd <-
     	    stopRd(Rd[[which[2]]], "Only one ", tag, " is allowed")
     }
 
-    if (is.character(Rd) || inherits(Rd, "connection")) {
-        if (is.character(Rd)) Rdfile <- Rd
-        else Rdfile <- summary(Rd)
+    if (is.character(Rd)) {
+        Rdfile <- Rd
+        ## do it this way to get info in internal warnings
+        Rd <- eval(substitute(parse_Rd(f, encoding = enc),
+                              list(f = Rd, enc = encoding)))
+    } else if(inherits(Rd, "connection")) {
+        Rdfile <- summary(Rd)
         Rd <- parse_Rd(Rd, encoding = encoding)
     }
 

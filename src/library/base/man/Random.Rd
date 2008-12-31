@@ -119,17 +119,17 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
     }
   }
 
-  \code{normal.kind} can be \code{"Kinderman-Ramage"}, \code{"Buggy
-  Kinderman-Ramage"} (not for \code{set.seed}), \code{"Ahrens-Dieter"},
-  \code{"Box-Muller"}, \code{"Inversion"} (the default), or
-  \code{"user-supplied"}.  (For inversion, see the reference in
-  \code{\link{qnorm}}.)  The Kinderman-Ramage generator used in versions
-  prior to 1.7.1 (now called \code{"Buggy"} had several approximation
-  errors and should only be used for reproduction of older results.
-  The \code{"Box-Muller"} generator is stateful as pairs of normals are
-  generated and returned sequentially.  The state is reset whenever it
-  is selected (even if it is the current normal generator) and when
-  \code{kind} is changed.
+  \code{normal.kind} can be \code{"Kinderman-Ramage"},
+  \code{"Buggy Kinderman-Ramage"} (not for \code{set.seed}),
+  \code{"Ahrens-Dieter"}, \code{"Box-Muller"}, \code{"Inversion"} (the
+  default), or \code{"user-supplied"}.  (For inversion, see the
+  reference in \code{\link{qnorm}}.)  The Kinderman-Ramage generator
+  used in versions prior to 1.7.1 (now called \code{"Buggy"} had several
+  approximation errors and should only be used for reproduction of older
+  results.  The \code{"Box-Muller"} generator is stateful as pairs of
+  normals are generated and returned sequentially.  The state is reset
+  whenever it is selected (even if it is the current normal generator)
+  and when \code{kind} is changed.
 
   \code{set.seed} uses its single integer argument to set as many seeds
   as are required.  It is intended as a simple way to get quite different
