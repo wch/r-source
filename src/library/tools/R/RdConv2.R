@@ -356,7 +356,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     	cat("</", para, ">\n", sep="", file=con)
     }
 
-    if (is.character(Rd)) Rd <- parse_Rd(Rd)
+    if (is.character(Rd) || inherits(Rd, "connection")) Rd <- parse_Rd(Rd)
 
     if (is.character(out)) {
         if(out == "") con <- stdout()
@@ -460,9 +460,12 @@ checkRd <-
 	RCODE = ,
 	TEXT = ,
 	COMMENT = {},
-	LIST = if (length(block)) if(!listOK)
-               stopRd(block, "Unnecessary braces at '{", block, "}'")
-               else warnRd(block, Rdfile, "Unnecessary braces at '{", block, "}'"),
+	LIST = if (length(block)) {
+		deparse <- sQuote(paste(as.character.Rd(block), collapse=""))
+		if(!listOK)
+               	    stopRd(block, "Unnecessary braces at ", deparse)
+               else warnRd(block, Rdfile, "Unnecessary braces at ", deparse)
+              },
 	"\\describe"=,
 	"\\enumerate"=,
 	"\\itemize"=,
@@ -602,8 +605,9 @@ checkRd <-
     	    stopRd(Rd[[which[2]]], "Only one ", tag, " is allowed")
     }
 
-    if (is.character(Rd)) {
-        Rdfile <- Rd
+    if (is.character(Rd) || inherits(Rd, "connection")) {
+        if (is.character(Rd)) Rdfile <- Rd
+        else Rdfile <- summary(Rd)
         Rd <- parse_Rd(Rd, encoding = encoding)
     }
 

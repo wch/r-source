@@ -45,3 +45,5 @@ S3method("print", "check_package_license")
 S3method("print", "check_package_datasets")
 S3method("print", "check_packages_used")
 S3method("print", "check_vignette_index")
+
+S3method("as.character", "Rd")

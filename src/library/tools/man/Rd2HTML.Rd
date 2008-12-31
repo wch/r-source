@@ -17,7 +17,7 @@
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type)
 checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
-        unknownOK = FALSE, listOK = ERROR)
+        unknownOK = FALSE, listOK = TRUE)
 }
 \arguments{
   \item{Rd}{ the \code{Rd} object. }
@@ -53,13 +53,16 @@ checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
 \references{ \url{http://developer.r-project.org/parseRd.pdf} }
 \seealso{ \code{\link{parse_Rd}} }
 \examples{
-  \dontrun{
-    # This example requires access to the R source code
-    Rsrc <- file.path(R.home(), "src")
-    infile <- file.path(Rsrc, "library","tools","man", "Rd2HTML.Rd")
-    outfile <- paste(tempfile(), ".html", sep="")
-    browseURL(Rd2HTML(infile, outfile, package="tools"))
-    checkRd(infile) # A stricter test than Rd2HTML uses
+  \donttest{
+  toolsRd <- Rd_db("tools")
+  con <- textConnection(toolsRd[["Rd2HTML.Rd"]], "rt")
+  outfile <- paste(tempfile(), ".html", sep="")
+  browseURL(Rd2HTML(con, outfile, package="tools"))
+  close(con)
+  
+  con <- textConnection(toolsRd[["Rd2HTML.Rd"]], "rt")
+  checkRd(con) # A stricter test than Rd2HTML uses
+  close(con)
   }
 }
 \keyword{ documentation }

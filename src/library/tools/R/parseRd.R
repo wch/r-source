@@ -67,29 +67,35 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
 }
 
 print.Rd <- function(x, ...) {
-    pr <- function(x, indent) {
-        spaces <- paste(rep(" ", indent), collapse="")
+    cat(as.character.Rd(x), sep="", collapse="")
+}
+
+as.character.Rd <- function(x, ...) {
+    pr <- function(x) {
+        tag <- attr(x, "Rd_tag")
+        if (is.null(tag) || tag == "LIST") tag <- ""
     	if (is.list(x)) {
-    	    tag <- attr(x, "Rd_tag")
-    	    if (length(grep("^#", tag))) {
-		cat(tag, x[[1L]][[1L]], "\n")
-		x <- x[[2L]]
-		for (i in seq_along(x)) pr(x[[i]], indent)
-		cat("#endif\n")
+    	    if (tag == "Rd") { # a whole file
+    	        result <- character(0)
+    	    	for (i in seq_along(x)) result <- c(result, pr(x[[i]]))
+    	    } else if (length(grep("^#", tag))) {
+    	    	result <- c(tag, x[[1L]][[1L]])
+    	    	x <- x[[2L]]
+    	    	for (i in seq_along(x)) result <- c(result, pr(x[[i]]))
+    	    	result <- c(result, "#endif\n")
     	    } else {
-		cat(spaces);
-		cat(tag);
-		if (!is.null(option <- attr(x, "Rd_option"))) {
-		    cat("[\n");
-		    pr(option, indent + 2)
-		    cat(spaces, "]\n", spaces, sep="");
-		}
-		cat("{\n")
-		for (i in seq_along(x)) pr(x[[i]], indent + 2)
-		cat(spaces, "}\n", sep="")
+    	    	result <- tag
+    	    	if (!is.null(option <- attr(x, "Rd_option"))) 
+    	    	    result <- c(result, "[", pr(option), "]")
+    	    	result <- c(result, "{")
+    	    	for (i in seq_along(x)) result <- c(result, pr(x[[i]]))
+    	    	result <- c(result, "}")
     	    }
-    	} else cat(paste(strwrap(x, indent=indent, exdent=indent), "\n"),
-    	           sep="")
+    	} else result <- as.character(x)
+    	if (tag == "COMMENT") result <- c(result, "\n")
+    	result
     }
-    for (i in seq_along(x)) pr(x[[i]], 0)
+    if (is.null(attr(x, "Rd_tag")))
+    	attr(x, "Rd_tag") <- "Rd"
+    pr(x)
 }
