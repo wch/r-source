@@ -31,7 +31,7 @@ while(length(args)) {
             "This is free software; see the GNU General Public License version 2",
             "or later for copying conditions.  There is NO warranty.",
             sep="\n")
-        return(invisible())
+        q("no")
     }
     else if(a == "-l") {
         if(length(args) >= 2) {lib <- args[2]; args <- args[-1]}
