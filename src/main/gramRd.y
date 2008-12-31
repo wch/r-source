@@ -111,7 +111,7 @@ static int 	mkComment(int);
 %token		SECTIONHEADER2
 %token		RCODEMACRO LATEXMACRO VERBMACRO OPTMACRO ESCAPE
 %token		LISTSECTION ITEMIZE DESCRIPTION NOITEM
-%token		LATEXMACRO2 VERBMACRO2
+%token		RCODEMACRO2 LATEXMACRO2 VERBMACRO2
 %token		IFDEF ENDIF
 %token		TEXT RCODE VERB COMMENT UNKNOWN
 
@@ -129,9 +129,6 @@ Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, &@$); }
 	|	SECTIONHEADER  LatexArg  	{ $$ = xxmarkup($1, $2, &@$); }
 	|	LISTSECTION    Item2Arg		{ $$ = xxmarkup($1, $2, &@$); }
 	|	SECTIONHEADER2 LatexArg LatexArg { $$ = xxmarkup2($1, $2, $3, &@$); }
-	|	SECTIONHEADER2 LatexArg TEXT	{ $$ = xxmarkup2($1, $2, xxnewlist($3), &@$);
-    	    					  warning(_("bad markup (extra space?) at %d:%d"), 
-    	    					            @3.first_line, @3.first_column+1); }
 	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, &@$); UNPROTECT_PTR($4); } 
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
 	|	TEXT				{ $$ = xxtag($1, TEXT, &@$); } /* must be whitespace */
@@ -149,14 +146,12 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 
 Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@$); }
 	|	LATEXMACRO2 LatexArg LatexArg   { $$ = xxmarkup2($1, $2, $3, &@$); }
-	|	LATEXMACRO2 LatexArg TEXT	{ $$ = xxmarkup2($1, $2, xxnewlist($3), &@$);
-    	    					  warning(_("bad markup (extra space?) at %d:%d"), 
-    	    					            @3.first_line, @3.first_column+1); }						  
 	|	ITEMIZE     Item0Arg		{ $$ = xxmarkup($1, $2, &@$); }
 	|	DESCRIPTION Item2Arg		{ $$ = xxmarkup($1, $2, &@$); }
 	|	OPTMACRO    goOption LatexArg  	{ $$ = xxmarkup($1, $3, &@$); xxpopMode($2); }
 	|	OPTMACRO    goOption Option LatexArg { $$ = xxOptionmarkup($1, $3, $4, &@$); xxpopMode($2); }
 	|	RCODEMACRO  RLikeArg     	{ $$ = xxmarkup($1, $2, &@$); }
+	|	RCODEMACRO2 RLikeArg RLikeArg 	{ $$ = xxmarkup2($1, $2, $2, &@$); }
 	|	VERBMACRO   VerbatimArg		{ $$ = xxmarkup($1, $2, &@$); }
 	|	VERBMACRO2  VerbatimArg		{ $$ = xxmarkup($1, $2, &@$); }
 	|       VERBMACRO2  VerbatimArg VerbatimArg2 { $$ = xxmarkup2($1, $2, $3, &@$); }
