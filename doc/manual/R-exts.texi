@@ -2364,30 +2364,30 @@ Windows, for example).  In that case it is likely that text will be
 rendered correctly in the terminal/console used to run @R{}, and files
 written will be readable by other UTF-8-aware applications.  However,
 plotting will be problematic.  On-screen plotting using the @samp{X11()}
-device will use a font that only covers a small proportion of UTF-8, and
-different fonts will likely need to be selected for Polish, Russian and
-Japanese (see @code{help("X11")}).  Using @samp{postscript} or
-@samp{pdf} will choose a default 8-bit encoding depending on the
-language of the UTF-8 locale, and your users would need to be told how
-to select the @samp{encoding} argument.
+device needs to find a font that covers the glyphs used, and
+this will be machine-dependent: you may have Russian or Japanese fonts
+installed but your users may not.  Using @samp{postscript} or @samp{pdf}
+will choose a default 8-bit encoding depending on the language of the
+UTF-8 locale, and your users would need to be told how to select the
+@samp{encoding} argument.
 
 Another fairly common scenario is where a package will only be used in
 one language, e.g.@: French.  It is not very safe to assume that all
 such users would have their computers set to a French locale, but let us
 assume so.  The problem then is that there are several possible
 encodings for French locales, the most common ones being @samp{CP1252}
-(Windows), @samp{ISO 8859-1} (latin-1), @samp{ISO 8859-15} (latin-9 which
-includes the Euro), and @samp{UTF-8}.  For characters in the French
-language the first three agree, but they do not agree with @samp{UTF-8}.
-Further, you (or different users) can run @R{} in different locales in
-different sessions, say @samp{fr_CA.utf8} one day and
-@samp{fr_CH.iso88591} the next.  As from @R{} 2.5.0, declaring the
-encoding as either @samp{latin1} or @samp{UTF-8} in the
-@file{DESCRIPTION} file will enable this to work.  If you have character
-data in @file{.rda} files (for use by @code{data} or LazyData) these
-need to have been prepared and @code{save}d in @R{} 2.5.0 in an
-appropriate locale (or marked via @code{Encoding}).  For example (from
-package @pkg{FactoMineR} version @code{1.02}):
+(Windows), @samp{ISO 8859-1} (latin-1), @samp{ISO 8859-15} (latin-9
+which includes the Euro), and @samp{UTF-8}.  For characters in the
+French language the first three agree, but they do not agree with
+@samp{UTF-8}.  Further, you (or different users of your machine) can run
+@R{} in different locales in different sessions, say @samp{fr_CA.utf8}
+one day and @samp{fr_CH.iso88591} the next.  Declaring the encoding as
+either @samp{latin1} or @samp{UTF-8} in the @file{DESCRIPTION} file will
+enable this to work.  If you have character data in @file{.rda} files
+(for use by @code{data} or LazyData) these need to have been prepared
+and @code{save}d in @R{} 2.5.0 or later in an appropriate locale (or
+marked via @code{Encoding}).  For example (from package @pkg{FactoMineR}
+version @code{1.02}):
 
 @example
 > library(FactoMineR)
@@ -2400,9 +2400,9 @@ package @pkg{FactoMineR} version @code{1.02}):
 @noindent
 was used to update a @file{.rda} file.
 
-If you want to run @command{R CMD check} on a Unix-alike over a
-package that sets the encoding you may need to specify a suitable
-locale via an environment variable.  The default is equivalent setting
+If you want to run @command{R CMD check} on a Unix-alike over a package
+that sets the encoding you may need to specify a suitable locale via an
+environment variable.  The default is equivalent to setting
 @env{R_ENCODING_LOCALES} to
 
 @example
@@ -2793,8 +2793,8 @@ installation scripts for packages.
 
 The @R{} distribution contains more than 1200 such files which can be
 found in the @file{src/library/@var{pkg}/man} directories of the @R{}
-source tree, where @var{pkg} stands for the standard packages which are
-included in the @R{} distribution.
+source tree, where @var{pkg} stands for one of the standard packages
+which are included in the @R{} distribution.
 
 As an example, let us look at the file
 @file{src/library/base/man/load.Rd} which documents the @R{} function
@@ -3058,9 +3058,9 @@ form
 @noindent
 for each component of the list returned.  Optional text may precede this
 list (see the introductory example for @code{rle}).  Note that
-@code{\value} is implicitly a @code{\itemize} environment, so that
+@code{\value} is implicitly a @code{\describe} environment, so that
 environment should not be used for listing components, just individual
-@code{\item} entries.
+@code{\item@{@}@{@}} entries.
 
 @item \references@{@dots{}@}
 @findex \references
@@ -3104,7 +3104,7 @@ Examples of how to use the function.  These are set as formatted in
 typewriter font: see @ref{Insertions} for when characters need to be
 escaped.  (Markup @code{\link} and @code{\var} will be interpreted, but
 no other.)  Code in this section is run by @code{example()} unless
-marked otherswise (see below).
+marked otherwise (see below).
 
 Examples are not only useful for documentation purposes, but also
 provide test code used for diagnostic checking of @R{}.  By default,
@@ -3143,8 +3143,11 @@ info).
 
 Finally, there is @code{\donttest}, used to mark code that should be run
 by @code{examples()} but not by @code{R CMD check}.  This should be
-needed only occasionally but can be used for code which might fail, for
-example in some locales.
+needed only occasionally but can be used for code which might fail in
+circumstances that are hard to test for, for example in some locales.
+(Use e.g. @code{capabilities()} to test for features needed in the
+examples wherever possible, and you can also use @code{try()} or
+@code{trycatch()}.)
 
 @findex \keyword
 @item \keyword@{@var{key}@}
@@ -3374,29 +3377,29 @@ quotation marks).
 @end table
 
 The following logical markup commands are available for indicating
-specific kinds of text.
+specific kinds of text.  `Literal' is not to be taken as meaning
+`verbatim', and some characters will need to be escaped
+(@pxref{Insertions}).
 
 @table @code
 @item \code@{@var{text}@}
 @findex \code
-Indicate text that is a literal example of a piece of a program, e.g., a
-fragment of @R{} code or the name of an @R{} object, using
-@code{typewriter} font if possible.  Some characters will need to be
-escaped (@pxref{Insertions}).  The only markup interpreted inside
+Indicate text that is a literal example of a piece of an @R{} program,
+e.g., a fragment of @R{} code or the name of an @R{} object, using
+@code{typewriter} font if possible.  The only markup interpreted inside
 @code{\code} is @code{\link} and @code{\var}.
 
 @item \preformatted@{@var{text}@}
 @findex \preformatted
 Indicate text that is a literal example of a piece of a program, using
-@code{typewriter} font if possible.  The same characters need to be
-escaped as for @code{\code}.  All other formatting, e.g.@: line breaks,
-is preserved.  The closing brace should be on a line by itself.
+@code{typewriter} font if possible.  Formatting, e.g.@: line breaks, is
+preserved.  The closing brace should be on a line by itself.
 
 @item \kbd@{@var{keyboard-characters}@}
 @findex \kbd
 Indicate keyboard input, using @kbd{slanted typewriter} font if
 possible, so users can distinguish the characters they are supposed to
-type from those the computer outputs.
+type from computer output.
 
 @item \samp@{@var{text}@}
 @findex \samp
@@ -3408,8 +3411,8 @@ Indicate the name of an @R{} package.
 
 @item \file@{@var{file_name}@}
 @findex \file
-Indicate the name of a file.  Note that special characters do need to be
-escaped.
+Indicate the name of a file.  Note that backlash is one of the
+characters which needs to be escaped.
 @item \email@{@var{email_address}@}
 @findex \email
 Indicate an electronic mail address.
@@ -3466,9 +3469,9 @@ bullet point (@code{\itemize}) or a number (@code{\enumerate}).
 
 @findex \describe
 The @code{\describe} command is similar to @code{\itemize} but allows
-initial labels to be specified.  The @code{\item}s take two arguments,
-the label and the body of the item, in exactly the same way as argument
-and value @code{\item}s.  @code{\describe} commands are mapped to
+initial labels to be specified.  Each @code{\item} takes two arguments,
+the label and the body of the item, in exactly the same way as an
+argument or value @code{\item}.  @code{\describe} commands are mapped to
 @code{<DL>} lists in @HTML{} and @code{\description} lists in @LaTeX{}.
 
 @findex \tabular
@@ -3643,7 +3646,7 @@ The ``comment'' character @samp{%} and unpaired braces@footnote{See the
 examples section in the file @file{Paren.Rd} for an example.}
 @emph{always} need to be escaped by @samp{\}, and @samp{\\} can be used
 for backslash and needs to be when there two or more adjacent
-backslashes).  Inside the verbatim-like commands (@code{usage},
+backslashes).  Inside the verbatim-like commands (@code{\usage},
 @code{\code}, @code{\preformatted} and @code{\examples}), no other
 characters are special.  Note that @code{\file} is @strong{not} a
 verbatim-like command.
