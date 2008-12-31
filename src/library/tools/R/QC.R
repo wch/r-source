@@ -4765,7 +4765,7 @@ function(txt)
 {
     if(!length(txt)) return(expression())
     txt <- gsub("\\\\l?dots", "...", txt)
-    txt <- gsub("\\\\%", "%", txt)
+    txt <- gsub("\\%", "%", txt, fixed = TRUE)
     txt <- .Rd_transform_command(txt, "special", function(u) NULL)
     txt <- .dquote_method_markup(txt, .S3_method_markup_regexp)
     txt <- .dquote_method_markup(txt, .S4_method_markup_regexp)
@@ -4775,12 +4775,12 @@ function(txt)
     txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
     ## \usage is only 'verbatim-like'
     ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage
-    txt <- gsub("\\\\\\{", "{", txt)
-    txt <- gsub("\\\\\\}", "}", txt)
-    txt <- gsub("\\\\%", "%", txt)
-    ## Yes, really 16, as we want 4 in the Rd file converted to 2.
-    txt <- gsub("\\\\\\\\\\\\\\\\", "\\\\\\\\", txt)
-    ## Using fixed = TRUE might enhance readability ...
+    txt <- gsub("\\{", "{", txt, fixed = TRUE)
+    txt <- gsub("\\}", "}", txt, fixed = TRUE)
+    ## Undo the escaping of \, via \\\\ to \\
+    ## However, this is not right, as "\\" should become "\" (and
+    ## a parse error in due course). (And we have \\method at this point.)
+    txt <- gsub("\\\\\\\\", "\\\\", txt, fixed = TRUE)
     .parse_text_as_much_as_possible(txt)
 }
 
