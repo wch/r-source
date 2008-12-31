@@ -26,13 +26,14 @@
   \item{x}{an \R object inheriting from \code{"stepfun"}.}
   \item{xval}{numeric vector of abscissa values at which to evaluate
     \code{x}.  Defaults to \code{\link{knots}(x)} restricted to \code{xlim}.}
-  \item{xlim,ylim}{numeric(2) each; range of \code{x} or \code{y} values
-    to use.  Both have sensible defaults.}
-  \item{xlab,ylab}{labels of x and y axis.}
+  \item{xlim, ylim}{limits for the plot repion: see
+    \code{\link{plot.window}}.  Both have sensible defaults defaults if
+    omitted.}
+  \item{xlab, ylab}{labels for x and y axis.}
   \item{main}{main title.}
   \item{add}{logical; if \code{TRUE} only \emph{add} to an existing plot.}
   \item{verticals}{logical;  if \code{TRUE}, draw vertical lines at steps.}
-  \item{do.points}{logical;  if \code{true}, also draw points at the
+  \item{do.points}{logical;  if \code{TRUE}, also draw points at the
     (\code{xlim} restricted) knot locations.}
   \item{pch}{character; point character if \code{do.points}.}
   \item{col}{default color of all points and lines.}

@@ -3035,6 +3035,10 @@ Usage:
 @end group
 @end example
 
+@findex \S3method
+Versions of @R{} since at least 2.0.0 accept @code{\S3method} as an
+alternative to @code{\method}.
+
 @item \arguments@{@dots{}@}
 @findex \arguments
 Description of the function's arguments, using an entry of the form

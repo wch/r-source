@@ -1190,13 +1190,13 @@ MinGW-specific patches are not yet stable (and not needed to build @R{}).
 You will need suitable cross-compilers installed and in your path.  We
 do not at present distribute suitable cross-compilers.
 
-For Fedora 8 and 9 users, RPMs are available at
-@uref{http://sourceforge.net/projects/@/mingw-cross/} for both
-@cputype{ix86} and @cputype{x86_64}.  (Currently there are Fedora 8 RPMs
-for 4.3.0 and Fedora 9 RPMs for both 4.3.0 and 4.3.1.  The Fedora 8
-@cputype{x86_64} RPMs have been tested.)  Recent Debian and Ubuntu
-versions have C/C++ (but it seems not Fortran) cross-compilers based on
-@command{gcc} 4.2.1.
+For Fedora 10 users, RPMs are epected to become available in the main
+repositories (see @uref{https://fedoraproject.org/wiki/MinGW}: also for
+RHEL/Centos 5 @cputype{i386} RPMs).  RPMs for Fedora 8 and 9 have been
+available at @uref{http://sourceforge.net/projects/@/mingw-cross/}.
+(The Fedora 8 @cputype{x86_64} RPMs have been tested.)  Recent Debian
+and Ubuntu versions have C/C++ (but it seems not Fortran)
+cross-compilers based on @command{gcc} 4.2.1.
 
 @c There is currently a complete set of tools based on @command{gcc} 3.4.5
 @c at @uref{http://www.stats.ox.ac.uk/pub/Rtools/i586-cross-tools.tar.bz2,
@@ -2389,13 +2389,12 @@ detected as @command{gcc}, @code{-std=gnu99} will be appended to
 @code{CC} unless it conflicts with a setting of @code{CFLAGS}.
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
-installed, including its headers and client libraries.  (On Fedora Core
-3 and SuSE 9.x Linux this meant the @samp{xorg-x11-devel} and
-@samp{xorg-x11-libs} RPMs.  For recent Fedora distributions it means (at
-least) @samp{libX11}, @samp{libX11-devel}, @samp{libXt} and
-@samp{libXt-devel}.  On Debian we recommend the meta-package
-@samp{xorg-dev}.)  If you really do not want these you will need to
-explicitly configure @R{} without X11, using @option{--with-x=no}.
+installed, including its headers and client libraries. For recent Fedora
+distributions it means (at least) @samp{libX11}, @samp{libX11-devel},
+@samp{libXt} and @samp{libXt-devel}.  On Debian we recommend the
+meta-package @samp{xorg-dev}.)  If you really do not want these you will
+need to explicitly configure @R{} without X11, using
+@option{--with-x=no}.
 
 The command-line editing depends on the @code{readline} library
 available from any @acronym{GNU} mirror: version 4.2 or later is
@@ -2452,21 +2451,21 @@ sources will be used if no suitable external @code{gettext} is found.
 The `modern' version of @code{X11}, @code{jpeg()}, @code{png()} and
 @code{tiff()} uses the @code{cairo} and (optionally) @code{Pango}
 libraries.  Cairo version 1.0 or later is required@footnote{We recommend
-that people with cairo 1.0.x, e.g.@: on Fedora Core 5, install 1.4.x or
-later from the sources, which works well}, and some features require 1.2
-or later (and may not work before 1.4).  Pango needs to be at least
-version 1.10, and 1.12 is the earliest version we have tested.  (For
-Fedora users we believe the @code{pango-devel} RPM and its dependencies
-suffice.)  @R{} checks for @command{pkg-config}, and uses that to check
-first that the @samp{pangocairo} package is installed (and if not,
-@samp{cairo}) and if additional flags are needed for the
-@samp{cairo-xlib} package, then if suitable code can be compiled.  These
-tests will fail if @command{pkg-config} is not installed, and are likely
-to fail if @code{cairo} was built statically (unusual).  Most systems
-with @code{Gtk+} 2.8 or later installed will have suitable libraries,
-but some (e.g.@: Solaris 10) may need @code{cairo} added separately.
-Mac OS X comes with none of these libraries, but @code{cairo} support
-has been added to the binary distribution.
+that people with cairo 1.0.x, install 1.4.x or later from the sources,
+which works well}, and some features require 1.2 or later (and may not
+work before 1.4).  Pango needs to be at least version 1.10, and 1.12 is
+the earliest version we have tested.  (For Fedora users we believe the
+@code{pango-devel} RPM and its dependencies suffice.)  @R{} checks for
+@command{pkg-config}, and uses that to check first that the
+@samp{pangocairo} package is installed (and if not, @samp{cairo}) and if
+additional flags are needed for the @samp{cairo-xlib} package, then if
+suitable code can be compiled.  These tests will fail if
+@command{pkg-config} is not installed, and are likely to fail if
+@code{cairo} was built statically (unusual).  Most systems with
+@code{Gtk+} 2.8 or later installed will have suitable libraries, but
+some (e.g.@: Solaris 10) may need @code{cairo} added separately.  Mac OS
+X comes with none of these libraries, but @code{cairo} support has been
+added to the binary distribution.
 
 For the best font experience with these devices you need suitable fonts
 installed: Linux users will want the @code{urw-fonts} package.  Another
@@ -3545,7 +3544,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora Core 5 and Fedora 8 we used
+on @cputype{x86_64} with Fedora 8 we used
 
 @example
 CC="gcc -m32"
@@ -4477,29 +4476,23 @@ for Mozilla-based browsers.  In particular, Sun's Java Run-time
 Environment @code{j2re}@tie{}1.4.2_02 to _05 do not work under
 @cputype{ix86} Linux.
 
-Note that there appears not to be a Sun Java plugin for 64-bit browsers
-on @cputype{x86_64} Linux:
-(@uref{http://forum.java.sun.com/thread.jspa?threadID=568127&tstart=75,
-@code{forum.java.sun.com/thread.jspa?threadID=568127&tstart=75}})
-(although one is expected for Java 6 in early 2009) but 32-bit browsers
-have been used on that platform.
+There is (at last) a Sun Java plugin for 64-bit browsers on
+@cputype{x86_64} Linux: but 32-bit browsers are often used on that
+platform.
 
-Marc Schwartz reports that the `IcedTea' (later called `OpenJDK') JVM
-that ships with Fedora 8 and 9 does not work with the search applet.
+Marc Schwartz reports that the `OpenJDK' (formerly called `IcedTea') JVM
+that ships with Fedora 8, 9 and 10 does not work with the search applet.
 (The bug report is part of
 @uref{https://bugzilla.redhat.com/show_bug.cgi?id=304021,
-@code{bugzilla.redhat.com/show_bug.cgi?id=304021}}.)  On @cputype{ix86}
-the Sun JRE and plugin can be installed: see
-@uref{http://www.fedorafaq.org/#java, @code{www.fedorafaq.org/#java}}.
-(The same FAQ documents the use of 32-bit Firefox on @cputype{x86_64}.
-See also
+@code{bugzilla.redhat.com/show_bug.cgi?id=304021}}.)  The Sun JRE and
+plugin can be installed: see @uref{http://www.fedorafaq.org/#java,
+@code{www.fedorafaq.org/#java}}.  (See also
 @uref{http://www.mjmwired.net/resources/mjm-fedora-f8.html#java,
-@code{www.mjmwired.net/resources/mjm-fedora-f8.html#java}} and
+@code{www.mjmwired.net/resources/mjm-fedora-f8.html#java}},
 @uref{http://www.mjmwired.net/resources/mjm-fedora-f9.html#java,
-@code{www.mjmwired.net/resources/mjm-fedora-f9.html#java}}.)
-
-Other Java installations, for example those from Blackdown and IBM, have
-been used in the (not recent) past.
+@code{www.mjmwired.net/resources/mjm-fedora-f9.html#java}} and
+@uref{http://www.mjmwired.net/resources/mjm-fedora-f10.html#java,
+@code{www.mjmwired.net/resources/mjm-fedora-f10.html#java}}.)
 
 Older but still useful links are for Firefox/Mozilla,
 @uref{http://plugindoc.mozdev.org/faqs/java.html,
