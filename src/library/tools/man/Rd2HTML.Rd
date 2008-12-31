@@ -55,7 +55,7 @@ checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
 \examples{
 \donttest{
   toolsRd <- Rd_db("tools")
-  con <- textConnection(toolsRd[["Rd2HTML.Rd"]], "rt")
+  con <- textConnection(toolsRd[[grep("Rd2HTML.Rd", names(toolsRd))]], "rt")
   outfile <- paste(tempfile(), ".html", sep="")
   browseURL(Rd2HTML(con, outfile, package="tools"))
   close(con)

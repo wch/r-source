@@ -72,6 +72,7 @@ static int	xxlineno, xxcolno;
 static int	xxlastlinelen;
 static int	xxmode, xxitemType, xxbraceDepth;  /* context for lexer */
 static int	xxDebugTokens;  /* non-zero causes debug output to R console */
+static const char* xxBasename;     /* basename of file for error messages */
 static SEXP	Value;
 
 #define RLIKE 1		/* Includes R strings; xxinRString holds the opening quote char, or 0 outside a string */
@@ -128,7 +129,7 @@ Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, &@$); }
 	|	RSECTIONHEADER RLikeArg		{ $$ = xxmarkup($1, $2, &@$); }
 	|	SECTIONHEADER  LatexArg  	{ $$ = xxmarkup($1, $2, &@$); }
 	|	LISTSECTION    Item2Arg		{ $$ = xxmarkup($1, $2, &@$); }
-	|	SECTIONHEADER2 LatexArg LatexArg { $$ = xxmarkup2($1, $2, $3, &@$); }
+	|	SECTIONHEADER2 LatexArg LatexArg2 { $$ = xxmarkup2($1, $2, $3, &@$); }
 	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, &@$); UNPROTECT_PTR($4); } 
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
 	|	TEXT				{ $$ = xxtag($1, TEXT, &@$); } /* must be whitespace */
@@ -145,7 +146,7 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 	|	Markup				{ $$ = $1; }	
 
 Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@$); }
-	|	LATEXMACRO2 LatexArg LatexArg   { $$ = xxmarkup2($1, $2, $3, &@$); }
+	|	LATEXMACRO2 LatexArg LatexArg2  { $$ = xxmarkup2($1, $2, $3, &@$); }
 	|	ITEMIZE     Item0Arg		{ $$ = xxmarkup($1, $2, &@$); }
 	|	DESCRIPTION Item2Arg		{ $$ = xxmarkup($1, $2, &@$); }
 	|	OPTMACRO    goOption LatexArg  	{ $$ = xxmarkup($1, $3, &@$); xxpopMode($2); }
@@ -159,6 +160,11 @@ Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@$); }
 	|	IFDEF IfDefTarget ArgItems ENDIF { $$ = xxmarkup2($1, $2, $3, &@$); UNPROTECT_PTR($4); } 
 	
 LatexArg:	goLatexLike Arg		 	{ xxpopMode($1); $$ = $2; }
+
+LatexArg2:	goLatexLike Arg			{ xxpopMode($1); $$ = $2; }
+	|	goLatexLike TEXT		{ xxpopMode($1); $$ = xxnewlist($2); 
+    	    					  warning(_("bad markup (extra space?) at %s:%d:%d"), 
+    	    					            xxBasename, @2.first_line, @2.first_column+1); }	
 
 Item0Arg:	goItem0 Arg		 	{ xxpopMode($1); $$ = $2; }
 
@@ -521,7 +527,6 @@ static int con_getc(void)
     return (last = c);
 }
 
-/* used in source.c */
 attribute_hidden
 SEXP R_ParseRd(Rconnection con, ParseStatus *status, SEXP srcfile)
 {
@@ -736,15 +741,18 @@ static void yyerror(char *s)
     	if (expecting) *expecting = '\0';
     	for (i = 0; yytname_translations[i]; i += 2) {
     	    if (!strcmp(s + sizeof yyunexpected - 1, yytname_translations[i])) {
-    	    	sprintf(R_ParseErrorMsg, _("unexpected %s"), 
-    	    	    i/2 < YYENGLISH ? _(yytname_translations[i+1])
+    	    	sprintf(R_ParseErrorMsg, _("%d:%d: unexpected %s"), 
+    	    	        yylloc.first_line, yylloc.first_column+1,
+    	    	        i/2 < YYENGLISH ? _(yytname_translations[i+1])
     	    	                    : yytname_translations[i+1]);
     	    	return;
     	    }
     	}
-    	sprintf(R_ParseErrorMsg, _("unexpected %s"), s + sizeof yyunexpected - 1);
+    	sprintf(R_ParseErrorMsg, _("%d:%d: unexpected %s"), yylloc.first_line, yylloc.first_column+1,
+    	                         s + sizeof yyunexpected - 1);
     } else {
-    	strncpy(R_ParseErrorMsg, s, PARSE_ERROR_SIZE - 1);
+    	sprintf(R_ParseErrorMsg, _("%d:%d: %s"),  
+    	                            yylloc.first_line, yylloc.first_column+1,s);
     }	
 }
 
@@ -804,8 +812,8 @@ static int token(void)
     
     if (xxinRString) {
     	if (c == R_EOF) 
-    	    error(_("Unexpected end of input (in %c quoted string opened at %d:%d)"), 
-    	            xxinRString, xxQuoteLine, xxQuoteCol);
+    	    error(_("Unexpected end of input (in %c quoted string opened at %s:%d:%d)"), 
+    	            xxinRString, xxBasename, xxQuoteLine, xxQuoteCol);
     	return mkCode(c);
     }
     
@@ -966,7 +974,7 @@ static int mkCode(int c)
     	TEXT_PUSH(c);
     	if (c == '\n') {
     	    if (xxinRString && !xxQuiet) {
-    	    	warning(_("newline within quoted string at line %d"), xxlineno-1);
+    	    	warning(_("newline within quoted string at %s:%d"), xxBasename, xxlineno-1);
     	    	xxQuiet = 1;
     	    }
     	    break;
@@ -1109,7 +1117,7 @@ static int yylex(void)
 
 /* "do_parseRd" 
 
- .Internal( parseRd(file, srcfile, encoding, verbose) )
+ .Internal( parseRd(file, srcfile, encoding, verbose, basename) )
  If there is text then that is read and the other arguments are ignored.
 */
 
@@ -1144,7 +1152,8 @@ SEXP attribute_hidden do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     if(streql(encoding, "UTF-8"))  known_to_be_utf8 = TRUE;
     if(!isLogical(CAR(args)) || LENGTH(CAR(args)) != 1)
     	error(_("invalid '%s' value"), "verbose");
-    xxDebugTokens = asInteger(CAR(args));
+    xxDebugTokens = asInteger(CAR(args));		args = CDR(args);
+    xxBasename = CHAR(STRING_ELT(CAR(args), 0));
 
     if (ifile >= 3) {/* file != "" */
 	if(!wasopen) {
