@@ -2368,30 +2368,30 @@ Windows, for example).  In that case it is likely that text will be
 rendered correctly in the terminal/console used to run @R{}, and files
 written will be readable by other UTF-8-aware applications.  However,
 plotting will be problematic.  On-screen plotting using the @samp{X11()}
-device will use a font that only covers a small proportion of UTF-8, and
-different fonts will likely need to be selected for Polish, Russian and
-Japanese (see @code{help("X11")}).  Using @samp{postscript} or
-@samp{pdf} will choose a default 8-bit encoding depending on the
-language of the UTF-8 locale, and your users would need to be told how
-to select the @samp{encoding} argument.
+device will use needs to find a font that covers the glyphs used, and
+this will be machine-dependent: you may have Russian or Japanese fonts
+installed but your users may not.  Using @samp{postscript} or @samp{pdf}
+will choose a default 8-bit encoding depending on the language of the
+UTF-8 locale, and your users would need to be told how to select the
+@samp{encoding} argument.
 
 Another fairly common scenario is where a package will only be used in
 one language, e.g.@: French.  It is not very safe to assume that all
 such users would have their computers set to a French locale, but let us
 assume so.  The problem then is that there are several possible
 encodings for French locales, the most common ones being @samp{CP1252}
-(Windows), @samp{ISO 8859-1} (latin-1), @samp{ISO 8859-15} (latin-9 which
-includes the Euro), and @samp{UTF-8}.  For characters in the French
-language the first three agree, but they do not agree with @samp{UTF-8}.
-Further, you (or different users) can run @R{} in different locales in
-different sessions, say @samp{fr_CA.utf8} one day and
-@samp{fr_CH.iso88591} the next.  As from @R{} 2.5.0, declaring the
-encoding as either @samp{latin1} or @samp{UTF-8} in the
-@file{DESCRIPTION} file will enable this to work.  If you have character
-data in @file{.rda} files (for use by @code{data} or LazyData) these
-need to have been prepared and @code{save}d in @R{} 2.5.0 in an
-appropriate locale (or marked via @code{Encoding}).  For example (from
-package @pkg{FactoMineR} version @code{1.02}):
+(Windows), @samp{ISO 8859-1} (latin-1), @samp{ISO 8859-15} (latin-9
+which includes the Euro), and @samp{UTF-8}.  For characters in the
+French language the first three agree, but they do not agree with
+@samp{UTF-8}.  Further, you (or different users of your machine) can run
+@R{} in different locales in different sessions, say @samp{fr_CA.utf8}
+one day and @samp{fr_CH.iso88591} the next.  Declaring the encoding as
+either @samp{latin1} or @samp{UTF-8} in the @file{DESCRIPTION} file will
+enable this to work.  If you have character data in @file{.rda} files
+(for use by @code{data} or LazyData) these need to have been prepared
+and @code{save}d in @R{} 2.5.0 or later in an appropriate locale (or
+marked via @code{Encoding}).  For example (from package @pkg{FactoMineR}
+version @code{1.02}):
 
 @example
 > library(FactoMineR)
@@ -2404,9 +2404,9 @@ package @pkg{FactoMineR} version @code{1.02}):
 @noindent
 was used to update a @file{.rda} file.
 
-If you want to run @command{R CMD check} on a Unix-alike over a
-package that sets the encoding you may need to specify a suitable
-locale via an environment variable.  The default is equivalent setting
+If you want to run @command{R CMD check} on a Unix-alike over a package
+that sets the encoding you may need to specify a suitable locale via an
+environment variable.  The default is equivalent to setting
 @env{R_ENCODING_LOCALES} to
 
 @example
@@ -2797,8 +2797,8 @@ installation scripts for packages.
 
 The @R{} distribution contains more than 1200 such files which can be
 found in the @file{src/library/@var{pkg}/man} directories of the @R{}
-source tree, where @var{pkg} stands for the standard packages which are
-included in the @R{} distribution.
+source tree, where @var{pkg} stands for one of the standard packages
+which are included in the @R{} distribution.
 
 As an example, let us look at the file
 @file{src/library/base/man/load.Rd} which documents the @R{} function
@@ -3119,7 +3119,7 @@ Examples of how to use the function.  These are set as formatted in
 typewriter font: see @ref{Insertions} for when characters need to be
 escaped.  (Markup @code{\link} and @code{\var} will be interpreted, but
 no other.)  Code in this section is run by @code{example()} unless
-marked otherswise (see below).
+marked otherwise (see below).
 
 Examples are not only useful for documentation purposes, but also
 provide test code used for diagnostic checking of @R{}.  By default,
@@ -3158,8 +3158,11 @@ info).
 
 Finally, there is @code{\donttest}, used to mark code that should be run
 by @code{examples()} but not by @code{R CMD check}.  This should be
-needed only occasionally but can be used for code which might fail, for
-example in some locales.
+needed only occasionally but can be used for code which might fail in
+circumstances that are hard to test for, for example in some locales.
+(Use e.g. @code{capabilities()} to test for features needed in the
+examples wherever possible, and you can also use @code{try()} or
+@code{trycatch()}.)
 
 @findex \keyword
 @item \keyword@{@var{key}@}
@@ -3389,29 +3392,29 @@ quotation marks).
 @end table
 
 The following logical markup commands are available for indicating
-specific kinds of text.
+specific kinds of text.  `Literal' is not to be taken as meaning
+`verbatim', and some characters will need to be escaped
+(@pxref{Insertions}).
 
 @table @code
 @item \code@{@var{text}@}
 @findex \code
-Indicate text that is a literal example of a piece of a program, e.g., a
-fragment of @R{} code or the name of an @R{} object, using
-@code{typewriter} font if possible.  Some characters will need to be
-escaped (@pxref{Insertions}).  The only markup interpreted inside
+Indicate text that is a literal example of a piece of an @R{} program,
+e.g., a fragment of @R{} code or the name of an @R{} object, using
+@code{typewriter} font if possible.  The only markup interpreted inside
 @code{\code} is @code{\link} and @code{\var}.
 
 @item \preformatted@{@var{text}@}
 @findex \preformatted
 Indicate text that is a literal example of a piece of a program, using
-@code{typewriter} font if possible.  The same characters need to be
-escaped as for @code{\code}.  All other formatting, e.g.@: line breaks,
-is preserved.  The closing brace should be on a line by itself.
+@code{typewriter} font if possible.  Formatting, e.g.@: line breaks, is
+preserved.  The closing brace should be on a line by itself.
 
 @item \kbd@{@var{keyboard-characters}@}
 @findex \kbd
 Indicate keyboard input, using @kbd{slanted typewriter} font if
 possible, so users can distinguish the characters they are supposed to
-type from those the computer outputs.
+type from computer output.
 
 @item \samp@{@var{text}@}
 @findex \samp
@@ -3423,8 +3426,8 @@ Indicate the name of an @R{} package.
 
 @item \file@{@var{file_name}@}
 @findex \file
-Indicate the name of a file.  Note that special characters do need to be
-escaped.
+Indicate the name of a file.  Note that backlash is one of the
+characters which needs to be escaped.
 @item \email@{@var{email_address}@}
 @findex \email
 Indicate an electronic mail address.
@@ -3481,9 +3484,9 @@ bullet point (@code{\itemize}) or a number (@code{\enumerate}).
 
 @findex \describe
 The @code{\describe} command is similar to @code{\itemize} but allows
-initial labels to be specified.  The @code{\item}s take two arguments,
-the label and the body of the item, in exactly the same way as argument
-and value @code{\item}s.  @code{\describe} commands are mapped to
+initial labels to be specified.  Each @code{\item} take two arguments,
+the label and the body of the item, in exactly the same way as an
+argument or value @code{\item}.  @code{\describe} commands are mapped to
 @code{<DL>} lists in @HTML{} and @code{\description} lists in @LaTeX{}.
 
 @findex \tabular
@@ -3555,9 +3558,9 @@ that more than one package offers help on a topic@footnote{a common
 example in CRAN packages is @code{\link[mgcv]@{gam@}}.} (in which case
 the present package has precedence so this is only needed to refer to
 other packages).  They are only in used in (C)HTML help (and not for
-hyperlinks in @LaTeX{} nor S sgml conversions of help pages), and link
-to the file rather than the topic (since there is no way to know which
-topics are in which files in an uninstalled package).
+hyperlinks in @LaTeX{} conversions of help pages), and link to the file
+rather than the topic (since there is no way to know which topics are in
+which files in an uninstalled package).
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation files
 @section Mathematics
@@ -3661,7 +3664,7 @@ The ``comment'' character @samp{%} and unpaired braces@footnote{See the
 examples section in the file @file{Paren.Rd} for an example.}
 @emph{always} need to be escaped by @samp{\}, and @samp{\\} can be used
 for backslash and needs to be when there two or more adjacent
-backslashes).  Inside the verbatim-like commands (@code{usage},
+backslashes).  Inside the verbatim-like commands (@code{\usage},
 @code{\code}, @code{\preformatted} and @code{\examples}), no other
 characters are special.  As from @R{} 2.9.0, all of @samp{% @{ @} \}
 should be escaped in non-verbatim-like text.
@@ -3738,7 +3741,10 @@ or
 @end example
 
 @noindent
-for OS-specific inclusion or exclusion.
+for OS-specific inclusion or exclusion.  Such blocks should not be
+nested, and should be entirely within a block (that, is between the
+opening and closing brace of a section or item), or at top-level contain
+a complete section.
 
 If the differences between platforms are extensive or the @R{} objects
 documented are only relevant to one platform, platform-specific Rd files
@@ -3820,8 +3826,8 @@ line.  All of these need Perl to be installed.
 @findex R CMD Rdconv
 Using @code{R CMD Rdconv} one can convert @R{} documentation format to
 other formats, or extract the executable examples for run-time testing.
-Currently, conversions to plain text, @HTML{}, @LaTeX{}, and @Sl{}
-version 3 or 4 documentation formats are supported.
+The currently supported conversions are to plain text, @HTML{} and
+@LaTeX{} as well as extraction of the examples.
 
 In addition to this low-level conversion tool, the @R{} distribution
 provides two user-level programs for processing Rd format.
@@ -3897,7 +3903,8 @@ still be handled if unescaped).  @samp{#}, @samp{_} and @samp{&} must
 not be escaped.
 
 @item
-@samp{\R@{@}} is accepted as an alternative to @samp{\R}.
+@samp{\R@{@}} is accepted as an alternative to @samp{\R}.  Similarly for
+@samp{\dots} and @samp{\ldots}.
 
 @item
 Whitespace is allowed between the first and second arguments of
@@ -3914,7 +3921,7 @@ In version 1.0 @samp{$} needs to be escaped by backslash in ``regular''
 text (not verbatim-like, not in the first argument of @code{\eqn},
 @dots{}), and @samp{#}, @samp{_} and @samp{&} can be.
 
-For historic reasons mostly, the @TeX{}/@LaTeX{} commands @code{\alpha},
+For historical reasons, the @TeX{}/@LaTeX{} commands @code{\alpha},
 @code{\Alpha}, @code{\beta}, @code{\Gamma}, @code{\epsilon},
 @code{\lambda}, @code{\mu}, @code{\pi}, @code{\sigma}, @code{\Sigma},
 @code{\le}, @code{\ge}, @code{\left(} and @code{\right)} were accepted,
@@ -3926,9 +3933,9 @@ For @R{} prior to 2.9.0, in ``regular'' text you needed to escape the
 specials @samp{$}, @samp{#} and @samp{_}: @samp{&} could also be
 escaped, but need not be.
 
-Further, @samp{^}, @samp{~}, @samp{<}, @samp{>} and @samp{|} are not in
-general safe to use in non-verbatim text.  Enter @samp{^} as
-@code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
+Further, @samp{^}, @samp{~}, @samp{<}, @samp{>} and @samp{|} were not in
+general safe to use in non-code text.  The advice was to enter @samp{^}
+as @code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
 @code{\eqn@{\mbox@{\textasciitilde@}@}@{~@}} or @code{\eqn@{\sim@}@{~@}}
 (for a short and long tilde respectively).  Also, @samp{<}, @samp{>},
 and @samp{|} could only be used safely in math mode, i.e., within the
@@ -3999,16 +4006,16 @@ No space is allowed bewteen the first and second arguments of a macro
 such as @code{\item}.
 
 @item
-@code{\code} is intended @emph{only} for @R{} code, and as such it
+@code{\code} is intended @emph{only} for @R{} code, and as such its
 argument must be syntactically valid once macros such as @code{\link}
 and @code{\var} have been substituted.  This means that quotes must
 balance.  Use @code{\samp} or @code{\kbd} for code snippets and code in
 other languages.
 
-@item
-@code{\examples} is intended for valid @R{} code even within
-@code{\dontrun} sections, which must have @code{%} escaped and balancing
-quotes.
+@c @item
+@c @code{\examples} is intended for valid @R{} code even within
+@c @code{\dontrun} sections, which must have @code{%} escaped and balancing
+@c quotes.
 
 @item
 Zero-argument macros such as @samp{\R}, @samp{\dots} and @samp{\ldots}
