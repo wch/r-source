@@ -2368,7 +2368,7 @@ Windows, for example).  In that case it is likely that text will be
 rendered correctly in the terminal/console used to run @R{}, and files
 written will be readable by other UTF-8-aware applications.  However,
 plotting will be problematic.  On-screen plotting using the @samp{X11()}
-device will use needs to find a font that covers the glyphs used, and
+device needs to find a font that covers the glyphs used, and
 this will be machine-dependent: you may have Russian or Japanese fonts
 installed but your users may not.  Using @samp{postscript} or @samp{pdf}
 will choose a default 8-bit encoding depending on the language of the
@@ -3484,7 +3484,7 @@ bullet point (@code{\itemize}) or a number (@code{\enumerate}).
 
 @findex \describe
 The @code{\describe} command is similar to @code{\itemize} but allows
-initial labels to be specified.  Each @code{\item} take two arguments,
+initial labels to be specified.  Each @code{\item} takes two arguments,
 the label and the body of the item, in exactly the same way as an
 argument or value @code{\item}.  @code{\describe} commands are mapped to
 @code{<DL>} lists in @HTML{} and @code{\description} lists in @LaTeX{}.
