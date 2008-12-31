@@ -4514,7 +4514,8 @@ function(txt, re)
         epos <- ipos + attr(ipos, "match.length") - 1L
         str <- substring(txt, ipos, epos)
         str <- sub("\"", "\\\"", str, fixed = TRUE)
-        str <- sub("\\", "\\\\", str, fixed = TRUE)
+        ## parse_usage_as_much_as_possible will turn \\\\ into \\
+        str <- sub("\\", "\\\\\\\\", str, fixed = TRUE)
         out <- sprintf("%s%s\"%s\"", out,
                        substring(txt, 1L, ipos - 1L), str)
         txt <- substring(txt, epos + 1L)
@@ -4777,11 +4778,11 @@ function(txt)
     ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage
     txt <- gsub("\\{", "{", txt, fixed = TRUE)
     txt <- gsub("\\}", "}", txt, fixed = TRUE)
-    ## Undo the escaping of \, via \\\\ to \\
-    ## However, this is not right, as "\\" should become "\" (and
-    ## a parse error in due course). (And we have \\method at this point.)
-    txt <- gsub("\\\\\\\\", "\\\\", txt, fixed = TRUE)
-    .parse_text_as_much_as_possible(txt)
+    ## now any valid escape by \ is \a \b \f 'n \r \t \u \U \v \x or \octal
+    txt <- gsub("(^|[^\\])\\\\\\\\($|[^abfnrtuUvx0-9\\])",
+                "\\1<unescaped bksl>\\2", txt)
+    txt <- gsub("\\\\", "\\", txt, fixed = TRUE)
+     .parse_text_as_much_as_possible(txt)
 }
 
 ### ** .pretty_print

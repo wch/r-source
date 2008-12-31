@@ -253,6 +253,9 @@ BUG FIXES
 
     o	deparse(control="S_compatible") now never uses backticks.
 
+    o	codoc() was missing some default value mismatches with
+	unescaped backslashes, e.g. final="\\" needs to be written as
+	final="\\\\" in the Rd file.
 
 
 
