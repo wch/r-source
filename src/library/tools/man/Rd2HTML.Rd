@@ -53,7 +53,7 @@ checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
 \references{ \url{http://developer.r-project.org/parseRd.pdf} }
 \seealso{ \code{\link{parse_Rd}} }
 \examples{
-  \donttest{
+\donttest{
   toolsRd <- Rd_db("tools")
   con <- textConnection(toolsRd[["Rd2HTML.Rd"]], "rt")
   outfile <- paste(tempfile(), ".html", sep="")
