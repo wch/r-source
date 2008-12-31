@@ -8027,7 +8027,7 @@ Clearing the pointer and checking for a @code{NULL} pointer avoids any
 possibility of attempting to close an already-closed channel.
 
 @R{}'s connections provide another example of using external pointers,
-in that case purely to be able to us a finalizer to close and destroy the
+in that case purely to be able to use a finalizer to close and destroy the
 connection if it is no longer is use.
 
 @node Vector accessor functions, Character encoding issues, External pointers and weak references, System and foreign language interfaces
