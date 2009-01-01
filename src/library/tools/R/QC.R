@@ -850,6 +850,7 @@ function(x, ...)
         else {
             s <- paste(deparse(s), collapse = "")
             s <- gsub(" = ([,\\)])", "\\1", s)
+            s <- gsub("<unescaped bksl>", "\\", s, fixed = TRUE)
             gsub("^list", "function", s)
         }
     }
@@ -873,7 +874,7 @@ function(x, ...)
             if(len) {
                 if(len > 3L) {
                     writeLines(gettext("  Mismatches in argument names (first 3):"))
-                    ind <- ind[1 : 3]
+                    ind <- ind[1L:3L]
                 } else {
                     writeLines(gettext("  Mismatches in argument names:"))
                 }
@@ -888,20 +889,30 @@ function(x, ...)
     summarize_mismatches_in_values <- function(ffc, ffd) {
         ## Be nice, and match arguments by names first.
         nms <- intersect(names(ffc), names(ffd))
-        vffc <- as.character(ffc[nms])
-        vffd <- as.character(ffd[nms])
-        ind <- which(vffc != vffd)
+        vffc <- ffc[nms]
+        vffd <- ffd[nms]
+        ind <- which(as.character(vffc) != as.character(vffd))
         len <- length(ind)
         if(len) {
             if(len > 3L) {
                 writeLines(gettext("  Mismatches in argument default values (first 3):"))
-                ind <- ind[1 : 3]
+                ind <- ind[1L:3L]
             } else {
                 writeLines(gettext("  Mismatches in argument default values:"))
             }
             for(i in ind) {
-                writeLines(sprintf("    Name: %s Code: %s Docs: %s",
-                                   nms[i], vffc[i], vffd[i]))
+                cv <- vffc[[i]]
+                cv <- if(is.character(cv)) {
+                    encodeString(cv, quote = '"')
+                } else as.character(cv)
+                dv <- vffd[[i]]
+                dv <- if(is.character(dv)) {
+                   gsub("<unescaped bksl>", "\\",
+                        encodeString(dv, quote='"'),
+                        fixed = TRUE)
+                } else as.character(dv)
+                writeLines(sprintf("    Name: '%s' Code: %s Docs: %s",
+                                   nms[i], cv, dv))
             }
         }
     }

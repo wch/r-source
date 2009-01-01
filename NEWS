@@ -257,6 +257,9 @@ BUG FIXES
 	unescaped backslashes, e.g. final="\\" needs to be written as
 	final="\\\\" in the Rd file.
 
+	The reports on values now give strings in the original quoted
+	format (with \ and " escaped).
+
 
 
 
