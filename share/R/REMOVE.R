@@ -61,11 +61,11 @@ if(!length(pkgs))
     stop("ERROR: no packages specified", call.=FALSE)
 if(!nzchar(lib)) {
     lib <- .libPaths()[1]
-    message("Removing from libary ", sQuote(lib))
+    message("Removing from library ", sQuote(lib))
 } else {
     ## lib is allowed to be a relative path.
     ## should be OK below, but be sure.
-    cwd <- try(setwd(lib), silent = TRUE)
+    cwd <- try(setwd(path.expand(lib)), silent = TRUE)
     if(inherits(cwd, "try-error"))
         stop("ERROR: cannot cd to directory ", sQuote(lib), call. = FALSE)
     lib <- getwd()

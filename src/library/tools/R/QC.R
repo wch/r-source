@@ -4785,6 +4785,9 @@ function(txt)
     ## now any valid escape by \ is \a \b \f 'n \r \t \u \U \v \x or \octal
     txt <- gsub("(^|[^\\])\\\\\\\\($|[^abfnrtuUvx0-9\\])",
                 "\\1<unescaped bksl>\\2", txt)
+    ## and since this may overlap, try again
+    txt <- gsub("(^|[^\\])\\\\\\\\($|[^abfnrtuUvx0-9\\])",
+                "\\1<unescaped bksl>\\2", txt)
     txt <- gsub("\\\\", "\\", txt, fixed = TRUE)
      .parse_text_as_much_as_possible(txt)
 }
