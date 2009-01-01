@@ -384,7 +384,7 @@ install.packages <-
             ## MAKE will be set by sourcing Renviron, but in case not
             make <- Sys.getenv("MAKE")
             if(!nzchar(make)) make <- "make"
-            status <- system(paste(make, "-j", Ncpus))
+            status <- system(paste(make, "-k -j", Ncpus))
             if(status > 0L)
                 warning(gettext("installation of one of more packages failed"),
                         domain = NA)
