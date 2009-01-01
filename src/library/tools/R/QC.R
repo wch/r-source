@@ -901,16 +901,9 @@ function(x, ...)
                 writeLines(gettext("  Mismatches in argument default values:"))
             }
             for(i in ind) {
-                cv <- vffc[[i]]
-                cv <- if(is.character(cv)) {
-                    encodeString(cv, quote = '"')
-                } else as.character(cv)
-                dv <- vffd[[i]]
-                dv <- if(is.character(dv)) {
-                   gsub("<unescaped bksl>", "\\",
-                        encodeString(dv, quote='"'),
-                        fixed = TRUE)
-                } else as.character(dv)
+                cv <- deparse(vffc[[i]])
+                dv <- deparse(vffd[[i]])
+                dv <- gsub("<unescaped bksl>", "\\", dv, fixed = TRUE)
                 writeLines(sprintf("    Name: '%s' Code: %s Docs: %s",
                                    nms[i], cv, dv))
             }
