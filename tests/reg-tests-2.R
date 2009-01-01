@@ -2161,7 +2161,7 @@ pmax(x, y, na.rm=TRUE)
 stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
 
 # tests of classed quantities
-x <- .leap.seconds; y <- rev(x)
+x <- .leap.seconds[1:23]; y <- rev(x)
 x[2] <- y[2] <- x[3] <- y[4] <- NA
 format(pmin(x, y), tz="GMT")  # TZ names differ by platform
 class(pmin(x, y))
