@@ -253,13 +253,6 @@ BUG FIXES
 
     o	deparse(control="S_compatible") now never uses backticks.
 
-    o	codoc() was missing some default value mismatches with
-	unescaped backslashes, e.g. final="\\" needs to be written as
-	final="\\\\" in the Rd file.
-
-	The reports on values now give strings in the original quoted
-	format (with \ and " escaped).
-
 
 
 
@@ -312,6 +305,13 @@ BUG FIXES
     o	.Call() and .External() were not accepting "NativeSymbolInfo"
 	and "NativeSymbol" objects as claimed. (Patch from Olaf
 	Mersmann.)
+
+    o	codoc() was missing some default value mismatches with
+	unescaped backslashes, e.g. final="\\" needs to be written as
+	final="\\\\" in the Rd file.
+
+	The reports on values now give strings in the original quoted
+	format (with \ and " escaped).
 
 
 
