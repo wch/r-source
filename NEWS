@@ -49,6 +49,13 @@ BUG FIXES
 	and "NativeSymbol" objects as claimed. (Patch from Olaf
 	Mersmann.)
 
+    o	codoc() was missing some default value mismatches with
+	unescaped backslashes, e.g. final="\\" needs to be written as
+	final="\\\\" in the Rd file.
+
+	The reports on values now give strings in the original quoted
+	format (with \ and " escaped).
+
 
 
 
@@ -1811,7 +1818,7 @@ UTILITIES
     o	R CMD check now warns if spaces or non-ASCII characters are
 	used in file paths, since these are not in general portable.
 
-    o	R CMD check (via massage-examples.pl) now checks all examples
+    o	R CMD check (via massage-Examples.pl) now checks all examples
 	with a 7 inch square device region on A4 paper, for
 	locale-independence and to be similar to viewing examples on
 	an on-screen device.

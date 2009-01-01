@@ -850,6 +850,7 @@ function(x, ...)
         else {
             s <- paste(deparse(s), collapse = "")
             s <- gsub(" = ([,\\)])", "\\1", s)
+            s <- gsub("<unescaped bksl>", "\\", s, fixed = TRUE)
             gsub("^list", "function", s)
         }
     }
@@ -888,9 +889,9 @@ function(x, ...)
     summarize_mismatches_in_values <- function(ffc, ffd) {
         ## Be nice, and match arguments by names first.
         nms <- intersect(names(ffc), names(ffd))
-        vffc <- as.character(ffc[nms])
-        vffd <- as.character(ffd[nms])
-        ind <- which(vffc != vffd)
+        vffc <- ffc[nms]
+        vffd <- ffd[nms]
+        ind <- which(as.character(vffc) != as.character(vffd))
         len <- length(ind)
         if(len) {
             if(len > 3L) {
@@ -900,8 +901,18 @@ function(x, ...)
                 writeLines(gettext("  Mismatches in argument default values:"))
             }
             for(i in ind) {
-                writeLines(sprintf("    Name: %s Code: %s Docs: %s",
-                                   nms[i], vffc[i], vffd[i]))
+                cv <- vffc[[i]]
+                cv <- if(is.character(cv)) {
+                    encodeString(cv, quote = '"')
+                } else as.character(cv)
+                dv <- vffd[[i]]
+                dv <- if(is.character(dv)) {
+                   gsub("<unescaped bksl>", "\\",
+                        encodeString(dv, quote='"'),
+                        fixed = TRUE)
+                } else as.character(dv)
+                writeLines(sprintf("    Name: '%s' Code: %s Docs: %s",
+                                   nms[i], cv, dv))
             }
         }
     }
@@ -2617,7 +2628,7 @@ function(db, def_enc = FALSE)
         c("name", "title", "description", "usage", "arguments",
           "format", "details", "value", "references", "source",
           "seealso", "examples", "note", "author", "synopsis",
-          "docType", "encoding")
+          "docType", "encoding", "Rdversion")
     known_tags <- c(unique_tags,
                     "section",
                     ## Allow for empty keywords (these do not make it
@@ -4452,7 +4463,8 @@ function(txt, re)
         epos <- ipos + attr(ipos, "match.length") - 1L
         str <- substring(txt, ipos, epos)
         str <- sub("\"", "\\\"", str, fixed = TRUE)
-        str <- sub("\\", "\\\\", str, fixed = TRUE)
+        ## parse_usage_as_much_as_possible will turn \\\\ into \\
+        str <- sub("\\", "\\\\\\\\", str, fixed = TRUE)
         out <- sprintf("%s%s\"%s\"", out,
                        substring(txt, 1L, ipos - 1L), str)
         txt <- substring(txt, epos + 1L)
@@ -4703,7 +4715,7 @@ function(txt)
 {
     if(!length(txt)) return(expression())
     txt <- gsub("\\\\l?dots", "...", txt)
-    txt <- gsub("\\\\%", "%", txt)
+    txt <- gsub("\\%", "%", txt, fixed = TRUE)
     txt <- .Rd_transform_command(txt, "special", function(u) NULL)
     txt <- .dquote_method_markup(txt, .S3_method_markup_regexp)
     txt <- .dquote_method_markup(txt, .S4_method_markup_regexp)
@@ -4713,13 +4725,13 @@ function(txt)
     txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
     ## \usage is only 'verbatim-like'
     ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage
-    txt <- gsub("\\\\\\{", "{", txt)
-    txt <- gsub("\\\\\\}", "}", txt)
-    txt <- gsub("\\\\%", "%", txt)
-    ## Yes, really 16, as we want 4 in the Rd file converted to 2.
-    txt <- gsub("\\\\\\\\\\\\\\\\", "\\\\\\\\", txt)
-    ## Using fixed = TRUE might enhance readability ...
-    .parse_text_as_much_as_possible(txt)
+    txt <- gsub("\\{", "{", txt, fixed = TRUE)
+    txt <- gsub("\\}", "}", txt, fixed = TRUE)
+    ## now any valid escape by \ is \a \b \f 'n \r \t \u \U \v \x or \octal
+    txt <- gsub("(^|[^\\])\\\\\\\\($|[^abfnrtuUvx0-9\\])",
+                "\\1<unescaped bksl>\\2", txt)
+    txt <- gsub("\\\\", "\\", txt, fixed = TRUE)
+     .parse_text_as_much_as_possible(txt)
 }
 
 ### ** .pretty_print
