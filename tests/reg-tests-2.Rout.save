@@ -1,6 +1,6 @@
 
-R version 2.9.0 Under development (unstable) (2008-12-26 r47335)
-Copyright (C) 2008 The R Foundation for Statistical Computing
+R version 2.9.0 Under development (unstable) (2009-01-01 r47425)
+Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -6229,4 +6229,27 @@ Error in aggregate.data.frame(z, by = z[1], FUN = sum) :
 > Call
 foo(1, bar = 2)
 > ## unnamed call in 2.8.1
+> 
+> 
+> ## .Call on symbol objects (not strings)
+> ## https://stat.ethz.ch/pipermail/r-devel/2008-December/051669.html
+> try(.Call("R_GD_nullDevice", NULL))
+Error in .Call("R_GD_nullDevice", NULL) : 
+  Incorrect number of arguments (1), expecting 0 for R_GD_nullDevice
+> sym <- getDLLRegisteredRoutines("grDevices")$.Call[["R_GD_nullDevice"]]
+> try(.Call(sym, NULL))
+Error in .Call(sym, NULL) : 
+  Incorrect number of arguments (1), expecting 0 for R_GD_nullDevice
+> try(.Call(sym$address, NULL))
+Error in .Call(sym$address, NULL) : 
+  Incorrect number of arguments (1), expecting 0 for R_GD_nullDevice
+> ## wrong error in 2.8.1
+> sym <- getDLLRegisteredRoutines("stats")$.C$prho
+> try(.C(sym, NULL))
+Error in .C(sym, NULL) : 
+  Incorrect number of arguments (1), expecting 5 for prho
+> try(.C(sym$address, NULL))
+Error in .C(sym$address, NULL) : 
+  Incorrect number of arguments (1), expecting 5 for prho
+> ## were OK
 > 

@@ -2307,3 +2307,16 @@ Call <- call("foo", 1)
 Call[["bar"]] <- 2
 Call
 ## unnamed call in 2.8.1
+
+
+## .Call on symbol objects (not strings)
+## https://stat.ethz.ch/pipermail/r-devel/2008-December/051669.html
+try(.Call("R_GD_nullDevice", NULL))
+sym <- getDLLRegisteredRoutines("grDevices")$.Call[["R_GD_nullDevice"]]
+try(.Call(sym, NULL))
+try(.Call(sym$address, NULL))
+## wrong error in 2.8.1
+sym <- getDLLRegisteredRoutines("stats")$.C$prho
+try(.C(sym, NULL))
+try(.C(sym$address, NULL))
+## were OK
