@@ -184,7 +184,6 @@ $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 	@$(ECHO) "re-making gram.c"
 	$(YACC) $(YFLAGS) $(srcdir)/gram.y
 	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gram.c
-	
 $(srcdir)/gramRd.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gramRd.y
 	@$(ECHO) "re-making gramRd.c"
 	$(YACC) $(YFLAGS) $(srcdir)/gramRd.y
@@ -193,7 +192,7 @@ $(srcdir)/gramRd.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gramRd.y
 install: installdirs
 	@$(MAKE) install-bin
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
-	@WANT_R_STATIC_TRUE@ @$(MAKE) install-static
+@WANT_R_STATIC_TRUE@	@$(MAKE) install-static
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir2)"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexeclibdir)"
@@ -206,7 +205,7 @@ install-static: installdirs
 install-strip: installdirs
 	@${INSTALL_PROGRAM} -s $(R_binary) "$(DESTDIR)$(Rexecbindir2)/R"
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
-	@WANT_R_STATIC_TRUE@ @$(MAKE) install-static
+@WANT_R_STATIC_TRUE@	@$(MAKE) install-static
 	@if test -n "$(STRIP_LIBS)"; then \
 	  if test -f $(libR_la); then $(STRIP_LIBS) "$(DESTDIR)$(Rexeclibdir)/$(libR_la)"; fi; \
 	fi

@@ -132,7 +132,7 @@ stamp-R: $(top_builddir)/bin/exec@R_ARCH@/R \
 	$(top_builddir)/src/library/stats/all.R \
 	$(top_builddir)/src/library/utils/all.R \
 	$(top_builddir)/modules@R_ARCH@/lapack$(SHLIB_EXT) \
-	@WANT_R_SHLIB_TRUE@ $(top_builddir)/lib@R_ARCH@/libR$(DYLIB_EXT)
+@WANT_R_SHLIB_TRUE@	$(top_builddir)/lib@R_ARCH@/libR$(DYLIB_EXT)
 	@touch $@
 
 Makedeps: Makefile
