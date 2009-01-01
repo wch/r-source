@@ -65,12 +65,13 @@ r <- as.POSIXct(round(range(time), "hours"))
 axis.POSIXct(1, at=seq(r[1], r[2], by="hour"), format="\%H")
 })
 
-plot(.leap.seconds, 1:23, type="n", yaxt="n",
+plot(.leap.seconds, seq_along(.leap.seconds), type="n", yaxt="n",
      xlab="leap seconds", ylab="", bty="n")
 rug(.leap.seconds)
 ## or as dates
 lps <- as.Date(.leap.seconds)
-plot(lps, 1:23, type = "n", yaxt = "n", xlab = "leap seconds",
+plot(lps, seq_along(.leap.seconds),
+     type = "n", yaxt = "n", xlab = "leap seconds",
      ylab = "", bty = "n")
 rug(lps)
 
