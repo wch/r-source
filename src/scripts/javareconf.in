@@ -7,7 +7,7 @@ fi
 
 tools_classpath=${R_SHARE_DIR}/java
 
-revision='$Rev'
+revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="R Java configurator r${version}
 
