@@ -408,7 +408,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         if (file.exists("src/Makefile")) {
             starsmsg(stars, "arch - ", arch)
             owd <- setwd("src")
-            makefiles <- c(systen_makefile, "Makefile")
+            makefiles <- c(system_makefile, "Makefile")
             if (file.exists(f <- path.expand(paste("~/.R/Makevars",
                                                    Sys.getenv("R_PLATFORM"), sep="-"))))
                 makefiles <- c(makefiles, f)
