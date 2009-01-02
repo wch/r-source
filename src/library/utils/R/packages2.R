@@ -366,15 +366,15 @@ install.packages <-
                 pkg <- update[i, 1L]
                 cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
                              getConfigureArgs(update[i, 3L]), update[i, 3L],
-                             ">", paste(pkg, ".ts", sep=""), "2>&1")
+                             ">", paste(pkg, ".out", sep=""), "2>&1")
                 deps <- DL[[pkg]]
                 deps <- deps[deps %in% pkgs]
                 deps <- if(length(deps))
                     paste(paste(deps, ".ts", sep=""), collapse=" ") else ""
                 cat(paste(pkg, ".ts: ", deps, sep=""),
                     paste("\t@echo installing package", pkg),
-                    paste("\t@", cmd, sep=""),
-                    paste("\t@cat ", pkg, ".ts", sep=""),
+                    paste("\t@", cmd, " && touch ", pkg, ".ts", sep=""),
+                    paste("\t@cat ", pkg, ".out", sep=""),
                     "", sep="\n", file = conn)
             }
             close(conn)
@@ -385,9 +385,15 @@ install.packages <-
             make <- Sys.getenv("MAKE")
             if(!nzchar(make)) make <- "make"
             status <- system(paste(make, "-k -j", Ncpus))
-            if(status > 0L)
-                warning(gettext("installation of one of more packages failed"),
+            if(status > 0L) {
+                ## Try to figure out which
+                pkgs <- update[, 1L]
+                tss <- sub("\\.ts$", "", dir(".", pattern = "\\.ts$"))
+                failed <- pkgs[!pkgs %in% tss]
+                warning(gettextf("installation of one of more packages failed,\n  probably %s",
+                                 paste(sQuote(failed), collapse = ", ")),
                         domain = NA)
+            }
             setwd(cwd); on.exit()
             unlink(tmpd, recursive = TRUE)
         } else {
