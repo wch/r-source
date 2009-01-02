@@ -26,6 +26,7 @@ etcpath <- paste("etc", arch, sep="")
 libpath <- paste("libs", arch, sep="")
 options(warn = 1)
 foo <- Sys.setlocale("LC_COLLATE", "C")
+ctype <- Sys.getlocale("LC_CTYPE")
 
 
 Usage <- function() {
@@ -378,7 +379,10 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                 Sys.chmod(file.path(rpkgdir, f), "644")
             }
 
+        ## This cannot be done in a MBCS: write.dcf fails
+        Sys.setlocale("LC_CTYPE", "C")
         res <- try(tools:::.install_package_description(".", rpkgdir))
+        Sys.setlocale("LC_CTYPE", ctype)
         if (inherits(res, "try-error"))
             errmsg("installing package DESCRIPTION failed")
     }
@@ -416,7 +420,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
             setwd(owd)
         } else { ## no src/Makefile
             owd <- setwd("src")
-            srcs <- dir(pattern = "\\.[(cfmCM]|cc|cpp|f90|f95|mm$")
+            srcs <- dir(pattern = "\\.([cfmCM]|cc|cpp|f90|f95|mm)$")
             allfiles <- if (file.exists("Makevars")) c("Makevars", srcs) else srcs
             wd2 <- setwd(file.path(R.home(), "bin", "exec"))
             archs <- Sys.glob("*")
@@ -458,19 +462,22 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         if (utils::file_test("-d", "R")) {
             starsmsg(stars, "R")
             dir.create(file.path(rpkgdir, "R"), recursive = TRUE)
+            ## This cannot be done in C
             res <- try(tools:::.install_package_code_files(".", rpkgdir))
             if (inherits(res, "try-error"))
                 pkgerrmsg("unable to collate files", pkg_name)
 
             if (file.exists(file.path("R", "sysdata.R"))) {
-                res <- try(tools:::sysdata2LazyLoadDB("R/sysdata.rda", rpkfdir))
+                res <- try(tools:::sysdata2LazyLoadDB("R/sysdata.rda", rpkgdir))
                 if (inherits(res, "try-error"))
                     pkgerrmsg("unable to build sysdata DB", pkg_name)
             }
             if (fake) {
                 if (file.exists("NAMESPACE")) {
-                    ## (echo; echo ".onLoad <- .onAttach <- function(lib, pkg) NULL") >> \
-                    ## "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
+                    cat("",
+                        '.onLoad <- .onAttach <- function(lib, pkg) NULL',
+                        sep = "\n",
+                        file = file.path(rpkgdir, "R", pkg_name), append = TRUE)
                     ## <NOTE>
                     ## Tweak fake installation to provide an 'empty' useDynLib() for
                     ## the time being.  Completely removing the directive results in
@@ -482,8 +489,10 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                     ## "${R_PACKAGE_DIR}/NAMESPACE"
                     ## </NOTE>
                 } else {
-                    ## (echo; echo ".First.lib <- function(lib, pkg) NULL") >> \
-                    ## "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
+                    cat("",
+                        '.First.lib <- function(lib, pkg) NULL',
+                        sep = "\n",
+                        file = file.path(rpkgdir, "R", pkg_name), append = TRUE)
                 }
             }
         } # end of R
