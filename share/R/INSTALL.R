@@ -316,7 +316,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
             if (utils::file_test("-x", "configure"))
                 system("./configure")
             else if (file.exists("configure"))
-                errsmg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
+                errmsg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
         }
         if (file.exists("Makefile"))
             if (system(MAKE)) pkgerrmsg("make failed")
@@ -369,7 +369,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         if (utils::file_test("-x", "configure"))
             system("./configure")
         else if (file.exists("configure"))
-            errsmg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
+            errmsg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
     }
 
     if (more_than_libs) {
@@ -655,7 +655,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
 
     if (tar_up) {
         version <- desc["version"]
-        filename <- paste0(pkgname, "_", version, "_R_",
+        filename <- paste0(pkg_name, "_", version, "_R_",
                            Sys.getenv("R_PLATFORM"), ".tar")
         filepath <- shQuote(file.path(startdir, filename))
         system(paste(TAR, "-chf", filepath, "-C", rlibdir, pkg_name))
@@ -841,7 +841,7 @@ if (!utils::file_test("-d", lib) || file.access(lib, 2L))
          sQuote(lib), call. = FALSE)
 
 if (lock) {
-    lockdir <- if (pkglock) file.path(lib, paste("00LOCK", pkgname, sep="-"))
+    lockdir <- if (pkglock) file.path(lib, paste("00LOCK", pkg_name, sep="-"))
     else file.path(lib, "00LOCK")
     if (file.exists(lockdir)) {
         message("ERROR: failed to lock directory ", sQuote(lib),
