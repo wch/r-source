@@ -14,7 +14,7 @@ A simple front-end for Sweave()
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print Sweave version info and exit
+  -v, --version		print version info and exit
 
 Report bugs to <r-bugs@r-project.org>."
 

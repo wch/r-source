@@ -6,7 +6,7 @@
 
 revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
-version="R compilation front end ${version}
+version="R compilation front end r${version}
 
 Copyright (C) 2000-2006 The R Core Development Team.
 This is free software; see the GNU General Public License version 2 or
@@ -24,7 +24,7 @@ C ('.c'), C++ ('.cc' or '.cpp' or '.C'), FORTRAN 77 ('.f'), FORTRAN 90
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print COMPILE version info and exit
+  -v, --version		print version info and exit
 
 Other options of the form '-DMACRO' or 'VAR=VALUE' are passed on to the
 compilation.

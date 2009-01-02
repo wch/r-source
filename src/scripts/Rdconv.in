@@ -87,7 +87,7 @@ if(!$opt_type_ok) {
 }
 
 sub usage {
-  print STDERR <<END;
+  print <<END;
 Usage: R CMD Rdconv [options] FILE
 
 Convert R documentation in FILE to other formats such as plain text,
@@ -95,7 +95,7 @@ HTML or LaTeX.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print Rdconv version info and exit
+  -v, --version		print version info and exit
   -d, --debug		turn on debugging (increase verbosity)
   -t, --type=TYPE	convert to format TYPE
   --encoding=enc        use 'enc' as the default encoding
@@ -110,7 +110,7 @@ The default is to send output to stdout, which is also given by '-o -'.
 Using '-o ""' will choose an output filename by removing a '.Rd'
 extension from FILE and adding a suitable extension.
 
-Email bug reports to <r-bugs\@r-project.org>.
+Report bugs to <r-bugs\@r-project.org>.
 END
   exit 0;
 }

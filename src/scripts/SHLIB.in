@@ -6,7 +6,7 @@
 
 revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
-version="R shared library builder ${version}
+version="R shared library builder r${version}
 
 Copyright (C) 2000-2007 The R Core Development Team.
 This is free software; see the GNU General Public License version 2
@@ -21,7 +21,7 @@ library is determined from the first source or object file.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print SHLIB version info and exit
+  -v, --version		print version info and exit
   -o, --output=LIB	use LIB as (full) name for the built library
   -c, --clean		remove files created during compilation
   --preclean		remove files created during a previous run

@@ -24,7 +24,7 @@
 
 revision='$Revision$'
 version=`set - ${revision}; echo ${2}`
-version="R configuration information retrieval script ${version}
+version="R configuration information retrieval script r${version}
 
 Copyright (C) 2002-6 The R Core Development Team.
 This is free software; see the GNU General Public License version 2
@@ -38,7 +38,7 @@ library flags necessary for linking against R.
 
 Options:
   -h, --help            print short help message and exit
-  -v, --version         print 'config' version info and exit
+  -v, --version         print version info and exit
       --cppflags        print pre-processor flags required to compile
 			a program using R as a library
       --ldflags         print linker flags needed for linking against

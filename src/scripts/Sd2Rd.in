@@ -29,20 +29,20 @@ $version = $1;
 ($name = $0) =~ s|.*/||;
 
 sub usage {
-  print STDERR <<END;
+  print <<END;
 Usage: R CMD Sd2Rd [options] FILE
 
 Convert S documentation in FILE to R documentation format.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print Sd2Rd version info and exit
+  -v, --version		print version info and exit
   -n			render examples non-executable by wrapping them
 			into a \\dontrun{} environment
   -x			(S3 docs) interpret all single-quoted names
 			as code names
 
-Email bug reports to <r-bugs\@r-project.org>.
+Report bugs to <r-bugs\@r-project.org>.
 END
   exit 0;
 }

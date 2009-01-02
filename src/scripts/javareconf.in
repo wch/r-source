@@ -7,6 +7,14 @@ fi
 
 tools_classpath=${R_SHARE_DIR}/java
 
+revision='$Rev'
+version=`set - ${revision}; echo ${2}`
+version="R Java configurator r${version}
+
+Copyright (C) 2002-6 The R Core Development Team.
+This is free software; see the GNU General Public License version 2
+or later for copying conditions.  There is NO warranty."
+
 usage="
 Usage: R CMD javareconf [options]
 
@@ -14,6 +22,7 @@ Detect current Java setup and update the corresponding configuration in R.
 
 Options:
   -h, --help     print this help message and exit
+  -v, --version  print version info and exit
   -n, --dry-run  perform Java detection, but don't touch any
                  configurations files
   -e <prog>      same as -n but exports all detected variables
@@ -49,6 +58,7 @@ export_vars=no
 while test -n "${1}"; do
     case ${1} in
 	-help | --help | -h) echo "${usage}"; exit 0 ;;
+	-v | --version) echo "${version}"; exit 0 ;;
 	-n | --dry-run) dry_run=yes ;;
 	-e) dry_run=yes; export_vars=yes; run_prog=${2}; shift ;;
 	*=*) eval ${1} ;;

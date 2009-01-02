@@ -751,7 +751,7 @@ sub fix_nonLF_in_make_files {
 
 
 sub usage {
-    print STDERR <<END;
+    print <<END;
 Usage: R CMD $name [options] pkgdirs
 
 Build R packages from package sources in the directories specified by
@@ -759,7 +759,7 @@ pkgdirs.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print 'build' version info and exit
+  -v, --version		print version info and exit
 
   --force               force overwriting of INDEX file
   --no-vignettes        do not rebuild package vignettes
@@ -767,22 +767,22 @@ Options:
   --binary              build pre-compiled binary packages, with options:
 END
     if($WINDOWS) {
-	print STDERR "  --docs=TYPE           " .
+	print "  --docs=TYPE           " .
 	    "type(s) of documentation to build and INSTALL\n";
-	print STDERR "                        " .
+	print "                        " .
 	    "See Rcmd INSTALL --help for possible values of TYPE\n";
-	print STDERR "  --auto-zip            " .
+	print "  --auto-zip            " .
 	    "select zipping of data and help based on size\n";
     } else {
-	print STDERR "  --no-docs             " .
+	print "  --no-docs             " .
 	    "do not build and install documentation\n";
     }
-    print STDERR <<END;
+    print <<END;
   --use-zip-data        collect data files in zip archive
   --use-zip-help        collect help and examples into zip archives
   --use-zip             combine '--use-zip-data' and '--use-zip-help'
 
-Email bug reports to <r-bugs\@r-project.org>.
+Report bugs to <r-bugs\@r-project.org>.
 END
     exit 0;
 }
