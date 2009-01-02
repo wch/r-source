@@ -11,7 +11,7 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
-Copyright (C) 2000-2009 The R Core Development Team.
+Copyright (C) 2000-2008 The R Core Development Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -473,7 +473,7 @@ do_install_source () {
   ## (The basename of ${pkg_dir} might be different from ${pkg_name},
   ## e.g., when building Debian packages from R packages.)
 
-  ## Make the destination directory available to the developer's
+  ## Make the destination directori available to the developer's
   ## installation scripts
   R_LIBRARY_DIR="${lib}"
   export R_LIBRARY_DIR
@@ -560,11 +560,15 @@ do_install_source () {
 	  && ${TAR} cf - R-ex help html latex 2>/dev/null) | \
 	(cd "${R_PACKAGE_DIR}" && ${TAR} xf -)
     fi
+    ## check if we are in a bundle so we can back out the whole bundle
     if grep "^Bundle:" DESCRIPTION >/dev/null; then
       if ${tar_up} ; then
 	error "cannot build (nor INSTALL) binary versions of bundles"
 	do_exit_on_error
       fi
+      bundlepkg=`get_dcf_field Contains ../DESCRIPTION`
+    else
+      bundlepkg=${pkg_name}
     fi
   fi
 
@@ -617,6 +621,7 @@ do_install_source () {
     fi
   fi
 
+  system_makefile="${R_HOME}/etc${R_ARCH}/Makeconf"
   if test -d src && test "${fake}" != "true"; then
     message "libs"
     if test ! -f "${R_INCLUDE_DIR}/R.h" ; then
@@ -630,7 +635,6 @@ do_install_source () {
     export CLINK_CPPFLAGS
     if ${debug}; then set -x; fi
     ${MKDIR_P} "${R_PACKAGE_DIR}/libs${R_ARCH}"
-    system_makefile="${R_HOME}/etc${R_ARCH}/Makeconf"
     if test -f src/Makefile; then
       arch=`echo ${R_ARCH} | ${SED} -e 's+^/++'`
       message "arch - ${arch}"
@@ -1018,7 +1022,8 @@ do_exit_on_error () {
   ## If we are not yet processing a package, we will not have
   ## set pkg_dir.  It's the first thing in do_install.
   if test -n "${pkg_dir}"; then
-    ## Find out if this is a bundle.
+    ## Find out if this is a bundle.  If we are installing multiple
+    ## 'packages' the existing bundlepkg is unreliable.
     bundlepkg=`get_dcf_field Contains "${pkg_dir}/DESCRIPTION"`
     if test -z "${bundlepkg}"; then
       bundlepkg=${pkg_name}
