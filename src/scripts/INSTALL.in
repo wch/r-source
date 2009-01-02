@@ -231,6 +231,7 @@ while test -n "${1}"; do
       debug=true ;;
     --with-package-versions)
       error "Use of --with-package-versions is defunct"
+      exit 1
       ;;
     --no-configure)
       use_configure=false ;;
@@ -441,17 +442,12 @@ is_first_package=yes
 do_install_binary () {
   pkg="${1}"
   R_PACKAGE_DIR="${2}"
-  R_PACKAGE_NAME="${3}"
 
-  if test "${pkg}" = "${R_PACKAGE_NAME}"; then
-    message "Installing *binary* package '${pkg}' ..."
-  else
-    message "Installing *binary* package '${pkg}' as '${R_PACKAGE_NAME}' ..."
-  fi
+  message "Installing *binary* package '${pkg}' ..."
 
   if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
     ## Back up previous version.
-    if ${lock}; then mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}" ; fi
+    if ${lock}; then mv "${R_PACKAGE_DIR}" "${lockdir}/${pkg}" ; fi
     ${MKDIR_P} "${R_PACKAGE_DIR}"
   fi
 
@@ -472,18 +468,15 @@ do_install_binary () {
 
 do_install_source () {
   pkg_name="${1}"
-  pkg_dir="${4}"
+  R_PACKAGE_DIR="${2}"
+  pkg_dir="${3}"
   ## (The basename of ${pkg_dir} might be different from ${pkg_name},
   ## e.g., when building Debian packages from R packages.)
 
-  ## Make the destination directories available to the developer's
-  ## installation scripts (e.g. configure, etc.)
-  R_PACKAGE_DIR="${2}"
-  R_PACKAGE_NAME="${3}"
+  ## Make the destination directori available to the developer's
+  ## installation scripts
   R_LIBRARY_DIR="${lib}"
   export R_LIBRARY_DIR
-  export R_PACKAGE_DIR
-  export R_PACKAGE_NAME
 
   if test -n "${lib0}" ; then
     ## set R_LIBS to include the current installation directory
@@ -544,18 +537,14 @@ do_install_source () {
     do_exit_on_error
   fi
 
-  if test "${pkg_name}" = "${R_PACKAGE_NAME}"; then
-    message "Installing *source* package '${pkg_name}' ..."
-  else
-    message "Installing *source* package '${pkg_name}' as '${R_PACKAGE_NAME}' ..."
-  fi
+  message "Installing *source* package '${pkg_name}' ..."
 
   stars="**"
 
   if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
     ## Back up previous version.
     if ${lock} ; then
-      mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
+      mv "${R_PACKAGE_DIR}" "${lockdir}/${pkg_name}"
     else
       if ${more_than_libs}; then
 	## this is only used for recommended packages installed from .tgz
@@ -567,7 +556,7 @@ do_install_source () {
     ## if we install from a non-temporary directory.
     if ${lock} && test "`cd .. && ${GETWD}`" != \
 	    "`cd \"${tmpdir}\" && ${GETWD}`"; then
-      (cd "${lockdir}/${R_PACKAGE_NAME}" \
+      (cd "${lockdir}/${pkg_name}" \
 	  && ${TAR} cf - R-ex help html latex 2>/dev/null) | \
 	(cd "${R_PACKAGE_DIR}" && ${TAR} xf -)
     fi
@@ -743,7 +732,7 @@ do_install_source () {
     if ${fake}; then
       if test -f NAMESPACE; then
 	(echo; echo ".onLoad <- .onAttach <- function(lib, pkg) NULL") >> \
-	  "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
+	  "${R_PACKAGE_DIR}/R/${pkg_name}"
 	## <NOTE>
 	## Tweak fake installation to provide an 'empty' useDynLib() for
 	## the time being.  Completely removing the directive results in
@@ -756,7 +745,7 @@ do_install_source () {
 	## </NOTE>
       else
 	(echo; echo ".First.lib <- function(lib, pkg) NULL") >> \
-	  "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
+	  "${R_PACKAGE_DIR}/R/${pkg_name}"
       fi
     fi
   fi
@@ -777,7 +766,7 @@ do_install_source () {
       ## it is possible that data in a package will make use of the
       ## code in the package, so ensure the package we have just
       ## installed is on the library path.
-      echo "options(warn=1); invisible(.libPaths(c(\"${lib}\", .libPaths()))); tools:::data2LazyLoadDB(\"${R_PACKAGE_NAME}\", \"${lib}\")" | \
+      echo "options(warn=1); invisible(.libPaths(c(\"${lib}\", .libPaths()))); tools:::data2LazyLoadDB(\"${pkg_name}\", \"${lib}\")" | \
 	R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" --vanilla > /dev/null
     if test ${?} -ne 0; then
       error "lazydata failed for package '${pkg_name}'"
@@ -848,7 +837,7 @@ do_install_source () {
   fi
   if ${thislazy}; then
     message "preparing package for lazy loading"
-    (echo "options(warn=1); invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages(); tools:::makeLazyLoading(\"${R_PACKAGE_NAME}\", \"${lib}\")") | \
+    (echo "options(warn=1); invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages(); tools:::makeLazyLoading(\"${pkg_name}\", \"${lib}\")") | \
       R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" --vanilla --slave
     if test ${?} -ne 0; then
       error "lazy loading failed for package '${pkg_name}'"
@@ -951,11 +940,11 @@ do_install_source () {
   if ${tar_up} ; then
     version=`get_dcf_field Version DESCRIPTION`
     ## R_PLATFORM is set by R CMD
-    filename="${R_PACKAGE_NAME}_${version}_R_${R_PLATFORM}.tar"
+    filename="${pkg_name}_${version}_R_${R_PLATFORM}.tar"
     filepath="${startdir}/$filename"
-    ${TAR} -chf "$filepath" -C "${R_LIBRARY_DIR}" ${R_PACKAGE_NAME}
+    ${TAR} -chf "$filepath" -C "${R_LIBRARY_DIR}" ${pkg_name}
     ${R_GZIPCMD} -9f "$filepath"
-    echo "packaged installation of '${R_PACKAGE_NAME}' as ${filename}.gz"
+    echo "packaged installation of '${pkg_name}' as ${filename}.gz"
   fi
 
   stars="*"
@@ -977,7 +966,6 @@ do_install () {
 
   ## Set R_PACKAGE_DIR here at the top level.  If a version is being
   ## specified, tack that on.
-  version=""
   R_PACKAGE_NAME="${pkg_name}"
   R_PACKAGE_DIR="${lib}/${pkg_name}"
   export R_PACKAGE_DIR
@@ -1013,11 +1001,11 @@ do_install () {
   if ${is_source_package}; then
     ## This is a source package ... hopefully.
     do_install_source \
-      "${pkg_name}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}" "${pkg_dir}"
+      "${pkg_name}" "${R_PACKAGE_DIR}" "${pkg_dir}"
   else
     ## This is a binary package ... hopefully.
     do_install_binary \
-      "${pkg_name}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}"
+      "${pkg_name}" "${R_PACKAGE_DIR}"
   fi
 
   find "${R_PACKAGE_DIR}" -exec chmod a+r \{\} \;

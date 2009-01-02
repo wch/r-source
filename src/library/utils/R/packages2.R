@@ -408,7 +408,7 @@ install.packages <-
         }
         if(!is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded packages are in\n\t%s",
-                               normalizePath(tmpd)), "\n", sep = "")
+                               sQuote(normalizePath(tmpd))), "\n", sep = "")
         ## update packages.html on Unix only if .Library was installed into
         libs_used <- unique(update[, 2L])
         if(.Platform$OS.type == "unix" && .Library %in% libs_used)
