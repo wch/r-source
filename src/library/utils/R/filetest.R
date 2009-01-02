@@ -33,6 +33,7 @@ function(op, x, y)
            "-ot" = (!is.na(mt.x <- file.info(x)$mtime)
                     & !is.na(mt.y <- file.info(y)$mtime)
                     & (mt.x < mt.y)),
+           "-x" = (file.access(x, 1L) == 0L),
            stop(gettextf("test '%s' is not available", op),
                 domain = NA))
 }

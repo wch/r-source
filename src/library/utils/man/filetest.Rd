@@ -1,6 +1,6 @@
 % File src/library/utils/man/filetest.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{file_test}
@@ -17,7 +17,8 @@ file_test(op, x, y)
 \arguments{
   \item{op}{a character string specifying the test to be performed.
     Unary tests (only \code{x} is used) are \code{"-f"} (existence and
-    not being a directory) and \code{"-d"} (existence and directory).
+    not being a directory), \code{"-d"} (existence and directory) and
+    \code{"-x"} (executable as a file or searchable as a directory). 
     Binary tests are \code{"-nt"} (strictly newer than, using the modification
     dates) and \code{"-ot"} (strictly older than): in both cases the
     test is false unless both files exist.}
@@ -27,7 +28,12 @@ file_test(op, x, y)
   \sQuote{Existence} here means being on the file system and accessible
   by the \code{stat} system call (or a 64-bit extension) -- on a
   Unix-alike this requires execute permission on all of the directories in
-  the path that leads to the file, but no permissions on the file itself.
+  the path that leads to the file, but no permissions on the file
+  itself.
+#ifdef windows
+  
+  For the meaning of \code{"-x"} see \code{\link{file.access}}.
+#endif
 }
 \seealso{
   \code{\link{file.exists}} which only tests for existence
