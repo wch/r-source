@@ -829,7 +829,7 @@ function(dir)
 
 .test_package_depends_R_version <-
 function(dir)
-    q(status = .test_package_depends_R_version(dir))
+    q(status = .Rtest_package_depends_R_version(dir))
 
 
 ### Local variables: ***
