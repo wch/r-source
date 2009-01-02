@@ -500,7 +500,7 @@ function(dir, outDir)
         cwd <- getwd()
         setwd(outVignetteDir)
         for(srcfile in vignetteIndex$File)
-            tryCatch(utils::Stangle(srcfile),
+            tryCatch(utils::Stangle(srcfile, quiet = TRUE),
                      error = function(e)
                      stop(gettextf("running Stangle on vignette '%s' failed with message:\n%s",
                                    srcfile, conditionMessage(e)),

@@ -134,8 +134,8 @@ installdirs:
 	@$(MKINSTALLDIRS) $(DESTDIR)$(bindir)
 install-cmds:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir)"
-	@for f in $(SCRIPTS_B); do \
-	  $(INSTALL_SCRIPT) $${f} "$(DESTDIR)$(Rexecbindir)"; \
+	@for f in $(SCRIPTS_S); do \
+	  $(INSTALL_SCRIPT) $(srcdir)/$${f} "$(DESTDIR)$(Rexecbindir)"; \
 	done
 	@for f in $(SCRIPTS_B); do \
 	  $(INSTALL_SCRIPT) $${f} "$(DESTDIR)$(Rexecbindir)"; \

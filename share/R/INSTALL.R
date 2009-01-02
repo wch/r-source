@@ -77,9 +77,9 @@ do_cleanup <- function()
         ## *one* package ... well not so sure for bundles.
         file.copy(file.path(R.home("doc"), "html", "R.css"), lib)
         if (lib == .Library) {
-            tools:::.file_apppend_ensuring_LFs(file.path(R.home("doc"), "html", "search", "index.txt"),
+            tools:::.file_append_ensuring_LFs(file.path(R.home("doc"), "html", "search", "index.txt"),
                                                Sys.glob(file.path(R.home(), "library", "*", "CONTENTS")))
-            if (build_help && identical(Sys.getenv("NO_PERL5", false)))
+            if (build_help && identical(Sys.getenv("NO_PERL5"), "false"))
                 tools::unix.packages.html(.Library, docdir = R.home("doc"))
 
          }
@@ -109,7 +109,7 @@ do_exit_on_error <- function(rm = TRUE)
                 starsmsg(stars, "Removing ", sQuote(pkgdir))
                 unlink(pkgdir, recursive = TRUE)
             }
-            if (utils::file_test("-d", lp <- file.path(lockdir, p))) {
+            if (lock && utils::file_test("-d", lp <- file.path(lockdir, p))) {
                 starsmsg(stars, "Restoring previous ", sQuote(pkgdir))
                 system(paste("mv", lp, pkgdir))
             }
@@ -392,8 +392,8 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         has_error <- FALSE
         linkTo <- desc["LinkingTo"]
         if(!is.na(linkTo)) {
-            lpkgs <- strsplit(LinkTo, ",[[:blank:]]*")[[1L]]
-            paths <- .find.package(lpkgs, lib.loc, quiet=TRUE)
+            lpkgs <- strsplit(linkTo, ",[[:blank:]]*")[[1L]]
+            paths <- .find.package(lpkgs, quiet=TRUE)
             if(length(paths)) {
                 clink_cppflags <- paste(paste0('-I"', paths, '/include"'),
                                         collapse=" ")
@@ -496,7 +496,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                 file.remove(Sys.glob(file.path(rpkgdir, "data", "*")))
                 file.copy(files, file.path(rpkgdir, "data"))
                 Sys.chmod(Sys.glob(file.path(rpkgdir, "data", "*")), "644")
-                value <- parse_description_field("LazyData", default = lazydata)
+                value <- parse_description_field("LazyData", default = lazy_data)
                 if (value) {
                     ## This also had an extra space in the sh version
                     starsmsg(stars, " moving datasets to lazyload DB")
@@ -507,7 +507,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                     res <- try(tools:::data2LazyLoadDB(pkg_name, lib))
                     if (inherits(res, "try-error"))
                         pkgerrmsg("lazydata failed", pkg_name)
-                } else if (zip_data &&
+                } else if (use_zip_data &&
                            nzchar(Sys.getenv("R_UNZIPCMD")) &&
                            nzchar(zip <- Sys.getenv("R_ZIPCMD"))) {
                     owd <- setwd(file.path(rpkgdir, "data"))
@@ -547,6 +547,9 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         if (!utils::file_test("-d", "R")) value <- FALSE
         if (value) {
             starsmsg(stars, "preparing package for lazy loading")
+            ## Something above, e.g. lazydata,  might have loaded the namespace
+            if(pkg_name %in% loadedNamespaces())
+                unloadNamespace(pkg_name)
             res <- try({.getRequiredPackages(quietly = TRUE)
                         tools:::makeLazyLoading(pkg_name, lib)})
             if (inherits(res, "try-error"))
@@ -748,7 +751,7 @@ while(length(args)) {
     } else if (a == "--fake") {
         fake <- TRUE
     } else if (a %in% c("--no-lock", "--unsafe")) {
-        lock <- false
+        lock <- FALSE
     } else if (a == "--pkglock") {
         pkglock <- TRUE
     } else if (a == "--libs-only") {
