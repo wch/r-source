@@ -198,7 +198,7 @@ run_shlib <- function(pkg_name, srcs, rpkgdir, arch)
     if (system(cmd) == 0L) {
         shlib_install(rpkgdir, arch)
         return(FALSE)
-    } else return(FALSE)
+    } else return(TRUE)
 }
 
 parse_description_field <- function(field, default=TRUE)
@@ -522,8 +522,9 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
             starsmsg(stars, "demo")
             dir.create(file.path(rpkgdir, "demo"), recursive = TRUE)
             file.remove(Sys.glob(file.path(rpkgdir, "demo", "*")))
-            try(tools:::.install_package_demos(".", rpkgdir))
-            if (res) pkgerrmsg("ERROR: installing demos failed")
+            res <- try(tools:::.install_package_demos(".", rpkgdir))
+            if (inherits(res, "try-error"))
+                pkgerrmsg("ERROR: installing demos failed")
         }
 
         if (utils::file_test("-d", "exec") && !fake) {
