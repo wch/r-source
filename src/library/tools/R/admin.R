@@ -786,7 +786,7 @@ function(dir, packages)
 
 ### * .test_package_depends_R_version
 
-.test_package_depends_R_version <-
+.Rtest_package_depends_R_version <-
 function(dir)
 {
     if(missing(dir)) dir <- "."
@@ -824,9 +824,12 @@ function(dir)
             }
         }
     }
-    q(status = status)
+    status
 }
 
+.test_package_depends_R_version <-
+function(dir)
+    q(status = .test_package_depends_R_version(dir))
 
 
 ### Local variables: ***

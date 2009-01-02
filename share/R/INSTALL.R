@@ -27,9 +27,6 @@ libpath <- paste("libs", arch, sep="")
 options(warn = 1)
 foo <- Sys.setlocale("LC_COLLATE", "C")
 
-##FIXME
-Sys.setenv(PERL5LIB=file.path(R.home("share"), "perl"))
-
 
 Usage <- function() {
     cat("Usage: R CMD INSTALL [options] pkgs",
@@ -69,6 +66,8 @@ Usage <- function() {
         "",
         "Report bugs to <r-bugs@r-project.org>.", sep="\n")
 }
+
+paste0 <- function(...) paste(..., sep="")
 
 do_cleanup <- function()
 {
@@ -135,6 +134,7 @@ get_packages <- function(dir)
         ## of a subdirectorues without DESCRIPTION.in files (handled by the
         ## R code).
         bundle_name <- desc["Bundle"]
+        contains <- strsplit(contains, " ")[[1]]
         pkgs <- character(0)
         for(p in contains) {
             if (utils::file_test("-d", file.path(dir, p))) {
@@ -171,9 +171,34 @@ cp_r <- function(from, to)
 {
     from <- shQuote(from)
     to <- shQuote(to)
-    system(paste("cp -r ", from, "/* ", to,
-                 " || (cd ", from, " && ", TAR, " cf - . | (cd '", to, "' && ", TAR, "xf - ))",
-           sep = ""))
+    system(paste0("cp -r ", from, "/* ", to,
+                  " || (cd ", from, " && ", TAR, " cf - . | (cd '", to, "' && ", TAR, "xf - ))"))
+}
+
+shlib_install <- function(rpkgdir, arch)
+{
+    files <- Sys.glob(paste0("*", SHLIB_EXT))
+    if (length(files)) {
+        libarch <- if (nzchar(arch)) paste0("libs", arch) else "libs"
+        dest <- file.path(rpkgdir, libarch)
+        file.copy(files, dest)
+        Sys.chmod(Sys.glob(file.path(dest, "*")), "755")
+    }
+}
+
+run_shlib <- function(pkg_name, srcs, rpkgdir, arch)
+{
+    cmd <- paste("sh",
+                 shQuote(file.path(R.home(), "bin", "SHLIB")),
+                 shargs,
+                 "-o",
+                 paste0(pkg_name, SHLIB_EXT),
+                 paste(srcs, collapse=" "))
+    if (debug) message("about to run ", sQuote(cmd))
+    if (system(cmd) == 0L) {
+        shlib_install(rpkgdir, arch)
+        return(FALSE)
+    } else return(FALSE)
 }
 
 parse_description_field <- function(field, default=TRUE)
@@ -215,9 +240,8 @@ do_install <- function(pkg)
     Sys.setenv(R_PACKAGE_NAME = pkg_name)
     rpkgdir <- file.path(lib, pkg_name)
     Sys.setenv(R_PACKAGE_DIR = rpkgdir)
-    ## FIXME
-    #tools:::.test_package_depends_R_version()
-    #FIXME if (something) do_exit_on_error()
+    status <- tools:::.Rtest_package_depends_R_version()
+    if (status) do_exit_on_error()
 
     dir.create(rpkgdir, recursive = TRUE, showWarnings = FALSE)
     if (!utils::file_test("-d", rpkgdir)) {
@@ -279,16 +303,34 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         rlibs <- Sys.getenv("R_LIBS")
         rlibs <- if (nzchar(rlibs)) paste(lib, rlibs, sep=.Platform$path.sep) else lib
         Sys.setenv(R_LIBS = rlibs)
+        ## This is needed
         .libPaths(c(lib, .libPaths()))
     }
 
     Type <- desc["Type"]
     if (!is.na(Type) && Type == "Frontend") {
-        ## FIXME
+        starsmsg(stars, "Installing *Frontend* package ", sQuote(pkg_name), " ...")
+        if (preclean) system(paste(MAKE, "clean"))
+        if (use_configure) {
+            if (utils::file_test("-x", "configure"))
+                system("./configure")
+            else if (file.exists("configure"))
+                errsmg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
+        }
+        if (file.exists("Makefile"))
+            if (system(MAKE)) pkgerrmsg("make failed")
+        if (clean) system(paste(MAKE, "clean"))
         return()
     }
     if (!is.na(Type) && Type == "Translation") {
-        ## FIXME
+        starsmsg(stars, "Installing *Translation* package ", sQuote(pkg_name), " ...")
+         if(utils::file_test("-d", "share")) {
+             files <- Sys.glob("share/*")
+             if(length(files)) file.copy(files, R.home("share"))
+         }
+         if(utils::file_test("-d", "library")) {
+             system(paste("cp -r ./library", R.home()))
+         }
         return()
     }
     OS_type <- desc["OS_type"]
@@ -302,7 +344,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
     if (file.exists(file.path(rpkgdir, "DESCRIPTION"))) {
         ## Back up a previous version
         if (lock) {
-            if(debug) starsmsg(stars, "backing up earlier installation")
+            if (debug) starsmsg(stars, "backing up earlier installation")
             system(paste("mv", rpkgdir, file.path(lockdir, pkg_name)))
 	## this is only used for recommended packages installed from .tgz
         } else if (more_than_libs) unlink(rpkgdir, recursive = TRUE)
@@ -314,10 +356,9 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         if (utils::file_test("-d", "src")) {
             owd <- setwd("src")
             if (file.exists("Makefile")) system(paste(MAKE, "clean"))
-            else unlink(Sys.glob(paste("*", SHLIB_EXT, sep = "")))
+            else unlink(Sys.glob(paste0("*", SHLIB_EXT)))
             setwd(owd)
         }
-        ## FIXME
         if (utils::file_test("-x", "cleanup")) system("./cleanup")
         else if (file.exists("cleanup"))
             warning("'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
@@ -325,12 +366,18 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
 
     if (use_configure) {
         if (utils::file_test("-x", "configure"))
-            system("./cleanup")
+            system("./configure")
         else if (file.exists("configure"))
             errsmg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
     }
 
     if (more_than_libs) {
+        for (f in c("NAMESPACE", "LICENSE", "LICENCE", "COPYING", "NEWS"))
+            if (file.exists(f)) {
+                file.copy(f, rpkgdir)
+                Sys.chmod(file.path(rpkgdir, f), "644")
+            }
+
         res <- try(tools:::.install_package_description(".", rpkgdir))
         if (inherits(res, "try-error"))
             errmsg("installing package DESCRIPTION failed")
@@ -343,9 +390,16 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
             warning(stars, " ",
                     "R include directory is empty -- perhaps need to install R-devel.rpm or similar")
         has_error <- FALSE
-        ## FIXME
-        ##clink_cppflags <- tools:::.find_cinclude_paths(file="DESCRIPTION")
-        ## Sys.setenv(CLINK_CPPFLAGS = clink_cppflags)
+        linkTo <- desc["LinkingTo"]
+        if(!is.na(linkTo)) {
+            lpkgs <- strsplit(LinkTo, ",[[:blank:]]*")[[1L]]
+            paths <- .find.package(lpkgs, lib.loc, quiet=TRUE)
+            if(length(paths)) {
+                clink_cppflags <- paste(paste0('-I"', paths, '/include"'),
+                                        collapse=" ")
+                Sys.setenv(CLINK_CPPFLAGS = clink_cppflags)
+           }
+    }
         dir.create(file.path(rpkgdir, libpath))
         if (file.exists("src/Makefile")) {
             starsmsg(stars, "arch - ", arch)
@@ -356,10 +410,8 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                 makefiles <- c(makefiles, f)
             else if (file.exists(f <- path.expand(paste("~/.R/Makevars"))))
                 makefiles <- c(makefiles, f)
-            res <- system(MAKE, paste(paste("-f", shQuote(makefiles)), collapse = " "))
-            if (res == 0)
-                file.copy(Sys.glob(paste("*", SHLIB_EXT)),
-                          file.path(rpkgdir, libarch))
+            res <- system(MAKE, paste("-f", shQuote(makefiles), collapse = " "))
+            if (res == 0) shlib_install(rpkgdir, arch)
             else has_error <- TRUE
             setwd(owd)
         } else { ## no src/Makefile
@@ -376,36 +428,12 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                 if (utils::file_test("-x", "configure")) {
                     if (nzchar(arch))
                         starsmsg(stars, "arch - ", substr(arch, 2, 1000))
-                    cmd <- paste("sh",
-                                 shQuote(file.path(R.home(), "bin", "SHLIB")),
-                                 shargs,
-                                 "-o",
-                                 paste(pkg_name, SHLIB_EXT, sep=""),
-                                 paste(srcs, collapse=" "))
-                    if(debug) message("about to run ", sQuote(cmd))
-                    res <- system(cmd)
-                    if (res == 0)
-                        file.copy(Sys.glob(paste("*", SHLIB_EXT, sep="")),
-                                  file.path(rpkgdir, libarch))
-                    else has_error <- TRUE
-                    Sys.chmod(Sys.glob(file.path(rpkgdir, libarch, "*")), "755")
+                    has_error <- run_shlib(pkg_name, srcs, rpkgdir, arch)
                 } else {
                     for(arch in archs) {
                         system("rm -f *.o *.so *.sl *.dylib")
                         if (arch == "R") {
-                            cmd <- paste("sh",
-                                         shQuote(file.path(R.home(), "bin", "SHLIB")),
-                                         shargs,
-                                         "-o",
-                                         paste(pkg_name, SHLIB_EXT, sep=""),
-                                         paste(srcs, collapse=" "))
-                            if(debug) message("about to run ", sQuote(cmd))
-                            res <- system(cmd)
-                            if (res == 0)
-                                file.copy(Sys.glob(paste("*", SHLIB_EXT, sep="")),
-                                          file.path(rpkgdir, "libs"))
-                            else has_error <- TRUE
-                            Sys.chmod(Sys.glob(file.path(rpkgdir, "libs", "*")), "755")
+                            has_error <- run_shlib(pkg_name, srcs, rpkgdir, "")
                         } else if (arch == "Rgnome") {
                             arch <- arch_keep
                         } else {
@@ -414,40 +442,30 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                             libarch <- paste("libs", arch, sep="/")
                             dir.create(file.path(rpkgdir, libarch),
                                        recursive = TRUE)
-                            cmd <- paste("sh",
-                                         shQuote(file.path(R.home(), "bin", "SHLIB")),
-                                         shargs,
-                                         "-o",
-                                         paste(pkg_name, SHLIB_EXT, sep=""),
-                                         paste(srcs, collapse=" "))
-                            if(debug) message("about to run ", sQuote(cmd))
-                            res <- system(cmd)
-                            if (res == 0)
-                                file.copy(Sys.glob(paste("*", SHLIB_EXT, sep="")),
-                                          file.path(rpkgdir, libarch))
-                            else has_error <- TRUE
-                            Sys.chmod(Sys.glob(file.path(rpkgdir, libarch, "*")), "755")
+                            has_error <- run_shlib(pkg_name, srcs, rpkgdir, arch)
                         }
                     }
                     arch <- arch_keep
                 }
-            } else
-            warning("no source files found")
+            } else warning("no source files found")
         }
+        if (has_error)
+            pkgerrmsg("compilation failed", pkg_name)
         setwd(owd)
     } # end of src dir
+
     if (more_than_libs) {
         if (utils::file_test("-d", "R")) {
             starsmsg(stars, "R")
             dir.create(file.path(rpkgdir, "R"), recursive = TRUE)
             res <- try(tools:::.install_package_code_files(".", rpkgdir))
             if (inherits(res, "try-error"))
-                pkgerrmsg("unable to collate files for package ", pkg_name)
+                pkgerrmsg("unable to collate files", pkg_name)
 
             if (file.exists(file.path("R", "sysdata.R"))) {
                 res <- try(tools:::sysdata2LazyLoadDB("R/sysdata.rda", rpkfdir))
                 if (inherits(res, "try-error"))
-                    pkgerrmsg("unable to build sysdata DB for package ", pkg_name)
+                    pkgerrmsg("unable to build sysdata DB", pkg_name)
             }
             if (fake) {
                 if (file.exists("NAMESPACE")) {
@@ -472,27 +490,32 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
 
         if (utils::file_test("-d", "data")) {
             starsmsg(stars, "data")
-            dir.create(file.path(rpkgdir, "data"), recursive = TRUE)
-            file.remove(Sys.glob(file.path(rpkgdir, "data", "*")))
-            system(paste("cp data/*", shQuote(rpkgdir)))
-            Sys.chmod(Sys.glob(file.path(rpkgdir, "data", "*")), "644")
-            value <- parse_description_field("LazyData", default = lazydata)
-            if (value) {
-                starsmsg(stars, "moving datasets to lazyload DB")
-                ## it is possible that data in a package will make use of the
-                ## code in the package, so ensure the package we have just
-                ## installed is on the library path.
-                ## FIXME check
-                res <- try(tools:::data2LazyLoadDB(pkg_name, lib))
-                if (res) pkgerrmsg("lazydata failed for package ", pkg_name)
-            } else if (zip_data &&
-                      nzchar(Sys.getenv("R_UNZIPCMD")) &&
-                      nzchar(zip <- Sys.getenv("R_ZIPCMD"))) {
-                owd <- setwd(file.path(rpkgdir, "data"))
-                system("find . -type f -print > filelist")
-                system(paste(zip, "-q -m Rdata * -x filelist 00Index"))
-                setwd(owd)
-            }
+            files <- Sys.glob(file.path("data", "*"))
+            if (length(files)) {
+                dir.create(file.path(rpkgdir, "data"), recursive = TRUE)
+                file.remove(Sys.glob(file.path(rpkgdir, "data", "*")))
+                file.copy(files, file.path(rpkgdir, "data"))
+                Sys.chmod(Sys.glob(file.path(rpkgdir, "data", "*")), "644")
+                value <- parse_description_field("LazyData", default = lazydata)
+                if (value) {
+                    ## This also had an extra space in the sh version
+                    starsmsg(stars, " moving datasets to lazyload DB")
+                    ## it is possible that data in a package will make use of the
+                    ## code in the package, so ensure the package we have just
+                    ## installed is on the library path.
+                    ## (We set .libPaths)
+                    res <- try(tools:::data2LazyLoadDB(pkg_name, lib))
+                    if (inherits(res, "try-error"))
+                        pkgerrmsg("lazydata failed", pkg_name)
+                } else if (zip_data &&
+                           nzchar(Sys.getenv("R_UNZIPCMD")) &&
+                           nzchar(zip <- Sys.getenv("R_ZIPCMD"))) {
+                    owd <- setwd(file.path(rpkgdir, "data"))
+                    system("find . -type f -print > filelist")
+                    system(paste(zip, "-q -m Rdata * -x filelist 00Index"))
+                    setwd(owd)
+                }
+            } else warning("empty 'data' directory")
         }
 
         if (utils::file_test("-d", "demo") && !fake) {
@@ -507,9 +530,11 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
             starsmsg(stars, "exec")
             dir.create(file.path(rpkgdir, "exec"), recursive = TRUE)
             file.remove(Sys.glob(file.path(rpkgdir, "exec", "*")))
-            ## FIXME
-            system("cp exec/*", shQuote(file.path(rpkgdir, "exec")))
-            Sys.chmod(Sys.glob(file.path(rpkgdir, "exec", "*")), "755")
+            files <- Sys.glob(file.path("exec", "*"))
+            if (length(files)) {
+                file.copy(files, file.path(rpkgdir, "exec"))
+                Sys.chmod(Sys.glob(file.path(rpkgdir, "exec", "*")), "755")
+            }
         }
 
         if (utils::file_test("-d", "inst") && !fake) {
@@ -522,23 +547,22 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         if (!utils::file_test("-d", "R")) value <- FALSE
         if (value) {
             starsmsg(stars, "preparing package for lazy loading")
-            res <- try({.getRequiredPackages()
+            res <- try({.getRequiredPackages(quietly = TRUE)
                         tools:::makeLazyLoading(pkg_name, lib)})
             if (inherits(res, "try-error"))
-                pkgerrmsg("lazy loading failed for package", pkg_name)
-            ## FIXME: needed?  If so needs a pretest
+                pkgerrmsg("lazy loading failed", pkg_name)
+            ## FIXME: still needed?  If so needs a pretest
             ## file.remove(file.path(rpkgdir, "R", "all.rda"))
         }
 
         if (utils::file_test("-d", "man")) {
-            starsmsg(stars, "man")
+            starsmsg(stars, "help")
             res <- try(tools:::.install_package_man_sources(".", rpkgdir))
             if (inherits(res, "try-error"))
                 pkgerrmsg("installing man sources failed", pkg_name)
             Sys.chmod(file.path(rpkgdir, "man",
-                                paste(pkg_name, ".Rd.gz", sep = "")), "644")
+                                paste0(pkg_name, ".Rd.gz")), "644")
             if (build_help) {
-                ## FIXME if (debug), quoting
                 cmd <- paste("perl",
                              shQuote(file.path(R.home("share"), "perl", "build-help.pl")),
                              paste(build_help_opts, collapse=" "),
@@ -546,10 +570,10 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                              shQuote(lib),
                              shQuote(rpkgdir),
                              pkg_name)
-                if(debug) message("about to run ", sQuote(cmd))
+                if (debug) message("about to run ", sQuote(cmd))
                 res <- system(cmd)
                 if (res)
-                    pkgerrmsg("building help failed for package ", pkg_name)
+                    pkgerrmsg("building help failed", pkg_name)
                 if (use_zip_help &&
                    nzchar(Sys.getenv("R_UNZIPCMD")) &&
                    nzchar(zip <- Sys.getenv("R_ZIPCMD"))) {
@@ -607,7 +631,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                 system(paste(MAKE, "clean"))
             else {
                 ## we used SHLIB --clean
-                system(paste("rm -f *", SHLIB_EXT, sep=""))
+                system(paste0("rm -f *", SHLIB_EXT))
             }
             setwd(owd)
         }
@@ -618,8 +642,8 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
 
     if (tar_up) {
         version <- desc["version"]
-        filename <- paste(pkgname, "_", version, "_R_",
-                          Sys.getenv("R_PLATFORM"), ".tar", sep = "")
+        filename <- paste0(pkgname, "_", version, "_R_",
+                           Sys.getenv("R_PLATFORM"), ".tar")
         filepath <- shQuote(file.path(startdir, filename))
         system(paste(TAR, "-chf", filepath, "-C", rlibdir, pkg_name))
         system(paste(GZIP, "-9f", filepath))
@@ -803,18 +827,22 @@ if (!utils::file_test("-d", lib) || file.access(lib, 2L))
     stop("ERROR: no permission install to directory ",
          sQuote(lib), call. = FALSE)
 
-if(lock) {
-    lockdir <- if(pkglock) file.path(lib, paste("00LOCK", pkgname, sep="-"))
+if (lock) {
+    lockdir <- if (pkglock) file.path(lib, paste("00LOCK", pkgname, sep="-"))
     else file.path(lib, "00LOCK")
-    if(file.exists(lockdir)) {
+    if (file.exists(lockdir)) {
         message("ERROR: failed to lock directory ", sQuote(lib),
                 " for modifying\nTry removing ", sQuote(lockdir))
         do_cleanup_tmpdir()
         q("no", status=3)
     }
     dir.create(lockdir, recursive = TRUE)
-    ## FIXME: check here?
-    if(debug) starsmsg(stars, "created lock directory ", sQuote(lockdir))
+    if (!utils::file_test("-d", lockdir)) {
+        message("ERROR: failed to create lock directory ", sQuote(lockdir))
+        do_cleanup_tmpdir()
+        q("no", status=3)
+     }
+    if (debug) starsmsg(stars, "created lock directory ", sQuote(lockdir))
 }
 
 if  (tar_up && fake)
@@ -838,10 +866,22 @@ if (build_text) build_help_opts <- c(build_help_opts, "--txt")
 if (build_html) build_help_opts <- c(build_help_opts, "--html")
 if (build_latex) build_help_opts <- c(build_help_opts, "--latex")
 if (build_example) build_help_opts <- c(build_help_opts, "--example")
-build_help <- length(build_help_opts)
+build_help <- length(build_help_opts) > 0L
 if (build_help && debug) build_help_opts <- c("--debug", build_help_opts)
 if (debug)
     starsmsg(stars, "build_help_opts=", paste(build_help_opts, collapse=" "))
+
+if (build_help) {
+    perllib <- Sys.getenv("PERL5LIB")
+    if(nzchar(perllib)) {
+        Sys.setenv(PERL5LIB = paste(file.path(R.home("share"), "perl"),
+                   perllib, sep = ":"))
+    } else {
+        perllib <- Sys.getenv("PERLLIB")
+        Sys.setenv(PERLLIB = paste(file.path(R.home("share"), "perl"),
+                   perllib, sep = ":"))
+    }
+}
 
 is_first_package <- TRUE
 
