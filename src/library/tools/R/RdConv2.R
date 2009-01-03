@@ -1,3 +1,58 @@
+alias2Path <- function(alias, package, type, lib.loc=NULL) {
+
+    paths <- sapply(.find.package(package, lib.loc, verbose = FALSE),
+                    function(p) index.search(alias, p, "AnIndex", type))
+    paths[paths != ""]
+}
+
+get_link <- function(arg) {	# like get_link in Rdconv.pm, plus a bit more
+    if (!identical(RdTags(arg), "TEXT"))
+    	stopRd(arg, "Bad \\link text")    
+    option <- attr(arg, "Rd_option")
+
+    dest <- arg[[1]]
+    topic <- NULL
+    pkg <- NULL
+    if (!is.null(option)) {
+        if (!identical(attr(option, "Rd_tag"), "TEXT"))
+    	    stopRd(option, "Bad \\link option")
+    	if (length(grep("^=", option))) 
+    	    dest <- sub("^=", "", option)
+    	else if (length(grep(":", option))) {
+    	    topic <- sub("^[^:]*:", "", option)
+    	    pkg <- sub(":.*", "", option)
+    	} else {
+    	    topic <- dest
+    	    pkg <- option
+    	}
+    }
+    list(dest=dest, pkg=pkg, topic=topic)
+}
+
+# translation of Utils.pm function of the same name, plus "unknown"
+mime_canonical_encoding <- function(encoding) {
+    encoding <- tolower(encoding)
+    std <- grep("iso_8859-[0-9]+", encoding)
+    encoding[std] <- paste("iso_8859-", 
+                           sub(".*iso_8859-(0-9+).*", "\\1", encoding[std]))
+    encoding[encoding == "latin1"] <-  "iso-8859-1" 
+    encoding[encoding == "latin2"] <-  "iso-8859-2" 
+    encoding[encoding == "latin3"] <-  "iso-8859-3" 
+    encoding[encoding == "latin4"] <-  "iso-8859-4" 
+    encoding[encoding == "cyrillic"] <-"iso-8859-5" 
+    encoding[encoding == "arabic"] <-  "iso-8859-6" 
+    encoding[encoding == "greek"] <-   "iso-8859-7" 
+    encoding[encoding == "hebrew"] <-  "iso-8859-8" 
+    encoding[encoding == "latin5"] <-  "iso-8859-9" 
+    encoding[encoding == "latin6"] <-  "iso-8859-10"
+    encoding[encoding == "latin8"] <-  "iso-8859-14"
+    encoding[encoding == "latin-9"] <- "iso-8859-15"
+    encoding[encoding == "latin10"] <- "iso-8859-16"
+    encoding[encoding == "utf8"] <-    "utf-8"
+    encoding[encoding == "unknown"] <- "iso-8859-1"
+    encoding
+}
+
 RdTags <- function(Rd)
     sapply(Rd, function(element) attr(element, "Rd_tag"))
 
@@ -71,7 +126,7 @@ sectionTitles <- c("\\description"="Description", "\\usage"="Usage", "\\synopsis
                    "\\section"="section", "\\author"="Author(s)", "\\references"="References", "\\source"="Source",
                    "\\seealso"="See Also", "\\examples"="Examples", "\\value"="Value")
 
-Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
+Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type, encoding="unknown") {
     # These correspond to HTML wrappers
     HTMLTags <- c("\\bold"="B",
     	          "\\cite"="CITE",
@@ -80,7 +135,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
                   "\\dfn"="DFN",
                   "\\emph"="EM",
                   "\\kbd"="KBD",
-                  "\\preformatted"="PRE",
+                  "\\preformatted"="pre",
                   "\\special"="PRE",
                   "\\strong"="STRONG",
                   "\\var"="VAR")
@@ -129,16 +184,30 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     	cat("</", HTMLTags[tag],">", sep="", file=con)
     }
 
-    writeLink <- function(tag, block) { # FIXME This doesn't handle aliases, and
-                                        # doesn't cover all variations
-    	option <- attr(block, "Rd_option")
-    	cat('<a href="', file=con)
-    	if (!is.null(option))
-    	    cat('../../', option, '/html/', sep="", file=con)
-    	writeContent(block, tag)
-    	if (tag == "\\linkS4class")
-    	    cat('-class', file=con)
-    	cat('.html">', file=con)
+    writeLink <- function(tag, block) {
+	parts <- get_link(block)
+	if (tag == "\\linkS4class") 
+	    parts$dest <- paste(parts$dest, "-class", sep="")
+	    
+    	if (is.null(parts$topic)) {
+    	    htmlfile <- alias2Path(parts$dest, package, "html")
+    	    if (!length(htmlfile)) {
+    	    	warnRd(block, Rdfile, "Alias ", sQuote(parts$dest), " not found.")
+    	    	htmlfile <- paste(parts$dest, ".html", sep="")
+    	    }
+    	    if (length(htmlfile) > 1) {
+    	    	warnRd(block, Rdfile, "Alias ", sQuote(parts$dest), " duplicated: first link used.")
+    	        htmlfile <- htmlfile[1]
+    	    }
+    	    # Drop path if it's in the same package
+    	    if (sub("^.*/([^/]*)/[^/]*/[^/]*$", "\\1", htmlfile) == package) 
+    	    	htmlfile <- sub("^.*/","", htmlfile)
+    	} else if (is.null(parts$pkg) || parts$pkg == package)
+    	    htmlfile <- paste(parts$topic, ".html", sep="")
+    	else
+    	    htmlfile <- paste("../../", parts$pkg, "/html/", parts$topic, ".html", sep="")
+    	    
+    	cat('<a href="', htmlfile, '">', sep="", file=con)
     	writeContent(block, tag)
     	cat('</a>', file=con)
     }
@@ -356,8 +425,17 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     	cat("</", para, ">\n", sep="", file=con)
     }
 
-    if (is.character(Rd) || inherits(Rd, "connection"))
-        Rd <- parse_Rd(Rd)
+    Rdfile <- "not known"
+
+    if (is.character(Rd)) {
+        Rdfile <- Rd
+        ## do it this way to get info in internal warnings
+        Rd <- eval(substitute(parse_Rd(f, encoding = enc),
+                              list(f = Rd, enc = encoding)))
+    } else if(inherits(Rd, "connection")) {
+        Rdfile <- summary(Rd)
+        Rd <- parse_Rd(Rd, encoding = encoding)
+    }
 
     if (is.character(out)) {
         if(out == "") con <- stdout()
@@ -386,6 +464,16 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     else if (length(version) > 1)
     	stopRd(Rd[[version[2]]], "Only one \\Rdversion declaration is allowed")
 
+    enc <- which(sections == "\\encoding")
+    if (length(enc)) {
+    	if (length(enc) > 1)
+    	    stopRd(Rd[[enc[2]]], "Only one \\encoding declaration is allowed")
+    	encoding <- Rd[[enc]]
+    	if (!identical(RdTags(encoding), "TEXT"))
+    	    stopRd(encoding, "Encoding must be plain text")
+    	encoding <- encoding[[1]]
+    }
+    
     # Give error for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]))))
     	stopRd(Rd[sections == "TEXT"][[bad[1]]], "All text must be in a section")
@@ -416,7 +504,9 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
         '<html><head><title>R: ', sep="", file=con)
     writeContent(title, "\\title")
     cat('</title>\n',
-        '<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">\n',
+        '<meta http-equiv="Content-Type" content="text/html; charset=',
+        mime_canonical_encoding(encoding),
+        '">\n',
         '<link rel="stylesheet" type="text/css" href="../../R.css">\n',
         '</head><body>\n\n',
         '<table width="100%" summary="page for ', name, ' {', package,
@@ -431,7 +521,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type) {
     version <- packageDescription(package, fields="Version")
     cat('\n',
         '<hr><div align="center">[Package <em>', package,
-        '</em> version ', version, ' <a href="00Index.html">Index]</a></div>\n',
+        '</em> version ', version, ' <a href="00Index.html">Index</a>]</div>\n',
         '</body></html>\n',
         sep='', file=con)
     return(out)
@@ -625,6 +715,15 @@ checkRd <-
     	warning("Rd2HTML is designed for Rd version 2 or higher.")
     else if (length(version) > 1)
     	stopRd(Rd[[version[2]]], "Only one \\Rdversion declaration is allowed")
+
+    enc <- which(sections == "\\encoding")
+    if (length(enc)) {
+    	if (length(enc) > 1)
+    	    stopRd(Rd[[enc[2]]], "Only one \\encoding declaration is allowed")
+    	encoding <- Rd[[enc]]
+    	if (!identical(RdTags(encoding), "TEXT"))
+    	    stopRd(encoding, "Encoding must be plain text")
+    }
 
     checkUnique("\\title")
     checkUnique("\\name")

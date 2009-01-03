@@ -15,7 +15,8 @@
   change.
 }
 \usage{
-Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type)
+Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
+	encoding = "unknown")
 checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
         unknownOK = FALSE, listOK = TRUE)
 }
@@ -34,8 +35,7 @@ checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
   The \code{Rd2HTML} converter is still in development, and currently
   has the following known deficiencies:
   \itemize{
-    \item \code{"\\link"} macros are not generated properly.
-    \item \code{"\\enc"} and \code{"\\encoding"} are not supported.
+    \item \code{"\\enc"} is not supported.
     \item Error messages are not as informative as they could be.  Often
     using \code{parse_Rd(\dots, verbose = TRUE)} will give a better idea
     of what is wrong.
