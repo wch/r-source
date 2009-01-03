@@ -65,7 +65,7 @@ static SEXP     makeSrcref(YYLTYPE *, SEXP);
 /* Internal lexer / parser state variables */
 
 static int 	xxinRString, xxQuoteLine, xxQuoteCol;
-static int	xxQuiet;
+static int	xxNewlineInString;
 static int	xxgetc();
 static int	xxungetc(int);
 static int	xxlineno, xxcolno;
@@ -93,6 +93,7 @@ static SEXP	xxmarkup2(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxOptionmarkup(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxtag(SEXP, int, YYLTYPE *);
 static void	xxsavevalue(SEXP, YYLTYPE *);
+static void	xxWarnNewline();
 
 static int	mkMarkup(int);
 static int      mkIfdef(int);
@@ -362,6 +363,13 @@ static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
     	setAttrib(item, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     return item;
 }
+
+static void xxWarnNewline()
+{
+    if (xxNewlineInString)
+	warning(_("newline within quoted string at %s:%d"), xxBasename, xxNewlineInString);
+}
+
   
 /*----------------------------------------------------------------------------*/
 
@@ -499,7 +507,7 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile)
     xxitemType = UNKNOWN;
     xxbraceDepth = 0;
     xxinRString = 0;
-    xxQuiet = 0;     /* FIXME:  set this in the parse_Rd call? */
+    xxNewlineInString = 0;
     
     Value = R_NilValue;
     
@@ -731,6 +739,8 @@ static void yyerror(char *s)
     _("section header");
 #endif 
    
+    xxWarnNewline();	/* post newline warning if necessary */
+    
     R_ParseError = xxlineno;
     R_ParseErrorFile = SrcFile;
     
@@ -811,9 +821,11 @@ static int token(void)
     }
     
     if (xxinRString) {
-    	if (c == R_EOF) 
+    	if (c == R_EOF) {
+    	    xxWarnNewline();
     	    error(_("Unexpected end of input (in %c quoted string opened at %s:%d:%d)"), 
     	            xxinRString, xxBasename, xxQuoteLine, xxQuoteCol);
+    	}
     	return mkCode(c);
     }
     
@@ -973,10 +985,8 @@ static int mkCode(int c)
     	}
     	TEXT_PUSH(c);
     	if (c == '\n') {
-    	    if (xxinRString && !xxQuiet) {
-    	    	warning(_("newline within quoted string at %s:%d"), xxBasename, xxlineno-1);
-    	    	xxQuiet = 1;
-    	    }
+    	    if (xxinRString && !xxNewlineInString) 
+    	    	xxNewlineInString = xxlineno-1;
     	    break;
     	}
     	c = xxgetc();
