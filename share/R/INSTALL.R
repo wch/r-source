@@ -414,7 +414,8 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                 makefiles <- c(makefiles, f)
             else if (file.exists(f <- path.expand(paste("~/.R/Makevars"))))
                 makefiles <- c(makefiles, f)
-            res <- system(MAKE, paste("-f", shQuote(makefiles), collapse = " "))
+            res <- system(paste(MAKE,
+                                paste("-f", shQuote(makefiles), collapse = " ")))
             if (res == 0) shlib_install(rpkgdir, arch)
             else has_error <- TRUE
             setwd(owd)
