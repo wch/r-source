@@ -65,9 +65,9 @@ for(file in files) {
     cat("flush(stderr()); flush(stdout())\n\n")
     dont_test <- FALSE
     for (line in lines) {
-        if(length(grep("^## No test:", line))) dont_test <- TRUE
+        if(length(grep("^[[:space:]]*## No test:", line))) dont_test <- TRUE
         if(!dont_test) cat(line, "\n", sep = "")
-        if(length(grep("^## End\\(No test\\)", line))) dont_test <- FALSE
+        if(length(grep("^[[:space:]]*## End\\(No test\\)", line))) dont_test <- FALSE
     }
 
     if(have_par)

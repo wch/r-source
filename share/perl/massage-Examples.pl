@@ -152,9 +152,9 @@ foreach my $file (@Rfiles) {
     my $dont_test = 0;	
     while (<FILE>) {
 	## process \donttest
-	$dont_test = 1 if /^## No test:/;
+	$dont_test = 1 if /^\s*## No test:/;
 	print $_ unless $dont_test;
-	$dont_test = 0 if /^## End\(No test\)/;
+	$dont_test = 0 if /^\s*## End\(No test\)/;
     }
     close(FILE);
 

@@ -3156,7 +3156,8 @@ number generation (for example, @code{x <- rnorm(100)}), or by using
 standard data sets listed by @code{data()} (see @code{?data} for more
 info).
 
-Finally, there is @code{\donttest}, used (at the beginning of af a
+Finally, there is @code{\donttest}, used (at the beginning@footnote{@R{}
+2.9.0 and later allow leading whitespace.} of af a
 separate line) to mark code that should be run by @code{examples()} but
 not by @code{R CMD check}.  This should be needed only occasionally but
 can be used for code which might fail in circumstances that are hard to
