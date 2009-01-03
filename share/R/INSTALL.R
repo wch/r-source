@@ -468,8 +468,9 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
             if (inherits(res, "try-error"))
                 pkgerrmsg("unable to collate files", pkg_name)
 
-            if (file.exists(file.path("R", "sysdata.R"))) {
-                res <- try(tools:::sysdata2LazyLoadDB("R/sysdata.rda", rpkgdir))
+            if (file.exists(file.path("R", "sysdata.rda"))) {
+                res <- try(tools:::sysdata2LazyLoadDB("R/sysdata.rda",
+                                                      file.path(rpkgdir, "R")))
                 if (inherits(res, "try-error"))
                     pkgerrmsg("unable to build sysdata DB", pkg_name)
             }
