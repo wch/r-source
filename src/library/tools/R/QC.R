@@ -3867,8 +3867,8 @@ function(dir)
         if(.Platform$OS.type == "windows") {
             ## "C" is in fact "en", and there are no UTF-8 locales
             switch(enc,
-                   "latin2" = Sys.setlocale('LC_CTYPE', 'polish'),
-                   Sys.setlocale('LC_CTYPE', 'C')
+                   "latin2" = Sys.setlocale("LC_CTYPE", 'polish'),
+                   Sys.setlocale("LC_CTYPE", "C")
                    )
         } else {
             loc <- Sys.getenv("R_ENCODING_LOCALES", NA)
@@ -3880,7 +3880,7 @@ function(dir)
                 if(!is.null(l <- loc[[enc]]))
                     Sys.setlocale("LC_CTYPE", l)
                 else
-                    Sys.setlocale('LC_CTYPE', 'C')
+                    Sys.setlocale("LC_CTYPE", "C")
 
             } else if(l10n_info()[["UTF-8"]] && capabilities("iconv")) {
                 ## the hope is that the conversion to UTF-8 works and
@@ -3896,7 +3896,7 @@ function(dir)
                        "latin2" = Sys.setlocale("LC_CTYPE", "pl_PL"),
                        "latin9" = Sys.setlocale("LC_CTYPE",
                        "fr_FR.iso885915@euro"),
-                       Sys.setlocale('LC_CTYPE', 'C')
+                       Sys.setlocale("LC_CTYPE", "C")
                       )
             }
         }

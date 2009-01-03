@@ -52,7 +52,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
     mar.orig <- (par.orig <- par(c("mar","las","mfrow")))$mar
     on.exit(par(par.orig))
 
-    w <- (3 + mar.orig[2L]) * par('csi') * 2.54
+    w <- (3 + mar.orig[2L]) * par("csi") * 2.54
     layout(matrix(c(2, 1), ncol=2L), widths=c(1, lcm(w)))
     par(las = las)
 

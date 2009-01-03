@@ -360,14 +360,14 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     ## and adjustment
     if(srt.x == 90){
         maxlen.xlabel <-
-            max(strwidth(label[[dimd + 1L - match('v', rev(dir))]],
+            max(strwidth(label[[dimd + 1L - match("v", rev(dir))]],
                 cex = cex.axis))
         adj.x <- 1
         y2 <- y2 - maxlen.xlabel
     }
     if(srt.y == 0){
         maxlen.ylabel <-
-            max(strwidth(label[[match('h', dir)]],
+            max(strwidth(label[[match("h", dir)]],
                 cex = cex.axis))
         adj.y <- 0
         x1 <- x1 + maxlen.ylabel

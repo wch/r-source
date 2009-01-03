@@ -17,6 +17,7 @@
 ####------ str : show STRucture of an R object
 str <- function(object, ...) UseMethod("str")
 
+## FIXME: convert to use sQuote
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
@@ -468,7 +469,7 @@ str.default <-
 	else {
 	    if(!exists("format.fun", inherits=TRUE)) #-- define one --
 		format.fun <-
-		    if(mod == 'num' || mod == 'cplx') format else as.character
+		    if(mod == "num" || mod == "cplx") format else as.character
 	    ## v.len <- max(1,round(v.len))
 	    ile <- min(v.len, le)
 	    formObj <- function(x) paste(format.fun(x), collapse = " ")
@@ -480,7 +481,7 @@ str.default <-
 
     } ## else (not function nor list)----------------------------------------
 
-    if(give.attr) { ## possible: || has.class && any(cl == 'terms')
+    if(give.attr) { ## possible: || has.class && any(cl == "terms")
 	nam <- names(a)
 	for (i in seq_along(a))
 	    if (all(nam[i] != std.attr)) {# only `non-standard' attributes:

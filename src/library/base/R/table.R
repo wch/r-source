@@ -48,7 +48,7 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 	    dnn <- if (!is.null(argn <- names(args)))
 		 argn
 	    else
-		 paste(dnn[1L], 1L:length(args), sep = '.')
+		 paste(dnn[1L], 1L:length(args), sep = ".")
     }
     # 0L, 1L, etc: keep 'bin' and 'pd' integer - as long as tabulate() requires it
     bin <- 0L

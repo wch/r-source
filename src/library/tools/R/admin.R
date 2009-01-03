@@ -133,7 +133,7 @@ function(db, verbose = FALSE)
             entries <- lapply(Rdeps2, function(x)
                 paste(lapply(x, as.character), collapse=""))
             message("WARNING: 'Depends' entry has multiple dependencies on R: ",
-                    paste(unlist(entries), collapse=', '),
+                    paste(unlist(entries), collapse=", "),
                     "\n\tonly the first will be used in R < 2.7.0")
         }
         Rdeps <- Depends[["R", exact = TRUE]] # the first one

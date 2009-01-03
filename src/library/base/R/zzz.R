@@ -151,12 +151,12 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
     ## now add the group generics
     ## round, signif, log, trunc are handled below
     fx <- function(x) {}
-    for(f in c('abs', 'sign', 'sqrt', 'floor', 'ceiling',
-               'exp', 'expm1', 'log1p', 'log10', 'log2',
-               'cos', 'sin', 'tan', 'acos', 'asin', 'atan', 'cosh', 'sinh',
-               'tanh', 'acosh', 'asinh', 'atanh',
-               'gamma', 'lgamma', 'digamma', 'trigamma',
-               'cumsum', 'cumprod', 'cummax', 'cummin')) {
+    for(f in c("abs", "sign", "sqrt", "floor", "ceiling",
+               "exp", "expm1", "log1p", "log10", "log2",
+               "cos", "sin", "tan", "acos", "asin", "atan", "cosh", "sinh",
+               "tanh", "acosh", "asinh", "atanh",
+               "gamma", "lgamma", "digamma", "trigamma",
+               "cumsum", "cumprod", "cummax", "cummin")) {
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
         environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)
@@ -164,8 +164,8 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
 
     ## ! is unary and handled below
     fx <- function(e1, e2) {}
-    for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|',
-               '==', '!=', '<', '<=', '>=', '>')) {
+    for(f in c("+", "-", "*", "/", "^", "%%", "%/%", "&", "|",
+               "==", "!=", "<", "<=", ">=", ">")) {
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
         environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)

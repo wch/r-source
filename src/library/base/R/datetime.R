@@ -601,7 +601,7 @@ seq.POSIXt <-
     if (!inherits(from, "POSIXt")) stop("'from' must be a POSIXt object")
     cfrom <- as.POSIXct(from)
     if(length(cfrom) != 1L) stop("'from' must be of length 1")
-    tz <- attr(cfrom , 'tzone')
+    tz <- attr(cfrom , "tzone")
     if (!missing(to)) {
         if (!inherits(to, "POSIXt")) stop("'to' must be a POSIXt object")
         if (length(as.POSIXct(to)) != 1) stop("'to' must be of length 1")

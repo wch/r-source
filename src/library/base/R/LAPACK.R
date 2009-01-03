@@ -27,30 +27,30 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
 
     if(is.complex(x)) {
         if(nu == 0L) {
-            jobu <- 'N'
+            jobu <- "N"
             u <- matrix(0+0i, 1L, 1L)  # dim is checked
         }
         else if(nu == n) {
-            jobu <- ifelse(n > p, 'A', 'S')
+            jobu <- ifelse(n > p, "A", "S")
             u <- matrix(0+0i, n, n)
         }
         else if(nu == p) {
-            jobu <- ifelse(n > p, 'S', 'A')
+            jobu <- ifelse(n > p, "S", "A")
             u <- matrix(0+0i, n, p)
         }
         else
             stop("'nu' must be 0, nrow(x) or ncol(x)")
 
         if (nv == 0L) {
-            jobv <- 'N'
+            jobv <- "N"
             v <- matrix(0+0i, 1L, 1L) # dim is checked
         }
         else if (nv == n) {
-            jobv <- ifelse(n > p, 'A', 'S')
+            jobv <- ifelse(n > p, "A", "S")
             v <- matrix(0+0i, min(n, p), p)
         }
         else if (nv == p) {
-            jobv <- ifelse(n > p, 'S', 'A')
+            jobv <- ifelse(n > p, "S", "A")
             v <- matrix(0+0i, p, p)
         }
         else
@@ -62,21 +62,21 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
         if(nu || nv) {
             np <- min(n, p)
             if(nu <= np && nv <= np) {
-                jobu <- 'S'
+                jobu <- "S"
                 u <- matrix(0, n, np)
                 v <- matrix(0, np, p)
             } else {
-                jobu <- 'A'
+                jobu <- "A"
                 u <- matrix(0, n, n)
                 v <- matrix(0, p, p)
             }
         } else {
-            jobu <- 'N'
+            jobu <- "N"
             # these dimensions _are_ checked, but unused
             u <- matrix(0, 1L, 1L)
             v <- matrix(0, 1L, 1L)
         }
-        jobv <- ''
+        jobv <- ""
         res <- .Call("La_svd", jobu, jobv, x, double(min(n,p)), u, v,
                      "dgsedd", PACKAGE = "base")
         res <- res[c("d", if(nu) "u", if(nv) "vt")]
