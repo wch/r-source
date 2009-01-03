@@ -2575,38 +2575,23 @@ SEXP (STRING_ELT)(SEXP x, int i) {
 }
 
 SEXP (VECTOR_ELT)(SEXP x, int i) {
-#ifdef USE_TYPE_CHECKING_STRICT
     /* We need to allow vector-like types here */
     if(TYPEOF(x) != VECSXP &&
        TYPEOF(x) != EXPRSXP &&
        TYPEOF(x) != WEAKREFSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "VECTOR_ELT", "list", type2char(TYPEOF(x)));
-#else
-    /* also allow STRSXP */
-    if(TYPEOF(x) != VECSXP && TYPEOF(x) != STRSXP &&
-       TYPEOF(x) != EXPRSXP &&
-       TYPEOF(x) != WEAKREFSXP)
-	error("%s() can only be applied to a '%s', not a '%s'",
-	      "VECTOR_ELT", "list", type2char(TYPEOF(x)));
-#endif
     return VECTOR_ELT(x, i);
 }
 
 int *(LOGICAL)(SEXP x) {
-#ifdef USE_TYPE_CHECKING_STRICT
     if(TYPEOF(x) != LGLSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "LOGICAL",  "logical", type2char(TYPEOF(x)));
-#else
-    /* Currently harmless, and quite widely used */
-    if(TYPEOF(x) != LGLSXP && TYPEOF(x) != INTSXP)
-	error("%s() can only be applied to a '%s', not a '%s'",
-	      "LOGICAL",  "logical", type2char(TYPEOF(x)));
-#endif
   return LOGICAL(x);
 }
 
+/* Maybe this should exclude logicals, but it is widely used */
 int *(INTEGER)(SEXP x) {
     if(TYPEOF(x) != INTSXP && TYPEOF(x) != LGLSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
@@ -2655,7 +2640,6 @@ void (SET_STRING_ELT)(SEXP x, int i, SEXP v) {
 }
 
 SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v) {
-#ifdef USE_TYPE_CHECKING_STRICT
     /*  we need to allow vector-like types here */
     if(TYPEOF(x) != VECSXP &&
        TYPEOF(x) != EXPRSXP &&
@@ -2663,14 +2647,6 @@ SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v) {
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "SET_VECTOR_ELT", "list", type2char(TYPEOF(x)));
     }
-#else
-    /* also allow STRSXP */
-    if(TYPEOF(x) != VECSXP && TYPEOF(x) != STRSXP &&
-       TYPEOF(x) != EXPRSXP && TYPEOF(x) != WEAKREFSXP) {
-	error("%s() can only be applied to a '%s', not a '%s'",
-	      "SET_VECTOR_ELT", "list", type2char(TYPEOF(x)));
-    }
-#endif
     CHECK_OLD_TO_NEW(x, v);
     return VECTOR_ELT(x, i) = v;
 }

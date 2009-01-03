@@ -120,6 +120,9 @@ NEW FEATURES
     o	install.packages() has a new argument 'Ncpus' to support
 	parallel installs of source packages.
 
+    o	Strict type checking is now turned on: this catches more
+	internal corruptions, and some badly written contributed code.
+
 
 DEPRECATED & DEFUNCT
 
