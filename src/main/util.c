@@ -647,8 +647,9 @@ SEXP static intern_getwd(void)
 	if(res > 0) {
 	    wcstoutf8(buf, wbuf, PATH_MAX+1);
 	    R_UTF8fixslash(buf);
-	    rval = allocVector(STRSXP, 1);
+	    PROTECT(rval = allocVector(STRSXP, 1));
 	    SET_STRING_ELT(rval, 0, mkCharCE(buf, CE_UTF8));
+	    UNPROTECT(1);
 	}
     }
 #elif defined(HAVE_GETCWD)

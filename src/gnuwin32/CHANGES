@@ -77,6 +77,15 @@ CUSTOMIZATION
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.8.1 patched
+
+
+BUG FIXES
+
+    o	getwd() could segfault (PR#13424).
+
+
+
 		CHANGES IN R VERSION 2.8.1
 
 
