@@ -56,7 +56,7 @@ getDependencies <-
         if(!lib %in% libpath) libpath <- c(lib, libpath)
         installed <- installed.packages(lib.loc = libpath,
                                         fields = c("Package", "Version"))
-        not_avail <- character(0L)
+        not_avail <- character()
 	repeat {
 	    deps <- apply(available[p1, dependencies, drop = FALSE],
                           1L, function(x) paste(x[!is.na(x)], collapse=", "))
@@ -101,7 +101,9 @@ install.packages <-
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
              method, available = NULL, destdir = NULL, dependencies = NA,
-             type = getOption("pkgType"), configure.args = character(0L),
+             type = getOption("pkgType"),
+             configure.args = getOption("configure.args"),
+             configure.vars = getOption("configure.vars"),
              clean = FALSE, Ncpus = getOption("Ncpus"), ...)
 {
     if (is.logical(clean) && clean)
@@ -138,6 +140,7 @@ install.packages <-
 
     getConfigureArgs <-  function(pkg)
     {
+        if(.Platform$OS.type == "windows") return(character())
         ## Since the pkg argument can be the name of a file rather than
         ## a regular package name, we have to clean that up.
         pkg <- gsub("_\\.(zip|tar\\.gz)", "",
@@ -155,7 +158,32 @@ install.packages <-
                             shQuote(paste(configure.args[[ pkg ]], collapse = " ")),
                             sep = "")
         else
-            config <- character(0L)
+            config <- character()
+
+        config
+    }
+
+    getConfigureVars <-  function(pkg)
+    {
+        if(.Platform$OS.type == "windows") return(character())
+        ## Since the pkg argument can be the name of a file rather than
+        ## a regular package name, we have to clean that up.
+        pkg <- gsub("_\\.(zip|tar\\.gz)", "",
+                    gsub(.standard_regexps()$valid_package_version, "", basename(pkg)))
+
+        if(length(pkgs) == 1L && length(configure.vars) &&
+           length(names(configure.vars)) == 0L)
+            return(paste("--configure-vars=",
+                         shQuote(paste(configure.vars, collapse = " ")),
+                         sep = ""))
+
+        if (length(configure.vars) && length(names(configure.vars))
+              && pkg %in% names(configure.vars))
+            config <- paste("--configure-vars=",
+                            shQuote(paste(configure.vars[[ pkg ]], collapse = " ")),
+                            sep = "")
+        else
+            config <- character()
 
         config
     }
@@ -304,7 +332,8 @@ install.packages <-
 
         for(i in seq_len(nrow(update))) {
             cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
-                          getConfigureArgs(update[i, 1L]),
+                         getConfigureArgs(update[i, 1L]),
+                         getConfigureVars(update[i, 1L]),
                          shQuote(update[i, 1L]))
             if(system(cmd) > 0L)
                 warning(gettextf(
@@ -365,7 +394,9 @@ install.packages <-
             for(i in seq_len(nrow(update))) {
                 pkg <- update[i, 1L]
                 cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
-                             getConfigureArgs(update[i, 3L]), update[i, 3L],
+                             getConfigureArgs(update[i, 3L]),
+                             getConfigureVars(update[i, 3L]),
+                             update[i, 3L],
                              ">", paste(pkg, ".out", sep=""), "2>&1")
                 deps <- DL[[pkg]]
                 deps <- deps[deps %in% pkgs]
@@ -399,7 +430,9 @@ install.packages <-
         } else {
             for(i in seq_len(nrow(update))) {
                 cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
-                             getConfigureArgs(update[i, 3L]), update[i, 3L])
+                             getConfigureArgs(update[i, 3L]),
+                             getConfigureVars(update[i, 3L]),
+                             update[i, 3L])
                 status <- system(cmd)
                 if(status > 0L)
                     warning(gettextf("installation of package '%s' had non-zero exit status",

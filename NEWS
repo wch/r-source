@@ -234,6 +234,9 @@ PACKAGE INSTALLATION
 	prevents a broken package without lazy-loading from being
 	installed and gives better diagnostics.
 
+    o	install.packages() gains a 'configure.vars' argument, and both
+	this and 'configure.args' get their defaults from options().
+
 
 C-LEVEL FACILITIES
 

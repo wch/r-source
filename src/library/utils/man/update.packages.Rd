@@ -48,7 +48,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
                  contriburl = contrib.url(repos, type),
                  method, available = NULL, destdir = NULL,
 		 dependencies = NA, type = getOption("pkgType"),
-                 configure.args = character(0),
+                 configure.args = getOption("configure.args"),
+                 configure.vars = getOption("configure.vars"),
                  clean = FALSE, Ncpus = getOption("Ncpus"), \dots)
 
 contrib.url(repos, type = getOption("pkgType"))
@@ -118,21 +119,25 @@ contrib.url(repos, type = getOption("pkgType"))
     The default, \code{NA}, means \code{c("Depends", "Imports")} if
     \code{lib} is unambiguous, and \code{FALSE} otherwise.
   }
-  \item{configure.args}{a character vector or a named list.
+  \item{configure.args}{(not Windows) a character vector or a named list.
     If a character vector with no names is supplied, the elements are
     concatenated into a single string (separated by a space) and used
     as the value for the \code{--configure-args}
-    flag in the call to \code{R CMD INSTALL}.
-    If the character vector has names, these are assumed to identify
+    flag in the call to \command{R CMD INSTALL}.
+    If the character vector has names these are assumed to identify
     values for \code{--configure-args} for individual packages.
     This allows one to specify settings for an entire collection of packages
-    which will be used if any of those packages are installed.
-    These settings can therefore be reused and act as default settings.
+    which will be used if any of those packages are to be installed.
+    (These settings can therefore be reused and act as default settings.)
+    
     A named list can be used also to the same effect, and that
     allows multi-element character strings for each package
     which are concatenated to a single string to be used as the
     value for \code{--configure-args}.
   }
+  \item{configure.vars}{(not Windows) similar, for
+    \code{--configure-vars}, which is used to set environment variables
+    for the \command{configure} run.}
   \item{oldPkgs}{
     if specified as non-NULL, \code{update.packages()} only considers
     these packages for updating. 
