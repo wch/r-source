@@ -14,8 +14,15 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## issues:
+## interruptibility, including of system() calls
+## --fake is untested
+## untested on Windows
+## it is taking a couple of seconds to parse this code, so move to tools.
+
+WINDOWS <- .Platform$OS.type == "windows"
+SHLIB_EXT <- if (WINDOWS) ".dll" else ".so"
 ## FIXME: get this from etc/Makeconf
-SHLIB_EXT <- ".so"
 
 MAKE <- Sys.getenv("MAKE")
 TAR <- shQuote(Sys.getenv("TAR"))
@@ -53,10 +60,13 @@ Usage <- function() {
         "  -l, --library=LIB	install packages to library tree LIB",
         "      --no-configure    do not use the package's configure script",
         "      --no-docs		do not build and install documentation",
+        "      --no-text		do not build text help",
+        "      --no-html		do not build HTML help",
+        "      --no-latex      	do not build LaTeX help",
+        "      --no-examples   	do not install R code for help examples",
         "      --use-zip-data	collect data files in zip archive",
         "      --use-zip-help	collect help and examples into zip archives",
         "      --use-zip		combine '--use-zip-data' and '--use-zip-help'",
-        "      --auto-zip       select whether to zip automatically",
         "      --fake		do minimal install for testing purposes",
         "      --no-lock		install on top of any existing installation",
         "			without using a lock directory",
@@ -64,6 +74,9 @@ Usage <- function() {
         "      --pkglock		use a per-package lock directory",
         "      --libs-only	only install the libs directory",
         "      --build    	build binary tarball(s) of the installed package(s)",
+        "and on Windows only",
+        "      --auto-zip       select whether to zip automatically",
+        "      --no-chm		do not build CHM help",
         "",
         "Report bugs to <r-bugs@r-project.org>.", sep="\n")
 }
@@ -313,9 +326,12 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         starsmsg(stars, "Installing *Frontend* package ", sQuote(pkg_name), " ...")
         if (preclean) system(paste(MAKE, "clean"))
         if (use_configure) {
-            if (utils::file_test("-x", "configure"))
-                system("./configure")
-            else if (file.exists("configure"))
+            if (utils::file_test("-x", "configure")) {
+                res <- system(paste(configure_vars,
+                                    "./configure",
+                                    configure_args))
+                if(res) pkgerrmsg("configuration failed")
+            } else if (file.exists("configure"))
                 errmsg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
         }
         if (file.exists("Makefile"))
@@ -325,13 +341,13 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
     }
     if (!is.na(Type) && Type == "Translation") {
         starsmsg(stars, "Installing *Translation* package ", sQuote(pkg_name), " ...")
-         if(utils::file_test("-d", "share")) {
-             files <- Sys.glob("share/*")
-             if(length(files)) file.copy(files, R.home("share"))
-         }
-         if(utils::file_test("-d", "library")) {
-             system(paste("cp -r ./library", R.home()))
-         }
+        if (utils::file_test("-d", "share")) {
+            files <- Sys.glob("share/*")
+            if (length(files)) file.copy(files, R.home("share"))
+        }
+        if (utils::file_test("-d", "library")) {
+            system(paste("cp -r ./library", R.home()))
+        }
         return()
     }
     OS_type <- desc["OS_type"]
@@ -365,6 +381,10 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
             warning("'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
     }
 
+    if (auto_zip || zip_up) {
+        ## FIXME (Windows only)
+    }
+
     if (use_configure) {
         if (utils::file_test("-x", "configure"))
             system("./configure")
@@ -395,10 +415,10 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                     "R include directory is empty -- perhaps need to install R-devel.rpm or similar")
         has_error <- FALSE
         linkTo <- desc["LinkingTo"]
-        if(!is.na(linkTo)) {
+        if (!is.na(linkTo)) {
             lpkgs <- strsplit(linkTo, ",[[:blank:]]*")[[1L]]
             paths <- .find.package(lpkgs, quiet=TRUE)
-            if(length(paths)) {
+            if (length(paths)) {
                 clink_cppflags <- paste(paste0('-I"', paths, '/include"'),
                                         collapse=" ")
                 Sys.setenv(CLINK_CPPFLAGS = clink_cppflags)
@@ -554,13 +574,23 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
             cp_r("inst", rpkgdir)
         }
 
+        ## Defunct:
+        if (file.exists("install.R"))
+            warning("use of file 'install.R' is no longer supported")
+        if (file.exists("R_PROFILE.R"))
+            warning("use of file 'R_PROFILE.R' is no longer supported")
+        value <- parse_description_field("SaveImage", default = NA)
+        if (!is.na(value))
+            warning("fie;d 'SaveImage' is defunct: please remove it")
+
+
         ## LazyLoading
         value <- parse_description_field("LazyLoad", default = lazy)
         if (!utils::file_test("-d", "R")) value <- FALSE
         if (value) {
             starsmsg(stars, "preparing package for lazy loading")
             ## Something above, e.g. lazydata,  might have loaded the namespace
-            if(pkg_name %in% loadedNamespaces())
+            if (pkg_name %in% loadedNamespaces())
                 unloadNamespace(pkg_name)
             res <- try({.getRequiredPackages(quietly = TRUE)
                         tools:::makeLazyLoading(pkg_name, lib)})
@@ -665,7 +695,17 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         message("packaged installation of ",
                 sQuote(pkg_name), " as ", filename, ".gz")
     }
-    stars <- "*"
+    if (zip_up) {
+        ZIP <- "zip" # Windows only
+        version <- desc["version"]
+        filename <- paste0(pkg_name, "_", version, ".zip")
+        filepath <- shQuote(file.path(startdir, filename))
+        ## zip appends to existing archives
+        system(paste("rm -f", filepath))
+        system(paste(ZIP, "-r9Xq", filepath))
+        message("packaged installation of ",
+                sQuote(pkg_name), " as ", filename, ".gz")
+    }
 }
 
 options(showErrorCalls=FALSE)
@@ -682,7 +722,6 @@ if (!dir.create(tmpdir))
 R_LIBS0 <- Sys.getenv("R_LIBS")
 stars <- "*"
 
-pkgs <- character(0)
 lib <- lib0 <- ""
 clean <- FALSE
 preclean <- FALSE
@@ -691,11 +730,12 @@ build_text <- TRUE
 build_html <- TRUE
 build_latex <- TRUE
 build_example <- TRUE
-build_help_opts <- character(0)
+build_chm <- WINDOWS
 use_configure <- TRUE
 use_zip_data <- FALSE
 use_zip_help <- FALSE
-## FIXME: make these character vectors
+auto_zip <- FALSE
+## FIXME: make these character vectors?
 configure_args <- ""
 configure_vars <- ""
 fake <- FALSE
@@ -705,17 +745,18 @@ lock <- TRUE
 pkglock <- FALSE
 pkglockname <- ""
 libs_only <- FALSE
-tar_up <- FALSE
+tar_up <- zip_up <- FALSE
 shargs <- character(0)
 
 while(length(args)) {
     a <- args[1]
     if (a %in% c("-h", "--help")) {
         Usage()
-        return(invisible())
+        q("no")
     }
     else if (a %in% c("-v", "--version")) {
-        cat("R add-on package installer ", R.version[["svn rev"]], "\n", sep = "")
+        cat("R add-on package installer r",
+            R.version[["svn rev"]], "\n", sep = "")
         cat("",
             "Copyright (C) 2000-2009 The R Core Development Team.",
             "This is free software; see the GNU General Public License version 2",
@@ -735,13 +776,15 @@ while(length(args)) {
     } else if (a == "--no-configure") {
         use_configure = FALSE;
     } else if (a == "--no-docs") {
-        build_text <- build_html <- build_latex <- build_example <- FALSE
+        build_text <- build_html <- build_latex <- build_example <- build_chm <- FALSE
     } else if (a == "--no-text") {
         build_text <- FALSE
     } else if (a == "--no-html") {
         build_html <- FALSE
     } else if (a == "--no-examples") {
         build_examples <- FALSE
+    } else if (a == "--no-chm") {
+        build_chm <- FALSE
     } else if (a == "--use-zip") {
         use_zip_data <- use_ziphelp <- TRUE
     } else if (a == "--use-zipdata") {
@@ -749,8 +792,8 @@ while(length(args)) {
     } else if (a == "--use-ziphelp") {
         use_zip_help <- TRUE
     } else if (a == "--auto-zip") {
-        ## FIXME: implement this
-        auto_zip <- TRUE
+        if (WINDOWS) auto_zip <- TRUE
+        else warning("--auto-zip' is for Windows only")
     } else if (a == "-l") {
         if (length(args) >= 2) {lib <- args[2]; args <- args[-1]}
         else stop("-l option without value", call. = FALSE)
@@ -769,7 +812,8 @@ while(length(args)) {
     } else if (a == "--libs-only") {
         libs_only <- TRUE
     } else if (a == "--build") {
-        tar_up <- TRUE
+        if(WINDOWS) zip_up <- TRUE
+        else tar_up <- TRUE
     } else pkgs <- c(pkgs, a)
     args <- args[-1]
 }
@@ -875,12 +919,15 @@ if (fake) {
   build_html <- FALSE
   build_latex <- TRUE
   build_example <- FALSE
+  build_chm <- FALSE
 }
 
+build_help_opts <- character(0)
 if (build_text) build_help_opts <- c(build_help_opts, "--txt")
 if (build_html) build_help_opts <- c(build_help_opts, "--html")
 if (build_latex) build_help_opts <- c(build_help_opts, "--latex")
 if (build_example) build_help_opts <- c(build_help_opts, "--example")
+if (build_chm) build_help_opts <- c(build_help_opts, "--chm")
 build_help <- length(build_help_opts) > 0L
 if (build_help && debug) build_help_opts <- c("--debug", build_help_opts)
 if (debug)
@@ -888,13 +935,13 @@ if (debug)
 
 if (build_help) {
     perllib <- Sys.getenv("PERL5LIB")
-    if(nzchar(perllib)) {
+    if (nzchar(perllib)) {
         Sys.setenv(PERL5LIB = paste(file.path(R.home("share"), "perl"),
-                   perllib, sep = ":"))
+                   perllib, sep = .Platform$path.sep))
     } else {
         perllib <- Sys.getenv("PERLLIB")
         Sys.setenv(PERLLIB = paste(file.path(R.home("share"), "perl"),
-                   perllib, sep = ":"))
+                   perllib, sep = .Platform$path.sep))
     }
 }
 
