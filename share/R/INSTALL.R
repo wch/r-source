@@ -16,8 +16,8 @@
 
 ## issues:
 ## interruptibility, including of system() calls
-## --fake is untested
-## untested on Windows
+## --fake is little tested
+## untested on Windows (and will need changes)
 ## it is taking a couple of seconds to parse this code, so move to tools.
 
 WINDOWS <- .Platform$OS.type == "windows"
@@ -291,6 +291,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         if (length(files)) {
             libarch <- if (nzchar(arch)) paste0("libs", arch) else "libs"
             dest <- file.path(rpkgdir, libarch)
+            dir.create(dest, recursive = TRUE, showWarnings = FALSE)
             file.copy(files, dest)
             Sys.chmod(Sys.glob(file.path(dest, "*")), "755")
         }
@@ -381,7 +382,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
             system(paste("(cd", shQuote(file.path(lockdir, pkg_name)),
                          "&&", TAR,
                          "cf  - R-ex help html latex 2>/dev/null) | (cd",
-                         shQuote(rpkgdir), "&&", "xf -)"))
+                         shQuote(rpkgdir), "&&", TAR, "xf -)"))
     }
 
     if (preclean) {
@@ -443,7 +444,6 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                 Sys.setenv(CLINK_CPPFLAGS = clink_cppflags)
             }
         }
-        ## FIXME: check existence
         dir.create(file.path(rpkgdir, libpath), showWarnings = FALSE)
         if (file.exists("src/Makefile")) {
             arch <- substr(rarch, 2, 1000)
@@ -471,7 +471,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
             if (length(allfiles)) {
                 ## if there is a configure script we install only the main
                 ## sub-architecture
-                if (utils::file_test("-x", "configure")) {
+                if (utils::file_test("-x", "../configure")) {
                     if (nzchar(rarch))
                         starsmsg(stars, "arch - ", substr(rarch, 2, 1000))
                     has_error <- run_shlib(pkg_name, srcs, rpkgdir, rarch)
@@ -488,9 +488,6 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                             ra <- paste0("/", arch)
                             ## FIXME: do this lower down
                             Sys.setenv(R_ARCH = ra)
-                            libarch <- paste0("libs", ra)
-                            dir.create(file.path(rpkgdir, libarch),
-                                       recursive = TRUE, showWarnings = FALSE)
                             has_error <- run_shlib(pkg_name, srcs, rpkgdir, ra)
                             if(has_error) break
                             Sys.setenv(R_ARCH = rarch)
@@ -617,13 +614,16 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
 
         ## LazyLoading
         value <- parse_description_field("LazyLoad", default = lazy)
-        if (!utils::file_test("-d", "R") && value) {
+        if (utils::file_test("-d", "R") && value) {
             starsmsg(stars, "preparing package for lazy loading")
             ## Something above, e.g. lazydata,  might have loaded the namespace
             if (pkg_name %in% loadedNamespaces())
                 unloadNamespace(pkg_name)
-            res <- try({.getRequiredPackages(quietly = TRUE)
+            ## suppress second round of parse warnings
+            options(warnEscapes = FALSE)
+            Res <- try({.getRequiredPackages(quietly = TRUE)
                         tools:::makeLazyLoading(pkg_name, lib)})
+            options(warnEscapes = TRUE)
             if (inherits(res, "try-error"))
                 pkgerrmsg("lazy loading failed", pkg_name)
             ## FIXME: still needed?  If so needs a pretest
