@@ -382,7 +382,10 @@ EOF
 ENCS=`grep '^\\\\\inputencoding' ${build_dir}/Rd2.tex | uniq | \
   ${SED} -e 's/^\\\\inputencoding{\(.*\)}/\1/' | \
   tr '\na-z0-9' ',a-z0-9' | ${SED} -e s/,$//`
-UENCS=`${echo} ${ENCS} | grep utf8`
+## some systems have Cyrillic support but it is broken
+if test -n "${_R_NO_CYRILLIC_TEX_}" then 
+  UENCS=`${echo} ${ENCS} | grep utf8
+fi`
 #echo "ENCS is ${ENCS}"
 #echo "UENCS is ${UENCS}"
 
