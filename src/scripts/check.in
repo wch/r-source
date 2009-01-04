@@ -2561,7 +2561,7 @@ sub check_pkg {
 	    } else {
 		print MANUAL "\\usepackage[ae]\{Rd\}\n";
 	    }
-	    if ($encs =~ /utf8/) {
+	    if ($encs =~ /utf8/ && !defined($ENV{"_R_NO_CYRILLIC_TEX_"})) {
 		print MANUAL $encs . "\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}\n";
 	    } else {
 		print MANUAL $encs;
