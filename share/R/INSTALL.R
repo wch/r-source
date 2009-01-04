@@ -23,13 +23,11 @@
 WINDOWS <- .Platform$OS.type == "windows"
 paste0 <- function(...) paste(..., sep="")
 
-MAKE <- Sys.getenv("MAKE")
 TAR <- shQuote(Sys.getenv("TAR"))
 GZIP <- Sys.getenv("R_GZIPCMD")
 if(!nzchar(GZIP)) GZIP <- "gzip"
 rarch <- Sys.getenv("R_ARCH")
 etcpath <- paste0("etc", rarch)
-libpath <- paste0("libs", rarch)
 
 SHLIB_EXT <- if (WINDOWS) ".dll" else {
     ## can we do better?
@@ -38,8 +36,8 @@ SHLIB_EXT <- if (WINDOWS) ".dll" else {
 }
 
 options(warn = 1)
-foo <- Sys.setlocale("LC_COLLATE", "C")
-ctype <- Sys.getlocale("LC_CTYPE")
+invisible(Sys.setlocale("LC_COLLATE", "C")) # discard output
+
 
 pkg_dir <- ""
 
@@ -186,14 +184,6 @@ get_packages <- function(dir)
     pkgs
 }
 
-cp_r <- function(from, to)
-{
-    from <- shQuote(from)
-    to <- shQuote(to)
-    system(paste0("cp -r ", from, "/* ", to,
-                  " || (cd ", from, " && ", TAR, " cf - . | (cd '", to, "' && ", TAR, "xf - ))"))
-}
-
 parse_description_field <- function(field, default=TRUE)
 {
     tmp <- desc[field]
@@ -267,6 +257,7 @@ do_install <- function(pkg)
 
 do_install_binary <- function(pkg, rpkgdir)
 {
+    TAR <- shQuote(Sys.getenv("TAR"))
     stars(stars, "Installing *binary* package ", sQuote(pkg), " ...")
 
     if (file.exists(file.path(rpkgdir, "DESCRIPTION"))) {
@@ -285,6 +276,18 @@ do_install_binary <- function(pkg, rpkgdir)
 
 do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
 {
+    MAKE <- Sys.getenv("MAKE")
+    paste0 <- function(...) paste(..., sep="")
+
+    cp_r <- function(from, to)
+    {
+        TAR <- shQuote(Sys.getenv("TAR"))
+        from <- shQuote(from)
+        to <- shQuote(to)
+        system(paste("cp -r ", from, "/* ", to,
+                     " || (cd ", from, " && ", TAR, " cf - . | (cd '", to, "' && ", TAR, "xf - ))", sep = ""))
+    }
+
     shlib_install <- function(rpkgdir, arch)
     {
         files <- Sys.glob(paste0("*", SHLIB_EXT))
@@ -378,11 +381,13 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
 
         ## Preserve man pages to speed up installation?  Only makes sense
         ## if we install from a non-temporary directory.
-        if(lock && is.na(pmatch(tmpdir, getwd())))
+        if(lock && is.na(pmatch(tmpdir, getwd()))) {
+            TAR <- shQuote(Sys.getenv("TAR"))
             system(paste("(cd", shQuote(file.path(lockdir, pkg_name)),
                          "&&", TAR,
                          "cf  - R-ex help html latex 2>/dev/null) | (cd",
                          shQuote(rpkgdir), "&&", TAR, "xf -)"))
+        }
     }
 
     if (preclean) {
@@ -420,6 +425,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
             }
 
         ## This cannot be done in a MBCS: write.dcf fails
+        ctype <- Sys.getlocale("LC_TYPE")
         Sys.setlocale("LC_CTYPE", "C")
         res <- try(tools:::.install_package_description(".", rpkgdir))
         Sys.setlocale("LC_CTYPE", ctype)
@@ -428,7 +434,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
     }
 
     if (utils::file_test("-d", "src") && !fake) {
-        system_makefile <- file.path(R.home(), etcpath, "Makeconf")
+        system_makefile <- file.path(R.home(), paste0("etc", rarch), "Makeconf")
         starsmsg(stars, "libs")
         if (!file.exists(file.path(R.home("include"), "R.h")))
             ## maybe even an error?  But installing Fortran-based packages should work
@@ -444,7 +450,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                 Sys.setenv(CLINK_CPPFLAGS = clink_cppflags)
             }
         }
-        dir.create(file.path(rpkgdir, libpath), showWarnings = FALSE)
+        dir.create(file.path(rpkgdir, paste0("libs", rarch)), showWarnings = FALSE)
         if (file.exists("src/Makefile")) {
             arch <- substr(rarch, 2, 1000)
             starsmsg(stars, "arch - ", arch)
@@ -531,7 +537,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                     ## symbol resolution w/out 'PACKAGE' arguments.
                     ## However, empty directives are not really meant
                     ## to work ...
-                    writelines(sub("useDynLib.*", 'useDynLib("")',
+                    writeLines(sub("useDynLib.*", 'useDynLib("")',
                                    readLines("NAMESPACE")),
                                file.path(rpkgdir, "NAMESPACE"))
                     ## </NOTE>
@@ -719,6 +725,9 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
     }
 
     if (tar_up) {
+        TAR <- shQuote(Sys.getenv("TAR"))
+        GZIP <- Sys.getenv("R_GZIPCMD")
+        if(!nzchar(GZIP)) GZIP <- "gzip"
         version <- desc["version"]
         filename <- paste0(pkg_name, "_", version, "_R_",
                            Sys.getenv("R_PLATFORM"), ".tar")
