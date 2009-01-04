@@ -3,8 +3,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ_YEAR 2008
-@set FAQ_DATE @value{FAQ_YEAR}-12-19
+@set FAQ_YEAR 2009
+@set FAQ_DATE @value{FAQ_YEAR}-01-03
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 8
@@ -1580,17 +1580,22 @@ For a very long time, there was no such thing.
 currently beta testing a commercially supported version of R named R+
 (read R plus).
 
-In addition, @url{http://www.revolution-computing.com/, REvolution
-Computing} has released
-@url{http://www.revolution-computing.com/rpro.html, RPro}, an
-enterprise-class statistical analysis system based on R, suitable for
-deployment in professional, commercial and regulated environments.
+@url{http://www.revolution-computing.com/, REvolution Computing} has
+released
+@url{http://www.revolution-computing.com/products/revolution-r.php,
+REvolution R}, an enterprise-class statistical analysis system based on
+R, suitable for deployment in professional, commercial and regulated
+environments.
 
 @url{http://www.random-technologies-llc.com/, Random Technologies}
 offers @url{http://random-technologies-llc.com/products/RStat/rstat,
 RStat}, an enterprise-strength statistical computing environment which
 combines R with enterprise-level validation, documentation, software
 support, and consulting services, as well as related R-based products.
+
+See also
+@url{http://en.wikipedia.org/wiki/R_programming_language#Commercialized_versions_of_R}
+for pointers to commercialized versions of R.
 
 @node R Web Interfaces, R Add-On Packages, R and S, Top
 @chapter R Web Interfaces
@@ -1873,6 +1878,8 @@ L. J. Kitchens, 2003, Duxbury.
 Statistical methods for safety assessment in agricultural field trials.
 @item BsMD
 Bayes screening and model discrimination follow-up designs.
+@item CADFtest
+Hansen's Covariate-Augmented Dickey-Fuller (CADF) test.
 @item CADStat
 A @acronym{GUI} to several statistical methods for biological
 inferences.
@@ -2071,6 +2078,8 @@ Bernard Flury (1997), Springer.
 @c @item FortranCallsR
 @c Simple Fortran/C/R interface example.
 @c </COMMENT>
+@item Formula
+Infrastructure for extended formulas.
 @item FrF2
 Analysis of fractional factorial designs with 2-level factors.
 @item FracSim
@@ -2274,6 +2283,8 @@ Date transformation and identification of differentially expressed genes
 in gene expression arrays.
 @item LearnBayes
 Functions for Learning Bayesian Inference.
+@item LearnEDA
+Functions for Learning Exploratory Data Analysis.
 @item Lmoments
 Estimation of L-moments and the parameters of normal and Cauchy
 polynomial quantile mixtures.
@@ -2580,6 +2591,8 @@ Poor Man's Gui: create interactive R analysis sessions.
 R interface to the PostgreSQL database system.
 @item RPyGeo
 ArcGIS Geoprocessing in R via Python.
+@item RQDA
+Qualitative Data Analysis.
 @item RQuantLib
 Provides access to (some) of the QuantLib functions from within R;
 currently limited to some Option pricing and analysis functions.  The
@@ -2650,6 +2663,8 @@ Rcmdr Teaching Demos plug-in.
 Rcmdr epack demos plug-in.
 @item RcmdrPlugin.orloca
 Rcmdr orloca plug-in.
+@item RcmdrPlugin.qcc
+Rcmdr qcc plug-in.
 @item Rcplex
 R interface to CPLEX solvers for linear, quadratic, and (linear and
 quadratic) mixed integer programs.
@@ -3101,6 +3116,8 @@ Backfitted independent values of Richards curves.
 Exploring portfolio-based hypotheses about financial instruments.
 @item bark
 Bayesian Additive Regression Kernels.
+@item bayesCGH
+Bayesian analysis of array CGH data.
 @item bayesGARCH
 Bayesian estimation of the GARCH(1,1) model with Student's @math{t}
 innovations.
@@ -4336,6 +4353,10 @@ Supervised and unsupervised self-organising maps.
 @item ks
 Kernel smoothing: bandwidth matrices for kernel density estimators and
 kernel discriminant analysis for bivariate data.
+@item kst
+Knowledge Space Theory: a set-theoretical framework which proposes
+mathematical formalisms to operationalize knowledge structures in a
+particular domain.
 @item kza
 Kolmogorov-Zurbenko Adpative filter for locating change points in a time
 series.
@@ -4749,6 +4770,8 @@ Visualizations of paired comparisons.
 @item multic
 Quantitative linkage analysis tools using the variance components
 approach.
+@item multicore
+Parallel processing of R code on machines with multiple cores or CPUs.
 @item multilevel
 Analysis of multilevel data by organizational and social psychologists.
 @item multinomRob
@@ -5255,6 +5278,8 @@ methods and accessing fields.
 @item rPorta
 An R interface to PORTA, a collection of routines for analyzing
 polytopes and polyhedra.
+@item rSymPy
+R interface to SymPy computer algebra system.
 @item race
 Implementation of some racing methods for the empirical selection of the
 best.
@@ -8540,7 +8565,8 @@ that might be expected to produce the bug but actually do not.  If you
 want to debug the problem and find exactly what caused it, that is
 wonderful.  You should still report the facts as well as any
 explanations or solutions.  Please include an example that reproduces
-the problem, preferably the simplest one you have found.
+(e.g., @url{http://en.wikipedia.org/wiki/Reproducibility}) the problem,
+preferably the simplest one you have found.
 
 Invoking R with the @option{--vanilla} option may help in isolating a
 bug.  This ensures that the site profile and saved data files are not
