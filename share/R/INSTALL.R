@@ -425,7 +425,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
             }
 
         ## This cannot be done in a MBCS: write.dcf fails
-        ctype <- Sys.getlocale("LC_TYPE")
+        ctype <- Sys.getlocale("LC_CTYPE")
         Sys.setlocale("LC_CTYPE", "C")
         res <- try(tools:::.install_package_description(".", rpkgdir))
         Sys.setlocale("LC_CTYPE", ctype)
