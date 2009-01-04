@@ -161,9 +161,9 @@ get_packages <- function(dir)
             } else {
                 warning("incorrect Contains metadata for bundle ",
                         sQuote(bundle_name),
-                        ": there is no package '", sQuote(p))
+                        ": there is no package '", sQuote(p), call. = FALSE)
                 warning("skipping installation of bundle ",
-                        sQuote(bundle_name))
+                        sQuote(bundle_name), call. = FALSE)
                 pkgs <- character(0)
                 break
             }
@@ -173,8 +173,9 @@ get_packages <- function(dir)
             ## level DESCRIPTION and the package level DESCRIPTION.in ones.
             res <- try(tools:::.vcreate_bundle_package_descriptions(dir, paste(contains, collapse=" ")))
             if (inherits(res, "try-error"))
-                warning("problem installing per-package DESCRIPTION files")
-         }
+                warning("problem installing per-package DESCRIPTION files",
+                        call. = FALSE)
+        }
     } else {
         ## Not a bundle
         owd <- setwd(dir)
@@ -400,7 +401,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         }
         if (utils::file_test("-x", "cleanup")) system("./cleanup")
         else if (file.exists("cleanup"))
-            warning("'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
+            warning("'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'", call. = FALSE)
     }
 
     if (auto_zip || zip_up) {
@@ -438,7 +439,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         starsmsg(stars, "libs")
         if (!file.exists(file.path(R.home("include"), "R.h")))
             ## maybe even an error?  But installing Fortran-based packages should work
-            warning("R include directory is empty -- perhaps need to install R-devel.rpm or similar")
+            warning("R include directory is empty -- perhaps need to install R-devel.rpm or similar", call. = FALSE)
         has_error <- FALSE
         linkTo <- desc["LinkingTo"]
         if (!is.na(linkTo)) {
@@ -500,7 +501,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                         }
                     }
                 }
-            } else warning("no source files found")
+            } else warning("no source files found", call. = FALSE)
         }
         if (has_error)
             pkgerrmsg("compilation failed", pkg_name)
@@ -578,7 +579,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                     system(paste(zip, "-q -m Rdata * -x filelist 00Index"))
                     setwd(owd)
                 }
-            } else warning("empty 'data' directory")
+            } else warning("empty 'data' directory", call. = FALSE)
         }
 
         if (utils::file_test("-d", "demo") && !fake) {
@@ -610,12 +611,15 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
 
         ## Defunct:
         if (file.exists("install.R"))
-            warning("use of file 'install.R' is no longer supported")
+            warning("use of file 'install.R' is no longer supported",
+                    call. = FALSE)
         if (file.exists("R_PROFILE.R"))
-            warning("use of file 'R_PROFILE.R' is no longer supported")
+            warning("use of file 'R_PROFILE.R' is no longer supported",
+                    call. = FALSE)
         value <- parse_description_field("SaveImage", default = NA)
         if (!is.na(value))
-            warning("fie;d 'SaveImage' is defunct: please remove it")
+            warning("field 'SaveImage' is defunct: please remove it",
+                    call. = FALSE)
 
 
         ## LazyLoading
@@ -721,7 +725,8 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
         }
         if (utils::file_test("-x", "cleanup")) system("./cleanup")
         else if (file.exists("cleanup"))
-            warning("'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
+            warning("'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'",
+                    call. = FALSE)
     }
 
     if (tar_up) {
@@ -836,7 +841,7 @@ while(length(args)) {
         use_zip_help <- TRUE
     } else if (a == "--auto-zip") {
         if (WINDOWS) auto_zip <- TRUE
-        else warning("--auto-zip' is for Windows only")
+        else warning("--auto-zip' is for Windows only", call. = FALSE)
     } else if (a == "-l") {
         if (length(args) >= 2) {lib <- args[2]; args <- args[-1]}
         else stop("-l option without value", call. = FALSE)
@@ -899,12 +904,13 @@ for(pkg in pkgs) {
         pkgname <- basename(pkg)
         allpkgs <- c(allpkgs, get_packages(pkg))
     } else {
-        warning("invalid package ", sQuote(pkg))
+        warning("invalid package ", sQuote(pkg), call. = FALSE)
         next
     }
     if (pkglock) {
         if (nzchar(pkglockname)) {
-            warning("--pkglock applies only to a single bundle/package")
+            warning("--pkglock applies only to a single bundle/package",
+                    call. = FALSE)
             pkglock <- FALSE
         } else pkglockname <- pkgname
     }
