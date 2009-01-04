@@ -468,7 +468,7 @@ sub check_package_description {
 
     my $any;
 
-    ## check the encoding
+    ## Check the encoding.
     my $Rcmd = "tools:::.check_package_description_encoding(\"$dfile\")";
     my @out = R_runR($Rcmd, "--vanilla --quiet",
 		     "R_DEFAULT_PACKAGES=NULL");
@@ -480,22 +480,29 @@ sub check_package_description {
     }
 
     ## Check the license.
-    ## The check code conditionalizes *output* on _R_CHECK_LICENSE_, but
-    ## there is little point in running the code with no output ...
-    my $check_license =
-	&config_val_to_logical(&R_getenv("_R_CHECK_LICENSE_", "FALSE"));
-    my $Rcmd =
-	"tools:::.check_package_license(\"$dfile\", \"$pkgdir\")";
-    my @out = R_runR($Rcmd, "--vanilla --quiet",
-		     "R_DEFAULT_PACKAGES=NULL");
-    @out = grep(!/^\>/, @out);
-    if(scalar(@out) > 0) {
-	$log->warning() unless $any;
-	$log->print(join("\n", @out) . "\n");
-	$any++;
+    if(!$is_base_pkg) {
+	## For base packages, the DESCRIPTION.in files have non-canonical
+	##   License: Part of R @VERSION@
+	## entries because these really are a part of R: hence, skip the
+	## check.
+
+	## The check code conditionalizes *output* on _R_CHECK_LICENSE_,
+	## but there is little point in running the code with no output ...
+	my $check_license =
+	    &config_val_to_logical(&R_getenv("_R_CHECK_LICENSE_", "FALSE"));
+	my $Rcmd =
+	    "tools:::.check_package_license(\"$dfile\", \"$pkgdir\")";
+	my @out = R_runR($Rcmd, "--vanilla --quiet",
+			 "R_DEFAULT_PACKAGES=NULL");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->warning() unless $any;
+	    $log->print(join("\n", @out) . "\n");
+	    $any++;
+	}
     }
 
-    $log->result("OK") unless $any;
+    $log->result("OK") unless $any;    
 
     rmtree(dirname($dir)) if($in_bundle);    
 }
