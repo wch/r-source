@@ -2632,6 +2632,7 @@ void (SET_STRING_ELT)(SEXP x, int i, SEXP v) {
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "SET_STRING_ELT", "character vector", type2char(TYPEOF(x)));
+    /* NULL is used in subscript.c */
     if(TYPEOF(v) != CHARSXP && TYPEOF(v) != NILSXP)
        error("Value of SET_STRING_ELT() must be a 'CHARSXP' not a '%s'",
 	     type2char(TYPEOF(v)));

@@ -1174,54 +1174,6 @@ Rboolean mbcsValid(const char *str)
     return  ((int)mbstowcs(NULL, str, 0) >= 0);
 }
 
-#ifdef UNUSED
-/* We do this conversion ourselves to do our own error recovery */
-void mbcsToLatin1(const char *in, char *out)
-{
-    wchar_t *wbuff;
-    int i;
-    size_t res = mbstowcs(NULL, in, 0), mres;
-
-    if(res == (size_t)(-1)) {
-	/* let's try to print out a readable version */
-	size_t used, n = strlen(in);
-	char *err = alloca(4*n + 1), *q;
-	const char *p;
-	mbstate_t ps;
-	R_CheckStack();
-	for(p = in, q = err; *p; ) {
-	    used = mbrtowc(NULL, p, n, &ps);
-	    if(used == 0) break;
-	    else if((int) used > 0) {
-		memcpy(q, p, used);
-		p += used;
-		q += used;
-		n -= used;
-	    } else {
-		sprintf(q, "<%02x>", (unsigned char) *p++);
-		q += 4;
-		n--;
-	    }
-	}
-	*q = '\0';
-	warning(_("invalid input '%s' in mbcsToLatin1: omitted"), err);
-	*out = '\0';
-	return;
-    }
-    wbuff = (wchar_t *) alloca((res+1) * sizeof(wchar_t));
-    R_CheckStack();
-    if(!wbuff) error(_("allocation failure in '%s'"), "mbcsToLatin1");
-    mres = mbstowcs(wbuff, in, res+1);
-    if(mres == (size_t)-1) /* we checked above, so should not get here */
-	error("invalid input in 'mbcsToLatin1'");
-    for(i = 0; i < res; i++) {
-	/* here we do assume Unicode wchars */
-	if(wbuff[i] > 0xFF) out[i] = '.';
-	else out[i] = (char) wbuff[i];
-    }
-    out[res] = '\0';
-}
-#endif
 
 /* MBCS-aware versions of common comparisons.  Only used for ASCII c */
 char *Rf_strchr(const char *s, int c)
@@ -1259,9 +1211,6 @@ int utf8clen(char c) { return 1;}
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, void *ps)
 { return (size_t)(-1);}
 Rboolean mbcsValid(const char *str) { return TRUE; }
-#ifdef UNUSED
-void mbcsToLatin1(char *in, char *out) {}
-#endif
 #undef Rf_strchr
 char *Rf_strchr(const char *s, int c) {return strchr(s, c);}
 #undef Rf_strrchr

@@ -55,23 +55,6 @@ static R_len_t asVecSize(SEXP x)
     return -1;
 }
 
-#ifdef UNUSED
-SEXP attribute_hidden do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP expr, env;
-    checkArity(op, args);
-    expr = CAR(args);
-    env = eval(CADR(args), rho);
-    if (isNull(env)) {
-	error(_("use of NULL environment is defunct"));
-	env = R_BaseEnv;
-    } else
-    if (!isEnvironment(env))
-	errorcall(call, R_MSG_IA);
-    return mkPROMISE(expr, env);
-}
-#endif
-
 SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP name = R_NilValue /* -Wall */, expr, eenv, aenv;

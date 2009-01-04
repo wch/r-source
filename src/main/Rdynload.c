@@ -130,7 +130,7 @@
 
 #ifdef HAVE_DYNAMIC_LOADING
 
-#ifdef CACHE_DLL_SYM
+#ifdef CACHE_DLL_SYM  /* NOT USED */
 /* keep a record of symbols that have been found */
 R_CPFun CPFun[100];
 int nCPFun = 0;
@@ -183,14 +183,6 @@ DllInfo *R_getEmbeddingDllInfo()
     }
     return dll;
 }
-
-#ifdef UNUSED
-DllInfo *
-getBaseDllInfo()
-{
-    return(&LoadedDLL[0]);
-}
-#endif
 
 Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value)
 {

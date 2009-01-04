@@ -298,10 +298,6 @@ extern char ** environ;
 #endif
 
 #ifdef Win32
-# define WC_ENVIRON
-#endif
-
-#ifdef WC_ENVIRON
 /* _wenviron is declared in stdlib.h */
 # define WIN32_LEAN_AND_MEAN 1
 # include <windows.h> /* _wgetenv etc */
@@ -323,7 +319,7 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 
     i = LENGTH(CAR(args));
     if (i == 0) {
-#ifdef WC_ENVIRON
+#ifdef Win32
 	char *buf;
 	int n = 0, N;
 	wchar_t **w;
@@ -346,7 +342,7 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (j = 0; j < i; j++) {
-#ifdef WC_ENVIRON
+#ifdef Win32
 	    const wchar_t *wnm = wtransChar(STRING_ELT(CAR(args), j));
 	    wchar_t *w = _wgetenv(wnm);
 	    if (w == NULL)
@@ -376,7 +372,7 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
     return (ans);
 }
 
-#ifdef WC_ENVIRON
+#ifdef Win32
 static int Rwputenv(const wchar_t *nm, const wchar_t *val)
 {
     wchar_t *buf;
@@ -423,7 +419,7 @@ SEXP attribute_hidden do_setenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	LOGICAL(ans)[i] = setenv(translateChar(STRING_ELT(nm, i)),
 				 translateChar(STRING_ELT(vars, i)),
 				 1) == 0;
-#elif defined(WC_ENVIRON)
+#elif defined(Win32)
     for (i = 0; i < n; i++)
 	LOGICAL(ans)[i] = Rwputenv(wtransChar(STRING_ELT(nm, i)),
 				   wtransChar(STRING_ELT(vars, i))) == 0;
@@ -461,7 +457,7 @@ SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	putenv(buf);
     }
 #elif defined(HAVE_PUTENV_UNSET2)
-# ifdef WC_ENVIRON
+# ifdef Win32
     for (i = 0; i < n; i++) {
 	const wchar_t *w = wtransChar(STRING_ELT(vars, i));
 	wchar_t *buf = (wchar_t *) alloca(2*wcslen(w));

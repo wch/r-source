@@ -1933,11 +1933,6 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
 	} else {
 	    gpptr(dd)->usr[0] = dpptr(dd)->usr[0] = min;
 	    gpptr(dd)->usr[1] = dpptr(dd)->usr[1] = max;
-/* MM: logusr is only used " when (log)" : */
-#ifdef NEVER_USED
-	    gpptr(dd)->logusr[0] = dpptr(dd)->logusr[0] = log10(min);
-	    gpptr(dd)->logusr[1] = dpptr(dd)->logusr[1] = log10(max);
-#endif
 	}
     } else {
 	if (log) {
@@ -1948,10 +1943,6 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
 	} else {
 	    gpptr(dd)->usr[2] = dpptr(dd)->usr[2] = min;
 	    gpptr(dd)->usr[3] = dpptr(dd)->usr[3] = max;
-#ifdef NEVER_USED
-	    gpptr(dd)->logusr[2] = dpptr(dd)->logusr[2] = log10(min);
-	    gpptr(dd)->logusr[3] = dpptr(dd)->logusr[3] = log10(max);
-#endif
 	}
     }
 

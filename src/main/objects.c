@@ -945,19 +945,6 @@ static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef)
 }
 
 
-#ifdef UNUSED
-static void load_methods_package()
-{
-    SEXP e;
-    R_set_standardGeneric_ptr(dispatchNonGeneric, NULL);
-    PROTECT(e = allocVector(LANGSXP, 2));
-    SETCAR(e, install("library"));
-    SETCAR(CDR(e), install("methods"));
-    eval(e, R_GlobalEnv);
-    UNPROTECT(1);
-}
-#endif
-
 static SEXP get_this_generic(SEXP args);
 
 SEXP attribute_hidden do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1350,24 +1337,6 @@ SEXP R_do_new_object(SEXP class_def)
     }
     return value;
 }
-
-#ifdef UNUSED
-Rboolean R_seemsS4Object(SEXP object)
-{
-    static SEXP R_packageSymbol = NULL;
-    SEXP klass;
-    if(!isObject(object))
-	return FALSE;
-    if(TYPEOF(object) == S4SXP)
-	return TRUE;
-    if(!R_packageSymbol)
-	R_packageSymbol = install("package");
-    klass = getAttrib(object, R_ClassSymbol);
-    return (klass != R_NilValue &&
-	    getAttrib(klass, R_packageSymbol) != R_NilValue) ?
-	TRUE: FALSE;
-}
-#endif
 
 Rboolean attribute_hidden R_seemsOldStyleS4Object(SEXP object)
 {

@@ -1976,23 +1976,6 @@ static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
 }
 
 
-#ifdef NOT_used_currently/*-- out 'def'  (-Wall) --*/
-static void CheckRange(double *x, int n, double min, double max)
-{
-    double xmin, xmax;
-    int i;
-    xmin =  DBL_MAX;
-    xmax = -DBL_MAX;
-    for (i = 0; i < n; i++)
-	if (R_FINITE(x[i])) {
-	    if (x[i] < xmin) xmin = x[i];
-	    if (x[i] > xmax) xmax = x[i];
-	}
-    if (xmin < min || xmax > max)
-	errorcall(gcall, _("coordinates outsize specified range"));
-}
-#endif
-
 static void PerspWindow(double *xlim, double *ylim, double *zlim, pGEDevDesc dd)
 {
     double pin1, pin2, scale, xdelta, ydelta, xscale, yscale, xadd, yadd;

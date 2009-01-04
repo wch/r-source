@@ -25,27 +25,6 @@
 
 #include "Defn.h"
 
-/*  append - append second to the tail of first    */
-/*           This operation is non-destructive     */
-/*           i.e. first and second are duplicated  */
-
-#ifdef UNUSED
-SEXP Rf_append(SEXP first, SEXP second)
-{
-    SEXP e;
-
-    PROTECT(second);
-    first = duplicate(first);
-    UNPROTECT(1);
-    PROTECT(first);
-    second = duplicate(second);
-    UNPROTECT(1);
-    for (e = first; CDR(e) != R_NilValue; e = CDR(e));
-    SETCDR(e, second);
-    return first;
-}
-#endif
-
 
 /*  mkPRIMSXP - return a builtin function      */
 /*              either "builtin" or "special"  */

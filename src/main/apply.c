@@ -79,67 +79,6 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-#ifdef UNUSED
-/* .Internal(apply(X, X1, FUN)) */
-/* X is a matrix, and the last dimension is the one we want to
-   loop over */
-
-SEXP attribute_hidden do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP R_fcall, X, Xd, X1, ans, FUN;
-    int i, j, nr, nc, inr;
-
-    checkArity(op, args);
-    X = CAR(args); args = CDR(args);
-    if(!isMatrix(X))
-	error(_("first argument is not a matrix"));
-    Xd = getAttrib(X, R_DimSymbol);
-    nr = INTEGER(Xd)[0];
-    nc = INTEGER(Xd)[1];
-    X1 = CAR(args); args = CDR(args);
-    FUN = CAR(args);
-
-    PROTECT(R_fcall = LCONS(FUN, LCONS(X1, LCONS(R_DotsSymbol, R_NilValue))));
-    PROTECT(ans = allocVector(VECSXP, nc));
-    PROTECT(X1 = allocVector(TYPEOF(X), nr));
-    SETCADR(R_fcall, X1);
-    for(i = 0; i < nc; i++) {
-	switch(TYPEOF(X)) {
-	case REALSXP:
-	    for (j = 0, inr = i*nr; j < nr; j++)
-		REAL(X1)[j] = REAL(X)[j + inr];
-	    break;
-	case INTSXP:
-	    for (j = 0, inr = i*nr; j < nr; j++)
-		INTEGER(X1)[j] = INTEGER(X)[j + inr];
-	    break;
-	case LGLSXP:
-	    for (j = 0, inr = i*nr; j < nr; j++)
-		LOGICAL(X1)[j] = LOGICAL(X)[j + inr];
-	    break;
-	case CPLXSXP:
-	    for (j = 0, inr = i*nr; j < nr; j++)
-		COMPLEX(X1)[j] = COMPLEX(X)[j + inr];
-	    break;
-	case STRSXP:
-	    for (j = 0, inr = i*nr; j < nr; j++)
-		SET_STRING_ELT(X1, j, STRING_ELT(X, j + inr));
-	    break;
-	case RAWSXP:
-	    for (j = 0, inr = i*nr; j < nr; j++)
-		RAW(X1)[j] = RAW(X)[j + inr];
-	    break;
-	default:
-	    UNIMPLEMENTED_TYPE("apply", X);
-	}
-	/* careful: we have altered X1 and might have FUN = function(x) x */
-	SET_VECTOR_ELT(ans, i, duplicate(eval(R_fcall, rho)));
-    }
-    UNPROTECT(3);
-    return ans;
-}
-#endif
-
 static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 		   Rboolean replace, SEXP rho)
 {

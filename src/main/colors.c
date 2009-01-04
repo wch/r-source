@@ -1317,14 +1317,6 @@ static unsigned int hexdigit(int digit)
     return digit; /* never occurs (-Wall) */
 }
 
-#ifdef UNUSED
-/* Integer to Hex Digit */
-
-static unsigned int digithex(int digit)
-{
-    return HexDigits[abs(digit) % 16];
-}
-#endif
 
 /* #RRGGBB[AA] String to Internal Color Code */
 static unsigned int rgb2col(const char *rgb)

@@ -1650,21 +1650,6 @@ static Rboolean isna(SEXP x, int indx)
     return FALSE;
 }
 
-#ifdef UNUSED
-static void change_dec(char *tmp, char cdec, SEXPTYPE t)
-{
-    char *p;
-    switch(t) {
-    case REALSXP:
-    case CPLXSXP:
-	for(p = tmp; *p; p++) if(*p == '.') *p = cdec;
-	break;
-    default:
-	break;
-    }
-}
-#endif
-
 /* a version of EncodeElement with different escaping of char strings */
 static const char
 *EncodeElement2(SEXP x, int indx, Rboolean quote,

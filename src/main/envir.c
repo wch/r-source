@@ -558,7 +558,7 @@ static SEXP R_HashProfile(SEXP table)
 */
 
 #define USE_GLOBAL_CACHE
-#ifdef USE_GLOBAL_CACHE
+#ifdef USE_GLOBAL_CACHE  /* NB leave in place: see below */
 /* Global variable caching.  A cache is maintained in a hash table,
    R_GlobalCache.  The entry values are either R_UnboundValue (a
    flushed cache entry), the binding LISTSXP cell from the environment
@@ -610,7 +610,7 @@ void attribute_hidden InitBaseEnv()
 void attribute_hidden InitGlobalEnv()
 {
     R_GlobalEnv = NewEnvironment(R_NilValue, R_NilValue, R_BaseEnv);
-#ifdef NEW_CODE
+#ifdef NEW_CODE /* Not used */
     HASHTAB(R_GlobalEnv) = R_NewHashTable(100);
 #endif
 #ifdef USE_GLOBAL_CACHE

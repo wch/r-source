@@ -188,11 +188,6 @@ static R_INLINE double R_log(double x) {
     return x > 0 ? log(x) : x < 0 ? R_NaN : R_NegInf;
 }
 
-#ifdef POW_DIRTY
-
-# define R_pow	pow
-
-#else
 double R_pow(double x, double y) /* = x ^ y */
 {
     if(x == 1. || y == 0.)
@@ -235,7 +230,6 @@ double R_pow(double x, double y) /* = x ^ y */
     return(R_NaN);		/* all other cases: (-Inf)^{+-Inf,
 				   non-int}; (neg)^{+-Inf} */
 }
-#endif
 
 double R_pow_di(double x, int n)
 {

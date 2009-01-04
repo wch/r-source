@@ -782,25 +782,13 @@ SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
     if (data.ans_nnames && data.ans_length > 0) {
 	PROTECT(data.ans_names = allocVector(STRSXP, data.ans_length));
 	data.ans_nnames = 0;
-#ifdef EXPT
-	if (!recurse) {
-#endif
-	    while (args != R_NilValue) {
-		nameData.seqno = 0;
-		nameData.firstpos = 0;
-		nameData.count = 0;
-		NewExtractNames(CAR(args), R_NilValue, TAG(args), recurse, &data, &nameData);
-		args = CDR(args);
-	    }
-#ifdef EXPT
-	}
-	else {
+	while (args != R_NilValue) {
 	    nameData.seqno = 0;
 	    nameData.firstpos = 0;
 	    nameData.count = 0;
-	    NewExtractNames(args, R_NilValue, TAG(args), recurse);
+	    NewExtractNames(CAR(args), R_NilValue, TAG(args), recurse, &data, &nameData);
+	    args = CDR(args);
 	}
-#endif/*EXPT*/
 	setAttrib(ans, R_NamesSymbol, data.ans_names);
 	UNPROTECT(1);
     }
@@ -956,25 +944,6 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 } /* do_unlist */
 
 
-#ifdef UNUSED
-#define LNAMBUF 100
-
-SEXP FetchMethod(char *generic, char *classname, SEXP env)
-{
-    char buf[LNAMBUF];
-    SEXP method;
-    if (strlen(generic) + strlen(classname) + 2 > LNAMBUF)
-	error(_("class name too long in '%s'"), generic);
-    sprintf(buf, "%s.%s", generic, classname);
-    method = findVar(install(buf), env);
-    if (TYPEOF(method)==PROMSXP)
-	method = eval(method, env);
-    if (TYPEOF(method) != CLOSXP)
-	method = R_NilValue;
-    return method;
-}
-#endif
-
 /* cbind(deparse.level, ...) and rbind(deparse.level, ...) : */
 SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1065,10 +1034,6 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Dispatch based on class membership has failed. */
     /* The default code for rbind/cbind.default follows */
     /* First, extract the evaluated arguments. */
-#ifdef OLD
-    for (a = args; a != R_NilValue; a = CDR(a))
-	CAR(a) = PRVALUE(CAR(a));
-#endif
 
     rho = env;
     data.ans_flags = 0;

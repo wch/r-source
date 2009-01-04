@@ -739,45 +739,6 @@ static SEXP DataLoad(FILE *fp, int startup, InputRoutines *m,
     return OffsetToNode(i, &node);
 }
 
-#ifdef UNUSED
-/* These functions convert old (pairlist) lists into new */
-/* (vectorlist) lists.	The conversion can be defeated by */
-/* hiding things inside closures, but it is doubtful that */
-/* anyone has done this. */
-
-static SEXP ConvertPairToVector(SEXP);
-
-static SEXP ConvertAttributes(SEXP attrs)
-{
-    SEXP ap = attrs;
-    while (ap != R_NilValue) {
-	if (TYPEOF(CAR(ap)) == LISTSXP)
-	    SETCAR(ap, ConvertPairToVector(CAR(ap)));
-	ap = CDR(ap);
-    }
-    return attrs;
-}
-
-static SEXP ConvertPairToVector(SEXP obj)
-{
-    int i, n;
-    switch (TYPEOF(obj)) {
-    case LISTSXP:
-	PROTECT(obj = PairToVectorList(obj));
-	n = length(obj);
-	for (i = 0; i < n; i++)
-	    SET_VECTOR_ELT(obj, i, ConvertPairToVector(VECTOR_ELT(obj, i)));
-	UNPROTECT(1);
-	break;
-    case VECSXP:
-	break;
-    default:
-	;
-    }
-    SET_ATTRIB(obj, ConvertAttributes(ATTRIB(obj)));
-    return obj;
-}
-#endif
 
 /* ----- V e r s i o n -- O n e -- S a v e / R e s t o r e ----- */
 

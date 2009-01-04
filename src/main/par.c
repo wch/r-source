@@ -151,17 +151,6 @@ static int ParCode(const char *what)
 }
 
 
-#ifdef UNUSED
-/* par(.)'s call */
-
-static SEXP gcall;
-
-void RecordGraphicsCall(SEXP call)
-{
-    gcall = call;
-}
-#endif
-
 static void par_error(const char *what)
 {
     error(_("invalid value specified for graphical parameter \"%s\""),  what);
@@ -187,14 +176,6 @@ static void posIntCheck(int x, const char *s)
     if (x == NA_INTEGER || x <= 0)
 	par_error(s);
 }
-
-#ifdef UNUSED
-static void naIntCheck(int x, const char *s)
-{
-    if (x == NA_INTEGER)
-	par_error(s);
-}
-#endif
 
 static void posRealCheck(double x, const char *s)
 {
@@ -1159,7 +1140,7 @@ SEXP attribute_hidden do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    else {
 		SET_VECTOR_ELT(value, i, R_NilValue);
-		SET_STRING_ELT(newnames, i, R_NilValue);
+		SET_STRING_ELT(newnames, i, R_BlankString);
 	    }
 	}
 	setAttrib(value, R_NamesSymbol, newnames);

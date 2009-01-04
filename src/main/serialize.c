@@ -402,23 +402,6 @@ static Rcomplex InComplex(R_inpstream_t stream)
     return c;
 }
 
-#ifdef UNUSED
-static int InByte(R_inpstream_t stream)
-{
-    Rbyte rb;
-
-    switch (stream->type) {
-    case R_pstream_ascii_format:
-    case R_pstream_binary_format:
-    case R_pstream_xdr_format:
-	stream->InBytes(stream, &rb, 1);
-	return rb;
-    default:
-	return 0;
-    }
-}
-#endif
-
 /* These utilities for reading characters with an unget option are
    defined so the code in InString can match the code in
    saveload.c:InStringAscii--that way it is easier to match changes in
