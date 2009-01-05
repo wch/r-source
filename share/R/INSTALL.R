@@ -631,7 +631,7 @@ do_install_source <- function(pkg_name, rpkgdir, pkg_dir)
                 unloadNamespace(pkg_name)
             ## suppress second round of parse warnings
             options(warnEscapes = FALSE)
-            Res <- try({.getRequiredPackages(quietly = TRUE)
+            res <- try({.getRequiredPackages(quietly = TRUE)
                         tools:::makeLazyLoading(pkg_name, lib)})
             options(warnEscapes = TRUE)
             if (inherits(res, "try-error"))
