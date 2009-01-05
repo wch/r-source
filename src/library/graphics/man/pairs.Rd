@@ -126,7 +126,7 @@ pairs(USJudgeRatings[1:5], panel=panel.smooth,
 
 ## put (absolute) correlations on the upper panels,
 ## with size proportional to the correlations.
-panel.cor <- function(x, y, digits=2, prefix="", cex.cor)
+panel.cor <- function(x, y, digits=2, prefix="", cex.cor, ...)
 {
     usr <- par("usr"); on.exit(par(usr))
     par(usr = c(0, 1, 0, 1))

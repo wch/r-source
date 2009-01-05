@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 ## issues:
-## interruptibility, including of system() calls
+## interruptibility, especially of system() calls
 ## --fake is little tested
 ## untested on Windows (and will need changes)
 
@@ -23,11 +23,14 @@
 .install_packages <- function()
 {
     ## global variables
-    pkg_dir <- ""
-    pkg_name <- ""
+    pkg_dir <- ""  ## source directory: rpkgdir is installation dir
+    pkg_name <- "" ## name from package DESCRIPTION file
+    lockdir <- ""
     desc <- NULL
     is_first_package <- TRUE
+    stars <- "*"
 
+    on.exit(do_exit_on_error())
     WINDOWS <- .Platform$OS.type == "windows"
     paste0 <- function(...) paste(..., sep="")
 
@@ -61,10 +64,9 @@
             "  -h, --help		print short help message and exit",
             "  -v, --version		print INSTALL version info and exit",
             "      --configure-args=ARGS",
-            "			set arguments for the package's configure script",
-            "			(if any)",
+            "			set arguments for the configure scripts (if any)",
             "      --configure-vars=VARS",
-            "			set variables for the configure script (if any)",
+            "			set variables for the configure scripts (if any)",
             "  -c, --clean		remove files created during installation",
             "      --preclean	remove files created during a previous run",
             "  -d, --debug		turn on shell and build-help debugging",
@@ -79,14 +81,14 @@
             "      --use-zip-help	collect help and examples into zip archives",
             "      --use-zip		combine '--use-zip-data' and '--use-zip-help'",
             "      --fake		do minimal install for testing purposes",
-            "      --no-lock		install on top of any existing installation",
+            "      --no-lock, --unsafe",
+            "			install on top of any existing installation",
             "			without using a lock directory",
-            "      --unsafe		ditto",
             "      --pkglock		use a per-package lock directory",
             "      --libs-only	only install the libs directory",
-            "      --build    	build binary tarball(s) of the installed package(s)",
-            "and on Windows only",
-            "      --auto-zip       select whether to zip automatically",
+            "      --build    	build binaries of the installed package(s)",
+            "\nand on Windows only",
+            "      --auto-zip	select whether to zip automatically",
             "      --no-chm		do not build CHM help",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
@@ -107,7 +109,7 @@
 
             }
         }
-        if (lock) unlink(lockdir, recursive = TRUE)
+        if (lock && nzchar(lockdir)) unlink(lockdir, recursive = TRUE)
     }
 
     do_cleanup_tmpdir <- function()
@@ -117,7 +119,7 @@
         if (utils::file_test("-d", tmpdir)) unlink(tmpdir, recursive=TRUE)
     }
 
-    do_exit_on_error <- function(rm = TRUE)
+    do_exit_on_error <- function()
     {
         ## If we are not yet processing a package, we will not have
         ## set pkg_dir.  It's the first thing in do_install.
@@ -128,11 +130,12 @@
             for(p in bundlepkg) {
                 if (is.na(p) || !nzchar(p)) next
                 pkgdir <- file.path(lib, p)
-                if (rm && utils::file_test("-d", pkgdir)) {
+                if (nzchar(pkgdir) && utils::file_test("-d", pkgdir)) {
                     starsmsg(stars, "Removing ", sQuote(pkgdir))
                     unlink(pkgdir, recursive = TRUE)
                 }
-                if (lock && utils::file_test("-d", lp <- file.path(lockdir, p))) {
+                if (lock && nzchar(lockdir) &&
+                    utils::file_test("-d", lp <- file.path(lockdir, p))) {
                     starsmsg(stars, "Restoring previous ", sQuote(pkgdir))
                     system(paste("mv", lp, pkgdir))
                 }
@@ -140,7 +143,7 @@
         }
 
         do_cleanup()
-        q("no", status = 1)
+        q("no", status = 1, runLast = FALSE)
     }
 
     get_packages <- function(dir)
@@ -228,14 +231,14 @@
 
         Sys.setenv(R_PACKAGE_NAME = pkg_name)
         rpkgdir <- file.path(lib, pkg_name)
-        Sys.setenv(R_PACKAGE_DIR = rpkgdir)
+        Sys.setenv(R_PACKAGE_DIR = rpkgdir) ## installation dir
         status <- tools:::.Rtest_package_depends_R_version()
         if (status) do_exit_on_error()
 
         dir.create(rpkgdir, recursive = TRUE, showWarnings = FALSE)
         if (!utils::file_test("-d", rpkgdir)) {
             message("ERROR unable to create ", sQuote(rpkgdir))
-            do_exit_on_error(FALSE)
+            do_exit_on_error()
         }
 
         ## Make sure we do not attempt installing to srcdir.
@@ -773,8 +776,6 @@
     if (!dir.create(tmpdir))
         stop("cannot create temporary directory")
 
-    stars <- "*"
-
     lib <- lib0 <- ""
     clean <- FALSE
     preclean <- FALSE
@@ -805,7 +806,7 @@
         a <- args[1]
         if (a %in% c("-h", "--help")) {
             Usage()
-            q("no")
+            q("no", runLast = FALSE)
         }
         else if (a %in% c("-v", "--version")) {
             cat("R add-on package installer r",
@@ -815,7 +816,7 @@
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep="\n")
-            q("no")
+            q("no", runLast = FALSE)
         } else if (a %in% c("-c", "--clean")) {
             clean <- TRUE
             shargs <- c(shargs, "--clean")
@@ -898,7 +899,7 @@
                 } else {
                     message("unknown package layout")
                     do_cleanup_tmpdir()
-                    q("no", status = 1)
+                    q("no", status = 1, runLast = FALSE)
                 }
             } else if (file.exists(file.path(tmpdir, pkgname, "DESCRIPTION"))) {
                 allpkgs <- c(allpkgs, get_packages(file.path(tmpdir, pkgname)))
@@ -955,13 +956,13 @@
             message("ERROR: failed to lock directory ", sQuote(lib),
                     " for modifying\nTry removing ", sQuote(lockdir))
             do_cleanup_tmpdir()
-            q("no", status=3)
+            q("no", status=3, runLast = FALSE)
         }
         dir.create(lockdir, recursive = TRUE)
         if (!utils::file_test("-d", lockdir)) {
             message("ERROR: failed to create lock directory ", sQuote(lockdir))
             do_cleanup_tmpdir()
-            q("no", status=3)
+            q("no", status=3, runLast = FALSE)
         }
         if (debug) starsmsg(stars, "created lock directory ", sQuote(lockdir))
     }
@@ -1006,6 +1007,8 @@
 
     for(pkg in allpkgs) do_install(pkg)
     do_cleanup()
+    on.exit()
+    invisible()
 }
 
 
