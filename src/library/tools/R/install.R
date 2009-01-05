@@ -17,8 +17,6 @@
 ## issues:
 ## interruptibility, especially of system() calls
 ## --fake is little tested
-## untested on Windows (and will need changes)
-
 
 .install_packages <- function()
 {
@@ -36,13 +34,13 @@
 
     TAR <- shQuote(Sys.getenv("TAR"))
     GZIP <- Sys.getenv("R_GZIPCMD")
-    if(!nzchar(GZIP)) GZIP <- "gzip"
+    if (!nzchar(GZIP)) GZIP <- "gzip"
+    if (WINDOWS) zip <- "zip"
     rarch <- Sys.getenv("R_ARCH")
-    etcpath <- paste0("etc", rarch)
 
     SHLIB_EXT <- if (WINDOWS) ".dll" else {
         ## can we do better?
-        mconf <- file.path(R.home(), etcpath, "Makeconf")
+        mconf <- file.path(R.home(), paste0("etc", rarch), "Makeconf")
         sub(".*= ", "", grep("SHLIB_EXT", readLines(mconf), value = TRUE))
     }
 
@@ -257,7 +255,7 @@
             do_install_binary(pkg_name, rpkgdir)
 
         ## FIXME do this in R?
-        if (.Platform$OS.type != "windows")
+        if (!WINDOWS)
             system(paste("find", shQuote(rpkgdir),  "-exec chmod a+r \\{\\} \\;"))
 
         starsmsg(stars, "DONE (", pkg_name, ")")
@@ -291,11 +289,15 @@
 
         cp_r <- function(from, to)
         {
-            TAR <- shQuote(Sys.getenv("TAR"))
-            from <- shQuote(from)
-            to <- shQuote(to)
-            system(paste("cp -r ", from, "/* ", to,
-                         " || (cd ", from, " && ", TAR, " cf - . | (cd '", to, "' && ", TAR, "xf - ))", sep = ""))
+            if (WINDOWS) {
+                system(paste0("cp -r ", shQuote(from), "/* ", shQuote(to)))
+            } else {
+                TAR <- shQuote(Sys.getenv("TAR"))
+                from <- shQuote(from)
+                to <- shQuote(to)
+                system(paste("cp -r ", from, "/* ", to,
+                             " || (cd ", from, " && ", TAR, " cf - . | (cd '", to, "' && ", TAR, "xf - ))", sep = ""))
+            }
         }
 
         shlib_install <- function(rpkgdir, arch)
@@ -341,7 +343,7 @@
 
         Type <- desc["Type"]
         if (!is.na(Type) && Type == "Frontend") {
-            if(WINDOWS) errmsg("'Frontend' packages are Unix-only")
+            if (WINDOWS) errmsg("'Frontend' packages are Unix-only")
             starsmsg(stars, "Installing *Frontend* package ", sQuote(pkg_name), " ...")
             if (preclean) system(paste(MAKE, "clean"))
             if (use_configure) {
@@ -349,7 +351,7 @@
                     res <- system(paste(configure_vars,
                                         "./configure",
                                         configure_args))
-                    if(res) pkgerrmsg("configuration failed", pkg_name)
+                    if (res) pkgerrmsg("configuration failed", pkg_name)
                 } else if (file.exists("configure"))
                     errmsg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
             }
@@ -391,7 +393,7 @@
 
             ## Preserve man pages to speed up installation?  Only makes sense
             ## if we install from a non-temporary directory.
-            if(lock && is.na(pmatch(tmpdir, getwd()))) {
+            if (!WINDOWS && lock && is.na(pmatch(tmpdir, getwd()))) {
                 TAR <- shQuote(Sys.getenv("TAR"))
                 system(paste("(cd", shQuote(file.path(lockdir, pkg_name)),
                              "&&", TAR,
@@ -408,24 +410,61 @@
                     unlink(Sys.glob(paste0("*", SHLIB_EXT)))
                 setwd(owd)
             }
-            if (utils::file_test("-x", "cleanup")) system("./cleanup")
+            if (WINDOWS) {
+                if (file.exists("cleanup.win")) system("sh ./cleanup.win")
+            } else if (utils::file_test("-x", "cleanup")) system("./cleanup")
             else if (file.exists("cleanup"))
                 warning("'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'", call. = FALSE)
         }
 
-        if (auto_zip || zip_up) {
-            ## FIXME (Windows only)
+        if (auto_zip || zip_up) { ## --build implies --auto-zip
+            thislazy <- parse_description_field("LazyData", default = lazy_data)
+            if (!thislazy && utils::file_test("-d", "data")) {
+                sizes <- system("ls.exe -s1 data", intern = TRUE)
+                out <- 0; nodups <- TRUE; prev <- ""
+                for(line in sizes) {
+                    if (length(grep("total", line))) next
+                    this <- sub("([ 0-9]*)(.*)", "\\1", line)
+                    out <- out + as.numeric(this)
+                    this <- sub("[[:space:]]*[0-9]+\\ ", "", line)
+                    this <- sub("\\.[a-zA-Z]+$", "", this)
+                    if (this == prev) nodups <- FALSE
+                    prev <- this
+                }
+                if(nodups && out > 100) use_zip_data <- TRUE
+            }
+            if (utils::file_test("-d", "man") &&
+                length(Sys.glob("man/*.Rd")) > 20) use_zip_help <- TRUE
+            message("\n  Using auto-selected zip options '",
+                    if (use_zip_data) "--use-zip-data ",
+                    if (use_zip_help) "--use-zip-help",
+                    "'\n")
         }
 
         if (use_configure) {
-            if (utils::file_test("-x", "configure")) {
-                res <- system(paste(configure_vars,
-                                    "./configure",
-                                    configure_args))
-                if(res) pkgerrmsg("configuration failed", pkg_name)
-            }  else if (file.exists("configure"))
-                errmsg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
+            if (WINDOWS) {
+                if (file.exists("configure.win")) {
+                    ## seems some scripts need / not \
+                    Sys.setenv(R_HOME = chartr("\\", "/", R.home()))
+                    res <- system("sh ./configure.win")
+                    if (res) pkgerrmsg("configuration failed", pkg_name)
+                } else if (file.exists("configure"))
+                    message("\n",
+                            "   **********************************************\n",
+                            "   WARNING: this package has a configure script\n",
+                            "         It probably needs manual configuration\n",
+                            "   **********************************************\n\n")
+            } else {
+                if (utils::file_test("-x", "configure")) {
+                    res <- system(paste(configure_vars,
+                                        "./configure",
+                                        configure_args))
+                    if (res) pkgerrmsg("configuration failed", pkg_name)
+                }  else if (file.exists("configure"))
+                    errmsg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
+            }
         }
+
 
         if (more_than_libs) {
             for (f in c("NAMESPACE", "LICENSE", "LICENCE", "COPYING", "NEWS"))
@@ -460,61 +499,77 @@
                     Sys.setenv(CLINK_CPPFLAGS = clink_cppflags)
                 }
             }
-            dir.create(file.path(rpkgdir, paste0("libs", rarch)), showWarnings = FALSE)
-            if (file.exists("src/Makefile")) {
-                arch <- substr(rarch, 2, 1000)
-                starsmsg(stars, "arch - ", arch)
-                owd <- setwd("src")
-                makefiles <- c(system_makefile, "Makefile")
-                if (file.exists(f <- path.expand(paste("~/.R/Makevars",
-                                                       Sys.getenv("R_PLATFORM"), sep="-"))))
-                    makefiles <- c(makefiles, f)
-                else if (file.exists(f <- path.expand(paste("~/.R/Makevars"))))
-                    makefiles <- c(makefiles, f)
-                res <- system(paste(MAKE,
-                                    paste("-f", shQuote(makefiles), collapse = " ")))
-                if (res == 0) shlib_install(rpkgdir, rarch)
-                else has_error <- TRUE
-                setwd(owd)
-            } else { ## no src/Makefile
-                owd <- setwd("src")
-                srcs <- dir(pattern = "\\.([cfmCM]|cc|cpp|f90|f95|mm)$")
-                ## This allows Makevars to set OBJECTS or its own targets.
-                allfiles <- if (file.exists("Makevars")) c("Makevars", srcs) else srcs
-                wd2 <- setwd(file.path(R.home(), "bin", "exec"))
-                archs <- Sys.glob("*")
-                setwd(wd2)
-                if (length(allfiles)) {
-                    ## if there is a configure script we install only the main
-                    ## sub-architecture
-                    if (utils::file_test("-x", "../configure")) {
-                        if (nzchar(rarch))
-                            starsmsg(stars, "arch - ", substr(rarch, 2, 1000))
-                        has_error <- run_shlib(pkg_name, srcs, rpkgdir, rarch)
-                    } else {
-                        for(arch in archs) {
-                            system("rm -f *.o *.so *.sl *.dylib")
-                            if (arch == "R") {
-                                ## top-level, so one arch without subdirs
-                                has_error <- run_shlib(pkg_name, srcs, rpkgdir, "")
-                            } else if (arch == "Rgnome") {
-                                ## ignore
-                            } else {
-                                starsmsg(stars, "arch - ", arch)
-                                ra <- paste0("/", arch)
-                                ## FIXME: do this lower down
-                                Sys.setenv(R_ARCH = ra)
-                                has_error <- run_shlib(pkg_name, srcs, rpkgdir, ra)
-                                if(has_error) break
-                                Sys.setenv(R_ARCH = rarch)
+            libdir <- file.path(rpkgdir, paste0("libs", rarch))
+            dir.create(libdir, showWarnings = FALSE)
+            if (WINDOWS) {
+                ## FIXME: this is a first pass
+                Sys.setenv(RHOME = chartr("\\", "/", R.home()))
+                Sys.setenv(PKG = pkg_name)
+                res <- system(paste("make -f", file.path(R.home(), "src/gnuwin32/MakePkg"),
+                                    "srcDynlib"))
+                if (res)
+                    pkgerrmsg("compilation failed", pkg_name)
+                dllfile <- file.path("src", paste0(pkg_name, ".dll"))
+                if (file.exists(dllfile)) {
+                    message("  installing DLL ...")
+                    file.copy(dllfile, libdir)
+                }
+            } else {
+                if (file.exists("src/Makefile")) {
+                    arch <- substr(rarch, 2, 1000)
+                    starsmsg(stars, "arch - ", arch)
+                    owd <- setwd("src")
+                    makefiles <- c(system_makefile, "Makefile")
+                    if (file.exists(f <- path.expand(paste("~/.R/Makevars",
+                                                           Sys.getenv("R_PLATFORM"), sep="-"))))
+                        makefiles <- c(makefiles, f)
+                    else if (file.exists(f <- path.expand(paste("~/.R/Makevars"))))
+                        makefiles <- c(makefiles, f)
+                    res <- system(paste(MAKE,
+                                        paste("-f", shQuote(makefiles), collapse = " ")))
+                    if (res == 0) shlib_install(rpkgdir, rarch)
+                    else has_error <- TRUE
+                    setwd(owd)
+                } else { ## no src/Makefile
+                    owd <- setwd("src")
+                    srcs <- dir(pattern = "\\.([cfmCM]|cc|cpp|f90|f95|mm)$")
+                    ## This allows Makevars to set OBJECTS or its own targets.
+                    allfiles <- if (file.exists("Makevars")) c("Makevars", srcs) else srcs
+                    wd2 <- setwd(file.path(R.home(), "bin", "exec"))
+                    archs <- Sys.glob("*")
+                    setwd(wd2)
+                    if (length(allfiles)) {
+                        ## if there is a configure script we install only the main
+                        ## sub-architecture
+                        if (utils::file_test("-x", "../configure")) {
+                            if (nzchar(rarch))
+                                starsmsg(stars, "arch - ", substr(rarch, 2, 1000))
+                            has_error <- run_shlib(pkg_name, srcs, rpkgdir, rarch)
+                        } else {
+                            for(arch in archs) {
+                                system("rm -f *.o *.so *.sl *.dylib")
+                                if (arch == "R") {
+                                    ## top-level, so one arch without subdirs
+                                    has_error <- run_shlib(pkg_name, srcs, rpkgdir, "")
+                                } else if (arch == "Rgnome") {
+                                    ## ignore
+                                } else {
+                                    starsmsg(stars, "arch - ", arch)
+                                    ra <- paste0("/", arch)
+                                    ## FIXME: do this lower down
+                                    Sys.setenv(R_ARCH = ra)
+                                    has_error <- run_shlib(pkg_name, srcs, rpkgdir, ra)
+                                    if (has_error) break
+                                    Sys.setenv(R_ARCH = rarch)
+                                }
                             }
                         }
-                    }
-                } else warning("no source files found", call. = FALSE)
+                    } else warning("no source files found", call. = FALSE)
+                }
+                if (has_error)
+                    pkgerrmsg("compilation failed", pkg_name)
+                setwd(owd)
             }
-            if (has_error)
-                pkgerrmsg("compilation failed", pkg_name)
-            setwd(owd)
         }                               # end of src dir
 
         if (more_than_libs) {
@@ -581,10 +636,11 @@
                         if (inherits(res, "try-error"))
                             pkgerrmsg("lazydata failed", pkg_name)
                     } else if (use_zip_data &&
-                               nzchar(Sys.getenv("R_UNZIPCMD")) &&
-                               nzchar(zip <- Sys.getenv("R_ZIPCMD"))) {
+                               (WINDOWS ||
+                               (nzchar(Sys.getenv("R_UNZIPCMD")) &&
+                               nzchar(zip <- Sys.getenv("R_ZIPCMD"))) )) {
                         owd <- setwd(file.path(rpkgdir, "data"))
-                        system("find . -type f -print > filelist")
+                        writeLines(dir(), "filelist")
                         system(paste(zip, "-q -m Rdata * -x filelist 00Index"))
                         setwd(owd)
                     }
@@ -659,7 +715,8 @@
                 ## 'Maybe build preformatted help pages ...'
                 if (build_help) {
                     cmd <- paste("perl",
-                                 shQuote(file.path(R.home("share"), "perl", "build-help.pl")),
+                                 shQuote(file.path(R.home("share"), "perl",
+                                                   if (WINDOWS) "build-help-windows.pl" else  "build-help.pl")),
                                  paste(build_help_opts, collapse=" "),
                                  shQuote(pkg_dir),
                                  shQuote(lib),
@@ -670,8 +727,9 @@
                     if (res)
                         pkgerrmsg("building help failed", pkg_name)
                     if (use_zip_help &&
-                        nzchar(Sys.getenv("R_UNZIPCMD")) &&
-                        nzchar(zip <- Sys.getenv("R_ZIPCMD"))) {
+                        (WINDOWS ||
+                         (nzchar(Sys.getenv("R_UNZIPCMD")) &&
+                          nzchar(zip <- Sys.getenv("R_ZIPCMD")) ))) {
                         owd <- setwd(rpkgdir)
                         if (utils::file_test("-d", "R-ex")) {
                             wd2 <- setwd("R-ex")
@@ -689,6 +747,23 @@
                             setwd(wd2)
                         }
                         setwd(owd)
+                    }
+                    if (build_chm) {
+                        if (utils::file_test("-d", "chm")) {
+                            owd <- setwd("chm")
+                            file.copy(file.path(R.home(), "src/gnuwin32/help/Rchm.css"), ".")
+                            file.copy(file.path(R.home(), "doc/html/logo.jpg"), ".")
+                            system(paste0("hhc ", pkg_name, ".hhp"))
+                            ## always gives an error code
+                            chm_file <- paste0(pkg_name, ".chm")
+                            if (file.exists(chm_file)) {
+                                dest <- file.path(rpkgdir, "chtml")
+                                ## parent must exist by now
+                                dir.create(dest, showWarnings = FALSE)
+                                file.copy(chm_file, dest)
+                            }
+                            setwd(owd)
+                        }
                     }
                 }
             } else                      # yes, to stdout
@@ -716,9 +791,10 @@
         ## .arch-ids (arch).
         for(d in c("CVS", ".svn", ".arch-ids", ".git")) {
             ## FIXME
-            system(paste("find",  shQuote(rpkgdir), "-name", d,
-                         "-type d -prune -exe rm \\{\\} \\;"),
-                   ignore.stderr = TRUE)
+            if (!WINDOWS)
+                system(paste("find",  shQuote(rpkgdir), "-name", d,
+                             "-type d -prune -exe rm \\{\\} \\;"),
+                       ignore.stderr = TRUE)
         }
 
         if (clean) {
@@ -732,17 +808,24 @@
                 }
                 setwd(owd)
             }
-            if (utils::file_test("-x", "cleanup")) system("./cleanup")
+            if (WINDOWS) {
+                if (file.exists("cleanup.win")) system("sh ./cleanup.win")
+            } else if (utils::file_test("-x", "cleanup")) system("./cleanup")
             else if (file.exists("cleanup"))
                 warning("'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'",
                         call. = FALSE)
         }
 
-        if (tar_up) {
+        if (WINDOWS) { ## Add MD5 sums: only for --build?
+            starsmsg(stars, "MD5 sums")
+            tools:::.installMD5sums(rpkgdir)
+        }
+
+        if (tar_up) {  ## FIXME: incorrect for bundles
             TAR <- shQuote(Sys.getenv("TAR"))
             GZIP <- Sys.getenv("R_GZIPCMD")
-            if(!nzchar(GZIP)) GZIP <- "gzip"
-            version <- desc["version"]
+            if (!nzchar(GZIP)) GZIP <- "gzip"
+            version <- desc["Version"]
             filename <- paste0(pkg_name, "_", version, "_R_",
                                Sys.getenv("R_PLATFORM"), ".tar")
             filepath <- shQuote(file.path(startdir, filename))
@@ -751,16 +834,18 @@
             message("packaged installation of ",
                     sQuote(pkg_name), " as ", filename, ".gz")
         }
-        if (zip_up) {
+        if (zip_up) {  ## FIXME: incorrect for bundles
             ZIP <- "zip"                # Windows only
-            version <- desc["version"]
+            version <- desc["Version"]
             filename <- paste0(pkg_name, "_", version, ".zip")
             filepath <- shQuote(file.path(startdir, filename))
             ## zip appends to existing archives
             system(paste("rm -f", filepath))
-            system(paste(ZIP, "-r9Xq", filepath))
+            owd <- setwd(lib)
+            system(paste(ZIP, "-r9Xq", filepath, pkg_name))
             message("packaged installation of ",
-                    sQuote(pkg_name), " as ", filename, ".gz")
+                    sQuote(pkg_name), " as ", filename)
+            setwd(owd)
         }
     }
 
@@ -866,7 +951,7 @@
         } else if (a == "--libs-only") {
             libs_only <- TRUE
         } else if (a == "--build") {
-            if(WINDOWS) zip_up <- TRUE else tar_up <- TRUE
+            if (WINDOWS) zip_up <- TRUE else tar_up <- TRUE
         } else pkgs <- c(pkgs, a)
         args <- args[-1]
     }
@@ -881,14 +966,25 @@
             ## Also allow for 'package.tgz' ...
             pkgname <- sub("\\.tgz$", "", pkgname)
             pkgname <- sub("_.*", "", pkgname)
-            ## Note that we use '-m' so that modification dates are *not*
-            ## preserved when untarring the sources.  This is necessary to
-            ## ensure that the preformatted help pages are always rebuilt.
-            ## Otherwise, the build date for an older version may be newer
-            ## than the modification date for the new sources as recorded in
-            ## the tarball ...
-            system(paste(GZIP, "-dc", shQuote(pkg),
-                         "| (cd ", shQuote(tmpdir), "&&", TAR, "-mxf -)"))
+            res <- if (WINDOWS) {
+                ## FIXME: may need to play with paths: Perl version had
+                ## $pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
+                td <- chartr("\\", "/", tmpdir)
+                system(paste("tar -zxf", shQuote(pkg), "-C", shQuote(td)))
+            } else {
+                ## Note that we use '-m' so that modification dates are *not*
+                ## preserved when untarring the sources.  This is necessary to
+                ## ensure that the preformatted help pages are always rebuilt.
+                ## Otherwise, the build date for an older version may be newer
+                ## than the modification date for the new sources as recorded in
+                ## the tarball ...
+
+                ## We cannot assume GNU tar, but we can assume system uses
+                ## a shell which understands subshells and pipes
+                system(paste(GZIP, "-dc", shQuote(pkg),
+                             "| (cd ", shQuote(tmpdir), "&&", TAR, "-mxf -)"))
+            }
+            if (res) errmsg("error unpacking tarball")
             ## If we have a binary bundle distribution, the DESCRIPTION file
             ## is at top level.
             if (file.exists(ff <- file.path(tmpdir, "DESCRIPTION"))) {
@@ -1010,5 +1106,3 @@
     on.exit()
     invisible()
 }
-
-
