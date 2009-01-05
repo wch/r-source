@@ -374,6 +374,8 @@ static int xxgetc(void)
 	xxlastlinelen = xxcolno;
 	xxcolno = 0;
     } else xxcolno++;
+    
+    R_ParseContextLine = xxlineno;    
 
     if ( KeepSource && GenerateCode && FunctionLevel > 0 ) {
 	if(SourcePtr <  FunctionSource + MAXFUNSIZE)
@@ -390,6 +392,7 @@ static int xxungetc(int c)
 	xxlineno -= 1;
 	xxcolno = xxlastlinelen; /* FIXME:  could we push back more than one line? */
 	xxlastlinelen = 0;
+	R_ParseContextLine = xxlineno;
     } else xxcolno--;
 
     if ( KeepSource && GenerateCode && FunctionLevel > 0 )
@@ -1617,7 +1620,8 @@ static void yyerror(char *s)
     _("end of line");
 #endif
 
-    R_ParseError = xxlineno;
+    R_ParseError     = yylloc.first_line;
+    R_ParseErrorCol  = yylloc.first_column;
     R_ParseErrorFile = SrcFile;
 
     if (!strncmp(s, yyunexpected, sizeof yyunexpected -1)) {

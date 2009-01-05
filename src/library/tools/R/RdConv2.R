@@ -69,7 +69,7 @@ stopRd <- function(block, ...)
     srcref <- attr(block, "srcref")
     if (is.null(srcref)) stop(..., call. = FALSE, domain = NA)
     else {
-    	loc <- paste(basename(attr(srcref, "srcfile")$filename),
+    	loc <- paste(attr(srcref, "srcfile")$filename,
                      ":", srcref[1], sep = "")
     	if (srcref[1] != srcref[3]) loc <- paste(loc, "-", srcref[3], sep="")
     	stop(call.=FALSE, loc, ": ", ..., domain = NA)
@@ -83,7 +83,7 @@ warnRd <- function(block, Rdfile, ...)
         warning("file '", Rdfile, "': ", ...,
                 call. = FALSE, domain = NA, immediate. = TRUE)
     else {
-    	loc <- paste(basename(attr(srcref, "srcfile")$filename),
+    	loc <- paste(attr(srcref, "srcfile")$filename,
                      ":", srcref[1], sep = "")
     	if (srcref[1] != srcref[3]) loc <- paste(loc, "-", srcref[3], sep="")
     	warning(loc, ": ", ..., call. = FALSE, domain = NA, immediate. = TRUE)
