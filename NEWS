@@ -319,6 +319,9 @@ BUG FIXES
 	The reports on values now give strings in the original quoted
 	format (with \ and " escaped).
 
+    o	The $<- method for pairlists (including language objects)
+	failed to duplicate if NAMED was 2.
+
 
 
 

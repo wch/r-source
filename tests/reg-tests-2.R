@@ -2320,3 +2320,20 @@ sym <- getDLLRegisteredRoutines("stats")$.C$prho
 try(.C(sym, NULL))
 try(.C(sym$address, NULL))
 ## were OK
+
+
+## $<- on pairlists failed to duplicate (from Felix Andrews,
+## https://stat.ethz.ch/pipermail/r-devel/2009-January/051698.html)
+foo <- function(given = NULL) {
+    callObj <- quote(callFunc())
+    if (!is.null(given)) callObj$given <- given
+    if (is.null(given)) callObj$default <- TRUE
+    callObj
+}
+
+foo()
+foo(given = TRUE)
+foo("blah blah")
+foo(given = TRUE)
+foo()
+## altered foo() in 2.8.1.
