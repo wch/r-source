@@ -1987,10 +1987,10 @@ is available, so we could have used @code{B <- t(A)}.
 @section Matrix facilities
 
 @macro xTx{}
- @eqn{@strong{x}'@strong{x}, x'x}
+ @eqn{@strong{x}^T @strong{x}, x'x}
 @end macro
 @macro xxT{}
- @eqn{@strong{x}@strong{x}', x x'}
+ @eqn{@strong{x}@strong{x}^T, x x'}
 @end macro
 
 As noted above, a matrix is just an array with two subscripts.  However
@@ -2108,10 +2108,10 @@ but rarely is needed.  Numerically, it is both inefficient and
 potentially unstable to compute @code{x <- solve(A) %*% b} instead of
 @code{solve(A,b)}.
 
-The quadratic form @eqn{@strong{x' A^{-1} x},@ @code{x %*% A^@{-1@} %*%
+The quadratic form @eqn{@strong{x^T  A^{-1} x},@ @code{x %*% A^@{-1@} %*%
 x} @ } which is used in multivariate computations, should be computed by
 something like@footnote{Even better would be to form a matrix square
-root @eqn{B, B} with @eqn{A = BB', A = BB'} and find the squared length of the
+root @eqn{B, B} with @eqn{A = BB^T, A = BB'} and find the squared length of the
 solution of @eqn{By = x, By = x}, perhaps using the Cholesky or
 eigendecomposition of @eqn{A, A}.} @code{x %*% solve(A,x)}, rather than
 computing the inverse of @code{A}.
@@ -3589,7 +3589,7 @@ Thus given a @math{n} by @math{1} vector @math{y} and an @math{n} by
 (X'X)^@{-@}X'y, where (X'X)^@{-@}
 @end ifnottex
 @tex
-$(X'X)^{-}X'y$, where $(X'X)^{-}$
+$(X^T X)^{-}X^T y$, where $(X^T X)^{-}$
 @end tex
 is a generalized inverse of @math{X'X}.
 
@@ -3776,7 +3776,7 @@ E = I_v - R^@{-1/2@}N'K^@{-1@}NR^@{-1/2@} = I_v - A'A, where
 A = K^@{-1/2@}NR^@{-1/2@}.
 @end ifnottex
 @tex
-$$E = I_v - R^{-1/2}N'K^{-1}NR^{-1/2} = I_v - A'A,$$
+$$E = I_v - R^{-1/2}N^T K^{-1}NR^{-1/2} = I_v - A^T A,$$
 where $A = K^{-1/2}NR^{-1/2}$.
 @end tex
 One way to write the function is given below.
