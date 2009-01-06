@@ -317,6 +317,33 @@
         }
     }
 
+    ## to be run from package source directory
+    run_clean <- function()
+    {
+        if (utils::file_test("-d", "src")) {
+            owd <- setwd("src")
+            if(WINDOWS) {
+                if (file.exists("Makefile.win"))
+                    system(paste(MAKE, "-f Makefile.win clean"))
+                else
+                    system("rm -f *_res.rc *.o *.d Makedeps")
+                ## FIXME copied from MakePkg: reconsider?
+                system("rm -rf ../chm ../check ../tests/*.Rout")
+            } else {
+                if (file.exists("Makefile")) system(paste(MAKE, "clean"))
+                else ## we will be using SHLIB --preclean
+                    unlink(Sys.glob(paste0("*", SHLIB_EXT)))
+            }
+            setwd(owd)
+        }
+        if (WINDOWS) {
+            if (file.exists("cleanup.win")) system("sh ./cleanup.win")
+        } else if (utils::file_test("-x", "cleanup")) system("./cleanup")
+        else if (file.exists("cleanup"))
+            warning("'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'", call. = FALSE)
+
+    }
+
     do_install_source <- function(pkg_name, instdir, pkg_dir, desc)
     {
         MAKE <- Sys.getenv("MAKE")
@@ -435,20 +462,7 @@
             }
         }
 
-        if (preclean) {
-            if (utils::file_test("-d", "src")) {
-                owd <- setwd("src")
-                if (file.exists("Makefile")) system(paste(MAKE, "clean"))
-                else ## we will be using SHLIB --preclean
-                    unlink(Sys.glob(paste0("*", SHLIB_EXT)))
-                setwd(owd)
-            }
-            if (WINDOWS) {
-                if (file.exists("cleanup.win")) system("sh ./cleanup.win")
-            } else if (utils::file_test("-x", "cleanup")) system("./cleanup")
-            else if (file.exists("cleanup"))
-                warning("'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'", call. = FALSE)
-        }
+        if (preclean) run_clean()
 
         if (auto_zip || zip_up) { ## --build implies --auto-zip
             thislazy <- parse_description_field(desc, "LazyData",
@@ -532,19 +546,37 @@
                                             collapse=" ")
                     Sys.setenv(CLINK_CPPFLAGS = clink_cppflags)
                 }
-            }
+            } else clink_cppflags <- ""
             libdir <- file.path(instdir, paste0("libs", rarch))
             dir.create(libdir, showWarnings = FALSE)
             if (WINDOWS) {
-                ## FIXME: this is a first pass
-                Sys.setenv(RHOME = chartr("\\", "/", R.home()))
-                Sys.setenv(PKG = pkg_name)
-                res <- system(paste("make -f", file.path(R.home(), "src/gnuwin32/MakePkg"),
-                                    "srcDynlib"))
-                if (res)
-                    pkgerrmsg("compilation failed", pkg_name)
+                owd <- getwd() # dummy
+                rhome <- chartr("\\", "/", R.home())
+                makefiles <- character()
+                if (file.exists(f <- path.expand("~/.R/Makevars.win")))
+                    makefiles <- f
+                else if (file.exists(f <- path.expand("~/.R/Makevars")))
+                    makefiles <- f
+                if (file.exists("src/Makefile.win")) {
+                    makefiles <- c("Makefile.wIn", makefiles)
+                    message("  running src/Makefile.win ...")
+                } else {
+                    makefiles <- c(file.path(rhome, "src/gnuwin32/MakeDLL"),
+                                   makefiles)
+                    message("  making DLL ...")
+                }
+                cmd <- paste0("make --no-print-directory -C src RHOME=", shQuote(rhome),
+                              " DLLNAME=", pkg_name,
+                              " CLINK_CPPFLAGS=", shQuote(clink_cppflags),
+                              " ",
+                              paste("-f", shQuote(makefiles), collapse = " "))
+                if(debug) cat("  running make cmd\n\t", cmd, "\n", sep="")
+                res <- system(cmd)
+                message("  ... done")
+                if (res) has_error <- TRUE
+
                 dllfile <- file.path("src", paste0(pkg_name, ".dll"))
-                if (file.exists(dllfile)) {
+                if (!has_error &&file.exists(dllfile)) {
                     message("  installing DLL ...")
                     file.copy(dllfile, libdir)
                 }
@@ -557,7 +589,7 @@
                     if (file.exists(f <- path.expand(paste("~/.R/Makevars",
                                                            Sys.getenv("R_PLATFORM"), sep="-"))))
                         makefiles <- c(makefiles, f)
-                    else if (file.exists(f <- path.expand(paste("~/.R/Makevars"))))
+                    else if (file.exists(f <- path.expand("~/.R/Makevars")))
                         makefiles <- c(makefiles, f)
                     res <- system(paste(MAKE,
                                         paste("-f", shQuote(makefiles), collapse = " ")))
@@ -832,24 +864,7 @@
                        ignore.stderr = TRUE)
         }
 
-        if (clean) {
-            if (utils::file_test("-d", "src")) {
-                owd <- setwd("src")
-                if (file.exists("Makefile"))
-                    system(paste(MAKE, "clean"))
-                else {
-                    ## we used SHLIB --clean
-                    system(paste0("rm -f *", SHLIB_EXT))
-                }
-                setwd(owd)
-            }
-            if (WINDOWS) {
-                if (file.exists("cleanup.win")) system("sh ./cleanup.win")
-            } else if (utils::file_test("-x", "cleanup")) system("./cleanup")
-            else if (file.exists("cleanup"))
-                warning("'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'",
-                        call. = FALSE)
-        }
+        if (clean) run_clean()
 
         if (WINDOWS) { ## Add MD5 sums: only for --build?
             starsmsg(stars, "MD5 sums")
