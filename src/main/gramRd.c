@@ -2560,6 +2560,7 @@ static keywords[] = {
     { "\\samp",    VERBMACRO },
     { "\\special", VERBMACRO },
     { "\\url",     VERBMACRO },
+    { "\\verb",    VERBMACRO },
     
     /* These ones take one or two verbatim args */
     

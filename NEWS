@@ -210,6 +210,10 @@ Rd CONVERSION
     o	R CMD check runs the package's Rd files through parse_Rd() for a
 	stricter syntax check.  This can be suppressed by setting
 	_R_CHECK_RD_PARSE_ to FALSE.
+	
+    o	Added markup \verb, which displays like \code, but parses as
+	verbatim text.  Currently only supported by parse_Rd() and
+	Rd2HTML().
 
 
 INSTALLATION

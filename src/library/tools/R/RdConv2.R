@@ -138,7 +138,8 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type, encoding=
                   "\\preformatted"="pre",
                   "\\special"="PRE",
                   "\\strong"="STRONG",
-                  "\\var"="VAR")
+                  "\\var"="VAR",
+                  "\\verb"="PRE")
     # These have simple substitutions
     HTMLEscapes <- c("\\R"='<font face="Courier New,Courier" color="#666666"><b>R</b></font>',
     		     "\\cr"="<br>",
@@ -240,7 +241,8 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type, encoding=
 	"\\preformatted"=,
 	"\\special"=,
 	"\\strong"=,
-	"\\var"= writeWrapped(tag, block),
+	"\\var",
+	"\\verb"= writeWrapped(tag, block),
 	"\\linkS4class" =,
 	"\\link" = writeLink(tag, block),
 	"\\email" = cat('<a href="mailto:', block[[1]], '">', htmlify(block[[1]]), '</a>', sep="", file=con),
@@ -570,7 +572,8 @@ checkRd <-
 	"\\preformatted"=,
 	"\\special"=,
 	"\\strong"=,
-	"\\var"= checkContent(tag, block),
+	"\\var",
+	"\\verb"= checkContent(tag, block),
 	"\\linkS4class" =,
 	"\\link" = checkLink(tag, block),
 	"\\email" =,
