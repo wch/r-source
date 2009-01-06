@@ -1,6 +1,6 @@
 % File src/library/base/man/logical.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{logical}
@@ -30,6 +30,11 @@ is.logical(x)
   constants in the \R language, whereas \code{T} and \code{F} are global
   variables whose initial values set to these.  All four are
   \code{logical(1)} vectors.
+
+  Logical vectors are coerced to integer vectors in contexts where a
+  numerical value is required, with \code{TRUE} being mapped to
+  \code{1L}, \code{FALSE} to \code{0L} and \code{NA_LOGICAL_} to
+  \code{NA_INTEGER_}.
 }
 \arguments{
   \item{length}{desired length.}
