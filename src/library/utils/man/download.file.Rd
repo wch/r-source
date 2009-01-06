@@ -1,11 +1,14 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{download.file}
 \Rdversion{1.1}
 \alias{download.file}
+\concept{proxy}
+\concept{ftp}
+\concept{http}
 \title{Download File from the Internet}
 \description{
   This function can be used to download a file from the Internet.
@@ -23,8 +26,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   \item{method}{Method to be used for downloading files.  Currently
     download methods \code{"internal"}, \code{"wget"} and \code{"lynx"}
-    are available, and there is a value \code{"auto"}: see \sQuote{Details}.  The
-    method can also be set through the option
+    are available, and there is a value \code{"auto"}: see
+    \sQuote{Details}.  The method can also be set through the option
     \code{"download.file.method"}: see \code{\link{options}()}.}
 
   \item{quiet}{If \code{TRUE}, suppress status messages (if any), and
@@ -168,6 +171,6 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{\link{url}} for a finer-grained way to read data from URLs.
 
   \code{\link{url.show}}, \code{\link{available.packages}},
-  \code{\link{download.packages}} for applications
+  \code{\link{download.packages}} for applications.
 }
 \keyword{utilities}
