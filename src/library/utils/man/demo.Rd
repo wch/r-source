@@ -1,6 +1,6 @@
 % File src/library/utils/man/demo.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{demo}
@@ -39,17 +39,30 @@ demo(topic, package = NULL, lib.loc = NULL,
   earlier versions of R, an empty character vector was returned along
   with listing available demos.
 }
-\seealso{\code{\link{source}} which is called by \code{demo}.}
+\seealso{
+  \code{\link{source}} which is called by \code{demo}.
+  \code{\link[grDevices]{devAskNewPage}} to prompt the user for
+  permission to start a new page of output.
+}
+
 \examples{
 demo() # for attached packages
 
 ## All available demos:
 demo(package = .packages(all.available = TRUE))
 
+## Display a demo, pausing between pages
+oldPrompt <- devAskNewPage(TRUE) # to pause for user input
 demo(lm.glm, package="stats")
+devAskNewPage(oldPrompt)  # restore the default
+
 \dontrun{
  ch <- "scoping"
  demo(ch, character = TRUE)
-}}
+}
+
+## Find the location of a demo
+system.file("demo", "lm.glm.R", package="stats")
+}
 \keyword{documentation}
 \keyword{utilities}
