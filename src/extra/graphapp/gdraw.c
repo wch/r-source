@@ -27,10 +27,10 @@
 extern unsigned int TopmostDialogs; /* from dialogs.c */
 #include <winbase.h>
 #include <wchar.h>
-#if defined __GNUC__
+#ifdef __GNUC__
 # define alloca(x) __builtin_alloca((x))
-else
-#error need appropriate declaration for alloca
+#else
+# error need appropriate declaration for alloca
 #endif
 
 /* from extra.c */
