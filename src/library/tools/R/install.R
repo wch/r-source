@@ -44,6 +44,14 @@
     options(warn = 1)
     invisible(Sys.setlocale("LC_COLLATE", "C")) # discard output
 
+    if (WINDOWS) {
+        rhome <- chartr("\\", "/", R.home())
+        ## These might be needed for configure.win and Make{file,vars}.win
+        ## Some people have *assumed* that R_HOME uses /
+        Sys.setenv(R_HOME = rhome)
+        ## and others have assumed that RHOME is set:
+        Sys.setenv(RHOME = rhome)
+    }
 
     Usage <- function() {
         cat("Usage: R CMD INSTALL [options] pkgs",
@@ -498,11 +506,6 @@
         if (use_configure) {
             if (WINDOWS) {
                 if (file.exists("configure.win")) {
-                    ## seems some scripts need / not \
-                    rhome <-  chartr("\\", "/", R.home())
-                    Sys.setenv(R_HOME = rhome)
-                    ## FIXME and Cairo is expecting RHOME, not R_HOME
-                    Sys.setenv(RHOME = rhome)
                     res <- system("sh ./configure.win")
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 } else if (file.exists("configure"))
@@ -560,7 +563,6 @@
             libdir <- file.path(instdir, paste0("libs", rarch))
             dir.create(libdir, showWarnings = FALSE)
             if (WINDOWS) {
-                rhome <- chartr("\\", "/", R.home())
                 makefiles <- character()
                 if (file.exists(f <- path.expand("~/.R/Makevars.win")))
                     makefiles <- f
