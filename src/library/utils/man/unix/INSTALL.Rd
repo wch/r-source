@@ -1,6 +1,6 @@
 % File src/library/utils/man/unix/INSTALL.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{INSTALL}
@@ -59,7 +59,9 @@
   If \option{--no-docs} is given, no help files are built.  Options
   \option{--no-text}, \option{--no-html}, and \option{--no-latex} suppress
   creating the text, HTML, and LaTeX versions, respectively.  The
-  default is to build help files in all three versions.
+  default is to build help files in all three versions.  Similarly,
+  \option{--no-example} suppresses extraction of the \R code for the
+  examples from the help files.
 
   If the attempt to install the package fails, leftovers are removed.
   If the package was already installed, the old version is restored.

@@ -14,9 +14,10 @@
 \special{R CMD INSTALL [options] [-l lib] pkgs}
 }
 \arguments{
-  \item{pkgs}{A space-separated list with the path names of the sources of the
+  \item{pkgs}{a space-separated list with the path names of the sources of the
     packages to be installed.}
-  \item{lib}{the path name of the \R library tree to install to.}
+  \item{lib}{the path name of the \R library tree to install to.  Also
+    accepted in the form \samp{--library=lib}.}
   \item{options}{a space-separated list of options through which in
     particular the process for building the help files can be controlled.
     Options should only be given once, and paths including spaces should

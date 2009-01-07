@@ -241,6 +241,12 @@ PACKAGE INSTALLATION
     o	install.packages() gains a 'configure.vars' argument, and both
 	this and 'configure.args' get their defaults from options().
 
+    o	There is a unified R script for INSTALL on both Unix-alike and
+	Windows that takes option names used by either in the past.
+	It adds --no-multiarch to disable building other than the main
+	sub-architecture.
+	[Pro tem this is accessed by R CMD RINSTALL.]
+
 
 C-LEVEL FACILITIES
 

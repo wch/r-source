@@ -15,7 +15,6 @@
 #  http://www.r-project.org/Licenses/
 
 ## issues:
-## interruptibility, especially of system() calls
 ## --fake is little tested
 
 .install_packages <- function()
@@ -51,21 +50,17 @@
             "",
             "Install the add-on packages specified by pkgs.  The elements of pkgs can",
             "be relative or absolute paths to directories with the package (bundle)",
-            "sources, or to gzipped package 'tar' archives.  The library tree to",
-            "install to can be specified via '--library'.  By default, packages are",
+            "sources, or to gzipped package 'tar' archives (Unix only).  The library tree",
+            "to install to can be specified via '--library'.  By default, packages are",
             "installed in the library tree rooted at the first directory in",
             ".libPaths() for an R session run in the current environment",
             "",
             "Options:",
             "  -h, --help		print short help message and exit",
             "  -v, --version		print INSTALL version info and exit",
-            "      --configure-args=ARGS",
-            "			set arguments for the configure scripts (if any)",
-            "      --configure-vars=VARS",
-            "			set variables for the configure scripts (if any)",
             "  -c, --clean		remove files created during installation",
             "      --preclean	remove files created during a previous run",
-            "  -d, --debug		turn on shell and build-help debugging",
+            "  -d, --debug		turn on script and build-help debugging",
             "  -l, --library=LIB	install packages to library tree LIB",
             "      --no-configure    do not use the package's configure script",
             "      --no-docs		do not build and install documentation",
@@ -81,8 +76,14 @@
             "			install on top of any existing installation",
             "			without using a lock directory",
             "      --pkglock		use a per-package lock directory",
-            "      --libs-only	only install the libs directory",
             "      --build    	build binaries of the installed package(s)",
+            "`nfor Unix",
+            "      --configure-args=ARGS",
+            "			set arguments for the configure scripts (if any)",
+            "      --configure-vars=VARS",
+            "			set variables for the configure scripts (if any)",
+            "      --libs-only	only install the libs directory",
+            "      --no-multiarch	build only the main architecture",
             "\nand on Windows only",
             "      --auto-zip	select whether to zip automatically",
             "      --no-chm		do not build CHM help",
@@ -531,7 +532,8 @@
         }
 
         if (utils::file_test("-d", "src") && !fake) {
-            system_makefile <- file.path(R.home(), paste0("etc", rarch), "Makeconf")
+            system_makefile <- file.path(R.home(), paste0("etc", rarch),
+                                         "Makeconf")
             starsmsg(stars, "libs")
             if (!file.exists(file.path(R.home("include"), "R.h")))
                 ## maybe even an error?  But installing Fortran-based packages should work
@@ -607,7 +609,8 @@
                     if (length(allfiles)) {
                         ## if there is a configure script we install only the main
                         ## sub-architecture
-                        if (utils::file_test("-x", "../configure")) {
+                        if (!multiarch ||
+                            utils::file_test("-x", "../configure")) {
                             if (nzchar(rarch))
                                 starsmsg(stars, "arch - ", substr(rarch, 2, 1000))
                             has_error <- run_shlib(pkg_name, srcs, instdir, rarch)
@@ -910,6 +913,7 @@
     libs_only <- FALSE
     tar_up <- zip_up <- FALSE
     shargs <- character(0)
+    multiarch <- TRUE
 
     while(length(args)) {
         a <- args[1]
@@ -974,6 +978,8 @@
             pkglock <- TRUE
         } else if (a == "--libs-only") {
             libs_only <- TRUE
+        } else if (a == "--multiarch") {
+            multiarch <- FALSE
         } else if (a == "--build") {
             if (WINDOWS) zip_up <- TRUE else tar_up <- TRUE
         } else if (substr(a, 1, 1) == "-") {

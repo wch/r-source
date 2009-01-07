@@ -50,6 +50,12 @@ NEW FEATURES
 	Rgui console to be minimized, maximize or restored and (not
 	the console) hidden, and to have recording turned on or off.
 
+    o	Rcmd INSTALL now supports the same option names as the
+	Unix-alike version: use 'Rcmd INSTALL --help' for details.
+	In particular, --docs is replaced by --no-docs, --no-text,
+	--no-html, --no-latex, --no-example and --no-chm.
+	[Pro tem: when used as Rcmd RINSTALL" ?INSTALL is not yet updated.]
+
 
 INSTALLATIOM
 
