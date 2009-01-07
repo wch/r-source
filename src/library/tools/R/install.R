@@ -436,8 +436,13 @@
         }
 
         OS_type <- desc["OS_type"]
-        if ((!is.na(OS_type) && OS_type == "windows") && !fake)
-            errmsg(" Windows-only package")
+        if (WINDOWS) {
+            if ((!is.na(OS_type) && OS_type == "unix") && !fake)
+                errmsg(" Unix-only package")
+        } else {
+            if ((!is.na(OS_type) && OS_type == "windows") && !fake)
+                errmsg(" Windows-only package")
+        }
 
         starsmsg(stars, "Installing *source* package ", sQuote(pkg_name), " ...")
 
@@ -494,7 +499,10 @@
             if (WINDOWS) {
                 if (file.exists("configure.win")) {
                     ## seems some scripts need / not \
-                    Sys.setenv(R_HOME = chartr("\\", "/", R.home()))
+                    rhome <-  chartr("\\", "/", R.home())
+                    Sys.setenv(R_HOME = rhome)
+                    ## FIXME and Cairo is expecting RHOME, not R_HOME
+                    Sys.setenv(RHOME = rhome)
                     res <- system("sh ./configure.win")
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 } else if (file.exists("configure"))
@@ -582,7 +590,7 @@
                     message("  installing DLL ...")
                     file.copy(dllfile, libdir)
                 }
-            } else {
+            } else { # not WINDOWS
                 if (file.exists("src/Makefile")) {
                     arch <- substr(rarch, 2, 1000)
                     starsmsg(stars, "arch - ", arch)
