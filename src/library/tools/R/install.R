@@ -560,7 +560,6 @@
             libdir <- file.path(instdir, paste0("libs", rarch))
             dir.create(libdir, showWarnings = FALSE)
             if (WINDOWS) {
-                owd <- getwd() # dummy
                 rhome <- chartr("\\", "/", R.home())
                 makefiles <- character()
                 if (file.exists(f <- path.expand("~/.R/Makevars.win")))
@@ -571,7 +570,7 @@
                     makefiles <- c("Makefile.wIn", makefiles)
                     message("  running src/Makefile.win ...")
                 } else {
-                    makefiles <- c(file.path(rhome, "src/gnuwin32/MakeDLL"),
+                    makefiles <- c(file.path(rhome, "src/gnuwin32/MakeDll"),
                                    makefiles)
                     message("  making DLL ...")
                 }
@@ -643,10 +642,10 @@
                         }
                     } else warning("no source files found", call. = FALSE)
                 }
-                if (has_error)
-                    pkgerrmsg("compilation failed", pkg_name)
                 setwd(owd)
             }
+            if (has_error)
+                pkgerrmsg("compilation failed", pkg_name)
         }                               # end of src dir
 
         if (more_than_libs) {
