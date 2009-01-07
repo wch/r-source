@@ -1,4 +1,4 @@
-% File src/library/utils/man/windows/INSTALL.Rd
+% File src/library/utils/man/INSTALL.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
@@ -6,23 +6,21 @@
 \name{INSTALL}
 \Rdversion{1.1}
 \alias{INSTALL}
-\title{Install Add-on Packages from Sources}
-\description{
-  Utility for installing add-on source packages.
-}
+\title{Install Add-on Packages}
+\description{Utility for installing add-on packages.}
 \usage{
 \special{R CMD INSTALL [options] [-l lib] pkgs}
 }
 \arguments{
-  \item{pkgs}{a space-separated list with the path names of the sources of the
-    packages to be installed.}
+  \item{pkgs}{a space-separated list with the path names of the packages to be
+    installed.}
   \item{lib}{the path name of the \R library tree to install to.  Also
     accepted in the form \samp{--library=lib}.}
   \item{options}{a space-separated list of options through which in
     particular the process for building the help files can be controlled.
     Most ptions should only be given once, and paths including spaces should
-    be quoted.
-    Use \code{R CMD INSTALL --help} for the full current list of options.}
+    be quoted.  Use \code{R CMD INSTALL --help} for the full current
+    list of options.}
 }
 \details{
   This will stop at the first error, so if you want all the \code{pkgs}
@@ -38,24 +36,44 @@
   duration of the install, so required packages in the installation
   directory will be found (and used in preference to those in other
   libraries).
+#ifdef windows
 
   Windows Perl and the files for installing from source packages need to
   be installed.  It is possible that environment variable \env{TMPDIR}
   will need to be set (although \code{R CMD} tries to set it suitably
   otherwise): use forward slashes and no spaces for the path to a
-  writeable directory.
+  writable directory.
+#endif
   
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names of directories.  \code{pkgs} may also contain
   names of package/bundle archive files of the form
   \file{pkg_version.tar.gz} as obtained from CRAN: these are then
-  extracted to a temporary directory
+  extracted to a temporary directory.
+#ifdef unix
+  Finally, binary package/bundle archive files (as created by \code{R
+  CMD build --binary} can be supplied.
+#endif
 
   The package sources can be cleaned up prior to installation by
   \option{--preclean} or after by \option{--clean}: cleaning is
   essential if the sources are to be used with more than one
-  platform.
+  architecture or platform.
+#ifdef unix  
   
+  Some package sources contain a \file{configure} script that can be
+  passed arguments or variables via the option \option{--configure-args}
+  and \option{--configure-vars}, respectively, if necessary.  The latter
+  is useful in particular if libraries or header files needed for the
+  package are in non-system directories.  In this case, one can use the
+  configure variables \code{LIBS} and \code{CPPFLAGS} to specify these
+  locations (and set these via \option{--configure-vars}), see section
+  \dQuote{Configuration variables} in \dQuote{R Installation and
+  Administration} for more information.  (If these are used more than
+  once on the command line they are concatenated.)  One can bypass the
+  configure mechanism using the option \option{--no-configure}.
+#endif
+
   If \option{--no-docs} is given, no help files are built.  Options
   \option{--no-text}, \option{--no-html}, and \option{--no-latex} suppress
   creating the text, HTML, and LaTeX versions, respectively.  The
@@ -80,6 +98,7 @@
   \var{n})} with \code{\var{n} > 1}.  Finally locking (and restoration
   on error) can be suppressed by \option{--no-lock} or \option{--unsafe}
   (two names for the same option).
+#ifdef windows
   
   On Windows it can be helpful to store text, latex and example code
   files and data files in zip archives since many small files can take
@@ -92,9 +111,22 @@
 
   Option \option{--build} can be used to zip up the installed package or
   bundle for distribution: it implies \option{--auto-zip}.
+#endif
+#ifdef unix
+  
+  Some platforms (notably Mac OS X) support sub-architectures in which
+  binaries for different CPUs are installed within the same library
+  tree. For such installations, the default behaviour is to try to build
+  packages for all installed sub-architectures unless the package has a
+  configure script or a \file{src/Makefile}, when only the
+  sub-architecture running \command{R CMD INSTALL} is used.  To use only
+  that sub-architecture, use \option{--no-multiarch}.  To install just
+  the compiled code for another sub-architecture, use
+  \option{--libs-only}.
+#endif
   
   Use \code{R CMD INSTALL --help} for concise usage information,
-  including all the options.
+  including all the available options
 }
 
 \note{
@@ -123,7 +155,10 @@
 
   The section on \dQuote{Add-on packages} in \dQuote{R Installation and
     Administration} and the chapter on \dQuote{Creating R packages} in
-  \dQuote{Writing \R Extensions} (see the Help menu in \code{RGui},
+  \dQuote{Writing \R Extensions}
+#ifdef windows
+  (on the Help menu in \code{RGui},
+#endif
   \code{\link{RShowDoc}} and the \file{doc/manual} subdirectory of the
   \R source tree).
 }

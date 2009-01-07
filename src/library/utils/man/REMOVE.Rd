@@ -1,4 +1,4 @@
-% File src/library/utils/man/windows/REMOVE.Rd
+% File src/library/utils/man/REMOVE.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2008 R Core Development Team
 % Distributed under GPL 2 or later
@@ -28,9 +28,14 @@
   To remove from the library tree \code{lib} instead of the default
   one, use \code{R CMD REMOVE -l lib pkgs}.
 
-  Windows Perl and the files for installing from source packages need to
-  be installed.  
+  Use \code{R CMD REMOVE --help} for more usage information.  
 }
+#ifdef unix
+\note{
+  Some binary distributions of \R have \code{REMOVE} in a separate
+  bundle, e.g. an \code{R-devel} RPM.
+}
+#endif
 \seealso{
   \code{\link{INSTALL}}, \code{\link{remove.packages}}
 }
