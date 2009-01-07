@@ -77,7 +77,7 @@
             "			without using a lock directory",
             "      --pkglock		use a per-package lock directory",
             "      --build    	build binaries of the installed package(s)",
-            "`nfor Unix",
+            "\nfor Unix",
             "      --configure-args=ARGS",
             "			set arguments for the configure scripts (if any)",
             "      --configure-vars=VARS",
