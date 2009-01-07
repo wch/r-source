@@ -54,7 +54,7 @@ c     implicit none
       integer n, ldx, info
       double precision x(ldx, n), v(n, n)
 c
-      double precision d
+      double precision d(2)
       integer i, j
 c
       do 20 i=1,n

@@ -37,9 +37,9 @@ static DL_FUNC User_unif_fun, User_unif_nseed,
 	User_unif_seedloc;
 typedef void (*UnifInitFun)(Int32);
 
-UnifInitFun User_unif_init;
+UnifInitFun User_unif_init = NULL; /* some picky compilers */
 
-DL_FUNC  User_norm_fun; /* also in ../nmath/snorm.c */
+DL_FUNC  User_norm_fun = NULL; /* also in ../nmath/snorm.c */
 
 
 static RNGtype RNG_kind = RNG_DEFAULT;

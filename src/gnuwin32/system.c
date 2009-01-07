@@ -41,6 +41,9 @@
 #include <windows.h>		/* for CreateEvent,.. */
 #include <process.h>		/* for _beginthread,... */
 #include <io.h>			/* for isatty, chdir */
+#ifdef _MSC_VER  /* for chdir */
+# include <direct.h>
+#endif
 #include "run.h"
 #include "Startup.h"
 #include <stdlib.h>		/* for exit */
@@ -60,7 +63,7 @@ Rboolean DebugMenuitem = FALSE;  /* exported for rui.c */
 static FILE *ifp = NULL;
 static char ifile[MAX_PATH] = "\0";
 
-__declspec(dllexport) UImode  CharacterMode;
+__declspec(dllexport) UImode  CharacterMode = RGui; /* some compilers want initialized for export */
 int ConsoleAcceptCmd;
 void set_workspace_name(const char *fn); /* ../main/startup.c */
 
