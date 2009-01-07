@@ -679,8 +679,13 @@
                         ## symbol resolution w/out 'PACKAGE' arguments.
                         ## However, empty directives are not really meant
                         ## to work ...
+
+                        ## encoding issues ... so need useBytes = TRUE
+                        ## FIXME: some packages have useDynlib()
+                        ## spread over several lines.
                         writeLines(sub("useDynLib.*", 'useDynLib("")',
-                                       readLines("NAMESPACE")),
+                                       readLines("NAMESPACE"),
+                                       perl = TRUE, useBytes = TRUE),
                                    file.path(instdir, "NAMESPACE"))
                         ## </NOTE>
                     } else {
