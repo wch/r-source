@@ -27,7 +27,11 @@
 extern unsigned int TopmostDialogs; /* from dialogs.c */
 #include <winbase.h>
 #include <wchar.h>
-#define alloca(x) __builtin_alloca((x)) /* always GNU C */
+#ifdef __GNUC__
+# define alloca(x) __builtin_alloca((x))
+#else
+# error need appropriate declaration for alloca
+#endif
 
 /* from extra.c */
 extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);

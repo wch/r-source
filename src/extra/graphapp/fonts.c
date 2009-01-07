@@ -34,11 +34,11 @@
 /*
  *  Pre-defined library fonts.
  */
-	font SystemFont = NULL;
-	font FixedFont  = NULL;
-	font Times      = NULL;
-	font Helvetica  = NULL;
-	font Courier    = NULL;
+__declspec(dllexport)	font SystemFont = NULL;
+__declspec(dllexport)	font FixedFont  = NULL;
+__declspec(dllexport)	font Times      = NULL;
+__declspec(dllexport)	font Helvetica  = NULL;
+__declspec(dllexport)	font Courier    = NULL;
 
 /*
  *  Dots per inch for the screen.

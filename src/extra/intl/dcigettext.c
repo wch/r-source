@@ -124,8 +124,9 @@ extern int errno;
 #if defined __GNUC__ && __GNUC__ >= 2
 # define alignof(TYPE) __alignof__ (TYPE)
 #else
+/* R change: was (int) */
 # define alignof(TYPE) \
-    ((int) &((struct { char dummy1; TYPE dummy2; } *) 0)->dummy2)
+    ((size_t) &((struct { char dummy1; TYPE dummy2; } *) 0)->dummy2)
 #endif
 
 /* Some compilers, like SunOS4 cc, don't have offsetof in <stddef.h>.  */

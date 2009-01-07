@@ -56,7 +56,7 @@ console RConsole = NULL;
 #ifdef USE_MDI
 int   RguiMDI = RW_MDI | RW_TOOLBAR | RW_STATUSBAR;
 int   MDIset = 0;
-window RFrame;
+window RFrame = NULL; /* some compilers want initialized for export */
 rect MDIsize;
 #endif
 extern int ConsoleAcceptCmd, R_is_running;

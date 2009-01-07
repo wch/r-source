@@ -157,7 +157,7 @@ int main (int argc, char **argv)
 #ifdef DEBUG
 	    printf("missing\n");
 #endif
-	    if(found) {
+	    if(found || nnames == 0) {
 		fprintf(stderr, "file %s: missing\n", line+34);
 		miss++;
 	    }
@@ -171,7 +171,7 @@ int main (int argc, char **argv)
 #endif
 	    continue;
 	} else {
-	    for(j = 0; j < 16; j++) snprintf (out+2*j, 2, "%02x", resblock[j]);
+	    for(j = 0; j < 16; j++) snprintf (out+2*j, 3, "%02x", resblock[j]);
 	    out[32] = '\0';
 	    if(strcmp(onfile, out) == 0) {
 #ifdef DEBUG
