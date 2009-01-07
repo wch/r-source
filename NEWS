@@ -36,7 +36,7 @@ NEW FEATURES
 	rounding error in computing the number of elements.
 
     o	install.packages() is able to infer that repos=NULL was
-	intended from the extension on the filename specified as 'pkgs'.
+	intended from the extension on the file name specified as 'pkgs'.
 
     o	install.packages() on Mac OS X now supports local binary
 	packages with .tar.gz extension. Nonetheless .tgz remains the
@@ -88,11 +88,11 @@ NEW FEATURES
     o	plot.ts(plot.type="multiple") now makes use of *.lab and
 	*.axis graphical parameters (wish of PR#13134 and 13135).
 
-    o	Classes can be exported from a namespace using the NAMESPACE
-	file directive'exportClassPattern' which has the same syntax
+    o	Classes can be exported from a name space using the NAMESPACE
+	file directive 'exportClassPattern' which has the same syntax
 	as 'exportPattern'.
 
-    o	strftime() now converts its first argment with as.POSIXlt()
+    o	strftime() now converts its first argument with as.POSIXlt()
 	and so is no longer an alias for format.POSIXLt.
 
     o	install.packages() now checks >= version dependencies for
@@ -244,7 +244,9 @@ PACKAGE INSTALLATION
     o	There is a unified R script for INSTALL on both Unix-alike and
 	Windows that takes option names used by either in the past.
 	It adds --no-multiarch to disable building other than the main
-	sub-architecture.
+	sub-architecture, and allows multiple instances of
+	--configure-args and --configure-vars (which will be
+	concatenated).
 	[Pro tem this is accessed by R CMD RINSTALL.]
 
 

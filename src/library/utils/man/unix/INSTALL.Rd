@@ -18,8 +18,8 @@
     accepted in the form \samp{--library=lib}.}
   \item{options}{a space-separated list of options through which in
     particular the process for building the help files can be
-    controlled.  Options should only be given once.
-    Use \code{R CMD INSTALL --help} for the current list of options.
+    controlled.  Most ptions should only be given once.
+    Use \code{R CMD INSTALL --help} for the full current list of options.
   }
 }
 \details{
@@ -31,19 +31,24 @@
   first directory in the library path which would be used by \R run in
   the current environment.
 
-  To install into the library tree \code{lib}, use
-  \code{R CMD INSTALL -l lib pkgs}.  This prepends \code{lib} to
-  \env{R_LIBS} for duration of the install, so required packages in the
-  installation directory will be found (and used in preference to those
-  in other libraries).
+  To install into the library tree \code{lib}, use \code{R CMD INSTALL
+  -l lib pkgs}.  This prepends \code{lib} to the library path for
+  duration of the install, so required packages in the installation
+  directory will be found (and used in preference to those in other
+  libraries).
 
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names of directories.  \code{pkgs} may also contain
   names of package/bundle archive files of the form
   \file{pkg_version.tar.gz} as obtained from CRAN: these are then
-  extracted in a temporary directory.  Finally, binary package/bundle
+  extracted to a temporary directory.  Finally, binary package/bundle
   archive files (as created by \code{R CMD build --binary} can be supplied.
-
+  
+  The package sources can be cleaned up prior to installation by
+  \option{--preclean} or after by \option{--clean}: cleaning is
+  essential if the sources are to be used with more than one
+  architecture or platform.
+  
   Some package sources contain a \file{configure} script that can be
   passed arguments or variables via the option \option{--configure-args}
   and \option{--configure-vars}, respectively, if necessary.  The latter
@@ -52,9 +57,9 @@
   configure variables \code{LIBS} and \code{CPPFLAGS} to specify these
   locations (and set these via \option{--configure-vars}), see section
   \dQuote{Configuration variables} in \dQuote{R Installation and
-    Administration} for more information.  (If these are used more than
-  once on the command line, only the last instance is used.)  One can
-  bypass the configure mechanism using the option \option{--no-configure}.
+  Administration} for more information.  (If these are used more than
+  once on the command line they are concatenated.)  One can bypass the
+  configure mechanism using the option \option{--no-configure}.
 
   If \option{--no-docs} is given, no help files are built.  Options
   \option{--no-text}, \option{--no-html}, and \option{--no-latex} suppress
@@ -69,15 +74,39 @@
   install is interrupted from the keyboard: after cleaning up the script
   terminates.
 
-  Use \code{R CMD INSTALL --help} for more usage information.
+  By default the library directory is \sQuote{locked} by creating a
+  directory \file{00LOCK} within it.  This has two purposes: it
+  prevents any other process installing into that library concurrently,
+  and is used to store any previous version of the package/bundle to
+  restore on error.  A finer-grained locking is provided by the option
+  \option{--pkglock} which creates a separate lock for each
+  package/bundle: this allows enough freedom for careful parallel
+  installation as done by \code{\link{install.packages}(Ncpus =
+  \var{n})} with \code{\var{n} > 1}.  Finally locking (and restoration
+  on error) can be suppressed by \option{--no-lock} or \option{--unsafe}
+  (two names for the same option).
+
+  Some platforms (notably Mac OS X) support sub-architectures in which
+  binaries for different CPUs are installed within the same library
+  tree. For such installations, the default behaviour is to try to build
+  packages for all installed sub-architectures unless the package has a
+  configure script or a \file{src/Makefile}, when only the
+  sub-architecture running \command{R CMD INSTALL} is used.  To use only
+  that sub-architecture, use \option{--no-multiarch}.  To install just
+  the compiled code for another sub-architecture, use
+  \option{--libs-only}.
+
+  Use \code{R CMD INSTALL --help} for concise usage information,
+  including all the options, some of which are not listed here.
 }
 
 \note{
-  Some parts of the operation of \code{INSTALL} depend on \file{/tmp}
-  having both write and execution access to the account running \R.
-  This is usually the case, but if  \file{/tmp} has been mounted as
-  \code{noexec}, environment variable \env{TMPDIR} needs to be set to a
-  directory from which execution is allowed.
+  Some parts of the operation of \code{INSTALL} depend on the \R
+  temporary directory (see \code{\link{tempdir}}, usually under
+  \file{/tmp}) having both write and execution access to the account
+  running \R.  This is usually the case, but if \file{/tmp} has been
+  mounted as \code{noexec}, environment variable \env{TMPDIR} may need
+  to be set to a directory from which execution is allowed.
 }
 
 \section{Packages using the methods package}{

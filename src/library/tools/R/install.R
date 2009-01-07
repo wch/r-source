@@ -418,9 +418,9 @@
             if (preclean) system(paste(MAKE, "clean"))
             if (use_configure) {
                 if (utils::file_test("-x", "configure")) {
-                    res <- system(paste(configure_vars,
+                    res <- system(paste(paste(configure_vars, collapse = " "),
                                         "./configure",
-                                        configure_args))
+                                        paste(configure_args, collapse = " ")))
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 } else if (file.exists("configure"))
                     errmsg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
@@ -516,9 +516,9 @@
                             "   **********************************************\n\n")
             } else {
                 if (utils::file_test("-x", "configure")) {
-                    res <- system(paste(configure_vars,
+                    res <- system(paste(paste(configure_vars, collapse = " "),
                                         "./configure",
-                                        configure_args))
+                                        paste(configure_args, collapse = " ")))
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 }  else if (file.exists("configure"))
                     errmsg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
@@ -915,9 +915,8 @@
     use_zip_data <- FALSE
     use_zip_help <- FALSE
     auto_zip <- FALSE
-    ## FIXME: make these character vectors?
-    configure_args <- ""
-    configure_vars <- ""
+    configure_args <- character(0)
+    configure_vars <- character(0)
     fake <- FALSE
     lazy <- TRUE
     lazy_data <- FALSE
@@ -981,9 +980,9 @@
         } else if (substr(a, 1, 10) == "--library=") {
             lib <- substr(a, 11, 1000)
         } else if (substr(a, 1, 17) == "--configure-args=") {
-            configure_args <- substr(a, 18, 1000)
+            configure_args <- c(configure_args, substr(a, 18, 1000))
         } else if (substr(a, 1, 17) == "--configure-vars=") {
-            configure_vars <- substr(a, 18, 1000)
+            configure_vars <- c(configure_vars, substr(a, 18, 1000))
         } else if (a == "--fake") {
             fake <- TRUE
         } else if (a %in% c("--no-lock", "--unsafe")) {
