@@ -1,13 +1,33 @@
 ##
 ## Rdiff -- diff 'without R version'
 
-## Copyright (C) 2000-2008 The R Core Development Team.
-## This is free software; see the GNU General Public License version 2
-## or later for copying conditions.  There is NO warranty.
+revision='$Rev$'
+version=`set - ${revision}; echo ${2}`
+version="R output diff r${version}
 
-## Usage:
-##   R CMD Rdiff from-file to-file exitstatus
-## where from-file equal to '-' means STDIN
+Copyright (C) 2000-2008 The R Core Development Team.
+This is free software; see the GNU General Public License version 2
+or later for copying conditions.  There is NO warranty."
+
+usage="
+Usage: R CMD Rdiff FROM-FILE TO-FILE EXITSTATUS
+
+Diff R output files FROM-FILE and TO-FILE discarding the R startup message,
+where FROM-FILE equal to '-' means stdin.
+
+Options:
+  -h, --help     print this help message and exit
+  -v, --version  print version info and exit
+
+Report bugs to <r-bugs@r-project.org>."
+
+if test "${#}" -le 1; then
+  case "${1}" in
+    -h | --help) echo "${usage}"; exit 0 ;;
+    -v | --version) echo "${version}"; exit 0 ;;
+    *) echo "${usage}"; exit 1 ;;
+  esac
+fi
 
 ffile=${1}
 tfile=${2}
