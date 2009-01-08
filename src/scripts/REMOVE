@@ -1,10 +1,4 @@
-#!@R_SHELL@
-#
 # ${R_HOME}/bin/REMOVE for removing add-on packages
 
 R_DEFAULT_PACKAGES=NULL "${R_HOME}/bin/R" -f "${R_HOME}/share/R/REMOVE.R" --slave --args $@
 
-### Local Variables: ***
-### mode: sh ***
-### sh-indentation: 2 ***
-### End: ***

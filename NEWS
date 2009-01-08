@@ -247,7 +247,6 @@ PACKAGE INSTALLATION
 	sub-architecture, and allows multiple instances of
 	--configure-args and --configure-vars (which will be
 	concatenated).
-	[Pro tem this is accessed by R CMD RINSTALL.]
 
 
 C-LEVEL FACILITIES

@@ -10,10 +10,10 @@ subdir = src/scripts
 
 include $(top_builddir)/Makeconf
 
-SCRIPTS_S = RINSTALL
+SCRIPTS_S = INSTALL REMOVE
 ## <NOTE>
 ## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.
-SCRIPTS_B_IN = BATCH.in LINK.in COMPILE.in INSTALL.in REMOVE.in \
+SCRIPTS_B_IN = BATCH.in LINK.in COMPILE.in \
   Rcmd.in Rdconv.in Rdiff.in Rd2dvi.in Rd2txt.in Rprof.in \
   SHLIB.in Sd2Rd.in Sweave.in Stangle.in build.in check.in config.in \
   f77_f2c.in javareconf.in mkinstalldirs.in pager.in rtags.in
@@ -43,11 +43,7 @@ BATCH: $(srcdir)/BATCH.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 COMPILE: $(srcdir)/COMPILE.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-INSTALL: $(srcdir)/INSTALL.in $(top_builddir)/config.status
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 LINK: $(srcdir)/LINK.in $(top_builddir)/config.status
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-REMOVE: $(srcdir)/REMOVE.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 Rcmd: $(srcdir)/Rcmd.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@

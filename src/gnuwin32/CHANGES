@@ -54,7 +54,6 @@ NEW FEATURES
 	Unix-alike version: use 'Rcmd INSTALL --help' for details.
 	In particular, --docs is replaced by --no-docs, --no-text,
 	--no-html, --no-latex, --no-example and --no-chm.
-	[Pro tem: when used as Rcmd RINSTALL.]
 
 
 INSTALLATIOM

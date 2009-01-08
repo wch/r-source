@@ -342,9 +342,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    } else if (strcmp(p, "config") == 0) {
 		strcpy(cmd, "sh ");
 		strcat(cmd, RHome); strcat(cmd, "/bin/config.sh");
-	    } else if (strcmp(p, "RINSTALL") == 0) {
+	    } else if (strcmp(p, "INSTALL") == 0) {
 		strcpy(cmd, "sh ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/RINSTALL.sh");
+		strcat(cmd, RHome); strcat(cmd, "/bin/INSTALL.sh");
 	    } else {
 		if (!strcmp(".sh", p + strlen(p) - 3)) {
 		    strcpy(cmd, "sh ");
