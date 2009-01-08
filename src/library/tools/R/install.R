@@ -1276,10 +1276,10 @@
 
     makeargs <- p0("SHLIB=", shQuote(shlib))
     if (with_f9x) {
-        makeargs <- c('SHLIB_LDFLAGS-"$(SHLIB_FCLDFLAGS)"',
+        makeargs <- c('SHLIB_LDFLAGS="$(SHLIB_FCLDFLAGS)"',
                       'SHLIB_LD="SHLIB_FCLD"', makeargs)
     } else if (with_cxx) {
-        makeargs <- c('SHLIB_LDFLAGS-"$(SHLIB_CXXDFLAGS)"',
+        makeargs <- c('SHLIB_LDFLAGS="$(SHLIB_CXXDFLAGS)"',
                       'SHLIB_LD="SHLIB_CXXLD"', makeargs)
     }
     if (with_objc) shlib_libadd <- c(shlib_libadd, "$(OBJC_LIBS)")
