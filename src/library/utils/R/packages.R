@@ -744,8 +744,9 @@ compareVersion <- function(a, b)
 
     .split_dependencies <- function(x) {
         .split2 <- function(x) {
-            ## same regexp as tools::.split_dependencies
-            x <- unique(sub("^[[:space:]]*([^[:space:]]*)[[:space:]]*$", "\\1" , x))
+            ## some have had space before ,
+            x <- sub('[[:space:]]+$', '', x)
+            x <- unique(sub("^[[:space:]]*(.*)[[:space:]]*$", "\\1" , x))
             names(x) <- sub("^([[:alnum:].]+).*$", "\\1" , x)
             x <- x[names(x) != "R"]
             ## FIXME: a better way to handle duplicates.

@@ -1217,8 +1217,9 @@ function(x)
     ## return a named list of list (name, [op, version])
     if(!length(x)) return(list())
     x <- unlist(strsplit(x, ","))
-    ## some have had space after,
-    x <- unique(sub("^[[:space:]]*([^[:space:]]*)[[:space:]]*$", "\\1" , x))
+    ## some have had space before ,
+    x <- sub('[[:space:]]+$', '', x)
+    x <- unique(sub("^[[:space:]]*(.*)[[:space:]]*$", "\\1" , x))
     names(x) <- sub("^([[:alnum:].]+).*$", "\\1" , x)
     lapply(x, .split_op_version)
 }
@@ -1230,6 +1231,7 @@ function(x)
 {
     ## given a single piece of dependency
     ## return a list of components (name, [op, version])
+    ## NB this relies on trailing space having been removed
     pat <- "^([^\\([:space:]]+)[[:space:]]*\\(([^\\)]+)\\).*"
     x1 <- sub(pat, "\\1", x)
     x2 <- sub(pat, "\\2", x)
@@ -1237,7 +1239,7 @@ function(x)
         pat <- "[[:space:]]*([[<>=!]+)[[:space:]]+(.*)"
         list(name = x1, op = sub(pat, "\\1", x2),
              version = package_version(sub(pat, "\\2", x2)))
-    } else list(name=x1)
+    } else list(name = x1)
 }
 
 ### ** .strip_whitespace
