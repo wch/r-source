@@ -251,7 +251,7 @@ clean:
 	  reg-plot-latin1.ps reg-tests-?.ps \
 	  $(test-src-auto) R-exts.* R-exts_res.rc R-intro.R Makedeps
 	@rm -rf *.Rcheck myTst* myLib
-	@rm -f FALSE* .R .tex mirrors.html Rplots*.pdf
+	@rm -f FALSE* PACKAGES* .R .tex mirrors.html Rplots*.pdf
 	@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	@rm -f ver10.txt ver10.html ver10.tex ver10-Ex.R
 	@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R
