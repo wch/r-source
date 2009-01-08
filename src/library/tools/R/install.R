@@ -1220,10 +1220,8 @@
             dry_run <- TRUE
         } else if (a %in% c("-c", "--clean")) {
             clean <- TRUE
-            shargs <- c(shargs, "--clean")
         } else if (a == "--preclean") {
             preclean <- TRUE
-            shargs <- c(shargs, "--preclean")
         } else if (a == "-o") {
             if (length(args) >= 2) {shlib <- args[2]; args <- args[-1]}
             else stop("-o option without value", call. = FALSE)
@@ -1267,8 +1265,14 @@
     }
     if(length(objs)) objs <- p0(objs, OBJ_EXT, collapse=" ")
 
+    if (file.exists(f <- path.expand("~/.R/Makevars.win")))
+        makefiles <- c(makefiles, f)
+    else if (file.exists(f <- path.expand("~/.R/Makevars")))
+        makefiles <- c(makefiles, f)
+
     makeobjs <- p0("OBJECTS=", shQuote(objs))
     if (file.exists("Makevars")) {
+        makefiles <- c("Makevars", makefiles)
         lines <- readLines("Makevars")
         if(length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes=TRUE)))
             makeobjs <- ""
@@ -1299,9 +1303,9 @@
         system(paste(cmd, "-n"))
         res <- 0
     } else {
-        if(preclean) system(paste(cmd, "clean"))
+        if(preclean) system(paste(cmd, "shlib-clean"))
         res <- system(cmd)
-        if(clean) system(paste(cmd, "clean"))
+        if(clean) system(paste(cmd, "shlib-clean"))
     }
     q("no", runLast=FALSE, status = res)
 }
