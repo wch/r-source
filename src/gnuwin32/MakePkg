@@ -1,4 +1,6 @@
 #-*- Makefile -*-
+## As from Jan 2008 this is only used for standard packages.
+
 RLIB=../../../library
 DPKG=$(RLIB)/$(PKG)
 SPKG=.

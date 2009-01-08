@@ -2,7 +2,7 @@ include ../MkRules
 
 R_HOME = ../../..
 
-all: profiles fixhtml fixbin fixetc fixshare ../XINSTALL svnonly
+all: profiles fixhtml fixbin fixetc fixshare svnonly
 
 profiles: $(R_HOME)/library/base/R/Rprofile
 
@@ -54,7 +54,4 @@ $(R_HOME)/doc/html/search/SearchEngine.html: $(R_HOME)/doc/html/search/SearchEng
 	cat html/search/SearchEngine-head.html > html/search/SearchEngine.html; \
 	$(PERL) ../tools/keywords2html.pl KEYWORDS.db >> html/search/SearchEngine.html; \
 	cat html/search/SearchEngine-foot.html >> html/search/SearchEngine.html)
-../XINSTALL: bin/INSTALL
-ifeq ($(strip $(BUILD)),CROSS)
-	@$(SED) -e 's/"GCC4"/"CROSS"/' $< > $@
-endif
+

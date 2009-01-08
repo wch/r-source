@@ -55,6 +55,10 @@ NEW FEATURES
 	In particular, --docs is replaced by --no-docs, --no-text,
 	--no-html, --no-latex, --no-example and --no-chm.
 
+    o	Cross-compiling of packages (including recommended packages)
+	using INSTALL is currently not supported.  [We hope to
+	reinstate this before release.]
+
 
 INSTALLATIOM
 

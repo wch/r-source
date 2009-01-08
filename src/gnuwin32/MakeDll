@@ -1,4 +1,5 @@
 #-*- Makefile -*-
+## This is called from R CMD SHLIB and R CMD INSTALL
 
 all:  before makeMakedeps $(DLLNAME).dll after
 

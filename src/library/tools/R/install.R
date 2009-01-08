@@ -461,10 +461,9 @@
             if (lock) {
                 if (debug) starsmsg(stars, "backing up earlier installation")
                 system(paste("mv", instdir, file.path(lockdir, pkg_name)))
-            } else if (more_than_libs)
-                ## this is only used for recommended packages installed from .tgz
+            } else if (more_than_libs && !WINDOWS)
                 unlink(instdir, recursive = TRUE)
-            dir.create(instdir, recursive=TRUE)
+            dir.create(instdir, recursive=TRUE, showWarnings = FALSE)
 
             ## Preserve man pages to speed up installation?  Only makes sense
             ## if we install from a non-temporary directory.
@@ -653,7 +652,8 @@
         if (more_than_libs) {
             if (utils::file_test("-d", "R")) {
                 starsmsg(stars, "R")
-                dir.create(file.path(instdir, "R"), recursive = TRUE)
+                dir.create(file.path(instdir, "R"), recursive = TRUE,
+                           showWarnings = FALSE)
                 ## This cannot be done in a C locale
                 res <- try(tools:::.install_package_code_files(".", instdir))
                 if (inherits(res, "try-error"))
@@ -702,7 +702,8 @@
                 starsmsg(stars, "data")
                 files <- Sys.glob(file.path("data", "*"))
                 if (length(files)) {
-                    dir.create(file.path(instdir, "data"), recursive = TRUE)
+                    dir.create(file.path(instdir, "data"), recursive = TRUE,
+                               showWarnings = FALSE)
                     file.remove(Sys.glob(file.path(instdir, "data", "*")))
                     file.copy(files, file.path(instdir, "data"))
                     Sys.chmod(Sys.glob(file.path(instdir, "data", "*")), "644")
@@ -733,7 +734,8 @@
 
             if (utils::file_test("-d", "demo") && !fake) {
                 starsmsg(stars, "demo")
-                dir.create(file.path(instdir, "demo"), recursive = TRUE)
+                dir.create(file.path(instdir, "demo"), recursive = TRUE,
+                           showWarnings = FALSE)
                 file.remove(Sys.glob(file.path(instdir, "demo", "*")))
                 res <- try(tools:::.install_package_demos(".", instdir))
                 if (inherits(res, "try-error"))
@@ -743,7 +745,8 @@
 
             if (utils::file_test("-d", "exec") && !fake) {
                 starsmsg(stars, "exec")
-                dir.create(file.path(instdir, "exec"), recursive = TRUE)
+                dir.create(file.path(instdir, "exec"), recursive = TRUE,
+                           showWarnings = FALSE)
                 file.remove(Sys.glob(file.path(instdir, "exec", "*")))
                 files <- Sys.glob(file.path("exec", "*"))
                 if (length(files)) {
