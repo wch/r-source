@@ -2416,9 +2416,7 @@ AC_CONFIG_FILES(
   src/scripts/Makefile
   src/scripts/BATCH
   src/scripts/COMPILE
-  src/scripts/INSTALL
   src/scripts/LINK
-  src/scripts/REMOVE
   src/scripts/R.sh
   src/scripts/Rcmd
   src/scripts/Rd2dvi
