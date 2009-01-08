@@ -15,9 +15,11 @@
 #  http://www.r-project.org/Licenses/
 
 getDependencies <-
-    function(pkgs, dependencies, available = NULL, lib)
+    function(pkgs, dependencies = NA, available = NULL, lib = .libPaths()[1L])
 {
     oneLib <- length(lib) == 1L
+    if(is.logical(dependencies) && is.na(dependencies))
+        dependencies <- c("Depends", "Imports")
     depends <- is.character(dependencies) ||
     (is.logical(dependencies) && dependencies)
     if(depends && is.logical(dependencies))
