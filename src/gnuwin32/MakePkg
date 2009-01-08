@@ -29,17 +29,10 @@ SRC = src
 #source directory
 SSPKG=$(SPKG)/$(SRC)
 
-# src Makefile?
-SRCMAKE=$(wildcard $(SSPKG)/Makefile.win)
 SDYNLIB=$(SSPKG)/$(DLLNAME).dll
 
-LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f $(SSPKG)/*.cc \
-	$(SSPKG)/*.cpp $(SSPKG)/*.C $(SSPKG)/*.f90  $(SSPKG)/*.f95)
-ifeq ($(strip $(LSOURCES)),)
-  DO_SRC=$(wildcard $(SSPKG)/Makevars.win $(SSPKG)/Makevars)
-else
-  DO_SRC=$(foreach i, $(LSOURCES), $(basename $i).o)
-endif
+LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f $(SSPKG)/*.cc)
+DO_SRC=$(foreach i, $(LSOURCES), $(basename $i).o)
 
 # data
 DSOURCES=$(filter-out $(SPKG)/data/CVS $(SPKG)/data/.svn $(SPKG)/data/.arch-ids, $(wildcard $(SPKG)/data/*))
@@ -61,16 +54,16 @@ endif
 
 # demos
 PKGDEMOS0=$(wildcard $(SPKG)/demo/*)
-PKGDEMOS=$(filter-out $(SPKG)/demo/CVS $(SPKG)/demo/.svn $(SPKG)/demo/.arch-ids $(SPKG)/demo/00Index, $(PKGDEMOS0))
+PKGDEMOS=$(filter-out $(SPKG)/demo/.svn $(SPKG)/demo/.arch-ids $(SPKG)/demo/00Index, $(PKGDEMOS0))
 
-# exec
+# exec -- tcltk has exec
 EXECFILES=$(filter-out $(SPKG)/exec/CVS $(SPKG)/exec/.svn $(SPKG)/exec/.arch-ids, $(wildcard $(SPKG)/exec/*))
 
-# Others: we will remove CVS and subversion files later.
+# Others: we will remove subversion files later.
 INSTFILES=$(wildcard $(SPKG)/inst/*)
 
-.PHONY: all fake clean Rcode Rcode0 zzzfirst frontmatter nmspace nmspacefake
-.PHONY: Dynlib Dynlib0 srcDynlib mansrcs md5sums lazyload lazydata sysdata
+.PHONY: all clean Rcode Rcode0 zzzfirst frontmatter nmspace
+.PHONY: Dynlib Dynlib0 srcDynlib mansrcs md5sums lazyload lazydata
 
 all:  
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg $(DPKG)/zzzz 
@@ -86,17 +79,10 @@ ifeq ($(strip $(LAZYDATA)),true)
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s lazydata
 endif
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s mansrcs indices
-	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg $(DPKG)/zzzzlast
-
-## this does not make any DLL, and modifies the NAMESPACE and R code
-## to try to ensure no attempt is made to load the DLL.
-## Otherwise, follow what Unix INSTALL does (no demo, exec or inst)
-fake: zzzfirst frontmatter nmspacefake R Rfake $(DATA) mansrcs indices
 
 include $(RHOME)/src/gnuwin32/MkRules
 
 clean:
-ifeq ($(strip $(SRCMAKE)),)
 ifneq ($(strip $(DO_SRC)),)
 	@makefiles="-f $(RHOME)/src/gnuwin32/MakeDll" ; \
 	if test -r "${HOME}/.R/Makevars.win"; then \
@@ -107,9 +93,6 @@ ifneq ($(strip $(DO_SRC)),)
 	$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
 	  DLLNAME=$(DLLNAME) $${makefiles} shlib-clean
 	@$(RM) $(SDYNLIB)
-endif
-else
-	$(MAKE) -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win clean
 endif
 	@$(RM) -rf $(SPKG)/chm $(SPKG)/check tests/*.Rout
 
@@ -172,9 +155,7 @@ $(DPKG)/inst: $(INSTFILES)
 ifneq ($(strip $(INSTFILES)),)
 	@$(ECHO) "  installing inst files"
 	-@$(CP) -r inst/* $(DPKG)
-	@$(FIND) $(DPKG) -name CVS -type d -prune -exec rm -rf {} \;
 	@$(FIND) $(DPKG) -name .svn -type d -prune -exec rm -rf {} \;
-	@$(FIND) $(DPKG) -name .arch-ids -type d -prune -exec rm -rf {} \;
 endif
 
 
@@ -189,11 +170,6 @@ $(DPKG)/zzzz: zzzfirst
 	    $(ECHO) "   **********************************************" ; \
 	    $(ECHO) ; \
 	  fi; \
-	fi
-
-$(DPKG)/zzzzlast:
-	@if test -f ${SPKG}/cleanup.win; then \
-	  sh ${SPKG}/cleanup.win; \
 	fi
 
 zzzfirst:
@@ -233,13 +209,6 @@ nmspace:
 	  R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows $(REXE) > /dev/null; \
 	fi
 
-nmspacefake:
-	@if test -f ${SPKG}/NAMESPACE; then \
-	  $(ECHO) "  installing NAMESPACE file"; \
-	  $(SED) -e '/useDynLib/d' ${SPKG}/NAMESPACE > $(DPKG)/NAMESPACE; \
-	fi
-
-
 $(DATA): $(DSOURCES)
 	@$(ECHO) "  installing data files"
 	@$(RM) -rf $(DATA)
@@ -254,7 +223,7 @@ Dynlib: srcDynlib
 	  $(CP) $(SDYNLIB) $(DPKG)/libs ; \
 	fi
 
-## for bootstrapping tools, only
+## for bootstrapping 'tools', only
 Dynlib0:
 ifneq ($(strip $(DO_SRC)),)
 	@$(ECHO) "  making DLL ..."
@@ -269,22 +238,7 @@ ifneq ($(strip $(DO_SRC)),)
 endif
 
 srcDynlib:
-ifeq ($(strip $(SRCMAKE)),)
 ifneq ($(strip $(DO_SRC)),)
-ifneq ($(strip $(BUILD)),CROSS)
-	@$(ECHO) "  making DLL ..."
-	@makefiles="-f $(RHOME)/src/gnuwin32/MakeDll" ; \
-	if test -r "${HOME}/.R/Makevars.win"; then \
-	  makefiles="$${makefiles} -f ${HOME}/.R/Makevars.win"; \
-	elif test -r "${HOME}/.R/Makevars"; then \
-	  makefiles="$${makefiles} -f \"${HOME}/.R/Makevars\""; \
-	fi; \
-	CLINK_CPPFLAGS=`echo "tools:::.find_cinclude_paths(file='DESCRIPTION')" | $(R_EXE) --no-save --slave R_DEFAULT_PACKAGES=NULL`; \
-	$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
-	  DLLNAME=$(DLLNAME) CLINK_CPPFLAGS="$${CLINK_CPPFLAGS}" \
-	  $${makefiles}
-	@$(ECHO) "  ... DLL made"
-else
 	@$(ECHO) "  making DLL ..."
 	@makefiles="-f $(RHOME)/src/gnuwin32/MakeDll" ; \
 	if test -r "${HOME}/.R/Makevars.win"; then \
@@ -296,35 +250,14 @@ else
 	  DLLNAME=$(DLLNAME) $${makefiles}
 	@$(ECHO) "  ... DLL made"
 endif
-endif
-else
-	@$(ECHO) "  running src/Makefile.win ..."
-	@makefiles="-f Makefile.win" ; \
-	if test -r "${HOME}/.R/Makevars.win"; then \
-	  makefiles="$${makefiles} -f ${HOME}/.R/Makevars.win"; \
-	elif test -r "${HOME}/.R/Makevars"; then \
-	  makefiles="$${makefiles} -f \"${HOME}/.R/Makevars\""; \
-	fi; \
-	  $(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
-	    DLLNAME=$(DLLNAME) $${makefiles}
-	@$(ECHO) "  ... done"
-endif
 
 # R
+# methods has R/Makefile.win
 AA=$(wildcard R/Makefile.win)
 ifeq ($(AA),)
- R: $(DPKG)/R/$(PKG) sysdata
+ R: $(DPKG)/R/$(PKG)
 else
  include R/Makefile.win
-endif
-
-Rfake: $(PKGRFILES)
-ifneq ($(strip $(PKGRFILES)),)
-	@if test -f $(SPKG)/NAMESPACE; then \
-	  echo ".onLoad <- .onAttach <- function(lib, pkg) NULL" >> $(DPKG)/R/$(PKG) ; \
-	else \
-	  echo ".First.lib <- function(lib, pkg) NULL" >> $(DPKG)/R/$(PKG) ;\
-	fi
 endif
 
 
@@ -396,12 +329,3 @@ lazydata:
 	      LC_ALL=C R_OSTYPE=windows $(REXE) > /dev/null  || exit 1; \
 	  fi ; \
 	fi
-
-SYSDATA=$(wildcard $(SPKG)/R/sysdata.rda)
-
-sysdata:
-ifneq ($(strip $(SYSDATA)),)
-	$(ECHO)  "    preparing to lazyload sysdata"
-	$(ECHO) "tools:::sysdata2LazyLoadDB(\"$(SYSDATA)\", \"$(DPKG)/R\")" | \
-	      R_DEFAULT_PACKAGES=NULL $(REXE) > /dev/null || exit 1
-endif
