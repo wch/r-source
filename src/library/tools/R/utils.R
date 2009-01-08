@@ -1219,7 +1219,7 @@ function(x)
     x <- unlist(strsplit(x, ","))
     ## some have had space before ,
     x <- sub('[[:space:]]+$', '', x)
-    x <- unique(sub("^[[:space:]]*(.*)[[:space:]]*$", "\\1" , x))
+    x <- unique(sub("^[[:space:]]*(.*)", "\\1" , x))
     names(x) <- sub("^([[:alnum:].]+).*$", "\\1" , x)
     lapply(x, .split_op_version)
 }
