@@ -1231,7 +1231,7 @@
             shlib <- substr(a, 10, 1000)
         } else {
             ## a source file or something like -Ldir -lfoo
-            base <- sub("\\.[[:alpha:]]*$", "", a)
+            base <- sub("\\.[[:alnum:]]*$", "", a)
             ext <- sub(p0(base, "."),  "", a)
             nobj <- ""
             if(nzchar(ext)) {
@@ -1276,14 +1276,14 @@
 
     makeargs <- p0("SHLIB=", shQuote(shlib))
     if (with_f9x) {
-        makeargs <- c('SHLIB_LDFLAGS="$(SHLIB_FCLDFLAGS)"',
-                      'SHLIB_LD="SHLIB_FCLD"', makeargs)
+        makeargs <- c("SHLIB_LDFLAGS='$(SHLIB_FCLDFLAGS)'",
+                      "SHLIB_LD='$(SHLIB_FCLD)'", makeargs)
     } else if (with_cxx) {
-        makeargs <- c('SHLIB_LDFLAGS="$(SHLIB_CXXDFLAGS)"',
-                      'SHLIB_LD="SHLIB_CXXLD"', makeargs)
+        makeargs <- c("SHLIB_LDFLAGS='$(SHLIB_CXXLDFLAGS)'",
+                      "SHLIB_LD='$(SHLIB_CXXLD)'", makeargs)
     }
-    if (with_objc) shlib_libadd <- c(shlib_libadd, "$(OBJC_LIBS)")
-    if (with_f77) shlib_libadd <- c(shlib_libadd, "$(FLIBS)")
+    if (with_objc) shlib_libadd <- c(shlib_libadd, "\\$(OBJC_LIBS)")
+    if (with_f77) shlib_libadd <- c(shlib_libadd, "\\$(FLIBS)")
 
     if (length(pkg_libs))
         makeargs <- c(makeargs,
