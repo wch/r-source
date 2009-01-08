@@ -48,13 +48,13 @@ Switzerland,Switzerland,Zuerich,http://cran.ch.r-project.org/,"ETH Zuerich",Mart
 Thailand,Thailand,Bangkok,http://mirror.kapook.com/cran/,"Kapook.com, Bangkok",thawachchai@bunditcenter.com,1,th
 "UK (Bristol)",UK,Bristol,http://cran.uk.r-project.org/,"University of Bristol","Guy Nason <G.P.Nason@bristol.ac.uk>",1,uk
 "USA (CA 1)",USA,Berkeley,http://cran.cnr.Berkeley.edu,"University of California, Berkeley, CA",casterln@nature.berkeley.edu,1,us
-"USA (CA 3)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA","Jose Hales-Garcia <jose@stat.ucla.edu>",1,us
+"USA (CA 2)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA","Jose Hales-Garcia <jose@stat.ucla.edu>",1,us
 "USA (IA)",USA,Ames,http://streaming.stat.iastate.edu/CRAN/,"Iowa State University, Ames, IA","Ted Peterson <cpterson@iastate.edu>",1,us
 "USA (MI)",USA,Houghton,http://cran.mtu.edu/,"Michigan Technological University, Houghton, MI","Robert Froese <froese@mtu.edu>",1,us
 "USA (MO)",USA,"St. Louis",http://cran.wustl.edu/,"Washington University, St. Louis, MO",admartin@wustl.edu,1,us
 "USA (NC)",USA,"Chapel Hill",http://www.ibiblio.org/pub/languages/R/CRAN/,"University of North Carolina, Chapel Hill, NC","""Nancy C. Wilson"" <nancy@metalab.unc.edu>",1,us
-"USA (OH)",USA,Cleveland,http://cran.case.edu/,"Case Western Reserve University","""Alberto H. Santana"" <ahs4@case.edu>",1,us
-"USA (PA 2)",USA,Pittsburgh,http://cran.mirrors.hoobly.com,"Hoobly Classifieds","Peter Grigor <pgrigor@hoobly.com>",1,us
-"USA (PA)",USA,Pittsburgh,http://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA",,1,us
-"USA (TX)",USA,"San Antonio",http://www.revolution-computing.com/cran/,"Revolution Computing","David Smith <david@revolution-computing.com>",1,us
+"USA (OH)",USA,Cleveland,http://cran.case.edu/,"Case Western Reserve University, Cleveland, OH","""Alberto H. Santana"" <ahs4@case.edu>",1,us
+"USA (PA 1)",USA,Pittsburgh,http://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA",,1,us
+"USA (PA 2)",USA,Pittsburgh,http://cran.mirrors.hoobly.com,"Hoobly Classifieds, Pittsburgh, PA","Peter Grigor <pgrigor@hoobly.com>",1,us
+"USA (TX)",USA,"San Antonio",http://www.revolution-computing.com/cran/,"Revolution Computing, San Antonio, TX","David Smith <david@revolution-computing.com>",1,us
 "USA (WA)",USA,Seattle,http://cran.fhcrc.org/,"Fred Hutchinson Cancer Research Center, Seattle, WA",sfalcon@fhcrc.org,1,us
