@@ -14,9 +14,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## issues:
-## --fake is little tested
-
 .install_packages <- function()
 {
     ## global variables
@@ -29,6 +26,7 @@
     WINDOWS <- .Platform$OS.type == "windows"
     paste0 <- function(...) paste(..., sep="")
 
+    MAKE <- Sys.getenv("MAKE")
     TAR <- shQuote(Sys.getenv("TAR"))
     GZIP <- Sys.getenv("R_GZIPCMD")
     if (!nzchar(GZIP)) GZIP <- "gzip"
@@ -38,7 +36,7 @@
     SHLIB_EXT <- if (WINDOWS) ".dll" else {
         ## can we do better?
         mconf <- file.path(R.home(), paste0("etc", rarch), "Makeconf")
-        sub(".*= ", "", grep("SHLIB_EXT", readLines(mconf), value = TRUE))
+        sub(".*= ", "", grep("^SHLIB_EXT", readLines(mconf), value = TRUE))
     }
 
     options(warn = 1)
@@ -355,7 +353,6 @@
 
     do_install_source <- function(pkg_name, instdir, pkg_dir, desc)
     {
-        MAKE <- Sys.getenv("MAKE")
         paste0 <- function(...) paste(..., sep="")
 
         cp_r <- function(from, to)
@@ -1151,4 +1148,160 @@
     do_cleanup()
     on.exit()
     invisible()
+}
+
+## Unix-only at present
+.SHLIB <- function()
+{
+    Usage <- function()
+        cat("Usage: R CMD SHLIB [options] files|linker options",
+            "",
+            "Build a shared library for dynamic loading from the specified source or",
+            "object files (which are automagically made from their sources) or",
+            "linker options.  If not given via '--output', the name for the shared",
+            "library is determined from the first source or object file.",
+            "",
+            "Options:",
+            "  -h, --help		print short help message and exit",
+            "  -v, --version		print version info and exit",
+            "  -o, --output=LIB	use LIB as (full) name for the built library",
+            "  -c, --clean		remove files created during compilation",
+            "  --preclean		remove files created during a previous run",
+            "  -n, --dry-run		dry run, showing commands that would be used",
+            "",
+            "Report bugs to <r-bugs@r-project.org>.",
+            sep="\n")
+
+    p0 <- function(...) paste(..., sep="")
+    ## FIXME shQuote here?
+    p1 <- function(...) paste(..., collapse=" ")
+
+    WINDOWS <- .Platform$OS.type == "windows"
+    if(!WINDOWS) {
+        mconf <- readLines(file.path(R.home(),
+                                     p0("etc", Sys.getenv("R_ARCH")),
+                                     "Makeconf"))
+        SHLIB_EXT <-sub(".*= ", "", grep("^SHLIB_EXT", mconf, value = TRUE))
+        SHLIB_LIBADD <-sub(".*= ", "", grep("^SHLIB_LIBADD", mconf, value = TRUE))
+    }
+    OBJ_EXT <- ".o" # all currrent compilers, but not some on Windows
+    MAKE <- Sys.getenv("MAKE")
+
+    objs <- character()
+    shlib <- ""
+    makefiles <- file.path(R.home("share"), "make", "shlib.mk")
+    shlib_libadd <- if(nzchar(SHLIB_LIBADD)) SHLIB_LIBADD else character()
+    with_cxx <- FALSE
+    with_f77 <- FALSE
+    with_f9x <- FALSE
+    with_objc <- FALSE
+    pkg_libs <- character()
+    clean <- FALSE
+    preclean <- FALSE
+    dry_run <- FALSE
+
+    args <- commandArgs(TRUE)
+    while(length(args)) {
+        a <- args[1]
+        if (a %in% c("-h", "--help")) {
+            Usage()
+            q("no", runLast = FALSE)
+        }
+        else if (a %in% c("-v", "--version")) {
+            cat("R add-on package installer r",
+                R.version[["svn rev"]], "\n", sep = "")
+            cat("",
+                "Copyright (C) 2000-2009 The R Core Development Team.",
+                "This is free software; see the GNU General Public License version 2",
+                "or later for copying conditions.  There is NO warranty.",
+                sep="\n")
+            q("no", runLast = FALSE)
+        } else if (a %in% c("-n", "--dry-run")) {
+            dry_run <- TRUE
+        } else if (a %in% c("-c", "--clean")) {
+            clean <- TRUE
+            shargs <- c(shargs, "--clean")
+        } else if (a == "--preclean") {
+            preclean <- TRUE
+            shargs <- c(shargs, "--preclean")
+        } else if (a == "-o") {
+            if (length(args) >= 2) {shlib <- args[2]; args <- args[-1]}
+            else stop("-o option without value", call. = FALSE)
+        } else if (substr(a, 1, 9) == "--output=") {
+            shlib <- substr(a, 10, 1000)
+        } else {
+            ## a source file or something like -Ldir -lfoo
+            base <- sub("\\.[[:alpha:]]*$", "", a)
+            ext <- sub(p0(base, "."),  "", a)
+            nobj <- ""
+            if(nzchar(ext)) {
+                if(ext %in% c("cc", "cpp", "C")) {
+                    with_cxx <- TRUE
+                    nobj <- base
+                } else if (ext == "m") {
+                    with_objc <- TRUE
+                    nobj <- base
+                } else if (ext %in% c("mm", "M")) {
+                    ## ObjC++ implies ObjC because we need ObjC runtime
+                    ## ObjC++ implies C++ because we use C++ linker
+                    with_objc <- with_cxx <- TRUE
+                    nobj <- base
+                } else if (ext == "f") {
+                    with_f77 <- TRUE
+                    nobj <- base
+                } else if (ext %in% c("f90", "f95")) {
+                    with_f9x <- TRUE
+                    nobj <- base
+                } else if (ext == "c") {
+                    nobj <- base
+                } else if (ext == "o") {
+                    nobj <- base
+                }
+                if (nzchar(nobj) && !nzchar(shlib))
+                    shlib <- p0(nobj, SHLIB_EXT)
+            }
+            if(nzchar(nobj)) objs <- c(objs, nobj)
+            else pkg_libs <- c(pkg_libs, a)
+        }
+        args <- args[-1]
+    }
+    if(length(objs)) objs <- p0(objs, OBJ_EXT, collapse=" ")
+
+    makeobjs <- p0("OBJECTS=", shQuote(objs))
+    if (file.exists("Makevars")) {
+        lines <- readLines("Makevars")
+        if(length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes=TRUE)))
+            makeobjs <- ""
+    }
+
+    makeargs <- p0("SHLIB=", shQuote(shlib))
+    if (with_f9x) {
+        makeargs <- c('SHLIB_LDFLAGS-"$(SHLIB_FCLDFLAGS)"',
+                      'SHLIB_LD="SHLIB_FCLD"', makeargs)
+    } else if (with_cxx) {
+        makeargs <- c('SHLIB_LDFLAGS-"$(SHLIB_CXXDFLAGS)"',
+                      'SHLIB_LD="SHLIB_CXXLD"', makeargs)
+    }
+    if (with_objc) shlib_libadd <- c(shlib_libadd, "$(OBJC_LIBS)")
+    if (with_f77) shlib_libadd <- c(shlib_libadd, "$(FLIBS)")
+
+    if (length(pkg_libs))
+        makeargs <- c(makeargs,
+                      p0("PKG_LIBS='", p1(pkg_libs), "'"))
+    if (length(shlib_libadd))
+        makeargs <- c(makeargs,
+                      p0("SHLIB_LIBADD='", p1(shlib_libadd), "'"))
+
+
+    cmd <- paste(MAKE, p1(paste("-f", makefiles)), p1(makeargs), p1(makeobjs))
+    if(dry_run) {
+        cat("make cmd is\n  ", cmd, "\n\nmake would use\n", sep = "")
+        system(paste(cmd, "-n"))
+        res <- 0
+    } else {
+        if(preclean) system(paste(cmd, "clean"))
+        res <- system(cmd)
+        if(clean) system(paste(cmd, "clean"))
+    }
+    q("no", runLast=FALSE, status = res)
 }
