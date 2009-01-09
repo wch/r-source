@@ -35,10 +35,10 @@ $(R_HOME)/bin/INSTALL.sh: INSTALL
 	@cp $< $@
 
 $(R_HOME)/bin/SHLIB.sh: SHLIB
-	@$(SED) -e 1d $< > $@
+	@cp $< $@
 
 $(R_HOME)/bin/Stangle.sh: Stangle
-	@$(SED) -e 1d $< > $@
+	@cp $< $@
 
 $(R_HOME)/bin/Sweave.sh: Sweave
-	@$(SED) -e 1d $< > $@
+	@cp $< $@
