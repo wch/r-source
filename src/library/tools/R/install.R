@@ -1052,6 +1052,7 @@
             } else errmsg("cannot extract package from ", sQuote(pkg))
         } else if (file.exists(file.path(pkg, "DESCRIPTION"))) {
             if (debug) message("a directory")
+            pkgname <- basename(pkg)
             allpkgs <- c(allpkgs, fullpath(pkg))
         } else {
             warning("invalid package ", sQuote(pkg), call. = FALSE)
