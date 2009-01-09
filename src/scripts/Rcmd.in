@@ -8,6 +8,9 @@
 R_CMD="${R_HOME}/bin/Rcmd"
 export R_CMD
 
+R_VERSION=@PACKAGE_VERSION@
+export R_VERSION
+
 R_OSTYPE="unix"
 export R_OSTYPE
 

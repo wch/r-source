@@ -9,7 +9,7 @@ tools_classpath=${R_SHARE_DIR}/java
 
 revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
-version="R Java configurator r${version}
+version="R Java configurator: ${R_VERSION} (r${version})
 
 Copyright (C) 2002-6 The R Core Development Team.
 This is free software; see the GNU General Public License version 2

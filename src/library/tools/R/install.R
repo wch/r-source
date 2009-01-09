@@ -939,8 +939,9 @@
             q("no", runLast = FALSE)
         }
         else if (a %in% c("-v", "--version")) {
-            cat("R add-on package installer r",
-                R.version[["svn rev"]], "\n", sep = "")
+            cat("R add-on package installer: ",
+                R.version[["major"]], ".",  R.version[["minor"]],
+                " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
                 "Copyright (C) 2000-2009 The R Core Development Team.",
                 "This is free software; see the GNU General Public License version 2",
@@ -1165,7 +1166,7 @@
 .shlib_internal <- function(args)
 {
     Usage <- function()
-        cat("Usage: R CMD SHLIB [options] files|linker options",
+        cat("Usage: R CMD SHLIB [options] files | linker options",
             "",
             "Build a shared library for dynamic loading from the specified source or",
             "object files (which are automagically made from their sources) or",
@@ -1229,8 +1230,9 @@
             return(0L)
         }
         else if (a %in% c("-v", "--version")) {
-            cat("R add-on package installer r",
-                R.version[["svn rev"]], "\n", sep = "")
+            cat("R shared library builder: ",
+                R.version[["major"]], ".",  R.version[["minor"]],
+                " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
                 "Copyright (C) 2000-2009 The R Core Development Team.",
                 "This is free software; see the GNU General Public License version 2",
