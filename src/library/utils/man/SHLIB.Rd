@@ -1,55 +1,76 @@
-% File src/library/utils/man/unix/SHLIB.Rd
+% File src/library/utils/man/SHLIB.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{SHLIB}
 \alias{SHLIB}
-\title{Build Shared Library for Dynamic Loading}
+\title{Build Shared Object/DLL for Dynamic Loading}
 \description{
   Compile the given source files and then link all specified object
-  files into a shared library which can be loaded into \R using
+  files into a shared library aka DLL which can be loaded into \R using
   \code{dyn.load} or \code{library.dynam}.
 }
 \usage{
-\special{R CMD SHLIB [options] [-o libname] files}
+\special{R CMD SHLIB [options] [-o dllname] files}
 }
 \arguments{
   \item{files}{a list specifying the object files to be included in the
-    shared library.  You can also include the name of source files (for
+    shared object/DLL.  You can also include the name of source files (for
     which the object files are automagically made from their sources)
     and library linking commands.
   }
-  \item{libname}{the full name of the shared library to be built,
-    including the extension (typically \file{.so} on Unix systems).  If
-    not given, the basename of the library is taken from the basename of
-    the first file.}
+  \item{dllname}{the full name of the shared object/DLL to be built,
+    including the extension (typically \file{.so} on Unix systems, and
+    \file{.dll} on Windows).  If not given, the basename of the object
+    is taken from the basename of the first file.}
   \item{options}{Further options to control the processing.  Use
-    \code{R CMD SHLIB --help} for a current list.}
+    \code{R CMD SHLIB --help} for a current list.
+#ifdef windows
+    The most useful one is \code{-d} to build a debug DLL.
+#endif
+  }
 }
 \details{
+#ifdef unix
   \code{R CMD SHLIB} is the mechanism used by \code{\link{INSTALL}} to
-  compile source code in packages. Please consult section
-  \sQuote{Creating shared objects} in the manual
+  compile source code in packages.
+#endif
+#ifdef windows
+  \code{R CMD SHLIB} is similar to the mechanism used by
+  \code{\link{INSTALL}} to compile source code in packages.
+#endif
+
+  Please consult section \sQuote{Creating shared objects} in the manual
   \sQuote{Writing R Extensions} for how to customize it (for example to
   add \code{cpp} flags and to add libraries to the link step) and for
   details of some of its quirks.
 
   Items in \code{files} with extensions \file{.c}, \file{.cpp},
-  \file{.cc}, \file{.C}, \file{.f}, \file{.f90}, \file{.f95}, \file{.m},
-  \file{.M} and \file{.mm} are regarded as source files, and those with
-  extension \file{.o} as object files.  All other items are passed to
-  the linker.
+  \file{.cc}, \file{.C}, \file{.f}, \file{.f90}, \file{.f95}, \file{.m}
+  (ObjC), \file{.M} and \file{.mm} (ObjC++) are regarded as source
+  files, and those with extension \file{.o} as object files.  All other
+  items are passed to the linker.
+#ifdef windows
+  
+  If there is an exports file \file{dllname-win.def} in the current
+  directory it will be used, otherwise all entry points in objects (but
+  not libraries) will be exported from the DLL.
+#endif
 
   Option \option{-n} (also known as \option{--dry-run}) will show the
   commands that would be run without actually executing them.
 }
+#ifdef unix
 \note{
   Some binary distributions of \R have \code{SHLIB} in a separate
   bundle, e.g., an \code{R-devel} RPM.
 }
+#endif
 \seealso{
+#ifdef unix
   \code{\link{COMPILE}},
+#endif
   \code{\link{dyn.load}},
   \code{\link{library.dynam}}.
 
@@ -60,7 +81,14 @@
   The \sQuote{R Installation and Administration} and \sQuote{Writing R 
   Extensions} manuals.
 }
+#ifdef unix
 \examples{\dontrun{
 R CMD SHLIB -o mylib.so a.f b.f -L/opt/acml3.5.0/gnu64/lib -lacml
 }}
+#endif
+#ifdef windows
+\examples{\dontrun{
+rcmd SHLIB -o my.dll a.f b.f -L/AMD/acml3.5.0/gnu32/lib -lacml
+}}
+#endif
 \keyword{utilities}

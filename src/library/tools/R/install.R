@@ -391,7 +391,7 @@
         {
             args <- c(shargs, "-o", paste0(pkg_name, SHLIB_EXT), srcs)
             if (debug) message("about to run ",
-                               sQuote("SHLIB", paste(args, collapse= " ")))
+                               sQuote("SHLIB"), paste(args, collapse= " "))
             if (.shlib_internal(args) == 0L) {
                 shlib_install(instdir, arch)
                 return(FALSE)
