@@ -1,8 +1,0 @@
-#!@R_SHELL@
-#
-# ${R_HOME}/bin/SHLIB
-
-# @configure_input@
-
-echo 'tools:::.SHLIB()' | R_DEFAULT_PACKAGES=NULL "${R_HOME}/bin/R" --slave --args $@
-

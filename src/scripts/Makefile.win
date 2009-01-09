@@ -34,11 +34,11 @@ $(R_HOME)/bin/config.sh: config.in
 $(R_HOME)/bin/INSTALL.sh: INSTALL
 	@cp $< $@
 
-$(R_HOME)/bin/SHLIB.sh: SHLIB.in
+$(R_HOME)/bin/SHLIB.sh: SHLIB
 	@$(SED) -e 1d $< > $@
 
-$(R_HOME)/bin/Stangle.sh: Stangle.in
+$(R_HOME)/bin/Stangle.sh: Stangle
 	@$(SED) -e 1d $< > $@
 
-$(R_HOME)/bin/Sweave.sh: Sweave.in
+$(R_HOME)/bin/Sweave.sh: Sweave
 	@$(SED) -e 1d $< > $@

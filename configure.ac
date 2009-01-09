@@ -2424,10 +2424,7 @@ AC_CONFIG_FILES(
   src/scripts/Rdconv
   src/scripts/Rdiff
   src/scripts/Rprof
-  src/scripts/SHLIB
   src/scripts/Sd2Rd
-  src/scripts/Stangle
-  src/scripts/Sweave
   src/scripts/build
   src/scripts/check
   src/scripts/config
