@@ -270,7 +270,6 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		strcat(cmd, "\"");
 	    } else strcat(cmd, argv[i]);
 	}
-	printf("cmd is %s\n", cmd);
 	status = system(cmd);
 	return(status);
     } else {
@@ -345,6 +344,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    } else if (strcmp(p, "INSTALL") == 0) {
 		strcpy(cmd, "sh ");
 		strcat(cmd, RHome); strcat(cmd, "/bin/INSTALL.sh");
+	    } else if (strcmp(p, "SHLIB") == 0) {
+		strcpy(cmd, "sh ");
+		strcat(cmd, RHome); strcat(cmd, "/bin/SHLIB.sh");
 	    } else {
 		if (!strcmp(".sh", p + strlen(p) - 3)) {
 		    strcpy(cmd, "sh ");

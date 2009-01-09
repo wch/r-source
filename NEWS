@@ -168,7 +168,8 @@ UTILITIES
 	members of a bundle.
 
     o	R CMD SHLIB is now an R script and has a new option -n aka
-	--dry-run to show what commands would be run.
+	--dry-run to show what commands would be run.  The same code
+	is used on Unix and Windows.
 
 
 Rd CONVERSION

@@ -1154,13 +1154,14 @@
     invisible()
 }
 
-## Unix-only at present
+## for R CMD SHLIB on Unix and Windows
 .SHLIB <- function()
 {
     status <- .shlib_internal(commandArgs(TRUE))
     q("no", runLast=FALSE, status=status)
 }
 
+## for .SHLIB and R CMD INSTALL only on Unix
 .shlib_internal <- function(args)
 {
     Usage <- function()
@@ -1181,6 +1182,7 @@
             "",
             "Windows only:",
             "  -d, --debug		build a debug DLL",
+            "",
             "Report bugs to <r-bugs@r-project.org>.",
             sep="\n")
 
@@ -1195,15 +1197,16 @@
                                      "Makeconf"))
         SHLIB_EXT <-sub(".*= ", "", grep("^SHLIB_EXT", mconf, value = TRUE))
         SHLIB_LIBADD <-sub(".*= ", "", grep("^SHLIB_LIBADD", mconf, value = TRUE))
+        MAKE <- Sys.getenv("MAKE")
     } else {
         rhome <- chartr("\\", "/", R.home())
         Sys.setenv(R_HOME = rhome)
         SHLIB_EXT <- ".dll"
         SHLIB_LIBADD <- ""
+        MAKE <- "make"
     }
 
     OBJ_EXT <- ".o" # all currrent compilers, but not some on Windows
-    MAKE <- Sys.getenv("MAKE")
 
     objs <- character()
     shlib <- ""

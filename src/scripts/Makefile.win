@@ -2,10 +2,13 @@
 include ../gnuwin32/MkRules
 R_HOME = ../..
 
+## BATCH and REMVOE are handled internally in Rcmd.exe
+
 all: \
  $(R_HOME)/bin/build $(R_HOME)/bin/check $(R_HOME)/bin/config.sh \
  $(R_HOME)/bin/Rdconv $(R_HOME)/bin/Rd2dvi.sh $(R_HOME)/bin/Sd2Rd \
- $(R_HOME)/bin/Rprof $(R_HOME)/bin/INSTALL.sh
+ $(R_HOME)/bin/Rprof $(R_HOME)/bin/INSTALL.sh $(R_HOME)/bin/SHLIB.sh \
+ $(R_HOME)/bin/Stangle.sh $(R_HOME)/bin/Sweave.sh
 
 $(R_HOME)/bin/check: check.in
 	@$(SED) -e 1d $< > $@
@@ -30,3 +33,12 @@ $(R_HOME)/bin/config.sh: config.in
 
 $(R_HOME)/bin/INSTALL.sh: INSTALL
 	@cp $< $@
+
+$(R_HOME)/bin/SHLIB.sh: SHLIB.in
+	@$(SED) -e 1d $< > $@
+
+$(R_HOME)/bin/Stangle.sh: Stangle.in
+	@$(SED) -e 1d $< > $@
+
+$(R_HOME)/bin/Sweave.sh: Sweave.in
+	@$(SED) -e 1d $< > $@

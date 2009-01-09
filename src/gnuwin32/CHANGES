@@ -55,9 +55,12 @@ NEW FEATURES
 	In particular, --docs is replaced by --no-docs, --no-text,
 	--no-html, --no-latex, --no-example and --no-chm.
 
+    o	Rcmd SHLIB now uses the same code as on a Unix-alike, and so
+	has some extra options.
+
     o	Cross-compiling of packages (including recommended packages)
-	using INSTALL is currently not supported.  [We hope to
-	reinstate this before release.]
+	using INSTALL is currently unsupported.  [We hope to reinstate
+	this at some time.]
 
 
 INSTALLATIOM
