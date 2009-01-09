@@ -1179,7 +1179,7 @@
             "  --preclean		remove files created during a previous run",
             "  -n, --dry-run		dry run, showing commands that would be used",
             "",
-            "Windows only:"
+            "Windows only:",
             "  -d, --debug		build a debug DLL",
             "Report bugs to <r-bugs@r-project.org>.",
             sep="\n")
