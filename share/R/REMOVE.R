@@ -41,8 +41,9 @@ while(length(args)) {
         return(invisible())
     }
     else if(a %in% c("-v", "--version")) {
-        cat("R add-on package remover r",
-            R.version[["svn rev"]], "\n", sep = "")
+        cat("R add-on package remover: ",
+            R.version[["major"]], ".",  R.version[["minor"]],
+            " (r", R.version[["svn rev"]], ")\n", sep = "")
         cat("",
             "Copyright (C) 2000-2009 The R Core Development Team.",
             "This is free software; see the GNU General Public License version 2",
