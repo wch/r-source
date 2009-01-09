@@ -16,6 +16,14 @@
 
 .install_packages <- function()
 {
+    .file_test <- function(op, x, y)
+        ## we don't want to load utils just for this
+        switch(op,
+               "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
+               "-d" = !is.na(isdir <- file.info(x)$isdir) & isdir,
+               "-x" = (file.access(x, 1L) == 0L),
+               stop(sprintf("test '%s' is not available", op), domain = NA))
+
     ## global variables
     bundle_pkgs <- character() # list of packages in current pkg/bundle
     lockdir <- ""
@@ -119,7 +127,7 @@
     {
         ## Solaris will not remove any directory in the current path
         setwd(startdir)
-        if (utils::file_test("-d", tmpdir)) unlink(tmpdir, recursive=TRUE)
+        if (.file_test("-d", tmpdir)) unlink(tmpdir, recursive=TRUE)
     }
 
     do_exit_on_error <- function()
@@ -130,12 +138,12 @@
         for(p in bundle_pkgs) {
             if (is.na(p) || !nzchar(p)) next
             pkgdir <- file.path(lib, p)
-            if (nzchar(pkgdir) && utils::file_test("-d", pkgdir)) {
+            if (nzchar(pkgdir) && .file_test("-d", pkgdir)) {
                 starsmsg(stars, "Removing ", sQuote(pkgdir))
                 unlink(pkgdir, recursive = TRUE)
             }
             if (lock && nzchar(lockdir) &&
-                utils::file_test("-d", lp <- file.path(lockdir, p))) {
+                .file_test("-d", lp <- file.path(lockdir, p))) {
                 starsmsg(stars, "Restoring previous ", sQuote(pkgdir))
                 system(paste("mv", lp, pkgdir))
             }
@@ -192,7 +200,7 @@
         if (is_bundle) {
             contains <- strsplit(desc["Contains"], " ")[[1]]
             for(p in contains) {
-                if (utils::file_test("-d", file.path(pkg, p))) {
+                if (.file_test("-d", file.path(pkg, p))) {
                     pkgs <- c(pkgs, p)
                 } else {
                     warning("incorrect Contains metadata for bundle ",
@@ -242,7 +250,7 @@
             if (status) do_exit_on_error()
 
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
-            if (!utils::file_test("-d", instdir)) {
+            if (!.file_test("-d", instdir)) {
                 message("ERROR unable to create ", sQuote(instdir))
                 do_exit_on_error()
             }
@@ -327,7 +335,7 @@
     ## to be run from package source directory
     run_clean <- function()
     {
-        if (utils::file_test("-d", "src")) {
+        if (.file_test("-d", "src")) {
             owd <- setwd("src")
             if(WINDOWS) {
                 if (file.exists("Makefile.win"))
@@ -345,7 +353,7 @@
         }
         if (WINDOWS) {
             if (file.exists("cleanup.win")) system("sh ./cleanup.win")
-        } else if (utils::file_test("-x", "cleanup")) system("./cleanup")
+        } else if (.file_test("-x", "cleanup")) system("./cleanup")
         else if (file.exists("cleanup"))
             warning("'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'", call. = FALSE)
 
@@ -381,14 +389,10 @@
 
         run_shlib <- function(pkg_name, srcs, instdir, arch)
         {
-            cmd <- paste("sh",
-                         shQuote(file.path(R.home(), "bin", "SHLIB")),
-                         shargs,
-                         "-o",
-                         paste0(pkg_name, SHLIB_EXT),
-                         paste(srcs, collapse=" "))
-            if (debug) message("about to run ", sQuote(cmd))
-            if (system(cmd) == 0L) {
+            args <- c(shargs, "-o", paste0(pkg_name, SHLIB_EXT), srcs)
+            if (debug) message("about to run ",
+                               sQuote("SHLIB", paste(args, collapse= " ")))
+            if (.shlib_internal(args) == 0L) {
                 shlib_install(instdir, arch)
                 return(FALSE)
             } else return(TRUE)
@@ -414,7 +418,7 @@
             starsmsg(stars, "Installing *Frontend* package ", sQuote(pkg_name), " ...")
             if (preclean) system(paste(MAKE, "clean"))
             if (use_configure) {
-                if (utils::file_test("-x", "configure")) {
+                if (.file_test("-x", "configure")) {
                     res <- system(paste(paste(configure_vars, collapse = " "),
                                         "./configure",
                                         paste(configure_args, collapse = " ")))
@@ -430,11 +434,11 @@
 
         if (!is.na(Type) && Type == "Translation") {
             starsmsg(stars, "Installing *Translation* package ", sQuote(pkg_name), " ...")
-            if (utils::file_test("-d", "share")) {
+            if (.file_test("-d", "share")) {
                 files <- Sys.glob("share/*")
                 if (length(files)) file.copy(files, R.home("share"))
             }
-            if (utils::file_test("-d", "library")) {
+            if (.file_test("-d", "library")) {
                 system(paste("cp -r ./library", R.home()))
             }
             return()
@@ -477,7 +481,7 @@
         if (auto_zip || zip_up) { ## --build implies --auto-zip
             thislazy <- parse_description_field(desc, "LazyData",
                                                 default = lazy_data)
-            if (!thislazy && utils::file_test("-d", "data")) {
+            if (!thislazy && .file_test("-d", "data")) {
                 sizes <- system("ls.exe -s1 data", intern = TRUE)
                 out <- 0; nodups <- TRUE; prev <- ""
                 for(line in sizes) {
@@ -491,7 +495,7 @@
                 }
                 if(nodups && out > 100) use_zip_data <- TRUE
             }
-            if (utils::file_test("-d", "man") &&
+            if (.file_test("-d", "man") &&
                 length(Sys.glob("man/*.Rd")) > 20) use_zip_help <- TRUE
             message("\n  Using auto-selected zip options '",
                     if (use_zip_data) "--use-zip-data ",
@@ -511,7 +515,7 @@
                             "         It probably needs manual configuration\n",
                             "   **********************************************\n\n")
             } else {
-                if (utils::file_test("-x", "configure")) {
+                if (.file_test("-x", "configure")) {
                     res <- system(paste(paste(configure_vars, collapse = " "),
                                         "./configure",
                                         paste(configure_args, collapse = " ")))
@@ -538,7 +542,7 @@
                 pkgerrmsg("installing package DESCRIPTION failed", pkg_name)
         }
 
-        if (utils::file_test("-d", "src") && !fake) {
+        if (.file_test("-d", "src") && !fake) {
             system_makefile <- file.path(R.home(), paste0("etc", rarch),
                                          "Makeconf")
             starsmsg(stars, "libs")
@@ -615,7 +619,7 @@
                         ## if there is a configure script we install only the main
                         ## sub-architecture
                         if (!multiarch ||
-                            utils::file_test("-x", "../configure")) {
+                            .file_test("-x", "../configure")) {
                             if (nzchar(rarch))
                                 starsmsg(stars, "arch - ", substr(rarch, 2, 1000))
                             has_error <- run_shlib(pkg_name, srcs, instdir, rarch)
@@ -647,7 +651,7 @@
         }                               # end of src dir
 
         if (more_than_libs) {
-            if (utils::file_test("-d", "R")) {
+            if (.file_test("-d", "R")) {
                 starsmsg(stars, "R")
                 dir.create(file.path(instdir, "R"), recursive = TRUE,
                            showWarnings = FALSE)
@@ -695,7 +699,7 @@
                 }
             }                           # end of R
 
-            if (utils::file_test("-d", "data")) {
+            if (.file_test("-d", "data")) {
                 starsmsg(stars, "data")
                 files <- Sys.glob(file.path("data", "*"))
                 if (length(files)) {
@@ -729,7 +733,7 @@
                 } else warning("empty 'data' directory", call. = FALSE)
             }
 
-            if (utils::file_test("-d", "demo") && !fake) {
+            if (.file_test("-d", "demo") && !fake) {
                 starsmsg(stars, "demo")
                 dir.create(file.path(instdir, "demo"), recursive = TRUE,
                            showWarnings = FALSE)
@@ -740,7 +744,7 @@
                 Sys.chmod(Sys.glob(file.path(instdir, "demo", "*")), "644")
             }
 
-            if (utils::file_test("-d", "exec") && !fake) {
+            if (.file_test("-d", "exec") && !fake) {
                 starsmsg(stars, "exec")
                 dir.create(file.path(instdir, "exec"), recursive = TRUE,
                            showWarnings = FALSE)
@@ -752,7 +756,7 @@
                 }
             }
 
-            if (utils::file_test("-d", "inst") && !fake) {
+            if (.file_test("-d", "inst") && !fake) {
                 starsmsg(stars, "inst")
                 ## FIXME avoid installing .svn etc?
                 cp_r("inst", instdir)
@@ -773,7 +777,7 @@
 
             ## LazyLoading
             value <- parse_description_field(desc, "LazyLoad", default = lazy)
-            if (utils::file_test("-d", "R") && value) {
+            if (.file_test("-d", "R") && value) {
                 starsmsg(stars, "preparing package for lazy loading")
                 ## Something above, e.g. lazydata,  might have loaded the namespace
                 if (pkg_name %in% loadedNamespaces())
@@ -789,7 +793,7 @@
                 ## file.remove(file.path(instdir, "R", "all.rda"))
             }
 
-            if (utils::file_test("-d", "man")) {
+            if (.file_test("-d", "man")) {
                 starsmsg(stars, "help")
                 res <- try(tools:::.install_package_man_sources(".", instdir))
                 if (inherits(res, "try-error"))
@@ -815,17 +819,17 @@
                          (nzchar(Sys.getenv("R_UNZIPCMD")) &&
                           nzchar(zip <- Sys.getenv("R_ZIPCMD")) ))) {
                         owd <- setwd(instdir)
-                        if (utils::file_test("-d", "R-ex")) {
+                        if (.file_test("-d", "R-ex")) {
                             wd2 <- setwd("R-ex")
                             system(paste(zip, " -q -m Rex *.R"))
                             setwd(wd2)
                         }
-                        if (utils::file_test("-d", "help")) {
+                        if (.file_test("-d", "help")) {
                             wd2 <- setwd("help")
                             system(paste(zip, " -q -m Rhelp * -x AnIndex"))
                             setwd(wd2)
                         }
-                        if (utils::file_test("-d", "latex")) {
+                        if (.file_test("-d", "latex")) {
                             wd2 <- setwd("latex")
                             system(paste(zip, " -q -m Rhelp *.tex"))
                             setwd(wd2)
@@ -833,7 +837,7 @@
                         setwd(owd)
                     }
                     if (build_chm) {
-                        if (utils::file_test("-d", "chm")) {
+                        if (.file_test("-d", "chm")) {
                             owd <- setwd("chm")
                             file.copy(file.path(R.home(), "src/gnuwin32/help/Rchm.css"), ".")
                             file.copy(file.path(R.home(), "doc/html/logo.jpg"), ".")
@@ -1005,7 +1009,7 @@
     allpkgs <- character(0)
     for(pkg in pkgs) {
         if (debug) message("processing ", sQuote(pkg))
-        if (utils::file_test("-f", pkg)) {
+        if (.file_test("-f", pkg)) {
             if (debug) message("a file")
             pkgname <- basename(pkg) # or bundle name
             ## Also allow for 'package.tgz' ...
@@ -1077,7 +1081,7 @@
         lib <- getwd()
         setwd(cwd)
     }
-    if (!utils::file_test("-d", lib) || file.access(lib, 2L))
+    if (!.file_test("-d", lib) || file.access(lib, 2L))
         stop("ERROR: no permission to install to directory ",
              sQuote(lib), call. = FALSE)
 
@@ -1098,7 +1102,7 @@
             q("no", status=3, runLast = FALSE)
         }
         dir.create(lockdir, recursive = TRUE)
-        if (!utils::file_test("-d", lockdir)) {
+        if (!.file_test("-d", lockdir)) {
             message("ERROR: failed to create lock directory ", sQuote(lockdir))
             do_cleanup_tmpdir()
             q("no", status=3, runLast = FALSE)
@@ -1153,6 +1157,12 @@
 ## Unix-only at present
 .SHLIB <- function()
 {
+    status <- .shlib_internal(commandArgs(TRUE))
+    q("no", runLast=FALSE, status=status)
+}
+
+.shlib_internal <- function(args)
+{
     Usage <- function()
         cat("Usage: R CMD SHLIB [options] files|linker options",
             "",
@@ -1169,6 +1179,8 @@
             "  --preclean		remove files created during a previous run",
             "  -n, --dry-run		dry run, showing commands that would be used",
             "",
+            "Windows only:"
+            "  -d, --debug		build a debug DLL",
             "Report bugs to <r-bugs@r-project.org>.",
             sep="\n")
 
@@ -1177,20 +1189,26 @@
     p1 <- function(...) paste(..., collapse=" ")
 
     WINDOWS <- .Platform$OS.type == "windows"
-    if(!WINDOWS) {
+    if (!WINDOWS) {
         mconf <- readLines(file.path(R.home(),
                                      p0("etc", Sys.getenv("R_ARCH")),
                                      "Makeconf"))
         SHLIB_EXT <-sub(".*= ", "", grep("^SHLIB_EXT", mconf, value = TRUE))
         SHLIB_LIBADD <-sub(".*= ", "", grep("^SHLIB_LIBADD", mconf, value = TRUE))
+    } else {
+        rhome <- chartr("\\", "/", R.home())
+        Sys.setenv(R_HOME = rhome)
+        SHLIB_EXT <- ".dll"
+        SHLIB_LIBADD <- ""
     }
+
     OBJ_EXT <- ".o" # all currrent compilers, but not some on Windows
     MAKE <- Sys.getenv("MAKE")
 
     objs <- character()
     shlib <- ""
     makefiles <- file.path(R.home("share"), "make", "shlib.mk")
-    shlib_libadd <- if(nzchar(SHLIB_LIBADD)) SHLIB_LIBADD else character()
+    shlib_libadd <- if (nzchar(SHLIB_LIBADD)) SHLIB_LIBADD else character()
     with_cxx <- FALSE
     with_f77 <- FALSE
     with_f9x <- FALSE
@@ -1199,13 +1217,13 @@
     clean <- FALSE
     preclean <- FALSE
     dry_run <- FALSE
+    debug <- FALSE
 
-    args <- commandArgs(TRUE)
     while(length(args)) {
         a <- args[1]
         if (a %in% c("-h", "--help")) {
             Usage()
-            q("no", runLast = FALSE)
+            return(0L)
         }
         else if (a %in% c("-v", "--version")) {
             cat("R add-on package installer r",
@@ -1215,9 +1233,11 @@
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep="\n")
-            q("no", runLast = FALSE)
+            return(0L)
         } else if (a %in% c("-n", "--dry-run")) {
             dry_run <- TRUE
+        } else if (a %in% c("-d", "--debug")) {
+            debug <- TRUE
         } else if (a %in% c("-c", "--clean")) {
             clean <- TRUE
         } else if (a == "--preclean") {
@@ -1232,8 +1252,8 @@
             base <- sub("\\.[[:alnum:]]*$", "", a)
             ext <- sub(p0(base, "."),  "", a)
             nobj <- ""
-            if(nzchar(ext)) {
-                if(ext %in% c("cc", "cpp", "C")) {
+            if (nzchar(ext)) {
+                if (ext %in% c("cc", "cpp", "C")) {
                     with_cxx <- TRUE
                     nobj <- base
                 } else if (ext == "m") {
@@ -1258,23 +1278,31 @@
                 if (nzchar(nobj) && !nzchar(shlib))
                     shlib <- p0(nobj, SHLIB_EXT)
             }
-            if(nzchar(nobj)) objs <- c(objs, nobj)
+            if (nzchar(nobj)) objs <- c(objs, nobj)
             else pkg_libs <- c(pkg_libs, a)
         }
         args <- args[-1]
     }
-    if(length(objs)) objs <- p0(objs, OBJ_EXT, collapse=" ")
+    if (length(objs)) objs <- p0(objs, OBJ_EXT, collapse=" ")
 
-    if (file.exists(f <- path.expand("~/.R/Makevars.win")))
-        makefiles <- c(makefiles, f)
-    else if (file.exists(f <- path.expand("~/.R/Makevars")))
-        makefiles <- c(makefiles, f)
+    if (WINDOWS) {
+        if (file.exists(f <- path.expand("~/.R/Makevars.win")))
+            makefiles <- c(makefiles, f)
+        else if (file.exists(f <- path.expand("~/.R/Makevars")))
+            makefiles <- c(makefiles, f)
+    } else {
+        if (file.exists(f <- path.expand(paste("~/.R/Makevars",
+                                               Sys.getenv("R_PLATFORM"), sep="-"))))
+            makefiles <- c(makefiles, f)
+        else if (file.exists(f <- path.expand("~/.R/Makevars")))
+            makefiles <- c(makefiles, f)
+    }
 
     makeobjs <- p0("OBJECTS=", shQuote(objs))
     if (file.exists("Makevars")) {
         makefiles <- c("Makevars", makefiles)
         lines <- readLines("Makevars")
-        if(length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes=TRUE)))
+        if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes=TRUE)))
             makeobjs <- ""
     }
 
@@ -1296,16 +1324,17 @@
         makeargs <- c(makeargs,
                       p0("SHLIB_LIBADD='", p1(shlib_libadd), "'"))
 
+    if (WINDOWS && debug) makeargs <- c(makeargs, "DEBUG=T")
 
     cmd <- paste(MAKE, p1(paste("-f", makefiles)), p1(makeargs), p1(makeobjs))
-    if(dry_run) {
+    if (dry_run) {
         cat("make cmd is\n  ", cmd, "\n\nmake would use\n", sep = "")
         system(paste(cmd, "-n"))
         res <- 0
     } else {
-        if(preclean) system(paste(cmd, "shlib-clean"))
+        if (preclean) system(paste(cmd, "shlib-clean"))
         res <- system(cmd)
-        if(clean) system(paste(cmd, "shlib-clean"))
+        if (clean) system(paste(cmd, "shlib-clean"))
     }
-    q("no", runLast=FALSE, status = res)
+    res
 }

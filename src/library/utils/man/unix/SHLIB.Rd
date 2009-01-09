@@ -1,6 +1,6 @@
 % File src/library/utils/man/unix/SHLIB.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{SHLIB}
@@ -22,7 +22,8 @@
   }
   \item{libname}{the full name of the shared library to be built,
     including the extension (typically \file{.so} on Unix systems).  If
-    not given, the name of the library is taken from the first file.}
+    not given, the basename of the library is taken from the basename of
+    the first file.}
   \item{options}{Further options to control the processing.  Use
     \code{R CMD SHLIB --help} for a current list.}
 }
@@ -39,6 +40,9 @@
   \file{.M} and \file{.mm} are regarded as source files, and those with
   extension \file{.o} as object files.  All other items are passed to
   the linker.
+
+  Option \option{-n} (also known as \option{--dry-run}) will show the
+  commands that would be run without actually executing them.
 }
 \note{
   Some binary distributions of \R have \code{SHLIB} in a separate

@@ -1,5 +1,5 @@
 #
 # ${R_HOME}/bin/INSTALL for installing add-on packages
 
-echo 'tools:::.install_packages()' | R_DEFAULT_PACKAGES= "${R_HOME}/bin/R" --slave --args $@
+echo 'tools:::.install_packages()' | R_DEFAULT_PACKAGES=tools "${R_HOME}/bin/R" --slave --args $@
 
