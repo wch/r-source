@@ -123,6 +123,9 @@ NEW FEATURES
     o	Strict type checking is now turned on: this catches more
 	internal corruptions, and some badly written contributed code.
 
+    o	There are new functions in package 'tcltk', tk_choose.files()
+	and tk_choose.dir(), analogues of functions available on Windows.
+
 
 DEPRECATED & DEFUNCT
 

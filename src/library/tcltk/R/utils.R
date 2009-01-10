@@ -166,3 +166,24 @@ close.tkProgressBar <- function(con, ...)
     con$kill()
     invisible(NULL)
 }
+
+## filters are not yet implemented: what is the corresponding R type?
+tk_choose.files <-
+    function(default = '', caption = 'Select files', multi = TRUE,
+             filters = NULL, index = 1)
+{
+    res <- if(nzchar(default)) {
+        tclvalue(tcl("tk_getOpenFile", title = caption, multiple = multi,
+                     initialdir = dirname(default),
+                     initialfile = basename(default)))
+    } else
+        tclvalue(tcl("tk_getOpenFile", title = caption, multiple = multi))
+    if(nzchar(res)) strsplit(res, " ", fixed = TRUE)[[1]] else character()
+}
+
+tk_choose.dir <- function(default = '', caption = 'Select directory')
+{
+    res <- tclvalue(tcl("tk_chooseDirectory", initialdir = default, title = caption))
+    if(nzchar(res)) res else NA_character_
+}
+
