@@ -37475,9 +37475,10 @@ fi
     { echo "$as_me:$LINENO: result: yes" >&5
 echo "${ECHO_T}yes" >&6; }
   else
-    { echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6; }
-    if test "${have_vecLib_fw}" = "yes"; then
+    ## NB: this lot is not cached
+    if test -n "${r_cv_check_fw_vecLib}"; then
+      { echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6; }
       ## for vecLib we have a work-around by using cblas_..._sub
       use_veclib_g95fix=yes
       ## The fix may not work with internal lapack, because
@@ -37486,6 +37487,8 @@ echo "${ECHO_T}no" >&6; }
       #      use_lapack=yes
       #	     with_lapack=""
     else
+      { echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6; }
       BLAS_LIBS=
       acx_blas_ok="no"
     fi
@@ -41675,8 +41678,11 @@ if test "${want_aqua}" = yes; then
     darwin*)
       ## we can build AQUA only with CoreFoundation, otherwise
       ## Quartz device won't build
-      if test "${have_CoreFoundation_fw}" = yes; then
+      if test -n "${r_cv_check_fw_CoreFoundation}" ; then
         use_aqua=yes
+      else
+        { echo "$as_me:$LINENO: WARNING: requested 'aqua' but CoreFoundation was not found" >&5
+echo "$as_me: WARNING: requested 'aqua' but CoreFoundation was not found" >&2;}
       fi
       ;;
   esac
@@ -47489,11 +47495,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:47492: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:47498: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:47496: \$? = $ac_status" >&5
+   echo "$as_me:47502: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -47588,11 +47594,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:47591: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:47597: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:47595: \$? = $ac_status" >&5
+   echo "$as_me:47601: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -47640,11 +47646,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:47643: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:47649: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:47647: \$? = $ac_status" >&5
+   echo "$as_me:47653: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
