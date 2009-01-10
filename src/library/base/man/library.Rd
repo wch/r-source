@@ -142,10 +142,14 @@ require(package, lib.loc = NULL, quietly = FALSE,
   so errors will not stop the package being detached.)
 }
 \value{
-  \code{library} returns the list of loaded (or available) packages
-  (or \code{TRUE} if \code{logical.return} is \code{TRUE}).
-  \code{require} returns a logical indicating whether the required
-  package is available, invisibly
+  Normally \code{library} returns (invisibly) the list of loaded
+  packages, but \code{TRUE} or \code{FALSE} if \code{logical.return} is
+  \code{TRUE}.  When called as \code{library()} it returns an object of
+  class \code{"libraryIQR"}, and for \code{library(help=)}, one of
+  class \code{"packageInfo"}.
+
+  \code{require} returns (invisbly) a logical indicating whether the required
+  package is available.
 }
 \section{Packages that require other packages}{
   \bold{NB:} This mechanism has been almost entirely superseded by
