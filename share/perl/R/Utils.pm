@@ -69,11 +69,11 @@ sub R_getenv {
 ### * R_version
 
 sub R_version {
-
     my ($name, $version) = @_;
+    my $RV = $ENV{"R_VERSION"};
 
     print <<END;
-$name SVN revision $version
+$name: $RV (r$version)
 
 Copyright (C) 1997-2006 R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
