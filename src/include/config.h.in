@@ -42,8 +42,8 @@
    */
 #undef HAVE_ALLOCA_H
 
-/* Define if you have the Aqua headers and libraries, and want the Aqua GUI to
-   be built. */
+/* Define if you have the Aqua headers and libraries, and want the Aqua GUI
+   components and quartz() device to be built. */
 #undef HAVE_AQUA
 
 /* Define to 1 if you have the `argz_count' function. */

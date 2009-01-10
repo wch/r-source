@@ -807,7 +807,11 @@ R_PROG_CXX_MAKEFRAG
 
 R_PROG_OBJC_MAKEFRAG
 R_PROG_OBJC_RUNTIME
-R_OBJC_FOUNDATION
+case "${host_os}" in
+  darwin*)
+    R_OBJC_FOUNDATION
+  ;;
+esac
 
 ### ** Platform-specific overrides for the C, Fortran 77 and C++ compilers.
 
@@ -1988,12 +1992,19 @@ if test "x${want_cairo}" = "xyes"; then
 R_PANGO_CAIRO
 fi
 
-## check for CoreFoundation framework (chances are much higher
-## that we can build AQUA if this one is present)
-R_CHECK_FRAMEWORK(CFStringGetSystemEncoding, CoreFoundation)
 
 ## Aqua
-R_AQUA
+case "${host_os}" in
+  darwin*)
+    ## check for CoreFoundation framework (chances are much higher
+    ## that we can build AQUA if this one is present)
+    R_CHECK_FRAMEWORK(CFStringGetSystemEncoding, CoreFoundation)
+    R_AQUA
+  ;;
+  *)
+    use_aqua=no
+  ;;
+esac
 AM_CONDITIONAL(BUILD_AQUA, [test "x${use_aqua}" = xyes])
 AC_SUBST(use_aqua)
 

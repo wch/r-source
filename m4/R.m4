@@ -1762,6 +1762,7 @@ fi])# R_X11_XMu
 # make sure the proper framework is found.
 # default action is to set have_..._fw to yes/no and to define
 # HAVE_..._FW if present
+# NB: the does NOT cache have_..._fw, so use with care
 
 AC_DEFUN([R_CHECK_FRAMEWORK],
 [ AC_CACHE_CHECK([for $1 in $2 framework], [r_cv_check_fw_$2],
@@ -1787,8 +1788,10 @@ if test "${want_aqua}" = yes; then
     darwin*)
       ## we can build AQUA only with CoreFoundation, otherwise
       ## Quartz device won't build
-      if test "${have_CoreFoundation_fw}" = yes; then
+      if test -n "${r_cv_check_fw_CoreFoundation}" ; then
         use_aqua=yes
+      else
+        AC_MSG_WARN([requested 'aqua' but CoreFoundation was not found])
       fi
       ;;
   esac
@@ -1796,7 +1799,7 @@ fi
 if test "${use_aqua}" = yes; then
   AC_DEFINE(HAVE_AQUA, 1,
             [Define if you have the Aqua headers and libraries,
-             and want the Aqua GUI to be built.])
+             and want the Aqua GUI components and quartz() device to be built.])
 fi
 ])# R_AQUA
 
@@ -2679,8 +2682,9 @@ fi
   if test -n "${r_cv_zdotu_is_usable}"; then
     AC_MSG_RESULT([yes])
   else
-    AC_MSG_RESULT([no])
-    if test "${have_vecLib_fw}" = "yes"; then
+    ## NB: this lot is not cached
+    if test -n "${r_cv_check_fw_vecLib}"; then
+      AC_MSG_RESULT([yes])
       ## for vecLib we have a work-around by using cblas_..._sub
       use_veclib_g95fix=yes
       ## The fix may not work with internal lapack, because
@@ -2689,6 +2693,7 @@ fi
       #      use_lapack=yes
       #	     with_lapack=""
     else
+      AC_MSG_RESULT([no])
       BLAS_LIBS=
       acx_blas_ok="no"
     fi
