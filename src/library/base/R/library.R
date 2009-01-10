@@ -103,7 +103,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     checkNoGenerics <- function(env, pkg)
     {
         nenv <- env
-        ns <- .Internal(getRegisteredNamespace(as.name(libraryPkgName(pkg))))
+        ns <- .Internal(getRegisteredNamespace(as.name(pkg)))
         if(!is.null(ns)) nenv <- asNamespace(ns)
         if (exists(".noGenerics", envir = nenv, inherits = FALSE))
             TRUE
@@ -171,24 +171,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 }
             }
         }
-    }
-
-    libraryPkgName <- function(pkgName, sep = "_")
-	unlist(strsplit(pkgName, sep, fixed=TRUE))[1L]
-
-    libraryPkgVersion <- function(pkgName, sep = "_")
-    {
-        splitName <- unlist(strsplit(pkgName, sep, fixed=TRUE))
-	if (length(splitName) > 1L) splitName[2L] else NULL
-    }
-
-    libraryMaxVersPos <- function(vers)
-    {
-	## Takes in a character vector of version numbers
-        ## returns the position of the maximum version.
-        if(length(vers) == 0L) return(integer(0L))
-        vers <- package_version(vers)
-        min(which(vers == max(vers)))
     }
 
     runUserHook <- function(pkgname, pkgpath) {
@@ -264,17 +246,10 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             pkgpath <- .find.package(package, lib.loc, quiet = TRUE,
                                      verbose = verbose)
             if(length(pkgpath) == 0L) {
-                if(length(lib.loc)) {
-                    vers <- libraryPkgVersion(package)
-                    txt <- if (!is.null(vers))
-                        gettextf("there is no package called '%s', version %s",
-                                 libraryPkgName(package), vers)
-                    else
-                        gettextf("there is no package called '%s'",
-                                 libraryPkgName(package))
-                } else {
-                    txt <- gettext("no library trees found in 'lib.loc'")
-                }
+                txt <- if(length(lib.loc))
+                    gettextf("there is no package called '%s'", package)
+                else
+                    gettext("no library trees found in 'lib.loc'")
                 if(logical.return) {
                     warning(txt, domain = NA)
 		    return(FALSE)
@@ -285,7 +260,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                  lib.loc = which.lib.loc)
             if(!nzchar(pfile))
             	stop(gettextf("'%s' is not a valid installed package",
-                     libraryPkgName(package)), domain = NA)
+                              package), domain = NA)
             pkgInfo <- .readRDS(pfile)
             testRversion(pkgInfo, package, pkgpath)
 
@@ -316,7 +291,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     if (logical.return)
                         return(FALSE)
                     else stop(gettextf("package/namespace load failed for '%s'",
-                                       libraryPkgName(package)),
+                                       package),
                               call. = FALSE, domain = NA)
                 else {
                     on.exit(do.call("detach", list(name = pkgname)))
@@ -341,8 +316,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             dependsMethods <- "methods" %in% names(pkgInfo$Depends)
             if(dependsMethods && pkgInfo$Built$R < "2.4.0")
                 stop("package was installed prior to 2.4.0 and must be re-installed")
-            codeFile <- file.path(which.lib.loc, package, "R",
-                                  libraryPkgName(package))
+            codeFile <- file.path(which.lib.loc, package, "R", package)
             ## create environment (not attached yet)
             loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
             ## save the package name in the environment
@@ -353,11 +327,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                       keep.source = keep.source))
                 if(inherits(res, "try-error"))
                     stop(gettextf("unable to load R code in package '%s'",
-                                  libraryPkgName(package)),
+                                  package),
                          call. = FALSE, domain = NA)
             } else if(verbose)
                 warning(gettextf("package '%s' contains no R code",
-                                 libraryPkgName(package)), domain = NA)
+                                 package), domain = NA)
             ## lazy-load data sets if required
             dbbase <- file.path(which.lib.loc, package, "data", "Rdata")
             if(file.exists(paste0(dbbase, ".rdb")))
@@ -376,7 +350,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             .Internal(lib.fixup(loadenv, env))
 
             ## Do this before we use any code from the package
-            bindTranslations(libraryPkgName(package), pkgpath)
+            bindTranslations(package, pkgpath)
 
             ## run .First.lib
             if(exists(".First.lib", mode = "function",
@@ -387,14 +361,14 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 if(inherits(tt, "try-error"))
                     if (logical.return) return(FALSE)
                     else stop(gettextf(".First.lib failed for '%s'",
-                                       libraryPkgName(package)), domain = NA)
+                                       package), domain = NA)
             }
             if(!is.null(firstlib <- getOption(".First.lib")[[package]])) {
                 tt<- try(firstlib(which.lib.loc, package))
                 if(inherits(tt, "try-error"))
                     if (logical.return) return(FALSE)
                     else stop(gettextf(".First.lib failed for '%s'",
-                                       libraryPkgName(package)), domain = NA)
+                                       package), domain = NA)
             }
             ## If there are generics then the package should
             ## depend on methods and so have turned methods dispatch on.
@@ -411,7 +385,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	}
 	if (verbose && !newpackage)
             warning(gettextf("package '%s' already present in search()",
-                             libraryPkgName(package)), domain = NA)
+                             package), domain = NA)
 
     }
     else if(!missing(help)) {
