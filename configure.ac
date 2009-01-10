@@ -2425,25 +2425,17 @@ AC_CONFIG_FILES(
   src/nmath/Makefile
   src/nmath/standalone/Makefile
   src/scripts/Makefile
-  src/scripts/BATCH
-  src/scripts/COMPILE
-  src/scripts/LINK
   src/scripts/R.sh
   src/scripts/Rcmd
-  src/scripts/Rd2dvi
-  src/scripts/Rd2txt
   src/scripts/Rdconv
   src/scripts/Rdiff
   src/scripts/Rprof
   src/scripts/Sd2Rd
   src/scripts/build
   src/scripts/check
-  src/scripts/config
   src/scripts/f77_f2c
-  src/scripts/javareconf
   src/scripts/mkinstalldirs
   src/scripts/pager
-  src/scripts/rtags
   src/unix/Makefile
   tests/Makefile
   tests/Embedding/Makefile

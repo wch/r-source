@@ -25,11 +25,11 @@ $(R_HOME)/bin/Rdconv: Rdconv.in
 $(R_HOME)/bin/Rprof: Rprof.in
 	@$(SED) -e 1d $< > $@
 
-$(R_HOME)/bin/Rd2dvi.sh: Rd2dvi.in
-	@$(SED) -e 1d $< > $@
+$(R_HOME)/bin/Rd2dvi.sh: Rd2dvi
+	@cp $< $@
 
-$(R_HOME)/bin/config.sh: config.in
-	@$(SED) -e 1d $< > $@
+$(R_HOME)/bin/config.sh: config
+	@cp $< $@
 
 $(R_HOME)/bin/INSTALL.sh: INSTALL
 	@cp $< $@

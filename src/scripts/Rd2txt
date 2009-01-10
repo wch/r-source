@@ -1,4 +1,3 @@
-#!@R_SHELL@
 ##
 ## Rd2txt -- Convert man pages (*.Rd help files) to plain text.
 

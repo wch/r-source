@@ -1,5 +1,3 @@
-#!@R_SHELL@
-
 ## Rd2dvi -- Convert man pages (*.Rd help files) via LaTeX to DVI/PDF.
 ##
 ## Examples:

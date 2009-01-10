@@ -1,5 +1,3 @@
-#!@R_SHELL@
-
 ## rtags -- tag source files recursively in a directory tree
 ##
 ## Examples:
