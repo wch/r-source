@@ -348,6 +348,10 @@ BUG FIXES
     o	read.table(blank.lines.skip = FALSE) gave a final empty row on
 	files with less than 5 lines (PR#13433).
 
+    o	Work around a bug in some versions of iconv that was seen with
+	output lines of more than 10,000 bytes and with an re-encoded
+	requested on an output connection.
+
 
 
 

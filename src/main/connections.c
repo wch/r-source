@@ -320,7 +320,8 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 		warning(_("invalid char string in output conversion"));
 	    *ob = '\0';
 	    con->write(outbuf, 1, strlen(outbuf), con);
-	} while(again);
+	} while(again && inb > 0);  /* it seems some iconv signal -1 on
+				       zero-length input */
     } else
 #endif /* HAVE_VA_COPY */
 	con->write(b, 1, res, con);
