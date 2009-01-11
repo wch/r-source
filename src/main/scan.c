@@ -1575,6 +1575,7 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    /* A line is empty only if it contains nothing before
 	       EOL, EOF or a comment char.
 	       A line containing just white space is not empty if sep=","
+	       However foo\nEOF does not have a final empty line.
 	    */
 	    if(empty && !skip)
 		if(c != '\n' && c != data.comchar) empty = FALSE;
@@ -1583,7 +1584,7 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	buf[nbuf] = '\0';
 	if(data.ttyflag && empty) goto no_more_lines;
-	if(!empty || !blskip) {
+	if(!empty || (c != R_EOF && !blskip)) { /* see previous comment */
 	    SET_STRING_ELT(ans, nread, mkChar(buf));
 	    nread++;
 	}
