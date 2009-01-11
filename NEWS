@@ -35,13 +35,6 @@ NEW FEATURES
 	have been slightly out of range because of the allowance for
 	rounding error in computing the number of elements.
 
-    o	install.packages() is able to infer that repos=NULL was
-	intended from the extension on the file name specified as 'pkgs'.
-
-    o	install.packages() on Mac OS X now supports local binary
-	packages with .tar.gz extension. Nonetheless .tgz remains the
-	preferred extension and is expected in repositories.
-
     o	boxplot() gains a simple 'matrix' method, enabling boxplot(mat)
 	instead of boxplot(data.frame(mat)).
 
@@ -79,7 +72,7 @@ NEW FEATURES
     o	plot() methods for "stepfun" (and hence "ecdf") gain an 'col'
 	argument, allowing to set all three colors simultaneously.
 
-    o	iterating over a factor in a for loop now coerces to a character
+    o	Iterating over a factor in a for loop now coerces to a character
 	vector (rather than using the integer codes).
 
     o	data.frame() now recycles columns of list arguments, not just
@@ -95,14 +88,6 @@ NEW FEATURES
     o	strftime() now converts its first argument with as.POSIXlt()
 	and so is no longer an alias for format.POSIXLt.
 
-    o	install.packages() now checks >= version dependencies for
-	dependent packages, and so will install a newer version of a
-	dependency if needed and available on the repositories.
-
-	The library being installed into is considered when looking
-	for installed packages if it is not already part of
-	.libPaths() (as INSTALL already does).
-
     o	body<-() now treats list values consistently with other
 	types: they no longer need to be wrapped in a list() call.
 
@@ -117,15 +102,14 @@ NEW FEATURES
     o	Package 'tools' contains dependsOnPkgs() to compute reverse
 	dependencies.
 
-    o	install.packages() has a new argument 'Ncpus' to support
-	parallel installs of source packages.
-
     o	Strict type checking is now turned on: this catches more
 	internal corruptions, and some badly written contributed code.
 
-    o	There are new functions in package 'tcltk', tk_choose.files()
+    o	There are new functions in package 'tcltk', tk_choose.files(),
 	tk_choose.dir() and tk_messageBox(), analogues of functions
 	available on Windows (the last is an analogue of winDialog).
+
+    o	Sys.glob() now does tilde expansion on all platforms.
 
 
 DEPRECATED & DEFUNCT
@@ -226,9 +210,9 @@ Rd CONVERSION
 
 INSTALLATION
 
-    o	The shell used by the 'R' script and other shell scripts run
-	by 'R CMD foo' can be specified at installation time by
-	setting the (precious) configure variable R_SHELL.
+    o	The shell used by the 'R' script and other shell scripts
+	intended to be run directly can be specified at installation
+	time by setting the (precious) configure variable R_SHELL.
 
     o	libtool has been updated to 2.2.6a.
 
@@ -237,6 +221,24 @@ INSTALLATION
 
 
 PACKAGE INSTALLATION
+
+    o	install.packages() is able to infer that repos=NULL was
+	intended from the extension on the file name specified as 'pkgs'.
+
+	On Mac OS X it now supports local binary packages with .tar.gz
+	extension. Nonetheless .tgz remains the preferred extension
+	and is expected in repositories.
+
+	It now checks >= version dependencies for dependent packages,
+	and so will install a newer version of a dependency if needed
+	and available on the repositories.
+
+	The library being installed into is considered when looking
+	for installed packages if it is not already part of
+	.libPaths() (as INSTALL already does).
+
+ 	It has a new argument 'Ncpus' to support parallel installs of
+	source packages.
 
     o	HTML links will be resolved first to the standard packages: this
 	avoids other installed packages diverting help on e.g. qr()
@@ -328,7 +330,7 @@ BUG FIXES
  	by x[["foo"]] <- value did not name the additional element.
 
     o	.Call() and .External() were not accepting "NativeSymbolInfo"
-	and "NativeSymbol" objects as claimed. (Patch from Olaf
+	and "NativeSymbol" objects as claimed.  (Patch from Olaf
 	Mersmann.)
 
     o	codoc() was missing some default value mismatches with
@@ -344,9 +346,9 @@ BUG FIXES
     o	read.table(blank.lines.skip = FALSE) gave a final empty row on
 	files with less than 5 lines (PR#13433).
 
-    o	Work around a bug in some versions of iconv that was seen with
-	output lines of more than 10,000 bytes and with re-encoding
-	requested on an output connection.
+    o	Workaround for a bug in some versions of iconv that was seen
+	with output lines of more than 10,000 bytes and with
+	re-encoding requested on an output connection.
 
 
 

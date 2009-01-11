@@ -33,8 +33,8 @@ Sys.glob(paths, dirmark = FALSE)
   system's documentation on the \code{glob} system call.  There is a
   POSIX 1003.2 standard (see
   \url{http://www.opengroup.org/onlinepubs/009695399/functions/glob.html})
-  but some OSes will go beyond this (in particular some BSD-based OSes also
-  do tilde expansion, see \code{\link{path.expand}}).
+  but some OSes will go beyond this.  The \R implementation will always
+  do tilde-expansion (see \code{\link{path.expand}}).
 
   All systems should interpret \code{*} (match zero or more characters),
   \code{?} (match a single character) and \code{[} (begin a character
@@ -106,8 +106,8 @@ Sys.glob(paths, dirmark = FALSE)
   accessible file paths (but not necessarily accessible files).
 #ifdef unix
   
-  On platforms which do not have the \code{glob} system call (nor, as for
-  \R under Windows, an emulation), \code{paths} is returned unchanged.
+  On platforms which do not have the \code{glob} system call,
+  \code{paths} is returned unchanged.
 #endif
 }
 \seealso{
