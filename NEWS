@@ -345,6 +345,9 @@ BUG FIXES
     o	The $<- method for pairlists (including language objects)
 	failed to duplicate if NAMED was 2.
 
+    o	read.table(blank.lines.skip = FALSE) gave a final empty row on
+	files with less than 5 lines (PR#13433).
+
 
 
 

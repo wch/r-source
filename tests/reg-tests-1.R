@@ -5554,3 +5554,12 @@ body(f) <- list(1, 2, 3) # was error
 qr.solve(cbind(as.complex(1:11), as.complex(1)),
          as.complex(2*(20:30)))
 ## failed in 2.8.1
+
+
+## PR#13433: is ....\nEOF an empty last line?
+aa <- "field1\tfield2\n 1\ta\n 2\tb"
+zz <- textConnection(aa)
+res <- read.table(zz, blank.lines.skip = FALSE)
+close(zz)
+stopifnot(nrow(res) == 3)
+## was 4 in 2.8.1
