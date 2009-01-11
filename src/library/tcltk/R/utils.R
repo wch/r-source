@@ -167,19 +167,26 @@ close.tkProgressBar <- function(con, ...)
     invisible(NULL)
 }
 
-## filters are not yet implemented: what is the corresponding R type?
 tk_choose.files <-
     function(default = '', caption = 'Select files', multi = TRUE,
              filters = NULL, index = 1)
 {
-    res <- if(nzchar(default)) {
-        tclvalue(tcl("tk_getOpenFile", title = caption, multiple = multi,
-                     initialdir = dirname(default),
-                     initialfile = basename(default)))
-    } else
-        tclvalue(tcl("tk_getOpenFile", title = caption, multiple = multi))
+    args <- list("tk_getOpenFile", title = caption, multiple = multi)
+    if(nzchar(default)) args <- c(args, initialdir = dirname(default),
+                                   initialfile = basename(default))
+    if(!is.null(filters)) {
+        if(!is.character(filters) || length(dim(filters)) != 2 || ncol(filters) != 2)
+            stop("'filters' must be a 2-column character matrix")
+        f <- filters
+        f[] <- paste("{", filters, "}", sep="")
+        ff <- apply(f, 1, paste, collapse = " ")
+        fff <- paste("{", ff, "}", sep="")
+        args <- c(args, filetypes = paste(fff, collapse = " "))
+    }
+    res <- tclvalue(do.call(tcl, args))
     if(nzchar(res)) strsplit(res, " ", fixed = TRUE)[[1]] else character()
 }
+
 
 tk_choose.dir <- function(default = '', caption = 'Select directory')
 {
