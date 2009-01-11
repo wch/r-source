@@ -243,6 +243,8 @@
             Sys.setenv(R_PACKAGE_NAME = pkg_name)
             instdir <- file.path(lib, pkg_name)
             Sys.setenv(R_PACKAGE_DIR = instdir) ## installation dir
+            if (WINDOWS)
+                Sys.setenv(DPKG = instdir) ## assumed by some
 
             ## FIXME: do this at bundle level?
             ## Could different packages have different version requirements?
