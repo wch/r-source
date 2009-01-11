@@ -194,3 +194,14 @@ tk_choose.dir <- function(default = '', caption = 'Select directory')
     if(nzchar(res)) res else NA_character_
 }
 
+tk_messageBox <-
+    function(type = c("ok", "okcancel", "yesno", "yesnocancel",
+                      "retrycancel", "aburtretrycancel"),
+             message, caption = "", default = "", ...)
+{
+    type <- match.arg(type)
+    args <- list("tk_messageBox", type=type, message=message,
+                 title=caption, ...)
+    if(nzchar(default)) args <- c(args, default=default)
+    tclvalue(do.call("tcl", args))
+}
