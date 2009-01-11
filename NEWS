@@ -235,10 +235,6 @@ INSTALLATION
     o	--with-ICU is now the default: this means that ICU will be
 	used for collation on Mac OS >= 10.4.
 
-    o	The .afm files in package grDevices are now installed compressed
-	on Unix-alikes (as has been done since 2.6.0 on Windows).
-	This saves about 2Mb of space in the installation.
-
 
 PACKAGE INSTALLATION
 

@@ -52,7 +52,6 @@ all: Makefile DESCRIPTION
 	  for f in `ls -d $(srcdir)/inst/afm/*`; do \
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/afm; \
 	  done; \
-	  $(R_GZIPCMD) -9f $(top_builddir)/library/$(pkg)/afm/*.afm; \
 	fi
 	@if test -d $(srcdir)/inst/enc; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/enc; \
