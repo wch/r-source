@@ -730,7 +730,7 @@ static void yyerror(char *s)
 	"OPTMACRO",	"macro",
 	
 	"DESCRIPTION",	"macro",
-	0
+	0,		0
     };
     static char const yyunexpected[] = "syntax error, unexpected ";
     static char const yyexpecting[] = ", expecting ";
