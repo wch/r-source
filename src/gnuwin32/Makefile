@@ -374,6 +374,7 @@ distclean: clean
 	@for d in $(EXTRA_DIRS); do \
 	  $(MAKE) -C ../extra/$${d} -f Makefile.win distclean; \
 	done
+	@$(MAKE) -C ../../tests/Examples -f Makefile.win distclean RHOME=$(RHOME)
 	$(RM) -r ../../bin ../../include ../../lib ../../library ../../modules
 	$(RM) ../include/config.h ../include/iconv.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h \
@@ -426,15 +427,13 @@ cleanwin:
 #                          ===== testing ======
 
 # tests
-check test: pkgtests test-Basic
+check: pkgtests test-Basic
+pkgtests:
+	@$(MAKE) --no-print-directory -C ../../tests/Examples -f Makefile.win RHOME=$(RHOME)
 
 test-Basic:
 	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f Makefile.win clean
 	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f Makefile.win
-
-
-PKGS-CHK = $(foreach i, $(R_PKGS_BASE), pkgcheck-$i)
-pkgtests: $(PKGS-CHK)
 
 check-devel: check
 	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f Makefile.win $@
