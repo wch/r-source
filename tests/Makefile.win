@@ -246,6 +246,25 @@ test-Rd: testit.Rd ver10.Rd ver11.Rd
 	@$(RDCONV) -t example ver10.Rd > ver10-Ex.R
 	@diff -bw ver10-Ex.R ver10-Ex.R.save
 
+## There is a potential name clash here on case-insensitive OS
+test-Packages-Recommended:
+	-@rm -rf PACKAGES
+	@test -d Packages || mkdir Packages
+	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
+	  gzip -dc "$(RHOME)/src/library/Recommended/$${p}.tgz" | \
+	    (cd Packages && $(TAR) xf -) ; \
+	  if grep "^Contains:" "Packages/$${p}/DESCRIPTION" >/dev/null; \
+	  then \
+	    echo "checking bundle '$${p}'"; \
+	  else \
+	    echo "checking package '$${p}'"; \
+	  fi; \
+	  R_LIBS="$(RHOME)/library:$${R_LIBS}" \
+            $(RHOME)/bin/Rcmd check --install=skip \
+	    --library="$(RHOME)/library" Packages/$${p} || echo; \
+	done
+
+
 clean:
 	@rm -f *.Rout *.Rout.fail internet.Rout2 Rplots.ps reg-plot.ps \
 	  reg-plot-latin1.ps reg-tests-?.ps \
@@ -255,4 +274,5 @@ clean:
 	@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	@rm -f ver10.txt ver10.html ver10.tex ver10-Ex.R
 	@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R
+	@rm -rf Packages
 	@$(MAKE) -C Embedding -f Makefile.win clean

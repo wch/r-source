@@ -333,19 +333,9 @@ pkgclean-%:
 	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
 	  -C $(PKGD)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
-pkgcheck-%:
-	@$(ECHO) -------- Testing package $* --------
-	-@$(MKDIR) -p $(PKGD)/$*/check
-	@$(MAKE) --no-print-directory -C $(PKGD)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
-	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
-	@if test -d $(PKGD)/$*/tests ; then \
-	  $(MAKE) --no-print-directory -C $(PKGD)/$*/tests PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
-	    -f $(RHOME)/src/gnuwin32/check/PkgCheck tests;\
-	fi
-
 ## used for standard packages whose tests are run in make check-devel, 
 ## not make check
-pkgcheck2-%:
+pkgcheck-%:
 	@$(ECHO) -------- Testing package $* --------
 	-@$(MKDIR) -p $(PKGD)/$*/check
 	@$(MAKE) --no-print-directory -C $(PKGD)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
@@ -443,7 +433,7 @@ test-Basic:
 	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f Makefile.win
 
 
-PKGS-CHK = $(foreach i, $(R_PKGS_BASE), pkgcheck2-$i)
+PKGS-CHK = $(foreach i, $(R_PKGS_BASE), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)
 
 check-devel: check
@@ -451,8 +441,9 @@ check-devel: check
 
 check-all fullcheck: check-devel check-recommended
 
-## FIXME
-check-recommended: $(foreach i, $(R_PKGS_RECOMMENDED), pkgcheck-$i)
+
+check-recommended:
+	@$(MAKE) -C ../../tests -f Makefile.win test-Packages-Recommended
 
 
 #                          ===== documentation ======
