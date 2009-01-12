@@ -1,0 +1,41 @@
+#
+# ${R_HOME}/src/library/Recommended/Makefile.win
+
+include ../../../share/make/vars.mk
+
+
+## foo.ts is the timestamp for package foo;
+## foo.tgz is a symlink to foo_x.y-z.tar.gz in the source dir.
+## unfortunately package foo can be uninstalled and leave foo.ts
+
+## For developers: A shell script, tools/rsync-recommended, updates
+## packages from the CRAN master directory. 
+
+OBJECTS = $(R_PKGS_RECOMMENDED_SOURCES:=.ts)
+OBJECTS_SRC = $(R_PKGS_RECOMMENDED_SOURCES:=.tgz)
+
+CLEANFILES = $(OBJECTS) stamp-recommended
+
+.SUFFIXES:
+.SUFFIXES: .tgz .ts
+
+all: KernSmooth.ts stamp-recommended
+
+stamp-recommended: $(OBJECTS)
+	@touch $@
+
+## need to allow parallel installs, modulo dependencies below
+INSTALL_OPTS=--no-lock --auto-zip
+
+.tgz.ts:
+	@echo
+	@echo "----- installing recommended package" `basename $< .tgz`
+	@../../../bin/Rcmd INSTALL $(INSTALL_OPTS) -l $(RHOME)/library $<
+	@touch $@
+
+clean:
+	@rm -f $(CLEANFILES)
+
+## Hardcoded dependencies (see '../../../share/make/vars.mk')
+mgcv.ts: nlme.ts VR.ts
+nlme.ts: lattice.ts

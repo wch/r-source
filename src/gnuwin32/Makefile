@@ -374,12 +374,13 @@ clean: cleanwin $(PKGCLEAN)
 	-$(MAKE) --no-print-directory -C ../nmath/standalone -f Makefile.win distclean
 	-$(MAKE) --no-print-directory -C ../modules -f Makefile.win clean
 	-$(MAKE) --no-print-directory -C ../../tests -f Makefile.win clean
+	-$(MAKE) --no-print-directory -C ../library/Recommended -f Makefile.win clean
 	$(RM) -f ../library/methods/all.R
 	for p in $(R_PKGS_RECOMMENDED); do \
 	  $(RM) -rf ../library/$$p; \
 	done
 
-distclean: clean clean-recommended
+distclean: clean
 	@for d in $(EXTRA_DIRS); do \
 	  $(MAKE) -C ../extra/$${d} -f Makefile.win distclean; \
 	done
@@ -505,26 +506,12 @@ link-recommended:
 	@$(RM) ../library/Recommended/*.tgz
 	@(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 
-../library/%/DESCRIPTION: ../library/Recommended/%.tgz
-	@$(ECHO) "---- $*"
-	(cd ../library; rm -rf $*; tar zxf Recommended/$*.tgz; touch $@)
-
-unpack-recommended:
-	@$(ECHO) "--- Unpacking recommended packages"
-	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(MAKE) -s --no-print-directory ../library/$$i/DESCRIPTION || exit 1; done
-
-clean-recommended:
-	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(RM) -r ../library/$${i} ; done
-
-## FIXME: replace this by timestamps as on Unix
-recommended: unpack-recommended
+recommended:
 	@$(ECHO) "--- Making recommended packages"
 ifeq ($(strip $(BUILD)),CROSS)
 	@echo 'ERROR: cross-building of recommended packages is currently not supported'
 else
-	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
-	  $(RHOME)/bin/rcmd.exe INSTALL --unsafe --auto-zip -l $(RHOME)/library ../library/$${p} || exit 1; \
-	done
+	@$(MAKE) --no-print-directory -C ../library/Recommended -f Makefile.win RHOME=$(RHOME) BUILD=$(BUILD)
 endif
 
 EXTRA_PKGS=
