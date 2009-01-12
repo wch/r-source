@@ -77,7 +77,7 @@ numeric.deriv <- function(expr, theta, rho=sys.frame(sys.parent()))
     ans <- eval(substitute(expr), rho)
     grad <- matrix(,length(ans), length(theta),
                    dimnames=list(NULL, theta))
-    for (i in seq(along=theta)) {
+    for (i in seq_along(theta)) {
         old <- get(theta[i], envir=rho)
         delta <- eps * min(1, abs(old))
         assign(theta[i], old+delta, envir=rho)

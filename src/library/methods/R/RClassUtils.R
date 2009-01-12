@@ -265,7 +265,7 @@ completeClassDefinition <-
                 properties <- properties[!duped]
 #                 dupNames <- unique(names(properties)[duped])
 #                 if(!is.na(match(".Data", dupNames))) {
-#                     dataParts <- seq(along=properties)[names(properties) == ".Data"]
+#                     dataParts <- seq_along(properties)[names(properties) == ".Data"]
 #                     dupNames <- dupNames[dupNames != ".Data"]
 #                     ## inherited data part classes are OK but should be consistent
 #                     dataPartClasses <- unique(as.character(properties[dataParts]))
@@ -278,7 +278,7 @@ completeClassDefinition <-
 #                 }
 #                 if(length(dupNames)>0) {
 #                     dupClasses <- logical(length(superProps))
-#                     for(i in seq(along = superProps)) {
+#                     for(i in seq_along(superProps)) {
 #                         dupClasses[i] <- !all(is.na(match(dupNames, names(superProps[[i]]))))
 #                     }
 #                     stop(paste("Duplicate slot names: slots ",

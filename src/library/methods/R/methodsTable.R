@@ -857,7 +857,7 @@ listFromMethods <- function(generic, where, table) {
 
 .makeMlist1 <- function(arg, objects, j = 1) {
     mnames <- character(length(objects))
-    for(i in seq(along=objects)) {
+    for(i in seq_along(objects)) {
         what <- objects[[i]]
         if(is.primitive(what))
           sig <- "ANY"
@@ -889,11 +889,11 @@ listFromMethods <- function(generic, where, table) {
     }
     jNext <- j+1
     if(jNext < length(args))
-      for(i in seq(along = mlists))
+      for(i in seq_along(mlists))
           mlists[[i]] <- .makeMlist2(args, mlists[[i]], jNext)
     else {
         arg2 = as.name(args[[jNext]])
-        for(i in seq(along = mlists))
+        for(i in seq_along(mlists))
           mlists[[i]] <- .makeMlist1(arg2, mlists[[i]], jNext)
     }
     new("MethodsList", argument = as.name(args[[1L]]), methods = mlists, allMethods = mlists)
@@ -902,7 +902,7 @@ listFromMethods <- function(generic, where, table) {
 .makeMlistFromTable <- function(generic, where = NULL) {
     .getAll <- function(what, table) {
         value <- list(length(what))
-        for(i in seq(along = what))
+        for(i in seq_along(what))
           value[[i]] <- get(what[[i]], envir = table)
         value
     }

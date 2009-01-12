@@ -315,7 +315,7 @@ conformMethod <- function(signature, mnames, fnames,
     else if(!all(signature[omitted] == "missing")) {
         .message(label, gettextf("expanding the signature to include omitted arguments in definition: %s",
                                  paste(fnames[omitted], "= \"missing\"",collapse = ", ")))
-        omitted <- seq(along = omitted)[omitted] # logical index will extend signature!
+        omitted <- seq_along(omitted)[omitted] # logical index will extend signature!
         signature[omitted] <- "missing"
     }
     ## remove trailing "ANY"'s
@@ -1454,7 +1454,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
               value <- as.environment(where)
         }
     }
-    else if(is.numeric(where) && where %in% seq(along = search()))
+    else if(is.numeric(where) && where %in% seq_along(search()))
       value <- as.environment(where)
     value
 }

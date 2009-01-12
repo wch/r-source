@@ -250,8 +250,8 @@ function(x)
     m <- matrix(attr(x, "height"), sum(lens), sum(lens))
     ## This seems a bit slower:
     ##    inds <- split(seq(length = sum(lens)),
-    ##                  rep.int(seq(along = lens), lens))
-    ##    for(i in seq(along = inds))
+    ##                  rep.int(seq_along(lens), lens))
+    ##    for(i in seq_along(inds))
     ##         m[inds[[i]], inds[[i]]] <- as.matrix(children[[i]])
     hi <- cumsum(lens)
     lo <- c(0, hi[-length(hi)]) + 1

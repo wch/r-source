@@ -1533,7 +1533,7 @@ hasMethods <- function(f, where, package)
       exists(what, envir = ev, inherits = FALSE) &&
     length(objects(get(what, envir = ev), all.names = TRUE))
     if(nowhere) {
-        for(i in seq(along = search())) {
+        for(i in seq_along(search())) {
             if(testEv(as.environment(i)))
               return(TRUE)
         }

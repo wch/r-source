@@ -43,7 +43,7 @@ split.data.frame <- function(x, f, drop = FALSE, ...)
 
 #"split<-.default" <- function(x, f, value)
 #{
-#    x[unlist(split(seq(along=x), f))] <- unlist(value)
+#    x[unlist(split(seq_along(x), f))] <- unlist(value)
 #    x
 #}
 

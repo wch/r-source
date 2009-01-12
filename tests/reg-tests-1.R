@@ -3259,9 +3259,9 @@ unlink(tf)
 
 ## seq() should be more consistent in returning "integer"
 stopifnot(typeof(seq(length=0)) == "integer",
-          identical(seq(length=0), seq(along=0[0])),
+          identical(seq(length=0), seq(along.with=0[0])),
           identical(seq(length=3), 1:3),
-          identical(seq(length=3), seq(along=1:3)))
+          identical(seq(length=3), seq(along.with=1:3)))
 
 
 ## labels.lm was broken (PR#7417)
