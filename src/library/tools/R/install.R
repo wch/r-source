@@ -34,7 +34,11 @@
     WINDOWS <- .Platform$OS.type == "windows"
     ## override for cross-building
     windir <- Sys.getenv("R_X_BUILD")
-    if(nzchar(windir)) WINDOWS <- TRUE
+    if(nzchar(windir)) {
+	WINDOWS <- TRUE
+	## needed for Build field in DESCRIPTION
+	Sys.setenv(R_OSTYPE="windows")
+    }
 
     paste0 <- function(...) paste(..., sep="")
 
