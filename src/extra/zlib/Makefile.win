@@ -31,7 +31,7 @@ Rzlib.def: $(OBJECTS)
 	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' | $(SORT) | uniq >> $@
 
 headers:
-	@$(CP) zlib.h zconf.h ../../../include
+	@$(CP) -p zlib.h zconf.h ../../../include
 
 clean:
 	@$(RM) *.o *~ *.d Makedeps Rzlib.def
