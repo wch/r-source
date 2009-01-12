@@ -8,6 +8,7 @@ all:
 	fi
 	@$(MAKE) --no-print-directory rbuild
 	@$(MAKE) --no-print-directory rpackage
+	@$(MAKE) --no-print-directory rpackagehelp
 	@$(MAKE) --no-print-directory htmldocs
 	@$(MAKE) --no-print-directory  -C ../../po -f Makefile.win
 
@@ -135,7 +136,12 @@ utils-LAZY=true
 datasets-LAZYDATA=true
 stats4-LAZY = true
 
-rpackage: ../../library/R.css rpackageindices
+rpackagehelp: ../../library/R.css rpackageindices
+	@for pkg in $(R_PKGS_BASE); do \
+	  $(MAKE) --no-print-directory pkghelp-$${pkg} || exit 1; \
+	done
+
+rpackage:
 	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-base
 ifneq ($(strip $(BUILD)),CROSS)
 	@if ! test -f ../../library/base/R/base.rdb ; then \
@@ -312,7 +318,10 @@ pkg-%:
           DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" BUILD=$(BUILD) \
 	  PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -C $(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg
-	@$(ECHO) "  installing help"
+
+pkghelp-%:
+	@$(ECHO)
+	@$(ECHO) "------ Installing help for package $*"
 ifneq ($(strip $(BUILD)),CROSS)
 	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* HELPTYPES='-txt -html -latex -example -chm' $($*-HELP)help-$*
 	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* chm-$*
@@ -507,10 +516,11 @@ unpack-recommended:
 clean-recommended:
 	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(RM) -r ../library/$${i} ; done
 
+## FIXME: replace this by timestamps as on Unix
 recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
 ifeq ($(strip $(BUILD)),CROSS)
-	@echo 'ERROR: cross-builing of recommended packages is currently not supported'
+	@echo 'ERROR: cross-building of recommended packages is currently not supported'
 else
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
 	  $(RHOME)/bin/rcmd.exe INSTALL --unsafe --auto-zip -l $(RHOME)/library ../library/$${p} || exit 1; \
