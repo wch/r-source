@@ -8,16 +8,6 @@
 
 BUILD=GCC4
 
-## These are overridden by R CMD INSTALL: they only apply to
-## standard packages when building R and when using 'make pkg-foo'
-HELP = YES
-HELPTYPES = -txt -html -latex -example
-ifeq ($(strip $(BUILD)),CROSS)
-WINHELP = NO
-else
-WINHELP = CHM # NO or CHM
-endif
-
 # an alternative is to use -gstabs here, if the debugger supports only stabs.
 G_FLAG=-gdwarf-2
 
@@ -92,7 +82,7 @@ ifeq ($(strip $(BUILD)),CROSS)
 ifeq ($(strip $(WIN)),64)
 BINPREF=x86_64-pc-mingw32-
 else
-BINPREF=i586-mingw32-
+BINPREF=i386-mingw32-
 endif
 # Optional, if compiler has been relocated
 # Set this to full path to dir where the mingw32 include files are.

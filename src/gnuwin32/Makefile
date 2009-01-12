@@ -133,6 +133,7 @@ stats-LAZY=true
 tcltk-LAZY=true
 utils-LAZY=true
 datasets-LAZYDATA=true
+stats4-LAZY = true
 
 rpackage: ../../library/R.css rpackageindices
 	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-base
@@ -168,7 +169,6 @@ endif
 	@$(CP) ../library/datasets/data/morley.tab ../../library/datasets/data
 
 rpackageindices:
-ifeq ($(strip $(HELP)),YES)
 	@$(ECHO)
 	@$(ECHO) -n "writing help indices for package:"
 	@for pkg in $(R_PKGS_BASE); do \
@@ -176,7 +176,6 @@ ifeq ($(strip $(HELP)),YES)
 	  $(MAKE) --no-print-directory  -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$${pkg} index-$${pkg} || exit 1; \
 	done
 	@$(ECHO)
-endif
 
 
 rlibs:
@@ -290,10 +289,8 @@ libRblas.dll.a:  ../extra/blas/Rblas.def
 #                          ===== Packages ======
 
 CHTML:
-ifeq ($(strip $(HELP)),YES)
-ifeq ($(strip $(WINHELP)),CHM)
+ifneq ($(strip $(BUILD)),CROSS)
 	$(MAKE) --no-print-directory -C ./help -f MkChmDll
-endif
 endif
 
 base-HELP = ziponly
@@ -308,21 +305,6 @@ stats4-HELP = ziponly
 tcltk-HELP = ziponly
 tools-HELP = ziponly
 utils-HELP = ziponly
-stats4-LAZY = true
-
-KernSmooth-HELP = ziponly
-MASS-HELP = ziponly
-class-HELP = ziponly
-nnet-HELP = ziponly
-spatial-HELP = ziponly
-boot-HELP = ziponly
-cluster-HELP = ziponly
-foreign-HELP = ziponly
-lattice-HELP = ziponly
-mgcv-HELP = ziponly
-nlme-HELP = ziponly
-rpart-HELP = ziponly
-survival-HELP = ziponly
 
 pkg-%:
 	@$(MAKE) --no-print-directory \
@@ -330,35 +312,13 @@ pkg-%:
           DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" BUILD=$(BUILD) \
 	  PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -C $(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg
-	@if test -d $(RLIB)/$*/data ; then \
-	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \
-	fi
-ifeq ($(strip $(HELP)),YES)
 	@$(ECHO) "  installing help"
-  ifeq ($(strip $(DPKG)),)
-    ifeq ($(strip $(WINHELP)),CHM)
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* HELPTYPES='$(HELPTYPES) -chm' $($*-HELP)help-$*
+ifneq ($(strip $(BUILD)),CROSS)
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* HELPTYPES='-txt -html -latex -example -chm' $($*-HELP)help-$*
 	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* chm-$*
-    else
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* HELPTYPES='$(HELPTYPES)' $($*-HELP)help-$*
-    endif
-  else
-    ifeq ($(strip $(WINHELP)),CHM)
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) HELPTYPES='$(HELPTYPES) -chm' $($*-HELP)help-$*
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) chm-$*
-    else
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) HELPTYPES='$(HELPTYPES)' $($*-HELP)help-$*
-    endif
-  endif
+else
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* HELPTYPES='-txt -html -latex -example' $($*-HELP)help-$*
 endif
-
-pkgfake-%:
-	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
-	  -C $(PKGD)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
-	  -f $(RHOME)/src/gnuwin32/MakePkg fake
-	@$(ECHO) "  installing help"
-	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) pkgfake-$*
-
 
 pkgclean-%:
 	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
@@ -388,29 +348,8 @@ lazyload-%:
 lazydata-%:
 	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -f $(RHOME)/src/gnuwin32/MakePkg lazydata
 
-ziphelp-%:
-	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziphelp-$*
-
 ziponly-%:
 	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziponlyhelp-$*
-
-## must be careful not to zip up a dir setup for lazy-data
-zipdata-%:
-	@if ! test -f $(RLIB)/$*/data/Rdata.rdb ; then \
-	  $(ECHO) "  zipping data" ; \
-	  (cd $(RLIB)/$*/data; \
-	    if test -f Rdata.zip ; then \
-	      unzip -qou Rdata; \
-	    fi; \
-	    $(RM) Rdata.zip filelist ; \
-	    ls -1 > filelist; \
-	    zip -rmq9X Rdata * -x filelist 00Index) ;\
-	fi
-
-data-%:
-	@if ! test -f $(RLIB)/$*/data/Rdata.rdb ; then \
-	  $(ECHO) "  not zipping data" ; \
-	fi
 
 
 #                          ===== cleaning ======
@@ -467,7 +406,6 @@ distclean: clean clean-recommended
 		cran/md5sum.txt cran/*.$(RPREFIX) 
 	$(RM) -r .vignettes # it gets left behind if there is an error
 	$(RM) -r ../../share/locale
-	$(RM) XINSTALL # from cross-building
 	$(RM) Rpwd.exe # do this last of all
 
 veryclean: distclean
@@ -511,7 +449,6 @@ check-recommended: $(foreach i, $(R_PKGS_RECOMMENDED), pkgcheck-$i)
 pdfdocs manuals:
 	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win clean BUILD=$(BUILD)
 	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win BUILD=$(BUILD)
-#	@$(MAKE) --no-print-directory ziponly-base
 
 vignettes:
 	@for pkg in $(R_PKGS_BASE); do \
@@ -576,7 +513,7 @@ ifeq ($(strip $(BUILD)),CROSS)
 	@echo 'ERROR: cross-builing of recommended packages is currently not supported'
 else
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
-	  $(RHOME)/bin/rcmd.exe INSTALL --unsafe -l $(RHOME)/library ../library/$${p} || exit 1; \
+	  $(RHOME)/bin/rcmd.exe INSTALL --unsafe --auto-zip -l $(RHOME)/library ../library/$${p} || exit 1; \
 	done
 endif
 

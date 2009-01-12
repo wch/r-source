@@ -24,13 +24,6 @@ pkg-% help-%:
 	    $(HELPTYPES) $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	fi
 
-pkgfake-%:
-	@if test -d $(PKGDIR)/$*/man ; then \
-	  PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	    $(R_HOME)/share/perl/build-help-windows.pl \
-	    -txt -latex $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
-	fi
-
 chm-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
 	  if ! test -d $(PKGDIR)/$*/chm ; then \
@@ -47,10 +40,6 @@ chm-%:
 	    echo CHM compile failed:  HTML Help Workshop not installed? ; \
 	  fi; \
 	fi
-
-ziphelp-%:
-	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
-	  -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqX  PKG=$* zipit
 
 ziponlyhelp-%:
 	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
