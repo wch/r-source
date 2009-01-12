@@ -708,11 +708,13 @@ foreach my $pkg (@ARGV) {
 		$INSTALL_opts = "--fake" if($opt_install eq "fake");
 		my $cmd;
 		if($WINDOWS) {
+		    ## avoid some quoting hell
+		    my $pkgd = Win32::GetShortPathName($pkgdir);
 		    $cmd = join(" ",
 				("Rcmd.exe INSTALL -l",
 				 &shell_quote_file_path($library),
 				 "$INSTALL_opts",
-				 &shell_quote_file_path($pkgdir)));
+				 &shell_quote_file_path($pkgd)));
 		} else {
 		    $cmd = join(" ",
 				(&shell_quote_file_path(${R::Vars::R_EXE}),
