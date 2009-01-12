@@ -2,9 +2,10 @@
 include ../../gnuwin32/MkRules
 
 DEFS=-DWIN32 -DPCRE_STATIC
-ifdef LEA_MALLOC
-DEFS+=-DLEA_MALLOC
-endif
+## used once, but no longer
+#ifdef LEA_MALLOC
+#DEFS+=-DLEA_MALLOC
+#endif
 
 CPPFLAGS=-I../../include -I. $(DEFS)
 CFLAGS= $(OPTFLAGS)
