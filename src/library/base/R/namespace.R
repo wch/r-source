@@ -419,7 +419,7 @@ loadNamespace <- function (package, lib.loc = NULL,
 
 
         ## run the load hook
-        if(!nzchar(Sys.getenv("R_CROSS_BUILD")))
+        if(!nzchar(Sys.getenv("R_CROSS_BUILD2")))
            runHook(".onLoad", package, env, package.lib, package)
 
         ## process exports, seal, and clear on.exit action

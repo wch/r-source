@@ -800,8 +800,10 @@
                     ol <- .libPaths(c(.Library, .libPaths()))
                     .getRequiredPackages(quietly = TRUE)
                     Sys.setenv(R_CROSS_BUILD="yes")
+                    Sys.setenv(R_CROSS_BUILD2="yes")
                     res <- try(tools:::makeLazyLoading(pkg_name, lib))
                     Sys.unsetenv("R_CROSS_BUILD")
+                    Sys.unsetenv("R_CROSS_BUILD2")
                     .libPaths(ol)
                 } else
                 res <- try({.getRequiredPackages(quietly = TRUE)
