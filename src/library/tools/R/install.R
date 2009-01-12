@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-.install_packages <- function()
+.install_packages <- function(args = NULL)
 {
     .file_test <- function(op, x, y)
         ## we don't want to load utils just for this
@@ -390,7 +390,7 @@
                 libarch <- if (nzchar(arch)) paste0("libs", arch) else "libs"
                 dest <- file.path(instdir, libarch)
                 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
-                file.copy(files, dest)
+                file.copy(files, dest, overwrite = TRUE)
                 Sys.chmod(Sys.glob(file.path(dest, "*")), "755")
             }
         }
@@ -444,7 +444,7 @@
             starsmsg(stars, "Installing *Translation* package ", sQuote(pkg_name), " ...")
             if (.file_test("-d", "share")) {
                 files <- Sys.glob("share/*")
-                if (length(files)) file.copy(files, R.home("share"))
+                if (length(files)) file.copy(files, R.home("share"), TRUE)
             }
             if (.file_test("-d", "library")) {
                 system(paste("cp -r ./library", R.home()))
@@ -537,7 +537,7 @@
         if (more_than_libs) {
             for (f in c("NAMESPACE", "LICENSE", "LICENCE", "COPYING", "NEWS"))
                 if (file.exists(f)) {
-                    file.copy(f, instdir)
+                    file.copy(f, instdir, TRUE)
                     Sys.chmod(file.path(instdir, f), "644")
                 }
 
@@ -597,7 +597,7 @@
                 dllfile <- file.path("src", paste0(pkg_name, ".dll"))
                 if (!has_error &&file.exists(dllfile)) {
                     message("  installing DLL ...")
-                    file.copy(dllfile, libdir)
+                    file.copy(dllfile, libdir, TRUE)
                 }
             } else { # not WINDOWS
                 if (file.exists("src/Makefile")) {
@@ -694,7 +694,7 @@
                         ## FIXME: some packages have useDynlib()
                         ## spread over several lines.
                         writeLines(sub("useDynLib.*", 'useDynLib("")',
-                                       readLines("NAMESPACE"),
+                                       readLines("NAMESPACE", warn = FALSE),
                                        perl = TRUE, useBytes = TRUE),
                                    file.path(instdir, "NAMESPACE"))
                         ## </NOTE>
@@ -714,7 +714,7 @@
                     dir.create(file.path(instdir, "data"), recursive = TRUE,
                                showWarnings = FALSE)
                     file.remove(Sys.glob(file.path(instdir, "data", "*")))
-                    file.copy(files, file.path(instdir, "data"))
+                    file.copy(files, file.path(instdir, "data"), TRUE)
                     Sys.chmod(Sys.glob(file.path(instdir, "data", "*")), "644")
                     thislazy <- parse_description_field(desc, "LazyData",
                                                         default = lazy_data)
@@ -759,7 +759,7 @@
                 file.remove(Sys.glob(file.path(instdir, "exec", "*")))
                 files <- Sys.glob(file.path("exec", "*"))
                 if (length(files)) {
-                    file.copy(files, file.path(instdir, "exec"))
+                    file.copy(files, file.path(instdir, "exec"), TRUE)
                     Sys.chmod(Sys.glob(file.path(instdir, "exec", "*")), "755")
                 }
             }
@@ -870,7 +870,7 @@
                                 dest <- file.path(instdir, "chtml")
                                 ## parent must exist by now
                                 dir.create(dest, showWarnings = FALSE)
-                                file.copy(chm_file, dest)
+                                file.copy(chm_file, dest, TRUE)
                             }
                             setwd(owd)
                         }
@@ -919,7 +919,7 @@
     options(showErrorCalls=FALSE)
     pkgs <- character(0)
     lib <- ""
-    args <- commandArgs(TRUE)
+    if(is.null(args)) args <- commandArgs(TRUE)
 
     startdir <- getwd()
 
@@ -1329,7 +1329,7 @@
     makeobjs <- p0("OBJECTS=", shQuote(objs))
     if (file.exists("Makevars")) {
         makefiles <- c("Makevars", makefiles)
-        lines <- readLines("Makevars")
+        lines <- readLines("Makevars", warn = FALSE)
         if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes=TRUE)))
             makeobjs <- ""
     }
