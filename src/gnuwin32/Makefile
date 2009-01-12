@@ -451,6 +451,7 @@ check-devel: check
 
 check-all fullcheck: check-devel check-recommended
 
+## FIXME
 check-recommended: $(foreach i, $(R_PKGS_RECOMMENDED), pkgcheck-$i)
 
 
@@ -509,9 +510,9 @@ link-recommended:
 recommended:
 	@$(ECHO) "--- Making recommended packages"
 ifeq ($(strip $(BUILD)),CROSS)
-	@echo 'ERROR: cross-building of recommended packages is currently not supported'
+	@R_X_BUILD=$(RHOME) $(MAKE) --no-print-directory -C ../library/Recommended -f Makefile.win RHOME=$(RHOME) BUILD=$(BUILD)
 else
-	@$(MAKE) --no-print-directory -C ../library/Recommended -f Makefile.win RHOME=$(RHOME) BUILD=$(BUILD)
+	@$(MAKE) --no-print-directory -C ../library/Recommended -f Makefile.win RHOME=$(RHOME)
 endif
 
 EXTRA_PKGS=

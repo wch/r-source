@@ -1177,8 +1177,6 @@ for suggesting WiX and building a prototype installer.
 @node Cross-building on Linux,  , Building the MSI installer, Building from source
 @subsection Cross-building on Linux
 
-[Cross-building of the development version of @R{} is currently unsupported.]
-
 It is possible to cross-build @R{} or packages on (at least)
 @cputype{ix86} and @cputype{x86_64} Linux, and the @cputype{ix86}
 cross-compilers have also been used successfully on @cputype{x86_64}
@@ -1228,10 +1226,13 @@ Edit @file{MkRules} to set @code{BUILD=CROSS} and the appropriate paths
 You also need a working copy of @emph{this version} of @R{} on Linux:
 uncomment and set @code{R_EXE} in @file{MkRules} to point to it.
 
-Then run @code{make} (and parallel make works reliably, unlike on Windows).
+Then run @code{make} (and parallel make works reliably, unlike on
+Windows) and @code{make recommended}.
 
 Even so, packages which depend on others that need to run compiled
 code to load may not work (@pkg{methods} is a special exception).
+Turning lazy-loading off may be more successful (but the package may not
+work without lazy-loading).
 
 To distribute a cross-build (or just to transfer it to a Windows machine
 for testing) use
