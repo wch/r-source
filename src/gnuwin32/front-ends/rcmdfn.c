@@ -347,6 +347,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    } else if (strcmp(p, "SHLIB") == 0) {
 		strcpy(cmd, "sh ");
 		strcat(cmd, RHome); strcat(cmd, "/bin/SHLIB.sh");
+	    } else if (strcmp(p, "Rd2txt") == 0) {
+		strcpy(cmd, "sh ");
+		strcat(cmd, RHome); strcat(cmd, "/bin/Rd2txt.sh");
 	    } else {
 		if (!strcmp(".sh", p + strlen(p) - 3)) {
 		    strcpy(cmd, "sh ");
