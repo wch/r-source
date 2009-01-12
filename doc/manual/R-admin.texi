@@ -985,10 +985,9 @@ make recommended
 @end example
 
 @noindent
-but this is only likely to be worthwhile on a dual-processor/dual-core
-machine with ample (at least 384Mb) of memory.  (On a dual AthlonMP it
-reduced the build time by about 30%.)  Note that this may sometimes stop
-and have to be restarted.
+but this is only likely to be worthwhile on a multi-core machine with
+ample memory.  Note that this may sometimes stop and have to be
+restarted.
 
 @end itemize
 
@@ -1178,6 +1177,8 @@ for suggesting WiX and building a prototype installer.
 @node Cross-building on Linux,  , Building the MSI installer, Building from source
 @subsection Cross-building on Linux
 
+[Cross-building of the development version of @R{} is currently unsupported.]
+
 It is possible to cross-build @R{} or packages on (at least)
 @cputype{ix86} and @cputype{x86_64} Linux, and the @cputype{ix86}
 cross-compilers have also been used successfully on @cputype{x86_64}
@@ -1190,7 +1191,7 @@ MinGW-specific patches are not yet stable (and not needed to build @R{}).
 You will need suitable cross-compilers installed and in your path.  We
 do not at present distribute suitable cross-compilers.
 
-For Fedora 10 users, RPMs are epected to become available in the main
+For Fedora 10 users, RPMs are expected to become available in the main
 repositories (see @uref{https://fedoraproject.org/wiki/MinGW}: also for
 RHEL/Centos 5 @cputype{i386} RPMs).  RPMs for Fedora 8 and 9 have been
 available at @uref{http://sourceforge.net/projects/@/mingw-cross/}.
@@ -1233,23 +1234,6 @@ uncomment and set @code{R_EXE} in @file{MkRules} to point to it.
 
 Then run @code{make} (and parallel make works reliably, unlike on Windows).
 
-Packages can be made in the same way as natively: see @ref{Customizing
-package compilation under Windows}, via the @file{Makefiles} but not
-via @samp{R CMD INSTALL}.  So care is needed where packages have
-dependencies: Linux versions of the dependencies must be installed in
-a library in the search path.  So for example to cross-build the
-@pkg{MCMCpack} package we used
-
-@example
-# MCMCpack depends on coda, so point to the library containing it
-export R_LIBS=/R/library
-make PKGDIR=/mysources pkg-MCMCpack
-make PKGDIR=/mysources lazyload-MCMCpack
-cd ../../library
-zip -r9X /dest/MCMCpack_0.7-4.zip MCMCpack
-@end example
-
-@noindent
 Even so, packages which depend on others that need to run compiled
 code to load may not work (@pkg{methods} is a special exception).
 
@@ -1474,8 +1458,7 @@ library paths, separated by colons (semicolons on Windows).
 @menu
 * Windows packages::            
 * Mac OS X packages::           
-* Customizing package compilation under Unix::  
-* Customizing package compilation under Windows::  
+* Customizing package compilation::  
 @end menu
 
 
@@ -1552,15 +1535,15 @@ files, @dots{}).
 @node Windows packages, Mac OS X packages, Installing packages, Installing packages
 @subsection Windows
 
-What @code{install.packages} does by default is different on Unix and
-Windows.  On Unix-alikes it consults the list of available @emph{source}
-packages on @acronym{CRAN} (or other repository/ies), downloads the
-latest version of the package sources, and installs them (via @code{R
-CMD INSTALL}).  On Windows it looks (by default) at the list of
-@emph{binary} versions of packages available for your version of @R{}
-and downloads the latest versions (if any), although optionally it will
-also download and install a source package by setting the @code{type}
-argument.
+What @code{install.packages} does by default is different on Unix-alikes
+(except Mac OS X) and Windows.  On Unix-alikes it consults the list of
+available @emph{source} packages on @acronym{CRAN} (or other
+repository/ies), downloads the latest version of the package sources,
+and installs them (via @code{R CMD INSTALL}).  On Windows it looks (by
+default) at the list of @emph{binary} versions of packages available for
+your version of @R{} and downloads the latest versions (if any),
+although optionally it will also download and install a source package
+by setting the @code{type} argument.
 
 On Windows @code{install.packages} can also install a binary package
 from a local @file{zip} file by setting argument @code{repos} to
@@ -1582,26 +1565,27 @@ If you have only a source package that is known to work with current
 the building service offered at @uref{http://win-builder.r-project.org,
 win-builder.r-project.org}.
 
-@node Mac OS X packages, Customizing package compilation under Unix, Windows packages, Installing packages
+@node Mac OS X packages, Customizing package compilation, Windows packages, Installing packages
 @subsection Mac OS X
 
 On Mac OS X @code{install.packages} works as it does on other Unix-like
-systems, but there is an additional type @code{mac.binary} that can be
-passed to @code{install.packages} in order to download and install
-binary packages from a suitable repository, and is the default for
-CRAN builds of R.  These Macintosh binary package files have the
-extension @samp{tgz}.  The @R{} GUI provides for installation of
-either binary or source packages, from @acronym{CRAN} or local files.
+systems, but there is an additional type @code{mac.binary} (the default
+in the CRAN distribution) that can be passed to @code{install.packages}
+in order to download and install binary packages from a suitable
+repository, and is the default for CRAN builds of R.  These Macintosh
+binary package files have the extension @samp{tgz}.  The @R{} GUI
+provides for installation of either binary or source packages, from
+@acronym{CRAN} or local files.
 
-@node Customizing package compilation under Unix, Customizing package compilation under Windows, Mac OS X packages, Installing packages
-@subsection Customizing package compilation under Unix
+@node Customizing package compilation,  , Mac OS X packages, Installing packages
+@subsection Customizing package compilation
 
 The R system and package-specific compilation flags can be overridden or
 added to by setting the appropriate Make variables in the personal file
-@file{$HOME/.R/Makevars-$R_PLATFORM}, or if that does not exist,
-@file{$HOME/.R/Makevars}, where @samp{R_PLATFORM} is the platform for
-which R was built, as available in the @code{platform} component of the
-R variable @code{R.version}.
+@file{$HOME/.R/Makevars-$R_PLATFORM} (but @file{$HOME/.R/Makevars.win} on
+Windows), or if that does not exist, @file{$HOME/.R/Makevars}, where
+@samp{R_PLATFORM} is the platform for which R was built, as available in
+the @code{platform} component of the R variable @code{R.version}.
 
 Package developers are encouraged to use this mechanism to enable a
 reasonable amount of diagnostic messaging (``warnings'') when compiling,
@@ -1621,131 +1605,6 @@ FFLAGS=-g -O
 ## for Fortran 95 code
 FCFLAGS=-g -O
 @end example
-
-@node Customizing package compilation under Windows,  , Customizing package compilation under Unix, Installing packages
-@subsection Customizing package compilation under Windows
-@findex MakeDll
-@findex Makevars.win
-@findex HELP
-@findex HELPTYPES
-@findex WINHELP
-
-This section describes ways to customize package compilation using the
-standard C, C++ and FORTRAN compilers and tools.  For instructions on
-using non-standard tools, see the @file{README.packages} file.
-
-The Makefiles can be customized: in particular the name of the DLL can
-be set (for example we once needed @code{integrate-DLLNM=adapt}), the
-compile flags can be set (see the examples in @file{MakeDll}) and the
-types of help (if any) to be generated can be chosen (variables
-@code{HELP}, @code{HELPTYPES} and @code{WINHELP}).  The simplest way to
-customize the compilation steps is to set variables in a file
-@file{src/Makevars.win}, which will automatically be included by
-@file{MakeDLL}. For example, for RODBC @file{src/Makevars.win} could
-include the line
-
-@example
-DLLLIBS+=-lodbc32
-@end example
-
-@noindent
-or, equivalently,
-
-@example
-RODBC-DLLLIBS=-lodbc32
-@end example
-
-@noindent
-but in fact contains the single line
-
-@example
-PKG_LIBS=-lodbc32
-@end example
-
-@noindent
-If you have a file @file{src/Makefile.win}, that will be used as the
-makefile for source compilation in place of our makefile and
-@file{MakeDll} and @file{src/Makevars.win} will be ignored.
-
-Package-specific compilation flags can be overridden or added to using
-the personal file @file{$HOME/.R/Makevars.win}, or if that does not
-exist, @file{$HOME/.R/Makevars}. (See the @file{rw-FAQ} for the meaning
-of @code{$HOME}.)  For the record, the order of precedence is (last wins)
-@itemize
-@item
-@file{MakeDll} and @file{MkRules}
-
-@item
-@file{src/Makevars.win} if it exists, otherwise @file{src/Makevars}
-
-@item
-@file{$HOME/.R/Makevars.win} if it exists, otherwise
-@file{$HOME/.R/Makevars}.
-
-@item
-@file{src/Makefile.win} if present causes all but the last of the above
-to be ignored.
-@end itemize
-
-@strong{Beware}: references to variables in @file{R.dll} are converted to the
-right form by using the header files.  You must include them.
-
-For additional control, @file{@var{R_HOME}/src/gnuwin32/Makefile}
-contains additional make targets corresponding to various options to
-@command{R CMD INSTALL}.  These assume that package @code{foo}'s source
-code has been installed in directory
-@file{@var{R_HOME}/src/library/foo}. Then @code{make pkg-foo} is similar
-to @code{R CMD INSTALL foo} (but the latter would require
-@file{@var{R_HOME}/src/library} to be the current directory).  Other
-targets are
-@itemize
-@item
-@code{ziponly-foo}, to use zip to compress the help files after building
-the package.
-@item
-@code{ziphelp-foo} to both compress the help files and to keep the
-originals.
-@item
-@code{zipdata-foo} to compress the data files.  This is recommended if
-you have either many small data files (as in package @pkg{Devore5}) or a
-few large data files.
-@item
-@code{pkgcheck-foo} to check the package (like @code{R CMD check foo}).
-@end itemize
-
-Using this approach allows variables to be set during the build, e.g.
-
-@example
-make PKGDIR=/mysources RLIB=/R/library pkg-foo
-@end example
-
-Some variables that may be used include:
-@itemize
-@item
-@code{DEBUG=T} to compile with debugging information for @code{gdb}.
-@item
-@code{PKG_CFLAGS=} to specify options to the C compiler.
-@item
-@code{PKG_CPPFLAGS=} to specify options to the preprocessor.
-@item
-@code{PKG_CXXFLAGS=} to specify options to the C++ compiler.
-@item
-@code{PKG_FFLAGS=} to specify options to the FORTRAN 77 compiler.
-@item
-@code{PKG_FCFLAGS=} to specify options to the Fortran 95 compiler (if
-specified).
-@item
-@code{PKG_LIBS=} to specify options to the linking step making the DLL.
-@item 
-@code{PKGDIR=/path/to/source} to specify the path to the package source files.
-@item 
-@code{RLIB=/path/to/library} to specify the path to the library
-where the package should be installed.
-@end itemize
-For a complete list of variables, see the @file{M*} files in
-@file{@var{R_HOME}/src/gnuwin32}.  The @code{PKG_*} flags are those
-typically included in @file{Makevars} files.
-
 
 @node Updating packages, Removing packages, Installing packages, Add-on packages
 @section Updating packages
@@ -1787,10 +1646,8 @@ From a running @R{} process they can be removed by
 @end example
 
 Finally, in most installations one can just remove the package directory
-from the library.
-
-@strong{Note}: only @code{remove.packages} can remove package
-@emph{bundles}.
+from the library (bti for a package from a bundle, be sure to remove the
+whole bundle).
 
 
 @node Setting up a package repository,  , Removing packages, Add-on packages

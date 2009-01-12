@@ -29,9 +29,9 @@ GW_INFO_FILES = CHANGES COPYRIGHTS README.Rterm rw-FAQ
 
 ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Makeconf Rcmd_environ
 
-GW32_FILES = MkRules MakePkg MakeDll Rpwd.exe pwd.pl makeDllRes.pl
+GW32_FILES = MkRules MakeDll # MakePkg Rpwd.exe pwd.pl makeDllRes.pl
 
-# we don't want share/{Makefile.in,sh} installed
+# we don't want share/{Makefile.in,sh} installed, except sh/dcf.sh for Rd2dvi
 SHARE_DIRS = R licenses locale make perl texmf zoneinfo
 
 all: $(RPREFIX)-win32.exe
@@ -86,14 +86,14 @@ endif
 	$(CP) $(R_HOME)/doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) $(R_HOME)/doc/KEYWORDS* $(RPREFIX)/doc
 	$(CP) -p $(foreach i,$(GW32_FILES),../$i) $(RPREFIX)/src/gnuwin32
-	$(SED) -e s/@RVER@/$(RVER)/g ../Makefile.packages > $(RPREFIX)/src/gnuwin32/Makefile
-	$(CP) -pr ../help ../check $(RPREFIX)/src/gnuwin32
-	$(RM) $(RPREFIX)/src/gnuwin32/help/*.c \
-	  $(RPREFIX)/src/gnuwin32/help/MkChmDll
-	(cd ..; $(MAKE) --no-print-directory -C installer/$(RPREFIX)/src/gnuwin32/help clean)
+#	$(SED) -e s/@RVER@/$(RVER)/g ../Makefile.packages > $(RPREFIX)/src/gnuwin32/Makefile
+#	$(CP) -pr ../help ../check $(RPREFIX)/src/gnuwin32
+#	$(RM) $(RPREFIX)/src/gnuwin32/help/*.c \
+#	  $(RPREFIX)/src/gnuwin32/help/MkChmDll
+#	(cd ..; $(MAKE) --no-print-directory -C installer/$(RPREFIX)/src/gnuwin32/help clean)
 	$(CP) -pr $(R_HOME)/include $(RPREFIX)
 	$(CP) -pr $(foreach i,$(SHARE_DIRS),$(R_HOME)/share/$i) $(RPREFIX)/share
-	$(CP) -p $(R_HOME)/share/sh/dcf.sh $(RPREFIX)/share/sh/ 
+	$(CP) -p $(R_HOME)/share/sh/dcf.sh $(RPREFIX)/share/sh
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library
 #
