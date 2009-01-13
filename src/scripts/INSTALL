@@ -3,5 +3,6 @@
 
 ## FIXME: this loses quotes, so filepaths with spaces in get broken up
 
-echo 'tools:::.install_packages()' | R_DEFAULT_PACKAGES= "${R_HOME}/bin/R" --no-restore --slave --args $@
+## NB: Apple's ICU needs LC_COLLATE set when R is started.
+echo 'tools:::.install_packages()' | R_DEFAULT_PACKAGES= LC_COLLATE=C "${R_HOME}/bin/R" --no-restore --slave --args $@
 
