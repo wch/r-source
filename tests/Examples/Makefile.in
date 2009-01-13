@@ -99,8 +99,8 @@ $(EX_IN_BASE): FORCE
 	else \
 	  target_is_newer_than_massage_Ex=no; \
 	fi; \
-	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
-	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
+	if $(top_builddir)/bin/R --slave -e \
+	  "tools:::.Rdnewer(\"$(top_srcdir)/src/library/$${pkg}\", \"$@\")"; then \
 	  target_is_newer_than_Rdfiles=no; \
 	else \
 	  target_is_newer_than_Rdfiles=yes; \

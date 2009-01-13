@@ -23,10 +23,6 @@ The files are as follows.
   GETVERSION
 	create API 'Rversion.h' from 'VERSION' and 'SVN-REVISION'.
   
-  Rdnewer.pl
-	determine whether any Rd file in an Rd tree is newer than a
-	given file.
-  
   copy-if-change
 	copy a file if changed; otherwise, do nothing.
 
@@ -67,10 +63,6 @@ The files are as follows.
 
   move-if-change
 	move a file if changed; otherwise, remove.
-
-  pkg2tex.pl
-	create a single 'PKGNAME-pkg.tex' file from the package docs in
-	LaTeX format.
 
   rsync-recommended
 	obtain sources for the recommended packages using rsync, and then
