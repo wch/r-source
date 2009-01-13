@@ -42,8 +42,8 @@ PDFLATEX = @PDFLATEX@
 PDFTEX = @PDFTEX@
 TEX = @TEX@
 
-BATCHLATEX = $(LATEX) '\nonstopmode'
-BATCHPDFLATEX = $(PDFLATEX) '\nonstopmode'
+BATCHLATEX = $(LATEX) -interaction=nonstopmode
+BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
 
 datarootdir = @datarootdir@
 infodir = @infodir@
@@ -161,10 +161,10 @@ refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(BATCHLATEX) '\input{refman.tex}'
+	  $(BATCHLATEX) refman.tex}
 	@-$(MAKEINDEX) refman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(BATCHLATEX) '\input{refman.tex}'
+	  $(BATCHLATEX) refman.tex
 	@touch stamp-refman-dvi
 
 version.tex: Makefile $(top_builddir)/SVN-REVISION $(top_builddir)/VERSION
@@ -224,7 +224,7 @@ fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\input{fullrefman.tex}'
+	  $(BATCHLATEX) fullrefman.tex 
 	@-$(MAKEINDEX) fullrefman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
 	  $(PDFLATEX) '\input{fullrefman.tex}'
@@ -297,12 +297,12 @@ refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(BATCHPDFLATEX) '\input{refman.tex}'
+	  $(BATCHPDFLATEX) refman.tex
 	@-$(MAKEINDEX) refman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(BATCHPDFLATEX) '\input{refman.tex}'
+	  $(BATCHPDFLATEX) refman.tex
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(BATCHPDFLATEX) '\input{refman.tex}'
+	  $(BATCHPDFLATEX) refman.tex
 	@touch stamp-refman-pdf
 stamp-refman-pdf: $(refman_TEXINPUTS)
 	@touch $@
@@ -332,12 +332,12 @@ fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(BATCHPDFLATEX) '\input{fullrefman.tex}'
+	  $(BATCHPDFLATEX) fullrefman.tex
 	@-$(MAKEINDEX) fullrefman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(BATCHPDFLATEX) '\input{fullrefman.tex}'
+	  $(BATCHPDFLATEX) fullrefman.tex
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(BATCHPDFLATEX) '\input{fullrefman.tex}'
+	  $(BATCHPDFLATEX) fullrefman.tex
 	@touch stamp-fullrefman-pdf
 stamp-fullrefman-pdf: $(fullrefman_TEXINPUTS)
 

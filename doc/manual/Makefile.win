@@ -39,7 +39,6 @@ LATEX = latex $(R_TEXOPTS)
 PDFTEX = pdftex $(R_TEXOPTS)
 TEX = tex $(R_TEXOPTS)
 
-## These probably depend on MiKTeX
 BATCHLATEX = $(LATEX) -interaction=nonstopmode
 BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
  
