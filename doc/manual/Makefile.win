@@ -2,6 +2,8 @@
 #
 # ${R_HOME}/doc/manual/Makefile.win
 
+ECHO = echo
+
 include ../../src/gnuwin32/MkRules
 ## this was in MkRules, but throws errors unless latex is in the path.
 ifneq ($(strip $(BUILD)),CROSS)
@@ -37,7 +39,10 @@ LATEX = latex $(R_TEXOPTS)
 PDFTEX = pdftex $(R_TEXOPTS)
 TEX = tex $(R_TEXOPTS)
 
-
+## These probably depend on MiKTeX
+BATCHLATEX = $(LATEX) -interaction=nonstopmode
+BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
+ 
 MAKEINDEX = LC_ALL=C makeindex
 TEXINDEX = LC_ALL=C texindex
 ifneq ($(strip $(BUILD)),CROSS)
@@ -46,9 +51,9 @@ else
 RHOME=$(shell $(PERL) ../../src/gnuwin32/pwd.pl ../..)
 endif
 
-MAKEINFO_HTML_OPTS = --html --no-split --css-include=Rman.css
-TEXI2HTML = $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
+MAKEINFO_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css
 MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
+TEXI2HTML = $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
 TEXI2TEXT = $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
 
 R_PAPERSIZE = a4
@@ -59,16 +64,15 @@ R_RD4PDF = times,hyper
 #R_RD4PDF = cm-super,hyper
 #R_RD4PDF = ae,hyper
 
+texinputs_BASE = $(R_PKGS_BASE:=-pkg.tex)
+texinputs_RECOMMENDED = $(R_PKGS_RECOMMENDED:=-pkg.tex)
 R_PKGS_refman = base datasets grDevices graphics grid methods stats tools utils
 refman_TEXINPUTS = $(R_PKGS_refman:=-pkg.tex)
 refman_DEPENDENCIES = version.tex $(top_srcdir)/share/texmf/Rd.sty
-
-texinputs_BASE = $(R_PKGS_BASE:=-pkg.tex)
-texinputs_RECOMMENDED = $(R_PKGS_RECOMMENDED:=-pkg.tex)
 fullrefman_TEXINPUTS = $(texinputs_BASE) $(texinputs_RECOMMENDED)
 
 
-texiincludes = version.texi R-defs.texi
+texiincludes = version.texi $(srcdir)/R-defs.texi
 
 .SUFFIXES:
 .SUFFIXES: .dvi .html .info .texi .pdf
@@ -87,11 +91,11 @@ else
 endif
 
 .texi.html:
-	@echo "creating doc/manual/$@"
-	@$(TEXI2HTML) -D UseExternalXrefs $< -o $@ || touch $@
+	@$(ECHO) "creating doc/manual/$@"
+	@$(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@
 
 .texi.info:
-	$(MAKEINFO) -D UseExternalXrefs $<
+	$(MAKEINFO) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
 
 ifeq ($(strip $(TEXI2DVI)),)
 .texi.pdf:
@@ -108,16 +112,16 @@ endif
 ## texinfo 4.7, as doc/html/SearchEngine.html links to it.
 ## So use that in the sources if we can -- it is not in the svn archive.
 ## There are no cross-references, external or not.
-R-admin.html: R-admin.texi
+R-admin.html: $(srcdir)/R-admin.texi
 	@if test -f "$(top_srcdir)/doc/html/R-admin.html" ; then \
 	  cp "$(top_srcdir)/doc/html/R-admin.html" R-admin.html ; \
 	else \
-	  echo "creating doc/manual/$@" ; \
+	  $(ECHO) "creating doc/manual/$@" ; \
 	  $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@ ; \
 	fi
 
 R-FAQ.html: R-FAQ.texi
-	@$(ECHO) "creating doc/manual/$@"
+	@$($(ECHO)) "creating doc/manual/$@"
 	@$(MAKEINFO) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@
 
 
@@ -126,68 +130,68 @@ $(OBJECTS_DVI): $(texiincludes)
 
 refman.dvi: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
   refman.top refman.bot
-	@echo "DVI/LaTeX documentation: reference index ..."
+	@$(ECHO) "DVI/LaTeX documentation: reference index ..."
 	@$(RM) -f *.aux refman.toc refman.ind
 	@(opt="$(R_PAPERSIZE)paper"; \
-	  echo "\\documentclass[$${opt}]{book}"; \
+	  $(ECHO) "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4DVI)"; \
-	  echo "\\usepackage[$${opt}]{Rd}"; \
-	  echo "\\usepackage[latin1]{inputenc}"; \
-	  cat refman.top; \
+	  $(ECHO) "\\usepackage[$${opt}]{Rd}"; \
+	  $(ECHO) "\\usepackage[latin1]{inputenc}"; \
+	  cat $(srcdir)/refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
-	    do echo $${f}; done) | LC_COLLATE=C $(SORT)`; \
-	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
-	  cat refman.bot) > refman.tex
+	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
+	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
+	  cat $(srcdir)/refman.bot) > refman.tex
 	@$(RM) -f *.aux refman.toc refman.ind
 ifeq ($(strip $(BUILD)),CROSS)
-	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(LATEX) -interaction=nonstopmode refman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  $(BATCHLATEX) refman.tex 
 	@-$(MAKEINDEX) refman
-	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(LATEX) -interaction=nonstopmode refman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  $(BATCHLATEX) refman.tex 
 else
-	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(LATEX) -interaction=nonstopmode refman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	  $(BATCHLATEX) refman.tex 
 	@-$(MAKEINDEX) refman
-	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(LATEX) -interaction=nonstopmode refman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	  $(BATCHLATEX) refman.tex 
 endif
 
 fullrefman.dvi: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
   refman.top refman.bot
-	@echo "DVI/LaTeX documentation: reference index ..."
+	@$(ECHO) "DVI/LaTeX documentation: reference index ..."
 	@$(RM) -f *.aux refman.toc refman.ind
 	@(opt="$(R_PAPERSIZE)paper"; \
-	  echo "\\documentclass[$${opt}]{book}"; \
+	  $(ECHO) "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4DVI)"; \
-	  echo "\\usepackage[$${opt}]{Rd}"; \
-	  echo "\\usepackage[latin1]{inputenc}"; \
-	  cat refman.top; \
-	  echo "\\part{}"; \
+	  $(ECHO) "\\usepackage[$${opt}]{Rd}"; \
+	  $(ECHO) "\\usepackage[latin1]{inputenc}"; \
+	  cat $(srcdir)/refman.top; \
+	  $(ECHO) "\\part{}"; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
-	    do echo $${f}; done) | LC_COLLATE=C $(SORT)`; \
-	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
-	  echo "\\part{}"; \
+	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
+	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
+	  $(ECHO) "\\part{}"; \
 	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
-	    do echo $${f}; done) | LC_COLLATE=C $(SORT)`; \
+	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
 	  for f in $(refman_TEXINPUTS); do \
-	    texinputs=`echo "$${texinputs}" | sed "s/\\<$${f}\\>//"`; \
+	    texinputs=`$(ECHO) "$${texinputs}" | sed "/$${f}/d"`; \
 	  done; \
-	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
+	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@$(RM) -f *.aux fullrefman.toc fullrefman.ind
 ifeq ($(strip $(BUILD)),CROSS)
-	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(LATEX) -interaction=nonstopmode fullrefman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  $(BATCHLATEX) fullrefman.tex 
 	@-$(MAKEINDEX) fullrefman
-	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(LATEX) -interaction=nonstopmode fullrefman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  $(BATCHLATEX) fullrefman.tex 
 else
-	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(LATEX) -interaction=nonstopmode fullrefman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	  $(BATCHLATEX) fullrefman.tex 
 	@-$(MAKEINDEX) fullrefman
-	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(LATEX) -interaction=nonstopmode fullrefman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	  $(BATCHLATEX) fullrefman.tex 
 endif
 
 html: $(OBJECTS_HTML)
@@ -201,101 +205,101 @@ $(OBJECTS_PDF): $(texiincludes)
 
 refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
    refman.top refman.bot
-	@echo " PDF/LaTeX documentation: reference index ..."
+	@$(ECHO) " PDF/LaTeX documentation: reference index ..."
 	@(opt="$(R_PAPERSIZE)paper"; \
-	  echo "\\documentclass[$${opt}]{book}"; \
+	  $(ECHO) "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4PDF)"; \
-	  echo "\\usepackage[$${opt}]{Rd}"; \
-	  echo "\\usepackage[latin1]{inputenc}"; \
-	  cat refman.top; \
+	  $(ECHO) "\\usepackage[$${opt}]{Rd}"; \
+	  $(ECHO) "\\usepackage[latin1]{inputenc}"; \
+	  cat $(srcdir)/refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
-	    do echo $${f}; done) | LC_COLLATE=C $(SORT)`; \
-	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
-	  cat refman.bot) > refman.tex
+	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
+	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
+	  cat $(srcdir)/refman.bot) > refman.tex
 	@$(RM) -f *.aux refman.toc refman.ind
 ifeq ($(strip $(BUILD)),CROSS)
-	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) -interaction=nonstopmode refman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  $(BATCHPDFLATEX) refman.tex 
 	@$(MAKEINDEX) refman
-	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) -interaction=nonstopmode refman.tex 
-	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) -interaction=nonstopmode refman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  $(BATCHPDFLATEX) refman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  $(BATCHPDFLATEX) refman.tex 
 else
-	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(PDFLATEX) -interaction=nonstopmode refman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	  $(BATCHPDFLATEX) refman.tex 
 	@$(MAKEINDEX) refman
-	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(PDFLATEX) -interaction=nonstopmode refman.tex 
-	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(PDFLATEX) -interaction=nonstopmode refman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	  $(BATCHPDFLATEX) refman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	  $(BATCHPDFLATEX) refman.tex 
 endif
 
 fullrefman.pdf: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
    refman.top refman.bot
-	@echo " PDF/LaTeX documentation: reference index ..."
+	@$(ECHO) " PDF/LaTeX documentation: reference index ..."
 	@(opt="$(R_PAPERSIZE)paper"; \
-	  echo "\\documentclass[$${opt}]{book}"; \
+	  $(ECHO) "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4PDF)"; \
-	  echo "\\usepackage[$${opt}]{Rd}"; \
-	  echo "\\usepackage[latin1]{inputenc}"; \
-	  cat refman.top; \
-	  echo "\\part{}"; \
+	  $(ECHO) "\\usepackage[$${opt}]{Rd}"; \
+	  $(ECHO) "\\usepackage[latin1]{inputenc}"; \
+	  cat $(srcdir)/refman.top; \
+	  $(ECHO) "\\part{}"; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
-	    do echo $${f}; done) | LC_COLLATE=C $(SORT)`; \
-	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
-	  echo "\\part{}"; \
+	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
+	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
+	  $(ECHO) "\\part{}"; \
 	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
-	    do echo $${f}; done) | LC_COLLATE=C $(SORT)`; \
+	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
 	  for f in $(refman_TEXINPUTS); do \
-	    texinputs=`echo "$${texinputs}" | sed "s/\\<$${f}\\>//"`; \
+	    texinputs=`$(ECHO) "$${texinputs}" | sed "/$${f}/d"`; \
 	  done; \
-	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
-	  cat refman.bot) > fullrefman.tex
+	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
+	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@$(RM) -f *.aux fullrefman.toc fullrefman.ind
 ifeq ($(strip $(BUILD)),CROSS)
-	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) -interaction=nonstopmode fullrefman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  $(BATCHPDFLATEX) fullrefman.tex 
 	@$(MAKEINDEX) fullrefman
-	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) -interaction=nonstopmode fullrefman.tex 
-	@TEXINPUTS="../../share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) -interaction=nonstopmode fullrefman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  $(BATCHPDFLATEX) fullrefman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  $(BATCHPDFLATEX) fullrefman.tex 
 else
-	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(PDFLATEX) -interaction=nonstopmode fullrefman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	  $(BATCHPDFLATEX) fullrefman.tex 
 	@$(MAKEINDEX) fullrefman
-	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(PDFLATEX) -interaction=nonstopmode fullrefman.tex 
-	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
-	  $(PDFLATEX) -interaction=nonstopmode fullrefman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	  $(BATCHPDFLATEX) fullrefman.tex 
+	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	  $(BATCHPDFLATEX) fullrefman.tex 
 endif
 
 version.tex: $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
-	@echo "creating $(subdir)/$@"
+	@$(ECHO) "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
 	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_srcdir)/SVN-REVISION`)"; \
-	  echo "$${v}") > $@
+	  $(ECHO) "$${v}") > $@
 
 ## Packages almost always have zipped latex dirs, 
 ## so don't try to be clever with dates
 ## And collecting is fast compared to latexing.
 %-pkg.tex: FORCE
-	@echo "collecting LaTeX docs for package \`$*' ..."
-	@echo "tools:::.pkg2tex(\"$(top_srcdir)/library/$*\")" \
-	    | LC_ALL=C ../../bin/Rterm --slave
+	@$(ECHO) "collecting LaTeX docs for package \`$*' ..."
+	@$(ECHO) "tools:::.pkg2tex(\"$(top_srcdir)/library/$*\")" \
+	    | LC_ALL=C $(top_srcdir)/bin/Rterm --slave
 FORCE:
 
 version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
-	@echo "creating $(subdir)/$@"
+	@$(ECHO) "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
-	  echo "@set VERSIONno $${v}" > $@; \
+	  $(ECHO) "@set VERSIONno $${v}" > $@; \
 	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_srcdir)/SVN-REVISION`)"; \
-	  echo "@set VERSION $${v}" >> $@; \
+	  $(ECHO) "@set VERSION $${v}" >> $@; \
 	  rwv=$(shell $(PERL) $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION); \
-	  echo "@set RWVERSION $${rwv}" >> $@ )
+	  $(ECHO) "@set RWVERSION $${rwv}" >> $@ )
 	@if test "$(R_PAPERSIZE)" = "a4"; then \
-	  echo "@afourpaper" >> $@ ; \
+	  $(ECHO) "@afourpaper" >> $@ ; \
 	fi
 
 

@@ -10,6 +10,8 @@ subdir = doc/manual
 
 include $(top_builddir)/Makeconf
 
+SORT = sort # to match Windows
+
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 SOURCES_TEXI = R-FAQ.texi R-admin.texi R-data.texi R-exts.texi \
   R-intro.texi R-ints.texi R-lang.texi
@@ -151,7 +153,7 @@ refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
 	  $(ECHO) "\\usepackage[latin1]{inputenc}"; \
 	  cat $(srcdir)/refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
-	    do $(ECHO) $${f}; done) | LC_COLLATE=C sort`; \
+	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
@@ -208,11 +210,11 @@ fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
 	  cat $(srcdir)/refman.top; \
 	  $(ECHO) "\\part{}"; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
-	    do $(ECHO) $${f}; done) | LC_COLLATE=C sort`; \
+	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  $(ECHO) "\\part{}"; \
 	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
-	    do $(ECHO) $${f}; done) | LC_COLLATE=C sort`; \
+	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
 	  for f in $(refman_TEXINPUTS); do \
 	    texinputs=`$(ECHO) "$${texinputs}" | sed "/$${f}/d"`; \
 	  done; \
@@ -287,7 +289,7 @@ refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 	  $(ECHO) "\\usepackage[latin1]{inputenc}"; \
 	  cat $(srcdir)/refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
-	    do $(ECHO) $${f}; done) | LC_COLLATE=C sort`; \
+	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
@@ -316,11 +318,11 @@ fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
 	  cat $(srcdir)/refman.top; \
 	  $(ECHO) "\\part{}"; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
-	    do $(ECHO) $${f}; done) | LC_COLLATE=C sort`; \
+	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  $(ECHO) "\\part{}"; \
 	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
-	    do $(ECHO) $${f}; done) | LC_COLLATE=C sort`; \
+	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
 	  for f in $(refman_TEXINPUTS); do \
 	    texinputs=`$(ECHO) "$${texinputs}" | sed "/$${f}/d"`; \
 	  done; \
