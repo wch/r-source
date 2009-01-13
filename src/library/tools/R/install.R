@@ -493,7 +493,9 @@
         if (auto_zip || zip_up) { ## --build implies --auto-zip
             thislazy <- parse_description_field(desc, "LazyData",
                                                 default = lazy_data)
-            if (!thislazy && .file_test("-d", "data")) {
+            thisdata <- parse_description_field(desc, "LazyData",
+                                               default = lazy_data)
+            if (!thisdata && .file_test("-d", "data")) {
                 sizes <- system("ls -s1 data", intern = TRUE)
                 out <- 0; nodups <- TRUE; prev <- ""
                 for(line in sizes) {

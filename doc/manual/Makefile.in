@@ -161,7 +161,7 @@ refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(BATCHLATEX) refman.tex}
+	  $(BATCHLATEX) refman.tex
 	@-$(MAKEINDEX) refman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
 	  $(BATCHLATEX) refman.tex
@@ -227,7 +227,7 @@ fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
 	  $(BATCHLATEX) fullrefman.tex 
 	@-$(MAKEINDEX) fullrefman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\input{fullrefman.tex}'
+	  $(BATCHLATEX) fullrefman.tex
 	@touch stamp-fullrefman-dvi
 stamp-fullrefman-dvi: $(fullrefman_TEXINPUTS)
 
