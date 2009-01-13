@@ -189,8 +189,8 @@ $(texinputs_RECOMMENDED): FORCE
 	if find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
 	    -print 2> /dev/null | grep $@ > /dev/null; then :; else \
 	  $(ECHO) "collecting LaTeX docs for package '$${pkg}' ..."; \
-	  RLIB="$(top_builddir)/library" \
-	    PERL5LIB=$(top_srcdir)/share/perl $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
+	  $(ECHO) "tools:::.pkg2tex(\"$(top_builddir)/library/$${pkg}\")" \
+	    | LC_ALL=C $(top_builddir)/bin/R --slave; \
 	fi)
 
 fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
@@ -214,7 +214,7 @@ fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
 	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
 	    do $(ECHO) $${f}; done) | LC_COLLATE=C sort`; \
 	  for f in $(refman_TEXINPUTS); do \
-	    texinputs=`$(ECHO) "$${texinputs}" | sed "s/\\<$${f}\\>//"`; \
+	    texinputs=`$(ECHO) "$${texinputs}" | sed "/$${f}/d"`; \
 	  done; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
@@ -325,7 +325,7 @@ fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
 	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
 	    do $(ECHO) $${f}; done) | LC_COLLATE=C sort`; \
 	  for f in $(refman_TEXINPUTS); do \
-	    texinputs=`$(ECHO) "$${texinputs}" | sed "s/\\<$${f}\\>//"`; \
+	    texinputs=`$(ECHO) "$${texinputs}" | sed "/$${f}/d"`; \
 	  done; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
