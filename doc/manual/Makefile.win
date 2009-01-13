@@ -277,22 +277,13 @@ version.tex: $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_srcdir)/SVN-REVISION`)"; \
 	  echo "$${v}") > $@
 
-# bundles such as VR are not unpacked in src/library directly
+## Packages almost always have zipped latex dirs, 
+## so don't try to be clever with dates
+## And collecting is fast compared to latexing.
 %-pkg.tex: FORCE
 	@echo "collecting LaTeX docs for package \`$*' ..."
-	@if test -f "$(top_srcdir)/library/$*/latex/Rhelp.zip" ; then \
-	  PERL5LIB=$(RHOME)/share/perl $(PERL) ../../tools/pkg2tex.pl $*; \
-	else \
-	  if test -d "$(top_srcdir)/src/library/$*" ; then \
-	    if $(PERL) ../../tools/Rdnewer.pl \
-		"$(top_srcdir)/src/library/$*" "$@"; then \
-	      (cd ../../src/gnuwin32/help && $(MAKE)  --no-print-directory RHOME=$(RHOME) latex-$*); \
-	      PERL5LIB=$(RHOME)/share/perl $(PERL) ../../tools/pkg2tex.pl $*; \
-	    fi \
-	  else \
-	    PERL5LIB=$(RHOME)/share/perl $(PERL) ../../tools/pkg2tex.pl $*; \
-	  fi \
-	fi
+	@echo "tools:::.pkg2tex(\"$(top_srcdir)/library/$*\")" \
+	    | LC_ALL=C ../../bin/Rterm --slave
 FORCE:
 
 version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
