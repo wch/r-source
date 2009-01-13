@@ -1390,8 +1390,8 @@
         stop("this package does not have a ", sQuote("latex"), " directory")
     ## they might be zipped up
     if (file.exists(f <- file.path(latexdir, "Rhelp.zip"))) {
-        newdir <- dir.create(tempfile("latex"))
-        res <- system(paste("unzip", f, "-d", newdir))
+        dir.create(newdir <- tempfile("latex"))
+        res <- system(paste("unzip -q", f, "-d", newdir))
         if (res) stop("unzipping latex files failed")
         latexdir <- newdir
     }
