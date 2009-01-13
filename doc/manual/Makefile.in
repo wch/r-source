@@ -42,6 +42,9 @@ PDFLATEX = @PDFLATEX@
 PDFTEX = @PDFTEX@
 TEX = @TEX@
 
+BATCHLATEX = $(LATEX) '\nonstopmode'
+BATCHPDFLATEX = $(PDFLATEX) '\nonstopmode'
+
 datarootdir = @datarootdir@
 infodir = @infodir@
 INSTALL_INFO = @INSTALL_INFO@
@@ -158,10 +161,10 @@ refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{refman.tex}'
+	  $(BATCHLATEX) '\input{refman.tex}'
 	@-$(MAKEINDEX) refman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{refman.tex}'
+	  $(BATCHLATEX) '\input{refman.tex}'
 	@touch stamp-refman-dvi
 
 version.tex: Makefile $(top_builddir)/SVN-REVISION $(top_builddir)/VERSION
@@ -221,10 +224,10 @@ fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(PDFLATEX) '\input{fullrefman.tex}'
 	@-$(MAKEINDEX) fullrefman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(PDFLATEX) '\input{fullrefman.tex}'
 	@touch stamp-fullrefman-dvi
 stamp-fullrefman-dvi: $(fullrefman_TEXINPUTS)
 
@@ -294,12 +297,12 @@ refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	  $(BATCHPDFLATEX) '\input{refman.tex}'
 	@-$(MAKEINDEX) refman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	  $(BATCHPDFLATEX) '\input{refman.tex}'
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	  $(BATCHPDFLATEX) '\input{refman.tex}'
 	@touch stamp-refman-pdf
 stamp-refman-pdf: $(refman_TEXINPUTS)
 	@touch $@
@@ -329,12 +332,12 @@ fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(BATCHPDFLATEX) '\input{fullrefman.tex}'
 	@-$(MAKEINDEX) fullrefman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(BATCHPDFLATEX) '\input{fullrefman.tex}'
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
+	  $(BATCHPDFLATEX) '\input{fullrefman.tex}'
 	@touch stamp-fullrefman-pdf
 stamp-fullrefman-pdf: $(fullrefman_TEXINPUTS)
 
