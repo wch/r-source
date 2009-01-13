@@ -213,7 +213,7 @@ fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
 	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
 	    do $(ECHO) $${f}; done) | LC_COLLATE=C sort`; \
 	  for f in $(refman_TEXINPUTS); do \
-	    texinputs=`$(ECHO) "$${texinputs}" | sed "s/\\<$${f}\\>//"`; \
+	    texinputs=`$(ECHO) "$${texinputs}" | sed "/$${f}/d"`; \
 	  done; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
@@ -291,14 +291,11 @@ refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@-$(MAKEINDEX) refman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@touch stamp-refman-pdf
 stamp-refman-pdf: $(refman_TEXINPUTS)
@@ -324,19 +321,16 @@ fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
 	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
 	    do $(ECHO) $${f}; done) | LC_COLLATE=C sort`; \
 	  for f in $(refman_TEXINPUTS); do \
-	    texinputs=`$(ECHO) "$${texinputs}" | sed "s/\\<$${f}\\>//"`; \
+	    texinputs=`$(ECHO) "$${texinputs}" | sed "/$${f}/d"`; \
 	  done; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  pool_size=500000 max_strings=50000 dest_names_size=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
 	@-$(MAKEINDEX) fullrefman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  pool_size=500000 max_strings=50000 dest_names_size=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  pool_size=500000 max_strings=50000 dest_names_size=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
 	@touch stamp-fullrefman-pdf
 stamp-fullrefman-pdf: $(fullrefman_TEXINPUTS)

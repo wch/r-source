@@ -48,7 +48,7 @@ BUG FIXES
  	by x[["foo"]] <- value did not name the additional element.
 
     o	.Call() and .External() were not accepting "NativeSymbolInfo"
-	and "NativeSymbol" objects as claimed. (Patch from Olaf
+	and "NativeSymbol" objects as claimed.  (Patch from Olaf
 	Mersmann.)
 
     o	codoc() was missing some default value mismatches with
@@ -64,9 +64,11 @@ BUG FIXES
     o	read.table(blank.lines.skip = FALSE) gave a final empty row on
 	files with less than 5 lines (PR#13433).
 
-    o	Work around a bug in some versions of iconv that was seen with
-	output lines of more than 10,000 bytes and with an re-encoded
-	requested on an output connection.
+    o	Workaround for a bug in some versions of iconv that was seen
+	with output lines of more than 10,000 bytes and with
+	re-encoding requested on an output connection.
+
+    o	The fullrefman.{dvi,pdf} duplicated part I in part II.
 
 
 
