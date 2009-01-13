@@ -52,7 +52,7 @@ rnbinom(n, size, prob, mu)
   \eqn{\Gamma} (\code{\link{pgamma}}) distribution with scale parameter
   \code{(1 - prob)/prob} and shape parameter \code{size}.  (This
   definition allows non-integer values of \code{size}.)
-  In this model \code{prob} = \code{scale/(1+scale)}, and the mean is
+  In this model \code{prob} = \code{1/(1+scale)}, and the mean is
   \code{size * (1 - prob)/prob}.
 
   The alternative parametrization (often used in ecology) is by the
