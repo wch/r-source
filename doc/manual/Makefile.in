@@ -292,14 +292,11 @@ refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@-$(MAKEINDEX) refman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@touch stamp-refman-pdf
 stamp-refman-pdf: $(refman_TEXINPUTS)
@@ -330,14 +327,11 @@ fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  pool_size=500000 max_strings=50000 dest_names_size=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
 	@-$(MAKEINDEX) fullrefman
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  pool_size=500000 max_strings=50000 dest_names_size=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
-	  pool_size=500000 max_strings=50000 dest_names_size=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
 	@touch stamp-fullrefman-pdf
 stamp-fullrefman-pdf: $(fullrefman_TEXINPUTS)

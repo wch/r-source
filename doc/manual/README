@@ -18,12 +18,9 @@ To make PDF versions of the manuals you will need pdf(la)tex and the
 hyperref package.  If you want to avoid making the hyperlinks, you can
 set the environment variable R_RD4PDF to "times" (or even to "").
 
-You may well have to increase the poolsize of your pdflatex to process
-the reference manual with hyperlinks. On a web2c-based system (teTeX,
-TeXLive, ...) set the configuration variable pool_size, for example to
-500000, and increase max_strings, for example to 50000.  The UNIX
-Makefile does this for you via environment variables, which should
-cover most UNIX TeX systems.
+You may have to increase the poolsize of your pdflatex to process the
+reference manual with hyperlinks, although these days the limits are
+set high.
 
 pdftex will warn (correctly) about missing hyperlinks in forming
 refman.pdf.
