@@ -2,6 +2,7 @@
 #
 # ${RHOME}/tests/Makefile.win
 
+RHOME=../..
 include $(RHOME)/src/gnuwin32/MkRules
 include $(RHOME)/share/make/vars.mk
 

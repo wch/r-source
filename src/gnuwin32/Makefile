@@ -333,14 +333,6 @@ pkgclean-%:
 	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
 	  -C $(PKGD)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
-## used for standard packages whose tests are run in make check-devel, 
-## not make check
-pkgcheck-%:
-	@$(ECHO) -------- Testing package $* --------
-	-@$(MKDIR) -p $(PKGD)/$*/check
-	@$(MAKE) --no-print-directory -C $(PKGD)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
-	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
-
 lazyload-%:
 	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -C $(PKGD)/$* SPKG=$(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg lazyload
 
@@ -374,7 +366,7 @@ distclean: clean
 	@for d in $(EXTRA_DIRS); do \
 	  $(MAKE) -C ../extra/$${d} -f Makefile.win distclean; \
 	done
-	@$(MAKE) -C ../../tests/Examples -f Makefile.win distclean RHOME=$(RHOME)
+	@$(MAKE) -C ../../tests -f Makefile.win distclean RHOME=$(RHOME)
 	$(RM) -r ../../bin ../../include ../../lib ../../library ../../modules
 	$(RM) ../include/config.h ../include/iconv.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h \

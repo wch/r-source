@@ -276,4 +276,6 @@ clean:
 	@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R
 	@rm -rf Packages
 	@$(MAKE) -C Embedding -f Makefile.win clean
+
+distclean: clean
 	@$(MAKE) -C Examples -f Makefile.win clean
