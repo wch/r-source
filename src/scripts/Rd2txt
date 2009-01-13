@@ -26,7 +26,7 @@ case "${1}" in
     echo "${version}"; exit 0 ;;
 esac
 
-exec ${R_HOME}/bin/Rdconv -t txt ${1}
+exec ${R_HOME}/bin/Rdconv -t txt "${1}"
 
 ### Local Variables: ***
 ### mode: sh ***
