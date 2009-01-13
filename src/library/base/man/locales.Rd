@@ -105,6 +105,14 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   library which is not internationalized.
 #endif
 }
+
+\note{
+  Changing the values of locale categories whilst \R is running ought
+  to be noticed by the OS services, and usually is: one known exception
+  is collation on Mac OS X which always uses the setting from the start
+  of the session.
+}
+
 \seealso{
   \code{\link{strptime}} for uses of \code{category = "LC_TIME"}.
   \code{\link{Sys.localeconv}} for details of numerical and monetary

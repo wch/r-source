@@ -296,7 +296,9 @@ BUG FIXES
 INSTALLATION
 
     o	--with-ICU is now supported (and recommended) on Mac OS X using
-	Apple's supplied port.
+	Apple's supplied port.  Note however that the locale category
+	LC_COLLATE cannot be changed whilst R is running on Apple's
+	version of ICU.
 
 	Configure supports a wider range of ICU versions on other
 	OSes: version 3.0 should suffice, and 3.2, 3.8 and 4.0 have
