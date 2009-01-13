@@ -1370,3 +1370,82 @@
     }
     res
 }
+
+## replacement for tools/pkg2tex.pl
+.pkg2tex <- function(pkgdir, outfile)
+{
+    re <- function(x)
+    {
+        ## sort order for topics, a little tricky
+        x[order(toupper(x), x)]
+    }
+    ## given an installed package with a latex dir, make a single file
+    ## for use in the refman.
+
+    options(warn=1)
+    if (missing(outfile)) outfile <- paste(basename(pkgdir), "-pkg.tex", sep="")
+
+    latexdir <- file.path(pkgdir, "latex")
+    if (!file_test("-d", latexdir))
+        stop("this package does not have a ", sQuote("latex"), " directory")
+    ## they might be zipped up
+    if (file.exists(f <- file.path(latexdir, "Rhelp.zip"))) {
+        newdir <- dir.create(tempfile("latex"))
+        res <- system(paste("unzip", f, "-d", newdir))
+        if (res) stop("unzipping latex files failed")
+        latexdir <- newdir
+    }
+    files <- dir(latexdir, pattern = "[[:alnum:]]+\\.tex$", full.names = TRUE)
+    if (!length(files))
+        stop("no validly-named files in the ", sQuote("latex"), " directory")
+
+    outcon <- file(outfile, "wt")
+    on.exit(close(outcon))
+
+    cat("\n\\chapter{The \\texttt{", basename(pkgdir), "} package}\n",
+        sep = "", file = outcon)
+    topics <- rep.int("", length(files)); names(topics) <- files
+    for (f in files) {
+        lines <- readLines(f)
+        hd <- grep("^\\\\HeaderA", lines, value = TRUE)
+        if (!length(hd)) {
+            warning("file ", sQuote(f), " lacks a header: skipping")
+            next
+        }
+        this <- sub("\\\\HeaderA\\{\\s*([^}]*)\\}.*", "\\1", hd[1])
+        if(length(grep("\\\\keyword\\{\\s*internal\\s*\\}", lines))) next
+        topics[f] <- this
+    }
+
+    topics <- topics[nzchar(topics)]
+    summ <- grep("-package$", topics)
+    topics <- if(length(summ)) c(topics[summ], re(topics[-summ])) else re(topics)
+    for (f in names(topics)) writeLines(readLines(f), outcon)
+
+    cat("\\clearpage\n", file = outcon)
+}
+
+## replacement for tools/Rdnewer.pl
+.Rdnewer <- function(dir, file)
+    q("no", status = ..Rdnewer(dir, file), runLast = FALSE)
+
+..Rdnewer <- function(dir, file, OS = .Platform$OS.type)
+{
+    ## Test whether any Rd file in the 'man' and 'man/$OS' subdirectories of
+    ## directory DIR is newer than a given FILE.  Return 0 if such a file is
+    ## found (i.e., in the case of 'success'), and 1 otherwise, so that the
+    ## return value can be used for shell 'if' tests.
+
+    if (!file.exists(file)) return(0L)
+    age <- file.info(file)$mtime
+
+    if(any(file.info(Sys.glob(file.path(dir, "man", "*.Rd")))$mtime > age))
+        return(0L)
+
+    if(isTRUE(file.info(file.path(dir, OS))$isdir)) {
+        if(any(file.info(Sys.glob(file.path(dir, "man", OS, "*.Rd")))$mtime > age))
+            return(0L)
+    }
+
+    1L
+}

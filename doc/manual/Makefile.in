@@ -174,12 +174,13 @@ stamp-refman-dvi: $(refman_TEXINPUTS)
 ## <NOTE> This assumes none of the latex dirs are zipped </NOTE>
 $(texinputs_BASE): FORCE $(top_srcdir)/share/perl/build-help.pl
 	@(pkg=`basename $@ -pkg.tex`; \
-	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
-	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
+	if $(top_builddir)/bin/R --slave -e \
+	  "tools:::.Rdnewer(\"$(top_srcdir)/src/library/$${pkg}\", \"$@\")"; then \
 	  $(ECHO) "collecting LaTeX docs for package '$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
 	    $(MAKE) R_PKGS_BASE="$${pkg}" latex); \
-	  PERL5LIB=$(top_srcdir)/share/perl $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
+	  $(ECHO) "tools:::.pkg2tex(\"$(top_builddir)/library/$${pkg}\")" \
+	    | LC_ALL=C $(top_builddir)/bin/R --slave; \
 	fi)
 FORCE:
 
