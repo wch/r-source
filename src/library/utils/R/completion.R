@@ -141,6 +141,7 @@ rc.status <- function()
 ## linebuffer and end to be already set, and itself sets token and
 ## start.  It returns the token.
 
+## FIXME: should this use getOption("rl_word_breaks")?
 
 .guessTokenFromLine <-
     function(linebuffer = .CompletionEnv[["linebuffer"]],
@@ -160,11 +161,11 @@ rc.status <- function()
                                       perl = TRUE))[[1L]]
             ## suppressWarnings(gregexpr("[^\\.\\w:?$@[\\]\\\\/~ ]+", substr(linebuffer, 1L, end), perl = TRUE))[[1L]]
         else
+            ##                    things that should not cause breaks
+            ##                           ______________
             suppressWarnings(gregexpr("[^\\.\\w:?$@[\\]]+",
                                       substr(linebuffer, 1L, end),
                                       perl = TRUE))[[1L]]
-    ##                                    ^^^^^^^^^^^^^^
-    ##                             things that should not cause breaks
     start <- ## 0-indexed
         if (all(start < 0L)) 0L
         else tail(start + attr(start, "match.length"), 1L) - 1L
@@ -184,12 +185,21 @@ rc.status <- function()
 ## need is to handle ".", so that e.g. "heat." doesn't match
 ## "heatmap".
 
+
 makeRegexpSafe <- function(s)
 {
-    s <- gsub(".", "\\.", s, fixed = TRUE)
+    ## the following can cause errors otherwise
+    s <- gsub("\\", "\\\\", s, fixed = TRUE) ## has to be the first
+    s <- gsub("(", "\\(", s, fixed = TRUE)
+    s <- gsub("*", "\\*", s, fixed = TRUE)
+    s <- gsub("+", "\\+", s, fixed = TRUE)
     s <- gsub("?", "\\?", s, fixed = TRUE)
     s <- gsub("[", "\\[", s, fixed = TRUE)
-    s <- gsub("]", "\\]", s, fixed = TRUE) # necessary?
+    s <- gsub("{", "\\{", s, fixed = TRUE)
+    ## s <- gsub("]", "\\]", s, fixed = TRUE) # necessary?
+    ## these are wildcards that we want to interpret literally
+    s <- gsub(".", "\\.", s, fixed = TRUE)
+    s <- gsub("^", "\\^", s, fixed = TRUE)
     ## what else?
     s
 }
@@ -791,13 +801,14 @@ fileCompletions <- function(token)
             return()
         }
 
-        ## Is there a "/" in there?  If so, work on the part after
-        ## that and append to prefix before returning.  See note in
-        ## rcompletion.c on why / is treated specially while + etc are
-        ## not (hint: filename completion)
+        ## Is there an arithmetic operator in there in there?  If so,
+        ## work on the part after that and append to prefix before
+        ## returning.  It would have been easier if these were
+        ## word-break characters, but that potentially interferes with
+        ## filename completion.
 
         ## lastArithOp <- tail(gregexpr("/", text, fixed = TRUE)[[1L]], 1)
-        lastArithOp <- tail(gregexpr("[/*+-]", text)[[1L]], 1)
+        lastArithOp <- tail(gregexpr("[\"'^/*+-]", text)[[1L]], 1)
         if (haveArithOp <- (lastArithOp > 0))
         {
             prefix <- substr(text, 1L, lastArithOp)
