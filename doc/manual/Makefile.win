@@ -121,7 +121,7 @@ R-admin.html: $(srcdir)/R-admin.texi
 	fi
 
 R-FAQ.html: R-FAQ.texi
-	@$($(ECHO)) "creating doc/manual/$@"
+	@$(ECHO) "creating doc/manual/$@"
 	@$(MAKEINFO) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@
 
 
