@@ -1392,7 +1392,10 @@ Introduction to R}.
 If the package sources contain a @file{tests} directory then the tests
 specified in that directory are run.  (Typically they will consist of a
 set of @file{.R} source files and target output files
-@file{.Rout.save}.)
+@file{.Rout.save}.)  Please note that the comparison will be done in the
+end user's locale, so the target output files should be ASCII if at all
+possible -- this may require using
+@code{options(useFancyQuotes=FALSE)} in the source files.
 
 @item
 The code in package vignettes (@pxref{Writing package vignettes}) is
