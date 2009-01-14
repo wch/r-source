@@ -830,6 +830,20 @@
                                     paste0(pkg_name, ".Rd.gz")), "644")
                 ## 'Maybe build preformatted help pages ...'
                 if (build_help) {
+                    starsmsg(paste0(stars, "*"),
+                             "installing help indices")
+                    cmd <- paste("perl",
+                                 shQuote(file.path(R.home("share"), "perl",
+                                                   if (WINDOWS) "build-help-windows.pl" else  "build-help.pl")),
+                                 "--index",
+                                 shQuote(pkg_dir),
+                                 shQuote(lib),
+                                 shQuote(instdir),
+                                 pkg_name)
+                    if (debug) message("about to run ", sQuote(cmd))
+                    res <- system(cmd)
+                    if (res)
+                        pkgerrmsg("building help indices failed", pkg_name)
                     cmd <- paste("perl",
                                  shQuote(file.path(R.home("share"), "perl",
                                                    if (WINDOWS) "build-help-windows.pl" else  "build-help.pl")),
@@ -1414,8 +1428,8 @@
             warning("file ", sQuote(f), " lacks a header: skipping")
             next
         }
-        this <- sub("\\\\HeaderA\\{\\s*([^}]*)\\}.*", "\\1", hd[1])
-        if(length(grep("\\\\keyword\\{\\s*internal\\s*\\}", lines))) next
+        this <- sub("\\\\HeaderA\\{\\s*([^}]*)\\}.*", "\\1", hd[1], perl = TRUE)
+        if(length(grep("\\\\keyword\\{\\s*internal\\s*\\}", lines, perl = TRUE))) next
         topics[f] <- this
     }
 
@@ -1450,4 +1464,236 @@
     }
 
     1L
+}
+
+## given a source package in 'dir', write outDirc/help/AnIndex
+## This is a two-column tab-separated file of topic and file basename,
+## conventionally sorted on topic (but with foo-package first)
+## NB: ASCII sort, C locale
+.writeAnIndex <- function(dir, outDir, OS = .Platform$OS.type)
+{
+    re <- function(x)
+    {
+        ## sort order for topics, a little tricky
+        ## FALSE sorts before TRUE
+        xx <- rep(TRUE, length(x))
+        xx[grep("-package", x, fixed = TRUE)] <- FALSE
+        order(xx, toupper(x), x)
+    }
+
+    mandir <- file.path(dir, "man")
+    if(!file_test("-d", mandir))
+        stop("there are no help pages in this package")
+    files <- Sys.glob(file.path(mandir, "*.[Rr]d"))
+    if(file_test("-d", f <- file.path(mandir, OS)))
+        files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
+    if(Sys.getenv("R_USE_AQUA_SUBDIRS") == "yes" &&
+       file_test("-d", f <- file.path(mandir, "aqua")))
+        files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
+    ## Should only process files starting with [A-Za-z0-9] and with
+    ## suffix .Rd or .rd, according to 'Writing R Extensions'.
+    OK <- grep("^[A-Za-z0-9]", basename(files))
+    files <- files[OK]
+    topics <- ff <- character()
+    for (f in files) {
+        lines <- readLines(f, warn = FALSE)
+        ## some \alias entries have trailing comments including a }
+        aliases <- grep("^\\s*\\\\alias\\{\\s*([^}]+)\\}", lines,
+                        perl = TRUE, value = TRUE)
+        aliases <- sub("\\s*\\\\alias\\{\\s*([^}]+)\\}.*", "\\1",
+                       aliases, perl = TRUE)
+        ## unescape % and {
+        aliases <- gsub("\\\\([%{])", "\\1", aliases)
+        dups <- aliases %in% topics
+        if (any(dups))
+            warning("skipping repeated alias(es) ",
+                    paste(sQuote(aliases[dups]), collapse = ", "),
+                    " in file ", basename(f))
+        aliases <- aliases[!dups]
+        topics <- c(topics, aliases)
+        fff <- sub("\\.[Rr]d",  "", basename(f))
+        ff <- c(ff, rep(fff, length(aliases)))
+    }
+    outman <- file.path(outDir, "help")
+    dir.create(outman, showWarnings = FALSE)
+    write.table(cbind(topics, ff)[re(topics),], file.path(outman, "AnIndex"),
+                quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
+}
+
+.writePkgIndices <- function(dir, outDir, OS = .Platform$OS.type)
+{
+    re <- function(x)
+    {
+        ## sort order for topics, a little tricky
+        ## FALSE sorts before TRUE
+        xx <- rep(TRUE, length(x))
+        xx[grep("-package", x, fixed = TRUE)] <- FALSE
+        order(xx, toupper(x), x)
+    }
+
+    html_header <- function(pkg, title, version, encoding, conn)
+    {
+        cat('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n<html><head><title>R: ', title, '</title>\n',
+            sep = "", file = conn)
+        cat('<meta http-equiv="Content-Type" content="text/html; charset=',
+            encoding, '">\n<link rel="stylesheet" type="text/css" href="../../R.css">\n</head><body>\n<h1>',
+            title, ' <img class="toplogo" src="../../../doc/html/logo.jpg" alt="[R logo]"></h1>\n\n<hr>\n\n',
+            sep = "", file = conn)
+        cat('<div align="center">\n<a href="../../../doc/html/packages.html"><img src="../../../doc/html/left.jpg"\nalt="[Package List]" width="30" height="30" border="0"></a>\n<a href="../../../doc/html/index.html"><img src="../../../doc/html/up.jpg"\nalt="[Top]" width="30" height="30" border="0"></a>\n</div>\n\n',
+            file = conn)
+        cat('<h2>Documentation for package &lsquo;', pkg, '&rsquo; version ',
+            version, '</h2>\n\n', sep = '', file = conn)
+        cat('<h2>Help Pages</h2>\n\n\n', file = conn)
+    }
+
+    mime_canonical_encoding <- function(x)
+    {
+        ## use preferred MIME encoding, not IANA registered name
+        x <- tolower(x)
+        x <- sub("iso_8859-([0-9]+)", "iso-8859-\\1", x)
+        x[x == "utf8"] <- "utf-8"
+        x[x == "latin1"] <- "iso-8859-1"
+        x[x == "latin2"] <- "iso-8859-2"
+        x[x == "latin3"] <- "iso-8859-3"
+        x[x == "latin4"] <- "iso-8859-4"
+        x[x == "cyrillic"] <- "iso-8859-5"
+        x[x == "arabic"] <- "iso-8859-6"
+        x[x == "greek"] <- "iso-8859-7"
+        x[x == "hebrew"] <- "iso-8859-8"
+        x[x == "latin5"] <- "iso-8859-9"
+        x[x == "latin6"] <- "iso-8859-10"
+        x[x == "latin8"] <- "iso-8859-14"
+        x[x == "latin9"] <- "iso-8859-15"
+        x[x == "latin10"] <- "iso-8859-16"
+        x
+    }
+
+    firstLetterCategory <- function(x)
+    {
+        x[grep("-package$", x)] <- " "
+        x <- toupper(substr(x, 1, 1))
+        x[x > "Z"] <- "misc"
+        x[x < "A" & x != " "] <- ""
+        x
+    }
+
+    mandir <- file.path(dir, "man")
+    if(!file_test("-d", mandir))
+        stop("there are no help pages in this package")
+    files <- Sys.glob(file.path(mandir, "*.[Rr]d"))
+    if(file_test("-d", f <- file.path(mandir, OS)))
+        files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
+    if(Sys.getenv("R_USE_AQUA_SUBDIRS") == "yes" &&
+       file_test("-d", f <- file.path(mandir, "aqua"))) {
+        files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
+    }
+    ## Should only process files starting with [A-Za-z0-9] and with
+    ## suffix .Rd or .rd, according to 'Writing R Extensions'.
+    OK <- grep("^[A-Za-z0-9]", basename(files))
+    files <- files[OK]
+    Rd <- tools:::Rdcontents(files)
+
+    topics <- Rd$Aliases
+    lens <- sapply(topics, length)
+    files <- sub("\\.[Rr]d$", "", Rd$File)
+    internal <- sapply(Rd$Keywords, function(x) "internal" %in% x)
+    M <- data.frame(Topic = unlist(topics),
+                    File = rep.int(files, lens),
+                    Title = rep.int(Rd$Title, lens),
+                    Internal = rep.int(internal, lens),
+                    stringsAsFactors = FALSE)
+    ## FIXME duplicated aliases warning
+    outman <- file.path(outDir, "help")
+    dir.create(outman, showWarnings = FALSE)
+    MM <- M[re(M[, 1]), 1:2]
+    write.table(MM, file.path(outman, "AnIndex"),
+                quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
+
+    outman <- file.path(outDir, "html")
+    dir.create(outman, showWarnings = FALSE)
+    outcon <- file(file.path(outman, "00Index.html"), "wt")
+    on.exit(close(outcon))
+    desc <- read.dcf(file.path(outDir, "DESCRIPTION"))[1,]
+    ## drop internal entries
+    M <- M[!M[, 4], ]
+    if(desc["Package"] %in% c("base", "graphics", "stats", "utils")) {
+        for(pass in 1:2) {
+            ## we skip method aliases
+            gen <- gsub("\\.data\\.frame", ".data_frame", M$Topic)
+            gen <- sub("\\.model\\.matrix$", ".modelmatrix", gen)
+            gen <- sub("^(all|as|is|file|Sys|row|na|model)\\.", "\\1_", gen)
+            gen <- sub("^(.*)\\.test", "\\1_test", gen)
+            gen <- sub("([-[:alnum:]]+)\\.[^.]+$", "\\1", gen)
+            last <- nrow(M)
+            nongen <- gen %in% c("ar", "bw", "contr", "dyn", "lm", "qr", "ts", "which", ".Call", ".External", ".Library", ".First", ".Last")
+            nc <- nchar(gen)
+            asg <- (nc > 3) & substr(gen, nc-1, nc) == "<-"
+            skip <- (gen == c("", gen[-last])) & (M$File == c("", M$File[-last])) & !nongen
+            skip <- skip | asg
+            ##N <- cbind(M$Topic, gen, c("", gen[-last]), skip)
+            M <- M[!skip, ]
+            M <- M[re(M[, 1]), ]
+        }
+    } else M <- M[re(M[, 1]), ]
+    ## encode some entries.
+    htmlize <- function(x, backtick)
+    {
+        x <- gsub("&", "&amp;", x, fixed = TRUE)
+        x <- gsub("<", "&lt;", x, fixed = TRUE)
+        x <- gsub(">", "&gt;", x, fixed = TRUE)
+        if(backtick) {
+            x <- gsub("---", "-", x, fixed = TRUE)
+            x <- gsub("--", "-", x, fixed = TRUE)
+            ## these hve been changed in the Rd parser
+            #x <- gsub("``", "&ldquo;", x, fixed = TRUE)
+            #x <- gsub("''", "&rdquo;", x, fixed = TRUE)
+            #x <- gsub("\\`([^']+)'", "&lsquo;\\1&rsquo;", x)
+            #x <- gsub("`", "'", x, fixed = TRUE)
+        }
+        x
+    }
+    M$HTopic <- htmlize(M$Topic, FALSE)
+    M$Title <- htmlize(M$Title, TRUE)
+
+    ## handle encodings
+    def <- desc["Encoding"]
+    def <- if(is.na(def)) "" else mime_canonical_encoding(def)
+    encodings <- mime_canonical_encoding(Rd$Encoding)
+    enc <- if(any(nzchar(encodings))) {
+        encs <- unique(c(def, encodings))
+        ## FIXME: we could reencode individual files
+        encs[nzchar(encs)][1]
+    } else def
+    html_header(desc["Package"], desc["Title"], desc["Version"],
+                if(nzchar(enc)) enc else "iso-8859-1", outcon)
+
+    use_alpha <- (nrow(M) > 100)
+    if (use_alpha) {
+        first <- firstLetterCategory(M$Topic)
+        nm <- sort(names(table(first)))
+        m <- match(" ", nm, 0L)
+        if(m) nm <- c(" ", nm[-m])
+        writeLines("<p align=\"center\">", outcon)
+        writeLines(paste("<a href=\"#", nm, "\">", nm, "</a>", sep = ""),
+                   outcon)
+        writeLines("</p>\n", outcon)
+        for (f in nm) {
+            cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
+                sep = "", file = outcon)
+            MM <- M[first == f, ]
+            ## cat("writing", nrow(MM), "lines for", sQuote(f), "\n")
+            writeLines('<table width="100%">', outcon)
+            writeLines(paste('<tr><td width="25%"><a href="', MM[, 2], '.html">',
+                             MM$HTopic, '</a></td>\n<td>', MM[, 3],'</td></tr>',
+                             sep = ''), outcon)
+            writeLines("</table>", outcon)
+       }
+    } else {
+        writeLines('<table width="100%">', outcon)
+        writeLines(paste('<tr><td width="25%"><a href="', M[, 2], '.html">',
+                         M$HTopic, '</a></td>\n<td>', M[, 3],'</td></tr>',
+                         sep = ''), outcon)
+        writeLines("</table>", outcon)
+    }
+    writeLines('</body></html>', outcon)
 }

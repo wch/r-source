@@ -93,8 +93,8 @@ if(-r &file_path($dest, "DESCRIPTION")) {
 }
 
 
-build_index($lib, $dest, $version, "");
 if($opt_index){
+    build_index($lib, $dest, $version, "");
     exit 0;
 }
 
@@ -168,7 +168,7 @@ foreach $manfile (@mandir) {
 	undef $do_example;
 
 	if($opt_txt){
-	    my $targetfile = $filenm{$manfilebase};
+	    my $targetfile = $manfilebase;
 	    $destfile = file_path($dest, "help", $targetfile);
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
@@ -177,7 +177,7 @@ foreach $manfile (@mandir) {
 	}
 
 	if($opt_html){
-	    my $targetfile = $filenm{$manfilebase};
+	    my $targetfile = $manfilebase;
 	    $misslink = "";
 	    $destfile = file_path($dest, "html", $targetfile.".html");
 	    if(fileolder($destfile, $manage)) {
@@ -188,7 +188,7 @@ foreach $manfile (@mandir) {
 	}
 
 	if($opt_latex){
-	    my $targetfile = $filenm{$manfilebase};
+	    my $targetfile = $manfilebase;
 	    $destfile = file_path($dest, "latex", $targetfile.".tex");
 	    if(fileolder($destfile, $manage)) {
 		$latexflag = "latex";
@@ -197,7 +197,7 @@ foreach $manfile (@mandir) {
 	}
 
 	if($opt_example){
-	    my $targetfile = $filenm{$manfilebase};
+	    my $targetfile = $manfilebase;
 	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
 	    if(fileolder($destfile, $manage)) {
 		if(-f $destfile) {unlink $destfile;}
