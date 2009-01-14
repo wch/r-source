@@ -49,27 +49,35 @@ R:
 	@$(INSTALL_DATA) $(top_srcdir)/doc/html/R.css \
 	  $(top_builddir)/library
 
+## do metadata before help indices
 docs:
+	@$(MAKE) metadata
 	@$(ECHO) "building all R documentation indices"
-	@$(MAKE) help-indices
+	@$(MAKE) help-indices-new
 	@$(ECHO) "building all R object docs (text, HTML, LaTeX, examples)"
 	@$(MAKE) Rdfiles
-	@$(MAKE) indices
 	@touch stamp-docs
 
 help-indices-new:
 	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO) "tools:::.writePkgIndices(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(top_builddir)/bin/R --slave; \
+	  $(ECHO) "tools:::.writePkgIndices(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(top_builddir)/bin/R --slave || exit 1; \
 	done
 
 help-indices:
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(R_CMD_BUILD_HELP) $(R_CMD_BUILD_HELP_OPTS) --index $(srcdir)/$${pkg}; \
 	done
+
+Rdfiles-new:
+	@for pkg in $(R_PKGS_BASE); do \
+	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(top_builddir)/bin/R --slave || exitt 1; \
+	done
+
 Rdfiles:
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(R_CMD_BUILD_HELP) $(R_CMD_BUILD_HELP_OPTS) $(srcdir)/$${pkg}; \
 	done
+
 vignettes:
 	@if test "$(PDFLATEX)" = false; then \
           $(ECHO) "WARNING: cannot build/update package vignettes."; \
@@ -84,8 +92,9 @@ vignettes:
 	    fi; \
 	  done; \
 	fi
-indices:
-	@$(ECHO) "building/updating package indices ..."
+
+metadata:
+	@$(ECHO) "building/updating package metadata ..."
 	@$(ECHO) "tools:::.vinstall_package_indices(\"$(srcdir)\", \"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
 	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) --slave > /dev/null
 	@cat $(top_builddir)/library/*/CONTENTS \
@@ -93,12 +102,15 @@ indices:
 
 help:
 	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--txt"
+
 html:
 	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--html"
 	@$(ECHO) "tools:::unix.packages.html(.Library)" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" >/dev/null
+
 latex:
 	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--latex"
+
 examples:
 	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--example"
 

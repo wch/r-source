@@ -1582,18 +1582,24 @@
     mandir <- file.path(dir, "man")
     if(!file_test("-d", mandir))
         stop("there are no help pages in this package")
-    files <- Sys.glob(file.path(mandir, "*.[Rr]d"))
-    if(file_test("-d", f <- file.path(mandir, OS)))
-        files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
-    if(Sys.getenv("R_USE_AQUA_SUBDIRS") == "yes" &&
-       file_test("-d", f <- file.path(mandir, "aqua"))) {
-        files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
+
+    ## This may well already have been done:
+    Rd <- if (file.exists(f <- file.path(outDir, "Meta", "Rd.rds"))) .readRDS(f)
+    else {
+        ## or use list_files_with_type
+        files <- Sys.glob(file.path(mandir, "*.[Rr]d"))
+        if(file_test("-d", f <- file.path(mandir, OS)))
+            files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
+        if(Sys.getenv("R_USE_AQUA_SUBDIRS") == "yes" &&
+           file_test("-d", f <- file.path(mandir, "aqua"))) {
+            files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
+        }
+        ## Should only process files starting with [A-Za-z0-9] and with
+        ## suffix .Rd or .rd, according to 'Writing R Extensions'.
+        OK <- grep("^[A-Za-z0-9]", basename(files))
+        files <- files[OK]
+        tools:::Rdcontents(files)
     }
-    ## Should only process files starting with [A-Za-z0-9] and with
-    ## suffix .Rd or .rd, according to 'Writing R Extensions'.
-    OK <- grep("^[A-Za-z0-9]", basename(files))
-    files <- files[OK]
-    Rd <- tools:::Rdcontents(files)
 
     topics <- Rd$Aliases
     lens <- sapply(topics, length)
@@ -1698,4 +1704,75 @@
         writeLines("</table>", outcon)
     }
     writeLines('</body></html>', outcon)
+}
+
+.convertRdfiles <-
+    function(dir, outDir, OS = .Platform$OS.type,
+             types = c("txt", "html", "latex", "example"))
+{
+    dirname <- c("help", "html", "latex", "R-ex")
+    ext <- c("", ".html", ".tex", ".R")
+    names(dirname) <- names(ext) <- c("txt", "html", "latex", "example")
+    mandir <- file.path(dir, "man")
+    if(!file_test("-d", mandir))
+        stop("there are no help pages in this package")
+    desc <- .readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION
+    pkg <- desc["Package"]
+    ver <- desc["Version"]
+    enc <- desc["encoding"]
+    if(is.na(enc)) enc <- "unknown"
+
+    ## or use list_files_with_type
+    files <- Sys.glob(file.path(mandir, "*.[Rr]d"))
+    if(file_test("-d", f <- file.path(mandir, OS)))
+        files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
+    if(Sys.getenv("R_USE_AQUA_SUBDIRS") == "yes" &&
+       file_test("-d", f <- file.path(mandir, "aqua"))) {
+        files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
+    }
+    ## Should only process files starting with [A-Za-z0-9] and with
+    ## suffix .Rd or .rd, according to 'Writing R Extensions'.
+    OK <- grep("^[A-Za-z0-9]", basename(files))
+    files <- files[OK]
+
+    for(type in types)
+        dir.create(file.path(outDir, dirname[type]), showWarnings = FALSE)
+    cmd <- paste(R.home(), "/bin/Rdconv -t ", sep = "")
+
+    perllib <- Sys.getenv("PERL5LIB")
+    if (nzchar(perllib)) {
+        Sys.setenv(PERL5LIB = paste(file.path(R.home("share"), "perl"),
+                   perllib, sep = .Platform$path.sep))
+    } else {
+        perllib <- Sys.getenv("PERLLIB")
+        Sys.setenv(PERLLIB = paste(file.path(R.home("share"), "perl"),
+                   perllib, sep = .Platform$path.sep))
+    }
+
+    cat("\n   converting help for package ", sQuote(pkg), "\n", sep="")
+    for (f in files) {
+        bf <-  sub("\\.[Rr]d","", basename(f))
+        need <- character()
+        for(type in types) {
+            ff <- file.path(outDir, dirname[type],
+                            paste(bf, ext[type], sep = ""))
+            if(!file.exists(ff) || file_test("-nt", f, ff)) {
+                this <- paste(cmd, type, " -o ", ff, " --package=", pkg,
+                              " --version=", ver,
+                              " --encoding=", enc,
+                              " ", f, sep="")
+                ##print(this)
+                res <- system(this)
+                if(res) {
+                    stop("problem in converting ", bf)
+                }
+                if(file.exists(ff)) need <- c(need, type)
+            }
+        }
+        if(length(need)) {
+            cat("    ", bf, rep(" ", max(0, 30-nchar(bf))),
+                paste(need, collapse=" \t"),
+                "\n",sep="")
+        }
+    }
 }

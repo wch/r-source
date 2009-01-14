@@ -542,6 +542,7 @@ function(src_dir, out_dir, packages)
     ## indices.
     ## Really only useful for base packages under Unix.
     ## See @file{src/library/Makefile.in}.
+    ## These days this is mostly installing the metadata
 
     for(p in unlist(strsplit(packages, "[[:space:]]+")))
         .install_package_indices(file.path(src_dir, p),

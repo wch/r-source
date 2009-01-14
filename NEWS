@@ -159,6 +159,9 @@ UTILITIES
 	--dry-run to show what commands would be run.  The same code
 	is used on Unix and Windows.
 
+    o	R CMD Rconv has new options --package and --version to set the
+	corresponding fields in HTML conversion.
+
 
 Rd CONVERSION
 
