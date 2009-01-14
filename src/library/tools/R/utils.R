@@ -115,6 +115,11 @@ function(dir, type, all.files = FALSE, full.names = TRUE,
     ## When listing R code and documentation files, files in OS-specific
     ## subdirectories are included (if present) according to the value
     ## of @code{OS_subdirs}.
+
+    ## Aargh, AQUA has a back door:
+    if(missing(OS_subdirs) && Sys.getenv("R_USE_AQUA_SUBDIRS") == "yes")
+        OS_subdirs <- c("unix", "aqua")
+
     exts <- .make_file_exts(type)
     files <-
         list_files_with_exts(dir, exts, all.files = all.files,
