@@ -200,6 +200,7 @@ sub read_anindex {
 sub striptitle { # text
     my $text = $_[0];
     $text =~ s/\\//go;
+    $text =~ s/&/&amp;/go;
     $text =~ s/---/-/go;
     $text =~ s/--/-/go;
     $text =~ s/\`\`/&ldquo;/g;
@@ -208,6 +209,7 @@ sub striptitle { # text
     $text =~ s/\`/\'/g;		# @samp{'} could be an apostrophe ...
     $text =~ s/</&lt;/g;
     $text =~ s/>/&gt;/g;
+    $text =~ s/ +/ /go;
     return $text;
 }
 
@@ -309,6 +311,8 @@ sub build_index { # lib, dest, version, [chmdir]
 	    $text =~ /\\title\{\s*([^\}]+)\s*\}/s;
 	    my $rdtitle = $1;
 	    $rdtitle =~ s/\n/ /sg;
+	    ## remove trailing space from above
+	    $rdtitle =~ s/\s*$//;
 	    $rdtitle =~ s/\\R/R/g; # don't use \R in titles
 	    $internal = 1 if $text =~ /\\keyword\{\s*internal\s*\}/;
 	    if($text =~ /\\encoding\{\s*([^\}]+)\s*\}/s) {
@@ -434,7 +438,7 @@ sub build_index { # lib, dest, version, [chmdir]
 	    $generic =~ s/\.model\.matrix$/.modelmatrix/o;
 	    $generic =~ s/\.[^.]+$//o;
 
-	    next if $alias =~ /<-$/o || $generic =~ /<-$/o;
+	    next if $alias =~ /^\w+<-$/o || $generic =~ /\w+<-$/o;
 	    if ($generic ne "" && $generic eq $current && 
 		$file eq $currentfile && $generic ne "ar") { 
 

@@ -7,7 +7,7 @@
 \alias{plot.isoreg}
 \alias{lines.isoreg}
 %\alias{print.isoreg}
-\title{Plot Method for isoreg  Objects}
+\title{Plot Method for isoreg Objects}
 \description{
   The \code{\link{plot}} and \code{\link{lines}} method for
   \R objects of class \code{\link{isoreg}}.

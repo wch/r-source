@@ -9,8 +9,7 @@
 \alias{Negate}
 \alias{Reduce}
 \alias{Position}
-\title{Common Higher-Order Functions in Functional Programming
-  Languages}
+\title{Common Higher-Order Functions in Functional Programming Languages}
 \description{
   \code{Reduce} uses a binary function to successively combine the
   elements of a given vector and a possibly given initial value.
