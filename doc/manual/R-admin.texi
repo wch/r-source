@@ -4305,7 +4305,7 @@ a link in a new tab or window.
 
 @c https://stat.ethz.ch/pipermail/r-help/2008-July/169521.html
 There is a known issue with Firefox 3.0.x (at least for x <= 5; we are
-told that it will fixed in 3.0.7).  The links in the results page may
+told that it will be fixed in 3.0.7).  The links in the results page may
 point to the wrong directory level.  This is a bug in the way Firefox is
 interpreting relative URLs, and can be circumvented by opening the HTML
 search page (@file{.../doc/html/SearchEngine.html}) directly rather than
