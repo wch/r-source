@@ -1,6 +1,6 @@
 % File src/library/base/man/notyet.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{NotYet}
@@ -26,9 +26,6 @@
   \item{error}{a logical.  If \code{TRUE}, an error is signalled; if
     \code{FALSE}; only a warning is given.}
 }
-%------ PLEASE: put \alias{.} here for  EACH !
-%done\alias{symbols}
-%done\alias{plot.lm}
 %NOT done, but in ./plot.lm.Rd on purpose:  \alias{plot.mlm}
 \seealso{the contrary, \code{\link{Deprecated}} and
   \code{\link{Defunct}} for outdated code.}
