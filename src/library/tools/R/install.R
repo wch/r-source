@@ -836,6 +836,8 @@
                                  shQuote(file.path(R.home("share"), "perl",
                                                    if (WINDOWS) "build-help-windows.pl" else  "build-help.pl")),
                                  "--index",
+                                 ## need next to get CHM index built
+                                 paste(build_help_opts, collapse=" "),
                                  shQuote(pkg_dir),
                                  shQuote(lib),
                                  shQuote(instdir),
