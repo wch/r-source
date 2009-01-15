@@ -89,12 +89,12 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
   \item{package}{a list containing 3 elements:
     \describe{
       \item{name}{the short form of the library name which can be used
-	as the value of the \code{PACKAGE} argument in
-	the different native interface functions.}
+        as the value of the \code{PACKAGE} argument in
+        the different native interface functions.}
       \item{path}{the fully qualified name of the DLL.}
       \item{dynamicLookup}{a logical value indicating whether dynamic
-	resolution is used when looking for symbols in this library,
-	or only registered routines can be located.}
+        resolution is used when looking for symbols in this library,
+        or only registered routines can be located.}
     }    
   }
   If the routine was explicitly registered by the dynamically loaded

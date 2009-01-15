@@ -1839,6 +1839,33 @@
     }
 
     cat("\n   converting help for package ", sQuote(pkg), "\n", sep="")
+    if(FALSE) {
+        type <- "html"
+        for (f in files) {
+            bf <-  sub("\\.[Rr]d","", basename(f))
+            ff <- file.path(outDir, dirname[type],
+                            paste(bf, ext[type], sep = ""))
+            if(!file.exists(ff) || file_test("-nt", f, ff)) {
+                cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "html\n",
+                    sep = "")
+                p <- tools::parse_Rd(f)
+                tools::Rd2HTML(p, ff, package = pkg)
+            }
+         }
+    } else if (TRUE) {
+        type <- "example"
+        for (f in files) {
+            bf <-  sub("\\.[Rr]d","", basename(f))
+            ff <- file.path(outDir, dirname[type],
+                            paste(bf, ext[type], sep = ""))
+            if(!file.exists(ff) || file_test("-nt", f, ff)) {
+                cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "example\n",
+                    sep = "")
+                p <- tools::parse_Rd(f)
+                tools:::Rd2txt(p, ff)
+            }
+         }
+    } else
     for (f in files) {
         bf <-  sub("\\.[Rr]d","", basename(f))
         need <- character()

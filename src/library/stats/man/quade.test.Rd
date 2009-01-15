@@ -20,10 +20,10 @@ quade.test(y, \dots)
 }
 \arguments{
   \item{y}{either a numeric vector of data values, or a data matrix.}
-  \item{groups}{a vector giving the group for the corresponding	elements
+  \item{groups}{a vector giving the group for the corresponding elements
     of \code{y} if this is a vector;  ignored if \code{y} is a matrix.
     If not a factor object, it is coerced to one.}
-  \item{blocks}{a vector giving the block for the corresponding	elements
+  \item{blocks}{a vector giving the block for the corresponding elements
     of \code{y} if this is a vector;  ignored if \code{y} is a matrix.
     If not a factor object, it is coerced to one.}
   \item{formula}{a formula of the form \code{a ~ b | c}, where \code{a},

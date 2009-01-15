@@ -135,7 +135,7 @@ str(longch, strict.width = "wrap")
 
 ## Settings for narrow transcript :
 op <- options(width = 60,
-	      str = strOptions(strict.width = "wrap"))
+              str = strOptions(strict.width = "wrap"))
 str(lsfit(1:9,1:9))
 str(options())
 ## reset to previous:

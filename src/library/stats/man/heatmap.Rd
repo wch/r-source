@@ -15,13 +15,13 @@
 }
 \usage{
 heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
-	distfun = dist, hclustfun = hclust,
+        distfun = dist, hclustfun = hclust,
         reorderfun = function(d,w) reorder(d,w),
         add.expr, symm = FALSE, revC = identical(Colv, "Rowv"),
-	scale=c("row", "column", "none"), na.rm = TRUE,
-	margins = c(5, 5), ColSideColors, RowSideColors,
-	cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
-	labRow = NULL, labCol = NULL, main = NULL,
+        scale=c("row", "column", "none"), na.rm = TRUE,
+        margins = c(5, 5), ColSideColors, RowSideColors,
+        cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
+        labRow = NULL, labCol = NULL, main = NULL,
         xlab = NULL, ylab = NULL,
         keep.dendro = FALSE, verbose = getOption("verbose"), \dots)
 }
@@ -33,7 +33,7 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     \code{\link{NA}} to suppress any row dendrogram (and reordering) or
     by default, \code{\link{NULL}}, see \sQuote{Details} below.}
   \item{Colv}{determines if and how the \emph{column} dendrogram should be
-    reordered.	Has the same options as the \code{Rowv} argument above and
+    reordered.  Has the same options as the \code{Rowv} argument above and
     \emph{additionally} when \code{x} is a square matrix, \code{Colv =
       "Rowv"} means that columns should be treated identically to the rows.}
   \item{distfun}{function used to compute the distance (dissimilarity)
@@ -81,7 +81,7 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 }
 \details{
   If either \code{Rowv} or \code{Colv} are dendrograms they are honored
-  (and not reordered).	Otherwise, dendrograms are computed as
+  (and not reordered).  Otherwise, dendrograms are computed as
   \code{dd <- as.dendrogram(hclustfun(distfun(X)))} where \code{X} is
   either \code{x} or \code{t(x)}.
 
@@ -138,37 +138,37 @@ x  <- as.matrix(mtcars)
 rc <- rainbow(nrow(x), start=0, end=.3)
 cc <- rainbow(ncol(x), start=0, end=.3)
 hv <- heatmap(x, col = cm.colors(256), scale="column",
-	      RowSideColors = rc, ColSideColors = cc, margins=c(5,10),
-	      xlab = "specification variables", ylab= "Car Models",
-	      main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
+              RowSideColors = rc, ColSideColors = cc, margins=c(5,10),
+              xlab = "specification variables", ylab= "Car Models",
+              main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
 utils::str(hv) # the two re-ordering index vectors
 
 ## no column dendrogram (nor reordering) at all:
 heatmap(x, Colv = NA, col = cm.colors(256), scale="column",
-	RowSideColors = rc, margins=c(5,10),
-	xlab = "specification variables", ylab= "Car Models",
-	main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
+        RowSideColors = rc, margins=c(5,10),
+        xlab = "specification variables", ylab= "Car Models",
+        main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
 \testonly{
 ## no row dendrogram (nor reordering) at all:
 heatmap(x, Rowv = NA, col = cm.colors(256), scale="column",
-	ColSideColors = cc, margins=c(5,10),
-	xlab = "xlab", ylab= "ylab")# no main
+        ColSideColors = cc, margins=c(5,10),
+        xlab = "xlab", ylab= "ylab")# no main
 }
 ## "no nothing"
 heatmap(x, Rowv = NA, Colv = NA, scale="column",
-	main = "heatmap(*, NA, NA) ~= image(t(x))")
+        main = "heatmap(*, NA, NA) ~= image(t(x))")
 %% also want example using the `add.exp' argument!
 
 round(Ca <- cor(attitude), 2)
 symnum(Ca) # simple graphic
-heatmap(Ca,	        symm = TRUE, margins=c(6,6))# with reorder()
+heatmap(Ca,             symm = TRUE, margins=c(6,6))# with reorder()
 heatmap(Ca, Rowv=FALSE, symm = TRUE, margins=c(6,6))# _NO_ reorder()
 
 ## For variable clustering, rather use distance based on cor():
 symnum( cU <- cor(USJudgeRatings) )
 
 hU <- heatmap(cU, Rowv = FALSE, symm = TRUE, col = topo.colors(16),
-	     distfun = function(c) as.dist(1 - c), keep.dendro = TRUE)
+             distfun = function(c) as.dist(1 - c), keep.dendro = TRUE)
 ## The Correlation matrix with same reordering:
 round(100 * cU[hU[[1]], hU[[2]]])
 ## The column dendrogram:

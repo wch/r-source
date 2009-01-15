@@ -63,12 +63,12 @@ SSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
     }
     z <- xy[["y"]]
     if (min(z) <= 0) { z <- z + 0.05 * max(z) } # avoid zeroes
-    z <- z/(1.05 * max(z))		# scale to within unit height
-    xy[["z"]] <- log(z/(1 - z))		# logit transformation
+    z <- z/(1.05 * max(z))              # scale to within unit height
+    xy[["z"]] <- log(z/(1 - z))         # logit transformation
     aux <- coef(lm(x ~ z, xy))
     parameters(xy) <- list(xmid = aux[1], scal = aux[2])
     pars <- as.vector(coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)), 
-  			     data = xy, algorithm = "plinear")))
+                             data = xy, algorithm = "plinear")))
     value <- c(pars[3], pars[1], pars[2])
     names(value) <- mCall[c("Asym", "xmid", "scal")]
     value

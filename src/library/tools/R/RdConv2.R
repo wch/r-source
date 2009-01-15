@@ -7,7 +7,7 @@ alias2Path <- function(alias, package, type, lib.loc=NULL) {
 
 get_link <- function(arg) {	# like get_link in Rdconv.pm, plus a bit more
     if (!identical(RdTags(arg), "TEXT"))
-    	stopRd(arg, "Bad \\link text")    
+    	stopRd(arg, "Bad \\link text")
     option <- attr(arg, "Rd_option")
 
     dest <- arg[[1]]
@@ -16,7 +16,7 @@ get_link <- function(arg) {	# like get_link in Rdconv.pm, plus a bit more
     if (!is.null(option)) {
         if (!identical(attr(option, "Rd_tag"), "TEXT"))
     	    stopRd(option, "Bad \\link option")
-    	if (length(grep("^=", option))) 
+    	if (length(grep("^=", option)))
     	    dest <- sub("^=", "", option)
     	else if (length(grep(":", option))) {
     	    topic <- sub("^[^:]*:", "", option)
@@ -33,17 +33,17 @@ get_link <- function(arg) {	# like get_link in Rdconv.pm, plus a bit more
 mime_canonical_encoding <- function(encoding) {
     encoding <- tolower(encoding)
     std <- grep("iso_8859-[0-9]+", encoding)
-    encoding[std] <- paste("iso_8859-", 
+    encoding[std] <- paste("iso_8859-",
                            sub(".*iso_8859-(0-9+).*", "\\1", encoding[std]))
-    encoding[encoding == "latin1"] <-  "iso-8859-1" 
-    encoding[encoding == "latin2"] <-  "iso-8859-2" 
-    encoding[encoding == "latin3"] <-  "iso-8859-3" 
-    encoding[encoding == "latin4"] <-  "iso-8859-4" 
-    encoding[encoding == "cyrillic"] <-"iso-8859-5" 
-    encoding[encoding == "arabic"] <-  "iso-8859-6" 
-    encoding[encoding == "greek"] <-   "iso-8859-7" 
-    encoding[encoding == "hebrew"] <-  "iso-8859-8" 
-    encoding[encoding == "latin5"] <-  "iso-8859-9" 
+    encoding[encoding == "latin1"] <-  "iso-8859-1"
+    encoding[encoding == "latin2"] <-  "iso-8859-2"
+    encoding[encoding == "latin3"] <-  "iso-8859-3"
+    encoding[encoding == "latin4"] <-  "iso-8859-4"
+    encoding[encoding == "cyrillic"] <-"iso-8859-5"
+    encoding[encoding == "arabic"] <-  "iso-8859-6"
+    encoding[encoding == "greek"] <-   "iso-8859-7"
+    encoding[encoding == "hebrew"] <-  "iso-8859-8"
+    encoding[encoding == "latin5"] <-  "iso-8859-9"
     encoding[encoding == "latin6"] <-  "iso-8859-10"
     encoding[encoding == "latin8"] <-  "iso-8859-14"
     encoding[encoding == "latin-9"] <- "iso-8859-15"
@@ -187,9 +187,9 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type, encoding=
 
     writeLink <- function(tag, block) {
 	parts <- get_link(block)
-	if (tag == "\\linkS4class") 
+	if (tag == "\\linkS4class")
 	    parts$dest <- paste(parts$dest, "-class", sep="")
-	    
+
     	if (is.null(parts$topic)) {
     	    htmlfile <- alias2Path(parts$dest, package, "html")
     	    if (!length(htmlfile)) {
@@ -201,13 +201,13 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type, encoding=
     	        htmlfile <- htmlfile[1]
     	    }
     	    # Drop path if it's in the same package
-    	    if (sub("^.*/([^/]*)/[^/]*/[^/]*$", "\\1", htmlfile) == package) 
+    	    if (sub("^.*/([^/]*)/[^/]*/[^/]*$", "\\1", htmlfile) == package)
     	    	htmlfile <- sub("^.*/","", htmlfile)
     	} else if (is.null(parts$pkg) || parts$pkg == package)
     	    htmlfile <- paste(parts$topic, ".html", sep="")
     	else
     	    htmlfile <- paste("../../", parts$pkg, "/html/", parts$topic, ".html", sep="")
-    	    
+
     	cat('<a href="', htmlfile, '">', sep="", file=con)
     	writeContent(block, tag)
     	cat('</a>', file=con)
@@ -475,7 +475,7 @@ Rd2HTML <- function(Rd, out="", package="", defines=.Platform$OS.type, encoding=
     	    stopRd(encoding, "Encoding must be plain text")
     	encoding <- encoding[[1]]
     }
-    
+
     # Give error for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]))))
     	stopRd(Rd[sections == "TEXT"][[bad[1]]], "All text must be in a section")
@@ -742,3 +742,115 @@ checkRd <-
     TRUE
 }
 
+Rd2txt <- function(Rd, out="", defines=.Platform$OS.type, encoding = "unknown")
+{
+    wr <- function(x) {
+        x <- remap(x)
+        paste("###", strwrap(x, 72, indent=1, exdent=3), sep="", collapse="\n")
+    }
+    remap <- function(x) {
+        ## it seems lines starting % can get through.
+        ## see Constants.Rd
+        comm <- grep("^\\s*%", x, perl = TRUE)
+        if(length(comm)) x <- x[-comm]
+        x <- gsub("(^|[^\\])\\\\([\\%{])", "\\1\\2", x)
+        x
+    }
+
+    render <- function(x, prefix = "")
+    {
+        tag <- attr(x, "Rd_tag")
+        if(tag %in% c("\\dontshow", "\\testonly")) {
+            ## There are fancy rules here if not followed by \n
+            cat("## Don't show: ", file = con) #
+            for(i in seq_along(x)) render(x[[i]], prefix)
+            cat("## End Don't show", file = con) #
+        } else if (tag  == "\\dontrun") {
+            ## fix me if fillowed by \n
+            cat("## Not run: ", file = con) #
+            for(i in seq_along(x)) render(x[[i]], paste("##D", prefix)) #
+            cat("## End(Not run)", file = con) #
+        } else if (tag  == "\\donttest") {
+            cat("## No test: ", file = con) #
+            for(i in seq_along(x)) render(x[[i]], prefix)
+            cat("## End(No test)", file = con) #
+        } else  if (tag %in% c("\\dots", "\\ldots")) {
+            cat("...", file = con)
+        } else {
+            txt <- unlist(x)
+            cat(paste(prefix, remap(txt), sep=""), file = con)
+        }
+    }
+
+    Rdfile <- "not known"
+
+    if (is.character(Rd)) {
+        Rdfile <- Rd
+        ## do it this way to get info in internal warnings
+        Rd <- eval(substitute(tools::parse_Rd(f, encoding = enc),
+                              list(f = Rd, enc = encoding)))
+    } else if(inherits(Rd, "connection")) {
+        Rdfile <- summary(Rd)
+        Rd <- tools::parse_Rd(Rd, encoding = encoding)
+    }
+
+
+    ## Process top level ifdef's.
+    Rd <- preprocessRd(Rd, defines)
+    sections <- attr(Rd, "RdTags")
+
+    where <- which(sections == "\\examples")
+    if(length(where)) {
+        if (is.character(out)) {
+            if(out == "") con <- stdout()
+            else {
+                con <- file(out, "w")
+                on.exit(close(con))
+            }
+        } else {
+            con <- out
+            out <- summary(con)$description
+        }
+
+        if(length(which) > 1L)
+            warning("more than one \\examples section, using the first")
+        if(any(f <- sections == "\\encoding")) {
+            encoding <- unlist(Rd[[which(f)]])[1]
+            cat("### Encoding: ", encoding, "\n\n", sep="", file=con)
+        }
+        nameblk <- sections == "\\name"
+        if (any(nameblk)) {
+            ## perl wrapped here, but it seems unnecessary
+            name <- as.character(Rd[[ which(nameblk)[1] ]])
+            cat("### Name: ", name, "\n", sep = "", file = con)
+        }
+        titleblk <- sections == "\\title"
+        if (any(titleblk)) {
+            title <- as.character(Rd[[ which(titleblk)[1] ]])
+        } else title <- "No title found"
+        cat(wr(paste("Title: ", title, sep='')), "\n", sep = "", file = con)
+        aliasblks <- sections == "\\alias"
+        if (any(aliasblks)) {
+            aliases <- unlist(Rd[aliasblks])
+            sp <- grep(" ", aliases)
+            aliases[sp] <- paste("'", aliases[sp], "'", sep = "")
+            cat(wr(paste("Aliases: ", paste(aliases, collapse=" "), sep="")),
+                "\n", sep = "", file = con)
+        }
+        keyblks <- sections == "\\keyword"
+        if (any(keyblks)) {
+            keys <- unlist(Rd[keyblks])
+            keys <- gsub("^\\s+", "", keys, perl = TRUE)
+            cat(wr(paste("Keywords: ", paste(keys, collapse=" "), sep="")),
+                "\n", sep = "", file = con)
+        }
+        writeLines(c("", "### ** Examples"), con)
+        ex <- preprocessRd(Rd[[ where[1] ]], defines)
+        ## FIXME
+        ## undo \var, \link
+        ## remap % \dots \ldots \\
+        ## interpret \dontshow \testonly \dontrun \donttest
+        for (i in seq_along(ex)) render(ex[[i]])
+        cat("\n\n\n", file = con)
+    }
+}

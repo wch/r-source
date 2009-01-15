@@ -38,7 +38,7 @@ mahalanobis(c(0,0), 1:2, S)
 
 x <- matrix(rnorm(100*3), ncol = 3)
 stopifnot(mahalanobis(x, 0, diag(ncol(x))) == rowSums(x*x))
-	##- Here, D^2 = usual squared Euclidean distances
+        ##- Here, D^2 = usual squared Euclidean distances
 
 Sx <- cov(x)
 D2 <- mahalanobis(x, colMeans(x), Sx)

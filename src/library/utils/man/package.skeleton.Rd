@@ -16,7 +16,7 @@
 \usage{
 package.skeleton(name = "anRpackage", list,
                  environment = .GlobalEnv,
-	         path = ".", force = FALSE, namespace = FALSE,
+                 path = ".", force = FALSE, namespace = FALSE,
                  code_files = character())
 }
 \arguments{

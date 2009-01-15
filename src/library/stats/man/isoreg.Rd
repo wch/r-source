@@ -84,7 +84,7 @@ y <- exp(x)
 x. <- round(x) # ties!
 plot(m <- isoreg(x., y))
 stopifnot(all.equal(with(m, yf[iKnots]),
-		    as.vector(tapply(y, x., mean))))
+                    as.vector(tapply(y, x., mean))))
 }
 \keyword{regression}
 \keyword{smooth}

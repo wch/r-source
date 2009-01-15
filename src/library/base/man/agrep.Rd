@@ -36,7 +36,7 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
       \item{\code{insertions}:}{maximum number/fraction of insertions}
       \item{\code{deletions}:}{maximum number/fraction of deletions}
       \item{\code{substitutions}:}{maximum number/fraction of
-	substitutions}
+        substitutions}
     }
     If \code{all} is missing, it is set to 10\%, the other components
     default to \code{all}.  The component names can be abbreviated.

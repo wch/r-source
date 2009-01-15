@@ -144,7 +144,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   \code{"default"}.
 }
 \note{
-  Initially, there is no seed;	a new one is created from the current
+  Initially, there is no seed;  a new one is created from the current
   time when one is required.  Hence, different sessions started at
   (sufficiently) different times will give different simulation results,
   by default.  However, the seed might be restored from a previous
@@ -248,7 +248,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
 \author{of RNGkind: Martin Maechler. Current implementation, B. D. Ripley}
 
 \seealso{\code{\link{runif}}, \code{\link{rnorm}}, \ldots.}
-%	this is ./Uniform.Rd
+%       this is ./Uniform.Rd
 \examples{
 require(stats)
 

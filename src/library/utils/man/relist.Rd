@@ -54,7 +54,7 @@ is.relistable(x)
   mathematical interfaces.
 
   For example, a likelihood function for a multivariate normal model needs a
-  variance-covariance matrix and a mean vector.	 It would be most convenient to
+  variance-covariance matrix and a mean vector.  It would be most convenient to
   represent it as a list containing a vector and a matrix.  A typical parameter
   might look like
   \preformatted{
@@ -65,17 +65,17 @@ is.relistable(x)
   conversion. Given a function \code{mvdnorm(x, mean, vcov, log=FALSE)}
   which computes the required probability density, then
   \preformatted{
- 	ipar <- list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0)))
- 	initial.param <- as.relistable(ipar)
+        ipar <- list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0)))
+        initial.param <- as.relistable(ipar)
 
- 	ll <- function(param.vector)
- 	{
-	   param <- relist(param.vector, skeleton=ipar))
-	   -sum(mvdnorm(x, mean = param$mean, vcov = param$vcov,
-		        log = TRUE))
- 	}
+        ll <- function(param.vector)
+        {
+           param <- relist(param.vector, skeleton=ipar))
+           -sum(mvdnorm(x, mean = param$mean, vcov = param$vcov,
+                        log = TRUE))
+        }
 
- 	optim(unlist(initial.param), ll)
+        optim(unlist(initial.param), ll)
   }
   \code{relist} takes two parameters: skeleton and flesh.  Skeleton is a sample
   object that has the right \code{shape} but the wrong content.  \code{flesh}

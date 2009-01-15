@@ -16,7 +16,7 @@
 }
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
-	encoding = "unknown")
+        encoding = "unknown")
 checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
         unknownOK = FALSE, listOK = TRUE)
 }

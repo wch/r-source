@@ -9,7 +9,7 @@
 
 \title{PDF Graphics Device}
 %% The definitive doc is the source :-)
-%% 	../../../main/devices.c  &   ../../../main/devPS.c
+%%         ../../../main/devices.c  &   ../../../main/devPS.c
 \description{
   \code{pdf} starts the graphics device driver for producing PDF
   graphics.
@@ -232,9 +232,9 @@ TestChars <- function(encoding="ISOLatin1", ...)
          title(paste("Centred chars in encoding", encoding))
     grid(17, 17, lty=1)
     for(i in c(32:255)) {
-	x <- i \%\% 16
-	y <- i \%/\% 16
-	points(x, y, pch=i)
+        x <- i \%\% 16
+        y <- i \%/\% 16
+        points(x, y, pch=i)
     }
     dev.off()
 }

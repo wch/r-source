@@ -82,15 +82,15 @@ rgb2hsvR <- function(rgb, gamma = 1, maxColorValue = 255)
     ## blue hue
     idx <- (v == rgb[3,] & notgray )
     if (any (idx))
-	h[idx] <- 2/3 + 1/6 * (rgb[1,idx] - rgb[2,idx]) / D[idx]
+        h[idx] <- 2/3 + 1/6 * (rgb[1,idx] - rgb[2,idx]) / D[idx]
     ## green hue
     idx <- (v == rgb[2,] & notgray )
     if (any (idx))
-	h[idx] <- 1/3 + 1/6 * (rgb[3,idx] - rgb[1,idx]) / D[idx]
+        h[idx] <- 1/3 + 1/6 * (rgb[3,idx] - rgb[1,idx]) / D[idx]
     ## red hue
     idx <- (v == rgb[1,] & notgray )
     if (any (idx))
-	h[idx] <-	1/6 * (rgb[2,idx] - rgb[3,idx]) / D[idx]
+        h[idx] <-       1/6 * (rgb[2,idx] - rgb[3,idx]) / D[idx]
 
     ## correct for negative red
     idx <- (h < 0)

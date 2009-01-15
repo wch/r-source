@@ -133,7 +133,7 @@ addNA(x, ifany=FALSE)
   \code{"levels"} attribute.  Be careful only to compare factors with
   the same set of levels (in the same order).  In particular,
   \code{as.numeric} applied to a factor is meaningless, and may
-  happen by implicit coercion.	To transform a factor \code{f} to
+  happen by implicit coercion.  To transform a factor \code{f} to
   its original numeric values, \code{as.numeric(levels(f))[f]} is
   recommended and slightly more efficient than
   \code{as.numeric(as.character(f))}.
@@ -191,7 +191,7 @@ addNA(x, ifany=FALSE)
 \examples{
 (ff <- factor(substring("statistics", 1:10, 1:10), levels=letters))
 as.integer(ff)  # the internal codes
-factor(ff)	# drops the levels that do not occur
+factor(ff)      # drops the levels that do not occur
 ff[, drop=TRUE] # the same, more transparently
 
 factor(letters[1:20], labels="letter")

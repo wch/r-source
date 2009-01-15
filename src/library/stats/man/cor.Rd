@@ -23,7 +23,7 @@ cov2cor(V)
 \description{
   \code{var}, \code{cov} and \code{cor} compute the variance of \code{x}
   and the covariance or correlation of \code{x} and \code{y} if these
-  are vectors.	If \code{x} and \code{y} are matrices then the
+  are vectors.   If \code{x} and \code{y} are matrices then the
   covariances (or correlations) between the columns of \code{x} and the
   columns of \code{y} are computed.
 
@@ -33,12 +33,12 @@ cov2cor(V)
 \arguments{
   \item{x}{a numeric vector, matrix or data frame.}
   \item{y}{\code{NULL} (default) or a vector, matrix or data frame with
-    compatible dimensions to \code{x}.	The default is equivalent to
+    compatible dimensions to \code{x}.   The default is equivalent to
     \code{y = x} (but more efficient).}
   \item{na.rm}{logical. Should missing values be removed?}
   \item{use}{an optional character string giving a
     method for computing covariances in the presence
-    of missing values.	This must be (an abbreviation of) one of the strings
+    of missing values.  This must be (an abbreviation of) one of the strings
     \code{"everything"}, \code{"all.obs"}, \code{"complete.obs"},
     \code{"na.or.complete"}, or \code{"pairwise.complete.obs"}.}
   \item{method}{a character string indicating which correlation
@@ -143,7 +143,7 @@ cor(cbind(P = Cl[i], S = clS[i], K = clK[i]))
 
 
 ## cov2cor() scales a covariance matrix by its diagonal
-##	     to become the correlation matrix.
+##           to become the correlation matrix.
 cov2cor # see the function definition {and learn ..}
 stopifnot(all.equal(Cl, cov2cor(cov(longley))),
           all.equal(cor(longley, method="kendall"),
@@ -151,14 +151,14 @@ stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 
 ##--- Missing value treatment:
 C1 <- cov(swiss)
-range(eigen(C1, only.values=TRUE)$values) # 6.19	1921
+range(eigen(C1, only.values=TRUE)$values) # 6.19        1921
 swM <- swiss
 swM[1,2] <- swM[7,3] <- swM[25,5] <- NA # create 3 "missing"
 try(cov(swM)) # Error: missing obs...
 C2 <- cov(swM, use = "complete")
-range(eigen(C2, only.values=TRUE)$values) # 6.46	1930
+range(eigen(C2, only.values=TRUE)$values) # 6.46        1930
 C3 <- cov(swM, use = "pairwise")
-range(eigen(C3, only.values=TRUE)$values) # 6.19	1938
+range(eigen(C3, only.values=TRUE)$values) # 6.19        1938
 
 symnum(cor(swM, method = "kendall", use = "complete"))
 ## Kendall's tau doesn't change much:

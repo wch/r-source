@@ -71,7 +71,7 @@ getOption(x)
       environment variable \env{R_DEFAULT_PACKAGES}, or if that is unset
       %%  default is set in ../../profile/Common.R :
       to \code{c("datasets", "utils", "grDevices", "graphics", "stats",
-	"methods")}.  (Set \env{R_DEFAULT_PACKAGES} to \code{NULL} or
+        "methods")}.  (Set \env{R_DEFAULT_PACKAGES} to \code{NULL} or
       a comma-separated list of package names.)   A call to
       \code{options} should be in your \file{.Rprofile} file to ensure
       that the change takes effect before the base package is

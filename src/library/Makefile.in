@@ -70,7 +70,7 @@ help-indices:
 
 Rdfiles-new:
 	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(top_builddir)/bin/R --slave || exitt 1; \
+	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(top_builddir)/bin/R --slave || exit 1; \
 	done
 
 Rdfiles:

@@ -47,7 +47,7 @@ download.packages(pkgs, destdir, available = NULL,
 install.packages(pkgs, lib, repos = getOption("repos"),
                  contriburl = contrib.url(repos, type),
                  method, available = NULL, destdir = NULL,
-		 dependencies = NA, type = getOption("pkgType"),
+                 dependencies = NA, type = getOption("pkgType"),
                  configure.args = getOption("configure.args"),
                  configure.vars = getOption("configure.vars"),
                  clean = FALSE, Ncpus = getOption("Ncpus"), \dots)

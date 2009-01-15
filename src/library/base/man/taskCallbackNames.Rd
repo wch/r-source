@@ -38,9 +38,9 @@ getTaskCallbackNames()
 }
 \examples{
  n <- addTaskCallback(function(expr, value, ok, visible) {
-			cat("In handler\n")
-			return(TRUE)
-		      }, name = "simpleHandler")
+                        cat("In handler\n")
+                        return(TRUE)
+                      }, name = "simpleHandler")
 
  getTaskCallbackNames()
 
@@ -50,9 +50,9 @@ getTaskCallbackNames()
 
  h <- taskCallbackManager()
  h$add(function(expr, value, ok, visible) {
-			cat("In handler\n")
-			return(TRUE)
-		      }, name = "simpleHandler")
+                        cat("In handler\n")
+                        return(TRUE)
+                      }, name = "simpleHandler")
  getTaskCallbackNames()
  removeTaskCallback("R-taskCallbackManager")
 }
