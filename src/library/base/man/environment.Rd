@@ -149,9 +149,9 @@ e2 <- new.env(parent = e1)
 assign("a", 3, envir=e1)
 ls(e1)
 ls(e2)
-exists("a", envir=e2)	# this succeeds by inheritance
+exists("a", envir=e2)   # this succeeds by inheritance
 exists("a", envir=e2, inherits = FALSE)
-exists("+", envir=e2)	# this succeeds by inheritance
+exists("+", envir=e2)   # this succeeds by inheritance
 }
 \keyword{data}
 \keyword{programming}

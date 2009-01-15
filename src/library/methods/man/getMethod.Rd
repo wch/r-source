@@ -140,11 +140,11 @@ hasMethod("testFun", "ANY")
 \dontrun{[1] FALSE}
 \dontshow{
 stopifnot(isGeneric("testFun"),
-	  hasMethod("testFun", "numeric"),
-	  hasMethod("testFun", "integer"),
-	  !existsMethod("testFun", "integer"),
-	  !hasMethod("testFun"),
-	  !hasMethod("testFun", "ANY") )
+          hasMethod("testFun", "numeric"),
+          hasMethod("testFun", "integer"),
+          !existsMethod("testFun", "integer"),
+          !hasMethod("testFun"),
+          !hasMethod("testFun", "ANY") )
 removeGeneric("testFun")
 }
 }

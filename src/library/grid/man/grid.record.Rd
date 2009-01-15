@@ -49,8 +49,8 @@ grid.record(expr, list, name=NULL, gp=NULL, vp=NULL)
 \examples{
 grid.record({
               w <- convertWidth(unit(1, "inches"), "npc")
-	              grid.rect(width=w)
+              grid.rect(width=w)
             },
             list())
 }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{ dplot }

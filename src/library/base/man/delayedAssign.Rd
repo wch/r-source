@@ -16,7 +16,7 @@ of (interpreted) functions.
 }
 \usage{
 delayedAssign(x, value, eval.env = parent.frame(1), 
-	      assign.env = parent.frame(1))
+              assign.env = parent.frame(1))
 }
 \arguments{
   \item{x}{a variable name (given as a quoted string in the function call)}

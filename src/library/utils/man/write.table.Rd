@@ -16,7 +16,7 @@
 \usage{
 write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
             eol = "\n", na = "NA", dec = ".", row.names = TRUE,
-	    col.names = TRUE, qmethod = c("escape", "double"))
+            col.names = TRUE, qmethod = c("escape", "double"))
 
 write.csv(\dots)
 write.csv2(\dots)

@@ -64,7 +64,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
       (1 norm).}
 
     \item{\code{canberra}:}{\eqn{\sum_i |x_i - y_i| / |x_i + y_i|}{%
-	sum(|x_i - y_i| / |x_i + y_i|)}.  Terms with zero numerator and
+        sum(|x_i - y_i| / |x_i + y_i|)}.  Terms with zero numerator and
       denominator are omitted from the sum and treated as if the values
       were missing.
     }

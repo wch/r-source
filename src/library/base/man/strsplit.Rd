@@ -72,14 +72,14 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
   The algorithm applied to each input string is
   \preformatted{
     repeat \{
-	if the string is empty
-	    break.
-	if there is a match
-	    add the string to the left of the match to the output.
-	    remove the match and all to the left of it.
-	else
-	    add the string to the output.
-	    break.
+        if the string is empty
+            break.
+        if there is a match
+            add the string to the left of the match to the output.
+            remove the match and all to the left of it.
+        else
+            add the string to the output.
+            break.
     \}
   }
   Note that this means that if there is a match at the beginning of a
@@ -122,7 +122,7 @@ unlist(strsplit("a.b.c", ".", fixed = TRUE))
 
 ## a useful function: rev() for strings
 strReverse <- function(x)
-	sapply(lapply(strsplit(x, NULL), rev), paste, collapse="")
+        sapply(lapply(strsplit(x, NULL), rev), paste, collapse="")
 strReverse(c("abc", "Statistics"))
 
 ## get the first names of the members of R-core

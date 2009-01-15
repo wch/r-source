@@ -23,7 +23,7 @@
      is used instead of giving \code{levels} explicitly.}
  \item{conf}{a numeric vector of confidence levels for profile-based
      confidence intervals on the parameters.  Defaults to \code{c(0.99,
-	 0.95, 0.90, 0.80, 0.50).}}
+         0.95, 0.90, 0.80, 0.50).}}
  \item{absVal}{a logical value indicating whether or not the plots
      should be on the scale of the absolute value of the profile t.
      Defaults to \code{TRUE}.} 

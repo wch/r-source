@@ -31,13 +31,13 @@ rep.int(x, times)
     For the internal default method these can include:
     \describe{
       \item{\code{times}}{A vector giving the number of
-	times to repeat each element if of length \code{length(x)}, or to
-	repeat the whole vector if of length 1.}
+        times to repeat each element if of length \code{length(x)}, or to
+        repeat the whole vector if of length 1.}
       \item{\code{length.out}}{non-negative integer. The desired length of the
-	output vector.  Ignored if \code{NA} or invalid.}
+        output vector.  Ignored if \code{NA} or invalid.}
       \item{\code{each}}{non-negative integer.  Each element of \code{x} is
-	repeated \code{each} times.  Treated as \code{1} if \code{NA} or
-	invalid.}
+        repeated \code{each} times.  Treated as \code{1} if \code{NA} or
+        invalid.}
     }
   }
   \item{times}{see \code{\dots}.}

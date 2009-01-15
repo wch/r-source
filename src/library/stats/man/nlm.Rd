@@ -86,17 +86,17 @@ nlm(f, p, \dots, hessian = FALSE, typsize = rep(1, length(p)),
   \item{code}{an integer indicating why the optimization process terminated.
     \describe{
       \item{1:}{relative gradient is close to zero, current iterate is
-	probably solution.}
+        probably solution.}
       \item{2:}{successive iterates within tolerance, current iterate
-	is probably solution.}
+        is probably solution.}
       \item{3:}{last global step failed to locate a point lower than
-	\code{estimate}.  Either \code{estimate} is an approximate local
-	minimum of the function or \code{steptol} is too small.}
+        \code{estimate}.  Either \code{estimate} is an approximate local
+        minimum of the function or \code{steptol} is too small.}
       \item{4:}{iteration limit exceeded.}
       \item{5:}{maximum step size \code{stepmax} exceeded five consecutive
-	times.  Either the function is unbounded below,
-	becomes asymptotic to a finite value from above in
-	some direction or \code{stepmax} is too small.}
+        times.  Either the function is unbounded below,
+        becomes asymptotic to a finite value from above in
+        some direction or \code{stepmax} is too small.}
     }
   }
   \item{iterations}{the number of iterations performed.}

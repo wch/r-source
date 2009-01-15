@@ -156,8 +156,8 @@ This should be a rare occurrence.
 \examples{
 \dontshow{
  if(isClass("trackMultiCurve")) removeClass("trackMultiCurve")
- if(isClass("trackCurve"))	removeClass("trackCurve")
- if(isClass("track"))		removeClass("track")
+ if(isClass("trackCurve"))      removeClass("trackCurve")
+ if(isClass("track"))           removeClass("track")
 }
 ## A simple class with two slots
 setClass("track",

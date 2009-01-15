@@ -88,9 +88,9 @@ h <- taskCallbackManager()
 
 # add a callback
 h$add(function(expr, value, ok, visible) {
-		       cat("In handler\n")
-		       return(TRUE)
-		     }, name = "simpleHandler")
+                       cat("In handler\n")
+                       return(TRUE)
+                     }, name = "simpleHandler")
 
 # look at the internal callbacks.
 getTaskCallbackNames()

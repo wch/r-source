@@ -171,12 +171,12 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
     components
     \describe{
       \item{knot:}{the knot sequence (including the repeated boundary
-	knots).}
+        knots).}
       \item{nk:}{number of coefficients or number of \sQuote{proper}
-	knots plus 2.}
+        knots plus 2.}
       \item{coef:}{coefficients for the spline basis used.}
       \item{min, range:}{numbers giving the corresponding quantities of
-	\code{x}.}
+        \code{x}.}
     }
   }
   \item{call}{the matched call.}

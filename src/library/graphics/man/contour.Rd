@@ -22,9 +22,9 @@ contour(x, \dots)
         ylim = range(y, finite = TRUE),
         zlim = range(z, finite = TRUE),
         labcex = 0.6, drawlabels = TRUE, method = "flattest",
-	vfont, axes = TRUE, frame.plot = axes,
+        vfont, axes = TRUE, frame.plot = axes,
         col = par("fg"), lty = par("lty"), lwd = par("lwd"),
-	add = FALSE, \dots)
+        add = FALSE, \dots)
 }
 \arguments{
   \item{x,y}{locations of grid lines at which the values in \code{z} are
@@ -120,7 +120,7 @@ contour(outer(x, x), method = "edge", vfont = c("sans serif", "plain"))
 z <- outer(x, sqrt(abs(x)), FUN = "/")
 image(x, x, z)
 contour(x, x, z, col = "pink", add = TRUE, method = "edge",
-	vfont = c("sans serif", "plain"))
+        vfont = c("sans serif", "plain"))
 contour(x, x, z, ylim = c(1, 6), method = "simple", labcex = 1)
 contour(x, x, z, ylim = c(-6, 6), nlev = 20, lty = 2, method = "simple")
 par(op)
@@ -142,7 +142,7 @@ plot(x = 0, y = 0,type = "n", xlim = rx, ylim = ry, xlab = "", ylab = "")
 u <- par("usr")
 rect(u[1], u[3], u[2], u[4], col = tcol[8], border = "red")
 contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE,
-	vfont = c("sans serif", "plain"))
+        vfont = c("sans serif", "plain"))
 title("A Topographic Map of Maunga Whau", font = 4)
 abline(h = 200*0:4, v = 200*0:4, col = "lightgray", lty = 2, lwd = 0.1)
 

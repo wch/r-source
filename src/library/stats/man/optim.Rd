@@ -112,9 +112,9 @@ optim(par, fn, gr = NULL, \dots,
       turns the problem into a maximization problem. Optimization is
       performed on \code{fn(par)/fnscale}.}
     \item{\code{parscale}}{A vector of scaling values for the parameters.
-	Optimization is performed on \code{par/parscale} and these should be
-	comparable in the sense that a unit change in any element produces
-	about a unit change in the scaled value.}
+        Optimization is performed on \code{par/parscale} and these should be
+        comparable in the sense that a unit change in any element produces
+        about a unit change in the scaled value.}
     \item{\code{ndeps}}{A vector of step sizes for the finite-difference
       approximation to the gradient, on \code{par/parscale}
       scale. Defaults to \code{1e-3}.}
