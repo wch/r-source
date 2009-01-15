@@ -14,6 +14,7 @@ TEXI2DVI=texi2dvi
 else
 R_TEXOPTS=
 TEXI2DVI=
+R_EXE=../../bin/Rterm
 endif
 else # cross-builds
 R_TEXOPTS=
@@ -286,7 +287,7 @@ version.tex: $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 %-pkg.tex: FORCE
 	@$(ECHO) "collecting LaTeX docs for package \`$*' ..."
 	@$(ECHO) "tools:::.pkg2tex(\"$(top_srcdir)/library/$*\")" \
-	    | LC_ALL=C $(top_srcdir)/bin/Rterm --slave
+	    | LC_ALL=C $(R_EXE) --slave
 FORCE:
 
 version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION

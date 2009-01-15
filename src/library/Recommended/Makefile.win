@@ -3,6 +3,7 @@
 
 include ../../../share/make/vars.mk
 
+include ../../gnuwin32/MkRules
 
 ## foo.ts is the timestamp for package foo;
 ## foo.tgz is a symlink to foo_x.y-z.tar.gz in the source dir.
@@ -27,10 +28,17 @@ stamp-recommended: $(OBJECTS)
 ## need to allow parallel installs, modulo dependencies below
 INSTALL_OPTS=--no-lock --auto-zip
 
+ifeq ($(strip $(BUILD)),CROSS)
+RCMD = $(R_EXE) CMD
+INSTALL_OPTS+=--no-chm
+else
+RCMD = ../../../bin/Rcmd
+endif
+
 .tgz.ts:
 	@echo
 	@echo "----- installing recommended package" `basename $< .tgz`
-	@../../../bin/Rcmd INSTALL $(INSTALL_OPTS) -l $(RHOME)/library $<
+	@$(RCMD) INSTALL $(INSTALL_OPTS) -l $(RHOME)/library $<
 	@touch $@
 
 clean:
