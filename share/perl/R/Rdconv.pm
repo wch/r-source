@@ -2310,6 +2310,8 @@ sub rdoc2ex { # (filename)
 
 	my $qaliases = "";
 	foreach my $a (@aliases) {
+	    ## % is still escaped here
+	    $a =~ s/\\%/%/go;
 	    $a = "'" . $a . "'" if $a =~ / / ;
 	    $qaliases = $qaliases . " " . $a;
 	}
