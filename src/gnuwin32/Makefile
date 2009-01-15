@@ -136,10 +136,20 @@ utils-LAZY=true
 datasets-LAZYDATA=true
 stats4-LAZY = true
 
-rpackagehelp: ../../library/R.css rpackageindices
-	@for pkg in $(R_PKGS_BASE); do \
-	  $(MAKE) --no-print-directory pkghelp-$${pkg} || exit 1; \
-	done
+metadata:
+	@echo
+	@echo
+	@echo "building/updating package metadata ..."
+	@echo "tools:::.vinstall_package_indices(\"../library\", \"../../library\", \"$(R_PKGS_BASE)\")" | \
+	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(REXE) > /dev/null
+	@cat ../../library/*/CONTENTS > ../../doc/html/search/index.txt
+
+nmspaces:
+	@echo "installing parsed NAMESPACE files"
+	@rm -f ../../library/tools/Meta/nsInfo.rds
+	@echo "tools:::.vinstall_package_namespaces_as_RDS(\"../../library\", \"$(R_PKGS_BASE)\")" | \
+	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(REXE) > /dev/null
+
 
 rpackage:
 	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-base
@@ -171,10 +181,11 @@ endif
 	@for pkg in $(R_PKGS0); do \
 	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-$${pkg} || exit 1; \
 	done
+	@$(MAKE) --no-print-directory nmspaces 
 	@gzip -9f ../../library/grDevices/afm/*.afm
 	@$(CP) ../library/datasets/data/morley.tab ../../library/datasets/data
 
-rpackageindices:
+rpackageindices-old:
 	@$(ECHO)
 	@$(ECHO) -n "writing help indices for package:"
 	@for pkg in $(R_PKGS_BASE); do \
@@ -182,6 +193,20 @@ rpackageindices:
 	  $(MAKE) --no-print-directory  -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$${pkg} index-$${pkg} || exit 1; \
 	done
 	@$(ECHO)
+
+rpackageindices:
+	@$(ECHO)
+	@$(ECHO) -n "writing help indices for package:"
+	@for pkg in $(R_PKGS_BASE); do \
+	  $(ECHO) -n " $${pkg}" ; \
+	  $(ECHO) "tools:::.writePkgIndices(\"../library/$${pkg}\", \"../../library/$${pkg}\", CHM = TRUE)" | LC_ALL=C $(REXE) || exit 1; \
+	done
+	@$(ECHO)
+
+rpackagehelp: metadata ../../library/R.css rpackageindices
+	@for pkg in $(R_PKGS_BASE); do \
+	  $(MAKE) --no-print-directory pkghelp-$${pkg} || exit 1; \
+	done
 
 
 rlibs:
@@ -258,7 +283,7 @@ front-ends:
 	$(MAKE) --no-print-directory -C front-ends
 
 ../../library/R.css: ../../doc/html/R.css
-	$(CP) $< $@
+	@$(CP) $< $@
 
 ../extra/zlib/libz.a:
 	$(MAKE) --no-print-directory -C ../extra/zlib -f Makefile.win

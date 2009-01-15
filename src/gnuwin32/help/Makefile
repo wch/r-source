@@ -14,7 +14,7 @@ index-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
 	  PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	    $(R_HOME)/share/perl/build-help-windows.pl \
-	    -index $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
+	    --index --chm $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	fi
 
 pkg-% help-%:

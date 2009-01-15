@@ -1,5 +1,5 @@
 #-*- Makefile -*-
-## As from Jan 2008 this is only used for standard packages.
+## As from Jan 2009 this is only used for standard packages.
 
 RLIB=../../../library
 DPKG=$(RLIB)/$(PKG)
@@ -62,13 +62,12 @@ EXECFILES=$(filter-out $(SPKG)/exec/CVS $(SPKG)/exec/.svn $(SPKG)/exec/.arch-ids
 # Others: we will remove subversion files later.
 INSTFILES=$(wildcard $(SPKG)/inst/*)
 
-.PHONY: all clean Rcode Rcode0 zzzfirst frontmatter nmspace
+.PHONY: all clean Rcode Rcode0 zzzfirst frontmatter
 .PHONY: Dynlib Dynlib0 srcDynlib mansrcs md5sums lazyload lazydata
 
 all:  
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg $(DPKG)/zzzz 
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s frontmatter
-	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s nmspace
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg Dynlib 
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s R
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s $(DPKG)/demo $(DPKG)/exec $(DPKG)/inst $(DATA)
@@ -78,7 +77,8 @@ endif
 ifeq ($(strip $(LAZYDATA)),true)
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s lazydata
 endif
-	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s mansrcs indices
+	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s mansrcs
+
 
 include $(RHOME)/src/gnuwin32/MkRules
 
@@ -194,20 +194,11 @@ frontmatter:
 	fi
 	@$(ECHO) "tools:::.install_package_description('.', '"$(DPKG)"')" | \
 	  R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows $(REXE) > /dev/null
-	@for f in LICENSE LICENCE COPYING NEWS; do \
+	@for f in LICENSE LICENCE COPYING NAMESPACE NEWS; do \
 	  if test -f ${SPKG}/$${f}; then \
 	    $(CP) ${SPKG}/$${f} $(DPKG)/$${f}; \
 	  fi; \
 	done
-
-nmspace:
-	@if test -f ${SPKG}/NAMESPACE; then \
-	  $(ECHO) -n "  installing NAMESPACE file"; \
-	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
-	  $(ECHO) " and metadata"; \
-	  $(ECHO) "tools:::.install_package_namespace_info('$(DPKG)', '$(DPKG)')" | \
-	  R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows $(REXE) > /dev/null; \
-	fi
 
 $(DATA): $(DSOURCES)
 	@$(ECHO) "  installing data files"
