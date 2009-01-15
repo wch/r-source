@@ -17,9 +17,12 @@ ifneq ($(strip $(BUILD)),CROSS)
 RHOME = $(shell ./Rpwd.exe ../..)
 PKGD = $(shell ./Rpwd.exe "$(PKGDIR)")
 R_EXE = $(RHOME)/bin/rterm.exe
+## also need to change tools/R/install.R  to re-enable this
+CHM = FALSE
 else
 RHOME = $(shell $(PERL) pwd.pl ../..)
 PKGD = $(shell $(PERL) pwd.pl $(PKGDIR))
+CHM = FALSE
 endif
 
 REXE = $(R_EXE) --vanilla --slave
@@ -190,7 +193,7 @@ rpackageindices:
 	@$(ECHO) -n "writing help indices for package:"
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(ECHO) -n " $${pkg}" ; \
-	  $(ECHO) "tools:::.writePkgIndices(\"../library/$${pkg}\", \"../../library/$${pkg}\", CHM = TRUE)" | LC_ALL=C $(REXE) || exit 1; \
+	  $(ECHO) "tools:::.writePkgIndices(\"../library/$${pkg}\", \"../../library/$${pkg}\", CHM = $(CHM))" | LC_ALL=C $(REXE) || exit 1; \
 	done
 	@$(ECHO)
 
@@ -311,7 +314,7 @@ libRblas.dll.a:  ../extra/blas/Rblas.def
 #                          ===== Packages ======
 
 CHTML:
-ifneq ($(strip $(BUILD)),CROSS)
+ifeq ($(strip $(CHM)),TRUE)
 	$(MAKE) --no-print-directory -C ./help -f MkChmDll
 endif
 
@@ -338,7 +341,7 @@ pkg-%:
 pkghelp-%:
 	@$(ECHO)
 	@$(ECHO) "------ Installing help for package $*"
-ifneq ($(strip $(BUILD)),CROSS)
+ifeq ($(strip $(CHM)),TRUE)
 	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* HELPTYPES='-txt -html -latex -example -chm' $($*-HELP)help-$*
 	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* chm-$*
 else
