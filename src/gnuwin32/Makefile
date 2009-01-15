@@ -185,15 +185,6 @@ endif
 	@gzip -9f ../../library/grDevices/afm/*.afm
 	@$(CP) ../library/datasets/data/morley.tab ../../library/datasets/data
 
-rpackageindices-old:
-	@$(ECHO)
-	@$(ECHO) -n "writing help indices for package:"
-	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO) -n " $${pkg}" ; \
-	  $(MAKE) --no-print-directory  -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$${pkg} index-$${pkg} || exit 1; \
-	done
-	@$(ECHO)
-
 rpackageindices:
 	@$(ECHO)
 	@$(ECHO) -n "writing help indices for package:"

@@ -278,4 +278,4 @@ clean:
 	@$(MAKE) -C Embedding -f Makefile.win clean
 
 distclean: clean
-	@$(MAKE) -C Examples -f Makefile.win clean
+	@$(MAKE) -C Examples -f Makefile.win $@

@@ -1522,7 +1522,8 @@
                 quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
 }
 
-.writePkgIndices <- function(dir, outDir, OS = .Platform$OS.type)
+.writePkgIndices <-
+    function(dir, outDir, OS = .Platform$OS.type, CHM = FALSE)
 {
     re <- function(x)
     {
@@ -1535,18 +1536,74 @@
 
     html_header <- function(pkg, title, version, encoding, conn)
     {
-        cat('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n<html><head><title>R: ', title, '</title>\n',
-            sep = "", file = conn)
-        cat('<meta http-equiv="Content-Type" content="text/html; charset=',
-            encoding, '">\n<link rel="stylesheet" type="text/css" href="../../R.css">\n</head><body>\n<h1>',
-            title, ' <img class="toplogo" src="../../../doc/html/logo.jpg" alt="[R logo]"></h1>\n\n<hr>\n\n',
-            sep = "", file = conn)
-        cat('<div align="center">\n<a href="../../../doc/html/packages.html"><img src="../../../doc/html/left.jpg"\nalt="[Package List]" width="30" height="30" border="0"></a>\n<a href="../../../doc/html/index.html"><img src="../../../doc/html/up.jpg"\nalt="[Top]" width="30" height="30" border="0"></a>\n</div>\n\n',
-            file = conn)
-        cat('<h2>Documentation for package &lsquo;', pkg, '&rsquo; version ',
-            version, '</h2>\n\n', sep = '', file = conn)
-        cat('<h2>Help Pages</h2>\n\n\n', file = conn)
+        cat('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
+            '<html><head><title>R: ', title, '</title>\n',
+            '<meta http-equiv="Content-Type" content="text/html; charset=',
+            encoding, '">',
+            '<link rel="stylesheet" type="text/css" href="../../R.css">\n',
+            '</head><body>\n',
+            '<h1>', title, ' <img class="toplogo" src="../../../doc/html/logo.jpg" alt="[R logo]"></h1>\n\n<hr>\n\n',
+            '<div align="center">\n<a href="../../../doc/html/packages.html"><img src="../../../doc/html/left.jpg"\n',
+            'alt="[Package List]" width="30" height="30" border="0"></a>\n',
+            '<a href="../../../doc/html/index.html"><img src="../../../doc/html/up.jpg"\n',
+            'alt="[Top]" width="30" height="30" border="0"></a>\n</div>\n\n',
+            '<h2>Documentation for package &lsquo;', pkg, '&rsquo; version ',
+            version, '</h2>\n\n', '<h2>Help Pages</h2>\n\n\n',
+            sep ='', file = conn)
     }
+
+    chm_header <- function(pkg, title, version, conn)
+    {
+        cat("<html><head><title>", title, "</title>\n",
+            "<link rel=\"stylesheet\" type=\"text/css\" href=\"Rchm.css\">\n" ,
+            "</head><body>\n",
+            "<h1>", title, "\n",
+            "<img class=\"toplogo\" src=\"logo.jpg\" alt=\"[R logo]\"></h1>\n\n",
+            "<hr>\n\n",
+            "<object type=\"application/x-oleobject\" classid=\"clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e\">\n",
+            "<param name=\"keyword\" value=\".. contents\">\n",
+            "</object>\n\n",
+            "<h2>Help pages for package &lsquo;", pkg, "&rsquo;",
+            if(nzchar(version)) paste(" version", version),
+            "</h2>\n\n",
+            sep = "", file = conn)
+    }
+
+    chm_toc<- function(dir, pkg, M)
+    {
+        conn <- file(file.path(dir, "chm", paste(pkg, ".toc", sep = "")), "wt")
+        on.exit(close(conn))
+        M$File <- paste(M$File, ".html", sep = "")
+        cat("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">\n",
+            "<HEAD></HEAD><HTML><BODY>\n<UL>\n",
+            "<LI> <OBJECT type=\"text/sitemap\">\n",
+            "<param name=\"Name\" value=\"Package ", pkg, ":  Contents\">\n",
+            "<param name=\"Local\" value=\"00Index.html\">\n",
+            "</OBJECT>\n",
+            "<LI> <OBJECT type=\"text/sitemap\">\n",
+            "<param name=\"Name\" value=\"Package ", pkg, ":  R objects\">\n",
+            "</OBJECT>\n", "<UL>\n",
+            sep = "", file = conn)
+        writeLines(paste("<LI> <OBJECT type=\"text/sitemap\">\n",
+                         "<param name=\"Name\" value=\"", M$Topic, "\">\n",
+                         "<param name=\"Local\" value=\"", M$File, "\">\n",
+                         "</OBJECT>", sep= ""), conn)
+        cat("</UL>\n",
+            "<LI> <OBJECT type=\"text/sitemap\">\n",
+            "<param name=\"Name\" value=\"Package ", pkg, ":  Titles\">\n",
+            "</OBJECT>\n",
+            "<UL>\n",
+            sep = "", file = conn)
+        M <- M[!duplicated(M$Title), ]
+        o <- order(tolower(M$Title), M$Title)
+        writeLines(paste("<LI> <OBJECT type=\"text/sitemap\">\n",
+                         "<param name=\"Name\" value=\"", M$Title[o], "\">\n",
+                         "<param name=\"Local\" value=\"", M$File[o], "\">\n",
+                         "</OBJECT>", sep = ""), conn)
+        cat("</UL>\n",
+            "</UL>\n</BODY></HTML>\n", sep="", file = conn)
+    }
+
 
     mime_canonical_encoding <- function(x)
     {
@@ -1621,6 +1678,12 @@
     dir.create(outman, showWarnings = FALSE)
     outcon <- file(file.path(outman, "00Index.html"), "wt")
     on.exit(close(outcon))
+    if(CHM) {
+        chmdir <- file.path(dir, "chm")
+        dir.create(chmdir, showWarnings = FALSE)
+        chmcon <- file(file.path(chmdir, "00Index.html"), "wt")
+        on.exit(close(chmcon))
+    }
     desc <- read.dcf(file.path(outDir, "DESCRIPTION"))[1,]
     ## drop internal entries
     M <- M[!M[, 4], ]
@@ -1674,6 +1737,8 @@
     } else def
     html_header(desc["Package"], desc["Title"], desc["Version"],
                 if(nzchar(enc)) enc else "iso-8859-1", outcon)
+    if(CHM)
+        chm_header(desc["Package"], desc["Title"], desc["Version"], chmcon)
 
     use_alpha <- (nrow(M) > 100)
     if (use_alpha) {
@@ -1685,6 +1750,12 @@
         writeLines(paste("<a href=\"#", nm, "\">", nm, "</a>", sep = ""),
                    outcon)
         writeLines("</p>\n", outcon)
+        if (CHM) {
+            writeLines("<p align=\"center\">", chmcon)
+            writeLines(paste("<a href=\"#", nm, "\">", nm, "</a>", sep = ""),
+                       chmcon)
+            writeLines("</p>\n", chmcon)
+       }
         for (f in nm) {
             cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
                 sep = "", file = outcon)
@@ -1695,6 +1766,15 @@
                              MM$HTopic, '</a></td>\n<td>', MM[, 3],'</td></tr>',
                              sep = ''), outcon)
             writeLines("</table>", outcon)
+            if(CHM) {
+                cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
+                    sep = "", file = chmcon)
+                writeLines('<table width="100%">', chmcon)
+                writeLines(paste('<tr><td width="25%"><a href="', MM[, 2], '.html">',
+                                 MM$HTopic, '</a></td>\n<td>', MM[, 3],'</td></tr>',
+                                 sep = ''), chmcon)
+                writeLines("</table>", chmcon)
+            }
        }
     } else {
         writeLines('<table width="100%">', outcon)
@@ -1702,8 +1782,17 @@
                          M$HTopic, '</a></td>\n<td>', M[, 3],'</td></tr>',
                          sep = ''), outcon)
         writeLines("</table>", outcon)
+        if (CHM) {
+            writeLines('<table width="100%">', chmcon)
+            writeLines(paste('<tr><td width="25%"><a href="', M[, 2], '.html">',
+                             M$HTopic, '</a></td>\n<td>', M[, 3],'</td></tr>',
+                             sep = ''), chmcon)
+            writeLines("</table>", chmcon)
+        }
     }
     writeLines('</body></html>', outcon)
+    if(CHM) writeLines('</body></html>', outcon)
+    if(CHM) chm_toc(dir, desc["Package"], M)
 }
 
 .convertRdfiles <-
@@ -1775,4 +1864,40 @@
                 "\n",sep="")
         }
     }
+}
+
+.makeDllRes <- function(name="", version = "0.0")
+{
+    if (file.exists(f <- "../DESCRIPTION") ||
+        file.exists(f <- "../../DESCRIPTION")) {
+        desc <- read.dcf(f)[[1]]
+        if(!is.na(f <- desc["Package"])) name <- f
+        if(!is.na(f <- desc["Version"])) version <- f
+    }
+    writeLines(c('#include <windows.h>',
+                 '#include "Rversion.h"',
+                 '',
+                 'VS_VERSION_INFO VERSIONINFO',
+                 'FILEVERSION R_FILEVERSION',
+                 'PRODUCTVERSION 3,0,0,0',
+                 'FILEFLAGSMASK 0x3L',
+                 'FILEOS VOS__WINDOWS32',
+                 'FILETYPE VFT_APP',
+                 'BEGIN',
+                 '    BLOCK "StringFileInfo"',
+                 '    BEGIN',
+                 '        BLOCK "040904E4"',
+                 '        BEGIN'))
+    cat("            VALUE \"FileDescription\", \"DLL for R package `", name,"'\\0\"\n",
+        "            VALUE \"FileVersion\", \"", version, "\\0\"\n", sep="")
+    writeLines(c(
+                 '            VALUE "Compiled under R Version", R_MAJOR "." R_MINOR " (" R_YEAR "-" R_MONTH "-" R_DAY ")\\0"',
+                 '            VALUE "Project info", "http://www.r-project.org\\0"',
+                 '        END',
+                 '    END',
+                 '    BLOCK "VarFileInfo"',
+                 '    BEGIN',
+                 '        VALUE "Translation", 0x409, 1252',
+                 '    END',
+                 'END'))
 }
