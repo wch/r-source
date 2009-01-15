@@ -162,6 +162,9 @@ UTILITIES
     o	R CMD Rconv has new options --package and --version to set the
 	corresponding fields in HTML conversion.
 
+    o	R CMD check runs the package tests with a custom startup file,
+	currently containing 'options(useFancyQuotes = FALSE)'.
+
 
 Rd CONVERSION
 

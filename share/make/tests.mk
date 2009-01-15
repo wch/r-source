@@ -12,6 +12,7 @@ R = srcdir=$(srcdir) LANGUAGE=C $(R_HOME)/bin/R --vanilla
 RDIFF = $(R_HOME)/bin/R CMD Rdiff
 USE_GCT = 0
 R_OPTS =
+R_TESTS = $(R_HOME)/share/R/tests-startup.R
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
@@ -24,7 +25,7 @@ R_OPTS =
 	@rm -f $@ $@.fail
 	@echo "  Running '$<'"
 	@(if test "$(USE_GCT)" != 0; then echo "gctorture(TRUE)"; fi; \
-	  cat $<) | R_LIBS=$(R_LIBS) $(R) $(R_OPTS) > $@ 2>&1 || \
+	  cat $<) | R_LIBS=$(R_LIBS) R_TESTS=$(R_TESTS) $(R) $(R_OPTS) > $@ 2>&1 || \
 	  (mv $@ $@.fail && exit 1)
 	@if test -f $(srcdir)/$@.save; then \
 	  mv $@ $@.fail; \

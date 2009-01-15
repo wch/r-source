@@ -36,3 +36,8 @@ if(.Platform$GUI == "Rgui") {
     Sys.setenv(GFORTRAN_STDOUT_UNIT= "-1")
     Sys.setenv(GFORTRAN_STDERR_UNIT= "-1")
 }
+
+local({
+    tests_startup <- Sys.getenv("R_TESTS")
+    if(nzchar(tests_startup)) source(tests_startup)
+})

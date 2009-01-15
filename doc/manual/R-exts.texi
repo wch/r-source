@@ -1394,8 +1394,9 @@ specified in that directory are run.  (Typically they will consist of a
 set of @file{.R} source files and target output files
 @file{.Rout.save}.)  Please note that the comparison will be done in the
 end user's locale, so the target output files should be ASCII if at all
-possible -- this may require using
-@code{options(useFancyQuotes=FALSE)} in the source files.
+possible -- this may require using@footnote{this is done automatically
+as from @R{} 2.9.0.}  @code{options(useFancyQuotes=FALSE)} in the source
+files.
 
 @item
 The code in package vignettes (@pxref{Writing package vignettes}) is

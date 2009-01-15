@@ -39,3 +39,8 @@ if(.Platform$GUI == "AQUA") {
     ## this is to allow g77 compiler to work
     Sys.setenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep = ""))
 }## end "Aqua"
+
+local({
+    tests_startup <- Sys.getenv("R_TESTS")
+    if(nzchar(tests_startup)) source(tests_startup)
+})
