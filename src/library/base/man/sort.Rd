@@ -51,14 +51,15 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
 
   If \code{partial} is not \code{NULL}, it is taken to contain indices
   of elements of the result which are to be placed in their correct
-  positions in the sorted array by partial sorting.  Any values
-  smaller than these values are guaranteed to have a smaller index in
-  the sorted array and any values which are greater are guaranteed to
-  have a bigger index in the sorted array.  (This is included for
-  efficiency, and many of the options are not available for partial
-  sorting.  It is only substantially more efficient if \code{partial}
-  has a handful of elements, and a full sort is done if there are more
-  than 10.)  Names are discarded for partial sorting.
+  positions in the sorted array by partial sorting.  For each of the
+  result values in a specified position, any values smaller than that
+  one are guaranteed to have a smaller index in the sorted array and any
+  values which are greater are guaranteed to have a bigger index in the
+  sorted array.  (This is included for efficiency, and many of the
+  options are not available for partial sorting.  It is only
+  substantially more efficient if \code{partial} has a handful of
+  elements, and a full sort is done if there are more than 10.)  Names
+  are discarded for partial sorting.
 
   Complex values are sorted first by the real part, then the imaginary
   part.
