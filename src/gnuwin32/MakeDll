@@ -82,7 +82,7 @@ else
 endif
 
 $(DLLNAME)_res.rc:
-	@PERL5LIB=$(RHOME)/share/perl $(PERL) $(RHOME)/src/gnuwin32/makeDllRes.pl $(DLLNAME) > $@
+	@echo "tools:::.makeDllRes(\"$(DLLNAME)\", \"$(RVER)\")" | R_DEFAULT_PACKAGES=tools $(RHOME)/bin/R --slave > $@
 
 $(DLLNAME)_res.o: $(DLLNAME)_res.rc $(RHOME)/include/Rversion.h
 

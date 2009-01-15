@@ -29,7 +29,7 @@ GW_INFO_FILES = CHANGES COPYRIGHTS README.Rterm rw-FAQ
 
 ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Makeconf Rcmd_environ
 
-GW32_FILES = MkRules MakeDll # MakePkg Rpwd.exe pwd.pl makeDllRes.pl
+GW32_FILES = MkRules MakeDll
 
 # we don't want share/{Makefile.in,sh} installed, except sh/dcf.sh for Rd2dvi
 SHARE_DIRS = R licenses locale make perl texmf zoneinfo

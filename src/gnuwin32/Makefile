@@ -568,18 +568,13 @@ crandir:
 	 $(RM) dosfiles.zip)
 
 distribution:
-	@$(MAKE) Rpwd.exe
-	-mv ../../SVN-REVISION ../../SVN-REVISION.bak 2> /dev/null
-	@$(MAKE) rbuild
-	@$(MAKE) rpackage
-	@$(MAKE) htmldocs
-	@$(MAKE) -C ../../po -f Makefile.win
-	$(MAKE) bitmapdll
-	$(MAKE) recommended
-	$(MAKE) vignettes
-	$(MAKE) manuals
-	$(MAKE) rinstaller
-	$(MAKE) crandir
+	@$(MAKE) --no-print-directory all
+	@$(MAKE) --no-print-directory bitmapdll
+	@$(MAKE) --no-print-directory recommended
+	@$(MAKE) --no-print-directory vignettes
+	@$(MAKE) --no-print-directory manuals
+	@$(MAKE) --no-print-directory rinstaller
+	@$(MAKE) --no-print-directory crandir
 	@$(RM) -f $(RHOME)/SVN-REVISION.bak
 
 

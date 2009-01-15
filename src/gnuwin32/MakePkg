@@ -1,5 +1,6 @@
 #-*- Makefile -*-
-## As from Jan 2009 this is only used for standard packages.
+## As from Jan 2009 this is only used for standard packages,
+## always run from the package top-level directory with BUILD, PKG, RHOME set
 
 RLIB=../../../library
 DPKG=$(RLIB)/$(PKG)
@@ -218,8 +219,10 @@ Dynlib: srcDynlib
 Dynlib0:
 ifneq ($(strip $(DO_SRC)),)
 	@$(ECHO) "  making DLL ..."
+	@cp $(RHOME)/src/gnuwin32/dllversion.rc $(SPKG)/src/$(PKG)_res.rc
 	@$(MAKE) --no-print-directory -C $(SPKG)/src RHOME=$(RHOME) \
 	  DLLNAME=$(DLLNAME) -f $(RHOME)/src/gnuwin32/MakeDll
+	@rm -f $(SPKG)/src/$(PKG)_res.rc
 	@$(ECHO) "  ... DLL made"
 	@if test -f $(SDYNLIB) ; then \
 	  $(ECHO) "  installing DLL" ; \
