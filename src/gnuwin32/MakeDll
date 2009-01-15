@@ -7,6 +7,10 @@ all:  before makeMakedeps $(DLLNAME).dll after
 before:
 after:
 
+ifneq ($(strip $(BUILD)),CROSS)
+R_EXE = $(RHOME)/bin/Rterm.exe
+endif
+
 .PHONY: all before after shlib-clean makeMakedeps
 
 # set this in Makevars.win to supply your own resource file
@@ -82,7 +86,7 @@ else
 endif
 
 $(DLLNAME)_res.rc:
-	@echo "tools:::.makeDllRes(\"$(DLLNAME)\", \"$(RVER)\")" | R_DEFAULT_PACKAGES=tools $(RHOME)/bin/R --slave > $@
+	@echo "tools:::.makeDllRes(\"$(DLLNAME)\", \"$(RVER)\")" | R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > $@
 
 $(DLLNAME)_res.o: $(DLLNAME)_res.rc $(RHOME)/include/Rversion.h
 
