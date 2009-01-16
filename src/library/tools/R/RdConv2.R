@@ -754,6 +754,8 @@ Rd2ex <-
         ## \link, \var are untouched in comments: e.g. is.R
         x <- gsub("\\\\(link|var)\\{([^}]+)\\}", "\\2", x)
         x <- gsub("(^|[^\\])\\\\([%{])", "\\1\\2", x)
+        ## Want to leave file bytes unchanged
+        Encoding(x) <- "unknown"
         x
     }
 
@@ -871,4 +873,5 @@ Rd2ex <-
         for (i in seq_along(ex)) render(ex[[i]])
         cat("\n\n\n", file = con)
     }
+    out
 }

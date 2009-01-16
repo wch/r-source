@@ -6,6 +6,7 @@
 \name{Rd2HTML}
 \Rdversion{1.1}
 \alias{Rd2HTML}
+\alias{Rd2ex}
 \alias{checkRd}
 \title{ Work with an Rd object }
 \description{
@@ -17,6 +18,9 @@
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         encoding = "unknown")
+
+Rd2ex(Rd, out = "", defines = .Platform$OS.type), encoding = "unknown")
+
 checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
         unknownOK = FALSE, listOK = TRUE)
 }
@@ -41,6 +45,16 @@ checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
     of what is wrong.
     \item Formatting is not always optimal.
   }
+
+  \code{Rd2ex} extracts the examples in the format used by
+  \code{\link{example}} and \R utilities.  it reproduces the previous
+  version up to
+  \itemize{
+    \item The parser does not interpret markup in \R comments: this used
+    to be done.
+    \item Small improvements in layout.
+  }
+  
 }
 \value{
   \code{Rd2HTML} is executed mainly for the side effect of writing the
@@ -49,20 +63,24 @@ checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
   \code{checkRd} returns \code{TRUE} if the file has no errors; it
   generates an R error otherwise.
 }
-\author{ Duncan Murdoch }
+\author{
+  Duncan Murdoch, Brian Ripley (\code{Rd2ex})
+}
 \references{ \url{http://developer.r-project.org/parseRd.pdf} }
-\seealso{ \code{\link{parse_Rd}} }
+\seealso{
+  \code{\link{parse_Rd}}
+}
 \examples{
 \donttest{
-  toolsRd <- Rd_db("tools")
-  con <- textConnection(toolsRd[[grep("Rd2HTML.Rd", names(toolsRd))]], "rt")
-  outfile <- paste(tempfile(), ".html", sep="")
-  browseURL(Rd2HTML(con, outfile, package="tools"))
-  close(con)
-  
-  con <- textConnection(toolsRd[["Rd2HTML.Rd"]], "rt")
-  checkRd(con) # A stricter test than Rd2HTML uses
-  close(con)
-  }
+toolsRd <- Rd_db("tools")
+con <- textConnection(toolsRd[[grep("Rd2HTML.Rd", names(toolsRd))]], "rt")
+outfile <- paste(tempfile(), ".html", sep="")
+browseURL(Rd2HTML(con, outfile, package="tools"))
+close(con)
+ 
+con <- textConnection(toolsRd[["Rd2HTML.Rd"]], "rt")
+checkRd(con) # A stricter test than Rd2HTML uses
+close(con)
+}
 }
 \keyword{ documentation }
