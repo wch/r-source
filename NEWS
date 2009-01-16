@@ -201,9 +201,9 @@ Rd CONVERSION
     o	\alias now supports the escaping of { as well as of %, and this
 	is recommended.
 
-    o	parse_Rd(), an experimental parser for Rd files, and Rd2HTML(),
-    	an experimental converter to HTML, have been added to package
-    	'tools'.
+    o	parse_Rd(), an experimental parser for Rd files, and Rd2HTML()
+    	and Rd2ex(), even more experimental converters, have been
+    	added to package 'tools'.
 
     o	R CMD check runs the package's Rd files through parse_Rd() for a
 	stricter syntax check.  This can be suppressed by setting
