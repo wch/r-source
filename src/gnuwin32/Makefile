@@ -178,7 +178,7 @@ endif
 	  echo "  preparing package tools for lazy loading" ; \
 	  (cat ../library/tools/R/makeLazyLoad.R; \
 	    echo "makeLazyLoading(\"tools\", lib.loc=\"$(RLIB)\")") | \
-	    R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --vanilla --slave > /dev/null ; \
+	    R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_ALL=C $(REXE) > /dev/null ; \
 	fi
 	@$(ECHO)
 	@for pkg in $(R_PKGS0); do \
@@ -527,7 +527,7 @@ crandir:
 	$(CP) ../../NEWS cran/NEWS.$(RPREFIX)
 	(cd cran;\
 	 $(ECHO) 'cat(md5sum("$(RPREFIX)-win32.exe"),"*$(RPREFIX)-win32.exe")' \
-         | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt)
+         | $(REXE) R_DEFAULT_PACKAGES=tools >md5sum.txt)
 	$(CP) ../../doc/html/rw-FAQ.html cran
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \

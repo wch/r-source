@@ -287,7 +287,7 @@ version.tex: $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 %-pkg.tex: FORCE
 	@$(ECHO) "collecting LaTeX docs for package \`$*' ..."
 	@$(ECHO) "tools:::.pkg2tex(\"$(top_srcdir)/library/$*\")" \
-	    | LC_ALL=C $(R_EXE) --slave
+	    | LC_ALL=C $(R_EXE) --slave --vanilla
 FORCE:
 
 version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION

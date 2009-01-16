@@ -13,6 +13,8 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
+R_EXE = $(top_builddir)/bin/R --slave --vanilla
+
 ## principle is that we can run all the examples in a package
 ## starting with just that package and 'datasets'
 ## R = R_DEFAULT_PACKAGES=datasets $(top_builddir)/bin/R --vanilla
@@ -100,7 +102,7 @@ $(EX_IN_BASE): FORCE
 	else \
 	  target_is_newer_than_massage_Ex=no; \
 	fi; \
-	if $(top_builddir)/bin/R --slave -e \
+	if $(R_EXE) -e \
 	  "tools:::.Rdnewer(\"$(top_srcdir)/src/library/$${pkg}\", \"$@\")"; then \
 	  target_is_newer_than_Rdfiles=no; \
 	else \
@@ -113,9 +115,8 @@ $(EX_IN_BASE): FORCE
 	    $(MAKE) R_CMD_BUILD_HELP_OPTS="--txt --example" \
 	    R_PKGS_BASE="$${pkg}" Rdfiles); \
 	  f=$${TMPDIR-/tmp}/R$$$$; \
-	  LC_ALL=C $(top_builddir)/bin/R --slave \
-	    < $(top_srcdir)/share/R/massage-examples.R --args $${pkg} \
-	    $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
+	  LC_ALL=C $(R_EXE) < $(top_srcdir)/share/R/massage-examples.R \
+	    --args $${pkg} $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} $@; \
 	  touch $@; \
 	fi)
@@ -138,9 +139,8 @@ $(EX_IN_RECOMMENDED): FORCE
 	    || test "$${target_is_newer_than_Rdfiles}" = no; then \
 	  $(ECHO) "collecting examples for package '$${pkg}' ..."; \
 	  f=$${TMPDIR-/tmp}/R$$$$; \
-	  LC_ALL=C $(top_builddir)/bin/R --slave \
-	    < $(top_srcdir)/share/R/massage-examples.R --args $${pkg} \
-	    $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
+	  LC_ALL=C $(R_EXE) < $(top_srcdir)/share/R/massage-examples.R \
+	    --args $${pkg} $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} $@; \
 	  touch $@; \
 	fi)

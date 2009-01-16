@@ -86,7 +86,7 @@ else
 endif
 
 $(DLLNAME)_res.rc:
-	@echo "tools:::.makeDllRes(\"$(DLLNAME)\", \"$(RVER)\")" | R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > $@
+	@echo "tools:::.makeDllRes(\"$(DLLNAME)\", \"$(RVER)\")" | R_DEFAULT_PACKAGES=tools $(R_EXE) --slave --vanilla > $@
 
 $(DLLNAME)_res.o: $(DLLNAME)_res.rc $(RHOME)/include/Rversion.h
 

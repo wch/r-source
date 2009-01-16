@@ -176,16 +176,18 @@ version.tex: Makefile $(top_builddir)/SVN-REVISION $(top_builddir)/VERSION
 stamp-refman-dvi: $(refman_TEXINPUTS)
 	@touch $@
 
+R_EXE = $(top_builddir)/bin/R --slave --vanilla
+
 ## <NOTE> This assumes none of the latex dirs are zipped </NOTE>
 $(texinputs_BASE): FORCE $(top_srcdir)/share/perl/build-help.pl
 	@(pkg=`basename $@ -pkg.tex`; \
-	if $(top_builddir)/bin/R --slave -e \
+	if $(R_EXE) -e \
 	  "tools:::.Rdnewer(\"$(top_srcdir)/src/library/$${pkg}\", \"$@\")"; then \
 	  $(ECHO) "collecting LaTeX docs for package '$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
 	    $(MAKE) R_PKGS_BASE="$${pkg}" latex); \
 	  $(ECHO) "tools:::.pkg2tex(\"$(top_builddir)/library/$${pkg}\")" \
-	    | LC_ALL=C $(top_builddir)/bin/R --slave; \
+	    | LC_ALL=C $(R_EXE) ; \
 	fi)
 FORCE:
 
@@ -195,7 +197,7 @@ $(texinputs_RECOMMENDED): FORCE
 	    -print 2> /dev/null | grep $@ > /dev/null; then :; else \
 	  $(ECHO) "collecting LaTeX docs for package '$${pkg}' ..."; \
 	  $(ECHO) "tools:::.pkg2tex(\"$(top_builddir)/library/$${pkg}\")" \
-	    | LC_ALL=C $(top_builddir)/bin/R --slave; \
+	    | LC_ALL=C $(R_EXE) ; \
 	fi)
 
 fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
