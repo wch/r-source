@@ -100,9 +100,10 @@ preprocessRd <- function(blocks, defines)
 	target <- blocks[[ifdef]][[1]][[1]]
 	# The target will have picked up some whitespace and a newline
 	target <- gsub("[[:blank:][:cntrl:]]*", "", target)
-	all <- 1:length(tags)
+	all <- seq_along(tags)
 	before <- all[all < ifdef]
-	after <- all[all > ifdef]
+        ## Since it is '#endif\n', need to remove \n block too
+	after <- all[all > ifdef+1]
 
 	if ((target %in% defines) == (tags[ifdef] == "#ifdef")) {
 	    tags <- c(tags[before], RdTags(blocks[[ifdef]][[2]]), tags[after])
@@ -742,40 +743,56 @@ checkRd <-
     TRUE
 }
 
-Rd2txt <- function(Rd, out="", defines=.Platform$OS.type, encoding = "unknown")
+Rd2ex <-
+    function(Rd, out="", defines=.Platform$OS.type, encoding = "unknown")
 {
     wr <- function(x) {
         x <- remap(x)
-        paste("###", strwrap(x, 72, indent=1, exdent=3), sep="", collapse="\n")
+        paste("###", strwrap(x, 73, indent=1, exdent=3), sep="", collapse="\n")
     }
     remap <- function(x) {
-        ## it seems lines starting % can get through.
-        ## see Constants.Rd
-        comm <- grep("^\\s*%", x, perl = TRUE)
-        if(length(comm)) x <- x[-comm]
-        x <- gsub("(^|[^\\])\\\\([\\%{])", "\\1\\2", x)
+        ## \link, \var are untouched in comments: e.g. is.R
+        x <- gsub("\\\\(link|var)\\{([^}]+)\\}", "\\2", x)
+        x <- gsub("(^|[^\\])\\\\([%{])", "\\1\\2", x)
         x
     }
 
     render <- function(x, prefix = "")
     {
         tag <- attr(x, "Rd_tag")
+        x <- preprocessRd(x, defines)
         if(tag %in% c("\\dontshow", "\\testonly")) {
             ## There are fancy rules here if not followed by \n
-            cat("## Don't show: ", file = con) #
+            cat("## Don't show: ", file = con)
+            if (!length(grep("^\n", x[[1]]))) cat("\n", file=con)
             for(i in seq_along(x)) render(x[[i]], prefix)
-            cat("## End Don't show", file = con) #
+            if (!length(grep("\n$", x[[length(x)]]))) cat("\n", file=con)
+            cat("## End Don't show", file = con)
         } else if (tag  == "\\dontrun") {
-            ## fix me if fillowed by \n
-            cat("## Not run: ", file = con) #
-            for(i in seq_along(x)) render(x[[i]], paste("##D", prefix)) #
-            cat("## End(Not run)", file = con) #
+            ## Special case for one line.
+            if (length(x) == 1) {
+                cat("## Not run: ", file = con)
+                render(x[[1]], prefix)
+            } else {
+                cat("## Not run: ", file = con)
+                if (!length(grep("^\n", x[[1]]))) {
+                    cat("\n", file=con)
+                    render(x[[1]], paste("##D", prefix))
+                } else render(x[[1]], prefix)
+                for(i in 2:length(x)) render(x[[i]], paste("##D", prefix))
+                if (!length(grep("\n$", x[[length(x)]]))) cat("\n", file=con)
+                cat("## End(Not run)", file = con)
+            }
         } else if (tag  == "\\donttest") {
-            cat("## No test: ", file = con) #
+            cat("## No test: ", file = con)
+            if (!length(grep("^\n", x[[1]]))) cat("\n", file=con)
             for(i in seq_along(x)) render(x[[i]], prefix)
-            cat("## End(No test)", file = con) #
+            if (!length(grep("\n$", x[[length(x)]]))) cat("\n", file=con)
+            cat("## End(No test)", file = con)
         } else  if (tag %in% c("\\dots", "\\ldots")) {
             cat("...", file = con)
+        } else if (tag == "COMMENT") {
+            cat("\n", file = con)
         } else {
             txt <- unlist(x)
             cat(paste(prefix, remap(txt), sep=""), file = con)
@@ -827,6 +844,11 @@ Rd2txt <- function(Rd, out="", defines=.Platform$OS.type, encoding = "unknown")
         titleblk <- sections == "\\title"
         if (any(titleblk)) {
             title <- as.character(Rd[[ which(titleblk)[1] ]])
+            # remove empty lines, leading whitespace
+            title <- paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
+                           collapse=" ")
+            ## FIXME: more?
+            title <- gsub("(---|--)", "-", title)
         } else title <- "No title found"
         cat(wr(paste("Title: ", title, sep='')), "\n", sep = "", file = con)
         aliasblks <- sections == "\\alias"
@@ -846,10 +868,6 @@ Rd2txt <- function(Rd, out="", defines=.Platform$OS.type, encoding = "unknown")
         }
         writeLines(c("", "### ** Examples"), con)
         ex <- preprocessRd(Rd[[ where[1] ]], defines)
-        ## FIXME
-        ## undo \var, \link
-        ## remap % \dots \ldots \\
-        ## interpret \dontshow \testonly \dontrun \donttest
         for (i in seq_along(ex)) render(ex[[i]])
         cat("\n\n\n", file = con)
     }

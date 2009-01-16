@@ -1862,7 +1862,7 @@
                 cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "example\n",
                     sep = "")
                 p <- tools::parse_Rd(f)
-                tools:::Rd2txt(p, ff)
+                tools:::Rd2ex(p, ff)
             }
          }
     } else
