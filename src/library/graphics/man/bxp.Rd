@@ -76,28 +76,28 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
     component or the corresponding \code{\link{par}} one.
     \describe{
       \item{boxwex:}{a scale factor to be applied to all boxes.  When there
-	are only a few groups, the appearance of the plot can be improved by
-	making the boxes narrower.  The default depends on \code{at} and
-	typically is \eqn{0.8}.}
+        are only a few groups, the appearance of the plot can be improved by
+        making the boxes narrower.  The default depends on \code{at} and
+        typically is \eqn{0.8}.}
       \item{staplewex, outwex:}{staple and outlier line width expansion,
-	proportional to box width; both default to 0.5.}
+        proportional to box width; both default to 0.5.}
       \item{boxlty, boxlwd, boxcol, boxfill:}{box outline type, width,
-	color, and fill color (which currently defaults to \code{col} and will
-	in future default to \code{par("bg")}).}
+        color, and fill color (which currently defaults to \code{col} and will
+        in future default to \code{par("bg")}).}
       \item{medlty, medlwd, medpch, medcex, medcol, medbg:}{median line type,
-	line width, point character, point size expansion, color, and
-	background color.  The default \code{medpch= NA} suppresses the
-	point, and \code{medlty="blank"} does so for the line.
-	Note that\code{medlwd} defaults to
-	\eqn{3\times}{3x} the default \code{lwd}.}
+        line width, point character, point size expansion, color, and
+        background color.  The default \code{medpch= NA} suppresses the
+        point, and \code{medlty="blank"} does so for the line.
+        Note that\code{medlwd} defaults to
+        \eqn{3\times}{3x} the default \code{lwd}.}
       \item{whisklty, whisklwd, whiskcol:}{whisker line type (default:
-	\code{"dashed"}), width, and color.}
+        \code{"dashed"}), width, and color.}
       \item{staplelty, staplelwd, staplecol:}{staple (= end of whisker) line
-	type, width, and color.}
+        type, width, and color.}
       \item{outlty, outlwd, outpch, outcex, outcol, outbg:}{outlier line
-	type, line width, point character, point size expansion, color, and
-	background color.  The default \code{outlty= "blank"} suppresses the
-	lines and \code{outpch=NA} suppresses points.}
+        type, line width, point character, point size expansion, color, and
+        background color.  The default \code{outlty= "blank"} suppresses the
+        lines and \code{outpch=NA} suppresses points.}
     }
   }%.../pars
 }

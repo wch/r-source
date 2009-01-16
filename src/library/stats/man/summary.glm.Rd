@@ -104,7 +104,7 @@
   \code{\link{glm}}, \code{\link{summary}}.
 }
 \examples{
-## --- Continuing the Example from  '?glm':%\code{\link{glm}}:
+## --- Continuing the Example from  '?glm':
 \dontshow{utils::example("glm", echo = FALSE)}
 summary(glm.D93)
 }

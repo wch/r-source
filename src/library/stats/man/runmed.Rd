@@ -28,17 +28,17 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
     beginning and the end (of the data) should be treated.
     \describe{
       \item{\code{"keep"}}{keeps the first and last \eqn{k_2}{k2} values
-	at both ends, where \eqn{k_2}{k2} is the half-bandwidth \code{k2
-	  = k \%/\% 2},
-	i.e., \code{y[j] = x[j]} for \eqn{j \in \{1,\ldots,k_2;
-	  n-k_2+1,\ldots,n\}}{j = 1,..,k2 and (n-k2+1),..,n};}
+        at both ends, where \eqn{k_2}{k2} is the half-bandwidth \code{k2
+          = k \%/\% 2},
+        i.e., \code{y[j] = x[j]} for \eqn{j \in \{1,\ldots,k_2;
+          n-k_2+1,\ldots,n\}}{j = 1,..,k2 and (n-k2+1),..,n};}
       \item{\code{"constant"}}{copies \code{median(y[1:k2])} to the first
-	values and analogously for the last ones making the smoothed ends
-	\emph{constant};}
+        values and analogously for the last ones making the smoothed ends
+        \emph{constant};}
       \item{\code{"median"}}{the default, smooths the ends by using
-	symmetrical medians of subsequently smaller bandwidth, but for
-	the very first and last value where Tukey's robust end-point
-	rule is applied, see \code{\link{smoothEnds}}.}
+        symmetrical medians of subsequently smaller bandwidth, but for
+        the very first and last value where Tukey's robust end-point
+        rule is applied, see \code{\link{smoothEnds}}.}
     }
   }
   \item{algorithm}{character string (partially matching \code{"Turlach"} or
@@ -62,7 +62,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
     \item{"Turlach"}{is the Härdle-Steiger
       algorithm (see Ref.) as implemented by Berwin Turlach.
       A tree algorithm is used, ensuring performance \eqn{O(n \log
-	k)}{O(n * log(k))} where \code{n <- length(x)} which is
+        k)}{O(n * log(k))} where \code{n <- length(x)} which is
       asymptotically optimal.}
     \item{"Stuetzle"}{is the (older) Stuetzle-Friedman implementation
       which makes use of median \emph{updating} when one observation

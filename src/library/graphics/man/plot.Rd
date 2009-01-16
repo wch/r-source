@@ -21,16 +21,16 @@ plot(x, y, \dots)
     \describe{
     \item{\code{type}}{what type of plot should be drawn.  Possible types are
       \itemize{
-	\item \code{"p"} for \bold{p}oints,
-	\item \code{"l"} for \bold{l}ines,
-	\item \code{"b"} for \bold{b}oth,
-	\item \code{"c"} for the lines part alone of \code{"b"},
-	\item \code{"o"} for both \sQuote{\bold{o}verplotted},
-	\item \code{"h"} for \sQuote{\bold{h}istogram} like (or
-	\sQuote{high-density}) vertical lines,
-	\item \code{"s"} for stair \bold{s}teps,
-	\item \code{"S"} for other \bold{s}teps, see \sQuote{Details} below,
-	\item \code{"n"} for no plotting.
+        \item \code{"p"} for \bold{p}oints,
+        \item \code{"l"} for \bold{l}ines,
+        \item \code{"b"} for \bold{b}oth,
+        \item \code{"c"} for the lines part alone of \code{"b"},
+        \item \code{"o"} for both \sQuote{\bold{o}verplotted},
+        \item \code{"h"} for \sQuote{\bold{h}istogram} like (or
+        \sQuote{high-density}) vertical lines,
+        \item \code{"s"} for stair \bold{s}teps,
+        \item \code{"S"} for other \bold{s}teps, see \sQuote{Details} below,
+        \item \code{"n"} for no plotting.
       }
       All other \code{type}s give a warning or an error; using, e.g.,
       \code{type = "punkte"} being equivalent to \code{type = "p"} for S

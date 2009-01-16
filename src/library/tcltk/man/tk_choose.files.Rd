@@ -12,7 +12,7 @@
 }
 \usage{
 tk_choose.files(default = "", caption = "Select files",
-	        multi = TRUE, filters = NULL, index = 1)
+                multi = TRUE, filters = NULL, index = 1)
 }
 \arguments{
   \item{default}{which filename to show initially.}

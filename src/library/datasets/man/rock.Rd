@@ -15,11 +15,11 @@
     A data frame with 48 rows and 4 numeric columns.
 
     \tabular{rll}{
-	[,1] \tab area  \tab area of pores space, in pixels
-	out of 256 by 256 \cr
-	[,2] \tab peri  \tab perimeter in pixels \cr
-	[,3] \tab shape \tab perimeter/sqrt(area) \cr
-	[,4] \tab perm  \tab permeability in milli-Darcies
+        [,1] \tab area  \tab area of pores space, in pixels
+        out of 256 by 256 \cr
+        [,2] \tab peri  \tab perimeter in pixels \cr
+        [,3] \tab shape \tab perimeter/sqrt(area) \cr
+        [,4] \tab perm  \tab permeability in milli-Darcies
     }
 }
 \details{

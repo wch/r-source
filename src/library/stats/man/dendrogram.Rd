@@ -196,7 +196,8 @@ plot(dend1, nodePar=list(pch = 2:1,cex=.4*2:1, col = 2:3),
 
 dend2 <- cut(dend1, h=70)
 plot(dend2$upper)
-## leafs are wrong horizontally:%% FIXME ?!?
+## leafs are wrong horizontally:
+%% FIXME ?!?
 plot(dend2$upper, nodePar=list(pch = c(1,7), col = 2:1))
 ##  dend2$lower is *NOT* a dendrogram, but a list of .. :
 plot(dend2$lower[[3]], nodePar=list(col=4), horiz = TRUE, type = "tr")

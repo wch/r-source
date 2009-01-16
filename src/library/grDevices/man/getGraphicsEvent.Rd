@@ -12,7 +12,7 @@ form of a mouse or keyboard event.
 }
 \usage{
 getGraphicsEvent(prompt = "Waiting for input", 
-	         onMouseDown = NULL, onMouseMove = NULL,
+                 onMouseDown = NULL, onMouseMove = NULL,
                  onMouseUp = NULL, onKeybd = NULL)
 }
 \arguments{
@@ -70,22 +70,22 @@ A non-\code{NULL} value returned from one of the event handlers.
     mousedown <- function(buttons, x, y) {
         plx <- grconvertX(x, "ndc", "user")
         ply <- grconvertY(y, "ndc", "user")    
-	cat("Buttons ", paste(buttons, collapse=" "), " at ndc",
+        cat("Buttons ", paste(buttons, collapse=" "), " at ndc",
             x, y, "user", plx, ply, "\n")
-	points(plx, ply, col="red", pch=19, cex=2)
-	if (x > 0.85 && y > 0.85) "Done"
-	else NULL
+        points(plx, ply, col="red", pch=19, cex=2)
+        if (x > 0.85 && y > 0.85) "Done"
+        else NULL
     }
     
     mousemove <- function(buttons, x, y) {
         plx <- grconvertX(x, "ndc", "user")
         ply <- grconvertY(y, "ndc", "user")    
-	points(plx, ply)
-	NULL
+        points(plx, ply)
+        NULL
     }
     
     keybd <- function(key) {
-	cat("Key <", key, ">\n", sep = "")
+        cat("Key <", key, ">\n", sep = "")
     }
     
     plot(0:1, 0:1, type='n')

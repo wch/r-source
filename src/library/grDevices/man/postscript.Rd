@@ -402,9 +402,9 @@ TestChars <- function(encoding="ISOLatin1", family="URWHelvetica")
     title(paste("Centred chars in encoding", encoding))
     grid(17, 17, lty=1)
     for(i in c(32:255)) {
-	x <- i \%\% 16
-	y <- i \%/\% 16
-	points(x, y, pch=i)
+        x <- i \%\% 16
+        y <- i \%/\% 16
+        points(x, y, pch=i)
     }
     dev.off()
 }

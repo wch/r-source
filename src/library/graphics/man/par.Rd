@@ -81,9 +81,9 @@
   
 \title{Set or Query Graphical Parameters}
 
-%% The 'real documentation' is the code	in ../../../main/par.c
-%% AND (defined AND commented)		in ../../../include/Graphics.h
-%% Default initialization by GInit()	in ../../../main/graphics.c
+%% The 'real documentation' is the code in ../../../main/par.c
+%% AND (defined AND commented)          in ../../../include/Graphics.h
+%% Default initialization by GInit()    in ../../../main/graphics.c
 
 \description{
   \code{par} can be used to set or query graphical parameters.
@@ -296,10 +296,10 @@ par(\dots, no.readonly = FALSE)
       This is the default color used for things like axes and boxes
       around plots.  When called from \code{par()} this also sets
       parameter \code{col} to the same value.  See section \sQuote{Color
-	Specification}.  A few devices have an argument to set the
+        Specification}.  A few devices have an argument to set the
       initial value, which is otherwise \code{"black"}.}
     \item{\code{fig}}{A numerical vector of the form \code{c(x1, x2, y1,
-	y2)} which gives the (NDC) coordinates of the figure region in
+        y2)} which gives the (NDC) coordinates of the figure region in
       the display region of the device. If you set this, unlike S, you
       start a new plot, so to add to an existing plot use
       \code{new=TRUE} as well.}
@@ -326,10 +326,10 @@ par(\dots, no.readonly = FALSE)
       \code{len} \emph{is unimplemented} in \R.}
     \item{\code{las}}{numeric in \{0,1,2,3\}; the style of axis labels.
       \describe{
-	\item{0:}{always parallel to the axis [\emph{default}],}
-	\item{1:}{always horizontal,}
-	\item{2:}{always perpendicular to the axis,}
-	\item{3:}{always vertical.}
+        \item{0:}{always parallel to the axis [\emph{default}],}
+        \item{1:}{always horizontal,}
+        \item{2:}{always perpendicular to the axis,}
+        \item{3:}{always vertical.}
       }
       Also supported by \code{\link{mtext}}.  Note that other
       string/character rotation (via argument \code{srt} to \code{par})
@@ -338,10 +338,10 @@ par(\dots, no.readonly = FALSE)
     \item{\code{lend}}{The line end style.  This can be specified as an
       integer or string:
       \describe{
-	\item{\code{0}}{and \code{"round"} mean rounded line caps
-	  [\emph{default}];}
-	\item{\code{1}}{and \code{"butt"} mean butt line caps;}
-	\item{\code{2}}{and \code{"square"} mean square line caps.}
+        \item{\code{0}}{and \code{"round"} mean rounded line caps
+          [\emph{default}];}
+        \item{\code{1}}{and \code{"butt"} mean butt line caps;}
+        \item{\code{2}}{and \code{"square"} mean square line caps.}
       }
     }
     \item{\code{lheight}}{The line height multiplier.
@@ -353,10 +353,10 @@ par(\dots, no.readonly = FALSE)
     \item{\code{ljoin}}{The line join style.
       This can be specified as an integer or string:
       \describe{
-	\item{\code{0}}{and \code{"round"} mean rounded line joins
-	  [\emph{default}];}
-	\item{\code{1}}{and \code{"mitre"} mean mitred line joins;}
-	\item{\code{2}}{and \code{"bevel"} mean bevelled line joins.}
+        \item{\code{0}}{and \code{"round"} mean rounded line joins
+          [\emph{default}];}
+        \item{\code{1}}{and \code{"mitre"} mean mitred line joins;}
+        \item{\code{2}}{and \code{"bevel"} mean bevelled line joins.}
       }
     }
     \item{\code{lmitre}}{The line mitre limit.
@@ -374,7 +374,7 @@ par(\dots, no.readonly = FALSE)
       \sQuote{invisible lines} (i.e., does not draw them).
 
       Alternatively, a string of up to 8 characters (from \code{c(1:9,
-	"A":"F")}) may be given, giving the length of line segments
+        "A":"F")}) may be given, giving the length of line segments
       which are alternatively drawn and skipped.  See section
       \sQuote{Line Type Specification}.
 
@@ -392,10 +392,10 @@ par(\dots, no.readonly = FALSE)
       a vector of length greater than one is supplied.
     }
     \item{\code{mai}}{A numerical vector of the form \code{c(bottom,
-	left, top, right)} which gives the margin size specified in
+        left, top, right)} which gives the margin size specified in
       inches.}
     \item{\code{mar}}{A numerical vector of the form \code{c(bottom,
-	left, top, right)} which gives the number of lines of margin to be
+        left, top, right)} which gives the number of lines of margin to be
       specified on the four sides of the plot.
       The default is \code{c(5, 4, 4, 2) + 0.1}.}
     \item{\code{mex}}{
@@ -453,13 +453,13 @@ par(\dots, no.readonly = FALSE)
       an error (ignored with a warning) to try to use \code{new=TRUE}
       on a device that does not currently contain a high-level plot.}
     \item{\code{oma}}{A vector of the form \code{c(bottom, left, top,
-	right)} giving the size of the outer margins in lines of text.}
+        right)} giving the size of the outer margins in lines of text.}
     \item{\code{omd}}{A vector of the form \code{c(x1, x2, y1, y2)}
       giving the region \emph{inside} outer margins in NDC (=
       normalized device coordinates), i.e., as fraction (in \eqn{[0,1]})
       of the device region.}
     \item{\code{omi}}{A vector of the form \code{c(bottom, left, top,
-	right)} giving the size of the outer margins in inches.}
+        right)} giving the size of the outer margins in inches.}
     \item{\code{pch}}{Either an integer specifying a symbol or a single
       character to be used as the default in plotting points.  See
       \code{\link{points}} for possible values and their interpretation.
@@ -516,10 +516,10 @@ par(\dots, no.readonly = FALSE)
       \code{"usr"} coordinates are log10-transformed here!)
 
       \describe{
-	\item{n=1}{will produce tick marks at \eqn{10^j} for
-	  integer \eqn{j},}
-	\item{n=2}{gives marks  \eqn{k 10^j} with \eqn{k \in \{1, 5\}},}
-	\item{n=3}{gives marks  \eqn{k 10^j} with \eqn{k \in \{1, 2, 5\}}.}
+        \item{n=1}{will produce tick marks at \eqn{10^j} for
+          integer \eqn{j},}
+        \item{n=2}{gives marks  \eqn{k 10^j} with \eqn{k \in \{1, 5\}},}
+        \item{n=3}{gives marks  \eqn{k 10^j} with \eqn{k \in \{1, 2, 5\}}.}
       }
       See \code{\link{axTicks}()} for a pure \R implementation of this.
 
@@ -546,7 +546,7 @@ par(\dots, no.readonly = FALSE)
       Style \code{"d"} (direct) specifies that the current axis should
       be used on subsequent plots.
       (\emph{Only \code{"r"} and \code{"i"} styles are currently
-	implemented})}
+        implemented})}
     \item{\code{xaxt}}{A character which specifies the x axis type.
       Specifying \code{"n"} suppresses plotting of the axis.  The
       standard value is \code{"s"}: for compatibility with S values
