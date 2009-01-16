@@ -111,6 +111,9 @@ NEW FEATURES
 
     o	Sys.glob() now does tilde expansion on all platforms.
 
+    o	read.table() and friends gain a 'fileEncoding' argument to
+	make re-encoding of input just a little bit simpler.
+
 
 DEPRECATED & DEFUNCT
 

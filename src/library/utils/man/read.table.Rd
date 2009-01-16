@@ -24,7 +24,7 @@ read.table(file, header = FALSE, sep = "", quote = "\"'",
            comment.char = "#",
            allowEscapes = FALSE, flush = FALSE,
            stringsAsFactors = default.stringsAsFactors(),
-           encoding = "unknown")
+           fileEncoding = "", encoding = "unknown")
 
 read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
          fill = TRUE, comment.char="", \dots)
@@ -55,10 +55,6 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     cleared before return.)
 
     \code{file} can also be a complete URL.
-
-    To read a data file not in the current encoding (for example a
-    Latin-1 file in a UTF-8 locale or conversely) use a
-    \code{\link{file}} connection setting the \code{encoding} argument.
   }
 
   \item{header}{a logical value indicating whether the file contains the
@@ -175,11 +171,17 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \item{stringsAsFactors}{logical: should character vectors be converted
     to factors?  Note that this is overridden bu \code{as.is} and
     \code{colClasses}, both of which allow finer control.}
-
+  
+  \item{fileEncoding}{character string: if non-empty declares the
+    encoding used on a file (not a connection) so the character data can
+    be re-encoded.  See \code{\link{file}}.
+  }
+  
   \item{encoding}{encoding to be assumed for input strings.  It is
     used to mark character strings as known to be in
-    Latin-1 or UTF-8: it is not used to re-encode the input.  For an
-    example of how to do so, see the examples under \code{\link{file}}.
+    Latin-1 or UTF-8: it is not used to re-encode the input, but allows
+    \R to handle encoded strings in their native encoding (if one of
+    those two).  See \sQuote{Value}.
   }
 
   \item{\dots}{Further arguments to be passed to \code{read.table}.}

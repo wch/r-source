@@ -43,10 +43,11 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
          strip.white = FALSE, blank.lines.skip = TRUE,
          comment.char = "#", allowEscapes = FALSE, flush = FALSE,
          stringsAsFactors = default.stringsAsFactors(),
-         encoding = "unknown")
+         fileEncoding = "", encoding = "unknown")
 {
     if(is.character(file)) {
-        file <- file(file, "r")
+        file <- if(nzchar(fileEncoding))
+            file(file, "r", encoding = fileEncoding) else file(file, "r")
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
