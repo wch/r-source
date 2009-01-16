@@ -44,10 +44,10 @@ utils-Ex.R: $(RLIB)/utils/R-ex/Rex.zip
 	@$(ECHO) "Massaging examples into '$*-Ex.R' ..."
 	@if test -f $(RLIB)/$*/R-ex/Rex.zip; then \
 	  (cd $(RLIB)/$*/R-ex; unzip -oq Rex); \
-	  LC_ALL=C $(RHOME)/bin/rterm --slave < $(RHOME)/share/R/massage-examples.R --args $* $(RLIB)/$*/R-ex/*.R > $@; \
+	  LC_ALL=C $(RHOME)/bin/rterm --slave --vanilla < $(RHOME)/share/R/massage-examples.R --args $* $(RLIB)/$*/R-ex/*.R > $@; \
 	  (cd $(RLIB)/$*/R-ex; $(RM) -f *.R); \
 	else \
-	  LC_ALL=C $(RHOME)/bin/rterm --slave < $(RHOME)/share/R/massage-examples.R --args $* $(RLIB)/$*/R-ex/*.R > $@; \
+	  LC_ALL=C $(RHOME)/bin/rterm --slave --vanilla < $(RHOME)/share/R/massage-examples.R --args $* $(RLIB)/$*/R-ex/*.R > $@; \
 	fi
 
 .R.Rout:
