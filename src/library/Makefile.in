@@ -73,6 +73,7 @@ Rdfiles-new:
 	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(top_builddir)/bin/R --slave || exit 1; \
 	done
 
+## NB this is called from tests/Examples/Makefile with the make variables set.
 Rdfiles:
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(R_CMD_BUILD_HELP) $(R_CMD_BUILD_HELP_OPTS) $(srcdir)/$${pkg}; \
