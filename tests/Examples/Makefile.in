@@ -91,6 +91,7 @@ R:
 ## older, then find will succeed but output nothing so that the grep
 ## will fail.
 ## </NOTE>
+## FIXME: Why does this make txt as well as example?
 $(EX_IN_BASE): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
 	if find $@ -newer $(top_srcdir)/share/R/massage-examples.R \
@@ -109,7 +110,8 @@ $(EX_IN_BASE): FORCE
 	    || test "$${target_is_newer_than_Rdfiles}" = no; then \
 	  $(ECHO) "collecting examples for package '$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
-	    OPTS="--txt --example" $(MAKE) R_PKGS_BASE="$${pkg}" Rdfiles); \
+	    $(MAKE) R_CMD_BUILD_HELP_OPTS="--txt --example" \
+	    R_PKGS_BASE="$${pkg}" Rdfiles); \
 	  f=$${TMPDIR-/tmp}/R$$$$; \
 	  LC_ALL=C $(top_builddir)/bin/R --slave \
 	    < $(top_srcdir)/share/R/massage-examples.R --args $${pkg} \
