@@ -42,12 +42,35 @@ typedef struct yyltype
 {
   int first_line;
   int first_column;
+  int first_byte;
 
   int last_line;
   int last_column;
+  int last_byte;
 } yyltype;
 
 # define YYLTYPE yyltype
+# define YYLLOC_DEFAULT(Current, Rhs, N)				\
+    do									\
+      if (YYID (N))							\
+	{								\
+	  (Current).first_line   = YYRHSLOC (Rhs, 1).first_line;	\
+	  (Current).first_column = YYRHSLOC (Rhs, 1).first_column;	\
+	  (Current).first_byte   = YYRHSLOC (Rhs, 1).first_byte;	\
+	  (Current).last_line    = YYRHSLOC (Rhs, N).last_line;		\
+	  (Current).last_column  = YYRHSLOC (Rhs, N).last_column;	\
+	  (Current).last_byte    = YYRHSLOC (Rhs, N).last_byte;		\
+	}								\
+      else								\
+	{								\
+	  (Current).first_line   = (Current).last_line   =		\
+	    YYRHSLOC (Rhs, 0).last_line;				\
+	  (Current).first_column = (Current).last_column =		\
+	    YYRHSLOC (Rhs, 0).last_column;				\
+	  (Current).first_byte   = (Current).last_byte =		\
+	    YYRHSLOC (Rhs, 0).last_byte;				\
+	}								\
+    while (YYID (0))
 
 /* Useful defines so editors don't get confused ... */
 
@@ -68,8 +91,9 @@ static int 	xxinRString, xxQuoteLine, xxQuoteCol;
 static int	xxNewlineInString;
 static int	xxgetc();
 static int	xxungetc(int);
-static int	xxlineno, xxcolno;
-static int	xxlastlinelen;
+static int	xxlineno, xxbyteno, xxcolno;
+static int	xxlastlinebytes, xxlastlinecols;
+static int	xxhavetab;
 static int	xxmode, xxitemType, xxbraceDepth;  /* context for lexer */
 static int	xxDebugTokens;  /* non-zero causes debug output to R console */
 static const char* xxBasename;     /* basename of file for error messages */
@@ -389,6 +413,11 @@ static int xxgetc(void)
 {
     int c;
 
+    if (xxhavetab) {
+    	xxcolno = (xxcolno + 7) & ~7;
+    	xxhavetab = 0;
+    }
+    	
     if(npush) c = pushback[--npush]; else  c = ptr_getc();
     if (c == EOF) return R_EOF;
     
@@ -397,9 +426,22 @@ static int xxgetc(void)
     
     if (c == '\n') {
     	xxlineno += 1;
-    	xxlastlinelen = xxcolno; 
+    	xxlastlinecols = xxcolno; 
     	xxcolno = 0;
-    } else xxcolno++;
+    	xxlastlinebytes = xxbyteno;
+    	xxbyteno = 0;
+    	xxhavetab = 0;
+    } else {
+       /* FIXME:  we should recognize bytes that don't move to a new column and
+                  not increment xxcolno for those */    	
+        xxcolno++;
+    	xxbyteno++;
+    }
+    
+    if (0x80 <= c && c <= 0xBF && known_to_be_utf8) /* only advance column for 1st byte in UTF-8 */
+    	xxcolno--;
+
+    if (c == '\t') xxhavetab = xxcolno;
     
     R_ParseContextLine = xxlineno;
     
@@ -408,12 +450,27 @@ static int xxgetc(void)
 
 static int xxungetc(int c)
 {
+    if (xxhavetab) {
+    	if (c == '\t') xxcolno = xxhavetab;
+    	xxhavetab = 0;   /* FIXME: may be wrong in case of multiple tabs */
+    }
+    
+    if (0x80 <= c && c <= 0xBF && known_to_be_utf8) 
+       	xxcolno++;
+
     if (c == '\n') {
     	xxlineno -= 1;
-    	xxcolno = xxlastlinelen; /* FIXME:  could we push back more than one line? */
-    	xxlastlinelen = 0;
+    	xxcolno = xxlastlinecols; /* FIXME:  could we push back more than one line? */
+    	xxbyteno = xxlastlinebytes;
+    	
+    	xxlastlinecols = 0;
+    	xxlastlinebytes = 0;
+    	
     	R_ParseContextLine = xxlineno;
-    } else xxcolno--;
+    } else {
+        xxcolno--;  /* FIXME: may be wrong in case of multibyte character */
+    	xxbyteno--;
+    }
     
     R_ParseContext[R_ParseContextLast] = '\0';
     /* Mac OS X requires us to keep this non-negative */
@@ -428,11 +485,13 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
 {
     SEXP val;
     
-    PROTECT(val = allocVector(INTSXP, 4));
+    PROTECT(val = allocVector(INTSXP, 6));
     INTEGER(val)[0] = lloc->first_line;
-    INTEGER(val)[1] = lloc->first_column;
+    INTEGER(val)[1] = lloc->first_byte;
     INTEGER(val)[2] = lloc->last_line;
-    INTEGER(val)[3] = lloc->last_column;
+    INTEGER(val)[3] = lloc->last_byte;
+    INTEGER(val)[4] = lloc->first_column;
+    INTEGER(val)[5] = lloc->last_column;
     setAttrib(val, R_SrcfileSymbol, srcfile);
     setAttrib(val, R_ClassSymbol, mkString("srcref"));
     UNPROTECT(1);
@@ -500,7 +559,9 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile)
     R_ParseContext[0] = '\0';
     
     xxlineno = 1;
-    xxcolno = 0;    
+    xxcolno = 0; 
+    xxbyteno = 0;
+    xxhavetab = 0;
     
     if (!isNull(srcfile)) SrcFile = srcfile;
     else SrcFile = NULL;
@@ -786,12 +847,14 @@ static void setfirstloc(void)
 {
     yylloc.first_line = xxlineno;
     yylloc.first_column = xxcolno;
+    yylloc.first_byte = xxbyteno;
 }
 
 static void setlastloc(void)
 {
     yylloc.last_line = xxlineno;
     yylloc.last_column = xxcolno;
+    yylloc.last_byte = xxbyteno;
 }
 
 /* Split the input stream into tokens. */
