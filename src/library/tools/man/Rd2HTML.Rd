@@ -19,7 +19,7 @@
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         encoding = "unknown")
 
-Rd2ex(Rd, out = "", defines = .Platform$OS.type), encoding = "unknown")
+Rd2ex(Rd, out = "", defines = .Platform$OS.type, encoding = "unknown")
 
 checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
         unknownOK = FALSE, listOK = TRUE)
