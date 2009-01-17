@@ -6,11 +6,15 @@ alias2Path <- function(alias, package, type, lib.loc=NULL) {
 }
 
 get_link <- function(arg) {	# like get_link in Rdconv.pm, plus a bit more
-    if (!identical(RdTags(arg), "TEXT"))
+    ## FIMXE some links are split in the parser
+    if (!all(RdTags(arg) == "TEXT"))
     	stopRd(arg, "Bad \\link text")
+
     option <- attr(arg, "Rd_option")
 
-    dest <- arg[[1]]
+    dest <- paste(unlist(arg), collapse = "")
+    ## It seems that e.g. \%*% is partially escaped
+    dest <- gsub("\\", "", dest, fixed = TRUE)
     topic <- NULL
     pkg <- NULL
     if (!is.null(option)) {
@@ -61,10 +65,10 @@ RdTags <- function(Rd)
 isBlankRd <- function(x)
     length(grep("^[[:blank:]]*\n?$", x)) == length(x) # newline optional
 
-isBlankLineRd <- function(x)
-    !is.null(src <- attr(x, "srcref")) &&
-    src[2] == 0                        &&             # Starts in column 1
+isBlankLineRd <- function(x) {
+    attr(x, "srcref")[2] == 1 &&
     length(grep("^[[:blank:]]*\n", x)) == length(x)   # newline required
+}
 
 stopRd <- function(block, ...)
 {
@@ -122,9 +126,9 @@ preprocessRd <- function(blocks, defines)
 
 sectionOrder <-
     c("\\title"=1, "\\name"=2, "\\description"=3, "\\usage"=4, "\\synopsis"=4,
-      "\\arguments"=5, "\\format"=5, "\\details"=6, "\\value"=7, "\\note"=7,
-      "\\section"=7, "\\author" = 8, "\\references"=8, "\\source"=8,
-      "\\seealso"=9, "\\examples"=10)
+      "\\arguments"=5, "\\format"=6, "\\details"=7, "\\value"=8,
+      "\\section"=9, "\\note"=10, "\\author" = 11, "\\source"=12,
+      "\\references"=13, "\\seealso"=14, "\\examples"=15)
 
 sectionTitles <-
     c("\\description"="Description", "\\usage"="Usage", "\\synopsis"="Usage",
@@ -133,6 +137,7 @@ sectionTitles <-
       "\\references"="References", "\\source"="Source",
       "\\seealso"="See Also", "\\examples"="Examples", "\\value"="Value")
 
+## FIXME: better to really use XHTML
 Rd2HTML <-
     function(Rd, out="", package="", defines=.Platform$OS.type,
              encoding="unknown")
@@ -146,7 +151,7 @@ Rd2HTML <-
                   "\\emph"="EM",
                   "\\kbd"="KBD",
                   "\\preformatted"="pre",
-                  "\\special"="PRE",
+#                  "\\special"="PRE",
                   "\\strong"="STRONG",
                   "\\var"="VAR",
                   "\\verb"="PRE")
@@ -157,7 +162,7 @@ Rd2HTML <-
     		     "\\ldots"="...")
     # These correspond to idiosyncratic wrappers
     HTMLLeft <- c("\\acronym"='<acronym><span class="acronym">',
-    		  "\\dontrun"='## Not run:',
+    		  "\\dontrun"='## Not run:\n',
     		  "\\donttest"="",
     		  "\\env"='<span class="env">',
                   "\\file"='&lsquo;<span class="file">',
@@ -167,7 +172,7 @@ Rd2HTML <-
                   "\\sQuote"="&lsquo;",
                   "\\dQuote"="&ldquo;")
     HTMLRight <- c("\\acronym"='</span></acronym>',
-    		   "\\dontrun"='## End(Not run)',
+    		   "\\dontrun"='\n## End(Not run)', ## FIXME
     		   "\\donttest"="",
     		   "\\env"="</span>",
                    "\\file"='</span>&rsquo;',
@@ -177,13 +182,23 @@ Rd2HTML <-
                    "\\sQuote"="&rsquo;",
                    "\\dQuote"="&rdquo;")
 
-    addParaBreaks <- function(x) {
-	if (isBlankLineRd(x)) x <- "\n</p>\n<p>\n"
-	x
+    addParaBreaks <- function(x, tag) {
+        start <- attr(x, "srcref")[2] # FIXME: what if no srcref?, start col
+	if (isBlankLineRd(x)) "<br>\n"
+	else if(start == 1) gsub("^\\s+", "", x)
+        else x
     }
 
-    # FIXME: what other substitutions do we need?
+    ## FIXME: what other substitutions do we need?
+    ## possibly quotes if the parser had left alone -- NA.Rd
     htmlify <- function(x) {
+	x <- gsub("&", "&amp;", x)
+	x <- gsub("---", "&mdash;", x)
+	x <- gsub("--", "&ndash;", x)
+	x <- gsub("<", "&lt;", x)
+	gsub(">", "&gt;", x)
+    }
+    vhtmlify <- function(x) { # code version
 	x <- gsub("&", "&amp;", x)
 	x <- gsub("<", "&lt;", x)
 	gsub(">", "&gt;", x)
@@ -240,8 +255,8 @@ Rd2HTML <-
 	switch(tag,
                UNKNOWN =,
                VERB =,
-               RCODE = cat(htmlify(block), file=con),
-               TEXT = cat(addParaBreaks(htmlify(block)), file=con),
+               RCODE = cat(vhtmlify(block), file=con),
+               TEXT = cat(addParaBreaks(htmlify(block), blocktag), file=con),
                COMMENT = {},
                LIST =,
                "\\describe"=,
@@ -255,10 +270,10 @@ Rd2HTML <-
                "\\emph"=,
                "\\kbd"=,
                "\\preformatted"=,
-               "\\special"=,
                "\\strong"=,
                "\\var" =,
                "\\verb"= writeWrapped(tag, block),
+               "\\special"= writeContent(block, tag), ## FIXME, verbatim?
                "\\linkS4class" =,
                "\\link" = writeLink(tag, block),
                "\\email" = cat('<a href="mailto:', block[[1]], '">', htmlify(block[[1]]), '</a>', sep="", file=con),
@@ -268,7 +283,7 @@ Rd2HTML <-
                "\\ldots" =,
                "\\R" = cat(HTMLEscapes[tag], file=con),
                "\\acronym" =,
-               "\\dontrun" =,
+               "\\dontrun"=,
                "\\donttest" =,
                "\\env" =,
                "\\file" =,
@@ -277,35 +292,41 @@ Rd2HTML <-
                "\\samp" =,
                "\\sQuote" =,
                "\\dQuote" =  writeLR(block, tag),
-               "\\enc" =  # FIXME:  this should sometimes use the first arg
+               "\\enc" =  # FIXME:  this could sometimes use the first arg -- does not at present, though
                writeContent(block[[2]], tag),
                "\\eqn" = {
-                   if (is.null(RdTags(block)))  # the two arg form has no tags
-                       block <- block[[2]]
                    cat("<i>", file=con)
-                   writeContent(block, tag)
+                   if (length(block) == 2)
+                       writeContent(block[[2]], tag)
+                   else cat(htmlify(block), file=con)
                    cat("</i>", file=con)
                },
                "\\deqn" = {
-                   if (is.null(RdTags(block)))  # the two arg form has no tags
-                       block <- block[[2]]
                    cat('</p><p align="center"><i>', file=con)
-                   writeContent(block, tag)
+                   if (length(block) == 2)
+                       writeContent(block[[2]], tag)
+                   else cat(htmlify(block), file=con)
                    cat('</i></p><p>', file=con)
                },
                "\\dontshow" =,
                "\\testonly" = {}, # do nothing
                "\\method" =,
                "\\S3method" = {
-                   cat('## S3 method for class &lsquo;', file=con)
-                   writeContent(block[[2]], tag)
-                   cat('&rsquo;:\n', file=con)
+                   ## FIXME: special methods for [ [<- and operators
+                   class <- as.character(block[[2]])
+                   if (class == "default")
+                       cat('## Default S3 method:\n', file=con)
+                   else {
+                       cat("## S3 method for class '", file=con)
+                       writeContent(block[[2]], tag)
+                       cat("':\n", file=con)
+                   }
                    writeContent(block[[1]], tag)
                },
                "\\S4method" = {
-                   cat('## S4 method for signature &lsquo;', file=con)
+                   cat("## S4 method for signature '", file=con)
                    writeContent(block[[2]], tag)
-                   cat('&rsquo;:\n', file=con)
+                   cat("':\n", file=con)
                    writeContent(block[[1]], tag)
                },
                "\\tabular" = writeTabular(block),
@@ -375,7 +396,7 @@ Rd2HTML <-
             "\\item" = {
     	    	if (!inlist) {
     	    	    switch(blocktag,
-    	    	    "\\arguments"=cat('\n<table summary="R argblock">\n', file=con),
+    	    	    "\\arguments"=cat('<table summary="R argblock">\n', file=con),
     	    	    "\\itemize"=cat("<ul>\n", file=con),
     	    	    "\\enumerate"=cat("<ol>\n", file=con),
     	    	    "\\value"=,
@@ -383,7 +404,7 @@ Rd2HTML <-
     	    	    inlist <- TRUE
     		} else {
     		    if (blocktag %in% c("\\itemize", "\\enumerate"))
-    		    	cat("</li>", file=con)
+    		    	cat("</li>\n", file=con)
     		}
     		switch(blocktag,
     		"\\arguments"={
@@ -426,7 +447,7 @@ Rd2HTML <-
     }
 
     writeSection <- function(section, tag) {
-    	cat("\n<h3>", file=con)
+    	cat("\n\n<h3>", file=con)
     	if (tag == "\\section") {
     	    title <- section[[1]]
     	    section <- section[[2]]
@@ -435,9 +456,10 @@ Rd2HTML <-
     	    cat(sectionTitles[tag], file=con)
     	if (tag %in% c("\\examples","\\synopsis","\\usage"))
     	    para <- "pre" else para <- "p"
-    	cat("</h3>\n<", para, ">\n", sep="", file=con)
-        ## There should be an initial \n, so remove that
-        if (section[[1]] == "\n") section <- section[-1]
+    	cat("</h3>\n\n<", para, ">\n", sep="", file=con)
+        ## There may be an initial \n, so remove that
+        s1 <- section[[1]][1]
+        if (RdTags(s1) == "TEXT" && s1 == "\n") section <- section[-1]
     	writeContent(section, tag)
     	cat("</", para, ">\n", sep="", file=con)
     }
@@ -525,7 +547,7 @@ Rd2HTML <-
         mime_canonical_encoding(encoding),
         '">\n',
         '<link rel="stylesheet" type="text/css" href="../../R.css">\n',
-        '</head>\n<body>\n\n',
+        '</head><body>\n\n',
         '<table width="100%" summary="page for ', name, ' {', package,
         '}"><tr><td>',name,' {', package,
         '}</td><td align="right">R Documentation</td></tr></table>\n\n',
@@ -540,7 +562,7 @@ Rd2HTML <-
     cat('\n',
         '<hr><div align="center">[Package <em>', package,
         '</em> version ', version, ' <a href="00Index.html">Index</a>]</div>\n',
-        '</body>\n</html>\n',
+        '</body></html>\n',
         sep='', file=con)
     return(out)
 }
@@ -887,333 +909,5 @@ Rd2ex <-
         for (i in seq_along(ex)) render(ex[[i]])
         cat("\n\n\n", file = con)
     }
-    out
-}
-
-Rd2latex <-
-    function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
-{
-    sectionExtras <-
-    c("\\description"="Description",
-      "\\usage"="verbatim",
-      "\\synopsis"="verbatim",
-      "\\arguments"="ldescription",
-      "\\format"="",
-      "\\details"="",
-      "\\note"="",
-      "\\section"="",
-      "\\author"="",
-      "\\references"="",
-      "\\source"="",
-      "\\seealso"="",
-      "\\examples"="ExampleCode",
-      "\\value"="")
-
-    ## These correspond to HTML wrappers
-    ltxtags <- c("\\bold"="textbf",
-    	          "\\cite"="cite",
-                  "\\code"="code",
-                  "\\command"="CODE",
-                  "\\dfn"="DFN",
-                  "\\emph"="emph",
-                  "\\kbd"="kbd",
-                  "\\preformatted"="pre",
-                  "\\special"="PRE",
-                  "\\strong"="textbf",
-                  "\\var"="VAR",
-                  "\\verb"="PRE")
-    ## These have simple substitutions
-    HTMLEscapes <- c("\\R" = 'R',
-    		     "\\cr"="<br>",
-    		     "\\dots"="...",
-    		     "\\ldots"="...")
-    ## These correspond to idiosyncratic wrappers
-    HTMLLeft <- c("\\acronym"='<acronym><span class="acronym">',
-    		  "\\dontrun"='## Not run:',
-    		  "\\donttest"="",
-    		  "\\env"='<span class="env">',
-                  "\\file"='&lsquo;<span class="file">',
-                  "\\option"='<span class="option">',
-                  "\\pkg"='<span class="pkg">',
-                  "\\samp"='<span class="samp">',
-                  "\\sQuote"="&lsquo;",
-                  "\\dQuote"="&ldquo;")
-    HTMLRight <- c("\\acronym"='</span></acronym>',
-    		   "\\dontrun"='## End(Not run)',
-    		   "\\donttest"="",
-    		   "\\env"="</span>",
-                   "\\file"='</span>&rsquo;',
-                   "\\option"="</span>",
-                   "\\pkg"="</span>",
-                   "\\samp"="</span>",
-                   "\\sQuote"="&rsquo;",
-                   "\\dQuote"="&rdquo;")
-
-    addParaBreaks <- function(x) {
-	if (isBlankLineRd(x)) x <- "\n"
-	x
-    }
-
-    ## FIXME: what other substitutions do we need?
-    htmlify <- function(x) {
-        x
-    }
-
-    writeWrapped <- function(tag, block) {
-    	cat(ltxtags[tag], "{", sep="", file=con)
-    	writeContent(block, tag)
-    	cat("}", file=con)
-    }
-
-    writeLink <- function(tag, block) {
-    	writeContent(block, tag)
-    }
-
-    writeComment <- function(txt) {
-	cat(txt, '\n', sep = "", file=con)
-    }
-
-    writeBlock <- function(block, tag, blocktag) {
-	switch(tag,
-               UNKNOWN = ,
-               VERB = ,
-               RCODE = cat(htmlify(block), file=con),
-               TEXT = cat(addParaBreaks(htmlify(block)), file=con),
-               COMMENT = {},
-               LIST =,
-               "\\describe"=,
-               "\\enumerate"=,
-               "\\itemize"=writeContent(block, tag),
-               "\\bold"=,
-               "\\cite"=,
-               "\\code"=,
-               "\\command"=,
-               "\\dfn"=,
-               "\\emph"=,
-               "\\kbd"=,
-               "\\preformatted"=,
-               "\\special"=,
-               "\\strong"=,
-               "\\var",
-               "\\verb"= writeWrapped(tag, block),
-               "\\linkS4class" =,
-               "\\link" = writeLink(tag, block),
-               "\\email" = cat('<a href="mailto:', block[[1]], '">', htmlify(block[[1]]), '</a>', sep="", file=con),
-               "\\url" = cat('<a href="', block[[1]], '">', htmlify(block[[1]]), '</a>', sep="", file=con),
-               "\\cr" =,
-               "\\dots" =,
-               "\\ldots" =,
-               "\\R" = cat(HTMLEscapes[tag], file=con),
-               "\\acronym" =,
-               "\\dontrun" =,
-               "\\donttest" =,
-               "\\env" =,
-               "\\file" =,
-               "\\option" =,
-               "\\pkg" =,
-               "\\samp" =,
-               "\\sQuote" =,
-               "\\dQuote" = {
-                   cat(HTMLLeft[tag], file=con)
-                   writeContent(block, tag)
-                   cat(HTMLRight[tag], file=con)
-               },
-               "\\enc" = # FIXME:  this should sometimes use the first arg
-               writeContent(block[[2]], tag),
-               "\\eqn" = {
-                   if (is.null(RdTags(block))) # the two arg form has no tags
-                       block <- block[[2]]
-                   cat("<i>", file=con)
-                   writeContent(block, tag)
-                   cat("</i>", file=con)
-               },
-               "\\deqn" = {
-                   if (is.null(RdTags(block))) # the two arg form has no tags
-                       block <- block[[2]]
-                   cat('</p><p align="center"><i>', file=con)
-                   writeContent(block, tag)
-                   cat('</i></p><p>', file=con)
-               },
-               "\\dontshow" =,
-               "\\testonly" = {},       # do nothing
-               "\\method" =,
-               "\\S3method" = {
-                   cat("## S3 method for class '", file=con)
-                   writeContent(block[[2]], tag)
-                   cat("'\n", file=con)
-                   writeContent(block[[1]], tag)
-               },
-               "\\S4method" = {
-                   cat("## S4 method for signature '", file=con)
-                   writeContent(block[[2]], tag)
-                   cat("'\n", file=con)
-                   writeContent(block[[1]], tag)
-               },
-               "\\tabular" = writeTabular(block),
-               stopRd(block, "Tag ", tag, " not recognized."))
-    }
-
-    writeTabular <- function(table) {
-    	format <- table[[1]]
-    	content <- table[[2]]
-    	if (length(format) != 1 || RdTags(format) != "TEXT")
-    	    stopRd(table, "\\tabular format must be simple text")
-    	format <- strsplit(format[[1]], "")[[1]]
-    	if (!all(format %in% c("l", "c", "r")))
-    	    stopRd(table, "Unrecognized \\tabular format: ", table[[1]][[1]])
-        format <- c(l="left", c="center", r="right")[format]
-
-        content <- preprocessRd(content, defines)
-        tags <- attr(content, "RdTags")
-
-        cat('\n</p>\n<table summary="Rd table">\n', file=con)
-        newrow <- TRUE
-        for (i in seq_along(tags)) {
-            if (newrow) {
-            	cat("<tr>\n ", file=con)
-            	newrow <- FALSE
-            	col <- 0
-            	newcol <- TRUE
-            }
-            if (newcol) {
-                col <- col + 1
-                if (col > length(format))
-                    stopRd(table, "Only ", length(format), " columns allowed in this table.")
-            	cat('<td align="', format[col], '">', sep="", file=con)
-            	newcol <- FALSE
-            }
-            switch(tags[i],
-                   "\\tab" = {
-                       cat('</td>', file=con)
-                       newcol <- TRUE
-                   },
-                   "\\cr" = {
-                       if (!newcol)
-                           cat('</td>', file=con)
-                       cat('\n</tr>\n', file=con)
-                       newrow <- TRUE
-                   },
-                   writeBlock(content[[i]], tags[i], "\\tabular"))
-        }
-        if (!newcol)
-            cat('</td>', file=con)
-        if (!newrow)
-            cat('\n</tr>\n', file=con)
-        cat('\n</table><p>\n', file=con)
-    }
-
-    writeContent <- function(blocks, blocktag) {
-        inlist <- FALSE
-
-	blocks <- preprocessRd(blocks, defines)
-	tags <- attr(blocks, "RdTags")
-
-	for (i in seq_along(tags)) {
-            tag <- tags[i]
-            block <- blocks[[i]]
-            writeBlock(block, tag, blocktag)
-	}
-    }
-
-    writeSection <- function(section, tag)
-    {
-    	if (tag == "\\section") { # FIXME
-    	    title <- section[[1]]
-    	    section <- section[[2]]
-    	    writeContent(title, tag)
-    	} else
-        cat("\\begin{", sectionTitles[tag], "}\\relax", sep = "", file=con)
-        extra <- sectionExtras[tag]
-        if(nzchar(extra))
-            cat("\n\\begin{", extra, "}", sep = "", file=con)
-    	writeContent(section, tag)
-        if(nzchar(extra))
-            cat("\\end{", extra, "}\n", sep = "", file=con)
-        cat("\\end{", sectionTitles[tag], "}\n", sep = "", file=con)
-    }
-
-    Rdfile <- "not known"
-
-    if (is.character(Rd)) {
-        Rdfile <- Rd
-        ## do it this way to get info in internal warnings
-        Rd <- eval(substitute(parse_Rd(f, encoding = enc),
-                              list(f = Rd, enc = encoding)))
-    } else if(inherits(Rd, "connection")) {
-        Rdfile <- summary(Rd)
-        Rd <- parse_Rd(Rd, encoding = encoding)
-    }
-
-    if (is.character(out)) {
-        if(out == "") con <- stdout()
-        else {
-	    con <- file(out, "w")
-	    on.exit(close(con))
-	}
-    } else {
-    	con <- out
-    	out <- summary(con)$description
-    }
-
-    ## Process top level ifdef's.
-    Rd <- preprocessRd(Rd, defines)
-    sections <- attr(Rd, "RdTags")
-
-    ## Print initial comments
-    ## for (i in seq_along(sections)) {
-    ## 	if (sections[i] != "COMMENT") break
-    ##	writeComment(Rd[[i]])
-    ##}
-
-    version <- which(sections == "\\Rdversion")
-    if (length(version) == 1 && as.numeric(version[[1]]) < 2)
-    	warning("Rd2HTML is designed for Rd version 2 or higher.")
-    else if (length(version) > 1)
-    	stopRd(Rd[[version[2]]], "Only one \\Rdversion declaration is allowed")
-
-    enc <- which(sections == "\\encoding")
-    if (length(enc)) {
-    	if (length(enc) > 1)
-    	    stopRd(Rd[[enc[2]]], "Only one \\encoding declaration is allowed")
-    	encoding <- Rd[[enc]]
-    	if (!identical(RdTags(encoding), "TEXT"))
-    	    stopRd(encoding, "Encoding must be plain text")
-    	encoding <- encoding[[1]]
-    }
-
-    ## Give error for nonblank text outside a section
-    if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]))))
-    	stopRd(Rd[sections == "TEXT"][[bad[1]]], "All text must be in a section")
-
-    ## Drop all the parts that are not rendered
-    drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding",
-                            "\\keyword", "\\alias", "\\Rdversion")
-    Rd <- Rd[!drop]
-    sections <- sections[!drop]
-
-    sortorder <- sectionOrder[sections]
-    if (any(bad <- is.na(sortorder)))
-    	stopRd(Rd[[which(bad)[1]]], "Section ", sections[which(bad)[1]], " unrecognized.")
-    sortorder <- order(sortorder)
-    Rd <- Rd[sortorder]
-    sections <- sections[sortorder]
-    if (!identical(sections[1:3],c("\\title", "\\name", "\\description")))
-    	stopRd(Rd, "Sections \\title, \\name and \\description must exist and be unique in Rd files.")
-
-    title <- as.character(Rd[[1]])
-    ## remove empty lines, leading whitespace
-    title <- paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
-                   collapse=" ")
-    ## substitutions?
-    name <- Rd[[2]]
-    tags <- RdTags(name)
-    if (length(tags) > 1) stopRd(name, "\\name must only contain simple text.")
-
-    name <- name[[1]]
-    cat('\\HeaderA{', name, '}{', title, '}{', name, '}\n', sep="", file=con)
-
-    for (i in seq_along(sections)[-(1:2)])
-        writeSection(Rd[[i]], sections[i])
-
     out
 }
