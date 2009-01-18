@@ -1,15 +1,16 @@
 useDynLib(tools, .registration = TRUE)
 
-export("Rd2HTML", "Rd2ex", "Rdindex",
-       "checkDocFiles", "checkDocStyle", "checkFF", "checkMD5sums",
-       "checkReplaceFuns", "checkS3methods", "checkTnF", "checkVignettes",
-       "codoc", "codocClasses", "codocData", "md5sum", "undoc",
+export("Rd2HTML", "Rd2ex", "Rdindex", "checkDocFiles",
+       "checkDocStyle", "checkFF", "checkMD5sums", "checkReplaceFuns",
+       "checkS3methods", "checkTnF", "checkVignettes", "codoc",
+       "codocClasses", "codocData", "md5sum", "undoc",
        "file_path_as_absolute", "file_path_sans_ext",
-       "list_files_with_exts", "list_files_with_type", "showNonASCII",
-       "delimMatch", "parse_Rd", "checkRd",
-       "texi2dvi", "buildVignettes", "pkgVignettes", "pkgDepends",
-       "getDepList", "installFoundDepends", "vignetteDepends",
-       "write_PACKAGES", "xgettext", "xgettext2pot", "xngettext",
+       "list_files_with_exts", "findHTMLlinks",
+       "list_files_with_type", "showNonASCII", "delimMatch",
+       "parse_Rd", "checkRd", "texi2dvi", "buildVignettes",
+       "pkgVignettes", "pkgDepends", "getDepList",
+       "installFoundDepends", "vignetteDepends", "write_PACKAGES",
+       "xgettext", "xgettext2pot", "xngettext",
        "encoded_text_to_latex", "charset_to_Unicode", "Adobe_glyphs",
        "checkNEWS", "readNEWS", "dependsOnPkgs")
 

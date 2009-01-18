@@ -1604,29 +1604,6 @@
             "</UL>\n</BODY></HTML>\n", sep="", file = conn)
     }
 
-
-    mime_canonical_encoding <- function(x)
-    {
-        ## use preferred MIME encoding, not IANA registered name
-        x <- tolower(x)
-        x <- sub("iso_8859-([0-9]+)", "iso-8859-\\1", x)
-        x[x == "utf8"] <- "utf-8"
-        x[x == "latin1"] <- "iso-8859-1"
-        x[x == "latin2"] <- "iso-8859-2"
-        x[x == "latin3"] <- "iso-8859-3"
-        x[x == "latin4"] <- "iso-8859-4"
-        x[x == "cyrillic"] <- "iso-8859-5"
-        x[x == "arabic"] <- "iso-8859-6"
-        x[x == "greek"] <- "iso-8859-7"
-        x[x == "hebrew"] <- "iso-8859-8"
-        x[x == "latin5"] <- "iso-8859-9"
-        x[x == "latin6"] <- "iso-8859-10"
-        x[x == "latin8"] <- "iso-8859-14"
-        x[x == "latin9"] <- "iso-8859-15"
-        x[x == "latin10"] <- "iso-8859-16"
-        x
-    }
-
     firstLetterCategory <- function(x)
     {
         x[grep("-package$", x)] <- " "
@@ -1839,8 +1816,10 @@
     }
 
     cat("\n   converting help for package ", sQuote(pkg), "\n", sep="")
-    if(FALSE) {
+    if(TRUE) {
         type <- "html"
+        ## FIXME: add this lib to lib.loc?
+        Links <- findHTMLlinks(outDir)
         for (f in files) {
             bf <-  sub("\\.[Rr]d","", basename(f))
             ff <- file.path(outDir, dirname[type],
@@ -1849,24 +1828,28 @@
                 cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "html\n",
                     sep = "")
                 p <- tools::parse_Rd(f)
-                tools::Rd2HTML(p, ff, package = pkg)
+                Rd2HTML(p, ff, package = pkg, Links = Links)
             }
          }
-    } else if (TRUE) {
+    }
+    if (FALSE) {
         type <- "example"
         for (f in files) {
             bf <-  sub("\\.[Rr]d","", basename(f))
             ff <- file.path(outDir, dirname[type],
                             paste(bf, ext[type], sep = ""))
             if(!file.exists(ff) || file_test("-nt", f, ff)) {
-                cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "example\n",
-                    sep = "")
                 p <- tools::parse_Rd(f)
-                tools:::Rd2ex(p, ff)
+                Rd2ex(p, ff)
+                if (file.exists(ff))
+                    cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "example\n",
+                        sep = "")
             }
          }
-    } else
+    }
+    if (FALSE)
     for (f in files) {
+        Links <- findHTMLlinks(outDir)
         bf <-  sub("\\.[Rr]d","", basename(f))
         need <- character()
         for(type in types) {

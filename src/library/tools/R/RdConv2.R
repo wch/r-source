@@ -1,10 +1,3 @@
-alias2Path <- function(alias, package, type, lib.loc=NULL) {
-
-    paths <- sapply(.find.package(package, lib.loc, verbose = FALSE),
-                    function(p) index.search(alias, p, "AnIndex", type))
-    paths[paths != ""]
-}
-
 get_link <- function(arg) {	# like get_link in Rdconv.pm, plus a bit more
     ## FIMXE some links are split in the parser
     if (!all(RdTags(arg) == "TEXT"))
@@ -139,8 +132,8 @@ sectionTitles <-
 
 ## FIXME: better to really use XHTML
 Rd2HTML <-
-    function(Rd, out="", package="", defines=.Platform$OS.type,
-             encoding="unknown")
+    function(Rd, out = "", package = "", defines = .Platform$OS.type,
+             encoding = "unknown", Links = NULL)
 {
     ##of <- function(...) cat(..., file = con)
     ##of0 <- function(...) cat(..., file = con, sep = "")
@@ -202,6 +195,10 @@ Rd2HTML <-
 	x <- gsub("&", "&amp;", x, fixed = TRUE)
 	x <- gsub("---", "&mdash;", x, fixed = TRUE)
 	x <- gsub("--", "&ndash;", x, fixed = TRUE)
+	x <- gsub("``", "&ldquo;;", x, fixed = TRUE)
+	x <- gsub("''", "&rdquo;;", x, fixed = TRUE)
+        x <- gsub("`([^']+)'", "&lsquo;\\1&rsquo;", x, perl=TRUE)
+	x <- gsub("`", "'", x, fixed = TRUE)
 	x <- gsub("<", "&lt;", x, fixed = TRUE)
 	gsub(">", "&gt;", x, fixed = TRUE)
     }
@@ -211,11 +208,32 @@ Rd2HTML <-
 	gsub(">", "&gt;", x, fixed = TRUE)
     }
 
+    HTMLeqn <- function(x)
+    {
+        x <- htmlify(x)
+        ## historical escapes for math
+        x <- gsub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilaon)", "&\\1;", x)
+        x <- gsub("\\\\left\\(", "(", x)
+        x <- gsub("\\\\right", "\\)", x)
+        x <- gsub("\\le", "&lt;=", x)
+        x <- gsub("\\ge", "&gt;=", x)
+        x
+    }
+
     writeWrapped <- function(tag, block) {
     	of0("<", HTMLTags[tag], ">")
     	writeContent(block, tag)
     	of0("</",  HTMLTags[tag], ">")
     }
+
+    topic2Path <- function(alias, package, type, lib.loc=NULL)
+    {
+        paths <- sapply(.find.package(package, lib.loc, verbose = FALSE),
+                        function(p) index.search(alias, p, "AnIndex", type))
+        paths[paths != ""]
+    }
+
+
 
     writeLink <- function(tag, block) {
 	parts <- get_link(block)
@@ -224,6 +242,13 @@ Rd2HTML <-
 
     	if (is.null(parts$topic)) {
             htmlfile <- paste(parts$dest, ".html", sep = "") ## pro tem
+            if (!is.null(Links)) {
+                tmp <- Links[parts$dest]
+                if (is.na(tmp)) {
+                    message("missing link ", parts$dest)
+                    ## FIXME warn on missing link
+                } else htmlfile <- tmp
+            }
 ##     	    htmlfile <- alias2Path(parts$dest, package, "html")
 ##     	    if (!length(htmlfile)) {
 ##     	    	warnRd(block, Rdfile, "Alias ", sQuote(parts$dest), " not found.")
@@ -307,14 +332,14 @@ Rd2HTML <-
                    of1("<i>")
                    if (length(block) == 2)
                        writeContent(block[[2]], tag)
-                   else of(htmlify(block))
+                   else of(HTMLeqn(block))
                    of1("</i>")
                },
                "\\deqn" = {
                    of1('</p><p align="center"><i>')
                    if (length(block) == 2)
                        writeContent(block[[2]], tag)
-                   else of(htmlify(block))
+                   else of(HTMLeqn(block))
                    of1('</i></p><p>')
                },
                "\\dontshow" =,
@@ -547,7 +572,11 @@ Rd2HTML <-
 
     of0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
         '<html><head><title>R: ')
-    writeContent(title, "\\title")
+    ## special for now, as we need to remove leading and traling spaces
+    title <- as.character(title)
+    title <- htmlify(paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
+                           collapse=" "))
+    of1(title)
     of0('</title>\n',
         '<meta http-equiv="Content-Type" content="text/html; charset=',
         mime_canonical_encoding(encoding),
@@ -558,7 +587,7 @@ Rd2HTML <-
         '}"><tr><td>',name,' {', package,
         '}</td><td align="right">R Documentation</td></tr></table>\n\n',
         '<h2>')
-    writeContent(title, "\\title")
+    of1(title)
     of1('</h2>\n')
 
     for (i in seq_along(sections)[-(1:2)])
@@ -901,7 +930,7 @@ Rd2ex <-
         titleblk <- sections == "\\title"
         if (any(titleblk)) {
             title <- as.character(Rd[[ which(titleblk)[1] ]])
-            # remove empty lines, leading whitespace
+            ## remove empty lines, leading whitespace
             title <- paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
                            collapse=" ")
             ## FIXME: more?
@@ -927,4 +956,71 @@ Rd2ex <-
         of1("\n\n\n")
     }
     out
+}
+
+findHTMLlinks <- function(pkgDir = "", lib.loc = NULL)
+{
+    ## The priority order is
+    ## This package
+    ## The standard packages
+    ## along lib.loc.
+
+    getTopics <- function(info)
+    {
+        topics <- info$Aliases
+        lens <- sapply(topics, length)
+        data.frame(Topic = unlist(topics),
+                   File = rep.int(info$File, lens),
+                   stringsAsFactors = FALSE)
+    }
+
+    if(is.null(lib.loc)) lib.loc <- .libPaths()
+    nlinks <- 10000L; used <- 0L
+    Links <- character(nlinks)
+    names(Links) <- rep("", nlinks)
+    addLink <- function(names, links, p)
+    {
+        m  <- length(names)
+        names <- names
+        if (m == 0L) return
+        if(used+m > nlinks) {
+            nnlink <- length(Links) + 1000L
+            new <- character(nnlink); names(new) <- rep("", nnlink)
+            new[1L:(length(Links) + m)] <- c(Links, links)
+            names(new)[1L:(length(Links)+m)] <- c(names(Links), names)
+            Links <<- new
+        } else {
+            Links[used + (1:m)] <<- links
+            names(Links)[used + (1:m)] <<- names
+        }
+        used <<- used + m
+    }
+    for (lib in rev(lib.loc))
+        for (p in rev(dir(lib))) {
+            f <- file.path(lib, p, "Meta", "Rd.rds")
+            if (file.exists(f)) {
+                info <- getTopics(.readRDS(f))
+
+                addLink(info$Topic, file.path("../..", p, "html", info$File))
+            }
+        }
+    for (p in c("base", "utils", "graphics", "grDevices", "stats",
+                "datasets", "methods")) {
+        f <- file.path(.Library, p, "Meta", "Rd.rds")
+        if (file.exists(f)) {
+            info <- getTopics(.readRDS(f))
+            addLink(info$Topic, file.path("../..", p, "html", info$File))
+        }
+    }
+    if(nzchar(pkgDir)) {
+        f <- file.path(pkgDir, "Meta", "Rd.rds")
+        if (file.exists(f)) {
+            info <- getTopics(.readRDS(f))
+            addLink(info$Topic, info$File)
+        }
+    }
+    ## now latest names are newest, so
+    Links <- rev(Links)
+    Links <- Links[!duplicated(names(Links))]
+    gsub("[Rr]d$", "html", Links)
 }

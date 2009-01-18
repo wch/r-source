@@ -8,6 +8,7 @@
 \alias{Rd2HTML}
 \alias{Rd2ex}
 \alias{checkRd}
+\alias{findHTMLlinks}
 \title{ Work with an Rd object }
 \description{
   These experimental functions take the output of the
@@ -17,12 +18,14 @@
 }
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
-        encoding = "unknown")
+        encoding = "unknown", Links = NULL)
 
 Rd2ex(Rd, out = "", defines = .Platform$OS.type, encoding = "unknown")
 
 checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
         unknownOK = FALSE, listOK = TRUE)
+
+findHTMLlinks(pkgDir = "", lib.loc = NULL)
 }
 \arguments{
   \item{Rd}{ the \code{Rd} object. }
@@ -30,10 +33,15 @@ checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
   \item{package}{ the package to list in the output. }
   \item{defines}{ string(s) to use in \code{"#ifdef"} tests. }
   \item{encoding}{ encoding to use if the file does not specify one. }
+  \item{Links}{\code{NULL} or a named (by topics) character vector of
+    links, as returned by \code{findHTMLlinks}.}
   \item{unknownOK}{ unrecognized macros are treated as errors if
     \code{FALSE}, otherwise warnings. }
   \item{listOK}{ unnecessary non-empty braces (e.g. around text, not
     as an argument) are treated as errors if \code{FALSE}, otherwise warnings. }
+  \item{pkgDir}{The top-level directory of an installed package.}
+  \item{lib.loc}{character vector describing the location of \R library trees
+    to scan: the default indicates \code{\link{.libPaths}()}.}
 }
 \details{
   The \code{Rd2HTML} converter is still in development, and currently
@@ -54,7 +62,16 @@ checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
     to be done.
     \item Small improvements in layout.
   }
-  
+
+  \code{findHTMLlinks} uses in decreasing priority
+  \itemize{
+    \item The package in \code{pkgDir}: this is used when converting
+    HTML help for that package.
+    \item The packages that are loaded in a vanilla \R session.
+    \item Other packages found in the library trees specified by
+    \code{lib.loc} in the order of the trees and alphabetically within a
+    library tree.
+  }
 }
 \value{
   \code{Rd2HTML} is executed mainly for the side effect of writing the
@@ -62,9 +79,12 @@ checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
   
   \code{checkRd} returns \code{TRUE} if the file has no errors; it
   generates an R error otherwise.
+
+  \code{findHTMLlinks} returns a namesd character vector of relative
+  file paths, in the same package or in a package in the same library tree.
 }
 \author{
-  Duncan Murdoch, Brian Ripley (\code{Rd2ex})
+  Duncan Murdoch, Brian Ripley
 }
 \references{ \url{http://developer.r-project.org/parseRd.pdf} }
 \seealso{
