@@ -92,7 +92,6 @@ static int	xxNewlineInString;
 static int	xxgetc();
 static int	xxungetc(int);
 static int	xxlineno, xxbyteno, xxcolno;
-static int	xxlastlinebytes, xxlastlinecols;
 static int	xxmode, xxitemType, xxbraceDepth;  /* context for lexer */
 static int	xxDebugTokens;  /* non-zero causes debug output to R console */
 static const char* xxBasename;     /* basename of file for error messages */
@@ -431,9 +430,7 @@ static int xxgetc(void)
     
     if (c == '\n') {
     	xxlineno += 1;
-    	xxlastlinecols = xxcolno; 
     	xxcolno = 1;
-    	xxlastlinebytes = xxbyteno;
     	xxbyteno = 1;
     } else {
         xxcolno++;
@@ -884,7 +881,7 @@ static int token(void)
     
     if (c == R_EOF) return END_OF_INPUT; 
 
-    if (c == '#' && xxcolno == 1) return mkIfdef(c);
+    if (c == '#' && yylloc.first_column == 1) return mkIfdef(c);
     
     if (c == LBRACE) {
     	xxbraceDepth++;
