@@ -48,18 +48,18 @@ atan2(y, x)
    branch cuts is standard.
 
    For \code{asin()} and \code{acos()}, there are two cuts, both along
-   the real axis: \eqn{\left(-\infty, -1\right]}{\(-Inf, -1\]} and
-   \eqn{\left[1, \infty\right)}{\[1, Inf\)}.  Functions \code{asin()}
+   the real axis: \eqn{\left(-\infty, -1\right]}{(-Inf, -1]} and
+   \eqn{\left[1, \infty\right)}{[1, Inf)}.  Functions \code{asin()}
    and \code{acos()} are continuous from above on the interval
-   \eqn{\left(-\infty, -1\right]}{\(-Inf, -1\]} and continuous from
-   below on \eqn{\left[1, \infty\right)}{\[1, Inf\)}.
+   \eqn{\left(-\infty, -1\right]}{(-Inf, -1]} and continuous from
+   below on \eqn{\left[1, \infty\right)}{[1, Inf)}.
 
    For \code{atan()} there are two cuts, both along the pure imaginary
-   axis: \eqn{\left(-\infty i, -1i\right]}{\(-1i*Inf, -1i\]} and
-   \eqn{\left[1i, \infty i\right)}{\[1i, 1i*Inf\)}.  It is continuous
+   axis: \eqn{\left(-\infty i, -1i\right]}{(-1i*Inf, -1i]} and
+   \eqn{\left[1i, \infty i\right)}{[1i, 1i*Inf)}.  It is continuous
    from the left on the interval
-   \eqn{\left(-\infty i, -1i\right]}{\(-1i*Inf, -1i\]} and from the
-   right on the interval \eqn{\left[1i, \infty i\right)}{\[1i, 1i*Inf\)}.
+   \eqn{\left(-\infty i, -1i\right]}{(-1i*Inf, -1i]} and from the
+   right on the interval \eqn{\left[1i, \infty i\right)}{[1i, 1i*Inf)}.
 }
 \section{S4 methods}{
   All except \code{atan2} are S4 generic functions: methods can be defined

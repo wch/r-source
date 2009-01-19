@@ -68,7 +68,7 @@
   \item{time1, time2}{date-time objects or character vectors.  (Character
     vectors are converted by \code{\link{as.POSIXct}}.)}
   \item{z}{a numeric vector (in seconds)}
-  %\emph{or} an object of class \code{"\link{difftime}"}.}
+%   \emph{or} an object of class \code{"\link{difftime}"}.}
   \item{lop}{One of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
 }
