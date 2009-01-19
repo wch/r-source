@@ -18,7 +18,7 @@
 }
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
-        encoding = "unknown", Links = NULL)
+        encoding = "unknown", Links = NULL, CHM = FALSE)
 
 Rd2ex(Rd, out = "", defines = .Platform$OS.type, encoding = "unknown")
 
@@ -35,6 +35,7 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
   \item{encoding}{ encoding to use if the file does not specify one. }
   \item{Links}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{findHTMLlinks}.}
+  \item{CHM}{logical: prepare HTML suitable for Compiled HTML?} 
   \item{unknownOK}{ unrecognized macros are treated as errors if
     \code{FALSE}, otherwise warnings. }
   \item{listOK}{ unnecessary non-empty braces (e.g. around text, not

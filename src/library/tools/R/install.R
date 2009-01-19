@@ -1827,8 +1827,9 @@
             if(!file.exists(ff) || file_test("-nt", f, ff)) {
                 cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "html\n",
                     sep = "")
-                p <- tools::parse_Rd(f)
-                Rd2HTML(p, ff, package = pkg, Links = Links)
+                #p <- tools::parse_Rd(f)
+                res <- try(Rd2HTML(f, ff, package = pkg, Links = Links))
+                if(inherits(res, "try-error")) unlink(ff)
             }
          }
     }
