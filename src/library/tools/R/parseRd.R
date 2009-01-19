@@ -94,7 +94,6 @@ as.character.Rd <- function(x, ...) {
     	    	result <- c(result, "}")
     	    }
     	} else result <- as.character(x)
-    	if (tag == "COMMENT") result <- c(result, "\n")
     	result
     }
     if (is.null(attr(x, "Rd_tag")))

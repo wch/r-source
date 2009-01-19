@@ -273,6 +273,7 @@ Rd2HTML <-
 
     writeComment <- function(txt) {
        	txt <- sub("^%", "", txt, fixed = TRUE)
+       	txt <- sub("\n", "", txt)
        	txt <- gsub("--", "- - ", txt, fixed = TRUE)
        	txt <- gsub(">", "&gt;", txt, fixed = TRUE)
 	of("<!-- ", txt, " -->\n")

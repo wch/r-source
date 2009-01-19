@@ -93,7 +93,6 @@ static int	xxgetc();
 static int	xxungetc(int);
 static int	xxlineno, xxbyteno, xxcolno;
 static int	xxlastlinebytes, xxlastlinecols;
-static int	xxhavetab;
 static int	xxmode, xxitemType, xxbraceDepth;  /* context for lexer */
 static int	xxDebugTokens;  /* non-zero causes debug output to R console */
 static const char* xxBasename;     /* basename of file for error messages */
@@ -409,16 +408,22 @@ static int (*ptr_getc)(void);
 static int pushback[PUSHBACK_BUFSIZE];
 static unsigned int npush = 0;
 
+static int prevpos = 0;
+static int prevlines[PUSHBACK_BUFSIZE];
+static int prevcols[PUSHBACK_BUFSIZE];
+static int prevbytes[PUSHBACK_BUFSIZE];
+
 static int xxgetc(void)
 {
     int c;
-
-    if (xxhavetab) {
-    	xxcolno = (xxcolno + 7) & ~7;
-    	xxhavetab = 0;
-    }
-    	
+    
     if(npush) c = pushback[--npush]; else  c = ptr_getc();
+
+    prevpos = (prevpos + 1) % PUSHBACK_BUFSIZE;
+    prevcols[prevpos] = xxcolno;
+    prevbytes[prevpos] = xxbyteno;
+    prevlines[prevpos] = xxlineno;    
+    
     if (c == EOF) return R_EOF;
     
     R_ParseContextLast = (R_ParseContextLast + 1) % PARSE_CONTEXT_SIZE;
@@ -427,21 +432,18 @@ static int xxgetc(void)
     if (c == '\n') {
     	xxlineno += 1;
     	xxlastlinecols = xxcolno; 
-    	xxcolno = 0;
+    	xxcolno = 1;
     	xxlastlinebytes = xxbyteno;
-    	xxbyteno = 0;
-    	xxhavetab = 0;
+    	xxbyteno = 1;
     } else {
-       /* FIXME:  we should recognize bytes that don't move to a new column and
-                  not increment xxcolno for those */    	
         xxcolno++;
     	xxbyteno++;
     }
-    
-    if (0x80 <= c && c <= 0xBF && known_to_be_utf8) /* only advance column for 1st byte in UTF-8 */
+    /* only advance column for 1st byte in UTF-8 */
+    if (0x80 <= (unsigned char)c && (unsigned char)c <= 0xBF && known_to_be_utf8) 
     	xxcolno--;
 
-    if (c == '\t') xxhavetab = xxcolno;
+    if (c == '\t') xxcolno = ((xxcolno + 6) & ~7) + 1;
     
     R_ParseContextLine = xxlineno;
     
@@ -450,27 +452,13 @@ static int xxgetc(void)
 
 static int xxungetc(int c)
 {
-    if (xxhavetab) {
-    	if (c == '\t') xxcolno = xxhavetab;
-    	xxhavetab = 0;   /* FIXME: may be wrong in case of multiple tabs */
-    }
+    /* this assumes that c was the result of xxgetc; if not, some edits will be needed */
+    xxlineno = prevlines[prevpos];
+    xxbyteno = prevbytes[prevpos];
+    xxcolno  = prevcols[prevpos];
+    prevpos = (prevpos + PUSHBACK_BUFSIZE - 1) % PUSHBACK_BUFSIZE;
     
-    if (0x80 <= c && c <= 0xBF && known_to_be_utf8) 
-       	xxcolno++;
-
-    if (c == '\n') {
-    	xxlineno -= 1;
-    	xxcolno = xxlastlinecols; /* FIXME:  could we push back more than one line? */
-    	xxbyteno = xxlastlinebytes;
-    	
-    	xxlastlinecols = 0;
-    	xxlastlinebytes = 0;
-    	
-    	R_ParseContextLine = xxlineno;
-    } else {
-        xxcolno--;  /* FIXME: may be wrong in case of multibyte character */
-    	xxbyteno--;
-    }
+    R_ParseContextLine = xxlineno;
     
     R_ParseContext[R_ParseContextLast] = '\0';
     /* Mac OS X requires us to keep this non-negative */
@@ -559,9 +547,8 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile)
     R_ParseContext[0] = '\0';
     
     xxlineno = 1;
-    xxcolno = 0; 
-    xxbyteno = 0;
-    xxhavetab = 0;
+    xxcolno = 1; 
+    xxbyteno = 1;
     
     if (!isNull(srcfile)) SrcFile = srcfile;
     else SrcFile = NULL;
@@ -852,9 +839,9 @@ static void setfirstloc(void)
 
 static void setlastloc(void)
 {
-    yylloc.last_line = xxlineno;
-    yylloc.last_column = xxcolno;
-    yylloc.last_byte = xxbyteno;
+    yylloc.last_line = prevlines[prevpos];
+    yylloc.last_column = prevcols[prevpos];
+    yylloc.last_byte = prevbytes[prevpos];
 }
 
 /* Split the input stream into tokens. */
@@ -865,8 +852,8 @@ static int token(void)
     int c;
     int outsideLiteral = xxmode == LATEXLIKE || xxmode == INOPTION || xxbraceDepth == 0;
 
-    c = xxgetc();
     setfirstloc();    
+    c = xxgetc();
 
     /* % comments are active everywhere */
     
@@ -967,7 +954,10 @@ static int mkComment(int c)
     
     do TEXT_PUSH(c);
     while ((c = xxgetc()) != '\n' && c != R_EOF);
+    
     if (c == R_EOF) xxungetc(c);
+    else TEXT_PUSH(c);
+    
     PROTECT(yylval = mkString2(stext,  bp - stext));
     if(stext != st0) free(stext);    
     return COMMENT;
