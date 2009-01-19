@@ -7,18 +7,21 @@
 \Rdversion{1.1}
 \alias{Rd2HTML}
 \alias{Rd2ex}
+\alias{Rd2latex}
 \alias{checkRd}
 \alias{findHTMLlinks}
 \title{ Work with an Rd object }
 \description{
   These experimental functions take the output of the
-  \code{\link{parse_Rd}} function and check it or produce an HTML help
+  \code{\link{parse_Rd}} function and check it or produce a help
   page from it.  Their interfaces (and existence!) are subject to
   change.
 }
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         encoding = "unknown", Links = NULL, CHM = FALSE)
+
+Rd2latex(Rd, out = "", defines = .Platform$OS.type, encoding = "unknown")
 
 Rd2ex(Rd, out = "", defines = .Platform$OS.type, encoding = "unknown")
 
@@ -75,8 +78,8 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
   }
 }
 \value{
-  \code{Rd2HTML} is executed mainly for the side effect of writing the
-  HTML page.  Its value is the name of that page.
+  \code{Rd2*} are executed mainly for the side effect of writing the
+  converted help page.  Its value is the name of that page.
   
   \code{checkRd} returns \code{TRUE} if the file has no errors; it
   generates an R error otherwise.

@@ -1,3 +1,19 @@
+#  File src/library/tools/R/RdConv2.R
+#  Part of the R package, http://www.R-project.org
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  http://www.r-project.org/Licenses/
+
 get_link <- function(arg) {	# like get_link in Rdconv.pm, plus a bit more
     ## FIMXE some links are split in the parser
     if (!all(RdTags(arg) == "TEXT"))
@@ -117,11 +133,11 @@ preprocessRd <- function(blocks, defines)
     blocks
 }
 
-sectionOrder <-
-    c("\\title"=1, "\\name"=2, "\\description"=3, "\\usage"=4, "\\synopsis"=4,
-      "\\arguments"=5, "\\format"=6, "\\details"=7, "\\value"=8,
-      "\\section"=9, "\\note"=10, "\\author" = 11, "\\source"=12,
-      "\\references"=13, "\\seealso"=14, "\\examples"=15)
+sectionOrder <- c("\\title"=1, "\\name"=2, "\\alias"=2.1, "\\keyword"=2.2,
+    "\\description"=3, "\\usage"=4, "\\synopsis"=4, "\\arguments"=5,
+    "\\format"=6, "\\details"=7, "\\value"=8, "\\section"=9,
+    "\\note"=10, "\\author" = 11, "\\source"=12, "\\references"=13,
+    "\\seealso"=14, "\\examples"=15)
 
 sectionTitles <-
     c("\\description"="Description", "\\usage"="Usage", "\\synopsis"="Usage",
@@ -157,7 +173,7 @@ Rd2HTML <-
     		     "\\cr"="<br>",
     		     "\\dots"="...",
     		     "\\ldots"="...")
-    # These correspond to idiosyncratic wrappers
+    ## These correspond to idiosyncratic wrappers
     HTMLLeft <- c("\\acronym"='<acronym><span class="acronym">',
     		  "\\donttest"="",
     		  "\\env"='<span class="env">',
@@ -329,14 +345,14 @@ Rd2HTML <-
                    of1("<i>")
                    if (length(block) == 2)
                        writeContent(block[[2]], tag)
-                   else of(HTMLeqn(block))
+                   else of1(HTMLeqn(block))
                    of1("</i>")
                },
                "\\deqn" = {
                    of1('</p><p align="center"><i>')
                    if (length(block) == 2)
                        writeContent(block[[2]], tag)
-                   else of(HTMLeqn(block))
+                   else of1(HTMLeqn(block))
                    of1('</i></p><p>')
                },
                "\\dontshow" =,
@@ -529,15 +545,15 @@ Rd2HTML <-
     	out <- summary(con)$description
     }
 
-    # Process top level ifdef's.
+    ## Process top level ifdef's.
     Rd <- preprocessRd(Rd, defines)
     sections <- attr(Rd, "RdTags")
 
-    # Print initial comments
-    # for (i in seq_along(sections)) {
-    # 	if (sections[i] != "COMMENT") break
-    #	writeComment(Rd[[i]])
-    #}
+    ## Print initial comments
+    ## for (i in seq_along(sections)) {
+    ## 	if (sections[i] != "COMMENT") break
+    ##	writeComment(Rd[[i]])
+    ##}
 
     version <- which(sections == "\\Rdversion")
     if (length(version) == 1 && as.numeric(version[[1]]) < 2)
@@ -555,11 +571,11 @@ Rd2HTML <-
     	encoding <- encoding[[1]]
     }
 
-    # Give error for nonblank text outside a section
+    ## Give error for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]), perl = TRUE )))
     	stopRd(Rd[sections == "TEXT"][[bad[1]]], "All text must be in a section")
 
-    # Drop all the parts that are not rendered
+    ## Drop all the parts that are not rendered
     drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding",
                             "\\keyword", "\\alias", "\\Rdversion")
     Rd <- Rd[!drop]
@@ -609,7 +625,15 @@ Rd2HTML <-
     	writeSection(Rd[[i]], sections[i])
 
     if (CHM) {
-        ## JScript() if $nlink > 0;
+        nlink <- 0 ## FIXME
+        if (nlink > 0)
+            of('<script Language="JScript">',
+               'function findlink(pkg, fn) {',
+               'var Y, link;',
+               'Y = location.href.lastIndexOf("\\\\") + 1;',
+               'link = location.href.substring(0, Y);',
+               'link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;',
+               'location.href = link;')
     }
     version <- packageDescription(package, fields="Version")
     of0('\n',

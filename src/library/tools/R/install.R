@@ -1,4 +1,4 @@
-#  File share/R/INSTALL.R
+#  File src/library/tools/R/install.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -1816,7 +1816,7 @@
     }
 
     cat("\n   converting help for package ", sQuote(pkg), "\n", sep="")
-    if(TRUE) {
+    if(FALSE) {
         type <- "html"
         ## FIXME: add this lib to lib.loc?
         Links <- findHTMLlinks(outDir)
@@ -1829,6 +1829,21 @@
                     sep = "")
                 #p <- tools::parse_Rd(f)
                 res <- try(Rd2HTML(f, ff, package = pkg, Links = Links))
+                if(inherits(res, "try-error")) unlink(ff)
+            }
+         }
+    }
+    if(TRUE) {
+        type <- "latex"
+        for (f in files) {
+            bf <-  sub("\\.[Rr]d","", basename(f))
+            ff <- file.path(outDir, dirname[type],
+                            paste(bf, ext[type], sep = ""))
+            if(!file.exists(ff) || file_test("-nt", f, ff)) {
+                cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "latex\n",
+                    sep = "")
+                #p <- tools::parse_Rd(f)
+                res <- try(Rd2latex(f, ff))
                 if(inherits(res, "try-error")) unlink(ff)
             }
          }
