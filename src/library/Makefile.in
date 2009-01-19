@@ -55,7 +55,7 @@ docs:
 	@$(ECHO) "building all R documentation indices"
 	@$(MAKE) help-indices-new
 	@$(ECHO) "building all R object docs (text, HTML, LaTeX, examples)"
-	@$(MAKE) Rdfiles-new
+	@$(MAKE) Rdfiles
 	@touch stamp-docs
 
 help-indices-new:
