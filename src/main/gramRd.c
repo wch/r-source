@@ -2357,7 +2357,6 @@ static int xxungetc(int c)
 	% PARSE_CONTEXT_SIZE;
     if(npush >= PUSHBACK_BUFSIZE - 2) return EOF;
     pushback[npush++] = c;
-    
     return c;
 }
 
