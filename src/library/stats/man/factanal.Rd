@@ -47,12 +47,12 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   \item{control}{A list of control values,
     \describe{
       \item{nstart}{The number of starting values to be tried if
-	\code{start = NULL}. Default 1.}
+        \code{start = NULL}. Default 1.}
       \item{trace}{logical. Output tracing information? Default \code{FALSE}.}
       \item{lower}{The lower bound for uniquenesses during
-	optimization. Should be > 0. Default 0.005.}
+        optimization. Should be > 0. Default 0.005.}
       \item{opt}{A list of control values to be passed to
-	\code{\link{optim}}'s \code{control} argument.}
+        \code{\link{optim}}'s \code{control} argument.}
       \item{rotate}{a list of additional arguments for the rotation function.}
     }
   }

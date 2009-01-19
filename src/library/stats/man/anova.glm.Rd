@@ -77,7 +77,7 @@
   time respecting their hierarchy.
 }
 \examples{
-## --- Continuing the Example from  '?glm':%\code{\link{glm}}:
+## --- Continuing the Example from  '?glm':
 \dontshow{require(utils)
 example("glm", echo = FALSE)}
 anova(glm.D93)

@@ -59,7 +59,7 @@ beaver.plot <- function(bdat, ...) {
     # Hours since start of day:
     hours <- time \%/\% 100 + 24*(day - day[1]) + (time \%\% 100)/60
     plot (hours, temp, type = "l", ...,
-	  main = paste(nam, "body temperature"))
+          main = paste(nam, "body temperature"))
     abline(h = 37.5, col = "gray", lty = 2)
     is.act <- activ == 1
     points(hours[is.act], temp[is.act], col = 2, cex = .8)

@@ -128,15 +128,15 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   \item{rect}{a list with components
     \describe{
       \item{\code{w, h}}{positive numbers giving \bold{w}idth and
-	\bold{h}eight of the legend's box.}
+        \bold{h}eight of the legend's box.}
       \item{\code{left, top}}{x and y coordinates of upper left corner
-	of the box.}
+        of the box.}
     }
   }
   \item{text}{a list with components
     \describe{
       \item{\code{x, y}}{numeric vectors of length \code{length(legend)},
-	giving the x and y coordinates of the legend's text(s).}
+        giving the x and y coordinates of the legend's text(s).}
     }
   }
   returned invisibly.
