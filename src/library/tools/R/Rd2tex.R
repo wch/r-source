@@ -15,10 +15,34 @@
 #  http://www.r-project.org/Licenses/
 
 
+
+latex_canonical_encoding  <- function(encoding)
+{
+    encoding <- tolower(encoding)
+    encoding <- sub("iso_8859-([0-9]+)", "iso-8859-\\1", encoding)
+
+    encoding[encoding == "iso-8859-1"] <-  "latin1"
+    encoding[encoding == "iso-8859-2"] <-  "latin2"
+    encoding[encoding == "iso-8859-3"] <-  "latin3"
+    encoding[encoding == "iso-8859-4"] <-  "latin4"
+    encoding[encoding == "iso-8859-5"] <-  "cyrillic"
+    encoding[encoding == "iso-8859-6"] <-  "arabic"
+    encoding[encoding == "iso-8859-7"] <-  "greek"
+    encoding[encoding == "iso-8859-1"] <-  "hebrew"
+    encoding[encoding == "iso-8859-9"] <-  "latin5"
+    encoding[encoding == "iso-8859-10"] <-  "latin6"
+    encoding[encoding == "iso-8859-14"] <-  "latin8"
+    encoding[encoding %in% c("latin-9", "iso-8859-15")] <-  "latin9"
+    encoding[encoding == "iso-8859-16"] <-  "latin10"
+    encoding[encoding == "utf-8"] <-  "utf8"
+    encoding
+}
+
 ## Things to do
-## munging of links and aliases
-## encoding
-## yet more escapes, I expect
+## escaping is not yet complete
+## spurious result in base-package.tex
+## use \textless{]  etc?
+## methalias -- need all the stems
 
 Rd2latex <-
     function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
@@ -26,6 +50,11 @@ Rd2latex <-
     of <- function(...) writeLines(paste(...), con, sep = '')
     of0 <- function(...) writeLines(paste(..., sep=""), con, sep ="")
     of1 <- function(text) writeLines(text, con, sep = "")
+
+    trim <- function(x) {
+        x <- sub("^\\s*", "", x, perl = TRUE)
+        sub("\\s*$", "", x, perl = TRUE)
+    }
 
     envTitles <- c("\\description"="Description", "\\usage"="Usage",
         "\\synopsis"="Usage", "\\arguments"="Arguments",
@@ -64,28 +93,30 @@ Rd2latex <-
 #        x <- gsub("{", "\\textbraceleft}", x, fixed = TRUE)
 #        x <- gsub("}", "\\textbraceright}", x, fixed = TRUE)
         x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
-        x <- gsub("~", "\\textasciitilde}", x, fixed = TRUE)
+        x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
         x
     }
 
     ## version for RCODE and VERB
     vtexify <- function(x) {
-        x <- gsub("\\\\[l]+dots", "...", x)
+        x <- gsub("\\\\[l]+dots", "...", as.character(x))
         if (inCodeBlock) return(x)
         x <- gsub("([&$%_])", "\\\\\\1", x)
+        x <- gsub("(^|[^\\])\\{", "\\1\\\\{", x)
+        x <- gsub("(^|[^\\])}", "\\1\\\\}", x)
         x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
-        x <- gsub("~", "\\textasciitilde}", x, fixed = TRUE)
+        x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
         ## avoid conversion to guillemets
         x <- gsub("<<", "<{}<", x, fixed = TRUE)
         x <- gsub(">>", ">{}>", x, fixed = TRUE)
         x
     }
 
-    ## only used for \verb, not right
+    ## FIXME only used for \verb, not right yet
     writeWrapped <- function(tag, block) {
-    	of0("\\", ltxtags[tag], "{")
+    	of0("\\", ltxtags[tag], "|")
     	writeContent(block, tag)
-    	of1("}")
+    	of1("|")
     }
 
     writePass <- function(block, tag) {
@@ -108,9 +139,9 @@ Rd2latex <-
     }
 
     writeLink <- function(tag, block) {
-        ## FIXME
         link <- as.character(block)
-        of0("\\LinkA{", link, "}{", link, "}")
+        of0("\\LinkA{", latex_escape_name(link), "}{",
+            latex_link_trans0(link), "}")
     }
 
     writeComment <- function(txt) {
@@ -127,6 +158,30 @@ Rd2latex <-
             of1('## Not run: ')
             writeContent(block, tag)
        }
+    }
+
+    ltxstriptitle <- function(x)
+    {
+        x <- gsub("\\R", "\\R{}", x, fixed = TRUE)
+        x <- gsub("([^\\\\])([$#_&])", "\\1\\\\\\2", x, perl = TRUE)
+        x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
+        x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
+        x
+    }
+
+    latex_escape_name <- function(x)
+    {
+        x <- gsub("([$#~_&])", "\\\\\\1", x) #- escape them
+        x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
+        x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
+        x <- gsub("%", "\\Rpercent{}", x, fixed = TRUE)
+        x <- gsub("{", "\\textbraceleft{}", x, fixed = TRUE)
+        x <- gsub("|", "\\textbraceright{}", x, fixed = TRUE)
+        x <- gsub("\\\\", "\\textbackslash{}", x, fixed = TRUE)
+        ## avoid conversion to guillemets
+        x <- gsub("<<", "<{}<", x, fixed = TRUE)
+        x <- gsub(">>", ">{}>", x, fixed = TRUE)
+        x
     }
 
     latex_link_trans0 <- function(x)
@@ -153,6 +208,43 @@ Rd2latex <-
         x
     }
 
+    latex_code_trans  <- function(x)
+    {
+        BSL = '@BSL@';
+        LATEX_SPECIAL = '$^&~_#'
+
+        if(length(grep(LATEX_SPECIAL, x))) {
+            x <- gsub("\\\\\\\\", BSL, x)
+            ## unescape (should not be escaped)
+            x <- gsub("\\\\([$^&~_#])", "\\1", x)
+            x <- gsub("[$^&~_#]", "\\1&", x) #- escape them
+            x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE) # ^ is SPECIAL
+            x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
+            x <- gsub(BSL, "\\bsl{}", x, fixed = TRUE)
+            x <- gsub("\\", "\\bsl{}", x, fixed = TRUE)
+        }
+        ## avoid conversion to guillemets
+        x <- gsub("<<", "<{}<", x, fixed = TRUE)
+        x <- gsub(">>", ">{}>", x, fixed = TRUE)
+        x <- gsub(",,", ",{},", x, fixed = TRUE) # ,, is a ligature in the ae font.
+        x <- gsub("\\\\bsl{}var\\\\{([^}]+)\\\\}", "\\var{\\1}", x)
+        x
+}
+
+    latex_link_trans <- function(x)
+    {
+        x <- gsub("<-\\.", "<\\Rdash.", x)
+        x <- gsub("<-$", "<\\Rdash", x)
+        x
+    }
+
+    latex_code_alias <- function(x)
+    {
+        x <- gsub("([&$%_])", "\\\\\\1", x)
+        x <- gsub("<-", "<\\Rdash", x, fixed = TRUE)
+        gsub("([!|])", '"\\1', x, perl = TRUE)
+    }
+
     latex_code_aliasAA <- function(x)
     {
         x <- latex_code_trans(x)
@@ -160,21 +252,17 @@ Rd2latex <-
         gsub("\\\\([!|])", '"\\1', x, perl = TRUE)
     }
 
-    latex_code_alias <- function(x)
-    {
-        x <- gsub("([&$%_])", "\\\\\\1", x)
-        x <- gsub("<-", "<\\Rdash", x)
-        gsub("\\\\([!|])", '"\\1', x, perl = TRUE)
-        x
-    }
 
     writeAlias <- function(block, tag) {
         ## FIXME much more here, including methalias
-        alias <- latex_code_alias(block)
-        ## These break PDF-indexing, and name is linked from the header
+        ## use methaliasA when link appears to be to a method.
+        alias <- as.character(block)
+        aa <- "\\aliasA{"
+        if (pmatch(paste(name, ".", sep=""), alias, 0L)) aa <- "\\methaliasA{"
+        ## These break PDF-indexing, and 'name' is linked from the header
         if (alias %in% c(name, "(", "{", "{-class")) return()
         alias2 <- latex_link_trans0(alias)
-        of0("\\aliasA{", alias, "}{", name, "}{", alias2, "}\n")
+        of0(aa, latex_code_alias(alias), "}{", name, "}{", alias2, "}\n")
     }
 
     writeBlock <- function(block, tag, blocktag) {
@@ -239,14 +327,16 @@ Rd2latex <-
                "\\linkS4class" =,
                "\\link" = writeLink(tag, block),
                "\\cr" = of1("\\\\"),
-               ## FIXME: code is similar
                "\\dots" =,
                "\\ldots" = of1(if(inCode || inCodeBlock) "..."  else tag),
                "\\R" = of0(tag, "{}"),
                "\\donttest" = writeContent(block, tag),
                "\\dontrun"= writeDR(block, tag),
-               "\\enc" =  # FIXME:  this could sometimes use the first arg -- does not at present, though
-               writeContent(block[[2]], tag),
+               "\\enc" = {
+                   txt <- as.character(if(encoding !=" unknown") block[[1]] else block[[2]])
+                   Encoding(txt) <- "unkownn"
+                   of1(txt)
+               } ,
                "\\eqn" =,
                "\\deqn" = {
                    of0(tag, "{", ltxeqn(block[[1]]),'}{}')
@@ -320,7 +410,9 @@ Rd2latex <-
                               "\\value"=,
                               "\\arguments"={
                                   of1('\\item[\\code{')
+                                  inCode <<- TRUE
                                   writeContent(block[[1]], tag)
+                                  inCode <<- FALSE
                                   of1('}] ')
                                   writeContent(block[[2]], tag)
                               },
@@ -329,7 +421,7 @@ Rd2latex <-
                        itemskup <- TRUE
                    },
                { # default
-                   if (inList && !(tag == "TEXT" && isBlankRd(block))) {
+                   if (inList && !(tag == "TEXT" && tools:::isBlankRd(block))) {
                        of1("\\end{ldescription}\n")
                        inList <- FALSE
                    }
@@ -350,9 +442,8 @@ Rd2latex <-
         if (tag == "\\alias")
             writeAlias(section, tag)
         else if (tag == "\\keyword") {
-            section <- sub("^\\s*", "", section, perl = TRUE)
-            section <- sub("\\s*$", "", section, perl = TRUE)
-            of0("\\keyword{", as.character(section), "}{", name, "}\n")
+            key <- trim(section)
+            of0("\\keyword{", latex_escape_name(key), "}{", ltxname, "}\n")
         } else if (tag == "\\section") {
             of0("%\n\\begin{Section}{", section[[1]], "}\n")
     	    writeContent(section[[2]], tag)
@@ -422,7 +513,10 @@ Rd2latex <-
     	encoding <- Rd[[enc]]
     	if (!identical(tools:::RdTags(encoding), "TEXT"))
     	    tools:::stopRd(encoding, "Encoding must be plain text")
-    	encoding <- encoding[[1]]
+    	encoding <- trim(encoding[[1]])
+        if (encoding != "unknown") {
+            of0("\\inputencoding{", latex_canonical_encoding(encoding), "}\n")
+        }
     }
 
     ## Give error for nonblank text outside a section
@@ -449,20 +543,20 @@ Rd2latex <-
 
     title <- as.character(Rd[[1]])
     ## remove empty lines, leading whitespace
-    title <- paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
-                   collapse=" ")
-    title <- sub("^\\s*", "", title, perl = TRUE)
-    title <- sub("\\s*$", "", title, perl = TRUE)
+    title <- trim(paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
+                        collapse=" "))
     ## substitutions?
 
     name <- Rd[[2]]
     tags <- tools:::RdTags(name)
     if (length(tags) > 1) tools:::stopRd(name, "\\name must only contain simple text.")
 
-    name <- name[[1]]
-    ## FIXME, yes, escapes needed in name
+    name <- trim(name[[1]])
+    ltxname <- latex_escape_name(name)
 
-    of0('\\HeaderA{', name, '}{', title, '}{', name, '}\n')
+    of0('\\HeaderA{', ltxname, '}{',
+        ltxstriptitle(title), '}{',
+        latex_link_trans0(name), '}\n')
 
     for (i in seq_along(sections)[-(1:2)])
         writeSection(Rd[[i]], sections[i])
