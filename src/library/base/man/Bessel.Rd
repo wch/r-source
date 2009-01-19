@@ -125,7 +125,7 @@ for(nu in nus){
 }
 legend(25, -.5, legend = paste("nu=", nus), col = nus+2, lwd = 1)
 
-## negative nu in bessel_Y -- was bogous for a long time
+## negative nu in bessel_Y -- was bogus for a long time
 curve(besselY(x, -0.1), 0, 10, ylim = c(-3,1), ylab = '')
 for(nu in c(seq(-0.2, -2, by = -0.1)))
   curve(besselY(x, nu), add = TRUE)
