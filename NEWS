@@ -114,6 +114,8 @@ NEW FEATURES
     o	read.table() and friends gain a 'fileEncoding' argument to
 	make re-encoding of input just a little bit simpler.
 
+    o	grep() gains an 'invert' argument mimicing 'grep -v/--invert'.
+
 
 DEPRECATED & DEFUNCT
 

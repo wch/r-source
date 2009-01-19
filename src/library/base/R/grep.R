@@ -16,12 +16,12 @@
 
 grep <-
 function(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
-         value = FALSE, fixed = FALSE, useBytes = FALSE)
+         value = FALSE, fixed = FALSE, useBytes = FALSE, invert = FALSE)
 {
     ## when value = TRUE we return names
     if(!is.character(x)) x <- structure(as.character(x), names=names(x))
     .Internal(grep(as.character(pattern), x, ignore.case, extended, value,
-                   perl, fixed, useBytes))
+                   perl, fixed, useBytes, invert))
 }
 
 sub <-

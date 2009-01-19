@@ -21,7 +21,8 @@
 }
 \usage{
 grep(pattern, x, ignore.case = FALSE, extended = TRUE,
-     perl = FALSE, value = FALSE, fixed = FALSE, useBytes = FALSE)
+     perl = FALSE, value = FALSE, fixed = FALSE, useBytes = FALSE,
+     invert = FALSE)
 
 sub(pattern, replacement, x,
     ignore.case = FALSE, extended = TRUE, perl = FALSE,
@@ -57,7 +58,10 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   \item{fixed}{logical.  If \code{TRUE}, \code{pattern} is a string to be
     matched as is.  Overrides all conflicting arguments.}
   \item{useBytes}{logical.  If \code{TRUE} the matching is done
-    byte-by-byte rather than character-by-character.  See \sQuote{Details}.}
+    byte-by-byte rather than character-by-character.  See
+    \sQuote{Details}.}
+  \item{invert}{logicaL.  If \code{TRUE} return indices or values for
+         elements that do \emph{not} match.}
   \item{replacement}{a replacement for matched pattern in \code{sub} and
     \code{gsub}.  Coerced to character if possible.  For \code{fixed =
       FALSE} this can include backreferences \code{"\\1"} to
