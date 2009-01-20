@@ -17,8 +17,8 @@ ifneq ($(strip $(BUILD)),CROSS)
 RHOME = $(shell ./Rpwd.exe ../..)
 PKGD = $(shell ./Rpwd.exe "$(PKGDIR)")
 R_EXE = $(RHOME)/bin/rterm.exe
-## also need to change tools/R/install.R  to re-enable this
-CHM = FALSE
+## also need to change tools/R/install.R  to dis/enable this
+CHM = TRUE
 else
 RHOME = $(shell $(PERL) pwd.pl ../..)
 PKGD = $(shell $(PERL) pwd.pl $(PKGDIR))

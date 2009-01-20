@@ -84,16 +84,11 @@ if($opt_chm) {
     if(! -d $chmdir) {
 	mkdir($chmdir, $dir_mod) or die "Could not create $chmdir: $!\n";
     }
-    open_hhp($pkg);
 }
 
 if($opt_index){
     build_index($lib, $dest, $version, $chmdir);
     exit 0;
-}
-
-if($opt_chm) {
-    build_chm_toc();
 }
 
 if ($opt_latex) {
@@ -215,7 +210,6 @@ foreach $manfile (@mandir) {
 	    my $targetfile = $manfilebase;
 	    $misslink = "";
 	    $destfile = "../chm/$targetfile.html";
-	    print hhpfile "$targetfile.html\n";
 	    if(fileolder($destfile,$manage)) {
 		$chmflag = "chm";
 		print "\t$destfile" if $opt_debug;
@@ -303,62 +297,4 @@ sub usage {
     exit 0;
 }
 
-sub open_hhp {
-    my $pkg = $_[0];
 
-    open(hhpfile, ">../chm/$pkg.hhp")
-	or die "Couldn't open the chm project file\n";
-    print hhpfile "[OPTIONS]\n", "Auto Index=Yes\n",
-    "Contents file=$pkg.toc\n",
-    "Compatibility=1.1 or later\n",
-    "Compiled file=$pkg.chm\n",
-    "Default topic=00Index.html\n",
-    "Display compile progress=No\n",
-    "Full-text search=Yes\n",
-    "Full text search stop list file=..\\..\\..\\gnuwin32\\help\\R.stp\n",
-    "Title=R Help for package $pkg\n",
-    "\n\n[FILES]\n00Index.html\n";
-}
-
-sub foldorder {($b =~ /-package$/) cmp ($a =~ /-package$/) or uc($a) cmp uc($b) or $a cmp $b;}
-
-sub build_chm_toc {
-    open(tocfile, ">../chm/$pkg.toc")
-	or die "Couldn't open the chm toc file";
-    print tocfile
-	"<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">\n",
-	"<HEAD></HEAD><HTML><BODY>\n<UL>\n";
-    print tocfile
-	"<LI> <OBJECT type=\"text/sitemap\">\n",
-	"<param name=\"Name\" value=\"Package $pkg:  Contents\">\n",
-	"<param name=\"Local\" value=\"00Index.html\">\n",
-	"</OBJECT>\n";
-    print tocfile
-	"<LI> <OBJECT type=\"text/sitemap\">\n",
-	"<param name=\"Name\" value=\"Package $pkg:  R objects\">\n",
-	"</OBJECT>\n";
-    print tocfile "<UL>\n";   # contents of a book
-    foreach $alias (sort foldorder keys %aliasnm) {
-	print tocfile
-	    "<LI> <OBJECT type=\"text/sitemap\">\n",
-	    "<param name=\"Name\" value=\"$alias\">\n",
-	    "<param name=\"Local\" value=\"$aliasnm{$alias}.html\">\n",
-	    "</OBJECT>\n";
-    }
-    print tocfile "</UL>\n";  # end of a book
-    print tocfile
-	"<LI> <OBJECT type=\"text/sitemap\">\n",
-	"<param name=\"Name\" value=\"Package $pkg:  Titles\">\n",
-	"</OBJECT>\n";
-    print tocfile "<UL>\n";   # contents of a book
-    foreach $title (sort foldorder keys %title2file) {
-	print tocfile
-	    "<LI> <OBJECT type=\"text/sitemap\">\n",
-	    "<param name=\"Name\" value=\"$title\">\n",
-	    "<param name=\"Local\" value=\"$title2file{$title}.html\">\n",
-	    "</OBJECT>\n";
-    }
-    print tocfile "</UL>\n";  # end of a book
-    print tocfile "</UL>\n</BODY></HTML>\n";
-    close tocfile;
-}

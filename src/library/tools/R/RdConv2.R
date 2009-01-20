@@ -155,6 +155,7 @@ Rd2HTML <-
     of0 <- function(...) writeLines(paste(..., sep=""), con, sep ="")
     of1 <- function(text) writeLines(text, con, sep = "")
 
+    nlinks <- 0L
 ### These correspond to HTML wrappers
     HTMLTags <- c("\\bold"="B",
     	          "\\cite"="CITE",
@@ -245,6 +246,8 @@ Rd2HTML <-
     }
 
     ## FIXME: depends on CHM or not
+    ## Cross-packages CHM links are of the form
+    ## <a onclick="findlink('stats', 'weighted.mean.html')" style="text-decoration: underline; color: blue; cursor: hand">weighted.mean</a>
     writeLink <- function(tag, block) {
 	parts <- get_link(block)
 	if (tag == "\\linkS4class")
@@ -269,6 +272,7 @@ Rd2HTML <-
     	of0('<a href="', htmlfile, '">')
     	writeContent(block, tag)
     	of1('</a>')
+        nlinks <<- nlinks + 1L
     }
 
     writeComment <- function(txt) {
@@ -502,6 +506,7 @@ Rd2HTML <-
     }
 
     writeSection <- function(section, tag) {
+        if (tag == "\\alias") return() ## only used on CHM header
     	of1("\n\n<h3>")
     	if (tag == "\\section") {
     	    title <- section[[1]]
@@ -577,7 +582,7 @@ Rd2HTML <-
 
     ## Drop all the parts that are not rendered
     drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding",
-                            "\\keyword", "\\alias", "\\Rdversion")
+                            "\\keyword", "\\Rdversion")
     Rd <- Rd[!drop]
     sections <- sections[!drop]
 
@@ -587,8 +592,8 @@ Rd2HTML <-
     sortorder <- order(sortorder)
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
-    if (!identical(sections[1:3],c("\\title", "\\name", "\\description")))
-    	stopRd(Rd, "Sections \\title, \\name and \\description must exist and be unique in Rd files.")
+    if (!identical(sections[1:2], c("\\title", "\\name")))
+    	stopRd(Rd, "Sections \\title, and \\name must exist and be unique in Rd files.")
 
     title <- Rd[[1]]
     name <- Rd[[2]]
@@ -597,9 +602,12 @@ Rd2HTML <-
 
     name <- htmlify(name[[1]])
 
-    of0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
-        '<html><head><title>R: ')
-    ## special for now, as we need to remove leading and traling spaces
+    if(CHM)
+        of0('<html><head><title>')
+    else
+        of0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
+            '<html><head><title>R: ')
+    ## special for now, as we need to remove leading and trailing spaces
     title <- as.character(title)
     title <- htmlify(paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
                            collapse=" "))
@@ -608,32 +616,41 @@ Rd2HTML <-
         '<meta http-equiv="Content-Type" content="text/html; charset=',
         mime_canonical_encoding(encoding),
         '">\n')
-    if(CHM)
+    if(CHM) {
         of0('<link rel="stylesheet" type="text/css" href="Rchm.css">\n',
             '</head><body>\n\n')
-    else
+        of0('<table width="100%"><tr><td>', name, '(', package, ')',
+            '</td><td align="right">R Documentation</td></tr></table>\n')
+        of1('<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">\n')
+        aliases <- sapply(Rd[RdTags(Rd) == "\\alias"], as.character)
+        ## FIXME: (un)escape as needed
+        of0('<param name="keyword" value="R:   ', aliases, '">\n')
+        ## space is deliberate, used in sorting indices
+        of0('<param name="keyword" value=" ', title, '">\n')
+        of1('</object>\n\n\n')
+    } else
         of0('<link rel="stylesheet" type="text/css" href="../../R.css">\n',
             '</head><body>\n\n',
             '<table width="100%" summary="page for ', name, ' {', package,
             '}"><tr><td>',name,' {', package,
-            '}</td><td align="right">R Documentation</td></tr></table>\n\n',
-            '<h2>')
-    of1(title)
-    of1('</h2>\n')
+            '}</td><td align="right">R Documentation</td></tr></table>\n\n')
+
+    of0("<h2>", title,'</h2>\n')
 
     for (i in seq_along(sections)[-(1:2)])
     	writeSection(Rd[[i]], sections[i])
 
     if (CHM) {
-        nlink <- 0 ## FIXME
-        if (nlink > 0)
-            of('<script Language="JScript">',
-               'function findlink(pkg, fn) {',
-               'var Y, link;',
-               'Y = location.href.lastIndexOf("\\\\") + 1;',
-               'link = location.href.substring(0, Y);',
-               'link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;',
-               'location.href = link;')
+        if (nlinks > 0)
+            writeLines(paste('',
+                             '<script Language="JScript">',
+                             'function findlink(pkg, fn) {',
+                             'var Y, link;',
+                             'Y = location.href.lastIndexOf("\\\\") + 1;',
+                             'link = location.href.substring(0, Y);',
+                             'link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;',
+                             'location.href = link;', '}', '</script>',
+                             sep = '\n'), con)
     }
     version <- packageDescription(package, fields="Version")
     of0('\n',

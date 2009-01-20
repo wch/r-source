@@ -16,13 +16,6 @@
     		CHANGES IN R VERSION 2.9.0
 
 
-HELP CHANGES
-
-    o	Whilst we are working on the help build system, CHM help is
-	not built by default (and is untested).  Whether this is
-	reinstated before release is undecided.
-
-
 NEW FEATURES
 
     o	memory.size() and memory.limits() now return rounded values.

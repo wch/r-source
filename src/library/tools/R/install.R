@@ -110,7 +110,7 @@
             "      --no-multiarch	build only the main architecture",
             "\nand on Windows only",
             "      --auto-zip	select whether to zip automatically",
-            "      --no-chm		do not build CHM help",
+            "      --no-chm		do not build CHM help [disabled pro lem]",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -832,20 +832,21 @@
                 if (build_help) {
                     starsmsg(paste0(stars, "*"),
                              "installing help indices")
-                    cmd <- paste("perl",
-                                 shQuote(file.path(R.home("share"), "perl",
-                                                   if (WINDOWS) "build-help-windows.pl" else  "build-help.pl")),
-                                 "--index",
-                                 ## need next to get CHM index built
-                                 paste(build_help_opts, collapse=" "),
-                                 shQuote(pkg_dir),
-                                 shQuote(lib),
-                                 shQuote(instdir),
-                                 pkg_name)
-                    if (debug) message("about to run ", sQuote(cmd))
-                    res <- system(cmd)
-                    if (res)
-                        pkgerrmsg("building help indices failed", pkg_name)
+                    .writePkgIndices(pkg_dir, instdir, CHM = build_chm)
+##                     cmd <- paste("perl",
+##                                  shQuote(file.path(R.home("share"), "perl",
+##                                                    if (WINDOWS) "build-help-windows.pl" else  "build-help.pl")),
+##                                  "--index",
+##                                  ## need next to get CHM index built
+##                                  paste(build_help_opts, collapse=" "),
+##                                  shQuote(pkg_dir),
+##                                  shQuote(lib),
+##                                  shQuote(instdir),
+##                                  pkg_name)
+##                     if (debug) message("about to run ", sQuote(cmd))
+##                     res <- system(cmd)
+##                     if (res)
+##                         pkgerrmsg("building help indices failed", pkg_name)
                     cmd <- paste("perl",
                                  shQuote(file.path(R.home("share"), "perl",
                                                    if (WINDOWS) "build-help-windows.pl" else  "build-help.pl")),
@@ -1768,10 +1769,35 @@
         }
     }
     writeLines('</body></html>', outcon)
-    if(CHM) writeLines('</body></html>', outcon)
-    if(CHM) chm_toc(dir, desc["Package"], M)
+    if(CHM) writeLines('</body></html>', chmcon)
+    if(CHM) {
+        chm_toc(dir, desc["Package"], M)
+        .write_CHM_hhp(dir, desc["Package"])
+    }
 }
 
+## dir is the package top-level directory
+.write_CHM_hhp <- function(dir, pkg)
+{
+    if(missing(pkg)) pkg <- basename(dir)
+    d <- file.path(dir, "chm")
+    dir.create(d, showWarnings = FALSE)
+    con <- file(file.path(d, paste(pkg, ".hhp", sep = "")), "wt")
+    on.exit(close(con))
+    writeLines(paste("[OPTIONS]\nAuto Index=Yes\n",
+                     "Contents file=", pkg, ".toc\n",
+                     "Compatibility=1.1 or later\n",
+                     "Compiled file=", pkg, ".chm\n",
+                     "Default topic=00Index.html\n",
+                     "Display compile progress=No\n",
+                     "Full-text search=Yes\n",
+                     "Full text search stop list file=..\\..\\..\\gnuwin32\\help\\R.stp\n",
+                     "Title=R Help for package ", pkg, "\n",
+                     "\n\n[FILES]", sep = ""), con)
+    writeLines(dir(d, pattern = "\\.html$"), con)
+}
+
+## NB Perl version removes files if the corresponding .Rd has disappeared
 .convertRdfiles <-
     function(dir, outDir, OS = .Platform$OS.type,
              types = c("txt", "html", "latex", "example"))
