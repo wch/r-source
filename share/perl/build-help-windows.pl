@@ -29,8 +29,7 @@ fileparse_set_fstype; # Unix, in case one gets anything else.
 ## write to both STDERR (warnings) and STDOUT.
 $| = 1;
 
-@knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
-		 "chm", "index");
+@knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d", "chm");
 GetOptions (@knownoptions) || usage();
 
 $OSdir = "windows";
@@ -60,7 +59,7 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example && !$opt_chm){
     $opt_txt = 1;
     $opt_latex = 1;
     $opt_example = 1;
-    $opt_chm = 1 unless $opt_index;
+    $opt_chm = 1;
 }
 
 ($pkg, $version, $lib, @mandir) = buildinit();
@@ -86,11 +85,6 @@ if($opt_chm) {
     }
 }
 
-if($opt_index){
-    build_index($lib, $dest, $version, $chmdir);
-    exit 0;
-}
-
 if ($opt_latex) {
     $latex_d = file_path($dest, "latex");
     if(! -d $latex_d) {
@@ -114,13 +108,11 @@ print "chm " if $opt_chm;
 print "\n";
 
 
-# get %htmlindex and %anindex
 # as from 1.7.0 we can resolve links to base from other libraries
 # by fixing the link in fixup.package.URLs().
 # as from 1.9.0 we fix up utils, graphics, stats as well.
 # by 2.3.0 grDevices, datasets and methods.
 
-%anindex = read_anindex($lib);
 if($opt_html || $opt_chm){
     %htmlindex = read_htmlindex($lib);
     if ($lib ne $mainlib) {
@@ -291,7 +283,7 @@ if($opt_chm){
 sub usage {
     print "Usage:  build-help-windows.pl [--rhome dir] [--html] [--txt]\n" .
       "                   [--latex] [--example] [--chm]\n" .
-      "                   [--debug] [--index]\n" .
+      "                   [--debug]\n" .
       "                   [pkg] [lib]\n";
 
     exit 0;
