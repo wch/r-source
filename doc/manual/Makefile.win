@@ -14,8 +14,8 @@ TEXI2DVI=texi2dvi
 else
 R_TEXOPTS=
 TEXI2DVI=
-R_EXE=../../bin/Rterm
 endif
+R_EXE=../../bin/Rterm
 else # cross-builds
 R_TEXOPTS=
 TEXI2DVI=texi2dvi
