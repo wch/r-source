@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2008 R Development Core Team
+# Copyright (C) 1997-2009 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,8 +36,7 @@ $version = $1;
 $| = 1;
 
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
-		 "help|h", "version|v", "os|OS:s", 
-		 "index");
+		 "help|h", "version|v", "os|OS:s");
 GetOptions (@knownoptions) || usage();
 &R_version($name, $version) if $opt_version;
 &usage() if $opt_help;
@@ -92,12 +91,6 @@ if(-r &file_path($dest, "DESCRIPTION")) {
 	}
 }
 
-
-if($opt_index){
-    build_index($lib, $dest, $version, "");
-    exit 0;
-}
-
 if ($opt_latex) {
     $latex_d = file_path($dest, "latex");
     if(! -d $latex_d) {
@@ -120,9 +113,6 @@ print "example " if $opt_example;
 print "\n";
 
 
-# get %htmlindex and %anindex
-
-%anindex = read_anindex($lib);
 if($opt_html){
     %htmlindex = read_htmlindex($lib);
     if ($lib ne $mainlib) {
@@ -282,7 +272,6 @@ Options:
   --txt                 build text files    (default is all)
   --latex               build LaTeX files   (default is all)
   --example             build example files (default is all)
-  --index               build index file only
 
 
 Email bug reports to <r-bugs\@r-project.org>.

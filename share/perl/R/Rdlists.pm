@@ -1,6 +1,6 @@
 ## Subroutines for building R documentation
 
-## Copyright (C) 1997-2006 R Development Core Team
+## Copyright (C) 1997-2009 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ package R::Rdlists;
 require  Exporter;
 @ISA     = qw(Exporter);
 @EXPORT  = qw(buildinit read_htmlindex read_htmlpkgindex read_anindex
-	      build_index fileolder foldorder aliasorder);
+	     fileolder foldorder aliasorder);
 
 use Cwd;
 use File::Basename;
@@ -227,280 +227,10 @@ sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
 
 sub aliasorder {($b =~ /-package$/) cmp ($a =~ /-package$/) or uc($a) cmp uc($b) or $a cmp $b;}
 
-
-sub isNonASCII {
-    return $_[0] =~ /[^A-Za-z0-9[:punct:][:space:]]/
-}
-
-sub build_index { # lib, dest, version, [chmdir]
-    my $lib = $_[0];
-    my $dest = $_[1];
-    my $version = $_[2];
-    my $chmdir = $_[3];
-
-    if(! -d $lib){
-        mkdir("$lib", $dir_mod) or die "Could not create directory $lib: $!\n";
-    }
-
-    if(! -d "$dest"){
-        mkdir("$dest", $dir_mod) or die "Could not create directory $dest: $!\n";
-    }
-
-    my $title = "";
-    my $pkg_name = "";
-    my $pkg_encoding = "unknown";
-    ## did not work if builddir ne srcdir
-    if(-r &file_path($dest, "DESCRIPTION")) {
-	my $rdcf = R::Dcf->new(&file_path($dest, "DESCRIPTION"));
-	if($rdcf->{"Package"}) {
-	    $pkg_name = $rdcf->{"Package"};
-	    chomp $pkg_name;
-	}
-	if($rdcf->{"Title"}) {
-	    $title = $rdcf->{"Title"};
-	    chomp $title;
-	}
-	if($rdcf->{"Encoding"}) {
-	    ## we use this even if the pkg title is ASCII
-	    $pkg_encoding = $rdcf->{"Encoding"};
-	    chomp $pkg_encoding;
-	    $pkg_encoding = mime_canonical_encoding($pkg_encoding);
-	}
-    }
-
-    my $tdir = file_path($dest, "help");
-    if(! -d $tdir) {
-	mkdir($tdir, $dir_mod) or die "Could not create " . $tdir.": $!\n";
-    }
-    $tdir = file_path($dest, "html");
-    if(! -d $tdir) {
-	mkdir($tdir, $dir_mod) or die "Could not create " . $tdir.": $!\n";
-    }
-    my $anindex = file_path($dest, "help", "AnIndex");
-
-    my %alltitles;
-    my $naliases;
-    my $nmanfiles;
-    my %firstlettersfound;
-    my %internal;
-    my $tfile;
-
-    foreach $manfile (@mandir) {
-	## Should only process files starting with [A-Za-z0-9] and with
-	## suffix .Rd or .rd, according to 'Writing R Extensions'.
-	if($manfile =~ /\.[Rr]d$/){
-
-	    my $rdname = basename($manfile, (".Rd", ".rd"));
-	    if(! ($rdname =~ /^[A-Za-z0-9]/) ) { next; }
-	    my $internal = 0;
-	    my $encoding = "unknown";
-
-	    if($main::opt_dosnames){
-		$manfilebase = "x" . $nmanfiles++;
-	    }
-	    else{
-		$manfilebase = $rdname;
-	    }
-
-	    open(rdfile, "< $manfile");
-	    undef $text;
-	    while(<rdfile>){  # skip comment lines
-		if(!/^%/) { $text .= $_; }
-	    }
-	    close rdfile;
-	    $text =~ /\\title\{\s*([^\}]+)\s*\}/s;
-	    my $rdtitle = $1;
-	    $rdtitle =~ s/\n/ /sg;
-	    ## remove trailing space from above
-	    $rdtitle =~ s/\s*$//;
-	    $rdtitle =~ s/\\R/R/g; # don't use \R in titles
-	    $internal = 1 if $text =~ /\\keyword\{\s*internal\s*\}/;
-	    if($text =~ /\\encoding\{\s*([^\}]+)\s*\}/s) {
-		$encoding = mime_canonical_encoding($1);
-		if(isNonASCII($rdtitle)) {
-		    if($pkg_encoding eq "unknown") {
-			$pkg_encoding = $encoding;
-		    } elsif($encoding ne $pkg_encoding) {
-			warn "Warning: " .
-			    "encoding of Rd title in '$encoding'".
-			    " is inconsistent with ".
-			    "earlier encoding '$pkg_encoding'\n";
-		    }
-		}
-	    }
-	    $main::filenm{$rdname} = $manfilebase;
-	    if($main::opt_chm) {
-		$main::title2file{$rdtitle} = $manfilebase;
-	    }
-
-	    ## some \alias entries have trailing comments including a }
-	    while($text =~ s/\\alias\{\s*([^}]+)\}//){
-		$alias = $1;
-		$alias =~ s/\\%/%/g;
-		$alias =~ s/\s*$//;
-		## As from 2.9.0 treat \{ as \{
-		$alias =~ s/\\\{/\{/;
-		if ($internal) {
-		    $internal{$alias} = 1;
-		}
-		my $an = $main::aliasnm{$alias};
-		if ($an) {
-		    if($an ne $manfilebase) {
-			warn "Warning: " .
-			    "\\alias\{$alias\} already in $an.Rd -- " .
-			    "skipping the one in $manfilebase.Rd\n";
-		    }
-		} else {
-		    $main::alltitles{$alias} = $rdtitle;
-		    $main::aliasnm{$alias} = $manfilebase;
-		    if(!$internal){
-			my $flc = firstLetterCategory($alias);
-			$firstlettersfound{$flc}++;
-		    }
-		    $naliases++;
-		}
-	    }
-	}
-    }
-
-    open(anindex, "> ${anindex}") or die "Could not open ${anindex}";
-    foreach $alias (sort aliasorder keys %main::aliasnm) {
-	print anindex "$alias\t$main::aliasnm{$alias}\n";
-    }
-    close anindex;
-
-
-    open(anindex, "< $anindex");
-    $tfile = file_path($dest, "html", "00Index".$HTML);
-    open(htmlfile, "> $tfile") or die "Could not open $tfile";
-    if($main::opt_chm) { # Windows only
-	open(chmfile, "> $chmdir/00Index$HTML") or
-	    die "Could not open $chmdir/00Index$HTML";
-    }
-    $pkg_encoding = mime_canonical_encoding($pkg_encoding);
-
-    $pkg_encoding = "iso-8859-1" if $pkg_encoding eq "unknown";
-
-    print htmlfile html_pagehead("$title", "../../../doc/html",
-				 "../../../doc/html/index$HTML", "Top",
-				 "../../../doc/html/packages$HTML",
-				 "Package List", "", "", "../../R.css",
-				 $pkg_encoding);
-
-    if($main::opt_chm) {
-	print chmfile chm_pagehead("$title");
-	print chmfile "<h2>Help pages for package &lsquo;", $pkg_name, "&rsquo;"; 
-	print chmfile " version ", $version if $version != "";
-	print chmfile "</h2>\n\n";
-    }
-
-    print htmlfile "<h2>Documentation for package &lsquo;", $pkg_name, "&rsquo;"; 
-    print htmlfile " version ", $version if $version != "";
-    print htmlfile "</h2>\n\n";
-
-    if(-d file_path($dest, "doc")){
-	print htmlfile "<h2>User Guides and Package Vignettes</h2>\n"
-	    . "Read <a href=\"../doc/index.html\">overview</a> or "
-	    . "browse <a href=\"../doc\">directory</a>.\n\n";
-    }
-    print htmlfile "<h2>Help Pages</h2>\n\n";
-	
-    if($naliases>100){
-	print htmlfile html_alphabet(keys(%firstlettersfound));
-	if($main::opt_chm) {
-	    print chmfile html_alphabet(keys(%firstlettersfound));
-	}
-   }
-
-    print htmlfile "\n<table width=\"100%\">\n";
-    if($main::opt_chm) {print chmfile "\n<table width=\"100%\">\n";}
-
-    my $firstletter = "";
-    my $current = "", $currentfile = "", $file, $generic;
-    while(<anindex>){
-        chomp;  ($alias, $file) = split /\t/;
-	if(!$internal{$alias}){
-	    $aliasfirst = firstLetterCategory($alias);
-	    if( ($naliases > 100) && ($aliasfirst ne $firstletter) ) {
-		print htmlfile "</table>\n";
-		print htmlfile html_title2("<a name=\"$aliasfirst\">-- $aliasfirst --</a>");
-		print htmlfile "<table width=\"100%\">\n";
-		if($main::opt_chm) {
-		    print chmfile "</table>\n";
-		    print chmfile html_title2("<a name=\"$aliasfirst\">-- $aliasfirst --</a>");
-		    print chmfile "<table width=\"100%\">\n";
-		}
-		$firstletter = $aliasfirst;
-	    }
-            ## skip method aliases.
-	    $generic = $alias;  
-	    $generic =~ s/\.data\.frame$/.dataframe/o;
-	    $generic =~ s/\.model\.matrix$/.modelmatrix/o;
-	    $generic =~ s/\.[^.]+$//o;
-
-	    next if $alias =~ /^\w+<-$/o || $generic =~ /\w+<-$/o;
-	    if ($generic ne "" && $generic eq $current && 
-		$file eq $currentfile && $generic ne "ar") { 
-
-		next; 
-	    } else { $current = $alias; $currentfile = $file;}
-
-	    my $title = striptitle($main::alltitles{$alias});
-	    print htmlfile "<tr><td width=\"25%\"><a href=\"$file$HTML\">" .
-		encodealias($alias) . "</a></td>\n<td>$title</td></tr>\n";
-	    if($main::opt_chm) {
-		print chmfile "<tr><td width=\"25%\"><a href=\"$file$HTML\">" .
-		    encodealias($alias) . "</a></td>\n<td>$title</td></tr>\n";
-	    }
-	}
-    }
-
-    print htmlfile "</table>\n";
-    print htmlfile "</body></html>\n";
-    if($main::opt_chm) {print chmfile "</table>\n</body></html>\n";}
-
-    close htmlfile;
-    if($main::opt_chm) {close chmfile;}
-    close anindex;
-}
-
-
-
-
 ## return true if file exists and is older than $age
 sub fileolder {
     my($file, $age) = @_;
     (! ((-f $file) && ((-M $file) < $age)));
-}
-
-
-## Return the first letter in uppercase, empty string for <=A and
-## or "*-package" and "misc" for >=Z 
-## used for indexing various HTML lists.
-sub firstLetterCategory {
-    my ($x) = @_;
-    
-    if ($x =~ /-package$/) { $x = " "; }
-    else {
-    	$x = uc substr($x, 0, 1);
-    	if($x lt "A") { $x = ""; }
-    	if($x gt "Z") { $x = "misc"; }
-    }
-    $x;
-}
-
-## produce alphabet for head of pages
-## optional argument gives array of letters to use
-sub html_alphabet
-{
-    my @letters = @_;
-
-    @letters = (A..Z) if $#letters<0;
-    my $retval = "<p align=\"center\">\n";
-    foreach $letter (sort(@letters)){
-	$retval .= "<a href=\"#${letter}\">${letter}</a>\n";
-    }
-    $retval . "</p>";
 }
 
 sub html_pagehead
@@ -553,14 +283,6 @@ sub chm_pagehead
 
     $retval;
 }
-
-sub html_title2
-{
-    my $title = $_[0];
-
-    "\n<h2>$title</h2>\n\n";
-}
-
 
 1;
 # Local variables: **
