@@ -123,7 +123,7 @@
             ## *one* package ... well not so sure for bundles.
             file.copy(file.path(R.home("doc"), "html", "R.css"), lib)
             if (lib == .Library) {
-                tools:::.file_append_ensuring_LFs(file.path(R.home("doc"), "html", "search", "index.txt"),
+                .file_append_ensuring_LFs(file.path(R.home("doc"), "html", "search", "index.txt"),
                                                   Sys.glob(file.path(R.home(), "library", "*", "CONTENTS")))
                 if (build_help && identical(Sys.getenv("NO_PERL5"), "false"))
                     tools::unix.packages.html(.Library, docdir = R.home("doc"))
@@ -228,7 +228,7 @@
             if (length(contains) && length(Sys.glob("*/DESCRIPTION.in"))) {
                 ## Create the package level DESCRIPTION files from the bundle
                 ## level DESCRIPTION and the package level DESCRIPTION.in ones.
-                res <- try(tools:::.vcreate_bundle_package_descriptions(pkg, paste(contains, collapse=" ")))
+                res <- try(.vcreate_bundle_package_descriptions(pkg, paste(contains, collapse=" ")))
                 if (inherits(res, "try-error"))
                     warning("problem installing per-package DESCRIPTION files",
                             call. = FALSE)
@@ -258,7 +258,7 @@
 
             ## FIXME: do this at bundle level?
             ## Could different packages have different version requirements?
-            status <- tools:::.Rtest_package_depends_R_version()
+            status <- .Rtest_package_depends_R_version()
             if (status) do_exit_on_error()
 
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
@@ -550,7 +550,7 @@
             ## This cannot be done in a MBCS: write.dcf fails
             ctype <- Sys.getlocale("LC_CTYPE")
             Sys.setlocale("LC_CTYPE", "C")
-            res <- try(tools:::.install_package_description(".", instdir))
+            res <- try(.install_package_description(".", instdir))
             Sys.setlocale("LC_CTYPE", ctype)
             if (inherits(res, "try-error"))
                 pkgerrmsg("installing package DESCRIPTION failed", pkg_name)
@@ -670,12 +670,12 @@
                 dir.create(file.path(instdir, "R"), recursive = TRUE,
                            showWarnings = FALSE)
                 ## This cannot be done in a C locale
-                res <- try(tools:::.install_package_code_files(".", instdir))
+                res <- try(.install_package_code_files(".", instdir))
                 if (inherits(res, "try-error"))
                     pkgerrmsg("unable to collate files", pkg_name)
 
                 if (file.exists(file.path("R", "sysdata.rda"))) {
-                    res <- try(tools:::sysdata2LazyLoadDB("R/sysdata.rda",
+                    res <- try(sysdata2LazyLoadDB("R/sysdata.rda",
                                                           file.path(instdir, "R")))
                     if (inherits(res, "try-error"))
                         pkgerrmsg("unable to build sysdata DB", pkg_name)
@@ -732,7 +732,7 @@
                         ## the package we have just installed is on the
                         ## library path.'
                         ## (We set .libPaths)
-                        res <- try(tools:::data2LazyLoadDB(pkg_name, lib))
+                        res <- try(data2LazyLoadDB(pkg_name, lib))
                         if (inherits(res, "try-error"))
                             pkgerrmsg("lazydata failed", pkg_name)
                     } else if (use_zip_data &&
@@ -752,7 +752,7 @@
                 dir.create(file.path(instdir, "demo"), recursive = TRUE,
                            showWarnings = FALSE)
                 file.remove(Sys.glob(file.path(instdir, "demo", "*")))
-                res <- try(tools:::.install_package_demos(".", instdir))
+                res <- try(.install_package_demos(".", instdir))
                 if (inherits(res, "try-error"))
                     pkgerrmsg("ERROR: installing demos failed")
                 Sys.chmod(Sys.glob(file.path(instdir, "demo", "*")), "644")
@@ -807,13 +807,13 @@
                     .getRequiredPackages(quietly = TRUE)
                     Sys.setenv(R_CROSS_BUILD="yes")
                     Sys.setenv(R_CROSS_BUILD2="yes")
-                    res <- try(tools:::makeLazyLoading(pkg_name, lib))
+                    res <- try(makeLazyLoading(pkg_name, lib))
                     Sys.unsetenv("R_CROSS_BUILD")
                     Sys.unsetenv("R_CROSS_BUILD2")
                     .libPaths(ol)
                 } else
                 res <- try({.getRequiredPackages(quietly = TRUE)
-                            tools:::makeLazyLoading(pkg_name, lib)})
+                            makeLazyLoading(pkg_name, lib)})
                 options(warnEscapes = TRUE)
                 if (inherits(res, "try-error"))
                     pkgerrmsg("lazy loading failed", pkg_name)
@@ -823,7 +823,7 @@
 
             if (.file_test("-d", "man")) {
                 starsmsg(stars, "help")
-                res <- try(tools:::.install_package_man_sources(".", instdir))
+                res <- try(.install_package_man_sources(".", instdir))
                 if (inherits(res, "try-error"))
                     pkgerrmsg("installing man sources failed", pkg_name)
                 Sys.chmod(file.path(instdir, "man",
@@ -904,13 +904,13 @@
 
             ## pkg indices
             starsmsg(stars, "building package indices ...")
-            res <- try(tools:::.install_package_indices(".", instdir))
+            res <- try(.install_package_indices(".", instdir))
             if (inherits(res, "try-error"))
                 errmsg("installing package indices failed")
 
             ## Install a dump of the parsed NAMESPACE file
             if (file.exists("NAMESPACE") && !fake) {
-                res <- try(tools:::.install_package_namespace_info(".", instdir))
+                res <- try(.install_package_namespace_info(".", instdir))
                 if (inherits(res, "try-error"))
                     errmsg("installing namespace metadata failed")
             }
@@ -934,7 +934,7 @@
 
         if (WINDOWS && !nzchar(windir)) { ## Add MD5 sums: only for --build?
             starsmsg(stars, "MD5 sums")
-            tools:::.installMD5sums(instdir)
+            .installMD5sums(instdir)
         }
 
     }
@@ -1633,7 +1633,7 @@
         ## suffix .Rd or .rd, according to 'Writing R Extensions'.
         OK <- grep("^[A-Za-z0-9]", basename(files))
         files <- files[OK]
-        tools:::Rdcontents(files)
+        Rdcontents(files)
     }
 
     topics <- Rd$Aliases
@@ -1841,55 +1841,62 @@
                    perllib, sep = .Platform$path.sep))
     }
 
+    ## FIXME: perl version cleans up non-matching converted files
+    #types <- "txt"
     cat("\n   converting help for package ", sQuote(pkg), "\n", sep="")
-    if(FALSE) {
-        type <- "html"
-        ## FIXME: add this lib to lib.loc?
-        Links <- findHTMLlinks(outDir)
-        for (f in files) {
-            bf <-  sub("\\.[Rr]d","", basename(f))
-            ff <- file.path(outDir, dirname[type],
-                            paste(bf, ext[type], sep = ""))
-            if(!file.exists(ff) || file_test("-nt", f, ff)) {
-                cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "html\n",
-                    sep = "")
-                #p <- tools::parse_Rd(f)
-                res <- try(Rd2HTML(f, ff, package = pkg, Links = Links))
-                if(inherits(res, "try-error")) unlink(ff)
-            }
-         }
-    }
     if(TRUE) {
-        type <- "latex"
+        ## FIXME: add this lib to lib.loc?
+        Links <- if ("html" %in% types) findHTMLlinks(outDir) else ""
         for (f in files) {
             bf <-  sub("\\.[Rr]d","", basename(f))
-            ff <- file.path(outDir, dirname[type],
-                            paste(bf, ext[type], sep = ""))
-            if(!file.exists(ff) || file_test("-nt", f, ff)) {
-                cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "latex\n",
-                    sep = "")
-                #p <- tools::parse_Rd(f)
-                res <- try(Rd2latex(f, ff))
-                if(inherits(res, "try-error")) unlink(ff)
-            }
-         }
-    }
-    if (FALSE) {
-        type <- "example"
-        for (f in files) {
-            bf <-  sub("\\.[Rr]d","", basename(f))
-            ff <- file.path(outDir, dirname[type],
-                            paste(bf, ext[type], sep = ""))
-            if(!file.exists(ff) || file_test("-nt", f, ff)) {
-                p <- tools::parse_Rd(f)
-                Rd2ex(p, ff)
-                if (file.exists(ff))
-                    cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "example\n",
+            Rd <- tools::parse_Rd(f)
+            if ("txt" %in% types) {
+                type <- "txt"
+                ff <- file.path(outDir, dirname[type],
+                                paste(bf, ext[type], sep = ""))
+                if(!file.exists(ff) || file_test("-nt", f, ff)) {
+                    cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "txt\n",
                         sep = "")
+                    res <- try(Rd2txt(Rd, ff, package = pkg))
+                    if(inherits(res, "try-error")) unlink(ff)
+                }
             }
-         }
+            if("html" %in% types) {
+                type <- "html"
+                ff <- file.path(outDir, dirname[type],
+                                paste(bf, ext[type], sep = ""))
+                if(!file.exists(ff) || file_test("-nt", f, ff)) {
+                    cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "html\n",
+                        sep = "")
+                    res <- try(Rd2HTML(Rd, ff, package = pkg, Links = Links))
+                    if(inherits(res, "try-error")) unlink(ff)
+                }
+            }
+            if ("latex" %in% types) {
+                type <- "latex"
+                ff <- file.path(outDir, dirname[type],
+                                paste(bf, ext[type], sep = ""))
+                if(!file.exists(ff) || file_test("-nt", f, ff)) {
+                    cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "latex\n",
+                        sep = "")
+                    res <- try(Rd2latex(Rd, ff))
+                    if(inherits(res, "try-error")) unlink(ff)
+                }
+            }
+            if ("example" %in% types) {
+                type <- "example"
+                ff <- file.path(outDir, dirname[type],
+                                paste(bf, ext[type], sep = ""))
+                if(!file.exists(ff) || file_test("-nt", f, ff)) {
+                    Rd2ex(Rd, ff)
+                    if (file.exists(ff))
+                        cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "example\n",
+                            sep = "")
+                }
+            }
+        }
     }
-    if (FALSE)
+    else
     for (f in files) {
         Links <- findHTMLlinks(outDir)
         bf <-  sub("\\.[Rr]d","", basename(f))

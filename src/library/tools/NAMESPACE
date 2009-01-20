@@ -1,11 +1,11 @@
 useDynLib(tools, .registration = TRUE)
 
-export("Rd2HTML", "Rd2ex", "Rdindex", "checkDocFiles",
-       "checkDocStyle", "checkFF", "checkMD5sums", "checkReplaceFuns",
-       "checkS3methods", "checkTnF", "checkVignettes", "codoc",
-       "codocClasses", "codocData", "md5sum", "undoc",
-       "file_path_as_absolute", "file_path_sans_ext",
-       "list_files_with_exts", "findHTMLlinks",
+export("Rd2HTML", "Rd2ex", "Rd2latex", "Rd2txt", "Rdindex",
+       "checkDocFiles", "checkDocStyle", "checkFF", "checkMD5sums",
+       "checkReplaceFuns", "checkS3methods", "checkTnF",
+       "checkVignettes", "codoc", "codocClasses", "codocData",
+       "md5sum", "undoc", "file_path_as_absolute",
+       "file_path_sans_ext", "list_files_with_exts", "findHTMLlinks",
        "list_files_with_type", "showNonASCII", "delimMatch",
        "parse_Rd", "checkRd", "texi2dvi", "buildVignettes",
        "pkgVignettes", "pkgDepends", "getDepList",

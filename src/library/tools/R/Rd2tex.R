@@ -14,6 +14,13 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## issues: see also inline
+## \samp is not escaping \\n etc: Quotes.Rd
+## some methalias, e.g. array.Rd, as.POSIX*
+## odd \describe in base-package
+## < vs textless
+## escape % in gc.Rd. { in pretty.tex, & in system.tex
+
 
 
 latex_canonical_encoding  <- function(encoding)
@@ -72,12 +79,11 @@ Rd2latex <-
 
     inCodeBlock <- FALSE ## used to indicate to texify where we are
     inCode <- FALSE
-
-    ltxtags <- c("\\verb"="PRE")
+    inEqn <- FALSE
 
     addParaBreaks <- function(x, tag) {
         start <- attr(x, "srcref")[2]
-        if (tools:::isBlankLineRd(x)) "\n"
+        if (isBlankLineRd(x)) "\n"
 	else if (start == 1) gsub("^\\s+", "", x, perl = TRUE)
         else x
     }
@@ -89,6 +95,7 @@ Rd2latex <-
 
     ## FIXME: what other substitutions do we need?
     texify <- function(x) {
+        if(inEqn) return(x)
         x <- gsub("([&$%_])", "\\\\\\1", x)
 #        x <- gsub("{", "\\textbraceleft}", x, fixed = TRUE)
 #        x <- gsub("}", "\\textbraceright}", x, fixed = TRUE)
@@ -99,6 +106,7 @@ Rd2latex <-
 
     ## version for RCODE and VERB
     vtexify <- function(x) {
+        if(inEqn) return(x)
         x <- gsub("\\\\[l]+dots", "...", as.character(x))
         if (inCodeBlock) return(x)
         x <- gsub("([&$%_])", "\\\\\\1", x)
@@ -114,7 +122,7 @@ Rd2latex <-
 
     ## FIXME only used for \verb, not right yet
     writeWrapped <- function(tag, block) {
-    	of0("\\", ltxtags[tag], "|")
+    	of0("\\verb|")
     	writeContent(block, tag)
     	of1("|")
     }
@@ -139,6 +147,7 @@ Rd2latex <-
     }
 
     writeLink <- function(tag, block) {
+        ## FIXME: first is probably wrong: see Arithmetic.Rd
         link <- as.character(block)
         of0("\\LinkA{", latex_escape_name(link), "}{",
             latex_link_trans0(link), "}")
@@ -240,6 +249,7 @@ Rd2latex <-
 
     latex_code_alias <- function(x)
     {
+        ## FIXME: ^ etc (Arithmetic.Rd)
         x <- gsub("([&$%_])", "\\\\\\1", x)
         x <- gsub("<-", "<\\Rdash", x, fixed = TRUE)
         gsub("([!|])", '"\\1', x, perl = TRUE)
@@ -339,7 +349,13 @@ Rd2latex <-
                } ,
                "\\eqn" =,
                "\\deqn" = {
-                   of0(tag, "{", ltxeqn(block[[1]]),'}{}')
+                   if (length(block) == 2 && is.list(block[[1]]))
+                       block <- block[[1]]
+                   of0(tag, "{")
+                   inEqn <<- TRUE
+                   writeContent(block, tag)
+                   inEqn <<- FALSE
+                   of0('}{}')
                },
                "\\dontshow" =,
                "\\testonly" = {}, # do nothing
@@ -363,16 +379,16 @@ Rd2latex <-
                    writeContent(block[[1]], tag)
                },
                "\\tabular" = writeTabular(block),
-               tools:::stopRd(block, "Tag ", tag, " not recognized.")
+               stopRd(block, "Tag ", tag, " not recognized.")
                )
     }
 
     writeTabular <- function(table) {
     	format <- table[[1]]
     	content <- table[[2]]
-    	if (length(format) != 1 || tools:::RdTags(format) != "TEXT")
-    	    tools:::stopRd(table, "\\tabular format must be simple text")
-        content <- tools:::preprocessRd(content, defines)
+    	if (length(format) != 1 || RdTags(format) != "TEXT")
+    	    stopRd(table, "\\tabular format must be simple text")
+        content <- preprocessRd(content, defines)
         tags <- attr(content, "RdTags")
         of0('\n\\Tabular{', format, '}{')
         for (i in seq_along(tags)) {
@@ -388,7 +404,7 @@ Rd2latex <-
         inList <- FALSE
         itemskip <- FALSE
 
-	blocks <- tools:::preprocessRd(blocks, defines)
+	blocks <- preprocessRd(blocks, defines)
 	tags <- attr(blocks, "RdTags")
 
 	for (i in seq_along(tags)) {
@@ -421,7 +437,7 @@ Rd2latex <-
                        itemskup <- TRUE
                    },
                { # default
-                   if (inList && !(tag == "TEXT" && tools:::isBlankRd(block))) {
+                   if (inList && !(tag == "TEXT" && isBlankRd(block))) {
                        of1("\\end{ldescription}\n")
                        inList <- FALSE
                    }
@@ -491,7 +507,7 @@ Rd2latex <-
     }
 
     ## Process top level ifdef's.
-    Rd <- tools:::preprocessRd(Rd, defines)
+    Rd <- preprocessRd(Rd, defines)
     sections <- attr(Rd, "RdTags")
 
     ## Print initial comments
@@ -504,15 +520,15 @@ Rd2latex <-
     if (length(version) == 1 && as.numeric(version[[1]]) < 2)
     	warning("Rd2HTML is designed for Rd version 2 or higher.")
     else if (length(version) > 1)
-    	tools:::stopRd(Rd[[version[2]]], "Only one \\Rdversion declaration is allowed")
+    	stopRd(Rd[[version[2]]], "Only one \\Rdversion declaration is allowed")
 
     enc <- which(sections == "\\encoding")
     if (length(enc)) {
     	if (length(enc) > 1)
-    	    tools:::stopRd(Rd[[enc[2]]], "Only one \\encoding declaration is allowed")
+    	    stopRd(Rd[[enc[2]]], "Only one \\encoding declaration is allowed")
     	encoding <- Rd[[enc]]
-    	if (!identical(tools:::RdTags(encoding), "TEXT"))
-    	    tools:::stopRd(encoding, "Encoding must be plain text")
+    	if (!identical(RdTags(encoding), "TEXT"))
+    	    stopRd(encoding, "Encoding must be plain text")
     	encoding <- trim(encoding[[1]])
         if (encoding != "unknown") {
             of0("\\inputencoding{", latex_canonical_encoding(encoding), "}\n")
@@ -521,25 +537,25 @@ Rd2latex <-
 
     ## Give error for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]), perl = TRUE )))
-    	tools:::stopRd(Rd[sections == "TEXT"][[bad[1]]], "All text must be in a section")
+    	stopRd(Rd[sections == "TEXT"][[bad[1]]], "All text must be in a section")
 
     ## Drop all the parts that are not rendered
     drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding", "\\Rdversion")
     Rd <- Rd[!drop]
     sections <- sections[!drop]
 
-    sortorder <- tools:::sectionOrder[sections]
+    sortorder <- sectionOrder[sections]
     if (any(bad <- is.na(sortorder)))
-    	tools:::stopRd(Rd[[which(bad)[1]]], "Section ", sections[which(bad)[1]], " unrecognized.")
+    	stopRd(Rd[[which(bad)[1]]], "Section ", sections[which(bad)[1]], " unrecognized.")
     ## Need to sort the aliases.
     nm <- character(length(Rd))
-    isAlias <- tools:::RdTags(Rd) == "\\alias"
+    isAlias <- RdTags(Rd) == "\\alias"
     nm[isAlias] <- sapply(Rd[isAlias], as.character)
     sortorder <- order(sortorder, toupper(nm), nm)
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
     if (!identical(sections[1:2], c("\\title", "\\name")))
-    	tools:::stopRd(Rd, "Sections \\title, and \\name must exist and be unique in Rd files.")
+    	stopRd(Rd, "Sections \\title, and \\name must exist and be unique in Rd files.")
 
     title <- as.character(Rd[[1]])
     ## remove empty lines, leading whitespace
@@ -548,8 +564,8 @@ Rd2latex <-
     ## substitutions?
 
     name <- Rd[[2]]
-    tags <- tools:::RdTags(name)
-    if (length(tags) > 1) tools:::stopRd(name, "\\name must only contain simple text.")
+    tags <- RdTags(name)
+    if (length(tags) > 1) stopRd(name, "\\name must only contain simple text.")
 
     name <- trim(name[[1]])
     ltxname <- latex_escape_name(name)

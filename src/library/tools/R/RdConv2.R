@@ -42,14 +42,26 @@ get_link <- function(arg) {	# like get_link in Rdconv.pm, plus a bit more
     list(dest=dest, pkg=pkg, topic=topic)
 }
 
+transform_S3_method  <- function(x)
+{
+    ## should take a call such as \method{foo}{bar}
+    ## and convert it to a parse_Rd version of the required line(s)
+    x
+}
+
+transform_S4_method  <- function(x)
+{
+    ## should take a call such as \S4method{foo}{bar}
+    ## and convert it to a parse_Rd version of the required line(s)
+    x
+}
+
+
 # translation of Utils.pm function of the same name, plus "unknown"
 mime_canonical_encoding <- function(encoding)
 {
     encoding <- tolower(encoding)
     encoding <- sub("iso_8859-([0-9]+)", "iso-8859-\\1", encoding)
-#    std <- grep("iso_8859-[0-9]+", encoding)
-#    encoding[std] <- paste("iso_8859-",
-#                           sub(".*iso_8859-(0-9+).*", "\\1", encoding[std]))
     encoding[encoding == "latin1"] <-  "iso-8859-1"
     encoding[encoding == "latin2"] <-  "iso-8859-2"
     encoding[encoding == "latin3"] <-  "iso-8859-3"
@@ -193,6 +205,11 @@ Rd2HTML <-
                    "\\samp"="</span>",
                    "\\sQuote"="&rsquo;",
                    "\\dQuote"="&rdquo;")
+
+    trim <- function(x) {
+        x <- sub("^\\s*", "", x, perl = TRUE)
+        sub("\\s*$", "", x, perl = TRUE)
+    }
 
     addParaBreaks <- function(x, tag) {
         start <- attr(x, "srcref")[2] # FIXME: what if no srcref?, start col
@@ -343,20 +360,20 @@ Rd2HTML <-
                "\\sQuote" =,
                "\\dQuote" =  writeLR(block, tag),
                "\\dontrun"= writeDR(block, tag),
-               "\\enc" =  # FIXME:  this could sometimes use the first arg -- does not at present, though
-               writeContent(block[[2]], tag),
+               "\\enc" = writeContent(block[[1]], tag),
                "\\eqn" = {
                    of1("<i>")
-                   if (length(block) == 2)
-                       writeContent(block[[2]], tag)
-                   else of1(HTMLeqn(block))
+                   if (length(block) == 2 && is.list(block[[1]]))
+                       block <- block[[2]]
+                   ## FIXME: space stripping needed: see Special.html
+                   writeContent(block, tag)
                    of1("</i>")
                },
                "\\deqn" = {
                    of1('</p><p align="center"><i>')
-                   if (length(block) == 2)
-                       writeContent(block[[2]], tag)
-                   else of1(HTMLeqn(block))
+                   if (length(block) == 2 && is.list(block[[1]]))
+                       block <- block[[2]]
+                   writeContent(block, tag)
                    of1('</i></p><p>')
                },
                "\\dontshow" =,
@@ -511,10 +528,11 @@ Rd2HTML <-
     	if (tag == "\\section") {
     	    title <- section[[1]]
     	    section <- section[[2]]
+            ## FIXME: this needs trimming of whitespace
     	    writeContent(title, tag)
     	} else
     	    of1(sectionTitles[tag])
-    	if (tag %in% c("\\examples","\\synopsis","\\usage"))
+    	if (tag %in% c("\\examples", "\\synopsis", "\\usage"))
     	    para <- "pre" else para <- "p"
         of1("</h3>\n")
         ## \arguments is a single table, not a para
@@ -608,7 +626,7 @@ Rd2HTML <-
         of0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
             '<html><head><title>R: ')
     ## special for now, as we need to remove leading and trailing spaces
-    title <- as.character(title)
+    title <- trim(as.character(title))
     title <- htmlify(paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
                            collapse=" "))
     of1(title)

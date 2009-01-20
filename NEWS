@@ -208,7 +208,7 @@ Rd CONVERSION
     o	\alias now supports the escaping of { as well as of %, and this
 	is recommended.
 
-    o	parse_Rd(), an experimental parser for Rd files, and
+    o	parse_Rd(), an experimental parser for Rd files, and Rd2txt(),
 	Rd2HTML(), Rd2latex() and Rd2ex(), even more experimental
 	converters, have been added to package 'tools'.
 
