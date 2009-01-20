@@ -1,6 +1,6 @@
 % File src/library/base/man/strwrap.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{strwrap}
@@ -15,7 +15,7 @@
 }
 \usage{
 strwrap(x, width = 0.9 * getOption("width"), indent = 0,
-        exdent = 0, prefix = "", simplify = TRUE)
+        exdent = 0, prefix = "", simplify = TRUE, initial = prefix)
 }
 \arguments{
   \item{x}{a character vector, or an object which can be converted to a
@@ -26,7 +26,8 @@ strwrap(x, width = 0.9 * getOption("width"), indent = 0,
     first line in a paragraph.}
   \item{exdent}{a non-negative integer specifying the indentation of
     subsequent lines in paragraphs.}
-  \item{prefix}{a character string to be used as prefix for each line.}
+  \item{prefix, initial}{a character string to be used as prefix for
+    each line except the first, for which \code{initial} is used.}
   \item{simplify}{a logical.  If \code{TRUE}, the result is a single
     character vector of line text; otherwise, it is a list of the same
     length as \code{x} the elements of which are character vectors of

@@ -22,7 +22,7 @@ strtrim <- function(x, width)
 
 strwrap <-
 function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
-         prefix = "", simplify = TRUE)
+         prefix = "", simplify = TRUE, initial = prefix)
 {
     if(!is.character(x)) x <- as.character(x)
     ## Useful variables.
@@ -58,7 +58,7 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
             }
 
             if(!length(words)) {
-                yi <- c(yi, "", prefix)
+                yi <- c(yi, "", initial)
                 next
             }
 
@@ -68,7 +68,7 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
             lens <- cumsum(nc + 1L)
 
             first <- TRUE
-            maxLength <- width - nchar(prefix, type="w") - indent
+            maxLength <- width - nchar(initial, type="w") - indent
 
             ## Recursively build a sequence of lower and upper indices
             ## such that the words in line k are the ones in the k-th
@@ -77,7 +77,7 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
                 k <- max(sum(lens <= maxLength), 1L)
                 if(first) {
                     first <- FALSE
-                    maxLength <- maxLength + indent - exdent
+                    maxLength <- width - nchar(prefix, type="w") - exdent
                 }
                 currentIndex <- currentIndex + k
                 if(nc[currentIndex] == 0L)
@@ -103,14 +103,16 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
             }
 
             nBlocks <- length(upperBlockIndex)
-            s <- paste(prefix,
+            s <- paste(c(initial, rep.int(prefix, nBlocks - 1L)),
                        c(indentString, rep.int(exdentString, nBlocks - 1L)),
                        sep = "")
+            initial <- prefix
             for(k in seq_len(nBlocks))
                 s[k] <- paste(s[k], paste(words[lowerBlockIndex[k] :
                                                 upperBlockIndex[k]],
                                           collapse = " "),
                               sep = "")
+
             yi <- c(yi, s, prefix)
         }
         y <- if(length(yi))

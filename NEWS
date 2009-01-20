@@ -116,6 +116,8 @@ NEW FEATURES
 
     o	grep() gains an 'invert' argument mimicing 'grep -v/--invert'.
 
+    o 	strwrap() now allows a separate prefix for the first line.
+
 
 DEPRECATED & DEFUNCT
 
