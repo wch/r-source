@@ -68,6 +68,7 @@ my @known_options = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		     "use-gct" => \$opt_use_gct, "no-codoc",
 		     "install=s" => \$opt_install, "no-install",
 		     "no-vignettes", "use-valgrind" => \$opt_use_valgrind,
+		     "install-args=s" => \$opt_install_args,
 		     "rcfile=s" => \$opt_rcfile,
 		     "check-subdirs=s" => \$opt_subdirs);
 GetOptions(@known_options) or usage();
@@ -704,7 +705,7 @@ foreach my $pkg (@ARGV) {
 		    (($opt_install =~ /^check/) ||
 		     $R_check_use_install_log ||
 		     !(-t STDIN && -t STDOUT));
-		my $INSTALL_opts = "";
+		my $INSTALL_opts = $opt_install_args;
 		$INSTALL_opts = "--fake" if($opt_install eq "fake");
 		my $cmd;
 		if($WINDOWS) {
@@ -2779,6 +2780,7 @@ Options:
       --no-latex        do not run LaTeX on help files
       --use-gct         use 'gctorture(TRUE)' when running examples/tests
       --use-valgrind    use 'valgrind' when running examples/tests/vignettes
+      --install-args=	command-line args to be passed to INSTALL
       --check-subdirs=default|yes|no
                         run checks on the package subdirectories
 			(default is yes for a tarball, no otherwise)

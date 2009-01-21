@@ -312,6 +312,14 @@ BUG FIXES
 		CHANGES IN R VERSION 2.8.1 patched
 
 
+NEW FEATURES
+
+    o	R CMD check has a new argument '--install-args' to pass
+	command-line arguments to INSTALL.
+	E.g. --install-args="--docs=normal" on Windows if the HTML
+	Help Workshop is not installed.
+
+
 INSTALLATION
 
     o	--with-ICU is now supported (and recommended) on Mac OS X using
