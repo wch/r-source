@@ -63,7 +63,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     of those codepages is in use, otherwise \file{"WinAnsi.enc"}
     (codepage 1252).
 #endif
-    The file is looked forin the \file{enc} directory of package
+    The file is looked for in the \file{enc} directory of package
     \pkg{grDevices} if the path does not contain a path separator.  An
     extension \code{".enc"} can be omitted.
   }
