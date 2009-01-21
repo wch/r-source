@@ -833,23 +833,9 @@
                     starsmsg(paste0(stars, "*"),
                              "installing help indices")
                     .writePkgIndices(pkg_dir, instdir, CHM = build_chm)
-##                     cmd <- paste("perl",
-##                                  shQuote(file.path(R.home("share"), "perl",
-##                                                    if (WINDOWS) "build-help-windows.pl" else  "build-help.pl")),
-##                                  "--index",
-##                                  ## need next to get CHM index built
-##                                  paste(build_help_opts, collapse=" "),
-##                                  shQuote(pkg_dir),
-##                                  shQuote(lib),
-##                                  shQuote(instdir),
-##                                  pkg_name)
-##                     if (debug) message("about to run ", sQuote(cmd))
-##                     res <- system(cmd)
-##                     if (res)
-##                         pkgerrmsg("building help indices failed", pkg_name)
                     cmd <- paste("perl",
                                  shQuote(file.path(R.home("share"), "perl",
-                                                   if (WINDOWS) "build-help-windows.pl" else  "build-help.pl")),
+                                                   "build-help.pl")),
                                  paste(build_help_opts, collapse=" "),
                                  shQuote(pkg_dir),
                                  shQuote(lib),
@@ -1177,6 +1163,9 @@
     if (build_chm) build_help_opts <- c(build_help_opts, "--chm")
     build_help <- length(build_help_opts) > 0L
     if (build_help && debug) build_help_opts <- c("--debug", build_help_opts)
+    if (build_help && WINDOWS)
+        build_help_opts <- c("--os=windows", build_help_opts)
+
     if (debug)
         starsmsg(stars, "build_help_opts=", paste(build_help_opts, collapse=" "))
 

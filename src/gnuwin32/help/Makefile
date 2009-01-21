@@ -12,17 +12,18 @@ R_HOME = ../../..
 PKGDIR = ../../library
 RLIB = $(RHOME)/library
 
+BUILD_HELP=R_HOME=$(RHOME) $(PERL) $(R_HOME)/share/perl/build-help.pl -os=windows
+
+## HELPTYPES is set in ../Makefile, differently for cross-builds
 help-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
-	  $(PERL) $(R_HOME)/share/perl/build-help-windows.pl \
-	    $(HELPTYPES) $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
+	   $(BUILD_HELP) $(HELPTYPES) $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	fi
 
 chm-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
 	  if ! test -d $(PKGDIR)/$*/chm ; then \
-	    $(PERL) $(R_HOME)/share/perl/build-help-windows.pl \
-	    -chm $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
+	    $(BUILD_HELP) -chm $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	  fi; \
 	  $(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm \
 	    -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm ; \
