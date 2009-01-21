@@ -4528,6 +4528,10 @@ and @uref{http://www.microsoft.com/office/ork/xp/appndx/appa06.htm,
 @code{www.microsoft.com/@/office/@/ork/@/xp/@/appndx/@/appa06.htm}}.  
 This is @emph{not} included in @file{Rtools.exe}.
 
+If this is not installed, @command{Rcmd INSTALL} will skip compiled HTML
+help (with a message).  However, to build @R{} itself without CHM help,
+you need to set @code{USE_CHM + FALSE} in @file{src/gnuwin32/MkRules}.
+
 @node LaTeX, The Inno Setup installer, The Microsoft HTML Help Workshop, The Windows toolset
 @section @LaTeX{}
 

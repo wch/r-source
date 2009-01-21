@@ -66,7 +66,6 @@
         Sys.setenv(R_HOME = rhome)
         ## and others have assumed that RHOME is set:
         Sys.setenv(RHOME = rhome)
-        message("rhome is ", rhome)
     }
 
     Usage <- function() {
@@ -1153,6 +1152,14 @@
         build_latex <- TRUE
         build_example <- FALSE
         build_chm <- FALSE
+    }
+
+    if (build_chm) {
+        res <- try(system("hhc.exe", intern=TRUE), silent=TRUE)
+        if (inherits(res, "try-error")) {
+            build_chm <- FALSE
+            message("\n*** 'hhc.exe' not found: not building CHM help\n")
+        }
     }
 
     build_help_opts <- character(0)

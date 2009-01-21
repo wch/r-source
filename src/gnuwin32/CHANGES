@@ -58,6 +58,9 @@ NEW FEATURES
     o	Rcmd SHLIB now uses the same code as on a Unix-alike, and so
 	has some extra options.
 
+    o	Package installation will authomatically skip CHM help if the
+	HTML Help compiler is not found.
+
 
 INSTALLATIOM
 

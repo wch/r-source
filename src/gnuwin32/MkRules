@@ -13,6 +13,9 @@ G_FLAG=-gdwarf-2
 
 ## ============== configuration macros for building R ===================
 
+# Should CHM help be built?  Any value other than TRUE disables this
+USE_CHM = TRUE
+
 # Comment out if the msvcrt.dll malloc/free is required.
 LEA_MALLOC=YES
 
