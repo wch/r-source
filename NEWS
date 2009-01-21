@@ -119,7 +119,10 @@ NEW FEATURES
     o 	strwrap() now allows a separate prefix for the first line.
 
     o	grep() has a more efficient sibling grepl() that returns a
-	logical vector,
+	logical vector.
+
+    o	xfig() has new arguments 'defaultFont' and 'textSpecial'
+	contributed by Sebastian Fischmeister.
 
 
 DEPRECATED & DEFUNCT

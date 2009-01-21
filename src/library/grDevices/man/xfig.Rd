@@ -20,7 +20,7 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
      paper = "default", horizontal = TRUE,
      width = 0, height = 0, family = "Helvetica",
      pointsize = 12, bg = "transparent", fg = "black",
-     pagecentre = TRUE)
+     pagecentre = TRUE, defaultfont = FALSE, textspecial = FALSE)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.   For use
@@ -60,6 +60,11 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
   \item{fg}{the initial foreground color to be used.}
   \item{pagecentre}{logical: should the device region be centred on the
     page?}
+  \item{defaultfont}{logical: should the device use xfig's default
+    font?}
+  \item{textspecial}{logical: should the device set the textspecial flag
+  for all text elements. This is useful when generating pstex from xfig
+  figures.}
 }
 %%>>> REAL DOC in SOURCE:    ../../../main/devices.c  &   ../../../unix/devPS.c
 \details{
@@ -101,6 +106,10 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
     \item Circle radii are multiples of 1/1200 inch.
     \item Colours are interpreted by the viewing/printing application.
   }
+}
+\author{
+  Brian Ripley.  Support for \code{defaultFont} and \code{textSpecial}
+  contributed by Sebastian Fischmeister.
 }
 \seealso{
   \code{\link{Devices}},

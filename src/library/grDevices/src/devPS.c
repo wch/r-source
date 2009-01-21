@@ -4354,6 +4354,9 @@ typedef struct {
     int ymax;            /* used to invert coord system */
     char encoding[50];   /* for writing text */
 
+    Rboolean textspecial; /* use textspecial flag in xfig for latex integration */
+    Rboolean defaultfont; /* use the default font in xfig */
+
     /*
      * Fonts and encodings used on the device
      *
@@ -4553,6 +4556,7 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 		 double width, double height,
 		 Rboolean horizontal, double ps,
 		 Rboolean onefile, Rboolean pagecentre,
+		 Rboolean defaultfont, Rboolean textspecial,
 		 const char *encoding)
 {
     /* If we need to bail out with some sort of "error" */
@@ -4591,6 +4595,8 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     pd->width = width;
     pd->height = height;
     pd->landscape = horizontal;
+    pd->textspecial = textspecial;
+    pd->defaultfont = defaultfont;
     pointsize = floor(ps);
     if(R_TRANSPARENT(pd->bg) && R_TRANSPARENT(pd->col)) {
 	free(dd);
@@ -5108,7 +5114,7 @@ static void XFig_Text(double x, double y, const char *str,
 	fprintf(fp, "4 %d ", (int)floor(2*hadj)); /* Text, how justified */
 	fprintf(fp, "%d 100 0 ", XF_SetColor(gc->col, pd));
 	/* color, depth, pen_style */
-	fprintf(fp, "%d %d %.4f 4 ", fontnum, (int)size, rot * DEG2RAD);
+	fprintf(fp, "%d %d %.4f %d ", pd->defaultfont?-1:fontnum, (int)size, rot * DEG2RAD,pd->textspecial?6:4);
 	/* font pointsize angle flags (Postscript font) */
 	fprintf(fp, "%d %d ", (int)(size*12),
 		(int)(16.667*XFig_StrWidth(str, gc, dd) +0.5));
@@ -7441,6 +7447,9 @@ SEXP PostScript(SEXP args)
  *  ps		= pointsize
  *  onefile     = {TRUE: normal; FALSE: single EPSF page}
  *  pagecentre  = centre plot region on paper?
+ *  defaultfont = {TRUE: use xfig default font; FALSE: use R font}
+ *  textspecial = {TRUE: use textspecial; FALSE: use standard font}
+ *
  *  encoding
  */
 
@@ -7449,7 +7458,7 @@ SEXP XFig(SEXP args)
     pGEDevDesc gdd;
     char *vmax;
     const char *file, *paper, *family, *bg, *fg, *encoding;
-    int horizontal, onefile, pagecentre;
+    int horizontal, onefile, pagecentre, defaultfont, textspecial;
     double height, width, ps;
 
     vmax = vmaxget();
@@ -7467,6 +7476,8 @@ SEXP XFig(SEXP args)
     ps = asReal(CAR(args));	      args = CDR(args);
     onefile = asLogical(CAR(args));   args = CDR(args);
     pagecentre = asLogical(CAR(args));args = CDR(args);
+    defaultfont = asLogical(CAR(args)); args = CDR(args);
+    textspecial = asLogical(CAR(args)); args = CDR(args);
     encoding = CHAR(asChar(CAR(args)));
 
     R_GE_checkVersionOrDie(R_GE_version);
@@ -7476,7 +7487,7 @@ SEXP XFig(SEXP args)
 	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc))))
 	    return 0;
 	if(!XFigDeviceDriver(dev, file, paper, family, bg, fg, width, height,
-			     (double) horizontal, ps, onefile, pagecentre,
+			     (double) horizontal, ps, onefile, pagecentre, defaultfont, textspecial,
 			     encoding)) {
 	    /* free(dev); No, freed inside XFigDeviceDriver */
 	    error(_("unable to start device xfig"));

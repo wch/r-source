@@ -273,7 +273,8 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
                   paper = "default", horizontal = TRUE,
                   width = 0, height = 0, family = "Helvetica",
                   pointsize = 12, bg = "transparent", fg = "black",
-                  pagecentre = TRUE)
+                  pagecentre = TRUE,
+                  defaultfont = FALSE, textspecial = FALSE)
 {
     ## do initialization if needed
     initPSandPDFfonts()
@@ -281,7 +282,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
     if(!checkIntFormat(file)) stop("invalid 'file'")
     .External(XFig, file, paper, family, bg, fg,
               width, height, horizontal, pointsize,
-              onefile, pagecentre, encoding)
+              onefile, pagecentre, defaultfont, textspecial, encoding)
     invisible()
 }
 

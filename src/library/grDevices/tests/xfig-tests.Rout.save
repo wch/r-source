@@ -1,0 +1,102 @@
+
+R version 2.9.0 Under development (unstable) (2009-01-21 r47661)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## tests for the xfig device
+> 
+> 
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=TRUE,textspecial=TRUE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=TRUE,textspecial=FALSE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=FALSE,textspecial=TRUE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=FALSE,textspecial=FALSE)
+> 
+> unlink("xfig-tests.fig")
+> 
+> ## tests for the xfig device
+> 
+> 
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=TRUE,textspecial=TRUE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=TRUE,textspecial=FALSE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=FALSE,textspecial=TRUE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=FALSE,textspecial=FALSE)
+> 
+> unlink("xfig-tests.fig")
+> 
+> ## tests for the xfig device
+> 
+> 
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=TRUE,textspecial=TRUE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=TRUE,textspecial=FALSE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=FALSE,textspecial=TRUE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=FALSE,textspecial=FALSE)
+> 
+> unlink("xfig-tests.fig")
+> 
+> ## tests for the xfig device
+> 
+> 
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=TRUE,textspecial=TRUE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=TRUE,textspecial=FALSE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=FALSE,textspecial=TRUE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=FALSE,textspecial=FALSE)
+> 
+> unlink("xfig-tests.fig")
+> 
+> ## tests for the xfig device
+> 
+> 
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=TRUE,textspecial=TRUE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=TRUE,textspecial=FALSE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=FALSE,textspecial=TRUE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=FALSE,textspecial=FALSE)
+> 
+> unlink("xfig-tests.fig")
+> 
+> ## tests for the xfig device
+> 
+> 
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=TRUE,textspecial=TRUE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=TRUE,textspecial=FALSE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=FALSE,textspecial=TRUE)
+> 
+> xfig("xfig-tests.fig",onefile=TRUE,defaultfont=FALSE,textspecial=FALSE)
+> 
+> unlink("xfig-tests.fig")
+> 
+> 
