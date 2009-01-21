@@ -266,8 +266,7 @@ Rd2txt <-
                    of1(txt)
                } ,
                "\\eqn" = {
-                   if (length(block) == 2 && is.list(block[[1]]))
-                       block <- block[[2]]
+                   block <- block[[length(block)]]
                    writeContent(block, tag)
                },
                "\\deqn" = {

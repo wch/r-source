@@ -111,7 +111,7 @@ static void	xxpopMode(SEXP);
 static SEXP	xxnewlist(SEXP);
 static SEXP	xxlist(SEXP, SEXP);
 static SEXP	xxmarkup(SEXP, SEXP, YYLTYPE *);
-static SEXP	xxmarkup2(SEXP, SEXP, SEXP, YYLTYPE *);
+static SEXP	xxmarkup2(SEXP, SEXP, SEXP, int, YYLTYPE *);
 static SEXP	xxOptionmarkup(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxtag(SEXP, int, YYLTYPE *);
 static void	xxsavevalue(SEXP, YYLTYPE *);
@@ -135,7 +135,7 @@ static int 	mkComment(int);
 %token		SECTIONHEADER2
 %token		RCODEMACRO LATEXMACRO VERBMACRO OPTMACRO ESCAPE
 %token		LISTSECTION ITEMIZE DESCRIPTION NOITEM
-%token		RCODEMACRO2 LATEXMACRO2 VERBMACRO2
+%token		LATEXMACRO2 VERBMACRO2
 %token		IFDEF ENDIF
 %token		TEXT RCODE VERB COMMENT UNKNOWN
 
@@ -152,8 +152,8 @@ Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, &@$); }
 	|	RSECTIONHEADER RLikeArg		{ $$ = xxmarkup($1, $2, &@$); }
 	|	SECTIONHEADER  LatexArg  	{ $$ = xxmarkup($1, $2, &@$); }
 	|	LISTSECTION    Item2Arg		{ $$ = xxmarkup($1, $2, &@$); }
-	|	SECTIONHEADER2 LatexArg LatexArg2 { $$ = xxmarkup2($1, $2, $3, &@$); }
-	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, &@$); UNPROTECT_PTR($4); } 
+	|	SECTIONHEADER2 LatexArg LatexArg2 { $$ = xxmarkup2($1, $2, $3, 2, &@$); }
+	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, 2, &@$); UNPROTECT_PTR($4); } 
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
 	|	TEXT				{ $$ = xxtag($1, TEXT, &@$); } /* must be whitespace */
 
@@ -169,18 +169,17 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 	|	Markup				{ $$ = $1; }	
 
 Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@$); }
-	|	LATEXMACRO2 LatexArg LatexArg2  { $$ = xxmarkup2($1, $2, $3, &@$); }
+	|	LATEXMACRO2 LatexArg LatexArg2  { $$ = xxmarkup2($1, $2, $3, 2, &@$); }
 	|	ITEMIZE     Item0Arg		{ $$ = xxmarkup($1, $2, &@$); }
 	|	DESCRIPTION Item2Arg		{ $$ = xxmarkup($1, $2, &@$); }
 	|	OPTMACRO    goOption LatexArg  	{ $$ = xxmarkup($1, $3, &@$); xxpopMode($2); }
 	|	OPTMACRO    goOption Option LatexArg { $$ = xxOptionmarkup($1, $3, $4, &@$); xxpopMode($2); }
 	|	RCODEMACRO  RLikeArg     	{ $$ = xxmarkup($1, $2, &@$); }
-	|	RCODEMACRO2 RLikeArg RLikeArg 	{ $$ = xxmarkup2($1, $2, $2, &@$); }
 	|	VERBMACRO   VerbatimArg		{ $$ = xxmarkup($1, $2, &@$); }
-	|	VERBMACRO2  VerbatimArg		{ $$ = xxmarkup($1, $2, &@$); }
-	|       VERBMACRO2  VerbatimArg VerbatimArg2 { $$ = xxmarkup2($1, $2, $3, &@$); }
+	|	VERBMACRO2  VerbatimArg		{ $$ = xxmarkup2($1, $2, R_NilValue, 1, &@$); }
+	|       VERBMACRO2  VerbatimArg VerbatimArg2 { $$ = xxmarkup2($1, $2, $3, 2, &@$); }
 	|	ESCAPE				{ $$ = xxmarkup($1, R_NilValue, &@$); }
-	|	IFDEF IfDefTarget ArgItems ENDIF { $$ = xxmarkup2($1, $2, $3, &@$); UNPROTECT_PTR($4); } 
+	|	IFDEF IfDefTarget ArgItems ENDIF { $$ = xxmarkup2($1, $2, $3, 2, &@$); UNPROTECT_PTR($4); } 
 	
 LatexArg:	goLatexLike Arg		 	{ xxpopMode($1); $$ = $2; }
 
@@ -344,19 +343,23 @@ static SEXP xxOptionmarkup(SEXP header, SEXP option, SEXP body, YYLTYPE *lloc)
     return ans;
 }
 
-static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, YYLTYPE *lloc)
+static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, int argcount, YYLTYPE *lloc)
 {
     SEXP ans;
 #if DEBUGVALS
     Rprintf("xxmarkup2(header=%p, body1=%p, body2=%p)", header, body1, body2);        
 #endif
-    PROTECT(ans = allocVector(VECSXP, 2));
+    
+    PROTECT(ans = allocVector(VECSXP, argcount));
     if (!isNull(body1)) {
     	SET_VECTOR_ELT(ans, 0, PairToVectorList(CDR(body1)));
     	UNPROTECT_PTR(body1);
     }
-    SET_VECTOR_ELT(ans, 1, PairToVectorList(CDR(body2)));    
-    UNPROTECT_PTR(body2);    
+    if (!isNull(body2)) {
+	if (argcount < 2) error("internal error: inconsistent argument count");
+    	SET_VECTOR_ELT(ans, 1, PairToVectorList(CDR(body2)));    
+    	UNPROTECT_PTR(body2);
+    }
     setAttrib(ans, install("Rd_tag"), header);
     UNPROTECT_PTR(header);    
     if (SrcFile) 
@@ -1094,7 +1097,12 @@ static int mkIfdef(int c)
     retval = KeywordLookup(stext);
     PROTECT(yylval = mkString2(stext, bp - stext - 1));
     
-    if (retval == UNKNOWN) {
+    switch (retval) {
+    case ENDIF:  /* eat chars to the end of the line */
+    	do { c = xxgetc(); }
+    	while (c != '\n' && c != R_EOF);
+    	break;
+    case UNKNOWN:
     	UNPROTECT(1);
     	bp--; bp--;
     	for (; bp > stext; bp--) 
@@ -1111,6 +1119,7 @@ static int mkIfdef(int c)
     	    retval = mkVerb(*bp);
     	    break;
 	}
+	break;
     }
     if(stext != st0) free(stext);
     return retval;

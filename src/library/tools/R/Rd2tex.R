@@ -349,8 +349,7 @@ Rd2latex <-
                } ,
                "\\eqn" =,
                "\\deqn" = {
-                   if (length(block) == 2 && is.list(block[[1]]))
-                       block <- block[[1]]
+                   block <- block[[1]]
                    of0(tag, "{")
                    inEqn <<- TRUE
                    writeContent(block, tag)

@@ -129,8 +129,7 @@ preprocessRd <- function(blocks, defines)
 	target <- gsub("[[:blank:][:cntrl:]]*", "", target)
 	all <- seq_along(tags)
 	before <- all[all < ifdef]
-        ## Since it is '#endif\n', need to remove \n block too
-	after <- all[all > ifdef+1]
+	after <- all[all > ifdef]
 
 	if ((target %in% defines) == (tags[ifdef] == "#ifdef")) {
 	    tags <- c(tags[before], RdTags(blocks[[ifdef]][[2]]), tags[after])
@@ -363,16 +362,14 @@ Rd2HTML <-
                "\\enc" = writeContent(block[[1]], tag),
                "\\eqn" = {
                    of1("<i>")
-                   if (length(block) == 2 && is.list(block[[1]]))
-                       block <- block[[2]]
+                   block <- block[[length(block)]];
                    ## FIXME: space stripping needed: see Special.html
                    writeContent(block, tag)
                    of1("</i>")
                },
                "\\deqn" = {
                    of1('</p><p align="center"><i>')
-                   if (length(block) == 2 && is.list(block[[1]]))
-                       block <- block[[2]]
+                   block <- block[[length(block)]];
                    writeContent(block, tag)
                    of1('</i></p><p>')
                },
@@ -750,10 +747,8 @@ checkRd <-
 	},
 	"\\eqn" =,
 	"\\deqn" = {
-	    if (is.null(RdTags(block))) { # the two arg form has no tags
-	        checkContent(block[[1]])
-	   	checkContent(block[[2]])
-	    } else checkContent(block, tag)
+	    checkContent(block[[1]])
+	    if (length(block) > 1) checkContent(block[[2]])
 	},
 	"\\dontshow" =,
 	"\\testonly" = checkContent(block, tag),
