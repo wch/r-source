@@ -371,7 +371,10 @@ BUG FIXES
 	with output lines of more than 10,000 bytes and with
 	re-encoding requested on an output connection.
 
-    o	The fullrefman.{dvi,pdf} duplicated part I in part II.
+    o	The fullrefman.{dvi,pdf} duplicated part I in part II (at
+	least on some systems).
+
+    o	cbind() could crash with a zero-length input and a list result.
 
 
 

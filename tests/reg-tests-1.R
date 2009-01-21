@@ -5563,3 +5563,13 @@ res <- read.table(zz, blank.lines.skip = FALSE)
 close(zz)
 stopifnot(nrow(res) == 3)
 ## was 4 in 2.8.1
+
+
+## segfault from cbind() reported by Hadley Wickham
+## https://stat.ethz.ch/pipermail/r-devel/2009-January/051853.html
+e <- environment()
+a <- matrix(list(e), ncol = 1, nrow = 2)
+b <- matrix(ncol = 0, nrow = 2) # zero-length
+cbind(a, b)
+cbind(a, b)
+## crashed in 2.9.0
