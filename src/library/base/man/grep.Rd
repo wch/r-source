@@ -6,6 +6,7 @@
 \name{grep}
 \title{Pattern Matching and Replacement}
 \alias{grep}
+\alias{grepl}
 \alias{sub}
 \alias{gsub}
 \alias{regexpr}
@@ -13,6 +14,7 @@
 \description{
   \code{grep} searches for matches to \code{pattern} (its first
   argument) within the character vector \code{x} (second argument).
+  \code{grepl} is an alternative way to return the results.
   \code{regexpr} and \code{gregexpr} do too, but return more detail in
   a different format.
 
@@ -23,6 +25,9 @@
 grep(pattern, x, ignore.case = FALSE, extended = TRUE,
      perl = FALSE, value = FALSE, fixed = FALSE, useBytes = FALSE,
      invert = FALSE)
+
+grepl(pattern, x, ignore.case = FALSE, extended = TRUE,
+     perl = FALSE, fixed = FALSE, useBytes = FALSE)
 
 sub(pattern, replacement, x,
     ignore.case = FALSE, extended = TRUE, perl = FALSE,
@@ -103,7 +108,10 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   \code{x} that yielded a match or, if \code{value} is \code{TRUE}, the
   matched elements of \code{x} (after coercion, preserving names but no
   other attributes).
-
+  
+  \code{grepl} differs only in that it returns a logical vector (match
+  or no for each element of \code{x}).
+  
   For \code{sub} and \code{gsub} a character vector of the same length
   and with the same attributes as \code{x} (after possible coercion).
   Elements of character vectors \code{x} which are not substituted will

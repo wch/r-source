@@ -118,6 +118,9 @@ NEW FEATURES
 
     o 	strwrap() now allows a separate prefix for the first line.
 
+    o	grep() has a more efficient sibling grepl() that returns a
+	logical vector,
+
 
 DEPRECATED & DEFUNCT
 

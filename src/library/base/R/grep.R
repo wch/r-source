@@ -24,6 +24,15 @@ function(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
                    perl, fixed, useBytes, invert))
 }
 
+grepl <-
+function(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
+         fixed = FALSE, useBytes = FALSE)
+{
+    if(!is.character(x)) x <- as.character(x)
+    .Internal(grepl(as.character(pattern), x, ignore.case, extended, FALSE,
+                   perl, fixed, useBytes, FALSE))
+}
+
 sub <-
 function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
          perl = FALSE, fixed = FALSE, useBytes = FALSE)
