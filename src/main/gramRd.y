@@ -1,3 +1,4 @@
+
 %{
 /*
  *  R : A Computer Langage for Statistical Data Analysis
@@ -102,7 +103,7 @@ static SEXP	Value;
 #define VERBATIM 3
 #define INOPTION 4
 
-static SEXP     SrcFile = NULL;
+static SEXP     SrcFile;  /* parse_Rd will *always* supply a srcfile */
 
 /* Routines used to build the parse tree */
 
@@ -314,8 +315,7 @@ static SEXP xxmarkup(SEXP header, SEXP body, YYLTYPE *lloc)
     	PROTECT(header = mkString("LIST"));
     	
     setAttrib(ans, install("Rd_tag"), header);
-    if (SrcFile) 
-    	setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     UNPROTECT_PTR(header);
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
@@ -335,8 +335,7 @@ static SEXP xxOptionmarkup(SEXP header, SEXP option, SEXP body, YYLTYPE *lloc)
     UNPROTECT_PTR(header);
     setAttrib(ans, install("Rd_option"), option);
     UNPROTECT_PTR(option);
-    if (SrcFile) 
-    	setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
 #endif
@@ -362,8 +361,7 @@ static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, int argcount, YYLTYPE
     }
     setAttrib(ans, install("Rd_tag"), header);
     UNPROTECT_PTR(header);    
-    if (SrcFile) 
-    	setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
 #endif
@@ -375,8 +373,7 @@ static void xxsavevalue(SEXP Rd, YYLTYPE *lloc)
     PROTECT(Value = PairToVectorList(CDR(Rd)));
     if (!isNull(Value)) {
     	setAttrib(Value, R_ClassSymbol, mkString("Rd"));
-    	if (SrcFile) 
-    	    setAttrib(Value, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    	setAttrib(Value, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     }
     UNPROTECT_PTR(Rd);
 }
@@ -384,8 +381,7 @@ static void xxsavevalue(SEXP Rd, YYLTYPE *lloc)
 static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
 {
     setAttrib(item, install("Rd_tag"), mkString(yytname[YYTRANSLATE(type)]));
-    if (SrcFile) 
-    	setAttrib(item, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(item, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     return item;
 }
 
@@ -550,8 +546,7 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile)
     xxcolno = 1; 
     xxbyteno = 1;
     
-    if (!isNull(srcfile)) SrcFile = srcfile;
-    else SrcFile = NULL;
+    SrcFile = srcfile;
     
     npush = 0;
     xxmode = LATEXLIKE; 

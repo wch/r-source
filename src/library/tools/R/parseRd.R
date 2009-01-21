@@ -63,8 +63,10 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     }
     tcon <- textConnection(lines)
     on.exit(close(tcon))
-    if (inherits(srcfile, "srcfile")) basename <- basename(srcfile$filename)
-    else basename <- ""
+    # the internal function must get some sort of srcfile
+    if (!inherits(srcfile, "srcfile")) 
+    	srcfile <- srcfile(file0)
+    basename <- basename(srcfile$filename)
     .Internal(parse_Rd(tcon, srcfile, encoding, verbose, basename))
 }
 
