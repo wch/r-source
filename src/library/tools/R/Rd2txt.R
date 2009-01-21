@@ -262,7 +262,7 @@ Rd2txt <-
                "\\ldots" = of1("..."),
                "\\R" = of1("R"),
                "\\enc" = {
-                   txt <- as.character(iblock[[2]])
+                   txt <- as.character(block[[2]])
                    of1(txt)
                } ,
                "\\eqn" = {

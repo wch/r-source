@@ -143,7 +143,8 @@ x <- c(1:3, 3:5, 10)
 is.unsorted(x)                #-> FALSE: is sorted
 is.unsorted(x, strictly=TRUE) #-> TRUE : is not (and cannot be) sorted strictly
 
-\dontrun{## Small speed comparison simulation:
+\dontrun{
+## Small speed comparison simulation:
 N <- 2000
 Sim <- 20
 rep <- 1000 # << adjust to your CPU

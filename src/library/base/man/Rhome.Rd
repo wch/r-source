@@ -6,7 +6,7 @@
 \name{Rhome}
 \alias{R.home}
 \alias{R_HOME}
-\alias{R\_HOME} % to allow \file{\var{\link{R\_HOME}}/Tcl/doc}
+%\alias{R\_HOME} % to allow \file{\var{\link{R\_HOME}}/Tcl/doc}
 \title{Return the R Home Directory}
 \description{
   Return the \R home directory.

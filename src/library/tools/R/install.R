@@ -1793,7 +1793,6 @@
     writeLines(dir(d, pattern = "\\.html$"), con)
 }
 
-## NB Perl version removes files if the corresponding .Rd has disappeared
 .convertRdfiles <-
     function(dir, outDir, OS = .Platform$OS.type,
              types = c("txt", "html", "latex", "example"))
@@ -1827,18 +1826,8 @@
         dir.create(file.path(outDir, dirname[type]), showWarnings = FALSE)
     cmd <- paste(R.home(), "/bin/Rdconv -t ", sep = "")
 
-    perllib <- Sys.getenv("PERL5LIB")
-    if (nzchar(perllib)) {
-        Sys.setenv(PERL5LIB = paste(file.path(R.home("share"), "perl"),
-                   perllib, sep = .Platform$path.sep))
-    } else {
-        perllib <- Sys.getenv("PERLLIB")
-        Sys.setenv(PERLLIB = paste(file.path(R.home("share"), "perl"),
-                   perllib, sep = .Platform$path.sep))
-    }
-
     ## FIXME: perl version cleans up non-matching converted files
-    #types <- "txt"
+    types <- "latex"
     cat("\n   converting help for package ", sQuote(pkg), "\n", sep="")
     if(TRUE) {
         ## FIXME: add this lib to lib.loc?
@@ -1892,31 +1881,42 @@
             }
         }
     }
-    else
-    for (f in files) {
-        Links <- findHTMLlinks(outDir)
-        bf <-  sub("\\.[Rr]d","", basename(f))
-        need <- character()
-        for(type in types) {
-            ff <- file.path(outDir, dirname[type],
-                            paste(bf, ext[type], sep = ""))
-            if(!file.exists(ff) || file_test("-nt", f, ff)) {
-                this <- paste(cmd, type, " -o ", ff, " --package=", pkg,
-                              " --version=", ver,
-                              " --encoding=", enc,
-                              " ", f, sep="")
-                ##print(this)
-                res <- system(this)
-                if(res) {
-                    stop("problem in converting ", bf)
-                }
-                if(file.exists(ff)) need <- c(need, type)
-            }
+    else {
+        perllib <- Sys.getenv("PERL5LIB")
+        if (nzchar(perllib)) {
+            Sys.setenv(PERL5LIB = paste(file.path(R.home("share"), "perl"),
+                       perllib, sep = .Platform$path.sep))
+        } else {
+            perllib <- Sys.getenv("PERLLIB")
+            Sys.setenv(PERLLIB = paste(file.path(R.home("share"), "perl"),
+                       perllib, sep = .Platform$path.sep))
         }
-        if(length(need)) {
-            cat("    ", bf, rep(" ", max(0, 30-nchar(bf))),
-                paste(need, collapse=" \t"),
-                "\n",sep="")
+
+        for (f in files) {
+            Links <- findHTMLlinks(outDir)
+            bf <-  sub("\\.[Rr]d","", basename(f))
+            need <- character()
+            for(type in types) {
+                ff <- file.path(outDir, dirname[type],
+                                paste(bf, ext[type], sep = ""))
+                if(!file.exists(ff) || file_test("-nt", f, ff)) {
+                    this <- paste(cmd, type, " -o ", ff, " --package=", pkg,
+                                  " --version=", ver,
+                                  " --encoding=", enc,
+                                  " ", f, sep="")
+                    ##print(this)
+                    res <- system(this)
+                    if(res) {
+                        stop("problem in converting ", bf)
+                    }
+                    if(file.exists(ff)) need <- c(need, type)
+                }
+            }
+            if(length(need)) {
+                cat("    ", bf, rep(" ", max(0, 30-nchar(bf))),
+                    paste(need, collapse=" \t"),
+                    "\n",sep="")
+            }
         }
     }
 }

@@ -8,7 +8,8 @@
 \title{Abbreviate Strings}
 \usage{
 abbreviate(names.arg, minlength = 4, use.classes = TRUE,
-           dot = FALSE, strict = FALSE, method = c("left.kept", "both.sides"))
+           dot = FALSE, strict = FALSE,
+           method = c("left.kept", "both.sides"))
 }
 \alias{abbreviate}
 \arguments{

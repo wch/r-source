@@ -22,7 +22,7 @@
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         encoding = "unknown", Links = NULL, CHM = FALSE)
 
-Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type
+Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type)
 
 Rd2latex(Rd, out = "", defines = .Platform$OS.type, encoding = "unknown")
 

@@ -66,7 +66,7 @@ mem.limits(nsize = NA, vsize = NA)
   cons cells and the \option{--*-vsize} options specify the size of the
   vector heap in bytes.  Both options must be integers or integers
   followed by \code{G}, \code{M}, \code{K}, or \code{k} meaning
-  \code{Giga} (\eqn{2^{30} = 1073741824}) \emph{Mega} (\eqn{2^{20} =
+  \emph{Giga} (\eqn{2^{30} = 1073741824}) \emph{Mega} (\eqn{2^{20} =
     1048576}), (computer) \emph{Kilo} (\eqn{2^{10} = 1024}), or regular
   \emph{kilo} (1000).
 

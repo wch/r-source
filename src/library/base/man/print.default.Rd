@@ -1,6 +1,6 @@
 % File src/library/base/man/print.default.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{print.default}
@@ -89,45 +89,49 @@
   locale.)
 #endif
 }
-\section{
+
 #ifdef unix
-Unicode and other multi-byte locales
-#endif
-#ifdef windows
-Multi-byte locales
-#endif
-}{
+\section{Unicode and other multi-byte locales}{
   In all locales, the characters in the ASCII range (\samp{0x00} to
   \samp{0x7f}) are printed in the same way, as-is if printable, otherwise
   via ANSI escape sequences or 3-digit octal escapes as described for
   single-byte locales.
 
   Multi-byte non-printing characters are printed as an escape sequence
-  of the form \samp{\\uxxxx}
-#ifndef windows
-  or \samp{\\Uxxxxxxxx}
-#endif
-  (in hexadecimal).
-#ifdef windows
-  This is the Unicode point of the character.
-#endif
-#ifdef unix
+  of the form \samp{\\uxxxx} or \samp{\\Uxxxxxxxx} (in hexadecimal).
   This is the internal code for the wide-character representation of the
   character.  If this is not known to be the Unicode point, a warning is
   issued.  The only known exceptions are certain Japanese ISO2022
   locales on commercial Unixes, which use a concatenation of the bytes:
   it is unlikely that \R compiles on such a system.
 % http://www.cl.cam.ac.uk/~mgk25/ucs/iso2022-wc.html
-#endif
 
   It is possible to have a character string in a character vector that
   is not valid in the current locale.  If a byte is encountered that is
   not part of a valid character it is printed in hex in the form
   \samp{\\xab} and this is repeated until the start of a valid character.
-#ifdef unix
   (This will rapidly recover from minor errors in UTF-8.)
-#endif
 }
+#endif
+
+#ifdef windows
+\section{Multi-byte locales}{
+  In all locales, the characters in the ASCII range (\samp{0x00} to
+  \samp{0x7f}) are printed in the same way, as-is if printable, otherwise
+  via ANSI escape sequences or 3-digit octal escapes as described for
+  single-byte locales.
+
+  Multi-byte non-printing characters are printed as an escape sequence
+ of the form \samp{\\uxxxx} (in hexadecimal). This is the Unicode point
+ of the character.
+
+  It is possible to have a character string in a character vector that
+  is not valid in the current locale.  If a byte is encountered that is
+  not part of a valid character it is printed in hex in the form
+  \samp{\\xab} and this is repeated until the start of a valid character.
+}
+#endif
+
 \seealso{
   The generic \code{\link{print}}, \code{\link{options}}.
   The \code{"\link{noquote}"} class and print method.
