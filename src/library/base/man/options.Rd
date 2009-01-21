@@ -51,7 +51,7 @@ getOption(x)
   a list with the previous values of the options changed (returned
   invisibly).
 }
-\section{Options used in base R}{
+\section{Options used in base \R}{
   \describe{
     \item{\code{add.smooth}:}{typically logical, defaulting to
       \code{TRUE}.  Could also be set to an integer for specifying how
