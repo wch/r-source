@@ -1253,10 +1253,12 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		case LISTSXP:
 		    PROTECT(u = coerceVector(u, mode));
 		    k = LENGTH(u);
-		    idx = (!isMatrix(u)) ? rows : k;
-		    for (i = 0; i < idx; i++)
-			SET_VECTOR_ELT(result, n++,
-				       duplicate(VECTOR_ELT(u, i % k)));
+		    if (k > 0) {
+			idx = (!isMatrix(u)) ? rows : k;
+			for (i = 0; i < idx; i++)
+			    SET_VECTOR_ELT(result, n++,
+					   duplicate(VECTOR_ELT(u, i % k)));
+		    }
 		    UNPROTECT(1);
 		    break;
 		default:
