@@ -55,7 +55,7 @@ co.intervals(x, number = 6, overlap = 0.5)
   \item{columns}{the number of columns in the panel layout array.}
   \item{show.given}{logical (possibly of length 2 for 2 conditioning
       variables): should conditioning plots be shown for the
-    corresponding conditioning variables (default \code{TRUE})}.
+    corresponding conditioning variables (default \code{TRUE}).}
   \item{col}{a vector of colors to be used to plot the points.  If too
     short, the values are recycled.}
   \item{pch}{a vector of plotting symbols or characters.  If too short,
