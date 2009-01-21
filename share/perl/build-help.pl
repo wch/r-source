@@ -48,7 +48,7 @@ $OSdir = $opt_os if $opt_os;
 
 $AQUAdir = "aqua" if($ENV{"R_USE_AQUA_SUBDIRS"} eq "yes");
 
-$WINDOWS = ($OSdir == "windows");
+$WINDOWS = ($OSdir eq "windows");
 
 $dir_mod = 0755;#- Permission ('mode') of newly created directories.
 
@@ -77,8 +77,9 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example && !$opt_chm){
     $opt_txt = 1;
     $opt_latex = 1;
     $opt_example = 1;
-    $opt_chm = 1 if $WINDOWS;
+    $opt_chm = 1;
 }
+$opt_chm = 0 unless $WINDOWS;
 
 ($pkg, $version, $lib, @mandir) = buildinit();
 $dest = $ARGV[2];
@@ -311,7 +312,7 @@ Options:
   --txt                 build text files    (default is all)
   --latex               build LaTeX files   (default is all)
   --example             build example files (default is all)
-  --chm                 build CHM files     (default on Windows)
+  --chm                 build CHM files     (only on Windows, default there)
 
 
 Email bug reports to <r-bugs\@r-project.org>.
