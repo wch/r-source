@@ -15,11 +15,9 @@
 #  http://www.r-project.org/Licenses/
 
 ## issues: see also inline
-## \samp is not escaping \\n etc: Quotes.Rd
 ## some methalias, e.g. array.Rd, as.POSIX*
 ## < vs textless
-## escape % in gc.Rd. { in pretty.tex, & in system.tex
-
+## escapting in code block, Paren.Rd
 
 
 latex_canonical_encoding  <- function(encoding)
@@ -274,6 +272,8 @@ Rd2latex <-
     latex_code_alias <- function(x)
     {
         ## FIXME do better
+        x <- gsub("{", "\\{", x, fixed = TRUE)
+        x <- gsub("}", "\\}", x, fixed = TRUE)
         x <- gsub("(^|[^\\])([&$%_])", "\\1\\\\\\2", x)
         x <- gsub("(^|[^\\])([&$%_])", "\\1\\\\\\2", x)
         x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
@@ -296,8 +296,8 @@ Rd2latex <-
         alias <- as.character(block)
         aa <- "\\aliasA{"
         if (pmatch(paste(name, ".", sep=""), alias, 0L)) aa <- "\\methaliasA{"
-        ## These break PDF-indexing, and 'name' is linked from the header
-        if (alias %in% c(name, "(", "{", "{-class")) return()
+        ## 'name' is linked from the header
+        if (alias == "name") return()
         alias2 <- latex_link_trans0(alias)
         of0(aa, latex_code_alias(alias), "}{",
             latex_escape_name(name), "}{", alias2, "}\n")
@@ -356,7 +356,7 @@ Rd2latex <-
                "\\preformatted"= {
                    inPre <<- TRUE
                    of1("\\begin{alltt}\n")
-                   writeContent(block, tag) # FIXME, translations?
+                   writeContent(block, tag)
                    of1("\\end{alltt}\n")
                    inPre <<- FALSE
                },
@@ -499,7 +499,9 @@ Rd2latex <-
             of0("\\keyword{", latex_escape_name(key), "}{", ltxname, "}\n")
         } else if (tag == "\\section") {
             ## FXIME not safe if markup in section header
-            of0("%\n\\begin{Section}{", section[[1]], "}")
+            of0("%\n\\begin{Section}{")
+            writeContent(section[[1]], tag)
+            of1("}")
     	    writeSectionInner(section[[2]], tag)
             of1("\\end{Section}\n")
     	} else {
