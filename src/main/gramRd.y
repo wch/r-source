@@ -89,6 +89,7 @@ static SEXP     makeSrcref(YYLTYPE *, SEXP);
 /* Internal lexer / parser state variables */
 
 static int 	xxinRString, xxQuoteLine, xxQuoteCol;
+static int	xxinEqn;
 static int	xxNewlineInString;
 static int	xxgetc();
 static int	xxungetc(int);
@@ -107,7 +108,7 @@ static SEXP     SrcFile;  /* parse_Rd will *always* supply a srcfile */
 
 /* Routines used to build the parse tree */
 
-static SEXP	xxpushMode(int, int);
+static SEXP	xxpushMode(int, int, int);
 static void	xxpopMode(SEXP);
 static SEXP	xxnewlist(SEXP);
 static SEXP	xxlist(SEXP, SEXP);
@@ -177,8 +178,8 @@ Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@$); }
 	|	OPTMACRO    goOption Option LatexArg { $$ = xxOptionmarkup($1, $3, $4, &@$); xxpopMode($2); }
 	|	RCODEMACRO  RLikeArg     	{ $$ = xxmarkup($1, $2, &@$); }
 	|	VERBMACRO   VerbatimArg		{ $$ = xxmarkup($1, $2, &@$); }
-	|	VERBMACRO2  VerbatimArg		{ $$ = xxmarkup2($1, $2, R_NilValue, 1, &@$); }
-	|       VERBMACRO2  VerbatimArg VerbatimArg2 { $$ = xxmarkup2($1, $2, $3, 2, &@$); }
+	|	VERBMACRO2  VerbatimArg1	{ $$ = xxmarkup2($1, $2, R_NilValue, 1, &@$); }
+	|       VERBMACRO2  VerbatimArg1 VerbatimArg2 { $$ = xxmarkup2($1, $2, $3, 2, &@$); }
 	|	ESCAPE				{ $$ = xxmarkup($1, R_NilValue, &@$); }
 	|	IFDEF IfDefTarget ArgItems ENDIF { $$ = xxmarkup2($1, $2, $3, 2, &@$); UNPROTECT_PTR($4); } 
 	
@@ -197,6 +198,8 @@ RLikeArg:	goRLike Arg			{ xxpopMode($1); $$ = $2; }
 
 VerbatimArg:	goVerbatim Arg		 	{ xxpopMode($1); $$ = $2; }
 
+VerbatimArg1:	goVerbatim1 Arg			{ xxpopMode($1); $$ = $2; }
+
 /* This one executes the push after seeing the brace starting the optional second arg */
 
 VerbatimArg2:   '{' goVerbatim2 ArgItems '}'    { xxpopMode($2); $$ = $3; }
@@ -205,19 +208,21 @@ VerbatimArg2:   '{' goVerbatim2 ArgItems '}'    { xxpopMode($2); $$ = $3; }
 IfDefTarget:	goLatexLike TEXT	{ xxpopMode($1); $$ = xxnewlist($2); }
 
 
-goLatexLike:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, UNKNOWN); }
+goLatexLike:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, UNKNOWN, FALSE); }
 
-goRLike:	/* empty */			{ $$ = xxpushMode(RLIKE, UNKNOWN); }
+goRLike:	/* empty */			{ $$ = xxpushMode(RLIKE, UNKNOWN, FALSE); }
 
-goOption:	/* empty */			{ $$ = xxpushMode(INOPTION, UNKNOWN); }
+goOption:	/* empty */			{ $$ = xxpushMode(INOPTION, UNKNOWN, FALSE); }
 
-goVerbatim:	/* empty */			{ $$ = xxpushMode(VERBATIM, UNKNOWN); }
+goVerbatim:	/* empty */			{ $$ = xxpushMode(VERBATIM, UNKNOWN, FALSE); }
 
-goVerbatim2:    /* empty */			{ xxbraceDepth--; $$ = xxpushMode(VERBATIM, UNKNOWN); xxbraceDepth++; }
+goVerbatim1:	/* empty */			{ $$ = xxpushMode(VERBATIM, UNKNOWN, TRUE); }
 
-goItem0:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, ESCAPE); }
+goVerbatim2:    /* empty */			{ xxbraceDepth--; $$ = xxpushMode(VERBATIM, UNKNOWN, FALSE); xxbraceDepth++; }
 
-goItem2:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, LATEXMACRO2); }
+goItem0:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, ESCAPE, FALSE); }
+
+goItem2:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, LATEXMACRO2, FALSE); }
 
 Arg:		'{' ArgItems  '}'		{ $$ = $2; }
 	|	'{' '}'				{ $$ = xxnewlist(NULL); }
@@ -226,10 +231,10 @@ Option:		'[' Item ']'			{ $$ = $2; }
 		
 %%
 
-static SEXP xxpushMode(int newmode, int newitem)
+static SEXP xxpushMode(int newmode, int newitem, int neweqn)
 {
     SEXP ans;
-    PROTECT(ans = allocVector(INTSXP, 6));
+    PROTECT(ans = allocVector(INTSXP, 7));
     
     INTEGER(ans)[0] = xxmode;		/* Lexer mode */
     INTEGER(ans)[1] = xxitemType;	/* What is \item? */
@@ -237,6 +242,7 @@ static SEXP xxpushMode(int newmode, int newitem)
     INTEGER(ans)[3] = xxinRString;      /* Quote char that started a string */
     INTEGER(ans)[4] = xxQuoteLine;      /* Where the quote was */
     INTEGER(ans)[5] = xxQuoteCol;       /*           "         */
+    INTEGER(ans)[6] = xxinEqn;          /* In the first arg to \eqn or \deqn:  no escapes */
     
 #if DEBUGMODE
     Rprintf("xxpushMode(%d, %s) pushes %d, %s, %d\n", newmode, yytname[YYTRANSLATE(newitem)], 
@@ -246,6 +252,7 @@ static SEXP xxpushMode(int newmode, int newitem)
     xxitemType = newitem;
     xxbraceDepth = 0;
     xxinRString = 0;
+    xxinEqn = neweqn;
     
     return ans;
 }
@@ -262,6 +269,7 @@ static void xxpopMode(SEXP oldmode)
     xxinRString = INTEGER(oldmode)[3];
     xxQuoteLine = INTEGER(oldmode)[4];
     xxQuoteCol  = INTEGER(oldmode)[5];
+    xxinEqn	= INTEGER(oldmode)[6];
     
     UNPROTECT_PTR(oldmode);
 }
@@ -851,12 +859,15 @@ static int token(void)
     c = xxgetc();
 
     switch (c) {
-    	case '%': return mkComment(c);
+    	case '%': if (!xxinEqn) return mkComment(c);
+    	    break;
 	case '\\':
-    	    lookahead = xxungetc(xxgetc());
-    	    if (isalpha(lookahead) && xxmode != VERBATIM 
-    	        && (lookahead == 'l' || !xxinRString)) 
-	        return mkMarkup(c);
+	    if (!xxinEqn) {
+		lookahead = xxungetc(xxgetc());
+		if (isalpha(lookahead) && xxmode != VERBATIM 
+		    && (lookahead == 'l' || !xxinRString)) 
+		    return mkMarkup(c);
+	    }
 	    break;
         case R_EOF:
             if (xxinRString) {
@@ -866,7 +877,7 @@ static int token(void)
     	    }
     	    return END_OF_INPUT; 
     	case '#':
-    	    if (yylloc.first_column == 1) return mkIfdef(c);
+    	    if (!xxinEqn && yylloc.first_column == 1) return mkIfdef(c);
     	    break;
     	case LBRACE:
     	    xxbraceDepth++;
@@ -1135,18 +1146,20 @@ static int mkVerb(int c)
         if (c == '\\') {
             int lookahead = xxgetc();
             if (lookahead == '\\' || lookahead == '%' || lookahead == LBRACE || lookahead == RBRACE) {
-		c = lookahead;
 		escaped = 1;
+		if (xxinEqn) TEXT_PUSH(c);
+		c = lookahead;
 	    } else xxungetc(lookahead);
         }
-    	if ((!escaped && c == '%') || c == R_EOF) break;
-	if (!escaped && c == LBRACE) 
-	    xxbraceDepth++;
-    	else if (!escaped && c == RBRACE) {
-	    if (xxbraceDepth == 1) break;
-	    else xxbraceDepth--;
-	} else if ((!escaped && c == '%') || c == R_EOF) 
-	    break;
+        if (c == R_EOF) break;
+        if (!escaped) {
+    	    if (c == '%' && !xxinEqn) break;
+	    else if (c == LBRACE) xxbraceDepth++;
+    	    else if (c == RBRACE) {
+	    	if (xxbraceDepth == 1) break;
+	    	else xxbraceDepth--;
+	    }
+	}
     	TEXT_PUSH(c);
     	if (c == '\n') break;
     	c = xxgetc();
