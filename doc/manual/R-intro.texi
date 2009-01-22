@@ -6498,7 +6498,7 @@ release, but the collection of available packages changes frequently.
 @findex :::
 
 Packages can have @emph{namespaces}, and currently all of the base and
-recommended packages do expect the @code{datasets} package.  Namespaces
+recommended packages do except the @code{datasets} package.  Namespaces
 do three things: they allow the package writer to hide functions and
 data that are meant only for internal use, they prevent functions from
 breaking when a user (or other package writer) picks a name that clashes
