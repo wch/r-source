@@ -14,3 +14,4 @@ BioCsoft	"BioC software"	http://www.bioconductor.org/packages/2.4/bioc	FALSE	TRU
 BioCann	"BioC annotation"	http://www.bioconductor.org/packages/2.4/data/annotation	FALSE	TRUE	TRUE	TRUE
 BioCexp	"BioC experiment"	http://www.bioconductor.org/packages/2.4/data/experiment	FALSE	TRUE	TRUE	TRUE
 BioCextra	"BioC extra"	http://www.bioconductor.org/packages/2.4/extra	FALSE	TRUE	TRUE	TRUE
+R-Forge	R-Forge	http://R-Forge.R-project.org	FALSE	TRUE	TRUE	TRUE

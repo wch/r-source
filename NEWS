@@ -318,6 +318,9 @@ NEW FEATURES
 	command-line arguments to INSTALL.
 	E.g. --install-args="--docs=normal" on Windows if the HTML
 	Help Workshop is not installed.
+	
+    o	R-Forge has been added to R_HOME/etc/repositories, so it will
+    	be available interactively in setRepositories().
 
 
 INSTALLATION
