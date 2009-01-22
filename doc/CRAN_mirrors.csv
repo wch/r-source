@@ -57,5 +57,6 @@ Turkey,Turkey,Kahramanmaras,http://www.kahramanmaras.bel.tr/cran/,"Kahramanmaras
 "USA (OH)",USA,Cleveland,http://cran.case.edu/,"Case Western Reserve University, Cleveland, OH","""Alberto H. Santana"" <ahs4@case.edu>",1,us
 "USA (PA 1)",USA,Pittsburgh,http://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA",,1,us
 "USA (PA 2)",USA,Pittsburgh,http://cran.mirrors.hoobly.com,"Hoobly Classifieds, Pittsburgh, PA","Peter Grigor <pgrigor@hoobly.com>",1,us
-"USA (TX)",USA,"San Antonio",http://www.revolution-computing.com/cran/,"Revolution Computing, San Antonio, TX","David Smith <david@revolution-computing.com>",1,us
+"USA (TX 1)",USA,"San Antonio",http://www.revolution-computing.com/cran/,"Revolution Computing, San Antonio, TX","David Smith <david@revolution-computing.com>",1,us
+"USA (TX 2)",USA,Dallas,http://www.cyberuse.com/cran,"CyberUse.com, Dallas, TX",help@cyberuse.com,1,us
 "USA (WA)",USA,Seattle,http://cran.fhcrc.org/,"Fred Hutchinson Cancer Research Center, Seattle, WA",sfalcon@fhcrc.org,1,us
