@@ -1656,7 +1656,7 @@
         chmdir <- file.path(dir, "chm")
         dir.create(chmdir, showWarnings = FALSE)
         chmcon <- file(file.path(chmdir, "00Index.html"), "wt")
-        on.exit(close(chmcon))
+        on.exit(close(chmcon), add = TRUE)
     }
     desc <- read.dcf(file.path(outDir, "DESCRIPTION"))[1,]
     ## drop internal entries
