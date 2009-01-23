@@ -16,7 +16,7 @@ DISTFILES = COPYRIGHTS.modreg COPYRIGHTS.portsrc DESCRIPTION.in Makefile.in \
 
 pkg = stats
 
-R_EXE = $(top_builddir)/bin/R --vanilla
+R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
@@ -34,7 +34,7 @@ all: Makefile DESCRIPTION
 	done
 	@if test -f DESCRIPTION; then \
 	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
-	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null ; \
+	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
 	fi
 	@if test -d $(srcdir)/demo; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo; \
@@ -66,10 +66,8 @@ all: Makefile DESCRIPTION
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-#	had all.rda in earlier versions 
-	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
 	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --slave > /dev/null
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status

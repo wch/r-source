@@ -15,7 +15,7 @@ DISTFILES = DESCRIPTION.in Makefile.in NAMESPACE
 
 pkg = grid
 
-R_EXE = $(top_builddir)/bin/R --vanilla
+R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
@@ -26,7 +26,7 @@ all: Makefile DESCRIPTION
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg) $${f}
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
-	@for f in COPYRIGHTS INDEX NAMESPACE SOURCES; do \
+	@for f in COPYRIGHTS NAMESPACE SOURCES; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \
 	      $(top_builddir)/library/$(pkg); \
@@ -34,7 +34,7 @@ all: Makefile DESCRIPTION
 	done
 	@if test -f DESCRIPTION; then \
 	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
-	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null ; \
+	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
 	fi
 	@if test -d $(srcdir)/demo; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo; \
@@ -73,7 +73,7 @@ all: Makefile DESCRIPTION
 	fi
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --slave > /dev/null
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@

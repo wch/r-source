@@ -15,7 +15,7 @@ DISTFILES = DESCRIPTION.in Makefile.in NAMESPACE
 
 pkg = tools
 
-R_EXE = $(top_builddir)/bin/R --vanilla
+R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
@@ -25,7 +25,7 @@ all: Makefile DESCRIPTION
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg) $${f}
-	@for f in COPYRIGHTS INDEX NAMESPACE SOURCES; do \
+	@for f in COPYRIGHTS NAMESPACE SOURCES; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \
 	      $(top_builddir)/library/$(pkg); \
@@ -81,9 +81,9 @@ all: Makefile DESCRIPTION
 	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  $(ECHO) "makeLazyLoading(\"$(pkg)\")") | \
-	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --slave > /dev/null
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 	@$(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
-	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null
+	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null
 
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status

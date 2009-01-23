@@ -26,7 +26,7 @@ all: Makefile DESCRIPTION
 	  cat $(RSRC) >> $${f}; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg))
-	@for f in COPYRIGHTS INDEX SOURCES; do \
+	@for f in COPYRIGHTS SOURCES; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \
 	      $(top_builddir)/library/$(pkg); \
@@ -34,7 +34,7 @@ all: Makefile DESCRIPTION
 	done
 	@if test -f DESCRIPTION; then \
 	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
-	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null ; \
+	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
 	fi
 	@if test -d $(srcdir)/data; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
