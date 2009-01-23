@@ -61,7 +61,7 @@ SEXP getvar(SEXP name, SEXP rho)
     if(!isEnvironment(rho))
 	error("rho should be an environment");
     ans = findVar(install(CHAR(STRING_ELT(name, 0))), rho);
-    printf("first value is %f\n", REAL(ans)[0]);
+    Rprintf("first value is %f\n", REAL(ans)[0]);
     return(R_NilValue);
 }
 
