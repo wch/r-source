@@ -49,13 +49,13 @@ all: Makefile DESCRIPTION
 	fi
 	@if test -d $(srcdir)/inst/afm; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/afm; \
-	  for f in `ls -d $(srcdir)/inst/afm/*`; do \
+	  for f in $(srcdir)/inst/afm/*; do \
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/afm; \
 	  done; \
 	fi
 	@if test -d $(srcdir)/inst/enc; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/enc; \
-	  for f in `ls -d $(srcdir)/inst/enc/*`; do \
+	  for f in $(srcdir)/inst/enc/*; do \
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/enc; \
 	  done; \
 	fi

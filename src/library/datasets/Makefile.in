@@ -38,7 +38,7 @@ all: Makefile DESCRIPTION
 	fi
 	@if test -d $(srcdir)/data; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
-	  for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
+	  for f in $(srcdir)/data/*; do \
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
 	  done; \
 	  rm -f $(top_builddir)/library/$(pkg)/data/Rdata.*; \

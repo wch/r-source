@@ -387,16 +387,17 @@ Rd2latex <-
                "\\testonly" = {}, # do nothing
                "\\method" =,
                "\\S3method" = {
-                   ## FIXME: special methods for [ [<- and operators
-                   class <- as.character(block[[2]])
-                   if (class == "default")
-                       of1('## Default S3 method:\n')
-                   else {
-                       of1("## S3 method for class '")
-                       writeContent(block[[2]], tag)
-                       of1("':\n")
-                   }
-                   writeContent(block[[1]], tag)
+                   ## should not get here
+##                    ## FIXME: special methods for [ [<- and operators
+##                    class <- as.character(block[[2]])
+##                    if (class == "default")
+##                        of1('## Default S3 method:\n')
+##                    else {
+##                        of1("## S3 method for class '")
+##                        writeContent(block[[2]], tag)
+##                        of1("':\n")
+##                    }
+##                    writeContent(block[[1]], tag)
                },
                "\\S4method" = {
                    of1("## S4 method for signature '")
@@ -434,9 +435,53 @@ Rd2latex <-
 	tags <- attr(blocks, "RdTags")
 
 	for (i in seq_along(tags)) {
-            tag <- tags[i]
             block <- blocks[[i]]
-            switch(tag,
+            switch(tag <- attr(block, "Rd_tag"),
+                   "\\method" =,
+                   "\\S3method" = {
+                       class <- as.character(block[[2]])
+                       generic <- as.character(block[[1]])
+                       if (generic %in% c("[", "[[", "$")) {
+                           of1("## S3 method for class '")
+                           writeContent(block[[2]], tag)
+                           of1("':\n")
+                           ## need to assemble the call
+                           j <- i + 1
+                           txt <- ""
+                           repeat {
+                               this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
+                                              "\\dots" = "...,",
+                                              RCODE = as.character(blocks[[j]]),
+                                              stop(tg, " should not get here"))
+                               txt <- paste(txt, this, sep = "")
+                               ## really check for balanced parentheses
+                               blocks[[j]] <- structure("", Rd_tag = "COMMENT")
+                               if(grepl("\n$", txt)) break
+                               j <- j + 1
+                           }
+                           #print(txt)
+                           txt <- sub("(x",
+                                      paste("x", generic, sep = ""), txt,
+                                      fixed = TRUE)
+                           if (generic == "[")
+                               txt <- sub(")([^)]*)$", "]\\1", txt)
+                           else if (generic == "[[")
+                               txt <- sub(")([^)]*)$", "]]\\1", txt)
+                           else if (generic == "$")
+                               txt <- sub(")([^)]*)$", "\\1", txt)
+                           #print(txt)
+                           blocks[[i+1]] <- structure(txt, Rd_tag = "RCODE")
+                       } else {
+                           if (class == "default")
+                               of1('## Default S3 method:\n')
+                           else {
+                               of1("## S3 method for class '")
+                               writeContent(block[[2]], tag)
+                               of1("':\n")
+                           }
+                           writeContent(block[[1]], tag)
+                       }
+                   },
                    "\\item" = {
                        if (blocktag == "\\value" && !inList) {
                            of1("\\begin{ldescription}\n")

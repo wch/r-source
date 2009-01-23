@@ -42,18 +42,6 @@ all: Makefile DESCRIPTION
 	    $(ECHO) "$${tmp}") \
 	    >> $(top_builddir)/library/$(pkg)/DESCRIPTION; \
 	fi
-	@if test -d $(srcdir)/data; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
-	  for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
-	  done; \
-	fi
-	@if test -d $(srcdir)/demo; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo; \
-	  for f in `ls -d $(srcdir)/demo/* | sed '/CVS/d'`; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
-	  done; \
-	fi
 	@if test -d $(srcdir)/inst/po; then \
 	  if test "@USE_NLS@" = "yes"; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \

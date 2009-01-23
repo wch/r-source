@@ -39,15 +39,9 @@ all: Makefile DESCRIPTION
 	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
 	fi
-	@if test -d $(srcdir)/data; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
-	  for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
-	  done; \
-	fi
 	@if test -d $(srcdir)/demo; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo; \
-	  for f in `ls -d $(srcdir)/demo/* | sed -e '/CVS/d' -e '/00Index/d'`; do \
+	  for f in `ls -d $(srcdir)/demo/* | sed -e '/00Index/d'`; do \
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
 	  done; \
 	fi
@@ -71,9 +65,6 @@ all: Makefile DESCRIPTION
             rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
             $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
 	fi
-	@if test -d src; then \
-	  (cd src && $(MAKE)) || exit 1; \
-	fi
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
@@ -86,10 +77,8 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 
 mostlyclean: clean
 clean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f all.R 
 distclean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f Makefile DESCRIPTION
 maintainer-clean: distclean
 

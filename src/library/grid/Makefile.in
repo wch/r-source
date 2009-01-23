@@ -36,15 +36,9 @@ all: Makefile DESCRIPTION
 	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
 	fi
-	@if test -d $(srcdir)/demo; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo; \
-	  for f in `ls -d $(srcdir)/demo/* | sed '/CVS/d'`; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
-	  done; \
-	fi
 	@if test -d $(srcdir)/inst/doc; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/doc; \
-	  for f in `ls -d $(srcdir)/inst/doc/* | sed '/CVS/d'`; do \
+	  for f in $(srcdir)/inst/doc/*; do \
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/doc; \
 	  done; \
 	fi
