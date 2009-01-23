@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pdf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{pdf}
@@ -69,9 +69,13 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     currently allowed values are \code{"rgb"}, \code{"gray"} and
     \code{"cmyk"}.  Defaults to \code{"rgb"}.}
   \item{useDingbats}{logical.  Should small circles be rendered
-    \emph{via} the Dingbats font?  Defaults to true, which produces
-    smaller and better output -- this is provided for those who insist
-    on using broken PDF viewers.}
+    \emph{via} the Dingbats font?  Defaults to \code{TRUE}, which produces
+    smaller and better output. Setting this to \code{FALSE} can work
+    around font display problems in broken PDF viewers.
+#ifdef unix
+    See the \sQuote{Note} for a possible fix for such viewers.
+#endif
+    }
   \item{useKerning}{logical.  Should kerning corrections be included in
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
 }
@@ -197,11 +201,27 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   font metrics from the true fonts.
 
   Acrobat Reader 5.x and later can be extended by support for Asian and
-  (so-called) Central European fonts (the latter only for 7.x and later,
-  part of the \sQuote{Extended} pack for 8.x and later), and these will
-  be needed for the full use of encodings other than Latin-1.  See
+  (so-called) Central European fonts, and these will be needed for the
+  full use of encodings other than Latin-1.  See
   \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html} for
-  Reader 5.x to 8.x, and Updates on \url{http://www.adobe.com} for 9.x.
+  Reader 6.x to 8.x, and \url{http://www.adobe.com/downloads/updates}
+  for 9.x.
+
+#ifdef unix
+  On some systems the default plotting character \code{pch = 1} is
+  displayed in some PDF viewers incorrectly as a \code{"q"}
+  character.  (These seem to be viewers based on the \samp{poppler} PDF
+  rendering library). This may be due to incorrect or incomplete mapping
+  of font names to those used by the system.  Adding the following lines
+  to \file{~/.fonts.conf} or \file{/etc/fonts/local.conf} may circumvent
+  this problem.
+  \preformatted{
+<alias binding="same">
+       <family>ZapfDingbats</family>
+       <accept><family>Dingbats</family></accept>
+</alias>
+  }
+#endif
 }
 \seealso{
   \code{\link{pdfFonts}}, \code{\link{pdf.options}},
