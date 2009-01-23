@@ -460,14 +460,11 @@ sub listFiles {
 		 || m/^share\\texmf/
 		 || m/^bin\\build/
 		 || m/^bin\\check/
-		 || m/^bin\\INSTALL/
 		 || m/^bin\\Rd2dvi.sh/
-		 || m/^bin\\Rd2txt/
 		 || m/^bin\\Rdconv/
 		 || m/^bin\\Rdiff.sh/
 		 || m/^bin\\Rprof/
 		 || m/^bin\\Sd2Rd/
-		 || m/^bin\\SHLIB/
 		 || m/^lib\\/) {
 	    $component = "devel";
 	} elsif (m/^library\\grid\\doc/

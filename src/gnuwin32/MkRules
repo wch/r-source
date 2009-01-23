@@ -79,12 +79,9 @@ FCFLAGS=-O3
 ## =============== end of user-customizable parts  ===================
 
 DEPARG=-MM
-MINGW32LDFLAG=
 C99FLAG=-std=gnu99
 
 ifeq ($(strip $(BUILD)),GCC4)
-BINPREF=
-MINGW32CFLAG=
 F77=gfortran$(GCC4_SUFF)
 FLIBS=-lgfortran
 AWK=gawk
@@ -96,8 +93,6 @@ GCC4_SUFF=
 endif
 
 ifeq ($(strip $(BUILD)),F2C)
-BINPREF=
-MINGW32CFLAG=
 F77=sh $(RHOME)/src/scripts/f77_f2c
 FLIBS=-lf2c
 AWK=gawk
@@ -114,32 +109,32 @@ LAPACK_LIBS=-L$(RHOME)/$(IMPDIR) -lRlapack
 GRAPHAPP_LIB=-lRgraphapp
 ZLIB_LIBS=-lRzlib
 
-AR=$(BINPREF)ar
-AS=$(BINPREF)as
+AR=ar
+AS=as
 CAT=cat
-CC=$(BINPREF)gcc$(GCC4_SUFF) $(MINGW32CFLAG) $(C99FLAG)
+CC=gcc$(GCC4_SUFF) $(C99FLAG)
 CP=cp
 # as set by make
 CPP=$(CC) -E
-CXX=$(BINPREF)g++$(GCC4_SUFF) $(MINGW32CFLAG)
+CXX=g++$(GCC4_SUFF)
 ## overridden in some packages
 DLL_LDMAIN=$(CC)
-DLL=$(DLL_LDMAIN) $(MINGW32LDFLAG)
+DLL=$(DLL_LDMAIN)
 ## formerly used version without -k for front-ends/libproxy.a
-DLLTOOL=$(BINPREF)dlltool
+DLLTOOL=dlltool
 ## some versions have trouble with paths, so we always need this
 ## even for native builds
 DLLTOOLFLAGS=--as $(AS) -k
 ECHO=echo
 FIND=find
-LINKER=$(MAIN_LD) $(MINGW32LDFLAG)
+LINKER=$(MAIN_LD)
 MAIN_LD=$(CC)
 MKDIR=mkdir
-NM=$(BINPREF)nm
-OBJC=$(BINPREF)gcc$(GCC4_SUFF) $(MINGW32CFLAG)
+NM=nm
+OBJC=gcc$(GCC4_SUFF)
 PERL=perl
-RANLIB=$(BINPREF)ranlib
-RESCOMP=$(BINPREF)windres --preprocessor="$(BINPREF)gcc$(GCC4_SUFF) -E -xc -DRC_INVOKED"
+RANLIB=ranlib
+RESCOMP=windres
 # as set by make
 RM=rm -f
 SED=sed

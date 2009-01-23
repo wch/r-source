@@ -89,6 +89,7 @@ imagedir:
 	$(CP) -pr $(R_HOME)/include $(RPREFIX)
 	$(CP) -pr $(foreach i,$(SHARE_DIRS),$(R_HOME)/share/$i) $(RPREFIX)/share
 	$(CP) -p $(R_HOME)/share/sh/dcf.sh $(RPREFIX)/share/sh
+# This is odd -- better to clean the copy
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library
 #

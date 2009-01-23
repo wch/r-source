@@ -6,18 +6,16 @@ CP = cp
 RM = rm
 MKDIR = mkdir
 
-R_HOME = ../../..
-## We pass RHOME in?
-## RHOME = $(shell perl ../pwd.pl ../../..)
+## We pass RHOME in
 PKGDIR = ../../library
 RLIB = $(RHOME)/library
 
-BUILD_HELP=R_HOME=$(RHOME) $(PERL) $(R_HOME)/share/perl/build-help.pl -os=windows
+BUILD_HELP=R_HOME=$(RHOME) $(PERL) $(RHOME)/share/perl/build-help.pl -os=windows
 
 ## HELPTYPES is set in ../Makefile
 help-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
-	   $(BUILD_HELP) $(HELPTYPES) $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
+	   $(BUILD_HELP) $(HELPTYPES) $(PKGDIR)/$* $(RLIB) $(RLIB)/$* $* ; \
 	fi
 
 chm-%:
@@ -25,11 +23,11 @@ chm-%:
 	  if ! test -d $(PKGDIR)/$*/chm ; then \
 	    $(BUILD_HELP) -chm $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	  fi; \
-	  $(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm \
+	  $(MAKE) --no-print-directory -C $(PKGDIR)/$*/chm \
 	    -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm ; \
 	  if test -f $(PKGDIR)/$*/chm/$*.chm ; then \
-	    $(MKDIR) -p $(DPKG)/chtml ;\
-	    $(CP) $(PKGDIR)/$*/chm/$*.chm $(DPKG)/chtml ; \
+	    $(MKDIR) -p $(RLIBS)/$*/chtml ;\
+	    $(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIBS)/$*/chtml ; \
 	  else \
 	    echo CHM compile failed:  HTML Help Workshop not installed? ; \
 	  fi; \

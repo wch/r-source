@@ -9,7 +9,7 @@ all:
 	@$(MAKE) --no-print-directory rbuild
 	@$(MAKE) --no-print-directory -C ../library -f Makefile.win all
 	@$(MAKE) --no-print-directory -C ../library -f Makefile.win rpackageindices
-	@$(MAKE) --no-print-directory rpackagehelp
+	@$(MAKE) --no-print-directory  -C ../library -f Makefile.win rpackagehelp
 	@$(MAKE) --no-print-directory htmldocs
 	@$(MAKE) --no-print-directory  -C ../../po -f Makefile.win
 
@@ -72,7 +72,7 @@ OBJS-EXTRA=malloc.o
 OPTFLAGS_M+=-DLEA_MALLOC
 endif
 
-.PHONY:  clean veryclean rlibs fixfiles front-ends rmodules rpackagehelp
+.PHONY:  clean veryclean rlibs fixfiles front-ends rmodules
 
 
 CPPFLAGS = -I../include -I. -I../extra -DHAVE_CONFIG_H -DR_DLL_BUILD
@@ -101,11 +101,6 @@ ifeq ($(strip $(USE_IMPLIBS)),YES)
 endif
 	@$(MAKE) --no-print-directory Rblas CHTML
 	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules fixed/fixdesc
-
-rpackagehelp:
-	@for pkg in $(R_PKGS_BASE); do \
-	  $(MAKE) --no-print-directory pkghelp-$${pkg} || exit 1; \
-	done
 
 
 rlibs:
@@ -220,38 +215,13 @@ ifeq ($(strip $(USE_CHM)),TRUE)
 	$(MAKE) --no-print-directory -C ./help -f MkChmDll
 endif
 
-base-HELP = ziponly
-datasets-HELP = ziponly
-graphics-HELP = ziponly
-grDevices-HELP = ziponly
-grid-HELP = ziponly
-methods-HELP = ziponly
-splines-HELP = ziponly
-stats-HELP = ziponly
-stats4-HELP = ziponly
-tcltk-HELP = ziponly
-tools-HELP = ziponly
-utils-HELP = ziponly
-
-PKGD = $(shell ./Rpwd.exe ../library)
-
-pkghelp-%:
-	@$(ECHO)
-	@$(ECHO) "------ Installing help for package $*"
-ifeq ($(strip $(USE_CHM)),TRUE)
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* HELPTYPES='-txt -html -latex -example -chm' $($*-HELP)help-$*
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* chm-$*
-else
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* HELPTYPES='-txt -html -latex -example' $($*-HELP)help-$*
-endif
-
 #                          ===== cleaning ======
 
 ## used in installer/Makefile
+PKGDIR=../library
 pkgclean-%:
-	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
-	  -C $(PKGD)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
-
+	@(cd $(PKGDIR)/$*/src; rm -f *.d *.o *.dll *_res.rc Makedeps)
+	@rm -rf $(PKGDIR)/$*/chm
 
 EXTRA_DIRS = blas bzip2 graphapp intl pcre trio tzone xdr zlib
 
@@ -272,6 +242,7 @@ clean: cleanwin
 	done
 
 distclean: clean
+	$(RM) -r ../library/*/chm
 	@for d in $(EXTRA_DIRS); do \
 	  $(MAKE) -C ../extra/$${d} -f Makefile.win distclean; \
 	done
