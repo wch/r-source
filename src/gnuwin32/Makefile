@@ -144,6 +144,7 @@ metadata:
 	@cat ../../library/*/CONTENTS > ../../doc/html/search/index.txt
 
 nmspaces:
+	@echo
 	@echo "installing parsed NAMESPACE files"
 	@rm -f ../../library/tools/Meta/nsInfo.rds
 	@echo "tools:::.vinstall_package_namespaces_as_RDS(\"../../library\", \"$(R_PKGS_BASE)\")" | \
@@ -320,7 +321,7 @@ utils-HELP = ziponly
 pkg-%:
 	@$(MAKE) --no-print-directory \
 	  SAVE=$($*-SAVE) LAZY=$($*-LAZY) LAZYDATA=$($*-LAZYDATA) \
-          DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" \
+          FLIBS="$(FLIBS)" \
 	  PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -C $(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg
 
@@ -335,17 +336,8 @@ else
 endif
 
 pkgclean-%:
-	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) \
+	@$(MAKE) --no-print-directory RHOME=$(RHOME) \
 	  -C $(PKGD)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
-
-lazyload-%:
-	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) -C $(PKGD)/$* SPKG=$(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg lazyload
-
-lazydata-%:
-	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) -f $(RHOME)/src/gnuwin32/MakePkg lazydata
-
-ziponly-%:
-	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziponlyhelp-$*
 
 
 #                          ===== cleaning ======

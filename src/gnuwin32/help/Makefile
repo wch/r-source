@@ -14,7 +14,7 @@ RLIB = $(RHOME)/library
 
 BUILD_HELP=R_HOME=$(RHOME) $(PERL) $(R_HOME)/share/perl/build-help.pl -os=windows
 
-## HELPTYPES is set in ../Makefile, differently for cross-builds
+## HELPTYPES is set in ../Makefile
 help-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
 	   $(BUILD_HELP) $(HELPTYPES) $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \

@@ -10,20 +10,13 @@ LAZYDATA=false
 
 SPKG0 = $(shell $(RHOME)/src/gnuwin32/Rpwd.exe $(SPKG))
 DPKG0 = $(shell $(RHOME)/src/gnuwin32/Rpwd.exe $(DPKG))
-R_EXE = $(RHOME)/bin/rterm.exe
 
-REXE = $(R_EXE) --vanilla --slave
+REXE = $(RHOME)/bin/rterm.exe --vanilla --slave
 
-ifeq ($(strip $(DLLNM)),)
-  DLLNAME=$(PKG)
-else
-  DLLNAME=$(DLLNM)
-endif
-#this can be overwriten by the caller
-SRC = src
+DLLNAME=$(PKG)
 
 #source directory
-SSPKG=$(SPKG)/$(SRC)
+SSPKG=$(SPKG)/src
 
 SDYNLIB=$(SSPKG)/$(DLLNAME).dll
 
@@ -31,7 +24,7 @@ LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f $(SSPKG)/*.cc)
 DO_SRC=$(foreach i, $(LSOURCES), $(basename $i).o)
 
 # data
-DSOURCES=$(filter-out $(SPKG)/data/CVS $(SPKG)/data/.svn $(SPKG)/data/.arch-ids, $(wildcard $(SPKG)/data/*))
+DSOURCES=$(filter-out $(SPKG)/data/.svn, $(wildcard $(SPKG)/data/*))
 ifeq ($(strip $(DSOURCES)),)
   DATA= 
 else
@@ -39,14 +32,7 @@ else
 endif
 
 # R
-PKGRFILES0=$(wildcard $(SPKG)/R/*.[RSqrs])
-RWIN32=$(wildcard $(SPKG)/R/windows/*.[Rr]) 
-ifeq ($(strip RWIN32),)
-  PKGRFILES=$(PKGRFILES0)
-else
-  R1 = $(foreach i,$(RWIN32), $(addprefix $(SPKG)/R/, $(notdir $i)))
-  PKGRFILES=$(filter-out $(R1), $(PKGRFILES0)) $(RWIN32)
-endif
+PKGRFILES=$(wildcard $(SPKG)/R/*.[Rr] $(SPKG)/R/windows/*.[Rr]) 
 
 # demos
 PKGDEMOS0=$(wildcard $(SPKG)/demo/*)
@@ -62,7 +48,7 @@ INSTFILES=$(wildcard $(SPKG)/inst/*)
 .PHONY: Dynlib Dynlib0 srcDynlib mansrcs md5sums lazyload lazydata
 
 all:  
-	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg $(DPKG)/zzzz 
+	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg zzzfirst 
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s frontmatter
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg Dynlib 
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s R
@@ -81,11 +67,6 @@ include $(RHOME)/src/gnuwin32/MkRules
 clean:
 ifneq ($(strip $(DO_SRC)),)
 	@makefiles="-f $(RHOME)/src/gnuwin32/MakeDll" ; \
-	if test -r "${HOME}/.R/Makevars.win"; then \
-	  makefiles="$${makefiles} -f ${HOME}/.R/Makevars.win"; \
-	elif test -r "${HOME}/.R/Makevars"; then \
-	  makefiles="$${makefiles} -f \"${HOME}/.R/Makevars\""; \
-	fi; \
 	$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
 	  DLLNAME=$(DLLNAME) $${makefiles} shlib-clean
 	@$(RM) $(SDYNLIB)
@@ -98,12 +79,7 @@ Rcode: Rcode0 Dynlib0
 
 Rcode0:
 	@$(MKDIR) -p $(DPKG) $(DPKG)/R
-ifneq ($(strip $(PKGRFILES)),)
 	@$(CAT) $(PKGRFILES) > $(DPKG)/R/$(PKG)
-else
-	@touch $(DPKG)/R/$(PKG)
-endif
-#	@cp -p $(DPKG)/R/$(PKG) $(DPKG)/R/all.R
 	@rm -f $(DPKG)/R/$(PKG).rdb  $(DPKG)/R/$(PKG).rdx
 	@if test -f ${SPKG}/NAMESPACE; then \
 	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
@@ -113,16 +89,12 @@ endif
 
 $(DPKG)/R/$(PKG): $(PKGRFILES)
 ifneq ($(strip $(PKG)),base)
-ifneq ($(strip $(PKGRFILES)),)
 	@$(ECHO) "  installing R files"
 	@$(MKDIR) -p $(DPKG)/R
 	@$(ECHO) "tools:::.install_package_code_files('"$(SPKG)"', '"$(DPKG)"')" \
 	  | R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows LC_COLLATE=C $(REXE) > /dev/null
 ## install halts here if collater failed
 	@rm -f $(DPKG)/R/$(PKG).rdb $(DPKG)/R/$(PKG).rdx $(DPKG)/R/all.rda
-else
-	@$(ECHO) "  no R files in this package"
-endif
 else
 ## .install_package_code_files adds an unwanted .packageName
 	@$(ECHO) "  installing R files"
@@ -154,27 +126,7 @@ ifneq ($(strip $(INSTFILES)),)
 	@$(FIND) $(DPKG) -name .svn -type d -prune -exec rm -rf {} \;
 endif
 
-
-$(DPKG)/zzzz: zzzfirst
-	@if test -f ${SPKG}/configure.win; then \
-	  sh ${SPKG}/configure.win; \
-	else if test -f ${SPKG}/configure; then \
-	    $(ECHO) ; \
-	    $(ECHO) "   **********************************************" ; \
-	    $(ECHO) "   WARNING: this package has a configure script" ; \
-	    $(ECHO) "         It probably needs manual configuration" ; \
-	    $(ECHO) "   **********************************************" ; \
-	    $(ECHO) ; \
-	  fi; \
-	fi
-
 zzzfirst:
-ifeq ($(SPKG0),$(DPKG0))
-	@$(ECHO)
-	@$(ECHO) "  *** cannot install a package into its source directory ***"
-	@$(ECHO)
-	@exit 111
-endif
 	@$(ECHO)
 	@$(ECHO) "---------- Making package $(PKG) ------------"
 	@$(MKDIR) -p $(DPKG)
@@ -182,12 +134,7 @@ endif
 
 frontmatter:
 	@$(MKDIR) -p $(DPKG)
-	@if test -f ${SPKG}/DESCRIPTION; then \
-	  $(ECHO) "  adding build stamp to DESCRIPTION"; \
-	else \
-	  $(ECHO) "A package must contain a DESCRIPTION file"; \
-	  exit 27; \
-	fi
+	@$(ECHO) "  adding build stamp to DESCRIPTION"
 	@$(ECHO) "tools:::.install_package_description('.', '"$(DPKG)"')" | \
 	  R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows $(REXE) > /dev/null
 	@for f in LICENSE LICENCE COPYING NAMESPACE NEWS; do \
@@ -257,34 +204,17 @@ mansrcs: $(DPKG)/man/$(PKG).Rd.gz
 
 PKGMANFILES=$(MANMAIN) $(MANWIN32)
 $(DPKG)/man/$(PKG).Rd.gz: $(MANMAIN) $(MANWIN32)
-ifneq ($(strip $(PKGMANFILES)),)
 	@$(ECHO) "  installing man source files"
 	@$(RM) -rf $(DPKG)/man
 	@$(ECHO) "tools:::.install_package_man_sources('.', '"$(DPKG)"')" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
-else
-	@$(ECHO) "  no man files in this package"
-endif
 
 indices:
 	@$(ECHO) "  installing indices"
 	@$(ECHO) "invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); tools:::.install_package_indices('.', '"$(DPKG)"')" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
-# need not have HTML installed when building packages.
-# Do this only if installing into main library, but tricky to figure out.
-# (so we don't bother with being careful).
-ifeq ($(RLIB),$(RHOME)/library)
-	-@$(MKDIR) -p $(RHOME)/doc/html/search
-	-@$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
-endif
 	@$(ECHO) "tools:::win.packages.html(.Library)" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
-
-md5sums:
-	@$(ECHO) "  adding MD5 sums"
-	@$(ECHO) "tools:::.installMD5sums('"$(DPKG)"')" | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
-
 
 lazyload:
 	@if test -d $(DPKG)/R ; then \
