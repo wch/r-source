@@ -45,7 +45,7 @@ function(x, strict = TRUE, regexp, classes = NULL)
     if(length(x)) {
         ok <- (regexpr(valid_numeric_version_regexp, x) > -1L)
         if(!all(ok) && strict)
-            stop("invalid version specification", call. = FALSE)
+            stop("invalid version specification ", x, call. = FALSE)
         y[ok] <- lapply(strsplit(x[ok], "[.-]"), as.integer)
     }
     class(y) <- unique(c(classes, "numeric_version"))

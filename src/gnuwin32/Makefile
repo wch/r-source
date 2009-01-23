@@ -7,10 +7,12 @@ all:
 	  cp ../../SVN-REVISION ../../SVN-REVISION.bak ; \
 	fi
 	@$(MAKE) --no-print-directory rbuild
-	@$(MAKE) --no-print-directory rpackage
+	@$(MAKE) --no-print-directory rpackage descs
 	@$(MAKE) --no-print-directory rpackagehelp
 	@$(MAKE) --no-print-directory htmldocs
 	@$(MAKE) --no-print-directory  -C ../../po -f Makefile.win
+
+RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 
 ## must be absolute and space-free paths
 RHOME = $(shell ./Rpwd.exe ../..)
@@ -70,9 +72,6 @@ EXTRALIBS = getline/gl.a ../extra/xdr/libxdr.a \
    ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a \
    ../extra/intl/libintl.a ../extra/trio/libtrio.a ../extra/tzone/libtz.a
 
-R_PKGS0 = $(filter-out base tools, $(R_PKGS_BASE))
-PKGCLEAN = $(foreach i,$(R_PKGS_BASE),pkgclean-$i)
-
 # flags to ensure that Doug Lea's malloc is used:
 ifdef LEA_MALLOC
 extra-CFLAGS+=-DLEA_MALLOC
@@ -80,7 +79,7 @@ OBJS-EXTRA=malloc.o
 OPTFLAGS_M+=-DLEA_MALLOC
 endif
 
-.PHONY:  clean veryclean  rlibs fixfiles front-ends rmodules
+.PHONY:  clean veryclean rlibs fixfiles front-ends rmodules rpackage rpackageindices rpackagehelp metadata
 
 
 CPPFLAGS = -I../include -I. -I../extra -DHAVE_CONFIG_H -DR_DLL_BUILD
@@ -108,32 +107,12 @@ ifeq ($(strip $(USE_IMPLIBS)),YES)
 	@$(MAKE) --no-print-directory implibs
 endif
 	@$(MAKE) --no-print-directory Rblas CHTML
-	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules Rcode
+	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules fixed/fixdesc
 
-## used to build skeletal versions of packages, enough to run
-## package tools to install them properly
-INITPACKAGES = base tools
-Rcode: fixed/fixdesc
-	@$(ECHO) "  making bootstrap versions of packages ..."
-	@for pkg in $(INITPACKAGES); do \
-	  if ! test -f $(RHOME)/library/$${pkg}/DESCRIPTION ; then \
-	  $(ECHO) "  --" $$pkg; \
-	  $(MAKE) --no-print-directory -C $(PKGDIR)/$${pkg} PKG=$${pkg} \
-	    RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg Rcode  || exit 1; \
-	  fi; \
-	done
-	@$(ECHO) "  ... done"
 
-# methods-LAZY is done directly
-graphics-LAZY=true
-grDevices-LAZY=true
-grid-LAZY=true
-splines-LAZY=true
-stats-LAZY=true
-tcltk-LAZY=true
-utils-LAZY=true
-datasets-LAZYDATA=true
-stats4-LAZY = true
+descs:
+	@$(ECHO) "tools:::.vinstall_package_descriptions_as_RDS(\"../../library\", \"$(R_PKGS_BASE)\")" | \
+	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(REXE)
 
 metadata:
 	@echo
@@ -152,24 +131,10 @@ nmspaces:
 
 
 rpackage:
-	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-base
-	@if ! test -f ../../library/base/R/base.rdb ; then \
-	  echo "  preparing package base for lazy loading" ; \
-	  (echo ".libPaths('../../library')"; \
-	    cat ../library/base/makebasedb.R) | \
-	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(REXE) > /dev/null; \
-          cp ../library/base/baseloader.R ../../library/base/R/base; \
-	fi
-	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-tools
-	@if ! test -f ../../library/tools/R/tools.rdb ; then \
-	  echo "  preparing package tools for lazy loading" ; \
-	  (cat ../library/tools/R/makeLazyLoad.R; \
-	    echo "makeLazyLoading(\"tools\", lib.loc=\"$(RLIB)\")") | \
-	    R_DEFAULT_PACKAGES=NULL LC_ALL=C $(REXE) > /dev/null ; \
-	fi
 	@$(ECHO)
-	@for pkg in $(R_PKGS0); do \
-	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-$${pkg} || exit 1; \
+	@for pkg in $(R_PKGS_BASE); do \
+	  $(MAKE) --no-print-directory -C ../library/$${pkg} -f Makefile.win \
+	  RHOME=$(RHOME) R_OSTYPE=windows VERSION=$(RVER) || exit 1; \
 	done
 	@$(MAKE) --no-print-directory nmspaces 
 	@gzip -9f ../../library/grDevices/afm/*.afm
@@ -318,13 +283,6 @@ tcltk-HELP = ziponly
 tools-HELP = ziponly
 utils-HELP = ziponly
 
-pkg-%:
-	@$(MAKE) --no-print-directory \
-	  SAVE=$($*-SAVE) LAZY=$($*-LAZY) LAZYDATA=$($*-LAZYDATA) \
-          FLIBS="$(FLIBS)" \
-	  PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
-	  -C $(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg
-
 pkghelp-%:
 	@$(ECHO)
 	@$(ECHO) "------ Installing help for package $*"
@@ -335,16 +293,19 @@ else
 	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* HELPTYPES='-txt -html -latex -example' $($*-HELP)help-$*
 endif
 
-pkgclean-%:
-	@$(MAKE) --no-print-directory RHOME=$(RHOME) \
-	  -C $(PKGD)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
-
-
 #                          ===== cleaning ======
 
 EXTRA_DIRS = blas bzip2 graphapp intl pcre trio tzone xdr zlib
 
-clean: cleanwin $(PKGCLEAN)
+PKGCLEAN = $(foreach i,$(R_PKGS_BASE),pkgclean-$i)
+pkgclean-%:
+	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
+	  -C $(PKGD)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
+
+clean: cleanwin  $(PKGCLEAN)
+#	@for pkg in $(R_PKGS_BASE); do \
+#	  $(MAKE) --no-print-directory -C ../library/$${pkg} -f Makefile.win clean; \
+#	done
 	$(RM) -f ../*/*.o ../*/*.a *.a ../*/*.d ../*/Makedeps fixed/fixdesc
 	@for d in $(EXTRA_DIRS); do \
 	  $(MAKE) -C ../extra/$${d} -f Makefile.win clean; \
@@ -452,7 +413,6 @@ vignettes:
 
 ## ===================== Maintainer targets ========================
 
-RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 RVER-PAT = $(shell version=`cut -d' ' -f1 ../../VERSION | sed -n 1p`; if test "`cut -f2 -d' ' ../../VERSION`" = "Patched"; then version=`echo $${version} | sed 's/\.[0-9]*$$//'`; echo "$${version}-patched"; else echo "$${version}"; fi)
 SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 

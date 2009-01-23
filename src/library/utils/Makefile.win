@@ -1,0 +1,83 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/utils/Makefile.win
+
+srcdir = .
+top_srcdir = ../../..
+
+top_builddir = ../../..
+
+RHOME = ../../../..
+
+pkg = utils
+
+R_EXE = $(top_builddir)/bin/Rterm.exe --vanilla --slave
+
+ECHO = echo
+MKINSTALLDIRS = mkdir -p
+INSTALL_DATA = cp
+SHELL = sh
+R_GZIPCMD = gzip
+
+RSRC0 = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
+RSRC = $(RSRC0)
+RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd
+NSFILES = $(srcdir)/NAMESPACE
+
+all:
+	@$(ECHO) "building package '$(pkg)'"
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
+	@(f=$${TMPDIR:-/tmp}/R$$$$; \
+	  cat $(RSRC) > $${f}; \
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
+	  $(top_builddir)/library/$(pkg)/R/$(pkg) $${f}
+	@cat $(NSFILES) > $(top_builddir)/library/$(pkg)/NAMESPACE
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
+	@for f in COPYRIGHTS SOURCES; do \
+	  if test -f $(srcdir)/$${f}; then \
+	    $(INSTALL_DATA) $(srcdir)/$${f} \
+	      $(top_builddir)/library/$(pkg); \
+	  fi; \
+	done
+	@if test -f DESCRIPTION; then \
+	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
+	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
+	fi
+	@if test -d $(srcdir)/inst/po; then \
+	  if test "yes" = "yes"; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
+	  cp -pr  $(srcdir)/inst/po/* $(top_builddir)/library/$(pkg)/po; \
+	  find "$(top_builddir)/library/$(pkg)/po" -name .svn -type d -prune \
+	    -exec rm -rf \{\} \; 2>/dev/null; \
+	  fi; \
+	fi
+	@for D in Sweave misc; do \
+	 if test -d $(srcdir)/inst/$${D}; then \
+	   $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/$${D}; \
+	   for f in `ls -d $(srcdir)/inst/$${D}/*`; do \
+	     $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/$${D}; \
+	   done; \
+	 fi; done
+	@if test -d $(srcdir)/man; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
+	  (f=$${TMPDIR:-/tmp}/R$$$$; \
+	    for rdfile in $(RdSRC); do \
+	      $(ECHO) "% --- Source file: $${rdfile} ---"; \
+            cat $${rdfile} $(top_srcdir)/src/library/eof_file; \
+	    done >> $${f}; \
+            $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
+              $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
+            rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
+            $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
+	fi
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
+
+
+mostlyclean: clean
+clean:
+	-@rm -f all.R
+distclean:
+	-@rm -f Makefile DESCRIPTION
