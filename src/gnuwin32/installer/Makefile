@@ -71,13 +71,8 @@ imagedir:
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" ../README > $(RPREFIX)/README.$(RPREFIX)
 	$(SED) -e 3,5d ../README.packages > $(RPREFIX)/doc/README.packages
 # convert docs and batch files to CRLF: might already be on Windows, though.
-ifeq ($(strip $(BUILD)),CROSS)
-	zip -l dosfiles.zip $(RPREFIX)/* $(RPREFIX)/doc/* $(RPREFIX)/bin/*.bat
-	unzip -o dosfiles.zip
-else
 	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/doc/* $(RPREFIX)/bin/*.bat
 	unzip -ao dosfiles.zip
-endif
 	$(RM) dosfiles.zip
 #
 # files to make source packages

@@ -3,8 +3,7 @@
 
 ## ===== configuration macros for building packages or R  ===============
 
-# Alternatives GCC4 (MinGW gcc4) or CROSS (e.g. Linux)
-# or F2C (use suitable f2c rather than a Fortran compiler).
+# Alternatives GCC4 or F2C (use suitable f2c rather than a Fortran compiler).
 
 BUILD=GCC4
 
@@ -77,27 +76,6 @@ FC=
 endif
 FCFLAGS=-O3
 
-## =================== cross-compilation settings  =================
-
-ifeq ($(strip $(BUILD)),CROSS)
-# Next might be i586-mingw32- or x86_64-pc-mingw32- or ...
-# depending on the cross-compiler.
-ifeq ($(strip $(WIN)),64)
-BINPREF=x86_64-pc-mingw32-
-else
-BINPREF=i386-mingw32-
-endif
-# Optional, if compiler has been relocated
-# Set this to full path to dir where the mingw32 include files are.
-# It should contain fcntl.h and windows.h
-HEADER=
-# path (possibly full path) to same version of R on the host system
-R_EXE='I failed to read the instructions to set R_EXE in MkRules'
-
-## SHLIB extension on host: 'so' or 'dll'
-CROSS_EXT=so
-endif
-
 ## =============== end of user-customizable parts  ===================
 
 DEPARG=-MM
@@ -115,15 +93,6 @@ AWK=gawk
 ## earlier Rtools needs -sjlj
 ## an alternative is -dw2, which currently fails building R.
 GCC4_SUFF=
-endif
-
-ifeq ($(strip $(BUILD)),CROSS)
-ifneq ($(strip $(HEADER)),)
-MINGW32CFLAG=-isystem $(HEADER)
-endif
-F77=$(BINPREF)gfortran
-FLIBS=-lgfortran
-AWK=awk
 endif
 
 ifeq ($(strip $(BUILD)),F2C)
@@ -239,13 +208,8 @@ lib%.dll.a: %.def
 	@$(RM) $@
 	$(AR) crs $@ $^
 
-ifeq ($(strip $(BUILD)),CROSS)
-%.o: %.rc
-	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -I $(HEADER) -i $< -o $@
-else
 %.o: %.rc
 	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $< -o $@
-endif
 
 .f90.o:
 	"$(FC)" $(PKG_FCFLAGS) $(FCFLAGS) -c $< -o $@

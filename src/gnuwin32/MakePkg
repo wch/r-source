@@ -1,6 +1,6 @@
 #-*- Makefile -*-
 ## As from Jan 2009 this is only used for standard packages,
-## always run from the package top-level directory with BUILD, PKG, RHOME set
+## always run from the package top-level directory with PKG, RHOME set
 
 RLIB=../../../library
 DPKG=$(RLIB)/$(PKG)
@@ -8,14 +8,9 @@ SPKG=.
 LAZY=false
 LAZYDATA=false
 
-ifneq ($(strip $(BUILD)),CROSS)
 SPKG0 = $(shell $(RHOME)/src/gnuwin32/Rpwd.exe $(SPKG))
 DPKG0 = $(shell $(RHOME)/src/gnuwin32/Rpwd.exe $(DPKG))
 R_EXE = $(RHOME)/bin/rterm.exe
-else
-SPKG0=$(SPKG)
-DPKG0=$(DPKG)
-endif
 
 REXE = $(R_EXE) --vanilla --slave
 
@@ -282,29 +277,21 @@ ifeq ($(RLIB),$(RHOME)/library)
 	-@$(MKDIR) -p $(RHOME)/doc/html/search
 	-@$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
 endif
-ifneq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "tools:::win.packages.html(.Library)" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
-else
-	@$(ECHO) "tools:::win.packages.html(.Library, docdir=\"$(RHOME)/doc\", libdir=\"$(RLIB)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
-endif
 
 md5sums:
 	@$(ECHO) "  adding MD5 sums"
 	@$(ECHO) "tools:::.installMD5sums('"$(DPKG)"')" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
 
-ifeq ($(strip $(BUILD)),CROSS)
-R_X_BUILD=yes
-endif
 
 lazyload:
 	@if test -d $(DPKG)/R ; then \
 	  if ! test -f $(DPKG)/R/$(PKG).rdb ; then \
 	    $(ECHO)  "  preparing package $(PKG) for lazy loading" ; \
             (if test -s $(SPKG0)/R_PROFILE.R; then cat $(SPKG0)/R_PROFILE.R; fi; \
-	      $(ECHO) "options(warn=1); invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); .getRequiredPackages(\"$(SPKG0)/DESCRIPTION\",useImports=TRUE); Sys.setenv('R_CROSS_BUILD'='$(R_X_BUILD)'); tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")") | \
+	      $(ECHO) "options(warn=1); invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); .getRequiredPackages(\"$(SPKG0)/DESCRIPTION\",useImports=TRUE); tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")") | \
 	      R_DEFAULT_PACKAGES=$(R_START_PACKAGES) \
 	      LC_ALL=C R_OSTYPE=windows $(REXE) > /dev/null || exit 1; \
 	    rm -f $(DPKG)/R/all.rda ; \
@@ -319,7 +306,7 @@ lazydata:
 	  if ! test -f $(DPKG)/data/Rdata.rdb ; then \
 	    $(ECHO)  "  preparing package $(PKG) for lazy data loading" ; \
 	    $(ECHO) "options(warn=1); invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); tools:::data2LazyLoadDB(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
-	      R_CROSS_BUILD=$(R_X_BUILD) R_DEFAULT_PACKAGES=$(R_START_PACKAGES) \
+	      R_DEFAULT_PACKAGES=$(R_START_PACKAGES) \
 	      LC_ALL=C R_OSTYPE=windows $(REXE) > /dev/null  || exit 1; \
 	  fi ; \
 	fi

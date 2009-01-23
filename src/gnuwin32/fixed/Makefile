@@ -19,13 +19,8 @@ iconv:
 	@$(CP) ../unicode/iconv.dll ../../../bin
 
 cp2bin: $(wildcard ./bin/*)
-ifeq ($(strip $(BUILD)),CROSS)
-	@zip -ql bins $^
-	@unzip -oq bins -d  $(R_HOME)
-else
 	@zip -q bins $^
 	@unzip -oaq bins -d  $(R_HOME)
-endif
 	@$(RM) bins.zip
 
 fixhtml:  html/rwin.html $(R_HOME)/doc/html/search/SearchEngine.html

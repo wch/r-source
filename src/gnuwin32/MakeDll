@@ -7,9 +7,7 @@ all:  before makeMakedeps $(DLLNAME).dll after
 before:
 after:
 
-ifneq ($(strip $(BUILD)),CROSS)
 R_EXE = $(RHOME)/bin/Rterm.exe
-endif
 
 .PHONY: all before after shlib-clean makeMakedeps
 

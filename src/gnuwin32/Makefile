@@ -13,17 +13,13 @@ all:
 	@$(MAKE) --no-print-directory  -C ../../po -f Makefile.win
 
 ## must be absolute and space-free paths
-ifneq ($(strip $(BUILD)),CROSS)
 RHOME = $(shell ./Rpwd.exe ../..)
 PKGD = $(shell ./Rpwd.exe "$(PKGDIR)")
 R_EXE = $(RHOME)/bin/rterm.exe
+
 ## also need to change tools/R/install.R  to dis/enable this for packages
 CHM = $(USE_CHM)
-else
-RHOME = $(shell $(PERL) pwd.pl ../..)
-PKGD = $(shell $(PERL) pwd.pl $(PKGDIR))
-CHM = FALSE
-endif
+
 
 REXE = $(R_EXE) --vanilla --slave
 
@@ -123,7 +119,7 @@ Rcode: fixed/fixdesc
 	  if ! test -f $(RHOME)/library/$${pkg}/DESCRIPTION ; then \
 	  $(ECHO) "  --" $$pkg; \
 	  $(MAKE) --no-print-directory -C $(PKGDIR)/$${pkg} PKG=$${pkg} \
-	    RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) Rcode  || exit 1; \
+	    RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg Rcode  || exit 1; \
 	  fi; \
 	done
 	@$(ECHO) "  ... done"
@@ -156,7 +152,6 @@ nmspaces:
 
 rpackage:
 	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-base
-ifneq ($(strip $(BUILD)),CROSS)
 	@if ! test -f ../../library/base/R/base.rdb ; then \
 	  echo "  preparing package base for lazy loading" ; \
 	  (echo ".libPaths('../../library')"; \
@@ -164,21 +159,12 @@ ifneq ($(strip $(BUILD)),CROSS)
 	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(REXE) > /dev/null; \
           cp ../library/base/baseloader.R ../../library/base/R/base; \
 	fi
-else
-	@if ! test -f ../../library/base/R/base.rdb ; then \
-	  echo "  preparing package base for lazy loading" ; \
-	  (echo ".libPaths('../../library')"; \
-	    cat ../library/base/cross-makebasedb.R) | \
-	    R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(REXE); \
-          cp ../library/base/baseloader.R ../../library/base/R/base; \
-	fi
-endif
 	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-tools
 	@if ! test -f ../../library/tools/R/tools.rdb ; then \
 	  echo "  preparing package tools for lazy loading" ; \
 	  (cat ../library/tools/R/makeLazyLoad.R; \
 	    echo "makeLazyLoading(\"tools\", lib.loc=\"$(RLIB)\")") | \
-	    R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_ALL=C $(REXE) > /dev/null ; \
+	    R_DEFAULT_PACKAGES=NULL LC_ALL=C $(REXE) > /dev/null ; \
 	fi
 	@$(ECHO)
 	@for pkg in $(R_PKGS0); do \
@@ -224,7 +210,7 @@ COPYRIGHTS: ../../doc/COPYRIGHTS COPYRIGHTS.win
 
 fixfiles: docfiles 
 	@$(MKDIR) -p ../../bin
-	@$(MAKE) --no-print-directory -C ./fixed BUILD=$(BUILD)
+	@$(MAKE) --no-print-directory -C ./fixed
 
 fixed/fixdesc:
 	@sh fixed/GETDESC $(R_PKGS_BASE)
@@ -294,7 +280,7 @@ front-ends:
 htmldocs:
 	@$(ECHO)
 	@$(ECHO) "------ Making HTML documentation ------"
-	@$(MAKE) --no-print-directory -C ../../doc/manual -f Makefile.win html BUILD=$(BUILD)
+	@$(MAKE) --no-print-directory -C ../../doc/manual -f Makefile.win html
 
 
 #                          ===== BLAS ======
@@ -334,7 +320,7 @@ utils-HELP = ziponly
 pkg-%:
 	@$(MAKE) --no-print-directory \
 	  SAVE=$($*-SAVE) LAZY=$($*-LAZY) LAZYDATA=$($*-LAZYDATA) \
-          DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" BUILD=$(BUILD) \
+          DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" \
 	  PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -C $(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg
 
@@ -349,14 +335,14 @@ else
 endif
 
 pkgclean-%:
-	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
+	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) \
 	  -C $(PKGD)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
 lazyload-%:
-	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -C $(PKGD)/$* SPKG=$(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg lazyload
+	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) -C $(PKGD)/$* SPKG=$(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg lazyload
 
 lazydata-%:
-	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -f $(RHOME)/src/gnuwin32/MakePkg lazydata
+	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) -f $(RHOME)/src/gnuwin32/MakePkg lazydata
 
 ziponly-%:
 	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziponlyhelp-$*
@@ -459,8 +445,8 @@ check-recommended:
 #                          ===== documentation ======
 
 pdfdocs manuals:
-	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win clean BUILD=$(BUILD)
-	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win BUILD=$(BUILD)
+	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win clean
+	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win
 
 vignettes:
 	@for pkg in $(R_PKGS_BASE); do \
@@ -510,11 +496,7 @@ link-recommended:
 
 recommended:
 	@$(ECHO) "--- Making recommended packages"
-ifeq ($(strip $(BUILD)),CROSS)
-	@R_X_BUILD=$(RHOME) $(MAKE) --no-print-directory -C ../library/Recommended -f Makefile.win RHOME=$(RHOME) BUILD=$(BUILD)
-else
 	@$(MAKE) --no-print-directory -C ../library/Recommended -f Makefile.win RHOME=$(RHOME)
-endif
 
 EXTRA_PKGS=
 rinstaller:

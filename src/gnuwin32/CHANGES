@@ -59,12 +59,15 @@ NEW FEATURES
 	has some extra options.
 
     o	Package installation will authomatically skip CHM help if the
-	HTML Help compiler is not found.
+	HTML Help compiler is not found (instead of trying and failing
+	as before).
 
 
 INSTALLATIOM
 
     o	The installer now checks for Windows 2000 or later.
+
+    o	Support for cross-building has been withdrawn.
 
 
 UTILITIES
