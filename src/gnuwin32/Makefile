@@ -7,23 +7,17 @@ all:
 	  cp ../../SVN-REVISION ../../SVN-REVISION.bak ; \
 	fi
 	@$(MAKE) --no-print-directory rbuild
-	@$(MAKE) --no-print-directory rpackage descs
+	@$(MAKE) --no-print-directory -C ../library -f Makefile.win all
+	@$(MAKE) --no-print-directory -C ../library -f Makefile.win rpackageindices
 	@$(MAKE) --no-print-directory rpackagehelp
 	@$(MAKE) --no-print-directory htmldocs
 	@$(MAKE) --no-print-directory  -C ../../po -f Makefile.win
 
-RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
-
-## must be absolute and space-free paths
+## must be absolute and space-free.  
+## NB: will not be set correctly first time through.
 RHOME = $(shell ./Rpwd.exe ../..)
-PKGD = $(shell ./Rpwd.exe "$(PKGDIR)")
-R_EXE = $(RHOME)/bin/rterm.exe
 
-## also need to change tools/R/install.R  to dis/enable this for packages
-CHM = $(USE_CHM)
-
-
-REXE = $(R_EXE) --vanilla --slave
+REXE = $(RHOME)/bin/rterm.exe --vanilla --slave
 
 RPREFIX = $(shell $(PERL) fixed/rwver.pl ../../VERSION)
 
@@ -34,7 +28,6 @@ DATE = $(shell date +%F)
 SVNREVISION=`sed -e 1s/Revision:.// -e q <$(RHOME)/SVN-REVISION`
 
 RLIB = $(RHOME)/library
-PKGDIR = $(RHOME)/src/library
 
 OPTFLAGS=-O3 -Wall -pedantic
 FOPTFLAGS=-O3
@@ -79,7 +72,7 @@ OBJS-EXTRA=malloc.o
 OPTFLAGS_M+=-DLEA_MALLOC
 endif
 
-.PHONY:  clean veryclean rlibs fixfiles front-ends rmodules rpackage rpackageindices rpackagehelp metadata
+.PHONY:  clean veryclean rlibs fixfiles front-ends rmodules rpackagehelp
 
 
 CPPFLAGS = -I../include -I. -I../extra -DHAVE_CONFIG_H -DR_DLL_BUILD
@@ -109,47 +102,7 @@ endif
 	@$(MAKE) --no-print-directory Rblas CHTML
 	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules fixed/fixdesc
 
-
-descs:
-	@$(ECHO) "tools:::.vinstall_package_descriptions_as_RDS(\"../../library\", \"$(R_PKGS_BASE)\")" | \
-	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(REXE)
-
-metadata:
-	@echo
-	@echo
-	@echo "building/updating package metadata ..."
-	@echo "tools:::.vinstall_package_indices(\"../library\", \"../../library\", \"$(R_PKGS_BASE)\")" | \
-	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(REXE) > /dev/null
-	@cat ../../library/*/CONTENTS > ../../doc/html/search/index.txt
-
-nmspaces:
-	@echo
-	@echo "installing parsed NAMESPACE files"
-	@rm -f ../../library/tools/Meta/nsInfo.rds
-	@echo "tools:::.vinstall_package_namespaces_as_RDS(\"../../library\", \"$(R_PKGS_BASE)\")" | \
-	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(REXE) > /dev/null
-
-
-rpackage:
-	@$(ECHO)
-	@for pkg in $(R_PKGS_BASE); do \
-	  $(MAKE) --no-print-directory -C ../library/$${pkg} -f Makefile.win \
-	  RHOME=$(RHOME) R_OSTYPE=windows VERSION=$(RVER) || exit 1; \
-	done
-	@$(MAKE) --no-print-directory nmspaces 
-	@gzip -9f ../../library/grDevices/afm/*.afm
-	@$(CP) ../library/datasets/data/morley.tab ../../library/datasets/data
-
-rpackageindices:
-	@$(ECHO)
-	@$(ECHO) -n "writing help indices for package:"
-	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO) -n " $${pkg}" ; \
-	  $(ECHO) "tools:::.writePkgIndices(\"../library/$${pkg}\", \"../../library/$${pkg}\", CHM = $(CHM))" | LC_ALL=C $(REXE) || exit 1; \
-	done
-	@$(ECHO)
-
-rpackagehelp: metadata ../../library/R.css rpackageindices
+rpackagehelp:
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(MAKE) --no-print-directory pkghelp-$${pkg} || exit 1; \
 	done
@@ -228,9 +181,6 @@ libiconv.dll.a: unicode/iconv.def
 front-ends:
 	$(MAKE) --no-print-directory -C front-ends
 
-../../library/R.css: ../../doc/html/R.css
-	@$(CP) $< $@
-
 ../extra/zlib/libz.a:
 	$(MAKE) --no-print-directory -C ../extra/zlib -f Makefile.win
 
@@ -266,7 +216,7 @@ libRblas.dll.a:  ../extra/blas/Rblas.def
 #                          ===== Packages ======
 
 CHTML:
-ifeq ($(strip $(CHM)),TRUE)
+ifeq ($(strip $(USE_CHM)),TRUE)
 	$(MAKE) --no-print-directory -C ./help -f MkChmDll
 endif
 
@@ -283,10 +233,12 @@ tcltk-HELP = ziponly
 tools-HELP = ziponly
 utils-HELP = ziponly
 
+PKGD = $(shell ./Rpwd.exe ../library)
+
 pkghelp-%:
 	@$(ECHO)
 	@$(ECHO) "------ Installing help for package $*"
-ifeq ($(strip $(CHM)),TRUE)
+ifeq ($(strip $(USE_CHM)),TRUE)
 	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* HELPTYPES='-txt -html -latex -example -chm' $($*-HELP)help-$*
 	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* chm-$*
 else
@@ -295,17 +247,16 @@ endif
 
 #                          ===== cleaning ======
 
-EXTRA_DIRS = blas bzip2 graphapp intl pcre trio tzone xdr zlib
-
-PKGCLEAN = $(foreach i,$(R_PKGS_BASE),pkgclean-$i)
+## used in installer/Makefile
 pkgclean-%:
 	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
 	  -C $(PKGD)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
-clean: cleanwin  $(PKGCLEAN)
-#	@for pkg in $(R_PKGS_BASE); do \
-#	  $(MAKE) --no-print-directory -C ../library/$${pkg} -f Makefile.win clean; \
-#	done
+
+EXTRA_DIRS = blas bzip2 graphapp intl pcre trio tzone xdr zlib
+
+clean: cleanwin
+	@$(MAKE) -C ../library -f Makefile.win clean
 	$(RM) -f ../*/*.o ../*/*.a *.a ../*/*.d ../*/Makedeps fixed/fixdesc
 	@for d in $(EXTRA_DIRS); do \
 	  $(MAKE) -C ../extra/$${d} -f Makefile.win clean; \
@@ -413,6 +364,7 @@ vignettes:
 
 ## ===================== Maintainer targets ========================
 
+RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 RVER-PAT = $(shell version=`cut -d' ' -f1 ../../VERSION | sed -n 1p`; if test "`cut -f2 -d' ' ../../VERSION`" = "Patched"; then version=`echo $${version} | sed 's/\.[0-9]*$$//'`; echo "$${version}-patched"; else echo "$${version}"; fi)
 SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 

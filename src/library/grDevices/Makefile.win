@@ -74,7 +74,7 @@ all:
             $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
 	fi
 	@if test -d src; then \
-	  (cd src && $(MAKE) -f ../../../gnuwin32/MakeDLL RHOME=$(RHOME) DLLNAME=$(pkg) ) || exit 1; \
+	  $(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDLL RHOME=$(RHOME) DLLNAME=$(pkg) || exit 1; \
 	  mkdir -p $(top_builddir)/library/$(pkg)/libs; \
 	  cp src/$(pkg).dll $(top_builddir)/library/$(pkg)/libs; \
 	fi
@@ -85,8 +85,7 @@ all:
 
 mostlyclean: clean
 clean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
+	@$(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDll RHOME=$(RHOME) DLLNAME=$(pkg) shlib-clean
 	-@rm -f all.R
 distclean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f DESCRIPTION

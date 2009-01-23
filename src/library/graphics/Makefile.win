@@ -7,8 +7,6 @@ top_srcdir = ../../..
 
 top_builddir = ../../..
 
-RHOME = ../../../..
-
 pkg = graphics
 
 R_EXE = $(top_builddir)/bin/Rterm.exe --vanilla --slave

@@ -6,7 +6,6 @@ srcdir = .
 top_srcdir = ../../..
 
 top_builddir = ../../..
-subdir = src/library/tools
 
 pkg = tools
 
@@ -64,12 +63,12 @@ all:
             $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
 	fi
 	@if test -d src; then \
-	  cp ../../gnuwin32/dllversion.rc src/tools_res.rc; \
-	  (cd src && $(MAKE) -f ../../../gnuwin32/MakeDLL RHOME=$(RHOME) DLLNAME=tools ) || exit 1; \
+	  cp -p ../../gnuwin32/dllversion.rc src/tools_res.rc; \
+	  $(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDll RHOME=$(RHOME) DLLNAME=$(pkg) || exit 1; \
 	  mkdir -p $(top_builddir)/library/$(pkg)/libs; \
 	  cp src/$(pkg).dll $(top_builddir)/library/$(pkg)/libs; \
 	fi
-	$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  $(ECHO) "makeLazyLoading(\"$(pkg)\")") | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
@@ -77,8 +76,7 @@ all:
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null
 
 clean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
+	@$(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDll RHOME=$(RHOME) DLLNAME=$(pkg) shlib-clean
 	-@rm -f all.R 
 distclean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f DESCRIPTION

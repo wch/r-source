@@ -7,8 +7,6 @@ top_srcdir = ../../..
 
 top_builddir = ../../..
 
-RHOME = ../../../..
-
 pkg = datasets
 
 RSRC = $(srcdir)/R/zzz.R
