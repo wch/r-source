@@ -40,7 +40,7 @@ write.csv2(\dots)
   \item{eol}{the character(s) to print at the end of each line (row).
     For example, \code{eol="\r\n"} will produce Windows' line endings on
     a Unix-alike OS, and \code{eol="\r"} will produce files as expected by
-    MacOS Excel 2004.}
+    Mac OS Excel 2004.}
   \item{na}{the string to use for missing values in the data.}
   \item{dec}{the string to use for decimal points in numeric or complex
     columns: must be a single character.}

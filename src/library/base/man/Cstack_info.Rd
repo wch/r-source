@@ -19,7 +19,7 @@ Cstack_info()
   stack-checking is not performed.
 
   The information on the stack base address is thought to be accurate on
-  Windows, Linux and FreeBSD (including MacOS X), but a heuristic is
+  Windows, Linux and FreeBSD (including Mac OS X), but a heuristic is
   used on other platforms.  Because this might be slightly inaccurate,
   the current usage could be estimated as negative.  (The heuristic is
   not used on embedded uses of \R on platforms where the stack base

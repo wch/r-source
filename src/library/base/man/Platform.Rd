@@ -24,7 +24,7 @@
   \item{file.sep}{
     character string, giving the \bold{file} \bold{sep}arator used on your
     platform: \code{"/"} on both Unix-alikes \emph{and} on Windows (but
-    not on the now abandoned port to Classic MacOS).
+    not on the once port to Classic Mac OS).
   }
   \item{dynlib.ext}{
     character string, giving the file name \bold{ext}ension of
@@ -38,7 +38,7 @@
     if no GUI can be assumed.  Possible values are for Unix-alikes the
     values given via the \option{-g} command-line flag (\code{"X11"},
     \code{"Tk"}, \code{"GNOME"}), \code{"AQUA"} (running under
-    \code{R.app} on MacOS X), \code{"Rgui"} and \code{"RTerm"}
+    \code{R.app} on Mac OS X), \code{"Rgui"} and \code{"RTerm"}
     (Windows) and perhaps others under alternative front-ends or embedded \R.
   }
   \item{endian}{
