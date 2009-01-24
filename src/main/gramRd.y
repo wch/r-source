@@ -562,6 +562,7 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile)
     xxbraceDepth = 0;
     xxinRString = 0;
     xxNewlineInString = 0;
+    xxinEqn = 0;
     
     Value = R_NilValue;
     
