@@ -387,6 +387,7 @@ BUG FIXES
 
     o	cbind() could crash with a zero-length input and a list result.
 
+    o	pdf(colormodel = "gray") was setting the stroke colour for fills,
 
 
 
