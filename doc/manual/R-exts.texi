@@ -3532,7 +3532,7 @@ The markup @code{\link@{@var{foo}@}} (usually in the combination
 @code{\alias} markup in another Rd file (possibly in another package).
 Hyperlinks are supported in some of the formats to which Rd files are
 converted, for example @HTML{} and PDF, but ignored in others, e.g.@:
-the text and S nroff formats.
+the text format.
 
 One main usage of @code{\link} is in the @code{\seealso} section of the
 help page, @pxref{Rd format}.
