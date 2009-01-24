@@ -11,7 +11,7 @@ subdir = src/library/Recommended
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in .cvsignore
+DISTFILES = Makefile.in Makefile.win .cvsignore
 R = R_LIBS= $(top_builddir)/bin/R
 
 ## foo.ts is the timestamp for package foo;

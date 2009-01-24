@@ -208,6 +208,14 @@ install-dvi install-info install-pdf:
 uninstall-dvi uninstall-info uninstall-pdf:
 	-@(cd doc/manual && $(MAKE) $@)
 
+install-tests:
+	-@(cd tests && $(MAKE) $@)
+	-@(cd src/library && $(MAKE) $@)
+
+uninstall-tests:
+	-@(cd src/library && $(MAKE) $@)
+	-@(cd tests && $(MAKE) $@)
+
 check check-devel check-all:
 	@(cd tests && $(MAKE) $@)
 

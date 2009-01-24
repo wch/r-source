@@ -1,16 +1,14 @@
 #
-# ${R_HOME}/tests/Makefile
+# ${R_HOME}/tests/Makefile.install
 
-VPATH = @srcdir@
-srcdir = @srcdir@
-top_srcdir = @top_srcdir@
+srcdir = .
+top_srcdir = ..
 
 top_builddir = ..
-subdir = tests
 
-include $(top_builddir)/Makeconf
+include $(top_builddir)/etc$(R_ARCH)/Makeconf
 
-distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+SUBDIRS = Examples
 
 test-src-gct = \
 	eval-etc.R \
@@ -53,32 +51,6 @@ test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
 test-src-reg3 = reg-tests-3.R reg-plot-latin1.R 
 
-INSTFILES = README \
-	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
-	$(test-src-sloppy-1) $(test-src-sloppy-1:.R=.Rout.save) \
-	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
-	$(test-src-demo) demos.Rout.save \
-	$(test-src-internet) internet.Rout.save \
-	$(test-src-primitive) \
-	$(test-src-random) p-r-random-tests.Rout.save \
-	$(test-src-reg) $(test-src-reg3) \
-	  reg-S4.Rout.save \
-	  reg-IO.Rout.save reg-IO2.Rout.save reg-plot.Rout.save \
-	  reg-plot.ps.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
-	  reg-plot-latin1.ps.save \
-	  reg-win.R encodings.R utf8-regex.R \
-	  errormsgs.R errormsgs.Rout.save \
-	gct-foot.R \
-	nanbug.rda \
-	WinUnicode.dat \
-	testit.Rd testit.txt.save testit.html.save \
-	testit.tex.save testit-Ex.R.save ver20.Rd \
-	ver10.Rd ver10.txt.save ver10.html.save ver10.tex.save ver10-Ex.R.save \
-	ver11.Rd ver11.txt.save ver11.html.save ver11.tex.save ver11-Ex.R.save \
-	R-intro.Rout.save
-DISTFILES = Makefile.in Makefile.win Makefile.install $(INSTFILES)
-SUBDIRS = Embedding Examples Native
-
 ## GNU gettext disables LANGUAGE if LC_ALL=C, but other systems might not.
 R = LANGUAGE=en LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 R2 = R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
@@ -113,41 +85,13 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct
 
 all-basic-tests = Examples Specific Reg Internet
-all-devel-tests = Docs IsAs Random Demo Rd Primitive Regexp Segfault \
-   Standalone Packages
+## not Docs Standalone Packages2
+all-devel-tests = IsAs Random Demo Rd Primitive Regexp Segfault Packages2
 
-all check: Makefile test-all-basics
+all check: test-all-basics
 check-devel: check test-all-devel
 check-all: check-devel test-Packages-Recommended
 
-Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-
-$(test-out): Makefile stamp-R
-
-stamp-R: $(top_builddir)/bin/exec@R_ARCH@/R \
-	$(top_builddir)/library/base/R/base \
-	$(top_builddir)/src/library/base/all.R \
-	$(top_builddir)/src/library/graphics/all.R \
-	$(top_builddir)/src/library/methods/all.R \
-	$(top_builddir)/src/library/stats/all.R \
-	$(top_builddir)/src/library/utils/all.R \
-	$(top_builddir)/modules@R_ARCH@/lapack$(SHLIB_EXT) \
-@WANT_R_SHLIB_TRUE@	$(top_builddir)/lib@R_ARCH@/libR$(DYLIB_EXT)
-	@touch $@
-
-Makedeps: Makefile
-	@(for f in $(test-src) $(test-src-reg) $(test-src-demo); do \
-	    if test -f $(srcdir)/$${f}out.save ; then \
-	      $(ECHO) "$${f}out: $${f} \$$(srcdir)/$${f}out.save \$$(FORCE)"; \
-	    else \
-	      $(ECHO) "$${f}out: $${f} \$$(FORCE)"; \
-	    fi; \
-	    if test -f $(srcdir)/$${f}in; then \
-	      $(ECHO) "$${f}: \$$(srcdir)/$${f}in stamp-R"; \
-	    fi; \
-	  done) >> Makefile
-	@touch $@
 FORCE:
 
 .Rin.R:
@@ -217,12 +161,12 @@ R-valgrind = $(R) --debugger="valgrind --tool=memcheck"
 
 
 
-test-all-basics: Makefile
+test-all-basics:
 	@for name in $(all-basic-tests); do \
 	  $(MAKE) test-$${name} || exit 1; \
 	done
 
-test-all-devel: Makefile
+test-all-devel:
 	@for name in $(all-devel-tests); do \
 	  $(MAKE) test-$${name} || exit 1; \
 	done
@@ -236,17 +180,22 @@ test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)
 test-Specific:
 	@$(ECHO) "updating test dependencies"
-	@$(MAKE) Makedeps
 	@$(ECHO) "running strict specific tests"
 	@$(MAKE) test-Specific-strict RVAL_IF_DIFF=1
 	@$(ECHO) "running sloppy specific tests"
 	@$(MAKE) test-Specific-sloppy RVAL_IF_DIFF=0
 
-test-Packages:
+test-Packages2:
 	@for p in $(R_PKGS_BASE); do \
-	  $(ECHO) "checking package '$${p}'"; \
-	  $(top_builddir)/bin/R CMD check --install=skip \
-	    $(top_srcdir)/src/library/$${p} || $(ECHO); \
+	  if test -d "./$${p}/tests"; then \
+	    $(ECHO) "checking tests from package '$${p}'"; \
+	    (cd ./$${p}/tests ; \
+	    tmp=""; \
+	    for f in `ls *.R`; do \
+	      tmp="$${tmp} $$f"; \
+	    done ; \
+	    $(MAKE) -f "$(R_SHARE_DIR)/make/tests.mk" test-src-1="$${tmp}"); \
+	  fi; \
 	done
 
 test-Gct: $(test-out-gct)
@@ -456,7 +405,7 @@ clean:
 	-@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	-@rm -f stamp-R Makedeps Rplot* Rprof.out data dumpdata.R \
+	-@rm -f stamp-R Rplot* Rprof.out data dumpdata.R \
 	  reg-plot-latin1.ps reg-plot.ps reg-tests-?.ps \
 	  R-exts.* R-intro.R R-intro.Rout \
 	  FALSE* .R .tex mirrors.html PACKAGES*
@@ -464,46 +413,11 @@ clean:
 	-@rm -f ver10.txt ver10.html ver10.tex ver10-Ex.R
 	-@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R
 	-@rm -rf anRpackage myTst* myLib
+	-@rm -f */tests/*.Rout
 distclean: clean
 	-@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	-@rm -f Makefile $(test-out) $(test-src-auto) .RData
+	-@rm -f $(test-out) $(test-src-auto) .RData
 	-@rm -rf *.Rcheck Packages
 maintainer-clean: distclean
-
-R install install-strip uninstall TAGS info dvi:
-
-install-tests:
-	@$(ECHO) "installing tests ..."
-	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/tests"
-	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/tests/Examples"	
-	@for f in $(INSTFILES); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rhome)/tests"; \
-	done
-	@$(INSTALL_DATA) $(srcdir)/Makefile.install \
-	  "$(DESTDIR)/$(rhome)/tests/Makefile"	
-	@$(INSTALL_DATA) $(srcdir)/Examples/Makefile.install \
-	  "$(DESTDIR)$(rhome)/tests/Examples/Makefile"	
-
-uninstall-tests:
-	@$(ECHO) "uninstalling tests ..."
-	@rm -rf "$(DESTDIR)$(rhome)/tests"
-
-distdir: $(DISTFILES)
-	@for f in $(DISTFILES); do \
-	  test -f $(distdir)/$${f} \
-	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
-	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
-	done
-	@for d in $(SUBDIRS); do \
-	  test -d $(distdir)/$${d} \
-	    || mkdir $(distdir)/$${d} \
-	    || exit 1; \
-	  chmod 755 $(distdir)/$${d}; \
-	  (cd $${d} && $(MAKE) distdir) \
-	    || exit 1; \
-	done
-
-## Automagically generated dependencies:
-

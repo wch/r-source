@@ -1,0 +1,80 @@
+#
+# ${R_HOME}/tests/Examples/Makefile.install
+
+## need MAKE, ECHO*
+
+top_builddir = ../..
+
+include $(top_builddir)/etc$(R_ARCH)/Makeconf
+
+R_EXE = $(top_builddir)/bin/R --slave --vanilla
+
+## principle is that we can run all the examples in a package
+## starting with just that package and 'datasets'
+## R = R_DEFAULT_PACKAGES=datasets $(top_builddir)/bin/R --vanilla
+R = $(top_builddir)/bin/R --vanilla
+
+EX_IN_BASE = $(R_PKGS_BASE:=-Ex.R)
+EX_OUT_BASE = $(EX_IN_BASE:.R=.Rout)
+
+EX_IN_RECOMMENDED = $(R_PKGS_RECOMMENDED:=-Ex.R)
+EX_OUT_RECOMMENDED = $(EX_IN_RECOMMENDED:.R=.Rout)
+
+RDIFF = $(top_builddir)/bin/R CMD Rdiff
+RVAL_IF_DIFF = 0
+
+.SUFFIXES:
+.SUFFIXES: .R .Rout
+
+all: test-Examples 
+
+test-Examples: test-Examples-Base
+test-Examples-Base:
+	@$(MAKE) $(EX_OUT_BASE)
+
+## <NOTE>
+## We do *not* want this to be added to test-Examples conditional on
+## .
+## 'make check-all' is used for running test-Examples-Recommended in
+## addition to 'make check'.
+test-Examples-Recommended: test-Examples-Base
+	@$(MAKE) $(EX_OUT_RECOMMENDED)
+## </NOTE>
+
+R:
+	@cd $(top_builddir) && $(MAKE) R
+
+.R.Rout:
+	@if test -f $@; then mv $@ $@.prev; fi
+	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
+	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
+	@$(ECHO) "$(ECHO_T) OK"
+	@if test -f $@.prev; then \
+	  mv $@ $@.fail; \
+	  $(ECHO) $(ECHO_N) "comparing '$@' to '$@.prev' ...$(ECHO_C)"; \
+	  $(RDIFF) $@.fail $@.prev $(RVAL_IF_DIFF) || exit 1; \
+	  mv $@.fail $@; \
+	  $(ECHO) "$(ECHO_T) OK"; \
+	fi
+
+$(EX_IN_BASE): # FORCE
+	@(pkg=`basename $@ -Ex.R`; \
+	  $(ECHO) "collecting examples for package '$${pkg}' ..."; \
+	  LC_ALL=C $(R_EXE) < $(top_builddir)/share/R/massage-examples.R \
+	    --args $${pkg} $(top_builddir)/library/$${pkg}/R-ex > $@; \
+	)
+
+$(EX_IN_RECOMMENDED): # FORCE
+	@(pkg=`basename $@ -Ex.R`; \
+	  $(ECHO) "collecting examples for package '$${pkg}' ..."; \
+	  LC_ALL=C $(R_EXE) < $(top_builddir)/share/R/massage-examples.R \
+	    --args $${pkg} $(top_builddir)/library/$${pkg}/R-ex > $@; \
+	fi)
+FORCE:
+
+mostlyclean: clean
+clean:
+	-@rm -f *.R *.Rout *.Rd* *.ps *.tex *.dat* data foo*
+distclean: clean
+	-@rm -f *.R*prev .RData sink-examp.txt
+maintainer-clean: distclean

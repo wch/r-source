@@ -11,7 +11,7 @@ subdir = src/library
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in eof_file
+DISTFILES = Makefile.in Makefile.win eof_file
 
 SUBDIRS = profile $(R_PKGS_BASE) Recommended
 
@@ -143,6 +143,19 @@ uninstall:
 	@rmdir "$(DESTDIR)$(rhome)/library" 2>/dev/null \
           || $(ECHO) "  subdir $(DESTDIR)$(rhome)/library not removed"
 
+install-tests:
+	@$(ECHO) "installing package tests ..."
+	@for pkg in $(R_PKGS_BASE); do \
+	  if test -d "$(srcdir)/$${pkg}/tests"; then \
+	    $(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/tests/$${pkg}/tests" ; \
+	    for f in $(srcdir)/$${pkg}/tests/*; do \
+	      $(INSTALL_DATA) $${f} "$(DESTDIR)$(rhome)/tests/$${pkg}/tests"; \
+	    done; \
+	  fi; \
+	done
+
+## all the uninstall is done in tests/Makefile for now.
+uninstall-tests:
 
 mostlyclean: clean
 clean:
