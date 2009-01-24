@@ -295,7 +295,7 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     f = (const char**) R_alloc(n, sizeof(char*));
     h = (const char**) R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
-	SEXP el = STRING_ELT(fn, 0);
+	SEXP el = STRING_ELT(fn, i);
 	if (!isNull(el))
 #ifdef Win32
 	    f[i] = acopy_string(reEnc(CHAR(el), getCharCE(el), CE_UTF8, 1));
