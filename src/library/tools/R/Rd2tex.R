@@ -15,7 +15,6 @@
 #  http://www.r-project.org/Licenses/
 
 ## issues: see also inline
-## some methalias, e.g. array.Rd, as.POSIX*
 ## < vs textless
 ## escapting in code block, Paren.Rd
 
@@ -42,16 +41,10 @@ latex_canonical_encoding  <- function(encoding)
     encoding
 }
 
-## Things to do
-## escaping is not yet complete
-## use \textless{]  etc?
-## methalias -- need all the stems
 
-Rd2latex <-
-    function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
+Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
 {
     last_char <- ""
-#    of <- function(...) of1(paste(...))
     of0 <- function(...) of1(paste(..., sep=""))
     of1 <- function(text) {
         Encoding(text) <- "unknown"
@@ -289,15 +282,17 @@ Rd2latex <-
         gsub("\\\\([!|])", '"\\1', x, perl = TRUE)
     }
 
+    currentAlias <- NA_character_
 
     writeAlias <- function(block, tag) {
-        ## FIXME much more here, including methalias
-        ## use methaliasA when link appears to be to a method.
         alias <- as.character(block)
         aa <- "\\aliasA{"
-        if (pmatch(paste(name, ".", sep=""), alias, 0L)) aa <- "\\methaliasA{"
+        if(is.na(currentAlias)) currentAlias <<- name
+        if (pmatch(paste(currentAlias, ".", sep=""), alias, 0L)) {
+            aa <- "\\methaliasA{"
+        } else currentAlias <<- alias
         ## 'name' is linked from the header
-        if (alias == "name") return()
+        if (alias == name) return()
         alias2 <- latex_link_trans0(alias)
         of0(aa, latex_code_alias(alias), "}{",
             latex_escape_name(name), "}{", alias2, "}\n")
@@ -442,27 +437,25 @@ Rd2latex <-
                        class <- as.character(block[[2]])
                        generic <- as.character(block[[1]])
                        if (generic %in% c("[", "[[", "$")) {
-                           of1("## S3 method for class '")
-                           writeContent(block[[2]], tag)
-                           of1("':\n")
                            ## need to assemble the call
                            j <- i + 1
                            txt <- ""
                            repeat {
                                this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
-                                              "\\dots" = "...,",
+                                              "\\dots" = "...",
                                               RCODE = as.character(blocks[[j]]),
                                               stop(tg, " should not get here"))
                                txt <- paste(txt, this, sep = "")
-                               ## really check for balanced parentheses
                                blocks[[j]] <- structure("", Rd_tag = "COMMENT")
-                               if(grepl("\n$", txt)) break
+                               if(grepl("\n$", txt)) {
+                                   res <- try(parse(text = paste("a", txt)))
+                                   if(!inherits(res, "try-error")) break
+                               }
                                j <- j + 1
                            }
                            #print(txt)
-                           txt <- sub("(x",
-                                      paste("x", generic, sep = ""), txt,
-                                      fixed = TRUE)
+                           txt <- sub("\\(([^,]*),\\s*", "\\1@generic@", txt)
+                           txt <- sub("@generic@", generic, txt, fixed = TRUE)
                            if (generic == "[")
                                txt <- sub(")([^)]*)$", "]\\1", txt)
                            else if (generic == "[[")
@@ -470,11 +463,21 @@ Rd2latex <-
                            else if (generic == "$")
                                txt <- sub(")([^)]*)$", "\\1", txt)
                            #print(txt)
+                           if (grepl("<-\\s*value", txt))
+                               of1("## S3 replacement method for class '")
+                           else
+                               of1("## S3 method for class '")
+                           writeContent(block[[2]], tag)
+                           of1("':\n")
                            blocks[[i+1]] <- structure(txt, Rd_tag = "RCODE")
                        } else {
                            if (class == "default")
                                of1('## Default S3 method:\n')
-                           else {
+                           else if (grepl("<-\\s*value", blocks[[i+1]][[1]])) {
+                               of1("## S3 replacement method for class '")
+                               writeContent(block[[2]], tag)
+                               of1("':\n")
+                           }else {
                                of1("## S3 method for class '")
                                writeContent(block[[2]], tag)
                                of1("':\n")
@@ -504,7 +507,10 @@ Rd2latex <-
                                   writeContent(block[[2]], tag)
                               },
                               "\\enumerate" =,
-                              "\\itemize"= of1("\\item "))
+                              "\\itemize"= {
+                                  of1("\\item ")
+                                  itemskip <- TRUE
+                              })
                        itemskup <- TRUE
                    },
                { # default
@@ -529,7 +535,7 @@ Rd2latex <-
     {
         ## need \n unless one follows, so
         nxt <- section[[1]]
-        if (attr(nxt, "Rd_tag") != "TEXT" ||
+        if (!attr(nxt, "Rd_tag") %in% c("TEXT", "RCODE") ||
             substr(as.character(nxt), 1L, 1L) != "\n") of1("\n")
         writeContent(section, tag)
         inCodeBlock <<- FALSE
@@ -543,7 +549,6 @@ Rd2latex <-
             key <- trim(section)
             of0("\\keyword{", latex_escape_name(key), "}{", ltxname, "}\n")
         } else if (tag == "\\section") {
-            ## FXIME not safe if markup in section header
             of0("%\n\\begin{Section}{")
             writeContent(section[[1]], tag)
             of1("}")
@@ -648,7 +653,7 @@ Rd2latex <-
     tags <- RdTags(name)
     if (length(tags) > 1) stopRd(name, "\\name must only contain simple text.")
 
-    name <- trim(name[[1]])
+    name <- trim(as.character(name[[1]]))
     ltxname <- latex_escape_name(name)
 
     of0('\\HeaderA{', ltxname, '}{',

@@ -179,7 +179,7 @@ stamp-refman-dvi: $(refman_TEXINPUTS)
 R_EXE = $(top_builddir)/bin/R --slave --vanilla
 
 ## <NOTE> This assumes none of the latex dirs are zipped </NOTE>
-$(texinputs_BASE): FORCE $(top_srcdir)/share/perl/build-help.pl
+$(texinputs_BASE): FORCE
 	@(pkg=`basename $@ -pkg.tex`; \
 	if $(R_EXE) -e \
 	  "tools:::.Rdnewer(\"$(top_srcdir)/src/library/$${pkg}\", \"$@\")"; then \
