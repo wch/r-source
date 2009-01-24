@@ -30,16 +30,15 @@ all: Makefile DESCRIPTION
 	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
 	fi
-	@if test -d $(srcdir)/data; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
-	  for f in $(srcdir)/data/*; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
-	  done; \
-	  rm -f $(top_builddir)/library/$(pkg)/data/Rdata.*; \
-	  $(ECHO) "tools:::data2LazyLoadDB(\"$(pkg)\")" | \
-	    R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null; \
-	  $(INSTALL_DATA) $(srcdir)/data/morley.tab $(top_builddir)/library/$(pkg)/data;\
-	fi
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data
+	@for f in $(srcdir)/data/*; do \
+	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
+	done
+	@rm -f $(top_builddir)/library/$(pkg)/data/Rdata.*
+	@$(ECHO) "tools:::data2LazyLoadDB(\"$(pkg)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
+	@$(INSTALL_DATA) $(srcdir)/data/morley.tab \
+	  $(top_builddir)/library/$(pkg)/data
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \

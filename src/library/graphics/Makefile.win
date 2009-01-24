@@ -39,12 +39,8 @@ all:
 	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
 	fi
-	@if test -d $(srcdir)/demo; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo; \
-	  for f in `ls -d $(srcdir)/demo/* | sed -e '/CVS/d' -e '/00Index/d'`; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
-	  done; \
-	fi
+	@$(ECHO) "tools:::.install_package_demos('.', '"$(top_builddir)/library/${pkg}"')" | \
+	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null
 	@if test -d $(srcdir)/inst/po; then \
 	  if test "yes" = "yes"; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
