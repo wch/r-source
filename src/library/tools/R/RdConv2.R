@@ -14,17 +14,23 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-get_link <- function(arg) {	# like get_link in Rdconv.pm, plus a bit more
-    ## FIMXE some links are split in the parser
+get_link <- function(arg, tag) {
+    ## 'topic' is the name to display, 'dest' is the topic to link to
+    ## optionaly in package 'pkg'.  If 'target' is set it is the file
+    ## to link to in HTML help
+
+    ## \link[=bar]{foo} means shows foo but treat this as a link to bar.
+    ## \link[pkg]{foo} means show foo and link to *file* foo in package pkg
+    ## \link{pkg:bar]{foo} means show foo and link to file bar in package pkg.
+
     if (!all(RdTags(arg) == "TEXT"))
     	stopRd(arg, "Bad \\link text")
 
     option <- attr(arg, "Rd_option")
 
     dest <- paste(unlist(arg), collapse = "")
-    ## It seems that e.g. \%*% is partially escaped
-    dest <- gsub("\\", "", dest, fixed = TRUE)
-    topic <- NULL
+    topic <- dest
+    targetfile <- NULL
     pkg <- NULL
     if (!is.null(option)) {
         if (!identical(attr(option, "Rd_tag"), "TEXT"))
@@ -32,14 +38,15 @@ get_link <- function(arg) {	# like get_link in Rdconv.pm, plus a bit more
     	if (length(grep("^=", option, perl = TRUE)))
     	    dest <- sub("^=", "", option, perl = TRUE)
     	else if (length(grep(":", option, perl = TRUE))) {
-    	    topic <- sub("^[^:]*:", "", option, perl = TRUE)
+    	    targetfile <- sub("^[^:]*:", "", option, perl = TRUE)
     	    pkg <- sub(":.*", "", option, perl = TRUE)
     	} else {
-    	    topic <- dest
+            targetfile <- dest
     	    pkg <- option
     	}
     }
-    list(dest=dest, pkg=pkg, topic=topic)
+    if (tag == "\\linkS4class") dest <- paste(dest, "-class", sep="")
+    list(topic = topic, dest = dest, pkg = pkg, targetfile = targetfile)
 }
 
 transform_S3_method  <- function(x)
@@ -265,11 +272,9 @@ Rd2HTML <-
     ## Cross-packages CHM links are of the form
     ## <a onclick="findlink('stats', 'weighted.mean.html')" style="text-decoration: underline; color: blue; cursor: hand">weighted.mean</a>
     writeLink <- function(tag, block) {
-	parts <- get_link(block)
-	if (tag == "\\linkS4class")
-	    parts$dest <- paste(parts$dest, "-class", sep="")
+	parts <- get_link(block, tag)
 
-    	if (is.null(parts$topic)) {
+    	if (is.null(parts$targetfile)) {
             topic <- parts$dest
             htmlfile <- paste(topic, ".html", sep = "") ## pro tem
             ## should be <a href=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/a>/s; where $argkey is the topic and $arg the HTMLiied version.
@@ -281,9 +286,10 @@ Rd2HTML <-
                 } else htmlfile <- tmp
             }
     	} else if (is.null(parts$pkg) || parts$pkg == package)
-    	    htmlfile <- paste(parts$topic, ".html", sep="")
+    	    htmlfile <- paste(parts$targetfile, ".html", sep="")
     	else
-    	    htmlfile <- paste("../../", parts$pkg, "/html/", parts$topic, ".html", sep="")
+    	    htmlfile <- paste("../../", parts$pkg, "/html/",
+                              parts$targetfile, ".html", sep="")
 
     	of0('<a href="', htmlfile, '">')
     	writeContent(block, tag)

@@ -14,9 +14,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## issues: see also inline
-## < vs textless
-## escapting in code block, Paren.Rd
+## Remaining problems
+## escapes in comments in codeblocks (kappa, qr, qraux, source)
+## [cosmetic) white-spacing in \[d]eqn (Random, Special, polyroot)
 
 
 latex_canonical_encoding  <- function(encoding)
@@ -73,7 +73,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
       "\\arguments"="ldescription",
       "\\examples"="ExampleCode")
 
-    inCodeBlock <- FALSE ## used to indicate to texify where we are
+    inCodeBlock <- FALSE ## used to indicate to vtexify where we are
     inCode <- FALSE
     inEqn <- FALSE
     inPre <- FALSE
@@ -94,8 +94,9 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
     texify <- function(x) {
         if(inEqn) return(ltxeqn(x))
         x <- gsub("([&$%_#])", "\\\\\\1", x)
-#        x <- gsub("{", "\\textbraceleft}", x, fixed = TRUE)
-#        x <- gsub("}", "\\textbraceright}", x, fixed = TRUE)
+        ## pretty has braces in text.
+        x <- gsub("{", "\\{", x, fixed = TRUE)
+        x <- gsub("}", "\\}", x, fixed = TRUE)
         x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
         x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
         x
@@ -110,20 +111,23 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
         x <- gsub("\\\\[l]+dots", "...", as.character(x))
         ## unescape (should not be escaped: but see kappa.Rd)
         x <- gsub("\\\\([$^&~_#])", "\\1", x)
-        if (inCodeBlock) return(x)
+        if (inCodeBlock) {
+            ## We do want to escape { }, but unmatched braces had
+            ## to be escaped in earlier versions (e.g. Paren.Rd, body.tex).
+            ## So fix up for now
+            x <- sub('"\\{"', '"{"', x, fixed = TRUE)
+            return(x)
+        }
         if (inPre) {
-            x <- gsub("(^|[^\\])\\{", "\\1\\\\{", x)
-            x <- gsub("(^|[^\\])}", "\\1\\\\}", x)
+            x <- gsub("(?<!\\\\)\\{", "\\\\{", x, perl= TRUE)
+            x <- gsub("(?<!\\\\)}", "\\\\}", x, perl= TRUE)
             return(x)
         }
         BSL = '@BSL@';
         x <- gsub("\\", BSL, x, fixed = TRUE)
-        x <- gsub("(^|[^\\])\\{", "\\1\\\\{", x)
-        x <- gsub("(^|[^\\])}", "\\1\\\\}", x)
-        x <- gsub("(^|[^\\])\\{", "\\1\\\\{", x)
-        x <- gsub("(^|[^\\])}", "\\1\\\\}", x)
-        x <- gsub("(^|[^\\])([&$%_#])", "\\1\\\\\\2", x)
-        x <- gsub("(^|[^\\])([&$%_#])", "\\1\\\\\\2", x)
+        x <- gsub("(?<!\\\\)\\{", "\\\\{", x, perl= TRUE)
+        x <- gsub("(?<!\\\\)}", "\\\\}", x, perl= TRUE)
+        x <- gsub("(?<!\\\\)([&$%_#])", "\\\\\\1", x, perl= TRUE)
         x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
         x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
         x <- gsub(BSL, "\\bsl{}", x, fixed = TRUE)
@@ -163,9 +167,9 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
 
     ## could be more complicated, e.g. force.Rd
     writeLink <- function(tag, block) {
-        link <- as.character(block)
-        of0("\\LinkA{", latex_escape_name(link), "}{",
-            latex_link_trans0(link), "}")
+        parts <- get_link(block, tag)
+        of0("\\LinkA{", latex_escape_name(parts$topic), "}{",
+            latex_link_trans0(parts$dest), "}")
     }
 
     writeComment <- function(txt) {
@@ -187,7 +191,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
     ltxstriptitle <- function(x)
     {
         x <- gsub("\\R", "\\R{}", x, fixed = TRUE)
-        x <- gsub("([^\\\\])([$#_&])", "\\1\\\\\\2", x, perl = TRUE)
+        x <- gsub("(?<!\\\\)([&$%_#])", "\\\\\\1", x, perl= TRUE)
         x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
         x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
         x
@@ -237,7 +241,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
         BSL = '@BSL@';
         LATEX_SPECIAL = '$^&~_#'
 
-        if(length(grep(LATEX_SPECIAL, x))) {
+        if(grepl(LATEX_SPECIAL, x)) {
             x <- gsub("\\\\\\\\", BSL, x)
             ## unescape (should not be escaped)
             x <- gsub("\\\\([$^&~_#])", "\\1", x)
@@ -350,7 +354,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
                 "\\var" = writePass(block, tag),
                "\\preformatted"= {
                    inPre <<- TRUE
-                   of1("\\begin{alltt}\n")
+                   of1("\\begin{alltt}")
                    writeContent(block, tag)
                    of1("\\end{alltt}\n")
                    inPre <<- FALSE
