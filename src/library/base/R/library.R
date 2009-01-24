@@ -711,8 +711,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
                     info <- .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
                 else next
                 if( (length(info) != 2L) || any(is.na(info)) ) next
-                if(regexpr(valid_package_version_regexp,
-                           info["Version"]) == -1) next
+                if(!grepl(valid_package_version_regexp, info["Version"])) next
                 ans <- c(ans, nam)
             }
         }
@@ -845,8 +844,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
             db <- do.call("rbind", db)
             ok <- (apply(!is.na(db), 1L, all)
                    & (db[, "Package"] == sub("_.*", "", pkg))
-                   & (regexpr(valid_package_version_regexp,
-                              db[, "Version"])) > -1)
+                   & (grepl(valid_package_version_regexp, db[, "Version"])))
             paths <- paths[ok]
         }
         if(length(paths) == 0L) {

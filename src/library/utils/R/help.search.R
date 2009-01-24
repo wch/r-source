@@ -140,7 +140,7 @@ help.search <-
                         info <- .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
                     else next
                     if ( (length(info) != 2L) || any(is.na(info)) ) next
-                    if (regexpr(valid_package_version_regexp, info["Version"]) == -1) next
+                    if (!grepl(valid_package_version_regexp, info["Version"])) next
                     ans <- c(ans, nam)
                     paths <- c(paths, file.path(lib, nam))
                 }
@@ -336,7 +336,7 @@ help.search <-
     ## or pattern has very few (currently, less than 5) characters.
     if(is.null(agrep) || is.na(agrep))
 	agrep <-
-	    ((regexpr("^([[:alnum:]]|[[:space:]]|-)+$", pattern) > 0L)
+	    (grepl("^([[:alnum:]]|[[:space:]]|-)+$", pattern)
 	     && (nchar(pattern, type="c") > 4L))
     if(is.logical(agrep)) {
 	if(agrep)

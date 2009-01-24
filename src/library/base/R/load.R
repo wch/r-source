@@ -24,9 +24,9 @@ load <-
         con <- gzfile(file)
         on.exit(close(con))
         magic <- readChar(con, 5L, useBytes = TRUE)
-        if (regexpr("RD[AX]2\n", magic) == -1L) {
+        if (!grepl("RD[AX]2\n", magic)) {
             ## a check while we still know the args
-            if(regexpr("RD[ABX][12]\r", magic) == 1L)
+            if(!grepl("RD[ABX][12]\r", magic))
                 stop("input has been corrupted, with LF replaced by CR")
             ## Not a version 2 magic number, so try the old way.
             warning(gettextf("file '%s' has magic number '%s'\n   Use of save versions prior to 2 is deprecated",

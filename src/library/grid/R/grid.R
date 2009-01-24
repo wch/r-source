@@ -116,7 +116,7 @@ pathMatch <- function(path, pathsofar, strict) {
       pattern <- paste("^", path, "$", sep="")
     else
       pattern <- paste(path, "$", sep="")
-    regexpr(pattern, pathsofar) > 0
+    grepl(pattern, pathsofar)
   }
 }
 
@@ -145,7 +145,7 @@ downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
                                      name$path, name$name, strict)
     # If the downViewport() fails, there is an error in C code
     # so none of the following code will be run
-  
+
     # Enforce the gpar settings for the viewport
     pvp <- grid.Call("L_currentViewport")
     # Do not call set.gpar because set.gpar accumulates cex

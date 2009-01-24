@@ -78,7 +78,7 @@ function(file, fields = NULL, all = FALSE)
              domain = NA)
     }
 
-    line_is_not_empty <- regexpr("^[[:space:]]*$", lines) < 0L
+    line_is_not_empty <- !grepl("^[[:space:]]*$", lines)
     nums <- cumsum(diff(c(FALSE, line_is_not_empty) > 0L) > 0L)
     ## Remove the empty ones so that nums knows which record each line
     ## belongs to.
@@ -87,12 +87,11 @@ function(file, fields = NULL, all = FALSE)
 
     ## Deal with escaped blank lines (used by Debian at least for the
     ## Description: values, see man 5 deb-control):
-    line_is_escaped_blank <-
-        regexpr("^[[:space:]]+\\.[[:space:]]*$", lines) > -1L
+    line_is_escaped_blank <- grepl("^[[:space:]]+\\.[[:space:]]*$", lines)
     if(any(line_is_escaped_blank))
         lines[line_is_escaped_blank] <- ""
 
-    line_has_tag <- regexpr("^[^[:blank:]][^:]*:", lines) > -1L
+    line_has_tag <- grepl("^[^[:blank:]][^:]*:", lines)
 
     ## Check that records start with tag lines.
     ind <- which(!line_has_tag[which(diff(nums) > 0L) + 1L])

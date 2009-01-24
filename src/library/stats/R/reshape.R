@@ -36,7 +36,7 @@ reshape <-
             nn <- do.call("rbind",strsplit(nms, re, fixed=fixed))
         else
             nn <- cbind(substr(nms, 1L, regexpr(re,nms)),
-                        substr(nms, regexpr(re,nms)+1, 10000))
+                        substr(nms, regexpr(re,nms)+1L, 10000L))
 
         if (ncol(nn) != 2)
             stop("Failed to guess time-varying variables from their names")

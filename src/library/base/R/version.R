@@ -43,7 +43,7 @@ function(x, strict = TRUE, regexp, classes = NULL)
     y <- rep.int(list(integer()), length(x))
     valid_numeric_version_regexp <- sprintf("^%s$", regexp)
     if(length(x)) {
-        ok <- (regexpr(valid_numeric_version_regexp, x) > -1L)
+        ok <- grepl(valid_numeric_version_regexp, x)
         if(!all(ok) && strict)
             stop("invalid version specification ", x, call. = FALSE)
         y[ok] <- lapply(strsplit(x[ok], "[.-]"), as.integer)
