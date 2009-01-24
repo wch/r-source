@@ -223,11 +223,12 @@ static float
 step_computing(int k,
 	       double *px, double *py,
 	       double s1, double s2,
-	       float precision)
+	       float precision,
+               pGEDevDesc dd)
 {
   double A_blend[4];
   double xstart, ystart, xend, yend, xmid, ymid, xlength, ylength;
-  double start_to_end_dist, number_of_steps;
+  double start_to_end_dist, devWidth, devHeight, devDiag, number_of_steps;
   float  step, angle_cos, scal_prod, xv1, xv2, yv1, yv2, sides_length_prod;
 
   /* This function computes the step used to draw the segment (p1, p2)
@@ -305,6 +306,21 @@ step_computing(int k,
   ylength = yend - ystart;
 
   start_to_end_dist = sqrt(xlength*xlength + ylength*ylength);
+
+  /* Paul 2009-01-25
+   * It is possible for origin and extremity to be very remote
+   * indeed (if the control points are located WAY off the device).
+   * In order to avoid having ridiculously many steps, limit
+   * the start_to_end_dist to being the length of the diagonal of the 
+   * device.
+   */
+  devWidth = fromDeviceWidth(toDeviceWidth(1, GE_NDC, dd),
+                             GE_INCHES, dd)*1200;
+  devHeight = fromDeviceHeight(toDeviceHeight(1, GE_NDC, dd),
+                               GE_INCHES, dd)*1200;
+  devDiag = sqrt(devWidth* devWidth + devHeight*devHeight);
+  if (start_to_end_dist > devDiag)
+      start_to_end_dist = devDiag;
 
   /* more steps if segment's origin and extremity are remote */
   number_of_steps = sqrt(start_to_end_dist)/2;
@@ -430,7 +446,7 @@ spline_last_segment_computing(float step, int k,
       COPY_CONTROL_POINT(3, 2, N)
 
 #define SPLINE_SEGMENT_LOOP(K, PX, PY, S1, S2, PREC) \
-      step = step_computing(K, PX, PY, S1, S2, PREC);    \
+      step = step_computing(K, PX, PY, S1, S2, PREC, dd);    \
       spline_segment_computing(step, K, PX, PY, S1, S2, dd)
 
 static Rboolean

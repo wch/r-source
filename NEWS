@@ -310,6 +310,10 @@ BUG FIXES
 
     o	deparse(control="S_compatible") now never uses backticks.
 
+    o   X-spline drawing is improved for cases where the control
+        points are located well off the edges of the device.
+
+        The symptom of this problem is the error "reached MAXNUMPTS".
 
 
 
