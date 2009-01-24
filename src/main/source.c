@@ -40,7 +40,7 @@ SEXP attribute_hidden getParseContext(void)
     char c;
 
     context[last] = '\0';
-    for (i=R_ParseContextLast; last>0 ; i--) {
+    for (i=R_ParseContextLast; last>0 ; i += PARSE_CONTEXT_SIZE - 1) {
 	i = i % PARSE_CONTEXT_SIZE;
 	context[--last] = R_ParseContext[i];
 	if (!context[last]) {
@@ -96,11 +96,35 @@ void attribute_hidden getParseFilename(char* buffer, int buflen)
     }
 }
 
+static SEXP tabExpand(SEXP strings)
+{
+    int i;
+    char buffer[200], *b;
+    const char *input;
+    SEXP result;
+    PROTECT(result = allocVector(STRSXP, length(strings)));
+    for (i = 0; i < length(strings); i++) {
+    	input = CHAR(STRING_ELT(strings, i));
+    	for (b = buffer; input && b-buffer < 192; input++) {
+    	    if (*input == '\t') do {
+    	    	*b++ = ' ';
+    	    } while (((b-buffer) & 7) != 0);
+    	    else *b++ = *input;
+    	}
+    	*b = '\0';
+    	SET_STRING_ELT(result, i, mkCharCE(buffer, Rf_getCharCE(STRING_ELT(strings, i))));
+    }
+    UNPROTECT(1);
+    return result;
+}
+    	
 void attribute_hidden parseError(SEXP call, int linenum)
 {
-    SEXP context = getParseContext();
-    int len = length(context);
-    char filename[128];
+    SEXP context;
+    int len, width;
+    char filename[128], buffer[10];
+    PROTECT(context = tabExpand(getParseContext()));
+    len = length(context);
     if (linenum) {
 	getParseFilename(filename, sizeof(filename)-2);
 	if (strlen(filename)) strcpy(filename + strlen(filename), ":");
@@ -111,15 +135,20 @@ void attribute_hidden parseError(SEXP call, int linenum)
 		  filename, linenum, R_ParseErrorCol, R_ParseErrorMsg);
 	    break;
 	case 1:
-	    error(_("%s%d:%d: %s\n%d: %s"),
+	    sprintf(buffer, "%d: %n", R_ParseContextLine, &width); 
+	    Rprintf("Context is '%s'", CHAR(STRING_ELT(context,0)));
+	    error(_("%s%d:%d: %s\n%d: %s\n%*s"),
 		  filename, linenum, R_ParseErrorCol, R_ParseErrorMsg,
-		  R_ParseContextLine, CHAR(STRING_ELT(context, 0)));
+		  R_ParseContextLine, CHAR(STRING_ELT(context, 0)), 
+		  width+R_ParseErrorCol, "^");
 	    break;
 	default:
-	    error(_("%s%d:%d: %s\n%d: %s\n%d: %s"),
+	    sprintf(buffer, "%d: %n", R_ParseContextLine, &width);
+	    error(_("%s%d:%d: %s\n%d: %s\n%d: %s\n%*s"),
 		  filename, linenum, R_ParseErrorCol, R_ParseErrorMsg,
 		  R_ParseContextLine-1, CHAR(STRING_ELT(context, len-2)),
-		  R_ParseContextLine, CHAR(STRING_ELT(context, len-1)));
+		  R_ParseContextLine, CHAR(STRING_ELT(context, len-1)), 
+		  width+R_ParseErrorCol, "^");
 	    break;
 	}
     } else {
@@ -138,6 +167,7 @@ void attribute_hidden parseError(SEXP call, int linenum)
 	    break;
 	}
     }
+    UNPROTECT(1);
 }
 
 /* "do_parse" - the user interface input/output to files.

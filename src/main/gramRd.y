@@ -782,6 +782,7 @@ static void yyerror(char *s)
 	"OPTMACRO",	"macro",
 	
 	"DESCRIPTION",	"macro",
+	"VERB",		"VERBATIM TEXT",
 	0,		0
     };
     static char const yyunexpected[] = "syntax error, unexpected ";
@@ -802,7 +803,7 @@ static void yyerror(char *s)
     R_ParseErrorFile = SrcFile;
     
     if (!strncmp(s, yyunexpected, sizeof yyunexpected -1)) {
-	int i;
+	int i, translated = FALSE;
     	/* Edit the error message */    
     	expecting = strstr(s + sizeof yyunexpected -1, yyexpecting);
     	if (expecting) *expecting = '\0';
@@ -811,11 +812,29 @@ static void yyerror(char *s)
     	    	sprintf(R_ParseErrorMsg, _("unexpected %s"), 
     	    	        i/2 < YYENGLISH ? _(yytname_translations[i+1])
     	    	                    : yytname_translations[i+1]);
-    	    	return;
+    	    	translated = TRUE;
+    	    	break;
     	    }
     	}
-    	sprintf(R_ParseErrorMsg, _("unexpected %s"),
-    	                         s + sizeof yyunexpected - 1);
+    	if (!translated)
+    	    sprintf(R_ParseErrorMsg, _("unexpected %s"),
+    	                             s + sizeof yyunexpected - 1);
+    	if (expecting) {
+ 	    translated = FALSE;
+    	    for (i = 0; yytname_translations[i]; i += 2) {
+    	    	if (!strcmp(expecting + sizeof yyexpecting - 1, yytname_translations[i])) {
+    	    	    strcat(R_ParseErrorMsg, _(yyexpecting));
+    	    	    strcat(R_ParseErrorMsg, i/2 < YYENGLISH ? _(yytname_translations[i+1])
+    	    	                    : yytname_translations[i+1]);
+    	    	    translated = TRUE;
+		    break;
+		}
+	    }
+	    if (!translated) {
+	    	strcat(R_ParseErrorMsg, _(yyexpecting));
+	    	strcat(R_ParseErrorMsg, expecting + sizeof yyexpecting - 1);
+	    }
+	}
     } else {
     	sprintf(R_ParseErrorMsg, _("%s"),s);
     }	

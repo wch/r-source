@@ -123,6 +123,11 @@ NEW FEATURES
 
     o	xfig() has new arguments 'defaultFont' and 'textSpecial'
 	contributed by Sebastian Fischmeister.
+	
+    o	parse() and parse_Rd() now point to syntax errors in the
+	reported error context, and include the filename and line and
+	column numbers so smart text editors can jump to the error
+	location.
 
 
 DEPRECATED & DEFUNCT

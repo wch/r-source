@@ -42,12 +42,35 @@ typedef struct yyltype
 {
   int first_line;
   int first_column;
+  int first_byte;
 
   int last_line;
   int last_column;
+  int last_byte;
 } yyltype;
 
 # define YYLTYPE yyltype
+# define YYLLOC_DEFAULT(Current, Rhs, N)				\
+    do									\
+      if (YYID (N))							\
+	{								\
+	  (Current).first_line   = YYRHSLOC (Rhs, 1).first_line;	\
+	  (Current).first_column = YYRHSLOC (Rhs, 1).first_column;	\
+	  (Current).first_byte   = YYRHSLOC (Rhs, 1).first_byte;	\
+	  (Current).last_line    = YYRHSLOC (Rhs, N).last_line;		\
+	  (Current).last_column  = YYRHSLOC (Rhs, N).last_column;	\
+	  (Current).last_byte    = YYRHSLOC (Rhs, N).last_byte;		\
+	}								\
+      else								\
+	{								\
+	  (Current).first_line   = (Current).last_line   =		\
+	    YYRHSLOC (Rhs, 0).last_line;				\
+	  (Current).first_column = (Current).last_column =		\
+	    YYRHSLOC (Rhs, 0).last_column;				\
+	  (Current).first_byte   = (Current).last_byte =		\
+	    YYRHSLOC (Rhs, 0).last_byte;				\
+	}								\
+    while (YYID (0))
 
 /* Useful defines so editors don't get confused ... */
 
@@ -82,8 +105,7 @@ static int	EndOfFile = 0;
 static int	xxgetc();
 static int	xxungetc(int);
 static int	xxcharcount, xxcharsave;
-static int	xxlineno, xxcolno, xxlinesave, xxcolsave;
-static int	xxlastlinelen;
+static int	xxlineno, xxbyteno, xxcolno,  xxlinesave, xxbytesave, xxcolsave;
 
 static SEXP     SrcFile = NULL;
 static SEXP	SrcRefs = NULL;
@@ -354,14 +376,26 @@ static int (*ptr_getc)(void);
 /* Private pushback, since file ungetc only guarantees one byte.
    We need up to one MBCS-worth */
 
-static int pushback[16];
+#define PUSHBACK_BUFSIZE 16
+static int pushback[PUSHBACK_BUFSIZE];
 static unsigned int npush = 0;
+
+static int prevpos = 0;
+static int prevlines[PUSHBACK_BUFSIZE];
+static int prevcols[PUSHBACK_BUFSIZE];
+static int prevbytes[PUSHBACK_BUFSIZE];
 
 static int xxgetc(void)
 {
     int c;
 
     if(npush) c = pushback[--npush]; else  c = ptr_getc();
+
+    prevpos = (prevpos + 1) % PUSHBACK_BUFSIZE;
+    prevcols[prevpos] = xxcolno;
+    prevbytes[prevpos] = xxbyteno;
+    prevlines[prevpos] = xxlineno;    
+    
     if (c == EOF) {
 	EndOfFile = 1;
 	return R_EOF;
@@ -371,9 +405,17 @@ static int xxgetc(void)
 
     if (c == '\n') {
 	xxlineno += 1;
-	xxlastlinelen = xxcolno;
 	xxcolno = 0;
-    } else xxcolno++;
+    	xxbyteno = 0;
+    } else {
+        xxcolno++;
+    	xxbyteno++;
+    }
+    /* only advance column for 1st byte in UTF-8 */
+    if (0x80 <= (unsigned char)c && (unsigned char)c <= 0xBF && known_to_be_utf8) 
+    	xxcolno--;
+
+    if (c == '\t') xxcolno = ((xxcolno + 7) & ~7);
     
     R_ParseContextLine = xxlineno;    
 
@@ -388,20 +430,20 @@ static int xxgetc(void)
 
 static int xxungetc(int c)
 {
-    if (c == '\n') {
-	xxlineno -= 1;
-	xxcolno = xxlastlinelen; /* FIXME:  could we push back more than one line? */
-	xxlastlinelen = 0;
-	R_ParseContextLine = xxlineno;
-    } else xxcolno--;
+    /* this assumes that c was the result of xxgetc; if not, some edits will be needed */
+    xxlineno = prevlines[prevpos];
+    xxbyteno = prevbytes[prevpos];
+    xxcolno  = prevcols[prevpos];
+    prevpos = (prevpos + PUSHBACK_BUFSIZE - 1) % PUSHBACK_BUFSIZE;
 
+    R_ParseContextLine = xxlineno;
     if ( KeepSource && GenerateCode && FunctionLevel > 0 )
 	SourcePtr--;
     xxcharcount--;
     R_ParseContext[R_ParseContextLast] = '\0';
     /* precaution as to how % is implemented for < 0 numbers */
     R_ParseContextLast = (R_ParseContextLast + PARSE_CONTEXT_SIZE -1) % PARSE_CONTEXT_SIZE;
-    if(npush >= 16) return EOF;
+    if(npush >= PUSHBACK_BUFSIZE) return EOF;
     pushback[npush++] = c;
     return c;
 }
@@ -410,11 +452,13 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
 {
     SEXP val;
 
-    PROTECT(val = allocVector(INTSXP, 4));
+    PROTECT(val = allocVector(INTSXP, 6));
     INTEGER(val)[0] = lloc->first_line;
-    INTEGER(val)[1] = lloc->first_column;
+    INTEGER(val)[1] = lloc->first_byte;
     INTEGER(val)[2] = lloc->last_line;
-    INTEGER(val)[3] = lloc->last_column;
+    INTEGER(val)[3] = lloc->last_byte;
+    INTEGER(val)[4] = lloc->first_column;
+    INTEGER(val)[5] = lloc->last_column;
     setAttrib(val, R_SrcfileSymbol, srcfile);
     setAttrib(val, R_ClassSymbol, mkString("srcref"));
     UNPROTECT(1);
@@ -1156,6 +1200,7 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
 
     xxlineno = 1;
     xxcolno = 0;
+    xxbyteno = 0;
     if (!isNull(srcfile)) {
 	SrcFile = srcfile;
 	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
@@ -1281,6 +1326,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
 
     xxlineno = 1;
     xxcolno = 0;
+    xxbyteno = 0;
     GenerateCode = 1;
     iob = buffer;
     ptr_getc = buffer_getc;
@@ -2305,6 +2351,7 @@ static int token(void)
 	SavedToken = 0;
 	yylloc.first_line = xxlinesave;
 	yylloc.first_column = xxcolsave;
+	yylloc.first_byte = xxbytesave;
 	return c;
     }
     xxcharsave = xxcharcount; /* want to be able to go back one token */
@@ -2314,6 +2361,7 @@ static int token(void)
 
     yylloc.first_line = xxlineno;
     yylloc.first_column = xxcolno;
+    yylloc.first_byte = xxbyteno;
 
     if (c == R_EOF) return END_OF_INPUT;
 
@@ -2495,6 +2543,7 @@ static void setlastloc(void)
 {
     yylloc.last_line = xxlineno;
     yylloc.last_column = xxcolno;
+    yylloc.last_byte = xxbyteno;
 }
 
 static int yylex(void)
@@ -2572,6 +2621,7 @@ static int yylex(void)
 		SavedToken = tok;
 		xxlinesave = yylloc.first_line;
 		xxcolsave  = yylloc.first_column;
+		xxbytesave = yylloc.first_byte;
 		SavedLval = yylval;
 		setlastloc();
 		return '\n';
