@@ -387,7 +387,10 @@ BUG FIXES
 
     o	cbind() could crash with a zero-length input and a list result.
 
-    o	pdf(colormodel = "gray") was setting the stroke colour for fills,
+    o	pdf(colormodel = "gray") was setting the stroke colour for fills.
+    
+    o	file.show() with multiple files would only show multiple
+	copies of the first one. (PR#13469)
 
 
 
