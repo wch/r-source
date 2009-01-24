@@ -55,7 +55,6 @@ all: Makefile DESCRIPTION
             rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
             $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
 	fi
-	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
 	$(MAKE) Rfiles
 
 

@@ -30,22 +30,9 @@ all: Makefile DESCRIPTION
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg) $${f}
-	@for f in COPYRIGHTS SOURCES; do \
-	  if test -f $(srcdir)/$${f}; then \
-	    $(INSTALL_DATA) $(srcdir)/$${f} \
-	      $(top_builddir)/library/$(pkg); \
-	  fi; \
-	done
-	@if test -f DESCRIPTION; then \
-	  $(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg); \
-	  (tmp="Built: R $(VERSION); "; \
-	    if test -d $(srcdir)/src; then \
-	      tmp="$${tmp}$(R_PLATFORM)"; \
-	    fi; \
-	    tmp="$${tmp}; `date`; $(R_OSTYPE)"; \
-	    $(ECHO) "$${tmp}") \
-	    >> $(top_builddir)/library/$(pkg)/DESCRIPTION; \
-	fi
+	@$(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg)
+	@$(ECHO) "Built: R $(VERSION); ; `date`; $(R_OSTYPE)" \
+	   >> $(top_builddir)/library/$(pkg)/DESCRIPTION
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo
 	@for f in `ls -d $(srcdir)/demo/* | sed -e '/00Index/d'`; do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \

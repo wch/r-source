@@ -25,23 +25,16 @@ all: Makefile DESCRIPTION
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg) $${f}
-	@for f in COPYRIGHTS NAMESPACE SOURCES; do \
+	@for f in COPYRIGHTS NAMESPACE; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \
 	      $(top_builddir)/library/$(pkg); \
 	  fi; \
 	done
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
-	@if test -f DESCRIPTION; then \
-	  $(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg); \
-	  (tmp="Built: R $(VERSION); "; \
-	    if test -d $(srcdir)/src; then \
-	      tmp="$${tmp}$(R_PLATFORM)"; \
-	    fi; \
-	    tmp="$${tmp}; `date`; $(R_OSTYPE)"; \
-	    $(ECHO) "$${tmp}") \
-	    >> $(top_builddir)/library/$(pkg)/DESCRIPTION; \
-	fi
+	@$(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg)
+	@$(ECHO) "Built: R $(VERSION); $(R_PLATFORM); `date`; $(R_OSTYPE)" \
+	  >> $(top_builddir)/library/$(pkg)/DESCRIPTION
 	@if test -d $(srcdir)/inst/po; then \
 	  if test "@USE_NLS@" = "yes"; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
@@ -62,11 +55,8 @@ all: Makefile DESCRIPTION
             rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
             $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
 	fi
-	@if test -d src; then \
-	  (cd src && $(MAKE)) || exit 1; \
-	fi
+	@(cd src && $(MAKE)) || exit 1
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  $(ECHO) "makeLazyLoading(\"$(pkg)\")") | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
@@ -82,10 +72,10 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 
 mostlyclean: clean
 clean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
+	@(cd src && $(MAKE) $@)
 	-@rm -f all.R 
 distclean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
+	@(cd src && $(MAKE) $@)
 	-@rm -f Makefile DESCRIPTION
 maintainer-clean: distclean
 

@@ -57,10 +57,6 @@ all:
             rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
             $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
 	fi
-	@if test -d src; then \
-	  (cd src && $(MAKE)) || exit 1; \
-	fi
-	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
 	@$(MAKE) -f Makefile.win Rfiles
 
 
@@ -73,8 +69,6 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
 
 mostlyclean: clean
 clean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f all.R
 distclean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f DESCRIPTION

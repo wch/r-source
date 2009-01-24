@@ -32,16 +32,9 @@ all:
 	  fi; \
 	done
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
-	@if test -f DESCRIPTION; then \
-	  $(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg); \
-	  (tmp="Built: R $(VERSION); "; \
-	    if test -d $(srcdir)/src; then \
-	      tmp="$${tmp}$(R_PLATFORM)"; \
-	    fi; \
-	    tmp="$${tmp}; `date +'%Y-%m-%d %H:%M:%S'`; $(R_OSTYPE)"; \
-	    $(ECHO) "$${tmp}") \
-	    >> $(top_builddir)/library/$(pkg)/DESCRIPTION; \
-	fi
+	@$(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg)
+	@$(ECHO) "Built: R $(VERSION); $(R_PLATFORM); `date +'%Y-%m-%d %H:%M:%S'`; $(R_OSTYPE)" \
+	  >> $(top_builddir)/library/$(pkg)/DESCRIPTION
 	@if test -d $(srcdir)/inst/po; then \
 	  if test "yes" = "yes"; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
