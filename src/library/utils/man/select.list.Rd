@@ -33,7 +33,7 @@ select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
   \sQuote{Cancel} button or pressing Escape.
 #endif
 #ifdef unix
-  Under the AQUA interface for MacOS X this brings up a modal dialog box
+  Under the AQUA interface for Mac OS X this brings up a modal dialog box
   with a (scrollable) list of items, which can be selected by the mouse.
   
   Otherwise it displays a text list from which the user can choose by

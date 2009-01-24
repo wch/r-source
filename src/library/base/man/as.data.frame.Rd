@@ -33,8 +33,10 @@
 }
 \usage{
 as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
+
 \method{as.data.frame}{character}(x, \dots,
               stringsAsFactors = default.stringsAsFactors())
+
 \method{as.data.frame}{matrix}(x, row.names = NULL, optional = FALSE, \dots, 
               stringsAsFactors = default.stringsAsFactors())
 

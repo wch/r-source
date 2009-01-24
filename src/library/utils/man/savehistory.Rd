@@ -50,7 +50,7 @@ timestamp(stamp = date(),
   The history mechanism is controlled by two environment
 #endif
 #ifdef unix
-  This works under the \code{readline} and GNOME and MacOS X consoles,
+  This works under the \code{readline} and GNOME and Mac OS X consoles,
   but not otherwise (for example, in batch use or in an embedded application).
 
   The \code{readline} history mechanism is controlled by two environment

@@ -233,7 +233,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   accented and special characters do not come out as you expect, you may
   need to change the encoding.  Some other encodings are supplied with
   \R: \code{"WinAnsi.enc"} and \code{"MacRoman.enc"} correspond to the
-  encodings normally used on Windows and Classic MacOS (at least by
+  encodings normally used on Windows and Classic Mac OS (at least by
   Adobe), and \code{"PDFDoc.enc"} is the first 256 characters of the
   Unicode encoding, the standard for PDF.  There are also encodings
   \code{"ISOLatin2.enc"}, \code{"CP1250.enc"}, \code{"ISOLatin7.enc"}

@@ -23,7 +23,7 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
 #endif
 #ifdef unix
     If true and \pkg{tcltk} and an X server are available, use a Tk
-    widget, or if under the AQUA interface use a MacOS X widget,
+    widget, or if under the AQUA interface use a Mac OS X widget,
 #endif
     otherwise use \code{\link{menu}}.}
   \item{all}{Logical, get all known mirrors or only the ones flagged as

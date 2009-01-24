@@ -72,7 +72,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 
   All versions of \R accept input from a connection with end of line
   marked by LF (as used on Unix), CRLF (as used on DOS/Windows)
-  or CR (as used on classic MacOS).  The final line can be incomplete, that
+  or CR (as used on classic Mac OS).  The final line can be incomplete, that
   is missing the final end-of-line marker.
 
   If \code{\link{options}}("keep.source") is true (the default in

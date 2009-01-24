@@ -88,13 +88,13 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   Error messages written to \file{stderr} will be sent by the shell to
   the terminal unless \code{ignore.stderr = TRUE}.  They can be captured
   (in the most likely shells) by
-  \preformatted{
+\preformatted{
     system("some command 2>&1", intern=TRUE)
-  }
+}
   What happens to output sent to \file{stdout} and \file{stderr} if
   \code{intern = FALSE} is interface-specific, and it is unsafe to
   assume that such messages will appear on the console (they do on the
-  MacOS X console but not on the \pkg{gnomeGUI} console, for example).
+  Mac OS X console but not on the \pkg{gnomeGUI} console, for example).
 }
 \note{
   \code{wait} is implemented by appending \code{&} to the command: this

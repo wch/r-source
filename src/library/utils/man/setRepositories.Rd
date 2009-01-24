@@ -20,7 +20,7 @@ setRepositories(graphics = getOption("menu.graphics"), ind = NULL)
 #endif
 #ifdef unix
     If true and \pkg{tcltk} and an X server are available, use a Tk
-    widget, or if under the AQUA interface use a MacOS X widget,
+    widget, or if under the AQUA interface use a Mac OS X widget,
 #endif
     otherwise use a text list in the console.}
   \item{ind}{\code{NULL} or a vector of integer indices, which have the
