@@ -26,7 +26,7 @@ getPackageName <- function(where = topenv(parent.frame()), create = TRUE) {
     env <- as.environment(where)
     envName <- environmentName(env)
     if(nzchar(envName)) {
-        if(regexpr("package:", envName, fixed = TRUE) == 1)
+        if(regexpr("package:", envName, fixed = TRUE) == 1L)
           pkg <- sub("package:","", envName, fixed = TRUE)
     }
     if(!nzchar(pkg)) { ## is still ""
