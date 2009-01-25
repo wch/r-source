@@ -200,6 +200,13 @@ test-Packages2:
 	    $(MAKE) -f "$(R_SHARE_DIR)/make/tests.mk" test-src-1="$${tmp}"); \
 	  fi; \
 	done
+	@for p in $(R_PKGS_BASE); do \
+	  if test -d "../library/$${p}/doc"; then \
+	    $(ECHO) "checking vignettes from package '$${p}'"; \
+	    $(ECHO) "tools::checkVignettes(\"$${p}\", latex=FALSE, weave=TRUE)" \
+	      | $(R) --slave; \
+	  fi; \
+	done
 
 test-Recommended: test-Examples-Recommended
 	@for p in $(R_PKGS_RECOMMENDED); do \
@@ -211,6 +218,13 @@ test-Recommended: test-Examples-Recommended
 	      tmp="$${tmp} $$f"; \
 	    done ; \
 	    $(MAKE) -f "$(R_SHARE_DIR)/make/tests.mk" test-src-1="$${tmp}"); \
+	  fi; \
+	done
+	@for p in $(R_PKGS_RECOMMENDED); do \
+	  if test -d "./$${p}/doc"; then \
+	    $(ECHO) "checking vignettes from package '$${p}'"; \
+	    $(ECHO) "tools::checkVignettes(\"$${p}\", latex=FALSE, weave=TRUE)" \
+	      | $(R) --slave; \
 	  fi; \
 	done
 
