@@ -63,6 +63,24 @@ install-strip: install
 
 uninstall:
 
+install-tests:
+	@(tmp=$${TMPDIR-/tmp}/R$$$$; \
+	 mkdir $${tmp}; cd $${tmp}; \
+	 for pkg in $(R_PKGS_RECOMMENDED_SOURCES); do \
+	   gzip -dc "$(top_srcdir)/src/library/Recommended/$${pkg}.tgz" | $(TAR) xf - ; \
+	 done ; \
+	 for pkg in MASS class nnet spatial;  do \
+	  mv VR/$${pkg} . ;\
+	 done ; \
+	 for pkg in $(R_PKGS_RECOMMENDED); do \
+	  if test -d $${pkg}/tests; then \
+	    $(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/tests/$${pkg}/tests" ; \
+	    for f in $${pkg}/tests/*; do \
+	      $(INSTALL_DATA) $${f} "$(DESTDIR)$(rhome)/tests/$${pkg}/tests"; \
+	    done; \
+	  fi; \
+	 done)
+
 mostlyclean: clean
 clean:
 	-@test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)

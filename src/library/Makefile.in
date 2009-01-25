@@ -153,6 +153,7 @@ install-tests:
 	    done; \
 	  fi; \
 	done
+	@(cd Recommended && $(MAKE) $@)
 
 ## all the uninstall is done in tests/Makefile for now.
 uninstall-tests:

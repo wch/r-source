@@ -641,6 +641,38 @@ Parallel makes are supported for making @R{} only, not for installation
 nor for checking.
 
 
+You can optionally install the run-time tests that are part of
+@command{make check-all} by
+
+@example
+make install-tests
+@end example
+
+@noindent
+which populates a @file{tests} directory in the installation.
+
+The tests can then be re-run by
+
+@example
+cd tests
+## followed by one of
+make check
+make check-devel
+make check-all
+@end example
+
+@noindent
+and other useful targets are @code{test-Packages} and
+@code{test-Recommended} to the run the example and package-specific
+tests in the standard and recommmended packages respectively.
+
+This runs all the tests relevant to the installed @R{}, but not for
+example the ones checking the examples in the manuals nor making the
+standalone Rmath library.  This can occasionally be useful when the
+operating environment has been changed, for example by OS updates or by
+substituting the BLAS (@pxref{Shared BLAS}).
+
+
 @node Uninstallation, Sub-architectures, Installation, Installing R under Unix-alikes
 @section Uninstallation
 
@@ -712,6 +744,14 @@ architecture-specific versions will be available in e.g.@:
 architectures will run on the platform so the architecture of
 @command{Rscript} does not matter.
 
+Weh running post-install tests with sub-architectures, use
+
+@example
+R --arch=@var{name} CMD make check[-devel|all]
+@end example
+
+@noindent
+to select a sub-architecture to check.
 
 On Linux, there is an alternative mechanism for mixing 32-bit and
 64-bit libraries known as @emph{multilib}. If a Linux distribution supports

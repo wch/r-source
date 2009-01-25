@@ -1,3 +1,4 @@
+#-*- Makefile -*-
 #
 # ${R_HOME}/tests/Makefile.install
 
@@ -85,12 +86,14 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct
 
 all-basic-tests = Examples Specific Reg Internet
-## not Docs Standalone Packages2
+## not Docs Standalone
 all-devel-tests = IsAs Random Demo Rd Primitive Regexp Segfault Packages2
 
-all check: test-all-basics
+all check: distclean test-all-basics
 check-devel: check test-all-devel
 check-all: check-devel test-Packages-Recommended
+
+test-Packages: test-Examples test-Packages2
 
 FORCE:
 
@@ -187,6 +190,19 @@ test-Specific:
 
 test-Packages2:
 	@for p in $(R_PKGS_BASE); do \
+	  if test -d "./$${p}/tests"; then \
+	    $(ECHO) "checking tests from package '$${p}'"; \
+	    (cd ./$${p}/tests ; \
+	    tmp=""; \
+	    for f in `ls *.R`; do \
+	      tmp="$${tmp} $$f"; \
+	    done ; \
+	    $(MAKE) -f "$(R_SHARE_DIR)/make/tests.mk" test-src-1="$${tmp}"); \
+	  fi; \
+	done
+
+test-Recommended: test-Examples-Recommended
+	@for p in $(R_PKGS_RECOMMENDED); do \
 	  if test -d "./$${p}/tests"; then \
 	    $(ECHO) "checking tests from package '$${p}'"; \
 	    (cd ./$${p}/tests ; \

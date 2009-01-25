@@ -244,10 +244,8 @@ INSTALLATION
 	used for collation on Mac OS >= 10.4.
 
     o	make install-tests can be used to install the test files,
-	to allowed an installed version of R to be tested.
-	[This is work in progress.  Run the tests by
-	cd .../tests; R CMD make for targest check, check-all and more
-	specific ones.]
+	to allowed an installed version of R to be tested -- see the
+	R-admin manual.
 
 
 PACKAGE INSTALLATION
