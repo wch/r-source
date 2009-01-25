@@ -26,7 +26,7 @@ load <-
         magic <- readChar(con, 5L, useBytes = TRUE)
         if (!grepl("RD[AX]2\n", magic)) {
             ## a check while we still know the args
-            if(!grepl("RD[ABX][12]\r", magic))
+            if(grepl("RD[ABX][12]\r", magic))
                 stop("input has been corrupted, with LF replaced by CR")
             ## Not a version 2 magic number, so try the old way.
             warning(gettextf("file '%s' has magic number '%s'\n   Use of save versions prior to 2 is deprecated",
