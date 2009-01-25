@@ -900,11 +900,11 @@ static int token(void)
     	    if (!xxinEqn && yylloc.first_column == 1) return mkIfdef(c);
     	    break;
     	case LBRACE:
-    	    xxbraceDepth++;
+    	    if (!xxinRString) xxbraceDepth++;
     	    if (outsideLiteral) return c;
     	    break;
     	case RBRACE:
-    	    xxbraceDepth--;
+    	    if (!xxinRString) xxbraceDepth--;
     	    if (outsideLiteral || xxbraceDepth == 0) return c;
     	    break;
     	case '[':
