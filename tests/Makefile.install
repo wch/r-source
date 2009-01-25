@@ -89,9 +89,9 @@ all-basic-tests = Examples Specific Reg Internet
 ## not Docs Standalone
 all-devel-tests = IsAs Random Demo Rd Primitive Regexp Segfault Packages2
 
-all check: distclean test-all-basics
+all check: clean2 test-all-basics
 check-devel: check test-all-devel
-check-all: check-devel test-Packages-Recommended
+check-all: check-devel test-Recommended
 
 test-Packages: test-Examples test-Packages2
 
@@ -398,24 +398,6 @@ test-undoc:
 	  fi; \
 	done
 
-## There is a potential name clash here on case-insensitive Mac OS X
-test-Packages-Recommended:
-	-@rm -rf PACKAGES
-	@test -d Packages || mkdir Packages
-	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
-	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
-	    (cd Packages && $(TAR) xf -) ; \
-	  if grep "^Contains:" "Packages/$${p}/DESCRIPTION" >/dev/null; \
-	  then \
-	    $(ECHO) "checking bundle '$${p}'"; \
-	  else \
-	    $(ECHO) "checking package '$${p}'"; \
-	  fi; \
-	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" \
-            $(top_builddir)/bin/R CMD check --install=skip \
-	    --library="$(top_builddir)/library" Packages/$${p} || $(ECHO); \
-	done
-
 mostlyclean: clean
 clean:
 	-@for d in $(SUBDIRS); do \
@@ -430,6 +412,10 @@ clean:
 	-@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R
 	-@rm -rf anRpackage myTst* myLib
 	-@rm -f */tests/*.Rout
+
+clean2: clean
+	-@rm -f $(test-out) $(test-src-auto) .RData
+
 distclean: clean
 	-@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \

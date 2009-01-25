@@ -656,9 +656,9 @@ The tests can then be re-run by
 @example
 cd tests
 ## followed by one of
-make check
-make check-devel
-make check-all
+../bin/R CMD make check
+../bin/R CMD make check-devel
+../bin/R CMD make check-all
 @end example
 
 @noindent
@@ -688,7 +688,11 @@ installation.
 
 This will also uninstall any installed manuals.  There are specific
 targets to uninstall DVI, info and PDF manuals in
-@file{doc/manual/Makefile}.
+@file{doc/manual/Makefile}.  
+
+Target @code{uninstall-tests} will
+uninstall any installed tests.
+
 
 
 @node Sub-architectures,  , Uninstallation, Installing R under Unix-alikes
