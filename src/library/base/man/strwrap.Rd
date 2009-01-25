@@ -37,9 +37,10 @@ strwrap(x, width = 0.9 * getOption("width"), indent = 0,
 }
 \details{
   Whitespace (space, tab or newline characters) in the input is
-  destroyed.  Double spaces after periods (thought as representing
-  sentence ends) are preserved.  Currently, possible sentence ends at
-  line breaks are not considered specially.
+  destroyed.  Double spaces after periods, question and explanation
+  marks (thought as representing sentence ends) are preserved.
+  Currently, possible sentence ends at line breaks are not considered
+  specially.
   
   Indentation is relative to the number of characters in the prefix
   string.

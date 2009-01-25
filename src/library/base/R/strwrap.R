@@ -50,7 +50,7 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
             if(any(nc == 0L)) {
                 zLenInd <- which(nc == 0L)
                 zLenInd <- zLenInd[!(zLenInd %in%
-                                     (grep("\\.$", words) + 1L))]
+                                     (grep("[.?!]$", words) + 1L))]
                 if(length(zLenInd)) {
                     words <- words[-zLenInd]
                     nc <- nc[-zLenInd]
