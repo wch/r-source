@@ -16,21 +16,28 @@
 
 
 ## surplus whitespace
-## Listing environments are minimal at best, \\tabular
+## Listing environments are minimal at best, \\describe \\tabular
 ## e.g. DateTimeClasses
-## conversion of -- --- (Extract.factor), `` (NA)
-## odd list() in links e.g. Logic
-## \\dontrun appears twice
+## \cr in argument, cbind
+## getDLLRegisteedRoutines
+## c\car{x} in regex
+## spacing in zMethods
+
 
 Rd2txt <-
     function(Rd, out="", package = "", defines=.Platform$OS.type)
 {
-    WIDTH <- 75L
+    WIDTH <- 72L
+    HDR_WIDTH <- 70L
 
     ## we need to keep track of where we are.
     nch <- 0L
     text <- ""
     indent <- 0L
+
+    inEqn <- FALSE
+    DLlab <- character()
+    DLval <- character()
 
     Of <- function(text) writeLines(text, con)
     of0 <- function(...)  of1(paste(..., sep=""))
@@ -81,7 +88,7 @@ Rd2txt <-
             text <- gsub("`([^']+)'", "\x93\\1\x94", text)
             text <- gsub("`", "'", text, fixed = TRUE)
         } else {
-            text <- gsub("(``|'')", '"', text, fixed = TRUE)
+            text <- gsub("(``|'')", '"', text)
             text <- gsub("`", "'", text, fixed = TRUE)
         }
         text
@@ -100,6 +107,10 @@ Rd2txt <-
     inCodeBlock <- FALSE ## used to indicate to texify where we are
 
     addParaBreaks <- function(x, tag) {
+        if (inEqn) {
+            of1(txt_eqn(x))
+            return()
+        }
         start <- attr(x, "srcref")[2]
         if (isBlankLineRd(x)) {
             writePara()
@@ -110,8 +121,24 @@ Rd2txt <-
         }
     }
 
-    ## Needed?
+    unescape <- function(x) {
+        x <- gsub("(---|--)", "-", x)
+        x
+    }
+
+    codeB <- function(x) {
+        txt <- as.character(x)
+        if(inEqn) txt <- txt_eqn(txt)
+        txt <- gsub('"\\{"', '"{"', txt, fixed = TRUE)
+        ## \dots gets left in noquote.Rd
+        txt <- gsub("\\dots",  "....", txt, fixed = TRUE)
+        of1(txt)
+    }
+
     txt_eqn <- function(x) {
+        x <- gsub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilaon|psi)", "\\1", x)
+        x <- gsub("\\\\(bold|strong|emph|var)\\{([^}]*)\\}", "\\2", x)
+        x <- gsub("\\\\(ode|samp)\\{([^}]*)\\}", "'\\2'", x)
         x
     }
 
@@ -124,22 +151,28 @@ Rd2txt <-
             of1('## Not run: ') # had trailing space before: FIXME remove
             writeCodeBlock(block, tag)
             ## FIXME only needs a \n here if not at left margin
-            of1('\n## End(Not run)')
+            of1('## End(Not run)')
         } else {
             of1('## Not run: ')
             writeCodeBlock(block, tag)
-       }
+        }
     }
 
 
     writeQ <- function(block, tag)
     {
         if (.Platform$OS.type == "windows" && Sys.getlocale("LC_CTYPE") != "C") {
-            if (tag == "\\sQuote") of0("\x91", as.character(block), "\x92")
-            else of0("\x93", as.character(block), "\x94")
+            if (tag == "\\sQuote") {
+                of1("\x91"); writeContent(block, tag); of1("\x92")
+            } else {
+                of1("\x93"); writeContent(block, tag); of1("\x94")
+            }
         } else {
-            if (tag == "\\sQuote") of0("'", as.character(block), "'")
-            else of0("\"", as.character(block), "\"")
+            if (tag == "\\sQuote") {
+                of1("'"); writeContent(block, tag); of1("'")
+            } else {
+                of1("\""); writeContent(block,tag); of1("\"")
+            }
         }
     }
 
@@ -152,12 +185,31 @@ Rd2txt <-
         writeContent(block[[1]], tag)
         label <- format(paste(text, ":", sep = ""),
                         justify = "right", width = 9)
-        text <<- ""
-        writeContent(block[[2]], tag)
-        text1 <- paste(strwrap(text, indent = 0, exdent = 10, width = WIDTH,
-                               initial = paste(label,"")),
-                       collapse = "\n")
-        Of(text1)
+        ## Do this by paras
+        block <- block[[2]]
+        parabreaks <- sapply(block,
+                             function(x) attr(x, "Rd_tag") == "TEXT"
+                             && as.character(x) == "\n"
+                             && attr(x, "srcref")[2] == 1)
+        pb <- which(c(parabreaks, TRUE))
+        first <-1
+        for (i in pb) {
+            if(first > 1) Of("")
+            text <<- ""
+            writeContent(block[first:(i-1)], tag)
+            text1 <-
+                if(first == 1)
+                    paste(strwrap(text, indent = 0, exdent = 10,
+                                  width = WIDTH,
+                                  initial = paste(label,"")),
+                          collapse = "\n")
+                else
+                    paste(strwrap(text, indent = 10, exdent = 10,
+                                  width = WIDTH),
+                          collapse = "\n")
+            Of(text1)
+            first <- i+1
+        }
         text <<- ""
         indent <<- indent0
         nch <- 0L
@@ -177,6 +229,7 @@ Rd2txt <-
     {
         ## FIXME: multi-line inputs
         text <- trim(text)
+        text <- txt_eqn(text)
         nc <- nchar(text)
         pad <- paste(rep.int(" ", indent + (WIDTH - nc) %/% 2L), collapse = "")
         Of(paste("\n", pad, text, "\n", sep = ""))
@@ -208,15 +261,22 @@ Rd2txt <-
 	switch(tag,
                UNKNOWN =,
                VERB =,
-               RCODE = of1(as.character(block)),
-               TEXT = addParaBreaks(block, blocktag),
-               COMMENT = {},
+               RCODE = codeB(block),
+               TEXT = addParaBreaks(unescape(block), blocktag),
                LIST =,
+               COMMENT = {},
                "\\describe"= {
                    writePara()
-                   of1("\\describe{")
+                   #print("in \\describe")
+                   indent0 <- indent; indent <<- 0L
                    writeContent(block, tag)
-                   of1("}")
+                   tab <- formatDL(DLlab, DLval, style = "list")
+                   indent <<- indent0
+                   text <- ""
+                   Of("")
+                   pad <- paste(rep.int(" ", indent), collapse = "")
+                   Of(paste(pad, tab, sep= "", collapse="\n\n"))
+                   DLlab <<-DLval <<- character()
                },
                "\\enumerate"=,
                "\\itemize"= {
@@ -243,16 +303,23 @@ Rd2txt <-
                "\\code" = { of1("'"); writeContent(block, tag); of1("'")},
 
                "\\bold"=,
-                "\\strong"= of0("*", as.character(block), "*"),
-               "\\emph"= of0("_", as.character(block), "_"),
+               "\\strong"= {
+                   of1("*")
+                   writeContent(block, tab)
+                   of1("*")
+               },
+               "\\emph"= {
+                   of1("_")
+                   writeContent(block, tag)
+                   of1("_")
+               },
                "\\sQuote" =,
                "\\dQuote"= writeQ(block, tag) ,
                "\\preformatted"= {
-                   inCodeBlock <<- TRUE
-                   of1("\\begin{alltt}\n")
-                   writeContent(block, tag) # FIXME, translations?
-                   of1("\\end{alltt}\n")
-                   inCodeBlock <<- FALSE
+                   writePara()
+                   writeCodeBlock(block, tag)
+                   Of(text)
+                   text <<- ""
                },
                "\\verb"= of1(block),
                "\\linkS4class" =,
@@ -267,13 +334,17 @@ Rd2txt <-
                } ,
                "\\eqn" = {
                    block <- block[[length(block)]]
+                   ## FIXME: treat 2 of 2 differently?
+                   inEqn <<- TRUE
                    writeContent(block, tag)
+                   inEqn <<- FALSE
                },
                "\\deqn" = {
                    writePara()
-                   if (length(block) == 2 && is.list(block[[1]]))
-                       block <- block[[2]]
+                   block <- block[[length(block)]]
+                   inEqn <<- TRUE
                    writeContent(block, tag)
+                   inEqn <<- FALSE
                    writeDeqn()
                },
                "\\tabular" = writeTabular(block),
@@ -305,12 +376,65 @@ Rd2txt <-
 	for (i in seq_along(tags)) {
             tag <- tags[i]
             block <- blocks[[i]]
-            switch(tag,
+            switch(tag<- attr(block, "Rd_tag"),
+                   "\\method" =,
+                   "\\S3method" = {
+                       class <- as.character(block[[2]])
+                       generic <- as.character(block[[1]])
+                       if (generic %in% c("[", "[[", "$")) {
+                           ## need to assemble the call
+                           j <- i + 1
+                           txt <- ""
+                           repeat {
+                               this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
+                                              "\\dots" = "...",
+                                              RCODE = as.character(blocks[[j]]),
+                                              stop(tg, " should not get here"))
+                               txt <- paste(txt, this, sep = "")
+                               blocks[[j]] <- structure("", Rd_tag = "COMMENT")
+                               if(grepl("\n$", txt)) {
+                                   res <- try(parse(text = paste("a", txt)))
+                                   if(!inherits(res, "try-error")) break
+                               }
+                               j <- j + 1
+                           }
+                           #print(txt)
+                           txt <- sub("\\(([^,]*),\\s*", "\\1@generic@", txt)
+                           txt <- sub("@generic@", generic, txt, fixed = TRUE)
+                           if (generic == "[")
+                               txt <- sub(")([^)]*)$", "]\\1", txt)
+                           else if (generic == "[[")
+                               txt <- sub(")([^)]*)$", "]]\\1", txt)
+                           else if (generic == "$")
+                               txt <- sub(")([^)]*)$", "\\1", txt)
+                           #print(txt)
+                           if (grepl("<-\\s*value", txt))
+                               of1("## S3 replacement method for class '")
+                           else
+                               of1("## S3 method for class '")
+                           writeCodeBlock(block[[2]], tag)
+                           of1("':\n")
+                           blocks[[i+1]] <- structure(txt, Rd_tag = "RCODE")
+                       } else {
+                           if (class == "default")
+                               of1('## Default S3 method:\n')
+                           else if (grepl("<-\\s*value", blocks[[i+1]][[1]])) {
+                               of1("## S3 replacement method for class '")
+                               writeCodeBlock(block[[2]], tag)
+                               of1("':\n")
+                           }else {
+                               of1("## S3 method for class '")
+                               writeCodeBlock(block[[2]], tag)
+                               of1("':\n")
+                           }
+                           writeCodeBlock(block[[1]], tag)
+                       }
+                   },
                    "\\special" =,
                    UNKNOWN =,
                    VERB =,
                    RCODE =,
-                   TEXT = of1(as.character(block)),
+                   TEXT = codeB(block),
                    "\\var" = writeCodeBlock(block, tag),
                    "\\dots" =,
                    "\\ldots" = of1("..."),
@@ -319,19 +443,6 @@ Rd2txt <-
                    COMMENT =,
                    "\\dontshow" =,
                    "\\testonly" = {}, # do nothing
-                   "\\method" =,
-                   "\\S3method" = {
-                       ## FIXME: special methods for [ [<- and operators
-                       class <- as.character(block[[2]])
-                       if (class == "default")
-                           of1('## Default S3 method:\n')
-                       else {
-                           of1("## S3 method for class '")
-                           writeCodeBlock(block[[2]], tag)
-                           of1("':\n")
-                       }
-                       writeCodeBlock(block[[1]], tag)
-                   },
                    "\\S4method" = {
                        of1("## S4 method for signature '")
                        writeCodeBlock(block[[2]], tag)
@@ -355,10 +466,14 @@ Rd2txt <-
                    "\\item" = {
                        switch(blocktag,
                               "\\describe" = {
-                                  of1('\\item[')
+                                  text <<- ""
                                   writeContent(block[[1]], tag)
-                                  of1('] ')
+                                  DLlab <<- c(DLlab, text)
+                                  ## FICME: handle paras here
+                                  text <<- ""
                                   writeContent(block[[2]], tag)
+                                  DLval <<- c(DLval, text)
+                                  text <<- ""
                               },
                               "\\value"=,
                               "\\arguments"= writeArgItem(block, tag),
@@ -476,13 +591,16 @@ Rd2txt <-
     name <- trim(name[[1]])
 
     if(nzchar(package)) {
-        pad <- WIDTH - nchar(name) - nchar(package) - 20L
-        if(encoding != "unknowwn") pad <- pad - 2L - nchar(encoding)
-        pad <- pad %/% 2L
-        pad <- paste(rep.int(" ", pad), collapse = "")
-        Of(paste(name, pad, "package:", package, pad, "R Documentation",
-                 if(encoding != "unknown") paste("(", encoding, ")", sep=""),
-                 "\n", sep = ""))
+        left <- name
+        mid <- if(nzchar(package)) paste("package:", package, sep = "") else ""
+        right <- "R Documentation"
+        if(encoding != "unknown")
+            right <- paste(right, "(", encoding, ")", sep="")
+        pad <- HDR_WIDTH - nchar(left, "w") - nchar(mid, "w") - nchar(right, "w")
+        pad0 <- pad %/% 2L
+        pad1 <- paste(rep.int(" ", pad0), collapse = "")
+        pad2 <- paste(rep.int(" ", pad - pad0), collapse = "")
+        Of(paste(left, pad1, mid, pad2, right, "\n", sep=""))
     }
 
     Of(c(txt_header(txt_striptitle(title)), ""))
