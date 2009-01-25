@@ -46,7 +46,7 @@ all: Makefile DESCRIPTION
 	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
 	fi
-	@$(ECHO) "tools:::.install_package_demos('.', '"$(top_builddir)/library/${pkg}"')" | \
+	@$(ECHO) "tools:::.install_package_demos('$(srcdir)', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null
 	@if test -d $(srcdir)/exec; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/exec; \
