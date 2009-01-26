@@ -10,6 +10,7 @@ top_builddir = ../../..
 pkg = tools
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
+RdSRC = $(srcdir)/man/*.Rd
 
 R_EXE = $(top_builddir)/bin/Rterm.exe --vanilla --slave
 

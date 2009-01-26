@@ -16,6 +16,7 @@ DISTFILES = DESCRIPTION.in Makefile.in Makefile.win NAMESPACE
 pkg = tools
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
+RdSRC = $(srcdir)/man/*.Rd
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
