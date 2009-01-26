@@ -26,8 +26,8 @@ chm-%:
 	  $(MAKE) --no-print-directory -C $(PKGDIR)/$*/chm \
 	    -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm ; \
 	  if test -f $(PKGDIR)/$*/chm/$*.chm ; then \
-	    $(MKDIR) -p $(RLIBS)/$*/chtml ;\
-	    $(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIBS)/$*/chtml ; \
+	    $(MKDIR) -p $(RLIB)/$*/chtml ;\
+	    $(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIB)/$*/chtml ; \
 	  else \
 	    echo CHM compile failed:  HTML Help Workshop not installed? ; \
 	  fi; \
