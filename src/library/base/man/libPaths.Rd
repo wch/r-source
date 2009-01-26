@@ -85,9 +85,12 @@
       \samp{2.5.0}).}
     \item{\code{\%v}}{\R version number excluding the patchlevel (e.g.,
       \samp{2.5}).}
-    \item{\code{\%p}}{the platform for which \R was built.}
-    \item{\code{\%o}}{the underlying operating system.}
-    \item{\code{\%a}}{the architecture (CPU) \R was built on/for.}
+    \item{\code{\%p}}{the platform for which \R was built, the value of
+      \code{\link{R.version}$platform}.}
+    \item{\code{\%o}}{the underlying operating system, the value of
+      \code{\link{R.version}$os}.}
+    \item{\code{\%a}}{the architecture (CPU) \R was built on/for, the
+      value of \code{\link{R.version}$arch}.}
   }
   (See \code{\link{version}} for details on R version information.)
 
