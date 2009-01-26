@@ -1,0 +1,145 @@
+## ${R_HOME}/share/make/basepkg.mk
+
+
+.PHONY: front instdirs mkR mkR2 mkdesc mkdemos mkexec mklazy mkman mkpo mksrc
+
+front:
+	@for f in $(FRONTFILES); do \
+	  if test -f $(srcdir)/$${f}; then \
+	    $(INSTALL_DATA) $(srcdir)/$${f} \
+	      $(top_builddir)/library/$(pkg); \
+	  fi; \
+	done
+
+instdirs:
+	@for D in $(INSTDIRS); do \
+	 if test -d $(srcdir)/inst/$${D}; then \
+	   $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/$${D}; \
+	   for f in `ls -d $(srcdir)/inst/$${D}/*`; do \
+	     $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/$${D}; \
+	   done; \
+	 fi; done
+
+mkR:
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
+	@(f=$${TMPDIR:-/tmp}/R$$$$; \
+	  cat $(RSRC) > $${f}; \
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
+	  $(top_builddir)/library/$(pkg)/R/$(pkg) $${f}
+	@if test -f $(srcdir)/NAMESPACE;  then \
+	  $(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg); \
+	fi
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
+
+## version for S4-using packages
+mkR2:
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
+	@(f=$${TMPDIR:-/tmp}/R$$$$; \
+          $(ECHO) ".packageName <- \"$(pkg)\"" >  $${f}; \
+	  cat `LC_COLLATE=C ls $(srcdir)/R/*.R` >> $${f}; \
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
+	@if test -f $(srcdir)/NAMESPACE;  then \
+	  $(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg); \
+	fi
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
+
+
+mkdesc:
+	@if test -f DESCRIPTION; then \
+	  $(ECHO) "tools:::.install_package_description('.', '$(top_builddir)/library/${pkg}')" | \
+	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
+	fi
+
+## for base and tools
+mkdesc2:
+	@$(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg)
+	@$(ECHO) "Built: R $(VERSION); ; `date`; $(R_OSTYPE)" \
+	   >> $(top_builddir)/library/$(pkg)/DESCRIPTION
+
+mkdemos:
+	@$(ECHO) "tools:::.install_package_demos('$(srcdir)', '$(top_builddir)/library/$(pkg)')" | \
+	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null
+
+## for base
+mkdemos2:
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo
+	@for f in `ls -d $(srcdir)/demo/* | sed -e '/00Index/d'`; do \
+	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
+	done
+
+mkexec:
+	@if test -d $(srcdir)/exec; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/exec; \
+	  for f in  $(srcdir)/exec/*; do \
+	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/exec; \
+	  done; \
+	fi
+
+mklazy:
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
+
+## needs RdSRC defined
+mkman:
+	@if test -d $(srcdir)/man; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
+	  (f=$${TMPDIR:-/tmp}/R$$$$; \
+	    for rdfile in $(RdSRC); do \
+	      $(ECHO) "% --- Source file: $${rdfile} ---"; \
+            cat $${rdfile} $(top_srcdir)/src/library/eof_file; \
+	    done >> $${f}; \
+            $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
+              $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
+            rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
+            $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
+	fi
+
+
+mkpo:
+	@if test -d $(srcdir)/inst/po; then \
+	  if test "$(USE_NLS)" = "yes"; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
+	  cp -pr  $(srcdir)/inst/po/* $(top_builddir)/library/$(pkg)/po; \
+	  find "$(top_builddir)/library/$(pkg)/po" -name .svn -type d -prune \
+	    -exec rm -rf \{\} \; 2>/dev/null; \
+	  fi; \
+	fi
+
+mksrc:
+	@if test -d src; then \
+	  (cd src && $(MAKE)) || exit 1; \
+	fi
+
+
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+mostlyclean: clean
+clean:
+	@if test -d src; then (cd src && $(MAKE) $@); fi
+	-@rm -f all.R .RData
+distclean:
+	@if test -d src; then (cd src && $(MAKE) $@); fi
+	-@rm -f Makefile DESCRIPTION
+maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+	@for d in R data demo exec inst man src po tests; do \
+	  if test -d $(srcdir)/$${d}; then \
+	    ((cd $(srcdir); \
+	          $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
+	        | (cd $(distdir); $(TAR) -x -f -)) \
+	      || exit 1; \
+	  fi; \
+	done
