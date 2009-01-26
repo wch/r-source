@@ -16,20 +16,14 @@ DISTFILES = DESCRIPTION.in Makefile.in Makefile.win
 pkg = datasets
 
 RSRC = $(srcdir)/R/zzz.R
+RdSRC = $(srcdir)/man/*.Rd
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
-	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
-	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  cat $(RSRC) >> $${f}; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
-	  $(top_builddir)/library/$(pkg)/R/$(pkg))
-	@if test -f DESCRIPTION; then \
-	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
-	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
-	fi
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
+	@$(MAKE) mkR mkdesc mkman
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data
 	@for f in $(srcdir)/data/*; do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
@@ -39,41 +33,5 @@ all: Makefile DESCRIPTION
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 	@$(INSTALL_DATA) $(srcdir)/data/morley.tab \
 	  $(top_builddir)/library/$(pkg)/data
-	@if test -d $(srcdir)/man; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
-	  (f=$${TMPDIR:-/tmp}/R$$$$; \
-	    for rdfile in $(srcdir)/man/*.Rd; do \
-	      $(ECHO) "% --- Source file: $${rdfile} ---"; \
-            cat $${rdfile} $(top_srcdir)/src/library/eof_file; \
-	    done >> $${f}; \
-            $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
-              $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
-            rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
-            $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
-	fi
 
-Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-
-mostlyclean: clean
-clean:
-distclean:
-	-@rm -f Makefile DESCRIPTION
-maintainer-clean: distclean
-
-distdir: $(DISTFILES)
-	@for f in $(DISTFILES); do \
-	  test -f $(distdir)/$${f} \
-	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
-	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
-	done
-	@for d in R data demo exec inst man src; do \
-	  if test -d $(srcdir)/$${d}; then \
-	    ((cd $(srcdir); \
-	          $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
-	        | (cd $(distdir); $(TAR) -x -f -)) \
-	      || exit 1; \
-	  fi; \
-	done
+include $(top_srcdir)/share/make/basepkg.mk

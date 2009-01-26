@@ -1827,7 +1827,7 @@
     cmd <- paste(R.home(), "/bin/Rdconv -t ", sep = "")
 
     ## FIXME: perl version cleans up non-matching converted files
-    types <- "latex"
+    types <- "txt"
     cat("\n   converting help for package ", sQuote(pkg), "\n", sep="")
     if(TRUE) {
         ## FIXME: add this lib to lib.loc?

@@ -22,87 +22,17 @@ RSRC0 = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
 RSRC = $(RSRC0) @BUILD_AQUA_TRUE@ `LC_COLLATE=C ls $(srcdir)/R/aqua/*.R`
 RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd @BUILD_AQUA_TRUE@ $(srcdir)/man/aqua/*.Rd
 NSFILES = $(srcdir)/NAMESPACE @BUILD_AQUA_TRUE@ $(srcdir)/NAMESPACE.aqua
+INSTDIRS = Sweave misc
 
-all: Makefile DESCRIPTION most $(top_builddir)/library/$(pkg)/iconvlist
-
-most: DESCRIPTION
+all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
-	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
-	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  cat $(RSRC) > $${f}; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
-	  $(top_builddir)/library/$(pkg)/R/$(pkg) $${f}
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
+	@$(MAKE) mkR mkdesc mkpo mkman instdirs
 	@cat $(NSFILES) > $(top_builddir)/library/$(pkg)/NAMESPACE
-	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
-	@for f in COPYRIGHTS SOURCES; do \
-	  if test -f $(srcdir)/$${f}; then \
-	    $(INSTALL_DATA) $(srcdir)/$${f} \
-	      $(top_builddir)/library/$(pkg); \
-	  fi; \
-	done
-	@if test -f DESCRIPTION; then \
-	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
-	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
-	fi
-	@if test -d $(srcdir)/inst/po; then \
-	  if test "@USE_NLS@" = "yes"; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
-	  cp -pr  $(srcdir)/inst/po/* $(top_builddir)/library/$(pkg)/po; \
-	  find "$(top_builddir)/library/$(pkg)/po" -name .svn -type d -prune \
-	    -exec rm -rf \{\} \; 2>/dev/null; \
-	  fi; \
-	fi
-	@for D in Sweave misc; do \
-	 if test -d $(srcdir)/inst/$${D}; then \
-	   $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/$${D}; \
-	   for f in `ls -d $(srcdir)/inst/$${D}/*`; do \
-	     $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/$${D}; \
-	   done; \
-	 fi; done
-	@if test -d $(srcdir)/man; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
-	  (f=$${TMPDIR:-/tmp}/R$$$$; \
-	    for rdfile in $(RdSRC); do \
-	      $(ECHO) "% --- Source file: $${rdfile} ---"; \
-            cat $${rdfile} $(top_srcdir)/src/library/eof_file; \
-	    done >> $${f}; \
-            $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
-              $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
-            rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
-            $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
-	fi
-	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
+	@$(MAKE) mklazy $(top_builddir)/library/$(pkg)/iconvlist
 
-Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-
-$(top_builddir)/library/$(pkg)/iconvlist: most
-	@iconv -l > $@ 2> /dev/null || touch $@
+$(top_builddir)/library/$(pkg)/iconvlist:
+	-@iconv -l > $@ 2> /dev/null || touch $@
 
 
-mostlyclean: clean
-clean:
-	-@rm -f all.R
-distclean:
-	-@rm -f Makefile DESCRIPTION
-maintainer-clean: distclean
-
-distdir: $(DISTFILES)
-	@for f in $(DISTFILES); do \
-	  test -f $(distdir)/$${f} \
-	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
-	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
-	done
-	@for d in R data demo exec inst man po src tests; do \
-	  if test -d $(srcdir)/$${d}; then \
-	    ((cd $(srcdir); \
-	          $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
-	        | (cd $(distdir); $(TAR) -x -f -)) \
-	      || exit 1; \
-	  fi; \
-	done
+include $(top_srcdir)/share/make/basepkg.mk
