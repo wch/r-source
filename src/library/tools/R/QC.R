@@ -618,8 +618,9 @@ function(package, dir, lib.loc = NULL,
     db_usage_texts[ind] <- db_synopses[ind]
     with_synopsis <- as.character(db_names[ind])
     db_usages <- lapply(db_usage_texts, .parse_usage_as_much_as_possible)
-    ind <- sapply(db_usages,
-                  function(x) !is.null(attr(x, "bad_lines")))
+    ## just in case this is empty
+    ind <- unlist(lapply(db_usages,
+                         function(x) !is.null(attr(x, "bad_lines"))))
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
     ## <FIXME>
@@ -1667,8 +1668,8 @@ function(package, dir, lib.loc = NULL)
     db_usage_texts <-
         .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
     db_usages <- lapply(db_usage_texts, .parse_usage_as_much_as_possible)
-    ind <- sapply(db_usages,
-                  function(x) !is.null(attr(x, "bad_lines")))
+    ind <- unlist(lapply(db_usages,
+                         function(x) !is.null(attr(x, "bad_lines"))))
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
     bad_doc_objects <- list()
