@@ -21,7 +21,8 @@ arima(x, order = c(0, 0, 0),
       transform.pars = TRUE,
       fixed = NULL, init = NULL,
       method = c("CSS-ML", "ML", "CSS"),
-      n.cond, optim.control = list(), kappa = 1e6)
+      n.cond, optim.method = "BFGS",
+      optim.control = list(), kappa = 1e6)
 }
 \arguments{
   \item{x}{a univariate time series}
@@ -69,6 +70,9 @@ arima(x, order = c(0, 0, 0),
   \item{n.cond}{Only used if fitting by conditional-sum-of-squares: the
     number of initial observations to ignore.  It will be ignored if
     less than the maximum lag of an AR term.}
+  
+  \item{optim.methodl}{The value passed as the \code{method} argument to
+    \code{\link{optim}}.}
 
   \item{optim.control}{List of control parameters for \code{\link{optim}}.}
 

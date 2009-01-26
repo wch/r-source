@@ -19,6 +19,7 @@ arima <- function(x, order = c(0, 0, 0),
                   xreg = NULL, include.mean = TRUE,
                   transform.pars = TRUE, fixed = NULL, init = NULL,
                   method = c("CSS-ML", "ML", "CSS"), n.cond,
+                  optim.method = "BFGS",
                   optim.control = list(), kappa = 1e6)
 {
     "%+%" <- function(a, b) .Call(R_TSconv, a, b)
@@ -222,7 +223,7 @@ arima <- function(x, order = c(0, 0, 0),
         res <- if(no.optim)
             list(convergence=0L, par=numeric(0L), value=armaCSS(numeric(0L)))
         else
-            optim(init[mask], armaCSS,  method = "BFGS", hessian = TRUE,
+            optim(init[mask], armaCSS,  method = optim.method, hessian = TRUE,
                   control = optim.control)
         if(res$convergence > 0)
             warning("possible convergence problem: optim gave code=",
@@ -242,7 +243,7 @@ arima <- function(x, order = c(0, 0, 0),
             res <- if(no.optim)
                 list(convergence=0L, par=numeric(0L), value=armaCSS(numeric(0L)))
             else
-                optim(init[mask], armaCSS,  method = "BFGS",
+                optim(init[mask], armaCSS,  method = optim.method,
                       hessian = FALSE, control = optim.control)
             if(res$convergence == 0) init[mask] <- res$par
             ## check stationarity
@@ -272,7 +273,7 @@ arima <- function(x, order = c(0, 0, 0),
             list(convergence = 0, par = numeric(0L),
                  value = armafn(numeric(0L), as.logical(transform.pars)))
         else
-            optim(init[mask], armafn,  method = "BFGS",
+            optim(init[mask], armafn,  method = optim.method,
                   hessian = TRUE, control = optim.control,
                   trans = as.logical(transform.pars))
         if(res$convergence > 0)
@@ -293,7 +294,7 @@ arima <- function(x, order = c(0, 0, 0),
             }
             if(any(coef[mask] != res$par))  {  # need to re-fit
                 oldcode <- res$convergence
-                res <- optim(coef[mask], armafn, method = "BFGS",
+                res <- optim(coef[mask], armafn, method = optim.method,
                              hessian = TRUE,
                              control = list(maxit = 0,
                              parscale = optim.control$parscale),
