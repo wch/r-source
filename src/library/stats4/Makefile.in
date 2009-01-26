@@ -23,7 +23,7 @@ all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) mkR2 mkdesc mkpo mkman
-	$(MAKE) Rfiles
+	@$(MAKE) Rfiles
 
 
 Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb

@@ -9,6 +9,8 @@ top_builddir = ../../..
 
 pkg = methods
 
+RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
+
 R_EXE = $(top_builddir)/bin/Rterm.exe --vanilla --slave
 
 ECHO = echo
@@ -16,51 +18,14 @@ MKINSTALLDIRS = mkdir -p
 INSTALL_DATA = cp
 SHELL = sh
 R_GZIPCMD = gzip
+USE_NLS =yes
 
 all:
 	@$(ECHO) "building package '$(pkg)'"
-	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
-	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  $(ECHO) ".packageName <- \"$(pkg)\"" >  $${f}; \
-	  cat `LC_COLLATE=C ls $(srcdir)/R/*.R` >> $${f}; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
-	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
-	@for f in COPYRIGHTS SOURCES NAMESPACE; do \
-	  if test -f $(srcdir)/$${f}; then \
-	    $(INSTALL_DATA) $(srcdir)/$${f} \
-	      $(top_builddir)/library/$(pkg); \
-	  fi; \
-	done
-	@if test -f DESCRIPTION; then \
-	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
-	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
-	fi
-	@if test -d $(srcdir)/inst/po; then \
-	  if test "yes" = "yes"; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
-	  cp -pr  $(srcdir)/inst/po/* $(top_builddir)/library/$(pkg)/po; \
-	  find "$(top_builddir)/library/$(pkg)/po" -name .svn -type d -prune \
-	    -exec rm -rf \{\} \; 2>/dev/null; \
-	  fi; \
-	fi
-	@if test -d $(srcdir)/man; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
-	  (f=$${TMPDIR:-/tmp}/R$$$$; \
-	    for rdfile in $(srcdir)/man/*.Rd; do \
-	      $(ECHO) "% --- Source file: $${rdfile} ---"; \
-            cat $${rdfile} $(top_srcdir)/src/library/eof_file; \
-	    done >> $${f}; \
-            $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
-              $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
-            rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
-            $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
-	fi
-	@if test -d src; then \
-	  $(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDll RHOME=$(RHOME) DLLNAME=$(pkg) || exit 1; \
-	  mkdir -p $(top_builddir)/library/$(pkg)/libs; \
-	  cp src/$(pkg).dll $(top_builddir)/library/$(pkg)/libs; \
-	fi
-	@$(MAKE) --no-print-directory -f Makefile.win RfilesLazy
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
+	@$(MAKE) -f Makefile.win mkR2 front mkdesc mkpo mkman
+	@$(MAKE) -f Makefile.win mksrc-win
+	@$(MAKE) -f Makefile.win RfilesLazy
 
 RfilesLazy: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 
@@ -76,9 +41,4 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE
 	@$(INSTALL_DATA) $(top_srcdir)/share/R/nspackloader.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)
 
-mostlyclean: clean
-clean:
-	@$(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDll RHOME=$(RHOME) DLLNAME=$(pkg) shlib-clean
-	-@rm -f all.R
-distclean:
-	-@rm -f DESCRIPTION
+include $(top_srcdir)/share/make/basepkg.mk

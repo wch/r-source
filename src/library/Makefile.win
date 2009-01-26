@@ -78,6 +78,6 @@ endif
 clean:
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(MAKE) --no-print-directory -C $${pkg} \
-	    -f Makefile.win RHOME=$(RHOME) clean; \
+	    -f Makefile.win RHOME=$(RHOME) clean-win; \
 	done
 

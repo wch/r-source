@@ -1,7 +1,7 @@
 ## ${R_HOME}/share/make/basepkg.mk
 
 
-.PHONY: front instdirs mkR mkR2 mkdesc mkdemos mkexec mklazy mkman mkpo mksrc
+.PHONY: front instdirs mkR mkR2 mkdesc mkdemos mkexec mklazy mkman mkpo mksrc mksrc-win
 
 front:
 	@for f in $(FRONTFILES); do \
@@ -113,6 +113,13 @@ mksrc:
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
 
+mksrc-win:
+	@if test -d src; then \
+	  $(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDLL RHOME=$(RHOME) DLLNAME=$(pkg) || exit 1; \
+	  mkdir -p $(top_builddir)/library/$(pkg)/libs; \
+	  cp src/$(pkg).dll $(top_builddir)/library/$(pkg)/libs; \
+	fi
+
 
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -124,10 +131,19 @@ mostlyclean: clean
 clean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f all.R .RData
-distclean:
+distclean: clean
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f Makefile DESCRIPTION
 maintainer-clean: distclean
+
+clean-win:
+	@if test -d src; then \
+	  $(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDll RHOME=$(RHOME) DLLNAME=$(pkg) shlib-clean; \
+	fi
+	-@rm -f all.R .RData
+distclean-win: clean-win
+	-@rm -f DESCRIPTION
+
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

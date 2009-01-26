@@ -10,6 +10,7 @@ top_builddir = ../../..
 pkg = datasets
 
 RSRC = $(srcdir)/R/zzz.R
+RdSRC = $(srcdir)/man/*.Rd
 
 R_EXE = $(top_builddir)/bin/Rterm.exe --vanilla --slave
 
@@ -18,18 +19,12 @@ MKINSTALLDIRS = mkdir -p
 INSTALL_DATA = cp
 SHELL = sh
 R_GZIPCMD = gzip
+USE_NLS =yes
 
 all:
 	@$(ECHO) "building package '$(pkg)'"
-	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
-	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  cat $(RSRC) >> $${f}; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
-	  $(top_builddir)/library/$(pkg)/R/$(pkg))
-	@if test -f DESCRIPTION; then \
-	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
-	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
-	fi
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
+	@$(MAKE) -f Makefile.win mkR mkdesc mkman
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data
 	@for f in $(srcdir)/data/*; do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
@@ -39,21 +34,6 @@ all:
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 	@$(INSTALL_DATA) $(srcdir)/data/morley.tab \
 	  $(top_builddir)/library/$(pkg)/data
-	@if test -d $(srcdir)/man; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
-	  (f=$${TMPDIR:-/tmp}/R$$$$; \
-	    for rdfile in $(srcdir)/man/*.Rd; do \
-	      $(ECHO) "% --- Source file: $${rdfile} ---"; \
-            cat $${rdfile} $(top_srcdir)/src/library/eof_file; \
-	    done >> $${f}; \
-            $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
-              $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
-            rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
-            $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
-	fi
 
 
-mostlyclean: clean
-clean:
-distclean:
-	-@rm -f DESCRIPTION
+include $(top_srcdir)/share/make/basepkg.mk

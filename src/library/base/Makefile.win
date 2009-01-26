@@ -21,50 +21,17 @@ MKINSTALLDIRS = mkdir -p
 INSTALL_DATA = cp
 SHELL = sh
 R_GZIPCMD = gzip
-
-VERSION = 2.9.0
+USE_NLS =yes
 
 all:
 	@$(ECHO) "building package '$(pkg)'"
-	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
-	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  cat $(RSRC) >> $${f}; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
-	  $(top_builddir)/library/$(pkg)/R/$(pkg) $${f}
-	@$(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg)
-	@$(ECHO) "Built: R $(VERSION); ; `date +'%Y-%m-%d %H:%M:%S`; $(R_OSTYPE)" \
-	   >> $(top_builddir)/library/$(pkg)/DESCRIPTION
-	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo
-	@for f in `ls -d $(srcdir)/demo/* | sed -e '/00Index/d'`; do \
-	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
-	done
-	@if test -d $(srcdir)/inst/po; then \
-	  if test "@USE_NLS@" = "yes"; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
-	  cp -pr  $(srcdir)/inst/po/* $(top_builddir)/library/$(pkg)/po; \
-	  find "$(top_builddir)/library/$(pkg)/po" -name .svn -type d -prune \
-	   -exec rm -rf \{\} \; 2>/dev/null; \
-	  fi; \
-	fi
-	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man
-	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  for rdfile in $(RdSRC); do \
-	    $(ECHO) "% --- Source file: $${rdfile} ---"; \
-	    cat $${rdfile} $(top_srcdir)/src/library/eof_file; \
-	  done >> $${f}; \
-          $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
-	    $(top_builddir)/library/$(pkg)/man/$(pkg).Rd)
-	@rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz
-	@$(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
+	@$(MAKE) -f Makefile.win mkR mkdesc2 mkdemos2 mkpo mkman
 	@$(INSTALL_DATA) $(srcdir)/inst/CITATION $(top_builddir)/library/$(pkg)
-	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@cat $(srcdir)/makebasedb.R | \
-	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --slave > /dev/null
-	@$(INSTALL_DATA) $(srcdir)/baseloader.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
+	@$(INSTALL_DATA) $(srcdir)/baseloader.R \
+	  $(top_builddir)/library/$(pkg)/R/$(pkg)
 
 
-clean:
-	-@rm -f all.R 
-distclean:
-	-@rm -f DESCRIPTION
+include $(top_srcdir)/share/make/basepkg.mk
