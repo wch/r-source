@@ -67,6 +67,11 @@ unit(x, units, data=NULL)
       specified in the \code{data} argument.}
   }
 
+  A number of variations are also allowed for the most common units.
+  For example, it is possible to use \code{"in"} or \code{"inch"}
+  instead of \code{"inches"} and \code{"centimetre"} or
+  \code{"centimeter"} instead of \code{"cm"}.
+  
   A special \code{units} value of \code{"null"} is also allowed,
   but only makes sense when used in specifying widths of columns
   or heights of rows in grid layouts (see \code{\link{grid.layout}}).

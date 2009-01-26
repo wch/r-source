@@ -1688,6 +1688,23 @@ static UnitTab UnitTable[] = {
     { "mystrwidth",    25 },
     { "mystrheight",   26 },
 
+    /*
+     * Some pseudonyms 
+     */
+    { "centimetre",  1001 },
+    { "centimetres", 1001 },
+    { "centimeter",  1001 },
+    { "centimeters", 1001 },
+    { "in",          1002 },
+    { "inch",        1002 },
+    { "line",        1003 },
+    { "millimetre",  1007 },
+    { "millimetres", 1007 },
+    { "millimeter",  1007 },
+    { "millimeters", 1007 },
+    { "point",       1008 },
+    { "pt",          1008 },
+
     { NULL,            -1 }
 };
 
@@ -1701,8 +1718,13 @@ int convertUnit(SEXP unit, int index)
 	    result = -1;
 	else {
 	    found = !strcmp(CHAR(STRING_ELT(unit, index)), UnitTable[i].name);
-	    if (found) 
+	    if (found) {
 		result = UnitTable[i].code;
+                /* resolve pseudonyms */
+                if (result > 1000) {
+                    result = result - 1000;
+                }
+            }
 	}
 	i += 1;
     }

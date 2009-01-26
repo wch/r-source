@@ -116,6 +116,7 @@ convertNative <- function(unit, dimension="x", type="location") {
 # NOTE: the order of the strings in these conversion functions must
 # match the order of the enums in ../src/grid.h
 # AND in ../src/unit.c (see UnitTable)
+# NOTE: ../src/unit.c also allows some pseudonyms (e.g., "in" for "inches")
 .grid.unit.list <- c("npc", "cm", "inches", "lines",
                      "native", "null", "snpc", "mm",
                      "points", "picas", "bigpts",

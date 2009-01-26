@@ -21,6 +21,9 @@ Changes from grid_2.8.0 to grid_2.9.0:
 
     Bug reported by Felix Andrews.
 
+5.  Added some pseudonyms for come units.  For example, it is now
+    possible to specify just "in" instead of "inches".
+
 
 Changes from grid_2.7.0 to grid_2.8.0:
 ------------------------------------
