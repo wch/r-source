@@ -495,6 +495,14 @@ assignClassDef <-
 .initClassSupport <- function(where) {
     setClass("classPrototypeDef", representation(object = "ANY", slots = "character", dataPart = "logical"),
              sealed = TRUE, where = where)
+    setClass(".Other", representation(label = "character"), 
+             sealed = TRUE, where = where)  # nonvirtual, nobody's subclass, see testInheritedMethods
+    ## a class and a method for reporting method selection ambiguities
+    setClass("MethodSelectionReport",
+         representation(generic = "character", allSelections = "character", target = "character", selected = "character", candidates = "list", note = "character"),
+             sealed = TRUE, where = where)
+
+
 }
 
 
@@ -909,12 +917,12 @@ completeExtends <-    function(ClassDef, class2, extensionDef, where) {
     }
     exts <- .walkClassGraph(ClassDef, "contains", where)
     if(length(exts)) {
-        ## sort the extends information by depth (required for method dispatch)
-        superClassNames <- getAllSuperClasses(ClassDef, FALSE)
-        ## FIXME:  getAllSuperClassses sometimes misses.  Why?
-        if(length(superClassNames) == length(exts))
-            exts <- exts[superClassNames]
-        if("oldClass" %in% superClassNames &&
+##         ## sort the extends information by depth (required for method dispatch)
+##         superClassNames <- getAllSuperClasses(ClassDef, FALSE)
+##         ## FIXME:  getAllSuperClassses sometimes misses.  Why?
+##         if(length(superClassNames) == length(exts))
+##             exts <- exts[superClassNames]
+        if("oldClass" %in% names(exts) &&
            length(ClassDef@slots) > 1L) # an extension of an S3 class
           exts <- .S3Extends(ClassDef, exts, where)
     }
@@ -972,10 +980,11 @@ completeSubclasses <-
 .walkClassGraph <-  function(ClassDef, slotName, where)
 {
     ext <- slot(ClassDef, slotName)
+    if(length(ext) == 0)
+        return(ext)
     className <- ClassDef@className
     ## the super- vs sub-class is identified by the slotName
     superClassCase <- identical(slotName, "contains")
-    fromTo <- ClassDef@className
     what <- names(ext)
     for(i in seq_along(ext)) {
         by <- what[[i]]
@@ -987,11 +996,11 @@ completeSubclasses <-
             if(length(exti)) {
                 if(superClassCase) {
                     strictBy <- TRUE  # FIXME:  need to find some safe test allowing non-strict
-                      exti <- .transitiveExtends(fromTo, by, ext[[i]], exti, strictBy)
+                      exti <- .transitiveExtends(className, by, ext[[i]], exti, strictBy)
                 }
                 else {
                     strictBy <- TRUE
-                    exti <- .transitiveSubclasses(by, fromTo, ext[[i]], exti, strictBy)
+                    exti <- .transitiveSubclasses(by, className, ext[[i]], exti, strictBy)
                 }
                 ext <- c(ext, exti)
             }
@@ -1009,34 +1018,63 @@ completeSubclasses <-
         ## but a non-simple cyclic relation, involving setIs, is allowed
         for(i in seq_along(what)[!ok]) {
             exti <- ext[[i]]
-            simple <- exti@simple
-            if(simple) {
-                fromDef <- getClassDef(exti@superClass, package = exti@package)
-                extBack <- elNamed(slot(fromDef, slotName), className)
-                simple <- is(extBack, "SClassExtension") && extBack@simple
-            }
-            if(simple) {
+            if(!is(exti, "conditionalExtension")) {
                 if(superClassCase) {
                     whatError <-  "contain itself"
-                    relation <- "contains"
                 }
                 else {
                     whatError <- "have itself as a subclass"
-                    relation <- "has subclass"
                 }
                 ## this is not translatable
-                stop(sprintf("class \"%s\" may not %s: it %s class \"%s\", with a circular relation back to \"%s\"",
-                              className, whatError, relation, fromTo, className),
+                stop(sprintf("class \"%s\" may not %s: it contains class \"%s\", with a circular relation back to \"%s\"",
+                              className, whatError, exti@by, className),
                      domain = NA)
             }
         }
-        ## but sub/superclasses can enter multiple ways, with all but the first
-        ## ignored.
         ext <- ext[ok]
+    }
+    ## require superclasses to be sorted by distance
+    distOrder <- sort.list(sapply(ext, function(x)x@distance))
+    ext <- ext[distOrder]
+    if(superClassCase && any(duplicated(what))) {
+        ext <- .resolveSuperclasses(ClassDef, ext, where)
     }
     ext
 }
 
+.resolveSuperclasses <- function(classDef, ext, where, verbose = identical(getOption("showResolveSuperclasses"), TRUE)) {
+    what <- names(ext)
+    dups <- unique(what[duplicated(what)])
+    ## First, eliminate all conditional relations, which never override non-conditional
+    affected <- match(what, dups, 0) > 0
+    conditionals <- integer()
+    for(j in seq_along(what)[affected])
+        if(is(ext[[j]], "conditionalExtension")) conditionals <- c(conditionals, j)
+    retain <- rep(TRUE, length(what))
+    if(length(conditionals) > 0) {
+        retain[conditionals] <- FALSE
+        what2 <- what[retain]
+        dups <- unique(what2[duplicated(what2)])
+        if(length(dups) == 0) {
+            ##  eliminating conditonal relations removed duplicates
+            return(ext)
+        }
+        ## else, go on with conditionals eliminated from retain
+    }
+    directSupers <- names(classDef@contains)
+    subNames <- lapply(directSupers, function(x) if(isClass(x)) extends(x) else x)
+    names(subNames) <- directSupers
+    retain = .choosePos(c(classDef@className, what),
+      subNames)
+    if(is.list(retain)) {
+        score <- retain[[2]]
+        retain <- retain[[1]]
+        warning(gettextf("None of the orderings of the superclasses of class \"%s\" is consistent with the superclass ordering of  its direct superclasses; using an ordering which conflicts with %s",
+                         classDef@className, paste('"', score, '"', sep="", collapse=", ")),
+                domain = NA)
+    }
+    ext[retain]
+}
 
 classMetaName <-
   ## a name for the object storing this class's definition
@@ -1332,6 +1370,9 @@ setDataPart <- function(object, value, check = TRUE) {
         toExt@by <- toExt@subClass
         toExt@subClass <- byExt@subClass
         toExt@distance <- toExt@distance + byExt@distance
+        ## the combined extension is conditional if either to or by is conditional
+        if(is(byExt, "conditionalExtension") && !is(toExt, "conditionalExtension"))
+          class(toExt) <- class(byExt)
         toExt
 }
 
@@ -1879,3 +1920,91 @@ substituteFunctionArgs <-
           NULL
     }
 
+classToAM <- function(classDef, includeSubclasses = FALSE, short = FALSE,
+                      withSlots = FALSE) { # withSlots not used yet, maybe never
+    findEdges <- function(extensions) {
+        superclasses <- names(extensions)
+        edges <- numeric()
+        for(what in superclasses) {
+            whatDef <- getClassDef(what)
+            ifrom <- match(what, nodes)
+            if(is.null(whatDef) || is.na(ifrom))
+              next
+            exts <- whatDef@contains
+            whatedges <- names(exts)
+            ito <- match(whatedges, nodes, 0)
+            for(i in seq_along(exts))
+              if(ito[[i]] >0 && exts[[i]]@distance == 1)
+                edges <- c(edges, ifrom, ito[[i]])
+        }
+        edges
+    }
+    nodes <- c(classDef@className, names(classDef@contains))
+    if(includeSubclasses)
+      nodes <- c(nodes, names(classDef@subclasses))
+    nodes <- unique(nodes)
+    if(identical(short, TRUE))  
+      labels <- abbreviate(nodes)
+    else if(is.character(short)) {
+        if(length(short) != length(nodes))
+          stop(gettextf("Needed the supplied labels vector of length %n, got %n",
+               length(nodes), length(short)), domain = NA)
+        else
+          labels <- short
+    }
+    else
+      labels <- nodes
+    size <- length(nodes)
+    value <- matrix(0, size, size, dimnames = list(labels, labels))
+    ifrom <- match(classDef@className, nodes) # well, 1, but just for consistency
+    ## the following could use the current fact that direct superclasses come
+    ## first, but the efficiency gain is minor, so we use the findEdges logic
+    extensions <- classDef@contains
+    superclasses <- names(extensions)
+    ito <- match(superclasses, nodes)
+    edges <- numeric()
+    for(i in seq_along(extensions)) {
+        exti <- extensions[[i]]
+        if(exti@distance == 1)
+            edges <- c(edges, ifrom, ito[[i]])
+    }
+    edges <- c(edges, findEdges(classDef@contains))
+    if(includeSubclasses) {
+        edges <- c(edges, findEdges(classDef@subclasses))
+    }
+    edges <- t(matrix(edges, nrow=2))
+    value[edges] <- 1
+    value
+}
+
+.choosePos <- function (allNames, subNames) 
+{
+    candidates <- list()
+    dups <- unique(allNames[duplicated(allNames)])
+    whichCase <- names(subNames)
+    for(what in dups) {
+        where <- seq_along(allNames)[match( allNames, what,0)>0]
+        ## make a list of all the subsets to remove duplicates
+        whatRemove <- lapply(-seq_along(where), function(x,y) y[x], y=where)
+        if(length(candidates) == 0)
+          candidates <- whatRemove
+        else # all the pairwise combinations with the previous
+          candidates <- outer(candidates, whatRemove,
+                              function(x,y)mapply(c,x,y, SIMPLIFY=FALSE))
+    }
+    ## check each way to make the list unique against each superclass extension
+    problems <- function(x,y) any(diff(match(y, x))<0)
+    possibles <- lapply(candidates, function(x, names)names[-x], names=allNames)
+    ## the next could be vectorized, but here we choose instead to exit early.
+    scores <- vector("list", length(possibles))
+    for(i in seq_along(possibles)) {
+        score <- sapply(subNames, problems, x=possibles[[i]])
+        scores[[i]] <- whichCase[score]
+        if(!any(score))
+          return(-candidates[[i]]+1)
+    }
+    # the first min. scoring possibility and its score
+    i <- which.min(sapply(scores, length))
+    list(-candidates[[i]]+1, scores[[i]])
+}
+            

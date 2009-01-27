@@ -23,7 +23,11 @@
 			    simple = "logical", by = "character",
 			    dataPart = "logical", distance = "numeric"),
 	     where = where)
-    assign(".SealedClasses", c(get(".SealedClasses", where), "SClassExtension"),
+    ## a class for conditional extensions, so they will not break the hierarchical
+    ## structure.
+    setClass("conditionalExtension", contains = "SClassExtension")
+    assign(".SealedClasses", c(get(".SealedClasses", where), "SClassExtension",
+                               "conditionalExtension"),
 	   where)
 }
 
@@ -213,10 +217,14 @@ makeExtends <- function(Class, to,
     }
     else stop(gettextf("the 'coerce' argument to 'setIs' should be a function of one argument, got an object of class \"%s\"",
                        class(coerce)), domain = NA)
-    if(is.null(test))
+    if(is.null(test)) {
         test <- .simpleExtTest
-    else
+        extClass <- "SClassExtension"
+    }
+    else {
         test <- .ChangeFormals(test, .simpleExtTest, "'test' argument to setIs ")
+        extClass <- "conditionalExtension"
+    }
     if(is.null(replace)) {
         if(dataPart) {
             extn <- elNamed(classDef2@contains, dataPartClass)
@@ -301,7 +309,7 @@ makeExtends <- function(Class, to,
         stop(gettextf("the 'replace' argument to setIs() should be a function of 2 or 3 arguments, got an object of class \"%s\"",
                       class(replace)), domain = NA)
 
-    new("SClassExtension", subClass = Class, superClass = to, package = package,
+    new(extClass, subClass = Class, superClass = to, package = package,
 	coerce = coerce, test = test, replace = replace, simple = simple,
 	by = by, dataPart = dataPart, distance = distance)
 }

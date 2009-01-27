@@ -51,6 +51,7 @@
 \alias{.InitBasicClasses}
 \alias{.InitMethodsListClass}
 \alias{.setCoerceGeneric}
+\alias{conditionalExtension-class}
 
 \title{Utilities for Managing Class Definitions}
 \description{

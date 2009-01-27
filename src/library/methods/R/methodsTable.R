@@ -206,7 +206,7 @@
 .findInheritedMethods <-
     function(classes, fdef, mtable = NULL,
              table = get(".MTable", envir = environment(fdef)),
-             excluded = NULL, useInherited, verbose = FALSE,
+             excluded = NULL, useInherited,
              returnAll = !(doMtable || doExcluded)
              , simpleOnly = .simpleInheritanceGeneric(fdef))
 {
@@ -224,12 +224,6 @@
   doMtable <- is.environment(mtable)
   doExcluded <- length(excluded) > 0L
   nargs <- length(classes)
-  if(verbose)
-      cat(sprintf("* .findInheritedMethods():%s nargs=%d, returnAll=%s\n",
-                  if(hasGroup) paste(" has group generics ",
-                                     paste(sapply(groupGenerics, slot, "generic"),
-                                           collapse=", "),";", sep='') else "",
-                  nargs, returnAll))
   methods <- list()
   if(!missing(useInherited) && length(useInherited) < nargs)
     useInherited <- rep(useInherited, length.out = nargs)
@@ -244,7 +238,6 @@
     direct <- .getGroupMethods(label, groupGenerics, FALSE)
     if(length(direct) && doMtable) {
         assign(label, direct[[1L]], envir = mtable)
-        if(verbose) cat("* found (and cached) direct group method for", label,"\n")
         return(direct)
 ##M	  ## else must be returnAll, so include the group direct method
 ##M	  methods <- direct
@@ -256,6 +249,7 @@
       if(missing(useInherited) || useInherited[[1L]])
           c(classes[[1L]], .eligibleSuperClasses(def@contains, simpleOnly), "ANY")
       else classes[[1L]]
+  supersList <- list(labels)
   if(nargs > 1) {
       classDefs <- vector("list", nargs)
       classDefs[[1L]] <- def
@@ -264,6 +258,7 @@
           allLabels <- if(missing(useInherited) || useInherited[[i]])
               c(cc@className, .eligibleSuperClasses(cc@contains, simpleOnly), "ANY") else cc@className
           labels <- outerLabels(labels, allLabels)
+          supersList <- c(supersList, list(allLabels))
       }
   }
   if(!returnAll)
@@ -282,8 +277,6 @@
   }
   else
       fromGroup <- rep(FALSE, length(methods))
-  if(verbose) cat(sprintf("* %d preliminary methods:", length(methods)),
-		  strwrap(paste(names(methods), collapse=", ")), sep="\n  ")
   ## remove default if its not the only method
   if(length(methods) > 1L && !returnAll) {
       defaultLabel <- paste(rep("ANY", nargs), collapse = "#")
@@ -296,19 +289,20 @@
   if(doExcluded)
     methods <- methods[is.na(match(names(methods), as.character(excluded)))]
   if(length(methods) > 1L && !returnAll) {
-      if(nargs == 1L)
-          classDefs <- list(def)
-      ## else, defined before
-      if(verbose) cat("* getting best methods, reducing from remaining preliminary",
-		      length(methods),"ones\n")
-      methods <- .getBestMethods(methods, classDefs, fromGroup, verbose = verbose)
-      if(length(methods) > 1L)
-	warning(gettextf(paste("Ambiguous method selection for \"%s\", target \"%s\"",
-                               "(the first of the signatures shown will be used)\n%s\n"),
-			 fdef@generic, .sigLabel(classes),
-			 paste("   ", names(methods), collapse = "\n")),
-                domain = NA, call. = FALSE)
-      methods <- methods[1L]
+      select <- .getBestMethods(methods, supersList, fromGroup)
+      if(length(select) > 1L) {
+        target <- .sigLabel(classes)
+        condAction <- getOption("ambiguousMethodSelection")
+        if(is.null(condAction))
+          condAction <- .ambiguousMethodMessage
+        else if(!is(condAction, "function"))
+          stop(gettextf("The \"ambiguousMethodSelection\" option should be a function to be called as the condition action; got an object of class \"%s\"",
+                         class(condAction)), domain = NA)
+        select <- withCallingHandlers(
+                              .disambiguateMethods(classes, select, fdef@generic, methods, supersList, fromGroup),
+                               ambiguousMethodSelection=condAction)
+      }
+      methods <- methods[select]
   }
   if(simpleOnly && length(methods) == 0L) {
       methods <- Recall(classes, fdef, mtable, table, excluded, useInherited,verbose, returnAll, FALSE)
@@ -330,6 +324,20 @@
     assign(tlabel, m, envir = mtable)
   }
   methods
+}
+
+.ambiguousMethodMessage <- function(cond) {
+  selected <- attr(cond, "selected")
+  if(is.null(selected)) {# not properly set up, so just use the message
+    message(cond$message)
+  }
+  else {
+    possible <- attr(cond, "candidates")
+    message(gettextf('Note: Method with signature "%s" chosen for function "%s", target signature "%s".  %s would also be valid',
+                     selected, attr(cond, "generic"), attr(cond, "target"),
+                     paste('"', possible[is.na(match(possible, selected))], '"', sep="", collapse=", ")),
+            domain = NA)
+  }
 }
 
 .simpleInheritanceGeneric <- function(fdef) {
@@ -421,7 +429,7 @@
   dist
 }
 
-.getBestMethods <- function(methods, classDefs, fromGroup, verbose = FALSE) {
+.getBestMethodsOld <- function(methods, supersList, classDefs, fromGroup, verbose = FALSE) {
     n <- length(methods)
     dist <- rep(0, n)
     nArg <- length(classDefs)
@@ -445,9 +453,81 @@
     best <- dist == min(dist)
     ## of the least distance methods, choose direct, rather than group
     ## methods, unless all the best methods are from group generics
-    if(!all(fromGroup[best]))
+    if(any(fromGroup[best]) && !all(fromGroup[best]))
 	best <- best & !fromGroup
-    methods[best]
+    (1:n)[best]
+}
+
+.getBestMethods <- function(methods, supersList, fromGroup) {
+    n <- length(methods)
+    nArg <- length(supersList)
+    sigs <- matrix("ANY", nArg, n)
+    for(i in 1:n) {
+      sig <- methods[[i]]@defined
+      if(length(sig) < nArg)  # is this still possible?
+        sigs[seq_along(sig), i] <- sig
+      else
+        sigs[,i] <- sig
+    }
+    if(nArg < 2) { # the easy case
+      return(which.min(match(sigs[1L,], supersList[[1L]])))
+    }
+    best <- rep(TRUE, n)
+    dominated <- rep(FALSE, n)
+    pos <- matrix(0,nArg, n)
+    for(i in 1:nArg) {
+      posi <- match(sigs[i,], supersList[[i]])
+      pos[i,] <- posi
+    }
+    ## pairwise comparison of columns of pos.  Any way to vectorize?
+    seqn <- 1:n
+    for(i in seqn) {
+      for(j in seqn[-i]) {
+        diffs <- pos[,j] - pos[,i]
+        if(any(diffs < 0))
+          best[i] <- FALSE
+        if(all(diffs <= 0))
+          dominated[i] <- TRUE
+      }
+    }
+    # a best method is as early in the superclasses as any other on all arguments
+    # Because the signatures are not duplicated, there can be at most one.
+    if(any(best))
+      seqn[best]
+    ## eliminate those methods dominated by another
+    else
+      seqn[!dominated]
+}
+
+.disambiguateMethods <- function(target, which, generic, methods, supersList, fromGroup) {
+  ## save full set of possibilities for condition object
+  candidates <- methods[which]
+  ## if some are group methods, eliminate those
+  note <- character()
+  if(any(fromGroup[which]) && !all(fromGroup[which])) {
+    which <- which[!fromGroup]
+    note <- c(note, gettextf("Selecting %d non-group methods", length(which)))
+  }
+  ## prefer partially direct methods
+  direct <- sapply(methods[which], function(x, target) (is(x, "MethodDefinition") && any(target == x@defined)), target = target)
+  if(any(direct) && !all(direct)) {
+    which <- which[direct]
+    note <- c(note, gettextf("Selecting %d partially exact-matching method(s)", length(which)))
+  }
+  which <- which[[1L]]
+  selected <- names(methods)[[which]]
+  message <- gettextf("Choosing method %s from %d ambiguous possibilities",
+                      selected, length(candidates))
+  condObject <- simpleCondition(message)
+  ## would be nice to use an S4 class eventually
+  class(condObject) <- c("ambiguousMethodSelection", class(condObject))
+  attr(condObject, "candidates") <- names(candidates)
+  attr(condObject, "target") <- .sigLabel(target)
+  attr(condObject, "selected") <- selected
+  attr(condObject, "generic") <- generic
+  attr(condObject, "notes") <- if(length(note)) paste(note, collapse ="; ") else ""
+  signalCondition(condObject)
+  which
 }
 
 # add objects to the generic function's environment that allow
@@ -589,7 +669,7 @@
                nzchar(m@generic))
 		cf("    (definition from function \"", m@generic, "\")\n")
 	}
-	if(includeDefs) {
+	if(includeDefs && is(m, "function")) {
 	    if(is(m, "MethodDefinition"))
 		m <- m@.Data
 	    cat(deparse(m), sep="\n", "\n", file = printTo)
@@ -972,3 +1052,151 @@ listFromMethods <- function(generic, where, table) {
     else
       NULL
 }
+
+testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE, groupMethods = TRUE,  where = .GlobalEnv) {
+  getSigs <- function(fdef) objects(methods:::.getMethodsTable(fdef), all=TRUE)
+
+  ## Function relevantClasses is defined here to set object .undefClasses
+  ## in testInheritedMethods as a marker to warn about undefined subclasses
+  .relevantClasses <- function(classes, excludeVirtual, where, doinheritance) {
+    classDefs <- lapply(classes, getClassDef, where)
+    undefs <- sapply(classDefs, is.null)
+    if(any(undefs)) {
+      .undefClasses <<- unique(c(.undefClasses, classes[undefs]))
+      classes <- classes[!undefs]
+      classDefs <- classDefs[!undefs]
+    }
+    if(doinheritance) {
+      allSubs <- lapply(classDefs,  function(what) names(what@subclasses))
+      allSubs <- unique(unlist(allSubs))
+      pattern <- sapply(allSubs, .matchSubsPattern, classes, excludeVirtual)
+      ## exclude virtuals
+      if(excludeVirtual) {
+        excl <- nzchar(pattern)
+        pattern <- pattern[excl]
+        allSubs <- allSubs[excl]
+      }
+      allSubs <- sapply(split(allSubs, pattern), `[[`,1)
+    }
+    else
+      allSubs <- character()
+    ## prepend the classes themselves, as appropriate
+    iAny <- match( "ANY", classes, 0)
+    if(iAny > 0) {
+      classes[[iAny]] <- ".Other" # non-virtual placeholder for ANY
+      classDefs[[iAny]] <- getClassDef(".Other")
+    }
+    if(excludeVirtual)
+      classes <- classes[sapply(classDefs, function(def) identical(def@virtual, FALSE))]
+    unique(c(classes, allSubs))
+  }
+  ## end of .relevantClasses
+  
+  if(!is(f, "genericFunction"))
+    f <- getGeneric(f)
+  fname <- f@generic
+  if(missing(signatures)) {
+    mdefs <- findMethods(f)
+    if(groupMethods) {
+      groups <- getGroup(f, recursive = TRUE)
+      for(group in groups) {
+        fg = getGeneric(group)
+        mg = findMethods(fg)
+        mg = mg[is.na(match(names(mg), names(mdefs)))]
+        mdefs <- c(mdefs, mg)
+      }
+    }
+    sigs <-  findMethodSignatures(methods = mdefs)
+    ## possible selection of which args to include with inheritance
+    if(fname %in% c("coerce", "coerce<-"))
+      ok <- match(colnames(sigs), "from", 0) > 0
+    else
+      ok <- rep(TRUE, ncol(sigs))
+    for(j in seq(length = ncol(sigs))) {
+      classesj <-unique(sigs[,j])
+      .undefClasses <- character()
+      subclasses <- .relevantClasses(classesj, !virtual, where, ok[[j]])
+      nj <- length(subclasses)
+      ##       if(nj == 0) {  ##FIXME, wrong test
+      ##         warning(gettextf("No elligible subclasses for argument \"%s\" found, so no contribution to analysis",
+      ##                          colnames(sigs)[[j]]), domain  = NA)
+      ##         next
+      ##       }
+      if(j > 1) {
+        ## replicate all the previous elements of subclasses a la outer
+        subclasses <- rep(subclasses, rep.int(ncomb, nj))
+        ncomb <- ncomb * nj
+        sigLabels <- paste(rep(sigLabels, times = nj), subclasses, sep = "#")
+      }
+      else {
+        sigLabels <- subclasses
+        ncomb <- nj
+      }
+
+      if(length(.undefClasses)) {
+        warning("Undefined classes (", paste('"',unique(.undefClasses),'"', sep="", collapse=", "),
+                ") will be ignored, for argument ", colnames(sigs)[[j]])
+        .undefClasses <- character()
+      }
+    } # loop on j
+    ## now split the individual labels back into signatures
+    signatures <- strsplit(sigLabels, "#", fixed = TRUE)
+  } #end of missing(signatures) case
+  else {
+    if(is(signatures, "matrix") && identical(typeof(signatures), "character")
+       && ncol(signatures) <= length(f@signature)) {
+      ## turn signatures back into a list
+      siglist = vector("list", nrow(signatures))
+      for(i in seq(length = nrow(signatures)))
+        siglist[[i]] <- signatures[i,]
+      signatures <- siglist
+    }
+    else stop('Argument "signatues" must be a character matrix whose rows are  method signatures')
+  }
+  ambig_target <- character()
+  ambig_candidates <- list()
+  ambig_selected <- character()
+  ambig_note <- character()
+  if(test) {
+    ## define a handler that accumulates the attributes from the condition object
+    warninghandler <- function(cond) {
+      ambig_target <<- c(ambig_target, attr(cond, "target"))
+      ambig_candidates <<- c(ambig_candidates, list(attr(cond, "candidates")))
+      ambig_selected <<- c(ambig_selected, attr(cond, "selected"))
+      ambig_note <<- c(ambig_note, attr(cond, "note"))
+    }
+    ambigOpt <- options(ambiguousMethodSelection = warninghandler)
+    on.exit(options(ambigOpt))
+    doSelect <-  function(sig) {
+      x = selectMethod(f = f, sig, optional = TRUE)
+      if(is(x, "MethodDefinition")) {
+        nsig <- x@defined
+        if(length(nsig) < length(sig))
+          c(nsig, rep("ANY", length(sig) - length(nsig)))
+        else
+          nsig
+      }
+      else if(is.null(x))
+        rep("<NONE>", length(sig))
+      else # primitive
+        rep("ANY", length(sig))
+    }
+    signatures <- lapply(signatures, doSelect)
+  }
+  signatures <- sapply(signatures, function(x)paste(x, collapse = "#"))
+  names(signatures) <- sigLabels
+  
+  new("MethodSelectionReport", generic = fname, allSelections = signatures,
+      target = ambig_target, selected = ambig_selected,
+      candidates = ambig_candidates, note = ambig_note)
+}
+
+.matchSubsPattern <- function(what, matchto, excludeVirtual) {
+  def <- getClass(what)
+  if(excludeVirtual & def@virtual)
+    return("")
+  matches <- match(names(def@contains), matchto, 0)
+  matches <- matches[matches>0]
+  paste(matches, collapse=".")
+}
+

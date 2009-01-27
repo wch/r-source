@@ -479,6 +479,7 @@ setMethod <-
         stop(gettextf("the method for function \"%s\" and signature %s is sealed and cannot be re-defined",
                       f, .signatureString(fdef, signature)), domain = NA)
     signature <- matchSignature(signature, fdef, where)
+    createMethod <- FALSE # TRUE for "closure" only
     switch(typeof(definition),
 	   "closure" = {
 	       fnames <- formalArgs(fdef)
@@ -506,6 +507,7 @@ setMethod <-
 		   }
 	       }
 	       definition <- matchDefaults(definition, fdef) # use generic's defaults if none in method
+               createMethod <- TRUE
 	   },
 	   "builtin" = , "special" = {
 	       ## the only primitive methods allowed are those equivalent
@@ -517,7 +519,7 @@ setMethod <-
 	   "NULL" = {
 
 	   },
-	   stop(gettextf("invalid method definition: expected a function, got an object of class \"%s\"",
+           stop(gettextf("invalid method definition: expected a function, got an object of class \"%s\"",
 			 class(definition)), domain = NA)
 	   )
     fenv <- environment(fdef)
@@ -525,9 +527,10 @@ setMethod <-
     nSig <- .getGenericSigLength(fdef, fenv, TRUE)
     signature <- .matchSigLength(signature, fdef, fenv, TRUE)
     margs <- (fdef@signature)[seq_along(signature)]
-    definition <- asMethodDefinition(definition, signature, sealed, fdef)
-    if(is(definition, "MethodDefinition"))
+    if(createMethod) {
+        definition <- asMethodDefinition(definition, signature, sealed, fdef)
         definition@generic <- fdef@generic
+    }
     is.not.base <- !identical(where, baseenv())
     if(is.not.base)
         whereMethods <- insertMethod(.getOrMakeMethodsList(f, where, fdef),
@@ -794,8 +797,7 @@ selectMethod <-
 		    ## look in the supplied (usually standard) table, cache w. inherited
 		    .findInheritedMethods(signature, fdef,
 					  mtable = allmethods, table = mlist,
-					  useInherited = useInherited,
-					  verbose = verbose)
+					  useInherited = useInherited)
 		    ##MM: TODO? allow 'excluded' to be passed
 		}
 		## else list() : just look in the direct table
@@ -1419,7 +1421,7 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE) {
         fdef <- f
         f <- fdef@generic
     }
-    else if(is.character(f) && length(f) == 1L) {
+    else if(.isSingleString(f)) {
         fdef <- if(missing(where))
             getGeneric(f)
         else
@@ -1504,9 +1506,9 @@ hasMethods <- function(f, where, package)
         fdef <- f
         f <- fdef@generic
     }
-    else if(!(is.character(f) && length(f) == 1L))
-        stop(gettextf("argument \"f\" must be a generic function or a single character string; got an object of class \"%s\"",
-                      class(f)), domain = NA)
+    else if(!.isSingleString(f))
+        stop(gettextf("argument \"f\" must be a generic function or %s",
+                      .notSingleString(f)), domain = NA)
     if(missing(package)) {
         package <- packageSlot(f)
 	if(is.null(package)) {
