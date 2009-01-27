@@ -94,6 +94,7 @@
             "      --use-zip-data	collect data files in zip archive",
             "      --use-zip-help	collect help and examples into zip archives",
             "      --use-zip		combine '--use-zip-data' and '--use-zip-help'",
+            "      --install-tests	install package-specific tests (if any)",
             "      --fake		do minimal install for testing purposes",
             "      --no-lock, --unsafe",
             "			install on top of any existing installation",
@@ -775,6 +776,11 @@
                 cp_r("inst", instdir)
             }
 
+            if (install_tests && .file_test("-d", "tests") && !fake) {
+                starsmsg(stars, "tests")
+                system(paste0("cp -r tests " , shQuote(instdir)))
+            }
+
             ## Defunct:
             if (file.exists("install.R"))
                 warning("use of file 'install.R' is no longer supported",
@@ -961,6 +967,7 @@
     tar_up <- zip_up <- FALSE
     shargs <- character(0)
     multiarch <- TRUE
+    install_tests <- FALSE
 
     while(length(args)) {
         a <- args[1]
@@ -1026,8 +1033,10 @@
             pkglock <- TRUE
         } else if (a == "--libs-only") {
             libs_only <- TRUE
-        } else if (a == "--multiarch") {
+        } else if (a == "--no-multiarch") {
             multiarch <- FALSE
+        } else if (a == "--install-tests") {
+            install_tests <- TRUE
         } else if (a == "--build") {
             if (WINDOWS) zip_up <- TRUE else tar_up <- TRUE
         } else if (substr(a, 1, 1) == "-") {

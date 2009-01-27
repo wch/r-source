@@ -148,9 +148,9 @@ install-tests:
 	@$(ECHO) "installing package tests ..."
 	@for pkg in $(R_PKGS_BASE); do \
 	  if test -d "$(srcdir)/$${pkg}/tests"; then \
-	    $(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/tests/$${pkg}/tests" ; \
+	    $(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/library/$${pkg}/tests" ; \
 	    for f in $(srcdir)/$${pkg}/tests/*; do \
-	      $(INSTALL_DATA) $${f} "$(DESTDIR)$(rhome)/tests/$${pkg}/tests"; \
+	      $(INSTALL_DATA) $${f} "$(DESTDIR)$(rhome)/library/$${pkg}/tests"; \
 	    done; \
 	  fi; \
 	done

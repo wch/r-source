@@ -190,9 +190,9 @@ test-Specific:
 
 test-Packages2:
 	@for p in $(R_PKGS_BASE); do \
-	  if test -d "./$${p}/tests"; then \
+	  if test -d "../library/$${p}/tests"; then \
 	    $(ECHO) "checking tests from package '$${p}'"; \
-	    (cd ./$${p}/tests ; \
+	    (cd ../library/$${p}/tests ; \
 	    tmp=""; \
 	    for f in `ls *.R`; do \
 	      tmp="$${tmp} $$f"; \
@@ -210,9 +210,9 @@ test-Packages2:
 
 test-Recommended: test-Examples-Recommended
 	@for p in $(R_PKGS_RECOMMENDED); do \
-	  if test -d "./$${p}/tests"; then \
+	  if test -d "../library/$${p}/tests"; then \
 	    $(ECHO) "checking tests from package '$${p}'"; \
-	    (cd ./$${p}/tests ; \
+	    (cd ../library/$${p}/tests ; \
 	    tmp=""; \
 	    for f in `ls *.R`; do \
 	      tmp="$${tmp} $$f"; \

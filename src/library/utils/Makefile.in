@@ -24,12 +24,16 @@ RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd @BUILD_AQUA_TRUE@ $(sr
 NSFILES = $(srcdir)/NAMESPACE @BUILD_AQUA_TRUE@ $(srcdir)/NAMESPACE.aqua
 INSTDIRS = Sweave misc
 
+.PHONY: iconvlist
+
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR mkdesc mkpo mkman instdirs
+	@$(MAKE) mkR mkdesc mkpo mkman instdirs iconvlist
 	@cat $(NSFILES) > $(top_builddir)/library/$(pkg)/NAMESPACE
-	@$(MAKE) mklazy $(top_builddir)/library/$(pkg)/iconvlist
+	@$(MAKE) mklazy
+
+iconvlist: $(top_builddir)/library/$(pkg)/iconvlist
 
 $(top_builddir)/library/$(pkg)/iconvlist:
 	-@iconv -l > $@ 2> /dev/null || touch $@

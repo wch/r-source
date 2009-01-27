@@ -18,7 +18,7 @@
 ## surplus whitespace
 ## Listing environments are minimal at best, \\describe \\tabular
 ## e.g. DateTimeClasses
-## \cr in argument, cbind
+## \cr in arguments, cbind
 ## getDLLRegisteedRoutines
 ## c\car{x} in regex
 ## spacing in zMethods
@@ -96,6 +96,7 @@ Rd2txt <-
 
     ## underline via backspacing
     txt_header <- function(header) {
+        header <- paste(strwrap(header, WIDTH), collapse="\n")
         letters <- strsplit(header, "")[[1]]
         isaln <- grep("[[:alnum:]]", letters)
         letters[isaln] <- paste("_\b", letters[isaln], sep="")
@@ -580,9 +581,10 @@ Rd2txt <-
     	stopRd(Rd, "Sections \\title, and \\name must exist and be unique in Rd files.")
 
     title <- as.character(Rd[[1]])
-    ## remove empty lines, leading whitespace
+    ## remove empty lines, leading and trailing whitespace, \n
     title <- trim(paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
                         collapse=" "))
+    title <- gsub("\n", "", title, fixed = TRUE)
 
     name <- Rd[[2]]
     tags <- RdTags(name)

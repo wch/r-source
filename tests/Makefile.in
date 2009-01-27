@@ -488,6 +488,9 @@ install-tests:
 
 uninstall-tests:
 	@$(ECHO) "uninstalling tests ..."
+	for pkg in $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) do \ 
+	  rm -rf "$(DESTDIR)$(rhome)/library/$${pkg}"; \
+	done
 	@rm -rf "$(DESTDIR)$(rhome)/tests"
 
 distdir: $(DISTFILES)
