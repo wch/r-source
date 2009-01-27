@@ -67,6 +67,10 @@ INSTALLATIOM
 
     o	The installer now checks for Windows 2000 or later.
 
+    o	There is a new component, 'Test files', which if selected will
+	install the package-specific tests. [At a later date there
+	will be support to run these.]
+
     o	Support for cross-building has been withdrawn.
 
 

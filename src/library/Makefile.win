@@ -17,7 +17,7 @@ RHOME = $(shell ../gnuwin32/Rpwd.exe ../..)
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
-all: R metadata
+all: R
 
 ## beware there is a bootstrapping problem here: tools uses tools to
 ## dump its namespace. So it works initially, but not to update.
@@ -25,7 +25,7 @@ R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(MAKE) -C $${pkg} -f Makefile.win RHOME=$(RHOME) \
-		R_OSTYPE=windows VERSION=$(RVER) || exit 1; \
+		R_OSTYPE=windows VERSION=$(RVER) all install-tests || exit 1; \
 	done
 	@$(ECHO) "tools:::.vinstall_package_descriptions_as_RDS(\"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
 	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) > /dev/null
@@ -37,8 +37,6 @@ R:
 	  $(top_builddir)/library
 	@gzip -9f ../../library/grDevices/afm/*.afm
 	@cp -p ../library/datasets/data/morley.tab ../../library/datasets/data
-
-metadata:
 	@$(ECHO) "building/updating package metadata ..."
 	@$(ECHO) "tools:::.vinstall_package_indices(\"$(srcdir)\", \"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
 	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) > /dev/null
@@ -56,7 +54,8 @@ rpackageindices:
 	@$(ECHO)
 
 
-rpackagehelp:
+## FIXME: chm-* needs to follow pkg-*
+rpackagehelp: rpackageindices
 ifeq ($(strip $(USE_CHM)),TRUE)
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(ECHO); \

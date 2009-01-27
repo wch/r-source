@@ -120,6 +120,12 @@ mksrc-win:
 	  cp src/$(pkg).dll $(top_builddir)/library/$(pkg)/libs; \
 	fi
 
+install-tests:
+	@if test -d tests; then \
+	  mkdir -p $(top_builddir)/library/$(pkg)/tests; \
+	  cp tests/* $(top_builddir)/library/$(pkg)/tests; \
+	fi
+
 
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status

@@ -1,3 +1,4 @@
+#-*- Makefile -*-
 #
 # ${R_HOME}/src/library/Recommended/Makefile.win
 
@@ -26,7 +27,7 @@ stamp-recommended: $(OBJECTS)
 	@touch $@
 
 ## need to allow parallel installs, modulo dependencies below
-INSTALL_OPTS=--no-lock --auto-zip
+INSTALL_OPTS=--no-lock --auto-zip --install-tests
 
 ifeq ($(strip $(BUILD)),CROSS)
 RCMD = $(R_EXE) CMD

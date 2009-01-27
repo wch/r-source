@@ -180,6 +180,8 @@ Name: "libdocs"; Description: "Docs for Packages grid and survival"; Types: user
 Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "latex"; Description: "Latex Help Files"; Types: full custom
 Name: "Rd"; Description: "Source Files for Help Pages"; Types: full custom
+Name: "tests"; Description: "Test files"; Types: full custom
+
 
 [Code]
 
@@ -442,6 +444,8 @@ sub listFiles {
 	    	$component = "latex";
 	} elsif (m/^library\\[^\\]*\\man/) {
 	    	$component = "Rd";
+	} elsif (m/^library\\[^\\]*\\tests/) {
+	    	$component = "tests";
 #	} elsif (m/^Tcl\\doc/) {
 #	    $component = "tcl/docs";
 	} elsif (m/^Tcl\\doc\\.*chm$/) {
