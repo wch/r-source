@@ -101,7 +101,10 @@ BUG FIXES
     o	dir() does a better job when dir is of rhe form "d:", the
 	currrent directory is not the root on that drive, and either
 	'full' or 'recursive' is true.
-
+	
+    o	Sys.setenv() and Sys.getenv() now use the Windows API
+	functions rather than the buggy C runtime functions, allowing
+	longer settings, e.g. for a long PATH.
 
 
 		CHANGES IN R VERSION 2.8.1
