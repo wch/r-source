@@ -419,6 +419,9 @@ BUG FIXES
     o	file.show() with multiple files would only show multiple
 	copies of the first one. (PR#13469)
 
+    o	formatC(mode = "character") was documented to work, but
+	did not. (PR#13474)
+
 
 
 		CHANGES IN R VERSION 2.8.1
