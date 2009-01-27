@@ -847,7 +847,15 @@ static SEXP filename(const char *dir, const char *file)
     SEXP ans;
     char cbuf[CBUFSIZE];
     if (dir) {
+#ifdef Win32
+	if ((strlen(dir) == 2 && dir[1] == ':') ||
+	    dir[strlen(dir) - 1] == '/' ||  dir[strlen(dir) - 1] == '\\')
+	    snprintf(cbuf, CBUFSIZE, "%s%s", dir, file);
+	else
+	    snprintf(cbuf, CBUFSIZE, "%s%s%s", dir, R_FileSep, file);
+#else
 	snprintf(cbuf, CBUFSIZE, "%s%s%s", dir, R_FileSep, file);
+#endif
 	ans = mkChar(cbuf);
     } else {
 	snprintf(cbuf, CBUFSIZE, "%s", file);
@@ -880,8 +888,14 @@ static void count_files(const char *dnp, int *count,
 	while ((de = readdir(dir))) {
 	    if (allfiles || !R_HiddenFile(de->d_name)) {
 		if (recursive) {
-		    snprintf(p, PATH_MAX, "%s%s%s", dnp,
-			     R_FileSep, de->d_name);
+#ifdef Win32
+		    if (strlen(dnp) == 2 && dnp[1] == ':')
+			snprintf(p, PATH_MAX, "%s%s", dnp, de->d_name);
+		    else
+			snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+#else
+		    snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+#endif		    
 #ifdef Windows
 		    _stati64(p, &sb);
 #else
@@ -921,8 +935,14 @@ static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
 	while ((de = readdir(dir))) {
 	    if (allfiles || !R_HiddenFile(de->d_name)) {
 		if (recursive) {
-		    snprintf(p, PATH_MAX, "%s%s%s", dnp,
-			     R_FileSep, de->d_name);
+#ifdef Win32
+		    if (strlen(dnp) == 2 && dnp[1] == ':')
+			snprintf(p, PATH_MAX, "%s%s", dnp, de->d_name);
+		    else
+			snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+#else
+		    snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+#endif
 #ifdef Windows
 		    _stati64(p, &sb);
 #else
@@ -931,10 +951,19 @@ static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
 		    if ((sb.st_mode & S_IFDIR) > 0) {
 			if (strcmp(de->d_name, ".") &&
 			    strcmp(de->d_name, "..")) {
-			    if (stem)
+			    if (stem) {
+#ifdef Win32
+				if(strlen(stem) == 2 && stem[1] == ':')
+				    snprintf(stem2, PATH_MAX, "%s%s", stem,
+					     de->d_name);
+				else
+				    snprintf(stem2, PATH_MAX, "%s%s%s", stem,
+					     R_FileSep, de->d_name);
+#else
 				snprintf(stem2, PATH_MAX, "%s%s%s", stem,
 					 R_FileSep, de->d_name);
-			    else
+#endif
+			    } else
 				strcpy(stem2, de->d_name);
 			    list_files(p, stem2, count, ans, allfiles,
 				       recursive, pattern, reg);
