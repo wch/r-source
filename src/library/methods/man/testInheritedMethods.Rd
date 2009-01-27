@@ -96,6 +96,11 @@ the signatures tested.
  \emph{Software for Data Analysis: Programming with R}
   Springer.  (Section 10.6 for basics of method selection.)
 
+ Chambers, John M.(2009)
+ \emph{Class Inheritance in R}
+ \url{http://stat.stanford.edu/~jmc4/classInheritance.pdf} (to be
+ submitted to the R Journal).
+
 }
 \examples{
 ## if no other attached  packages have methods for `+` or its group generic 

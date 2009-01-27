@@ -1076,7 +1076,10 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE, g
         pattern <- pattern[excl]
         allSubs <- allSubs[excl]
       }
-      allSubs <- sapply(split(allSubs, pattern), `[[`,1)
+      if(length(allSubs)>0)
+        allSubs <- sapply(split(allSubs, pattern), `[[`,1)
+      else
+        allSubs <- character()
     }
     else
       allSubs <- character()
