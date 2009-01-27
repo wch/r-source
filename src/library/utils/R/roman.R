@@ -104,7 +104,7 @@ function(x)
         y <- gsub("XL", "XXXX", y)
         y <- gsub("IX", "VIIII", y)
         y <- gsub("IV", "IIII", y)
-        ok <- (regexpr("^M{,3}D?C{,4}L?X{,4}V?I{,4}$", y) > -1L)
+        ok <- grepl("^M{,3}D?C{,4}L?X{,4}V?I{,4}$", y)
         if(any(!ok)) {
             warning(gettextf("Invalid roman numeral(s): %s",
                              paste(x[!ind][!ok], collapse = " ")))

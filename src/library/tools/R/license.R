@@ -265,7 +265,7 @@ function(x)
         .strip_whitespace(unlist(strsplit(x, "|", fixed = TRUE)))
 
     ## Now analyze the individual components.
-    ok <- regexpr(license_regexps$re_for_component, components) > -1L
+    ok <- grepl(license_regexps$re_for_component, components)
 
     pointers <- if(all(ok)) NULL else {
         ind <- regexpr(re_anchor(license_regexps$re_for_license_file),

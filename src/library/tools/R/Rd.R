@@ -420,8 +420,7 @@ function(package, dir, lib.loc = NULL)
         paths <- as.character(sapply(db, "[", 1L))
         names(db) <-
             if(length(paths)
-               && all(regexpr("^% --- Source file: (.+) ---$", paths)
-                      > -1L))
+               && all(grepl("^% --- Source file: (.+) ---$", paths)))
                 sub("^% --- Source file: (.+) ---$", "\\1", paths)
             else
                 NULL
@@ -549,7 +548,7 @@ function(file, text = NULL)
                      domain = NA)
             tag <- c(tag, tmp)
         }
-        if(regexpr("^[[:space:]]*(^|\n)[[:space:]]*$", start) == -1L) {
+        if(!grepl("^[[:space:]]*(^|\n)[[:space:]]*$", start)) {
             names(start) <- paste(otag, collapse = " ")
             rest <- c(rest, start)
         }
@@ -559,14 +558,14 @@ function(file, text = NULL)
                                   pos + attr(pos, "match.length") - 2L))
         txt <- substring(txt, pos + attr(pos, "match.length"))
     }
-    if(regexpr("^[[:space:]]*(^|\n)[[:space:]]*$", txt) == -1L) {
+    if(!grepl("^[[:space:]]*(^|\n)[[:space:]]*$", txt)) {
         names(txt) <- paste(tag, collapse = " ")
         rest <- c(rest, txt)
     }
     ## Remove empty sections unless needed for checking ...
     if(!identical(as.logical(Sys.getenv("_R_CHECK_RD_EMPTY_SECTIONS_")),
                   TRUE)) {
-        ind <- regexpr("^[[:space:]]*$", vals) > -1L
+        ind <- grepl("^[[:space:]]*$", vals)
         if(any(ind)) {
             vals <- vals[!ind]
             tags <- tags[!ind]

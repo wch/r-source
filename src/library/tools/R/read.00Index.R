@@ -56,7 +56,7 @@ function(file)
     ## lines.
     for(chunk in unlist(strsplit(x, "\n[ \t\n]*\n"))) {
         entries <- tryCatch({
-            if(regexpr("(   |\t)", chunk) == -1L)
+            if(!grepl("(   |\t)", chunk))
                 NULL
             else {
                 ## Combine entries with continuation lines.

@@ -1389,8 +1389,8 @@ function(package, dir, lib.loc = NULL)
             ## defensive and reduce to arguments which either are not
             ## syntactically valid names of do not match the \usage text
             ## (modulo word boundaries).
-            bad <- regexpr("^[[:alnum:]._]+$",
-                           arg_names_in_arg_list_missing_in_usage) == -1L
+            bad <- !grepl("^[[:alnum:]._]+$",
+                          arg_names_in_arg_list_missing_in_usage)
             if(any(bad)) {
                 bad_args <- arg_names_in_arg_list_missing_in_usage[bad]
                 arg_names_in_arg_list_missing_in_usage <-
@@ -1398,8 +1398,8 @@ function(package, dir, lib.loc = NULL)
             }
             bad <- sapply(arg_names_in_arg_list_missing_in_usage,
                           function(x)
-                          regexpr(paste("\\b", x, "\\b", sep = ""),
-                                  usage_text) == -1L)
+                          !grepl(paste("\\b", x, "\\b", sep = ""),
+                                 usage_text))
             arg_names_in_arg_list_missing_in_usage <-
                 c(bad_args,
                   arg_names_in_arg_list_missing_in_usage[as.logical(bad)])
@@ -2723,10 +2723,9 @@ function(db, def_enc = FALSE)
             c(mandatory_tags %w/o% tags,
               ## Also catch empty mandatory sections.
               Filter(Negate(is.na),
-                     mandatory_tags[regexpr("^[[:space:]]*$",
-                                            x$data$vals[match(mandatory_tags,
-                                                              tags, NA)])
-                                    > -1L]),
+                     mandatory_tags[grepl("^[[:space:]]*$",
+                                          x$data$vals[match(mandatory_tags,
+                                                            tags, NA)])]),
               if(!length(x$meta$aliases)) "alias")
         ## R-exts says that the only requirement for this page is that
         ## it includes \docType{package}, all other "content" being
@@ -2744,7 +2743,7 @@ function(db, def_enc = FALSE)
 
         ind <- which(tags == "title")[1L]
         if(is.na(ind) ||
-           (regexpr("^[[:space:]]*$", x$data$vals[[ind]]) != -1L))
+           (grepl("^[[:space:]]*$", x$data$vals[[ind]])))
             files_with_bad_title <- c(files_with_bad_title, f)
 
         bad_tags <- intersect(tags[duplicated(tags)], unique_tags)
@@ -2765,8 +2764,8 @@ function(db, def_enc = FALSE)
                 rbind(files_with_bad_keywords,
                       cbind(f, bad_keywords))
 
-        empty_sections <- x$data$tags[regexpr("^[[:space:]]*$",
-                                              x$data$vals) > -1L]
+        empty_sections <- x$data$tags[grepl("^[[:space:]]*$",
+                                            x$data$vals)]
         if(length(empty_sections))
             files_with_empty_sections[[f]] <- empty_sections
     }
@@ -2832,7 +2831,7 @@ function(x, ...)
         ## braces at top level).  These are not quite correct Rd, but
         ## can safely be ignored, as Rdconv does.
         bad <- lapply(bad,
-                      function(x) x[regexpr("^[[:space:]}]*$", x) == -1L])
+                      function(x) x[!grepl("^[[:space:]}]*$", x)])
         bad <- bad[sapply(bad, length) > 0L]
         if(length(bad)) {
             writeLines(gettext("Rd files with likely Rd problems:"))
@@ -3054,8 +3053,8 @@ function(dfile)
     val <- package_name <- db["Package"]
     if(!is.na(val)) {
         tmp <- character()
-        if(regexpr(sprintf("^%s$", valid_package_name_regexp), val) == -1L
-           && regexpr("^Translation-[[:alnum:].]+$", val) == -1L)
+        if(!grepl(sprintf("^%s$", valid_package_name_regexp), val)
+           && !grepl("^Translation-[[:alnum:].]+$", val))
             tmp <- c(tmp, gettext("Malformed package name"))
         ## <FIXME>
         ## Not clear if we really want to do this.  The Perl code still
@@ -3080,11 +3079,10 @@ function(dfile)
     }
     if(!is.na(val <- db["Version"])
        && !is_base_package
-       && (regexpr(sprintf("^%s$", valid_package_version_regexp),
-                   val) == -1L))
+       && !grepl(sprintf("^%s$", valid_package_version_regexp), val))
         out$bad_version <- val
     if(!is.na(val <- db["Maintainer"])
-       && (regexpr(.valid_maintainer_field_regexp, val) == -1L))
+       && !grepl(.valid_maintainer_field_regexp, val))
         out$bad_maintainer <- val
 
     ## Optional entries in DESCRIPTION:
@@ -3103,7 +3101,7 @@ function(dfile)
                   "[[:space:]]*$",
                   sep = "")
         for(dep in depends) {
-            if(regexpr(dep_regexp, dep) == -1L) {
+            if(!grepl(dep_regexp, dep)) {
                 ## Entry does not match the regexp.
                 bad_dep_entry <- c(bad_dep_entry, dep)
                 next
@@ -3113,9 +3111,9 @@ function(dfile)
                 if(!sub(dep_regexp, "\\3", dep) %in%
                    c("<=", ">=", "<", ">", "==", "!="))
                     bad_dep_op <- c(bad_dep_op, dep)
-                else if(regexpr(sprintf("^%s$",
-                                        valid_package_version_regexp),
-                                sub(dep_regexp, "\\4", dep)) == -1L)
+                else if(!grepl(sprintf("^%s$",
+                                       valid_package_version_regexp),
+                               sub(dep_regexp, "\\4", dep)))
                     bad_dep_version <- c(bad_dep_version, dep)
             }
         }
@@ -3353,7 +3351,7 @@ function(dir)
         return(bad_flags)
 
     ## Try to be careful ...
-    lines <- lines[regexpr("^PKG_(CPP|C|CXX|F|FC|OBJC)FLAGS: ", lines) > -1L]
+    lines <- lines[grepl("^PKG_(CPP|C|CXX|F|FC|OBJC)FLAGS: ", lines)]
     names <- sub(":.*", "", lines)
     lines <- sub("^PKG_(CPP|C|CXX|F|FC|OBJC)FLAGS: ", "", lines)
     flags <- strsplit(lines, "[[:space:]]+")
@@ -3983,7 +3981,7 @@ function(dir) {
                && as.character(e[[1L]]) %in% c("library.dynam",
                                               "library.dynam.unload")
                && is.character(e[[2L]])
-               && (regexpr("\\.(so|sl|dll)$", e[[2L]]) > -1L)
+               && grepl("\\.(so|sl|dll)$", e[[2L]])
                )
                 matches <<- c(matches, list(e))
             if(is.recursive(e))
