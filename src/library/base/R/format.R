@@ -120,7 +120,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 	if(mode=="real") mode <- "double"
 	storage.mode(x) <- mode
     }
-    else stop("'mode\' must be \"double\" (\"real\") or \"integer\"")
+    else if (mode != "character") stop("'mode' must be \"double\" (\"real\"), \"integer\" or \"character\"")
     if (mode == "character" || (!is.null(format) && format == "s")) {
 	if (mode != "character") {
 	    warning('coercing argument to "character" for format="s"')
