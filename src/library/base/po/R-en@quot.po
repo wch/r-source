@@ -664,8 +664,8 @@ msgstr "‘vec’ contains NAs"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "‘vec’ must be sorted non-decreasingly"
 
-msgid "'mode' must be \"double\" (\"real\") or \"integer\""
-msgstr "‘mode’ must be “double” (“real”) or “integer”"
+msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
+msgstr "‘mode’ must be “double” (“real”), “integer” or “character”"
 
 msgid "coercing argument to \"character\" for format=\"s\""
 msgstr "coercing argument to “character” for format=“s”"

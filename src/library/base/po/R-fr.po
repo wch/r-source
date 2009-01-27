@@ -641,8 +641,8 @@ msgstr "'vec' contient des valeurs manquantes (NAs)"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' doit être trié par ordre croissant"
 
-msgid "'mode' must be \"double\" (\"real\") or \"integer\""
-msgstr "'mode' doit être un \"double\" (\"réel\") ou \"integer\" (\"entier\")"
+msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
+msgstr "'mode' doit être un de \"double\" (\"real\"), \"integer\" ou \"character\""
 
 msgid "coercing argument to \"character\" for format=\"s\""
 msgstr "conversion automatique de l'argument en \"character\" pour format=\"s\""

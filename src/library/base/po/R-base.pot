@@ -620,7 +620,7 @@ msgstr ""
 msgid "'vec' must be sorted non-decreasingly"
 msgstr ""
 
-msgid "'mode' must be \"double\" (\"real\") or \"integer\""
+msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
 
 msgid "coercing argument to \"character\" for format=\"s\""
