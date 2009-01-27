@@ -71,7 +71,7 @@ arima(x, order = c(0, 0, 0),
     number of initial observations to ignore.  It will be ignored if
     less than the maximum lag of an AR term.}
   
-  \item{optim.methodl}{The value passed as the \code{method} argument to
+  \item{optim.method}{The value passed as the \code{method} argument to
     \code{\link{optim}}.}
 
   \item{optim.control}{List of control parameters for \code{\link{optim}}.}
