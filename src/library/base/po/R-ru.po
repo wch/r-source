@@ -659,8 +659,8 @@ msgstr "'vec' должен быть сортирован не по уменьшению"
 msgid "using the first element of 'value' of type expression"
 msgstr ""
 
-msgid "'mode' must be \"double\" (\"real\") or \"integer\""
-msgstr "'mode' должна быть \"double\" (\"real\") или \"integer\""
+msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
+msgstr "'mode' должна быть \"double\" (\"real\"), \"integer\" или \"character\""
 
 msgid "coercing argument to \"character\" for format=\"s\""
 msgstr "преобразую аргумент в \"character\" для format=\"s\""

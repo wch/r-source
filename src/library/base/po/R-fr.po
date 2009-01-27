@@ -685,8 +685,8 @@ msgstr "'vec' doit être trié par ordre croissant"
 msgid "using the first element of 'value' of type expression"
 msgstr ""
 
-msgid "'mode' must be \"double\" (\"real\") or \"integer\""
-msgstr "'mode' doit être un \"double\" (\"réel\") ou \"integer\" (\"entier\")"
+msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
+msgstr "'mode' doit être un de \"double\" (\"real\"), \"integer\" ou \"character\""
 
 msgid "coercing argument to \"character\" for format=\"s\""
 msgstr ""

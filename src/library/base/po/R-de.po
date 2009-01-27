@@ -663,8 +663,8 @@ msgstr "'vec' muss nicht-abfallend sortiert werden"
 msgid "using the first element of 'value' of type expression"
 msgstr ""
 
-msgid "'mode' must be \"double\" (\"real\") or \"integer\""
-msgstr "'mode' muss \"double\" (\"real\") oder \"integer\" sein"
+msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
+msgstr "'mode' muss \"double\" (\"real\"), \"integer\" oder \"character\" sein"
 
 msgid "coercing argument to \"character\" for format=\"s\""
 msgstr "wandle Argument in \"character\" für das Format=\"%s\""
