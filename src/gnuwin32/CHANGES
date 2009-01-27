@@ -98,6 +98,10 @@ BUG FIXES
 
     o	getwd() could segfault (PR#13424).
 
+    o	dir() does a better job when dir is of rhe form "d:", the
+	currrent directory is not the root on that drive, and either
+	'full' or 'recursive' is true.
+
 
 
 		CHANGES IN R VERSION 2.8.1
