@@ -1,5 +1,5 @@
 
-R version 2.9.0 Under development (unstable) (2009-01-05 r47477)
+R version 2.9.0 Under development (unstable) (2009-01-26 r47727)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -2274,7 +2274,7 @@ Coefficients:
 > ## failed in 1.6.2
 > 
 > str(array(1))# not a scalar
- num [, 1] 1
+ num [1(1d)] 1
 > 
 > 
 > ## na.print="" shouldn't apply to (dim)names!

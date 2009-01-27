@@ -123,7 +123,7 @@ NEW FEATURES
 
     o	xfig() has new arguments 'defaultFont' and 'textSpecial'
 	contributed by Sebastian Fischmeister.
-	
+
     o	parse() and parse_Rd() now point to syntax errors in the
 	reported error context, and include the filename and line and
 	column numbers so smart text editors can jump to the error
@@ -133,12 +133,15 @@ NEW FEATURES
 
     o	errors in setOldClass() will cause a previous definition to be restored.
 
-    o  Ambiguities in class inheritance and method selection resulting
-        from duplicates in superclasses are now resolved by requiring
-        (if possible) consistency with all the superclass
-        inheritance. The rules for method selection have been revised
-        to take advantage of the improved ordering.See ?Methods and
-        the reference there on inheritance.
+    o	Ambiguities in class inheritance and method selection resulting
+	from duplicates in superclasses are now resolved by requiring
+	(if possible) consistency with all the superclass inheritance. The
+	rules for method selection have been revised to take advantage of
+	the improved ordering.
+	See ?Methods and the reference there on inheritance.
+
+    o	str(<1d-array>) now produces "[1:n(1d)]" instead of the previous
+	less decipherable "[, 1:n]".
 
 
 DEPRECATED & DEFUNCT
@@ -157,7 +160,7 @@ DEPRECATED & DEFUNCT
 	which were deprecated in 2.4.0 are now defunct: use power()
 	directly.
 
-    o	Conversion to Sd and Ssgm by R CMD Rdconv is now defunct.	
+    o	Conversion to Sd and Ssgm by R CMD Rdconv is now defunct.
 
 
 UTILITIES
@@ -237,7 +240,7 @@ Rd CONVERSION
     o	R CMD check runs the package's Rd files through parse_Rd() for a
 	stricter syntax check.  This can be suppressed by setting
 	_R_CHECK_RD_PARSE_ to FALSE.
-	
+
     o	Added markup \verb, which displays like \code, but parses as
 	verbatim text.  Currently only supported by parse_Rd() and
 	Rd2HTML().
@@ -342,7 +345,7 @@ NEW FEATURES
 	command-line arguments to INSTALL.
 	E.g. --install-args="--docs=normal" on Windows if the HTML
 	Help Workshop is not installed.
-	
+
     o	R-Forge has been added to R_HOME/etc/repositories, so it will
     	be available interactively in setRepositories().
 
@@ -377,7 +380,7 @@ BUG FIXES
     o	as.matrix.data.frame() could fail if coercion changed the
 	dimension of one of the columns (as e.g. the coercion of a "Surv"
 	object to a character vector does).
-	
+
     o	When extracting part of a complex list structure using [[]]
     	with a vector index, the extracted part was not marked for
     	duplication on change. (PR#13411)
@@ -412,7 +415,7 @@ BUG FIXES
     o	cbind() could crash with a zero-length input and a list result.
 
     o	pdf(colormodel = "gray") was setting the stroke colour for fills.
-    
+
     o	file.show() with multiple files would only show multiple
 	copies of the first one. (PR#13469)
 

@@ -238,11 +238,12 @@ str.default <-
 		else if(mod == "char") { mod <- "chr"; char.like <- TRUE }
 		else if(mod == "comp") mod <- "cplx" #- else: keep 'logi'
 		if(is.array(object)) {
-		    di. <- dim(object)
+		    rnk <- length(di. <- dim(object))
 		    di <- P0(ifelse(di. > 1, "1:",""), di.,
 			     ifelse(di. > 0, "" ," "))
-		    le.str <- paste(c("[", P0(di[-length(di)], ", "),
-				      di[length(di)], "]"), collapse = "")
+		    pDi <- function(...) paste(c("[", ..., "]"), collapse = "")
+		    le.str <- (if(rnk == 1) pDi(di[1L], "(1d)") else
+			       pDi(P0(di[-rnk], ", "), di[rnk]))
 		    std.attr <- "dim" #- "names"
 		} else if(!is.null(names(object))) {
 		    mod <- paste("Named", mod)
