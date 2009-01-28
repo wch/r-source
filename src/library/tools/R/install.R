@@ -876,7 +876,7 @@
                         if (.file_test("-d", "chm")) {
                             owd <- setwd("chm")
                             file.copy(file.path(R.home(), "src/gnuwin32/help/Rchm.css"), ".")
-                            file.copy(file.path(R.home(), "doc/html/logo.jpg"), ".")
+                            file.copy(file.path(R.home("doc"), "html/logo.jpg"), ".")
                             system(paste0("hhc ", pkg_name, ".hhp"))
                             ## always gives an error code
                             chm_file <- paste0(pkg_name, ".chm")

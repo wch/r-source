@@ -72,7 +72,7 @@ function(file, topic)
         stop("'latexcmd' is empty")
     if(!nzchar(getOption("dvipscmd")))
         stop("'dvipscmd' is empty")
-    Rtexmf <- file.path(R.home(), "share", "texmf")
+    Rtexmf <- file.path(R.home("share"), "texmf")
     system(paste("/bin/sh",
                  shQuote(file.path(R.home("share"), "sh", "help-print.sh")),
                  con,

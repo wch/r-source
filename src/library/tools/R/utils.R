@@ -219,7 +219,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         texi2dvi <- Sys.which("texi2dvi")
 
     envSep <- .Platform$path.sep
-    Rtexmf <- file.path(R.home(), "share", "texmf")
+    Rtexmf <- file.path(R.home("share"), "texmf")
     ## "" forces use of default paths.
     texinputs <- paste(c(texinputs, Rtexmf, ""), collapse = envSep)
     ## not clear if this is needed, but works
@@ -784,7 +784,7 @@ function()
 
 ### ** .get_standard_package_names
 
-## we cannot assume that file.path(R.home(), "share", "make", "vars.mk")
+## we cannot assume that file.path(R.home("share"), "make", "vars.mk")
 ## is installed, as it is not on Windows
 .get_standard_package_names <-
 local({

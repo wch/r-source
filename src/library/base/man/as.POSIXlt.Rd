@@ -130,7 +130,7 @@ as.POSIXlt(Sys.time(), "Australia/Darwin")
 #ifdef windows
 
 cols <- c("code", "coordinates", "TZ", "comments")
-tmp <- read.delim(file.path(R.home(), "share", "zoneinfo", "zone.tab"),
+tmp <- read.delim(file.path(R.home("share"), "zoneinfo", "zone.tab"),
                   header = FALSE, comment.char="#", col.names = cols)
 if(interactive()) View(tmp)
 #endif

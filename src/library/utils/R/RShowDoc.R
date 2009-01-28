@@ -111,7 +111,7 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
                 return(invisible(path))
             }
         }
-        path <- file.path(R.home(), "doc", what)
+        path <- file.path(R.home("doc"), what)
         if(file.exists(path)) {
             file.show(path)
             return(invisible(path))

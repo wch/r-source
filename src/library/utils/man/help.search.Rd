@@ -137,7 +137,7 @@ help.search(apropos = "print")  # The same
 
 help.search(keyword = "hplot")  # All help pages documenting high-level
                                 # plots.
-file.show(file.path(R.home(), "doc", "KEYWORDS"))  # show all keywords
+file.show(file.path(R.home("doc"), "KEYWORDS"))  # show all keywords
 
 ## Help pages with documented topics starting with 'try'.
 help.search("\\\\btry", fields = "alias")

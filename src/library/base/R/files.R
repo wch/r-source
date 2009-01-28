@@ -23,6 +23,8 @@ R.home <- function(component="home")
            else file.path(rh, component),
 	   "doc"=if(nzchar(p <- as.vector(Sys.getenv("R_DOC_DIR")))) p
            else file.path(rh, component),
+           "include" = if(nzchar(p <- as.vector(Sys.getenv("R_INCLUDE_DIR")))) p
+           else file.path(rh, component),
            file.path(rh, component))
 }
 file.show <-

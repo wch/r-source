@@ -76,7 +76,7 @@ massageExamples <- function(pkg, files, outFile = stdout())
                 "ordered = \"contr.poly\"))\n", sep="", file = out)
     }
 
-    cat(readLines(file.path(R.home(), "share", "R", "examples-footer.R")),
+    cat(readLines(file.path(R.home("share"), "R", "examples-footer.R")),
         sep="\n", file = out)
 }
 

@@ -34,7 +34,7 @@ function()
 
     ## Read in the license data base, and precompute some variables.
     license_db <-
-        read.dcf(file.path(R.home(), "share", "licenses", "license.db"))
+        read.dcf(file.path(R.home("share"), "licenses", "license.db"))
     license_db[is.na(license_db)] <- ""
     ## (Could also keeps NAs and filter on is.finite().)
     license_db <- data.frame(license_db, stringsAsFactors = FALSE)
