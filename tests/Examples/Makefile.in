@@ -81,68 +81,40 @@ R:
 
 ## <NOTE>
 ## We need to update an ex_in file if it is older than any Rd file it
-## contains examples from, or older than massage-examples.R.  As we do
-## not have the Rd files as explicit dependencies (which would currently
-## be impossible for recommended packages), we cannot use Make to figure
-## out the need to update ex_in files ... hence we do things ourselves,
-## and force these computations.
-## The ugly 'find | grep' construct is necessary because 'test -nt' is
-## not portable.  The pipeline will succeed if the target exists and is
-## newer than the corresponding DESCRIPTION file in the package.  If the
-## target does not exist, then find will fail; if it exists and is
-## older, then find will succeed but output nothing so that the grep
-## will fail.
+## contains examples from.  As we do not have the Rd files as explicit
+## dependencies (which would currently be impossible for recommended
+## packages), we cannot use Make to figure out the need to update
+## ex_in files ... hence we do things ourselves, and force these
+## computations.
 ## </NOTE>
-## FIXME: Why does this make txt as well as example?
+## Why did this do txt as well as example?
 $(EX_IN_BASE): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
-	if find $@ -newer $(top_srcdir)/share/R/massage-examples.R \
-	    -print 2> /dev/null | grep $@ > /dev/null; then \
-	  target_is_newer_than_massage_Ex=yes; \
-	else \
-	  target_is_newer_than_massage_Ex=no; \
-	fi; \
 	if $(R_EXE) -e \
 	  "tools:::.Rdnewer(\"$(top_srcdir)/src/library/$${pkg}\", \"$@\")"; then \
 	  target_is_newer_than_Rdfiles=no; \
 	else \
 	  target_is_newer_than_Rdfiles=yes; \
 	fi; \
-	if test "$${target_is_newer_than_massage_Ex}" = no \
-	    || test "$${target_is_newer_than_Rdfiles}" = no; then \
+	if test "$${target_is_newer_than_Rdfiles}" = no; then \
 	  $(ECHO) "collecting examples for package '$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
-	    $(MAKE) R_CMD_BUILD_HELP_OPTS="--txt --example" \
+	    $(MAKE) R_CMD_BUILD_HELP_OPTS="--example" \
 	    R_PKGS_BASE="$${pkg}" Rdfiles); \
-	  f=$${TMPDIR-/tmp}/R$$$$; \
-	  LC_ALL=C $(R_EXE) < $(top_srcdir)/share/R/massage-examples.R \
-	    --args $${pkg} $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} $@; \
-	  touch $@; \
+	  LC_ALL=C echo "tools:::massageExamples(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}/R-ex\", \"$@\")" | LC_ALL=C $(R_EXE); \
 	fi)
 
 $(EX_IN_RECOMMENDED): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
-	if find $@ -newer $(top_srcdir)/share/R/massage-examples.R \
-	    -print 2> /dev/null | grep $@ > /dev/null; then \
-	  target_is_newer_than_massage_Ex=yes; \
-	else \
-	  target_is_newer_than_massage_Ex=no; \
-	fi; \
 	if find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
 	    -print 2> /dev/null | grep $@ > /dev/null; then \
 	  target_is_newer_than_Rdfiles=yes; \
 	else \
 	  target_is_newer_than_Rdfiles=no; \
 	fi; \
-	if test "$${target_is_newer_than_massage_Ex}" = no \
-	    || test "$${target_is_newer_than_Rdfiles}" = no; then \
+	if test "$${target_is_newer_than_Rdfiles}" = no; then \
 	  $(ECHO) "collecting examples for package '$${pkg}' ..."; \
-	  f=$${TMPDIR-/tmp}/R$$$$; \
-	  LC_ALL=C $(R_EXE) < $(top_srcdir)/share/R/massage-examples.R \
-	    --args $${pkg} $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} $@; \
-	  touch $@; \
+	  LC_ALL=C echo "tools:::massageExamples(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}/R-ex\", \"$@\")" | LC_ALL=C $(R_EXE); \
 	fi)
 FORCE:
 
@@ -161,7 +133,7 @@ mostlyclean: clean
 clean:
 	-@rm -f *.R *.Rout *.Rd* *.ps *.tex *.dat* data foo* Makedeps
 distclean: clean
-	-@rm -f *.R*bak *.R*bakk *.R*prev .RData sink-examp.txt Makefile
+	-@rm -f *.R*prev .RData sink-examp.txt Makefile
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

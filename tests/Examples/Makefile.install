@@ -55,17 +55,14 @@ R:
 $(EX_IN_BASE):
 	@(pkg=`basename $@ -Ex.R`; \
 	  $(ECHO) "collecting examples for package '$${pkg}' ..."; \
-	  LC_ALL=C $(R_EXE) < $(top_builddir)/share/R/massage-examples.R \
-	    --args $${pkg} $(top_builddir)/library/$${pkg}/R-ex > $@; \
+	  LC_ALL=C echo "tools:::massageExamples(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}/R-ex\", \"$@\")" | LC_ALL=C $(R_EXE); \
 	)
 
 $(EX_IN_RECOMMENDED):
 	@(pkg=`basename $@ -Ex.R`; \
 	  $(ECHO) "collecting examples for package '$${pkg}' ..."; \
-	  LC_ALL=C $(R_EXE) < $(top_builddir)/share/R/massage-examples.R \
-	    --args $${pkg} $(top_builddir)/library/$${pkg}/R-ex > $@; \
+	  LC_ALL=C echo "tools:::massageExamples(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}/R-ex\", \"$@\")" | LC_ALL=C $(R_EXE); \
 	)
-
 FORCE:
 
 mostlyclean: clean

@@ -1,0 +1,118 @@
+#  File src/library/tools/R/testing.R
+#  Part of the R package, http://www.R-project.org
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  http://www.r-project.org/Licenses/
+
+## functions principally for testing R
+
+massageExamples <- function(pkg, files, outFile = stdout())
+{
+    if(utils::file_test("-d", files[1]))
+        files <- sort(Sys.glob(file.path(files, "*.R")))
+
+    if(is.character(outFile)) {
+        out <- file(outFile, "wt")
+        on.exit(close(out))
+    } else out <- outFile
+
+    lines <- readLines(file.path(R.home("share"), "R", "examples-header.R"))
+    cat(sub("@PKG@", pkg, lines), sep = "\n", file = out)
+    if(.Platform$OS.type == "windows")
+        cat("options(pager = \"console\")\n", file = out)
+
+    if(pkg == "tcltk") {
+        if(capabilities("tcltk")) cat("require('tcltk')\n\n", file = out)
+        else cat("q()\n\n", file = out)
+    } else if(pkg != "base")
+        cat("library('", pkg, "')\n\n", sep = "", file = out)
+
+    cat("assign(\".oldSearch\", search(), pos = 'CheckExEnv')\n", file = out)
+    cat("assign(\".oldNS\", loadedNamespaces(), pos = 'CheckExEnv')\n",
+        file = out)
+
+    for(file in files) {
+        nm <- sub("\\.R$", "", basename(file))
+        ## make a syntactic name out of the filename
+        nm <- gsub("[^- .a-zA-Z0-9_]", ".", nm, perl = TRUE)
+        if (pkg == "graphics" && nm == "text") next
+        if(!file.exists(file)) stop("file ", file, " cannot be opened")
+        lines <- readLines(file)
+        have_examples <- any(grepl("_ Examples _|### \\*+ Examples", lines))
+        ## skip comment lines
+        com <- grep("^#", lines)
+        lines1 <- if(length(com)) lines[-com] else lines
+        have_par <- length(grep("[^a-zA-Z0-9.]par\\(|^par\\(", lines1)) > 0L
+        have_contrasts <- length(grep("options\\(contrasts", lines1)) > 0L
+
+        if(have_examples)
+            cat("cleanEx(); nameEx(\"", nm, "\")\n", sep = "", file = out)
+
+        cat("### * ", nm, "\n\n", sep = "", file = out)
+        cat("flush(stderr()); flush(stdout())\n\n", file = out)
+        dont_test <- FALSE
+        for (line in lines) {
+            if(length(grep("^[[:space:]]*## No test:", line)))
+                dont_test <- TRUE
+            if(!dont_test) cat(line, "\n", sep = "", file = out)
+            if(length(grep("^[[:space:]]*## End\\(No test\\)", line)))
+                dont_test <- FALSE
+        }
+
+        if(have_par)
+            cat("graphics::par(get(\"par.postscript\", pos = 'CheckExEnv'))\n", file = out)
+        if(have_contrasts)
+            cat("options(contrasts = c(unordered = \"contr.treatment\",",
+                "ordered = \"contr.poly\"))\n", sep="", file = out)
+    }
+
+    cat(readLines(file.path(R.home(), "share", "R", "examples-footer.R")),
+        sep="\n", file = out)
+}
+
+## compares 2 files
+Rdiff <- function(from, to)
+{
+    clean <- function(txt)
+    {
+        ## remove R header
+        if(length(top <- grep("^R version ", txt)) &&
+           length(bot <- grep("quit R.$", txt)))
+            txt <- txt[-(top[1]:bot[1])]
+        ## regularize fancy quotes.
+        txt <- gsub("(\xe2\x80\x98|\x32\x80\x99)", "'", txt,
+                      perl = TRUE, useBytes = TRUE)
+        if(.Platform$OS.type == "windows") # not entirely safe ...
+            txt <- gsub("(\x93|\x94)", "'", txt, perl = TRUE, useBytes = TRUE)
+        pat1 <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded)'
+        pat2 <- if (any(grepl("primitive-funs", from))) '^\\[1\\] [19][0-9][0-9])'
+        else '^<(environment|promise|pointer):'
+        txt <- txt[! (grepl(pat1, txt) | grepl(pat2, txt))]
+        txt
+    }
+
+    left <- clean(readLines(from))
+    right <- clean(readLines(to))
+    if (length(left) == length(right)) {
+        if(all(left == right)) return(0L)
+        diff <- left != right
+        for(i in which(diff)) {
+            cat("< ", left[i], "\n", sep = "")
+            cat("---\n> ", right[i], "\n", sep = "")
+        }
+    } else {
+        ## FIXME: call out to diff -bw, use C code?
+        cat("files differ in number of lines\n")
+    }
+    return(1L)
+}
