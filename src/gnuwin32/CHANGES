@@ -68,8 +68,9 @@ INSTALLATIOM
     o	The installer now checks for Windows 2000 or later.
 
     o	There is a new component, 'Test files', which if selected will
-	install the package-specific tests. [At a later date there
-	will be support to run these.]
+	install the package-specific tests.  Function
+	testInstalledPackages() in package 'tools'can be used to test
+	these.
 
     o	Support for cross-building has been withdrawn.
 
