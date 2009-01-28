@@ -1,6 +1,6 @@
 useDynLib(tools, .registration = TRUE)
 
-export("Rd2HTML", "Rd2ex", "Rd2latex", "Rd2txt", "Rdindex", "Rdiff",
+export("Rd2HTML", "Rd2ex", "Rd2latex", "Rd2txt", "Rdindex",
        "checkDocFiles", "checkDocStyle", "checkFF", "checkMD5sums",
        "checkReplaceFuns", "checkS3methods", "checkTnF",
        "checkVignettes", "codoc", "codocClasses", "codocData",
@@ -12,7 +12,8 @@ export("Rd2HTML", "Rd2ex", "Rd2latex", "Rd2txt", "Rdindex", "Rdiff",
        "installFoundDepends", "vignetteDepends", "write_PACKAGES",
        "xgettext", "xgettext2pot", "xngettext",
        "encoded_text_to_latex", "charset_to_Unicode", "Adobe_glyphs",
-       "checkNEWS", "readNEWS", "dependsOnPkgs")
+       "checkNEWS", "readNEWS", "dependsOnPkgs",
+       "Rdiff", "testInstalledPackage", "testInstalledPackages")
 
 export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
 

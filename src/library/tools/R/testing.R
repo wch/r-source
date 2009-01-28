@@ -86,9 +86,12 @@ Rdiff <- function(from, to)
     clean <- function(txt)
     {
         ## remove R header
-        if(length(top <- grep("^R version ", txt)) &&
+        if(length(top <- grep("^(R version|R : Copyright)", txt)) &&
            length(bot <- grep("quit R.$", txt)))
             txt <- txt[-(top[1]:bot[1])]
+        ## remove BATCH footer
+        nl <- length(txt)
+        if(grepl("proc.time()", txt[nl-2])) txt <- txt[1:(nl-1)]
         ## regularize fancy quotes.
         txt <- gsub("(\xe2\x80\x98|\x32\x80\x99)", "'", txt,
                       perl = TRUE, useBytes = TRUE)
@@ -105,14 +108,100 @@ Rdiff <- function(from, to)
     right <- clean(readLines(to))
     if (length(left) == length(right)) {
         if(all(left == right)) return(0L)
+        cat("\n")
         diff <- left != right
+        ## FIXME do run lengths here
         for(i in which(diff)) {
-            cat("< ", left[i], "\n", sep = "")
-            cat("---\n> ", right[i], "\n", sep = "")
+            cat(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i], "\n",
+                sep = "")
         }
     } else {
-        ## FIXME: call out to diff -bw, use C code?
-        cat("files differ in number of lines\n")
+        ## FIXME: use C code, or something like merge?
+        cat("\nfiles differ in number of lines:\n")
+        a <- tempfile()
+        b <- tempfile()
+        writeLines(left, a)
+        writeLines(right, b)
+        system(paste("diff", shQuote(a), shQuote(b)))
     }
     return(1L)
+}
+
+testInstalledPackages <- function(outDir = ".", errorsAreFatal = TRUE)
+{
+    status <- 0L
+    base_pkgs <- rownames(installed.packages(.Library, priority = "base"))
+    for (pkg in base_pkgs) {
+        res <- testInstalledPackage(pkg, .Library, outDir)
+        if(res) stop(gettextf("testing '%s' failed", pkg),
+                     domain = NA, call. = FALSE)
+    }
+    recommended_pkgs <-
+        rownames(installed.packages(.Library, priority = "recommended"))
+    for (pkg in recommended_pkgs) {
+        res <- testInstalledPackage(pkg, .Library, outDir)
+        if(res) {
+            status <- 1L
+            msg <- gettextf("testing '%s' failed", pkg)
+            if (errorsAreFatal) stop(msg, domain=NA, call.=FALSE)
+            else warning(msg, domain=NA, call.=FALSE, immediate.=TRUE)
+        }
+    }
+    return(invisible(status))
+}
+
+testInstalledPackage <- function(pkg, lib.loc = NULL, outDir = ".")
+{
+    pkgdir <- .find.package(pkg, lib.loc)
+    if (file_test("-d", file.path(pkgdir, "R-ex"))) {
+        Rfile <- paste(pkg, "-Ex-R", sep = "")
+        massageExamples(pkg, file.path(pkgdir, "R-ex"), Rfile)
+        outfile <- paste(pkg, "-Ex.Rout", sep = "")
+        savefile <- paste(outfile, "prev", sep = "." )
+        if (file.exists(outfile)) file.rename(outfile, savefile)
+        message("Running examples in package ", sQuote(pkg))
+        cmd <- paste("R_LIBS=", file.path(R.home(), "bin", "R"), "--vanilla",
+                     "<", Rfile, ">", outfile, "2>&1")
+        cmd <- paste("R_LIBS=", file.path(R.home(), "bin", "R"),
+                     "CMD BATCH --vanilla", Rfile, outfile)
+        res <- system(cmd)
+        if(res) {
+            file.rename(outfile, paste(outfile, "fail", sep="."))
+            return(invisible(1L))
+        }
+        savefile <- paste(outfile, "prev", sep = "." )
+        if (file.exists(savefile)) {
+            message("  comparing ", sQuote(outfile), " to ",
+                    sQuote(basename(savefile)), " ...", appendLF = FALSE)
+            res <- Rdiff(outfile, savefile)
+            if(!res) message(" OK")
+        }
+    }
+
+    if (file_test("-d", d <- file.path(pkgdir, "tests"))) {
+        cwd <- setwd(d)
+        message("Running specific tests for package ", sQuote(pkg))
+        Rfiles <- dir(d, pattern="\\.R$")
+        for(f in Rfiles) {
+            message("  Running ", sQuote(f))
+            outfile <- paste(f, "out", sep = "")
+            cmd <- paste("LANGUAGE=C",
+                         file.path(R.home(), "bin", "R"), "--vanilla",
+                         "<", file.path(d, f), ">", outfile, "2>&1")
+            res <- system(cmd)
+            if(res) {
+                file.rename(outfile, paste(outfile, "fail", sep="."))
+                return(invisible(1L))
+            }
+            savefile <- file.path(d, paste(outfile, "save", sep = "." ))
+            if (file.exists(savefile)) {
+                message("  comparing ", sQuote(outfile), " to ",
+                        sQuote(basename(savefile)), " ...", appendLF = FALSE)
+                res <- Rdiff(outfile, savefile)
+                if(!res) message(" OK")
+            }
+        }
+        setwd(cwd)
+    }
+    invisible(0L)
 }

@@ -129,8 +129,12 @@ NEW FEATURES
 	column numbers so smart text editors can jump to the error
 	location.
 
-    o	str(<1d-array>) now produces "[1:n(1d)]" instead of the previous
-	less decipherable "[, 1:n]".
+    o	str(<1d-array>) now writes "[1:n(1d)]" instead of the previous
+	less clear "[, 1:n]".
+
+    o	New function testInstalledPackage() in package 'tools' allows
+	the examples (and if they exist and were installed) the
+	package-specific tests to be run on an installed package.
 
 
 DEPRECATED & DEFUNCT
@@ -248,7 +252,8 @@ INSTALLATION
 
     o	make install-tests can be used to install the test files,
 	to allowed an installed version of R to be tested -- see the
-	R-admin manual.
+	R-admin manual.  This is also supported by the function
+	testInstalledPackages() in package 'tools'.
 
 
 PACKAGE INSTALLATION
@@ -284,10 +289,14 @@ PACKAGE INSTALLATION
 
     o	There is a unified R script for INSTALL on both Unix-alike and
 	Windows that takes option names used by either in the past.
+
 	It adds --no-multiarch to disable building other than the main
 	sub-architecture, and allows multiple instances of
 	--configure-args and --configure-vars (which will be
 	concatenated).
+
+	New option --install-tests will install any package-specific
+	tests.
 
 
 C-LEVEL FACILITIES
