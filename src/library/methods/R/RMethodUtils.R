@@ -1571,15 +1571,3 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
     assign(label, method, allmtable)
     method
 }
-
-.isSingleString <- function(what)
-  is.character(what) && identical(nzchar(what), TRUE)
-
-.notSingleString <- function(what) {
-  if(identical(what, ""))
-    "non-empty string; got \"\""
-  else if(is.character(what))
-    paste("single string; got a character vector of length", length(what))
-  else
-    gettextf("single string; got an object of class \"%s\"", class(what)[[1]])
-}

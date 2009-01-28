@@ -181,9 +181,6 @@
                   value
               },
               where = envir)
-    setClass("factor", contains = "integer", representation(levels = "character"),
-             where = envir)
-    setOldClass("factor", S4Class = "factor", where = envir)
     setMethod("show", "oldClass", function(object) {
         if(!isS4(object))  {
             print(object)

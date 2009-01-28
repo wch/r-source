@@ -20,8 +20,6 @@ setOldClass <- function(Classes, prototype = NULL,
                         where = topenv(parent.frame()), test = FALSE,
                         S4Class) {
     simpleCase <- is.null(prototype)
-    mainClass <- Classes[[1L]]
-    prevDef <- getClassDef(mainClass, where)
     if(!missing(S4Class)) {
         if(test)
           stop("not allowed to have test==TRUE and an S4Class definition")
@@ -42,14 +40,11 @@ setOldClass <- function(Classes, prototype = NULL,
         }
         ## register simple S3 class(es), including main class, if it's not defined already
         Recall(Classes, where = where)
-        return(.S4OldClass(Classes[[1L]], if(length(Classes) > 1) Classes[[2L]] else "oldClass", S4Class, where, prevDef))
+        return(.S4OldClass(Classes[[1L]], if(length(Classes) > 1) Classes[[2L]] else "oldClass", S4Class, where))
     }
     if(test)
         return(.setOldIs(Classes, where))
-    if(!is.null(prevDef)) {
-        on.exit(.restoreClass(prevDef, where))
-        removeClass(mainClass, where = where) # so Recall() will work
-    }
+    mainClass <- Classes[[1L]]
     prevClass <- "oldClass"
     S3Class <- character()  #will accumulate the S3 classes inherited
     for(cl in rev(Classes)) {
@@ -86,82 +81,23 @@ setOldClass <- function(Classes, prototype = NULL,
         }
        prevClass <- cl
     }
-    if(!is.null(prevDef)) # cancel error action
-      on.exit()
 }
 
-.restoreClass <- function(def, where) {
-    cl <- def@className
-    message(gettextf("Restoring definition of class \"%s\"", cl),
-            domain = NA)
-    if(isClass(cl, where = where))
-       removeClass(cl, where = where)
-    assignClassDef(cl, def, where = where)
-}
-
-.S4OldClass <- function(Class, prevClass, def,where, prevDef) {
-    curDef <- getClassDef(Class, where) # asserted to be defined
-    ## arrange to restore previous definition if there was one.  Also done in setOldClass
-    ## when no S4Class argument supplied
-    if(!is.null(prevDef)) {
-        on.exit(.restoreClass(prevDef, where))
-        removeClass(Class, where = where) # so Recall() will work
-    }
+.S4OldClass <- function(class, prevClass, def,where) {
+    curDef <- getClassDef(class, where) # asserted to be defined
     if(!identical(def@className, curDef@className))
       def <- .renameClassDef(def, curDef@className)
-    ## check that any common slots will give a valid S3 object
-    .validS3Extends(def, curDef)
     def@slots <- c(def@slots, curDef@slots)
-    ext <- c(def@contains, curDef@contains)
-    ## correct ordering & duplicate resolution: copied from .walkClassGraph
-    distOrder <- sort.list(sapply(ext, function(x)x@distance))
-    ext <- ext[distOrder]
-    if(any(duplicated(names(ext)))) {
-        root <- c(rep("S3 source", length(curDef@contains)), rep("S4 source", length(def@contains)))
-        root <- root[distOrder]
-        ext <- .resolveSuperclasses(def, ext, root, where)
-    }
-    def@contains <- ext
-    def@subclasses <- c(def@subclasses, curDef@subclasses)
     proto <- def@prototype
-    if(is.null(attr(proto, ".S3Class"))) { # no S3 class slot, as will usually be true
-        attr(proto, ".S3Class") <- if(.identC(prevClass, "oldClass")) Class else S3Class(curDef@prototype)
+    if(is.null(attr(proto, ".S3Class"))) { # no S3 clas slot, as will usually be true
+        attr(proto, ".S3Class") <- class
         def@prototype <- proto
     }
-    assignClassDef(Class, def, where = where)
-    ## allow an existing superclass relation to remain (it may have a coerce method)
-    ## Otherwise, create a simple transformation, which relies on consistency
-    ## in the slots.
-    if(!extends(def, prevClass, maybe = FALSE))
-      setIs(Class, prevClass, classDef = def, where = where)
+    assignClassDef(class, def, where = where)
+    setIs(class, prevClass, classDef = def, where = where)
     slotsMethod <- function(object) NULL
     body(slotsMethod) <- substitute({LIST}, list(LIST = def@slots))
-    setMethod("slotsFromS3", Class, slotsMethod, where = where)
-    if(!is.null(prevDef)) # cancel error action
-      on.exit()
-}
-
-.validS3Extends <- function(classDef1, classDef2) {
-    slots2 <- classDef2@slots
-    if(length(slots2) > 0) {
-        n2 <- names(slots2)
-        slots1 <- classDef1@slots
-        n1 <- names(slots1)
-        bad <- character()
-        for(what in n2[match(n2, n1, 0) > 0])
-          if(!extends(elNamed(slots1, what), elNamed(slots2, what))) {
-              message(gettextf("Slot \"%s\": class \"%s\" should extend class \"%s\"",
-                               what, elNamed(slots1, what), elNamed(slots2, what)),
-                      domain = NA)
-              bad <- c(bad, what)
-          }
-        if(length(bad)>0)
-          stop(
-               gettextf("invalid S4 class corresponding to S3 class: slots in  S4 version must extend corresponding slots in S3 version: fails for %s",
-                        paste('"', bad, '"', sep="",  collapse = ", ")),
-               domain = NA)
-    }
-    TRUE
+    setMethod("slotsFromS3", class, slotsMethod, where = where)
 }
 
 ##.initS3Classes will make this generic, with a method for "oldClass"

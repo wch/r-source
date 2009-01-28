@@ -38,7 +38,11 @@
 "\{"
 
 ### Each of the classes above extends the virtual class
+
 "language"
+
+
+
 }
 \section{Objects from the Class}{
   \code{"language"} is a virtual class; no objects may be created from

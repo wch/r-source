@@ -1,6 +1,6 @@
 
-R version 2.9.0 Under development (unstable) (2009-01-23 r47697)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.9.0 Under development (unstable) (2008-12-08 r47115)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -290,7 +290,11 @@ Slot "y":
 + }
 > 
 > assertError(b & b)
-Note: Method with signature "brob#ANY" chosen for function "&", target signature "brob#brob".  "ANY#brob" would also be valid
+Warning message:
+Ambiguous method selection for "&", target "brob#brob" (the first of the signatures shown will be used)
+    brob#ANY
+    ANY#brob
+ 
 > assertError(b | 1)
 > assertError(TRUE & b)
 > 

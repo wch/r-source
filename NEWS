@@ -129,17 +129,6 @@ NEW FEATURES
 	column numbers so smart text editors can jump to the error
 	location.
 
-    o	class "factor" has been added to the S3 classes with known slots.
-
-    o	errors in setOldClass() will cause a previous definition to be restored.
-
-    o	Ambiguities in class inheritance and method selection resulting
-	from duplicates in superclasses are now resolved by requiring
-	(if possible) consistency with all the superclass inheritance. The
-	rules for method selection have been revised to take advantage of
-	the improved ordering.
-	See ?Methods and the reference there on inheritance.
-
     o	str(<1d-array>) now produces "[1:n(1d)]" instead of the previous
 	less decipherable "[, 1:n]".
 
