@@ -131,14 +131,9 @@ testInstalledPackages <- function(outDir = ".", errorsAreFatal = TRUE)
 {
     status <- 0L
     base_pkgs <- rownames(installed.packages(.Library, priority = "base"))
-    for (pkg in base_pkgs) {
-        res <- testInstalledPackage(pkg, .Library, outDir)
-        if(res) stop(gettextf("testing '%s' failed", pkg),
-                     domain = NA, call. = FALSE)
-    }
     recommended_pkgs <-
         rownames(installed.packages(.Library, priority = "recommended"))
-    for (pkg in recommended_pkgs) {
+    for (pkg in c(base_pkgs, recommended_pkgs)) {
         res <- testInstalledPackage(pkg, .Library, outDir)
         if(res) {
             status <- 1L
@@ -155,7 +150,7 @@ testInstalledPackage <- function(pkg, lib.loc = NULL, outDir = ".")
     pkgdir <- .find.package(pkg, lib.loc)
     exdir <- file.path(pkgdir, "R-ex")
     if (file_test("-d", exdir)) {
-        Rfile <- paste(pkg, "-Ex-R", sep = "")
+        Rfile <- paste(pkg, "-Ex.R", sep = "")
         ## might be zipped:
         if(file.exists(fzip <- file.path(exdir, "Rex.zip"))) {
             files <- tempfile()
