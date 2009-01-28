@@ -54,7 +54,6 @@ rpackageindices:
 	@$(ECHO)
 
 
-## FIXME: chm-* needs to follow pkg-*
 rpackagehelp: rpackageindices
 ifeq ($(strip $(USE_CHM)),TRUE)
 	@for pkg in $(R_PKGS_BASE); do \
@@ -62,7 +61,7 @@ ifeq ($(strip $(USE_CHM)),TRUE)
 	  $(ECHO) "------ Installing help for package $${pkg}"; \
 	  $(MAKE) --no-print-directory -C ../gnuwin32/help -s RHOME=$(RHOME) \
 	    HELPTYPES='-txt -html -latex -example -chm' \
-	    ziponlyhelp-$${pkg} chm-$${pkg} || exit 1; \
+	    chm-$${pkg} || exit 1; \
 	done
 else
 	@for pkg in $(R_PKGS_BASE); do \

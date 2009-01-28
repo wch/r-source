@@ -1,4 +1,4 @@
-## Only ever called from ../Makefile
+## Only ever called from src/library/Makefile
 
 PERL = PERL5LIB=$(RHOME)/share/perl R_OSTYPE=windows perl
 CAT = cat
@@ -12,13 +12,13 @@ RLIB = $(RHOME)/library
 
 BUILD_HELP=R_HOME=$(RHOME) $(PERL) $(RHOME)/share/perl/build-help.pl -os=windows
 
-## HELPTYPES is set in ../Makefile
+## HELPTYPES is set in src/library/Makefile
 help-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
 	   $(BUILD_HELP) $(HELPTYPES) $(PKGDIR)/$* $(RLIB) $(RLIB)/$* $* ; \
 	fi
 
-chm-%:
+chm-%: ziponlyhelp-%
 	@if test -d $(PKGDIR)/$*/man ; then \
 	  if ! test -d $(PKGDIR)/$*/chm ; then \
 	    $(BUILD_HELP) -chm $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \

@@ -91,9 +91,9 @@ Rdiff <- function(from, to)
             txt <- txt[-(top[1]:bot[1])]
         ## remove BATCH footer
         nl <- length(txt)
-        if(grepl("proc.time()", txt[nl-2])) txt <- txt[1:(nl-1)]
+        if(grepl("^> proc.time()", txt[nl-2])) txt <- txt[1:(nl-3)]
         ## regularize fancy quotes.
-        txt <- gsub("(\xe2\x80\x98|\x32\x80\x99)", "'", txt,
+        txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
                       perl = TRUE, useBytes = TRUE)
         if(.Platform$OS.type == "windows") # not entirely safe ...
             txt <- gsub("(\x93|\x94)", "'", txt, perl = TRUE, useBytes = TRUE)
@@ -153,17 +153,23 @@ testInstalledPackages <- function(outDir = ".", errorsAreFatal = TRUE)
 testInstalledPackage <- function(pkg, lib.loc = NULL, outDir = ".")
 {
     pkgdir <- .find.package(pkg, lib.loc)
-    if (file_test("-d", file.path(pkgdir, "R-ex"))) {
+    exdir <- file.path(pkgdir, "R-ex")
+    if (file_test("-d", exdir)) {
         Rfile <- paste(pkg, "-Ex-R", sep = "")
-        massageExamples(pkg, file.path(pkgdir, "R-ex"), Rfile)
+        ## might be zipped:
+        if(file.exists(fzip <- file.path(exdir, "Rex.zip"))) {
+            files <- tempfile()
+            system(paste("unzip -q", fzip, "-d", files))
+        } else files <- exdir
+        massageExamples(pkg, files, Rfile)
         outfile <- paste(pkg, "-Ex.Rout", sep = "")
         savefile <- paste(outfile, "prev", sep = "." )
         if (file.exists(outfile)) file.rename(outfile, savefile)
         message("Running examples in package ", sQuote(pkg))
-        cmd <- paste("R_LIBS=", file.path(R.home(), "bin", "R"), "--vanilla",
-                     "<", Rfile, ">", outfile, "2>&1")
-        cmd <- paste("R_LIBS=", file.path(R.home(), "bin", "R"),
+        cmd <- paste(file.path(R.home(), "bin", "R"),
                      "CMD BATCH --vanilla", Rfile, outfile)
+        if(.Platform$OS.type == "windows") Sys.setenv(R_LIBS = "")
+        else cmd <- paste("R_LIBS=", cmd)
         res <- system(cmd)
         if(res) {
             file.rename(outfile, paste(outfile, "fail", sep="."))
@@ -171,7 +177,7 @@ testInstalledPackage <- function(pkg, lib.loc = NULL, outDir = ".")
         }
         savefile <- paste(outfile, "prev", sep = "." )
         if (file.exists(savefile)) {
-            message("  comparing ", sQuote(outfile), " to ",
+            message("  Comparing ", sQuote(outfile), " to ",
                     sQuote(basename(savefile)), " ...", appendLF = FALSE)
             res <- Rdiff(outfile, savefile)
             if(!res) message(" OK")
@@ -180,28 +186,29 @@ testInstalledPackage <- function(pkg, lib.loc = NULL, outDir = ".")
 
     if (file_test("-d", d <- file.path(pkgdir, "tests"))) {
         cwd <- setwd(d)
+        on.exit(setwd(cwd))
         message("Running specific tests for package ", sQuote(pkg))
         Rfiles <- dir(d, pattern="\\.R$")
         for(f in Rfiles) {
             message("  Running ", sQuote(f))
             outfile <- paste(f, "out", sep = "")
-            cmd <- paste("LANGUAGE=C",
-                         file.path(R.home(), "bin", "R"), "--vanilla",
-                         "<", file.path(d, f), ">", outfile, "2>&1")
-            res <- system(cmd)
+            cmd <- paste(file.path(R.home(), "bin", "R"),
+                         "CMD BATCH --vanilla", file.path(d, f), outfile)
+            if(.Platform$OS.type == "windows") Sys.setenv(LANGUAGE = "C")
+            else cmd <- paste("R_LIBS=", cmd)
+           res <- system(cmd)
             if(res) {
                 file.rename(outfile, paste(outfile, "fail", sep="."))
                 return(invisible(1L))
             }
             savefile <- file.path(d, paste(outfile, "save", sep = "." ))
             if (file.exists(savefile)) {
-                message("  comparing ", sQuote(outfile), " to ",
+                message("  Comparing ", sQuote(outfile), " to ",
                         sQuote(basename(savefile)), " ...", appendLF = FALSE)
                 res <- Rdiff(outfile, savefile)
                 if(!res) message(" OK")
             }
         }
-        setwd(cwd)
     }
     invisible(0L)
 }
