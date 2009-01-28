@@ -149,6 +149,8 @@ testInstalledPackage <- function(pkg, lib.loc = NULL, outDir = ".")
 {
     pkgdir <- .find.package(pkg, lib.loc)
     exdir <- file.path(pkgdir, "R-ex")
+    owd <- setwd(outDir)
+    on.exit(setwd(owd))
     if (file_test("-d", exdir)) {
         Rfile <- paste(pkg, "-Ex.R", sep = "")
         ## might be zipped:
@@ -180,8 +182,11 @@ testInstalledPackage <- function(pkg, lib.loc = NULL, outDir = ".")
     }
 
     if (file_test("-d", d <- file.path(pkgdir, "tests"))) {
-        cwd <- setwd(d)
-        on.exit(setwd(cwd))
+        this <- paste(pkg, "tests", sep="-")
+        unlink(this, recursive = TRUE)
+        dir.create(this)
+        system(paste("cp -pr", file.path(d, "*"), this)) # FIXME: avoid
+        setwd(this)
         message("Running specific tests for package ", sQuote(pkg))
         Rfiles <- dir(d, pattern="\\.R$")
         for(f in Rfiles) {

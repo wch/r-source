@@ -15,7 +15,8 @@ testInstalledPackages(outDir = ".", errorsAreFatal = TRUE)
   \item{pkg}{name of an installed package.}
   \item{lib.loc}{library path(s) in which to look for the package.  See
     \code{\link{library}}.}
-  \item{outDir}{the directory into which to write the ouptut files.}
+  \item{outDir}{the directory into which to write the ouptut files: this
+    should already exist.}
   \item{errorsAreFatal}{logical: should testing terminate at the first error?}
 }
 \details{
@@ -25,8 +26,8 @@ testInstalledPackages(outDir = ".", errorsAreFatal = TRUE)
   installed by default, but wlll be if
   \command{R CMD INSTALL --install-tests} was used.
 
-  Package tests are run in the \file{tests} directory of the package,
-  and leave output there.  [This may change in future versions.]
+  Package tests are run in a \file{\var{pkg}-tests} subdirectory of
+  \file{outDir}, and leave their output there.
 
   Base and recommended packages are testing in alphabetic order in the
   current locale.
