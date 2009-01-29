@@ -26,7 +26,6 @@ all: Makefile DESCRIPTION
 	@$(MAKE) mkR mkdesc mkdemos mkpo mkman 
 	@$(MAKE) mklazy
 
-instfiles:
-
 
 include $(top_srcdir)/share/make/basepkg.mk
+
