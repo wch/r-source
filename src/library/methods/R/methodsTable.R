@@ -299,7 +299,7 @@
           stop(gettextf("The \"ambiguousMethodSelection\" option should be a function to be called as the condition action; got an object of class \"%s\"",
                          class(condAction)), domain = NA)
         select <- withCallingHandlers(
-                              .disambiguateMethods(classes, select, fdef@generic, methods, supersList, fromGroup),
+                              .disambiguateMethods(classes, select, fdef@generic, methods, supersList, fromGroup, classDefs),
                                ambiguousMethodSelection=condAction)
       }
       methods <- methods[select]
@@ -429,7 +429,7 @@
   dist
 }
 
-.getBestMethodsOld <- function(methods, supersList, classDefs, fromGroup, verbose = FALSE) {
+.leastMethodDistance <- function(methods, supersList, classDefs, fromGroup, verbose = FALSE) {
     n <- length(methods)
     dist <- rep(0, n)
     nArg <- length(classDefs)
@@ -499,20 +499,28 @@
       seqn[!dominated]
 }
 
-.disambiguateMethods <- function(target, which, generic, methods, supersList, fromGroup) {
+.disambiguateMethods <- function(target, which, generic, methods, supersList, fromGroup, classDefs) {
   ## save full set of possibilities for condition object
   candidates <- methods[which]
-  ## if some are group methods, eliminate those
   note <- character()
-  if(any(fromGroup[which]) && !all(fromGroup[which])) {
+  ## choose based on total generational distance
+  which2 <- .leastMethodDistance(methods[which],supersList, classDefs, fromGroup)
+  if(length(which2) < length(which)) {
+    note <- c(note, gettextf("Selecting %d methods of min. distance", which2))
+    which <- which2
+  }
+  ## if some are group methods, eliminate those
+  if(length(which) > 1 && any(fromGroup[which]) && !all(fromGroup[which])) {
     which <- which[!fromGroup]
     note <- c(note, gettextf("Selecting %d non-group methods", length(which)))
   }
   ## prefer partially direct methods
-  direct <- sapply(methods[which], function(x, target) (is(x, "MethodDefinition") && any(target == x@defined)), target = target)
-  if(any(direct) && !all(direct)) {
-    which <- which[direct]
-    note <- c(note, gettextf("Selecting %d partially exact-matching method(s)", length(which)))
+  if(length(which) > 1) {
+    direct <- sapply(methods[which], function(x, target) (is(x, "MethodDefinition") && any(target == x@defined)), target = target)
+    if(any(direct) && !all(direct)) {
+      which <- which[direct]
+      note <- c(note, gettextf("Selecting %d partially exact-matching method(s)", length(which)))
+    }
   }
   which <- which[[1L]]
   selected <- names(methods)[[which]]
