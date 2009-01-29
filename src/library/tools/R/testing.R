@@ -97,11 +97,8 @@ Rdiff <- function(from, to, useDiff = FALSE)
                       perl = TRUE, useBytes = TRUE)
         if(.Platform$OS.type == "windows") # not entirely safe ...
             txt <- gsub("(\x93|\x94)", "'", txt, perl = TRUE, useBytes = TRUE)
-        pat1 <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded)'
-        pat2 <- if (any(grepl("primitive-funs", from))) '^\\[1\\] [19][0-9][0-9])'
-        else '^<(environment|promise|pointer):'
-        txt <- txt[! (grepl(pat1, txt) | grepl(pat2, txt))]
-        txt
+        pat <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded|^<(environment|promise|pointer): )'
+        txt[! (grepl(pat, txt)]
     }
 
     left <- clean(readLines(from))

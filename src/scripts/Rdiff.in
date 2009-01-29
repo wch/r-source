@@ -49,16 +49,7 @@ s1="s/‘/'/g"
 s2="s/’/'/g"
 
 ## egrep pattern to get rid of some more
-## <= 2.2.x was pattern='(^Number of.*:|^Time |^Loading required package.*'
-pattern='(^Time |^Loading required package.*|^Package [A-Za-z][A-Za-z0-9]+ loaded'
-case "${ffile}" in
-  *primitive-funs*)
-    pattern=${pattern}'|^\[1\] [19][0-9][0-9])'
-    ;;
-  *)
-    pattern=${pattern}'|^<(environment|promise|pointer): )'
-    ;;
-esac
+pattern='(^Time |^Loading required package.*|^Package [A-Za-z][A-Za-z0-9]+ loaded|^<(environment|promise|pointer): )'
 
 if test ${ffile} = '-' ; then
   ffile=''
