@@ -659,15 +659,16 @@ cd tests
 @end example
 
 @noindent
-and other useful targets are @code{test-Packages} and
-@code{test-Recommended} to the run the example and package-specific
-tests in the standard and recommmended packages respectively.
+and other useful targets are @code{test-BasePackages} and
+@code{test-Recommended} to the run tests of the standard and
+recommmended packages (if installed) respectively.
 
-This runs all the tests relevant to the installed @R{}, but not for
-example the ones checking the examples in the manuals nor making the
-standalone Rmath library.  This can occasionally be useful when the
-operating environment has been changed, for example by OS updates or by
-substituting the BLAS (@pxref{Shared BLAS}).
+This re-runs all the tests relevant to the installed @R{} (including for
+example code in the package vignettes), but not for example the ones
+checking the example code in the manuals nor making the standalone Rmath
+library.  This can occasionally be useful when the operating environment
+has been changed, for example by OS updates or by substituting the BLAS
+(@pxref{Shared BLAS}).
 
 
 @node Uninstallation, Sub-architectures, Installation, Installing R under Unix-alikes
@@ -687,8 +688,8 @@ This will also uninstall any installed manuals.  There are specific
 targets to uninstall DVI, info and PDF manuals in
 @file{doc/manual/Makefile}.  
 
-Target @code{uninstall-tests} will
-uninstall any installed tests.
+Target @code{uninstall-tests} will uninstall any installed tests, as
+well as removing the directory @file{tests} containing the test results.
 
 
 
@@ -745,7 +746,7 @@ architecture-specific versions will be available in e.g.@:
 architectures will run on the platform so the architecture of
 @command{Rscript} does not matter.
 
-Weh running post-install tests with sub-architectures, use
+When running post-install tests with sub-architectures, use
 
 @example
 R --arch=@var{name} CMD make check[-devel|all]

@@ -81,7 +81,7 @@ massageExamples <- function(pkg, files, outFile = stdout())
 }
 
 ## compares 2 files
-Rdiff <- function(from, to)
+Rdiff <- function(from, to, useDiff = FALSE)
 {
     clean <- function(txt)
     {
@@ -106,7 +106,7 @@ Rdiff <- function(from, to)
 
     left <- clean(readLines(from))
     right <- clean(readLines(to))
-    if (length(left) == length(right)) {
+    if (!useDiff && (length(left) == length(right))) {
         if(all(left == right)) return(0L)
         cat("\n")
         diff <- left != right
@@ -127,14 +127,22 @@ Rdiff <- function(from, to)
     return(1L)
 }
 
-testInstalledPackages <- function(outDir = ".", errorsAreFatal = TRUE)
+testInstalledPackages <-
+    function(outDir = ".", errorsAreFatal = TRUE,
+             scope = c("both", "base", "recommended"),
+             types = c("examples", "tests", "vignettes"))
 {
+    scope <- match.arg(scope)
     status <- 0L
-    base_pkgs <- rownames(installed.packages(.Library, priority = "base"))
-    recommended_pkgs <-
-        rownames(installed.packages(.Library, priority = "recommended"))
-    for (pkg in c(base_pkgs, recommended_pkgs)) {
-        res <- testInstalledPackage(pkg, .Library, outDir)
+    pkgs <- character()
+    if(scope %in% c("both", "base"))
+        pkgs <- rownames(installed.packages(.Library, priority = "base"))
+    if(scope %in% c("both", "recommended"))
+        pkgs <- c(pkgs,
+                  rownames(installed.packages(.Library,
+                                              priority = "recommended")))
+    for (pkg in pkgs) {
+        res <- testInstalledPackage(pkg, .Library, outDir, types)
         if(res) {
             status <- 1L
             msg <- gettextf("testing '%s' failed", pkg)
@@ -145,13 +153,16 @@ testInstalledPackages <- function(outDir = ".", errorsAreFatal = TRUE)
     return(invisible(status))
 }
 
-testInstalledPackage <- function(pkg, lib.loc = NULL, outDir = ".")
+testInstalledPackage <-
+    function(pkg, lib.loc = NULL, outDir = ".",
+             types = c("examples", "tests", "vignettes"))
 {
+    types <- pmatch(types, c("examples", "tests", "vignettes"))
     pkgdir <- .find.package(pkg, lib.loc)
     exdir <- file.path(pkgdir, "R-ex")
     owd <- setwd(outDir)
     on.exit(setwd(owd))
-    if (file_test("-d", exdir)) {
+    if (1 %in% types && file_test("-d", exdir)) {
         Rfile <- paste(pkg, "-Ex.R", sep = "")
         ## might be zipped:
         if(file.exists(fzip <- file.path(exdir, "Rex.zip"))) {
@@ -181,7 +192,7 @@ testInstalledPackage <- function(pkg, lib.loc = NULL, outDir = ".")
         }
     }
 
-    if (file_test("-d", d <- file.path(pkgdir, "tests"))) {
+    if (2 %in% types && file_test("-d", d <- file.path(pkgdir, "tests"))) {
         this <- paste(pkg, "tests", sep="-")
         unlink(this, recursive = TRUE)
         dir.create(this)
@@ -210,5 +221,11 @@ testInstalledPackage <- function(pkg, lib.loc = NULL, outDir = ".")
             }
         }
     }
+
+    if (3 %in% types && file_test("-d", d <- file.path(pkgdir, "doc"))) {
+        message("Running vignettes for package ", sQuote(pkg))
+        checkVignettes(pkg, lib.loc, latex = FALSE, weave =TRUE)
+    }
+
     invisible(0L)
 }

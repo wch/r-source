@@ -72,7 +72,7 @@ install-tests:
 	   gzip -dc "$(abs_top_srcdir)/src/library/Recommended/$${pkg}.tgz" | $(TAR) xf - ; \
 	 done ; \
 	 for pkg in MASS class nnet spatial;  do \
-	  mv VR/$${pkg} . ;\
+	  mv VR/$${pkg} . ; \
 	 done ; \
 	 for pkg in $(R_PKGS_RECOMMENDED); do \
 	  if test -d $${pkg}/tests; then \
@@ -82,6 +82,12 @@ install-tests:
 	    done; \
 	  fi; \
 	 done)
+
+uninstall-tests:
+	@for pkg in $(R_PKGS_RECOMMENDED); do \
+	 rm -rf "$(DESTDIR)$(rhome)/library/$${pkg}/tests" ; \
+	done
+
 
 mostlyclean: clean
 clean:

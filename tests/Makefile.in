@@ -475,22 +475,17 @@ maintainer-clean: distclean
 R install install-strip uninstall TAGS info dvi:
 
 install-tests:
-	@$(ECHO) "installing tests ..."
+	@$(ECHO) "installing specific tests"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/tests"
-	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/tests/Examples"	
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/tests/Packages"
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rhome)/tests"; \
 	done
 	@$(INSTALL_DATA) $(srcdir)/Makefile.install \
 	  "$(DESTDIR)/$(rhome)/tests/Makefile"	
-	@$(INSTALL_DATA) $(srcdir)/Examples/Makefile.install \
-	  "$(DESTDIR)$(rhome)/tests/Examples/Makefile"	
 
 uninstall-tests:
-	@$(ECHO) "uninstalling tests ..."
-	for pkg in $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) do \ 
-	  rm -rf "$(DESTDIR)$(rhome)/library/$${pkg}"; \
-	done
+	@$(ECHO) "uninstalling specific tests and removing results"
 	@rm -rf "$(DESTDIR)$(rhome)/tests"
 
 distdir: $(DISTFILES)

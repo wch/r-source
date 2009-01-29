@@ -9,8 +9,6 @@ top_builddir = ..
 
 include $(top_builddir)/etc$(R_ARCH)/Makeconf
 
-SUBDIRS = Examples
-
 test-src-gct = \
 	eval-etc.R \
 	simple-true.R \
@@ -85,15 +83,13 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct
 
-all-basic-tests = Examples Specific Reg Internet
+all-basic-tests = BasePackages Specific Reg Internet
 ## not Docs Standalone
-all-devel-tests = IsAs Random Demo Rd Primitive Regexp Segfault Packages2
+all-devel-tests = IsAs Random Demo Rd Primitive Regexp Segfault
 
 all check: clean2 test-all-basics
 check-devel: check test-all-devel
 check-all: check-devel test-Recommended
-
-test-Packages: test-Examples test-Packages2
 
 FORCE:
 
@@ -174,11 +170,6 @@ test-all-devel:
 	  $(MAKE) test-$${name} || exit 1; \
 	done
 
-test-Examples:
-	@(cd Examples && $(MAKE) $@)
-test-Examples-Recommended:
-	@(cd Examples && $(MAKE) $@)
-
 test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)
 test-Specific:
@@ -188,45 +179,14 @@ test-Specific:
 	@$(ECHO) "running sloppy specific tests"
 	@$(MAKE) test-Specific-sloppy RVAL_IF_DIFF=0
 
-test-Packages2:
-	@for p in $(R_PKGS_BASE); do \
-	  if test -d "../library/$${p}/tests"; then \
-	    $(ECHO) "checking tests from package '$${p}'"; \
-	    (cd ../library/$${p}/tests ; \
-	    tmp=""; \
-	    for f in `ls *.R`; do \
-	      tmp="$${tmp} $$f"; \
-	    done ; \
-	    $(MAKE) -f "$(R_SHARE_DIR)/make/tests.mk" test-src-1="$${tmp}"); \
-	  fi; \
-	done
-	@for p in $(R_PKGS_BASE); do \
-	  if test -d "../library/$${p}/doc"; then \
-	    $(ECHO) "checking vignettes from package '$${p}'"; \
-	    $(ECHO) "tools::checkVignettes(\"$${p}\", latex=FALSE, weave=TRUE)" \
-	      | $(R) --slave; \
-	  fi; \
-	done
+test-BasePackages:
+	@$(MKINSTALLDIRS) Packages
+	@$(ECHO) "tools::testInstalledPackages(outDir='Packages', scope='base')" | $(R) --slave
 
-test-Recommended: test-Examples-Recommended
-	@for p in $(R_PKGS_RECOMMENDED); do \
-	  if test -d "../library/$${p}/tests"; then \
-	    $(ECHO) "checking tests from package '$${p}'"; \
-	    (cd ../library/$${p}/tests ; \
-	    tmp=""; \
-	    for f in `ls *.R`; do \
-	      tmp="$${tmp} $$f"; \
-	    done ; \
-	    $(MAKE) -f "$(R_SHARE_DIR)/make/tests.mk" test-src-1="$${tmp}"); \
-	  fi; \
-	done
-	@for p in $(R_PKGS_RECOMMENDED); do \
-	  if test -d "./$${p}/doc"; then \
-	    $(ECHO) "checking vignettes from package '$${p}'"; \
-	    $(ECHO) "tools::checkVignettes(\"$${p}\", latex=FALSE, weave=TRUE)" \
-	      | $(R) --slave; \
-	  fi; \
-	done
+test-Recommended:
+	@$(MKINSTALLDIRS) Packages
+	@$(ECHO) "tools::testInstalledPackages(outDir='Packages', scope='recommended')" | $(R) --slave
+
 
 test-Gct: $(test-out-gct)
 
@@ -414,9 +374,6 @@ test-undoc:
 
 mostlyclean: clean
 clean:
-	-@for d in $(SUBDIRS); do \
-	  (cd $${d} && $(MAKE) $@); \
-	done
 	-@rm -f stamp-R Rplot* Rprof.out data dumpdata.R \
 	  reg-plot-latin1.ps reg-plot.ps reg-tests-?.ps \
 	  R-exts.* R-intro.R R-intro.Rout \

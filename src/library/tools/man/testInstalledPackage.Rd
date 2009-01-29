@@ -7,9 +7,12 @@
   and recommended packages.
 }
 \usage{
-testInstalledPackage(pkg, lib.loc = NULL, outDir = ".")
+testInstalledPackage(pkg, lib.loc = NULL, outDir = ".",
+                     types = c("examples", "tests", "vignettes"))
 
-testInstalledPackages(outDir = ".", errorsAreFatal = TRUE)
+testInstalledPackages(outDir = ".", errorsAreFatal = TRUE,
+                      scope = c("both", "base", "recommended"),
+                      types = c("examples", "tests", "vignettes"))
 }
 \arguments{
   \item{pkg}{name of an installed package.}
@@ -17,14 +20,18 @@ testInstalledPackages(outDir = ".", errorsAreFatal = TRUE)
     \code{\link{library}}.}
   \item{outDir}{the directory into which to write the ouptut files: this
     should already exist.}
-  \item{errorsAreFatal}{logical: should testing terminate at the first error?}
+  \item{types}{type(s) of tests to be done.}
+  \item{errorsAreFatal}{logical: should testing terminate at the first
+    error?}
+  \item{scope}{Which set(s) of packages should be tested?}
 }
 \details{
-  These tests depend on having the package example file installed (which
+  These tests depend on having the package example files installed (which
   is the default).  If package-specific tests are found in a
-  \file{tests} directory they too will be tested: these are not
+  \file{tests} directory they can be tested: these are not
   installed by default, but wlll be if
-  \command{R CMD INSTALL --install-tests} was used.
+  \command{R CMD INSTALL --install-tests} was used.  Finally, the \R
+  code in any vignettes can be extracted and tested.
 
   Package tests are run in a \file{\var{pkg}-tests} subdirectory of
   \file{outDir}, and leave their output there.

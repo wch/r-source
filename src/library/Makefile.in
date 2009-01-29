@@ -154,10 +154,14 @@ install-tests:
 	    done; \
 	  fi; \
 	done
-	@(cd Recommended && $(MAKE) $@)
+@USE_RECOMMENDED_PACKAGES_TRUE@	@(cd Recommended && $(MAKE) $@)
 
-## all the uninstall is done in tests/Makefile for now.
 uninstall-tests:
+	@$(ECHO) "uninstalling package tests"
+	@for pkg in $(R_PKGS_BASE); do \
+	 rm -rf "$(DESTDIR)$(rhome)/library/$${pkg}/tests" ; \
+	done
+@USE_RECOMMENDED_PACKAGES_TRUE@	@(cd Recommended && $(MAKE) $@)
 
 mostlyclean: clean
 clean:
