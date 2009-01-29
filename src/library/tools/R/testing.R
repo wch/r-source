@@ -98,7 +98,7 @@ Rdiff <- function(from, to, useDiff = FALSE)
         if(.Platform$OS.type == "windows") # not entirely safe ...
             txt <- gsub("(\x93|\x94)", "'", txt, perl = TRUE, useBytes = TRUE)
         pat <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded|^<(environment|promise|pointer): )'
-        txt[! (grepl(pat, txt)]
+        txt[!grepl(pat, txt)]
     }
 
     left <- clean(readLines(from))
