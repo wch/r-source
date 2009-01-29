@@ -53,7 +53,8 @@ install-man: installdirs R.1 Rscript.1
 	@@$(INSTALL_DATA) ${srcdir}/Rscript.1 $(DESTDIR)$(mandir)/man1
 install-message:
 	@$(ECHO) "installing $(subdir) ..."
-install-sources: installdirs
+install-sources:
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)"
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rdocdir)"; \
 	done
