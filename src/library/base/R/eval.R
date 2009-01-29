@@ -29,8 +29,9 @@ eval.parent <- function(expr, n = 1){
 }
 
 evalq <-
-    function (expr, envir, enclos)
-    eval.parent(substitute(eval(quote(expr), envir, enclos)))
+    function (expr, envir = parent.frame(), enclos = if (is.list(envir) ||
+    is.pairlist(envir)) parent.frame() else baseenv())
+      .Internal(eval(substitute(expr), envir, enclos)) 
 
 new.env <- function (hash=FALSE, parent=parent.frame(), size=29L)
     .Internal(new.env(hash, parent, size))
