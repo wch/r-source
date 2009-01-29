@@ -46,18 +46,18 @@ install: install-message installdirs install-sources install-sources2 install-ma
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)"
 	@$(MKINSTALLDIRS) $(DESTDIR)$(mandir)/man1
-install-man: R.1 Rscript.1
+install-man: installdirs R.1 Rscript.1
 	@rm -f $(DESTDIR)$(mandir)/man1/R.1
 	@$(INSTALL_DATA) R.1 $(DESTDIR)$(mandir)/man1
 	@rm -f $(DESTDIR)$(mandir)/man1/Rscript.1
 	@@$(INSTALL_DATA) ${srcdir}/Rscript.1 $(DESTDIR)$(mandir)/man1
 install-message:
 	@$(ECHO) "installing $(subdir) ..."
-install-sources:
+install-sources: installdirs
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rdocdir)"; \
 	done
-install-sources2:
+install-sources2: installdirs
 	@for f in $(NON_SVN_INSTFILES); do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)"; \
 	done

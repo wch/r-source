@@ -637,9 +637,6 @@ destination.  In this case @code{prefix} (and so on) should reflect
 the final destination, and @env{DESTDIR} should be used: see
 @uref{http://www.gnu.org/prep/standards/html_node/DESTDIR.html}
 
-Parallel makes are supported for making @R{} only, not for installation
-nor for checking.
-
 
 You can optionally install the run-time tests that are part of
 @command{make check-all} by

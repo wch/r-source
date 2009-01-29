@@ -255,6 +255,8 @@ INSTALLATION
 	R-admin manual.  This is also supported by the function
 	testInstalledPackages() in package 'tools'.
 
+    o	'make install' using a parallel make should now work.
+
 
 PACKAGE INSTALLATION
 

@@ -361,23 +361,23 @@ install-message:
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)/manual"
 install-strip: install
-install-dvi: dvi installdirs install-images-eps
+install-dvi: installdirs dvi installdirs install-images-eps
 	@$(ECHO) "installing R manuals in DVI format ..."
 	@for f in *.dvi; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/manual"; \
 	done
-install-images-eps:
+install-images-eps: installdirs
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)/manual/images"
 	@-for f in $(srcdir)/images/*.eps; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/manual/images"; \
 	done
-install-images-pdf:
+install-images-pdf: installdirs
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)/manual/images"
 	@-for f in $(srcdir)/images/*.pdf; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/manual/images"; \
 	done
 ## if there is no makeinfo >= 4.7 then there are no html pages
-install-html:
+install-html: installdirs
 	@for f in $(OBJECTS_HTML); do \
 	  if test -f $${f} ; then \
 	    $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/manual"; \

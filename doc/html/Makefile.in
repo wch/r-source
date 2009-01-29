@@ -69,7 +69,7 @@ installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)/html"
 install-message:
 	@$(ECHO) "installing $(subdir) ..."
-install-sources:
+install-sources: installdirs
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rdocdir)/html"; \
 	done
