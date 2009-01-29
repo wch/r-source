@@ -16,23 +16,40 @@ DISTFILES = Makefile.in
 SUBDIRS = blas bzip2 pcre xdr zlib @USE_NLS_TRUE@ intl
 SUBDIRS_WITH_NO_BUILD = graphapp trio tzone @USE_NLS_FALSE@ intl
 
-RBLAS =@BLAS_SHLIB_TRUE@ blas
-LIBBZ2 =@BUILD_BZLIB_TRUE@ bzip2
-LIBPCRE =@BUILD_PCRE_TRUE@ pcre
-LIBZ =@BUILD_ZLIB_TRUE@ zlib
-LIBXDR =@BUILD_XDR_TRUE@ xdr
-LIBINTL =@BUILD_LIBINTL_TRUE@ intl
-EXTRA_LIBS = $(RBLAS) $(LIBBZ2) $(LIBPCRE) $(LIBZ) $(LIBXDR) $(LIBINTL)
+RBLAS =@BLAS_SHLIB_TRUE@ make.blas
+LIBBZ2 =@BUILD_BZLIB_TRUE@ make.bzip2
+LIBPCRE =@BUILD_PCRE_TRUE@ make.pcre
+LIBZ =@BUILD_ZLIB_TRUE@ make.zlib
+LIBXDR =@BUILD_XDR_TRUE@ make.xdr
+LIBINTL =@BUILD_LIBINTL_TRUE@ make.intl
+EXTRAS = $(RBLAS) $(LIBBZ2) $(LIBPCRE) $(LIBZ) $(LIBXDR) $(LIBINTL)
 
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-R: Makefile
-	@list='$(EXTRA_LIBS)'; for d in $${list}; do \
-	  (cd $${d} && $(MAKE) $@) || exit 1; \
-	done
+## can be done in parallel
+R: Makefile $(EXTRAS)
+
+make.blas: Makefile
+	@(cd blas; $(MAKE))
+
+make.bzip2: Makefile
+	@(cd bzip2; $(MAKE))
+
+make.pcre: Makefile
+	@(cd pcre; $(MAKE))
+
+make.zlib: Makefile
+	@(cd zlib; $(MAKE))
+
+make.xdr: Makefile
+	@(cd xdr; $(MAKE))
+
+make.intl: Makefile
+	@(cd intl; $(MAKE))
+
 
 mostlyclean: clean
 clean:
