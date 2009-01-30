@@ -135,12 +135,12 @@ testInstalledPackages <-
     scope <- match.arg(scope)
     status <- 0L
     pkgs <- character()
+    known_packages <- .get_standard_package_names()
     if(scope %in% c("both", "base"))
-        pkgs <- rownames(installed.packages(.Library, priority = "base"))
+        pkgs <- known_packages$base
     if(scope %in% c("both", "recommended"))
-        pkgs <- c(pkgs,
-                  rownames(installed.packages(.Library,
-                                              priority = "recommended")))
+        pkgs <- c(pkgs, known_packages$recommended)
+    ## It *should* be an error if any of these are missing
     for (pkg in pkgs) {
         res <- testInstalledPackage(pkg, .Library, outDir, types)
         if(res) {

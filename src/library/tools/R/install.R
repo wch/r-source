@@ -14,6 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## calls sytem() on Windows for sh mv rm make zip perl hhc
+
 .install_packages <- function(args = NULL)
 {
     .file_test <- function(op, x, y)
@@ -155,6 +157,7 @@
             if (lock && nzchar(lockdir) &&
                 .file_test("-d", lp <- file.path(lockdir, p))) {
                 starsmsg(stars, "Restoring previous ", sQuote(pkgdir))
+                ## FIXME: on Windows use file.copy(recursive = TRUE)
                 system(paste("mv", lp, pkgdir))
             }
         }
@@ -309,8 +312,8 @@
             version <- desc["Version"]
             filename <- paste0(bundle_name, "_", version, ".zip")
             filepath <- shQuote(file.path(startdir, filename))
-            ## zip appends to existing archives
-            system(paste("rm -f", filepath))
+            ## system(paste("rm -f", filepath))
+            unlink(filepath)
             owd <- setwd(lib)
             system(paste(ZIP, "-r9Xq", filepath, bundle_pkgs))
             message("packaged installation of ",
@@ -377,6 +380,7 @@
 
         cp_r <- function(from, to)
         {
+            ## unused now
             if (WINDOWS) {
                 system(paste0("cp -r ", shQuote(from), "/* ", shQuote(to)))
             } else {
@@ -451,6 +455,7 @@
                 if (length(files)) file.copy(files, R.home("share"), TRUE)
             }
             if (.file_test("-d", "library")) {
+                ## FIXME use file.copy
                 system(paste("cp -r ./library", R.home()))
             }
             return()
@@ -473,6 +478,7 @@
             ## Back up a previous version
             if (lock) {
                 if (debug) starsmsg(stars, "backing up earlier installation")
+                ## FIXME use file.copy + unlink
                 system(paste("mv", instdir, file.path(lockdir, pkg_name)))
             } else if (more_than_libs && !WINDOWS)
                 unlink(instdir, recursive = TRUE)
@@ -496,18 +502,11 @@
             thiszip <- parse_description_field(desc, "ZipData",
                                                default = TRUE)
             if (!thislazy && thiszip && .file_test("-d", "data")) {
-                sizes <- system("ls -s1 data", intern = TRUE)
-                out <- 0; nodups <- TRUE; prev <- ""
-                for(line in sizes) {
-                    if (length(grep("total", line))) next
-                    this <- sub("([ 0-9]*)(.*)", "\\1", line)
-                    out <- out + as.numeric(this)
-                    this <- sub("[[:space:]]*[0-9]+\\ ", "", line)
-                    this <- sub("\\.[a-zA-Z]+$", "", this)
-                    if (this == prev) nodups <- FALSE
-                    prev <- this
+                fi <- file.info(dir("data"))
+                if (sum(fi$size) > 100) {
+                    this <- sub("\\.[a-zA-Z]+$", "", row.names(fi))
+                    if(!any(duplicated(this))) use_zip_data <- TRUE
                 }
-                if(nodups && out > 100) use_zip_data <- TRUE
             }
             if (.file_test("-d", "man") &&
                 length(Sys.glob("man/*.Rd")) > 20) use_zip_help <- TRUE
@@ -774,11 +773,14 @@
                 starsmsg(stars, "inst")
                 ## FIXME avoid installing .svn etc?
                 cp_r("inst", instdir)
+                ## file.copy("inst", "instdir", recursive = TRUE)
             }
 
             if (install_tests && .file_test("-d", "tests") && !fake) {
                 starsmsg(stars, "tests")
+                ## FIXME use file.copy
                 system(paste0("cp -r tests " , shQuote(instdir)))
+                ## file.copy("tests", instdir, recursive = TRUE)
             }
 
             ## Defunct:
