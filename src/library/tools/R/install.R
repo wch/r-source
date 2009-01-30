@@ -502,7 +502,7 @@
             thiszip <- parse_description_field(desc, "ZipData",
                                                default = TRUE)
             if (!thislazy && thiszip && .file_test("-d", "data")) {
-                fi <- file.info(dir("data"))
+                fi <- file.info(dir("data", full.names=TRUE))
                 if (sum(fi$size) > 100) {
                     this <- sub("\\.[a-zA-Z]+$", "", row.names(fi))
                     if(!any(duplicated(this))) use_zip_data <- TRUE
@@ -778,9 +778,8 @@
 
             if (install_tests && .file_test("-d", "tests") && !fake) {
                 starsmsg(stars, "tests")
-                ## FIXME use file.copy
-                system(paste0("cp -r tests " , shQuote(instdir)))
-                ## file.copy("tests", instdir, recursive = TRUE)
+                ## system(paste0("cp -r tests " , shQuote(instdir)))
+                file.copy("tests", instdir, recursive = TRUE)
             }
 
             ## Defunct:
