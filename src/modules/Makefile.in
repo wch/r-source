@@ -23,7 +23,7 @@ all: Makefile R
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-R: Makefile
+R: Makefile make.internet make.lapack make.vfonts
 	@for d in "$(R_MODULES)"; do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
