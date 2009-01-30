@@ -1958,6 +1958,120 @@ end:
 }
 #endif
 
+/* take file/dir 'name' in dir 'from' and copy it to 'to' 
+   'from', 'to' should have trailing path separator if needed.
+*/
+static int do_copy(const char* from, const char* name, const char* to,
+		   int over, int recursive)
+{
+    struct stat sb;
+    int nc, nfail = 0, res;
+    char dest[PATH_MAX], this[PATH_MAX];
+
+    /* REprintf("from: %s, name: %s, to: %s\n", from, name, to); */
+    snprintf(this, PATH_MAX, "%s%s", from, name);
+    stat(this, &sb);
+    if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
+	DIR *dir;
+	struct dirent *de;
+	char p[PATH_MAX];
+
+	if (!recursive) return 1;
+	nc = strlen(to);
+	snprintf(dest, PATH_MAX, "%s%s", to, name);
+#ifdef Win32
+	res = mkdir(dest);
+#else
+	res = mkdir(dest, sb.st_mode);
+#endif
+	if (res && errno != EEXIST) return 1;
+	strcat(dest, R_FileSep);
+	if ((dir = opendir(name)) != NULL) {
+	    while ((de = readdir(dir))) {
+		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
+		    continue;
+		snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep, de->d_name);
+		do_copy(from, p, to, over, recursive);
+	    }
+	    closedir(dir);
+	} else nfail++; /* we were unable to read a dir */
+    } else { /* a file */
+	FILE *fp1 = NULL, *fp2 = NULL;
+	char buf[APPENDBUFSIZE];
+
+	nfail = 1;
+	nc = strlen(to);
+	snprintf(dest, PATH_MAX, "%s%s", to, name);
+	if (over || !R_FileExists(dest)) {
+	    /* REprintf("copying %s to %s\n", this, dest); */
+	    if ((fp1 = R_fopen(this, "rb")) == NULL) goto copy_error;
+	    if ((fp2 = R_fopen(dest, "wb")) == NULL) goto copy_error;
+	    while ((nc = fread(buf, 1, APPENDBUFSIZE, fp1)) == APPENDBUFSIZE)
+		if (fwrite(buf, 1, APPENDBUFSIZE, fp2) != APPENDBUFSIZE) 
+		    goto copy_error;
+	    if (fwrite(buf, 1, nc, fp2) != nc) goto copy_error;
+	    nfail = 0;
+	}
+copy_error:
+	if(fp2) fclose(fp2);
+	if(fp1) fclose(fp1);
+    }
+    return nfail;
+}
+
+/* file.copy(files, dir, recursive), only */
+SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn, to, ans;
+    char *p, dir[PATH_MAX], from[PATH_MAX], name[PATH_MAX];
+    int i, nfiles, over, recursive, nfail;
+
+    checkArity(op, args);
+    fn = CAR(args);
+    nfiles = length(fn);
+    PROTECT(ans = allocVector(LGLSXP, nfiles));
+    if (nfiles > 0) {
+	if (!isString(fn))
+	    error(_("invalid '%s' argument"), "from");
+	to = CADR(args);
+	if (!isString(to) || LENGTH(to) != 1)
+	    error(_("invalid '%s' argument"), "to");
+	over = asLogical(CADDR(args));
+	if (over == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "over");
+	recursive = asLogical(CADDDR(args));
+	if (recursive == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "recursive");
+	strncpy(dir, translateChar(STRING_ELT(to, 0)), PATH_MAX);
+	if (*(dir + (strlen(dir) - 1)) != '/') {
+	    /* FIXME Windows path madness */
+	    strncat(dir, "/", PATH_MAX);
+	}
+	for (i = 0; i < nfiles; i++) {
+	    if (STRING_ELT(fn, i) != NA_STRING) {
+		strncpy(from, translateChar(STRING_ELT(fn, i)), PATH_MAX);
+		/* FIXME Windows path madness */
+		/* If there is a trailing /, this is a mistake */
+		p = from + (strlen(from) - 1);
+		if(*p == '/') *p = '\0';
+		p = strrchr(from, '/') ;
+		if (p) {
+		    strncpy(name, p+1, PATH_MAX);
+		    *(p+1) = '\0';
+		} else {
+		    strncpy(name, from, PATH_MAX);
+		    strncpy(from , "./", PATH_MAX);
+		}
+		nfail = do_copy(from, name, dir, over, recursive);
+	    } else nfail = 1;
+	    LOGICAL(ans)[i] = (nfail == 0);
+	}
+    }
+    UNPROTECT(1);
+    return ans;
+}
+
+
 SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #ifdef Win32

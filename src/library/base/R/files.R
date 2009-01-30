@@ -19,14 +19,15 @@ R.home <- function(component="home")
     rh <- .Internal(R.home())
     switch(component,
            "home" = rh,
-           "share"= if(nzchar(p <- as.vector(Sys.getenv("R_SHARE_DIR")))) p
+           "share" = if(nzchar(p <- as.vector(Sys.getenv("R_SHARE_DIR")))) p
            else file.path(rh, component),
-	   "doc"=if(nzchar(p <- as.vector(Sys.getenv("R_DOC_DIR")))) p
+	   "doc" = if(nzchar(p <- as.vector(Sys.getenv("R_DOC_DIR")))) p
            else file.path(rh, component),
            "include" = if(nzchar(p <- as.vector(Sys.getenv("R_INCLUDE_DIR")))) p
            else file.path(rh, component),
            file.path(rh, component))
 }
+
 file.show <-
     function (..., header = rep("", nfiles), title = "R Information",
               delete.file = FALSE, pager = getOption("pager"), encoding = "")
@@ -83,14 +84,16 @@ file.create <- function(..., showWarnings =  TRUE)
 
 file.choose <- function(new=FALSE) .Internal(file.choose(new))
 
-file.copy <- function(from, to, overwrite=FALSE)
+file.copy <- function(from, to, overwrite = recursive, recursive = FALSE)
 {
     if (!(nf <- length(from))) stop("no files to copy from")
     if (!(nt <- length(to)))   stop("no files to copy to")
     ## we don't use file_test as that is in utils.
-    if (nt == 1 && file.exists(to) && file.info(to)$isdir)
-        to <- file.path(to, basename(from))
-    else if (nf > nt) stop("more 'from' files than 'to' files")
+    if (nt == 1 && file.exists(to) && file.info(to)$isdir) {
+        return(.Internal(file.copy(from, to, overwrite, recursive)))
+        # to <- file.path(to, basename(from))
+    } else if (nf > nt) stop("more 'from' files than 'to' files")
+    else if (recursive) warning("'recursive' will be ignored")
     if(nt > nf) from <- rep(from, length.out = nt)
     okay <- file.exists(from)
     if (!overwrite) okay[file.exists(to)] <- FALSE

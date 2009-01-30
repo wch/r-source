@@ -210,6 +210,7 @@ SEXP do_expression(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileaccess(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileappend(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filechoose(SEXP, SEXP, SEXP, SEXP);
+SEXP do_filecopy(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filecreate(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileexists(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileinfo(SEXP, SEXP, SEXP, SEXP);

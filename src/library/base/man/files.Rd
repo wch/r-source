@@ -5,6 +5,17 @@
 
 \name{files}
 \alias{files}
+\alias{file.append}
+\alias{file.copy}
+\alias{file.create}
+\alias{file.exists}
+\alias{file.rcopy}
+\alias{file.remove}
+\alias{file.rename}
+\alias{file.symlink}
+\alias{dir.create}
+\alias{Sys.chmod}
+\alias{Sys.umask}
 \concept{directory}
 \title{File and Directory Manipulation}
 \usage{
@@ -13,31 +24,25 @@ file.exists(\dots)
 file.remove(\dots)
 file.rename(from, to)
 file.append(file1, file2)
-file.copy(from, to, overwrite = FALSE)
+file.copy(from, to, overwrite = recursive, recursive = FALSE)
 file.symlink(from, to)
 dir.create(path, showWarnings = TRUE, recursive = FALSE,
            mode = "0777")
 Sys.chmod(paths, mode = "0777")
 Sys.umask(mode = "0000")
 }
-\alias{file.append}
-\alias{file.copy}
-\alias{file.create}
-\alias{file.exists}
-\alias{file.remove}
-\alias{file.rename}
-\alias{file.symlink}
-\alias{dir.create}
-\alias{Sys.chmod}
-\alias{Sys.umask}
 \arguments{
   \item{\dots, file1, file2, from, to, paths}{character vectors,
     containing file names or paths.}
   \item{path}{a character vector containing a single path name.}
   \item{overwrite}{logical; should the destination files be overwritten?}
   \item{showWarnings}{logical; should the warnings on failure be shown?}
-  \item{recursive}{logical: should elements of the path other than the
-    last be created?  If true, like Unix's \code{mkdir -p}.}
+  \item{recursive}{logical.
+    For \code{file.copy}, if \code{to} is a directory, should
+    directories in \code{from} be copied (and their contents).
+    
+    For \code{dir.create}, should elements of the path other than the
+    last be created?  If true, like Unix's \command{mkdir -p}.}
   \item{mode}{the file mode to be used on Unix-alikes: it will be
     coerced by \code{\link{as.octmode}}.}
 }
@@ -169,6 +174,8 @@ Sys.umask(mode = "0000")
   \code{\link{file.show}}, \code{\link{list.files}},
   \code{\link{unlink}}, \code{\link{basename}}, \code{\link{path.expand}}.
 
+  \code{\link{Sys.glob}} to expand wildcards in file specifications.
+  
   \code{\link{file_test}}.
 }
 
