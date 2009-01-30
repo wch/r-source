@@ -117,7 +117,7 @@ Rdiff <- function(from, to, useDiff = FALSE)
     } else {
         ## FIXME: use C code, or something like merge?
         ## The files can be very big.
-        cat("\nfiles differ in number of lines:\n")
+        if(!useDiff) cat("\nfiles differ in number of lines:\n")
         a <- tempfile()
         b <- tempfile()
         writeLines(left, a)
