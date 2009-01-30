@@ -48,8 +48,9 @@ testInstalledPackages(outDir = ".", errorsAreFatal = TRUE,
   The package-specific tests for the base and recommended packages are
   an optional part of the install: for testing package \pkg{tools} you
   will also need the help page sources installed (also
-  optional). Currently testing requires \command{unzip} in the path, and
-  a Unix-like \code{diff} if more than simple differences are found.
+  optional).  Currently testing requires \command{unzip} in the path, and
+  a Unix-like \code{diff} for a full report if more than simple
+  differences are found.
 #endif
 }
 \value{

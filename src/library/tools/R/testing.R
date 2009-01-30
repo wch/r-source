@@ -104,9 +104,11 @@ Rdiff <- function(from, to, useDiff = FALSE)
     left <- clean(readLines(from))
     right <- clean(readLines(to))
     if (!useDiff && (length(left) == length(right))) {
-        if(all(left == right)) return(0L)
+        bleft <- gsub("[[:space:]]+", " ", left)
+        bright <- gsub("[[:space:]]+", " ", right)
+        if(all(bleft == bright)) return(0L)
         cat("\n")
-        diff <- left != right
+        diff <- bleft != bright
         ## FIXME do run lengths here
         for(i in which(diff)) {
             cat(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i], "\n",
@@ -114,12 +116,13 @@ Rdiff <- function(from, to, useDiff = FALSE)
         }
     } else {
         ## FIXME: use C code, or something like merge?
+        ## The files can be very big.
         cat("\nfiles differ in number of lines:\n")
         a <- tempfile()
         b <- tempfile()
         writeLines(left, a)
         writeLines(right, b)
-        system(paste("diff", shQuote(a), shQuote(b)))
+        system(paste("diff -bw", shQuote(a), shQuote(b)))
     }
     return(1L)
 }
@@ -171,8 +174,8 @@ testInstalledPackage <-
         savefile <- paste(outfile, "prev", sep = "." )
         if (file.exists(outfile)) file.rename(outfile, savefile)
         message("Running examples in package ", sQuote(pkg))
-        cmd <- paste(file.path(R.home(), "bin", "R"),
-                     "CMD BATCH --vanilla", Rfile, outfile)
+        cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
+                     "CMD BATCH --vanilla", shQuote(Rfile), shQuote(outfile))
         if(.Platform$OS.type == "windows") Sys.setenv(R_LIBS = "")
         else cmd <- paste("R_LIBS=", cmd)
         res <- system(cmd)
@@ -193,15 +196,17 @@ testInstalledPackage <-
         this <- paste(pkg, "tests", sep="-")
         unlink(this, recursive = TRUE)
         dir.create(this)
-        system(paste("cp -pr", file.path(d, "*"), this)) # FIXME: avoid
+        ## system(paste("cp -pr", file.path(d, "*"), this))
+        file.copy(Sys.glob(file.path(d, "*")), this, recursive = TRUE)
         setwd(this)
         message("Running specific tests for package ", sQuote(pkg))
         Rfiles <- dir(d, pattern="\\.R$")
         for(f in Rfiles) {
             message("  Running ", sQuote(f))
             outfile <- paste(f, "out", sep = "")
-            cmd <- paste(file.path(R.home(), "bin", "R"),
-                         "CMD BATCH --vanilla", file.path(d, f), outfile)
+            cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
+                         "CMD BATCH --vanilla",
+                         shQuote(file.path(d, f)), shQuote(outfile))
             if(.Platform$OS.type == "windows") Sys.setenv(LANGUAGE = "C")
             else cmd <- paste("R_LIBS=", cmd)
            res <- system(cmd)
