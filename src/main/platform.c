@@ -1960,6 +1960,8 @@ end:
 
 /* take file/dir 'name' in dir 'from' and copy it to 'to' 
    'from', 'to' should have trailing path separator if needed.
+
+   NB Windows' mkdir appears to require \ not /.
 */
 static int do_copy(const char* from, const char* name, const char* to,
 		   int over, int recursive)
@@ -1967,6 +1969,11 @@ static int do_copy(const char* from, const char* name, const char* to,
     struct stat sb;
     int nc, nfail = 0, res;
     char dest[PATH_MAX], this[PATH_MAX];
+#ifdef Win32
+    const char *filesep = "\\";
+#else
+    const char *filesep = "/";
+#endif
 
     /* REprintf("from: %s, name: %s, to: %s\n", from, name, to); */
     snprintf(this, PATH_MAX, "%s%s", from, name);
@@ -1990,7 +1997,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 	    while ((de = readdir(dir))) {
 		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 		    continue;
-		snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep, de->d_name);
+		snprintf(p, PATH_MAX, "%s%s%s", name, filesep, de->d_name);
 		do_copy(from, p, to, over, recursive);
 	    }
 	    closedir(dir);
@@ -2025,6 +2032,11 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP fn, to, ans;
     char *p, dir[PATH_MAX], from[PATH_MAX], name[PATH_MAX];
     int i, nfiles, over, recursive, nfail;
+#ifdef Win32
+    const char *filesep = "\\", *cur = ".\\", sep = '\\';
+#else
+    const char *filesep = "/", cur = "./", sep = '/';
+#endif
 
     checkArity(op, args);
     fn = CAR(args);
@@ -2043,24 +2055,29 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (recursive == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "recursive");
 	strncpy(dir, translateChar(STRING_ELT(to, 0)), PATH_MAX);
-	if (*(dir + (strlen(dir) - 1)) != '/') {
-	    /* FIXME Windows path madness */
-	    strncat(dir, "/", PATH_MAX);
-	}
+	if (*(dir + (strlen(dir) - 1)) !=  sep)
+	    strncat(dir, filesep, PATH_MAX);
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
 		strncpy(from, translateChar(STRING_ELT(fn, i)), PATH_MAX);
-		/* FIXME Windows path madness */
-		/* If there is a trailing /, this is a mistake */
+		/* If there is a trailing sep, this is a mistake */
 		p = from + (strlen(from) - 1);
-		if(*p == '/') *p = '\0';
-		p = strrchr(from, '/') ;
+		if(*p == sep) *p = '\0';
+		p = strrchr(from, sep) ;
 		if (p) {
 		    strncpy(name, p+1, PATH_MAX);
 		    *(p+1) = '\0';
 		} else {
-		    strncpy(name, from, PATH_MAX);
-		    strncpy(from , "./", PATH_MAX);
+#ifdef Win32
+		    if(strlen(from) > 2 && from[1] == ':') {
+			strncpy(name, from+2, PATH_MAX);
+			from[2] = '\0';
+		    } else 
+#endif
+		    {
+			strncpy(name, from, PATH_MAX);
+			strncpy(from, cur, PATH_MAX);
+		    }
 		}
 		nfail = do_copy(from, name, dir, over, recursive);
 	    } else nfail = 1;

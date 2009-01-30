@@ -166,6 +166,14 @@ Sys.umask(mode = "0000")
   Using a missing value for a file or path name will always be regarded
   as a failure.
 }
+#ifdef windows
+\note{
+  There is no guarantee that these fcuntions will handle Windows
+  relative paths of the form \file{d:path}: try \file{d:./path}
+  instead.  In particular, \file{d:} is not recognized as a directory.
+}
+#endif
+
 \author{
   Ross Ihaka, Brian Ripley
 }
