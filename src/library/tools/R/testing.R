@@ -208,7 +208,7 @@ testInstalledPackage <-
                          "CMD BATCH --vanilla",
                          shQuote(file.path(d, f)), shQuote(outfile))
             if(.Platform$OS.type == "windows") Sys.setenv(LANGUAGE = "C")
-            else cmd <- paste("R_LIBS=", cmd)
+            else cmd <- paste("LANGUAGE=C", cmd)
            res <- system(cmd)
             if(res) {
                 file.rename(outfile, paste(outfile, "fail", sep="."))
@@ -230,4 +230,66 @@ testInstalledPackage <-
     }
 
     invisible(0L)
+}
+
+## run all the tests in a directory: for use by R CMD check.
+## trackObjs has .Rin files
+
+.runPackageTestsR <- function()
+{
+    cat("\n");
+    status <- .runPackageTests()
+    q("no", status = status)
+}
+
+.runPackageTests <- function(dir=".")
+{
+    runone <- function(f)
+    {
+        message("  Running ", sQuote(f))
+        outfile <- paste(f, "out", sep = "")
+        cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
+                     "CMD BATCH --vanilla",
+                     shQuote(file.path(dir, f)), shQuote(outfile))
+        if(.Platform$OS.type == "windows")
+            Sys.setenv(LANGUAGE = "C")
+        else {
+            startup <- file.path(R.home("share"), "R", "tests-startup.R")
+            cmd <- paste("LANGUAGE=C ", "R_TESTS=", shQuote(startup), " ",
+                         cmd, sep = "")
+        }
+        res <- system(cmd)
+        if(res) {
+            file.rename(outfile, paste(outfile, "fail", sep="."))
+            return(1L)
+        }
+        savefile <- file.path(dir, paste(outfile, "save", sep = "." ))
+        if (file.exists(savefile)) {
+            message("  Comparing ", sQuote(outfile), " to ",
+                    sQuote(basename(savefile)), " ...", appendLF = FALSE)
+            res <- Rdiff(outfile, savefile, TRUE)
+            if(!res) message(" OK")
+        }
+        0L
+    }
+
+    nfail <- 0L ## allow for later running all tests even if some fail.
+    Rinfiles <- dir(dir, pattern="\\.Rin$")
+    for(f in Rinfiles) {
+        Rfile <- sub("\\.Rin$", ".R", f)
+        message("  Creating ", sQuote(Rfile))
+        cmd <- paste(shQuote(file.path(R.home(), "bin", "Rscript")),
+                     "--vanilla", f)
+        if(system(cmd))
+            warning("creation of ", sQuote(Rfile), " failed")
+        else if(file.exists(Rfile)) nfail <- nfail + runone(Rfile)
+        if (nfail > 0) return(nfail)
+    }
+
+    Rfiles <- dir(dir, pattern="\\.R$")
+    for(f in Rfiles) {
+        nfail <- nfail + runone(f)
+        if (nfail > 0) return(nfail)
+    }
+    return(nfail)
 }
