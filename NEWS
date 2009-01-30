@@ -133,8 +133,10 @@ NEW FEATURES
 	less clear "[, 1:n]".
 
     o	New function testInstalledPackage() in package 'tools' allows
-	the examples (and if they exist and were installed) the
-	package-specific tests to be run on an installed package.
+	the examples (and if they were installed) any package-specific
+	tests to be run on an installed package.
+
+    o	file.copy() now has a 'recursive' argument.
 
 
 DEPRECATED & DEFUNCT
@@ -189,6 +191,9 @@ UTILITIES
 
     o	R CMD check runs the package tests with a custom startup file,
 	currently containing 'options(useFancyQuotes = FALSE)'.
+
+    o	R CMD config now knows about DYLIB_EXT and SHLIB_EXT, for use
+	in configure files.
 
 
 Rd CONVERSION

@@ -56,6 +56,7 @@ Variables:
   CXXFLAGS      C++ compiler flags
   CXXPICFLAGS   special flags for compiling C++ code to be turned into a
 		shared library
+  DYLIB_EXT	file extension (including '.') for dynamic libraries
   DYLIB_LD      command for linking dynamic libraries which contain
 		object files from a C or Fortran compiler only
   DYLIB_LDFLAGS
@@ -84,13 +85,14 @@ Variables:
   OBJCFLAGS     Objective C compiler flags
   MAKE          Make command
   SAFE_FFLAGS   Safe (as conformant as possible) Fortran 77 compiler flags
-  SHLIB_CFLAGS  additional CFLAGS used when building shared libraries
-  SHLIB_CXXLD   command for linking shared libraries which contain
+  SHLIB_CFLAGS  additional CFLAGS used when building shared objects
+  SHLIB_CXXLD   command for linking shared objects which contain
 		object files from a C++ compiler
   SHLIB_CXXLDFLAGS
 		special flags used by SHLIB_CXXLD
-  SHLIB_FFLAGS  additional FFLAGS used when building shared libraries
-  SHLIB_LD      command for linking shared libraries which contain
+  DYLIB_EXT	file extension (including '.') for shared objects
+  SHLIB_FFLAGS  additional FFLAGS used when building shared objects
+  SHLIB_LD      command for linking shared objects which contain
 		object files from a C or Fortran compiler only
   SHLIB_LDFLAGS
 		special flags used by SHLIB_LD
@@ -192,12 +194,12 @@ done
 
 ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
 ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS"
-ok_dylib_vars="DYLIB_LD DYLIB_LDFLAGS"
+ok_dylib_vars="DYLIB_EXT DYLIB_LD DYLIB_LDFLAGS"
 ok_objc_vars="OBJC OBJCFLAGS"
 ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS JAVA_CPPFLAGS"
 ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS FC FCFLAGS FCPICFLAGS"
 ok_ld_vars="LDFLAGS"
-ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS SHLIB_FCLD SHLIB_FCLDFLAGS"
+ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS SHLIB_FCLD SHLIB_FCLDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
 ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn"
 
