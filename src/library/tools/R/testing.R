@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## functions principally for testing R
+## functions principally for testing R and packages
 
 massageExamples <- function(pkg, files, outFile = stdout())
 {
@@ -114,6 +114,7 @@ Rdiff <- function(from, to, useDiff = FALSE)
             cat(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i], "\n",
                 sep = "")
         }
+        return(1L)
     } else {
         ## FIXME: use C code, or something like merge?
         ## The files can be very big.
@@ -122,9 +123,8 @@ Rdiff <- function(from, to, useDiff = FALSE)
         b <- tempfile()
         writeLines(left, a)
         writeLines(right, b)
-        system(paste("diff -bw", shQuote(a), shQuote(b)))
+        return(system(paste("diff -bw", shQuote(a), shQuote(b))))
     }
-    return(1L)
 }
 
 testInstalledPackages <-
@@ -292,4 +292,16 @@ testInstalledPackage <-
         if (nfail > 0) return(nfail)
     }
     return(nfail)
+}
+
+.createExdotR <- function(pkg, exdir)
+{
+
+    Rfile <- paste(pkg, "-Ex.R", sep = "")
+    ## might be zipped:
+    if(file.exists(fzip <- file.path(exdir, "Rex.zip"))) {
+        files <- tempfile()
+        system(paste("unzip -q", fzip, "-d", files))
+    } else files <- exdir
+    massageExamples(pkg, files, Rfile)
 }
