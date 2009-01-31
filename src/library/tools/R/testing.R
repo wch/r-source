@@ -169,18 +169,19 @@ testInstalledPackage <-
         message("\nCollecting examples for package ", sQuote(pkg))
         Rfile <- .createExdotR(pkg, exdir)
         outfile <- paste(pkg, "-Ex.Rout", sep = "")
+        failfile <- paste(outfile, "fail", sep = "." )
         savefile <- paste(outfile, "prev", sep = "." )
         if (file.exists(outfile)) file.rename(outfile, savefile)
+        unlink)failfile)
         message("Running examples in package ", sQuote(pkg))
+        ## Create as .fail in case this R session gets killed
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
-                     "CMD BATCH --vanilla", shQuote(Rfile), shQuote(outfile))
+                     "CMD BATCH --vanilla", shQuote(Rfile), shQuote(failfile))
         cmd <- if(.Platform$OS.type == "windows") paste(cmd, "RLIBS=")
         else paste("R_LIBS=", cmd)
         res <- system(cmd)
-        if(res) {
-            file.rename(outfile, paste(outfile, "fail", sep="."))
-            return(invisible(1L))
-        }
+        if (res) return(invisible(1L)) else file.rename(failfile, outfile)
+
         savefile <- paste(outfile, "prev", sep = "." )
         if (file.exists(savefile)) {
             message("  Comparing ", sQuote(outfile), " to ",

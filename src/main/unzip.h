@@ -1,15 +1,16 @@
 /* unzip.h -- IO for uncompress .zip files using zlib
-   Version 0.15 beta, Mar 19th, 1998,
+   Version 1.01e, February 12th, 2005
 
-   Copyright (C) 1998 Gilles Vollant
+   Copyright (C) 1998-2005 Gilles Vollant
 
    This unzip package allow extract file from .ZIP file, compatible with PKZip 2.04g
      WinZip, InfoZip tools and compatible.
-   Encryption and multi volume ZipFile (span) are not supported.
+
+   Multi volume ZipFile (span) are not supported.
+   Encryption compatible with pkzip 2.04g only supported
    Old compressions used by old PKZip 1.x are not supported
 
-   THIS IS AN ALPHA VERSION. AT THIS STAGE OF DEVELOPPEMENT, SOMES API OR STRUCTURE
-   CAN CHANGE IN FUTURE VERSION !!
+
    I WAIT FEEDBACK at mail info@winimage.com
    Visit also http://www.winimage.com/zLibDll/unzip.htm for evolution
 
@@ -33,10 +34,13 @@
 
 
 */
+
 /* for more info about .ZIP format, see
-      ftp://ftp.cdrom.com/pub/infozip/doc/appnote-970311-iz.zip
+      http://www.info-zip.org/pub/infozip/doc/appnote-981119-iz.zip
+      http://www.info-zip.org/pub/infozip/doc/
    PkWare has also a specification at :
-      ftp://ftp.pkware.com/probdesc.zip */
+      ftp://ftp.pkware.com/probdesc.zip
+*/
 
 #ifndef _unz_H
 #define _unz_H
@@ -45,16 +49,54 @@
 extern "C" {
 #endif
 
+#ifndef _ZLIB_H
 #include "zlib.h"
-
-/* workaround for NetBSD vandalism on zconf.h */
-#ifndef OF /* function prototypes */
-#  ifdef STDC
-#    define OF(args)  args
-#  else
-#    define OF(args)  ()
-#  endif
 #endif
+
+/* merged from ioapi.h */
+#define ZLIB_FILEFUNC_SEEK_CUR (1)
+#define ZLIB_FILEFUNC_SEEK_END (2)
+#define ZLIB_FILEFUNC_SEEK_SET (0)
+
+#define ZLIB_FILEFUNC_MODE_READ      (1)
+#define ZLIB_FILEFUNC_MODE_WRITE     (2)
+#define ZLIB_FILEFUNC_MODE_READWRITEFILTER (3)
+
+#define ZLIB_FILEFUNC_MODE_EXISTING (4)
+#define ZLIB_FILEFUNC_MODE_CREATE   (8)
+
+typedef voidpf (*open_file_func) OF((voidpf opaque, const char* filename, int mode));
+typedef uLong  (*read_file_func) OF((voidpf opaque, voidpf stream, void* buf, uLong size));
+typedef uLong  (*write_file_func) OF((voidpf opaque, voidpf stream, const void* buf, uLong size));
+typedef long   (*tell_file_func) OF((voidpf opaque, voidpf stream));
+typedef long   (*seek_file_func) OF((voidpf opaque, voidpf stream, uLong offset, int origin));
+typedef int    (*close_file_func) OF((voidpf opaque, voidpf stream));
+typedef int    (*testerror_file_func) OF((voidpf opaque, voidpf stream));
+
+typedef struct zlib_filefunc_def_s
+{
+    open_file_func      zopen_file;
+    read_file_func      zread_file;
+    write_file_func     zwrite_file;
+    tell_file_func      ztell_file;
+    seek_file_func      zseek_file;
+    close_file_func     zclose_file;
+    testerror_file_func zerror_file;
+    voidpf              opaque;
+} zlib_filefunc_def;
+
+
+
+void fill_fopen_filefunc OF((zlib_filefunc_def* pzlib_filefunc_def));
+
+#define ZREAD(filefunc,filestream,buf,size) ((*((filefunc).zread_file))((filefunc).opaque,filestream,buf,size))
+#define ZWRITE(filefunc,filestream,buf,size) ((*((filefunc).zwrite_file))((filefunc).opaque,filestream,buf,size))
+#define ZTELL(filefunc,filestream) ((*((filefunc).ztell_file))((filefunc).opaque,filestream))
+#define ZSEEK(filefunc,filestream,pos,mode) ((*((filefunc).zseek_file))((filefunc).opaque,filestream,pos,mode))
+#define ZCLOSE(filefunc,filestream) ((*((filefunc).zclose_file))((filefunc).opaque,filestream))
+#define ZERROR(filefunc,filestream) ((*((filefunc).zerror_file))((filefunc).opaque,filestream))
+
+/* end of merge */
 
 #if defined(STRICTUNZIP) || defined(STRICTZIPUNZIP)
 /* like the STRICT of WIN32, we define a pointer that cannot be converted
@@ -66,10 +108,10 @@ typedef voidp unzFile;
 #endif
 
 
-#define UNZ_OK                                  (0)
-#define UNZ_END_OF_LIST_OF_FILE (-100)
-#define UNZ_ERRNO               (Z_ERRNO)
-#define UNZ_EOF                 (0)
+#define UNZ_OK                          (0)
+#define UNZ_END_OF_LIST_OF_FILE         (-100)
+#define UNZ_ERRNO                       (Z_ERRNO)
+#define UNZ_EOF                         (0)
 #define UNZ_PARAMERROR                  (-102)
 #define UNZ_BADZIPFILE                  (-103)
 #define UNZ_INTERNALERROR               (-104)
@@ -119,27 +161,34 @@ typedef struct unz_file_info_s
 } unz_file_info;
 
 static int unzStringFileNameCompare OF ((const char* fileName1,
-												 const char* fileName2,
-												 int iCaseSensitivity));
+					 const char* fileName2,
+					 int iCaseSensitivity));
 /*
    Compare two filename (fileName1,fileName2).
    If iCaseSenisivity = 1, comparision is case sensitivity (like strcmp)
    If iCaseSenisivity = 2, comparision is not case sensitivity (like strcmpi
 								or strcasecmp)
    If iCaseSenisivity = 0, case sensitivity is defaut of your operating system
-	(like 1 on Unix, 2 on Windows)
+    (like 1 on Unix, 2 on Windows)
 */
 
 
 static unzFile unzOpen OF((const char *path));
 /*
   Open a Zip file. path contain the full pathname (by example,
-     on a Windows NT computer "c:\\zlib\\zlib111.zip" or on an Unix computer
-	 "zlib/zlib111.zip".
-	 If the zipfile cannot be opened (file don't exist or in not valid), the
-	   return value is NULL.
+     on a Windows XP computer "c:\\zlib\\zlib113.zip" or on an Unix computer
+     "zlib/zlib113.zip".
+     If the zipfile cannot be opened (file don't exist or in not valid), the
+       return value is NULL.
      Else, the return value is a unzFile Handle, usable with other function
-	   of this unzip package.
+       of this unzip package.
+*/
+
+static unzFile unzOpen2 OF((const char *path,
+			   zlib_filefunc_def* pzlib_filefunc_def));
+/*
+   Open a Zip file, like unzOpen, but provide a set of file low level API
+      for read/write the zip file (see ioapi.h)
 */
 
 static int unzClose OF((unzFile file));
@@ -155,6 +204,18 @@ static int unzGetGlobalInfo OF((unzFile file,
   Write info about the ZipFile in the *pglobal_info structure.
   No preparation of the structure is needed
   return UNZ_OK if there is no problem. */
+
+
+#ifdef UNUSED
+static int unzGetGlobalComment OF((unzFile file,
+                                           char *szComment,
+                                           uLong uSizeBuf));
+/*
+  Get the global comment string of the ZipFile, in the szComment buffer.
+  uSizeBuf is the size of the szComment buffer.
+  return the number of byte copied or an error code <0
+*/
+#endif
 
 
 /***************************************************************************/
@@ -174,8 +235,8 @@ static int unzGoToNextFile OF((unzFile file));
 */
 
 static int unzLocateFile OF((unzFile file,
-				     const char *szFileName,
-				     int iCaseSensitivity));
+			     const char *szFileName,
+			     int iCaseSensitivity));
 /*
   Try locate the file szFileName in the zipfile.
   For the iCaseSensitivity signification, see unzStringFileNameCompare
@@ -186,25 +247,42 @@ static int unzLocateFile OF((unzFile file,
 */
 
 
+#ifdef UNUSED
+/* ****************************************** */
+/* Ryan supplied functions */
+/* unz_file_info contain information about a file in the zipfile */
+typedef struct unz_file_pos_s
+{
+    uLong pos_in_zip_directory;   /* offset in zip file directory */
+    uLong num_of_file;            /* # of file */
+} unz_file_pos;
+
+static int unzGetFilePos(unzFile file, unz_file_pos* file_pos);
+
+static int unzGoToFilePos(unzFile file, unz_file_pos* file_pos);
+#endif
+
+/* ****************************************** */
+
 static int unzGetCurrentFileInfo OF((unzFile file,
-					     unz_file_info *pfile_info,
-					     char *szFileName,
-					     uLong fileNameBufferSize,
-					     void *extraField,
-					     uLong extraFieldBufferSize,
-					     char *szComment,
-					     uLong commentBufferSize));
+				     unz_file_info *pfile_info,
+				     char *szFileName,
+				     uLong fileNameBufferSize,
+				     void *extraField,
+				     uLong extraFieldBufferSize,
+				     char *szComment,
+				     uLong commentBufferSize));
 /*
   Get Info about the current file
   if pfile_info!=NULL, the *pfile_info structure will contain somes info about
-	    the current file
+        the current file
   if szFileName!=NULL, the filemane string will be copied in szFileName
-			(fileNameBufferSize is the size of the buffer)
+            (fileNameBufferSize is the size of the buffer)
   if extraField!=NULL, the extra field information will be copied in extraField
-			(extraFieldBufferSize is the size of the buffer).
-			This is the Central-header version of the extra field
+            (extraFieldBufferSize is the size of the buffer).
+            This is the Central-header version of the extra field
   if szComment!=NULL, the comment string of the file will be copied in szComment
-			(commentBufferSize is the size of the buffer)
+            (commentBufferSize is the size of the buffer)
 */
 
 /***************************************************************************/
@@ -218,16 +296,53 @@ static int unzOpenCurrentFile OF((unzFile file));
   If there is no error, the return value is UNZ_OK.
 */
 
+#ifdef UNUSED
+static int unzOpenCurrentFilePassword OF((unzFile file,
+					  const char* password));
+/*
+  Open for reading data the current file in the zipfile.
+  password is a crypting password
+  If there is no error, the return value is UNZ_OK.
+*/
+
+static int unzOpenCurrentFile2 OF((unzFile file,
+				   int* method,
+				   int* level,
+				   int raw));
+/*
+  Same than unzOpenCurrentFile, but open for read raw the file (not uncompress)
+    if raw==1
+  *method will receive method of compression, *level will receive level of
+     compression
+  note : you can set level parameter as NULL (if you did not want known level,
+         but you CANNOT set method parameter as NULL
+*/
+#endif
+
+static int unzOpenCurrentFile3 OF((unzFile file,
+				   int* method,
+				   int* level,
+				   int raw,
+				   const char* password));
+/*
+  Same than unzOpenCurrentFile, but open for read raw the file (not uncompress)
+    if raw==1
+  *method will receive method of compression, *level will receive level of
+     compression
+  note : you can set level parameter as NULL (if you did not want known level,
+         but you CANNOT set method parameter as NULL
+*/
+
+
 static int unzCloseCurrentFile OF((unzFile file));
 /*
   Close the file in zip opened with unzOpenCurrentFile
   Return UNZ_CRCERROR if all the file was read but the CRC is not good
 */
 
-
 static int unzReadCurrentFile OF((unzFile file,
-					  voidp buf,
-					  unsigned len));
+				  voidp buf,
+				  unsigned len));
 /*
   Read bytes from the current file (opened by unzOpenCurrentFile)
   buf contain buffer where data must be copied
@@ -238,6 +353,43 @@ static int unzReadCurrentFile OF((unzFile file,
   return <0 with error code if there is an error
     (UNZ_ERRNO for IO error, or zLib error for uncompress error)
 */
+
+#ifdef UNUSED
+static z_off_t unztell OF((unzFile file));
+/*
+  Give the current position in uncompressed data
+*/
+
+static int unzeof OF((unzFile file));
+/*
+  return 1 if the end of file was reached, 0 elsewhere
+*/
+
+static int unzGetLocalExtrafield OF((unzFile file,
+				     voidp buf,
+                                             unsigned len));
+/*
+  Read extra field from the current file (opened by unzOpenCurrentFile)
+  This is the local-header version of the extra field (sometimes, there is
+    more info in the local-header version than in the central-header)
+
+  if buf==NULL, it return the size of the local extra field
+
+  if buf!=NULL, len is the size of the buffer, the extra header is copied in
+    buf.
+  the return value is the number of bytes copied in buf, or (if <0)
+    the error code
+*/
+
+/***************************************************************************/
+
+/* Get the current file offset */
+static uLong unzGetOffset (unzFile file);
+
+/* Set the current file offset */
+static int unzSetOffset (unzFile file, uLong pos);
+#endif
+
 
 #ifdef __cplusplus
 }
