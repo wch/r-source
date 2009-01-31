@@ -265,6 +265,10 @@ INSTALLATION
 
     o	'make install' using a parallel make should now work.
 
+    o	'make check' now always re-makes and re-runs the package
+	examples, which are now collated in the locale's order (and
+	not ASCII order).
+
 
 PACKAGE INSTALLATION
 
