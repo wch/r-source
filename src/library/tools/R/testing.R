@@ -272,6 +272,8 @@ testInstalledPackage <-
         0L
     }
 
+    file.copy(file.path(R.home("share"), "R", "tests-startup.R"), "startup.Rs")
+    if(use_gct) cat("gctorture(TRUE)" , file = "startup.Rs", append = TRUE)
     nfail <- 0L ## allow for later running all tests even if some fail.
     Rinfiles <- dir(".", pattern="\\.Rin$")
     for(f in Rinfiles) {
@@ -285,8 +287,6 @@ testInstalledPackage <-
         if (nfail > 0) return(nfail)
     }
 
-    file.copy(file.path(R.home("share"), "R", "tests-startup.R"), "startup.Rs")
-    if(use_gct) cat("gctorture(TRUE)" , file = "startup.Rs", append = TRUE)
     Rfiles <- dir(".", pattern="\\.R$")
     for(f in Rfiles) {
         nfail <- nfail + runone(f)
