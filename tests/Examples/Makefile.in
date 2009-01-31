@@ -11,7 +11,7 @@ subdir = tests/Examples
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in  Makefile.win Makefile.install
+DISTFILES = Makefile.in  Makefile.win
 
 R_EXE = $(top_builddir)/bin/R --slave --vanilla
 
