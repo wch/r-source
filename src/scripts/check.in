@@ -2333,19 +2333,11 @@ sub check_pkg {
         }
         chdir($testdir);
 	dircopy($testsrcdir, ".");
-	if($opt_use_gct) {
-	    $cmd = join(" ",
-			("(echo 'gctorture(TRUE); tools:::.runPackageTestsR()' |",
-			 &shell_quote_file_path(${R::Vars::R_EXE}), 
-			 "--vanilla --slave)"
-			));
-	} else {
-	    $cmd = join(" ",
-			("(echo 'tools:::.runPackageTestsR()' |",
-			 &shell_quote_file_path(${R::Vars::R_EXE}), 
-			 "--vanilla --slave)"
-			));
-	}    		    
+	if($opt_use_gct) {$extra = "use_gct = TRUE";} else {$extra = "";}
+	$cmd = join(" ",
+		    ("(echo 'tools:::.runPackageTestsR($extra)' |",
+		     &shell_quote_file_path(${R::Vars::R_EXE}), 
+		     "--vanilla --slave)") );
         if(R_system($cmd)) {
             $log->error();
 	    ## Don't just fail: try to log where the problem occurred.

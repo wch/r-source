@@ -132,6 +132,8 @@ testInstalledPackages <-
              scope = c("both", "base", "recommended"),
              types = c("examples", "tests", "vignettes"))
 {
+    ow <- options(warn = 1)
+    on.exit(ow)
     scope <- match.arg(scope)
     status <- 0L
     pkgs <- character()
@@ -162,14 +164,10 @@ testInstalledPackage <-
     exdir <- file.path(pkgdir, "R-ex")
     owd <- setwd(outDir)
     on.exit(setwd(owd))
+
     if (1 %in% types && file_test("-d", exdir)) {
-        Rfile <- paste(pkg, "-Ex.R", sep = "")
-        ## might be zipped:
-        if(file.exists(fzip <- file.path(exdir, "Rex.zip"))) {
-            files <- tempfile()
-            system(paste("unzip -q", fzip, "-d", files))
-        } else files <- exdir
-        massageExamples(pkg, files, Rfile)
+        message("\nCollecting examples for package ", sQuote(pkg))
+        Rfile <- .createExdotR(pkg, exdir)
         outfile <- paste(pkg, "-Ex.Rout", sep = "")
         savefile <- paste(outfile, "prev", sep = "." )
         if (file.exists(outfile)) file.rename(outfile, savefile)
@@ -192,6 +190,7 @@ testInstalledPackage <-
         }
     }
 
+    ## FIXME merge with code in .runPackageTests
     if (2 %in% types && file_test("-d", d <- file.path(pkgdir, "tests"))) {
         this <- paste(pkg, "tests", sep="-")
         unlink(this, recursive = TRUE)
@@ -200,13 +199,13 @@ testInstalledPackage <-
         file.copy(Sys.glob(file.path(d, "*")), this, recursive = TRUE)
         setwd(this)
         message("Running specific tests for package ", sQuote(pkg))
-        Rfiles <- dir(d, pattern="\\.R$")
+        Rfiles <- dir(".", pattern="\\.R$")
         for(f in Rfiles) {
             message("  Running ", sQuote(f))
             outfile <- paste(f, "out", sep = "")
             cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                          "CMD BATCH --vanilla",
-                         shQuote(file.path(d, f)), shQuote(outfile))
+                         shQuote(f), shQuote(outfile))
             if(.Platform$OS.type == "windows") Sys.setenv(LANGUAGE = "C")
             else cmd <- paste("LANGUAGE=C", cmd)
            res <- system(cmd)
@@ -214,14 +213,15 @@ testInstalledPackage <-
                 file.rename(outfile, paste(outfile, "fail", sep="."))
                 return(invisible(1L))
             }
-            savefile <- file.path(d, paste(outfile, "save", sep = "." ))
+            savefile <- paste(outfile, "save", sep = "." )
             if (file.exists(savefile)) {
                 message("  Comparing ", sQuote(outfile), " to ",
-                        sQuote(basename(savefile)), " ...", appendLF = FALSE)
+                        sQuote(savefile), " ...", appendLF = FALSE)
                 res <- Rdiff(outfile, savefile)
                 if(!res) message(" OK")
             }
         }
+        setwd(owd)
     }
 
     if (3 %in% types && file_test("-d", d <- file.path(pkgdir, "doc"))) {
@@ -235,14 +235,15 @@ testInstalledPackage <-
 ## run all the tests in a directory: for use by R CMD check.
 ## trackObjs has .Rin files
 
-.runPackageTestsR <- function()
+.runPackageTestsR <- function(...)
 {
     cat("\n");
-    status <- .runPackageTests()
+    status <- .runPackageTests(...)
     q("no", status = status)
 }
 
-.runPackageTests <- function(dir=".")
+## used by R CMD check
+.runPackageTests <- function(use_gct = FALSE)
 {
     runone <- function(f)
     {
@@ -250,23 +251,20 @@ testInstalledPackage <-
         outfile <- paste(f, "out", sep = "")
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                      "CMD BATCH --vanilla",
-                     shQuote(file.path(dir, f)), shQuote(outfile))
+                     shQuote(f), shQuote(outfile))
         if(.Platform$OS.type == "windows")
-            Sys.setenv(LANGUAGE = "C")
-        else {
-            startup <- file.path(R.home("share"), "R", "tests-startup.R")
-            cmd <- paste("LANGUAGE=C ", "R_TESTS=", shQuote(startup), " ",
-                         cmd, sep = "")
-        }
+            Sys.setenv(LANGUAGE = "C", R_TESTS = "startup.Rs")
+        else
+            cmd <- paste("LANGUAGE=C", "R_TESTS=startup.Rs", cmd)
         res <- system(cmd)
         if(res) {
             file.rename(outfile, paste(outfile, "fail", sep="."))
             return(1L)
         }
-        savefile <- file.path(dir, paste(outfile, "save", sep = "." ))
+        savefile <- paste(outfile, "save", sep = "." )
         if (file.exists(savefile)) {
             message("  Comparing ", sQuote(outfile), " to ",
-                    sQuote(basename(savefile)), " ...", appendLF = FALSE)
+                    sQuote(savefile), " ...", appendLF = FALSE)
             res <- Rdiff(outfile, savefile, TRUE)
             if(!res) message(" OK")
         }
@@ -274,7 +272,7 @@ testInstalledPackage <-
     }
 
     nfail <- 0L ## allow for later running all tests even if some fail.
-    Rinfiles <- dir(dir, pattern="\\.Rin$")
+    Rinfiles <- dir(".", pattern="\\.Rin$")
     for(f in Rinfiles) {
         Rfile <- sub("\\.Rin$", ".R", f)
         message("  Creating ", sQuote(Rfile))
@@ -286,7 +284,9 @@ testInstalledPackage <-
         if (nfail > 0) return(nfail)
     }
 
-    Rfiles <- dir(dir, pattern="\\.R$")
+    file.copy(file.path(R.home("share"), "R", "tests-startup.R"), "startup.Rs")
+    if(use_gct) cat("gctorture(TRUE)" , file = "startup.Rs", append = TRUE)
+    Rfiles <- dir(".", pattern="\\.R$")
     for(f in Rfiles) {
         nfail <- nfail + runone(f)
         if (nfail > 0) return(nfail)
@@ -304,4 +304,5 @@ testInstalledPackage <-
         system(paste("unzip -q", fzip, "-d", files))
     } else files <- exdir
     massageExamples(pkg, files, Rfile)
+    invisible(Rfile)
 }
