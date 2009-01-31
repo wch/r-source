@@ -174,8 +174,8 @@ testInstalledPackage <-
         message("Running examples in package ", sQuote(pkg))
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                      "CMD BATCH --vanilla", shQuote(Rfile), shQuote(outfile))
-        if(.Platform$OS.type == "windows") Sys.setenv(R_LIBS = "")
-        else cmd <- paste("R_LIBS=", cmd)
+        cmd <- if(.Platform$OS.type == "windows") paste(cmd, "RLIBS=")
+        else paste("R_LIBS=", cmd)
         res <- system(cmd)
         if(res) {
             file.rename(outfile, paste(outfile, "fail", sep="."))
@@ -206,8 +206,8 @@ testInstalledPackage <-
             cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                          "CMD BATCH --vanilla",
                          shQuote(f), shQuote(outfile))
-            if(.Platform$OS.type == "windows") Sys.setenv(LANGUAGE = "C")
-            else cmd <- paste("LANGUAGE=C", cmd)
+            cmd <- if(.Platform$OS.type == "windows") paste(cmd, "LANGUAGE=C")
+            else paste("LANGUAGE=C", cmd)
            res <- system(cmd)
             if(res) {
                 file.rename(outfile, paste(outfile, "fail", sep="."))
@@ -252,10 +252,10 @@ testInstalledPackage <-
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                      "CMD BATCH --vanilla",
                      shQuote(f), shQuote(outfile))
-        if(.Platform$OS.type == "windows")
-            Sys.setenv(LANGUAGE = "C", R_TESTS = "startup.Rs")
+        cmd <- if(.Platform$OS.type == "windows")
+            paste(cmd, "LANGUAGE=C", "R_TESTS=startup.Rs")
         else
-            cmd <- paste("LANGUAGE=C", "R_TESTS=startup.Rs", cmd)
+            paste("LANGUAGE=C", "R_TESTS=startup.Rs", cmd)
         res <- system(cmd)
         if(res) {
             file.rename(outfile, paste(outfile, "fail", sep="."))

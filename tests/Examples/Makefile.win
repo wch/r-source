@@ -1,70 +1,26 @@
 #-*- Makefile -*-
 #
-# ${RHOME}/tests/Makefile.win
+# ${RHOME}/tests/Examples/Makefile.win
 
 RHOME=../..
-include $(RHOME)/src/gnuwin32/MkRules
-include $(RHOME)/share/make/vars.mk
+ECHO = echo
 
-R = $(RHOME)/bin/Rterm --vanilla LANGUAGE=en
-RLIB = $(RHOME)/library
+R_EXE = $(RHOME)/bin/Rterm --slave --vanilla
 
-EX_IN_BASE = $(R_PKGS_BASE:=-Ex.R)
-EX_OUT_BASE = $(EX_IN_BASE:.R=.Rout)
+all: test-Examples-Base
 
-RDIFF = $(RHOME)/bin/Rcmd Rdiff
-RVAL_IF_DIFF = 0
+test-Examples: test-Examples-Base
 
-.PHONY: FORCE
+## Used to collate examples in LC_ALL
+test-Examples-Base:
+	@$(ECHO) "tools::testInstalledPackages(scope='base', types='examples')" | $(R_EXE)
 
-.SUFFIXES:
-.SUFFIXES: .R .Rout
 
-all:  $(EX_OUT_BASE)
+test-Examples-Recommended: test-Examples-Base
+	@$(ECHO) "tools::testInstalledPackages(scope='recomended', types='examples')" | $(R_EXE)
+## </NOTE>
 
-## if we don't FORCE here we have to work out a dependence on R.
-$(EX_IN_BASE): FORCE $(RHOME)/share/R/massage-examples.R
-
-FORCE:
-
-base-Ex.R: $(RLIB)/base/R-ex/Rex.zip
-datasets-Ex.R: $(RLIB)/datasets/R-ex/Rex.zip
-grDevices-Ex.R: $(RLIB)/grDevices/R-ex/Rex.zip
-graphics-Ex.R: $(RLIB)/graphics/R-ex/Rex.zip
-grid-Ex.R: $(RLIB)/grid/R-ex/Rex.zip
-methods-Ex.R: $(RLIB)/methods/R-ex/Rex.zip
-splines-Ex.R: $(RLIB)/splines/R-ex/Rex.zip
-stats-Ex.R: $(RLIB)/stats/R-ex/Rex.zip
-stats4-Ex.R: $(RLIB)/stats4/R-ex/Rex.zip
-tcltk-Ex.R: $(RLIB)/tcltk/R-ex/Rex.zip
-tools-Ex.R: $(RLIB)/tools/R-ex/Rex.zip
-utils-Ex.R: $(RLIB)/utils/R-ex/Rex.zip
-
-%-Ex.R: 
-	@$(ECHO) "Massaging examples into '$*-Ex.R' ..."
-	@if test -f $(RLIB)/$*/R-ex/Rex.zip; then \
-	  (cd $(RLIB)/$*/R-ex; unzip -oq Rex); \
-	  LC_ALL=C $(RHOME)/bin/rterm --slave --vanilla < $(RHOME)/share/R/massage-examples.R --args $* $(RLIB)/$*/R-ex/*.R > $@; \
-	  (cd $(RLIB)/$*/R-ex; $(RM) -f *.R); \
-	else \
-	  LC_ALL=C $(RHOME)/bin/rterm --slave --vanilla < $(RHOME)/share/R/massage-examples.R --args $* $(RLIB)/$*/R-ex/*.R > $@; \
-	fi
-
-.R.Rout:
-	@if test -f $@ ; then \
-	  mv $@ $@.prev ; fi
-	@rm -f $@.fail
-	@$(ECHO) "Running examples in '$<' ..."
-	@$(R) R_LIBS='$(RLIB);$(R_LIBS)' < $< > $@ 2>&1 \
-	  || (mv  $@ $@.fail && exit 1)
-	@if test -f $@.prev ; then \
-	  mv $@ $@.fail; \
-	  echo -n "Comparing \`$@' to \`$@.prev' ..."; \
-	  $(RDIFF) $@.fail $@.prev 0 || exit 1; \
-	  mv $@.fail $@; \
-	  echo "OK"; \
-	fi
-
+mostlyclean: clean
 clean:
 	-@rm -f *.R *.Rout *.Rd* *.ps *.tex *.dat* data foo* ex*.gz
 distclean: clean
