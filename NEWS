@@ -138,6 +138,15 @@ NEW FEATURES
 
     o	file.copy() now has a 'recursive' argument.
 
+    o	errors in setOldClass() will cause a previous definition to be restored.
+
+    o	Ambiguities in class inheritance and method selection resulting
+	from duplicates in superclasses are now resolved by requiring
+	(if possible) consistency with all the superclass inheritance. The
+	rules for method selection have been revised to take advantage of
+	the improved ordering.
+	See ?Methods and the reference there related to inheritance.
+
 
 DEPRECATED & DEFUNCT
 

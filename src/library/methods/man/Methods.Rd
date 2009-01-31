@@ -122,7 +122,7 @@ Each element of the list describes the nature of the relationship (see
 \code{\linkS4class{SClassExtension}} for details).
 Included in the element is a \code{distance} slot giving a numeric
 distance between the two classes.
-The distance currently is the path length for the relationship:
+The distance is the path length for the relationship:
 \code{1} for direct superclasses (regardless of which mechanism
 defined them), then \code{2} for the direct superclasses of those
 classes, and so on.
@@ -132,6 +132,15 @@ actual class.
 The special class \code{"missing"} corresponding to missing arguments
 has only \code{"ANY"} as a superclass, while \code{"ANY"} has no
 superclasses.
+
+When a class definition is created or modified, the superclasses
+are ordered, first by a stable sort of the all superclasses by
+distance.
+If the set of superclasses has duplicates (that is, if some class is
+inherited through more than one relationship), these are removed, if
+possible, so that the list of superclasses is consistent with the
+superclasses of all direct superclasses.
+See the reference on inheritance for details.
 
 The information about superclasses is summarized when a class
 definition is printed.
@@ -155,40 +164,21 @@ argument (think of the function \code{outer} generating an array of
 all possible combinations).
 The search now finds all the methods matching any of this combination
 of classes.
-The computation of distances also has to combine distances for the
-individual arguments.
-There are many ways to combine the distances; the current
-implementation simply adds them.
-The result of the search is then a list of zero, one, or more methods,
-and a parallel vector of distances between the target signature and
-the available methods.
+For each argument, the position in the list of superclasses of that
+argument's class defines which method or methods (if the same class
+appears more than once) match best.
+When there is only one argument, the best match is unambiguous.
+With more than one argument, there may be zero or one match that is
+among the best matches for \emph{all} arguments.
 
-If the list has more than one matching method,  only those corresponding to
-the minimum distance are considered.
-There may still be multiple best methods.
-The dispatch software considers this an ambiguous case and warns the
-user (only on the first call for this selection).
-The method occurring first in the list of superclasses is selected.  By the mechanism of producing
-the extension information, this orders the direct superclasses by the
-order they appeared in the original call to \code{\link{setClass}}.
-Classes specified in \code{\link{setIs}} and
-\code{\link{setClassUnion}}  calls, and by
-the superclasses of these classes. (Note that only
-the ordering of classes within a particular generation of superclasses
-counts, because only these will have the same distance).
-It is generally a very bad idea to  count on any observed ordering,
-other than of the simple superclasses, since both circumstances and
-future changes to the computations could alter such orderings.
-
-All this detail about selection is less important than the realization
-that having ambiguous method selection usually means that you need to
-be more specific about intentions.
-It is likely that some consideration other than the ordering of
-superclasses in the class definition is more important in determining
-which method \emph{should}  be selected, and the preference may well
-be different for different generic functions.  Where ambiguities
-arise, the best approach is usually to provide a specific method for
-the subclass.
+If there is no best match, the selection is ambiguous and a message is
+printed noting which method was selected (the first method
+lexicographicaly in the ordering) and what other methods could have
+been selected.
+Since the ambiguity is usually nothing the end user could control,
+this is not a warning.
+Package authors should examine their package for possible ambiguous
+inheritance by calling \code{\link{testInheritedMethods}}.
 
 When the inherited method has been selected, the selection is cached
 in the generic function so that future calls with the same class will
@@ -368,6 +358,11 @@ The  \code{"target"} slot starts off equal to the \code{"defined"}
  \emph{Software for Data Analysis: Programming with R}
   Springer.  (For the R version: see section 10.6 for method
   selection and section 10.5 for generic functions).
+
+ Chambers, John M.(2009)
+ \emph{Class Inheritance in R}
+ \url{http://stat.stanford.edu/~jmc4/classInheritance.pdf} (to be
+ submitted to the R Journal).
 
  Chambers, John M. (1998)
  \emph{Programming with Data}
