@@ -274,8 +274,8 @@ src/extra/zlib/README, *.c, *.h
 
 src/main/dounzip.c, unzip.h
 
-  Contains code Copyright (C) 1998 Gilles Vollant from contrib/minizip
-  in the zlib 1.1.3 distribution.
+  Contain code Copyright (C) 1998-2005 Gilles Vollant from contrib/minizip
+  in the zlib 1.2.3 distribution.
 
 
 src/main/acosh.c, asinh.c, atanh.c
