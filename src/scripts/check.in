@@ -2193,45 +2193,13 @@ sub check_pkg {
     if($opt_examples && (-d &file_path($library, $pkgname, "R-ex"))) {
 	$log->creating("${pkgname}-Ex.R");
 	my $Rexdir = &file_path($library, $pkgname, "R-ex");
-        ## $Rexdir might contain spaces (not on Windows)
-        my $is_zipped = 0;
-	my $cmd;
-
-        if(-e &file_path($Rexdir, "Rex.zip")) {
-            $is_zipped = 1;
-	    my $UNZIP = &R_getenv("R_UNZIPCMD", "unzip");
-            my $Rexfile = &file_path($Rexdir, "Rex.zip");
-	    $cmd = join(" ",
-			("$UNZIP", "-q",
-			 &shell_quote_file_path($Rexfile),
-			 "-d",
-			 &shell_quote_file_path($Rexdir)));
-	    if(R_system($cmd)) {
-		$log->error();
-		$log->print("Cannot extract examples from ZIP archive.\n");
-		exit(1);
-	    }
-        }
-        if($WINDOWS) {
-            ## We've forced R_HOME and Rexdir to have no spaces already.
-            $cmd = "LC_ALL=C ${R::Vars::R_HOME}/bin/Rterm --slave --vanilla ". 
-		"-f ${R::Vars::R_HOME}/share/R/massage-examples.R ".
-		"--args ${pkgname} ${Rexdir} ".
-		"> ${pkgname}-Ex.R";
-        } else {
-	    $cmd =
-		join(" ",
-		     ("LC_ALL=C",
-		      &shell_quote_file_path(${R::Vars::R_EXE}),
-		      "--slave --vanilla -f",
-		      &shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
-							"R",
-							"massage-examples.R")),
-		      "--args", "${pkgname}",
-		      &shell_quote_file_path(${Rexdir}),
-		      "> ${pkgname}-Ex.R"));
-        }
-
+        ## $Rexdir might contain spaces (not on Windows, though)
+	$cmd = join(" ",
+		    ("(echo 'tools:::.createExdotR(\"${pkgname}\", \"${Rexdir}\")'",
+		     "| LC_ALL=C",
+		     &shell_quote_file_path(${R::Vars::R_EXE}), 
+		     "--vanilla --slave)"
+		    ));
  	if(R_system($cmd)) {
   	    $log->error();
 	    $log->print("Running massage-Examples to create " .
@@ -2365,51 +2333,20 @@ sub check_pkg {
         }
         chdir($testdir);
 	dircopy($testsrcdir, ".");
-        my $makefiles = "-f " .
-	    &shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
-					      "make", "tests.mk"));
-        if($WINDOWS) {
-            $makefiles = "-f ${R::Vars::R_SHARE_DIR}/make/wintests.mk";}
-        my $makevars = "";
-        if($WINDOWS && (-r "$testsrcdir/Makefile.win")) {
-            $makefiles .= " -f $testsrcdir/Makefile.win";
-        }
-        elsif(-r &file_path($testsrcdir, "Makefile")) {
-            $makefiles .= " -f " . &file_path($testsrcdir, "Makefile");
-        }
-        if($WINDOWS && (-r "$testsrcdir/Makevars.win")) {
-            $makevars = " -f $testsrcdir/Makevars.win";
-        }
-        elsif(-r &file_path($testsrcdir, "Makevars")) {
-            $makevars = " -f " . &file_path($testsrcdir, "Makevars");
-        }
-        else {
-            open(MAKEVARS, "> Makevars");
-            print MAKEVARS "makevars = -f Makevars\n";
-            ## at least windows does not pass env correctly to make
-            print MAKEVARS "R_LIBS = $ENV{'R_LIBS'}\n";
-	    ## No longer needed now that we dircopy() all of
-	    ## $testsrcdir:
-            ##   print MAKEVARS "srcdir = $testsrcdir\n";
-            ##   print MAKEVARS "VPATH = \$(srcdir)\n\n";
-            print MAKEVARS "test-src-1 =";
-	    foreach my $file (sort &list_files_with_exts($testdir, "R")) {
-                print MAKEVARS "\\\n " . basename($file);
-            }
-            print MAKEVARS "\n";
-            print MAKEVARS "test-src-auto =";
-	    foreach my $file (sort &list_files_with_exts($testdir, "Rin")) {
-                $file =~ s/Rin$/R/;
-                print MAKEVARS "\\\n " . basename($file);
-            }
-            print MAKEVARS "\n";
-	    print MAKEVARS "USE_GCT = $opt_use_gct\n";
-	    print MAKEVARS "R_OPTS = -d valgrind\n" if $opt_use_valgrind;
-            close(MAKEVARS);
-            $makevars = " -f Makevars";
-        }
-        print "\n";
-        if(R_system("${R::Vars::MAKE} $makefiles $makevars")) {
+	if($opt_use_gct) {
+	    $cmd = join(" ",
+			("(echo 'gctorture(TRUE); tools:::.runPackageTestsR()' |",
+			 &shell_quote_file_path(${R::Vars::R_EXE}), 
+			 "--vanilla --slave)"
+			));
+	} else {
+	    $cmd = join(" ",
+			("(echo 'tools:::.runPackageTestsR()' |",
+			 &shell_quote_file_path(${R::Vars::R_EXE}), 
+			 "--vanilla --slave)"
+			));
+	}    		    
+        if(R_system($cmd)) {
             $log->error();
 	    ## Don't just fail: try to log where the problem occurred.
 	    ## First, find the test which failed.

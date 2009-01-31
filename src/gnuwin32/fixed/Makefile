@@ -2,7 +2,7 @@ include ../MkRules
 
 R_HOME = ../../..
 
-all: profiles fixhtml fixbin fixetc fixshare svnonly
+all: profiles fixhtml fixbin fixetc svnonly
 
 profiles: $(R_HOME)/library/base/R/Rprofile
 
@@ -31,11 +31,6 @@ fixetc: $(wildcard ./etc/*)
 	$(CP) -p $^ $(R_HOME)/etc
 	@$(ECHO) done > fixetc
 
-fixshare: share/tests.mk
-	$(MKDIR) -p $(R_HOME)/share/make
-	$(CP) -p $^ $(R_HOME)/share/make/wintests.mk
-	@$(ECHO) done > fixshare	
-
 svnonly:
 	@$(MAKE) -C ../../../doc/manual -f Makefile.win svnonly
 
@@ -44,7 +39,10 @@ clean:
 
 distclean:
 
-$(R_HOME)/doc/html/search/SearchEngine.html: $(R_HOME)/doc/html/search/SearchEngine-head.html $(R_HOME)/doc/html/search/SearchEngine-foot.html $(R_HOME)/doc/KEYWORDS.db
+$(R_HOME)/doc/html/search/SearchEngine.html: \
+  $(R_HOME)/doc/html/search/SearchEngine-head.html \
+  $(R_HOME)/doc/html/search/SearchEngine-foot.html \
+  $(R_HOME)/doc/KEYWORDS.db
 	(cd $(R_HOME)/doc; \
 	cat html/search/SearchEngine-head.html > html/search/SearchEngine.html; \
 	$(PERL) ../tools/keywords2html.pl KEYWORDS.db >> html/search/SearchEngine.html; \

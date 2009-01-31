@@ -192,6 +192,9 @@ UTILITIES
     o	R CMD check runs the package tests with a custom startup file,
 	currently containing 'options(useFancyQuotes = FALSE)'.
 
+	Those tests are run by R script: using a tests/Makefile
+	(undocumented) to longer works.
+
     o	R CMD config now knows about DYLIB_EXT and SHLIB_EXT, for use
 	in configure files.
 
