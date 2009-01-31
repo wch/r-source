@@ -15,43 +15,18 @@ DISTFILES = Makefile.in  Makefile.win
 
 R_EXE = $(top_builddir)/bin/R --slave --vanilla
 
-## principle is that we can run all the examples in a package
-## starting with just that package and 'datasets'
-## R = R_DEFAULT_PACKAGES=datasets $(top_builddir)/bin/R --vanilla
-R = $(top_builddir)/bin/R --vanilla
-
-EX_IN_BASE = $(R_PKGS_BASE:=-Ex.R)
-EX_OUT_BASE = $(EX_IN_BASE:.R=.Rout)
-
-EX_IN_RECOMMENDED = $(R_PKGS_RECOMMENDED:=-Ex.R)
-EX_OUT_RECOMMENDED = $(EX_IN_RECOMMENDED:.R=.Rout)
-
-RDIFF = $(top_builddir)/bin/R CMD Rdiff
-RVAL_IF_DIFF = 0
-
-.SUFFIXES:
-.SUFFIXES: .R .Rout
-
-all: Makefile Makedeps test-Examples 
+all: Makekefile test-Examples-Base
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-Makedeps: Makefile
-	@(for p in $(R_PKGS_BASE); do \
-	    dep="$${p}-Ex.Rout: $${p}-Ex.R"; \
-	    dep="$${dep} \$$(top_builddir)/library/$${p}/R/$${p}"; \
-	    tmp="library/$${p}/libs/$${p}" ; \
-	    if test -f $(top_builddir)/$${tmp}$(SHLIB_EXT); then \
-	      dep="$${dep} \$$(top_builddir)/$${tmp}\$$(SHLIB_EXT)"; \
-	    fi; \
-	    dep="$${dep} \$$(FORCE)"; \
-	    $(ECHO) $${dep}; \
-	  done) >> Makefile
-	@touch $@
+
 test-Examples: test-Examples-Base
+
+## Should this go and update the R-ex directories?  It used to ...
+## Who does make check but not make? -- maybe better to check what was made.
 test-Examples-Base: Makefile
-	@$(MAKE) Makedeps
-	@$(MAKE) $(EX_OUT_BASE)
+	@$(ECHO) "tools::testInstalledPackages(scope='base', types='examples')" | $(R_EXE)
+
 
 ## <NOTE>
 ## We do *not* want this to be added to test-Examples conditional on
@@ -59,75 +34,8 @@ test-Examples-Base: Makefile
 ## 'make check-all' is used for running test-Examples-Recommended in
 ## addition to 'make check'.
 test-Examples-Recommended: test-Examples-Base
-	@$(MAKE) $(EX_OUT_RECOMMENDED)
+	@$(ECHO) "tools::testInstalledPackages(scope='recomended', types='examples')" | $(R_EXE)
 ## </NOTE>
-
-R:
-	@cd $(top_builddir) && $(MAKE) R
-
-.R.Rout:
-	@if test -f $@; then mv $@ $@.prev; fi
-	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
-	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
-	@$(ECHO) "$(ECHO_T) OK"
-	@if test -f $@.prev; then \
-	  mv $@ $@.fail; \
-	  $(ECHO) $(ECHO_N) "comparing '$@' to '$@.prev' ...$(ECHO_C)"; \
-	  $(RDIFF) $@.fail $@.prev $(RVAL_IF_DIFF) || exit 1; \
-	  mv $@.fail $@; \
-	  $(ECHO) "$(ECHO_T) OK"; \
-	fi
-
-
-## <NOTE>
-## We need to update an ex_in file if it is older than any Rd file it
-## contains examples from.  As we do not have the Rd files as explicit
-## dependencies (which would currently be impossible for recommended
-## packages), we cannot use Make to figure out the need to update
-## ex_in files ... hence we do things ourselves, and force these
-## computations.
-## </NOTE>
-## Why did this do txt as well as example?
-$(EX_IN_BASE): FORCE
-	@(pkg=`basename $@ -Ex.R`; \
-	if $(R_EXE) -e \
-	  "tools:::.Rdnewer(\"$(top_srcdir)/src/library/$${pkg}\", \"$@\")"; then \
-	  target_is_newer_than_Rdfiles=no; \
-	else \
-	  target_is_newer_than_Rdfiles=yes; \
-	fi; \
-	if test "$${target_is_newer_than_Rdfiles}" = no; then \
-	  $(ECHO) "collecting examples for package '$${pkg}' ..."; \
-	  (cd $(top_builddir)/src/library && \
-	    $(MAKE) R_CMD_BUILD_HELP_OPTS="--example" \
-	    R_PKGS_BASE="$${pkg}" Rdfiles); \
-	  LC_ALL=C echo "tools:::massageExamples(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}/R-ex\", \"$@\")" | LC_ALL=C $(R_EXE); \
-	fi)
-
-$(EX_IN_RECOMMENDED): FORCE
-	@(pkg=`basename $@ -Ex.R`; \
-	if find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
-	    -print 2> /dev/null | grep $@ > /dev/null; then \
-	  target_is_newer_than_Rdfiles=yes; \
-	else \
-	  target_is_newer_than_Rdfiles=no; \
-	fi; \
-	if test "$${target_is_newer_than_Rdfiles}" = no; then \
-	  $(ECHO) "collecting examples for package '$${pkg}' ..."; \
-	  LC_ALL=C echo "tools:::massageExamples(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}/R-ex\", \"$@\")" | LC_ALL=C $(R_EXE); \
-	fi)
-FORCE:
-
-$(EX_OUT_BASE) $(EX_OUT_RECOMMENDED): Makefile \
-  $(top_builddir)/bin/exec@R_ARCH@/R \
-  $(top_builddir)/src/library/base/all.R \
-  $(top_builddir)/src/library/graphics/all.R \
-  $(top_builddir)/src/library/methods/all.R \
-  $(top_builddir)/src/library/stats/all.R \
-  $(top_builddir)/src/library/utils/all.R \
-  $(top_builddir)/modules@R_ARCH@/lapack$(SHLIB_EXT) \
-  @WANT_R_SHLIB_TRUE@ $(top_builddir)/lib@R_ARCH@/libR$(DYLIB_EXT)
-graphics-Ex.Rout: $(top_builddir)/modules@R_ARCH@/vfonts$(SHLIB_EXT)
 
 mostlyclean: clean
 clean:
@@ -142,5 +50,3 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-
-## Automagically generated dependencies:
