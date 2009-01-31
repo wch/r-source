@@ -1,3 +1,4 @@
+## used by .check_make_vars in QC.R
 all:
 	@echo PKG_CFLAGS:   "$(PKG_CFLAGS)"
 	@echo PKG_CPPFLAGS: "$(PKG_CPPFLAGS)"
