@@ -172,7 +172,7 @@ testInstalledPackage <-
         failfile <- paste(outfile, "fail", sep = "." )
         savefile <- paste(outfile, "prev", sep = "." )
         if (file.exists(outfile)) file.rename(outfile, savefile)
-        unlink)failfile)
+        unlink(failfile)
         message("Running examples in package ", sQuote(pkg))
         ## Create as .fail in case this R session gets killed
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
