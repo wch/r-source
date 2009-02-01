@@ -25,7 +25,7 @@ MK = MAKE
 
 all-basic-tests = BasePackages Specific Reg Internet
 ## not Docs Standalone
-all-devel-tests = IsAs Random Demo Rd Primitive Regexp Segfault
+all-devel-tests = IsAs Random Demo Primitive Regexp Segfault
 
 
 ## <NOTE>
