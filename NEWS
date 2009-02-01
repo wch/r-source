@@ -38,7 +38,8 @@ NEW FEATURES
     o	boxplot() gains a simple 'matrix' method, enabling boxplot(mat)
 	instead of boxplot(data.frame(mat)).
 
-    o	zip.file.extract() gains an optional 'dir' argument.
+    o	zip.file.extract() gains an optional 'dir' argument (but use
+	unzip() instead).
 
     o	source() with 'encoding' specified (and not as "unknown") marks
 	the encoding of character strings in Latin-1 and UTF-8
@@ -136,7 +137,9 @@ NEW FEATURES
 	the examples (and if they were installed) any package-specific
 	tests to be run on an installed package.
 
-	Also testInstalledBasic() to run the basic tests (if installed).
+	testInstalledPackages() can run all the examples and tests in
+	the standard and/or recommended packages.  Also
+	testInstalledBasic() can run the basic tests (if installed).
 
     o	file.copy() now has a 'recursive' argument.
 
@@ -206,7 +209,7 @@ UTILITIES
     o	R CMD check runs the package tests with a custom startup file,
 	currently containing 'options(useFancyQuotes = FALSE)'.
 
-	Those tests are run by R script: using a tests/Makefile
+	Those tests are run by an R script: using a tests/Makefile
 	(undocumented) to longer works.
 
     o	R CMD config now knows about DYLIB_EXT and SHLIB_EXT, for use

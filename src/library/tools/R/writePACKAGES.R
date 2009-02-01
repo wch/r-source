@@ -178,16 +178,16 @@ dependsOnPkgs <- function(pkgs,
                           dependencies = c("Depends", "Imports"),
                           recursive = TRUE,
                           lib.loc = NULL,
-                          installed = installed.packages(lib.loc))
+                          installed = installed.packages(lib.loc, fields = "Enhanes"))
 {
-    need <- apply(installed[, dependencies], 1,
+    need <- apply(installed[, dependencies, drop = FALSE], 1L,
                   function(x) any(pkgs %in% utils:::.clean_up_dependencies(x)) )
     uses <- rownames(installed)[need]
     if(recursive) {
         p <- pkgs
         repeat {
             p <- unique(c(p, uses))
-            need <- apply(installed[, dependencies], 1L,
+            need <- apply(installed[, dependencies, FALSE], 1L,
                           function(x) any(p %in% utils:::.clean_up_dependencies(x)) )
             uses <- unique(c(p, rownames(installed)[need]))
             if(length(uses) <= length(p)) break
