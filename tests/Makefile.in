@@ -45,13 +45,14 @@ DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.common \
 
 SUBDIRS = Embedding Examples Native
 
+## SRCDIR is used by reg-tests-1.R and reg-IO2.R
 ## GNU gettext disables LANGUAGE if LC_ALL=C, but other systems might not.
 R = LANGUAGE=en LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 R2 = R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 R3 = $(top_builddir)/bin/R CMD check
 RDIFF = $(top_builddir)/bin/R CMD Rdiff
 RDCONV = $(top_builddir)/bin/R CMD Rdconv
-MK = MAKE
+MK = $(MAKE)
 
 
 all-basic-tests = Examples Specific Reg Internet

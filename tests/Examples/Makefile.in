@@ -15,7 +15,7 @@ DISTFILES = Makefile.in  Makefile.win
 
 R_EXE = $(top_builddir)/bin/R --slave --vanilla
 
-all: Makekefile test-Examples-Base
+all: Makefile test-Examples-Base
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@

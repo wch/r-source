@@ -21,7 +21,7 @@ R2 = R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 R3 = $(top_builddir)/bin/R CMD check
 RDIFF = $(top_builddir)/bin/R CMD Rdiff
 RDCONV = $(top_builddir)/bin/R CMD Rdconv
-MK = MAKE
+MK = $(MAKE)
 
 all-basic-tests = BasePackages Specific Reg Internet
 ## not Docs Standalone
