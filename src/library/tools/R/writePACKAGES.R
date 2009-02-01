@@ -187,7 +187,7 @@ dependsOnPkgs <- function(pkgs,
         p <- pkgs
         repeat {
             p <- unique(c(p, uses))
-            need <- apply(installed[, dependencies, FALSE], 1L,
+            need <- apply(installed[, dependencies, drop = FALSE], 1L,
                           function(x) any(p %in% utils:::.clean_up_dependencies(x)) )
             uses <- unique(c(p, rownames(installed)[need]))
             if(length(uses) <= length(p)) break
