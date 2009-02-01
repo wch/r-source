@@ -39,7 +39,6 @@ test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-src-demo = demos.R demos2.R
-test-src-errmsgs = errormsgs.R
 test-src-internet = internet.R
 test-src-isas = isas-tests.R
 test-src-primitive = primitives.R
@@ -67,16 +66,15 @@ INSTFILES = README \
 	  reg-plot.ps.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
 	  reg-plot-latin1.ps.save \
 	  reg-win.R encodings.R utf8-regex.R \
-	  errormsgs.R errormsgs.Rout.save \
-	gct-foot.R \
 	nanbug.rda \
-	WinUnicode.dat \
+	WinUnicode.dat
+DISTFILES = Makefile.in Makefile.win Makefile.install $(INSTFILES) gct-foot \
 	testit.Rd testit.txt.save testit.html.save \
 	testit.tex.save testit-Ex.R.save ver20.Rd \
 	ver10.Rd ver10.txt.save ver10.html.save ver10.tex.save ver10-Ex.R.save \
 	ver11.Rd ver11.txt.save ver11.html.save ver11.tex.save ver11-Ex.R.save \
 	R-intro.Rout.save
-DISTFILES = Makefile.in Makefile.win Makefile.install $(INSTFILES)
+
 SUBDIRS = Embedding Examples Native
 
 ## GNU gettext disables LANGUAGE if LC_ALL=C, but other systems might not.
@@ -92,7 +90,6 @@ test-out-gct = $(test-src-gct:.R=.Rout-gct)
 test-out-valgct = $(test-src-gct:.R=.Rout-valgct)
 
 test-out-demo = $(test-src-demo:.R=.Rout)
-test-out-errmsgs = $(test-src-errmsgs:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
 test-out-primitive = $(test-src-primitive:.R=.Rout)
@@ -266,9 +263,6 @@ test-Demo:
 	@$(ECHO) "running demos from base and stats"
 	@$(MAKE) $(test-out-demo) RVAL_IF_DIFF=0
 
-test-Errormsgs:
-	@$(ECHO) "running tests of error messages"
-	@$(MAKE) $(test-out-errmsgs) RVAL_IF_DIFF=0
 
 ## <NOTE>
 ## These depend on an internet connection, and the sites being up.

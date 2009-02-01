@@ -36,7 +36,6 @@ test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-src-demo = demos.R demos2.R
-test-src-errmsgs = errormsgs.R
 test-src-internet = internet.R
 test-src-isas = isas-tests.R
 test-src-primitive = primitives.R
@@ -63,7 +62,6 @@ test-out-gct = $(test-src-gct:.R=.Rout-gct)
 test-out-valgct = $(test-src-gct:.R=.Rout-valgct)
 
 test-out-demo = $(test-src-demo:.R=.Rout)
-test-out-errmsgs = $(test-src-errmsgs:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
 test-out-primitive = $(test-src-primitive:.R=.Rout)
@@ -139,27 +137,6 @@ reg-plot-latin1.Rout: reg-plot-latin1.R
 	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
 
-.R.Rout-gct:
-	@$(ECHO) "running gctorture() + '$<'"
-	@($(ECHO) '.ptime <- proc.time(); gctorture()' ; \
-	  cat $< $(srcdir)/gct-foot.R) | $(R) > $@ 2>&1
-	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
-	  if test ! -r $${Ro}; then $(MAKE) $${Ro}; fi; \
-	  $(ECHO) $(ECHO_N) "comparing '$@' to '$${Ro}' ...$(ECHO_C)"; \
-	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $${Ro} 1 || exit 1; \
-	  mv $@.fail $@; \
-	  $(ECHO) "$(ECHO_T) OK"
-
-R-valgrind = $(R) --debugger="valgrind --tool=memcheck"
-
-.R.Rout-valgct:
-	@$(ECHO) "running gctorture() + valgrind + '$<'"
-	@($(ECHO) '.ptime <- proc.time(); gctorture()' ; \
-	  cat $< $(srcdir)/gct-foot.R) | $(R-valgrind) > $@ 2>&1
-	grep "==[0-9]*==" $@
-
-
-
 test-all-basics:
 	@for name in $(all-basic-tests); do \
 	  $(MAKE) test-$${name} || exit 1; \
@@ -205,9 +182,6 @@ test-Demo:
 	@$(ECHO) "running demos from base and stats"
 	@$(MAKE) $(test-out-demo) RVAL_IF_DIFF=0
 
-test-Errormsgs:
-	@$(ECHO) "running tests of error messages"
-	@$(MAKE) $(test-out-errmsgs) RVAL_IF_DIFF=0
 
 ## <NOTE>
 ## These depend on an internet connection, and the sites being up.
@@ -251,33 +225,6 @@ test-Standalone:
 	@$(ECHO) "testing building standalone Rmath"
 	-@(cd $(top_builddir)/src/nmath/standalone; $(MAKE) check)
 ## </NOTE>
-
-test-Rd: $(srcdir)/testit.Rd $(srcdir)/ver10.Rd $(srcdir)/ver11.Rd
-	@$(ECHO) "testing Rd conversion"
-	@$(RDCONV) -t txt $(srcdir)/testit.Rd > testit.txt
-	@diff -bw testit.txt $(srcdir)/testit.txt.save
-	@$(RDCONV) -t html $(srcdir)/testit.Rd > testit.html
-	@diff -bw testit.html $(srcdir)/testit.html.save
-	@$(RDCONV) -t latex $(srcdir)/testit.Rd > testit.tex
-	@diff -bw testit.tex $(srcdir)/testit.tex.save
-	@$(RDCONV) -t example $(srcdir)/testit.Rd > testit-Ex.R
-	@diff -bw testit-Ex.R $(srcdir)/testit-Ex.R.save
-	@$(RDCONV) -t txt $(srcdir)/ver11.Rd > ver11.txt
-	@diff -bw ver11.txt $(srcdir)/ver11.txt.save
-	@$(RDCONV) -t html $(srcdir)/ver11.Rd > ver11.html
-	@diff -bw ver11.html $(srcdir)/ver11.html.save
-	@$(RDCONV) -t latex $(srcdir)/ver11.Rd > ver11.tex
-	@diff -bw ver11.tex $(srcdir)/ver11.tex.save
-	@$(RDCONV) -t example $(srcdir)/ver11.Rd > ver11-Ex.R
-	@diff -bw ver11-Ex.R $(srcdir)/ver11-Ex.R.save
-	@$(RDCONV) -t txt $(srcdir)/ver10.Rd > ver10.txt 2>&1
-	@diff -bw ver10.txt $(srcdir)/ver10.txt.save
-	@$(RDCONV) -t html $(srcdir)/ver10.Rd > ver10.html 2>&1
-	@diff -bw ver10.html $(srcdir)/ver10.html.save
-	@$(RDCONV) -t latex $(srcdir)/ver10.Rd > ver10.tex 2>&1
-	@diff -bw ver10.tex $(srcdir)/ver10.tex.save
-	@$(RDCONV) -t example $(srcdir)/ver10.Rd > ver10-Ex.R
-	@diff -bw ver10-Ex.R $(srcdir)/ver10-Ex.R.save
 
 test-DocFiles:
 	@$(ECHO) "checking Rd usage sections"
