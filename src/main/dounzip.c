@@ -170,6 +170,7 @@ static SEXP do_list(const char *zipname)
     uf = unzOpen(zipname);
     if (!uf) error(_("zip file '%s' cannot be opened"));
 
+    gi.number_entry = 0; /* =Wall */
     err = unzGetGlobalInfo (uf, &gi);
     if (err != UNZ_OK)
         error("error %d with zipfile in unzGetGlobalInfo", err);
@@ -221,7 +222,7 @@ SEXP attribute_hidden do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn, ans, names = R_NilValue;
     char  zipname[PATH_MAX], dest[PATH_MAX];
-    const char *p, **topics;
+    const char *p, **topics = NULL;
     int   i, ntopics, list, rc, nnames = 0;
 
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)

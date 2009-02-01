@@ -32,7 +32,7 @@ zip.file.extract <- function(file, zipname = "R.zip",
                 system(cmd, invisible = TRUE) else system(paste(cmd, "> /dev/null"))
             if(!res) file <- file.path(dir, topic)
         } else {
-            rc <- .Internal(int.unzip(file.path(path, zipname), topic, dir))
+            rc <- .Internal(int.unzip(file.path(path, zipname), topic, dir, FALSE))
             if (rc == 0L)
                 file <- file.path(dir, topic)
         }

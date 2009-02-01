@@ -236,9 +236,7 @@ zip.unpack <- function(zipname, dest)
         if((unzip <- getOption("unzip")) != "internal") {
             system(paste(unzip, "-oq", zipname, "-d", dest),
                    show = FALSE, invisible = TRUE)
-        } else {
-            .Internal(int.unzip(zipname, NULL, dest))
-        }
+        } else unzip(zipname, exdir = dest)
     } else stop(gettextf("zipfile '%s' not found", zipname),
                 domain = NA)
 }
