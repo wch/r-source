@@ -7,6 +7,8 @@ include ../src/gnuwin32/MkRules
 include ../share/make/vars.mk
 
 srcdir = .
+top_srcdir = ..
+top_builddir = $(RHOME)
 
 ## Can't test when cross-building
 RHOME = $(shell ../src/gnuwin32/Rpwd.exe ..)# must be absolute path
@@ -16,6 +18,11 @@ RDIFF = $(RHOME)/bin/R CMD Rdiff
 RVAL_IF_DIFF=0
 ## suppress fancy quotes for diff-ing
 RDCONV = LC_ALL=C $(RHOME)/bin/Rcmd Rdconv
+
+ECHO = echo
+ECHO_C = 
+ECHO_N = -n
+ECHO_T = 
 
 test-src-gct = \
 	eval-etc.R \
@@ -44,7 +51,6 @@ test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-src-demo = demos.R demos2.R
-test-src-errmsgs = errormsgs.R
 test-src-internet = internet.R
 test-src-isas = isas-tests.R
 test-src-primitive = primitives.R
@@ -62,7 +68,6 @@ test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 
 test-out-demo = $(test-src-demo:.R=.Rout)
-test-out-errmsgs = $(test-src-errmsgs:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
 test-out-primitive = $(test-src-primitive:.R=.Rout)
@@ -72,16 +77,18 @@ test-out-regexp = $(test-src-regexp:.R=.Rout)
 test-out-reg3 = $(test-src-reg3:.R=.Rout)
 test-out-segfault = $(test-src-segfault:.R=.Rout)
 
-## This macro is used only for dependencies
+## This macro is used only for dependencies and for distclean
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) \
 	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
-	$(test-out-segfault) $(test-out-isas)
+	$(test-out-segfault) $(test-out-isas) \
+	$(test-out-primitive) utf8-regex.Rout
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
 
 all-basic-tests = Specific Reg Internet
+## add Regexp?
 all-devel-tests = Docs IsAs Random Demo Rd Primitive Segfault \
    Standalone Packages
 
@@ -89,54 +96,54 @@ all check: test-all-basics
 check-devel: check test-all-devel
 check-all: check-devel
 
+$(test-out): FORCE
+
+FORCE:
 
 .Rin.R:
-	@echo "creating '$@'"
+	@$(ECHO) "creating '$@'"
 	@$(R) < $< > /dev/null
 
 .R.Rout:
 	@rm -f $@ $@.fail
-	@echo -n "running code in '$<' ..."
-	@$(R) < $< > $@  2>&1 || (mv $@ $@.fail && exit 1)
-	@echo "OK"
-	@if test -f $(srcdir)/$@.save  ; then \
+	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
+	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
+	@$(ECHO) "$(ECHO_T) OK"
+	@if test -f $(srcdir)/$@.save ; then \
 	  mv $@ $@.fail; \
-	  echo -n "  comparing '$@' to '$(srcdir)/$@.save' ..."; \
+	  $(ECHO) $(ECHO_N) \
+	    "comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)"; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
 	  mv $@.fail $@; \
-	  echo "OK"; \
+	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
 
 reg-plot.Rout: reg-plot.R
 	@rm -f $@ $@.fail
-	@echo -n "running code in '$<' ..."
+	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
-	@echo "OK"
-	@if test -f $(srcdir)/$@.save ; then \
-	  mv $@ $@.fail; \
-	  echo -n "  comparing '$@' to '$(srcdir)/$@.save' ..."; \
-	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
-	  mv $@.fail $@; \
-	  echo "OK"; \
-	fi
-	@echo -n "  comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ..."
-	@$(RDIFF) reg-plot.ps $(srcdir)/reg-plot.ps.save $(RVAL_IF_DIFF)
-	@echo "OK"
+	@$(ECHO) "$(ECHO_T) OK"
+	@$(ECHO) $(ECHO_N) \
+	  "comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ...$(ECHO_C)"
+	-@diff reg-plot.ps $(srcdir)/reg-plot.ps.save
+	@$(ECHO) "$(ECHO_T) OK"
 
 ## allow this to fail, as it must if the locale does not support Latin-1 chars
+## we can't use Rdiff as MacOS tr crashes on latin-1 chars in a UTF-8 locale
 reg-plot-latin1.Rout: reg-plot-latin1.R
 	@rm -f $@ $@.fail
-	@echo "running tests of plotting Latin-1 "
-	@echo "  expect failure or some differences if not in a Latin or UTF-8 locale"
-	@echo -n "running code in '$<' ..."
+	@$(ECHO) "running tests of plotting Latin-1"
+	@$(ECHO) "  expect failure or some differences if not in a Latin or UTF-8 locale"
+	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R2) < $< > $@ 2>&1 || mv $@ $@.fail
 	@if test -e $@.fail; then \
-	  echo " FAILED"; \
+	  $(ECHO) "$(ECHO_T) FAILED"; \
 	else \
-	  echo " OK"; \
-	  echo -n "  comparing 'reg-plot-latin1.ps' to '$(srcdir)/reg-plot-latin1.ps.save' ..."; \
-	  $(RDIFF) reg-plot-latin1.ps $(srcdir)/reg-plot-latin1.ps.save $(RVAL_IF_DIFF); \
-	  echo "OK"; \
+	  $(ECHO) "$(ECHO_T) OK"; \
+	  $(ECHO) $(ECHO_N) \
+	  "comparing 'reg-plot-latin1.ps' to '$(srcdir)/reg-plot-latin1.ps.save' ...$(ECHO_C)"; \
+	  diff reg-plot-latin1.ps $(srcdir)/reg-plot-latin1.ps.save && exitstatus=0; \
+	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
 
 test-all-basics:
@@ -152,116 +159,116 @@ test-all-devel:
 test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)
 test-Specific:
-	@echo "running strict specific tests ..."
+	@$(ECHO) "running strict specific tests"
 	@$(MAKE) -f Makefile.win test-Specific-strict RVAL_IF_DIFF=1
-	@echo "running sloppy specific tests ..."
+	@$(ECHO) "running sloppy specific tests"
 	@$(MAKE) -f Makefile.win test-Specific-sloppy RVAL_IF_DIFF=0
 
 test-Packages:
-	@echo
-	@echo "---- checking base packages ----"
 	@for p in $(R_PKGS_BASE); do \
-	  echo ; \
-	  echo "* checking package '$${p}'"; \
-	  $(RHOME)/bin/R CMD check ../src/library/$${p} || echo; \
+	  $(ECHO) "checking package '$${p}'"; \
+	  $(top_builddir)/bin/R CMD check --install=skip \
+	    $(top_srcdir)/src/library/$${p} || $(ECHO); \
 	done
 
 test-Docs:
-	@echo "running tests of documentation examples"
-	@cp ../doc/manual/*.R .
+	@$(ECHO) "running tests of documentation examples"
+	@cp ${top_srcdir}/doc/manual/*.R .
 	@$(MAKE) -f Makefile.win R-intro.Rout RVAL_IF_DIFF=0
-	@cp ../doc/manual/R-exts.c .
-	@$(RHOME)/bin/rcmd SHLIB R-exts.c
+	@cp ${top_srcdir}/doc/manual/R-exts.c .
+	@$(top_builddir)/bin/R CMD SHLIB R-exts.c
 	@$(MAKE) -f Makefile.win R-exts.Rout
 	@rm R-exts.*
 
 test-Demo:
-	@echo "running demos from base and stats"
+	@$(ECHO) "running demos from base and stats"
 	@$(MAKE) -f Makefile.win $(test-out-demo) RVAL_IF_DIFF=0
 
 internet.Rout2:
 	-@$(R) --internet2 < internet.R > internet.Rout2 2>&1 || \
 	  echo " testing --internet2 failed"
 
-## These depend on an internet connection, and the sites being up
+## <NOTE>
+## These depend on an internet connection, and the sites being up.
+## So allow this to fail: it may be slow doing so.
 test-Internet:
-	@echo "running tests of Internet and socket functions ..."
-	@echo "  expect some differences"
+	@$(ECHO) "running tests of Internet and socket functions ..."
+	@$(ECHO) "  expect some differences"
 	-@$(MAKE) -f Makefile.win $(test-out-internet) RVAL_IF_DIFF=0 || \
-	  echo " testing standard internet connectivity failed"
+	  $(ECHO) " testing standard internet connectivity failed"
 	@$(MAKE) -f Makefile.win internet.Rout2 RVAL_IF_DIFF=0
 	-@diff internet.Rout internet.Rout2
 
 test-IsAs:
-	@echo "running tests of consistency of as/is.*"
+	@$(ECHO) "running tests of consistency of as/is.*"
 	@$(MAKE) -f Makefile.win $(test-out-isas) RVAL_IF_DIFF=1
 
 test-Primitive:
-	@echo "running tests of primitives"
+	@$(ECHO) "running tests of primitives"
 	@$(MAKE) -f Makefile.win $(test-out-primitive) RVAL_IF_DIFF=0
 
 test-Random:
-	@echo "running tests of random deviate generation"
+	@$(ECHO) "running tests of random deviate generation"
 	@$(MAKE) -f Makefile.win $(test-out-random) RVAL_IF_DIFF=1
 
 test-Reg:
-	@echo "running regression tests ..."
+	@$(ECHO) "running regression tests ..."
 	@$(MAKE) -f Makefile.win $(test-out-reg) RVAL_IF_DIFF=1
 	@$(MAKE) -f Makefile.win $(test-out-reg3) RVAL_IF_DIFF=0
 
 test-Segfault:
-	@echo "running tests to possibly trigger segfaults"
+	@$(ECHO) "running tests to possibly trigger segfaults"
 	@$(MAKE) -f Makefile.win $(test-out-segfault) RVAL_IF_DIFF=0
-	@rm -f data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots.*
+	@rm -f data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots* PACKAGES PACKAGES.gz FALSE-package.Rd FALSE.* ./-Ex.R
 
 test-Standalone:
-	@echo "testing building standalone Rmath"
+	@$(ECHO) "testing building standalone Rmath"
 	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win all test || exit 1
 	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win clean
 
-test-Rd: testit.Rd ver10.Rd ver11.Rd
-	@echo "testing Rd conversion"
-	@$(RDCONV) -t txt testit.Rd > testit.txt
-	@diff -bw testit.txt testit.txt.save
-	@$(RDCONV) -t html testit.Rd > testit.html
-	@diff -bw testit.html testit.html.save
-	@$(RDCONV) -t latex testit.Rd > testit.tex
-	@diff -bw testit.tex testit.tex.save
-	@$(RDCONV) -t example testit.Rd > testit-Ex.R
-	@diff -bw testit-Ex.R testit-Ex.R.save
-	@$(RDCONV) -t txt ver11.Rd > ver11.txt
-	@diff -bw ver11.txt ver11.txt.save
-	@$(RDCONV) -t html ver11.Rd > ver11.html
-	@diff -bw ver11.html ver11.html.save
-	@$(RDCONV) -t latex ver11.Rd > ver11.tex
-	@diff -bw ver11.tex ver11.tex.save
-	@$(RDCONV) -t example ver11.Rd > ver11-Ex.R
-	@diff -bw ver11-Ex.R ver11-Ex.R.save
-	@$(RDCONV) -t txt ver10.Rd > ver10.txt 2>&1
-	@diff -bw ver10.txt ver10.txt.save
-	@$(RDCONV) -t html ver10.Rd > ver10.html 2>&1
-	@diff -bw ver10.html ver10.html.save
-	@$(RDCONV) -t latex ver10.Rd > ver10.tex 2>&1
-	@diff -bw ver10.tex ver10.tex.save
-	@$(RDCONV) -t example ver10.Rd > ver10-Ex.R
-	@diff -bw ver10-Ex.R ver10-Ex.R.save
+test-Rd: $(srcdir)/testit.Rd $(srcdir)/ver10.Rd $(srcdir)/ver11.Rd
+	@$(ECHO) "testing Rd conversion"
+	@$(RDCONV) -t txt $(srcdir)/testit.Rd > testit.txt
+	@diff -bw testit.txt $(srcdir)/testit.txt.save
+	@$(RDCONV) -t html $(srcdir)/testit.Rd > testit.html
+	@diff -bw testit.html $(srcdir)/testit.html.save
+	@$(RDCONV) -t latex $(srcdir)/testit.Rd > testit.tex
+	@diff -bw testit.tex $(srcdir)/testit.tex.save
+	@$(RDCONV) -t example $(srcdir)/testit.Rd > testit-Ex.R
+	@diff -bw testit-Ex.R $(srcdir)/testit-Ex.R.save
+	@$(RDCONV) -t txt $(srcdir)/ver11.Rd > ver11.txt
+	@diff -bw ver11.txt $(srcdir)/ver11.txt.save
+	@$(RDCONV) -t html $(srcdir)/ver11.Rd > ver11.html
+	@diff -bw ver11.html $(srcdir)/ver11.html.save
+	@$(RDCONV) -t latex $(srcdir)/ver11.Rd > ver11.tex
+	@diff -bw ver11.tex $(srcdir)/ver11.tex.save
+	@$(RDCONV) -t example $(srcdir)/ver11.Rd > ver11-Ex.R
+	@diff -bw ver11-Ex.R $(srcdir)/ver11-Ex.R.save
+	@$(RDCONV) -t txt $(srcdir)/ver10.Rd > ver10.txt 2>&1
+	@diff -bw ver10.txt $(srcdir)/ver10.txt.save
+	@$(RDCONV) -t html $(srcdir)/ver10.Rd > ver10.html 2>&1
+	@diff -bw ver10.html $(srcdir)/ver10.html.save
+	@$(RDCONV) -t latex $(srcdir)/ver10.Rd > ver10.tex 2>&1
+	@diff -bw ver10.tex $(srcdir)/ver10.tex.save
+	@$(RDCONV) -t example $(srcdir)/ver10.Rd > ver10-Ex.R
+	@diff -bw ver10-Ex.R $(srcdir)/ver10-Ex.R.save
 
 ## There is a potential name clash here on case-insensitive OS
 test-Packages-Recommended:
 	-@rm -rf PACKAGES
 	@test -d Packages || mkdir Packages
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
-	  gzip -dc "$(RHOME)/src/library/Recommended/$${p}.tgz" | \
+	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
 	    (cd Packages && $(TAR) xf -) ; \
 	  if grep "^Contains:" "Packages/$${p}/DESCRIPTION" >/dev/null; \
 	  then \
-	    echo "checking bundle '$${p}'"; \
+	    $(ECHO) "checking bundle '$${p}'"; \
 	  else \
-	    echo "checking package '$${p}'"; \
+	    $(ECHO) "checking package '$${p}'"; \
 	  fi; \
 	  R_LIBS="$(RHOME)/library:$${R_LIBS}" \
             $(RHOME)/bin/Rcmd check --install=skip \
-	    --library="$(RHOME)/library" Packages/$${p} || echo; \
+	    --library="$(RHOME)/library" Packages/$${p} || $(ECHO); \
 	done
 
 

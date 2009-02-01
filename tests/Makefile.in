@@ -120,31 +120,8 @@ check-all: check-devel test-Packages-Recommended
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-$(test-out): Makefile stamp-R
+$(test-out): Makefile FORCE
 
-stamp-R: $(top_builddir)/bin/exec@R_ARCH@/R \
-	$(top_builddir)/library/base/R/base \
-	$(top_builddir)/src/library/base/all.R \
-	$(top_builddir)/src/library/graphics/all.R \
-	$(top_builddir)/src/library/methods/all.R \
-	$(top_builddir)/src/library/stats/all.R \
-	$(top_builddir)/src/library/utils/all.R \
-	$(top_builddir)/modules@R_ARCH@/lapack$(SHLIB_EXT) \
-@WANT_R_SHLIB_TRUE@	$(top_builddir)/lib@R_ARCH@/libR$(DYLIB_EXT)
-	@touch $@
-
-Makedeps: Makefile
-	@(for f in $(test-src) $(test-src-reg) $(test-src-demo); do \
-	    if test -f $(srcdir)/$${f}out.save ; then \
-	      $(ECHO) "$${f}out: $${f} \$$(srcdir)/$${f}out.save \$$(FORCE)"; \
-	    else \
-	      $(ECHO) "$${f}out: $${f} \$$(FORCE)"; \
-	    fi; \
-	    if test -f $(srcdir)/$${f}in; then \
-	      $(ECHO) "$${f}: \$$(srcdir)/$${f}in stamp-R"; \
-	    fi; \
-	  done) >> Makefile
-	@touch $@
 FORCE:
 
 .Rin.R:
@@ -232,8 +209,6 @@ test-Examples-Recommended:
 test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)
 test-Specific:
-	@$(ECHO) "updating test dependencies"
-	@$(MAKE) Makedeps
 	@$(ECHO) "running strict specific tests"
 	@$(MAKE) test-Specific-strict RVAL_IF_DIFF=1
 	@$(ECHO) "running sloppy specific tests"
@@ -497,5 +472,4 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	done
 
-## Automagically generated dependencies:
 
