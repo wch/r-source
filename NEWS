@@ -138,7 +138,7 @@ NEW FEATURES
 
     o	file.copy() now has a 'recursive' argument.
 
-    o	errors in setOldClass() will cause a previous definition to be restored.
+    o	Errors in setOldClass() will cause a previous definition to be restored.
 
     o	Ambiguities in class inheritance and method selection resulting
 	from duplicates in superclasses are now resolved by requiring
@@ -146,6 +146,9 @@ NEW FEATURES
 	rules for method selection have been revised to take advantage of
 	the improved ordering.
 	See ?Methods and the reference there related to inheritance.
+
+    o	New function unzip() in package 'utils' to expand or list zip
+	archives.
 
 
 DEPRECATED & DEFUNCT

@@ -560,7 +560,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"Version",	do_version,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"machine",	do_machine,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"commandArgs", do_commandArgs, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"int.unzip",	do_int_unzip,	0,	11,    -1,	{PP_FUNCALL, PREC_FN,	0}},
+{"int.unzip",	do_int_unzip,	0,	111,    -1,	{PP_FUNCALL, PREC_FN,	0}},
 #ifdef Win32
 {"system",	do_system,	0,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
 #else

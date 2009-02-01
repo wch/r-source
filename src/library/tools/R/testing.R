@@ -297,12 +297,12 @@ testInstalledPackage <-
 
 .createExdotR <- function(pkg, exdir)
 {
-
     Rfile <- paste(pkg, "-Ex.R", sep = "")
     ## might be zipped:
     if(file.exists(fzip <- file.path(exdir, "Rex.zip"))) {
         files <- tempfile()
-        system(paste("unzip -q", fzip, "-d", files))
+        unzip(fzip, exdir = files)
+        # system(paste("unzip -q", fzip, "-d", files))
     } else files <- exdir
     massageExamples(pkg, files, Rfile)
     invisible(Rfile)

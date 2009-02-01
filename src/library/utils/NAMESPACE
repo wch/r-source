@@ -24,7 +24,7 @@ export("?", CRAN.packages, Rprof,Rprofmem, RShowDoc, RSiteSearch,
        read.table, recover, relist, remove.packages, savehistory, select.list,
        sessionInfo, setRepositories, stack, str, strOptions,
        summaryRprof, tail, tail.matrix, timestamp, toBibtex, toLatex,
-       type.convert, unstack, update.packageStatus, update.packages,
+       type.convert, unstack, unzip, update.packageStatus, update.packages,
        upgrade, url.show, vi, vignette, withVisible, write.csv,
        write.csv2, write.socket, write.table, wsbrowser, xedit,
        xemacs, zip.file.extract, rtags)

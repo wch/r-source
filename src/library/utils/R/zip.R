@@ -39,3 +39,14 @@ zip.file.extract <- function(file, zipname = "R.zip",
     }
     file
 }
+
+unzip <- function(zipfile, files = NULL, list = FALSE, exdir = ".")
+{
+    if(!list && !missing(exdir))
+        dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
+    res <- .Internal(int.unzip(zipfile, files, exdir, list))
+    if(list) {
+        dates <- as.POSIXct(res[[3]], "%Y-%m-%d %H:%M",  tz="UTC")
+        data.frame(Name = res[[1]], Length = res[[2]], Date = dates)
+    } else invisible(attr(res, "extracted"))
+}

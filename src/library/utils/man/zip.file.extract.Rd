@@ -1,6 +1,6 @@
 % File src/library/utils/man/zip.file.extract.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{zip.file.extract}
@@ -31,7 +31,7 @@ zip.file.extract(file, zipname = "R.zip",
 
   The file will be extracted if it is in the archive and any required
   \code{unzip} utility is available.  It will be extracted to the
-  directory given by \code{tempdir}, overwriting any existing file of
+  directory given by \code{dir}, overwriting any existing file of
   that name.
 }
 \note{
@@ -46,6 +46,9 @@ zip.file.extract(file, zipname = "R.zip",
 \value{
   The name of the original or extracted file.  Success is indicated by
   returning a different name.
+}
+\seealso{
+  \code{\link{unzip}}
 }
 
 \keyword{file}

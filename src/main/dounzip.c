@@ -159,16 +159,74 @@ do_unzip(const char *zipname, const char *dest, int nfiles, const char **files,
     return err;
 }
 
+static SEXP do_list(const char *zipname)
+{
+    SEXP ans = R_NilValue, names, lengths, dates;
+    unzFile uf;
+    uLong i;
+    unz_global_info gi;
+    int err, nfiles;
+
+    uf = unzOpen(zipname);
+    if (!uf) error(_("zip file '%s' cannot be opened"));
+
+    err = unzGetGlobalInfo (uf, &gi);
+    if (err != UNZ_OK)
+        error("error %d with zipfile in unzGetGlobalInfo", err);
+    nfiles = gi.number_entry;
+    /* name, length, datetime */
+    PROTECT(ans = allocVector(VECSXP, 3));
+    SET_VECTOR_ELT(ans, 0, names = allocVector(STRSXP, nfiles));
+    SET_VECTOR_ELT(ans, 1, lengths = allocVector(INTSXP, nfiles));
+    SET_VECTOR_ELT(ans, 2, dates = allocVector(STRSXP, nfiles));
+
+    for (i = 0; i < nfiles; i++) {
+        char filename_inzip[PATH_MAX], date[50];
+        unz_file_info file_info;
+
+        err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, 
+				    sizeof(filename_inzip), NULL, 0, NULL, 0);
+        if (err != UNZ_OK)
+            error("error %d with zipfile in unzGetCurrentFileInfo\n", err);
+	SET_STRING_ELT(names, i, mkChar(filename_inzip));
+	INTEGER(lengths)[i] = file_info.uncompressed_size;
+	snprintf(date, 50, "%d-%02d-%02d %02d:%02d",
+		 file_info.tmu_date.tm_year,
+		 file_info.tmu_date.tm_mon + 1,
+		 file_info.tmu_date.tm_mday,
+		 file_info.tmu_date.tm_hour,
+		 file_info.tmu_date.tm_min);
+	SET_STRING_ELT(dates, i, mkChar(date));
+
+        if (i < nfiles - 1) {
+            err = unzGoToNextFile(uf);
+            if (err != UNZ_OK)
+                error("error %d with zipfile in unzGoToNextFile\n",err);
+        }
+    }
+    unzClose(uf);
+
+    UNPROTECT(1);
+    return ans;
+}
+
+
+/* called as int.unzip(file.path(path, zipname), topic, dir)
+   in src/library/utils/R/zip.R
+
+   and as int.unzip(zipname, NULL, dest)
+   in src/library/utils/R/windows/install.packages.R
+*/
 SEXP attribute_hidden do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn, ans, names = R_NilValue;
     char  zipname[PATH_MAX], dest[PATH_MAX];
-    const char *p, *topics[500];
-    int   i, ntopics, rc, nnames = 0;
+    const char *p, **topics;
+    int   i, ntopics, list, rc, nnames = 0;
 
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("invalid zip name argument"));
-    p = translateChar(STRING_ELT(CAR(args), 0));
+    p = R_ExpandFileName(translateChar(STRING_ELT(CAR(args), 0)));
     if (strlen(p) > PATH_MAX - 1)
 	error(_("zip path is too long"));
     strcpy(zipname, p);
@@ -176,8 +234,9 @@ SEXP attribute_hidden do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     fn = CAR(args);
     ntopics = length(fn);
     if (ntopics > 0) {
-	if (!isString(fn) || ntopics > 500)
+	if (!isString(fn))
 	    error(_("invalid '%s' argument"), "topics");
+	topics = (const char **) R_alloc(ntopics, sizeof(char *));
 	for (i = 0; i < ntopics; i++)
 	    topics[i] = translateChar(STRING_ELT(fn, i));
     }
@@ -190,6 +249,11 @@ SEXP attribute_hidden do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     strcpy(dest, p);
     if(!R_FileExists(dest))
 	error(_("'destination' does not exist"));
+    args = CDR(args);
+    list = asLogical(CAR(args));
+    if(list == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "list");
+    if(list) return(do_list(zipname));
 
     if(ntopics > 0)
 	PROTECT(names = allocVector(STRSXP, ntopics));
@@ -217,7 +281,7 @@ SEXP attribute_hidden do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 	default:
 	    warning(_("error %d in extracting from zip file"), rc);
 	}
-    PROTECT(ans = ScalarLogical(rc));
+    PROTECT(ans = ScalarInteger(rc));
     PROTECT(names = lengthgets(names, nnames));
     setAttrib(ans, install("extracted"), names);
     UNPROTECT(3);
