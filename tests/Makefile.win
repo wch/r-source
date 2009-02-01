@@ -1,6 +1,6 @@
 #-*- Makefile -*-
 #
-# ${RHOME}/tests/Makefile.win
+# ${R_HOME}/tests/Makefile.win
 
 # for R_PKGS_BASE
 include ../src/gnuwin32/MkRules
@@ -23,6 +23,7 @@ ECHO = echo
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
+MK = $(MAKE) -f Makefile.win
 
 test-src-gct = \
 	eval-etc.R \
@@ -67,6 +68,9 @@ test-src-reg3 = reg-tests-3.R reg-plot-latin1.R
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 
+test-out-gct = $(test-src-gct:.R=.Rout-gct)
+test-out-valgct = $(test-src-gct:.R=.Rout-valgct)
+
 test-out-demo = $(test-src-demo:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
@@ -85,16 +89,15 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-primitive) utf8-regex.Rout
 
 .SUFFIXES:
-.SUFFIXES: .R .Rin .Rout
+.SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct
 
 all-basic-tests = Specific Reg Internet
-## add Regexp?
-all-devel-tests = Docs IsAs Random Demo Rd Primitive Segfault \
+all-devel-tests = Docs IsAs Random Demo Rd Primitive Regexp Segfault \
    Standalone Packages
 
 all check: test-all-basics
 check-devel: check test-all-devel
-check-all: check-devel
+check-all: check-devel  test-Packages-Recommended
 
 $(test-out): FORCE
 
@@ -146,23 +149,49 @@ reg-plot-latin1.Rout: reg-plot-latin1.R
 	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
 
+.R.Rout-gct:
+	@$(ECHO) "running gctorture() + '$<'"
+	@($(ECHO) '.ptime <- proc.time(); gctorture()' ; \
+	  cat $< $(srcdir)/gct-foot.R) | $(R) > $@ 2>&1
+	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
+	  if test ! -r $${Ro}; then $(MAKE) $${Ro}; fi; \
+	  $(ECHO) $(ECHO_N) "comparing '$@' to '$${Ro}' ...$(ECHO_C)"; \
+	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $${Ro} 1 || exit 1; \
+	  mv $@.fail $@; \
+	  $(ECHO) "$(ECHO_T) OK"
+
+R-valgrind = $(R) --debugger="valgrind --tool=memcheck"
+
+.R.Rout-valgct:
+	@$(ECHO) "running gctorture() + valgrind + '$<'"
+	@($(ECHO) '.ptime <- proc.time(); gctorture()' ; \
+	  cat $< $(srcdir)/gct-foot.R) | $(R-valgrind) > $@ 2>&1
+	grep "==[0-9]*==" $@
+
+
+
 test-all-basics:
 	@for name in $(all-basic-tests); do \
-	  $(MAKE)  -f Makefile.win test-$${name} || exit 1; \
+	  $(MK) test-$${name} || exit 1; \
 	done
 
 test-all-devel:
 	@for name in $(all-devel-tests); do \
-	  $(MAKE)  -f Makefile.win test-$${name} || exit 1; \
+	  $(MK) test-$${name} || exit 1; \
 	done
+
+test-Examples:
+	@(cd Examples && $(MK) $@)
+test-Examples-Recommended:
+	@(cd Examples && $(MK) $@)
 
 test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)
 test-Specific:
 	@$(ECHO) "running strict specific tests"
-	@$(MAKE) -f Makefile.win test-Specific-strict RVAL_IF_DIFF=1
+	@$(MK) test-Specific-strict RVAL_IF_DIFF=1
 	@$(ECHO) "running sloppy specific tests"
-	@$(MAKE) -f Makefile.win test-Specific-sloppy RVAL_IF_DIFF=0
+	@$(MK) test-Specific-sloppy RVAL_IF_DIFF=0
 
 test-Packages:
 	@for p in $(R_PKGS_BASE); do \
@@ -171,18 +200,22 @@ test-Packages:
 	    $(top_srcdir)/src/library/$${p} || $(ECHO); \
 	done
 
+test-Gct: $(test-out-gct)
+
+test-Vgct: $(test-out-valgct)
+
 test-Docs:
 	@$(ECHO) "running tests of documentation examples"
 	@cp ${top_srcdir}/doc/manual/*.R .
-	@$(MAKE) -f Makefile.win R-intro.Rout RVAL_IF_DIFF=0
+	@$(MK) R-intro.Rout RVAL_IF_DIFF=0
 	@cp ${top_srcdir}/doc/manual/R-exts.c .
 	@$(top_builddir)/bin/R CMD SHLIB R-exts.c
-	@$(MAKE) -f Makefile.win R-exts.Rout
+	@$(MK) R-exts.Rout
 	@rm R-exts.*
 
 test-Demo:
 	@$(ECHO) "running demos from base and stats"
-	@$(MAKE) -f Makefile.win $(test-out-demo) RVAL_IF_DIFF=0
+	@$(MK) $(test-out-demo) RVAL_IF_DIFF=0
 
 internet.Rout2:
 	-@$(R) --internet2 < internet.R > internet.Rout2 2>&1 || \
@@ -194,37 +227,41 @@ internet.Rout2:
 test-Internet:
 	@$(ECHO) "running tests of Internet and socket functions ..."
 	@$(ECHO) "  expect some differences"
-	-@$(MAKE) -f Makefile.win $(test-out-internet) RVAL_IF_DIFF=0 || \
+	-@$(MK) $(test-out-internet) RVAL_IF_DIFF=0 || \
 	  $(ECHO) " testing standard internet connectivity failed"
-	@$(MAKE) -f Makefile.win internet.Rout2 RVAL_IF_DIFF=0
+	@$(MK) internet.Rout2 RVAL_IF_DIFF=0
 	-@diff internet.Rout internet.Rout2
 
 test-IsAs:
 	@$(ECHO) "running tests of consistency of as/is.*"
-	@$(MAKE) -f Makefile.win $(test-out-isas) RVAL_IF_DIFF=1
+	@$(MK) $(test-out-isas) RVAL_IF_DIFF=1
 
 test-Primitive:
 	@$(ECHO) "running tests of primitives"
-	@$(MAKE) -f Makefile.win $(test-out-primitive) RVAL_IF_DIFF=0
+	@$(MK) $(test-out-primitive) RVAL_IF_DIFF=0
 
 test-Random:
 	@$(ECHO) "running tests of random deviate generation"
-	@$(MAKE) -f Makefile.win $(test-out-random) RVAL_IF_DIFF=1
+	@$(MK) $(test-out-random) RVAL_IF_DIFF=1
 
 test-Reg:
 	@$(ECHO) "running regression tests ..."
-	@$(MAKE) -f Makefile.win $(test-out-reg) RVAL_IF_DIFF=1
-	@$(MAKE) -f Makefile.win $(test-out-reg3) RVAL_IF_DIFF=0
+	@$(MK) $(test-out-reg) RVAL_IF_DIFF=1
+	@$(MK) $(test-out-reg3) RVAL_IF_DIFF=0
+
+test-Regexp:
+	@$(ECHO) "running regexp regression tests"
+	@$(R2) < $(srcdir)/utf8-regex.R > utf8-regex.Rout 2>&1 || (mv utf8-regex.Rout utf8-regex.Rout.fail && exit 1)
 
 test-Segfault:
 	@$(ECHO) "running tests to possibly trigger segfaults"
-	@$(MAKE) -f Makefile.win $(test-out-segfault) RVAL_IF_DIFF=0
+	@$(MK) $(test-out-segfault) RVAL_IF_DIFF=0
 	@rm -f data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots* PACKAGES PACKAGES.gz FALSE-package.Rd FALSE.* ./-Ex.R
 
 test-Standalone:
 	@$(ECHO) "testing building standalone Rmath"
-	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win all test || exit 1
-	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win clean
+	@$(MK) -C ../src/nmath/standalone all test || exit 1
+	@$(MK) -C ../src/nmath/standalone clean
 
 test-Rd: $(srcdir)/testit.Rd $(srcdir)/ver10.Rd $(srcdir)/ver11.Rd
 	@$(ECHO) "testing Rd conversion"
@@ -282,7 +319,7 @@ clean:
 	@rm -f ver10.txt ver10.html ver10.tex ver10-Ex.R
 	@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R
 	@rm -rf Packages
-	@$(MAKE) -C Embedding -f Makefile.win clean
+	@$(MK) -C Embedding clean
 
 distclean: clean
-	@$(MAKE) -C Examples -f Makefile.win $@
+	@$(MK) -C Examples $@

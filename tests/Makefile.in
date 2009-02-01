@@ -82,6 +82,7 @@ R = LANGUAGE=en LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bi
 R2 = R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 RDIFF = $(top_builddir)/bin/R CMD Rdiff
 RDCONV = $(top_builddir)/bin/R CMD Rdconv
+MK = MAKE
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
@@ -193,26 +194,26 @@ R-valgrind = $(R) --debugger="valgrind --tool=memcheck"
 
 test-all-basics: Makefile
 	@for name in $(all-basic-tests); do \
-	  $(MAKE) test-$${name} || exit 1; \
+	  $(MK) test-$${name} || exit 1; \
 	done
 
 test-all-devel: Makefile
 	@for name in $(all-devel-tests); do \
-	  $(MAKE) test-$${name} || exit 1; \
+	  $(MK) test-$${name} || exit 1; \
 	done
 
 test-Examples:
-	@(cd Examples && $(MAKE) $@)
+	@(cd Examples && $(MK) $@)
 test-Examples-Recommended:
-	@(cd Examples && $(MAKE) $@)
+	@(cd Examples && $(MK) $@)
 
 test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)
 test-Specific:
 	@$(ECHO) "running strict specific tests"
-	@$(MAKE) test-Specific-strict RVAL_IF_DIFF=1
+	@$(MK) test-Specific-strict RVAL_IF_DIFF=1
 	@$(ECHO) "running sloppy specific tests"
-	@$(MAKE) test-Specific-sloppy RVAL_IF_DIFF=0
+	@$(MK) test-Specific-sloppy RVAL_IF_DIFF=0
 
 test-Packages:
 	@for p in $(R_PKGS_BASE); do \
@@ -228,15 +229,15 @@ test-Vgct: $(test-out-valgct)
 test-Docs:
 	@$(ECHO) "running tests of documentation examples"
 	@cp ${top_srcdir}/doc/manual/*.R .
-	@$(MAKE) R-intro.Rout RVAL_IF_DIFF=0
+	@$(MK) R-intro.Rout RVAL_IF_DIFF=0
 	@cp ${top_srcdir}/doc/manual/R-exts.c .
 	@$(top_builddir)/bin/R CMD SHLIB R-exts.c
-	@$(MAKE) R-exts.Rout
+	@$(MK) R-exts.Rout
 	@rm R-exts.*
 
 test-Demo:
 	@$(ECHO) "running demos from base and stats"
-	@$(MAKE) $(test-out-demo) RVAL_IF_DIFF=0
+	@$(MK) $(test-out-demo) RVAL_IF_DIFF=0
 
 
 ## <NOTE>
@@ -250,20 +251,20 @@ test-Internet:
 
 test-IsAs:
 	@$(ECHO) "running tests of consistency of as/is.*"
-	@$(MAKE) $(test-out-isas) RVAL_IF_DIFF=1
+	@$(MK) $(test-out-isas) RVAL_IF_DIFF=1
 
 test-Primitive:
 	@$(ECHO) "running tests of primitives"
-	@$(MAKE) $(test-out-primitive) RVAL_IF_DIFF=1
+	@$(MK) $(test-out-primitive) RVAL_IF_DIFF=0
 
 test-Random:
 	@$(ECHO) "running tests of random deviate generation"
-	@$(MAKE) $(test-out-random) RVAL_IF_DIFF=1
+	@$(MK) $(test-out-random) RVAL_IF_DIFF=1
 
 test-Reg:
-	@$(ECHO) "running regression tests"
-	@$(MAKE) $(test-out-reg) RVAL_IF_DIFF=1
-	@$(MAKE) $(test-out-reg3) RVAL_IF_DIFF=0
+	@$(ECHO) "running regression tests ..."
+	@$(MK) $(test-out-reg) RVAL_IF_DIFF=1
+	@$(MK) $(test-out-reg3) RVAL_IF_DIFF=0
 
 test-Regexp:
 	@$(ECHO) "running regexp regression tests"
@@ -271,7 +272,7 @@ test-Regexp:
 
 test-Segfault:
 	@$(ECHO) "running tests to possibly trigger segfaults"
-	@$(MAKE) $(test-out-segfault) RVAL_IF_DIFF=0
+	@$(MK) $(test-out-segfault) RVAL_IF_DIFF=0
 	@rm -f data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots* PACKAGES PACKAGES.gz FALSE-package.Rd FALSE.* ./-Ex.R
 
 ## <NOTE>
