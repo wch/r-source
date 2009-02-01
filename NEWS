@@ -136,6 +136,8 @@ NEW FEATURES
 	the examples (and if they were installed) any package-specific
 	tests to be run on an installed package.
 
+	Also testInstalledBasic() to run the basic tests (if installed).
+
     o	file.copy() now has a 'recursive' argument.
 
     o	Errors in setOldClass() will cause a previous definition to be restored.

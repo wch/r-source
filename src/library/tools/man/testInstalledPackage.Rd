@@ -1,6 +1,7 @@
 \name{testInstalledPackage}
 \alias{testInstalledPackage}
 \alias{testInstalledPackages}
+\alias{testInstalledBasic}
 \title{Test Installed Packages}
 \description{
   These functions allow an installed package to be tested, or all base
@@ -13,6 +14,8 @@ testInstalledPackage(pkg, lib.loc = NULL, outDir = ".",
 testInstalledPackages(outDir = ".", errorsAreFatal = TRUE,
                       scope = c("both", "base", "recommended"),
                       types = c("examples", "tests", "vignettes"))
+
+testInstalledBasic(scope = c("basic", "devel", "both"))
 }
 \arguments{
   \item{pkg}{name of an installed package.}
@@ -23,7 +26,7 @@ testInstalledPackages(outDir = ".", errorsAreFatal = TRUE,
   \item{types}{type(s) of tests to be done.}
   \item{errorsAreFatal}{logical: should testing terminate at the first
     error?}
-  \item{scope}{Which set(s) of packages should be tested?}
+  \item{scope}{Which set(s) should be tested?}
 }
 \details{
   These tests depend on having the package example files installed (which
@@ -38,11 +41,13 @@ testInstalledPackages(outDir = ".", errorsAreFatal = TRUE,
 
   Base and recommended packages are testing in alphabetic order in the
   current locale.
-
+  
+  \code{testInstalledBasic} runs the basic tests, if installed.
+  
 #ifdef unix
   The package-specific tests for the base and recommended packages are
   not normally installed, but \command{make install-tests} is provided
-  to do so.
+  to do so (as well as the basic tests).
 #endif
 #ifdef windows
   The package-specific tests for the base and recommended packages are

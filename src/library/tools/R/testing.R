@@ -138,14 +138,14 @@ testInstalledPackages <-
     status <- 0L
     pkgs <- character()
     known_packages <- .get_standard_package_names()
-    if(scope %in% c("both", "base"))
+    if (scope %in% c("both", "base"))
         pkgs <- known_packages$base
-    if(scope %in% c("both", "recommended"))
+    if (scope %in% c("both", "recommended"))
         pkgs <- c(pkgs, known_packages$recommended)
     ## It *should* be an error if any of these are missing
     for (pkg in pkgs) {
         res <- testInstalledPackage(pkg, .Library, outDir, types)
-        if(res) {
+        if (res) {
             status <- 1L
             msg <- gettextf("testing '%s' failed", pkg)
             if (errorsAreFatal) stop(msg, domain=NA, call.=FALSE)
@@ -177,7 +177,7 @@ testInstalledPackage <-
         ## Create as .fail in case this R session gets killed
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                      "CMD BATCH --vanilla", shQuote(Rfile), shQuote(failfile))
-        cmd <- if(.Platform$OS.type == "windows") paste(cmd, "RLIBS=")
+        cmd <- if (.Platform$OS.type == "windows") paste(cmd, "RLIBS=")
         else paste("R_LIBS=", cmd)
         res <- system(cmd)
         if (res) return(invisible(1L)) else file.rename(failfile, outfile)
@@ -187,7 +187,7 @@ testInstalledPackage <-
             message("  Comparing ", sQuote(outfile), " to ",
                     sQuote(basename(savefile)), " ...", appendLF = FALSE)
             res <- Rdiff(outfile, savefile)
-            if(!res) message(" OK")
+            if (!res) message(" OK")
         }
     }
 
@@ -207,10 +207,10 @@ testInstalledPackage <-
             cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                          "CMD BATCH --vanilla",
                          shQuote(f), shQuote(outfile))
-            cmd <- if(.Platform$OS.type == "windows") paste(cmd, "LANGUAGE=C")
+            cmd <- if (.Platform$OS.type == "windows") paste(cmd, "LANGUAGE=C")
             else paste("LANGUAGE=C", cmd)
            res <- system(cmd)
-            if(res) {
+            if (res) {
                 file.rename(outfile, paste(outfile, "fail", sep="."))
                 return(invisible(1L))
             }
@@ -219,7 +219,7 @@ testInstalledPackage <-
                 message("  Comparing ", sQuote(outfile), " to ",
                         sQuote(savefile), " ...", appendLF = FALSE)
                 res <- Rdiff(outfile, savefile)
-                if(!res) message(" OK")
+                if (!res) message(" OK")
             }
         }
         setwd(owd)
@@ -253,12 +253,12 @@ testInstalledPackage <-
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                      "CMD BATCH --vanilla",
                      shQuote(f), shQuote(outfile))
-        cmd <- if(.Platform$OS.type == "windows")
+        cmd <- if (.Platform$OS.type == "windows")
             paste(cmd, "LANGUAGE=C", "R_TESTS=startup.Rs")
         else
             paste("LANGUAGE=C", "R_TESTS=startup.Rs", cmd)
         res <- system(cmd)
-        if(res) {
+        if (res) {
             file.rename(outfile, paste(outfile, "fail", sep="."))
             return(1L)
         }
@@ -267,13 +267,13 @@ testInstalledPackage <-
             message("  Comparing ", sQuote(outfile), " to ",
                     sQuote(savefile), " ...", appendLF = FALSE)
             res <- Rdiff(outfile, savefile, TRUE)
-            if(!res) message(" OK")
+            if (!res) message(" OK")
         }
         0L
     }
 
     file.copy(file.path(R.home("share"), "R", "tests-startup.R"), "startup.Rs")
-    if(use_gct) cat("gctorture(TRUE)" , file = "startup.Rs", append = TRUE)
+    if (use_gct) cat("gctorture(TRUE)" , file = "startup.Rs", append = TRUE)
     nfail <- 0L ## allow for later running all tests even if some fail.
     Rinfiles <- dir(".", pattern="\\.Rin$")
     for(f in Rinfiles) {
@@ -281,9 +281,9 @@ testInstalledPackage <-
         message("  Creating ", sQuote(Rfile))
         cmd <- paste(shQuote(file.path(R.home(), "bin", "Rscript")),
                      "--vanilla", f)
-        if(system(cmd))
+        if (system(cmd))
             warning("creation of ", sQuote(Rfile), " failed")
-        else if(file.exists(Rfile)) nfail <- nfail + runone(Rfile)
+        else if (file.exists(Rfile)) nfail <- nfail + runone(Rfile)
         if (nfail > 0) return(nfail)
     }
 
@@ -299,11 +299,101 @@ testInstalledPackage <-
 {
     Rfile <- paste(pkg, "-Ex.R", sep = "")
     ## might be zipped:
-    if(file.exists(fzip <- file.path(exdir, "Rex.zip"))) {
+    if (file.exists(fzip <- file.path(exdir, "Rex.zip"))) {
         files <- tempfile()
         unzip(fzip, exdir = files)
         # system(paste("unzip -q", fzip, "-d", files))
     } else files <- exdir
     massageExamples(pkg, files, Rfile)
     invisible(Rfile)
+}
+
+testInstalledBasic <- function(scope = c("basic", "devel", "both"))
+{
+    scope <- match.arg(scope)
+    tests1 <- c("eval-etc", "simple-true", "arith-true", "lm-tests",
+                "ok-errors", "method-dispatch", "d-p-q-r-tests")
+    tests2 <- c("complex", "print-tests", "lapack", "datasets")
+    tests3 <- c("reg-tests-1", "reg-tests-2", "reg-IO", "reg-IO2", "reg-S4")
+
+    runone <- function(f, diffOK = FALSE, inC = TRUE)
+    {
+        f <- paste(f, "R", sep = ".")
+        if (!file.exists(f)) {
+            if (!file.exists(fin <- paste(f, "in", sep = "")))
+                stop("file ", sQuote(f), " not found", domain = NA)
+            message("creating ", sQuote(f))
+            cmd <- paste(shQuote(file.path(R.home(), "bin", "Rscript")),
+                         "--vanilla", fin)
+            if (system(cmd))
+                stop("creation of ", sQuote(f), " failed")
+            on.exit(unlink(f))
+        }
+        message("  running code in ", sQuote(f))
+        outfile <- paste(f, "out", sep = "")
+        cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
+                     "CMD BATCH --vanilla",
+                     shQuote(f), shQuote(outfile))
+        extra <- paste("LANGUAGE=C", "R_DEFAULT_PACKAGES=", "SRCDIR=.")
+        if (inC) extra <- paste(extra,  "LC_ALL=C")
+        cmd <- if (.Platform$OS.type == "windows") paste(cmd, extra)
+        else paste(extra, cmd)
+        res <- system(cmd)
+        if (res) {
+            file.rename(outfile, paste(outfile, "fail", sep="."))
+            return(1L)
+        }
+        savefile <- paste(outfile, "save", sep = "." )
+        if (file.exists(savefile)) {
+            message("  comparing ", sQuote(outfile), " to ",
+                    sQuote(savefile), " ...", appendLF = FALSE)
+            res <- Rdiff(outfile, savefile, TRUE)
+            if (!res) message(" OK")
+            else if (!diffOK) return(1L)
+        }
+        0L
+    }
+    owd <- setwd(file.path(R.home(), "tests"))
+    on.exit(setwd(owd))
+
+    if (scope %in% c("basic", "both")) {
+        message("running strict specific tests")
+        for (f in tests1) if (runone(f)) return(1L)
+        message("running sloppy specific tests")
+        for (f in tests2) runone(f, TRUE)
+        message("running regression tests")
+        for (f in tests3) {
+            if (runone(f)) return(invisible(1L))
+            if (f == "reg-plot") {
+                message("  comparing 'reg-plot.ps' to 'reg-plot.ps.save' ...",
+                        appendLF = FALSE)
+                system("diff reg-plot.ps reg-plot.ps.save")
+                message("OK")
+            }
+        }
+        runone("reg-tests-3", TRUE)
+        message("running tests of plotting Latin-1")
+        message("  expect failure or some differences if not in a Latin or UTF-8 locale")
+
+        runone("reg-plot-latin1", TRUE, FALSE)
+        message("  comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ...",
+                appendLF = FALSE)
+        system("diff reg-plot-latin1.ps reg-plot-latin1.ps.save")
+        message("OK")
+    }
+
+    if (scope %in% c("devel", "both")) {
+        message("running tests of consistency of as/is.*")
+        runone("isas-tests")
+        message("running tests of random deviate generation -- fails occasionally")
+        runone("p-r-random-tests", TRUE)
+        message("running tests of primitives")
+        if (runone("primitives")) return(invisible(1L))
+        message("running regexp regression tests")
+        if (runone("utf8-regex", inC = FALSE)) return(invisible(1L))
+        message("running tests to possibly trigger segfaults")
+        if (runone("no-segfault")) return(invisible(1L))
+    }
+
+    invisible(0L)
 }
