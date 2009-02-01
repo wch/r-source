@@ -9,11 +9,11 @@ check-all: check-devel test-Packages-Recommended
 # for R_PKGS_BASE
 include ../src/gnuwin32/MkRules
 include ../share/make/vars.mk
-include Makefile.common
 
 srcdir = .
 top_srcdir = ..
 top_builddir = $(RHOME)
+include Makefile.common
 
 RHOME = $(shell ../src/gnuwin32/Rpwd.exe ..)# must be absolute path
 R = $(RHOME)/bin/Rterm --vanilla LC_ALL=C SRCDIR=. R_DEFAULT_PACKAGES=
@@ -30,10 +30,10 @@ ECHO_N = -n
 ECHO_T = 
 MK = $(MAKE) -f Makefile.win
 
+test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R \
+  reg-plot.R reg-S4.R reg-win.R
 
-test-src-reg-1 = $(test-src-reg-1) reg-win.R
-
-all-basic-tests = Specific Reg Internet
+all-basic-tests = Examples Specific Reg Internet
 all-devel-tests = Docs IsAs Random Demo Rd Primitive Regexp Segfault \
    Standalone Packages
 
@@ -51,6 +51,11 @@ test-Internet:
 	  $(ECHO) " testing standard internet connectivity failed"
 	@$(MK) internet.Rout2 RVAL_IF_DIFF=0
 	-@diff internet.Rout internet.Rout2
+
+test-Standalone:
+	@echo "testing building standalone Rmath"
+	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win all test || exit 1
+	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win clean
 
 
 clean:

@@ -296,24 +296,9 @@ cleanwin:
 
 #                          ===== testing ======
 
-# tests
-check: pkgtests test-Basic
-pkgtests:
-	@$(MAKE) --no-print-directory -C ../../tests/Examples -f Makefile.win RHOME=$(RHOME)
-
-test-Basic:
-	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f Makefile.win clean
-	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f Makefile.win
-
-check-devel: check
-	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f Makefile.win $@
-
-check-all fullcheck: check-devel check-recommended
-
-
-check-recommended:
-	@$(MAKE) -C ../../tests -f Makefile.win test-Packages-Recommended
-
+check check-devel check-all:
+	@$(MAKE) --no-print-directory -C ../../tests \
+	  -f Makefile.win RHOME=$(RHOME) $@
 
 #                          ===== documentation ======
 
