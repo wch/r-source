@@ -18,23 +18,6 @@ include $(srcdir)/Makefile.common
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
-
-INSTFILES = README \
-	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
-	$(test-src-sloppy-1) $(test-src-sloppy-1:.R=.Rout.save) \
-	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
-	$(test-src-demo) demos.Rout.save \
-	$(test-src-internet) internet.Rout.save \
-	$(test-src-primitive) \
-	$(test-src-random) p-r-random-tests.Rout.save \
-	$(test-src-reg) $(test-src-reg3) \
-	  reg-S4.Rout.save \
-	  reg-IO.Rout.save reg-IO2.Rout.save reg-plot.Rout.save \
-	  reg-plot.ps.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
-	  reg-plot-latin1.ps.save \
-	  encodings.R utf8-regex.R \
-	nanbug.rda WinUnicode.dat
-
 DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.common \
 	$(INSTFILES) gct-foot.R reg-win.R \
 	testit.Rd testit.txt.save testit.html.save \

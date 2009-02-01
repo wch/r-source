@@ -446,6 +446,8 @@ sub listFiles {
 	    	$component = "Rd";
 	} elsif (m/^library\\[^\\]*\\tests/) {
 	    	$component = "tests";
+	} elsif (m/^tests/) {
+	    	$component = "tests";
 #	} elsif (m/^Tcl\\doc/) {
 #	    $component = "tcl/docs";
 	} elsif (m/^Tcl\\doc\\.*chm$/) {

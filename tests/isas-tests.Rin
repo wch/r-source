@@ -20,7 +20,7 @@ aroot <- substring(as.bi <- bi[substring(bi,1,3) == "as."],4)
 ## eliminate as.foo methods: there are no is.foo methods
 ## this works because data.frame.*  has no other matches for data.
 aroot <- aroot[!duplicated(sub("\\..*", "", aroot))]
-(root <- intersect(iroot, aroot))# both an  is.foo and as.foo function exist
+root <- intersect(iroot, aroot) # both an  is.foo and as.foo function exist
 
 ex.list <- expression(integer(0), NULL, list(), 1:1, pi, "1.3", list(a=1),
     as.data.frame(character(0)))

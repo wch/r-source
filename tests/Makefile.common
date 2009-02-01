@@ -2,6 +2,7 @@
 #
 # ${R_HOME}/tests/Makefile.common
 
+
 test-src-gct = \
 	eval-etc.R \
 	simple-true.R \
@@ -353,3 +354,19 @@ test-Packages-Recommended:
 	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" $(R3) --install=skip \
 	    --library="$(top_builddir)/library" Packages/$${p} || $(ECHO); \
 	done
+
+INSTFILES = README \
+	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
+	$(test-src-sloppy-1) $(test-src-sloppy-1:.R=.Rout.save) \
+	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
+	$(test-src-demo) demos.Rout.save \
+	$(test-src-internet) internet.Rout.save \
+	$(test-src-primitive) \
+	$(test-src-random) p-r-random-tests.Rout.save \
+	$(test-src-reg) $(test-src-reg3) \
+	  reg-S4.Rout.save \
+	  reg-IO.Rout.save reg-IO2.Rout.save reg-plot.Rout.save \
+	  reg-plot.ps.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
+	  reg-plot-latin1.ps.save \
+	  encodings.R utf8-regex.R \
+	nanbug.rda WinUnicode.dat

@@ -93,6 +93,11 @@ imagedir:
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library
 #
+# test dir
+	mkdir $(RPREFIX)/tests
+	$(MAKE) --no-print-directory -C ../../../tests -f Makefile.win \
+	  INST_TO=../src/gnuwin32/installer/$(RPREFIX)/tests install-tests
+#
 	$(FIND) $(RPREFIX) -name .svn -prune -exec rm -rf \{\} \;
 	$(FIND) $(RPREFIX) -name \*~ -delete
 

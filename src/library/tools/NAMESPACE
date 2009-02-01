@@ -12,8 +12,9 @@ export("Rd2HTML", "Rd2ex", "Rd2latex", "Rd2txt", "Rdindex",
        "installFoundDepends", "vignetteDepends", "write_PACKAGES",
        "xgettext", "xgettext2pot", "xngettext",
        "encoded_text_to_latex", "charset_to_Unicode", "Adobe_glyphs",
-       "checkNEWS", "readNEWS", "dependsOnPkgs",
-       "Rdiff", "testInstalledPackage", "testInstalledPackages")
+       "checkNEWS", "readNEWS", "dependsOnPkgs", "Rdiff",
+       "testInstalledBasic", "testInstalledPackage",
+       "testInstalledPackages")
 
 export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
 

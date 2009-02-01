@@ -311,6 +311,9 @@ testInstalledPackage <-
 testInstalledBasic <- function(scope = c("basic", "devel", "both"))
 {
     scope <- match.arg(scope)
+
+    ## We need to force C collation: might not work
+    Sys.setlocale("LC_COLLATE", "C")
     tests1 <- c("eval-etc", "simple-true", "arith-true", "lm-tests",
                 "ok-errors", "method-dispatch", "d-p-q-r-tests")
     tests2 <- c("complex", "print-tests", "lapack", "datasets")
