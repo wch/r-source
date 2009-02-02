@@ -215,6 +215,9 @@ UTILITIES
     o	R CMD config now knows about DYLIB_EXT and SHLIB_EXT, for use
 	in configure files.
 
+    o	R CMD BATCH has a new option --no-timing to suppress printing
+	out the session timing.
+
 
 Rd CONVERSION
 

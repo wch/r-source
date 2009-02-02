@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/BATCH.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{BATCH}
@@ -33,6 +33,7 @@
 
   A final expression \samp{proc.time()} will be executed after the input
   script unless the latter calls \code{\link{q}(runLast=FALSE)} or is aborted.
+  This can be suppressed by the option \option{--no-timing}.
   
   Additional options can be set by the environment variable
   \code{R_BATCH_OPTIONS}: these come after \samp{--restore --save}

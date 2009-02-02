@@ -21,6 +21,7 @@ and '.Rout' appended.
 Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
+  --no-timing           do not report the timings
   --			end processing of options
 
 Further arguments starting with a '-' are considered as options as long
@@ -36,6 +37,8 @@ while test -n "${1}"; do
       echo "${usage}"; exit 0 ;;
     -v|--version)
       echo "${version}"; exit 0 ;;
+    --no-timing)
+      timing=no; shift ;;
     --) shift; break ;;
     -*) opts="${opts} ${1}"; shift ;;
     *)  break ;;
@@ -45,8 +48,10 @@ done
 in=${1}
 out=${2-`basename ${1} .R`.Rout}
 
-R_BATCH=${$}
-export R_BATCH
+if test -z "${timing}"; then
+  R_BATCH=${$}
+  export R_BATCH
+fi
 ## this used to set options(echo=TRUE), but that is the default
 ## except for --slave, and why inhibit the latter?
 
