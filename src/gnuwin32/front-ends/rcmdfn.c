@@ -104,6 +104,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
     char RCMD[] = "R CMD";
     int len = strlen(argv[0]);
     char env_path[MAX_PATH];
+    int timing = 1;
 
     if(!strncmp(argv[0]+len-4, "Rcmd", 4) ||
        !strncmp(argv[0]+len-4, "rcmd", 4) ||
@@ -175,13 +176,19 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 "Report bugs to <r-bugs@r-project.org>.");
 		return(0);
 	    }
-	    if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "-version")) {
+	    if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
 		fprintf(stderr, "BATCH %s\n%s%s%s\n", "1.2",
 "Copyright (C) 1997-2004 R Core Development Team.\n",
 "This is free software; see the GNU General Public Licence version 2\n",
 "or later for copying conditions.  There is NO warranty.");
 		return(0);
 	    }
+	    if (!strcmp(argv[i], "--no-timing")) {
+		timing = 0;
+		iused = i;
+		continue;
+	    }
+
 	    if (!strcmp(argv[i], "--")) {
 		iused = i;
 		break;
@@ -218,7 +225,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    return(27);
 	}
 	strcat(cmd, cmd_extra);
-	putenv("R_BATCH=1234"); /* to get Last.sys run */
+	if(timing) 
+	    putenv("R_BATCH=1234"); 
+	/* to get ,Last.sys run: see profile/Common.R */
 
 	/* fprintf(stderr, "%s->%s\n", infile, outfile);
 	   fprintf(stderr, "%s\n", cmd); */
