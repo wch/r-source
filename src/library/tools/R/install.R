@@ -34,13 +34,6 @@
 
     on.exit(do_exit_on_error())
     WINDOWS <- .Platform$OS.type == "windows"
-    ## override for cross-building
-    windir <- Sys.getenv("R_X_BUILD")
-    if(nzchar(windir)) {
-	WINDOWS <- TRUE
-	## needed for Build field in DESCRIPTION
-	Sys.setenv(R_OSTYPE="windows")
-    }
 
     paste0 <- function(...) paste(..., sep="")
 
@@ -62,7 +55,6 @@
 
     if (WINDOWS) {
         rhome <- chartr("\\", "/", R.home())
-        if(nzchar(windir)) rhome <- windir
         ## These might be needed for configure.win and Make{file,vars}.win
         ## Some people have *assumed* that R_HOME uses /
         Sys.setenv(R_HOME = rhome)
@@ -286,7 +278,7 @@
                 do_install_binary(pkg_name, instdir, desc)
 
             ## Add read permission to all, write permission to ownwe
-            if (!WINDOWS) .Internal(dirchmod(instdir))
+            .Internal(dirchmod(instdir))
             ##    system(paste("find", shQuote(instdir),  "-exec chmod a+r \\{\\} \\;"))
             if (is_bundle)
                 starsmsg(stars, "DONE (", pkg_name, ")")
@@ -804,20 +796,6 @@
                     unloadNamespace(pkg_name)
                 ## suppress second round of parse warnings
                 options(warnEscapes = FALSE)
-                if(nzchar(windir)) {
-                    ## Subtlety here: we cannot load the cross-compiled
-                    ## package unless we turn off dynload (and .onLoad)
-                    ## and we want normal versions of dependencies.
-                    ## This works enough to get recommended packages built.
-                    ol <- .libPaths(c(.Library, .libPaths()))
-                    .getRequiredPackages(quietly = TRUE)
-                    Sys.setenv(R_CROSS_BUILD="yes")
-                    Sys.setenv(R_CROSS_BUILD2="yes")
-                    res <- try(makeLazyLoading(pkg_name, lib))
-                    Sys.unsetenv("R_CROSS_BUILD")
-                    Sys.unsetenv("R_CROSS_BUILD2")
-                    .libPaths(ol)
-                } else
                 res <- try({.getRequiredPackages(quietly = TRUE)
                             makeLazyLoading(pkg_name, lib)})
                 options(warnEscapes = TRUE)
@@ -924,7 +902,7 @@
 
         if (clean) run_clean()
 
-        if (WINDOWS && !nzchar(windir)) { ## Add MD5 sums: only for --build?
+        if (WINDOWS) { ## Add MD5 sums: only for --build?
             starsmsg(stars, "MD5 sums")
             .installMD5sums(instdir)
         }

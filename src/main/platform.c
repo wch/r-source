@@ -1430,15 +1430,18 @@ static void chmod_one(const char *name)
     char p[PATH_MAX];
     struct stat sb;
     int n;
-#ifdef Win32
-    mode_t mask = _S_IREAD | _S_IWRITE;
-#else
+#ifndef Win32
     mode_t mask = S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR;
 #endif
 
     if (streql(name, ".") || streql(name, "..")) return;
     if (!R_FileExists(name)) return;
     stat(name, &sb);
+#ifdef Win32
+    chmod(name, _S_IWRITE);
+#else
+    chmod(name, sb.st_mode | mask);
+#endif
     if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 	if ((dir = opendir(name)) != NULL) {
 	    while ((de = readdir(dir))) {
@@ -1455,9 +1458,6 @@ static void chmod_one(const char *name)
 	} else { 
 	    /* we were unable to read a dir */
 	}
-    } else { /* A file */
-	mode_t mode = sb.st_mode | mask;
-	chmod(name, mode);
     }
 }
 
