@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## calls sytem() on Windows for sh mv rm make zip perl hhc
+## calls sytem() on Windows for sh mv make zip perl hhc
 
 .install_packages <- function(args = NULL)
 {
@@ -285,9 +285,9 @@
             else
                 do_install_binary(pkg_name, instdir, desc)
 
-            ## FIXME do this in R?
-            if (!WINDOWS)
-                system(paste("find", shQuote(instdir),  "-exec chmod a+r \\{\\} \\;"))
+            ## Add read permission to all, write permission to ownwe
+            if (!WINDOWS) .Internal(dirchmod(instdir))
+            ##    system(paste("find", shQuote(instdir),  "-exec chmod a+r \\{\\} \\;"))
             if (is_bundle)
                 starsmsg(stars, "DONE (", pkg_name, ")")
             is_first_package <<- FALSE

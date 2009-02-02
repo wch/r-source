@@ -1337,6 +1337,7 @@ static int R_unlink(const char *name, int recursive)
 }
 #endif
 
+
 /* Note that wildcards are allowed in 'names' */
 #ifdef Win32
 # include <dos_wglob.h>
@@ -1421,6 +1422,59 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarInteger(failures ? 1 : 0);
 }
 #endif
+
+static void chmod_one(const char *name)
+{
+    DIR *dir;
+    struct dirent *de;
+    char p[PATH_MAX];
+    struct stat sb;
+    int n;
+#ifdef Win32
+    mode_t mask = _S_IREAD | _S_IWRITE;
+#else
+    mode_t mask = S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR;
+#endif
+
+    if (streql(name, ".") || streql(name, "..")) return;
+    if (!R_FileExists(name)) return;
+    stat(name, &sb);
+    if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
+	if ((dir = opendir(name)) != NULL) {
+	    while ((de = readdir(dir))) {
+		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
+		    continue;
+		n = strlen(name);
+		if (name[n-1] == R_FileSep[0])
+		    snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
+		else
+		    snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep, de->d_name);
+		chmod_one(p);
+	    }
+	    closedir(dir);
+	} else { 
+	    /* we were unable to read a dir */
+	}
+    } else { /* A file */
+	mode_t mode = sb.st_mode | mask;
+	chmod(name, mode);
+    }
+}
+
+
+SEXP attribute_hidden do_dirchmod(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP dr;
+    checkArity(op, args);
+    dr = CAR(args);
+    if(!isString(dr) || length(dr) != 1)
+	error(_("invalid '%s' argument"), "dir");
+    chmod_one(translateChar(STRING_ELT(dr, 0)));
+
+    return R_NilValue;
+}
+
+
 
 
 SEXP attribute_hidden do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
