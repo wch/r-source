@@ -176,7 +176,8 @@ testInstalledPackage <-
         message("Running examples in package ", sQuote(pkg))
         ## Create as .fail in case this R session gets killed
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
-                     "CMD BATCH --vanilla", shQuote(Rfile), shQuote(failfile))
+                     "CMD BATCH --vanilla --no-timing",
+                     shQuote(Rfile), shQuote(failfile))
         cmd <- if (.Platform$OS.type == "windows") paste(cmd, "RLIBS=")
         else paste("R_LIBS=", cmd)
         res <- system(cmd)
@@ -205,7 +206,7 @@ testInstalledPackage <-
             message("  Running ", sQuote(f))
             outfile <- paste(f, "out", sep = "")
             cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
-                         "CMD BATCH --vanilla",
+                         "CMD BATCH --vanilla --no-timing",
                          shQuote(f), shQuote(outfile))
             cmd <- if (.Platform$OS.type == "windows") paste(cmd, "LANGUAGE=C")
             else paste("LANGUAGE=C", cmd)
@@ -251,7 +252,7 @@ testInstalledPackage <-
         message("  Running ", sQuote(f))
         outfile <- paste(f, "out", sep = "")
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
-                     "CMD BATCH --vanilla",
+                     "CMD BATCH --vanilla --no-timing",
                      shQuote(f), shQuote(outfile))
         cmd <- if (.Platform$OS.type == "windows")
             paste(cmd, "LANGUAGE=C", "R_TESTS=startup.Rs")
@@ -279,8 +280,8 @@ testInstalledPackage <-
     for(f in Rinfiles) {
         Rfile <- sub("\\.Rin$", ".R", f)
         message("  Creating ", sQuote(Rfile))
-        cmd <- paste(shQuote(file.path(R.home(), "bin", "Rscript")),
-                     "--vanilla", f)
+        cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
+                     "CMD BATCH --no-timing --vanilla --slave", f)
         if (system(cmd))
             warning("creation of ", sQuote(Rfile), " failed")
         else if (file.exists(Rfile)) nfail <- nfail + runone(Rfile)
@@ -326,8 +327,8 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
             if (!file.exists(fin <- paste(f, "in", sep = "")))
                 stop("file ", sQuote(f), " not found", domain = NA)
             message("creating ", sQuote(f))
-            cmd <- paste(shQuote(file.path(R.home(), "bin", "Rscript")),
-                         "--vanilla", fin)
+            cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
+                         "CMD BATCH --no-timing --vanilla --slave", fin)
             if (system(cmd))
                 stop("creation of ", sQuote(f), " failed")
             on.exit(unlink(f))
@@ -335,7 +336,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
         message("  running code in ", sQuote(f))
         outfile <- paste(f, "out", sep = "")
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
-                     "CMD BATCH --vanilla",
+                     "CMD BATCH --vanilla --no-timing",
                      shQuote(f), shQuote(outfile))
         extra <- paste("LANGUAGE=C", "R_DEFAULT_PACKAGES=", "SRCDIR=.")
         if (inC) extra <- paste(extra,  "LC_ALL=C")

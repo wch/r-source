@@ -39,9 +39,6 @@ testInstalledBasic(scope = c("basic", "devel", "both"))
   Package tests are run in a \file{\var{pkg}-tests} subdirectory of
   \file{outDir}, and leave their output there.
 
-  Base and recommended packages are testing in alphabetic order in the
-  current locale.
-  
   \code{testInstalledBasic} runs the basic tests, if installed.  This
   should be run with \code{LC_COLLATE=C} set: the function tries to set
   this by it may not work on all OSes.

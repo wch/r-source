@@ -208,10 +208,11 @@ test-Regexp:
 	@$(ECHO) "running regexp regression tests"
 	@$(R2) < $(srcdir)/utf8-regex.R > utf8-regex.Rout 2>&1 || (mv utf8-regex.Rout utf8-regex.Rout.fail && exit 1)
 
+## There can be problems with PACKAGES vs Packages on case-insenstive OSes
 test-Segfault:
 	@$(ECHO) "running tests to possibly trigger segfaults"
 	@$(MK) $(test-out-segfault) RVAL_IF_DIFF=0
-	@rm -f data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots* PACKAGES PACKAGES.gz FALSE-package.Rd FALSE.* ./-Ex.R
+	-@rm -f data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots* PACKAGES PACKAGES.gz FALSE-package.Rd FALSE.* ./-Ex.R
 
 
 test-Rd: $(srcdir)/testit.Rd $(srcdir)/ver10.Rd $(srcdir)/ver11.Rd
