@@ -2059,8 +2059,8 @@ will make standalone libraries @file{libRmath.a} and @file{libRmath.so}.
 
 @strong{NB:} certain compilers are unable to do compile-time IEEE-754
 arithmetic and so cannot compile @file{mlutils.c} and several other
-files.  The known example is earlier versions of Sun's @code{cc}
-(e.g.@: Forte 6 and 7): the Sun Studio 11 suite does work.
+files.  The known example is old versions of Sun's @code{cc} (e.g.@:
+Forte 6 and 7).
 
 
 To use the routines in your own C or C++ programs, include
@@ -2461,7 +2461,7 @@ to be usable from a shared object (so must contain position-independent
 code), and that is not checked.
 
 Some enhanced BLASes are compiler-system-specific (@code{libsunperf} on
-Sun Sparc@footnote{Using the Sun Studio @command{cc} and @command{f95}
+Sun Sparc@footnote{Using the Sun Ceres @command{cc} and @command{f95}
 compilers}, @code{libessl} on IBM, @code{vecLib} on Mac OS X).  The
 correct incantation for these is usually found @emph{via}
 @option{--with-blas} with no value on the appropriate platforms.
@@ -3519,21 +3519,21 @@ suggests that @option{-pc64} may be desirable.
 @node SunPro compilers,  , PGI compilers, Linux
 @subsection SunPro compilers
 
-Brian Ripley tested the SunPro Studio 12 compilers
+Brian Ripley tested the SunStudio 12 (aka Sun Ceres) compilers
 (@uref{http://developers.sun.com/@/sunstudio/@/index.jsp}) on
 @cputype{x86_64} Linux with
 
 @example
-CC=cc
+CC=csunc
 CFLAGS="-xO5 -xc99 -xlibmil -nofstore"
 CPICFLAGS=-Kpic
-F77=f95
+F77=sunf95
 FFLAGS="-O5 -libmil -nofstore"
 FPICFLAGS=-Kpic
-CXX=CC
+CXX=sunCC
 CXXFLAGS="-xO5 -xlibmil -nofstore"
 CXXPICFLAGS=-Kpic
-FC=f95
+FC=sunf95
 FCFLAGS=$FFLAGS
 FCPICFLAGS=-Kpic
 LDFLAGS=-L/opt/sunstudio12/lib/amd64
@@ -3548,7 +3548,7 @@ SAFE_FFLAGS="-O5 -libmil"
 @option{-fast}: see the warnings under Solaris.
 
 The resulting build of @R{} was not quite as fast as that built with
-@command{gcc}@tie{}4.2.1 at @code{-O3}.
+@command{gcc}@tie{}4.3.2 at @code{-O3}.
 
 
 @node Mac OS X, Solaris, Linux, Platform notes
@@ -3635,7 +3635,7 @@ in @file{config.site} or on the @command{configure} command line.
 @R{} has been built successfully on Solaris 10 (both Sparc and
 @cputype{x86}) using @command{gcc}@tie{}3/@command{g77},
 @command{gcc}@tie{}4/@command{gfortran} and the (zero cost) Sun Studio
-11/12 compilers.  Sun packages for @R{} are available from
+(aka Ceres) 11/12 compilers.  Sun packages for @R{} are available from
 @uref{http://www.sunfreeware.com/} for both architectures.  (Recent Sun
 machines are Opterons (@cputype{x86-64}) rather than @cputype{x86}, but
 32-bit @cputype{x86} executables are the default.)
