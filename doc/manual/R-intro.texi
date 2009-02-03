@@ -7200,9 +7200,13 @@ runfoo arg1 arg2
 @end example
 
 @noindent
-For further options see @command{help("Rscript")}.  If you do not wish
-to hardcode the path to @command{Rscript} but have it in your path (which
-is normally the case for an installed @R{}), use
+For further options see @command{help("Rscript")}.  This writes @R{}
+output to @file{stdout} and @file{stderr}, and this can be redirected in
+the usual way for the shell running the command.
+
+If you do not wish to hardcode the path to @command{Rscript} but have it
+in your path (which is normally the case for an installed @R{} except on
+Windows), use
 
 @example
 #! /usr/bin/env Rscript
