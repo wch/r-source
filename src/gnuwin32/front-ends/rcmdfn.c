@@ -169,6 +169,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 "Options:\n"
 "  -h, --help		print short help message and exit\n",
 "  -v, --version		print version info and exit\n",
+"  --no-timing		do not report the timings\n",
 "  --			end processing of options\n\n",
 "Further arguments starting with a '-' are considered as options as long\n",
 "as '--' was not encountered, and are passed on to the R process, which\n",
