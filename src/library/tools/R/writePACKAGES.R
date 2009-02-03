@@ -178,7 +178,7 @@ dependsOnPkgs <- function(pkgs,
                           dependencies = c("Depends", "Imports"),
                           recursive = TRUE,
                           lib.loc = NULL,
-                          installed = installed.packages(lib.loc, fields = "Enhanes"))
+                          installed = installed.packages(lib.loc, fields = "Enhances"))
 {
     need <- apply(installed[, dependencies, drop = FALSE], 1L,
                   function(x) any(pkgs %in% utils:::.clean_up_dependencies(x)) )
