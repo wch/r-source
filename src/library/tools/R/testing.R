@@ -178,8 +178,8 @@ testInstalledPackage <-
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                      "CMD BATCH --vanilla --no-timing",
                      shQuote(Rfile), shQuote(failfile))
-        cmd <- if (.Platform$OS.type == "windows") paste(cmd, "RLIBS=")
-        else paste("R_LIBS=", cmd)
+        if (.Platform$OS.type == "windows") Sys.setenv(R_LIBS="")
+        else cmd =paste("R_LIBS=", cmd)
         res <- system(cmd)
         if (res) return(invisible(1L)) else file.rename(failfile, outfile)
 
@@ -254,10 +254,11 @@ testInstalledPackage <-
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                      "CMD BATCH --vanilla --no-timing",
                      shQuote(f), shQuote(outfile))
-        cmd <- if (.Platform$OS.type == "windows")
-            paste(cmd, "LANGUAGE=C", "R_TESTS=startup.Rs")
-        else
-            paste("LANGUAGE=C", "R_TESTS=startup.Rs", cmd)
+        if (.Platform$OS.type == "windows") {
+            Sys.setenv(LANGUAGE="C")
+            Sys.setenv(R_TESTS="startup.Rs")
+        } else
+            cmd <- paste("LANGUAGE=C", "R_TESTS=startup.Rs", cmd)
         res <- system(cmd)
         if (res) {
             file.rename(outfile, paste(outfile, "fail", sep="."))
@@ -340,11 +341,16 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
                      shQuote(f), shQuote(outfile))
         extra <- paste("LANGUAGE=C", "R_DEFAULT_PACKAGES=", "SRCDIR=.")
         if (inC) extra <- paste(extra,  "LC_ALL=C")
-        cmd <- if (.Platform$OS.type == "windows") paste(cmd, extra)
-        else paste(extra, cmd)
+        if (.Platform$OS.type == "windows") {
+            Sys.setenv(LANGUAGE="C")
+            Sys.setenv(R_DEFAULT_PACKAGES="")
+            Sys.setenv(SRCDIR=".")
+            ## ignore inC and hope
+        } else cmd <- paste(extra, cmd)
         res <- system(cmd)
         if (res) {
             file.rename(outfile, paste(outfile, "fail", sep="."))
+            message("FAILED")
             return(1L)
         }
         savefile <- paste(outfile, "save", sep = "." )
