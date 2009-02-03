@@ -2157,7 +2157,7 @@ linked).
 It is possible to link to @file{Rmath.dll} using other compilers, either
 directly or via an import library: if you make a MinGW import library as
 above, you will create a file @file{Rmath.def} which can be used
-(possibly after editing) to creat an import library for other systems
+(possibly after editing) to create an import library for other systems
 such as Visual C++.
 
 If you make use of dynamic linking you should use
@@ -2198,17 +2198,18 @@ installed.
 @section Essential programs
 
 You need a means of compiling C and FORTRAN 77 (see @ref{Using
-FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
-compiler should be @acronym{IEC}@tie{}60059@footnote{also known as
-@acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant if at all
+FORTRAN}).  The @pkg{Matrix} package also needs a C++ compiler.  
+
+Your C compiler should be @acronym{IEC}@tie{}60059@footnote{also known
+as @acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant if at all
 possible.  @R{} tries to choose suitable flags for the C compilers it
 knows about, but you may have to set @code{CC} or @code{CFLAGS}
 suitably.  For recent versions of @command{gcc} with @code{glibc} this
-means including @option{-std=gnu99}@footnote{@option{-std=c99}
-excludes POSIX functionality, but @file{config.h} will turn on all GNU
-extensions include the POSIX functionality.}.  If the compiler is
-detected as @command{gcc}, @code{-std=gnu99} will be appended to
-@code{CC} unless it conflicts with a setting of @code{CFLAGS}.
+means including @option{-std=gnu99}@footnote{@option{-std=c99} excludes
+POSIX functionality, but @file{config.h} will turn on all GNU extensions
+to include the POSIX functionality.}.  If the compiler is detected as
+@command{gcc}, @code{-std=gnu99} will be appended to @code{CC} unless it
+conflicts with a setting of @code{CFLAGS}.
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries. For recent Fedora
@@ -2988,11 +2989,11 @@ front end shell script which does the re-ordering).
 
 These flags can also be used to build a faster-running version of @R{}.
 On most platforms using @command{gcc}, having @samp{-O3} in
-@code{CFLAGS} and @code{FFLAGS} produces worthwhile performance gains.
-On systems using the GNU linker (especially those using @R{} as a shared
-library), it is likely that including @samp{-Wl,-O1} in @code{LDFLAGS}
-is worthwhile, and on recent systems@footnote{e.g.@: Fedora Core 6 and
-later} @samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is recommended at
+@code{CFLAGS} produces worthwhile performance gains.  On systems using
+the GNU linker (especially those using @R{} as a shared library), it is
+likely that including @samp{-Wl,-O1} in @code{LDFLAGS} is worthwhile,
+and on recent systems@footnote{e.g.@: Fedora Core 6 and later}
+@samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is recommended at
 @uref{http://lwn.net/Articles/192624/}.  Tuning compilation to a
 specific CPU family (e.g.@: @samp{-mtune=core2} for @command{gcc}) can
 give worthwhile performance gains, especially on older architectures
@@ -3133,6 +3134,13 @@ return conventions for double-complex functions between
 in @code{example(eigen)} hanging or segfaulting under external BLASs
 built under @command{g77}.  This should be detected by a
 @command{configure} test.
+
+The default @code{FFLAGS} chosen (by @command{autoconf}) for a GNU
+FORTRAN compiler is @samp{-g -O2}.  This seems not to be documented for
+@command{gfortran}, and has caused problems (segfaults and infinite
+loops) on @cputype{x86_64} Linux (and the optimizer will be shared with
+other platforms on that CPU type).  A maximum optimization of @samp{-O}
+is recommended there.
 
 
 @node Compile and load flags,  , Using FORTRAN, Configuration on Unix
