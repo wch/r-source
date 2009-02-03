@@ -174,9 +174,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 "Report bugs to <r-bugs@r-project.org>.");
 		return(0);
 	    }
-	    if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "-version")) {
+	    if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
 		fprintf(stderr, "BATCH %s\n%s%s%s\n", "1.2",
-"Copyright (C) 1997-2004 R Core Development Team.\n",
+"Copyright (C) 1997-2009 R Core Development Team.\n",
 "This is free software; see the GNU General Public Licence version 2\n",
 "or later for copying conditions.  There is NO warranty.");
 		return(0);
