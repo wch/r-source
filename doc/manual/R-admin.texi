@@ -263,6 +263,7 @@ of this chapter we consider only building from the sources.
 * Installation::                
 * Uninstallation::              
 * Sub-architectures::           
+* Testing a Unix Installation::  
 @end menu
 
 @node Simple compilation, Making the manuals, Installing R under Unix-alikes, Installing R under Unix-alikes
@@ -648,28 +649,6 @@ make install-tests
 @noindent
 which populates a @file{tests} directory in the installation.
 
-The tests can then be re-run by
-
-@example
-cd tests
-## followed by one of
-../bin/R CMD make check
-../bin/R CMD make check-devel
-../bin/R CMD make check-all
-@end example
-
-@noindent
-and other useful targets are @code{test-BasePackages} and
-@code{test-Recommended} to the run tests of the standard and
-recommmended packages (if installed) respectively.
-
-This re-runs all the tests relevant to the installed @R{} (including for
-example code in the package vignettes), but not for example the ones
-checking the example code in the manuals nor making the standalone Rmath
-library.  This can occasionally be useful when the operating environment
-has been changed, for example by OS updates or by substituting the BLAS
-(@pxref{Shared BLAS}).
-
 
 @node Uninstallation, Sub-architectures, Installation, Installing R under Unix-alikes
 @section Uninstallation
@@ -693,7 +672,7 @@ well as removing the directory @file{tests} containing the test results.
 
 
 
-@node Sub-architectures,  , Uninstallation, Installing R under Unix-alikes
+@node Sub-architectures, Testing a Unix Installation, Uninstallation, Installing R under Unix-alikes
 @section Sub-architectures
 
 Some platforms can support closely related builds of @R{} which can
@@ -797,6 +776,63 @@ e.g.@: @file{/usr/lib64/R/bin}.  Normally all installed architectures
 will run on the platform so the architecture of @command{Rscript} does
 not matter.
 
+@node Testing a Unix Installation,  , Sub-architectures, Installing R under Unix-alikes
+@section Testing an Installation
+
+Full testing is possible only if the test files have been installed with
+
+@example
+make install-tests
+@end example
+
+@noindent
+which populates a @file{tests} directory in the installation.
+
+If this has been done, two testing routes are available.
+The first is to move to the home directory of the @R{} installation
+(as given by @code{R.home()} and run
+
+@example
+cd tests
+## followed by one of
+../bin/R CMD make check
+../bin/R CMD make check-devel
+../bin/R CMD make check-all
+@end example
+
+@noindent
+and other useful targets are @code{test-BasePackages} and
+@code{test-Recommended} to the run tests of the standard and
+recommmended packages (if installed) respectively.
+
+This re-runs all the tests relevant to the installed @R{} (including for
+example code in the package vignettes), but not for example the ones
+checking the example code in the manuals nor making the standalone Rmath
+library.  This can occasionally be useful when the operating environment
+has been changed, for example by OS updates or by substituting the BLAS
+(@pxref{Shared BLAS}).
+
+Alternatively, the installed @R{} can be run, preferably with
+@option{--vanilla}.  Then
+
+@example
+library(tools)
+testInstalledBasic("both")
+testInstalledPackages("base")
+testInstallPackages("recommended")
+@end example
+
+@noindent
+runs the basic tests and then all the tests on the standard and
+recommended packages.  These tests can be run from anywhere: they write
+their results in the @file{tests} folder of the @R{} home directory.
+They run slightly fewer tests than the first approach: in particular
+they do not test Internet access.
+
+It is possible to test the installed packages (but not the
+package-specific tests) by @code{testInstallPackages} even if
+@command{make install-tests} was not run.
+
 @node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
 @cindex Installing under Windows
@@ -821,9 +857,10 @@ See the @uref{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 
 @menu
 * Building from source::        
+* Testing a Windows Installation::  
 @end menu
 
-@node Building from source,  , Installing R under Windows, Installing R under Windows
+@node Building from source, Testing a Windows Installation, Installing R under Windows, Installing R under Windows
 @section Building from source
 
 @menu
@@ -1220,6 +1257,31 @@ for suggesting WiX and building a prototype installer.
 @subsection Cross-building on Linux
 
 Support for cross-building has been withdrawn as from @R{} 2.9.0.
+
+@node Testing a Windows Installation,  , Building from source, Installing R under Windows
+@section Testing an Installation
+
+The Windows installer contains a set of test files used when building
+@R{}.  These are an optional part of the installation, and if it is
+desired to run tests on the installation these should be selected as
+well as the help source files (perhaps most easily by doing a `Full
+Installation').
+
+Once this has been done, launch either @code{Rgui} or @code{Rterm},
+preferably with @option{--vanilla}.  Then
+
+@example
+library(tools)
+testInstalledBasic("both")
+testInstalledPackages("base")
+testInstallPackages("recommended")
+@end example
+
+@noindent
+runs the basic tests and then all the tests on the standard and
+recommended packages.  These tests can be run from anywhere: they write
+their results in the @file{tests} folder of the @R{} home directory (as
+given by @code{R.home()}.
 
 
 @node Installing R under Mac OS X, Running R, Installing R under Windows, Top
