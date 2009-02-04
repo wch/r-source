@@ -1,4 +1,4 @@
-### configure.ac					-*- Autoconf -*-
+	### configure.ac					-*- Autoconf -*-
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
@@ -563,6 +563,8 @@ AC_PROG_CC
 AC_PROG_GCC_TRADITIONAL
 AC_PROG_CPP
 R_PROG_CPP_CPPFLAGS
+## see if the user set FFLAGS
+userFFLAGS=${FFLAGS}
 R_PROG_F77
 AC_PROG_CXX
 AC_PROG_CXXCPP
@@ -956,9 +958,31 @@ case "${host_os}" in
         ;;
     esac
     case  "${F77}" in
+      ## gfortran: At least for 4.3.x -O2 gives faulty code
+      gfortran*)
+ 	if test "x$userFFLAGS" = x; then
+          if test $ac_cv_prog_f77_g = yes; then
+	    case "${host_cpu}" in
+	      x86_64)
+	        FFLAGS="-g -O"
+		;;
+	      *)
+		;;
+	    esac
+          else
+	    case "${host_cpu}" in
+	      x86_64)
+	        FFLAGS="-O"
+		;;
+	      *)
+		;;
+	    esac
+          fi
+        fi
+        ;;
       ## Intel compilers
       *ifc|*ifort)
-	if test "$ac_test_FFLAGS" != set; then
+	if test "x$userFFLAGS" = x; then
           if test $ac_cv_prog_f77_g = yes; then
 	    case "${host_cpu}" in
 	      x86_64)
@@ -2120,6 +2144,7 @@ AC_SUBST(R_BATCHSAVE)
 R_JAVA
 
 ## F90/F95 support
+userFCFLAGS=${FCFLAGS}
 AC_PROG_FC()
 AC_LANG_PUSH(Fortran)
 AC_FC_SRCEXT(f90, [dummy=1], [dummy=0])
@@ -2129,6 +2154,7 @@ AC_LANG_POP()
 : ${SHLIB_FCLDFLAGS="${SHLIB_LDFLAGS}"}
 AC_SUBST(SHLIB_FCLD)
 AC_SUBST(SHLIB_FCLDFLAGS)
+
 
 ## Look for FCPICFLAGS
 ## Debian in their wisdom have f95 as a link to gfortran, so
@@ -2156,6 +2182,27 @@ case "${host_os}" in
     ;;
   linux*)
     case  "${FC}" in
+      gfortran)
+ 	if test "x$userFCFLAGS" = x; then
+          if test $ac_cv_prog_fc_g = yes; then
+	    case "${host_cpu}" in
+	      x86_64)
+	        FCFLAGS="-g -O"
+		;;
+	      *)
+		;;
+	    esac
+          else
+	    case "${host_cpu}" in
+	      x86_64)
+	        FCFLAGS="-O"
+		;;
+	      *)
+		;;
+	    esac
+          fi
+        fi
+        ;;
       ## Intel compilers: probably get identified as GNU, but make sure.
       *ifc|*ifort)
         fcpicflags="-fpic"

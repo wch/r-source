@@ -295,6 +295,10 @@ INSTALLATION
 	examples, which are now collated in the locale's order (and
 	not ASCII order).
 
+    o	configure will now set the default optimization level for
+	gfortran on x86_64 Linux to -O as -O2 has caused problems with
+	gfortran 4.3.x.
+
 
 PACKAGE INSTALLATION
 
