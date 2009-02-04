@@ -160,7 +160,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 
 	for(i = cmdarg + 1, iused = cmdarg; i < argc; i++) {
 	    if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
-		fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
+		fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
 "Usage: ", RCMD, " BATCH [options] infile [outfile]\n\n",
 "Run R non-interactively with input from infile and place output (stdout\n",
 "and stderr) to another file.  If not given, the name of the output file\n",
