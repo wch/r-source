@@ -517,6 +517,8 @@ SEXP attribute_hidden do_classgets(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     if (NAMED(CAR(args)) == 2) SETCAR(args, duplicate(CAR(args)));
     if (length(CADR(args)) == 0) SETCADR(args, R_NilValue);
+    if(IS_S4_OBJECT(CAR(args)))
+      UNSET_S4_OBJECT(CAR(args));
     setAttrib(CAR(args), R_ClassSymbol, CADR(args));
     return CAR(args);
 }
@@ -524,7 +526,15 @@ SEXP attribute_hidden do_classgets(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    return getAttrib(CAR(args), R_ClassSymbol);
+    static SEXP R_S3ClassSymbol = 0;
+    SEXP x = CAR(args), S3Class;
+    if(IS_S4_OBJECT(x)) {
+      if(!R_S3ClassSymbol)
+	R_S3ClassSymbol = install(".S3Class");
+      if((S3Class = getAttrib(x, R_S3ClassSymbol)) != R_NilValue)
+	return S3Class;
+    } /* else */
+    return getAttrib(x, R_ClassSymbol);
 }
 
 /* character elements corresponding to the syntactic types in the

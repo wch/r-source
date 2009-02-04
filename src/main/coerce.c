@@ -2361,6 +2361,8 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
     int nProtect = 0;
     if(isNull(value)) {
 	setAttrib(obj, R_ClassSymbol, value);
+	if(IS_S4_OBJECT(obj)) /* NULL class is only valid for S3 objects */
+	  UNSET_S4_OBJECT(obj);
 	return obj;
     }
     if(TYPEOF(value) != STRSXP) {
@@ -2369,8 +2371,11 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	PROTECT(value = coerceVector(duplicate(value), STRSXP));
 	nProtect++;
     }
-    if(length(value) > 1)
+    if(length(value) > 1) {
 	setAttrib(obj, R_ClassSymbol, value);
+	if(IS_S4_OBJECT(obj)) /*  multiple strings only valid for S3 objects */
+	  UNSET_S4_OBJECT(obj);
+    }
     else if(length(value) == 0) {
 	UNPROTECT(nProtect); nProtect = 0;
 	error(_("invalid replacement object to be a class string"));
@@ -2386,6 +2391,8 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	/*  assigning type as a class deletes an explicit class attribute. */
 	if(valueType != -1) {
 	    setAttrib(obj, R_ClassSymbol, R_NilValue);
+	    if(IS_S4_OBJECT(obj)) /* NULL class is only valid for S3 objects */
+	      UNSET_S4_OBJECT(obj);
 	    if(classTable[whichType].canChange) {
 		PROTECT(obj = ascommon(call, obj, valueType));
 		nProtect++;
@@ -2397,6 +2404,8 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	}
 	else if(!strcmp("numeric", valueString)) {
 	    setAttrib(obj, R_ClassSymbol, R_NilValue);
+	    if(IS_S4_OBJECT(obj)) /* NULL class is only valid for S3 objects */
+	      UNSET_S4_OBJECT(obj);
 	    switch(TYPEOF(obj)) {
 	    case INTSXP: case REALSXP: break;
 	    default: PROTECT(obj = coerceVector(obj, REALSXP));
@@ -2410,11 +2419,15 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 		error(_("invalid to set the class to matrix unless the dimension attribute is of length 2 (was %d)"),
 		 length(getAttrib(obj, R_DimSymbol)));
 	    setAttrib(obj, R_ClassSymbol, R_NilValue);
+	    if(IS_S4_OBJECT(obj)) /* NULL class is only valid for S3 objects */
+	      UNSET_S4_OBJECT(obj);
 	}
 	else if(!strcmp("array", valueString)) {
 	    if(length(getAttrib(obj, R_DimSymbol))<= 0)
 		error(_("cannot set class to \"array\" unless the dimension attribute has length > 0"));
 	    setAttrib(obj, R_ClassSymbol, R_NilValue);
+	    if(IS_S4_OBJECT(obj)) /* NULL class is only valid for S3 objects */
+	      UNSET_S4_OBJECT(obj);
 	}
 	else { /* set the class but don't do the coercion; that's
 		  supposed to be done by an as() method */
