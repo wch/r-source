@@ -92,6 +92,7 @@ FORCE:
 	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
 
+## diff -b may be needed on Windows because of CRLF line endings.
 reg-plot.Rout: reg-plot.R
 	@rm -f $@ $@.fail
 	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
@@ -99,7 +100,7 @@ reg-plot.Rout: reg-plot.R
 	@$(ECHO) "$(ECHO_T) OK"
 	@$(ECHO) $(ECHO_N) \
 	  "comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ...$(ECHO_C)"
-	-@diff reg-plot.ps $(srcdir)/reg-plot.ps.save
+	-@diff -b reg-plot.ps $(srcdir)/reg-plot.ps.save
 	@$(ECHO) "$(ECHO_T) OK"
 
 ## allow this to fail, as it must if the locale does not support Latin-1 chars
@@ -116,7 +117,7 @@ reg-plot-latin1.Rout: reg-plot-latin1.R
 	  $(ECHO) "$(ECHO_T) OK"; \
 	  $(ECHO) $(ECHO_N) \
 	  "comparing 'reg-plot-latin1.ps' to '$(srcdir)/reg-plot-latin1.ps.save' ...$(ECHO_C)"; \
-	  diff reg-plot-latin1.ps $(srcdir)/reg-plot-latin1.ps.save && exitstatus=0; \
+	  diff -b reg-plot-latin1.ps $(srcdir)/reg-plot-latin1.ps.save && exitstatus=0; \
 	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
 
