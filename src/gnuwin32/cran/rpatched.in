@@ -3,55 +3,73 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="http://cran.r-project.org/R.css">
-<title>R-@FULLVERSION@ build for Windows</title>
+<title>Download the R-@FULLVERSION@ build for Windows.  The R-project for statistical computing.</title>
+<style>
+.download {
+  border: 1px solid #ccc;
+  margin: 1em 0em;
+  padding: 0.5em 1em;
+  background-color: #eee;
+}
+.download p {
+  font-size: 1.2em;
+  margin: 0.5em 0 0.5em 0;
+}
+.download p span {font-size: 0.8em;}
+.download a:link, .download a:visited {background-color: #eee;}
+.download ul, .download li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.download li {
+  font-size: 0.8em;
+  margin-bottom: 0.25em;
+  font-family: Verdana, Arial, "sans serif";
+}
+</style>
+
 </head>
 
-<body bgcolor="#FFFFFF">
+<body>
 
 <h1>R-@FULLVERSION@ build for Windows</h1>
 
-<p>This directory contains a Windows binary build of R including
+<div class="download">
+  <p><a href="@RWVER@-win32.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(34 megabytes)</span></p>
+  <ul>
+    <li><a href="README.@RWVER@">Installation and other instructions</a></li>
+    <li>New features in this version: <a href="CHANGES.@RWVER@">Windows specific</a>, <a href="NEWS.@RWVER@">all platforms</a>.</li>
+  </ul>
+</div>
+
+<p>This is a Windows binary build of R including
 patches up to @DATE@ (r@SVNREVISION@).</p>
 
 <p>This is not an official release of R. Please check bugs
 in this version against the official release before reporting them. </p>
 
-<p>The current
-official release is available <a href="index.html">here</a>. </p>
+<h2>Frequently asked questions</h2>
 
-<p>A build of the development snapshot of the next release is
-available <a href="rdevel.html">here</a>.</p>
-
-<p>In this directory:</p>
-
-<table width="90%" border="0">
-<TBODY>
-  <tr>
-    <td width="25%" valign="top"><a href="README.@RWVER@">README.@RWVER@</a></td>
-    <td width="75%">Installation and other instructions.</td>
-  </tr>
-  <tr>
-    <td width="25%" valign="top"><a href="CHANGES.@RWVER@">CHANGES</a></td>
-    <td width="75%">New features of this Windows version.</td>
-  </tr>
-  <tr>
-    <td width="25%" valign="top"><a href="NEWS.@RWVER@">NEWS</a></td>
-    <td width="75%">New features of all versions.</td>
-  </tr>
-  <tr>
-    <td width="25%" valign="top"><a
-href="@RWVER@-win32.exe">@RWVER@-win32.exe</a></td>
-    <td width="75%">Setup program (about 31 megabytes). Please download this
-    from a <a href="http://cran.r-project.org/mirrors.html">mirror near you</a>.
-  </tr>
-</TBODY>
-</table>
-
-<p> Please see the <a
+<ul>
+  <li><a href="rw-FAQ.html#Does-R-run-under-Windows-Vista_003f">How do I install R when using Windows Vista?</a></li>
+  <li><a href="rw-FAQ.html#What_0027s-the-best-way-to-upgrade_003f">How do I update packages in my previous version of R?</a></li>
+</ul>
+  
+<p>Please see the <a
 href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
 general information about R and the <a href="rw-FAQ.html">R Windows
-FAQ</a> for Windows-specific information, including upgrade
-advice.</p>
+FAQ</a> for Windows-specific information.</p>
+
+
+<h2>Other builds</h2>
+
+<ul>
+  <li><a href="index.html">The current official release.</a></li>
+  <li>A build of the development version (which will eventually become
+the next major release of R) is available in the <a href="rdevel.html">r-devel snapshot build</a>.
+  <li><a href="old/">Previous releases</a></li>
+</ul>
 
 <hr>
 
