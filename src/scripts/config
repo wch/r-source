@@ -90,7 +90,7 @@ Variables:
 		object files from a C++ compiler
   SHLIB_CXXLDFLAGS
 		special flags used by SHLIB_CXXLD
-  DYLIB_EXT	file extension (including '.') for shared objects
+  SHLIB_EXT	file extension (including '.') for shared objects
   SHLIB_FFLAGS  additional FFLAGS used when building shared objects
   SHLIB_LD      command for linking shared objects which contain
 		object files from a C or Fortran compiler only
