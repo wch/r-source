@@ -50,6 +50,9 @@ BINPREF=
 WIN=32
 ifeq ($(strip $(WIN)),64)
 USE_IMPLIBS = YES
+DEFINES=-DW64
+BINPREF=x86_64-pc-mingw32-
+USE_CHM = FALSE
 endif
 
 # use ICU
@@ -72,7 +75,7 @@ WIXDIR=C:/packages/WiX
 ## For a package using F90/95 set the name or path of gfortran.exe 
 ## or g95.exe.  Spaces allowed.
 ifeq ($(strip $(BUILD)),GCC4)
-FC=gfortran$(GCC4_SUFF)
+FC=$(BINPREF)gfortran$(GCC4_SUFF)
 else
 # needs to be set by user
 FC=
@@ -85,7 +88,7 @@ DEPARG=-MM
 C99FLAG=-std=gnu99
 
 ifeq ($(strip $(BUILD)),GCC4)
-F77=gfortran$(GCC4_SUFF)
+F77=$(BINPREF)gfortran$(GCC4_SUFF)
 FLIBS=-lgfortran
 AWK=gawk
 ## for mingw-runtime <= 3.11
@@ -153,7 +156,7 @@ TAR=tar
 
 .c.d:
 	@echo "making $@ from $<"
-	@$(CC) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
+	@$(CC) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $(DEFINES) $< -o $@
 
 .cc.d:
 	@echo "making $@ from $<"
@@ -172,7 +175,7 @@ TAR=tar
 	@$(OBJC) $(DEPARG) $(CPPFLAGS) $($*-CPPFLAGS) $< -o $@
 
 .c.o:
-	$(CC) $(CPPFLAGS) $($*-CPPFLAGS) $(CFLAGS) $($*-CFLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) $($*-CPPFLAGS) $(CFLAGS) $($*-CFLAGS) $(DEFINES) -c $< -o $@
 
 .f.o:
 	$(F77) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
@@ -206,6 +209,7 @@ lib%.dll.a: %.def
 	@$(RM) $@
 	$(AR) crs $@ $^
 
+## FIXME: Mingw64 currently needs --use-temp-file
 %.o: %.rc
 	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $< -o $@
 

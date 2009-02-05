@@ -27,7 +27,10 @@
 #include <string.h>
 #include <stdlib.h> /* for getenv */
 
+#ifndef W64
 extern char *alloca(size_t);
+#endif
+
 #ifndef min
 /* in stdlib.h in Win64 headers */
 # define min(a, b) (a < b ? a : b)

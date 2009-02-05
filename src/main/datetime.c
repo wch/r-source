@@ -487,7 +487,10 @@ SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-#ifdef Win32
+#ifdef W64
+extern void tzset(void);
+/* tzname is in the headers */
+#elif defined Win32
 extern void tzset(void);
 extern char *tzname[2];
 #elif defined(__CYGWIN__)

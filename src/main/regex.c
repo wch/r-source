@@ -1130,6 +1130,9 @@ build_wcs_buffer (re_string_t *pstr)
 
 /* Build wide character buffer PSTR->WCS like build_wcs_buffer,
    but for REG_ICASE.  */
+#ifdef W64
+#define mbsinit(x) memset(x, 0, sizeof(mbstate_t))
+#endif
 
 static reg_errcode_t
 internal_function
