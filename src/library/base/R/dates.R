@@ -20,7 +20,7 @@
 ## The difftime class already covers time differences in days.
 
 ## Need to take timezone into account here
-Sys.Date <- function() .Internal(POSIXlt2Date(as.POSIXlt(Sys.time())))
+Sys.Date <- function() as.Date(as.POSIXlt(Sys.time()))
 
 as.Date <- function(x, ...) UseMethod("as.Date")
 
@@ -51,7 +51,7 @@ as.Date.character <- function(x, format="", ...)
 	stop("character string is not in a standard unambiguous format")
     }
     res <- if(missing(format)) fromchar(x) else strptime(x, format, tz="GMT")
-    .Internal(POSIXlt2Date(res))
+    as.Date(res)
 }
 
 as.Date.numeric <- function(x, origin, ...)
@@ -278,7 +278,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
                 yr <- seq.int(r1$year, to$year, by)
             }
             r1$year <- yr
-            res <- .Internal(POSIXlt2Date(r1))
+            res <- as.Date(r1)
         } else if(valid == 3L) { # months
             if(missing(to)) {
                 mon <- seq.int(r1$mon, by = by, length.out = length.out)
@@ -287,7 +287,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
                 mon <- seq.int(r1$mon, 12*(to$year - r1$year) + to$mon, by)
             }
             r1$mon <- mon
-            res <- .Internal(POSIXlt2Date(r1))
+            res <- as.Date(r1)
         }
         return(res)
     }
@@ -346,7 +346,7 @@ cut.Date <-
         end$mday <- 1L
         breaks <- as.Date(seq(start, end, paste(step * 3L, "months")))
     } else {
-        start <- .Internal(POSIXlt2Date(start))
+        start <- as.Date(start)
         if (length(by2) == 2L) incr <- incr * as.integer(by2[1L])
         maxx <- max(x, na.rm = TRUE)
         breaks <- seq.int(start, maxx + incr, breaks)

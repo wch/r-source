@@ -241,13 +241,13 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
         m <- length(zz$mon)
         m <- rep.int(zz$year[1L], m)
         zz$year <- c(m, m+1)
-        z <- .Internal(POSIXlt2Date(zz))
+        z <- as.Date(zz)
         if(missing(format)) format <- "%b"
     } else { # years
         zz <- as.POSIXlt(z)
         zz$mday <- 1; zz$mon <- 0
         zz$year <- pretty(zz$year)
-        z <- .Internal(POSIXlt2Date(zz))
+        z <- as.Date(zz)
         if(missing(format)) format <- "%Y"
     }
     if(!mat) z <- x[is.finite(x)] # override changes
@@ -338,7 +338,7 @@ hist.Date <- function(x, breaks, ..., xlab = deparse(substitute(x)),
                 end$mday <- 1
                 breaks <- as.Date(seq(start, end, "3 months")) - 1
             } else {
-                start <- .Internal(POSIXlt2Date(start))
+                start <- as.Date(start)
                 maxx <- max(x, na.rm = TRUE)
                 breaks <- seq.int(start, maxx + incr, breaks)
                 breaks <- breaks[1L:(1+max(which(breaks < maxx)))]
