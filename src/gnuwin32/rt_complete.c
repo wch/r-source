@@ -27,8 +27,9 @@
 #include <string.h>
 #include <stdlib.h> /* for getenv */
 
-#ifndef W64
-extern char *alloca(size_t);
+#ifdef __GNUC__
+# undef alloca
+# define alloca(x) __builtin_alloca((x))
 #endif
 
 #ifndef min
