@@ -4391,6 +4391,74 @@ function(x, ...)
     invisible(x)
 }
 
+### * .check_dotIntenal
+
+.check_dotInternal <-
+function(package, dir, lib.loc = NULL)
+{
+    bad_closures <- character()
+
+    find_bad_closures <- function(env) {
+        objects_in_env <- objects(env, all.names = TRUE)
+        x <- lapply(objects_in_env,
+                    function(o) {
+                        v <- get(o, envir = env)
+                        if (typeof(v) == "closure")
+                            codetools::findGlobals(v)
+                    })
+        objects_in_env[sapply(x,
+                              function(s) any(s %in% ".Internal"))]
+    }
+
+    if(!missing(package)) {
+        if(length(package) != 1L)
+            stop("argument 'package' must be of length 1")
+        dir <- .find.package(package, lib.loc)
+        if(TRUE || ! package %in% .get_standard_package_names()$base) {
+            .load_package_quietly(package, lib.loc)
+            code_env <- if(packageHasNamespace(package, dirname(dir)))
+                           asNamespace(package)
+            else .package_env(package)
+            bad_closures <- find_bad_closures(code_env)
+        }
+    }
+    else {
+        ## The dir case.
+        if(missing(dir))
+            stop("you must specify 'package' or 'dir'")
+        dir <- file_path_as_absolute(dir)
+        code_dir <- file.path(dir, "R")
+        if(file_test("-d", code_dir)) {
+            code_env <- new.env()
+            dfile <- file.path(dir, "DESCRIPTION")
+            meta <- if(file_test("-f", dfile))
+                .read_description(dfile)
+            else
+                character()
+            .source_assignments_in_code_dir(code_dir, code_env, meta)
+            bad_closures <- find_bad_closures(code_env)
+        }
+    }
+
+    out <- list(bad_closures = bad_closures)
+    class(out) <- "check_dotInternal"
+    out
+}
+
+print.check_dotInternal <-
+function(x, ...)
+{
+    if(length(x$bad_closures)) {
+        msg <- ngettext(length(x$bad_closures),
+                        "Found .Internal call in the following function:",
+                        "Found .Internal calls in the following functions:"
+                        )
+        writeLines(strwrap(msg))
+        .pretty_print(x$bad_closures)
+    }
+    invisible(x)
+}
+
 ### * .check_namespace
 
 .check_namespace <-
