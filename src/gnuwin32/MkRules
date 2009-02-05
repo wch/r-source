@@ -43,6 +43,9 @@ TCL_VERSION = 85
 # Needed if using other compilers, and currently on Win64
 # USE_IMPLIBS = YES
 
+# Some of the Minge64 compilers are in fact cross-compilers and have prefixes
+BINPREF=
+
 # 32- or 64-bit Windows?
 WIN=32
 ifeq ($(strip $(WIN)),64)
@@ -109,19 +112,19 @@ LAPACK_LIBS=-L$(RHOME)/$(IMPDIR) -lRlapack
 GRAPHAPP_LIB=-lRgraphapp
 ZLIB_LIBS=-lRzlib
 
-AR=ar
-AS=as
+AR=$(BINPREF)ar
+AS=$(BINPREF)as
 CAT=cat
-CC=gcc$(GCC4_SUFF) $(C99FLAG)
+CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG)
 CP=cp
 # as set by make
 CPP=$(CC) -E
-CXX=g++$(GCC4_SUFF)
+CXX=$(BINPREF)g++$(GCC4_SUFF)
 ## overridden in some packages
 DLL_LDMAIN=$(CC)
 DLL=$(DLL_LDMAIN)
 ## formerly used version without -k for front-ends/libproxy.a
-DLLTOOL=dlltool
+DLLTOOL=$(BINPREF)dlltool
 ## some versions have trouble with paths, so we always need this
 ## even for native builds
 DLLTOOLFLAGS=--as $(AS) -k
@@ -130,11 +133,11 @@ FIND=find
 LINKER=$(MAIN_LD)
 MAIN_LD=$(CC)
 MKDIR=mkdir
-NM=nm
-OBJC=gcc$(GCC4_SUFF)
+NM=$(BINPREF)nm
+OBJC=$(BINPREF)gcc$(GCC4_SUFF)
 PERL=perl
-RANLIB=ranlib
-RESCOMP=windres
+RANLIB=$(BINPREF)ranlib
+RESCOMP=$(BINPREF)windres
 # as set by make
 RM=rm -f
 SED=sed
