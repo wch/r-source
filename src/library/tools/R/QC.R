@@ -4414,7 +4414,7 @@ function(package, dir, lib.loc = NULL)
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         dir <- .find.package(package, lib.loc)
-        if(TRUE || ! package %in% .get_standard_package_names()$base) {
+        if(! package %in% .get_standard_package_names()$base) {
             .load_package_quietly(package, lib.loc)
             code_env <- if(packageHasNamespace(package, dirname(dir)))
                            asNamespace(package)
