@@ -159,7 +159,11 @@ NEW FEATURES
 
     o	Replacement functions for class() and oldClass()  will unset
         the S4 bit when the replacement can't be an S4 object;
-        oldClass() will return the S3 class for S4 objects with slot .S3Class.
+        oldClass() will return the S3 class for S4 objects with slot
+        .S3Class.
+
+    o	clip() takes extra steps to avoid the next graphics call
+	resetting the clip region.
 
 
 DEPRECATED & DEFUNCT
