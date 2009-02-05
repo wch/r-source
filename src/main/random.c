@@ -472,7 +472,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (replace == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "replace");
     if (n == NA_INTEGER || n < 1)
-	error(_("invalid '%s' argument"), "x");
+	error(_("invalid first argument"));
     if (k == NA_INTEGER || k < 0)
 	error(_("invalid '%s' argument"), "size");
     if (!replace && k > n)

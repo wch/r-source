@@ -25,3 +25,6 @@ sample <- function(x, size, replace=FALSE, prob=NULL)
 	x[.Internal(sample(length(x), size, replace, prob))]
     }
 }
+
+sample.int  <- function(n, size, replace=FALSE, prob=NULL)
+    .Internal(sample(n, size, replace, prob))

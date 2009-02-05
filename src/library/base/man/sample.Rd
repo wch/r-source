@@ -1,10 +1,11 @@
 % File src/library/base/man/sample.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sample}
 \alias{sample}
+\alias{sample.int}
 \title{Random Samples and Permutations}
 \description{
   \code{sample} takes a sample of the specified size from the elements
@@ -12,18 +13,22 @@
 }
 \usage{
 sample(x, size, replace = FALSE, prob = NULL)
+
+sample.int(n, size, replace = FALSE, prob = NULL)
 }
 \arguments{
   \item{x}{Either a (numeric, complex, character or logical) vector of
     more than one element from which to choose, or a positive integer.}
-  \item{size}{non-negative integer giving the number of items to choose.}
+  \item{n}{a non-negaiive integer, the number of items to choose from.}
+  \item{size}{positive integer giving the number of items to choose.}
   \item{replace}{Should sampling be with replacement?}
   \item{prob}{A vector of probability weights for obtaining the elements
     of the vector being sampled.}
 }
 \details{
   If \code{x} has length 1, is numeric (in the sense of
-  \code{\link{is.numeric}}) and \code{x >= 1}, sampling takes place from
+  \code{\link{is.numeric}}) and \code{x >= 1}, sampling \emph{via}
+  \code{sample} takes place from
   \code{1:x}.  \emph{Note} that this convenience feature may lead to
   undesired behaviour when \code{x} is of varying length
   \code{sample(x)}.  See the \code{resample()} example below.
@@ -45,7 +50,19 @@ sample(x, size, replace = FALSE, prob = NULL)
   sequentially, that is the probability of choosing the next item is
   proportional to the weights amongst the remaining items.  The number
   of nonzero weights must be at least \code{size} in this case.
+  
+  \code{sample.int} is a bare interface in which both \code{n} and
+  \code{size} must be supplied as integers.
 }
+
+\value{
+  For \code{sample} a vector of length \code{size} with elements
+  drawn from either \code{x} or from \code{1:x}.
+
+  For \code{sample.int}, an integer vector of length \code{size} with
+  elements from \code{1:n},
+}
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

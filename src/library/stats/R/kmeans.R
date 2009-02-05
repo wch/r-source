@@ -83,13 +83,13 @@ function(x, centers, iter.max = 10, nstart = 1,
 	k <- centers
         ## we need to avoid duplicates here
         if(nstart == 1)
-            centers <- x[sample(1 : m, k), , drop = FALSE]
+            centers <- x[sample.int(m, k), , drop = FALSE]
         if(nstart >= 2 || any(duplicated(centers))) {
             cn <- unique(x)
             mm <- nrow(cn)
             if(mm < k)
                 stop("more cluster centers than distinct data points.")
-            centers <- cn[sample(1L:mm, k), , drop=FALSE]
+            centers <- cn[sample.int(mm, k), , drop=FALSE]
         }
     } else {
 	centers <- as.matrix(centers)
@@ -107,7 +107,7 @@ function(x, centers, iter.max = 10, nstart = 1,
     if(nstart >= 2 && !is.null(cn)) {
         best <- sum(Z$wss)
         for(i in 2:nstart) {
-            centers <- cn[sample(1L:mm, k), , drop=FALSE]
+            centers <- cn[sample.int(mm, k), , drop=FALSE]
             ZZ <- do_one(nmeth)
             if((z <- sum(ZZ$wss)) < best) {
                 Z <- ZZ
