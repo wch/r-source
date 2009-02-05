@@ -103,7 +103,7 @@ contour(x, \dots)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{options}("max.countour.segments")} for the maximal
+  \code{\link{options}("max.contour.segments")} for the maximal
   complexity of a single contour line.
 
   \code{\link[grDevices]{contourLines}},
