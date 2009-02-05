@@ -32,7 +32,7 @@ zip.file.extract <- function(file, zipname = "R.zip",
                 system(cmd, invisible = TRUE) else system(paste(cmd, "> /dev/null"))
             if(!res) file <- file.path(dir, topic)
         } else {
-            rc <- .Internal(int.unzip(file.path(path, zipname), topic, dir, FALSE))
+            rc <- .Internal(unzip(file.path(path, zipname), topic, dir, FALSE))
             if (rc == 0L)
                 file <- file.path(dir, topic)
         }
@@ -44,7 +44,7 @@ unzip <- function(zipfile, files = NULL, list = FALSE, exdir = ".")
 {
     if(!list && !missing(exdir))
         dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
-    res <- .Internal(int.unzip(zipfile, files, exdir, list))
+    res <- .Internal(unzip(zipfile, files, exdir, list))
     if(list) {
         dates <- as.POSIXct(res[[3]], "%Y-%m-%d %H:%M",  tz="UTC")
         data.frame(Name = res[[1]], Length = res[[2]], Date = dates)
