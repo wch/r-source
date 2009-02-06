@@ -8,7 +8,7 @@ all: makeMakedeps install
 install: iconv.dll
 	@cp iconv.dll ../../../bin/iconv.dll
 
-CPPFLAGS=-I.../../include
+CPPFLAGS=-I../../include
 CFLAGS= $(OPTFLAGS)
 
 CSOURCES= win_iconv.c

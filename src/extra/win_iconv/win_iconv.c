@@ -5,14 +5,6 @@
  *
  * Maintainer: Yukihiro Nakadaira <yukihiro.nakadaira@gmail.com>
  *
- * If $WINICONV_LIBICONV_DLL environment variable was defined, win_iconv
- * loads the specified DLL dynamically and uses it.  If loading the DLL
- * or iconv_open() failed, falls back to internal conversion.
- * $WINICONV_LIBICONV_DLL is a comma separated list.  The first loadable
- * DLL is used.  The specified DLL should have iconv_open(),
- * iconv_close() and iconv() functions.  Or these functions can be
- * libiconv_open(), libiconv_close() and libiconv().
- *
  * Win32 API does not support strict encoding conversion for some
  * codepage.  And MLang function drop or replace invalid bytes and does
  * not return useful error status as iconv.  This implementation cannot
@@ -58,7 +50,7 @@ typedef unsigned char uchar;
 typedef unsigned short ushort;
 typedef unsigned int uint;
 
-typedef void* iconv_t;
+//typedef void* iconv_t;
 
 /*
 iconv_t iconv_open(const char *tocode, const char *fromcode);
