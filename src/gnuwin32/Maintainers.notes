@@ -6,14 +6,7 @@ achieved by overrides in the configure script.
 
 You will need a copy of sh.exe in /bin.  Then with the R sources in
 /R/R-2.6.0, I used in /TEMP/R (any other directory will do, except the
-sources).  For MinGW 4.2.1 you will need to set
-
-CC=gcc-sjlj
-F77=gfortran-sjlj
-CXX=g++-sjlj
-
-in the environment (or copy the executables to gcc.exe, gfortran.exe
-and g++.exe).
+sources).
 
 To test trio and iconv, set
 
