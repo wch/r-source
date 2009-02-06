@@ -275,9 +275,36 @@ Also:
 
 BDR 2008-01-06
 
+
 7) Changing the parser
 
 By default the parser in gram.y is only processed in maintainer mode, 
 which isn't supported in Windows builds.  Defining RUN_BISON will 
 cause src/main/Makefile.win to process it (and correct for the erroneous
 line number records caused by our renaming of the output).
+
+
+8) Making iconv.dll
+
+In the past this was done from the libiconv sources using VC++ 6, but
+as from version 1.12 that is no longer supported.  It does not build
+easily with MinGW (due to the overuse of libtool), but we used
+
+eetenv INSTALL cp
+setenv INSTALL_DATA cp
+sh configure --build=i386-pc-mingw32 --disable-nls
+cd libcharset; make
+cp include/localcharset.h ../lib
+cd ../lib
+make
+cp .libs/libiconv-2.dll iconv.dll
+
+There is a possible alternative. win_iconv, available via
+http://www.gtk.org/download-windows.html .  This does not support
+UCS-4LE (but is easily extended to do so) and is small (30Kb) since it
+uses Windows' codepages.  The latter are more comprehensive than is
+usually documented, but do exclude so rarer encodings.  (Some common
+aliases such as latin2 would need to be added, as well as a lost for
+iconvlist.)
+
+BDR 2009-02-07
