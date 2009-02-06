@@ -1,7 +1,7 @@
 #! @PERL@
 #-*- perl -*-
 
-# Copyright (C) 2000-2008 R Development Core Team
+# Copyright (C) 2000-2009 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -132,6 +132,9 @@ my $R_check_executables_exclusions =
     &R_getenv("_R_CHECK_EXECUTABLES_EXCLUSIONS_", "TRUE");
 my $R_check_Rd_parse =
     &R_getenv("_R_CHECK_RD_PARSE_", "TRUE");
+## This check needs codetools
+my $R_check_dot_internal =
+    &R_getenv("_R_CHECK_DOT_INTERNAL_", "FALSE");
 
 ## Maybe move basic configuration (and documentation) to
 ##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
@@ -178,6 +181,8 @@ $R_check_executables_exclusions =
     &config_val_to_logical($R_check_executables_exclusions);
 $R_check_Rd_parse =
     &config_val_to_logical($R_check_Rd_parse);
+$R_check_dot_internal =
+    &config_val_to_logical($R_check_dot_internal);
 ## <NOTE>
 ## This looks a bit strange, but tools:::.check_package_depends()
 ## currently gets the information about forcing suggests via an
@@ -1776,6 +1781,25 @@ sub check_pkg {
 	    }
 	    else {
 		$Rcmd .= "tools:::.check_T_and_F(dir = \"${pkgdir}\")\n";
+	    }
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=");
+	    @out = grep(!/^\>/, @out);
+	    if(scalar(@out) > 0) {
+		$log->note() unless $any;
+		$any++;
+		$log->print(join("\n", @out) . "\n");
+	    }
+	}
+	
+	## .Internal is intended for base packages
+	if((!$is_base_pkg) && $R_check_use_codetools && $R_check_dot_internal) {
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
+	    if($opt_install) {
+		$Rcmd .= "tools:::.check_dotInternal(package = \"${pkgname}\")\n";
+	    }
+	    else {
+		$Rcmd .= "tools:::.check_dotInternal(dir = \"${pkgdir}\")\n";
 	    }
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=");
