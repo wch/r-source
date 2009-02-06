@@ -17,7 +17,7 @@ test-Examples-Base:
 
 
 test-Examples-Recommended: test-Examples-Base
-	@$(ECHO) "tools::testInstalledPackages(scope='recomended', types='examples')" | $(R_EXE)
+	@$(ECHO) "tools::testInstalledPackages(scope='recommended', types='examples')" | $(R_EXE)
 ## </NOTE>
 
 mostlyclean: clean

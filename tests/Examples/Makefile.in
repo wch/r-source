@@ -34,12 +34,12 @@ test-Examples-Base: Makefile
 ## 'make check-all' is used for running test-Examples-Recommended in
 ## addition to 'make check'.
 test-Examples-Recommended: test-Examples-Base
-	@$(ECHO) "tools::testInstalledPackages(scope='recomended', types='examples')" | $(R_EXE)
+	@$(ECHO) "tools::testInstalledPackages(scope='recommended', types='examples')" | $(R_EXE)
 ## </NOTE>
 
 mostlyclean: clean
 clean:
-	-@rm -f *.R *.Rout *.Rd* *.ps *.tex *.dat* data foo* Makedeps
+	-@rm -f *.R *.Rout *.Rd* *.ps *.tex *.dat* data foo* ex*.gz Makedeps
 distclean: clean
 	-@rm -f *.R*prev .RData sink-examp.txt Makefile
 maintainer-clean: distclean
