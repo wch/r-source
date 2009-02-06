@@ -12,7 +12,7 @@ $(R_HOME)/library/base/R/Rprofile:  ../../library/profile/Common.R \
 	mkdir -p $(R_HOME)/library/base/R
 	@$(CAT)  $^ > $@
 
-fixbin:  cp2bin iconv
+fixbin:  cp2bin # iconv
 	@$(ECHO) done > fixbin
 
 iconv:

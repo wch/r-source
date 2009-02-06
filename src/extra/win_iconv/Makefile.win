@@ -1,0 +1,31 @@
+#-*- Makefile -*-
+
+include ../../gnuwin32/MkRules
+
+all: makeMakedeps install
+
+
+install: iconv.dll
+	@cp iconv.dll ../../../bin/iconv.dll
+
+CPPFLAGS=-I.../../include
+CFLAGS= $(OPTFLAGS)
+
+CSOURCES= win_iconv.c
+OBJS=$(CSOURCES:.c=.o)
+
+iconv.dll: $(OBJS)
+
+clean:
+	$(RM) *.o *~ *.d Makedeps
+distclean: clean
+	@$(RM) iconv.dll
+
+# Dependencies
+DEPS=$(CSOURCES:.c=.d)
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps

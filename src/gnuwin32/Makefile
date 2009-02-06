@@ -108,7 +108,7 @@ rlibs:
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../main RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS_M)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ./getline OPTFLAGS='$(OPTFLAGS)'
-	@for ex in graphapp pcre bzip2 zlib xdr trio tzone; do \
+	@for ex in graphapp pcre bzip2 zlib xdr trio tzone win_iconv; do \
 	  $(MAKE) --no-print-directory -C ../extra/$${ex} OPTFLAGS='$(OPTFLAGS)' -f Makefile.win || exit 1; \
 	done
 
@@ -222,7 +222,7 @@ pkgclean-%:
 	@(cd $(PKGDIR)/$*/src; rm -f *.d *.o *.dll *_res.rc Makedeps)
 	@rm -rf $(PKGDIR)/$*/chm
 
-EXTRA_DIRS = blas bzip2 graphapp intl pcre trio tzone xdr zlib
+EXTRA_DIRS = blas bzip2 graphapp intl pcre trio tzone xdr win_iconv zlib
 
 clean: cleanwin
 	@$(MAKE) -C ../library -f Makefile.win clean
