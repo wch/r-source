@@ -12,7 +12,8 @@
   Extract files from or list a zip archive.
 }
 \usage{
-unzip(zipfile, files = NULL, list = FALSE, exdir = ".")
+unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
+       junkpaths = FALSE, exdir = ".")
 }
 \arguments{
   \item{zipfile}{The pathname of the xip file: tilde expansion (see
@@ -23,6 +24,12 @@ unzip(zipfile, files = NULL, list = FALSE, exdir = ".")
   
   \item{list}{If \code{TRUE}, list the files and extract none.  The
     equivalent of \command{unzip -l}.}
+  
+  \item{overwrtie}{If \code{TRUE}, overwrite existing files, otherwise
+    ignore such files.  The equivalent of \command{unzip -o}.}
+  
+  \item{junkpaths}{If \code{TRUE}, use only the basename of the stored
+    filepath when extraxting.  The equivalent of \command{unzip -j}.}
   
   \item{exdir}{The directory to extract files to (the equivalent of
     \code{unzip -d}).  It will be created if necessary.}
@@ -36,6 +43,11 @@ unzip(zipfile, files = NULL, list = FALSE, exdir = ".")
   class \code{"\link{POSIXct}"}).
 
   Otherwise, a character vector of the filepaths extracted to, invisibly.
+}
+\source{
+  The C code uses \code{zlib} and is in particular based on the
+  contributed \samp{minizip} application in the \code{zlib} sources by
+  Gilles Vollant.
 }
 \seealso{
   \code{\link{zip.file.extract}}

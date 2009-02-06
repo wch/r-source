@@ -43,6 +43,11 @@ zip.file.extract(file, zipname = "R.zip",
   ignored, and the path to \code{file} is used only to determine the
   directory within which to find \code{zipname}.
 }
+\source{
+  The C code uses \code{zlib} and is in particular based on the
+  contributed \samp{minizip} application in the \code{zlib} sources by
+  Gilles Vollant.
+}
 \value{
   The name of the original or extracted file.  Success is indicated by
   returning a different name.
