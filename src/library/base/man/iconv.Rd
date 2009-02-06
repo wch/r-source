@@ -76,7 +76,8 @@ iconvlist()
   \code{\link{localeToCharset}}, \code{\link{file}}. 
 }
 \examples{\donttest{
-utils::head(iconvlist(), n = 50)
+## not all systems have iconvlist
+try(utils::head(iconvlist(), n = 50))
 
 \dontrun{
 ## convert from Latin-2 to UTF-8: two of the glibc iconv variants.
