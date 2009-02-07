@@ -67,7 +67,8 @@ NEW FEATURES
 	Windows' codepages and is not quite as comprehensive as
 	libiconv: it is however much smaller and easier to maintain.
 	The implementation here is 100% compatible: you can drop in
-	libiconv's iconv.dll as a replacment if you need it.
+	libiconv's iconv.dll as a replacment if you need it, from
+	http://www.stats.ox.ac.uk/pub/Rtools/iconv.dll
 
 
 INSTALLATIOM

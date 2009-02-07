@@ -297,14 +297,11 @@ cd libcharset; make
 cp include/localcharset.h ../lib
 cd ../lib
 make
-cp .libs/libiconv-2.dll iconv.dll
+gcc -shared  .libs/iconv.o .libs/localcharset.o .libs/relocatable.o \
+  .libs/iconv-exports.o -export-all-symbols -o iconv.dll
 
-There is a possible alternative. win_iconv, available via
-http://www.gtk.org/download-windows.html .  This does not support
-UCS-4LE (but is easily extended to do so) and is small (30Kb) since it
-uses Windows' codepages.  The latter are more comprehensive than is
-usually documented, but do exclude so rarer encodings.  (Some common
-aliases such as latin2 would need to be added, as well as a lost for
-iconvlist.)
+We now use a modified version of win-iconv, but the libiconv version
+can still be use by replacing bin/iconv.dll.
 
-BDR 2009-02-07
+
+BDR 2009-02-08
