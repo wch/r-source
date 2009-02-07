@@ -192,6 +192,16 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   }
 }
 \note{
+  If you see problems with postscript output, so remember that the
+  problem is much more likely to be in your viewer as in \R.  Try
+  another viewer if possible.  Symptoms for which the viewer has been at
+  fault are apparent grids on image plots (turn off graphics
+  anti-aliasing in your viewer if you) and missing or incorrect glyphs
+  in text (viewers silently doing font substitution).
+
+  Unfortunately the default viewers on most Linux and Mac OS X systems
+  have these problems, and no obvious way to turn off graphics anti-aliasing.
+  
   Acrobat Reader does not use the fonts specified but rather emulates
   them from multiple-master fonts.  This can be seen in imprecise
   centering of characters, for example the multiply and divide signs in
