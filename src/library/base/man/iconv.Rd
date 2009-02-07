@@ -33,7 +33,9 @@ iconvlist()
   The names of encodings and which ones are available (and indeed, if
   any are) is platform-dependent.  On all systems that support
   \code{iconv} you can use \code{""} for the encoding of the current
-  locale, as well as \code{"latin1"} and \code{"UTF-8"}.
+  locale, as well as \code{"latin1"} and \code{"UTF-8"}.  On most
+  systems (including those using \code{glibc} or \code{libinconv}, Mac
+  OS X and Windows) case is ignored when specifying an encoding.
 
 #ifdef unix
   On many platforms \code{iconvlist} provides an alphabetical list of

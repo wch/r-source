@@ -953,10 +953,10 @@ build you will also need
 
 @itemize
 
-@item
-Get @file{iconv.dll} from
-@uref{http://www.stats.ox.ac.uk/pub/Rtools/iconv.dll} and put it in
-@file{@var{R_HOME}/@/src/@/gnuwin32/@/unicode}.
+@c @item
+@c Get @file{iconv.dll} from
+@c @uref{http://www.stats.ox.ac.uk/pub/Rtools/iconv.dll} and put it in
+@c @file{@var{R_HOME}/@/src/@/gnuwin32/@/unicode}.
 
 @item
 The Tcl/Tk support files are in a zip file at
