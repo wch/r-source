@@ -1771,7 +1771,11 @@ substituteFunctionArgs <-
 		"Undefined subclass, \"%s\", of class \"%s\"; definition not updated",
                              what, def@className))
         else if(is.na(match(what, names(subDef@contains)))) {
-            subDef@contains[[class]] <- subs[[i]]
+            ## insert the new superclass to maintain order by distance
+            cntns <- subDef@contains
+            cntns[[class]] <- subs[[i]]
+            cntns <- cntns[sort.list(sapply(cntns, function(x)x@distance))]
+            subDef@contains <- cntns
             .cacheClass(what, subDef, FALSE, env)
         }
     }
