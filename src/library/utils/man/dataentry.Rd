@@ -1,6 +1,6 @@
 % File src/library/utils/man/dataentry.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dataentry}
@@ -34,15 +34,14 @@ de(\dots, Modes = list(), Names = NULL)
   a collection of variables (including a data frame) as described in the
   Notes section.
   
-  \code{data.entry} has side
-  effects, any changes made in the spreadsheet are reflected in the
-  variables.  The functions \code{de}, \code{de.ncols}, \code{de.setup}
-  and \code{de.restore} are designed to help achieve these side effects.
-  If the user passes in a matrix, \code{X} say, then the matrix is
-  broken into columns before \code{dataentry} is called. Then on return
-  the columns are collected and glued back together and the result
-  assigned to the variable \code{X}.  If you don't want this behaviour
-  use dataentry directly.
+  \code{data.entry} has side effects, any changes made in the
+  spreadsheet are reflected in the variables.  The functions \code{de},
+  \code{de.ncols}, \code{de.setup} and \code{de.restore} are designed to
+  help achieve these side effects. If the user passes in a matrix,
+  \code{X} say, then the matrix is broken into columns before
+  \code{dataentry} is called. Then on return the columns are collected
+  and glued back together and the result assigned to the variable
+  \code{X}.  If you don't want this behaviour use dataentry directly.
 
   The primitive function is \code{dataentry}. It takes a list of
   vectors of possibly different lengths and modes (the second argument)
@@ -174,6 +173,10 @@ de(\dots, Modes = list(), Names = NULL)
 #endif
 #ifdef windows
   50 characters (and by the window width).
+  
+  The intitial size of the data editor window is taken from the default
+  dimensions of a pager (see \code{\link{Rconsole}}), but adjusted
+  downwards to show a whole number of rows and columns.
 #endif
 }
 #ifdef unix
