@@ -906,8 +906,8 @@ Mincho or MS Gothic as the console font to ensure that single- and
 double-width characters are handled correctly.  The default graphics
 fonts for the @code{windows()} graphics device can handle most common
 Japanese characters, but more specialized fonts may need to be set.
-(See Q3.5 for how to set fonts: the console font can also be set from
-the `GUI preferences' meny item.)  The help for @code{windowsFonts} has
+(See Q5.2 for how to set fonts: the console font can also be set from
+the `GUI preferences' menu item.)  The help for @code{windowsFonts} has
 examples of selecting Japanese fonts for the @code{windows()} family of
 devices.
 
@@ -921,7 +921,7 @@ see its help page (which also applies to @code{pdf}).
 @node I don't see characters with accents at the R console, The dialog buttons are not translated, I would like to be able to use Japanese fonts, Languages and Internationalization
 @section I don't see characters with accents at the R console, for example in ?text.
 
-You need to specify a font in @file{Rconsole} (see Q3.5) that supports
+You need to specify a font in @file{Rconsole} (see Q5.2) that supports
 the encoding in use, in Western European languages Latin-1.  This used
 to be a problem in earlier versions of Windows, but now it is hard to
 find a font which does not.
