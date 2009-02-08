@@ -1374,26 +1374,108 @@
     res
 }
 
-## replacement for tools/pkg2tex.pl
-.pkg2tex <- function(pkgdir, outfile)
+## FIXME: encoding issues here
+## base packages do not have versioss and this is called on
+## DESCRIPTION.in
+.DESCRIPTION_to_latex <- function(descfile, outfile, version = "Unknown")
+{
+    desc <- read.dcf(descfile)[1, ]
+    if (is.character(outfile)) {
+        out <- file(outfile, "a")
+        on.exit(close(out))
+    }
+    cat("\\begin{description}", "\\raggedright{}", sep="\n", file=out)
+    fields <- names(desc)
+    fields <- fields[! fields %in% c("Bundle", "Package", "Packaged", "Built")]
+    for (f in fields) {
+        text <- desc[f]
+        ## munge 'text' appropriately (\\, {, }, "...")
+        ## not sure why just these: copied from Rd2dvi
+        text <- gsub('"([^"]*)"', "\\`\\`\\1''", text)
+        text <- gsub("\\\\", "\\textbackslash", text, fixed = TRUE)
+        text <- gsub("([{}])", "\\\\1", text)
+        text <- gsub("@VERSION@", version, text, fixed = TRUE)
+        Encoding(text) <- "unknown"
+        cat("\\item[", gsub("_", "\\_", f, fixed = TRUE),
+            "] \\AsIs{", text, "}\n", sep="", file=out)
+    }
+    cat("\\end{description}\n", file = out)
+}
+
+.Rdfiles2tex <-
+    function(files, outfile, encoding = "unknown", append = FALSE,
+             extraDirs=NULL)
+{
+    if(file_test("-d", files))
+        .pkg2tex(files, outfile, encoding = encoding, append = append,
+                 asChapter = FALSE, extraDirs = extraDirs)
+    else {
+        files <- strsplit(files, "[[:space:]]+")[[1]]
+        latexdir <- tempfile("ltx")
+        dir.create(latexdir)
+         message("Converting Rd files to LaTeX ...")
+        cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
+                     encoding, sep="")
+        outcon <- file(outfile, if(append) "at" else "wt")
+        on.exit(close(outcon))
+        for(f in files) {
+            cat("  ", basename(f), "\n", sep="")
+            out <-  file.path(latexdir, sub("\\.[Rr]d",".tex", basename(f)))
+            system(paste(cmd,"-o", out, f))
+            writeLines(readLines(out), outcon)
+        }
+    }
+}
+
+## replacement for tools/pkg2tex.pl, and more
+.pkg2tex <-
+    function(pkgdir, outfile, internals = FALSE, asChapter = TRUE,
+             encoding = "unknown", extraDirs = NULL, append = FALSE)
 {
     re <- function(x)
     {
         ## sort order for topics, a little tricky
         x[order(toupper(x), x)]
     }
+
     ## given an installed package with a latex dir, make a single file
     ## for use in the refman.
 
     options(warn=1)
-    if (missing(outfile)) outfile <- paste(basename(pkgdir), "-pkg.tex", sep="")
+    if (missing(outfile))
+        outfile <- paste(basename(pkgdir), "-pkg.tex", sep="")
 
+    ## First check for a latex dir.
+    ## If it does not exist, guess this is a source package.
     latexdir <- file.path(pkgdir, "latex")
-    if (!file_test("-d", latexdir))
-        stop("this package does not have a ", sQuote("latex"), " directory")
+    if (!file_test("-d", latexdir)) {
+        files <- Sys.glob(file.path(pkgdir, "*.[Rr]d"))
+        if (!length(files)) {
+            ## is this a source package?  That has man/*.Rd files.
+            files <- Sys.glob(file.path(pkgdir, "man", "*.[Rr]d"))
+            if (!length(files))
+                stop("this package does not have either a ", sQuote("latex"),
+                 " or a ", sQuote("man"), " directory")
+            if (is.null(extraDirs)) extraDirs <- .Platform$OS.type
+            for(e in extraDirs)
+                files <- c(files,
+                           Sys.glob(file.path(pkgdir, "man", e, "*.[Rr]d")))
+        }
+        latexdir <- tempfile("ltx")
+        dir.create(latexdir)
+        message("Converting Rd files to LaTeX ...")
+        cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
+                     encoding, sep="")
+        for(f in files) {
+            cat("  ", basename(f), "\n", sep="")
+            out <-  sub("\\.[Rr]d",".tex", basename(f))
+            system(paste(cmd,"-o", file.path(latexdir, out), f))
+        }
+    }
     ## they might be zipped up
     if (file.exists(f <- file.path(latexdir, "Rhelp.zip"))) {
         dir.create(newdir <- tempfile("latex"))
+        ## FIXME: use utils::unzip
         res <- system(paste("unzip -q", f, "-d", newdir))
         if (res) stop("unzipping latex files failed")
         latexdir <- newdir
@@ -1402,11 +1484,14 @@
     if (!length(files))
         stop("no validly-named files in the ", sQuote("latex"), " directory")
 
-    outcon <- file(outfile, "wt")
-    on.exit(close(outcon))
+    if(is.character(outfile)) {
+        outcon <- file(outfile, if(append) "at" else "wt")
+        on.exit(close(outcon))
+    } else outcon <- outfile
 
-    cat("\n\\chapter{The \\texttt{", basename(pkgdir), "} package}\n",
-        sep = "", file = outcon)
+    if(asChapter)
+        cat("\n\\chapter{The \\texttt{", basename(pkgdir), "} package}\n",
+            sep = "", file = outcon)
     topics <- rep.int("", length(files)); names(topics) <- files
     for (f in files) {
         lines <- readLines(f)
@@ -1416,7 +1501,8 @@
             next
         }
         this <- sub("\\\\HeaderA\\{\\s*([^}]*)\\}.*", "\\1", hd[1], perl = TRUE)
-        if(length(grep("\\\\keyword\\{\\s*internal\\s*\\}", lines, perl = TRUE))) next
+        if(!internals &&
+           grepl("\\\\keyword\\{\\s*internal\\s*\\}", lines, perl = TRUE)) next
         topics[f] <- this
     }
 
@@ -1425,7 +1511,8 @@
     topics <- if(length(summ)) c(topics[summ], re(topics[-summ])) else re(topics)
     for (f in names(topics)) writeLines(readLines(f), outcon)
 
-    cat("\\clearpage\n", file = outcon)
+    if(asChapter)
+        cat("\\clearpage\n", file = outcon)
 }
 
 ## replacement for tools/Rdnewer.pl
