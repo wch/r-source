@@ -25,7 +25,7 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   \item{list}{If \code{TRUE}, list the files and extract none.  The
     equivalent of \command{unzip -l}.}
   
-  \item{overwrtie}{If \code{TRUE}, overwrite existing files, otherwise
+  \item{overwrite}{If \code{TRUE}, overwrite existing files, otherwise
     ignore such files.  The equivalent of \command{unzip -o}.}
   
   \item{junkpaths}{If \code{TRUE}, use only the basename of the stored
