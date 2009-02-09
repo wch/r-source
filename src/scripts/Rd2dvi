@@ -9,7 +9,7 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi: ${R_VERSION} (r${version})
 
-Copyright (C) 2000-2008 The R Core Development Team.
+Copyright (C) 2000-2009 The R Core Development Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -17,7 +17,7 @@ usage="Usage: R CMD Rd2dvi [options] files
 
 Generate DVI (or PDF) output from the Rd sources specified by files, by
 either giving the paths to the files, or the path to a directory with
-the sources of a package.
+the sources of a package/bundle, or an installed package.
 
 Unless specified via option '--output', the basename of the output file
 equals the basename of argument 'files' if this specifies a package
@@ -42,6 +42,7 @@ Options:
       --title=NAME	use NAME as the title of the document
   -V, --verbose		report on what is done
       --no-index	don't index PDF output
+      --no-description	don't typrset the description of a package.
 
 The output papersize is set by the environment variable R_PAPERSIZE.
 The DVI previewer is set by the environment variable xdvi.
@@ -64,6 +65,7 @@ output=""
 verbose=false
 enc=unknown
 index=true
+description=true
 
 if test "${R_OSTYPE}" = "windows"; then
   echo=echo
@@ -129,9 +131,11 @@ while test -n "${1}"; do
       build_dir=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     -V|--verbose)
       verbose=${echo} ;;
-     --no-index)
+    --no-index)
       index=false ;;
-   --|*)
+    --no-description)
+      description=false ;;
+    --|*)
       break ;;
   esac
   shift
@@ -149,64 +153,6 @@ do_cleanup () {
   else
     echo "You may want to clean up by 'rm -rf ${build_dir}'"
   fi
-}
-
-Rdconv_dir_or_files_to_LaTeX () {
-  ## Convert Rd files in a dir or a list of Rd files to LaTeX, appending
-  ## the result to OUTFILE.
-  ## Usage:
-  ##   Rdconv_dir_or_files_to_LaTeX OUTFILE DIR
-  ##   Rdconv_dir_or_files_to_LaTeX OUTFILE FILES
-
-  ${verbose} $@
-
-  out="${1}"
-  shift
-
-  if test -d ${1}; then
-    if ${only_meta}; then
-      files=
-    else
-      files=`ls ${1}/*.[Rr]d`
-      if test -d ${1}/${OSdir}; then
-	files="${files} `ls ${1}/${OSdir}/*.[Rr]d`"
-      fi
-      files=`LC_ALL=C ${echo} ${files} | sort`
-    fi
-  else
-    files="${@}"
-  fi
-
-  ${only_meta} || echo "Converting Rd files to LaTeX ..."
-
-  for f in ${files}; do
-    ${echo} ${f}
-    ${R_CMD} Rdconv -t latex --encoding=${enc} ${f} >> ${out}
-  done
-
-}
-
-Rd_DESCRIPTION_to_LaTeX () {
-  ## Typeset the contents of a DESCRIPTION file in a LaTeX description
-  ## list.
-  ## Usage:
-  ##   Rd_DESCRIPTION_to_LaTeX FILE
-
-  fields=`${SED} '/^[  \t]/d; s/^\([^:]*\):.*$/\1/' $1`
-  ${echo} "\\begin{description}"
-  ${echo} "\\raggedright{}"
-  ## this throws warnings on Solaris sed as input is missing newline
-  for f in `${echo} "${fields}" | ${SED} '/Package/d; /Bundle/d;'`; do
-    text=`get_dcf_field ${f} ${1} | \
-      tr '\n' ' ' | \
-      ${SED} "s/\"\([^\"]*\)\"/\\\`\\\`\\1''/g
-		  s/\\\\\\\\/\\\\\\\\textbackslash /g
-		  s/{/\\\\\\\\{/g
-		  s/}/\\\\\\\\}/g" 2>/dev/null`
-    ff=`echo ${f} | ${SED} s/_/\\\\\\\\_/g`
-    ${echo} "\\item[${ff}] \\AsIs{${text}}"
-  done
-  ${echo} "\\end{description}"
 }
 
 is_bundle=no
@@ -227,7 +173,7 @@ if test -d "${1}"; then
       echo "Hmm ... looks like a package"
       package_name=`get_dcf_field Package "${1}/DESCRIPTION"`
       title=${title-"Package \`${package_name}'"}
-      dir=${1}/man
+      dir=${1}
     fi
     pkg_enc=`get_dcf_field Encoding "${1}/DESCRIPTION"`
     test -z "${output}" && output="`basename ${1}`.${out_ext}"
@@ -237,7 +183,7 @@ if test -d "${1}"; then
     echo "Hmm ... looks like a package from the R distribution"
     package_name=`get_dcf_field Package "${1}/DESCRIPTION.in"`
     title=${title-"Package \`${package_name}'"}
-    dir=${1}/man
+    dir=${1}
     test -z "${output}" && output="`basename ${1}`.${out_ext}"
     ## base package has things like %in% that sometimes cause trouble
     test ${package_name} == "base" && index=false
@@ -316,16 +262,17 @@ if test "${is_bundle}" = no; then
 \\par\\bigskip{\\large \\today}
 \\end{center}
 EOF
+  if ${description};  then
   if test -f ${1}/DESCRIPTION; then
-    Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION >> ${build_dir}/Rd2.tex
+    echo "tools:::.DESCRIPTION_to_latex(\"${1}/DESCRIPTION\" , \"${build_dir}/Rd2.tex\")" | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla
   fi
   if test "${is_base_package}" = yes; then
     R_version=unknown
     if test -f ${1}/../../../VERSION; then
       R_version=`cat ${1}/../../../VERSION`
     fi
-    Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION.in | \
-      ${SED} "s/@VERSION@/${R_version}/" >> ${build_dir}/Rd2.tex
+    echo "tools:::.DESCRIPTION_to_latex(\"${1}/DESCRIPTION.in\" , \"${build_dir}/Rd2.tex\", \"${R_version}\")" | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla
+  fi
   fi
 else
   cat >> ${build_dir}/Rd2.tex <<EOF
@@ -338,7 +285,11 @@ else
 \\end{center}
 \\par\\bigskip
 EOF
-  Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION >> ${build_dir}/Rd2.tex
+
+  if ${description}; then
+    echo "tools:::.DESCRIPTION_to_latex(\"${1}/DESCRIPTION\" , \"${build_dir}/Rd2.tex\")" | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla
+  fi 
+
   cat >> ${build_dir}/Rd2.tex <<EOF
 \\vfill\\vfill
 \\end{titlepage}
@@ -348,7 +299,10 @@ fi
 ## Rd2.tex part 2: body
 if test "${is_bundle}" = no; then
   ${only_meta} || ${echo} ${toc} >> ${build_dir}/Rd2.tex
-  Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${dir-${@}}
+  ## ${only_meta} || Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${dir-${@}}
+    ${only_meta} || echo "tools:::.Rdfiles2tex(\"${dir-${@}}\", \"${build_dir}/Rd2.tex\", \
+      encoding=\"${enc}\", append = TRUE, extraDirs = \"${OSdir}\")" | \
+      LC_ALL=C ${R_HOME}/bin/R --slave --vanilla
 else
   cat >> ${build_dir}/Rd2.tex <<EOF
 \\setcounter{secnumdepth}{-1}
@@ -360,11 +314,14 @@ EOF
   for p in ${bundle_pkgs}; do
     ${echo} "Bundle package: '${p}'"
     ${echo} "\\chapter{Package \`${p}'}" >> ${build_dir}/Rd2.tex
-    if test -f ${1}/${p}/DESCRIPTION.in; then
-      Rd_DESCRIPTION_to_LaTeX ${1}/${p}/DESCRIPTION.in \
-	>> ${build_dir}/Rd2.tex
+    if ${description}; then
+      if test -f ${1}/${p}/DESCRIPTION.in; then
+        echo "tools:::.DESCRIPTION_to_latex(\"${1}/${p}/DESCRIPTION.in\" , \"${build_dir}/Rd2.tex\")" | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla
+      fi
     fi
-    Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${1}/${p}/man
+    ${only_meta} || echo "tools:::.pkg2tex(\"${1}/${p}\", \"${build_dir}/Rd2.tex\", \
+      encoding=\"${enc}\", append = TRUE, asChapter= FALSE)" | \
+      LC_ALL=C ${R_HOME}/bin/R --slave --vanilla
     ${echo} "\\clearpage{}" >> ${build_dir}/Rd2.tex
   done
   ${echo} "\\cleardoublepage{}" >> ${build_dir}/Rd2.tex

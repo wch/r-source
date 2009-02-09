@@ -922,12 +922,20 @@ foreach my $pkg (@ARGV) {
 		      $is_base_pkg);
 	    $log->setstars("*");
 	}
+	## We could use the latex-ed pages, but we need the DESCRIPTION.in
+	check_pkg_manual($pkgdir, basename($pkgdir), $log);
     }
     else {
 	chdir($startdir);
 	check_pkg($pkgdir, $pkgoutdir, $startdir, $library,
 		  $is_bundle, $description, $log, $is_base_pkg, 
 		  $thispkg_subdirs);
+	my $instdir = &file_path($library, $pkgname);
+	if (-d &file_path($instdir, "latex")) {
+	    check_pkg_manual($instdir, $description->{"Package"}, $log);
+	} else {
+	    check_pkg_manual($pkgdir, $description->{"Package"}, $log);
+	}
     }
 
     if($log->{"warnings"}) {
@@ -2460,225 +2468,44 @@ sub check_pkg {
 
 	$log->result("OK") unless($any);
     }
+}
 
+
+## NB Bundles should have a bundle manual, not one for each package,
+## so this is no longer part of check_pkg.
+sub check_pkg_manual {
+    my ($pkgdir, $pkgname, $log) = @_;
     ## Run LaTeX on the manual.
-
-    if($opt_latex) {
-        my $latex_dir = &file_path($library, $pkgname, "latex");
-	if(-d $latex_dir) {
-	    $ENV{'TEXINPUTS'} =
-	      env_path(&file_path($R::Vars::R_SHARE_DIR, "texmf"),
-		       $ENV{'TEXINPUTS'});
-            my $is_zipped = 0;
-            # latex files might have been zipped
-            if(-f &file_path($latex_dir, "Rhelp.zip")) {
-                $is_zipped = 1;
-		my $UNZIP = &R_getenv("R_UNZIPCMD", "unzip");
-		my $latex_file = &file_path($latex_dir, "Rhelp.zip");
-		$cmd = join(" ",
-			    ("$UNZIP", "-q",
-			     &shell_quote_file_path($latex_file),
-			     "-d",
-			     &shell_quote_file_path($latex_dir)));
-                if(R_system($cmd)) {
-		    $log->error();
-		    $log->print("Unzipping latex files failed.\n");
-		    exit(1);
-                }
-            }
-	    $log->creating("${pkgname}-manual.tex");
-	    my @tex_files = &list_files_with_exts($latex_dir, "tex");
-	    my %encodings;
-	    foreach my $file (@tex_files) {
-		open(FILE, "< $file")
-		  or die("Error: cannot open file '$file' for reading\n");
-		while(<FILE>) {
-		    if (/^\\inputencoding/) {
-			$enc = $_;
-			chomp $enc;
-			$enc =~ s/^\\inputencoding{(.*)}/\1/;
-			$encodings{$enc} = $enc;
-		    }
-		}
-		close(FILE);
-	    }
-	    my $encs = "";
-	    if (scalar(%encodings)) {
-		$encs = "\\usepackage[" . join(",", values %encodings) .
-		    "]{inputenc}\n";
-	    }
-	    open(MANUAL, "> ${pkgname}-manual.tex")
-	      or die("Error: cannot open file '${pkgname}-manual.tex'" .
-		     "for writing\n");
-	    print MANUAL "\\documentclass\{book\}\n";
-	    ## Use the same Rd.sty defaults as Rd2dvi.
-	    if($HAVE_PDFLATEX) {
-		print MANUAL "\\usepackage[times,hyper]\{Rd\}\n";
-	    } else {
-		print MANUAL "\\usepackage[ae]\{Rd\}\n";
-	    }
-	    if ($encs =~ /utf8/ && !defined($ENV{"_R_NO_CYRILLIC_TEX_"})) {
-		print MANUAL $encs . "\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}\n";
-	    } else {
-		print MANUAL $encs;
-	    }
-	    print MANUAL "\\begin\{document\}\n";
-	    foreach my $file (@tex_files) {
-		open(FILE, "< $file")
-		  or die("Error: cannot open file '$file' for reading\n");
-		while(<FILE>) {
-		    print MANUAL $_;
-		}
-		close(FILE);
-	    }
-	    print MANUAL "\\end\{document\}\n";
-	    close(MANUAL);
-            if($is_zipped) {
-		unlink(&list_files_with_exts($latex_dir, "tex"));
-            }
-	    $log->result("OK");
-	    if($HAVE_LATEX) {
-		my ($cmd, $fmt);
-		if($HAVE_PDFLATEX) {
-		    $cmd = "${R::Vars::PDFLATEX}";
-		    $cmd_name = "pdflatex";
-		    $fmt = "pdf";
-		} else {
-		    $cmd = "${R::Vars::LATEX}";
-		    $cmd_name = "latex";
-		    $fmt = "dvi";
-		}
-		$log->checking("${pkgname}-manual.tex using ${cmd_name}");
-		## <NOTE>
-		## We use \nonstopmode{} so that LaTeX really gives an
-	        ## error (and returns) if something is wrong, and all
-	        ## info goes to ${pkgname}-manual.log.
-		## We also suppress all output from running LaTeX.
-                ## We could also write stdout to a tempfile and replay
-                ## this in case of problems.  But does this really help?
-		if($WINDOWS) {
-		    ## check if we have MiKTeX and call latex accordingly
-		    ## (can't do this in R::Vars::LATEX as we need R::Utils.)
-		    my $Rout = R_tempfile("Rlatex");
-		    my $cmd2 = "$cmd --version > ${Rout}";
-		    R_system($cmd2);
-		    my $is_miktex = 0;
-		    open ROUT, "< $Rout";
-		    while (<ROUT>) {
-			chomp;
-			$is_miktex = 1 if /^MiKTeX/;
-		    }
-		    close ROUT;
-		    unlink($Rout);
-		    $out =~ s/\w//;
-		    if($is_miktex) {
-			my $R_HOME = $ENV{"R_HOME"};
-			$cmd .= " --include-directory=$R_HOME/share/texmf";
-		    }
-		}
-		$cmd .= " '\\nonstopmode{}\\input{${pkgname}-manual.tex}'";
-		$cmd .= " >/dev/null 2>&1";
-		## </NOTE>
-		if(R_system($cmd)) {
-		    $log->error();
-		    $log->print("LaTeX errors when creating \U$fmt\E version.\n");
-		    $log->print("This typically indicates Rd problems.\n");
-		    ## If possible, indicate the problems found.
-		    if(-f "${pkgname}-manual.log") {
-			my $Rcmd = "writeLines(tools:::.get_LaTeX_errors_from_log_file(\"${pkgname}-manual.log\"))";
-			my @out = R_runR($Rcmd, "${R_opts} --quiet",
-					 "R_DEFAULT_PACKAGES=NULL");
-			@out = grep(!/^\>/, @out);
-			if(scalar(@out) > 0) {
-			    $log->print("LaTeX errors found:\n");
-			    $log->print(join("\n", @out) . "\n");
-			}
-		    }
-		    exit(1);
-		}
-		$log->result("OK");
-	    }
-	}
-	else { # no latex dir
-	    if($HAVE_LATEX) {
-		## index will be skipped on base package: see Rd2dvi
-		my $Rd2dvi_opts = "--batch --no-preview";
-		my $fmt;
-		if($HAVE_PDFLATEX) {
-		    $Rd2dvi_opts = $Rd2dvi_opts . " --pdf";
-		    $fmt = "pdf";
-		} else {
-		    $fmt = "dvi";
-		}
-		$log->checking("\U$fmt\E version of manual");
-		my $cmd;
-		my $build_dir = R_tempfile("Rd2dvi");
-		if($WINDOWS) {
-		    $cmd = join(" ",
-				("Rcmd.exe Rd2dvi $Rd2dvi_opts",
-				 "--build-dir=${build_dir} --no-clean",
-				 "-o ${pkgname}-manual.${fmt} >/dev/null 2>&1",
-				 "$pkgdir"));
-		} else {
-		    $cmd = join(" ",
-				(&shell_quote_file_path("${R::Vars::R_EXE}"),
-				 "CMD Rd2dvi $Rd2dvi_opts",
-				 "--build-dir=${build_dir} --no-clean",
-				 "-o ${pkgname}-manual.${fmt} >/dev/null 2>&1",
-				 "$pkgdir"));
-		}
-		if(R_system($cmd)) {
-		    $log->error();
-		    $log->print("LaTeX errors when creating \U$fmt\E version.\n");
-		    $log->print("This typically indicates Rd problems.\n");
-		    ## If possible, indicate the problems found.
-		    my $latex_log = &file_path($build_dir, "Rd2.log");
-		    ## Note that Rd2dvi works on 'Rd2.tex'.
-		    if(-f $latex_log) {
-			my $Rcmd = "writeLines(tools:::.get_LaTeX_errors_from_log_file(\"${latex_log}\"))";
-			my @out = R_runR($Rcmd, "${R_opts} --quiet",
-					 "R_DEFAULT_PACKAGES=NULL");
-			@out = grep(!/^\>/, @out);
-			if(scalar(@out) > 0) {
-			    $log->print("LaTeX errors found:\n");
-			    $log->print(join("\n", @out) . "\n");
-			}
-		    }
-		    rmtree($build_dir);			
-		    exit(1);
-		}
-		rmtree($build_dir);
-		$log->result("OK");
-	    }
-	}
-    }
-
-    ## Run Rd2dvi on the DESCRIPTION.
-
-    ## Note that currently (2008-02-14) passing this and the above test
-    ## still does not ensure that R CMD Rd2dvi can produce the package
-    ## reference manual, as the above does not use makeindex.
-    
-    if($opt_latex && $ENV{"_R_CHECK_RD2DVI_DESCRIPTION_"}) {
-	my $Rd2dvi_opts = "--batch --no-preview --no-clean --only-meta";
-	my $ext;
+    if($opt_latex && $HAVE_LATEX) {
+	$topdir = $pkgdir;
+	my $Rd2dvi_opts = "--batch --no-preview";
+	my $fmt;
 	if($HAVE_PDFLATEX) {
 	    $Rd2dvi_opts = $Rd2dvi_opts . " --pdf";
-	    $ext = "pdf";
+	    $fmt = "pdf";
 	} else {
-	    $ext = "dvi";
+	    $fmt = "dvi";
 	}
+	$log->checking("\U$fmt\E version of manual");
+	my $cmd;
 	my $build_dir = R_tempfile("Rd2dvi");
-	$log->checking("\U$ext\E version of DESCRIPTION");	
-	my $cmd = join(" ",
-		       (&shell_quote_file_path("${R::Vars::R_EXE}"),
-			"CMD Rd2dvi $Rd2dvi_opts",
-			"--build-dir=${build_dir}",
-			"-o ${pkgname}-header.${ext} >/dev/null 2>&1",
-			"$pkgdir"));
-	if(R_system($cmd)) {
-	    $log->warning();
-	    $log->print("Problems when creating \U$ext\E version of DESCRIPTION.\n");
+	if($WINDOWS) {
+	    $cmd = "Rcmd.exe";
+	} else {
+	    $cmd = &shell_quote_file_path("${R::Vars::R_EXE}");
+	}
+	$cmd = join(" ",
+		    ($cmd, "CMD Rd2dvi $Rd2dvi_opts",
+		     "--build-dir=${build_dir} --no-clean",
+		     "-o ${pkgname}-manual.${fmt} >/dev/null 2>&1",
+		     "$topdir"));
+	my $res = R_system($cmd);
+	my $latex_log = &file_path($build_dir, "Rd2.log");
+	if(-f $latex_log) {copy($latex_log, "${pkgname}-manual.log");}
+	if($res) {
+	    $log->error();
+	    $log->print("LaTeX errors when creating \U$fmt\E version.\n");
+	    $log->print("This typically indicates Rd problems.\n");
 	    ## If possible, indicate the problems found.
 	    my $latex_log = &file_path($build_dir, "Rd2.log");
 	    ## Note that Rd2dvi works on 'Rd2.tex'.
@@ -2692,14 +2519,14 @@ sub check_pkg {
 		    $log->print(join("\n", @out) . "\n");
 		}
 	    }
-	}
-	else {
-	    $log->result("OK");
+	    rmtree($build_dir);			
+	    exit(1);
 	}
 	rmtree($build_dir);
+	$log->result("OK");
     }
-
 }
+
 
 
 sub usage {

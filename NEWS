@@ -234,6 +234,8 @@ UTILITIES
     o	R CMD BATCH has a new option --no-timing to suppress printing
 	out the session timing.
 
+    o	R CMD Rd2dvi can now work on an installed package.
+
 
 Rd CONVERSION
 
