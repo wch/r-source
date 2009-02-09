@@ -476,6 +476,10 @@ BUG FIXES
     o	formatC(mode = "character") was documented to work, but
 	did not. (PR#13474)
 
+    o	besselI(x,.., expon.scaled=TRUE) now gives accurate results for
+    	x < 1e5 whereas it previous underflowed for x >~= 1500.
+	Further, besselJ(x,..) also computes up to 1e5 (instead of 1e4).
+
 
 
 		CHANGES IN R VERSION 2.8.1
