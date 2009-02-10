@@ -168,6 +168,10 @@ NEW FEATURES
     o	New function sample.int() to provide documented access to the
 	internal part of sample() (sampling from 1:n).
 
+    o   New version of withVisible() for better handling of cases like
+        withVisible(eval.parent(....)).
+
+
 
 DEPRECATED & DEFUNCT
 

@@ -14,8 +14,4 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-withVisible <- function(x) {
-    x <- substitute(x)
-    v <- .Internal(eval.with.vis(x, parent.frame(), baseenv()))
-    v
-}
+withVisible <- function(x) .Internal(withVisible(x))
