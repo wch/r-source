@@ -2503,6 +2503,8 @@ sub check_pkg_manual {
 	my $latex_log = &file_path($build_dir, "Rd2.log");
 	if(-f $latex_log) {copy($latex_log, "${pkgname}-manual.log");}
 	if($res) {
+	    my $latex_file = &file_path($build_dir, "Rd2.tex");
+	    if(-f $latex_file) {copy($latex_file, "${pkgname}-manual.tex");}
 	    $log->error();
 	    $log->print("LaTeX errors when creating \U$fmt\E version.\n");
 	    $log->print("This typically indicates Rd problems.\n");

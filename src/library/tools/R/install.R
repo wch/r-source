@@ -1374,7 +1374,7 @@
     res
 }
 
-## FIXME: encoding issues here
+## FIXME: possible encoding issues here
 ## base packages do not have versioss and this is called on
 ## DESCRIPTION.in
 .DESCRIPTION_to_latex <- function(descfile, outfile, version = "Unknown")
@@ -1383,20 +1383,20 @@
     if (is.character(outfile)) {
         out <- file(outfile, "a")
         on.exit(close(out))
-    }
+    } else out <- outfile
     cat("\\begin{description}", "\\raggedright{}", sep="\n", file=out)
     fields <- names(desc)
     fields <- fields[! fields %in% c("Bundle", "Package", "Packaged", "Built")]
     for (f in fields) {
         text <- desc[f]
         ## munge 'text' appropriately (\\, {, }, "...")
-        ## not sure why just these: copied from Rd2dvi
+        ## not sure why just these: copied from Rd2dvi, then added to.
         text <- gsub('"([^"]*)"', "\\`\\`\\1''", text)
-        text <- gsub("\\\\", "\\textbackslash", text, fixed = TRUE)
-        text <- gsub("([{}])", "\\\\1", text)
+        text <- gsub("\\", "\\textbackslash{}", text, fixed = TRUE)
+        text <- gsub("([{}$#_])", "\\\\\\1", text)
         text <- gsub("@VERSION@", version, text, fixed = TRUE)
         Encoding(text) <- "unknown"
-        cat("\\item[", gsub("_", "\\_", f, fixed = TRUE),
+        cat("\\item[", gsub("([_#])", "\\\\\\1", f),
             "] \\AsIs{", text, "}\n", sep="", file=out)
     }
     cat("\\end{description}\n", file = out)
