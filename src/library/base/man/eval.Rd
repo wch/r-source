@@ -8,21 +8,17 @@
 \alias{evalq}
 \alias{eval.parent}
 \alias{local}
-\alias{eval.with.vis}
 \title{Evaluate an (Unevaluated) Expression}
 \description{
   Evaluate an \R expression in a specified environment.
 }
 \usage{
 eval(expr, envir = parent.frame(),
-     enclos = if(is.list(envir) || is.pairlist(envir))
-         parent.frame() else baseenv())
+           enclos = if(is.list(envir) || is.pairlist(envir))
+                       parent.frame() else baseenv())
 evalq(expr, envir, enclos)
 eval.parent(expr, n = 1)
 local(expr, envir = new.env())
-eval.with.vis(expr, envir = parent.frame(),
-             enclos = if(is.list(envir) || is.pairlist(envir))
-                 parent.frame() else baseenv())
 }
 \arguments{
   \item{expr}{an object to be evaluated.  See \sQuote{Details}.}
@@ -74,12 +70,6 @@ eval.with.vis(expr, envir = parent.frame(),
 \value{
   The result of evaluating the object: for an expression vector this it
   the result of evaluating the last elements.
-  
-  \code{eval.with.vis} differs only from \code{eval} in the return
-  value which is a named list of two elements, \code{value}, the result,
-  and \code{visible}, a logical vector of length one indicating if the
-  \code{\link{invisible}} property was \strong{not} set.  It is
-  principally a helper for \code{\link{source}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -168,9 +168,6 @@ NEW FEATURES
     o	New function sample.int() to provide documented access to the
 	internal part of sample() (sampling from 1:n).
 
-    o	eval.with.vis() is now a documented function rather than
-	internal to source().
-
 
 DEPRECATED & DEFUNCT
 

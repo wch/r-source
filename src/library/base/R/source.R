@@ -14,12 +14,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-eval.with.vis <-
-    function (expr, envir = parent.frame(),
-              enclos = if (is.list(envir) || is.pairlist(envir))
-              parent.frame() else baseenv())
-    .Internal(eval.with.vis(expr, envir, enclos))
-
 source <-
 function(file, local = FALSE, echo = verbose, print.eval = echo,
 	 verbose = getOption("verbose"),
@@ -29,6 +23,15 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
          continue.echo = getOption("continue"),
          skip.echo = 0, keep.source = getOption("keep.source"))
 {
+    ## eval.eiht.vis is retained for historical reasons, including
+    ## not changing tracebacks.
+    ## Use withVisible(eval(...)) for less critical applications.
+    eval.with.vis <-
+	function (expr, envir = parent.frame(),
+		  enclos = if (is.list(envir) || is.pairlist(envir))
+		  parent.frame() else baseenv())
+	.Internal(eval.with.vis(expr, envir, enclos))
+
     envir <- if (local) parent.frame() else .GlobalEnv
     have_encoding <- !missing(encoding) && encoding != "unknown"
     if (!missing(echo)) {
