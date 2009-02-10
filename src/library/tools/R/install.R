@@ -1395,9 +1395,13 @@
         text <- gsub("\\", "\\textbackslash{}", text, fixed = TRUE)
         text <- gsub("([{}$#_])", "\\\\\\1", text)
         text <- gsub("@VERSION@", version, text, fixed = TRUE)
+        ## test can have paras, and digest/DESCRIPTION does.
+        ## \AsIs is per-para.
+        text <- strsplit(text, "\n\n")[[1]]
         Encoding(text) <- "unknown"
+        wrap <- paste("\\AsIs{", text, "}", sep = "")
         cat("\\item[", gsub("([_#])", "\\\\\\1", f),
-            "] \\AsIs{", text, "}\n", sep="", file=out)
+            "]", paste(wrap, collapse = "\n\n"),  "\n", sep = "", file=out)
     }
     cat("\\end{description}\n", file = out)
 }
