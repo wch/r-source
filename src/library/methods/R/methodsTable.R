@@ -504,7 +504,7 @@
   candidates <- methods[which]
   note <- character()
   ## choose based on total generational distance
-  which2 <- .leastMethodDistance(methods[which],supersList, classDefs, fromGroup)
+  which2 <- .leastMethodDistance(methods[which],supersList, classDefs, fromGroup[which])
   if(length(which2) < length(which)) {
     note <- c(note, gettextf("Selecting %d methods of min. distance", which2))
     which <- which2
@@ -1118,6 +1118,8 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE, g
       }
     }
     sigs <-  findMethodSignatures(methods = mdefs)
+    if(length(sigs) == 0)
+      return(new("MethodSelectionReport", generic = fname))
     ## possible selection of which args to include with inheritance
     if(fname %in% c("coerce", "coerce<-"))
       ok <- match(colnames(sigs), "from", 0) > 0
