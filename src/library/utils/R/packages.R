@@ -801,14 +801,15 @@ compareVersion <- function(a, b)
     list(canget, miss)
 }
 
-.make_dependency_list <- function(pkgs, available)
+.make_dependency_list <-
+function(pkgs, available, dependencies = c("Depends", "Imports"))
 {
     ## given a character vector of packages,
     ## return a named list of character vectors of their dependencies
     if(!length(pkgs)) return(NULL)
     if(is.null(available))
         stop(gettextf("'%s' must be supplied", available), domain = NA)
-    info <- available[pkgs, c("Depends", "Imports"), drop = FALSE]
+    info <- available[pkgs, dependencies, drop = FALSE]
     ## we always want a list here, but apply can simplify to a matrix.
     ## x <- apply(info, 1L, .clean_up_dependencies)
     ## if(length(pkgs) == 1) {x <- list(as.vector(x)); names(x) <- pkgs}
