@@ -3412,10 +3412,9 @@ function(package, lib.loc = NULL)
                                        "Meta", "package.rds"))
             pkgs1 <- sapply(desc$Suggests, "[[", "name")
             pkgs2 <- sapply(desc$Enhances, "[[", "name")
-            ## add tcltk for now, as many packages require() but not
-            ## Suggests it
-            for(pkg in unique(c(pkgs1, pkgs2, "tcltk")))
+            for(pkg in unique(c(pkgs1, pkgs2)))
                 ## tcltk warns if no DISPLAY variable
+		##, errors if not compiled in
                 suppressWarnings(suppressMessages(try(require(pkg,
                                                               character.only = TRUE,
                                                               quietly=TRUE),
