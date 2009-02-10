@@ -46,8 +46,6 @@ GetOptions (@knownoptions) || usage();
 $OSdir ="unix";
 $OSdir = $opt_os if $opt_os;
 
-$AQUAdir = "aqua" if($ENV{"R_USE_AQUA_SUBDIRS"} eq "yes");
-
 $WINDOWS = ($OSdir eq "windows");
 
 $dir_mod = 0755;#- Permission ('mode') of newly created directories.

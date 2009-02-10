@@ -1561,9 +1561,6 @@
     files <- Sys.glob(file.path(mandir, "*.[Rr]d"))
     if(file_test("-d", f <- file.path(mandir, OS)))
         files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
-    if(Sys.getenv("R_USE_AQUA_SUBDIRS") == "yes" &&
-       file_test("-d", f <- file.path(mandir, "aqua")))
-        files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
     ## Should only process files starting with [A-Za-z0-9] and with
     ## suffix .Rd or .rd, according to 'Writing R Extensions'.
     OK <- grep("^[A-Za-z0-9]", basename(files))
@@ -1696,10 +1693,6 @@
         files <- Sys.glob(file.path(mandir, "*.[Rr]d"))
         if(file_test("-d", f <- file.path(mandir, OS)))
             files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
-        if(Sys.getenv("R_USE_AQUA_SUBDIRS") == "yes" &&
-           file_test("-d", f <- file.path(mandir, "aqua"))) {
-            files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
-        }
         ## Should only process files starting with [A-Za-z0-9] and with
         ## suffix .Rd or .rd, according to 'Writing R Extensions'.
         OK <- grep("^[A-Za-z0-9]", basename(files))
@@ -1888,10 +1881,6 @@
     files <- Sys.glob(file.path(mandir, "*.[Rr]d"))
     if(file_test("-d", f <- file.path(mandir, OS)))
         files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
-    if(Sys.getenv("R_USE_AQUA_SUBDIRS") == "yes" &&
-       file_test("-d", f <- file.path(mandir, "aqua"))) {
-        files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
-    }
     ## Should only process files starting with [A-Za-z0-9] and with
     ## suffix .Rd or .rd, according to 'Writing R Extensions'.
     OK <- grep("^[A-Za-z0-9]", basename(files))

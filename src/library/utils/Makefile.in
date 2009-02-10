@@ -20,7 +20,7 @@ R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 RSRC0 = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
 RSRC = $(RSRC0) @BUILD_AQUA_TRUE@ `LC_COLLATE=C ls $(srcdir)/R/aqua/*.R`
-RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd @BUILD_AQUA_TRUE@ $(srcdir)/man/aqua/*.Rd
+RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd
 NSFILES = $(srcdir)/NAMESPACE @BUILD_AQUA_TRUE@ $(srcdir)/NAMESPACE.aqua
 INSTDIRS = Sweave misc
 
