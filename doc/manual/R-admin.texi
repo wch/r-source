@@ -4333,7 +4333,7 @@ become inactive if you return to it: to work around this you can open
 a link in a new tab or window.
 
 @c https://stat.ethz.ch/pipermail/r-help/2008-July/169521.html
-There is a known issue with Firefox 3.0.x (at least for x <= 5; we are
+There is a known issue with Firefox 3.0.x (at least for x <= 6; we are
 told that it will be fixed in 3.0.7).  The links in the results page may
 point to the wrong directory level.  This is a bug in the way Firefox is
 interpreting relative URLs, and can be circumvented by opening the HTML
@@ -4359,9 +4359,9 @@ for Mozilla-based browsers.  In particular, Sun's Java Run-time
 Environment @code{j2re}@tie{}1.4.2_02 to _05 do not work under
 @cputype{ix86} Linux.
 
-There is (at last) a Sun Java plugin for 64-bit browsers on
-@cputype{x86_64} Linux: but 32-bit browsers are often used on that
-platform.
+There is a Sun Java plugin (as of version @code{1.6.0_u12} for 64-bit
+browsers on @cputype{x86_64} Linux: but 32-bit browsers are often used
+on that platform.
 
 Marc Schwartz reports that the `OpenJDK' (formerly called `IcedTea') JVM
 that ships with Fedora 8, 9 and 10 does not work with the search applet.

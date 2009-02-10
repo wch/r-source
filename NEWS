@@ -233,6 +233,9 @@ UTILITIES
 
     o	R CMD Rd2dvi can now work on an installed package.
 
+    o	R CMD check no longer loads pacakge 'tcltk' when checking for
+	code problems, so more problems may be reported.
+
 
 Rd CONVERSION
 
