@@ -1479,9 +1479,9 @@
     ## they might be zipped up
     if (file.exists(f <- file.path(latexdir, "Rhelp.zip"))) {
         dir.create(newdir <- tempfile("latex"))
-        ## FIXME: use utils::unzip
-        res <- system(paste("unzip -q", f, "-d", newdir))
-        if (res) stop("unzipping latex files failed")
+        unzip(f, exdir = newdir)
+        ## res <- system(paste("unzip -q", f, "-d", newdir))
+        ## if (res) stop("unzipping latex files failed")
         latexdir <- newdir
     }
     files <- dir(latexdir, pattern = "[[:alnum:]]+\\.tex$", full.names = TRUE)
