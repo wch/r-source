@@ -2495,7 +2495,7 @@ sub check_pkg_manual {
 		$cmd0 = "Rcmd.exe";
 	    } else {
 		$cmd0 = &shell_quote_file_path("${R::Vars::R_EXE}");
-		$cmd0 = "$cmd0 CHD";
+		$cmd0 = "$cmd0 CMD";
 	    }
 	    $cmd = join(" ",
 			($cmd0, "Rd2dvi $Rd2dvi_opts",
