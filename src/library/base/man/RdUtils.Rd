@@ -32,9 +32,8 @@
 }
 \details{
   \code{Rdconv} converts Rd format to other formats.  Currently,
-  plain text, HTML, LaTeX, S version 3 (Sd), and S version 4 (.sgml)
-  formats are supported.  It can also extract the examples for
-  run-time testing.
+  plain text, HTML and LaTeX formats are supported.  It can also extract
+  the examples for run-time testing.
 
   \code{Rd2dvi} and \code{Rd2txt} are user-level programs
   for producing DVI/PDF output or pretty text output from Rd sources.
@@ -52,16 +51,9 @@
   \code{executive}.)
 
   \code{Sd2Rd} converts S (version 3 or 4) documentation formats to Rd
-  format.
+  format: it is no longer much used and the results may need hand-tuning.
 
-  Use
-  \code{R CMD foo --help}
-  to obtain usage information on utility \code{foo}.
-}
-\note{
-  Conversion to S version 3/4 formats is rough: there are some
-  \file{.Rd} constructs for which there is no natural analogue.
-  They are intended as a starting point for hand-tuning.
+  Use \code{R CMD foo --help} to obtain usage information on utility \code{foo}.
 }
 \seealso{
   The chapter \dQuote{Processing Rd format} in the \dQuote{Writing \R
