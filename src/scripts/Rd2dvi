@@ -43,6 +43,7 @@ Options:
   -V, --verbose		report on what is done
       --no-index	don't index PDF output
       --no-description	don't typeset the description of a package
+      --internals	typeset 'internal' documentatiom (usually skipped)
 
 The output papersize is set by the environment variable R_PAPERSIZE.
 The DVI previewer is set by the environment variable xdvi.
@@ -66,6 +67,7 @@ verbose=false
 enc=unknown
 index=true
 description=true
+internals=no
 
 if test "${R_OSTYPE}" = "windows"; then
   echo=echo
@@ -135,6 +137,8 @@ while test -n "${1}"; do
       index=false ;;
     --no-description)
       description=false ;;
+    --internals)
+      internals="yes" ;;
     --|*)
       break ;;
   esac
@@ -213,7 +217,7 @@ fi
 
 
 ## substitution went wrong under ash
-title1="\\\\R{} documentation}} \\\\par\\\\bigskip{{''\\Large of ${subj}"
+title1="\\\\R{} documentation}} \\\\par\\\\bigskip{{''\\\\Large of ${subj}"
 title=${title-$title1}
 
 if test "${enc}"="unknown"; then
@@ -239,7 +243,8 @@ mkdir ${build_dir}
 echo "tools:::.Rd2dvi(\"${1}\",  \"${build_dir}/Rd2.tex\", \"$is_bundle\", \
 \"$title\",  \"$toc\", \"$batch\", \"$description\", \"$only_meta\",\
 \"$bundle_pkgs\", \"$encoding\", \"${dir-$@}\",  \"$is_base_package\",
-\"OSdir\")" | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla || exit 1
+\"OSdir\", \"$internals\", \"$index\")" \
+  | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla || exit 1
 
 ## <FIXME>
 ## Need to do something smarter about the exit status in batch mode.

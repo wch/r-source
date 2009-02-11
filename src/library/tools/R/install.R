@@ -1410,11 +1410,12 @@
 
 .Rdfiles2tex <-
     function(files, outfile, encoding = "unknown", append = FALSE,
-             extraDirs=NULL)
+             extraDirs = NULL, internals = FALSE)
 {
     if(file_test("-d", files))
         .pkg2tex(files, outfile, encoding = encoding, append = append,
-                 asChapter = FALSE, extraDirs = extraDirs)
+                 asChapter = FALSE, extraDirs = extraDirs,
+                 internals = internals)
     else {
         files <- strsplit(files, "[[:space:]]+")[[1]]
         latexdir <- tempfile("ltx")
@@ -1426,6 +1427,11 @@
         on.exit(close(outcon))
         for(f in files) {
             cat("  ", basename(f), "\n", sep="")
+            if(!internals) {
+                lines <- readLines(f)
+                if(any(grepl("\\\\keyword\\{\\s*internal\\s*\\}",
+                         lines, perl = TRUE))) next
+            }
             out <-  file.path(latexdir, sub("\\.[Rr]d",".tex", basename(f)))
             ## people have file names with quotes in them.
             system(paste(cmd,"-o", shQuote(out), shQuote(f)))
@@ -1512,7 +1518,8 @@
         }
         this <- sub("\\\\HeaderA\\{\\s*([^}]*)\\}.*", "\\1", hd[1], perl = TRUE)
         if(!internals &&
-           grepl("\\\\keyword\\{\\s*internal\\s*\\}", lines, perl = TRUE)) next
+           any(grepl("\\\\keyword\\{\\s*internal\\s*\\}", lines, perl = TRUE)))
+            next
         topics[f] <- this
     }
 
@@ -2033,7 +2040,8 @@
 
 .Rd2dvi <- function(pkgdir, outfile, is_bundle, title, toc = "", batch = FALSE,
                     description = TRUE, only_meta = FALSE, bundle_pkgs,
-                    enc = "unknown", files_or_dir, is_base_package, OSdir)
+                    enc = "unknown", files_or_dir, is_base_package, OSdir,
+                    internals = "no", index = "true")
 {
     # print(match.call())
 
@@ -2041,13 +2049,16 @@
     if (!nzchar(enc)) enc <- "unknown"
     description <- description == "true"
     only_meta <- only_meta == "no"
+    internals <- internals != "no"
+    index <- index != "false"
+
     ## Rd2.tex part 1: header
     if(batch == "true") writeLines("\\nonstopmode{}", out)
     cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
         "\\usepackage[", Sys.getenv("R_RD4DVI", "ae"), "]{Rd}\n",
         sep = "", file = out)
-    writeLines(c("\\usepackage{makeidx}",
-                 "\\usepackage[@ENC@]{inputenc}",
+    if(index) writeLines("\\usepackage{makeidx}", out)
+    writeLines(c("\\usepackage[@ENC@]{inputenc}",
                  "@CYRILLIC_SUPPORT@",
                  "\\makeindex{}",
                  "\\begin{document}"), out)
@@ -2064,7 +2075,7 @@
             .DESCRIPTION_to_latex(file.path(pkgdir, "DESCRIPTION.in"),
                                   out, version)
         }
-    } else {  ## bundle case
+    } else { ## bundle case
         cat("\\pagenumbering{Roman}\n",
             "\\begin{titlepage}\n",
             "\\strut\\vfill\n",
@@ -2083,7 +2094,7 @@
         writeLines(toc, out)
         if(!only_meta) {
             .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
-                         extraDirs = OSdir)
+                         extraDirs = OSdir, internals = internals)
         }
     } else {
         writeLines(c("\\setcounter{secnumdepth}{-1}",
@@ -2099,14 +2110,16 @@
                 .DESCRIPTION_to_latex(f, out)
             if(!only_meta)
                 .pkg2tex(file.path(pkgdir, p), out, encoding = enc,
-                         append = TRUE, asChapter = FALSE)
+                         append = TRUE, asChapter = FALSE,
+                         internals = internals)
             writeLines("\\clearpage{}", out)
         }
         writeLines("\\cleardoublepage{}", out)
     }
 
     ## Rd2.tex part 3: footer
-    writeLines(c("\\printindex{}", "\\end{document}"), out)
+    if(index) writeLines("\\printindex{}", out)
+    writeLines("\\end{document}", out)
     close(out)
 
     ## Look for encodings
@@ -2120,16 +2133,16 @@
         lines <- lines[! lines %in%
                        c("\\usepackage[@ENC@]{inputenc}",
                          "@CYRILLIC_SUPPORT@")]
-     } else if (!utf8) {
-         lines[lines == "\\usepackage[@ENC@]{inputenc}"] <-
-             paste("\\usepackage[", encs, "]{inputenc}", sep = "")
-         lines <- lines[lines != "@CYRILLIC_SUPPORT@"]
-     } else {
-         lines[lines == "\\usepackage[@ENC@]{inputenc}"] <-
-             paste("\\usepackage[", encs, "]{inputenc}", sep = "")
-         lines[lines == "@CYRILLIC_SUPPORT@"] <-
-             "\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}"
-     }
+    } else if (!utf8) {
+        lines[lines == "\\usepackage[@ENC@]{inputenc}"] <-
+            paste("\\usepackage[", encs, "]{inputenc}", sep = "")
+        lines <- lines[lines != "@CYRILLIC_SUPPORT@"]
+    } else {
+        lines[lines == "\\usepackage[@ENC@]{inputenc}"] <-
+            paste("\\usepackage[", encs, "]{inputenc}", sep = "")
+        lines[lines == "@CYRILLIC_SUPPORT@"] <-
+            "\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}"
+    }
 
     if(is.character(outfile)) {
         out <- file(outfile, "at")
