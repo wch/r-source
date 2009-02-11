@@ -198,7 +198,9 @@ UTILITIES
 	up src/.
 
     o	R CMD Rd2dvi and R CMD check are now able to cope with Cyrillic
-	characters in UTF-8 (thanks to a hint from Alexey Shipunov).
+	characters in UTF-8 if _R_CYRILLIC_TEX_ is set to a non-empty
+	value and the latex system has suitable fonts (thanks to a hint
+	from Alexey Shipunov).
 
     o	New function rtags() in package 'utils' that provides etags-like
 	indexing capabilities for R code files.

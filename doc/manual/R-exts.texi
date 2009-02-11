@@ -3786,10 +3786,9 @@ always recognized: these and @samp{UTF-8} are likely to work fairly
 widely.  However, this does not mean that all characters in UTF-8 will
 be recognized, and the coverage of non-Latin characters@footnote{@R{}
 2.9.0 added support for UTF-8 Cyrillic characters in @LaTeX{}, but on
-some OSes this will need Cyrillic support added to @LaTeX{}.  If such
-support is ony partially present this can be suppressed by setting
-environment variable @env{_R_NO_CYRILLIC_TEX_} to a non-empty value.} is
-often low, especially when converting to @LaTeX{}.
+some OSes this will need Cyrillic support added to @LaTeX{}, so
+environment variable @env{_R_CYRILLIC_TEX_} needs to be set ot a
+non-empty value to enable this.} is low.
 
 The @code{\enc} command (@pxref{Insertions}) can be used to provide
 transliterations which will be used in conversions that do not support
