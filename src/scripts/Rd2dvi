@@ -42,7 +42,7 @@ Options:
       --title=NAME	use NAME as the title of the document
   -V, --verbose		report on what is done
       --no-index	don't index PDF output
-      --no-description	don't typrset the description of a package.
+      --no-description	don't typeset the description of a package
 
 The output papersize is set by the environment variable R_PAPERSIZE.
 The DVI previewer is set by the environment variable xdvi.
@@ -160,7 +160,7 @@ is_base_package=no
 file_sed='s/[_$]/\\&/g'
 pkg_enc=
 
-toc="\\Rdcontents{\\R{} topics documented:}"
+toc="\\\\Rdcontents{\\\\R{} topics documented:}"
 if test -d "${1}"; then
   if test -f ${1}/DESCRIPTION; then
     if test -n "`grep '^Bundle:' ${1}/DESCRIPTION`"; then
@@ -194,7 +194,7 @@ if test -d "${1}"; then
       dir=${1}
     fi
     subj0=`${echo} ${dir} | ${SED} -e ${file_sed}`
-    subj="all in \\file{${subj0}}"
+    subj="all in \\\\file{${subj0}}"
   fi
 else
   if test ${#} -gt 1 ; then
@@ -208,12 +208,12 @@ else
     fi
   fi
   subj0=`${echo} ${1} | ${SED} -e ${file_sed}`
-  subj="\\file{${subj0}}${subj}"
+  subj="\\\\file{${subj0}}${subj}"
 fi
 
 
 ## substitution went wrong under ash
-title1="\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"
+title1="\\\\R{} documentation}} \\\\par\\\\bigskip{{''\\Large of ${subj}"
 title=${title-$title1}
 
 if test "${enc}"="unknown"; then
@@ -236,130 +236,10 @@ if test -d ${build_dir}; then
 fi
 mkdir ${build_dir}
 
-## Rd2.tex part 1: header
-if test ${batch}; then
-  cat > ${build_dir}/Rd2.tex <<EOF
-\\nonstopmode{}
-EOF
-else
-  cat > ${build_dir}/Rd2.tex <<EOF
-EOF
-fi
-cat >> ${build_dir}/Rd2.tex <<EOF
-\\documentclass[${R_PAPERSIZE}paper]{book}
-\\usepackage[${R_RD4DVI-ae}]{Rd}
-\\usepackage{makeidx}
-\\usepackage[@ENC@]{inputenc}
-@CYRILLIC_SUPPORT@
-\\makeindex{}
-\\begin{document}
-EOF
-if test "${is_bundle}" = no; then
-  cat >> ${build_dir}/Rd2.tex <<EOF
-\\chapter*{}
-\\begin{center}
-{\\textbf{\\huge ${title}}}
-\\par\\bigskip{\\large \\today}
-\\end{center}
-EOF
-  if ${description};  then
-  if test -f ${1}/DESCRIPTION; then
-    echo "tools:::.DESCRIPTION_to_latex(\"${1}/DESCRIPTION\" , \"${build_dir}/Rd2.tex\")" | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla
-  fi
-  if test "${is_base_package}" = yes; then
-    R_version=unknown
-    if test -f ${1}/../../../VERSION; then
-      R_version=`cat ${1}/../../../VERSION`
-    fi
-    echo "tools:::.DESCRIPTION_to_latex(\"${1}/DESCRIPTION.in\" , \"${build_dir}/Rd2.tex\", \"${R_version}\")" | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla
-  fi
-  fi
-else
-  cat >> ${build_dir}/Rd2.tex <<EOF
-\\pagenumbering{Roman}
-\\begin{titlepage}
-\\strut\\vfill
-\\begin{center}
-{\\textbf{\\Huge ${title}}}
-\\par\\bigskip{\\large \\today}
-\\end{center}
-\\par\\bigskip
-EOF
-
-  if ${description}; then
-    echo "tools:::.DESCRIPTION_to_latex(\"${1}/DESCRIPTION\" , \"${build_dir}/Rd2.tex\")" | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla
-  fi 
-
-  cat >> ${build_dir}/Rd2.tex <<EOF
-\\vfill\\vfill
-\\end{titlepage}
-EOF
-fi
-
-## Rd2.tex part 2: body
-if test "${is_bundle}" = no; then
-  ${only_meta} || ${echo} ${toc} >> ${build_dir}/Rd2.tex
-  ## ${only_meta} || Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${dir-${@}}
-    ${only_meta} || echo "tools:::.Rdfiles2tex(\"${dir-${@}}\", \"${build_dir}/Rd2.tex\", \
-      encoding=\"${enc}\", append = TRUE, extraDirs = \"${OSdir}\")" | \
-      LC_ALL=C ${R_HOME}/bin/R --slave --vanilla
-else
-  cat >> ${build_dir}/Rd2.tex <<EOF
-\\setcounter{secnumdepth}{-1}
-\\pagenumbering{roman}
-\\tableofcontents{}
-\\cleardoublepage{}
-\\pagenumbering{arabic}
-EOF
-  for p in ${bundle_pkgs}; do
-    ${echo} "Bundle package: '${p}'"
-    ${echo} "\\chapter{Package \`${p}'}" >> ${build_dir}/Rd2.tex
-    if ${description}; then
-      if test -f ${1}/${p}/DESCRIPTION.in; then
-        echo "tools:::.DESCRIPTION_to_latex(\"${1}/${p}/DESCRIPTION.in\" , \"${build_dir}/Rd2.tex\")" | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla
-      fi
-    fi
-    ${only_meta} || echo "tools:::.pkg2tex(\"${1}/${p}\", \"${build_dir}/Rd2.tex\", \
-      encoding=\"${enc}\", append = TRUE, asChapter= FALSE)" | \
-      LC_ALL=C ${R_HOME}/bin/R --slave --vanilla
-    ${echo} "\\clearpage{}" >> ${build_dir}/Rd2.tex
-  done
-  ${echo} "\\cleardoublepage{}" >> ${build_dir}/Rd2.tex
-fi
-
-## Rd2.tex part 3: footer
-cat >> ${build_dir}/Rd2.tex <<EOF
-\\printindex{}
-\\end{document}
-EOF
-
-## Look for encodings
-ENCS=`grep '^\\\\\inputencoding' ${build_dir}/Rd2.tex | uniq | \
-  ${SED} -e 's/^\\\\inputencoding{\(.*\)}/\1/' | \
-  tr '\na-z0-9' ',a-z0-9' | ${SED} -e s/,$//`
-## some systems have Cyrillic support but it is broken
-if test -z "${_R_NO_CYRILLIC_TEX_}" ; then
-  UENCS=`${echo} ${ENCS} | grep utf8`
-fi
-#echo "ENCS is ${ENCS}"
-#echo "UENCS is ${UENCS}"
-
-## substitute for the encodings used
-mv ${build_dir}/Rd2.tex ${build_dir}/Rd2.tex.pre
-if test -z "${ENCS}"; then
-  ${SED} -e '/^\\usepackage\[@ENC@\]{inputenc}$/d' \
-      -e '/@CYRILLIC_SUPPORT@/d' \
-    ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
-elif test -n "${UENCS}" ; then
-  # next is needed to get Cyrillic characters in UTF-8
-  ${SED} -e s/^\\\\usepackage\\[@ENC@\\]/\\\\usepackage[${ENCS}]/ \
-      -e 's/@CYRILLIC_SUPPORT@/\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}/' \
-    ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
-else
-  ${SED} -e s/^\\\\usepackage\\[@ENC@\\]/\\\\usepackage[${ENCS}]/ \
-      -e '/@CYRILLIC_SUPPORT@/d' \
-    ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
-fi
+echo "tools:::.Rd2dvi(\"${1}\",  \"${build_dir}/Rd2.tex\", \"$is_bundle\", \
+\"$title\",  \"$toc\", \"$batch\", \"$description\", \"$only_meta\",\
+\"$bundle_pkgs\", \"$encoding\", \"${dir-$@}\",  \"$is_base_package\",
+\"OSdir\")" | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla || exit 1
 
 ## <FIXME>
 ## Need to do something smarter about the exit status in batch mode.

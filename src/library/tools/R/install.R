@@ -1374,7 +1374,6 @@
     res
 }
 
-## FIXME: possible encoding issues here
 ## base packages do not have versioss and this is called on
 ## DESCRIPTION.in
 .DESCRIPTION_to_latex <- function(descfile, outfile, version = "Unknown")
@@ -1387,6 +1386,9 @@
     cat("\\begin{description}", "\\raggedright{}", sep="\n", file=out)
     fields <- names(desc)
     fields <- fields[! fields %in% c("Bundle", "Package", "Packaged", "Built")]
+    if("Encoding" %in% fields)
+        cat("\\inputencoding{", latex_canonical_encoding(desc["Encoding"]),
+            "}\n", sep = "", file = out)
     for (f in fields) {
         text <- desc[f]
         ## munge 'text' appropriately (\\, {, }, "...")
@@ -1425,7 +1427,8 @@
         for(f in files) {
             cat("  ", basename(f), "\n", sep="")
             out <-  file.path(latexdir, sub("\\.[Rr]d",".tex", basename(f)))
-            system(paste(cmd,"-o", out, f))
+            ## people have file names with quotes in them.
+            system(paste(cmd,"-o", shQuote(out), shQuote(f)))
             writeLines(readLines(out), outcon)
         }
     }
@@ -1473,7 +1476,8 @@
         for(f in files) {
             cat("  ", basename(f), "\n", sep="")
             out <-  sub("\\.[Rr]d",".tex", basename(f))
-            system(paste(cmd,"-o", file.path(latexdir, out), f))
+            system(paste(cmd,"-o", shQuote(file.path(latexdir, out)),
+                         shQuote(f)))
         }
     }
     ## they might be zipped up
@@ -1484,7 +1488,9 @@
         ## if (res) stop("unzipping latex files failed")
         latexdir <- newdir
     }
-    files <- dir(latexdir, pattern = "[[:alnum:]]+\\.tex$", full.names = TRUE)
+    ## There are some restrictions, but the former "[[:alnum:]]+\\.tex$" was
+    ## too strict.
+    files <- dir(latexdir, pattern = "\\.tex$", full.names = TRUE)
     if (!length(files))
         stop("no validly-named files in the ", sQuote("latex"), " directory")
 
@@ -2023,4 +2029,113 @@
                  '        VALUE "Translation", 0x409, 1252',
                  '    END',
                  'END'))
+}
+
+.Rd2dvi <- function(pkgdir, outfile, is_bundle, title, toc = "", batch = FALSE,
+                    description = TRUE, only_meta = FALSE, bundle_pkgs,
+                    enc = "unknown", files_or_dir, is_base_package, OSdir)
+{
+    # print(match.call())
+
+    out <- file(of <- tempfile(), "wt")
+    if (!nzchar(enc)) enc <- "unknown"
+    description <- description == "true"
+    only_meta <- only_meta == "no"
+    ## Rd2.tex part 1: header
+    if(batch == "true") writeLines("\\nonstopmode{}", out)
+    cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
+        "\\usepackage[", Sys.getenv("R_RD4DVI", "ae"), "]{Rd}\n",
+        sep = "", file = out)
+    writeLines(c("\\usepackage{makeidx}",
+                 "\\usepackage[@ENC@]{inputenc}",
+                 "@CYRILLIC_SUPPORT@",
+                 "\\makeindex{}",
+                 "\\begin{document}"), out)
+    if(is_bundle == "no") {
+        cat("\\chapter*{}\n",
+            "\\begin{center}\n",
+            "{\\textbf{\\huge ", title, "}}\n",
+            "\\par\\bigskip{\\large \\today}\n",
+            "\\end{center}\n", sep = "", file = out)
+        if(description && file.exists(f <- file.path(pkgdir, "DESCRIPTION")))
+            .DESCRIPTION_to_latex(f, out)
+        if(is_base_package == "yes") {
+            version <- readLines(file.path(pkgdir, "../../../VERSION"))
+            .DESCRIPTION_to_latex(file.path(pkgdir, "DESCRIPTION.in"),
+                                  out, version)
+        }
+    } else {  ## bundle case
+        cat("\\pagenumbering{Roman}\n",
+            "\\begin{titlepage}\n",
+            "\\strut\\vfill\n",
+            "\\begin{center}\n",
+            "{\\textbf{\\Huge ", title, "}}\n",
+            "\\par\\bigskip{\\large \\today}\n",
+            "\\end{center}\n",
+            "\\par\\bigskip\n", sep = "", file = out)
+        if (description)
+            .DESCRIPTION_to_latex(file.path(pkgdir, "DESCRIPTION"), out)
+        writeLines("\\vfill\\vfill\n\\end{titlepage}", out)
+    }
+
+    ## Rd2.tex part 2: body
+    if (is_bundle == "no") {
+        writeLines(toc, out)
+        if(!only_meta) {
+            .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
+                         extraDirs = OSdir)
+        }
+    } else {
+        writeLines(c("\\setcounter{secnumdepth}{-1}",
+                     "\\pagenumbering{roman}",
+                     "\\tableofcontents{}",
+                     "\\cleardoublepage{}",
+                     "\\pagenumbering{arabic}"), out)
+        for (p in strsplit(bundle_pkgs, "[[:blank:]]+")[[1]]) {
+            message("Bundle package: ", p)
+            cat("\\chapter{Package `", p, "'}\n", sep = "", file = out)
+            if (description &&
+                file.exists(f <- file.path(pkgdir, p, "DESCRIPTION.in")))
+                .DESCRIPTION_to_latex(f, out)
+            if(!only_meta)
+                .pkg2tex(file.path(pkgdir, p), out, encoding = enc,
+                         append = TRUE, asChapter = FALSE)
+            writeLines("\\clearpage{}", out)
+        }
+        writeLines("\\cleardoublepage{}", out)
+    }
+
+    ## Rd2.tex part 3: footer
+    writeLines(c("\\printindex{}", "\\end{document}"), out)
+    close(out)
+
+    ## Look for encodings
+    ## FIXME cyrillic probably only works with times, not ae.
+    lines <- readLines(of)
+    encs <- lines[grepl('^\\\\inputencoding', lines)]
+    encs <- unique(sub("^\\\\inputencoding\\{(.*)\\}", "\\1", encs))
+    encs <- paste(encs, collapse=",")
+    utf8 <- if(nzchar(Sys.getenv("_R_CYRILLIC_TEX_"))) "utf8" %in% encs else FALSE
+    if (!nzchar(encs)) {
+        lines <- lines[! lines %in%
+                       c("\\usepackage[@ENC@]{inputenc}",
+                         "@CYRILLIC_SUPPORT@")]
+     } else if (!utf8) {
+         lines[lines == "\\usepackage[@ENC@]{inputenc}"] <-
+             paste("\\usepackage[", encs, "]{inputenc}", sep = "")
+         lines <- lines[lines != "@CYRILLIC_SUPPORT@"]
+     } else {
+         lines[lines == "\\usepackage[@ENC@]{inputenc}"] <-
+             paste("\\usepackage[", encs, "]{inputenc}", sep = "")
+         lines[lines == "@CYRILLIC_SUPPORT@"] <-
+             "\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}"
+     }
+
+    if(is.character(outfile)) {
+        out <- file(outfile, "at")
+        on.exit(close(out))
+    } else out <- outfile
+    writeLines(lines, out)
+
+    invisible(NULL)
 }
