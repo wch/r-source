@@ -1763,7 +1763,7 @@ SEXP attribute_hidden do_addTryHandlers(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     if (R_GlobalContext == R_ToplevelContext ||
-	! R_GlobalContext->callflag & CTXT_FUNCTION)
+	! (R_GlobalContext->callflag & CTXT_FUNCTION))
 	errorcall(call, _("not in a try context"));
     SET_RESTART_BIT_ON(R_GlobalContext->callflag);
     R_InsertRestartHandlers(R_GlobalContext, FALSE);
