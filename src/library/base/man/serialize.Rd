@@ -1,11 +1,9 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2097 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{serialize}
-\alias{.readRDS}
-\alias{.saveRDS}
 \alias{serialize}
 \alias{unserialize}
 \title{Simple Serialization Interface}
@@ -16,29 +14,15 @@
 serialize(object, connection, ascii = FALSE, refhook = NULL)
 
 unserialize(connection, refhook = NULL)
-
-.saveRDS(object, file = "", ascii = FALSE, version = NULL,
-         compress = TRUE, refhook = NULL)
-
-.readRDS(file, refhook = NULL)
 }
 \arguments{
   \item{object}{\R object to serialize.}
   \item{connection}{an open connection or (for \code{serialize})
     \code{NULL} or (for \code{unserialize}) a raw vector
     (see \sQuote{Details}).}
-  \item{file}{a connection or the name of the file where the R object
-    is saved to or read from.}
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
     written; otherwise (default except for text-mode connections), a
     more compact binary one is used.}
-  \item{version}{the workspace format version to use.  \code{NULL}
-    specifies the current default format.  The version used from \R
-    0.99.0 to \R 1.3.1 was version 1.  The default format as from \R
-    1.4.0 is version 2.}
-  \item{compress}{a logical specifying whether saving to a named file is
-    to use compression.  Ignored when \code{file} is a connection and for
-    workspace format version 1.}
   \item{refhook}{a hook function for handling reference objects.}
 }
 \details{
@@ -70,8 +54,7 @@ unserialize(connection, refhook = NULL)
 \section{Warning}{
   These functions are still experimental.  Names, interfaces and
   values might change in future versions (and the value of
-  \code{serialize} was changed for \R 2.4.0).  \code{.saveRDS} and
-  \code{.readRDS} are intended for internal use.
+  \code{serialize} was changed for \R 2.4.0).
 
   A raw vector is limited to \eqn{2^{31} - 1}{2^31 - 1} bytes, but \R
   objects can exceed this and their serializations will normally be
@@ -81,13 +64,11 @@ unserialize(connection, refhook = NULL)
   For \code{serialize}, \code{NULL} unless \code{connection = NULL}, when
   the result is returned in a raw vector.
 
-  For \code{unserialize} and \code{.readRDS}, an \R object.
-
-  For \code{.saveRDS}, \code{NULL} invisibly.
+  For \code{unserialize} an \R object.
 }
 \examples{
 x <- serialize(list(1,2,3), NULL)
 unserialize(x)
 }
-\keyword{internal}
 \keyword{file}
+\keyword{connection}
