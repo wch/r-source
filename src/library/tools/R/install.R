@@ -2038,19 +2038,31 @@
                  'END'))
 }
 
-.Rd2dvi <- function(pkgdir, outfile, is_bundle, title, toc = "", batch = FALSE,
-                    description = TRUE, only_meta = FALSE, bundle_pkgs,
-                    enc = "unknown", files_or_dir, is_base_package, OSdir,
+.Rd2dvi <- function(pkgdir, outfile, is_bundle, title, batch = FALSE,
+                    description = TRUE, only_meta = FALSE,
+                    enc = "unknown", files_or_dir, OSdir,
                     internals = "no", index = "true")
 {
-    # print(match.call())
+    print(match.call())
 
+    ## %in% and others cause problems for some page layouts.
+    if (basename(pkgdir) == "base") index <- "false"
     out <- file(of <- tempfile(), "wt")
     if (!nzchar(enc)) enc <- "unknown"
     description <- description == "true"
     only_meta <- only_meta == "no"
     internals <- internals != "no"
     index <- index != "false"
+
+    if(enc == "unknown" && file.exists(f <- file.path(pkgdir, "DESCRIPTION"))) {
+        desc <- read.dcf(f)[1,]
+        pkg_enc <- desc["Encoding"]
+        if (!is.na(enc)) enc <- pkg_enc
+    }
+
+    toc <- if(file_test("-d", files_or_dir)) {
+        "\\Rdcontents{\\R{} topics documented:}"
+    } else ""
 
     ## Rd2.tex part 1: header
     if(batch == "true") writeLines("\\nonstopmode{}", out)
@@ -2070,7 +2082,10 @@
             "\\end{center}\n", sep = "", file = out)
         if(description && file.exists(f <- file.path(pkgdir, "DESCRIPTION")))
             .DESCRIPTION_to_latex(f, out)
-        if(is_base_package == "yes") {
+        ## running on the sources of a base package will have DESCRIPTION.in,
+        ## only.
+        if(description &&
+           file.exists(f <- file.path(pkgdir, "DESCRIPTION.in"))) {
             version <- readLines(file.path(pkgdir, "../../../VERSION"))
             .DESCRIPTION_to_latex(file.path(pkgdir, "DESCRIPTION.in"),
                                   out, version)
@@ -2091,7 +2106,7 @@
 
     ## Rd2.tex part 2: body
     if (is_bundle == "no") {
-        writeLines(toc, out)
+        if(nzchar(toc)) writeLines(toc, out)
         if(!only_meta) {
             .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
                          extraDirs = OSdir, internals = internals)
@@ -2102,7 +2117,9 @@
                      "\\tableofcontents{}",
                      "\\cleardoublepage{}",
                      "\\pagenumbering{arabic}"), out)
-        for (p in strsplit(bundle_pkgs, "[[:blank:]]+")[[1]]) {
+        desc <- read.dcf(file.path(pkgdir, "DESCRIPTION"))[1,]
+        bundle_pkgs <- strsplit(desc["Contains"], "[[:blank:]]+")[[1]]
+        for (p in bundle_pkgs) {
             message("Bundle package: ", p)
             cat("\\chapter{Package `", p, "'}\n", sep = "", file = out)
             if (description &&
