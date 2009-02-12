@@ -2409,6 +2409,9 @@ sub rdoc2latex {# (filename)
 	$latexout = "STDOUT";
     }
     $blname = &latex_escape_name($blocks{"name"});
+    ## This is going to be used in indexing, so it needs || escaped too.
+    ## They render as escaped, though.
+    $blname =~ s/([!|])/"$1/g;
     print $latexout "\\inputencoding{$encoding}\n" if $encoding ne "unknown";
     print $latexout "\\HeaderA\{";
     print $latexout $blname;
