@@ -225,7 +225,7 @@ manglePackageName(pkgName, pkgVersion)
   \code{gammaCody} is the \eqn{(\Gamma)} function from the Specfun
   package used at C level in the Bessel code.  It may be
   somewhat faster but less precise and/or robust than \R's standard
-  \code{\link{gamma}}.  Re R-level interface  was here for experimental
+  \code{\link{gamma}}.  The \R-level interface was here for experimental
   purposes.
 
   \code{manglePackageName} was part of the defunct support for versioned
