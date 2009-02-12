@@ -785,7 +785,7 @@ RweaveChunkPrefix <- function(options)
 
 RweaveEvalWithOpt <- function (expr, options){
     if(options$eval){
-        res <- try(.Internal(eval.with.vis(expr, .GlobalEnv, baseenv())),
+        res <- try(withVisible(eval(expr, .GlobalEnv)),
                    silent=TRUE)
         if(inherits(res, "try-error")) return(res)
         if(options$print | (options$term & res$visible))
