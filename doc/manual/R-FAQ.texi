@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2009
-@set FAQ_DATE @value{FAQ_YEAR}-01-03
+@set FAQ_DATE @value{FAQ_YEAR}-02-12
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 8
@@ -297,7 +297,12 @@ powerpc-apple-darwin, mips-sgi-irix,
 @c <FIXME>
 @c Not sure anymore ...
 @c alpha-dec-osf4,
-@c i386-freebsd,
+@c <COMMENT>
+@c i386-freebsd reported by B. Gian James" <gian.james@gmail.com> on
+@c 2009-01-11
+@c (Architecture: i386, OS: FreeBSD 7.1-PRERELEASE, Vendor: PC-BSD)
+i386-freebsd,
+@c </COMMENT>
 @c i386-sun-solaris,
 @c hppa-hp-hpux, 
 @c </FIXME>
@@ -1841,6 +1846,10 @@ Functions and datasets for ``Bayesian Methods: A Social and Behavioral
 Sciences Approach'' (2nd edition) by Jeff Gill, 2007, CRC Press.
 @item BayHaz
 Functions for Bayesian Hazard rate estimation.
+@item BayesDA
+Functions and data sets for the book ``Bayesian Data Analysis'' by
+A. Gelman, J. B. Carlin, H. S. Stern and D. B. Rubin, 2003, Chapman &
+Hall/CRC.
 @item BayesTree
 Bayesian methods for tree based models.
 @item BayesValidate
@@ -1939,6 +1948,8 @@ Competing risk model with frailties for right censored survival data.
 @item Containers
 Object-oriented data structures including stack, queue, and binary
 search tree.
+@item ConvCalendar
+Converts dates between calendars.
 @item ConvergenceConcepts
 Seeing convergence concepts in action.
 @item CoxBoost
@@ -1977,6 +1988,8 @@ Functions for the Davies quantile function and the Generalized Lambda
 distribution.
 @item Defaults
 Create global function defaults.
+@item Depela
+Semiparametric estimation of copula models.
 @item DescribeDisplay
 R interface to the DescribeDisplay GGobi plugin.
 @item Design
@@ -2042,6 +2055,8 @@ Fractional Gaussian Noise model fitting.
 FITS (Flexible Image Transport System) utilities.
 @item FKBL
 Fuzzy Knowledge Base Learning.
+@item FKF
+Fast Kalman Filter.
 @c <COMMENT>
 @c Moved to the Archive on 2007-11-17 as it fails R CMD check.
 @c @item FLCore
@@ -2102,6 +2117,8 @@ Topographic and geologic mapping.
 @item GExMap
 Functions for the analysis of genomic distribution of genes lists
 produced by transcriptomic studies.
+@item GFMaps
+Visualization of high-throughput genetic or proteomic experiments.
 @item GLDEX
 Fit RS and FMKL generalised lambda distributions using discretized and
 maximum likelihood methods.
@@ -2110,6 +2127,8 @@ Computation of functional similarities between GO terms and gene
 products.
 @item GPArotation
 Gradient Projection Algorithm rotation for factor analysis.
+@item GRRGI
+Gauge R and R Confidence Intervals.
 @item GRASS
 An interface between the GRASS geographical information system and R,
 based on starting R from within the GRASS environment and chosen
@@ -2137,10 +2156,13 @@ Generalized @math{F}-statistics.
 Relevance or Dependency network and signaling pathway discovery.
 @item GeneNet
 Modeling and inferring gene networks.
-@item GeneTS
-A package for analysing multiple gene expression time series data.
-Currently, implements methods for cell cycle analysis and for inferring
-large sparse graphical Gaussian models.
+@c <COMMENT>
+@c Moved to the Archive on 2009-01-26 as requested by the maintainer.
+@c @item GeneTS
+@c A package for analysing multiple gene expression time series data.
+@c Currently, implements methods for cell cycle analysis and for inferring
+@c large sparse graphical Gaussian models.
+@c </COMMENT>
 @item Geneland
 MCMC inference from individual genetic data based on a spatial
 statistical model.
@@ -2303,6 +2325,8 @@ Functions and datasets from the main package of Venables and Ripley,
 bundle.  @emph{Recommended}.
 @item MAclinical
 Class prediction based on microarray data and clinical parameters.
+@item MAMSE
+Calculation of Minimum Averaged Mean Squared Error (MAMSE) weights.
 @item MBA
 Multilevel @math{B}-spline Approximation.
 @item MBESS
@@ -2313,6 +2337,8 @@ from the Medicare Air Pollution Study (MCAPS) of 204 U.S. counties,
 1999--2002.
 @item MCE
 Tools for evaluating Monte Carlo Error.
+@item MCMCglmm
+MCMC Generalized Linear Mixed Models.
 @item MCMCpack
 Markov chain Monte Carlo (MCMC) package: functions for posterior
 simulation for a number of statistical models.
@@ -2393,6 +2419,8 @@ A set of test nonlinear least squares examples from @acronym{NIST}, the
 U.S. National Institute for Standards and Technology.
 @item NMMAPSlite
 U.S. National Morbidity, Mortality, and Air Pollution Study data lite.
+@item NMRS
+NMR spectroscopy.
 @item NORMT3
 Evaluates complex erf, erfc and density of sum of Gaussian and Student's 
 @math{t}.
@@ -2435,8 +2463,10 @@ Estimation of pharmacokinetic parameters.
 @item PKfit
 A nonlinear regression (including a genetic algorithm) program designed
 to deal with curve fitting for pharmacokinetics.
-@item
+@item PKtools
 Unified computational interfaces for pop PK.
+@item PMA
+Penalized Multivariate Analysis.
 @item POT
 Generalized Pareto distribution and Peaks Over Threshold.
 @item PSAgraphics
@@ -2805,14 +2835,21 @@ Stores data frames and matrices in SQLite tables.
 Shared Reproducibility Package Management.
 @item STAR
 Spike Train Analysis with R.
-@item SciViews
-A bundle of packages to implement a full reusable @acronym{GUI} API for
-R.  Contains @strong{svGUI} with the main @acronym{GUI} features,
-@strong{svDialogs} for the dialog boxes, @strong{svIO} for data
-import/export, @strong{svMisc} with miscellaneous supporting functions,
-and @strong{svViews} providing views and report features (views are
-@acronym{HTML} presentations of the content of R objects, combining
-text, tables and graphs in the same document).
+@c <COMMENT>
+@c Moved to the Archive on 2009-01-22 (replaced by its unbundled
+@c packages).
+@c @item SciViews
+@c A bundle of packages to implement a full reusable @acronym{GUI} API for
+@c R.  Contains @strong{svGUI} with the main @acronym{GUI} features,
+@c @strong{svDialogs} for the dialog boxes, @strong{svIO} for data
+@c import/export, @strong{svMisc} with miscellaneous supporting functions,
+@c and @strong{svViews} providing views and report features (views are
+@c @acronym{HTML} presentations of the content of R objects, combining
+@c text, tables and graphs in the same document).
+@c </COMMENT>
+@item ScottKnott
+Multiple comparison test of means using the clustering method of Scott &
+Knott.
 @item SemiPar
 Functions for semiparametric regression analysis, to complement the
 book ``Semiparametric Regression'' by R. Ruppert, M. P. Wand, and
@@ -2868,6 +2905,8 @@ Read and write StatDataML.
 Processing and statistical analysis of molecular fingerprint profiles.
 @item StatMatch
 Functions to perform statistical matching between two data sources.
+@item Stem
+Spatio-temporal models in R.
 @c <COMMENT>
 @c Removed on 2007-11-17 due to license problems.
 @c @item StoppingRules
@@ -2982,6 +3021,8 @@ Tools for reading @XML{} documents and DTDs.
 Extreme regression.
 @item YaleToolkit
 Data exploration tools from Yale University.
+@item YourCast
+YourCast: time series cross-sectional forecasts.
 @item ZIGP
 Zero Inflated Generalized Poisson (ZIGP) regression models.
 @item Zelig
@@ -3124,6 +3165,8 @@ innovations.
 @item bayesSurv
 Bayesian survival regression with flexible error and (later on also
 random effects) distributions.
+@item bayesclust
+Tests/searches for significant clusters in genetic data.
 @item bayescount
 Bayesian analysis of count distributions with JAGS.
 @item bayesm
@@ -3226,6 +3269,8 @@ Methods and Their Applications'' by A. C. Davison and D. V. Hinkley,
 1997, Cambridge University Press.  @emph{Recommended}.
 @item bootStepAIC
 Model selection by bootstrapping the @code{stepAIC()} procedure.
+@item bootspecdens
+Bootstrap for testing equality of spectral densities.
 @item bootstrap
 Software (bootstrap, cross-validation, jackknife), data and errata for
 the book ``An Introduction to the Bootstrap'' by B. Efron and
@@ -3303,6 +3348,9 @@ Convex clustering methods, including @math{k}-means algorithm, on-line
 update algorithm (Hard Competitive Learning) and Neural Gas algorithm
 (Soft Competitive Learning) and calculation of several indexes for
 finding the number of clusters in a data set.
+@item cellVolumeDist
+Functions to fit cell volume distributions and thereby estimate cell
+growth rates and division times.
 @item celsius
 Retrieve Affymetrix microarray measurements and metadata from Celsius.
 @item cem
@@ -3370,8 +3418,12 @@ Walter&Lieth diagrams.
 @c </COMMENT>
 @item clinfun
 Utilities for clinical study design and data analyses.
+@item clinsig
+Functions for calculating clinical significance.
 @item clue
 CLUster Ensembles.
+@item clues
+Clustering method based on local shrinking.
 @item clustTool
 @acronym{GUI} for clustering data with spatial information.
 @item cluster
@@ -3632,6 +3684,8 @@ Discrete Trigonometric Transforms.
 Dynamic Time Warping algorithms.
 @item dyn
 Time series regression.
+@item dynCorr
+Dynamic correlation.
 @item dynamicGraph
 Interactive graphical tool for manipulating graphs.
 @item dynamicTreeCut
@@ -3852,6 +3906,12 @@ Simple key-value database using SQLite as the backend.
 Solving financial problems in R.
 @item fingerprint
 Functions to operate on binary fingerprint data.
+@item fishmethods
+Fisheries methods and models.
+@item fit4NM
+Platform for NONMEM.
+@item flashClust
+Implementation of optimal hierarchical clustering.
 @item flexclust
 Flexible cluster algorithms.
 @item flexmix
@@ -3980,6 +4040,8 @@ logistic, Poisson, Cox proportional hazards partial likelihood, and
 AdaBoost exponential loss.
 @item gbs
 Generalized Birnbaum-Saunders distributions.
+@item gcExplorer
+Graphical cluster explorer.
 @item gcl
 Compute a fuzzy rules or tree classifier from data.
 @item gclus
@@ -4083,6 +4145,10 @@ models with multiplicative interaction terms such as the UNIDIFF model
 from sociology and the AMMI model from crop science.
 @item goalprog
 Weighted and lexicographical goal programming and optimization.
+@item gof
+Model-diagnostics based on cumulative residuals.
+@item gogarch
+Generalized Orthogonal GARCH (GO-GARCH) models.
 @item gpclib
 General polygon clipping routines for R based on Alan Murta's C
 library.
@@ -4145,6 +4211,8 @@ Various functions to help manipulate data.
 Functions for the Gumbel-Hougaard copula.
 @item gvlma
 Global Validation of Linear Models Assumptions.
+@item hacks
+Some convenience functions.
 @item hapassoc
 Likelihood inference of trait associations with SNP haplotypes and other 
 attributes using the EM Algorithm.
@@ -4291,6 +4359,9 @@ of prediction error.
 @item irr
 Coefficients of Interrater Reliability and Agreement for quantitative,
 ordinal and nominal data.
+@item irtProb
+Utilities and probability distributions related to multidimensional
+person Item Response Models (IRT).
 @item irtoys
 Simple interface to the estimation and plotting of IRT models.
 @item ismev
@@ -4438,6 +4509,8 @@ simplex algorithm.
 Logistic Joinpoint Regression.
 @item lme4
 Fit linear and generalized linear mixed-effects models.
+@item lmec
+Linear mixed-effects models with censored responses.
 @item lmeSplines
 Fit smoothing spline terms in Gaussian linear and nonlinear
 mixed-effects models.
@@ -4681,6 +4754,8 @@ with missing values.
 @item mlogit
 Estimation of the multinomial logit model with choice specific
 variables.
+@item mmcm
+Modified Maximum Contrast Method.
 @item mmlcr
 Mixed-mode latent class regression (also known as mixed-mode mixture
 model regression or mixed-mode mixture regression models) which can
@@ -4855,6 +4930,8 @@ Training of neural networks.
 @c </COMMENT>
 @item nice
 Get or set UNIX priority (niceness) of running R process.
+@item nleqslv
+Solve systems of non-linear equations.
 @item nlme
 Fit and compare Gaussian linear and nonlinear mixed-effects models.
 @emph{Recommended}.
@@ -4960,6 +5037,8 @@ Maxent} Java package for training and using maximum entropy models.
 English and spanish models for @strong{openNLP}.
 @item opentick
 Interface to opentick real time and historical market data.
+@item operators
+Additional binary operators for R.
 @item optmatch
 Functions to perform optimal matching, particularly full matching.
 @item orientlib
@@ -5039,6 +5118,8 @@ Periodic Autoregression Analysis.
 Prediction Error Curves for survival models.
 @item penalized
 Penalized estimation in generalized linear models.
+@item penalizedSVM
+Feature selection SVM using penalty functions.
 @item peperr
 Parallelised Estimation of Prediction ERRor.
 @item permax
@@ -5207,6 +5288,8 @@ R in the Political Science Computational Laboratory, Stanford
 University.
 @item pseudo
 Pseudo-observations.
+@item pspearman
+Spearman's rank correlation test.
 @item pspline
 Smoothing splines with penalties on order @math{m} derivatives.
 @item psy
@@ -5319,6 +5402,8 @@ C Double Description for R, an interface to the CDD computational
 geometry library.
 @item rcdk
 Interface to the CDK libraries, a Java framework for cheminformatics.
+@item rcdklibs
+CDK libraries packaged for R.
 @item rcom
 R COM Client Interface and internal COM Server.
 @item rcompgen
@@ -5349,6 +5434,8 @@ models.
 Detect and test regular sequences and subsequences.
 @item regtest
 Regression testing.
+@item rela
+Item analysis with standard errors.
 @item relaimpo
 RELAtive IMPOrtance of regressors in linear models.
 @item relations
@@ -5368,6 +5455,8 @@ Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model.
 @item relsurv
 Various functions for regression in relative survival.
+@item remMap
+Regularized multivariate regression for identifying master predictors.
 @item repolr
 Repeated measures proportional odds logistic regression.
 @item reporttools
@@ -5425,6 +5514,8 @@ two-sample comparison of binary outcomes.
 An interface between R and the metasim simulation engine.  Facilitates
 the use of the metasim engine to build and run individual based
 population genetics simulations.
+@item robCompositions
+Robust estimation for compositional data.
 @item robfilter
 Robust time series filters.
 @c <COMMENT>
@@ -5480,6 +5571,8 @@ Unified object oriented interface for multiple independent streams of
 random numbers from different sources.
 @item rtiff
 Read TIFF format images and return them as pixmap objects.
+@item rtv
+Random Time Variable objects.
 @item runjags
 Run Bayesian MCMC models in the BUGS syntax using JAGS.
 @item rv
@@ -5548,6 +5641,8 @@ Shrinkage Discriminant Analysis.
 @item sdcMicro
 Statistical Disclosure Control methods for the generation of public and
 scientific use files.
+@item sdcTable
+Statistical Disclosure Control for tabular data.
 @item sde
 Simulation and inference for Stochastic Differential Equations.
 @item sdtalt
@@ -5836,6 +5931,8 @@ Two-sample tests for survival analysis.
 @item survBayes
 Fits a proportional hazards model to time to event data by a Bayesian
 approach.
+@item survcomp
+Performance assessment and comparison for survival analysis.
 @item surveillance
 Outbreak detection algorithms for surveillance data.
 @item survey
@@ -5854,6 +5951,16 @@ Functions for survival analysis, including penalised likelihood.
 Time-dependent ROC curve estimation from censored survival data.
 @item survrec
 Survival analysis for recurrent event data.
+@item svGUI
+SciViews @acronym{GUI} @acronym{API}: functions to manage @acronym{GUI}
+clients.
+@item svIDE
+SciViews @acronym{GUI} @acronym{API}: functions to interact with
+external IDE/code editors.
+@item svMisc
+SciViews @acronym{GUI} @acronym{API}: miscellaneous functions.
+@item svSocket
+SciViews @acronym{GUI} @acronym{API} socket server.
 @item svcR
 A support vector machine technique for clustering.
 @item svcm
@@ -5965,6 +6072,8 @@ A constrained two-dimensional Delaunay triangulation package.
 Goodness-of-fit tests allowing for left truncated data.
 @item truncnorm
 Truncated normal distribution.
+@item truncreg
+Truncated regression models.
 @item trust
 Local optimization using two derivatives and trust regions.
 @item tsDyn
@@ -5995,6 +6104,8 @@ Maximum likelihood computations for Tweedie exponential family models.
 @item twslm
 A two-way semilinear model for normalization and analysis of cDNA
 microarray data.
+@item ucminf
+Unconstrained nonlinear optimization via UCMINF.
 @item udunits
 Interface to Unidata's routines to convert units.
 @item ump
@@ -6076,6 +6187,8 @@ WordNet interface.
 @item write.snns
 Function for exporting data to SNNS (Stuttgart Neural Network Simulator)
 pattern files.
+@item x12
+A wrapper function and @acronym{GUI} for the X12 binaries under windows.
 @item xgobi
 Interface to the XGobi and XGvis programs for graphical data analysis.
 @item xlsReadWrite
@@ -6106,6 +6219,8 @@ seismic waves when they interact at an interface between two layers.
 @item zoo
 A class with methods for totally ordered indexed observations such as
 irregular time series.
+@item zyp
+Zhang & Yue-Pilon approach to determining trends in climate data.
 @end table
 
 @noindent
