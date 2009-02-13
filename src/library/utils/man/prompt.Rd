@@ -21,7 +21,7 @@ prompt(object, filename = NULL, name = NULL, \dots)
 }
 \arguments{
   \item{object}{an \R object, typically a function for the default
-    method.}
+    method.  Can be \code{\link{missing}} when \code{name} is specified.}
   \item{filename}{usually, a connection or a character string giving the
     name of the file to which the documentation shell should be written.
     The default corresponds to a file whose name is \code{name} followed
@@ -96,5 +96,11 @@ unlink("women.Rd")
 
 prompt(sunspots) # non-data.frame data
 unlink("sunspots.Rd")
+
+\dontrun{
+## Create a help file for each function in the .GlobalEnv:
+for(f in ls()) if(is.function(get(f))) prompt(name = f)
+}
+
 }
 \keyword{documentation}
