@@ -438,16 +438,17 @@ residuals.lm <-
                   if(is.null(object$weights)) r else r * sqrt(object$weights),
                   partial = r
            )
-    res<-naresid(object$na.action, res)
+    res <- naresid(object$na.action, res)
     if (type=="partial") ## predict already does naresid
-      res<-res+predict(object,type="terms")
+      res <- res + predict(object,type="terms")
     res
 }
 
+## The lm method now includes "glm" ones :
 simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
 {
     if(!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
-        runif(1)                       # initialize the RNG if necessary
+        runif(1)                     # initialize the RNG if necessary
     if(is.null(seed))
         RNGstate <- get(".Random.seed", envir = .GlobalEnv)
     else {
@@ -456,14 +457,38 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
         RNGstate <- structure(seed, kind = as.list(RNGkind()))
         on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
     }
-    ftd <- fitted(object)
-    ans <-
-        as.data.frame(ftd +
-                      matrix(rnorm(length(ftd) * nsim,
-                                   sd = sqrt(deviance(object)/
-                                   df.residual(object))),
-                             nrow = length(ftd)))
+    ftd <- fitted(object)             # == napredict(*, object$fitted)
+    ntot <- length(ftd) * nsim
+    fam <- if(inherits(object, "glm")) object$family$family else "gaussian"
+    val <- switch(fam,
+		  "gaussian" = ftd + rnorm(ntot, sd =
+		  sqrt(deviance(object)/ df.residual(object)))
+		  ,
+		  "poisson" = rpois(ntot, ftd)
+		  ,
+		  "binomial" = {
+		      wts <- object$prior.weights
+		      if (any(wts %% 1 != 0))
+			  stop("cannot simulate from non-integer prior.weights")
+		      rbinom(ntot, size = wts, prob = ftd)/wts
+		  },
+		  "Gamma" = {
+		      if(is.null(tryCatch(loadNamespace("MASS"),
+					  error = function(e) NULL)))
+			  stop("Need 'MASS' package for 'Gamma' family")
+		      shape <- MASS::gamma.shape(object)$alpha
+		      rgamma(ntot, shape = shape, rate = shape/ftd)
+		  },
+		  "inverse.gaussian" = {
+		      if(is.null(tryCatch(loadNamespace("SuppDists"),
+					  error = function(e) NULL)))
+			  stop("Need CRAN package 'SuppDists' for 'inverse.gaussian' family")
+		      lambda <- 1/summary(object)$dispersion
+		      SuppDists::rinvGauss(ntot, nu = ftd, lambda = lambda)
+		  },
+		  stop("family '", fam, "' not yet implemented"))
 
+    ans <- as.data.frame(matrix(val, ncol = nsim))
     attr(ans, "seed") <- RNGstate
     ans
 }
