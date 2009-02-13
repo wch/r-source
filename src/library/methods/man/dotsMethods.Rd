@@ -138,9 +138,9 @@ setClass("cdate", contains = "character", representation(date = "Date"))
 
 setClass("vdate", contains = "vector", representation(date = "Date"))
 
-cd1 = new("cdate", "abcdef", date = Sys.Date())
+cd1 <- new("cdate", "abcdef", date = Sys.Date())
 
-cd2 = new("vdate", "abcdef", date = Sys.Date())
+cd2 <- new("vdate", "abcdef", date = Sys.Date())
 
 stopifnot(identical(cc(letters, character(), cd1), paste(letters, character(), cd1))) # the "character" method
 
