@@ -495,7 +495,7 @@ assignClassDef <-
 .initClassSupport <- function(where) {
     setClass("classPrototypeDef", representation(object = "ANY", slots = "character", dataPart = "logical"),
              sealed = TRUE, where = where)
-    setClass(".Other", representation(label = "character"), 
+    setClass(".Other", representation(label = "character"),
              sealed = TRUE, where = where)  # nonvirtual, nobody's subclass, see testInheritedMethods
     ## a class and a method for reporting method selection ambiguities
     setClass("MethodSelectionReport",
@@ -785,7 +785,11 @@ showClass <-
     else
         ClassDef <- getClassDef(Class)
     cat(if(identical(ClassDef@virtual, TRUE)) "Virtual ",
-	"Class ", dQuote(Class), "\n", sep="")
+	"Class ", dQuote(Class),
+	## Show the package if that is non-trivial:
+	if(nzchar(pkg <- ClassDef@package))
+	c(" [", if(pkg != ".GlobalEnv") "package" else "in", " \"", pkg,"\"]"),
+	"\n", sep="")
     x <- ClassDef@slots
     if(length(x)) {
         n <- length(x)
@@ -1629,31 +1633,31 @@ substituteFunctionArgs <-
 
 
 ..classEnv <- function(Class, default = .requirePackage("methods"), mustFind = TRUE) {
-    if(is.character(Class))
-        package <- packageSlot(Class)
-    else ## must then be a class definition
-        package <- Class@package
+    package <- { if(is.character(Class)) packageSlot(Class) else
+		 ## must then be a class definition
+		 Class@package }
     if(is.null(package)) {
-            ## use the default, but check that the class is there, and if not
-            ## try a couple of other heuristics
-            value <- default
-            def <- getClassDef(Class, value, NULL)
-            if(is.null(def)) {
-                value <- .GlobalEnv
-                def <- getClassDef(Class, value, NULL)
-                if(is.null(def)) {
-                    value <- .requirePackage("methods")
-                    if(!identical(default, value)) # user supplied default
-                        def <- getClassDef(Class, value, NULL)
-                }
-            }
-            if(is.null(def) && mustFind)
-                stop(gettextf("unable to find an environment containing class \"%s\"", Class), domain = NA)
-            value
-        }
-        else
-            .requirePackage(package)
+	## use the default, but check that the class is there, and if not
+	## try a couple of other heuristics
+	value <- default
+	def <- getClassDef(Class, value, NULL)
+	if(is.null(def)) {
+	    value <- .GlobalEnv
+	    def <- getClassDef(Class, value, NULL)
+	    if(is.null(def)) {
+		value <- .requirePackage("methods")
+		if(!identical(default, value)) # user supplied default
+		    def <- getClassDef(Class, value, NULL)
+	    }
+	}
+	if(is.null(def) && mustFind)
+	    stop(gettextf("unable to find an environment containing class \"%s\"",
+			  Class), domain = NA)
+	value
     }
+    else
+	.requirePackage(package)
+}
 
 ## find a generic function reference, using the package slot if present
 ## FIXME:  this and .classEnv should be combined and implemented in C for speed
@@ -1947,7 +1951,7 @@ classToAM <- function(classDef, includeSubclasses = FALSE, short = FALSE,
     if(includeSubclasses)
       nodes <- c(nodes, names(classDef@subclasses))
     nodes <- unique(nodes)
-    if(identical(short, TRUE))  
+    if(identical(short, TRUE))
       labels <- abbreviate(nodes)
     else if(is.character(short)) {
         if(length(short) != length(nodes))
@@ -1981,7 +1985,7 @@ classToAM <- function(classDef, includeSubclasses = FALSE, short = FALSE,
     value
 }
 
-.choosePos <- function (allNames, subNames) 
+.choosePos <- function (allNames, subNames)
 {
     candidates <- list()
     dups <- unique(allNames[duplicated(allNames)])
@@ -2011,4 +2015,4 @@ classToAM <- function(classDef, includeSubclasses = FALSE, short = FALSE,
     i <- which.min(sapply(scores, length))
     list(-candidates[[i]]+1, scores[[i]])
 }
-            
+
