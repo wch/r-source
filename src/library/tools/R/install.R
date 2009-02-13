@@ -1423,8 +1423,10 @@
          message("Converting Rd files to LaTeX ...")
         cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
                      encoding, sep="")
-        outcon <- file(outfile, if(append) "at" else "wt")
-        on.exit(close(outcon))
+        if (is.character(outfile)) {
+            outfile <- file(outfile, if(append) "at" else "wt")
+            on.exit(close(outfile))
+        }
         for(f in files) {
             cat("  ", basename(f), "\n", sep="")
             if(!internals) {
@@ -1435,7 +1437,7 @@
             out <-  file.path(latexdir, sub("\\.[Rr]d",".tex", basename(f)))
             ## people have file names with quotes in them.
             system(paste(cmd,"-o", shQuote(out), shQuote(f)))
-            writeLines(readLines(out), outcon)
+            writeLines(readLines(out), outfile)
         }
     }
 }
@@ -2043,7 +2045,7 @@
                     enc = "unknown", files_or_dir, OSdir,
                     internals = "no", index = "true")
 {
-    print(match.call())
+    # print(match.call())
 
     ## %in% and others cause problems for some page layouts.
     if (basename(pkgdir) == "base") index <- "false"
@@ -2054,10 +2056,13 @@
     internals <- internals != "no"
     index <- index != "false"
 
-    if(enc == "unknown" && file.exists(f <- file.path(pkgdir, "DESCRIPTION"))) {
+    desc <- NULL
+    if (file.exists(f <- file.path(pkgdir, "DESCRIPTION"))) {
         desc <- read.dcf(f)[1,]
-        pkg_enc <- desc["Encoding"]
-        if (!is.na(enc)) enc <- pkg_enc
+        if(enc == "unknown") {
+            pkg_enc <- desc["Encoding"]
+            if (!is.na(enc)) enc <- pkg_enc
+        }
     }
 
     toc <- if(file_test("-d", files_or_dir)) {
@@ -2075,6 +2080,24 @@
                  "\\makeindex{}",
                  "\\begin{document}"), out)
     if(is_bundle == "no") {
+        if (!nzchar(title)) {
+            if (is.character(desc))
+                title <- paste("Package `", desc["Package"], "'", sep = "")
+            else if (file.exists(f <- file.path(pkgdir, "DESCRIPTION.in"))) {
+                desc <- read.dcf(f)[1,]
+                title <- paste("Package `", desc["Package"], "'", sep = "")
+            } else {
+                if (file_test("-d", pkgdir)) {
+                    subj <- paste("all in \\file{", pkgdir, "}", sep ="")
+                } else {
+                    files <- strsplit(files_or_dir, "[[:space:]]+")[[1]]
+                    subj1 <- if (length(files) > 1) " etc." else ""
+                    subj <- paste("\\file{", pkgdir, "}", subj1, sep = "")
+                }
+                subJ <- gsub("[_$]", "\\\\1", subj)
+                title <- paste("\\R{} documentation}} \\par\\bigskip{{\\Large of", subj)
+            }
+        }
         cat("\\chapter*{}\n",
             "\\begin{center}\n",
             "{\\textbf{\\huge ", title, "}}\n",
@@ -2091,6 +2114,8 @@
                                   out, version)
         }
     } else { ## bundle case
+        if (!nzchar(title) && is.character(desc))
+            title <- paste("Bundle `", desc["Bundle"], "'", sep = "")
         cat("\\pagenumbering{Roman}\n",
             "\\begin{titlepage}\n",
             "\\strut\\vfill\n",

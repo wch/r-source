@@ -57,6 +57,7 @@ unset CDPATH
 start_dir=`pwd`
 build_dir=".Rd2dvi${$}"
 
+title=""
 batch=false
 clean=true
 debug=false
@@ -147,9 +148,6 @@ done
 
 if ${debug}; then set -x; fi
 
-. ${R_SHARE_DIR}/sh/dcf.sh	# get_dcf_field()
-
-
 do_cleanup () {
   if ${clean}; then
     cd ${start_dir}
@@ -160,27 +158,20 @@ do_cleanup () {
 }
 
 is_bundle=no
-file_sed='s/[_$]/\\&/g'
 
 if test -d "${1}"; then
   if test -f ${1}/DESCRIPTION; then
     if test -n "`grep '^Bundle:' ${1}/DESCRIPTION`"; then
       echo "Hmm ... looks like a package bundle"
       is_bundle=yes
-      bundle_name=`get_dcf_field Bundle "${1}/DESCRIPTION"`
-      title=${title-"Bundle \`${bundle_name}'"}
     else
       echo "Hmm ... looks like a package"
-      package_name=`get_dcf_field Package "${1}/DESCRIPTION"`
-      title=${title-"Package \`${package_name}'"}
       dir=${1}
     fi
     test -z "${output}" && output="`basename ${1}`.${out_ext}"
   elif test -f ${1}/DESCRIPTION.in && \
        test -n "`grep '^Priority: *base' ${1}/DESCRIPTION.in`"; then
     echo "Hmm ... looks like a package from the R distribution"
-    package_name=`get_dcf_field Package "${1}/DESCRIPTION.in"`
-    title=${title-"Package \`${package_name}'"}
     dir=${1}
     test -z "${output}" && output="`basename ${1}`.${out_ext}"
   else
@@ -189,28 +180,15 @@ if test -d "${1}"; then
     else
       dir=${1}
     fi
-    subj0=`${echo} ${dir} | ${SED} -e ${file_sed}`
-    subj="all in \\\\\\\\file{${subj0}}"
   fi
 else
-  if test ${#} -gt 1 ; then
-    subj=" etc.";
-  else
-    subj=
+  if test ${#} -eq 1 ; then
     if test -z "${output}"; then
       output=`basename "${1}"`
       output="`echo ${output} | ${SED} 's/[Rr]d$//'`${out_ext}"
     fi
   fi
-  subj0=`${echo} ${1} | ${SED} -e ${file_sed}`
-  subj="\\\\\\\\file{${subj0}}${subj}"
 fi
-
-
-## substitution went wrong under ash
-title1="\\\\\\\\R{} documentation}} \\\\\\\\par\\\\\\\\bigskip{{''\\\\\\\\Large of ${subj}"
-title=${title-$title1}
-
 
 ## Prepare for building the documentation.
 if test -z "${output}"; then
