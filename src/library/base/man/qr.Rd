@@ -38,7 +38,7 @@ as.qr(x)
     \code{x} is real.}
   \item{qr}{a QR decomposition of the type computed by \code{qr}.}
   \item{y, b}{a vector or matrix of right-hand sides of equations.}
-  \item{a}{A QR decomposition or (\code{qr.solve} only) a rectangular matrix.}
+  \item{a}{a QR decomposition or (\code{qr.solve} only) a rectangular matrix.}
   \item{k}{effective rank.}
   \item{LAPACK}{logical. For real \code{x}, if true use LAPACK
     otherwise use LINPACK.}

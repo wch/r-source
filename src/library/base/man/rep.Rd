@@ -26,7 +26,8 @@ rep.int(x, times)
 \arguments{
   \item{x}{a vector (of any mode including a list) or a pairlist or a
     factor or (except for \code{rep.int}) a \code{POSIXct} or
-    \code{POSIXlt} or \code{date} object.}
+    \code{POSIXlt} or \code{date} object; or also, an S4 object containing
+    a vector of the above kind.}
   \item{\dots}{further arguments to be passed to or from other methods.
     For the internal default method these can include:
     \describe{
@@ -68,7 +69,7 @@ rep.int(x, times)
   If \code{x} has length zero and \code{length.out} is supplied and is
   positive, the values are filled in using the extraction rules, that is
   by an \code{NA} of the appropriate class for an atomic vector
-  (\code{0} for raw vectors) and \code{NULL} for a list.  
+  (\code{0} for raw vectors) and \code{NULL} for a list.
 }
 \value{
   An object of the same type as \code{x} (except that \code{rep} will
