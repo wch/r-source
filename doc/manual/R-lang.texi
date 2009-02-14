@@ -3683,7 +3683,7 @@ call, so it is distinctly different from @code{round(x)}.  The form is
 used rather rarely, but is occasionally useful where the name of a
 function is available as a character variable.
 
-The function @code{do.call} is related, but evaluates the call immediate
+The function @code{do.call} is related, but evaluates the call immediately
 and takes the arguments from an object of mode @code{"list"} containing
 all the arguments.  A natural use of this is when one wants to apply a
 function like @code{cbind} to all elements of a list or data frame.
