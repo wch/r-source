@@ -150,6 +150,7 @@ A package consists of a subdirectory containing a file
 package subdirectory may also contain files @file{INDEX},
 @file{NAMESPACE}, @file{configure}, @file{cleanup}, @file{LICENSE},
 @file{LICENCE}, @file{COPYING} and @file{NEWS}.  Other files such as
+@file{INSTALL} (for non-standard installation instructions),
 @file{README} or @file{ChangeLog} will be ignored by @R{}, but may be
 useful to end-users.
 
