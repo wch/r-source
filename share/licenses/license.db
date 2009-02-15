@@ -104,14 +104,14 @@ Abbrev: MPL
 Version: 1.0
 OSI: open
 FSF: free_and_GPL_incompatible
-URL: http://www.opensource.org/licenses/mozilla1.0.php
+URL: http://www.mozilla.org/MPL/MPL-1.0.html
 
 Name: Mozilla Public License
 Abbrev: MPL
 Version: 1.1
 OSI: open
 FSF: free_and_GPL_incompatible
-URL: http://www.opensource.org/licenses/mozilla1.1.php
+URL: http://www.mozilla.org/MPL/MPL-1.1.html
 
 Name: X11 License
 Abbrev: X11
@@ -124,3 +124,10 @@ Version: 1.0
 FSF: free_and_GPL_incompatible
 OSI: open
 URL: http://www.eclipse.org/legal/cpl-v10.html
+
+Name: Eclipse Public License
+Version: 1.0
+Abbrev: EPL
+FSF: free_and_GPL_incompatible
+OSI: open
+URL: http://www.eclipse.org/legal/epl-v10.html
