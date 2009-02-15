@@ -105,10 +105,19 @@
     \item{coerce}{Methods are defined to coerce arbitrary objects to
       these classes, by calling the corresponding basic function, for
       example, \code{as(x, "matrix")} calls \code{as.matrix(x)}.}
-    \item{Ops, Math}{Group methods (see, e.g., \code{\link{S4groupGeneric}})
+    \item{Ops}{Group methods (see, e.g., \code{\link{S4groupGeneric}})
       are defined for combinations of structures and vectors (including
       special cases for array and matrix), implementing the concept of
-      vector structures as in the reference.
+      vector structures as in the reference.  Essentially, structures
+      combined with vectors retain the structure as long as the
+      resulting object has the same length.  Structures combined with
+      other structures remove the structure, since there is no
+      automatic way to determine what should happen to the slots
+      defining the structure.
+
+      Note that these methods will be activated when a package is loaded
+      containing a class that inherits from any of the structure
+      classes or class \code{"vector"}.
     }
   }
 }

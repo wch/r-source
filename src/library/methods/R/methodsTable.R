@@ -587,11 +587,8 @@
     if(exists(tname, envir = env, inherits = FALSE)) {
       .mergeMethodsTable(generic, mtable, get(tname, envir = env), attach)
     }
-    else {
-      warning(gettextf(
-              "Couldn't find methods table for \"%s\", package \"%s\" may be out of date",
-                       generic@generic, generic@package), domain=NA)
-    }
+    ## else used to warn, but the generic may be implicitly required
+    ## by class inheritance, without any explicit methods in this package
   }
   if(length(generic@group)) {
       groups <- as.list(generic@group)

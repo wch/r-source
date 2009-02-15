@@ -387,7 +387,7 @@ stopifnot(c("BIC", "coef", "confint", "logLik", "plot", "profile",
 em <- as.environment("package:methods")
 ggm <- getGenerics(em)
 gms <- c("addNextMethod", "body<-", "cbind2", "initialize",
-	 "loadMethod", "Math", "Ops", "rbind2", "show")
+	 "loadMethod", "Ops", "rbind2", "show")
 stopifnot(unlist(lapply(ggm, function(g) !is.null(getGeneric(g, where = em)))),
 	  unlist(lapply(ggm, function(g) !is.null(getGeneric(g)))),
 	  gms %in% ggm,

@@ -177,6 +177,10 @@ NEW FEATURES
     o	simulate(obj) now also works for "glm" objects, thanks to
 	contributions from Ben Bolker and Heather Turner.
 
+    o	S4 classes that inherit from any of the "structure" classes or
+        from "vector" will turn on methods for all the "Ops" group of
+        functions when the package containing the classes is
+        loaded. See class?structure.
 
 
 DEPRECATED & DEFUNCT

@@ -1,5 +1,5 @@
 
-R version 2.9.0 Under development (unstable) (2009-01-23 r47697)
+R version 2.9.0 Under development (unstable) (2009-02-15 r47923)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -643,7 +643,7 @@ include omitted arguments in definition: mode = "missing"
 > em <- as.environment("package:methods")
 > ggm <- getGenerics(em)
 > gms <- c("addNextMethod", "body<-", "cbind2", "initialize",
-+ 	 "loadMethod", "Math", "Ops", "rbind2", "show")
++ 	 "loadMethod", "Ops", "rbind2", "show")
 > stopifnot(unlist(lapply(ggm, function(g) !is.null(getGeneric(g, where = em)))),
 + 	  unlist(lapply(ggm, function(g) !is.null(getGeneric(g)))),
 + 	  gms %in% ggm,

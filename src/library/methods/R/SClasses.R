@@ -75,6 +75,11 @@ setClass <-
                 stop(gettextf("error in contained classes (%s) for class \"%s\"; previous definition restored to \"%s\"",
                               msg, Class, getPackageName(where)), domain = NA)
         }
+        classDef <- getClassDef(Class, where = where) # updated with superclasses
+        if(is.null(classDef))
+          stop(gettextf('Internal error: definiition of class "%s" not properly assigned', Class),
+               domain = NA)
+        .checkRequiredGenerics(Class, classDef, where)
         if(sealed) {
             classDef@sealed <- TRUE
             assignClassDef(Class, classDef, where)
@@ -708,3 +713,32 @@ sealClass <- function(Class, where = topenv(parent.frame())) {
     invisible(classDef)
 }
 
+.checkRequiredGenerics <- function(Class, classDef, where) {}
+
+..checkRequiredGenerics <- function(Class, classDef, where) {
+  ## If any of the superclasses are in the .NeedPrimitiveMethods
+  ## list, cache the corresponding generics now and also save their names in
+  ## .requireCachedGenerics to be used when the environment
+  ## where= is loaded.
+  supers <- names(classDef@contains)
+  allNeeded <- get(".NeedPrimitiveMethods", envir = .methodsNamespace)
+  specials <- names(allNeeded)
+  needed <- match(specials, supers, 0) > 0
+  if(any(needed)) {
+    generics <- unique(allNeeded[needed])
+    packages <- character()
+    for(g in generics) {
+      def <- getGeneric(g)
+      packages <- c(packages, def@package) # must be "methods" ?
+      cacheGenericsMetaData(g, def, TRUE, where, def@package)
+    }
+    if(exists(".requireCachedGenerics",  where, inherits = FALSE))
+      previous <- get(".requireCachedGenerics",  where)
+    else
+      previous <- character()
+    packages <- c(attr(previous, "package"), packages)
+    gg <- c(previous, generics)
+    attr(gg, "package") <- packages
+    assign(".requireCachedGenerics", gg, where)
+  }
+}

@@ -757,6 +757,14 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
     packages <- attr(generics, "package")
     if(length(packages) <  length(generics))
       packages <- rep(packages, length.out = length(generics))
+    if(attach && exists(".requireCachedGenerics", where, inherits = FALSE)) {
+      others <- get(".requireCachedGenerics", where)
+      generics <- c(generics, others)
+      packages <- c(packages, attr(others, "package"))
+    }
+    ## check for duplicates
+    dups <- duplicated(generics) & duplicated(packages)
+    generics <- generics[!dups]
     pkg <- getPackageName(where)
     for(i in seq_along(generics)) {
         f <- generics[[i]]

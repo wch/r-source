@@ -237,6 +237,16 @@
 }
 
 .InitStructureMethods <- function(where) {
+    ## these methods need to be cached (for the sake of the primitive
+    ## functions in the group) if a class is loaded that extends
+    ## one of the classes structure, vector, or array.
+    if(!exists(".NeedPrimitiveMethods", where))
+      needed <- list()
+    else
+      needed <- get(".NeedPrimitiveMethods", where)
+    needed <- c(needed, list(structure = "Ops", vector = "Ops",
+          array = "Ops"))
+    assign(".NeedPrimitiveMethods", needed, where)
     setMethod("Ops", c("structure", "vector"), where = where,
               function(e1, e2) {
                   value <- callGeneric(e1@.Data, e2)
@@ -280,11 +290,14 @@
                  callGeneric(e1@.Data, e2@.Data)
               )
 
-    setMethod("Math", "structure", where = where,
-              function(x) {
-                  x@.Data <- callGeneric(x@.Data)
-                  x
-              })
+    ## it's asserted that the following is not needed,
+    ## because the primitive code does the same thing.
+    ## If a counterexample surfaces, uncomment below
+##     setMethod("Math", "structure", where = where,
+##               function(x) {
+##                   x@.Data <- callGeneric(x@.Data)
+##                   x
+##               })
 }
 
 

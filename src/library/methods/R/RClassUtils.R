@@ -485,6 +485,8 @@ assignClassDef <-
     slot(object, "package", FALSE) <- getPackageName(where)
 ##    assignClassDef("classRepresentation", object, where)
     assign(classMetaName("classRepresentation"), object, where)
+    ## the list of needed generics, initially empty (see .InitStructureMethods)
+    assign(".NeedPrimitiveMethods", list(), where)
 }
 
 .classNameFromMethods <- function(what) {
