@@ -8049,13 +8049,7 @@ from @code{SET_STRING_ELT} and @code{SET_VECTOR_ELT} which are always
 functions.)
 
 The accessor functions check that they are being used on an appropriate
-type of @code{SEXP}.  By default a certain amount of misuse is allowed
-where the internal representation is the same: for example
-@code{LOGICAL} can be used on a @code{INTSXP} and @code{SET_VECTOR_ELT}
-on a @code{STRSXP}.  Strict checking can be enabled by compiling @R{}
-(specifically @file{src/main/memory.c}) with
-@samp{USE_TYPE_CHECKING_STRICT} defined (e.g. in as the configure
-variable @samp{DEFS} on a Unix-alike).
+type of @code{SEXP}.
 
 If efficiency is essential, the macro versions of the accessors can be 
 obtained by defining @samp{USE_RINTERNALS} before including
