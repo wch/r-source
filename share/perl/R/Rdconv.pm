@@ -2409,9 +2409,9 @@ sub rdoc2latex {# (filename)
 	$latexout = "STDOUT";
     }
     $blname = &latex_escape_name($blocks{"name"});
-    ## This is going to be used in indexing, so it needs || escaped too.
+    ## This is going to be used in indexing, so it needs ||@ escaped too.
     ## They render as escaped, though.
-    $blname =~ s/([!|])/"$1/g;
+    $blname =~ s/([!@|])/"$1/g;
     print $latexout "\\inputencoding{$encoding}\n" if $encoding ne "unknown";
     print $latexout "\\HeaderA\{";
     print $latexout $blname;
@@ -2919,7 +2919,7 @@ sub latex_code_alias {
     my $c = $_[0];  ##-- $c is (typically) the OUTPUT of  code2latex(.) :
     $c = latex_code_trans ($c);
     $c = latex_link_trans ($c);
-    $c =~ s/\!/"!/go; # "  This is the bibtex escape
+    $c =~ s/\!/"!/go; # "  This is the indexing escape
     $c =~ s/\|/"|/go; # "
     ##      $c =~ s/@/"@/go; # "  Not currently valid R character
     $c;

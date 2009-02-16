@@ -2890,7 +2890,7 @@ on a case-insensitive file system.} is the basename of the Rd file
 containing the documentation.  It is the ``name'' of the Rd object
 represented by the file and has to be unique in a package.  To avoid
 problems with indexing the package manual, it may not contain @samp{!}
-nor @samp{!}.
+@samp{!} nor @samp{@}.
 @c and must not contain @LaTeX{}
 @c special characters (@samp{#}, @samp{$}, @samp{%}, @samp{&}, @samp{~},
 @c @samp{_}, @samp{^}, @samp{\}, @samp{@{}, @samp{@}}).
