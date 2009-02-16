@@ -1033,11 +1033,13 @@ to ensure that the LAPACK routines find some constants without infinite
 looping.  The Windows equivalent is
 
 @smallexample
+all: $(SHLIB)
+
 slamc.o: slamc.f
         $(F77) $(SAFE_FFLAGS) -c -o slamc.o slamc.f
 @end smallexample
 
-More generally, on a Unix-alike one could have something like
+More generally, one could have something like
 
 @smallexample
 .PHONY: all
@@ -1051,31 +1053,6 @@ after:
         Cleanup needed after 'before'
 @end smallexample
 
-@noindent
-On Windows, one can add dependencies to the @samp{all} target (which is
-what will get called), e.g.@: (based on package @pkg{rcom})
-
-@smallexample
-all: ../inst/tst/bin/rcom_test.exe extraclean
-
-../inst/tst/bin/rcom_test.exe: rcom_test.exe
-	$(MKDIR) -p ../inst/tst/bin
-	$(CP) $? $@
-rcom_test.exe: rcom_test.o
-rcom_test-LIBS = -L. -lsupc++ -luuid -lole32 -loleaut32
-
-extraclean:
-        $(RM) rcom_test.exe
-@end smallexample
-
-@noindent
-The added dependencies will be built after the DLL: it is also possible
-(but not advisable) to have a target @samp{all} with commands (rather
-than dependencies)
-
-There are two another targets, @samp{before} and @samp{after}, which by
-default have neither dependencies nor commands so can be overridden in a
-@file{Makevars.win}.  See the example in @ref{Linking to other packages}.
 
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
 or @file{Makevars.win}: this will be used by @command{R CMD build}.
@@ -6213,7 +6190,7 @@ PKG_LIBS= -L"$(PKGB_PATH)" -lexB
 
 Another possibility is to use an import library, shipping with package
 @pkg{packA} an exports file @file{exB.def}.  Then @file{Makevars.win}
-could contain
+could contain (@strong{for R 2.8.x:needs updating})
 
 @example
 PKG_LIBS= -L. -lexB
