@@ -69,49 +69,99 @@ direct and inherited slot names must be unique.
 That does not, however, prevent the same class from being inherited
 via more than one path.
 
-One kind of element in the \code{contains=} argument is special, specifying one of the R
-vector types or one of a few other special \R types (\code{matrix} and
+One kind of element in the \code{contains=} argument is special, specifying one of the \R
+object types or one of a few other special \R types (\code{matrix} and
 \code{array}).
-A class can contain at most one of these, directly or indirectly.
-When it does, that contained class determines the \dQuote{data part}
-of the class, and objects from the new class inherit all the built in
-behavior of the contained type.
-Two direct consequences are:  for any object \code{x} from the class,
-\code{typeof(x)} will be the contained basic type; and a special
-pseudo-slot, \code{.Data}, will be shown with the corresponding class.
+See the section on inheriting from object types, below.
 
-For an object from any class that does \emph{not} contain such a type,
-\code{typeof(x)} will be \code{"S4"} and the class will have no
-\code{.Data} slot.
-}
 
 \note{
   Certain slot names are not allowed in the current implementation, as
   they correspond to \link{attributes} which are treated
   specially.  These are \code{class}, \code{comment}, \code{dim},
   \code{dimnames}, \code{names}, \code{row.names} and \code{tsp}.
+  Some other slot names have special meaning; these names start with
+  the \code{"."} character.  To be safe, you  define all of
+  your own slots with names starting with an alphabetic character.
 }
-\section{ Prototypes}{
-  Defining new classes that inherit from (\sQuote{extend}) other classes
-  is a powerful technique, but has to be used carefully and not
-  over-used.  Otherwise, you will often get unintended results when you
-  start to compute with objects from the new class.
-
-  As shown in the examples below, the simplest and safest form of
-  inheritance is to start with an explicit class, with some slots, that
-  does not extend anything else.  It only does what we say it does.
-
-  Then extensions will add some new slots and new behavior.
-
-  Another variety of extension starts with one of the built-in objects,
-  perhaps with the intention of modifying R's standard behavior for that
-  class.  In this case, the new class inherits the built-in data type
-  as its \sQuote{data} part.  See the \code{"numWithId"} example below.
-
-  When such a class definition is printed, the data part shows up as a
-  pseudo-slot named \code{.Data}.
 }
 
+\section{Inheriting from Object Types}{
+In addition to containing other S4 classes, a class definition can
+contain either informal either an S3 classes or a built-in R pseudo-class---one
+of the \R
+object types or one of the special \R pseudo-classes \code{"matrix"} and
+\code{"array}. 
+A class can contain at most one of the object types, directly or indirectly.
+When it does, that contained class determines the \dQuote{data part}
+of the class.
+
+Objects from the new class try to inherit the built in
+behavior of the contained type.
+In the case of normal \R data types, including vectors, functions and
+expressions, the implementation is relatively straightforward.
+For any object \code{x} from the class,
+\code{typeof(x)} will be the contained basic type; and a special
+pseudo-slot, \code{.Data}, will be shown with the corresponding class.
+See the \code{"numWithId"} example below.
+
+For an object from any class that does \emph{not} contain such a type,
+\code{typeof(x)} will be \code{"S4"}.
+
+Some \R data types do not behave normally, in the sense that they are
+non-local references or other objects that are not duplicated.
+Examples include those corresponding to classes \code{"environment"}, \code{"externalptr"}, and \code{"name"}.
+These can not be the types for objects with user-defined
+classes (either S4 or S3) because setting an attribute overwrites the
+object in all contexts.
+It is possible to define a class that inherits from such types,
+through an indirect mechanism that stores the inherited object in a
+reserved slot.
+The implementation tries to make such classes behave as if the object
+had a data part of the corresponding object type.
+Methods defined with the object type in the signature should work as
+should core code that coerces an object to the type in an internal or
+primitive calculation.
+There is no guarantee, however, because C-level code may switch
+directly on the object type, which in this case will be \code{"S4"}.
+
+Also, keep in mind that the object passed to the low-level computation
+will be the underlying object type, \emph{without} any of the slots
+defined in the class.
+To return the full information, you will usually have to define a
+method that sets the data part.
+
+Note that, in the current implementation, the interpretation of the
+\code{".Data"} pseudo-slot includes all of the object types above, as
+well as the special pseudo-classes \code{"matrix"} and
+\code{"array}, which \R treats internally as if they were object types
+(they have no explicit class and \code{\link{is.object}} returns
+\code{FALSE} for such objects).
+Some of this implementation is still experimental, so a wise policy is
+to use standard tools, such as \code{as(object, type)}, to convert to
+the underlying data type, rather than the pseudo-slot, when possible.
+
+}
+
+\section{Inheriting from S3 Classes}{
+Old-style S3 classes have no formal definition.  Objects are
+\dQuote{from} the class when their class attribute contains the
+character string considered to be the class name.
+
+Using such classes with formal classes and methods is necessarily a
+risky business, since there are no guarantees about the content of the
+objects or about consistency of inherited methods.
+Given that, it is still possible to define a class that inherits from
+an S3 class, providing that class has been registered as an old class
+(see \code{\link{setOldClass}}).
+The essential result is that S3 method dispatch will use the S3 class
+as registered when dispatching.
+
+Some additional options are planned, to control whether the object is
+converted to an S3 class before dispatch.  In the present
+implementation, it is not, which causes some S3 computations to
+misbehave, since they are not seeing the S3 class explicitly.
+}
 
 \section{Classes and Packages}{
 

@@ -182,6 +182,9 @@ NEW FEATURES
         functions when the package containing the classes is
         loaded. See class?structure.
 
+    o	a mechanism now allows S4 classes to inherit from object types
+        "environment", "externalptr" and symbol ("name").  See ?setClass.
+
 
 DEPRECATED & DEFUNCT
 
