@@ -245,7 +245,7 @@
     else
       needed <- get(".NeedPrimitiveMethods", where)
     needed <- c(needed, list(structure = "Ops", vector = "Ops",
-          array = "Ops"))
+          array = "Ops", .environment = "$<-", .environment = "[[<-"))
     assign(".NeedPrimitiveMethods", needed, where)
     setMethod("Ops", c("structure", "vector"), where = where,
               function(e1, e2) {

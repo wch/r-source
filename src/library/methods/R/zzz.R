@@ -64,6 +64,7 @@
         assign(".isPrototype", ..isPrototype, envir = where)
         .InitClassUnion(where)
         .InitS3Classes(where)
+        .InitSpecialTypes(where)
         ## now seal the classes defined in the package
         for(cl in get(".SealedClasses", where))
             sealClass(cl, where)

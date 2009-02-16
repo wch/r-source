@@ -5,7 +5,7 @@
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation; either version 2 of the License, or
 #  (at your option) any later version.
-#
+#int
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -604,16 +604,11 @@ reconcilePropertiesAndPrototype <-
               thisDataPart <-  .validDataPartClass(clDef, name)
               if(!is.null(thisDataPart)) {
                   if(is.null(dataPartClass)) {
-                      if(!is.na(match(thisDataPart, c("NULL", "environment"))))
-                          warning(gettextf("class \"%s\" cannot be used as the data part of another class",
-                                           thisDataPart), domain = NA)
-                      else {
-                          dataPartClass <- thisDataPart
-                          if(!is.null(clDef@prototype)) {
-                            newObject <- clDef@prototype
-                            dataPartValue <- TRUE
-                          }
-                      }
+                    dataPartClass <- thisDataPart
+                    if(!is.null(clDef@prototype)) {
+                      newObject <- clDef@prototype
+                      dataPartValue <- TRUE
+                    }
                   }
                   else if(!extends(dataPartClass, thisDataPart) &&
                           !isVirtualClass(thisDataPart, where = where))
@@ -1164,6 +1159,20 @@ validSlotNames <- function(names) {
 
 ### utility function called from primitive code for "@"
 getDataPart <- function(object) {
+    if(identical(typeof(object),"S4")) {
+        ## explicit .Data or .xData slot
+        ## Some day, we may merge both of these as .Data
+        value <- attr(object, ".Data")
+        if(is.null(value)) {
+            value <- attr(object, ".xData")
+            if(is.null(value))
+              stop("Data part is undefined for general S4 object")
+          }
+        if(identical(value, .pseudoNULL))
+          return(NULL)
+        else
+          return(value)
+    }
     temp <- getClass(class(object))@slots
     if(length(temp) == 0L)
         return(object)
@@ -1205,13 +1214,24 @@ getDataPart <- function(object) {
 }
 
 setDataPart <- function(object, value, check = TRUE) {
-    if(check) {
+    if(check || identical(typeof(object), "S4")) {
         classDef <- getClass(class(object))
-        dataClass <- elNamed(getSlots(classDef), ".Data")
-        if(is.null(dataClass))
+        slots <- getSlots(classDef)
+        dataSlot <- .dataSlot(names(slots))
+        if(length(dataSlot) == 1)
+          dataClass <- elNamed(slots, dataSlot)
+        else if(check)
           stop(gettextf("class \"%s\" does not have a data part (a .Data slot) defined",
                         class(object)), domain = NA)
-        value <- as(value, dataClass)
+        else # this case occurs in making the methods package. why?
+          return(.mergeAttrs(value, object))
+        value <- as(value, dataClass)  # note that this is strict as()
+        if(identical(typeof(object), "S4")) {
+            if(is.null(value))
+              value <- .pseudoNULL
+            attr(object, dataSlot) <- value
+            return(object)
+        }
     }
     .mergeAttrs(value, object)
 }
@@ -1260,6 +1280,15 @@ setDataPart <- function(object, value, check = TRUE) {
     }
     value
 }
+
+.dataSlot <- function(slotNames) {
+    dataSlot <- c(".Data", ".xData")
+    dataSlot <- dataSlot[match(dataSlot, slotNames, 0)>0]
+    if(length(dataSlot) > 1)
+      stop("Class cannot have both an ordinary and hidden data type")
+    dataSlot
+  }
+  
 
 .mergeAttrs <- function(value, object, explicit = NULL) {
     supplied <- attributes(object)

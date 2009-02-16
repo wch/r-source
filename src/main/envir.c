@@ -2672,6 +2672,13 @@ do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
     case NILSXP:
 	errorcall(call,_("using 'as.environment(NULL)' is defunct"));
 	return R_BaseEnv;	/* -Wall */
+    case S4SXP: {
+        SEXP dot_xData = R_getS4DataSlot(arg, ENVSXP);
+        if(arg == R_NilValue)
+	    errorcall(call, _("S4 object does not extend class \"environment\""));
+	else
+	    return(dot_xData);
+    }
     default:
 	errorcall(call, _("invalid object for 'as.environment'"));
 	return R_NilValue;	/* -Wall */

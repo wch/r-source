@@ -798,6 +798,13 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(nsubs > 1 && nsubs != ndims)
 	errorcall(call, _("incorrect number of subscripts"));
 
+    /* code to allow classes to extend environment */
+    if(TYPEOF(x) == S4SXP) {
+        x = R_getS4DataSlot(x, ANYSXP);
+	if(x == R_NilValue)
+	  errorcall(call, _("this S4 class is not subsettable"));
+    }
+
     /* split out ENVSXP for now */
     if( TYPEOF(x) == ENVSXP ) {
       if( nsubs != 1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
@@ -1007,6 +1014,12 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 
     /* Optimisation to prevent repeated recalculation */
     slen = strlen(translateChar(input));
+     /* The mechanism to allow  a class extending "environment" */
+    if( IS_S4_OBJECT(x) && TYPEOF(x) == S4SXP ){
+        x = R_getS4DataSlot(x, ANYSXP);
+	if(x == R_NilValue)
+	    errorcall(call, "$ operator not defined for this S4 class");
+    }
 
     /* If this is not a list object we return NULL. */
     /* Or should this be allocVector(VECSXP, 0)? */
@@ -1118,9 +1131,6 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
     }
     else if( isVectorAtomic(x) ){
 	errorcall(call, "$ operator is invalid for atomic vectors");
-    }
-    else if( IS_S4_OBJECT(x) ){
-	errorcall(call, "$ operator not defined for this S4 class");
     }
     else /* e.g. a function */
 	errorcall(call, R_MSG_ob_nonsub, type2char(TYPEOF(x)));

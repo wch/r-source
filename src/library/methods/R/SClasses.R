@@ -149,6 +149,8 @@ makeClassRepresentation <-
   ## Users should call setClass instead of this function.
   function(name, slots = list(), superClasses = character(), prototype = NULL, package, validity = NULL, access = list(), version = .newExternalptr(), sealed = FALSE, virtual = NA, where)
 {
+    if(any(superClasses %in% .AbnormalTypes))
+        superClasses <- .addAbnormalDataType(superClasses)
     if(!is.null(prototype) || length(slots) || length(superClasses)) {
         ## collect information about slots, create prototype if needed
         pp <- reconcilePropertiesAndPrototype(name, slots, prototype, superClasses, where)
@@ -711,6 +713,37 @@ sealClass <- function(Class, where = topenv(parent.frame())) {
         assignClassDef(Class, classDef, where)
     }
     invisible(classDef)
+}
+
+## see $RHOME/src/main/duplicate.c for the corresponding datatypes
+## not copied by duplicate1
+.AbnormalTypes <- c("environment", "name", "primitive", "externalptr", "weakref", "NULL", "bytecode")
+
+.indirectAbnormalClasses <- c(environment = ".environment",
+                              name = ".name",
+                              primitive = ".primitive",
+                              weakref = ".weakref",
+                              "NULL" = ".NULL",
+                              bytecode = ".bytecode"
+                              )
+
+.addAbnormalDataType <- function(classes) {
+  types <- match(classes, .AbnormalTypes, 0) > 0
+  type = classes[types]
+  if(length(type) == 0)
+    return(classes)
+  if(length(type) > 1)
+    stop(gettextf("Class definition cannot extend more than one of these data types: %s", paste('"',type, '"', sep="", collapse = ", ")),
+         domain = NA)
+  class <- .indirectAbnormalClasses[type]
+  if(is.na(class) || is.null(getClassDef(class, .methodsNamespace)))
+    stop(gettextf("Sorry, abnormal type \"%s\" is not supported as a superclass of a class definition", type),
+         domain = NA)
+  ## this message is not strictly needed, but reminds programmers that
+  ## they will see an unexpected superclass
+  message(gettextf('Defining type "%s" as a superclass via class "%s"',
+                  type, class), domain = NA)
+  c(class, classes[!types])
 }
 
 .checkRequiredGenerics <- function(Class, classDef, where) {}

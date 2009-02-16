@@ -1478,6 +1478,13 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     ndims = length(dims);
     nsubs = length(subs);
 
+    /* code to allow classes to extend ENVSXP */
+    if(TYPEOF(x) == S4SXP) {
+        x = R_getS4DataSlot(x, ANYSXP);
+	if(x == R_NilValue)
+	  errorcall(call, _("no method for assigning subsets of this S4 class"));
+    }
+
     /* ENVSXP special case first */
     if( TYPEOF(x) == ENVSXP) {
       if( nsubs!=1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
@@ -1804,6 +1811,12 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	maybe_duplicate=TRUE;
     else if (NAMED(val)==1)
 	REPROTECT(val = duplicate(val), pvalidx);
+    /* code to allow classes to extend ENVSXP */
+    if(TYPEOF(x) == S4SXP) {
+        x = R_getS4DataSlot(x, ANYSXP);
+	if(x == R_NilValue)
+	  errorcall(call, _("no method for assigning subsets of this S4 class"));
+    }
 
     if ((isList(x) || isLanguage(x)) && !isNull(x)) {
 	/* Here we do need to duplicate */

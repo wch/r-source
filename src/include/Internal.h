@@ -514,6 +514,7 @@ SEXP do_playSnapshot(SEXP, SEXP, SEXP, SEXP);
 
 SEXP R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP R_getS4DataSlot(SEXP obj, SEXPTYPE type);
 
 #ifdef BYTECODE
 SEXP do_mkcode(SEXP, SEXP, SEXP, SEXP);

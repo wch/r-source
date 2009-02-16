@@ -21,10 +21,11 @@ showDefault <- function(object, oldMethods = TRUE)
     if(!is.null(clDef) && isS4(object) && is.na(match(clDef@className, .BasicClasses)) ) {
         cat("An object of class ", cl, "\n", sep="")
         slots <- slotNames(clDef)
-        if(!is.na(match(".Data", slots))) {
-            dataPart <- object@.Data
+        dataSlot <- .dataSlot(slots)
+        if(length(dataSlot) > 0) {
+            dataPart <- slot(object, dataSlot)
             show(dataPart)
-            slots <- slots[is.na(match(slots, ".Data"))]
+            slots <- slots[is.na(match(slots, dataSlot))]
         }
         else if(length(slots) == 0L)
             show(unclass(object))

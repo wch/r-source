@@ -58,6 +58,10 @@
     ## NULL is weird in that it has NULL as a prototype, but is not virtual
     tmp <- newClassRepresentation(className="NULL", prototype = NULL, virtual=FALSE, package = "methods")
     assignClassDef("NULL", tmp, where = envir); clList <- c(clList, "NULL")
+    ## the pseudo-NULL used to store NULL as a slot
+    ## must match the C code in attrib.c (would be better to use that
+    ## code to create .pseudoNULL)
+    assign(".pseudoNULL", as.name("\001NULL\001"), envir = envir)
 
 
     setClass("structure", where = envir); clList <- c(clList, "structure")
@@ -468,3 +472,25 @@
                    c("POSIXt", "POSIXlt"),
                    c("aov","mlm")
                    )
+
+.InitSpecialTypes <- function(where) {
+  for(cl in c("environment", "externalptr", "name", "NULL")) {
+      ncl <- paste(".",cl, sep="")
+      setClass(ncl, representation(.xData = cl), where = where)
+      setIs(ncl, cl, coerce = function(from) from@.xData,
+        replace = function(from, value){ from@.xData <- value; from},
+        where = where)
+    }
+  setMethod("$<-", ".environment", function (x, name, value) {
+    call <- sys.call()
+    call[[2]] <- x@.Data
+    eval.parent(call)
+    x
+  })
+  setMethod("[[<-", ".environment", function (x, i, j, ..., value) {
+    call <- sys.call()
+    call[[2]] <- x@.Data
+    eval.parent(call)
+    x
+  })
+}
