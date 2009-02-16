@@ -298,10 +298,10 @@ cp include/localcharset.h ../lib
 cd ../lib
 make
 gcc -shared  .libs/iconv.o .libs/localcharset.o .libs/relocatable.o \
-  .libs/iconv-exports.o -export-all-symbols -o iconv.dll
+  .libs/iconv-exports.o -export-all-symbols -o Riconv.dll
 
 We now use a modified version of win-iconv, but the libiconv version
-can still be use by replacing bin/iconv.dll.
+can still be use by replacing bin/Riconv.dll.
 
 
 BDR 2009-02-08
