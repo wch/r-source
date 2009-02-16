@@ -62,7 +62,7 @@ NEW FEATURES
 	HTML Help compiler is not found (instead of trying and failing
 	as before).
 
-    o	iconv() is now dobe by a version of Yukihiro Nakadaira's
+    o	iconv() is now done by a version of Yukihiro Nakadaira's
 	win_iconv rather than by libiconv.  This version is based on
 	Windows' codepages and is not quite as comprehensive as
 	libiconv: it is however much smaller and easier to maintain.
