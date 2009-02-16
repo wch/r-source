@@ -5,8 +5,8 @@ include ../../gnuwin32/MkRules
 all: makeMakedeps install
 
 
-install: iconv.dll
-	@cp iconv.dll ../../../bin/iconv.dll
+install: Riconv.dll
+	@cp Riconv.dll ../../../bin/Riconv.dll
 
 CPPFLAGS=-I../../include
 CFLAGS= $(OPTFLAGS)
@@ -14,7 +14,7 @@ CFLAGS= $(OPTFLAGS)
 CSOURCES= win_iconv.c
 OBJS=$(CSOURCES:.c=.o)
 
-iconv.dll: $(OBJS)
+Riconv.dll: $(OBJS)
 
 clean:
 	$(RM) *.o *~ *.d Makedeps
