@@ -2527,7 +2527,7 @@ sub check_pkg_manual {
 		rmtree($build_dir);
 		$log->checking("\U$fmt\E version of manual without index");
 		$cmd = join(" ",
-			    ($cmd0, "CMD Rd2dvi $Rd2dvi_opts",
+			    ($cmd0, "Rd2dvi $Rd2dvi_opts",
 			     "--build-dir=${build_dir} --no-clean --no-index",
 			     "-o ${pkgname}-manual.${fmt} >/dev/null 2>&1",
 			     "$topdir"));
