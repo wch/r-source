@@ -19,7 +19,7 @@ Riconv.dll: $(OBJS)
 clean:
 	$(RM) *.o *~ *.d Makedeps
 distclean: clean
-	@$(RM) iconv.dll
+	@$(RM) Riconv.dll
 
 # Dependencies
 DEPS=$(CSOURCES:.c=.d)
