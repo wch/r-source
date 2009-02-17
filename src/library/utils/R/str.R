@@ -95,7 +95,7 @@ str.default <-
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
 
     ## Get defaults for these
-    oDefs <- c("vec.len", "digits.d", "strict.width")
+    oDefs <- c("vec.len", "digits.d", "strict.width", "formatNum")
     ## from
     strO <- getOption("str")
     if (!is.list(strO)) {
