@@ -608,6 +608,12 @@ C++ with associated extensions @file{.c}, @file{.cc} or @file{.cpp} or
 @file{.mm} or @file{.M}, respectively.  We recommend using @file{.h} for
 headers, also for C++@footnote{Using @file{.hpp}, although somewhat
 popular, is not guaranteed to be portable.} or Fortran 9x include files.
+
+It is not portable (and may not be possible at all) to mix all these
+languages in a single package, and we do not support using both C++ and
+Fortran 9x. Because @R{} itself uses it, we know that C and FORTRAN 77
+can be used together and mixing C and C++ seems to be widely successful.
+
 The default rules can be tweaked by setting macros in a file
 @file{src/Makevars} (@pxref{Using Makevars}).  Note that this mechanism
 should be general enough to eliminate the need for a package-specific
@@ -1030,6 +1036,8 @@ to ensure that the LAPACK routines find some constants without infinite
 looping.  The Windows equivalent is
 
 @smallexample
+all: $(SHLIB)
+
 slamc.o: slamc.f
         $(F77) $(SAFE_FFLAGS) -c -o slamc.o slamc.f
 @end smallexample
