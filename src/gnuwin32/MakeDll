@@ -1,47 +1,13 @@
 #-*- Makefile -*-
-## This is called from R CMD SHLIB and R CMD INSTALL
+## This now is use to compile thw standard packages, only
 
-all:  before makeMakedeps $(DLLNAME).dll after
-
-## these targets are just here to allow packages to add to them.
-before:
-after:
+all:  makeMakedeps $(DLLNAME).dll
 
 R_EXE = $(RHOME)/bin/Rterm.exe
 
-.PHONY: all before after shlib-clean makeMakedeps
-
-# set this in Makevars.win to supply your own resource file
-RCNAME=${DLLNAME}_res
-# set this (e.g. in SHLIB) to suppress adding version info to the DLL
-RCOBJ=$(RCNAME).o
-
-# Don't use SOURCES as this get passed on for libR.
-CSOURCES=$(wildcard -f *.c)
-CXXSOURCES=$(wildcard -f *.cc *.cpp *.C)
-FSOURCES=$(wildcard -f *.f)
-FCSOURCES=$(wildcard -f *.f90 *.f95)
-MSOURCES=$(wildcard -f *.m)
-OBJSA=$(foreach i,$(CSOURCES) $(FSOURCES) $(CXXSOURCES) $(FCSOURCES) $(MSOURCES),$(basename $i).o)
+.PHONY: all makeMakedeps
 
 include $(RHOME)/src/gnuwin32/MkRules
-
-ifneq ($(strip $(FCSOURCES)),)
-# don't assume F95 can be cross-compiled in the same way
-  DLL="$(FC)"
-else
-
-ifneq ($(strip $(CXXSOURCES)),)
-  DLL_LDMAIN=$(CXX)
-endif
-ifneq ($(strip $(FSOURCES)),)
-  EXTRA_LIBS+=$(FLIBS)
-endif
-ifneq ($(strip $(MSOURCES)),)
-  EXTRA_LIBS+=-lobjc
-endif
-
-endif
 
 ifdef DEBUG
   DLLFLAGS=
@@ -52,36 +18,27 @@ else
 endif
 
 COPTFLAG=-O3 -Wall
-CXXOPTFLAG=-O2 -Wall
 FOPTFLAG=-O3
 
-CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/include $(CLINK_CPPFLAGS)
+CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/include
 CFLAGS=$(PKG_CFLAGS) $(DEBUGFLAG) $(COPTFLAG)
-CXXFLAGS=$(PKG_CXXFLAGS) $(DEBUGFLAG) $(CXXOPTFLAG)
 FFLAGS=$(PKG_FFLAGS) $(DEBUGFLAG) $(FOPTFLAG)
-DLLLIBS=-L$(RHOME)/$(IMPDIR) $(PKG_LIBS) $(PKG_LIBS2) $(EXTRA_LIBS) -lR
+DLLLIBS=-L$(RHOME)/$(IMPDIR) $(PKG_LIBS) -lR
 RESFLAGS=-I $(RHOME)/include
 
 # for use by Makevars.win
-R_HOME=$(RHOME)
-SHLIB=$(DLLNAME).dll
-SAFE_FFLAGS=$(FOPTFLAG) $(DEBUGFLAG) -ffloat-store
+#R_HOME=$(RHOME)
+#SHLIB=$(DLLNAME).dll
+#SAFE_FFLAGS=$(FOPTFLAG) $(DEBUGFLAG) -ffloat-store
 
-## can be overridden in Makevars[.win]
-OBJECTS=$(filter-out $(OBJS-NO),$(OBJSA))
-CXXSOURCES1=$(wildcard -f *.cc)
-CXXSOURCES2=$(wildcard -f *.cpp)
-CXXSOURCES3=$(wildcard -f *.C)
-DEPS=$(CSOURCES:.c=.d) $(CXXSOURCES1:.cc=.d) $(CXXSOURCES2:.cpp=.d) $(CXXSOURCES3:.C=.d) $(MSOURCES:.m=.d)
+CSOURCES=$(wildcard -f *.c)
+FSOURCES=$(wildcard -f *.f)
+OBJECTS=$(foreach i,$(CSOURCES) $(FSOURCES),$(basename $i).o)
+DEPS=$(CSOURCES:.c=.d)
 
-## these are documented (in R-admin) to come after MakeDll and MkRules,
-## unlike Unix.
-AA=$(wildcard Makevars.win)
-ifeq ($(AA),Makevars.win)
- include Makevars.win
-else
--include Makevars
-endif
+RCOBJ=$(DLLNAME)_res.o
+
+-include Makevars.win
 
 $(DLLNAME)_res.rc:
 	@echo "tools:::.makeDllRes(\"$(DLLNAME)\", \"$(RVER)\")" | R_DEFAULT_PACKAGES=tools $(R_EXE) --slave --vanilla > $@
@@ -90,7 +47,7 @@ $(DLLNAME)_res.o: $(DLLNAME)_res.rc $(RHOME)/include/Rversion.h
 
 ifeq ($(wildcard $(DLLNAME)-win.def),$(DLLNAME)-win.def)
 $(DLLNAME).dll : $(DLLNAME)-win.def $(OBJECTS) $(RCOBJ)
-	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $^ $($*-DLLLIBS) $(DLLLIBS)
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ $(DLLLIBS)
 else
 $(DLLNAME).dll : $(OBJECTS) $(RCOBJ)
 endif

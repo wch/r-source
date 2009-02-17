@@ -8,7 +8,5 @@ devWindows-CPPFLAGS=-I$(RHOME)/src/gnuwin32 -I$(RHOME)/src/extra
 
 PKG_LIBS=-lRgraphapp -lRzlib
 
-## need to avoid quartz files added for 2.7.0
 OBJECTS=chull.o devNull.o devPicTeX.o devPS.o devWindows.o init.o
 DEPS=chull.d devNull.d devPicTeX.d devPS.d devWindows.d init.d
-EXTRA_LIBS=

@@ -29,9 +29,10 @@ GW_INFO_FILES = CHANGES COPYRIGHTS README.Rterm rw-FAQ
 
 ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Makeconf Rcmd_environ
 
+## FIXME; MakeDll is used by a few packages: Matrix RQuantlib RServe maps mapdata
 GW32_FILES = MkRules MakeDll
 
-# we don't want share/{Makefile.in,sh} installed, except sh/dcf.sh for Rd2dvi
+# we don't want share/{Makefile.in,sh} installed
 SHARE_DIRS = R licenses locale make perl texmf zoneinfo
 
 all: $(RPREFIX)-win32.exe
