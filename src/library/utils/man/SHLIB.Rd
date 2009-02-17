@@ -32,14 +32,12 @@
   }
 }
 \details{
-#ifdef unix
   \code{R CMD SHLIB} is the mechanism used by \code{\link{INSTALL}} to
-  compile source code in packages.
-#endif
-#ifdef windows
-  \code{R CMD SHLIB} is similar to the mechanism used by
-  \code{\link{INSTALL}} to compile source code in packages.
-#endif
+  compile source code in packages.  It will generate suitable
+  compilation commands for C, C++, ObjC(++) and Fortran sources: Fortran
+  90/95 sources can also be used but it may not be possible to mix these
+  with other langauges (on most platforms it is possible to mix with C,
+  but mixing with C++ rarely works).
 
   Please consult section \sQuote{Creating shared objects} in the manual
   \sQuote{Writing R Extensions} for how to customize it (for example to
@@ -51,12 +49,6 @@
   (ObjC), \file{.M} and \file{.mm} (ObjC++) are regarded as source
   files, and those with extension \file{.o} as object files.  All other
   items are passed to the linker.
-#ifdef windows
-  
-  If there is an exports file \file{dllname-win.def} in the current
-  directory it will be used, otherwise all entry points in objects (but
-  not libraries) will be exported from the DLL.
-#endif
 
   Option \option{-n} (also known as \option{--dry-run}) will show the
   commands that would be run without actually executing them.
@@ -74,9 +66,9 @@
   \code{\link{dyn.load}},
   \code{\link{library.dynam}}.
 
-  The section on \dQuote{Customizing compilation under Unix} in
-  \dQuote{R Administration and Installation}
-  (see the \file{doc/manual} subdirectory of the \R source tree).  
+  The section on \dQuote{Customizing compilation} in the \dQuote{R
+    Administration and Installation} manual (see the \file{doc/manual}
+  subdirectory of the \R source tree).
 
   The \sQuote{R Installation and Administration} and \sQuote{Writing R 
   Extensions} manuals.

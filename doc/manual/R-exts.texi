@@ -611,6 +611,12 @@ C++ with associated extensions @file{.c}, @file{.cc} or @file{.cpp} or
 @file{.mm} or @file{.M}, respectively.  We recommend using @file{.h} for
 headers, also for C++@footnote{Using @file{.hpp}, although somewhat
 popular, is not guaranteed to be portable.} or Fortran 9x include files.
+
+It is not portable (and may not be possible at all) to mix all these
+languages in a single package, and we do not support using both C++ and
+Fortran 9x. Because @R{} itself uses it, we know that C and FORTRAN 77
+can be used together and mixing C and C++ seems to be widely successful.
+
 The default rules can be tweaked by setting macros in a file
 @file{src/Makevars} (@pxref{Using Makevars}).  Note that this mechanism
 should be general enough to eliminate the need for a package-specific
@@ -1052,6 +1058,32 @@ before:
 after:
         Cleanup needed after 'before'
 @end smallexample
+
+@noindent
+On Windows, one can add dependencies to the @samp{all} target (which is
+what will get called), e.g.@: (based on package @pkg{rcom})
+
+@smallexample
+all: rcom.dll ../inst/tst/bin/rcom_test.exe extraclean
+
+../inst/tst/bin/rcom_test.exe: rcom_test.exe
+	$(MKDIR) -p ../inst/tst/bin
+	$(CP) $? $@
+rcom_test.exe: rcom_test.o
+rcom_test-LIBS = -L. -lsupc++ -luuid -lole32 -loleaut32
+
+extraclean:
+        $(RM) rcom_test.exe
+@end smallexample
+
+@noindent
+The added dependencies will be built after the DLL: it is also possible
+(but not advisable) to have a target @samp{all} with commands (rather
+than dependencies)
+
+There are two another targets, @samp{before} and @samp{after}, which by
+default have neither dependencies nor commands so can be overridden in a
+@file{Makevars.win}.  See the example in @ref{Linking to other packages}.
 
 
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
@@ -5860,12 +5892,9 @@ It is also possible to set such variables in personal @file{Makevars}
 files, which are read after the local @file{Makevars} and the system
 makefiles. 
 @ifset UseExternalXrefs
-@xref{Customizing package compilation under Unix,
-Customizing package compilation under Unix, R-admin,
-R Installation and Administration}, and also
-@ref{Customizing package compilation under Windows,
-Customizing package compilation under Windows, R-admin,
-R Installation and Administration}.
+@xref{Customizing package compilation,
+Customizing package compilation, R-admin,
+R Installation and Administration},
 @end ifset
 
 
@@ -5915,10 +5944,10 @@ details of building DLLs with a variety of compilers, see file
 @uref{http://@/www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/}
 .
 
-Under Windows you can supply an exports file called
-@file{@var{dllname}-win.def}: otherwise all entry points in objects (but
-not libraries) supplied to @code{R CMD SHLIB} will be exported from the
-DLL.  An example is @file{stats-win.def} for the @pkg{stats} package.
+@c Under Windows you can supply an exports file called
+@c @file{@var{dllname}-win.def}: otherwise all entry points in objects (but
+@c not libraries) supplied to @code{R CMD SHLIB} will be exported from the
+@c DLL.  An example is @file{stats-win.def} for the @pkg{stats} package.
 
 
 @node Interfacing C++ code, Fortran I/O, Creating shared objects, System and foreign language interfaces
@@ -9424,18 +9453,7 @@ void attribute_visible R_init_stats(DllInfo *dll)
 @}
 @end example
 
-The visibility mechanism is not available on Windows, but there is an
-equally effective way to control which entry points are visible, by
-supplying a definitions file
-@file{@var{pkgnme}/src/@var{pkgname}-win.def}: only entry points
-listed in that file will be visible.  Again using @pkg{stats} as an
-example, it has
-
-@example
-LIBRARY stats.dll
-EXPORTS
- R_init_stats
-@end example
+The visibility mechanism is not currently available on Windows.
 
 @node Standalone Mathlib, Organization of header files, Controlling visibility, The R API
 @section Using these functions in your own C code
