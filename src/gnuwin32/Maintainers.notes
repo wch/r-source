@@ -290,7 +290,7 @@ In the past this was done from the libiconv sources using VC++ 6, but
 as from version 1.12 that is no longer supported.  It does not build
 easily with MinGW (due to the overuse of libtool), but we used
 
-eetenv INSTALL cp
+setenv INSTALL cp
 setenv INSTALL_DATA cp
 sh configure --build=i386-pc-mingw32 --disable-nls
 cd libcharset; make
