@@ -428,6 +428,9 @@ getOption(x)
       If this is unset (the default), 0, negative or \code{NA}, variable
       cell widths are used.}
 
+    \item{\code{demo.ask}:}{default for the \code{ask} argument of
+      \code{\link{demo}}.}      
+
     \item{\code{editor}:}{a non-empty string, or a function that is
       called with a file path as argument.
       Sets the default text editor, e.g., for

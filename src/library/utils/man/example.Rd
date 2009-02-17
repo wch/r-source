@@ -40,13 +40,12 @@ example(topic, package = NULL, lib.loc = NULL,
     running a package's examples.  This is currently equivalent to
     \code{setRNG = \{RNGkind("default", "default"); set.seed(1)\}}.}
   \item{ask}{logical (or \code{"default"}) indicating if
-    \code{\link{par}(ask=TRUE)} and \code{\link{grid.prompt}(ask=TRUE)}
-    should be called before graphical output
-    happens from the example code.  The value \code{"default"} (the
-    factory-fresh default) means to ask if \code{echo == TRUE} and the
-    graphics device appears to be interactive.  This parameter applies
-    both to any currently opened device and to any devices opened by the
-    example code.}
+    \code{\link[grDevices]{devAskNewPage}(ask=TRUE)} should be called
+    before graphical output happens from the example code.  The value
+    \code{"default"} (the factory-fresh default) means to ask if
+    \code{echo == TRUE} and the graphics device appears to be
+    interactive.  This parameter applies both to any currently opened
+    device and to any devices opened by the example code.}    
   \item{prompt.prefix}{character; prefixes the prompt to be used if
     \code{echo = TRUE}.}
 }

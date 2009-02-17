@@ -12,7 +12,8 @@
 }
 \usage{
 demo(topic, package = NULL, lib.loc = NULL,
-     character.only = FALSE, verbose = getOption("verbose"))
+     character.only = FALSE, verbose = getOption("verbose"),
+     echo = TRUE, ask = getOption("demo.ask"))
 }
 \arguments{
   \item{topic}{the topic which should be demonstrated, given as a
@@ -31,6 +32,14 @@ demo(topic, package = NULL, lib.loc = NULL,
     character string.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
+  \item{echo}{a logical.  If \code{TRUE}, show the \R input when sourcing.}
+    \item{ask}{a logical (or \code{"default"}) indicating if
+    \code{\link[grDevices]{devAskNewPage}(ask=TRUE)} should be called before
+    graphical output happens from the demo code.  The value
+    \code{"default"} (the factory-fresh default) means to ask if
+    \code{echo == TRUE} and the graphics device appears to be
+    interactive.  This parameter applies both to any currently opened
+    device and to any devices opened by the demo code.}
 }
 \details{
   If no topics are given, \code{demo} lists the available demos.  The
@@ -40,9 +49,8 @@ demo(topic, package = NULL, lib.loc = NULL,
   with listing available demos.
 }
 \seealso{
-  \code{\link{source}} which is called by \code{demo}.
-  \code{\link[grDevices]{devAskNewPage}} to prompt the user for
-  permission to start a new page of output.
+  \code{\link{source}} and \code{\link[grDevices]{devAskNewPage}} which 
+are called by \code{demo}.
 }
 
 \examples{
@@ -52,9 +60,10 @@ demo() # for attached packages
 demo(package = .packages(all.available = TRUE))
 
 ## Display a demo, pausing between pages
-oldPrompt <- devAskNewPage(TRUE) # to pause for user input
-demo(lm.glm, package="stats")
-devAskNewPage(oldPrompt)  # restore the default
+demo(lm.glm, package="stats", ask=TRUE)
+
+## Display it without pausing
+demo(lm.glm, package="stats", ask=FALSE)
 
 \dontrun{
  ch <- "scoping"

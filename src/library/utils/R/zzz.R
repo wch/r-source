@@ -25,7 +25,7 @@
 	     internet.info = 2,
 	     pkgType = .Platform$pkgType,
 	     str = list(strict.width = "no", digits.d = 3, vec.len = 4),
-	     example.ask = "default",
+	     demo.ask = "default", example.ask = "default",
 	     HTTPUserAgent = defaultUserAgent(),
 	     menu.graphics = TRUE)
     extra <-

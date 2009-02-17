@@ -1,7 +1,5 @@
 require(datasets)
 require(grDevices); require(graphics)
-oask <- devAskNewPage(dev.interactive(orNone = TRUE))
-
 
 ## --- "math annotation" in plots :
 
@@ -192,4 +190,3 @@ draw.plotmath.cell(expression(group(lfloor, x, rfloor)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(group("|", x, "|")), i, nr); i <- i + 1
 
 par(oldpar)
-devAskNewPage(oask)

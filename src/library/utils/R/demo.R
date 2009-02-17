@@ -16,7 +16,8 @@
 
 demo <-
 function(topic, package = NULL, lib.loc = NULL,
-	 character.only = FALSE, verbose = getOption("verbose"))
+	 character.only = FALSE, verbose = getOption("verbose"),
+	 echo = TRUE, ask = getOption("demo.ask"))
 {
     paths <- .find.package(package, lib.loc, verbose = verbose)
 
@@ -77,13 +78,27 @@ function(topic, package = NULL, lib.loc = NULL,
 	warning(gettextf("Demo for topic '%s' found more than once,\nusing the one found in '%s'",
                 topic, dirname(available[1L])), domain = NA)
     }
-    cat("\n\n",
-	"\tdemo(", topic, ")\n",
-	"\t---- ", rep.int("~", nchar(topic, type="w")), "\n",
-	sep="")
-    if(interactive()) {
-	cat("\nType  <Return>	 to start : ")
-	readline()
+    
+    if(ask == "default")
+        ask <- echo && grDevices::dev.interactive(orNone = TRUE)    
+    
+    if(.Device != "null device") {
+	oldask <- grDevices::devAskNewPage(ask = ask)
+        on.exit(grDevices::devAskNewPage(oldask), add = TRUE)
     }
-    source(available, echo = TRUE, max.deparse.length = Inf, keep.source=TRUE)
+
+    op <- options(device.ask.default = ask)
+    on.exit(options(op), add = TRUE)
+    
+    if (echo) {
+	cat("\n\n",
+	    "\tdemo(", topic, ")\n",
+	    "\t---- ", rep.int("~", nchar(topic, type="w")), "\n",
+	    sep="")
+	if(ask) {
+	    cat("\nType  <Return>	 to start : ")
+	    readline()
+	}
+    }
+    source(available, echo = echo, max.deparse.length = Inf, keep.source=TRUE)
 }

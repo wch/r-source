@@ -3,8 +3,6 @@
 
 require(datasets)
 require(grDevices); require(graphics)
-oask <- devAskNewPage(dev.interactive(orNone = TRUE))
-
 
 ## (1) The Obligatory Mathematical surface.
 ##     Rotated sinc function.
@@ -85,4 +83,3 @@ persp(x, y, 2*z, theta = 110, phi = 40, col = fcol, scale = FALSE,
 
 ## reset par():
 par(oldpar)
-devAskNewPage(oask)

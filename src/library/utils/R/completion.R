@@ -1011,20 +1011,18 @@ fileCompletions <- function(token)
           "plt", "ps", "pty", "smo", "srt", "tck", "tcl", "usr",
           "xaxp", "xaxs", "xaxt", "xpd", "yaxp", "yaxs", "yaxt")
 
-    options <-
-        c("add.smooth", "browser", "check.bounds", "continue",
-          "contrasts", "defaultPackages", "device", "digits",
-          "dvipscmd", "echo", "editor", "encoding", "example.ask",
-          "expressions", "help.try.all.packages", "htmlhelp",
-          "HTTPUserAgent", "internet.info", "keep.source",
-          "keep.source.pkgs", "latexcmd", "locatorBell", "mailer",
-          "max.print", "menu.graphics", "na.action", "OutDec",
-          "pager", "papersize", "par.ask.default", "pdfviewer",
-          "pkgType", "printcmd", "prompt", "repos", "scipen",
-          "show.coef.Pvalues", "show.error.messages",
-          "show.signif.stars", "str", "stringsAsFactors", "timeout",
-          "ts.eps", "ts.S.compat", "unzip", "verbose", "warn",
-          "warnings.length", "width")
+    options <- c("add.smooth", "browser", "check.bounds", "continue",
+	"contrasts", "defaultPackages", "demo.ask", "device",
+	"digits", "dvipscmd", "echo", "editor", "encoding",
+	"example.ask", "expressions", "help.try.all.packages",
+	"htmlhelp", "HTTPUserAgent", "internet.info", "keep.source",
+	"keep.source.pkgs", "latexcmd", "locatorBell", "mailer",
+	"max.print", "menu.graphics", "na.action", "OutDec", "pager",
+	"papersize", "par.ask.default", "pdfviewer", "pkgType",
+	"printcmd", "prompt", "repos", "scipen", "show.coef.Pvalues",
+	"show.error.messages", "show.signif.stars", "str",
+	"stringsAsFactors", "timeout", "ts.eps", "ts.S.compat",
+	"unzip", "verbose", "warn", "warnings.length", "width")
 
     .addFunctionInfo(par = par, options = options)
 

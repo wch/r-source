@@ -182,8 +182,11 @@ NEW FEATURES
         functions when the package containing the classes is
         loaded. See class?structure.
 
-    o	a mechanism now allows S4 classes to inherit from object types
+    o	A mechanism now allows S4 classes to inherit from object types
         "environment", "externalptr" and symbol ("name").  See ?setClass.
+
+    o	demo() gains "echo" and "ask" arguments,  with defaults similar
+	to example().
 
 
 DEPRECATED & DEFUNCT

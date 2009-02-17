@@ -1,8 +1,6 @@
 #### --- Hershey Vector Fonts ---
 
 require(grDevices); require(graphics)
-oask <- devAskNewPage(dev.interactive(orNone = TRUE))
-
 
 ######
 # create tables of vector font functionality
@@ -392,4 +390,3 @@ for (i in 1:73)
                  i-1, nr)
 
 par(oldpar)
-devAskNewPage(oask)

@@ -1,7 +1,5 @@
 require(datasets)
 require(grDevices); require(graphics)
-oask <- devAskNewPage(dev.interactive(orNone = TRUE))
-
 
 ## Here is some code which illustrates some of the differences between
 ## R and S graphics capabilities.  Note that colors are generally specified
@@ -143,4 +141,3 @@ par(bg="cornsilk")
 coplot(lat ~ long | depth, data = quakes, pch = 21, bg = "green3")
 
 par(opar)
-devAskNewPage(oask)
