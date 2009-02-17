@@ -389,7 +389,8 @@
                 dest <- file.path(instdir, libarch)
                 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
                 file.copy(files, dest, overwrite = TRUE)
-                Sys.chmod(Sys.glob(file.path(dest, "*")), "755")
+                if(!WINDOWS)
+                    Sys.chmod(Sys.glob(file.path(dest, "*")), "755")
             }
         }
 
@@ -566,34 +567,26 @@
             libdir <- file.path(instdir, paste0("libs", rarch))
             dir.create(libdir, showWarnings = FALSE)
             if (WINDOWS) {
+                owd <- setwd("src")
                 makefiles <- character()
                 if (file.exists(f <- path.expand("~/.R/Makevars.win")))
                     makefiles <- f
                 else if (file.exists(f <- path.expand("~/.R/Makevars")))
                     makefiles <- f
-                if (file.exists("src/Makefile.win")) {
+                if (file.exists("Makefile.win")) {
                     makefiles <- c("Makefile.wIn", makefiles)
                     message("  running src/Makefile.win ...")
+                    res <- system(paste("make --no-print-directory",
+                                        paste("-f", shQuote(makefiles), collapse = " ")))
+                    if (res == 0) shlib_install(instdir, "")
+                    else has_error <- TRUE
                 } else {
-                    makefiles <- c(file.path(rhome, "src/gnuwin32/MakeDll"),
-                                   makefiles)
                     message("  making DLL ...")
+                    srcs <- dir(pattern = "\\.([cfmCM]|cc|cpp|f90|f95|mm)$")
+                    has_error <- run_shlib(pkg_name, srcs, instdir, "")
+                    message("  ... done")
                 }
-                cmd <- paste0("make --no-print-directory -C src RHOME=", shQuote(rhome),
-                              " DLLNAME=", pkg_name,
-                              " CLINK_CPPFLAGS=", shQuote(clink_cppflags),
-                              " ",
-                              paste("-f", shQuote(makefiles), collapse = " "))
-                if(debug) cat("  running make cmd\n\t", cmd, "\n", sep="")
-                res <- system(cmd)
-                message("  ... done")
-                if (res) has_error <- TRUE
-
-                dllfile <- file.path("src", paste0(pkg_name, ".dll"))
-                if (!has_error &&file.exists(dllfile)) {
-                    message("  installing DLL ...")
-                    file.copy(dllfile, libdir, TRUE)
-                }
+                setwd(owd)
             } else { # not WINDOWS
                 if (file.exists("src/Makefile")) {
                     arch <- substr(rarch, 2, 1000)
@@ -1239,7 +1232,9 @@
 
     objs <- character()
     shlib <- ""
-    makefiles <- file.path(R.home("share"), "make", "shlib.mk")
+    makefiles <-
+        file.path(R.home("share"), "make",
+                  if(WINDOWS) "winshlib.mk" else "shlib.mk")
     shlib_libadd <- if (nzchar(SHLIB_LIBADD)) SHLIB_LIBADD else character()
     with_cxx <- FALSE
     with_f77 <- FALSE
@@ -1332,7 +1327,12 @@
     }
 
     makeobjs <- p0("OBJECTS=", shQuote(objs))
-    if (file.exists("Makevars")) {
+    if (WINDOWS && file.exists("Makevars.win")) {
+        makefiles <- c("Makevars.win", makefiles)
+        lines <- readLines("Makevars.win", warn = FALSE)
+        if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes=TRUE)))
+            makeobjs <- ""
+    } else if (file.exists("Makevars")) {
         makefiles <- c("Makevars", makefiles)
         lines <- readLines("Makevars", warn = FALSE)
         if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes=TRUE)))
@@ -1357,6 +1357,7 @@
         makeargs <- c(makeargs,
                       p0("SHLIB_LIBADD='", p1(shlib_libadd), "'"))
 
+    if (WINDOWS) makeargs <- c(makeargs, "all")
     if (WINDOWS && debug) makeargs <- c(makeargs, "DEBUG=T")
 
     cmd <- paste(MAKE, p1(paste("-f", makefiles)), p1(makeargs), p1(makeobjs))
@@ -1372,7 +1373,7 @@
     res
 }
 
-## base packages do not have versioss and this is called on
+## base packages do not have versions and this is called on
 ## DESCRIPTION.in
 .DESCRIPTION_to_latex <- function(descfile, outfile, version = "Unknown")
 {
