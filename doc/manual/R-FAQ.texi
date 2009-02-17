@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2009
-@set FAQ_DATE @value{FAQ_YEAR}-02-12
+@set FAQ_DATE @value{FAQ_YEAR}-02-17
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 8
@@ -3881,6 +3881,8 @@ Functions for calculating fractal dimension.
 Estimation and control of (local) False Discovery Rates.
 @item feature
 Feature significance for multivariate kernel density estimation.
+@item fechner
+Fechnerian scaling of discrete object sets.
 @item femmeR
 Output analysis of FEMME model results.
 @item ff
@@ -3910,6 +3912,8 @@ Functions to operate on binary fingerprint data.
 Fisheries methods and models.
 @item fit4NM
 Platform for NONMEM.
+@item fitdistrplus
+Fit parametric distributions to non-censored or censored data.
 @item flashClust
 Implementation of optimal hierarchical clustering.
 @item flexclust
@@ -6151,6 +6155,8 @@ Construction of test suites using verify objects.
 @item vioplot
 Violin plots, which are a combination of a box plot and a kernel density
 plot.
+@item vowels
+Vowel manipulation, normalization, and plotting.
 @item vrtest
 Variance ratio tests for weak-form market efficiency.
 @item wasim
@@ -6407,6 +6413,8 @@ and widget hierarchies, S source file contents, etc.
 @item RJavaDevice
 A graphics device for R that uses Java components and graphics.
 @acronym{API}s.
+@item RKML
+Simple tools for creating KML displays from R.
 @item RMatlab
 A bi-directional interface between R and Matlab.
 @item RObjectTables
@@ -6457,6 +6465,8 @@ Plugin for Netscape and JavaScript.
 @item SSOAP
 A client interface to SOAP (Simple Object Access Protocol) servers from
 within S.
+@item SVGAnnotation
+Tools for post-processing SVG plots created in R.
 @item SWinRegistry
 Provides access from within R to read and write the Windows registry.
 @item SWinTypeLibs
@@ -7512,7 +7522,7 @@ dir /opt/R/src/unix
 * Why are powers of negative numbers wrong?::  
 * How can I save the result of each iteration in a loop into a separate file?::  
 * Why are p-values not displayed when using lmer()?::  
-* Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?::  
+* Why are there unwanted borders::  
 * Why does backslash behave strangely inside strings?::  
 @end menu
 
@@ -8401,34 +8411,57 @@ for(i in 1:100) @{
 @}
 @end example
 
-@node Why are p-values not displayed when using lmer()?, Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?, How can I save the result of each iteration in a loop into a separate file?, R Miscellanea
+@node Why are p-values not displayed when using lmer()?, Why are there unwanted borders, How can I save the result of each iteration in a loop into a separate file?, R Miscellanea
 @section Why are @math{p}-values not displayed when using lmer()?
 
 Doug Bates has kindly provided an extensive response in a post to the 
 r-help list, which can be reviewed at
 @uref{https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html}.
 
-@node Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?, Why does backslash behave strangely inside strings?, Why are p-values not displayed when using lmer()?, R Miscellanea
-@section Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?
+@node Why are there unwanted borders, Why does backslash behave strangely inside strings?, Why are p-values not displayed when using lmer()?, R Miscellanea
+@section Why are there unwanted borders, lines or grid-like artifacts when viewing a plot saved to a PS or PDF file?
 
-Output from @code{polygon()} (and other functions calling
-@code{polygon()}) with the argument @code{border=NA} or
-@code{border="transparent"} should suppress border lines between
-polygons for all graphics devices.
+This can occur when using functions such as @code{polygon()},
+@code{filled.contour()}, @code{image()} or other functions which may
+call these internally.  In the case of @code{polygon()}, you may observe
+unwanted borders between the polygons even when setting the
+@code{border} argument to @code{NA} or @code{"transparent"}.
 
-PDF output from R can be made in many ways, both directly, and through
-for example Postscript or Windows Metafiles converted to PDF in external
-software. In Adobe Reader, the default setting for line art, such as
-polygons, is to smooth, which produces the impression of thin borders.
-Adobe Reader does this both for PDF files written by R or through other
-software.
+The source of the problem is the PS/PDF viewer when the plot is
+anti-aliased.  The details for the solution will be different depending
+upon the viewer used, the operating system and may change over time.
+For some common viewers, consider the following:
 
-This is irritating, especially when using Adobe Reader for presentation.
-The unwanted effect can be removed by turning off smoothing for line
-art: use the `Edit | Preferences | Page Display | Smooth line art' menu
-in Adobe Reader 7.0.
+@ftable @asis
+@item Acrobat Reader (cross platform)
+There are options in Preferences to enable/disable text smoothing, image
+smoothing and line art smoothing.
+Disable line art smoothing.
+@item Preview (Mac OS X)
+There is an option in Preferences to enable/disable anti-aliasing of
+text and line art.
+Disable this option. 
+@item GSview (cross platform)
+There are settings for Text Alpha and Graphics Alpha.
+Change Graphics Alpha from 4 bits to 1 bit to disable graphic
+anti-aliasing.
+@item gv (Linux/Unix X)
+There is an option to enable/disable anti-aliasing.
+Disable this option.
+@item Evince (Linux/GNOME)
+There is not an option to disable anti-aliasing in this viewer.
+@item Okular (Linux/KDE)
+There is not an option in the GUI to enable/disable anti-aliasing.
+From a console command line, use:
+@smallexample
+$ kwriteconfig --file okularpartrc --group 'Dlg Performance' \
+               --key TextAntialias Disabled
+@end smallexample
+Then restart Okular.  Change the final word to @samp{Enabled} to restore
+the original setting.
+@end ftable
 
-@node Why does backslash behave strangely inside strings?,  , Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?, R Miscellanea
+@node Why does backslash behave strangely inside strings?,  , Why are there unwanted borders, R Miscellanea
 @section Why does backslash behave strangely inside strings?
 
 This question most often comes up in relation to file names (see
