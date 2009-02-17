@@ -185,7 +185,7 @@ NEW FEATURES
     o	A mechanism now allows S4 classes to inherit from object types
         "environment", "externalptr" and symbol ("name").  See ?setClass.
 
-    o	demo() gains "echo" and "ask" arguments,  with defaults similar
+    o	demo() gains 'echo' and 'ask' arguments, with defaults similar
 	to example().
 
 
@@ -255,7 +255,7 @@ UTILITIES
 
     o	R CMD Rd2dvi can now work on an installed package.
 
-    o	R CMD check no longer loads pacakge 'tcltk' when checking for
+    o	R CMD check no longer loads package 'tcltk' when checking for
 	code problems, so more problems may be reported.
 
 
