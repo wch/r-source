@@ -75,20 +75,18 @@ object types or one of a few other special \R types (\code{matrix} and
 See the section on inheriting from object types, below.
 
 
-\note{
   Certain slot names are not allowed in the current implementation, as
   they correspond to \link{attributes} which are treated
   specially.  These are \code{class}, \code{comment}, \code{dim},
   \code{dimnames}, \code{names}, \code{row.names} and \code{tsp}.
   Some other slot names have special meaning; these names start with
-  the \code{"."} character.  To be safe, you  define all of
+  the \code{"."} character.  To be safe, you should define all of
   your own slots with names starting with an alphabetic character.
-}
 }
 
 \section{Inheriting from Object Types}{
 In addition to containing other S4 classes, a class definition can
-contain either informal either an S3 classes or a built-in R pseudo-class---one
+contain either an S3 class (see the next section) or a built-in R pseudo-class---one
 of the \R
 object types or one of the special \R pseudo-classes \code{"matrix"} and
 \code{"array}. 
@@ -124,6 +122,9 @@ should core code that coerces an object to the type in an internal or
 primitive calculation.
 There is no guarantee, however, because C-level code may switch
 directly on the object type, which in this case will be \code{"S4"}.
+The cautious mechanism is to use \code{as(x, "environment")} or
+something similar before doing the low-level computation.  See the
+example for class \code{"stampedEnv"} below.
 
 Also, keep in mind that the object passed to the low-level computation
 will be the underlying object type, \emph{without} any of the slots
@@ -248,6 +249,21 @@ setClass("numWithId", representation(id = "character"),
          contains = "numeric")
 
 new("numWithId", 1:3, id = "An Example")
+
+## inherit from reference object of type "environment"
+setClass("stampedEnv", contains = "environment",
+      representation(update = "POSIXct"))
+
+e1 <- new("stampedEnv", new.env(), update = Sys.time())
+
+setMethod("[[<-", c("stampedEnv", "character", "missing"),
+   function(x, i, j, ..., value) {
+       ev <- as(x, "environment")
+       ev[[i]] <- value  #update the object in the environment
+       x@update <- Sys.time() # and the update time
+       x})
+
+e1[["noise"]] <- rnorm(10)
 
 \dontshow{
 tMC <- new("trackMultiCurve")
