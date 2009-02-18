@@ -3826,7 +3826,8 @@ it might for example use
 (Use of @code{utf8} as an encoding requires @LaTeX{} dated 2003/12/01 or
 later.  Also, the use of Cyrillic characters in @samp{UTF-8} appears to
 also need @samp{\usepackage[T2A]@{fontenc@}}, and @command{R CMD Rd2dvi}
-includes this conditionally on the @file{t2aenc.def} being present.)
+includes this conditionally on the @file{t2aenc.def} being present and
+@env{_R_CYRILLIC_TEX_} being set.)
 
 Note that this mechanism works best with Latin letters and for example
 the copyright symbol may be rendered as a subscript and the plus--minus
@@ -5944,10 +5945,10 @@ details of building DLLs with a variety of compilers, see file
 @uref{http://@/www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/}
 .
 
-@c Under Windows you can supply an exports file called
-@c @file{@var{dllname}-win.def}: otherwise all entry points in objects (but
-@c not libraries) supplied to @code{R CMD SHLIB} will be exported from the
-@c DLL.  An example is @file{stats-win.def} for the @pkg{stats} package.
+Under Windows you can supply an exports file called
+@file{@var{dllname}-win.def}: otherwise all entry points in objects (but
+not libraries) supplied to @code{R CMD SHLIB} will be exported from the
+DLL.  An example is @file{stats-win.def} for the @pkg{stats} package.
 
 
 @node Interfacing C++ code, Fortran I/O, Creating shared objects, System and foreign language interfaces
@@ -6219,7 +6220,7 @@ PKG_LIBS= -L"$(PKGB_PATH)" -lexB
 
 Another possibility is to use an import library, shipping with package
 @pkg{packA} an exports file @file{exB.def}.  Then @file{Makevars.win}
-could contain (@strong{for R 2.8.x:needs updating})
+could contain
 
 @example
 PKG_LIBS= -L. -lexB
@@ -9453,7 +9454,18 @@ void attribute_visible R_init_stats(DllInfo *dll)
 @}
 @end example
 
-The visibility mechanism is not currently available on Windows.
+The visibility mechanism is not available on Windows, but there is an
+equally effective way to control which entry points are visible, by
+supplying a definitions file
+@file{@var{pkgnme}/src/@var{pkgname}-win.def}: only entry points
+listed in that file will be visible.  Again using @pkg{stats} as an
+example, it has
+
+@example
+LIBRARY stats.dll
+EXPORTS
+ R_init_stats
+@end example
 
 @node Standalone Mathlib, Organization of header files, Controlling visibility, The R API
 @section Using these functions in your own C code
