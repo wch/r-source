@@ -202,8 +202,8 @@ glm.fit(x, y, weights = rep(1, nobs),
   \item{df.null}{the residual degrees of freedom for the null model.}
   \item{y}{if requested (the default) the \code{y} vector
     used. (It is a vector even for a binomial model.)}
-  \item{x}{(if requested, the model matrix.}
-  \item{model}{(if requested (the default), the model frame.}
+  \item{x}{if requested, the model matrix.}
+  \item{model}{if requested (the default), the model frame.}
   \item{converged}{logical. Was the IWLS algorithm judged to have converged?}
   \item{boundary}{logical. Is the fitted value on the boundary of the
     attainable values?}

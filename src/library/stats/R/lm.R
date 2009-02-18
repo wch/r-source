@@ -444,7 +444,7 @@ residuals.lm <-
     res
 }
 
-## The lm method now includes "glm" ones :
+## The lm method includes objects of class "glm"
 simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
 {
     if(!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
@@ -458,19 +458,43 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
         on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
     }
     ftd <- fitted(object)             # == napredict(*, object$fitted)
-    ntot <- length(ftd) * nsim
+    nm <- names(ftd)
+    n <- length(ftd)
+    ntot <- n * nsim
     fam <- if(inherits(object, "glm")) object$family$family else "gaussian"
     val <- switch(fam,
-		  "gaussian" = ftd + rnorm(ntot, sd =
-		  sqrt(deviance(object)/ df.residual(object)))
-		  ,
+                  "gaussian" = {
+                      vars <- deviance(object)/ df.residual(object)
+                      if (!is.null(object$weights)) vars <- vars/object$weights
+                      ftd + rnorm(ntot, sd = sqrt(vars))
+                  },
 		  "poisson" = rpois(ntot, ftd)
 		  ,
 		  "binomial" = {
 		      wts <- object$prior.weights
 		      if (any(wts %% 1 != 0))
 			  stop("cannot simulate from non-integer prior.weights")
-		      rbinom(ntot, size = wts, prob = ftd)/wts
+                      ## Try to fathom out if the original data were
+                      ## proportions, a factor or a two-column matrix
+                      if (!is.null(m <- object$model)) {
+                          y <- model.response(m)
+                          if(is.factor(y)) {
+                              ## ignote weights
+                              yy <- factor(1+rbinom(ntot, size = 1, prob = ftd),
+                                           labels = levels(y))
+                              split(yy, rep(seq_len(nsim), each = n))
+                          } else if(is.matrix(y) && ncol(y) == 2) {
+                              yy <- vector("list", nsim)
+                              for (i in seq_len(nsim)) {
+                                  Y <- rbinom(n, size = wts, prob = ftd)
+                                  YY <- cbind(Y, wts - Y)
+                                  colnames(YY) <- colnames(y)
+                                  yy[[i]] <- YY
+                              }
+                              yy
+                          } else
+                              rbinom(ntot, size = wts, prob = ftd)/wts
+                      } else rbinom(ntot, size = wts, prob = ftd)/wts
 		  },
 		  "Gamma" = {
 		      if(is.null(tryCatch(loadNamespace("MASS"),
@@ -488,9 +512,15 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
 		  },
 		  stop("family '", fam, "' not yet implemented"))
 
-    ans <- as.data.frame(matrix(val, ncol = nsim))
-    attr(ans, "seed") <- RNGstate
-    ans
+    if(!is.list(val)) {
+        dim(val) <- c(n, nsim)
+        val <- as.data.frame(val)
+    } else
+        class(val) <- "data.frame"
+    names(val) <- paste("sim", seq_len(nsim), sep="_")
+    if (!is.null(nm)) row.names(val) <- nm
+    attr(val, "seed") <- RNGstate
+    val
 }
 
 #fitted.lm <- function(object, ...)

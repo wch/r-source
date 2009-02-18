@@ -166,7 +166,7 @@ NEW FEATURES
 	resetting the clip region.
 
     o	New function sample.int() to provide documented access to the
-	internal part of sample() (sampling from 1:n).
+	internal part of sample() (sampling from seq_len(n)).
 
     o	New version of withVisible() for better handling of cases like
 	withVisible(eval.parent(....)).
@@ -174,8 +174,9 @@ NEW FEATURES
     o	showClass() which is also used to auto-print class definitions, now
 	mentions the package where the class comes from, if there is one.
 
-    o	simulate(obj) now also works for "glm" objects, thanks to
-	contributions from Ben Bolker and Heather Turner.
+    o	simulate(obj) now also works for "glm" objects and for
+	weighted fits, thanks in part to contributions from Ben Bolker
+	and Heather Turner. 
 
     o	S4 classes that inherit from any of the "structure" classes or
         from "vector" will turn on methods for all the "Ops" group of
@@ -214,9 +215,9 @@ UTILITIES
 	up src/.
 
     o	R CMD Rd2dvi and R CMD check are now able to cope with Cyrillic
-	characters in UTF-8 if _R_CYRILLIC_TEX_ is set to a non-empty
-	value and the latex system has suitable fonts (thanks to a hint
-	from Alexey Shipunov).
+	characters in UTF-8 if environment variable _R_CYRILLIC_TEX_
+	is set to a non-empty value and the latex system has suitable
+	fonts (thanks to a hint from Alexey Shipunov).
 
     o	New function rtags() in package 'utils' that provides etags-like
 	indexing capabilities for R code files.
