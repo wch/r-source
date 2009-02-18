@@ -3084,20 +3084,14 @@ understand it.  This is particularly helpful for fixing problems, and
 includes using self-descriptive variable names, commenting the code, and
 also formatting it properly.  The @R{} Core Team recommends to use a
 basic indentation of 4 for @R{} and C (and most likely also Perl) code,
-and 2 for documentation in Rd format.  Emacs users can implement this
-indentation style by putting the following in one of their startup
-files.
-Alternatively, (for @acronym{GNU} Emacs 21 or later),
-use customization to set the @code{c-default-style} to @code{"bsd"} and
-@code{c-basic-offset} to @code{4}.)
+and 2 for documentation in Rd format.  Emacs (21 or later) users can
+implement this indentation style by putting the following in one of
+their startup files, and using customization to set the
+@code{c-default-style} to @code{"bsd"} and @code{c-basic-offset} to
+@code{4}.)
 @findex emacs
 
 @smallexample
-@group
-;;; C
-(add-hook 'c-mode-hook
-          (lambda () (c-set-style "bsd")))
-@end group
 @group
 ;;; ESS
 (add-hook 'ess-mode-hook
