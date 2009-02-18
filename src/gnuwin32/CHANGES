@@ -50,17 +50,8 @@ NEW FEATURES
 	Rgui console to be minimized, maximize or restored and (not
 	the console) hidden, and to have recording turned on or off.
 
-    o	Rcmd INSTALL now supports the same option names as the
-	Unix-alike version: use 'Rcmd INSTALL --help' for details.
-	In particular, --docs is replaced by --no-docs, --no-text,
-	--no-html, --no-latex, --no-example and --no-chm.
-
     o	Rcmd SHLIB now uses the same code as on a Unix-alike, and so
 	has some extra options.
-
-    o	Package installation will authomatically skip CHM help if the
-	HTML Help compiler is not found (instead of trying and failing
-	as before).
 
     o	iconv() is now done by a version of Yukihiro Nakadaira's
 	win_iconv rather than by libiconv.  This version is based on
@@ -69,7 +60,8 @@ NEW FEATURES
 	The implementation here is 100% compatible: you can drop in
 	libiconv's iconv.dll as a replacement if you need it, from
 	http://www.stats.ox.ac.uk/pub/Rtools/Riconv.dll.
-	To avoid name conflicts with GTk+, it has been renamed to
+
+	To avoid name conflicts with Gtk+, it has been renamed to
 	Riconv.dll.
 
 
@@ -89,6 +81,26 @@ UTILITIES
 
     o	RSetReg's name for the version-specific Registry entry in
 	development versions of R now matches that of the R installer.
+
+
+PACKAGE INSTALLATION
+
+    o	The way packages are installed has been overhauled to be much
+	closer to the Unix version: for example Rcmd SHLIB is used to
+	build DLLs (unless there is a src/Makefile.win).  This means
+	that various private variables and files that some packages
+	used are no longer available, notably DPKG (the documented
+	variable was and is R_PACKAGE_DIR) and MkRules (use
+	etc/Makeconf).
+
+    o	Rcmd INSTALL now supports the same option names as the
+	Unix-alike version: use 'Rcmd INSTALL --help' for details.
+	In particular, --docs is replaced by --no-docs, --no-text,
+	--no-html, --no-latex, --no-example and --no-chm.
+
+    o	Since iconv.dll has been renamed, packages wanting to link
+	against it need to use -lRiconv (or, hetter, use the entry
+	points in R_exts/Riconv.h).
 
 
 CUSTOMIZATION

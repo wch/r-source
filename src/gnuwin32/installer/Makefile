@@ -29,9 +29,6 @@ GW_INFO_FILES = CHANGES COPYRIGHTS README.Rterm rw-FAQ
 
 ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Makeconf Rcmd_environ
 
-## FIXME; MakeDll is used by a few packages: Matrix RQuantlib RServe maps mapdata
-GW32_FILES = MkRules MakeDll
-
 # we don't want share/{Makefile.in,sh} installed
 SHARE_DIRS = R licenses locale make perl texmf zoneinfo
 
@@ -46,8 +43,6 @@ imagedir:
 	$(MKDIR) -p $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
 	$(RM) $(RPREFIX)/library/*/MD5
-# morley.tab was needed for R-intro Appendix A, but is now installed
-#	$(CP) -p $(R_HOME)/src/library/datasets/data/morley.tab $(RPREFIX)/library/datasets/data
 	$(RM) $(RPREFIX)/*/Makefile.in
 	$(MKDIR) -p $(RPREFIX)/etc
 	$(CP) -p $(foreach i,$(ETC_FILES),$(R_HOME)/etc/$i) $(RPREFIX)/etc
@@ -81,12 +76,6 @@ imagedir:
 	  $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32 $(RPREFIX)/share/sh
 	$(CP) $(R_HOME)/doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) $(R_HOME)/doc/KEYWORDS* $(RPREFIX)/doc
-	$(CP) -p $(foreach i,$(GW32_FILES),../$i) $(RPREFIX)/src/gnuwin32
-#	$(SED) -e s/@RVER@/$(RVER)/g ../Makefile.packages > $(RPREFIX)/src/gnuwin32/Makefile
-#	$(CP) -pr ../help ../check $(RPREFIX)/src/gnuwin32
-#	$(RM) $(RPREFIX)/src/gnuwin32/help/*.c \
-#	  $(RPREFIX)/src/gnuwin32/help/MkChmDll
-#	(cd ..; $(MAKE) --no-print-directory -C installer/$(RPREFIX)/src/gnuwin32/help clean)
 	$(CP) -pr $(R_HOME)/include $(RPREFIX)
 	$(CP) -pr $(foreach i,$(SHARE_DIRS),$(R_HOME)/share/$i) $(RPREFIX)/share
 	$(CP) -p $(R_HOME)/share/sh/dcf.sh $(RPREFIX)/share/sh
