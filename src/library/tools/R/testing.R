@@ -86,8 +86,9 @@ Rdiff <- function(from, to, useDiff = FALSE)
     clean <- function(txt)
     {
         ## remove R header
-        if(length(top <- grep("^(R version|R : Copyright)", txt)) &&
-           length(bot <- grep("quit R.$", txt)))
+        if(length(top <- grep("^(R version|R : Copyright)", txt,
+                              perl = TRUE, useBytes = TRUE)) &&
+           length(bot <- grep("quit R.$", txt, perl = TRUE, useBytes = TRUE)))
             txt <- txt[-(top[1]:bot[1])]
         ## remove BATCH footer
         nl <- length(txt)
@@ -98,7 +99,7 @@ Rdiff <- function(from, to, useDiff = FALSE)
         if(.Platform$OS.type == "windows") # not entirely safe ...
             txt <- gsub("(\x93|\x94)", "'", txt, perl = TRUE, useBytes = TRUE)
         pat <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded|^<(environment|promise|pointer): )'
-        txt[!grepl(pat, txt)]
+        txt[!grepl(pat, txt, perl = TRUE, useBytes = TRUE)]
     }
 
     left <- clean(readLines(from))
