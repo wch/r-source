@@ -29,7 +29,7 @@ rnbinom(n, size, prob, mu)
     is taken to be the number required.}
   \item{size}{target for number of successful trials, or dispersion
     parameter (the shape parameter of the gamma mixing distribution).
-    Must be strictly positive.}
+    Must be strictly positive, need not be integer.}
   \item{prob}{probability of success in each trial. \code{0 < prob <= 1}.}
   \item{mu}{alternative parametrization via mean: see \sQuote{Details}.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
@@ -52,7 +52,7 @@ rnbinom(n, size, prob, mu)
   \eqn{\Gamma} (\code{\link{pgamma}}) distribution with scale parameter
   \code{(1 - prob)/prob} and shape parameter \code{size}.  (This
   definition allows non-integer values of \code{size}.)
-  In this model \code{prob} = \code{1/(1+scale)}, and the mean is
+  In this model \code{prob} = \code{1/(1+size)}, and the mean is
   \code{size * (1 - prob)/prob}.
 
   The alternative parametrization (often used in ecology) is by the

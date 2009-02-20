@@ -1,6 +1,6 @@
 % File src/library/stats/man/simulate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{simulate}
@@ -11,7 +11,7 @@ simulate(object, nsim, seed, \dots)
 \alias{simulate}
 \arguments{
   \item{object}{an object representing a fitted model.}
-  \item{nsim}{number of response vectors to simulate.  Defaults to 1.}
+  \item{nsim}{number of response vectors to simulate.  Defaults to \code{1}.}
   \item{seed}{an object specifying if and how the random number
     generator should be initialized (\sQuote{seeded}).\cr
     For the "lm" method, either \code{NULL} or an integer that will be
@@ -24,9 +24,9 @@ simulate(object, nsim, seed, \dots)
   \item{\dots}{additional optional arguments.}
 }
 \value{
-  Typically, a list of length \code{nsim} of simulated response vectors.
-  When appropriate the result can be a data frame (which is a special
-  type of list).
+  Typically, a list of length \code{nsim} of simulated responses.  Where
+  appropriate the result can be a data frame (which is a special type of
+  list).
   %% a *matrix* seems very natural and is more efficient
   %% for large-scale simulation, already for stats:::simulate.lm (in ../R/lm.R )
 
@@ -37,17 +37,25 @@ simulate(object, nsim, seed, \dots)
   started when \code{seed} was NULL as by default.
 }
 \description{
-  Simulate one or more response vectors from the theoretical distribution
+  Simulate one or more responses from the distribution
   corresponding to a fitted model object.
 }
 \details{
-  This is a generic function with a method for \code{\link{lm}} objects.
-  Consult the individual modeling functions
+  This is a generic function.  Consult the individual modeling functions
   for details on how to use this function.
+
+  Package \pkg{stats} has a method for \code{"lm"} objects which is used
+  for \code{\link{lm}} and \code{\link{glm}} fits.  There is a method
+  for fits from \code{glm.nb} in package \pkg{MASS}, and hence the case
+  of negative binomial families is not covered by the \code{"lm"}
+  method.
 }
 \seealso{
   \code{\link{fitted.values}} and \code{\link{residuals}} for related methods;
   \code{\link{glm}}, \code{\link{lm}} for model fitting.
+
+  There are further examples in the \file{simulate.R} tests file in the
+  sources for package \pkg{stats}.
 }
 \examples{
 x <- 1:5
@@ -70,6 +78,19 @@ RNGversion("2.7.0")
 ## first set the RNG kind, then simulate
 do.call(RNGkind, attr(sseed, "kind"))
 identical(S2, simulate(mod1, nsim = 200, seed = sseed))
+
+## Binomial GLM examples
+yb1 <- matrix(c(4,4,5,7,8,6,6,5,3,2), ncol = 2)
+modb1 <- glm(yb1 ~ x, family = binomial)
+S3 <- simulate(modb1, nsim = 4)
+# each column of S3 is a two-column matrix.
+
+x2 <- sort(runif(100))
+yb2 <- rbinom(100, prob = plogis(2*(x2-1)), size = 1)
+yb2 <- factor(1+yb2, labels=c("failure", "success"))
+modb2 <- glm(yb2 ~ x2, family = binomial)
+S4 <- simulate(modb2, nsim = 4)
+# each column of S4 is a factor
 }
 \keyword{models}
 \keyword{datagen}
