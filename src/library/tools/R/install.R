@@ -495,7 +495,7 @@
                                                default = TRUE)
             if (!thislazy && thiszip && .file_test("-d", "data")) {
                 fi <- file.info(dir("data", full.names=TRUE))
-                if (sum(fi$size) > 100) {
+                if (sum(fi$size) > 100000) {
                     this <- sub("\\.[a-zA-Z]+$", "", row.names(fi))
                     if(!any(duplicated(this))) use_zip_data <- TRUE
                 }
