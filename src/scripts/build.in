@@ -171,8 +171,8 @@ foreach my $pkg (@ARGV) {
     $log->message("removing junk files");
     find(\&unlink_junk_files, $pkgdir);
 
-       chdir(dirname($pkgdir));
-       my $filename = "${intname}_" . $description->{"Version"} . ".tar";
+    chdir(dirname($pkgdir));
+    my $filename = "${intname}_" . $description->{"Version"} . ".tar";
     my $filepath = &file_path($startdir, $filename);
     R_system(join(" ",
                  ("$tar -chf",
@@ -218,6 +218,8 @@ foreach my $pkg (@ARGV) {
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.git$/);
 	## some authors managed to create ..Rcheck as well as pkgname.Rcheck
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /\.Rcheck$/);
+	## some authors have problems with 'Read-and-delete-me'
+	print EXCLUDE "$File::Find::name\n" if /^Read-and-delete-me$/;
 	print EXCLUDE "$File::Find::name\n" if /^GNUMakefile$/;
 	## Mac resource forks
 	print EXCLUDE "$File::Find::name\n" if(/^\._/);
