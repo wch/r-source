@@ -83,9 +83,9 @@ function(dir, fields = NULL,
     type <- match.arg(type)
 
     package_pattern <- switch(type,
-                              "source" = "\\.tar\\.gz$",
-                              "mac.binary" = "\\.tgz$",
-                              "win.binary" = "\\.zip$")
+                              "source" = "_.*\\.tar\\.gz$",
+                              "mac.binary" = "_.*\\.tgz$",
+                              "win.binary" = "_.*\\.zip$")
     files <- list.files(dir, pattern = package_pattern)
 
     if(!length(files))
@@ -94,8 +94,7 @@ function(dir, fields = NULL,
     ## Add the standard set of fields required to build a repository's
     ## PACKAGES file:
     fields <- unique(c(.get_standard_repository_db_fields(), fields))
-    packages <- sapply(strsplit(files, "_"), "[", 1)
-    files <- file.path(dir, files)
+    packages <- sapply(strsplit(files, "_", fixed = TRUE), "[", 1L)
     db <- vector(length(files), mode = "list")
     ## Many (roughly length(files)) warnings are *expected*, hence
     ## suppressed.
@@ -103,6 +102,7 @@ function(dir, fields = NULL,
     on.exit(options(op))
     if(verbose) message("Processing packages:")
     if(type == "win.binary") {
+        files <- file.path(dir, files)
         for(i in seq_along(files)) {
             if(verbose) message(paste(" ", files[i]))
             ## for bundles:
@@ -125,8 +125,7 @@ function(dir, fields = NULL,
         }
     } else {
         dir <- file_path_as_absolute(dir)
-        files <- list.files(dir, pattern = package_pattern,
-                            full.names = TRUE)
+        files <- file.path(dir, files)
         cwd <- getwd()
         td <- tempfile("PACKAGES")
         if(!dir.create(td)) stop("unable to create ", td)
@@ -174,21 +173,24 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
     db
 }
 
-dependsOnPkgs <- function(pkgs,
-                          dependencies = c("Depends", "Imports"),
-                          recursive = TRUE,
-                          lib.loc = NULL,
-                          installed = installed.packages(lib.loc, fields = "Enhances"))
+dependsOnPkgs <-
+function(pkgs,
+         dependencies = c("Depends", "Imports"),
+         recursive = TRUE,
+         lib.loc = NULL,
+         installed = installed.packages(lib.loc, fields = "Enhances"))
 {
     need <- apply(installed[, dependencies, drop = FALSE], 1L,
-                  function(x) any(pkgs %in% utils:::.clean_up_dependencies(x)) )
+                  function(x)
+                  any(pkgs %in% utils:::.clean_up_dependencies(x)) )
     uses <- rownames(installed)[need]
     if(recursive) {
         p <- pkgs
         repeat {
             p <- unique(c(p, uses))
             need <- apply(installed[, dependencies, drop = FALSE], 1L,
-                          function(x) any(p %in% utils:::.clean_up_dependencies(x)) )
+                          function(x)
+                          any(p %in% utils:::.clean_up_dependencies(x)) )
             uses <- unique(c(p, rownames(installed)[need]))
             if(length(uses) <= length(p)) break
         }
