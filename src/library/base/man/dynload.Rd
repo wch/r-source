@@ -1,6 +1,6 @@
 % File src/library/base/man/dynload.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dyn.load}
@@ -58,7 +58,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
     same way as in \code{\link{.C}}, \code{\link{.Call}},
     \code{\link{.Fortran}} and \code{\link{.External}} functions}
   \item{type}{The type of symbol to look for: can be any (\code{""}, the
-  default), \code{"Fortran"}, \code{"Call"} or \code{"External"}.}
+    default), \code{"Fortran"}, \code{"Call"} or \code{"External"}.}
 }
 \details{
   The objects \code{dyn.load} loads are called \sQuote{dynamically
@@ -70,10 +70,8 @@ is.loaded(symbol, PACKAGE = "", type = "")
   no one else does.)
 
   See \sQuote{See Also} and the \emph{Writing R Extensions} and \emph{R
-  Installation and Administration} manuals for how to create and install
-  a suitable DLL.  Note that unlike some versions of S-PLUS,
-  \code{dyn.load} does not load an object (\file{.o}) file but a shared
-  object or DLL.
+    Installation and Administration} manuals for how to create and install
+  a suitable DLL.
 
   Unfortunately a very few platforms (e.g. Compaq Tru64) do not handle
   the \code{PACKAGE} argument correctly, and may incorrectly find
@@ -83,7 +81,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   aspects of the mode argument to the \code{dlopen()} routine on POSIX
   systems. They are available so that users can exercise greater control
   over the loading process for an individual library.  In general, the
-  defaults values are appropriate and you should override them only if
+  default values are appropriate and you should override them only if
   there is good reason and you understand the implications.
 
 #ifdef unix
@@ -111,14 +109,12 @@ is.loaded(symbol, PACKAGE = "", type = "")
   other elements of the application and so can be shared across two
   different DLLs.
 
-  Some systems do not provide (explicit) support for local/global and
-  lazy/eager symbol resolution.  This can be the source of subtle bugs.
-  One can arrange to have warning messages emitted when unsupported
-  options are used.  This is done by setting either of the options
-  \code{verbose} or \code{warn} to be non-zero via the
-  \code{\link{options}} function.  Currently, we know of only 2
-  platforms that do not provide a value for local load (RTLD_LOCAL).
-  These are IRIX6.4 and unpatched versions of Solaris 2.5.1.
+  Some (very old) systems do not provide (explicit) support for
+  local/global and lazy/eager symbol resolution.  This can be the source
+  of subtle bugs.  One can arrange to have warning messages emitted when
+  unsupported options are used.  This is done by setting either of the
+  options \code{verbose} or \code{warn} to be non-zero via the
+  \code{\link{options}} function.
 
   There is a short discussion of these additional arguments with some
   example code available at
@@ -149,7 +145,9 @@ is.loaded(symbol, PACKAGE = "", type = "")
   \code{DLLInfo}.  See \code{\link{getLoadedDLLs}} for information about
   this class.
 
-  The function \code{dyn.unload} unlinks the DLL.
+  The function \code{dyn.unload} unlinks the DLL.  Note that unloading a
+  DLL and then re-loading a DLL of the same name may or may not work: on
+  Solaris it uses the first version loaded.
 
   \code{is.loaded} checks if the symbol name is loaded and hence
   available for use in \code{.C} or \code{.Fortran} or \code{.Call} or
@@ -172,8 +170,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   standard mechanism (\code{LoadLibrary}) for loading DLLs.
 
   The original code for loading DLLs in Unix-alikes was provided by
-  Heiner Schwarte.  The compatibility code for HP-UX was provided by
-  Luke Tierney.
+  Heiner Schwarte.
 }
 #ifdef windows
 \section{Windows}{
