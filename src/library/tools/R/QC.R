@@ -3317,8 +3317,12 @@ function(x, ...)
                      if(length(x$bad_pointers))
                      gettextf("Invalid license file pointers: %s",
                               paste(x$bad_pointers, collapse = " ")),
-                     gettextf("Verifiable as open source: %s",
-                              x$is_verified)))
+                     gettextf("Standardizable: %s",
+                              x$is_standardizable),
+                     if(x$is_standardizable)
+                     c(gettextf("Standardized license specification:"),
+                       strwrap(x$standardization,
+                               indent = 2L, exdent = 2L))))
     }
     invisible(x)
 }

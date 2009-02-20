@@ -496,7 +496,7 @@ sub check_package_description {
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
-	    $log->warning() unless $any;
+	    $log->note() unless $any;
 	    $log->print(join("\n", @out) . "\n");
 	    $any++;
 	}

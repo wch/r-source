@@ -14,6 +14,27 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## <NOTE>
+## We want *standardized* license specs so that we can compute on them.
+## In particular, we want to know whether licenses are recognizable as
+## free (FSF) or open source (OSI) licenses.
+## With the current standardization scheme, standardized license specs
+## specify free or open source software licenses or refer to LICENSE or
+## LICENCE files (requiring inspection by maintainers or installers).
+## AGPL is a particular nuisance: the FSF considers it a free software
+## license, but additional (e.g., attribution) clauses make it necessary
+## for installers to inspect these.
+## The R distribution contains a basic free or open source software
+## license db, but it would be good to have a more extensible mechanism
+## eventually.
+##
+## See in particular
+##   http://www.fsf.org/licensing/licenses
+##   http://en.wikipedia.org/wiki/List_of_FSF_approved_software_licences
+##   http://en.wikipedia.org/wiki/List_of_OSI_approved_software_licences
+## for more information.
+## </NOTE>
+
 re_anchor <- function(s)
     if(length(s)) paste("^", s, "$", sep = "") else character()
 re_group <- function(s)
@@ -109,135 +130,337 @@ function()
 
 license_regexps <- .make_license_regexps()
 
+## Standardizable and other free or open source software license specs:
+
 ## License specifications found on CRAN/BioC/Omegahat and manually
-## classified as "safe" open/free software licenses (even though not
-## canonical).  With ongoing standardization this should gradually be
-## eliminated.
-## Last updated: 2007-11-04.
+## classified as standardizable (hence currently free or open source)
+## software licenses (even though not standardized/canonical), provided
+## as a list of license specs named by the respective standardizations.
+## With ongoing standardization this should gradually be eliminated.
+## Last updated: 2009-02-19.
 
-## Note
-##   http://www.fsf.org/licensing/licenses
-##   http://en.wikipedia.org/wiki/List_of_FSF_approved_software_licences
+## Nasty issues.
+## * There really is no GPL version 2.0.
+##   Unfortunately, the FSF uses 2.0 in URLs or links
+##   (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+##   The text clearly says "Version 2, June 1991".
+## * There really is no LGPL version 2.0.
+##   Unfortunately, the FSF uses 2.0 in URLs or links
+##   (http://www.gnu.org/licenses/old-licenses/).
+##   The text clearly says "Version 2, June 1991".
+## * CeCILL is a bit of a mess: the current version is referred to as
+##   "version 2" (http://www.cecill.info/licences.en.html) but
+##    internally uses "Version 2.0 dated 2006-09-05" 
+##    (http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt).
 
-.safe_license_specs_in_standard_repositories <-
-    c(## <NOTE>
-      ## These really need fixing for a variety of reasons:
-      "'GPL'",
-      "Artistic",
-      "CeCILL 2 (GNU GPL 2 compatible)",
-      "LGPL version 2.1 or newer (the releases)",
-      "Standard GNU public license",
-      "The Gnu general public liscense, current version, 2/12/2004.",
-      "Unlimited distribution.",
-      ## It is really GNU Library General Public License 2
-      ## and GNU Lesser General Public License 2.1.
-      "Lesser GPL Version 2 or later.",
-      ## These are variants of GPL 2.0 which does not exist:
-      "GNU GPL v2.0 or greater",
-      "GNU General Public License 2.0.",
-      "GNU Public Licence 2.0 or above at your convenience",
-      "GNU-license 2.0 or newer",
-      "GPL (Version 2.0 or later)",
-      "GPL (version 2.0 or later)",
-      "GPL 2.0",
-      "GPL 2.0 or above",
-      "GPL 2.0 or higher",
-      "GPL 2.0 or later",
-      "GPL 2.0 or newer",
-      "GPL version 2.0",
-      "GPL version 2.0 or later",
-      "GPL version 2.0 or newer",
-      "GPL2.0",
-      ## CeCILL is a bit of a mess: the current version is referred to
-      ## as "version 2" (http://www.cecill.info/licences.en.html) but
-      ## internally uses "Version 2.0 dated 2006-09-05"
-      ## (http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt).
-      "CeCILL-2.0",
-      ## </NOTE>
-      "GNU GPL (version 2 or any later version)",
-      "GNU GPL (version 2 or later)",
-      "GNU GPL (version 2 or later); see the file COPYING for details",
-      "GNU GPL Version 2",
-      "GNU GPL Version 2 (or later)",
-      "GNU GPL Version 2 or newer.",
-      "GNU GPL version 2",
-      "GNU GPL version 2 or newer",
-      "GNU GPL version 2.",
-      "GNU General Public License Version 2 or higher.",
-      "GNU General Public License version 2 or newer",
-      "GNU Public License",
-      "GPL version 2 or later",
-      "GPL ( version 2 or later)",
-      "GPL (GNU Public Licence), Version 2 or later",
-      "GPL (Version 2 or above)",
-      "GPL (Version 2 or later)",
-      "GPL (version 2 or higher)",
-      "GPL (version 2 or later)",
-      "GPL (version 2 or later, see the included file GPL)",
-      "GPL (version 2 or newer)",
-      "GPL (version 2)",
-      "GPL 2",
-      "GPL 2 or above",
-      "GPL 2 or later",
-      "GPL 3.0 Affero (with attribution)",
-      "GPL AFFERO 3.0 (with citation)",
-      "GPL Version 2",
-      "GPL Version 2 or higher",
-      "GPL Version 2 or later",
-      "GPL Version 2 or later.",
-      "GPL Version 2 or newer",
-      "GPL Version 2 or newer.",
-      "GPL Version 2.",
-      "GPL Version 2. See the LICENSE file for details.",
-      "GPL or LGPL by your choice",
-      "GPL v2",
-      "GPL v2 (but not later)",
-      "GPL v2 or later",
-      "GPL version 2",
-      "GPL version 2 (June, 1991)",
-      "GPL version 2 (June, 1991) or later",
-      "GPL version 2 (or newer)",
-      "GPL version 2 or later (June, 1991)",
-      "GPL version 2 or later.",
-      "GPL version 2 or newer",
-      "GPL version 2 or newer (http://www.gnu.org/copyleft/gpl.html)",
-      "GPL version 2 or newer (see README).",
-      "GPL version 2 or newer.",
-      "GPL version 2 or newer. http://www.gnu.org/copyleft/gpl.html",
-      "GPL version 2, or, at your option, any newer version.",
-      "GPL version 2.",
-      "GPL version 3 or newer",
-      "GPL vesion 2 or newer",
-      "GPL2",
-      "Gnu GPL",
-      "LGPL (see <http://www.opensource.org/licenses/lgpl-license.php>).",
-      "LGPL 2.1",
-      "LGPL >= 2.0",
-      "LGPL Version 2 or later.",
-      "LGPL version 2",
-      "LGPL version 2 or newer",
-      "LGPL version 2.1 or later",
-      "LGPL2",
-      "Mozilla Public License 1.1 (http://www.mozilla.org/MPL/)",
-      "The Artistic License, Version 2.0",
-      "X11 (http://www.x.org/Downloads_terms.html)",
-      "use under GPL2, or see file LICENCE",
-      "GNU GPL",
-      "GPL (version 2 or later) See file LICENCE.",
-      "GPL 2.",
-      "GPL Version 2 (or later)",
-      "LGPL (version 2 or later)",
-      ## BioC
-      "GNU GPL.",
-      "GPL (http://www.gnu.org/copyleft/gpl.html)",
-      "GPL V2",
-      "GPL version 2 (or later)",
-      "GPL version 2 or higher",
-      "GPL, version 2",
-      "GPL2 or later",
-      "LGPL version 2.1",
-      "caBIG"
+.standardizable_license_specs <-
+list("Artistic-2.0" =
+     c("The Artistic License, Version 2.0",
+       "Artistic 2.0",
+       "Artistic-2.0, see http://www.opensource.org/licenses/artistic-license-2.0.php"
+       ),
+
+     "CeCILL-2" =
+     c("CeCILL 2 (GNU GPL 2 compatible)",
+       "CeCILL-2.0"
+       ),
+     
+     "GPL" =
+     c(## <FIXME>
+       "'GPL'",
+       ## </FIXME>
+       "GNU Public License",
+       "Gnu GPL",
+       "GNU GPL",
+       "GPL (http://www.gnu.org/copyleft/gpl.html)"
+       ),
+     
+     "GPL-2" =
+     c(## <FIXME>
+       "GPL vesion 2 or newer",       
+       ## </FIXME>
+       ## <NOTE>
+       ## There is no GPL 2.0, see above.
+       "GNU General Public License 2.0.",
+       "GPL 2.0",
+       "GPL version 2.0",
+       "GPL2.0",
+       ## </NOTE>
+       "GPL Version 2",
+       "GNU GPL Version 2",
+       "GNU GPL version 2",
+       "GNU GPL version 2.",
+       "GPL (version 2)",
+       "GPL 2",
+       "GPL 2.",
+       "GPL v2",
+       "GPL version 2",
+       "GPL version 2 (June, 1991)",
+       "GPL version 2.",
+       "GPL2",
+       "GPL-2 http://www.r-project.org/Licenses/GPL-2",
+       ## BioC:
+       "GPL V2",
+       "GPL, version 2"
+       ),
+     
+     "GPL-3" =
+     c("GPL Version 3",
+       "GPL version 3",
+       "GNU General Public Licence (GPLv3)",
+       "GPL v3"
+       ),
+
+     "GPL (>= 2)" =
+     c(## <NOTE>
+       ## There is no GPL 2.0, see above.
+       "GNU GPL v2.0 or greater",
+       "GNU Public Licence 2.0 or above at your convenience",
+       "GPL (Version 2.0 or later)",
+       "GPL 2.0 or higher",
+       "GPL 2.0 or later",
+       "GPL 2.0 or newer",
+       "GPL version 2.0 or later",
+       "GPL version 2.0 or newer",
+       ## </NOTE>
+       "GNU GPL (version 2 or later)",
+       "GNU GPL (version 2 or later); see the file COPYING for details",
+       "GNU GPL Version 2 (or later)",
+       "GNU GPL Version 2 or newer.",
+       "GNU GPL version 2 or newer",
+       "GNU General Public License version 2 or newer",
+       "GPL version 2 or later",
+       "GPL ( version 2 or later)",
+       "GPL (Version 2 or above)",
+       "GPL (Version 2 or later)",
+       "GPL (version 2 or higher)",
+       "GPL (version 2 or later)",
+       "GPL (version 2 or later, see the included file GPL)",
+       "GPL (version 2 or newer)",
+       "GPL 2 or above",
+       "GPL 2 or later",
+       "GPL version 2 or any later version",
+       "GPL Version 2 or later",
+       "GPL Version 2 or later.",
+       "GPL Version 2 or newer",
+       "GPL Version 2 or newer.",
+       "GPL version 2 (June, 1991) or later",
+       "GPL version 2 (or newer)",
+       "GPL version 2 or later.",
+       "GPL version 2 or newer",
+       "GPL version 2 or newer (http://www.gnu.org/copyleft/gpl.html)",
+       "GPL version 2 or newer (see README).",
+       "GPL version 2 or newer.",
+       "GPL version 2 or newer. http://www.gnu.org/copyleft/gpl.html",
+       "GPL version 2, or, at your option, any newer version.",
+       "GPL (version 2 or later) See file LICENCE.",
+       "GPL Version 2 (or later)",
+       "GPL version 2 (or later)",
+       "GPL version 2 or higher",
+       "GPL2 or later",
+       "GPL>=2",
+       "GNU General Public License (version 2 or later)"
+       ),
+
+     "GPL (>= 3)" =
+     c("GPL (version 3 or later)",
+       "GPL version 3 or newer",
+       "GPL >=3"
+       ),
+
+     "GPL | LGPL" =
+     c("GPL or LGPL by your choice"
+       ),
+
+     "GPL | BSD" =
+     c("GPL, BSD"
+       ),
+
+     "GPL-2 | file LICENSE" =
+     c("use under GPL2, or see file LICENCE"
+       ),
+     
+     "LGPL" =
+     c("LGPL (see <http://www.opensource.org/licenses/lgpl-license.php>).",
+       "GNU LGPL (same as wxWidgets)."
+       ),
+     
+     "LGPL-2" =
+     c("LGPL2",
+       "LGPL2.0"
+       ),
+     
+     "LGPL-2.1" =
+     c("LGPL version 2.1"
+       ),
+
+     "LGPL-3" =
+     c("LGPL-v3"
+       ),
+       
+     "LGPL (>= 2.0)" =
+     c(## <FIXME>
+       ## LGPL-2 is the "Library General Public License" (not "Lesser"
+       ## as in the subsequent LGPLs).
+       "Lesser GPL Version 2 or later.",
+       ## </FIXME>
+       ## <NOTE>
+       ## There is no LGPL-2.0, see above.
+       "LGPL >= 2.0",
+       ## </NOTE>
+       "LGPL Version 2 or later.",
+       "LGPL version 2 or newer",
+       "LGPL (version 2 or later)",
+       "LGPL version 2 or later"
+       ),
+     
+     "LGPL (>= 2.1)" =
+     c("LGPL version 2.1 or newer (the releases)",
+       "LGPL version 2.1 or later"
+       ),
+
+     "X11" =
+     c("X11 (http://www.x.org/Downloads_terms.html)"
+       ),
+
+     "Unlimited" =
+     c("Unlimited use and distribution."
+       )
 )
+
+.standardizable_license_specs_db <-
+data.frame(ispecs =
+           unlist(.standardizable_license_specs),
+           ospecs =
+           rep.int(names(.standardizable_license_specs),
+                   sapply(.standardizable_license_specs,
+                          length)),
+           stringsAsFactors = FALSE)
+
+## These used to be in .safe_license_specs_in_standard_repositories:
+##    "Artistic",
+##    "GPL AFFERO 3.0 (with citation)",
+##    "caBIG"
+##    "Unlimited distribution.",
+## These are safe from a distribution point of view, but clearly not
+## standardizable ... hence:
+## A list of license specs we cannot standardize, but safely classify as
+## free or open source software licenses:
+.other_free_or_open_license_specs <-
+c("Artistic",
+  "GPL AFFERO 3.0 (with citation)",
+  ## https://cabig-kc.nci.nih.gov/CTMS/KC/index.php/C3PR_caBIG_License  
+  "caBIG"
+  )
+
+.safe_license_specs <-
+    c(.standardizable_license_specs_db$ispecs,
+      .other_free_or_open_license_specs)
+
+## .safe_license_specs_in_standard_repositories <-
+##     c(## <NOTE>
+##       ## These really need fixing for a variety of reasons:
+##       "'GPL'",
+##       "Artistic",
+##       "CeCILL 2 (GNU GPL 2 compatible)",
+##       "LGPL version 2.1 or newer (the releases)",
+##       "Unlimited distribution.",
+##       ## It is really GNU Library General Public License 2
+##       ## and GNU Lesser General Public License 2.1.
+##       "Lesser GPL Version 2 or later.",
+##       ## These are variants of GPL 2.0 which does not exist:
+##       "GNU GPL v2.0 or greater",
+##       "GNU General Public License 2.0.",
+##       "GNU Public Licence 2.0 or above at your convenience",
+##       "GPL (Version 2.0 or later)",
+##       "GPL 2.0",
+##       "GPL 2.0 or higher",
+##       "GPL 2.0 or later",
+##       "GPL 2.0 or newer",
+##       "GPL version 2.0",
+##       "GPL version 2.0 or later",
+##       "GPL version 2.0 or newer",
+##       "GPL2.0",
+##       ## CeCILL is a bit of a mess: the current version is referred to
+##       ## as "version 2" (http://www.cecill.info/licences.en.html) but
+##       ## internally uses "Version 2.0 dated 2006-09-05"
+##       ## (http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt).
+##       "CeCILL-2.0",
+##       ## </NOTE>
+##       "GNU GPL (version 2 or later)",
+##       "GNU GPL (version 2 or later); see the file COPYING for details",
+##       "GNU GPL Version 2",
+##       "GNU GPL Version 2 (or later)",
+##       "GNU GPL Version 2 or newer.",
+##       "GNU GPL version 2",
+##       "GNU GPL version 2 or newer",
+##       "GNU GPL version 2.",
+##       "GNU General Public License version 2 or newer",
+##       "GNU Public License",
+##       "GPL version 2 or later",
+##       "GPL ( version 2 or later)",
+##       "GPL (Version 2 or above)",
+##       "GPL (Version 2 or later)",
+##       "GPL (version 2 or higher)",
+##       "GPL (version 2 or later)",
+##       "GPL (version 2 or later, see the included file GPL)",
+##       "GPL (version 2 or newer)",
+##       "GPL (version 2)",
+##       "GPL (version 3 or later)",
+##       "GPL 2",
+##       "GPL 2 or above",
+##       "GPL 2 or later",
+##       "GPL AFFERO 3.0 (with citation)",
+##       "GPL Version 2",
+##       "GPL version 2 or any later version",
+##       "GPL Version 2 or later",
+##       "GPL Version 2 or later.",
+##       "GPL Version 2 or newer",
+##       "GPL Version 2 or newer.",
+##       "GPL Version 3",
+##       "GPL or LGPL by your choice",
+##       "GPL v2",
+##       "GPL version 2",
+##       "GPL version 2 (June, 1991)",
+##       "GPL version 2 (June, 1991) or later",
+##       "GPL version 2 (or newer)",
+##       "GPL version 2 or later.",
+##       "GPL version 2 or newer",
+##       "GPL version 2 or newer (http://www.gnu.org/copyleft/gpl.html)",
+##       "GPL version 2 or newer (see README).",
+##       "GPL version 2 or newer.",
+##       "GPL version 2 or newer. http://www.gnu.org/copyleft/gpl.html",
+##       "GPL version 2, or, at your option, any newer version.",
+##       "GPL version 2.",
+##       "GPL version 3",
+##       "GPL version 3 or newer",
+##       "GPL vesion 2 or newer",
+##       "GPL2",
+##       "Gnu GPL",
+##       "LGPL (see <http://www.opensource.org/licenses/lgpl-license.php>).",
+##       "LGPL >= 2.0",
+##       "LGPL Version 2 or later.",
+##       "LGPL version 2 or newer",
+##       "LGPL version 2.1 or later",
+##       "LGPL2",
+##       "The Artistic License, Version 2.0",
+##       "X11 (http://www.x.org/Downloads_terms.html)",
+##       "use under GPL2, or see file LICENCE",
+##       "GNU GPL",
+##       "GPL (version 2 or later) See file LICENCE.",
+##       "GPL 2.",
+##       "GPL Version 2 (or later)",
+##       "LGPL (version 2 or later)",
+##       ## BioC
+##       "GPL (http://www.gnu.org/copyleft/gpl.html)",
+##       "GPL V2",
+##       "GPL version 2 (or later)",
+##       "GPL version 2 or higher",
+##       "GPL, version 2",
+##       "GPL2 or later",
+##       "LGPL version 2.1",
+##       "caBIG"
+## )
 
 analyze_license <-
 function(x)
@@ -245,12 +468,16 @@ function(x)
     .make_results <- function(is_empty = FALSE,
                               is_canonical = FALSE,
                               bad_components = character(),
+                              is_standardizable = FALSE,
                               is_verified = FALSE,
+                              standardization = NA_character_,
                               pointers = NULL)
         list(is_empty = is_empty,
              is_canonical = is_canonical,
              bad_components = bad_components,
+             is_standardizable = is_standardizable,
              is_verified = is_verified,
+             standardization = standardization,
              pointers = pointers)
 
 
@@ -268,27 +495,64 @@ function(x)
     ok <- grepl(license_regexps$re_for_component, components)
 
     pointers <- if(all(ok)) NULL else {
-        ind <- regexpr(re_anchor(license_regexps$re_for_license_file),
-                       components) > -1L
+        ind <- grepl(re_anchor(license_regexps$re_for_license_file),
+                     components)
         sub("file ", "", components[ind])
     }
 
-    ## Is the version specification "safe"?  For the time being, test
-    ## whether the spec is canonical and different from just a pointer
-    ## to a license file, or in a table of safe specifications derived
-    ## from license specifications of CRAN packages as recorded in Sep
-    ## 2007.
+    ## Is the license specification "safe" in the sense of automatically
+    ## verifiable as a free or open source software license?
+    ## For the time being, test whether the spec is canonical and
+    ## different from just a pointer to a license file, or in the list
+    ## of safe specifications derived from license specifications in the
+    ## standard repositories.
     is_verified <-
         ((all(ok)
-          && any(regexpr(re_anchor(license_regexps$re_for_license_file),
-                         components) == -1L))
-         || all(components %in%
-                .safe_license_specs_in_standard_repositories))
+          && !all(grepl(re_anchor(license_regexps$re_for_license_file),
+                        components)))
+         || all(components %in% .safe_license_specs))
 
+    ## Is the license specification standardizable?
+    standardizable <-
+        components %in% .standardizable_license_specs_db$ispecs
+    is_standardizable <- (all(ok) || all(standardizable))
+
+    standardization <- if(is_standardizable) {
+        ## Standardize the ones which are standardizable but not yet
+        ## standardized.
+        ind <- !ok & standardizable
+        if(any(ind))
+            components[ind] <-
+                .standardize_license_components(components[ind])
+        ## Canonicalize the standardized ones a bit more (as we are
+        ## rather generous about using whitespace).
+        ind <- ok & grepl("\\(", components)
+        if(any(ind)) {
+            s <- sub("[[:space:]]*\\(", " \\(", components[ind])
+            s <- gsub("[[:space:]]*,[[:space:]]*", ", ", s)
+            ## Really re_or(operators) ...
+            s <- gsub("[[:space:]]+(<=?|>=?|==|!=)", " \\1", s)
+            components[ind] <-
+                gsub(sprintf("[[:space:]]*(%s)",
+                             .standard_regexps()$valid_numeric_version),
+                     " \\1", s)
+        }
+        standardization <- paste(components, collapse = " | ")
+    } else NA_character_
+    
     .make_results(is_canonical = all(ok),
                   bad_components = components[!ok],
+                  is_standardizable = is_standardizable,
                   is_verified = is_verified,
+                  standardization = standardization,
                   pointers = pointers)
+}
+
+.standardize_license_components <-
+function(x)
+{
+    with(.standardizable_license_specs_db,
+         ospecs[match(x, ispecs)])
 }
 
 analyze_licenses <-
@@ -376,7 +640,7 @@ find_unused_safe_license_specs <-
 function(...)
 {
     ldb <- do.call("rbind", list(...))
-    safe <- .safe_license_specs_in_standard_repositories
+    safe <- .safe_license_specs
     safe[!safe %in% unique(ldb$License)]
 }
 
@@ -384,6 +648,6 @@ find_canonical_safe_license_specs <-
 function()
 {
     grep(license_regexps$re_for_component,
-         .safe_license_specs_in_standard_repositories,
+         .safe_license_specs,
          value = TRUE)
 }

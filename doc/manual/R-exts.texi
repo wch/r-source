@@ -319,7 +319,8 @@ License: GPL-2 | file LICENCE
 Please note in particular that ``Public domain'' is not a valid license.
 It is very important that you include this information!  Otherwise, it
 may not even be legally correct for others to distribute copies of the
-package.
+package.  Do not use the @samp{License} field for copyright information:
+if needed, use a @samp{Copyright} field.
 
 The @samp{Description} field should give a comprehensive description of
 what the package does.  One can use several (complete) sentences, but
@@ -1457,12 +1458,12 @@ matched against the file names relative to the top-level source
 directory.  In addition, directories from source control
 systems@footnote{called @file{CVS} or @file{.svn} or @file{.arch-ids} or
 @file{.bzr} or @file{git}.}, directories with names ending
-@file{.Rcheck} or @file{Old} or @file{old} and files @file{GNUMakefile}
-or with base names starting with @samp{.#}, or starting and ending with
-@samp{#}, or ending in @samp{~}, @samp{.bak} or @samp{.swp}, are
-excluded by default.  In addition, those files in the @file{R},
-@file{demo} and @file{man} directories which are flagged by @code{R CMD
-check} as having invalid names will be excluded.
+@file{.Rcheck} or @file{Old} or @file{old} and files @file{GNUMakefile},
+@file{Read-and-delete-me} or with base names starting with @samp{.#}, or
+starting and ending with @samp{#}, or ending in @samp{~}, @samp{.bak} or
+@samp{.swp}, are excluded by default.  In addition, those files in the
+@file{R}, @file{demo} and @file{man} directories which are flagged by
+@code{R CMD check} as having invalid names will be excluded.
 
 @c <FIXME>
 @c From 1.8.0 on, the build code removes exclude files itself, rather
