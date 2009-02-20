@@ -57,13 +57,13 @@ library.dynam.unload(chname, libpath,
   not be added.  Note that to allow for versioned installs, the
   \code{chname} argument should not be set to the \code{pkgname}
   argument of \code{.First.lib} or \code{.onLoad}.
-
-  If \code{\dots} does not include a named argument \code{Dllpath},
-  \code{\link{dyn.load}} is called with \code{DLLpath} set to the
-  package's \file{libs} directory.  (Currently only used under Windows.)
 #ifdef windows
-  See the \dQuote{Windows} section of the help on \code{\link{dyn.load}}
-  for how to control where dependent DLLs are found.
+
+  If \code{\dots} does not include a named argument \code{DLLpath},
+  \code{\link{dyn.load}} is called with \code{DLLpath} set to the
+  package's \file{libs} directory.  See the \dQuote{Windows} section of
+  the help on \code{\link{dyn.load}} for how to control where dependent
+  DLLs are found.
 #endif
   
   \code{library.dynam.unload} is designed for use in
@@ -98,6 +98,10 @@ library.dynam.unload(chname, libpath,
   \code{library.dynam}: use \code{library.dynam.unload} to ensure
   that \code{.dynLibs} gets updated.  Otherwise a subsequent call to
   \code{library.dynam} will be told the object is already loaded.
+
+  Note that whether or not it is possible to unload a DLL and then
+  reload a revised version of the same file is OS-dependent: see the
+  \sQuote{Value} section of the help for  \code{\link{dyn.unload}}.
 }
 \seealso{
   \code{\link{getLoadedDLLs}} for information on \code{"DLLInfo"} and
