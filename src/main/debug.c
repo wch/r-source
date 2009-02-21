@@ -26,6 +26,8 @@
 
 SEXP attribute_hidden do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    SEXP ans = R_NilValue;
+
     checkArity(op,args);
 #define find_char_fun \
     if (isValidString(CAR(args))) {				\
@@ -47,8 +49,11 @@ SEXP attribute_hidden do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    warningcall(call, "argument is not being debugged");
 	SET_DEBUG(CAR(args), 0);
 	break;
+    case 2:
+        ans = ScalarLogical(DEBUG(CAR(args)));
+        break;
     }
-    return R_NilValue;
+    return ans;
 }
 
 SEXP attribute_hidden do_trace(SEXP call, SEXP op, SEXP args, SEXP rho)

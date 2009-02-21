@@ -13,6 +13,9 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
     o	expand.grid() by default no longer coerces strings into factors.
 
+    o   isdebugged added, indicates whether the function passed in has
+        the debug flag set or not.
+
 
 NEW FEATURES
 

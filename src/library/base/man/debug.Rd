@@ -8,14 +8,16 @@
 \usage{
 debug(fun)
 undebug(fun)
+isdebugged(fun)
 }
 \alias{debug}
 \alias{undebug}
+\alias{isdebugged}
 \arguments{
 \item{fun}{any interpreted \R function.}
 }
 \description{
-  Set or unset the debugging flag on a function.
+  Set, unset or query the debugging flag on a function.
 }
 \details{
   When a function flagged for debugging is entered, normal execution

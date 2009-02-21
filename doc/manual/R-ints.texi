@@ -1817,15 +1817,15 @@ axis <- function(side, at = NULL, labels = NULL, ...)
 
 However, for reasons of convenience and also efficiency (as there is
 some overhead in using the @code{.Internal} interface wrapped in a
-function closure), there are exceptions which can be accessed directly.
-Note that these functions make no use of @R{} code, and hence are very
-different from the usual interpreted functions.  In particular,
-@code{args}, @code{formals} and @code{body} return @code{NULL} for such
-objects, and argument matching is purely positional (with two exceptions
-described below).
+function closure), the primitive functions are exceptions that can be
+accessed directly.  Note that primitive functions make no use of @R{}
+code, and hence are very different from the usual interpreted functions.
+In particular, @code{args}, @code{formals} and @code{body} return
+@code{NULL} for such objects, and argument matching is purely positional
+(with two exceptions described below).  
 
-The list of these ``primitive'' functions is subject to change:
-currently, it includes the following.
+The list of primitive functions is subject to change; currently, it
+includes the following.
 
 @enumerate
 
@@ -1930,7 +1930,7 @@ The programming and session management utilities
 
 @example
 @group
-debug  undebug browser  proc.time  gc.time
+browser  proc.time  gc.time
 tracemem retracemem untracemem
 @end group
 @end example
