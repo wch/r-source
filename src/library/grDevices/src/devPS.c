@@ -791,6 +791,10 @@ static double
 	}
 #endif
 
+    /* safety */
+    if(!metrics) return 0.0;
+    
+
     /* Now we know we have an 8-bit encoded string in the encoding to
        be used for output. */
     for (p = str1; *p; p++) {
@@ -7263,7 +7267,6 @@ static double PDF_StrWidth(const char *str,
 			   pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    int face = gc->fontface;
 
     if(gc->fontface < 1 || gc->fontface > 5) gc->fontface = 1;
     if (isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
@@ -7274,7 +7277,8 @@ static double PDF_StrWidth(const char *str,
 				  pd->useKern, gc->fontface,
 				  PDFconvname(gc->fontfamily, pd));
     } else { /* cidfont(gc->fontfamily) */
-	if (face < 5) {
+#ifdef SUPPORT_MBCS
+	if (gc->fontface < 5) {
 	    return floor(gc->cex * gc->ps + 0.5) *
 		PostScriptStringWidth((const unsigned char *)str, CE_NATIVE,
 				      NULL, FALSE, gc->fontface, NULL);
@@ -7285,6 +7289,10 @@ static double PDF_StrWidth(const char *str,
 							     pd),
 				      FALSE, gc->fontface, NULL);
 	}
+#else
+	error(_("CID fonts are not supported on this platform"));
+	
+#endif
     }
 }
 

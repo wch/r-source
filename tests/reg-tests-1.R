@@ -5383,10 +5383,13 @@ stopifnot(substring(foo[-1], 1,1) == " ", length(foo) == 4,
 ## was " .haha" (not according to DCF standard)
 
 
-## Pdf() with CIDfonts active
+## Pdf() with CIDfonts active -- they need MBCS to be supported
 pdf(family="Japan1") # << for CIDfonts, pd->fonts is NULL
-plot(1,1,pch="", axes=FALSE)
-text(1,1,"F.1", family="Helvetica"); dev.off()
+try({
+    plot(1,1,pch="", axes=FALSE)
+    text(1,1,"F.1", family="Helvetica")
+})
+dev.off()
 ## text() seg.faulted up to 2.7.2 (and early 2.8.0-alpha)
 
 ## PS mixing CIDfonts and Type1 - reverse case
