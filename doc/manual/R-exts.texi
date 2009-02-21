@@ -1585,7 +1585,8 @@ Future versions of @R{} may enhance this customization mechanism, and
 provide a similar scheme for @code{R CMD build}.
 
 There are other internal settings that can be changed via environment
-variables @w{@env{_R_CHECK_*_}:} see the Perl source code.
+variables @w{@env{_R_CHECK_*_}:}  @xref{Tools, , Tools, R-ints, R
+Internals}, (and the Perl source code).
 
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
 @section Writing package vignettes

@@ -70,6 +70,7 @@ The current version of this document is @value{VERSION}.
 * .Internal vs .Primitive::     
 * Internationalization in the R sources::  
 * Graphics Devices::            
+* Tools::                       
 * R coding standards::          
 * Testing R code::              
 * Function and variable index::  
@@ -2210,7 +2211,7 @@ This is handled separately: see
 
 See @file{po/README} for how to update the message templates and catalogs.
 
-@node Graphics Devices, R coding standards, Internationalization in the R sources, Top
+@node Graphics Devices, Tools, Internationalization in the R sources, Top
 @chapter Graphics
 
 @R{}'s graphics internals were revised for version 1.4.0 (and tidied up
@@ -2983,8 +2984,150 @@ package @pkg{grDevices}.
 
 [At least pointers to documentation.]
 
+@node Tools, R coding standards, Graphics Devices, Top
+@chapter Tools
 
-@node R coding standards, Testing R code, Graphics Devices, Top
+The behavior of @command{R CMD check} can be controlled through a
+variety of command line arguments, Perl configuration variables, and
+internal environment variables.
+
+There is an internal @option{--install=@var{value}} command line
+argument not shown by @command{R CMD check --help}, with possible values
+
+@table @code
+@item check:@var{file}
+Assume that installation was already performed with stdout/stderr to
+@var{file}, the contents of which need to be checked (without repeating
+the installation).  This is useful for checks applied by repository
+maintainers: it reduces the check time by the installation time given
+that the package has already been installed.  In this case, one also
+needs to specify @emph{where} the package was installed to using command
+line option @option{--library}.
+@item fake
+Fake installation, and turn off the run-time tests.
+@item skip
+Skip installation, e.g., when testing recommended packages bundled with
+R.
+@item no
+The same as @option{--no-install}: turns off installation and the tests
+which require the package to be installed.
+@end table
+
+The following internal environment variables are used for initializing
+the corresponding public Perl configuration variables
+(@pxref{Customizing checking and building, , Customizing checking and
+building, R-exts, Writing R Extensions}):
+
+@quotation
+@multitable {@code{_R_CHECK_LATEX_VIGNETTES_}} {@code{$R_check_latex_vignettes}}
+@item Environment variable
+@tab Configuration variable
+@item @code{_R_CHECK_ALL_NON_ISO_C_}
+@vindex _R_CHECK_ALL_NON_ISO_C_
+@tab @code{$R_check_all_non_ISO_C} 
+@item @code{_R_CHECK_FORCE_SUGGESTS_}
+@vindex_R_CHECK_FORCE_SUGGESTS_
+@tab @code{$R_check_force_suggests}
+@item @code{_R_CHECK_LATEX_VIGNETTES_}
+@vindex_R_CHECK_LATEX_VIGNETTES_
+@tab @code{$R_check_latex_vignettes}
+@item @code{_R_CHECK_RD_STYLE_}
+@vindex_R_CHECK_RD_STYLE_
+@tab @code{$R_check_Rd_style}
+@item @code{_R_CHECK_RD_XREFS_}
+@vindex_R_CHECK_RD_XREFS_
+@tab @code{$R_check_Rd_xrefs}
+@item @code{_R_CHECK_SUBDIRS_NOCASE_}
+@vindex_R_CHECK_SUBDIRS_NOCASE_
+@tab @code{$R_check_subdirs_nocase}
+@item @code{_R_CHECK_SUBDIRS_STRICT_}
+@vindex_R_CHECK_SUBDIRS_STRICT_
+@tab @code{$R_check_subdirs_strict}
+@item @code{_R_CHECK_USE_INSTALL_LOG_}
+@vindex_R_CHECK_USE_INSTALL_LOG_
+@tab @code{$R_check_use_install_log}
+@item @code{_R_CHECK_WEAVE_VIGNETTES_}
+@vindex_R_CHECK_WEAVE_VIGNETTES_
+@tab @code{$R_check_weave_vignettes}
+@item @code{_R_CHECK_USE_CODETOOLS_}
+@vindex_R_CHECK_USE_CODETOOLS_
+@tab @code{$R_check_use_codetools}
+@end multitable
+@end quotation
+
+The following internal environment variables have no corresponding
+configuration variable.
+@vtable @code
+@item _R_CHECK_CODOC_S4_METHODS_
+Control whether @code{codoc()} testing is also performed on S4 methods.
+This is off by default because this can result in false positives, as
+@code{rematchDefinition()} currently does not preserve the given
+formals.
+@item _R_CHECK_DOT_INTERNAL_
+Control whether the package code is scanned for @code{.Internal} calls.
+Default: false.
+@item _R_CHECK_EXECUTABLES_
+Control checking for executable (binary) files.
+Default: true.
+@item _R_CHECK_EXECUTABLES_EXCLUSIONS_
+Control whether checking for executable (binary) files ignores files
+listed in the package's @file{BinaryFiles} file.
+Default: true.
+However, most likely this package-level override mechanism will be
+removed eventually.
+@item _R_CHECK_FF_CALLS_
+Allows turning off @code{checkFF()} testing.  Legacy mostly.
+Default: true.
+@item _R_CHECK_LICENSE_
+Control whether license checks are performed.
+Default: false.
+@item _R_CHECK_RD_EMPTY_SECTIONS_
+Control whether @code{Rd_parse()} and @code{check_Rd_files_in_Rd_db()}
+worry about empty sections.  Of questionable use, as Rdconv drops empty
+sections anyways with a note.
+Default: false.
+@item _R_CHECK_RD_EXAMPLES_T_AND_F_
+Control whether @code{check_T_and_F()} also looks for ``bad'' (global)
+@samp{T}/@samp{F} uses in examples.
+Off by default because this can result in false positives.
+@item _R_CHECK_RD_PARSE_
+Control whether Rd files are checked against the Rd version 2 parser.
+Default: true.
+@item _R_CHECK_RD_USAGE_METHOD_BINOPS_
+Control whether binops generics are considered as allowing useful S3
+method markup. 
+Default: true (as this Rd feature was added some time ago).
+OBSOLETE.
+@item _R_CHECK_RD_USAGE_METHOD_SUBSET_
+Control whether subset generics are considered as allowing useful S3
+method markup.
+Default: true (as this Rd feature was added some time ago).
+OBSOLETE.
+@item _R_CHECK_SRC_MINUS_W_IMPLICIT_
+Control whether installation output is checked for compilation warnings
+about implicit function declarations (as spotted by GCC with command
+line option @option{-Wimplicit-function-declaration}, which is implied
+by @option{-Wall}).
+Default: false.
+This should really be a configuration variable, but we need a better
+name.
+@item _R_CHECK_SRC_MINUS_W_UNUSED_
+Control whether installation output is checked for compilation warnings
+about unused code constituents (as spotted by GCC with command line
+option @option{-Wunused}, which is implied by @option{-Wall}).
+@item _R_CHECK_WALL_FORTRAN_
+Control whether gfortran 4.0 or better @option{-Wall} warnings are used in
+the analysis of installation output.
+Default: false, even though the warnings are justifiable.
+This should really be a configuration variable, but we need a better name.
+@item _R_CHECK_WARN_BAD_USAGE_LINES_
+Control whether @code{checkDocFiles()} warns about bad Rd @code{\usage}
+lines.
+Default: true (as @code{\special} was rolled out a long time ago).
+OBSOLETE.
+@end vtable
+
+@node R coding standards, Testing R code, Tools, Top
 @chapter R coding standards
 
 @cindex coding standards
