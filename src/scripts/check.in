@@ -485,7 +485,7 @@ foreach my $pkg (@ARGV) {
 		}
 	    }
 
-	    $log->checking("package dependencies");
+	    $log->checking("$package_or_bundle dependencies");
 	    ## Everything listed in Depends or Suggests or Imports
 	    ## should be available for successfully running R CMD check.
 	    ## \VignetteDepends{} entries not "required" by the package code
@@ -850,6 +850,20 @@ foreach my $pkg (@ARGV) {
 			my $warn_re = "warning: implicit declaration of function";
 			@lines = grep(!/$warn_re/, @lines);
 		    }
+
+		    ## Warnings spotted by gcc with '-Wunused', which is
+		    ## implied by '-Wall'.  Currently only accessible
+		    ## via an internal environment variable.
+		    my $check_src_flag =
+			&R_getenv("_R_CHECK_SRC_MINUS_W_UNUSED_",
+				  "FALSE");
+		    $check_src_flag =
+			&config_val_to_logical($check_src_flag);
+		    if(!$check_src_flag) {
+			my $warn_re = "warning: unused";
+			@lines = grep(!/$warn_re/i, @lines);
+		    }
+		    ## (gfortran seems to use upper case.)
 
 		    ## Warnings spotted by gfortran 4.0 or better with
 		    ## -Wall.  Justified in principle, it seems.  Let's
@@ -2223,7 +2237,9 @@ sub check_pkg {
     ${R_opts} = ${R_opts}." -d valgrind" if $opt_use_valgrind;
 
     if($opt_examples && (-d &file_path($library, $pkgname, "R-ex"))) {
-	$log->creating("${pkgname}-Ex.R");
+
+	$log->checking("examples");
+	
 	my $Rexdir = &file_path($library, $pkgname, "R-ex");
 	## $Rexdir might contain spaces (not on Windows, though)
 	$cmd = join(" ",
@@ -2238,12 +2254,10 @@ sub check_pkg {
 			"'${pkgname}-Ex.R' failed.\n");
 	    exit(1);
 	}
+
 	if($is_zipped) {
 	    unlink(&list_files_with_exts($Rexdir, "R"));
 	}
-
-	$log->result("OK");
-	$log->checking("examples");
 
 	my $enc = "";
 	if(defined($description->{"Encoding"})) {
