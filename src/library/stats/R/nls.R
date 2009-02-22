@@ -420,7 +420,7 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
     if (any(lower != -Inf) || any(upper != Inf)) {
         low <- rep(as.double(lower), length.out = length(par))
         upp <- rep(as.double(upper), length.out = length(par))
-        if(any(start < low || start > upp)) {
+        if(any(unlist(start) < low) ||any( unlist(start) > upp)) {
             iv[1L] <- 300
             return(iv)
         }

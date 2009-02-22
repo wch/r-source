@@ -513,6 +513,9 @@ BUG FIXES
     o	str() was incorrectly warning about its option component
 	'formatNum' set by strOptions().
 
+    o	nls(algorithm = "port") did not accept the [factor] notation.
+    	(PR#13650)
+
 
 
 		CHANGES IN R VERSION 2.8.1

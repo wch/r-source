@@ -241,4 +241,19 @@ summary (nls(expsumNoisy ~ getExpmat(k, 1:100) %*% sp, expsum.df,
              algorithm = "port"))
 
 
+## PR13540
+
+x <- runif(200)
+b0 <- c(rep(0,100),runif(100))
+b1 <- 1
+fac <- as.factor(rep(c(0,1), each = 100))
+y <- b0 + b1*x + rnorm(200, sd=0.05)
+# next failed in 2.8.1
+fit <- nls(y~b0[fac] + b1*x, start = list(b0=c(1,1), b1=1),
+           algorithm ="port", upper = c(100, 100, 100))
+# next did not fail in proposed fix.
+fit <- try(nls(y~b0[fac] + b1*x, start = list(b0=c(1,1), b1=101),
+               algorithm ="port", upper = c(100, 100, 100)))
+stopifnot(inherits(fit, "try-error"))
+
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')

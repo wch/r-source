@@ -1,6 +1,6 @@
 
-R version 2.8.0 Under development (unstable) (2008-08-28 r46446)
-Copyright (C) 2008 The R Foundation for Statistical Computing
+R version 2.9.0 Under development (unstable) (2009-02-22 r47979)
+Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -663,6 +663,23 @@ Residual standard error: 0.00205 on 96 degrees of freedom
 Algorithm "port", convergence message: both X-convergence and relative convergence (5) 
 
 > 
+> 
+> ## PR13540
+> 
+> x <- runif(200)
+> b0 <- c(rep(0,100),runif(100))
+> b1 <- 1
+> fac <- as.factor(rep(c(0,1), each = 100))
+> y <- b0 + b1*x + rnorm(200, sd=0.05)
+> # next failed in 2.8.1
+> fit <- nls(y~b0[fac] + b1*x, start = list(b0=c(1,1), b1=1),
++            algorithm ="port", upper = c(100, 100, 100))
+> # next did not fail in proposed fix.
+> fit <- try(nls(y~b0[fac] + b1*x, start = list(b0=c(1,1), b1=101),
++                algorithm ="port", upper = c(100, 100, 100)))
+Error in nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  : 
+  Convergence failure: initial par violates constraints
+> stopifnot(inherits(fit, "try-error"))
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
 Time elapsed:  2.928 0.011 2.94 0 0 
