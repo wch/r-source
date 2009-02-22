@@ -1231,12 +1231,10 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 @node Using F95 code,  , Configure example, Configure and cleanup
 @subsection Using F95 code
 
-@R{} currently does not distinguish between FORTRAN 77 and Fortran 90/95
-code, and assumes all FORTRAN comes in source files with extension
-@file{.f}.  Commercial Unix systems typically use a F95 compiler, but
-only since the release of @code{gcc 4.0.0} in April 2005 have Linux and
-other non-commercial OSes had much support for F95.  Only wih @R{} 2.6.0
-did the Windows port adopt a Fortran 90 compiler.
+@R{} assumes that source files with extension @file{.f} are FORTRAN 77,
+and passes them to the compiler specified by @samp{F77}.  On most but
+not all platforms that compiler will accept Fortran 90/95 code, and a
+few platforms have no Fortran 90/95 support.
 
 This means that portable packages need to be written in correct
 FORTRAN 77, which will also be valid Fortran 95.  See
@@ -3753,7 +3751,10 @@ or
 @end example
 
 @noindent
-for OS-specific inclusion or exclusion.
+for OS-specific inclusion or exclusion.  Such blocks should not be
+nested, and should be entirely within a block (that, is between the
+opening and closing brace of a section or item), or at top-level contain
+a complete section.
 
 If the differences between platforms are extensive or the @R{} objects
 documented are only relevant to one platform, platform-specific Rd files
@@ -5801,10 +5802,9 @@ system makefile and then any personal @file{Makevars} files.
 If the @file{src} subdirectory of package contains a file
 @file{Makefile}, this is used in place of the @code{R CMD SHLIB}
 mechanism.  @command{make} is called with makefiles
-@file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}@footnote{or the version
-specific to a sub-architecture}, @file{src/Makefile} and any personal
-@file{Makevars} files (in that order).  The first target found in
-@file{src/Makefile} is used.
+@file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}, @file{src/Makefile} and
+any personal @file{Makevars} files (in that order).  The first target
+found in @file{src/Makefile} is used.
 
 It is better to make use of a @code{Makevars}
 file rather than a @code{Makefile}: the latter should be needed only
@@ -5827,7 +5827,8 @@ details of building DLLs with a variety of compilers, see file
 Under Windows you can supply an exports file called
 @file{@var{dllname}-win.def}: otherwise all entry points in objects (but
 not libraries) supplied to @code{R CMD SHLIB} will be exported from the
-DLL.  An example is @file{stats-win.def} for the @pkg{stats} package.
+DLL.  An example is @file{stats-win.def} for the @pkg{stats} package: a
+CRAN example in package @pkg{fastICA}.
 
 
 @node Interfacing C++ code, Fortran I/O, Creating shared objects, System and foreign language interfaces
@@ -6036,7 +6037,7 @@ directory is not in the @command{ld.so}@footnote{@command{dyld} on Mac
 OS X, and @env{DYLD_LIBRARY_PATHS} below.}  search path.  You can
 arrange to put it there @strong{before} @R{} is launched by setting (on
 some platforms) @env{LD_RUN_PATH} or @env{LD_LIBRARY_PATH} or adding to
-the @command{ld.so} cache (see @command{ldconfig}).  On platforms that
+the @command{ld.so} cache (see @command{man ldconfig}).  On platforms that
 support it, the path to the dynamic library can be hardcoded at install
 time (which assumes that the location of package @pkg{packB} will not be
 changed).  On systems with the GNU linker (e.g.@: Linux) and some others
@@ -6054,7 +6055,7 @@ and on some other systems (e.g.@: Solaris with its native linker) use
 
 It may be possible to figure out what is required semi-automatically
 from the result of @command{R CMD libtool --config} (look for
-@samp{hardode}).
+@samp{hardcode}).
 
 Making headers provided by package @pkg{packB} available to the code to
 be compiled in package @pkg{packA} can be done by the @code{LinkingTo}
@@ -6110,7 +6111,7 @@ libexB.dll.a: exB.def
 
 and then installing package @pkg{packA} will make and use the import
 library for @file{exB.dll}.  (One way to prepare the exports file is to
-use @file{pexports.exe}.
+use @file{pexports.exe}.)
 
 @item loading @file{packA.dll} which depends on @file{exB.dll}.
 
@@ -7491,7 +7492,7 @@ numeric.deriv <- function(expr, theta, rho=sys.frame(sys.parent()))
   ans <- eval(substitute(expr), rho)
   grad <- matrix(,length(ans), length(theta),
                  dimnames=list(NULL, theta))
-  for (i in seq(along=theta)) @{
+  for (i in seq_along(theta)) @{
     old <- get(theta[i], envir=rho)
     delta <- eps * min(1, abs(old))
     assign(theta[i], old+delta, envir=rho)
