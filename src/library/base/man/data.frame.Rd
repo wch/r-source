@@ -59,12 +59,12 @@ default.stringsAsFactors()
 }
 
 \details{
-  A data frame is a list of variables of the same length with unique row
-  names, given class \code{"data.frame"}.  If there are zero variables,
-  the row names determine the number of rows.
+  A data frame is a list of variables of the same number of rows with
+  unique row names, given class \code{"data.frame"}.  If no variables
+  are included, the row names determine the number of rows.
 
   Duplicate column names are allowed, but you need to use
-  \code{check.names=FALSE} for \code{data.frame} to generate such a data
+  \code{check.names = FALSE} for \code{data.frame} to generate such a data
   frame.  However, not all operations on data frames will preserve
   duplicated column names: for example matrix-like subsetting will force
   column names in the result to be unique.
@@ -74,7 +74,8 @@ default.stringsAsFactors()
   generic function, methods can be written to change the behaviour of
   arguments according to their classes: \R comes with many such methods.
   Character variables passed to \code{data.frame} are converted to
-  factor columns unless protected by \code{\link{I}}.  If a list or data
+  factor columns unless protected by \code{\link{I}} or argument
+  \code{stringsAsFactors} is false.  If a list or data
   frame or matrix is passed to \code{data.frame} it is as if each
   component or column had been passed as a separate argument (except for
   matrices of class \code{"\link{model.matrix}"} and those protected by
@@ -107,7 +108,7 @@ default.stringsAsFactors()
 }
 \note{
   In versions of \R prior to 2.4.0 \code{row.names} had to be
-  character: to ensure compatibility with earlier versions of \R, supply
+  character: to ensure compatibility with such versions of \R, supply
   a character vector as the \code{row.names} argument.
 }
 \references{
