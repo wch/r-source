@@ -164,7 +164,8 @@ name spaces}.
 The optional files @file{configure} and @file{cleanup} are (Bourne
 shell) script files which are executed before and (provided that option
 @option{--clean} was given) after installation on Unix-alikes, see
-@ref{Configure and cleanup}.
+@ref{Configure and cleanup}.  For use on Windows there may be analogues
+@file{configure.win} and @file{cleanup.win}
 
 @cindex LICENSE file
 @cindex LICENCE file
@@ -964,15 +965,17 @@ compiler: flags such as @option{-O2 -Wall -pedantic} are all specific to
 GCC.
 
 There are some macros which are built whilst configuring the building of
-@R{} itself, are stored on Unix-alikes in
-@file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf} and can be used in
-@file{Makevars}.  These include
+@R{} itself, are stored in @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}
+which is included as a @file{Makefile} @emph{before}
+@file{Makevars[.win]}, and so the macros it defines can be used in
+latter.  These include
 
 @table @code
 @item FLIBS
 @vindex FLIBS
 A macro containing the set of libraries need to link FORTRAN code.  This
-may need to be included in @code{PKG_LIBS}.
+may need to be included in @code{PKG_LIBS}: it will normally be included
+automatically if the package contains FORTRAN sources.
 
 @item BLAS_LIBS
 @vindex BLAS_LIBS
@@ -981,18 +984,19 @@ need to be included in @code{PKG_LIBS}.  Beware that if it is empty then
 the @R{} executable will contain all the double-precision and
 double-complex BLAS routines, but no single-precision or complex
 routines.  If @code{BLAS_LIBS} is included, then @code{FLIBS} also needs
-to be@footnote{on Unix-alikes: Windows resolves such dependencies at
-link time.}, as most BLAS libraries are written in FORTRAN.
+to be@footnote{at least on Unix-alikes: the Windows build currently
+resolves such dependencies to a static FORTRAN library at link time.},
+as most BLAS libraries are written at least partially in FORTRAN.
 
 @item LAPACK_LIBS
 @vindex LAPACK_LIBS
 A macro containing the LAPACK libraries (and paths where appropriate)
 used when building @R{}.  This may need to be included in
-@code{PKG_LIBS}.  This may point to a dynamic library @code{libRlapack}
+@code{PKG_LIBS}.  It may point to a dynamic library @code{libRlapack}
 which contains all the double-precision LAPACK routines as well as those
-double-complex LAPACK and BLAS routines needed to build @R{}, or it
-may point to an external LAPACK library, or may be empty if an external
-BLAS library also contains LAPACK.
+double-complex LAPACK and BLAS routines needed to build @R{}, or it may
+point to an external LAPACK library, or may be empty if an external BLAS
+library also contains LAPACK.
 
 [There is no guarantee that the LAPACK library will provide more than
 all the double-precision and double-complex routines, and some do not
@@ -1005,12 +1009,12 @@ The macros @code{BLAS_LIBS} and @code{FLIBS} should always be included
 @vindex SAFE_FFLAGS
 A macro containing flags which are needed to circumvent
 over-optimization of FORTRAN code: it is typically @samp{-g -O2
--ffloat-store} on @cputype{ix86} platforms using @command{g77} or
-@command{gfortran}.  Note that this is @strong{not} an additional flag
-to be used as part of @code{PKG_FFLAGS}, but a replacement for
-@code{FFLAGS}, and that it is intended for the FORTRAN-77 compiler
-@samp{F77} and not necessarily for the Fortran 90/95 compiler @samp{FC}.
-See the example later in this section.
+-ffloat-store} on @cputype{ix86} platforms using @command{gfortran}.
+Note that this is @strong{not} an additional flag to be used as part of
+@code{PKG_FFLAGS}, but a replacement for @code{FFLAGS}, and that it is
+intended for the FORTRAN-77 compiler @samp{F77} and not necessarily for
+the Fortran 90/95 compiler @samp{FC}.  See the example later in this
+section.
 @end table
 
 @vindex OBJECTS
@@ -1020,13 +1024,17 @@ SHLIB} setting them: in particular if @file{Makevars} sets
 This can be useful in conjunction with implicit rules to allow other
 types of source code to be compiled and included in the shared object.
 
-Note that @file{Makevars} should not normally contain targets, as it is
-(except on Windows) included before the default makefile and @command{make}
-is called without an explicit target.  To circumvent that, use a
-suitable phony target before any actual targets: for example
-@pkg{fastICA} has
+Note that @file{Makevars} should not normally contain targets, as it
+is@footnote{but was not on Windows prior to @R{} 2.9.0.} included before
+the default makefile and @command{make} is called@footnote{In @R{} 2.9.x
+it is called on Windows with target @code{all}, but this will be removed
+in future releases.} without an explicit target.  To circumvent that,
+use a suitable (phony) target @code{all} before any actual targets: for
+example @pkg{fastICA} has
 
 @smallexample
+PKG_LIBS = @@BLAS_LIBS@@
+
 SLAMC_FFLAGS=$(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(SAFE_FFLAGS)
 
 all: $(SHLIB)
@@ -1036,8 +1044,8 @@ slamc.o: slamc.f
 @end smallexample
 
 @noindent
-to ensure that the LAPACK routines find some constants without infinite
-looping.  The Windows equivalent is
+needed to ensure that the LAPACK routines find some constants without
+infinite looping.  The Windows equivalent is
 
 @smallexample
 all: $(SHLIB)
@@ -1045,6 +1053,10 @@ all: $(SHLIB)
 slamc.o: slamc.f
         $(F77) $(SAFE_FFLAGS) -c -o slamc.o slamc.f
 @end smallexample
+
+@noindent
+(since the other macros are all empty on that platform, and R's internal
+blas is not used).
 
 More generally, one could have something like
 
@@ -1059,33 +1071,6 @@ before:
 after:
         Cleanup needed after 'before'
 @end smallexample
-
-@noindent
-On Windows, one can add dependencies to the @samp{all} target (which is
-what will get called), e.g.@: (based on package @pkg{rcom})
-
-@smallexample
-all: rcom.dll ../inst/tst/bin/rcom_test.exe extraclean
-
-../inst/tst/bin/rcom_test.exe: rcom_test.exe
-	$(MKDIR) -p ../inst/tst/bin
-	$(CP) $? $@
-rcom_test.exe: rcom_test.o
-rcom_test-LIBS = -L. -lsupc++ -luuid -lole32 -loleaut32
-
-extraclean:
-        $(RM) rcom_test.exe
-@end smallexample
-
-@noindent
-The added dependencies will be built after the DLL: it is also possible
-(but not advisable) to have a target @samp{all} with commands (rather
-than dependencies)
-
-There are two another targets, @samp{before} and @samp{after}, which by
-default have neither dependencies nor commands so can be overridden in a
-@file{Makevars.win}.  See the example in @ref{Linking to other packages}.
-
 
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
 or @file{Makevars.win}: this will be used by @command{R CMD build}.
@@ -1228,12 +1213,10 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 @node Using F95 code,  , Configure example, Configure and cleanup
 @subsection Using F95 code
 
-@R{} currently does not distinguish between FORTRAN 77 and Fortran 90/95
-code, and assumes all FORTRAN comes in source files with extension
-@file{.f}.  Commercial Unix systems typically use a F95 compiler, but
-only since the release of @code{gcc 4.0.0} in April 2005 have Linux and
-other non-commercial OSes had much support for F95.  Only wih @R{} 2.6.0
-did the Windows port adopt a Fortran 90 compiler.
+@R{} assumes that source files with extension @file{.f} are FORTRAN 77,
+and passes them to the compiler specified by @samp{F77}.  On most but
+not all platforms that compiler will accept Fortran 90/95 code, and a
+few platforms have no Fortran 90/95 support.
 
 This means that portable packages need to be written in correct
 FORTRAN 77, which will also be valid Fortran 95.  See
@@ -5924,10 +5907,9 @@ system makefile and then any personal @file{Makevars} files.
 If the @file{src} subdirectory of package contains a file
 @file{Makefile}, this is used in place of the @code{R CMD SHLIB}
 mechanism.  @command{make} is called with makefiles
-@file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}@footnote{or the version
-specific to a sub-architecture}, @file{src/Makefile} and any personal
-@file{Makevars} files (in that order).  The first target found in
-@file{src/Makefile} is used.
+@file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}, @file{src/Makefile} and
+any personal @file{Makevars} files (in that order).  The first target
+found in @file{src/Makefile} is used.
 
 It is better to make use of a @code{Makevars}
 file rather than a @code{Makefile}: the latter should be needed only
@@ -5950,7 +5932,8 @@ details of building DLLs with a variety of compilers, see file
 Under Windows you can supply an exports file called
 @file{@var{dllname}-win.def}: otherwise all entry points in objects (but
 not libraries) supplied to @code{R CMD SHLIB} will be exported from the
-DLL.  An example is @file{stats-win.def} for the @pkg{stats} package.
+DLL.  An example is @file{stats-win.def} for the @pkg{stats} package: a
+CRAN example in package @pkg{fastICA}.
 
 
 @node Interfacing C++ code, Fortran I/O, Creating shared objects, System and foreign language interfaces
@@ -6159,7 +6142,7 @@ directory is not in the @command{ld.so}@footnote{@command{dyld} on Mac
 OS X, and @env{DYLD_LIBRARY_PATHS} below.}  search path.  You can
 arrange to put it there @strong{before} @R{} is launched by setting (on
 some platforms) @env{LD_RUN_PATH} or @env{LD_LIBRARY_PATH} or adding to
-the @command{ld.so} cache (see @command{ldconfig}).  On platforms that
+the @command{ld.so} cache (see @command{man ldconfig}).  On platforms that
 support it, the path to the dynamic library can be hardcoded at install
 time (which assumes that the location of package @pkg{packB} will not be
 changed).  On systems with the GNU linker (e.g.@: Linux) and some others
@@ -6177,7 +6160,7 @@ and on some other systems (e.g.@: Solaris with its native linker) use
 
 It may be possible to figure out what is required semi-automatically
 from the result of @command{R CMD libtool --config} (look for
-@samp{hardode}).
+@samp{hardcode}).
 
 Making headers provided by package @pkg{packB} available to the code to
 be compiled in package @pkg{packA} can be done by the @code{LinkingTo}
@@ -6227,13 +6210,15 @@ could contain
 @example
 PKG_LIBS= -L. -lexB
 
+all: $(SHLIB) before
+
 before: libexB.dll.a
 libexB.dll.a: exB.def
 @end example
 
 and then installing package @pkg{packA} will make and use the import
 library for @file{exB.dll}.  (One way to prepare the exports file is to
-use @file{pexports.exe}.
+use @file{pexports.exe}.)
 
 @item loading @file{packA.dll} which depends on @file{exB.dll}.
 
