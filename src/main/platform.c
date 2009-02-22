@@ -2047,7 +2047,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 #endif
 	if (res && errno != EEXIST) return 1;
 	strcat(dest, R_FileSep);
-	if ((dir = opendir(name)) != NULL) {
+	if ((dir = opendir(this)) != NULL) {
 	    while ((de = readdir(dir))) {
 		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 		    continue;
