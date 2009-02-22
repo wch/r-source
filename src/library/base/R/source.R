@@ -23,9 +23,10 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
          continue.echo = getOption("continue"),
          skip.echo = 0, keep.source = getOption("keep.source"))
 {
-    ## eval.eiht.vis is retained for historical reasons, including
+    ## eval.with.vis is retained for historical reasons, including
     ## not changing tracebacks.
     ## Use withVisible(eval(...)) for less critical applications.
+    ## A one line change is marked around line 166 to use it here as well.
     eval.with.vis <-
 	function (expr, envir = parent.frame(),
 		  enclos = if (is.list(envir) || is.pairlist(envir))
@@ -162,7 +163,9 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 		      else " ....", "[TRUNCATED] "), "\n", sep = "")
 	    }
 	}
+###  Switch comment below get rid of eval.with.vis
 	yy <- eval.with.vis(ei, envir)
+###	yy <- withVisible(eval(ei, envir))
 	i.symbol <- mode(ei[[1L]]) == "name"
 	if (!i.symbol) {
 	    ## ei[[1L]] : the function "<-" or other

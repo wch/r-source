@@ -172,7 +172,8 @@ NEW FEATURES
 	internal part of sample() (sampling from seq_len(n)).
 
     o	New version of withVisible() for better handling of cases like
-	withVisible(eval.parent(....)).
+	withVisible(eval.parent(....)). Moved to package 'base' with a 
+        view to replace .Internal(eval.with.vis) in source() later.
 
     o	showClass() which is also used to auto-print class definitions, now
 	mentions the package where the class comes from, if there is one.
