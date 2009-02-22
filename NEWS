@@ -192,6 +192,9 @@ NEW FEATURES
     o	demo() gains 'echo' and 'ask' arguments, with defaults similar
 	to example().
 
+    o	library() no longer checks for the packages merged during the
+	re-organization of 1.9.0.
+
 
 DEPRECATED & DEFUNCT
 

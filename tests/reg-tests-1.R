@@ -2448,7 +2448,6 @@ options(op)# reset to previous
 ## Didn't work before 1.8.0
 
 
-library(stats)
 ## cmdscale
 ## failed in versions <= 1.4.0 :
 cm1 <- cmdscale(eurodist, k=1, add=TRUE, x.ret = TRUE)
@@ -2495,7 +2494,6 @@ try(smooth.spline(y18, spar = 50)) #>> error : spar 'way too large'
 ## end of moved from smooth.spline.Rd
 
 
-library(ts)
 ## arima{0}
 (fit <- arima(lh, c(1,0,0)))
 tsdiag(fit)

@@ -198,42 +198,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         if(is.na(package) || (package == ""))
             stop("invalid package name")
 
-        if(package %in% c("ctest", "eda", "modreg", "mva", "nls",
-                          "stepfun", "ts")) {
-            have.stats <- "package:stats" %in% search()
-            if(!have.stats) require("stats")
-            old <- "stats"
-            warning(gettextf("package '%s' has been merged into '%s'",
-                             package, old),
-                    call. = FALSE, domain = NA)
-            return(if (logical.return) TRUE else invisible(.packages()))
-        }
-        if(package  == "mle") {
-            have.stats4 <- "package:stats4" %in% search()
-            if(!have.stats4) require("stats4")
-            old <- "stats4"
-            warning(gettextf("package '%s' has been merged into '%s'",
-                             package, old),
-                    call. = FALSE, domain = NA)
-            return(if (logical.return) TRUE else invisible(.packages()))
-        }
-        if(package == "lqs") {
-            warning("package 'lqs' has been moved back to package 'MASS'",
-                    call. = FALSE, immediate. = TRUE)
-            have.VR <- "package:MASS" %in% search()
-            if(!have.VR) {
-                if(require("MASS", quietly=TRUE))
-                    warning("package 'MASS' has now been loaded",
-                            call. = FALSE, immediate. = TRUE)
-                else {
-                    if(logical.return) return(FALSE)
-                    else
-                        stop("package 'MASS' seems to be missing from this R installation")
-                }
-            }
-            return(if (logical.return) TRUE else invisible(.packages()))
-        }
-
 	pkgname <- paste("package", package, sep = ":")
 	newpackage <- is.na(match(pkgname, search()))
 	if(newpackage) {
