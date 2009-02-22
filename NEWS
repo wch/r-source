@@ -196,6 +196,10 @@ NEW FEATURES
     o	library() no longer checks for the packages merged during the
 	re-organization of 1.9.0.
 
+    o   new function poisson.test() in package 'stats' for exact test
+        of rates and rate ratios.
+
+
 
 DEPRECATED & DEFUNCT
 
