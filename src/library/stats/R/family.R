@@ -176,6 +176,10 @@ poisson <- function (link = "log")
 	n <- rep.int(1, nobs)
 	mustart <- y + 0.1
     })
+    simfun <- function(object, nsim) {
+        ftd <- fitted(object)
+        rpois(nsim*length(ftd), ftd)
+    }
     structure(list(family = "poisson",
 		   link = linktemp,
 		   linkfun = stats$linkfun,
@@ -186,7 +190,8 @@ poisson <- function (link = "log")
 		   mu.eta = stats$mu.eta,
 		   initialize = initialize,
 		   validmu = validmu,
-		   valideta = stats$valideta),
+		   valideta = stats$valideta,
+                   simulate = simfun),
 	      class = "family")
 }
 
@@ -374,6 +379,35 @@ binomial <- function (link = "logit")
 	else stop("for the binomial family, y must be a vector of 0 and 1\'s\n",
                   "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures")
     })
+    simfun <- function(object, nsim) {
+        ftd <- fitted(object)
+        n <- length(ftd)
+        ntot <- n*nsim
+        wts <- object$prior.weights
+        if (any(wts %% 1 != 0))
+            stop("cannot simulate from non-integer prior.weights")
+        ## Try to fathom out if the original data were
+        ## proportions, a factor or a two-column matrix
+        if (!is.null(m <- object$model)) {
+            y <- model.response(m)
+            if(is.factor(y)) {
+                ## ignote weights
+                yy <- factor(1+rbinom(ntot, size = 1, prob = ftd),
+                             labels = levels(y))
+                split(yy, rep(seq_len(nsim), each = n))
+            } else if(is.matrix(y) && ncol(y) == 2) {
+                yy <- vector("list", nsim)
+                for (i in seq_len(nsim)) {
+                    Y <- rbinom(n, size = wts, prob = ftd)
+                    YY <- cbind(Y, wts - Y)
+                    colnames(YY) <- colnames(y)
+                    yy[[i]] <- YY
+                }
+                yy
+            } else
+            rbinom(ntot, size = wts, prob = ftd)/wts
+        } else rbinom(ntot, size = wts, prob = ftd)/wts
+    }
     structure(list(family = "binomial",
 		   link = linktemp,
 		   linkfun = stats$linkfun,
@@ -384,7 +418,8 @@ binomial <- function (link = "logit")
 		   mu.eta = stats$mu.eta,
 		   initialize = initialize,
 		   validmu = validmu,
-		   valideta = stats$valideta),
+		   valideta = stats$valideta,
+                   simulate = simfun),
 	      class = "family")
 }
 
@@ -503,6 +538,11 @@ Gamma <- function (link = "inverse")
 	n <- rep.int(1, nobs)
 	mustart <- y
     })
+    simfun <- function(object, nsim) {
+        ftd <- fitted(object)
+        shape <- MASS::gamma.shape(object)$alpha
+        rgamma(nsim*length(ftd), shape = shape, rate = shape/ftd)
+    }
     structure(list(family = "Gamma",
 		   link = linktemp,
 		   linkfun = stats$linkfun,
@@ -513,7 +553,8 @@ Gamma <- function (link = "inverse")
 		   mu.eta = stats$mu.eta,
 		   initialize = initialize,
 		   validmu = validmu,
-		   valideta = stats$valideta),
+		   valideta = stats$valideta,
+                   simulate = simfun),
 	      class = "family")
 }
 
@@ -560,6 +601,14 @@ inverse.gaussian <- function(link = "1/mu^2")
 	mustart <- y
     })
     validmu <- function(mu) TRUE
+    simfun <- function(object, nsim) {
+        if(is.null(tryCatch(loadNamespace("SuppDists"),
+                            error = function(e) NULL)))
+            stop("Need CRAN package 'SuppDists' for 'inverse.gaussian' family")
+        ftd <- fitted(object)
+        SuppDists::rinvGauss(nsim * length(ftd), nu = ftd,
+                             lambda = 1/summary(object)$dispersion)
+    }
 
     structure(list(family = "inverse.gaussian",
 		   link = linktemp,
@@ -571,7 +620,8 @@ inverse.gaussian <- function(link = "1/mu^2")
 		   mu.eta = stats$mu.eta,
 		   initialize = initialize,
 		   validmu = validmu,
-		   valideta = stats$valideta),
+		   valideta = stats$valideta,
+                   simulate = simfun),
 	      class = "family")
 }
 

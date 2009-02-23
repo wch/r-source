@@ -468,49 +468,9 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
                       if (!is.null(object$weights)) vars <- vars/object$weights
                       ftd + rnorm(ntot, sd = sqrt(vars))
                   },
-		  "poisson" = rpois(ntot, ftd)
-		  ,
-		  "binomial" = {
-		      wts <- object$prior.weights
-		      if (any(wts %% 1 != 0))
-			  stop("cannot simulate from non-integer prior.weights")
-                      ## Try to fathom out if the original data were
-                      ## proportions, a factor or a two-column matrix
-                      if (!is.null(m <- object$model)) {
-                          y <- model.response(m)
-                          if(is.factor(y)) {
-                              ## ignote weights
-                              yy <- factor(1+rbinom(ntot, size = 1, prob = ftd),
-                                           labels = levels(y))
-                              split(yy, rep(seq_len(nsim), each = n))
-                          } else if(is.matrix(y) && ncol(y) == 2) {
-                              yy <- vector("list", nsim)
-                              for (i in seq_len(nsim)) {
-                                  Y <- rbinom(n, size = wts, prob = ftd)
-                                  YY <- cbind(Y, wts - Y)
-                                  colnames(YY) <- colnames(y)
-                                  yy[[i]] <- YY
-                              }
-                              yy
-                          } else
-                              rbinom(ntot, size = wts, prob = ftd)/wts
-                      } else rbinom(ntot, size = wts, prob = ftd)/wts
-		  },
-		  "Gamma" = {
-		      if(is.null(tryCatch(loadNamespace("MASS"),
-					  error = function(e) NULL)))
-			  stop("Need 'MASS' package for 'Gamma' family")
-		      shape <- MASS::gamma.shape(object)$alpha
-		      rgamma(ntot, shape = shape, rate = shape/ftd)
-		  },
-		  "inverse.gaussian" = {
-		      if(is.null(tryCatch(loadNamespace("SuppDists"),
-					  error = function(e) NULL)))
-			  stop("Need CRAN package 'SuppDists' for 'inverse.gaussian' family")
-		      lambda <- 1/summary(object)$dispersion
-		      SuppDists::rinvGauss(ntot, nu = ftd, lambda = lambda)
-		  },
-		  stop("family '", fam, "' not yet implemented"))
+                  if(!is.null(object$family$simulate))
+                      object$family$simulate(object, nsim)
+                  else stop("family '", fam, "' not implemented"))
 
     if(!is.list(val)) {
         dim(val) <- c(n, nsim)

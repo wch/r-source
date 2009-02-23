@@ -178,9 +178,11 @@ NEW FEATURES
     o	showClass() which is also used to auto-print class definitions, now
 	mentions the package where the class comes from, if there is one.
 
-    o	simulate(obj) now also works for "glm" objects and for
-	weighted fits, thanks in part to contributions from Ben Bolker
-	and Heather Turner. 
+    o	simulate(obj) now also works for "glm" objects and for weighted
+	fits, thanks in part to contributions from Ben Bolker and
+	Heather Turner.  There is now a means to extend the methods
+	available for "glm" objects, as glm families can have an
+	optional 'simulate' component.
 
     o	S4 classes that inherit from any of the "structure" classes or
         from "vector" will turn on methods for all the "Ops" group of

@@ -1,6 +1,6 @@
 % File src/library/stats/man/family.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{family}
@@ -127,6 +127,11 @@ quasipoisson(link = "log")
     vector \code{mu} is within the domain of \code{variance}.}
   \item{valid.eta}{logical function.   Returns \code{TRUE} if a linear
     predictor \code{eta} is within the domain of \code{linkinv}.}
+  \item{simulate}{(optional) function \code{simulate(object, nsim)} to be
+    called by the \code{"lm"} method of \code{\link{simulate}}.  It will
+    normally return a matrix with \code{nsim} columns and one row for
+    each fitted value, but it can also return a list of length
+    \code{nsim}. Clearly this will be missing for \sQuote{quasi-} families.}
 }
 \references{
   McCullagh P. and Nelder, J. A. (1989)
