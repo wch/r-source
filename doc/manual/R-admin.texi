@@ -3577,7 +3577,7 @@ Brian Ripley tested the SunStudio 12 (aka Sun Ceres) compilers
 @cputype{x86_64} Linux with
 
 @example
-CC=csunc
+CC=suncc
 CFLAGS="-xO5 -xc99 -xlibmil -nofstore"
 CPICFLAGS=-Kpic
 F77=sunf95
