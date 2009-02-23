@@ -102,6 +102,9 @@ BUG FIXES
     o	nls(algorithm = "port") did not accept the [factor] notation.
     	(PR#13650)
 
+    o	The relational (aka "comparison") operators are now binary, also in
+	a lower level sense, and an expression as  "<"(1)  is now erronous.
+
 
 
 		CHANGES IN R VERSION 2.8.1
