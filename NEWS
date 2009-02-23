@@ -172,7 +172,7 @@ NEW FEATURES
 	internal part of sample() (sampling from seq_len(n)).
 
     o	New version of withVisible() for better handling of cases like
-	withVisible(eval.parent(....)). Moved to package 'base' with a 
+	withVisible(eval.parent(....)). Moved to package 'base' with a
         view to replace .Internal(eval.with.vis) in source() later.
 
     o	showClass() which is also used to auto-print class definitions, now
@@ -521,6 +521,9 @@ BUG FIXES
 
     o	nls(algorithm = "port") did not accept the [factor] notation.
     	(PR#13650)
+
+    o	The relational (aka "comparison") operators are now binary, also in
+	a lower level sense, and an expression as  "<"(1)  is now erronous.
 
 
 
