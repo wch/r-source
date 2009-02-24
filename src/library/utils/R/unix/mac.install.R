@@ -15,6 +15,14 @@
 #  http://www.r-project.org/Licenses/
 
 
+if(substr(R.version$os, 1L, 6L) != "darwin") {
+.install.macbinary <-
+    function(pkgs, lib, repos = getOption("repos"),
+             contriburl = contrib.url(repos, type="mac.binary"),
+             method, available = NULL, destdir = NULL,
+             dependencies = FALSE, ...)
+    {}
+} else {
 ## edited from windows/.install.winbinary
 ##
 .install.macbinary <-
@@ -159,4 +167,5 @@
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 
     invisible()
+}
 }

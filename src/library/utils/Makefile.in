@@ -11,17 +11,14 @@ subdir = src/library/utils
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = DESCRIPTION.in Makefile.in Makefile.win \
-  NAMESPACE NAMESPACE.aqua
+DISTFILES = DESCRIPTION.in Makefile.in Makefile.win NAMESPACE
 
 pkg = utils
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
-RSRC0 = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
-RSRC = $(RSRC0) @BUILD_AQUA_TRUE@ `LC_COLLATE=C ls $(srcdir)/R/aqua/*.R`
+RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
 RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd
-NSFILES = $(srcdir)/NAMESPACE @BUILD_AQUA_TRUE@ $(srcdir)/NAMESPACE.aqua
 INSTDIRS = Sweave misc
 
 .PHONY: iconvlist
@@ -30,7 +27,6 @@ all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) mkR mkdesc mkpo mkman instdirs iconvlist
-	@cat $(NSFILES) > $(top_builddir)/library/$(pkg)/NAMESPACE
 	@$(MAKE) mklazy
 
 iconvlist: $(top_builddir)/library/$(pkg)/iconvlist

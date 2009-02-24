@@ -2029,6 +2029,8 @@ case "${host_os}" in
     use_aqua=no
   ;;
 esac
+## Now used only in etc/Renviron to set the personal library,
+## and in grDevices to select building quartz()
 AM_CONDITIONAL(BUILD_AQUA, [test "x${use_aqua}" = xyes])
 AC_SUBST(use_aqua)
 
