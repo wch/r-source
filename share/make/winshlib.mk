@@ -13,10 +13,10 @@ $(SHLIB): $(OBJECTS)
 	$(SHLIB_LD) -shared $(DLLFLAGS) -o $@ $(BASE)-win.def $(OBJECTS) $(ALL_LIBS)
 else
 $(SHLIB): $(OBJECTS)
-	echo EXPORTS > tmp.def
-	$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' >> tmp.def
+	@echo EXPORTS > tmp.def
+	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' >> tmp.def
 	$(SHLIB_LD) -shared $(DLLFLAGS) -o $@ tmp.def $(OBJECTS) $(ALL_LIBS)
-	$(RM) tmp.def
+	@$(RM) tmp.def
 endif
 
 .PHONY: all before after shlib-clean
