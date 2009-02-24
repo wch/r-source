@@ -1662,7 +1662,7 @@
     {
         conn <- file(file.path(dir, "chm", paste(pkg, ".toc", sep = "")), "wt")
         on.exit(close(conn))
-        M$File <- paste(M$File, ".html", sep = "")
+        if(length(M$File)) M$File <- paste(M$File, ".html", sep = "")
         cat("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">\n",
             "<HEAD></HEAD><HTML><BODY>\n<UL>\n",
             "<LI> <OBJECT type=\"text/sitemap\">\n",
