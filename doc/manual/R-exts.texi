@@ -1024,13 +1024,12 @@ SHLIB} setting them: in particular if @file{Makevars} sets
 This can be useful in conjunction with implicit rules to allow other
 types of source code to be compiled and included in the shared object.
 
-Note that @file{Makevars} should not normally contain targets, as it
-is@footnote{but was not on Windows prior to @R{} 2.9.0.} included before
-the default makefile and @command{make} is called@footnote{In @R{} 2.9.x
-it is called on Windows with target @code{all}, but this will be removed
-in future releases.} without an explicit target.  To circumvent that,
-use a suitable (phony) target @code{all} before any actual targets: for
-example @pkg{fastICA} has
+Note that @file{Makevars} should not normally contain targets, as it is
+included before the default makefile and @command{make} is called with
+target @code{all} which is defined in the default makefile..  If you
+really need to circumvent that, use a suitable (phony) target @code{all}
+before any actual targets in @file{Makevars.[win]}: for example
+@pkg{fastICA} has
 
 @smallexample
 PKG_LIBS = @@BLAS_LIBS@@
@@ -1074,6 +1073,55 @@ after:
 
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
 or @file{Makevars.win}: this will be used by @command{R CMD build}.
+
+@menu
+* Back-compatibility for Makevars::  
+@end menu
+
+@node Back-compatibility for Makevars,  , Using Makevars, Using Makevars
+@subsubsection Back-compatibility
+
+The description above is for @R{} 2.9.0 and later.  In earlier versions
+of @R{} the mechanisms used on Unix-alikes and Windows were completely
+separate and their operation differed in a number of details.  The
+current version was designed to be as compatible as possible with both.
+
+On a Unix-alike prior to @R{} 2.9.0 the makefiles were called without a
+target, so the first target found was used.  If there was no
+@file{Makevars} file or this contained no targets (the usual case), the
+first target in @file{share/make/shlib.mk} was used, which made
+@samp{$(SHLIB)}, a macro by default set to the package name plus the
+appropriate extensuon (@samp{$(SHLIB_EXT)}).  As this is the sole
+dependency of the phony target @code{all} in the current version, the
+operation is unchanged.  The only difference on a Unix-alike is where
+@file{Makevars} contains targets @emph{and} the first target is not
+called @code{all}: so backwards compatibility is achieved simply by
+having no targets or a first target called @code{all}.
+
+On Windows prior to @R{} 2.9.0 any file @file{Makevars.win} or
+@file{Makevars} was included in another makefile after its targets, so
+the target made was always
+
+@example
+all:  before $(DLLNAME).dll after
+
+## these targets are just here to allow packages to add to them.
+before:
+after:
+@end example
+
+@noindent
+This allows packages to set dependencies for targets @code{all},
+@code{before} or @code{after}.  Pretty complete backwards compatibility
+can be obtained by having no targets, or by having the first target in
+@code{Makevars.win} as
+
+@example
+all: before $(SHLIB) after
+@end example
+
+@noindent
+omitting @code{bwfore} or @code{after} if they are unused.
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example
@@ -5884,7 +5932,7 @@ R Installation and Administration},
 @end ifset
 
 
-Note that as @code{R CMD SHLIB} uses Make, it will not remake a shared
+Note that as @command{R CMD SHLIB} uses Make, it will not remake a shared
 object just because the flags have changed, and if @file{test.c} and
 @file{test.f} both exist in the current directory
 
@@ -5898,26 +5946,26 @@ will compile @file{test.c}!
 
 If the @file{src} subdirectory of an add-on package contains source code
 with one of the extensions listed above or a file @file{Makevars} but
-@strong{not} a file @code{Makefile}, @code{R CMD INSTALL} creates a
+@strong{not} a file @code{Makefile}, @command{R CMD INSTALL} creates a
 shared object (for loading into @R{} in the @code{.First.lib} or
-@code{.onLoad} function of the package) using the @code{R CMD SHLIB}
+@code{.onLoad} function of the package) using the @command{R CMD SHLIB}
 mechanism.  If file @file{Makevars} exists it is read first, then the
 system makefile and then any personal @file{Makevars} files.
 
 If the @file{src} subdirectory of package contains a file
-@file{Makefile}, this is used in place of the @code{R CMD SHLIB}
-mechanism.  @command{make} is called with makefiles
+@file{Makefile}, this is used by @command{R CMD INSTALL} in place of the
+@code{R CMD SHLIB} mechanism.  @command{make} is called with makefiles
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}, @file{src/Makefile} and
 any personal @file{Makevars} files (in that order).  The first target
 found in @file{src/Makefile} is used.
 
-It is better to make use of a @code{Makevars}
-file rather than a @code{Makefile}: the latter should be needed only
-exceptionally.
+It is better to make use of a @code{Makevars} file rather than a
+@code{Makefile}: the latter should be needed only exceptionally.
 
-Note that whereas @code{R CMD INSTALL} makes use of a @file{Makefile},
-@code{R CMD SHLIB} does not.  The file must be named @file{Makefile},
-not for example @file{makefile} nor @file{GNUmakefile}.
+@c Not so clearcut on case-insensitive file systems. 
+@c Note that whereas @code{R CMD INSTALL} makes use of a @file{Makefile},
+@c @code{R CMD SHLIB} does not.  The file must be named @file{Makefile},
+@c not for example @file{makefile} nor @file{GNUmakefile}.
 
 Under Windows@footnote{The files in the @R{} binary Windows distribution
 for installing source packages need to be installed.} the same commands
@@ -5928,13 +5976,20 @@ details of building DLLs with a variety of compilers, see file
 @samp{README.packages} and
 @uref{http://@/www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/}
 .
-
-Under Windows you can supply an exports file called
+Under Windows you can supply an exports definitions file called
 @file{@var{dllname}-win.def}: otherwise all entry points in objects (but
 not libraries) supplied to @code{R CMD SHLIB} will be exported from the
 DLL.  An example is @file{stats-win.def} for the @pkg{stats} package: a
 CRAN example in package @pkg{fastICA}.
 
+If you feel tempted to read the source code and subvert these
+mechanisms, please resist.  Far too much developer time has been wasted
+in chasing down errors caused by failures to follow this documentation,
+and even more by package authors demanding explanations as to why their
+packages not longer work.
+@c Jasjeet Singh Sekhon: this is your moment of infamy.
+In particular, undocumented environment or make variables are not for
+use by package writers and are subject to change without notice.
 
 @node Interfacing C++ code, Fortran I/O, Creating shared objects, System and foreign language interfaces
 @section Interfacing C++ code

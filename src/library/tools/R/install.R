@@ -1177,14 +1177,14 @@
     invisible()
 }
 
-## for R CMD SHLIB on Unix and Windows
+## for R CMD SHLIB on qll platforms
 .SHLIB <- function()
 {
     status <- .shlib_internal(commandArgs(TRUE))
     q("no", runLast=FALSE, status=status)
 }
 
-## for .SHLIB and R CMD INSTALL only on Unix
+## for .SHLIB and R CMD INSTALL on all platforms
 .shlib_internal <- function(args)
 {
     Usage <- function()
@@ -1312,6 +1312,7 @@
         }
         args <- args[-1]
     }
+
     if (length(objs)) objs <- p0(objs, OBJ_EXT, collapse=" ")
 
     if (WINDOWS) {

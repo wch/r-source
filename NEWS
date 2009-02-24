@@ -13,9 +13,6 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
     o	expand.grid() by default no longer coerces strings into factors.
 
-    o   isdebugged added, indicates whether the function passed in has
-        the debug flag set or not.
-
 
 NEW FEATURES
 
@@ -198,9 +195,11 @@ NEW FEATURES
     o	library() no longer checks for the packages merged during the
 	re-organization of 1.9.0.
 
-    o   new function poisson.test() in package 'stats' for exact test
-        of rates and rate ratios.
+    o	New function poisson.test() in package 'stats' for exact test
+	of rates and rate ratios.
 
+    o	New function isdebugged() indicates whether its argument has the
+	debug flag set or not.
 
 
 DEPRECATED & DEFUNCT
@@ -271,6 +270,12 @@ UTILITIES
 
     o	R CMD check no longer loads package 'tcltk' when checking for
 	code problems, so more problems may be reported.
+
+    o	R CMD SHLIB now calls the makefiles with target 'all' on all
+	platforms, not just on Windows: this is only relevant when a
+	Makevars[.win] is used that contains targets (not in general
+	recommended): for backwrds compatibility the first target
+	whould be named 'all'.
 
 
 Rd CONVERSION
