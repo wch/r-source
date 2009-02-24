@@ -1358,7 +1358,7 @@
         makeargs <- c(makeargs,
                       p0("SHLIB_LIBADD='", p1(shlib_libadd), "'"))
 
-    if (WINDOWS) makeargs <- c(makeargs, "all")
+    makeargs <- c(makeargs, "all")
     if (WINDOWS && debug) makeargs <- c(makeargs, "DEBUG=T")
 
     cmd <- paste(MAKE, p1(paste("-f", makefiles)), p1(makeargs), p1(makeobjs))
