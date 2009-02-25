@@ -528,6 +528,10 @@ BUG FIXES
     o	The relational (aka "comparison") operators are now binary, also in
 	a lower level sense, and an expression as  "<"(1)  is now erronous.
 
+    o	The 'offset' argument for lm() and glm() is not longer
+	documented to be allowed to be of length 1: this has not been
+	true for a long time.
+
 
 
 		CHANGES IN R VERSION 2.8.1

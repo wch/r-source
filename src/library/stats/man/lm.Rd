@@ -63,13 +63,12 @@ lm(formula, data, subset, weights, na.action,
   \item{contrasts}{an optional list. See the \code{contrasts.arg}
     of \code{\link{model.matrix.default}}.}
 
-  \item{offset}{this can be used to specify an \emph{a priori}
-    known component to be included in the linear predictor
-    during fitting.  This should be \code{NULL} or a numeric vector of
-    length either one or equal to the number of cases.
-    One or more \code{\link{offset}} terms can be included in the
-    formula instead or as well, and if both are specified their sum is
-    used.  See \code{\link{model.offset}}.}
+  \item{offset}{this can be used to specify an \emph{a priori} known
+    component to be included in the linear predictor during fitting.
+    This should be \code{NULL} or a numeric vector of length equal to
+    the number of cases.  One or more \code{\link{offset}} terms can be
+    included in the formula instead or as well, and if more than one are
+    specified their sum is used.  See \code{\link{model.offset}}.}
 
   \item{\dots}{additional arguments to be passed to the low level
     regression fitting functions (see below).}

@@ -69,13 +69,12 @@ glm.fit(x, y, weights = rep(1, nobs),
 
   \item{mustart}{starting values for the vector of means.}
 
-  \item{offset}{this can be used to specify an \emph{a priori}
-    known component to be included in the linear predictor
-    during fitting.  This should be \code{NULL} or a numeric vector of
-    length either one or equal to the number of cases.
-    One or more \code{\link{offset}} terms can be included in the
-    formula instead or as well, and if both are specified their sum is
-    used.  See \code{\link{model.offset}}.}
+  \item{offset}{this can be used to specify an \emph{a priori} known
+    component to be included in the linear predictor during fitting.
+    This should be \code{NULL} or a numeric vector of length equal to
+    the number of cases.  One or more \code{\link{offset}} terms can be
+    included in the formula instead or as well, and if more than one is
+    specified their sum is used.  See \code{\link{model.offset}}.}
 
   \item{control}{a list of parameters for controlling the fitting
     process.  See the documentation for \code{\link{glm.control}}
