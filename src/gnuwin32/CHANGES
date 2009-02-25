@@ -109,6 +109,14 @@ CUSTOMIZATION
 	and front-ends/RSetReg.c.
 
 
+BUG FIXES
+
+    o	Sys.setenv() since R 2.7.0 was limited to 1023 characters for
+	the name+value, and silently truncated the value otherwise.
+	It should now work up to the Windows' limit (which is
+	version-dependent).
+
+
 
 
 	**************************************************
