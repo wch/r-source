@@ -51,7 +51,7 @@ Box.test(x, lag = 1, type = c("Box-Pierce", "Ljung-Box"), fitdf = 0)
 
   Ljung, G. M. and Box, G. E. P. (1978),
   On a measure of lack of fit in time series models.
-  \emph{Biometrika} \bold{65}, 553--564.
+  \emph{Biometrika} \bold{65}, 297--303.
 
   Harvey, A. C. (1993)
   \emph{Time Series Models}.
