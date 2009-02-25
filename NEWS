@@ -22,8 +22,6 @@ NEW FEATURES
 	libraries Lapack and from the SuiteSparse collection CHOLMOD,
 	CSparse, and SPQR among others.
 
-	This means that a C++ compiler is now required to install R.
-
     o	pdf() and postscript() gain a 'useKerning' argument to place
 	strings using kerning (which had previously been ignored in
 	display but not in strwidth), based in part on an idea and
