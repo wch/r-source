@@ -304,7 +304,7 @@ extern char ** environ;
 #ifdef WC_ENVIRON
 /* _wenviron is declared in stdlib.h */
 # define WIN32_LEAN_AND_MEAN 1
-# include <windows.h> /* SetEnvironmentVariable etc */
+# include <windows.h> /* _wgetenv etc */
 const wchar_t *wtransChar(SEXP x);
 #endif
 
@@ -326,21 +326,16 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef WC_ENVIRON
 	char *buf;
 	int n = 0, N;
-	wchar_t *w, *envstrings = GetEnvironmentStringsW();
-	for (i = 0, w = envstrings; *w; i++, w++) {
-	    int len = wcslen(w);
-	    n = max(n, len);
-	    w += len;
-	}
+	wchar_t **w;
+	for (i = 0, w = _wenviron; *w != NULL; i++, w++)
+	    n = max(n, wcslen(*w));
 	N = 3*n+1; buf = alloca(N);
 	R_CheckStack();
 	PROTECT(ans = allocVector(STRSXP, i));
-	for (i = 0, w = envstrings; *w; i++, w++) {
-	    wcstoutf8(buf, w, N); buf[N-1] = '\0';
+	for (i = 0, w = _wenviron; *w != NULL; i++, w++) {
+	    wcstoutf8(buf, *w, N); buf[N-1] = '\0';
 	    SET_STRING_ELT(ans, i, mkCharCE(buf, CE_UTF8));
-	    w += wcslen(w);
 	}
-	FreeEnvironmentStringsW(envstrings);
 #else
 	char **e;
 	for (i = 0, e = environ; *e != NULL; i++, e++);
@@ -353,19 +348,15 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (j = 0; j < i; j++) {
 #ifdef WC_ENVIRON
 	    const wchar_t *wnm = wtransChar(STRING_ELT(CAR(args), j));
-	    DWORD len = GetEnvironmentVariableW(wnm, NULL, 0);
-	    if (!len)
+	    wchar_t *w = _wgetenv(wnm);
+	    if (w == NULL)
 		SET_STRING_ELT(ans, j, STRING_ELT(CADR(args), 0));
 	    else {
-		wchar_t *w = (wchar_t *) alloca( len * sizeof(wchar_t) );
+		int n = wcslen(w), N = 3*n+1; /* UCS-2 maps to <=3 UTF-8 */
+		char *buf = alloca(N);
 		R_CheckStack();
-		if (GetEnvironmentVariableW(wnm, w, len)) {
-		    int N = 3*len+1; /* UCS-2 maps to <=3 UTF-8 */
-		    char *buf = alloca(N);
-		    R_CheckStack();
-		    wcstoutf8(buf, w, N); buf[N-1] = '\0'; /* safety */
-		    SET_STRING_ELT(ans, j, mkCharCE(buf, CE_UTF8));
-		}
+		wcstoutf8(buf, w, N); buf[N-1] = '\0'; /* safety */
+		SET_STRING_ELT(ans, j, mkCharCE(buf, CE_UTF8));
 	    }
 #else
 	    char *s = getenv(translateChar(STRING_ELT(CAR(args), j)));
@@ -388,8 +379,13 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef WC_ENVIRON
 static int Rwputenv(const wchar_t *nm, const wchar_t *val)
 {
-    if(SetEnvironmentVariableW(nm, val)) return 1;
-    else return 0;
+    wchar_t *buf;
+    buf = (wchar_t *) malloc((wcslen(nm) + wcslen(val) + 2) * sizeof(wchar_t));
+    if(!buf) return 1;
+    wsprintfW(buf, L"%s=%s", nm, val);
+    if(_wputenv(buf)) return 1;
+    /* no free here: storage remains in use */
+    return 0;
 }
 #elif !defined(HAVE_SETENV) && defined(HAVE_PUTENV)
 static int Rputenv(const char *nm, const char *val)
@@ -468,7 +464,11 @@ SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
 # ifdef WC_ENVIRON
     for (i = 0; i < n; i++) {
 	const wchar_t *w = wtransChar(STRING_ELT(vars, i));
-	SetEnvironmentVariableW(w,NULL);
+	wchar_t *buf = (wchar_t *) alloca(2*wcslen(w));
+	R_CheckStack();
+	wcscpy(buf, w);
+	wcscat(buf, L"=");
+	_wputenv(buf);
     }
 # else
     for (i = 0; i < n; i++) {
