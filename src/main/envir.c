@@ -102,6 +102,7 @@
 #define BINDING_VALUE(b) ((IS_ACTIVE_BINDING(b) ? getActiveValue(CAR(b)) : CAR(b)))
 
 #define SYMBOL_BINDING_VALUE(s) ((IS_ACTIVE_BINDING(s) ? getActiveValue(SYMVALUE(s)) : SYMVALUE(s)))
+#define SYMBOL_HAS_BINDING(s) (IS_ACTIVE_BINDING(s) || (SYMVALUE(s) != R_UnboundValue))
 
 #define SET_BINDING_VALUE(b,val) do { \
   SEXP __b__ = (b); \
@@ -257,6 +258,19 @@ static SEXP R_HashGet(int hashcode, SEXP symbol, SEXP table)
 	if (TAG(chain) == symbol) return BINDING_VALUE(chain);
     /* If not found */
     return R_UnboundValue;
+}
+
+static Rboolean R_HashExists(int hashcode, SEXP symbol, SEXP table)
+{
+    SEXP chain;
+
+    /* Grab the chain from the hashtable */
+    chain = VECTOR_ELT(table, hashcode);
+    /* Find the binding in the chain */
+    for (; chain != R_NilValue ; chain = CDR(chain))
+	if (TAG(chain) == symbol) return TRUE;
+    /* If not found */
+    return FALSE;
 }
 
 
@@ -950,6 +964,55 @@ SEXP findVarInFrame3(SEXP rho, SEXP symbol, Rboolean doGet)
     return R_UnboundValue;
 }
 
+/* This variant of findVarinFrame3 is needed to avoid running active
+   binding functions in calls to exists() with mode = "any" */
+static Rboolean existsVarInFrame(SEXP rho, SEXP symbol)
+{
+    int hashcode;
+    SEXP frame, c;
+
+    if (TYPEOF(rho) == NILSXP)
+	error(_("use of NULL environment is defunct"));
+
+    if (rho == R_BaseNamespace || rho == R_BaseEnv)
+	return SYMBOL_HAS_BINDING(symbol);
+
+    if (rho == R_EmptyEnv)
+	return FALSE;
+
+    if(IS_USER_DATABASE(rho)) {
+	/* Use the objects function pointer for this symbol. */
+	R_ObjectTable *table;
+	Rboolean val = FALSE;
+	table = (R_ObjectTable *) R_ExternalPtrAddr(HASHTAB(rho));
+	if(table->active) {
+	    if(table->exists(CHAR(PRINTNAME(symbol)), NULL, table))
+		val = TRUE;
+	    else
+		val = FALSE;
+	}
+	return(val);
+    } else if (HASHTAB(rho) == R_NilValue) {
+	frame = FRAME(rho);
+	while (frame != R_NilValue) {
+	    if (TAG(frame) == symbol)
+		return TRUE;
+	    frame = CDR(frame);
+	}
+    }
+    else {
+	c = PRINTNAME(symbol);
+	if( !HASHASH(c) ) {
+	    SET_HASHVALUE(c, R_Newhashpjw(CHAR(c)));
+	    SET_HASHASH(c, 1);
+	}
+	hashcode = HASHVALUE(c) % HASHSIZE(HASHTAB(rho));
+	/* Will return 'R_UnboundValue' if not found */
+	return R_HashExists(hashcode, symbol, HASHTAB(rho));
+    }
+    return FALSE;
+}
+
 SEXP findVarInFrame(SEXP rho, SEXP symbol)
 {
     return findVarInFrame3(rho, symbol, TRUE);
@@ -1079,7 +1142,10 @@ findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits,
     if (mode == FUNSXP || mode ==  BUILTINSXP || mode == SPECIALSXP)
 	mode = CLOSXP;
     while (rho != R_EmptyEnv) {
-	vl = findVarInFrame3(rho, symbol, doGet);
+	if (! doGet && mode == ANYSXP)
+	    vl = existsVarInFrame(rho, symbol) ? R_NilValue : R_UnboundValue;
+	else
+	    vl = findVarInFrame3(rho, symbol, doGet);
 
 	if (vl != R_UnboundValue) {
 	    if (mode == ANYSXP) return vl;

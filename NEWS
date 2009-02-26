@@ -420,6 +420,9 @@ BUG FIXES
 
         The symptom of this problem is the error "reached MAXNUMPTS".
 
+    o   exists() with mode= "any" will no longer run an active binding's
+        function.
+
 
 
 	**************************************************
