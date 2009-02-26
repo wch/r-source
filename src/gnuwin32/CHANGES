@@ -24,6 +24,11 @@ BUG FIXES
 	currrent directory is not the root on that drive, and either
 	'full' or 'recursive' is true.
 
+    o	Sys.setenv() since R 2.7.0 was limited to 1023 characters for
+	the name+value, and silently truncated the value otherwise.
+	It should now work up to the Windows limit (which is
+	version-dependent).
+
 
 
 		CHANGES IN R VERSION 2.8.1
@@ -1544,7 +1549,7 @@ UNCATEGORIZED
     o	Overwrite mode in the console now works for MBCS charsets.
 	(Patch contributed by Haruki Koyanagi.)
 
-    o	Input from the Rgui console was changing the letter 255 ( in Latin-2)
+    o	Input from the Rgui console was changing the letter 255 (ÿ in Latin-2)
 	in the character set to letter 1.
 
     o	R CMD REMOVE in 2.2.0 removed the package(s) but failed to remake the
