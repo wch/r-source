@@ -66,7 +66,7 @@ for(i in seq_len(3))
     print(coef(summary(update(fit6, ys[, i] ~ .))))
 
 
-## gamma fit, from exaple(glm)
+## gamma fit, from example(glm)
 clotting <- data.frame(u = c(5,10,15,20,30,40,60,80,100),
                        lot1 = c(118,58,42,35,27,25,21,19,18))
 fit7 <- glm(lot1 ~ log(u), data=clotting, family=Gamma)
