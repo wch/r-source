@@ -99,13 +99,13 @@ R_bin_OBJECTS = Rmain.o
 @WANT_R_SHLIB_FALSE@R_bin_LDADD = libR.a $(EXTRA_LIBS)
 ## Linked against -lRblas becasue -lR is and otherwise ld complains.
 @WANT_R_SHLIB_TRUE@R_bin_LDADD = -L../../lib@R_ARCH@ -lR @BLAS_SHLIB_TRUE@-lRblas
-R_bin_DEPENDENCIES =@WANT_R_SHLIB_FALSE@ libR.a
+R_bin_DEPENDENCIES =@WANT_R_SHLIB_FALSE@ libR.a @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 
 libR_la = libR$(DYLIB_EXT)
 ## have to force in Rembedded.o
 libR_la_OBJECTS = $(OBJECTS) ../unix/Rembedded.o
-libR_la_LIBADD = $(STATIC_LIBS) $(EXTRA_LIBS)
-libR_la_DEPENDENCIES = $(STATIC_LIBS)
+libR_la_LIBADD = $(STATIC_LIBS) $(EXTRA_LIBS) @WANT_R_SHLIB_TRUE@ @USE_EXPORTFILES_TRUE@ -Wl,-bE:$(top_builddir)/etc/R.exp
+libR_la_DEPENDENCIES = $(STATIC_LIBS) @WANT_R_SHLIB_TRUE@ @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 
 ## The next is needed on darwin only at present
 LIBR_LDFLAGS = @LIBR_LDFLAGS@
@@ -140,7 +140,7 @@ R: Makefile
 ../include/config.h ../include/Rversion.h:
 	(cd $(@D); $(MAKE) $(@F))
 
-$(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
+$(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
 	$(MAIN_LINK) -o $@ $(R_bin_OBJECTS) $(R_bin_LDADD)
 
 libR.a: $(OBJECTS) $(STATIC_LIBS)

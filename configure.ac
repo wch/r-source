@@ -1206,10 +1206,7 @@ case "${host_os}" in
     AC_MSG_ERROR([AIX prior to 4.2 is not supported])
     ;;
   aix*)
-    ## now use run-time linking
-    if test "${want_R_shlib}" != yes; then
-      use_exportfiles=yes
-    fi
+    use_exportfiles=yes
     ## All AIX code is PIC.
     cpicflags=
     cxxpicflags=
@@ -1228,18 +1225,14 @@ case "${host_os}" in
       main_ldflags="${wl}-brtl ${wl}-bexpall -lc"
     fi
     shlib_ldflags="${wl}-brtl ${wl}-G ${wl}-bexpall ${wl}-bnoentry -lc"
-    if test "${want_R_shlib}" != yes; then
-      ## symbol of an archive(RLIBS and EXTRA_LIBS) is thrown away
-      ## unless export it in a main link when unused.
-      R_SH_VAR_ADD(main_ldflags, [-Wl,-bE:\$(top_builddir)/etc/R.exp])
-      ## Import symbol is IMPid = '.'
-      ## no import symbol is IMPid = '..' (run-time link style)
-      ## R_SH_VAR_ADD(LIBR, [-Wl,-bI:\$(R_HOME)/etc/R.exp])
-    fi
-#    main_ldflags="${wl}-bdynamic ${wl}-bE:\$(top_builddir)/etc/R.exp ${wl}-bM:SRE"
-#    shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
     SHLIB_LIBADD="\$(LIBM)"
     shlib_cxxldflags="${shlib_ldflags}"
+    if test "${GCC}" = yes; then
+      shlib_ldflags="-shared ${shlib_ldflags}"
+    fi
+    if test "${GXX}" = yes; then
+      shlib_cxxldflags="-shared ${shlib_cxxldflags}"
+    fi 
     ;;
   cygwin*)
     ## All Windows code is PIC
