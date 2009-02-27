@@ -31336,10 +31336,7 @@ echo "$as_me: error: AIX prior to 4.2 is not supported" >&2;}
    { (exit 1); exit 1; }; }
     ;;
   aix*)
-    ## now use run-time linking
-    if test "${want_R_shlib}" != yes; then
-      use_exportfiles=yes
-    fi
+    use_exportfiles=yes
     ## All AIX code is PIC.
     cpicflags=
     cxxpicflags=
@@ -31358,24 +31355,14 @@ echo "$as_me: error: AIX prior to 4.2 is not supported" >&2;}
       main_ldflags="${wl}-brtl ${wl}-bexpall -lc"
     fi
     shlib_ldflags="${wl}-brtl ${wl}-G ${wl}-bexpall ${wl}-bnoentry -lc"
-    if test "${want_R_shlib}" != yes; then
-      ## symbol of an archive(RLIBS and EXTRA_LIBS) is thrown away
-      ## unless export it in a main link when unused.
-      separator=""
-test -z "${separator}" && separator=" "
-if test -z "${main_ldflags}"; then
-  main_ldflags="-Wl,-bE:\$(top_builddir)/etc/R.exp"
-else
-  main_ldflags="${main_ldflags}${separator}-Wl,-bE:\$(top_builddir)/etc/R.exp"
-fi
-      ## Import symbol is IMPid = '.'
-      ## no import symbol is IMPid = '..' (run-time link style)
-      ## R_SH_VAR_ADD(LIBR, [-Wl,-bI:\$(R_HOME)/etc/R.exp])
-    fi
-#    main_ldflags="${wl}-bdynamic ${wl}-bE:\$(top_builddir)/etc/R.exp ${wl}-bM:SRE"
-#    shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
     SHLIB_LIBADD="\$(LIBM)"
     shlib_cxxldflags="${shlib_ldflags}"
+    if test "${GCC}" = yes; then
+      shlib_ldflags="-shared ${shlib_ldflags}"
+    fi
+    if test "${GXX}" = yes; then
+      shlib_cxxldflags="-shared ${shlib_cxxldflags}"
+    fi
     ;;
   cygwin*)
     ## All Windows code is PIC
@@ -42265,6 +42252,8 @@ fi
     use_aqua=no
   ;;
 esac
+## Now used only in etc/Renviron to set the personal library,
+## and in grDevices to select building quartz()
  if test "x${use_aqua}" = xyes; then
   BUILD_AQUA_TRUE=
   BUILD_AQUA_FALSE='#'
@@ -42331,7 +42320,7 @@ echo $ECHO_N "checking for tclConfig.sh in library (sub)directories... $ECHO_C" 
 if test "${r_cv_path_TCL_CONFIG+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  for ldir in /usr/local/${LIBnn} /usr/${LIBnn} /${LIBnn} /opt/lib /sw/lib /opt/csw/lib /usr/sfw/lib; do
+  for ldir in /usr/local/${LIBnn} /usr/${LIBnn} /${LIBnn} /opt/lib /sw/lib /opt/csw/lib /usr/sfw/lib /opt/freeware/lib; do
   for dir in \
       ${ldir} \
       `ls -d ${ldir}/tcl[8-9].[0-9]* 2>/dev/null | sort -r`; do
@@ -42406,7 +42395,7 @@ echo $ECHO_N "checking for tkConfig.sh in library (sub)directories... $ECHO_C" >
 if test "${r_cv_path_TK_CONFIG+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  for ldir in /usr/local/${LIBnn} /usr/${LIBnn} /${LIBnn} /opt/lib /sw/lib /opt/csw/lib /usr/sfw/lib; do
+  for ldir in /usr/local/${LIBnn} /usr/${LIBnn} /${LIBnn} /opt/lib /sw/lib /opt/csw/lib /usr/sfw/lib /opt/freeware/lib; do
   for dir in \
       ${ldir} \
       `ls -d ${ldir}/tk[8-9].[0-9]* 2>/dev/null | sort -r`; do
@@ -45998,7 +45987,8 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
-#include <stdio.h>
+#include <sys/types.h> /* for off_t */
+     #include <stdio.h>
 #ifdef F77_DUMMY_MAIN
 
 #  ifdef __cplusplus
@@ -46010,7 +46000,8 @@ cat >>conftest.$ac_ext <<_ACEOF
 int
 main ()
 {
-return fseeko (stdin, 0, 0) && (fseeko) (stdin, 0, 0);
+int (*fp) (FILE *, off_t, int) = fseeko;
+     return fseeko (stdin, 0, 0) && fp (stdin, 0, 0);
   ;
   return 0;
 }
@@ -46050,7 +46041,8 @@ cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 #define _LARGEFILE_SOURCE 1
-#include <stdio.h>
+#include <sys/types.h> /* for off_t */
+     #include <stdio.h>
 #ifdef F77_DUMMY_MAIN
 
 #  ifdef __cplusplus
@@ -46062,7 +46054,8 @@ cat >>conftest.$ac_ext <<_ACEOF
 int
 main ()
 {
-return fseeko (stdin, 0, 0) && (fseeko) (stdin, 0, 0);
+int (*fp) (FILE *, off_t, int) = fseeko;
+     return fseeko (stdin, 0, 0) && fp (stdin, 0, 0);
   ;
   return 0;
 }
@@ -48087,11 +48080,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48090: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48083: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:48094: \$? = $ac_status" >&5
+   echo "$as_me:48087: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -48186,11 +48179,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48189: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48182: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:48193: \$? = $ac_status" >&5
+   echo "$as_me:48186: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -48238,11 +48231,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48241: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48234: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:48245: \$? = $ac_status" >&5
+   echo "$as_me:48238: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
