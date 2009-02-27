@@ -96,11 +96,10 @@ is.loaded(symbol, PACKAGE = "", type = "")
   One should be careful of the potential side-effect of using lazy
   loading via the \code{now} argument as \code{FALSE}.  If a routine is
   called that has a missing symbol, the process will terminate
-  immediately and unsaved session variables will be lost.  The intended
-  use is for library developers to call specify a value \code{TRUE} to
-  check that all symbols are actually resolved and for regular users to
-  all with \code{FALSE} so that missing symbols can be ignored and the
-  available ones can be called.
+  immediately.  The intended use is for library developers to call with
+  value \code{TRUE} to check that all symbols are actually resolved and
+  for regular users to call with \code{FALSE} so that missing symbols
+  can be ignored and the available ones can be called.
 
   The initial motivation for adding these was to avoid such termination
   in the \code{_init()} routines of the Java virtual machine library.
@@ -188,8 +187,6 @@ is.loaded(symbol, PACKAGE = "", type = "")
     \item Along the search path for executables given by the environment
     variable \env{PATH}.
   }
-  This means that for all but embedded uses of \R, \file{iconv.dll} will
-  be found in \file{\var{\link[base:Rhome]{R_HOME}}/bin}.
 
   Packages often want to supply dependent DLLs in their \file{libs}
   directory, and do this by setting the \env{PATH} variable
