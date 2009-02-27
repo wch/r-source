@@ -346,7 +346,7 @@ function(pkg, con, vignetteIndex = NULL)
               "</head><body>",
               paste("<h2>Vignettes of package", pkg,"</h2>"))
 
-    if(is.null(vignetteIndex) || nrow(vignetteIndex)==0) {
+    if(is.null(vignetteIndex) || nrow(vignetteIndex) == 0L) {
         html <- c(html, "Sorry, the package contains no vignette meta-information or index.",
                   "Please browse the <a href=\".\">directory</a>.")
     }
@@ -394,12 +394,12 @@ function(vigDeps)
         depMtrx <- cbind(sub(pat, "\\1", z),
                          sub(pat, "\\2", z),
                          NA)
-        noversion <- depMtrx[, 1] == depMtrx[, 2]
-        depMtrx[noversion, 2] <- NA
+        noversion <- depMtrx[, 1L] == depMtrx[, 2L]
+        depMtrx[noversion, 2L] <- NA
         pat <- "[[:space:]]*([[<>=]+)[[:space:]]+(.*)"
         depMtrx[!noversion, 2:3] <-
-            c(sub(pat, "\\1", depMtrx[!noversion, 2]),
-              sub(pat, "\\2", depMtrx[!noversion, 2]))
+            c(sub(pat, "\\1", depMtrx[!noversion, 2L]),
+              sub(pat, "\\2", depMtrx[!noversion, 2L]))
         depMtrx
     }
     else

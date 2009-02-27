@@ -39,7 +39,7 @@ win.packages.html <-
             lib0 <- "../../library"
             libname <- "the standard library"
         }
-        if(length(lib.loc) > 1)
+        if(length(lib.loc) > 1L)
             cat("<p><h3>Packages in ", libname, "</h3>\n",
                 sep = "", file = out)
         if(libname != "the standard library")

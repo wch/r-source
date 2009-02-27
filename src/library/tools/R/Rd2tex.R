@@ -79,7 +79,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
     inPre <- FALSE
 
     addParaBreaks <- function(x, tag) {
-        start <- attr(x, "srcref")[2]
+        start <- attr(x, "srcref")[2L]
         if (isBlankLineRd(x)) "\n"
 	else if (start == 1) gsub("^\\s+", "", x, perl = TRUE)
         else x
@@ -177,7 +177,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
     }
 
     writeDR <- function(block, tag) {
-        if (length(block) > 1) {
+        if (length(block) > 1L) {
             of1('## Not run: ') # had trailing space before: FIXME remove
             writeContent(block, tag)
             ## FIXME only needs a \n here if not at left margin
@@ -370,7 +370,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
                "\\donttest" = writeContent(block, tag),
                "\\dontrun"= writeDR(block, tag),
                "\\enc" = {
-                   txt <- as.character(if(encoding !=" unknown") block[[1]] else block[[2]])
+                   txt <- as.character(if(encoding !=" unknown") block[[1L]] else block[[2L]])
                    Encoding(txt) <- "unkownn"
                    of1(txt)
                } ,
@@ -378,7 +378,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
                "\\deqn" = {
                    of0(tag, "{")
                    inEqn <<- TRUE
-                   writeContent(block[[1]], tag)
+                   writeContent(block[[1L]], tag)
                    inEqn <<- FALSE
                    of0('}{}')
                },
@@ -388,21 +388,21 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
                "\\S3method" = {
                    ## should not get here
 ##                    ## FIXME: special methods for [ [<- and operators
-##                    class <- as.character(block[[2]])
+##                    class <- as.character(block[[2L]])
 ##                    if (class == "default")
 ##                        of1('## Default S3 method:\n')
 ##                    else {
 ##                        of1("## S3 method for class '")
-##                        writeContent(block[[2]], tag)
+##                        writeContent(block[[2L]], tag)
 ##                        of1("':\n")
 ##                    }
-##                    writeContent(block[[1]], tag)
+##                    writeContent(block[[1L]], tag)
                },
                "\\S4method" = {
                    of1("## S4 method for signature '")
-                   writeContent(block[[2]], tag)
+                   writeContent(block[[2L]], tag)
                    of1("':\n")
-                   writeContent(block[[1]], tag)
+                   writeContent(block[[1L]], tag)
                },
                "\\tabular" = writeTabular(block),
                stopRd(block, "Tag ", tag, " not recognized.")
@@ -410,8 +410,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
     }
 
     writeTabular <- function(table) {
-    	format <- table[[1]]
-    	content <- table[[2]]
+    	format <- table[[1L]]
+    	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
     	    stopRd(table, "\\tabular format must be simple text")
         content <- preprocessRd(content, defines)
@@ -438,8 +438,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
             switch(tag <- attr(block, "Rd_tag"),
                    "\\method" =,
                    "\\S3method" = {
-                       class <- as.character(block[[2]])
-                       generic <- as.character(block[[1]])
+                       class <- as.character(block[[2L]])
+                       generic <- as.character(block[[1L]])
                        if (generic %in% c("[", "[[", "$")) {
                            ## need to assemble the call
                            j <- i + 1
@@ -471,22 +471,22 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
                                of1("## S3 replacement method for class '")
                            else
                                of1("## S3 method for class '")
-                           writeContent(block[[2]], tag)
+                           writeContent(block[[2L]], tag)
                            of1("':\n")
                            blocks[[i+1]] <- structure(txt, Rd_tag = "RCODE")
                        } else {
                            if (class == "default")
                                of1('## Default S3 method:\n')
-                           else if (grepl("<-\\s*value", blocks[[i+1]][[1]])) {
+                           else if (grepl("<-\\s*value", blocks[[i+1]][[1L]])) {
                                of1("## S3 replacement method for class '")
-                               writeContent(block[[2]], tag)
+                               writeContent(block[[2L]], tag)
                                of1("':\n")
                            }else {
                                of1("## S3 method for class '")
-                               writeContent(block[[2]], tag)
+                               writeContent(block[[2L]], tag)
                                of1("':\n")
                            }
-                           writeContent(block[[1]], tag)
+                           writeContent(block[[1L]], tag)
                        }
                    },
                    "\\item" = {
@@ -497,18 +497,18 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
                        switch(blocktag,
                               "\\describe" = {
                                   of1('\\item[')
-                                  writeContent(block[[1]], tag)
+                                  writeContent(block[[1L]], tag)
                                   of1('] ')
-                                  writeContent(block[[2]], tag)
+                                  writeContent(block[[2L]], tag)
                               },
                               "\\value"=,
                               "\\arguments"={
                                   of1('\\item[\\code{')
                                   inCode <<- TRUE
-                                  writeContent(block[[1]], tag)
+                                  writeContent(block[[1L]], tag)
                                   inCode <<- FALSE
                                   of1('}] ')
-                                  writeContent(block[[2]], tag)
+                                  writeContent(block[[2L]], tag)
                               },
                               "\\enumerate" =,
                               "\\itemize"= {
@@ -538,7 +538,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
     writeSectionInner <- function(section, tag)
     {
         ## need \n unless one follows, so
-        nxt <- section[[1]]
+        nxt <- section[[1L]]
         if (!attr(nxt, "Rd_tag") %in% c("TEXT", "RCODE") ||
             substr(as.character(nxt), 1L, 1L) != "\n") of1("\n")
         writeContent(section, tag)
@@ -554,9 +554,9 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
             of0("\\keyword{", latex_escape_name(key), "}{", ltxname, "}\n")
         } else if (tag == "\\section") {
             of0("%\n\\begin{Section}{")
-            writeContent(section[[1]], tag)
+            writeContent(section[[1L]], tag)
             of1("}")
-    	    writeSectionInner(section[[2]], tag)
+    	    writeSectionInner(section[[2L]], tag)
             of1("\\end{Section}\n")
     	} else {
             title <- envTitles[tag]
@@ -607,19 +607,19 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
     ##}
 
     version <- which(sections == "\\Rdversion")
-    if (length(version) == 1 && as.numeric(version[[1]]) < 2)
+    if (length(version) == 1L && as.numeric(version[[1L]]) < 2)
     	warning("Rd2HTML is designed for Rd version 2 or higher.")
-    else if (length(version) > 1)
-    	stopRd(Rd[[version[2]]], "Only one \\Rdversion declaration is allowed")
+    else if (length(version) > 1L)
+    	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
 
     enc <- which(sections == "\\encoding")
     if (length(enc)) {
-    	if (length(enc) > 1)
-    	    stopRd(Rd[[enc[2]]], "Only one \\encoding declaration is allowed")
+    	if (length(enc) > 1L)
+    	    stopRd(Rd[[enc[2L]]], "Only one \\encoding declaration is allowed")
     	encoding <- Rd[[enc]]
     	if (!identical(RdTags(encoding), "TEXT"))
     	    stopRd(encoding, "Encoding must be plain text")
-    	encoding <- trim(encoding[[1]])
+    	encoding <- trim(encoding[[1L]])
         if (encoding != "unknown") {
             of0("\\inputencoding{", latex_canonical_encoding(encoding), "}\n")
         }
@@ -627,7 +627,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
 
     ## Give error for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]), perl = TRUE )))
-    	stopRd(Rd[sections == "TEXT"][[bad[1]]], "All text must be in a section")
+    	stopRd(Rd[sections == "TEXT"][[bad[1L]]], "All text must be in a section")
 
     ## Drop all the parts that are not rendered
     drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding", "\\Rdversion")
@@ -636,7 +636,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
 
     sortorder <- sectionOrder[sections]
     if (any(bad <- is.na(sortorder)))
-    	stopRd(Rd[[which(bad)[1]]], "Section ", sections[which(bad)[1]], " unrecognized.")
+    	stopRd(Rd[[which(bad)[1L]]], "Section ", sections[which(bad)[1L]], " unrecognized.")
     ## Need to sort the aliases.
     nm <- character(length(Rd))
     isAlias <- RdTags(Rd) == "\\alias"
@@ -647,17 +647,17 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
     if (!identical(sections[1:2], c("\\title", "\\name")))
     	stopRd(Rd, "Sections \\title, and \\name must exist and be unique in Rd files.")
 
-    title <- as.character(Rd[[1]])
+    title <- as.character(Rd[[1L]])
     ## remove empty lines, leading whitespace
     title <- trim(paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
                         collapse=" "))
     ## substitutions?
 
-    name <- Rd[[2]]
+    name <- Rd[[2L]]
     tags <- RdTags(name)
-    if (length(tags) > 1) stopRd(name, "\\name must only contain simple text.")
+    if (length(tags) > 1L) stopRd(name, "\\name must only contain simple text.")
 
-    name <- trim(as.character(name[[1]]))
+    name <- trim(as.character(name[[1L]]))
     ltxname <- latex_escape_name(name)
 
     of0('\\HeaderA{', ltxname, '}{',

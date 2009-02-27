@@ -2495,20 +2495,20 @@ function(x, ...)
         if(length(reqs[m]))
             bad_depends$required_but_stub <- reqs[m]
         ## now check versions
-        have_ver <- unlist(lapply(lreqs, function(x) length(x) == 3))
+        have_ver <- unlist(lapply(lreqs, function(x) length(x) == 3L))
         lreqs3 <- lreqs[have_ver]
         if(length(lreqs3)) {
             bad <- character(0)
             for (r in lreqs3) {
-                pkg <- r[[1]]
-                op <- r[[2]]
+                pkg <- r[[1L]]
+                op <- r[[2L]]
                 where <- which(installed == pkg)
                 if(!length(where)) next
                 ## want the first one
-                desc <- .readRDS(file.path(installed_in[where[1]], pkg,
+                desc <- .readRDS(file.path(installed_in[where[1L]], pkg,
                                            "Meta", "package.rds"))
                 current <- desc$DESCRIPTION["Version"]
-                target <- as.package_version(r[[3]])
+                target <- as.package_version(r[[3L]])
                 if(eval(parse(text = paste("!(current", op, "target)"))))
                     bad <- c(bad, pkg)
             }

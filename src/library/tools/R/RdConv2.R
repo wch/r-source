@@ -94,7 +94,7 @@ isBlankRd <- function(x)
     length(grep("^[[:blank:]]*\n?$", x, perl = TRUE)) == length(x) # newline optional
 
 isBlankLineRd <- function(x) {
-    attr(x, "srcref")[2] == 1 &&
+    attr(x, "srcref")[2L] == 1 &&
     length(grep("^[[:blank:]]*\n", x, perl = TRUE)) == length(x)   # newline required
 }
 
@@ -104,8 +104,8 @@ stopRd <- function(block, ...)
     if (is.null(srcref)) stop(..., call. = FALSE, domain = NA)
     else {
     	loc <- paste(attr(srcref, "srcfile")$filename,
-                     ":", srcref[1], sep = "")
-    	if (srcref[1] != srcref[3]) loc <- paste(loc, "-", srcref[3], sep="")
+                     ":", srcref[1L], sep = "")
+    	if (srcref[1L] != srcref[3L]) loc <- paste(loc, "-", srcref[3L], sep="")
     	stop(call.=FALSE, loc, ": ", ..., domain = NA)
     }
 }
@@ -118,8 +118,8 @@ warnRd <- function(block, Rdfile, ...)
                 call. = FALSE, domain = NA, immediate. = TRUE)
     else {
     	loc <- paste(attr(srcref, "srcfile")$filename,
-                     ":", srcref[1], sep = "")
-    	if (srcref[1] != srcref[3]) loc <- paste(loc, "-", srcref[3], sep="")
+                     ":", srcref[1L], sep = "")
+    	if (srcref[1L] != srcref[3L]) loc <- paste(loc, "-", srcref[3L], sep="")
     	warning(loc, ": ", ..., call. = FALSE, domain = NA, immediate. = TRUE)
     }
 }
@@ -130,8 +130,8 @@ preprocessRd <- function(blocks, defines)
     ## Process ifdef's.
     tags <- RdTags(blocks)
     while (length(ifdef <- which(tags %in% c("#ifdef", "#ifndef")))) {
-	ifdef <- ifdef[1]
-	target <- blocks[[ifdef]][[1]][[1]]
+	ifdef <- ifdef[1L]
+	target <- blocks[[ifdef]][[1L]][[1L]]
 	# The target will have picked up some whitespace and a newline
 	target <- gsub("[[:blank:][:cntrl:]]*", "", target)
 	all <- seq_along(tags)
@@ -139,8 +139,8 @@ preprocessRd <- function(blocks, defines)
 	after <- all[all > ifdef]
 
 	if ((target %in% defines) == (tags[ifdef] == "#ifdef")) {
-	    tags <- c(tags[before], RdTags(blocks[[ifdef]][[2]]), tags[after])
-	    blocks <- c(blocks[before], blocks[[ifdef]][[2]], blocks[after])
+	    tags <- c(tags[before], RdTags(blocks[[ifdef]][[2L]]), tags[after])
+	    blocks <- c(blocks[before], blocks[[ifdef]][[2L]], blocks[after])
 	} else {
 	    tags <- c(tags[before], tags[after])
 	    blocks <- c(blocks[before], blocks[after])
@@ -218,7 +218,7 @@ Rd2HTML <-
     }
 
     addParaBreaks <- function(x, tag) {
-        start <- attr(x, "srcref")[2] # FIXME: what if no srcref?, start col
+        start <- attr(x, "srcref")[2L] # FIXME: what if no srcref?, start col
 	if (isBlankLineRd(x)) "</p>\n<p>\n"
 	else if(start == 1) gsub("^\\s+", "", x, perl = TRUE)
         else x
@@ -312,7 +312,7 @@ Rd2HTML <-
     }
 
     writeDR <- function(block, tag) {
-        if (length(block) > 1) {
+        if (length(block) > 1L) {
             of1('## Not run: ') # had trailing space before: FIXME remove
             writeContent(block, tag)
             ## FIXME only needs a \n here if not at left margin
@@ -348,9 +348,9 @@ Rd2HTML <-
                "\\special"= writeContent(block, tag), ## FIXME, verbatim?
                "\\linkS4class" =,
                "\\link" = writeLink(tag, block),
-               "\\email" = of0('<a href="mailto:', block[[1]], '">', htmlify(block[[1]]), '</a>'),
+               "\\email" = of0('<a href="mailto:', block[[1L]], '">', htmlify(block[[1L]]), '</a>'),
                ## FIXME: encode, not htmlify
-               "\\url" = of0('<a href="', block[[1]], '">', block[[1]], '</a>'),
+               "\\url" = of0('<a href="', block[[1L]], '">', block[[1L]], '</a>'),
                "\\cr" =,
                "\\dots" =,
                "\\ldots" =,
@@ -365,7 +365,7 @@ Rd2HTML <-
                "\\sQuote" =,
                "\\dQuote" =  writeLR(block, tag),
                "\\dontrun"= writeDR(block, tag),
-               "\\enc" = writeContent(block[[1]], tag),
+               "\\enc" = writeContent(block[[1L]], tag),
                "\\eqn" = {
                    of1("<i>")
                    block <- block[[length(block)]];
@@ -384,21 +384,21 @@ Rd2HTML <-
                "\\method" =,
                "\\S3method" = {
                    ## FIXME: special methods for [ [<- and operators
-                   class <- as.character(block[[2]])
+                   class <- as.character(block[[2L]])
                    if (class == "default")
                        of1('## Default S3 method:\n')
                    else {
                        of1("## S3 method for class '")
-                       writeContent(block[[2]], tag)
+                       writeContent(block[[2L]], tag)
                        of1("':\n")
                    }
-                   writeContent(block[[1]], tag)
+                   writeContent(block[[1L]], tag)
                },
                "\\S4method" = {
                    of1("## S4 method for signature '")
-                   writeContent(block[[2]], tag)
+                   writeContent(block[[2L]], tag)
                    of1("':\n")
-                   writeContent(block[[1]], tag)
+                   writeContent(block[[1L]], tag)
                },
                "\\tabular" = writeTabular(block),
                stopRd(block, "Tag ", tag, " not recognized.")
@@ -406,13 +406,13 @@ Rd2HTML <-
     }
 
     writeTabular <- function(table) {
-    	format <- table[[1]]
-    	content <- table[[2]]
+    	format <- table[[1L]]
+    	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
     	    stopRd(table, "\\tabular format must be simple text")
-    	format <- strsplit(format[[1]], "")[[1]]
+    	format <- strsplit(format[[1L]], "")[[1L]]
     	if (!all(format %in% c("l", "c", "r")))
-    	    stopRd(table, "Unrecognized \\tabular format: ", table[[1]][[1]])
+    	    stopRd(table, "Unrecognized \\tabular format: ", table[[1L]][[1L]])
         format <- c(l="left", c="center", r="right")[format]
 
         content <- preprocessRd(content, defines)
@@ -482,16 +482,16 @@ Rd2HTML <-
    		"\\value"=,
      		"\\arguments"={
     		    of1('<tr valign="top"><td><code>')
-    		    writeContent(block[[1]], tag)
+    		    writeContent(block[[1L]], tag)
     		    of1('</code></td>\n<td>\n')
-    		    writeContent(block[[2]], tag)
+    		    writeContent(block[[2L]], tag)
     		    of1('</td></tr>')
     		},
     		"\\describe"= {
     		    of1("<dt>")
-    		    writeContent(block[[1]], tag)
+    		    writeContent(block[[1L]], tag)
     		    of1("</dt><dd>")
-    		    writeContent(block[[2]], tag)
+    		    writeContent(block[[2L]], tag)
     		    of1("</dd>")
     		},
     		"\\enumerate" =,
@@ -529,8 +529,8 @@ Rd2HTML <-
         if (tag == "\\alias") return() ## only used on CHM header
     	of1("\n\n<h3>")
     	if (tag == "\\section") {
-    	    title <- section[[1]]
-    	    section <- section[[2]]
+    	    title <- section[[1L]]
+    	    section <- section[[2L]]
             ## FIXME: this needs trimming of whitespace
     	    writeContent(title, tag)
     	} else
@@ -542,7 +542,7 @@ Rd2HTML <-
         if (tag == "\\arguments") para <- ""
     	if(nzchar(para)) of0("\n<", para, ">")
         ## There may be an initial \n, so remove that
-        s1 <- section[[1]][1]
+        s1 <- section[[1L]][1L]
         if (RdTags(s1) == "TEXT" && s1 == "\n") section <- section[-1]
     	writeContent(section, tag)
     	if(nzchar(para)) of0("</", para, ">\n")
@@ -582,24 +582,24 @@ Rd2HTML <-
     ##}
 
     version <- which(sections == "\\Rdversion")
-    if (length(version) == 1 && as.numeric(version[[1]]) < 2)
+    if (length(version) == 1L && as.numeric(version[[1L]]) < 2)
     	warning("Rd2HTML is designed for Rd version 2 or higher.")
-    else if (length(version) > 1)
-    	stopRd(Rd[[version[2]]], "Only one \\Rdversion declaration is allowed")
+    else if (length(version) > 1L)
+    	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
 
     enc <- which(sections == "\\encoding")
     if (length(enc)) {
-    	if (length(enc) > 1)
-    	    stopRd(Rd[[enc[2]]], "Only one \\encoding declaration is allowed")
+    	if (length(enc) > 1L)
+    	    stopRd(Rd[[enc[2L]]], "Only one \\encoding declaration is allowed")
     	encoding <- Rd[[enc]]
     	if (!identical(RdTags(encoding), "TEXT"))
     	    stopRd(encoding, "Encoding must be plain text")
-    	encoding <- encoding[[1]]
+    	encoding <- encoding[[1L]]
     }
 
     ## Give error for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]), perl = TRUE )))
-    	stopRd(Rd[sections == "TEXT"][[bad[1]]], "All text must be in a section")
+    	stopRd(Rd[sections == "TEXT"][[bad[1L]]], "All text must be in a section")
 
     ## Drop all the parts that are not rendered
     drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding",
@@ -609,19 +609,19 @@ Rd2HTML <-
 
     sortorder <- sectionOrder[sections]
     if (any(bad <- is.na(sortorder)))
-    	stopRd(Rd[[which(bad)[1]]], "Section ", sections[which(bad)[1]], " unrecognized.")
+    	stopRd(Rd[[which(bad)[1L]]], "Section ", sections[which(bad)[1L]], " unrecognized.")
     sortorder <- order(sortorder)
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
     if (!identical(sections[1:2], c("\\title", "\\name")))
     	stopRd(Rd, "Sections \\title, and \\name must exist and be unique in Rd files.")
 
-    title <- Rd[[1]]
-    name <- Rd[[2]]
+    title <- Rd[[1L]]
+    name <- Rd[[2L]]
     tags <- RdTags(name)
-    if (length(tags) > 1) stopRd(name, "\\name must only contain simple text.")
+    if (length(tags) > 1L) stopRd(name, "\\name must only contain simple text.")
 
-    name <- htmlify(name[[1]])
+    name <- htmlify(name[[1L]])
 
     if(CHM)
         of0('<html><head><title>')
@@ -700,7 +700,7 @@ checkRd <-
 
     checkBlock <- function(block, tag, blocktag) {
 	switch(tag,
-	UNKNOWN = if (!unknownOK) stopRd(block, "Unrecognized macro ", block[[1]]) else warnRd(block, Rdfile, "Unrecognized macro ", block[[1]]),
+	UNKNOWN = if (!unknownOK) stopRd(block, "Unrecognized macro ", block[[1L]]) else warnRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
 	VERB = ,
 	RCODE = ,
 	TEXT = ,
@@ -748,13 +748,13 @@ checkRd <-
 	"\\S3method" =,
 	"\\S4method" =,
 	"\\enc" = {
-	    checkContent(block[[1]], tag)
-	    checkContent(block[[2]], tag)
+	    checkContent(block[[1L]], tag)
+	    checkContent(block[[2L]], tag)
 	},
 	"\\eqn" =,
 	"\\deqn" = {
-	    checkContent(block[[1]])
-	    if (length(block) > 1) checkContent(block[[2]])
+	    checkContent(block[[1L]])
+	    if (length(block) > 1L) checkContent(block[[2L]])
 	},
 	"\\dontshow" =,
 	"\\testonly" = checkContent(block, tag),
@@ -763,13 +763,13 @@ checkRd <-
     }
 
     checkTabular <- function(table) {
-    	format <- table[[1]]
-    	content <- table[[2]]
+    	format <- table[[1L]]
+    	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
     	    stopRd(table, "\\tabular format must be simple text")
-    	format <- strsplit(format[[1]], "")[[1]]
+    	format <- strsplit(format[[1L]], "")[[1L]]
     	if (!all(format %in% c("l", "c", "r")))
-    	    stopRd(table, "Unrecognized \\tabular format: ", table[[1]][[1]])
+    	    stopRd(table, "Unrecognized \\tabular format: ", table[[1L]][[1L]])
         content <- preprocessRd(content, defines)
         tags <- attr(content, "RdTags")
 
@@ -811,13 +811,13 @@ checkRd <-
     	    	if (!inlist) inlist <- TRUE
     		switch(blocktag,
     		"\\arguments"={
-    		    checkContent(block[[1]], tag)
-    		    checkContent(block[[2]], tag)
+    		    checkContent(block[[1L]], tag)
+    		    checkContent(block[[2L]], tag)
     		},
     		"\\value"=,
     		"\\describe"= {
-    		    checkContent(block[[1]], tag)
-    		    checkContent(block[[2]], tag)
+    		    checkContent(block[[1L]], tag)
+    		    checkContent(block[[2L]], tag)
     		},
     		"\\enumerate"=,
     		"\\itemize"= {})
@@ -834,8 +834,8 @@ checkRd <-
 
     checkSection <- function(section, tag) {
     	if (tag == "\\section") {
-    	    title <- section[[1]]
-    	    section <- section[[2]]
+    	    title <- section[[1L]]
+    	    section <- section[[2L]]
     	    checkContent(title, tag)
     	}
     	checkContent(section, tag)
@@ -843,10 +843,10 @@ checkRd <-
 
     checkUnique <- function(tag) {
     	which <- which(sections == tag)
-    	if (length(which) < 1)
+    	if (length(which) < 1L)
     	    stopRd(Rd, "Must have a ", tag)
-    	else if (length(which) > 1)
-    	    stopRd(Rd[[which[2]]], "Only one ", tag, " is allowed")
+    	else if (length(which) > 1L)
+    	    stopRd(Rd[[which[2L]]], "Only one ", tag, " is allowed")
     }
 
     if (is.character(Rd)) {
@@ -864,15 +864,15 @@ checkRd <-
     sections <- attr(Rd, "RdTags")
 
     version <- which(sections == "\\Rdversion")
-    if (length(version) == 1 && as.numeric(version[[1]]) < 2)
+    if (length(version) == 1L && as.numeric(version[[1L]]) < 2)
     	warning("Rd2HTML is designed for Rd version 2 or higher.")
-    else if (length(version) > 1)
-    	stopRd(Rd[[version[2]]], "Only one \\Rdversion declaration is allowed")
+    else if (length(version) > 1L)
+    	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
 
     enc <- which(sections == "\\encoding")
     if (length(enc)) {
-    	if (length(enc) > 1)
-    	    stopRd(Rd[[enc[2]]], "Only one \\encoding declaration is allowed")
+    	if (length(enc) > 1L)
+    	    stopRd(Rd[[enc[2L]]], "Only one \\encoding declaration is allowed")
     	encoding <- Rd[[enc]]
     	if (!identical(RdTags(encoding), "TEXT"))
     	    stopRd(encoding, "Encoding must be plain text")
@@ -884,7 +884,7 @@ checkRd <-
 
     name <- Rd[[which(sections == "\\name")]]
     tags <- RdTags(name)
-    if (length(tags) > 1) stopRd(name, "\\name must only contain simple text.")
+    if (length(tags) > 1L) stopRd(name, "\\name must only contain simple text.")
 
     for (i in seq_along(sections))
     	checkSection(Rd[[i]], sections[i])
@@ -920,7 +920,7 @@ Rd2ex <-
         if(tag %in% c("\\dontshow", "\\testonly")) {
             ## There are fancy rules here if not followed by \n
             of1("## Don't show: ")
-            if (!length(grep("^\n", x[[1]], perl = TRUE)))
+            if (!length(grep("^\n", x[[1L]], perl = TRUE)))
                 writeLines("", con)
             for(i in seq_along(x)) render(x[[i]], prefix)
             if (!length(grep("\n$", x[[length(x)]], perl = TRUE)))
@@ -928,15 +928,15 @@ Rd2ex <-
             of1("## End Don't show")
         } else if (tag  == "\\dontrun") {
             ## Special case for one line.
-            if (length(x) == 1) {
+            if (length(x) == 1L) {
                 of1("## Not run: ")
-                render(x[[1]], prefix)
+                render(x[[1L]], prefix)
             } else {
                 of1("## Not run: ")
-                if (!length(grep("^\n", x[[1]], perl = TRUE))) {
+                if (!length(grep("^\n", x[[1L]], perl = TRUE))) {
                     writeLines("", con)
-                    render(x[[1]], paste("##D", prefix))
-                } else render(x[[1]], prefix)
+                    render(x[[1L]], paste("##D", prefix))
+                } else render(x[[1L]], prefix)
                 for(i in 2:length(x)) render(x[[i]], paste("##D", prefix))
                 if (!length(grep("\n$", x[[length(x)]], perl = TRUE)))
                     writeLines("", con)
@@ -944,7 +944,7 @@ Rd2ex <-
             }
         } else if (tag  == "\\donttest") {
             of1("## No test: ")
-            if (!length(grep("^\n", x[[1]], perl = TRUE)))
+            if (!length(grep("^\n", x[[1L]], perl = TRUE)))
                 writeLines("", con)
             for(i in seq_along(x)) render(x[[i]], prefix)
             if (!length(grep("\n$", x[[length(x)]], perl = TRUE)))
@@ -954,7 +954,7 @@ Rd2ex <-
             ## % can escape a whole line (e.g. beavers.Rd) or
             ## be trailing when we want a NL
             ## This is not right (leaading spaces?) but it may do
-            if(attr(x, "srcref")[2] > 1) writeLines("", con)
+            if(attr(x, "srcref")[2L] > 1) writeLines("", con)
         } else if (tag %in% c("\\dots", "\\ldots")) {
             of1("...")
         } else {
@@ -996,18 +996,18 @@ Rd2ex <-
         if(length(which) > 1L)
             warning("more than one \\examples section, using the first")
         if(any(f <- sections == "\\encoding")) {
-            encoding <- unlist(Rd[[which(f)]])[1]
+            encoding <- unlist(Rd[[which(f)]])[1L]
             of0("### Encoding: ", encoding, "\n\n")
         }
         nameblk <- sections == "\\name"
         if (any(nameblk)) {
             ## perl wrapped here, but it seems unnecessary
-            name <- as.character(Rd[[ which(nameblk)[1] ]])
+            name <- as.character(Rd[[ which(nameblk)[1L] ]])
             of0("### Name: ", name, "\n")
         }
         titleblk <- sections == "\\title"
         if (any(titleblk)) {
-            title <- as.character(Rd[[ which(titleblk)[1] ]])
+            title <- as.character(Rd[[ which(titleblk)[1L] ]])
             ## remove empty lines, leading whitespace
             title <- paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
                            collapse=" ")
@@ -1029,7 +1029,7 @@ Rd2ex <-
             of0(wr(paste("Keywords: ", paste(keys, collapse=" "), sep="")), "\n")
         }
         writeLines(c("", "### ** Examples"), con)
-        ex <- preprocessRd(Rd[[ where[1] ]], defines)
+        ex <- preprocessRd(Rd[[ where[1L] ]], defines)
         for (i in seq_along(ex)) render(ex[[i]])
         of1("\n\n\n")
     }

@@ -62,7 +62,7 @@ package.dependencies <-
                    && deps[[k]][ok, 2] %in% c("<=", ">=")) {
                     ## careful.  We don't want 1.9.1 < 1.50
                     op <- deps[[k]][ok,2]
-                    x1 <- rep(0, 6)
+                    x1 <- rep.int(0, 6)
                     y <- c(R.version$major,
                            strsplit(R.version$minor, ".", fixed=TRUE)[[1L]])
                     x1[seq_along(y)] <- y

@@ -32,14 +32,14 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 
     chop1st <- function(cvec) {
 	## The first non-empty line
-	n <- length(cvec); if(n <= 1) return(cvec)
+	n <- length(cvec); if(n <= 1L) return(cvec)
 	## else	 n >= 2
 	empty <- grep("^[\t ]*$", cvec)
 	cvec[if(any(!empty)) which(!empty)[1L] else 1]
     }
 
     chopPara <- function(cvec) {
-	n <- length(cvec); if(n <= 1) return(cvec)
+	n <- length(cvec); if(n <= 1L) return(cvec)
 	## else	 n >= 2
 	empty <- grep("^[\t ]*$", cvec)
 	## the first non-empty ``from the right''

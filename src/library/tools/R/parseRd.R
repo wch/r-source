@@ -38,10 +38,10 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     enc <- grep("\\encoding{", lines, fixed = TRUE, useBytes=TRUE)
     enc <- grep("^\\\\encoding\\{([^}]*)\\}.*", lines[enc], value=TRUE)
     if(length(enc)) {
-        if(length(enc) > 1)
+        if(length(enc) > 1L)
             warning("multiple \\encoding lines in file ", file0)
         ## keep first one
-        enc <- enc[1]
+        enc <- enc[1L]
         enc <- sub("^\\\\encoding\\{([^}]*)\\}.*", "\\1", enc)
         if(verbose) message("found encoding ", enc)
         if(enc %in% c("UTF-8", "utf-8", "utf8")) {
