@@ -522,6 +522,11 @@ function(con)
     ## Get BibTeX error info, using non-header lines until the first
     ## warning or summary, hoping for the best ...
     lines <- readLines(con, warn = FALSE)
+    if(any(ind <- is.na(nchar(lines, allowNA = TRUE)))) {
+        if(!capabilities("iconv")) return(character())
+        lines[ind] <- iconv(lines[ind], "", "", sub = "byte")
+    }
+    
     ## How can we find out for sure that there were errors?  Try
     ## guessing ... and peeking at tex-buf.el from AUCTeX.
     really_has_errors <-
@@ -545,6 +550,11 @@ function(con, n = 4L)
     ## Get (La)TeX lines with error plus n (default 4) lines of trailing
     ## context.
     lines <- readLines(con, warn = FALSE)
+    if(any(ind <- is.na(nchar(lines, allowNA = TRUE)))) {
+        if(!capabilities("iconv")) return(character())
+        lines[ind] <- iconv(lines[ind], "", "", sub = "byte")
+    }
+
     ## Try matching both the regular error indicator ('!') as well as
     ## the file line error indicator ('file:line:').
     pos <- grep("^(!|.*:[0123456789]+:)", lines)
