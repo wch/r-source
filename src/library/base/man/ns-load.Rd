@@ -45,17 +45,17 @@ unloadNamespace(ns)
   space and any imports needed.  However it may be useful to call
   these functions directly at times.
 
-  \code{loadNamespace} loads the specified name space and registers it in
-  an internal data base.  A request to load a name space that is already
-  loaded has no effect.  The arguments have the same meaning as the
-  corresponding arguments to \code{\link{library}}, whose help page
-  explains the details of how a particular installed package comes to be
-  chosen.  After loading,
-  \code{loadNamespace} looks for a hook function named
-  \code{\link{.onLoad}} as an internal variable in the name space (it
-  should not be exported).  This function is called with the same arguments
-  as \code{.First.lib}.  Partial loading is used to support installation with
-  the \option{--save} and \option{--lazy} options.
+  \code{loadNamespace} loads the specified name space and registers it
+  in an internal data base.  A request to load a name space when one of
+  that name is already loaded has no effect.  The arguments have the
+  same meaning as the corresponding arguments to \code{\link{library}},
+  whose help page explains the details of how a particular installed
+  package comes to be chosen.  After loading, \code{loadNamespace} looks
+  for a hook function named \code{\link{.onLoad}} as an internal
+  variable in the name space (it should not be exported).  This function
+  is called with the same arguments as \code{.First.lib}.  Partial
+  loading is used to support installation with the \option{--save} and
+  \option{--lazy} options.
 
   \code{loadNamespace} does not attach the name space it loads to the
   search path.  \code{attachNamespace} can be used to attach a frame
@@ -66,14 +66,24 @@ unloadNamespace(ns)
   \code{loadedNamespaces} returns a character vector of the names of
   the loaded name spaces.
 
-  \code{unloadNamespace} can be used to force
-  a name space to be unloaded.  An error is signaled if the name space
-  is imported by other loaded name spaces.  If defined, a hook
-  function \code{\link{.onUnload}} is run
-  before removing the name space from the internal registry.
-  \code{unloadNamespace} will first \code{\link{detach}} a package of
-  the same name if one is on the path, thereby running a
-  \code{.Last.lib} function in the package if one is exported.
+  \code{unloadNamespace} can be used to attempt to force a name space to
+  be unloaded.  If the namespace is attached, it is first
+  \code{\link{detache}}ed, thereby running a \code{.Last.lib} function
+  in the namespace if one is exported.  Then an error is signaled if the
+  name space is imported by other loaded name spaces, and the namespace
+  is not unloaded.  If defined, a hook function \code{\link{.onUnload}}
+  is run before removing the name space from the internal registry.
+}
+\value{
+  \code{attachNamespace} returns invisibly the environment it adds to
+  the search path.
+  
+  \code{loadNamespace} returns the namespace environment, either one
+  already loaded or the one the function causes to be loaded.
+
+  \code{loadedNamespaces} returns a character vector.
+
+  \code{unloadNamespace} returns \code{NULL}, invisibly.
 }
 \keyword{data}
 \keyword{utilities}
