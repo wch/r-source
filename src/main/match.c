@@ -62,9 +62,7 @@ Rboolean psmatch(const char *f, const char *t, Rboolean exact)
     if (exact)
 	return (Rboolean)!strcmp(f, t);
     /* else */
-    while (*f || *t) {
-	if (*t == '\0') return TRUE;
-	if (*f == '\0') return FALSE;
+    while (*t) {
 	if (*t != *f)   return FALSE;
 	t++;
 	f++;
