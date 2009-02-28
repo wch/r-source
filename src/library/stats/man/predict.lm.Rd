@@ -93,10 +93,6 @@
   variables found are not of the same length as those in \code{newdata}
   if it was supplied.
   
-  Offsets specified by \code{offset} in the fit by \code{\link{lm}}
-  will not be included in predictions, whereas those specified by an
-  offset term in the formula will be.
-
   Notice that prediction variances and prediction intervals always refer
   to \emph{future} observations, possibly corresponding to the same
   predictors as used for the fit. The variance of the \emph{residuals}
