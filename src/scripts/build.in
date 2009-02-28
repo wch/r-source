@@ -561,16 +561,14 @@ sub cleanup_pkg {
 	    } else {
 		if(-r "Makevars.win") {
 		    my $makefiles = " -f " .
-			&shell_quote_file_path(&file_path(${R::Vars::R_HOME},
-							  "share", "make",
-							  "clean.mk"));
+			&shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
+							  "make", "clean.mk"));
 		    $makefiles .= " -f Makevars.win";
 		    R_system("${R::Vars::MAKE} $makefiles clean");
 		} elsif (-r "Makevars") {
 		    my $makefiles = " -f " .
-			&shell_quote_file_path(&file_path(${R::Vars::R_HOME},
-							  "share", "make",
-							  "clean.mk"));
+			&shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
+							  "make", "clean.mk"));
 		    $makefiles .= " -f Makevars";
 		    R_system("${R::Vars::MAKE} $makefiles clean");
 		}
@@ -591,9 +589,8 @@ sub cleanup_pkg {
 		if(-r "Makevars") {
 		    ## ensure we do have a 'clean' target.
 		    $makefiles .= " -f " .
-			&shell_quote_file_path(&file_path(${R::Vars::R_HOME},
-							  "share", "make",
-							  "clean.mk"));
+			&shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
+							  "make", "clean.mk"));
 		    $makefiles .= " -f Makevars";
 		    R_system("${R::Vars::MAKE} $makefiles clean");
 		}
