@@ -199,6 +199,9 @@ NEW FEATURES
     o	New function isdebugged() indicates whether its argument has the
 	debug flag set or not.
 
+    o	ls.str() [via print method] now also works when some objects in
+	the environment are missing().
+
 
 DEPRECATED & DEFUNCT
 

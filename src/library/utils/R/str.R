@@ -523,8 +523,13 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE, ...)
     M <- attr(x, "mode")
     for(nam in x) {
 	cat(nam, ": ")
-	str(get(nam, envir = E, mode = M),
-	    max.level = max.level, give.attr = give.attr, ...)
+	## check missingness, e.g. inside debug(.) :
+	if(eval(substitute(missing(.), list(. = as.name(nam))),
+		envir = E))
+	    cat("<missing>\n")
+	else
+	    str(get(nam, envir = E, mode = M),
+		max.level = max.level, give.attr = give.attr, ...)
     }
     invisible(x)
 }
