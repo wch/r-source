@@ -196,7 +196,8 @@ glm.fit(x, y, weights = rep(1, nobs),
   \item{iter}{the number of iterations of IWLS used.}
   \item{weights}{the \emph{working} weights, that is the weights
     in the final iteration of the IWLS fit.}
-  \item{prior.weights}{the case weights initially supplied.}
+  \item{prior.weights}{the weights initially supplied, a vector of
+    \code{1}s if none were.}
   \item{df.residual}{the residual degrees of freedom.}
   \item{df.null}{the residual degrees of freedom for the null model.}
   \item{y}{if requested (the default) the \code{y} vector

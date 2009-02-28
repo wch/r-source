@@ -177,6 +177,7 @@ poisson <- function (link = "log")
 	mustart <- y + 0.1
     })
     simfun <- function(object, nsim) {
+        ## assume weights are case weights
         ftd <- fitted(object)
         rpois(nsim*length(ftd), ftd)
     }
@@ -539,6 +540,7 @@ Gamma <- function (link = "inverse")
 	mustart <- y
     })
     simfun <- function(object, nsim) {
+        if (any(object$prior.weights != 1)) warning("ignoring prior weights")
         ftd <- fitted(object)
         shape <- MASS::gamma.shape(object)$alpha
         rgamma(nsim*length(ftd), shape = shape, rate = shape/ftd)
@@ -605,6 +607,7 @@ inverse.gaussian <- function(link = "1/mu^2")
         if(is.null(tryCatch(loadNamespace("SuppDists"),
                             error = function(e) NULL)))
             stop("Need CRAN package 'SuppDists' for 'inverse.gaussian' family")
+        if (any(object$prior.weights != 1)) warning("ignoring prior weights")
         ftd <- fitted(object)
         SuppDists::rinvGauss(nsim * length(ftd), nu = ftd,
                              lambda = 1/summary(object)$dispersion)
