@@ -423,6 +423,8 @@ BUG FIXES
     o   exists() with mode= "any" will no longer run an active binding's
         function.
 
+    o	format(c(1 + 2i, NA)) no longer has extraneous space in "  NA".
+
 
 
 	**************************************************
@@ -536,6 +538,7 @@ BUG FIXES
 	true for a long time.
 
     o	format.info(x) is now also correct when x has no finite content.
+
 
 
 		CHANGES IN R VERSION 2.8.1

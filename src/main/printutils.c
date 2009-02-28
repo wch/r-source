@@ -235,8 +235,9 @@ const char
     if (x.i == 0.0) x.i = 0.0;
 
     if (ISNA(x.r) || ISNA(x.i)) {
-	snprintf(buff, NB, "%*s%*s", R_print.gap, "", wr+wi+2,
-		CHAR(R_print.na_string));
+	snprintf(buff, NB,
+		 "%*s", /* was "%*s%*s", R_print.gap, "", */
+		 wr+wi+2, CHAR(R_print.na_string));
     } else {
 	/* formatComplex rounded, but this does not, and we need to
 	   keep it that way so we don't get strange trailing zeros.

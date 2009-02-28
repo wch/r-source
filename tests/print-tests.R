@@ -116,6 +116,19 @@ for(di in 1:10) {
 ##-  8 : 14 7 1	=	 8 : 14 7 1
 ##-  9 : 15 8 1	=	 9 : 15 8 1
 ##- 10 : 16 9 1	=	10 : 16 9 1
+nonFin <- list(c(Inf,-Inf), c(NaN,NA), NA_real_, Inf)
+mm <- sapply(nonFin, format.info)
+fm <- lapply(nonFin, format)
+w <- c(4,3,2,3)
+stopifnot(sapply(lapply(fm, nchar), max) == w,
+	  mm == rbind(w, 0, 0))# m[2,] was 2147483647; m[3,] was 1
+cnF <- c(lapply(nonFin, function(x) complex(re=x, im=x))[-3],
+         complex(re=NaN, im=-Inf))
+cmm <- sapply(cnF, format.info)
+cfm <- lapply(cnF, format)
+cw <- sapply(lapply(cfm, nchar), max)
+stopifnot(cw == cmm[1,]+1 +cmm[4,]+1,
+	  nchar(format(c(NA, 1 + 2i))) == 4)# wrongly was (5,4)
 
 
 ##-- Ok now, everywhere

@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-08-11 r35246)
+R version 2.9.0 Under development (unstable) (2009-02-27 r48020)
+Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > #### Testing print(), format()	and the like --- mainly with numeric()
@@ -245,6 +245,19 @@ Type 'q()' to quit R.
 > ##-  8 : 14 7 1	=	 8 : 14 7 1
 > ##-  9 : 15 8 1	=	 9 : 15 8 1
 > ##- 10 : 16 9 1	=	10 : 16 9 1
+> nonFin <- list(c(Inf,-Inf), c(NaN,NA), NA_real_, Inf)
+> mm <- sapply(nonFin, format.info)
+> fm <- lapply(nonFin, format)
+> w <- c(4,3,2,3)
+> stopifnot(sapply(lapply(fm, nchar), max) == w,
++ 	  mm == rbind(w, 0, 0))# m[2,] was 2147483647; m[3,] was 1
+> cnF <- c(lapply(nonFin, function(x) complex(re=x, im=x))[-3],
++          complex(re=NaN, im=-Inf))
+> cmm <- sapply(cnF, format.info)
+> cfm <- lapply(cnF, format)
+> cw <- sapply(lapply(cfm, nchar), max)
+> stopifnot(cw == cmm[1,]+1 +cmm[4,]+1,
++ 	  nchar(format(c(NA, 1 + 2i))) == 4)# wrongly was (5,4)
 > 
 > 
 > ##-- Ok now, everywhere
