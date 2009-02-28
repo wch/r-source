@@ -535,6 +535,7 @@ BUG FIXES
 	documented to be allowed to be of length 1: this has not been
 	true for a long time.
 
+    o	format.info(x) is now also correct when x has no finite content.
 
 
 		CHANGES IN R VERSION 2.8.1
