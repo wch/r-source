@@ -68,7 +68,7 @@ unloadNamespace(ns)
 
   \code{unloadNamespace} can be used to attempt to force a name space to
   be unloaded.  If the namespace is attached, it is first
-  \code{\link{detache}}ed, thereby running a \code{.Last.lib} function
+  \code{\link{detach}}ed, thereby running a \code{.Last.lib} function
   in the namespace if one is exported.  Then an error is signaled if the
   name space is imported by other loaded name spaces, and the namespace
   is not unloaded.  If defined, a hook function \code{\link{.onUnload}}
