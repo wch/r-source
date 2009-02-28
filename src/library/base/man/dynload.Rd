@@ -187,7 +187,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
     variable \env{PATH}.
   }
   This means that for all but embedded uses of \R, \file{iconv.dll} will
-  be found in \file{\var{\link[base:Rhome]{R_HOME}}/bin}.
+  be found in \file{\var{\link[base:Rhome]{R\_HOME}}/bin}.
 
   Packages often want to supply dependent DLLs in their \file{libs}
   directory, and do this by setting the \env{PATH} variable
