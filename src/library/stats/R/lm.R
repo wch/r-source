@@ -649,10 +649,12 @@ predict.lm <-
                          xlev = object$xlevels)
         if(!is.null(cl <- attr(Terms, "dataClasses"))) .checkMFClasses(cl, m)
         X <- model.matrix(Terms, m, contrasts.arg = object$contrasts)
-	offset <- if (!is.null(off.num <- attr(tt, "offset")))
-	    eval(attr(tt, "variables")[[off.num+1]], newdata)
-	else if (!is.null(object$offset))
-	    eval(object$call$offset, newdata)
+        offset <- rep(0, nrow(X))
+        if (!is.null(off.num <- attr(tt, "offset")))
+            for(i in off.num)
+                offset <- offset + eval(attr(tt, "variables")[[i+1]], newdata)
+	if (!is.null(object$call$offset))
+	    offset <- offset + eval(object$call$offset, newdata)
 	mmDone <- FALSE
     }
     n <- length(object$residuals) # NROW(object$qr$qr)

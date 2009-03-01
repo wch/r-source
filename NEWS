@@ -542,6 +542,11 @@ BUG FIXES
 
     o	format.info(x) is now also correct when x has no finite content.
 
+    o	predict.lm() now works correctly when the fit had more than
+	one offset (possibly specified both in the formula and as an
+	argument).  This function is called by predict.glm(), so the
+	same isses are corrected there.
+
 
 
 		CHANGES IN R VERSION 2.8.1
