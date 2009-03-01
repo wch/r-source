@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2009
-@set FAQ_DATE @value{FAQ_YEAR}-02-17
+@set FAQ_DATE @value{FAQ_YEAR}-03-01
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 8
@@ -1956,6 +1956,8 @@ Seeing convergence concepts in action.
 Cox survival models by likelihood based boosting.
 @item CreditMetrics
 Functions for calculating the CreditMetrics risk model.
+@item CvM2SL1Test
+Cramer-von Mises two sample tests, @math{L1} version.
 @item CvM2SL2Test
 Cramer-von Mises two sample tests.
 @item DAAG
@@ -1965,6 +1967,8 @@ Graphics Using R'' by John H. Maindonald and W. John Brown, 2003.
 Data sets and functions, for demonstrations with expression arrays.
 @item DAAGxtras
 Data sets and functions additional to @strong{DAAG}.
+@item DAKS
+Data Analysis and Knowledge Spaces.
 @item DBI
 A common database interface (DBI) class and method definitions.  All
 classes in this package are virtual and need to be extended by the
@@ -1983,6 +1987,9 @@ Import and manipulate medical imaging data using the Digital Imaging and
 Communications in Medicine (DICOM) Standard.
 @item DPpackage
 Semiparametric Bayesian analysis using Dirichlet process priors.
+@item DTK
+Dunnett-Tukey-Kramer: pairwise multiple comparison test adjusted for
+unequal variances and unequal sample sizes.
 @item Davies
 Functions for the Davies quantile function and the Generalized Lambda
 distribution.
@@ -2026,9 +2033,12 @@ Evolutionary Monte Carlo (EMC) algorithm.
 Evolutionary Monte Carlo (EMC) methods for clustering.
 @item EMD
 Empirical mode decomposition and Hilbert spectral analysis.
-@item EMV
-Estimation of missing values in a matrix by a @math{k}-th nearest
-neighboors algorithm.
+@c <COMMENT>
+@c Moved to the Archive on 2009-02-23 as requested by the maintainer.
+@c @item EMV
+@c Estimation of missing values in a matrix by a @math{k}-th nearest
+@c neighboors algorithm.
+@c </COMMENT>
 @item ETC
 Tests and simultaneous confidence intervals for equivalence to control.
 @item EVER
@@ -2498,11 +2508,17 @@ Pattern oriented modeling information criterion.
 Prediction intervals for three basic statistical models.
 @item PresenceAbsence
 Presence-absence model evaluation.
-@item ProbForecastGOP
-Probabilistic weather field forecasts using the Geostatistical Output
-Perturbation method introduced by Gel, Raftery and Gneiting (2004).
-@item ProbeR
-Reliability for gene expression from Affymetrix chip.
+@c <COMMENT>
+@c Moved to the Archive on 2009-02-23 (Orphaned).
+@c @item ProbForecastGOP
+@c Probabilistic weather field forecasts using the Geostatistical Output
+@c Perturbation method introduced by Gel, Raftery and Gneiting (2004).
+@c </COMMENT>
+@c <COMMENT>
+@c Moved to the Archive on 2009-03-01 (Orphaned and license issues.)
+@c @item ProbeR
+@c Reliability for gene expression from Affymetrix chip.
+@c </COMMENT>
 @item ProfessR
 Programs to determine student grades and create examinations from
 question banks.
@@ -2611,6 +2627,8 @@ Visualizing the performance of scoring classifiers.
 An @acronym{ODBC} database interface.
 @item ROptEst
 Optimally robust estimation.
+@item ROptEstOld
+Optimally robust estimation, old version.
 @item ROptEstTS
 Optimally robust estimation for regression-type models.
 @item ROracle
@@ -2641,6 +2659,8 @@ An interface to ScaLAPACK functions from R.
 An R @acronym{SVG} graphics device with dynamic tips and hyperlinks.
 @item RSeqMeth
 analysis of Sequenom EpiTYPER data.
+@item RSurvey
+Analysis of spatially distributed data.
 @item RSvgDevice
 A graphics device for R that uses the new w3.org @XML{} standard for
 Scalable Vector Graphics.
@@ -2695,6 +2715,8 @@ Rcmdr epack demos plug-in.
 Rcmdr orloca plug-in.
 @item RcmdrPlugin.qcc
 Rcmdr qcc plug-in.
+@item RcmdrPlugin.survival
+Rcmdr plugin for the @strong{survival} package.
 @item Rcplex
 R interface to CPLEX solvers for linear, quadratic, and (linear and
 quadratic) mixed integer programs.
@@ -2733,8 +2755,11 @@ Interface to the LSF queuing system.
 @c @item RmSQL
 @c An interface between R and the mSQL database system.
 @c </COMMENT>
-@item Rmdr
-R-Multifactor Dimensionality Reduction.
+@c <COMMENT>
+@c Moved to the Archive on 2009-02-23 (Orphaned).
+@c @item Rmdr
+@c R-Multifactor Dimensionality Reduction.
+@c </COMMENT>
 @c <COMMENT>
 @c Moved to the Archive on 2008-10-27 as requested by the maintainer.
 @c @item Rmetrics
@@ -2797,11 +2822,11 @@ examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 @item SASxport
 Read and write SAS XPORT files.
+@item SDDA
+Stepwise Diagonal Discriminant Analysis.
 @item SDaA
 Functions and data sets from ``Sampling: Design and Analysis'' by
 S. Lohr, 1999, Duxbury.
-@item SDDA
-Stepwise Diagonal Discriminant Analysis.
 @item SGP
 Student growth percentile and percentile growth projection/trajectory
 functions.
@@ -2884,8 +2909,11 @@ Programming with R'' by John Chambers, Springer, 2008.
 @item SoPhy
 Soil Physics Tools: simulation of water flux and solute transport in
 soil.
-@item SparseLogReg
-Sparse logistic regression.
+@c <COMMENT>
+@c Moved to the Archive on 2009-03-01 (Orphaned and license issues.)
+@c @item SparseLogReg
+@c Sparse logistic regression.
+@c </COMMENT>
 @item SparseM
 Basic linear algebra for sparse matrices.
 @item SpatialExtremes
@@ -3064,6 +3092,9 @@ Anderson-Darling @math{K}-sample test and combinations of such tests.
 Adaptive Wavelet transforms for signal denoising.
 @item ads
 Spatial point patterns analysis.
+@item afc
+Calculate the Generalized Discrimination Score (also known as Two
+Alternatives Forced Choice Score, 2AFC).
 @item agce
 Analysis of growth curve experiments.
 @item agreement
@@ -3401,8 +3432,11 @@ Construct graph of S4 class hierarchies.
 @item classInt
 Choose univariate class intervals for mapping or other graphics
 purposes.
-@item classPP
-Projection Pursuit for supervised classification.
+@c <COMMENT>
+@c Moved to the Archive on 2009-03-01 (Orphaned and license issues.)
+@c @item classPP
+@c Projection Pursuit for supervised classification.
+@c </COMMENT>
 @item classifly
 Explore classification models in high dimensions.
 @item clim.pact
@@ -3883,8 +3917,12 @@ Estimation and control of (local) False Discovery Rates.
 Feature significance for multivariate kernel density estimation.
 @item fechner
 Fechnerian scaling of discrete object sets.
-@item femmeR
-Output analysis of FEMME model results.
+@c <COMMENT>
+@c Moved to the Archive on 2009-02-20 as requested by the maintainer:
+@c Henrik Andersson <JAN@dhigroup.com>.
+@c @item femmeR
+@c Output analysis of FEMME model results.
+@c </COMMENT>
 @item ff
 Flat file database designed for large vectors and multi-dimensional
 arrays.
@@ -4113,9 +4151,13 @@ Naive Gibbs sampling with Metropolis steps.
 Graphical lasso.
 @item gld
 Basic functions for the generalised (Tukey) lambda distribution.
-@item gllm
-Routines for log-linear models of incomplete contingency tables,
-including some latent class models via EM and Fisher scoring approaches.
+@c <COMMENT>
+@c Moved to the Archive on 2009-03-01 (Orphaned and license issues.)
+@c @item gllm
+@c Routines for log-linear models of incomplete contingency tables,
+@c including some latent class models via EM and Fisher scoring
+@c approaches.
+@c </COMMENT>
 @item glmc
 Fitting Generalized Linear Models subject to Constraints.
 @item glmmAK
@@ -4351,6 +4393,9 @@ proportional hazard model for interval censored event data.
 @c  Adaptive quadrature in up to 20 dimensions.
 @item intervals
 Tools for working with points and intervals.
+@item introgress
+Analysis of introgression of genotypes between divergent, hybridizing
+lineages.
 @item iplots
 Interactive graphics for R.
 @item ipptoolbox
@@ -4408,8 +4453,11 @@ Linear equations with Kronecker structure.
 @c </COMMENT>
 @item kml
 @math{K}-Means for Longitudinal data.
-@item knnFinder
-Fast nearest neighbor search.
+@c <COMMENT>
+@c Moved to the Archive on 2009-02-23 (Orphaned).
+@c @item knnFinder
+@c Fast nearest neighbor search.
+@c </COMMENT>
 @item knnTree
 Construct or predict with @math{k}-nearest-neighbor classifiers, using
 cross-validation to select @math{k}, choose variables (by forward or
@@ -4441,6 +4489,8 @@ Kolmogorov-Zurbenko Fourier Transform and application.
 Kolmogorov-Zurbenko Spline.
 @item labdsv
 Laboratory for Dynamic Synthetic Vegephenomenology.
+@item labeltodendro
+Convert labels or tables to a dendrogram.
 @item labstatR
 Functions for the book ``Laboratorio di statistica con R'' by
 S. M. Iacus and G. Masarotto, 2002, McGraw-Hill.  Function names and
@@ -4683,6 +4733,8 @@ Accuracy and precision of measurements.
 @item meta
 Fixed and random effects meta-analysis, with functions for tests of
 bias, forest and funnel plot.
+@item metaMA
+Meta-analysis for MicroArrays.
 @item mfp
 Multiple Fractional Polynomials.
 @item mgcv
@@ -4752,9 +4804,12 @@ Maximum Likelihood Estimates of Gaussian Processes.
 Independent Component Analysis using Maximum Likelihood.
 @item mlmRev
 Examples from Multilevel Modelling Software Review.
-@item mlmmm
-Maximum likelihood estimation under multivariate linear mixed models
-with missing values.
+@c <COMMENT>
+@c Moved to the Archive on 2009-03-01 (Orphaned and license issues.)
+@c @item mlmmm
+@c Maximum likelihood estimation under multivariate linear mixed models
+@c with missing values.
+@c </COMMENT>
 @item mlogit
 Estimation of the multinomial logit model with choice specific
 variables.
@@ -4878,16 +4933,19 @@ Nelson-Aalen estimator of the cumulative hazard in multistate models.
 ML estimation for multivariate normal data with missing values.
 @item mvnormtest
 Generalization of the Shapiro-Wilk test for multivariate variables.
-@item mvtnormpcs
-Multivariate Normal and @math{T} Distribution functions of Dunnett
-(1989).
 @item mvoutlier
 Multivariate outlier detection based on robust estimates of location and
 covariance structure.
 @item mvpart
 Multivariate partitioning.
+@item mvtBinaryEP
+Generate correlated binary data based on the method of Emrich and
+Piedmonte.
 @item mvtnorm
 Multivariate normal and @math{t} distributions.
+@item mvtnormpcs
+Multivariate Normal and @math{T} Distribution functions of Dunnett
+(1989).
 @item nFDR
 Nonparametric Estimate of FDR Based on Bernstein polynomials.
 @item nFactors
@@ -5063,9 +5121,12 @@ A collection of some tests commonly used for identifying outliers.
 Functions for plotting Australia's coastline and state boundaries.
 @item pARccs
 Estimation of partial attributable risks from case-control data.
-@item pARtial
-(Partial) attributable risk estimates, corresponding variance estimates
-and confidence intervals.
+@c <COMMENT>
+@c Moved to the Archive on 2009-02-23 (Orphaned).
+@c @item pARtial
+@c (Partial) attributable risk estimates, corresponding variance estimates
+@c and confidence intervals.
+@c </COMMENT>
 @item pack
 Create and manipulate raw vectors.
 @item packClassic
@@ -5120,6 +5181,8 @@ principal component analyses.
 Periodic Autoregression Analysis.
 @item pec
 Prediction Error Curves for survival models.
+@item pedigree
+Pedigree functions.
 @item penalized
 Penalized estimation in generalized linear models.
 @item penalizedSVM
@@ -5478,14 +5541,20 @@ Provides bindings to Frank Warmerdam's Geospatial Data Abstraction
 Library (GDAL).
 @item rgenoud
 R version of GENetic Optimization Using Derivatives.
-@item rggm
-Robustified methods for Gaussian Graphical Models.
+@c <COMMENT>
+@c Moved to the Archive on 2009-02-23 (Orphaned).
+@c @item rggm
+@c Robustified methods for Gaussian Graphical Models.
+@c </COMMENT>
 @item rggobi
 Interface between R and GGobi.
 @item rgl
 3D visualization device system (OpenGL).
 @item rgr
 The GSC (Geological Survey of Canada) applied geochemistry EDA package.
+@item rgrs
+Functions to make R usage in social sciences easier (documentation in
+french).
 @item rhosp
 Side effect risks in hospital: simulation and estimation.
 @item richards
