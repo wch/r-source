@@ -35,6 +35,12 @@ savePlot(filename = paste("Rplot", type, sep="."),
 \value{
   Invisible \code{NULL}.
 }
+
+\note{
+  There is a similar function of the same name but fewer types for
+  cairo-based \code{X11} devices on Unix-alikes
+}
+
 \seealso{
   \code{\link{X11}}, \code{\link{dev.copy}}, \code{\link{dev.print}}
 }

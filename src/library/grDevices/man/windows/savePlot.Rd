@@ -50,6 +50,11 @@ savePlot(filename = "Rplot",
   None, but a plot file will be created.
 }
 
+\note{
+  There is a similar function of the same name but more types for
+  \code{windoew} devices on Windows.
+}
+
 \seealso{
   \code{\link{png}}, \code{\link{dev.print}}
 }
