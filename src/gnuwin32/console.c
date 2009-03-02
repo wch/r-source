@@ -830,6 +830,8 @@ static void storekey(control c, int k)
     if (p->wipe_completion) {
 	p->wipe_completion = 0;
 	checkpointpos(p->lbuf, 0);
+	/* maek current line as user input */
+	USER(NUMLINES-1) = max_pos;
 	p->needredraw = 1;
 	REDRAW;
     }
