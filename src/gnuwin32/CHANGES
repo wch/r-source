@@ -64,6 +64,9 @@ NEW FEATURES
 	To avoid name conflicts with Gtk+, it has been renamed to
 	Riconv.dll.
 
+    o	Completions in Rgui when selected from a list are now coloured
+	as user input rather than R output (wish of PR#13562).
+
 
 INSTALLATIOM
 
