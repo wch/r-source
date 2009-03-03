@@ -38,7 +38,7 @@
         xcode <- system(paste("tar zxf \"", path.expand(what), "\" -C \"",
                               path.expand(where), "\"", sep=''), intern=FALSE)
         if (xcode)
-            warning(gettextf("'tar' returned non-zero exit code %d", ,xcode),
+            warning(gettextf("'tar' returned non-zero exit code %d", xcode),
                     domain = NA, call. = FALSE)
     }
 
