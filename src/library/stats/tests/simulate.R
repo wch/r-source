@@ -2,7 +2,7 @@
 
 options(digits = 5)
 
-# recommended pacakges should be present
+# recommended packages should be present
 if(!require("MASS")) q()
 
 ## cases should be named

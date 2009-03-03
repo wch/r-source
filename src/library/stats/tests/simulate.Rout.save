@@ -21,7 +21,7 @@ Type 'q()' to quit R.
 > 
 > options(digits = 5)
 > 
-> # recommended pacakges should be present
+> # recommended packages should be present
 > if(!require("MASS")) q()
 Loading required package: MASS
 > 
