@@ -5,6 +5,10 @@
 
 \name{simulate}
 \title{Simulate Responses}
+\description{
+  Simulate one or more responses from the distribution
+  corresponding to a fitted model object.
+}
 \usage{
 simulate(object, nsim, seed, \dots)
 }
@@ -36,10 +40,6 @@ simulate(object, nsim, seed, \dots)
   or the value of \code{\link{.Random.seed}} before the simulation was
   started when \code{seed} was NULL as by default.
 }
-\description{
-  Simulate one or more responses from the distribution
-  corresponding to a fitted model object.
-}
 \details{
   This is a generic function.  Consult the individual modeling functions
   for details on how to use this function.
@@ -49,6 +49,23 @@ simulate(object, nsim, seed, \dots)
   for fits from \code{glm.nb} in package \pkg{MASS}, and hence the case
   of negative binomial families is not covered by the \code{"lm"}
   method.
+
+  The methods for linear models fitted by \code{lm} or
+  \code{glm(family = "gaussian"} assume that any weights have been
+  supplied are inversely proportional to the error variance.
+
+  For a gamma GLM the shape parameter is estimated by maximum likelihood
+  (using \code{\link[MASS]{gamma.shape}} in package \pkg{MASS}).  The
+  interpretation of weights is as multipliers to a basic shape
+  parameter.
+
+  For an inverse gauasian GLM the model assumed is \eqn{IG(\mu_i, \lambda w_i)}
+  (see \url{http://en.wikipedia.org/wiki/Inverse_Gaussian_distribution})
+  where \eqn{lambda} is estimated by the inverse of the dispersion.  The
+  variance is \eqn{\mu_i^3/\lambda w_i} and hence inversely
+  proprortional to the weights.  The simulation is done by function
+  \code{\link[SuppDists]{rinvGaussian}} from the \pkg{SuppDists}
+  package, which must be installed.
 }
 \seealso{
   \code{\link{fitted.values}} and \code{\link{residuals}} for related methods;

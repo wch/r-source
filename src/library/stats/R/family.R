@@ -167,9 +167,7 @@ poisson <- function (link = "log")
     validmu <- function(mu) all(mu>0)
     dev.resids <- function(y, mu, wt)
         2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
-    aic <- function(y, n, mu, wt, dev)
-#	2*sum((mu-y*log(mu)+lgamma(y+1))*wt)
-	-2*sum(dpois(y, mu, log=TRUE)*wt)
+    aic <- function(y, n, mu, wt, dev) -2*sum(dpois(y, mu, log=TRUE)*wt)
     initialize <- expression({
 	if (any(y < 0))
 	    stop("negative values not allowed for the Poisson family")
@@ -177,7 +175,9 @@ poisson <- function (link = "log")
 	mustart <- y + 0.1
     })
     simfun <- function(object, nsim) {
-        ## assume weights are case weights
+        ## assume weights are frequency/sampling weights
+        wts <- object$prior.weights
+        if (any(wts != 1)) warning("ignoring prior weights")
         ftd <- fitted(object)
         rpois(nsim*length(ftd), ftd)
     }
@@ -346,10 +346,7 @@ binomial <- function (link = "logit")
     validmu <- function(mu) all(mu>0) && all(mu<1)
     dev.resids <- function(y, mu, wt)
         .Call("binomial_dev_resids", y, mu, wt, PACKAGE="stats")
-#	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
-#		  (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
     aic <- function(y, n, mu, wt, dev) {
-#	-2*sum((lchoose(n, n*y) + n*(y*log(mu) + (1-y)*log(1-mu)))*wt/n)
         m <- if(any(n > 1)) n else wt
 	-2*sum(ifelse(m > 0, (wt/m), 0)*
                dbinom(round(m*y), round(m), mu, log=TRUE))
@@ -529,8 +526,6 @@ Gamma <- function (link = "inverse")
     aic <- function(y, n, mu, wt, dev){
 	n <- sum(wt)
 	disp <- dev/n
-#	2*((sum(wt*(y/mu+log(mu)-log(y)))+n*log(disp))/disp+
-#	   n*lgamma(1/disp)+sum(log(y)*wt)+1)
 	-2*sum(dgamma(y, 1/disp, scale=mu*disp, log=TRUE)*wt) + 2
     }
     initialize <- expression({
@@ -540,9 +535,10 @@ Gamma <- function (link = "inverse")
 	mustart <- y
     })
     simfun <- function(object, nsim) {
-        if (any(object$prior.weights != 1)) warning("ignoring prior weights")
+        wts <- object$prior.weights
+        if (any(wts != 1)) message("using weights as shape paraneters")
         ftd <- fitted(object)
-        shape <- MASS::gamma.shape(object)$alpha
+        shape <- MASS::gamma.shape(object)$alpha * wts
         rgamma(nsim*length(ftd), shape = shape, rate = shape/ftd)
     }
     structure(list(family = "Gamma",
@@ -607,10 +603,11 @@ inverse.gaussian <- function(link = "1/mu^2")
         if(is.null(tryCatch(loadNamespace("SuppDists"),
                             error = function(e) NULL)))
             stop("Need CRAN package 'SuppDists' for 'inverse.gaussian' family")
-        if (any(object$prior.weights != 1)) warning("ignoring prior weights")
+        wts <- object$prior.weights
+        if (any(wts != 1)) message("using weights as inverse variances")
         ftd <- fitted(object)
         SuppDists::rinvGauss(nsim * length(ftd), nu = ftd,
-                             lambda = 1/summary(object)$dispersion)
+                             lambda = wts/summary(object)$dispersion)
     }
 
     structure(list(family = "inverse.gaussian",
