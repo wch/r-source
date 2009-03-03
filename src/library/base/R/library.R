@@ -671,9 +671,11 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
             a <- list.files(lib, all.files = FALSE, full.names = FALSE)
             for(nam in a) {
                 pfile <- file.path(lib, nam, "Meta", "package.rds")
-                if(file.exists(pfile))
-                    info <- .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
-                else next
+                if(!file.exists(pfile)) next
+                ## we might want to stop here, as the info was
+                ## checked at package installation time.
+                ## Howe about checking R version dependencies?
+                info <- .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
                 if( (length(info) != 2L) || any(is.na(info)) ) next
                 if(!grepl(valid_package_version_regexp, info["Version"])) next
                 ans <- c(ans, nam)
