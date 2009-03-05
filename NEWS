@@ -547,6 +547,9 @@ BUG FIXES
 	argument).  This function is called by predict.glm(), so the
 	same isses are corrected there.
 
+    o	besselI(x, nu) with nu a negative integer (a singular case) is now
+	correct. (PR#13556)
+
 
 
 		CHANGES IN R VERSION 2.8.1
