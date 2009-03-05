@@ -4332,9 +4332,9 @@ become inactive if you return to it: to work around this you can open
 a link in a new tab or window.
 
 @c https://stat.ethz.ch/pipermail/r-help/2008-July/169521.html
-There is a known issue with Firefox 3.0.x (at least for x <= 6; we are
-told that it will be fixed in 3.0.7).  The links in the results page may
-point to the wrong directory level.  This is a bug in the way Firefox is
+There is a known issue with Firefox 3.0.x (for x <= 6; it is
+fixed in 3.0.7).  The links in the results page may
+point to the wrong directory level.  This was a bug in the way Firefox was
 interpreting relative URLs, and can be circumvented by opening the HTML
 search page (@file{.../doc/html/SearchEngine.html}) directly rather than
 from @file{.../doc/html/index.html} as shown by @code{help.start()}.

@@ -1415,9 +1415,9 @@ NEW FEATURES
     o	stripchart() now passes '...' to title() (as well as to
 	plot.default() and axis()). (Wish of PR#12202)
 
-    o	help.search() has new argument 'searchEngine' to go
-	directly to the search form: this is needed by users of
-	Firefox 3 to workaround a bug in interpreting the search
+    o	help.search() has new argument 'searchEngine' to go directly
+	to the search form: this is needed by users of Firefox 3.0.x,
+	for x <= 6, to workaround a bug in interpreting the search
 	results pages.
 
 
