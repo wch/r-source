@@ -213,6 +213,9 @@ NEW FEATURES
     	were installed in a long-obsolete version of R).  Both changes
     	speed up searches in libraries of thousands of packages().
 
+    o	boxplot() uses butt line endings for its median line
+	(suggestion of Uwe Ligges, PR#13553).
+
 
 DEPRECATED & DEFUNCT
 
@@ -225,6 +228,7 @@ DEPRECATED & DEFUNCT
 
     o	Support for versioned installs (R CMD INSTALL --with-package-versions
 	and install.packages(installWithVers = TRUE)) has been removed.
+	Packages installed with versioned names will be ignored.
 
     o	The numeric and power(0.5) forms of argument to make.link()
 	which were deprecated in 2.4.0 are now defunct: use power()
@@ -438,6 +442,11 @@ BUG FIXES
         function.
 
     o	format(c(1 + 2i, NA)) no longer has extraneous space in "  NA".
+
+    o	mood.test() could fail in 2.8.x on large samples because of
+	integer overflow.
+
+    o	heatmap() without a dendrogram could fail, (PR#13512)
 
 
 

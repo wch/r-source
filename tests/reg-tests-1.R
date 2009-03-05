@@ -5583,3 +5583,20 @@ suppressWarnings(r <- outer(x, c(-nu, nu), besselI))
 stopifnot(identical(r[,1:3], r[,4:6]))
 ## suffered from sin(n * pi) imprecision in R <= 2.8.1
 
+
+## Large sanples in mood.test
+## https://stat.ethz.ch/pipermail/r-help/2009-March/190479.html
+set.seed(123)
+x <- rnorm(50, 10, 5)
+y <- rnorm(50, 2 ,5)
+(z <- mood.test(x, y))
+stopifnot(!is.na(z$p.value))
+## gave warning and incorrect result in 2.8.x
+
+
+## heatmap without dendrogram (PR#13512)
+X <- matrix(rnorm(200),20,10)
+XX <- crossprod(X)
+heatmap(XX, Rowv =  NA, revC = TRUE)
+heatmap(XX, Rowv = NA, symm = TRUE)
+## boht failed in 2.8.1

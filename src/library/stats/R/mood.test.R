@@ -29,7 +29,8 @@ function(x, y, alternative = c("two.sided", "less", "greater"), ...)
     if ((N <- m + n) < 3L)
         stop("not enough observations")
     E <- m * (N ^ 2 - 1) / 12
-    v <- m * n * (N + 1L) * (N + 2L) * (N - 2L) / 180
+    ## avoid possible integer overflow
+    v <- (1/180) * m * n * (N + 1) * (N + 2) * (N - 2)
     z <- c(x, y)
     if(!any(duplicated(z))) {
         ## Proceed as per Conover (1971).

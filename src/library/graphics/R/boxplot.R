@@ -148,7 +148,8 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	    ## Median
 	    xysegments(xP(x, -wntch), stats[3L],
 		       xP(x, +wntch), stats[3L],
-		       lty = medlty[i], lwd = medlwd[i], col = medcol[i])
+		       lty = medlty[i], lwd = medlwd[i], col = medcol[i],
+                       lend = 1) ## avoid oerlap by butt line endings.
 	    xypoints(x, stats[3L],
 		     pch = medpch[i], cex = medcex[i], col= medcol[i], bg = medbg[i])
 	    ## Whiskers

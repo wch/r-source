@@ -1,6 +1,6 @@
 % File src/library/stats/man/heatmap.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{heatmap}
@@ -35,7 +35,9 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
   \item{Colv}{determines if and how the \emph{column} dendrogram should be
     reordered.  Has the same options as the \code{Rowv} argument above and
     \emph{additionally} when \code{x} is a square matrix, \code{Colv =
-      "Rowv"} means that columns should be treated identically to the rows.}
+      "Rowv"} means that columns should be treated identically to the
+    rows (and so if there is to be no row dendrogram there will not be a
+    column one either).}
   \item{distfun}{function used to compute the distance (dissimilarity)
     between both rows and columns.  Defaults to \code{\link{dist}}.}
   \item{hclustfun}{function used to compute the hierarchical clustering

@@ -595,6 +595,7 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 
     doRdend <- !identical(Rowv,NA)
     doCdend <- !identical(Colv,NA)
+    if(!doRdend && identical(Colv, "Rowv")) doCdend <- FALSE
     ## by default order by row/col means
     if(is.null(Rowv)) Rowv <- rowMeans(x, na.rm = na.rm)
     if(is.null(Colv)) Colv <- colMeans(x, na.rm = na.rm)
@@ -699,7 +700,7 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	x <- t(x)
     if(revC) { # x columns reversed
 	iy <- nr:1
-	ddr <- rev(ddr)
+        if(doRdend) ddr <- rev(ddr)
 	x <- x[,iy]
     } else iy <- 1L:nr
 
