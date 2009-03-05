@@ -37,7 +37,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
 double bessel_i(double x, double alpha, double expo)
 {
     long nb, ncalc, ize;
-    double *bi;
+    double na, *bi;
 #ifndef MATHLIB_STANDALONE
     char *vmax;
 #endif
@@ -51,14 +51,16 @@ double bessel_i(double x, double alpha, double expo)
 	return ML_NAN;
     }
     ize = (long)expo;
+    na = floor(alpha);
     if (alpha < 0) {
-	/* Using Abramowitz & Stegun  9.6.2
+	/* Using Abramowitz & Stegun  9.6.2 & 9.6.6
 	 * this may not be quite optimal (CPU and accuracy wise) */
 	return(bessel_i(x, -alpha, expo) +
-	       bessel_k(x, -alpha, expo) * ((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI
-	       * sin(-M_PI * alpha));
+	       ((alpha == na) ? 0 :
+		bessel_k(x, -alpha, expo) *
+		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sin(-M_PI * alpha)));
     }
-    nb = 1+ (long)floor(alpha);/* nb-1 <= alpha < nb */
+    nb = 1 + (long)na;/* nb-1 <= alpha < nb */
     alpha -= (nb-1);
 #ifdef MATHLIB_STANDALONE
     bi = (double *) calloc(nb, sizeof(double));
