@@ -442,6 +442,7 @@ stopifnot(identical(m,			as(nf, "matrix")),
 	  identical(matrix(1:6,ncol=2), as(n3, "matrix")))
 ## partly failed at times in pre-2.8.0
 
+if("S4_subsettable" == TRUE) { ## now (2.9.0) not thought to be a good idea
 ## "[" subsetting of "simple S4" classes:
 for(bcl in c("list","integer","numeric")) {
     setClass("C", contains= bcl)
@@ -449,6 +450,7 @@ for(bcl in c("list","integer","numeric")) {
     stopifnot(is(x, "C"), is(rep(x, 3), "C"), is(rep.int(x, 2), "C"))
 }
 ## used to drop the class in 2.8.0 and earlier
+}
 
 ##From "Michael Lawrence" <....@fhcrc.org>  To r-devel@r-project, 25 Nov 2008:
 setGeneric("order", signature="...",
