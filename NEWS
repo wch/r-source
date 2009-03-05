@@ -202,9 +202,16 @@ NEW FEATURES
     o	ls.str() [via print method] now also works when some objects in
 	the environment are missing().
 
-    o	Subsetting S4-objects (without an explicit "[" method) no longer preserves
-	the class in cases like setClass("C", contains="list");
-	This reverts a "bug fix" activated R 2.8.0.
+    o	Subsetting S4-objects (without an explicit "[" method) no longer
+	preserves the class in cases like setClass("C",
+	contains="list"); This reverts a "bug fix" activated in  R 2.8.0.
+
+    o	.packages() and .find.packages() no longer check the package
+    	info for installed packages with dumped metadata, since this
+    	was checked when the package was installed.  .packages() only
+    	considers such packages to be validly installed (any others
+    	were installed in a long-obsolete version of R).  Both changes
+    	speed up searches in libraries of thousands of packages().
 
 
 DEPRECATED & DEFUNCT
