@@ -111,8 +111,9 @@ lazyLoadDBfetch(key, file, compressed, hook)
   TRUE} a warning will be given about the named packages which are not
   found, and an error if none are.  If \code{verbose} is true, warnings
   about packages found more than once are given.  For a package to be
-  returned it must have a \file{DESCRIPTION} file containing a valid
-  \code{version} field, but it need not be installed.
+  returned it must contain a either a \file{Meta} subdirectory on a
+  \file{DESCRIPTION} file containing a valid \code{version} field, but
+  it need not be installed.
 
   \code{.path.package} returns the paths from which the named packages
   were loaded, or if none were named, for all currently loaded packages.

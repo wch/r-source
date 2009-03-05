@@ -37,7 +37,7 @@ help.start(update = TRUE, gui = "irrelevant",
     reflect the currently installed packages.}
 #endif
   \item{searchEngine}{logical: if true go directly to the search engine
-    page.  A workaround for Firefox 3 users (see \sQuote{Notes}).}
+    page.  A workaround for some Firefox 3 versions (see \sQuote{Notes}).}
 }
 \details{
 #ifdef unix
@@ -69,7 +69,7 @@ help.start(update = TRUE, gui = "irrelevant",
 
   \code{help.start} and the Java-based search engine have been tested
   under Internet Explorer 6/7,  Opera 7.54,
-  Mozilla 1.7 and Firefox 1.5/2.0.  Users of IE
+  Mozilla 1.7 and Firefox 1.5/2.0/3.0.  Users of IE
   will probably need to allow \sQuote{active content} from the
   \sQuote{information bar} before the search engine can be used.
 #endif
@@ -80,10 +80,10 @@ help.start(update = TRUE, gui = "irrelevant",
   consult the \sQuote{R Installation and Administration} manual which is
   linked from that page.
 
-  Note to users of Firefox 3: the search results have links that are
-  resolved incorrectly by that browser if starting from the normal HTML
-  index page.  The workaround is to start with
-  \code{help.start(searchEngine = TRUE)}
+  Note to users of Firefox 3.0 to 3.0.6: the search results have links
+  that are resolved incorrectly by that browser if starting from the
+  normal HTML index page.  The workaround is to start with
+  \code{help.start(searchEngine = TRUE)}.  This was fixed in Firefox 3.0.7.
 }
 
 \seealso{
