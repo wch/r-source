@@ -5574,3 +5574,12 @@ b <- matrix(ncol = 0, nrow = 2) # zero-length
 cbind(a, b)
 cbind(a, b)
 ## crashed in 2.9.0
+
+
+## besselI(x, -n) == besselI(x, +n)  when n is an integer
+set.seed(7) ; x <- rlnorm(216) ; nu <- c(1,44,111)
+## precision lost warnings {may be gone in the future}:
+suppressWarnings(r <- outer(x, c(-nu, nu), besselI))
+stopifnot(identical(r[,1:3], r[,4:6]))
+## suffered from sin(n * pi) imprecision in R <= 2.8.1
+
