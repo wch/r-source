@@ -399,7 +399,7 @@
         {
             args <- c(shargs, "-o", paste0(pkg_name, SHLIB_EXT), srcs)
             if (debug) message("about to run ",
-                               sQuote("SHLIB"), paste(args, collapse= " "))
+                               "R CMD SHLIB ", paste(args, collapse= " "))
             if (.shlib_internal(args) == 0L) {
                 shlib_install(instdir, arch)
                 return(FALSE)
@@ -520,10 +520,13 @@
                             "         It probably needs manual configuration\n",
                             "   **********************************************\n\n")
             } else {
+                ## FIXME: should these be quoted?
                 if (.file_test("-x", "configure")) {
-                    res <- system(paste(paste(configure_vars, collapse = " "),
-                                        "./configure",
-                                        paste(configure_args, collapse = " ")))
+                    cmd <- paste(paste(configure_vars, collapse = " "),
+                                 "./configure",
+                                 paste(configure_args, collapse = " "))
+                    if (debug) message("configure command: ", sQuote(cmd))
+                    res <- system(cmd)
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 }  else if (file.exists("configure"))
                     errmsg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
@@ -904,7 +907,12 @@
     options(showErrorCalls=FALSE)
     pkgs <- character(0)
     lib <- ""
-    if(is.null(args)) args <- commandArgs(TRUE)
+    if(is.null(args)) {
+        args <- commandArgs(TRUE)
+        ## it seems that splits on spaces, so try harder.
+        args <- paste(args, collapse=" ")
+        args <- strsplit(args,'nextArg', fixed = TRUE)[[1]][-1]
+    }
 
     startdir <- getwd()
 
