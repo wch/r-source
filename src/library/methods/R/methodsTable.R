@@ -302,7 +302,7 @@
                          class(condAction)), domain = NA)
 
 	select <- withCallingHandlers(.disambiguateMethods(classes, select, fdef@generic,
-                                                           methods, supersList, fromGroup, classDefs)
+                                                           methods, supersList, fromGroup, classDefs),
                                       ambiguousMethodSelection=condAction)
       }
       methods <- methods[select]
