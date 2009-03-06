@@ -262,6 +262,8 @@ don't use the extra arguments.
   \code{\link{isGeneric}} will tell you whether methods are defined
   for the function in the current session.
 
+  Note that S4 methods can only be set on those primitives which are
+  \sQuote{\link{internal generic}}, plus \code{\%*\%}.
 }
 \value{
   The \code{setGeneric} function exists for its side effect: saving the

@@ -65,6 +65,7 @@
 
 
     setClass("structure", where = envir); clList <- c(clList, "structure")
+    setClass("nonStructure",  where = envir); #NOT a basic class
     stClasses <- c("matrix", "array") # classes that have attributes, but no class attr.
     for(.class in stClasses) {
         .setBaseClass(.class, prototype = newBasic(.class), where = envir)
@@ -359,7 +360,7 @@
     ## functions of the same name.
 
     ## These methods are designed to be inherited or extended
-    setMethod("initialize", "matrix",
+    setMethod("initialize", "matrix", where = where,
 	      function(.Object, data = NA, nrow = 1, ncol = 1,
 		       byrow = FALSE, dimnames = NULL, ...) {
 		  if((na <- nargs()) < 2) # guaranteed to be called with .Object from new
@@ -389,7 +390,7 @@
 		  }
 	      })
 
-    setMethod("initialize", "array",
+    setMethod("initialize", "array", where = where,
 	      function(.Object, data = NA, dim = length(data),
 		       dimnames = NULL, ...) {
 		  if((na <- nargs()) < 2) # guaranteed to be called with .Object from new
@@ -414,6 +415,18 @@
 		      .mergeAttrs(value, .Object, dots)
 		  }
 	      })
+    ## following should not be needed if data_class2 returns "array",...
+##     setMethod("[", # a method to avoid invalid objects from an S4 class
+##               signature(x = "array"), where = where,
+##               function (x, i, j, ..., drop = TRUE) 
+##               {
+##                 value <- callNextMethod()
+##                 if(is(value, class(x)))
+##                   value@.Data
+##                 else
+##                   value
+##               })
+
 }
 
 ## .OldClassList is a purely heuristic list of known old-style classes, with emphasis

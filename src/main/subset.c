@@ -192,6 +192,7 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 	    setAttrib(result, R_SrcrefSymbol, nattrib);
 	    UNPROTECT(1);
 	}
+	/* FIXME:  this is wrong, because the slots are gone, so result is an invalid object of the S4 class! JMC 3/3/09 */
 #ifdef _S4_subsettable
 	if(IS_S4_OBJECT(x)) { /* e.g. contains = "list" */
 	    setAttrib(result, R_ClassSymbol, getAttrib(x, R_ClassSymbol));
@@ -733,7 +734,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     else {
 	PROTECT(ans);
     }
-    if (ATTRIB(ans) != R_NilValue) {
+    if (ATTRIB(ans) != R_NilValue) { /* remove probably erroneous attr's */
 	setAttrib(ans, R_TspSymbol, R_NilValue);
 #ifdef _S4_subsettable
 	if(!IS_S4_OBJECT(x))

@@ -213,7 +213,7 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_isMethodsDispatchOn, 1),
     CALLDEF(R_traceOnOff, 1),
     CALLDEF(R_isS4Object, 1),
-    CALLDEF(R_setS4Object, 2),
+    CALLDEF(R_setS4Object, 3),
     CALLDEF(R_do_new_object, 1),
     CALLDEF(R_get_primname, 1),
 

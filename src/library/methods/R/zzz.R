@@ -68,6 +68,7 @@
         ## now seal the classes defined in the package
         for(cl in get(".SealedClasses", where))
             sealClass(cl, where)
+        assign("isSealedMethod", .isSealedMethod, envir = where)
         assign(".requirePackage", ..requirePackage, envir = where)
         ## initialize implicit generics for base package
         ## Note that this is done before making a non-vacuous implicitGeneric()

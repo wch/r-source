@@ -114,12 +114,12 @@
 ## namespace is available)
 .asS4 <- function (object)
 {
-    .Call("R_setS4Object", object, TRUE, PACKAGE = "base")
+    .Call("R_setS4Object", object, TRUE, 0L, PACKAGE = "base")
 }
 
 .notS4 <- function (object)
 {
-    .Call("R_setS4Object", object, FALSE, PACKAGE = "base")
+    .Call("R_setS4Object", object, FALSE, 0L, PACKAGE = "base")
 }
 
 

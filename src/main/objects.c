@@ -208,13 +208,19 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
     }
 }
 
+static int match_to_obj(SEXP arg, SEXP obj) {
+  return (arg == obj) ||
+    (TYPEOF(arg) == PROMSXP && PRVALUE(arg) == obj);
+}
+
+
 int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	      SEXP rho, SEXP callrho, SEXP defrho, SEXP *ans)
 {
     SEXP klass, method, sxp, t, s, matchedarg;
-    SEXP op, formals, newrho, newcall;
+    SEXP op, formals, newrho, newcall, match_obj = 0, copy;
     char buf[512];
-    int i, j, nclass, matched;
+    int i, j, nclass, matched, S4toS3;
     RCNTXT *cptr;
 
     /* Get the context which UseMethod was called from. */
@@ -244,12 +250,16 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	error(_("Invalid generic function in 'usemethod'"));
     }
 
+    S4toS3 = IS_S4_OBJECT(obj) ? 1 : 0;
     if (TYPEOF(op) == CLOSXP) {
 	formals = FORMALS(op);
 	for (s = FRAME(cptr->cloenv); s != R_NilValue; s = CDR(s)) {
 	    matched = 0;
 	    for (t = formals; t != R_NilValue; t = CDR(t))
-		if (TAG(t) == TAG(s)) matched = 1;
+	        if (TAG(t) == TAG(s)) {
+		    matched = 1;
+		    if(t == formals) match_obj = CAR(s); /* remember 1st arg */
+		}
 
 	    if (!matched) defineVar(TAG(s), CAR(s), newrho);
 	}
@@ -259,9 +269,11 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
     PROTECT(newcall = duplicate(cptr->call));
 
     PROTECT(klass = R_data_class2(obj));
+
     nclass = length(klass);
-    for (i = 0; i < nclass; i++) {
-	const char *ss = translateChar(STRING_ELT(klass, i));
+    for (i = 0; i < nclass + S4toS3; i++) {
+        const char *ss = translateChar(
+	    (S4toS3 && i == nclass) ? type2str(S4SXP) : STRING_ELT(klass, i));
 	if(strlen(generic) + strlen(ss) + 2 > 512)
 	    error(_("class name too long in '%s'"), generic);
 	sprintf(buf, "%s.%s", generic, ss);
@@ -270,9 +282,15 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	if (isFunction(sxp)) {
 	    defineVar(install(".Generic"), mkString(generic), newrho);
 	    if (i > 0) {
-		PROTECT(t = allocVector(STRSXP, nclass - i));
-		for (j = 0; j < length(t); j++, i++)
-		    SET_STRING_ELT(t, j, STRING_ELT(klass, i));
+	        if(i == nclass) { /* "S4" class */
+		  PROTECT(t = allocVector(STRSXP, 1));
+		  SET_STRING_ELT(t, 0, type2str(S4SXP));
+	        }
+		else {
+		  PROTECT(t = allocVector(STRSXP, nclass - i));
+		  for (j = 0; j < length(t); j++, i++)
+		      SET_STRING_ELT(t, j, STRING_ELT(klass, i));
+		}
 		setAttrib(t, install("previous"), klass);
 		defineVar(install(".Class"), t, newrho);
 		UNPROTECT(1);
@@ -283,6 +301,16 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	    UNPROTECT(1);
 	    defineVar(install(".GenericCallEnv"), callrho, newrho);
 	    defineVar(install(".GenericDefEnv"), defrho, newrho);
+	    if(S4toS3 && (i < nclass)) { /* give the method an S3 object */
+	      if(!match_obj) /* use the first arg, for "[",e.g. */
+		match_obj = CAR(matchedarg);
+	      if(NAMED(obj)) SET_NAMED(obj, 2);
+	      obj = asS4(obj, 0, 2); /* make an S3 object if possible */
+	      if(TYPEOF(match_obj) == PROMSXP)
+		SET_PRVALUE(match_obj, obj); /* must have been eval'd */
+	      else /* not possible ?*/
+		defineVar(TAG(FORMALS(sxp)), obj, newrho);
+	    }
 	    t = newcall;
 	    SETCAR(t, method);
 	    R_GlobalContext->callflag = CTXT_GENERIC;
@@ -1359,17 +1387,13 @@ SEXP R_isS4Object(SEXP object)
     return IS_S4_OBJECT(object) ? mkTrue() : mkFalse(); ;
 }
 
-SEXP R_setS4Object(SEXP object, SEXP onOff)
+SEXP R_setS4Object(SEXP object, SEXP onOff, SEXP do_complete)
 {
-    Rboolean flag = asLogical(onOff);
-    /* wanted     return asS4(object, flag); */
+  Rboolean flag = asLogical(onOff), complete = asInteger(do_complete);
     if(flag == IS_S4_OBJECT(object))
 	return object;
-    if(NAMED(object) == 2)
-	object = duplicate(object);
-    if(flag) SET_S4_OBJECT(object);
-    else UNSET_S4_OBJECT(object);
-    return object;
+    else
+      return asS4(object, flag, complete);
 }
 
 SEXP R_get_primname(SEXP object)
@@ -1377,7 +1401,7 @@ SEXP R_get_primname(SEXP object)
     SEXP f;
     if(TYPEOF(object) != BUILTINSXP && TYPEOF(object) != SPECIALSXP)
 	error(_("'R_get_primname' called on a non-primitive"));
-    f = PROTECT(allocVector(STRSXP, 1));
+    PROTECT(f = allocVector(STRSXP, 1));
     SET_STRING_ELT(f, 0, mkChar(PRIMNAME(object)));
     UNPROTECT(1);
     return f;
@@ -1388,13 +1412,29 @@ Rboolean isS4(SEXP s)
     return IS_S4_OBJECT(s);
 }
 
-SEXP asS4(SEXP s, Rboolean flag)
+SEXP asS4(SEXP s, Rboolean flag, int complete)
 {
     if(flag == IS_S4_OBJECT(s))
 	return s;
+    PROTECT(s);
     if(NAMED(s) == 2)
 	s = duplicate(s);
+    UNPROTECT(1);
     if(flag) SET_S4_OBJECT(s);
-    else UNSET_S4_OBJECT(s);
+    else {
+	if(complete) {
+	    SEXP value;
+	    /* TENTATIVE:  how much does this change? */
+	    if((value = R_getS4DataSlot(s, ANYSXP))
+	       != R_NilValue && !IS_S4_OBJECT(value))
+	      return value;
+	    /* else no plausible S3 object*/
+	    else if(complete == 1) /* ordinary case (2, for conditional) */
+	      error(_("Object of class \"%s\" does not correspond to a valid S3 object"),
+		      CHAR(STRING_ELT(R_data_class(s, FALSE), 0)));
+	    else return s; /*  unchanged */
+	}
+	UNSET_S4_OBJECT(s);
+    }
     return s;
 }

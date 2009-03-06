@@ -631,7 +631,8 @@ void R_Reprotect(SEXP, PROTECT_INDEX);
 SEXP R_tryEval(SEXP, SEXP, int *);
 
 Rboolean Rf_isS4(SEXP);
-SEXP Rf_asS4(SEXP, Rboolean);
+SEXP Rf_asS4(SEXP, Rboolean, int);
+SEXP Rf_S3Class(SEXP);
 
 typedef enum {
     CE_NATIVE = 0,
@@ -936,6 +937,7 @@ int R_system(const char *);
 #define protect			Rf_protect
 #define reEnc			Rf_reEnc
 #define rownamesgets		Rf_rownamesgets
+#define S3Class                 Rf_S3Class
 #define ScalarComplex		Rf_ScalarComplex
 #define ScalarInteger		Rf_ScalarInteger
 #define ScalarLogical		Rf_ScalarLogical

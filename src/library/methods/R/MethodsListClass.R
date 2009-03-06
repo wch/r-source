@@ -245,7 +245,11 @@
     else
       needed <- get(".NeedPrimitiveMethods", where)
     needed <- c(needed, list(structure = "Ops", vector = "Ops",
-          array = "Ops", .environment = "$<-", .environment = "[[<-"))
+          array = "Ops", nonStructure = "Ops",
+          .environment = "$<-", .environment = "[[<-"),
+          array = "[", structure = "[", nonStructure = "[",
+          structure = "Math", nonStructure = "Math"
+                )
     assign(".NeedPrimitiveMethods", needed, where)
     setMethod("Ops", c("structure", "vector"), where = where,
               function(e1, e2) {
@@ -290,14 +294,49 @@
                  callGeneric(e1@.Data, e2@.Data)
               )
 
-    ## it's asserted that the following is not needed,
-    ## because the primitive code does the same thing.
-    ## If a counterexample surfaces, uncomment below
-##     setMethod("Math", "structure", where = where,
-##               function(x) {
-##                   x@.Data <- callGeneric(x@.Data)
-##                   x
-##               })
+
+    setMethod("Math", "structure", where = where,
+              function(x) {
+                  x@.Data <- callGeneric(x@.Data)
+                  x
+              })
+    setMethod("Math2", "structure", where = where,
+              function(x, digits) {
+                  value <- x
+                  x <- x@.Data
+                  value@Data  <- callGeneric()
+                  value
+              })
+    ## some methods for nonStructure, ensuring that the class and slots
+    ## will be discarded
+    setMethod("Ops", c("nonStructure", "vector"), where = where,
+              function(e1, e2) {
+                  callGeneric(e1@.Data, e2)
+              })
+    setMethod("Ops", c("vector", "nonStructure"), where = where,
+              function(e1, e2) {
+                  callGeneric(e1, e2@.Data)
+              })
+    setMethod("Ops", c("nonStructure", "nonStructure"), where = where,
+              function(e1, e2)
+                 callGeneric(e1@.Data, e2@.Data)
+              )
+    setMethod("Math", "nonStructure", where = where,
+              function(x) {
+                  callGeneric(x@.Data)
+              })
+    setMethod("Math2", "nonStructure", where = where,
+              function(x, digits) {
+                  x <- x@.Data
+                  callGeneric()
+              })
+    setMethod("[", "nonStructure", where = where,
+                        function (x, i, j, ..., drop = TRUE) 
+                        {
+                          value <- callNextMethod()
+                          value@.Data
+                        })
+     
 }
 
 

@@ -526,14 +526,10 @@ SEXP attribute_hidden do_classgets(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    static SEXP R_S3ClassSymbol = 0;
-    SEXP x = CAR(args), S3Class;
+    SEXP x = CAR(args), s3class;
     if(IS_S4_OBJECT(x)) {
-      if(!R_S3ClassSymbol)
-	R_S3ClassSymbol = install(".S3Class");
-      if((S3Class = getAttrib(x, R_S3ClassSymbol)) != R_NilValue) {
-	warning(_("oldClass() is ambiguous for an S4 extension of an S3 class; will retun the value of S3Class(object)"));
-	return S3Class;
+      if((s3class = S3Class(x)) != R_NilValue) {
+	return s3class;
       }
     } /* else */
     return getAttrib(x, R_ClassSymbol);
@@ -615,15 +611,35 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
 }
 
 static SEXP s_dot_S3Class;
+
+SEXP S3Class(SEXP obj) {
+    getAttrib(obj, s_dot_S3Class);
+}
+
 /* Version for S3-dispatch */
 SEXP attribute_hidden R_data_class2 (SEXP obj)
 {
     SEXP klass = getAttrib(obj, R_ClassSymbol);
       if(length(klass) > 0) {
-	if(IS_S4_OBJECT(obj)) {  /* try for an S4 object with an S3Class slot */
-  	    SEXP S3Class = getAttrib(obj, s_dot_S3Class);
-	    if(S3Class != R_NilValue)
-       	        klass = S3Class;
+	if(IS_S4_OBJECT(obj) && TYPEOF(obj) != S4SXP) { 
+	    /* try to return an S3Class slot, or matrix/array */
+  	    SEXP s3class = S3Class(obj);
+	    if(s3class != R_NilValue)
+       	        klass = s3class;
+	    else {
+	        SEXP dim = getAttrib(obj, R_DimSymbol), value, class0;
+	        int nd = length(dim);
+		if(nd > 0) {
+		  PROTECT(value =  allocVector(STRSXP, 1));
+		  if(nd == 2)
+		    class0 = mkChar("matrix");
+		  else
+		    class0 = mkChar("array");
+		  SET_STRING_ELT(value, 0, class0);
+		  UNPROTECT(1);
+		  return value;
+		}
+	    }
 	}
 	return(klass);
     }
@@ -1464,12 +1480,22 @@ SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden
 R_getS4DataSlot(SEXP obj, SEXPTYPE type)
 {
-  static SEXP s_xData, s_dotData; SEXP value;
+  static SEXP s_xData, s_dotData; SEXP value = R_NilValue;
   if(!s_xData) {
     s_xData = install(".xData");
     s_dotData = install(".Data");
   }
-  value = getAttrib(obj, s_dotData);
+  if(TYPEOF(obj) != S4SXP) { /* does not validate type against S4 class def */
+    SEXP s3class = S3Class(obj);
+    if(NAMED(obj)) obj = duplicate(obj);
+    if(s3class != R_NilValue) {/* replace class with S3 class */
+      setAttrib(obj, R_ClassSymbol, s3class);
+    }
+    UNSET_S4_OBJECT(obj);
+    value = obj;
+  }  
+  else
+      value = getAttrib(obj, s_dotData);
   if(value == R_NilValue)
       value = getAttrib(obj, s_xData);
   if(value != R_NilValue &&

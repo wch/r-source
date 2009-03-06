@@ -291,6 +291,15 @@ SEXP DropDims(SEXP x)
 	setAttrib(x, R_DimNamesSymbol, R_NilValue);
 	setAttrib(x, R_DimSymbol, R_NilValue);
 	setAttrib(x, R_NamesSymbol, newnames);
+	/* FIXME: the following is desirable, but pointless as long as
+	   subset.c & others have a contrary version that leaves the
+	   S4 class in, incorrectly, in the case of vectors.  JMC
+	   3/3/09 */
+/* 	if(IS_S4_OBJECT(x)) {/\* no longer valid subclass of array or
+ 	matrix *\/ */
+/* 	    setAttrib(x, R_ClassSymbol, R_NilValue); */
+/* 	    UNSET_S4_OBJECT(x); */
+/* 	} */
 	UNPROTECT(1);
     } else {
 	/* We have a lower dimensional array. */

@@ -6,6 +6,10 @@
 \name{Classes}
 \alias{Classes}
 \alias{__ClassMetaData}
+\alias{.environment-class}
+\alias{.externalptr-class}
+\alias{.name-class}
+\alias{.NULL-class}
 \title{Class Definitions}
 \description{
   Class definitions are objects that contain the formal definition of a
@@ -50,33 +54,14 @@
       definition, or some class that extends the one in the
       definition (a \emph{subclass}).
 
-      One class name is special, \code{.Data}.  This stands for the
-      \sQuote{data part} of the object.  Any class that contains one
-      of the basic object types in \R, has implicitly a corresponding
-      \code{.Data} slot of that type, allowing computations to extract
-      or replace the data part while leaving other slots
-      unchanged. The \code{.Data} slot also determines the type of the
-      object; if \code{x} has a \code{.Data} slot, the type of the
-      slot is the type of the object (that is, the value of
-      \code{\link{typeof}(x)}). Extending a basic type this way allows objects to
-      use old-style code for the corresponding type as well as S4
-      methods.  Any basic type can be used for \code{.Data}, with the
-      exception of a few that do not behave like ordinary objects;
-      namely, \code{"NULL"}, environments, and external pointers.
-
-      There is  one additional use of the data part, which is also an
-      exception to the correspondence with the object's type.  The exception
-      arises from the special treatment of \code{\linkS4class{matrix}}
-      and \code{\linkS4class{array}} \dQuote{classes} in \R.
-      Matrix and array objects are managed internally and recognized
-      without regard to any class attribute; therefore, they can be
-      used as the data part of a new class.  In this case, the object
-      type for the new class depends on the type of the data in the
-      matrix or array.
-
-      If the new class does not have a data part as described above,
-      the type of objects from the new class is
-      \code{"S4"}.  
+      One slot name is special, \code{.Data}.  This stands for the
+      \sQuote{data part} of the object.  An object from a class with a
+      data part is defined by specifying that the class contains one
+      of the \R object types or one of the special pseudo-classes, 
+      \code{matrix} or \code{array}, usually because the definition of
+      the class, or of one of its superclasses, has included the type
+      or pseudo-class in its \code{contains} argument.  See the
+      section on inheriting from non-S4 classes for more details.
 
     }
     \item{Superclasses:}{
@@ -133,18 +118,19 @@
     }
     \item{Prototype:}{
 
-      The objects from a class, typically created by a call to
-      \code{\link{new}} or by assigning another object from the class,
+      The objects from a class created by a call to
+      \code{\link{new}}
       are defined by the \emph{prototype} object for the class and by
       additional arguments in the call to \code{\link{new}}, which are
       passed to a method for that class for the function
       \code{\link{initialize}}.
 
-      Each class definition contains a prototype object
-      for the class.  This must have values for all the slots defined by
-      the class definition.
-      By default, these are the prototypes of all
-      the slot classes, if those are not virtual classes.  However, the
+      Each class representation object contains a prototype object
+      for the class (although for a virtual class the prototype may be
+      \code{NULL}). The prototype object must have values for all the
+      slots of the class.
+      By default, these are the prototypes of
+      the corresponding slot classes.  However, the
       definition of the class can specify any valid object for any of
       the slots.
     }
@@ -152,7 +138,8 @@
 }
 \section{Virtual classes; Basic classes}{
 
-      Classes exist for which there are no actual objects, the
+      Classes exist for which no actual objects can be created by a
+      call to \code{\link{new}}, the
       \emph{virtual} classes, in fact a
       very important programming tool.  They are used to group together
       ordinary classes that want to share some programming behavior,
@@ -165,7 +152,7 @@
         union}, a virtual class that is defined in a call to
       \code{\link{setClassUnion}} by listing one or
       more of subclasses (classes that extend the class union).  Class
-      unions can include as subclasses basic data types (whose
+      unions can include as subclasses basic object types (whose
       definition is otherwise sealed).
 
       There are a number of \sQuote{basic} classes, corresponding to the
@@ -182,82 +169,149 @@
       In addition to the vector classes there are also basic classes corresponding to objects in the
       language, such as \code{"function"} and \code{"call"}.
       These classes are subclasses of the virtual class \code{"language"}.
-      Finally, there are basic classes for
-      specialized objects, such as \code{"environment"} and \code{"externalptr"}.
-      The vector and language basic classes can be used as slots or as
-      superclasses for any other class definitions. 
-      The classes corresponding to other object types can be used as
-      slots but not always as superclasses, since many of them do not follow the
+      Finally, there are object types and corresponding basic classes for
+      \dQuote{abnormal} objects, such as \code{"environment"} and
+      \code{"externalptr"}.
+      These objects do not follow the
       functional behavior of the language; in particular, they are not
       copied and so cannot have attributes or slots defined locally.
 
+     All these classes can be used as slots or as
+      superclasses for any other class definitions, although they do
+      not themselves come with an explicit class.  For the abnormal
+      object types, a special mechanism is used to enable inheritance
+      as described below.
+
+
 }
-\section{S3 Classes}{
+% S3 classes
 
-  Earlier, informal classes of objects (usually referred to as
-  \sQuote{S3} classes) are used by many \R functions.  It is natural to
-  consider including them as the class for a slot in a formal class,
-  or even as a class to be extended by the new class.  This isn't
-  prohibited but there are some disadvantages, and if you do want to
-  include S3 classes, they should be declared by including them in a
-  call to \code{\link{setOldClass}}.  Here are some considerations:
+\section{Inheriting from non-S4 Classes}{
+  A class definition can extend classes other than
+  regular S4 classes, usually by specifying them in the
+  \code{contains=} argument to \code{\link{setClass}}.  Three groups
+  of such classes behave distinctly:
+\enumerate{
+\item 
+S3 classes, which must have been registered by a previous call to
+\code{\link{setOldClass}} (you can check that this has been done
+  by calling \code{\link{getClass}}, which should return a class that
+  extends \linkS4class{oldClass});
 
-  \itemize{
-  \item Using S3 classes somewhat defeats the purpose of defining a
-    formal class:  An important advantage to your users is that a formal
-    class provides guarantees of what the object contains (minimally,
-    the classes of the slots and therfore what data they contain;
-    optionally, any other requirements imposed by a validity method).
+\item 
+  One of the \R object types, typically a vector type, which then
+    defines the type of the S4 objects, but also a type such as
+    \code{\link{environment}} that can not be used directly as a type
+    for an S4 object.  See
+    below.
 
-    But there is no guarantee whatever about the data in an object from
-    an S3 class.  It's entirely up to the functions that create or
-    modify such objects.  If you want to provide guarantees to your
-    users, you will need a valdity method that explicitly checks the
-    contents of S3-class objects.
-
-  \item To get the minimal guarantee (that the object in a slot has, or
-    extends, the class for the slot) you should ensure that the S3
-    classes are known to \emph{be} S3 classes, possibly with S
-    inheritance.  To do this, include a call to
-    \code{\link{setOldClass}} for the S3 classes used.
-
-    Otherwise, the S3 class is undefined (and the code used by
-    \code{setClass} will issue a warning).  Slot assignments, for
-    example, will not then check for possible errors.
-
-  \item Current versions of \R (beginning with 2.8.0) try to
-    accommodate S4 classes that extend S3 classes, that is, those
-    including an S3 class in the \code{contains=} argument to
-    \code{\link{setClass}} . Specifically, objects from  such classes
-    will contain the S3 class as a slot, and some S3 computations will
-    recognize the S3 class,
-    including method dispatch and the function
-    \code{\link{inherits}}.  See  \code{\link{S3Class}} for details.
-    The S3 classes \emph{must} have been registered by a call to  \code{\link{setOldClass}}.
-    The basic caution remains true however: There is no guarantee that all S3 computations will be
-    compatible, and some are known not to be.
-
-  \item These caveats apply to S3 classes; that is, objects with a
-    class assigned by some \R function but without a formal class
-    definition.  In contrast, the built-in vector types (\code{numeric},
-    \code{list}, etc.) are generally fine as slots or for
-    \code{contains=} classes.  These object
-    types don't have formal slots, but the base code in the system
-    essentially forces them to contain the type of data they claim to
-    have.
-
-    Objects with a \dQuote{class}  of \code{matrix} or \code{array} are somewhat in
-    between.  They do not have an explicit S3 class, but do have one or
-    two attributes.  There is no general problem in having these as
-    slots, but because there is no guarantee of a dimnames slot, they
-    don't work as formal classes.  The \code{ts} class, although also
-    ancient in the S language, is implemented in \R essentially as an
-    S3 class, with the implications noted above---not suitable for a
-    \code{contains=} argument---but with a few S4
-    methods defined.  See the documentation for class \code{\linkS4class{structure}} for more details.
-
+\item 
+  One of the pseudo-classes \code{\linkS4class{matrix}}
+      and \code{\linkS4class{array}}, implying objects with
+      arbitrary vector types plus the \code{dim} and \code{dimnames}
+      attributes.
   }
- }% S3 classes
+
+  This section describes the approach to combining S4 computations
+  with older S3 computations by using such classes as superclasses. The
+  design goal is to allow the S4 class to inherit S3 methods and
+  default computations in as consistent a form as possible.
+
+
+      As part of a general effort to make the S4 and S3 code in R more
+      consistent,
+      when objects from an S4 class are used as the first argument
+       to a non-default S3 method, either for an S3 generic function (one that calls
+      \code{\link{UseMethod}}) or for one of the primitive functions
+      that dispatches S3 methods, an effort is made to provide a
+      valid object for that method.  In
+      particular, if the S4 class extends an S3 class or \code{matrix}
+      or \code{array}, and there is an S3 method matching one of these
+      classes, the S4 object will be coerced to a valid S3 object, to
+      the extent that is possible given that there is no formal
+      definition of an S3 class.
+
+      For example, suppose \code{"myFrame"} is an S4 class that
+      includes the S3 class \code{"data.frame"} in the \code{contains=}
+      argument to \code{\link{setClass}}.  If an object from this S4
+      class is passed to a function, say \code{\link{as.matrix}}, that
+      has an S3 method for \code{"data.frame"}, the internal code for
+      \code{\link{UseMethod}} will convert the object to a data frame;
+      in particular, to an S3 object whose class attribute will be the vector
+      corresponding to the S3 class (possibly containing multiple
+      class names). Similarly for an S4 object inheriting from
+      \code{"matrix"} or \code{"array"}, the S4 object will be
+      converted to a valid S3 matrix or array.
+
+      Note that the conversion is \emph{not} applied when an S4 object is passed
+      to the default S3 method.  Some S3 generics attempt
+      to deal with general objects, including S4 objects.  Also, no transformation is
+      applied to S4 objects that do not correspond to a
+      selected S3 method; in particular, to objects from a class that
+      does not contain either an S3 class or one of the basic types.
+      See \code{\link{asS4}} for the transformation details.
+
+      In addition to explicit S3 generic functions, S3 methods are
+      defined for a variety of operators and functions implemented as
+      primitives.  These methods are dispatched by some internal C
+      code that operates partly through the same code as real S3
+      generic functions and partly via special considerations (for
+      example, both arguments to a binary operator are examined when
+      looking for methods).  The same mechanism for adapting S4
+      objects to S3 methods has been applied to these computations as
+      well, with a few exceptions such as generating an error if an S4
+      object that does not extend an appropriate S3 class or type is
+      passed to a binary operator.
+
+      The remainder of this section discusses the mechanisms for
+      accessing the inherited objects of the second and third items
+      above:  basic object types and the matrix and array
+      pseudo-classes.  For the corresponding details for inheritance
+      from S3 classes, see \code{\link{setOldClass}}.
+ 
+      An object from a class that directly and simply contains one
+      of the basic object types in \R, has implicitly a corresponding
+      \code{.Data} slot of that type, allowing computations to extract
+      or replace the data part while leaving other slots
+      unchanged. If the type is one that can accept attributes and is
+      duplicated normally, the inheritance also determines the type of the
+      object; if the class definition has a \code{.Data} slot
+      corresponding to a normal type, the class of the
+      slot determines the type of the object (that is, the value of
+      \code{\link{typeof}(x)}).
+      For such classes,  \code{.Data} is a pseudo-slot; that 
+      is, extracting or setting it modifies the non-slot data in the
+      object.  The functions \code{\link{getDataPart}} and
+      \code{\link{setDataPart}} are a cleaner, but essentially
+      equivalent way to deal with the data part.
+
+      Extending a basic type this way allows objects to
+      use old-style code for the corresponding type as well as S4
+      methods.  Any basic type can be used for \code{.Data}, but 
+      a few types are treated differently because they do not behave like ordinary objects;
+      for example, \code{"NULL"}, environments, and external pointers.
+      Classes extend these types by using a specially named slot,
+      itself inherited from an internally defined S4 class.
+      Inheritance from the nonstandard object type then requires an
+      actual computation, rather than the \code{"simple"} inclusion
+      for other types and classes.  The intent is that programmers
+      will not need to take account of the mechanism, but one
+      implication is that you should \emph{not} explicitly use the
+      type of an S4 object that extends an arbitrary object type.  Use
+      \code{\link{is}} and similar functions instead.
+
+      There is  one additional use of the data part, which is also an
+      exception to the correspondence with the object's type.  The exception
+      arises from the special treatment of \code{\linkS4class{matrix}}
+      and \code{\linkS4class{array}} \dQuote{classes} in \R.
+      Matrix and array objects are managed internally and recognized
+      without regard to any class attribute; therefore, they can be
+      used as the data part of a new class.  In this case, the object
+      type for the new class depends on the type of the data in the
+      matrix or array, but the \code{.Data} slot in the definition
+      will be \code{"matrix"} or \code{"array"}.
+     
+}
 
 \references{
  Chambers, John M. (2008)

@@ -1192,7 +1192,12 @@ initMethodDispatch <- function(where = topenv(parent.frame()))
     .Call("R_initMethodDispatch", as.environment(where),
           PACKAGE = "methods")# C-level initialization
 
+### dummy version for booting
 isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = where),
+			   where = topenv(parent.frame())) FALSE
+
+### real version
+.isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = where),
 			   where = topenv(parent.frame()))
 {
     ## look for the generic to see if it is a primitive

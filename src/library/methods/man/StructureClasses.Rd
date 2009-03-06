@@ -104,7 +104,11 @@
   \describe{
     \item{coerce}{Methods are defined to coerce arbitrary objects to
       these classes, by calling the corresponding basic function, for
-      example, \code{as(x, "matrix")} calls \code{as.matrix(x)}.}
+      example, \code{as(x, "matrix")} calls \code{as.matrix(x)}.
+      If \code{strict = TRUE} in the call to \code{as()}, the method
+      goes on to delete all other slots and attributes other than the
+      \code{dim} and \code{dimnames}.
+    }
     \item{Ops}{Group methods (see, e.g., \code{\link{S4groupGeneric}})
       are defined for combinations of structures and vectors (including
       special cases for array and matrix), implementing the concept of
@@ -120,6 +124,11 @@
       classes or class \code{"vector"}.
     }
   }
+}
+\seealso{Class \linkS4class{nonStructure}, which enforces the
+  alternative model, in which all slots are dropped if any math
+  transformation or operation is applied to an object from a class extending one of
+  the basic classes.
 }
 \references{
  Chambers, John M. (2008)
