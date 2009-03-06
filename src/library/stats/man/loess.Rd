@@ -35,7 +35,8 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
     smoothing.}
   \item{enp.target}{an alternative way to specify \code{span}, as the
     approximate equivalent number of parameters to be used.}
-  \item{degree}{the degree of the polynomials to be used, up to 2.}
+  \item{degree}{the degree of the polynomials to be used, normally 1 or
+    2. (Degree 0 is also allowed, but see the \sQuote{Note}.)}
   \item{parametric}{should any terms be fitted globally rather than
     locally?  Terms can be specified by name, number or as a logical
     vector of the same length as the number of predictors.}
@@ -90,15 +91,21 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
 }
 \author{
   B. D. Ripley, based on the \code{cloess} package of Cleveland,
-  Grosse and Shyu available at \url{http://www.netlib.org/a/}.
+  Grosse and Shyu (currently available as \code{dloess} at
+  \url{http://www.netlib.org/a}: the \R implementation is based on an
+  1998 version).
 }
 \note{
-  As this is based on the \code{cloess} package available at
-  \code{netlib}, it is similar to but not identical to the \code{loess}
-  function of S.  In particular, conditioning is not implemented.
+  As this is based on \code{cloess}, it is similar to but not identical to
+  the \code{loess} function of S.  In particular, conditioning is not
+  implemented.
 
   The memory usage of this implementation of \code{loess} is roughly
   quadratic in the number of points, with 1000 points taking about 10Mb.
+
+  \code{degree = 0}, local constant fitting, is allowed in this
+  implementation but not documented in the reference.  It seems very little
+  tested, so use with caution.
 }
 \seealso{
   \code{\link{loess.control}},
