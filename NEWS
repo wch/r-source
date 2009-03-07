@@ -217,13 +217,14 @@ NEW FEATURES
 	(suggestion of Uwe Ligges, PR#13553).
 
     o	S4 objects passed to a non-default S3 method will be converted
-        to a valid S3 object with the S3 class. See the section on
-        inheriting from non-S4 classes in ?Classes.
+ 	to a valid S3 object with the S3 class.  See the section on
+ 	inheriting from non-S4 classes in ?Classes.
 
-    o	A new class "nonStructure" has been defined; classes that
-        extend a vector class but that should lose their slots under
-        math or ops functions should extend this class. See
-        class?nonStructure.
+    o	A new class "nonStructure" has been defined; classes that extend
+	a vector class but that should lose their slots under math or
+	ops functions should extend this class.  See
+	class?nonStructure.
+
 
 DEPRECATED & DEFUNCT
 
@@ -299,7 +300,7 @@ UTILITIES
 	platforms, not just on Windows: this is only relevant when a
 	Makevars[.win] is used that contains targets (not in general
 	recommended): for backwrds compatibility the first target
-	whould be named 'all'.
+	should be named 'all'.
 
 
 Rd CONVERSION
