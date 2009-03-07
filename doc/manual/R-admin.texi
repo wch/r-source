@@ -1986,7 +1986,7 @@ more space and (usually) more time to manipulate.  So 64-bit versions of
 the difference was 15-20%, on Linux on Opteron around 10%.  The pattern
 is not universal, as on Intel Core 2 Duo the vanilla 64-bit version is
 around 10% faster on both Linux and Mac OS X -- this can be reduced by
-tuning the compiler to that chip.)
+tuning the compile to that chip.)
 @end itemize
 
 So, for speed you may want to use a 32-bit build, but to handle large
@@ -2000,23 +2000,21 @@ use of 32-bit integers (especially in FORTRAN code).  On all versions of
 @math{2^{31}-1}, about 2 billion, and on 64-bit systems the size of a
 block of memory allocated is limited to @math{2^{34}-1} bytes (8GB).  It
 is anticipated these will be raised eventually but routine use of 8GB
-objects is (in 2005) several years off.
+objects is (when this was written in 2005) several years off.
 
 @node Windows,  , Choosing between 32- and 64-bit builds, Choosing between 32- and 64-bit builds
 @section Windows
 
-Currently the Windows build of @R{} is a 32-bit executable.  This runs
-happily on Windows 64 on AMD64 and EM64T, but is limited to an address
-space of 2 to 4GB (see the `R for Windows FAQ' for details).  It will
-not be possible to provide a native version for Windows 64 until
-suitable compilers are available, and currently (mid-2007) that is not
-imminent.@footnote{It is likely that commercial 64-bit compilers could
-be used, but those we have looked at do not work in the same way as the
-MinGW compilers so extensive changes to the build system would be
-needed.  Also, end users would need to have the same compilers to
-install extension packages.  There is an experimental version of MinGW
-for 64-bit Windows, but it is not yet good enough to build a working
-@R{}.}
+Currently the Windows build of @R{} from @acronym{CRAN} is a 32-bit
+executable.  This runs happily on Windows 64 on AMD64 and EM64T, but is
+limited to an address space of 2 to 4GB (see the `R for Windows FAQ' for
+details).  It will not be possible fro the @R{} project to provide a
+native version for Windows 64 until suitable non-commercial compilers
+are available, and currently (early 2009) the experimental version of
+MinGW for 64-bit Windows is not yet good enough to build a working @R{}.
+Commercial 64-bit compilers have been used, and @R{} can be be built
+with such compilers with minimal changes to the sources (and
+constructing suitable project files).
 
 
 @node The standalone Rmath library, Essential and useful other programs under Unix, Choosing between 32- and 64-bit builds, Top
@@ -2899,7 +2897,9 @@ if you will be using an application which embeds @R{}.  Note that C code
 in packages installed on an @R{} system linked with
 @option{--enable-R-shlib} is linked against the dynamic library and so
 such packages cannot be used from an @R{} system built in the default
-way.
+way.  Also, because packages are linked against @R{} they are on some
+OSes also linked against the dynamic libraries @R{} itself is linked
+against, and this can lead to symbol conflicts.
 
 If you need to re-configure @R{} with different options you may need to run
 @code{make clean} or even @code{make distclean} before doing so.
@@ -3701,11 +3701,12 @@ The Solaris versions of several of the tools needed to build @R{}
 path.
 
 Modern Solaris systems allow a large selection of Open Source software
-to be installed via @command{pkg-get}: a Sparc Solaris 10 system came
-with @code{libreadline} and @code{libiconv} and a choice of @code{gcc3}
-and @code{gcc4} compilers, installed under @file{/opt/csw}.  (You will
-need GNU @code{libiconv}: the Solaris version of @code{iconv} is not
-sufficiently powerful.)
+to be installed from @url{http://www.opencsw.org} (formerly
+@url{http://www.blastwave.org}) via @command{pkg-get}: a Sparc Solaris 10
+system came with @code{libreadline} and @code{libiconv} and a choice of
+@code{gcc3} and @code{gcc4} compilers, installed under @file{/opt/csw}.
+(You will need GNU @code{libiconv}: the Solaris version of @code{iconv}
+is not sufficiently powerful.)
 
 If using @command{gcc}, do ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be ascertained from @command{gcc
@@ -3718,6 +3719,14 @@ from Sun.@footnote{@uref{http://www.sun.com/download/index.jsp?cat=Application%2
 When using the Sun compilers@footnote{including @command{gcc} for Sparc
 from Sun.} do @emph{not} specify @option{-fast}, as this disables
 @acronym{IEEE} arithmetic and @command{make check} will fail.
+
+@c https://stat.ethz.ch/pipermail/r-devel/2009-March/052454.html
+@c and followups
+Jeff Long reported problems if @R{} is built as a shared library and
+@samp{libintl} was installed via @command{pkg-get}: in particular
+segfaults using @code{read.spss} from package @pkg{foreign}: this can be
+avoided by not building @R{} as a shared library or configuring with
+@option{--with-included-gettext}.
 
 To compile for a 64-bit Sparc target with @command{gcc}@tie{}4 we used
 
@@ -3788,8 +3797,8 @@ Building on @cputype{x86} with @command{gcc}@tie{}4 failed @command{make
 check} in the complex LAPACK tests: using Sun Studio 11 worked
 correctly.
 
-There is limited support for @cputype{x86-64} builds in the pre-built
-GNU software repositories, with 64-bit libraries (which are in
+There is limited support for @cputype{x86_64} builds in the pre-built
+GNU software repositories, with 64-bit libraries (which are installed in
 @file{/opt/csw/lib/amd64} and so on) being scarce (and not including the
 @command{gcc} support libraries).  The Sun Studio compilers do support
 64-bit builds via @code{-xarch=amd64} (or, for version 12, @code{-m64}).
