@@ -208,17 +208,18 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
     }
 }
 
+#ifdef UNUSED
 static int match_to_obj(SEXP arg, SEXP obj) {
   return (arg == obj) ||
     (TYPEOF(arg) == PROMSXP && PRVALUE(arg) == obj);
 }
-
+#endif
 
 int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	      SEXP rho, SEXP callrho, SEXP defrho, SEXP *ans)
 {
     SEXP klass, method, sxp, t, s, matchedarg;
-    SEXP op, formals, newrho, newcall, match_obj = 0, copy;
+    SEXP op, formals, newrho, newcall, match_obj = 0;
     char buf[512];
     int i, j, nclass, matched, S4toS3;
     RCNTXT *cptr;
