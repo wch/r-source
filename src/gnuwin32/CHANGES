@@ -67,6 +67,9 @@ NEW FEATURES
     o	Completions in Rgui when selected from a list are now coloured
 	as user input rather than R output (wish of PR#13562).
 
+    o	Omegahat is no longer offered as a repository for binary
+	packages, as the latest versions it had were for R 2.7.x.
+
 
 INSTALLATIOM
 
@@ -110,9 +113,6 @@ CUSTOMIZATION
 
     o	The name of the producer can be changed in installer/Makefile
 	and front-ends/RSetReg.c.
-
-
-BUG FIXES
 
 
 

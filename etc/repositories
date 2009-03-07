@@ -9,7 +9,7 @@
 menu_name	URL	default	source	win.binary	mac.binary
 CRAN	CRAN	@CRAN@	TRUE	TRUE	TRUE	TRUE
 CRANextra	CRAN (extras)	"http://www.stats.ox.ac.uk/pub/RWin"	TRUE	FALSE	TRUE	FALSE
-Omegahat	Omegahat	http://www.omegahat.org/R	FALSE	TRUE	TRUE	FALSE
+Omegahat	Omegahat	http://www.omegahat.org/R	FALSE	TRUE	FALSE	FALSE
 BioCsoft	"BioC software"	http://www.bioconductor.org/packages/2.4/bioc	FALSE	TRUE	TRUE	TRUE
 BioCann	"BioC annotation"	http://www.bioconductor.org/packages/2.4/data/annotation	FALSE	TRUE	TRUE	TRUE
 BioCexp	"BioC experiment"	http://www.bioconductor.org/packages/2.4/data/experiment	FALSE	TRUE	TRUE	TRUE
