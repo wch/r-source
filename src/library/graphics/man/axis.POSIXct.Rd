@@ -47,6 +47,11 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
   and labels whereas if \code{x} is specified a suitable grid of labels
   is chosen. Printing of tick labels can be suppressed by using
   \code{labels = FALSE}.
+  
+  As from \R 2.9.0 the date-times for a \code{"POSIXct"} input are
+  interpreted in the timwzonw give by the \code{"tzone"} attribute it
+  there is one, otherwise the current timezone.  (Earlier vrsions always
+  used the current timezone.)
 }
 \value{
   The locations on the axis scale at which tick marks were drawn.

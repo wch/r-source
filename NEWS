@@ -221,9 +221,13 @@ NEW FEATURES
  	inheriting from non-S4 classes in ?Classes.
 
     o	A new class "nonStructure" has been defined; classes that extend
-	a vector class but that should lose their slots under math or
-	ops functions should extend this class.  See
-	class?nonStructure.
+	a vector class but that should lose their slots under Math or
+	Ops functions should extend this class.  See class?nonStructure.
+
+    o	axis.POSIXct() now plots in the timezone marked for its inputs
+	(if any) rather than in the local time.  (The latter was
+	deliberate, but is easy to select by removing the 'Tzone'
+	attribute.  (Suggestion of Dan Kelley.)
 
 
 DEPRECATED & DEFUNCT

@@ -22,6 +22,7 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
     ## find out the scale involved
     d <- range[2L] - range[1L]
     z <- c(range, x[is.finite(x)])
+    attr(z, "tzone") <- attr(x, "tzone")
     if(d < 1.1*60) { # seconds
         sc <- 1
         if(missing(format)) format <- "%S"
@@ -48,6 +49,7 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
         if(missing(format)) format <- "%b %d"
     } else if(d < 1.1*60*60*24*365) { # months
         class(z) <- c("POSIXt", "POSIXct")
+        attr(z, "tzone") <- attr(x, "tzone")
         zz <- as.POSIXlt(z)
         zz$mday <- zz$wday <- zz$yday <- 1
         zz$isdst <- -1; zz$hour <- zz$min <- zz$sec <- 0
@@ -57,10 +59,12 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
         zz$year <- c(m, m+1)
         zz <- lapply(zz, function(x) rep(x, length.out = M))
         class(zz) <- c("POSIXt", "POSIXlt")
+        attr(z, "tzone") <- attr(x, "tzone")
         z <- as.POSIXct(zz)
         if(missing(format)) format <- "%b"
     } else { # years
         class(z) <- c("POSIXt", "POSIXct")
+        attr(z, "tzone") <- attr(x, "tzone")
         zz <- as.POSIXlt(z)
         zz$mday <- zz$wday <- zz$yday <- 1
         zz$isdst <- -1; zz$mon <- zz$hour <- zz$min <- zz$sec <- 0

@@ -30,7 +30,7 @@ as.POSIXlt.date <- as.POSIXlt.dates <- function(x, ...)
 as.POSIXlt.POSIXct <- function(x, tz = "", ...)
 {
     tzone <- attr(x, "tzone")
-    if(missing(tz) && !is.null(tzone)) tz <- tzone[1L]
+    if((missing(tz) || is.null(tz)) && !is.null(tzone)) tz <- tzone[1L]
     .Internal(as.POSIXlt(x, tz))
 }
 
