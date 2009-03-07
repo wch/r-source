@@ -226,7 +226,7 @@ NEW FEATURES
 
     o	axis.POSIXct() now plots in the timezone marked for its inputs
 	(if any) rather than in the local time.  (The latter was
-	deliberate, but is easy to select by removing the 'Tzone'
+	deliberate, but is easy to select by removing the 'tzone'
 	attribute.  (Suggestion of Dan Kelley.)
 
 

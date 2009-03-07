@@ -1842,10 +1842,6 @@ sub check_pkg {
       = ("See the chapter 'Writing R documentation files'",
 	 "in manual 'Writing R Extensions'.\n");
 
-    my @msg2_writing_Rd
-      = ("The Rdversion 2 parser is experimental,",
-	 "but almost all reports are correct.\n");
-
     if(-d "man") {
 	$log->checking("Rd files");
 	my $def_enc = 0;
@@ -1882,7 +1878,6 @@ sub check_pkg {
 	    if(scalar(@out) > 0) {
 		$log->warning();
 		$log->print(join("\n", @out) . "\n");
-		$log->print(wrap("", "", @msg2_writing_Rd));
 	    }
 	    else {
 		$log->result("OK");
