@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2009
-@set FAQ_DATE @value{FAQ_YEAR}-03-01
+@set FAQ_DATE @value{FAQ_YEAR}-03-08
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 8
@@ -1815,6 +1815,8 @@ Bayesian prediction of complex computer codes, calibration of computer
 models, and emulation of computer programs, respectively.
 @item BARD
 Better Automated ReDistricting.
+@item BAS
+Bayesian model averaging using Bayesian Adaptive Sampling.
 @item BAYSTAR
 Bayesian analysis of threshold autoregressive models.
 @item BB
@@ -1824,6 +1826,8 @@ simple constraints.
 @item BCE
 Bayesian Composition Estimator for sample (taxonomic) composition from
 biomarker data.
+@item BGSIMD
+Block Gibbs Sampler with Incomplete Multinomial Distribution.
 @item BHH2
 Functions and data sets reproducing some examples in ``Statistics for
 Experimenters II'' by G. E. P. Box, J. S. Hunter, and W. C. Hunter,
@@ -2441,6 +2445,9 @@ Applications'' by Doug Bates and Donald Watts, 1988, Wiley.
 Survival analysis for cohorts with missing covariate information.
 @item NetIndices
 Estimates network indices, including trophic structure of foodwebs.
+@item OAIHarvester
+Harvest metadata using the Open Archives Initiative Protocol for
+Metadata Harvesting (OAI-PMH) version 2.0.
 @item OPE
 Fit an outer-product emlator to the multivariate evaluations of a
 computer model.
@@ -2498,6 +2505,7 @@ Independent component analysis using score functions from the Pearson
 system.
 @item PerformanceAnalytics
 Econometric tools for performance and risk analysis.
+@item PhViD
 @item PhySim
 Phylogenetic tree simulation.
 @item PolynomF
@@ -2727,6 +2735,8 @@ quadratic) mixed integer programs.
 @c </COMMENT>
 @item Rcpp
 R/C++ interface library and package template.
+@item Rcsdp
+R interface to the CSDP semidefinite programming library.
 @item Read.isi
 Access old data saved in fixed-width format based on ISI-formatted
 codebooks.
@@ -2827,6 +2837,8 @@ Stepwise Diagonal Discriminant Analysis.
 @item SDaA
 Functions and data sets from ``Sampling: Design and Analysis'' by
 S. Lohr, 1999, Duxbury.
+@item SGCS
+Spatial Graph based Clustering Summaries for spatial point patterns.
 @item SGP
 Student growth percentile and percentile growth projection/trajectory
 functions.
@@ -2963,6 +2975,8 @@ A problem solving environment for fitting superposition models.
 @item TRAMPR
 Terminal Restriction Fragment Length Polymorphism (TRFLP) Analysis and
 Matching Package for R.
+@item TRIANG
+Discrete triangular distributions.
 @item TSA
 Functions and datasets detailed in the book ``Time Series Analysis
 With Applications in R'' (3rd edition) by Jonathan Cryer and Kung-Sik
@@ -3379,6 +3393,8 @@ Convex clustering methods, including @math{k}-means algorithm, on-line
 update algorithm (Hard Competitive Learning) and Neural Gas algorithm
 (Soft Competitive Learning) and calculation of several indexes for
 finding the number of clusters in a data set.
+@item ccems
+Combinatorially Complex Equilibrium Model Selection.
 @item cellVolumeDist
 Functions to fit cell volume distributions and thereby estimate cell
 growth rates and division times.
@@ -3989,6 +4005,9 @@ Palaeoecological and palaeogeographical analysis tools.
 Fixed point clusters, clusterwise regression and discriminant plots.
 @item fpca
 Restricted MLE for Functional Principal Components Analysis.
+@item fpow
+Compute the non-centrality parameter of the non-central @math{F}
+distribution.
 @item fracdiff
 Maximum likelihood estimation of the parameters of a fractionally
 differenced ARIMA(@math{p,d,q}) model (Haslett and Raftery, Applied
@@ -4574,6 +4593,8 @@ Linear mixed models.
 Model II simple linear regression.
 @item lmom
 @math{L}-moments.
+@item lmomRFA
+Regional Frequency Analysis using @math{L}-moments.
 @item lmomco
 @math{L}-moments and @math{L}-comoments.
 @item lmtest
@@ -4741,6 +4762,9 @@ Multiple Fractional Polynomials.
 Routines for GAMs and other genralized ridge regression problems with
 multiple smoothing parameter selection by GCV or UBRE.
 @emph{Recommended}.
+@item mhsmm
+Parameter estimation and prediction for multiple hidden Markov and
+semi-Markov models.
 @item mi
 Missing-data imputation and model checking.
 @c <COMMENT>
@@ -5587,6 +5611,8 @@ two-sample comparison of binary outcomes.
 An interface between R and the metasim simulation engine.  Facilitates
 the use of the metasim engine to build and run individual based
 population genetics simulations.
+@item rngwell19937
+WELL19937a random number generator.
 @item robCompositions
 Robust estimation for compositional data.
 @item robfilter
@@ -5720,6 +5746,8 @@ Statistical Disclosure Control for tabular data.
 Simulation and inference for Stochastic Differential Equations.
 @item sdtalt
 Signal Detection Theory measures and ALTernatives.
+@item sdtoolkit
+Scenario discovery tools to support robust decision making.
 @item seacarb
 Calculates parameters of the seawater carbonate system.
 @c <COMMENT>
@@ -5870,6 +5898,9 @@ structures by Markov chain Monte Carlo (MCMC).
 Sparse PArtial Correlation Estimation.
 @item spam
 SPArse Matrix algebra.
+@item sparseLDA
+Sparse Linear Discriminant Analysis for gaussians and mixture of
+gaussians models.
 @item spatclus
 Arbitrarily shaped multiple spatial cluster detection for case event
 data.
@@ -6099,6 +6130,9 @@ TIme-To-Event Continual Reassessment Method and calibration tools.
 TK widget tools for @strong{rgl} package.
 @item tkrplot
 Simple mechanism for placing R graphics in a Tk widget.
+@item tlemix
+Trimmed maximum likelihood estimation for robust fitting of finite
+mixture models.
 @item tlnise
 Two-level normal independent sampling estimation.
 @item tm
@@ -6159,6 +6193,8 @@ Package for time series analysis with emphasis on non-linear modelling.
 Routines for the analysis of non-linear time series.
 @item tsfa
 Time Series Factor Analysis.
+@item tslars
+Least angle regression for time series analysis.
 @item tuneR
 Collection of tools to analyze music, handle wave files, transcription,
 etc.
