@@ -51,7 +51,7 @@ rpois(n, lambda)
   \eqn{p(x)} is computed using Loader's algorithm, see the reference in
   \code{\link{dbinom}}.
 
-  The quantile is left continuous: \code{qgeom(q, prob)} is the largest
+  The quantile is left continuous: \code{qpois(q, lambda)} is the largest
   integer \eqn{x} such that \eqn{P(X \le x) < q}.
 
   Setting \code{lower.tail = FALSE} allows to get much more precise
