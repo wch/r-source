@@ -2107,8 +2107,11 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
         value = CAR(args);
 	if(NAMED(value)) SET_NAMED(value, 2);
 	value = asS4(value, 0, 2);
-	if(TYPEOF(value) == S4SXP)
-	  error(_("Non-vector S4 object as first argument to operator"));
+	/* This and the similar test below are not possible when people
+	   insist on writing S3 methods for S4 classes & so NOT getting
+	   S4 inheritance JMC 8.iii.09 */
+/* 	if(TYPEOF(value) == S4SXP) */
+/* 	  error(_("Non-vector S4 object as first argument to operator")); */
 	SETCAR(args, value);
     }
 
@@ -2122,8 +2125,8 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
         value = CADR(args);
 	if(NAMED(value)) SET_NAMED(value, 2);
 	value = asS4(value, 0, 2);
-	if(TYPEOF(value) == S4SXP)
-	  error(_("Non-vector S4 object as second argument to binary operator"));
+/* 	if(TYPEOF(value) == S4SXP) */
+/* 	  error(_("Non-vector S4 object as second argument to binary operator")); */
 	SETCADR(args, value);
     }
 
