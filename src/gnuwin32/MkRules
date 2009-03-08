@@ -1,7 +1,8 @@
 #-*- Makefile -*-
-## This files contains tabs: make sure your editor leaves them unchanged.
+## This file contains tabs: make sure your editor leaves them unchanged.
+## As from R 2.9.0 it is only used when building R itself.
 
-## ===== configuration macros for building packages or R  ===============
+## ===== configuration macros for building R  ===============
 
 # Alternatives GCC4 or F2C (use suitable f2c rather than a Fortran compiler).
 
@@ -15,7 +16,7 @@ G_FLAG=-gdwarf-2
 # Should CHM help be built?  Any value other than TRUE disables this
 USE_CHM = TRUE
 
-# Comment out if the msvcrt.dll malloc/free is required.
+# Comment out if the msvcrt.dll malloc/free is required (not tested recently)
 LEA_MALLOC=YES
 
 # Set to YES and specify the path if you want to use the ATLAS BLAS.
@@ -25,7 +26,8 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 # Support for the ACML and Goto BLASes has been withdrawn: see R-admin.html
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
-# not requested. Spaces allowed.)
+# not selectred by USE_CHM = TRUE). Spaces allowed.
+# Used to build Rchtml.dll: hhc.exe must also be in the path.
 HHWDIR=C:/Program Files/HTML Help Workshop
 
 # Define this to enable memory profiling.
@@ -40,13 +42,13 @@ TCL_VERSION = 85
 # USE_SVNVERSION = YES
 
 # We normally link against DLLs, but this macro forces the use of import libs
-# Needed if using other compilers, and currently on Win64
+# Needed if using other compilers, including Mingw64
 # USE_IMPLIBS = YES
 
-# Some of the Minge64 compilers are in fact cross-compilers and have prefixes
+# Some of the Mingw64 compilers are in fact cross-compilers and have prefixes
 BINPREF=
 
-# 32- or 64-bit Windows?
+# 32- or 64-bit Windows?  For experminets with Mingw64.
 WIN=32
 ifeq ($(strip $(WIN)),64)
 USE_IMPLIBS = YES
@@ -59,6 +61,12 @@ endif
 USE_ICU=NO
 # path to parent of ICU headers
 ICU_PATH=/sources/icu
+
+# optional overrides for making bitmapdll
+# JPEGDIR = jpeg-6b
+# PNGDIR = libpng-1.2.35
+# TIFFDIR = libtiff
+
 
 ## ====== configuration macros for building installer ===========
 
@@ -90,7 +98,6 @@ C99FLAG=-std=gnu99
 ifeq ($(strip $(BUILD)),GCC4)
 F77=$(BINPREF)gfortran$(GCC4_SUFF)
 FLIBS=-lgfortran
-AWK=gawk
 ## for mingw-runtime <= 3.11
 # C99FLAG=-std=gnu99 -fgnu89-inline
 ## earlier Rtools needs -sjlj
@@ -101,7 +108,6 @@ endif
 ifeq ($(strip $(BUILD)),F2C)
 F77=sh $(RHOME)/src/scripts/f77_f2c
 FLIBS=-lf2c
-AWK=gawk
 endif
 
 ifeq ($(strip $(USE_IMPLIBS)),YES)
@@ -117,6 +123,7 @@ ZLIB_LIBS=-lRzlib
 
 AR=$(BINPREF)ar
 AS=$(BINPREF)as
+AWK=gawk
 CAT=cat
 CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG)
 CP=cp
@@ -209,7 +216,7 @@ lib%.dll.a: %.def
 	@$(RM) $@
 	$(AR) crs $@ $^
 
-## FIXME: Mingw64 currently needs --use-temp-file
+## Mingw64 at one time needed --use-temp-file
 %.o: %.rc
 	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $< -o $@
 

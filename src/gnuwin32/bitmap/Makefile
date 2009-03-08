@@ -1,8 +1,10 @@
-include ../MkRules
+## These can be overridden in MkRules
 
-JPEGDIR=jpeg-6b
-PNGDIR=libpng
-TIFFDIR=libtiff
+JPEGDIR = jpeg-6b
+PNGDIR = libpng
+TIFFDIR = libtiff
+
+include ../MkRules
 
 .PHONY: all DLL buildzlib buildpng buildjpeg buildtiff clean
 
