@@ -1023,10 +1023,13 @@ SHLIB} setting them: in particular if @file{Makevars} sets
 @samp{OBJECTS} it will not be set on the @command{make} command line.
 This can be useful in conjunction with implicit rules to allow other
 types of source code to be compiled and included in the shared object.
+Also, as from @R{} 2.9.0 setting an empty value for @samp{OBJECTS} will
+prevent the shared object / DLL from being made (possibly useful in
+conjuction with an @code{all} target as described in the next paragraph).
 
 Note that @file{Makevars} should not normally contain targets, as it is
 included before the default makefile and @command{make} is called with
-target @code{all} which is defined in the default makefile..  If you
+target @code{all} which is defined in the default makefile.  If you
 really need to circumvent that, use a suitable (phony) target @code{all}
 before any actual targets in @file{Makevars.[win]}: for example
 @pkg{fastICA} has
@@ -1093,10 +1096,15 @@ first target in @file{share/make/shlib.mk} was used, which made
 @samp{$(SHLIB)}, a macro by default set to the package name plus the
 appropriate extensuon (@samp{$(SHLIB_EXT)}).  As this is the sole
 dependency of the phony target @code{all} in the current version, the
-operation is unchanged.  The only difference on a Unix-alike is where
+operation is unchanged.  The main difference on a Unix-alike is where
 @file{Makevars} contains targets @emph{and} the first target is not
 called @code{all}: so backwards compatibility is achieved simply by
-having no targets or a first target called @code{all}.
+having no targets or a first target called @code{all}.  The other
+difference is where the first target in @file{Makevars} was called
+@code{all}: the @code{all} target in @file{share/make/shlib.mk} adds the
+dependency @samp{$(SHLIB)}---if this is not wanted, set @samp{OBJECTS}
+to an empty value in @file{Makevars} if there any compiled-code source
+files in the directory.
 
 On Windows prior to @R{} 2.9.0 any file @file{Makevars.win} or
 @file{Makevars} was included in another makefile after its targets, so
@@ -1122,6 +1130,9 @@ all: before $(SHLIB) after
 
 @noindent
 omitting @code{bwfore} or @code{after} if they are unused.
+
+Some packages used undocumented macros under Windows, notably
+@samp{DPKG} (use @env{R_PACKAGE_DIR} instead).
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example
