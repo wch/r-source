@@ -225,14 +225,15 @@ NEW FEATURES
 	Ops functions should extend this class.  See class?nonStructure.
 
     o	axis.POSIXct() now plots in the timezone marked for its inputs
-	(if any) rather than in the local time.  (The latter was
-	deliberate, but is easy to select by removing the 'tzone'
-	attribute.  (Suggestion of Dan Kelley.)
+	(if any) rather than in the local time.  The latter was a
+	deliberate choice, but is easy to select by removing the
+	'tzone' attribute.  (Suggestion of Dan Kelley.)
 
-    o	a new function classesToAM() returns an adjacency matrix
-        representing the inheritance of the classes specified.  Allows
-        better human examination of the patterns, e.g. by using the
-        matrix as input to one of the graph packages (see the documentation).
+    o	A new function classesToAM() returns an adjacency matrix
+	representing the inheritance of the classes specified.  Allows
+	better human examination of the patterns, e.g. by using the
+	matrix as input to one of the graph packages (see the
+	documentation).
 
 
 DEPRECATED & DEFUNCT

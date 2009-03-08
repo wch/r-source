@@ -1060,19 +1060,24 @@ slamc.o: slamc.f
 (since the other macros are all empty on that platform, and R's internal
 blas is not used).
 
-More generally, one could have something like
+If you want to create and then link to a library, say using code in a
+subdirectory, use something like
 
 @smallexample
-.PHONY: all
+.PHONY: all mylibs
 
-all: before $(SHLIB) after
+all: $(SHLIB)
+$(SHLIB): myliss
 
-before:
-        Things that need to be done first like creating libraries
-
-after:
-        Cleanup needed after 'before'
+mylibs:
+        (cd subdir; make)
 @end smallexample
+
+@noindent
+Be careful to create all the necessary dependencies, as there is a no
+guarantess that the dpendencies of @code{all} will be run in a
+particular order (and some of the CRAN build machines use multiple CPUs
+and parallel makes).
 
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
 or @file{Makevars.win}: this will be used by @command{R CMD build}.
