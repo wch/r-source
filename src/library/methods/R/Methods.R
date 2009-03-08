@@ -777,7 +777,7 @@ selectMethod <-
             signature[(length(signature)+1):nsig] <- "ANY"
         if(identical(fdef@signature, "...")) {
             method <- .selectDotsMethod(signature, mlist,
-                 if(useInherited) getMethodsForDispatch(fdef, inherited = TRUE) else NULL)
+                 if(useInherited) getMethodsForDispatch(fdef, inherited = TRUE))
             if(is.null(method) && !optional)
               stop(gettextf("No method for \"...\" matches class \"%s\"", signature),
                    domain = NA)
@@ -793,11 +793,13 @@ selectMethod <-
 			    paste(signature, collapse=", "),")\n", sep="")
 	    methods <-
 		if(any(useInherited)) {
-		    allmethods <- .getMethodsTable(fdef, fenv, check=FALSE, inherited=TRUE)
+		    allmethods <- .getMethodsTable(fdef, fenv, check=FALSE,
+                                                   inherited=TRUE)
 		    ## look in the supplied (usually standard) table, cache w. inherited
 		    .findInheritedMethods(signature, fdef,
 					  mtable = allmethods, table = mlist,
-					  useInherited = useInherited)
+					  useInherited = useInherited,
+                                          verbose = verbose)
 		    ##MM: TODO? allow 'excluded' to be passed
 		}
 		## else list() : just look in the direct table
@@ -818,57 +820,9 @@ selectMethod <-
 	else
 	    stop(gettextf('"%s" has no methods defined', f), domain = NA)
     }
-
-    ## ELSE  {mlist not an environment nor NULL }
-
-    evalArgs <- is.environment(signature)
-    env <-
-	if(evalArgs)
-	    signature
-	else if(length(names(signature)) == length(signature))
-	    sigToEnv(signature, fdef)
-	else if(is.character(signature)) {
-	    argNames <-	 formalArgs(fdef)
-	    length(argNames) <- length(signature)
-	    argNames <- argNames[is.na(match(argNames, "..."))]
-	    names(signature) <- argNames
-	    sigToEnv(signature, fdef)
-	}
-	else
-	    stop("signature must be a vector of classes or an environment")
-
-    selection <- .Call("R_selectMethod", f, env, mlist, evalArgs, PACKAGE = "methods")
-    if(verbose)
-	cat("* mlist non-environment ... => 'env' of length", length(env),
-	    if(is.null(selection)) "; selection = NULL -- further search", "\n")
-    if(is.null(selection) && !identical(useInherited, FALSE)) {
-      ## do the inheritance computations to update the methods list, try again.
-      ##
-      ## assign the updated information to the method environment
-      fEnv <- environment(fdef)
-      if(exists(".SelectMethodOn", fEnv, inherits = FALSE)) {
-          ##<FIXME> This should have been eliminated now
-          ## we shouldn't be doing method selection on a function used in method selection!
-          ## Having name spaces for methods will prevent this happening -- until then
-          ## force a return of the original default method
-          message("selectMethod(): .SelectMethodOn - old stuff - please report")
-          return(finalDefaultMethod(mlist, f))
-      }
-      assign(".SelectMethodOn", TRUE, fEnv)
-      on.exit(rm(.SelectMethodOn, envir = fEnv))
-      ##</FIXME>
-      mlist <- MethodsListSelect(f, env, mlist, NULL, evalArgs = evalArgs,
-                                 useInherited = useInherited, resetAllowed = FALSE)
-      if(verbose) cat("* new mlist with", length(mlist), "potential methods\n")
-      if(is(mlist, "MethodsList"))
-          selection <- .Call("R_selectMethod", f, env, mlist, evalArgs, PACKAGE = "methods")
-      ## else: selection remains NULL
-    }
-    if(is(selection, "function") || optional)
-        selection
-    else if(is(selection, "MethodsList"))
-        stop("no unique method corresponding to this signature")
-    else stop("unable to match signature to methods")
+    else ## mlist not an environment nor NULL :
+	stop("selectMethod(): mlist is not an environment or NULL :\n",
+	     "** should no longer happen!")
 }
 
 hasMethod <-

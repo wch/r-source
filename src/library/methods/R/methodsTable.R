@@ -209,14 +209,15 @@
     function(classes, fdef, mtable = NULL,
              table = get(".MTable", envir = environment(fdef)),
              excluded = NULL, useInherited,
-             returnAll = !(doMtable || doExcluded)
-             , simpleOnly = .simpleInheritanceGeneric(fdef))
+             returnAll = !(doMtable || doExcluded),
+             simpleOnly = .simpleInheritanceGeneric(fdef), verbose = FALSE)
 {
   ## classes is a list of the class(x) for each arg in generic
   ## signature, with "missing" for missing args
   if(!is.environment(table)) {
     if(is(fdef, "standardGeneric"))
-      stop("Invalid or unset methods table in generic function \"", fdef@generic,"\"")
+      stop("Invalid or unset methods table in generic function \"",
+           fdef@generic,"\"")
     else
       stop("Trying to find a methods table in a non-generic function")
   }
@@ -225,6 +226,10 @@
       groupGenerics <- .getAllGroups(list(fdef))
   doMtable <- is.environment(mtable)
   doExcluded <- length(excluded) > 0L
+  if(verbose)
+      cat(" .findInheritedMethods(): (hasGroup, doMtable, doExcluded)= (",
+	  paste(c("f","T")[1+c(hasGroup, doMtable, doExcluded)],collapse=", "),
+	  ")\n", sep='')
   nargs <- length(classes)
   methods <- list()
   if(!missing(useInherited) && length(useInherited) < nargs)
@@ -241,8 +246,6 @@
     if(length(direct) && doMtable) {
         assign(label, direct[[1L]], envir = mtable)
         return(direct)
-##M	  ## else must be returnAll, so include the group direct method
-##M	  methods <- direct
     }
     ## else, continue because we may want all defined methods
   }
@@ -258,30 +261,36 @@
       for(i in 2:nargs) {
           cc <- classDefs[[i]] <- getClass(classes[[i]], .Force = TRUE)
           allLabels <- if(missing(useInherited) || useInherited[[i]])
-              c(cc@className, .eligibleSuperClasses(cc@contains, simpleOnly), "ANY") else cc@className
+              c(cc@className, .eligibleSuperClasses(cc@contains, simpleOnly),
+                "ANY") else cc@className
           labels <- outerLabels(labels, allLabels)
           supersList <- c(supersList, list(allLabels))
       }
   }
   if(!returnAll)
     labels <- labels[-1L] # drop exact match
-  labels <- unique(labels) # only needed while contains slot can have duplicates(!)
+  labels <- unique(labels)# only needed while contains slot can have duplicates(!)
+  if(verbose) cat(" .fI> length(unique(method labels)) = ", length(labels))
   allMethods <- objects(table, all.names=TRUE)
   found <- match(labels, allMethods, 0L) > 0L
   for(label in labels[found])
       methods[[label]] <- get(label, envir = table)
+  if(verbose) cat(" >> found: ", nFound, "\n")
   if(hasGroup) {
       ##  add the  group methods recursively found but each time
       ## only those not already included in found.
       groupmethods <- .getGroupMethods(labels, groupGenerics, found)
-      fromGroup <- c(rep(FALSE, length(methods)), rep(TRUE, length(groupmethods)))
+      fromGroup <- c(rep(FALSE, length(methods)),
+                     rep(TRUE,  length(groupmethods)))
+      if(verbose) cat(" .fI> #{additional group methods}:",
+                      length(groupmethods),"\n")
       methods <- c(methods, groupmethods)
   }
   else
       fromGroup <- rep(FALSE, length(methods))
-  ## remove default if its not the only method
+  ## remove default (ANY,..,ANY) if its not the only method:
   if(length(methods) > 1L && !returnAll) {
-      defaultLabel <- paste(rep("ANY", nargs), collapse = "#")
+      defaultLabel <- paste(rep.int("ANY", nargs), collapse = "#")
       i <- match(defaultLabel, names(methods), 0L)
       if(i > 0L) {
           methods <- methods[-i]
@@ -291,8 +300,14 @@
   if(doExcluded)
     methods <- methods[is.na(match(names(methods), as.character(excluded)))]
   if(length(methods) > 1L && !returnAll) {
-      select <- .getBestMethods(methods, supersList, fromGroup)
+      if(verbose) cat(" .fI> length(methods) = ", length(methods),
+                      " --> ambiguity\n")
+      ## have ambiguity to resolve
+      select <- .getBestMethods(methods, supersList, fromGroup, verbose=verbose)
+      ##         --------------
       if(length(select) > 1L) {
+        if(verbose) cat(" .fI> found", length(select)," best methods\n")
+
         target <- .sigLabel(classes)
         condAction <- getOption("ambiguousMethodSelection")
         if(is.null(condAction))
@@ -301,9 +316,11 @@
           stop(gettextf("The \"ambiguousMethodSelection\" option should be a function to be called as the condition action; got an object of class \"%s\"",
                          class(condAction)), domain = NA)
 
-	select <- withCallingHandlers(.disambiguateMethods(classes, select, fdef@generic,
-                                                           methods, supersList, fromGroup, classDefs),
-                                      ambiguousMethodSelection=condAction)
+	select <- withCallingHandlers(
+			.disambiguateMethods(classes, select, fdef@generic,
+					     methods, supersList, fromGroup,
+					     classDefs, verbose),
+				      ambiguousMethodSelection=condAction)
       }
       methods <- methods[select]
   }
@@ -315,6 +332,7 @@
                       fdef@generic), domain = NA)
   }
   if(doMtable && length(methods)) { ## Cache the newly found one
+      if(verbose) cat(" .fI> caching newly found methods ..\n")
     tlabel <- .sigLabel(classes)
     m <- methods[[1L]]
     if(is(m, "MethodDefinition"))  { # else, a primitive
@@ -465,9 +483,10 @@
     (1:n)[best]
 }
 
-.getBestMethods <- function(methods, supersList, fromGroup) {
-    n <- length(methods)
-    nArg <- length(supersList)
+## currently called exactly once from .findInheritedMethods() :
+.getBestMethods <- function(methods, supersList, fromGroup, verbose = FALSE) {
+    n <- length(methods)      ## >= 2
+    nArg <- length(supersList)## >= 1
     sigs <- matrix("ANY", nArg, n)
     for(i in 1:n) {
       sig <- methods[[i]]@defined
@@ -479,9 +498,10 @@
     if(nArg < 2) { # the easy case
       return(which.min(match(sigs[1L,], supersList[[1L]])))
     }
-    best <- rep(TRUE, n)
-    dominated <- rep(FALSE, n)
-    pos <- matrix(0,nArg, n)
+    ## else  nArg >= 2
+    best      <- rep.int(TRUE,  n)
+    dominated <- rep.int(FALSE, n)
+    pos <- matrix(0L, nArg, n)
     for(i in 1:nArg) {
       posi <- match(sigs[i,], supersList[[i]])
       pos[i,] <- posi
@@ -497,6 +517,12 @@
           dominated[i] <- TRUE
       }
     }
+    if(verbose)
+	cat(if(any(best)) paste(" have best ones",
+				paste(format(seqn[best]),collapse=","))
+	    else if(any(dominated)) paste(" can eliminate dominated ones,",
+				    paste(format(seqn[dominated]),collapse=",")),
+	    "\n")
     ## a best method is as early in the superclasses as any other on all arguments
     ## Because the signatures are not duplicated, there can be at most one.
     if(any(best))
@@ -506,15 +532,19 @@
       seqn[!dominated]
 }
 
-.disambiguateMethods <- function(target, which, generic, methods, supersList, fromGroup, classDefs) {
+## currently called exactly once from .findInheritedMethods() :
+.disambiguateMethods <- function(target, which, generic, methods, supersList,
+                                 fromGroup, classDefs, verbose)
+{
   ## save full set of possibilities for condition object
   candidates <- methods[which]
   note <- character()
   ## choose based on total generational distance
-  which2 <- .leastMethodDistance(methods[which],supersList, classDefs, fromGroup[which])
+  which2 <- .leastMethodDistance(candidates, supersList, classDefs,
+                                 fromGroup[which])
   if(length(which2) < length(which)) {
     note <- c(note, gettextf("Selecting %d methods of min. distance", which2))
-    which <- which2
+    which <- which[which2]
   }
   ## if some are group methods, eliminate those
   if(length(which) > 1 && any(fromGroup[which]) && !all(fromGroup[which])) {
@@ -523,10 +553,13 @@
   }
   ## prefer partially direct methods
   if(length(which) > 1) {
-    direct <- sapply(methods[which], function(x, target) (is(x, "MethodDefinition") && any(target == x@defined)), target = target)
+    direct <- sapply(methods[which], function(x, target)
+                     (is(x, "MethodDefinition") && any(target == x@defined)),
+                     target = target)
     if(any(direct) && !all(direct)) {
       which <- which[direct]
-      note <- c(note, gettextf("Selecting %d partially exact-matching method(s)", length(which)))
+      note <- c(note, gettextf("Selecting %d partially exact-matching method(s)",
+                               length(which)))
     }
   }
   which <- which[[1L]]
@@ -536,11 +569,15 @@
   condObject <- simpleCondition(message)
   ## would be nice to use an S4 class eventually
   class(condObject) <- c("ambiguousMethodSelection", class(condObject))
-  attr(condObject, "candidates") <- names(candidates)
-  attr(condObject, "target") <- .sigLabel(target)
-  attr(condObject, "selected") <- selected
-  attr(condObject, "generic") <- generic
-  attr(condObject, "notes") <- if(length(note)) paste(note, collapse ="; ") else ""
+  attributes(condObject) <-
+      c(attributes(condObject),
+	list("candidates" = names(candidates),
+	     "target"	  = .sigLabel(target),
+	     "selected"	  = selected,
+	     "generic"	  = generic,
+	     "notes" = if(length(note)) paste(note, collapse ="; ") else ""))
+  if(verbose) cat("   .disambiguateM*(): notes =\n\t",
+		  attr(condObject, "notes"), "\n")
   signalCondition(condObject)
   which
 }
@@ -548,7 +585,8 @@
 # add objects to the generic function's environment that allow
 # table-based dispatch of methods
 .setupMethodsTables <- function(generic,
-                                initialize = !exists(".MTable", envir = env, inherits = FALSE)) {
+		initialize = !exists(".MTable", envir = env, inherits = FALSE))
+{
     env <- environment(generic)
     if(initialize || !exists(".SigLength", envir = env, inherits = FALSE)) {
         nsig <- 1
@@ -569,9 +607,9 @@
         mlist <- generic@default # either a list with the default or an empty list
         mtable <- .mlistAddToTable(generic, mlist) # by default, adds to an empty table
         assign(".MTable", mtable, envir = env)
-    } # else the current .MTable
-    else
-      mtable <- getMethodsForDispatch(generic)
+    }
+    else ## the current .MTable
+        mtable <- getMethodsForDispatch(generic)
     .resetInheritedMethods(env, mtable)
     if(is(generic, "groupGenericFunction")) {
         for(gp in generic@groupMembers) {
@@ -825,7 +863,7 @@ outerLabels <- function(labels, new) {
     ## and so must change if that does (e.g. to include package)
     n <- length(labels)
     m <- length(new)
-    paste(labels[rep(1L:n, rep(m,n))], new[rep(1L:m,n)], sep ="#")
+    paste(labels[rep.int(1L:n, rep.int(m,n))], new[rep.int(1L:m,n)], sep ="#")
 }
 
 
