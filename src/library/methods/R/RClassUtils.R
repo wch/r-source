@@ -1959,8 +1959,41 @@ substituteFunctionArgs <-
           NULL
     }
 
-classToAM <- function(classDef, includeSubclasses = FALSE, short = FALSE,
-                      withSlots = FALSE) { # withSlots not used yet, maybe never
+classesToAM <- function(classes, includeSubclasses = FALSE,
+                        abbreviate = 2) {
+  .mergeMatrices <- function(m1, m2) {
+    if(nrow(m1) == 0)
+      return(m2)
+    dn1 <- dimnames(m1)
+    dn2 <- dimnames(m2)
+    rows <- unique(c(dn1[[1]], dn2[[1]]))
+    columns <- unique(c(dn1[[2]], dn2[[2]]))
+    value <- matrix(0, length(rows), length(columns), dimnames = list(rows, columns))
+    value[dn1[[1]], dn1[[2]] ] <- m1
+    value[dn2[[1]], dn2[[2]] ] <- m2
+    value
+  }
+  if(length(includeSubclasses) == 1)
+    includeSubclasses <- rep(includeSubclasses, length(classes))
+  if(!is(includeSubclasses, "logical") || length(includeSubclasses) != length(classes))
+    stop("argument includeSubclasses must be a logical, either one value or a vector of the same length as argument classes")
+  value <- matrix(0,0,0)
+  for(i in seq_along(classes)) {
+    class <- classes[[i]] # to allow for package attribute
+    classDef <- getClass(class) # throws an error if undefined.  Make a warning?
+    value <- .mergeMatrices(value, .oneClassToAM(classDef, includeSubclasses[[i]]))
+  }
+  abbr <- match(as.integer(abbreviate), 0:3)
+  if(length(abbr) != 1 || is.na(abbr))
+    stop("Argument abbreviate must be 0, 1, 2, or 3")
+  if(abbr %% 2)
+    dimnames(value)[[1]] <- base::abbreviate(dimnames(value)[[1]])
+  if(abbr %/% 2)
+    dimnames(value)[[2]] <- base::abbreviate(dimnames(value)[[2]])
+  value
+}
+
+.oneClassToAM <- function(classDef, includeSubclasses = FALSE, short = FALSE) { 
     findEdges <- function(extensions) {
         superclasses <- names(extensions)
         edges <- numeric()
