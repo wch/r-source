@@ -26,11 +26,6 @@ FFLAGS=$(PKG_FFLAGS) $(DEBUGFLAG) $(FOPTFLAG)
 DLLLIBS=-L$(RHOME)/$(IMPDIR) $(PKG_LIBS) -lR
 RESFLAGS=-I $(RHOME)/include
 
-# for use by Makevars.win
-#R_HOME=$(RHOME)
-#SHLIB=$(DLLNAME).dll
-#SAFE_FFLAGS=$(FOPTFLAG) $(DEBUGFLAG) -ffloat-store
-
 CSOURCES=$(wildcard -f *.c)
 FSOURCES=$(wildcard -f *.f)
 OBJECTS=$(foreach i,$(CSOURCES) $(FSOURCES),$(basename $i).o)
