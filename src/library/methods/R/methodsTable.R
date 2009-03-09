@@ -231,7 +231,6 @@
 	  paste(c("f","T")[1+c(hasGroup, doMtable, doExcluded)],collapse=", "),
 	  ")\n", sep='')
   nargs <- length(classes)
-  methods <- list()
   if(!missing(useInherited) && length(useInherited) < nargs)
     useInherited <- rep(useInherited, length.out = nargs)
   if(hasGroup && !doExcluded) {
@@ -249,13 +248,16 @@
     }
     ## else, continue because we may want all defined methods
   }
-  def <- getClass(classes[[1L]], .Force = TRUE)
+  cl1 <- classes[[1L]]
+  def <- getClass(cl1, .Force = TRUE)
   labels <-
       if(missing(useInherited) || useInherited[[1L]])
-          c(classes[[1L]], .eligibleSuperClasses(def@contains, simpleOnly), "ANY")
-      else classes[[1L]]
+          c(cl1, .eligibleSuperClasses(def@contains, simpleOnly),
+            ## comes last:
+            "ANY")
+      else cl1
   supersList <- list(labels)
-  if(nargs > 1) {
+  if(nargs > 1) { ## further arguments
       classDefs <- vector("list", nargs)
       classDefs[[1L]] <- def
       for(i in 2:nargs) {
@@ -273,7 +275,9 @@
   if(verbose) cat(" .fI> length(unique(method labels)) = ", length(labels))
   allMethods <- objects(table, all.names=TRUE)
   found <- match(labels, allMethods, 0L) > 0L
-  for(label in labels[found])
+  nFound <- length(lab.found <- labels[found])
+  methods <- list() # =?= vector("list", nFound) ; but fails??
+  for(label in lab.found)
       methods[[label]] <- get(label, envir = table)
   if(verbose) cat(" >> found: ", nFound, "\n")
   if(hasGroup) {
@@ -355,7 +359,7 @@
   }
   else {
     possible <- attr(cond, "candidates")
-    message(gettextf('Note: Method with signature "%s" chosen for function "%s", target signature "%s".  %s would also be valid',
+    message(gettextf('Note: Method with signature "%s" chosen for function "%s",\n target signature "%s".\n %s would also be valid',
                      selected, attr(cond, "generic"), attr(cond, "target"),
                      paste('"', possible[is.na(match(possible, selected))], '"',
                            sep="", collapse=", ")),
@@ -427,16 +431,15 @@
     stop("Internal error in finding inherited methods; didn't return a unique method")
 }
 
-.findMethodInTable <- function(signature, table, fdef = NULL) {
-  allMethods <- objects(table, all.names=TRUE)
-  if(is(fdef, "genericFunction"))
-    signature <- .matchSigLength(signature, fdef, environment(fdef), FALSE)
-  label <- .sigLabel(signature)
-  found <- match(label, allMethods, 0L)
-  if(found > 0L)
-    get(label, envir = table)
-  else
-    NULL
+.findMethodInTable <- function(signature, table, fdef = NULL)
+{
+    if(is(fdef, "genericFunction"))
+        signature <- .matchSigLength(signature, fdef, environment(fdef), FALSE)
+    label <- .sigLabel(signature)
+##     allMethods <- objects(table, all.names=TRUE)
+##     if(match(label, allMethods, nomatch = 0L))
+    if(exists(label, envir = table, inherits = FALSE))
+        get(label, envir = table) ## else NULL
 }
 
 ## inheritance distances:  0 for the class, 1 for immediate contains, 2 for other contains
@@ -503,11 +506,10 @@
     dominated <- rep.int(FALSE, n)
     pos <- matrix(0L, nArg, n)
     for(i in 1:nArg) {
-      posi <- match(sigs[i,], supersList[[i]])
-      pos[i,] <- posi
+        pos[i,] <- match(sigs[i,], supersList[[i]])
     }
     ## pairwise comparison of columns of pos.  Any way to vectorize?
-    seqn <- 1:n
+    seqn <- seq_len(n)
     for(i in seqn) {
       for(j in seqn[-i]) {
         diffs <- pos[,j] - pos[,i]
@@ -564,9 +566,10 @@
   }
   which <- which[[1L]]
   selected <- names(methods)[[which]]
-  message <- gettextf("Choosing method %s from %d ambiguous possibilities",
+  ## FIXME (?): This is not shown to the user
+  msg <- gettextf("Choosing method %s from %d ambiguous possibilities",
                       selected, length(candidates))
-  condObject <- simpleCondition(message)
+  condObject <- simpleCondition(msg)
   ## would be nice to use an S4 class eventually
   class(condObject) <- c("ambiguousMethodSelection", class(condObject))
   attributes(condObject) <-
@@ -615,7 +618,7 @@
         for(gp in generic@groupMembers) {
             gpDef <- getGeneric(gp)
             if(is(gpDef, "genericFunction"))
-              .getMethodsTable(gpDef) # force initialization w. group methods
+                .getMethodsTable(gpDef) # force initialization w. group methods
         }
     }
 }
@@ -785,9 +788,9 @@ useMTable <- function(onOff = NA)
 {
     name <- if(inherited) ".AllMTable" else ".MTable"
     if(check && !exists(name, envir = env, inherits = FALSE)) {
-        .setupMethodsTables(fdef)
-        if(!exists(name, envir = env, inherits = FALSE))
-         stop("Invalid methods table request")
+	.setupMethodsTables(fdef, initialize = TRUE)
+	if(!exists(name, envir = env, inherits = FALSE))
+	    stop("Invalid methods table request")
     }
     get(name, envir = env)
 }

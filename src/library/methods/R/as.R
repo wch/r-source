@@ -370,7 +370,7 @@ setAs <-
     if(is.null(cdef))
         return(FALSE) # only for booting the methods package?
     prevCoerce <- !is.null(selectMethod("coerce", sig, TRUE, FALSE,
-                                      fdef = cdef))
+                                        fdef = cdef))
     rdef <- getGeneric("coerce<-", where = where)
     if(is.null(rdef))
         return(FALSE) # only for booting the methods package?

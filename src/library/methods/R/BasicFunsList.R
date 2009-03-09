@@ -164,7 +164,7 @@ genericForPrimitive <- function(f, where = topenv(parent.frame())) {
 }
 
 ## setGenericForPrimitive <- function(f, value, where = topenv(parent.frame()),
-##                                    methods = getMethods(value)) {
+##				      methods = getMethods(value)) {
 ##     env <- .findBasicFuns(where)
 ##     funs <- get(".BasicFunsList", envir = env)
 ##     if(is.null(elNamed(funs, f)))

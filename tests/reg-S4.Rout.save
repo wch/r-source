@@ -1,5 +1,5 @@
 
-R version 2.9.0 Under development (unstable) (2009-03-03 r48046)
+R version 2.9.0 Under development (unstable) (2009-03-09 r48086)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -290,7 +290,9 @@ Slot "y":
 + }
 > 
 > assertError(b & b)
-Note: Method with signature "brob#ANY" chosen for function "&", target signature "brob#brob".  "ANY#brob" would also be valid
+Note: Method with signature "brob#ANY" chosen for function "&",
+ target signature "brob#brob".
+ "ANY#brob" would also be valid
 > assertError(b | 1)
 > assertError(TRUE & b)
 > 

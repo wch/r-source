@@ -220,7 +220,7 @@
 	       where = envir)
     ## and its default methods:
     setMethod("cbind2", signature(x = "ANY", y = "ANY"),
-	      function(x,y) .Internal(cbind(deparse.level = 0, x,y)))
+	      function(x,y) .Internal(cbind(deparse.level = 0, x, y)))
     setMethod("cbind2", signature(x = "ANY", y = "missing"),
 	      function(x,y) .Internal(cbind(deparse.level = 0, x)))
 
@@ -228,7 +228,7 @@
 	       where = envir)
     ## and its default methods:
     setMethod("rbind2", signature(x = "ANY", y = "ANY"),
-	      function(x,y) .Internal(rbind(deparse.level = 0, x,y)))
+	      function(x,y) .Internal(rbind(deparse.level = 0, x, y)))
     setMethod("rbind2", signature(x = "ANY", y = "missing"),
 	      function(x,y) .Internal(rbind(deparse.level = 0, x)))
     .InitStructureMethods(envir)
