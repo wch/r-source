@@ -15,7 +15,7 @@
 \usage{
 isS4(object)
 
-asS4(object, flag = TRUE, complete = 1)
+asS4(object, flag = TRUE, complete = TRUE)
 }
 \arguments{
   \item{object}{ Any R object. }
