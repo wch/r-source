@@ -64,14 +64,11 @@ c     remaining vertices
 
       subroutine ehg125(p,nv,v,vhit,nvmax,d,k,t,r,s,f,l,u)
       logical i1,i2,match
-      integer d,execnt,h,i,i3,j,k,m,mm,nv,nvmax,p,r,s
+      integer d,h,i,i3,j,k,m,mm,nv,nvmax,p,r,s
       integer f(r,0:1,s),l(r,0:1,s),u(r,0:1,s),vhit(nvmax)
       DOUBLE PRECISION t
       DOUBLE PRECISION v(nvmax,d)
       external ehg182
-      save execnt
-      data execnt /0/
-      execnt=execnt+1
       h=nv
       do 3 i=1,r
 	 do 4 j=1,s
@@ -130,12 +127,9 @@ c           bottom of while loop
 
       integer function ehg138(i,z,a,xi,lo,hi,ncmax)
       logical i1
-      integer execnt,i,j,ncmax
+      integer i,j,ncmax
       integer a(ncmax),hi(ncmax),lo(ncmax)
       DOUBLE PRECISION xi(ncmax),z(8)
-      save execnt
-      data execnt /0/
-      execnt=execnt+1
 c     descend tree until leaf or ambiguous
       j=i
 c     top of while loop
@@ -413,7 +407,12 @@ c     solve least squares problem
 	 dgamma(j)=i2
    26 continue
       do 27 j=0,od
-	 s(j)=ddot(k,e(j+1,1),15,dgamma,1)
+c        bug fix 2006-07-04 for k=1, od>1.   (thanks btyner@gmail.com)
+         if(j.lt.k)then
+            s(j)=ddot(k,e(j+1,1),15,dgamma,1)
+         else
+            s(j)=0.d0
+         end if
    27 continue
       return
       end
@@ -422,7 +421,7 @@ c     solve least squares problem
      +     nvmax,nf,f,a,c,hi,lo,pi,psi,v,vhit,vval,xi,dist,eta,b,ntol,
      +     fd,w,vval2,rcond,sing,dd,tdeg,cdeg,lq,lf,setlf)
       logical setlf
-      integer identi,d,dd,execnt,i1,i2,j,k,kernel,n,nc,ncmax,nf,ntol,nv,
+      integer identi,d,dd,i1,i2,j,k,kernel,n,nc,ncmax,nf,ntol,nv,
      +     nvmax,sing,tdeg,vc
       integer lq(nvmax,nf),a(ncmax),c(vc,ncmax),cdeg(8),hi(ncmax),
      +     lo(ncmax),pi(n),psi(n),vhit(nvmax)
@@ -433,11 +432,8 @@ c     solve least squares problem
       external ehg126,ehg182,ehg139,ehg124
       double precision dnrm2
       external dnrm2
-      save execnt
-      data execnt /0/
 c     Identity -> identi
 c     X -> b
-      execnt=execnt+1
       if(.not.(d.le.8))then
 	 call ehg182(101)
       end if
@@ -493,11 +489,8 @@ c Var
       end
 
       subroutine ehg140(iw,i,j)
-      integer execnt,i,j
+      integer i,j
       integer iw(i)
-      save execnt
-      data execnt /0/
-      execnt=execnt+1
       iw(i)=j
       return
       end
@@ -559,14 +552,11 @@ c     coef, d, deg, del
       end
 
       subroutine lowesc(n,l,ll,trl,delta1,delta2)
-      integer execnt,i,j,n
+      integer i,j,n
       double precision delta1,delta2,trl
       double precision l(n,n),ll(n,n)
       double precision ddot
       external ddot
-      save execnt
-      data execnt /0/
-      execnt=execnt+1
 c     compute $LL~=~(I-L)(I-L)'$
       do 3 i=1,n
 	 l(i,i)=l(i,i)-1
@@ -782,14 +772,11 @@ c Args
      +     vval2(0:d,nvmax), lf(0:d,nvmax,nf)
       integer lq(nvmax,nf),a(ncmax),c(vc,ncmax),lo(ncmax),hi(ncmax)
 c Var
-      integer lq1,execnt,i,i1,i2,j,p
+      integer lq1,i,i1,i2,j,p
       double precision zi(8)
       double precision ehg128
       external ehg128
 
-      save execnt
-      data execnt /0/
-      execnt=execnt+1
       do 3 j=1,n
 	 do 4 i2=1,nv
 	    do 5 i1=0,d
@@ -824,12 +811,9 @@ c           bottom of while loop
       end
 
       subroutine ehg196(tau,d,f,trl)
-      integer d,dka,dkb,execnt,tau
+      integer d,dka,dkb,tau
       double precision alpha,f,trl,trla,trlb
       external ehg197
-      save execnt
-      data execnt /0/
-      execnt=execnt+1
       call ehg197(1,tau,d,f,dka,trla)
       call ehg197(2,tau,d,f,dkb,trlb)
       alpha=dble(tau-dka)/dble(dkb-dka)
@@ -882,16 +866,13 @@ c Args
       DOUBLE PRECISION z(d),xi(ncmax),v(nvmax,d), vval(0:d,nvmax)
 c Vars
       logical i2,i3,i4,i5,i6,i7,i8,i9,i10
-      integer execnt,i,i1,i11,i12,ig,ii,j,lg,ll,m,nt,ur
+      integer i,i1,i11,i12,ig,ii,j,lg,ll,m,nt,ur
       integer t(20)
       DOUBLE PRECISION ge,gn,gs,gw,gpe,gpn,gps,gpw,h,phi0,phi1,
      +     psi0,psi1,s,sew,sns,v0,v1,xibar
       DOUBLE PRECISION g(0:8,256),g0(0:8),g1(0:8)
 
       external ehg182,ehg184
-      save execnt
-      data execnt /0/
-      execnt=execnt+1
 c     locate enclosing cell
       nt=1
       t(nt)=1
@@ -1236,7 +1217,7 @@ c     f = span
 c     nf = min(n, floor(f * n))
       subroutine ehg136(u,lm,m,n,d,nf,f,x,psi,y,rw,kernel,k,dist,eta,b,
      +     od,o,ihat,w,rcond,sing,dd,tdeg,cdeg,s)
-      integer identi,d,dd,execnt,i,i1,ihat,info,j,k,kernel,l,lm,m,n,nf,
+      integer identi,d,dd,i,i1,ihat,info,j,k,kernel,l,lm,m,n,nf,
      +     od,sing,tdeg
       integer cdeg(8),psi(n)
       double precision f,i2,rcond,scale,tol
@@ -1248,15 +1229,11 @@ c     nf = min(n, floor(f * n))
       double precision ddot
       external ddot
 
-      save execnt
-      data execnt /0/
-
 c     V -> g
 c     U -> e
 c     Identity -> identi
 c     L -> o
 c     X -> b
-      execnt=execnt+1
       if(k .gt. nf-1) call ehg182(104)
       if(k .gt. 15)   call ehg182(105)
       do 3 identi=1,n
@@ -1283,6 +1260,7 @@ c           top of while loop
 	       i=i+1
 	       if(.not.(i.lt.nf))then
 		  call ehg182(123)
+c next line is not in current dloess
 		  goto 7
 	       end if
 	       goto 6
@@ -1356,7 +1334,7 @@ c somewhat similar to ehg136
      +     dist,phi,eta,b,od,w,diagl,vval2,ncmax,vc,a,xi,lo,hi,c,vhit,
      +     rcond,sing,dd,tdeg,cdeg,lq,lf,setlf,s)
       logical setlf
-      integer identi,d,dd,execnt,i,i2,i3,i5,i6,ii,ileaf,info,j,k,kernel,
+      integer identi,d,dd,i,i2,i3,i5,i6,ii,ileaf,info,j,k,kernel,
      +     l,n,ncmax,nf,nleaf,nv,nvmax,od,sing,tdeg,vc
       integer lq(nvmax,nf),a(ncmax),c(vc,ncmax),cdeg(8),hi(ncmax),
      +     leaf(256),lo(ncmax),pi(n),psi(n),vhit(nvmax)
@@ -1373,12 +1351,9 @@ c somewhat similar to ehg136
       DOUBLE PRECISION DDOT
       external DDOT
 
-      save execnt
-      data execnt /0/
 c     V -> e
 c     Identity -> identi
 c     X -> b
-      execnt=execnt+1
 c     l2fit with trace(L)
       if(k .gt. nf-1) call ehg182(104)
       if(k .gt. 15)   call ehg182(105)
@@ -1438,7 +1413,12 @@ c                    $eta = Q sup T W e sub i$
 		       DGAMMA(j)=i4
    15                continue
 		     do 16 j=1,d+1
-			vval2(j-1,l)=DDOT(k,e(j,1),15,DGAMMA,1)
+c                       bug fix 2006-07-15 for k=1, od>1.   (thanks btyner@gmail.com)
+                        if(j.le.k)then
+                           vval2(j-1,l)=DDOT(k,e(j,1),15,DGAMMA,1)
+                        else
+                           vval2(j-1,l)=0.0d0
+                        end if
    16                continue
 		     do 17 i5=1,d
 			z(i5)=x(pi(ii),i5)
@@ -1483,10 +1463,14 @@ c           $Lf sub {:,l,:} = V SIGMA sup {+} U sup T Q sup T W$
 	       do 25 i5=1,nf
 		  eta(i5)=eta(i5)*(scale*w(i5))
    25          continue
-	       do 26 i=1,nf
-		  i7=eta(i)
-		  do 27 i5=0,d
-		     lf(i5,l,i)=lf(i5,l,i)+e(1+i5,j)*i7
+               do 26 i=1,nf
+                  i7=eta(i)
+                  do 27 i5=0,d
+                     if(i5.lt.k)then
+                        lf(i5,l,i)=lf(i5,l,i)+e(1+i5,j)*i7
+                     else
+                        lf(i5,l,i)=0
+                     end if
    27             continue
    26          continue
    22       continue
@@ -1515,15 +1499,11 @@ c           $Lf sub {:,l,:} = V SIGMA sup {+} U sup T Q sup T W$
 c Var
       DOUBLE PRECISION trl
       logical setlf
-      integer execnt
 
       integer ifloor
       external ifloor
       external ehg131,ehg182,ehg183
 
-      save execnt
-      data execnt /0/
-      execnt=execnt+1
       if(.not.(iv(28).ne.173))then
 	 call ehg182(174)
       end if
@@ -1566,18 +1546,15 @@ c ------     called only by loess_workspace()  in ./loessc.c
       logical setlf
       double precision f, v(lv)
 
-      integer bound,execnt,i,i1,i2,j,ncmax,nf,vc
+      integer bound,i,i1,i2,j,ncmax,nf,vc
       external ehg182
       integer ifloor
       external ifloor
-      save execnt
-      data execnt /0/
 c
 c     unnecessary initialization of i1 to keep g77 -Wall happy
 c
       i1 = 0
 c     version -> versio
-      execnt=execnt+1
       if(.not.(versio.eq.106))then
 	 call ehg182(100)
       end if
@@ -1670,12 +1647,8 @@ c     initialize permutation
       integer iv(*)
       double precision s(m),wv(*),z(m,1)
 
-      integer execnt
       external ehg133,ehg182
 
-      save execnt
-      data execnt /0/
-      execnt=execnt+1
       if(.not.(iv(28).ne.172))then
 	 call ehg182(172)
       end if
@@ -1695,12 +1668,8 @@ c     m = number of x values at which to evaluate
       double precision xx(*),yy(*),ww(*),wv(*),z(m,1),l(m,*),s(m)
 
       logical i1
-      integer execnt
 
       external ehg182,ehg136
-      save execnt
-      data execnt /0/
-      execnt=execnt+1
       if(171.le.iv(28))then
 	 i1=(iv(28).le.174)
       else
@@ -1729,11 +1698,8 @@ c              w,     rcond,sing,    dd,    tdeg,cdeg,  s)
       integer iv(*)
       double precision l(m,*),wv(*),z(m,1)
 
-      integer execnt
       external ehg182,ehg191
-      save execnt
-      data execnt /0/
-      execnt=execnt+1
+
       if(.not.(iv(28).ne.172))then
 	 call ehg182(172)
       end if
@@ -1754,11 +1720,7 @@ c              w,     rcond,sing,    dd,    tdeg,cdeg,  s)
       integer iv(*)
       DOUBLE PRECISION yy(*),wv(*)
 
-      integer execnt
       external ehg182,ehg192
-      save execnt
-      data execnt /0/
-      execnt=execnt+1
       if(.not.(iv(28).ne.172))then
 	 call ehg182(172)
       end if
@@ -1834,15 +1796,12 @@ c     partial sort to find 6*mad
       double precision y(n),yhat(n),pwgts(n),rwgts(n),ytilde(n)
 c Var
       double precision c,i1,i4,mad
-      integer identi,execnt,i2,i3,i5,m
+      integer identi,i2,i3,i5,m
 
       external ehg106
       integer ifloor
       external ifloor
-      save execnt
-      data execnt /0/
 c     Identity -> identi
-      execnt=execnt+1
 c     median absolute deviation
       do 3 i5=1,n
 	 ytilde(i5)=dabs(y(i5)-yhat(i5))*dsqrt(pwgts(i5))
@@ -1885,22 +1844,19 @@ c     pseudovalues
       end
 
       subroutine ehg124(ll,uu,d,n,nv,nc,ncmax,vc,x,pi,a,xi,lo,hi,c,v,
-     +     vhit,nvmax,fc,fd,dd)
+     +	   vhit,nvmax,fc,fd,dd)
 
       integer ll,uu,d,n,nv,nc,ncmax,vc,nvmax,fc,dd
       integer a(ncmax),c(vc,ncmax),hi(ncmax),lo(ncmax),pi(n),vhit(nvmax)
       DOUBLE PRECISION fd, v(nvmax,d),x(n,d),xi(ncmax)
 
       logical i1,i2,i3,leaf
-      integer execnt,i4,inorm2,k,l,m,p,u
+      integer i4,inorm2,k,l,m,p,u, upper, lower, check, offset
       DOUBLE PRECISION diam,diag(8),sigma(8)
 
       external ehg125,ehg106,ehg129
       integer IDAMAX
       external IDAMAX
-      save execnt
-      data execnt /0/
-      execnt=execnt+1
       p=1
       l=ll
       u=uu
@@ -1910,11 +1866,11 @@ c     top of while loop
     3 if(.not.(p.le.nc))goto 4
 	 do 5 i4=1,dd
 	    diag(i4)=v(c(vc,p),i4)-v(c(1,p),i4)
-    5    continue
+    5	 continue
 	 diam=0
 	 do 6 inorm2=1,dd
 	    diam=diam+diag(inorm2)**2
-    6    continue
+    6	 continue
 	 diam=DSQRT(diam)
 	 if((u-l)+1.le.fc)then
 	    i1=.true.
@@ -1936,18 +1892,35 @@ c     top of while loop
 	    k=IDAMAX(dd,sigma,1)
 	    m=DBLE(l+u)/2.D0
 	    call ehg106(l,u,m,1,x(1,k),pi,n)
-c           all ties go with hi son
-c           top of while loop
-    7       if(1.lt.m)then
-	       i3=(x(pi(m-1),k).eq.x(pi(m),k))
-	    else
-	       i3=.false.
-	    end if
-	    if(.not.(i3))goto 8
-	       m=m-1
-	       goto 7
-c           bottom of while loop
-    8       if(v(c(1,p),k).eq.x(pi(m),k))then
+
+c	    all ties go with hi son
+c	    top of while loop
+c     bug fix from btyner@gmail.com 2006-07-20
+            offset = 0
+ 7          if(((m+offset).ge.u).or.((m+offset).lt.l))goto 8
+            if(offset .lt. 0)then
+               lower = l
+               check = m + offset
+               upper = check
+            else
+               lower = m + offset + 1
+               check = lower
+               upper = u
+            end if
+            call ehg106(lower,upper,check,1,x(1,k),pi,n)
+            if(x(pi(m + offset),k).eq.x(pi(m+offset+1),k))then
+               offset = -offset
+               if(offset .ge. 0) then
+                  offset = offset + 1
+               end if
+               goto 7
+            else
+               m = m + offset
+               goto 8
+            end if
+
+c	    bottom of while loop
+    8	    if(v(c(1,p),k).eq.x(pi(m),k))then
 	       leaf=.true.
 	    else
 	       leaf=(v(c(vc,p),k).eq.x(pi(m),k))
@@ -1958,18 +1931,18 @@ c           bottom of while loop
 	 else
 	    a(p)=k
 	    xi(p)=x(pi(m),k)
-c           left son
+c	    left son
 	    nc=nc+1
 	    lo(p)=nc
 	    lo(nc)=l
 	    hi(nc)=m
-c           right son
+c	    right son
 	    nc=nc+1
 	    hi(p)=nc
 	    lo(nc)=m+1
 	    hi(nc)=u
 	    call ehg125(p,nv,v,vhit,nvmax,d,k,xi(p),2**(k-1),2**(d-k),
-     +                  c(1,p),c(1,lo(p)),c(1,hi(p)))
+     +			c(1,p),c(1,lo(p)),c(1,hi(p)))
 	 end if
 	 p=p+1
 	 l=lo(p)
@@ -2013,13 +1986,10 @@ c {called only from ehg127}  purpose...?...
       integer leaf(256),a(ncmax),hi(ncmax),lo(ncmax),pstack(20)
       DOUBLE PRECISION z(d),xi(ncmax)
 
-      integer execnt,p,stackt
+      integer p,stackt
 
       external ehg182
-      save execnt
-      data execnt /0/
 c     stacktop -> stackt
-      execnt=execnt+1
 c     find leaf cells affected by $z$
       stackt=0
       p=1

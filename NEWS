@@ -489,6 +489,11 @@ NEW FEATURES
     o	R-Forge has been added to R_HOME/etc/repositories, so it will
     	be available interactively in setRepositories().
 
+    o	The compiled loess() code had been updated to the current
+	version of dloess from Netlib.  This includes patches from Ben
+	Tyner which correct some errors when degree = 0 and hence
+	solve PR#13570.
+
 
 INSTALLATION
 
