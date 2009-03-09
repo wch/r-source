@@ -841,9 +841,9 @@ cacheGenericsMetaData <- function(f, fdef, attach = TRUE,
     deflt <- finalDefaultMethod(fdef@default) #only to detect primitives
     if(is.primitive(deflt)) {
 	if(missing(methods)) ## "reset"
-	    setPrimitiveMethods(f, deflt, code, fdef, NULL)
+	    setPrimitiveMethods(f, deflt, "reset", fdef, NULL)
 	else ## "set"
-	    setPrimitiveMethods(f, deflt, code, fdef, methods)
+	    setPrimitiveMethods(f, deflt, "set", fdef, methods)
     }
     else if(isGroup(f, fdef = fdef)) {
 	members <- fdef@groupMembers
