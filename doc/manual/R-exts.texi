@@ -2229,7 +2229,7 @@ Some additional steps are needed for packages which make use of formal
 internally).  The package should have @code{Depends: methods} in its
 @file{DESCRIPTION} file and any classes and methods which are to be
 exported need to be declared in the @file{NAMESPACE} file.  For example,
-the @pkg{stats} package has
+the @pkg{stats4} package has
 
 @findex exportClasses
 @findex exportMethods
