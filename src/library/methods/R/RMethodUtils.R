@@ -408,7 +408,9 @@ getGeneric <-
         else
             stop("Argument f must be a string, generic function, or primitive: got an ordinary function")
     }
-    value <- if(missing(where)) .getGeneric(f, ,package) else .getGeneric( f, where, package)
+    value <- if(missing(where))
+	.getGeneric(f, , package) else
+	.getGeneric(f, where, package)
     if(is.null(value) && exists(f, envir = baseenv(), inherits = FALSE)) {
         ## check for primitives
         baseDef <- get(f, envir = baseenv())
@@ -821,29 +823,27 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
   }
 
 
-cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(parent.frame()),
-                                  package, methods) {
+cacheGenericsMetaData <- function(f, fdef, attach = TRUE,
+                                  where = topenv(parent.frame()),
+                                  package, methods)
+{
     if(!is(fdef, "genericFunction")) {
-        warning(gettextf("no methods found for \"%s\"; cacheGenericsMetaData() will have no effect", f), domain = NA)
-        return(FALSE)
+	warning(gettextf(
+		"no methods found for \"%s\"; cacheGenericsMetaData() will have no effect",
+			 f),
+		domain = NA)
+	return(FALSE)
     }
     if(missing(package))
         package <- fdef@package
-### Assetion: methods argument unused except for primitives
+### Assertion: methods argument unused except for primitives
 ### and then only for the old non-table case.
     deflt <- finalDefaultMethod(fdef@default) #only to detect primitives
     if(is.primitive(deflt)) {
-             if(missing(methods))
-                code <- "reset"
-            else
-                code <- "set"
-         switch(code,
-               reset = setPrimitiveMethods(f, deflt, code, fdef, NULL),
-               set = setPrimitiveMethods(f, deflt, code, fdef, methods),
-##               clear = setPrimitiveMethods(f, deflt, code, NULL, NULL),
-	       stop(gettextf("internal error: bad code for 'setPrimitiveMethods': %s",
-			     code), domain = NA)
-	       )
+	if(missing(methods)) ## "reset"
+	    setPrimitiveMethods(f, deflt, code, fdef, NULL)
+	else ## "set"
+	    setPrimitiveMethods(f, deflt, code, fdef, methods)
     }
     else if(isGroup(f, fdef = fdef)) {
 	members <- fdef@groupMembers
@@ -852,7 +852,8 @@ cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(parent.
 	for(ff in members) {
 	    ffdef <- getGeneric(ff, where = where)
 	    if(is(ffdef, "genericFunction"))
-		Recall(ff,ffdef, attach, where, methods = .getMethodsTable(ffdef))
+		Recall(ff, ffdef, attach, where,
+                       methods = .getMethodsTable(ffdef))
 	}
     }
     TRUE
