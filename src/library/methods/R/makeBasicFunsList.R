@@ -52,28 +52,24 @@
 
     ## the Math group.
     members <- c("abs", "sign", "sqrt",
-                 "ceiling", "floor", "trunc",
-                 "cummax", "cummin", "cumprod", "cumsum",
+		 "ceiling", "floor", "trunc",
+		 "cummax", "cummin", "cumprod", "cumsum",
 		 "exp", "expm1",
 		 "log", "log10", "log2", "log1p",
-                 "cos", "cosh", "sin", "sinh", "tan", "tanh",
-                 "acos", "acosh", "asin", "asinh", "atan", "atanh",
-                 "gamma", "lgamma", "digamma", "trigamma"
-                 )
-     for(f in members) {
-         funs <-
-             if(f %in% c("log", "trunc"))
-                 .addBasicGeneric(funs, f,
-                                  function(x, ...) standardGeneric(""),
-                                  "Math")
-
-             else
-                 .addBasicGeneric(funs, f,
-                                  function(x) standardGeneric(""),
-                                  "Math")
+		 "cos", "cosh", "sin", "sinh", "tan", "tanh",
+		 "acos", "acosh", "asin", "asinh", "atan", "atanh",
+		 "gamma", "lgamma", "digamma", "trigamma"
+		 )
+    for(f in members) {
+	funs <-
+	    .addBasicGeneric(funs, f,
+			     if(f %in% c("log", "trunc")) {
+				 function(x, ...) standardGeneric("")
+			     } else   function(x) standardGeneric(""),
+			     "Math")
     }
 
-    setGroupGeneric(where=where,"Math", function(x)NULL,
+    setGroupGeneric(where=where, "Math", function(x)NULL,
 		    knownMembers = members, package = "base")
 
     ## The Math2 group.
