@@ -175,7 +175,9 @@ poisson <- function (link = "log")
 	mustart <- y + 0.1
     })
     simfun <- function(object, nsim) {
-        ## assume weights are frequency/sampling weights
+        ## A Poisson GLM has dispersion fixed at 1, so prior weights
+        ## do not have a simple unambiguous interpretation:
+        ## they might be frequency weights or indicate averages.
         wts <- object$prior.weights
         if (any(wts != 1)) warning("ignoring prior weights")
         ftd <- fitted(object)

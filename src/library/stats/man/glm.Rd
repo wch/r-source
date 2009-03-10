@@ -50,8 +50,8 @@ glm.fit(x, y, weights = rep(1, nobs),
     variables are taken from \code{environment(formula)},
     typically the environment from which \code{glm} is called.}
 
-  \item{weights}{an optional vector of weights to be used in the fitting
-    process.  Should be \code{NULL} or a numeric vector.}
+  \item{weights}{an optional vector of \sQuote{prior weights} to be used
+    in the fitting process.  Should be \code{NULL} or a numeric vector.}
 
   \item{subset}{an optional vector specifying a subset of observations
     to be used in the fitting process.}
@@ -118,17 +118,17 @@ glm.fit(x, y, weights = rep(1, nobs),
 \details{
   A typical predictor has the form \code{response ~ terms} where
   \code{response} is the (numeric) response vector and \code{terms} is a
-  series of terms which specifies a linear predictor for \code{response}.
-  For \code{binomial} and \code{quasibinomial} families the response can
-  also be specified as a \code{\link{factor}} (when the first level
-  denotes failure and all
-  others success) or as a two-column matrix with the columns giving the
-  numbers of successes and failures.  A terms specification of the form
-  \code{first + second} indicates all the terms in \code{first} together
-  with all the terms in \code{second} with duplicates removed.  The terms in
-  the formula will be re-ordered so that main effects come first,
-  followed by the interactions, all second-order, all third-order and so
-  on: to avoid this pass a \code{terms} object as the formula.
+  series of terms which specifies a linear predictor for
+  \code{response}.  For \code{binomial} and \code{quasibinomial}
+  families the response can also be specified as a \code{\link{factor}}
+  (when the first level denotes failure and all others success) or as a
+  two-column matrix with the columns giving the numbers of successes and
+  failures.  A terms specification of the form \code{first + second}
+  indicates all the terms in \code{first} together with all the terms in
+  \code{second} with duplicates removed.  The terms in the formula will
+  be re-ordered so that main effects come first, followed by the
+  interactions, all second-order, all third-order and so on: to avoid
+  this pass a \code{terms} object as the formula.
 
   A specification of the form \code{first:second} indicates the
   the set of terms obtained by taking the interactions of
@@ -136,6 +136,18 @@ glm.fit(x, y, weights = rep(1, nobs),
   The specification \code{first*second} indicates the \emph{cross}
   of \code{first} and \code{second}.
   This is the same as \code{first + second + first:second}.
+
+  Non-\code{NULL} \code{weights} can be used to indicate that different
+  observations have different dispersions (with the values in
+  \code{weights} being inversely proportional to the dispersions); or
+  equivalently, when the elements of \code{weights} are positive
+  integers \eqn{w_i}, that each response \eqn{y_i} is the mean of
+  \eqn{w_i} unit-weight observations (including the case that there are
+  \eqn{w_i} observations equal to \eqn{y_i} and the data have been
+  summarized).  For a binomial GLM prior weights to give the number of
+  trials when the response is the proportion of successes: they would
+  rarely be used of a Poisson GLM.
+
 
   \code{glm.fit} is the workhorse function.
 

@@ -57,15 +57,16 @@ simulate(object, nsim, seed, \dots)
   For a gamma GLM the shape parameter is estimated by maximum likelihood
   (using \code{\link[MASS]{gamma.shape}} in package \pkg{MASS}).  The
   interpretation of weights is as multipliers to a basic shape
-  parameter.
+  parameter, since dispersion is inversely proportional to shape.
 
-  For an inverse gauasian GLM the model assumed is \eqn{IG(\mu_i, \lambda w_i)}
-  (see \url{http://en.wikipedia.org/wiki/Inverse_Gaussian_distribution})
-  where \eqn{lambda} is estimated by the inverse of the dispersion.  The
-  variance is \eqn{\mu_i^3/\lambda w_i} and hence inversely
-  proprortional to the weights.  The simulation is done by function
-  \code{\link[SuppDists]{rinvGaussian}} from the \pkg{SuppDists}
-  package, which must be installed.
+  For an inverse gauasian GLM the model assumed is \eqn{IG(\mu_i,
+  \lambda w_i)} (see
+  \url{http://en.wikipedia.org/wiki/Inverse_Gaussian_distribution})
+  where \eqn{lambda} is estimated by the inverse of the dispersion
+  estimate for the fit.  The variance is \eqn{\mu_i^3/\lambda w_i} and
+  hence inversely proprortional to the prior weights.  The simulation is
+  done by function \code{\link[SuppDists]{rinvGaussian}} from the
+  \pkg{SuppDists} package, which must be installed.
 }
 \seealso{
   \code{\link{fitted.values}} and \code{\link{residuals}} for related methods;
@@ -104,7 +105,7 @@ S3 <- simulate(modb1, nsim = 4)
 
 x2 <- sort(runif(100))
 yb2 <- rbinom(100, prob = plogis(2*(x2-1)), size = 1)
-yb2 <- factor(1+yb2, labels=c("failure", "success"))
+yb2 <- factor(1 + yb2, labels = c("failure", "success"))
 modb2 <- glm(yb2 ~ x2, family = binomial)
 S4 <- simulate(modb2, nsim = 4)
 # each column of S4 is a factor

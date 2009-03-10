@@ -39,7 +39,7 @@ lm(formula, data, subset, weights, na.action,
     process.  Should be \code{NULL} or a numeric vector.
     If non-NULL, weighted least squares is used with weights
     \code{weights} (that is, minimizing \code{sum(w*e^2)}); otherwise
-    ordinary least squares is used.}
+    ordinary least squares is used.  See also \sQuote{Details},}
 
   \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.  The default is set by
@@ -101,6 +101,15 @@ lm(formula, data, subset, weights, na.action,
   A formula has an implied intercept term.  To remove this use either
   \code{y ~ x - 1} or \code{y ~ 0 + x}.  See \code{\link{formula}} for
   more details of allowed formulae.
+
+  Non-\code{NULL} \code{weights} can be used to indicate that different
+  observations have different variances (with the values in
+  \code{weights} being inversely proportional to the variances); or
+  equivalently, when the elements of \code{weights} are positive
+  integers \eqn{w_i}, that each response \eqn{y_i} is the mean of
+  \eqn{w_i} unit-weight observations (including the case that there are
+  \eqn{w_i} observations equal to \eqn{y_i} and the data have been
+  summarized).
 
   \code{lm} calls the lower level functions \code{\link{lm.fit}}, etc,
   see below, for the actual numerical computations.  For programming
