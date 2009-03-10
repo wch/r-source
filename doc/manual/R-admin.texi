@@ -1308,15 +1308,15 @@ and then sit back and wait.  The first two options are the default (and
 strongly recommended), and with some toolsets have been essential.
 Selecting @option{--with-ICU} replaces Apple's @code{wcscoll} with
 one@footnote{It makes use of an Apple-supplied modified ICU library, and
-is known to work with Mac OS >= 10.4.}  that works correctly in UTF-8
-locales, and is the default as from @R{} 2.9.0.  The second line of
-options is also default on Mac OS X, but needed only if you want to
-build @R{} for use with @code{R.app} Console, and imply
-@option{--enable-R-shlib} to build @R{} as a shared/dynamic library.
+is known to work with Mac OS >= 10.4.} that works correctly in UTF-8
+locales, and is the default as from @R{} 2.9.0.  
 
+The second line of options is also default on Mac OS X, but needed only
+if you want to build @R{} for use with @code{R.app} Console, and imply
+@option{--enable-R-shlib} to build @R{} as a shared/dynamic library.
 These options configure @R{} to be built and installed as a framework
 called @file{R.framework}.  The default path for @file{R.framework} is
-@file{/Library/Frameworks} but this can be changed at configure time
+@file{/Library/Frameworks} but this can be changed at configure time by
 specifying the flag @option{--enable-R-framework[=@var{DIR}]} or at
 install time as
 
@@ -1325,7 +1325,12 @@ make prefix=/where/you/want/R.framework/to/go install
 @end example
 
 @noindent
-the @file{R.framework} has not to be specified in the path.
+(the @file{R.framework} directory should not be included in the path).
+
+For compatibility with the CRAN distribution you may need to specify
+@option{--with-included-gettext} to avoid linking against a
+@samp{libintl} dynamic library you may have available, for example in
+@file{/usr/local/lib}.
 
 Note that building the @file{R.app} GUI console is a separate project:
 see the FAQ for details.
