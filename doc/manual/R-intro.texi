@@ -6992,10 +6992,9 @@ debugger.
 @itemx -g @var{type}
 (UNIX only) Use @var{type} as graphical user interface (note that this
 also includes interactive graphics).  Currently, possible values for
-@var{type} are @samp{X11} (the default), provided that @samp{Tcl/Tk}
-support is available, @samp{Tk} and @samp{gnome} provided that package
-@pkg{gnomeGUI} is installed.  (For back-compatibility, @samp{x11},
-@samp{tk} and @samp{GNOME} are accepted.)
+@var{type} are @samp{X11} (the default) and, provided that @samp{Tcl/Tk}
+support is available, @samp{Tk}. (For back-compatibility, @samp{x11} and
+@samp{tk} are accepted.)
 
 @item --args
 This flag does nothing except cause the rest of the command line to be

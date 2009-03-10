@@ -82,7 +82,7 @@ Options:
   -d, --debugger=NAME   Run R through debugger NAME
   --debugger-args=ARGS  Pass ARGS as arguments to the debugger
   -g, --gui=TYPE	Use TYPE as GUI; possible values are 'X11'
-			(default), 'Tk' and (with package gnomeGUI) 'gnome'
+			(default) and 'Tk'.
   --arch=NAME		Specify a sub-architecture
   --args                Skip the rest of the command line
   -f, --file=FILE       Take input from 'FILE'
@@ -210,9 +210,6 @@ R_binary="${R_HOME}/bin/exec${R_ARCH}/R"
 export R_ARCH
 
 case "${gui}" in
-gnome|GNOME)
-  R_binary="${R_HOME}/bin/exec${R_ARCH}/Rgnome"
-  ;;
 Tk|tk|X11|x11)
   ;;
 "")

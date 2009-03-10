@@ -392,7 +392,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #include <pmmintrin.h>
 #endif
 
-/* used in package gnomeGUI */
+/* exported for Rembedded.h */
 void fpu_setup(Rboolean start)
 {
     if (start) {

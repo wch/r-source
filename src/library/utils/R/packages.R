@@ -323,10 +323,6 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     poss <- sort(unique(available[ ,"Package"])) # sort in local locale
     res <- setdiff(poss, installed)
 
-    ## We need to treat gnomeGUI separately
-    if(.Platform$OS.type == "unix" &&
-       file.exists(paste(R.home(), "/bin/exec", Sys.getenv("R_ARCH"), "/Rgnome", sep=""))) res <- setdiff(res, "gnomeGUI")
-
     update <- character(0L)
     if(is.character(ask) && ask == "graphics") {
         if(.Platform$OS.type == "unix"

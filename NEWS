@@ -255,6 +255,10 @@ DEPRECATED & DEFUNCT
 
     o	Conversion to Sd and Ssgm by R CMD Rdconv is now defunct.
 
+    o	Support for R --gui=gnome is now defunct (and package
+	gnomeGUI has been withdrwan as it used a long-obsolete version
+	of GNOME).
+
 
 UTILITIES
 
@@ -465,7 +469,7 @@ BUG FIXES
     o	mood.test() could fail in 2.8.x on large samples because of
 	integer overflow.
 
-    o	heatmap() without a dendrogram could fail, (PR#13512)
+    o	heatmap() without a dendrogram could fail. (PR#13512)
 
 
 
