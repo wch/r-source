@@ -7260,7 +7260,8 @@ command-line via the @option{-e} flag.
 When the @acronym{GNU} @strong{readline} library is available at the
 time @R{} is configured for compilation under UNIX, an inbuilt command
 line editor allowing recall, editing and re-submission of prior commands
-is used.
+is used.  Note that other versions of @strong{readline} exist and may be
+used by the inbuilt command line editor: this may happen on Mac OS X.
 
 It can be disabled (useful for usage with @acronym{ESS} @footnote{The
 `Emacs Speaks Statistics' package; see the @acronym{URL}
