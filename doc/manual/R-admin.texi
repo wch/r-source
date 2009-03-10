@@ -915,8 +915,7 @@ It is also possible to obtain the source code using Subversion; see
 @item
 If you are not using a tarball you need to obtain copies of the
 recommended packages from @acronym{CRAN}.  Put the @file{.tar.gz} files
-in @file{@var{R_HOME}/src/library/Recommended} and run @code{make
-link-recommended}.  If you have an Internet
+in @file{@var{R_HOME}/src/library/Recommended}.  If you have an Internet
 connection, you can do this automatically using
 
 @example
