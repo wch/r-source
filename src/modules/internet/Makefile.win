@@ -37,7 +37,7 @@ DEPS=$(CSOURCES:.c=.d) internet2.d
 
 internet2.d: internet.c
 	@echo "making $@ from $<"
-	@$(CC) $(DEPARG) $(CPPFLAGS) -DUSE_WININET -c $< -o foo
+	@$(CC) -MM $(CPPFLAGS) -DUSE_WININET -c $< -o foo
 	@sed -e 's/internet.o/internet2.o/' foo > internet2.d
 	@rm foo
 
