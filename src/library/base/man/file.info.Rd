@@ -85,6 +85,8 @@ file.info(\dots)
   \code{\link{files}}, \code{\link{file.access}},
   \code{\link{list.files}},
   and \code{\link{DateTimeClasses}} for the date formats.
+  
+  \code{\link{Sys.chmod}} to change permissions.
 }
 \examples{
 %-- the output of this should be "diff"able, says MM: why?

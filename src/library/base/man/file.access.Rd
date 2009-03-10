@@ -58,7 +58,13 @@ file.access(names, mode = 0)
   the return value is \bold{false} for \bold{success}.
 }
 
-\seealso{\code{\link{file.info}}, \code{\link{try}}}
+\seealso{
+  \code{\link{file.info}} for more details on permissions,
+  \code{\link{Sys.chmod}} to change permissions, and
+  \code{\link{try}} for a \sQuote{test it and see} approach.
+
+  \code{\link{file_test}} for shell-style file tests.
+}
 
 \examples{
 fa <- file.access(dir("."))
