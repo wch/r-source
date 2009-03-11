@@ -41,9 +41,9 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
     locally?  Terms can be specified by name, number or as a logical
     vector of the same length as the number of predictors.}
   \item{drop.square}{for fits with more than one predictor and
-    \code{degree=2}, should the quadratic term (and cross-terms) be
-    dropped for particular predictors?  Terms are specified in the same
-    way as for \code{parametric}.}
+    \code{degree=2}, should the quadratic term be dropped for particular
+    predictors?  Terms are specified in the same way as for
+    \code{parametric}.}
   \item{normalize}{should the predictors be normalized to a common scale
     if there is more than one?  The normalization used is to set the
     10\% trimmed standard deviation to one.  Set to false for spatial
