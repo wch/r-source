@@ -29,6 +29,7 @@ ECHO_C =
 ECHO_N = -n
 ECHO_T = 
 MK = $(MAKE) -f Makefile.win
+TAR = tar
 
 test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R \
   reg-plot.R reg-S4.R reg-win.R
