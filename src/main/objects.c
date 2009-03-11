@@ -155,6 +155,18 @@ static SEXP matchmethargs(SEXP oldargs, SEXP newargs)
     return listAppend(oldargs, newargs);
 }
 
+#ifdef S3_for_S4_warn /* not currently used */
+static SEXP s_check_S3_for_S4 = 0;
+void R_warn_S3_for_S4(SEXP method) {
+  SEXP call;
+  if(!s_check_S3_for_S4)
+    s_check_S3_for_S4 = install(".checkS3forS4");
+  PROTECT(call = lang2(s_check_S3_for_S4, method));
+  eval(call, R_MethodsNamespace);
+  UNPROTECT(1);
+}
+#endif
+
 /*  usemethod  -  calling functions need to evaluate the object
  *  (== 2nd argument).	They also need to ensure that the
  *  argument list is set up in the correct manner.
@@ -302,7 +314,8 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	    UNPROTECT(1);
 	    defineVar(install(".GenericCallEnv"), callrho, newrho);
 	    defineVar(install(".GenericDefEnv"), defrho, newrho);
-	    if(S4toS3 && (i < nclass)) { /* give the method an S3 object */
+	    if(S4toS3 && (i < nclass)) { 
+	      if(i>0) {/* give the method an S3 object */
 	      if(!match_obj) /* use the first arg, for "[",e.g. */
 		match_obj = CAR(matchedarg);
 	      if(NAMED(obj)) SET_NAMED(obj, 2);
@@ -311,6 +324,13 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 		SET_PRVALUE(match_obj, obj); /* must have been eval'd */
 	      else /* not possible ?*/
 		defineVar(TAG(FORMALS(sxp)), obj, newrho);
+		}
+		else { /* Design error: S3 method defined for S4 class 
+			but this use is not likely an error */
+#ifdef S3_for_S4_warn
+		  R_warn_S3_for_S4(sxp);
+#endif
+		}
 	    }
 	    t = newcall;
 	    SETCAR(t, method);

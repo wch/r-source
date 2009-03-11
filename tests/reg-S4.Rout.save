@@ -1,5 +1,5 @@
 
-R version 2.9.0 Under development (unstable) (2009-03-09 r48086)
+R version 2.9.0 Under development (unstable) (2009-03-10 r48103)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -83,6 +83,8 @@ Type 'q()' to quit R.
 > ## objects should correspond to a call to show(), as per the green
 > ## book, p. 332.  Therefore, the show() method is called, once defined,
 > ## for auto-printing foo, regardless of the S3 or S4 print() method.
+> ## (But most of this example is irrelevant if one avoids S3 methods for
+> ## S4 classes, as one should.)
 > setClass("bar", representation(a="numeric"))
 [1] "bar"
 > foo <- new("bar", a=pi)
@@ -114,13 +116,11 @@ show method
 > # not.  Can reinstate when S4 type is obligatory
 > # print(foo, digits = 4)
 > 
-> print.bar <- function(x, ...) cat("print method\n")
-> foo
-show method
-> print(foo)
-print method
-> show(foo)
-show method
+> ## DON'T DO THIS:  S3 methods for S4 classes are a design error JMC iii.9.09
+> ## print.bar <- function(x, ...) cat("print method\n")
+> ## foo
+> ## print(foo)
+> ## show(foo)
 > 
 > setMethod("print", "bar", function(x, ...){cat("S4 print method\n")})
 Creating a new generic function for "print" in ".GlobalEnv"

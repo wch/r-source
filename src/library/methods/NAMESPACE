@@ -1,8 +1,6 @@
 useDynLib(methods) #>> fails for now : .registration = TRUE
 
 importFrom(utils, find)
-S3method(print, MethodsList)
-S3method(print, classRepresentation)
 
 
 exportPattern("^\\.__C__")

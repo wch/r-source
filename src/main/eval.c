@@ -2025,6 +2025,32 @@ static void findmethod(SEXP Class, const char *group, const char *generic,
     *which = whichclass;
 }
 
+/* a portion of the logic of R_data_class2, but not producing
+   "matrix", "array" classes or vector types as classes  */
+static SEXP data_class_group(SEXP obj) {
+    SEXP klass = getAttrib(obj, R_ClassSymbol);
+      if(length(klass) > 0) {
+	if(IS_S4_OBJECT(obj) && TYPEOF(obj) != S4SXP) { 
+	    /* try to return an S3Class slot, but NOT matrix/array */
+	    /* The S4 class is included for compatibility with
+	       the deprecated practice of defining S3 methods 
+	       for S4 classes.  Someday this should be disallowed. 
+	       JMC iii.9.09 */
+  	    SEXP s3class = S3Class(obj);
+	    if(s3class != R_NilValue) {
+	        SEXP value; int i, n = length(s3class);
+		PROTECT(value =  allocVector(STRSXP, n+1));
+		SET_STRING_ELT(value, 0, STRING_ELT(klass, 0));
+		for(i=0; i<n; i++)
+		  SET_STRING_ELT(value, i+1, STRING_ELT(s3class, i));
+		UNPROTECT(1);
+		return value;
+	    }
+	}
+      }
+      return(klass);
+}
+
 attribute_hidden
 int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 		  SEXP *ans)
@@ -2090,10 +2116,12 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	error(_("generic name too long in '%s'"), PRIMNAME(op));
     sprintf(generic, "%s", PRIMNAME(op) );
 
-    lclass = getAttrib(CAR(args), R_ClassSymbol);
+    lclass = IS_S4_OBJECT(CAR(args)) ? data_class_group(CAR(args))
+      : getAttrib(CAR(args), R_ClassSymbol);
 
     if( nargs == 2 )
-	rclass = getAttrib(CADR(args), R_ClassSymbol);
+	rclass = IS_S4_OBJECT(CADR(args)) ? data_class_group(CADR(args))
+      : getAttrib(CADR(args), R_ClassSymbol);
     else
 	rclass = R_NilValue;
 
@@ -2104,6 +2132,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	       lbuf, rho);
     PROTECT(lgr);
     if(isFunction(lsxp) && IS_S4_OBJECT(CAR(args))) {
+      if(lwhich > 0) {
         value = CAR(args);
 	if(NAMED(value)) SET_NAMED(value, 2);
 	value = asS4(value, 0, 2);
@@ -2113,6 +2142,10 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 /* 	if(TYPEOF(value) == S4SXP) */
 /* 	  error(_("Non-vector S4 object as first argument to operator")); */
 	SETCAR(args, value);
+      }
+      else { /* Design error: S3 method written for S4 class */
+	/*TODO: should warn here? */
+      }
     }
 
     if( nargs == 2 )
@@ -2122,12 +2155,17 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	rwhich = 0;
 
     if(isFunction(rsxp) && IS_S4_OBJECT(CADR(args))) {
+      if(rwhich > 0) {
         value = CADR(args);
 	if(NAMED(value)) SET_NAMED(value, 2);
 	value = asS4(value, 0, 2);
 /* 	if(TYPEOF(value) == S4SXP) */
 /* 	  error(_("Non-vector S4 object as second argument to binary operator")); */
 	SETCADR(args, value);
+      }
+      else {
+	/*TODO: should warn here ? */
+      }
     }
 
     PROTECT(rgr);

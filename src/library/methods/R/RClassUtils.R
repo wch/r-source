@@ -853,7 +853,7 @@ showExtends <-
 
 
 
-print.classRepresentation <-
+printClassRepresentation <-
   function(x, ...)
   showClass(x, propertiesAreCalled="Slots")
 
@@ -917,6 +917,7 @@ completeExtends <-    function(ClassDef, class2, extensionDef, where) {
         }
     }
     exts <- .walkClassGraph(ClassDef, "contains", where)
+    .checkS3forClass(ClassDef@className, where, names(exts))
     if(length(exts)) {
 ##         ## sort the extends information by depth (required for method dispatch)
 ##         superClassNames <- getAllSuperClasses(ClassDef, FALSE)
@@ -2080,3 +2081,80 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
     list(-candidates[[i]]+1, scores[[i]])
 }
 
+.checkGeneric <- function(what, where) {
+  .checkFun <-  function(x) {
+      maybe <- (if(exists(x, where)) {
+        f <- get(x, where)
+        is.function(f)
+      }
+      else
+        FALSE)
+      if(maybe)
+        maybe <- is(f, "genericFunction") ||
+              (length(grep("UseMethod", deparse(f))) > 0) ||
+              is.primitive(f)
+      maybe
+    }
+  sapply(what, .checkFun)
+}
+      
+
+S3forS4Methods <- function(where, checkClasses = character()) {
+  allClasses <- getClasses(where)
+  if(length(checkClasses) > 0)
+    allClasses <- allClasses[match(allClasses, checkClasses, 0) > 0]
+  if(length(allClasses) == 0)
+    return(allClasses)
+  pattern <- paste("([.]",allClasses, "$)", sep = "", collapse="|")
+  allObjects <- objects(where, all.names = TRUE)
+  allObjects <- allObjects[-grep("^[.][_][_]", allObjects)] # remove meta data
+  allObjects <- grep(pattern, allObjects, value = TRUE)
+  if(length(allObjects) > 0) {
+    badMethods <- allObjects
+    funs <- sub(pattern, "", badMethods)
+    uniqueFuns <- unique(funs)
+    uniqueFuns <- uniqueFuns[nzchar(uniqueFuns)]
+    possible <- .checkGeneric(uniqueFuns, where)
+    if(!any(possible))
+      return(character())
+    uniqueFuns <- uniqueFuns[possible]
+    badMethods <- badMethods[match(funs, uniqueFuns, 0) > 0]
+    allObjects <- badMethods
+    attr(allObjects, "functions") <- uniqueFuns
+  }
+  allObjects
+}
+  
+## this function warns of S3 methods for S4 classes, but only once per package
+## per session.
+.checkS3forS4 <- function(method) {
+  envir <- environment(method)
+  pkg <- getPackageName(envir)
+  if(!nzchar(pkg)) pkg <- getPackageName(parent.env(pkg)) #? if generic function
+  if(!nzchar(pkg)) pkg <- format(envir)
+  if(!exists(".WarnedS3forS4", .GlobalEnv, inherits = FALSE))
+    assign(".WarnedS3forS4", character(), envir = .GlobalEnv)
+  if(is.na(match(pkg, .WarnedS3forS4))) {
+      methods <-   S3forS4Methods(envir)
+      .WarnedS3forS4 <<- c(.WarnedS3forS4, pkg)
+      if(length(methods) > 0) {
+        warning("S3 methods written for S4 classes will fail inheritance!\nPackage ", pkg, " apparently has ",
+            length(methods), " such methods  for the functions ", paste(attr(methods, "functions"), collapse = ", "), "\n\n",
+        "Possible dangerous methods: ", paste(methods, collapse =", "),
+                "\n\n(Warnings generated once per package per session)")
+      }
+  }
+}
+
+## a warning when a class is defined that extends classes with S3 methods.
+.checkS3forClass <- function(className, where, what = className) {
+  badMethods <- S3forS4Methods(where, what)
+  if(length(badMethods) > 0) {
+    msg <- paste("The apparent methods are ", paste('"',badMethods, '"', sep = "", collapse = ", "))
+    if(missing(what))
+      warning("There are apparent S3 methods for class \"",className, "\"\nDANGER: any subclasses of this class will not inherit the methods\n\n", msg)
+    else
+      warning("Some of the superclasses in the definition of class \"",
+            className, "\" have apparent S3 methods.\n\nDANGER: the new class will not inherit these methods.\nComplain to the author of the superclass definitions.\n\n", msg)
+  }
+}

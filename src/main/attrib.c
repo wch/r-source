@@ -624,19 +624,31 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
       if(length(klass) > 0) {
 	if(IS_S4_OBJECT(obj) && TYPEOF(obj) != S4SXP) { 
 	    /* try to return an S3Class slot, or matrix/array */
+	    /* The S4 class is included for compatibility with
+	       the deprecated practice of defining S3 methods 
+	       for S4 classes.  Someday this should be disallowed. 
+	       JMC iii.9.09 */
   	    SEXP s3class = S3Class(obj);
-	    if(s3class != R_NilValue)
-       	        klass = s3class;
+	    if(s3class != R_NilValue) {
+	        SEXP value; int i, n = length(s3class);
+		PROTECT(value =  allocVector(STRSXP, n+1));
+		SET_STRING_ELT(value, 0, STRING_ELT(klass, 0));
+		for(i=0; i<n; i++)
+		  SET_STRING_ELT(value, i+1, STRING_ELT(s3class, i));
+		UNPROTECT(1);
+		return value;
+	    }
 	    else {
 	        SEXP dim = getAttrib(obj, R_DimSymbol), value, class0;
 	        int nd = length(dim);
 		if(nd > 0) {
-		  PROTECT(value =  allocVector(STRSXP, 1));
+		  PROTECT(value =  allocVector(STRSXP, 2));
 		  if(nd == 2)
 		    class0 = mkChar("matrix");
 		  else
 		    class0 = mkChar("array");
-		  SET_STRING_ELT(value, 0, class0);
+		  SET_STRING_ELT(value, 0, STRING_ELT(klass, 0));
+		  SET_STRING_ELT(value, 1, class0);
 		  UNPROTECT(1);
 		  return value;
 		}
@@ -1491,6 +1503,9 @@ R_getS4DataSlot(SEXP obj, SEXPTYPE type)
     if(NAMED(obj)) obj = duplicate(obj);
     if(s3class != R_NilValue) {/* replace class with S3 class */
       setAttrib(obj, R_ClassSymbol, s3class);
+    }
+    else { /* to avoid inf. recursion, must unset class attribute */
+      setAttrib(obj, R_ClassSymbol, R_NilValue);
     }
     UNSET_S4_OBJECT(obj);
     value = obj;

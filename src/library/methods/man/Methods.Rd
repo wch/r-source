@@ -80,6 +80,52 @@
   concatenation of the class names for the active arguments in the method signature.
 
 }
+
+\section{S3 Methods}{
+
+The functions for which S4 methods will be written often include some
+for which S3 methods exist, corresponding to S3 classes for the first
+formal argument or, for the primitive binary operators either of the
+operands.  These methods should continue to work in the presence of S4
+methods.  In the case of operators and other primitive functions, the
+underlying C evaluator will attempt to dispatch S3 methods if no S4
+methods are found; in particular, if the relevant actual arguments are
+not S4 objects.
+
+In the general case of true functions, S3 methods will be dispatched
+by the original version of the function.  The usual and recommended
+way this happens in most cases is by the function becoming the default
+method for the S4 generic, simply from the call
+
+  \code{setGeneric("f")}
+
+where the original \code{f()} contained the call
+\code{UseMethod("f")}.
+Existing S3 methods for \code{f()} for S3 classes will then
+potentially be dispatched by the default S4 method, if no S4 methods
+match the call.  However, there is one insidious error to be avoided.
+
+\emph{DO NOT WRITE S3 METHODS FOR S4 CLASSES.}
+
+Such methods will usually appear to work, but they represent a design
+error with potentially disastrous consequences; worse yet, the
+consequences may only appear later and often not to the original
+author but to a programmer attempting legitimately to extend the class
+for which the method was written.
+
+The essential flaw is that S3 dispatch is not aware of S4 inheritance,
+but instead expects class attributes with multiple strings.
+Secondly, S4 dispatch has no knowledge of S3 methods. Each of these
+can lead to bad errors.  The example section shows the first type of
+error.  The second, somewhat less likely, arises when the class with
+the S3 method, \code{"classA"} in the example, also inherits from another S4
+class.  If that class inherits a method for a function, no matter how
+indirectly, the method will be selected for an object from
+\code{"classA"}, even though there is a directly defined S3 method.
+The S3 method can only be accessed through the default S4 method.
+
+
+}
 \section{Method Selection and Dispatch}{
 
 When a call to a generic function is evaluated, a method is selected corresponding
@@ -351,6 +397,30 @@ The  \code{"target"} slot starts off equal to the \code{"defined"}
   rematch arguments, for reasons of both efficiency and consistency.
 }
 
+\examples{
+## an example of the errors from S3 methods for S4 classes
+## DO NOT DEFINE S3 METHODS FOR AN S4 CLASS
+
+setClass("classA", contains = "numeric", 
+   representation(realData = "numeric"))
+
+Math.classA <- function(x) {x <- x@realData; NextMethod()}
+
+x <- new("classA", log(1:10), realData = 1:10)
+
+abs(x) # 1:10, as intended
+
+setClass("classB", contains = "classA")
+
+y <- new("classB", x)
+
+abs(y) #WRONG ANSWER
+
+\dontshow{
+removeClass("classA"); removeClass("classB"); rm(x,y)
+}
+
+}
 
 
 \references{

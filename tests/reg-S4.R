@@ -59,6 +59,8 @@ removeGeneric("f")
 ## objects should correspond to a call to show(), as per the green
 ## book, p. 332.  Therefore, the show() method is called, once defined,
 ## for auto-printing foo, regardless of the S3 or S4 print() method.
+## (But most of this example is irrelevant if one avoids S3 methods for
+## S4 classes, as one should.)
 setClass("bar", representation(a="numeric"))
 foo <- new("bar", a=pi)
 foo
@@ -73,10 +75,11 @@ print(foo)
 # not.  Can reinstate when S4 type is obligatory
 # print(foo, digits = 4)
 
-print.bar <- function(x, ...) cat("print method\n")
-foo
-print(foo)
-show(foo)
+## DON'T DO THIS:  S3 methods for S4 classes are a design error JMC iii.9.09
+## print.bar <- function(x, ...) cat("print method\n")
+## foo
+## print(foo)
+## show(foo)
 
 setMethod("print", "bar", function(x, ...){cat("S4 print method\n")})
 foo

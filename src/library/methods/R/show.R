@@ -126,7 +126,7 @@ show <- function(object)
                   if(!.identC(class(object), "classRepresentation"))
                     cat("Extended class definition (", classLabel(class(object)),
                         ")\n")
-                  print.classRepresentation(object)
+                  printClassRepresentation(object)
               },
               where = envir)
 
