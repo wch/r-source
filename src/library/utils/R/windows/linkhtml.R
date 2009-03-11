@@ -83,11 +83,11 @@ make.search.html <- function(lib.loc=.libPaths())
         return()
     }
     ## next ought to succeed, but be cautious.
-    out <- try(suppressWarnings(file(f.tg, open = "w")), silent = TRUE)
+    out <- try(suppressWarnings(file(con <- f.tg, open = "w")), silent = TRUE)
     if(inherits(out, "try-error")) {
         # warning("cannot update HTML search index")
         return()
-    }
+    } else close(con)
     for (lib in lib.loc) {
         rh <- chartr("\\", "/", R.home())
         drive <- substring(rh, 1L, 2L)
