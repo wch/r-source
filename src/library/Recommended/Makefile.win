@@ -29,6 +29,12 @@ stamp-recommended: $(OBJECTS)
 ## need to allow parallel installs, modulo dependencies below
 INSTALL_OPTS=--no-lock --auto-zip --install-tests
 
+ifneq ($(strip $(USE_CHM)),TRUE)
+INSTALL_OPTS+=--no-chm
+endif
+
+
+
 RCMD = ../../../bin/Rcmd
 
 ## foo.tgz is a timestamp now, as symlinks fail.
