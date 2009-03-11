@@ -1185,11 +1185,11 @@
     invisible()
 }
 
-## for R CMD SHLIB on qll platforms
+## for R CMD SHLIB on all platforms
 .SHLIB <- function()
 {
     status <- .shlib_internal(commandArgs(TRUE))
-    q("no", runLast=FALSE, status=status)
+    q("no", status = (status != 0), runLast=FALSE)
 }
 
 ## for .SHLIB and R CMD INSTALL on all platforms
@@ -1380,7 +1380,7 @@
         res <- system(cmd)
         if (clean) system(paste(cmd, "shlib-clean"))
     }
-    res
+    res # probably a multiple of 256
 }
 
 ## base packages do not have versions and this is called on
