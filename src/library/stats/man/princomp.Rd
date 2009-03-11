@@ -78,8 +78,9 @@ princomp(x, \dots)
   \item{scores}{if \code{scores = TRUE}, the scores of the supplied
     data on the principal components.  These are non-null only if
     \code{x} was supplied, and if \code{covmat} was also supplied if it
-    was a covariance list.  For the formula method, \code{napredict} is
-    applied to handle the treatment of values omitted by the \code{na.action}.}
+    was a covariance list.  For the formula method,
+    \code{\link{napredict}()} is applied to handle the treatment of
+    values omitted by the \code{na.action}.}
   \item{call}{the matched call.}
   \item{na.action}{If relevant.}
 }
