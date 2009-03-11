@@ -349,6 +349,10 @@ rsync-recommended:
 	@$(RM) ../library/Recommended/*.tgz
 	@(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED_SOURCES}; do touch $${i}.tgz; done)
 
+link-recommended:
+	@$(RM) ../library/Recommended/*.tgz
+	@(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do touch $${i}.tgz ; done)
+
 
 recommended:
 	@$(ECHO) "--- Making recommended packages"
