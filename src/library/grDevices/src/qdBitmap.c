@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007-8  The R Foundation
+ *  Copyright (C) 2007-9  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -144,7 +144,7 @@ QuartzDesc_t QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPa
         size_t h = dpi[1] * height;
         size_t rb= (w*8*4+7)/8; /* Bytes per row */
         size_t s = h*rb;
-        QuartzDesc_t qd;
+        /* QuartzDesc_t qd; */
         /* Allocate sufficient space */
         QuartzBitmapDevice *dev = malloc(sizeof(QuartzBitmapDevice)+s);
         dev->length = s;
