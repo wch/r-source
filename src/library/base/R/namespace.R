@@ -394,33 +394,29 @@ loadNamespace <- function (package, lib.loc = NULL,
         registerS3methods(nsInfo$S3methods, package, env)
 
         ## load any dynamic libraries
-        ## We provide a way out for cross-building where we can't dynload
-        if(!nzchar(Sys.getenv("R_CROSS_BUILD")) ||
-           identical(package, "methods")) {
-            dlls <- list()
-            dynLibs <- nsInfo$dynlibs
-            for (i in seq_along(dynLibs)) {
-               lib <- dynLibs[i]
-               dlls[[lib]]  <- library.dynam(lib, package, package.lib)
+        dlls <- list()
+        dynLibs <- nsInfo$dynlibs
+        for (i in seq_along(dynLibs)) {
+            lib <- dynLibs[i]
+            dlls[[lib]]  <- library.dynam(lib, package, package.lib)
                assignNativeRoutines(dlls[[lib]], lib, env,
                                     nsInfo$nativeRoutines[[lib]])
 
-               ## If the DLL has a name as in useDynLib(alias = foo),
-               ## then assign DLL reference to alias.  Check if
-               ## names() is NULL to handle case that the nsInfo.rds
-               ## file was created before the names were added to the
-               ## dynlibs vector.
-               if(!is.null(names(nsInfo$dynlibs)) && names(nsInfo$dynlibs)[i] != "")
-                  assign(names(nsInfo$dynlibs)[i], dlls[[lib]], envir = env)
-            }
+            ## If the DLL has a name as in useDynLib(alias = foo),
+            ## then assign DLL reference to alias.  Check if
+            ## names() is NULL to handle case that the nsInfo.rds
+            ## file was created before the names were added to the
+            ## dynlibs vector.
+            if(!is.null(names(nsInfo$dynlibs))
+               && names(nsInfo$dynlibs)[i] != "")
+                assign(names(nsInfo$dynlibs)[i], dlls[[lib]], envir = env)
             setNamespaceInfo(env, "DLLs", dlls)
         }
         addNamespaceDynLibs(env, nsInfo$dynlibs)
 
 
         ## run the load hook
-        if(!nzchar(Sys.getenv("R_CROSS_BUILD2")))
-           runHook(".onLoad", package, env, package.lib, package)
+        runHook(".onLoad", package, env, package.lib, package)
 
         ## process exports, seal, and clear on.exit action
         exports <- nsInfo$exports
