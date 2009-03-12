@@ -15,7 +15,7 @@
 grid.get(gPath, strict = FALSE, grep = FALSE, global = FALSE,
          allDevices = FALSE)
 
-grid.gget(..., grep = TRUE, global = TRUE)
+grid.gget(\dots, grep = TRUE, global = TRUE)
 
 getGrob(gTree, gPath, strict = FALSE, grep = FALSE, global = FALSE) 
 }
@@ -41,6 +41,7 @@ getGrob(gTree, gPath, strict = FALSE, grep = FALSE, global = FALSE)
     be searched for matches, or just the current device.
     NOT YET IMPLEMENTED.
   }
+  \item{\dots}{ Arguments that are passed to \code{grid.get}. }
 }
 \details{
   \code{grid.gget} (\code{g} for global) is just a convenience wrapper for

@@ -15,7 +15,7 @@
 grid.remove(gPath, warn = TRUE, strict  =  FALSE, grep = FALSE,
             global = FALSE, allDevices = FALSE, redraw = TRUE)
 
-grid.gremove(..., grep = TRUE, global = TRUE)
+grid.gremove(\dots, grep = TRUE, global = TRUE)
 
 removeGrob(gTree, gPath, strict = FALSE, grep = FALSE,
            global = FALSE, warn = TRUE) 
@@ -45,6 +45,7 @@ removeGrob(gTree, gPath, strict = FALSE, grep = FALSE,
   \item{warn}{A logical to indicate whether failing to find the
     specified grob should trigger an error.  }
   \item{redraw}{A logical value to indicate whether to redraw the grob. }
+  \item{\dots}{ Arguments that are passed to \code{grid.get}. }
 }
 \details{
   \code{removeGrob} copies the specified grob and returns a modified

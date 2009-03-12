@@ -10,14 +10,18 @@
 \title{Draw a rectangle with rounded corners}
 \description{Draw a \emph{single} rectangle with rounded corners.}
 \usage{
-roundrectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"), 
-              width = unit(1, "npc"), height = unit(1, "npc"), 
-              r = unit(0.1, "snpc"), just = "centre",
-              name = NULL, gp = NULL, vp = NULL) 
+roundrectGrob(x=0.5, y=0.5, width=1, height=1,
+              default.units="npc",
+              r=unit(0.1, "snpc"),
+              just="centre",
+              name=NULL, gp=NULL, vp=NULL) 
 grid.roundrect(...) 
 }
 \arguments{
   \item{x, y, width, height}{The location and size of the rectangle.}
+  \item{default.units}{A string indicating the default units to use
+    if \code{x}, \code{y}, \code{width}, or \code{height}
+    are only given as numeric vectors.}  
   \item{r}{The radius of the rounded corners.}
   \item{just}{The justification of the rectangle relative to its
 location.}
