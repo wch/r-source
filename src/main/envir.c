@@ -1909,10 +1909,30 @@ R_isMissing(SEXP symbol, SEXP rho)
 	}
 	if (MISSING(vl) == 1 || CAR(vl) == R_MissingArg)
 	    return 1;
+	if (IS_ACTIVE_BINDING(vl))
+	    return 1;
 	if (TYPEOF(CAR(vl)) == PROMSXP &&
 	    PRVALUE(CAR(vl)) == R_UnboundValue &&
-	    TYPEOF(PREXPR(CAR(vl))) == SYMSXP)
-	    return R_isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
+	    TYPEOF(PREXPR(CAR(vl))) == SYMSXP) {
+	    /* This code uses the PRSEEN bit to detect cycles.  If a
+	       cycle occurs then a missing argument was encountered,
+	       so the return value is TRUE.  It would be a little
+	       safer to use the promise stack to ensure unsetting of
+	       the bits in the event of a longjump, but doing so would
+	       require distinguishing between evaluating promises and
+	       checking for missingness.  Because of the test above
+	       for an active binding a longjmp should only happen if
+	       the stack check fails.  LT */
+	    if (PRSEEN(CAR(vl)))
+		return 1;
+	    else {
+		int val;
+		SET_PRSEEN(CAR(vl), 1);
+		val = R_isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
+		SET_PRSEEN(CAR(vl), 0);
+		return val;
+	    }
+	}
 	else
 	    return 0;
     }

@@ -471,6 +471,9 @@ BUG FIXES
 
     o	heatmap() without a dendrogram could fail. (PR#13512)
 
+    o	checks for missing vaues will no longer result in an infinite loop
+        or stack overflow error, depending on the compiler.
+
 
 
 	**************************************************
