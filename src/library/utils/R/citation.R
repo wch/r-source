@@ -149,15 +149,16 @@ as.person.default <- function(x)
     if(length(name) == 0L) name = ""
 
     ## and now create appropriate person objects
-    if(length(name)==1)
-        z <- person(last=name, email=email)
-    else if(length(name)==2)
-        z <- person(first=name[1L], last=name[2L], email=email)
+    if(length(name) == 1L)
+        z <- person(last = name, email = email)
+    else if(length(name) == 2L)
+        z <- person(first = name[1L], last = name[2L], email = email)
     else
-        z <- person(first=name[1L],
-                    last=name[length(name)],
-                    middle=paste(name[-c(1, length(name))], collapse=" "),
-                    email=email)
+        z <- person(first = name[1L],
+                    last = name[length(name)],
+                    middle = paste(name[-c(1L, length(name))],
+                    collapse = " "),
+                    email = email)
     z
 }
 
@@ -265,23 +266,31 @@ function(package = "base", lib.loc = NULL)
     	return(cit)
     }
 
+    year <- sub("-.*", "", meta$`Date/Publication`)
+    if(!length(year)) {
+        year <- sub(".*((19|20)[[:digit:]]{2}).*", "\\1", meta$Date)
+        if(is.null(meta$Date)){
+            warning(gettextf("no date field in DESCRIPTION file of package '%s'",
+                             package),
+                    domain = NA)
+        }
+        else if(!length(year)) {
+            warning(gettextf("could not determine year for '%s' from package DESCRIPTION file",
+                             package),
+                    domain = NA)
+        }
+    }
+        
     z <- list(title = paste(package, ": ", meta$Title, sep=""),
               author = as.personList(meta$Author),
-              year = sub(".*((19|20)[[:digit:]]{2}).*", "\\1", meta$Date),
+              year = year,
               note = paste("R package version", meta$Version)
               )
 
-    if(is.null(meta$Date)){
-        warning(gettextf("no date field in DESCRIPTION file of package '%s'",
-                         package), domain = NA)
-    }
-    else if(!length(z$year)) {
-        warning(gettextf("could not determine year for '%s' from package DESCRIPTION file",
-                         package),
-                domain = NA)
-    }
-
-    z$url <- meta$URL
+    z$url <- if(identical(meta$Repository, "CRAN"))
+        sprintf("http://CRAN.R-project.org/package=%s", package)
+    else
+        meta$URL
 
     class(z) <- "citation"
     attr(z, "entry") <- "Manual"
