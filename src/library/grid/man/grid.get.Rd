@@ -15,7 +15,7 @@
 grid.get(gPath, strict = FALSE, grep = FALSE, global = FALSE,
          allDevices = FALSE)
 
-grid.gget <- function(..., grep = TRUE, global = TRUE)
+grid.gget(..., grep = TRUE, global = TRUE)
 
 getGrob(gTree, gPath, strict = FALSE, grep = FALSE, global = FALSE) 
 }

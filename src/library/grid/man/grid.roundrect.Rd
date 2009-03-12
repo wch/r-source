@@ -10,13 +10,10 @@
 \title{Draw a rectangle with rounded corners}
 \description{Draw a \emph{single} rectangle with rounded corners.}
 \usage{
-roundrectGrob <- function(x=unit(0.5, "npc"), 
-                          y=unit(0.5, "npc"), 
-                          width=unit(1, "npc"), 
-                          height=unit(1, "npc"), 
-                          r=unit(0.1, "snpc"),
-                          just="centre",
-                          name=NULL, gp=NULL, vp=NULL) 
+roundrectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"), 
+              width = unit(1, "npc"), height = unit(1, "npc"), 
+              r = unit(0.1, "snpc"), just = "centre",
+              name = NULL, gp = NULL, vp = NULL) 
 grid.roundrect(...) 
 }
 \arguments{

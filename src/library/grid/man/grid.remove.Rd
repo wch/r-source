@@ -15,7 +15,7 @@
 grid.remove(gPath, warn = TRUE, strict  =  FALSE, grep = FALSE,
             global = FALSE, allDevices = FALSE, redraw = TRUE)
 
-grid.gremove <- function(..., grep = TRUE, global = TRUE)
+grid.gremove(..., grep = TRUE, global = TRUE)
 
 removeGrob(gTree, gPath, strict = FALSE, grep = FALSE,
            global = FALSE, warn = TRUE) 
