@@ -113,7 +113,7 @@ print.packageDescription <- function(x, ...)
 {
     xx <- x
     xx[] <- lapply(xx, function(x) if(is.na(x)) "NA" else x)
-    write.dcf(as.data.frame.list(xx))
+    write.dcf(as.data.frame.list(xx, optional = TRUE))
     cat("\n-- File:", attr(x, "file"), "\n")
     if(!is.null(attr(x, "fields"))){
         cat("-- Fields read: ")
