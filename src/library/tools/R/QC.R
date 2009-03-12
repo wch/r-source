@@ -252,7 +252,8 @@ function(package, dir, lib.loc = NULL)
         ## we use .ArgsEnv and .GenericArgsEnv in checkS3methods and codoc,
         ## so we check here that the set of primiitives has not been changed.
         base_funs <- ls("package:base", all.names=TRUE)
-        prim <- sapply(base_funs, function(x) is.primitive(get(x, "package:base")))
+        prim <- sapply(base_funs,
+                       function(x) is.primitive(get(x, "package:base")))
         prims <- base_funs[prim]
         prototypes <- sort(c(ls(envir=.ArgsEnv, all.names=TRUE),
                              ls(envir=.GenericArgsEnv, all.names=TRUE)))
@@ -748,6 +749,41 @@ function(package, dir, lib.loc = NULL,
     ## (Note that 'functions_in_code' does not necessarily contain all
     ## (exported) functions in the package.)
 
+    ## Determine functions which have no usage but really should have.
+    ## If there is no name space (including base), we have no idea.
+    ## If there is one, everything "exported" (in the package env)
+    ## should also have a \usage, apart from
+    ## * Defunct functions
+    ## * S4 generics.  Note that as per R-exts,
+    ##     exporting methods on a generic in the namespace will also
+    ##     export the generic, and exporting a generic in the namespace
+    ##     will also export its methods.
+    ##   so it seems there is really no way to figure out whether an
+    ##   exported S4 generic should have a \usage entry or not ...
+    functions_missing_from_usages <-
+        if(!has_namespace) character() else {
+            functions <- functions_in_code_not_in_usages
+            if(.isMethodsDispatchOn()) {
+                ## Drop the functions which have S4 methods.
+                functions <-
+                    functions %w/o% get_S4_generics_with_methods(code_env)
+            }
+            ## Drop the defunct functions.
+            is_defunct <- function(f) {
+                f <- get(f, envir = code_env)
+                if(!is.function(f)) return(FALSE)
+                (is.call(b <- body(f))
+                 && identical(as.character(b[[1L]]), ".Defunct"))
+            }
+            functions[!sapply(functions, is_defunct)]
+        }
+    objects_missing_from_usages <-
+        if(!has_namespace) character() else {
+            c(functions_missing_from_usages,
+              (objects_in_code_not_in_usages
+               %w/o% c(functions_in_code, data_sets_in_code)))
+        }
+
     attr(bad_doc_objects, "objects_in_code_not_in_usages") <-
         objects_in_code_not_in_usages
     attr(bad_doc_objects, "functions_in_code_not_in_usages") <-
@@ -758,6 +794,10 @@ function(package, dir, lib.loc = NULL,
         function_args_in_code
     attr(bad_doc_objects, "data_sets_in_usages_not_in_code") <-
         data_sets_in_usages_not_in_code
+    attr(bad_doc_objects, "objects_missing_from_usages") <-
+        objects_missing_from_usages
+    attr(bad_doc_objects, "functions_missing_from_usages") <-
+        functions_missing_from_usages
     attr(bad_doc_objects, "has_namespace") <- has_namespace
     attr(bad_doc_objects, "with_synopsis") <- with_synopsis
     attr(bad_doc_objects, "bad_lines") <- bad_lines
@@ -815,6 +855,7 @@ function(x, ...)
     ##         }
     ##     }
     ## </COMMENT>
+    ## Update: there's now functions_missing_from_usages ...
     ## </FIXME>
 
     functions_in_usages_not_in_code <-
