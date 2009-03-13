@@ -139,7 +139,7 @@ c     top of while loop
 	 i1=.false.
       end if
       if(.not.(i1))goto 4
-	 if(z(a(j)).lt.xi(j))then
+	 if(z(a(j)).le.xi(j))then
 	    j=lo(j)
 	 else
 	    j=hi(j)
@@ -880,7 +880,7 @@ c     locate enclosing cell
 c     top of while loop
     3 if(.not.(a(j).ne.0))goto 4
 	 nt=nt+1
-	 if(z(a(j)).lt.xi(j))then
+	 if(z(a(j)).le.xi(j))then
 	    i1=lo(j)
 	 else
 	    i1=hi(j)
@@ -969,7 +969,7 @@ c        bottom of while loop
 	    m=hi(t(m))
 c           top of while loop
    14       if(.not.(a(m).ne.0))goto 15
-	       if(z(a(m)).lt.xi(m))then
+	       if(z(a(m)).le.xi(m))then
 		  m=lo(m)
 	       else
 		  m=hi(m)
@@ -1028,7 +1028,7 @@ c        bottom of while loop
 	    m=lo(t(m))
 c           top of while loop
    22       if(.not.(a(m).ne.0))goto 23
-	       if(z(a(m)).lt.xi(m))then
+	       if(z(a(m)).le.xi(m))then
 		  m=lo(m)
 	       else
 		  m=hi(m)
@@ -1087,7 +1087,7 @@ c        bottom of while loop
 	    m=hi(t(m))
 c           top of while loop
    30       if(.not.(a(m).ne.0))goto 31
-	       if(z(a(m)).lt.xi(m))then
+	       if(z(a(m)).le.xi(m))then
 		  m=lo(m)
 	       else
 		  m=hi(m)
@@ -1146,7 +1146,7 @@ c        bottom of while loop
 	    m=lo(t(m))
 c           top of while loop
    38       if(.not.(a(m).ne.0))goto 39
-	       if(z(a(m)).lt.xi(m))then
+	       if(z(a(m)).le.xi(m))then
 		  m=lo(m)
 	       else
 		  m=hi(m)
@@ -2017,7 +2017,7 @@ c              Push
 	       pstack(stackt)=hi(p)
 	       p=lo(p)
 	    else
-	       if(z(a(p)).lt.xi(p))then
+	       if(z(a(p)).le.xi(p))then
 		  p=lo(p)
 	       else
 		  p=hi(p)
