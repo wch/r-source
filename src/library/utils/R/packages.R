@@ -419,7 +419,7 @@ installed.packages <-
 				paste(fields, collapse=","), ".rds",
 				sep=""))
 	if(!noCache && file.exists(dest) &&
-	    file.info(dest)$mtime > file.info(lib.loc)$mtime) {
+	    file.info(dest)$mtime > file.info(lib)$mtime) {
 	    ## use the cache file
 	    retval <- rbind(retval, .readRDS(dest))
 	} else {
