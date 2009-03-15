@@ -2123,10 +2123,10 @@ from the clipboard (via @code{file = "clipboard"} or
 @code{readClipboard}).  The @code{read.DIF} function can also read from
 the clipboard.
 
-Note that an Excel @file{.xls} is not just a spreadsheet: such files can
-contain many sheets, and the sheets can contain formulae, macros and so
-on.  Not all readers can read other than the first sheet, and may be
-confused by other contents of the file.
+Note that an Excel @file{.xls} file is not just a spreadsheet: such
+files can contain many sheets, and the sheets can contain formulae,
+macros and so on.  Not all readers can read other than the first sheet,
+and may be confused by other contents of the file.
 
 @findex odbcConnectExcel
 @findex odbcConnectExcel2007
@@ -2136,16 +2136,18 @@ spreadsheet file.  The version @code{odbcConnectExcel2007} will read the
 Excel 2007 formats as well as earlier ones (provided the latest drivers
 are installed: see above).
 
-@findex xlsReadWrite
-Also only for Windows, the package @pkg{xlsReadWrite} has a function
-@code{read.xls} to read @file{.xls} files (based on a third-party
-non-Open Source Delphi component).
+@c @findex xlsReadWrite
+@c Also only for Windows, the package @pkg{xlsReadWrite} has a function
+@c @code{read.xls} to read @file{.xls} files (based on a third-party
+@c non-Open Source Delphi component).
 
 @code{Perl} users have contributed a module
 @code{OLE::SpreadSheet::ParseExcel} and a program @code{xls2csv.pl} to
 convert Excel spreadsheets to CSV files.  Package @pkg{gdata} provides a
 basic wrapper in its @code{read.xls} function.
 
+Package @pkg{dataframes2xls} contains a function to @emph{write} one or
+more data frames to an @file{.xls} file: it requires Python.
 
 @node References, Function and variable index, Reading Excel spreadsheets, Top
 @appendix References
