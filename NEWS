@@ -471,8 +471,9 @@ BUG FIXES
 
     o	heatmap() without a dendrogram could fail. (PR#13512)
 
-    o	checks for missing vaues will no longer result in an infinite loop
-        or stack overflow error, depending on the compiler.
+    o	checks for missing values will no longer result in an infinite
+	loop or stack overflow error, depending on the compiler. Active
+	bindings are now always considered to be non-missing.
 
 
 
