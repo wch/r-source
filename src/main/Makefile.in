@@ -24,7 +24,7 @@ SOURCES_C = \
 	engine.c envir.c errors.c eval.c \
 	format.c fourier.c \
 	gevents.c gram.c gram-ex.c gramRd.c graphics.c \
-	identical.c inlined.c internet.c iosupport.c \
+	identical.c inspect.c inlined.c internet.c iosupport.c \
 	lapack.c list.c localecharset.c logic.c \
 	main.c mapply.c match.c memory.c model.c \
 	names.c \

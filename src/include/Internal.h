@@ -263,6 +263,7 @@ SEXP do_if(SEXP, SEXP, SEXP, SEXP);
 SEXP do_image(SEXP, SEXP, SEXP, SEXP);
 SEXP do_indexsearch(SEXP, SEXP, SEXP, SEXP);
 SEXP do_inherits(SEXP, SEXP, SEXP, SEXP);
+SEXP do_inspect(SEXP, SEXP, SEXP, SEXP);
 SEXP do_intToUtf8(SEXP, SEXP, SEXP, SEXP);
 SEXP do_interactive(SEXP, SEXP, SEXP, SEXP);
 SEXP do_internal(SEXP, SEXP, SEXP, SEXP);
