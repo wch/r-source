@@ -717,7 +717,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"retracemem",  do_memretrace,  0,      1,     -1,      {PP_FUNCALL, PREC_FN,	0}},
 {"untracemem",  do_memuntrace,  0,      101,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"object.size",	do_objectsize,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{".inspect",	do_inspect,	0,	101,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"inspect",	do_inspect,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"mem.limits",	do_memlimits,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"merge",	do_merge,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"capabilities",do_capabilities,0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
