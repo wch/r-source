@@ -1289,7 +1289,7 @@ setDataPart <- function(object, value, check = TRUE) {
       stop("Class cannot have both an ordinary and hidden data type")
     dataSlot
   }
-  
+
 
 .mergeAttrs <- function(value, object, explicit = NULL) {
     supplied <- attributes(object)
@@ -1301,19 +1301,15 @@ setDataPart <- function(object, value, check = TRUE) {
         if(length(value) != length(object))
             length(supplied$names) <- length(value)
     }
-    if(length(valueAttrs) == 0L) # nothing to protect
-        attributes(value) <- supplied
-    else {
-        valueAttrs$class <- NULL # copy in class if it's supplied
-           # otherwise, don't overwrite existing attrs
-        for(what in names(supplied))
-            if(is.null(valueAttrs[[what]]))
-                attr(value, what) <- supplied[[what]]
-    }
+    if(length(valueAttrs)) {	 ## don't overwrite existing attrs
+	valueAttrs$class <- NULL ## copy in class if it's supplied
+	supplied[names(valueAttrs)] <- valueAttrs
+    } ## else --  nothing to protect
+    attributes(value) <- supplied
     if(isS4(object))
-      .asS4(value)
+        .asS4(value)
     else
-      value
+        value
 }
 
 .newExternalptr <- function()
@@ -1994,7 +1990,7 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
   value
 }
 
-.oneClassToAM <- function(classDef, includeSubclasses = FALSE, short = FALSE) { 
+.oneClassToAM <- function(classDef, includeSubclasses = FALSE, short = FALSE) {
     findEdges <- function(extensions) {
         superclasses <- names(extensions)
         edges <- numeric()
@@ -2097,7 +2093,7 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
     }
   sapply(what, .checkFun)
 }
-      
+
 
 S3forS4Methods <- function(where, checkClasses = character()) {
   allClasses <- getClasses(where)
@@ -2124,7 +2120,7 @@ S3forS4Methods <- function(where, checkClasses = character()) {
   }
   allObjects
 }
-  
+
 ## this function warns of S3 methods for S4 classes, but only once per package
 ## per session.
 .checkS3forS4 <- function(method) {
