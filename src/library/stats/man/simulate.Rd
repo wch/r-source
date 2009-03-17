@@ -22,8 +22,8 @@ simulate(object, nsim, seed, \dots)
     used in a call to \code{set.seed} before simulating the response
     vectors.  If set, the value is saved as the \code{"seed"} attribute
     of the returned value.  The default, \code{NULL} will not change the
-    random generator state, and return \code{\link{.Random.seed}} as
-    \code{"seed"} attribute, see below.
+    random generator state, and return \code{\link{.Random.seed}} as the
+    \code{"seed"} attribute, see \sQuote{Value}.
   }
   \item{\dots}{additional optional arguments.}
 }
@@ -35,10 +35,10 @@ simulate(object, nsim, seed, \dots)
   %% for large-scale simulation, already for stats:::simulate.lm (in ../R/lm.R )
 
   For the \code{"lm"} method, the result is a data frame with an
-  attribute \code{"seed"} containing the \code{seed} argument and
-  \code{as.list(\link{RNGkind}())} if \code{seed} was not \code{NULL},
-  or the value of \code{\link{.Random.seed}} before the simulation was
-  started when \code{seed} was NULL as by default.
+  attribute \code{"seed"} containing the \code{seed} argument if not
+  \code{NULL} with \code{"kind"} attributs the vaue of
+  \code{as.list(\link{RNGkind}())}, otherwise (the default) the value of
+  \code{\link{.Random.seed}} before the simulation was started.
 }
 \details{
   This is a generic function.  Consult the individual modeling functions
@@ -50,20 +50,30 @@ simulate(object, nsim, seed, \dots)
   of negative binomial families is not covered by the \code{"lm"}
   method.
 
-  The methods for linear models fitted by \code{lm} or
-  \code{glm(family = "gaussian"} assume that any weights have been
-  supplied are inversely proportional to the error variance.
+  The methods for linear models fitted by \code{lm} or \code{glm(family
+  = "gaussian")} assume that any weights which have been supplied are
+  inversely proportional to the error variance.  For other GLMs the
+  (optional) \code{simulate} component of the \code{\link{family}}
+  object is used---there is no appropriate simulation method for
+  \sQuote{quasi} models as they are specified only up to two moments.
+
+  For binomial and Poisson GLMs the dispersion is fixed at one.  Integer
+  prior weights \eqn{w_i} can be interpreted as meaning that
+  observation \eqn{i} is an average of \eqn{w_i} observations, which is
+  natural for binomials specified as proportions but less so for a
+  Poisson, for which prior weights are ignored with a warning.
 
   For a gamma GLM the shape parameter is estimated by maximum likelihood
-  (using \code{\link[MASS]{gamma.shape}} in package \pkg{MASS}).  The
-  interpretation of weights is as multipliers to a basic shape
-  parameter, since dispersion is inversely proportional to shape.
+  (using function \code{\link[MASS]{gamma.shape}} in package
+  \pkg{MASS}).  The interpretation of weights is as multipliers to a
+  basic shape parameter, since dispersion is inversely proportional to
+  shape.
 
   For an inverse gauasian GLM the model assumed is \eqn{IG(\mu_i,
   \lambda w_i)} (see
   \url{http://en.wikipedia.org/wiki/Inverse_Gaussian_distribution})
   where \eqn{lambda} is estimated by the inverse of the dispersion
-  estimate for the fit.  The variance is \eqn{\mu_i^3/\lambda w_i} and
+  estimate for the fit.  The variance is \eqn{\mu_i^3/(\lambda w_i)} and
   hence inversely proprortional to the prior weights.  The simulation is
   done by function \code{\link[SuppDists]{rinvGaussian}} from the
   \pkg{SuppDists} package, which must be installed.

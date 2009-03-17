@@ -36,13 +36,13 @@ library.dynam.unload(chname, libpath,
   \item{verbose}{a logical value indicating whether an announcement
     is printed on the console before loading the DLL.  The
     default value is taken from the verbose entry in the system
-    options.}
-  \item{file.ext}{the extension to append to the file name to specify
-    the library to be loaded. This defaults to the appropriate value
-    for the operating system.}
+    \code{\link{options}}.}
+  \item{file.ext}{the extension (including \samp{.} if used) to append
+    to the file name to specify the library to be loaded.  This defaults
+    to the appropriate value for the operatingsystem.}
   \item{\dots}{additional arguments needed by some libraries that
     are passed to the call to \code{\link{dyn.load}} to control
-    how the library is loaded.}
+    how the library and its dependencies are loaded.}
   \item{new}{a list of \code{"DLLInfo"} objects corresponding to the
     DLLs loaded by packages.  Can be missing.}
 }

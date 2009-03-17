@@ -125,31 +125,32 @@ glm.fit(x, y, weights = rep(1, nobs),
   two-column matrix with the columns giving the numbers of successes and
   failures.  A terms specification of the form \code{first + second}
   indicates all the terms in \code{first} together with all the terms in
-  \code{second} with duplicates removed.  The terms in the formula will
-  be re-ordered so that main effects come first, followed by the
-  interactions, all second-order, all third-order and so on: to avoid
-  this pass a \code{terms} object as the formula.
+  \code{second} with any duplicates removed.
 
-  A specification of the form \code{first:second} indicates the
-  the set of terms obtained by taking the interactions of
-  all terms in \code{first} with all terms in \code{second}.
-  The specification \code{first*second} indicates the \emph{cross}
-  of \code{first} and \code{second}.
-  This is the same as \code{first + second + first:second}.
+  A specification of the form \code{first:second} indicates the the set
+  of terms obtained by taking the interactions of all terms in
+  \code{first} with all terms in \code{second}.  The specification
+  \code{first*second} indicates the \emph{cross} of \code{first} and
+  \code{second}.  This is the same as \code{first + second +
+  first:second}.
+
+  The terms in the formula will be re-ordered so that main effects come
+  first, followed by the interactions, all second-order, all third-order
+  and so on: to avoid this pass a \code{terms} object as the formula.
 
   Non-\code{NULL} \code{weights} can be used to indicate that different
   observations have different dispersions (with the values in
   \code{weights} being inversely proportional to the dispersions); or
   equivalently, when the elements of \code{weights} are positive
   integers \eqn{w_i}, that each response \eqn{y_i} is the mean of
-  \eqn{w_i} unit-weight observations (including the case that there are
-  \eqn{w_i} observations equal to \eqn{y_i} and the data have been
-  summarized).  For a binomial GLM prior weights to give the number of
-  trials when the response is the proportion of successes: they would
-  rarely be used of a Poisson GLM.
+  \eqn{w_i} unit-weight observations.  For a binomial GLM prior weights
+  are used to give the number of trials when the response is the
+  proportion of successes: they would rarely be used for a Poisson GLM.
 
 
-  \code{glm.fit} is the workhorse function.
+  \code{glm.fit} is the workhorse function: it is not normally called
+  directly but can be more efficient where the response vector and
+  design mattrix have already been calculated.
 
   If more than one of \code{etastart}, \code{start} and \code{mustart}
   is specified, the first in the list will be used.  It is often
