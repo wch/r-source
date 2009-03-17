@@ -275,7 +275,7 @@ generally to any implementation of the @R{} environment.
 Most users will find it necessary to interact directly with the
 operating system on their computer from time to time.  In this guide, we
 mainly discuss interaction with the operating system on UNIX machines.
-If you are running @R{} under Windows or MacOS you will need to make
+If you are running @R{} under Windows or Mac OS you will need to make
 some small adjustments.
 
 Setting up a workstation to take full advantage of the customizable
@@ -6242,7 +6242,7 @@ For use with the X11 window system on Unix-alikes
 For use on Windows
 @item quartz()
 @findex quartz
-For use on MacOS X
+For use on Mac OS X
 @item postscript()
 @findex postscript
 For printing on PostScript printers, or creating PostScript graphics
@@ -6332,14 +6332,17 @@ meanings are as follows:
 @itemx win.metafile()
 [Windows]
 @item quartz()
-[MacOS X]
+[Mac OS X]
 @item postscript()
 @itemx pdf()
+@item png()
+@item jpeg()
+@item tiff()
+@item bitmap()
 @itemx @dots{}
 Each new call to a device driver function opens a new graphics device,
 thus extending by one the device list.  This device becomes the current
-device, to which graphics output will be sent. (Some platforms may have
-further devices available.)
+device, to which graphics output will be sent.
 
 @item dev.list()
 @findex dev.list

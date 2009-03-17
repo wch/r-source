@@ -2103,7 +2103,7 @@ internationalized in the same way as other packages.
 * R code::                      
 * Main C code::                 
 * Windows-GUI-specific code::   
-* MacOS X GUI::                 
+* Mac OS X GUI::                 
 * Updating::                    
 @end menu
 
@@ -2169,7 +2169,7 @@ header for standalone @samp{nmath} skips possible translation.  (This
 does not apply to @code{N_} or @code{P_}).
 
 
-@node Windows-GUI-specific code, MacOS X GUI, Main C code, Internationalization in the R sources
+@node Windows-GUI-specific code, Mac OS X GUI, Main C code, Internationalization in the R sources
 @section Windows-GUI-specific code
 
 Messages for the Windows GUI are in a separate domain @samp{RGui}.  This
@@ -2199,14 +2199,14 @@ The template and message catalogs for the @samp{RGui} domain are in the
 top-level @file{po} directory.
 
 
-@node MacOS X GUI, Updating, Windows-GUI-specific code, Internationalization in the R sources
-@section MacOS X GUI
+@node Mac OS X GUI, Updating, Windows-GUI-specific code, Internationalization in the R sources
+@section Mac OS X GUI
 
 This is handled separately: see
 @uref{http://developer.r-project.org/Translations.html}.
 
 
-@node Updating,  , MacOS X GUI, Internationalization in the R sources
+@node Updating,  , Mac OS X GUI, Internationalization in the R sources
 @section Updating
 
 See @file{po/README} for how to update the message templates and catalogs.
@@ -3132,7 +3132,7 @@ OBSOLETE.
 
 @cindex coding standards
 @R{} is meant to run on a wide variety of platforms, including Linux and
-most variants of Unix as well as 32-bit Windows versions and on MacOS X.
+most variants of Unix as well as 32-bit Windows versions and on Mac OS X.
 Therefore, when extending @R{} by either adding to the @R{} base
 distribution or by providing an add-on package, one should not rely on
 features specific to only a few supported platforms, if this can be
@@ -3150,7 +3150,7 @@ The following tools can ``safely be assumed'' for @R{} extensions.
 An ISO C99 C compiler.  Note that extensions such as @acronym{POSIX}
 1003.1 must be tested for, typically using Autoconf unless you are sure
 they are supported on all mainstream @R{} platforms (including Windows
-and MacOS X).  Packages will be more portable if written assuming only
+and Mac OS X).  Packages will be more portable if written assuming only
 C89, but this should not be done where using C99 features will make for
 cleaner or more robust code.
 
