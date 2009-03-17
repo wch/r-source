@@ -2378,20 +2378,25 @@ AC_MSG_RESULT([using as R_SHELL for scripts ... ${R_SHELL}])
 ### * Win32 overrides
 case "${host_os}" in
   mingw*)
-    AC_DEFINE(HAVE_ICONV, 1)
-    AC_DEFINE(HAVE_ICONVLIST, 1)
-    AC_DEFINE(HAVE_ICONV_H, 1)
-    AC_DEFINE(HAVE_INTERNET, 1)
-    AC_DEFINE(HAVE_JPEG, 1)
-    AC_DEFINE(HAVE_PNG, 1)
-    AC_DEFINE(HAVE_POSIX_SETJMP, 1)
-    AC_DEFINE(HAVE_SOCKETS, 1)
-    AC_DEFINE(HAVE_TCLTK, 1)
-    AC_DEFINE(HAVE_TIMES, 1)
-    AC_DEFINE(ICONV_LATIN1, 1)
+    AC_DEFINE(HAVE_ICONV, 1, [Define if you have the iconv() function.])
+    AC_DEFINE(HAVE_ICONVLIST, 1, [Define if you have the `iconvlist' function.])
+    AC_DEFINE(HAVE_ICONV_H, 1, [Define to 1 if you have the <iconv.h> header file.])
+    AC_DEFINE(HAVE_INTERNET, 1, [Define if you have support for ftp/http
+                                 access.])
+    AC_DEFINE(HAVE_JPEG, 1,[Define if you have the JPEG headers and libraries.])
+    AC_DEFINE(HAVE_PNG, 1, [Define if you have the PNG headers and libraries.])
+    AC_DEFINE(HAVE_POSIX_SETJMP, 1, [Define if you have POSIX.1 compatible
+                                     sigsetjmp/siglongjmp.])
+    AC_DEFINE(HAVE_SOCKETS, 1, [Define if you have support for sockets.])
+    AC_DEFINE(HAVE_TCLTK, 1, [Define if you have the Tcl/Tk headers and 
+                              libraries and want Tcl/Tk support to be built.] )
+    AC_DEFINE(HAVE_TIMES, 1, [Define to 1 if you have the `times' function.])
+    AC_DEFINE(ICONV_LATIN1, 1, [Define if `iconv' accepts "UTF-8", "latin1" 
+                                and "UCS-*".])
     want_R_profiling=yes
-    AC_DEFINE(R_PROFILING, 1)
-    AC_DEFINE(SUPPORT_LIBXML, 1)
+    AC_DEFINE(R_PROFILING, 1, [Define this to enable R-level profiling.])
+    AC_DEFINE(SUPPORT_LIBXML, 1, [Define if you provide support for the libxml
+                                  ftp/http functions.])
     ;;
 esac
 

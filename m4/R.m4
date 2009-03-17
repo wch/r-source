@@ -2683,7 +2683,7 @@ fi
     AC_MSG_RESULT([yes])
   else
     ## NB: this lot is not cached
-    if test -n "${r_cv_check_fw_vecLib}"; then
+    if test "${r_cv_check_fw_vecLib}" = "yes"; then
       AC_MSG_RESULT([yes])
       ## for vecLib we have a work-around by using cblas_..._sub
       use_veclib_g95fix=yes
@@ -3475,7 +3475,7 @@ AC_DEFUN([R_CHECK_FUNCS],
 for ac_func in $1
 do
 R_CHECK_DECL($ac_func,
-             [AC_DEFINE_UNQUOTED([AS_TR_CPP([HAVE_$ac_func])], 1)], , [$2])dnl
+             [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_$ac_func]), 1)], , [$2])dnl
 done
 ])# R_CHECK_FUNCS
 
