@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
-"PO-Revision-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:27\n"
+"PO-Revision-Date: 2009-03-17 19:27\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -378,8 +378,11 @@ msgstr "Non-standard license specification:"
 msgid "Invalid license file pointers: %s"
 msgstr "Invalid license file pointers: %s"
 
-msgid "Verifiable as open source: %s"
-msgstr "Verifiable as open source: %s"
+msgid "Standardizable: %s"
+msgstr "Standardizable: %s"
+
+msgid "Standardized license specification:"
+msgstr "Standardized license specification:"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Non-portable flags in variable '%s':"
@@ -502,8 +505,14 @@ msgstr "cannot deal with Rd objects with missing/empty names"
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "missing/empty \\name field in Rd file(s)"
 
+msgid "should not get here"
+msgstr "should not get here"
+
 msgid "Rd2HTML is designed for Rd version 2 or higher."
 msgstr "Rd2HTML is designed for Rd version 2 or higher."
+
+msgid "more than one \\examples section, using the first"
+msgstr "more than one \\examples section, using the first"
 
 msgid "unable to create temp directory"
 msgstr "unable to create temp directory"
@@ -612,6 +621,207 @@ msgstr "ERROR: this R is version %s, required is R %s %s"
 msgid "cannot read index information in file '%s'"
 msgstr "cannot read index information in file ‘%s’"
 
+msgid "ERROR:"
+msgstr "ERROR:"
+
+msgid "for package"
+msgstr "for package"
+
+msgid "incorrect Contains metadata for bundle"
+msgstr "incorrect Contains metadata for bundle"
+
+msgid ": there is no package '"
+msgstr ": there is no package '"
+
+msgid "skipping installation of bundle"
+msgstr "skipping installation of bundle"
+
+msgid "problem installing per-package DESCRIPTION files"
+msgstr "problem installing per-package DESCRIPTION files"
+
+msgid "ERROR unable to create"
+msgstr "ERROR unable to create"
+
+msgid "packaged installation of"
+msgstr "packaged installation of"
+
+msgid "as"
+msgstr "as"
+
+msgid ".gz"
+msgstr ".gz"
+
+msgid ""
+"'cleanup' exists but is not executable -- see the 'R Installation and "
+"Adminstration Manual'"
+msgstr ""
+"‘cleanup’ exists but is not executable -- see the ‘R Installation and "
+"Adminstration Manual’"
+
+msgid "about to run"
+msgstr "about to run"
+
+msgid "R CMD SHLIB"
+msgstr "R CMD SHLIB"
+
+msgid "Using auto-selected zip options '"
+msgstr "Using auto-selected zip options '"
+
+msgid "--use-zip-data"
+msgstr "--use-zip-data"
+
+msgid "--use-zip-help"
+msgstr "--use-zip-help"
+
+msgid "**********************************************"
+msgstr "**********************************************"
+
+msgid "WARNING: this package has a configure script"
+msgstr "WARNING: this package has a configure script"
+
+msgid "It probably needs manual configuration"
+msgstr "It probably needs manual configuration"
+
+msgid "configure command:"
+msgstr "configure command:"
+
+msgid ""
+"R include directory is empty -- perhaps need to install R-devel.rpm or "
+"similar"
+msgstr ""
+"R include directory is empty -- perhaps need to install R-devel.rpm or "
+"similar"
+
+msgid "running src/Makefile.win ..."
+msgstr "running src/Makefile.win ..."
+
+msgid "making DLL ..."
+msgstr "making DLL ..."
+
+msgid "... done"
+msgstr "... done"
+
+msgid "no source files found"
+msgstr "no source files found"
+
+msgid "empty 'data' directory"
+msgstr "empty ‘data’ directory"
+
+msgid "use of file 'install.R' is no longer supported"
+msgstr "use of file ‘install.R’ is no longer supported"
+
+msgid "use of file 'R_PROFILE.R' is no longer supported"
+msgstr "use of file ‘R_PROFILE.R’ is no longer supported"
+
+msgid "field 'SaveImage' is defunct: please remove it"
+msgstr "field ‘SaveImage’ is defunct: please remove it"
+
+msgid "cannot create temporary directory"
+msgstr "cannot create temporary directory"
+
+msgid "Use of --with-package-versions is defunct"
+msgstr "Use of --with-package-versions is defunct"
+
+msgid "--auto-zip' is for Windows only"
+msgstr "--auto-zip' is for Windows only"
+
+msgid "-l option without value"
+msgstr "-l option without value"
+
+msgid "Warning: unknown option"
+msgstr "Warning: unknown option"
+
+msgid "processing"
+msgstr "processing"
+
+msgid "a file"
+msgstr "a file"
+
+msgid "unknown package layout"
+msgstr "unknown package layout"
+
+msgid "a directory"
+msgstr "a directory"
+
+msgid "invalid package"
+msgstr "invalid package"
+
+msgid "--pkglock applies only to a single bundle/package"
+msgstr "--pkglock applies only to a single bundle/package"
+
+msgid "ERROR: no packages specified"
+msgstr "ERROR: no packages specified"
+
+msgid "ERROR: cannot cd to directory"
+msgstr "ERROR: cannot cd to directory"
+
+msgid "ERROR: no permission to install to directory"
+msgstr "ERROR: no permission to install to directory"
+
+msgid "ERROR: failed to lock directory"
+msgstr "ERROR: failed to lock directory"
+
+msgid ""
+"for modifying\n"
+"Try removing"
+msgstr ""
+"for modifying\n"
+"Try removing"
+
+msgid "ERROR: failed to create lock directory"
+msgstr "ERROR: failed to create lock directory"
+
+msgid "building a fake installation is disallowed"
+msgstr "building a fake installation is disallowed"
+
+msgid "*** 'hhc.exe' not found: not building CHM help"
+msgstr "*** ‘hhc.exe’ not found: not building CHM help"
+
+msgid "-o option without value"
+msgstr "-o option without value"
+
+msgid "Converting Rd files to LaTeX ..."
+msgstr "Converting Rd files to LaTeX ..."
+
+msgid "this package does not have either a"
+msgstr "this package does not have either a"
+
+msgid "latex"
+msgstr "latex"
+
+msgid "or a"
+msgstr "or a"
+
+msgid "man"
+msgstr "man"
+
+msgid "directory"
+msgstr "directory"
+
+msgid "no validly-named files in the"
+msgstr "no validly-named files in the"
+
+msgid "file"
+msgstr "file"
+
+msgid "lacks a header: skipping"
+msgstr "lacks a header: skipping"
+
+msgid "there are no help pages in this package"
+msgstr "there are no help pages in this package"
+
+msgid "skipping repeated alias(es)"
+msgstr "skipping repeated alias(es)"
+
+msgid "in file"
+msgstr "in file"
+
+msgid "problem in converting"
+msgstr "problem in converting"
+
+msgid "Bundle package:"
+msgstr "Bundle package:"
+
 msgid "there is no package called '%s'"
 msgstr "there is no package called ‘%s’"
 
@@ -680,6 +890,96 @@ msgstr "‘file’ must be a character string or connection"
 
 msgid "unimplemented encoding"
 msgstr "unimplemented encoding"
+
+msgid "cannot be opened"
+msgstr "cannot be opened"
+
+msgid "testing '%s' failed"
+msgstr "testing ‘%s’ failed"
+
+msgid "Collecting examples for package"
+msgstr "Collecting examples for package"
+
+msgid "Running examples in package"
+msgstr "Running examples in package"
+
+msgid "Comparing"
+msgstr "Comparing"
+
+msgid "to"
+msgstr "to"
+
+msgid "..."
+msgstr "..."
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Running specific tests for package"
+msgstr "Running specific tests for package"
+
+msgid "Running"
+msgstr "Running"
+
+msgid "Running vignettes for package"
+msgstr "Running vignettes for package"
+
+msgid "Creating"
+msgstr "Creating"
+
+msgid "creation of"
+msgstr "creation of"
+
+msgid "failed"
+msgstr "failed"
+
+msgid "creating"
+msgstr "creating"
+
+msgid "running code in"
+msgstr "running code in"
+
+msgid "FAILED"
+msgstr "FAILED"
+
+msgid "comparing"
+msgstr "comparing"
+
+msgid "running strict specific tests"
+msgstr "running strict specific tests"
+
+msgid "running sloppy specific tests"
+msgstr "running sloppy specific tests"
+
+msgid "running regression tests"
+msgstr "running regression tests"
+
+msgid "comparing 'reg-plot.ps' to 'reg-plot.ps.save' ..."
+msgstr "comparing ‘reg-plot.ps’ to ‘reg-plot.ps.save’ ..."
+
+msgid "running tests of plotting Latin-1"
+msgstr "running tests of plotting Latin-1"
+
+msgid "expect failure or some differences if not in a Latin or UTF-8 locale"
+msgstr "expect failure or some differences if not in a Latin or UTF-8 locale"
+
+msgid "comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ..."
+msgstr "comparing ‘reg-plot-latin1.ps’ to ‘reg-plot-latin1.ps.save’ ..."
+
+msgid "running tests of consistency of as/is.*"
+msgstr "running tests of consistency of as/is.*"
+
+msgid "running tests of random deviate generation -- fails occasionally"
+msgstr "running tests of random deviate generation -- fails occasionally"
+
+msgid "running tests of primitives"
+msgstr "running tests of primitives"
+
+msgid "running regexp regression tests"
+msgstr "running regexp regression tests"
+
+msgid "running tests to possibly trigger segfaults"
+msgstr "running tests to possibly trigger segfaults"
 
 msgid "test '%s' is not available"
 msgstr "test ‘%s’ is not available"
@@ -750,3 +1050,8 @@ msgid_plural ""
 "Found possibly global 'T' or 'F' in the following Rd example files:"
 msgstr[0] "Found possibly global ‘T’ or ‘F’ in the following Rd example file:"
 msgstr[1] "Found possibly global ‘T’ or ‘F’ in the following Rd example files:"
+
+msgid "Found .Internal call in the following function:"
+msgid_plural "Found .Internal calls in the following functions:"
+msgstr[0] "Found .Internal call in the following function:"
+msgstr[1] "Found .Internal calls in the following functions:"

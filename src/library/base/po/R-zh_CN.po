@@ -2,12 +2,12 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2006.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:25\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -615,6 +615,10 @@ msgstr "拷贝时没有可以写的文件"
 msgid "more 'from' files than 'to' files"
 msgstr "'from'的文件比'to'的文件要多"
 
+#, fuzzy
+msgid "'recursive' will be ignored"
+msgstr "忽略drop变元"
+
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "不能同时又读又写同一个文件"
 
@@ -651,7 +655,8 @@ msgstr "'vec'的顺序一定得从小到大"
 msgid "using the first element of 'value' of type expression"
 msgstr ""
 
-msgid "'mode' must be \"double\" (\"real\") or \"integer\""
+#, fuzzy
+msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr "'mode'的值必需是\"double\" (\"real\")或者 \"integer\"中的一个"
 
 msgid "coercing argument to \"character\" for format=\"s\""
@@ -750,21 +755,6 @@ msgstr ":"
 
 msgid "invalid package name"
 msgstr "程辑包名字不对"
-
-msgid "package '%s' has been merged into '%s'"
-msgstr "程辑包'%s'已经被合并到'%s'"
-
-msgid "package 'lqs' has been moved back to package 'MASS'"
-msgstr "程辑包'lqs'已经被合并到程辑包'MASS'里去了"
-
-msgid "package 'MASS' has now been loaded"
-msgstr "成功载入程辑包'MASS'"
-
-msgid "package 'MASS' seems to be missing from this R installation"
-msgstr "本R安装本里好象没有程辑包'MASS'"
-
-msgid "there is no package called '%s', version %s"
-msgstr "不存在名称为'%s'，版本为%s的程辑包"
 
 msgid "there is no package called '%s'"
 msgstr "不存在叫'%s'这个名字的程辑包"
@@ -989,11 +979,15 @@ msgid ""
 "namespace"
 msgstr "追蹤函数需要方法程辑包，但在载入方法名字空间的时候出了错"
 
-msgid "Expected a single logical value for the S4 object state"
+#, fuzzy
+msgid "Expected a single logical value for the S4 state flag"
 msgstr "需要的是一个单独的S4对象逻辑值"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "不能改变因子的存储状态"
+
+msgid "package '%s' has been merged into '%s'"
+msgstr "程辑包'%s'已经被合并到'%s'"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'不是'namespace:%s'内的出口对象："
@@ -1479,7 +1473,7 @@ msgstr ""
 msgid "ERROR: no packages specified"
 msgstr "找不到程辑包"
 
-msgid "Removing from libary"
+msgid "Removing from library"
 msgstr ""
 
 msgid "ERROR: cannot cd to directory"
@@ -1500,12 +1494,6 @@ msgstr ""
 #, fuzzy
 msgid "have been removed from the search path"
 msgstr "'%s'不在搜索路径上"
-
-msgid "file"
-msgstr ""
-
-msgid "cannot be opened"
-msgstr ""
 
 msgid "cannot find name space environment"
 msgstr "找不到名字空间环境"
@@ -1548,6 +1536,18 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "package 'lqs' has been moved back to package 'MASS'"
+#~ msgstr "程辑包'lqs'已经被合并到程辑包'MASS'里去了"
+
+#~ msgid "package 'MASS' has now been loaded"
+#~ msgstr "成功载入程辑包'MASS'"
+
+#~ msgid "package 'MASS' seems to be missing from this R installation"
+#~ msgstr "本R安装本里好象没有程辑包'MASS'"
+
+#~ msgid "there is no package called '%s', version %s"
+#~ msgstr "不存在名称为'%s'，版本为%s的程辑包"
 
 #~ msgid "'%s' is not a valid package -- installed < 2.0.0?"
 #~ msgstr "'%s'不是正当的程辑包--是不是在R版本2.0.0之前装的？"

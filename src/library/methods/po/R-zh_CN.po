@@ -2,12 +2,12 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2006.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:30\n"
+"POT-Creation-Date: 2009-03-17 19:26\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -282,17 +282,11 @@ msgstr "标记'%s'里不存在任何方法"
 msgid "\"%s\" has no methods defined"
 msgstr "'%s'没有设定任何方法"
 
-msgid "signature must be a vector of classes or an environment"
-msgstr "标记要么是个含类别的矢量，要么是个环境"
+msgid "selectMethod(): mlist is not an environment or NULL :"
+msgstr ""
 
-msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
-msgstr "selectMethod():.SelectMethodOn - 过时了的东西 - 请报告"
-
-msgid "no unique method corresponding to this signature"
-msgstr "这一标记没有与之相对应的唯一方法"
-
-msgid "unable to match signature to methods"
-msgstr "无法将标记同方法歸併匹配"
+msgid "** should no longer happen!"
+msgstr ""
 
 msgid ""
 "bad class specified for element %d (should be a single character string)"
@@ -360,6 +354,10 @@ msgstr "findMethods()不适用于非同屬函数'%s'"
 
 msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr "用'where'时，FALSE只对于'inherited'有意义，(得到了"
+
+#, fuzzy
+msgid "argument \"f\" must be a generic function or %s"
+msgstr "为变元\"f\"提供的函数必需是同属函数"
 
 msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
 msgstr "'%s'不是'%s'里的同属函数，{也没有设定'package'}"
@@ -452,6 +450,18 @@ msgid ""
 "class \"%s\""
 msgstr "初始化方法回復了类别为\"%s\"的对象而不是所要求的\"%s\"这一类别"
 
+msgid "Reported %d ambiguous selections out of %d for function %s"
+msgstr ""
+
+msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "Notes: %s."
+msgstr ""
+
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr "方法(%s)标记里的名字同函数%s变元(%s)不相对应"
 
@@ -537,9 +547,6 @@ msgid ""
 "\"%s\""
 msgstr "在定义\"%2$s\"里不存在母类别\"%1$s\"的定义"
 
-msgid "class \"%s\" cannot be used as the data part of another class"
-msgstr "无法把类别\"%s\"当作另外一个类别的数据部分来用"
-
 msgid ""
 "more than one possible class for the data part: using \"%s\" rather than \"%s"
 "\""
@@ -588,14 +595,26 @@ msgstr "原型的單元同槽的类别对应不上: %s"
 msgid "the \"%s\" list for class \"%s\", includes an undefined class \"%s\""
 msgstr "类别为\"%s\"的'%s'串列包含不存在的类别\"%s\""
 
+msgid ""
+"None of the orderings of the superclasses of class \"%s\" is consistent with "
+"the superclass ordering of  its direct superclasses; using an ordering which "
+"conflicts with %s"
+msgstr ""
+
 msgid "\"class\" is a reserved slot name and cannot be redefined"
 msgstr "\"class\"是为保留槽名，不可以重新被定义"
+
+msgid "Data part is undefined for general S4 object"
+msgstr ""
 
 msgid "no '.Data' slot defined for class \"%s\""
 msgstr "类别\"%s\"没有'.Data'这一个槽"
 
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "类别\"%s\"没有数据部分(.Data 槽)"
+
+msgid "Class cannot have both an ordinary and hidden data type"
+msgstr ""
 
 msgid ""
 "a validity method must be a function of one argument, got an object of class "
@@ -630,6 +649,57 @@ msgstr "在删除类别\"%2$s\"之子类别關聯时没有找到\"%1$s\"这样�
 
 msgid "No class \"%s\" found as expected in removing subclass \"%s\""
 msgstr "在删除类别\"%2$s\"时没有找到类别\"%1$s\""
+
+msgid ""
+"argument includeSubclasses must be a logical, either one value or a vector "
+"of the same length as argument classes"
+msgstr ""
+
+msgid "Argument abbreviate must be 0, 1, 2, or 3"
+msgstr ""
+
+msgid "Needed the supplied labels vector of length %n, got %n"
+msgstr ""
+
+msgid ""
+"S3 methods written for S4 classes will fail inheritance!\n"
+"Package"
+msgstr ""
+
+msgid "apparently has"
+msgstr ""
+
+msgid "such methods  for the functions"
+msgstr ""
+
+#, fuzzy
+msgid "functions"
+msgstr "链结"
+
+msgid "Possible dangerous methods:"
+msgstr ""
+
+msgid "(Warnings generated once per package per session)"
+msgstr ""
+
+msgid "There are apparent S3 methods for class \""
+msgstr ""
+
+msgid ""
+"\"\n"
+"DANGER: any subclasses of this class will not inherit the methods"
+msgstr ""
+
+#, fuzzy
+msgid "Some of the superclasses in the definition of class \""
+msgstr "在定义\"%2$s\"里不存在母类别\"%1$s\"的定义"
+
+msgid ""
+"\" have apparent S3 methods.\n"
+"\n"
+"DANGER: the new class will not inherit these methods.\n"
+"Complain to the author of the superclass definitions."
+msgstr ""
 
 msgid ""
 "the function being used as %s in making a generic function for \"%s\" is "
@@ -689,9 +759,6 @@ msgstr "在定义里扩展标记来包括进忽略了的变元：%s"
 msgid "= \"missing\""
 msgstr "= \"missing\""
 
-msgid ","
-msgstr ","
-
 msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
 "generic"
@@ -729,9 +796,6 @@ msgstr "程序包\"%s\"的方法好象过时了；请重新安装"
 msgid ""
 "no methods found for \"%s\"; cacheGenericsMetaData() will have no effect"
 msgstr "为'%s'找不到方法；'cacheGenericsMetaData'没有作用"
-
-msgid "internal error: bad code for 'setPrimitiveMethods': %s"
-msgstr "内部出错: 'setPrimitiveMethods'的编码不对: %s"
 
 msgid "invalid value from generic function \"%s\", class \"%s\", expected %s"
 msgstr "类别为\"%s\"的同屬函数'%s'的值不对, 所要求的是%s"
@@ -817,6 +881,10 @@ msgstr "；用第一个"
 msgid "multiple equivalent inherited matches:"
 msgstr "多个等同继承匹配"
 
+#, fuzzy
+msgid "single string; got an object of class \"%s\""
+msgstr "\"),提供的应该是函数，得到的却是对象"
+
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr "\"%s\"的类别定义被封闭了，因此无法重新被定义"
 
@@ -846,6 +914,10 @@ msgid ""
 "error in contained classes (%s) for class \"%s\"; previous definition "
 "restored to \"%s\""
 msgstr "\"%s\"类别里包含的子类别(%s)不对；原来的定义重新储存到'%s'中"
+
+#, fuzzy
+msgid "Internal error: definiition of class \"%s\" not properly assigned"
+msgstr "类别\"%s\"的定义不存在"
 
 msgid "element %d of the representation was not a single character string"
 msgstr "表现的%d單元不是单字符的字串"
@@ -914,6 +986,17 @@ msgstr ""
 
 msgid "no definition of \"%s\" to use for %s"
 msgstr "\"%s\"没有定义，不能为%s起作用"
+
+msgid "Class definition cannot extend more than one of these data types: %s"
+msgstr ""
+
+msgid ""
+"Sorry, abnormal type \"%s\" is not supported as a superclass of a class "
+"definition"
+msgstr ""
+
+msgid "Defining type \"%s\" as a superclass via class \"%s\""
+msgstr ""
 
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
@@ -1092,20 +1175,23 @@ msgstr "同属函数的方法表不对，或还没有设制"
 msgid "Trying to find a methods table in a non-generic function"
 msgstr "在非同属函数里是找不到方法列表的"
 
-msgid "Ambiguous method selection for \"%s\", target \"%s\""
-msgstr "\"%s\"的方法选择不明确，目标\"%s\""
-
+#, fuzzy
 msgid ""
-"(the first of the signatures shown will be used)\n"
-"%s"
+"The \"ambiguousMethodSelection\" option should be a function to be called as "
+"the condition action; got an object of class \"%s\""
 msgstr ""
-"(使用显示的第一个标记)\n"
-"%s"
+"'setIs'的'coerce'变元值必需是单变元函数，而现在它却是类别为\"%s\"的对象"
 
 msgid ""
 "No simply inherited methods found for function \"%s\"; using non-simple "
 "method"
 msgstr "找不到适用于函数\"%s\"的简单方法；用复杂方法"
+
+msgid ""
+"Note: Method with signature \"%s\" chosen for function \"%s\",\n"
+" target signature \"%s\".\n"
+" %s would also be valid"
+msgstr ""
 
 msgid "found"
 msgstr "找到了"
@@ -1123,9 +1209,17 @@ msgid ""
 "Internal error in finding inherited methods; didn't return a unique method"
 msgstr "在搜索继承方法时出了错；找不到唯一方法"
 
-msgid ""
-"Couldn't find methods table for \"%s\", package \"%s\" may be out of date"
-msgstr "\"%s\"找不到方法列表，\"%s\"程序包可能过时了"
+msgid "Selecting %d methods of min. distance"
+msgstr ""
+
+msgid "Selecting %d non-group methods"
+msgstr ""
+
+msgid "Selecting %d partially exact-matching method(s)"
+msgstr ""
+
+msgid "Choosing method %s from %d ambiguous possibilities"
+msgstr ""
 
 msgid "Failed to find expected group generic function:"
 msgstr "找不到团体同属函数："
@@ -1164,6 +1258,18 @@ msgid ""
 "No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
 msgstr "在\"%3$s\"程序包中，程序包\"%2$s\"里的同属\"%1$s\"没有方法列表"
 
+#, fuzzy
+msgid "Undefined classes ("
+msgstr "\"%s\"不是有定义的类别"
+
+msgid ") will be ignored, for argument"
+msgstr ""
+
+msgid ""
+"Argument \"signatures\" must be a character matrix whose rows are method "
+"signatures"
+msgstr ""
+
 msgid "not allowed to have test==TRUE and an S4Class definition"
 msgstr "test==TRUE和S4Class定义不能同时存在"
 
@@ -1181,6 +1287,20 @@ msgid ""
 "is the S3 class being registered (\"%s\")"
 msgstr ""
 "S3类别的原型, \"%s\", 没有定义；只有在注册这个S3类别时才允许这种情况(\"%s\")"
+
+#, fuzzy
+msgid "Restoring definition of class \"%s\""
+msgstr "类别\"%s\"的定义不存在"
+
+#, fuzzy
+msgid "Slot \"%s\": class \"%s\" should extend class \"%s\""
+msgstr "类别\"%s\"无法擴充类别\"%s\""
+
+#, fuzzy
+msgid ""
+"invalid S4 class corresponding to S3 class: slots in  S4 version must extend "
+"corresponding slots in S3 version: fails for %s"
+msgstr "类别\"%s\"里的槽必需擴充类别\"%s\"中相应的槽：%s出了错"
 
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr "旧式类别(%s)的明确强制转换没有定义"
@@ -1307,6 +1427,38 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
+
+#~ msgid "signature must be a vector of classes or an environment"
+#~ msgstr "标记要么是个含类别的矢量，要么是个环境"
+
+#~ msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+#~ msgstr "selectMethod():.SelectMethodOn - 过时了的东西 - 请报告"
+
+#~ msgid "no unique method corresponding to this signature"
+#~ msgstr "这一标记没有与之相对应的唯一方法"
+
+#~ msgid "unable to match signature to methods"
+#~ msgstr "无法将标记同方法歸併匹配"
+
+#~ msgid "class \"%s\" cannot be used as the data part of another class"
+#~ msgstr "无法把类别\"%s\"当作另外一个类别的数据部分来用"
+
+#~ msgid "internal error: bad code for 'setPrimitiveMethods': %s"
+#~ msgstr "内部出错: 'setPrimitiveMethods'的编码不对: %s"
+
+#~ msgid "Ambiguous method selection for \"%s\", target \"%s\""
+#~ msgstr "\"%s\"的方法选择不明确，目标\"%s\""
+
+#~ msgid ""
+#~ "(the first of the signatures shown will be used)\n"
+#~ "%s"
+#~ msgstr ""
+#~ "(使用显示的第一个标记)\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Couldn't find methods table for \"%s\", package \"%s\" may be out of date"
+#~ msgstr "\"%s\"找不到方法列表，\"%s\"程序包可能过时了"
 
 #~ msgid "The class to be removed  (\""
 #~ msgstr "将被删除的类别(\""
@@ -1437,4 +1589,3 @@ msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
 
 #~ msgid "trying to use new() on a virtual class"
 #~ msgstr "不能在虛擬类别上用new()这一函数"
-

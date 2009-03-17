@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:27\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -790,6 +790,9 @@ msgstr ""
 msgid "negative values not allowed for the Poisson family"
 msgstr "포아송 패밀리에서 negative 값은 허용되지 않습니다"
 
+msgid "ignoring prior weights"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "link \"%s\" not available for quasipoisson family; available links are %s"
@@ -833,6 +836,9 @@ msgid ""
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr "또는 1열이 성공수, 2열이 실패수인 2열의 행렬입니다"
 
+msgid "cannot simulate from non-integer prior.weights"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "link \"%s\" not available for quasibinomial family; available links are %s"
@@ -854,6 +860,9 @@ msgstr ""
 msgid "non-positive values not allowed for the gamma family"
 msgstr "정확하지 않는 값은 gamma family에서 허용되지 않습니다"
 
+msgid "using weights as shape paraneters"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "link \"%s\" not available for inverse.gaussian family; available links are %s"
@@ -864,6 +873,12 @@ msgstr ""
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr "역정규 패밀리에서 정의값만 허용되지 않습니다"
+
+msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
+msgstr ""
+
+msgid "using weights as inverse variances"
+msgstr ""
 
 msgid ""
 "'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", "
@@ -1282,6 +1297,13 @@ msgstr "무효인 'lm'오브젝트: 항('terms') 혹은 'qr'성분이 없습니�
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr "오브젝트중의 나머지 자유도는 이 'lm'가 아니라고 시사합니다"
+
+msgid "family '"
+msgstr ""
+
+#, fuzzy
+msgid "' not implemented"
+msgstr "유형 '%s'는 실제 적용되지 않습니다"
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr ""
@@ -1762,6 +1784,29 @@ msgstr ""
 msgid "and there are no factor predictors; no plot no. 5"
 msgstr ""
 
+#, fuzzy
+msgid "'x' and 'T' have incompatible length"
+msgstr "'x'와 'g'는 동일 길이를 가지지 않으면 되지 않습니다"
+
+#, fuzzy
+msgid "'x' must be finite, nonnegative, and integer"
+msgstr "'x'는 non-negative 정수가 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "'T' must be nonnegative"
+msgstr "'x'는 non-negative가 나오지 않으면 되지 않습니다"
+
+msgid "not enough data"
+msgstr "적당한 데이타가 없습니다"
+
+#, fuzzy
+msgid "The case k > 2 is unimplemented"
+msgstr "유형 '%s'는 실제 적용되지 않습니다"
+
+#, fuzzy
+msgid "'r' must be a single positive number"
+msgstr "'ratio'는 단일의 positive의 수가 아니면 되지 않습니다"
+
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
 msgstr ""
@@ -1853,9 +1898,6 @@ msgstr "'proj'는 \"mlm\"에 의한 실제 적용되지 있지 않습니다"
 
 msgid "'proj' is not implemented for multiple responses"
 msgstr "'proj'는 다중 응답에 대해서는 실제 적용되지 않습니다"
-
-msgid "not enough data"
-msgstr "적당한 데이타가 없습니다"
 
 msgid "elements of 'n' must be positive"
 msgstr "'n'의 요소는 poitive가 아니면 되지 않습니다"

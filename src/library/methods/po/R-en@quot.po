@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:50\n"
-"PO-Revision-Date: 2008-10-06 07:50\n"
+"POT-Creation-Date: 2009-03-17 19:26\n"
+"PO-Revision-Date: 2009-03-17 19:26\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -330,17 +330,11 @@ msgstr "No method found for signature %s"
 msgid "\"%s\" has no methods defined"
 msgstr "“%s” has no methods defined"
 
-msgid "signature must be a vector of classes or an environment"
-msgstr "signature must be a vector of classes or an environment"
+msgid "selectMethod(): mlist is not an environment or NULL :"
+msgstr "selectMethod(): mlist is not an environment or NULL :"
 
-msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
-msgstr "selectMethod(): .SelectMethodOn - old stuff - please report"
-
-msgid "no unique method corresponding to this signature"
-msgstr "no unique method corresponding to this signature"
-
-msgid "unable to match signature to methods"
-msgstr "unable to match signature to methods"
+msgid "** should no longer happen!"
+msgstr "** should no longer happen!"
 
 msgid ""
 "bad class specified for element %d (should be a single character string)"
@@ -418,6 +412,9 @@ msgstr "non-generic function ‘%s’ given to findMethods()"
 msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
 "Only FALSE is meaningful for 'inherited', when ‘where’ is supplied (got"
+
+msgid "argument \"f\" must be a generic function or %s"
+msgstr "argument “f” must be a generic function or %s"
 
 msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
 msgstr "‘%s’ is not a generic function in ‘%s’ {and ‘package’ not specified}"
@@ -528,6 +525,18 @@ msgstr ""
 "initialize method returned an object of class “%s” instead of the required "
 "class “%s”"
 
+msgid "Reported %d ambiguous selections out of %d for function %s"
+msgstr "Reported %d ambiguous selections out of %d for function %s"
+
+msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
+msgstr "%d: target “%s”: chose “%s” (others: %s)"
+
+msgid ","
+msgstr ","
+
+msgid "Notes: %s."
+msgstr "Notes: %s."
+
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 "the names in signature for method (%s) do not match %s's arguments (%s)"
@@ -625,9 +634,6 @@ msgstr ""
 "No definition was found for superclass “%s” in the specification of class “%"
 "s”"
 
-msgid "class \"%s\" cannot be used as the data part of another class"
-msgstr "class “%s” cannot be used as the data part of another class"
-
 msgid ""
 "more than one possible class for the data part: using \"%s\" rather than \"%s"
 "\""
@@ -684,14 +690,29 @@ msgstr "named elements of prototype do not correspond to slot names: %s"
 msgid "the \"%s\" list for class \"%s\", includes an undefined class \"%s\""
 msgstr "the “%s” list for class “%s”, includes an undefined class “%s”"
 
+msgid ""
+"None of the orderings of the superclasses of class \"%s\" is consistent with "
+"the superclass ordering of  its direct superclasses; using an ordering which "
+"conflicts with %s"
+msgstr ""
+"None of the orderings of the superclasses of class “%s” is consistent with "
+"the superclass ordering of  its direct superclasses; using an ordering which "
+"conflicts with %s"
+
 msgid "\"class\" is a reserved slot name and cannot be redefined"
 msgstr "“class” is a reserved slot name and cannot be redefined"
+
+msgid "Data part is undefined for general S4 object"
+msgstr "Data part is undefined for general S4 object"
 
 msgid "no '.Data' slot defined for class \"%s\""
 msgstr "no ‘.Data’ slot defined for class “%s”"
 
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "class “%s” does not have a data part (a .Data slot) defined"
+
+msgid "Class cannot have both an ordinary and hidden data type"
+msgstr "Class cannot have both an ordinary and hidden data type"
 
 msgid ""
 "a validity method must be a function of one argument, got an object of class "
@@ -732,6 +753,65 @@ msgstr ""
 
 msgid "No class \"%s\" found as expected in removing subclass \"%s\""
 msgstr "No class “%s” found as expected in removing subclass “%s”"
+
+msgid ""
+"argument includeSubclasses must be a logical, either one value or a vector "
+"of the same length as argument classes"
+msgstr ""
+"argument includeSubclasses must be a logical, either one value or a vector "
+"of the same length as argument classes"
+
+msgid "Argument abbreviate must be 0, 1, 2, or 3"
+msgstr "Argument abbreviate must be 0, 1, 2, or 3"
+
+msgid "Needed the supplied labels vector of length %n, got %n"
+msgstr "Needed the supplied labels vector of length %n, got %n"
+
+msgid ""
+"S3 methods written for S4 classes will fail inheritance!\n"
+"Package"
+msgstr ""
+"S3 methods written for S4 classes will fail inheritance!\n"
+"Package"
+
+msgid "apparently has"
+msgstr "apparently has"
+
+msgid "such methods  for the functions"
+msgstr "such methods  for the functions"
+
+msgid "functions"
+msgstr "functions"
+
+msgid "Possible dangerous methods:"
+msgstr "Possible dangerous methods:"
+
+msgid "(Warnings generated once per package per session)"
+msgstr "(Warnings generated once per package per session)"
+
+msgid "There are apparent S3 methods for class \""
+msgstr "There are apparent S3 methods for class \""
+
+msgid ""
+"\"\n"
+"DANGER: any subclasses of this class will not inherit the methods"
+msgstr ""
+"\"\n"
+"DANGER: any subclasses of this class will not inherit the methods"
+
+msgid "Some of the superclasses in the definition of class \""
+msgstr "Some of the superclasses in the definition of class \""
+
+msgid ""
+"\" have apparent S3 methods.\n"
+"\n"
+"DANGER: the new class will not inherit these methods.\n"
+"Complain to the author of the superclass definitions."
+msgstr ""
+"\" have apparent S3 methods.\n"
+"\n"
+"DANGER: the new class will not inherit these methods.\n"
+"Complain to the author of the superclass definitions."
 
 msgid ""
 "the function being used as %s in making a generic function for \"%s\" is "
@@ -796,9 +876,6 @@ msgstr "expanding the signature to include omitted arguments in definition: %s"
 msgid "= \"missing\""
 msgstr "= “missing”"
 
-msgid ","
-msgstr ","
-
 msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
 "generic"
@@ -841,9 +918,6 @@ msgstr ""
 msgid ""
 "no methods found for \"%s\"; cacheGenericsMetaData() will have no effect"
 msgstr "no methods found for “%s”; cacheGenericsMetaData() will have no effect"
-
-msgid "internal error: bad code for 'setPrimitiveMethods': %s"
-msgstr "internal error: bad code for 'setPrimitiveMethods': %s"
 
 msgid "invalid value from generic function \"%s\", class \"%s\", expected %s"
 msgstr "invalid value from generic function “%s”, class “%s”, expected %s"
@@ -940,6 +1014,9 @@ msgstr "; using the first of these"
 msgid "multiple equivalent inherited matches:"
 msgstr "multiple equivalent inherited matches:"
 
+msgid "single string; got an object of class \"%s\""
+msgstr "single string; got an object of class “%s”"
+
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr "“%s” has a sealed class definition and cannot be redefined"
 
@@ -977,6 +1054,9 @@ msgid ""
 msgstr ""
 "error in contained classes (%s) for class “%s”; previous definition restored "
 "to “%s”"
+
+msgid "Internal error: definiition of class \"%s\" not properly assigned"
+msgstr "Internal error: definiition of class “%s” not properly assigned"
 
 msgid "element %d of the representation was not a single character string"
 msgstr "element %d of the representation was not a single character string"
@@ -1047,6 +1127,19 @@ msgstr ""
 
 msgid "no definition of \"%s\" to use for %s"
 msgstr "no definition of “%s” to use for %s"
+
+msgid "Class definition cannot extend more than one of these data types: %s"
+msgstr "Class definition cannot extend more than one of these data types: %s"
+
+msgid ""
+"Sorry, abnormal type \"%s\" is not supported as a superclass of a class "
+"definition"
+msgstr ""
+"Sorry, abnormal type “%s” is not supported as a superclass of a class "
+"definition"
+
+msgid "Defining type \"%s\" as a superclass via class \"%s\""
+msgstr "Defining type “%s” as a superclass via class “%s”"
 
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
@@ -1248,21 +1341,27 @@ msgstr "Invalid or unset methods table in generic function \""
 msgid "Trying to find a methods table in a non-generic function"
 msgstr "Trying to find a methods table in a non-generic function"
 
-msgid "Ambiguous method selection for \"%s\", target \"%s\""
-msgstr "Ambiguous method selection for “%s”, target “%s”"
-
 msgid ""
-"(the first of the signatures shown will be used)\n"
-"%s"
+"The \"ambiguousMethodSelection\" option should be a function to be called as "
+"the condition action; got an object of class \"%s\""
 msgstr ""
-"(the first of the signatures shown will be used)\n"
-"%s"
+"The “ambiguousMethodSelection” option should be a function to be called as "
+"the condition action; got an object of class “%s”"
 
 msgid ""
 "No simply inherited methods found for function \"%s\"; using non-simple "
 "method"
 msgstr ""
 "No simply inherited methods found for function “%s”; using non-simple method"
+
+msgid ""
+"Note: Method with signature \"%s\" chosen for function \"%s\",\n"
+" target signature \"%s\".\n"
+" %s would also be valid"
+msgstr ""
+"Note: Method with signature “%s” chosen for function “%s”,\n"
+" target signature “%s”.\n"
+" %s would also be valid"
 
 msgid "found"
 msgstr "found"
@@ -1281,9 +1380,17 @@ msgid ""
 msgstr ""
 "Internal error in finding inherited methods; didn't return a unique method"
 
-msgid ""
-"Couldn't find methods table for \"%s\", package \"%s\" may be out of date"
-msgstr "Couldn't find methods table for “%s”, package “%s” may be out of date"
+msgid "Selecting %d methods of min. distance"
+msgstr "Selecting %d methods of min. distance"
+
+msgid "Selecting %d non-group methods"
+msgstr "Selecting %d non-group methods"
+
+msgid "Selecting %d partially exact-matching method(s)"
+msgstr "Selecting %d partially exact-matching method(s)"
+
+msgid "Choosing method %s from %d ambiguous possibilities"
+msgstr "Choosing method %s from %d ambiguous possibilities"
 
 msgid "Failed to find expected group generic function:"
 msgstr "Failed to find expected group generic function:"
@@ -1324,6 +1431,19 @@ msgid ""
 "No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
 msgstr "No methods table for generic “%s” from package “%s” in package “%s”"
 
+msgid "Undefined classes ("
+msgstr "Undefined classes ("
+
+msgid ") will be ignored, for argument"
+msgstr ") will be ignored, for argument"
+
+msgid ""
+"Argument \"signatures\" must be a character matrix whose rows are method "
+"signatures"
+msgstr ""
+"Argument “signatures” must be a character matrix whose rows are method "
+"signatures"
+
 msgid "not allowed to have test==TRUE and an S4Class definition"
 msgstr "not allowed to have test==TRUE and an S4Class definition"
 
@@ -1345,6 +1465,19 @@ msgid ""
 msgstr ""
 "The S3 class of the prototype, “%s”, is undefined; only allowed when this is "
 "the S3 class being registered (“%s”)"
+
+msgid "Restoring definition of class \"%s\""
+msgstr "Restoring definition of class “%s”"
+
+msgid "Slot \"%s\": class \"%s\" should extend class \"%s\""
+msgstr "Slot “%s”: class “%s” should extend class “%s”"
+
+msgid ""
+"invalid S4 class corresponding to S3 class: slots in  S4 version must extend "
+"corresponding slots in S3 version: fails for %s"
+msgstr ""
+"invalid S4 class corresponding to S3 class: slots in  S4 version must extend "
+"corresponding slots in S3 version: fails for %s"
 
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr "explicit coercion of old-style class (%s) is not defined"

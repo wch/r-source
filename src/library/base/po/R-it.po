@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:25\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -648,6 +648,10 @@ msgstr "nessun file su cui copiare"
 msgid "more 'from' files than 'to' files"
 msgstr "ci sono più file 'from' che file 'to'"
 
+#, fuzzy
+msgid "'recursive' will be ignored"
+msgstr "l'argomento drop verrà ignorato"
+
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "il file non può essere copiato sia da 'from' che su 'to'"
 
@@ -795,21 +799,6 @@ msgstr ""
 #, fuzzy
 msgid "invalid package name"
 msgstr "nome non valido"
-
-msgid "package '%s' has been merged into '%s'"
-msgstr "il pacchetto '%s' è stato integrato in '%s'"
-
-msgid "package 'lqs' has been moved back to package 'MASS'"
-msgstr "il pacchetto 'lqs' è stato reinserito nel pacchetto 'MASS'"
-
-msgid "package 'MASS' has now been loaded"
-msgstr "il pacchetto 'MASS' è stato caricato"
-
-msgid "package 'MASS' seems to be missing from this R installation"
-msgstr "il pacchetto 'MASS' sembra mancare in questa installazione di R"
-
-msgid "there is no package called '%s', version %s"
-msgstr "non c'è alcun pacchetto chiamato '%s', versione %s"
 
 msgid "there is no package called '%s'"
 msgstr "non c'è alcun pacchetto chiamato '%s'"
@@ -1045,11 +1034,14 @@ msgstr ""
 "Il 'trace' delle funzioni richiede il pacchetto method, ma non è possibile "
 "caricare il namespace methods"
 
-msgid "Expected a single logical value for the S4 object state"
+msgid "Expected a single logical value for the S4 state flag"
 msgstr ""
 
 msgid "invalid to change the storage mode of a factor"
 msgstr ""
+
+msgid "package '%s' has been merged into '%s'"
+msgstr "il pacchetto '%s' è stato integrato in '%s'"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' non è un oggetto esportato dal 'namespace:%s'"
@@ -1556,7 +1548,7 @@ msgstr ""
 msgid "ERROR: no packages specified"
 msgstr "nessun pacchetto trovato"
 
-msgid "Removing from libary"
+msgid "Removing from library"
 msgstr ""
 
 msgid "ERROR: cannot cd to directory"
@@ -1577,12 +1569,6 @@ msgstr ""
 #, fuzzy
 msgid "have been removed from the search path"
 msgstr "'%s' non trovato nel percorso di ricerca, uso pos = 2"
-
-msgid "file"
-msgstr ""
-
-msgid "cannot be opened"
-msgstr ""
 
 msgid "cannot find name space environment"
 msgstr ""
@@ -1638,6 +1624,18 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#~ msgid "package 'lqs' has been moved back to package 'MASS'"
+#~ msgstr "il pacchetto 'lqs' è stato reinserito nel pacchetto 'MASS'"
+
+#~ msgid "package 'MASS' has now been loaded"
+#~ msgstr "il pacchetto 'MASS' è stato caricato"
+
+#~ msgid "package 'MASS' seems to be missing from this R installation"
+#~ msgstr "il pacchetto 'MASS' sembra mancare in questa installazione di R"
+
+#~ msgid "there is no package called '%s', version %s"
+#~ msgstr "non c'è alcun pacchetto chiamato '%s', versione %s"
 
 #~ msgid "'%s' is not a valid package -- installed < 2.0.0?"
 #~ msgstr "'%s' non è un pacchetto valido -- installato < 2.0.0?"

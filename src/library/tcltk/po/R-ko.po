@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
+"POT-Creation-Date: 2009-03-17 19:27\n"
 "PO-Revision-Date: 2005-05-26 16:24+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -87,6 +87,9 @@ msgid "Cancel"
 msgstr ""
 
 msgid "'pb' is not from class \"tkProgressBar\""
+msgstr ""
+
+msgid "'filters' must be a 2-column character matrix"
 msgstr ""
 
 msgid "Loading Tcl/Tk interface ..."

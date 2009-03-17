@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:27\n"
 "PO-Revision-Date: 2008-10-02 13:49+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -773,6 +773,9 @@ msgstr ""
 msgid "negative values not allowed for the Poisson family"
 msgstr " ポアソンファミリには負の値は許されません "
 
+msgid "ignoring prior weights"
+msgstr ""
+
 msgid ""
 "link \"%s\" not available for quasipoisson family; available links are %s"
 msgstr ""
@@ -812,6 +815,9 @@ msgid ""
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr " もしくは、第一列が成功数、第二列が失敗数である 2 列の行列です "
 
+msgid "cannot simulate from non-integer prior.weights"
+msgstr ""
+
 msgid ""
 "link \"%s\" not available for quasibinomial family; available links are %s"
 msgstr ""
@@ -830,6 +836,9 @@ msgstr ""
 msgid "non-positive values not allowed for the gamma family"
 msgstr " 正でない値はガンマファミリには許されません "
 
+msgid "using weights as shape paraneters"
+msgstr ""
+
 msgid ""
 "link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr ""
@@ -838,6 +847,12 @@ msgstr ""
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr " 逆正規ファミリでは正の値しか許されません "
+
+msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
+msgstr ""
+
+msgid "using weights as inverse variances"
+msgstr ""
 
 msgid ""
 "'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", "
@@ -1247,6 +1262,13 @@ msgstr " 無効な 'lm' オブジェクト: 項('terms')もしくは 'qr' 成分
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr " オブジェクト中の残り自由度はこの 'lm'ではないと示唆します "
+
+msgid "family '"
+msgstr ""
+
+#, fuzzy
+msgid "' not implemented"
+msgstr " 型 '%s' はまだ実装されていません "
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr " 完全なフィットに対するANOVA F検定には信頼性がありません "
@@ -1700,6 +1722,29 @@ msgstr " ハット値（leverage）は全て同一値で "
 msgid "and there are no factor predictors; no plot no. 5"
 msgstr " 因子予測値もありません：5 番目のプロットはありません "
 
+#, fuzzy
+msgid "'x' and 'T' have incompatible length"
+msgstr " 'x' と 'weights' は同じ長さを持たねばなりません "
+
+#, fuzzy
+msgid "'x' must be finite, nonnegative, and integer"
+msgstr " 'x' は非負整数でなければなりません "
+
+#, fuzzy
+msgid "'T' must be nonnegative"
+msgstr " 'x' は非負でなければなりません "
+
+msgid "not enough data"
+msgstr " 十分なデータがありません "
+
+#, fuzzy
+msgid "The case k > 2 is unimplemented"
+msgstr " 型 '%s' はまだ実装されていません "
+
+#, fuzzy
+msgid "'r' must be a single positive number"
+msgstr " 比率('ratio')は単一の正値でなければなりません "
+
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
 msgstr ""
@@ -1788,9 +1833,6 @@ msgstr " 'proj' は \"mlm\" による当てはめに対しては実装されて�
 
 msgid "'proj' is not implemented for multiple responses"
 msgstr " 'proj' は多重応答に対しては実装されていません "
-
-msgid "not enough data"
-msgstr " 十分なデータがありません "
 
 msgid "elements of 'n' must be positive"
 msgstr " 'n' の要素は正でなければなりません "

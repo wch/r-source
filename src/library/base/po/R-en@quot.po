@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
-"PO-Revision-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:25\n"
+"PO-Revision-Date: 2009-03-17 19:25\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -634,6 +634,9 @@ msgstr "no files to copy to"
 msgid "more 'from' files than 'to' files"
 msgstr "more ‘from’ files than ‘to’ files"
 
+msgid "'recursive' will be ignored"
+msgstr "‘recursive’ will be ignored"
+
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "file can not be copied both ‘from’ and ‘to’"
 
@@ -768,21 +771,6 @@ msgstr ":"
 
 msgid "invalid package name"
 msgstr "invalid package name"
-
-msgid "package '%s' has been merged into '%s'"
-msgstr "package ‘%s’ has been merged into ‘%s’"
-
-msgid "package 'lqs' has been moved back to package 'MASS'"
-msgstr "package ‘lqs’ has been moved back to package ‘MASS’"
-
-msgid "package 'MASS' has now been loaded"
-msgstr "package ‘MASS’ has now been loaded"
-
-msgid "package 'MASS' seems to be missing from this R installation"
-msgstr "package ‘MASS’ seems to be missing from this R installation"
-
-msgid "there is no package called '%s', version %s"
-msgstr "there is no package called '%s', version %s"
 
 msgid "there is no package called '%s'"
 msgstr "there is no package called ‘%s’"
@@ -1010,11 +998,14 @@ msgstr ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
 
-msgid "Expected a single logical value for the S4 object state"
-msgstr "Expected a single logical value for the S4 object state"
+msgid "Expected a single logical value for the S4 state flag"
+msgstr "Expected a single logical value for the S4 state flag"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "invalid to change the storage mode of a factor"
+
+msgid "package '%s' has been merged into '%s'"
+msgstr "package ‘%s’ has been merged into ‘%s’"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "‘%s’ is not an exported object from ‘namespace:%s’"
@@ -1502,8 +1493,8 @@ msgstr "-l option without value"
 msgid "ERROR: no packages specified"
 msgstr "ERROR: no packages specified"
 
-msgid "Removing from libary"
-msgstr "Removing from libary"
+msgid "Removing from library"
+msgstr "Removing from library"
 
 msgid "ERROR: cannot cd to directory"
 msgstr "ERROR: cannot cd to directory"
@@ -1522,12 +1513,6 @@ msgstr "items"
 
 msgid "have been removed from the search path"
 msgstr "have been removed from the search path"
-
-msgid "file"
-msgstr "file"
-
-msgid "cannot be opened"
-msgstr "cannot be opened"
 
 msgid "cannot find name space environment"
 msgstr "cannot find name space environment"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-10-06 07:50\n"
+"POT-Creation-Date: 2009-03-17 19:26\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -315,17 +315,11 @@ msgstr "generic '%s'때문에 검색되는 메소드가 아닙니다"
 msgid "\"%s\" has no methods defined"
 msgstr "'%s'는 메소드를 정해두지 않습니다"
 
-msgid "signature must be a vector of classes or an environment"
-msgstr "기호는 클래스 또는 환경의 벡터가 아니면 되지 않습니다"
-
-msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
+msgid "selectMethod(): mlist is not an environment or NULL :"
 msgstr ""
 
-msgid "no unique method corresponding to this signature"
-msgstr "이 기호와 일치하고 있는 특별한 메소드가 아닙니다"
-
-msgid "unable to match signature to methods"
-msgstr "기호를 메소드으로 match할수가 없습니다"
+msgid "** should no longer happen!"
+msgstr ""
 
 msgid ""
 "bad class specified for element %d (should be a single character string)"
@@ -416,6 +410,10 @@ msgstr "'%s'가 검색되어진 non-geteric 함수가 아닙니다"
 
 msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
+
+#, fuzzy
+msgid "argument \"f\" must be a generic function or %s"
+msgstr "함수'%s'는 일반명 '%s'로 이외에, 일반적인 함수인 것처럼 보입니다"
 
 #, fuzzy
 msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
@@ -533,6 +531,18 @@ msgstr ""
 "initialize 메소드는 필수의 클래스 \"%s\"를 대신에 클래스\n"
 "\"%s\"의 오브젝트를 돌려주었습니다"
 
+msgid "Reported %d ambiguous selections out of %d for function %s"
+msgstr ""
+
+msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "Notes: %s."
+msgstr ""
+
 #, fuzzy
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr "메소드(%s)를 위한 기호의 이름은 함수 인수(%s)에 match하지 않습니다"
@@ -636,9 +646,6 @@ msgid ""
 "\"%s\""
 msgstr "지정된 위치의 클래스 \"%s\", %s,(s) 정의가 없습니다: %s"
 
-msgid "class \"%s\" cannot be used as the data part of another class"
-msgstr "클래스 \"%s\"가 다른 클래스의 데이터 일부로서 사용될 수가 없습니다"
-
 msgid ""
 "more than one possible class for the data part: using \"%s\" rather than \"%s"
 "\""
@@ -704,14 +711,26 @@ msgid "the \"%s\" list for class \"%s\", includes an undefined class \"%s\""
 msgstr ""
 "클래스 '%s'을 위한 \"%s\" 리스트는 정의하지 않은 클래스 \"%s\"를 포함합니다"
 
+msgid ""
+"None of the orderings of the superclasses of class \"%s\" is consistent with "
+"the superclass ordering of  its direct superclasses; using an ordering which "
+"conflicts with %s"
+msgstr ""
+
 msgid "\"class\" is a reserved slot name and cannot be redefined"
 msgstr "\"class\"는 예약의 slot명이어서 다시 정의 될 수가 없습니다"
+
+msgid "Data part is undefined for general S4 object"
+msgstr ""
 
 msgid "no '.Data' slot defined for class \"%s\""
 msgstr "클래스 \"%s\"때문에 정해지는 '.Data' slot이 아닙니다"
 
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "클래스 \"%s\"는 데이터 일부(.Data slot)를 정해지지 않습니다"
+
+msgid "Class cannot have both an ordinary and hidden data type"
+msgstr ""
 
 msgid ""
 "a validity method must be a function of one argument, got an object of class "
@@ -748,6 +767,56 @@ msgstr ""
 #, fuzzy
 msgid "No class \"%s\" found as expected in removing subclass \"%s\""
 msgstr "class \"%s\"는 정의하지 않는 클래스 \"%s\"를 연장합니다"
+
+msgid ""
+"argument includeSubclasses must be a logical, either one value or a vector "
+"of the same length as argument classes"
+msgstr ""
+
+msgid "Argument abbreviate must be 0, 1, 2, or 3"
+msgstr ""
+
+msgid "Needed the supplied labels vector of length %n, got %n"
+msgstr ""
+
+msgid ""
+"S3 methods written for S4 classes will fail inheritance!\n"
+"Package"
+msgstr ""
+
+msgid "apparently has"
+msgstr ""
+
+msgid "such methods  for the functions"
+msgstr ""
+
+msgid "functions"
+msgstr ""
+
+msgid "Possible dangerous methods:"
+msgstr ""
+
+msgid "(Warnings generated once per package per session)"
+msgstr ""
+
+msgid "There are apparent S3 methods for class \""
+msgstr ""
+
+msgid ""
+"\"\n"
+"DANGER: any subclasses of this class will not inherit the methods"
+msgstr ""
+
+#, fuzzy
+msgid "Some of the superclasses in the definition of class \""
+msgstr "지정된 위치의 클래스 \"%s\", %s,(s) 정의가 없습니다: %s"
+
+msgid ""
+"\" have apparent S3 methods.\n"
+"\n"
+"DANGER: the new class will not inherit these methods.\n"
+"Complain to the author of the superclass definitions."
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -816,9 +885,6 @@ msgstr "포함한 기호를 확대하는 것은 명확함으로 인수를 생략
 msgid "= \"missing\""
 msgstr "=\\\"이상하다\""
 
-msgid ","
-msgstr ","
-
 msgid ""
 "methods can add arguments to the generic only if '...' is an argument to the "
 "generic"
@@ -864,9 +930,6 @@ msgid ""
 msgstr ""
 "'%s' 때문에 검색되는 방법이 아닙니다; 'cacheGenericsMetaData'는 영향을 가지"
 "지 않을것입니다"
-
-msgid "internal error: bad code for 'setPrimitiveMethods': %s"
-msgstr "내부의 에러: 'setPrimitiveMethids'를 위한 잘못한 코드: %s입니다"
 
 #, fuzzy
 msgid "invalid value from generic function \"%s\", class \"%s\", expected %s"
@@ -972,6 +1035,10 @@ msgstr ""
 msgid "multiple equivalent inherited matches:"
 msgstr ""
 
+#, fuzzy
+msgid "single string; got an object of class \"%s\""
+msgstr "무효인 메소드 정의: 함수를 예측해서 클래스 '%s'의 대상을 얻었습니다"
+
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr "\"%s\"는 밀폐된 클래스 정의를 가져, 다시 정의를 될수가 없습니다"
 
@@ -1015,6 +1082,10 @@ msgid ""
 msgstr ""
 "클레스\"%s\" 때문에 클래스(%s)를 포함된 에러입니다; %s 으로부터\n"
 "전의 정의가 회복되었습니다"
+
+#, fuzzy
+msgid "Internal error: definiition of class \"%s\" not properly assigned"
+msgstr "검색되는 클래스 \"%s\"의 정의가 아닙니다"
 
 msgid "element %d of the representation was not a single character string"
 msgstr "대표의 요소 %d 는 하나의 문자열에서도 없었습니다"
@@ -1090,6 +1161,17 @@ msgstr ""
 
 msgid "no definition of \"%s\" to use for %s"
 msgstr "%s를 사용하는 \"%s\"의 정의가 아닙니다"
+
+msgid "Class definition cannot extend more than one of these data types: %s"
+msgstr ""
+
+msgid ""
+"Sorry, abnormal type \"%s\" is not supported as a superclass of a class "
+"definition"
+msgstr ""
+
+msgid "Defining type \"%s\" as a superclass via class \"%s\""
+msgstr ""
 
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
@@ -1306,19 +1388,25 @@ msgstr ""
 "generic 함수가 아닌 오브젝트(클래스 \"%s\"의 것)에 메소드 기호를 match시키려"
 "고 합니다"
 
-msgid "Ambiguous method selection for \"%s\", target \"%s\""
-msgstr ""
-
+#, fuzzy
 msgid ""
-"(the first of the signatures shown will be used)\n"
-"%s"
+"The \"ambiguousMethodSelection\" option should be a function to be called as "
+"the condition action; got an object of class \"%s\""
 msgstr ""
+"'setIs'에서 'coerce' 인수는 하나의 인수함수이어야만 합니다,\n"
+"클래스 \"%s\" 오브젝트를 얻었습니다"
 
 #, fuzzy
 msgid ""
 "No simply inherited methods found for function \"%s\"; using non-simple "
 "method"
 msgstr "함수'%s' 그리고 기호 %s 때문에 검색되는 메소드가 아닙니다"
+
+msgid ""
+"Note: Method with signature \"%s\" chosen for function \"%s\",\n"
+" target signature \"%s\".\n"
+" %s would also be valid"
+msgstr ""
 
 msgid "found"
 msgstr ""
@@ -1337,8 +1425,16 @@ msgid ""
 "Internal error in finding inherited methods; didn't return a unique method"
 msgstr ""
 
-msgid ""
-"Couldn't find methods table for \"%s\", package \"%s\" may be out of date"
+msgid "Selecting %d methods of min. distance"
+msgstr ""
+
+msgid "Selecting %d non-group methods"
+msgstr ""
+
+msgid "Selecting %d partially exact-matching method(s)"
+msgstr ""
+
+msgid "Choosing method %s from %d ambiguous possibilities"
 msgstr ""
 
 msgid "Failed to find expected group generic function:"
@@ -1380,6 +1476,18 @@ msgid ""
 "No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
 msgstr ""
 
+#, fuzzy
+msgid "Undefined classes ("
+msgstr "\"%s\"는 정의가 끝난 상태 클래스가 아닙니다"
+
+msgid ") will be ignored, for argument"
+msgstr ""
+
+msgid ""
+"Argument \"signatures\" must be a character matrix whose rows are method "
+"signatures"
+msgstr ""
+
 msgid "not allowed to have test==TRUE and an S4Class definition"
 msgstr ""
 
@@ -1403,6 +1511,22 @@ msgid ""
 "The S3 class of the prototype, \"%s\", is undefined; only allowed when this "
 "is the S3 class being registered (\"%s\")"
 msgstr ""
+
+#, fuzzy
+msgid "Restoring definition of class \"%s\""
+msgstr "검색되는 클래스 \"%s\"의 정의가 아닙니다"
+
+#, fuzzy
+msgid "Slot \"%s\": class \"%s\" should extend class \"%s\""
+msgstr "클래스 \"%s\"는 클래스 \"%s\"를 연장시킬 수가 없습니다"
+
+#, fuzzy
+msgid ""
+"invalid S4 class corresponding to S3 class: slots in  S4 version must extend "
+"corresponding slots in S3 version: fails for %s"
+msgstr ""
+"클래스 \"%s\"의 slot는 클래스 \"%s\"로 대응하는 slot을 연장하여야만 합니다: %"
+"s 때문에 실패합니다"
 
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr "old-style 클래스(%s)의 명시적인 강제는 정의 되지 있지 않았습니다"
@@ -1544,6 +1668,21 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "함수'%s'를 위한 메소드 signature으로, 클래스용 정의는 없습니다: %s"
+
+#~ msgid "signature must be a vector of classes or an environment"
+#~ msgstr "기호는 클래스 또는 환경의 벡터가 아니면 되지 않습니다"
+
+#~ msgid "no unique method corresponding to this signature"
+#~ msgstr "이 기호와 일치하고 있는 특별한 메소드가 아닙니다"
+
+#~ msgid "unable to match signature to methods"
+#~ msgstr "기호를 메소드으로 match할수가 없습니다"
+
+#~ msgid "class \"%s\" cannot be used as the data part of another class"
+#~ msgstr "클래스 \"%s\"가 다른 클래스의 데이터 일부로서 사용될 수가 없습니다"
+
+#~ msgid "internal error: bad code for 'setPrimitiveMethods': %s"
+#~ msgstr "내부의 에러: 'setPrimitiveMethids'를 위한 잘못한 코드: %s입니다"
 
 #~ msgid ""
 #~ "'NextMethod' not defined because the current method is not a "

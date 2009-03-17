@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:25\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -631,6 +631,10 @@ msgstr "복사한것에서 파일이 없습니다"
 msgid "more 'from' files than 'to' files"
 msgstr "복사하는 파일보다 많은 복사 전 파일이 있습니다"
 
+#, fuzzy
+msgid "'recursive' will be ignored"
+msgstr "drop인수는 무시됩니다"
+
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "동일 파일에 복사할수가 없습니다"
 
@@ -672,7 +676,8 @@ msgstr "'vec'는 비감소순서에 소트되어 있지 않으면 안됩니다"
 msgid "using the first element of 'value' of type expression"
 msgstr ""
 
-msgid "'mode' must be \"double\" (\"real\") or \"integer\""
+#, fuzzy
+msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
 "'mode'는 \"double\" (\"real\") 또는 \"integer\"가 나오지 않으면 되지 않습니다"
 
@@ -782,21 +787,6 @@ msgstr ""
 #, fuzzy
 msgid "invalid package name"
 msgstr "부적절한 이름입니다"
-
-msgid "package '%s' has been merged into '%s'"
-msgstr "패케지'%s'는 '%s'에 병합되었습니다"
-
-msgid "package 'lqs' has been moved back to package 'MASS'"
-msgstr "패키지 'lqs'는  패키지 'MASS'으로 재귀했습니다"
-
-msgid "package 'MASS' has now been loaded"
-msgstr "패키지 'MASS'는 적재되었습니다"
-
-msgid "package 'MASS' seems to be missing from this R installation"
-msgstr "패키지 'MASS'는 이 R의 인스톨에서 존재하지 않는것 같습니다"
-
-msgid "there is no package called '%s', version %s"
-msgstr "'%s'와 이름의 패키지(%s 버전)가 없습니다"
 
 msgid "there is no package called '%s'"
 msgstr "'%s'라는 이름의 패키지는 없습니다"
@@ -1032,11 +1022,14 @@ msgstr ""
 "적재할수가\n"
 "없습니다"
 
-msgid "Expected a single logical value for the S4 object state"
+msgid "Expected a single logical value for the S4 state flag"
 msgstr ""
 
 msgid "invalid to change the storage mode of a factor"
 msgstr ""
+
+msgid "package '%s' has been merged into '%s'"
+msgstr "패케지'%s'는 '%s'에 병합되었습니다"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'는 'namespace:%s' 로부터  export된 오브젝트가 아닙니다"
@@ -1545,7 +1538,7 @@ msgstr ""
 msgid "ERROR: no packages specified"
 msgstr "어떠한 패키지도 검색되지 않았습니다"
 
-msgid "Removing from libary"
+msgid "Removing from library"
 msgstr ""
 
 msgid "ERROR: cannot cd to directory"
@@ -1566,12 +1559,6 @@ msgstr ""
 #, fuzzy
 msgid "have been removed from the search path"
 msgstr "'%s'는 탐색 패스에서는 검색되지 않았습니다. pos = 2를 사용합니다"
-
-msgid "file"
-msgstr ""
-
-msgid "cannot be opened"
-msgstr ""
 
 #, fuzzy
 msgid "cannot find name space environment"
@@ -1634,6 +1621,18 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#~ msgid "package 'lqs' has been moved back to package 'MASS'"
+#~ msgstr "패키지 'lqs'는  패키지 'MASS'으로 재귀했습니다"
+
+#~ msgid "package 'MASS' has now been loaded"
+#~ msgstr "패키지 'MASS'는 적재되었습니다"
+
+#~ msgid "package 'MASS' seems to be missing from this R installation"
+#~ msgstr "패키지 'MASS'는 이 R의 인스톨에서 존재하지 않는것 같습니다"
+
+#~ msgid "there is no package called '%s', version %s"
+#~ msgstr "'%s'와 이름의 패키지(%s 버전)가 없습니다"
 
 #~ msgid "'%s' is not a valid package -- installed < 2.0.0?"
 #~ msgstr ""

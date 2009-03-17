@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-12-16 12:57+0000\n"
+"POT-Creation-Date: 2009-03-17 19:26+0000\n"
 "PO-Revision-Date: 2008-10-06 16:50-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -85,15 +85,15 @@ msgstr "Не разработанная единичная функция"
 msgid "Illegal unit or unit not yet implemented"
 msgstr "Неправильная или не разработанная единица"
 
-#: unit.c:1710
+#: unit.c:1732
 msgid "Invalid unit"
 msgstr "Неправильная единица"
 
-#: unit.c:1726
+#: unit.c:1748
 msgid "Units must be character"
 msgstr "Единицы должен быть буквами"
 
-#: unit.c:1729
+#: unit.c:1751
 msgid "Units must be of length > 0"
 msgstr "Единицы должны быть длиной > 0"
 

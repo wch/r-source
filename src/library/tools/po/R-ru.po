@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:27\n"
 "PO-Revision-Date: 2008-10-06 17:10-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -371,8 +371,12 @@ msgstr "Нестандартная лицензия:"
 msgid "Invalid license file pointers: %s"
 msgstr "Неправильные указатели файла лицензии: %s"
 
-msgid "Verifiable as open source: %s"
-msgstr "Поддается проверке как open source: %s"
+msgid "Standardizable: %s"
+msgstr ""
+
+#, fuzzy
+msgid "Standardized license specification:"
+msgstr "Нестандартная лицензия:"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Непереносимые флаги в переменной '%s':"
@@ -496,7 +500,13 @@ msgstr "не могу работать с Rd-объектами в пропущенными/пустыми именами"
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "пропущенное/пустое поле \\имя Rd-файлы"
 
+msgid "should not get here"
+msgstr ""
+
 msgid "Rd2HTML is designed for Rd version 2 or higher."
+msgstr ""
+
+msgid "more than one \\examples section, using the first"
 msgstr ""
 
 msgid "unable to create temp directory"
@@ -607,6 +617,213 @@ msgstr "ОШИБКА: это R версии %s, а требуется R %s %s"
 msgid "cannot read index information in file '%s'"
 msgstr "не могу прочитать индексную информацию из файла '%s'"
 
+msgid "ERROR:"
+msgstr ""
+
+#, fuzzy
+msgid "for package"
+msgstr "Плохое имя пакета"
+
+msgid "incorrect Contains metadata for bundle"
+msgstr ""
+
+#, fuzzy
+msgid ": there is no package '"
+msgstr "нет пакета по имени '%s'"
+
+msgid "skipping installation of bundle"
+msgstr ""
+
+msgid "problem installing per-package DESCRIPTION files"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR unable to create"
+msgstr "не могу создать"
+
+#, fuzzy
+msgid "packaged installation of"
+msgstr "пакет не содержит кода R"
+
+msgid "as"
+msgstr ""
+
+msgid ".gz"
+msgstr ""
+
+msgid ""
+"'cleanup' exists but is not executable -- see the 'R Installation and "
+"Adminstration Manual'"
+msgstr ""
+
+msgid "about to run"
+msgstr ""
+
+msgid "R CMD SHLIB"
+msgstr ""
+
+msgid "Using auto-selected zip options '"
+msgstr ""
+
+msgid "--use-zip-data"
+msgstr ""
+
+msgid "--use-zip-help"
+msgstr ""
+
+msgid "**********************************************"
+msgstr ""
+
+msgid "WARNING: this package has a configure script"
+msgstr ""
+
+msgid "It probably needs manual configuration"
+msgstr ""
+
+msgid "configure command:"
+msgstr ""
+
+msgid ""
+"R include directory is empty -- perhaps need to install R-devel.rpm or "
+"similar"
+msgstr ""
+
+#, fuzzy
+msgid "running src/Makefile.win ..."
+msgstr "не удался запуск 'make'"
+
+msgid "making DLL ..."
+msgstr ""
+
+#, fuzzy
+msgid "... done"
+msgstr "готово"
+
+msgid "no source files found"
+msgstr ""
+
+msgid "empty 'data' directory"
+msgstr ""
+
+msgid "use of file 'install.R' is no longer supported"
+msgstr ""
+
+msgid "use of file 'R_PROFILE.R' is no longer supported"
+msgstr ""
+
+msgid "field 'SaveImage' is defunct: please remove it"
+msgstr ""
+
+#, fuzzy
+msgid "cannot create temporary directory"
+msgstr "Не могу создать папку '%s'"
+
+msgid "Use of --with-package-versions is defunct"
+msgstr ""
+
+msgid "--auto-zip' is for Windows only"
+msgstr ""
+
+msgid "-l option without value"
+msgstr ""
+
+msgid "Warning: unknown option"
+msgstr ""
+
+#, fuzzy
+msgid "processing"
+msgstr "обрабытываю '"
+
+msgid "a file"
+msgstr ""
+
+msgid "unknown package layout"
+msgstr ""
+
+msgid "a directory"
+msgstr ""
+
+#, fuzzy
+msgid "invalid package"
+msgstr "Неправильное имя пакета."
+
+msgid "--pkglock applies only to a single bundle/package"
+msgstr ""
+
+msgid "ERROR: no packages specified"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: cannot cd to directory"
+msgstr "Не могу создать папку '%s'"
+
+msgid "ERROR: no permission to install to directory"
+msgstr ""
+
+msgid "ERROR: failed to lock directory"
+msgstr ""
+
+msgid ""
+"for modifying\n"
+"Try removing"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: failed to create lock directory"
+msgstr "не могу создать временную папку"
+
+msgid "building a fake installation is disallowed"
+msgstr ""
+
+msgid "*** 'hhc.exe' not found: not building CHM help"
+msgstr ""
+
+msgid "-o option without value"
+msgstr ""
+
+msgid "Converting Rd files to LaTeX ..."
+msgstr ""
+
+msgid "this package does not have either a"
+msgstr ""
+
+msgid "latex"
+msgstr ""
+
+msgid "or a"
+msgstr ""
+
+msgid "man"
+msgstr ""
+
+msgid "directory"
+msgstr ""
+
+#, fuzzy
+msgid "no validly-named files in the"
+msgstr "Неправильные указатели файла лицензии: %s"
+
+msgid "file"
+msgstr ""
+
+msgid "lacks a header: skipping"
+msgstr ""
+
+msgid "there are no help pages in this package"
+msgstr ""
+
+msgid "skipping repeated alias(es)"
+msgstr ""
+
+msgid "in file"
+msgstr ""
+
+msgid "problem in converting"
+msgstr ""
+
+msgid "Bundle package:"
+msgstr ""
+
 msgid "there is no package called '%s'"
 msgstr "нет пакета по имени '%s'"
 
@@ -676,6 +893,98 @@ msgstr "'file' должен быть текстовой строкой или соединением"
 
 msgid "unimplemented encoding"
 msgstr "не разработанная кодировка"
+
+msgid "cannot be opened"
+msgstr ""
+
+#, fuzzy
+msgid "testing '%s' failed"
+msgstr "не удался запуск 'make'"
+
+msgid "Collecting examples for package"
+msgstr ""
+
+msgid "Running examples in package"
+msgstr ""
+
+msgid "Comparing"
+msgstr ""
+
+msgid "to"
+msgstr ""
+
+msgid "..."
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Running specific tests for package"
+msgstr ""
+
+msgid "Running"
+msgstr ""
+
+msgid "Running vignettes for package"
+msgstr ""
+
+msgid "Creating"
+msgstr ""
+
+msgid "creation of"
+msgstr ""
+
+msgid "failed"
+msgstr ""
+
+msgid "creating"
+msgstr ""
+
+#, fuzzy
+msgid "running code in"
+msgstr "не удался запуск 'make'"
+
+msgid "FAILED"
+msgstr ""
+
+msgid "comparing"
+msgstr ""
+
+msgid "running strict specific tests"
+msgstr ""
+
+msgid "running sloppy specific tests"
+msgstr ""
+
+msgid "running regression tests"
+msgstr ""
+
+msgid "comparing 'reg-plot.ps' to 'reg-plot.ps.save' ..."
+msgstr ""
+
+msgid "running tests of plotting Latin-1"
+msgstr ""
+
+msgid "expect failure or some differences if not in a Latin or UTF-8 locale"
+msgstr ""
+
+msgid "comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ..."
+msgstr ""
+
+msgid "running tests of consistency of as/is.*"
+msgstr ""
+
+msgid "running tests of random deviate generation -- fails occasionally"
+msgstr ""
+
+msgid "running tests of primitives"
+msgstr ""
+
+msgid "running regexp regression tests"
+msgstr ""
+
+msgid "running tests to possibly trigger segfaults"
+msgstr ""
 
 msgid "test '%s' is not available"
 msgstr "тест '%s' недоступен"
@@ -751,6 +1060,16 @@ msgstr[1] ""
 "Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
 msgstr[2] ""
 "Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
+
+#, fuzzy
+msgid "Found .Internal call in the following function:"
+msgid_plural "Found .Internal calls in the following functions:"
+msgstr[0] "Найдены возможные глобальные T или F в следующей функциии:"
+msgstr[1] "Найдены возможные глобальные T или F в следующих функциях:"
+msgstr[2] "Найдены возможные глобальные T или F в следующих функциях:"
+
+#~ msgid "Verifiable as open source: %s"
+#~ msgstr "Поддается проверке как open source: %s"
 
 #~ msgid "--- running texi2dvi on vignettes"
 #~ msgstr "--- запуск 'texi2dvi' на очерки"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:28\n"
 "PO-Revision-Date: 2008-10-06 17:04-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -638,6 +638,11 @@ msgid "unable to create temporary directory '%s'"
 msgstr "не могу создать временную папку '%s'"
 
 msgid ""
+"installation of one of more packages failed,\n"
+"  probably %s"
+msgstr ""
+
+msgid ""
 "The downloaded packages are in\n"
 "\t%s"
 msgstr ""
@@ -944,6 +949,24 @@ msgstr "не могу создать HTML-индекс для поиска"
 msgid "Updating HTML index of packages in '.Library'"
 msgstr "Обновляю HTML-список пакетов в '.Library'"
 
+msgid "'tar' returned non-zero exit code %d"
+msgstr "'tar' вернул ненулевой код выхода %d"
+
+msgid "package '%s' successfully unpacked and MD5 sums checked"
+msgstr "пакет '%s' успешно распакован, MD5-суммы проверены"
+
+msgid "malformed bundle DESCRIPTION file, no Contains field"
+msgstr "у связки пакетов -- неправильный файл DESCRIPTION, без поля 'Contains'"
+
+msgid "bundle '%s' successfully unpacked and MD5 sums checked"
+msgstr "связка пакетов '%s' успешно распакована, MD5-суммы проверены"
+
+msgid "unable to move temporary installation '%s' to '%s'"
+msgstr "не могу перенести временную установку из '%s' в '%s'"
+
+msgid "cannot remove prior installation of package"
+msgstr "не могу удалить прежнюю установку пакета"
+
 msgid "'memory.size()' is Windows-specific"
 msgstr "'memory.size()' -- Windows-специфичный"
 
@@ -962,20 +985,8 @@ msgstr "исправляю URL'ы в нестандартных библиотеках"
 msgid "If nothing happens, you should open '%s' yourself"
 msgstr "Если ничего не произойдет, надо самому открыть '%s'"
 
-msgid "package '%s' successfully unpacked and MD5 sums checked"
-msgstr "пакет '%s' успешно распакован, MD5-суммы проверены"
-
-msgid "malformed bundle DESCRIPTION file, no Contains field"
-msgstr "у связки пакетов -- неправильный файл DESCRIPTION, без поля 'Contains'"
-
-msgid "bundle '%s' successfully unpacked and MD5 sums checked"
-msgstr "связка пакетов '%s' успешно распакована, MD5-суммы проверены"
-
 msgid "failed to create '%s'"
 msgstr "не удалось создать '%s'"
-
-msgid "unable to move temporary installation '%s' to '%s'"
-msgstr "не могу перенести временную установку из '%s' в '%s'"
 
 msgid "cannot remove prior installation of package '%s'"
 msgstr "не могу удалить прежнюю установку пакета '%s'"
@@ -997,15 +1008,6 @@ msgstr "winDialogString() нельзя использовать неинтерактивно"
 
 msgid "'pb' is not from class \"winProgressBar\""
 msgstr "'pb' не из класса \"winProgressBar\""
-
-msgid "this function is intended to work with the Aqua GUI"
-msgstr "эта функция предназначена для работы с Aqua GUI"
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar' вернул ненулевой код выхода %d"
-
-msgid "cannot remove prior installation of package"
-msgstr "не могу удалить прежнюю установку пакета"
 
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
@@ -1048,6 +1050,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "this function is intended to work with the Aqua GUI"
+#~ msgstr "эта функция предназначена для работы с Aqua GUI"
 
 #~ msgid "Maintainer:"
 #~ msgstr "Поддержка:"

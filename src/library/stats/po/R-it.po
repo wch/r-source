@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:27\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -799,6 +799,9 @@ msgstr ""
 msgid "negative values not allowed for the Poisson family"
 msgstr "valori negativi non ammissibili per la famiglia Poisson"
 
+msgid "ignoring prior weights"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "link \"%s\" not available for quasipoisson family; available links are %s"
@@ -843,6 +846,9 @@ msgstr ""
 "o una matrice di 2 colonne dove la prima colonna contiene il numero di "
 "successi e la seconda colonna il numero di insuccessi"
 
+msgid "cannot simulate from non-integer prior.weights"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "link \"%s\" not available for quasibinomial family; available links are %s"
@@ -862,6 +868,9 @@ msgstr ""
 msgid "non-positive values not allowed for the gamma family"
 msgstr "valori non positivi non sono ammessi per la famiglia gamma"
 
+msgid "using weights as shape paraneters"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "link \"%s\" not available for inverse.gaussian family; available links are %s"
@@ -871,6 +880,12 @@ msgstr ""
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr "sono ammessi solo valori positivi per la famiglia gaussiana inversa"
+
+msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
+msgstr ""
+
+msgid "using weights as inverse variances"
+msgstr ""
 
 msgid ""
 "'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", "
@@ -1287,6 +1302,13 @@ msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr ""
 "numero di gradi di libertà dei residui dell'oggetto suggeriscono che questo "
 "non una stima \"lm\""
+
+msgid "family '"
+msgstr ""
+
+#, fuzzy
+msgid "' not implemented"
+msgstr "tipo '%s' non ancora implementato"
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr ""
@@ -1760,6 +1782,29 @@ msgstr ""
 msgid "and there are no factor predictors; no plot no. 5"
 msgstr ""
 
+#, fuzzy
+msgid "'x' and 'T' have incompatible length"
+msgstr "'x' e 'g' devono avere la stessa lunghezza"
+
+#, fuzzy
+msgid "'x' must be finite, nonnegative, and integer"
+msgstr "'x' deve essere un intero non negativo"
+
+#, fuzzy
+msgid "'T' must be nonnegative"
+msgstr "'x' deve essere non negativo"
+
+msgid "not enough data"
+msgstr "dati insufficienti"
+
+#, fuzzy
+msgid "The case k > 2 is unimplemented"
+msgstr "tipo '%s' non ancora implementato"
+
+#, fuzzy
+msgid "'r' must be a single positive number"
+msgstr "'ratio' deve essere un numero positivo"
+
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
 msgstr ""
@@ -1847,9 +1892,6 @@ msgstr "'proj' non implementata per stime \"mlm\""
 
 msgid "'proj' is not implemented for multiple responses"
 msgstr "'proj' non implementata per risposte multiple"
-
-msgid "not enough data"
-msgstr "dati insufficienti"
 
 msgid "elements of 'n' must be positive"
 msgstr "gli elementi di 'n' devono essere positivi"

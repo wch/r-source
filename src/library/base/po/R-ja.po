@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:25\n"
 "PO-Revision-Date: 2008-09-30 10:48+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -626,6 +626,10 @@ msgstr " そこへコピーすべきファイルがありません "
 msgid "more 'from' files than 'to' files"
 msgstr " コピー先ファイルよりも多くのコピー元ファイルがあります "
 
+#, fuzzy
+msgid "'recursive' will be ignored"
+msgstr " drop 引数は無視されます "
+
 msgid "file can not be copied both 'from' and 'to'"
 msgstr " 同じファイルにコピーすることはできません "
 
@@ -662,7 +666,8 @@ msgstr " 'vec' は非減少順にソートされていなければいけませ�
 msgid "using the first element of 'value' of type expression"
 msgstr ""
 
-msgid "'mode' must be \"double\" (\"real\") or \"integer\""
+#, fuzzy
+msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
 " 'mode' は \"double\" (\"real\") または \"integer\" でなければなりません "
 
@@ -765,21 +770,6 @@ msgstr "  :  "
 
 msgid "invalid package name"
 msgstr " 不当なパッケージ名です "
-
-msgid "package '%s' has been merged into '%s'"
-msgstr " パッケージ '%s' は '%s' に併合されました "
-
-msgid "package 'lqs' has been moved back to package 'MASS'"
-msgstr " パッケージ 'lqs' はパッケージ 'MASS' へ戻さました "
-
-msgid "package 'MASS' has now been loaded"
-msgstr " パッケージ 'MASS' は現在ロードされています "
-
-msgid "package 'MASS' seems to be missing from this R installation"
-msgstr " パッケージ 'MASS' はこの R のインストールでは存在しないようです "
-
-msgid "there is no package called '%s', version %s"
-msgstr " '%s' という名前のパッケージ(%s 版)がありません "
 
 msgid "there is no package called '%s'"
 msgstr " '%s' という名前のパッケージはありません "
@@ -1013,11 +1003,15 @@ msgstr ""
 " トレース関数は methods パッケージを必要としていますが、その名前空間をロード"
 "できません "
 
-msgid "Expected a single logical value for the S4 object state"
+#, fuzzy
+msgid "Expected a single logical value for the S4 state flag"
 msgstr " この S4 オブジェクト状態に対しては単一の論理値が期待されています "
 
 msgid "invalid to change the storage mode of a factor"
 msgstr " factor　の格納モードを変えるのは不正です "
+
+msgid "package '%s' has been merged into '%s'"
+msgstr " パッケージ '%s' は '%s' に併合されました "
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr ""
@@ -1521,7 +1515,7 @@ msgstr ""
 msgid "ERROR: no packages specified"
 msgstr " いかなるパッケージも見付かりませんでした "
 
-msgid "Removing from libary"
+msgid "Removing from library"
 msgstr ""
 
 msgid "ERROR: cannot cd to directory"
@@ -1542,12 +1536,6 @@ msgstr ""
 #, fuzzy
 msgid "have been removed from the search path"
 msgstr " 検索パス上にありません "
-
-msgid "file"
-msgstr ""
-
-msgid "cannot be opened"
-msgstr ""
 
 msgid "cannot find name space environment"
 msgstr " 名前空間環境を見つけられません "
@@ -1592,6 +1580,18 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "package 'lqs' has been moved back to package 'MASS'"
+#~ msgstr " パッケージ 'lqs' はパッケージ 'MASS' へ戻さました "
+
+#~ msgid "package 'MASS' has now been loaded"
+#~ msgstr " パッケージ 'MASS' は現在ロードされています "
+
+#~ msgid "package 'MASS' seems to be missing from this R installation"
+#~ msgstr " パッケージ 'MASS' はこの R のインストールでは存在しないようです "
+
+#~ msgid "there is no package called '%s', version %s"
+#~ msgstr " '%s' という名前のパッケージ(%s 版)がありません "
 
 #~ msgid "'%s' is not a valid package -- installed < 2.0.0?"
 #~ msgstr ""

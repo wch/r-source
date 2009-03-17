@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:27\n"
 "PO-Revision-Date: 2008-10-06 17:21-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -779,6 +779,9 @@ msgstr ""
 msgid "negative values not allowed for the Poisson family"
 msgstr "отрицательные значения в пуассоновском семействе не разрешены"
 
+msgid "ignoring prior weights"
+msgstr ""
+
 msgid ""
 "link \"%s\" not available for quasipoisson family; available links are %s"
 msgstr ""
@@ -817,6 +820,9 @@ msgstr ""
 "или 2-колонная матрица где колонка 1 -- это кол-во успехов, а колонка 2 -- "
 "кол-во неудач"
 
+msgid "cannot simulate from non-integer prior.weights"
+msgstr ""
+
 msgid ""
 "link \"%s\" not available for quasibinomial family; available links are %s"
 msgstr ""
@@ -832,6 +838,9 @@ msgstr "ссылка \"%s\" недоступна для гамма-семейства; доступны ссылки %s"
 msgid "non-positive values not allowed for the gamma family"
 msgstr "неположительные значения не разрешены для гамма-семейства"
 
+msgid "using weights as shape paraneters"
+msgstr ""
+
 msgid ""
 "link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr ""
@@ -840,6 +849,12 @@ msgstr ""
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr ""
 "только положительные значения разрешены для обратно-гауссового семейства"
+
+msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
+msgstr ""
+
+msgid "using weights as inverse variances"
+msgstr ""
 
 msgid ""
 "'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", "
@@ -1246,6 +1261,13 @@ msgstr "неправильный 'lm'-объект:  нет ни 'terms', ни компонента 'qr'"
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr ""
 "остаточные степени свободы в объекте указывают, что это не подгонка \"lm\""
+
+msgid "family '"
+msgstr ""
+
+#, fuzzy
+msgid "' not implemented"
+msgstr "тип '%s' еще не разработан"
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr "ANOVA F-тесты для в целом хороше подгонки бессмысленны"
@@ -1704,6 +1726,29 @@ msgstr "hat-значения (трансляции) все ="
 msgid "and there are no factor predictors; no plot no. 5"
 msgstr "и здесь нет факторов-предикторов; нет графика N 5"
 
+#, fuzzy
+msgid "'x' and 'T' have incompatible length"
+msgstr "'x' и 'weights' имеют неравную длину"
+
+#, fuzzy
+msgid "'x' must be finite, nonnegative, and integer"
+msgstr "'x' должен быть неотрицательным и целым"
+
+#, fuzzy
+msgid "'T' must be nonnegative"
+msgstr "'x' должен быть неотрицательным"
+
+msgid "not enough data"
+msgstr "недостаточно данных"
+
+#, fuzzy
+msgid "The case k > 2 is unimplemented"
+msgstr "тип '%s' еще не разработан"
+
+#, fuzzy
+msgid "'r' must be a single positive number"
+msgstr "'ratio' должно быть одним положительным числом."
+
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
 msgstr ""
@@ -1794,9 +1839,6 @@ msgstr "'proj' для \"mlm\" подгонок не разработан"
 
 msgid "'proj' is not implemented for multiple responses"
 msgstr "'proj' для множественных откликов не разработан"
-
-msgid "not enough data"
-msgstr "недостаточно данных"
 
 msgid "elements of 'n' must be positive"
 msgstr "элементы 'n' должны быть положительны"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:28\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -569,6 +569,9 @@ msgstr ""
 msgid "unable to create temporary directory '%s'"
 msgstr ""
 
+msgid "installation of one of more packages failed,\n  probably %s"
+msgstr ""
+
 msgid "The downloaded packages are in\n\t%s"
 msgstr ""
 
@@ -845,6 +848,24 @@ msgstr ""
 msgid "Updating HTML index of packages in '.Library'"
 msgstr ""
 
+msgid "'tar' returned non-zero exit code %d"
+msgstr ""
+
+msgid "package '%s' successfully unpacked and MD5 sums checked"
+msgstr ""
+
+msgid "malformed bundle DESCRIPTION file, no Contains field"
+msgstr ""
+
+msgid "bundle '%s' successfully unpacked and MD5 sums checked"
+msgstr ""
+
+msgid "unable to move temporary installation '%s' to '%s'"
+msgstr ""
+
+msgid "cannot remove prior installation of package"
+msgstr ""
+
 msgid "'memory.size()' is Windows-specific"
 msgstr ""
 
@@ -863,19 +884,7 @@ msgstr ""
 msgid "If nothing happens, you should open '%s' yourself"
 msgstr ""
 
-msgid "package '%s' successfully unpacked and MD5 sums checked"
-msgstr ""
-
-msgid "malformed bundle DESCRIPTION file, no Contains field"
-msgstr ""
-
-msgid "bundle '%s' successfully unpacked and MD5 sums checked"
-msgstr ""
-
 msgid "failed to create '%s'"
-msgstr ""
-
-msgid "unable to move temporary installation '%s' to '%s'"
 msgstr ""
 
 msgid "cannot remove prior installation of package '%s'"
@@ -897,15 +906,6 @@ msgid "winDialogString() cannot be used non-interactively"
 msgstr ""
 
 msgid "'pb' is not from class \"winProgressBar\""
-msgstr ""
-
-msgid "this function is intended to work with the Aqua GUI"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr ""
-
-msgid "cannot remove prior installation of package"
 msgstr ""
 
 msgid        "class discarded from column %s"

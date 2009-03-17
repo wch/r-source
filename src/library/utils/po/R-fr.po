@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:28\n"
 "PO-Revision-Date: 2008-09-30 19:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -653,6 +653,11 @@ msgid "unable to create temporary directory '%s'"
 msgstr "impossible de créer le répertoire temporaire '%s'"
 
 msgid ""
+"installation of one of more packages failed,\n"
+"  probably %s"
+msgstr ""
+
+msgid ""
 "The downloaded packages are in\n"
 "\t%s"
 msgstr ""
@@ -966,6 +971,28 @@ msgstr "impossible de créer l'index HTML de recherche"
 msgid "Updating HTML index of packages in '.Library'"
 msgstr "mise à jour de la liste HTML des packages dans '.Library'"
 
+msgid "'tar' returned non-zero exit code %d"
+msgstr "'tar' a renvoyé un code de sortie non nul %d"
+
+msgid "package '%s' successfully unpacked and MD5 sums checked"
+msgstr ""
+"le package '%s' a été décompressé et les sommes MD5 ont été vérifiées avec "
+"succés"
+
+msgid "malformed bundle DESCRIPTION file, no Contains field"
+msgstr "fichier DESCRIPTION du bundle erroné, pas de champ Contains"
+
+msgid "bundle '%s' successfully unpacked and MD5 sums checked"
+msgstr ""
+"le bundle '%s' a été décompressé et les sommes MD5 ont été vérifiées avec "
+"succès"
+
+msgid "unable to move temporary installation '%s' to '%s'"
+msgstr "impossible de déplacer l'installation temporaire '%s' vers '%s'"
+
+msgid "cannot remove prior installation of package"
+msgstr "impossible de supprimer l'installation précédente du package"
+
 msgid "'memory.size()' is Windows-specific"
 msgstr "'memory.size()' est spécifique à Windows"
 
@@ -984,24 +1011,8 @@ msgstr "correction des URL dans les librairies non standard"
 msgid "If nothing happens, you should open '%s' yourself"
 msgstr "Si rien ne se passe, vous devrez ouvrir '%s' vous-même"
 
-msgid "package '%s' successfully unpacked and MD5 sums checked"
-msgstr ""
-"le package '%s' a été décompressé et les sommes MD5 ont été vérifiées avec "
-"succés"
-
-msgid "malformed bundle DESCRIPTION file, no Contains field"
-msgstr "fichier DESCRIPTION du bundle erroné, pas de champ Contains"
-
-msgid "bundle '%s' successfully unpacked and MD5 sums checked"
-msgstr ""
-"le bundle '%s' a été décompressé et les sommes MD5 ont été vérifiées avec "
-"succès"
-
 msgid "failed to create '%s'"
 msgstr "la création de '%s' a échoué"
-
-msgid "unable to move temporary installation '%s' to '%s'"
-msgstr "impossible de déplacer l'installation temporaire '%s' vers '%s'"
 
 msgid "cannot remove prior installation of package '%s'"
 msgstr "impossible de supprimer l'installation précédente du package '%s'"
@@ -1023,15 +1034,6 @@ msgstr "winDialogString() ne peut être utilisé en mode non interactif"
 
 msgid "'pb' is not from class \"winProgressBar\""
 msgstr "'pb' n'est pas un objet de classe \"winProgressBar\""
-
-msgid "this function is intended to work with the Aqua GUI"
-msgstr "cette fonction est conçue pour fontionner avec l'interface Aqua"
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar' a renvoyé un code de sortie non nul %d"
-
-msgid "cannot remove prior installation of package"
-msgstr "impossible de supprimer l'installation précédente du package"
 
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
@@ -1070,6 +1072,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "this function is intended to work with the Aqua GUI"
+#~ msgstr "cette fonction est conçue pour fontionner avec l'interface Aqua"
 
 #~ msgid "Maintainer:"
 #~ msgstr "Responsable :"

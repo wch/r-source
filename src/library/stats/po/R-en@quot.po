@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
-"PO-Revision-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:27\n"
+"PO-Revision-Date: 2009-03-17 19:27\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -784,6 +784,9 @@ msgstr "link “%s” not available for poisson family; available links are %s"
 msgid "negative values not allowed for the Poisson family"
 msgstr "negative values not allowed for the Poisson family"
 
+msgid "ignoring prior weights"
+msgstr "ignoring prior weights"
+
 msgid ""
 "link \"%s\" not available for quasipoisson family; available links are %s"
 msgstr ""
@@ -818,6 +821,9 @@ msgid ""
 msgstr ""
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 
+msgid "cannot simulate from non-integer prior.weights"
+msgstr "cannot simulate from non-integer prior.weights"
+
 msgid ""
 "link \"%s\" not available for quasibinomial family; available links are %s"
 msgstr ""
@@ -832,6 +838,9 @@ msgstr "link “%s” not available for gamma family; available links are %s"
 msgid "non-positive values not allowed for the gamma family"
 msgstr "non-positive values not allowed for the gamma family"
 
+msgid "using weights as shape paraneters"
+msgstr "using weights as shape paraneters"
+
 msgid ""
 "link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr ""
@@ -839,6 +848,12 @@ msgstr ""
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr "positive values only allowed for the inverse.gaussian family"
+
+msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
+msgstr "Need CRAN package ‘SuppDists’ for ‘inverse.gaussian’ family"
+
+msgid "using weights as inverse variances"
+msgstr "using weights as inverse variances"
 
 msgid ""
 "'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", "
@@ -1244,6 +1259,12 @@ msgstr "invalid ‘lm’ object:  no ‘terms’ nor ‘qr’ component"
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr "residual degrees of freedom in object suggest this is not an “lm” fit"
+
+msgid "family '"
+msgstr "family '"
+
+msgid "' not implemented"
+msgstr "' not implemented"
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr "ANOVA F-tests on an essentially perfect fit are unreliable"
@@ -1691,6 +1712,24 @@ msgstr "hat values (leverages) are all ="
 msgid "and there are no factor predictors; no plot no. 5"
 msgstr "and there are no factor predictors; no plot no. 5"
 
+msgid "'x' and 'T' have incompatible length"
+msgstr "‘x’ and ‘T’ have incompatible length"
+
+msgid "'x' must be finite, nonnegative, and integer"
+msgstr "‘x’ must be finite, nonnegative, and integer"
+
+msgid "'T' must be nonnegative"
+msgstr "‘T’ must be nonnegative"
+
+msgid "not enough data"
+msgstr "not enough data"
+
+msgid "The case k > 2 is unimplemented"
+msgstr "The case k > 2 is unimplemented"
+
+msgid "'r' must be a single positive number"
+msgstr "‘r’ must be a single positive number"
+
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
 msgstr ""
@@ -1778,9 +1817,6 @@ msgstr "‘proj’ is not implemented for “mlm” fits"
 
 msgid "'proj' is not implemented for multiple responses"
 msgstr "‘proj’ is not implemented for multiple responses"
-
-msgid "not enough data"
-msgstr "not enough data"
 
 msgid "elements of 'n' must be positive"
 msgstr "elements of ‘n’ must be positive"

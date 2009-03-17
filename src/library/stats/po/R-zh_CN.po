@@ -2,12 +2,12 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2006.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:27\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -765,6 +765,9 @@ msgstr "Poisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結�
 msgid "negative values not allowed for the Poisson family"
 msgstr "Poisson分布族不能用负数"
 
+msgid "ignoring prior weights"
+msgstr ""
+
 msgid ""
 "link \"%s\" not available for quasipoisson family; available links are %s"
 msgstr "quasipoisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
@@ -797,6 +800,9 @@ msgid ""
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr "或是有两个列的矩阵，第一列是成功的计数，第二列是失败的计数"
 
+msgid "cannot simulate from non-integer prior.weights"
+msgstr ""
+
 msgid ""
 "link \"%s\" not available for quasibinomial family; available links are %s"
 msgstr "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
@@ -810,12 +816,21 @@ msgstr "gamma分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%
 msgid "non-positive values not allowed for the gamma family"
 msgstr "gamma分布族不允许有负值"
 
+msgid "using weights as shape paraneters"
+msgstr ""
+
 msgid ""
 "link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr "inverse.gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結%s"
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr "inverse.gaussian分布族只允许正值"
+
+msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
+msgstr ""
+
+msgid "using weights as inverse variances"
+msgstr ""
 
 msgid ""
 "'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", "
@@ -1219,6 +1234,13 @@ msgstr "'lm'对象不对: 不包含'terms'或'qr'组件"
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr "对象的残差自由度表明这不是\"lm\" 拟合"
+
+msgid "family '"
+msgstr ""
+
+#, fuzzy
+msgid "' not implemented"
+msgstr "还没有实现'%s'种类"
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr "对几乎是完全拟合进行ANOVA F-检验的结果不会可靠"
@@ -1662,6 +1684,29 @@ msgstr "所有的帽值(杠杆率) 都是"
 msgid "and there are no factor predictors; no plot no. 5"
 msgstr "没有因子预测变无，因此没有第五幅画表"
 
+#, fuzzy
+msgid "'x' and 'T' have incompatible length"
+msgstr "'x'和'weights'的长度必需相同"
+
+#, fuzzy
+msgid "'x' must be finite, nonnegative, and integer"
+msgstr "'x'必需是非负的整数"
+
+#, fuzzy
+msgid "'T' must be nonnegative"
+msgstr "'x'必需为非负数"
+
+msgid "not enough data"
+msgstr "数据不够"
+
+#, fuzzy
+msgid "The case k > 2 is unimplemented"
+msgstr "还没有实现'%s'种类"
+
+#, fuzzy
+msgid "'r' must be a single positive number"
+msgstr "'ratio'必需是单一的正数"
+
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
 msgstr "'n', 'delta', 'sd', 'power',和'sig.level'之中只能有一个取NULL值"
@@ -1746,9 +1791,6 @@ msgstr "'proj'还没有为\"mlm\"拟合实现"
 
 msgid "'proj' is not implemented for multiple responses"
 msgstr "'proj'还没有为多反应实现"
-
-msgid "not enough data"
-msgstr "数据不够"
 
 msgid "elements of 'n' must be positive"
 msgstr "'n'的单元必需都是正的"

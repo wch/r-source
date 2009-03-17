@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:27\n"
 "PO-Revision-Date: 2008-10-06 22:01+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -377,8 +377,12 @@ msgstr " 標準ではないライセンス指定: "
 msgid "Invalid license file pointers: %s"
 msgstr " 不正なライセンスファイルのポインタ: %s "
 
-msgid "Verifiable as open source: %s"
-msgstr "オープンソースとして確認されています: %s "
+msgid "Standardizable: %s"
+msgstr ""
+
+#, fuzzy
+msgid "Standardized license specification:"
+msgstr " 標準ではないライセンス指定: "
 
 msgid "Non-portable flags in variable '%s':"
 msgstr " 変数 '%s' 中に non-portable なフラグ: "
@@ -510,7 +514,13 @@ msgstr ""
 " Rd ファイル中に欠損もしくは空の  \n"
 " ame 欄 "
 
+msgid "should not get here"
+msgstr ""
+
 msgid "Rd2HTML is designed for Rd version 2 or higher."
+msgstr ""
+
+msgid "more than one \\examples section, using the first"
 msgstr ""
 
 msgid "unable to create temp directory"
@@ -623,6 +633,213 @@ msgstr "エラー：この R はバージョン %s です。 R %s %s を必要�
 msgid "cannot read index information in file '%s'"
 msgstr " ファイル '%s' 中のインデックス情報を読み取ることが出来ません "
 
+msgid "ERROR:"
+msgstr ""
+
+#, fuzzy
+msgid "for package"
+msgstr " 奇矯なパッケージ名です "
+
+msgid "incorrect Contains metadata for bundle"
+msgstr ""
+
+#, fuzzy
+msgid ": there is no package '"
+msgstr " '%s' というパッケージが見当たりません "
+
+msgid "skipping installation of bundle"
+msgstr ""
+
+msgid "problem installing per-package DESCRIPTION files"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR unable to create"
+msgstr " 生成出来ません "
+
+#, fuzzy
+msgid "packaged installation of"
+msgstr " パッケージにRコードが含まれていません "
+
+msgid "as"
+msgstr ""
+
+msgid ".gz"
+msgstr ""
+
+msgid ""
+"'cleanup' exists but is not executable -- see the 'R Installation and "
+"Adminstration Manual'"
+msgstr ""
+
+msgid "about to run"
+msgstr ""
+
+msgid "R CMD SHLIB"
+msgstr ""
+
+msgid "Using auto-selected zip options '"
+msgstr ""
+
+msgid "--use-zip-data"
+msgstr ""
+
+msgid "--use-zip-help"
+msgstr ""
+
+msgid "**********************************************"
+msgstr ""
+
+msgid "WARNING: this package has a configure script"
+msgstr ""
+
+msgid "It probably needs manual configuration"
+msgstr ""
+
+msgid "configure command:"
+msgstr ""
+
+msgid ""
+"R include directory is empty -- perhaps need to install R-devel.rpm or "
+"similar"
+msgstr ""
+
+#, fuzzy
+msgid "running src/Makefile.win ..."
+msgstr " make の実行に失敗しました "
+
+msgid "making DLL ..."
+msgstr ""
+
+#, fuzzy
+msgid "... done"
+msgstr " 完了 "
+
+msgid "no source files found"
+msgstr ""
+
+msgid "empty 'data' directory"
+msgstr ""
+
+msgid "use of file 'install.R' is no longer supported"
+msgstr ""
+
+msgid "use of file 'R_PROFILE.R' is no longer supported"
+msgstr ""
+
+msgid "field 'SaveImage' is defunct: please remove it"
+msgstr ""
+
+#, fuzzy
+msgid "cannot create temporary directory"
+msgstr " ディレクトリ '%s' を生成することが出来ません "
+
+msgid "Use of --with-package-versions is defunct"
+msgstr ""
+
+msgid "--auto-zip' is for Windows only"
+msgstr ""
+
+msgid "-l option without value"
+msgstr ""
+
+msgid "Warning: unknown option"
+msgstr ""
+
+#, fuzzy
+msgid "processing"
+msgstr " 以下を処理中 ' "
+
+msgid "a file"
+msgstr ""
+
+msgid "unknown package layout"
+msgstr ""
+
+msgid "a directory"
+msgstr ""
+
+#, fuzzy
+msgid "invalid package"
+msgstr " 不正なパッケージ名です "
+
+msgid "--pkglock applies only to a single bundle/package"
+msgstr ""
+
+msgid "ERROR: no packages specified"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: cannot cd to directory"
+msgstr " ディレクトリ '%s' を生成することが出来ません "
+
+msgid "ERROR: no permission to install to directory"
+msgstr ""
+
+msgid "ERROR: failed to lock directory"
+msgstr ""
+
+msgid ""
+"for modifying\n"
+"Try removing"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: failed to create lock directory"
+msgstr " 仮ディレクトリを生成することが出来ません "
+
+msgid "building a fake installation is disallowed"
+msgstr ""
+
+msgid "*** 'hhc.exe' not found: not building CHM help"
+msgstr ""
+
+msgid "-o option without value"
+msgstr ""
+
+msgid "Converting Rd files to LaTeX ..."
+msgstr ""
+
+msgid "this package does not have either a"
+msgstr ""
+
+msgid "latex"
+msgstr ""
+
+msgid "or a"
+msgstr ""
+
+msgid "man"
+msgstr ""
+
+msgid "directory"
+msgstr ""
+
+#, fuzzy
+msgid "no validly-named files in the"
+msgstr " 不正なライセンスファイルのポインタ: %s "
+
+msgid "file"
+msgstr ""
+
+msgid "lacks a header: skipping"
+msgstr ""
+
+msgid "there are no help pages in this package"
+msgstr ""
+
+msgid "skipping repeated alias(es)"
+msgstr ""
+
+msgid "in file"
+msgstr ""
+
+msgid "problem in converting"
+msgstr ""
+
+msgid "Bundle package:"
+msgstr ""
+
 msgid "there is no package called '%s'"
 msgstr " '%s' というパッケージが見当たりません "
 
@@ -694,6 +911,98 @@ msgstr " 'file' は文字列ベクトルかコネクションでなければな�
 msgid "unimplemented encoding"
 msgstr " 実装されていないエンコード "
 
+msgid "cannot be opened"
+msgstr ""
+
+#, fuzzy
+msgid "testing '%s' failed"
+msgstr " make の実行に失敗しました "
+
+msgid "Collecting examples for package"
+msgstr ""
+
+msgid "Running examples in package"
+msgstr ""
+
+msgid "Comparing"
+msgstr ""
+
+msgid "to"
+msgstr ""
+
+msgid "..."
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Running specific tests for package"
+msgstr ""
+
+msgid "Running"
+msgstr ""
+
+msgid "Running vignettes for package"
+msgstr ""
+
+msgid "Creating"
+msgstr ""
+
+msgid "creation of"
+msgstr ""
+
+msgid "failed"
+msgstr ""
+
+msgid "creating"
+msgstr ""
+
+#, fuzzy
+msgid "running code in"
+msgstr " make の実行に失敗しました "
+
+msgid "FAILED"
+msgstr ""
+
+msgid "comparing"
+msgstr ""
+
+msgid "running strict specific tests"
+msgstr ""
+
+msgid "running sloppy specific tests"
+msgstr ""
+
+msgid "running regression tests"
+msgstr ""
+
+msgid "comparing 'reg-plot.ps' to 'reg-plot.ps.save' ..."
+msgstr ""
+
+msgid "running tests of plotting Latin-1"
+msgstr ""
+
+msgid "expect failure or some differences if not in a Latin or UTF-8 locale"
+msgstr ""
+
+msgid "comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ..."
+msgstr ""
+
+msgid "running tests of consistency of as/is.*"
+msgstr ""
+
+msgid "running tests of random deviate generation -- fails occasionally"
+msgstr ""
+
+msgid "running tests of primitives"
+msgstr ""
+
+msgid "running regexp regression tests"
+msgstr ""
+
+msgid "running tests to possibly trigger segfaults"
+msgstr ""
+
 msgid "test '%s' is not available"
 msgstr " テスト '%s' は利用出来ません "
 
@@ -761,6 +1070,14 @@ msgid_plural ""
 "Found possibly global 'T' or 'F' in the following Rd example files:"
 msgstr[0] ""
 " 以下の Rd 例示ファイル中に大局的かもしれない 'T' もしくは 'F' がありました: "
+
+#, fuzzy
+msgid "Found .Internal call in the following function:"
+msgid_plural "Found .Internal calls in the following functions:"
+msgstr[0] " 以下の関数中に大局的かもしれない 'T' もしくは 'F' がありました: "
+
+#~ msgid "Verifiable as open source: %s"
+#~ msgstr "オープンソースとして確認されています: %s "
 
 #~ msgid "--- running texi2dvi on vignettes"
 #~ msgstr " --- texi2dvi をビニエットに対して実行中 "

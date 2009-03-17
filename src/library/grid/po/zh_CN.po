@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-12-16 12:57+0000\n"
+"POT-Creation-Date: 2009-03-17 19:26+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -80,15 +80,15 @@ msgstr "单位函数目前没有实现"
 msgid "Illegal unit or unit not yet implemented"
 msgstr "要么没有这种单位，要么这个单位目前没有被实现"
 
-#: unit.c:1710
+#: unit.c:1732
 msgid "Invalid unit"
 msgstr "单位不对"
 
-#: unit.c:1726
+#: unit.c:1748
 msgid "Units must be character"
 msgstr "单位必需是字符"
 
-#: unit.c:1729
+#: unit.c:1751
 msgid "Units must be of length > 0"
 msgstr "单位的长度必需大于零"
 

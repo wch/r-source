@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:25\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -590,6 +590,9 @@ msgstr ""
 msgid "more 'from' files than 'to' files"
 msgstr ""
 
+msgid "'recursive' will be ignored"
+msgstr ""
+
 msgid "file can not be copied both 'from' and 'to'"
 msgstr ""
 
@@ -723,21 +726,6 @@ msgid ":"
 msgstr ""
 
 msgid "invalid package name"
-msgstr ""
-
-msgid "package '%s' has been merged into '%s'"
-msgstr ""
-
-msgid "package 'lqs' has been moved back to package 'MASS'"
-msgstr ""
-
-msgid "package 'MASS' has now been loaded"
-msgstr ""
-
-msgid "package 'MASS' seems to be missing from this R installation"
-msgstr ""
-
-msgid "there is no package called '%s', version %s"
 msgstr ""
 
 msgid "there is no package called '%s'"
@@ -950,10 +938,13 @@ msgstr ""
 msgid "Tracing functions requires the methods package, but unable to load methods namespace"
 msgstr ""
 
-msgid "Expected a single logical value for the S4 object state"
+msgid "Expected a single logical value for the S4 state flag"
 msgstr ""
 
 msgid "invalid to change the storage mode of a factor"
+msgstr ""
+
+msgid "package '%s' has been merged into '%s'"
 msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
@@ -1430,7 +1421,7 @@ msgstr ""
 msgid "ERROR: no packages specified"
 msgstr ""
 
-msgid "Removing from libary"
+msgid "Removing from library"
 msgstr ""
 
 msgid "ERROR: cannot cd to directory"
@@ -1449,12 +1440,6 @@ msgid "items"
 msgstr ""
 
 msgid "have been removed from the search path"
-msgstr ""
-
-msgid "file"
-msgstr ""
-
-msgid "cannot be opened"
 msgstr ""
 
 msgid "cannot find name space environment"

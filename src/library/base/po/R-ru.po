@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-17 19:25\n"
 "PO-Revision-Date: 2008-10-06 16:47-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -623,6 +623,10 @@ msgstr "нет файлов, чтобы скопировать на"
 msgid "more 'from' files than 'to' files"
 msgstr "больше файлов 'from', чем 'to'"
 
+#, fuzzy
+msgid "'recursive' will be ignored"
+msgstr "аргумент 'drop' не будет учтен"
+
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "файл не может быть скопирован одновременно 'from' и 'to'"
 
@@ -660,7 +664,8 @@ msgid "using the first element of 'value' of type expression"
 msgstr ""
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
-msgstr "'mode' должна быть \"double\" (\"real\"), \"integer\" или \"character\""
+msgstr ""
+"'mode' должна быть \"double\" (\"real\"), \"integer\" или \"character\""
 
 msgid "coercing argument to \"character\" for format=\"s\""
 msgstr "преобразую аргумент в \"character\" для format=\"s\""
@@ -759,21 +764,6 @@ msgstr ":"
 
 msgid "invalid package name"
 msgstr "неправильное имя пакета"
-
-msgid "package '%s' has been merged into '%s'"
-msgstr "пакет '%s' был слит с '%s'"
-
-msgid "package 'lqs' has been moved back to package 'MASS'"
-msgstr "пакет 'lqs' перемещен обратно в пакет 'MASS'"
-
-msgid "package 'MASS' has now been loaded"
-msgstr "пакет 'MASS' загрузился"
-
-msgid "package 'MASS' seems to be missing from this R installation"
-msgstr "пакет 'MASS', похоже, пропущен в данной установке R"
-
-msgid "there is no package called '%s', version %s"
-msgstr "нет пакета под названием '%s' и версии %s"
 
 msgid "there is no package called '%s'"
 msgstr "нет пакета под названием '%s'"
@@ -1002,11 +992,15 @@ msgstr ""
 "Трассировка функций требует пакета 'methods', но я не могу загрузить его "
 "пространство имен"
 
-msgid "Expected a single logical value for the S4 object state"
+#, fuzzy
+msgid "Expected a single logical value for the S4 state flag"
 msgstr "Для состояния \"объект S4\" ожидается простое логическое значение "
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "неправильно менять тип хранения фактора"
+
+msgid "package '%s' has been merged into '%s'"
+msgstr "пакет '%s' был слит с '%s'"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
@@ -1497,7 +1491,7 @@ msgstr ""
 msgid "ERROR: no packages specified"
 msgstr "пакетов не найдено"
 
-msgid "Removing from libary"
+msgid "Removing from library"
 msgstr ""
 
 msgid "ERROR: cannot cd to directory"
@@ -1518,12 +1512,6 @@ msgstr ""
 #, fuzzy
 msgid "have been removed from the search path"
 msgstr "не найден в пути поиска"
-
-msgid "file"
-msgstr ""
-
-msgid "cannot be opened"
-msgstr ""
 
 msgid "cannot find name space environment"
 msgstr "не могу найти окружение пространства имен"
@@ -1584,6 +1572,18 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "package 'lqs' has been moved back to package 'MASS'"
+#~ msgstr "пакет 'lqs' перемещен обратно в пакет 'MASS'"
+
+#~ msgid "package 'MASS' has now been loaded"
+#~ msgstr "пакет 'MASS' загрузился"
+
+#~ msgid "package 'MASS' seems to be missing from this R installation"
+#~ msgstr "пакет 'MASS', похоже, пропущен в данной установке R"
+
+#~ msgid "there is no package called '%s', version %s"
+#~ msgstr "нет пакета под названием '%s' и версии %s"
 
 #~ msgid "'%s' is not a valid package -- installed < 2.0.0?"
 #~ msgstr "'%s' не является правильным пакет -- установлен под < 2.0.0?"

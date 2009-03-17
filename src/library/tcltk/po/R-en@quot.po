@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-04-05 11:08\n"
-"PO-Revision-Date: 2008-04-05 11:08\n"
+"POT-Creation-Date: 2009-03-17 19:27\n"
+"PO-Revision-Date: 2009-03-17 19:27\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -110,6 +110,9 @@ msgstr "Cancel"
 
 msgid "'pb' is not from class \"tkProgressBar\""
 msgstr "‘pb’ is not from class “tkProgressBar”"
+
+msgid "'filters' must be a 2-column character matrix"
+msgstr "‘filters’ must be a 2-column character matrix"
 
 msgid "Loading Tcl/Tk interface ..."
 msgstr "Loading Tcl/Tk interface ..."
