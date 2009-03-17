@@ -2683,7 +2683,7 @@ fi
     AC_MSG_RESULT([yes])
   else
     ## NB: this lot is not cached
-    if test "${r_cv_check_fw_vecLib}" = "yes"; then
+    if test "${r_cv_check_fw_vecLib}" != "no"; then
       AC_MSG_RESULT([yes])
       ## for vecLib we have a work-around by using cblas_..._sub
       use_veclib_g95fix=yes
