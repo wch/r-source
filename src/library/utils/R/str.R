@@ -525,20 +525,20 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE, ...)
 	cat(nam, ": ")
 	## check missingness, e.g. inside debug(.) :
 
-##__ Why does this give  too many <missing> in some case?
-##__ 	if(eval(substitute(missing(.), list(. = as.name(nam))),
-##__ 		envir = E))
-##__ 	    cat("<missing>\n")
-##__ 	else
-##__ 	    str(get(nam, envir = E, mode = M),
-##__ 		max.level = max.level, give.attr = give.attr, ...)
+##__ Why does this give	 too many <missing> in some case?
+##__	if(eval(substitute(missing(.), list(. = as.name(nam))),
+##__		envir = E))
+##__	    cat("<missing>\n")
+##__	else
+##__	    str(get(nam, envir = E, mode = M),
+##__		max.level = max.level, give.attr = give.attr, ...)
 
-        o <- tryCatch(get(nam, envir = E, mode = M), error = function(e)e)
-	if(inherits(o,"error")) {
-            if(length(grep("not found", o$message)))
-                cat("<missing>\n")
-            else stop(o$message)
-        }
+	o <- tryCatch(get(nam, envir = E, mode = M), error = function(e)e)
+	if(inherits(o, "error")) {
+	    if(length(grep("missing|not found", o$message)))
+		cat("<missing>\n")
+	    else stop(o$message)
+	}
 	else
 	    str(o, max.level = max.level, give.attr = give.attr, ...)
     }
