@@ -65,7 +65,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \item{xpos, ypos}{integer.  Position of the top left of the window, in
     pixels.  Negative values are taken from the opposite edge of the
     monitor.  Missing values (the default) mean take the default from the
-    \file{\link{Rconsole}} file, which in turn defaults to
+    \file{\link[utils]{Rconsole}} file, which in turn defaults to
     \code{xpos=-25, ypos=0}: this puts the right edge of the window 25
     pixels from the right edge of the monitor.}
   \item{buffered}{logical.  Should the screen output be double-buffered?

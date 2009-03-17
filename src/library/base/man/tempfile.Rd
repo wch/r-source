@@ -52,7 +52,7 @@ tempdir()
 #endif
 #ifdef windows
   if none succeeds the value of \env{R_USER} (see
-  \code{\link{Rconsole}}) is used.  If the path to the directory
+  \code{\link[utils]{Rconsole}}) is used.  If the path to the directory
   contains a space in any of the components, the path returned will use
   the shortnames version of the path.
 #endif

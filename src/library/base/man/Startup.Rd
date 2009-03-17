@@ -109,7 +109,7 @@
   \option{--no-restore} and \option{--no-environ}.
 #ifdef windows
   Under Windows, it also implies \option{--no-Rconsole}, which
-  prevents loading the \file{\link{Rconsole}} file.
+  prevents loading the \file{\link[utils]{Rconsole}} file.
 #endif
 }
 \details{
