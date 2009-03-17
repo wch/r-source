@@ -7,7 +7,7 @@
 \alias{parse_Rd}
 \title{ Parse an Rd file }
 \description{
-  This function reads an R documentation (Rd) file anad parses it, for
+  This function reads an R documentation (Rd) file and parses it, for
   processing by other functions.
 
   It is \bold{experimental}.
@@ -27,7 +27,7 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE)
 \details{
   This experimental function parses Rd files according to the
   specification given in
-  \url{http://developer.r-project.org/ParseRd.pdf}.  At the current
+  \url{http://developer.r-project.org/parseRd.pdf}.  At the current
   writing, this is not identical to the rules used by other tools:  it
   is somewhat stricter. 
 }
@@ -44,7 +44,7 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE)
   These functions are still experimental.  Names, interfaces and values
   might change in future versions.
 }
-\references{ \url{http://developer.r-project.org/ParseRd.pdf} }
+\references{ \url{http://developer.r-project.org/parseRd.pdf} }
 \author{ Duncan Murdoch }
 \seealso{
   \code{\link{Rd2HTML}}.
