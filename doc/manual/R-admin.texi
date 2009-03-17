@@ -2687,7 +2687,7 @@ MKL="   -L$@{MKL_LIB_PATH@}                               \
                 $@{MKL_LIB_PATH@}/libmkl_gnu_thread.a     \
                 $@{MKL_LIB_PATH@}/libmkl_core.a           \
         -Wl,--end-group                                 \
-        -liomp5 -lpthread"
+        -lgomp -lpthread"
 @end example
 
 @noindent
