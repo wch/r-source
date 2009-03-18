@@ -1,7 +1,7 @@
 ## Subroutines for converting R documentation into text, HTML, LaTeX and
 ## R (Examples) format
 
-## Copyright (C) 1997-2008 R Development Core Team
+## Copyright (C) 1997-2009 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -1358,7 +1358,7 @@ sub html_print_argblock {
 	    $text =~ /^(.*)(\\item.*)*/s;
 	    my ($begin, $rest) = split(/\\item/, $text, 2);
 	    if($begin){
-		$text =~ s/^$begin//s;
+		$text =~ s/^\Q$begin//s;
 		$begin =~ s/(\n)+$//;
 		print $htmlout "<p>\n", text2html($begin, 1, 1), "\n</p>\n";
 	    }
@@ -2170,7 +2170,7 @@ sub txt_print_argblock {
 	    my ($begin, $rest) = split(/\\item/, $text, 2);
 	    if($begin){
 		txt_fill("     ", 5, text2txt($begin));
-		$text =~ s/^$begin//s;
+		$text =~ s/^\Q$begin//s;
 	    }
 	    my $loopcount = 0;
 	    while(checkloop($loopcount++, $text, "\\item") &&
@@ -2728,6 +2728,7 @@ sub latex_print_exampleblock {
     }
 }
 
+## used for \arguments and \value
 sub latex_print_argblock {
 
     my ($block,$env) = @_;
@@ -2750,12 +2751,12 @@ sub latex_print_argblock {
 	    }
 	}
 
-	if($text =~ /\\item/s){#-- if there is >= 1 "\item":  ldescription
+	if($text =~ /\\item/s){ #-- if there are \item's
 	    $text =~ /^(.*)(\\item.*)*/s;
 	    my ($begin, $rest) = split(/\\item/, $text, 2);
 	    if($begin){
 		print $latexout &text2latex($begin);
-		$text =~ s/^$begin//s;
+		$text =~ s/^\Q$begin//s;
 	    }
 	    print $latexout "\\begin\{ldescription\}\n";
 	    my $loopcount = 0;
@@ -2774,7 +2775,7 @@ sub latex_print_argblock {
 	    print $latexout "\n" unless
 		$thisblock =~ /\n$/ || length($thisblock) == 0;
 	}
-	else{
+	else{ # no \item, typical \value block
 	    my $thisblock = &text2latex($text);
 	    print $latexout $thisblock;
 	    print $latexout "\n" unless
