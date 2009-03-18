@@ -767,7 +767,7 @@ AC_CHECK_TYPES([intptr_t, uintptr_t], , , [#ifdef HAVE_INTTYPES_H
 
 ### *** C compiler.
 
-AC_C_BIGENDIAN
+R_BIGENDIAN
 AC_C_CONST
 R_C_INLINE
 AC_CHECK_SIZEOF(int)
