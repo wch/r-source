@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2009
-@set FAQ_DATE @value{FAQ_YEAR}-03-08
+@set FAQ_DATE @value{FAQ_YEAR}-03-18
 @set REL_YEAR 2008
 @set REL_MAJOR 2
 @set REL_MINOR 8
@@ -1783,6 +1783,8 @@ Analysis of data from aCGH experiments.
 Functions, data sets, examples and vignettes for the book ``Applied
 Econometrics with R'' by Christian Kleiber and Achim Zeileis, 2008,
 Springer-Verlag, New York.
+@item AIGIS
+Areal Interpolation for GIS data.
 @item AIS
 Tools to look at the data (``Ad Inidicia Spectata'').
 @item ALS
@@ -1858,6 +1860,9 @@ Hall/CRC.
 Bayesian methods for tree based models.
 @item BayesValidate
 Bayesian software validation using posterior quantiles.
+@item BayesX
+Utilities accompanying the BayesX software for Bayesian Inference in
+structured additive regression models. 
 @item Bchron
 Create chronologies based on radiocarbon and non-radiocarbon dated
 depths.
@@ -2456,6 +2461,8 @@ Odds ratio based multivactor-dimensionality reduction method for
 detecting gene-gene interactions.
 @item Oarray
 Arrays with arbitrary offsets.
+@item Oncotree
+Estimation of oncogenetic trees.
 @item PASWR
 Data and functions for the book ``Probability and Statistics with R'' by
 M. D. Ugarte, A. F. Militino and A. T. Arnholt, 2008, Chapman &
@@ -2506,6 +2513,8 @@ system.
 @item PerformanceAnalytics
 Econometric tools for performance and risk analysis.
 @item PhViD
+Pharmacovigilance signal detection methods extended to the multiple
+comparison setting.
 @item PhySim
 Phylogenetic tree simulation.
 @item PolynomF
@@ -2932,6 +2941,8 @@ Basic linear algebra for sparse matrices.
 Modeling spatial extremes.
 @item SpatialNP
 Multivariate nonparametric methods based on spatial signs and ranks.
+@item SpectralGEM
+Discovering genetic ancestry using spectral graph theory.
 @item SpherWave
 Spherical Wavelets and SW-based spatially adaptive methods.
 @item StatDA
@@ -3011,6 +3022,8 @@ Trees WIth eXtra splits.
 A set of demonstration functions that can be used in a classroom to
 demonstrate statistical concepts, or on your own to better understand
 the concepts or the programming.
+@item TeachingSampling
+Sampling designs and parameter estimation in finite populations.
 @item TinnR
 Resources for the Tinn-R GUI/Editor for R.
 @item TraMineR
@@ -3176,6 +3189,8 @@ David Scott's ASH routines for 1D and 2D density estimation.
 @item aspace
 Estimating centrographic statistics and computational geometries from
 spatial point patterns.
+@item aspect
+Aspects of multivariables.
 @item assist
 A suite of functions implementing smoothing splines.
 @item aster
@@ -4443,6 +4458,8 @@ An S4 class for handling irregular time series.
 In vitro in vivo correlation (IVIVC) modeling.
 @item jit
 Just-in-time compiler.
+@item jointDiag
+Joint approximate diagonalization of a set of square matrices.
 @item kappalab
 The ``laboratory for capacities'', an S4 tool box for capacity (or
 non-additive measure, fuzzy measure) and integral manipulation on a
@@ -4754,6 +4771,8 @@ Accuracy and precision of measurements.
 @item meta
 Fixed and random effects meta-analysis, with functions for tests of
 bias, forest and funnel plot.
+@item metacor
+Meta-analysis of correlation coefficients.
 @item metaMA
 Meta-analysis for MicroArrays.
 @item mfp
@@ -5234,6 +5253,8 @@ Phylogenetic analysis in R.
 @item pheno
 Some easy-to-use functions for time series analyses of (plant-)
 phenological data sets.
+@item phmm
+Proportional Hazards with Mixed Model.
 @item phpSerialize
 Serialize R to PHP associative array.
 @c <COMMENT>
@@ -5264,6 +5285,8 @@ Linear models for panel data.
 @c </COMMENT>
 @item plotSEMM
 Graphing nonlinear latent variable interactions in SEMM.
+@item plotpc
+Plot principal component histograms around a scatter plot.
 @item plotrix
 Various useful functions for enhancing plots.
 @item plugdensity
@@ -5916,6 +5939,8 @@ one dimensional numerical integration and analytic results.
 @item spatialkernel
 Nonparameteric estimation of spatial segregation in a multivariate point
 process.
+@item spatialsegregation
+Segregation measures for multitype spatial point patterns.
 @item spatstat
 Data analysis and modelling of two-dimensional point patterns, including
 multitype points and spatial covariates.
@@ -5924,6 +5949,8 @@ Statistical Process Control: evaluation of control charts by means of
 the zero-state, steady-state ARL (Average Run Length), setting up
 control charts for given in-control ARL, and plotting of the related
 figures.
+@item spcosa
+SPatial COverage SAmpling.
 @item spdep
 A collection of functions to create spatial weights matrix objects from
 polygon contiguities, from point patterns by distance and tesselations,
@@ -5968,6 +5995,10 @@ Insightful package providing missing S-PLUS functionality in R.
 Read SPSS system files and produce valid DDI version 3.0 documents.
 @item spsurvey
 Spatial survey design and analysis.
+@item spuRs
+Functions and datasets from the book ``An Introduction to Scientific
+Programming and Simulation Using R'' by O. Jones, R. Maillardet and
+A. Robinson, 2009, CRC Press.
 @item sqldf
 Perform @acronym{SQL} selects on R data frames.
 @item ssanv
@@ -6302,8 +6333,11 @@ pattern files.
 A wrapper function and @acronym{GUI} for the X12 binaries under windows.
 @item xgobi
 Interface to the XGobi and XGvis programs for graphical data analysis.
-@item xlsReadWrite
-Natively read and write Excel files.
+@c <COMMENT>
+@c Moved to the Archive on 2009-03-10 (Orphaned).
+@c @item xlsReadWrite
+@c Natively read and write Excel files.
+@c </COMMENT>
 @item xtable
 Export data to @LaTeX{} and @HTML{} tables.
 @item xts
