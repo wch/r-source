@@ -14,15 +14,18 @@
 \usage{
 svg(filename = if(onefile) "Rplots.svg" else "Rplot\%03d.svg",
     width = 7, height = 7, pointsize = 12,
-    onefile = FALSE, bg = "white", antialias)
+    onefile = FALSE, bg = "white",
+    antialias = c("default", "none", "gray", "subpixel"))
 
 cairo_pdf(filename = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
           width = 7, height = 7, pointsize = 12,
-          onefile = FALSE, bg = "white", antialias)
+          onefile = FALSE, bg = "white",
+          antialias = c("default", "none", "gray", "subpixel"))
 
 cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
          width = 7, height = 7, pointsize = 12,
-         onefile = FALSE, bg = "white", antialias)
+         onefile = FALSE, bg = "white",
+         antialias = c("default", "none", "gray", "subpixel"))
 }
 \arguments{
   \item{filename}{the name of the output file.
@@ -37,26 +40,26 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \item{onefile}{should all plots appear in one file or in separate files?}
   \item{bg}{the initial background colour: can be overridden by setting
     par("bg").}
-  \item{antialias}{the type of anti-aliasing (if any) to be used.
-    See \code{\link{X11}}.}
+  \item{antialias}{string, the type of anti-aliasing (if any) to be used;
+    defaults to \code{"default"}, see \code{\link{X11}}.}
 }
 \details{
   SVG (Scalar Vector Graphics) is a W3C standard for vector graphics.
   See \url{http://www.w3.org/Graphics/SVG/}.  The output is SVG version
   1.1 for \code{onefile = FALSE} (the default), otherwise SVG 1.2.  (Very few
   SVG viewers are capable of displaying multi-page SVG files.)
-  
+
   Note that unlike \code{\link{postscript}} and \code{\link{pdf}},
   \code{cairo_pdf} and \code{cairo_ps} sometimes record \emph{bitmaps}
   and not vector graphics: a resolution of 72dpi is used.  On the other
   hand, they can (on suitable platforms) include a much wider range of
   UTF-8 glyphs, and embed the fonts used.  They are somewhat experimental.
-  
+
   \R can be compiled without support for any of these
   devices: this will be reported if you attempt to use them on a system
   where they are not supported.  They all require cairo version 1.2 or
   later.
-  
+
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
   \code{file} (or set \code{onefile=TRUE}) the file will contain the

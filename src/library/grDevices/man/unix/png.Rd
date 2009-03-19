@@ -81,7 +81,7 @@ tiff(filename = "Rplot\%03d.tiff",
   format on Windows.  TIFF is a meta-format: the default format written
   by \code{tiff} is lossless and stores RGB (and alpha where
   appropriate) values uncompressed---such files are widely accepted,
-  which is their main virtue over PNG.   
+  which is their main virtue over PNG.
 
   \code{png} supports transparent backgrounds: use \code{bg =
   "transparent"}.  Not all PNG viewers render files with transparency
@@ -98,7 +98,7 @@ tiff(filename = "Rplot\%03d.tiff",
   \R can be compiled without support for each of these devices: this
   will be reported if you attempt to use them on a system where they are
   not supported.  For \code{type = "Xlib"} they may not be usable unless
-  the X11 display is available to the owner of the \R process.  
+  the X11 display is available to the owner of the \R process.
   \code{type = "cairo"} requires cairo 1.2 or later.  \code{type =
   "quartz"} uses the \code{\link{quartz}} device and so is only
   available where that is (on some Mac OS X) builds.  It is at present
@@ -131,7 +131,7 @@ tiff(filename = "Rplot\%03d.tiff",
 \section{Warnings}{
   Note that by default the \code{width} and \code{height} are in pixels
   not inches.  A warning will be issued if both are less than 20.
-  
+
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
   \code{file}, the file will contain the last page plotted.
