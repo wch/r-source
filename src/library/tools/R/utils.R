@@ -910,9 +910,12 @@ function(fname, envir, mustMatch = TRUE)
 function(package, lib.loc)
 {
     ## Load (reload if already loaded) @code{package} from
-    ## @code{lib.loc}, capturing all output and messages.  Don't do
-    ## anything for base, and don't attempt reloading methods, as this
-    ## does not work (most likely a bug).
+    ## @code{lib.loc}, capturing all output and messages.
+    ## Don't do anything for base.
+    ## Earlier versions did not attempt reloading methods as this used
+    ## to cause trouble, but this now (2009-03-19) seems ok.
+    ## Otoh, it seems that unloading tcltk is a bad idea ...
+    ## Also, do not unload ourselves (but shouldn't we be "in use"?).
     ##
     ## All QC functions use this for loading packages because R CMD
     ## check interprets all output as indicating a problem.
@@ -920,8 +923,9 @@ function(package, lib.loc)
         .try_quietly({
             pos <- match(paste("package", package, sep = ":"), search())
             if(!is.na(pos)) {
-                if(package == "methods") return()
-                detach(pos = pos, unload = TRUE)
+                ## if(package == "methods") return()
+                detach(pos = pos,
+                       unload = ! package %in% c("tcltk", "tools"))
             }
             library(package, lib.loc = lib.loc, character.only = TRUE,
                     verbose = FALSE)
