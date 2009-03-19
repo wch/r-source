@@ -290,3 +290,5 @@ qsignrank <- function(p, n, lower.tail = TRUE, log.p = FALSE)
     .Internal(qsignrank(p, n, lower.tail, log.p))
 }
 rsignrank <- function(nn, n) .Internal(rsignrank(nn, n))
+
+rWishart <- function(n, df, invScal) .Call(rWishart, n, df, invScal)

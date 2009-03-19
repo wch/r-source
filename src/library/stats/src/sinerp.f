@@ -6,10 +6,11 @@ C            where L = abd is a Banded Matrix with 3 subdiagonals
 
 C The algorithm works in two passes:
 C
-C               Pass 1 computes (cj,ck) k=j,j-1,j-2,j-3 ;  j=nk, .. 1
-C               Pass 2 computes (cj,ck) k <= j-4  (If flag == 1 ).
+C       Pass 1 computes (cj,ck) k=j,j-1,j-2,j-3 ;  j=nk, .. 1
+C       Pass 2 computes (cj,ck) k <= j-4
+C	  {if flag != 0, i.e. NOT from R's smooth.spline() !}
 C
-C               A refinement of Elden's trick is used.
+C       A refinement of Elden's trick is used.
 c Args
       integer ld4,nk,ldnk,flag
       DOUBLE precision abd(ld4,nk),p1ip(ld4,nk), p2ip(ldnk,nk)
@@ -64,7 +65,7 @@ C Pass 1
          wjm1(1)=p1ip(4,j)
  100  continue
 
-      if(flag.ne.0)then
+      if(flag.ne.0) then
 
 C     ____ Pass 2 _____
 

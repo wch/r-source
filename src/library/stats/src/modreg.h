@@ -70,10 +70,10 @@ void Trunmed(Sint *nn,/* = length(data) */
 	     double *window,/* (2k+1) */
 	     Sint   *end_rule,
 	     Sint   *print_level);
-void kmeans_Lloyd(double *x, int *pn, int *pp, double *cen, int *pk, int *cl, 
+void kmeans_Lloyd(double *x, int *pn, int *pp, double *cen, int *pk, int *cl,
 		  int *pmaxiter, int *nc, double *wss);
 
-void kmeans_MacQueen(double *x, int *pn, int *pp, double *cen, int *pk, 
+void kmeans_MacQueen(double *x, int *pn, int *pp, double *cen, int *pk,
 		     int *cl, int *pmaxiter, int *nc, double *wss);
 
 /* Fortran : */
@@ -94,6 +94,9 @@ void F77_SUB(qsbart)(double *penalt, double *dofoff,
 		     double *xs, double *ys, double *ws, double *ssw,
 		     int *n, double *knot, int *nk, double *coef,
 		     double *sz, double *lev, double *crit, int *iparms,
+/* FIXME: rather this
+/* 		     double *spar, double *parms, double *ratio, int *isetup, */
+/* 		     double *scrtch, int *ld4, int *ier); */
 		     double *spar, double *parms, int *isetup,
 		     double *scrtch, int *ld4, int *ldnk, int *ier);
 
@@ -102,12 +105,12 @@ void F77_NAME(sbart)
      double *xs, double *ys, double *ws, double *ssw,
      int *n, double *knot, int *nk, double *coef,
      double *sz, double *lev, double *crit, int *icrit,
-     double *spar, int *ispar, int *iter, double *lspar,
-     double *uspar, double *tol, double *eps, int *isetup,
+     double *spar, int *ispar, int *iter,
+     double *lspar, double *uspar, double *tol, double *eps, double *ratio,
+     int *isetup,
      double *xwy, double *hs0, double *hs1, double *hs2,
      double *hs3, double *sg0, double *sg1, double *sg2,
-     double *sg3, double *abd, double *p1ip, double *p2ip,
-     int *ld4, int *ldnk, int *ier);
+     double *sg3, double *abd, double *p1ip, int *ld4, int *ier);
 
 void F77_NAME(sgram)(double *sg0, double *sg1, double *sg2, double *sg3,
 		     double *tb, int *nb);
@@ -121,8 +124,7 @@ void F77_NAME(sslvrg)(double *penalt, double *dofoff,
 		      double *xwy,
 		      double *hs0, double *hs1, double *hs2, double *hs3,
 		      double *sg0, double *sg1, double *sg2, double *sg3,
-		      double *abd, double *p1ip, double *p2ip,
-		      int *ld4, int *ldnk, int *info);
+		      double *abd, double *p1ip, int *ld4, int *info);
 
 void F77_SUB(bvalus)(int *n, double *knot, double *coef,
 		     int *nk, double *x, double *s, int *order);

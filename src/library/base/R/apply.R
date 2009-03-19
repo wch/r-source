@@ -14,6 +14,25 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## Utility for apply(), sweep(), and potentially more, e.g. duplicated.matrix()
+iMargin <- function(margin, dNames)
+{
+    if (is.character(margin)) {
+        ndn <- names(dNames)
+	if(is.null(ndn))
+	    stop("dNames must have names when ",sQuote(margin)," is character")
+	iM <- match(margin, ndn)
+	if(any(is.na(iM)))
+            stop("character margin ", margin[is.na(iM)],
+                 " does not match names(dNames) ", ndn)
+       return(iM)
+    }
+    ## else
+    if(!is.numeric(margin))
+        stop(sQuote("margin"), " must be integer or character")
+    margin
+}
+
 apply <- function(X, MARGIN, FUN, ...)
 {
     FUN <- match.fun(FUN)
@@ -31,6 +50,7 @@ apply <- function(X, MARGIN, FUN, ...)
     d <- dim(X)
     dn <- dimnames(X)
 
+    MARGIN <- iMargin(MARGIN, dn)
     ## Extract the margins and associated dimnames
 
     s.call <- ds[-MARGIN]

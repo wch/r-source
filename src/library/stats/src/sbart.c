@@ -25,12 +25,12 @@ void F77_SUB(sbart)
      double *xs, double *ys, double *ws, double *ssw,
      int *n, double *knot, int *nk, double *coef,
      double *sz, double *lev, double *crit, int *icrit,
-     double *spar, int *ispar, int *iter, double *lspar,
-     double *uspar, double *tol, double *eps, int *isetup,
+     double *spar, int *ispar, int *iter,
+     double *lspar, double *uspar, double *tol, double *eps, double *ratio,
+     int *isetup,
      double *xwy, double *hs0, double *hs1, double *hs2,
      double *hs3, double *sg0, double *sg1, double *sg2,
-     double *sg3, double *abd, double *p1ip, double *p2ip,
-     int *ld4, int *ldnk, int *ier)
+     double *sg3, double *abd, double *p1ip, int *ld4, int *ier)
 {
 
 /* A Cubic B-spline Smoothing routine.
@@ -60,7 +60,8 @@ void F77_SUB(sbart)
    ispar	indicating if spar is supplied (ispar=1) or to be estimated
    lspar, uspar lower and upper values for spar search;  0.,1. are good values
    tol, eps	used in Golden Search routine
-   isetup	setup indicator [initially 0
+   ratio	the factor 'r' in   lspar = r * 256^(3*spar - 1)
+   isetup	setup indicator [0: compute 'ratio'; otherwise use 'ratio']
    icrit	indicator saying which cross validation score is to be computed
 		0: none ;  1: GCV ;  2: CV ;  3: 'df matching'
    ld4		the leading dimension of abd (ie ld4=4)
@@ -86,8 +87,9 @@ void F77_SUB(sbart)
    sg0,sg1,sg2,sg3	the diagonals of the Gram matrix SIGMA
    abd (ld4,nk)		[ X'WX + lambda*SIGMA ] in diagonal form
    p1ip(ld4,nk)		inner products between columns of L inverse
+                        where  L'L = [X'WX + lambda*SIGMA]
+   -- never made use of, hence no longer defined:
    p2ip(ldnk,nk)	all inner products between columns of L inverse
-			where  L'L = [X'WX + lambda*SIGMA]  NOT REFERENCED
 */
 
 #define CRIT(FX) (*icrit == 3 ? FX - 3. : FX)
@@ -100,25 +102,18 @@ void F77_SUB(sbart)
     /* == (3. - sqrt(5.)) / 2. */
 
     /* Local variables */
-    static double ratio;/* must be static (not needed in R) */
-
+/*     static double ratio;/\* must be static: computed only when *isetup=0 */
+/* 			 * (unneeded for R's use) *\/ */
     double a, b, d, e, p, q, r, u, v, w, x;
     double ax, fu, fv, fw, fx, bx, xm;
-    double t1, t2, tol1, tol2;
+    double tol1, tol2;
 
     int i, maxit;
     Rboolean Fparabol = FALSE, tracing = (*ispar < 0);
 
     /* unnecessary initializations to keep  -Wall happy */
     d = 0.; fu = 0.; u = 0.;
-    ratio = 1.;
-
-/*  Compute SIGMA, X' W X, X' W z, trace ratio, s0, s1.
-
-	SIGMA	-> sg0,sg1,sg2,sg3
-	X' W X	-> hs0,hs1,hs2,hs3
-	X' W Z	-> xwy
-*/
+/*     ratio = 1.; */
 
 /* trevor fixed this 4/19/88
  * Note: sbart, i.e. stxwx() and sslvrg() {mostly, not always!}, use
@@ -128,8 +123,16 @@ void F77_SUB(sbart)
 	    ws[i] = sqrt(ws[i]);
 
     if (*isetup == 0) {
+/*  Compute SIGMA, X' W X, X' W z, trace ratio.
+
+	SIGMA	-> sg0,sg1,sg2,sg3
+	X' W X	-> hs0,hs1,hs2,hs3
+	X' W Z	-> xwy
+*/
+	double t1, t2;
 	/* SIGMA[i,j] := Int  B''(i,t) B''(j,t) dt  {B(k,.) = k-th B-spline} */
 	F77_CALL(sgram)(sg0, sg1, sg2, sg3, knot, nk);
+	/* X' W X  &  X' W Z , where W = diag(orig.ws[]) = diag(ws^2[]):*/
 	F77_CALL(stxwx)(xs, ys, ws, n,
 			knot, nk,
 			xwy,
@@ -140,19 +143,19 @@ void F77_SUB(sbart)
 	    t1 += hs0[i];
 	    t2 += sg0[i];
 	}
-	ratio = t1 / t2;
+	*ratio = t1 / t2;
 	*isetup = 1;
     }
 /*     Compute estimate */
 
     if (*ispar == 1) { /* Value of spar supplied */
-	*lspar = ratio * R_pow(16., *spar * 6. - 2.);
+	*lspar = *ratio * R_pow(16., *spar * 6. - 2.);
 	F77_CALL(sslvrg)(penalt, dofoff, xs, ys, ws, ssw, n,
 			 knot, nk,
 			 coef, sz, lev, crit, icrit, lspar, xwy,
 			 hs0, hs1, hs2, hs3,
 			 sg0, sg1, sg2, sg3, abd,
-			 p1ip, p2ip, ld4, ldnk, ier);
+			 p1ip, ld4, ier);
 	/* got through check 2 */
 	return;
     }
@@ -230,13 +233,13 @@ void F77_SUB(sbart)
     x = v;
     e = 0.;
     *spar = x;
-    *lspar = ratio * R_pow(16., *spar * 6. - 2.);
+    *lspar = *ratio * R_pow(16., *spar * 6. - 2.);
     F77_CALL(sslvrg)(penalt, dofoff, xs, ys, ws, ssw, n,
 		     knot, nk,
 		     coef, sz, lev, crit, icrit, lspar, xwy,
 		     hs0, hs1, hs2, hs3,
 		     sg0, sg1, sg2, sg3, abd,
-		     p1ip, p2ip, ld4, ldnk, ier);
+		     p1ip, ld4, ier);
     fx = *crit;
     fv = fx;
     fw = fx;
@@ -254,7 +257,7 @@ void F77_SUB(sbart)
 		Rprintf("sbart (ratio = %15.8g) iterations;"
 			" initial tol1 = %12.6e :\n"
 			"%11s %14s  %9s %11s  Kind %11s %12s\n%s\n",
-			ratio, tol1, "spar",
+			*ratio, tol1, "spar",
 			((*icrit == 1) ? "GCV" :
 			 (*icrit == 2) ?  "CV" :
 			 (*icrit == 3) ?"(df0-df)^2" :
@@ -337,13 +340,13 @@ void F77_SUB(sbart)
 	/*  tol1 check : f must not be evaluated too close to x */
 
 	*spar = u;
-	*lspar = ratio * R_pow(16., *spar * 6. - 2.);
+	*lspar = *ratio * R_pow(16., *spar * 6. - 2.);
 	F77_CALL(sslvrg)(penalt, dofoff, xs, ys, ws, ssw, n,
 			 knot, nk,
 			 coef, sz, lev, crit, icrit, lspar, xwy,
 			 hs0, hs1, hs2, hs3,
 			 sg0, sg1, sg2, sg3, abd,
-			 p1ip, p2ip, ld4, ldnk, ier);
+			 p1ip, ld4, ier);
 	fu = *crit;
 	if(tracing) Rprintf("%11g %12g\n", *lspar, CRIT(fu));
 	if(!R_FINITE(fu)) {

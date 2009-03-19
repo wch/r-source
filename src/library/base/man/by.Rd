@@ -31,7 +31,7 @@ by(data, INDICES, FUN, \dots, simplify = TRUE)
 
   Object \code{data} will be coerced to a data frame by the default
   method, \emph{but} if this results in a 1-column data frame, the
-  objects passed to \code{FUN} are dropped to a subsets of that column.
+  objects passed to \code{FUN} are dropped to subsets of that column.
   (This was the long-term behaviour, but only documented since \R 2.7.0.)
 }
 \value{
