@@ -1217,7 +1217,7 @@ c Args
 c Var
       double precision knot(29), coef(25), work((17+25)*25)
       double precision dx(2500),dy(2500), dw(2500),dsmo(2500), lev(2500)
-      double precision param(5), df1, lambda, crit, p, s
+      double precision param(4), df1, lambda, crit, p, s
       integer iparms(3), i, nk, ip, isetup,ier
 
       double precision     df, gcvpen
@@ -1263,8 +1263,6 @@ c  tol for `spar' estimation:
       param(3) = 1d-2
 c   this was `eps' (=? sqrt(machine eps)) in ./sbart.f :
       param(4) = .000244
-c     'ratio' (unused here)
-      param(5) = 0d0
 
       isetup = 0
       ier = 1

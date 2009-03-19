@@ -14,7 +14,7 @@
 smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
               cv = FALSE, all.knots = FALSE, nknots = NULL,
               keep.data = TRUE, df.offset = 0, penalty = 1,
-              control.spar = list(), keepAuxmat = FALSE)
+              control.spar = list())
 }
 \arguments{
  \item{x}{a vector giving the values of the predictor variable, or  a
@@ -38,9 +38,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    spaced in \code{1:n}, see also the next argument \code{nknots}.}
  \item{nknots}{integer giving the number of knots to use when
    \code{all.knots=FALSE}.  Per default, this is less than \eqn{n}, the
-   number of unique \code{x} values for \eqn{n > 49}; specifically,
-   it is \code{nknots <- n.kn(n)} where \code{n.kn} is defined inside
-   \code{stats:::sknotl}.}
+   number of unique \code{x} values for \eqn{n > 49}.}
  \item{keep.data}{logical specifying if the input data should be kept
    in the result.  If \code{TRUE} (as per default), fitted values and
    residuals are available from the result.}
@@ -63,24 +61,13 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
      to 1e-4 (formerly 1e-3).}
      \item{eps:}{the relative precision used; defaults to 2e-8 (formerly
        0.00244).}
-     \item{ratio:}{allows to the factor \eqn{r} used in the relation
-       between \eqn{\lambda} and \eqn{s=spar}{\code{spar}} below;
-     defaults to \code{NA}, such that it is computed internally.}
      \item{trace:}{logical indicating if iterations should be traced.}
      \item{maxit:}{integer giving the maximal number of iterations;
        defaults to 500.}
-     \item{auxMat:}{numeric vector of length \code{9*nk} which must
-       correspond to \code{smooth.spline(*, keepAuxmat=TRUE)$auxMat} of a
-       previous call, see \code{keepAuxmat} below.}
    }
    Note that \code{spar} is only searched for in the interval
    \eqn{[low, high]}.
  }
- \item{keepAuxmat}{logical indicating if interval computations for the
-   \eqn{X'WX} and \eqn{\Sigma} matrices should be saved (as component
-   \code{auxMat}) with the result.  This could be reused (together with
-     \code{ratio}) in subsequent calls to \code{smooth.spline()} with
-     identical \code{x} and \code{w}.}
 }
 \details{
   The \code{x} vector should contain at least four distinct values.
@@ -178,14 +165,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   \item{spar}{the value of \code{spar} computed or given.}
   \item{lambda}{the value of \eqn{\lambda} corresponding to \code{spar},
     see the details above.}
-  \item{ratio}{the value of \eqn{r} in the relation
-    between \eqn{\lambda} and \eqn{s=spar}{\code{spar}}, see above.}
   \item{iparms}{named integer(3) vector where \code{..$ipars["iter"]}
     gives number of spar computing iterations used.}
-  \item{auxMat}{if \code{keepAuxmat = TRUE}, a numeric vector of length
-    \code{9*nk}, containing.  This can be used in subsequent calls of
-    \code{smooth.spline()} as \code{auxMat} component in the
-    \code{control.spar} argument.}
   \item{fit}{list for use by \code{\link{predict.smooth.spline}}, with
     components
     \describe{

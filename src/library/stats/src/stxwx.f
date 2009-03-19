@@ -1,8 +1,5 @@
-C Compute X' W^2 X -> hs0,hs1,hs2,hs3  and X' W^2 Z -> y
-C Note that here the weights w(i) == sqrt(wt[i])  where wt[] where original weights
-
 C Output from Public domain Ratfor, version 1.0
-      subroutine stxwx(x,z,w,k,xknot,n, y, hs0,hs1,hs2,hs3)
+      subroutine stxwx(x,z,w,k,xknot,n,y,hs0,hs1,hs2,hs3)
 
 c      implicit none
       integer k,n
@@ -25,6 +22,8 @@ C     Initialise the output vectors
 	 hs3(i)=0d0
  1    continue
 
+C Compute X' W^2 X -> hs0,hs1,hs2,hs3  and X' W^2 Z -> y
+C Note that here the weights w(i) == sqrt(wt[i])  where wt[] where original weights
       ileft=1
       eps= .1d-9
 

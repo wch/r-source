@@ -1,19 +1,19 @@
 C Output from Public domain Ratfor, version 1.0
       subroutine sslvrg(penalt,dofoff,x,y,w,ssw, n, knot,nk,coef,
      *     sz,lev, crit,icrit, lambda, xwy, hs0,hs1,hs2,hs3,
-     *     sg0,sg1,sg2,sg3, abd,p1ip,ld4,info)
+     *     sg0,sg1,sg2,sg3, abd,p1ip,p2ip,ld4,ldnk,info)
 
 C Purpose :
 C       Compute smoothing spline for smoothing parameter lambda
 C       and compute one of three `criteria' (OCV , GCV , "df match").
 C See comments in ./sbart.f from which this is called
 
-      integer n,nk,icrit,ld4,info
+      integer n,nk,icrit,ld4,ldnk,info
       DOUBLE precision penalt,dofoff,x(n),y(n),w(n),ssw,
      &     knot(nk+4), coef(nk),sz(n),lev(n), crit, lambda,
      *     xwy(nk), hs0(nk),hs1(nk),hs2(nk),hs3(nk),
      *     sg0(nk),sg1(nk),sg2(nk),sg3(nk), abd(ld4,nk),
-     &     p1ip(ld4,nk)
+     &     p1ip(ld4,nk),p2ip(ldnk,nk)
 
       EXTERNAL bvalue
       double precision bvalue
@@ -68,18 +68,18 @@ C     Compute the criterion function if requested
 C --- Ordinary or Generalized CV or "df match" ---
 
 C     Get Leverages First
-         call sinerp(abd,ld4,nk,p1ip, 0d0, 0, 0)
-         do 16 i=1,n
-            xv = x(i)
-            ileft = interv(knot(1), nk+1, xv, 0,0, ileft, mflag)
-            if(mflag .eq. -1) then
-               ileft = 4
-               xv = knot(4)+eps
-            else if(mflag .eq. 1) then
-               ileft = nk
-               xv = knot(nk+1) - eps
-            endif
-            j=ileft-3
+	 call sinerp(abd,ld4,nk,p1ip,p2ip,ldnk,0)
+	 do 16 i=1,n
+	    xv = x(i)
+	    ileft = interv(knot(1), nk+1, xv, 0,0, ileft, mflag)
+	    if(mflag .eq. -1) then
+	       ileft = 4
+	       xv = knot(4)+eps
+	    else if(mflag .eq. 1) then
+	       ileft = nk
+	       xv = knot(nk+1) - eps
+	    endif
+	    j=ileft-3
 C           call bspvd(knot,4,1,xv,ileft,4,vnikx,work)
 	    call bsplvd(knot,lenkno,4,xv,ileft,work,vnikx,1)
 	    b0=vnikx(1,1)
@@ -87,17 +87,17 @@ C           call bspvd(knot,4,1,xv,ileft,4,vnikx,work)
 	    b2=vnikx(3,1)
 	    b3=vnikx(4,1)
 	    lev(i) = (
-     &             p1ip(4,j  )*b0**2 + 2.d0*p1ip(3,j  )*b0*b1 +
-     *        2.d0*p1ip(2,j  )*b0*b2 + 2.d0*p1ip(1,j  )*b0*b3 +
-     *             p1ip(4,j+1)*b1**2 + 2.d0*p1ip(3,j+1)*b1*b2 +
-     *        2.d0*p1ip(2,j+1)*b1*b3 +      p1ip(4,j+2)*b2**2 +
-     &        2.d0*p1ip(3,j+2)*b2*b3 +      p1ip(4,j+3)*b3**2
+     &              p1ip(4,j)*b0**2   + 2.d0*p1ip(3,j)*b0*b1 +
+     *           2.d0*p1ip(2,j)*b0*b2   + 2.d0*p1ip(1,j)*b0*b3 +
+     *              p1ip(4,j+1)*b1**2 + 2.d0*p1ip(3,j+1)*b1*b2 +
+     *           2.d0*p1ip(2,j+1)*b1*b3 +    p1ip(4,j+2)*b2**2 +
+     &           2.d0*p1ip(3,j+2)*b2*b3 +    p1ip(4,j+3)*b3**2
      &           )*w(i)**2
  16      continue
 
 C     Evaluate Criterion
 
-         if(icrit .eq. 1) then
+	 if(icrit .eq. 1)then
 C     Generalized CV
 	    rss = ssw
 	    df = 0d0

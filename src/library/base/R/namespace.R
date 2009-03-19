@@ -817,8 +817,8 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages) {
             warning(msg, " ", n)
     importIntoEnv(impenv, impnames, ns, impvars)
     if (register) {
-        addImports(self, ns,
-                   if (missing(vars)) TRUE else impvars)
+        if (missing(vars)) addImports(self, ns, TRUE)
+        else addImports(self, ns, impvars)
     }
 }
 

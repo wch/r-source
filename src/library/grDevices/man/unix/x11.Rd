@@ -19,7 +19,8 @@
 }
 \usage{
 X11(display = "", width, height, pointsize, gamma, bg, canvas,
-    fonts, xpos, ypos, title, type, antialias)
+    fonts, xpos, ypos, title,
+    type, antialias = c("default", "none", "gray", "subpixel"))
 
 X11.options(\dots, reset = FALSE)
 }

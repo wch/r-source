@@ -131,12 +131,12 @@
     }
 }
 
-
 .Last.lib <- function(libpath) {
-##    methods:::.onUnload(libpath)
-## Why don't we unload "methods" on detach(), but just the simple part?
-    .isMethodsDispatchOn(FALSE)
+    methods:::.onUnload(libpath)
 }
+## redefining it here, invalidates the one above:
+## Why don't we unload "methods" on detach() ?
+.Last.lib <- function(libpath) .isMethodsDispatchOn(FALSE)
 
 .saveImage <- FALSE
 ## cat("Saving namespace image ...\n")
