@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-8     the R Development Core Team
+ *  Copyright (C) 2002-9     the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -79,13 +79,12 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     static R_StringBuffer outbuff = {NULL, 0, MAXELTSIZE};
     Rboolean use_UTF8;
 
-    outputString = R_AllocStringBuffer(0, &outbuff);
-
     /* grab the format string */
     nargs = length(args);
     format = CAR(args);
-    if (!isString(format) || length(format) == 0)
-	error(_("'fmt' is not a non-empty character vector"));
+    if (!isString(format))
+	error(_("'fmt' is not a character vector"));
+    if (length(format) == 0) return allocVector(STRSXP, 0);
     args = CDR(args); nargs--;
     if(nargs >= 100)
 	error(_("only 100 arguments are allowed"));
@@ -96,10 +95,12 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     maxlen = nfmt = length(format);
     for(i = 0; i < nargs; i++) {
 	lens[i] = length(a[i]);
-	if(lens[i] == 0)
-	    error(_("zero-length argument"));
+	if(lens[i] == 0) return allocVector(STRSXP, 0);
 	if(maxlen < lens[i]) maxlen = lens[i];
     }
+
+    outputString = R_AllocStringBuffer(0, &outbuff);
+
     if(maxlen % length(format))
 	error(_("arguments cannot be recycled to the same length"));
     for(i = 0; i < nargs; i++)

@@ -5599,4 +5599,10 @@ X <- matrix(rnorm(200),20,10)
 XX <- crossprod(X)
 heatmap(XX, Rowv =  NA, revC = TRUE)
 heatmap(XX, Rowv = NA, symm = TRUE)
-## boht failed in 2.8.1
+## both failed in 2.8.1
+
+
+## sprintf with 0-length args
+stopifnot(identical(sprintf("%d", integer(0L)), character(0L)))
+stopifnot(identical(sprintf(character(0L), pi), character(0L)))
+## new feature in 2.9.0

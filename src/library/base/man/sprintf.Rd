@@ -1,6 +1,6 @@
 % File src/library/base/man/sprintf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sprintf}
@@ -33,7 +33,8 @@ gettextf(fmt, \dots, domain = NULL)
 
   The arguments (including \code{fmt}) are recycled if possible a whole
   number of times to the length of the longest, and then the formatting
-  is done in parallel.
+  is done in parallel.  As from \R 2.9.0 zero-length arguments are
+  allowed and will give a zero-length result.
   
   The following is abstracted from Kernighan and Ritchie
   (see References).  The string \code{fmt} contains normal characters,

@@ -10,9 +10,8 @@
   Function to do wildcard expansion (also known as \sQuote{globbing}) on
   file paths.
 
-#ifdef unix
-  Not all platforms support this.
-#endif
+  Platforms are not required to support this, but all knoen current \R
+  platforms do.
 }
 \usage{
 Sys.glob(paths, dirmark = FALSE)
@@ -37,10 +36,10 @@ Sys.glob(paths, dirmark = FALSE)
   do tilde-expansion (see \code{\link{path.expand}}).
 
   All systems should interpret \code{*} (match zero or more characters),
-  \code{?} (match a single character) and \code{[} (begin a character
-  class or range).  If a filename starts with \code{.} this must be
-  matched explicitly.  By default paths ending in \code{/} will be
-  accepted and matched only to directories.
+  \code{?} (match a single character) and (probably) \code{[} (begin a
+  character class or range).  If a filename starts with \code{.} this
+  must be matched explicitly.  By default paths ending in \code{/} will
+  be accepted and matched only to directories.
 
   The rest of these details are indicative (and based on the POSIX
   standard).

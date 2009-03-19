@@ -235,7 +235,11 @@ NEW FEATURES
 	matrix as input to one of the graph packages (see the
 	documentation).
 
-    o	X11options(antialias = "none") now works, in consistence with X11().
+    o	X11options(antialias = "none") now works, for consistency with
+	X11().
+
+    o	sprintf() now allows zero-length arguments (with a zero-length
+	result).  (Suggestion of Bill Dunlap.)
 
 
 DEPRECATED & DEFUNCT
