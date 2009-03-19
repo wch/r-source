@@ -158,6 +158,7 @@ fixup.package.URLs <- function(pkg, force = FALSE)
     meth <- paste(top, "/library/methods", sep="")
     for(f in files) {
         page <- readLines(f)
+	old.page <- page
         page <- gsub(olddoc, doc, page, fixed = TRUE, useBytes=TRUE)
         page <- gsub(oldbase, base, page, fixed = TRUE, useBytes=TRUE)
         page <- gsub(oldutils, utils, page, fixed = TRUE, useBytes=TRUE)
@@ -166,14 +167,16 @@ fixup.package.URLs <- function(pkg, force = FALSE)
         page <- gsub(olddata, datasets, page, fixed = TRUE, useBytes=TRUE)
         page <- gsub(oldgrD, grD, page, fixed = TRUE, useBytes=TRUE)
         page <- gsub(oldmeth, meth, page, fixed = TRUE, useBytes=TRUE)
-        ## only do this if the substitutions worked
-        out <- try(file(f, open = "w"), silent = TRUE)
-        if(inherits(out, "try-error")) {
-            warning(gettextf("cannot update '%s'", f), domain = NA)
-            next
-        }
-        writeLines(page, out)
-        close(out)
+	if(!identical(page, old.page)) {
+	    ## only do this if the substitutions worked
+	    out <- try(file(f, open = "w"), silent = TRUE)
+	    if(inherits(out, "try-error")) {
+		warning(gettextf("cannot update '%s'", f), domain = NA)
+		next
+	    }
+	    writeLines(page, out)
+	    close(out)
+	}
     }
     return(TRUE)
 }
