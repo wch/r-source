@@ -4542,8 +4542,12 @@ function(dir, silent = FALSE)
         if(is.na(enc)) enc <- "unknown"
     } else enc <- "unknown"
     pg <- c(Sys.glob(file.path(dir, "man", "*.Rd")),
-            Sys.glob(file.path(dir, "man/*", "*.Rd")))
-    bad <- character(0)
+            Sys.glob(file.path(dir, "man", "*.rd")),
+            Sys.glob(file.path(dir, "man", "*", "*.Rd")),
+            Sys.glob(file.path(dir, "man", "*", "*.rd")))
+    ## (Note that Using character classes as in '*.[Rr]d' is not
+    ## guaranteed to be portable.)
+    bad <- character()
     for (f in pg) {
         tmp <- try(checkRd(f, encoding = enc), silent=TRUE)
         if(inherits(tmp, "try-error")) {
