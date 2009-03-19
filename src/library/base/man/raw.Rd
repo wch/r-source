@@ -1,6 +1,6 @@
 % File src/library/base/man/raw.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{raw}
@@ -27,7 +27,7 @@ is.raw(x)
 
   \code{as.raw} attempts to coerce its argument to be of raw
   type.  The (elementwise) answer will be \code{0} unless the
-  coercion succeeds.
+  coercion succeeds (or if the original value successfully coerces to 0).
 
   \code{is.raw} returns true if and only if \code{typeof(x) == "raw"}.
 }
