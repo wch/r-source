@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/nclass.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{nclass}
@@ -8,9 +8,7 @@
 \alias{nclass.scott}
 \alias{nclass.FD}
 \encoding{latin1}
-\title{
-Compute the Number of Classes for a Histogram
-}
+\title{Compute the Number of Classes for a Histogram}
 \description{
   Compute the number of classes for a histogram.
 }
@@ -56,10 +54,14 @@ nclass.FD(x)
   Scott, D. W. (1992)
   \emph{Multivariate Density Estimation. Theory, Practice, and
     Visualization}. Wiley.
+
+  Sturges, H. A. (1926)  The choice of a class interval.
+  \emph{Journal of the American Statistical Association} \bold{21}, 65--66.
 }
 \seealso{
   \code{\link{hist}} and \code{\link[MASS]{truehist}} (which use
-  a different default).
+  a different default);  \code{\link[KernSmooth]{dpih}} for a plugin
+  bandwidth proposed by Wand(1995).
 }
 \examples{
 set.seed(1)
