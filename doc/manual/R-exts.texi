@@ -1071,7 +1071,7 @@ subdirectory, use something like
 .PHONY: all mylibs
 
 all: $(SHLIB)
-$(SHLIB): myliss
+$(SHLIB): mylibs
 
 mylibs:
         (cd subdir; make)
@@ -1079,7 +1079,7 @@ mylibs:
 
 @noindent
 Be careful to create all the necessary dependencies, as there is a no
-guarantess that the dpendencies of @code{all} will be run in a
+guarantee that the dependencies of @code{all} will be run in a
 particular order (and some of the CRAN build machines use multiple CPUs
 and parallel makes).
 
