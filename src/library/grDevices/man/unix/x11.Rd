@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/x11.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{x11}
@@ -14,12 +14,13 @@
   \code{X11} starts a graphics device driver for the X Window System
   (version 11).  This can only be done on machines/accounts that have
   access to an X server.
-  
+
   \code{x11} is recognized as a synonym for \code{X11}.
 }
 \usage{
 X11(display = "", width, height, pointsize, gamma, bg, canvas,
-    fonts, xpos, ypos, title, type, antialias)
+    fonts, xpos, ypos, title,
+    type, antialias = c("default", "none", "gray", "subpixel"))
 
 X11.options(\dots, reset = FALSE)
 }
@@ -72,7 +73,7 @@ X11.options(\dots, reset = FALSE)
   The defaults for all of the arguments of \code{X11} are set by
   \code{X11.options}: the \sQuote{Arguments} section gives the
   \sQuote{factory-fresh} defaults.
-  
+
   The initial size and position are only hints, and may not be acted on
   by the window manager.  Also, some systems (especially laptops) are
   set up to appear to have a screen of a different size to the physical
@@ -119,7 +120,7 @@ X11.options(\dots, reset = FALSE)
   that it will choose a font in the wrong encoding or which does not
   contain glyphs for your language (particularly common in
   \code{iso10646-1} fonts).
-  
+
   The \code{fonts} argument is a two-element character vector, and the
   first element will be crucial in successfully using
   non-Western-European fonts.  Settings that have proved useful include

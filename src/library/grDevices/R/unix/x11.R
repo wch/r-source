@@ -27,7 +27,7 @@ assign(".X11.Options",
             fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
             "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"),
             xpos = NA_integer_, ypos = NA_integer_,
-            title = "", type = "cairo", antialias = 1),
+	    title = "", type = "cairo", antialias = "default"),
        envir = .X11env)
 
 assign(".X11.Options.default",
@@ -49,7 +49,8 @@ X11.options <- function(..., reset = FALSE)
 }
 
 X11 <- function(display = "", width, height, pointsize, gamma,
-                bg, canvas, fonts, xpos, ypos, title, type, antialias)
+                bg, canvas, fonts, xpos, ypos, title, type,
+                antialias = c("default", "none", "gray", "subpixel"))
 {
     if(display == "" && .Platform$GUI == "AQUA" &&
        is.na(Sys.getenv("DISPLAY", NA))) Sys.setenv(DISPLAY = ":0")
@@ -68,11 +69,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     if(!checkIntFormat(new$title)) stop("invalid 'title'")
     if(!missing(type))
         new$type <- match.arg(type, c("Xlib", "cairo", "nbcairo"))
-    if(!missing(antialias)) {
-        new$antialias <- pmatch(antialias,
-                                c("default", "none", "gray", "subpixel"))
-        if(is.na(new$antialias)) stop("invalid value for 'antialias'")
-    }
+    new$antialias <- match.arg(antialias)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     type <-
 	if(capabilities("cairo"))
@@ -81,9 +78,10 @@ X11 <- function(display = "", width, height, pointsize, gamma,
 	else 0
     ## Aargh -- trkplot has a trapdoor and does not set type.
     if (display == "XImage") type <- 0
+    antialias <- match(new$antialias, eval(formals()$antialias))
     .Internal(X11(d$display, d$width, d$height, d$pointsize, d$gamma,
                   d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
-                  NA_integer_, d$xpos, d$ypos, d$title, type, d$antialias))
+                  NA_integer_, d$xpos, d$ypos, d$title, type, antialias))
 }
 
 x11 <- X11

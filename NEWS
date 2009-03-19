@@ -235,6 +235,8 @@ NEW FEATURES
 	matrix as input to one of the graph packages (see the
 	documentation).
 
+    o	X11options(antialias = "none") now works, in consistence with X11().
+
 
 DEPRECATED & DEFUNCT
 
@@ -414,7 +416,8 @@ PACKAGE INSTALLATION
 
     o	HTML links will be resolved first to the standard packages: this
 	avoids other installed packages diverting help on e.g. qr()
-	and plot() to themselves.
+	and plot() to themselves. The HTML files are only "touched" if
+	they have changed.
 
     o	A check is done that the R files can be parsed: this both
 	prevents a broken package without lazy-loading from being
