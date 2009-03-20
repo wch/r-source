@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:24+0000\n"
+"POT-Creation-Date: 2009-03-20 09:02+0000\n"
 "PO-Revision-Date: 2008-09-30 21:08+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1246,7 +1246,7 @@ msgstr "la longueur choisie pour le vecteur est trop grande"
 
 #: src/main/builtin.c:73 src/main/builtin.c:82 src/main/builtin.c:277
 #: src/main/builtin.c:305 src/main/builtin.c:342 src/main/builtin.c:351
-#: src/main/coerce.c:1396 src/main/connections.c:2443 src/main/engine.c:2773
+#: src/main/coerce.c:1396 src/main/connections.c:2443 src/main/engine.c:2766
 #: src/main/envir.c:922 src/main/envir.c:975 src/main/envir.c:1065
 #: src/main/envir.c:1527 src/main/envir.c:1619 src/main/envir.c:1686
 #: src/main/envir.c:1801 src/main/envir.c:2472 src/main/envir.c:2525
@@ -1813,7 +1813,7 @@ msgstr "palette de couleurs inconnue (nécessite >= 2 couleurs)"
 msgid "maximum number of colors exceeded"
 msgstr "nombre maximum de couleurs dépassé"
 
-#: src/main/colors.c:1316 src/main/engine.c:2914
+#: src/main/colors.c:1316 src/main/engine.c:2907
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "nombre hexadécimal incorrect dans 'color' ou 'lty'"
 
@@ -2555,8 +2555,8 @@ msgstr "R n'a pas été compilé pour supporter le profilage de mémoire"
 #: src/main/plot.c:2013 src/main/plot.c:2091 src/main/plot.c:2372
 #: src/main/plot.c:2550 src/main/plot.c:2769 src/main/plot.c:3309
 #: src/main/plot.c:3437 src/main/plot.c:3516 src/main/plot.c:3687
-#: src/main/plot.c:3964 src/main/plot3d.c:1360 src/main/sprintf.c:190
-#: src/main/sprintf.c:218
+#: src/main/plot.c:3964 src/main/plot3d.c:1360 src/main/sprintf.c:191
+#: src/main/sprintf.c:219
 msgid "too few arguments"
 msgstr "trop peu d'arguments"
 
@@ -2934,7 +2934,7 @@ msgstr ""
 msgid "Graphics API version mismatch"
 msgstr "Version de l'API graphiques incompatible"
 
-#: src/main/engine.c:114 src/main/engine.c:171
+#: src/main/engine.c:114 src/main/engine.c:177
 msgid "unable to allocate memory (in GEregister)"
 msgstr "impossible d'allouer de la mémoire (dans GEregister)"
 
@@ -2942,97 +2942,97 @@ msgstr "impossible d'allouer de la mémoire (dans GEregister)"
 msgid "too many graphics systems registered"
 msgstr "trop de systèmes graphiques enregistrés"
 
-#: src/main/engine.c:189
+#: src/main/engine.c:195
 msgid "no graphics system to unregister"
 msgstr "aucun système graphiques à enregistrer"
 
-#: src/main/engine.c:437 src/main/engine.c:442 src/main/engine.c:450
-#: src/main/engine.c:457 src/main/engine.c:471 src/modules/X11/devX11.c:996
+#: src/main/engine.c:430 src/main/engine.c:435 src/main/engine.c:443
+#: src/main/engine.c:450 src/main/engine.c:464 src/modules/X11/devX11.c:996
 msgid "invalid line end"
 msgstr "fin de ligne incorrecte"
 
-#: src/main/engine.c:502 src/main/engine.c:507 src/main/engine.c:515
-#: src/main/engine.c:522 src/main/engine.c:536 src/modules/X11/devX11.c:1014
+#: src/main/engine.c:495 src/main/engine.c:500 src/main/engine.c:508
+#: src/main/engine.c:515 src/main/engine.c:529 src/modules/X11/devX11.c:1014
 msgid "invalid line join"
 msgstr "jonction de ligne incorrecte"
 
-#: src/main/engine.c:790
+#: src/main/engine.c:783
 msgid "out of memory while clipping polyline"
 msgstr "manque de mémoire lors de la coupure d'une ligne brisée"
 
-#: src/main/engine.c:1545
+#: src/main/engine.c:1538
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr ""
 "la police de caractère %d n'est pas disponible pour la famille de fontes '%s'"
 
-#: src/main/engine.c:1855
+#: src/main/engine.c:1848
 msgid "no graphics device is active"
 msgstr "aucun périphérique graphiques actif"
 
-#: src/main/engine.c:1936
+#: src/main/engine.c:1929
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr "valeur pch '%d' incorrecte dans cet environnement linguistique"
 
-#: src/main/engine.c:2193
+#: src/main/engine.c:2186
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "valeur '%d' de pch non implémentée"
 
-#: src/main/engine.c:2216
+#: src/main/engine.c:2209
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "étendue de l'axe incorrecte [GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2220
+#: src/main/engine.c:2213
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "étendue de l'axe infinie [GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2258
+#: src/main/engine.c:2251
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.) : nouveau *lo = %g < %g = x1"
 
-#: src/main/engine.c:2260
+#: src/main/engine.c:2253
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.) : nouveau *up = %g > %g = x2"
 
-#: src/main/engine.c:2585
+#: src/main/engine.c:2578
 msgid "Display list redraw incomplete"
 msgstr "Liste de retraçage des affichages incomplète"
 
-#: src/main/engine.c:2769
+#: src/main/engine.c:2762
 msgid "'expr' argument must be an expression"
 msgstr "l'argument 'expr' doit être une expression"
 
-#: src/main/engine.c:2771
+#: src/main/engine.c:2764
 msgid "'list' argument must be a list"
 msgstr "l'argument 'list' doit être une liste"
 
-#: src/main/engine.c:2777
+#: src/main/engine.c:2770
 msgid "'env' argument must be an environment"
 msgstr "l'argument 'env' doit être un environnement"
 
-#: src/main/engine.c:2799 src/main/graphics.c:2391
+#: src/main/engine.c:2792 src/main/graphics.c:2391
 msgid "invalid graphics state"
 msgstr "état des graphiques incorrect"
 
-#: src/main/engine.c:2858 src/main/engine.c:2866
+#: src/main/engine.c:2851 src/main/engine.c:2859
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "caractère multioctet incorrect dans pch=\"c\""
 
-#: src/main/engine.c:2937
+#: src/main/engine.c:2930
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "type de ligne incorrect : doit être de longueur 2, 4, 6 ou 8"
 
-#: src/main/engine.c:2941
+#: src/main/engine.c:2934
 msgid "invalid line type: zeroes are not allowed"
 msgstr "type de ligne incorrect : les zéros ne sont pas autorisés"
 
-#: src/main/engine.c:2950 src/main/engine.c:2958 src/main/engine.c:2965
+#: src/main/engine.c:2943 src/main/engine.c:2951 src/main/engine.c:2958
 msgid "invalid line type"
 msgstr "type de ligne incorrect"
 
@@ -6591,77 +6591,74 @@ msgstr "La taille du groupe est 0 mais la taille des données est > 0"
 msgid "data length is not a multiple of split variable"
 msgstr "la taille de données n'est pas un multiple de la variable découpée"
 
-#: src/main/sprintf.c:88
-msgid "'fmt' is not a non-empty character vector"
+#: src/main/sprintf.c:86
+#, fuzzy
+msgid "'fmt' is not a character vector"
 msgstr "'fmt' n'est pas un vecteur de caractères non-vide"
 
-#: src/main/sprintf.c:91
+#: src/main/sprintf.c:90
 msgid "only 100 arguments are allowed"
 msgstr "100 arguments possibles au maximum"
 
-#: src/main/sprintf.c:100
-msgid "zero-length argument"
-msgstr "argument de taille nulle"
-
-#: src/main/sprintf.c:104 src/main/sprintf.c:107
+#: src/main/sprintf.c:105 src/main/sprintf.c:108
 msgid "arguments cannot be recycled to the same length"
 msgstr "les arguments ne peuvent être recyclés à la même taille"
 
-#: src/main/sprintf.c:128
+#: src/main/sprintf.c:129
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "taille de 'fmt' au-delà de la taille de format maximale %d"
 
-#: src/main/sprintf.c:144
+#: src/main/sprintf.c:145
 msgid "unrecognised format at end of string"
 msgstr "format non reconnu à la fin de la chaîne de caractères"
 
-#: src/main/sprintf.c:155 src/main/sprintf.c:162 src/main/sprintf.c:176
-#: src/main/sprintf.c:183
+#: src/main/sprintf.c:156 src/main/sprintf.c:163 src/main/sprintf.c:177
+#: src/main/sprintf.c:184
 #, c-format
 msgid "reference to non-existent argument %d"
 msgstr "référence à un argument %d inexistant"
 
-#: src/main/sprintf.c:195
+#: src/main/sprintf.c:196
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 "un maximum d'une astérisque '*' est supportée dans chaque spécification de "
 "conversion"
 
-#: src/main/sprintf.c:205
+#: src/main/sprintf.c:206
 msgid "argument for '*' conversion specification must be a number"
 msgstr "l'argument pour la spécification de conversion '*' doit être un nombre"
 
-#: src/main/sprintf.c:279
+#: src/main/sprintf.c:280
 msgid "coercion has changed vector length to 0"
 msgstr "la conversion automatique a changé la taille du vecteur à 0"
 
-#: src/main/sprintf.c:287
+#: src/main/sprintf.c:288
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr "utilisez les formats %d ou %i pour les objets booléens"
 
-#: src/main/sprintf.c:301
+#: src/main/sprintf.c:302
 #, c-format
 msgid "use format %d, %i, %x or %X for integer objects"
 msgstr "utilisez les formats %d, %i, %x ou %X pour les objets entiers"
 
-#: src/main/sprintf.c:315
+#: src/main/sprintf.c:316
 #, c-format
 msgid "use format %f, %e, %g or %a for numeric objects"
 msgstr "utilisez les formats %f, %e, %g ou %a pour les objets numériques"
 
-#: src/main/sprintf.c:349
+#: src/main/sprintf.c:350
 #, c-format
 msgid "use format %s for character objects"
 msgstr "utilisez le format %s pour les objets caractères"
 
-#: src/main/sprintf.c:356
+#: src/main/sprintf.c:357
 #, c-format
 msgid "likely truncation of character string to %d characters"
 msgstr "Troncature probable d'une chaîne à %d caractères"
 
-#: src/main/sprintf.c:365
+#: src/main/sprintf.c:366
 msgid "unsupported type"
 msgstr "type non géré"
 
@@ -8102,6 +8099,9 @@ msgstr "impossible de charger le module X11"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11 indisponible"
+
+#~ msgid "zero-length argument"
+#~ msgstr "argument de taille nulle"
 
 #~ msgid "first argument is not a matrix"
 #~ msgstr "le premier argument n'est pas une matrice"

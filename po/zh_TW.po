@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:24+0000\n"
+"POT-Creation-Date: 2009-03-20 09:02+0000\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1232,7 +1232,7 @@ msgstr "指定的向量大小太大"
 
 #: src/main/builtin.c:73 src/main/builtin.c:82 src/main/builtin.c:277
 #: src/main/builtin.c:305 src/main/builtin.c:342 src/main/builtin.c:351
-#: src/main/coerce.c:1396 src/main/connections.c:2443 src/main/engine.c:2773
+#: src/main/coerce.c:1396 src/main/connections.c:2443 src/main/engine.c:2766
 #: src/main/envir.c:922 src/main/envir.c:975 src/main/envir.c:1065
 #: src/main/envir.c:1527 src/main/envir.c:1619 src/main/envir.c:1686
 #: src/main/envir.c:1801 src/main/envir.c:2472 src/main/envir.c:2525
@@ -1787,7 +1787,7 @@ msgstr "沒有這種調色盤 (需要 >= 兩種顏色)"
 msgid "maximum number of colors exceeded"
 msgstr "顏色的數目已超過最大值"
 
-#: src/main/colors.c:1316 src/main/engine.c:2914
+#: src/main/colors.c:1316 src/main/engine.c:2907
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "十六進位 'color' 設定或 'lty' 設定不正確"
 
@@ -2516,8 +2516,8 @@ msgstr ""
 #: src/main/plot.c:2013 src/main/plot.c:2091 src/main/plot.c:2372
 #: src/main/plot.c:2550 src/main/plot.c:2769 src/main/plot.c:3309
 #: src/main/plot.c:3437 src/main/plot.c:3516 src/main/plot.c:3687
-#: src/main/plot.c:3964 src/main/plot3d.c:1360 src/main/sprintf.c:190
-#: src/main/sprintf.c:218
+#: src/main/plot.c:3964 src/main/plot3d.c:1360 src/main/sprintf.c:191
+#: src/main/sprintf.c:219
 msgid "too few arguments"
 msgstr "引數數目太少"
 
@@ -2883,7 +2883,7 @@ msgstr ""
 msgid "Graphics API version mismatch"
 msgstr "繪圖 API 版本不相符"
 
-#: src/main/engine.c:114 src/main/engine.c:171
+#: src/main/engine.c:114 src/main/engine.c:177
 msgid "unable to allocate memory (in GEregister)"
 msgstr "無法指派記憶體 (於 GEregister)"
 
@@ -2891,97 +2891,97 @@ msgstr "無法指派記憶體 (於 GEregister)"
 msgid "too many graphics systems registered"
 msgstr "登記了太多的繪圖系統"
 
-#: src/main/engine.c:189
+#: src/main/engine.c:195
 msgid "no graphics system to unregister"
 msgstr "沒有可以取消登記的繪圖系統"
 
-#: src/main/engine.c:437 src/main/engine.c:442 src/main/engine.c:450
-#: src/main/engine.c:457 src/main/engine.c:471 src/modules/X11/devX11.c:996
+#: src/main/engine.c:430 src/main/engine.c:435 src/main/engine.c:443
+#: src/main/engine.c:450 src/main/engine.c:464 src/modules/X11/devX11.c:996
 msgid "invalid line end"
 msgstr "列終點發生錯誤"
 
-#: src/main/engine.c:502 src/main/engine.c:507 src/main/engine.c:515
-#: src/main/engine.c:522 src/main/engine.c:536 src/modules/X11/devX11.c:1014
+#: src/main/engine.c:495 src/main/engine.c:500 src/main/engine.c:508
+#: src/main/engine.c:515 src/main/engine.c:529 src/modules/X11/devX11.c:1014
 msgid "invalid line join"
 msgstr "列接合發生錯誤"
 
-#: src/main/engine.c:790
+#: src/main/engine.c:783
 msgid "out of memory while clipping polyline"
 msgstr "剪裁多邊形的時候記憶體不足"
 
-#: src/main/engine.c:1545
+#: src/main/engine.c:1538
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr "字模家族 '%2$s' 中沒有字模 %1$d"
 
-#: src/main/engine.c:1855
+#: src/main/engine.c:1848
 msgid "no graphics device is active"
 msgstr "沒有活動中的繪圖裝置"
 
-#: src/main/engine.c:1936
+#: src/main/engine.c:1929
 #, fuzzy, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr "'pattern' 的值在本語言環境下不正確"
 
-#: src/main/engine.c:2193
+#: src/main/engine.c:2186
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "尚未實作pch '%d' 的值"
 
-#: src/main/engine.c:2216
+#: src/main/engine.c:2209
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "座標範圍不正確 [GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2220
+#: src/main/engine.c:2213
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "無限的座標範圍值 [GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2258
+#: src/main/engine.c:2251
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.): new *lo =%g <%g = x1"
 
-#: src/main/engine.c:2260
+#: src/main/engine.c:2253
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): new *up =%g >%g = x2"
 
-#: src/main/engine.c:2585
+#: src/main/engine.c:2578
 msgid "Display list redraw incomplete"
 msgstr "顯示串列重新整理時不完整"
 
-#: src/main/engine.c:2769
+#: src/main/engine.c:2762
 msgid "'expr' argument must be an expression"
 msgstr "'expr' 引數必須是運算式"
 
-#: src/main/engine.c:2771
+#: src/main/engine.c:2764
 msgid "'list' argument must be a list"
 msgstr "'list' 引數必須是串列"
 
-#: src/main/engine.c:2777
+#: src/main/engine.c:2770
 msgid "'env' argument must be an environment"
 msgstr "'env' 引數必須是環境物件"
 
-#: src/main/engine.c:2799 src/main/graphics.c:2391
+#: src/main/engine.c:2792 src/main/graphics.c:2391
 msgid "invalid graphics state"
 msgstr "繪圖狀態不正確"
 
-#: src/main/engine.c:2858 src/main/engine.c:2866
+#: src/main/engine.c:2851 src/main/engine.c:2859
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "pch=\"c\" 中的多位元組字元不正確"
 
-#: src/main/engine.c:2937
+#: src/main/engine.c:2930
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "無效的列類型: 長度必須是 2, 4, 6 或 8"
 
-#: src/main/engine.c:2941
+#: src/main/engine.c:2934
 #, fuzzy
 msgid "invalid line type: zeroes are not allowed"
 msgstr "不允許負長度的向量"
 
-#: src/main/engine.c:2950 src/main/engine.c:2958 src/main/engine.c:2965
+#: src/main/engine.c:2943 src/main/engine.c:2951 src/main/engine.c:2958
 msgid "invalid line type"
 msgstr "無效的列類型"
 
@@ -6466,77 +6466,74 @@ msgstr "Group 長度為零但資料長度 > 0"
 msgid "data length is not a multiple of split variable"
 msgstr "資料長度不是 split 變數的倍數"
 
-#: src/main/sprintf.c:88
-msgid "'fmt' is not a non-empty character vector"
+#: src/main/sprintf.c:86
+#, fuzzy
+msgid "'fmt' is not a character vector"
 msgstr "'fmt' 必須是字元向量"
 
-#: src/main/sprintf.c:91
+#: src/main/sprintf.c:90
 msgid "only 100 arguments are allowed"
 msgstr "只允許 100 個引數"
 
-#: src/main/sprintf.c:100
-msgid "zero-length argument"
-msgstr "零長度引數"
-
-#: src/main/sprintf.c:104 src/main/sprintf.c:107
+#: src/main/sprintf.c:105 src/main/sprintf.c:108
 msgid "arguments cannot be recycled to the same length"
 msgstr "不是所有的引數都一樣長"
 
-#: src/main/sprintf.c:128
+#: src/main/sprintf.c:129
 #, fuzzy, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "'fmt' 長度超過了緩衝區長度的最大值 %d"
 
-#: src/main/sprintf.c:144
+#: src/main/sprintf.c:145
 msgid "unrecognised format at end of string"
 msgstr "沒有這種在字串尾的格式"
 
-#: src/main/sprintf.c:155 src/main/sprintf.c:162 src/main/sprintf.c:176
-#: src/main/sprintf.c:183
+#: src/main/sprintf.c:156 src/main/sprintf.c:163 src/main/sprintf.c:177
+#: src/main/sprintf.c:184
 #, c-format
 msgid "reference to non-existent argument %d"
 msgstr "參照不存在的引數 %d"
 
-#: src/main/sprintf.c:195
+#: src/main/sprintf.c:196
 #, fuzzy
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "在任一轉換指定中最多只支援一個星號 '*'"
 
-#: src/main/sprintf.c:205
+#: src/main/sprintf.c:206
 #, fuzzy
 msgid "argument for '*' conversion specification must be a number"
 msgstr "'*' 轉換指定的引數必須是一個數字"
 
-#: src/main/sprintf.c:279
+#: src/main/sprintf.c:280
 msgid "coercion has changed vector length to 0"
 msgstr "強制變更時將向量長度改為 0"
 
-#: src/main/sprintf.c:287
+#: src/main/sprintf.c:288
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr "邏輯目的物件套用格式 %d 或 %i"
 
-#: src/main/sprintf.c:301
+#: src/main/sprintf.c:302
 #, c-format
 msgid "use format %d, %i, %x or %X for integer objects"
 msgstr "整數目的物件套用格式 %d、%i、%x 或 %X"
 
-#: src/main/sprintf.c:315
+#: src/main/sprintf.c:316
 #, fuzzy, c-format
 msgid "use format %f, %e, %g or %a for numeric objects"
 msgstr "數值目的物件套用格式 %f、%e 或 %g"
 
-#: src/main/sprintf.c:349
+#: src/main/sprintf.c:350
 #, c-format
 msgid "use format %s for character objects"
 msgstr "字元目的物件套用格式 %s"
 
-#: src/main/sprintf.c:356
+#: src/main/sprintf.c:357
 #, fuzzy, c-format
 msgid "likely truncation of character string to %d characters"
 msgstr "字串很可能被截短"
 
-#: src/main/sprintf.c:365
+#: src/main/sprintf.c:366
 msgid "unsupported type"
 msgstr "不支援此一類型"
 
@@ -7951,6 +7948,9 @@ msgstr "無法載入 X11 模組"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "無法使用 X11"
+
+#~ msgid "zero-length argument"
+#~ msgstr "零長度引數"
 
 #~ msgid "first argument is not a matrix"
 #~ msgstr "第一個引數不是矩陣"

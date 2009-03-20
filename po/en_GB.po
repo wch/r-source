@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:24+0000\n"
+"POT-Creation-Date: 2009-03-20 09:02+0000\n"
 "PO-Revision-Date: 2008-02-18 11:38+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -1200,7 +1200,7 @@ msgstr ""
 
 #: src/main/builtin.c:73 src/main/builtin.c:82 src/main/builtin.c:277
 #: src/main/builtin.c:305 src/main/builtin.c:342 src/main/builtin.c:351
-#: src/main/coerce.c:1396 src/main/connections.c:2443 src/main/engine.c:2773
+#: src/main/coerce.c:1396 src/main/connections.c:2443 src/main/engine.c:2766
 #: src/main/envir.c:922 src/main/envir.c:975 src/main/envir.c:1065
 #: src/main/envir.c:1527 src/main/envir.c:1619 src/main/envir.c:1686
 #: src/main/envir.c:1801 src/main/envir.c:2472 src/main/envir.c:2525
@@ -1740,7 +1740,7 @@ msgstr "unknown palette (need >= 2 colours)"
 msgid "maximum number of colors exceeded"
 msgstr "maximum number of colours exceeded"
 
-#: src/main/colors.c:1316 src/main/engine.c:2914
+#: src/main/colors.c:1316 src/main/engine.c:2907
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr ""
 
@@ -2448,8 +2448,8 @@ msgstr ""
 #: src/main/plot.c:2013 src/main/plot.c:2091 src/main/plot.c:2372
 #: src/main/plot.c:2550 src/main/plot.c:2769 src/main/plot.c:3309
 #: src/main/plot.c:3437 src/main/plot.c:3516 src/main/plot.c:3687
-#: src/main/plot.c:3964 src/main/plot3d.c:1360 src/main/sprintf.c:190
-#: src/main/sprintf.c:218
+#: src/main/plot.c:3964 src/main/plot3d.c:1360 src/main/sprintf.c:191
+#: src/main/sprintf.c:219
 msgid "too few arguments"
 msgstr ""
 
@@ -2811,7 +2811,7 @@ msgstr ""
 msgid "Graphics API version mismatch"
 msgstr ""
 
-#: src/main/engine.c:114 src/main/engine.c:171
+#: src/main/engine.c:114 src/main/engine.c:177
 msgid "unable to allocate memory (in GEregister)"
 msgstr ""
 
@@ -2819,96 +2819,96 @@ msgstr ""
 msgid "too many graphics systems registered"
 msgstr ""
 
-#: src/main/engine.c:189
+#: src/main/engine.c:195
 msgid "no graphics system to unregister"
 msgstr ""
 
-#: src/main/engine.c:437 src/main/engine.c:442 src/main/engine.c:450
-#: src/main/engine.c:457 src/main/engine.c:471 src/modules/X11/devX11.c:996
+#: src/main/engine.c:430 src/main/engine.c:435 src/main/engine.c:443
+#: src/main/engine.c:450 src/main/engine.c:464 src/modules/X11/devX11.c:996
 msgid "invalid line end"
 msgstr ""
 
-#: src/main/engine.c:502 src/main/engine.c:507 src/main/engine.c:515
-#: src/main/engine.c:522 src/main/engine.c:536 src/modules/X11/devX11.c:1014
+#: src/main/engine.c:495 src/main/engine.c:500 src/main/engine.c:508
+#: src/main/engine.c:515 src/main/engine.c:529 src/modules/X11/devX11.c:1014
 msgid "invalid line join"
 msgstr ""
 
-#: src/main/engine.c:790
+#: src/main/engine.c:783
 msgid "out of memory while clipping polyline"
 msgstr ""
 
-#: src/main/engine.c:1545
+#: src/main/engine.c:1538
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr ""
 
-#: src/main/engine.c:1855
+#: src/main/engine.c:1848
 msgid "no graphics device is active"
 msgstr ""
 
-#: src/main/engine.c:1936
+#: src/main/engine.c:1929
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr ""
 
-#: src/main/engine.c:2193
+#: src/main/engine.c:2186
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr ""
 
-#: src/main/engine.c:2216
+#: src/main/engine.c:2209
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr ""
 
-#: src/main/engine.c:2220
+#: src/main/engine.c:2213
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr ""
 
-#: src/main/engine.c:2258
+#: src/main/engine.c:2251
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr ""
 
-#: src/main/engine.c:2260
+#: src/main/engine.c:2253
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr ""
 
-#: src/main/engine.c:2585
+#: src/main/engine.c:2578
 msgid "Display list redraw incomplete"
 msgstr ""
 
-#: src/main/engine.c:2769
+#: src/main/engine.c:2762
 msgid "'expr' argument must be an expression"
 msgstr ""
 
-#: src/main/engine.c:2771
+#: src/main/engine.c:2764
 msgid "'list' argument must be a list"
 msgstr ""
 
-#: src/main/engine.c:2777
+#: src/main/engine.c:2770
 msgid "'env' argument must be an environment"
 msgstr ""
 
-#: src/main/engine.c:2799 src/main/graphics.c:2391
+#: src/main/engine.c:2792 src/main/graphics.c:2391
 msgid "invalid graphics state"
 msgstr ""
 
-#: src/main/engine.c:2858 src/main/engine.c:2866
+#: src/main/engine.c:2851 src/main/engine.c:2859
 msgid "invalid multibyte char in pch=\"c\""
 msgstr ""
 
-#: src/main/engine.c:2937
+#: src/main/engine.c:2930
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr ""
 
-#: src/main/engine.c:2941
+#: src/main/engine.c:2934
 msgid "invalid line type: zeroes are not allowed"
 msgstr ""
 
-#: src/main/engine.c:2950 src/main/engine.c:2958 src/main/engine.c:2965
+#: src/main/engine.c:2943 src/main/engine.c:2951 src/main/engine.c:2958
 msgid "invalid line type"
 msgstr ""
 
@@ -6321,75 +6321,71 @@ msgstr ""
 msgid "data length is not a multiple of split variable"
 msgstr ""
 
-#: src/main/sprintf.c:88
-msgid "'fmt' is not a non-empty character vector"
+#: src/main/sprintf.c:86
+msgid "'fmt' is not a character vector"
 msgstr ""
 
-#: src/main/sprintf.c:91
+#: src/main/sprintf.c:90
 msgid "only 100 arguments are allowed"
 msgstr ""
 
-#: src/main/sprintf.c:100
-msgid "zero-length argument"
-msgstr ""
-
-#: src/main/sprintf.c:104 src/main/sprintf.c:107
+#: src/main/sprintf.c:105 src/main/sprintf.c:108
 msgid "arguments cannot be recycled to the same length"
 msgstr ""
 
-#: src/main/sprintf.c:128
+#: src/main/sprintf.c:129
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr ""
 
-#: src/main/sprintf.c:144
+#: src/main/sprintf.c:145
 msgid "unrecognised format at end of string"
 msgstr ""
 
-#: src/main/sprintf.c:155 src/main/sprintf.c:162 src/main/sprintf.c:176
-#: src/main/sprintf.c:183
+#: src/main/sprintf.c:156 src/main/sprintf.c:163 src/main/sprintf.c:177
+#: src/main/sprintf.c:184
 #, c-format
 msgid "reference to non-existent argument %d"
 msgstr ""
 
-#: src/main/sprintf.c:195
+#: src/main/sprintf.c:196
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 
-#: src/main/sprintf.c:205
+#: src/main/sprintf.c:206
 msgid "argument for '*' conversion specification must be a number"
 msgstr ""
 
-#: src/main/sprintf.c:279
+#: src/main/sprintf.c:280
 msgid "coercion has changed vector length to 0"
 msgstr ""
 
-#: src/main/sprintf.c:287
+#: src/main/sprintf.c:288
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr ""
 
-#: src/main/sprintf.c:301
+#: src/main/sprintf.c:302
 #, c-format
 msgid "use format %d, %i, %x or %X for integer objects"
 msgstr ""
 
-#: src/main/sprintf.c:315
+#: src/main/sprintf.c:316
 #, c-format
 msgid "use format %f, %e, %g or %a for numeric objects"
 msgstr ""
 
-#: src/main/sprintf.c:349
+#: src/main/sprintf.c:350
 #, c-format
 msgid "use format %s for character objects"
 msgstr ""
 
-#: src/main/sprintf.c:356
+#: src/main/sprintf.c:357
 #, c-format
 msgid "likely truncation of character string to %d characters"
 msgstr ""
 
-#: src/main/sprintf.c:365
+#: src/main/sprintf.c:366
 msgid "unsupported type"
 msgstr ""
 
