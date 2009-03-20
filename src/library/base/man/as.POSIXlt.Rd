@@ -115,7 +115,7 @@ as.POSIXct(z, origin="1960-01-01", tz="GMT")      # in UTC
 as.POSIXct(z, origin=ISOdatetime(1960,1,1,0,0,0)) # local
 ISOdatetime(1960,1,1,0,0,0) + z                   # local
 
-## SPSS dates (R-help 2006-02-17)
+## SPSS dates (R-help 2006-02-16)
 z <- c(10485849600, 10477641600, 10561104000, 10562745600)
 as.Date(as.POSIXct(z, origin="1582-10-14", tz="GMT"))
 
