@@ -29,7 +29,6 @@ Type 'q()' to quit R.
 > str(ordered(ff, exclude=NULL))
  Ord.factor w/ 3 levels "1"<"2"<NA: 2 1 3
 > if(require(survival)) {
-+     data(aml)
 +     (sa <- Surv(aml$time, aml$status))
 +     str(sa)
 +     detach("package:survival")

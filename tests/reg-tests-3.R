@@ -9,7 +9,6 @@ str(levels(ff))
 str(ff)
 str(ordered(ff, exclude=NULL))
 if(require(survival)) {
-    data(aml)
     (sa <- Surv(aml$time, aml$status))
     str(sa)
     detach("package:survival")
