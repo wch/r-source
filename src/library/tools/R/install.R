@@ -1645,7 +1645,15 @@
             '<a href="../../../doc/html/index.html"><img src="../../../doc/html/up.jpg"\n',
             'alt="[Top]" width="30" height="30" border="0"></a>\n</div>\n\n',
             '<h2>Documentation for package &lsquo;', pkg, '&rsquo; version ',
-            version, '</h2>\n\n', '<h2>Help Pages</h2>\n\n\n',
+            version, '</h2>\n\n', sep ='', file = conn)
+            
+        if (file.exists(file.path(outDir, "doc")))
+		    cat('<h2>User Guides and Package Vignettes</h2>\n',
+		        'Read <a href="../doc/index.html">overview</a> or ',
+		        'browse <a href="../doc">directory</a>.\n\n',
+	        sep = '', file=conn)
+            
+        cat('<h2>Help Pages</h2>\n\n\n',
             sep ='', file = conn)
     }
 
