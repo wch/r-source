@@ -9,6 +9,12 @@
 		CHANGES IN R VERSION 2.10.0
 
 
+NEW FEATRUES
+
+    o	unlink() is now able to remove broken symbolic links on
+	Unix-alikes what support the 'lstat' system call.
+
+
 
 	**************************************************
 	*						 *

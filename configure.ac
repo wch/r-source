@@ -1700,7 +1700,7 @@ R_CHECK_FUNCS([setenv system unsetenv], [#include <stdlib.h>])
 ## strcoll is C89
 R_CHECK_FUNCS([strcoll], [#include <string.h>])
 R_CHECK_FUNCS([getrlimit getrusage], [#include <sys/resource.h>])
-R_CHECK_FUNCS([chmod mkfifo stat umask], [#include <sys/stat.h>])
+R_CHECK_FUNCS([chmod lstat mkfifo stat umask], [#include <sys/stat.h>])
 R_CHECK_FUNCS([gettimeofday], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
 R_CHECK_FUNCS([time], [#include <time.h>])

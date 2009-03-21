@@ -1295,10 +1295,26 @@ void R_CleanTempDir(void)
     }
 }
 #else
+#ifdef HAVE_SYS_STAT_H
+# include <sys/stat.h>
+#endif
+
 static int R_unlink(const char *name, int recursive)
 {
     if (streql(name, ".") || streql(name, "..")) return 0;
-    if (!R_FileExists(name)) return 0;
+    /* Failed for broken symbolic links, reported by Martin Morgan
+       on R-devel, 2009-03-21 
+       if (!R_FileExists(name)) return 0; */
+    {
+	struct stat sb;
+	if(
+#ifdef HAVE_LSTAT
+	    lstat
+#else
+	    stat
+#endif
+	    (R_ExpandFileName(name), &sb) != 0) return 0;
+    }
     if (recursive) {
 	DIR *dir;
 	struct dirent *de;
