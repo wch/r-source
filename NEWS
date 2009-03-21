@@ -330,7 +330,7 @@ UTILITIES
     o	R CMD SHLIB now calls the makefiles with target 'all' on all
 	platforms, not just on Windows: this is only relevant when a
 	Makevars[.win] is used that contains targets (not in general
-	recommended): for backwrds compatibility the first target
+	recommended): for backwards compatibility the first target
 	should be named 'all'.
 
 
