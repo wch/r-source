@@ -4,14 +4,14 @@
 ## default 	is whether this should be a default choice
 ## source, win.binary, mac.binary   indicate if the corresponding type is present
 ##
-## BioC entries are version-specific: 2.4 is for R 2.9
+## BioC entries are version-specific: 2.5 is for R 2.10
 ##
 menu_name	URL	default	source	win.binary	mac.binary
 CRAN	CRAN	@CRAN@	TRUE	TRUE	TRUE	TRUE
 CRANextra	CRAN (extras)	"http://www.stats.ox.ac.uk/pub/RWin"	TRUE	FALSE	TRUE	FALSE
 Omegahat	Omegahat	http://www.omegahat.org/R	FALSE	TRUE	FALSE	FALSE
-BioCsoft	"BioC software"	http://www.bioconductor.org/packages/2.4/bioc	FALSE	TRUE	TRUE	TRUE
-BioCann	"BioC annotation"	http://www.bioconductor.org/packages/2.4/data/annotation	FALSE	TRUE	TRUE	TRUE
-BioCexp	"BioC experiment"	http://www.bioconductor.org/packages/2.4/data/experiment	FALSE	TRUE	TRUE	TRUE
-BioCextra	"BioC extra"	http://www.bioconductor.org/packages/2.4/extra	FALSE	TRUE	TRUE	TRUE
+BioCsoft	"BioC software"	http://www.bioconductor.org/packages/2.5/bioc	FALSE	TRUE	TRUE	TRUE
+BioCann	"BioC annotation"	http://www.bioconductor.org/packages/2.5/data/annotation	FALSE	TRUE	TRUE	TRUE
+BioCexp	"BioC experiment"	http://www.bioconductor.org/packages/2.5/data/experiment	FALSE	TRUE	TRUE	TRUE
+BioCextra	"BioC extra"	http://www.bioconductor.org/packages/2.5/extra	FALSE	TRUE	TRUE	TRUE
 R-Forge	R-Forge	http://R-Forge.R-project.org	FALSE	TRUE	TRUE	TRUE

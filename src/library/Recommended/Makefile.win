@@ -27,7 +27,7 @@ stamp-recommended: $(OBJECTS)
 	@touch $@
 
 ## need to allow parallel installs, modulo dependencies below
-INSTALL_OPTS=--no-lock --auto-zip --install-tests
+INSTALL_OPTS=--pkglock --auto-zip --install-tests
 
 ifneq ($(strip $(USE_CHM)),TRUE)
 INSTALL_OPTS+=--no-chm
