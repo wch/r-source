@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{files}
@@ -13,11 +13,7 @@
 \alias{file.remove}
 \alias{file.rename}
 \alias{file.symlink}
-\alias{dir.create}
-\alias{Sys.chmod}
-\alias{Sys.umask}
-\concept{directory}
-\title{File and Directory Manipulation}
+\title{File Manipulation}
 \usage{
 file.create(\dots, showWarnings = TRUE)
 file.exists(\dots)
@@ -26,25 +22,14 @@ file.rename(from, to)
 file.append(file1, file2)
 file.copy(from, to, overwrite = recursive, recursive = FALSE)
 file.symlink(from, to)
-dir.create(path, showWarnings = TRUE, recursive = FALSE,
-           mode = "0777")
-Sys.chmod(paths, mode = "0777")
-Sys.umask(mode = "0000")
 }
 \arguments{
-  \item{\dots, file1, file2, from, to, paths}{character vectors,
+  \item{\dots, file1, file2, from, to}{character vectors,
     containing file names or paths.}
-  \item{path}{a character vector containing a single path name.}
   \item{overwrite}{logical; should the destination files be overwritten?}
   \item{showWarnings}{logical; should the warnings on failure be shown?}
-  \item{recursive}{logical.
-    For \code{file.copy}, if \code{to} is a directory, should
-    directories in \code{from} be copied (and their contents).
-    
-    For \code{dir.create}, should elements of the path other than the
-    last be created?  If true, like Unix's \command{mkdir -p}.}
-  \item{mode}{the file mode to be used on Unix-alikes: it will be
-    coerced by \code{\link{as.octmode}}.}
+  \item{recursive}{logical. If \code{to} is a directory, should
+    directories in \code{from} be copied (and their contents).}
 }
 \description{
   These functions provide a low-level interface to the computer's
@@ -67,6 +52,10 @@ Sys.umask(mode = "0000")
   might use different permissions and so obtain a different result.
   Note that the existence of a file does not imply that it is readable:
   for that use \code{\link{file.access}}.)
+#ifdef unix
+  Note that if the file is a symbolic link, the result indicates if the
+  libk points to an actual file, not just if the link exists.
+#endif
 
   \code{file.remove} attempts to remove the files named in its
   argument.
@@ -98,73 +87,16 @@ Sys.umask(mode = "0000")
   (Windows Vista/Server 2008 have a version of symbolic links on NTFS
   filesystems, but this seems too limited to be worth implementing.)
 #endif
-  
-  \code{dir.create} creates the last element of the path, unless
-  \code{recursive = TRUE}.  Trailing path separators are removed.
-#ifdef windows
-  On Windows drives are allowed in the path specification and unless
-  the path is rooted, it will be interpreted relative to the current
-  directory on that drive.  \code{mode} is ignored on Windows.
-#endif
-#ifdef unix
-  The mode will be modified by the \code{umask} setting in the same way
-  as for the system function \code{mkdir}.  What modes can be set is
-  OS-dependent, and it is unsafe to assume that more than three octal
-  digits will be used.  For more details see your OS's documentation on the
-  system call \code{mkdir} (and not that on the command-line utility of
-  that name). 
-#endif
-
-  \code{Sys.chmod} sets the file permissions of one or more files.
-#ifdef unix
-  It may not be supported (when a warning is issued).
-  See the comments for \code{dir.create} for how modes are interpreted.
-  Changing mode on a symbolic link is unlikely to work (nor be
-  necessary).  For more details see your OS's documentation on the
-  system call \code{chmod} (and not that on the command-line utility of
-  that name). 
-#endif
-#ifdef windows
-  The interpretation of \code{mode} in the Windows system function is
-  non-POSIX and only supports setting the read-only attribute of the
-  file.  So \R interprets \code{mode} to mean set read-only if and only
-  if \code{mode & 0200 == 0} (interpreted in octal).  Windows has a much
-  more extensive system of file permissions on some file systems
-  (e.g. versions of NTFS) which are unrelated to this system call.
-#endif
-
-  \code{Sys.umask} sets the \code{umask}.
-#ifdef unix
-  It may not be supported (when a warning is issued and \code{"0000"}
-  returned).  For more details see your OS's documentation on the
-  system call \code{umask}. 
-#endif
-#ifdef windows
-  All files on Windows are readable, and files being executable is not a
-  Windows concept.  So \code{umask} only controls whether a file is
-  writable: a setting of \code{"200"} makes files (but not directories)
-  created subsequently read-only.
-#endif  
 }
 \value{
-  \code{dir.create} and \code{file.rename} return a logical,
-  true for success.
-
-  \code{Sys.umask} returns the previous value of the \code{umask},
-  invisibly, as a length-one object of class \code{"octmode"}.
+  \code{file.rename} returns a logical value, true for success.
 
   The remaining functions return a logical vector indicating which
-  operation succeeded for each of the files attempted.
+  operation succeeded for each of the files attempted.  Using a missing
+  value for a file or path name will always be regarded as a failure.
 
-  \code{dir.create} will return failure if the directory already exists.
-
-  If \code{showWarnings = TRUE}, \code{file.create} and
-  \code{dir.create} will give a warning for an unexpected failure
-  (e.g. not for a missing value nor for an already existing component for
-  \code{dir.create(recursive = TRUE)}).
-
-  Using a missing value for a file or path name will always be regarded
-  as a failure.
+  If \code{showWarnings = TRUE}, \code{file.create} will give a warning
+  for an unexpected failure.
 }
 #ifdef windows
 \note{
@@ -180,7 +112,10 @@ Sys.umask(mode = "0000")
 \seealso{
   \code{\link{file.info}}, \code{\link{file.access}}, \code{\link{file.path}},
   \code{\link{file.show}}, \code{\link{list.files}},
-  \code{\link{unlink}}, \code{\link{basename}}, \code{\link{path.expand}}.
+  \code{\link{unlink}}, \code{\link{basename}},
+  \code{\link{path.expand}}.
+
+  \code{\link{dir.create}}.
 
   \code{\link{Sys.glob}} to expand wildcards in file specifications.
   
