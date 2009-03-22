@@ -33300,8 +33300,7 @@ done
 
 
 
-
-for ac_func in chmod lstat mkfifo stat umask
+for ac_func in chmod mkfifo stat umask
 do
 as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
@@ -48077,11 +48076,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48080: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48079: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:48084: \$? = $ac_status" >&5
+   echo "$as_me:48083: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -48176,11 +48175,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48179: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48178: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:48183: \$? = $ac_status" >&5
+   echo "$as_me:48182: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -48228,11 +48227,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48231: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48230: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:48235: \$? = $ac_status" >&5
+   echo "$as_me:48234: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

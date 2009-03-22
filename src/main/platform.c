@@ -1295,34 +1295,23 @@ void R_CleanTempDir(void)
     }
 }
 #else
-#ifdef HAVE_SYS_STAT_H
-# include <sys/stat.h>
-#endif
-
 static int R_unlink(const char *name, int recursive)
 {
+    struct stat sb;
+    int res, res2;
+
     if (streql(name, ".") || streql(name, "..")) return 0;
-    /* Failed for broken symbolic links, reported by Martin Morgan
-       on R-devel, 2009-03-21 
+    /* We cannot use R_FileExists here since it is false for broken
+       symbolic links 
        if (!R_FileExists(name)) return 0; */
-    {
-	struct stat sb;
-	if(
-#ifdef HAVE_LSTAT
-	    lstat
-#else
-	    stat
-#endif
-	    (R_ExpandFileName(name), &sb) != 0) return 0;
-    }
-    if (recursive) {
+    res  = stat(name, &sb);
+
+    if (!res && recursive) {
 	DIR *dir;
 	struct dirent *de;
 	char p[PATH_MAX];
-	struct stat sb;
 	int n, ans = 0;
 
-	stat(name, &sb);
 	if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 	    if ((dir = opendir(name)) != NULL) {
 		while ((de = readdir(dir))) {
@@ -1349,7 +1338,9 @@ static int R_unlink(const char *name, int recursive)
 	}
 	/* drop through */
     }
-    return unlink(name) == 0 ? 0 : 1;
+    res2 = unlink(name);
+    /* We want to return 0 if either unlink succeeded or 'name' did not exist */
+    return (res2 == 0 || res != 0) ? 0 : 1;
 }
 #endif
 

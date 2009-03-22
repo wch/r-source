@@ -11,8 +11,7 @@
 
 NEW FEATURES
 
-    o	unlink() is now able to remove broken symbolic links on
-	Unix-alikes which support the 'lstat' system call.
+    o	Place-holder.
 
 
 
@@ -257,6 +256,9 @@ NEW FEATURES
 
     o	sprintf() now allows zero-length arguments (with a zero-length
 	result).  (Suggestion of Bill Dunlap.)
+
+    o	unlink() is now able to remove broken symbolic links on
+	Unix-alikes.
 
 
 DEPRECATED & DEFUNCT
