@@ -2146,8 +2146,9 @@ are installed: see above).
 convert Excel spreadsheets to CSV files.  Package @pkg{gdata} provides a
 basic wrapper in its @code{read.xls} function.
 
-Package @pkg{dataframes2xls} contains a function to @emph{write} one or
-more data frames to an @file{.xls} file: it requires Python.
+Packages @pkg{dataframes2xls} and @pkg{WriteXLS} each contain a function
+to @emph{write} one or more data frames to an @file{.xls} file:, using
+Python and Perl respectively.
 
 @node References, Function and variable index, Reading Excel spreadsheets, Top
 @appendix References
