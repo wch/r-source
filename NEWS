@@ -284,6 +284,10 @@ DEPRECATED & DEFUNCT
 	gnomeGUI has been withdrwan as it used a long-obsolete version
 	of GNOME).
 
+    o	R CMD SHLIB on Windows will call the first target (not 'all') in
+	Makevars[.win] in future versions: so make 'all' the first
+	target if you have any.
+
 
 UTILITIES
 
@@ -335,13 +339,8 @@ UTILITIES
     o	R CMD check no longer loads package 'tcltk' when checking for
 	code problems, so more problems may be reported.
 
-    o	R CMD SHLIB now calls the makefiles with target 'all' on all
-	platforms, not just on Windows: this is only relevant when a
-	Makevars[.win] is used that contains targets (not in general
-	recommended): for backwards compatibility the first target
-	should be named 'all'.  On Windows the default 'all' target
-	only makes the DLL, and no longer call targets 'before' and
-	'after'.
+    o	For R CMD SHLIB on Windows the default 'all' target only makes
+	the DLL, and no longer call targets 'before' and 'after'.
 
 
 Rd CONVERSION

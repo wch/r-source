@@ -1367,7 +1367,7 @@
         makeargs <- c(makeargs,
                       p0("SHLIB_LIBADD='", p1(shlib_libadd), "'"))
 
-    makeargs <- c(makeargs, "all")
+    if(WINDOWS) makeargs <- c(makeargs, "all")
     if (WINDOWS && debug) makeargs <- c(makeargs, "DEBUG=T")
 
     cmd <- paste(MAKE, p1(paste("-f", makefiles)), p1(makeargs), p1(makeobjs))
@@ -1646,13 +1646,13 @@
             'alt="[Top]" width="30" height="30" border="0"></a>\n</div>\n\n',
             '<h2>Documentation for package &lsquo;', pkg, '&rsquo; version ',
             version, '</h2>\n\n', sep ='', file = conn)
-            
+
         if (file.exists(file.path(outDir, "doc")))
 		    cat('<h2>User Guides and Package Vignettes</h2>\n',
 		        'Read <a href="../doc/index.html">overview</a> or ',
 		        'browse <a href="../doc">directory</a>.\n\n',
 	        sep = '', file=conn)
-            
+
         cat('<h2>Help Pages</h2>\n\n\n',
             sep ='', file = conn)
     }
