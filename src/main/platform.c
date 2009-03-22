@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, 2001-8 The R Development Core Team
+ *  Copyright (C) 1998, 2001-9 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1297,16 +1297,21 @@ void R_CleanTempDir(void)
 #else
 static int R_unlink(const char *name, int recursive)
 {
+    struct stat sb;
+    int res, res2;
+
     if (streql(name, ".") || streql(name, "..")) return 0;
-    if (!R_FileExists(name)) return 0;
-    if (recursive) {
+    /* We cannot use R_FileExists here since it is false for broken
+       symbolic links 
+       if (!R_FileExists(name)) return 0; */
+    res  = stat(name, &sb);
+
+    if (!res && recursive) {
 	DIR *dir;
 	struct dirent *de;
 	char p[PATH_MAX];
-	struct stat sb;
 	int n, ans = 0;
 
-	stat(name, &sb);
 	if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 	    if ((dir = opendir(name)) != NULL) {
 		while ((de = readdir(dir))) {
@@ -1333,7 +1338,9 @@ static int R_unlink(const char *name, int recursive)
 	}
 	/* drop through */
     }
-    return unlink(name) == 0 ? 0 : 1;
+    res2 = unlink(name);
+    /* We want to return 0 if either unlink succeeded or 'name' did not exist */
+    return (res2 == 0 || res != 0) ? 0 : 1;
 }
 #endif
 
