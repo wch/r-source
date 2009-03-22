@@ -339,7 +339,9 @@ UTILITIES
 	platforms, not just on Windows: this is only relevant when a
 	Makevars[.win] is used that contains targets (not in general
 	recommended): for backwards compatibility the first target
-	should be named 'all'.
+	should be named 'all'.  On Windows the default 'all' target
+	only makes the DLL, and no longer call targets 'before' and
+	'after'.
 
 
 Rd CONVERSION

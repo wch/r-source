@@ -2,8 +2,7 @@
 
 include $(R_HOME)/etc${R_ARCH}/Makeconf
 
-## NB, not parallel-safe but Matrix currently uses this
-all: before $(SHLIB) after
+all: $(SHLIB)
 
 BASE = $(shell basename $(SHLIB) .dll)
 
@@ -24,6 +23,6 @@ $(SHLIB): $(OBJECTS)
 	  fi \
 	fi
 
-.PHONY: all before after shlib-clean
+.PHONY: all shlib-clean
 shlib-clean:
 	@rm -f $(OBJECTS)
