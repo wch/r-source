@@ -1,6 +1,6 @@
 % File src/library/base/man/unlink.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{unlink}
@@ -23,6 +23,7 @@
 
 #ifdef unix
   On most platforms \sQuote{file} includes symbolic links, fifos and sockets.
+  Some earlier versions of \R would bot try to remove broken symbolic links.
 #endif  
   
   Wildcard expansion is done by the internal code of
