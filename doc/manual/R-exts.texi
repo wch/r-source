@@ -1063,7 +1063,9 @@ slamc.o: slamc.f
 
 @noindent
 (since the other macros are all empty on that platform, and R's internal
-blas is not used).
+blas is not used).  Note that the first target in @file{Makevars} will
+be called on a Unix-alike, and target @samp{all} on Windows (but the
+latter will change in as from @R 2.10.0).
 
 If you want to create and then link to a library, say using code in a
 subdirectory, use something like
@@ -1087,6 +1089,18 @@ and parallel makes).
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
 or @file{Makevars.win}: this will be used by @command{R CMD build}.
 
+If you really want to subvert the mechanisms, use a first target named
+something other than @samp{all}, as the standard makefile (which is
+included after @file{Makevars}) includes the target
+
+@example
+all: $(SHLIB)
+@end example
+
+@noindent
+and hence target @samp{all} in @file{Makevars} adds to that target.
+(This is for Unix-alikes only until @R{} 2.10.0.)
+
 @menu
 * Back-compatibility for Makevars::  
 @end menu
@@ -1099,22 +1113,7 @@ of @R{} the mechanisms used on Unix-alikes and Windows were completely
 separate and their operation differed in a number of details.  The
 current version was designed to be as compatible as possible with both.
 
-On a Unix-alike prior to @R{} 2.9.0 the makefiles were called without a
-target, so the first target found was used.  If there was no
-@file{Makevars} file or this contained no targets (the usual case), the
-first target in @file{share/make/shlib.mk} was used, which made
-@samp{$(SHLIB)}, a macro by default set to the package name plus the
-appropriate extensuon (@samp{$(SHLIB_EXT)}).  As this is the sole
-dependency of the phony target @code{all} in the current version, the
-operation is unchanged.  The main difference on a Unix-alike is where
-@file{Makevars} contains targets @emph{and} the first target is not
-called @code{all}: so backwards compatibility is achieved simply by
-having no targets or a first target called @code{all}.  The other
-difference is where the first target in @file{Makevars} was called
-@code{all}: the @code{all} target in @file{share/make/shlib.mk} adds the
-dependency @samp{$(SHLIB)}---if this is not wanted, set @samp{OBJECTS}
-to an empty value in @file{Makevars} if there any compiled-code source
-files in the directory.
+On a Unix-alike the rules are unchanged.
 
 On Windows prior to @R{} 2.9.0 any file @file{Makevars.win} or
 @file{Makevars} was included in another makefile after its targets, so
@@ -1141,6 +1140,10 @@ all: before $(SHLIB) after
 @noindent
 omitting @code{bwfore} or @code{after} if they are unused.  Note however
 that this is not compatible with the use of a parallel make.
+
+Note that as from @R{} 2.10.0 the first target in @file{Makevars[.win]}
+will be called if there is one, so for future compatibility this should
+be named @samp{all}.
 
 Some packages used undocumented macros under Windows, notably
 @samp{DPKG} (use @env{R_PACKAGE_DIR} instead).
