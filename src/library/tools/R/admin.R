@@ -71,7 +71,7 @@ function(dir, outDir)
               else "",
               "; ",
               ## Prefer date in ISO 8601 format, UTC.
-              format(Sys.time(), "%a %b %d %X %Y", tz = "UTC", usetz = TRUE),
+              format(Sys.time(), tz = "UTC", usetz = TRUE),
               ## Sys.time(),
               "; ",
               .OStype(),
