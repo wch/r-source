@@ -70,10 +70,9 @@ function(dir, outDir)
               if(file_test("-d", file.path(dir, "src"))) OStype
               else "",
               "; ",
-              ## Prefer date in ISO 8601 format.
-              ## Could also use
-              ##   format(Sys.time(), "%a %b %d %X %Y")
-              Sys.time(),
+              ## Prefer date in ISO 8601 format, UTC.
+              format(Sys.time(), "%a %b %d %X %Y", tz = "UTC", usetz = TRUE),
+              ## Sys.time(),
               "; ",
               .OStype(),
               sep = "")

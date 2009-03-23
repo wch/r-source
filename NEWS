@@ -461,6 +461,8 @@ PACKAGE INSTALLATION
 	New option --install-tests will install any package-specific
 	tests.
 
+    o	Times in the Packaged: and Built: fields are no recorded in UTC.
+
 
 C-LEVEL FACILITIES
 
@@ -498,9 +500,10 @@ BUG FIXES
 
     o	heatmap() without a dendrogram could fail. (PR#13512)
 
-    o	Checks for missing values will no longer result in an infinite
-	loop or stack overflow error, depending on the compiler. Active
-	bindings are now always considered to be non-missing.
+    o	Checks for missing values will no longer occasionally result in
+	an infinite loop or stack overflow error, depending on the
+	compiler.  Active bindings are now always considered to be
+	non-missing.
 
     o	Rd conversion was not accepting \p (as in \pkg} or (in Perl
 	5.10.x) \k (as in \kbd) in any preamble text in a \value{}

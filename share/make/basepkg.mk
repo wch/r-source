@@ -55,7 +55,7 @@ mkdesc:
 ## for base and tools
 mkdesc2:
 	@$(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg)
-	@$(ECHO) "Built: R $(VERSION); ; `date`; $(R_OSTYPE)" \
+	@$(ECHO) "Built: R $(VERSION); ; `TZ=UTC date`; $(R_OSTYPE)" \
 	   >> $(top_builddir)/library/$(pkg)/DESCRIPTION
 
 mkdemos:

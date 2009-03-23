@@ -454,7 +454,7 @@ sub add_build_stamp_to_description_file {
     @lines = grep(!/^Packaged:/, @lines);
     $fh->print(join("\n", @lines), "\n");
     $fh->print("Packaged: ",
-	       scalar(localtime()), "; ",
+	       scalar(gmtime()), " UTC; ",
 	       $user_name, "\n");
     $fh->close();
 }
