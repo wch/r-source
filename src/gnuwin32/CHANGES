@@ -8,6 +8,24 @@
 
 	**************************************************
 	*						 *
+	*	       2.10 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+    		CHANGES IN R VERSION 2.10.0
+
+
+PACKAGE INSTALLATION
+
+    o	Rcmd SHLIB (which is used by Rcmd INSTALL) now calls 'make'
+	without a target, rather than target 'all'.  This is now the
+	same as on Unix, and was announced in the NEWS for 2.9.0.
+
+
+
+	**************************************************
+	*						 *
 	*	       2.9 SERIES NEWS			 *
 	*						 *
 	**************************************************
