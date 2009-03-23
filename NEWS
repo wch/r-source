@@ -461,7 +461,8 @@ PACKAGE INSTALLATION
 	New option --install-tests will install any package-specific
 	tests.
 
-    o	Times in the Packaged: and Built: fields are no recorded in UTC.
+    o	Times in the Packaged: and Built: fields are now recorded in
+	UTC.
 
 
 C-LEVEL FACILITIES
