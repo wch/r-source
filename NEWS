@@ -464,7 +464,7 @@ PACKAGE INSTALLATION
 	tests.
 
     o	Times in the Packaged: and Built: fields are now recorded in
-	UTC.
+	UTC, and in most cases in ISO 8601 format.
 
 
 C-LEVEL FACILITIES
@@ -508,9 +508,10 @@ BUG FIXES
 	compiler.  Active bindings are now always considered to be
 	non-missing.
 
-    o	Rd conversion was not accepting \p (as in \pkg} or (in Perl
-	5.10.x) \k (as in \kbd) in any preamble text in a \value{}
-	section, since those are nowadays interpreted by Perl.  (PR#13575)
+    o	Rd conversion was not accepting \p (as in \pkg} or (when using
+	Perl 5.10.x) \k (as in \kbd) in any preamble text in a
+	\value{} section, since those are nowadays interpreted by
+	Perl.  (PR#13575)
 
 
 
