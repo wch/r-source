@@ -26,8 +26,9 @@ aggregate.default <- function(x, ...)
 
 aggregate.data.frame <- function(x, by, FUN, ...)
 {
-    if(!is.data.frame(x))
-        x <- as.data.frame(x)
+    if(!is.data.frame(x)) x <- as.data.frame(x)
+    ## do this here to avoid masking by non-function (could happen)
+    FUN <- match.fun(FUN)
     if(NROW(x) == 0) stop("no rows to aggregate")
     if(NCOL(x) == 0) {
         ## fake it
