@@ -4151,12 +4151,11 @@ port would be greatly appreciated.
 @cindex AIX
 
 We no longer support AIX prior to 4.2, and @command{configure} will
-throw an error on such systems.  The recent testing has been under AIX
-5.2 on @cputype{powerpc}, where Ei-ji Nakama was able to build with
-@command{gcc 4.0.3} in several configurations.
+throw an error on such systems.
 
-Mr Nakama found 32-bit versions of @R{} could be built with
-@command{configure --without-iconv} as well as
+Ei-ji Nakama was able to build under AIX 5.2 on @cputype{powerpc} with
+GCC 4.0.3 in several configurations.  32-bit bit versions could be
+configured with @option{--without-iconv} as well as
 @option{--enable-R-shlib}.  For 64-bit versions he used
 
 @example
@@ -4187,12 +4186,14 @@ be invoked as @command{xlf_r}.
 
 The AIX native @code{iconv} does not support encodings @samp{latin1} nor
 @samp{""} and so cannot be used.  (As far as we know GNU @code{libiconv}
-could be installed.)  Fan Long reports success on AIX 5.3 using
+could be installed.)
+
+Fan Long reports success on AIX 5.3 using
 @c https://stat.ethz.ch/pipermail/r-devel/2008-August/050318.html
 
 @example
 OBJECT_MODE=64
-LIBICONV=/where/libiconv/installed
+LIBICONV=@var{/where/libiconv/installed}
 CC="xlc_r -q64" 
 CFLAGS="-O -qstrict"
 CXX="xlC_r -q64"
@@ -4205,6 +4206,89 @@ LDFLAGS="-L$LIBICONV/lib -L/usr/lib -L/usr/X11R6/lib"
 
 On one AIX 6.x system it was necessary to use @env{R_SHELL} to set the
 default shell to be Bash rather than Zsh.
+
+Kurt Hornik and Stefan Theussl at WU (Wirtschaftsuniversit@"at Wien)
+successfully built R on a @cputype{powerpc} (8-@acronym{CPU} Power6
+system) on AIX 6.1, configuring with or without
+@option{--enable-R-shlib} (Ei-Ji Nakama's support is gratefully
+acknowledged).
+
+It helps to describe the WU build environment first.  A small part of
+the software needed to build R and/or install packages is available
+directly from the AIX Installation DVDs, e.g., Java 6, X11, or Perl.
+Additional open source software (OSS) is packaged for AIX in @file{.rpm}
+files and available from both IBM's ``AIX Toolbox for Linux
+Applications''
+(@uref{http://www-03.ibm.com/systems/power/software/aix/linux/}) and
+@uref{http://www.@/oss4aix.org/download/}.  The latter website typically
+offers more recent versions of the available OSS.  All tools needed and
+libraries downloaded from these repositories (e.g., GCC, Make,
+@code{libreadline}, etc.) are typically installed to
+@file{/opt/freeware}, hence corresponding executables are found in
+@file{/opt/freeware/bin} which thus needs to be in @env{PATH} for using
+these tools.  Like on other Unix systems one needs @acronym{GNU}
+@code{libiconv} as the AIX version of iconv is not sufficiently
+powerful.  Additionally, for proper Unicode compatibility one should
+install the corresponding package from the ICU project
+(@uref{http://www.icu-project.org/download/}), which offers pre-compiled
+binaries for various platforms which in case of AIX can be installed via
+unpacking the tarball to the root file system.  For full @LaTeX{}
+support one can install the @TeX{} Live DVD distribution
+(@uref{http://www.tug.org/texlive/}): it is recommended to update the
+distribution using the @code{tlmgr} update manager.  For 64-bit R builds
+supporting Tcl/Tk this needs to installed from the sources as available
+pre-compiled binaries supply only 32-bit shared objects.
+
+The recent WU testing was done using compilers from both the GNU
+Compiler Collection (version 4.2.4) which is available from one of the
+above OSS repositories, and the IBM C/C++ (XL C/C++ 10.01) as well as
+FORTRAN (XL Fortran 12.01) compilers
+(@url{http://www14.software.ibm.com/webapp/download/byproduct.jsp#X}).
+
+To compile for a 64-bit @cputype{powerpc} (Power6 CPU) target one can
+use
+
+@example
+CC ="gcc -maix64 -pthread"
+CXX="g++ -maix64 -pthread"
+FC="gfortran -maix64 -pthread"
+F77="gfortran -maix64 -pthread"
+CFLAGS="-O2 -g -mcpu=power6"
+FFLAGS="-O2 -g -mcpu=power6"
+FCFLAGS="-O2 -g -mcpu=power6"
+@end example
+
+@noindent
+for the GCC and
+
+@example
+CC=xlc
+CXX=xlc++
+FC=xlf
+F77=xlf
+CFLAGS="-qarch=auto -qcache=auto -qtune=auto -O3 -qstrict -ma"
+FFLAGS="-qarch=auto -qcache=auto -qtune=auto -O3 -qstrict"
+FCFLAGS="-qarch=auto -qcache=auto -qtune=auto -O3 -qstrict"
+CXXFLAGS="-qarch=auto -qcache=auto -qtune=auto -O3 -qstrict"
+@end example
+
+@noindent
+for the IBM XL compilers.  For the latter, it is important to note that
+the decision for generating 32-bit or 64-bit code is done by setting the
+@env{OBJECT_MODE} environment variable appropriately (recommended) or
+using an additional compiler flag (@option{-q32} or @option{-q64}).  By
+default the IBM XL compilers produce 32 bit code.  Thus, to build R with
+64-bit support one needs to either export @env{OBJECT_MODE=64} in the
+environment or, alternatively, use the @option{-q64} compiler options.
+
+It is strongly recommended to install Bash and use it as the configure
+shell, e.g., via setting @code{CONFIG_SHELL=/usr/bin/bash} in the
+environment, and to use @acronym{GNU} Make (e.g., via
+(@code{MAKE=/opt/freeware/bin/make}).
+
+Further installation instructions to set up a proper R development
+environment can be found in the ``R on AIX'' project on R-Forge
+(@uref{http://R-Forge.R-project.org/projects/aix/}).
 
 @node Cygwin, New platforms, AIX, Platform notes
 @section Cygwin
