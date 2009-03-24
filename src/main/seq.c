@@ -32,6 +32,9 @@
 #include "RBufferUtils.h"
 static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
+#define _S4_rep_keepClass
+/* ==>  rep(<S4>, .) keeps class e.g., for list-like */
+
 static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 {
     SEXP a, la, ls, lt, rs, rt;
@@ -207,10 +210,12 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     default:
 	UNIMPLEMENTED_TYPE("rep2", s);
     }
+#ifdef _S4_rep_keepClass
     if(IS_S4_OBJECT(s)) { /* e.g. contains = "list" */
 	setAttrib(a, R_ClassSymbol, getAttrib(s, R_ClassSymbol));
 	SET_S4_OBJECT(a);
     }
+#endif
     if (inherits(s, "factor")) {
 	SEXP tmp;
 	if(inherits(s, "ordered")) {
@@ -258,10 +263,12 @@ static SEXP rep1(SEXP s, SEXP ncopy)
 	a = allocList(na);
     PROTECT(a);
 
+#ifdef _S4_rep_keepClass
     if(IS_S4_OBJECT(s)) { /* e.g. contains = "list" */
 	setAttrib(a, R_ClassSymbol, getAttrib(s, R_ClassSymbol));
 	SET_S4_OBJECT(a);
     }
+#endif
 
     switch (TYPEOF(s)) {
     case LGLSXP:
@@ -414,10 +421,12 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 done:
     ans = do_subset_dflt(R_NilValue, R_NilValue, list2(x, ind), rho);
+#ifdef _S4_rep_keepClass
     if(IS_S4_OBJECT(x)) { /* e.g. contains = "list" */
 	setAttrib(ans, R_ClassSymbol, getAttrib(x, R_ClassSymbol));
 	SET_S4_OBJECT(ans);
     }
+#endif
     /* 1D arrays get dimensions preserved */
     setAttrib(ans, R_DimSymbol, R_NilValue);
     UNPROTECT(nprotect);
