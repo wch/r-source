@@ -453,9 +453,9 @@ sub add_build_stamp_to_description_file {
     ## Do not keep previous build stamps.
     @lines = grep(!/^Packaged:/, @lines);
     $fh->print(join("\n", @lines), "\n");
-    $fh->print("Packaged: ",
-	       scalar(gmtime()), " UTC; ",
-	       $user_name, "\n");
+    my @dt = R_runR("cat(format(Sys.time(), '', tz='UTC', usetz=TRUE))",
+		    "--vanilla --slave", "R_DEFAULT_PACKAGES=NULL");
+    $fh->print("Packaged: ", @dt, "; ", $user_name, "\n");
     $fh->close();
 }
 
