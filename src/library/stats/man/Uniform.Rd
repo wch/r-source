@@ -49,6 +49,11 @@ runif(n, min=0, max=1)
   \code{max = min} or \code{max-min} is small compared to \code{min},
   and in particular not for the default arguments.
 }
+\note{The characteristics of output from pseudo-random number generators
+  (such as precision and periodicity) vary widely.  See
+  \code{\link{.Random.seed}} for more information on \R's random number
+  generation algorithms.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
