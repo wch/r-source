@@ -260,6 +260,8 @@ NEW FEATURES
     o	unlink() is now able to remove broken symbolic links on
 	Unix-alikes.
 
+    o	new selectSuperClasses() utility.
+
 
 DEPRECATED & DEFUNCT
 

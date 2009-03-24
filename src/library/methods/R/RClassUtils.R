@@ -121,12 +121,13 @@ makePrototypeFromClassDef <-
     pnames <- names(attributes(prototype))
     ## watch out for a prototype of this class.  Not supposed to happen, but will
     ## at least for the basic class "ts", and can lead to inf. recursion
-    if(.identC(class(prototype), className))
-        pslots <- names(attributes(unclass(prototype)))
-    else if(isClass(class(prototype)))
-        pslots <- names(getSlots(getClass(class(prototype))))
-    else
-        pslots <- NULL
+    pslots <-
+        if(.identC(class(prototype), className))
+            names(attributes(unclass(prototype)))
+        else if(isClass(class(prototype)))
+            names(getSlots(getClass(class(prototype))))
+        ## else NULL
+
     ## now check that all the directly specified slots have corresponding elements
     ## in the prototype--the inherited slots were done in the loop over extends
     if(!is.na(match(".Data", snames))) {
@@ -217,7 +218,7 @@ completeClassDefinition <-
     validity <- ClassDef@validity
     access <- ClassDef@access
     package <- ClassDef@package
-    extends <- if(doExtends) completeExtends(ClassDef, where = where) else ClassDef@contains
+    extends    <- if(doExtends) completeExtends   (ClassDef, where = where) else ClassDef@contains
     subclasses <- if(doExtends) completeSubclasses(ClassDef, where = where) else ClassDef@subclasses
     if(is.na(virtual))
         ## compute it from the immediate extensions, but all the properties
@@ -361,11 +362,11 @@ superClassDepth <-
     ## all the superclasses of ClassDef, along with the depth of the relation
     ## Includes the extension definitions, but these are not currently used by
     ## getAllSuperClasses
-  function(ClassDef, soFar = ClassDef@className, simpleOnly = TRUE )
+  function(ClassDef, soFar = ClassDef@className, simpleOnly = TRUE)
 {
     ext <- ClassDef@contains
     ## remove indirect and maybe non-simple superclasses (latter for inferring slots)
-    ok <- rep(TRUE, length(ext))
+    ok <- rep.int(TRUE, length(ext))
     for(i in seq_along(ext)) {
         exti <- ext[[i]]
         if(.isIndirectExtension(exti) ||
@@ -376,8 +377,8 @@ superClassDepth <-
     immediate <- names(ext)
     notSoFar <- is.na(match(immediate, soFar))
     immediate <- immediate[notSoFar]
-    super <- list(label=immediate, depth = rep(1, length(immediate)), ext = ext)
-    for(i  in seq_along(immediate)) {
+    super <- list(label = immediate, depth = rep.int(1, length(immediate)), ext = ext)
+    for(i in seq_along(immediate)) {
         what <- immediate[[i]]
         if(!is.na(match(what, soFar)))
            ## watch out for loops (e.g., matrix/array have mutual is relationship)
@@ -413,6 +414,41 @@ superClassDepth <-
     }
     super
 }
+
+selectSuperClasses <-
+    function(Class, dropVirtual = FALSE, namesOnly = TRUE,
+             directOnly = TRUE, simpleOnly = directOnly,
+             where = topenv(parent.frame()))
+{
+    ext <- if(isClassDef(Class))
+        Class@contains
+    else if(isClass(Class, where = where))
+        getClass(Class, where = where)@contains
+    else stop("'Class' must be a valid class definition or class")
+
+    .selectSuperClasses(ext, dropVirtual = dropVirtual, namesOnly = namesOnly,
+                        directOnly = directOnly, simpleOnly = simpleOnly)
+}
+
+.selectSuperClasses <- function(ext, dropVirtual = FALSE, namesOnly = TRUE,
+                                directOnly = TRUE, simpleOnly = directOnly)
+{
+    ## No argument checking here
+    addCond <- function(xpr, prev)
+        if(length(prev)) substitute(P && N, list(P = prev, N = xpr)) else xpr
+    C <- if(dropVirtual) {
+        isVirtualExt <- function(x) getClass(x@superClass)@virtual
+        quote(!isVirtualExt(exti))
+    } else expression()
+    if(directOnly) C <- addCond(quote(length(exti@by) == 0), C)
+    if(simpleOnly) C <- addCond(quote(exti@simple), C)
+    if(length(C)) {
+      F <- function(exti){}; body(F) <- C
+      ext <- ext[unlist(lapply(ext, F), use.names=FALSE)]
+    }
+    if(namesOnly) names(ext) else ext
+}
+
 
 
 isVirtualClass <-
@@ -2012,17 +2048,14 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
     if(includeSubclasses)
       nodes <- c(nodes, names(classDef@subclasses))
     nodes <- unique(nodes)
-    if(identical(short, TRUE))
-      labels <- abbreviate(nodes)
-    else if(is.character(short)) {
-        if(length(short) != length(nodes))
-          stop(gettextf("Needed the supplied labels vector of length %n, got %n",
-               length(nodes), length(short)), domain = NA)
-        else
-          labels <- short
-    }
-    else
-      labels <- nodes
+    labels <-
+        if(isTRUE(short)) abbreviate(nodes)
+        else if(is.character(short)) {
+            if(length(short) != length(nodes))
+                stop(gettextf("Needed the supplied labels vector of length %n, got %n",
+                              length(nodes), length(short)), domain = NA)
+            else short
+        } else nodes
     size <- length(nodes)
     value <- matrix(0, size, size, dimnames = list(labels, labels))
     ifrom <- match(classDef@className, nodes) # well, 1, but just for consistency

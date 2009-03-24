@@ -127,48 +127,48 @@
 }
 
 .InitS3Classes <- function(envir) {
-    # create a virtual class from which all S3 classes will inherit the .S3Class slot
+    ## create a virtual class from which all S3 classes will inherit the .S3Class slot
     setClass("oldClass", representation(.S3Class = "character"),
              contains = "VIRTUAL", prototype = prototype(.S3Class = character()),
              where = envir)
-      ## call setOldClass on some known old-style classes.  Ideally this would be done
+    ## call setOldClass on some known old-style classes.  Ideally this would be done
     ## in the code that uses the classes, but that code doesn't know about the methods
     ## package.
     ## Two steps; first, those classes with a known prototype.  These
     ## can be non-Virtual
     clList <- get(".SealedClasses", envir = envir)
     for(i in seq_along(.OldClassesPrototypes)) {
-      el <- .OldClassesPrototypes[[i]]
-      if(is.list(el) && length(el) > 1)
-        setOldClass(el[[1L]], prototype = el[[2L]],  where = envir)
-       else
-        warning("OOPS: something wrong with line ",i, " in .OldClassesPrototypes")
+        el <- .OldClassesPrototypes[[i]]
+        if(is.list(el) && length(el) > 1)
+            setOldClass(el[[1L]], prototype = el[[2L]],  where = envir)
+        else
+            warning("OOPS: something wrong with line ",i, " in .OldClassesPrototypes")
     }
     setGeneric("slotsFromS3", where = envir)
     ## the method for "oldClass" is really a constant, just hard to express that way
-    setMethod("slotsFromS3", "oldClass", function(object)   getClass("oldClass")@slots,
+    setMethod("slotsFromS3", "oldClass", function(object) getClass("oldClass")@slots,
               where = envir)
 
-    setClass("ts", contains = "structure", representation(tsp = "numeric"), prototype(NA, tsp = rep(1,3)), where = envir)
+    setClass("ts", contains = "structure", representation(tsp = "numeric"),
+             prototype = prototype(NA, tsp = rep(1,3)), where = envir)
 
     setOldClass("ts", S4Class = "ts", where = envir)
 
-    setClass("mts", contains=c("matrix", "ts"), prototype = prototype(matrix(NA,1,1), tsp = rep(1,3), .S3Class = c("mts", "ts")))
-    .init_ts <-  function(.Object,  ...) {
-        if(nargs() < 2) # guaranteed to be called with .Object from new
-          return( .Object)
-        args <- list(...)
-        argnames <- names(args)
-        if(is.null(argnames))
-          slotnames <- FALSE
-        else
-          slotnames <- nzchar(argnames) & is.na(match(argnames, .tsArgNames))
-        if(any(slotnames)) {
-            value = do.call(stats::ts, args[!slotnames])
-            .mergeAttrs(value, .Object, args[slotnames])
-        }
-        else
-          .mergeAttrs(stats::ts(...), .Object, list())
+    setClass("mts", contains=c("matrix", "ts"), prototype =
+             prototype(matrix(NA,1,1), tsp = rep(1,3), .S3Class = c("mts", "ts")))
+    .init_ts <-	 function(.Object,  ...) {
+	if(nargs() < 2) # guaranteed to be called with .Object from new
+	    return(.Object)
+	args <- list(...)
+	argnames <- names(args)
+	slotnames <- if(is.null(argnames)) FALSE else {
+            nzchar(argnames) & is.na(match(argnames, .tsArgNames)) }
+	if(any(slotnames)) {
+	    value <- do.call(stats::ts, args[!slotnames])
+	    .mergeAttrs(value, .Object, args[slotnames])
+	}
+	else
+	    .mergeAttrs(stats::ts(...), .Object)
     }
     setMethod("initialize", "ts", .init_ts, where = envir)
     setMethod("initialize", "mts", .init_ts, where = envir) #else, it's ambiguous
@@ -179,7 +179,7 @@
                   value <- as.ts(from)
                   if(strict) {
                       attrs <- attributes(value)
-                      if(length(attrs)>2)
+                      if(length(attrs) > 2)
                         attributes(value) <- attrs[c("class", "tsp")]
                       value <- .asS4(value)
                   }

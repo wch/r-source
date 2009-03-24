@@ -1,7 +1,7 @@
 % File src/library/methods/man/RClassUtils.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2007 R Core Development Team
-% Copyright 2008      The R Foundation
+% Copyright 2008-2009 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{RClassUtils}

@@ -1,5 +1,5 @@
 
-R version 2.9.0 Under development (unstable) (2009-03-10 r48103)
+R version 2.10.0 Under development (unstable) (2009-03-23 r48200)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -264,7 +264,8 @@ Slot "y":
 [1] "test"
 
 > ## failed reconcilePropertiesAndPrototype(..) after svn r37018
-> 
+> stopifnot(identical(selectSuperClasses("C", dropVirtual = TRUE), c("A", "B")),
++ 	  0 == length(.selectSuperClasses(getClass("B")@contains)))
 > 
 > ## "Logic" group -- was missing in R <= 2.4.0
 > stopifnot(all(getGroupMembers("Logic") %in% c("&", "|")),
@@ -752,4 +753,5 @@ Creating a generic for "rbind" in package  ".GlobalEnv"
 + 	  ## median of two -> sum()
 + 	  median(x2) == 2)
 > ## median.default(x) was too stringent on x
+> 
 > 

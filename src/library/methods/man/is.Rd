@@ -1,6 +1,6 @@
 % File src/library/methods/man/is.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{is}
@@ -9,27 +9,30 @@
 \alias{setIs}
 \title{Is an Object from a Class}
 \description{
-Functions to test inheritance relationships between an object and a
-class (\code{is}) or between two classes (\code{extends}), and to
-establish such relationships (\code{setIs},  an explicit alternative to the \code{contains=} argument to \code{\link{setClass}}).
+  Functions to test inheritance relationships between an object and a
+  class (\code{is}) or between two classes (\code{extends}), and to
+  establish such relationships (\code{setIs}, an explicit alternative
+  to the \code{contains=} argument to \code{\link{setClass}}).
 }
 \section{Summary of Functions}{
   \describe{
-  \item{\code{is}:}{
+    \item{\code{is}:}{
       With two arguments, tests whether \code{object} can be treated as from
       \code{class2}.
 
       With one argument, returns all the super-classes of this object's class.
     }
-  \item{\code{extends}:}{
+    \item{\code{extends}:}{
       Does the first class extend the second class?
-      The call returns \code{maybe} if the extension includes a test.  
+      The call returns \code{maybe} if the extension includes a test.
 
-When called with one argument, the value is a vector of the
-superclasses of \code{class1}.  If argument \code{fullInfo}  is
-\code{TRUE}, the call returns a named list of objects of class \code{\linkS4class{SClassExtension}}; otherwise, just the names of the superclasses.
+      When called with one argument, the value is a vector of the
+      superclasses of \code{class1}.  If argument \code{fullInfo}  is
+      \code{TRUE}, the call returns a named list of objects of class
+      \code{\linkS4class{SClassExtension}}; otherwise, just the names of
+      the superclasses.
     }
-  \item{\code{setIs}:}{
+    \item{\code{setIs}:}{
       Defines \code{class1} to be an extension (subclass) of
       \code{class2}.
       If \code{class2} is an existing virtual class, such as a class
@@ -37,19 +40,19 @@ superclasses of \code{class1}.  If argument \code{fullInfo}  is
       call, if the implied inherited methods work for \code{class1}.
       See the details section below.
 
-      Alternatively, arguments
-      \code{coerce} and \code{replace} should be supplied, defining
-      methods to coerce to the superclass and to replace the part
-      corresponding to the superclass. As discussed in the details and
-      other sections below, this form is often less recommended than the
-      corresponding call to \code{\link{setAs}}, to which it is an alternative. 
+      Alternatively, arguments \code{coerce} and \code{replace} should
+      be supplied, defining methods to coerce to the superclass and to
+      replace the part corresponding to the superclass. As discussed in
+      the details and other sections below, this form is often less
+      recommended than the corresponding call to \code{\link{setAs}}, to
+      which it is an alternative.
     }
   }
 }
 \usage{
 is(object, class2)
 
-extends(class1, class2, maybe=TRUE, fullInfo = FALSE)
+extends(class1, class2, maybe = TRUE, fullInfo = FALSE)
 
 setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
       by = character(), where = topenv(parent.frame()), classDef =,
@@ -63,36 +66,38 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
     objects for the classes.}
 
   \item{maybe, fullInfo}{
-      In a call to \code{extends}, \code{maybe} is the value returned if a
-      relation is conditional. In a call with \code{class2} missing, \code{fullInfo} is a
-      flag, which if \code{TRUE} causes a list of objects of class
-      \code{classExtension} to be returned, rather than just the
-      names of the classes.
-      }
+    In a call to \code{extends}, \code{maybe} is the value returned if
+    a relation is conditional. In a call with \code{class2} missing,
+    \code{fullInfo} is a flag, which if \code{TRUE} causes a list of
+    objects of class \code{classExtension} to be returned, rather than
+    just the names of the classes.}
 
   \item{test, coerce, replace}{
-    In a call to \code{setIs}, functions optionally supplied to test whether the relation is
-    defined, to coerce the object to \code{class2}, and to alter the
-    object so that \code{is(object, class2)} is identical to
-    \code{value}. See the details section below.
+    In a call to \code{setIs}, functions optionally supplied to test
+    whether the relation is defined, to coerce the object to
+    \code{class2}, and to alter the object so that \code{is(object, class2)}
+    is identical to \code{value}.  See the details section below.
 
   The remaining arguments are for internal use and/or usually omitted.}
 
   \item{extensionObject}{ alternative to the \code{test, coerce,
     replace, by} arguments; an object from class
-    \code{SClassExtension} describing the relation.  (Used in internal calls.)
-    }
+    \code{SClassExtension} describing the relation.  (Used in internal calls.)}
 
   \item{doComplete}{when \code{TRUE}, the class definitions will be
-  augmented with indirect relations as well.  (Used in internal calls.)}
-
+    augmented with indirect relations as well.  (Used in internal calls.)}
   \item{by}{
-    In a call to \code{setIs}, the name of an intermediary class.  Coercion will proceed by first
-    coercing to this class and from there to the target class.  (The
-    intermediate coercions have to be valid.)}
+    In a call to \code{setIs}, the name of an intermediary class.
+    Coercion will proceed by first coercing to this class and from there
+    to the target class.  (The intermediate coercions have to be valid.)}
   \item{where}{
-    In a call to \code{setIs}, where to store the metadata defining the relationship. Default is
-    the global environment for calls from the top level of the session or a source file evaluated there.  When the call occurs in the top level of a file in the source of a package, the default will be the name space or environment of the package.  Other uses are tricky and not usually a good idea, unless you really know what you are doing.}
+    In a call to \code{setIs}, where to store the metadata defining the
+    relationship.  Default is the global environment for calls from the
+    top level of the session or a source file evaluated there.  When the
+    call occurs in the top level of a file in the source of a package,
+    the default will be the name space or environment of the package.
+    Other uses are tricky and not usually a good idea, unless you really
+    know what you are doing.}
   \item{classDef}{
     Optional class definition for \code{class} , required internally
     when \code{setIs} is called during the initial definition of the
@@ -101,12 +106,11 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
 }
 
 \section{Details}{
-
   Arranging for a class to inherit from another class is a key tool in
   programming.  In \R, there are three basic techniques, the first two
   providing what is called  \dQuote{simple} inheritance, the preferred form:
+  %%
   \enumerate{
-
   \item
     By the \code{contains=} argument in a call to \code{\link{setClass}}.  This
       is and should be the most common mechanism.  It arranges that the new
@@ -115,7 +119,7 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
       resulting class extension is defined to be \code{simple}, with
       important implications for method definition (see the section on
       this topic below).
- 
+
   \item
      Making \code{class1} a subclass of a virtual class
       either by a call to \code{\link{setClassUnion}} to make the
@@ -153,13 +157,11 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
       recommendation is to use the \code{\link{setAs}} mechanism
       instead, unless there is a strong counter reason. Otherwise, be prepared to
       override some of  the methods inherited.
-
   }
- 
-  With this caution given, the rest of this section describes what
-  happens when
-    \code{coerce=} and \code{replace=} argument are supplied to \code{setIs}.
 
+  With this caution given, the rest of this section describes what
+  happens when \code{coerce=} and \code{replace=} arguments are supplied
+  to \code{setIs}.
 
   The \code{coerce} and \code{replace} arguments are functions that
   define how to coerce a \code{class1} object to \code{class2}, and
@@ -169,14 +171,13 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
   (\code{from}, \code{value}).  For details, see the section on coerce
   functions below .
 
-   When \code{by} is specified, the coerce process first coerces to
-   this class and then to \code{class2}.  It's unlikely you
+  When \code{by} is specified, the coerce process first coerces to
+  this class and then to \code{class2}.  It's unlikely you
   would use the \code{by} argument directly, but it is used in defining
   cached information about classes.
 
   The value returned (invisibly) by
   \code{setIs} is the revised class definition of \code{class1}.
-
 }
 
 \section{Coerce, replace, and test functions}{
@@ -205,7 +206,7 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
   For additional discussion of these functions, see
   the documentation of the
    \code{\link{setAs}} function.  (Unfortunately, argument
-   \code{def} to that function corresponds to argument \code{coerce} here.) 
+   \code{def} to that function corresponds to argument \code{coerce} here.)
 
   The inheritance relationship can also be conditional, if a function is supplied as the
   \code{test} argument.  This should be a function of one argument
@@ -273,13 +274,17 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
   generic functions.
 
   If you get into problems with functions that do allow non-simple
-  inheritance, there are two basic choices.  Either 
+  inheritance, there are two basic choices.  Either
   back off from the \code{setIs} call and settle for explicit coercing
   defined by a call to \code{\link{setAs}}; or, define explicit
   methods involving \code{class1} to override the bad inherited
   methods.  The first choice is the safer, when there are serious
   problems.
 
+}
+\seealso{
+  \code{\link{selectSuperClasses}(cl)} has similar semantics as
+  \code{extends(cl)}, typically returning subsets of the latter.
 }
 \references{
  Chambers, John M. (2008)
@@ -342,33 +347,24 @@ removeClass("track")
 ## A class that adds a slot to "character"
 setClass("stringsDated", contains = "character", representation(stamp="POSIXt"))
 
-## Convert automatically to a factor by explicit coerce 
+## Convert automatically to a factor by explicit coerce
 setIs("stringsDated", "factor",
-   coerce = function(from){factor(from@.Data)}, 
-   replace=function(from, value){
-       from@.Data<- as.character(value); from})
-
+      coerce = function(from) factor(from@.Data),
+      replace= function(from, value) {
+                  from@.Data <- as.character(value); from })
 \dontshow{
-
 set.seed(750)
 }
 ll <- sample(letters, 10, replace = TRUE)
- ld <- new("stringsDated", ll, stamp = Sys.time())
+ld <- new("stringsDated", ll, stamp = Sys.time())
 
 levels(as(ld, "factor"))
-
 levels(ld) # will be NULL--see comment in section on inheritance above.
 
 ## In contrast, a class that simply extends "factor" has no such ambiguities
-
 setClass("factorDated", contains = "factor", representation(stamp="POSIXt"))
-
-fd = new("factorDated", factor(ll), stamp = Sys.time())
-
+fd <- new("factorDated", factor(ll), stamp = Sys.time())
 identical(levels(fd), levels(as(fd, "factor")))
-
-
-
 }
 \keyword{programming}
 \keyword{classes}
