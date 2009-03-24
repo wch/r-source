@@ -167,7 +167,8 @@ setClass("C", contains = c("A", "B"), representation(z = "logical"),
          prototype = prototype(x = 1.5, y = "test", z = TRUE))
 (cc <- new("C"))
 ## failed reconcilePropertiesAndPrototype(..) after svn r37018
-
+stopifnot(identical(selectSuperClasses("C", dropVirtual = TRUE), c("A", "B")),
+	  0 == length(.selectSuperClasses(getClass("B")@contains)))
 
 ## "Logic" group -- was missing in R <= 2.4.0
 stopifnot(all(getGroupMembers("Logic") %in% c("&", "|")),
@@ -482,3 +483,4 @@ stopifnot(unlist(x2) == (1:3)[-2],
 	  ## median of two -> sum()
 	  median(x2) == 2)
 ## median.default(x) was too stringent on x
+
