@@ -878,9 +878,20 @@ checkRd <-
     	    stopRd(encoding, "Encoding must be plain text")
     }
 
+    dt <- which(sections == "\\docType")
+    if(length(dt)) {
+        if(length(dt) > 1L)
+            stopRd(Rd[[dt[2L]]], "Only one \\docType declaration is allowed.")
+        docType <- Rd[[dt]]
+        if(!identical(RdTags(docType), "TEXT"))
+            stopRd(docType, "docType must be plain text")
+        docType <- docType[[1L]]
+    } else docType <- ""
+
     checkUnique("\\title")
     checkUnique("\\name")
-    checkUnique("\\description")
+    if(docType != "package")
+        checkUnique("\\description")
 
     name <- Rd[[which(sections == "\\name")]]
     tags <- RdTags(name)
