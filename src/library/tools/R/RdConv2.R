@@ -879,18 +879,19 @@ checkRd <-
     }
 
     dt <- which(sections == "\\docType")
-    if(length(dt)) {
-        if(length(dt) > 1L)
-            stopRd(Rd[[dt[2L]]], "Only one \\docType declaration is allowed.")
-        docType <- Rd[[dt]]
-        if(!identical(RdTags(docType), "TEXT"))
-            stopRd(docType, "docType must be plain text")
-        docType <- docType[[1L]]
-    } else docType <- ""
+    docTypes <- character(length(dt))   
+    if (length(dt)) {
+        for (i in dt) {
+            docType <- Rd[[i]]
+            if(!identical(RdTags(docType), "TEXT"))
+        	stopRd(docType, "docType must be plain text")
+            docTypes[i] <- docType[[1L]]
+         }
+    }
 
     checkUnique("\\title")
     checkUnique("\\name")
-    if(docType != "package")
+    if(!identical("package", docTypes))
         checkUnique("\\description")
 
     name <- Rd[[which(sections == "\\name")]]
