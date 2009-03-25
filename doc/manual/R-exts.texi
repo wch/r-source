@@ -489,6 +489,25 @@ There should be no @samp{Built} or @samp{Packaged} fields, as these are
 added by the package management tools.
 @end quotation
 
+One can add subject classifications for the content of the package using
+the optional fields @samp{Classification/ACM} (using the Computing
+Classification System of the Association for Computing Machinery,
+@uref{http://www.acm.org/class/}), @samp{Classification/JEL} (the
+Journal of Economic Literature Classification System,
+@uref{http://www.aeaweb.org/journal/jel_class_system.html}), or
+@samp{Classification/MSC} (the Mathematics Subject Classification of the
+American Mathematical Society, @uref{http://www.ams.org/msc/}).  The
+subject classifications should be comma-separated lists of the
+respective classification codes, e.g., @samp{Classification/ACM: G.4,
+H.2.8, I.5.1}.
+
+Finally, an optional @samp{Language} field can be used to indicate if
+the package documentation is not in English: this should be a
+comma-separated list of 2-letter ISO 639-1
+(@uref{http://en.@/wikipedia.@/org/wiki/ISO_639-1}) or 3-letter ISO
+639-3 (@uref{http://en.@/wikipedia.@/org/wiki/ISO_639-3}) language
+codes.
+
 
 @node The INDEX file, Package subdirectories, The DESCRIPTION file, Package structure
 @subsection The @file{INDEX} file
@@ -3411,13 +3430,15 @@ the information that would be produced up to
 @code{library(help = @var{pkgname})}.  Otherwise (the default) comments
 will be inserted giving suggestions for content.
 
-The only requirement for this page is that it include a
-@code{\docType@{package@}} statement.  All other content is optional.
-We suggest that it should be a short overview, to give a reader
-unfamiliar with the package enough information to get started.  More
-extensive documentation is better placed into a package vignette
-(@pxref{Writing package vignettes}) and referenced from this page, or
-into individual man pages for the functions, datasets, or classes.
+Apart from the mandatory @code{\name} and @code{\title} and the
+@code{@var{pkgname}-package} alias, the only requirement for the package
+overview page is that it include a @code{\docType@{package@}} statement.
+All other content is optional.  We suggest that it should be a short
+overview, to give a reader unfamiliar with the package enough
+information to get started.  More extensive documentation is better
+placed into a package vignette (@pxref{Writing package vignettes}) and
+referenced from this page, or into individual man pages for the
+functions, datasets, or classes.
 
 @node Sectioning, Marking text, Rd format, Writing R documentation files
 @section Sectioning
