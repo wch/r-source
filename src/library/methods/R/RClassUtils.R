@@ -1453,12 +1453,14 @@ setDataPart <- function(object, value, check = TRUE) {
     toSlots <- names(toDef@slots)
     sameSlots <- (length(fromSlots) == length(toSlots) &&
 		  !any(is.na(match(fromSlots, toSlots))))
+    if(!isVirtualClass(toDef))
+        toClass <- class(new(toDef)) # get it with the package slot correct
     if(sameSlots)
-	substitute({class(from)[[1L]] <- CLASS; from}, list(CLASS = toClass))
+	substitute({class(from) <- CLASS; from}, list(CLASS = toClass))
     else if(length(toSlots) == 0L) {
 	## either a basic class or something with the same representation
 	if(is.na(match(toClass, .BasicClasses)))
-	    substitute({ attributes(from) <- NULL; class(from)[[1L]] <- CLASS; from},
+	    substitute({ attributes(from) <- NULL; class(from) <- CLASS; from},
 		       list(CLASS = toClass))
 	else if(isVirtualClass(toDef))
 	    quote(from)
