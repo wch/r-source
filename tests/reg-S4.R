@@ -484,3 +484,9 @@ stopifnot(unlist(x2) == (1:3)[-2],
 	  median(x2) == 2)
 ## median.default(x) was too stringent on x
 
+## Buglet in as() generation for class without own slots
+setClass("SIG", contains="signature")
+stopifnot(packageSlot(class(S <- new("SIG"))) == ".GlobalEnv",
+	  packageSlot(class(ss <- new("signature"))) == "methods",
+	  packageSlot(class(as(S, "signature"))) == "methods")
+## the 3rd did not have "methods"

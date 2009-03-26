@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-03-23 r48200)
+R version 2.10.0 Under development (unstable) (2009-03-26 r48221)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -754,4 +754,11 @@ Creating a generic for "rbind" in package  ".GlobalEnv"
 + 	  median(x2) == 2)
 > ## median.default(x) was too stringent on x
 > 
+> ## Buglet in as() generation for class without own slots
+> setClass("SIG", contains="signature")
+[1] "SIG"
+> stopifnot(packageSlot(class(S <- new("SIG"))) == ".GlobalEnv",
++ 	  packageSlot(class(ss <- new("signature"))) == "methods",
++ 	  packageSlot(class(as(S, "signature"))) == "methods")
+> ## the 3rd did not have "methods"
 > 
