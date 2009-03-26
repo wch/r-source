@@ -197,13 +197,17 @@ makeClassRepresentation <-
 
 getClassDef <-
   ## Get the definition of the class supplied as a string.
-  function(Class, where = topenv(parent.frame()), package = packageSlot(Class))
+  function(Class, where = topenv(parent.frame()), package = packageSlot(Class),
+           inherits = TRUE)
 {
     ## FIXME:  really wants to be is(Class, "classRepresentation") but
     ## generates inf. loop in booting methods package (also for new())
     if(.identC(class(Class), "classRepresentation"))
         return(Class)
-    value <- .getClassFromCache(Class, where)
+    if(inherits)
+      value <- .getClassFromCache(Class, where)
+    else
+      value <- NULL
     if(is.null(value)) {
 	cname <-
 	    classMetaName(if(length(Class) > 1L)
@@ -214,10 +218,10 @@ getClassDef <-
 	## should be in that package.
 	if(identical(nzchar(package), TRUE)) {
 	    whereP <- .requirePackage(package)
-	    if(exists(cname, whereP))
+	    if(exists(cname, whereP, inherits = inherits))
 		value <- get(cname, whereP)
 	}
-	if(is.null(value) && exists(cname, where))
+	if(is.null(value) && exists(cname, where, inherits = inherits))
 	    value <- get(cname, where)
     }
     value
