@@ -21,7 +21,7 @@ setOldClass <- function(Classes, prototype = NULL,
                         S4Class) {
     simpleCase <- is.null(prototype)
     mainClass <- Classes[[1L]]
-    prevDef <- getClassDef(mainClass, where)
+    prevDef <- getClassDef(mainClass, where, inherits = FALSE)
     if(!missing(S4Class)) {
         if(test)
           stop("not allowed to have test==TRUE and an S4Class definition")
@@ -57,7 +57,7 @@ setOldClass <- function(Classes, prototype = NULL,
         if(isClass(cl, where)) {
             def <- getClass(cl, where)
             if(!extends(def, prevClass))
-                stop(gettextf("inconsistent old-style class information for \"%s\" (maybe mixing old and new classes?)", cl), domain = NA)
+                stop(gettextf("inconsistent old-style class information for \"%s\"; the class is defined but does not extend \"%s\"", cl, prevClass), domain = NA)
             prevP <- def@prototype
             if(missing(prototype))
               prototype <- prevP # keep track of inherited prototype for use in mainClass
