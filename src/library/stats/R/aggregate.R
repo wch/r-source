@@ -75,6 +75,8 @@ aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
 {
     x <- as.ts(x)
     ofrequency <- tsp(x)[3L]
+    ## do this here to avoid masking by non-function (could happen)
+    FUN <- match.fun(FUN)
     ## Set up the new frequency, and make sure it is an integer.
     if(missing(nfrequency))
         nfrequency <- 1 / ndeltat
