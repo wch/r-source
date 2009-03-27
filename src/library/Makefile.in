@@ -36,11 +36,14 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 ## FIXME: do some of this in parallel
 ## beware there is a bootstrapping problem here: tools uses tools to
 ## dump its namespace. So it works initially, but not to update.
+## When base is made we need to use 'date' to set the timestamp,
+## so we remake it before dumpung the DESCRIPTION files.
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@for pkg in profile $(R_PKGS_BASE); do \
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
+	@(cd base && $(MAKE) mkdesc)
 	@$(ECHO) "tools:::.vinstall_package_descriptions_as_RDS(\"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
 	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) > /dev/null
 	@$(ECHO) "installing parsed NAMESPACE files"
