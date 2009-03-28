@@ -58,7 +58,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	}
 	## set RNG
 	if(is.logical(setRNG)) { # i.e. == TRUE: use the same as R CMD check
-	    ## see ../../../../share/perl/massage-Examples.pl
+	    ## see share/R/examples-header.R
 	    RNGkind("default", "default")
 	    set.seed(1)
 	} else eval(setRNG)

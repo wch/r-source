@@ -2245,7 +2245,7 @@ sub check_pkg {
 		    ));
 	if(R_system($cmd)) {
 	    $log->error();
-	    $log->print("Running massage-Examples to create " .
+	    $log->print("Running massageExamples to create " .
 			"'${pkgname}-Ex.R' failed.\n");
 	    exit(1);
 	}
@@ -2285,7 +2285,7 @@ sub check_pkg {
 	    my $txt = join("\n", &read_lines("${pkgname}-Ex.Rout"));
 	    ## Look for the header section anchored by a subsequent call
 	    ## to flush(): needs to be kept in sync with the code in
-	    ## massage-Examples.pl.  Should perhaps also be more
+	    ## massageExamples (in testing.R).  Should perhaps also be more
 	    ## defensive about the prompt ...
 	    my @chunks = split(/(> \#\#\# \* [^\n]+\n> \n> flush)/, $txt);
 	    if(scalar(@chunks) > 2) {

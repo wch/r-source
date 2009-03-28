@@ -311,8 +311,8 @@ UTILITIES
 	to 'texi2dvi' found at configure time: this now provides the
 	default to option("texi2dvi").
 
-    o	massage-Examples.pl has been replaced by an R script
-	share/R/massage-examples.R .
+    o	massage-Examples.pl has been replaced by the R function
+	tools:::massageExamples().
 
     o	R CMD REMOVE now uses remove.packages() and hence removes all
 	members of a bundle.
