@@ -48,7 +48,8 @@
     \item{\code{warnIncomplete}}{
       Some exotic objects such as \link{environment}s,
       external pointers, etc. can not be deparsed properly.  This option
-      causes a warning to be issued if any of those may give problems.
+      causes a warning to be issued if the deparser recognizes one of these
+      situations.
 
       Also, the parser in \R < 2.7.0 would only accept strings of up to
       8192 bytes, and this option gives a warning for longer strings.
