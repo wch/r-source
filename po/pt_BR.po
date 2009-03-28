@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-03-20 09:02+0000\n"
+"POT-Creation-Date: 2009-03-28 17:24+0000\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -154,13 +154,13 @@ msgstr ""
 #: src/main/platform.c:294 src/main/platform.c:994 src/main/platform.c:1000
 #: src/main/platform.c:1055 src/main/platform.c:1103 src/main/platform.c:1106
 #: src/main/platform.c:1109 src/main/platform.c:1112 src/main/platform.c:1115
-#: src/main/platform.c:1199 src/main/platform.c:1202 src/main/platform.c:1356
-#: src/main/platform.c:1359 src/main/platform.c:1395 src/main/platform.c:1398
-#: src/main/platform.c:1471 src/main/platform.c:1489 src/main/platform.c:1528
-#: src/main/platform.c:1530 src/main/platform.c:1588 src/main/platform.c:1679
-#: src/main/platform.c:1940 src/main/platform.c:1980 src/main/platform.c:2101
-#: src/main/platform.c:2104 src/main/platform.c:2107 src/main/platform.c:2110
-#: src/main/platform.c:2227 src/main/platform.c:2255 src/main/plot.c:2953
+#: src/main/platform.c:1199 src/main/platform.c:1202 src/main/platform.c:1363
+#: src/main/platform.c:1366 src/main/platform.c:1402 src/main/platform.c:1405
+#: src/main/platform.c:1478 src/main/platform.c:1496 src/main/platform.c:1535
+#: src/main/platform.c:1537 src/main/platform.c:1595 src/main/platform.c:1686
+#: src/main/platform.c:1947 src/main/platform.c:1987 src/main/platform.c:2108
+#: src/main/platform.c:2111 src/main/platform.c:2114 src/main/platform.c:2117
+#: src/main/platform.c:2234 src/main/platform.c:2262 src/main/plot.c:2953
 #: src/main/plot.c:4092 src/main/plot.c:4096 src/main/plot.c:4099
 #: src/main/plot3d.c:2447 src/main/plot3d.c:2451 src/main/plot3d.c:2456
 #: src/main/plot3d.c:2460 src/main/plot3d.c:2464 src/main/plot3d.c:2468
@@ -253,7 +253,7 @@ msgstr "etiqueta de tempo inválida"
 #: src/main/errors.c:1012 src/main/errors.c:1037 src/main/errors.c:1042
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
-#: src/main/platform.c:2275 src/main/plot.c:276 src/main/plot.c:470
+#: src/main/platform.c:2282 src/main/plot.c:276 src/main/plot.c:470
 #: src/main/plot.c:475 src/main/plot.c:2131 src/main/plot.c:2138
 #: src/main/plot.c:3166 src/main/plot.c:3168 src/main/plot.c:3170
 #: src/main/plot.c:3328 src/main/plot3d.c:1397 src/main/plot3d.c:2525
@@ -1595,11 +1595,11 @@ msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'recursive = TRUE' não é suportado nessa plataforma"
 
 #: src/main/character.c:3184 src/main/character.c:3198
-#: src/main/platform.c:1366 src/main/platform.c:1410
+#: src/main/platform.c:1373 src/main/platform.c:1417
 msgid "internal out-of-memory condition"
 msgstr ""
 
-#: src/main/character.c:3194 src/main/platform.c:1406
+#: src/main/character.c:3194 src/main/platform.c:1413
 #, fuzzy, c-format
 msgid "read error on '%s'"
 msgstr "erro de leitura"
@@ -5202,48 +5202,48 @@ msgstr "nome de arquivo muito longo"
 msgid "file.access() is not implemented on this system"
 msgstr "file.access() não está implementado nesse sistema"
 
-#: src/main/platform.c:1560
+#: src/main/platform.c:1567
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "espeficação de 'LC_NUMERIC' pode fazer o R funcionar de forma estranha"
 
-#: src/main/platform.c:1594
+#: src/main/platform.c:1601
 #, fuzzy, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "SO informa que a requisição não pode ser cumprida"
 
-#: src/main/platform.c:1895
+#: src/main/platform.c:1902
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' deve ser um vetor de caracteres de comprimento 1"
 
-#: src/main/platform.c:1901
+#: src/main/platform.c:1908
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "resolução de máquina '%s' impossível em nsl()"
 
-#: src/main/platform.c:1908
+#: src/main/platform.c:1915
 msgid "unknown format returned by gethostbyname"
 msgstr "formato desconhecido retornado por gethostbyname"
 
-#: src/main/platform.c:1917
+#: src/main/platform.c:1924
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() não é suportado nessa plataforma"
 
-#: src/main/platform.c:1963
+#: src/main/platform.c:1970
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' já existe"
 
-#: src/main/platform.c:1966
+#: src/main/platform.c:1973
 #, fuzzy, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "não foi possível criar fifo '%s', motivo '%s'"
 
-#: src/main/platform.c:2009
+#: src/main/platform.c:2016
 #, fuzzy, c-format
 msgid "'%ls' already exists"
 msgstr "'%s' já existe"
 
-#: src/main/platform.c:2282
+#: src/main/platform.c:2289
 #, fuzzy
 msgid "insufficient OS support on this platform"
 msgstr "nsl() não é suportado nessa plataforma"

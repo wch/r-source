@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-03-20 09:02+0000\n"
+"POT-Creation-Date: 2009-03-28 17:24+0000\n"
 "PO-Revision-Date: 2008-10-06 16:42-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -157,13 +157,13 @@ msgstr "проблема при отображении '%s'"
 #: src/main/platform.c:294 src/main/platform.c:994 src/main/platform.c:1000
 #: src/main/platform.c:1055 src/main/platform.c:1103 src/main/platform.c:1106
 #: src/main/platform.c:1109 src/main/platform.c:1112 src/main/platform.c:1115
-#: src/main/platform.c:1199 src/main/platform.c:1202 src/main/platform.c:1356
-#: src/main/platform.c:1359 src/main/platform.c:1395 src/main/platform.c:1398
-#: src/main/platform.c:1471 src/main/platform.c:1489 src/main/platform.c:1528
-#: src/main/platform.c:1530 src/main/platform.c:1588 src/main/platform.c:1679
-#: src/main/platform.c:1940 src/main/platform.c:1980 src/main/platform.c:2101
-#: src/main/platform.c:2104 src/main/platform.c:2107 src/main/platform.c:2110
-#: src/main/platform.c:2227 src/main/platform.c:2255 src/main/plot.c:2953
+#: src/main/platform.c:1199 src/main/platform.c:1202 src/main/platform.c:1363
+#: src/main/platform.c:1366 src/main/platform.c:1402 src/main/platform.c:1405
+#: src/main/platform.c:1478 src/main/platform.c:1496 src/main/platform.c:1535
+#: src/main/platform.c:1537 src/main/platform.c:1595 src/main/platform.c:1686
+#: src/main/platform.c:1947 src/main/platform.c:1987 src/main/platform.c:2108
+#: src/main/platform.c:2111 src/main/platform.c:2114 src/main/platform.c:2117
+#: src/main/platform.c:2234 src/main/platform.c:2262 src/main/plot.c:2953
 #: src/main/plot.c:4092 src/main/plot.c:4096 src/main/plot.c:4099
 #: src/main/plot3d.c:2447 src/main/plot3d.c:2451 src/main/plot3d.c:2456
 #: src/main/plot3d.c:2460 src/main/plot3d.c:2464 src/main/plot3d.c:2468
@@ -256,7 +256,7 @@ msgstr "неправильная временная метка"
 #: src/main/errors.c:1012 src/main/errors.c:1037 src/main/errors.c:1042
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
-#: src/main/platform.c:2275 src/main/plot.c:276 src/main/plot.c:470
+#: src/main/platform.c:2282 src/main/plot.c:276 src/main/plot.c:470
 #: src/main/plot.c:475 src/main/plot.c:2131 src/main/plot.c:2138
 #: src/main/plot.c:3166 src/main/plot.c:3168 src/main/plot.c:3170
 #: src/main/plot.c:3328 src/main/plot3d.c:1397 src/main/plot3d.c:2525
@@ -1558,11 +1558,11 @@ msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'dirmarke = TRUE' не поддерживается на этой платформе"
 
 #: src/main/character.c:3184 src/main/character.c:3198
-#: src/main/platform.c:1366 src/main/platform.c:1410
+#: src/main/platform.c:1373 src/main/platform.c:1417
 msgid "internal out-of-memory condition"
 msgstr "внутренняя нехватка памяти"
 
-#: src/main/character.c:3194 src/main/platform.c:1406
+#: src/main/character.c:3194 src/main/platform.c:1413
 #, c-format
 msgid "read error on '%s'"
 msgstr "ошибка чтения в '%s'"
@@ -5122,48 +5122,48 @@ msgstr "имя файла слишком длинное"
 msgid "file.access() is not implemented on this system"
 msgstr "file.access() в этой системе не разработан"
 
-#: src/main/platform.c:1560
+#: src/main/platform.c:1567
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "установка 'LC_NUMERIC' может заставить R странно себя вести"
 
-#: src/main/platform.c:1594
+#: src/main/platform.c:1601
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "запрос ОС установить локаль в \"%s\" не может быть выполнен"
 
-#: src/main/platform.c:1895
+#: src/main/platform.c:1902
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' должен быть единичным текстовым вектором"
 
-#: src/main/platform.c:1901
+#: src/main/platform.c:1908
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() не способна разрешить хост '%s'"
 
-#: src/main/platform.c:1908
+#: src/main/platform.c:1915
 msgid "unknown format returned by gethostbyname"
 msgstr "'gethostbyname' вернул неизвестный формат"
 
-#: src/main/platform.c:1917
+#: src/main/platform.c:1924
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() не поддерживается на этой платформе"
 
-#: src/main/platform.c:1963
+#: src/main/platform.c:1970
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' уже существует"
 
-#: src/main/platform.c:1966
+#: src/main/platform.c:1973
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "не могу создать директорию '%s' по причине '%s'"
 
-#: src/main/platform.c:2009
+#: src/main/platform.c:2016
 #, fuzzy, c-format
 msgid "'%ls' already exists"
 msgstr "'%s' уже существует"
 
-#: src/main/platform.c:2282
+#: src/main/platform.c:2289
 msgid "insufficient OS support on this platform"
 msgstr "недостаточная поддержка OS на этой платформе"
 
