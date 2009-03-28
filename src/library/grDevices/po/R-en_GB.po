@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-28 17:26\n"
 "PO-Revision-Date: 2005-08-15 11:43+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -257,9 +257,6 @@ msgid "invalid arguments in quartzFonts (must be font names)"
 msgstr ""
 
 msgid "invalid arguments in quartzFonts (need named args)"
-msgstr ""
-
-msgid "invalid value for 'antialias'"
 msgstr ""
 
 msgid "invalid 'filename'"

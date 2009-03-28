@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:26\n"
+"POT-Creation-Date: 2009-03-28 17:27\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -363,6 +363,9 @@ msgid "in definition of class \"%s\", information for superclass \"%s\" is of cl
 msgstr ""
 
 msgid "class \"%s\" extends an undefined class, \"%s\""
+msgstr ""
+
+msgid "'Class' must be a valid class definition or class"
 msgstr ""
 
 msgid "trying to assign an object of class \"%s\" as the definition of class \"%s\": must supply a \"classRepresentation\" object"
@@ -935,7 +938,7 @@ msgstr ""
 msgid "argument S4Class must be a class definition:  got an object of class \"%s\""
 msgstr ""
 
-msgid "inconsistent old-style class information for \"%s\" (maybe mixing old and new classes?)"
+msgid "inconsistent old-style class information for \"%s\"; the class is defined but does not extend \"%s\""
 msgstr ""
 
 msgid "The S3 class of the prototype, \"%s\", is undefined; only allowed when this is the S3 class being registered (\"%s\")"
@@ -957,6 +960,9 @@ msgid "explicit replacement not defined for as(x, \"%s\") <- value for old-style
 msgstr ""
 
 msgid "argument 'Classes' must be a vector of two classes; got an argument of length %d"
+msgstr ""
+
+msgid "inconsistent old-style class information for \"%s\" (maybe mixing old and new classes?)"
 msgstr ""
 
 msgid "S3Class only defined for extensions of \"oldClass\" or classes with a data part:  not true of class \""

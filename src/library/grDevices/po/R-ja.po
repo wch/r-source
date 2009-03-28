@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-28 17:26\n"
 "PO-Revision-Date: 2008-09-30 10:49+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -265,9 +265,6 @@ msgstr " quartzFonts 中の不正な引数です（フォント名が必要で�
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr " quartzFonts 中の不正な引数です（名前がついた引数が必要です） "
 
-msgid "invalid value for 'antialias'"
-msgstr " 'antialias'の値が不正です "
-
 msgid "invalid 'filename'"
 msgstr " 不正な 'filename' 引数です "
 
@@ -331,6 +328,9 @@ msgstr[0] " %d 個の正でない y の値が対数プロットから除かれ�
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] " %d 個の正でない x の値が対数プロットから除かれました "
+
+#~ msgid "invalid value for 'antialias'"
+#~ msgstr " 'antialias'の値が不正です "
 
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr ""

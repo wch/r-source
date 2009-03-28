@@ -2,12 +2,12 @@
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2007.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-28 17:26\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -265,9 +265,6 @@ msgstr "石英字体里的变元不对(必需为字体名称)"
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "石英字体里的变元不对(需要带名变元)"
 
-msgid "invalid value for 'antialias'"
-msgstr "'antialias'的值不对"
-
 msgid "invalid 'filename'"
 msgstr "'filename'不对"
 
@@ -330,6 +327,9 @@ msgstr[0] "对数图里略过%d个小于等于零的y值"
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "对数图里略过%d个小于等于零的z值"
+
+#~ msgid "invalid value for 'antialias'"
+#~ msgstr "'antialias'的值不对"
 
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr "因为没有事件循环管理器，减少quartz()装置的交互能力"

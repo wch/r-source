@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:26\n"
+"POT-Creation-Date: 2009-03-28 17:27\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -514,6 +514,10 @@ msgstr ""
 
 msgid "class \"%s\" extends an undefined class, \"%s\""
 msgstr "类别\"%s\"不能擴充不存在的类别\"%s\""
+
+#, fuzzy
+msgid "'Class' must be a valid class definition or class"
+msgstr "'class1'必需是类别名字或类别定义"
 
 msgid ""
 "trying to assign an object of class \"%s\" as the definition of class \"%s"
@@ -1277,9 +1281,10 @@ msgid ""
 "argument S4Class must be a class definition:  got an object of class \"%s\""
 msgstr "变元S4Class必需是类别定义：现在得到的却是类别为\"%s\"的目标对象"
 
+#, fuzzy
 msgid ""
-"inconsistent old-style class information for \"%s\" (maybe mixing old and "
-"new classes?)"
+"inconsistent old-style class information for \"%s\"; the class is defined "
+"but does not extend \"%s\""
 msgstr "\"%s\"旧式类别信息有矛盾(会不会是将旧的和新的类别混在了一起用?)"
 
 msgid ""
@@ -1314,6 +1319,11 @@ msgid ""
 "argument 'Classes' must be a vector of two classes; got an argument of "
 "length %d"
 msgstr "变元'classes'必需是包含两个类别的矢量；现在得到的是长度为%d的变元"
+
+msgid ""
+"inconsistent old-style class information for \"%s\" (maybe mixing old and "
+"new classes?)"
+msgstr "\"%s\"旧式类别信息有矛盾(会不会是将旧的和新的类别混在了一起用?)"
 
 msgid ""
 "S3Class only defined for extensions of \"oldClass\" or classes with a data "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-29 14:43\n"
+"POT-Creation-Date: 2009-03-28 17:26\n"
 "PO-Revision-Date: 2008-09-18 16:29+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -266,9 +266,6 @@ msgstr "ungültige Argumente in quartzFonts (muss ein Zeichensatzname sein)"
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "ungültige Argumente in quartzFonts (benötigt benannte Argumente)"
 
-msgid "invalid value for 'antialias'"
-msgstr "unzulässiger Wert für 'antialias'"
-
 msgid "invalid 'filename'"
 msgstr "unzulässiges 'filename' Argument"
 
@@ -336,6 +333,9 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d z Wert <= 0 ausgelassen in logarithmischem Plot"
 msgstr[1] "%d z Werte <= 0 ausgelassen in logarithmischem Plot"
+
+#~ msgid "invalid value for 'antialias'"
+#~ msgstr "unzulässiger Wert für 'antialias'"
 
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr ""
