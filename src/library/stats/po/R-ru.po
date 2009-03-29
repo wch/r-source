@@ -3,22 +3,22 @@
 #
 # Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <dactylorhiza at gmail> 2008
+# Copyright (C) 2008 Alexey Shipunov <dactylorhiza at gmail>
+# Copyright (C) 2009 Anton Korobeynikov <asl at math dot spbu dot ru>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.8.0\n"
+"Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-03-17 19:27\n"
-"PO-Revision-Date: 2008-10-06 17:21-0500\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
+"PO-Revision-Date: 2009-03-29 04:54+0300\n"
+"Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "empty model supplied"
 msgstr "предложена пустая модель"
@@ -36,13 +36,10 @@ msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
 msgstr "'alpha', 'beta' и 'gamma' должны быть внутри единичного интервала."
 
 msgid "data must be strictly non-negative for multiplicative Holt-Winters."
-msgstr ""
-"данные должны быть строго неотрицательными для того чтобы использовать "
-"'multiplicative Holt-Winters'."
+msgstr "данные должны быть строго неотрицательными для того чтобы использовать мультипликативный вариант метода Холта-Винтерса."
 
 msgid "need at least 2 periods to compute seasonal start values."
-msgstr ""
-"нужны по крайней мере 3 периода, чтобы вычислить стартовые значения сезона."
+msgstr "нужны по крайней мере 3 периода, чтобы вычислить стартовые значения сезона."
 
 msgid "time series has no or less than 2 periods"
 msgstr "временной ряд не имеет или имеет меньше 2 периодов"
@@ -54,7 +51,7 @@ msgid "frequency must be a positive integer for BSM"
 msgstr "частота для BSM должна быть положительным целым"
 
 msgid "only implemented for univariate time series"
-msgstr "разработано только для одномерных временных рядов"
+msgstr "реализовано только для одномерных временных рядов"
 
 msgid "'x' must be numeric"
 msgstr "'x' должен быть числом"
@@ -63,7 +60,7 @@ msgid "the first value of the time series must not be missing"
 msgstr "первое значение временного ряда не должно быть пропущенным"
 
 msgid "all parameters were fixed"
-msgstr "все параметры были исправлены"
+msgstr "все параметры были фиксированными"
 
 msgid "possible convergence problem: optim gave code="
 msgstr "возможно, проблема сходимости: 'optim' выдал код="
@@ -75,7 +72,7 @@ msgid "'which' specified no factors"
 msgstr "'which' не указывает факторы"
 
 msgid "'which' specified some non-factors which will be dropped"
-msgstr "'which' указывает некоторые не-факторы, которые будут сброшены"
+msgstr "'which' указывает некоторые не-факторы, которые будут выброшены"
 
 msgid "'lag.max' must be at least 0"
 msgstr "'lag.max' должен быть по меньшей мере 0"
@@ -114,7 +111,7 @@ msgid "F test assumes quasi%s family"
 msgstr "Тест Фишера предполагает квази-%s семейство"
 
 msgid "no 'add1' method implemented for \"mlm\" models"
-msgstr "'add1'-метод для моделей \"mlm\" не разработан"
+msgstr "'add1'-метод для моделей \"mlm\" не реализован"
 
 msgid "scope is not a subset of term labels"
 msgstr "область действия не является подмножеством меток выражений"
@@ -144,9 +141,8 @@ msgstr ""
 "длина FUN, %d,\n"
 " не соответствует длине краев, %d"
 
-#, fuzzy
 msgid "no rows to aggregate"
-msgstr "нет моделей для сравнения"
+msgstr "отсутствуют строки для агрегирования"
 
 msgid "'by' must be a list"
 msgstr "'by' должен быть списком"
@@ -161,7 +157,7 @@ msgid "'x' must be coefficient matrix/data frame"
 msgstr "'x' должен быть коэффициентом матрицы/таблицы данных"
 
 msgid "option \"show.coef.Pvalues\" is invalid: assuming TRUE"
-msgstr "опция \"show.coef.Pvalues\" неправильная: принимаю TRUE"
+msgstr "опция \"show.coef.Pvalues\" неправильная: предполагаю TRUE"
 
 msgid "'P.values' is TRUE, but 'has.Pvalue' is not"
 msgstr "'P.values' = TRUE, но 'has.Pvalue' нет"
@@ -170,7 +166,7 @@ msgid "wrong k / cs.ind"
 msgstr "неправильный k / cs.ind"
 
 msgid "option \"show.signif.stars\" is invalid: assuming TRUE"
-msgstr "опция \"show.signif.stars\" неправильная: принимаю TRUE"
+msgstr "опция \"show.signif.stars\" неправильная: предполагаю TRUE"
 
 msgid "'anova' object must have colnames"
 msgstr "объект 'anova' должен иметь имена колонок"
@@ -185,24 +181,22 @@ msgid "not enough 'y' observations"
 msgstr "недостаточно наблюдений 'y'"
 
 msgid "samples differ in location: cannot compute confidence set, returning NA"
-msgstr ""
-"выборки различаются положением: не могу высчитать доверительный набор, "
-"возвращаю NA"
+msgstr "выборки различаются положением: не могу подсчитать доверительное множество, возвращаю NA"
 
 msgid "cannot compute confidence set, returning NA"
-msgstr "не могу высчитать доверительный набор, возвращаю NA"
+msgstr "не могу подсчитать доверительное множество, возвращаю NA"
 
 msgid "cannot compute asymptotic confidence set or estimator"
-msgstr "не могу высчитать асимптотический доверительный набор или оценку"
+msgstr "не могу подсчитать асимптотическое доверительное множество или оценку"
 
 msgid "cannot compute estimate, returning NA"
-msgstr "не могу высчитать оценку, возвращаю NA"
+msgstr "не могу подсчитать оценку, возвращаю NA"
 
 msgid "cannot compute exact p-value with ties"
-msgstr "совпадающие значения: не могу высчитать точное p-value"
+msgstr "не могу подсчитать точное p-значение при наличии повторяющихся наблюдений"
 
 msgid "cannot compute exact confidence intervals with ties"
-msgstr "совпадающие значения: не могу высчитать точные доверительные интервалы"
+msgstr "не могу подсчитать точные доверительные интервалы при наличии повторяющихся наблюдений"
 
 msgid "'formula' missing or incorrect"
 msgstr "'formula' пропущена или неправильная"
@@ -211,7 +205,7 @@ msgid "grouping factor must have exactly 2 levels"
 msgstr "группирующий фактор должен иметь в точности 2 уровня"
 
 msgid "weights are not supported in a multistratum aov() fit"
-msgstr ""
+msgstr "веса не поддерживаются для многослойного варианта aov()"
 
 msgid "Error() model is singular"
 msgstr "Error()-модель сингулярна"
@@ -238,7 +232,7 @@ msgid "columns of 'contrast.obj' must define a contrast (sum to zero)"
 msgstr "колонки 'контраст.obj' должен определять контраст (с нулевой суммой)"
 
 msgid "no degrees of freedom for residuals"
-msgstr "для остатков не степеней свободы"
+msgstr "для остатков нет степеней свободы"
 
 msgid "'object' does not include an error 'qr' component"
 msgstr "'object' не включает ошибку 'qr'-компонента"
@@ -316,8 +310,7 @@ msgid "wrong length for 'fixed'"
 msgstr "неправильная длина 'fixed'"
 
 msgid "some AR parameters were fixed: setting transform.pars = FALSE"
-msgstr ""
-"некоторые параметры AR были исправлены: устанавливаю transform.pars = FALSE"
+msgstr "некоторые параметры AR были исправлены: устанавливаю transform.pars = FALSE"
 
 msgid "too few non-missing observations"
 msgstr "слишком мало непропущенных значений"
@@ -326,32 +319,31 @@ msgid "'init' is of the wrong length"
 msgstr "'init' неправильной длины"
 
 msgid "non-stationary AR part"
-msgstr "нестационарная часть AR"
+msgstr "нестационарная часть авторегрессии"
 
 msgid "non-stationary seasonal AR part"
-msgstr "нестационарная сезонная часть AR"
+msgstr "нестационарная сезонная часть авторегрессии"
 
 msgid "non-stationary AR part from CSS"
-msgstr "нестационарная часть AR из CSS"
+msgstr "нестационарная часть авторегрессии из CSS"
 
 msgid "non-stationary seasonal AR part from CSS"
-msgstr "нестационарная сезонная часть AR из CSS"
+msgstr "нестационарная сезонная часть авторегресии из CSS"
 
 msgid "'xreg' and 'newxreg' have different numbers of columns"
 msgstr "у 'xreg' и 'newxreg' -- разное количество колонок"
 
 msgid "MA part of model is not invertible"
-msgstr "MA-часть модели не обратима"
+msgstr "часть скользящего среднего из модели не обратима"
 
 msgid "seasonal MA part of model is not invertible"
-msgstr "сезонная MA-часть модели необратима"
+msgstr "сезонная часть скользящего среднего из модели необратима"
 
 msgid "converting non-invertible initial MA values"
-msgstr "конвертирую не-необратимые начальные значения MA"
+msgstr "конвертирую не-необратимые начальные значения скользящего среднего"
 
 msgid "some ARMA parameters were fixed: setting transform.pars = FALSE"
-msgstr ""
-"некоторые параметры ARMA были исправлены: устанавливаю transform.pars = FALSE"
+msgstr "некоторые параметры модели авторегрессии-скользящего среднего были исправлены: устанавливаю transform.pars = FALSE"
 
 msgid "'xreg' is collinear"
 msgstr "'xreg' коллинеарен"
@@ -360,7 +352,7 @@ msgid "NAs present: setting 'delta' to -1"
 msgstr "есть NAs: устанавливаю 'delta' в -1"
 
 msgid "transformed ARMA parameters were fixed"
-msgstr "измененные параметры ARMA были исправлены"
+msgstr "измененные параметры модели авторегрессии-сколькозящего среднего были исправлены"
 
 msgid "need at least 2 data points"
 msgstr "нужны по крайней мере 2 точки"
@@ -390,10 +382,10 @@ msgid "'x' and 'g' must have the same length"
 msgstr "'x' и 'g' должны иметь одну длину"
 
 msgid "all observations are in the same group"
-msgstr "все наблюдения -- в одной группе"
+msgstr "все наблюдения находятся в одной группе"
 
 msgid "there must be at least 2 observations in each group"
-msgstr "тут должно быть как минимум 2 наблюдения на группу"
+msgstr "тут должно быть как минимум 2 наблюдения в каждой группе"
 
 msgid "'x' must be nonnegative and integer"
 msgstr "'x' должен быть неотрицательным и целым"
@@ -417,7 +409,7 @@ msgid "'scale' is outside [0, 1]"
 msgstr "'scale' находится вне [0, 1]"
 
 msgid "biplots are not defined for complex PCA"
-msgstr "для комплексного PCA биплоты не определены"
+msgstr "для комплексного анализа главных компонент биплоты не определены"
 
 msgid "unequal number of rows in 'cancor'"
 msgstr "неодинаковое количество строк в 'cancor'"
@@ -459,19 +451,19 @@ msgid "probabilities must sum to 1."
 msgstr "вероятности должны в сумме давать 1."
 
 msgid "Chi-squared approximation may be incorrect"
-msgstr "аппроксимация хи-квадрат может быть неправильной"
+msgstr "аппроксимация на основе хи-квадрат может быть неправильной"
 
 msgid "NA values not allowed in 'd'"
 msgstr "NA в 'd' не разрешены"
 
 msgid "distances must be result of 'dist' or a square matrix"
-msgstr "дистанции должны быть результатом 'dist' или квадратной матрицей"
+msgstr "расстояния должны быть результатом 'dist' или квадратной матрицей"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr "'k' должен быть из {1, 2, ..  n - 1}"
 
 msgid "some of the first %d eigenvalues are < 0"
-msgstr "некоторые из первых %d eigenvalues < 0"
+msgstr "некоторые из первых %d собственных значений < 0"
 
 msgid "initial value not feasible"
 msgstr "начальное значение недопустимо"
@@ -479,12 +471,8 @@ msgstr "начальное значение недопустимо"
 msgid "contrasts not defined for %d degrees of freedom"
 msgstr "для %d степеней свободы контрасты не определены"
 
-msgid ""
-"orthogonal polynomials cannot be represented accurately enough for %d "
-"degrees of freedom"
-msgstr ""
-"ортогональные многочлены не могут быть достаточно аккуратно представлены для "
-"%d степеней свободы"
+msgid "orthogonal polynomials cannot be represented accurately enough for %d degrees of freedom"
+msgstr "ортогональные многочлены не могут быть достаточно аккуратно представлены для %d степеней свободы"
 
 msgid "'scores' argument is of the wrong length"
 msgstr "'scores' аргумент неправильной длины"
@@ -550,10 +538,10 @@ msgid "not enough finite observations"
 msgstr "недостаточно конечных наблюдений"
 
 msgid "Cannot compute exact p-value with ties"
-msgstr "Есть совпадающие значения: не могу высчитать точное p-value"
+msgstr "Есть совпадающие значения: не могу высчитать точное p-значение"
 
 msgid "Cannot compute exact p-values with ties"
-msgstr "Есть совпадающие значения: не могу высчитать точные p-values"
+msgstr "Есть совпадающие значения: не могу высчитать точные p-значения"
 
 msgid "'formula' missing or invalid"
 msgstr "'formula' пропущена либо неправильная"
@@ -602,7 +590,7 @@ msgid "dendrogram node with non-positive #{branches}"
 msgstr "узел дендрограммы с неположительными #{branches}"
 
 msgid "midcache() of non-binary dendrograms only partly implemented"
-msgstr "midcache() для небинарных дендрограмм разработан лишь частично"
+msgstr "midcache() для небинарных дендрограмм реализован лишь частично"
 
 msgid "non-leaf subtree of length 0"
 msgstr "безлистное дерево нулевой длины"
@@ -713,7 +701,7 @@ msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[] и prob[] должны векторами одинаковой длины."
 
 msgid "probabilities cannot be negative nor all 0."
-msgstr "вероятности не могут быть ни отрицательными, ни все = 0."
+msgstr "вероятности не могут быть ни отрицательными, ни все равными нулю."
 
 msgid "'x' must be non-negative"
 msgstr "'x' должен быть неотрицательным"
@@ -734,13 +722,13 @@ msgid "wrong embedding dimension"
 msgstr "неправильное встроенное измерение"
 
 msgid "'covmat' is not a valid covariance list"
-msgstr "'covmat' не является правильным списком коварианс"
+msgstr "'covmat' не является правильным списком ковариаций"
 
 msgid "neither 'x' nor 'covmat' supplied"
 msgstr "не дано ни 'x', ни 'covmat'"
 
 msgid "response not allowed in formula"
-msgstr "ответ в формуле не разрешен"
+msgstr "отклик не разрешен в формуле"
 
 msgid "factor analysis applies only to numerical variables"
 msgstr "факторный анализ применим только к числовым переменным"
@@ -764,7 +752,7 @@ msgid "no starting values supplied"
 msgstr "не указано стартовое значение"
 
 msgid "unable to optimize from these starting value(s)"
-msgstr "не могу оптимизировать с этих стартовых значени(й)"
+msgstr "не могу оптимизировать, начиная с этих стартовых значени(й)"
 
 msgid "invalid argument 'lambda'"
 msgstr "неправильный аргумент 'lambda'"
@@ -773,34 +761,28 @@ msgid "link not recognised"
 msgstr "ссылка не распознана"
 
 msgid "link \"%s\" not available for poisson family; available links are %s"
-msgstr ""
-"ссылка \"%s\" недоступна для пуассоновского семейства; доступны ссылки %s"
+msgstr "функция связи \"%s\" недоступна для пуассоновского семейства; доступны функции %s"
 
 msgid "negative values not allowed for the Poisson family"
 msgstr "отрицательные значения в пуассоновском семействе не разрешены"
 
 msgid "ignoring prior weights"
-msgstr ""
+msgstr "игнорирую априорные веса"
 
-msgid ""
-"link \"%s\" not available for quasipoisson family; available links are %s"
-msgstr ""
-"ссылка \"%s\" недоступна для квази-пуассоновского семейства; доступны ссылки "
-"%s"
+msgid "link \"%s\" not available for quasipoisson family; available links are %s"
+msgstr "функция связи \"%s\" недоступна для квази-пуассоновского семейства; доступны функции %s"
 
 msgid "negative values not allowed for the quasiPoisson family"
 msgstr "отрицательные значения для квази-пуассоновского семейства не разрешены"
 
 msgid "link \"%s\" not available for gaussian family; available links are %s"
-msgstr "ссылка \"%s\" недоступна для гауссового семейства; доступны ссылки %s"
+msgstr "функция связи \"%s\" недоступна для гауссового семейства; доступны функции %s"
 
 msgid "cannot find valid starting values: please specify some"
-msgstr ""
-"не могу найти правильное стартовое значение: пожалуйста, укажите какое-нибудь"
+msgstr "не могу найти правильное стартовое значение: пожалуйста, укажите какое-нибудь"
 
 msgid "link \"%s\" not available for binomial family; available links are %s"
-msgstr ""
-"ссылка \"%s\" недоступна для биномиального семейства; доступны ссылки %s"
+msgstr "функция связи \"%s\" недоступна для биномиального семейства; доступны функции %s"
 
 msgid "y values must be 0 <= y <= 1"
 msgstr "значения y должны быть 0 <= y <= 1"
@@ -814,54 +796,41 @@ msgstr "не целочисленные счетчики в биномиальном 'glm'!"
 msgid "for the binomial family, y must be a vector of 0 and 1's"
 msgstr "для биномиального семейства y должен быть вектором из 0 и 1"
 
-msgid ""
-"or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
-msgstr ""
-"или 2-колонная матрица где колонка 1 -- это кол-во успехов, а колонка 2 -- "
-"кол-во неудач"
+msgid "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
+msgstr "или 2-колонная матрица где колонка 1 -- это кол-во успехов, а колонка 2 -- кол-во неудач"
 
 msgid "cannot simulate from non-integer prior.weights"
-msgstr ""
+msgstr "не могу промоделировать исходят из нечисловых prior.weights"
 
-msgid ""
-"link \"%s\" not available for quasibinomial family; available links are %s"
-msgstr ""
-"ссылка \"%s\" не доступна для квази-биномиального семейства; доступны ссылки "
-"%s"
+msgid "link \"%s\" not available for quasibinomial family; available links are %s"
+msgstr "ссылка \"%s\" не доступна для квази-биномиального семейства; доступны ссылки %s"
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "для квази-биномиального семейства, y должен быть вектором из 0 и 1"
 
 msgid "link \"%s\" not available for gamma family; available links are %s"
-msgstr "ссылка \"%s\" недоступна для гамма-семейства; доступны ссылки %s"
+msgstr "функция связи \"%s\" недоступна для гамма-семейства; доступны функции %s"
 
 msgid "non-positive values not allowed for the gamma family"
 msgstr "неположительные значения не разрешены для гамма-семейства"
 
 msgid "using weights as shape paraneters"
-msgstr ""
+msgstr "использую веса в качестве параметров формы"
 
-msgid ""
-"link \"%s\" not available for inverse.gaussian family; available links are %s"
-msgstr ""
-"ссылка \"%s\" недоступна для обратно-гауссового семейства; доступны ссылки %s"
+msgid "link \"%s\" not available for inverse.gaussian family; available links are %s"
+msgstr "функция связи \"%s\" недоступна для обратно-гауссового семейства; доступны функции %s"
 
 msgid "positive values only allowed for the inverse.gaussian family"
-msgstr ""
-"только положительные значения разрешены для обратно-гауссового семейства"
+msgstr "только положительные значения разрешены для обратно-гауссового семейства"
 
 msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
-msgstr ""
+msgstr "Необходим пакет 'SuppDists' из CRAN для семейства 'inverse.gaussian'"
 
 msgid "using weights as inverse variances"
-msgstr ""
+msgstr "использую веса в качестве обратных к дисперсиям"
 
-msgid ""
-"'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", "
-"\"mu^2\", \"mu^3\" and \"constant\""
-msgstr ""
-"'variance' \"%s\" неправильная: возможные значения: \"mu(1-mu)\", \"mu\", "
-"\"mu^2\", \"mu^3\" и \"constant\""
+msgid "'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\" and \"constant\""
+msgstr "'variance' \"%s\" неправильная: возможные значения: \"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\" и \"constant\""
 
 msgid "length mismatch in convolution"
 msgstr "несоответствие длины в свертке"
@@ -954,10 +923,10 @@ msgid "'formula' has '.' in both left and right hand side"
 msgstr "у 'formula' есть '.' и слева, и справа"
 
 msgid "incorrect variable names in rhs of formula"
-msgstr "неправильные имена переменных в 'rhs' формулы"
+msgstr "неправильные имена переменных в правой части формулы"
 
 msgid "incorrect variable names in lhs of formula"
-msgstr "неправильные имена переменных в 'lhs' формулы"
+msgstr "неправильные имена переменных в левой части формулы"
 
 msgid "cannot use dots in formula with given data"
 msgstr "не могу использовать точки в формуле с заданной таблицей данных"
@@ -1004,8 +973,7 @@ msgstr "неправильный линейный предиктор значений в пустой модели"
 msgid "invalid fitted means in empty model"
 msgstr "неправильные подогнанные средние в пустой модели"
 
-msgid ""
-"length of 'start' should equal %d and correspond to initial coefs for %s"
+msgid "length of 'start' should equal %d and correspond to initial coefs for %s"
 msgstr "длина 'start' должна = %d и соответствовать начальным коэффициентам %s"
 
 msgid "NAs in V(mu)"
@@ -1024,16 +992,13 @@ msgid "non-finite coefficients at iteration"
 msgstr "не-конечные коэффициенты в итерации"
 
 msgid "X matrix has rank %d, but only %d observations"
-msgstr "X-матрица имеет ранг %d, но только %d наблюдений"
+msgstr "матрица X имеет ранг %d, но только %d наблюдений"
 
-msgid ""
-"no valid set of coefficients has been found: please supply starting values"
-msgstr ""
-"не найден правильный набор коэффициентов: пожалуйста, укажите стартовые "
-"значения"
+msgid "no valid set of coefficients has been found: please supply starting values"
+msgstr "не найден правильный набор коэффициентов: пожалуйста, укажите стартовые значения"
 
 msgid "step size truncated due to divergence"
-msgstr "размер шага уменьшен в связи с раздвоением"
+msgstr "размер шага уменьшен в связи с расходимостью"
 
 msgid "inner loop 1; cannot correct step size"
 msgstr "внутренний цикл 1; не могу исправить размер шага"
@@ -1057,7 +1022,7 @@ msgid "fitted rates numerically 0 occurred"
 msgstr "подогнанные доли: возник 0"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
-msgstr "следующие аргументы 'anova.glm' неправильные и были сброшены:"
+msgstr "следующие аргументы 'anova.glm' неправильные и были отброшены:"
 
 msgid ","
 msgstr ","
@@ -1069,10 +1034,10 @@ msgid "using F test with a fixed dispersion is inappropriate"
 msgstr "использовать тест Фишера с фиксированной дисперсией неправильно"
 
 msgid "models with response"
-msgstr "модели с зависимостью"
+msgstr "модели с откликом"
 
 msgid "removed because response differs from model 1"
-msgstr "удалено, потому что зависимость отличается от модели 1"
+msgstr "удалено, потому что отклик отличается от модели 1"
 
 msgid "models were not all fitted to the same size of dataset"
 msgstr "не все модели были подогнаны под размер данных"
@@ -1259,18 +1224,16 @@ msgid "invalid 'lm' object:  no 'terms' nor 'qr' component"
 msgstr "неправильный 'lm'-объект:  нет ни 'terms', ни компонента 'qr'"
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
-msgstr ""
-"остаточные степени свободы в объекте указывают, что это не подгонка \"lm\""
+msgstr "остаточные степени свободы в объекте указывают, что это не подгонка \"lm\""
 
 msgid "family '"
-msgstr ""
+msgstr "семейство '"
 
-#, fuzzy
 msgid "' not implemented"
-msgstr "тип '%s' еще не разработан"
+msgstr "' не реализовано"
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
-msgstr "ANOVA F-тесты для в целом хороше подгонки бессмысленны"
+msgstr "применение F-критерия для в целом хорошей подгонки бессмысленно"
 
 msgid "removed because response differs from"
 msgstr "удалено, потому что зависимость отличалась от"
@@ -1279,24 +1242,16 @@ msgid "model 1"
 msgstr "модель 1"
 
 msgid "prediction from a rank-deficient fit may be misleading"
-msgstr ""
-"предсказание от недостаточно подогнанной ранговой модели может быть "
-"неправильным"
+msgstr "предсказание от вырожденной подгонки может быть неправильным"
 
 msgid "Predictions on current data refer to _future_ responses"
-msgstr ""
-"Предсказания на основе текущих данных указывают на _будущие_ зависимости"
+msgstr "Предсказания на основе текущих данных указывают на _будущие_ зависимости"
 
-msgid ""
-"Assuming prediction variance inversely proportional to weights used for "
-"fitting"
-msgstr ""
-"Принимаю предсказательную вариансу, обратно пропорциональную весам, "
-"использованным для подгонки"
+msgid "Assuming prediction variance inversely proportional to weights used for fitting"
+msgstr "Предполагаю дисперсию для предсказания обратно пропорциональной весам, использованным для подгонки"
 
 msgid "Assuming constant prediction variance even though model fit is weighted"
-msgstr ""
-"Принимаю постоянную предсказательную вариансу, хотя подгонка модели взвешена"
+msgstr "Предполагаю постоянную дисперсию для предсказания, хотя подгонка модели взвешена"
 
 msgid "'weights' as formula should be one-sided"
 msgstr "'weights' как формула должны быть односторонними"
@@ -1305,11 +1260,10 @@ msgid "'object' has no 'effects' component"
 msgstr "'object' не имеет компонента 'effects'"
 
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
-msgstr "аргумент 'se.fit' для \"mlm\"-объектов еще не разработан"
+msgstr "аргумент 'se.fit' для \"mlm\"-объектов еще не реализован"
 
 msgid "non-NA residual length does not match cases used in fitting"
-msgstr ""
-"не-NA остаточная длина не соответствует случаям, использованным в подгонке"
+msgstr "не-NA остаточная длина не соответствует случаям, использованным в подгонке"
 
 msgid "too few cases, n < k"
 msgstr "слишком мало случаев, n < k"
@@ -1332,16 +1286,11 @@ msgstr "разрешены только 1-4 предиктора"
 msgid "invalid 'y'"
 msgstr "недопустимый y"
 
-msgid ""
-"specified the square of a factor predictor to be dropped when degree = 1"
+msgid "specified the square of a factor predictor to be dropped when degree = 1"
 msgstr "указанный квадрат фактора-предиктора будет сброшен, если степень = 1"
 
-msgid ""
-"specified the square of a predictor to be dropped with only one numeric "
-"predictor"
-msgstr ""
-"указанный квадрат предиктора будет сброшен к только одному числовому "
-"предиктору"
+msgid "specified the square of a predictor to be dropped with only one numeric predictor"
+msgstr "указанный квадрат предиктора будет сброшен к только одному числовому предиктору"
 
 msgid "specified parametric for all predictors"
 msgstr "указан параметрический для всех предикторов"
@@ -1383,9 +1332,7 @@ msgid "missing observations deleted"
 msgstr "пропущенные значения удалены"
 
 msgid "observations with 0 weight not used in calculating standard deviation"
-msgstr ""
-"наблюдения с нулевым весом не использованы при вычислении стандартного "
-"отклонения"
+msgstr "наблюдения с нулевым весом не использованы при вычислении стандартного отклонения"
 
 msgid "observations with 0 weights not used"
 msgstr "наблюдения с нулевым весом не использованы"
@@ -1460,15 +1407,13 @@ msgid "this fit does not inherit from \"lm\""
 msgstr "эта подгонка не унаследована из \"lm\""
 
 msgid "'cterms' argument must match terms in model object"
-msgstr ""
-"аргумент 'cterms' должен соответствовать выражениям в модельном объекте"
+msgstr "аргумент 'cterms' должен соответствовать выражениям в модельном объекте"
 
 msgid "Design is unbalanced - use se.contrast() for se's"
 msgstr "Дизайн не сбалансирован -- используйте se.contrast() для 'se'"
 
-#, fuzzy
 msgid "design is unbalanced so cannot proceed"
-msgstr "Дизайн не сбалансирован -- используйте se.contrast() для 'se'"
+msgstr "дизайн не сбалансирован и поэтому не может быть использован"
 
 msgid ""
 "Standard error information not returned as design is unbalanced. \n"
@@ -1478,7 +1423,7 @@ msgstr ""
 "Стандартные ошибки можно получить через 'se.contrast'."
 
 msgid "SEs for type '%s' are not yet implemented"
-msgstr "SE для типа '%s' еще не разработаны"
+msgstr "SE для типа '%s' еще не реализованы"
 
 msgid "na.action must be a function"
 msgstr "na.action должна быть функцией"
@@ -1535,9 +1480,7 @@ msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "переменная '%s' отсутствует, ее контраст будет проигнорирован"
 
 msgid "using type=\"numeric\" with a factor response will be ignored"
-msgstr ""
-"использование type=\"numeric\" с зависимой переменной-фактором будет "
-"пропущено"
+msgstr "использование type=\"numeric\" с зависимой переменной-фактором будет пропущено"
 
 msgid "invalid response type"
 msgstr "неправильный тип отклика"
@@ -1576,10 +1519,10 @@ msgid "_NOT_ converged in"
 msgstr "_НЕ_ сошлось в"
 
 msgid "control argument must be a named list"
-msgstr "контрольный аргумент должен быть именованным списком"
+msgstr "аргумент 'control' должен быть именованным списком"
 
 msgid "unrecognized control element(s) named `"
-msgstr "нераспознанный контрольный элемент(ы) назван `"
+msgstr "нераспознанный контрольный элемент(ы) с именем `"
 
 msgid "' ignored"
 msgstr "' пропущен"
@@ -1590,9 +1533,8 @@ msgstr "Логический аргумент 'hessian' не разрешен. См. документацию."
 msgid "'params' has wrong length"
 msgstr "у 'params' неправильная длина"
 
-#, fuzzy
 msgid "'varying' must be in 1L:length(pars)"
-msgstr "'varying' должен быть в 1:length(pars)"
+msgstr "'varying' должен быть в пределах 1L:length(pars)"
 
 msgid "'varying' has wrong length"
 msgstr "у 'varying' неправильная длина"
@@ -1655,7 +1597,7 @@ msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "Верхние и нижние границы игнорируются, пока алгоритм не = \"port\""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
-msgstr "не могу высчитать REML лог-правдоподобие для объектов \"nls\""
+msgstr "не могу высчитать REML логарифм функции правдоподобия для объектов \"nls\""
 
 msgid "anova is only defined for sequences of \"nls\" objects"
 msgstr "anova определена только для последовательностей \"nls\"-объектов"
@@ -1687,13 +1629,11 @@ msgstr "читайте документацию по 'trace' внимательнее"
 msgid "'trace != 0' needs 'REPORT >= 1'"
 msgstr "'trace != 0' нуждается в 'REPORT >= 1'"
 
-msgid ""
-"method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
-msgstr ""
-"метод L-BFGS-B использует 'factr' (и 'pgtol') вместо 'reltol' и 'abstol'"
+msgid "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
+msgstr "метод L-BFGS-B использует 'factr' (и 'pgtol') вместо 'reltol' и 'abstol'"
 
 msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
-msgstr "one-diml-оптимизация Nelder-Mead ненадежна: используйте 'optimize'"
+msgstr "одномерная оптимизация методом Нелдера-Мида ненадежна: используйте 'optimize'"
 
 msgid "Pooling of SD is incompatible with paired tests"
 msgstr "Собирание SD несовместимо с парными тестами"
@@ -1713,9 +1653,8 @@ msgstr "Наблюдения с единичной трансляцией не рисую:"
 msgid "use only with \"lm\" objects"
 msgstr "используется только с \"lm\"-объектами"
 
-#, fuzzy
 msgid "'which' must be in 1L:6"
-msgstr "'which' должен быть в пределах 1:6"
+msgstr "'which' должен быть в пределах 1L:6"
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' должен быть в пределах {1,..,%d}"
@@ -1726,33 +1665,26 @@ msgstr "hat-значения (трансляции) все ="
 msgid "and there are no factor predictors; no plot no. 5"
 msgstr "и здесь нет факторов-предикторов; нет графика N 5"
 
-#, fuzzy
 msgid "'x' and 'T' have incompatible length"
-msgstr "'x' и 'weights' имеют неравную длину"
+msgstr "'x' и 'T' имеют несовместимую длину"
 
-#, fuzzy
 msgid "'x' must be finite, nonnegative, and integer"
-msgstr "'x' должен быть неотрицательным и целым"
+msgstr "'x' должен быть конечным, неотрицательным и целым"
 
-#, fuzzy
 msgid "'T' must be nonnegative"
-msgstr "'x' должен быть неотрицательным"
+msgstr "'T' должен быть неотрицательным"
 
 msgid "not enough data"
 msgstr "недостаточно данных"
 
-#, fuzzy
 msgid "The case k > 2 is unimplemented"
-msgstr "тип '%s' еще не разработан"
+msgstr "Случай k > 2 не реализован"
 
-#, fuzzy
 msgid "'r' must be a single positive number"
-msgstr "'ratio' должно быть одним положительным числом."
+msgstr "'r' должно быть одним положительным числом."
 
-msgid ""
-"exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
-msgstr ""
-"в точности один из 'n', 'delta', 'sd', 'power', 'sig.level' должен быть NULL"
+msgid "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
+msgstr "в точности один из 'n', 'delta', 'sd', 'power', 'sig.level' должен быть NULL"
 
 msgid "'sig.level' must be numeric in [0, 1]"
 msgstr "'sig.level' должен быть числом в [0, 1]"
@@ -1761,15 +1693,10 @@ msgid "internal error"
 msgstr "внутренняя ошибка"
 
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
-msgstr ""
-"в точности один из of 'n', 'p1', 'p2', 'power', 'sig.level' должен быть NULL"
+msgstr "в точности один из of 'n', 'p1', 'p2', 'power', 'sig.level' должен быть NULL"
 
-msgid ""
-"exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
-"level' must be NULL"
-msgstr ""
-"в точности один из 'groups', 'n', 'between.var', 'within.var', 'power', 'sig."
-"level' должен быть NULL"
+msgid "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig.level' must be NULL"
+msgstr "в точности один из 'groups', 'n', 'between.var', 'within.var', 'power', 'sig.level' должен быть NULL"
 
 msgid "number of groups must be at least 2"
 msgstr "количество групп должно быть по крайней мере 2"
@@ -1790,10 +1717,10 @@ msgid "wrong number of columns in 'x'"
 msgstr "неправильное количество колонок в 'x'"
 
 msgid "cannot rescale a constant/zero column to unit variance"
-msgstr "не могу перешкалировать постоянную/нулевую колонку единичной вариансы"
+msgstr "не могу отмасштабировать постоянную/нулевую колонку с единичной дисперсией"
 
 msgid "PCA applies only to numerical variables"
-msgstr "PCA применим только к числовым переменным"
+msgstr "анализ главных компонент применим только к числовым переменным"
 
 msgid "no scores are available: refit with 'retx=TRUE'"
 msgstr "нет доступных вкладов: подгоняю еще раз с 'retx=TRUE'"
@@ -1801,12 +1728,8 @@ msgstr "нет доступных вкладов: подгоняю еще раз с 'retx=TRUE'"
 msgid "'newdata' must be a matrix or data frame"
 msgstr "'newdata' должна быть матрицей или таблицей данных"
 
-msgid ""
-"'newdata' does not have named columns matching one or more of the original "
-"columns"
-msgstr ""
-"у 'newdata' нет именованных колонок, соответствующих одной или более "
-"исходным колонкам"
+msgid "'newdata' does not have named columns matching one or more of the original columns"
+msgstr "у 'newdata' нет именованных колонок, соответствующих одной или более исходным колонкам"
 
 msgid "'newdata' does not have the correct number of columns"
 msgstr "'newdata' не имеет правильного количества колонок"
@@ -1818,15 +1741,13 @@ msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr "указаны и 'x', и 'covmat': 'x' будет пропущено"
 
 msgid "'princomp' can only be used with more units than variables"
-msgstr ""
-"'princomp' может быть использовано только если наблюдений больше чем "
-"переменных"
+msgstr "'princomp' может быть использовано только если наблюдений больше чем переменных"
 
 msgid "cannot use cor=TRUE with a constant variable"
 msgstr "не могу использовать cor=TRUE с постоянной переменной"
 
 msgid "covariance matrix is not non-negative definite"
-msgstr "матрица ковариансы не является определенной и неотрицательной"
+msgstr "ковариационная матрица не является неотрицательно определенной"
 
 msgid "argument does not include a 'qr' component"
 msgstr "аргумент не включает компонент 'qr'"
@@ -1835,10 +1756,10 @@ msgid "argument does not include an 'effects' component"
 msgstr "аргумент не включает компонент 'effects'"
 
 msgid "'proj' is not implemented for \"mlm\" fits"
-msgstr "'proj' для \"mlm\" подгонок не разработан"
+msgstr "'proj' для \"mlm\" подгонок не реализован"
 
 msgid "'proj' is not implemented for multiple responses"
-msgstr "'proj' для множественных откликов не разработан"
+msgstr "'proj' для множественных откликов не реализован"
 
 msgid "elements of 'n' must be positive"
 msgstr "элементы 'n' должны быть положительны"
@@ -1891,9 +1812,8 @@ msgstr "'relevel' -- только для факторов"
 msgid "'ref' must be an existing level"
 msgstr "'ref' должен быть существующим уровнем"
 
-#, fuzzy
 msgid "ref = %d must be in 1L:%d"
-msgstr "ref = %d должен быть в 1:%d"
+msgstr "ref = %d должен быть в пределах 1L:%d"
 
 msgid "Failed to guess time-varying variables from their names"
 msgstr "Не получилось создать временнЫе переменные из их имен"
@@ -1919,11 +1839,8 @@ msgstr "'varying' должен быть непустым списком или вектором"
 msgid "length of v.names does not evenly divide length of varying"
 msgstr "длина 'v.names' не делится без остатка длиной 'varying'"
 
-msgid ""
-"length of varying must be the product of length of v.names and length of "
-"times"
-msgstr ""
-"длина 'varying' должна быть произведением длины 'v.names' и длины 'times'"
+msgid "length of varying must be the product of length of v.names and length of times"
+msgstr "длина 'varying' должна быть произведением длины 'v.names' и длины 'times'"
 
 msgid "'k' must be positive"
 msgstr "'k' должен быть положителен"
@@ -1965,8 +1882,7 @@ msgid "'nknots' must be numeric <= n"
 msgstr "'nknots' должен быть числом <= n"
 
 msgid "cannot use more inner knots than unique 'x' values"
-msgstr ""
-"не могу использовать внутренних узлов больше, чем уникальных значений 'x'"
+msgstr "не могу использовать внутренних узлов больше, чем уникальных значений 'x'"
 
 msgid "invalid 'control.spar'"
 msgstr "неправильный 'control.spar'"
@@ -2041,16 +1957,13 @@ msgid "coverage probability out of range [0,1)"
 msgstr "покрывающая вероятность вне [0,1)"
 
 msgid "spline: first and last y values differ - using y[1] for both"
-msgstr ""
-"spline: первое и последнее значения y различны -- использую y[1] для обоих"
+msgstr "spline: первое и последнее значения y различны -- использую y[1] для обоих"
 
 msgid "'spline' requires n >= 1"
 msgstr "'spline' требует n >= 1"
 
-#, fuzzy
 msgid "spline: first and last y values differ - using y[1L] for both"
-msgstr ""
-"spline: первое и последнее значения y различны -- использую y[1] для обоих"
+msgstr "spline: первое и последнее значения y различны -- использую y[1L] для обоих"
 
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv' должно быть между 0 и 3"
@@ -2104,12 +2017,10 @@ msgid "'x' must be between %s and %s"
 msgstr "'x' должен быть между %s и %s"
 
 msgid "number of 'cutpoints' must be one less than number of symbols"
-msgstr ""
-"количество 'cutpoints' должно быть на один меньше, чем количество символов"
+msgstr "количество 'cutpoints' должно быть на один меньше, чем количество символов"
 
 msgid "number of 'cutpoints' must be one more than number of symbols"
-msgstr ""
-"количество 'cutpoints' должно быть на один больше, чем количество символов"
+msgstr "количество 'cutpoints' должно быть на один больше, чем количество символов"
 
 msgid "must have 2 'symbols' for logical 'x' argument"
 msgstr "надо 2 'symbols' для логического аргумента 'x'"
@@ -2204,12 +2115,8 @@ msgstr "не указаны замены"
 msgid "too many replacement values supplied"
 msgstr "указано слишком много заменяющих значений"
 
-msgid ""
-"number of values supplied is not a sub-multiple of the number of values to "
-"be replaced"
-msgstr ""
-"указанное количество значений не является множителем количества значений, "
-"которые надо заменить"
+msgid "number of values supplied is not a sub-multiple of the number of values to be replaced"
+msgstr "указанное количество значений не является множителем количества значений, которые надо заменить"
 
 msgid "only replacement of elements is allowed"
 msgstr "разрешены только замены элементов"
@@ -2263,18 +2170,16 @@ msgid "cannot compute exact confidence interval with ties"
 msgstr "совпадающие значения: не могу высчитать точный доверительный интервал"
 
 msgid "cannot compute exact p-value with zeroes"
-msgstr "нули: не могу высчитать точное p-value"
+msgstr "не могу высчитать точное p-значение при наличии нулей"
 
 msgid "cannot compute exact confidence interval with zeroes"
-msgstr "нули: не могу высчитать точный доверительный интервал"
+msgstr "не могу высчитать точный доверительный интервал при наличии нулей"
 
 msgid "must supply either 'formula' or 'data'"
 msgstr "нужно указать либо 'formula', либо 'data'"
 
 msgid "too few distinct input values to fit an asymptotic regression model"
-msgstr ""
-"слишком мало различающихся входных значений для подгонки асимптотической "
-"модели регрессии"
+msgstr "слишком мало различающихся входных значений для подгонки асимптотической модели регрессии"
 
 msgid "cannot fit an asymptotic regression model to these data"
 msgstr "не могу подогнать асимптотическую модель регрессии для этих данных"
@@ -2283,17 +2188,13 @@ msgid "too few observations to fit an asymptotic regression model"
 msgstr "слишком мало наблюдений для подгонки асимптотической модели регрессии"
 
 msgid "too few distinct input values to fit the 'asympOff' model"
-msgstr ""
-"слишком мало различающихся входных значений для подгонки модели 'asympOff'"
+msgstr "слишком мало различающихся входных значений для подгонки модели 'asympOff'"
 
 msgid "too few distinct input values to fit the 'asympOrig' model"
-msgstr ""
-"слишком мало различающихся входных значений для подгонки модели 'asympOrig'"
+msgstr "слишком мало различающихся входных значений для подгонки модели 'asympOrig'"
 
 msgid "too few distinct input values to fit a biexponential"
-msgstr ""
-"слишком мало различающихся входных значений для подгонки модели "
-"'biexponential'"
+msgstr "слишком мало различающихся входных значений для подгонки модели 'biexponential'"
 
 msgid "must have length of response = length of second argument to 'SSfol'"
 msgstr "надо, чтобы длина отклика = длине второго аргумента 'SSfol'"
@@ -2302,32 +2203,22 @@ msgid "must have at least 4 observations to fit an 'SSfol' model"
 msgstr "нужны как минимум 4 наблюдения, чтобы подогнать модель 'SSfol'"
 
 msgid "too few distinct input values to fit a four-parameter logistic"
-msgstr ""
-"слишком мало различающихся входных значений для подгонки логистической "
-"модели с 4 параметрами"
+msgstr "слишком мало различающихся входных значений для подгонки логистической модели с 4 параметрами"
 
 msgid "too few distinct input values to fit a logistic model"
-msgstr ""
-"слишком мало различающихся входных значений для подгонки логистической модели"
+msgstr "слишком мало различающихся входных значений для подгонки логистической модели"
 
 msgid "too few distinct input values to fit a Michaelis-Menten model"
-msgstr ""
-"слишком мало различающихся входных значений для подгонки модели Michaelis-"
-"Menten"
+msgstr "слишком мало различающихся входных значений для подгонки модели Michaelis-Menten"
 
 msgid "too few distinct input values to fit the Gompertz model"
-msgstr ""
-"слишком мало различающихся входных значений для подгонки модели Gompertz"
+msgstr "слишком мало различающихся входных значений для подгонки модели Gompertz"
 
 msgid "too few distinct input values to fit the Weibull growth model"
-msgstr ""
-"слишком мало различающихся входных значений для подгонки модели 'Weibull "
-"growth'"
+msgstr "слишком мало различающихся входных значений для подгонки модели 'Weibull growth'"
 
 msgid "all 'x' values must be non-negative to fit the Weibull growth model"
-msgstr ""
-"все значения 'x' должны быть неотрицательными, чтобы подогнать модель "
-"'Weibull growth'"
+msgstr "все значения 'x' должны быть неотрицательными, чтобы подогнать модель 'Weibull growth'"
 
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
@@ -2349,27 +2240,20 @@ msgstr[2] "параметры %s не встречаются в формуле модели"
 
 #~ msgid "'newdata' does not contain the variables needed"
 #~ msgstr "'newdata' не содержит нужных переменных"
-
 #~ msgid "diagonal has non-finite entries"
 #~ msgstr "диагональ имеет не-конечные элементы"
-
 #~ msgid "no 'time' or 'id' specified"
 #~ msgstr "не указан ни 'time', ни 'id'"
-
 #~ msgid "trying +"
 #~ msgstr "пробую +"
-
 #~ msgid "trying -"
 #~ msgstr "пробую -"
-
 #~ msgid "Start:  AIC="
 #~ msgstr "Старт:  AIC="
-
 #~ msgid "Step:  AIC="
 #~ msgstr "Ступень:  AIC="
-
 #~ msgid "contrasts not defined for 0 degrees of freedom"
 #~ msgstr "контрасты для 0 степеней свободы не определены"
-
 #~ msgid "Convergence failure:"
 #~ msgstr "Ошибка схождения:"
+

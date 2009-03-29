@@ -3,11 +3,11 @@
 #
 # Copyright (C) 2007 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <dactylorhiza@gmail.com> 2008
+# Alexey Shipunov <dactylorhiza@gmail.com> 2009
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.8.0\n"
+"Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2005-02-06 11:40+0000\n"
 "PO-Revision-Date: 2008-10-06 16:51-0500\n"
