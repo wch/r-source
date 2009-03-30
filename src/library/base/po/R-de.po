@@ -1,14 +1,14 @@
 # Translation of src/library/base/R-base.pot to German
-# Copyright (C) 2005-2008 The R Foundation
+# Copyright (C) 2005-2009 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2008.
+# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.8.0\n"
+"Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-03-17 19:25\n"
-"PO-Revision-Date: 2008-09-18 16:26+0200\n"
+"PO-Revision-Date: 2009-03-20 11:23+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -173,9 +173,8 @@ msgstr "'x' muss ein Array mit mindestens zwei Dimensionen sein"
 msgid "invalid 'dims'"
 msgstr "ungültige 'dims'"
 
-#, fuzzy
 msgid "extra arguments ignored:"
-msgstr "drop Argument wird ignoriert"
+msgstr "Zusätliche  Argumente ignoriert:"
 
 msgid "bad handler specification"
 msgstr "schlechte handler Spezifikation"
@@ -627,9 +626,8 @@ msgstr "keine Dateien, um dorthin zu kopieren"
 msgid "more 'from' files than 'to' files"
 msgstr "mehr 'from' Dateien als 'to' Dateien"
 
-#, fuzzy
 msgid "'recursive' will be ignored"
-msgstr "drop Argument wird ignoriert"
+msgstr "'recursive' wird ignoriert"
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "Datei kann nicht sowohl 'from' als auch 'to' der Kopie sein"
@@ -665,7 +663,7 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' muss nicht-abfallend sortiert werden"
 
 msgid "using the first element of 'value' of type expression"
-msgstr ""
+msgstr "nutze das erste Element von 'value' vom Typ Ausdruck"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr "'mode' muss \"double\" (\"real\"), \"integer\" oder \"character\" sein"
@@ -774,9 +772,8 @@ msgstr "es gibt kein Paket '%s'"
 msgid "no library trees found in 'lib.loc'"
 msgstr "keine Bibliotheken in 'lib.loc' gefunden"
 
-#, fuzzy
 msgid "'%s' is not a valid installed package"
-msgstr "'%s' ist keine gültige Wahl"
+msgstr "'%s' ist keine gültiges installiertes Paket"
 
 msgid "'%s' not found on search path, using pos = 2"
 msgstr "'%s' nicht im Suchpfad gefunden, nutze pos = 2"
@@ -998,9 +995,8 @@ msgstr ""
 "Das Tracing von Funktionen benötigt das Paket methods, aber der Namensraum "
 "von methods kann nicht geladen werden"
 
-#, fuzzy
 msgid "Expected a single logical value for the S4 state flag"
-msgstr "Erwarte einzelnen, logischen Wert für den Satus des S4 Objektes"
+msgstr "Erwarte einzelnen, logischen Wert für das S4 Status-Flag"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "unzulässig den Speichermodus eines Faktors zu ändern"
@@ -1057,7 +1053,7 @@ msgid "package '%s' does not have a name space"
 msgstr "Paket '%s' hat keinen Namensraum"
 
 msgid "exportClassPattern specified but no matching classes in %s"
-msgstr ""
+msgstr "exportClassPattern angegeben, aber keine passenden Klassen in %s"
 
 msgid "in '%s' classes for export not defined: %s"
 msgstr "in '%s' sind Klassen nicht für den Export definiert: %s"
@@ -1492,33 +1488,31 @@ msgid "'%s' execution failed with error code %d"
 msgstr "'%s' Ausführung mit Fehlerkode %d fehlgeschlagen"
 
 msgid "-l option without value"
-msgstr ""
+msgstr "-l Option ohne Werte"
 
-#, fuzzy
 msgid "ERROR: no packages specified"
-msgstr "keine Pakete gefunden"
+msgstr "ERROR: keine Pakete spezifiziert"
 
 msgid "Removing from library"
-msgstr ""
+msgstr "Entfernen aus der Bibliothek"
 
 msgid "ERROR: cannot cd to directory"
-msgstr ""
+msgstr "ERROR: kann nicht in das Verzeichnis wechseln"
 
 msgid "ERROR: no permission to remove from directory"
-msgstr ""
+msgstr "ERROR: keine Rechte, um aus diesem Verzeichnis zu löschen"
 
 msgid "T used instead of TRUE"
-msgstr ""
+msgstr "T statt TRUE benutzt"
 
 msgid "F used instead of FALSE"
-msgstr ""
+msgstr "F statt FALSE benutzt"
 
 msgid "items"
-msgstr ""
+msgstr "Punkte"
 
-#, fuzzy
 msgid "have been removed from the search path"
-msgstr "ist nicht im Suchpfad "
+msgstr "sind aus dem  Suchpfad entfernt worden"
 
 msgid "cannot find name space environment"
 msgstr "kann keine Namensraum-Umgebung finden"

@@ -1,14 +1,14 @@
 # German translation of 
 # src/library/graphics/po/R-graphics.pot
-# Copyright (C) 2005-2008 The R Foundation
+# Copyright (C) 2005-2009 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2008.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.8.0\n"
+"Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-12-16 12:57\n"
-"PO-Revision-Date: 2008-09-18 16:28+0200\n"
+"PO-Revision-Date: 2009-03-20 14:27+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -40,9 +40,8 @@ msgstr "midestens ein Eintrag in 'x' muss positiv sein"
 msgid "incorrect 'col': must be length 2"
 msgstr "ungültiger Wert für 'col': muss Länge 2 haben"
 
-#, fuzzy
 msgid "'side' must be in {1L:4}"
-msgstr "'side' muss in {1:4} liegen"
+msgstr "'side' muss in {1L:4} liegen"
 
 msgid "invalid 'axp'"
 msgstr "ungültiger Wert für 'axp'"
@@ -50,9 +49,8 @@ msgstr "ungültiger Wert für 'axp'"
 msgid "invalid 'log'"
 msgstr "ungültiger Wert für 'axp'"
 
-#, fuzzy
 msgid "invalid positive 'axp[3L]'"
-msgstr "ungültiger positiver Wert für 'axp[3]'"
+msgstr "ungültiger positiver Wert für 'axp[3L]'"
 
 msgid "invalid 'usr'"
 msgstr "ungültiger Wert für 'usr'"
@@ -255,11 +253,10 @@ msgid "horizontal specification overrides: Number of columns :="
 msgstr "horizontale Spezifikation überschreibt Anzahl der Spalten ;="
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
-msgstr ""
+msgstr "'merge = TRUE' hat keine Effekt, wenn keine Liniensegmente gezeichnent werden"
 
-#, fuzzy
 msgid "not using pch[2..] since pch[1L] has multiple chars"
-msgstr "nutze pch[2..] nicht, da pch[1] mehrere Zeichen enthält"
+msgstr "nutze pch[2..] nicht, da pch[1L] mehrere Zeichen enthält"
 
 msgid "must specify at least one of 'x' and 'y'"
 msgstr "entweder 'x' oder 'y' muss mindestens angegeben werden"

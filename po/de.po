@@ -1,14 +1,14 @@
 # Translation of R.po to german
-# Copyright (C) 2005-2008 The R Foundation
+# Copyright (C) 2005-2009 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2005-2008.
+# Detlef Steuer <steuer@hsu-hh.de>, 2005-2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.8.0\n"
+"Project-Id-Version: R-2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2009-03-28 17:25+0000\n"
-"PO-Revision-Date: 2008-09-18 16:15+0200\n"
+"PO-Revision-Date: 2009-03-20 14:22+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -946,9 +946,8 @@ msgid "a matrix-like object is required as argument to 'row/col'"
 msgstr "ein matrixähnliches Objekt ist als Argument für 'row/col' nötig"
 
 #: src/main/array.c:605
-#, fuzzy
 msgid "requires numeric/complex matrix/vector arguments"
-msgstr "verlangt numerische Matrix/Vektor-Argumente"
+msgstr "verlangt numerische/komplexe Matrix/Vektor-Argumente"
 
 #: src/main/array.c:679 src/main/array.c:683 src/main/array.c:687
 msgid "non-conformable arguments"
@@ -1291,9 +1290,9 @@ msgid "vector: zero-length 'type' argument"
 msgstr "Vektor: Argument 'type' der Länge 0"
 
 #: src/main/builtin.c:707
-#, fuzzy, c-format
+#, c-format
 msgid "vector: cannot make a vector of mode '%s'."
-msgstr "vector: kann keinen Vektor vom Mode \"%s\" erzeugen."
+msgstr "vector: kann keinen Vektor vom Mode '%s' erzeugen."
 
 #: src/main/builtin.c:732
 msgid "cannot set length of non-vector"
@@ -1583,9 +1582,9 @@ msgid "out-of-range values treated as 0 in coercion to raw"
 msgstr "Werte außerhalb des Bereichs als 0 behandelt in Umwandlung nach raw"
 
 #: src/main/coerce.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "invalid data of mode '%s' (too short)"
-msgstr "Ungültige Daten vom Mode \"%s\" (zu kurz)"
+msgstr "ungültige Daten vom Mode '%s' (zu kurz)"
 
 #: src/main/coerce.c:907
 #, c-format
@@ -1599,16 +1598,15 @@ msgstr "(list) Objekt kann nicht nach '%s' umgewandelt werden"
 
 #: src/main/coerce.c:1047 src/main/coerce.c:1344
 msgid "no method for coercing this S4 class to a vector"
-msgstr ""
+msgstr "Keine Methode um diese S4 Klasse in einen Vektor zu verwandeln"
 
 #: src/main/coerce.c:1106
 msgid "environments cannot be coerced to other types"
 msgstr "Umgebungen können nicht in andere Typen umgewandelt werden"
 
 #: src/main/coerce.c:1249
-#, fuzzy
 msgid "attempting to coerce non-factor"
-msgstr "Versuch einen nicht-Vektor zu vergrößern"
+msgstr "Versuch einen nicht-Faktor umzuwandeln"
 
 #: src/main/coerce.c:1392
 msgid "list argument expected"
@@ -1661,7 +1659,7 @@ msgstr "ungültige Umgebung spezifiziert"
 
 #: src/main/coerce.c:2375
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
-msgstr ""
+msgstr "Setze class(x) auf NULL;  das Ergebnis ist keine S4 Objekt mehr"
 
 #: src/main/coerce.c:2378
 #, c-format
@@ -1669,6 +1667,8 @@ msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
 "longer be an S4 object"
 msgstr ""
+"Setze class(x) auf mehrere Zeichenketten(\"%s\", \"%s\", ...); das Ergebnis "
+"ist kein S4 Objekt mehr"
 
 #: src/main/coerce.c:2380
 #, c-format
@@ -1676,6 +1676,8 @@ msgid ""
 "Setting class(x) to \"%s\" sets attribut to NULL;   result will no longer be "
 "an S4 object"
 msgstr ""
+"class(x) auf \"%s\" setzen setzt Attribut auf NULL; das Ergebnis ist kein S4 "
+"Objekt mehr"
 
 #: src/main/coerce.c:2410
 msgid "invalid replacement object to be a class string"
@@ -2562,9 +2564,9 @@ msgid "only the first element is used as variable name"
 msgstr "nur das erste Element wird als Variablenname genutzt"
 
 #: src/main/deriv.c:648
-#, fuzzy, c-format
+#, c-format
 msgid "invalid expression in '%s'"
-msgstr "ungültiger Ausdruck in \"%s\""
+msgstr "ungültiger Ausdruck in '%s'"
 
 #: src/main/deriv.c:931 src/main/model.c:1322
 msgid "invalid variable names"
@@ -2767,14 +2769,14 @@ msgid "mode '%s' is not supported in call_R"
 msgstr "Mode '%s' wird in call_R nicht unterstützt"
 
 #: src/main/dounzip.c:109
-#, fuzzy, c-format
+#, c-format
 msgid " not overwriting file '%s"
-msgstr "kann Datei '%s' nicht öffnen"
+msgstr "überschreibe  Datei '%s' nicht"
 
 #: src/main/dounzip.c:188
-#, fuzzy, c-format
+#, c-format
 msgid "zip file '%s' cannot be opened"
-msgstr "lapack Routinen können nicht geladen werden"
+msgstr "zip Datei '%s' kann nicht geöffnet werden"
 
 #: src/main/dounzip.c:240
 msgid "invalid zip name argument"
@@ -3046,9 +3048,9 @@ msgid "cannot remove variables from this database"
 msgstr "kann aus dieser Datenbank keine Variablen entfernen"
 
 #: src/main/envir.c:1728
-#, fuzzy, c-format
+#, c-format
 msgid "object '%s' of mode '%s' was not found"
-msgstr "Variable \"%s\" mit Modus \"%s\" nicht gefunden"
+msgstr "Objekt '%s' mit Modus '%s' nicht gefunden"
 
 #: src/main/envir.c:1795
 #, c-format
@@ -3114,9 +3116,8 @@ msgid "using 'as.environment(NULL)' is defunct"
 msgstr "Benutzung von 'as.enivornment(NULL) ist nicht mehr möglich"
 
 #: src/main/envir.c:2764
-#, fuzzy
 msgid "S4 object does not extend class \"environment\""
-msgstr "Ersatzobjekt ist keine Umgebung"
+msgstr "Das S4 Objekt erweitert nicht die Klasse \"environment\""
 
 #: src/main/envir.c:2769
 msgid "invalid object for 'as.environment'"
@@ -4180,9 +4181,8 @@ msgid "cons memory exhausted (limit reached?)"
 msgstr "Cons-Speicher erschöpft (Limit erreicht?)"
 
 #: src/main/memory.c:1547
-#, fuzzy
 msgid "memory exhausted (limit reached?)"
-msgstr "Cons-Speicher erschöpft (Limit erreicht?)"
+msgstr "Speicher erschöpft (Limit erreicht?)"
 
 #: src/main/memory.c:1668 src/main/memory.c:1674
 #, c-format
@@ -4628,6 +4628,7 @@ msgstr "'R_get_primname' für ein non-primitive aufgerufen"
 #, c-format
 msgid "Object of class \"%s\" does not correspond to a valid S3 object"
 msgstr ""
+"Objekt der Klasse \"%s\" Korrespondiert nicht mit einem gültigen S3 objekt"
 
 #: src/main/optim.c:73 src/main/optim.c:100 src/main/optim.c:184
 msgid "non-finite value supplied by optim"
@@ -5169,9 +5170,9 @@ msgid "cannot create dir '%s', reason '%s'"
 msgstr "kann Verzeichnis '%s' nicht erzeugen. Grund '%s'"
 
 #: src/main/platform.c:2016
-#, fuzzy, c-format
+#, c-format
 msgid "'%ls' already exists"
-msgstr "'%s' existiert bereits"
+msgstr "'%ls' existiert bereits"
 
 #: src/main/platform.c:2289
 msgid "insufficient OS support on this platform"
@@ -6394,34 +6395,33 @@ msgid "too large a range of values in 'x'"
 msgstr "zu großer Wertebereich in 'x'"
 
 #: src/main/source.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "%s%d:%d: %s"
-msgstr ""
-"%s%s bei\n"
-"%d: %s"
+msgstr "%s%d:%d: %s"
 
 #: src/main/source.c:140
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%d:%d: %s\n"
 "%d: %s\n"
 "%*s"
 msgstr ""
-"%s%s bei\n"
+"%s%d:%d :%s\n"
 "%d: %s\n"
-"%d: %s"
+"%*s"
 
 #: src/main/source.c:147
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%d:%d: %s\n"
 "%d: %s\n"
 "%d: %s\n"
 "%*s"
 msgstr ""
-"%s%s bei\n"
+"%s%d:%d: %s\n"
 "%d: %s\n"
-"%d: %s"
+"%d: %s\n"
+"%*s"
 
 #: src/main/source.c:157
 #, c-format
@@ -6595,7 +6595,7 @@ msgstr "Ergebnis hat Länge 0 und kann deshalb kein Objekt der Sprache sein"
 
 #: src/main/subassign.c:1485 src/main/subassign.c:1818
 msgid "no method for assigning subsets of this S4 class"
-msgstr ""
+msgstr "keine Methode um Teilmengen dieser S4 Klasse zuzuweisen"
 
 #: src/main/subassign.c:1491
 msgid "wrong args for environment subassignment"
@@ -6711,9 +6711,8 @@ msgid "no index specified"
 msgstr "kein Index angegeben"
 
 #: src/main/subset.c:814
-#, fuzzy
 msgid "this S4 class is not subsettable"
-msgstr "Objekt ist nicht indizierbar"
+msgstr "Diese S4 Klasse ist nicht in Teilen verfügbar"
 
 #: src/main/subset.c:820
 msgid "wrong arguments for subsetting an environment"
@@ -6931,14 +6930,13 @@ msgid "invalid tag in name extraction"
 msgstr "ungültiger tag in Namensauswertung"
 
 #: src/main/util.c:442
-#, fuzzy, c-format
+#, c-format
 msgid "'nthcdr' list shorter than %d"
-msgstr "\"nthcdr\" Liste kürzer als %d"
+msgstr "'nthcdr' Liste kürzer als %d"
 
 #: src/main/util.c:447
-#, fuzzy
 msgid "'nthcdr' needs a list to CDR down"
-msgstr "\"nthcdr\" braucht eine Liste zum 'cdr'en"
+msgstr "'nthcdr' braucht eine Liste um CDR zu verkleinern"
 
 #: src/main/util.c:563
 msgid "'all.x' must be TRUE or FALSE"

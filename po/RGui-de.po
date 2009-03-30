@@ -1,14 +1,14 @@
 # translation of po/RGui.pot to German
 # This file is distributed under the same license as the R package.
-# Copyright (C) 2005-2008.
-# Detlef Steuer <steuer@hsuhh.de>, 2005-2008.
+# Copyright (C) 2005-2009.
+# Detlef Steuer <steuer@hsuhh.de>, 2005-2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.8.0\n"
+"Project-Id-Version: R-2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2009-03-17 19:29+0000\n"
-"PO-Revision-Date: 2008-09-18 16:17+0200\n"
+"PO-Revision-Date: 2009-03-20 11:13+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -372,9 +372,9 @@ msgid "R Editor"
 msgstr "R Editor"
 
 #: editor.c:119
-#, fuzzy, c-format
+#, c-format
 msgid "unable to open file %s for reading"
-msgstr "Kann Datei nicht zum Lesen öffnen"
+msgstr "Kann Datei %s nicht zum Lesen öffnen"
 
 #: editor.c:135
 #, c-format

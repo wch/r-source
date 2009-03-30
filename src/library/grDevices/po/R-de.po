@@ -1,14 +1,14 @@
 # German translation of 
 # src/library/grDevices/po/R-grDevices.pot
-# Copyright (C) 2005-2008 The R Foundation
+# Copyright (C) 2005-2009 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2008.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.8.0\n"
+"Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-03-28 17:26\n"
-"PO-Revision-Date: 2008-09-18 16:29+0200\n"
+"PO-Revision-Date: 2009-03-20 14:29+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -288,11 +288,10 @@ msgid "can only bring windows devices to the front"
 msgstr "kann nur windows-Devices nach Vorne bringen"
 
 msgid "'type' not applicable to the R console"
-msgstr ""
+msgstr "'type' für die R-Konsole nicht anwendbar"
 
-#, fuzzy
 msgid "can only manipulate windows devices"
-msgstr "kann nur aus 'windows' Devices kopieren"
+msgstr "kann nur  Windows-Devices kopieren"
 
 msgid "can only copy from 'windows' devices"
 msgstr "kann nur aus 'windows' Devices kopieren"
