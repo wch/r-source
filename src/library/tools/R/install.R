@@ -2079,7 +2079,7 @@
         desc <- read.dcf(f)[1,]
         if(enc == "unknown") {
             pkg_enc <- desc["Encoding"]
-            if (!is.na(enc)) enc <- pkg_enc
+            if (!is.na(pkg_enc)) enc <- pkg_enc
         }
     }
 
