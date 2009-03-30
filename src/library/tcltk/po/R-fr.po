@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-03-17 19:27\n"
-"PO-Revision-Date: 2008-09-30 19:13+0100\n"
+"PO-Revision-Date: 2009-03-29 19:09+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -95,7 +95,7 @@ msgid "'pb' is not from class \"tkProgressBar\""
 msgstr "'pb' n'est pas un objet de classe \"tkProgressBar\""
 
 msgid "'filters' must be a 2-column character matrix"
-msgstr ""
+msgstr "'filters' doit être une matrice de chaînes de caractères à 2 colonnes"
 
 msgid "Loading Tcl/Tk interface ..."
 msgstr "Chargement de Tcl/Tk..."
@@ -108,3 +108,4 @@ msgstr "Tcl/Tk n'est pas supporté sur ce système"
 
 msgid "Tcl/Tk support files were not installed"
 msgstr "les fichiers Tcl/Tk nécessaires n'ont pas été installés"
+
