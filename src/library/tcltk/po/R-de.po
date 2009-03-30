@@ -1,14 +1,13 @@
 # German translation of src/library/tcltk/po/R-tcltk.pot
-# Copyright (C) 2008 The R Foundation
+# Copyright (C) 2008-2009 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008.
-#
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.8.0\n"
+"Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-03-17 19:27\n"
-"PO-Revision-Date: 2008-09-19 10:50+0200\n"
+"PO-Revision-Date: 2009-03-26 11:30+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -95,7 +94,7 @@ msgid "'pb' is not from class \"tkProgressBar\""
 msgstr "'pb' ist nicht aus Klasse \"tkProgressBar\""
 
 msgid "'filters' must be a 2-column character matrix"
-msgstr ""
+msgstr "'filters' muss eine zweispaltige Zeichenmatrix sein"
 
 msgid "Loading Tcl/Tk interface ..."
 msgstr "Lade Tcl/Tk Interface ..."

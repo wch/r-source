@@ -1,14 +1,13 @@
 # German translation of src/library/tools/po/R-tools.pot
-# Copyright (C) 2008 The R Foundation
+# Copyright (C) 2008-2009 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008.
-#
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.8.0\n"
+"Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-03-17 19:27\n"
-"PO-Revision-Date: 2008-09-19 10:57+0200\n"
+"PO-Revision-Date: 2009-03-26 14:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -173,9 +172,8 @@ msgstr ""
 msgid "Packages required but not available:"
 msgstr "Benötigte, aber nicht verfügbare Pakete:"
 
-#, fuzzy
 msgid "Packages required and available but unsuitable version:"
-msgstr "Benötigte, aber nicht verfügbare Pakete:"
+msgstr "Benötigte aber nur in falscher Version verfügbare Pakete:"
 
 msgid "Former standard packages required but now defunct:"
 msgstr "Ehemalige Standardpakete benötigt, die es nicht mehr gibt:"
@@ -369,11 +367,10 @@ msgid "Invalid license file pointers: %s"
 msgstr "Ungültiger Verweis auf Lizenzdatei: %s"
 
 msgid "Standardizable: %s"
-msgstr ""
+msgstr "Zu standardisieren: %s"
 
-#, fuzzy
 msgid "Standardized license specification:"
-msgstr "Nicht-Standard Lizenzspezifikation:"
+msgstr "Standardisierte Lizenzspezifikation:"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nicht portierbare Flags in der Variablen '%s'"
@@ -396,9 +393,8 @@ msgstr "'::' oder ':::' importieren unangemeldet aus:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 
-#, fuzzy
 msgid "*** error on file"
-msgstr "Parse-Fehler in Datei '%s'"
+msgstr "*** Fehler in Datei"
 
 msgid "Generics g in env ="
 msgstr "Generische g in env ="
@@ -498,13 +494,13 @@ msgid "missing/empty \\name field in Rd file(s)"
 msgstr "fehlendes bzw. leeres \\name Feld in Rd Datei(en)"
 
 msgid "should not get here"
-msgstr ""
+msgstr "sollte nicht hierher kommen"
 
 msgid "Rd2HTML is designed for Rd version 2 or higher."
-msgstr ""
+msgstr "Rd2HTML ist für Rd in Version 2 oder später entworfen"
 
 msgid "more than one \\examples section, using the first"
-msgstr ""
+msgstr "mehr als eine \\examples section, benutze die erste"
 
 msgid "unable to create temp directory"
 msgstr "kann kein temp Verzeichnis erzeugen"
@@ -615,211 +611,201 @@ msgid "cannot read index information in file '%s'"
 msgstr "kann die Indexinformation in Datei '%s' nicht lesen"
 
 msgid "ERROR:"
-msgstr ""
+msgstr "Fehler:"
 
-#, fuzzy
 msgid "for package"
-msgstr "ungeeigneter Paketname"
+msgstr "für Paket"
 
 msgid "incorrect Contains metadata for bundle"
-msgstr ""
+msgstr "inkorrekt enthält Metadaten für ein Bundle"
 
-#, fuzzy
 msgid ": there is no package '"
-msgstr "es gibt kein Paket names '%s'"
+msgstr ": es gibt kein Paket '"
 
 msgid "skipping installation of bundle"
-msgstr ""
+msgstr "überspringe Installation des Bundles"
 
 msgid "problem installing per-package DESCRIPTION files"
-msgstr ""
+msgstr "Problem bei der Installation der DESCRPTION Dateien je Paket"
 
-#, fuzzy
 msgid "ERROR unable to create"
-msgstr "kann nicht erzeugen"
+msgstr "Feher: kann nicht erzeugen"
 
-#, fuzzy
 msgid "packaged installation of"
-msgstr "Paket enthält keinen R Code"
+msgstr "gepackte Installation von"
 
 msgid "as"
-msgstr ""
+msgstr "als"
 
 msgid ".gz"
-msgstr ""
+msgstr ".gz"
 
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
 "Adminstration Manual'"
-msgstr ""
+msgstr "'cleanup'existiert, ist aber nicht ausführbar -- bitte im 'R Installation and Administration Manual' nachlesen"
 
 msgid "about to run"
-msgstr ""
+msgstr "gleich startet"
 
 msgid "R CMD SHLIB"
-msgstr ""
+msgstr "R CMD SHLIB"
 
 msgid "Using auto-selected zip options '"
-msgstr ""
+msgstr "Benutze automatisch gewählte zip Optionen"
 
 msgid "--use-zip-data"
-msgstr ""
+msgstr "--use-zip-data"
 
 msgid "--use-zip-help"
-msgstr ""
+msgstr "--use-zip-help"
 
 msgid "**********************************************"
-msgstr ""
+msgstr "**********************************************"
 
 msgid "WARNING: this package has a configure script"
-msgstr ""
+msgstr "Warnung: Dieses Paket hat ein configure Skript"
 
 msgid "It probably needs manual configuration"
-msgstr ""
+msgstr "Es benötigt wahrscheinlich manuelle Konfiguration"
 
 msgid "configure command:"
-msgstr ""
+msgstr "configure Kommando:"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
 "similar"
-msgstr ""
+msgstr "Das R include Verzeichnis ist leer -- evtl. muss das R-devel Paket installiert werden"
 
-#, fuzzy
 msgid "running src/Makefile.win ..."
-msgstr "Ausführen von 'make ' fehlgeschlagen"
+msgstr "Ausführen von src/Makefile.win ..."
 
 msgid "making DLL ..."
-msgstr ""
+msgstr "erzuege DLL"
 
-#, fuzzy
 msgid "... done"
-msgstr "fertig"
+msgstr "... fertig"
 
 msgid "no source files found"
-msgstr ""
+msgstr "kein Quellkode gefunden"
 
 msgid "empty 'data' directory"
-msgstr ""
+msgstr "leeres 'data' Verzeichnis"
 
 msgid "use of file 'install.R' is no longer supported"
-msgstr ""
+msgstr "Benutzung der Datei 'install.R' wird nicht mehr unterstützt"
 
 msgid "use of file 'R_PROFILE.R' is no longer supported"
-msgstr ""
+msgstr "Benutzung der Datei 'R_PROFILE.R' wird nicht mehr unterstütz"
 
 msgid "field 'SaveImage' is defunct: please remove it"
-msgstr ""
+msgstr "Das Feld 'SaveImage' ist veraltet: bitte entfernen"
 
-#, fuzzy
 msgid "cannot create temporary directory"
-msgstr "kann  Verzeichnis '%s' nicht erzeugen"
+msgstr "kann  temporäres Verzeichnis nicht erzeugen"
 
 msgid "Use of --with-package-versions is defunct"
-msgstr ""
+msgstr "Benutzung von --with-package-versions ist veraltet"
 
 msgid "--auto-zip' is for Windows only"
-msgstr ""
+msgstr "'--auto-zip'ist nur für Windows"
 
 msgid "-l option without value"
-msgstr ""
+msgstr "-l Option ohne Wert"
 
 msgid "Warning: unknown option"
-msgstr ""
+msgstr "Warnung: unbekannte Option"
 
-#, fuzzy
 msgid "processing"
 msgstr "Bearbeiten von'"
 
 msgid "a file"
-msgstr ""
+msgstr "eine Datei"
 
 msgid "unknown package layout"
-msgstr ""
+msgstr "unbekannter Paketaufbau"
 
 msgid "a directory"
-msgstr ""
+msgstr "ein Verzeichnis"
 
-#, fuzzy
 msgid "invalid package"
-msgstr "unzulässiger Paketname"
+msgstr "ungültiges Paket"
 
 msgid "--pkglock applies only to a single bundle/package"
-msgstr ""
+msgstr "--pkglock bezieht sich nur auf eine einzelnes Bündel bzw. Paket"
 
 msgid "ERROR: no packages specified"
-msgstr ""
+msgstr "Fehler: keine Pakete angegeben"
 
-#, fuzzy
 msgid "ERROR: cannot cd to directory"
-msgstr "kann  Verzeichnis '%s' nicht erzeugen"
+msgstr "Fehler: kann  nicht in Verzeichnis wechseln"
 
 msgid "ERROR: no permission to install to directory"
-msgstr ""
+msgstr "Fehler: keine ausreichenden Rechte zur Installation in das Verzeichnis"
 
 msgid "ERROR: failed to lock directory"
-msgstr ""
+msgstr "Fehler: konnte das Verzeichnis nicht blockieren"
 
 msgid ""
 "for modifying\n"
 "Try removing"
 msgstr ""
+"um zu modifizieren\n"
+"Versuche zu entfernen"
 
-#, fuzzy
 msgid "ERROR: failed to create lock directory"
-msgstr "kann kein temp Verzeichnis erzeugen"
+msgstr "Fehler: kann kein lock Verzeichnis erzeugen"
 
 msgid "building a fake installation is disallowed"
-msgstr ""
+msgstr "eine Scheininstallation ist nicht erlaubt"
 
 msgid "*** 'hhc.exe' not found: not building CHM help"
-msgstr ""
+msgstr "*** 'hhc.exe' nicht gefunden: CHM Hilfe wird nicht erzeugt"
 
 msgid "-o option without value"
-msgstr ""
+msgstr "-o Option ohne Wert"
 
 msgid "Converting Rd files to LaTeX ..."
-msgstr ""
+msgstr "Konvertiere RD Dateien nach LaTeX"
 
 msgid "this package does not have either a"
-msgstr ""
+msgstr "dieses Paket hat weder ein"
 
 msgid "latex"
-msgstr ""
+msgstr "latex"
 
 msgid "or a"
-msgstr ""
+msgstr "noch ein"
 
 msgid "man"
-msgstr ""
+msgstr "man"
 
 msgid "directory"
-msgstr ""
+msgstr "Verzeichnis"
 
-#, fuzzy
 msgid "no validly-named files in the"
-msgstr "Ungültiger Verweis auf Lizenzdatei: %s"
+msgstr "keine gültig benannten Dateien in"
 
 msgid "file"
-msgstr ""
+msgstr "Datei"
 
 msgid "lacks a header: skipping"
-msgstr ""
+msgstr "Kopf fehlt: überspringen"
 
 msgid "there are no help pages in this package"
-msgstr ""
+msgstr "keine Hilfeseiten in diesem Paket"
 
 msgid "skipping repeated alias(es)"
-msgstr ""
+msgstr "überspringe wiederholte(n) Alias(se)"
 
 msgid "in file"
-msgstr ""
+msgstr "in Datei"
 
 msgid "problem in converting"
-msgstr ""
+msgstr "Problem bei der Konvertierung"
 
 msgid "Bundle package:"
-msgstr ""
+msgstr "Paketbündel"
 
 msgid "there is no package called '%s'"
 msgstr "es gibt kein Paket names '%s'"
@@ -861,14 +847,13 @@ msgid "cannot create HTML package index"
 msgstr "kann den HTML Paketindex nicht erzeugen"
 
 msgid "multiple \\encoding lines in file"
-msgstr ""
+msgstr "mehrere \\encoding Zeilen in der Datei"
 
-#, fuzzy
 msgid "found encoding"
-msgstr "Unbekannte Kodierung"
+msgstr "gefundene Kodierung"
 
 msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
-msgstr ""
+msgstr "Mehrbyte Lokalisierungen außer UTF-8 werden nicht unterstützt -- rekodiere nach UTF-8"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "Argument 'pkg' muss Länge 1 haben"
@@ -892,96 +877,94 @@ msgid "unimplemented encoding"
 msgstr "nicht implementierte Kodierung"
 
 msgid "cannot be opened"
-msgstr ""
+msgstr "kann nicht geöffnet werden"
 
-#, fuzzy
 msgid "testing '%s' failed"
-msgstr "Ausführen von 'make ' fehlgeschlagen"
+msgstr "Test von '%s' fehlgeschlagen"
 
 msgid "Collecting examples for package"
-msgstr ""
+msgstr "Sammle die Beispiele für Paket"
 
 msgid "Running examples in package"
-msgstr ""
+msgstr "Ausführen der Beispiele im Paket "
 
 msgid "Comparing"
-msgstr ""
+msgstr "Vergleiche"
 
 msgid "to"
-msgstr ""
+msgstr "mit"
 
 msgid "..."
-msgstr ""
+msgstr "..."
 
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 msgid "Running specific tests for package"
-msgstr ""
+msgstr "Ausführen spezifischer Tests für das Paket"
 
 msgid "Running"
-msgstr ""
+msgstr "Ausführen"
 
 msgid "Running vignettes for package"
-msgstr ""
+msgstr "Ausführen der Vignetten für das Paket"
 
 msgid "Creating"
-msgstr ""
+msgstr "Erzeugen"
 
 msgid "creation of"
-msgstr ""
+msgstr "Erzeugung von"
 
 msgid "failed"
-msgstr ""
+msgstr "fehlgeschlagen"
 
 msgid "creating"
-msgstr ""
+msgstr "erzeugen"
 
-#, fuzzy
 msgid "running code in"
-msgstr "Ausführen von 'make ' fehlgeschlagen"
+msgstr "Ausführen von Code in "
 
 msgid "FAILED"
-msgstr ""
+msgstr "fehlgeschlagen"
 
 msgid "comparing"
-msgstr ""
+msgstr "vergleiche"
 
 msgid "running strict specific tests"
-msgstr ""
+msgstr "Ausführen strenger spezifischer Tests"
 
 msgid "running sloppy specific tests"
-msgstr ""
+msgstr "Ausführen lockerer spezifischer Tests"
 
 msgid "running regression tests"
-msgstr ""
+msgstr "Ausführen von Regression-Tests"
 
 msgid "comparing 'reg-plot.ps' to 'reg-plot.ps.save' ..."
-msgstr ""
+msgstr "Vergleiche 'reg-plot.ps' mit 'reg-plot.ps.save' ..."
 
 msgid "running tests of plotting Latin-1"
-msgstr ""
+msgstr "Ausführen der Tests um Latin-1 zu plotten"
 
 msgid "expect failure or some differences if not in a Latin or UTF-8 locale"
-msgstr ""
+msgstr "einige Fehler oder Unterschiede sind in Lokalisierungen außer Latin oder UTF-8 zu erwarten"
 
 msgid "comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ..."
-msgstr ""
+msgstr "vergleiche  'reg-plot-latin1.ps' mit 'reg-plot-latin1.ps.save' .."
 
 msgid "running tests of consistency of as/is.*"
-msgstr ""
+msgstr "Ausführen von Tests zur Konsistenz von as/is*"
 
 msgid "running tests of random deviate generation -- fails occasionally"
-msgstr ""
+msgstr "Ausführen von Tests zur Zufallszahlenerzeugung -- schlägt manchmal fehl"
 
 msgid "running tests of primitives"
-msgstr ""
+msgstr "Ausführen der Tests von Primitiven"
 
 msgid "running regexp regression tests"
-msgstr ""
+msgstr "Ausführen von Rgressions-Tests für reguläre Ausdrücke"
 
 msgid "running tests to possibly trigger segfaults"
-msgstr ""
+msgstr "Ausführen von Tests, um Segfaults zu provozieren"
 
 msgid "test '%s' is not available"
 msgstr "Test '%s' nicht verfügbar"
@@ -1054,11 +1037,10 @@ msgstr[0] "Evtl. globales 'T' oder 'F' in folgender Rd Beispieldatei gefunden:"
 msgstr[1] ""
 "Evtl. globales 'T' oder 'F' in folgenden Rd Beispieldateien gefunden:"
 
-#, fuzzy
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
-msgstr[0] "Evtl. globales 'T' oder 'F' in der folgenden Funktion gefunden:"
-msgstr[1] "Evtl. globales 'T' oder 'F' in den folgenden Funktionen gefunden:"
+msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
+msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
 
 #~ msgid "Verifiable as open source: %s"
 #~ msgstr "Verifizierbar als Open Source: %s"

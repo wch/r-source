@@ -1,14 +1,14 @@
 # German translation of src/library/utils/po/R-utils.pot
-# Copyright (C) 2008 The R Foundation
+# Copyright (C) 2008-2009 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.8.0\n"
+"Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-03-17 19:28\n"
-"PO-Revision-Date: 2008-12-16 09:49+0100\n"
+"PO-Revision-Date: 2009-03-26 11:28+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -534,7 +534,7 @@ msgid "bundle '%s' has extra contents %s"
 msgstr "Bundel '%s'hat zusätzlichen Inhalt %s"
 
 msgid "read.dcf() error on file '%s'"
-msgstr ""
+msgstr "Fehler in read.dcf() bei Datei '%s'"
 
 msgid "'priority' must be character or NULL"
 msgstr "'priority' muss ein Zeichen oder NULL sein"
@@ -613,7 +613,7 @@ msgid "unable to create"
 msgstr "kann nicht erzeugen"
 
 msgid "inferring 'repos = NULL' from the file name"
-msgstr ""
+msgstr "leite 'repos = NULL' aus dem Dateinamen ab"
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "kann keine MacOS X Binaries auf Windows installieren"
@@ -641,6 +641,8 @@ msgid ""
 "installation of one of more packages failed,\n"
 "  probably %s"
 msgstr ""
+"Installation eines oder mehrer Pakete schlug fehl,\n"
+" vermutlich %s"
 
 msgid ""
 "The downloaded packages are in\n"
@@ -795,10 +797,10 @@ msgid "Invalid roman numeral(s): %s"
 msgstr "Ungültige römische Zahl(en): %s"
 
 msgid "length mismatch: bug in code!"
-msgstr ""
+msgstr "Längen passen nicht: Fehler im Code!"
 
 msgid "Processing file"
-msgstr ""
+msgstr "Verarbeite Datei"
 
 msgid "no valid packages were specified"
 msgstr "keine gültigen Pakete angegeben"
@@ -902,10 +904,10 @@ msgid "options(\"browser\") not set"
 msgstr "options(\"browser\") nicht gesetzt"
 
 msgid "'latexcmd' is empty"
-msgstr ""
+msgstr "'latexcmd' ist leer"
 
 msgid "'dvipscmd' is empty"
-msgstr ""
+msgstr "'dvipscmd'ist leer"
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "ungültiger Browsername, überprüfen Sie options(\"browser\")."
