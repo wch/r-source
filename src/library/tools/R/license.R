@@ -493,6 +493,7 @@ function(x)
 
     ## Now analyze the individual components.
     ok <- grepl(license_regexps$re_for_component, components)
+    bad_components <- components[!ok]
 
     pointers <- if(all(ok)) NULL else {
         ind <- grepl(re_anchor(license_regexps$re_for_license_file),
@@ -541,7 +542,7 @@ function(x)
     } else NA_character_
     
     .make_results(is_canonical = all(ok),
-                  bad_components = components[!ok],
+                  bad_components = bad_components,
                   is_standardizable = is_standardizable,
                   is_verified = is_verified,
                   standardization = standardization,
