@@ -1488,6 +1488,8 @@ int asLogical(SEXP x)
 	    return Rf_LogicalFromComplex(COMPLEX(x)[0], &warn);
 	case STRSXP:
 	    return Rf_LogicalFromString(STRING_ELT(x, 0), &warn);
+	case RAWSXP:
+	    return Rf_LogicalFromInteger((int)RAW(x)[0], &warn);
 	default:
 	    UNIMPLEMENTED_TYPE("asLogical", x);
 	}
@@ -1614,7 +1616,7 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
        evaluating arguments in DispatchOrEval */
     if(PRIMVAL(op) >= 100 && PRIMVAL(op) < 200 &&
        isObject(CAR(args))) {
-	/* This used CHAR(PRINTNAME(CAR(call))), but that is not 
+	/* This used CHAR(PRINTNAME(CAR(call))), but that is not
 	   necessarily correct, e.g. when called from lapply() */
 	const char *nm;
 	switch(PRIMVAL(op)) {
