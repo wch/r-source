@@ -5606,3 +5606,7 @@ heatmap(XX, Rowv = NA, symm = TRUE)
 stopifnot(identical(sprintf("%d", integer(0L)), character(0L)))
 stopifnot(identical(sprintf(character(0L), pi), character(0L)))
 ## new feature in 2.9.0
+
+## C-level asLogical(x) did not work when R-level as.logical() did
+stopifnot(if(as.raw(1)) TRUE)
+## failed before 2.9.0

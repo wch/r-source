@@ -513,6 +513,8 @@ BUG FIXES
 	\value{} section, since those are nowadays interpreted by
 	Perl.  (PR#13575)
 
+    o	if(as.raw(1)) TRUE  now works as expected. (PR#13630)
+
 
 
 	**************************************************
