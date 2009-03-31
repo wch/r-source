@@ -25,7 +25,7 @@ duplicated.default <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
 
 duplicated.data.frame <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
 {
-    if(!is.logical(incomparables) || incomparables)
+    if(!identical(incomparables, FALSE))
 	.NotYetUsed("incomparables != FALSE")
     duplicated(do.call("paste", c(x, sep="\r")), fromLast = fromLast)
 }
@@ -33,7 +33,7 @@ duplicated.data.frame <- function(x, incomparables = FALSE, fromLast = FALSE, ..
 duplicated.matrix <- duplicated.array <-
     function(x, incomparables = FALSE , MARGIN = 1L, fromLast = FALSE, ...)
 {
-    if(!is.logical(incomparables) || incomparables)
+    if(!identical(incomparables, FALSE))
 	.NotYetUsed("incomparables != FALSE")
     ndim <- length(dim(x))
     if (length(MARGIN) > ndim || any(MARGIN > ndim))
@@ -67,7 +67,7 @@ unique.default <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
 
 unique.data.frame <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
 {
-    if(!is.logical(incomparables) || incomparables)
+    if(!identical(incomparables, FALSE))
 	.NotYetUsed("incomparables != FALSE")
     x[!duplicated(x, fromLast = fromLast),  , drop = FALSE]
 }
@@ -75,7 +75,7 @@ unique.data.frame <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
 unique.matrix <- unique.array <-
     function(x, incomparables = FALSE , MARGIN = 1, fromLast = FALSE, ...)
 {
-    if(!is.logical(incomparables) || incomparables)
+    if(!identical(incomparables, FALSE))
 	.NotYetUsed("incomparables != FALSE")
     ndim <- length(dim(x))
     if (length(MARGIN) > 1L || any(MARGIN > ndim))
