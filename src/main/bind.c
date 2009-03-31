@@ -264,6 +264,11 @@ LogicalAnswer(SEXP x, struct BindData *data, SEXP call)
 	for (i = 0; i < n; i++)
 	    LOGICAL(data->ans_ptr)[data->ans_length++] = INTEGER(x)[i];
 	break;
+    case RAWSXP:
+	n = LENGTH(x);
+	for (i = 0; i < n; i++)
+	    LOGICAL(data->ans_ptr)[data->ans_length++] = (int)RAW(x)[i];
+	break;
     default:
 	errorcall(call, _("type '%s' is unimplemented in '%s'"),
 		  type2char(TYPEOF(x)), "LogicalAnswer");
@@ -298,6 +303,11 @@ IntegerAnswer(SEXP x, struct BindData *data, SEXP call)
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
 	    INTEGER(data->ans_ptr)[data->ans_length++] = INTEGER(x)[i];
+	break;
+    case RAWSXP:
+	n = LENGTH(x);
+	for (i = 0; i < n; i++)
+	    INTEGER(data->ans_ptr)[data->ans_length++] = (int)RAW(x)[i];
 	break;
     default:
 	errorcall(call, _("type '%s' is unimplemented in '%s'"),
@@ -346,6 +356,11 @@ RealAnswer(SEXP x, struct BindData *data, SEXP call)
 		REAL(data->ans_ptr)[data->ans_length++] = NA_REAL;
 	    else REAL(data->ans_ptr)[data->ans_length++] = xi;
 	}
+	break;
+    case RAWSXP:
+	n = LENGTH(x);
+	for (i = 0; i < n; i++)
+	    REAL(data->ans_ptr)[data->ans_length++] = (int)RAW(x)[i];
 	break;
     default:
 	errorcall(call, _("type '%s' is unimplemented in '%s'"),
@@ -415,6 +430,16 @@ ComplexAnswer(SEXP x, struct BindData *data, SEXP call)
 	    data->ans_length++;
 	}
 	break;
+
+    case RAWSXP:
+	n = LENGTH(x);
+	for (i = 0; i < n; i++) {
+	    COMPLEX(data->ans_ptr)[data->ans_length].r = (int)RAW(x)[i];
+	    COMPLEX(data->ans_ptr)[data->ans_length].i = 0.0;
+	    data->ans_length++;
+	}
+	break;
+
     default:
 	errorcall(call, _("type '%s' is unimplemented in '%s'"),
 		  type2char(TYPEOF(x)), "ComplexAnswer");

@@ -514,6 +514,7 @@ BUG FIXES
 	Perl.  (PR#13575)
 
     o	if(as.raw(1)) TRUE  now works as expected. (PR#13630)
+    	Also,  c(as.raw(12), TRUE) or c(raw(3), pi) do.
 
 
 
