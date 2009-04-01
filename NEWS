@@ -523,6 +523,8 @@ BUG FIXES
     o	duplicated(<data frame>, incomparables = NA) now gives the
 	intended error message.
 
+    o   name handling of as.data.frame() has been sanitized somewhat
+
 
 
 	**************************************************
