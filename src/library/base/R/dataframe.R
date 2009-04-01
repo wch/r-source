@@ -177,10 +177,12 @@ as.data.frame.list <-
     x
 }
 
-as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...)
+as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...,
+                                 nm = paste(deparse(substitute(x),
+                                 width.cutoff = 500L), collapse=" ")  )
 {
+    force(nm)
     nrows <- length(x)
-    nm <- paste(deparse(substitute(x), width.cutoff = 500L), collapse=" ")
     if(is.null(row.names)) {
 	if (nrows == 0L)
 	    row.names <- character(0L)
@@ -222,8 +224,11 @@ default.stringsAsFactors <- function()
 
 
 as.data.frame.character <-
-    function(x, ..., stringsAsFactors = default.stringsAsFactors())
-    as.data.frame.vector(if(stringsAsFactors) factor(x) else x, ...)
+    function(x, ..., stringsAsFactors = default.stringsAsFactors()){
+        nm <- deparse(substitute(x), width.cutoff=500L)
+        if(stringsAsFactors) x <- factor(x)
+        as.data.frame.vector(x, ..., nm=nm)
+    }
 
 as.data.frame.logical <- as.data.frame.vector
 
