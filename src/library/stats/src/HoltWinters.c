@@ -29,6 +29,9 @@ void HoltWinters (double *x,
 		  int    *start_time,
 		  int    *seasonal,
 		  int    *period,
+		  int    *dotrend,
+		  int    *doseasonal,
+
 		  double *a,
 		  double *b,
 		  double *s,
@@ -46,8 +49,8 @@ void HoltWinters (double *x,
 
     /* copy start values to the beginning of the vectors */
     level[0] = *a;
-    if (*beta > 0) trend[0] = *b;
-    if (*gamma > 0) memcpy(season, s, *period * sizeof(double));
+    if (*dotrend == 1) trend[0] = *b;
+    if (*doseasonal == 1) memcpy(season, s, *period * sizeof(double));
 
     for (i = *start_time - 1; i < *xl; i++) {
 	/* indices for period i */
@@ -55,8 +58,8 @@ void HoltWinters (double *x,
 	s0 = i0 + *period - 1;
 
 	/* forecast *for* period i */
-	xhat = level[i0 - 1] + (*beta > 0 ? trend[i0 - 1] : 0);
-	stmp = *gamma > 0 ? season[s0 - *period] : (*seasonal != 1);
+	xhat = level[i0 - 1] + (*dotrend == 1 ? trend[i0 - 1] : 0);
+	stmp = *doseasonal == 1 ? season[s0 - *period] : (*seasonal != 1);
 	if (*seasonal == 1)
 	    xhat += stmp;
 	else
@@ -75,12 +78,12 @@ void HoltWinters (double *x,
 		      + (1 - *alpha) * (level[i0 - 1] + trend[i0 - 1]);
 
 	/* estimate of trend *in* period i */
-	if (*beta > 0)
+	if (*dotrend == 1)
 	    trend[i0] = *beta        * (level[i0] - level[i0 - 1])
 		      + (1 - *beta)  * trend[i0 - 1];
 
 	/* estimate of seasonal component *in* period i */
-	if (*gamma > 0) {
+	if (*doseasonal == 1) {
 	    if (*seasonal == 1)
 		season[s0] = *gamma       * (x[i] - level[i0])
 			   + (1 - *gamma) * stmp;

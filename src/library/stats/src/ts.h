@@ -41,6 +41,7 @@ void filter2(double *x, int *n, double *filter, int *nfilt, double *out);
 void R_pp_sum (double *u, int *n, int *l, double *sum);
 void HoltWinters (double *x, int *xl, double *alpha, double *beta,
 		  double *gamma, int *start_time, int *seasonal, int *period,
+		  int *dotrend, int *doseasonal,
 		  double *a, double *b, double *s, double *SSE, double *level, 
 		  double *trend, double *season);
 
