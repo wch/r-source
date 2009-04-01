@@ -131,7 +131,7 @@ static const R_CMethodDef CEntries[]  = {
     {"filter1", (DL_FUNC) &filter1, 7},
     {"filter2", (DL_FUNC) &filter2, 5},
     {"R_pp_sum", (DL_FUNC) &R_pp_sum, 4},
-    {"HoltWinters", (DL_FUNC) &HoltWinters, 15},
+    {"HoltWinters", (DL_FUNC) &HoltWinters, 17},
     {"kmeans_Lloyd", (DL_FUNC) &kmeans_Lloyd, 9},
     {"kmeans_MacQueen", (DL_FUNC) &kmeans_MacQueen, 9},
     CDEF(R_approx),

@@ -260,7 +260,11 @@ NEW FEATURES
     o	unlink() is now able to remove broken symbolic links on
 	Unix-alikes.
 
-    o	new selectSuperClasses() utility.
+    o	New selectSuperClasses() utility.
+
+    o	HoltWinters() now allows parameters alpha and beta to be fixed
+	at 0 and hence beta = FALSE and gamma = FALSE are used to
+	specify restricted models.
 
 
 DEPRECATED & DEFUNCT

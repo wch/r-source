@@ -24,10 +24,10 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
 \arguments{
   \item{x}{An object of class \code{ts}}
   \item{alpha}{\eqn{alpha} parameter of Holt-Winters Filter.}
-  \item{beta}{\eqn{beta} parameter of Holt-Winters Filter. If set to 0,
-    the function will do exponential smoothing.}
+  \item{beta}{\eqn{beta} parameter of Holt-Winters Filter. If set to
+    \code{FALSE}, the function will do exponential smoothing.}
   \item{gamma}{\eqn{gamma} parameter used for the seasonal component.
-    If set to 0, an non-seasonal model is fitted.}
+    If set to \code{FALSE}, an non-seasonal model is fitted.}
   \item{seasonal}{Character string to select an \code{"additive"}
     (the default) or \code{"multiplicative"} seasonal model. The first
     few characters are sufficient. (Only takes effect if
@@ -133,11 +133,11 @@ plot(m)
 
 ## Non-Seasonal Holt-Winters
 x <- uspop + rnorm(uspop, sd = 5)
-m <- HoltWinters(x, gamma = 0)
+m <- HoltWinters(x, gamma = FALSE)
 plot(m)
 
 ## Exponential Smoothing
-m2 <- HoltWinters(x, gamma = 0, beta = 0)
+m2 <- HoltWinters(x, gamma = FALSE, beta = FALSE)
 lines(fitted(m2)[,1], col = 3)
 }
 \keyword{ts}
