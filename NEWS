@@ -525,6 +525,10 @@ BUG FIXES
 
     o   name handling of as.data.frame() has been sanitized somewhat
 
+    o   Evaluating an assignment expression with a string on the left
+	hand side no longer destructively changes the string to a symbol
+	in the expression.
+
 
 
 	**************************************************
