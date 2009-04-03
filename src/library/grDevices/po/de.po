@@ -206,7 +206,7 @@ msgstr "postscript(print.it=TRUE) mit leerem Druckkommando benutzt"
 #: devPS.c:3361
 #, c-format
 msgid "invalid page type '%s' (postscript)"
-msgstr "ungültiger Seitentyp '%s%' (potscript)"
+msgstr "ungültiger Seitentyp '%s' (postscript)"
 
 #: devPS.c:3485 devPS.c:4426 devWindows.c:2269
 msgid ""
@@ -221,7 +221,7 @@ msgstr "Drucken über file=\"\" ist in dieser Version nicht implementiert"
 #: devPS.c:3584 devPS.c:3597
 #, c-format
 msgid "cannot open 'postscript' pipe to '%s'"
-msgstr "kann die 'postscript' Pipe nach '%s%' nicht öffnen"
+msgstr "kann die 'postscript' Pipe nach '%s' nicht öffnen"
 
 #: devPS.c:3590
 msgid "file = \"|cmd\" is not implemented in this version"
