@@ -1,15 +1,15 @@
 import(grDevices)
 
 export(abline, arrows, assocplot, axTicks, Axis, axis, axis.Date,
-       axis.POSIXct, barplot, barplot, box, boxplot, bxp, cdplot,
-       clip, close.screen, co.intervals, contour, coplot, curve,
+       axis.POSIXct, barplot, barplot, blues, box, boxplot, bxp, cdplot,
+       clip, close.screen, co.intervals, contour, coplot, curve, densCols,
        dotchart, erase.screen, filled.contour, fourfoldplot, frame,
        grconvertX, grconvertY, grid, hist, hist.default, identify,
        image, layout, layout.show, lcm, legend, lines, lines.default,
        locator, matlines, matplot, matpoints, mosaicplot, mtext,
        pairs, panel.smooth, par, persp, pie, plot, plot.design,
        plot.new, plot.window, plot.xy, points, polygon, rect, rug,
-       screen, segments, spineplot, split.screen, stars, stem,
+       screen, segments, smoothScatter, spineplot, split.screen, stars, stem,
        strheight, stripchart, strwidth, sunflowerplot, symbols, text,
        title, xinch, xspline, xyinch, yinch)
 
