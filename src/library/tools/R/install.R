@@ -14,17 +14,25 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## calls sytem() on Windows for sh mv make zip perl hhc
+#### R based engine for  'R CMD INSTALL', 'R CMD SHLIB'
+####
+#### NB: future 'R CMD Rdconv'  is in ./RdConv2.R
 
+##' @param args
+
+##' @return ...
 .install_packages <- function(args = NULL)
 {
-    .file_test <- function(op, x, y)
-        ## we don't want to load utils just for this
+    ## calls system() on Windows for sh mv make zip perl hhc
+
+    ## we don't want to load utils just for this
+    .file_test <- function(op, x, y) # 'y' is unused here
         switch(op,
                "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
-               "-d" = !is.na(isdir <- file.info(x)$isdir) & isdir,
+               ## "-d":  90% of cases: use dir.exists() directly
                "-x" = (file.access(x, 1L) == 0L),
                stop(sprintf("test '%s' is not available", op), domain = NA))
+    dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
     ## global variables
     bundle_pkgs <- character() # list of packages in current pkg/bundle
@@ -131,7 +139,7 @@
     {
         ## Solaris will not remove any directory in the current path
         setwd(startdir)
-        if (.file_test("-d", tmpdir)) unlink(tmpdir, recursive=TRUE)
+        if (dir.exists(tmpdir)) unlink(tmpdir, recursive=TRUE)
     }
 
     do_exit_on_error <- function()
@@ -142,12 +150,12 @@
         for(p in bundle_pkgs) {
             if (is.na(p) || !nzchar(p)) next
             pkgdir <- file.path(lib, p)
-            if (nzchar(pkgdir) && .file_test("-d", pkgdir)) {
+            if (nzchar(pkgdir) && dir.exists(pkgdir)) {
                 starsmsg(stars, "Removing ", sQuote(pkgdir))
                 unlink(pkgdir, recursive = TRUE)
             }
             if (lock && nzchar(lockdir) &&
-                .file_test("-d", lp <- file.path(lockdir, p))) {
+                dir.exists(lp <- file.path(lockdir, p))) {
                 starsmsg(stars, "Restoring previous ", sQuote(pkgdir))
                 ## FIXME: on Windows use file.copy(recursive = TRUE)
                 system(paste("mv", lp, pkgdir))
@@ -205,7 +213,7 @@
         if (is_bundle) {
             contains <- strsplit(desc["Contains"], " ")[[1]]
             for(p in contains) {
-                if (.file_test("-d", file.path(pkg, p))) {
+                if (dir.exists(file.path(pkg, p))) {
                     pkgs <- c(pkgs, p)
                 } else {
                     warning("incorrect Contains metadata for bundle ",
@@ -256,7 +264,7 @@
             if (status) do_exit_on_error()
 
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
-            if (!.file_test("-d", instdir)) {
+            if (!dir.exists(instdir)) {
                 message("ERROR unable to create ", sQuote(instdir))
                 do_exit_on_error()
             }
@@ -341,7 +349,7 @@
     ## to be run from package source directory
     run_clean <- function()
     {
-        if (.file_test("-d", "src")) {
+        if (dir.exists("src")) {
             owd <- setwd("src")
             if(WINDOWS) {
                 if (file.exists("Makefile.win"))
@@ -367,8 +375,6 @@
 
     do_install_source <- function(pkg_name, instdir, pkg_dir, desc)
     {
-        paste0 <- function(...) paste(..., sep="")
-
         cp_r <- function(from, to)
         {
             ## unused now
@@ -377,8 +383,9 @@
             } else {
                 from <- shQuote(from)
                 to <- shQuote(to)
-                system(paste("cp -r ", from, "/* ", to,
-                             " || (cd ", from, " && ", TAR, " cf - . | (cd '", to, "' && ", TAR, "xf - ))", sep = ""))
+                system(paste0("cp -r ", from, "/* ", to,
+                              " || (cd ", from, " && ", TAR, " cf - . | (cd '",
+                              to, "' && ", TAR, "xf - ))"))
             }
         }
 
@@ -442,11 +449,11 @@
 
         if (!is.na(Type) && Type == "Translation") {
             starsmsg(stars, "Installing *Translation* package ", sQuote(pkg_name), " ...")
-            if (.file_test("-d", "share")) {
+            if (dir.exists("share")) {
                 files <- Sys.glob("share/*")
                 if (length(files)) file.copy(files, R.home("share"), TRUE)
             }
-            if (.file_test("-d", "library")) {
+            if (dir.exists("library")) {
                 ## FIXME use file.copy
                 system(paste("cp -r ./library", R.home()))
             }
@@ -493,14 +500,14 @@
                                                 default = lazy_data)
             thiszip <- parse_description_field(desc, "ZipData",
                                                default = TRUE)
-            if (!thislazy && thiszip && .file_test("-d", "data")) {
+            if (!thislazy && thiszip && dir.exists("data")) {
                 fi <- file.info(dir("data", full.names=TRUE))
                 if (sum(fi$size) > 100000) {
                     this <- sub("\\.[a-zA-Z]+$", "", row.names(fi))
                     if(!any(duplicated(this))) use_zip_data <- TRUE
                 }
             }
-            if (.file_test("-d", "man") &&
+            if (dir.exists("man") &&
                 length(Sys.glob("man/*.Rd")) > 20) use_zip_help <- TRUE
             message("\n  Using auto-selected zip options '",
                     if (use_zip_data) "--use-zip-data ",
@@ -550,7 +557,7 @@
                 pkgerrmsg("installing package DESCRIPTION failed", pkg_name)
         }
 
-        if (.file_test("-d", "src") && !fake) {
+        if (dir.exists("src") && !fake) {
             system_makefile <- file.path(R.home(), paste0("etc", rarch),
                                          "Makeconf")
             starsmsg(stars, "libs")
@@ -651,7 +658,7 @@
         }                               # end of src dir
 
         if (more_than_libs) {
-            if (.file_test("-d", "R")) {
+            if (dir.exists("R")) {
                 starsmsg(stars, "R")
                 dir.create(file.path(instdir, "R"), recursive = TRUE,
                            showWarnings = FALSE)
@@ -699,7 +706,7 @@
                 }
             }                           # end of R
 
-            if (.file_test("-d", "data")) {
+            if (dir.exists("data")) {
                 starsmsg(stars, "data")
                 files <- Sys.glob(file.path("data", "*"))
                 if (length(files)) {
@@ -733,7 +740,7 @@
                 } else warning("empty 'data' directory", call. = FALSE)
             }
 
-            if (.file_test("-d", "demo") && !fake) {
+            if (dir.exists("demo") && !fake) {
                 starsmsg(stars, "demo")
                 dir.create(file.path(instdir, "demo"), recursive = TRUE,
                            showWarnings = FALSE)
@@ -744,7 +751,7 @@
                 Sys.chmod(Sys.glob(file.path(instdir, "demo", "*")), "644")
             }
 
-            if (.file_test("-d", "exec") && !fake) {
+            if (dir.exists("exec") && !fake) {
                 starsmsg(stars, "exec")
                 dir.create(file.path(instdir, "exec"), recursive = TRUE,
                            showWarnings = FALSE)
@@ -756,14 +763,14 @@
                 }
             }
 
-            if (.file_test("-d", "inst") && !fake) {
+            if (dir.exists("inst") && !fake) {
                 starsmsg(stars, "inst")
                 ## FIXME avoid installing .svn etc?
                 cp_r("inst", instdir)
                 ## file.copy("inst", "instdir", recursive = TRUE)
             }
 
-            if (install_tests && .file_test("-d", "tests") && !fake) {
+            if (install_tests && dir.exists("tests") && !fake) {
                 starsmsg(stars, "tests")
                 ## system(paste0("cp -r tests " , shQuote(instdir)))
                 file.copy("tests", instdir, recursive = TRUE)
@@ -784,7 +791,7 @@
 
             ## LazyLoading
             value <- parse_description_field(desc, "LazyLoad", default = lazy)
-            if (.file_test("-d", "R") && value) {
+            if (dir.exists("R") && value) {
                 starsmsg(stars, "preparing package for lazy loading")
                 ## Something above, e.g. lazydata,  might have loaded the namespace
                 if (pkg_name %in% loadedNamespaces())
@@ -800,7 +807,7 @@
                 ## file.remove(file.path(instdir, "R", "all.rda"))
             }
 
-            if (.file_test("-d", "man")) {
+            if (dir.exists("man")) {
                 starsmsg(stars, "help")
                 res <- try(.install_package_man_sources(".", instdir))
                 if (inherits(res, "try-error"))
@@ -829,17 +836,17 @@
                          (nzchar(Sys.getenv("R_UNZIPCMD")) &&
                           nzchar(zip <- Sys.getenv("R_ZIPCMD")) ))) {
                         owd <- setwd(instdir)
-                        if (.file_test("-d", "R-ex")) {
+                        if (dir.exists("R-ex")) {
                             wd2 <- setwd("R-ex")
                             system(paste(zip, " -q -m Rex *.R"))
                             setwd(wd2)
                         }
-                        if (.file_test("-d", "help")) {
+                        if (dir.exists("help")) {
                             wd2 <- setwd("help")
                             system(paste(zip, " -q -m Rhelp * -x AnIndex"))
                             setwd(wd2)
                         }
-                        if (.file_test("-d", "latex")) {
+                        if (dir.exists("latex")) {
                             wd2 <- setwd("latex")
                             system(paste(zip, " -q -m Rhelp *.tex"))
                             setwd(wd2)
@@ -847,7 +854,7 @@
                         setwd(owd)
                     }
                     if (build_chm) {
-                        if (.file_test("-d", "chm")) {
+                        if (dir.exists("chm")) {
                             owd <- setwd("chm")
                             file.copy(file.path(R.home(), "src/gnuwin32/help/Rchm.css"), ".")
                             file.copy(file.path(R.home("doc"), "html/logo.jpg"), ".")
@@ -916,11 +923,6 @@
 
     startdir <- getwd()
 
-    ## FIXME: move down to where needed
-    tmpdir <- tempfile("R.INSTALL")
-    if (!dir.create(tmpdir))
-        stop("cannot create temporary directory")
-
     lib <- lib0 <- ""
     clean <- FALSE
     preclean <- FALSE
@@ -975,7 +977,7 @@
         } else if (a == "--with-package-versions") {
             stop("Use of --with-package-versions is defunct", call. = FALSE)
         } else if (a == "--no-configure") {
-            use_configure = FALSE;
+            use_configure <- FALSE
         } else if (a == "--no-docs") {
             build_text <- build_html <- build_latex <- build_example <- build_chm <- FALSE
         } else if (a == "--no-text") {
@@ -1023,6 +1025,10 @@
         } else pkgs <- c(pkgs, a)
         args <- args[-1]
     }
+
+    tmpdir <- tempfile("R.INSTALL")
+    if (!dir.create(tmpdir))
+        stop("cannot create temporary directory")
 
     ## now unpack tarballs and do some basic checks
     allpkgs <- character(0)
@@ -1101,7 +1107,7 @@
         lib <- getwd()
         setwd(cwd)
     }
-    if (!.file_test("-d", lib) || file.access(lib, 2L))
+    if (!dir.exists(lib) || file.access(lib, 2L))
         stop("ERROR: no permission to install to directory ",
              sQuote(lib), call. = FALSE)
 
@@ -1122,7 +1128,7 @@
             q("no", status=3, runLast = FALSE)
         }
         dir.create(lockdir, recursive = TRUE)
-        if (!.file_test("-d", lockdir)) {
+        if (!dir.exists(lockdir)) {
             message("ERROR: failed to create lock directory ", sQuote(lockdir))
             do_cleanup_tmpdir()
             q("no", status=3, runLast = FALSE)
@@ -1164,17 +1170,8 @@
     if (debug)
         starsmsg(stars, "build_help_opts=", paste(build_help_opts, collapse=" "))
 
-    if (build_help) {
-        perllib <- Sys.getenv("PERL5LIB")
-        if (nzchar(perllib)) {
-            Sys.setenv(PERL5LIB = paste(file.path(R.home("share"), "perl"),
-                       perllib, sep = .Platform$path.sep))
-        } else {
-            perllib <- Sys.getenv("PERLLIB")
-            Sys.setenv(PERLLIB = paste(file.path(R.home("share"), "perl"),
-                       perllib, sep = .Platform$path.sep))
-        }
-    }
+    if (build_help)
+        .setPERL()
 
     if (debug)
         starsmsg(stars, "DBG: R CMD INSTALL' now doing do_install")
@@ -1226,8 +1223,8 @@
         mconf <- readLines(file.path(R.home(),
                                      p0("etc", Sys.getenv("R_ARCH")),
                                      "Makeconf"))
-        SHLIB_EXT <-sub(".*= ", "", grep("^SHLIB_EXT", mconf, value = TRUE))
-        SHLIB_LIBADD <-sub(".*= ", "", grep("^SHLIB_LIBADD", mconf, value = TRUE))
+        SHLIB_EXT <- sub(".*= ", "", grep("^SHLIB_EXT", mconf, value = TRUE))
+        SHLIB_LIBADD <- sub(".*= ", "", grep("^SHLIB_LIBADD", mconf, value = TRUE))
         MAKE <- Sys.getenv("MAKE")
     } else {
         rhome <- chartr("\\", "/", R.home())
@@ -1898,6 +1895,15 @@
     writeLines(dir(d, pattern = "\\.html$"), con)
 }
 
+.setPERL <- function() {
+    pperl <- function(lib) paste(file.path(R.home("share"), "perl"), lib,
+				 sep = .Platform$path.sep)
+    if (nzchar(perllib <- Sys.getenv("PERL5LIB")))
+	Sys.setenv(PERL5LIB = pperl(perllib))
+    else
+	Sys.setenv(PERLLIB = pperl(Sys.getenv("PERLLIB")))
+}
+
 .convertRdfiles <-
     function(dir, outDir, OS = .Platform$OS.type,
              types = c("txt", "html", "latex", "example"))
@@ -1983,15 +1989,7 @@
         }
     }
     else {
-        perllib <- Sys.getenv("PERL5LIB")
-        if (nzchar(perllib)) {
-            Sys.setenv(PERL5LIB = paste(file.path(R.home("share"), "perl"),
-                       perllib, sep = .Platform$path.sep))
-        } else {
-            perllib <- Sys.getenv("PERLLIB")
-            Sys.setenv(PERLLIB = paste(file.path(R.home("share"), "perl"),
-                       perllib, sep = .Platform$path.sep))
-        }
+        .setPERL()
 
         for (f in files) {
             Links <- findHTMLlinks(outDir)
