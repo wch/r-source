@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-03-28 17:27\n"
-"PO-Revision-Date: 2008-10-07 02:05+0900 \n"
-"Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
+"PO-Revision-Date: 2009-03-31 20:47+0900 \n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=utf-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 0.10.1 \n"
+"X-Generator: Pootle 1.1.0 \n"
 
 msgid "replacement value is not a matrix"
 msgstr " 置き換え値は行列ではありません "
@@ -233,7 +233,7 @@ msgid "no existing definition for function \"%s\""
 msgstr " 関数 \"%s\" に対する既存の定義はありません "
 
 msgid "Creating a generic function from function \"%s\""
-msgstr " 新しい総称関数 \"%s\" を \"%s\" 中に生成します "
+msgstr " 関数 \"%s\" から総称関数を生成します "
 
 msgid "Creating a new generic function for \"%s\" in \"%s\""
 msgstr " 新しい総称関数 \"%s\" を \"%s\" 中に生成します "
@@ -325,10 +325,10 @@ msgid "\"%s\" has no methods defined"
 msgstr " \"%s\" は定義されたメソッドを持ちません "
 
 msgid "selectMethod(): mlist is not an environment or NULL :"
-msgstr ""
+msgstr " selectMethod（）：mlistは環境またはNULLでありません： "
 
 msgid "** should no longer happen!"
-msgstr ""
+msgstr " **は、もはや起こってはいけません！ "
 
 msgid ""
 "bad class specified for element %d (should be a single character string)"
@@ -411,9 +411,8 @@ msgstr ""
 " where が与えられた時は、継承に対しては FALSE だけが意味を持ちます(以下が与え"
 "られました "
 
-#, fuzzy
 msgid "argument \"f\" must be a generic function or %s"
-msgstr " 引数 \"f\" に対する関数は総称的でなければなりません "
+msgstr " 引数 \"f\" に対する関数は総称関数または %s でなければなりません "
 
 msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
 msgstr ""
@@ -528,16 +527,16 @@ msgstr ""
 " クラス \"%s\" のオブジェクト(要求されたクラス \"%s\" ではなく)を初期化 "
 
 msgid "Reported %d ambiguous selections out of %d for function %s"
-msgstr ""
+msgstr "関数 %s に対し、%d 個の曖昧な選択が %d 個中報告されました "
 
 msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
-msgstr ""
+msgstr " %d: ターゲット \"%s\": 選択 \"%s\" (その他: %s) "
 
 msgid ","
 msgstr " , "
 
 msgid "Notes: %s."
-msgstr ""
+msgstr " 注意：%s "
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
@@ -601,9 +600,8 @@ msgstr ""
 msgid "class \"%s\" extends an undefined class, \"%s\""
 msgstr " クラス \"%s\" は未定義のクラスに拡張されます，\"%s\" "
 
-#, fuzzy
 msgid "'Class' must be a valid class definition or class"
-msgstr " 'class1' はクラス名かクラス定義でなければなりません "
+msgstr " 'Class' は適正なクラス定義もしくはクラスでなければなりません "
 
 msgid ""
 "trying to assign an object of class \"%s\" as the definition of class \"%s"
@@ -703,12 +701,14 @@ msgid ""
 "the superclass ordering of  its direct superclasses; using an ordering which "
 "conflicts with %s"
 msgstr ""
+"クラス \"%s\" の上位クラスの順序付けはどれもその直接の上位クラスの上位クラス"
+"順序と両立しません；%s と矛盾する順序付けを用います "
 
 msgid "\"class\" is a reserved slot name and cannot be redefined"
 msgstr " \"class\" は予約済みのスロット名であり、再定義出来ません "
 
 msgid "Data part is undefined for general S4 object"
-msgstr ""
+msgstr " 一般的な S4 クラスオブジェクトに対してデータ部分が未定義です "
 
 msgid "no '.Data' slot defined for class \"%s\""
 msgstr " クラス \"%s\" に対して定義された '.Data' スロットはありません "
@@ -717,7 +717,7 @@ msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr " クラス \"%s\" はデータパート(.Data スロット)が定義されていません "
 
 msgid "Class cannot have both an ordinary and hidden data type"
-msgstr ""
+msgstr "クラスは通常と隠れデータタイプの双方を持つことはできません "
 
 msgid ""
 "a validity method must be a function of one argument, got an object of class "
@@ -764,45 +764,49 @@ msgid ""
 "argument includeSubclasses must be a logical, either one value or a vector "
 "of the same length as argument classes"
 msgstr ""
+" 引数 includeSubclasses は、単一か引数クラスと同じ長さのベクトルである論理値"
+"でなければなりません "
 
 msgid "Argument abbreviate must be 0, 1, 2, or 3"
-msgstr ""
+msgstr " 引数の省略形は 0,1,2,3 のどれかでなければなりません "
 
 msgid "Needed the supplied labels vector of length %n, got %n"
-msgstr ""
+msgstr "長さ %n のラベルベクトルを与える必要がありましたが、%n 個でした "
 
 msgid ""
 "S3 methods written for S4 classes will fail inheritance!\n"
 "Package"
 msgstr ""
+"S4 クラスに対して書かれた S3 メソッドが継承に失敗しました！ \n"
+"パッケージ"
 
 msgid "apparently has"
-msgstr ""
+msgstr " 見たところ以下を持ちます "
 
 msgid "such methods  for the functions"
-msgstr ""
+msgstr "この関数に対するそうしたメソッド "
 
-#, fuzzy
 msgid "functions"
-msgstr "コネクション"
+msgstr "関数"
 
 msgid "Possible dangerous methods:"
-msgstr ""
+msgstr "危険な可能性のあるメソッド： "
 
 msgid "(Warnings generated once per package per session)"
-msgstr ""
+msgstr " (警告はパッケージ毎、セッション毎に一回出されます) "
 
 msgid "There are apparent S3 methods for class \""
-msgstr ""
+msgstr " 見たところ S3 メソッドが存在します、以下のクラス \" "
 
 msgid ""
 "\"\n"
 "DANGER: any subclasses of this class will not inherit the methods"
 msgstr ""
+" \" \n"
+"危険: このクラスのどんなサブクラスもメソッドを引き継がないでしょう. "
 
-#, fuzzy
 msgid "Some of the superclasses in the definition of class \""
-msgstr "スーパークラス \"%s\" の定義が, クラス \"%s\" の設定中にありません "
+msgstr "クラスの定義のスーパークラスのいくつか \" "
 
 msgid ""
 "\" have apparent S3 methods.\n"
@@ -810,6 +814,10 @@ msgid ""
 "DANGER: the new class will not inherit these methods.\n"
 "Complain to the author of the superclass definitions."
 msgstr ""
+" \" 見かけのS3方法を持ってください. \n"
+"\n"
+"危険: 新しいクラスはこれらのメソッドを引き継がないでしょう. \n"
+"スーパークラスの定義について作者に訴えてください. "
 
 msgid ""
 "the function being used as %s in making a generic function for \"%s\" is "
@@ -1018,10 +1026,8 @@ msgstr " ; これらのうち最初のものを使います "
 msgid "multiple equivalent inherited matches:"
 msgstr " 複数の継承された同等物による一致: "
 
-#, fuzzy
 msgid "single string; got an object of class \"%s\""
-msgstr ""
-" \")、メソッドが期待されますが、以下のクラスのオブジェクトが得られました \" "
+msgstr " 一つのストリング;クラス \"%s\" のオブジェクトを得ました "
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr " \"%s\" は封印されたクラス定義を持ち、再定義は出来ません "
@@ -1061,9 +1067,8 @@ msgstr ""
 " 含まれるクラス (%s) (クラス \"%s\" に対する)中にエラーがありました； \"%s\" "
 "から以前の定義を再生しました "
 
-#, fuzzy
 msgid "Internal error: definiition of class \"%s\" not properly assigned"
-msgstr " クラス \"%s\" の定義はありません "
+msgstr "内部エラー: 適切に割り当てられなかったクラスの定義 \"%s\" "
 
 msgid "element %d of the representation was not a single character string"
 msgstr " representation の要素 %d は単一の文字列ではありません "
@@ -1140,14 +1145,17 @@ msgstr " \"%s\" (%s に対して使用する)の定義がありません "
 
 msgid "Class definition cannot extend more than one of these data types: %s"
 msgstr ""
+"クラス定義は、これらのデータ型のうちの1つ以上を広げることができません：%s "
 
 msgid ""
 "Sorry, abnormal type \"%s\" is not supported as a superclass of a class "
 "definition"
 msgstr ""
+"すいませんが, 異常なタイプ \"%s\" はクラス定義のスーパークラスとして支持され"
+"ません. "
 
 msgid "Defining type \"%s\" as a superclass via class \"%s\""
-msgstr ""
+msgstr "タイプ \"%s\" をクラス \"%s\" を経たスーパークラスと定義すること"
 
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
@@ -1356,15 +1364,13 @@ msgstr " 以下の総称的関数中に不正か未設定のメソッドテー�
 msgid "Trying to find a methods table in a non-generic function"
 msgstr " 総称的でない関数中にメソッドテーブルを探しています "
 
-#, fuzzy
 msgid ""
 "The \"ambiguousMethodSelection\" option should be a function to be called as "
 "the condition action; got an object of class \"%s\""
 msgstr ""
-" 'setIs' に対する 'coerce' 引数は１つの引数を持つ関数であるべきですが、クラ"
-"ス \"%s\" のオブジェクトを受け取りました "
+" \"ambiguousMethodSelection\" オプションは条件付きアクションとして呼び出され"
+"る関数であるべきです；クラス \"%s\" のオブジェクトでした "
 
-#, fuzzy
 msgid ""
 "No simply inherited methods found for function \"%s\"; using non-simple "
 "method"
@@ -1377,6 +1383,9 @@ msgid ""
 " target signature \"%s\".\n"
 " %s would also be valid"
 msgstr ""
+" 注：シグネチャー\"%s\"を選ぶ(メソッド \"%s\" のために)方法, \n"
+" 対象シグネチャー\"%s\". \n"
+" \"%s\"も有効です "
 
 msgid "found"
 msgstr " が見付かりました "
@@ -1397,16 +1406,16 @@ msgstr ""
 "できません "
 
 msgid "Selecting %d methods of min. distance"
-msgstr ""
+msgstr "最小距離の %d 個のメソッドを選択 "
 
 msgid "Selecting %d non-group methods"
-msgstr ""
+msgstr " %d 個の非グループメソッドを選択 "
 
 msgid "Selecting %d partially exact-matching method(s)"
-msgstr ""
+msgstr " %d 個の部分的に正確なマッチングメソッドを選択 "
 
 msgid "Choosing method %s from %d ambiguous possibilities"
-msgstr ""
+msgstr " %d 個の曖昧な可能性からメソッド %s を選択 "
 
 msgid "Failed to find expected group generic function:"
 msgstr " 期待されたグループ総称的関数を見付けることができませんでした: "
@@ -1449,17 +1458,18 @@ msgstr ""
 " Generic \"%s\" に対するメソッドテーブルを、パッケージ \"%s\" から パッケー"
 "ジ \"%s\" の中に見つけることができません "
 
-#, fuzzy
 msgid "Undefined classes ("
-msgstr " \"%s\" は定義されたクラスではありません "
+msgstr "未定義クラス( "
 
 msgid ") will be ignored, for argument"
-msgstr ""
+msgstr " ) 引数の為に無視されるでしょう "
 
 msgid ""
 "Argument \"signatures\" must be a character matrix whose rows are method "
 "signatures"
 msgstr ""
+" 引数”シグネチャー”は行がメソッドシグネチャーであるキャラクタマトリクスである"
+"に違いありません "
 
 msgid "not allowed to have test==TRUE and an S4Class definition"
 msgstr "S4Classの定義とtest == TRUEをともに与えることはできません "
@@ -1470,13 +1480,12 @@ msgstr ""
 " 引数 S4Class はクラス定義でなければなりません: クラス \"%s\" のオブジェクト"
 "が与えられました "
 
-#, fuzzy
 msgid ""
 "inconsistent old-style class information for \"%s\"; the class is defined "
 "but does not extend \"%s\""
 msgstr ""
-" \"%s\" に対する不整合な旧式の情報(恐らく古いクラスと新しいクラスが混ざってい"
-"る？) "
+" \"%s\" に対する不整合な旧式のクラス情報；クラスは定義されていますが \"%s\" "
+"に拡張できません "
 
 msgid ""
 "The S3 class of the prototype, \"%s\", is undefined; only allowed when this "
@@ -1485,21 +1494,18 @@ msgstr ""
 "プロトタイプのS3クラス、\"%s\" は未定義です。これは登録済みのS3クラス( \"%s"
 "\" ) の場合にのみ許されます "
 
-#, fuzzy
 msgid "Restoring definition of class \"%s\""
-msgstr " クラス \"%s\" の定義はありません "
+msgstr "クラス”%s”の定義を回復させる "
 
-#, fuzzy
 msgid "Slot \"%s\": class \"%s\" should extend class \"%s\""
-msgstr " クラス \"%s\" はクラス \"%s\" に拡張できません "
+msgstr "スロット \"%s\": クラス \"%s\"  の拡張されたクラス \"%s\"  "
 
-#, fuzzy
 msgid ""
 "invalid S4 class corresponding to S3 class: slots in  S4 version must extend "
 "corresponding slots in S3 version: fails for %s"
 msgstr ""
-" クラス \"%s\" のスロット \"%s\" 中のスロットに拡張されなければなりません： %"
-"s に対して失敗しました "
+" S3 クラスに対する不正な S4 クラス：S4 バージョン中のスロットは S3 バージョン"
+"中のスロットに拡張されなければなりません： %s に対して失敗しました "
 
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr " 旧式のクラス (%s) の明示的な強制変換は定義されていません "

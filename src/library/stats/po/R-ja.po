@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:27\n"
-"PO-Revision-Date: 2008-10-02 13:49+0900 \n"
-"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
+"POT-Creation-Date: 2009-04-03 13:12\n"
+"PO-Revision-Date: 2009-03-31 20:57+0900 \n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 0.10.1 \n"
+"X-Generator: Pootle 1.1.0 \n"
 
 msgid "empty model supplied"
 msgstr " 空のモデルが与えられました "
@@ -21,7 +21,8 @@ msgstr " 'acf' は 2 以上の長さでなければなりません "
 msgid "object not interpretable as a factor"
 msgstr " オブジェクトは因子として解釈できません "
 
-msgid "cannot fit models without level ('alpha' must not be 0)."
+#, fuzzy
+msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)."
 msgstr ""
 " 水準のないモデルは当てはめられません('alpha' は 0 であってはいけません) "
 
@@ -135,9 +136,8 @@ msgstr ""
 " FUNの長さ %d は \n"
 "  マージンの長さ %d と合致しません "
 
-#, fuzzy
 msgid "no rows to aggregate"
-msgstr " 比較すべきモデルがありません "
+msgstr " 合体すべき行がありません "
 
 msgid "'by' must be a list"
 msgstr " 'by' はリストでなければなりません "
@@ -201,7 +201,7 @@ msgid "grouping factor must have exactly 2 levels"
 msgstr " グループ化因子は丁度二つの水準を持たなければなりません "
 
 msgid "weights are not supported in a multistratum aov() fit"
-msgstr ""
+msgstr " 多層の aov() では重みはサポートされていません "
 
 msgid "Error() model is singular"
 msgstr " Error() モデルは特異です "
@@ -774,7 +774,7 @@ msgid "negative values not allowed for the Poisson family"
 msgstr " ポアソンファミリには負の値は許されません "
 
 msgid "ignoring prior weights"
-msgstr ""
+msgstr " 事前重みを無視します "
 
 msgid ""
 "link \"%s\" not available for quasipoisson family; available links are %s"
@@ -816,7 +816,7 @@ msgid ""
 msgstr " もしくは、第一列が成功数、第二列が失敗数である 2 列の行列です "
 
 msgid "cannot simulate from non-integer prior.weights"
-msgstr ""
+msgstr "整数でない事前重みからはシミュレーションできません "
 
 msgid ""
 "link \"%s\" not available for quasibinomial family; available links are %s"
@@ -837,7 +837,7 @@ msgid "non-positive values not allowed for the gamma family"
 msgstr " 正でない値はガンマファミリには許されません "
 
 msgid "using weights as shape paraneters"
-msgstr ""
+msgstr "シェイプパラメータとして重みを使います "
 
 msgid ""
 "link \"%s\" not available for inverse.gaussian family; available links are %s"
@@ -850,9 +850,10 @@ msgstr " 逆正規ファミリでは正の値しか許されません "
 
 msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
 msgstr ""
+" 'inverse.gaussian' ファミリには CRAN パッケージ 'SuppDists' が必要です "
 
 msgid "using weights as inverse variances"
-msgstr ""
+msgstr "逆分散として重みを使いました "
 
 msgid ""
 "'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", "
@@ -1264,11 +1265,10 @@ msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr " オブジェクト中の残り自由度はこの 'lm'ではないと示唆します "
 
 msgid "family '"
-msgstr ""
+msgstr " ファミリ ' "
 
-#, fuzzy
 msgid "' not implemented"
-msgstr " 型 '%s' はまだ実装されていません "
+msgstr " 実装されていません "
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr " 完全なフィットに対するANOVA F検定には信頼性がありません "
@@ -1458,9 +1458,8 @@ msgstr ""
 msgid "Design is unbalanced - use se.contrast() for se's"
 msgstr " デザインは均衡していません - seのためにse.contrast()を使います "
 
-#, fuzzy
 msgid "design is unbalanced so cannot proceed"
-msgstr " デザインは均衡していません - seのためにse.contrast()を使います "
+msgstr " デザインは不均衡ですから先に進めません "
 
 msgid ""
 "Standard error information not returned as design is unbalanced. \n"
@@ -1583,9 +1582,8 @@ msgstr " 論理値の `hessian' は許されません。ドキュメントを見
 msgid "'params' has wrong length"
 msgstr " 'params' は 誤った長さです "
 
-#, fuzzy
 msgid "'varying' must be in 1L:length(pars)"
-msgstr " 'varying' は 1:length(pars) 中になければなりません "
+msgstr " 'varying' は 1L:length(pars) 中になければなりません "
 
 msgid "'varying' has wrong length"
 msgstr " 'varying' が 誤った長さです "
@@ -1709,9 +1707,8 @@ msgstr "てこ比1の観測データはプロットしません "
 msgid "use only with \"lm\" objects"
 msgstr " \"lm\" オブジェクトに対してだけ使用してください "
 
-#, fuzzy
 msgid "'which' must be in 1L:6"
-msgstr " 'which' は 1:6 中になければなりません "
+msgstr " 'which' は 1L:6 中になければなりません "
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr " 'id.n' は {1,..,%d} 中になければなりません "
@@ -1722,28 +1719,23 @@ msgstr " ハット値（leverage）は全て同一値で "
 msgid "and there are no factor predictors; no plot no. 5"
 msgstr " 因子予測値もありません：5 番目のプロットはありません "
 
-#, fuzzy
 msgid "'x' and 'T' have incompatible length"
-msgstr " 'x' と 'weights' は同じ長さを持たねばなりません "
+msgstr " 'x' と 'weights' は比較可能な長さを持たねばなりません "
 
-#, fuzzy
 msgid "'x' must be finite, nonnegative, and integer"
-msgstr " 'x' は非負整数でなければなりません "
+msgstr " 'x' は有限、非負の整数でなければなりません "
 
-#, fuzzy
 msgid "'T' must be nonnegative"
-msgstr " 'x' は非負でなければなりません "
+msgstr " 'T' は非負でなければなりません "
 
 msgid "not enough data"
 msgstr " 十分なデータがありません "
 
-#, fuzzy
 msgid "The case k > 2 is unimplemented"
-msgstr " 型 '%s' はまだ実装されていません "
+msgstr " k > 2 の場合はまだ実装されていません "
 
-#, fuzzy
 msgid "'r' must be a single positive number"
-msgstr " 比率('ratio')は単一の正値でなければなりません "
+msgstr " 'r' は単一の正値でなければなりません "
 
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
@@ -1885,12 +1877,11 @@ msgstr " 'relevel' は因子専用です "
 msgid "'ref' must be an existing level"
 msgstr " 'ref' は既存の水準でなければなりません "
 
-#, fuzzy
 msgid "ref = %d must be in 1L:%d"
-msgstr " ref = %d は 1:%d 中になければなりません: "
+msgstr " ref = %d は 1L:%d 中になければなりません: "
 
 msgid "Failed to guess time-varying variables from their names"
-msgstr "時間依存変数を名前から推測できませんでした "
+msgstr " 時間依存変数を名前から推測できませんでした "
 
 msgid "'varying' arguments must be the same length"
 msgstr " 'varying' 引数は同じ長さでなければなりません "
@@ -2042,10 +2033,9 @@ msgstr ""
 msgid "'spline' requires n >= 1"
 msgstr " 'spline' は n > = 1 であることを必要とします "
 
-#, fuzzy
 msgid "spline: first and last y values differ - using y[1L] for both"
 msgstr ""
-" spline: 最初と最後の y 値が異なります ‐ y[1] を双方のために使用します "
+" spline: 最初と最後の y 値が異なります ‐ y[1L] を双方のために使用します "
 
 msgid "'deriv' must be between 0 and 3"
 msgstr " 'deriv' は 0 と 3 の間になければなりません "

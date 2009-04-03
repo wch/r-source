@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-03-17 19:28\n"
-"PO-Revision-Date: 2008-10-02 13:51+0900 \n"
-"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
+"PO-Revision-Date: 2009-03-31 21:07+0900 \n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 0.10.1 \n"
+"X-Generator: Pootle 1.1.0 \n"
 
 msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
@@ -520,9 +520,10 @@ msgstr " リポジトリー %s に対する索引にアクセスできません 
 
 msgid "invalid 'oldPkgs'; must be as result from old.packages()"
 msgstr ""
+" 不正な 'oldPkgs'; old.packages() からの結果のようでなければなりません "
 
 msgid "illformed 'instPkgs' matrix"
-msgstr ""
+msgstr " 不正な 'instPkgs' 行列 "
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr ""
@@ -535,7 +536,7 @@ msgid "bundle '%s' has extra contents %s"
 msgstr " バンドル '%s' は余計な内容 %s を持ちます "
 
 msgid "read.dcf() error on file '%s'"
-msgstr ""
+msgstr "ファイル '%s' に対する read.dcf() エラー"
 
 msgid "'priority' must be character or NULL"
 msgstr " 'priority' は文字か NULL で無ければなりません "
@@ -615,7 +616,7 @@ msgid "unable to create"
 msgstr " 生成できませんでした "
 
 msgid "inferring 'repos = NULL' from the file name"
-msgstr ""
+msgstr "ファイル名から 'repos = NULL' を推測"
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr ""
@@ -649,6 +650,8 @@ msgid ""
 "installation of one of more packages failed,\n"
 "  probably %s"
 msgstr ""
+" 一つもしくは複数のパッケージのインストールが失敗しました \n"
+"恐らく %s "
 
 msgid ""
 "The downloaded packages are in\n"
@@ -813,10 +816,10 @@ msgid "Invalid roman numeral(s): %s"
 msgstr " 不正なローマ数字です: %s "
 
 msgid "length mismatch: bug in code!"
-msgstr ""
+msgstr "長さが一致しません：コードにバグ！ "
 
 msgid "Processing file"
-msgstr ""
+msgstr "ファイルを処理中"
 
 msgid "no valid packages were specified"
 msgstr " 有効なパッケージが指定されませんでした "
@@ -921,10 +924,10 @@ msgid "options(\"browser\") not set"
 msgstr " options(\"browser\") が設定されていません "
 
 msgid "'latexcmd' is empty"
-msgstr ""
+msgstr " 'latexcmd' が空です "
 
 msgid "'dvipscmd' is empty"
-msgstr ""
+msgstr " 'dvipsscmd' が空です "
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr " 不正なブラウザー名です、 options(\"browser\") をチェックして下さい "

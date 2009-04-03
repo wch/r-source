@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2009-03-17 19:25+0000\n"
-"PO-Revision-Date: 2008-09-30 10:56+0900 \n"
-"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
+"PO-Revision-Date: 2009-03-31 20:52+0900 \n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 0.10.1 \n"
+"X-Generator: Pootle 1.1.0 \n"
 
 #: devNull.c:42 devNull.c:45
 msgid "unable to start NULL device"
@@ -66,13 +66,13 @@ msgid "font metrics unknown for character 0x%x"
 msgstr " 文字　0x%x に対するフォントメトリックスが未知です "
 
 #: devPS.c:920
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "invalid character (%04x) sent to 'PostScriptCIDMetricInfo' in a single-byte "
 "locale"
 msgstr ""
-" 一バイトロケールに於いて 'PostScriptCIDMetricInfo' に不正な文字が送られまし"
-"た "
+" 一バイトロケールに於いて 'PostScriptCIDMetricInfo' に不正な文字(%04x)が送ら"
+"れました "
 
 #: devPS.c:928
 msgid ""
@@ -385,7 +385,7 @@ msgstr " PDF のバージョンを 1.4 に更新 "
 
 #: devPS.c:5920 devPS.c:5958
 msgid "unknown 'colormodel', using 'rgb'"
-msgstr ""
+msgstr "未知の 'colormodel', 'rggb' を使います "
 
 #: devPS.c:6315
 msgid "Corrupt encodings in PDF device"
@@ -423,7 +423,7 @@ msgstr " PDF CID フォントが見付からないかロードできませんで
 
 #: devPS.c:7293
 msgid "CID fonts are not supported on this platform"
-msgstr ""
+msgstr "CID フォントはこのプラットフォームではサポートされていません "
 
 #: devPS.c:7401 devPS.c:7405 devPS.c:7557 devPS.c:7561
 #, c-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:27\n"
+"POT-Creation-Date: 2009-04-03 13:12\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -25,7 +25,8 @@ msgstr "'acf' deve ter comprimento dois ou mais"
 msgid "object not interpretable as a factor"
 msgstr "objeto não é interpretável como fator"
 
-msgid "cannot fit models without level ('alpha' must not be 0)."
+#, fuzzy
+msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)."
 msgstr "não é possível ajustar modelos sem nível ('alpha' não pode ser 0)."
 
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."

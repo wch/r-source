@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:27\n"
+"POT-Creation-Date: 2009-04-03 13:12\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -25,7 +25,8 @@ msgstr "'acf'的长度必需是一或二"
 msgid "object not interpretable as a factor"
 msgstr "不能把对象解释成因子"
 
-msgid "cannot fit models without level ('alpha' must not be 0)."
+#, fuzzy
+msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)."
 msgstr "无法拟合没有层次的模型('alpha'不能为0) 。"
 
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."

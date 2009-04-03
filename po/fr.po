@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-03-28 17:25+0000\n"
+"POT-Creation-Date: 2009-04-03 13:05+0100\n"
 "PO-Revision-Date: 2009-03-29 19:06+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -146,8 +146,8 @@ msgstr "problème lors de l'affichage de '%s'"
 #: src/main/envir.c:1823 src/main/envir.c:1837 src/main/envir.c:1843
 #: src/main/envir.c:1847 src/main/envir.c:2063 src/main/envir.c:2184
 #: src/main/envir.c:2442 src/main/envir.c:2716 src/main/envir.c:3257
-#: src/main/eval.c:282 src/main/eval.c:1696 src/main/eval.c:1720
-#: src/main/eval.c:1724 src/main/memory.c:2940 src/main/model.c:1612
+#: src/main/eval.c:282 src/main/eval.c:1703 src/main/eval.c:1727
+#: src/main/eval.c:1731 src/main/memory.c:2940 src/main/model.c:1612
 #: src/main/model.c:1620 src/main/optim.c:225 src/main/paste.c:85
 #: src/main/paste.c:344 src/main/paste.c:351 src/main/paste.c:358
 #: src/main/paste.c:363 src/main/paste.c:368 src/main/paste.c:373
@@ -572,7 +572,7 @@ msgstr "le second argument doit être une chaîne de caractères"
 msgid "second argument must be a list"
 msgstr "le second argument doit être une liste"
 
-#: src/include/Errormsg.h:42 src/main/eval.c:2829 src/main/subscript.c:286
+#: src/include/Errormsg.h:42 src/main/eval.c:2836 src/main/subscript.c:286
 #: src/main/subscript.c:395 src/main/subscript.c:495
 msgid "subscript out of bounds"
 msgstr "indice hors limites"
@@ -1183,41 +1183,41 @@ msgstr ""
 msgid "Event GE_ScalePS requires a single numeric value"
 msgstr "L'événement GE_ScalePS exige une valeur numérique unique"
 
-#: src/main/bind.c:268 src/main/bind.c:303 src/main/bind.c:351
-#: src/main/bind.c:419 src/main/bind.c:449
+#: src/main/bind.c:273 src/main/bind.c:313 src/main/bind.c:366
+#: src/main/bind.c:444 src/main/bind.c:474
 #, c-format
 msgid "type '%s' is unimplemented in '%s'"
 msgstr "type '%s' est indisponible dans '%s'"
 
-#: src/main/bind.c:648
+#: src/main/bind.c:673
 msgid "repeated formal argument 'recursive'"
 msgstr "argument formel 'recursive' répété"
 
-#: src/main/bind.c:659
+#: src/main/bind.c:684
 msgid "repeated formal argument 'use.names'"
 msgstr "argument formel 'use.names' répété"
 
-#: src/main/bind.c:856
+#: src/main/bind.c:881
 msgid "argument not a list"
 msgstr "l'argument n'est pas une liste"
 
-#: src/main/bind.c:999 src/main/eval.c:2007 src/main/eval.c:2016
+#: src/main/bind.c:1024 src/main/eval.c:2014 src/main/eval.c:2023
 #: src/main/objects.c:291 src/main/objects.c:345 src/main/objects.c:705
 #: src/main/objects.c:722 src/main/objects.c:729
 #, c-format
 msgid "class name too long in '%s'"
 msgstr "nom de classe trop long dans '%s'"
 
-#: src/main/bind.c:1074
+#: src/main/bind.c:1099
 msgid "cannot create a matrix from these types"
 msgstr "impossible de créer une matrice à partir de ces types"
 
-#: src/main/bind.c:1144
+#: src/main/bind.c:1169
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "le nombre de lignes des matrices doit correspondre (voir argument %d)"
 
-#: src/main/bind.c:1378
+#: src/main/bind.c:1403
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr ""
@@ -1251,7 +1251,7 @@ msgstr "la longueur choisie pour le vecteur est trop grande"
 #: src/main/envir.c:1801 src/main/envir.c:2472 src/main/envir.c:2525
 #: src/main/envir.c:2818 src/main/envir.c:2846 src/main/envir.c:2866
 #: src/main/envir.c:2888 src/main/envir.c:2922 src/main/envir.c:2942
-#: src/main/envir.c:3249 src/main/envir.c:3253 src/main/eval.c:3634
+#: src/main/envir.c:3249 src/main/envir.c:3253 src/main/eval.c:3641
 #: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2055
 #: src/main/saveload.c:2326 src/main/saveload.c:2376 src/main/serialize.c:2232
 msgid "use of NULL environment is defunct"
@@ -1328,7 +1328,7 @@ msgid "cannot set length of non-vector"
 msgstr "impossible de modifier la longueur d'un objet qui n'est pas un vecteur"
 
 #: src/main/builtin.c:833 src/main/builtin.c:837 src/main/character.c:331
-#: src/main/coerce.c:2496
+#: src/main/coerce.c:2498
 msgid "invalid value"
 msgstr "valeur incorrecte"
 
@@ -1336,7 +1336,7 @@ msgstr "valeur incorrecte"
 msgid "missing value for 'length'"
 msgstr "valeur manquante pour 'length'"
 
-#: src/main/builtin.c:863 src/main/coerce.c:2234 src/main/coerce.c:2275
+#: src/main/builtin.c:863 src/main/coerce.c:2236 src/main/coerce.c:2277
 msgid "... used in an incorrect context"
 msgstr "... utilisé dans un contexte incorrect"
 
@@ -1650,7 +1650,7 @@ msgstr "tentative de conversion automatique d'autre chose qu'un facteur"
 msgid "list argument expected"
 msgstr "liste d'arguments attendue"
 
-#: src/main/coerce.c:1400 src/main/eval.c:3631 src/main/eval.c:3638
+#: src/main/coerce.c:1400 src/main/eval.c:3638 src/main/eval.c:3645
 msgid "invalid environment"
 msgstr "environnement incorrect"
 
@@ -1670,37 +1670,37 @@ msgstr "argument de longueur nulle incorrect"
 msgid "invalid argument list"
 msgstr "liste d'arguments incorrect"
 
-#: src/main/coerce.c:1749
+#: src/main/coerce.c:1751
 msgid "type \"single\" unimplemented in R"
 msgstr "type \"single\" non implémenté dans R"
 
-#: src/main/coerce.c:1751
+#: src/main/coerce.c:1753
 msgid "unimplemented predicate"
 msgstr "prédicat non implémenté"
 
-#: src/main/coerce.c:1890 src/main/coerce.c:1988
+#: src/main/coerce.c:1892 src/main/coerce.c:1990
 #, c-format
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr ""
 "%s() appliqué à un objet de type '%s' qui n'est ni une liste, ni un vecteur"
 
-#: src/main/coerce.c:2153
+#: src/main/coerce.c:2155
 msgid "'what' must be a character string or a function"
 msgstr "'what' doit être une chaîne de caractères ou une fonction"
 
-#: src/main/coerce.c:2159
+#: src/main/coerce.c:2161
 msgid "'envir' must be an environment"
 msgstr "'envir' doit être un environnement"
 
-#: src/main/coerce.c:2314
+#: src/main/coerce.c:2316
 msgid "invalid environment specified"
 msgstr "environnement spécifié incorrect"
 
-#: src/main/coerce.c:2375
+#: src/main/coerce.c:2377
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr "class(x) est mise à NULL ; le résultat ne sera plus un objet S4"
 
-#: src/main/coerce.c:2378
+#: src/main/coerce.c:2380
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
@@ -1709,7 +1709,7 @@ msgstr ""
 "class(x) est une chaîne multiple (\"%s\", \"%s\", ...) ; le résultat ne sera "
 "plus un objet S4"
 
-#: src/main/coerce.c:2380
+#: src/main/coerce.c:2382
 #, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribut to NULL;   result will no longer be "
@@ -1718,12 +1718,12 @@ msgstr ""
 "class(x) changée vers \"%s\" et l'attribut devient NULL ; le résultat ne "
 "sera plus un objet S4"
 
-#: src/main/coerce.c:2410
+#: src/main/coerce.c:2412
 msgid "invalid replacement object to be a class string"
 msgstr ""
 "objet de remplacement incorrect, doit être de classe chaîne de caractères"
 
-#: src/main/coerce.c:2430
+#: src/main/coerce.c:2432
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -1731,7 +1731,7 @@ msgstr ""
 "\"%s\" peut être attribué comme classe seulement si l'objet est de ce type ; "
 "type trouvé : \"%s\""
 
-#: src/main/coerce.c:2448
+#: src/main/coerce.c:2450
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1740,18 +1740,18 @@ msgstr ""
 "impossible de définir la classe de l'objet comme matrice si son attribut de "
 "dimension n'est pas de longueur 2 (il est de %d)"
 
-#: src/main/coerce.c:2456
+#: src/main/coerce.c:2458
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
 "impossible de définir la classe de l'objet comme tableau, à moins que "
 "l'attribut de dimension ait une longueur > 0"
 
-#: src/main/coerce.c:2487
+#: src/main/coerce.c:2489
 msgid "'value' must be non-null character string"
 msgstr "'value' doit être une chaîne de caractères non nulle"
 
-#: src/main/coerce.c:2500
+#: src/main/coerce.c:2502
 msgid "invalid to change the storage mode of a factor"
 msgstr ""
 "la modification du mode de stockage d'un objet 'factor' n'est pas autorisée"
@@ -2599,7 +2599,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr "'opts' doit être un petit entier positif ou nul"
 
 #: src/main/deparse.c:358 src/main/envir.c:1643 src/main/envir.c:1725
-#: src/main/eval.c:420 src/main/eval.c:876 src/main/eval.c:2696
+#: src/main/eval.c:420 src/main/eval.c:876 src/main/eval.c:2703
 #: src/main/saveload.c:1964 src/main/saveload.c:2274 src/main/serialize.c:2250
 #, c-format
 msgid "object '%s' not found"
@@ -3082,7 +3082,7 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d utilisé dans un mauvais contexte, aucun ... où chercher"
 
 #: src/main/envir.c:1309 src/main/envir.c:1721 src/main/eval.c:424
-#: src/main/eval.c:2699
+#: src/main/eval.c:2706
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "l'argument \"%s\" est manquant, avec aucune valeur par défaut"
@@ -3466,17 +3466,17 @@ msgstr ""
 "évaluations trop profondément imbriquées : récursion infinie / options"
 "(expressions=) ?"
 
-#: src/main/eval.c:414 src/main/eval.c:513 src/main/eval.c:1523
-#: src/main/eval.c:1585 src/main/eval.c:1640 src/main/eval.c:1891
-#: src/main/eval.c:3266 src/main/eval.c:3373
+#: src/main/eval.c:414 src/main/eval.c:513 src/main/eval.c:1530
+#: src/main/eval.c:1592 src/main/eval.c:1647 src/main/eval.c:1898
+#: src/main/eval.c:3273 src/main/eval.c:3380
 msgid "'...' used in an incorrect context"
 msgstr "'...' utilisé dans un contexte incorrect"
 
-#: src/main/eval.c:426 src/main/eval.c:2700
+#: src/main/eval.c:426 src/main/eval.c:2707
 msgid "argument is missing, with no default"
 msgstr "argument manquant, sans valeur associée par défaut"
 
-#: src/main/eval.c:509 src/main/eval.c:3214
+#: src/main/eval.c:509 src/main/eval.c:3221
 msgid "attempt to apply non-function"
 msgstr "tentative d'appliquer un objet qui n'est pas une fonction"
 
@@ -3557,15 +3557,15 @@ msgstr "fonction incorrecte dans un assignation complexe"
 msgid "overlong name in '%s'"
 msgstr "nom trop long dans '%s'"
 
-#: src/main/eval.c:1462
+#: src/main/eval.c:1469
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "membre gauche de l'assignation (do_set) incorrect"
 
-#: src/main/eval.c:1477
+#: src/main/eval.c:1484
 msgid "invalid assignment left-hand side"
 msgstr "membre gauche de l'assignation incorrect"
 
-#: src/main/eval.c:1533
+#: src/main/eval.c:1540
 #, c-format
 msgid ""
 "element %d is empty;\n"
@@ -3576,7 +3576,7 @@ msgstr ""
 "  la partie de la liste d'arguments d'un objet 'builtin' évaluée était :\n"
 "  %s"
 
-#: src/main/eval.c:1537
+#: src/main/eval.c:1544
 #, c-format
 msgid ""
 "element %d is empty;\n"
@@ -3587,169 +3587,169 @@ msgstr ""
 "  la partie de la liste d'arguments de '%s' en cours d'évaluation était :\n"
 "  %s"
 
-#: src/main/eval.c:1671
+#: src/main/eval.c:1678
 msgid "invalid formal argument list for \"function\""
 msgstr "liste d'arguments formels incorrecte pour \"function\""
 
-#: src/main/eval.c:1717
+#: src/main/eval.c:1724
 msgid "numeric 'envir' arg not of length one"
 msgstr "argument numérique 'envir' n'ayant une longueur unitaire"
 
-#: src/main/eval.c:1739 src/main/eval.c:1758
+#: src/main/eval.c:1746 src/main/eval.c:1765
 msgid "restarts not supported in 'eval'"
 msgstr "redémarrages non supportés dans 'eval'"
 
-#: src/main/eval.c:1823
+#: src/main/eval.c:1830
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall' appelé en dehors d'une fermeture (closure)"
 
-#: src/main/eval.c:1885
+#: src/main/eval.c:1892
 msgid "value in '...' is not a promise"
 msgstr "la valeur dans '...' n'est pas une promesse (promise)"
 
-#: src/main/eval.c:2095 src/main/objects.c:696
+#: src/main/eval.c:2102 src/main/objects.c:696
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "nom d'appel trop long dans '%s'"
 
-#: src/main/eval.c:2116
+#: src/main/eval.c:2123
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr "nom générique trop long dans '%s'"
 
-#: src/main/eval.c:2180
+#: src/main/eval.c:2187
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "Méthodes incompatibles (\"%s\", \"%s\") pour \"%s\""
 
-#: src/main/eval.c:2242
+#: src/main/eval.c:2249
 msgid "dispatch error in group dispatch"
 msgstr "erreur de branchement de méthode du groupe"
 
-#: src/main/eval.c:2623
+#: src/main/eval.c:2630
 msgid "node stack overflow"
 msgstr "pile de noeuds débordée vers le haut"
 
-#: src/main/eval.c:2629
+#: src/main/eval.c:2636
 msgid "integer stack overflow"
 msgstr "pile d'entiers débordée vers le haut"
 
-#: src/main/eval.c:2682
+#: src/main/eval.c:2689
 msgid "Bad opcode"
 msgstr "Mauvais code d'opération (opcode)"
 
-#: src/main/eval.c:2831
+#: src/main/eval.c:2838
 msgid "not a vector object"
 msgstr "cet objet n'est pas un vecteur"
 
-#: src/main/eval.c:2839 src/main/eval.c:2861 src/main/eval.c:2885
-#: src/main/eval.c:2909
+#: src/main/eval.c:2846 src/main/eval.c:2868 src/main/eval.c:2892
+#: src/main/eval.c:2916
 msgid "can only handle simple real vectors"
 msgstr "ne peut traiter que des simples vecteurs de réels"
 
-#: src/main/eval.c:2848 src/main/eval.c:2895
+#: src/main/eval.c:2855 src/main/eval.c:2902
 msgid "not a simple vector"
 msgstr "ce n'est pas un simple vecteur"
 
-#: src/main/eval.c:2865 src/main/eval.c:2913 src/main/subassign.c:972
+#: src/main/eval.c:2872 src/main/eval.c:2920 src/main/subassign.c:972
 #: src/main/subset.c:808
 msgid "incorrect number of subscripts"
 msgstr "nombre d'indices incorrect"
 
-#: src/main/eval.c:2876 src/main/eval.c:2927
+#: src/main/eval.c:2883 src/main/eval.c:2934
 msgid "not a simple matrix"
 msgstr "ce n'est pas une simple matrice"
 
-#: src/main/eval.c:2964
+#: src/main/eval.c:2971
 msgid "bytecode version mismatch; using eval"
 msgstr "incohérence de version de pseudo-code ; utilisation de eval"
 
-#: src/main/eval.c:2969
+#: src/main/eval.c:2976
 msgid "bytecode version is too old"
 msgstr "la version du pseudo-code est trop longue"
 
-#: src/main/eval.c:2970
+#: src/main/eval.c:2977
 msgid "bytecode version is too new"
 msgstr "la version du pseudo-code est trop récente"
 
-#: src/main/eval.c:2975
+#: src/main/eval.c:2982
 msgid "byte code version mismatch"
 msgstr "incohérence de versions du pseudo-code"
 
-#: src/main/eval.c:2991
+#: src/main/eval.c:2998
 msgid "missing value where logical needed"
 msgstr "valeur manquante là où une valeur logique est attendue"
 
-#: src/main/eval.c:2992
+#: src/main/eval.c:2999
 msgid "argument of if(*) is not interpretable as logical"
 msgstr "l'argument de if(*) n'est pas interprétable comme une valeur logique"
 
-#: src/main/eval.c:3026
+#: src/main/eval.c:3033
 msgid "invalid sequence argument in for loop"
 msgstr "séquence d'arguments incorrecte dans une boucle for"
 
-#: src/main/eval.c:3176 src/main/eval.c:3197 src/main/eval.c:3311
+#: src/main/eval.c:3183 src/main/eval.c:3204 src/main/eval.c:3318
 msgid "not a BUILTIN function"
 msgstr "ce n'est pas une function BUILTIN"
 
-#: src/main/eval.c:3297
+#: src/main/eval.c:3304
 msgid "bad function"
 msgstr "mauvaise fonction"
 
-#: src/main/eval.c:3337
+#: src/main/eval.c:3344
 msgid "not a SPECIAL function"
 msgstr "ce n'est pas une fonction SPECIALE"
 
-#: src/main/eval.c:3571
+#: src/main/eval.c:3578
 msgid "cannot find index for threaded code address"
 msgstr "impossible de trouver l'indice pour l'adresse de code traitée"
 
-#: src/main/eval.c:3651
+#: src/main/eval.c:3658
 msgid "invalid symbol"
 msgstr "symbole non valide"
 
-#: src/main/eval.c:3695
+#: src/main/eval.c:3702
 msgid "argument is not a byte code object"
 msgstr "l'argument n'est pas un objet pseudo-code"
 
-#: src/main/eval.c:3716
+#: src/main/eval.c:3723
 msgid "bad file name"
 msgstr "mauvais nom de fichier"
 
-#: src/main/eval.c:3720 src/main/eval.c:3741
+#: src/main/eval.c:3727 src/main/eval.c:3748
 msgid "unable to open 'file'"
 msgstr "impossible d'ouvrir 'file'"
 
-#: src/main/eval.c:3735 src/main/saveload.c:1928
+#: src/main/eval.c:3742 src/main/saveload.c:1928
 msgid "'file' must be non-empty string"
 msgstr "'file' doit être une chaîne de caractères non vide"
 
-#: src/main/eval.c:3737 src/main/saveload.c:1930 src/main/saveload.c:2219
+#: src/main/eval.c:3744 src/main/saveload.c:1930 src/main/saveload.c:2219
 #: src/main/serialize.c:1786
 msgid "'ascii' must be logical"
 msgstr "'ascii' doit être une valeur logique"
 
-#: src/main/eval.c:3766 src/main/eval.c:3773
+#: src/main/eval.c:3773 src/main/eval.c:3780
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName : tampon trop petit"
 
-#: src/main/eval.c:3806
+#: src/main/eval.c:3813
 msgid "code must be a generic vector"
 msgstr "le code doit être un vecteur générique"
 
-#: src/main/eval.c:3845
+#: src/main/eval.c:3852
 msgid "profile timer in use"
 msgstr "temporisation de profilage en utilisation"
 
-#: src/main/eval.c:3847
+#: src/main/eval.c:3854
 msgid "already byte code profiling"
 msgstr "déjà en train de profiler du pseudo-code"
 
-#: src/main/eval.c:3865
+#: src/main/eval.c:3872
 msgid "setting profile timer failed"
 msgstr "le démarrage d'une temporisation de profilage a échoué"
 
-#: src/main/eval.c:3882
+#: src/main/eval.c:3889
 msgid "not byte code profiling"
 msgstr "profilage d'autre chose que du pseudo-code"
 
