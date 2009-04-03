@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-03-28 17:24+0000\n"
+"POT-Creation-Date: 2009-04-03 12:49+0100\n"
 "PO-Revision-Date: 2009-03-20 14:22+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -1154,41 +1154,41 @@ msgstr ""
 msgid "Event GE_ScalePS requires a single numeric value"
 msgstr "Ereignis GE_ScalePS verlangt einzelnen numerischen Wert"
 
-#: src/main/bind.c:268 src/main/bind.c:303 src/main/bind.c:351
-#: src/main/bind.c:419 src/main/bind.c:449
+#: src/main/bind.c:273 src/main/bind.c:313 src/main/bind.c:366
+#: src/main/bind.c:444 src/main/bind.c:474
 #, c-format
 msgid "type '%s' is unimplemented in '%s'"
 msgstr "Typ '%s' ist in '%s' nicht implementiert"
 
-#: src/main/bind.c:648
+#: src/main/bind.c:673
 msgid "repeated formal argument 'recursive'"
 msgstr "Wiederholung des formalen Argumentes 'recursive'"
 
-#: src/main/bind.c:659
+#: src/main/bind.c:684
 msgid "repeated formal argument 'use.names'"
 msgstr "Wiederholung des formalen Argumentes 'use.names'"
 
-#: src/main/bind.c:856
+#: src/main/bind.c:881
 msgid "argument not a list"
 msgstr "Argument ist keine Liste"
 
-#: src/main/bind.c:999 src/main/eval.c:2007 src/main/eval.c:2016
+#: src/main/bind.c:1024 src/main/eval.c:2007 src/main/eval.c:2016
 #: src/main/objects.c:291 src/main/objects.c:345 src/main/objects.c:705
 #: src/main/objects.c:722 src/main/objects.c:729
 #, c-format
 msgid "class name too long in '%s'"
 msgstr "Klassenname zu lang in '%s'"
 
-#: src/main/bind.c:1074
+#: src/main/bind.c:1099
 msgid "cannot create a matrix from these types"
 msgstr "kann aus diesen Typen keine Matrix machen"
 
-#: src/main/bind.c:1144
+#: src/main/bind.c:1169
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "Anzahl der Zeilen der Matrizen muss übereinstimmen (siehe Argument %d)"
 
-#: src/main/bind.c:1378
+#: src/main/bind.c:1403
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr ""
@@ -1299,7 +1299,7 @@ msgid "cannot set length of non-vector"
 msgstr "kann Länge eines Nicht-Vektors nicht setzen"
 
 #: src/main/builtin.c:833 src/main/builtin.c:837 src/main/character.c:331
-#: src/main/coerce.c:2496
+#: src/main/coerce.c:2498
 msgid "invalid value"
 msgstr "ungültiger Wert"
 
@@ -1307,7 +1307,7 @@ msgstr "ungültiger Wert"
 msgid "missing value for 'length'"
 msgstr "fehlender Wert für 'length'"
 
-#: src/main/builtin.c:863 src/main/coerce.c:2234 src/main/coerce.c:2275
+#: src/main/builtin.c:863 src/main/coerce.c:2236 src/main/coerce.c:2277
 msgid "... used in an incorrect context"
 msgstr "... in falschem Kontext benutzt"
 
@@ -1632,36 +1632,36 @@ msgstr "ungültiges Argument der Länge 0"
 msgid "invalid argument list"
 msgstr "ungültige Argumentenliste"
 
-#: src/main/coerce.c:1749
+#: src/main/coerce.c:1751
 msgid "type \"single\" unimplemented in R"
 msgstr "Typ \"single\" nicht in R implementiert"
 
-#: src/main/coerce.c:1751
+#: src/main/coerce.c:1753
 msgid "unimplemented predicate"
 msgstr "nicht implementiertes Prädikat"
 
-#: src/main/coerce.c:1890 src/main/coerce.c:1988
+#: src/main/coerce.c:1892 src/main/coerce.c:1990
 #, c-format
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr "%s() auf nicht-(Liste oder Vektor) des Typs '%s' angewendet"
 
-#: src/main/coerce.c:2153
+#: src/main/coerce.c:2155
 msgid "'what' must be a character string or a function"
 msgstr "'what' muss eine Zeichenkette oder eine Funktion sein"
 
-#: src/main/coerce.c:2159
+#: src/main/coerce.c:2161
 msgid "'envir' must be an environment"
 msgstr "'envir' muss eine Umgebung sein"
 
-#: src/main/coerce.c:2314
+#: src/main/coerce.c:2316
 msgid "invalid environment specified"
 msgstr "ungültige Umgebung spezifiziert"
 
-#: src/main/coerce.c:2375
+#: src/main/coerce.c:2377
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr "Setze class(x) auf NULL;  das Ergebnis ist keine S4 Objekt mehr"
 
-#: src/main/coerce.c:2378
+#: src/main/coerce.c:2380
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
@@ -1670,7 +1670,7 @@ msgstr ""
 "Setze class(x) auf mehrere Zeichenketten(\"%s\", \"%s\", ...); das Ergebnis "
 "ist kein S4 Objekt mehr"
 
-#: src/main/coerce.c:2380
+#: src/main/coerce.c:2382
 #, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribut to NULL;   result will no longer be "
@@ -1679,11 +1679,11 @@ msgstr ""
 "class(x) auf \"%s\" setzen setzt Attribut auf NULL; das Ergebnis ist kein S4 "
 "Objekt mehr"
 
-#: src/main/coerce.c:2410
+#: src/main/coerce.c:2412
 msgid "invalid replacement object to be a class string"
 msgstr "Ungültiges Ersetzungsobjekt als Klassenzeichenkette"
 
-#: src/main/coerce.c:2430
+#: src/main/coerce.c:2432
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -1691,7 +1691,7 @@ msgstr ""
 "\"%s\" kann nur als Klasse gesetzt werden, wenn das Objekt diesen Typ hat; "
 "gefunden wurde \"%s\""
 
-#: src/main/coerce.c:2448
+#: src/main/coerce.c:2450
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1700,18 +1700,18 @@ msgstr ""
 "ungültig die Klasse auf Matrix zu setzen, außer das Dimensionsattribut hat "
 "Länge 2 (war %d)"
 
-#: src/main/coerce.c:2456
+#: src/main/coerce.c:2458
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
 "Kann Klasse nicht auf \"array\" setzen, außer das Dimensionsattribut hat "
 "eine Länge > 0"
 
-#: src/main/coerce.c:2487
+#: src/main/coerce.c:2489
 msgid "'value' must be non-null character string"
 msgstr "'value' muss eine nicht-Null Zeichenkette sein"
 
-#: src/main/coerce.c:2500
+#: src/main/coerce.c:2502
 msgid "invalid to change the storage mode of a factor"
 msgstr "unzulässig den Speichermodus eines Faktors zu ändern"
 

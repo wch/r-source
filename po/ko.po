@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-03-28 17:24+0000\n"
+"POT-Creation-Date: 2009-04-03 12:49+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -1186,41 +1186,41 @@ msgstr ""
 msgid "Event GE_ScalePS requires a single numeric value"
 msgstr "Event UpdatePS는 단일의 수치를 꼭 적용해야합니다"
 
-#: src/main/bind.c:268 src/main/bind.c:303 src/main/bind.c:351
-#: src/main/bind.c:419 src/main/bind.c:449
+#: src/main/bind.c:273 src/main/bind.c:313 src/main/bind.c:366
+#: src/main/bind.c:444 src/main/bind.c:474
 #, fuzzy, c-format
 msgid "type '%s' is unimplemented in '%s'"
 msgstr "type2str에는 %d형태는 실제 적용되지 않습니다"
 
-#: src/main/bind.c:648
+#: src/main/bind.c:673
 msgid "repeated formal argument 'recursive'"
 msgstr "'recursive'의 가인수가 반복해졌습니다"
 
-#: src/main/bind.c:659
+#: src/main/bind.c:684
 msgid "repeated formal argument 'use.names'"
 msgstr "'use.names'의 가인수가 반복해졌습니다"
 
-#: src/main/bind.c:856
+#: src/main/bind.c:881
 msgid "argument not a list"
 msgstr "인수는 리스트가 아닙니다"
 
-#: src/main/bind.c:999 src/main/eval.c:2007 src/main/eval.c:2016
+#: src/main/bind.c:1024 src/main/eval.c:2007 src/main/eval.c:2016
 #: src/main/objects.c:291 src/main/objects.c:345 src/main/objects.c:705
 #: src/main/objects.c:722 src/main/objects.c:729
 #, c-format
 msgid "class name too long in '%s'"
 msgstr "'%s'의 클래스명이 너무 깁니다"
 
-#: src/main/bind.c:1074
+#: src/main/bind.c:1099
 msgid "cannot create a matrix from these types"
 msgstr "이러한 유형으로부터 행렬을 작성할수가 없습니다"
 
-#: src/main/bind.c:1144
+#: src/main/bind.c:1169
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "행렬의 행수는 일치하여야만 합니다(%d번째의 인수를 참조합니다)"
 
-#: src/main/bind.c:1378
+#: src/main/bind.c:1403
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "행렬의 열수는 일치하여야만 합니다(%d번째의 인수를 참조합니다)"
@@ -1335,7 +1335,7 @@ msgid "cannot set length of non-vector"
 msgstr "벡터가 non-Vector이지만 길이는 설정할수 없습니다"
 
 #: src/main/builtin.c:833 src/main/builtin.c:837 src/main/character.c:331
-#: src/main/coerce.c:2496
+#: src/main/coerce.c:2498
 #, fuzzy
 msgid "invalid value"
 msgstr "'%s'의 값이 부적절합니다"
@@ -1345,7 +1345,7 @@ msgstr "'%s'의 값이 부적절합니다"
 msgid "missing value for 'length'"
 msgstr "length<-에서,'length'의 값이 없습니다"
 
-#: src/main/builtin.c:863 src/main/coerce.c:2234 src/main/coerce.c:2275
+#: src/main/builtin.c:863 src/main/coerce.c:2236 src/main/coerce.c:2277
 msgid "... used in an incorrect context"
 msgstr "...가 부적절한 문맥으로 사용되었습니다"
 
@@ -1674,55 +1674,55 @@ msgstr "길이가 0의 인수는 부적절합니다"
 msgid "invalid argument list"
 msgstr "인수 리스트가 부적절합니다"
 
-#: src/main/coerce.c:1749
+#: src/main/coerce.c:1751
 msgid "type \"single\" unimplemented in R"
 msgstr "\"single\" 형태는 R에는 실제 적용되지 않습니다"
 
-#: src/main/coerce.c:1751
+#: src/main/coerce.c:1753
 msgid "unimplemented predicate"
 msgstr "실제 적용 되지 않는 [술어]입니다"
 
-#: src/main/coerce.c:1890 src/main/coerce.c:1988
+#: src/main/coerce.c:1892 src/main/coerce.c:1990
 #, fuzzy, c-format
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr "%s()는 벡터, 리스트 이외에만 사용할수가 있습니다"
 
-#: src/main/coerce.c:2153
+#: src/main/coerce.c:2155
 #, fuzzy
 msgid "'what' must be a character string or a function"
 msgstr "첫번째에서 뺀 수는 문자열 또는 함수이어야만 합니다"
 
-#: src/main/coerce.c:2159
+#: src/main/coerce.c:2161
 msgid "'envir' must be an environment"
 msgstr "'envir'는 환경이어야만 합니다"
 
-#: src/main/coerce.c:2314
+#: src/main/coerce.c:2316
 msgid "invalid environment specified"
 msgstr "부적절한 환경 지정입니다"
 
-#: src/main/coerce.c:2375
+#: src/main/coerce.c:2377
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr ""
 
-#: src/main/coerce.c:2378
+#: src/main/coerce.c:2380
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
 "longer be an S4 object"
 msgstr ""
 
-#: src/main/coerce.c:2380
+#: src/main/coerce.c:2382
 #, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribut to NULL;   result will no longer be "
 "an S4 object"
 msgstr ""
 
-#: src/main/coerce.c:2410
+#: src/main/coerce.c:2412
 msgid "invalid replacement object to be a class string"
 msgstr "class 문자열이라고 하기에는 부적절한 치환 오브젝트입니다"
 
-#: src/main/coerce.c:2430
+#: src/main/coerce.c:2432
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -1730,7 +1730,7 @@ msgstr ""
 "\"%s\"는 오브젝트가 이 형태를 가지고 있는 때에만 class으로서 설정할수가 있습"
 "니다. \"%s\"가 검색되었습니다"
 
-#: src/main/coerce.c:2448
+#: src/main/coerce.c:2450
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1739,17 +1739,17 @@ msgstr ""
 "만약 차원 속성이 길이(%d)2가 나오지 아닌한, 행렬에 class를 설정하는것은\n"
 "부적절합니다"
 
-#: src/main/coerce.c:2456
+#: src/main/coerce.c:2458
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr "차원 속성이 길이 > 0  나오지 아닌한, 배열에 class를 설정할수 없습니다"
 
-#: src/main/coerce.c:2487
+#: src/main/coerce.c:2489
 #, fuzzy
 msgid "'value' must be non-null character string"
 msgstr "'name'는 NULL아닌 문자열이어야만 합니다"
 
-#: src/main/coerce.c:2500
+#: src/main/coerce.c:2502
 msgid "invalid to change the storage mode of a factor"
 msgstr ""
 

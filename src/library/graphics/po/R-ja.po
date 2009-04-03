@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2008-12-16 12:57\n"
-"PO-Revision-Date: 2008-04-04 14:56+0900 \n"
-"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
+"PO-Revision-Date: 2009-03-31 20:55+0900 \n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
-"Report- Msgid-Bugs-To: bugs@r-project.org \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 0.10.1 \n"
+"X-Generator: Pootle 1.1.0 \n"
+"Report- Msgid-Bugs-To: bugs@r-project.org \n"
 
 msgid "'a' is overridden by 'reg'"
 msgstr " 'a' は 'reg\" により無効にされます "
@@ -37,9 +37,8 @@ msgstr " 'x' の少なくとも一つの項目は正値でなければなりま�
 msgid "incorrect 'col': must be length 2"
 msgstr " 誤った 'col'：長さは2でなければなりません "
 
-#, fuzzy
 msgid "'side' must be in {1L:4}"
-msgstr " 'side' は範囲 {1,2,3,4} になければなりません "
+msgstr " 'side' は範囲 {1,2,3,4} 中になければなりません "
 
 msgid "invalid 'axp'"
 msgstr " 無効な 'axp' です "
@@ -47,9 +46,8 @@ msgstr " 無効な 'axp' です "
 msgid "invalid 'log'"
 msgstr " 無効な 'log' です "
 
-#, fuzzy
 msgid "invalid positive 'axp[3L]'"
-msgstr " 無効な正の 'axp[3]' です "
+msgstr " 無効な正の 'axp[3L]' です "
 
 msgid "invalid 'usr'"
 msgstr " 無効な 'usr' です "
@@ -252,9 +250,8 @@ msgid "horizontal specification overrides: Number of columns :="
 msgstr " 水平方向の指定は無効とされました: 列の数 := "
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
-msgstr ""
+msgstr " 'merge = TRUE' はいかなる線分も描かれないときは効果がありません "
 
-#, fuzzy
 msgid "not using pch[2..] since pch[1L] has multiple chars"
 msgstr " pch[1] が複数の文字を含むため、pch[2..] を使用しません "
 

@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-03-17 19:25\n"
-"PO-Revision-Date: 2008-09-30 10:48+0900 \n"
-"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
+"PO-Revision-Date: 2009-03-31 13:18+0900 \n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 0.10.1 \n"
+"X-Generator: Pootle 1.1.0 \n"
 
 msgid "'%s' is defunct."
 msgstr " '%s' は廃止されました。 "
@@ -168,9 +168,8 @@ msgstr " 'x' は少なくとも二次元の配列でなければなりません 
 msgid "invalid 'dims'"
 msgstr " 無効な 'dims' です "
 
-#, fuzzy
 msgid "extra arguments ignored:"
-msgstr " drop 引数は無視されます "
+msgstr " 余計な引数は無視されました: "
 
 msgid "bad handler specification"
 msgstr " 誤ったハンドラーの指定です "
@@ -626,9 +625,8 @@ msgstr " そこへコピーすべきファイルがありません "
 msgid "more 'from' files than 'to' files"
 msgstr " コピー先ファイルよりも多くのコピー元ファイルがあります "
 
-#, fuzzy
 msgid "'recursive' will be ignored"
-msgstr " drop 引数は無視されます "
+msgstr " 'recursive' は無視されます "
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr " 同じファイルにコピーすることはできません "
@@ -664,12 +662,12 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr " 'vec' は非減少順にソートされていなければいけません "
 
 msgid "using the first element of 'value' of type expression"
-msgstr ""
+msgstr "タイプ表現 'value' の最初の要素だけを使います "
 
-#, fuzzy
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
-" 'mode' は \"double\" (\"real\") または \"integer\" でなければなりません "
+" 'mode' は \"double\" (\"real\") , \"integer\" または \"character\" でなけれ"
+"ばなりません "
 
 msgid "coercing argument to \"character\" for format=\"s\""
 msgstr " 引数を \"format=\"s\" に対する \"character\" へ強制変換します "
@@ -777,9 +775,8 @@ msgstr " '%s' という名前のパッケージはありません "
 msgid "no library trees found in 'lib.loc'"
 msgstr " 'lib.loc' 中に如何なるライブラリー木も見つかりません "
 
-#, fuzzy
 msgid "'%s' is not a valid installed package"
-msgstr " '%s' は有効な選択ではありません "
+msgstr " '%s' は有効なインストール済みパッケージではありません "
 
 msgid "'%s' not found on search path, using pos = 2"
 msgstr " '%s' は検索パス上には見つかりませんでした。pos = 2 を使用します "
@@ -1003,9 +1000,8 @@ msgstr ""
 " トレース関数は methods パッケージを必要としていますが、その名前空間をロード"
 "できません "
 
-#, fuzzy
 msgid "Expected a single logical value for the S4 state flag"
-msgstr " この S4 オブジェクト状態に対しては単一の論理値が期待されています "
+msgstr " S4 状態フラグに対しては単一の論理値が期待されています "
 
 msgid "invalid to change the storage mode of a factor"
 msgstr " factor　の格納モードを変えるのは不正です "
@@ -1064,6 +1060,7 @@ msgstr " パッケージ '%s' は名前空間を持っていません "
 
 msgid "exportClassPattern specified but no matching classes in %s"
 msgstr ""
+" exportClassPattern が指定されましたが、%s 中には対応するクラスがありません "
 
 msgid "in '%s' classes for export not defined: %s"
 msgstr " '%s' 中にはエクスポートのためのクラスは見付かりません： %s "
@@ -1509,33 +1506,31 @@ msgid "'%s' execution failed with error code %d"
 msgstr " '%s' の実行は失敗しました(エラーコード %d) "
 
 msgid "-l option without value"
-msgstr ""
+msgstr " 値がない -l  オプション"
 
-#, fuzzy
 msgid "ERROR: no packages specified"
-msgstr " いかなるパッケージも見付かりませんでした "
+msgstr " エラー：いかなるパッケージも指定されていません "
 
 msgid "Removing from library"
-msgstr ""
+msgstr "ライブラリーから取り除いています "
 
 msgid "ERROR: cannot cd to directory"
-msgstr ""
+msgstr " エラー：ディレクトリーに変更できません "
 
 msgid "ERROR: no permission to remove from directory"
-msgstr ""
+msgstr " エラー：このディレクトリーから抹消する許可がありません "
 
 msgid "T used instead of TRUE"
-msgstr ""
+msgstr " TRUE の代わりに T が使われました "
 
 msgid "F used instead of FALSE"
-msgstr ""
+msgstr " FALSE の代わりに F が使われました "
 
 msgid "items"
-msgstr ""
+msgstr " 項目"
 
-#, fuzzy
 msgid "have been removed from the search path"
-msgstr " 検索パス上にありません "
+msgstr " 検索パスから抹消されています "
 
 msgid "cannot find name space environment"
 msgstr " 名前空間環境を見つけられません "
