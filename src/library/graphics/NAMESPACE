@@ -1,8 +1,8 @@
 import(grDevices)
 
 export(abline, arrows, assocplot, axTicks, Axis, axis, axis.Date,
-       axis.POSIXct, barplot, barplot, blues, box, boxplot, bxp, cdplot,
-       clip, close.screen, co.intervals, contour, coplot, curve, densCols,
+       axis.POSIXct, barplot, barplot, box, boxplot, bxp, cdplot,
+       clip, close.screen, co.intervals, contour, coplot, curve,
        dotchart, erase.screen, filled.contour, fourfoldplot, frame,
        grconvertX, grconvertY, grid, hist, hist.default, identify,
        image, layout, layout.show, lcm, legend, lines, lines.default,
