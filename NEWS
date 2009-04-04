@@ -266,9 +266,11 @@ NEW FEATURES
 	at 0 and hence beta = FALSE and gamma = FALSE are used to
 	specify restricted models.
 
-    o   a new function smoothScatter has been added to graphics. It
-        is appropriate for very dense scatter plots and uses density
-        estimation and color to reflect density of plotting.
+    o	A new function smoothScatter has been added to package
+	'graphics'.  It is appropriate for very dense scatter plots
+	and uses density estimation and color to reflect density of
+	plotting.
+
 
 DEPRECATED & DEFUNCT
 
