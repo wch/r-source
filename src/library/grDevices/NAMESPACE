@@ -13,10 +13,10 @@ if(tools:::.OStype() == "windows") {
               Type1FontInUse, CIDFontInUse, R_GD_nullDevice)
 }
 
-export(Hershey, as.graphicsAnnot, boxplot.stats, check.options, chull,
+export(Hershey, as.graphicsAnnot, blues9, boxplot.stats, check.options, chull,
        CIDFont, col2rgb, colors, colours, cm, colorRamp,
        colorRampPalette, contourLines, convertColor, colorConverter,
-       colorspaces, cm.colors, devAskNewPage, dev.control,
+       colorspaces, cm.colors, densCols, devAskNewPage, dev.control,
        dev.copy, dev.copy2eps, dev.copy2pdf, dev.cur, dev.interactive,
        dev.list, dev.new, dev.next, dev.off, dev.prev, dev.print,
        dev.set, dev.size, dev2bitmap, deviceIsInteractive, embedFonts,
