@@ -2470,8 +2470,14 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     env = CAR(args);
     if (ISNULL(env))
 	error(_("use of NULL environment is defunct"));
-    if( !isEnvironment(env) )
-	error(_("argument must be an environment"));
+    if( !isEnvironment(env) ) {
+        SEXP xdata;
+	if( IS_S4_OBJECT(env) && TYPEOF(env) == S4SXP &&
+	    (xdata = R_getS4DataSlot(env, ENVSXP)) != R_NilValue)
+	    env = xdata;
+	else
+	    error(_("argument must be an environment"));
+    }
 
     all = asLogical(CADR(args));
     if (all == NA_LOGICAL) all = 0;
