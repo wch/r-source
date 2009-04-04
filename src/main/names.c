@@ -132,6 +132,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"debug",	do_debug,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"undebug",	do_debug,	1,	111,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"isdebugged",	do_debug,	2,	11,	1,	{PP_FUNCALL, PREC_FN,	  0}},
+{"debugonce",	do_debug,	3,	111,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {".primTrace",	do_trace,	0,	101,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {".primUntrace",do_trace,	1,	101,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {".Internal",	do_internal,	0,	200,	1,	{PP_FUNCALL, PREC_FN,	  0}},

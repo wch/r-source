@@ -7,10 +7,12 @@
 \title{Debug a Function}
 \usage{
 debug(fun)
+debugonce(fun)
 undebug(fun)
 isdebugged(fun)
 }
 \alias{debug}
+\alias{debugonce}
 \alias{undebug}
 \alias{isdebugged}
 \arguments{
@@ -47,6 +49,12 @@ isdebugged(fun)
 
   If a function is defined inside a function, single-step though to the
   end of its definition, and then call \code{debug} on its name.
+
+  Using \code{debug} is persistant, and unless debugging is turned off
+  the debugger will be entered on every invocation (note that if the
+  function is removed and replaced the debug state is not preserved).
+  Use \code{debugonce} to enter the debugger only the next time the 
+  function is invoked.
   
   In order to debug S4 methods (see \code{\link[methods]{Methods}}), you
   need to use \code{\link{trace}}, typically calling \code{\link{browser}},

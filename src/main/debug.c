@@ -52,6 +52,9 @@ SEXP attribute_hidden do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
     case 2:
         ans = ScalarLogical(DEBUG(CAR(args)));
         break;
+    case 3:
+        SET_STEP(CAR(args), 1);
+        break;
     }
     return ans;
 }

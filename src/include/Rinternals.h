@@ -308,6 +308,8 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define CLOENV(x)	((x)->u.closxp.env)
 #define DEBUG(x)	((x)->sxpinfo.debug)
 #define SET_DEBUG(x,v)	(((x)->sxpinfo.debug)=(v))
+#define STEP(x)		((x)->sxpinfo.spare)
+#define SET_STEP(x,v)	(((x)->sxpinfo.spare)=(v))
 
 /* Symbol Access Macros */
 #define PRINTNAME(x)	((x)->u.symsxp.pname)
@@ -418,8 +420,10 @@ SEXP (FORMALS)(SEXP x);
 SEXP (BODY)(SEXP x);
 SEXP (CLOENV)(SEXP x);
 int  (DEBUG)(SEXP x);
+int  (STEP)(SEXP x);
 int  (TRACE)(SEXP x);
 void (SET_DEBUG)(SEXP x, int v);
+void (SET_TRACE)(SEXP x, int v);
 void (SET_TRACE)(SEXP x, int v);
 void SET_FORMALS(SEXP x, SEXP v);
 void SET_BODY(SEXP x, SEXP v);
