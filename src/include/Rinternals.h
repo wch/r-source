@@ -423,7 +423,7 @@ int  (DEBUG)(SEXP x);
 int  (STEP)(SEXP x);
 int  (TRACE)(SEXP x);
 void (SET_DEBUG)(SEXP x, int v);
-void (SET_TRACE)(SEXP x, int v);
+void (SET_STEP)(SEXP x, int v);
 void (SET_TRACE)(SEXP x, int v);
 void SET_FORMALS(SEXP x, SEXP v);
 void SET_BODY(SEXP x, SEXP v);
