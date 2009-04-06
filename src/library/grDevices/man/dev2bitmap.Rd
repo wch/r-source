@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/dev2bitmap.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dev2bitmap}
@@ -73,9 +73,13 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   
   The default type, \code{"png16m"} supports 24-bit colour and
   anti-aliasing.  Versions of \R prior to 2.7.0 defaulted to
-  \code{"png256"}, which used a palette of 256 colours and could be a
-  more compact representation.  Monochrome graphs can used
+  \code{"png256"}, which uses a palette of 256 colours and could be a
+  more compact representation.  Monochrome graphs can use
   \code{"pngmono"}, or \code{"pnggray"} if anti-aliasing is desired.
+
+  Note that for a colour TIFF image you probably want \code{"tiff24nc"},
+  which is 8-bit per channel RGB (the most common TIFF format).  None of
+  the listed TIFF types support transparency.
   
   For formats which contain a single image, a file specification like
   \code{Rplots\%03d.png} can be used: this is interpreted by GhostScript.
@@ -91,7 +95,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
 #ifdef windows
   Paths for \code{file} and \env{R_GSCMD} which contain spaces are
   mapped to short names \emph{via} \code{\link{shortPathName}}.
-#endif  
+#endif
 }
 \value{
   None.
