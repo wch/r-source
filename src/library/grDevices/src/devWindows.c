@@ -67,7 +67,8 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 			Rboolean recording, int resize, int bg, int canvas,
 			double gamma, int xpos, int ypos, Rboolean buffered,
 			SEXP psenv, Rboolean restoreConsole, 
-			const char *title, Rboolean clickToConfirm);
+			const char *title, Rboolean clickToConfirm,
+			Rboolean fillOddEven);
 
 
 /* a colour used to represent the background on png if transparent
@@ -289,7 +290,8 @@ static void SaveAsWin(pDevDesc dd, const char *display,
 					GE_INCHES, gdd),
 		       ((gadesc*) dd->deviceSpecific)->basefontsize,
 		       0, 1, White, White, 1, NA_INTEGER, NA_INTEGER, FALSE,
-		       R_GlobalEnv, restoreConsole, "", FALSE))
+		       R_GlobalEnv, restoreConsole, "", FALSE, 
+		       ((gadesc*) dd->deviceSpecific)->fillOddEven))
         PrivateCopyDevice(dd, ndd, display);
 }
 
@@ -2570,6 +2572,11 @@ static void GA_Polygon(int n, double *x, double *y,
     r.x = mx0; r.width = mx1 - mx0;
     r.y = my0; r.height = my1 - my0;
 
+    if (xd->doSetPolyFill && xd->fillOddEven == FALSE) {
+    	DRAW(gsetpolyfillmode(_d, 0));
+    	xd->doSetPolyFill = FALSE;  /* Only set it once */
+    }
+    
     SetColor(gc->fill, gc->gamma, xd);
     if (R_OPAQUE(gc->fill)) {
 	DRAW(gfillpolygon(_d, xd->fgcolor, points, n));
@@ -2810,7 +2817,8 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 			Rboolean recording, int resize, int bg, int canvas,
 			double gamma, int xpos, int ypos, Rboolean buffered,
 			SEXP psenv, Rboolean restoreConsole,
-			const char *title, Rboolean clickToConfirm)
+			const char *title, Rboolean clickToConfirm,
+			Rboolean fillOddEven)
 {
     /* if need to bail out with some sort of "error" then */
     /* must free(dd) */
@@ -2847,6 +2855,8 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     xd->warn_trans = FALSE;
     strncpy(xd->title, title, 101);
     xd->title[100] = '\0';
+    xd->doSetPolyFill = TRUE;     /* will only set it once */
+    xd->fillOddEven = fillOddEven;
 
     /* Start the Device Driver and Hardcopy.  */
 
@@ -3235,7 +3245,7 @@ SEXP devga(SEXP args)
     char *vmax;
     double height, width, ps, xpinch, ypinch, gamma;
     int recording = 0, resize = 1, bg, canvas, xpos, ypos, buffered;
-    Rboolean restoreConsole, clickToConfirm;
+    Rboolean restoreConsole, clickToConfirm, fillOddEven;
     SEXP sc, psenv;
 
     vmax = vmaxget();
@@ -3292,6 +3302,10 @@ SEXP devga(SEXP args)
     title = CHAR(STRING_ELT(sc, 0));
     args = CDR(args);
     clickToConfirm = asLogical(CAR(args));
+    args = CDR(args);
+    fillOddEven = asLogical(CAR(args));
+    if (fillOddEven == NA_LOGICAL)
+	error(_("invalid value of '%s'"), "fillOddEven");
     
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -3303,7 +3317,7 @@ SEXP devga(SEXP args)
 	if (!GADeviceDriver(dev, display, width, height, ps,
 			    (Rboolean)recording, resize, bg, canvas, gamma,
 			    xpos, ypos, (Rboolean)buffered, psenv,
-			    restoreConsole, title, clickToConfirm)) {
+			    restoreConsole, title, clickToConfirm, fillOddEven)) {
 	    free(dev);
 	    error(_("unable to start device"));
 	}

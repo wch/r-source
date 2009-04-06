@@ -22,8 +22,8 @@ windows.options(\dots, reset = FALSE)
   \item{\dots}{arguments \code{width}, \code{height}, \code{pointsize},
     \code{record}, \code{rescale}, \code{xpinch}, \code{ypinch},
     \code{bg}, \code{canvas}, \code{gamma}, \code{xpos}, \code{ypos},
-    \code{buffered}, \code{restoreConsole}, \code{clickToConfirm}
-    and \code{title} can be supplied.}
+    \code{buffered}, \code{restoreConsole}, \code{clickToConfirm},
+    \code{title} and \code{fillOddEven} can be supplied.}
   \item{reset}{logical: should the defaults be reset to their
     \sQuote{factory-fresh} values?}
 }

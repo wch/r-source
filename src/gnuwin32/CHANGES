@@ -16,6 +16,13 @@
     		CHANGES IN R VERSION 2.10.0
 
 
+NEW FEATURES
+
+    o	windows() now has a parameter fillOddEven (default TRUE),
+	which controls the mode used for polygon fills of self-
+	intersecting shapes.
+    	
+    	
 PACKAGE INSTALLATION
 
     o	Rcmd SHLIB (which is used by Rcmd INSTALL) now calls 'make'

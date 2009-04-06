@@ -384,6 +384,7 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define gscroll		GA_gscroll
 #define gsetcliprect		GA_gsetcliprect
 #define gsetcursor		GA_gsetcursor
+#define gsetpolyfillmode	GA_gsetpolyfillmode
 #define gsetmodified		GA_gsetmodified
 #define gsetpixel		GA_gsetpixel
 #define gstrrect		GA_gstrrect

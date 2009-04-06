@@ -61,8 +61,16 @@ polygon(x, y = NULL, density = NULL, angle = 45,
   and \code{lty} are recycled in the usual manner.
 }
 \section{Bugs}{
-  The present shading algorithm can produce incorrect results for
-  self-intersecting polygons.
+Different graphics devices fill self-intersecting polygons
+differently, using either the \dQuote{odd-even} or \dQuote{nonzero}
+rule.  These fill a region if the polygon border encircles it an odd
+or nonzero number of times respectively.
+#ifdef windows
+The \code{\link{windows}()} device has parameter \code{fillOddEven}
+to control this.
+#endif
+Shading lines are handled internally by \R{} and may not be consistent with the 
+device-based fills.
 }
 \author{
   The code implementing polygon shading was donated by
