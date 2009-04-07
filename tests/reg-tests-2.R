@@ -2337,3 +2337,10 @@ foo("blah blah")
 foo(given = TRUE)
 foo()
 ## altered foo() in 2.8.1.
+
+## Using  '#' flag in  sprintf():
+forms <- c("%#7.5g","%#5.f", "%#7x", "%#5d", "%#9.0e")
+nums <- list(-3.145, -31,   0xabc,  -123L, 123456)
+rbind(mapply(sprintf, forms,               nums),
+      mapply(sprintf, sub("#", '', forms), nums))
+## gave an error in pre-release versions of 2.9.0

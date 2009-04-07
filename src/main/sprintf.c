@@ -44,7 +44,7 @@ static const char *findspec(const char *str)
 
     if(*p != '%') return p;
     for(p++; ; p++) {
-	if(*p == '-' || *p == '+' || *p == ' ' || *p == '.' ) continue;
+	if(*p == '-' || *p == '+' || *p == ' ' || *p == '#' || *p == '.' ) continue;
 	/* '*' will currently have got substituted before this */
 	if(*p == '*' || (*p >= '0' && *p <= '9')) continue;
 	break;

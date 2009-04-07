@@ -35,7 +35,7 @@ gettextf(fmt, \dots, domain = NULL)
   number of times to the length of the longest, and then the formatting
   is done in parallel.  As from \R 2.9.0 zero-length arguments are
   allowed and will give a zero-length result.
-  
+
   The following is abstracted from Kernighan and Ritchie
   (see References).  The string \code{fmt} contains normal characters,
   which are passed through to the output string, and also conversion
@@ -74,8 +74,8 @@ gettextf(fmt, \dots, domain = NULL)
       \code{NaN} or (perhaps a sign followed by) \code{Inf}.  Format
       \code{\%a} uses lower-case for \code{x}, \code{p} and the hex
       values: format \code{\%A} uses upper-case.
-  
-      This might not be supported on all platforms as if is a feature of C99.
+
+      This might not be supported on all platforms as it is a feature of C99.
       The format is not uniquely defined: although it would be possible
       to make the leading \code{h} always zero or one, this is not
       always done.  Most systems will suppress trailing zeros, but a few
@@ -97,8 +97,8 @@ gettextf(fmt, \dots, domain = NULL)
   determined before conversion, so do not rely on the internal
   coercion if this would change the length.  The coercion is done only
   once, so if \code{length(fmt) > 1} then all elements must expect the
-  same types of arguments. 
-  
+  same types of arguments.
+
   In addition, between the initial \code{\%} and the terminating
   conversion character there may be, in any order:
 
@@ -110,6 +110,15 @@ gettextf(fmt, \dots, domain = NULL)
       negative numbers are printed with a sign.}
     \item{a space}{Prefix a space if the first character is not a sign.}
     \item{\code{0}}{For numbers, pad to the field width with leading zeros.}
+    \item{\code{#}}{specifies \dQuote{alternate output} for numbers, its
+      action depending on the type:
+      %% This is from Kernighan & Ritchie, p. 243:
+      %% For \code{o}, the first digit will be zero.
+      For \code{x} or \code{X}, \code{0x} or \code{0X} will be prefixed
+      to a non-zero result.  For \code{e}, \code{e}, \code{f}, \code{g}
+      and \code{G}, the output will always have a decimal point; for
+      \code{g} and \code{G}, trailing zeros will not be removed.
+    }
   }
   Further, immediately after \code{\%} may come \code{1$} to \code{99$}
   to refer to numbered argument: this allows arguments to be
@@ -225,7 +234,7 @@ sprintf("precision \%.*f, width '\%*.3f'", 3, pi, 8, pi)
 ## Asterisk and argument re-use, 'e' example reiterated:
 sprintf("e with \%1$2d digits = \%2$.*1$g", n, exp(1))
 
-## re-cycle arguments 
+## re-cycle arguments
 sprintf("\%s \%d", "test", 1:3)
 
 ## binary output showing rounding/representation errors

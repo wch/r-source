@@ -1,5 +1,5 @@
 
-R version 2.9.0 Under development (unstable) (2009-02-27 r48020)
+R version 2.10.0 Under development (unstable) (2009-04-06 r48294)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6273,4 +6273,14 @@ callFunc(default = TRUE, given = TRUE)
 > foo()
 callFunc(default = TRUE)
 > ## altered foo() in 2.8.1.
+> 
+> ## Using  '#' flag in  sprintf():
+> forms <- c("%#7.5g","%#5.f", "%#7x", "%#5d", "%#9.0e")
+> nums <- list(-3.145, -31,   0xabc,  -123L, 123456)
+> rbind(mapply(sprintf, forms,               nums),
++       mapply(sprintf, sub("#", '', forms), nums))
+     %#7.5g    %#5.f   %#7x      %#5d    %#9.0e     
+[1,] "-3.1450" " -31." "  0xabc" " -123" "   1.e+05"
+[2,] " -3.145" "  -31" "    abc" " -123" "    1e+05"
+> ## gave an error in pre-release versions of 2.9.0
 > 
