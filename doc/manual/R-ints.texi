@@ -2149,17 +2149,18 @@ macro, for example
 @noindent
 from @file{src/main/errors.c}.
 
-A macro
+The @code{P_} macro
 
 @example
 #ifdef ENABLE_NLS
 #define P_(StringS, StringP, N) ngettext (StringS, StringP, N)
 #else
-#define P_(String, StringP, N) (N > 1 ? StringP: String)
+#define P_(StringS, StringP, N) (N > 1 ? StringP: StringS)
 #endif
 @end example
 
 @noindent
+may be used
 as a wrapper for @code{ngettext}: however in some cases the preferred
 approach has been to conditionalize (on @code{ENABLE_NLS}) code using
 @code{ngettext}.
