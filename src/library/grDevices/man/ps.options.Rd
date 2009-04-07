@@ -28,8 +28,8 @@ setPS(\dots)
     \code{fonts},
     \code{encoding}, \code{bg}, \code{fg}, \code{width}, \code{height},
     \code{horizontal}, \code{pointsize},  \code{paper},
-    \code{pagecentre}, \code{print.it}, \code{command} and
-    \code{colormodel} can be supplied.  \code{onefile},
+    \code{pagecentre}, \code{print.it}, \code{command},
+    \code{colormodel} and \code{fillOddEven} can be supplied.  \code{onefile},
     \code{horizontal} and \code{paper} are \emph{ignored}
     for \code{setEPS} and \code{setPS}.}
   \item{reset}{logical: should the defaults be reset to their

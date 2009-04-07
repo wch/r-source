@@ -372,7 +372,7 @@ static void SaveAsPostscript(pDevDesc dd, const char *fn)
 					GE_INCHES, gdd),
 		       (double)0, ((gadesc*) dd->deviceSpecific)->basefontsize,
 		       0, 1, 0, "", "R Graphics Output", R_NilValue, "rgb", 
-		       TRUE))
+		       TRUE, xd->fillOddEven))
 	/* horizontal=F, onefile=F, pagecentre=T, print.it=F */
 	PrivateCopyDevice(dd, ndd, "postscript");
 }
@@ -433,7 +433,7 @@ static void SaveAsPDF(pDevDesc dd, const char *fn)
 					 GE_INCHES, gdd),
 			((gadesc*) dd->deviceSpecific)->basefontsize,
 			1, 0, "R Graphics Output", R_NilValue, 1, 4, 
-			"rgb", TRUE, TRUE))
+			"rgb", TRUE, TRUE, xd->fillOddEven))
 	PrivateCopyDevice(dd, ndd, "PDF");
 }
 

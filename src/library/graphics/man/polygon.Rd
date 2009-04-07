@@ -64,11 +64,12 @@ polygon(x, y = NULL, density = NULL, angle = 45,
 Different graphics devices fill self-intersecting polygons
 differently, using either the \dQuote{odd-even} or \dQuote{nonzero}
 rule.  These fill a region if the polygon border encircles it an odd
-or nonzero number of times respectively.
+or nonzero number of times respectively. The 
 #ifdef windows
-The \code{\link{windows}()} device has parameter \code{fillOddEven}
-to control this.
+\code{\link{windows}},
 #endif
+\code{\link{pdf}} and \code{\link{postscript}} devices
+have parameter \code{fillOddEven} to control this.
 Shading lines are handled internally by \R{} and may not be consistent with the 
 device-based fills.
 }

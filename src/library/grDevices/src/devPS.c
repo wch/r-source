@@ -2241,6 +2241,7 @@ typedef struct {
     Rboolean paperspecial;	/* suppress %%Orientation */
     Rboolean warn_trans; /* have we warned about translucent cols? */
     Rboolean useKern;
+    Rboolean fillOddEven; /* polygon fill mode */
 
     /* This group of variables track the current device status.
      * They should only be set by routines that emit PostScript code. */
@@ -3078,7 +3079,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	       Rboolean horizontal, double ps,
 	       Rboolean onefile, Rboolean pagecentre, Rboolean printit,
 	       const char *cmd, const char *title, SEXP fonts,
-	       const char *colormodel, int useKern)
+	       const char *colormodel, int useKern, Rboolean fillOddEven)
 {
     /* If we need to bail out with some sort of "error"
        then we must free(dd) */
@@ -3113,6 +3114,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     strncpy(pd->title, title, 1024);
     strncpy(pd->colormodel, colormodel, 30);
     pd->useKern = (useKern != 0);
+    pd->fillOddEven = fillOddEven;
 
     if(strlen(encoding) > PATH_MAX - 1) {
 	free(dd);
@@ -3997,8 +3999,11 @@ static void PS_Polygon(int n, double *x, double *y,
     code = 2 * (R_OPAQUE(gc->fill)) + (R_OPAQUE(gc->col));
 
     if (code) {
-	if(code & 2)
+	if(code & 2) {
 	    SetFill(gc->fill, dd);
+	    if (pd->fillOddEven) 
+	    	code |= 4;
+	}
 	if(code & 1) {
 	    SetColor(gc->col, dd);
 	    SetLineStyle(gc, dd);
@@ -5274,6 +5279,7 @@ typedef struct {
     char title[1024];
     char colormodel[30];
     Rboolean dingbats, useKern;
+    Rboolean fillOddEven; /* polygon fill mode */
 
     /*
      * Fonts and encodings used on the device
@@ -5412,7 +5418,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 		double ps, int onefile, int pagecentre,
 		const char *title, SEXP fonts,
 		int versionMajor, int versionMinor,
-		const char *colormodel, int dingbats, int useKern)
+		const char *colormodel, int dingbats, int useKern,
+		Rboolean fillOddEven)
 {
     /* If we need to bail out with some sort of "error" */
     /* then we must free(dd) */
@@ -5464,6 +5471,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     strncpy(pd->colormodel, colormodel, 30);
     pd->dingbats = (dingbats != 0);
     pd->useKern = (useKern != 0);
+    pd->fillOddEven = fillOddEven;
 
     pd->width = width;
     pd->height = height;
@@ -6736,10 +6744,18 @@ static void PDF_Polygon(int n, double *x, double *y,
 	    yy = y[i];
 	    fprintf(pd->pdffp, "  %.2f %.2f l\n", xx, yy);
 	}
-	switch(code) {
-	case 1: fprintf(pd->pdffp, "s\n"); break;
-	case 2: fprintf(pd->pdffp, "h f\n"); break;
-	case 3: fprintf(pd->pdffp, "b\n"); break;
+	if (pd->fillOddEven) {
+	    switch(code) {
+	    case 1: fprintf(pd->pdffp, "s\n"); break;
+	    case 2: fprintf(pd->pdffp, "h f*\n"); break;
+	    case 3: fprintf(pd->pdffp, "b*\n"); break;
+	    }	
+	} else {
+	    switch(code) {
+	    case 1: fprintf(pd->pdffp, "s\n"); break;
+	    case 2: fprintf(pd->pdffp, "h f\n"); break;
+	    case 3: fprintf(pd->pdffp, "b\n"); break;
+	    }
 	}
     }
 }
@@ -7375,6 +7391,10 @@ static void PDF_MetricInfo(int c,
  *  printit     = 'print' after closing device?
  *  command     = 'print' command
  *  title       = character string
+ *  fonts	
+ *  colorModel
+ *  useKerning
+ *  fillOddEven
  */
 
 SEXP PostScript(SEXP args)
@@ -7387,6 +7407,7 @@ SEXP PostScript(SEXP args)
     int i, horizontal, onefile, pagecentre, printit, useKern;
     double height, width, ps;
     SEXP fam, fonts;
+    Rboolean fillOddEven;
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
@@ -7419,11 +7440,14 @@ SEXP PostScript(SEXP args)
     cmd = CHAR(asChar(CAR(args)));    args = CDR(args);
     title = translateChar(asChar(CAR(args)));  args = CDR(args);
     fonts = CAR(args);		      args = CDR(args);
-    colormodel = CHAR(asChar(CAR(args)));  args = CDR(args);
-    useKern = asLogical(CAR(args));
-    if (useKern == NA_LOGICAL) useKern = 1;
     if (!isNull(fonts) && !isString(fonts))
 	error(_("invalid 'fonts' parameter in %s"), call);
+    colormodel = CHAR(asChar(CAR(args)));  args = CDR(args);
+    useKern = asLogical(CAR(args));   args = CDR(args);
+    if (useKern == NA_LOGICAL) useKern = 1;
+    fillOddEven = asLogical(CAR(args));
+    if (fillOddEven == NA_LOGICAL)
+	error(_("invalid value of '%s'"), "fillOddEven");
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -7434,7 +7458,7 @@ SEXP PostScript(SEXP args)
 	if(!PSDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			   width, height, (double)horizontal, ps, onefile,
 			   pagecentre, printit, cmd, title, fonts,
-			   colormodel, useKern)) {
+			   colormodel, useKern, fillOddEven)) {
 	    /* free(dev); No, dev freed inside PSDeviceDrive */
 	    error(_("unable to start device PostScript"));
 	}
@@ -7533,6 +7557,7 @@ SEXP XFig(SEXP args)
  *  colormodel
  *  useDingbats
  *  forceLetterSpacing
+ *  fillOddEven
  */
 
 SEXP PDF(SEXP args)
@@ -7545,6 +7570,7 @@ SEXP PDF(SEXP args)
     double height, width, ps;
     int i, onefile, pagecentre, major, minor, dingbats, useKern;
     SEXP fam, fonts;
+    Rboolean fillOddEven;
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
@@ -7576,8 +7602,12 @@ SEXP PDF(SEXP args)
     colormodel = CHAR(asChar(CAR(args))); args = CDR(args);
     dingbats = asLogical(CAR(args)); args = CDR(args);
     if (dingbats == NA_LOGICAL) dingbats = 1;
-    useKern = asLogical(CAR(args));
+    useKern = asLogical(CAR(args)); args = CDR(args);
     if (useKern == NA_LOGICAL) useKern = 1;
+    fillOddEven = asLogical(CAR(args));
+    if (fillOddEven == NA_LOGICAL)
+	error(_("invalid value of '%s'"), "fillOddEven");
+
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -7588,7 +7618,7 @@ SEXP PDF(SEXP args)
 	if(!PDFDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			    width, height, ps, onefile, pagecentre,
 			    title, fonts, major, minor, colormodel,
-			    dingbats, useKern)) {
+			    dingbats, useKern, fillOddEven)) {
 	    /* free(dev); PDFDeviceDriver now frees */
 	    error(_("unable to start device pdf"));
 	}

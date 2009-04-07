@@ -18,7 +18,7 @@
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width, height, onefile, family, title, fonts, version,
     paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
-    useDingbats, useKerning)
+    useDingbats, useKerning, fillOddEven)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
@@ -78,6 +78,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     }
   \item{useKerning}{logical.  Should kerning corrections be included in
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
+  \item{fillOddEven}{logical controlling the polygon fill mode:  see
+      \code{\link{polygon}} for details.  Default \code{FALSE}.}
 }
 \details{
   All arguments except \code{file} default to values given by

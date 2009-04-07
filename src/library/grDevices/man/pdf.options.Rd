@@ -22,8 +22,8 @@ pdf.options(\dots, reset = FALSE)
   \item{\dots}{arguments \code{width}, \code{height}, \code{onefile},
     \code{family}, \code{title}, \code{fonts}, \code{paper},
     \code{encoding}, \code{pointsize}, \code{bg}, \code{fg},
-    \code{pagecentre}, \code{useDingbats} and \code{colormodel} can be
-    supplied.}
+    \code{pagecentre}, \code{useDingbats}, \code{colormodel} 
+    and \code{fillOddEven} can be supplied.}
   \item{reset}{logical: should the defaults be reset to their
     \sQuote{factory-fresh} values?}
 }
