@@ -306,7 +306,9 @@ setvpgpar.vpTree <- function(vp) {
   setvpgpar(vp$children)
 }
 
+#############
 # Functions for creating "paths" of viewport names
+#############
 .grid.pathSep <- "::"
 
 vpPathFromVector <- function(names) {
@@ -356,6 +358,270 @@ explodePath <- function(path) {
   unlist(strsplit(path, .grid.pathSep))
 }
 
+#############
+# Viewing viewports
+#############
+
+# FIXME:  some of this code for vpLists and vpStacks and vpTrees
+# assumes that the components of a vpList or vpStack or the
+# vpTree parent can ONLY be a viewport (when in fact they can
+# also be a vpList, vpStack, or vpTree!)
+
+# Label a viewport
+# Get physical aspect ratio of vp to determine whether to rotate
+# Shrink text to fit in vp
+# (Assumes that we are currently occupying 'vp'
+#  so that conversions are correct)
+labelVP <- function(vp, col) {
+    vw <- convertWidth(unit(1, "npc"), "inches", valueOnly=TRUE)
+    vh <- convertHeight(unit(1, "npc"), "inches", valueOnly=TRUE)
+    tw <- convertWidth(stringWidth(vp$name), "inches", valueOnly=TRUE)
+    th <- convertHeight(stringHeight(vp$name), "inches", valueOnly=TRUE)
+    eps <- .01
+    # If viewport is REALLY short, draw horiz at normal cex
+    if (vh < eps) {
+        rot <- 0
+        cex <- 1
+    # If viewport is REALLY thin, draw vertical at normal cex
+    } else if (vw < eps) {
+        rot <- 90
+        cex <- 1
+    } else {
+        vratio <- vh/vw
+        if (vratio > 1 && tw > vw) {
+            rot <- 90
+            wratio <- th/vw
+            hratio <- tw/vh        
+        } else {
+            rot <- 0
+            wratio <- tw/vw
+            hratio <- th/vh
+        }
+        if (wratio > 1 || hratio > 1) {
+            cex <- 1/max(wratio, hratio)
+        } else {
+            cex <- 1
+        }
+    }
+    # Violate any clipping that is in effect
+    pushViewport(viewport(clip="off"))
+    grid.text(vp$name, rot=rot, gp=gpar(col=col, cex=cex))
+    upViewport()
+}
+
+# Draw a "viewport"
+drawVP <- function(vp, curDepth, depth, col, fill, label) {
+    UseMethod("drawVP")
+}
+
+drawVP.viewport <- function(vp, curDepth, depth, col, fill, label) {
+    if (vp$name != "ROOT" &&
+        (is.null(depth) || curDepth %in% depth)) {
+        pushViewport(vp)
+        colIndex <- (curDepth - 1) %% length(col) + 1
+        fillIndex <- (curDepth - 1) %% length(fill) + 1
+        grid.rect(gp=gpar(col=col[colIndex], fill=fill[fillIndex]))
+        if (label) 
+            labelVP(vp, col[colIndex])
+        upViewport()
+    }
+}
+
+drawVP.vpList <- function(vp, curDepth, depth, col, fill, label) {
+    lapply(vp, drawVP, curDepth, depth, col, fill, label)    
+}
+
+drawVPStack <- function(vp, curDepth, depth, col, fill, label) {
+    pushViewport(vp)
+    if (is.null(depth) || curDepth %in% depth) {
+        colIndex <- (curDepth - 1) %% length(col) + 1
+        fillIndex <- (curDepth - 1) %% length(fill) + 1
+        grid.rect(gp=gpar(col=col[colIndex], fill=fill[fillIndex]))
+    }
+}
+
+drawVP.vpStack <- function(vp, curDepth, depth, col, fill, label) {
+    d <- depth(vp)
+    mapply(drawVPStack, vp, curDepth + 1:d - 1,
+           MoreArgs=list(depth, col, fill, label))
+    if (label && curDepth + d - 1 %in% depth)
+        labelVP(vp[[d]], col[(curDepth + d - 2) %% length(col) + 1])
+    upViewport(depth(vp))
+}
+
+drawVP.vpTree <- function(vp, curDepth, depth, col, fill, label) {
+    if (vp$parent$name == "ROOT") {
+        lapply(vp$children, drawVP, curDepth, depth, col, fill, label)        
+    } else {
+        pushViewport(vp$parent)
+        if (is.null(depth) || curDepth %in% depth) {
+            colIndex <- (curDepth - 1) %% length(col) + 1
+            fillIndex <- (curDepth - 1) %% length(fill) + 1
+            grid.rect(gp=gpar(col=col[colIndex], fill=fill[fillIndex]))
+            if (label) {
+                drawLabel <- is.null(vp$children) ||
+                             (!is.null(depth) && 
+                              curDepth == max(depth))
+                if (drawLabel)
+                    labelVP(vp$parent, col[colIndex])
+            }
+        }
+        lapply(vp$children, drawVP, curDepth + 1, depth, col, fill, label)
+        upViewport()
+    }
+}
+
+# Draw all viewports in same viewport
+showVP <- function(vp, newpage, cvpt, depth, col, fill,
+                   label) {
+    # Work off a vpTree, so convert vp if it's a vpPath
+    showingPath <- inherits(vp, "vpPath")
+    if (showingPath) {
+        path <- vp
+        # If we've started a new page, we'll need the old
+        # viewport tree to navigate within
+        if (newpage) {
+            pushViewport(cvpt)
+            # "-1" for "ROOT"
+            upViewport(depth(cvpt) - 1)
+        }
+        downViewport(path)
+        vp <- current.vpTree(all=FALSE)
+        upViewport(1)
+    }
+    drawVP(vp, 1, depth, col, fill, label)
+    if (showingPath)
+        # "-1" because we went down the path then back up 1 originally
+        upViewport(depth(path) - 1)
+    invisible()
+}
+
+# Convert a "viewport" to a set of vpPaths
+leafPaths <- function(vp) {
+    UseMethod("leafPaths")
+}
+
+leafPaths.viewport <- function(vp) {
+    if (vp$name == "ROOT")
+        NULL
+    else
+        vp$name
+}
+
+leafPaths.vpList <- function(vp) {
+    unlist(lapply(vp, leafPaths))
+}
+
+leafPaths.vpStack <- function(vp) {
+    pathList <- lapply(vp, leafPaths)
+    paste(unlist(pathList),
+          sep=.grid.pathSep)
+}
+
+leafPaths.vpTree <- function(vp) {
+    if (is.null(vp$children)) {
+        if (vp$parent$name == "ROOT")
+            NULL
+        else
+            vp$parent$name
+    } else {
+        pathList <- lapply(vp$children, leafPaths)
+        if (vp$parent$name == "ROOT") {
+            unlist(pathList)
+        } else {
+            paste(vp$parent$name,
+                  unlist(pathList),
+                  sep=.grid.pathSep)
+        }
+    }
+}
+
+# Draw a vpPath
+drawPath <- function(path, depth, col, fill, label) {
+    n <- depth(path)
+    for (i in 1:n) {
+        downViewport(path[i])
+        if (is.null(depth) || i %in% depth) {
+            colIndex <- (i - 1) %% length(col) + 1
+            fillIndex <- (i - 1) %% length(fill) + 1
+            grid.rect(gp=gpar(col=col[colIndex], fill=fill[fillIndex]))
+            if (label) {
+                if (is.null(depth))
+                    drawLabel <- i == n
+                else
+                    drawLabel <- min(n, max(depth))
+                if (drawLabel)
+                    labelVP(current.viewport(), col[colIndex])
+            }
+        }
+    }
+    upViewport(n)
+}
+
+# Draw each leaf in separate viewports
+# FIXME: allow control over number of rows and cols
+# NOTE: this does NOT leave its viewports hanging around after
+showVPmatrix <- function(vp, cvpt, depth, col, fill,
+                         label, # Only the leaf viewports are labelled
+                         nrow=3, ncol=nrow) {
+    # Work off a vpPath, so convert vp if it's a "viewport"
+    if (is.viewport(vp)) {
+        paths <- leafPaths(vp)
+    } else {
+        # Should not happen
+        stop("How did we get here?")
+    }
+    firstPath <- 0
+    while (length(paths) - firstPath > 0) {
+        if (firstPath > 0) 
+            grid.newpage()
+        pushViewport(viewport(layout=grid.layout(nrow, ncol)))
+        for (i in 1:nrow) {
+            for (j in 1:ncol) {
+                theLeaf <- firstPath + (i - 1)*nrow + j
+                if (theLeaf <= length(paths)) {
+                    thePath <- vpPathDirect(paths[theLeaf])
+                    pushViewport(viewport(layout.pos.row=i,
+                                          layout.pos.col=j))
+                    grid.rect(gp=gpar(col="grey80"))
+                    pushViewport(vp)
+                    upViewport(depth(vp))
+                    drawPath(thePath, depth, col, fill, label)
+                    popViewport()
+                }
+            }
+        }
+        popViewport()
+        firstPath <- firstPath + nrow*ncol
+    }
+}
+
+showViewport <- function(vp=NULL, recurse=TRUE, depth=NULL,
+                         newpage=FALSE, leaves=FALSE,
+                         col=rgb(0, 0, 1, .2), fill=rgb(0, 0, 1, .1),
+                         label=TRUE) {
+    cvpt <- current.vpTree()
+    if (is.null(vp))
+        vp <- cvpt
+    if (newpage == FALSE && leaves == TRUE)
+        stop("Must start new page if showing leaves separately")
+    if (newpage) {
+        grid.newpage()
+    }
+    if (!recurse)
+        depth <- 1
+    if (leaves) {
+        # Special case of showing vpPath (i.e., only one viewport)
+        # Ignores nrow & ncol
+        if (inherits(vp, "vpPath"))
+            showVP(vp, TRUE, cvpt, depth, col, fill, label)
+        else 
+            showVPmatrix(vp, cvpt, depth, col, fill, label)
+    } else {
+        showVP(vp, newpage, cvpt, depth, col, fill, label)
+    }
+}
+                         
 #############
 # Some handy viewport functions
 #############

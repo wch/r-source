@@ -89,11 +89,6 @@ get.gpar(names = NULL)
   \code{"cyrillic"}, \code{"cyrillic.oblique"}, and \code{"EUC"}
   are also available.
 
-  Specifying the value \code{NULL} for a parameter is the same as not
-  specifying any value for that parameter, except for \code{col} and
-  \code{fill}, where \code{NULL} indicates not to draw a border or
-  not to fill an area (respectively).
-
   All parameter values can be vectors of multiple values.  (This will
   not always make sense -- for example, viewports will only take
   notice of the first parameter value.)

@@ -42,6 +42,7 @@ export(
        "popViewport", "pushViewport",
        "dataViewport", "plotViewport",
        "downViewport", "upViewport", "seekViewport",
+       "showViewport",
 
        "drawDetails", "preDrawDetails", "postDrawDetails",
        "editDetails",
@@ -114,6 +115,7 @@ S3method("[", "gpar")
 S3method("[", "unit")
 S3method("[", "unit.arithmetic")
 S3method("[", "unit.list")
+S3method("[", "vpPath")
 S3method("Ops", "unit")
 S3method("Summary", "unit")
 S3method("as.character", "grob")
@@ -293,6 +295,14 @@ S3method("depth", "vpList")
 S3method("depth", "vpStack")
 S3method("depth", "vpTree")
 S3method("depth", "path")
+S3method("drawVP", "viewport")
+S3method("drawVP", "vpList")
+S3method("drawVP", "vpStack")
+S3method("drawVP", "vpTree")
+S3method("leafPaths", "viewport")
+S3method("leafPaths", "vpList")
+S3method("leafPaths", "vpStack")
+S3method("leafPaths", "vpTree")
 S3method("pushgrobvp", "viewport")
 S3method("pushgrobvp", "vpPath")
 S3method("popgrobvp", "viewport")
