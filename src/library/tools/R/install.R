@@ -2068,7 +2068,7 @@
     out <- file(of <- tempfile(), "wt")
     if (!nzchar(enc)) enc <- "unknown"
     description <- description == "true"
-    only_meta <- only_meta == "no"
+    only_meta <- only_meta == "true"
     internals <- internals != "no"
     index <- index != "false"
 
@@ -2080,10 +2080,6 @@
             if (!is.na(pkg_enc)) enc <- pkg_enc
         }
     }
-
-    toc <- if(file_test("-d", files_or_dir)) {
-        "\\Rdcontents{\\R{} topics documented:}"
-    } else ""
 
     ## Rd2.tex part 1: header
     if(batch == "true") writeLines("\\nonstopmode{}", out)
@@ -2146,9 +2142,17 @@
     }
 
     ## Rd2.tex part 2: body
+    toc <- if(file_test("-d", files_or_dir)) {
+        "\\Rdcontents{\\R{} topics documented:}"
+    } else ""
+
     if (is_bundle == "no") {
-        if(nzchar(toc)) writeLines(toc, out)
+        ## if this looks like a package with no man pages, skip body
+        if(file.exists(file.path(pkgdir, "DESCRIPTION")) &&
+           !(file_test("-d", file.path(pkgdir, "man")) ||
+             file_test("-d", file.path(pkgdir, "latex")))) only_meta <- TRUE
         if(!only_meta) {
+            if(nzchar(toc)) writeLines(toc, out)
             .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
                          extraDirs = OSdir, internals = internals)
         }
