@@ -314,7 +314,8 @@
             ## system(paste("rm -f", filepath))
             unlink(filepath)
             owd <- setwd(lib)
-            system(paste(ZIP, "-r9Xq", filepath, bundle_pkgs))
+            system(paste(ZIP, "-r9Xq", filepath,
+                         paste(bundle_pkgs, collapse = " ")))
             message("packaged installation of ",
                     sQuote(bundle_name), " as ", filename)
             setwd(owd)
