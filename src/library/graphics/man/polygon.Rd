@@ -12,7 +12,8 @@
 }
 \usage{
 polygon(x, y = NULL, density = NULL, angle = 45,
-        border = NULL, col = NA, lty = par("lty"), \dots)
+        border = NULL, col = NA, lty = par("lty"),
+        \dots, fillOddEven = FALSE)
 }
 \arguments{
   \item{x,y}{vectors containing the coordinates of the vertices
@@ -40,6 +41,8 @@ polygon(x, y = NULL, density = NULL, angle = 45,
   \item{lty}{the line type to be used, as in \code{\link{par}}.}
   \item{\dots}{graphical parameters such as \code{xpd}, \code{lend},
     \code{ljoin} and \code{lmitre} can be given as arguments.}
+  \item{fillOddEven}{logical controlling the polygon fill mode:  see
+      below for details.  Default \code{FALSE}.} 
 }
 \details{
   The coordinates can be passed in a plotting structure
@@ -61,17 +64,17 @@ polygon(x, y = NULL, density = NULL, angle = 45,
   and \code{lty} are recycled in the usual manner.
 }
 \section{Bugs}{
-Different graphics devices fill self-intersecting polygons
-differently, using either the \dQuote{odd-even} or \dQuote{nonzero}
-rule.  These fill a region if the polygon border encircles it an odd
-or nonzero number of times respectively. The 
+  Self-intersecting polygons may be filled using either the
+  \dQuote{odd-even} or \dQuote{non-zero} rule.  These fill a region if
+  the polygon border encircles it an odd or non-zero number of times,
+  respectively. Shading lines are handled internally by \R{} according
+  to the \code{fillOddEven} argument, but device-based solid fills
+  depend on the graphics device.  The
 #ifdef windows
-\code{\link{windows}},
+  \code{\link{windows}},
 #endif
-\code{\link{pdf}} and \code{\link{postscript}} devices
-have parameter \code{fillOddEven} to control this.
-Shading lines are handled internally by \R{} and may not be consistent with the 
-device-based fills.
+  \code{\link{pdf}} and \code{\link{postscript}} devices
+  have their own \code{fillOddEven} argument to control this.
 }
 \author{
   The code implementing polygon shading was donated by

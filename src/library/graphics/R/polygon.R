@@ -21,7 +21,7 @@
 
 polygon <-
   function(x, y = NULL, density = NULL, angle = 45,
-           border = NULL, col = NA, lty = par("lty"), ...)
+           border = NULL, col = NA, lty = par("lty"), ..., fillOddEven=FALSE)
 {
     ## FIXME: remove this eventually
     ..debug.hatch <- FALSE
@@ -78,11 +78,15 @@ polygon <-
             tsort <- t[o]
 
             ## we draw the part of line from t[i] to t[i+1] whenever it lies
-            ##   "inside" the polygon --- we define this to mean we crossed
+            ##   "inside" the polygon --- the definition of this depends on
+            ##   fillOddEven:  if FALSE, we crossed
             ##   unequal numbers of left-to-right and right-to-left polygon
-            ##   segments to get there
-
-            drawline <- cumsum(cross[does.cross][o]) != 0
+            ##   segments to get there.  if TRUE, an odd number of crossings.
+            ##
+	 
+	    crossings <- cumsum(cross[does.cross][o])
+	    if (fillOddEven) crossings <- crossings %% 2
+            drawline <- crossings != 0
 
             ## draw those segments
 

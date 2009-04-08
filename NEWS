@@ -11,9 +11,9 @@
 
 NEW FEATURES
 
-    o	pdf() and postscript() now have a parameter fillOddEven
-	(default FALSE), which controls the mode used for polygon
-	fills of self-intersecting shapes.
+    o	polygon(), pdf() and postscript() now have a parameter
+	fillOddEven (default FALSE), which controls the mode used for
+	polygon fills of self-intersecting shapes.
 
 
 
