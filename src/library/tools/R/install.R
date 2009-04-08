@@ -236,9 +236,8 @@
                     warning("problem installing per-package DESCRIPTION files",
                             call. = FALSE)
             }
-            ## This cannot create a binary bundle
-            if (tar_up)
-                errmsg("cannot create a binary bundle: use 'R CMD build --binary' to do so")
+            ##if (tar_up)
+            ##    errmsg("cannot create a binary bundle: use 'R CMD build --binary' to do so")
             bundle_pkgs <<- contains
         } else {
             bundle_name <- desc["Package"]
