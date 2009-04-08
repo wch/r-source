@@ -1303,19 +1303,20 @@ available from @uref{http://www.microsoft.com/data/odbc/} as part of MDAC.
 On Unix/Linux you will need an @acronym{ODBC} Driver Manager such as
 unixODBC (@uref{http://www.unixODBC.org}) or iOBDC
 (@uref{http://www.iODBC.org}) and an installed driver for your database
-system.  The FreeODBC project (@uref{http://www.jepstone.net/FreeODBC/})
-is a repository of information related to @acronym{ODBC}.
+system.
 
 @cindex Excel
 @findex .xls
 @cindex Dbase
 @findex .dbf
-Windows provides drivers not just for DBMSs but also for Excel (@file{.xls})
-spreadsheets, DBase (@file{.dbf}) files and even text files.  (The named
-applications do @emph{not} need to be installed.)  There are versions
-for Excel 2007 and Access 2007 (go to
-@uref{http://download.microsoft.com}, select `Office' and search for
-`ODBC', which will lead to @file{AccessDatabaseEngine.exe}).
+Windows provides drivers not just for DBMSs but also for Excel
+(@file{.xls}) spreadsheets, DBase (@file{.dbf}) files and even text
+files.  (The named applications do @emph{not} need to be
+installed. Which file formats are supported depends on the the versions
+of the drivers.)  There are versions for Excel 2007 and Access 2007 (go
+to @uref{http://download.microsoft.com}, and search for `Office ODBC',
+which will lead to @file{AccessDatabaseEngine.exe}), the `2007 Office
+System Driver'.
 
 @findex odbcConnect
 @findex odbcDriverConnect
@@ -2132,9 +2133,11 @@ and may be confused by other contents of the file.
 @findex odbcConnectExcel2007
 Windows users can use @code{odbcConnectExcel} in package @pkg{RODBC}.
 This can select rows and columns from any of the sheets in an Excel
-spreadsheet file.  The version @code{odbcConnectExcel2007} will read the
-Excel 2007 formats as well as earlier ones (provided the latest drivers
-are installed: see above).
+spreadsheet file (at least from Excel 97--2003, depending on your ODBC
+drivers: by calling @code{odbcConnect} directly versions back to Excel
+3.0 can be read).  The version @code{odbcConnectExcel2007} will read the
+Excel 2007 formats as well as earlier ones (provided the drivers are
+installed: @pxref{RODBC}).
 
 @c @findex xlsReadWrite
 @c Also only for Windows, the package @pkg{xlsReadWrite} has a function
@@ -2142,9 +2145,9 @@ are installed: see above).
 @c non-Open Source Delphi component).
 
 @code{Perl} users have contributed a module
-@code{OLE::SpreadSheet::ParseExcel} and a program @code{xls2csv.pl} to
-convert Excel spreadsheets to CSV files.  Package @pkg{gdata} provides a
-basic wrapper in its @code{read.xls} function.
+@code{OLE::SpreadSheet::ParseExcel} And a program @code{xls2csv.pl} to
+convert Excel 95--2003 spreadsheets to CSV files.  Package @pkg{gdata}
+provides a basic wrapper in its @code{read.xls} function.
 
 Packages @pkg{dataframes2xls} and @pkg{WriteXLS} each contain a function
 to @emph{write} one or more data frames to an @file{.xls} file:, using
