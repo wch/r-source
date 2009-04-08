@@ -50,8 +50,9 @@ timestamp(stamp = date(),
   The history mechanism is controlled by two environment
 #endif
 #ifdef unix
-  This works under the \code{readline} and GNOME and Mac OS X consoles,
-  but not otherwise (for example, in batch use or in an embedded application).
+  This works under the \code{readline} command-line interface and the
+  \code{R.app} Mac OS X console, but not otherwise (for example, in
+  batch use or in an embedded application).
 
   The \code{readline} history mechanism is controlled by two environment
 #endif
@@ -70,13 +71,14 @@ timestamp(stamp = date(),
   supplied.
   
   The \code{timestamp} function writes a timestamp (or other message)
-  into the history and echos it to the console.  On platforms that do not 
-  support a history mechanism (where the mechanism does not yet support
+  into the history and echos it to the console.  On platforms that do not
+  support a history mechanism (where the mechanism does not support
   timestamps) only the console message is printed.
 }
 \note{
-  If you want to save the history (almost) every session, you can put a
-  call to \code{savehistory()} in \code{\link{.Last}}.  See the examples.
+  If you want to save the history at the end of (almost) every
+  interactive session, you can put a call to \code{savehistory()} in
+  \code{\link{.Last}}.  See the examples.
 }
 \examples{\dontrun{
 .Last <- function()
