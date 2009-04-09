@@ -103,20 +103,21 @@ where the original \code{f()} contained the call
 \code{UseMethod("f")}.
 Existing S3 methods for \code{f()} for S3 classes will then
 potentially be dispatched by the default S4 method, if no S4 methods
-match the call.  However, there is one insidious error to be avoided.
+match the call. 
 
-\emph{DO NOT WRITE S3 METHODS FOR S4 CLASSES.}
+\emph{S3 METHODS FOR S4 CLASSES.}
 
-Such methods will usually appear to work, but they represent a design
-error with potentially disastrous consequences; worse yet, the
-consequences may only appear later and often not to the original
-author but to a programmer attempting legitimately to extend the class
-for which the method was written.
+Writing S3 methods for an ordinary S4 class is generally discouraged.
+S3 methods for an S3 class that is extended by an S4 class are quite
+sensible and the preferred mechanism for sharing the two class and
+method mechanisms.  There are two potential problems with S3 methods
+for S4 classes, however.
 
-The essential flaw is that S3 dispatch is not aware of S4 inheritance,
+Through version 2.9.0 of \R, S3 dispatch is not aware of S4 inheritance,
 but instead expects class attributes with multiple strings.
-Secondly, S4 dispatch has no knowledge of S3 methods. Each of these
-can lead to bad errors.  The example section shows the first type of
+This is expected to be fixed in version 2.9.1.
+At the same time, S4 dispatch has no knowledge of S3 methods. Each of these
+can lead to  errors.  The example section shows the first type of
 error.  The second, somewhat less likely, arises when the class with
 the S3 method, \code{"classA"} in the example, also inherits from another S4
 class.  If that class inherits a method for a function, no matter how
