@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2006	The R Development Core Team.
+ *  Copyright (C) 1998--2009	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -609,8 +609,15 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     SET_DEBUG(newrho, DEBUG(op) || STEP(op));
     if( STEP(op) ) SET_STEP(op, 0);
     if (DEBUG(newrho)) {
+	int old_bl = R_BrowseLines,
+	    blines = asInteger(GetOption(install("deparse.max.lines"),
+					 R_BaseEnv));
 	Rprintf("debugging in: ");
-	PrintValueRec(call,rho);
+	if(blines != NA_INTEGER && blines > 0)
+	    R_BrowseLines = blines;
+	PrintValueRec(call, rho);
+	R_BrowseLines = old_bl;
+
 	/* Is the body a bare symbol (PR#6804) */
 	if (!isSymbol(body) & !isVectorAtomic(body)){
 		/* Find out if the body is function with only one statement. */
@@ -2038,11 +2045,11 @@ static void findmethod(SEXP Class, const char *group, const char *generic,
 static SEXP data_class_group(SEXP obj) {
     SEXP klass = getAttrib(obj, R_ClassSymbol);
       if(length(klass) > 0) {
-	if(IS_S4_OBJECT(obj) && TYPEOF(obj) != S4SXP) { 
+	if(IS_S4_OBJECT(obj) && TYPEOF(obj) != S4SXP) {
 	    /* try to return an S3Class slot, but NOT matrix/array */
 	    /* The S4 class is included for compatibility with
-	       the deprecated practice of defining S3 methods 
-	       for S4 classes.  Someday this should be disallowed. 
+	       the deprecated practice of defining S3 methods
+	       for S4 classes.  Someday this should be disallowed.
 	       JMC iii.9.09 */
   	    SEXP s3class = S3Class(obj);
 	    if(s3class != R_NilValue) {
@@ -2089,7 +2096,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	/* Remove argument names to ensure positional matching */
 	if(isOps)
 	    for(s = args; s != R_NilValue; s = CDR(s)) SET_TAG(s, R_NilValue);
-	if(R_has_methods(op) && 
+	if(R_has_methods(op) &&
 	   (value = R_possible_dispatch(call, op, args, rho, FALSE))) {
 	       *ans = value;
 	       return 1;

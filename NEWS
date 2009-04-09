@@ -15,6 +15,10 @@ NEW FEATURES
 	fillOddEven (default FALSE), which controls the mode used for
 	polygon fills of self-intersecting shapes.
 
+    o	new debugonce() function; further, getOption("deparse.max.lines")
+	is now observed as well when debugging, from a code suggestion by
+	John Brzustowski.
+
 
 
 	**************************************************
@@ -528,7 +532,7 @@ BUG FIXES
 	Also,  c(as.raw(12), TRUE) or c(raw(3), pi) do.
 
     o	duplicated(<data frame>, incomparables = NA) now gives the
-	intended error message.
+	intended error message. (PR#13632)
 
     o   name handling of as.data.frame() has been sanitized somewhat
 

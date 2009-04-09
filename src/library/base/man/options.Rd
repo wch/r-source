@@ -78,9 +78,9 @@ getOption(x)
       initialized (see \code{\link{Startup}}).}
 
     \item{\code{deparse.max.lines}:}{controls the number of lines used
-      when deparsing in \code{\link{traceback}} and
-      \code{\link{browser}}.  Initially unset, and only used if set to
-      a positive integer.}
+      when deparsing in \code{\link{traceback}}, \code{\link{browser}},
+      and upon entry to a function whose debugging flag is set.
+      Initially unset, and only used if set to a positive integer.}
 
     \item{\code{digits}:}{controls the number of digits to print when
       printing numeric values.  It is a suggestion only.  Valid values
@@ -199,7 +199,7 @@ getOption(x)
       Defaults to the full path to \samp{open.exe}, a utility supplied with \R
 #endif
     }
-    
+
     \item{\code{printcmd}:}{the command used by \code{\link{postscript}}
       for printing; set by environment variable \env{R_PRINTCMD} when
       \R is started.  This should be a command that expects either input
@@ -421,7 +421,7 @@ getOption(x)
     \item{\code{browser}:}{default HTML browser used by
       \code{\link{help.start}()} and \code{\link{browseURL}} on UNIX, or
       a non-default browser on Windows.  Alternatively, an \R function that
-      is called with a URL as its argument.} 
+      is called with a URL as its argument.}
 
     \item{\code{de.cellwidth}:}{integer: the cell widths (number of
       characters) to be used in the data editor \code{\link{dataentry}}.
@@ -429,7 +429,7 @@ getOption(x)
       cell widths are used.}
 
     \item{\code{demo.ask}:}{default for the \code{ask} argument of
-      \code{\link{demo}}.}      
+      \code{\link{demo}}.}
 
     \item{\code{editor}:}{a non-empty string, or a function that is
       called with a file path as argument.
@@ -471,7 +471,7 @@ getOption(x)
       of repositories instead of the default \code{"universal"}.
 #endif
     }
-    
+
     \item{\code{repos}:}{URLs of the repositories for use by
       \code{\link{update.packages}}.  Defaults to
       \code{c(CRAN="@CRAN@")}, a value that causes some utilities to
