@@ -20,6 +20,14 @@ NEW FEATURES
 	John Brzustowski.
 
 
+BUG FIXES
+
+    o	The ... argument was not handled properly when ... was found
+	in the enclosure of the current function, rather than in the
+	function header itself.  (This caused integrate() to fail in
+	certain cases.)
+
+
 
 	**************************************************
 	*						 *
