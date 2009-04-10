@@ -977,7 +977,7 @@ Recall that the evaluation frame for a function initially contains the
 this will be true for @code{...} as well.  The value of @code{...} is a
 (special) pairlist whose elements are referred to by the special symbols
 @code{..1}, @code{..2}, @dots{} which have the @code{DDVAL} bit set:
-when one of these is encountered it is looked up (via @code{ddfndVar})
+when one of these is encountered it is looked up (via @code{ddfindVar})
 in the value of the @code{...} symbol in the evaluation frame.
 
 Values of arguments matched to a @code{...} argument can be missing.
