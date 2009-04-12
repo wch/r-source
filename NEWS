@@ -26,6 +26,9 @@ BUG FIXES
 	in the enclosure of the current function, rather than in the
 	function header itself.  (This caused integrate() to fail in
 	certain cases.)
+	
+    o	col2rgb("#00000080", TRUE) would return the background colour.
+	(Reported by Hadley Wickham.)
 
 
 
