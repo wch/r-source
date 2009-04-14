@@ -1,6 +1,6 @@
 % File src/library/base/man/grep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{grep}
@@ -73,7 +73,7 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
     \code{"\\9"} to parenthesized subexpressions of \code{pattern}.  For
     \code{perl = TRUE} only, it can also contain \code{"\\U"} or
     \code{"\\L"} to convert the rest of the replacement to upper or
-    lower case.
+    lower case, or \code{"\\E"} to end such case conversion.
   }
 }
 \details{
@@ -108,10 +108,10 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   \code{x} that yielded a match or, if \code{value} is \code{TRUE}, the
   matched elements of \code{x} (after coercion, preserving names but no
   other attributes).
-  
+
   \code{grepl} differs only in that it returns a logical vector (match
   or no for each element of \code{x}).
-  
+
   For \code{sub} and \code{gsub} a character vector of the same length
   and with the same attributes as \code{x} (after possible coercion).
   Elements of character vectors \code{x} which are not substituted will
@@ -218,8 +218,13 @@ sub('[[:space:]]+$', '', str) ## white space, POSIX-style
 sub('\\\\s+$', '', str, perl = TRUE) ## Perl-style white space
 
 ## capitalizing
-gsub("(\\\\w)(\\\\w*)", "\\\\U\\\\1\\\\L\\\\2", "a test of capitalizing", perl=TRUE)
-gsub("\\\\b(\\\\w)", "\\\\U\\\\1", "a test of capitalizing", perl=TRUE)
+txt <- "a test of capitalizing"
+gsub("(\\\\w)(\\\\w*)", "\\\\U\\\\1\\\\L\\\\2", txt, perl=TRUE)
+gsub("\\\\b(\\\\w)",    "\\\\U\\\\1",       txt, perl=TRUE)
+
+txt2 <- "useRs may fly into JFK or laGuardia"
+gsub("(\\\\w)(\\\\w*)(\\\\w)", "\\\\U\\\\1\\\\E\\\\2\\\\U\\\\3", txt2, perl=TRUE)
+ sub("(\\\\w)(\\\\w*)(\\\\w)", "\\\\U\\\\1\\\\E\\\\2\\\\U\\\\3", txt2, perl=TRUE)
 }
 \keyword{character}
 \keyword{utilities}
