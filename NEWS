@@ -19,6 +19,9 @@ NEW FEATURES
 	is now observed as well when debugging, from a code suggestion by
 	John Brzustowski.
 
+    o	plot() methods for "stepfun" and hence "ecdf" no longer plot
+	points by default for n >= 10000.
+
 
 BUG FIXES
 
@@ -26,7 +29,7 @@ BUG FIXES
 	in the enclosure of the current function, rather than in the
 	function header itself.  (This caused integrate() to fail in
 	certain cases.)
-	
+
     o	col2rgb("#00000080", TRUE) would return the background colour.
 	(Reported by Hadley Wickham.)
 
