@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2009
-@set FAQ_DATE @value{FAQ_YEAR}-03-30
-@set REL_YEAR 2008
+@set FAQ_DATE @value{FAQ_YEAR}-04-15
+@set REL_YEAR 2009
 @set REL_MAJOR 2
-@set REL_MINOR 8
-@set REL_PATCHLEVEL 1
+@set REL_MINOR 9
+@set REL_PATCHLEVEL 0
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -505,46 +505,45 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2008-06-24:
+@c Linux binaries as of 2009-04-15:
 @c
 @c debian
-@c   sarge
-@c           i386   2.4.1  Johannes Ranke
-@c           amd64  2.4.1  Johannes Ranke
 @c   etch-cran
-@c           i386   2.8.0  Johannes Ranke
-@c           amd64  2.8.0  Johannes Ranke
+@c            i386   2.8.1  Johannes Ranke
+@c            amd64  2.8.1  Johannes Ranke
+@c   lenny-cran
+@c            i386   2.8.1  Johannes Ranke
 @c redhat
-@c   el4     i386   2.8.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c           x86_64 2.8.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c   el5     i386   2.8.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c           x86_64 2.8.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c   fedora7 i386   2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c           x86_64 2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c   fedora8 i386   2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c           x86_64 2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c   fedora9 i386   2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c           x86_64 2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   el4      i386   2.8.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c            x86_64 2.8.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c   el5      i386   2.8.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c            x86_64 2.8.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c   fedora8  i386   2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c            x86_64 2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   fedora9  i386   2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c            x86_64 2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   fedora10 i386   2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c            x86_64 2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c suse
-@c   10.2    i586   2.8.0  Detlef Steuer <steuer@hsu-hh.de>
-@c           x86_64 2.8.0  Detlef Steuer <steuer@hsu-hh.de>
-@c   10.3    i586   2.8.0  Detlef Steuer <steuer@hsu-hh.de>
-@c           x86_64 2.8.0  Detlef Steuer <steuer@hsu-hh.de>
-@c   11.0    i586   2.8.0  Detlef Steuer <steuer@hsu-hh.de>
-@c           x86_64 2.8.0  Detlef Steuer <steuer@hsu-hh.de>
+@c   10.3     i586   2.8.1  Detlef Steuer <steuer@hsu-hh.de>
+@c            x86_64 2.8.1  Detlef Steuer <steuer@hsu-hh.de>
+@c   11.0     i586   2.8.1  Detlef Steuer <steuer@hsu-hh.de>
+@c            x86_64 2.8.1  Detlef Steuer <steuer@hsu-hh.de>
+@c   11.1     i586   2.8.1  Detlef Steuer <steuer@hsu-hh.de>
+@c            x86_64 2.8.1  Detlef Steuer <steuer@hsu-hh.de>
 @c ubuntu
 @c   intrepid [Intrepid Ibex, 8.10]
-@c           i386   2.8.0  Vincent Goulet
-@c           amd64  2.8.0  Michael Rutter
+@c           i386   2.8.1  Vincent Goulet
+@c           amd64  2.8.1  Michael Rutter
 @c   hardy [Hardy Heron, 8.04]
-@c           i386   2.8.0  Vincent Goulet
-@c           amd64  2.8.0  Michael Rutter
+@c           i386   2.8.1  Vincent Goulet
+@c           amd64  2.8.1  Michael Rutter
 @c   gutsy [Gutsy Gibbon, 7.10]
-@c           i386   2.8.0  Vincent Goulet
-@c           amd64  2.8.0  Michael Rutter
+@c           i386   2.8.1  Vincent Goulet
+@c           amd64  2.8.1  Michael Rutter
 @c   dapper [Dapper Drake, 6.06]
-@c           i386   2.8.0  Vincent Goulet
-@c           amd64  2.8.0  Michael Rutter
+@c           i386   2.8.1  Vincent Goulet
+@c           amd64  2.8.1  Michael Rutter
 
 The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
@@ -552,14 +551,11 @@ packages.
 @quotation
 @multitable {Red Hat} {i386/x86_64} {dapper/gutsy/hardy/intrepid} {Martyn Plummer}
 @headitem @tab CPU @tab Versions @tab Provider
-@item Debian   @tab i386/amd64 @tab etch-cran/sarge @tab Johannes Ranke
-@c @item          @tab amd64 @tab stable/oldstable @tab Johannes Ranke
-@item Red Hat  @tab i386/x86_64 @tab fedora7/fedora8/fedora9@tab Martyn Plummer
-@c @item          @tab x86_86 @tab fc5/fc6/fedora7/fedora8 @tab Martyn Plummer
+@item Debian   @tab i386/amd64 @tab etch-cran @tab Johannes Ranke
+@item          @tab i386       @tab lenny-cran @tab Johannes Ranke
+@item Red Hat  @tab i386/x86_64 @tab fedora8/fedora9/fedora10 @tab Martyn Plummer
 @item          @tab i386/x86_64 @tab el4/el5 @tab Bob Kinney
-@c @item          @tab x86_64 @tab Enterprise Linux @tab Matthew P. Cox
-@item SuSE     @tab i586/x86_64 @tab 10.2/10.3/11.0 @tab Detlef Steuer
-@c @item          @tab x86_64 @tab 10.0/10.1/10.2/10.3 @tab Detlef Steuer
+@item SuSE     @tab i586/x86_64 @tab 10.3/11.0/11.1 @tab Detlef Steuer
 @item Ubuntu   @tab i386   @tab dapper/gutsy/hardy/intrepid @tab Vincent Goulet
 @item          @tab amd64  @tab dapper/gutsy/hardy/intrepid @tab Michael Rutter
 @end multitable
@@ -1810,6 +1806,9 @@ Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 @item Animal
 Analyze time-coded animal behavior data.
+@item AquaEnv
+An integrated development toolbox for aquatic chemical model
+generation.
 @item ArDec
 Time series autoregressive decomposition.
 @item BACCO
@@ -2067,6 +2066,10 @@ nonparametric techniques.
 Data sets, functions and examples from the book ``The Elements of
 Statistical Learning: Data Mining, Inference, and Prediction'' by Trevor
 Hastie, Robert Tibshirani and Jerome Friedman (2001), Springer.
+@item EngrExpt
+Data sets from the book ``Introductory Statistics for Engineering
+Experimentation'' by Peter Nelson, Marie Coffin and Karen Copeland
+(2003), Elsevier, with sample code.
 @item Epi
 Statistical analysis in epidemiology, with functions for demographic and
 epidemiological analysis in the Lexis diagram.
@@ -2216,6 +2219,8 @@ Utilities by H. Felix Wittmann: Excel connections, string matching, and
 passing by reference.
 @item HadoopStreaming
 Utilities for using R scripts in Hadoop streaming.
+@item HaploSim
+Simulate haplotypes through meioses.
 @item HardyWeinberg
 Graphical tests for Hardy-Weinberg equilibrium.
 @item HiddenMarkov
@@ -2429,7 +2434,7 @@ similar covariate distributions.
 @item Matching
 Multivariate and propensity score matching with formal tests of balance.
 @item Matrix
-A Matrix package.
+A Matrix package.  @emph{Recommended} for R 2.9.0 or later.
 @item Metabonomic
 @acronym{GUI} for metabonomic analysis.
 @item MiscPsycho
@@ -2474,6 +2479,9 @@ detecting gene-gene interactions.
 Arrays with arbitrary offsets.
 @item Oncotree
 Estimation of oncogenetic trees.
+@item OrdMonReg
+Compute least squares estimates of one bounded or two ordered antitonic
+regression curves.
 @item PASWR
 Data and functions for the book ``Probability and Statistics with R'' by
 M. D. Ugarte, A. F. Militino and A. T. Arnholt, 2008, Chapman &
@@ -3203,6 +3211,8 @@ Mining association rules and frequent itemsets with R.
 Mining NB-frequent itemsets and NB-precise rules.
 @item arulesSequences
 Mining frequent sequences.
+@item ascii
+Export R objects to asciidoc or txt2tags.
 @item ash
 David Scott's ASH routines for 1D and 2D density estimation.
 @item aspace
@@ -3404,6 +3414,8 @@ Statistical tool for calibration of plate based bioassays.
 Calibration of biplot axes.
 @item candisc
 Generalized canonical discriminant analysis.
+@item canvas
+R graphics device targeting the @HTML{} canvas element.
 @item car
 Companion to Applied Regression, containing functions for applied
 regession, linear models, and generalized linear models, with an
@@ -4069,6 +4081,8 @@ Features and strings for nonparametric regression.
 @item fts
 Fast operations for time series objects via an interface to tslib (a
 C++ time series library).
+@item futile
+A collection of utility functions to expedite software development.
 @item fuzzyFDR
 Exact calculation of fuzzy decision rules for multiple testing.
 @item fuzzyOP
@@ -4336,6 +4350,8 @@ Statistical analysis of haplotypes with traits and covariates when
 linkage phase is ambiguous.
 @item hapsim
 Haplotype data simulation.
+@item hash
+Implements hash/associated arrays/dictionaries.
 @item hbim
 Hill/Bliss Independence Model for combination vaccines.
 @item hddplot
@@ -4445,6 +4461,8 @@ Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic).
 @item inetwork
 Network analysis and plotting.
+@item influence.ME
+Tools for recognizing influential data in mixed models.
 @item inline
 Inline C/C++ function calls from R.
 @item intcox
@@ -4598,7 +4616,9 @@ law.
 @item lazy
 Lazy learning for local regression.
 @item ldDesign
-Design of experiments for detection of linkage disequilibrium,
+Design of experiments for detection of linkage disequilibrium.
+@item lcd
+Learn Chain graphs via Decomposition.
 @item lcda
 Latent Class Discriminant Analysis.
 @item lda.cv
@@ -4761,6 +4781,8 @@ medians.
 @item mboost
 Gradient boosting for fitting generalized linear, additive and
 interaction models.
+@item mc2d
+Tools for two-dimensional Monte-Carlo simulations.
 @item mcgibbsit
 Warnes and Raftery's MCGibbsit MCMC diagnostic.
 @item mclust
@@ -5189,6 +5211,8 @@ Operations Research LOCational Analysis models.
 Spanish version of @strong{orloca} package.
 @item orth
 Multivariate logistic regressions using orthogonalized residuals.
+@item orthogonalsplinebasis
+Orthogonal @math{B}-spline basis functions.
 @item orthopolynom
 Functions for orthogonal and orthonormal polynomials.
 @item ouch
@@ -5337,6 +5361,8 @@ Regression (PCR).
 @c </COMMENT>
 @item plsgenomics
 PLS analyses for genomics.
+@item plspm
+Partial Least Squares Path Modeling.
 @item plyr
 Tools for splitting, applying and combining data.
 @item pmg
@@ -5752,6 +5778,9 @@ Rice Wavelet Toolbox wrapper, providing a set of functions for
 performing digital signal processing.
 @item s20x
 Stats 20x functions.
+@item sabreR
+Provide SABRE functionality (analysis of multi-process random effect
+response data) from within R.
 @item sac
 Semiparametric empirical likelihood ratio based test of changepoint with
 one-change or epidemic alternatives with data-based model diagnostic.
@@ -5794,8 +5823,11 @@ Plots a three dimensional (3D) point cloud perspectively.
 Functions and datasets for math used in school.
 @item sciplot
 Scientific graphing functions for factorial designs.
-@item scope
-Data manipulation using arbitrary row and column criteria.
+@c <COMMENT>
+@c Moved to the Archive on 2009-04-15 as requested by the maintainer.
+@c @item scope
+@c Data manipulation using arbitrary row and column criteria.
+@c </COMMENT>
 @item scout
 Scout method for covariance-regularized regression.
 @item scrime
@@ -6162,6 +6194,9 @@ Three-Stage Least Squares (3SLS).
 @c </COMMENT>
 @item taskPR
 Task-Parallel R package.
+@item tawny
+Various portfolio optimization strategies, including random matrix
+theory and shrinkage estimators.
 @item tcltk2
 A series of widgets and functions to supplement @strong{tcltk}.
 @item tdist
@@ -7436,6 +7471,7 @@ Packages in `/usr/local/lib/R/library':
 
 KernSmooth    Functions for kernel smoothing for Wand & Jones (1995)
 MASS          Main Package of Venables and Ripley's MASS
+Matrix        Sparse and Dense Matrix Classes and Methods
 base          The R Base package
 boot          Bootstrap R (S-Plus) Functions (Canty)
 class         Functions for Classification
@@ -7449,7 +7485,8 @@ graphics      The R Graphics Package
 grid          The Grid Graphics Package
 lattice       Lattice Graphics
 methods       Formal Methods and Classes
-mgcv          GAMs with GCV smoothness estimation and GAMMs by REML/PQ
+mgcv          GAMs with GCV/AIC/REML smoothness estimation and GAMMs
+              by PQL
 nlme          Linear and Nonlinear Mixed Effects Models
 nnet          Feed-forward Neural Networks and Multinomial Log-Linear
               Models
