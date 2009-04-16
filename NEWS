@@ -25,6 +25,9 @@ NEW FEATURES
     o	[g]sub(*, perl=TRUE) now also supports '\E' in order to *end*
 	\U and \L case changes, thanks to a patch from Bill Dunlap.
 
+    o	new anyDuplicated(x) returns 0 (= FALSE) or the index of the first
+	duplicated entry of x.
+
 
 BUG FIXES
 
