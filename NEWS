@@ -39,6 +39,8 @@ BUG FIXES
     o	col2rgb("#00000080", TRUE) would return the background colour.
 	(Reported by Hadley Wickham.)
 
+    o   interaction() now ensures that its result's levels are unique.
+
 
 
 	**************************************************
