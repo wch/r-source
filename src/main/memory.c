@@ -2751,11 +2751,13 @@ SEXP (FORMALS)(SEXP x) { return FORMALS(x); }
 SEXP (BODY)(SEXP x) { return BODY(x); }
 SEXP (CLOENV)(SEXP x) { return CLOENV(x); }
 int (DEBUG)(SEXP x) { return DEBUG(x); }
+int (STEP)(SEXP x) { return STEP(x); }
 
 void (SET_FORMALS)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); FORMALS(x) = v; }
 void (SET_BODY)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); BODY(x) = v; }
 void (SET_CLOENV)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); CLOENV(x) = v; }
 void (SET_DEBUG)(SEXP x, int v) { SET_DEBUG(x, v); }
+void (SET_STEP)(SEXP x, int v) { SET_STEP(x, v); }
 
 /* Primitive Accessors */
 attribute_hidden int (PRIMOFFSET)(SEXP x) { return PRIMOFFSET(x); }
