@@ -1400,6 +1400,10 @@
         text <- desc[f]
         ## munge 'text' appropriately (\\, {, }, "...")
         ## not sure why just these: copied from Rd2dvi, then added to.
+        ## KH: the LaTeX special characters are
+        ##   # $ % & _ ^ ~ { } \
+        ## \Rd@AsIs@dospecials in Rd.sty handles the first seven, so
+        ## braces and backslashes need explicit handling.
         text <- gsub('"([^"]*)"', "\\`\\`\\1''", text)
         text <- gsub("\\", "\\textbackslash{}", text, fixed = TRUE)
         text <- gsub("([{}$#_])", "\\\\\\1", text)
@@ -1409,7 +1413,8 @@
         text <- strsplit(text, "\n\n")[[1]]
         Encoding(text) <- "unknown"
         wrap <- paste("\\AsIs{", text, "}", sep = "")
-        cat("\\item[", gsub("([_#])", "\\\\\\1", f),
+        ## Not entirely safe: in theory, tags could contain \ ~ ^.
+        cat("\\item[", gsub("([#$%&_{}])", "\\\\\\1", f),
             "]", paste(wrap, collapse = "\n\n"),  "\n", sep = "", file=out)
     }
     cat("\\end{description}\n", file = out)
