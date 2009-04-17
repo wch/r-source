@@ -18,6 +18,8 @@
 ## Handling Conditions
 ##
 
+## CARE:  try() in ./New-Internal.R  depends on *internal* coding of tryCatch()!
+## ----   If you change this, be sure to adapt  try().
 tryCatch <- function(expr, ..., finally) {
     tryCatchList <- function(expr, names, parentenv, handlers) {
 	nh <- length(names)

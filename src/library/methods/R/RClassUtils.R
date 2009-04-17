@@ -437,6 +437,7 @@ selectSuperClasses <-
     addCond <- function(xpr, prev)
         if(length(prev)) substitute(P && N, list(P = prev, N = xpr)) else xpr
     C <- if(dropVirtual) {
+        ## NB the default 'where' in getClass() may depend on specific superClass:
         isVirtualExt <- function(x) getClass(x@superClass)@virtual
         quote(!isVirtualExt(exti))
     } else expression()
@@ -1698,6 +1699,7 @@ substituteFunctionArgs <-
      }
 
 
+## to be .classEnv()  --- currently used in 'Matrix'  (via wrapper)
 ..classEnv <- function(Class, default = .requirePackage("methods"), mustFind = TRUE) {
     package <- { if(is.character(Class)) packageSlot(Class) else
 		 ## must then be a class definition

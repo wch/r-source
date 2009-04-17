@@ -274,7 +274,8 @@ checkSlotAssignment <- function(obj, name, value)
        return(value)
     ## check the value, but be careful to use the definition of the slot's class from
     ## the class environment of obj (change validObject too if a better way is found)
-    ok <- possibleExtends(valueClass, slotClass, ClassDef2 = getClassDef(slotClass, where = .classEnv(ClassDef)))
+    ok <- possibleExtends(valueClass, slotClass,
+                          ClassDef2 = getClassDef(slotClass, where = .classEnv(ClassDef)))
     if(identical(ok, FALSE))
        stop(gettextf("assignment of an object of class \"%s\" is not valid for slot \"%s\" in an object of class \"%s\"; is(value, \"%s\") is not TRUE",
                      class(value),  name, class(obj), slotClass),
