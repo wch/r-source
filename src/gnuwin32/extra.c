@@ -151,13 +151,13 @@ static void internal_shellexecW(const wchar_t * file)
     if(ret <= 32) { /* an error condition */
 	if(ret == ERROR_FILE_NOT_FOUND  || ret == ERROR_PATH_NOT_FOUND
 	   || ret == SE_ERR_FNF || ret == SE_ERR_PNF)
-	    error(_("'%s' not found"), file);
+	    error(_("'%ls' not found"), file);
 	if(ret == SE_ERR_ASSOCINCOMPLETE || ret == SE_ERR_NOASSOC)
-	    error(_("file association for '%s' not available or invalid"),
+	    error(_("file association for '%ls' not available or invalid"),
 		  file);
 	if(ret == SE_ERR_ACCESSDENIED || ret == SE_ERR_SHARE)
-	    error(_("access to '%s' denied"), file);
-	error(_("problem in displaying '%s'"), file);
+	    error(_("access to '%ls' denied"), file);
+	error(_("problem in displaying '%ls'"), file);
     }
 }
 
@@ -1832,7 +1832,7 @@ SEXP do_readRegistry(SEXP call, SEXP op, SEXP args, SEXP env)
     hive = find_hive(CHAR(STRING_ELT(CADR(args), 0)));
     res = RegOpenKeyExW(hive, key, 0, KEY_READ, &hkey);
     if (res == ERROR_FILE_NOT_FOUND)
-	error(_("Registry key '%s' not found"), key);
+	error(_("Registry key '%ls' not found"), key);
     if (res != ERROR_SUCCESS)
 	error("RegOpenKeyEx error code %d: '%s'", (int) res, formatError(res));
     ans = readRegistryKey(hkey, maxdepth);
