@@ -67,7 +67,8 @@ addNA(x, ifany=FALSE)
 \value{
   \code{factor} returns an object of class \code{"factor"} which has a
   set of integer codes the length of \code{x} with a \code{"levels"}
-  attribute of mode \code{\link{character}}.  If \code{ordered} is true
+  attribute of mode \code{\link{character}} and unique
+  (\code{!\link{anyDuplicated}(.)}) entries.  If \code{ordered} is true
   (or \code{ordered} is used) the result has class
   \code{c("ordered", "factor")}.
 
@@ -103,7 +104,7 @@ addNA(x, ifany=FALSE)
 
   Normally the \sQuote{levels} used as an attribute of the result are
   the reduced set of levels after removing those in \code{exclude}, but
-  this can be altered by supplying \code{labels}. This should either
+  this can be altered by supplying \code{labels}.  This should either
   be a set of new labels for the levels, or a character string, in
   which case the levels are that character string with a sequence
   number appended.

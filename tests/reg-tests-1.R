@@ -5,6 +5,15 @@ options(stringsAsFactors=TRUE)
 ## .Machine
 (Meps <- .Machine$double.eps)# and use it in this file
 
+assertError <- function(expr)
+    stopifnot(inherits(try(expr, silent = TRUE), "try-error"))
+assertWarning <- function(expr)
+    stopifnot(inherits(tryCatch(expr, warning = function(w)w), "warning"))
+assertWarning_atleast <- function(expr) {
+    r <- tryCatch(expr, warning = function(w)w, error = function(e)e)
+    stopifnot(inherits(r, "warning") || inherits(r, "error"))
+}
+
 ## regression test for PR#376
 aggregate(ts(1:20), nfreq=1/3)
 ## Comments: moved from aggregate.Rd
@@ -5614,3 +5623,18 @@ for (type in c("null", "logical", "integer", "real", "complex",
                "character", "list", "expression"))
     c(r, r, get(sprintf('as.%s', type))(1))
 ## failed  before 2.9.0
+
+### Non-unique levels in factor should be forbidden from R 2.10.0 on
+c1 <- c("a.b","a"); c2 <- c("c","b.c")
+fi <- interaction(c1, c2)
+stopifnot(length(lf <- levels(fi)) == 3, lf[1] == "a.b.c",
+	  identical(as.integer(fi), rep.int(1L, 2)))
+## interaction() failed to produce unique levels before 2.9.1
+
+levs <- c("A","A")
+## warnings for now {errors in the future}
+local({ oo <- options(warn=2); on.exit(options(oo))
+	assertError(gl(2,3, labels = levs))
+	assertError(factor(levs, levels=levs))
+	assertError(factor(1:2,	 labels=levs))
+    })

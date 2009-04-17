@@ -28,6 +28,11 @@ NEW FEATURES
     o	new anyDuplicated(x) returns 0 (= FALSE) or the index of the first
 	duplicated entry of x.
 
+    o	factor(), `levels<-`(), etc, now ensure that the resulting factor
+	levels are unique (as was always the implied intention).  Factors
+	with duplicated levels are still constructible by low-level means,
+	but are now declared illegal.
+
 
 BUG FIXES
 

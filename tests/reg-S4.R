@@ -490,3 +490,13 @@ stopifnot(packageSlot(class(S <- new("SIG"))) == ".GlobalEnv",
 	  packageSlot(class(ss <- new("signature"))) == "methods",
 	  packageSlot(class(as(S, "signature"))) == "methods")
 ## the 3rd did not have "methods"
+
+## Invalid "factor"s -- now "caught" by  validity check :
+ ok.f <- gl(3,5, labels = letters[1:3])
+bad.f <- structure(rep(1:3, each=5), levels=c("a","a","b"), class="factor")
+validObject(ok.f) ; assertError(validObject(bad.f))
+setClass("myF", contains = "factor")
+validObject(new("myF", ok.f))
+assertError(validObject(new("myF", bad.f)))
+removeClass("myF")
+## no validity check in R <= 2.9.0

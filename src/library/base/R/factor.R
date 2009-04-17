@@ -19,18 +19,31 @@ factor <- function (x = character(), levels = sort(unique.default(x),
                     ordered = is.ordered(x))
 {
     exclude <- as.vector(exclude, typeof(x))
+
+    if(!missing(levels) && length(levels) && (i <- anyDuplicated(levels))) {
+	## user-specified..
+	warning("non-unique factor levels are unique()d")
+	## new in 2.10.0;  TODO:  stop() in future R versions !
+	levels <- unique(levels[-i])
+    }
     levels <- levels[is.na(match(levels, exclude))]
     f <- match(x, levels)
     names(f) <- names(x)
     nl <- length(labels)
-    attr(f, "levels") <-
-	if (nl == length(levels))
-	    as.character(labels)
-	else if(nl == 1L)
-	    paste(labels, seq_along(levels), sep = "")
-	else
-	    stop(gettextf("invalid labels; length %d should be 1 or %d",
-                          nl, length(levels)), domain = NA)
+    nL <- length(levels)
+    if(!any(nl == c(1L, nL)))
+	stop(gettextf("invalid labels; length %d should be 1 or %d", nl, nL),
+	     domain = NA)
+    p0 <- function(...) paste(..., sep = "")
+    ## Need to make sure that unique numeric levels (or labels) lead to unique labels
+    ## that are still as.numeric(.)able: People use names(table(.)) for that!
+    asChar <- function(x) ## '17' seems minimal (and +- portable)
+	if(is.double(x)) ifelse(is.na(x), NA_character_, sprintf("%.17g", x))
+	else if(is.complex(x)) p0(asChar(Re(x)),"+",asChar(Im(x)),"i")
+	else as.character(x)
+    ## Consider e.g. levels <- pi + c(0, -4e-16, 5e-16)
+    levels(f) <- ## nl == nL or 1
+	if (nl == nL) asChar(labels) else p0(labels, seq_along(levels))
     class(f) <- c(if(ordered)"ordered", "factor")
     f
 }
@@ -54,7 +67,7 @@ nlevels <- function(x) length(levels(x))
 ##     x
 ## }
 
-"levels<-.factor" <- function(x, value)
+`levels<-.factor` <- function(x, value)
 {
     xlevs <- levels(x)
     if (is.list(value)) {
