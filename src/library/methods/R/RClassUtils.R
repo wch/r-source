@@ -2020,7 +2020,7 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
     classDef <- getClass(class) # throws an error if undefined.  Make a warning?
     value <- .mergeMatrices(value, .oneClassToAM(classDef, includeSubclasses[[i]]))
   }
-  abbr <- match(as.integer(abbreviate), 0:3)
+  abbr <- match(as.integer(abbreviate), 0:3)-1
   if(length(abbr) != 1 || is.na(abbr))
     stop("Argument abbreviate must be 0, 1, 2, or 3")
   if(abbr %% 2)
