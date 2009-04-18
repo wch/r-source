@@ -9,14 +9,20 @@
 		CHANGES IN R VERSION 2.9.0 patched
 
 
+NEW FEATURES
+
+    o	new anyDuplicated(x) returns 0 (= FALSE) or the index of the
+	first duplicated entry of x.
+
+
 BUG FIXES
 
     o	The ... argument was not handled properly when ... was found
 	in the enclosure of the current function, rather than in the
-	function header itself.  (This caused integrate() to fail in
+	function header itself.	 (This caused integrate() to fail in
 	certain cases.)
 
-    o   interaction() now ensures that its result's levels are unique.
+    o	interaction() now ensures that its result's levels are unique.
 
 
 

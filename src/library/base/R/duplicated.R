@@ -45,6 +45,15 @@ duplicated.matrix <- duplicated.array <-
     res
 }
 
+anyDuplicated <- function(x, incomparables = FALSE, ...) UseMethod("anyDuplicated")
+
+anyDuplicated.default <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
+{
+    if(is.na(fromLast <- as.logical(fromLast[1L])))
+        stop("'fromLast' must be TRUE or FALSE")
+    .Internal(anyDuplicated(x, incomparables, fromLast))
+}
+
 unique <- function(x, incomparables = FALSE, ...) UseMethod("unique")
 
 
