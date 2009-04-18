@@ -36,16 +36,6 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	The ... argument was not handled properly when ... was found
-	in the enclosure of the current function, rather than in the
-	function header itself.  (This caused integrate() to fail in
-	certain cases.)
-
-    o	col2rgb("#00000080", TRUE) would return the background colour.
-	(Reported by Hadley Wickham.)
-
-    o   interaction() now ensures that its result's levels are unique.
-
 
 
 	**************************************************
@@ -67,6 +57,8 @@ BUG FIXES
 
     o	col2rgb("#00000080", TRUE) would return the background colour.
 	(Reported by Hadley Wickham.)
+
+    o   interaction() now ensures that its result's levels are unique.
 
 
 
@@ -308,13 +300,13 @@ NEW FEATURES
     o	unlink() is now able to remove broken symbolic links on
 	Unix-alikes.
 
-    o	New selectSuperClasses() utility.
+    o	New selectSuperClasses() utility in package 'methods'.
 
     o	HoltWinters() now allows parameters alpha and beta to be fixed
 	at 0 and hence beta = FALSE and gamma = FALSE are used to
 	specify restricted models.
 
-    o	A new function smoothScatter has been added to package
+    o	A new function smoothScatter() has been added to package
 	'graphics'.  It is appropriate for very dense scatter plots
 	and uses density estimation and color to reflect density of
 	plotting.
@@ -1514,7 +1506,6 @@ BUG FIXES
 	*	       2.7 SERIES NEWS			 *
 	*						 *
 	**************************************************
-
 
 
 		CHANGES IN R VERSION 2.7.2 patched
@@ -2719,7 +2710,6 @@ BUG FIXES
 	*	       2.6 SERIES NEWS			 *
 	*						 *
 	**************************************************
-
 
 
 		CHANGES IN R VERSION 2.6.2 patched
