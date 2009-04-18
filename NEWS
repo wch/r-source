@@ -6,6 +6,15 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.9.0 patched
+
+
+BUG FIXES
+
+    o   interaction() now ensures that its result's levels are unique.
+
+
+
 		CHANGES IN R VERSION 2.9.0
 
 
@@ -1452,7 +1461,6 @@ BUG FIXES
 	**************************************************
 
 
-
 		CHANGES IN R VERSION 2.7.2 patched
 
 
@@ -2655,7 +2663,6 @@ BUG FIXES
 	*	       2.6 SERIES NEWS			 *
 	*						 *
 	**************************************************
-
 
 
 		CHANGES IN R VERSION 2.6.2 patched

@@ -40,6 +40,14 @@ interaction <- function(..., drop = FALSE, sep = ".", lex.order = FALSE)
                 lvs <- ## as.vector(outer(l, lvs, paste, sep=sep))
                     paste(rep(l, length(lvs)), rep(lvs, each = length(l)), sep=sep)
             }
+	    if(anyDuplicated(lvs)) { ## fix them up
+		ulvs <- unique(lvs)
+		while((i <- anyDuplicated(flv <- match(lvs, ulvs)))) {
+		    lvs <- lvs[-i]
+		    ans[ans+1L == i] <- match(flv[i], flv[1:(i-1)]) - 1L
+		}
+		lvs <- ulvs
+	    }
         } else {
             ans <- if1
             lvs <- l
