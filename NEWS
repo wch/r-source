@@ -253,13 +253,13 @@ NEW FEATURES
     o	unlink() is now able to remove broken symbolic links on
 	Unix-alikes.
 
-    o	New selectSuperClasses() utility.
+    o	New selectSuperClasses() utility in package 'methods'.
 
     o	HoltWinters() now allows parameters alpha and beta to be fixed
 	at 0 and hence beta = FALSE and gamma = FALSE are used to
 	specify restricted models.
 
-    o	A new function smoothScatter has been added to package
+    o	A new function smoothScatter() has been added to package
 	'graphics'.  It is appropriate for very dense scatter plots
 	and uses density estimation and color to reflect density of
 	plotting.
@@ -519,7 +519,7 @@ BUG FIXES
 	Also,  c(as.raw(12), TRUE) or c(raw(3), pi) do.
 
     o	duplicated(<data frame>, incomparables = NA) now gives the
-	intended error message.
+	intended error message. (PR#13632)
 
     o   name handling of as.data.frame() has been sanitized somewhat
 
