@@ -25,9 +25,6 @@ NEW FEATURES
     o	[g]sub(*, perl=TRUE) now also supports '\E' in order to *end*
 	\U and \L case changes, thanks to a patch from Bill Dunlap.
 
-    o	new anyDuplicated(x) returns 0 (= FALSE) or the index of the first
-	duplicated entry of x.
-
     o	factor(), `levels<-`(), etc, now ensure that the resulting factor
 	levels are unique (as was always the implied intention).  Factors
 	with duplicated levels are still constructible by low-level means,
@@ -48,17 +45,23 @@ BUG FIXES
 		CHANGES IN R VERSION 2.9.0 patched
 
 
+NEW FEATURES
+
+    o	new anyDuplicated(x) returns 0 (= FALSE) or the index of the
+	first duplicated entry of x.
+
+
 BUG FIXES
 
     o	The ... argument was not handled properly when ... was found
 	in the enclosure of the current function, rather than in the
-	function header itself.  (This caused integrate() to fail in
+	function header itself.	 (This caused integrate() to fail in
 	certain cases.)
 
     o	col2rgb("#00000080", TRUE) would return the background colour.
 	(Reported by Hadley Wickham.)
 
-    o   interaction() now ensures that its result's levels are unique.
+    o	interaction() now ensures that its result's levels are unique.
 
 
 
