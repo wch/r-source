@@ -63,6 +63,10 @@ BUG FIXES
 
     o	interaction() now ensures that its result's levels are unique.
 
+    o	packageDescription() and hence sessionInfo() now report the correct
+	package version also for a non-attached loaded namespace of
+	a version different from the default lib.loc.
+
 
 
 		CHANGES IN R VERSION 2.9.0

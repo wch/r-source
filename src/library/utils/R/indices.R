@@ -23,20 +23,25 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
         retval[fields] <- NA
     }
 
-    pkgpath <- ""
     ## If the NULL default for lib.loc is used, the loaded packages are
     ## searched before the libraries.
-    if(is.null(lib.loc)) {
-        if(pkg == "base")
-            pkgpath <- file.path(.Library, "base")
-        else if((envname <- paste("package:", pkg, sep = ""))
-                %in% search()) {
-            pkgpath <- attr(as.environment(envname), "path")
-            ## could be NULL if a perverse user has been naming environmnents
-            ## to look like packages.
-            if(is.null(pkgpath)) pkgpath <- ""
-        }
-    }
+    tryNamespace <- function(.)
+	tryCatch(loadNamespace(.), error = function(e) NULL)
+    pkgpath <-
+	if(is.null(lib.loc)) {
+	    if(pkg == "base")
+		file.path(.Library, "base")
+	    else if((envname <- paste("package:", pkg, sep = ""))
+		    %in% search()) {
+		pp <- attr(as.environment(envname), "path")
+		## could be NULL if a perverse user has been naming
+		## environmnents to look like packages.
+	    } else if(!is.null(ns <- tryNamespace(pkg)))
+		## correct path for a loaded (not attached) namespace:
+		getNamespaceInfo(ns, "path")
+	}
+    if(is.null(pkgpath)) pkgpath <- ""
+
     if(pkgpath == "") {
         libs <- if(is.null(lib.loc)) .libPaths() else lib.loc
         for(lib in libs)
@@ -84,7 +89,7 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
                 else
                     warning("'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible", call. = FALSE)
             } else
-                warning("'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible", call. = FALSE)
+            warning("'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible", call. = FALSE)
         }
         if(!is.null(fields)){
             ok <- names(desc) %in% fields
