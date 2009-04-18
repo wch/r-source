@@ -833,7 +833,7 @@ void setup_Rmainloop(void)
     R_LockEnvironment(R_BaseEnv, TRUE);
 #endif
     /* At least temporarily unlock some bindings used in graphics */
-    R_unLockBinding(install(".Device"), R_BaseEnv);
+    R_unLockBinding(R_DeviceSymbol, R_BaseEnv);
     R_unLockBinding(install(".Devices"), R_BaseEnv);
     R_unLockBinding(install(".Library.site"), R_BaseEnv);
 

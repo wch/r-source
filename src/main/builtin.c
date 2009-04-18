@@ -372,7 +372,7 @@ SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    ans = ScalarString(STRING_ELT(R_PackageEnvName(env), 0));
 	else if (R_IsNamespaceEnv(env))
 	    ans = ScalarString(STRING_ELT(R_NamespaceEnvSpec(env), 0));
-	else if (!isNull(res = getAttrib(env, install("name")))) ans = res;
+	else if (!isNull(res = getAttrib(env, R_NameSymbol))) ans = res;
     }
     return ans;
 }

@@ -82,10 +82,7 @@ Rcomplex Rf_ComplexFromReal(double, int*);
 extern0 SEXP	R_CommentSymbol;    /* "comment" */
 extern0 SEXP	R_DotEnvSymbol;     /* ".Environment" */
 extern0 SEXP	R_ExactSymbol;	    /* "exact" */
-extern0 SEXP	R_LastvalueSymbol;  /* ".Last.value" */
-extern0 SEXP	R_NaRmSymbol;	    /* "na.rm" */
 extern0 SEXP	R_RecursiveSymbol;  /* "recursive" */
-extern0 SEXP	R_SourceSymbol;     /* "source" */
 extern0 SEXP	R_SrcfileSymbol;    /* "srcfile" */
 extern0 SEXP	R_SrcrefSymbol;     /* "srcref" */
 extern0 SEXP	R_TmpvalSymbol;     /* "*tmp*" */

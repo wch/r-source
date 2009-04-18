@@ -1011,34 +1011,37 @@ static void installFunTab(int i)
 }
 
 static void SymbolShortcuts(void)
-{
+{  /* ../include/Rinternals.h : */
     R_Bracket2Symbol = install("[[");
     R_BracketSymbol = install("[");
     R_BraceSymbol = install("{");
-    R_TmpvalSymbol = install("*tmp*");
     R_ClassSymbol = install("class");
+    R_DeviceSymbol = install(".Device");
     R_DimNamesSymbol = install("dimnames");
     R_DimSymbol = install("dim");
     R_DollarSymbol = install("$");
     R_DotsSymbol = install("...");
     R_DropSymbol = install("drop");
-    R_ExactSymbol = install("exact");
+    R_LastvalueSymbol = install(".Last.value");
     R_LevelsSymbol = install("levels");
     R_ModeSymbol = install("mode");
+    R_NameSymbol  = install("name");
     R_NamesSymbol = install("names");
     R_NaRmSymbol = install("na.rm");
+    R_PackageSymbol = install("package");
     R_RowNamesSymbol = install("row.names");
     R_SeedsSymbol = install(".Random.seed");
-    R_LastvalueSymbol = install(".Last.value");
-    R_TspSymbol = install("tsp");
-    R_CommentSymbol = install("comment");
     R_SourceSymbol = install("source");
+    R_TspSymbol = install("tsp");
+    /* ../include/Defn.h , i.e. non-public : */
+    R_CommentSymbol = install("comment");
     R_DotEnvSymbol = install(".Environment");
+    R_ExactSymbol = install("exact");
     R_RecursiveSymbol = install("recursive");
-    R_UseNamesSymbol = install("use.names");
-    R_RowNamesSymbol = install("row.names");
     R_SrcfileSymbol = install("srcfile");
     R_SrcrefSymbol = install("srcref");
+    R_TmpvalSymbol = install("*tmp*");
+    R_UseNamesSymbol = install("use.names");
 }
 
 extern SEXP framenames; /* from model.c */

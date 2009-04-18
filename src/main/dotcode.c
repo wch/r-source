@@ -99,9 +99,9 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
     *fun = NULL;
     if(TYPEOF(op) == EXTPTRSXP) {
 	char *p = NULL;
-	if(R_ExternalPtrTag(op) == Rf_install("native symbol"))
+	if(R_ExternalPtrTag(op) == install("native symbol"))
 	   *fun = R_ExternalPtrAddrFn(op);
-	else if(R_ExternalPtrTag(op) == Rf_install("registered native symbol")) {
+	else if(R_ExternalPtrTag(op) == install("registered native symbol")) {
 	   R_RegisteredNativeSymbol *tmp;
 	   tmp = (R_RegisteredNativeSymbol *) R_ExternalPtrAddr(op);
 	   if(tmp) {
@@ -1514,7 +1514,7 @@ SEXP attribute_hidden do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
      * If there is an error or user-interrupt in the above
      * evaluation, dd->recordGraphics is set to TRUE
      * on all graphics devices (see GEonExit(); called in errors.c)
-     * 
+     *
      * NOTE: if someone uses try() around this call and there
      * is an error, then dd->recordGraphics stays FALSE, so
      * subsequent pages of graphics output are NOT saved on
@@ -1544,7 +1544,7 @@ SEXP attribute_hidden do_dotcallgr(SEXP call, SEXP op, SEXP args, SEXP env)
      * If there is an error or user-interrupt in the above
      * evaluation, dd->recordGraphics is set to TRUE
      * on all graphics devices (see GEonExit(); called in errors.c)
-     * 
+     *
      * NOTE: if someone uses try() around this call and there
      * is an error, then dd->recordGraphics stays FALSE, so
      * subsequent pages of graphics output are NOT saved on
@@ -1595,7 +1595,7 @@ Rf_getCallingDLL(void)
     }
     if(!found) return R_NilValue;
 
-    PROTECT(e = lang2(Rf_install("getCallingDLLe"), rho));
+    PROTECT(e = lang2(install("getCallingDLLe"), rho));
     ans = eval(e,  R_GlobalEnv);
     UNPROTECT(1);
     return(ans);

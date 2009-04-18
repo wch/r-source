@@ -256,8 +256,7 @@ static void PrivateCopyDevice(pDevDesc dd, pDevDesc ndd, const char *name)
     int saveDev = curDevice();
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     gsetcursor(xd->gawin, WatchCursor);
-    gsetVar(install(".Device"),
-	    mkString(name), R_BaseEnv);
+    gsetVar(R_DeviceSymbol, mkString(name), R_BaseEnv);
     ndd->displayListOn = FALSE;
     gdd = GEcreateDevDesc(ndd);
     GEaddDevice(gdd);

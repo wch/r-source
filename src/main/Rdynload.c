@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2008 The R Development Core Team
+ *  Copyright (C) 1997-2009 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -940,7 +940,7 @@ Rf_MakeNativeSymbolRef(DL_FUNC f)
 {
     SEXP ref, klass;
 
-    PROTECT(ref = R_MakeExternalPtrFn(f, Rf_install("native symbol"),
+    PROTECT(ref = R_MakeExternalPtrFn(f, install("native symbol"),
 				      R_NilValue));
     PROTECT(klass = mkString("NativeSymbol"));
     setAttrib(ref, R_ClassSymbol, klass);
@@ -970,7 +970,7 @@ Rf_MakeRegisteredNativeSymbol(R_RegisteredNativeSymbol *symbol)
     *copy = *symbol;
 
     PROTECT(ref = R_MakeExternalPtr(copy,
-				    Rf_install("registered native symbol"),
+				    install("registered native symbol"),
 				    R_NilValue));
     R_RegisterCFinalizer(ref, freeRegisteredNativeSymbolCopy);
 
@@ -987,7 +987,7 @@ Rf_makeDllObject(HINSTANCE inst)
 {
     SEXP ans;
 
-    PROTECT(ans = R_MakeExternalPtr(inst, Rf_install("DLLHandle"),
+    PROTECT(ans = R_MakeExternalPtr(inst, install("DLLHandle"),
 				    R_NilValue));
     setAttrib(ans, R_ClassSymbol, mkString("DLLHandle"));
     UNPROTECT(1);
@@ -1000,8 +1000,8 @@ Rf_makeDllInfoReference(HINSTANCE inst)
 {
     SEXP ans;
 
-    PROTECT(ans = R_MakeExternalPtr(inst, Rf_install("DLLInfo"),
-				    Rf_install("DLLInfo")));
+    PROTECT(ans = R_MakeExternalPtr(inst, install("DLLInfo"),
+				    install("DLLInfo")));
     setAttrib(ans, R_ClassSymbol, mkString("DLLInfoReference"));
     UNPROTECT(1);
 
@@ -1080,7 +1080,7 @@ R_getSymbolInfo(SEXP sname, SEXP spackage, SEXP withRegistrationInfo)
 	if(TYPEOF(spackage) == STRSXP)
 	    package = translateChar(STRING_ELT(spackage, 0));
 	else if(TYPEOF(spackage) == EXTPTRSXP &&
-		R_ExternalPtrTag(spackage) == Rf_install("DLLInfo")) {
+		R_ExternalPtrTag(spackage) == install("DLLInfo")) {
 	    f = R_dlsym((DllInfo *) R_ExternalPtrAddr(spackage), name, &symbol);
 	    package = NULL;
 	} else
@@ -1251,7 +1251,7 @@ R_getRegisteredRoutines(SEXP dll)
     const char * const names[] = {".C", ".Call", ".Fortran", ".External"};
 
     if(TYPEOF(dll) != EXTPTRSXP &&
-       R_ExternalPtrTag(dll) != Rf_install("DLLInfo"))
+       R_ExternalPtrTag(dll) != install("DLLInfo"))
 	error(_("R_getRegisteredRoutines() expects a DllInfo reference"));
 
     info = (DllInfo *) R_ExternalPtrAddr(dll);

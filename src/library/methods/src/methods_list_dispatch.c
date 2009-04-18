@@ -48,7 +48,7 @@ static SEXP R_loadMethod(SEXP f, SEXP fname, SEXP ev);
 static int initialized = 0;
 static SEXP s_dot_Methods, s_skeleton, s_expression, s_function,
     s_getAllMethods, s_objectsEnv, s_MethodsListSelect,
-    s_sys_dot_frame, s_sys_dot_call, s_sys_dot_function, s_generic, s_package,
+    s_sys_dot_frame, s_sys_dot_call, s_sys_dot_function, s_generic,
     s_missing, s_generic_dot_skeleton, s_subset_gets, s_element_gets,
     s_argument, s_allMethods;
 static SEXP R_FALSE, R_TRUE;
@@ -61,9 +61,9 @@ static SEXP f_x_i_skeleton, fgets_x_i_skeleton, f_x_skeleton, fgets_x_skeleton;
 
 SEXP R_quick_method_check(SEXP object, SEXP fsym, SEXP fdef);
 
-static SEXP R_target, R_defined, R_nextMethod, R_source;
-static SEXP R_dot_target, R_dot_defined, R_dot_nextMethod;
-static SEXP R_loadMethod_name, R_dot_Method;
+static SEXP R_target, R_defined, R_nextMethod,
+    R_dot_target, R_dot_defined, R_dot_nextMethod,
+    R_loadMethod_name, R_dot_Method;
 
 static SEXP Methods_Namespace = NULL;
 
@@ -77,7 +77,6 @@ static void init_loadMethod()
     R_target = install("target");
     R_defined = install("defined");
     R_nextMethod = install("nextMethod");
-    R_source = install("source");
     R_loadMethod_name = install("loadMethod");
     R_dot_target = install(".target");
     R_dot_defined = install(".defined");
@@ -95,23 +94,22 @@ SEXP R_initMethodDispatch(SEXP envir)
     if(initialized)
 	return(envir);
 
-    s_dot_Methods = Rf_install(".Methods");
-    s_skeleton = Rf_install("skeleton");
-    s_expression = Rf_install("expression");
-    s_function = Rf_install("function");
-    s_getAllMethods = Rf_install("getAllMethods");
-    s_objectsEnv = Rf_install("objectsEnv");
-    s_MethodsListSelect = Rf_install("MethodsListSelect");
-    s_sys_dot_frame = Rf_install("sys.frame");
-    s_sys_dot_call = Rf_install("sys.call");
-    s_sys_dot_function = Rf_install("sys.function");
-    s_generic = Rf_install("generic");
-    s_package = Rf_install("package");
-    s_generic_dot_skeleton = Rf_install("generic.skeleton");
-    s_subset_gets = Rf_install("[<-");
-    s_element_gets = Rf_install("[[<-");
-    s_argument = Rf_install("argument");
-    s_allMethods = Rf_install("allMethods");
+    s_dot_Methods = install(".Methods");
+    s_skeleton = install("skeleton");
+    s_expression = install("expression");
+    s_function = install("function");
+    s_getAllMethods = install("getAllMethods");
+    s_objectsEnv = install("objectsEnv");
+    s_MethodsListSelect = install("MethodsListSelect");
+    s_sys_dot_frame = install("sys.frame");
+    s_sys_dot_call = install("sys.call");
+    s_sys_dot_function = install("sys.function");
+    s_generic = install("generic");
+    s_generic_dot_skeleton = install("generic.skeleton");
+    s_subset_gets = install("[<-");
+    s_element_gets = install("[[<-");
+    s_argument = install("argument");
+    s_allMethods = install("allMethods");
 
     R_FALSE = ScalarLogical(FALSE);
     R_PreserveObject(R_FALSE);
@@ -132,14 +130,14 @@ SEXP R_initMethodDispatch(SEXP envir)
        These will be promises under lazy-loading.
     */
     PROTECT(R_short_skeletons =
-	    findVar(Rf_install(".ShortPrimitiveSkeletons"),
+	    findVar(install(".ShortPrimitiveSkeletons"),
 		    Methods_Namespace));
     if(TYPEOF(R_short_skeletons) == PROMSXP)
 	R_short_skeletons = eval(R_short_skeletons, Methods_Namespace);
     R_PreserveObject(R_short_skeletons);
     UNPROTECT(1);
     PROTECT(R_empty_skeletons =
-	    findVar(Rf_install(".EmptyPrimitiveSkeletons"),
+	    findVar(install(".EmptyPrimitiveSkeletons"),
 		    Methods_Namespace));
     if(TYPEOF(R_empty_skeletons) == PROMSXP)
 	R_empty_skeletons = eval(R_empty_skeletons, Methods_Namespace);
@@ -338,7 +336,7 @@ static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist, SEXP f_env)
 #define IS_NON_GENERIC(vl) (TYPEOF(vl) == BUILTINSXP ||TYPEOF(vl) == SPECIALSXP || \
             (TYPEOF(vl) == CLOSXP && getAttrib(vl, s_generic) == R_NilValue))
 #define IS_GENERIC(vl) (TYPEOF(vl) == CLOSXP && getAttrib(vl, s_generic) != R_NilValue)
-#define PACKAGE_SLOT(vl) getAttrib(vl, s_package)
+#define PACKAGE_SLOT(vl) getAttrib(vl, R_PackageSymbol)
 
 static SEXP get_generic(SEXP symbol, SEXP rho, SEXP package)
 {
@@ -695,7 +693,7 @@ static SEXP R_loadMethod(SEXP def, SEXP fname, SEXP ev)
 	else if(t == R_nextMethod)  {
 	    defineVar(R_dot_nextMethod, CAR(s), ev); found++;
 	}
-	else if(t == R_source)  {
+	else if(t == R_SourceSymbol)  {
 	    /* ignore */ found++;
 	}
     }
@@ -892,7 +890,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
     if(method == R_UnboundValue) {
 	method = do_inherited_table(classes, fdef, mtable, ev);
     }
-    /* the rest of this is identical to R_standardGeneric; 
+    /* the rest of this is identical to R_standardGeneric;
        hence the f=method to remind us  */
     f = method;
     if(isObject(f))

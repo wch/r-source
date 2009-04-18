@@ -35,6 +35,7 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarLogical( compute_identical(CAR(args), CADR(args)) );
 }
 
+/* MM:  Export this to R's API --  useful in package's C code! */
 /* do the two objects compute as identical? */
 Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 {

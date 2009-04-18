@@ -1132,7 +1132,7 @@ QuartzDesc_t Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create, int 
 	    if(streql(par->type, "") || streql(par->type, "native")
 	       || streql(par->type, "cocoa") || streql(par->type, "carbon"))
 		devname = "quartz";
-            gsetVar(install(".Device"), mkString(devname), R_BaseEnv);
+            gsetVar(R_DeviceSymbol, mkString(devname), R_BaseEnv);
             pGEDevDesc dd = GEcreateDevDesc(dev);
             GEaddDevice(dd);
             GEinitDisplayList(dd);
@@ -1280,7 +1280,7 @@ SEXP Quartz(SEXP args)
 	const char *devname = "quartz_off_screen";
 	if(streql(type, "") || streql(type, "native") || streql(type, "cocoa") 
 	   || streql(type, "carbon")) devname = "quartz";
- 	gsetVar(install(".Device"), mkString(devname), R_BaseEnv);
+ 	gsetVar(R_DeviceSymbol, mkString(devname), R_BaseEnv);
 	pGEDevDesc dd = GEcreateDevDesc(dev);
 	GEaddDevice(dd);
 	GEinitDisplayList(dd);
