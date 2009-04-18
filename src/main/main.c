@@ -1417,15 +1417,13 @@ R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
     SEXP f = (SEXP) userData;
     SEXP e, tmp, val, cur;
     int errorOccurred;
-    Rboolean again;
-    Rboolean useData;
-    useData = LOGICAL(VECTOR_ELT(f, 2))[0];
+    Rboolean again, useData = LOGICAL(VECTOR_ELT(f, 2))[0];
 
     PROTECT(e = allocVector(LANGSXP, 5 + useData));
     SETCAR(e, VECTOR_ELT(f, 0));
     cur = CDR(e);
     SETCAR(cur, tmp = allocVector(LANGSXP, 2));
-	SETCAR(tmp, install("quote"));
+	SETCAR(tmp, R_QuoteSymbol);
 	SETCAR(CDR(tmp), expr);
     cur = CDR(cur);
     SETCAR(cur, value);

@@ -2320,11 +2320,12 @@ void R_initialize_bcode(void)
   R_AndSym = install("&");
   R_OrSym = install("|");
   R_NotSym = install("!");
-  R_SubsetSym = install("[");
+  R_SubsetSym = R_BracketSymbol; /* "[" */
   R_SubassignSym = install("[<-");
   R_CSym = install("c");
-  R_Subset2Sym = install("[[");
+  R_Subset2Sym = R_Bracket2Symbol /* "[[" */
   R_Subassign2Sym = install("[[<-");
+
   FakeCall0 = CONS(R_NilValue, R_NilValue);
   FakeCall1 = CONS(R_NilValue, FakeCall0);
   FakeCall2 = CONS(R_NilValue, FakeCall1);

@@ -130,8 +130,7 @@
 
 static void setActiveValue(SEXP fun, SEXP val)
 {
-    SEXP s_quote = install("quote");
-    SEXP arg = LCONS(s_quote, LCONS(val, R_NilValue));
+    SEXP arg = LCONS(R_QuoteSymbol, LCONS(val, R_NilValue));
     SEXP expr = LCONS(fun, LCONS(arg, R_NilValue));
     PROTECT(expr);
     eval(expr, R_GlobalEnv);

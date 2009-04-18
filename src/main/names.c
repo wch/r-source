@@ -1029,6 +1029,7 @@ static void SymbolShortcuts(void)
     R_NamesSymbol = install("names");
     R_NaRmSymbol = install("na.rm");
     R_PackageSymbol = install("package");
+    R_QuoteSymbol = install("quote");
     R_RowNamesSymbol = install("row.names");
     R_SeedsSymbol = install(".Random.seed");
     R_SourceSymbol = install("source");

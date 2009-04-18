@@ -1450,13 +1450,12 @@ static SEXP findSimpleErrorHandler(void)
 static void vsignalWarning(SEXP call, const char *format, va_list ap)
 {
     char buf[BUFSIZE];
-    SEXP hooksym, quotesym, hcall, qcall;
+    SEXP hooksym, hcall, qcall;
 
     hooksym = install(".signalSimpleWarning");
-    quotesym = install("quote");
     if (SYMVALUE(hooksym) != R_UnboundValue &&
-	SYMVALUE(quotesym) != R_UnboundValue) {
-	PROTECT(qcall = LCONS(quotesym, LCONS(call, R_NilValue)));
+	SYMVALUE(R_QuoteSymbol) != R_UnboundValue) {
+	PROTECT(qcall = LCONS(R_QuoteSymbol, LCONS(call, R_NilValue)));
 	PROTECT(hcall = LCONS(qcall, R_NilValue));
 	Rvsnprintf(buf, BUFSIZE - 1, format, ap);
 	hcall = LCONS(ScalarString(mkChar(buf)), hcall);
@@ -1495,14 +1494,14 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 	    if (ENTRY_HANDLER(entry) == R_RestartToken)
 		return; /* go to default error handling; do not reset stack */
 	    else {
-		SEXP hooksym, quotesym, hcall, qcall;
+		SEXP hooksym, hcall, qcall;
 		/* protect oldstack here, not outside loop, so handler
 		   stack gets unwound in case error is protect stack
 		   overflow */
 		PROTECT(oldstack);
 		hooksym = install(".handleSimpleError");
-		quotesym = install("quote");
-		PROTECT(qcall = LCONS(quotesym, LCONS(call, R_NilValue)));
+		PROTECT(qcall = LCONS(R_QuoteSymbol,
+				      LCONS(call, R_NilValue)));
 		PROTECT(hcall = LCONS(qcall, R_NilValue));
 		hcall = LCONS(ScalarString(mkChar(buf)), hcall);
 		hcall = LCONS(ENTRY_HANDLER(entry), hcall);
@@ -1794,9 +1793,9 @@ SEXP attribute_hidden
 do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int orig_value = R_interrupts_suspended;
-    if (args != R_NilValue) 
+    if (args != R_NilValue)
 	R_interrupts_suspended = asLogical(CAR(args));
     return ScalarLogical(orig_value);
 }
-	
-	
+
+
