@@ -118,7 +118,6 @@
  R_IoBufferWriteReset
  R_JumpToContext
  R_KeepSource
- R_LastvalueSymbol
  R_LibraryFileName
  R_LoadFromFile
  R_LoadRconsole
@@ -126,7 +125,6 @@
  R_NHeap
  R_NShowCalls
  R_NSize
- R_NaRmSymbol
  R_Newhashpjw
  R_OpenInitFile
  R_OpenLibraryFile
@@ -163,7 +161,6 @@
  R_ShowErrorMessages
  R_ShowFiles
  R_ShowWarnCalls
- R_SourceSymbol
  R_SrcfileSymbol
  R_SrcrefSymbol
  R_StdinEnc
