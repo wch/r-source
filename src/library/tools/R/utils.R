@@ -570,7 +570,7 @@ function(con, n = 4L)
 function(db)
 {
     if("Contains" %in% names(db))
-        unlist(strsplit(db["Contains"], " +"))
+        unlist(strsplit(db["Contains"], "[[:space:]]+"))
     else
         character()
 }

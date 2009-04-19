@@ -211,7 +211,7 @@
         bundle_name <- desc["Bundle"]
         is_bundle <- !is.na(bundle_name)
         if (is_bundle) {
-            contains <- strsplit(desc["Contains"], " ")[[1]]
+            contains <- .get_contains_from_package_db(desc)
             for(p in contains) {
                 if (dir.exists(file.path(pkg, p))) {
                     pkgs <- c(pkgs, p)
@@ -2168,7 +2168,7 @@
                      "\\cleardoublepage{}",
                      "\\pagenumbering{arabic}"), out)
         desc <- read.dcf(file.path(pkgdir, "DESCRIPTION"))[1,]
-        bundle_pkgs <- strsplit(desc["Contains"], "[[:blank:]]+")[[1]]
+        bundle_pkgs <- .get_contains_from_package_db(desc)
         for (p in bundle_pkgs) {
             message("Bundle package: ", p)
             cat("\\chapter{Package `", p, "'}\n", sep = "", file = out)
