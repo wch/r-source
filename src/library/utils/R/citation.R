@@ -292,6 +292,15 @@ function(package = "base", lib.loc = NULL)
     else
         meta$URL
 
+    if(identical(meta$Repository, "R-Forge")) {
+        z$url <- if(!is.null(rfp <- meta$"Repository/R-Forge/Project"))
+            sprintf("http://R-Forge.R-project.org/projects/%s/", rfp)
+        else
+            "http://R-Forge.R-project.org/"
+        if(!is.null(rfr <- meta$"Repository/R-Forge/Revision"))
+            z$note <- paste(z$note, rfr, sep = "/r")
+    }
+    
     class(z) <- "citation"
     attr(z, "entry") <- "Manual"
     attr(z, "package") <- package
