@@ -121,7 +121,7 @@ NEW FEATURES
 	happened for many years but was not previously documented, and
 	is no longer the default).
 
-    o	bxp() now coputes the 'ylim' including the outliers only if
+    o	bxp() now computes the 'ylim' including the outliers only if
 	'outline = TRUE'.  (Wish of PR#13196)
 
     o	barplot() gains a 'args.legend' argument.  (Wish of PR#13265).
@@ -274,7 +274,7 @@ NEW FEATURES
     	was checked when the package was installed.  .packages() only
     	considers such packages to be validly installed (any others
     	were installed in a long-obsolete version of R).  Both changes
-    	speed up searches in libraries of thousands of packages().
+    	speed up searches in libraries of thousands of packages.
 
     o	boxplot() uses butt line endings for its median line
 	(suggestion of Uwe Ligges, PR#13553).
