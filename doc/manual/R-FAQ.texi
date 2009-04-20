@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2009
-@set FAQ_DATE @value{FAQ_YEAR}-04-15
+@set FAQ_DATE @value{FAQ_YEAR}-04-19
 @set REL_YEAR 2009
 @set REL_MAJOR 2
 @set REL_MINOR 9
@@ -2045,6 +2045,8 @@ Evolutionary Monte Carlo (EMC) algorithm.
 Evolutionary Monte Carlo (EMC) methods for clustering.
 @item EMD
 Empirical mode decomposition and Hilbert spectral analysis.
+@item EMJumpDiffusion
+EM algorithm for jump diffusion processes.
 @c <COMMENT>
 @c Moved to the Archive on 2009-02-23 as requested by the maintainer.
 @c @item EMV
@@ -2075,6 +2077,11 @@ Statistical analysis in epidemiology, with functions for demographic and
 epidemiological analysis in the Lexis diagram.
 @item FAiR
 Factor Analysis in R, using genetic algorithms.
+@item FBN
+FISH Based Normalization and copy number inference of SNP microarray
+data.
+@item FD
+Measuring functional diversity (FD) from multiple traits.
 @item FGN
 Fractional Gaussian Noise model fitting.
 @item FITSio
@@ -2479,6 +2486,8 @@ detecting gene-gene interactions.
 Arrays with arbitrary offsets.
 @item Oncotree
 Estimation of oncogenetic trees.
+@item OrdFacReg
+Least squares, logistic, and Cox regression with ordered predictors.
 @item OrdMonReg
 Compute least squares estimates of one bounded or two ordered antitonic
 regression curves.
@@ -2652,6 +2661,8 @@ models.
 Analysis of infectious diseases using stochastic epidemic models.
 @item RM2
 Revenue management and pricing.
+@item RMTstat
+Distributions and statistics from Random Matrix Theory.
 @item RMySQL
 An interface between R and the MySQL database system.
 @item RNetCDF
@@ -3724,6 +3735,8 @@ R language objects.
 Compute Hartigan's dip test statistic for unimodality.
 @item dirichlet
 Dirichlet model of consumer buying behavior for marketing research.
+@item diseasemapping
+Calculate SMRs from population and case data.
 @item dispmod
 Functions for modelling dispersion in GLMs.
 @item distr
@@ -4278,6 +4291,8 @@ Classification using generalized partial least squares for two-group and
 multi-group (more than 2 group) classification.
 @item gplots
 Various functions to draw plots.
+@item gputools
+A few GPU-enabled data mining functions.
 @item grImport
 Importing vector graphics.
 @item grade
@@ -4672,6 +4687,8 @@ and H. Sonnberger, 1986, Physica.
 @item lnMLE
 Marginally specified logistic normal models for longitudinal binary
 data.
+@item localdepth
+Simplicial, Mahalanobis and ellipsoid local and global depth.
 @item locfdr
 Computation of local false discovery rates.
 @item locfit
@@ -4742,6 +4759,8 @@ A variety of methods for creating magic squares of any order greater
 than 2, and various magic hypercubes.
 @item mapLD
 Linkage Disequilibrium mapping.
+@item mapReduce
+Flexible mapReduce algorithm for parallel computation.
 @item mapdata
 Supplement to package @strong{maps}, providing the larger and/or
 higher-resolution databases.
@@ -4763,6 +4782,9 @@ lacustrine sciences.
 Margin trees for high-dimensional classification.
 @item marginalmodelplots
 Marginal model plots for linear and generalized linear models.
+@item markerSearchPower
+Power calculation for marker detection strategies in genome-wide
+association studies.
 @item mathgraph
 Tools for constructing and manipulating objects from a class of directed
 and undirected graphs.
@@ -5412,6 +5434,9 @@ Framework for simulating equity portfolio strategies.
 Optimizes a function using Powell's UObyQA algorithm.
 @item powerGWASinteraction
 Power calculations for interactions for GWAS.
+@item powerSurvEpi
+Power and sample size calculation for survival analysis of
+epidemiological studies.
 @item powerpkg
 Power analyses for the affected sib pair and the TDT design.
 @item ppc
@@ -6341,6 +6366,8 @@ Uniformly Most Powerful tests.
 Function estimation via Unbalanced Haar wavelets.
 @item uncompress
 For uncompressing @file{.Z} files.
+@item uniCox
+Univarate shrinkage prediction in the Cox model.
 @item untb
 Ecological drift under the UNTB (Unified Neutral Theory of
 Biodiversity).
