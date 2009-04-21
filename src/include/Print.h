@@ -65,6 +65,8 @@ void printMatrix(SEXP, int, SEXP, int, int, SEXP, SEXP,
 		 const char*, const char*);
 void printNamedVector(SEXP, SEXP, int, const char*);
 void printVector(SEXP, int, int);
+void PrintClosure(SEXP, Rboolean);
+void PrintLanguage(SEXP, Rboolean);
 
 /* Utilities for S compatibility and debuggging */
 int F77_SYMBOL(dblepr0)(const char *, int *, double *, int *);

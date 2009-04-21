@@ -2321,12 +2321,12 @@ try(.C(sym, NULL))
 try(.C(sym$address, NULL))
 ## were OK
 
-
+options(keep.source = TRUE)
 ## $<- on pairlists failed to duplicate (from Felix Andrews,
 ## https://stat.ethz.ch/pipermail/r-devel/2009-January/051698.html)
 foo <- function(given = NULL) {
     callObj <- quote(callFunc())
-    if (!is.null(given)) callObj$given <- given
+    if(!is.null(given)) callObj$given <- given
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
@@ -2344,3 +2344,22 @@ nums <- list(-3.145, -31,   0xabc,  -123L, 123456)
 rbind(mapply(sprintf, forms,               nums),
       mapply(sprintf, sub("#", '', forms), nums))
 ## gave an error in pre-release versions of 2.9.0
+
+## (auto)printing of functions {with / without source attribute},
+## including primitives
+sink(textConnection("of", "w")) ; c ; sink(NULL)
+of2 <- capture.output(print(c))
+stopifnot(identical(of2, of),
+          identical(of2, "function (..., recursive = FALSE)  .Primitive(\"c\")"))
+## ^^ would have failed up to R 2.9.x
+foo
+print(foo, useSource = FALSE)
+attr(foo, "source") <- NULL
+foo
+(f <- structure(function(){}, note = "just a note",
+                yada = function() "not the same"))
+print(f, useSource = FALSE) # must print attributes
+print.function <- function(x, ...) { str(x,...); invisible(x) }
+print.function
+f
+rm(print.function)

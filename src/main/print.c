@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
- *  Copyright (C) 2000-2007	The R Development Core Team.
+ *  Copyright (C) 2000-2009	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -72,6 +72,9 @@
 attribute_hidden R_print_par_t R_print;
 
 static void printAttributes(SEXP, SEXP, Rboolean);
+static void PrintSpecial(SEXP);
+static void PrintLanguageEtc(SEXP, Rboolean, Rboolean);
+
 
 #define TAGBUFLEN 256
 static char tagbuf[TAGBUFLEN + 5];
@@ -154,6 +157,57 @@ SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }/* do_prmatrix */
 
+/* .Internal( print.function(f, useSource, ...)) */
+SEXP attribute_hidden do_printfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP s = CAR(args);
+    switch (TYPEOF(s)) {
+    case CLOSXP:
+	PrintLanguageEtc(s, asLogical(CADR(args)), /*is closure = */ TRUE);
+	printAttributes(s, rho, FALSE);
+	break;
+    case BUILTINSXP:
+    case SPECIALSXP:
+	PrintSpecial(s);
+	break;
+
+    default: /* if(!isFunction(s)) */
+	errorcall(call,
+		  _("non-function argument to .Internal(print.function(.))"));
+    }
+    return s;
+}
+
+/* PrintLanguage() or PrintClosure() : */
+static void PrintLanguageEtc(SEXP s, Rboolean useSource, Rboolean isClosure)
+{
+    int i;
+    SEXP t = getAttrib(s, R_SourceSymbol);
+    if (!isString(t) || !useSource)
+	t = deparse1(s, 0, useSource | DEFAULTDEPARSE);
+    for (i = 0; i < LENGTH(t); i++)
+	Rprintf("%s\n", CHAR(STRING_ELT(t, i))); /* translated */
+    if (isClosure) {
+#ifdef BYTECODE
+	if (isByteCode(BODY(s)))
+	    Rprintf("<bytecode: %p>\n", BODY(s));
+#endif
+	t = CLOENV(s);
+	if (t != R_GlobalEnv)
+	    Rprintf("%s\n", EncodeEnvironment(t));
+    }
+}
+
+void PrintClosure(SEXP s, Rboolean useSource)
+{
+    PrintLanguageEtc(s, useSource, TRUE);
+}
+
+void PrintLanguage(SEXP s, Rboolean useSource)
+{
+    PrintLanguageEtc(s, useSource, FALSE);
+}
+
 /* .Internal(print.default(x, digits, quote, na.print, print.gap,
 			   right, max, useS4)) */
 SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -172,7 +226,7 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (R_print.digits == NA_INTEGER ||
 	    R_print.digits < R_MIN_DIGITS_OPT ||
 	    R_print.digits > R_MAX_DIGITS_OPT)
-		error(_("invalid '%s' argument"), "digits");
+	    error(_("invalid '%s' argument"), "digits");
     }
     args = CDR(args);
 
@@ -263,7 +317,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	PROTECT(dims);
 	PROTECT(t = allocArray(STRSXP, dims));
 	/* FIXME: check (ns <= R_print.max +1) ? ns : R_print.max; */
-	for (i = 0 ; i < ns ; i++) {
+	for (i = 0; i < ns; i++) {
 	    switch(TYPEOF(PROTECT(tmp = VECTOR_ELT(s, i)))) {
 	    case NILSXP:
 		snprintf(pbuf, 115, "NULL");
@@ -368,7 +422,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	if(ns > 0) {
 	    int n_pr = (ns <= R_print.max +1) ? ns : R_print.max;
 	    /* '...max +1'  ==> will omit at least 2 ==> plural in msg below */
-	    for (i = 0 ; i < n_pr ; i++) {
+	    for (i = 0; i < n_pr; i++) {
 		if (i > 0) Rprintf("\n");
 		if (names != R_NilValue &&
 		    STRING_ELT(names, i) != R_NilValue &&
@@ -561,8 +615,39 @@ static void PrintExpression(SEXP s)
 
     u = deparse1(s, 0, R_print.useSource | DEFAULTDEPARSE);
     n = LENGTH(u);
-    for (i = 0; i < n ; i++)
+    for (i = 0; i < n; i++)
 	Rprintf("%s\n", CHAR(STRING_ELT(u, i))); /*translated */
+}
+
+static void PrintSpecial(SEXP s)
+{
+    /* This is OK as .Internals are not visible to be printed */
+    char *nm = PRIMNAME(s);
+    SEXP env, s2;
+    PROTECT_INDEX xp;
+    PROTECT_WITH_INDEX(env = findVarInFrame3(R_BaseEnv,
+					     install(".ArgsEnv"), TRUE),
+		       &xp);
+    if (TYPEOF(env) == PROMSXP) REPROTECT(env = eval(env, R_BaseEnv), xp);
+    s2 = findVarInFrame3(env, install(nm), TRUE);
+    if(s2 == R_UnboundValue) {
+	REPROTECT(env = findVarInFrame3(R_BaseEnv,
+					install(".GenericArgsEnv"), TRUE),
+		  xp);
+	if (TYPEOF(env) == PROMSXP)
+	    REPROTECT(env = eval(env, R_BaseEnv), xp);
+	s2 = findVarInFrame3(env, install(nm), TRUE);
+    }
+    if(s2 != R_UnboundValue) {
+	SEXP t;
+	PROTECT(s2);
+	t = deparse1(s2, 0, DEFAULTDEPARSE);
+	Rprintf("%s ", CHAR(STRING_ELT(t, 0))); /* translated */
+	Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
+	UNPROTECT(1);
+    } else /* missing definition, e.g. 'if' */
+	Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
+    UNPROTECT(1);
 }
 
 /* PrintValueRec -- recursively print an SEXP
@@ -571,7 +656,6 @@ static void PrintExpression(SEXP s)
  */
 void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 {
-    int i;
     SEXP t;
 
 #ifdef Win32
@@ -609,34 +693,7 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 	break;
     case SPECIALSXP:
     case BUILTINSXP:
-	/* This is OK as .Internals are not visible to be printed */
-    {
-	char *nm = PRIMNAME(s);
-	SEXP env, s2;
-	PROTECT_INDEX xp;
-	PROTECT_WITH_INDEX(env = findVarInFrame3(R_BaseEnv,
-						 install(".ArgsEnv"), TRUE),
-			   &xp);
-	if (TYPEOF(env) == PROMSXP) REPROTECT(env = eval(env, R_BaseEnv), xp);
-	s2 = findVarInFrame3(env, install(nm), TRUE);
-	if(s2 == R_UnboundValue) {
-	    REPROTECT(env = findVarInFrame3(R_BaseEnv,
-					    install(".GenericArgsEnv"), TRUE),
-		      xp);
-	    if (TYPEOF(env) == PROMSXP)
-		REPROTECT(env = eval(env, R_BaseEnv), xp);
-	    s2 = findVarInFrame3(env, install(nm), TRUE);
-	}
-	if(s2 != R_UnboundValue) {
-	    PROTECT(s2);
-	    t = deparse1(s2, 0, DEFAULTDEPARSE);
-	    Rprintf("%s ", CHAR(STRING_ELT(t, 0))); /* translated */
-	    Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
-	    UNPROTECT(1);
-	} else /* missing definition, e.g. 'if' */
-	    Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
-	UNPROTECT(1);
-    }
+	PrintSpecial(s);
 	break;
     case CHARSXP:
 	Rprintf("<CHARSXP: ");
@@ -646,22 +703,11 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
     case EXPRSXP:
 	PrintExpression(s);
 	break;
-    case CLOSXP:
     case LANGSXP:
-	t = getAttrib(s, R_SourceSymbol);
-	if (!isString(t) || !R_print.useSource)
-	    t = deparse1(s, 0, R_print.useSource | DEFAULTDEPARSE);
-	for (i = 0; i < LENGTH(t); i++)
-	    Rprintf("%s\n", CHAR(STRING_ELT(t, i))); /* translated */
-#ifdef BYTECODE
-	if (TYPEOF(s) == CLOSXP && isByteCode(BODY(s)))
-	    Rprintf("<bytecode: %p>\n", BODY(s));
-#endif
-	if (TYPEOF(s) == CLOSXP) {
-	    t = CLOENV(s);
-	    if (t != R_GlobalEnv)
-		Rprintf("%s\n", EncodeEnvironment(t));
-	}
+	PrintLanguage(s, FALSE);
+	break;
+    case CLOSXP:
+	PrintClosure(s, FALSE);
 	break;
     case ENVSXP:
 	Rprintf("%s\n", EncodeEnvironment(s));
@@ -876,11 +922,11 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
     PrintDefaults(env);
     tagbuf[0] = '\0';
     PROTECT(s);
-    if(isObject(s)) {
+    if(isObject(s) || isFunction(s)) {
 	/*
-	   The intention here is to call show() on S4 objects, otherwise
-	   print(), so S4 methods for show() have precedence over those for
-	   print() to conform with the "green book", p. 332
+	  The intention here is to call show() on S4 objects, otherwise
+	  print(), so S4 methods for show() have precedence over those for
+	  print() to conform with the "green book", p. 332
 	*/
 	SEXP call, showS;
 	if(isMethodsDispatchOn() && IS_S4_OBJECT(s)) {
@@ -901,8 +947,10 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
 		    error("missing show() in methods namespace: this should not happen");
 	    }
 	    PROTECT(call = lang2(showS, s));
-	} else
+	}
+	else /* S3 */
 	    PROTECT(call = lang2(install("print"), s));
+
 	eval(call, env);
 	UNPROTECT(1);
     } else PrintValueRec(s, env);

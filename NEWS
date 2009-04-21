@@ -30,6 +30,11 @@ NEW FEATURES
 	with duplicated levels are still constructible by low-level means,
 	but are now declared illegal.
 
+    o	new print() (S3) method for class "function", also used for
+	auto-printing.	Further, .Primitive functions now print and
+	auto-print identically.  The new method is based on code
+	suggestions by Romain Francois.
+
 
 BUG FIXES
 
