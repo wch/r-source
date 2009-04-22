@@ -13,9 +13,12 @@ print(x, \dots)
 
 \method{print}{table}(x, digits = getOption("digits"), quote = FALSE,
       na.print = "", zero.print = "0", justify = "none", \dots)
+
+\method{print}{function}(x, useSource = TRUE, \dots)
 }
 \alias{print}
 \alias{print.factor}
+\alias{print.function}
 \alias{print.htest}
 \alias{print.listof}
 \alias{print.simple.list}
@@ -45,6 +48,9 @@ print(x, \dots)
     printed; for sparse tables, using \code{"."} can produce stronger results.}
   \item{justify}{character indicating if strings should left- or
     right-justified or left alone, passed to \code{\link{format}}.}
+  \item{useSource}{logical indicating if a \code{"source"} attribute
+    should be used for printing when present, e.g., if
+    \code{\link{options}(keep.source=TRUE)} has been in use.}
 }
 \details{
   The default method, \code{\link{print.default}} has its own help page.
