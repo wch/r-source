@@ -22,13 +22,13 @@ smoothScatter <- function(x, y=NULL, nbin=128, bandwidth,
     ## xlim and ylim
     if(!missing(xlim)) {
 	stopifnot(is.numeric(xlim), length(xlim)==2, is.finite(xlim))
-	x <- x[ xlim[1] <= x[,1] & x[,1] <= xlim[2], ]
+	x <- x[ min(xlim) <= x[,1] & x[,1] <= max(xlim), ]
     } else {
 	xlim <- range(x[,1])
     }
     if(!missing(ylim)) {
 	stopifnot(is.numeric(ylim), length(ylim)==2, is.finite(ylim))
-	x <- x[ ylim[1] <= x[,2] & x[,2] <= ylim[2], ]
+	x <- x[ min(ylim) <= x[,2] & x[,2] <= max(ylim), ]
     } else {
 	ylim <- range(x[,2])
     }
