@@ -72,6 +72,8 @@ BUG FIXES
 	package version also for a non-attached loaded namespace of
 	a version different from the default lib.loc.
 
+    o	smoothScatter() now also works when e.g. xlim[2] < xlim[1].
+
 
 
 		CHANGES IN R VERSION 2.9.0
