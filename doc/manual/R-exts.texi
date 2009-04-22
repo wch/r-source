@@ -1533,7 +1533,7 @@ directory.  These patterns should be Perl regexps, one per line, to be
 matched against the file names relative to the top-level source
 directory.  In addition, directories from source control
 systems@footnote{called @file{CVS} or @file{.svn} or @file{.arch-ids} or
-@file{.bzr} or @file{git}.}, directories with names ending
+@file{.bzr} or @file{.git}.}, directories with names ending
 @file{.Rcheck} or @file{Old} or @file{old} and files @file{GNUMakefile},
 @file{Read-and-delete-me} or with base names starting with @samp{.#}, or
 starting and ending with @samp{#}, or ending in @samp{~}, @samp{.bak} or
