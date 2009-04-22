@@ -430,7 +430,7 @@ static void SampleNoReplace(int k, int n, int *y, int *x)
     }
 }
 
-static void FixupProb(SEXP call, double *p, int n, int k, int replace)
+void FixupProb(double *p, int n, int require_k, Rboolean replace)
 {
     double sum;
     int i, npos;
@@ -446,7 +446,7 @@ static void FixupProb(SEXP call, double *p, int n, int k, int replace)
 	    sum += p[i];
 	}
     }
-    if (npos == 0 || (!replace && k > npos))
+    if (npos == 0 || (!replace && require_k > npos))
 	error(_("too few positive probabilities"));
     for (i = 0; i < n; i++)
 	p[i] /= sum;
@@ -465,7 +465,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = asInteger(CAR(args)); args = CDR(args);
     k = asInteger(CAR(args)); args = CDR(args);
     sreplace = CAR(args); args = CDR(args);
-    if( length(sreplace) != 1 )
+    if(length(sreplace) != 1)
 	 error(_("invalid '%s' argument"), "replace");
     replace = asLogical(sreplace);
     prob = CAR(args);
@@ -486,7 +486,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	p = REAL(prob);
 	if (length(prob) != n)
 	    error(_("incorrect number of probabilities"));
-	FixupProb(call, p, n, k, replace);
+	FixupProb(p, n, k, (Rboolean)replace);
 	PROTECT(x = allocVector(INTSXP, n));
 	if (replace) {
 	    int i, nc = 0;
@@ -528,7 +528,8 @@ SEXP attribute_hidden do_rmultinom(SEXP call, SEXP op, SEXP args, SEXP rho)
     k = length(prob);/* k = #{components or classes} = X-vector length */
     if (NAMED(prob)) prob = duplicate(prob);/*as `do_sample' -- need this line? */
     PROTECT(prob);
-    FixupProb(call, REAL(prob), k, 0, 1);/*check and make sum = 1 */
+    /* check and make sum = 1: */
+    FixupProb(REAL(prob), k, /*require_k = */ 0, TRUE);
     GetRNGstate();
     PROTECT(ans = allocMatrix(INTSXP, k, n));/* k x n : natural for columnwise store */
     for(i=ik = 0; i < n; i++, ik += k)

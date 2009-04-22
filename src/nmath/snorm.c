@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2 the R Development Core Team
+ *  Copyright (C) 1998   Ross Ihaka
+ *  Copyright (C) 2000-9 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@
  * Is called from  rnorm(..), but also rt(), rf(), rgamma(), ...
  */
 
-#include "nmath.h"
 #include <R_ext/Random.h>
+#include "nmath.h"
 
 #define repeat for(;;)
 
@@ -127,11 +127,11 @@ double norm_rand(void)
 
     double s, u1, w, y, u2, u3, aa, tt, theta, R;
     int i;
-    
+
     switch(N01_kind) {
-	
+
     case  AHRENS_DIETER: /* see Reference above */
-	
+
 	u1 = unif_rand();
 	s = 0.0;
 	if (u1 > 0.5)
@@ -188,23 +188,23 @@ double norm_rand(void)
 	    }
 	  jump:;
 	}
-	
+
       deliver:
 	y = aa + w;
 	return (s == 1.0) ? -y : y;
 
 	/*-----------------------------------------------------------*/
-    
+
     case BUGGY_KINDERMAN_RAMAGE: /* see Reference above */
-	/* note: this has problems, but is retained for 
-	 * reproducibility of older codes, with the same 
+	/* note: this has problems, but is retained for
+	 * reproducibility of older codes, with the same
 	 * numeric code */
 	u1 = unif_rand();
 	if(u1 < 0.884070402298758) {
 	    u2 = unif_rand();
 	    return A*(1.13113163544180*u1+u2-1);
 	}
-	
+
 	if(u1 >= 0.973310954173898) { /* tail: */
 	    repeat {
 		u2 = unif_rand();
@@ -214,7 +214,7 @@ double norm_rand(void)
 		    return (u1 < 0.986655477086949) ? sqrt(tt) : -sqrt(tt);
 	    }
 	}
-	
+
 	if(u1 >= 0.958720824790463) { /* region3: */
 	    repeat {
 		u2 = unif_rand();
@@ -226,7 +226,7 @@ double norm_rand(void)
 		    return (u2<u3) ? tt : -tt;
 	    }
 	}
-	
+
 	if(u1 >= 0.911312780288703) { /* region2: */
 	    repeat {
 		u2 = unif_rand();
@@ -276,7 +276,7 @@ double norm_rand(void)
 	    u2 = unif_rand();
 	    return A*(1.131131635444180*u1+u2-1);
 	}
-	
+
 	if(u1 >= 0.973310954173898) { /* tail: */
 	    repeat {
 		u2 = unif_rand();
@@ -286,7 +286,7 @@ double norm_rand(void)
 		    return (u1 < 0.986655477086949) ? sqrt(tt) : -sqrt(tt);
 	    }
 	}
-	
+
 	if(u1 >= 0.958720824790463) { /* region3: */
 	    repeat {
 		u2 = unif_rand();
@@ -298,7 +298,7 @@ double norm_rand(void)
 		    return (u2<u3) ? tt : -tt;
 	    }
 	}
-	
+
 	if(u1 >= 0.911312780288703) { /* region2: */
 	    repeat {
 		u2 = unif_rand();
