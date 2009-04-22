@@ -76,8 +76,8 @@ Rcomplex Rf_ComplexFromInteger(int, int*);
 Rcomplex Rf_ComplexFromReal(double, int*);
 
 #define CALLED_FROM_DEFN_H 1
-#include <Rinternals.h>		/*-> Arith.h, Complex.h, Error.h, Memory.h
-				  PrtUtil.h, Utils.h */
+#include <Rinternals.h>		/*-> Arith.h, Boolean.h, Complex.h, Error.h,
+				  Memory.h, PrtUtil.h, Utils.h */
 #undef CALLED_FROM_DEFN_H
 extern0 SEXP	R_CommentSymbol;    /* "comment" */
 extern0 SEXP	R_DotEnvSymbol;     /* ".Environment" */
@@ -1104,9 +1104,6 @@ void R_restore_globals(RCNTXT *);
 
 /* ../main/devices.c, used in memory.c, gnuwin32/extra.c */
 #define R_MaxDevices 64
-
-/* ../main/identical.c : */
-Rboolean compute_identical(SEXP x, SEXP y);
 
 /* ../../main/printutils.c : */
 typedef enum {

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-7  R Development Core Team
+ *  Copyright (C) 2001-9  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,12 +32,11 @@ static Rboolean neWithNaN(double x,  double y);
 SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    return ScalarLogical( compute_identical(CAR(args), CADR(args)) );
+    return ScalarLogical( R_compute_identical(CAR(args), CADR(args)) );
 }
 
-/* MM:  Export this to R's API --  useful in package's C code! */
 /* do the two objects compute as identical? */
-Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
+Rboolean R_compute_identical(SEXP x, SEXP y)
 {
     SEXP ax, ay, atrx, atry;
     if(x == y)
@@ -60,7 +59,7 @@ Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
     if(ax != R_NilValue || ay != R_NilValue) {
 	if(ax == R_NilValue || ay == R_NilValue)
 	    return FALSE;
-	/* if(!compute_identical(ATTRIB(x),ATTRIB(y))) return FALSE; */
+	/* if(!R_compute_identical(ATTRIB(x),ATTRIB(y))) return FALSE; */
 	if(TYPEOF(ax) != LISTSXP || TYPEOF(ay) != LISTSXP) {
 	    warning(_("ignoring non-pairlist attributes"));
 	} else {
@@ -76,13 +75,13 @@ Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 			if(streql(tx, "row.names")) {
                             PROTECT(atrx = getAttrib(x, R_RowNamesSymbol));
                             PROTECT(atry = getAttrib(y, R_RowNamesSymbol));
-			    if(!compute_identical(atrx, atry)){
+			    if(!R_compute_identical(atrx, atry)){
                                UNPROTECT(2);
 			       return FALSE;
                             } else
                               UNPROTECT(2);
 			} else
-			    if(!compute_identical(CAR(elx), CAR(ely)))
+			    if(!R_compute_identical(CAR(elx), CAR(ely)))
 				return FALSE;
 			break;
 		    }
@@ -153,7 +152,7 @@ Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 	int i, n = length(x);
 	if(n != length(y)) return FALSE;
 	for(i = 0; i < n; i++)
-	    if(!compute_identical(VECTOR_ELT(x, i),VECTOR_ELT(y, i)))
+	    if(!R_compute_identical(VECTOR_ELT(x, i),VECTOR_ELT(y, i)))
 		return FALSE;
 	return TRUE;
     }
@@ -163,9 +162,9 @@ Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 	while (x != R_NilValue) {
 	    if(y == R_NilValue)
 		return FALSE;
-	    if(!compute_identical(CAR(x), CAR(y)))
+	    if(!R_compute_identical(CAR(x), CAR(y)))
 		return FALSE;
-	    if(!compute_identical(PRINTNAME(TAG(x)), PRINTNAME(TAG(y))))
+	    if(!R_compute_identical(PRINTNAME(TAG(x)), PRINTNAME(TAG(y))))
 		return FALSE;
 	    x = CDR(x);
 	    y = CDR(y);
@@ -173,8 +172,8 @@ Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 	return(y == R_NilValue);
     }
     case CLOSXP:
-	return(compute_identical(FORMALS(x), FORMALS(y)) &&
-	       compute_identical(BODY_EXPR(x), BODY_EXPR(y)) &&
+	return(R_compute_identical(FORMALS(x), FORMALS(y)) &&
+	       R_compute_identical(BODY_EXPR(x), BODY_EXPR(y)) &&
 	       CLOENV(x) == CLOENV(y) ? TRUE : FALSE);
     case SPECIALSXP:
     case BUILTINSXP:
@@ -198,7 +197,7 @@ Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 	   we require both expression and environment to be identical? */
 	/*#define PREXPR(x)	((x)->u.promsxp.expr)
 	  #define PRENV(x)	((x)->u.promsxp.env)
-	  return(compute_identical(subsititute(PREXPR(x), PRENV(x)),
+	  return(R_compute_identical(subsititute(PREXPR(x), PRENV(x)),
 	  subsititute(PREXPR(y), PRENV(y))));*/
     case S4SXP:
 	/* attributes already tested, so all slots identical */
