@@ -74,8 +74,10 @@ BUG FIXES
 
     o	smoothScatter() now also works when e.g. xlim[2] < xlim[1].
 
-    o	invalid use of sprintf() such as sprintf("%S%") now give an error
-	instead of a segmentation fault.
+    o	Invalid use of sprintf() such as sprintf("%S%") now give an error
+	instead of a segmentation fault, as do very unusual cases such as
+	sprintf("%s", tryCatch(stop(), error=identity)).
+
 
 
 

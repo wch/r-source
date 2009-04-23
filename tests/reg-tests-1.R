@@ -5644,3 +5644,9 @@ local({ oo <- options(warn=2); on.exit(options(oo))
 assertError(sprintf("%S%"))
 assertError(sprintf("%n %g", 1))
 ## seg.faulted in R <= 2.9.0
+
+## sprintf(., e)  where length(as.character(e)) < length(e):
+e <- tryCatch(stop(), error=identity)
+stopifnot(identical(sprintf("%s", e),
+		    sprintf("%s", as.character(e))))
+## seg.faulted in R <= 2.9.0

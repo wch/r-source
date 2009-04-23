@@ -68,7 +68,7 @@ static Rboolean checkfmt(const char *fmt, const char *pattern)
 
 SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int i, nargs, cnt, v, thislen, nfmt, nprotect = 1;
+    int i, nargs, cnt, v, thislen, nfmt, nprotect = 0;
     /* fmt2 is a copy of fmt with '*' expanded.
        bit will hold numeric formats and %<w>s, so be quite small. */
     char fmt[MAXLINE+1], fmt2[MAXLINE+10], *fmtp, bit[MAXLINE+1],
@@ -90,31 +90,34 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     format = CAR(args);
     if (!isString(format))
 	error(_("'fmt' is not a character vector"));
-    if (length(format) == 0) return allocVector(STRSXP, 0);
+    nfmt = length(format);
+    if (nfmt == 0) return allocVector(STRSXP, 0);
     args = CDR(args); nargs--;
     if(nargs >= MAXNARGS)
 	error(_("only %d arguments are allowed"), MAXNARGS);
 
     /* record the args for possible coercion and later re-ordering */
-    for(i = 0; i < nargs; i++, args = CDR(args)) a[i] = CAR(args);
-
-    maxlen = nfmt = length(format);
-    for(i = 0; i < nargs; i++) {
+    for(i = 0; i < nargs; i++, args = CDR(args)) {
+	a[i] = CAR(args);
 	lens[i] = length(a[i]);
 	if(lens[i] == 0) return allocVector(STRSXP, 0);
-	if(maxlen < lens[i]) maxlen = lens[i];
     }
+
+#define CHECK_maxlen							\
+    maxlen = nfmt;							\
+    for(i = 0; i < nargs; i++)						\
+	if(maxlen < lens[i]) maxlen = lens[i];				\
+    if(maxlen % nfmt)							\
+	error(_("arguments cannot be recycled to the same length"));	\
+    for(i = 0; i < nargs; i++)						\
+	if(maxlen % lens[i])						\
+	    error(_("arguments cannot be recycled to the same length"))
+
+    CHECK_maxlen;
 
     outputString = R_AllocStringBuffer(0, &outbuff);
 
-    if(maxlen % length(format))
-	error(_("arguments cannot be recycled to the same length"));
-    for(i = 0; i < nargs; i++)
-	if(maxlen % lens[i])
-	    error(_("arguments cannot be recycled to the same length"));
-
     /* We do the format analysis a row at a time */
-    PROTECT(ans = allocVector(STRSXP, maxlen));
     for(ns = 0; ns < maxlen; ns++) {
 	outputString[0] = '\0';
 	use_UTF8 = getCharCE(STRING_ELT(format, ns % nfmt)) == CE_UTF8;
@@ -238,6 +241,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			/* Now let us see if some minimal coercion
 			   would be sensible, but only do so once, for ns = 0: */
 			if(ns == 0) {
+			    Rboolean do_check;
 			    switch(*findspec(fmtp)) {
 			    case 'd':
 			    case 'i':
@@ -260,19 +264,25 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    case 'G':
 				if(TYPEOF(_this) != REALSXP) {
 				    PROTECT(tmp = lang2(install("as.double"), _this));
-				    _this = eval(tmp, env);
-				    UNPROTECT(1);
-				    PROTECT(a[nthis] = _this);
-				    nprotect++;
+#define COERCE_THIS_TO_A						\
+				    _this = eval(tmp, env);		\
+				    UNPROTECT(1);			\
+				    PROTECT(a[nthis] = _this);		\
+				    nprotect++;				\
+				    do_check = (lens[nthis] == maxlen);	\
+				    lens[nthis] = length(_this); /* may have changed! */ \
+				    if(do_check && lens[nthis] < maxlen) { \
+					CHECK_maxlen;			\
+				    }
+
+				    COERCE_THIS_TO_A
 				}
 				break;
 			    case 's':
 				if(TYPEOF(_this) != STRSXP) {
 				    PROTECT(tmp = lang2(install("as.character"), _this));
-				    _this = eval(tmp, env);
-				    UNPROTECT(1);
-				    PROTECT(a[nthis] = _this);
-				    nprotect++;
+
+				    COERCE_THIS_TO_A
 				}
 				break;
 			    default:
@@ -392,6 +402,10 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}  /* end for ( each chunk ) */
 
+	if(ns == 0) { /* may have adjusted maxlen now ... */
+	    PROTECT(ans = allocVector(STRSXP, maxlen));
+	    nprotect++;
+	}
 	SET_STRING_ELT(ans, ns, mkCharCE(outputString,
 					 use_UTF8 ? CE_UTF8 : CE_NATIVE));
     } /* end for(ns ...) */
