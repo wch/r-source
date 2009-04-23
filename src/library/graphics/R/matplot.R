@@ -17,16 +17,17 @@
 ## Author: Martin Maechler, Date: 27 Jun 97
 
 matpoints <-
-    function(x, y,  type = "p", lty=1L:5, lwd = 1, pch=NULL, col=1L:6, ...)
+    function(x, y,  type = "p", lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
     matplot(x=x, y=y, type = type, lty=lty, lwd=lwd, pch=pch, col=col,
 	    add=TRUE, ...)
 matlines  <-
-    function(x, y, type = "l", lty=1L:5, lwd = 1, pch=NULL, col=1L:6, ...)
+    function(x, y, type = "l", lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
     matplot(x=x, y=y, type = type, lty=lty, lwd=lwd, pch=pch, col=col,
 	    add=TRUE, ...)
 
 matplot <- function(x, y, type = "p",
-		    lty = 1L:5, lwd = 1, pch=NULL, col=1L:6, cex=NULL, bg=NA,
+		    lty = 1:5, lwd = 1, lend = par("lend"),
+                    pch=NULL, col=1:6, cex=NULL, bg=NA,
 		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL,
 		    ..., add= FALSE, verbose = getOption("verbose"))
 {
@@ -80,6 +81,7 @@ matplot <- function(x, y, type = "p",
     ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
     if(length(type)< k) type<- rep(type,length.out = k)
     if(length(lty) < k) lty <- rep(lty, length.out = k)
+    if(length(lend)< k) lend <- rep(lend, length.out = k)
     if(length(lwd) < k) lwd <- rep(lwd, length.out = k)
     if(length(pch) < k) pch <- rep(pch, length.out = k)
     if(length(col) < k) col <- rep(col, length.out = k)
@@ -89,11 +91,11 @@ matplot <- function(x, y, type = "p",
     if(!add) {
 	ii <- ii[-1L]
 	plot(x[,1],y[,1], type=type[1L], xlab=xlab, ylab=ylab,
-	     xlim = xlim, ylim = ylim, lty=lty[1L], lwd=lwd[1L],
+	     xlim = xlim, ylim = ylim, lty=lty[1L], lwd=lwd[1L], lend=lend[1L],
 	     pch=pch[1L], col=col[1L], cex=cex[1L], bg=bg[1L], ...)
     }
     for (i in ii) {
 	lines(x[,i], y[,i], type=type[i], lty=lty[i],
-	      lwd=lwd[i], pch=pch[i], col=col[i], cex=cex[i], bg=bg[i])
+	      lwd=lwd[i], lend=lend[i], pch=pch[i], col=col[i], cex=cex[i], bg=bg[i])
     }
 }
