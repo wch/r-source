@@ -36,6 +36,9 @@ BUG FIXES
 
     o	smoothScatter() now also works when e.g. xlim[2] < xlim[1].
 
+    o	parse_Rd() would mishandle closing braces when they occurred at
+	the start of a line within an R string in an Rd file. (Reported
+	by Alex Couture-Beil.)
 
 
 		CHANGES IN R VERSION 2.9.0
