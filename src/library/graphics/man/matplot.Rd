@@ -9,7 +9,8 @@
 \alias{matlines}
 \title{Plot Columns of Matrices}
 \usage{
-matplot(x, y, type = "p", lty = 1:5, lwd = 1, pch = NULL,
+matplot(x, y, type = "p", lty = 1:5, lwd = 1, lend = par("lend"),
+        pch = NULL,
         col = 1:6, cex = NULL, bg = NA,
         xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
         \dots, add = FALSE, verbose = getOption("verbose"))
@@ -32,7 +33,7 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
     defines the first plot, the second character the second, etc.
     Characters in \code{type} are cycled through; e.g., \code{"pl"}
     alternately plots points and lines.}
-  \item{lty,lwd}{vector of line types and widths.
+  \item{lty,lwd,lend}{vector of line types, widths, and end styles.
     The first element is for the first column, the second element for
     the second column, etc., even if lines are not plotted for all
     columns. Line types will be used cyclically until all plots are
@@ -114,6 +115,10 @@ matplot(x, outer(x, 1:8, function(x, k) sin(k*pi * x)),
 ## pch & type =  vector of 1-chars :
 matplot(x, outer(x, 1:4, function(x, k) sin(k*pi * x)),
         pch = letters[1:4], type = c("b","p","o"))
+
+lends <- c("round","butt","square")
+matplot(matrix(1:12, 4), type="c", lty=1, lwd=10, lend=lends)
+text(cbind(2.5, 2*c(1,3,5)-.4), lends, col= 1:3, cex = 1.5)
 
 table(iris$Species) # is data.frame with 'Species' factor
 iS <- iris$Species == "setosa"

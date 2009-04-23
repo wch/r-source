@@ -55,6 +55,9 @@ NEW FEATURES
     o	new anyDuplicated(x) returns 0 (= FALSE) or the index of the
 	first duplicated entry of x.
 
+    o	matplot(), matlines() and matpoints() now also obey a 'lend'
+	argument, determining line end styles. (Wish of PR#13619).
+
 
 BUG FIXES
 
