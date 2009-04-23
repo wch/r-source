@@ -84,7 +84,10 @@ BUG FIXES
     o	Invalid use of sprintf() such as sprintf("%S%") now give an error
 	instead of a segmentation fault, as do very unusual cases such as
 	sprintf("%s", tryCatch(stop(), error=identity)).
-
+	
+    o	parse_Rd() would mishandle closing braces when they occurred at
+	the start of a line within an R string in an Rd file. (Reported
+	by Alex Couture-Beil.)
 
 
 
