@@ -35,6 +35,10 @@ NEW FEATURES
 	auto-print identically.  The new method is based on code
 	suggestions by Romain Francois.
 
+    o   the print() and toLatex() methods for class "sessionInfo" now
+        show the locale in a nicer format and have arguments to
+        supress locale information.
+
 
 BUG FIXES
 

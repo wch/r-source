@@ -13,20 +13,21 @@
 }
 \usage{
 sessionInfo(package=NULL)
-\S3method{print}{sessionInfo}(x, ...)
-\S3method{toLatex}{sessionInfo}(object, ...)
+\S3method{print}{sessionInfo}(x, locale=TRUE, ...)
+\S3method{toLatex}{sessionInfo}(object, locale=TRUE, ...)
 }
 \arguments{
  \item{package}{a character vector naming installed packages.  By
    default all attached packages are used.}
   \item{x}{an object of class \code{"sessionInfo"}.}
   \item{object}{an object of class \code{"sessionInfo"}.}
+  \item{locale}{show locale information?}
   \item{\dots}{currently not used.}
 }
 \seealso{\code{\link{R.version}}
 }
 \examples{
 sessionInfo()
-toLatex(sessionInfo())
+toLatex(sessionInfo(), locale=FALSE)
 }
 \keyword{misc}
