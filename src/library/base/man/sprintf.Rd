@@ -42,7 +42,7 @@ gettextf(fmt, \dots, domain = NULL)
   specifications which operate on the arguments provided through
   \code{\dots}.  The allowed conversion specifications start with a
   \code{\%} and end with one of the letters in the set
-  \code{difeEgGsxX\%}.  These letters denote the following types:
+  \code{difeEgGsxXaA\%}.  These letters denote the following types:
 
   \describe{
     \item{\code{d, i, x, X}}{Integer value, \code{x} and \code{X}
@@ -52,13 +52,15 @@ gettextf(fmt, \dots, domain = NULL)
       logical variables, which will be converted to \code{0}, \code{1}
       or \code{NA}.
     }
-    \item{\code{f}}{Double precision value, in decimal notation of the
-      form "[-]mmm.ddd".  The number of decimal places is specified by
-      the precision: the default is 6; a precision of 0 suppresses the
-      decimal point.  Non-finite values are converted to \code{NA},
-      \code{NaN} or (perhaps a sign followed by) \code{Inf}.
+    \item{\code{f}}{Double precision value, in \dQuote{\bold{f}ixed
+	point} decimal notation of the form "[-]mmm.ddd".  The number of
+      decimal places is specified by the precision: the default is 6; a
+      precision of 0 suppresses the decimal point.  Non-finite values
+      are converted to \code{NA}, \code{NaN} or (perhaps a sign followed
+      by) \code{Inf}.
     }
-    \item{\code{e, E}}{Double precision value, in decimal notation of the
+    \item{\code{e, E}}{Double precision value, in
+      \dQuote{\bold{e}xponential} decimal notation of the
       form \code{[-]m.ddde[+-]xx} or \code{[-]m.dddE[+-]xx}.
     }
     \item{\code{g, G}}{Double precision value, in \code{\%e} or
@@ -79,12 +81,12 @@ gettextf(fmt, \dots, domain = NULL)
       The format is not uniquely defined: although it would be possible
       to make the leading \code{h} always zero or one, this is not
       always done.  Most systems will suppress trailing zeros, but a few
-      do not. On a well-written platform, for normal numbers there will
+      do not.  On a well-written platform, for normal numbers there will
       be a leading one before the decimal point plus (by default) 13
       hexadecimal digits, hence 53 bits.  (The treatment of denormalized
       numbers is very platform-dependent.)
     }
-    \item{\code{s}}{Character string.   Character \code{NA}s are
+    \item{\code{s}}{Character string.  Character \code{NA}s are
       converted to \code{"NA"}.
     }
     \item{\code{\%}}{Literal \code{\%} (none of the extra formatting
@@ -186,7 +188,7 @@ gettextf(fmt, \dots, domain = NULL)
 
 sprintf("\%s is \%f feet tall\n", "Sven", 7.1)      # OK
 try(sprintf("\%s is \%i feet tall\n", "Sven", 7.1)) # not OK
-try(sprintf("\%s is \%i feet tall\n", "Sven", 7))   # OK
+    sprintf("\%s is \%i feet tall\n", "Sven", 7  )  # OK
 
 ## use a literal \% :
 

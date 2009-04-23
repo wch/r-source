@@ -5638,3 +5638,9 @@ local({ oo <- options(warn=2); on.exit(options(oo))
 	assertError(factor(levs, levels=levs))
 	assertError(factor(1:2,	 labels=levs))
     })
+## failed in R < 2.10.0
+
+## "misuses" of sprintf()
+assertError(sprintf("%S%"))
+assertError(sprintf("%n %g", 1))
+## seg.faulted in R <= 2.9.0

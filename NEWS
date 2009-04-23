@@ -74,6 +74,9 @@ BUG FIXES
 
     o	smoothScatter() now also works when e.g. xlim[2] < xlim[1].
 
+    o	invalid use of sprintf() such as sprintf("%S%") now give an error
+	instead of a segmentation fault.
+
 
 
 		CHANGES IN R VERSION 2.9.0
