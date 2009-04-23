@@ -21,6 +21,11 @@ is.integer(x)
   \item{x}{object to be coerced or tested.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
+\note{
+  \code{as.integer(x)} does \bold{not} test if \code{x} contains integer
+  numbers!  For that, do use \code{\link{round}}, e.g., as in a
+  variation of \code{is.wholenumber(x)}, see the examples.
+}
 \details{
   Integer vectors exist so that data can be passed to C or Fortran code
   which expects them, and so that small integer data can be represented
@@ -65,8 +70,15 @@ is.integer(x)
   page) to convert to integral values.
 }
 \examples{
-  ## as.integer() truncates:
-  x <- pi * c(-1:1,10)
-  as.integer(x)
+## as.integer() truncates:
+x <- pi * c(-1:1,10)
+as.integer(x)
+
+is.integer(1) # is FALSE !
+
+is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol
+is.wholenumber(1) # is TRUE
+(x <- seq(1,5, by=0.5) )
+is.wholenumber( x ) #-->  TRUE FALSE TRUE ...
 }
 \keyword{classes}
