@@ -526,7 +526,7 @@ function(con)
         if(!capabilities("iconv")) return(character())
         lines[ind] <- iconv(lines[ind], "", "", sub = "byte")
     }
-    
+
     ## How can we find out for sure that there were errors?  Try
     ## guessing ... and peeking at tex-buf.el from AUCTeX.
     really_has_errors <-
@@ -806,8 +806,8 @@ local({
 
 .get_standard_repository_db_fields <-
 function()
-    c("Package", "Version", "Priority", "Bundle",
-      "Contains", "Depends", "Imports", "Suggests", "OS_type")
+    c("Package", "Version", "Priority", "Bundle", "Contains",
+      "Depends", "Imports", "Suggests", "Enhances", "OS_type")
 
 ### ** .is_ASCII
 
