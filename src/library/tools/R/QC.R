@@ -3051,7 +3051,7 @@ function(dfile)
     ## For all fields used by the R package management system, values
     ## must be ASCII as well (so that the RPM works in a C locale).
     ASCII_fields <- c(.get_standard_repository_db_fields(),
-                      "Encoding", "Enhances", "License")
+                      "Encoding", "License")
     ASCII_fields <- intersect(ASCII_fields, names(db))
     if(any(ind <- !.is_ASCII(db[ASCII_fields])))
         out$fields_with_non_ASCII_values <- ASCII_fields[ind]
