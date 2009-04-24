@@ -88,6 +88,8 @@ BUG FIXES
     o	parse_Rd() would mishandle closing braces when they occurred at
 	the start of a line within an R string in an Rd file. (Reported
 	by Alex Couture-Beil.)
+	
+    o	readNEWS() missed version numbers with more than one digit.
 
 
 
