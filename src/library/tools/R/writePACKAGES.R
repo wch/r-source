@@ -114,7 +114,18 @@ function(dir, fields = NULL,
                 temp <- try(read.dcf(con, fields = fields)[1L, ], silent = TRUE)
                 if(inherits(temp, "try-error")) {
                     close(con)
-                    next
+                    ## otherwise look for the DESCRIPTION file of first package.
+                    inzip <- as.character(unzip(files[i], list = TRUE)$Name)
+                    d <- grepl("DESCRIPTION$", inzip)
+                    if(any(d)) {
+                        con <- unz(files[i], (inzip[d])[1])
+                        temp <- try(read.dcf(con, fields = fields)[1L, ],
+                                    silent = TRUE)
+                    }
+                    if(inherits(temp, "try-error")) {
+                        close(con)
+                        next
+                    }
                 }
             }
             db[[i]] <- temp
