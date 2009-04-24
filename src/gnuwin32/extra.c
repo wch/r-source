@@ -689,7 +689,7 @@ struct mallinfo mallinfo(void);
 SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
-    int maxmem;
+    int maxmem = NA_LOGICAL;
 
     checkArity(op, args);
     if(isLogical(CAR(args))) 
@@ -707,7 +707,6 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    warningcall(call, _("cannot decrease memory limit: ignored"));
 	else
 	    R_max_memory = newmax;
-	maxmem = NA_LOGICAL;
 #endif
     } else
 	errorcall(call, _("incorrect argument"));
