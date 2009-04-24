@@ -156,7 +156,7 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
     s.pre <- "^\t*\\*[\t ]+ " ##  REGEXP prefix used to identify series begin
     s.post <- " SERIES NEWS"
 
-    iS <- grep(p0(s.pre, "[1-9]\\.[0-9]", s.post), ll)
+    iS <- grep(p0(s.pre, "[1-9]+\\.[0-9]+", s.post), ll)
     series <- as.list(iS)
     names(series) <- sub(p0(s.post,"[\t ]*\\*$"), "",
 			 sub(s.pre, "", ll[iS]))
