@@ -43,10 +43,8 @@ function(dir = ".", fields = NULL,
             fields <- names(desc[[1L]])
             desc <- matrix(unlist(desc), ncol = length(fields), byrow = TRUE)
             colnames(desc) <- fields
-            ## bundles do not have a Package entry in the DESCRIPTION,
-            ## hence replace non-existing Package entries by Bundle entries
-            noPack <- is.na(desc[,"Package"])
-            desc[noPack, "Package"] <- desc[noPack, "Bundle"]
+            bundle <- !is.na(desc[,"Bundle"])
+            desc[bundle, "Package"] <- desc[bundle, "Bundle"]
 
             ## Writing PACKAGES file from matrix desc linewise in order to
             ## omit NA entries appropriately:
@@ -105,19 +103,29 @@ function(dir, fields = NULL,
         files <- file.path(dir, files)
         for(i in seq_along(files)) {
             if(verbose) message(paste(" ", files[i]))
-            ## for bundles:
-            con <- unz(files[i], "DESCRIPTION")
-            temp <- try(read.dcf(con, fields = fields)[1L, ],
-                        silent = TRUE)
+            ## package zips have <name>/DESCRIPTION, rarer bundle zips do not.
+            ## So try package case first.
+            con <- unz(files[i], file.path(packages[i], "DESCRIPTION"))
+            temp <- try(read.dcf(con, fields = fields)[1L, ], silent = TRUE)
             if(inherits(temp, "try-error")) {
                 close(con)
-                ## for regular packages:
-                con <- unz(files[i], file.path(packages[i], "DESCRIPTION"))
-                temp <- try(read.dcf(con, fields = fields)[1L, ],
-                            silent = TRUE)
+                ## prior to 2.9.0 bundle zips had a top-level DESCRIPTION file
+                con <- unz(files[i], "DESCRIPTION")
+                temp <- try(read.dcf(con, fields = fields)[1L, ], silent = TRUE)
                 if(inherits(temp, "try-error")) {
                     close(con)
-                    next
+                    ## otherwise look for the DESCRIPTION file of first package.
+                    inzip <- as.character(unzip(files[i], list = TRUE)$Name)
+                    d <- grepl("DESCRIPTION$", inzip)
+                    if(any(d)) {
+                        con <- unz(files[i], (inzip[d])[1])
+                        temp <- try(read.dcf(con, fields = fields)[1L, ],
+                                    silent = TRUE)
+                    }
+                    if(inherits(temp, "try-error")) {
+                        close(con)
+                        next
+                    }
                 }
             }
             db[[i]] <- temp
