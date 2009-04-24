@@ -38,12 +38,21 @@ PACKAGE INSTALLATION
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.9.0 patched
+
+
+BUG FIXES
+
+    o	memory.limit(size) gave a spurious error message.
+    
+    
+
     		CHANGES IN R VERSION 2.9.0
 
 
 NEW FEATURES
 
-    o	memory.size() and memory.limits() now return rounded values.
+    o	memory.size() and memory.limit() now return rounded values.
     
     o	The Rgui preferences dialog now allows more flexible colour
     	settings, and shows a sample of what will be displayed.

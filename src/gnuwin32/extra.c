@@ -3,7 +3,7 @@
  *  file extra.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2008  The R Development Core Team
+ *  Copyright (C) 2005--2009  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -692,23 +692,9 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
     int maxmem;
 
     checkArity(op, args);
-    if(isLogical(CAR(args))) {
+    if(isLogical(CAR(args))) 
 	maxmem = asLogical(CAR(args));
-	PROTECT(ans = allocVector(REALSXP, 1));
-#ifdef LEA_MALLOC
-	if(maxmem == NA_LOGICAL)
-	    REAL(ans)[0] = R_max_memory;
-	else if(maxmem)
-	    REAL(ans)[0] = mallinfo().usmblks;
-	else
-	    REAL(ans)[0] = mallinfo().uordblks;
-	REAL(ans)[0] /= 1048576.0;
-#else
-	REAL(ans)[0] = NA_REAL;
-#endif
-	UNPROTECT(1);
-	return ans;
-    } else if(isReal(CAR(args))) {
+    else if(isReal(CAR(args))) {
 	unsigned int newmax;
 	double mem = asReal(CAR(args));
 	if (!R_FINITE(mem))
@@ -721,10 +707,25 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    warningcall(call, _("cannot decrease memory limit: ignored"));
 	else
 	    R_max_memory = newmax;
+	maxmem = NA_LOGICAL;
 #endif
     } else
 	errorcall(call, _("incorrect argument"));
-    return R_NilValue;
+	
+    PROTECT(ans = allocVector(REALSXP, 1));
+#ifdef LEA_MALLOC
+    if(maxmem == NA_LOGICAL)
+	REAL(ans)[0] = R_max_memory;
+    else if(maxmem)
+	REAL(ans)[0] = mallinfo().usmblks;
+    else
+	REAL(ans)[0] = mallinfo().uordblks;
+    REAL(ans)[0] /= 1048576.0;
+#else
+    REAL(ans)[0] = NA_REAL;
+#endif
+    UNPROTECT(1);
+    return ans;
 }
 
 SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)

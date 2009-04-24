@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/memory.size.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{memory.size}
@@ -20,9 +20,10 @@ memory.size(max = FALSE)
 memory.limit(size = NA)
 }
 \arguments{
-  \item{max}{logical.  If true the maximum amount of memory obtained from
-    the OS is reported, otherwise the amount currently in use.}
-  \item{size}{numeric.  If \code{NA} report the memory size, otherwise
+  \item{max}{logical.  If \code{TRUE} the maximum amount of memory obtained from
+    the OS is reported, if \code{FALSE} the amount currently in use, if \code{NA}
+    the memory limit.}
+  \item{size}{numeric.  If \code{NA} report the memory limit, otherwise
     request a new limit, in Mb.  Values of up to 4095 are allowed, but
     see Details.}
 }
