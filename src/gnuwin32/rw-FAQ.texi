@@ -137,13 +137,13 @@ release.
 @node How do I install R for Windows?, How do I check an installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-Versions of R as from 2.7.0 will only run on Windows 2000 or later.  (R
+Current binary versions of R will only run on Windows 2000 or later.  (R
 2.6.2 was the last version for Windows 95. 98, ME and NT4.)  There is no
 specific binary@footnote{See @ref{How can I compile R from source?} for
 the possibility of building one from the sources.} version for x64
 Windows, but the standard 32-bit version works well enough.  We only
 test on versions of Windows currently supported by Microsoft, mainly on
-XP SP3, Vista x64 and Windows Server 2003.
+32-bit XP SP3, and 64-bit Vista and Windows Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
@@ -1449,16 +1449,13 @@ To build R on 32-bit Windows you will need the tools from
 @uref{http://www.murdoch-sutherland.com/Rtools/} as well as some
 others.  See the `R Installation and Administration' manual.
 
-It has been possible to cross-build R for Windows x64 using
-@code{binutils} and @code{gcc} with the @samp{x86_64-pc-mingw32} target,
-using suitable settings in @file{src/gnuwin32/MkRules} (see the comments
-there).  However, that toolchain is experimental and the support for
-Unicode file functions needed for R 2.7.0 and later was incomplete.
- 
-You are of course welcome to try a commercial compiler@footnote{such as
-those from Intel and PGI: there is no Fortran compiler in the Microsoft
-set, but @code{f2c} could be used.}, but we will not be distributing a
-binary port to which users cannot easily add packages.
+To build a 64-bit version on 64-bit Windows you will need a suitable
+compiler, and experiments with the Mingw64 port of @code{binutils} and
+@code{gcc} have failed to produce a working version on R.  You are of
+course welcome to try a commercial compiler@footnote{such as those from
+Intel and PGI: there is no Fortran compiler in the Microsoft set, but
+@code{f2c} could be used.}, and pre-compiled versions using such
+compilers are available from R redistributors.
 
 @node Can I use a fast BLAS?, How do I include compiled C code?, How can I compile R from source?, Building from Source
 @section  Can I use a fast BLAS?

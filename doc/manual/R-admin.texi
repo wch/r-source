@@ -1176,9 +1176,16 @@ make myR IMAGEDIR=rootdir
 
 @noindent
 where @file{rootdir} is the path to the root of the customized
-installation (forward slashes and no spaces, please).  This creates an
-executable with the standard name, @file{@value{RWVERSION}-win32.exe}, so
-please rename it to indicate that it is customized.
+installation (forward slashes and no spaces, please).  
+
+Both methods create an executable with the standard name,
+@file{@value{RWVERSION}-win32.exe}, so please rename it to indicate that
+it is customized.  If you intend to @emph{distribute} a customized
+installer please do check that license requirements are met -- e.g.@:
+that all the packages have licenses compatible with the GPL-2 license
+that will apply to the distribution and that you make the sources you
+used available (the R sources even if you started with a binary
+distribution of R).
 
 The defaults for the startup parameters may also be customized.  For example
 
