@@ -315,9 +315,12 @@
             owd <- setwd(lib)
             system(paste(ZIP, "-r9Xq", filepath,
                          paste(bundle_pkgs, collapse = " ")))
+            ## need to add top-level DESCRIPTION file
+            setwd(pkg)
+            system(paste(ZIP, "-9Xq", filepath, "DESCRIPTION"))
+            setwd(owd)
             message("packaged installation of ",
                     sQuote(bundle_name), " as ", filename)
-            setwd(owd)
         }
 
         starsmsg(stars, "DONE (", bundle_name, ")")
