@@ -95,6 +95,8 @@ BUG FIXES
 
     o	readNEWS() missed version numbers with more than one digit.
 
+    o	building R --without-x no longer fails (PR#13665)
+
 
 
 		CHANGES IN R VERSION 2.9.0
