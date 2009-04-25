@@ -5650,3 +5650,9 @@ e <- tryCatch(stop(), error=identity)
 stopifnot(identical(sprintf("%s", e),
 		    sprintf("%s", as.character(e))))
 ## seg.faulted in R <= 2.9.0
+e <- tryCatch(sprintf("%q %d",1), error=function(e)e)
+stopifnot(inherits(e, "error"),
+	  grep("invalid", msg <- conditionMessage(e)) == 1,
+	  grep("%q", msg) == 1)
+## less helpful previously
+

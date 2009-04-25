@@ -138,8 +138,9 @@ gettextf(fmt, \dots, domain = NULL)
   precision were omitted.  The argument should be integer, but a double
   argument will be coerced to integer.
 
-  There is a limit of 8192 bytes on elements of \code{fmt} and also on
-  strings included by a \code{\%s} conversion specification.
+  There is a limit of 8192 bytes on elements of \code{fmt}, on
+  strings included from a single \code{\%}\emph{letter} conversion
+  specification.
 
   Field widths and precisions of \code{\%s} conversions are interpreted
   as bytes, not characters, as described in the C standard.
