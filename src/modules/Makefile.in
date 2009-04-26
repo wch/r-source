@@ -28,13 +28,13 @@ R: Makefile make.internet make.lapack make.vfonts
 	  (cd X11 && $(MAKE) $@) || exit 1; \
 	fi
 
-make.internet:
+make.internet: Makefile
 	@(cd internet && $(MAKE))
 
-make.lapack:
+make.lapack: Makefile
 	@(cd lapack && $(MAKE))
 
-make.vfonts:
+make.vfonts: Makefile
 	@(cd vfonts && $(MAKE))
 
 install install-strip:
