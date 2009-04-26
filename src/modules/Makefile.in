@@ -24,9 +24,9 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 R: Makefile make.internet make.lapack make.vfonts
-	@if test -n "$(R_MODULES)"; then for d in $(R_MODULES); do \
-	  (cd $${d} && $(MAKE) $@) || exit 1; \
-	done; fi
+	@if test -n "$(R_MODULES)"; then \
+	  (cd X11 && $(MAKE) $@) || exit 1; \
+	fi
 
 make.internet:
 	@(cd internet && $(MAKE))
