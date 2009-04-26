@@ -1953,8 +1953,6 @@ AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 
 ### * Checks for system services.
 
-AC_SUBST(R_MODULES)
-
 ## iconv headers and function.
 if test "${use_iconv}" = yes; then
   R_ICONV
@@ -1995,11 +1993,7 @@ AC_SUBST(USE_ICU_APPLE)
 
 ## X11.
 R_X11
-if test "${use_X11}" = yes; then
-  R_MODULES=X11
-else
-  R_MODULES=
-fi
+AM_CONDITIONAL(BUILD_X11, [test "x${use_X11}" = "xyes"])
 ## check if X11 typedefs KeySym
 R_TYPE_KEYSYM
 ## check if Xmu is supported

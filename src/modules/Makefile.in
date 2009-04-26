@@ -15,18 +15,17 @@ DISTFILES = Makefile.in Makefile.win
 
 SUBDIRS = X11 internet lapack vfonts
 
-## R_MODULES is X11 (or not)
-MODULES = $(R_MODULES) internet lapack vfonts
+MODULES = internet lapack vfonts @BUILD_X11_TRUE@X11
 
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-R: Makefile make.internet make.lapack make.vfonts
-	@if test -n "$(R_MODULES)"; then for d in $(R_MODULES); do \
-	  (cd $${d} && $(MAKE) $@) || exit 1; \
-	done; fi
+R: Makefile make.internet make.lapack make.vfonts @BUILD_X11_TRUE@make.X11
+
+make.X11:
+	@(cd X11 && $(MAKE))
 
 make.internet:
 	@(cd internet && $(MAKE))
