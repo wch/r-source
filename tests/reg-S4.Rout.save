@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-04-17 r48336)
+R version 2.10.0 Under development (unstable) (2009-04-25 r48402)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -744,8 +744,18 @@ Creating a generic for "rbind" in package  ".GlobalEnv"
 + 	  function(x, ..., na.rm=FALSE) {x <- unlist(x); callNextMethod()})
 [1] "Summary"
 > setMethod("[", signature(x="L", i="ANY", j="missing",drop="missing"),
-+           function(x,i,j,drop) new("L", x@.Data[i]))
++           function(x,i,j,drop) new(class(x), x@.Data[i]))
 [1] "["
+> ## This example requires a method for sort(), now that class "L"
+> ## inherits S3 methods for "list"; i.e., sort.list
+> setMethod("sort", signature = "L", function(x, decreasing = FALSE, ...)
++           sort.L(x, decreasing, ...))
+Creating a new generic function for "sort" in ".GlobalEnv"
+[1] "sort"
+> ##FIXME:  it should not be necessary to define an a S3 method, but
+> ## defining S4 methods for sort() has no effect currently on calls to
+> ## sort() from functions in base; e.g., median.default.
+> sort.L <- function(x, ...) { x@.Data <- as.list(sort(unlist(x@.Data), ...)); x}
 > x <- new("L", 1:3); x2 <- x[-2]
 > stopifnot(unlist(x2) == (1:3)[-2],
 + 	  is(mx <- median(x), "L"), mx == 2,
