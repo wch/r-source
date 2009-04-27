@@ -43,8 +43,11 @@ NEW FEATURES
 BUG FIXES
 
     o	sprintf() now signals an error when the result of single format
-    	specification would be longer than the limit (8192 bytes); it would
-    	return "somewhat random" results or segfault previously.
+	specification would be longer than the limit (8192 bytes); it would
+	return "somewhat random" results or segfault previously.  Further,
+	arguments of type "language" or "symbol" are no longer allowed, as
+	these, e.g., sprintf("%s", quote(list())), typically lead to
+	unexpected results or hard to understand error messages.
 
 
 
