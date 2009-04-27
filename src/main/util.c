@@ -1628,7 +1628,7 @@ static const struct {
 };
     
 
-SEXP do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x;
     UErrorCode  status = U_ZERO_ERROR;
@@ -1703,7 +1703,7 @@ int Scollate(SEXP a, SEXP b)
 
 #else /* not USE_ICU */
 
-SEXP do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     warning(_("ICU is not supported on this build"));
     return R_NilValue;

@@ -193,7 +193,7 @@ static void inspect(int pre, SEXP v, int deep) {
 /* internal API - takes one mandatory argument (object to inspect) and
    one optional argument (deep - see above), positional argument
    matching only */
-SEXP do_inspect(SEXP call, SEXP op, SEXP args, SEXP env) {
+SEXP attribute_hidden do_inspect(SEXP call, SEXP op, SEXP args, SEXP env) {
     SEXP obj = CAR(args);
     int deep = -1;
     if (CDR(args) != R_NilValue)
