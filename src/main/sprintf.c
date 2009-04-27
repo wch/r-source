@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-9     the R Development Core Team
+ *  Copyright (C) 2002--2009     the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	*outputString, *formatString;
     size_t n, cur, chunk;
 
-    SEXP format, _this, a[MAXNARGS], tmp, ans /* -Wall */ = R_NilValue;
+    SEXP format, _this, a[MAXNARGS], ans /* -Wall */ = R_NilValue;
     int ns, maxlen, lens[MAXNARGS], nthis, nstar, star_arg = 0;
     static R_StringBuffer outbuff = {NULL, 0, MAXELTSIZE};
     Rboolean has_star, use_UTF8;
@@ -106,7 +106,11 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* record the args for possible coercion and later re-ordering */
     for(i = 0; i < nargs; i++, args = CDR(args)) {
+	SEXPTYPE t_ai;
 	a[i] = CAR(args);
+	if((t_ai = TYPEOF(a[i])) == LANGSXP || t_ai == SYMSXP) /* << maybe add more .. */
+	    error(_("invalid type of argument[%d]: '%s'"),
+		  i+1, CHAR(type2str(t_ai)));
 	lens[i] = length(a[i]);
 	if(lens[i] == 0) return allocVector(STRSXP, 0);
     }
@@ -233,6 +237,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    strcpy(bit, fmt);
 			/* was sprintf(..)  for which some compiler warn */
 		    } else {
+			Rboolean did_this = FALSE;
 			if(nthis < 0) {
 			    if (cnt >= nargs) error(_("too few arguments"));
 			    nthis = cnt++;
@@ -251,10 +256,16 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    fmtp = fmt2;
 			} else fmtp = fmt;
 
+#define CHECK_this_length						\
+			PROTECT(_this);					\
+			thislen = length(_this);			\
+			if(thislen == 0)				\
+			    error(_("coercion has changed vector length to 0"))
+
 			/* Now let us see if some minimal coercion
 			   would be sensible, but only do so once, for ns = 0: */
 			if(ns == 0) {
-			    Rboolean do_check;
+			    SEXP tmp; Rboolean do_check;
 			    switch(*findspec(fmtp)) {
 			    case 'd':
 			    case 'i':
@@ -275,16 +286,20 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    case 'g':
 			    case 'E':
 			    case 'G':
-				if(TYPEOF(_this) != REALSXP) {
+				if(TYPEOF(_this) != REALSXP &&
+				   /* no automatic as.double(<string>) : */
+				   TYPEOF(_this) != STRSXP) {
 				    PROTECT(tmp = lang2(install("as.double"), _this));
 #define COERCE_THIS_TO_A						\
 				    _this = eval(tmp, env);		\
 				    UNPROTECT(1);			\
 				    PROTECT(a[nthis] = _this);		\
 				    nprotect++;				\
+				    did_this = TRUE;			\
+				    CHECK_this_length;			\
 				    do_check = (lens[nthis] == maxlen);	\
-				    lens[nthis] = length(_this); /* may have changed! */ \
-				    if(do_check && lens[nthis] < maxlen) { \
+				    lens[nthis] = thislen; /* may have changed! */ \
+				    if(do_check && thislen < maxlen) {	\
 					CHECK_maxlen;			\
 				    }
 
@@ -301,12 +316,10 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    default:
 				break;
 			    }
-			}
+			} /* ns == 0 (first-time only) */
 
-			PROTECT(_this);
-			thislen = length(_this);
-			if(thislen == 0)
-			    error(_("coercion has changed vector length to 0"));
+			if(!did_this)
+			    CHECK_this_length;
 
 			switch(TYPEOF(_this)) {
 			case LGLSXP:

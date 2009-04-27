@@ -5651,8 +5651,13 @@ stopifnot(identical(sprintf("%s", e),
 		    sprintf("%s", as.character(e))))
 ## seg.faulted in R <= 2.9.0
 e <- tryCatch(sprintf("%q %d",1), error=function(e)e)
-stopifnot(inherits(e, "error"),
-	  grep("invalid", msg <- conditionMessage(e)) == 1,
-	  grep("%q", msg) == 1)
-## less helpful previously
+e2 <- tryCatch(sprintf("%s", quote(list())), error=function(e)e)
+e3 <- tryCatch(sprintf("%s", quote(blabla)), error=function(e)e)
+stopifnot(inherits(e, "error"), inherits(e2, "error"),inherits(e3, "error"),
+	  grep("invalid", c(msg	 <- conditionMessage(e),
+			    msg2 <- conditionMessage(e2),
+			    msg3 <- conditionMessage(e3))) == 1:3,
+	  1 == c(grep("%q", msg), grep("language", msg2), grep("symbol", msg3))
+          )
+## less helpful error messages previously
 
