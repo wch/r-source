@@ -25,8 +25,6 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
 
     ## If the NULL default for lib.loc is used, the loaded packages are
     ## searched before the libraries.
-    tryNamespace <- function(.)
-	tryCatch(loadNamespace(.), error = function(e) NULL)
     pkgpath <-
 	if(is.null(lib.loc)) {
 	    if(pkg == "base")
@@ -36,9 +34,9 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
 		pp <- attr(as.environment(envname), "path")
 		## could be NULL if a perverse user has been naming
 		## environmnents to look like packages.
-	    } else if(!is.null(ns <- tryNamespace(pkg)))
+	    } else if(pkg %in% loadedNamespaces())
 		## correct path for a loaded (not attached) namespace:
-		getNamespaceInfo(ns, "path")
+		getNamespaceInfo(pkg, "path")
 	}
     if(is.null(pkgpath)) pkgpath <- ""
 
