@@ -35,7 +35,8 @@ gettextf(fmt, \dots, domain = NULL)
   number of times to the length of the longest, and then the formatting
   is done in parallel.  As from \R 2.9.0 zero-length arguments are
   allowed and will give a zero-length result.  All arguments are
-  evaluated even if unused.
+  evaluated even if unused, and hence some types (e.g., \code{"symbol"}
+  or \code{"language"}, see \code{\link{typeof}}) are not allowed.
 
   The following is abstracted from Kernighan and Ritchie
   (see References).  The string \code{fmt} contains normal characters,
@@ -55,8 +56,8 @@ gettextf(fmt, \dots, domain = NULL)
     }
     \item{\code{f}}{Double precision value, in \dQuote{\bold{f}ixed
 	point} decimal notation of the form "[-]mmm.ddd".  The number of
-      decimal places is specified by the precision: the default is 6; a
-      precision of 0 suppresses the decimal point.  Non-finite values
+      decimal places ("d") is specified by the precision: the default is 6;
+      a precision of 0 suppresses the decimal point.  Non-finite values
       are converted to \code{NA}, \code{NaN} or (perhaps a sign followed
       by) \code{Inf}.
     }
@@ -67,6 +68,9 @@ gettextf(fmt, \dots, domain = NULL)
     \item{\code{g, G}}{Double precision value, in \code{\%e} or
       \code{\%E} format if the exponent is less than -4 or greater than or
       equal to the precision, and \code{\%f} format otherwise.
+      (The precision (default 6) specifies the number of
+      \emph{significant} digits here, whereas in \code{\%f, \%e}, it is
+      the number of digits after the decimal point.)
     }
     \item{\code{a, A}}{Double precision value, in binary notation of the
       form \code{[-]0xh.hhhp[+-]d}.  This is a binary fraction
