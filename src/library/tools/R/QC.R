@@ -490,69 +490,22 @@ function(package, dir, lib.loc = NULL,
         ## In principle, we can get codoc checking for S4 methods
         ## documented explicitly using the \S4method{GENERIC}{SIGLIST}
         ## markup by adding the corresponding "pseudo functions" using
-        ## the Rd markup as their name.  However: the formals recorded
-        ## in the methods db only pertain to the signature, not to the
-        ## ones of the function actually registered.  It seems that we
-        ## can only get these by working on the internal representation:
-        ## hence, let's make this optional for the time being.
+        ## the Rd markup as their name.  However note that the formals
+        ## recorded in the methods db only pertain to the signature, not
+        ## to the ones of the function actually registered ... hence we
+        ## use methods::unRematchDefinition() which knows how to extract
+        ## the formals in the method definition from the
+        ##   function(ARGLIST) {
+        ##     .local <- function(FORMALS) BODY
+        ##     .local(ARGLIST)
+        ##   }
+        ## redefinitions obtained by methods::rematchDefinition().
         ## </NOTE>
         check_S4_methods <-
             isTRUE(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")))
         if(check_S4_methods) {
-            get_formals_from_method_definition <- function(m) {
-                ## Argh, see methods:::rematchDefinition().
-                ## We get the original definition in case it has the
-                ## "same" formals as the generic.  Otherwise, we get a
-                ## redefition of the form
-                ## function(ARGLIST) {
-                ##   .local <- function(FORMALS) BODY
-                ##   .local(ARGLIST)
-                ## }
-                ## <NOTE>
-                ## Actually, it seems that one gets the formals of the
-                ## generic if this "extends" the formals of the method
-                ## in the sense that the latter have the formals with
-                ## "missing" signature, and possibly a '...' formal,
-                ## removed.  E.g.,
-                ##   setGeneric("foo",
-                ##     function(x, y, ...) standardGeneric("foo"))
-                ##   setMethod("foo",
-                ##     signature((x = "integer", y = "missing"),
-                ##     function(x) x)
-                ## is accepted and comes out with the formals of the
-                ## generic: (x, y, ...).
-                ## There seems to be no way of dealing with possibly
-                ## non-missing '...' formals based on the information in
-                ## the S4 registry.
-                ## One could consider to remove "missing" formals from
-                ## the the formals of the registered method, but note
-                ## that one can do
-                ##   setMethod("foo",
-                ##     signature(x = "integer", y = "missing"),
-                ##     function(x, y) x)
-                ## as well ...
-                ## So, to avoid false positives, one would need to run
-                ## the check_codoc() comparisons ignoring mismatches
-                ## possibly from the above.  Not easily possible in the
-                ## current layout, and it is also not clear whether we
-                ## should do this: formally, what we get is different
-                ## from what the authors thought and documented.
-                ## Also note that setAs() typically seems to give formals
-                ## (from, to, strict = TRUE).
-                ## </NOTE>
-                fun <- methods::slot(m, ".Data")
-                bdy <- body(fun)
-                if((length(bdy) == 3L)
-                   && (bdy[[1L]] == as.name("{"))
-                   && (length(bdy[[2L]]) == 3L)
-                   && (bdy[[2L]][[2L]] == as.name(".local"))
-                   && (class(bdy[[3L]]) == "call")
-                   && (bdy[[3L]][[1L]] == as.name(".local"))) {
-                    ## Could add more tests :-)
-                    formals(bdy[[2L]][[3L]])
-                } else
-                formals(fun)
-            }
+            get_formals_from_method_definition <- function(m)
+                formals(methods::unRematchDefinition(m))
             lapply(get_S4_generics_with_methods(code_env),
                    function(f) {
                        mlist <- .get_S4_methods_list(f, code_env)
