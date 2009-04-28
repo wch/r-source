@@ -1802,6 +1802,14 @@ will run these tests before putting a submission in the main archive.
 Note that @acronym{CRAN} generally does not accept submissions of
 precompiled binaries due to security reasons.
 
+Note also that for running @LaTeX{}, the Debian GNU/Linux @acronym{CRAN}
+check systems use reasonably recent versions of the Debian texlive
+distribution (@uref{http://packages.debian.org/de/sid/texlive}); for
+the Windows @acronym{CRAN} server, a reasonably recent of MikTeX
+(including all packages available for MikTeX) is employed.  Developers
+wanting to have their vignettes use @TeX{} packages or style files not
+(yet) included in these distributions should add the corresponding style
+files to the @file{inst/doc} subdirectory of their package.
 
 @node Package name spaces, Writing portable packages, Submitting a package to CRAN, Creating R packages
 @section Package name spaces
