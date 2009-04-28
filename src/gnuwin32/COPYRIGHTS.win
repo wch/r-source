@@ -112,3 +112,23 @@ src/fixed/h/iconv.h
 
 From GNU libiconv-1.11, distributed under LGPL>=2,
 Copyright (C) 1999-2003, 2005-2006 Free Software Foundation, Inc.
+
+
+Binary components
+-----------------
+
+The Windows binary distribution contains components that have been
+compiled separately.  Most of these are from the Rtools distribution
+at http://www.murdoch-sutherland.com/Rtools/;
+http://www.murdoch-sutherland.com/Rtools/Rtools.txt lists the current
+contents.
+
+The build of Tcl/Tk contained in the binary installer is taken via
+Rtools from http://www.stats.ox.ac.uk/pub/Rtools/, which hosts the
+sources used and links to the scripts used for the build.
+
+Rbitmap.dll is built against static libraries for libpng, jpeg-6b and
+libtiff: the Makefiles and configuration headers used are in the
+src/gnuwin32/bitmap direcctory.  The exact sources used for these
+libraries are available on request to R-windows@r-project.org (you
+will need to specify which binary installer version).
