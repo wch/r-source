@@ -3679,8 +3679,11 @@ function(pkgDir)
     setwd(old)
 
     non_ASCII <- latin1 <- utf8 <- character(0L)
-    for(ds in ls(envir = dataEnv, all.names = TRUE))
-        check_one(get(ds, envir = dataEnv))
+    ## avoid messages about loading packages that started with r48409
+    suppressPackageStartupMessages({
+        for(ds in ls(envir = dataEnv, all.names = TRUE))
+            check_one(get(ds, envir = dataEnv))
+    })
     structure(list(latin1 = unique(latin1), utf8 = unique(utf8),
                    unknown = unique(non_ASCII)),
               class = "check_package_datasets")
