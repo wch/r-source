@@ -1923,7 +1923,7 @@ SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
     char str[MAX_PATH+1];
 
     checkArity(op, args);
-    setuserfilter("All files (*.*)\0*.*\0\0");
+    setuserfilterW(L"All files (*.*)\0*.*\0\0");
     fn = askfilenameW(G_("Select file"), "");
     if (!fn)
 	error(_("file choice cancelled"));

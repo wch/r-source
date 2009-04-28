@@ -2083,7 +2083,7 @@ void consolesavefile(console c, int pager)
     int x0, y0, x1, y1, cl;
     wchar_t *s, buf[1024];
 
-    setuserfilter("Text files (*.txt)\0*.txt\0All files (*.*)\0*.*\0\0");
+    setuserfilterW(L"Text files (*.txt)\0*.txt\0All files (*.*)\0*.*\0\0");
     if(p->sel)
 	fn = askfilesaveW(G_("Save selection to"), "lastsave.txt");
     else

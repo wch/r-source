@@ -45,6 +45,9 @@ BUG FIXES
 
     o	memory.limit(size) gave a spurious error message.
     
+    o	file.choose() and the save console dialog did not set the
+	file filters properly.
+    
     
 
     		CHANGES IN R VERSION 2.9.0
