@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2009
-@set FAQ_DATE @value{FAQ_YEAR}-04-19
+@set FAQ_DATE @value{FAQ_YEAR}-04-28
 @set REL_YEAR 2009
 @set REL_MAJOR 2
 @set REL_MINOR 9
@@ -1816,6 +1816,8 @@ Bayesian Analysis of Computer Code Output.  Contains
 @strong{approximator}, @strong{calibrator}, and @strong{emulator}, for
 Bayesian prediction of complex computer codes, calibration of computer
 models, and emulation of computer programs, respectively.
+@item BAMD
+Bayesian association model for genomic data with missing covariates.
 @item BARD
 Better Automated ReDistricting.
 @item BAS
@@ -1910,6 +1912,8 @@ Canonical correlation analysis.
 Components of Canadian monetary aggregates.
 @item CGIwithR
 Facilities for the use of R to write CGI scripts.
+@item CHNOSZ
+Chemical thermodynamics and activity diagrams.
 @item CHsharp
 Choi and Hall clustering in 3d.
 @item CORREP
@@ -1988,8 +1992,11 @@ various DBMS implementations.
 @item DCluster
 A set of functions for the detection of spatial clusters of diseases
 using count data.
-@item DDHFm
-Variance stabilization by Data-Driven Haar-Fisz (for microarrays).
+@c <COMMENT>
+@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
+@c @item DDHFm
+@c Variance stabilization by Data-Driven Haar-Fisz (for microarrays).
+@c </COMMENT>
 @item DEA
 Data Envelopment Analysis.
 @item DEoptim
@@ -2335,8 +2342,11 @@ Longest increasing subsequence independence test.
 @item LLAhclust
 Hierarchical clustering of variables or objects based on the likelihood
 linkage analysis method.
-@item LLN
-Learning with latent networks.
+@c <COMMENT>
+@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
+@c @item LLN
+@c Learning with latent networks.
+@c </COMMENT>
 @item LMGene
 Date transformation and identification of differentially expressed genes
 in gene expression arrays.
@@ -2446,12 +2456,16 @@ A Matrix package.  @emph{Recommended} for R 2.9.0 or later.
 @acronym{GUI} for metabonomic analysis.
 @item MiscPsycho
 Miscellaneous Psychometrics.
+@item MixSim
+Simulating data to study performance of clustering algorithms.
 @item ModelMap
 Random forest and stochastic gradient boosting models for building
 detailed prediction maps.
 @item MultEq
 Equivalence tests and simultaneous confidence intervals for multiple
 endpoints.
+@item Multiclasstesting
+Performance of @math{N}-ary classification testing.
 @item NADA
 Methods described in ``Nondetects And Data Analysis: Statistics for
 Censored Environmental Data'' by Dennis R. Helsel, 2004, John Wiley and
@@ -2611,6 +2625,8 @@ Fetch data from a Bloomberg API using COM.
 @item RColorBrewer
 ColorBrewer palettes for drawing nice maps shaded according to a
 variable.
+@item RDS
+Respondent-Driven Sampling.
 @item RDieHarder
 R interface to the dieharder random number generator test suite.
 @item REQS
@@ -2793,8 +2809,11 @@ R/GNU Linear Programming Kit interface.
 Classification and analysis of microbial community profiles.
 @item Rigroup
 Provides small integer group functions.
-@item Rlab
-Functions and data sets for the NCSU ST370 class.
+@c <COMMENT>
+@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
+@c @item Rlab
+@c Functions and data sets for the NCSU ST370 class.
+@c </COMMENT>
 @item Rlabkey
 Data retrieval from a Labkey database.
 @item Rlsf
@@ -3085,6 +3104,8 @@ Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
 @item VaR
 Methods for calculation of Value at Risk (VaR).
+@item VarianceGamma
+The variance gamma distribution.
 @item VhayuR
 R interface to the Vhayu Velocity high volume fast financial market data
 archival and analysis products.
@@ -3327,6 +3348,8 @@ Evaluation and experimental design for binomial group testing.
 @item binMto
 Asymptotic simultaneous confidence intervals for many-to-one comparisons
 of proportions.
+@item binarySimCLF
+Simulate correlated binary data.
 @item bindata
 Generation of correlated artificial binary data.
 @item binom
@@ -3870,6 +3893,8 @@ estimating local false discovery rates.  Contains packages
 @item emplik
 Empirical likelihood ratio for means/quantiles/hazards from possibly
 right censored data.
+@item emplik2
+Empirical likelihood test (two-sample, censored data).
 @item emu
 Interface to the Emu speech database system.
 @item energy
@@ -3933,6 +3958,8 @@ Designing and analyzing randomized experiments.
 Modeling of data using expert opinion.
 @item extRemes
 Extreme value toolkit.
+@item ez
+Easy analysis and visualization of factorial experiments.
 @item fArma
 The Rmetrics module for ``ARMA Time Series Modelling''.
 @item fAsianOptions
@@ -4009,8 +4036,11 @@ Fechnerian scaling of discrete object sets.
 @item ff
 Flat file database designed for large vectors and multi-dimensional
 arrays.
-@item ffmanova
-Fifty-fifty MANOVA.
+@c <COMMENT>
+@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
+@c @item ffmanova
+@c Fifty-fifty MANOVA.
+@c </COMMENT>
 @item fgac
 Families of Generalized Archimedean Copulas.
 @item fgui
@@ -4480,9 +4510,12 @@ Network analysis and plotting.
 Tools for recognizing influential data in mixed models.
 @item inline
 Inline C/C++ function calls from R.
-@item intcox
-Implementation of the Iterated Convex Minorant Algorithm for the Cox
-proportional hazard model for interval censored event data.
+@c <COMMENT>
+@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
+@c @item intcox
+@c Implementation of the Iterated Convex Minorant Algorithm for the Cox
+@c proportional hazard model for interval censored event data.
+@c </COMMENT>
 @c  @item integrate
 @c  Adaptive quadrature in up to 20 dimensions.
 @item intervals
@@ -4834,6 +4867,8 @@ additive regression splines (MARS), adaptive back-fitting splines
 @c </COMMENT>
 @item meboot
 Maximum entropy bootstrap for time series.
+@item medAdherence
+Medication Adherence: commonly used definitions.
 @item mefa
 Faunistic count data handling and reporting.
 @item meifly
@@ -4899,8 +4934,11 @@ Estimation of mixture Rasch models.
 Finite mixture distribution models.
 @item mixer
 Random graph clustering via estimation of Erd@H{o}s-R@'enyi mixtures.
-@item mixlow
-Assessing drug synergism/antagonism.
+@c <COMMENT>
+@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
+@c @item mixlow
+@c Assessing drug synergism/antagonism.
+@c </COMMENT>
 @c <COMMENT>
 @c Moved to the Archive on 2008-10-15 as suggested by the maintainer:
 @c replaced by package 'mixer'.
@@ -4920,8 +4958,11 @@ A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
 @item mlegp
 Maximum Likelihood Estimates of Gaussian Processes.
-@item mlica
-Independent Component Analysis using Maximum Likelihood.
+@c <COMMENT>
+@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
+@c @item mlica
+@c Independent Component Analysis using Maximum Likelihood.
+@c </COMMENT>
 @item mlmRev
 Examples from Multilevel Modelling Software Review.
 @c <COMMENT>
@@ -4968,8 +5009,11 @@ nonparametric models.
 Strictly monotone smoothing procedure.
 @item moonsun
 Basic astronomical calculations.
-@item mota
-Mean Optimal Transformation Approach.
+@c <COMMENT>
+@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
+@c @item mota
+@c Mean Optimal Transformation Approach.
+@c </COMMENT>
 @item mpm
 Spectral map analysis.
 @item mprobit
@@ -5353,6 +5397,8 @@ Functions for import, export, plotting and other manipulations of
 bitmapped images.
 @item plRasch
 Log linear by linear asscociation models.
+@item plan
+Tools for project planning.
 @item playwith
 A @acronym{GUI} for interactive plots using GTK+.
 @item plink
@@ -5626,8 +5672,11 @@ Completion generator for R.  @emph{Recommended} for R 2.5.0 or 2.6.0.
 @c </COMMENT>
 @item rconifers
 Interface to the CONIFERS forest growth model.
-@item rda
-Shrunken Centroids Regularized Discriminant Analysis.
+@c <COMMENT>
+@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
+@c @item rda
+@c Shrunken Centroids Regularized Discriminant Analysis.
+@c </COMMENT>
 @item rdetools
 Relevant Dimension Estimation (RDE) in feature spaces.
 @item realized
@@ -5870,8 +5919,11 @@ scientific use files.
 Statistical Disclosure Control for tabular data.
 @item sde
 Simulation and inference for Stochastic Differential Equations.
-@item sdtalt
-Signal Detection Theory measures and ALTernatives.
+@c <COMMENT>
+@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
+@c @item sdtalt
+@c Signal Detection Theory measures and ALTernatives.
+@c </COMMENT>
 @item sdtoolkit
 Scenario discovery tools to support robust decision making.
 @item seacarb
@@ -6168,9 +6220,12 @@ Methodology for supervised grouping of predictor variables.
 Supervised principal components.
 @item surv2sample
 Two-sample tests for survival analysis.
-@item survBayes
-Fits a proportional hazards model to time to event data by a Bayesian
-approach.
+@c <COMMENT>
+@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
+@c @item survBayes
+@c Fits a proportional hazards model to time to event data by a Bayesian
+@c approach.
+@c </COMMENT>
 @item survcomp
 Performance assessment and comparison for survival analysis.
 @item surveillance
@@ -6415,8 +6470,11 @@ Variance ratio tests for weak-form market efficiency.
 @item wasim
 Tools for data processing and visualization of results of the WASIM-ETH
 hydrological model.
-@item waveclock
-Time-frequency analysis of cycling cell luminescence data.
+@c <COMMENT>
+@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
+@c @item waveclock
+@c Time-frequency analysis of cycling cell luminescence data.
+@c </COMMENT>
 @item waved
 WaveD transform in R.
 @item wavelets
@@ -6457,6 +6515,8 @@ Interface to the XGobi and XGvis programs for graphical data analysis.
 @c </COMMENT>
 @item xtable
 Export data to @LaTeX{} and @HTML{} tables.
+@item xterm256
+Support for xterm256 escape sequences.
 @item xts
 Extensible time series.
 @item yaImpute
@@ -6773,9 +6833,15 @@ Algorithms for Calculating Microarray Enrichment (ACME).
 Affymetrix GeneChip software compatibility
 @item AffyExpress
 Affymetrix quality assessment and analysis tool.
-@item AnnBuilder
-Processing annotation date from public data repositories and building
-annoation data packages or @XML{} data documents using the source data.
+@item AffyTiling
+Easy extraction of individual probes in Affymetrix tiling arrays.
+@c <COMMENT>
+@c Removed in BioC 2.4.
+@c @item AnnBuilder
+@c Processing annotation date from public data repositories and building
+@c annoation data packages or @XML{} data documents using the source
+@c data.
+@c </COMMENT>
 @item AnnotationDbi
 Annotation DataBase Interface.
 @item BAC
@@ -6806,6 +6872,8 @@ A matrix data storage object held in temporary files.
 @item CALIB
 Calibration model for estimating absolute expression levels from
 microarray data.
+@item CAMERA
+Collection of annotation related methods for mass spectrometry data.
 @item CGHcall
 Calling aberrations for array CGH tumor profiles.
 @item CORREP
@@ -6817,6 +6885,8 @@ A collection of tools for performing category analysis.
 @c Draw gene expression profile onto chromosome using @acronym{SVG}.
 @item CoCiteStats
 A collection of software tools for dealing with co-citation data.
+@item DAVIDQuery
+Retrieval from the DAVID bioinformatics data resource into R.
 @item DEDS
 Differential Expression via Distance Summary for microarray data.
 @item DNAcopy
@@ -6840,6 +6910,8 @@ Infrastructure for genetics of gene expression.
 Software and data for genetical genomics.
 @item GLAD
 Gain and Loss Analysis of DNA.
+@item GOSemSim
+GO-terms Semantic Similarity measures.
 @item GOstats
 Tools for manipulating GO and microarrays.
 @item GSEABase
@@ -6853,6 +6925,12 @@ experimental data.
 Package manipulating nucleotidic sequences (Embl, Fasta, GenBank).
 @item GeneRfold
 R for genes and sequences, using viennaRNA package (fold).
+@item GeneRegionScan
+Analysis of Affymetrix data within discrete regions of the genome.
+@item GeneSelectMMD
+Gene selection based on the marginal distributions of gene profiles that
+characterized by a mixture of three-component multivariate
+distributions.
 @item GeneSelector
 GeneSelector.
 @item GeneSpring
@@ -6890,6 +6968,8 @@ A heat map displaying covariates and coloring clusters.
 Functions for computing the NPMLE for censored and truncated data.
 @item KEGGSOAP
 Client-side SOAP access KEGG.
+@item KEGGgraph
+A graph approach to KEGG PATHWAY.
 @item LBE
 Estimation of the false discovery rate.
 @item LMGene
@@ -6900,9 +6980,8 @@ Significance analysis of microarray data with small number of replicates
 using the Local Pooled Error (LPE) method.
 @item MANOR
 Micro-Array NORmalization.
-@c Still present in development branch but not in 2.2 release.
-@c @item MCRestimate
-@c Misclassification error estimation with cross-validation.
+@item MCRestimate
+Misclassification error estimation with cross-validation.
 @item MLInterfaces
 Uniform interfaces to machine learning code for the exprSet class from
 Bioconductor.
@@ -6934,6 +7013,8 @@ Similarities of ordered gene lists.
 @item OutlierD
 Outlier detection using quantile regression on the M-A scatterplots of
 high-throughput data.
+@item PAnnBuilder
+Protein annotation data package builder.
 @item PCpheno
 Phenotypes and cellular organizational units.
 @item PGSEA
@@ -6955,8 +7036,11 @@ Functionality to handle MAGEML documents.
 @item ROC
 Receiver Operating Characteristic (ROC) approach for identifying genes
 that are differentially expressed in two types of samples.
-@item RSNPper
-Interface to chip.org::SNPper for SNP-related data.
+@c <COMMENT>
+@c Removed in BioC 2.4.
+@c @item RSNPper
+@c Interface to chip.org::SNPper for SNP-related data.
+@c </COMMENT>
 @item RWebServices
 Expose R functions as web services through Java/Axis/Apache.
 @item RankProd
@@ -6981,6 +7065,8 @@ An interface with Graphviz for plotting graph objects in R.
 R Investigation of NimbleGen Oligoarrays..
 @item Rintact
 Interface to EBI Intact protein interaction data base.
+@item Rmagpie
+Micro-array gene-expression-based program in error rate estimation.
 @item Rredland
 Interface to redland RDF utilities.
 @item Rtreemix
@@ -7005,10 +7091,17 @@ A Segmental Maximum A Posteriori approach to array-CGH copy number
 profiling.
 @item SNPchip
 Classes and methods for high throughput SNP chip data.
+@item SPIA
+Signaling Pathway Impact Analysis using combined evidence of pathway
+over-representation and unusual signaling perturbations.
+@item SSPA
+Sample Size and Power Analysis for microarray data.
 @item ScISI
 In Silico Interactome.
 @item SemSim
 Gene ontology-based semantic similarity measures.
+@item TargetSearch
+Analysis of GC-MS metabolite profiling data.
 @item TypeInfo
 Optional type specification prototype.
 @item VanillaICE
@@ -7070,6 +7163,8 @@ Quality metrics on ExpressionSets.
 Quality control and low-level analysis of BeadArrays.
 @item beadarraySNP
 Normalization and reporting of Illumina SNP bead arrays.
+@item betr
+Identify differentially expressed genes in microarray time-course data.
 @item bgafun
 A method to identify specifity determining residues in protein
 families.
@@ -7077,6 +7172,8 @@ families.
 Bayesian Gene eXpression.
 @item bioDist
 A collection of software tools for calculating distance measures.
+@item biocDatasets
+Synthetic datasets for bioconductor.
 @item biocGraph
 Graph examples and use cases in Bioinformatics.
 @item biocViews
@@ -7104,6 +7201,9 @@ Supervised detection of conserved motifs in DNA sequences.
 @item cosmoGUI
 GUI for constructing constraint sets used by the @strong{cosmo}
 package.
+@item crlmm
+Genotype calling (CRLMM) and copy number analysis tool for Affymetrix 
+SNP 5.0 and 6.0 and Illumina arrays.
 @item ctc
 Tools to export and import Tree and Cluster to other programs.
 @item daMA
@@ -7112,6 +7212,8 @@ experiments and for the statistical analysis of factorial microarray
 data.
 @item diffGeneAnalysis
 Performs differential Gene expression Analysis.
+@item dyebias
+Methods to correct for gene-specific dye bias.
 @item ecolitk
 Metadata and tools to work with E. coli.
 @item edd
@@ -7131,12 +7233,19 @@ contrast and perform single outlier detection.
 Family Based Association Tests for genetic data.
 @item fdrame
 FDR Adjustments of Microarray Experiments (FDR-AME).
+@item flagme
+Analysis of metabolomics GC/MS data.
 @item flowClust
 Clustering for flow cytometry.
 @item flowCore
 Basic structures for flow cytometry data.
+@item flowFlowJo
+Tools for extracting information from a FlowJo workspace and working 
+with the data in the @strong{flowCore} paradigm.
 @item flowQ
 Qualitiy control for flow cytometry.
+@item flowStats
+Statistical methods for the analysis of flow cytometry data.
 @item flowUtils
 Utilities for flow cytometry.
 @item flowViz
@@ -7149,6 +7258,9 @@ Broadcast data between R and Java bioinformatics programs.
 Background adjustment using sequence information.
 @item genArise
 A tool for dual color microarray data.
+@item gene2pathway
+Prediction of KEGG pathway membership for individual genes based on
+InterPro domain signatures.
 @item geneRecommender
 A gene recommender algorithm to identify genes coexpressed with a query
 set of genes.
@@ -7162,6 +7274,8 @@ functions to genes.
 Graphical tools for genomic data, for example for plotting expression
 data along a chromosome or producing color images of expression data
 matrices.
+@item genomeIntervals
+Operations on genomic intervals.
 @item globaltest
 Testing globally whether a group of genes is significantly related to
 some clinical variable of interest.
@@ -7235,6 +7349,8 @@ Tools for sequence matching of probes on arrays.
 Mahalanobis Distance Quality Control for microarrays.
 @item metaArray
 Integration of microarray data for meta-analysis.
+@item metahdep
+Hierarchical dependence in meta-analysis.
 @item multtest
 Multiple testing procedures for controlling the family-wise error rate
 (FWER) and the false discovery rate (FDR).  Tests can be based on
@@ -7297,12 +7413,19 @@ experiments based on cellular assays and fluorescent detection.
 A collection of pre-processing functions.
 @item puma
 Propagating Uncertainty in Microarray Analysis.
+@item qpcrNorm
+Data-driven normalization strategies for high-throughput qPCR data.
+@item qpgraph
+Reverse engineering of molecular regulatory networks with qp-graphs.
 @item quantsmooth
 Quantile smoothing and genomic visualization of array data.
 @item qvalue
 Q-value estimation for false discovery rate control.
 @item rHVDM
 Hidden Variable Dynamic Modeling.
+@item rMAT
+R implementation from MAT program to normalize and analyze tiling arrays 
+and ChIP-chip data.
 @item rama
 Robust Analysis of MicroArrays: robust estimation of cDNA microarray
 intensities with replicates using a Bayesian hierarchical model.
@@ -7341,6 +7464,8 @@ Segmentation, normalization and processing of aCGH data.
 The snp.matrix and X.snp.matrix classes.
 @item spikeLI
 Affymetrix Spike-in Langmuir Isotherm data analysis tool.
+@item spkTools
+Methods for spike-in arrays.
 @item splicegear
 A set of tools to work with alternative splicing.
 @item splots
@@ -7364,6 +7489,8 @@ Statistical analysis for developmental microarray time course data.
 Widgets in Tcl/Tk that provide functionality for Bioconductor packages.
 @item topGO
 Enrichment analysis for Gene Ontology.
+@item tspair
+Top scoring pairs for microarray classification.
 @item twilight
 Estimation of local false discovery rate.
 @item vbmp
