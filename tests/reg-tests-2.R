@@ -2363,3 +2363,7 @@ print.function <- function(x, ...) { str(x,...); invisible(x) }
 print.function
 f
 rm(print.function)
+## auto-printing and printing differed up to R 2.9.x
+
+printCoefmat(cbind(0,1))
+## would print NaN up to R 2.9.0

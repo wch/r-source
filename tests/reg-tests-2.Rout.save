@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-04-20 r48365)
+R version 2.10.0 Under development (unstable) (2009-04-28 r48429)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6347,4 +6347,10 @@ function ()
  - attr(*, "yada")=function ()  
   ..- attr(*, "source")= chr "function() \"not the same\""
 > rm(print.function)
+> ## auto-printing and printing differed up to R 2.9.x
+> 
+> printCoefmat(cbind(0,1))
+     [,1] [,2]
+[1,]    0    1
+> ## would print NaN up to R 2.9.0
 > 
