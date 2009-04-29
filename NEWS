@@ -39,10 +39,12 @@ BUG FIXES
     o	parse_Rd() would mishandle closing braces when they occurred at
 	the start of a line within an R string in an Rd file. (Reported
 	by Alex Couture-Beil.)
-	
+
     o	readNEWS() missed version numbers with more than one digit.
 
     o	building R --without-x no longer fails (PR#13665)
+
+    o	printCoefmat(cbind(0,1)) now works too (PR#13677)
 
 
 		CHANGES IN R VERSION 2.9.0

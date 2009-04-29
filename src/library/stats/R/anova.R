@@ -53,9 +53,9 @@ printCoefmat <-
 	     signif.stars = getOption("show.signif.stars"),
              signif.legend = signif.stars,
 	     dig.tst = max(1, min(5, digits - 1)),
-	     cs.ind = 1L:k, tst.ind = k+1L, zap.ind = integer(0L),
+	     cs.ind = 1:k, tst.ind = k+1, zap.ind = integer(0),
 	     P.values = NULL,
-	     has.Pvalue = nc >= 4L && substr(colnames(x)[nc], 1L, 3L) == "Pr(",
+	     has.Pvalue = nc >= 4 && substr(colnames(x)[nc], 1, 3) == "Pr(",
              eps.Pvalue = .Machine$double.eps,
 	     na.print = "NA", ...)
 {
@@ -94,19 +94,20 @@ printCoefmat <-
     Cf <- array("", dim=d, dimnames = dimnames(xm))
 
     ok <- !(ina <- is.na(xm))
-    if(length(cs.ind)>0) {
+    if(length(cs.ind)) {
 	acs <- abs(coef.se <- xm[, cs.ind, drop=FALSE])# = abs(coef. , stderr)
-        if(any(is.finite(acs))) {
-            ## #{digits} BEFORE decimal point -- for min/max. value:
-            digmin <- 1+floor(log10(range(acs[acs != 0], na.rm= TRUE)))
+	if(any(ia <- is.finite(acs))) {
+	    ## #{digits} BEFORE decimal point -- for min/max. value:
+	    digmin <- 1 + if(length(acs <- acs[ia & acs != 0]))
+		floor(log10(range(acs[acs != 0], finite = TRUE))) else 0
             Cf[,cs.ind] <- format(round(coef.se, max(1,digits-digmin)),
                                   digits=digits)
         }
     }
-    if(length(tst.ind)>0)
+    if(length(tst.ind))
 	Cf[, tst.ind]<- format(round(xm[, tst.ind], digits = dig.tst),
                                digits = digits)
-    if(length(zap.ind)>0)
+    if(length(zap.ind))
 	Cf[, zap.ind]<- format(zapsmall(xm[,zap.ind], digits = digits),
                                digits = digits)
     if(any(r.ind <- !((1L:nc) %in%
