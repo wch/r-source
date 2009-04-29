@@ -508,3 +508,7 @@ validObject(new("myF", ok.f))
 assertError(validObject(new("myF", bad.f)))
 removeClass("myF")
 ## no validity check in R <= 2.9.0
+
+## as(x, .)   when x is from an "unregistered" S3 class :
+as(structure(1:3, class = "foobar"), "vector")
+## failed to work in R <= 2.9.0

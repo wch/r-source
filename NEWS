@@ -49,6 +49,9 @@ BUG FIXES
 	allowed, as these, e.g., sprintf("%s", quote(list())), typically
 	lead to unexpected results or hard to understand error messages.
 
+    o	as(I(1), "vector") and similar coercions from objects of
+	"unregistered" S3 classes now work.
+
 
 
 	**************************************************
