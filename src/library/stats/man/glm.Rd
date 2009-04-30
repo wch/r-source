@@ -197,9 +197,17 @@ glm.fit(x, y, weights = rep(1, nobs),
   \item{deviance}{up to a constant, minus twice the maximized
     log-likelihood.  Where sensible, the constant is chosen so that a
     saturated model has deviance zero.}
-  \item{aic}{Akaike's \emph{An Information Criterion}, minus twice the
-    maximized log-likelihood plus twice the number of coefficients (so
-    assuming that the dispersion is known).}
+  \item{aic}{A version of Akaike's \emph{An Information Criterion},
+    minus twice the maximized log-likelihood plus twice the number of
+    parameters, computed by the \code{aic} component of the family.
+    For binomial and Poison families the dispersion is
+    fixed at one and the number of parameters is the number of
+    coefficients. For gaussian, Gamma and inverse gaussian families the
+    dispersion is estimated from the residual deviance, and the number
+    of parameters is the number of coefficients plus one.  For a
+    gaussian family the MLE of the dispersion is used so this is a valid
+    value of AIC, but for Gamma and inverse gaussian families it is not.
+    For families fitted by quasi-likelihood the value is \code{NA}.}
   \item{null.deviance}{The deviance for the null model, comparable with
     \code{deviance}. The null model will include the offset, and an
     intercept if there is one in the model.  Note that this will be
