@@ -549,7 +549,7 @@ drawPath <- function(path, depth, col, fill, label) {
                 if (is.null(depth))
                     drawLabel <- i == n
                 else
-                    drawLabel <- min(n, max(depth))
+                    drawLabel <- i == min(n, max(depth))
                 if (drawLabel)
                     labelVP(current.viewport(), col[colIndex])
             }
@@ -563,7 +563,7 @@ drawPath <- function(path, depth, col, fill, label) {
 # NOTE: this does NOT leave its viewports hanging around after
 showVPmatrix <- function(vp, cvpt, depth, col, fill,
                          label, # Only the leaf viewports are labelled
-                         nrow=3, ncol=nrow) {
+                         nrow, ncol) {
     # Work off a vpPath, so convert vp if it's a "viewport"
     if (is.viewport(vp)) {
         paths <- leafPaths(vp)
@@ -599,7 +599,7 @@ showVPmatrix <- function(vp, cvpt, depth, col, fill,
 showViewport <- function(vp=NULL, recurse=TRUE, depth=NULL,
                          newpage=FALSE, leaves=FALSE,
                          col=rgb(0, 0, 1, .2), fill=rgb(0, 0, 1, .1),
-                         label=TRUE) {
+                         label=TRUE, nrow=3, ncol=nrow) {
     cvpt <- current.vpTree()
     if (is.null(vp))
         vp <- cvpt
@@ -616,10 +616,11 @@ showViewport <- function(vp=NULL, recurse=TRUE, depth=NULL,
         if (inherits(vp, "vpPath"))
             showVP(vp, TRUE, cvpt, depth, col, fill, label)
         else 
-            showVPmatrix(vp, cvpt, depth, col, fill, label)
+            showVPmatrix(vp, cvpt, depth, col, fill, label, nrow, ncol)
     } else {
         showVP(vp, newpage, cvpt, depth, col, fill, label)
     }
+    invisible()
 }
                          
 #############

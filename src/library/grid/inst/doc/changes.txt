@@ -1,3 +1,10 @@
+Changes from grid_2.9.0 to grid_2.10.0:
+--------------------------------------
+
+1.  Added showViewport() function for displaying viewport trees
+    graphically.
+
+
 Changes from grid_2.8.0 to grid_2.9.0:
 ------------------------------------
 
