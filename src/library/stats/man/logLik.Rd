@@ -41,7 +41,7 @@ logLik(object, \dots)
 }
 \details{
   For a \code{"glm"} fit the \code{\link{family}} does not have to specify
-  how to calculate the log-likelihood, so this is based on the
+  how to calculate the log-likelihood, so this is based on using the
   family's \code{aic()} function to compute the AIC.  For the
   \code{\link{gaussian}}, \code{\link{Gamma}} and
   \code{\link{inverse.gaussian}} families it assumed that the dispersion
@@ -49,9 +49,9 @@ logLik(object, \dots)
   value, and for all other families it is assumed that the dispersion is
   known.
 
-  Note that this procedure is not completely accurate for the gamma and
-  inverse gaussian families, as the estimate of dispersion used is not
-  the MLE.
+  Note that this procedure does not give the maximized likelihood for
+  \code{"glm"} fits from the Gamma and inverse gaussian families, as the
+  estimate of dispersion used is not the MLE.
 
   For \code{"lm"} fits it is assumed that the scale has been estimated
   (by maximum likelihood or REML), and all the constants in the
