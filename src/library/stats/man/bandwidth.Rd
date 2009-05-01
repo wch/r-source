@@ -16,24 +16,29 @@ bw.nrd0(x)
 
 bw.nrd(x)
 
-bw.ucv(x, nb = 1000, lower = 0.1 * hmax, upper = hmax)
+bw.ucv(x, nb = 1000, lower = 0.1 * hmax, upper = hmax, tol = 0.1 * lower)
 
-bw.bcv(x, nb = 1000, lower = 0.1 * hmax, upper = hmax)
+bw.bcv(x, nb = 1000, lower = 0.1 * hmax, upper = hmax, tol = 0.1 * lower)
 
 bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
-      method = c("ste", "dpi"))
+      method = c("ste", "dpi"), tol = 0.1 * lower)
 }
 \arguments{
-  \item{x}{A data vector.}
+  \item{x}{numeric vector.}
   \item{nb}{number of bins to use.}
-  \item{lower, upper}{Range over which to minimize.  The default is
+  \item{lower, upper}{range over which to minimize.  The default is
     almost always satisfactory.  \code{hmax} is calculated internally
     from a normal reference bandwidth.}
-  \item{method}{Either \code{"ste"} ("solve-the-equation") or
+  \item{method}{either \code{"ste"} ("solve-the-equation") or
     \code{"dpi"} ("direct plug-in").}
+  \item{tol}{for method \code{"ste"}, the convergence tolerance for
+    \code{\link{uniroot}}.  The default leads to bandwidth estimates
+    with only slightly more than one digit accuracy, which is sufficient
+    for practical density estimation, but possibly not for theoretical
+    simulation studies.}
 }
 \description{
-  Bandwidth selectors for gaussian windows in \code{\link{density}}.
+  Bandwidth selectors for Gaussian kernels in \code{\link{density}}.
 }
 
 \details{
@@ -54,9 +59,10 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
 
   \code{bw.SJ} implements the methods of Sheather & Jones (1991)
   to select the bandwidth using pilot estimation of derivatives.\cr
-  The algorithm solves an equation (via \code{\link{uniroot}}) and
-  because of that, enlarges the interval \code{c(lower,upper)} when
-  the boundaries were not user-specified and do not bracket the root.
+  The algorithm for method \code{"ste"} solves an equation (via
+  \code{\link{uniroot}}) and because of that, enlarges the interval
+  \code{c(lower,upper)} when the boundaries were not user-specified and
+  do not bracket the root.
 }
 \value{
   A bandwidth on a scale suitable for the \code{bw} argument

@@ -38,7 +38,7 @@ bw.nrd <- function (x)
 }
 
 bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
-                  method = c("ste", "dpi"))
+                  method = c("ste", "dpi"), tol = 0.1*lower)
 {
     if((n <- length(x)) < 2) stop("need at least 2 data points")
     if(!is.numeric(x)) stop("invalid 'x'")
@@ -71,8 +71,7 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
             x,
             cnt = integer(nb))
     d <- Z$d; cnt <- as.integer(Z$cnt)
-    hmax <- 1.144 * sqrt(var(x)) * n^(-1/5)
-    scale <- min(sqrt(var(x)), IQR(x)/1.349)
+    scale <- min(sd(x), IQR(x)/1.349)
     a <- 1.24 * scale * n^(-1/7)
     b <- 1.23 * scale * n^(-1/9)
     c1 <- 1/(2*sqrt(pi)*n)
@@ -80,32 +79,38 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
     if(!is.finite(TD) || TD <= 0)
         stop("sample is too sparse to find TD")
     if(method == "dpi")
-        res <- (c1/SDh(cnt,(2.394/(n * TD))^(1/7) , n, d))^(1/5)
+        res <- (c1/SDh(cnt, (2.394/(n * TD))^(1/7), n, d))^(1/5)
     else {
+        if(bnd.Miss <- missing(lower) || missing(upper)) {
+            ## only used for  lower & upper  defaults :
+            hmax <- 1.144 * sd(x) * n^(-1/5)
+            ##              ^^^^ may be way off -- will use 'scale' from 2.10.0
+        }
         alph2 <- 1.357*(SDh(cnt, a, n, d)/TD)^(1/7)
         if(!is.finite(alph2))
             stop("sample is too sparse to find alph2")
         itry <- 1
 	while (fSD(lower, cnt, alph2, c1, n, d) *
 	       fSD(upper, cnt, alph2, c1, n, d) > 0) {
-	    if(itry > 20 || !(missing(lower) && missing(upper)))
+	    if(itry > 99 || !bnd.Miss) # 1.2 ^ 99 = 69'014'979 .. enough
 		stop("no solution in the specified range of bandwidths")
 	    if(itry %% 2)
 		upper <- upper * 1.2
 	    else lower <- lower / 1.2
 	    if(getOption("verbose"))
-		message(gettextf("increasing bw.SJ() search interval (%d)",
-                        itry), sep='', domain = NA)
+		message(gettextf("increasing bw.SJ() search interval (%d) to [%.4g,%.4g]",
+                        itry, lower, upper), sep='', domain = NA)
 	    itry <- itry + 1
 	}
-        res <- uniroot(fSD, c(lower, upper), tol=0.1*lower,
+        res <- uniroot(fSD, c(lower, upper), tol=tol,
                        x=cnt, alph2=alph2, c1=c1, n=n, d=d)$root
     }
     res
 }
 
 
-bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
+bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
+                   tol = 0.1*lower)
 {
     if((n <- length(x)) < 2) stop("need at least 2 data points")
     if(!is.numeric(x)) stop("invalid 'x'")
@@ -128,14 +133,15 @@ bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
             x,
             cnt = integer(nb))
     d <- Z$d; cnt <- as.integer(Z$cnt)
-    h <- optimize(fucv, c(lower, upper), tol=0.1*lower,
+    h <- optimize(fucv, c(lower, upper), tol=tol,
                   x=cnt, n=n, d=d)$minimum
-    if(h < 1.1*lower | h > upper-0.1*lower)
+    if(h < lower+tol | h > upper-tol)
         warning("minimum occurred at one end of the range")
     h
 }
 
-bw.bcv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
+bw.bcv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
+                   tol = 0.1*lower)
 {
     if((n <- length(x)) < 2) stop("need at least 2 data points")
     if(!is.numeric(x)) stop("invalid 'x'")
@@ -158,9 +164,9 @@ bw.bcv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
             x,
             cnt = integer(nb))
     d <- Z$d; cnt <- as.integer(Z$cnt)
-    h <- optimize(fbcv, c(lower, upper), tol=0.1*lower,
+    h <- optimize(fbcv, c(lower, upper), tol=tol,
                   x=cnt, n=n, d=d)$minimum
-    if(h < 1.1*lower | h > upper-0.1*lower)
+    if(h < lower+tol | h > upper-tol)
         warning("minimum occurred at one end of the range")
     h
 }
