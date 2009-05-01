@@ -72,6 +72,9 @@ NEW FEATURES
     o	matplot(), matlines() and matpoints() now also obey a 'lend'
 	argument, determining line end styles. (Wish of PR#13619).
 
+    o	bw.SJ(), bw.bcv() and bw.ucv() now gain an optional 'tol'
+    	argument allowing more accurate estimates.
+
 
 BUG FIXES
 
@@ -104,6 +107,8 @@ BUG FIXES
     o	building R --without-x no longer fails (PR#13665)
 
     o	printCoefmat(cbind(0,1)) now works too (PR#13677)
+
+    o	bw.SJ(c(1:99, 1e6)) now works too.
 
 
 

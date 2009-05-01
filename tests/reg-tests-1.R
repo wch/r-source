@@ -5661,3 +5661,6 @@ stopifnot(inherits(e, "error"), inherits(e2, "error"),inherits(e3, "error"),
           )
 ## less helpful error messages previously
 
+ep <- 1e-3
+stopifnot(all.equal(bw.SJ(c(1:99, 1e6), tol=ep), 0.725, tol=ep))
+## bw.SJ(x) failed for R <= 2.9.0 (in two ways!), when x had extreme outlier
