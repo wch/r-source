@@ -47,6 +47,9 @@ BUG FIXES
     
     o	file.choose() and the save console dialog did not set the
 	file filters properly.
+
+    o	Rcmd INSTALL --build in 2.9.0 did not make _bundles_ in the
+	format install.packages() expected.
     
     
 
