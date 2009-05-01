@@ -138,6 +138,13 @@ do_set_prim_method
 for methods
 
 
+set_R_Tcldo
+unset_R_Tcldo
+wtransChar
+
+for tcltk
+
+
 R_gl_tab_set
 cmdlineoptions
 getDLLVersion
