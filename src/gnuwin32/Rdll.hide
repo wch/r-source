@@ -142,10 +142,13 @@
  R_ParseConn
  R_ParseContext
  R_ParseContextLast
+ R_ParseContextLine
  R_ParseError
+ R_ParseErrorCol
  R_ParseErrorFile
  R_ParseErrorMsg
  R_ParseFile
+ R_ParseRd
  R_PendingPromises
  R_Quiet
  R_RecursiveSymbol
@@ -202,6 +205,7 @@
  R_getDllTable
  R_getProcTime
  R_getRegisteredRoutines
+ R_getS4DataSlot
  R_getSymbolInfo
  R_getVarsFromFrame
  R_gmtime
@@ -293,6 +297,7 @@
  Rf_StringFromLogical
  Rf_StringFromReal
  Rf_VectorIndex
+ Rf_allocCharsxp
  Rf_bd0
  Rf_chebyshev_eval
  Rf_chebyshev_init
@@ -386,6 +391,7 @@
  Rwin_rename
  Rwin_wrename
  SET_ACTIVE_BINDING_BIT
+ SET_CACHED
  SET_LATIN1
  SET_PRIMOFFSET
  SET_UTF8
@@ -413,7 +419,11 @@
  _pcre_is_newline
  _pcre_ord2utf8
  _pcre_try_flipped
+ _pcre_ucd_records
+ _pcre_ucd_stage1
+ _pcre_ucd_stage2
  _pcre_ucp_findprop
+ _pcre_ucp_gentype
  _pcre_ucp_othercase
  _pcre_utf8_table1
  _pcre_utf8_table1_size
@@ -427,6 +437,8 @@
  _pcre_was_newline
  _pcre_xclass
  _vsnprintf
+ any_duplicated
+ any_duplicated3
  applyGUI
  apse_create
  apse_destroy
@@ -507,6 +519,7 @@
  do_D2POSIXlt
  do_External
  do_Externalgr
+ do_ICUset
  do_Math2
  do_POSIXlt2D
  do_RGB2hsv
@@ -563,6 +576,7 @@
  do_c_dflt
  do_call
  do_capabilities
+ do_capabilitiesX11
  do_cat
  do_charToRaw
  do_charmatch
@@ -615,6 +629,7 @@
  do_dimgets
  do_dimnames
  do_dimnamesgets
+ do_dirchmod
  do_dircreate
  do_dirname
  do_disassemble
@@ -649,6 +664,7 @@
  do_fileaccess
  do_fileappend
  do_filechoose
+ do_filecopy
  do_filecreate
  do_fileedit
  do_fileexists
@@ -717,6 +733,7 @@
  do_int_unzip
  do_interactive
  do_internal
+ do_interruptsSuspended
  do_invisible
  do_invokeRestart
  do_is
@@ -788,6 +805,7 @@
  do_mkcode
  do_modelframe
  do_modelmatrix
+ do_msgwindow
  do_mtext
  do_mvfft
  do_names
@@ -817,6 +835,7 @@
  do_parentenvgets
  do_parentframe
  do_parse
+ do_parseRd
  do_paste
  do_pathexpand
  do_persp
@@ -853,6 +872,8 @@
  do_rawShift
  do_rawToBits
  do_rawToChar
+ do_rawconnection
+ do_rawconvalue
  do_readClipboard
  do_readDCF
  do_readLines
@@ -905,6 +926,7 @@
  do_setlocale
  do_setseed
  do_setwd
+ do_setwinprogressbar
  do_shellexec
  do_shortpath
  do_signalCondition
@@ -974,6 +996,7 @@
  do_unserializeFromConn
  do_unsetenv
  do_unz
+ do_unzip
  do_updateform
  do_url
  do_usemethod
@@ -989,6 +1012,7 @@
  do_winmenunames
  do_winprogressbar
  do_winver
+ do_withVisible
  do_writeClipboard
  do_writebin
  do_writechar
@@ -1005,8 +1029,10 @@
  editorcleanall
  editorsetfont
  epslon_
+ filenameToWchar
  fontname
  fontsty
+ formatError
  framenames
  freeConsoleData
  freemenuitems
@@ -1032,9 +1058,11 @@
  gl_histadd
  gl_in_hook
  gl_out_hook
+ gl_savehistory
  gl_setwidth
  gl_strwidth
  gl_tab_hook
+ guiColors
  haveusedapager
  helpmenuact
  hqr_
@@ -1118,6 +1146,8 @@
  pcre_version
  pgamma_raw
  pkgmenuact
+ pnbeta2
+ pnbeta_raw
  pnchisq_raw
  pointsize
  process_site_Renviron
@@ -1192,7 +1222,9 @@
  wgl_hist_prev
  wgl_histadd
  wgl_loadhistory
+ wgl_loadhistoryW
  wgl_savehistory
+ wgl_savehistoryW
  winAccessW
  winaddmenu
  winaddmenuitem
