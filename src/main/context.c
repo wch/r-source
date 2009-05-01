@@ -466,6 +466,35 @@ SEXP attribute_hidden do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
     return(R_NilValue);
 }
 
+/* functions to support looking up information about the browser */
+/* contexts that are in the evaluation stack */
+
+SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int i;
+    SEXP rval;
+    RCNTXT *cptr;
+
+    checkArity(op, args);
+    /* first find the closest  browser context */
+    cptr = R_GlobalContext;
+    while (cptr != R_ToplevelContext) {
+        if (cptr->callflag & CTXT_BROWSER)
+                break;
+        cptr = cptr->nextcontext;
+    }
+
+    switch (PRIMVAL(op)) {
+    case 1: /* text */
+        rval = CAR(cptr->promargs);
+        break;
+    case 2: /* condition */
+        rval = CADR(cptr->promargs);
+        break;
+    }
+    return(rval);
+}
+
 /* An implementation of S's frame access functions. They usually count */
 /* up from the globalEnv while we like to count down from the currentEnv. */
 /* So if the argument is negative count down if positive count up. */

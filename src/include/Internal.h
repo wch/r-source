@@ -478,6 +478,7 @@ SEXP do_surface(SEXP, SEXP, SEXP, SEXP);
 SEXP do_switch(SEXP, SEXP, SEXP, SEXP);
 SEXP do_symbols(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sys(SEXP, SEXP, SEXP, SEXP);
+SEXP do_sysbrowser(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sysgetpid(SEXP, SEXP, SEXP, SEXP);
 SEXP do_system(SEXP, SEXP, SEXP, SEXP);
 SEXP do_systime(SEXP, SEXP, SEXP, SEXP);

@@ -11,12 +11,32 @@
   the environment where \code{browser} was called from.
 }
 \usage{
-browser()
+browser(text="", condition=NULL, expr=TRUE)
+}
+\arguments{
+  \item{text}{a text string that can be retrieved once the browser is invoked.}
+  \item{condition}{a condition that can be retrieved once the browser is invoded.}
+  \item{expr}{An expression, which if it evaluates to \code{TRUE} the
+    debugger will invoked, otherwise control is returned directly.}
 }
 \details{
   A call to \code{browser} can be included in the body of a function.
   When reached, this causes a pause in the execution of the
   current expression and allows access to the \R interpreter.
+
+  The purpose of the \code{text} and \code{condition} arguments are to
+  allow helper programs (e.g. external debuggers) to insert specific
+  values here, so that the specific call to browser (perhaps its location
+  in a source file) can be identified and special processing can be
+  achieved.
+
+  The purpose of the \code{expr} argument is to allow for the illusion
+  of conditional debugging. It is an illusion, because execution is
+  always paused at the call to browser, but control is only passed
+  to the evaluator described below if \code{expr} evaluates to \code{TRUE}.
+  In most cases it is going to be more efficient to use an \code{if} 
+  statement in the calling program, but in some cases using this argument
+  will be simpler.
 
   At the browser prompt the user can enter commands or \R expressions.
   The commands are
@@ -27,6 +47,8 @@ browser()
     \item{\code{cont}}{synonym for \code{c}.}
     \item{\code{n}}{enter the step-through debugger. This changes the
       meaning of \code{c}: see the documentation for \code{\link{debug}}.}
+    \item{\code{gettext}}{retrieve the text string provided as an argument.}
+    \item{\code{getcondition}}{retrieve the condition provided as an argument.}
     \item{\code{where}}{print a stack trace of all active function calls.}
     \item{\code{Q}}{exit the browser and the current evaluation and
       return to the top-level prompt.}

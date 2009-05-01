@@ -1042,13 +1042,99 @@ static void browser_cend(void *data)
     R_BrowseLevel = *psaved - 1;
 }
 
+/* 
+   since users are unlikely to get this right we need to try
+   to do name/position matching - this is a bit rough
+*/
+static SEXP matchargs(SEXP args)
+{
+   int i, nargs = length(args), mt=0, mc=0, me=0, nmatch=0, pos[3];
+   SEXP tmp, tsym, csym, esym, argList;
+
+   /*set up argList and defaults */
+   PROTECT(argList = allocList(3));
+   PROTECT(tmp = allocVector(STRSXP, 3));
+   SET_STRING_ELT(tmp, 0, mkChar("text"));
+   SET_STRING_ELT(tmp, 0, mkChar("condition"));
+   SET_STRING_ELT(tmp, 0, mkChar("expr"));
+   setAttrib(argList, R_NamesSymbol, tmp);
+   UNPROTECT(1);
+
+   /*set default values */
+
+   CAR(argList) = mkString("");
+   CADR(argList) = R_NilValue;
+   PROTECT(tmp = allocVector(LGLSXP, 1));
+   LOGICAL(tmp)[0] = 1; /*true*/
+   CADDR(argList) = tmp;
+   UNPROTECT(1);
+
+   /*now match  */
+   if( nargs == 0 ) {
+     UNPROTECT(1);
+     return(argList);
+   }
+
+   /* we have at least one arg */
+   tsym=install("text"); csym=install("condition"); esym=install("expr");
+   tmp = args;
+
+   for(i=0; i<nargs; i++) { 
+       pos[i] = 0;
+       if(TAG(tmp) == tsym) {
+         if( mt == 0 ) {
+           nmatch++; pos[i]=1;
+           mt=1; 
+           CAR(argList) = CAR(tmp);
+         } else error(_("duplicate text argument"));
+       }
+       if(TAG(tmp) == csym) {
+        if( mc == 0 ) {
+           nmatch++; pos[i]=1;
+           mc = 1;
+           CADR(argList) = CAR(tmp);
+        } else error(_("duplicate condition argument"));
+      }
+      if(TAG(tmp) == esym) {
+        if( me == 0 ) {
+          nmatch++; pos[i]=1;
+          me = 1;
+          CADDR(argList) = CAR(tmp);
+        } else error(_("duplicate expr argument"));
+      tmp = CDR(tmp);
+      }
+   }
+   if (nmatch == nargs) {
+     UNPROTECT(1);
+     return(argList);
+   }
+   /*otherwise match by position */
+   /* reset tmp */
+   tmp=args;
+   for(i=0; i<3; i++) {
+     if( pos[i] == 0 ) {
+        if( mt==0 ) /* first non-named is text */
+          CAR(argList) = tmp;
+        else if(mc==0)  /*second is condition */
+          CADR(argList) = tmp;
+        else CADDR(argList) = tmp; /*third is expr */
+        nmatch++;
+     }
+   }
+   UNPROTECT(1);
+   return(argList);
+}
+
 SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *saveToplevelContext;
     RCNTXT *saveGlobalContext;
     RCNTXT thiscontext, returncontext, *cptr;
-    int savestack, savebrowselevel, tmp;
-    SEXP topExp;
+    int savestack, savebrowselevel, tmp, nargs, namedargs, loc[3], i;
+    SEXP topExp, tmpE, argList;
+
+    /* argument matching */
+    PROTECT(argList = matchargs(args)); 
 
     /* Save the evaluator state information */
     /* so that it can be restored on exit. */
@@ -1079,7 +1165,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* acts as a target for error returns. */
 
     begincontext(&returncontext, CTXT_BROWSER, call, rho,
-		 R_BaseEnv, R_NilValue, R_NilValue);
+		 R_BaseEnv, argList, R_NilValue);
     returncontext.cend = browser_cend;
     returncontext.cenddata = &savebrowselevel;
     if (!SETJMP(returncontext.cjmpbuf)) {
@@ -1103,6 +1189,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_CurrentExpr = topExp;
     UNPROTECT(1);
     R_PPStackTop = savestack;
+    UNPROTECT(1);
     R_CurrentExpr = topExp;
     R_ToplevelContext = saveToplevelContext;
     R_GlobalContext = saveGlobalContext;
