@@ -424,6 +424,8 @@
  _pcre_was_newline
  _pcre_xclass
  _vsnprintf
+ any_duplicated
+ any_duplicated3
  applyGUI
  apse_create
  apse_destroy

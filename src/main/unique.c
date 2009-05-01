@@ -402,7 +402,7 @@ SEXP duplicated(SEXP x, Rboolean from_last)
 }
 
 /* simpler version of the above : return 1-based index of first, or 0 : */
-int any_duplicated(SEXP x, Rboolean from_last)
+int attribute_hidden any_duplicated(SEXP x, Rboolean from_last)
 {
     DUPLICATED_INIT;
 
@@ -448,7 +448,7 @@ SEXP duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 }
 
 /* return (1-based) index of first duplication, or 0 : */
-int any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
+int attribute_hidden any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 {
     int j, m = length(incomp);
 
