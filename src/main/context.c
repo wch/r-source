@@ -483,6 +483,10 @@ SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
                 break;
         cptr = cptr->nextcontext;
     }
+    /* error if not a browser context */
+
+    if( !(cptr->callflag & CTXT_BROWSER) )
+        error(_("no browser context to query"));
 
     switch (PRIMVAL(op)) {
     case 1: /* text */
