@@ -1136,6 +1136,12 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* argument matching */
     PROTECT(argList = matchargs(args)); 
 
+    /* return if the expr is not TRUE */
+    if( !asLogical(CADDR(argList)) ) {
+        UNPROTECT(1);
+        return R_NilValue;
+    }
+
     /* Save the evaluator state information */
     /* so that it can be restored on exit. */
 
