@@ -39,9 +39,10 @@ BUG FIXES
 
     o	smoothScatter() now also works when e.g. xlim[2] < xlim[1].
 
-    o	parse_Rd() would mishandle closing braces when they occurred at
-	the start of a line within an R string in an Rd file. (Reported
-	by Alex Couture-Beil.)
+    o	parse_Rd() would mishandle braces when they occurred at
+	the start of a line within an R string in an Rd file (reported
+	by Alex Couture-Beil) or when they occurred in an R comment
+	(reported by Mark Bravington).
 
     o	readNEWS() missed version numbers with more than one digit.
 
@@ -50,6 +51,10 @@ BUG FIXES
     o	printCoefmat(cbind(0,1)) now works too (PR#13677)
 
     o	bw.SJ(c(1:99, 1e6)) now works too.
+    
+    o	Rd2txt() could not handle empty descriptions of items in an Rd
+    	file (reported by Mark Bravington), and did not wrap long lists
+    	of arguments if they were given in a single item.
 
 
 		CHANGES IN R VERSION 2.9.0

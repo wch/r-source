@@ -184,36 +184,44 @@ Rd2txt <-
         indent0 <- indent
         text <<- ""; indent <<- 0
         writeContent(block[[1L]], tag)
-        label <- format(paste(text, ":", sep = ""),
-                        justify = "right", width = 9)
+        label <- strwrap(paste(text, ":", sep = ""),
+        		 indent = 0, exdent = 0, width = WIDTH)
+        if (length(label) == 1)
+     	    label <- format(label, justify = "right", width = 9)
+        else
+            label <- paste(label, collapse="\n")
         ## Do this by paras
         block <- block[[2L]]
         parabreaks <- sapply(block,
                              function(x) attr(x, "Rd_tag") == "TEXT"
                              && as.character(x) == "\n"
                              && attr(x, "srcref")[2L] == 1)
-        pb <- which(c(parabreaks, TRUE))
-        first <-1
-        for (i in pb) {
-            if(first > 1) Of("")
-            text <<- ""
-            writeContent(block[first:(i-1)], tag)
-            text1 <-
-                if(first == 1)
-                    paste(strwrap(text, indent = 0, exdent = 10,
-                                  width = WIDTH,
-                                  initial = paste(label,"")),
-                          collapse = "\n")
-                else
-                    paste(strwrap(text, indent = 10, exdent = 10,
-                                  width = WIDTH),
-                          collapse = "\n")
-            Of(text1)
-            first <- i+1
-        }
+        if (length(parabreaks) == 0) {
+            Of(label)
+        } else {
+            pb <- which(c(parabreaks, TRUE))
+	    first <-1
+	    for (i in pb) {
+		if(first > 1) Of("")
+		text <<- ""
+		writeContent(block[first:(i-1)], tag)
+		text1 <-
+		    if(first == 1)
+			paste(strwrap(text, indent = 0, exdent = 10,
+				      width = WIDTH,
+				      initial = paste(label,"")),
+			      collapse = "\n")
+		    else
+			paste(strwrap(text, indent = 10, exdent = 10,
+				      width = WIDTH),
+			      collapse = "\n")
+		Of(text1)
+		first <- i+1
+	    }
+	}
         text <<- ""
         indent <<- indent0
-        nch <- 0L
+        nch <<- 0L
     }
 
 
@@ -223,7 +231,7 @@ Rd2txt <-
         ## running para for a section.
         Of(strwrap(text, width = WIDTH, indent = indent, exdent = indent))
         text <<- ""
-        nch <- 0L
+        nch <<- 0L
     }
 
     writeDeqn <- function()
@@ -235,7 +243,7 @@ Rd2txt <-
         pad <- paste(rep.int(" ", indent + (WIDTH - nc) %/% 2L), collapse = "")
         Of(paste("\n", pad, text, "\n", sep = ""))
         text <<- ""
-        nch <- 0L
+        nch <<- 0L
     }
 
     indentprev <- 0L
