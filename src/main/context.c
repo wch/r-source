@@ -471,8 +471,7 @@ SEXP attribute_hidden do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int i;
-    SEXP rval;
+    SEXP rval=R_NilValue;
     RCNTXT *cptr;
 
     checkArity(op, args);

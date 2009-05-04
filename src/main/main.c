@@ -1130,8 +1130,8 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     RCNTXT *saveToplevelContext;
     RCNTXT *saveGlobalContext;
     RCNTXT thiscontext, returncontext, *cptr;
-    int savestack, savebrowselevel, tmp, nargs, namedargs, loc[3], i;
-    SEXP topExp, tmpE, argList;
+    int savestack, savebrowselevel, tmp;
+    SEXP topExp, argList;
 
     /* argument matching */
     PROTECT(argList = matchargs(args)); 
