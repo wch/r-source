@@ -55,7 +55,7 @@ addNA(x, ifany=FALSE)
     levels (in the same order as \code{levels} after removing those in
     \code{exclude}), \emph{or} a character string of length 1.}
   \item{exclude}{a vector of values to be excluded when forming the
-    set of levels. This should be of the same type as \code{x}, and
+    set of levels.  This should be of the same type as \code{x}, and
     will be coerced if necessary.}
   \item{ordered}{logical flag to determine if the levels should be regarded
     as ordered (in the order given).}
@@ -108,6 +108,15 @@ addNA(x, ifany=FALSE)
   be a set of new labels for the levels, or a character string, in
   which case the levels are that character string with a sequence
   number appended.
+
+  If \code{factor(x)} or \code{as.factor(x)} is applied to a numeric
+  or complex vector \code{x}, and the levels are \emph{not} specified,
+  they are constructed from \code{x} using 17 digits precision.  This
+  guarantees that different numbers are converted to different levels,
+  but may produce unwanted results for numbers with \dQuote{few decimal
+    positions}.  In such situations, it is recommended to use
+  \code{factor(format(x))} or similar, rather than simply
+  \code{factor(x)}, see the example.
 
   \code{factor(x, exclude=NULL)} applied to a factor is a no-operation
   unless there are unused levels: in that case, a factor with the
@@ -210,6 +219,10 @@ is.na(x)
 Month <- airquality$Month
 table(addNA(Month))
 table(addNA(Month, ifany=TRUE))
+
+## Converting (non-integer) numbers:
+as.factor(c(0.1, 0.2, 0.3)) # maybe not what you'd expect, so rather use
+factor(format(c(0.1, 0.2, 0.3)))
 }
 \keyword{category}
 \keyword{NA}
