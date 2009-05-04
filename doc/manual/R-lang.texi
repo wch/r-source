@@ -1871,11 +1871,14 @@ The result of this commands is as if the following had been executed
 @example
 `*tmp*` <- x
 x <- "[<-"(`*tmp*`, 3:5, value=13:15)
+rm(`*tmp*`)
 @end example
 
 Note that the index is first converted to a numeric index and then the
 elements are replaced sequentially along the numeric index, as if a
-@code{for} loop had been used.
+@code{for} loop had been used.  Any existing variable called 
+@code{`*tmp*`} will be overwritten and deleted, and this variable name 
+should not be used in code.
 
 The same mechanism can be applied to functions other than @code{[}.  The
 replacement function has the same name with @code{<-} pasted on.  Its last
@@ -1888,6 +1891,7 @@ is equivalent to
 @example
 `*tmp*` <- x
 x <- "names<-"(`*tmp*`, value=c("a","b"))
+rm(`*tmp*`)
 @end example
 
 Nesting of complex assignments is evaluated recursively
@@ -1898,6 +1902,7 @@ is equivalent to
 @example
 `*tmp*` <- x
 x <- "names<-"(`*tmp*`, value="[<-"(names(`*tmp*`), 3, value="Three"))
+rm(`*tmp*`)
 @end example
 
 
@@ -1912,11 +1917,13 @@ is equivalent to
 `*tmp*` <<- get(x, envir=parent.env(), inherits=TRUE)
 names(`*tmp*`)[3] <- "Three"
 x <<- `*tmp*`
+rm(`*tmp*`)
 @end example
 and also to
 @example
 `*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
 x <<- "names<-"(`*tmp*`, value="[<-"(names(`*tmp*`), 3, value="Three"))
+rm(`*tmp*`)
 @end example
 
 Only the target variable is evaluated in the enclosing environment, so 
@@ -1936,11 +1943,12 @@ value of @code{e} on the RHS of the superassignment statement.  It sets
  a  b 
  1 12
 @end example
-That is, the superassignment is equivalent to the three lines
+That is, the superassignment is equivalent to the four lines
 @example
 `*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
 `*tmp*`[i] <- e[i]+1
 x <<- `*tmp*`
+rm(`*tmp*`)
 @end example
 
 Similarly
@@ -1952,12 +1960,14 @@ is equivalent to
 `*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
 `*tmp*`[is.na(x)] <- 0
 x <<- `*tmp*`
+rm(`*tmp*`)
 @end example
 and not to
 @example
 `*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
 `*tmp*`[is.na(`*tmp*`)] <- 0
 x <<- `*tmp*`
+rm(`*tmp*`)
 @end example
 These two candidate interpretations differ only if there is also a
 local variable @code{x}.  It is a good idea to avoid having a local
