@@ -537,13 +537,15 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
 
     writeSectionInner <- function(section, tag)
     {
-        ## need \n unless one follows, so
-        nxt <- section[[1L]]
-        if (!attr(nxt, "Rd_tag") %in% c("TEXT", "RCODE") ||
-            substr(as.character(nxt), 1L, 1L) != "\n") of1("\n")
-        writeContent(section, tag)
-        inCodeBlock <<- FALSE
-        if (last_char != "\n") of1("\n")
+        if (length(section)) {
+	    ## need \n unless one follows, so
+	    nxt <- section[[1L]]
+	    if (!attr(nxt, "Rd_tag") %in% c("TEXT", "RCODE") ||
+		substr(as.character(nxt), 1L, 1L) != "\n") of1("\n")
+	    writeContent(section, tag)
+	    inCodeBlock <<- FALSE
+	    if (last_char != "\n") of1("\n")
+	}
     }
 
     writeSection <- function(section, tag) {

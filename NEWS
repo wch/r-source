@@ -117,6 +117,8 @@ BUG FIXES
     	
     o	stars() would do a partial plot when called with plot = FALSE;
     	it now consistently returns the locations of the stars.
+    	
+    o	Rd2latex() could not handle empty sections.
 
 
 
