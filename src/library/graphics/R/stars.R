@@ -107,13 +107,13 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 
     ## The asp argument keeps everything (the symbols!) square
     op <- par(mar = mar, xpd = xpd) ; on.exit(par(op))
-    if(!add)
+    if(plot && !add)
         plot(0, type="n", ..., xlim=xlim, ylim=ylim,
              main = main, sub = sub, xlab = xlab, ylab=ylab,
              asp = 1, axes = axes)
 
     if(!plot)
-        return()
+        return(locations)
 
     s.x <- xloc + x * rep.int(cos(angles), rep.int(n.loc,n.seg))
     s.y <- yloc + x * rep.int(sin(angles), rep.int(n.loc,n.seg))

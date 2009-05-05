@@ -114,6 +114,9 @@ BUG FIXES
     o	Rd2txt() could not handle empty descriptions of items in an Rd
     	file (reported by Mark Bravington), and did not wrap long lists
     	of arguments if they were given in a single item.
+    	
+    o	stars() would do a partial plot when called with plot = FALSE;
+    	it now consistently returns the locations of the stars.
 
 
 

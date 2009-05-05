@@ -103,6 +103,10 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
 
   Only one page of output is produced.
 }
+\value{
+  Returns the locations of the plots in a two column matrix, invisibly
+  when \code{plot=TRUE}.
+}
 \author{Thomas S. Dye}
 \seealso{
   \code{\link{symbols}} for another way to draw stars and other symbols.
