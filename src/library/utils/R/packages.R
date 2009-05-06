@@ -183,7 +183,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 	    return(invisible())
     }
     else if(!(is.matrix(oldPkgs) && is.character(oldPkgs)))
-	stop("invalid 'oldPkgs'; must be as result from old.packages()")
+	stop("invalid 'oldPkgs'; must be a result from old.packages()")
 
     if(is.character(ask) && ask == "graphics") {
         if(.Platform$OS.type == "unix" && .Platform$GUI != "AQUA"
@@ -192,7 +192,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                                        title = "Packages to be updated")
             update <- oldPkgs[match(k, oldPkgs[,1L]), , drop=FALSE]
         } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
-            k <- select.list(oldPkgs[,1], oldPkgs[,1], multiple = TRUE,
+            k <- select.list(oldPkgs[,1L], oldPkgs[,1L], multiple = TRUE,
                              title = "Packages to be updated")
             update <- oldPkgs[match(k, oldPkgs[,1L]), , drop=FALSE]
         } else update <- text.select(oldPkgs)
@@ -202,11 +202,11 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
 
     if(!is.null(update)) {
-        if(is.null(instlib)) instlib <-  update[,"LibPath"]
+        if(is.null(instlib)) instlib <-  update[, "LibPath"]
         ## do this a library at a time, to handle dependencies correctly.
         libs <- unique(instlib)
         for(l in libs)
-            install.packages(update[instlib == l ,"Package"], l,
+            install.packages(update[instlib == l , "Package"], l,
                              contriburl = contriburl, method = method,
                              available = available, ..., type = type)
     }
@@ -221,12 +221,11 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
     if(!missing(instPkgs)) {
-        if(!is.matrix(instPkgs) || !is.character(instPkgs[,"Package"]))
+        ## actually we need rather more than this
+        if(!is.matrix(instPkgs) || !is.character(instPkgs[, "Package"]))
             stop("illformed 'instPkgs' matrix")
     }
     if(NROW(instPkgs) == 0L) return(NULL)
-    ##    stop(gettextf("no installed packages for (invalid?) 'lib.loc=%s'",
-    ##                  lib.loc), domain = NA)
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
@@ -246,6 +245,8 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     ## for packages contained in bundles use bundle names from now on
     ok <- !is.na(instPkgs[, "Bundle"])
     instPkgs[ok, "Package"] <- instPkgs[ok, "Bundle"]
+
+    ## This should be true in the PACKAGES file, is on CRAN
     ok <- !is.na(available[, "Bundle"])
     available[ok, "Package"] <- available[ok, "Bundle"]
 
@@ -470,6 +471,8 @@ remove.packages <- function(pkgs, lib)
         warning(gettextf("argument 'lib' is missing: using %s", lib),
                 immediate. = TRUE, domain = NA)
     }
+    ## For bundles, remove all of the bundle.  This should remain
+    ## this way even if bundles are unbundled, for back compatibility.
     have <- installed.packages(lib.loc=lib)
     is_bundle <- pkgs %in% have[, "Bundle"]
     pkgs0 <- pkgs; pkgs <- pkgs[!is_bundle]
@@ -502,6 +505,8 @@ download.packages <- function(pkgs, destdir, available = NULL,
     retval <- matrix(character(0L), 0L, 2L)
     for(p in unique(pkgs))
     {
+        ## Normally bundles have a Package field of the same name, but
+        ## allow for repositories that do not.
         ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
         ok <- ok & !is.na(ok)
         if(!any(ok))
