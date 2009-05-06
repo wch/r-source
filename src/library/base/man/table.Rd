@@ -65,8 +65,8 @@ is.table(x)
   arguments.
 
   Both \code{exclude} and \code{useNA} operate on an "all or none"
-  basis. If you want to control the dimensions of a multiway table
-  separately, modify each argument using \code{factor} or \code{addNA}
+  basis.  If you want to control the dimensions of a multiway table
+  separately, modify each argument using \code{factor} or \code{addNA}.
 
   The \code{summary} method for class \code{"table"} (used for objects
   created by \code{table} or \code{\link{xtabs}}) which gives basic

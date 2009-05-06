@@ -143,7 +143,7 @@ gettextf(fmt, \dots, domain = NULL)
   precision were omitted.  The argument should be integer, but a double
   argument will be coerced to integer.
 
-  There is a limit of 8192 bytes on elements of \code{fmt}, on
+  There is a limit of 8192 bytes on elements of \code{fmt}, and on
   strings included from a single \code{\%}\emph{letter} conversion
   specification.
 
@@ -162,8 +162,9 @@ gettextf(fmt, \dots, domain = NULL)
 \section{Warning}{
   The format string is passed down the OS's \code{sprintf} function, and
   incorrect formats can cause the latter to crash the \R process .  \R
-  does perform basic sanity checks on the format, but not all possible user
-  errors will be caught and some might be terminal.
+  does perform sanity checks on the format, and since \R 2.10.0, we have
+  not seen crashes anymore.  But not all possible user errors on all
+  platforms have been tested, and some might be terminal.
 }
 
 \references{
