@@ -49,6 +49,11 @@ NEW FEATURES
     o	For completeness, old.packages() allows 'type' to be specified
 	(you could always specify 'available' or 'contriburl').
 
+    o	available.packages() by default only returns information on
+	the latest versions of packages whose version requirements are
+	satisified by the currently running R: use 'duplicates = TRUE'
+	to return information on all avalilable versions.
+
 
 BUG FIXES
 
@@ -76,8 +81,8 @@ BUG FIXES
 
 NEW FEATURES
 
-    o	new anyDuplicated(x) returns 0 (= FALSE) or the index of the
-	first duplicated entry of x.
+    o	New function anyDuplicated(x) returns 0 (= FALSE) or the index
+	of the first duplicated entry of x.
 
     o	matplot(), matlines() and matpoints() now also obey a 'lend'
 	argument, determining line end styles. (Wish of PR#13619).
@@ -130,8 +135,9 @@ BUG FIXES
 
     o	Rd2latex() could not handle empty sections.
 
-    o	install.packages() would fail on a repository which contained
-	only one package, but with multiple versions of that package.
+    o	old.packages() and hence update.packages() would fail on a
+	repository which contained only one package but with multiple
+	versions of that package.
 
 
 

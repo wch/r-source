@@ -26,7 +26,7 @@ update.packages(lib.loc = NULL, repos = getOption("repos"),
                 type = getOption("pkgType"))
 
 available.packages(contriburl = contrib.url(getOption("repos")),
-                   method, fields = NULL)
+                   method, fields = NULL, duplicates = FALSE)
 
 old.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
@@ -190,6 +190,9 @@ contrib.url(repos, type = getOption("pkgType"))
     \code{NULL} (default).  Unavailable fields result in \code{NA}
     values.
   }
+  \item{duplicates}{logical.  If true, information on all versions of
+    duplicated packages are returned, otherwise only on the
+    highest-numbered versions.}  
 }
 \details{
   All of these functions work with the names of a package or bundle (and
@@ -198,17 +201,18 @@ contrib.url(repos, type = getOption("pkgType"))
   information).
   
   \code{available.packages} returns a matrix of details corresponding to
-  packages/bundles currently available at  one or more repositories. The
+  packages/bundles currently available at one or more repositories. The
   current list of packages is downloaded over the internet (or copied
   from a local mirror).  It returns only packages whose version
-  requirements are met by the running version of \R.
+  and OS type requirements are met by the running version of \R, and by
+  default only returns information on the latest versions.
   
   \code{old.packages} compares the information from
-  \code{available.packages} with that from \code{instPkgs}
-  (\code{\link{installed.packages}} by default) and reports installed
+  \code{available.packages} with that from \code{instPkgs} (computed by
+  \code{\link{installed.packages}} by default) and reports installed
   packages/bundles that have newer versions on the repositories or, if
   \code{checkBuilt = TRUE}, that were built under an earlier minor
-  version of \R (for example built under 2.0.x when running \R 2.1.1).
+  version of \R (for example built under 2.8.x when running \R 2.9.0).
 #ifdef windows
   (There is no check that the version on the repository was built under
   the current minor version of \R, but it is advertised as being
@@ -329,7 +333,7 @@ contrib.url(repos, type = getOption("pkgType"))
 \note{
   Some binary distributions of \R have \code{INSTALL} in a separate
   bundle, e.g. an \code{R-devel} RPM.  \code{install.packages} will
-  give an error if called on such a system.
+  give an error if called with \code{type = "source"} on such a system.
 }
 #endif
 #ifdef windows

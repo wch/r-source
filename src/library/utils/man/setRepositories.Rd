@@ -37,6 +37,10 @@ setRepositories(graphics = getOption("menu.graphics"), ind = NULL)
   \code{options("repos")} plus those marked as default in the
   list of known repositories.
 
+  The list of repositiories offered depends on the setting of option
+  \code{"pkgType"} as some repositories only offer a subset of types
+  (e.g. only source packages or not Mac OS X binary packages).
+
   This function requires the \R session to be interactive unless
   \code{ind} is supplied.
 }

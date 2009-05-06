@@ -16,7 +16,7 @@
 
 available.packages <-
     function(contriburl = contrib.url(getOption("repos")), method,
-             fields = NULL)
+             fields = NULL, duplicates = FALSE)
 {
     requiredFields <-
         tools:::.get_standard_repository_db_fields()
@@ -124,6 +124,7 @@ available.packages <-
         }
         res <- res[apply(res, 1L, .checkOStype), , drop=FALSE]
     }
+    if(length(res) && !duplicates) res <- .remove_stale_dups(res)
     res
 }
 
