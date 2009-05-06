@@ -5639,6 +5639,16 @@ local({ oo <- options(warn=2); on.exit(options(oo))
 	assertError(factor(1:2,	 labels=levs))
     })
 ## failed in R < 2.10.0
+L <- c("no", "yes")
+x <- (5:1)/10; lx <- paste("0.", 1:5, sep="")
+y <- pi + (-9:9)*2^-53
+stopifnot(identical(factor(c(2, 1:2), labels = L),
+		    structure(c(2L, 1:2), .Label = L, class="factor")),
+	  identical(factor(x),
+		    structure(5:1, .Label = lx, class="factor")),
+	  length(levels(factor(y))) == 1, length(unique(y)) == 5,
+	  length(levels(factor(y, keepUnique=TRUE))) == 5)
+## partly failed in R <= 2.9.0, partly in R-devel(2.10.0)
 
 ## "misuses" of sprintf()
 assertError(sprintf("%S%"))

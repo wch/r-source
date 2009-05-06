@@ -14,12 +14,35 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-factor <- function (x = character(), levels = sort(unique.default(x),
-                    na.last = TRUE), labels=levels, exclude = NA,
-                    ordered = is.ordered(x))
+factor <- function(x = character(),
+		   levels = sort(unique.default(x), na.last=TRUE),
+		   labels = levels, exclude = NA,
+		   ordered = is.ordered(x), keepUnique = FALSE,
+		   digitsLabels = if(keepUnique) 17 else 15)
 {
+    p0 <- function(...) paste(..., sep = "")
     exclude <- as.vector(exclude, typeof(x))
-
+    asChar <- as.character
+    if((dbl <- is.double(x)) || is.complex(x)) {
+	stopifnot(is.numeric(digitsLabels), length(digitsLabels) == 1,
+		  digitsLabels == round(digitsLabels))
+	if(missing(levels) && !keepUnique) {
+	    ## Lump very similar x[] values together :
+	    x[] <- signif(if(dbl) as.double(x) else as.complex(x),# << drop class
+			  digitsLabels)
+	} else {
+	    ## Ensure that unique numeric levels (or labels) lead to unique labels
+	    ## that are still as.numeric(.)able: some use names(table(.)) for that!
+	    asChar <- function(x)
+		if(is.character(x)) x
+		else if(is.double(x))
+		    ifelse(is.na(x), NA_character_,
+			   sprintf("%.*g", digitsLabels, x))
+		else if(is.complex(x))
+		    p0(asChar(Re(x)),"+",asChar(Im(x)),"i")
+		else as.character(x)
+	}
+    }
     if(!missing(levels) && length(levels) && (i <- anyDuplicated(levels))) {
 	## user-specified..
 	warning("non-unique factor levels are unique()d")
@@ -34,14 +57,6 @@ factor <- function (x = character(), levels = sort(unique.default(x),
     if(!any(nl == c(1L, nL)))
 	stop(gettextf("invalid labels; length %d should be 1 or %d", nl, nL),
 	     domain = NA)
-    p0 <- function(...) paste(..., sep = "")
-    ## Need to make sure that unique numeric levels (or labels) lead to unique labels
-    ## that are still as.numeric(.)able: People use names(table(.)) for that!
-    asChar <- function(x) ## '17' seems minimal (and +- portable)
-	if(is.double(x)) ifelse(is.na(x), NA_character_, sprintf("%.17g", x))
-	else if(is.complex(x)) p0(asChar(Re(x)),"+",asChar(Im(x)),"i")
-	else as.character(x)
-    ## Consider e.g. levels <- pi + c(0, -4e-16, 5e-16)
     levels(f) <- ## nl == nL or 1
 	if (nl == nL) asChar(labels) else p0(labels, seq_along(levels))
     class(f) <- c(if(ordered)"ordered", "factor")
