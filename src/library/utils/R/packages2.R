@@ -114,31 +114,12 @@ install.packages <-
         dependencies <- if(!missing(lib) && length(lib) > 1L) FALSE
         else c("Depends", "Imports")
 
-    explode_bundles <- function(a)
-    {
-        contains <- .find_bundles(a, FALSE)
-        extras <- unlist(lapply(names(contains), function(x)
-                                paste(contains[[x]], " (", x, ")", sep="")))
-        sort(as.vector(c(a[, 1L], extras)))
-    }
-
-    implode_bundles <- function(pkgs)
-    {
-    	bundled <- grep(".* \\(.*\\)$", pkgs)
-    	if (length(bundled)) {
-    	    bundles <- unique(gsub(".* \\((.*)\\)$", "\\1", pkgs[bundled]))
-    	    pkgs <- c(pkgs[-bundled], bundles)
-    	}
-    	pkgs
-    }
-
-
-      # Compute the configuration arguments for a given package.
-      # If configure.args is an unnamed character vector, use that.
-      # If it is named, match the pkg name to the names of the character vector
-      # and if we get a match, use that element.
-      # Similarly, configure.args is a list(), match pkg to the names pkg and
-      # use that element, collapsing it into a single string.
+    ## Compute the configuration arguments for a given package.
+    ## If configure.args is an unnamed character vector, use that.
+    ## If it is named, match the pkg name to the names of the character vector
+    ## and if we get a match, use that element.
+    ## Similarly, configure.args is a list(), match pkg to the names pkg and
+    ## use that element, collapsing it into a single string.
 
     getConfigureArgs <-  function(pkg)
     {
@@ -191,6 +172,7 @@ install.packages <-
     }
 
     if(missing(pkgs) || !length(pkgs)) {
+        ## if no packages were specified, use a menu
 	if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
 	    SelectList <- select.list
 	} else if(.Platform$OS.type == "unix" &&
@@ -203,6 +185,25 @@ install.packages <-
 	    available <- available.packages(contriburl = contriburl,
 					    method = method)
 	if(NROW(available)) {
+            explode_bundles <- function(a)
+            {
+                contains <- .find_bundles(a, FALSE)
+                extras <- unlist(lapply(names(contains), function(x)
+                                        paste(contains[[x]], " (", x, ")", sep="")))
+                sort(as.vector(c(a[, 1L], extras)))
+            }
+
+            implode_bundles <- function(pkgs)
+            {
+                bundled <- grep(".* \\(.*\\)$", pkgs)
+                if (length(bundled)) {
+                    bundles <- unique(gsub(".* \\((.*)\\)$", "\\1",
+                                           pkgs[bundled]))
+                    pkgs <- c(pkgs[-bundled], bundles)
+                }
+                pkgs
+            }
+
 	    a <- explode_bundles(available)
 	    pkgs <- implode_bundles(SelectList(a, multiple = TRUE,
 					       title = "Packages"))
