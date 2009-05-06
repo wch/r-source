@@ -120,6 +120,9 @@ BUG FIXES
     	
     o	Rd2latex() could not handle empty sections.
 
+    o	install.packages() could fail on a repository which contained
+	only one package (possibly with multiple versions).
+
 
 
 		CHANGES IN R VERSION 2.9.0
