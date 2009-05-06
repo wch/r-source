@@ -472,12 +472,6 @@ print.difftime <- function(x, digits = getOption("digits"), ...)
     invisible(x)
 }
 
-round.difftime <- function (x, digits = 0, ...)
-{
-   units <- attr(x, "units")
-   structure(NextMethod(), units=units, class="difftime")
-}
-
 "[.difftime" <- function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
@@ -553,11 +547,21 @@ Ops.difftime <- function(e1, e2)
               class = "difftime")
 }
 
+## "Math": some methods *should* work; the other ones are meaningless :
 Math.difftime <- function (x, ...)
 {
-    stop(gettextf("'%s' not defined for \"difftime\" objects", .Generic),
-         domain = NA)
+    switch(.Generic,
+           'abs'=, 'sign'=,
+           'floor'=, 'ceiling'=, 'trunc'=,
+           'round'=, 'signif'= {
+               units <- attr(x, "units")
+               structure(NextMethod(), units=units, class="difftime")
+           },
+           ### otherwise :
+           stop(gettextf("'%s' not defined for \"difftime\" objects", .Generic),
+                domain = NA))
 }
+
 
 mean.difftime <- function (x, ..., na.rm = FALSE)
     structure(mean(unclass(x), ...), units=attr(x, "units"), class="difftime")

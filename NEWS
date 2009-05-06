@@ -42,6 +42,10 @@ NEW FEATURES
         show the locale in a nicer format and have arguments to
         suppress locale information.
 
+    o	In addition to previously only round(), there are other 'Math'
+	group (S3) methods for 'difftime', such as floor(), signif(),
+	abs(), etc.
+
 
 BUG FIXES
 

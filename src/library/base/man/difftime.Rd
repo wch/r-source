@@ -8,7 +8,6 @@
 \alias{as.difftime}
 \alias{as.double.difftime}
 \alias{print.difftime}
-\alias{round.difftime}
 \alias{format.difftime}
 \alias{units.difftime}
 \alias{units<-.difftime}
@@ -23,7 +22,7 @@
 \alias{units<-}
 \title{Time Intervals}
 \description{
-  Create, print and round time intervals.
+  Time intervals creation, printing, and some arithmetic.
 }
 \usage{
 \special{time1 - time2}
@@ -34,12 +33,14 @@ difftime(time1, time2, tz = "",
 
 as.difftime(tim, format = "\%X", units="auto")
 
-
-\method{round}{difftime}(x, digits = 0, \dots)
 \method{format}{difftime}(x, ...)
 \method{units}{difftime}(x)
 \method{units}{difftime}(x) <- value
 \method{as.double}{difftime}(x, units="auto", ...)
+
+## Group methods, notably for round(), signif(), floor(), ceiling(),
+## trunc(), abs(); called directly, *not* as Math():
+\method{Math}{difftime}(x, \dots)
 }
 \arguments{
   \item{time1, time2}{\link{date-time} or \link[base:Dates]{date} objects.}
@@ -60,10 +61,12 @@ as.difftime(tim, format = "\%X", units="auto")
 \details{
   Function \code{difftime} calculates a difference of two date/time objects
   and returns an object of class \code{"difftime"}
-  with an attribute indicating the units.  There is a \code{\link{round}}
-  method for objects of this class, as well as methods for the
-  group-generic (see \code{\link[base:groupGeneric]{Ops}}) logical and
-  arithmetic operations.
+  with an attribute indicating the units.  The \code{\link{Math}} group
+  method provides \code{\link{round}}, \code{\link{signif}},
+  \code{\link{floor}}, \code{\link{ceiling}}, \code{\link{trunc}},
+  \code{\link{abs}}, and \code{\link{sign}} methods for objects of this
+  class, and there are methods for the group-generic (see
+  \code{\link[base:groupGeneric]{Ops}}) logical and arithmetic operations.
 
   If \code{units = "auto"}, a suitable set of units is chosen, the largest
   possible (excluding \code{"weeks"}) in which all the absolute
@@ -88,7 +91,7 @@ as.difftime(tim, format = "\%X", units="auto")
   The \code{as.double} method returns the numeric value expressed in
   the specified units.  Using  \code{units="auto"} means the units of the
   object.
-  
+
   The \code{format} method simply formats the numeric value and appends
   the units as a text string.
 }
