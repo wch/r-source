@@ -139,6 +139,9 @@ BUG FIXES
 	repository which contained only one package but with multiple
 	versions of that package.
 
+    o	as.character.Rd() added extra braces when displaying two-argument
+    	macros.  (Report and fix by Manuel Eugster.)
+
 
 
 		CHANGES IN R VERSION 2.9.0

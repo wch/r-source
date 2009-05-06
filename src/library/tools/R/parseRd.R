@@ -75,6 +75,8 @@ print.Rd <- function(x, ...) {
 }
 
 as.character.Rd <- function(x, ...) {
+    TWOARG <- c("\\section", "\\item", "\\enc", "\\method", "\\S3method", 
+                "\\S4method", "\\tabular", "\\deqn", "\\eqn")
     pr <- function(x) {
         tag <- attr(x, "Rd_tag")
         if (is.null(tag) || tag == "LIST") tag <- ""
@@ -87,6 +89,9 @@ as.character.Rd <- function(x, ...) {
     	    	x <- x[[2L]]
     	    	for (i in seq_along(x)) result <- c(result, pr(x[[i]]))
     	    	result <- c(result, "#endif\n")
+    	    } else if (tag %in% TWOARG) {
+    	    	result <- tag
+    	    	for (i in seq_along(x)) result <- c(result, pr(x[[i]]))
     	    } else {
     	    	result <- tag
     	    	if (!is.null(option <- attr(x, "Rd_option"))) 
