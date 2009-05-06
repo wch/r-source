@@ -12,10 +12,10 @@
 NEW FEATURES
 
     o	polygon(), pdf() and postscript() now have a parameter
-	fillOddEven (default FALSE), which controls the mode used for
+	'fillOddEven' (default FALSE), which controls the mode used for
 	polygon fills of self-intersecting shapes.
 
-    o	new debugonce() function; further, getOption("deparse.max.lines")
+    o	New debugonce() function; further, getOption("deparse.max.lines")
 	is now observed as well when debugging, from a code suggestion by
 	John Brzustowski.
 
@@ -33,18 +33,21 @@ NEW FEATURES
 	which determine the exact behavior in the case of a (non-integer)
 	numeric argument.
 
-    o	new print() (S3) method for class "function", also used for
+    o	New print() (S3) method for class "function", also used for
 	auto-printing.	Further, .Primitive functions now print and
 	auto-print identically.  The new method is based on code
 	suggestions by Romain Francois.
 
-    o   the print() and toLatex() methods for class "sessionInfo" now
+    o   The print() and toLatex() methods for class "sessionInfo" now
         show the locale in a nicer format and have arguments to
         suppress locale information.
 
     o	In addition to previously only round(), there are other 'Math'
 	group (S3) methods for 'difftime', such as floor(), signif(),
 	abs(), etc.
+
+    o	For completeness, old.packages() allows 'type' to be specified
+	(you could always specify 'available' or 'contriburl').
 
 
 BUG FIXES
@@ -127,8 +130,8 @@ BUG FIXES
 
     o	Rd2latex() could not handle empty sections.
 
-    o	install.packages() could fail on a repository which contained
-	only one package (possibly with multiple versions).
+    o	install.packages() would fail on a repository which contained
+	only one package, but with multiple versions of that package.
 
 
 

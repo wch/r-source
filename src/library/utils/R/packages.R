@@ -174,9 +174,9 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         available <- available.packages(contriburl = contriburl,
                                         method = method)
     if(is.null(oldPkgs)) {
+        ## since 'available' is supplied, 'contriburl' and 'method' are unused
 	oldPkgs <- old.packages(lib.loc = lib.loc,
-				contriburl = contriburl,
-				method = method,
+				contriburl = contriburl, method = method,
 				available = available, checkBuilt = checkBuilt)
 	if(is.null(oldPkgs))
 	    return(invisible())
@@ -212,9 +212,10 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 }
 
 old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
-                         contriburl = contrib.url(repos),
+                         contriburl = contrib.url(repos, type),
                          instPkgs = installed.packages(lib.loc = lib.loc),
-                         method, available = NULL, checkBuilt = FALSE)
+                         method, available = NULL, checkBuilt = FALSE,
+                         type = getOption("pkgType"))
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()

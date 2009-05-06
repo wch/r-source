@@ -1,6 +1,6 @@
 % File src/library/utils/man/update.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{update.packages}
@@ -22,16 +22,17 @@ update.packages(lib.loc = NULL, repos = getOption("repos"),
                 contriburl = contrib.url(repos, type),
                 method, instlib = NULL,
                 ask = TRUE, available = NULL,
-                oldPkgs = NULL, \dots,
-                checkBuilt = FALSE, type = getOption("pkgType"))
+                oldPkgs = NULL, \dots, checkBuilt = FALSE,
+                type = getOption("pkgType"))
 
 available.packages(contriburl = contrib.url(getOption("repos")),
                    method, fields = NULL)
 
 old.packages(lib.loc = NULL, repos = getOption("repos"),
-             contriburl = contrib.url(repos),
+             contriburl = contrib.url(repos, type),
              instPkgs = installed.packages(lib.loc = lib.loc),
-             method, available = NULL, checkBuilt = FALSE)
+             method, available = NULL, checkBuilt = FALSE,
+             type = getOption("pkgType"))
 
 new.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
