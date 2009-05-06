@@ -869,5 +869,6 @@ function(pkgs, available, dependencies = c("Depends", "Imports"))
         stale_dups[i:end_i] <- wh
         i <- end_i + 1L
     }
-    if(length(stale_dups)) ap[-stale_dups, ] else ap
+    ## Possible to have only one package in a repository
+    if(length(stale_dups)) ap[-stale_dups, , drop = FALSE] else ap
 }
