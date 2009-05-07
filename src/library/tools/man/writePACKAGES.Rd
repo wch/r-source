@@ -1,6 +1,6 @@
 % File src/library/tools/man/writePACKAGES.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{write_PACKAGES}
@@ -13,7 +13,8 @@
 \usage{
 write_PACKAGES(dir = ".", fields = NULL,
                type = c("source", "mac.binary", "win.binary"),
-               verbose = FALSE, unpacked = FALSE, subdirs = FALSE)
+               verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
+               latestOnly = FALSE)
 }
 \arguments{
   \item{dir}{Character vector describing the location of the repository
@@ -41,6 +42,8 @@ write_PACKAGES(dir = ".", fields = NULL,
     available in unpacked form or not (default).}
   \item{subdirs}{either logical (to indicate if subdirectories should be
     included) or a character vector of subdirectories to include.}
+  \item{latestOnly}{logical: if multiple versions of a package are
+    available should only the latest version be included?}
 }
 \details{
   \code{type = "win.binary"} uses \code{\link{unz}} connections to read

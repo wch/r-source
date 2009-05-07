@@ -17,7 +17,8 @@
 write_PACKAGES <-
 function(dir = ".", fields = NULL,
          type = c("source", "mac.binary", "win.binary"),
-         verbose = FALSE, unpacked = FALSE, subdirs = FALSE)
+         verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
+         latestOnly = FALSE)
 {
     if(missing(type) && .Platform$OS.type == "windows")
         type <- "win.binary"
@@ -45,6 +46,7 @@ function(dir = ".", fields = NULL,
             colnames(desc) <- fields
             bundle <- !is.na(desc[,"Bundle"])
             desc[bundle, "Package"] <- desc[bundle, "Bundle"]
+            if(latestOnly) desc <- utils:::.remove_stale_dups(desc)
 
             ## Writing PACKAGES file from matrix desc linewise in order to
             ## omit NA entries appropriately:
