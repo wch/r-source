@@ -226,25 +226,10 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
             stop("illformed 'instPkgs' matrix")
     }
     if(NROW(instPkgs) == 0L) return(NULL)
-    if(is.null(available))
-        available <- available.packages(contriburl = contriburl,
-                                        method = method)
-    available <- .remove_stale_dups(available)
 
-    ## For bundles it is sufficient to install the first package
-    ## contained in the bundle, as this will install the complete bundle
-    ## However, a bundle might be installed in more than one place.
-    for(b in unique(instPkgs[, "Bundle"])){
-        if(!is.na(b))
-            for (w in unique(instPkgs[, "LibPath"])) {
-                ok <- which(instPkgs[, "Bundle"] == b & instPkgs[, "LibPath"] == w)
-                if(length(ok) > 1L) instPkgs <- instPkgs[-ok[-1L], ]
-            }
-    }
-
-    ## for packages contained in bundles use bundle names from now on
-    ok <- !is.na(instPkgs[, "Bundle"])
-    instPkgs[ok, "Package"] <- instPkgs[ok, "Bundle"]
+    available <- if(is.null(available))
+        available.packages(contriburl = contriburl, method = method)
+    else .remove_stale_dups(available)
 
     ## This should be true in the PACKAGES file, is on CRAN
     ok <- !is.na(available[, "Bundle"])
@@ -256,8 +241,16 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     minorR[[c(1L, 3L)]] <- 0L # set patchlevel to 0
     for(k in 1L:nrow(instPkgs)) {
         if (instPkgs[k, "Priority"] %in% "base") next
-        z <- match(instPkgs[k, "Package"], available[,"Package"])
-        if(is.na(z)) next
+        z <- match(instPkgs[k, "Package"], available[, "Package"])
+        if(is.na(z)) {
+            bundle <- instPkgs[k, "Bundle"]
+            if(!is.na(bundle)) {
+                ## no match to the package, so look for update to the bundle
+                z <- match(bundle, available[, "Package"])
+                if(is.na(z)) next
+                instPkgs[k, "Package"] <- bundle
+            } else next
+        }
         onRepos <- available[z, ]
         ## works OK if Built: is missing (which it should not be)
 	if((!checkBuilt || package_version(instPkgs[k, "Built"]) >= minorR) &&
@@ -280,7 +273,8 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         colnames(update) <- c("Package", "LibPath", "Installed", "Built",
                               "ReposVer", "Repository")
     rownames(update) <- update[, "Package"]
-    update
+    ## finally, remove duplicate rows (which bundles may give)
+    update[!duplicated(update), , drop = FALSE]
 }
 
 new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
@@ -706,12 +700,10 @@ compareVersion <- function(a, b)
 .find_bundles <- function(available, all=TRUE)
 {
     ## Sort out bundles. Returns a named list of character vectors
+    ## Once upon a time all=TRUE told it about the VR bundle.
+    ## which might not have been in 'available' on Windows.
     bundles <- available[!is.na(available[, "Bundle"]), "Contains"]
-    ans <- strsplit(bundles, "[[:space:]]+")
-    ## As VR is recommended, it may not be the same version
-    ## as on CRAN (and for Windows etc may not be there).
-    if(all) ans$VR <- c("MASS", "class", "nnet","spatial")
-    ans
+    strsplit(bundles, "[[:space:]]+")
 }
 
 .clean_up_dependencies <- function(x, available = NULL)

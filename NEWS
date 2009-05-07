@@ -29,9 +29,10 @@ NEW FEATURES
 	levels are unique (as was always the implied intention).  Factors
 	with duplicated levels are still constructible by low-level means,
 	but are now declared illegal.
-	factor() gains new optional arguments 'keepUnique' and 'digitsLabels'
-	which determine the exact behavior in the case of a (non-integer)
-	numeric argument.
+
+	factor() gains new optional arguments 'keepUnique' and
+	'digitsLabels' which determine the exact behavior in the case
+	of a (non-integer) numeric argument.
 
     o	New print() (S3) method for class "function", also used for
 	auto-printing.	Further, .Primitive functions now print and
@@ -53,6 +54,11 @@ NEW FEATURES
 	the latest versions of packages whose version requirements are
 	satisified by the currently running R: use 'duplicates = TRUE'
 	to return information on all avalilable versions.
+
+
+DEPRECATED & DEFUNCT
+
+    o	Bundles of packages are deprecated.
 
 
 BUG FIXES
