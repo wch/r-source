@@ -105,6 +105,11 @@ NEW FEATURES
 	It no longer reports on partially installed bundles (since
 	members can be updated individually if a bundle is unbundled).
 
+    o	old.packages() and hence updates.packages() will look for
+	updates to members of package bundles before updates to the
+	whole bundle: this allow bundles to be split and installations
+	updated.
+
 
 BUG FIXES
 
