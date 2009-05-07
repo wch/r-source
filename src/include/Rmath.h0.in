@@ -186,11 +186,13 @@ double  Rlog1p(double);
 
 
 #ifdef MATHLIB_STANDALONE
-/* "copy-paste" R_ext/Boolean.h : */
+# ifndef R_EXT_BOOLEAN_H_
+/* "copy-paste" R_ext/Boolean.h if not already included: */
  #define R_EXT_BOOLEAN_H_
  #undef FALSE
  #undef TRUE
  typedef enum { FALSE = 0, TRUE } Rboolean;
+# endif
 #else
 # include <R_ext/Boolean.h>
 #endif
