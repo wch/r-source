@@ -297,32 +297,19 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
-    ## For packages contained in bundles use bundle names from now on.
-    ## We used not to have enough information to know if they are complete,
-    ## as they may be out of date and the contents may have changed
-    ## However, as from 2.1.0 we install the Contains: field.
-    ok <- !is.na(instPkgs[, "Bundle"])
-    if(any(ok)) { # we have at least one bundle installed
-        for(b in unique(instPkgs[ok, "Bundle"]))
-            if(!is.na(b)) {
-                if(! b %in% rownames(available)) next
-                ok1 <- which(instPkgs[, "Bundle"] == b)
-                contains <- instPkgs[ok1[1L], "Contains"]
-                if(!is.na(contains)) {
-                    contains <- strsplit(contains, "[[:space:]]+")[[1L]]
-                    if(!all(contains %in% instPkgs[ok1, "Package"]))
-                        warning(gettextf("bundle '%s' is incompletely installed", b), domain = NA)
-                }
-                new <- setdiff(strsplit(available[b, "Contains"], "[[:space:]]+")[[1L]],
-                               instPkgs[ok1, "Package"])
-                if(length(new))
-                    warning(gettextf("bundle '%s' has extra contents %s", b,
-                                     paste(sQuote(new), collapse = ", ")),
-                            domain = NA)
-            }
-    }
-    instPkgs[ok, "Package"] <- instPkgs[ok, "Bundle"]
+
     installed <- unique(instPkgs[, "Package"])
+
+    ## We need to work out what to do with bundles, and unfortunately some
+    ## people have used the same name for a bundle and a package (both as
+    ## one of the components and replacing a package by a bundle or v.v.).
+    ## Since 'available' will have names of bundles or single packages, we
+    ## add the bundle names to the list of installed packages: this means
+    ## that if there is a package installed with the name of a bundle, the
+    ## bundle is regarded as installed.
+    ok <- !is.na(instPkgs[, "Bundle"])
+    if(any(ok)) installed <- c(installed, unique(instPkgs[ok, "Bundle"]))
+
     poss <- sort(unique(available[ ,"Package"])) # sort in local locale
     res <- setdiff(poss, installed)
 

@@ -90,6 +90,13 @@ NEW FEATURES
     o	bw.SJ(), bw.bcv() and bw.ucv() now gain an optional 'tol'
     	argument allowing more accurate estimates.
 
+    o	new.packages() no longer regards packages with the same name
+	as a member of an installed bundle as 'new' (this is now
+	consistent with the dependency checks in install.packages()).
+  	
+	It no longer reports on partially installed bundles (since
+	members can be updated individually if a bundle is unbundled).
+
 
 BUG FIXES
 
@@ -101,7 +108,7 @@ BUG FIXES
     o	col2rgb("#00000080", TRUE) would return the background colour.
 	(Reported by Hadley Wickham.)
 
-    o	interaction() now ensures that its result's levels are unique.
+    o	interaction() now ensures that the levels of the result are unique.
 
     o	packageDescription() and hence sessionInfo() now report the correct
 	package version also for a non-attached loaded namespace of
