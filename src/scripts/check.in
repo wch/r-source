@@ -2314,27 +2314,6 @@ sub check_pkg {
 			      "soon as of the next release of R.\n",
 			      "See ?Deprecated.\n")));
 	}
-	@bad_lines = grep(/^Warning: package '.*' has been merged into/,
-			  @lines);
-	## Could make this more precise by looking for an exact match
-	## for one of the defunct stubs, but we currently do not get
-	## R_PKGS_STUBS from 'share/make/vars.mk'.
-	if(scalar(@bad_lines) > 0) {
-	    if($any) {
-		$log->print("\nAdditional significant warnings:\n");
-	    }
-	    else {
-		$log->warning();
-		$any++;
-		$log->print("Found the following significant " .
-			    "warnings:\n");
-	    }
-	    $log->print("  " . join("\n  ", @bad_lines) . "\n");
-	    $log->print(wrap("", "",
-			     ("Support for loading defunct former base",
-			      "packages may be removed as soon as of",
-			      "the next release of R.\n")));
-	}
 	$log->result("OK") unless($any);
 
 	## Try to compare results from running the examples to a saved

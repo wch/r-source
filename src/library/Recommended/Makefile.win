@@ -14,7 +14,6 @@ include ../../gnuwin32/MkRules
 ## packages from the CRAN master directory. 
 
 OBJECTS = $(R_PKGS_RECOMMENDED_SOURCES:=.ts)
-OBJECTS_SRC = $(R_PKGS_RECOMMENDED_SOURCES:=.tgz)
 
 CLEANFILES = $(OBJECTS) stamp-recommended
 

@@ -20,23 +20,7 @@
 getNamespace <- function(name) {
     ns <- .Internal(getRegisteredNamespace(as.name(name)))
     if (! is.null(ns)) ns
-    else tryCatch(loadNamespace(name),
-		  error = function(e)
-	      {
-		  ## This assignment is needed because 'name' contains
-		  ## version as second component when called from internal
-		  ## serialization code
-		  name <- name[1L]
-		  if (name %in% c("ctest","eda","modreg","mva","nls",
-				  "stepfun","ts")) {
-		      old <- "stats"
-		      warning(gettextf("package '%s' has been merged into '%s'",
-				       name, old),
-			      call. = FALSE, domain = NA)
-		      return(getNamespace("stats"))
-		  }
-		  else stop(e)
-	      })
+    else tryCatch(loadNamespace(name), error = function(e) stop(e))
 }
 
 loadedNamespaces <- function()
