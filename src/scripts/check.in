@@ -136,6 +136,11 @@ my $R_check_Rd_parse =
 my $R_check_dot_internal =
     &R_getenv("_R_CHECK_DOT_INTERNAL_", "FALSE");
 
+## Only relevant when the package is loaded, thus installed.
+my $R_check_suppress_RandR_message =
+    ($opt_install &&
+     &R_getenv("_R_CHECK_SUPPRESS_RANDR_MESSAGE_", "FALSE"));
+
 ## Maybe move basic configuration (and documentation) to
 ##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
 ## eventually ...
@@ -197,6 +202,8 @@ $R_check_force_suggests =
 $ENV{"_R_CHECK_FORCE_SUGGESTS_"} = $R_check_force_suggests;
 ## </FIXME>
 ## </NOTE>
+$R_check_suppress_RandR_message =
+    &config_val_to_logical($R_check_suppress_RandR_message);
 
 $opt_subdirs = $R_check_subdirs_strict if $opt_subdirs eq "";
 
@@ -1630,6 +1637,9 @@ sub check_pkg {
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=NULL");
 	    @out = grep(!/^\>/, @out);
+	    @out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+			@out)
+		if($R_check_suppress_RandR_message);
 	    if(scalar(@out) > 0) {
 		$log->warning();
 		$log->print(join("\n", @out) . "\n");
@@ -1678,6 +1688,9 @@ sub check_pkg {
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	@out = grep(!/^\>/, @out);
+	@out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+		    @out)
+	    if($R_check_suppress_RandR_message);
 	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
@@ -1710,6 +1723,9 @@ sub check_pkg {
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	@out = grep(!/^\>/, @out);
+		    @out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+			@out)
+		if($R_check_suppress_RandR_message);
 	if(scalar(@out) > 0) {
 	    ## <NOTE>
 	    ## We really want to stop if we find offending replacement
@@ -1745,6 +1761,9 @@ sub check_pkg {
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	@out = grep(!/^\>/, @out);
+	@out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+		    @out)
+	    if($R_check_suppress_RandR_message);
 	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
@@ -1789,6 +1808,9 @@ sub check_pkg {
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=");
 	    @out = grep(!/^\>/, @out);
+	    @out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+			@out)
+		if($R_check_suppress_RandR_message);
 	    if(scalar(@out) > 0) {
 		$log->note() unless $any;
 		$any++;
@@ -1807,6 +1829,9 @@ sub check_pkg {
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=");
 	    @out = grep(!/^\>/, @out);
+	    @out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+			@out)
+		if($R_check_suppress_RandR_message);
 	    if(scalar(@out) > 0) {
 		$log->note() unless $any;
 		$any++;
@@ -1826,6 +1851,9 @@ sub check_pkg {
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=");
 	    @out = grep(!/^\>/, @out);
+	    @out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+			@out)
+		if($R_check_suppress_RandR_message);
 	    if(scalar(@out) > 0) {
 		$log->note() unless $any;
 		$any++;
@@ -1940,6 +1968,9 @@ sub check_pkg {
 			 "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	my @err = grep(/^Error/, @out);
 	@out = grep(!/^\>/, @out);
+	@out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+		    @out)
+	    if($R_check_suppress_RandR_message);
 	if(scalar(@err) > 0) {
 	    $log->error();
 	    $log->print(join("\n", @err) . "\n");
@@ -1979,8 +2010,10 @@ sub check_pkg {
 	    }
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
-
 	    @out = grep(!/^\>/, @out);
+	    @out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+			@out)
+		if($R_check_suppress_RandR_message);
 	    if(scalar(@out) > 0) {
 		$any++;
 		$log->warning();
@@ -1994,6 +2027,9 @@ sub check_pkg {
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	    @out = grep(!/^\>/, @out);
+	    @out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+			@out)
+		if($R_check_suppress_RandR_message);
 	    if(scalar(@out) > 0) {
 		$log->warning() unless($any);
 		$any++;
@@ -2007,6 +2043,9 @@ sub check_pkg {
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	    @out = grep(!/^\>/, @out);
+	    @out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+			@out)
+		if($R_check_suppress_RandR_message);
 	    if(scalar(@out) > 0) {
 		$log->warning() unless($any);
 		$any++;
@@ -2070,6 +2109,9 @@ sub check_pkg {
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	    @out = grep(!/^\>/, @out);
+	    @out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+			@out)
+		if($R_check_suppress_RandR_message);
 	    if(scalar(@out) > 0) {
 		$log->note() unless($any);
 		$any++;
@@ -2442,6 +2484,9 @@ sub check_pkg {
 	    ## Or to "empty".  As empty lines in the output will most
 	    ## likely not indicate a problem ...
 	    @out = grep(!/^[[:space:]]*$/, @out);
+	    @out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+			@out)
+		if($R_check_suppress_RandR_message);
 	    if(scalar(@out) > 0) {
 		if(grep(/^\*\*\* (Tangle|Weave|Source) Errors \*\*\*$/,
 			@out)) {
