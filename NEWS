@@ -109,6 +109,10 @@ NEW FEATURES
 	updates to members of package bundles before updates to the
 	whole bundle: this allow bundles to be split and installations
 	updated.
+	
+    o	Since search.r-project.org will soon drop mailing list
+	archives, the 'restrict' parameter to choose them will be
+	ignored by RSiteSearch().
 
 
 BUG FIXES
