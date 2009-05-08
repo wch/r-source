@@ -1,3 +1,4 @@
+
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
@@ -48,7 +49,11 @@
    level 0 is no additional instrumentation
    level 1 marks uninitialized numeric, logical, integer vectors
 	   and R_alloc memory
-   level 2 marks free memory as inaccessible
+   level 2 marks the data section of vector nodes as inaccessible
+           when they are freed.
+   level 3 marks the first three bytes of sxpinfo and the ATTRIB
+           field on both vector and non-vector nodes, and the
+           three words of data in non-vector nodes.
 
    It may be necessary to define NVALGRIND for a non-gcc
    compiler on a supported architecture if it has different
@@ -653,6 +658,12 @@ static void GetNewPage(int node_class)
 #if  VALGRIND_LEVEL > 1
 	if (NodeClassSize[node_class]>0)
 	    VALGRIND_MAKE_NOACCESS(DATAPTR(s), NodeClassSize[node_class]*sizeof(VECREC));
+#if  VALGRIND_LEVEL > 2
+        else 
+            VALGRIND_MAKE_NOACCESS(&(s->u), 3*(sizeof(void *)));
+        VALGRIND_MAKE_NOACCESS(s, 3); /* start of sxpinfo */	
+        VALGRIND_MAKE_NOACCESS(&ATTRIB(s), sizeof(void *));
+#endif
 #endif
 	s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
 	SET_NODE_CLASS(s, node_class);
@@ -1395,10 +1406,17 @@ static void RunGenCollect(R_size_t size_needed)
 	for(s=NEXT_NODE(R_GenHeap[i].New); s!=R_GenHeap[i].Free; s=NEXT_NODE(s)){
 	    VALGRIND_MAKE_NOACCESS(DATAPTR(s), NodeClassSize[i]*sizeof(VECREC));
 # if VALGRIND_LEVEL > 2
-	    VALGRIND_MAKE_NOACCESS(s,4); /* sizeof sxpinfo_struct */
+	    VALGRIND_MAKE_NOACCESS(&ATTRIB(s),sizeof(void *));
+            VALGRIND_MAKE_NOACCESS(s,3);
 # endif
 	}
     }
+#if VALGRIND_LEVEL > 2
+    for(s=NEXT_NODE(R_GenHeap[0].New);s!=R_GenHeap[0].Free; s=NEXT_NODE(s)){
+            VALGRIND_MAKE_NOACCESS(&(s->u),3*(sizeof(void *)));
+            VALGRIND_MAKE_NOACCESS(s,3);
+    }
+#endif
 #endif
 
     /* reset Free pointers */
@@ -1679,6 +1697,8 @@ char *R_alloc(size_t nelem, int eltsize)
 	R_VStack = s;
 #if VALGRIND_LEVEL > 0
 	VALGRIND_MAKE_WRITABLE(DATAPTR(s), (int) dsize);
+        VALGRIND_MAKE_WRITABLE(&(ATTRIB(s)), sizeof(void *));
+        VALGRIND_MAKE_WRITABLE(s,3);
 #endif
 	return (char *)DATAPTR(s);
     }
@@ -1729,10 +1749,12 @@ SEXP allocSExp(SEXPTYPE t)
     CAR(s) = R_NilValue;
     CDR(s) = R_NilValue;
     TAG(s) = R_NilValue;
-    ATTRIB(s) = R_NilValue;
 #if VALGRIND_LEVEL > 2
-    VALGRIND_MAKE_READABLE(s, sizeof(*s));
+    VALGRIND_MAKE_WRITABLE(&ATTRIB(s), sizeof(void *));
+    VALGRIND_MAKE_WRITABLE(&(s->u), 3*(sizeof(void *)));
+    VALGRIND_MAKE_WRITABLE(s,3);
 #endif
+    ATTRIB(s) = R_NilValue;
     return s;
 }
 
@@ -1748,10 +1770,12 @@ static SEXP allocSExpNonCons(SEXPTYPE t)
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(s) = t;
     TAG(s) = R_NilValue;
-    ATTRIB(s) = R_NilValue;
 #if VALGRIND_LEVEL > 2
-    VALGRIND_MAKE_READABLE(s, sizeof(*s));
+    VALGRIND_MAKE_WRITABLE(&ATTRIB(s), sizeof(void *));
+    VALGRIND_MAKE_WRITABLE(&(s->u), 3*(sizeof(void *)));
+    VALGRIND_MAKE_WRITABLE(s,3);
 #endif
+    ATTRIB(s) = R_NilValue;
     return s;
 }
 
@@ -1770,7 +1794,9 @@ SEXP cons(SEXP car, SEXP cdr)
     }
     GET_FREE_NODE(s);
 #if VALGRIND_LEVEL > 2
-    VALGRIND_MAKE_READABLE(s, sizeof(*s));
+    VALGRIND_MAKE_WRITABLE(&ATTRIB(s), sizeof(void *));
+    VALGRIND_MAKE_WRITABLE(&(s->u), 3*(sizeof(void *)));
+    VALGRIND_MAKE_WRITABLE(s,3);
 #endif
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(s) = LISTSXP;
@@ -1814,7 +1840,9 @@ SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
     }
     GET_FREE_NODE(newrho);
 #if VALGRIND_LEVEL > 2
-    VALGRIND_MAKE_READABLE(newrho, sizeof(*newrho));
+    VALGRIND_MAKE_WRITABLE(&ATTRIB(newrho), sizeof(void *));
+    VALGRIND_MAKE_WRITABLE(&(newrho->u), 3*(sizeof(void *)));
+    VALGRIND_MAKE_WRITABLE(newrho,3);
 #endif
     newrho->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(newrho) = ENVSXP;
@@ -1848,7 +1876,9 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
     }
     GET_FREE_NODE(s);
 #if VALGRIND_LEVEL > 2
-    VALGRIND_MAKE_READABLE(s,sizeof(*s));
+    VALGRIND_MAKE_WRITABLE(&ATTRIB(s), sizeof(void *));
+    VALGRIND_MAKE_WRITABLE(&(s->u), 3*(sizeof(void *)));
+    VALGRIND_MAKE_WRITABLE(s,3);
 #endif
     /* precaution to ensure code does not get modified via
        substitute() and the like */
@@ -1991,7 +2021,8 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	if (node_class < NUM_SMALL_NODE_CLASSES) {
 	    CLASS_GET_FREE_NODE(node_class, s);
 #if VALGRIND_LEVEL > 2
-	    VALGRIND_MAKE_WRITABLE(s, 4); /* sizeof sxpinfo_struct */
+	    VALGRIND_MAKE_WRITABLE(&ATTRIB(s), sizeof(void *));
+            VALGRIND_MAKE_WRITABLE(s, 3);
 #endif
 #if VALGRIND_LEVEL > 1
 	    VALGRIND_MAKE_WRITABLE(DATAPTR(s), actual_size);

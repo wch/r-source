@@ -1793,7 +1793,7 @@ Optional Packages:
   --with-system-pcre      use system PCRE library (if available) [no]
   --with-valgrind-instrumentation
                           Level of additional instrumentation for Valgrind
-                          (0/1/2) [0]
+                          (0/1/2/3) [0]
   --with-recommended-packages
                           use/install recommended R packages [yes]
   --with-iconv            use iconv library [yes]
