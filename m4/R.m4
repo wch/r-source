@@ -3145,12 +3145,12 @@ fi
 
 ## R_RECOMMENDED_PACKAGES
 ## ----------------------
-## See if the sources for the recommended packages are available.
+## See if the sources for (all) the recommended packages are available.
 AC_DEFUN([R_RECOMMENDED_PACKAGES],
 [AC_CACHE_CHECK([for recommended packages],
                 [r_cv_misc_recommended_packages],
 [r_cv_misc_recommended_packages=yes
-recommended_pkgs=`grep '^R_PKGS_RECOMMENDED_SOURCES *=' \
+recommended_pkgs=`grep '^R_PKGS_RECOMMENDED *=' \
   ${srcdir}/share/make/vars.mk | sed 's/.*=//'`
 for pkg in ${recommended_pkgs}; do
   n_pkg=`ls ${srcdir}/src/library/Recommended/${pkg}_*.tar.gz | wc -l`

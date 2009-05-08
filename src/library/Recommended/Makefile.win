@@ -13,7 +13,7 @@ include ../../gnuwin32/MkRules
 ## For developers: A shell script, tools/rsync-recommended, updates
 ## packages from the CRAN master directory. 
 
-OBJECTS = $(R_PKGS_RECOMMENDED_SOURCES:=.ts)
+OBJECTS = $(R_PKGS_RECOMMENDED:=.ts)
 
 CLEANFILES = $(OBJECTS) stamp-recommended
 
@@ -47,5 +47,5 @@ clean:
 	@rm -f $(CLEANFILES)
 
 ## Hardcoded dependencies (see '../../../share/make/vars.mk')
-mgcv.ts: nlme.ts VR.ts
+mgcv.ts: nlme.ts MASS.ts
 nlme.ts: lattice.ts

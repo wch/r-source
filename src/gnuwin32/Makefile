@@ -347,11 +347,11 @@ rsync-recommended:
 	    --exclude=Makefile.in --exclude=Makefile.win --exclude=.cvsignore \
 	    --include=*.tar.gz --exclude=*.tgz --exclude=".svn" $(CRANREC) . )
 	@$(RM) ../library/Recommended/*.tgz
-	@(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED_SOURCES}; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
+	@(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED}; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 
 link-recommended:
 	@$(RM) ../library/Recommended/*.tgz
-	@(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
+	@(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 
 
 recommended:

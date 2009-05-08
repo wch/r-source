@@ -344,15 +344,10 @@ test-undoc:
 test-Packages-Recommended:
 	-@rm -rf PACKAGES
 	@test -d Packages || mkdir Packages
-	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
+	@for p in $(R_PKGS_RECOMMENDED); do \
 	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
 	    (cd Packages && $(TAR) xf -) ; \
-	  if grep "^Contains:" "Packages/$${p}/DESCRIPTION" >/dev/null; \
-	  then \
-	    $(ECHO) "checking bundle '$${p}'"; \
-	  else \
-	    $(ECHO) "checking package '$${p}'"; \
-	  fi; \
+	  $(ECHO) "checking package '$${p}'"; \
 	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" $(R3) --install=skip \
 	    --library="$(top_builddir)/library" Packages/$${p} || $(ECHO); \
 	done

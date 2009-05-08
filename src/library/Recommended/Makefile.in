@@ -21,7 +21,7 @@ R = R_LIBS= $(top_builddir)/bin/R
 ## For developers: A shell script, tools/rsync-recommended, updates
 ## packages from the CRAN master directory. 
 
-OBJECTS = $(R_PKGS_RECOMMENDED_SOURCES:=.ts)
+OBJECTS = $(R_PKGS_RECOMMENDED:=.ts)
 
 CLEANFILES = $(OBJECTS) Makedeps stamp-recommended
 DISTCLEANFILES = Makefile
@@ -67,11 +67,8 @@ install-tests:
 	 cd "$(top_srcdir)"; abs_top_srcdir=`pwd`; \
 	 abs_MKINSTALLDIRS=`echo "$(MKINSTALLDIRS)" | sed "s:$(top_srcdir):$${abs_top_srcdir}:"` ; \
 	 cd $${tmp}; \
-	 for pkg in $(R_PKGS_RECOMMENDED_SOURCES); do \
+	 for pkg in $(R_PKGS_RECOMMENDED); do \
 	   gzip -dc "$(abs_top_srcdir)/src/library/Recommended/$${pkg}.tgz" | $(TAR) xf - ; \
-	 done ; \
-	 for pkg in MASS class nnet spatial;  do \
-	  mv VR/$${pkg} . ; \
 	 done ; \
 	 for pkg in $(R_PKGS_RECOMMENDED); do \
 	  if test -d $${pkg}/tests; then \
@@ -108,5 +105,5 @@ distdir: $(DISTFILES)
 
 
 ## Hardcoded dependencies (see '../../../share/make/vars.mk')
-mgcv.ts: nlme.ts VR.ts
+mgcv.ts: nlme.ts MASS.ts
 nlme.ts: lattice.ts

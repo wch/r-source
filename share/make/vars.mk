@@ -3,6 +3,5 @@
 
 R_PKGS_BASE = base tools utils grDevices graphics stats datasets methods grid splines stats4 tcltk
 
-R_PKGS_RECOMMENDED_SOURCES = VR boot cluster codetools foreign KernSmooth lattice nlme mgcv rpart survival Matrix
 R_PKGS_RECOMMENDED =            boot cluster codetools foreign KernSmooth lattice mgcv nlme rpart survival MASS class nnet spatial Matrix
 # mgcv requires nlme and MASS, but that is handled in src/library/Recommended/Makefile*
