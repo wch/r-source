@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-04-03 13:01\n"
+"POT-Creation-Date: 2009-05-08 17:39\n"
 "PO-Revision-Date: 2009-03-29 21:40+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -386,7 +386,8 @@ msgstr "l'échantillon est trop clairsemé pour estimer alph2"
 msgid "no solution in the specified range of bandwidths"
 msgstr "pas de solution dans l'intervalle de largeur de fenêtre"
 
-msgid "increasing bw.SJ() search interval (%d)"
+#, fuzzy
+msgid "increasing bw.SJ() search interval (%d) to [%.4g,%.4g]"
 msgstr "augmentation de l'intervalle de recherche bw.SJ() (%d)"
 
 msgid "minimum occurred at one end of the range"

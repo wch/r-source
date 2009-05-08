@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:28\n"
+"POT-Creation-Date: 2009-05-08 17:39\n"
 "PO-Revision-Date: 2009-03-31 21:07+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -518,7 +518,7 @@ msgstr " これ以上のステップが '%s' 中に説明されています "
 msgid "unable to access index for repository %s"
 msgstr " リポジトリー %s に対する索引にアクセスできません "
 
-msgid "invalid 'oldPkgs'; must be as result from old.packages()"
+msgid "invalid 'oldPkgs'; must be a result from old.packages()"
 msgstr ""
 " 不正な 'oldPkgs'; old.packages() からの結果のようでなければなりません "
 
@@ -528,12 +528,6 @@ msgstr " 不正な 'instPkgs' 行列 "
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr ""
 " (不正な？) 'lib.loc=%s' に対するインストール済のパッケージはありません "
-
-msgid "bundle '%s' is incompletely installed"
-msgstr " バンドル '%s' のインストールが不完全です "
-
-msgid "bundle '%s' has extra contents %s"
-msgstr " バンドル '%s' は余計な内容 %s を持ちます "
 
 msgid "read.dcf() error on file '%s'"
 msgstr "ファイル '%s' に対する read.dcf() エラー"
@@ -1054,6 +1048,12 @@ msgstr[0] " 'lib' の要素 '%s'' は書き込み可能なディレクトリで�
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "bundle '%s' is incompletely installed"
+#~ msgstr " バンドル '%s' のインストールが不完全です "
+
+#~ msgid "bundle '%s' has extra contents %s"
+#~ msgstr " バンドル '%s' は余計な内容 %s を持ちます "
 
 #~ msgid "this function is intended to work with the Aqua GUI"
 #~ msgstr " この関数は Aqua GUI で使うことを意図しています "

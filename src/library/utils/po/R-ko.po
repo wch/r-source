@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:28\n"
+"POT-Creation-Date: 2009-05-08 17:39\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -534,7 +534,7 @@ msgstr ""
 msgid "unable to access index for repository %s"
 msgstr "reposityory %s를 위한 인덱스에 액세스 할수 없습니다"
 
-msgid "invalid 'oldPkgs'; must be as result from old.packages()"
+msgid "invalid 'oldPkgs'; must be a result from old.packages()"
 msgstr ""
 
 msgid "illformed 'instPkgs' matrix"
@@ -542,12 +542,6 @@ msgstr ""
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "'lib.loc=%s'를 위한 (무효?) 인스톨 된 패키지가 없습니다"
-
-msgid "bundle '%s' is incompletely installed"
-msgstr "bundle '%s'는 불완전하게 인스톨됩니다"
-
-msgid "bundle '%s' has extra contents %s"
-msgstr "bundle '%s'는 여분의 내용 %s를 가지고 있습니다"
 
 msgid "read.dcf() error on file '%s'"
 msgstr ""
@@ -1090,6 +1084,12 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] ""
 "package '%s'는 사용되고 있어 인스톨 되지 않을 것입니다\n"
 "packages '%s'는 사용되고 있어 인스톨 되지 않을 것입니다"
+
+#~ msgid "bundle '%s' is incompletely installed"
+#~ msgstr "bundle '%s'는 불완전하게 인스톨됩니다"
+
+#~ msgid "bundle '%s' has extra contents %s"
+#~ msgstr "bundle '%s'는 여분의 내용 %s를 가지고 있습니다"
 
 #~ msgid "this function is intended to work with the Aqua GUI"
 #~ msgstr "이 함수는 Aqua GUI로 작업하도록 의도됩니다"

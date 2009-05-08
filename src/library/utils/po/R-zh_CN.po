@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:28\n"
+"POT-Creation-Date: 2009-05-08 17:39\n"
 "PO-Revision-Date: 2008-10-08 18:27+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -503,7 +503,7 @@ msgstr "'%s'里有详细内容"
 msgid "unable to access index for repository %s"
 msgstr "无法在貯藏處%s中读写索引"
 
-msgid "invalid 'oldPkgs'; must be as result from old.packages()"
+msgid "invalid 'oldPkgs'; must be a result from old.packages()"
 msgstr "'oldPkgs'的值不对；必需是从old.packages()得到的结果"
 
 msgid "illformed 'instPkgs' matrix"
@@ -511,12 +511,6 @@ msgstr "'instPkgs'矩阵有错"
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "'lib.loc=%s'里没有已经安装好了的程序包"
-
-msgid "bundle '%s' is incompletely installed"
-msgstr "包袱'%s'没有完全被装好"
-
-msgid "bundle '%s' has extra contents %s"
-msgstr "包袱'%s'里有多余的内容%s"
 
 msgid "read.dcf() error on file '%s'"
 msgstr ""
@@ -1011,6 +1005,12 @@ msgstr[0] "'lib'元素'%s'不是可写的目录"
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "bundle '%s' is incompletely installed"
+#~ msgstr "包袱'%s'没有完全被装好"
+
+#~ msgid "bundle '%s' has extra contents %s"
+#~ msgstr "包袱'%s'里有多余的内容%s"
 
 #~ msgid "this function is intended to work with the Aqua GUI"
 #~ msgstr "此函数只能在Aqua GUI下有用"

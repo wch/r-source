@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-04-03 13:01\n"
+"POT-Creation-Date: 2009-05-08 17:39\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -367,7 +367,8 @@ msgstr "样本太稀疏，找不到alph2"
 msgid "no solution in the specified range of bandwidths"
 msgstr "在设定的頻寬值域内找不到解答"
 
-msgid "increasing bw.SJ() search interval (%d)"
+#, fuzzy
+msgid "increasing bw.SJ() search interval (%d) to [%.4g,%.4g]"
 msgstr "增加bw.SJ()的搜索间隔(%d)"
 
 msgid "minimum occurred at one end of the range"

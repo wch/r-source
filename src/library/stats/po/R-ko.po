@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-04-03 13:01\n"
+"POT-Creation-Date: 2009-05-08 17:39\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -378,7 +378,7 @@ msgstr "sample이 너무 부족하기 때문에 alph2를 검색해낼 수가 없
 msgid "no solution in the specified range of bandwidths"
 msgstr "지정된 bandwidth의 범위내에서 해법은 없습니다"
 
-msgid "increasing bw.SJ() search interval (%d)"
+msgid "increasing bw.SJ() search interval (%d) to [%.4g,%.4g]"
 msgstr ""
 
 msgid "minimum occurred at one end of the range"
