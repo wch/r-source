@@ -6,18 +6,18 @@
 \name{RSiteSearch}
 \alias{RSiteSearch}
 \title{
-  Search for Key Words or Phrases in the \R Documentation
+  Search for Key Words or Phrases in the R-help Mailing List Archives
+  or Documentation
 }
 \description{
-  Search for key words or phrases in the help pages, using the
-  search engine at \url{http://search.r-project.org} and view them in a
-  web browser.
+  Search for key words or phrases in the R-help mailing list
+  archives, or \R manuals and help pages, using the search engine at
+  \url{http://search.r-project.org} and view them in a web browser.
 }
 \usage{
 RSiteSearch(string,
-	    restrict = NULL,
+            restrict = c("Rhelp02a", "functions", "docs"),
             format = c("normal", "short"),
-            
             sortby = c("score", "date:late", "date:early",
                        "subject", "subject:descending",
                        "from", "from:descending",
@@ -27,10 +27,16 @@ RSiteSearch(string,
 \arguments{
   \item{string}{word(s) or phrase to search.  If the words are to be
     searched as one entity, enclose all words in braces (see example).}
-  \item{restrict}{not currently used; provided for back compatibility.}
+  \item{restrict}{a character vector, typically of length larger than one:
+    What areas to search in:
+    \code{Rhelp02a} for R-help mailing list archive since 2002,
+    \code{Rhelp01} for mailing list archive before 2002,
+    \code{docs} for R manuals,
+    \code{functions} for help pages.
+    \code{R-devel} for R-devel mailing list.
+    Use \code{c()} to specify more than one.}
   \item{format}{\code{normal} or \code{short} (no excerpts); can be
     abbreviated.}
-
   \item{sortby}{character string (can be abbreviated) indicating how to
     sort the search results:\cr
     (\code{score},
@@ -54,12 +60,6 @@ RSiteSearch(string,
 
   Unique partial matches will work for all arguments.  Each new
   browser window will stay open unless you close it.
-  
-  Since R 2.9.0, mailing lists are not searched.  They may be searched
-  at several other sites, including \url{http://tolstoy.newcastle.edu.au/R/}, 
-  and \url{http://markmail.org/search/list:r-project}.  See 
-  \url{http://search.r-project.org} for an updated list.
-  
 }
 \author{Andy Liaw and Jonathan Baron}
 \seealso{
@@ -69,6 +69,16 @@ RSiteSearch(string,
 }
 \examples{\donttest{ # need Internet connection
 RSiteSearch("{logistic regression}") # matches exact phrase
+Sys.sleep(5) # allow browser to open, take a quick look
+RSiteSearch("Baron Liaw", restrict = "Rhelp02a")
+## Search in R-devel archive and documents  (and store the query-string):
+Sys.sleep(5)
+fullquery <- RSiteSearch("S4", restrict = c("R-dev", "docs"))
+fullquery # a string of ~ 116 characters
+## the latest purported bug reports, responses ...
+%% FIXME: "/bug/ and other reg.exp.s seem to fail
+Sys.sleep(5)
+RSiteSearch("bug", restrict = "R-devel", sortby = "date:late")
 }}
 \keyword{utilities}
 \keyword{documentation}
