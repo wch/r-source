@@ -102,6 +102,7 @@ static SEXP tabExpand(SEXP strings)
     char buffer[200], *b;
     const char *input;
     SEXP result;
+    PROTECT(strings);
     PROTECT(result = allocVector(STRSXP, length(strings)));
     for (i = 0; i < length(strings); i++) {
     	input = CHAR(STRING_ELT(strings, i));
@@ -114,7 +115,7 @@ static SEXP tabExpand(SEXP strings)
     	*b = '\0';
     	SET_STRING_ELT(result, i, mkCharCE(buffer, Rf_getCharCE(STRING_ELT(strings, i))));
     }
-    UNPROTECT(1);
+    UNPROTECT(2);
     return result;
 }
     	
