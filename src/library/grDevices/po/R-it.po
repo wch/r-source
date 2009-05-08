@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-28 17:26\n"
+"POT-Creation-Date: 2009-05-08 17:33\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -235,6 +235,17 @@ msgstr "carico snapshot di una versione di R pre-2.0.0"
 
 msgid "loading snapshot from different R version"
 msgstr "carico uno snapshot da una versione differente di R"
+
+msgid "'nbin' must be numeric of length 1 or 2"
+msgstr ""
+
+#, fuzzy
+msgid "'bandwidth' must be numeric"
+msgstr "matrice rgb deve essere numerica"
+
+#, fuzzy
+msgid "'bandwidth' must be positive"
+msgstr "'bias' deve essere positivo"
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr ""

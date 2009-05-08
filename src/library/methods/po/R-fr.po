@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-28 17:27\n"
+"POT-Creation-Date: 2009-05-08 17:33\n"
 "PO-Revision-Date: 2008-09-30 21:02+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -805,35 +805,6 @@ msgstr ""
 msgid "Needed the supplied labels vector of length %n, got %n"
 msgstr ""
 
-msgid ""
-"S3 methods written for S4 classes will fail inheritance!\n"
-"Package"
-msgstr ""
-
-msgid "apparently has"
-msgstr ""
-
-msgid "such methods  for the functions"
-msgstr ""
-
-#, fuzzy
-msgid "functions"
-msgstr "connexion"
-
-msgid "Possible dangerous methods:"
-msgstr ""
-
-msgid "(Warnings generated once per package per session)"
-msgstr ""
-
-msgid "There are apparent S3 methods for class \""
-msgstr ""
-
-msgid ""
-"\"\n"
-"DANGER: any subclasses of this class will not inherit the methods"
-msgstr ""
-
 #, fuzzy
 msgid "Some of the superclasses in the definition of class \""
 msgstr ""
@@ -843,8 +814,7 @@ msgstr ""
 msgid ""
 "\" have apparent S3 methods.\n"
 "\n"
-"DANGER: the new class will not inherit these methods.\n"
-"Complain to the author of the superclass definitions."
+"These will be hidden by the S3 class that this class contains. (See ?Methods)"
 msgstr ""
 
 msgid ""
@@ -1747,6 +1717,10 @@ msgstr[0] ""
 msgstr[1] ""
 "dans la signature de méthode pour la fonction \"%s\", il n'y a aucune "
 "définition pour les classes : %s"
+
+#, fuzzy
+#~ msgid "functions"
+#~ msgstr "connexion"
 
 #~ msgid "signature must be a vector of classes or an environment"
 #~ msgstr "la signature doit être un vecteur de classes ou un environnement"

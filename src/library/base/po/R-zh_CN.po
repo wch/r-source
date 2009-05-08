@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:25\n"
+"POT-Creation-Date: 2009-05-08 17:33\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -588,6 +588,9 @@ msgstr "'eigen'里'cg'回覆了代码%d"
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'eigen'里'rg'回覆了代码%d"
 
+msgid "non-unique factor levels are unique()d"
+msgstr ""
+
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "标记不对；长度%d应该是一或%d"
 
@@ -985,9 +988,6 @@ msgstr "需要的是一个单独的S4对象逻辑值"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "不能改变因子的存储状态"
-
-msgid "package '%s' has been merged into '%s'"
-msgstr "程辑包'%s'已经被合并到'%s'"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'不是'namespace:%s'内的出口对象："
@@ -1536,6 +1536,9 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "package '%s' has been merged into '%s'"
+#~ msgstr "程辑包'%s'已经被合并到'%s'"
 
 #~ msgid "package 'lqs' has been moved back to package 'MASS'"
 #~ msgstr "程辑包'lqs'已经被合并到程辑包'MASS'里去了"

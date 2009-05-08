@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-28 17:26\n"
+"POT-Creation-Date: 2009-05-08 17:33\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -237,6 +237,17 @@ msgstr "pre-2.0.0 R 버전으로부터 snapshot가 적재되고 있습니다"
 
 msgid "loading snapshot from different R version"
 msgstr "다른 R 버전으로부터 snapshot가 적재되고 있습니다"
+
+msgid "'nbin' must be numeric of length 1 or 2"
+msgstr ""
+
+#, fuzzy
+msgid "'bandwidth' must be numeric"
+msgstr "rgb행렬은 수치가 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "'bandwidth' must be positive"
+msgstr "'bias'는 poitive 값이 아니면 되지 않습니다"
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr ""

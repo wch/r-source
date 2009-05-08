@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 12:57\n"
+"POT-Creation-Date: 2009-05-08 17:33\n"
 "PO-Revision-Date: 2009-03-20 14:27+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -253,7 +253,8 @@ msgid "horizontal specification overrides: Number of columns :="
 msgstr "horizontale Spezifikation überschreibt Anzahl der Spalten ;="
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
-msgstr "'merge = TRUE' hat keine Effekt, wenn keine Liniensegmente gezeichnent werden"
+msgstr ""
+"'merge = TRUE' hat keine Effekt, wenn keine Liniensegmente gezeichnent werden"
 
 msgid "not using pch[2..] since pch[1L] has multiple chars"
 msgstr "nutze pch[2..] nicht, da pch[1L] mehrere Zeichen enthält"
@@ -348,6 +349,9 @@ msgstr "'figs' muss ein Vektor oder eine Matrix mit 4 Spalten sein"
 
 msgid "'figs' must specify at least one screen"
 msgstr "'figs' muss zumindet einen Screen angeben"
+
+msgid "'nrpoints' should be numeric scalar with value >= 0."
+msgstr ""
 
 msgid "a 2-way table has to be specified"
 msgstr "eine 2-Wege-Tafel muss angegeben werden"

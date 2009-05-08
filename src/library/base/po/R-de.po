@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:25\n"
+"POT-Creation-Date: 2009-05-08 17:33\n"
 "PO-Revision-Date: 2009-03-20 11:23+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -599,6 +599,9 @@ msgstr "'cg' gab Kode %d zurück in 'eigen'"
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'rg' gab Kode %d zurück in 'eigen'"
 
+msgid "non-unique factor levels are unique()d"
+msgstr ""
+
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "ungültige Label; Länge %d sollte 1 oder %d sein"
 
@@ -1000,9 +1003,6 @@ msgstr "Erwarte einzelnen, logischen Wert für das S4 Status-Flag"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "unzulässig den Speichermodus eines Faktors zu ändern"
-
-msgid "package '%s' has been merged into '%s'"
-msgstr "Paket '%s' wurde in '%s' eingebaut"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' ist kein von 'namespace:%s' exportiertes Objekt"
@@ -1564,6 +1564,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "package '%s' has been merged into '%s'"
+#~ msgstr "Paket '%s' wurde in '%s' eingebaut"
 
 #~ msgid "package 'lqs' has been moved back to package 'MASS'"
 #~ msgstr "Paket 'lqs' ist wieder in Paket 'MASS'"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-03-24 15:34+0000\n"
+"POT-Creation-Date: 2009-05-08 17:33+0100\n"
 "PO-Revision-Date: 2009-03-25 09:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "invalid list for substitution"
 msgstr "unzulässige Liste für Substitution"
 
-#: methods_list_dispatch.c:150
+#: methods_list_dispatch.c:148
 msgid ""
 "could not find the skeleton calls for 'methods' (package detached?): expect "
 "very bad things to happen"
@@ -35,7 +35,7 @@ msgstr ""
 "konnte die Skelettaufrufe für 'methods' nicht finden (Paket entfernt?): "
 "erwarte,dass wirklich schlimme Dinge passieren"
 
-#: methods_list_dispatch.c:216
+#: methods_list_dispatch.c:214
 #, c-format
 msgid ""
 "no \"allMethods\" slot found in object of class \"%s\" used as methods list "
@@ -44,7 +44,7 @@ msgstr ""
 "kein \"allMethods\" Slot im Objekt der Klasse \"%s\", das als "
 "Methodenlistefür Funktion '%s' genutzt wird"
 
-#: methods_list_dispatch.c:326
+#: methods_list_dispatch.c:324
 #, c-format
 msgid ""
 "S language method selection got an error when called from internal dispatch "
@@ -53,12 +53,12 @@ msgstr ""
 "S Methodenauswahl ergab einen Fehler, wenn aufgerufen aus dem internen "
 "Dispatchfür Funktion '%s'"
 
-#: methods_list_dispatch.c:401
+#: methods_list_dispatch.c:399
 #, c-format
 msgid "no generic function definition found for '%s'"
 msgstr "keine generische Funktionsdefinition für '%s' gefunden"
 
-#: methods_list_dispatch.c:404
+#: methods_list_dispatch.c:402
 #, c-format
 msgid ""
 "No generic function definition found for '%s' in the supplied environment"
@@ -66,7 +66,7 @@ msgstr ""
 "keine generische Funktionsdefinition für '%s' in der angegebenen Umgebung "
 "gefunden"
 
-#: methods_list_dispatch.c:441
+#: methods_list_dispatch.c:439
 #, c-format
 msgid ""
 "invalid generic function object for method selection for function '%s': "
@@ -76,22 +76,22 @@ msgstr ""
 "s': erwartete eine Funktion oder eine Primitive, bekam Objekt der Klasse \"%s"
 "\""
 
-#: methods_list_dispatch.c:456
+#: methods_list_dispatch.c:454
 #, c-format
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 "keine direkte oder vererbte Methode für Funktion '%s' für diesen Aufruf"
 
-#: methods_list_dispatch.c:482 methods_list_dispatch.c:916
+#: methods_list_dispatch.c:480 methods_list_dispatch.c:914
 msgid "invalid object (non-function) used as method"
 msgstr "unzulässiges Objekt (keine Funktion) als Methode benutzt"
 
-#: methods_list_dispatch.c:499
+#: methods_list_dispatch.c:497
 #, c-format
 msgid "could not find symbol '%s' in frame of call"
 msgstr "konnte Symbol '%s' nicht im Rahmen des Aufrufs finden"
 
-#: methods_list_dispatch.c:507
+#: methods_list_dispatch.c:505
 #, c-format
 msgid ""
 "invalid symbol in checking for missing argument in method dispatch: expected "
@@ -100,11 +100,11 @@ msgstr ""
 "unzulässiges Symbol bei der Überprüfung auf fehlende Argumente im "
 "Methodendispatch: erwartete einen Namen, bekam Objekt der Klasse \"%s\""
 
-#: methods_list_dispatch.c:510
+#: methods_list_dispatch.c:508
 msgid "use of NULL environment is defunct"
 msgstr "Nutzen der NULL Umgebung nicht mehr möglich"
 
-#: methods_list_dispatch.c:514
+#: methods_list_dispatch.c:512
 #, c-format
 msgid ""
 "invalid environment in checking for missing argument, '%s', in methods "
@@ -113,7 +113,7 @@ msgstr ""
 "unzulässige Umgebung bei der Überprüfung auf fehlende Argumente, '%s', im "
 "Methodendispatch: bekam Objekt der Klasse \"%s\""
 
-#: methods_list_dispatch.c:540
+#: methods_list_dispatch.c:538
 #, c-format
 msgid ""
 "object of class \"%s\" used as methods list for function '%s' ( no "
@@ -122,7 +122,7 @@ msgstr ""
 "Objekt der Klasse \"%s\" als Methodenliste für Funktion '%s' genutzt (kein "
 "'argument' Slot)"
 
-#: methods_list_dispatch.c:551
+#: methods_list_dispatch.c:549
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') '...' and related variables cannot "
@@ -131,7 +131,7 @@ msgstr ""
 "(bei der Auswahl einer Methode für Funktion '%s') '...' und damit "
 "zusammenhängende Variablenkönnen nicht für Methodendispatch gennutzt werden"
 
-#: methods_list_dispatch.c:554
+#: methods_list_dispatch.c:552
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') the 'environment' argument for "
@@ -140,8 +140,8 @@ msgstr ""
 "(bei der Auswahl einer Methode für Funktion '%s') das 'environment' Argument "
 "für den Dispatch muss eine R Umgebung sein; bekam Objekt der Klasse \"%s\""
 
-#: methods_list_dispatch.c:568 methods_list_dispatch.c:579
-#: methods_list_dispatch.c:872
+#: methods_list_dispatch.c:566 methods_list_dispatch.c:577
+#: methods_list_dispatch.c:870
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function '%s'"
@@ -149,13 +149,13 @@ msgstr ""
 "Fehler bei der Berechnung des Argumentes '%s' bei der Methodenauswahl für "
 "Funktion '%s'"
 
-#: methods_list_dispatch.c:586
+#: methods_list_dispatch.c:584
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
 msgstr ""
 "kein passende Methode für die Funktion '%s' (Argument '%s', mit Klasse \"%s\""
 
-#: methods_list_dispatch.c:593
+#: methods_list_dispatch.c:591
 #, c-format
 msgid ""
 "recursive use of function '%s' in method selection, with no default method"
@@ -163,7 +163,7 @@ msgstr ""
 "rekursive Benutzung der Funktion '%s' in der Methodenwahl, ohne "
 "Standardmethode"
 
-#: methods_list_dispatch.c:625
+#: methods_list_dispatch.c:623
 msgid ""
 "internal error in 'callNextMethod': '.nextMethod' was not assigned in the "
 "frame of the method call"
@@ -171,7 +171,7 @@ msgstr ""
 "interner Fehler in 'callNextMethod': '.NextMethod' wurde im Rahmen der "
 "Methodenaufrufs nicht zugewiesen"
 
-#: methods_list_dispatch.c:656
+#: methods_list_dispatch.c:654
 msgid ""
 "in processing 'callNextMethod', found a '...' in the matched call, but no "
 "corresponding '...' argument"
@@ -179,36 +179,36 @@ msgstr ""
 "bei der Verarbeitung von 'callNextMethod' ein '...' im Aufruf gefunden, aber "
 "keinnkorrespondierendes '...' Argument"
 
-#: methods_list_dispatch.c:668
+#: methods_list_dispatch.c:666
 msgid "error in evaluating a 'primitive' next method"
 msgstr "Fehler in der Berechnung einer nächsten 'primitive' Methode"
 
-#: methods_list_dispatch.c:727
+#: methods_list_dispatch.c:725
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 "\"%s\" muss eine einzelne Zeichenkette sein (bekam Zeichenkettenvektor der "
 "Länge %d)"
 
-#: methods_list_dispatch.c:731
+#: methods_list_dispatch.c:729
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr ""
 "'%s' muss eine nicht-leere Zeichenkette sein; bekam eine leere Zeichenkette"
 
-#: methods_list_dispatch.c:735
+#: methods_list_dispatch.c:733
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr ""
 "'%s' muss eine einzelne Zeichenkette sein (bekam ein Objekt der Klasse \"%s"
 "\")"
 
-#: methods_list_dispatch.c:841
+#: methods_list_dispatch.c:839
 #, c-format
 msgid "Failed to get the generic for the primitive \"%s\""
 msgstr "Bekam keine Generische für die Primitive \"%s\""
 
-#: methods_list_dispatch.c:848
+#: methods_list_dispatch.c:846
 #, c-format
 msgid ""
 "Expected a generic function or a primitive for dispatch, got an object of "
@@ -217,7 +217,7 @@ msgstr ""
 "Erwartete eine generische Funktion oder eine Primitive für den Dispatch, "
 "bekam Objekt der Klasse \"%s\""
 
-#: methods_list_dispatch.c:860
+#: methods_list_dispatch.c:858
 #, c-format
 msgid ""
 "Generic \"%s\" seems not to have been initialized for table dispatch---need "

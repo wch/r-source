@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:27\n"
+"POT-Creation-Date: 2009-05-08 17:34\n"
 "PO-Revision-Date: 2009-04-01 08:36+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -726,9 +726,6 @@ msgstr "ファイル 'R_PROFILE.R' の使用は今後サポートされません
 msgid "field 'SaveImage' is defunct: please remove it"
 msgstr " 'SaveImage' 欄は廃止されました：取り除いてください "
 
-msgid "cannot create temporary directory"
-msgstr " 一時ディレクトリを生成することが出来ません "
-
 msgid "Use of --with-package-versions is defunct"
 msgstr " --with-package-versions の使用は廃止されました "
 
@@ -740,6 +737,9 @@ msgstr " 値のない -l オプション"
 
 msgid "Warning: unknown option"
 msgstr " 警告: 未知のオプションです "
+
+msgid "cannot create temporary directory"
+msgstr " 一時ディレクトリを生成することが出来ません "
 
 msgid "processing"
 msgstr " 処理中  "

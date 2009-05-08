@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:25\n"
-"PO-Revision-Date: 2009-03-17 19:25\n"
+"POT-Creation-Date: 2009-05-08 17:33\n"
+"PO-Revision-Date: 2009-05-08 17:33\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -607,6 +607,9 @@ msgstr "‘cg’ returned code %d in ‘eigen’"
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "‘rg’ returned code %d in ‘eigen’"
 
+msgid "non-unique factor levels are unique()d"
+msgstr "non-unique factor levels are unique()d"
+
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "invalid labels; length %d should be 1 or %d"
 
@@ -1003,9 +1006,6 @@ msgstr "Expected a single logical value for the S4 state flag"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "invalid to change the storage mode of a factor"
-
-msgid "package '%s' has been merged into '%s'"
-msgstr "package ‘%s’ has been merged into ‘%s’"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "‘%s’ is not an exported object from ‘namespace:%s’"

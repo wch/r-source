@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:27\n"
-"PO-Revision-Date: 2009-03-17 19:27\n"
+"POT-Creation-Date: 2009-05-08 17:34\n"
+"PO-Revision-Date: 2009-05-08 17:34\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -716,9 +716,6 @@ msgstr "use of file ‘R_PROFILE.R’ is no longer supported"
 msgid "field 'SaveImage' is defunct: please remove it"
 msgstr "field ‘SaveImage’ is defunct: please remove it"
 
-msgid "cannot create temporary directory"
-msgstr "cannot create temporary directory"
-
 msgid "Use of --with-package-versions is defunct"
 msgstr "Use of --with-package-versions is defunct"
 
@@ -730,6 +727,9 @@ msgstr "-l option without value"
 
 msgid "Warning: unknown option"
 msgstr "Warning: unknown option"
+
+msgid "cannot create temporary directory"
+msgstr "cannot create temporary directory"
 
 msgid "processing"
 msgstr "processing"

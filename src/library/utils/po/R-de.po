@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:28\n"
+"POT-Creation-Date: 2009-05-08 17:34\n"
 "PO-Revision-Date: 2009-03-26 11:28+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -518,7 +518,7 @@ msgstr "Die nächsten Schritte werden in '%s' beschrieben."
 msgid "unable to access index for repository %s"
 msgstr "kann nicht auf den Index für das Repository %s zugreifen"
 
-msgid "invalid 'oldPkgs'; must be as result from old.packages()"
+msgid "invalid 'oldPkgs'; must be a result from old.packages()"
 msgstr "unzulässige 'oldPkgs'; muss ein Ergebniss von old.packages() sein"
 
 msgid "illformed 'instPkgs' matrix"
@@ -526,12 +526,6 @@ msgstr "missgestaltete 'instPkgs' Matrix"
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "keine installierten Pakete für (falsche?) 'lib.loc=%s'"
-
-msgid "bundle '%s' is incompletely installed"
-msgstr "Bundel '%s' ist nicht vollständig installiert"
-
-msgid "bundle '%s' has extra contents %s"
-msgstr "Bundel '%s'hat zusätzlichen Inhalt %s"
 
 msgid "read.dcf() error on file '%s'"
 msgstr "Fehler in read.dcf() bei Datei '%s'"
@@ -1041,6 +1035,12 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "Paket '%s' wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete '%s' werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "bundle '%s' is incompletely installed"
+#~ msgstr "Bundel '%s' ist nicht vollständig installiert"
+
+#~ msgid "bundle '%s' has extra contents %s"
+#~ msgstr "Bundel '%s'hat zusätzlichen Inhalt %s"
 
 #~ msgid "this function is intended to work with the Aqua GUI"
 #~ msgstr "diese Funktion soll mit dem Aqua GUI arbeiten"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 13:00\n"
+"POT-Creation-Date: 2009-05-08 17:31\n"
 "PO-Revision-Date: 2009-03-31 20:58+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -488,6 +488,12 @@ msgstr ""
 
 msgid "Invalid viewport name(s)"
 msgstr " 不正な viewport 名です "
+
+msgid "How did we get here?"
+msgstr ""
+
+msgid "Must start new page if showing leaves separately"
+msgstr ""
 
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr " 'x' or 'xscale' のうち少なくとも一つを指定しなければなりません "

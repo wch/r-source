@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-28 17:26\n"
+"POT-Creation-Date: 2009-05-08 17:33\n"
 "PO-Revision-Date: 2009-03-31 20:50+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -222,6 +222,18 @@ msgstr " R2.0.0以前のバージョンからのスナップショットが読�
 
 msgid "loading snapshot from different R version"
 msgstr " 異なった R バージョンからのスナップショットが読み込まれています "
+
+#, fuzzy
+msgid "'nbin' must be numeric of length 1 or 2"
+msgstr " 'r' は範囲でなければなりません. 従って長さは2です "
+
+#, fuzzy
+msgid "'bandwidth' must be numeric"
+msgstr " rgb 行列は数値でなければなりません "
+
+#, fuzzy
+msgid "'bandwidth' must be positive"
+msgstr " 'bias' は正の値でなければなりません "
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr " 'r' は範囲でなければなりません. 従って長さは2です "

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 13:00\n"
-"PO-Revision-Date: 2008-12-16 13:00\n"
+"POT-Creation-Date: 2009-05-08 17:31\n"
+"PO-Revision-Date: 2009-05-08 17:31\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -494,6 +494,12 @@ msgstr "A viewport path must contain at least one viewport name"
 
 msgid "Invalid viewport name(s)"
 msgstr "Invalid viewport name(s)"
+
+msgid "How did we get here?"
+msgstr "How did we get here?"
+
+msgid "Must start new page if showing leaves separately"
+msgstr "Must start new page if showing leaves separately"
 
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr "Must specify at least one of ‘x’ or ‘xscale’"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:25\n"
+"POT-Creation-Date: 2009-05-08 17:33\n"
 "PO-Revision-Date: 2009-03-31 13:18+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -598,6 +598,9 @@ msgstr " 'eigen' で 'cg' がコード %d を返しました "
 msgid "'rg' returned code %d in 'eigen'"
 msgstr " 'eigen' で 'rg' がコード %d を返しました "
 
+msgid "non-unique factor levels are unique()d"
+msgstr ""
+
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr " 無効なラベルです。長さ %d は 1 または %d であるべきです "
 
@@ -1005,9 +1008,6 @@ msgstr " S4 状態フラグに対しては単一の論理値が期待されて�
 
 msgid "invalid to change the storage mode of a factor"
 msgstr " factor　の格納モードを変えるのは不正です "
-
-msgid "package '%s' has been merged into '%s'"
-msgstr " パッケージ '%s' は '%s' に併合されました "
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr ""
@@ -1575,6 +1575,9 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "package '%s' has been merged into '%s'"
+#~ msgstr " パッケージ '%s' は '%s' に併合されました "
 
 #~ msgid "package 'lqs' has been moved back to package 'MASS'"
 #~ msgstr " パッケージ 'lqs' はパッケージ 'MASS' へ戻さました "
