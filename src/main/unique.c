@@ -454,24 +454,27 @@ int attribute_hidden any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 
     DUPLICATED_INIT;
 
-    if(m) {
-	PROTECT(incomp = coerceVector(incomp, TYPEOF(x)));
-	m = length(incomp);
-    }
+    if(!m)
+	error(_("any_duplicated3(., <0-length incomp>)"));
+
+    PROTECT(incomp = coerceVector(incomp, TYPEOF(x)));
+    m = length(incomp);
 
     for (i = 0; i < data.M; i++) h[i] = NIL;
     if(from_last)
 	for (i = n-1; i >= 0; i--) {
-#define IS_DUPLICATED_CHECK
-	    if(isDuplicated(x, i, &data)) {
-		Rboolean isDup = TRUE;
-		for(j = 0; j < m; j++)
-		    if(data.equal(x, i, incomp, j)) {
-			isDup = FALSE; break;
-		    }
-		if(isDup)
-		    return ++i;
-		/* else continue */
+#define IS_DUPLICATED_CHECK				\
+	    if(isDuplicated(x, i, &data)) {		\
+		Rboolean isDup = TRUE;			\
+		for(j = 0; j < m; j++)			\
+		    if(data.equal(x, i, incomp, j)) {	\
+			isDup = FALSE; break;		\
+		    }					\
+		if(isDup) {				\
+		    UNPROTECT(1);			\
+		    return ++i;				\
+ 	        }					\
+		/* else continue */			\
 	    }
 	    IS_DUPLICATED_CHECK;
 	}
@@ -480,6 +483,7 @@ int attribute_hidden any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
             IS_DUPLICATED_CHECK;
     }
 
+    UNPROTECT(1);
     return 0;
 }
 

@@ -5674,3 +5674,12 @@ stopifnot(inherits(e, "error"), inherits(e2, "error"),inherits(e3, "error"),
 ep <- 1e-3
 stopifnot(all.equal(bw.SJ(c(1:99, 1e6), tol=ep), 0.725, tol=ep))
 ## bw.SJ(x) failed for R <= 2.9.0 (in two ways!), when x had extreme outlier
+
+## anyDuplicated() with 'incomp' ...
+oo <- options(warn=2) # no warnings allowed
+stopifnot(identical(0L, anyDuplicated(c(1,NA,3,NA,5), incomp=NA)),
+	  identical(5L, anyDuplicated(c(1,NA,3,NA,3), incomp=NA)),
+	  identical(4L, anyDuplicated(c(1,NA,3,NA,3), incomp= 3)),
+	  identical(0L, anyDuplicated(c(1,NA,3,NA,3), incomp=c(3,NA))))
+options(oo)
+## missing UNPROTECT and partly wrong in development versions of R
