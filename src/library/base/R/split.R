@@ -82,7 +82,7 @@ unsplit <-function (value, f, drop = FALSE)
 {
     len <- length(if (is.list(f)) f[[1L]] else f)
     if (is.data.frame(value[[1L]])) {
-        x <- value[[1L]][rep(NA,len),]
+        x <- value[[1L]][rep(NA,len),, drop=FALSE]
         rownames(x) <- unsplit(lapply(value, rownames), f)
     }
     else
