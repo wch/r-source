@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 12:57\n"
+"POT-Creation-Date: 2009-05-10 11:44\n"
 "PO-Revision-Date: 2005-02-26 22:56+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -349,6 +349,9 @@ msgstr "'figs' deve essere un vettore o una matrice con 4 colonne"
 
 msgid "'figs' must specify at least one screen"
 msgstr "'figs' deve specificare almeno uno schermo"
+
+msgid "'nrpoints' should be numeric scalar with value >= 0."
+msgstr ""
 
 msgid "a 2-way table has to be specified"
 msgstr ""

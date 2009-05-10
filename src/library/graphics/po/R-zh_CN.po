@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2008-12-16 12:57\n"
+"POT-Creation-Date: 2009-05-10 11:44\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -341,6 +341,9 @@ msgstr "'figs'要么是向量，要么是有四条列的矩阵"
 
 msgid "'figs' must specify at least one screen"
 msgstr "'figs'至少要设定一个屏幕"
+
+msgid "'nrpoints' should be numeric scalar with value >= 0."
+msgstr ""
 
 msgid "a 2-way table has to be specified"
 msgstr "没有设定二维表"

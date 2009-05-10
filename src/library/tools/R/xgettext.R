@@ -22,7 +22,7 @@ function(dir, verbose = FALSE, asCall = TRUE)
     dir <- file.path(dir, "R")
     exts <- .make_file_exts("code")
     R_files <- list_files_with_exts(dir, exts)
-    for(d in c("unix", "windows", "aqua")) {
+    for(d in c("unix", "windows")) {
         OSdir <- file.path(dir, d)
         if(file_test("-d", OSdir))
             R_files <- c(R_files, list_files_with_exts(OSdir, exts))
@@ -151,7 +151,8 @@ function(dir, potFile)
     writeLines(con=con,
                c('msgid ""',
                  'msgstr ""',
-                 '"Project-Id-Version: R 2.3.0\\n"',
+                 sprintf('"Project-Id-Version: R %s.%s\\n"',
+                         R.version$major, R.version$minor),
                  '"Report-Msgid-Bugs-To: bugs@r-project.org\\n"',
                  paste('"POT-Creation-Date: ',
                        format(Sys.time(), "%Y-%m-%d %H:%M"), # %z is not portable
