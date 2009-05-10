@@ -60,7 +60,8 @@ NEW FEATURES
 
 DEPRECATED & DEFUNCT
 
-    o	Bundles of packages are deprecated.
+    o	Bundles of packages are deprecated.  See 'Writing R
+	Extensions' for the steps needed to unbundle a bundle.
 
 
 BUG FIXES

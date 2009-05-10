@@ -735,67 +735,24 @@ Subdirectory @file{po} is used for files related to @emph{localization}:
 @subsection Package bundles
 @cindex Package bundles
 
-Support for package bundles was deprecated in @R{} 2.10.0 and will be
-removed shortly.
+Package bundles were deprecated in @R{} 2.10.0 and support for
+installing them will be removed in @R{} 2.11.0.
 
-@c Sometimes it is convenient to distribute several packages as a
-@c @emph{bundle}.  (An example is @pkg{VR} which contains four packages.)
-@c The installation procedures on both Unix-alikes and Windows can handle
-@c package bundles.
+Unbundling a package bundle is straightforward: just replace the
+@file{DESCRIPTION.in} file of each package by a suitbale
+@file{DESCRIPTION} file and distribute the individual packages (e.g.@:
+@emph{via} tarballs created by @command{R CMD build})).  The installed
+@file{DESCRIPTION} files provide a good starting point, but the
+@samp{Bundle}, @samp{Contains} and @samp{BundleDescription} fields
+should not appear.  It may be needed to add references in the
+@samp{Suggests} ot @samp{Iimports} fields to other members of the former
+bundle.
 
-@c The @file{DESCRIPTION} file of a bundle has a @samp{Bundle}
-@c field and no @samp{Package} field, as in
-
-@c @quotation
-@c @cartouche
-@c @smallexample
-@c Bundle: VR
-@c Priority: recommended
-@c Contains: MASS class nnet spatial
-@c Version: 7.2-36
-@c Date: 2007-08-29
-@c Depends: R (>= 2.4.0), grDevices, graphics, stats, utils
-@c Suggests: lattice, nlme, survival
-@c Author: S original by Venables & Ripley.
-@c   R port by Brian Ripley <ripley@@stats.ox.ac.uk>, following earlier
-@c   work by Kurt Hornik and Albrecht Gebhardt.
-@c Maintainer: Brian Ripley <ripley@@stats.ox.ac.uk>
-@c BundleDescription: Functions and datasets to support Venables and
-@c   Ripley, 'Modern Applied Statistics with S' (4th edition).
-@c License: GPL-2 | GPL-3
-@c URL: http://www.stats.ox.ac.uk/pub/MASS4/
-@c @end smallexample
-@c @end cartouche
-@c @end quotation
-
-@c The @samp{Contains} field lists the packages (space separated), which
-@c should be contained in separate subdirectories with the names given.
-@c During building and installation, packages will be installed in the
-@c order specified.  Be sure to order this list so that dependencies are
-@c met appropriately.
-
-@c The packages contained in a bundle are standard packages in all
-@c respects except that the @file{DESCRIPTION} file is replaced by a
-@c @file{DESCRIPTION.in} file which just contains fields additional to
-@c the @file{DESCRIPTION} file of the bundle, for example
-
-@c @quotation
-@c @cartouche
-@c @smallexample
-@c Package: spatial
-@c Description: Functions for kriging and point pattern analysis.
-@c Title: Functions for Kriging and Point Pattern Analysis
-@c @end smallexample
-@c @end cartouche
-@c @end quotation
-
-@c Any files in the package bundle except the @file{DESCRIPTION} file and
-@c the named packages will be ignored.
-
-@c The @samp{Depends} field in the bundle's @file{DESCRIPTION} file should
-@c list the dependencies of all the constituent packages (and similarly for
-@c @samp{Imports} and @samp{Suggests}), and then @file{DESCRIPTION.in}
-@c files should not contain these fields.
+Prior to @R{} 2.9.1, @code{update.packages()} will only update members
+of a bundle by an updated bundle, whereas later versions of @R{} will
+update one or more members if an updated package of that name is
+available.  Thus when a bundle is unbundled, updating is transparent in
+@R{} 2.9.1 and later but needs to be done manually in earlier versions.
 
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
