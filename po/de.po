@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:33+0100\n"
+"POT-Creation-Date: 2009-05-11 12:42+0100\n"
 "PO-Revision-Date: 2009-03-20 14:22+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -163,7 +163,7 @@ msgstr "Problem bei der Anzeige von '%s'"
 #: src/main/envir.c:1838 src/main/envir.c:2054 src/main/envir.c:2175
 #: src/main/envir.c:2433 src/main/envir.c:2713 src/main/envir.c:3251
 #: src/main/eval.c:282 src/main/eval.c:1711 src/main/eval.c:1735
-#: src/main/eval.c:1739 src/main/memory.c:2939 src/main/model.c:1612
+#: src/main/eval.c:1739 src/main/memory.c:2970 src/main/model.c:1612
 #: src/main/model.c:1620 src/main/optim.c:225 src/main/paste.c:85
 #: src/main/paste.c:344 src/main/paste.c:351 src/main/paste.c:358
 #: src/main/paste.c:363 src/main/paste.c:368 src/main/paste.c:373
@@ -199,8 +199,8 @@ msgstr "Problem bei der Anzeige von '%s'"
 #: src/main/seq.c:367 src/main/seq.c:371 src/main/seq.c:389 src/main/seq.c:393
 #: src/main/seq.c:399 src/main/seq.c:407 src/main/sort.c:160
 #: src/main/sysutils.c:560 src/main/sysutils.c:562 src/main/sysutils.c:564
-#: src/main/unique.c:763 src/main/unique.c:1010 src/main/unique.c:1070
-#: src/main/unique.c:1077 src/main/util.c:558 src/main/util.c:561
+#: src/main/unique.c:767 src/main/unique.c:1014 src/main/unique.c:1074
+#: src/main/unique.c:1081 src/main/util.c:558 src/main/util.c:561
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
 #: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
 #: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
@@ -277,7 +277,7 @@ msgstr "ungültiger Zeitstempel"
 #: src/main/plot.c:3328 src/main/plot3d.c:1397 src/main/plot3d.c:2525
 #: src/main/plot3d.c:2529 src/main/plot3d.c:2531 src/main/seq.c:155
 #: src/main/seq.c:253 src/main/seq.c:256 src/main/sort.c:859
-#: src/main/sort.c:957 src/main/source.c:205 src/main/summary.c:977
+#: src/main/sort.c:957 src/main/source.c:206 src/main/summary.c:977
 #: src/main/sysutils.c:229 src/main/util.c:876 src/main/util.c:881
 #: src/main/util.c:888 src/main/util.c:891 src/modules/X11/devX11.c:2593
 #: src/modules/X11/devX11.c:2620 src/modules/X11/devX11.c:2625
@@ -1976,7 +1976,7 @@ msgstr ""
 #: src/main/connections.c:4315 src/main/dcf.c:51 src/main/deparse.c:303
 #: src/main/deparse.c:383 src/main/saveload.c:2238 src/main/saveload.c:2318
 #: src/main/scan.c:913 src/main/scan.c:1026 src/main/scan.c:1527
-#: src/main/scan.c:1721 src/main/source.c:250
+#: src/main/scan.c:1721 src/main/source.c:251
 msgid "cannot open the connection"
 msgstr "kann Verbindung nicht öffnen"
 
@@ -2171,7 +2171,7 @@ msgstr "Zeile länger als Buffergröße"
 #: src/main/connections.c:3691 src/main/connections.c:3711 src/main/dcf.c:48
 #: src/main/dcf.c:54 src/main/saveload.c:2314 src/main/scan.c:916
 #: src/main/scan.c:920 src/main/scan.c:1029 src/main/scan.c:1033
-#: src/main/serialize.c:1645 src/main/source.c:253 src/main/source.c:256
+#: src/main/serialize.c:1645 src/main/source.c:254 src/main/source.c:257
 msgid "cannot read from this connection"
 msgstr "kann aus dieser Verbindung nicht lesen"
 
@@ -4098,61 +4098,61 @@ msgstr "kann die gespeicherten Daten aus .RData nicht wiederherstellen\n"
 msgid "During startup - "
 msgstr "Beim Start - "
 
-#: src/main/main.c:1089
+#: src/main/main.c:1088
 #, fuzzy
 msgid "duplicate text argument"
 msgstr "falsches Argument"
 
-#: src/main/main.c:1096
+#: src/main/main.c:1094
 #, fuzzy
 msgid "duplicate condition argument"
 msgstr "ungültiges zweites Argument"
 
-#: src/main/main.c:1103
+#: src/main/main.c:1100
 #, fuzzy
 msgid "duplicate expr argument"
 msgstr "Nicht-Charakter Argument"
 
-#: src/main/main.c:1239
+#: src/main/main.c:1237
 msgid "cannot quit from browser"
 msgstr "kann Browser nicht beenden"
 
-#: src/main/main.c:1243
+#: src/main/main.c:1241
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "entweder \"yes\", \"no\", \"ask\" oder \"default\" erwartet."
 
-#: src/main/main.c:1248
+#: src/main/main.c:1246
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=\"ask\" in nicht-interaktiver Nutzung: Kommandozeilenstandard wird "
 "benutzt"
 
-#: src/main/main.c:1256
+#: src/main/main.c:1254
 msgid "unrecognized value of 'save'"
 msgstr "unbekannter Wert für 'save'"
 
-#: src/main/main.c:1259
+#: src/main/main.c:1257
 msgid "invalid 'status', 0 assumed"
 msgstr "ungültiger 'status', nehme 0 an"
 
-#: src/main/main.c:1264
+#: src/main/main.c:1262
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "ungültiger Wert für 'runLast', nehme FALSE an"
 
-#: src/main/main.c:1295
+#: src/main/main.c:1293
 msgid "cannot allocate space for toplevel callback element"
 msgstr "kann keinen Speicher für toplevel callback zuteilen"
 
-#: src/main/main.c:1373
+#: src/main/main.c:1371
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "negativer Index an R_removeTaskCallbackByIndex übergeben"
 
-#: src/main/main.c:1481
+#: src/main/main.c:1479
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "Warnmeldung vom toplevel task callback '%s'\n"
 
-#: src/main/main.c:1537
+#: src/main/main.c:1535
 msgid "top-level task callback did not return a logical value"
 msgstr "toplevel task callback gibt keinen logischen Wert zurück"
 
@@ -4191,118 +4191,118 @@ msgstr "partielle Übereinstimmung des Argumentes '%s' mit '%s'"
 msgid "unused argument(s) %s"
 msgstr "unbenutzte(s) Argument(e) %s"
 
-#: src/main/memory.c:950
+#: src/main/memory.c:961
 msgid "can only weakly reference/finalize reference objects"
 msgstr "kann referenzierte Objekte nur schwach referenzieren/finalisieren"
 
-#: src/main/memory.c:984
+#: src/main/memory.c:995
 msgid "finalizer must be a function or NULL"
 msgstr "Finalisierer muss entweder Funktion sein oder NULL"
 
-#: src/main/memory.c:1035 src/main/memory.c:1043 src/main/memory.c:1054
+#: src/main/memory.c:1046 src/main/memory.c:1054 src/main/memory.c:1065
 msgid "not a weak reference"
 msgstr "keine schwache Referenz"
 
-#: src/main/memory.c:1165
+#: src/main/memory.c:1176
 msgid "first argument must be environment or external pointer"
 msgstr "erstes Argument muss entweder Umgebung oder externer Zeiger sein"
 
-#: src/main/memory.c:1167
+#: src/main/memory.c:1178
 msgid "second argument must be a function"
 msgstr "zweites Argument muss eine Funktion sein"
 
-#: src/main/memory.c:1171
+#: src/main/memory.c:1182
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "drittes Argument  muss 'TRUE' oder 'FALSE' sein"
 
-#: src/main/memory.c:1536
+#: src/main/memory.c:1554
 msgid "vector memory exhausted (limit reached?)"
 msgstr "Vektorspeicher erschöpft (Limit erreicht?)"
 
-#: src/main/memory.c:1542
+#: src/main/memory.c:1560
 msgid "cons memory exhausted (limit reached?)"
 msgstr "Cons-Speicher erschöpft (Limit erreicht?)"
 
-#: src/main/memory.c:1547
+#: src/main/memory.c:1565
 msgid "memory exhausted (limit reached?)"
 msgstr "Speicher erschöpft (Limit erreicht?)"
 
-#: src/main/memory.c:1668 src/main/memory.c:1674
+#: src/main/memory.c:1686 src/main/memory.c:1692
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "kann Speicherblock der Größe %0.1f GB nicht zuteilen"
 
-#: src/main/memory.c:1888
+#: src/main/memory.c:1918
 msgid "negative length vectors are not allowed"
 msgstr "Vektoren negativer Länge sind nicht erlaubt"
 
-#: src/main/memory.c:1910 src/main/memory.c:1921 src/main/memory.c:1932
-#: src/main/memory.c:1945
+#: src/main/memory.c:1940 src/main/memory.c:1951 src/main/memory.c:1962
+#: src/main/memory.c:1975
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "kann Vektor der Länge %d nicht allozieren"
 
-#: src/main/memory.c:1958
+#: src/main/memory.c:1988
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "ungültiger Typ/Länge (%s/%d) bei der Vektorallokation"
 
-#: src/main/memory.c:2026
+#: src/main/memory.c:2057
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "kann Vektor der Größe %0.1f GB nicht allozieren"
 
-#: src/main/memory.c:2030
+#: src/main/memory.c:2061
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "kann Vektor der Größe %0.1f MB nicht allozieren"
 
-#: src/main/memory.c:2034
+#: src/main/memory.c:2065
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "kann Vektor der Größe %0.1f KB nicht allozieren"
 
-#: src/main/memory.c:2157
+#: src/main/memory.c:2188
 msgid "gc.time() is not implemented on this system"
 msgstr "gc.time() ist auf diesem System nicht implementiert"
 
-#: src/main/memory.c:2325
+#: src/main/memory.c:2356
 msgid "protect(): protection stack overflow"
 msgstr "protect(): protection stack Überlauf"
 
-#: src/main/memory.c:2341
+#: src/main/memory.c:2372
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): nur %d geschützte Elemente"
 
-#: src/main/memory.c:2355
+#: src/main/memory.c:2386
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: Zeiger nicht gefunden"
 
-#: src/main/memory.c:2396
+#: src/main/memory.c:2427
 #, c-format
 msgid "Calloc could not allocate (%d of %d) memory"
 msgstr "Calloc konnte nicht (%d von %d) Speicher zuteilen"
 
-#: src/main/memory.c:2406
+#: src/main/memory.c:2437
 #, c-format
 msgid "Realloc could not re-allocate (size %d) memory"
 msgstr "Realloc konnte nicht (size %d) Speicher re-allozieren"
 
-#: src/main/memory.c:2624
+#: src/main/memory.c:2655
 msgid "not safe to return vector pointer"
 msgstr "Vektorzeigerrückgabe ist unsicher"
 
-#: src/main/memory.c:2671 src/main/memory.c:2680 src/main/memory.c:2691
-#: src/main/memory.c:2704 src/main/memory.c:2720 src/main/memory.c:2737
+#: src/main/memory.c:2702 src/main/memory.c:2711 src/main/memory.c:2722
+#: src/main/memory.c:2735 src/main/memory.c:2751 src/main/memory.c:2768
 msgid "bad value"
 msgstr "unbrauchbarer Wert"
 
-#: src/main/memory.c:2860
+#: src/main/memory.c:2891
 msgid "memory profiling is not available on this system"
 msgstr "Speicherprofiling ist auf diesem System nicht verfügbar"
 
-#: src/main/memory.c:2925
+#: src/main/memory.c:2956
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: kann die Ausgabedatei '%s' nicht öffnen"
@@ -6442,12 +6442,12 @@ msgstr "negativer Wert in 'x'"
 msgid "too large a range of values in 'x'"
 msgstr "zu großer Wertebereich in 'x'"
 
-#: src/main/source.c:134
+#: src/main/source.c:135
 #, c-format
 msgid "%s%d:%d: %s"
 msgstr "%s%d:%d: %s"
 
-#: src/main/source.c:140
+#: src/main/source.c:141
 #, c-format
 msgid ""
 "%s%d:%d: %s\n"
@@ -6458,7 +6458,7 @@ msgstr ""
 "%d: %s\n"
 "%*s"
 
-#: src/main/source.c:147
+#: src/main/source.c:148
 #, c-format
 msgid ""
 "%s%d:%d: %s\n"
@@ -6471,17 +6471,17 @@ msgstr ""
 "%d: %s\n"
 "%*s"
 
-#: src/main/source.c:157
+#: src/main/source.c:158
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: src/main/source.c:160
+#: src/main/source.c:161
 #, c-format
 msgid "%s in \"%s\""
 msgstr "%s in \"%s\""
 
-#: src/main/source.c:164
+#: src/main/source.c:165
 #, c-format
 msgid ""
 "%s in:\n"
@@ -6932,48 +6932,52 @@ msgstr "Länge %d zu lang für hashing"
 msgid "'duplicated' applies only to vectors"
 msgstr "'duplicated' kann nur auf Vektoren angewendet werden"
 
-#: src/main/unique.c:507
+#: src/main/unique.c:458
+msgid "any_duplicated3(., <0-length incomp>)"
+msgstr ""
+
+#: src/main/unique.c:511
 #, c-format
 msgid "%s() applies only to vectors"
 msgstr "%s() kann nur auf Vektoren angewendet werden"
 
-#: src/main/unique.c:721
+#: src/main/unique.c:725
 msgid "'match' requires vector arguments"
 msgstr "'match' benötigt Vektoren als Argumente"
 
-#: src/main/unique.c:767 src/main/unique.c:880
+#: src/main/unique.c:771 src/main/unique.c:884
 msgid "argument is not of mode character"
 msgstr "Argument hat nicht Modus Charakter"
 
-#: src/main/unique.c:972
+#: src/main/unique.c:976
 msgid "... used in a situation where it doesn't exist"
 msgstr "... in einer Situation benutzt, in der es nicht existiert"
 
-#: src/main/unique.c:1063
+#: src/main/unique.c:1067
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr "kann keinen Aschluss finden, aus dem 'match.call' aufgerufen wurde"
 
-#: src/main/unique.c:1220
+#: src/main/unique.c:1224
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr "nicht-numerische Matrix in rowsum(): dies kann nicht passieren"
 
-#: src/main/unique.c:1254
+#: src/main/unique.c:1258
 msgid "non-numeric data frame in rowsum"
 msgstr "nicht-numerischer dataframe in rowsum"
 
-#: src/main/unique.c:1280
+#: src/main/unique.c:1284
 msgid "this cannot happen"
 msgstr "dies kann nicht passieren"
 
-#: src/main/unique.c:1334
+#: src/main/unique.c:1338
 msgid "'names' must be a character vector"
 msgstr "'names' muss Charaktervektor sein"
 
-#: src/main/unique.c:1338
+#: src/main/unique.c:1342
 msgid "'sep' must be a character string"
 msgstr "'sep' muss Zeichenkette sein"
 
-#: src/main/unique.c:1417
+#: src/main/unique.c:1421
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated nicht mit einem STRSXP aufgerufen"
 

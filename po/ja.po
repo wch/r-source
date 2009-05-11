@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:33+0100\n"
+"POT-Creation-Date: 2009-05-11 12:42+0100\n"
 "PO-Revision-Date: 2009-03-31 20:38+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -166,7 +166,7 @@ msgstr " '%s'の表示に問題があります "
 #: src/main/envir.c:1838 src/main/envir.c:2054 src/main/envir.c:2175
 #: src/main/envir.c:2433 src/main/envir.c:2713 src/main/envir.c:3251
 #: src/main/eval.c:282 src/main/eval.c:1711 src/main/eval.c:1735
-#: src/main/eval.c:1739 src/main/memory.c:2939 src/main/model.c:1612
+#: src/main/eval.c:1739 src/main/memory.c:2970 src/main/model.c:1612
 #: src/main/model.c:1620 src/main/optim.c:225 src/main/paste.c:85
 #: src/main/paste.c:344 src/main/paste.c:351 src/main/paste.c:358
 #: src/main/paste.c:363 src/main/paste.c:368 src/main/paste.c:373
@@ -202,8 +202,8 @@ msgstr " '%s'の表示に問題があります "
 #: src/main/seq.c:367 src/main/seq.c:371 src/main/seq.c:389 src/main/seq.c:393
 #: src/main/seq.c:399 src/main/seq.c:407 src/main/sort.c:160
 #: src/main/sysutils.c:560 src/main/sysutils.c:562 src/main/sysutils.c:564
-#: src/main/unique.c:763 src/main/unique.c:1010 src/main/unique.c:1070
-#: src/main/unique.c:1077 src/main/util.c:558 src/main/util.c:561
+#: src/main/unique.c:767 src/main/unique.c:1014 src/main/unique.c:1074
+#: src/main/unique.c:1081 src/main/util.c:558 src/main/util.c:561
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
 #: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
 #: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
@@ -280,7 +280,7 @@ msgstr " タイムスタンプが不正です "
 #: src/main/plot.c:3328 src/main/plot3d.c:1397 src/main/plot3d.c:2525
 #: src/main/plot3d.c:2529 src/main/plot3d.c:2531 src/main/seq.c:155
 #: src/main/seq.c:253 src/main/seq.c:256 src/main/sort.c:859
-#: src/main/sort.c:957 src/main/source.c:205 src/main/summary.c:977
+#: src/main/sort.c:957 src/main/source.c:206 src/main/summary.c:977
 #: src/main/sysutils.c:229 src/main/util.c:876 src/main/util.c:881
 #: src/main/util.c:888 src/main/util.c:891 src/modules/X11/devX11.c:2593
 #: src/modules/X11/devX11.c:2620 src/modules/X11/devX11.c:2625
@@ -1984,7 +1984,7 @@ msgstr ""
 #: src/main/connections.c:4315 src/main/dcf.c:51 src/main/deparse.c:303
 #: src/main/deparse.c:383 src/main/saveload.c:2238 src/main/saveload.c:2318
 #: src/main/scan.c:913 src/main/scan.c:1026 src/main/scan.c:1527
-#: src/main/scan.c:1721 src/main/source.c:250
+#: src/main/scan.c:1721 src/main/source.c:251
 msgid "cannot open the connection"
 msgstr " コネクションを開くことができません "
 
@@ -2182,7 +2182,7 @@ msgstr " 行がバッファーサイズより長くなっています "
 #: src/main/connections.c:3691 src/main/connections.c:3711 src/main/dcf.c:48
 #: src/main/dcf.c:54 src/main/saveload.c:2314 src/main/scan.c:916
 #: src/main/scan.c:920 src/main/scan.c:1029 src/main/scan.c:1033
-#: src/main/serialize.c:1645 src/main/source.c:253 src/main/source.c:256
+#: src/main/serialize.c:1645 src/main/source.c:254 src/main/source.c:257
 msgid "cannot read from this connection"
 msgstr " このコネクションから読み込みできません "
 
@@ -4112,61 +4112,61 @@ msgstr " .RData に保存されたデータを復帰できません \n"
 msgid "During startup - "
 msgstr " 起動準備中です ー "
 
-#: src/main/main.c:1089
+#: src/main/main.c:1088
 #, fuzzy
 msgid "duplicate text argument"
 msgstr " 正しくない引数です "
 
-#: src/main/main.c:1096
+#: src/main/main.c:1094
 #, fuzzy
 msgid "duplicate condition argument"
 msgstr " 二番目の引数が不正です "
 
-#: src/main/main.c:1103
+#: src/main/main.c:1100
 #, fuzzy
 msgid "duplicate expr argument"
 msgstr "文字列でない引数です "
 
-#: src/main/main.c:1239
+#: src/main/main.c:1237
 msgid "cannot quit from browser"
 msgstr " ブラウザを終了できません "
 
-#: src/main/main.c:1243
+#: src/main/main.c:1241
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 " \"yes\", \"no\", \"ask\" または \"default\" のどれかが期待されています "
 
-#: src/main/main.c:1248
+#: src/main/main.c:1246
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 " 非対話的な使用での save=\"ask\"：コマンドラインでの既定動作が使用されます "
 
-#: src/main/main.c:1256
+#: src/main/main.c:1254
 msgid "unrecognized value of 'save'"
 msgstr " 'save' の値が認識できません "
 
-#: src/main/main.c:1259
+#: src/main/main.c:1257
 msgid "invalid 'status', 0 assumed"
 msgstr " 'status' が不正です。0が仮定されました "
 
-#: src/main/main.c:1264
+#: src/main/main.c:1262
 msgid "invalid 'runLast', FALSE assumed"
 msgstr " 'runLast' が不正です。FALSE が仮定されました "
 
-#: src/main/main.c:1295
+#: src/main/main.c:1293
 msgid "cannot allocate space for toplevel callback element"
 msgstr " トップレベルの callback 要素に作業空間を割り当てることができません "
 
-#: src/main/main.c:1373
+#: src/main/main.c:1371
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr " R_removeTaskCallbackByIndex に負の添字が渡されました "
 
-#: src/main/main.c:1481
+#: src/main/main.c:1479
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr " トップレベルの task callback '%s' からの警告メッセージ \n"
 
-#: src/main/main.c:1537
+#: src/main/main.c:1535
 msgid "top-level task callback did not return a logical value"
 msgstr " トップレベルの task callback が論理値を返していません "
 
@@ -4203,118 +4203,118 @@ msgstr " '%s' の '%s'　への部分的な引数のマッチング"
 msgid "unused argument(s) %s"
 msgstr " 使われていない引数 %s "
 
-#: src/main/memory.c:950
+#: src/main/memory.c:961
 msgid "can only weakly reference/finalize reference objects"
 msgstr " 参照オブジェクトは曖昧にしか参照・完結できません "
 
-#: src/main/memory.c:984
+#: src/main/memory.c:995
 msgid "finalizer must be a function or NULL"
 msgstr " ファイナライザーは関数であるか NULL でなければなりません "
 
-#: src/main/memory.c:1035 src/main/memory.c:1043 src/main/memory.c:1054
+#: src/main/memory.c:1046 src/main/memory.c:1054 src/main/memory.c:1065
 msgid "not a weak reference"
 msgstr " 弱い (weak) 参照ではありません "
 
-#: src/main/memory.c:1165
+#: src/main/memory.c:1176
 msgid "first argument must be environment or external pointer"
 msgstr " 最初の引数は環境か外部ポインタでなくてはなりません "
 
-#: src/main/memory.c:1167
+#: src/main/memory.c:1178
 msgid "second argument must be a function"
 msgstr " 二番目の引数は関数でなければなりません "
 
-#: src/main/memory.c:1171
+#: src/main/memory.c:1182
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr " 三番目の引数は 'TRUE' か 'FALSE' でなくてはなりません "
 
-#: src/main/memory.c:1536
+#: src/main/memory.c:1554
 msgid "vector memory exhausted (limit reached?)"
 msgstr " ベクトルのメモリを使い切りました（上限に達した？） "
 
-#: src/main/memory.c:1542
+#: src/main/memory.c:1560
 msgid "cons memory exhausted (limit reached?)"
 msgstr " cons メモリが尽きました（限界に達したかも？） "
 
-#: src/main/memory.c:1547
+#: src/main/memory.c:1565
 msgid "memory exhausted (limit reached?)"
 msgstr " メモリが尽きました（限界に達したかも？） "
 
-#: src/main/memory.c:1668 src/main/memory.c:1674
+#: src/main/memory.c:1686 src/main/memory.c:1692
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr " サイズ %0.1f Gb のメモリブロックを割り当てることができません "
 
-#: src/main/memory.c:1888
+#: src/main/memory.c:1918
 msgid "negative length vectors are not allowed"
 msgstr " 負の長さのベクトルは許されません "
 
-#: src/main/memory.c:1910 src/main/memory.c:1921 src/main/memory.c:1932
-#: src/main/memory.c:1945
+#: src/main/memory.c:1940 src/main/memory.c:1951 src/main/memory.c:1962
+#: src/main/memory.c:1975
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr " 長さ %d のベクトルを割り当てることができません "
 
-#: src/main/memory.c:1958
+#: src/main/memory.c:1988
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr " ベクトル割り当てにおいて，型か長さ (%s か %d) が不正です "
 
-#: src/main/memory.c:2026
+#: src/main/memory.c:2057
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr " サイズ %0.1f Gb のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2030
+#: src/main/memory.c:2061
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr " サイズ %0.1f Mb のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2034
+#: src/main/memory.c:2065
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr " サイズ %0.f Kb のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2157
+#: src/main/memory.c:2188
 msgid "gc.time() is not implemented on this system"
 msgstr " このシステムでは gc.time 関数は実装されていません "
 
-#: src/main/memory.c:2325
+#: src/main/memory.c:2356
 msgid "protect(): protection stack overflow"
 msgstr " protect()：プロテクションスタックが溢れました "
 
-#: src/main/memory.c:2341
+#: src/main/memory.c:2372
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr " unprotect(): %d 個の保護された項目  "
 
-#: src/main/memory.c:2355
+#: src/main/memory.c:2386
 msgid "unprotect_ptr: pointer not found"
 msgstr " unprotect_ptr：ポインターがありません "
 
-#: src/main/memory.c:2396
+#: src/main/memory.c:2427
 #, c-format
 msgid "Calloc could not allocate (%d of %d) memory"
 msgstr " Calloc がメモリー (%d of %d) を割りあてられませんでした "
 
-#: src/main/memory.c:2406
+#: src/main/memory.c:2437
 #, c-format
 msgid "Realloc could not re-allocate (size %d) memory"
 msgstr " Realloc がメモリーを再確保できません (サイズは %d)  "
 
-#: src/main/memory.c:2624
+#: src/main/memory.c:2655
 msgid "not safe to return vector pointer"
 msgstr " ベクトルのポインタを返すのは安全ではありません "
 
-#: src/main/memory.c:2671 src/main/memory.c:2680 src/main/memory.c:2691
-#: src/main/memory.c:2704 src/main/memory.c:2720 src/main/memory.c:2737
+#: src/main/memory.c:2702 src/main/memory.c:2711 src/main/memory.c:2722
+#: src/main/memory.c:2735 src/main/memory.c:2751 src/main/memory.c:2768
 msgid "bad value"
 msgstr " 不適切な値です "
 
-#: src/main/memory.c:2860
+#: src/main/memory.c:2891
 msgid "memory profiling is not available on this system"
 msgstr " メモリプロファリングはこのシステムでは使えません "
 
-#: src/main/memory.c:2925
+#: src/main/memory.c:2956
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr " Rprofmem: ファイル '%s' を開くことができません "
@@ -6451,12 +6451,12 @@ msgstr " 'x' 中に負の値があります "
 msgid "too large a range of values in 'x'"
 msgstr " 'x' 中の値の範囲が大きすぎます "
 
-#: src/main/source.c:134
+#: src/main/source.c:135
 #, c-format
 msgid "%s%d:%d: %s"
 msgstr " %s%d:%d: %s "
 
-#: src/main/source.c:140
+#: src/main/source.c:141
 #, c-format
 msgid ""
 "%s%d:%d: %s\n"
@@ -6467,7 +6467,7 @@ msgstr ""
 " %d: %s \n"
 " %*s "
 
-#: src/main/source.c:147
+#: src/main/source.c:148
 #, c-format
 msgid ""
 "%s%d:%d: %s\n"
@@ -6480,17 +6480,17 @@ msgstr ""
 " %d: %s \n"
 " %*s "
 
-#: src/main/source.c:157
+#: src/main/source.c:158
 #, c-format
 msgid "%s"
 msgstr "  %s "
 
-#: src/main/source.c:160
+#: src/main/source.c:161
 #, c-format
 msgid "%s in \"%s\""
 msgstr " %s ( \"%s\" の) "
 
-#: src/main/source.c:164
+#: src/main/source.c:165
 #, c-format
 msgid ""
 "%s in:\n"
@@ -6937,49 +6937,53 @@ msgstr " 長さ %d は大きすぎてハッシュできません "
 msgid "'duplicated' applies only to vectors"
 msgstr " duplicated' はベクトルに対してだけ適用できます "
 
-#: src/main/unique.c:507
+#: src/main/unique.c:458
+msgid "any_duplicated3(., <0-length incomp>)"
+msgstr ""
+
+#: src/main/unique.c:511
 #, c-format
 msgid "%s() applies only to vectors"
 msgstr " %s() はベクトルにのみ使用できます "
 
-#: src/main/unique.c:721
+#: src/main/unique.c:725
 msgid "'match' requires vector arguments"
 msgstr " 'match' はベクトル引数を必要とします "
 
-#: src/main/unique.c:767 src/main/unique.c:880
+#: src/main/unique.c:771 src/main/unique.c:884
 msgid "argument is not of mode character"
 msgstr " 引数がモードを表す文字列ではありません "
 
-#: src/main/unique.c:972
+#: src/main/unique.c:976
 msgid "... used in a situation where it doesn't exist"
 msgstr " ... がそれが存在しな状況で使われました "
 
-#: src/main/unique.c:1063
+#: src/main/unique.c:1067
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr ""
 " 'match.call' がその中から呼び出されたクロージャを見付けることができません "
 
-#: src/main/unique.c:1220
+#: src/main/unique.c:1224
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr " rowsum() 関数中に非数値行列：これはあり得ません "
 
-#: src/main/unique.c:1254
+#: src/main/unique.c:1258
 msgid "non-numeric data frame in rowsum"
 msgstr " rowsum の引数が数値データフレームではありません "
 
-#: src/main/unique.c:1280
+#: src/main/unique.c:1284
 msgid "this cannot happen"
 msgstr " このようなことは起き得ないはずです "
 
-#: src/main/unique.c:1334
+#: src/main/unique.c:1338
 msgid "'names' must be a character vector"
 msgstr " 'names' は文字ベクトルでなければなりません "
 
-#: src/main/unique.c:1338
+#: src/main/unique.c:1342
 msgid "'sep' must be a character string"
 msgstr " 'sep' は文字列でなければなりません "
 
-#: src/main/unique.c:1417
+#: src/main/unique.c:1421
 msgid "csduplicated not called on a STRSXP"
 msgstr " csduplicated は STRSXP に対して呼び出されていません "
 

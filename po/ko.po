@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:33+0100\n"
+"POT-Creation-Date: 2009-05-11 12:42+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -166,7 +166,7 @@ msgstr ""
 #: src/main/envir.c:1838 src/main/envir.c:2054 src/main/envir.c:2175
 #: src/main/envir.c:2433 src/main/envir.c:2713 src/main/envir.c:3251
 #: src/main/eval.c:282 src/main/eval.c:1711 src/main/eval.c:1735
-#: src/main/eval.c:1739 src/main/memory.c:2939 src/main/model.c:1612
+#: src/main/eval.c:1739 src/main/memory.c:2970 src/main/model.c:1612
 #: src/main/model.c:1620 src/main/optim.c:225 src/main/paste.c:85
 #: src/main/paste.c:344 src/main/paste.c:351 src/main/paste.c:358
 #: src/main/paste.c:363 src/main/paste.c:368 src/main/paste.c:373
@@ -202,8 +202,8 @@ msgstr ""
 #: src/main/seq.c:367 src/main/seq.c:371 src/main/seq.c:389 src/main/seq.c:393
 #: src/main/seq.c:399 src/main/seq.c:407 src/main/sort.c:160
 #: src/main/sysutils.c:560 src/main/sysutils.c:562 src/main/sysutils.c:564
-#: src/main/unique.c:763 src/main/unique.c:1010 src/main/unique.c:1070
-#: src/main/unique.c:1077 src/main/util.c:558 src/main/util.c:561
+#: src/main/unique.c:767 src/main/unique.c:1014 src/main/unique.c:1074
+#: src/main/unique.c:1081 src/main/util.c:558 src/main/util.c:561
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
 #: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
 #: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
@@ -281,7 +281,7 @@ msgstr "태그가 부적절합니다"
 #: src/main/plot.c:3328 src/main/plot3d.c:1397 src/main/plot3d.c:2525
 #: src/main/plot3d.c:2529 src/main/plot3d.c:2531 src/main/seq.c:155
 #: src/main/seq.c:253 src/main/seq.c:256 src/main/sort.c:859
-#: src/main/sort.c:957 src/main/source.c:205 src/main/summary.c:977
+#: src/main/sort.c:957 src/main/source.c:206 src/main/summary.c:977
 #: src/main/sysutils.c:229 src/main/util.c:876 src/main/util.c:881
 #: src/main/util.c:888 src/main/util.c:891 src/modules/X11/devX11.c:2593
 #: src/modules/X11/devX11.c:2620 src/modules/X11/devX11.c:2625
@@ -2017,7 +2017,7 @@ msgstr ""
 #: src/main/connections.c:4315 src/main/dcf.c:51 src/main/deparse.c:303
 #: src/main/deparse.c:383 src/main/saveload.c:2238 src/main/saveload.c:2318
 #: src/main/scan.c:913 src/main/scan.c:1026 src/main/scan.c:1527
-#: src/main/scan.c:1721 src/main/source.c:250
+#: src/main/scan.c:1721 src/main/source.c:251
 msgid "cannot open the connection"
 msgstr "연결로부터 열수가 없습니다"
 
@@ -2219,7 +2219,7 @@ msgstr "행이 버퍼 사이즈보다 길어지고 있습니다"
 #: src/main/connections.c:3691 src/main/connections.c:3711 src/main/dcf.c:48
 #: src/main/dcf.c:54 src/main/saveload.c:2314 src/main/scan.c:916
 #: src/main/scan.c:920 src/main/scan.c:1029 src/main/scan.c:1033
-#: src/main/serialize.c:1645 src/main/source.c:253 src/main/source.c:256
+#: src/main/serialize.c:1645 src/main/source.c:254 src/main/source.c:257
 msgid "cannot read from this connection"
 msgstr "이 연결로부터 열수가 없습니다"
 
@@ -4181,61 +4181,61 @@ msgstr ".RData에 보존된 데이터를 복구할수가 없습니다\n"
 msgid "During startup - "
 msgstr "기동 준비중입니다 -"
 
-#: src/main/main.c:1089
+#: src/main/main.c:1088
 #, fuzzy
 msgid "duplicate text argument"
 msgstr "올바르지 않은 인수입니다"
 
-#: src/main/main.c:1096
+#: src/main/main.c:1094
 #, fuzzy
 msgid "duplicate condition argument"
 msgstr "두번째의 인수가 부적절합니다"
 
-#: src/main/main.c:1103
+#: src/main/main.c:1100
 #, fuzzy
 msgid "duplicate expr argument"
 msgstr "이름은 문자열이 아닙니다"
 
-#: src/main/main.c:1239
+#: src/main/main.c:1237
 msgid "cannot quit from browser"
 msgstr "브라우저를 종료할수가 없습니다"
 
-#: src/main/main.c:1243
+#: src/main/main.c:1241
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 "\"yes\", \"no\", \\'\"ask\" 또는 \"default\" 의 어떤것이 예상되어 있습니다"
 
-#: src/main/main.c:1248
+#: src/main/main.c:1246
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "비대화적인 사용에서  save=\"ask \": 커멘드 라인에서 기정 동작이 사용됩니다"
 
-#: src/main/main.c:1256
+#: src/main/main.c:1254
 msgid "unrecognized value of 'save'"
 msgstr "'save'의 값을 인식할수가 없습니다"
 
-#: src/main/main.c:1259
+#: src/main/main.c:1257
 msgid "invalid 'status', 0 assumed"
 msgstr "'status'가 부적절합니다. 0이 가정되었습니다"
 
-#: src/main/main.c:1264
+#: src/main/main.c:1262
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast'가 부적절합니다. FALSE가 가정되었습니다"
 
-#: src/main/main.c:1295
+#: src/main/main.c:1293
 msgid "cannot allocate space for toplevel callback element"
 msgstr "top level의 callback 요소에 작업 공간을 할당할수가 없습니다"
 
-#: src/main/main.c:1373
+#: src/main/main.c:1371
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex에 부의 첨자가 건데 받았습니다"
 
-#: src/main/main.c:1481
+#: src/main/main.c:1479
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "top level의 task callback '%s'로부터 경고 메세지\n"
 
-#: src/main/main.c:1537
+#: src/main/main.c:1535
 msgid "top-level task callback did not return a logical value"
 msgstr "top level의 task callback가 논리값을 돌려주고 있지 않습니다"
 
@@ -4276,121 +4276,121 @@ msgstr ""
 msgid "unused argument(s) %s"
 msgstr "사용되지 않는 인수 (%s...)"
 
-#: src/main/memory.c:950
+#: src/main/memory.c:961
 msgid "can only weakly reference/finalize reference objects"
 msgstr "참조 오브젝트는 이상해서 참조/완결 할수가 없습니다"
 
-#: src/main/memory.c:984
+#: src/main/memory.c:995
 msgid "finalizer must be a function or NULL"
 msgstr "finalizer는 함수 또는 NULL가 나오지 않으면 안됩니다"
 
-#: src/main/memory.c:1035 src/main/memory.c:1043 src/main/memory.c:1054
+#: src/main/memory.c:1046 src/main/memory.c:1054 src/main/memory.c:1065
 msgid "not a weak reference"
 msgstr "약한 (week) 참조가 아닙니다"
 
-#: src/main/memory.c:1165
+#: src/main/memory.c:1176
 msgid "first argument must be environment or external pointer"
 msgstr "최초의 인수는 환경 또는 외부 포인터가 아니면 안됩니다"
 
-#: src/main/memory.c:1167
+#: src/main/memory.c:1178
 msgid "second argument must be a function"
 msgstr "두번째의 인수는 함수이어야만 합니다"
 
-#: src/main/memory.c:1171
+#: src/main/memory.c:1182
 #, fuzzy
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "인수 'multiple'는 TRUE 또는 FALSE 이어야만 합니다"
 
-#: src/main/memory.c:1536
+#: src/main/memory.c:1554
 msgid "vector memory exhausted (limit reached?)"
 msgstr "벡터의 메모리를 전부 소모했습니다(상한에 이르렀습니까?)"
 
-#: src/main/memory.c:1542
+#: src/main/memory.c:1560
 msgid "cons memory exhausted (limit reached?)"
 msgstr "cons 메모리가 전부 소모했습니다(한계가 이르렀을지도?)"
 
-#: src/main/memory.c:1547
+#: src/main/memory.c:1565
 #, fuzzy
 msgid "memory exhausted (limit reached?)"
 msgstr "cons 메모리가 전부 소모했습니다(한계가 이르렀을지도?)"
 
-#: src/main/memory.c:1668 src/main/memory.c:1674
+#: src/main/memory.c:1686 src/main/memory.c:1692
 #, fuzzy, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "size %.0f의 메모리 블록을 할당할수가 없습니다"
 
-#: src/main/memory.c:1888
+#: src/main/memory.c:1918
 msgid "negative length vectors are not allowed"
 msgstr "부의 길이가 벡터에서는 허용되지 않습니다"
 
-#: src/main/memory.c:1910 src/main/memory.c:1921 src/main/memory.c:1932
-#: src/main/memory.c:1945
+#: src/main/memory.c:1940 src/main/memory.c:1951 src/main/memory.c:1962
+#: src/main/memory.c:1975
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "길이 %d의 벡터를 할당한 수가 없습니다"
 
-#: src/main/memory.c:1958
+#: src/main/memory.c:1988
 #, fuzzy, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "벡터 할당에 두고, 유형 또는 길이(%d/%d)가 부적절합니다"
 
-#: src/main/memory.c:2026
+#: src/main/memory.c:2057
 #, fuzzy, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "사이즈 %lu Kb의 벡터를 할당할수가 없습니다"
 
-#: src/main/memory.c:2030
+#: src/main/memory.c:2061
 #, fuzzy, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "사이즈 %lu Kb의 벡터를 할당할수가 없습니다"
 
-#: src/main/memory.c:2034
+#: src/main/memory.c:2065
 #, fuzzy, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "사이즈 %lu Kb의 벡터를 할당할수가 없습니다"
 
-#: src/main/memory.c:2157
+#: src/main/memory.c:2188
 msgid "gc.time() is not implemented on this system"
 msgstr "이 시스템에서는 gc.time()함수는 실제 적용되지 않습니다"
 
-#: src/main/memory.c:2325
+#: src/main/memory.c:2356
 msgid "protect(): protection stack overflow"
 msgstr "protect():  protection 스택이 오버플로우입니다"
 
-#: src/main/memory.c:2341
+#: src/main/memory.c:2372
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr ""
 
-#: src/main/memory.c:2355
+#: src/main/memory.c:2386
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: pointer가 없습니다"
 
-#: src/main/memory.c:2396
+#: src/main/memory.c:2427
 #, c-format
 msgid "Calloc could not allocate (%d of %d) memory"
 msgstr "Calloc가 메모리(%d of %d)를 할당할수가 없었습니다"
 
-#: src/main/memory.c:2406
+#: src/main/memory.c:2437
 #, c-format
 msgid "Realloc could not re-allocate (size %d) memory"
 msgstr "Realloc가 메모리를 재확보할수 없습니다 (size는 %d)"
 
-#: src/main/memory.c:2624
+#: src/main/memory.c:2655
 msgid "not safe to return vector pointer"
 msgstr "벡터 pointer를 돌려주는 것은 안전하지는 않습니다"
 
-#: src/main/memory.c:2671 src/main/memory.c:2680 src/main/memory.c:2691
-#: src/main/memory.c:2704 src/main/memory.c:2720 src/main/memory.c:2737
+#: src/main/memory.c:2702 src/main/memory.c:2711 src/main/memory.c:2722
+#: src/main/memory.c:2735 src/main/memory.c:2751 src/main/memory.c:2768
 msgid "bad value"
 msgstr "부적절한 값입니다"
 
-#: src/main/memory.c:2860
+#: src/main/memory.c:2891
 #, fuzzy
 msgid "memory profiling is not available on this system"
 msgstr "R profiling는 이 시스템에서 사용할 수가 없습니다"
 
-#: src/main/memory.c:2925
+#: src/main/memory.c:2956
 #, fuzzy, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprof: profile 파일,파일 '%s'를 열수가 없습니다"
@@ -6555,12 +6555,12 @@ msgstr "'x'에서 부의 값이 있습니다"
 msgid "too large a range of values in 'x'"
 msgstr "'x'에서 값 범위가 너무 큽니다"
 
-#: src/main/source.c:134
+#: src/main/source.c:135
 #, fuzzy, c-format
 msgid "%s%d:%d: %s"
 msgstr "구문 에러입니다"
 
-#: src/main/source.c:140
+#: src/main/source.c:141
 #, fuzzy, c-format
 msgid ""
 "%s%d:%d: %s\n"
@@ -6568,7 +6568,7 @@ msgid ""
 "%*s"
 msgstr "%d행에 구문에러가 있었습니다"
 
-#: src/main/source.c:147
+#: src/main/source.c:148
 #, fuzzy, c-format
 msgid ""
 "%s%d:%d: %s\n"
@@ -6577,17 +6577,17 @@ msgid ""
 "%*s"
 msgstr "%d행에 구문에러가 있었습니다"
 
-#: src/main/source.c:157
+#: src/main/source.c:158
 #, c-format
 msgid "%s"
 msgstr ""
 
-#: src/main/source.c:160
+#: src/main/source.c:161
 #, c-format
 msgid "%s in \"%s\""
 msgstr ""
 
-#: src/main/source.c:164
+#: src/main/source.c:165
 #, fuzzy, c-format
 msgid ""
 "%s in:\n"
@@ -7050,49 +7050,53 @@ msgstr "길이 %d는 너무 커서 해싱할수 없습니다"
 msgid "'duplicated' applies only to vectors"
 msgstr "'duplicated'는 벡터에 대해서만 적용할수가 있습니다"
 
-#: src/main/unique.c:507
+#: src/main/unique.c:458
+msgid "any_duplicated3(., <0-length incomp>)"
+msgstr ""
+
+#: src/main/unique.c:511
 #, c-format
 msgid "%s() applies only to vectors"
 msgstr "%s()는 벡터에만 사용할수가 있습니다"
 
-#: src/main/unique.c:721
+#: src/main/unique.c:725
 msgid "'match' requires vector arguments"
 msgstr "'match'는 벡터 인수를 필요로 합니다"
 
-#: src/main/unique.c:767 src/main/unique.c:880
+#: src/main/unique.c:771 src/main/unique.c:884
 msgid "argument is not of mode character"
 msgstr "인수가 모드를 표현하는 문자열이 아닙니다"
 
-#: src/main/unique.c:972
+#: src/main/unique.c:976
 msgid "... used in a situation where it doesn't exist"
 msgstr "...이(가)그것이 존재하지않는 상환으로 사용되었습니다"
 
-#: src/main/unique.c:1063
+#: src/main/unique.c:1067
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr ""
 
-#: src/main/unique.c:1220
+#: src/main/unique.c:1224
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr ""
 "rowsum함수의 인수 행렬이 수치가 아닙니다: 이것이 발생하여서 얻지 못합니다"
 
-#: src/main/unique.c:1254
+#: src/main/unique.c:1258
 msgid "non-numeric data frame in rowsum"
 msgstr "rowsum의 인수가 수치 데이터 프레임이 아닙니다"
 
-#: src/main/unique.c:1280
+#: src/main/unique.c:1284
 msgid "this cannot happen"
 msgstr "이러한 것은 발생할수가 없습니다"
 
-#: src/main/unique.c:1334
+#: src/main/unique.c:1338
 msgid "'names' must be a character vector"
 msgstr "'names'는 문자벡터가 아니면 되지 않습니다"
 
-#: src/main/unique.c:1338
+#: src/main/unique.c:1342
 msgid "'sep' must be a character string"
 msgstr "'sep'는 문자열이 아니면 안됩니다"
 
-#: src/main/unique.c:1417
+#: src/main/unique.c:1421
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated는 STRSXP에 대해서 호출되어 있지 않습니다"
 
