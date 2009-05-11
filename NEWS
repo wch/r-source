@@ -60,6 +60,12 @@ DEPRECATED & DEFUNCT
 	Extensions' for the steps needed to unbundle a bundle.
 
 
+UTILITIES
+
+    o	There is some makefile support for adding/updating translations
+	in packages: see po/README and 'Writing R Extensions'.
+
+
 BUG FIXES
 
     o	sprintf() now signals an error when the result of single format

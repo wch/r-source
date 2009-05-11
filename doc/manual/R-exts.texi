@@ -2594,10 +2594,11 @@ Windows users can find pre-compiled binaries at the @acronym{GNU}
 archive mirrors and packaged with the @code{poEdit} package
 (@uref{http://@/poedit.sourceforge.net/@/download.php#win32}).
 
-
 @menu
 * C-level messages::            
 * R messages::                  
+* Installing translations::     
+* Makefile support::            
 @end menu
 
 @node C-level messages, R messages, Internationalization, Internationalization
@@ -2653,7 +2654,7 @@ for any language @var{lang} that matches the user's preferences (via the
 setting of the @code{LANGUAGE} environment variable or from the locale
 settings).
 
-@node R messages,  , C-level messages, Internationalization
+@node R messages, Installing translations, C-level messages, Internationalization
 @subsection R messages
 
 Mechanisms to support the automatic translation of @R{} @code{stop},
@@ -2684,6 +2685,91 @@ the selected language depending on the value of its first argument
 Packages without name spaces will need to use @code{domain="R-@var{pkg}"}
 explicitly in calls to @code{stop}, @code{warning}, @code{message},
 @code{gettext}/@code{gettextf} and @code{ngettext}.
+
+
+@node Installing translations, Makefile support, R messages, Internationalization
+@subsection Installing translations
+
+Once the template files have been created, translations can be made.
+Conventional translations have file extension @file{.po} and are placed
+in the @file{po} subdirectory of the package with a name that is either
+@samp{@var{ll}.po} or @samp{R-@var{ll}.po} for translations of the C and R
+messages respectively to language with code @samp{@var{ll}}.
+
+@ifset UseExternalXrefs
+@xref{Localization of messages, Localization of messages,
+Customizing package compilation, R-admin,
+R Installation and Administration}, for details of language codes.
+@end ifset
+@ifclear UseExternalXrefs
+See `Localization of messages' in `R Installation and Administration',
+for details of language codes.
+@end ifclear
+
+Translations need to be prepared and installed in @file{inst/po/} to be
+usable once the package is installed.  To do this use the appropriate
+lines of
+
+@example
+mkdir -p inst/po/@var{ll}/LC_MESSAGES
+msgfmt -c --statistics -o inst/po/@var{ll}/LC_MESSAGES/R-@var{pkg}.mo po/R-@var{ll}.po
+msgfmt -c --statistics -o inst/po/@var{ll}/LC_MESSAGES/@var{pkg}.mo po/@var{ll}.po
+@end example
+
+@noindent
+from the package's top-level directory.  Using @option{-c} does some
+useful validity checks, and @option{--statistics} notes the coverage.
+
+@node Makefile support,  , Installing translations, Internationalization
+@subsection Makefile support
+
+As from @R{} 2.10.0 there is some makefile support in the @file{po}
+directory of the @R{} sources.  To use this to create the template
+files, use
+
+@example
+mkdir -p @var{pkgdir}/po
+@end example
+
+@noindent
+where @file{@var{pkgdir}} is the top-level directory of the package
+sources.  If the package as C source files in its @file{src} directory
+that are marked for translation, use
+
+@example
+touch @var{pkgdir}/po/@var{pkg}.pot
+@end example
+
+@noindent
+to create a dummy template file.  Then
+
+@example
+cd @var{R_BUILD_DIR}/po
+make pkg-update PKG=@var{pkg} PKGDIR=@var{pkgdir}
+@end example
+
+@noindent
+will create a template file of R messages and update any template of C
+messages.  It will also prepare an install a translation for the
+@samp{en@@quot} pseudo-language, which if selected interprets (single
+and double) quotes in their directional forms in suitable (e.g.@:)
+locales.
+
+If translations are added in the @file{@var{pkgdir}/po} directory,
+running the same @command{make} command will check and then install the
+translations.
+
+If the package sources are updated, the same @command{make} command will
+update the template files, merge the changes into the translation
+@file{.po} files and then installed the updated translations.  You will
+often see that merging marks translations as `fuzzy' and this is
+reported in the coverage statistics.  As fuzzy translations are
+@emph{not} used, this is an indication that the translation files need
+human attention.
+
+
+This support is only for Unix-alikes, and the tools did not work
+correctly on at least one Mac OS X system.
 
 @findex CITATION
 @cindex citation
@@ -4467,7 +4553,7 @@ profile DLLs on Windows.
 @menu
 * Linux::                       
 * Solaris::                     
-* Mac OS X::                     
+* Mac OS X::                    
 @end menu
 
 @node Linux, Solaris, Profiling compiled code, Profiling compiled code

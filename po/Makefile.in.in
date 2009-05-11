@@ -505,7 +505,12 @@ pkg-update: remove-potcdate.sed en@quot.insert-header
 	  fi ; \
 	fi ; \
 	cd $$tmpdir; \
-	echo $(ECHO_N) "updating R-$${pkg}.pot "$(ECHO_C); \
+	if test -f "$${src}/po/R-$${pkg}.pot"; then \
+	  echo $(ECHO_N) "updating R-$${pkg}.pot "$(ECHO_C); \
+        else \
+	  echo $(ECHO_N) "creating R-$${pkg}.pot "$(ECHO_C); \
+	  touch "$${src}/po/R-$${pkg}.pot"; \
+	fi ; \
 	echo "tools::xgettext2pot('$${src}', 'R-$${pkg}.po')" \
 	  | R_DEFAULT_PACKAGES= LC_COLLATE=C $(R_EXE) --slave > /dev/null; \
 	sed -f remove-potcdate.sed < $${src}/po/R-$${pkg}.pot > R-$${pkg}.1po && \
