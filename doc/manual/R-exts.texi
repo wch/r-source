@@ -738,7 +738,9 @@ Subdirectory @file{po} is used for files related to @emph{localization}:
 Sometimes it is convenient to distribute several packages as a
 @emph{bundle}.  (An example is @pkg{VR} which contains four packages.)
 The installation procedures on both Unix-alikes and Windows can handle
-package bundles.
+package bundles.  However, it has been announced that this will be
+removed in @R{} 2.11.0, so it is recommended that no new bundles be
+created.
 
 The @file{DESCRIPTION} file of a bundle has a @samp{Bundle}
 field and no @samp{Package} field, as in
