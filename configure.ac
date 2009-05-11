@@ -695,8 +695,6 @@ if test "${use_readline}" = yes; then
   fi
   ## the NetBSD version as used in MacOS X does not have this
   AC_CHECK_FUNCS(history_truncate_file)
-  READLINE_LIBS="${LIBS}"
-  LIBS="${r_save_LIBS}"
   if test "${use_readline}" = no; then
     AC_MSG_ERROR([--with-readline=yes (default) and headers/libs are not available])
   else
@@ -705,6 +703,8 @@ if test "${use_readline}" = yes; then
 #include <readline/readline.h>]
                  )
   fi
+  READLINE_LIBS="${LIBS}"
+  LIBS="${r_save_LIBS}"
 fi
 AC_SUBST(READLINE_LIBS)
 
