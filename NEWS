@@ -30,10 +30,6 @@ NEW FEATURES
 	with duplicated levels are still constructible by low-level means,
 	but are now declared illegal.
 
-	factor() gains new optional arguments 'keepUnique' and
-	'digitsLabels' which determine the exact behavior in the case
-	of a (non-integer) numeric argument.
-
     o	New print() (S3) method for class "function", also used for
 	auto-printing.	Further, .Primitive functions now print and
 	auto-print identically.  The new method is based on code
@@ -102,7 +98,7 @@ NEW FEATURES
     o	new.packages() no longer regards packages with the same name
 	as a member of an installed bundle as 'new' (this is now
 	consistent with the dependency checks in install.packages()).
-  	
+
 	It no longer reports on partially installed bundles (since
 	members can be updated individually if a bundle is unbundled).
 

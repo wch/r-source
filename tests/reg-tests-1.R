@@ -5646,8 +5646,7 @@ stopifnot(identical(factor(c(2, 1:2), labels = L),
 		    structure(c(2L, 1:2), .Label = L, class="factor")),
 	  identical(factor(x),
 		    structure(5:1, .Label = lx, class="factor")),
-	  length(levels(factor(y))) == 1, length(unique(y)) == 5,
-	  length(levels(factor(y, keepUnique=TRUE))) == 5)
+	  length(levels(factor(y))) == 1, length(unique(y)) == 5)
 ## partly failed in R <= 2.9.0, partly in R-devel(2.10.0)
 
 ## "misuses" of sprintf()

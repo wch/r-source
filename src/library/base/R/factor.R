@@ -14,41 +14,14 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-factor <- function(x = character(),
-		   levels = sort(unique.default(x), na.last=TRUE),
-		   labels = levels, exclude = NA,
-		   ordered = is.ordered(x), keepUnique = FALSE,
-		   digitsLabels = if(keepUnique) 17 else 15)
+factor <- function(x = character(), levels, labels=levels,
+                   exclude = NA, ordered = is.ordered(x))
 {
-    p0 <- function(...) paste(..., sep = "")
     exclude <- as.vector(exclude, typeof(x))
-    asChar <- as.character
-    if((dbl <- is.double(x)) || is.complex(x)) {
-	stopifnot(is.numeric(digitsLabels), length(digitsLabels) == 1,
-		  digitsLabels == round(digitsLabels))
-	if(missing(levels) && !keepUnique) {
-	    ## Lump very similar x[] values together :
-	    x[] <- signif(if(dbl) as.double(x) else as.complex(x),# << drop class
-			  digitsLabels)
-	} else {
-	    ## Ensure that unique numeric levels (or labels) lead to unique labels
-	    ## that are still as.numeric(.)able: some use names(table(.)) for that!
-	    asChar <- function(x)
-		if(is.character(x)) x
-		else if(is.double(x))
-		    ifelse(is.na(x), NA_character_,
-			   sprintf("%.*g", digitsLabels, x))
-		else if(is.complex(x))
-		    p0(asChar(Re(x)),"+",asChar(Im(x)),"i")
-		else as.character(x)
-	}
-    }
-    if(!missing(levels) && length(levels) && (i <- anyDuplicated(levels))) {
-	## user-specified..
-	warning("non-unique factor levels are unique()d")
-	## new in 2.10.0;  TODO:  stop() in future R versions !
-	levels <- unique(levels[-i])
-    }
+    ind <- sort.list(x) # or ?  order(x) which more (too ?) tolerant
+    x <- as.character(x)
+    if(missing(levels)) # get unique levels ordered by the original values
+	levels <- unique(x[ind])
     levels <- levels[is.na(match(levels, exclude))]
     f <- match(x, levels)
     names(f) <- names(x)
@@ -58,7 +31,8 @@ factor <- function(x = character(),
 	stop(gettextf("invalid labels; length %d should be 1 or %d", nl, nL),
 	     domain = NA)
     levels(f) <- ## nl == nL or 1
-	if (nl == nL) asChar(labels) else p0(labels, seq_along(levels))
+	if (nl == nL) as.character(labels)
+	else paste(labels, seq_along(levels), sep="")
     class(f) <- c(if(ordered)"ordered", "factor")
     f
 }
@@ -82,7 +56,7 @@ nlevels <- function(x) length(levels(x))
 ##     x
 ## }
 
-`levels<-.factor` <- function(x, value)
+"levels<-.factor" <- function(x, value)
 {
     xlevs <- levels(x)
     if (is.list(value)) {

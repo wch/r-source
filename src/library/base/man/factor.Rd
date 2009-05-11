@@ -31,10 +31,9 @@
   are the membership and coercion functions for these classes.
 }
 \usage{
-factor(x = character(),
-       levels = sort(unique.default(x), na.last = TRUE),
-       labels = levels, exclude = NA, ordered = is.ordered(x),
-       keepUnique = FALSE, digitsLabels = if(keepUnique) 17 else 15)
+factor(x = character(), levels, labels = levels,
+       exclude = NA, ordered = is.ordered(x))
+%       keepUnique = FALSE, digitsLabels = if(keepUnique) 17 else 15)
 
 ordered(x, \dots)
 
@@ -50,8 +49,9 @@ addNA(x, ifany=FALSE)
   \item{x}{a vector of data, usually taking a small number of distinct
     values.}
   \item{levels}{an optional vector of the values that \code{x} might
-    have taken. The default is the set of values taken by \code{x},
-    sorted into increasing order.}
+    have taken.  The default is the unique set of values taken by \code{character(x)},
+    sorted into increasing order \emph{of \code{x}}.  Note that this set
+    can be smaller than \code{sort(unique(x))}.}
   \item{labels}{\emph{either} an optional vector of labels for the
     levels (in the same order as \code{levels} after removing those in
     \code{exclude}), \emph{or} a character string of length 1.}
@@ -60,16 +60,16 @@ addNA(x, ifany=FALSE)
     will be coerced if necessary.}
   \item{ordered}{logical flag to determine if the levels should be regarded
     as ordered (in the order given).}
-  \item{keepUnique}{logical, for the case of default levels, indicating
-    if the \emph{resulting} factor levels correspond exactly to
-    \code{sort(unique(x))}.}
-  \item{digitsLabels}{numeric (integer valued), for the case of numeric
-    (or complex) \code{x}, there are two cases:\cr
-    1) if \code{levels} are missing and \code{keepUnique} is false,
-    \code{x} is replaced with \code{signif(x, digitsLabels)}.\cr
-    2) otherwise, if \code{labels} are numeric (or complex) as well, as by
-    default, the result levels are built via
-    \code{\link{sprintf}("\%.*g", digitsLabels, .)}.}
+%   \item{keepUnique}{logical, for the case of default levels, indicating
+%     if the \emph{resulting} factor levels correspond exactly to
+%     \code{sort(unique(x))}.}
+%   \item{digitsLabels}{numeric (integer valued), for the case of numeric
+%     (or complex) \code{x}, there are two cases:\cr
+%     1) if \code{levels} are missing and \code{keepUnique} is false,
+%     \code{x} is replaced with \code{signif(x, digitsLabels)}.\cr
+%     2) otherwise, if \code{labels} are numeric (or complex) as well, as by
+%     default, the result levels are built via
+%     \code{\link{sprintf}("\%.*g", digitsLabels, .)}.}
   \item{\dots}{(in \code{ordered(.)}): any of the above, apart from
     \code{ordered} itself.}
   \item{ifany}{(in \code{addNA}): Only add an \code{NA} level if it is
@@ -102,7 +102,9 @@ addNA(x, ifany=FALSE)
   level (so that \code{NA} values are counted in tables, for instance).
 }
 \details{
-  The type of the vector \code{x} is not restricted.
+  The type of the vector \code{x} is not restricted; it only must have
+  an \code{\link{as.character}} method and be sortable (by
+  \code{\link{sort.list}}).
 
   Ordered factors differ from factors only in their class, but methods
   and the model-fitting functions treat the two classes quite differently.
@@ -120,19 +122,19 @@ addNA(x, ifany=FALSE)
   which case the levels are that character string with a sequence
   number appended.
 
-  If \code{factor(x)} or \code{as.factor(x)} is applied to a numeric
-  or complex vector \code{x}, the levels and/or labels are not specified (aka
-  \code{\link{missing}}), \code{keepUnique} will determine what happens:
+%   If \code{factor(x)} or \code{as.factor(x)} is applied to a numeric
+%   or complex vector \code{x}, the levels and/or labels are not specified (aka
+%   \code{\link{missing}}), \code{keepUnique} will determine what happens:
 
-  If it is false (as by default), similar \code{x} values are lumped
-  together via \code{\link{signif}(x, digitsLabels)} \emph{before}
-  levels construction and matching.  This avoids both duplicate
-  (character) result levels and accidental differentiation of numbers
-  differing only because of rounding error, e.g., \code{0.1 + 0.2 != 0.3}.
-  \cr
-  When \code{keepUnique} is true (and \code{digitsLabels} at least 17),
-  it is ensured that \dQuote{uniqueness  is preserved}, i.e.,
-  differing \code{x} values will correspond to differing result levels.
+%   If it is false (as by default), similar \code{x} values are lumped
+%   together via \code{\link{signif}(x, digitsLabels)} \emph{before}
+%   levels construction and matching.  This avoids both duplicate
+%   (character) result levels and accidental differentiation of numbers
+%   differing only because of rounding error, e.g., \code{0.1 + 0.2 != 0.3}.
+%   \cr
+%   When \code{keepUnique} is true (and \code{digitsLabels} at least 17),
+%   it is ensured that \dQuote{uniqueness  is preserved}, i.e.,
+%   differing \code{x} values will correspond to differing result levels.
 
   \code{factor(x, exclude=NULL)} applied to a factor is a no-operation
   unless there are unused levels: in that case, a factor with the
@@ -235,8 +237,6 @@ is.na(x)
 Month <- airquality$Month
 table(addNA(Month))
 table(addNA(Month, ifany=TRUE))
-
-%% TODO:  examples for        keepUnique / digitsLabels / ...
 }
 \keyword{category}
 \keyword{NA}
