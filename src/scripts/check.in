@@ -139,7 +139,7 @@ my $R_check_dot_internal =
 ## Only relevant when the package is loaded, thus installed.
 my $R_check_suppress_RandR_message =
     ($opt_install &&
-     &R_getenv("_R_CHECK_SUPPRESS_RANDR_MESSAGE_", "FALSE"));
+     &R_getenv("_R_CHECK_SUPPRESS_RANDR_MESSAGE_", "TRUE"));
 
 ## Maybe move basic configuration (and documentation) to
 ##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
