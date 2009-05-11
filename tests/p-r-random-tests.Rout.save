@@ -1,6 +1,6 @@
 
-R version 2.4.0 Under development (unstable) (2006-09-03 r39077)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.10.0 Under development (unstable) (2009-05-10 r48517)
+Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -23,12 +23,12 @@ Type 'q()' to quit R.
 > ## The 2 in front of exp() was derived by Massart. It is the best possible
 > ## constant valid uniformly in t,n,F. For large n*t^2 this agrees with the
 > ## large-sample approximation to the Kolmogorov-Smirnov statistic.
-> ## 
+> ##
 > 
 > 
 > superror <- function(rfoo,pfoo,sample.size,...) {
 +     x <- rfoo(sample.size,...)
-+     tx <- table(x)
++     tx <- table(signif(x, 12)) # such that xi will be sort(unique(x))
 +     xi <- as.numeric(names(tx))
 +     f <- pfoo(xi,...)
 +     fhat <- cumsum(tx)/sample.size
@@ -278,6 +278,6 @@ f(df1 = 10, df2 = 2, ncp = 3) PASSED
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  2.862 0.019 2.923 0 0 
+Time elapsed:  2.797 0.046 2.857 0 0 
 > 
 > 

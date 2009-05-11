@@ -6,12 +6,12 @@
 ## The 2 in front of exp() was derived by Massart. It is the best possible
 ## constant valid uniformly in t,n,F. For large n*t^2 this agrees with the
 ## large-sample approximation to the Kolmogorov-Smirnov statistic.
-## 
+##
 
 
 superror <- function(rfoo,pfoo,sample.size,...) {
     x <- rfoo(sample.size,...)
-    tx <- table(x)
+    tx <- table(signif(x, 12)) # such that xi will be sort(unique(x))
     xi <- as.numeric(names(tx))
     f <- pfoo(xi,...)
     fhat <- cumsum(tx)/sample.size
