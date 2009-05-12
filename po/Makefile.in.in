@@ -332,119 +332,16 @@ update-po: Makefile
 
 ## NB datasets does not have any po, tcltk has src but no tcltk.pot
 R_PKGS_PO = base grDevices graphics grid methods splines stats stats4 tcltk tools utils
-DUMMYPKGFILES= $(R_PKGS_PO:=.nop)
-UPDATEPKGFILES=$(R_PKGS_PO:=.pkg-update)
-$(DUMMYPKGFILES): remove-potcdate.sed en@quot.insert-header
 
-update-pkg-po: Makefile remove-potcdate.sed en@quot.insert-header $(UPDATEPKGFILES)
+update-pkg-po: Makefile remove-potcdate.sed en@quot.insert-header
+	@for pkg in $(R_PKGS_PO); do \
+	  $(MAKE) pkg-update PKG=$${pkg}; \
+	done
 
 R_EXE = $(top_builddir)/bin/R --vanilla
 
-.nop.pkg-update: remove-potcdate.sed en@quot.insert-header
-	@pkg=`echo $@ | sed -e 's/\.pkg-update$$//'`; \
-	tmpdir=`pwd`; \
-	src=$(top_srcdir)/src/library/$${pkg}; \
-	test "$(srcdir)" = . && cdcmd="cd ../src/library/$${pkg}/po" || cdcmd="cd $(top_srcdir)/src/library/$${pkg}/po && "; \
-	if test -f $${src}/po/$${pkg}.pot; then \
-	  echo $(ECHO_N) "updating $${pkg}.pot "$(ECHO_C); \
-	  (cd $${src}/src; $(XGETTEXT) \
-	   --keyword=_ --keyword=N_ \
-	   --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
-	   --copyright-holder='$(COPYRIGHT_HOLDER)' \
-	   --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
-	   -o - `LC_COLLATE=C ls *.c`) > $${pkg}.po ; \
-	    sed -f remove-potcdate.sed < $${src}/po/$${pkg}.pot > $${pkg}.1po && \
-	    sed -f remove-potcdate.sed < $${pkg}.po > $${pkg}.2po && \
-	    if cmp $${pkg}.1po $${pkg}.2po >/dev/null 2>&1; then \
-	      rm -f $${pkg}.1po $${pkg}.2po $${pkg}.po; \
-	    else \
-	      rm -f $${pkg}.1po $${pkg}.2po $${src}/po/$${pkg}.pot && \
-	      mv $${pkg}.po $${src}/po/$${pkg}.pot; \
-	    fi; \
-	  echo "and translations"; \
-	  trs=`$${cdcmd} && ls *.po 2> /dev/null`; \
-	  trs=`echo $${trs} | sed -e 's/R-[^.]*\.po//g' -e s/en@quot.po//`; \
-	  if test -n "$${trs}"; then \
-	    for tr in $${trs}; do \
-	      lang=`echo $${tr} | sed -e 's/^R-//' -e 's/.po$$//'`; \
-	      echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
-	      ($${cdcmd} && $(MSGMERGE_UPDATE) $${tr} $${pkg}.pot); \
-	      mkdir -p $(srcdir)/../src/library/$${pkg}/inst/po/$$lang/LC_MESSAGES; \
-	      ($${cdcmd} && $(MSGFMT) -c --statistics -o ../inst/po/$$lang/LC_MESSAGES/$${pkg}.mo $${tr}) ; \
-	    done; \
-	  fi ; \
-	  lang=en@quot; \
-	  echo $(ECHO_N) "  $$lang:"$(ECHO_C); \
-	  psrc=$(top_srcdir)/src/library/$${pkg}/po; \
-	  LC_ALL=C; export LC_ALL; \
-	  cd $(srcdir); \
-	  if $(MSGINIT) -i $${psrc}/$${pkg}.pot --no-translator -l en -o - 2>/dev/null | sed -f $$tmpdir/$$lang.insert-header | sed -e s/PACKAGE/R/ -e s/VERSION/$(VERSION)/ | $(MSGCONV) -t UTF-8 | $(MSGFILTER) sed -f $(srcdir)/quot.sed 2>/dev/null > $$tmpdir/$$lang.new.po; then \
-	    if cmp $${psrc}/$$lang.po $$tmpdir/$$lang.new.po >/dev/null 2>&1; then \
-	      rm -f $$tmpdir/$$lang.new.po; \
-	    else \
-	      if mv -f $$tmpdir/$$lang.new.po $${psrc}/$$lang.po; then \
-		:; \
-	      else \
-		echo "creation of $$lang.po failed: cannot move $$tmpdir/$$lang.new.po to $$lang.po" 1>&2; \
-		exit 1; \
-	      fi; \
-	    fi; \
-	    mkdir -p $(srcdir)/../src/library/$${pkg}/inst/po/$$lang/LC_MESSAGES; \
-	    ($${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/$${pkg}.mo $$lang.po) ; \
-	    echo " done."; \
-	  else \
-	    echo "creation of $$lang.po failed!" 1>&2; \
-	    rm -f $$tmpdir/$$lang.new.po; \
-	  fi ; \
-	fi ; \
-	cd $$tmpdir; \
-	echo $(ECHO_N) "updating R-$${pkg}.pot "$(ECHO_C); \
-	src=$(top_srcdir)/src/library/$${pkg}; \
-	echo "tools::xgettext2pot('$${src}', 'R-$${pkg}.po')" \
-	  | R_DEFAULT_PACKAGES= LC_COLLATE=C $(R_EXE) --slave > /dev/null; \
-	sed -f remove-potcdate.sed < $${src}/po/R-$${pkg}.pot > R-$${pkg}.1po && \
-	sed -f remove-potcdate.sed < R-$${pkg}.po > R-$${pkg}.2po && \
-	if cmp R-$${pkg}.1po R-$${pkg}.2po >/dev/null 2>&1; then \
-	  rm -f R-$${pkg}.1po R-$${pkg}.2po R-$${pkg}.po; \
-	else \
-	  rm -f R-$${pkg}.1po R-$${pkg}.2po $${src}/po/R-$${pkg}.pot && \
-	  mv R-$${pkg}.po $${src}/po/R-$${pkg}.pot; \
-	fi ; \
-	echo "and translations"; \
-	trs=`$${cdcmd} && ls R-*.po 2> /dev/null`; \
-	trs=`echo $${trs} | sed -e s/R-en@quot.po//`; \
-	if test -n "$${trs}"; then \
-	  for tr in $${trs}; do \
-	    lang=`echo $${tr} | sed -e 's/^R-//' -e 's/.po$$//'`; \
-	    echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
-	    ($${cdcmd} && $(MSGMERGE_UPDATE) $${tr} R-$${pkg}.pot); \
-	    mkdir -p $(srcdir)/../src/library/$${pkg}/inst/po/$$lang/LC_MESSAGES; \
-	    ($${cdcmd} && $(MSGFMT) -c --statistics -o ../inst/po/$$lang/LC_MESSAGES/R-$${pkg}.mo $${tr}) ; \
-	  done; \
-	fi ; \
-	lang=en@quot; \
-	echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
-	psrc=$(top_srcdir)/src/library/$${pkg}/po; \
-	LC_ALL=C; export LC_ALL; \
-	cd $(srcdir); \
-	if $(MSGINIT) -i $${psrc}/R-$${pkg}.pot --no-translator -l en -o - 2>/dev/null | sed -f $$tmpdir/$$lang.insert-header | sed -e s/PACKAGE/R/ -e s/VERSION/$(VERSION)/ | $(MSGCONV) -t UTF-8 | $(MSGFILTER) sed -f $(srcdir)/quot.sed 2>/dev/null > $$tmpdir/R-$$lang.new.po; then \
-	  if cmp $${psrc}/R-$$lang.po $$tmpdir/R-$$lang.new.po >/dev/null 2>&1; then \
-	    rm -f $$tmpdir/R-$$lang.new.po; \
-	  else \
-	    if mv -f $$tmpdir/R-$$lang.new.po $${psrc}/R-$$lang.po; then \
-	      :; \
-	    else \
-	      echo "creation of R-$$lang.po failed: cannot move $$tmpdir/R-$$lang.new.po to R-$$lang.po" 1>&2; \
-	      exit 1; \
-	    fi; \
-	  fi; \
-	  mkdir -p $(srcdir)/../src/library/$${pkg}/inst/po/$$lang/LC_MESSAGES; \
-	  ($${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/R-$${pkg}.mo R-$$lang.po) ; \
-	  echo " done."; \
-	else \
-	  echo "creation of R-$$lang.po failed!" 1>&2; \
-	  rm -f $$tmpdir/R-$$lang.new.po; \
-	fi
+## default for 'make update-pkg-po', overridden by end users.
+PKGDIR = $(top_srcdir)/src/library/$(PKG)
 
 ## use as 'make pkg-update PKG=foo PKGDIR=/path/to/foo'
 pkg-update: remove-potcdate.sed en@quot.insert-header

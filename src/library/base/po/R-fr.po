@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:33\n"
+"POT-Creation-Date: 2009-05-12 07:01\n"
 "PO-Revision-Date: 2009-03-29 21:29+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -620,9 +620,6 @@ msgstr "'cg' a renvoyé le code %d dans 'eigen'"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'rg' a renvoyé le code %d dans 'eigen'"
-
-msgid "non-unique factor levels are unique()d"
-msgstr ""
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "étiquettes incorrectes ; la longueur %d doit être 1 ou %d"

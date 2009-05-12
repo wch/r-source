@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:33\n"
+"POT-Creation-Date: 2009-05-12 07:01\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -619,9 +619,6 @@ msgstr "'cg' ha restituito codice %d in 'eigen'"
 
 msgid "'rg' returned code %d in 'eigen'"
 msgstr "'rg' ha restituito codice %d in 'eigen'"
-
-msgid "non-unique factor levels are unique()d"
-msgstr ""
 
 msgid "invalid labels; length %d should be 1 or %d"
 msgstr "'labels' non valide; lunghezza %d dovrebbe essere 1 o %d"
