@@ -49,9 +49,10 @@ addNA(x, ifany=FALSE)
   \item{x}{a vector of data, usually taking a small number of distinct
     values.}
   \item{levels}{an optional vector of the values that \code{x} might
-    have taken.  The default is the unique set of values taken by \code{character(x)},
-    sorted into increasing order \emph{of \code{x}}.  Note that this set
-    can be smaller than \code{sort(unique(x))}.}
+    have taken.  The default is the unique set of values taken by
+    \code{\link{as.character}(x)}, sorted into increasing order \emph{of
+      \code{x}}.  Note that this set can be smaller than
+    \code{sort(unique(x))}.}
   \item{labels}{\emph{either} an optional vector of labels for the
     levels (in the same order as \code{levels} after removing those in
     \code{exclude}), \emph{or} a character string of length 1.}
@@ -162,9 +163,9 @@ addNA(x, ifany=FALSE)
   the same set of levels (in the same order).  In particular,
   \code{as.numeric} applied to a factor is meaningless, and may
   happen by implicit coercion.  To transform a factor \code{f} to
-  its original numeric values, \code{as.numeric(levels(f))[f]} is
-  recommended and slightly more efficient than
-  \code{as.numeric(as.character(f))}.
+  approximately its original numeric values,
+  \code{as.numeric(levels(f))[f]} is recommended and slightly more
+  efficient than \code{as.numeric(as.character(f))}.
 
   The levels of a factor are by default sorted, but the sort order
   may well depend on the locale at the time of creation, and should
