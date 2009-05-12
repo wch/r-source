@@ -346,7 +346,7 @@ R_EXE = $(top_builddir)/bin/R --vanilla
 	src=$(top_srcdir)/src/library/$${pkg}; \
 	test "$(srcdir)" = . && cdcmd="cd ../src/library/$${pkg}/po" || cdcmd="cd $(top_srcdir)/src/library/$${pkg}/po && "; \
 	if test -f $${src}/po/$${pkg}.pot; then \
-	  echo $(ECHO_N) "updating $${pkg}.pot "$(ECHO_C); \
+	  echo $(ECHO_N) "updating $${pkg}.pot $(ECHO_C)"; \
 	  (cd $${src}/src; $(XGETTEXT) \
 	   --keyword=_ --keyword=N_ \
 	   --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
@@ -374,8 +374,7 @@ R_EXE = $(top_builddir)/bin/R --vanilla
 	    done; \
 	  fi ; \
 	  lang=en@quot; \
-	  echo $(ECHO_N) "  $$lang:"$(ECHO_C); \
-	  psrc=$(top_srcdir)/src/library/$${pkg}/po; \
+	  echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
 	  LC_ALL=C; export LC_ALL; \
 	  cd $(srcdir); \
 	  if $(MSGINIT) -i $${psrc}/$${pkg}.pot --no-translator -l en -o - 2>/dev/null | sed -f $$tmpdir/$$lang.insert-header | sed -e s/PACKAGE/R/ -e s/VERSION/$(VERSION)/ | $(MSGCONV) -t UTF-8 | $(MSGFILTER) sed -f $(srcdir)/quot.sed 2>/dev/null > $$tmpdir/$$lang.new.po; then \
@@ -398,7 +397,7 @@ R_EXE = $(top_builddir)/bin/R --vanilla
 	  fi ; \
 	fi ; \
 	cd $$tmpdir; \
-	echo $(ECHO_N) "updating R-$${pkg}.pot "$(ECHO_C); \
+	echo $(ECHO_N) "updating R-$${pkg}.pot $(ECHO_C)"; \
 	src=$(top_srcdir)/src/library/$${pkg}; \
 	echo "tools::xgettext2pot('$${src}', 'R-$${pkg}.po')" \
 	  | R_DEFAULT_PACKAGES= LC_COLLATE=C $(R_EXE) --slave > /dev/null; \
