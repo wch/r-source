@@ -18,15 +18,14 @@ compiled (.mo) files.
 
 To do this for an individual standard package use
 
-	make pkgname.pkg-update
-
-e.g. make grid.pkg-update.
+	make pkg-update PKG=<pkgname>
 
 
 To add a new translation, add the lang.po file to this directory and
-add the language to LINGUAS.  Hopefully 'make all R' (in the builddir,
-if separate) will do the rest (create ll.gmo and install it as
-required).  For fuller manual control, use
+add the language to LINGUAS.  If there are no problems with the
+translations 'make all R' (in the builddir, if separate) will do the
+rest (create ll.gmo and install it as required).  For fuller manual
+control, use
 
 	msgfmt -c --statistics -o ll.gmo ll.po
 
@@ -99,5 +98,5 @@ Note to Mac OS X users
 ======================
 
 NB: these commands did not run correctly on at least one Mac OS X
-installation.  There were problems with msgmerge and with the sed
-scripts used for the en@quot translations (and how \n was handled).
+installation.  There were problems with the sed scripts used for the
+en@quot translations (in how \n was handled).
