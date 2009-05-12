@@ -192,8 +192,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   }
 }
 \note{
-  If you see problems with postscript output, so remember that the
-  problem is much more likely to be in your viewer as in \R.  Try
+  If you see problems with PDF output, do remember that the
+  problem is much more likely to be in your viewer than in \R.  Try
   another viewer if possible.  Symptoms for which the viewer has been at
   fault are apparent grids on image plots (turn off graphics
   anti-aliasing in your viewer if you) and missing or incorrect glyphs
