@@ -151,12 +151,12 @@
             if (is.na(p) || !nzchar(p)) next
             pkgdir <- file.path(lib, p)
             if (nzchar(pkgdir) && dir.exists(pkgdir)) {
-                starsmsg(stars, "Removing ", sQuote(pkgdir))
+                starsmsg(stars, "removing ", sQuote(pkgdir))
                 unlink(pkgdir, recursive = TRUE)
             }
             if (lock && nzchar(lockdir) &&
                 dir.exists(lp <- file.path(lockdir, p))) {
-                starsmsg(stars, "Restoring previous ", sQuote(pkgdir))
+                starsmsg(stars, "restoring previous ", sQuote(pkgdir))
                 ## FIXME: on Windows use file.copy(recursive = TRUE)
                 system(paste("mv", lp, pkgdir))
             }
@@ -334,7 +334,7 @@
 
     do_install_binary <- function(pkg, instdir, desc)
     {
-        starsmsg(stars, "Installing *binary* package ", sQuote(pkg), " ...")
+        starsmsg(stars, "installing *binary* package ", sQuote(pkg), " ...")
 
         if (file.exists(file.path(instdir, "DESCRIPTION"))) {
             if (lock) system(paste("mv", instdir, file.path(lockdir, pkg)))
@@ -436,7 +436,7 @@
         Type <- desc["Type"]
         if (!is.na(Type) && Type == "Frontend") {
             if (WINDOWS) errmsg("'Frontend' packages are Unix-only")
-            starsmsg(stars, "Installing *Frontend* package ", sQuote(pkg_name), " ...")
+            starsmsg(stars, "installing *Frontend* package ", sQuote(pkg_name), " ...")
             if (preclean) system(paste(MAKE, "clean"))
             if (use_configure) {
                 if (.file_test("-x", "configure")) {
@@ -454,7 +454,7 @@
         }
 
         if (!is.na(Type) && Type == "Translation") {
-            starsmsg(stars, "Installing *Translation* package ", sQuote(pkg_name), " ...")
+            starsmsg(stars, "installing *Translation* package ", sQuote(pkg_name), " ...")
             if (dir.exists("share")) {
                 files <- Sys.glob("share/*")
                 if (length(files)) file.copy(files, R.home("share"), TRUE)
@@ -475,7 +475,7 @@
                 errmsg(" Windows-only package")
         }
 
-        starsmsg(stars, "Installing *source* package ", sQuote(pkg_name), " ...")
+        starsmsg(stars, "installing *source* package ", sQuote(pkg_name), " ...")
 
         stars <- "**"
 
@@ -1070,7 +1070,7 @@
             if (file.exists(ff <- file.path(tmpdir, "DESCRIPTION"))) {
                 con <- read.dcf(ff, "Contains")
                 if (!is.na(con)) {
-                    starsmsg(stars, "Looks like a binary bundle")
+                    starsmsg(stars, "looks like a binary bundle")
                     allpkgs <- c(allpkgs, tmpdir)
                 } else {
                     message("unknown package layout")
@@ -1102,7 +1102,7 @@
 
     if (!nzchar(lib)) {
         lib <- .libPaths()[1]
-        starsmsg(stars, "Installing to library ", sQuote(lib))
+        starsmsg(stars, "installing to library ", sQuote(lib))
     } else {
         lib0 <- lib <- path.expand(lib)
         ## lib is allowed to be a relative path.
