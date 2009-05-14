@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2009
-@set FAQ_DATE @value{FAQ_YEAR}-04-28
+@set FAQ_DATE @value{FAQ_YEAR}-05-13
 @set REL_YEAR 2009
 @set REL_MAJOR 2
 @set REL_MINOR 9
@@ -1947,6 +1947,8 @@ Mack- and Munich-chain-ladder methods for insurance claims reserving.
 @item CircStats
 Circular Statistics, from ``Topics in Circular Statistics'' by S. Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific.
+@item ClinicalRobustPriors
+Robust Bayesian priors in clinical trials.
 @item CoCo
 Graphical modeling for contingency tables using CoCo.
 @c <COMMENT>
@@ -2006,6 +2008,8 @@ Import and manipulate medical imaging data using the Digital Imaging and
 Communications in Medicine (DICOM) Standard.
 @item DPpackage
 Semiparametric Bayesian analysis using Dirichlet process priors.
+@item DSpat
+Spatial modelling for distance sampling data.
 @item DTK
 Dunnett-Tukey-Kramer: pairwise multiple comparison test adjusted for
 unequal variances and unequal sample sizes.
@@ -2082,6 +2086,8 @@ Experimentation'' by Peter Nelson, Marie Coffin and Karen Copeland
 @item Epi
 Statistical analysis in epidemiology, with functions for demographic and
 epidemiological analysis in the Lexis diagram.
+@item ExPD2D
+Exact computation of bivariate projection depth.
 @item FAiR
 Factor Analysis in R, using genetic algorithms.
 @item FBN
@@ -2107,6 +2113,10 @@ Fast Kalman Filter.
 @c @item FLEDA
 @c Exploratory Data Analysis for FLR.
 @c </COMMENT>
+@item FRB
+Fast and Robust Bootstrap.
+@item FSelector
+Selecting attributes.
 @item FTICRMS
 Analysis of Fourier Transform-Ion Cyclotron Resonance Mass Spectrometry
 data.
@@ -2464,8 +2474,11 @@ detailed prediction maps.
 @item MultEq
 Equivalence tests and simultaneous confidence intervals for multiple
 endpoints.
-@item Multiclasstesting
-Performance of @math{N}-ary classification testing.
+@c <COMMENT>
+@c Archived on 2009-05-12 as requested by the maintainer.
+@c @item Multiclasstesting
+@c Performance of @math{N}-ary classification testing.
+@c </COMMENT>
 @item NADA
 Methods described in ``Nondetects And Data Analysis: Statistics for
 Censored Environmental Data'' by Dennis R. Helsel, 2004, John Wiley and
@@ -2483,6 +2496,8 @@ Evaluates complex erf, erfc and density of sum of Gaussian and Student's
 @item NRAIA
 Data sets with sample code from ``Nonlinear Regression Analysis and Its
 Applications'' by Doug Bates and Donald Watts, 1988, Wiley.
+@item NeatMap
+Non-clustered heatmap alternatives.
 @item NestedCohort
 Survival analysis for cohorts with missing covariate information.
 @item NetIndices
@@ -2722,6 +2737,8 @@ An interface to ScaLAPACK functions from R.
 An R @acronym{SVG} graphics device with dynamic tips and hyperlinks.
 @item RSeqMeth
 analysis of Sequenom EpiTYPER data.
+@item RSiteSearch
+Alternative interfaces to RSiteSearch.
 @item RSurvey
 Analysis of spatially distributed data.
 @item RSvgDevice
@@ -2805,6 +2822,8 @@ Electrical properties of resistor networks.
 Forward Search for Multivariate Data.
 @item Rglpk
 R/GNU Linear Programming Kit interface.
+@item RgoogleMaps
+Overlays on Google map tiles in R.
 @item RiboSort
 Classification and analysis of microbial community profiles.
 @item Rigroup
@@ -2876,6 +2895,9 @@ Transforms with an Implementation in S'' by Rene Carmona, Wen L. Hwang
 and Bruno Torresani, 1998, Academic Press.
 @item Ryacas
 An R interfaces to the yacas computer algebra system.
+@item RxCEcolInf
+@math{R x C} Ecological Inference with optional incorporation of survey
+information.
 @c <COMMENT>
 @c Removed on 2006-10-06 as requested by the maintainer (now @BioC).
 @c @item SAGx
@@ -2895,6 +2917,8 @@ Stepwise Diagonal Discriminant Analysis.
 @item SDaA
 Functions and data sets from ``Sampling: Design and Analysis'' by
 S. Lohr, 1999, Duxbury.
+@item SEMModComp
+Model Comparisons for SEM.
 @item SGCS
 Spatial Graph based Clustering Summaries for spatial point patterns.
 @item SGP
@@ -2907,6 +2931,9 @@ Miscellaneous Functions for analysis of gene expression data at SIRS-Lab
 GmbH.
 @item SMC
 Sequential Monte Carlo (SMC) Algorithm.
+@item SMIR
+Companion to ``Statistical Modelling in R'' by Murray Aitkin, Brian
+Francis, John Hinde and Ross Darnell, 2009, Oxford University Press.
 @item SMPracticals
 Data sets and a few functions for use with the practicals outlined in
 Appendix A of the book ``Statistical Models'' by Anthony Davison, 2003,
@@ -3750,6 +3777,8 @@ simulate the effects of colour-blindness.
 @item diffractometry
 Baseline identification and peak decomposition for x-ray
 diffractograms.
+@item diffusionMap
+Diffusion map method of data parametrization.
 @item digest
 Two functions for the creation of ``hash'' digests of arbitrary R
 objects using the md5 and sha-1 algorithms permitting easy comparison of
@@ -3874,6 +3903,8 @@ Semiparametric factor and regression models for symmetric relational
 data.
 @item elasticnet
 Elastic net regularization and variable selection.
+@item elec
+Functions for statistical election audits.
 @item ellipse
 Package for drawing ellipses and ellipse-like confidence regions.
 @item elliptic
@@ -4036,11 +4067,8 @@ Fechnerian scaling of discrete object sets.
 @item ff
 Flat file database designed for large vectors and multi-dimensional
 arrays.
-@c <COMMENT>
-@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
-@c @item ffmanova
-@c Fifty-fifty MANOVA.
-@c </COMMENT>
+@item ffmanova
+Fifty-fifty MANOVA.
 @item fgac
 Families of Generalized Archimedean Copulas.
 @item fgui
@@ -4854,6 +4882,8 @@ Model-based cluster analysis: the 2002 version of MCLUST.
 Functions for Markov Chain Monte Carlo (MCMC).
 @item mco
 Multi criteria optimization algorithms.
+@item mcsm
+Functions for Monte Carlo methods.
 @item mda
 Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -4926,6 +4956,8 @@ datasets.
 @item mix
 Estimation/multiple imputation programs for mixed categorical and
 continuous data.
+@item mixAK
+Mixture of methods including mixtures.
 @item mixPHM
 Mixtures of proportional hazard models.
 @item mixRasch
@@ -4934,11 +4966,8 @@ Estimation of mixture Rasch models.
 Finite mixture distribution models.
 @item mixer
 Random graph clustering via estimation of Erd@H{o}s-R@'enyi mixtures.
-@c <COMMENT>
-@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
-@c @item mixlow
-@c Assessing drug synergism/antagonism.
-@c </COMMENT>
+@item mixlow
+Assessing drug synergism/antagonism.
 @c <COMMENT>
 @c Moved to the Archive on 2008-10-15 as suggested by the maintainer:
 @c replaced by package 'mixer'.
@@ -5267,6 +5296,9 @@ English and spanish models for @strong{openNLP}.
 Interface to opentick real time and historical market data.
 @item operators
 Additional binary operators for R.
+@item optBiomarker
+Estimates optimal number of biomarkers for two-group classification
+based on microarray data.
 @item optmatch
 Functions to perform optimal matching, particularly full matching.
 @item orientlib
@@ -5323,6 +5355,10 @@ Functions and datasets for fitting models to Panel data.
 Parallel apply function using MPI.
 @item paran
 Horn's test of principal components/factors.
+@item parcor
+Regularized estimation of partial correlation matrices.
+@item partDSA
+Partitioning using Deletion, Substitution, and Addition moves.
 @item partitions
 Additive partitions of integers.
 @item partsm
@@ -5351,6 +5387,8 @@ Periodic Autoregression Analysis.
 Prediction Error Curves for survival models.
 @item pedigree
 Pedigree functions.
+@item pegas
+Population and Evolutionary Genetics Analysis System.
 @item penalized
 Penalized estimation in generalized linear models.
 @item penalizedSVM
@@ -5672,11 +5710,8 @@ Completion generator for R.  @emph{Recommended} for R 2.5.0 or 2.6.0.
 @c </COMMENT>
 @item rconifers
 Interface to the CONIFERS forest growth model.
-@c <COMMENT>
-@c Moved to the Archive on 2009-04-26 (Orphaned/QC).
-@c @item rda
-@c Shrunken Centroids Regularized Discriminant Analysis.
-@c </COMMENT>
+@item rda
+Shrunken Centroids Regularized Discriminant Analysis.
 @item rdetools
 Relevant Dimension Estimation (RDE) in feature spaces.
 @item realized
@@ -6349,6 +6384,9 @@ Testing Of Spatial Structure Methods.
 Temporal Process Regression.
 @item trackObjs
 Track objects.
+@item tractor.base
+Basic TractoR (tractography with R) functions for working with magnetic
+images.
 @item tradeCosts
 Post-trade analysis of transaction costs.
 @item tree
