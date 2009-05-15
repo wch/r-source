@@ -27,7 +27,7 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
         if(file == "") file <- stdin()
         else {
             if (missing(srcfile) && isTRUE(getOption("keep.source")))
-        	srcfile <- srcfile(file)
+        	srcfile <- srcfile(file, encoding)
             file <- file(file, "r")
             on.exit(close(file))
         }

@@ -52,6 +52,8 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
             if(encoding == "unknown") encoding <- "UTF-8"
             lines <- iconv(lines, enc, encoding, sub = "byte")
         }
+    } else {
+    	enc <- encoding
     }
     ## The parser is fine with encodings in which ASCII bytes mean ASCII
     ## All known 8-bit encodings and UTF-8 meet that requirement
@@ -67,6 +69,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     if (!inherits(srcfile, "srcfile")) 
     	srcfile <- srcfile(file0)
     basename <- basename(srcfile$filename)
+    srcfile$encoding <- enc
     .Internal(parse_Rd(tcon, srcfile, encoding, verbose, basename))
 }
 
