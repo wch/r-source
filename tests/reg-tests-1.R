@@ -5642,11 +5642,15 @@ local({ oo <- options(warn=2); on.exit(options(oo))
 L <- c("no", "yes")
 x <- (5:1)/10; lx <- paste("0.", 1:5, sep="")
 y <- pi + (-9:9)*2^-53
+z <- c(1:2,2:1) ; names(z) <- nz <- letters[seq_along(z)]
 stopifnot(identical(factor(c(2, 1:2), labels = L),
 		    structure(c(2L, 1:2), .Label = L, class="factor")),
 	  identical(factor(x),
 		    structure(5:1, .Label = lx, class="factor")),
-	  length(levels(factor(y))) == 1, length(unique(y)) == 5)
+	  length(levels(factor(y))) == 1, length(unique(y)) == 5,
+	  identical(factor(z),
+		    structure(z, .Names = nz, .Label = c("1","2"),
+			      class="factor")))
 ## partly failed in R <= 2.9.0, partly in R-devel(2.10.0)
 
 ## "misuses" of sprintf()
