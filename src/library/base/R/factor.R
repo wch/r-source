@@ -20,6 +20,7 @@ factor <- function(x = character(), levels, labels=levels,
     exclude <- as.vector(exclude, typeof(x))
     ind <- sort.list(x) # or ?  order(x) which more (too ?) tolerant
     nx <- names(x)
+    force(ordered)
     x <- as.character(x)
     if(missing(levels)) # get unique levels ordered by the original values
 	levels <- unique(x[ind])
