@@ -1,6 +1,6 @@
 % File src/library/base/man/factor.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{factor}
@@ -166,14 +166,12 @@ addNA(x, ifany=FALSE)
   ordered factors they must have the same level set.
 }
 \note{
-  Storing character data as a factor is more efficient storage if
-  there is even a small proportion of repeats.  On a 32-bit machine
-  storing a string of \eqn{n} bytes takes
-  \eqn{28 + 8\lceil(n+1)/8\rceil}{28 + 8*ceiling((n+1)/8)}
-  bytes whereas storing a factor code takes 4 bytes.  (On a 64-bit
-  machine 28 is replaced by 56 or more.)  Only if they were computed
-  from the same values (or in some cases read from a file: see
-  \code{\link{scan}}) will identical strings share storage.
+  In earlier versions of \R, storing character data as a factor was more
+  space efficient if there is even a small proportion of
+  repeats.  Since \R 2.6.0 identical character strings share storage, so
+  the difference is now small in most cases.  (Integer values are stored
+  in 4 bytes whereas each reference to a character string needs a
+  pointer of 4 or 8 bytes.)
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
