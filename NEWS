@@ -168,6 +168,11 @@ BUG FIXES
     o	as(I(1), "vector") and similar coercions from objects of
 	"unregistered" S3 classes now work.
 
+    o	The X11 version of View() was misbehaving in MBCS locales, and
+ 	PgUp/PgDn now behave better, thanks to a patch from Ei-ji Nakama.
+
+
+
 
 		CHANGES IN R VERSION 2.9.0
 
