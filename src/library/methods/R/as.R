@@ -29,7 +29,7 @@ as <-
     thisClass <- .class1(object) ## always one string
     if(.identC(thisClass, Class) || .identC(Class, "ANY"))
         return(object)
-    where <- .classEnv(thisClass)
+    where <- .classEnv(thisClass, mustFind = FALSE)
     coerceFun <- getGeneric("coerce", where = where)
     ## get the methods table, use inherited table
     coerceMethods <- .getMethodsTable(coerceFun,environment(coerceFun),inherited= TRUE)

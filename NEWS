@@ -18,12 +18,12 @@ NEW FEATURES
 	argument, determining line end styles. (Wish of PR#13619).
 
     o	bw.SJ(), bw.bcv() and bw.ucv() now gain an optional 'tol'
-    	argument allowing more accurate estimates.
+	argument allowing more accurate estimates.
 
     o	new.packages() no longer regards packages with the same name
 	as a member of an installed bundle as 'new' (this is now
 	consistent with the dependency checks in install.packages()).
-  	
+
 	It no longer reports on partially installed bundles (since
 	members can be updated individually if a bundle is unbundled).
 
@@ -69,11 +69,11 @@ BUG FIXES
     o	bw.SJ(c(1:99, 1e6)) now works too.
 
     o	Rd2txt() could not handle empty descriptions of items in an Rd
-    	file (reported by Mark Bravington), and did not wrap long lists
-    	of arguments if they were given in a single item.
+	file (reported by Mark Bravington), and did not wrap long lists
+	of arguments if they were given in a single item.
 
     o	stars() would do a partial plot when called with plot = FALSE;
-    	it now consistently returns the locations of the stars.
+	it now consistently returns the locations of the stars.
 
     o	Rd2latex() could not handle empty sections.
 
@@ -82,10 +82,13 @@ BUG FIXES
 	versions of that package.
 
     o	as.character.Rd() added extra braces when displaying two-argument
-    	macros.  (Report and fix by Manuel Eugster.)
+	macros.	 (Report and fix by Manuel Eugster.)
 
-    o   unsplit() was misbehaving in the case of single-column data
-        frames. (Reported by Will Gray.)
+    o	unsplit() was misbehaving in the case of single-column data
+	frames. (Reported by Will Gray.)
+
+    o	as(I(1), "vector") and similar coercions from objects of
+	"unregistered" S3 classes now work.
 
 
 		CHANGES IN R VERSION 2.9.0
