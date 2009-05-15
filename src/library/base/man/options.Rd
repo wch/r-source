@@ -16,7 +16,7 @@
 \usage{
 options(\dots)
 
-getOption(x)
+getOption(x, default = NULL)
 
 .Options
 }
@@ -29,6 +29,9 @@ getOption(x)
     Further, \code{options('name') == options()['name']}, see the example.
   }
   \item{x}{a character string holding an option name.}
+  \item{default}{if the specified option is not set in the options list, this value
+     is returned.  This facilitates retrieving an option and checking whether it is set and
+     setting it separately if not.}
 }
 \details{
   Invoking \code{options()} with no arguments returns a list with the
@@ -562,7 +565,23 @@ options(error = recover)
 options(error = dump.frames)
 ## A possible setting for non-interactive sessions
 options(error = quote({dump.frames(to.file=TRUE); q()}))
-}}
+}
+
+  # Compare the two ways to get an option and use it
+  # acconting for the possibility it might not be set.
+if(as.logical(getOption("performCleanp", TRUE)))
+   cat("do cleanup\n")
+
+\dontrun{
+  # a clumsier way of expressing the above w/o the default.
+tmp <- getOption("performCleanup")
+if(is.null(tmp))
+  tmp <- TRUE
+if(tmp)
+   cat("do cleanup\n")
+}
+
+}
 \keyword{environment}
 \keyword{error}
 \keyword{print}

@@ -53,6 +53,10 @@ NEW FEATURES
 
     o	tools::write_PACKAGES() has a new argument 'latestOnly'.
 
+    o	getOption() has a new argument 'default' that is returned if
+	the specified option is not set. This simplifies querying a
+	value and checking whether it is NULL or not.
+
 
 DEPRECATED & DEFUNCT
 
