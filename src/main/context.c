@@ -473,13 +473,18 @@ SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval=R_NilValue;
     RCNTXT *cptr;
+    int n;
 
     checkArity(op, args);
+    n = asInteger(CAR(args));
+    if(n < 1 ) error(_("number of contexts must be positive"));
+
     /* first find the closest  browser context */
     cptr = R_GlobalContext;
     while (cptr != R_ToplevelContext) {
-        if (cptr->callflag & CTXT_BROWSER)
+        if (cptr->callflag & CTXT_BROWSER) {
                 break;
+        }
         cptr = cptr->nextcontext;
     }
     /* error if not a browser context */
@@ -489,10 +494,37 @@ SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     switch (PRIMVAL(op)) {
     case 1: /* text */
-        rval = CAR(cptr->promargs);
-        break;
     case 2: /* condition */
-        rval = CADR(cptr->promargs);
+        /* first rewind to the right place if needed */
+        /* note we want n>1, as we have already      */
+        /* rewound to the first context              */
+        if( n > 1 ) {
+           while (cptr != R_ToplevelContext && n > 0 ) {
+               if (cptr->callflag & CTXT_BROWSER) {
+                   n--;
+                   break;
+               }
+               cptr = cptr->nextcontext;
+           }
+        }
+        if( !(cptr->callflag & CTXT_BROWSER) )
+           error(_("not that many calls to browser are active"));
+
+        if( PRIMVAL(op) == 1 )
+            rval = CAR(cptr->promargs);
+        else
+            rval = CADR(cptr->promargs);
+        break;
+    case 3: /* turn on debugging n levels up */
+        while ( (cptr != R_ToplevelContext) && n > 0 ) {
+            if (cptr->callflag & CTXT_FUNCTION) 
+                  n--;
+            cptr = cptr->nextcontext;
+        } 
+        if( !(cptr->callflag & CTXT_FUNCTION) )
+           error(_("not that many functions on the call stack"));
+        else
+           DEBUG(cptr->cloenv) = 1;
         break;
     }
     return(rval);

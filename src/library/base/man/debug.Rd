@@ -6,8 +6,8 @@
 \name{debug}
 \title{Debug a Function}
 \usage{
-debug(fun)
-debugonce(fun)
+debug(fun, text="", condition=NULL)
+debugonce(fun, text="", condition=NULL)
 undebug(fun)
 isdebugged(fun)
 }
@@ -17,9 +17,15 @@ isdebugged(fun)
 \alias{isdebugged}
 \arguments{
 \item{fun}{any interpreted \R function.}
+\item{text}{a text string that can be retrieved when the browser is entered.}
+\item{condition}{a condition that can be retrieved when the browser is entered.}
 }
 \description{
   Set, unset or query the debugging flag on a function.
+ The \code{text} and \code{condition} arguments are the same as those
+ that can be supplied via a call to \code{browser}. They can be retrieved
+ by the user once the browser has been entered, and provide a mechanism to
+ allow users to identify which breakpoint has been activated.
 }
 \details{
   When a function flagged for debugging is entered, normal execution
