@@ -524,7 +524,7 @@ SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
         if( !(cptr->callflag & CTXT_FUNCTION) )
            error(_("not that many functions on the call stack"));
         else
-           DEBUG(cptr->cloenv) = 1;
+           SET_DEBUG(cptr->cloenv, 1);
         break;
     }
     return(rval);
