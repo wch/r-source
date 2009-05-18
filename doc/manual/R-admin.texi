@@ -129,7 +129,7 @@ setting of @code{umask} whilst building and installing.)
 @node Getting patched and development versions,  , Getting and unpacking the sources, Obtaining R
 @section Getting patched and development versions
 
-A patched version of the current release, @samp{r-patched} and the
+A patched version of the current release, @samp{r-patched}, and the
 current development version, @samp{r-devel}, are available as daily
 tarballs and via access to the R Subversion repository.  (For the two
 weeks prior to the release of a minor (2.x.0) version, @samp{r-patched}

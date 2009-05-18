@@ -5586,9 +5586,9 @@ the call is from the body of a function defined in a package with a
 name space, the shared object loaded by the first (if any)
 @code{useDynLib} directive will be used.)
 
-For @code{.C} only you can specify an @code{ENCODING} argument: this
-requests that (unless @code{DUP = FALSE}) character vectors be
-re-encoded to the requested encoding before being passed in, and
+For @code{.C} and @code{.Fortran} you can specify an @code{ENCODING}
+argument: this requests that (unless @code{DUP = FALSE}) character vectors
+be re-encoded to the requested encoding before being passed in, and
 re-encoded from the requested encoding when passed back.  Note that
 encoding names are not standardized, and not all @R{} builds support
 re-encoding. (The argument is ignored with a warning if re-encoding is
@@ -5772,8 +5772,8 @@ Windows allows more control (and less security) over where dependent
 DLLs are looked for.  On all versions this includes the @env{PATH}
 environment variable, but with lowest priority: note that it does not
 include the directory from which the DLL was loaded.  On XP and later it
-is possible@footnote{and we provide an emulation on Windows 2000): see
-@samp{?dyn.oad}.} to add a single path with quite high priority via the
+is possible@footnote{and we provide an emulation on Windows 2000: see
+@samp{?dyn.load}.} to add a single path with quite high priority via the
 @code{DLLpath} argument to @code{dyn.load}.  This is (by default) used
 by @code{library.dynam} to include the package's @file{libs} directory
 in the DLL search path.
