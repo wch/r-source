@@ -42,7 +42,7 @@ contr.poly <- function (n, scores = 1L:n, contrasts = TRUE)
         stop(gettextf("orthogonal polynomials cannot be represented accurately enough for %d degrees of freedom", n-1), domain = NA)
     if (length(scores) != n)
         stop("'scores' argument is of the wrong length")
-    if (!is.numeric(scores) || any(duplicated(scores)))
+    if (!is.numeric(scores) || anyDuplicated(scores))
         stop("'scores' must all be different numbers")
     contr <- make.poly(n, scores)
     if (contrasts) {

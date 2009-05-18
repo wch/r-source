@@ -118,7 +118,7 @@ setOldClass <- function(Classes, prototype = NULL,
     ## correct ordering & duplicate resolution: copied from .walkClassGraph
     distOrder <- sort.list(sapply(ext, function(x)x@distance))
     ext <- ext[distOrder]
-    if(any(duplicated(names(ext)))) {
+    if(anyDuplicated(names(ext))) {
         root <- c(rep("S3 source", length(curDef@contains)), rep("S4 source", length(def@contains)))
         root <- root[distOrder]
         ext <- .resolveSuperclasses(def, ext, root, where)
@@ -269,4 +269,4 @@ S3Class <- function(object) {
     def@subclasses <- comp
     def
 }
-    
+

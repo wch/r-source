@@ -32,7 +32,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"), ...)
     ## avoid possible integer overflow
     v <- (1/180) * m * n * (N + 1) * (N + 2) * (N - 2)
     z <- c(x, y)
-    if(!any(duplicated(z))) {
+    if(!anyDuplicated(z)) {
         ## Proceed as per Conover (1971).
         r <- rank(z)
         T <- sum((r[seq_along(x)] - (N + 1L) / 2) ^ 2)

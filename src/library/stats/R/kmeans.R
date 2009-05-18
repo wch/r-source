@@ -84,7 +84,7 @@ function(x, centers, iter.max = 10, nstart = 1,
         ## we need to avoid duplicates here
         if(nstart == 1)
             centers <- x[sample.int(m, k), , drop = FALSE]
-        if(nstart >= 2 || any(duplicated(centers))) {
+        if(nstart >= 2 || anyDuplicated(centers)) {
             cn <- unique(x)
             mm <- nrow(cn)
             if(mm < k)
@@ -93,7 +93,7 @@ function(x, centers, iter.max = 10, nstart = 1,
         }
     } else {
 	centers <- as.matrix(centers)
-        if(any(duplicated(centers)))
+        if(anyDuplicated(centers))
             stop("initial centers are not distinct")
         cn <- NULL
 	k <- nrow(centers)

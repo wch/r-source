@@ -260,7 +260,7 @@ completeClassDefinition <-
             }
             properties <- unlist(superProps, recursive = FALSE)
             ## check for conflicting slot names
-            if(any(duplicated(allNames(properties)))) {
+            if(anyDuplicated(allNames(properties))) {
                 duped <- duplicated(names(properties))
 #TEMPORARY -- until classes are completed in place & we have way to match non-inherited slots
                 properties <- properties[!duped]
@@ -923,7 +923,8 @@ possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
             if(!.identC(class(ClassDef2), "classRepresentation") &&
                isClassUnion(ClassDef2))
                 ## a simple TRUE iff class1 or one of its superclasses belongs to the union
-                i <- any(duplicated(c(class1, unique(nm1), names(ext))))
+		i <- as.logical(anyDuplicated(c(class1, unique(nm1),
+						names(ext))))
             else {
                 i <- match(class1, names(ext))
             }
@@ -1081,7 +1082,7 @@ completeSubclasses <-
     ## require superclasses to be sorted by distance
     distOrder <- sort.list(sapply(ext, function(x)x@distance))
     ext <- ext[distOrder]
-    if(superClassCase && any(duplicated(what))) {
+    if(superClassCase && anyDuplicated(what)) {
         ext <- .resolveSuperclasses(ClassDef, ext, where)
     }
     ext

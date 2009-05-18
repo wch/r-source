@@ -57,7 +57,7 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
     }
     else if (length(value) != n)
 	stop("invalid 'row.names' length")
-    if (any(duplicated(value))) {
+    if (anyDuplicated(value)) {
         nonuniq <- sort(unique(value[duplicated(value)]))
         warning(ngettext(length(nonuniq),
                          sprintf("non-unique value when setting 'row.names': %s",
@@ -187,7 +187,7 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...,
 	if (nrows == 0L)
 	    row.names <- character(0L)
 	else if(length(row.names <- names(x)) == nrows &&
-		!any(duplicated(row.names))) {}
+		!anyDuplicated(row.names)) {}
 	else row.names <- .set_row_names(nrows)
     }
     names(x) <- NULL # remove names as from 2.0.0
@@ -322,7 +322,7 @@ as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE, ...)
             if (nrows == 0L)
                 row.names <- character(0L)
             else if(length(row.names <- names(x)) == nrows &&
-                    !any(duplicated(row.names))) {}
+                    !anyDuplicated(row.names)) {}
             else row.names <- .set_row_names(nrows)
         }
         value <- list(x)
@@ -346,7 +346,7 @@ data.frame <-
 	    function(current, new, i) {
 		if(is.character(current)) new <- as.character(new)
 		if(is.character(new)) current <- as.character(current)
-		if(any(duplicated(new)))
+		if(anyDuplicated(new))
 		    return(current)
 		if(is.null(current))
 		    return(new)
@@ -356,9 +356,9 @@ data.frame <-
 	    }
 	else function(current, new, i) {
 	    if(is.null(current)) {
-		if(any(dup <- duplicated(new))) {
+		if(anyDuplicated(new)) {
 		    warning("some row.names duplicated: ",
-                            paste(which(dup), collapse=","),
+                            paste(which(duplicated(new)), collapse=","),
                             " --> row.names NOT used")
 		    current
 		} else new
@@ -374,7 +374,7 @@ data.frame <-
                 row.names <- as.character(row.names)
             if(any(is.na(row.names)))
                 stop("row names contain missing values")
-            if(any(duplicated(row.names)))
+            if(anyDuplicated(row.names))
                 stop("duplicate row.names: ",
                      paste(unique(row.names[duplicated(row.names)]),
                            collapse = ", "))
@@ -488,7 +488,7 @@ data.frame <-
             row.names <- as.character(row.names)
         if(any(is.na(row.names)))
             stop("row names contain missing values")
-        if(any(duplicated(row.names)))
+        if(anyDuplicated(row.names))
             stop("duplicate row.names: ",
                  paste(unique(row.names[duplicated(row.names)]),
                        collapse = ", "))
@@ -531,7 +531,7 @@ data.frame <-
                 stop("undefined columns selected")
         }
         ## added in 1.8.0
-        if(any(duplicated(cols))) names(y) <- make.unique(cols)
+        if(anyDuplicated(cols)) names(y) <- make.unique(cols)
         ## since we have not touched the rows, copy over the raw row.names
 	return(structure(y, class = oldClass(x),
                          row.names = .row_names_info(x, 0L)))
@@ -554,7 +554,7 @@ data.frame <-
             if(any(is.na(cols))) stop("undefined columns selected")
         }
         if(drop && length(y) == 1L) return(.subset2(y, 1L))
-        if(any(duplicated(cols))) names(y) <- make.unique(cols)
+        if(anyDuplicated(cols)) names(y) <- make.unique(cols)
         nrow <- .row_names_info(x, 2L)
         if(drop && !mdrop && nrow == 1L)
             return(structure(y, class = NULL, row.names = NULL))
@@ -627,7 +627,7 @@ data.frame <-
         ## row names might have NAs.
         if(is.null(rows)) rows <- attr(xx, "row.names")
         rows <- rows[i]
-	if((ina <- any(is.na(rows))) | (dup <- any(duplicated(rows)))) {
+	if((ina <- any(is.na(rows))) | (dup <- anyDuplicated(rows))) {
 	    ## both will coerce integer 'rows' to character:
 	    if (!dup && is.character(rows)) dup <- "NA" %in% rows
 	    if(ina)
@@ -636,7 +636,7 @@ data.frame <-
 		rows <- make.unique(as.character(rows))
 	}
         ## new in 1.8.0  -- might have duplicate columns
-        if(has.j && any(duplicated(nm <- names(x))))
+	if(has.j && anyDuplicated(nm <- names(x)))
             names(x) <- make.unique(nm)
         if(is.null(rows)) rows <- attr(xx, "row.names")[i]
 	attr(x, "row.names") <- rows
@@ -796,7 +796,7 @@ data.frame <-
     else jseq <- seq_along(x)
 
     ## addition in 1.8.0
-    if(any(duplicated(jseq)))
+    if(anyDuplicated(jseq))
         stop("duplicate subscripts for columns")
     n <- length(iseq)
     if(n == 0L) n <- nrows
@@ -905,7 +905,7 @@ data.frame <-
     if(length(new.cols) > 0L) {
         new.cols <- names(x) # we might delete columns with NULL
         ## added in 1.8.0
-        if(any(duplicated(new.cols))) names(x) <- make.unique(new.cols)
+        if(anyDuplicated(new.cols)) names(x) <- make.unique(new.cols)
     }
     class(x) <- cl
     x
@@ -1250,7 +1250,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	}
     }
     rlabs <- unlist(rlabs)
-    if(any(duplicated(rlabs)))
+    if(anyDuplicated(rlabs))
         rlabs <- make.unique(as.character(unlist(rlabs)), sep = "")
     if(is.null(cl)) {
 	as.data.frame(value, row.names = rlabs)

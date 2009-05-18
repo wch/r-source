@@ -1431,7 +1431,7 @@ function(package, dir, lib.loc = NULL)
             functions_not_in_aliases <- character()
 
         if((length(arg_names_in_usage_missing_in_arg_list))
-           || any(duplicated(arg_names_in_arg_list))
+           || anyDuplicated(arg_names_in_arg_list)
            || (length(arg_names_in_arg_list_missing_in_usage))
            || (length(functions_not_in_aliases)))
             bad_doc_objects[[docObj]] <-

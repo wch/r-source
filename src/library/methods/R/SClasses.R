@@ -104,13 +104,13 @@ representation <-
             stop(gettextf("element %d of the representation was not a single character string", i), domain = NA)
     }
     includes <- as.character(value[!nzchar(anames)])
-    if(any(duplicated(includes)))
+    if(anyDuplicated(includes))
         stop(gettextf("duplicate class names among superclasses: %s",
                       paste(dQuote(includes[duplicated(includes)]),
                             collapse = ", ")),
              domain = NA)
     slots <- anames[nzchar(anames)]
-    if(any(duplicated(slots)))
+    if(anyDuplicated(slots))
        stop(gettextf("duplicated slot names: %s",
                      paste(sQuote(slots[duplicated(slots)]), collapse="")),
             domain = NA)
@@ -609,7 +609,7 @@ initialize <- function(.Object, ...) {
         }
         if(length(elements)) {
             snames <- names(elements)
-            if(any(duplicated(snames)))
+	    if(anyDuplicated(snames))
                 stop(gettextf("duplicated slot names: %s",
                               paste(sQuote(snames[duplicated(snames)]),
                                     collapse = ", ")), domain = NA)

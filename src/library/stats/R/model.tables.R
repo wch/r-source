@@ -112,7 +112,7 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
     t.factor <- attr(prjs, "t.factor")
     efficiency <- FALSE
     if(type == "effects" || type == "means") {
-	if(any(duplicated(names(dn.proj)[names(dn.proj)!= "Residuals"]))) {
+	if(anyDuplicated(names(dn.proj)[names(dn.proj) != "Residuals"])) {
 	    efficiency <- eff.aovlist(x)
 	    ## Elect to use the effects from the lowest stratum:
 	    ##	usually expect this to be highest efficiency

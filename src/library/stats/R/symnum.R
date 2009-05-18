@@ -35,7 +35,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	force(corr) # missingness..
 	cutpoints <- sort(cutpoints)
 	if(corr) cutpoints <- c(0, cutpoints, 1)
-	if(any(duplicated(cutpoints)) ||
+	if(anyDuplicated(cutpoints) ||
 	   (corr && (any(cutpoints > 1) || any(cutpoints < 0)) ))
 	    stop(if(corr) gettext("'cutpoints' must be unique in 0 < cuts < 1, but are = ")
                  else gettext("'cutpoints' must be unique, but are = "),
@@ -53,7 +53,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 
 	ns <- length(symbols)
 	symbols <- as.character(symbols)
-	if(any(duplicated(symbols)))
+	if(anyDuplicated(symbols))
 	    stop("'symbols' must be unique, but are = ",
                  paste(symbols, collapse="|"), domain = NA)
 	if(nc != ns+1)

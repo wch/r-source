@@ -103,7 +103,7 @@ interpSpline.default <-
     frm <- frm[order(frm$x), ]
     ndat <- nrow(frm)
     x <- frm$x
-    if(any(duplicated(x)))
+    if(anyDuplicated(x))
 	stop("values of 'x' must be distinct")
     ## 'deg' extra knots (shifted) out on each side :
     knots <- c(x[1L:deg] + x[1L] - x[ord], x,

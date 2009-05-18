@@ -738,7 +738,7 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages) {
     else impvars <- vars
     impvars <- makeImportExportNames(impvars)
     impnames <- names(impvars)
-    if (any(duplicated(impnames))) {
+    if (anyDuplicated(impnames)) {
         stop("duplicate import names ",
              paste(impnames[duplicated(impnames)], collapse = ", "))
     }

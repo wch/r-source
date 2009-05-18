@@ -253,7 +253,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
     if(!compactRN) {
         if (length(row.names) != nlines)
             stop("invalid 'row.names' length")
-        if (any(duplicated(row.names)))
+        if (anyDuplicated(row.names))
             stop("duplicate 'row.names' are not allowed")
         if (any(is.na(row.names)))
             stop("missing values in 'row.names' are not allowed")
