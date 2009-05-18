@@ -51,8 +51,8 @@ package R::Vars;
     R_CMD      string for 'R CMD' including path
 
     MAKE       command string for 'make' [MAKE]
-    LATEX      command string for 'latex' [LATEX]
-    PDFLATEX   command string for 'pdflatex' [PDFLATEX]
+    LATEX      command string for 'latex' [R_LATEXCMD]
+    PDFLATEX   command string for 'pdflatex' [R_PDFLATEXCMD]
 
     Most have sensible defaults for all platforms.
 
@@ -68,9 +68,9 @@ else{
     $OSTYPE = "unix";
 }
 
-getenv("LATEX", "LATEX", "latex");
+getenv("LATEX", "R_LATEXCMD", "latex");
 getenv("MAKE", "MAKE", "make");
-getenv("PDFLATEX", "PDFLATEX", "pdflatex");
+getenv("PDFLATEX", "R_PDFLATEXCMD", "pdflatex");
 getenv("R_HOME", "R_HOME");
 getenv("R_SHARE_DIR", "R_SHARE_DIR", "$R_HOME/share");
 

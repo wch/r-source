@@ -240,6 +240,7 @@ if($opt_latex) {
 	"test\n\\end\{document\}\n";
     close(TEXFILE);
     chdir($R::Vars::TMPDIR);
+    ## print "\ntesting ${R::Vars::PDFLATEX}\n";
     if(R_system("${R::Vars::PDFLATEX} Rtextest$$ > Rtextest$$.out")) {
 	$log->result("NO");
     } else {

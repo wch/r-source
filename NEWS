@@ -178,6 +178,10 @@ BUG FIXES
     o	The X11 version of View() was misbehaving in MBCS locales, and
  	PgUp/PgDn now behave better, thanks to a patch from Ei-ji Nakama.
 
+    o	R CMD check looked at the environment variable PDFLATEX, but
+	as from R 2.8.1 R CMD Rd2dvi used R_PDFLATEXCMD in
+	preference, and that was set by R CMD (and not PDFLATEX).  Now
+	R CMD check looks at R_PDFLATEXCMD.
 
 
 
