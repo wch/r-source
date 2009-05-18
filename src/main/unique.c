@@ -504,8 +504,9 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args);
     /* handle zero length vectors, and NULL */
     if ((n = length(x)) == 0)
-	return(allocVector(PRIMVAL(op) == 0 ? LGLSXP :
-			   (PRIMVAL(op) == 1 ? TYPEOF(x) : /* 2 */ INTSXP), 0));
+	return(PRIMVAL(op) <= 1
+	       ? allocVector(PRIMVAL(op) != 1 ? LGLSXP : TYPEOF(x), 0)
+	       : ScalarInteger(0));
 
     if (!isVector(x)) {
 	error(_("%s() applies only to vectors"),
