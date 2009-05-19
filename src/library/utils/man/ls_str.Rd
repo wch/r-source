@@ -31,7 +31,7 @@ lsf.str(pos = -1, envir, \dots)
     Only names matching \code{pattern} are considered.}
   \item{max.level}{maximal level of nesting which is applied for
     displaying nested structures, e.g., a list containing sub lists.
-    Default 0: Display all nesting levels.}
+    Default 1: Display only the first nested level.}
   \item{give.attr}{logical; if \code{TRUE} (default), show attributes
     as sub structures.}
   \item{mode}{character specifying the \code{\link{mode}} of objects to
