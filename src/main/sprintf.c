@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-9     the R Development Core Team
+ *  Copyright (C) 2002--2009     the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,17 +27,19 @@
 #include "RBufferUtils.h"
 
 #define MAXLINE MAXELTSIZE
+#define MAXNARGS 100
+/*               ^^^ not entirely arbitrary, but strongly linked to allowing %$1 to %$99 !*/
 
-/* 
+/*
    This is passed a format that started with % and may include other
    chars, e.g. '.2f abc'.  It's aim is to show that this is a valid
-   format from one of the types given in pattern. 
+   format from one of the types given in pattern.
 */
 
 static const char *findspec(const char *str)
 {
     /* This is not strict about checking where '.' is allowed.
-       It should allow  - + ' ' 0 as flags
+       It should allow  - + ' ' # 0 as flags
        m m. .n n.m as width/precision
     */
     const char *p = str;
@@ -53,62 +55,77 @@ static const char *findspec(const char *str)
 }
 
 
-/*   FALSE is success, TRUE is an error. */
+/*   FALSE is success, TRUE is an error: pattern *not* found . */
 static Rboolean checkfmt(const char *fmt, const char *pattern)
 {
     const char *p =fmt;
 
-    if(*p != '%') return 1;
+    if(*p != '%') return TRUE;
     p = findspec(fmt);
-    return strcspn(p, pattern) != 0;
+    return strcspn(p, pattern) ? TRUE : FALSE;
 }
 
 
 SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int i, nargs, cnt, v, thislen, nfmt, nprotect = 1;
-    const char *formatString, *ss; char *starc;
+    int i, nargs, cnt, v, thislen, nfmt, nprotect = 0;
     /* fmt2 is a copy of fmt with '*' expanded.
        bit will hold numeric formats and %<w>s, so be quite small. */
     char fmt[MAXLINE+1], fmt2[MAXLINE+10], *fmtp, bit[MAXLINE+1],
-	*outputString;
+	*outputString, *formatString;
     size_t n, cur, chunk;
 
-    SEXP format, ans, _this, a[100], tmp;
-    int ns, maxlen, lens[100], nthis, has_star, star_arg = 0, nstar;
+    SEXP format, _this, a[MAXNARGS], ans /* -Wall */ = R_NilValue;
+    int ns, maxlen, lens[MAXNARGS], nthis, nstar, star_arg = 0;
     static R_StringBuffer outbuff = {NULL, 0, MAXELTSIZE};
-    Rboolean use_UTF8;
+    Rboolean has_star, use_UTF8;
 
-    /* grab the format string */
+#define TRANSLATE_CHAR(_STR_, _i_)				\
+    (char *)((use_UTF8)						\
+	     ? translateCharUTF8(STRING_ELT(_STR_, _i_))	\
+	     : translateChar    (STRING_ELT(_STR_, _i_)))
+
+#define _my_sprintf(_X_)						\
+    {									\
+	int nc = snprintf(bit, MAXLINE+1, fmtp, _X_);			\
+	if (nc > MAXLINE)						\
+	    error(_("required resulting string length %d is > maximal %d"), \
+		  nc, MAXLINE);						\
+    }
+
     nargs = length(args);
+    /* grab the format string */
     format = CAR(args);
     if (!isString(format))
 	error(_("'fmt' is not a character vector"));
-    if (length(format) == 0) return allocVector(STRSXP, 0);
+    nfmt = length(format);
+    if (nfmt == 0) return allocVector(STRSXP, 0);
     args = CDR(args); nargs--;
-    if(nargs >= 100)
-	error(_("only 100 arguments are allowed"));
+    if(nargs >= MAXNARGS)
+	error(_("only %d arguments are allowed"), MAXNARGS);
 
     /* record the args for possible coercion and later re-ordering */
-    for(i = 0; i < nargs; i++, args = CDR(args)) a[i] = CAR(args);
-
-    maxlen = nfmt = length(format);
-    for(i = 0; i < nargs; i++) {
+    for(i = 0; i < nargs; i++, args = CDR(args)) {
+	a[i] = CAR(args);
 	lens[i] = length(a[i]);
 	if(lens[i] == 0) return allocVector(STRSXP, 0);
-	if(maxlen < lens[i]) maxlen = lens[i];
     }
+
+#define CHECK_maxlen							\
+    maxlen = nfmt;							\
+    for(i = 0; i < nargs; i++)						\
+	if(maxlen < lens[i]) maxlen = lens[i];				\
+    if(maxlen % nfmt)							\
+	error(_("arguments cannot be recycled to the same length"));	\
+    for(i = 0; i < nargs; i++)						\
+	if(maxlen % lens[i])						\
+	    error(_("arguments cannot be recycled to the same length"))
+
+    CHECK_maxlen;
 
     outputString = R_AllocStringBuffer(0, &outbuff);
 
-    if(maxlen % length(format))
-	error(_("arguments cannot be recycled to the same length"));
-    for(i = 0; i < nargs; i++)
-	if(maxlen % lens[i])
-	    error(_("arguments cannot be recycled to the same length"));
-
     /* We do the format analysis a row at a time */
-    PROTECT(ans = allocVector(STRSXP, maxlen));
     for(ns = 0; ns < maxlen; ns++) {
 	outputString[0] = '\0';
 	use_UTF8 = getCharCE(STRING_ELT(format, ns % nfmt)) == CE_UTF8;
@@ -120,15 +137,14 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	}
-	if (use_UTF8)
-	    formatString = translateCharUTF8(STRING_ELT(format, ns % nfmt));
-	else
-	    formatString = translateChar(STRING_ELT(format, ns % nfmt));
+
+	formatString = TRANSLATE_CHAR(format, ns % nfmt);
 	n = strlen(formatString);
 	if (n > MAXLINE)
 	    error(_("'fmt' length exceeds maximal format length %d"), MAXLINE);
 	/* process the format string */
 	for (cur = 0, cnt = 0; cur < n; cur += chunk) {
+	    char *curFormat = formatString + cur, *ss, *starc;
 	    ss = NULL;
 	    if (formatString[cur] == '%') { /* handle special format command */
 
@@ -139,12 +155,13 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		else {
 		    /* recognise selected types from Table B-1 of K&R */
+		    /* NB: we deal with "%%" in branch above. */
 		    /* This is MBCS-OK, as we are in a format spec */
-		    chunk = strcspn(formatString + cur + 1, "aAdisfeEgGxX%") + 2;
+		    chunk = strcspn(curFormat + 1, "disfeEgGxXaA") + 2;
 		    if (cur + chunk > n)
-			error(_("unrecognised format at end of string"));
+			error(_("unrecognised format specification '%s'"), curFormat);
 
-		    strncpy(fmt, formatString + cur, chunk);
+		    strncpy(fmt, curFormat, chunk);
 		    fmt[chunk] = '\0';
 
 		    nthis = -1;
@@ -156,8 +173,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				error(_("reference to non-existent argument %d"), v);
 			    nthis = v-1;
 			    memmove(fmt+1, fmt+3, strlen(fmt)-2);
-			} else if(fmt[2] >= '1' && fmt[2] <= '9'
-				  && fmt[3] == '$') {
+			} else if(fmt[2] >= '1' && fmt[2] <= '9' && fmt[3] == '$') {
 			    v = 10*v + fmt[2] - '0';
 			    if(v > nargs)
 				error(_("reference to non-existent argument %d"), v);
@@ -166,9 +182,8 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 		    }
 
-		    has_star = 0;
 		    starc = Rf_strchr(fmt, '*');
-		    if (starc) { /* handle * format if present */
+		    if (starc) { /* handle  *  format if present */
 			nstar = -1;
 			if (strlen(starc) > 3 && starc[1] >= '1' && starc[1] <= '9') {
 			    v = starc[1] - '0';
@@ -204,34 +219,49 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			if(TYPEOF(_this) != INTSXP || LENGTH(_this)<1 ||
 			   INTEGER(_this)[ns % LENGTH(_this)] == NA_INTEGER)
 			    error(_("argument for '*' conversion specification must be a number"));
-			has_star = 1;
 			star_arg = INTEGER(_this)[ns % LENGTH(_this)];
+			has_star = TRUE;
 		    }
+		    else
+			has_star = FALSE;
 
 		    if (fmt[strlen(fmt) - 1] == '%') {
 			/* handle % with formatting options */
 			if (has_star)
 			    sprintf(bit, fmt, star_arg);
 			else
-			    sprintf(bit, fmt);
+			    strcpy(bit, fmt);
+			/* was sprintf(..)  for which some compiler warn */
 		    } else {
+			Rboolean did_this = FALSE;
 			if(nthis < 0) {
 			    if (cnt >= nargs) error(_("too few arguments"));
 			    nthis = cnt++;
 			}
 			_this = a[nthis];
 			if (has_star) {
-			    char *p, *q = fmt2;
+			    int nf; char *p, *q = fmt2;
 			    for (p = fmt; *p; p++)
 				if (*p == '*') q += sprintf(q, "%d", star_arg);
 				else *q++ = *p;
 			    *q = '\0';
+			    nf = strlen(fmt2);
+			    if (nf > MAXLINE)
+				error(_("the '%*' constructed 'fmt2' length exceeds maximum of %d"),
+				      MAXLINE);
 			    fmtp = fmt2;
 			} else fmtp = fmt;
 
+#define CHECK_this_length						\
+			PROTECT(_this);					\
+			thislen = length(_this);			\
+			if(thislen == 0)				\
+			    error(_("coercion has changed vector length to 0"))
+
+			/* Now let us see if some minimal coercion
+			   would be sensible, but only do so once, for ns = 0: */
 			if(ns == 0) {
-			    /* Now let us see if some minimal coercion
-			       would be sensible, but only do so once. */
+			    SEXP tmp; Rboolean do_check;
 			    switch(*findspec(fmtp)) {
 			    case 'd':
 			    case 'i':
@@ -252,45 +282,53 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    case 'g':
 			    case 'E':
 			    case 'G':
-				if(TYPEOF(_this) != REALSXP) {
+				if(TYPEOF(_this) != REALSXP &&
+				   /* no automatic as.double(<string>) : */
+				   TYPEOF(_this) != STRSXP) {
 				    PROTECT(tmp = lang2(install("as.double"), _this));
-				    _this = eval(tmp, env);
-				    UNPROTECT(1);
-				    PROTECT(a[nthis] = _this);
-				    nprotect++;
+#define COERCE_THIS_TO_A						\
+				    _this = eval(tmp, env);		\
+				    UNPROTECT(1);			\
+				    PROTECT(a[nthis] = _this);		\
+				    nprotect++;				\
+				    did_this = TRUE;			\
+				    CHECK_this_length;			\
+				    do_check = (lens[nthis] == maxlen);	\
+				    lens[nthis] = thislen; /* may have changed! */ \
+				    if(do_check && thislen < maxlen) {	\
+					CHECK_maxlen;			\
+				    }
+
+				    COERCE_THIS_TO_A
 				}
 				break;
 			    case 's':
 				if(TYPEOF(_this) != STRSXP) {
 				    PROTECT(tmp = lang2(install("as.character"), _this));
-				    _this = eval(tmp, env);
-				    UNPROTECT(1);
-				    PROTECT(a[nthis] = _this);
-				    nprotect++;
+
+				    COERCE_THIS_TO_A
 				}
 				break;
 			    default:
 				break;
 			    }
-			}
+			} /* ns == 0 (first-time only) */
 
-			PROTECT(_this);
-			thislen = length(_this);
-			if(thislen == 0)
-			    error(_("coercion has changed vector length to 0"));
+			if(!did_this)
+			    CHECK_this_length;
 
 			switch(TYPEOF(_this)) {
 			case LGLSXP:
 			    {
 				int x = LOGICAL(_this)[ns % thislen];
 				if (checkfmt(fmtp, "di"))
-				    error("%s",
+				    error(_("invalid format '%s'; %s"), fmtp,
 					  _("use format %d or %i for logical objects"));
 				if (x == NA_LOGICAL) {
 				    fmtp[strlen(fmtp)-1] = 's';
-				    sprintf(bit, fmtp, "NA");
+				    _my_sprintf("NA")
 				} else {
-				    sprintf(bit, fmtp, x);
+				    _my_sprintf(x)
 				}
 				break;
 			    }
@@ -298,13 +336,13 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    {
 				int x = INTEGER(_this)[ns % thislen];
 				if (checkfmt(fmtp, "dixX"))
-				    error("%s",
+				    error(_("invalid format '%s'; %s"), fmtp,
 					  _("use format %d, %i, %x or %X for integer objects"));
 				if (x == NA_INTEGER) {
 				    fmtp[strlen(fmtp)-1] = 's';
-				    sprintf(bit, fmtp, "NA");
+				    _my_sprintf("NA")
 				} else {
-				    sprintf(bit, fmtp, x);
+				    _my_sprintf(x)
 				}
 				break;
 			    }
@@ -312,10 +350,10 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    {
 				double x = REAL(_this)[ns % thislen];
 				if (checkfmt(fmtp, "aAfeEgG"))
-				    error("%s",
+				    error(_("invalid format '%s'; %s"), fmtp,
 					  _("use format %f, %e, %g or %a for numeric objects"));
 				if (R_FINITE(x)) {
-				    sprintf(bit, fmtp, x);
+				    _my_sprintf(x)
 				} else {
 				    char *p = Rf_strchr(fmtp, '.');
 				    if (p) {
@@ -324,39 +362,38 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 					fmtp[strlen(fmtp)-1] = 's';
 				    if (ISNA(x)) {
 					if (strcspn(fmtp, " ") < strlen(fmtp))
-					    sprintf(bit, fmtp, " NA");
+					    _my_sprintf(" NA")
 					else
-					    sprintf(bit, fmtp, "NA");
+					    _my_sprintf("NA")
 				    } else if (ISNAN(x)) {
 					if (strcspn(fmtp, " ") < strlen(fmtp))
-					    sprintf(bit, fmtp, " NaN");
+					    _my_sprintf(" NaN")
 					else
-					    sprintf(bit, fmtp, "NaN");
+					    _my_sprintf("NaN")
 				    } else if (x == R_PosInf) {
 					if (strcspn(fmtp, "+") < strlen(fmtp))
-					    sprintf(bit, fmtp, "+Inf");
+					    _my_sprintf("+Inf")
 					else if (strcspn(fmtp, " ") < strlen(fmtp))
-					    sprintf(bit, fmtp, " Inf");
+					    _my_sprintf(" Inf")
 					else
-					    sprintf(bit, fmtp, "Inf");
+					    _my_sprintf("Inf")
 				    } else if (x == R_NegInf)
-					sprintf(bit, fmtp, "-Inf");
+					_my_sprintf("-Inf")
 				}
 				break;
 			    }
 			case STRSXP:
 			    /* NA_STRING will be printed as 'NA' */
 			    if (checkfmt(fmtp, "s"))
-				error("%s", _("use format %s for character objects"));
-			    if (use_UTF8)
-				ss = translateCharUTF8(STRING_ELT(_this, ns % thislen));
-			    else
-				ss = translateChar(STRING_ELT(_this, ns % thislen));
+				error(_("invalid format '%s'; %s"), fmtp,
+				      _("use format %s for character objects"));
+
+			    ss = TRANSLATE_CHAR(_this, ns % thislen);
 			    if(fmtp[1] != 's') {
 				if(strlen(ss) > MAXLINE)
 				    warning(_("likely truncation of character string to %d characters"),
 					    MAXLINE-1);
-				snprintf(bit, MAXLINE, fmtp, ss);
+				_my_sprintf(ss)
 				bit[MAXLINE] = '\0';
 				ss = NULL;
 			    }
@@ -372,11 +409,9 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	    else { /* not '%' : handle string part */
-		char *ch = Rf_strchr(formatString + cur, '%'); /* MBCS-aware
-								  version used */
-		if(ch) chunk = ch - formatString - cur;
-		else chunk = strlen(formatString + cur);
-		strncpy(bit, formatString + cur, chunk);
+		char *ch = Rf_strchr(curFormat, '%'); /* MBCS-aware version used */
+		chunk = (ch) ? ch - curFormat : strlen(curFormat);
+		strncpy(bit, curFormat, chunk);
 		bit[chunk] = '\0';
 	    }
 	    if(ss) {
@@ -388,17 +423,17 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 						   strlen(bit) + 1, &outbuff);
 		strcat(outputString, bit);
 	    }
+	}  /* end for ( each chunk ) */
+
+	if(ns == 0) { /* may have adjusted maxlen now ... */
+	    PROTECT(ans = allocVector(STRSXP, maxlen));
+	    nprotect++;
 	}
-	SET_STRING_ELT(ans, ns, mkCharCE(outputString, 
+	SET_STRING_ELT(ans, ns, mkCharCE(outputString,
 					 use_UTF8 ? CE_UTF8 : CE_NATIVE));
-    }
+    } /* end for(ns ...) */
 
     UNPROTECT(nprotect);
     R_FreeStringBufferL(&outbuff);
     return ans;
 }
-
-/* Local Variables: */
-/* indent-tabs-mode: t */
-/* c-basic-offset: 4 */
-/* End: */
