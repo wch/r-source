@@ -50,8 +50,8 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = FALSE)
             orep <- orep/nx
             x <- x[rep.int(rep.int(seq_len(nx),
                                    rep.int(rep.fac, nx)), orep)]
-            ## avoid sorting the levels of character variates
-	    if(!is.factor(x) && is.character(x))
+	    ## avoid sorting the levels of character variates
+	    if(stringsAsFactors && !is.factor(x) && is.character(x))
 		x <- factor(x, levels = unique(x))
             cargs[[i]] <- x
             rep.fac <- rep.fac * nx
