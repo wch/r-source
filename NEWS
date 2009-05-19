@@ -72,13 +72,6 @@ UTILITIES
 
 BUG FIXES
 
-    o	sprintf() now signals an error when the result of single format
-	specification would be longer than the limit (8192 bytes); it would
-	return "somewhat random" results or segfault previously. (PR#13667)
-	Further, arguments of type "language" or "symbol" are no longer
-	allowed, as these, e.g., sprintf("%s", quote(list())), typically
-	lead to unexpected results or hard to understand error messages.
-
 
 
 	**************************************************
@@ -185,6 +178,13 @@ BUG FIXES
 
     o	expand.grid() now *does* obey its 'stringsAsFactors = FALSE'
 	default, as has been promised (below) for R 2.9.0.
+
+    o	sprintf() now signals an error when the result of single format
+	specification would be longer than the limit (8192 bytes); it would
+	return "somewhat random" results or segfault previously. (PR#13667)
+	Further, arguments of type "language" or "symbol" are no longer
+	allowed, as these, e.g., sprintf("%s", quote(list())), typically
+	lead to unexpected results or hard to understand error messages.
 
 
 
