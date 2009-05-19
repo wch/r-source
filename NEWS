@@ -101,9 +101,6 @@ BUG FIXES
 	preference, and that was set by R CMD (and not PDFLATEX).  Now
 	R CMD check looks at R_PDFLATEXCMD.
 
-    o	expand.grid() now *does* obey its 'stringsAsFactors = FALSE'
-	default, as has been promised (below) for R 2.9.0.
-
     o	sprintf() now signals an error when the result of single format
 	specification would be longer than the limit (8192 bytes); it would
 	return "somewhat random" results or segfault previously. (PR#13667)
@@ -114,6 +111,9 @@ BUG FIXES
     o	The new (in 2.9.0) 'stringsAsFactors' argument to expand.grid()
 	was not working: it now does but has argument default TRUE for
 	backwards compatibility.
+
+    o	tcrossprod(<1d-array>, <matrix>) now does work when the arguments
+	are of compatible dimensions.
 
 
 

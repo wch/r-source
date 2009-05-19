@@ -21,7 +21,7 @@ tcrossprod(x, y = NULL)
 \arguments{
   \item{x, y}{numeric or complex matrices: \code{y = NULL} is taken to
     be the same matrix as \code{x}.  Vectors are promoted to
-    single-column matrices.}
+    single-column or single-row matrices, depending on the context.}
 }
 \value{
   A double or complex matrix, with appropriate \code{dimnames} taken
