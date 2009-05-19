@@ -6,7 +6,7 @@
 \name{expand.grid}
 \title{Create a Data Frame from All Combinations of Factors}
 \usage{
-expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = FALSE)
+expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 }
 \alias{expand.grid}
 \arguments{

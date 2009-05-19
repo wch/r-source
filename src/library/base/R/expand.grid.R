@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = FALSE)
+expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 {
     ## x should either be a list or a set of vectors or factors
     nargs <- length(args <- list(...))
