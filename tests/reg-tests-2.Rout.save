@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-04-28 r48429)
+R version 2.10.0 Under development (unstable) (2009-05-18 r48561)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1499,8 +1499,9 @@ x    1  2
 > 
 > ## Chong Gu 2002-Feb-8: `.' not expanded in drop1
 > lab <- dimnames(HairEyeColor)
-> HairEye <- cbind(expand.grid(Hair=lab$Hair, Eye=lab$Eye, Sex=lab$Sex),
-+                  Fr=as.vector(HairEyeColor))
+> HairEye <- cbind(expand.grid(Hair=lab$Hair, Eye=lab$Eye, Sex=lab$Sex,
++ 			     stringsAsFactors = TRUE),
++ 		 Fr = as.vector(HairEyeColor))
 > HairEye.fit <- glm(Fr ~ . ^2, poisson, HairEye)
 > drop1(HairEye.fit)
 Single term deletions

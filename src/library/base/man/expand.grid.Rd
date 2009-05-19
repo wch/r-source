@@ -1,6 +1,6 @@
 % File src/library/base/man/expand.grid.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{expand.grid}
@@ -13,8 +13,8 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = FALSE)
   \item{\dots}{vectors, factors or a list containing these. }
   \item{KEEP.OUT.ATTRS}{a logical indicating the \code{"out.attrs"}
     attribute (see below) should be computed and returned.}
-  \item{stringsAsFactors}{If true, character vectors are converted to
-    factors.}
+  \item{stringsAsFactors}{logical specifying if character vectors are
+    converted to factors (used to be true, implicitly, up to \R 2.9.0).}
 }
 \description{
   Create a data frame from all combinations of the supplied vectors or

@@ -183,6 +183,9 @@ BUG FIXES
 	preference, and that was set by R CMD (and not PDFLATEX).  Now
 	R CMD check looks at R_PDFLATEXCMD.
 
+    o	expand.grid() now *does* obey its 'stringsAsFactors = FALSE'
+	default, as has been promised (below) for R 2.9.0.
+
 
 
 		CHANGES IN R VERSION 2.9.0
@@ -232,7 +235,7 @@ NEW FEATURES
 	avoid passing invalid formats to the OS (which have a tendency
 	to crash under such inputs).
 
-    o	expand.grid() gains a 'stringsAsFactor' argument to ask for
+    o	expand.grid() gains a 'stringsAsFactors' argument to ask for
 	automatic conversion of character vectors to factors (which
 	happened for many years but was not previously documented, and
 	is no longer the default).

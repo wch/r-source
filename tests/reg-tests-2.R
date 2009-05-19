@@ -544,8 +544,9 @@ predict(fit, newdata=data[1:2, ])
 
 ## Chong Gu 2002-Feb-8: `.' not expanded in drop1
 lab <- dimnames(HairEyeColor)
-HairEye <- cbind(expand.grid(Hair=lab$Hair, Eye=lab$Eye, Sex=lab$Sex),
-                 Fr=as.vector(HairEyeColor))
+HairEye <- cbind(expand.grid(Hair=lab$Hair, Eye=lab$Eye, Sex=lab$Sex,
+			     stringsAsFactors = TRUE),
+		 Fr = as.vector(HairEyeColor))
 HairEye.fit <- glm(Fr ~ . ^2, poisson, HairEye)
 drop1(HairEye.fit)
 ## broken around 1.2.1 it seems.
