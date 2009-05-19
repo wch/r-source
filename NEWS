@@ -56,6 +56,8 @@ NEW FEATURES
     o	getOption() has a new argument 'default' that is returned if
 	the specified option is not set. This simplifies querying a
 	value and checking whether it is NULL or not.
+	
+    o	parse() now warns if the requested encoding is not supported.
 
 
 DEPRECATED & DEFUNCT
