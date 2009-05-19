@@ -6,7 +6,7 @@
 \name{expand.grid}
 \title{Create a Data Frame from All Combinations of Factors}
 \usage{
-expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = FALSE)
+expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 }
 \alias{expand.grid}
 \arguments{
@@ -32,9 +32,8 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = FALSE)
   %% currently, from "base R", only predict.loess() makes use of it.
 }
 \note{
-  Prior to \R 2.9.0 character vectors were always converted to factors
-  (and this was not documented).  \code{stringsAsFactors = TRUE} gives
-  the earlier behaviour.
+  Prior to \R 2.9.1 character vectors were always converted to factors
+  (and this was not documented).
 }
 
 \references{

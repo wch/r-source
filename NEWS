@@ -186,14 +186,14 @@ BUG FIXES
 	allowed, as these, e.g., sprintf("%s", quote(list())), typically
 	lead to unexpected results or hard to understand error messages.
 
+    o	The new (in 2.9.0) 'stringsAsFactors' argument to expand.grid()
+	was not working: it now does but has argument default TRUE for
+	backwards compatibility.
+
+
 
 
 		CHANGES IN R VERSION 2.9.0
-
-
-SIGNIFICANT USER-VISIBLE CHANGES
-
-    o	expand.grid() by default no longer coerces strings into factors.
 
 
 NEW FEATURES
@@ -237,8 +237,7 @@ NEW FEATURES
 
     o	expand.grid() gains a 'stringsAsFactors' argument to ask for
 	automatic conversion of character vectors to factors (which
-	happened for many years but was not previously documented, and
-	is no longer the default).
+	happened for many years but was not previously documented).
 
     o	bxp() now computes the 'ylim' including the outliers only if
 	'outline = TRUE'.  (Wish of PR#13196)
