@@ -31,7 +31,7 @@ duplicated.data.frame <- function(x, incomparables = FALSE, fromLast = FALSE, ..
 }
 
 duplicated.matrix <- duplicated.array <-
-    function(x, incomparables = FALSE , MARGIN = 1L, fromLast = FALSE, ...)
+    function(x, incomparables = FALSE, MARGIN = 1L, fromLast = FALSE, ...)
 {
     if(!identical(incomparables, FALSE))
 	.NotYetUsed("incomparables != FALSE")
@@ -52,6 +52,25 @@ anyDuplicated.default <- function(x, incomparables = FALSE, fromLast = FALSE, ..
     if(is.na(fromLast <- as.logical(fromLast[1L])))
         stop("'fromLast' must be TRUE or FALSE")
     .Internal(anyDuplicated(x, incomparables, fromLast))
+}
+
+anyDuplicated.data.frame <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
+{
+    if(!identical(incomparables, FALSE))
+	.NotYetUsed("incomparables != FALSE")
+    anyDuplicated(do.call("paste", c(x, sep="\r")), fromLast = fromLast)
+}
+
+anyDuplicated.matrix <- anyDuplicated.array <-
+    function(x, incomparables = FALSE, MARGIN = 1L, fromLast = FALSE, ...)
+{
+    if(!identical(incomparables, FALSE))
+	.NotYetUsed("incomparables != FALSE")
+    ndim <- length(dim(x))
+    if (length(MARGIN) > ndim || any(MARGIN > ndim))
+        stop("MARGIN = ", MARGIN, " is invalid for dim = ", dim(x))
+    temp <- apply(x, MARGIN, function(x) paste(x, collapse = "\r"))
+    anyDuplicated(as.vector(temp), fromLast = fromLast)
 }
 
 unique <- function(x, incomparables = FALSE, ...) UseMethod("unique")

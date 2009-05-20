@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{duplicated}
+\title{Determine Duplicate Elements}
 \alias{duplicated}
 \alias{duplicated.default}
 \alias{duplicated.data.frame}
@@ -11,7 +12,9 @@
 \alias{duplicated.array}
 \alias{anyDuplicated}
 \alias{anyDuplicated.default}
-\title{Determine Duplicate Elements}
+\alias{anyDuplicated.array}
+\alias{anyDuplicated.matrix}
+\alias{anyDuplicated.data.frame}
 \description{
   Determines which elements of a vector or data frame are duplicates
   of elements with smaller subscripts, and returns a logical vector
@@ -23,12 +26,14 @@ duplicated(x, incomparables = FALSE, \dots)
 \method{duplicated}{default}(x, incomparables = FALSE,
            fromLast = FALSE, \dots)
 
-\method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1L,
+\method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1,
            fromLast = FALSE, \dots)
 
 anyDuplicated(x, incomparables = FALSE, \dots)
 \method{anyDuplicated}{default}(x, incomparables = FALSE,
            fromLast = FALSE, \dots)
+\method{anyDuplicated}{array}(x, incomparables = FALSE,
+           MARGIN = 1, fromLast = FALSE, \dots)
 }
 \arguments{
   \item{x}{a vector or a data frame or an array or \code{NULL}.}
@@ -46,13 +51,16 @@ anyDuplicated(x, incomparables = FALSE, \dots)
 }
 \details{
   These are generic functions with methods for vectors (including
-  lists), and---for \code{duplicated()}---data frames and arrays
-  (including matrices).
+  lists), data frames and arrays (including matrices).
 
+  For the default methods, and whenever there are equivalent method
+  definitions for \code{duplicated} and \code{anyDuplicated},
   \code{anyDuplicated(x,...)} is a \dQuote{generalized} shortcut for
   \code{any(duplicated(x,...))}, in the sense that it returns the
   \emph{index} \code{i} of the first duplicated entry \code{x[i]} if
   there is one, and \code{0} otherwise.
+  \cr The behaviours may be different when at least one of
+  \code{duplicated} and \code{anyDuplicated} has a relevant method.
 
   \code{duplicated(x, fromLast=TRUE)} is equivalent to but faster than
   \code{rev(duplicated(rev(x)))}.
@@ -109,11 +117,13 @@ stopifnot(identical(xu,  unique(x)),
 duplicated(iris)[140:143]
 
 duplicated(iris3, MARGIN = c(1, 3))
-
-## FIXME:  example for
+anyDuplicated(iris) ## 143
+\dontshow{% array & data.frame methods:
+stopifnot(identical(anyDuplicated(iris), 143L),
+          identical(anyDuplicated(iris3, MARGIN = c(1, 3)), 143L))
+}
 anyDuplicated(x)
 anyDuplicated(x, fromLast = TRUE)
-
 }
 \keyword{logic}
 \keyword{manip}
