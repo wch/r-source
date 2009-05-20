@@ -1,5 +1,5 @@
 
-R version 2.9.0 Under development (unstable) (2009-02-27 r48020)
+R version 2.9.0 Patched (2009-05-20 r48584)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -3172,15 +3172,15 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 +     noquote(sub(paste("\\.",cl,"$",sep=""),"", c(methods(class = cl))))
 > meth2gen("data.frame")
  [1] $<-           Math          Ops           Summary       [            
- [6] [<-           [[            [[<-          aggregate     as.data.frame
-[11] as.list       as.matrix     by            cbind         dim          
-[16] dimnames      dimnames<-    duplicated    edit          format       
-[21] formula       head          is.na         mean          merge        
-[26] na.exclude    na.omit       plot          print         prompt       
-[31] rbind         row.names     row.names<-   rowsum        split        
-[36] split<-       stack         str           subset        summary      
-[41] t             tail          transform     unique        unstack      
-[46] within       
+ [6] [<-           [[            [[<-          aggregate     anyDuplicated
+[11] as.data.frame as.list       as.matrix     by            cbind        
+[16] dim           dimnames      dimnames<-    duplicated    edit         
+[21] format        formula       head          is.na         mean         
+[26] merge         na.exclude    na.omit       plot          print        
+[31] prompt        rbind         row.names     row.names<-   rowsum       
+[36] split         split<-       stack         str           subset       
+[41] summary       t             tail          transform     unique       
+[46] unstack       within       
 > meth2gen("dendrogram")
 [1] [[         cophenetic cut        labels     plot       print      reorder   
 [8] rev        str       
