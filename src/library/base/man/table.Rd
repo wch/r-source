@@ -30,7 +30,7 @@ as.table(x, \dots)
 is.table(x)
 
 \method{as.data.frame}{table}(x, row.names = NULL, \dots,
-              responseName = "Freq")
+              responseName = "Freq", stringsAsFactors = TRUE)
 }
 \arguments{
   \item{\dots}{one of more objects which can be interpreted as factors
@@ -51,6 +51,8 @@ is.table(x)
     frame.}
   \item{responseName}{The name to be used for the column of
     table entries, usually counts.}
+  \item{stringsAsFactors}{logical: should the classifying factors be
+    returned as factors (the default) or character vectors?}
 }
 \details{
   If the argument \code{dnn} is not supplied, the internal function

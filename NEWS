@@ -59,6 +59,10 @@ NEW FEATURES
 
     o	parse() now warns if the requested encoding is not supported.
 
+    o	The "table" method of as.data.frame() gains a 'stringsAsFactors'
+	argument to allow the classifying factors to be returned as
+	character vectors rather than the default factor type.
+
 
 DEPRECATED & DEFUNCT
 

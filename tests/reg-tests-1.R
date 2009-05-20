@@ -5688,3 +5688,11 @@ stopifnot(identical(0L, anyDuplicated(c(1,NA,3,NA,5), incomp=NA)),
 	  identical(0L, anyDuplicated(c(1,NA,3,NA,3), incomp=c(3,NA))))
 options(oo)
 ## missing UNPROTECT and partly wrong in development versions of R
+
+
+## test of 'stringsAsFactors' arguemnt to expand.grid()
+z <- expand.grid(letters[1:3], letters[1:4], stringsAsFactors = TRUE)
+stopifnot(sapply(z, class) == "factor")
+z <- expand.grid(letters[1:3], letters[1:4], stringsAsFactors = FALSE)
+stopifnot(sapply(z, class) == "character")
+## did not work in 2.9.0, fixed in 2.9.1 patched
