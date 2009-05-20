@@ -398,6 +398,11 @@ model.frame.default <-
 	for(nm in names(xlev))
 	    if(!is.null(xl <- xlev[[nm]])) {
 		xi <- data[[nm]]
+                if(is.character(xi)) {
+                    xi <- as.factor(xi)
+		    warning(gettextf("character variable '%s' changed to a factor", nm),
+                            domain = NA)
+                }
 		if(!is.factor(xi) || is.null(nxl <- levels(xi)))
 		    warning(gettextf("variable '%s' is not a factor", nm),
                             domain = NA)

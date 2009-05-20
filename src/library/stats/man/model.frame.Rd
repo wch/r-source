@@ -1,6 +1,6 @@
 % File src/library/stats/man/model.frame.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{model.frame}
@@ -95,7 +95,9 @@ get_all_vars(formula, data, \dots)
   frame.  Then the \code{na.action} function is applied to the data frame
   (and may well add attributes).  The levels of any factors in the data
   frame are adjusted according to the \code{drop.unused.levels} and
-  \code{xlev} arguments.
+  \code{xlev} arguments: if \code{xlev} specifies a factor and a
+  character variable is found, it is converted to a factor (as from \R
+  2.10.0).
 
   Unless \code{na.action = NULL}, time-series attributes will be removed
   from the variables found (since they will be wrong if \code{NA}s are
