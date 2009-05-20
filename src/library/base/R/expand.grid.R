@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
+expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE)
 {
     ## x should either be a list or a set of vectors or factors
     nargs <- length(args <- list(...))
@@ -51,7 +51,7 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
             x <- x[rep.int(rep.int(seq_len(nx),
                                    rep.int(rep.fac, nx)), orep)]
 	    ## avoid sorting the levels of character variates
-	    if(stringsAsFactors && !is.factor(x) && is.character(x))
+	    if(!is.factor(x) && is.character(x))
 		x <- factor(x, levels = unique(x))
             cargs[[i]] <- x
             rep.fac <- rep.fac * nx

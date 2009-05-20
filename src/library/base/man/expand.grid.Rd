@@ -14,7 +14,7 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
   \item{KEEP.OUT.ATTRS}{a logical indicating the \code{"out.attrs"}
     attribute (see below) should be computed and returned.}
   \item{stringsAsFactors}{logical specifying if character vectors are
-    converted to factors (used to be true, implicitly, up to \R 2.9.0).}
+    converted to factors.}
 }
 \description{
   Create a data frame from all combinations of the supplied vectors or
@@ -32,8 +32,10 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
   %% currently, from "base R", only predict.loess() makes use of it.
 }
 \note{
-  Prior to \R 2.9.1 character vectors were always converted to factors
-  (and this was not documented).
+  Character vectors have always been converted to factors: this because
+  optional in \R 2.9.1.  Conversion is done with levels in the order
+  they occur in the character vectors (and not alphabetically, as is
+  most common when converting to factors).
 }
 
 \references{
