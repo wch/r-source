@@ -58,9 +58,9 @@ anyDuplicated(x, incomparables = FALSE, \dots)
   \code{anyDuplicated(x,...)} is a \dQuote{generalized} shortcut for
   \code{any(duplicated(x,...))}, in the sense that it returns the
   \emph{index} \code{i} of the first duplicated entry \code{x[i]} if
-  there is one, and \code{0} otherwise.
-  \cr The behaviours may be different when at least one of
-  \code{duplicated} and \code{anyDuplicated} has a relevant method.
+  there is one, and \code{0} otherwise.  Their behaviours may be
+  different when at least one of \code{duplicated} and
+  \code{anyDuplicated} has a relevant method.
 
   \code{duplicated(x, fromLast=TRUE)} is equivalent to but faster than
   \code{rev(duplicated(rev(x)))}.
