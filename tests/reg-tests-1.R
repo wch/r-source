@@ -5690,9 +5690,19 @@ options(oo)
 ## missing UNPROTECT and partly wrong in development versions of R
 
 
-## test of 'stringsAsFactors' arguemnt to expand.grid()
+## test of 'stringsAsFactors' argument to expand.grid()
 z <- expand.grid(letters[1:3], letters[1:4], stringsAsFactors = TRUE)
 stopifnot(sapply(z, class) == "factor")
 z <- expand.grid(letters[1:3], letters[1:4], stringsAsFactors = FALSE)
 stopifnot(sapply(z, class) == "character")
 ## did not work in 2.9.0, fixed in 2.9.1 patched
+
+## print.srcref should not leave open connections
+nopen <- nrow(showConnections())
+tmp <- tempfile()
+cat( c( "1", "a+b", "2"), file=tmp, sep="\n")
+p <- parse(tmp)
+print(p)
+unlink(tmp)
+stopifnot(nopen = nrow(showConnections())
+##
