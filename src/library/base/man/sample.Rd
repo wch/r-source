@@ -19,7 +19,7 @@ sample.int(n, size, replace = FALSE, prob = NULL)
 \arguments{
   \item{x}{Either a (numeric, complex, character or logical) vector of
     more than one element from which to choose, or a positive integer.}
-  \item{n}{a non-negaiive integer, the number of items to choose from.}
+  \item{n}{a non-negative integer, the number of items to choose from.}
   \item{size}{positive integer giving the number of items to choose.}
   \item{replace}{Should sampling be with replacement?}
   \item{prob}{A vector of probability weights for obtaining the elements
