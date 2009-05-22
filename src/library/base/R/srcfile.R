@@ -26,6 +26,8 @@ srcfile <- function(filename, encoding = getOption("encoding")) {
 
     # If filename is a URL, this will return NA
     e$timestamp <- file.info(filename)[1,"mtime"]
+    
+    if (identical(encoding, "unknown")) encoding <- "native.enc"
     e$encoding <- encoding
 
     class(e) <- "srcfile"
