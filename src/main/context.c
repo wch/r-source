@@ -467,7 +467,10 @@ SEXP attribute_hidden do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* count how many contexts of the specified type are present on the stack */
-int countContexts(int ctxttype) {
+/* browser contexts are a bit special because they are transient and for  */
+/* any closure context with the debug bit set one will be created; so we  */
+/* need to count those as well                                            */
+int countContexts(int ctxttype, int browser) {
     int n=0;
     RCNTXT *cptr;
 
@@ -475,6 +478,10 @@ int countContexts(int ctxttype) {
     while( cptr != R_ToplevelContext) {
         if( cptr->callflag == ctxttype ) 
             n++;
+        else if( browser ) {
+           if(cptr->callflag & CTXT_FUNCTION && DEBUG(cptr->cloenv) )
+              n++;
+        }
         cptr = cptr->nextcontext;
     }
     return n;

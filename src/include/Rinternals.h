@@ -585,7 +585,7 @@ Rboolean R_compute_identical(SEXP, SEXP);/* ../main/identical.c */
 void Rf_copyMatrix(SEXP, SEXP, Rboolean);
 void Rf_copyMostAttrib(SEXP, SEXP);
 void Rf_copyVector(SEXP, SEXP);
-int Rf_countContexts(int);
+int Rf_countContexts(int, int);
 SEXP Rf_CreateTag(SEXP);
 void Rf_defineVar(SEXP, SEXP, SEXP);
 SEXP Rf_dimgets(SEXP, SEXP);

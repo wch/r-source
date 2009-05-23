@@ -1134,7 +1134,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Save the evaluator state information */
     /* so that it can be restored on exit. */
 
-    browselevel = countContexts(CTXT_BROWSER);
+    browselevel = countContexts(CTXT_BROWSER, 1);
     savestack = R_PPStackTop;
     PROTECT(topExp = R_CurrentExpr);
     saveToplevelContext = R_ToplevelContext;
@@ -1225,7 +1225,7 @@ SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     int status, runLast;
 
     /* if there are any browser contexts active don't quit */
-    if(countContexts(CTXT_BROWSER)) {
+    if(countContexts(CTXT_BROWSER, 1)) {
 	warning(_("cannot quit from browser"));
 	return R_NilValue;
     }
