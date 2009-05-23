@@ -466,6 +466,21 @@ SEXP attribute_hidden do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
     return(R_NilValue);
 }
 
+/* count how many contexts of the specified type are present on the stack */
+int countContexts(int ctxttype) {
+    int n=0;
+    RCNTXT *cptr;
+
+    cptr = R_GlobalContext;
+    while( cptr != R_ToplevelContext) {
+        if( cptr->callflag & ctxttype ) 
+            n++;
+        cptr = cptr->nextcontext;
+    }
+    return n;
+}
+  
+   
 /* functions to support looking up information about the browser */
 /* contexts that are in the evaluation stack */
 

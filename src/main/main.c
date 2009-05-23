@@ -1020,7 +1020,6 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	    R_run_onexits(R_ToplevelContext);
 
 	    /* this is really dynamic state that should be managed as such */
-	    R_BrowseLevel = 0;
 	    SET_DEBUG(rho, 0); /*PR#1721*/
 
 	    jump_to_toplevel();
@@ -1032,14 +1031,6 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	}
     }
     return rval;
-}
-
-/* registering this as a cend exit procedure makes sure R_BrowseLevel
-   is maintained across LONGJMP's */
-static void browser_cend(void *data)
-{
-    int *psaved = (int *) data;
-    R_BrowseLevel = *psaved - 1;
 }
 
 /* 
@@ -1128,7 +1119,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     RCNTXT *saveToplevelContext;
     RCNTXT *saveGlobalContext;
     RCNTXT thiscontext, returncontext, *cptr;
-    int savestack, savebrowselevel, tmp;
+    int savestack, browselevel, tmp;
     SEXP topExp, argList;
 
     /* argument matching */
@@ -1143,7 +1134,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Save the evaluator state information */
     /* so that it can be restored on exit. */
 
-    savebrowselevel = R_BrowseLevel + 1;
+    browselevel = countContexts(CTXT_BROWSER);
     savestack = R_PPStackTop;
     PROTECT(topExp = R_CurrentExpr);
     saveToplevelContext = R_ToplevelContext;
@@ -1174,8 +1165,6 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     begincontext(&returncontext, CTXT_BROWSER, call, rho,
 		 R_BaseEnv, argList, R_NilValue);
-    returncontext.cend = browser_cend;
-    returncontext.cenddata = &savebrowselevel;
     if (!SETJMP(returncontext.cjmpbuf)) {
 	begincontext(&thiscontext, CTXT_RESTART, R_NilValue, rho,
 		     R_BaseEnv, R_NilValue, R_NilValue);
@@ -1186,8 +1175,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	R_GlobalContext = &thiscontext;
 	R_InsertRestartHandlers(&thiscontext, TRUE);
-	R_BrowseLevel = savebrowselevel;
-	R_ReplConsole(rho, savestack, R_BrowseLevel);
+	R_ReplConsole(rho, savestack, browselevel+1);
 	endcontext(&thiscontext);
     }
     endcontext(&returncontext);
@@ -1201,7 +1189,6 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_CurrentExpr = topExp;
     R_ToplevelContext = saveToplevelContext;
     R_GlobalContext = saveGlobalContext;
-    R_BrowseLevel--;
     return R_ReturnedValue;
 }
 
@@ -1237,7 +1224,8 @@ SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     SA_TYPE ask=SA_DEFAULT;
     int status, runLast;
 
-    if(R_BrowseLevel) {
+    /* if there are any browser contexts active don't quit */
+    if(countContexts(CTXT_BROWSER)) {
 	warning(_("cannot quit from browser"));
 	return R_NilValue;
     }
