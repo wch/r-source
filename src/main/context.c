@@ -473,7 +473,7 @@ int countContexts(int ctxttype) {
 
     cptr = R_GlobalContext;
     while( cptr != R_ToplevelContext) {
-        if( cptr->callflag & ctxttype ) 
+        if( cptr->callflag == ctxttype ) 
             n++;
         cptr = cptr->nextcontext;
     }
@@ -497,14 +497,14 @@ SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* first find the closest  browser context */
     cptr = R_GlobalContext;
     while (cptr != R_ToplevelContext) {
-        if (cptr->callflag & CTXT_BROWSER) {
+        if (cptr->callflag == CTXT_BROWSER) {
                 break;
         }
         cptr = cptr->nextcontext;
     }
     /* error if not a browser context */
 
-    if( !(cptr->callflag & CTXT_BROWSER) )
+    if( !(cptr->callflag == CTXT_BROWSER) )
         error(_("no browser context to query"));
 
     switch (PRIMVAL(op)) {
@@ -515,14 +515,14 @@ SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
         /* rewound to the first context              */
         if( n > 1 ) {
            while (cptr != R_ToplevelContext && n > 0 ) {
-               if (cptr->callflag & CTXT_BROWSER) {
+               if (cptr->callflag == CTXT_BROWSER) {
                    n--;
                    break;
                }
                cptr = cptr->nextcontext;
            }
         }
-        if( !(cptr->callflag & CTXT_BROWSER) )
+        if( !(cptr->callflag == CTXT_BROWSER) )
            error(_("not that many calls to browser are active"));
 
         if( PRIMVAL(op) == 1 )
