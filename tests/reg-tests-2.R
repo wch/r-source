@@ -2348,7 +2348,7 @@ rbind(mapply(sprintf, forms,               nums),
 
 ## (auto)printing of functions {with / without source attribute},
 ## including primitives
-sink(textConnection("of", "w")) ; c ; sink(NULL)
+sink(con <- textConnection("of", "w")) ; c ; sink(NULL); close(con)
 of2 <- capture.output(print(c))
 stopifnot(identical(of2, of),
           identical(of2, "function (..., recursive = FALSE)  .Primitive(\"c\")"))
