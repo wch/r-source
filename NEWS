@@ -66,6 +66,8 @@ NEW FEATURES
     o	If model.frame.default() encounters a character variable where
     	'xlev' indicates a factor, it now converts the variable to a
     	factor (with a warning).
+    	
+    o	curve() now returns a list containing the points that were drawn.
 
 
 DEPRECATED & DEFUNCT

@@ -55,6 +55,10 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
 
   For expensive-to-compute \code{expr}essions, you should use smarter tools.
 }
+\value{
+  A list with components \code{x} and \code{y} of the points that were 
+  drawn is returned invisibly.
+}
 \seealso{
   \code{\link{splinefun}} for spline interpolation, \code{\link{lines}}.
 }
