@@ -233,7 +233,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
     SEXP klass, method, sxp, t, s, matchedarg;
     SEXP op, formals, newrho, newcall, match_obj = 0;
     char buf[512];
-    int i, j, nclass, matched, S4toS3;
+    int i, j, nclass, matched, S4toS3, nprotect;
     RCNTXT *cptr;
 
     /* Get the context which UseMethod was called from. */
@@ -264,6 +264,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
     }
 
     S4toS3 = IS_S4_OBJECT(obj) ? 1 : 0;
+    nprotect = 5;
     if (TYPEOF(op) == CLOSXP) {
 	formals = FORMALS(op);
 	for (s = FRAME(cptr->cloenv); s != R_NilValue; s = CDR(s)) {
@@ -284,9 +285,8 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
     PROTECT(klass = R_data_class2(obj));
 
     nclass = length(klass);
-    for (i = 0; i < nclass + S4toS3; i++) {
-        const char *ss = translateChar(
-				       (S4toS3 && (i == nclass)) ? type2str(S4SXP) : STRING_ELT(klass, i));
+    for (i = 0; i < nclass; i++) {
+        const char *ss = translateChar(STRING_ELT(klass, i));
 	if(strlen(generic) + strlen(ss) + 2 > 512)
 	    error(_("class name too long in '%s'"), generic);
 	sprintf(buf, "%s.%s", generic, ss);
@@ -295,15 +295,10 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	if (isFunction(sxp)) {
 	    defineVar(install(".Generic"), mkString(generic), newrho);
 	    if (i > 0) {
-	        if(i == nclass) { /* "S4" class */
-		  PROTECT(t = allocVector(STRSXP, 1));
-		  SET_STRING_ELT(t, 0, type2str(S4SXP));
-	        }
-		else {
-		  PROTECT(t = allocVector(STRSXP, nclass - i));
-		  for (j = 0; j < length(t); j++, i++)
-		      SET_STRING_ELT(t, j, STRING_ELT(klass, i));
-		}
+	        int ii;
+		PROTECT(t = allocVector(STRSXP, nclass - i));
+		for(j = 0, ii = i; j < length(t); j++, ii++)
+		      SET_STRING_ELT(t, j, STRING_ELT(klass, ii));
 		setAttrib(t, install("previous"), klass);
 		defineVar(install(".Class"), t, newrho);
 		UNPROTECT(1);
@@ -314,30 +309,31 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	    UNPROTECT(1);
 	    defineVar(install(".GenericCallEnv"), callrho, newrho);
 	    defineVar(install(".GenericDefEnv"), defrho, newrho);
-	    if(S4toS3 && (i < nclass)) { 
-	      if(i>0) {/* give the method an S3 object */
-	      if(!match_obj) /* use the first arg, for "[",e.g. */
-		match_obj = CAR(matchedarg);
-	      if(NAMED(obj)) SET_NAMED(obj, 2);
-	      obj = asS4(obj, 0, 2); /* make an S3 object if possible */
-	      if(TYPEOF(match_obj) == PROMSXP)
-		SET_PRVALUE(match_obj, obj); /* must have been eval'd */
-	      else /* not possible ?*/
-		defineVar(TAG(FORMALS(sxp)), obj, newrho);
-		}
-		else { /* Design error: S3 method defined for S4 class 
-			but this use is not likely an error */
-#ifdef S3_for_S4_warn
-		  R_warn_S3_for_S4(sxp);
-#endif
-		}
+	    if(S4toS3 && i > 0) {
+	      SEXP S3Part; 
+	      S3Part = R_getS4DataSlot(obj, S4SXP);
+	      if(S3Part == R_NilValue && TYPEOF(obj) == S4SXP) /* could be type, e.g. "environment" */
+		S3Part = R_getS4DataSlot(obj, ANYSXP);
+	      PROTECT(S3Part); nprotect++;
+	      /* At this point S3Part is the S3 class object or
+	       an object of an abnormal type, or NULL */
+	      if(S3Part != R_NilValue) {  /* use S3Part as inherited object */
+		  obj = S3Part;
+		  if(!match_obj) /* use the first arg, for "[",e.g. */
+		    match_obj = CAR(matchedarg);
+		  if(NAMED(obj)) SET_NAMED(obj, 2);
+		  if(TYPEOF(match_obj) == PROMSXP)
+		    SET_PRVALUE(match_obj, obj); /* must have been eval'd */
+		  else /* not possible ?*/
+		    defineVar(TAG(FORMALS(sxp)), obj, newrho);
+	      } /* else, use the S4 object and S4 inheritance */
 	    }
 	    t = newcall;
 	    SETCAR(t, method);
 	    R_GlobalContext->callflag = CTXT_GENERIC;
 	    *ans = applyMethod(t, sxp, matchedarg, rho, newrho);
 	    R_GlobalContext->callflag = CTXT_RETURN;
-	    UNPROTECT(5);
+	    UNPROTECT(nprotect);
 	    return 1;
 	}
     }
@@ -839,8 +835,9 @@ SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 
     x = CAR(args);
     if(IS_S4_OBJECT(x))
-        return do_S4inherits(x, CADR(args), CADDR(args));
-    klass = R_data_class(x, FALSE);
+      klass = R_data_class2(x); /* the S3 class or extends(class(x)) */
+    else
+      klass = R_data_class(x, FALSE);
     nclass = length(klass);
 
     what = CADR(args);

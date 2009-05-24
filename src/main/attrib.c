@@ -610,11 +610,33 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
     return value;
 }
 
-static SEXP s_dot_S3Class;
+static SEXP s_dot_S3Class = 0;
 
-SEXP S3Class(SEXP obj)
-{
-    return getAttrib(obj, s_dot_S3Class);
+static SEXP R_S4_extends_table = 0;
+
+static SEXP S4_extends(SEXP klass) {
+    static SEXP s_extends = 0;
+    SEXP e, val; const char *class; 
+    if(!s_extends) {
+	s_extends = install("extends");
+	R_S4_extends_table = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
+	R_PreserveObject(R_S4_extends_table);
+    }
+    /* sanity check for methods package available */
+    if(findVar(s_extends, R_GlobalEnv) == R_UnboundValue)
+        return klass;
+    class = translateChar(STRING_ELT(klass, 0)); /* TODO: include package attr. */
+    val = findVarInFrame(R_S4_extends_table, install(class));
+    if(val != R_UnboundValue)
+       return val;
+    PROTECT(e = allocVector(LANGSXP, 2));
+    SETCAR(e, s_extends);
+    val = CDR(e);
+    SETCAR(val, klass);
+    val = eval(e, R_GlobalEnv);
+    defineVar(install(class), val, R_S4_extends_table);
+    UNPROTECT(1);
+    return(val);
 }
 
 /* Version for S3-dispatch */
@@ -622,8 +644,9 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
 {
     SEXP klass = getAttrib(obj, R_ClassSymbol);
       if(length(klass) > 0) {
-	if(IS_S4_OBJECT(obj) && TYPEOF(obj) != S4SXP) { 
-	    /* try to return an S3Class slot, or matrix/array */
+	if(IS_S4_OBJECT(obj)) { 
+	    /* return an S3Class slot, if it exists,
+	       or else the S4 class inheritance */
 	    /* The S4 class is included for compatibility with
 	       the deprecated practice of defining S3 methods 
 	       for S4 classes.  Someday this should be disallowed. 
@@ -638,23 +661,20 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
 		UNPROTECT(1);
 		return value;
 	    }
-	    else {
-	        SEXP dim = getAttrib(obj, R_DimSymbol), value, class0;
-	        int nd = length(dim);
-		if(nd > 0) {
-		  PROTECT(value =  allocVector(STRSXP, 2));
-		  if(nd == 2)
-		    class0 = mkChar("matrix");
-		  else
-		    class0 = mkChar("array");
-		  SET_STRING_ELT(value, 0, STRING_ELT(klass, 0));
-		  SET_STRING_ELT(value, 1, class0);
-		  UNPROTECT(1);
-		  return value;
-		}
+	    else if(TYPEOF(obj) == S4SXP &&
+		    (s3class = R_getS4DataSlot(obj, ANYSXP)) != R_NilValue) {
+	        SEXP value; /* an object extending an abnormal type*/
+	        PROTECT(value = allocVector(STRSXP, 2));
+		SET_STRING_ELT(value, 0, STRING_ELT(klass, 0));
+		SET_STRING_ELT(value, 1, type2str(TYPEOF(s3class)));
+		UNPROTECT(1);
+		return value; /* return c(class(obj), typeof(obj)) */
 	    }
-	}
-	return(klass);
+	    else
+	        return S4_extends(klass);
+	    }
+	else
+	    return(klass);
     }
     else {
 	SEXPTYPE t;
@@ -1362,6 +1382,12 @@ static SEXP set_data_part(SEXP obj,  SEXP rhs) {
     return(val);
 }
 
+SEXP S3Class(SEXP obj)
+{
+    if(!s_dot_S3Class) init_slot_handling();
+    return getAttrib(obj, s_dot_S3Class);
+}
+
 /* Slots are stored as attributes to
    provide some back-compatibility
 */
@@ -1485,10 +1511,19 @@ SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* the mechanism for extending abnormal types.  In the future, would b
-   good to consolidate under the ".Data" slot, but this has
-   been used to mean S4 objects with non-S4 type, so for now
-   a secondary slot name, ".xData" is used to avoid confusion
+/* Return a suitable S3 object (OK, the name of the routine comes from
+   an earlier version and isn't quite accurate.) If there is a .S3Class 
+   slot convert to that S3 class.
+   Otherwise, unless type == S4SXP, look for a .Data or .xData slot.  The
+   value of type controls what's wanted.  If it is S4SXP, then ONLY 
+   .S3class is used.  If it is ANYSXP, don't check except that automatic 
+   conversion from the current type only applies for classes that extend 
+   one of the basic types (i.e., not S4SXP).  For all other types, the 
+   recovered data must match the type. 
+   Because S3 objects can't have type S4SXP, .S3Class slot is not searched
+   for in that type object, unless ONLY that class is wanted.
+   (Obviously, this is another routine that has accumulated barnacles and 
+   should at some time be broken into separate parts.)
 */
 SEXP attribute_hidden
 R_getS4DataSlot(SEXP obj, SEXPTYPE type)
@@ -1498,23 +1533,34 @@ R_getS4DataSlot(SEXP obj, SEXPTYPE type)
     s_xData = install(".xData");
     s_dotData = install(".Data");
   }
-  if(TYPEOF(obj) != S4SXP) { /* does not validate type against S4 class def */
+  if(TYPEOF(obj) != S4SXP || type == S4SXP) {
     SEXP s3class = S3Class(obj);
+    if(s3class == R_NilValue && type == S4SXP)
+      return R_NilValue;
+    PROTECT(s3class);
     if(NAMED(obj)) obj = duplicate(obj);
+    UNPROTECT(1);
     if(s3class != R_NilValue) {/* replace class with S3 class */
       setAttrib(obj, R_ClassSymbol, s3class);
+      setAttrib(obj, s_dot_S3Class, R_NilValue); /* not in the S3 class */
     }
     else { /* to avoid inf. recursion, must unset class attribute */
       setAttrib(obj, R_ClassSymbol, R_NilValue);
     }
     UNSET_S4_OBJECT(obj);
+    if(type == S4SXP)
+      return obj;
     value = obj;
   }  
   else
       value = getAttrib(obj, s_dotData);
   if(value == R_NilValue)
       value = getAttrib(obj, s_xData);
-  if(value != R_NilValue &&
+/* the mechanism for extending abnormal types.  In the future, would b
+   good to consolidate under the ".Data" slot, but this has
+   been used to mean S4 objects with non-S4 type, so for now
+   a secondary slot name, ".xData" is used to avoid confusion
+*/  if(value != R_NilValue &&
      (type == ANYSXP || type == TYPEOF(value)))
      return value;
   else

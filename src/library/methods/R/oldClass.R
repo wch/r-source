@@ -100,6 +100,8 @@ setOldClass <- function(Classes, prototype = NULL,
 }
 
 .S4OldClass <- function(Class, prevClass, def,where, prevDef) {
+    ## def is the S4 version of this class def'n, maybe by another class
+    ## name, and may or may not already extend oldClass
     curDef <- getClassDef(Class, where) # asserted to be defined
     ## arrange to restore previous definition if there was one.  Also done in setOldClass
     ## when no S4Class argument supplied
@@ -122,7 +124,10 @@ setOldClass <- function(Classes, prototype = NULL,
         ext <- .resolveSuperclasses(def, ext, root, where)
     }
     def@contains <- ext
-    def@subclasses <- c(def@subclasses, curDef@subclasses)
+    subcls <- curDef@subclasses
+    if(length(subcls) > 0) {
+      def@subclasses[names(subcls)]  <- subcls
+    }
     proto <- def@prototype
     if(is.null(attr(proto, ".S3Class"))) { # no S3 class slot, as will usually be true
         attr(proto, ".S3Class") <- if(.identC(prevClass, "oldClass")) Class else S3Class(curDef@prototype)
@@ -193,7 +198,7 @@ slotsFromS3 <- function(object) {
     for(cl in Classes[-1L]) {
         tfun <- .oldTestFun
         body(tfun, envir = environment(tfun)) <-
-            substitute(CLASS %in% attr(object, "class"), list(CLASS = cl))
+            substitute(inherits(object, CLASS), list(CLASS = cl))
         setIs(Class1, cl, test = tfun, coerce = .oldCoerceFun,
               replace = .oldReplaceFun, where = where)
     }

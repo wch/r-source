@@ -32,6 +32,11 @@ NEW FEATURES
 	whole bundle: this allow bundles to be split and installations
 	updated.
 
+    o	changes to S4 and S3 method dispatch will support S4 class
+        inheritance for S3 methods, primitive and via UseMethod() and
+	do better on S3 inheritance per-instance for S4 methods. 
+        See ?Methods and the paper referenced there.
+
 
 BUG FIXES
 

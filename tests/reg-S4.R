@@ -475,7 +475,15 @@ setMethod("Compare", signature(e1="L", e2="ANY"),
 setMethod("Summary", "L",
 	  function(x, ..., na.rm=FALSE) {x <- unlist(x); callNextMethod()})
 setMethod("[", signature(x="L", i="ANY", j="missing",drop="missing"),
-          function(x,i,j,drop) new("L", x@.Data[i]))
+          function(x,i,j,drop) new(class(x), x@.Data[i]))
+## This example requires a method for sort(), now that class "L"
+## inherits S3 methods for "list"; i.e., sort.list
+setMethod("sort", signature = "L", function(x, decreasing = FALSE, ...)
+          sort.L(x, decreasing, ...))
+##FIXME:  it should not be necessary to define an a S3 method, but
+## defining S4 methods for sort() has no effect currently on calls to
+## sort() from functions in base; e.g., median.default.
+sort.L <- function(x, ...) { x@.Data <- as.list(sort(unlist(x@.Data), ...)); x}
 x <- new("L", 1:3); x2 <- x[-2]
 stopifnot(unlist(x2) == (1:3)[-2],
 	  is(mx <- median(x), "L"), mx == 2,
