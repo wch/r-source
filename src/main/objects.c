@@ -807,6 +807,7 @@ SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
     return CAR(args);
 }
 
+#ifdef UNUSED
 static SEXP s_S4inherits;
 static SEXP do_S4inherits(SEXP obj, SEXP what, SEXP which) {
     SEXP e, val;
@@ -824,6 +825,7 @@ static SEXP do_S4inherits(SEXP obj, SEXP what, SEXP which) {
     UNPROTECT(1);
     return val;
 }
+#endif
 
 
 SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
