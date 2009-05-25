@@ -33,9 +33,9 @@ NEW FEATURES
 	updated.
 
     o	changes to S4 and S3 method dispatch will support S4 class
-        inheritance for S3 methods, primitive and via UseMethod() and
-	do better on S3 inheritance per-instance for S4 methods. 
-        See ?Methods and the paper referenced there.
+	inheritance for S3 methods, primitive and via UseMethod() and
+	do better on S3 inheritance per-instance for S4 methods.
+	See ?Methods and the paper referenced there.
 
 
 DEPRECATED & DEFUNCT
@@ -102,10 +102,10 @@ BUG FIXES
 	"unregistered" S3 classes now work.
 
     o	srcref records produced by parse() and parse_Rd() did not record
-    	the encoding of the source file.  (Reported by Romain Francois.)
+	the encoding of the source file.  (Reported by Romain Francois.)
 
     o	The X11 version of View() was misbehaving in MBCS locales, and
- 	PgUp/PgDn now behave better, thanks to a patch from Ei-ji Nakama.
+	PgUp/PgDn now behave better, thanks to a patch from Ei-ji Nakama.
 
     o	R CMD check looked at the environment variable PDFLATEX, but
 	as from R 2.8.1 R CMD Rd2dvi used R_PDFLATEXCMD in
@@ -125,6 +125,9 @@ BUG FIXES
 
     o	tcrossprod(<1d-array>, <matrix>) now does work when the arguments
 	are of compatible dimensions.
+
+    o	qbinom() now is accurate also in (large size, small prob)
+	cases.	(PR#13711)
 
 
 
