@@ -103,7 +103,7 @@ printNoClass(x, digits = NULL, quote = TRUE, na.print = NULL,
 % Removed in 1.9.0
 codes(x, \dots)
 codes(x, \dots) <- value
-print.atomic(x, quote = TRUE, \dots)
+% print.atomic(x, quote = TRUE, \dots)
 % </Removed 1.9.0>
 % Removed in 2.0.0
 La.eigen(x, symmetric, only.values = FALSE, method = c("dsyevr", "dsyev"))
@@ -187,9 +187,6 @@ manglePackageName(pkgName, pkgVersion)
   \code{as.integer}.  For \emph{ordered} factors, \code{codes} was
   equivalent to these, but for \emph{unordered} factors it assumed an
   an alphabetical ordering of the levels in the locale in use.
-
-  \code{print.atomic} differed from \code{print.default} only in its
-  argument sequence.  It is not a method for \code{print}.
 
   \code{La.eigen} has become the default for \code{\link{eigen}}.
 
