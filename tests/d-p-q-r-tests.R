@@ -687,5 +687,22 @@ stopifnot(-0.047 < dP, dP < -0.0455)
 stopifnot(0 == dchisq(c(Inf, 1e80, 1e50, 1e40), df=10, ncp=1))
 ## did hang in 2.8.0 and earlier (PR#13309).
 
+## qbinom() .. particuarly for large sizes, small prob:
+p.s <- c(.01, .001, .1, .25)
+pr <- (2:20)*1e-7
+sizes <- 1000*(5000 + c(0,6,16)) + 279
+k.s <- 0:15; q.xct <- rep(k.s, each=length(pr))
+for(sz in sizes) {
+    for(p in p.s) {
+	qb <- qbinom(p=p, size = sz, prob=pr)
+	pb <- qpois (p=p, lambda = sz * pr)
+	stopifnot(All.eq(qb, pb))
+    }
+    pp.x <- outer(pr, k.s, function(pr, q) pbinom(q, size = sz, prob=pr))
+    qq.x <- apply(pp.x, 2, function(p)     qbinom(p, size = sz, prob=pr))
+    stopifnot(qq.x == q.xct)
+}
+## do_search() in qbinom() contained a thinko up to 2.9.0 (PR#13711)
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

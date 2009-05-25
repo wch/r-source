@@ -66,7 +66,7 @@ NEW FEATURES
     o	If model.frame.default() encounters a character variable where
     	'xlev' indicates a factor, it now converts the variable to a
     	factor (with a warning).
-    	
+
     o	curve() now returns a list containing the points that were drawn.
 
 
@@ -207,6 +207,9 @@ BUG FIXES
 
     o	tcrossprod(<1d-array>, <matrix>) now does work when the arguments
 	are of compatible dimensions.
+
+    o	qbinom() now is accurate also in (large size, small prob)
+    	cases.  (PR#13711)
 
 
 
