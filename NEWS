@@ -120,6 +120,12 @@ NEW FEATURES
 	updated.
 
 
+DEPRECATED & DEFUNCT
+
+    o	print.atomic() (defunct since 1.9.0) has been removed since it
+	caused confusion for an S4 class union of that name.
+
+
 BUG FIXES
 
     o	The ... argument was not handled properly when ... was found

@@ -93,7 +93,8 @@ codes <- function(x, ...) .Defunct()
 codes.factor <- function(x, ...) .Defunct("unclass")
 codes.ordered <- function(x, ...) .Defunct("unclass")
 "codes<-" <- function(x, ..., value) .Defunct()
-print.atomic <- function(x, quote = TRUE, ...) .Defunct("print.default")
+# removed in 2.9.1, as it caused confusion for an S4 class union of this name.
+#print.atomic <- function(x, quote = TRUE, ...) .Defunct("print.default")
 ## </entry>
 
 ## <entry>
