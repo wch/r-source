@@ -61,8 +61,8 @@ Type 'q()' to quit R.
 +     "\n\t starting with 'is.' :\t  ",
 +     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n")
 
-Number of base objects:		 1195 
-Number of functions in base:	 1166 
+Number of base objects:		 1199 
+Number of functions in base:	 1170 
 	 starting with 'is.' :	   48 
 
 > ## 0.14  : 31
