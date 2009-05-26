@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-05-19 r48575)
+R version 2.10.0 Under development (unstable) (2009-05-26 r48614)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6354,4 +6354,81 @@ function ()
      [,1] [,2]
 [1,]    0    1
 > ## would print NaN up to R 2.9.0
+> 
+> 
+> ## continuity correction for Kendall's tau.  Improves this example.
+> cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "kendall",
++          exact = TRUE)
+
+	Kendall's rank correlation tau
+
+data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3) 
+T = 1, p-value = 0.08333
+alternative hypothesis: true tau is not equal to 0 
+sample estimates:
+ tau 
+-0.8 
+
+> cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "kendall",
++          exact = FALSE)
+
+	Kendall's rank correlation tau
+
+data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3) 
+z = -1.9596, p-value = 0.05004
+alternative hypothesis: true tau is not equal to 0 
+sample estimates:
+ tau 
+-0.8 
+
+> cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "kendall",
++          exact = FALSE, continuity = TRUE)
+
+	Kendall's rank correlation tau
+
+data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3) 
+z = -1.7146, p-value = 0.08641
+alternative hypothesis: true tau is not equal to 0 
+sample estimates:
+ tau 
+-0.8 
+
+> # and a little for Spearman's
+> cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "spearman",
++          exact = TRUE)
+
+	Spearman's rank correlation rho
+
+data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3) 
+S = 38, p-value = 0.08333
+alternative hypothesis: true rho is not equal to 0 
+sample estimates:
+ rho 
+-0.9 
+
+> cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "spearman",
++          exact = FALSE)
+
+	Spearman's rank correlation rho
+
+data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3) 
+S = 38, p-value = 0.03739
+alternative hypothesis: true rho is not equal to 0 
+sample estimates:
+ rho 
+-0.9 
+
+> cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "spearman",
++          exact = FALSE, continuity = TRUE)
+
+	Spearman's rank correlation rho
+
+data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3) 
+S = 38, p-value = 0.09689
+alternative hypothesis: true rho is not equal to 0 
+sample estimates:
+ rho 
+-0.9 
+
+> ## Kendall case is wish of PR#13691
 > 

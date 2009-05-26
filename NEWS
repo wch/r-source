@@ -72,6 +72,10 @@ NEW FEATURES
     o	spineplot() now accepts axes = FALSE, for consistency with
 	other functions called by plot.factor().
 
+    o	The Kendall and Spearman methods of cor.test() can optionally
+	use continuity correction when not computing exact p-values.
+	(The Kendall case is the wish of PR#13691.)
+
 
 DEPRECATED & DEFUNCT
 

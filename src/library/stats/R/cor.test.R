@@ -19,7 +19,7 @@ cor.test <- function(x, ...) UseMethod("cor.test")
 cor.test.default <-
 function(x, y, alternative = c("two.sided", "less", "greater"),
          method = c("pearson", "kendall", "spearman"), exact = NULL,
-         conf.level = 0.95, ...)
+         conf.level = 0.95, continuity = FALSE, ...)
 {
     alternative <- match.arg(alternative)
     method <- match.arg(method)
@@ -123,8 +123,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                         v1 / (2 * n * (n - 1)) +
                             v2 / (9 * n * (n - 1) * (n - 2))
 
-
-#                    STATISTIC <- c(z = r / sqrt((4 * n + 10) / (9 * n*(n-1))))
+                    if (continuity) S <- sign(S) * (abs(S) - 1)
                     STATISTIC <- c(z = S / sqrt(var_S))
                     p <- pnorm(STATISTIC)
                     if(exact && TIES)
@@ -158,7 +157,10 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                            as.logical(lower.tail),
                            PACKAGE = "stats")$p
 		    else { # for large n: asymptotic t_{n-2}
-			r <- 1 - 6 * q / (n*(n^2-1)) # careful for overflow
+                        den <- (n*(n^2-1))/6 # careful for overflow
+                        ## Kendall et all (1939) p. 260
+                        if (continuity) den <- den + 1
+			r <- 1 - q / den
 			pt(r / sqrt((1 - r^2)/(n-2)), df = n-2,
 			   lower.tail= !lower.tail)
 		    }

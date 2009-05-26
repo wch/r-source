@@ -2368,3 +2368,20 @@ rm(print.function)
 
 printCoefmat(cbind(0,1))
 ## would print NaN up to R 2.9.0
+
+
+## continuity correction for Kendall's tau.  Improves this example.
+cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "kendall",
+         exact = TRUE)
+cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "kendall",
+         exact = FALSE)
+cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "kendall",
+         exact = FALSE, continuity = TRUE)
+# and a little for Spearman's
+cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "spearman",
+         exact = TRUE)
+cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "spearman",
+         exact = FALSE)
+cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "spearman",
+         exact = FALSE, continuity = TRUE)
+## Kendall case is wish of PR#13691
