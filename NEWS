@@ -221,6 +221,10 @@ BUG FIXES
     o	The calculation of the Spearman p-value in cor.test() is
 	slightly more accurate in some cases.  (PR#13574)
 
+    o	The digamma(), trigamma() and psigamma() functions could be
+	inaccurate for value of x around 1e-15 due to cancellation.
+	(PR#13714).
+
 
 
 

@@ -145,6 +145,7 @@
 
 #define n_max (100)
 
+/* only used for kode = 1, m = 1, n in {0,1,2,3} : */
 void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 {
     const static double bvalues[] = {	/* Bernoulli Numbers */
@@ -194,6 +195,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 		ans[j] = ((j+n) % 2) ? ML_POSINF : ML_NAN;
 	    return;
 	}
+	/* This could cancel badly */
 	dpsifn(1. - x, n, /*kode = */ 1, m, ans, nz, ierr);
 	/* ans[j] == (-1)^(k+1) / gamma(k+1) * psi(k, 1 - x)
 	 *	     for j = 0:(m-1) ,	k = n + j
@@ -310,7 +312,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	    t1 = xdmln + xdmln;
 	    t2 = t + xdmln;
 	    tk = fmax2(fabs(t), fmax2(fabs(t1), fabs(t2)));
-	    if (tk <= elim)
+	    if (tk <= elim) /* for all but large x */
 		goto L10;
 	}
 	nz++;
@@ -448,10 +450,10 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 
   L20:
     for(i = 1; i <= nx; i++)
-	s += 1. / (x + nx - i);
+	s += 1. / (x + (nx - i)); /* avoid disastrous cancellation, PR#13714 */
 
   L30:
-    if (kode!=2)
+    if (kode != 2) /* always */
 	ans[0] = s - xdmln;
     else if (xdmy != x) {
 	xq = xdmy / x;
