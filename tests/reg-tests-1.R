@@ -5708,3 +5708,9 @@ con <- try(file(tmp, open="r", encoding="unknown"))
 unlink(tmp)
 stopifnot(inherits(con, "try-error") && nopen == nrow(showConnections()))
 ##
+
+
+## PR#13574
+x <- 1:11; y <- c(6:1, 7, 11:8)
+stopifnot(all.equal(cor.test(x, y, method="spearman", alternative="greater")$p.value, cor.test(x, -y, method="spearman", alternative="less")$p.value))
+## marginally different < 2.9.0 patched

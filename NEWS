@@ -218,6 +218,9 @@ BUG FIXES
     o	qbinom() now is accurate also in (large size, small prob)
     	cases.  (PR#13711)
 
+    o	The calculation of the Spearman p-value in cor.test() is
+	slightly more accurate in some cases.  (PR#13574)
+
 
 
 
