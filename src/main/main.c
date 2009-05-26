@@ -980,11 +980,13 @@ static void printwhere(void)
 {
   RCNTXT *cptr;
   int lct = 1;
+  SEXP srcref;
 
   for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
     if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN)) &&
 	(TYPEOF(cptr->call) == LANGSXP)) {
-	Rprintf("where %d: ", lct++);
+	Rprintf("where %d", lct++);
+	SrcrefPrompt("", cptr->srcref);
 	PrintValue(cptr->call);
     }
   }

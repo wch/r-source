@@ -493,6 +493,7 @@ typedef struct RCNTXT {
     IStackval *intstack;
 # endif
 #endif
+    SEXP srcref;	        /* The source line in effect */
 } RCNTXT, *context;
 
 /* The Various Context Types.
@@ -678,6 +679,7 @@ extern0 Rboolean R_warn_partial_match_attr INI_as(FALSE);
 extern0 Rboolean R_ShowWarnCalls INI_as(FALSE);
 extern0 Rboolean R_ShowErrorCalls INI_as(FALSE);
 extern0 int R_NShowCalls INI_as(50);
+extern0 SEXP	R_Srcref;
 
 LibExtern Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
 LibExtern Rboolean mbcslocale  INI_as(FALSE);  /* is this a MBCS locale? */
@@ -860,6 +862,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define Seql			Rf_Seql
 # define Scollate		Rf_Scollate
 # define sortVector		Rf_sortVector
+# define SrcrefPrompt		Rf_SrcrefPrompt
 # define ssort			Rf_ssort
 # define StringFromComplex	Rf_StringFromComplex
 # define StringFromInteger	Rf_StringFromInteger
@@ -1064,6 +1067,7 @@ void R_Suicide(const char *);
 void R_getProcTime(double *data);
 int R_isMissing(SEXP symbol, SEXP rho);
 void sortVector(SEXP, Rboolean);
+void SrcrefPrompt(const char *, SEXP);
 void ssort(SEXP*,int);
 int StrToInternal(const char *);
 SEXP substituteList(SEXP, SEXP);

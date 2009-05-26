@@ -66,7 +66,11 @@ debugger <- function(dump = last.dump)
 ## allow for the numbering by menu here
 limitedLabels <- function(value, maxwidth = getOption("width") - 5)
 {
-    value <- as.character(value)
+    srcrefs <- sapply(value, function(v) if (!is.null(srcref <- attr(v, "srcref"))) {
+				srcfile <- attr(srcref, "srcfile")
+				paste(basename(srcfile$filename), "#", srcref[1L],": ", sep="")
+			     } else "")    
+    value <- paste(srcrefs, as.character(value), sep="")
     if(is.null(maxwidth) || maxwidth < 40)
         maxwidth <- 40
     strtrim(value, maxwidth)

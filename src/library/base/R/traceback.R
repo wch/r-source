@@ -25,7 +25,12 @@ function(x = NULL, max.lines = getOption("deparse.max.lines"))
     else {
         for(i in 1L:n) {
             label <- paste(n-i+1L, ": ", sep="")
-            m <- length(x[[i]])
+            m <- length(x[[i]])            
+            if (!is.null(srcref <- attr(x[[i]], "srcref"))) {
+            	srcfile <- attr(srcref, "srcfile")
+            	x[[i]][m] <- paste(x[[i]][m], " at ", 
+            	            basename(srcfile$filename), "#", srcref[1L], sep="")
+            }
             if(m > 1)
                 label <- c(label, rep(substr("          ", 1L,
                                              nchar(label, type="w")),
@@ -35,7 +40,7 @@ function(x = NULL, max.lines = getOption("deparse.max.lines"))
                     sep = "\n")
                 cat(label[max.lines+1L], " ...\n")
             } else
-            cat(paste(label, x[[i]], sep=""), sep="\n")
+            	cat(paste(label, x[[i]], sep=""), sep="\n")
         }
     }
     invisible()

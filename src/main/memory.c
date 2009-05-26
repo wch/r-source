@@ -1653,6 +1653,9 @@ void attribute_hidden InitMemory()
 
     /*  Unbound values which are to be preserved through GCs */
     R_PreciousList = R_NilValue;
+    
+    /*  The current source line */
+    R_Srcref = R_NilValue;
 }
 
 /* Since memory allocated from the heap is non-moving, R_alloc just
