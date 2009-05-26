@@ -2343,7 +2343,8 @@ suitable code can be compiled.  These tests will fail if
 @code{Gtk+} 2.8 or later installed will have suitable libraries, but
 some (e.g.@: Solaris 10) may need @code{cairo} added separately.  Mac OS
 X comes with none of these libraries, but @code{cairo} support has been
-added to the binary distribution.
+added to the binary distribution: @code{pkg-config} is still needed and
+can be compiled from the sources.
 
 For the best font experience with these devices you need suitable fonts
 installed: Linux users will want the @code{urw-fonts} package.  Another
