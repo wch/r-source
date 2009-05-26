@@ -17,8 +17,8 @@
     \item{\dots}{Further arguments to \code{\link{barplot}},
       \code{\link{boxplot}}, \code{\link{spineplot}} or
       \code{\link{plot}} as appropriate.  All of these accept graphical
-      parameters, see \code{\link{par}}, and annotation arguments passed
-      to \code{\link{title}}.  None accept \code{type}.
+      parameters, see \code{\link{par}}, annotation arguments passed
+      to \code{\link{title}} and \code{axes = FALSE}.  None accept \code{type}.
     }
 }
 \description{

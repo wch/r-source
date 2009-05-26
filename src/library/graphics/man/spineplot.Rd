@@ -21,14 +21,14 @@ spineplot(x, \dots)
           ylevels = NULL, col = NULL,
           main = "", xlab = NULL, ylab = NULL,
           xaxlabels = NULL, yaxlabels = NULL,
-          xlim = NULL, ylim = c(0, 1), \dots)
+          xlim = NULL, ylim = c(0, 1), axes = TRUE, \dots)
 
 \method{spineplot}{formula}(formula, data = list(),
           breaks = NULL, tol.ylab = 0.05, off = NULL,
           ylevels = NULL, col = NULL,
           main = "", xlab = NULL, ylab = NULL,
           xaxlabels = NULL, yaxlabels = NULL,
-          xlim = NULL, ylim = c(0, 1), \dots,
+          xlim = NULL, ylim = c(0, 1), axes = TRUE, \dots,
           subset = NULL)
 }
 \arguments{
@@ -57,6 +57,8 @@ spineplot(x, \dots)
     spine plot. For \code{xaxlabels} in the spinogram, the breaks are
     used.}
   \item{xlim, ylim}{the range of x and y values with sensible defaults.}  
+  \item{axes}{logical.  If \code{FALSE} all axes (including those giving
+    level names) are suppressed.}
   \item{\dots}{additional arguments passed to \code{\link{rect}}.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used for plotting.  }
