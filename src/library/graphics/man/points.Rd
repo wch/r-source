@@ -74,7 +74,7 @@ points(x, \dots)
   \itemize{
     \item \code{NA_integer_}: no symbol.
     \item \code{0:18}: S-compatible vector symbols.
-    \item \code{0:25}: \R vector symbols.
+    \item \code{19:25}: further \R vector symbols.
     \item \code{26:31}: unused (and ignored).
     \item \code{32:127}: ASCII characters.
     \item \code{128:255} native characters \emph{only in a
@@ -83,8 +83,8 @@ points(x, \dots)
     \item \code{-32 \dots} Unicode point (where supported).
   }
   Note that unlike S (which uses octagons), symbols \code{1}, \code{10},
-  \code{13} and \code{16} use circles.  The filled shapes do not include
-  a border.
+  \code{13} and \code{16} use circles.  The filled shapes \code{15:18}
+  do not include a border.
   
   The following  \R plotting symbols are can be obtained with
   \code{pch=19:25}: those with \code{21:25} can be colored and
@@ -92,17 +92,21 @@ points(x, \dots)
   and \code{bg} the background color.
   \itemize{
     \item \code{pch=19}: solid circle,
-    \item \code{pch=20}: bullet (smaller circle),
+    \item \code{pch=20}: bullet (smaller solid circle, 2/3 the size of 19),
     \item \code{pch=21}: filled circle,
     \item \code{pch=22}: filled square,
     \item \code{pch=23}: filled diamond,
     \item \code{pch=24}: filled triangle point-up,
     \item \code{pch=25}: filled triangle point down.
   }
-  Note that all of these both fill the shape and draw a border. Some
+  Note that all of these both fill the shape and draw a border.  Some
   care in interpretation is needed when semi-transparent colours are
   used for both fill and border (and the result might be device-specific
   and even viewer-specific for \code{\link{pdf}}).
+
+  The difference between \code{pch=16} and \code{pch=19} is that the
+  latter uses a border and so is perceptibly larger when \code{lty} is
+  large relative to \code{cex}.
       
   Values \code{pch=26:31} are currently unused and \code{pch=32:127}
   give the ASCII characters.  In a single-byte locale
