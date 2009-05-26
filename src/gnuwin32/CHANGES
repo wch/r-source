@@ -50,7 +50,13 @@ BUG FIXES
 
     o	Rcmd INSTALL --build in 2.9.0 did not make _bundles_ in the
 	format install.packages() expected.
-    
+
+    o	Calling setWinProgressBar() on a closed bar gives an error
+	message, rather than crashing R.  (PR#13709)
+
+    o	sprintf("%a") works better in some cases thanks to a patch to
+	trio from Ei-ji Nakama.
+
     
 
     		CHANGES IN R VERSION 2.9.0
