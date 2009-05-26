@@ -1,6 +1,6 @@
 % File src/library/stats/man/cor.test.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{cor.test}
@@ -107,7 +107,9 @@ cor.test(x, \dots)
   the estimate scaled to zero mean and unit variance, and is approximately
   normally distributed.
 
-  For Spearman's test, p-values are computed using algorithm AS 89.
+  For Spearman's test, p-values are computed using algorithm AS 89 for
+  \eqn{n < 1290} and \code{exact = TRUE}, otherwise via the asymptotic
+  \eqn{t} approximation.
 }
 \references{
   D. J. Best & D. E. Roberts (1975),
@@ -120,6 +122,15 @@ cor.test(x, \dots)
   New York: John Wiley & Sons.
   Pages 185--194 (Kendall and Spearman tests).
 }
+
+\seealso{
+  \code{\link[Kendall:Kendall]{Kendall}} in package \pkg{Kendall}.
+
+  \code{\link[SuppDists:Kendall]{pKendall}} and
+  \code{\link[SuppDists:Spearman]{pSpearman}} in package \pkg{SuppDists},
+  which use different (and often more accurate) approximations.
+}
+
 \examples{
 ## Hollander & Wolfe (1973), p. 187f.
 ## Assessment of tuna quality.  We compare the Hunter L measure of
