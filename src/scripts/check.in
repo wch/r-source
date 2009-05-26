@@ -2567,7 +2567,25 @@ sub check_pkg_manual {
 			     "$topdir"));
 		if(R_system($cmd)) {
 		    $log->error();
-		    if(-f $latex_log) {copy($latex_log, "${pkgname}-manual.log");}
+		    if(-f $latex_log) {
+			copy($latex_log, "${pkgname}-manual.log");
+		    } else {
+			## No log file and thus no chance to find out
+			## what went wrong.  Hence, re-run without
+			## redirecting stdout/stderr and hope that this
+			## gives the same problem ...
+			## Ideally, we would have a version of
+			## R_system() similar to R_run_R() which returns 
+			## both the exit status and stdout/stderr.
+			$log->print("LaTeX error when running command:\n");
+			$log->print(wrap("  ", "    ", ($cmd)) . "\n");
+			$log->print("Re-running with no redirection of stdout/stderr.\n");
+			$cmd = join(" ",
+				    ($cmd0, "Rd2dvi $Rd2dvi_opts",
+				     "--build-dir=${build_dir} --no-clean --no-index",
+				     "-o ${pkgname}-manual.${fmt} $topdir"));
+			R_system($cmd);
+		    }
 		    rmtree($build_dir);
 		    exit(1);
 		}
