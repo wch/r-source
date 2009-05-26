@@ -231,6 +231,11 @@ BUG FIXES
 	inaccurate for value of x around 1e-15 due to cancellation.
 	(PR#13714).
 
+    o	median.default() was altered in 2.8.1 to use sum() rather
+	than mean(), although it was still documented to use mean().
+	This caused problems for POSIXt objects, for which mean() but
+	not sum() makes sense.
+
 
 
 

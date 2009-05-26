@@ -5714,3 +5714,8 @@ stopifnot(inherits(con, "try-error") && nopen == nrow(showConnections()))
 x <- 1:11; y <- c(6:1, 7, 11:8)
 stopifnot(all.equal(cor.test(x, y, method="spearman", alternative="greater")$p.value, cor.test(x, -y, method="spearman", alternative="less")$p.value))
 ## marginally different < 2.9.0 patched
+
+
+## median should work on POSIXt objects (it did in 2.8.0)
+median(rep(Sys.time(), 2))
+## failed in 2.8.1, 2.9.0
