@@ -205,7 +205,8 @@ x$name
 
   This may not be true for methods defined for them; for example it is
   not true for the \code{data.frame} methods described in
-  \code{\link{[.data.frame}}.
+  \code{\link{[.data.frame}} which do not allow \code{i} and \code{j}
+  to be named.
 
   To avoid confusion, do not name index arguments (but \code{drop} and
   \code{exact} must be named).
