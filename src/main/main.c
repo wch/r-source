@@ -980,7 +980,6 @@ static void printwhere(void)
 {
   RCNTXT *cptr;
   int lct = 1;
-  SEXP srcref;
 
   for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
     if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN)) &&
@@ -992,7 +991,6 @@ static void printwhere(void)
   }
   Rprintf("\n");
 }
-
 
 static int ParseBrowser(SEXP CExpr, SEXP rho)
 {

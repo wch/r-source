@@ -140,17 +140,6 @@ static void doprof(void)
 	fprintf(R_ProfileOutfile, "%s\n", buf);
 }
 
-void SrcrefPrompt(const char * prefix, SEXP srcref)
-{
-    if (srcref && !isNull(srcref)) {
-        if (isVectorList(srcref)) srcref = VECTOR_ELT(srcref, 0);
-	SEXP srcfile = getAttrib(srcref, R_SrcfileSymbol);
-	SEXP filename = findVar(install("filename"), srcfile);
-	Rprintf(_("%s at %s#%d: "), prefix, CHAR(STRING_ELT(filename, 0)), 
-	                                 asInteger(srcref));
-    } else Rprintf("%s: ", prefix);
-}
-
 /* Profiling thread main function */
 static void __cdecl ProfileThread(void *pwait)
 {
@@ -531,6 +520,17 @@ SEXP eval(SEXP e, SEXP rho)
     R_EvalDepth = depthsave;
     R_Srcref = srcrefsave;
     return (tmp);
+}
+
+void SrcrefPrompt(const char * prefix, SEXP srcref)
+{
+    if (srcref && !isNull(srcref)) {
+        if (isVectorList(srcref)) srcref = VECTOR_ELT(srcref, 0);
+	SEXP srcfile = getAttrib(srcref, R_SrcfileSymbol);
+	SEXP filename = findVar(install("filename"), srcfile);
+	Rprintf(_("%s at %s#%d: "), prefix, CHAR(STRING_ELT(filename, 0)), 
+	                                 asInteger(srcref));
+    } else Rprintf("%s: ", prefix);
 }
 
 /* Apply SEXP op of type CLOSXP to actuals */
