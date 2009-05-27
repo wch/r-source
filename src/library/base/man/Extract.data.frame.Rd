@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.data.frame.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Extract.data.frame}
@@ -114,6 +114,8 @@
   The default behaviour when only one \emph{row} is left is equivalent to
   specifying \code{drop = FALSE}.  To drop from a data frame to a list,
   \code{drop = TRUE} has to be specified explicitly.
+
+  Arguments other than \code{drop} and \code{exact} should not be named. 
 }
 \value{
   For \code{[} a data frame, list or a single column (the latter two
