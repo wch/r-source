@@ -157,7 +157,9 @@
   \file{zoneinfo} database.)
 
   Using \code{\link{c}} on \code{"POSIXlt"} objects converts them to the
-  current time zone.
+  current time zone, and on \code{"POSIXct"} objects drops any
+  \code{"tzone"} attributes (even if they are all marked with the same
+  time zone).
 
   A few times have specific issues.  First, the leapseconds are ignored,
   and real times such as \code{"2005-12-31 23:59:60"} are (probably)
