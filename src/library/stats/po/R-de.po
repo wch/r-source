@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:33\n"
+"POT-Creation-Date: 2009-05-27 13:51\n"
 "PO-Revision-Date: 2009-03-26 11:24+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -1522,6 +1522,10 @@ msgstr "'data' muss ein Dataframe sein, weder Matrix noch array"
 
 msgid "'newdata' had %d rows but variable(s) found have %d rows"
 msgstr "'newdate' hat %d Zeilen, aber die gefundenen Variablen haben %d Zeilen"
+
+#, fuzzy
+msgid "character variable '%s' changed to a factor"
+msgstr "Variable '%s' in Faktor konvertiert"
 
 msgid "variable '%s' is not a factor"
 msgstr "Variable '%s' is kein Faktor"

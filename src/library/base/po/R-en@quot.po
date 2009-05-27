@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-12 07:01\n"
-"PO-Revision-Date: 2009-05-12 07:01\n"
+"POT-Creation-Date: 2009-05-27 13:50\n"
+"PO-Revision-Date: 2009-05-27 13:50\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -288,11 +288,20 @@ msgstr "row names supplied are of the wrong length"
 msgid "row names were found from a short variable and have been discarded"
 msgstr "row names were found from a short variable and have been discarded"
 
+msgid "named arguments other than 'drop' are not allowed"
+msgstr "named arguments other than ‘drop’ are not allowed"
+
 msgid "drop argument will be ignored"
 msgstr "drop argument will be ignored"
 
 msgid "undefined columns selected"
 msgstr "undefined columns selected"
+
+msgid "named arguments other than 'exact' are not allowed"
+msgstr "named arguments other than ‘exact’ are not allowed"
+
+msgid "named arguments are not allowed"
+msgstr "named arguments are not allowed"
 
 msgid "rhs is the wrong length for indexing by a logical matrix"
 msgstr "rhs is the wrong length for indexing by a logical matrix"
@@ -548,8 +557,11 @@ msgstr "‘x’ must be a square matrix"
 msgid "determinant not currently defined for complex matrices"
 msgstr "determinant not currently defined for complex matrices"
 
-msgid "first argument is array, but not matrix."
-msgstr "first argument is array, but not matrix."
+msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
+msgstr "‘nrow’ or ‘ncol’ cannot be specified when ‘x’ is a matrix"
+
+msgid "'x' is an array, but not 1D."
+msgstr "‘x’ is an array, but not 1D."
 
 msgid "only matrix diagonals can be replaced"
 msgstr "only matrix diagonals can be replaced"

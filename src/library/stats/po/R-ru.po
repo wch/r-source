@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:33\n"
+"POT-Creation-Date: 2009-05-27 13:51\n"
 "PO-Revision-Date: 2009-03-29 04:54+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -1522,6 +1522,10 @@ msgstr "'data' должна быть таблицей данных, а не матрицей"
 
 msgid "'newdata' had %d rows but variable(s) found have %d rows"
 msgstr "'newdata' имеет %d строк, а переменная(ые) нашли %d строк"
+
+#, fuzzy
+msgid "character variable '%s' changed to a factor"
+msgstr "переменная '%s' конвертирована в фактор"
 
 msgid "variable '%s' is not a factor"
 msgstr "переменная '%s' -- не фактор"

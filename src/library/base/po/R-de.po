@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-12 07:01\n"
+"POT-Creation-Date: 2009-05-27 13:50\n"
 "PO-Revision-Date: 2009-03-20 11:23+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -274,11 +274,22 @@ msgid "row names were found from a short variable and have been discarded"
 msgstr ""
 "Zeilennamen wurden in einer short Variablen gefunden und wurden verworfen"
 
+#, fuzzy
+msgid "named arguments other than 'drop' are not allowed"
+msgstr "fehlende Werte in 'row.names' nicht zulässig"
+
 msgid "drop argument will be ignored"
 msgstr "drop Argument wird ignoriert"
 
 msgid "undefined columns selected"
 msgstr "nicht definierte Spalten gewählt"
+
+msgid "named arguments other than 'exact' are not allowed"
+msgstr ""
+
+#, fuzzy
+msgid "named arguments are not allowed"
+msgstr "doppelte 'row.names' nicht zulässig"
 
 msgid "rhs is the wrong length for indexing by a logical matrix"
 msgstr ""
@@ -538,7 +549,11 @@ msgstr "'x' muss eine quadratische Matrix sein"
 msgid "determinant not currently defined for complex matrices"
 msgstr "Determinante für komplexe Matrizen nicht definiert"
 
-msgid "first argument is array, but not matrix."
+msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
+msgstr ""
+
+#, fuzzy
+msgid "'x' is an array, but not 1D."
 msgstr "erstes Argument ist ein Array, aber keine Matrix"
 
 msgid "only matrix diagonals can be replaced"

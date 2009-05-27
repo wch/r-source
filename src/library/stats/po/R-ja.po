@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:33\n"
+"POT-Creation-Date: 2009-05-27 13:51\n"
 "PO-Revision-Date: 2009-03-31 20:57+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1507,6 +1507,10 @@ msgstr " 'data' は行列や配列ではなく、データフレームでなけ�
 msgid "'newdata' had %d rows but variable(s) found have %d rows"
 msgstr ""
 " 'newdata' は %d 個の行を持ちますが、見付かった変数は %d の行数を持ちます： "
+
+#, fuzzy
+msgid "character variable '%s' changed to a factor"
+msgstr " 変数 '%s' は因子に変換されました "
 
 msgid "variable '%s' is not a factor"
 msgstr " 変数 %s は因子ではありません "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-12 07:01\n"
+"POT-Creation-Date: 2009-05-27 13:50\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -266,10 +266,19 @@ msgstr ""
 msgid "row names were found from a short variable and have been discarded"
 msgstr ""
 
+msgid "named arguments other than 'drop' are not allowed"
+msgstr ""
+
 msgid "drop argument will be ignored"
 msgstr ""
 
 msgid "undefined columns selected"
+msgstr ""
+
+msgid "named arguments other than 'exact' are not allowed"
+msgstr ""
+
+msgid "named arguments are not allowed"
 msgstr ""
 
 msgid "rhs is the wrong length for indexing by a logical matrix"
@@ -506,7 +515,10 @@ msgstr ""
 msgid "determinant not currently defined for complex matrices"
 msgstr ""
 
-msgid "first argument is array, but not matrix."
+msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
+msgstr ""
+
+msgid "'x' is an array, but not 1D."
 msgstr ""
 
 msgid "only matrix diagonals can be replaced"

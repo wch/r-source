@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:33\n"
+"POT-Creation-Date: 2009-05-27 13:51\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1551,6 +1551,10 @@ msgstr "'data' deve ser um data.frame, não uma matriz ou array"
 
 msgid "'newdata' had %d rows but variable(s) found have %d rows"
 msgstr "'newdata' tem  %d linhas mas variável(eis) encontradas tem %d linhass"
+
+#, fuzzy
+msgid "character variable '%s' changed to a factor"
+msgstr "variável '%s' não é um fator"
 
 msgid "variable '%s' is not a factor"
 msgstr "variável '%s' não é um fator"

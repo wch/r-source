@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:33\n"
+"POT-Creation-Date: 2009-05-27 13:51\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1557,6 +1557,10 @@ msgstr "'data'는 행렬이나 배열은 아니고, data.frame이 아니면 되�
 msgid "'newdata' had %d rows but variable(s) found have %d rows"
 msgstr ""
 "'newdata'는 행렬이나 배열은 아니고, 데이터 프레임이 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "character variable '%s' changed to a factor"
+msgstr "변수 '%s'는 인자가 아닙니다"
 
 msgid "variable '%s' is not a factor"
 msgstr "변수 '%s'는 인자가 아닙니다"
