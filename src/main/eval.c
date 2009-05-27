@@ -524,13 +524,21 @@ SEXP eval(SEXP e, SEXP rho)
 
 void SrcrefPrompt(const char * prefix, SEXP srcref)
 {
-    if (srcref && !isNull(srcref)) {
-        if (isVectorList(srcref)) srcref = VECTOR_ELT(srcref, 0);
+    /* If we have a valid srcref, use it */
+    if (srcref && srcref != R_NilValue) {
+        if (TYPEOF(srcref) == VECSXP) srcref = VECTOR_ELT(srcref, 0);
 	SEXP srcfile = getAttrib(srcref, R_SrcfileSymbol);
-	SEXP filename = findVar(install("filename"), srcfile);
-	Rprintf(_("%s at %s#%d: "), prefix, CHAR(STRING_ELT(filename, 0)), 
-	                                 asInteger(srcref));
-    } else Rprintf("%s: ", prefix);
+	if (TYPEOF(srcfile) == ENVSXP) {
+	    SEXP filename = findVar(install("filename"), srcfile);
+	    if (TYPEOF(filename) == STRSXP && length(filename) == 1) {
+	    	Rprintf(_("%s at %s#%d: "), prefix, CHAR(STRING_ELT(filename, 0)), 
+	                                    asInteger(srcref));
+	        return;
+	    }
+	}
+    }
+    /* default: */
+    Rprintf("%s: ", prefix);
 }
 
 /* Apply SEXP op of type CLOSXP to actuals */
@@ -1203,24 +1211,40 @@ SEXP attribute_hidden do_paren(SEXP call, SEXP op, SEXP args, SEXP rho)
     return CAR(args);
 }
 
+/* this function gets the srcref attribute from a statement block, 
+   and confirms it's in the expected format */
+   
+static SEXP getSrcrefs(SEXP call, SEXP args)
+{
+    SEXP srcrefs = getAttrib(call, R_SrcrefSymbol);
+    if (   TYPEOF(srcrefs) == VECSXP
+        && length(srcrefs) == length(args)+1 ) return srcrefs;
+    return R_NilValue;
+}
 
 SEXP attribute_hidden do_begin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s = R_NilValue;
     if (args != R_NilValue) {
-    	SEXP srcrefs = getAttrib(call, R_SrcrefSymbol);
-    	Rboolean usesrcrefs = !isNull(srcrefs);
+    	SEXP srcrefs = getSrcrefs(call, args);
     	int i = 1;
     	R_Srcref = R_NilValue;
 	while (args != R_NilValue) {	    
-	    if (usesrcrefs) PROTECT(R_Srcref = VECTOR_ELT(srcrefs, i++));
+	    if (srcrefs != R_NilValue) {
+	    	PROTECT(R_Srcref = VECTOR_ELT(srcrefs, i++));
+	    	if (  TYPEOF(R_Srcref) != INTSXP
+	    	    || length(R_Srcref) != 6) {
+	    	    srcrefs = R_Srcref = R_NilValue;
+	    	    UNPROTECT(1);
+	    	}
+	    }
 	    if (DEBUG(rho)) {
-	    	SrcrefPrompt("debug", usesrcrefs ? R_Srcref : R_NilValue);
+	    	SrcrefPrompt("debug", R_Srcref);
 	        PrintValue(CAR(args));
 		do_browser(call, op, R_NilValue, rho);
 	    }
 	    s = eval(CAR(args), rho);
-	    if (usesrcrefs) UNPROTECT(1);
+	    if (srcrefs != R_NilValue) UNPROTECT(1);
 	    args = CDR(args);
 	}
 	R_Srcref = R_NilValue;
