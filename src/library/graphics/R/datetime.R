@@ -45,6 +45,7 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
         zz <- pretty(z/sc)
         z <- zz*sc
         class(z) <- c("POSIXt", "POSIXct")
+        attr(z, "tzone") <- attr(x, "tzone")
         if(sc == 60*60*24) z <- as.POSIXct(round(z, "days"))
         if(missing(format)) format <- "%b %d"
     } else if(d < 1.1*60*60*24*365) { # months
