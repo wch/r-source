@@ -3433,9 +3433,9 @@ on @cputype{x86_64} with Fedora 8 we used
 
 @example
 CC="gcc -m32"
-CXXFLAGS="-m32 -O2 -g" 
-FFLAGS="-m32 -O2 -g"
-FCFLAGS="-m32 -O2 -g"
+CXX="g++ -m32"
+F77="gfortran -m32"
+FC=$F77
 LDFLAGS="-L/usr/local/lib"
 LIBnn=lib
 @end example
