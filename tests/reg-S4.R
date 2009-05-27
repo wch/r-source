@@ -484,6 +484,10 @@ setMethod("sort", signature = "L", function(x, decreasing = FALSE, ...)
 ## defining S4 methods for sort() has no effect currently on calls to
 ## sort() from functions in base; e.g., median.default.
 sort.L <- function(x, ...) { x@.Data <- as.list(sort(unlist(x@.Data), ...)); x}
+
+## NB: median is documented to use mean(), and was incorrectly changed
+## to use sum() in 2.8.1.  So we need an S3 mean method:
+mean.L <- function(x, ...) mean(unlist(x@.Data), ...)
 x <- new("L", 1:3); x2 <- x[-2]
 stopifnot(unlist(x2) == (1:3)[-2],
 	  is(mx <- median(x), "L"), mx == 2,
