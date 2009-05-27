@@ -77,7 +77,7 @@ NEW FEATURES
 	(The Kendall case is the wish of PR#13691.)
 
     o	R now keeps track of line numbers during execution for
-	code sourced with options("keep.source") = TRUE.  The source
+	code sourced with options(keep.source = TRUE).  The source
 	reference is displayed by debugging functions such as traceback(),
 	browser(), recover(), and dump.frames(), and is stored as an
 	attribute on each element returned by sys.calls(). [Experimental]
