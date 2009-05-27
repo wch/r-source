@@ -421,7 +421,7 @@ SEXP attribute_hidden R_syscall(int n, RCNTXT *cptr)
     }
     if (n == 0 && cptr->nextcontext == NULL) {
 	PROTECT(result = duplicate(cptr->call));
-	if (!isNull(cptr->srcref))
+	if (cptr->srcref && !isNull(cptr->srcref))
 	    setAttrib(result, R_SrcrefSymbol, duplicate(cptr->srcref));
 	UNPROTECT(1);
 	return result;

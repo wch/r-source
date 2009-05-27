@@ -789,6 +789,7 @@ void setup_Rmainloop(void)
     R_Toplevel.intsusp = FALSE;
     R_Toplevel.handlerstack = R_HandlerStack;
     R_Toplevel.restartstack = R_RestartStack;
+    R_Toplevel.srcref = R_NilValue;
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
 
     R_Warnings = R_NilValue;
