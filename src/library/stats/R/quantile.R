@@ -20,6 +20,7 @@ quantile.default <-
     function(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE,
              type = 7, ...)
 {
+    if(is.factor(x)) stop("need numeric data")
     if (na.rm)
 	x <- x[!is.na(x)]
     else if (any(is.na(x)))

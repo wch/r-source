@@ -40,6 +40,13 @@ quantile(x, \dots)
 
   \code{\link{NA}} and \code{\link{NaN}} values in \code{probs} are
   propagated to the result.
+  
+  The default method does not allow factors, but works with objects
+  sufficiently like numeric vectors that \code{sort}, addition and
+  multiplication work correctly.  In principle only sorts and weighted
+  means are needed, so datatimes could have quantiles -- but this is not
+  implemnted.  Note that as this is in a namespace, the copy of
+  \code{sort} in \pkg{base} will be used, not some S4 generic of that name.
 }
 \section{Types}{
   \code{quantile} returns estimates of underlying distribution quantiles
