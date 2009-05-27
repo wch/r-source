@@ -2323,6 +2323,11 @@ namespaces (normally) have the package namespace as their environment.
 @node Argument matching, Argument evaluation, Evaluation environment, Evaluation
 @subsection Argument matching
 
+This subsection applies to closures but not to primitive functions.  The
+latter typicaly ignore tags and do positional matching, but their help
+pages should be consulted for exceptions, which include @code{log},
+@code{round}, @code{signif}, @code{rep} and @code{seq.int}.
+
 The first thing that occurs in a
 @cindex function
 function evaluation is the matching of
