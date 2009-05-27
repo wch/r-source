@@ -192,9 +192,9 @@
 ## FC=
 ## FCFLAGS=
 ## FCPICFLAGS=
-## SHLIB_FCLD=$(FC)
+## SHLIB_FCLD=${FC}
 ## Unlike SHLIB_CXXLDFLAGS, SHLIB_FCLDFLAGS is never additional
-## SHLIB_FCLDFLAGS=$(SHLIB_LDFLAGS)
+## SHLIB_FCLDFLAGS=${SHLIB_LDFLAGS}
 
 ## Tcl/Tk settings.
 ## Use TCLTK_LIBS for all '-L' and '-l' options needed for linking
