@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-05-26 r48614)
+R version 2.10.0 Under development (unstable) (2009-05-27 r48630)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6431,4 +6431,14 @@ sample estimates:
 -0.9 
 
 > ## Kendall case is wish of PR#13691
+> 
+> 
+> ## corrupt data frame, PR#13724
+> foo <- matrix(1:12, nrow = 3)
+> bar <- as.data.frame(foo)
+> try(bar$NewCol <- foo[foo[, 1] == 4, 4])
+Error in `$<-.data.frame`(`*tmp*`, "NewCol", value = integer(0)) : 
+  replacement has 0 rows, data has 3
+> ## succeeded but gave corrupt result in 2.9.0
+> 
 > 
