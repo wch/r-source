@@ -93,3 +93,10 @@ as.matrix(df.soa) # numeric result
 df.soac <- data.frame(soa, letters[1:5])
 as.matrix(df.soac) # character result
 ## failed in 2.8.1
+
+## wish of PR#13505
+utils::data(npk, package="MASS")
+npk.aov <- aov(yield ~ block + N * P + K, npk)
+foo <- proj(npk.aov)
+cbind(npk, foo)
+## failed in R < 2.10.0

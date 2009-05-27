@@ -93,6 +93,8 @@ NEW FEATURES
 	for [ and [[.  (Names are ignored in the default method, but
 	could have odd semantics for other methods.)
 
+    o	as.data.frame() has an "aovproj" method.  (Wish of PR#13505)
+
 
 DEPRECATED & DEFUNCT
 

@@ -203,3 +203,5 @@ terms.aovlist <- function(x, ...)
     terms(x, ...)
 }
 
+## wish of PR#13505
+as.data.frame.aovproj <- function(x, ...) as.data.frame(unclass(x), ...)
