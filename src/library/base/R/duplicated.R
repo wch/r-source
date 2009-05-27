@@ -112,5 +112,5 @@ unique.matrix <- unique.array <-
     args <- rep(alist(a=), ndim)
     names(args) <- NULL
     args[[MARGIN]] <- !duplicated(as.vector(temp), fromLast = fromLast)
-    do.call("[", c(list(x=x), args, list(drop=FALSE)))
+    do.call("[", c(list(x), args, list(drop=FALSE)))
 }
