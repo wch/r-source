@@ -472,6 +472,7 @@ setClass("L", contains = "list")
 ## {simplistic, just for the sake of testing here} :
 setMethod("Compare", signature(e1="L", e2="ANY"),
           function(e1,e2) sapply(e1, .Generic, e2=e2))
+## note the next does *not* return an object of the class.
 setMethod("Summary", "L",
 	  function(x, ..., na.rm=FALSE) {x <- unlist(x); callNextMethod()})
 setMethod("[", signature(x="L", i="ANY", j="missing",drop="missing"),
@@ -485,15 +486,15 @@ setMethod("sort", signature = "L", function(x, decreasing = FALSE, ...)
 ## sort() from functions in base; e.g., median.default.
 sort.L <- function(x, ...) { x@.Data <- as.list(sort(unlist(x@.Data), ...)); x}
 
-## NB: median is documented to use mean(), and was incorrectly changed
+## NB: median is documented to use mean(), but was incorrectly changed
 ## to use sum() in 2.8.1.  So we need an S3 mean method:
-mean.L <- function(x, ...) mean(unlist(x@.Data), ...)
+mean.L <- function(x, ...) new("L", mean(unlist(x@.Data), ...))
 x <- new("L", 1:3); x2 <- x[-2]
 stopifnot(unlist(x2) == (1:3)[-2],
 	  is(mx <- median(x), "L"), mx == 2,
 	  identical(mx, quantile(x, 0.5, names=FALSE)),
-	  ## median of two -> sum()
-	  median(x2) == 2)
+	  ## median of two
+	  median(x2) == x[2])
 ## median.default(x) was too stringent on x
 
 ## Buglet in as() generation for class without own slots
