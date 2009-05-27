@@ -14,15 +14,28 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-weighted.mean <- function(x, w, na.rm = FALSE) {
+weighted.mean <- function(x, w, ...) UseMethod("weighted.mean")
+
+weighted.mean.default <- function(x, w, ..., na.rm = FALSE)
+{
     if(missing(w))
-      w <- rep.int(1, length(x))
+        w <- rep.int(1, length(x))
     else if (length(w) != length(x))
-      stop("'x' and 'w' must have the same length")
-    if(is.integer(w)) w <- as.numeric(w)  # avoid overflow in sum.
-    if (na.rm) {
-	w <- w[i <- !is.na(x)]
-	x <- x[i]
-    }
-    sum(x*w)/sum(w)
+        stop("'x' and 'w' must have the same length")
+    if(is.integer(w)) w <- as.numeric(w) # avoid overflow in sum.
+    w <- w/sum(w)
+    if (na.rm) { i <- !is.na(x); w <- w[i]; x <- x[i] }
+    sum(x*w)
 }
+
+## see note for ?mean.Date
+weighted.mean.Date <- function (x, w, ...)
+    structure(weighted.mean(unclass(x), w, ...), class = "Date")
+
+weighted.mean.POSIXct <- function (x, w, ...)
+    structure(weighted.mean(unclass(x), w, ...), class = c("POSIXt", "POSIXct"),
+              tzone = attr(x, "tzone"))
+
+weighted.mean.POSIXlt <- function (x, w, ...)
+    as.POSIXlt(weighted.mean(as.POSIXct(x), w, ...))
+

@@ -1,19 +1,21 @@
 % File src/library/stats/man/weighted.mean.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{weighted.mean}
+\alias{weighted.mean}
 \title{Weighted Arithmetic Mean}
 \usage{
-weighted.mean(x, w, na.rm = FALSE)
+weighted.mean(x, \dots)
+
+\method{weighted.mean}{default}(x, w, \dots, na.rm = FALSE)
 }
-\alias{weighted.mean}
 \arguments{
-  \item{x}{a numeric vector containing the values
-    whose mean is to be computed.}
+  \item{x}{an object containing the values whose mean is to be computed.}
   \item{w}{a vector of weights the same length as \code{x} giving
     the weights to use for each element of \code{x}.}
+  \item{\dots}{arguments to be passed to or from methods.}
   \item{na.rm}{a logical value indicating whether \code{NA}
     values in \code{x} should be stripped before the computation proceeds.}
 }
@@ -21,6 +23,15 @@ weighted.mean(x, w, na.rm = FALSE)
   Compute a weighted mean of a numeric vector.
 }
 \details{
+  This is a generic function and methods can be defined for the first
+  argument \code{x}: apart from the default methods there are methods
+  for the date-time classes \code{"POSIXct"}, \code{"POSIXlt"} and
+  \code{"Date"}.  The default method will work for any numeric-like
+  object for which multiplication and \code{\link{sum}} has a suitable
+  method.
+  
+  \code{w} is normalized to sum to one.
+  
   If \code{w} is missing then all elements of \code{x} are
   given the same weight.
   

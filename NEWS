@@ -86,6 +86,9 @@ NEW FEATURES
 	and its help documents what numeric-like properties its input
 	need to have to work correctly.
 
+    o	weighted.mean() is now generic and has "Date", "POSIXct" and
+	"POSIXlt" methods.
+
 
 DEPRECATED & DEFUNCT
 
