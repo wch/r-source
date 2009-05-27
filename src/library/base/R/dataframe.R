@@ -671,7 +671,7 @@ data.frame <-
 "[<-.data.frame" <- function(x, i, j, value)
 {
     if(!all(names(sys.call()) %in% c("", "value")))
-        stop("named arguments are not aallowed")
+        stop("named arguments are not allowed")
 
     nA <- nargs() # value is never missing, so 3 or 4.
     if(nA == 4L) { ## df[,] or df[i,] or df[, j] or df[i,j]
