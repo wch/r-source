@@ -16,7 +16,10 @@
 
 diag <- function(x = 1, nrow, ncol)
 {
-    if (is.matrix(x) && nargs() == 1L) {
+    if (is.matrix(x)) {
+        if (nargs() > 1L)
+            stop("'nrow' or 'ncol' cannot be specified when 'x' is a matrix")
+
         if((m <- min(dim(x))) == 0L)
 	    return(vector(typeof(x), 0L)) # logical, integer, also list ..
 
@@ -28,11 +31,11 @@ diag <- function(x = 1, nrow, ncol)
         return(y)
     }
     if(is.array(x) && length(dim(x)) != 1L)
-        stop("first argument is array, but not matrix.")
+        stop("'x' is an array, but not 1D.")
 
     if(missing(x))
 	n <- nrow
-    else if(length(x) == 1L && missing(nrow) && missing(ncol)) {
+    else if(length(x) == 1L && nargs() == 1L) {
 	n <- as.integer(x)
 	x <- 1
     }
