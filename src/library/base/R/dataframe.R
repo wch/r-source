@@ -508,6 +508,8 @@ data.frame <-
     mdrop <- missing(drop)
     Narg <- nargs() - !mdrop  # number of arg from x,i,j that were specified
     has.j <- !missing(j)
+    if(!all(names(sys.call()) %in% c("", "drop")))
+        stop("named arguments other than 'drop' are not allowed")
 
     if(Narg < 3L) {  # list-like indexing or matrix indexing
         if(!mdrop) warning("drop argument will be ignored")
@@ -650,6 +652,9 @@ data.frame <-
     ## use in-line functions to refer to the 1st and 2nd ... arguments
     ## explicitly. Also will check for wrong number or empty args
     na <- nargs() - !missing(exact)
+    if(!all(names(sys.call()) %in% c("", "exact")))
+        stop("named arguments other than 'exact' are not allowed")
+
     if(na < 3L)
 	(function(x, i, exact)
 	  if(is.matrix(i)) as.matrix(x)[[i]]
@@ -665,6 +670,9 @@ data.frame <-
 
 "[<-.data.frame" <- function(x, i, j, value)
 {
+    if(!all(names(sys.call()) %in% c("", "value")))
+        stop("named arguments are not aallowed")
+
     nA <- nargs() # value is never missing, so 3 or 4.
     if(nA == 4L) { ## df[,] or df[i,] or df[, j] or df[i,j]
 	has.i <- !missing(i)
@@ -913,6 +921,9 @@ data.frame <-
 
 "[[<-.data.frame"<- function(x, i, j, value)
 {
+    if(!all(names(sys.call()) %in% c("", "value")))
+        stop("named arguments are not allowed")
+
     cl <- oldClass(x)
     ## delete class: Version 3 idiom
     ## to avoid any special methods for [[<-
