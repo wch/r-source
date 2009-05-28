@@ -34,7 +34,7 @@ as.expression(x, \dots)
   subsetted by both \code{[} and by \code{[[}, the latter extracting
   individual calls etc.
   
-  \code{expression} is a \link{primitive} function.
+  \code{expression} and \code{is.expression} are \link{primitive} functions.
 }
 \value{
   \code{expression} returns a vector of type \code{"expression"}
