@@ -255,6 +255,10 @@ BUG FIXES
     	DF$foo <- value gave a corrupt data frame rather than failing.
 	(PR#13724)  This also happened for DF[["foo"]] <- value.
 
+    o	R CMD INSTALL no longer gives a spurious warning about old R
+	versions ignoring multiple dependencies, if the conditions are
+	known to be satisfied.
+
 
 
 
