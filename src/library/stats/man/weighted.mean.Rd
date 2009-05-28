@@ -7,7 +7,7 @@
 \alias{weighted.mean}
 \title{Weighted Arithmetic Mean}
 \usage{
-weighted.mean(x, \dots)
+weighted.mean(x, w, \dots)
 
 \method{weighted.mean}{default}(x, w, \dots, na.rm = FALSE)
 }
