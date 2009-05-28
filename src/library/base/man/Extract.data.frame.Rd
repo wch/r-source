@@ -18,7 +18,7 @@
 \method{[}{data.frame}(x, i, j) <- value
 \method{[[}{data.frame}(x, ..., exact = TRUE)
 \method{[[}{data.frame}(x, i, j) <- value
-\method{$}{data.frame}(x, i) <- value
+\method{$}{data.frame}(x, name) <- value
 }
 \arguments{
   \item{x}{data frame.}
@@ -27,9 +27,11 @@
     \code{[[}, these are \code{numeric} or \code{character} or, for
     \code{[} only, empty.  Numeric values are coerced to integer as if
     by \code{\link{as.integer}}.  For replacement by \code{[}, a logical
-    matrix is allowed.  For replacement by \code{$}, \code{i} is a name
-    or literal character string.
-  }
+    matrix is allowed.}
+
+  \item{name}{
+    A literal character string or a \link{name} (possibly \link{backtick}
+    quoted).}
 
   \item{drop}{logical.  If \code{TRUE} the result is coerced to the
     lowest possible dimension.  The default is to drop if only one
@@ -46,8 +48,12 @@
   Data frames can be indexed in several modes.  When \code{[} and
   \code{[[} are used with a single index (\code{x[i]} or \code{x[[i]]}),
   they index the data frame as if it were a list.  In this usage a
-  \code{drop} argument is ignored, with a warning.  Using \code{$} is
-  equivalent to using \code{[[i, exact = FALSE]]}.
+  \code{drop} argument is ignored, with a warning.
+
+  Note that there is no \code{data.frame} method for \code{$}, so
+  \code{x$name} uses the default method which treats \code{x} as a
+  list.  There is a method for replacement which checks \code{value} for
+  the corrupt number of row, and replicates it if necessary.
 
   When \code{[} and \code{[[} are used with two indices (\code{x[i, j]}
   and \code{x[[i, j]]}) they act like indexing a matrix:  \code{[[} can
