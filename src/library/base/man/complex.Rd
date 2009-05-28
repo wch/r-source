@@ -66,6 +66,10 @@ Conj(z)
 
   In addition, the elementary trigonometric, logarithmic and exponential
   functions are available for complex values.
+
+  \code{as.complex} and \code{is.complex} are \link{primitive}, so
+  positional matching is used and any names of supplied arguments are
+  ignored.  This may not be true of methods for \code{as.complex}.
 }
 \section{S4 methods}{
   \code{as.complex} is primitive and can have S4 methods set.

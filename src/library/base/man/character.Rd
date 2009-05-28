@@ -39,6 +39,10 @@ is.character(x)
   back to numeric may change the number.  If you want to convert numbers
   to character with the maximum possible precision, use
   \code{\link{format}}.
+
+  \code{as.character} and \code{is.character} are \link{primitive}, so
+  positional matching is used and any names of supplied arguments are
+  ignored.  This may not be true of their methods.
 }
 \value{
   \code{character} creates a character vector of the specified length.

@@ -1,6 +1,6 @@
 % File src/library/base/man/Primitive.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Primitive}
@@ -22,8 +22,9 @@
   functions is the potential efficiency of argument passing.  However,
   this is done by ignoring argument names and using positional matching
   of arguments (unless arranged differently for specific primitives such
-  as \code{\link{rep}}), so this is discouraged for functions of more
-  than one argument.
+  as \code{\link{log}}, \code{\link{round}}, \code{\link{signif}},
+  \code{\link{rep}} and \code{\link{seq.int}}), so this is discouraged
+  for functions of more than one argument.
 
   All primitive functions are in the base name space.
 }

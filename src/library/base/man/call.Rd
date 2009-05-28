@@ -40,6 +40,8 @@ as.call(x)
   The first element of the list becomes the function part of the call,
   so should be a function or the name of one (as a symbol; a quoted
   string will not do).  
+  
+  All three are \link{primitive} functions.
 }
 \seealso{
   \code{\link{do.call}} for calling a function by name and argument

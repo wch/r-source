@@ -41,6 +41,8 @@ is.name(x)
 
   \code{as.name} is implemented as \code{\link{as.vector}(x, "symbol")},
   and hence will dispatch methods for the generic function \code{as.vector}.
+  
+  \code{is.name} and \code{is.symbol} are \link{primitive} functions.
 }
 \value{
   For \code{as.name} and \code{as.symbol}, an \R object of type

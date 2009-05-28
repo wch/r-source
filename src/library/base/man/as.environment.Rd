@@ -23,6 +23,9 @@ as.environment(object)
 \value{
   The corresponding environment object.
 }
+\note{
+  This is a \link{primitive} function.
+}
 \author{ John Chambers }
 \seealso{\code{\link{environment}} for creation and manipulation,
   \code{\link{search}}.}

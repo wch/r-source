@@ -20,7 +20,7 @@
   via corresponding positions in the search path.  \code{pos.to.env} is
   a convenience function for programmers which converts these positions
   to corresponding environments; users will typically have no need for
-  it.
+  it.  It is \link{primitive}.
 }
 \examples{
 pos.to.env(1) # R_GlobalEnv

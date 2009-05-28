@@ -13,6 +13,9 @@
 \usage{
 interactive()
 }
+\note{
+  This is a \link{primitive} function.
+}
 \seealso{
   \code{\link{source}},
   \code{\link{.First}}

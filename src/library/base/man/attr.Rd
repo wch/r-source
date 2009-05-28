@@ -45,6 +45,8 @@ attr(x, which) <- value
 
   The extractor function allows (and does not match) empty and missing
   values of \code{which}: the replacement function does not.
+  
+  These functions are \link{primitive}, so argument names are ignored.  
 }
 \value{
   For the extractor, the value of the attribute matched, or \code{NULL}

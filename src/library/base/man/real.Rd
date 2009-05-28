@@ -25,5 +25,9 @@ is.real(x)
 \details{
   \code{as.real} is a generic function, but S3 methods must be
   written for \code{\link{as.double}}.  
+  
+  \code{as.real} and \code{is.real} are \link{primitive}, so
+  positional matching is used and any names of supplied arguments are
+  ignored.  This may not be true of methods for \code{as.real}.  
 }
 \keyword{classes}

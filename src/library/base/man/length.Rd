@@ -35,7 +35,7 @@ length(x) <- value
   length one: note that for functions this differs from S.
 
   The replacement form removes all the attributes of \code{x} except its
-  names.
+  names.  
 }
 \details{
   Both functions are generic: you can write methods to handle specific
@@ -46,6 +46,9 @@ length(x) <- value
   a vector is shortened, extra values are discarded and when a vector is
   lengthened, it is padded out to its new length with \code{\link{NA}}s
   (\code{nul} for raw vectors).
+  
+  These functions are \link{primitive}, so argument names are ignored
+  (but this might not be true of their methods).
 }
 \seealso{\code{nchar} for counting the number of characters in
   character vectors.

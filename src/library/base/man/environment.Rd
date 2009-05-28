@@ -122,6 +122,10 @@ env.profile(env)
   it can be used to destructively change environments in ways that
   violate assumptions made by the internal C code.  It may be removed
   in the near future.
+  
+  The replacement form of \code{environment}, \code{is.environment},
+  \code{baseenv}, \code{emptyenv} and \code{globalenv} are
+  \link{primitive} functions.
 }
 \seealso{
   The \code{envir} argument of \code{\link{eval}}, \code{\link{get}},

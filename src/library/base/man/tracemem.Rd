@@ -45,6 +45,9 @@ retracemem(x, previous = NULL)
   \code{\link{trace}} and it is not useful to trace \code{NULL},
   environments, promises, weak references, or external pointer objects, as
   these are not duplicated.
+  
+  These functions are \link{primitive} and use positional matching of
+  arguments.
 }
 \value{
   A character string for identifying the object in the trace output (an

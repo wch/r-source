@@ -29,6 +29,8 @@ is.recursive(x)
   Most types of language objects are regarded as recursive: those which
   are not are the atomic vector types, \code{NULL} and symbols (as given
   by \code{\link{as.name}}).
+  
+  These are \link{primitive} functions.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
