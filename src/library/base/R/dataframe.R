@@ -806,8 +806,8 @@ data.frame <-
     ## addition in 1.8.0
     if(anyDuplicated(jseq))
         stop("duplicate subscripts for columns")
-    n <- length(iseq)
-    if(n == 0L) n <- nrows
+    n <- nn <- length(iseq)
+    if(n == 0L) n <- nrows # why?
     p <- length(jseq)
     m <- length(value)
     if(!is.list(value)) {
@@ -816,7 +816,7 @@ data.frame <-
             if(N > n)
                 stop(gettextf("replacement has %d rows, data has %d", N, n),
                      domain = NA)
-            if(!is.null(value) && N < n)
+            if(!is.null(value) && nn && N < n)
                 if(N > 0L && (n %% N == 0L) && length(dim(value)) <= 1L)
                     value <- rep(value, length.out = n)
                 else
