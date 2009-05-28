@@ -5,6 +5,7 @@
 
 \name{weighted.mean}
 \alias{weighted.mean}
+\alias{weighted.mean.default}
 \title{Weighted Arithmetic Mean}
 \usage{
 weighted.mean(x, w, \dots)
