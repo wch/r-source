@@ -1,6 +1,6 @@
 % File src/library/base/man/mean.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{mean}
@@ -14,9 +14,11 @@ mean(x, \dots)
 \alias{mean.default}
 \alias{mean.data.frame}
 \arguments{
-  \item{x}{An \R object.  Currently there are methods for numeric data
-    frames, numeric vectors and dates.  A complex vector is allowed for
-    \code{trim = 0}, only.}
+  \item{x}{An \R object.  Currently there are methods for
+    numeric/logical vectors and \link[base:Dates]{date},
+    \link{date-time} and \link{time interval} objects, and for data
+    frames all of whose columns have a method.  Complex vectors are
+    allowed for \code{trim = 0}, only.}
   \item{trim}{the fraction (0 to 0.5) of observations to be
     trimmed from each end of \code{x} before the mean is computed.
     Values of trim outside that range are taken as the nearest endpoint.
@@ -32,11 +34,10 @@ mean(x, \dots)
   For a data frame, a named vector with the appropriate method being
   applied column by column.
   
-  If \code{trim} is zero (the default),
-  the arithmetic mean of the values in \code{x} is computed, as a
-  numeric or complex vector of length one.  If \code{x} is
-  not logical (coerced to numeric), integer, numeric or complex,
-  \code{NA} is returned, with a warning.
+  If \code{trim} is zero (the default), the arithmetic mean of the
+  values in \code{x} is computed, as a numeric or complex vector of
+  length one.  If \code{x} is not logical (coerced to numeric), numeric
+  (including integer) or complex, \code{NA} is returned, with a warning.
 
   If \code{trim} is non-zero, a symmetrically trimmed mean is computed
   with a fraction of \code{trim} observations deleted from each end
