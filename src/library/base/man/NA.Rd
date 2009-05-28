@@ -52,6 +52,10 @@ is.na(x) <- value
 
   Function \code{is.na<-} may provide a safer way to set missingness.
   It behaves differently for factors, for example.
+
+  \code{is.na} (but not the replacement function nor the
+  \code{data.frame} method) is a \link{primitive} function so any
+  argument name is ignored.
 }
 \value{
   The default method for \code{is.na} returns a logical vector of the same

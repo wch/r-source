@@ -56,7 +56,8 @@ is.nan(x)
 
   All three functions are generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.  The
-  default methods handle real and complex vectors.
+  default methods handle real and complex vectors.  They are
+  \link{primitive}, so any argument names are ignored..
 }
 \note{
   In \R, basically all mathematical functions (including basic

@@ -18,6 +18,8 @@
   This can occur in rather indirect ways, so for example \code{x[]}
   might dispatch a call to \code{`[.some_method`(x, )} which is
   considered to have two arguments.
+  
+  This is a \link{primitive} function.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

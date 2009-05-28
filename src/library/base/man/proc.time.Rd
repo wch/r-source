@@ -47,6 +47,8 @@ proc.time()
 #ifdef windows
   and are typically available to 10ms on Windows.
 #endif
+
+  This is a \link{primitive} function.
 }
 \note{
 #ifdef unix

@@ -83,6 +83,9 @@ alist(\dots)
 
   \code{as.pairlist} is implemented as \code{\link{as.vector}(x, "pairlist")},
   and hence will dispatch methods for the generic function \code{as.vector}.
+  
+  \code{list}, \code{is.list} and \code{is.pairlist} are
+  \link{primitive} functions.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

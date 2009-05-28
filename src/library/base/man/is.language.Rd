@@ -17,6 +17,9 @@ is.language(x)
 \arguments{
   \item{x}{object to be tested.}
 }
+\note{
+  This is a \link{primitive} function.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

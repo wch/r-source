@@ -44,6 +44,10 @@ as.single(x, \dots)
   except they set the attribute \code{Csingle} that is used in the
   \code{\link{.C}} and \code{\link{.Fortran}} interface, and they are
   intended only to be used in that context.
+  
+  \code{as.double} and \code{is.double} are \link{primitive}, so
+  positional matching is used and any names of supplied arguments are
+  ignored.  This may not be true of methods for \code{as.double}.
 }
 \value{
   \code{double} creates a double-precision vector of the specified

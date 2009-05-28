@@ -47,6 +47,8 @@ nzchar(x)
   \code{\link{as.character}} is performed on \code{x} (so there is no
   method dispatch).  If you want to operate on non-vector objects
   passing them through \code{\link{deparse}} first will be required.
+  
+  \code{nzchar} is \link{primitive} and so will ignore any argument name.
 }
 \value{
   For \code{nchar}, an integer vector giving the sizes of each element,

@@ -28,6 +28,9 @@ is \code{NULL} and \code{FALSE} otherwise.
   \item{x}{an object to be tested or coerced.}
   \item{\dots}{ignored.}
 }
+\note{
+  \code{is.null} is a \link{primitive} function.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

@@ -33,6 +33,8 @@ as.expression(x, \dots)
   As an object of mode \code{"expression"} is a list, it can be
   subsetted by both \code{[} and by \code{[[}, the latter extracting
   individual calls etc.
+  
+  \code{expression} is a \link{primitive} function.
 }
 \value{
   \code{expression} returns a vector of type \code{"expression"}
