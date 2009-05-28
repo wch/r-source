@@ -1,6 +1,6 @@
 % File src/library/base/man/difftime.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{difftime}
@@ -21,6 +21,7 @@
 \alias{mean.difftime}
 \alias{units}
 \alias{units<-}
+\alias{time interval} % used by mean.Rd
 \title{Time Intervals}
 \description{
   Create, print and round time intervals.
@@ -32,14 +33,14 @@ difftime(time1, time2, tz = "",
          units = c("auto", "secs", "mins", "hours",
                    "days", "weeks"))
 
-as.difftime(tim, format = "\%X", units="auto")
+as.difftime(tim, format = "\%X", units = "auto")
 
 
 \method{round}{difftime}(x, digits = 0, \dots)
 \method{format}{difftime}(x, ...)
 \method{units}{difftime}(x)
 \method{units}{difftime}(x) <- value
-\method{as.double}{difftime}(x, units="auto", ...)
+\method{as.double}{difftime}(x, units = "auto", ...)
 }
 \arguments{
   \item{time1, time2}{\link{date-time} or \link[base:Dates]{date} objects.}
@@ -58,6 +59,7 @@ as.difftime(tim, format = "\%X", units="auto")
   \item{\dots}{arguments to be passed to or from other methods.}
 }
 \details{
+
   Function \code{difftime} calculates a difference of two date/time objects
   and returns an object of class \code{"difftime"}
   with an attribute indicating the units.  There is a \code{\link{round}}
@@ -70,23 +72,26 @@ as.difftime(tim, format = "\%X", units="auto")
   differences are greater than one.
 
   Subtraction of date-time objects gives an object of this class,
-  by calling \code{difftime} with \code{units="auto"}.  Alternatively,
+  by calling \code{difftime} with \code{units = "auto"}.  Alternatively,
   \code{as.difftime()} works on character-coded or numeric time
   intervals; in the latter case, units must be specified, and
   \code{format} has no effect.
 
   Limited arithmetic is available on \code{"difftime"} objects: they can
   be added or subtracted, and multiplied or divided by a numeric vector.
-  In addition, adding or subtracting a numeric vector implicitly
-  converts the numeric vector to a \code{"difftime"} object with the
-  same units as the \code{"difftime"} object.
+  In addition, adding or subtracting a numeric vector by a
+  \code{"difftime"} object implicitly converts the numeric vector to a
+  \code{"difftime"} object with the same units as the \code{"difftime"}
+  object.  There are methods for \code{\link{mean}} and
+  \code{\link{sum}} (via the \code{\link[base:groupGeneric]{Summary}}
+  group generic).
 
   The units of a \code{"difftime"} object can be extracted by the
   \code{units} function, which also has an replacement form.  If the units
   are changed, the numerical value is scaled accordingly.
 
   The \code{as.double} method returns the numeric value expressed in
-  the specified units.  Using  \code{units="auto"} means the units of the
+  the specified units.  Using  \code{units = "auto"} means the units of the
   object.
   
   The \code{format} method simply formats the numeric value and appends
