@@ -128,7 +128,9 @@ function(db, verbose = FALSE)
     if("R" %in% names(Depends)) {
         Rdeps2 <- Depends["R" == names(Depends)]
         names(Rdeps2) <- NULL
-        if(verbose && length(Rdeps2)> 1L) {
+        if(verbose && !all(lapply(Rdeps2[-1], function(x)
+            		   x$op %in% c("<", "<=") 
+            		&& x$version >= package_version("2.7.0")))) {
             entries <- lapply(Rdeps2, function(x)
                 paste(lapply(x, as.character), collapse=""))
             message("WARNING: 'Depends' entry has multiple dependencies on R: ",
