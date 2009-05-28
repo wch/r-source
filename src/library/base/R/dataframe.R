@@ -816,8 +816,8 @@ data.frame <-
             if(N > n)
                 stop(gettextf("replacement has %d rows, data has %d", N, n),
                      domain = NA)
-            if(N < n && N > 0L)
-                if(n %% N == 0L && length(dim(value)) <= 1L)
+            if(!is.null(value) && N < n)
+                if(N > 0L && (n %% N == 0L) && length(dim(value)) <= 1L)
                     value <- rep(value, length.out = n)
                 else
                     stop(gettextf("replacement has %d rows, data has %d", N, n),
@@ -856,8 +856,8 @@ data.frame <-
 	dimv <- c(n, length(value))
     }
     nrowv <- dimv[1L]
-    if(nrowv < n && nrowv > 0L) {
-	if(n %% nrowv == 0L)
+    if(nrowv < n) {
+	if(nrowv > 0L && (n %% nrowv == 0L))
 	    value <- value[rep(seq_len(nrowv), length.out = n),,drop = FALSE]
 	else stop(gettextf("%d rows in value to replace %d rows", nrowv, n),
                   domain = NA)
@@ -938,8 +938,8 @@ data.frame <-
             if(N > nrows)
                 stop(gettextf("replacement has %d rows, data has %d", N, nrows),
                      domain = NA)
-            if(N < nrows && N > 0L)
-                if(nrows %% N == 0L && length(dim(value)) <= 1L)
+            if(N < nrows)
+                if(N > 0L && (nrows %% N == 0L) && length(dim(value)) <= 1L)
                     value <- rep(value, length.out = nrows)
                 else
                     stop(gettextf("replacement has %d rows, data has %d",

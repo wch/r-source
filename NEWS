@@ -251,7 +251,8 @@ BUG FIXES
 
     o	Assigning an extra 0-length column to a data frame by
     	DF$foo <- value gave a corrupt data frame rather than failing.
-	(PR#13724)
+	(PR#13724)  Also applied to using [[ ]] and [ ] to add a
+    	0-length column.
 
 
 
