@@ -806,8 +806,8 @@ data.frame <-
     ## addition in 1.8.0
     if(anyDuplicated(jseq))
         stop("duplicate subscripts for columns")
-    n <- nn <- length(iseq)
-    if(n == 0L) n <- nrows # why?
+    n <- length(iseq)
+    if(n == 0L) n <- nrows
     p <- length(jseq)
     m <- length(value)
     if(!is.list(value)) {
@@ -816,8 +816,8 @@ data.frame <-
             if(N > n)
                 stop(gettextf("replacement has %d rows, data has %d", N, n),
                      domain = NA)
-            if(!is.null(value) && nn && N < n)
-                if(N > 0L && (n %% N == 0L) && length(dim(value)) <= 1L)
+            if(N < n && N > 0L)
+                if(n %% N == 0L && length(dim(value)) <= 1L)
                     value <- rep(value, length.out = n)
                 else
                     stop(gettextf("replacement has %d rows, data has %d", N, n),
@@ -856,8 +856,8 @@ data.frame <-
 	dimv <- c(n, length(value))
     }
     nrowv <- dimv[1L]
-    if(nrowv < n) {
-	if(nrowv > 0L && (n %% nrowv == 0L))
+    if(nrowv < n && nrowv > 0L) {
+	if(n %% nrowv == 0L)
 	    value <- value[rep(seq_len(nrowv), length.out = n),,drop = FALSE]
 	else stop(gettextf("%d rows in value to replace %d rows", nrowv, n),
                   domain = NA)
@@ -938,8 +938,8 @@ data.frame <-
             if(N > nrows)
                 stop(gettextf("replacement has %d rows, data has %d", N, nrows),
                      domain = NA)
-            if(N < nrows)
-                if(N > 0L && (nrows %% N == 0L) && length(dim(value)) <= 1L)
+            if(N < nrows && N > 0L)
+                if(nrows %% N == 0L && length(dim(value)) <= 1L)
                     value <- rep(value, length.out = nrows)
                 else
                     stop(gettextf("replacement has %d rows, data has %d",
@@ -1012,7 +1012,7 @@ data.frame <-
 }
 
 ## added in 1.8.0
-"$<-.data.frame"<- function(x, name, value)
+"$<-.data.frame"<- function(x, i, value)
 {
     cl <- oldClass(x)
     ## delete class: Version 3 idiom
@@ -1034,7 +1034,7 @@ data.frame <-
                      domain = NA)
         if(is.atomic(value)) names(value) <- NULL
     }
-    x[[name]] <- value
+    x[[i]] <- value
     class(x) <- cl
     return(x)
 }
