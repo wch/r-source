@@ -172,7 +172,9 @@ BUG FIXES
 
     o	Invalid use of sprintf() such as sprintf("%S%") now give an error
 	instead of a segmentation fault, as do very unusual cases such as
-	sprintf("%s", tryCatch(stop(), error=identity)).
+	sprintf("%s", tryCatch(stop(), error=identity)).  (It was
+	always documented that misuse could crash R in
+	platform-dependent ways.)
 
     o	parse_Rd() would mishandle braces when they occurred at
 	the start of a line within an R string in an Rd file (reported
@@ -241,17 +243,17 @@ BUG FIXES
 	slightly more accurate in some cases.  (PR#13574)
 
     o	The digamma(), trigamma() and psigamma() functions could be
-	inaccurate for value of x around 1e-15 due to cancellation.
+	inaccurate for values of x around 1e-15 due to cancellation.
 	(PR#13714).
 
     o	median.default() was altered in 2.8.1 to use sum() rather
 	than mean(), although it was still documented to use mean().
 	This caused problems for POSIXt objects, for which mean() but
-	not sum() makes sense.
+	not sum() makes sense, so the change has been reverted.
 
     o	Assigning an extra 0-length column to a data frame by
     	DF$foo <- value gave a corrupt data frame rather than failing.
-	(PR#13724)
+	(PR#13724)  This also happened for DF[["foo"]] <- value.
 
 
 

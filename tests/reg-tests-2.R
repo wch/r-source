@@ -2390,6 +2390,8 @@ cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "spearman",
 ## corrupt data frame, PR#13724
 foo <- matrix(1:12, nrow = 3)
 bar <- as.data.frame(foo)
-try(bar$NewCol <- foo[foo[, 1] == 4, 4])
+val <- foo[foo[, 1] == 4, 4]
+try(bar$NewCol <- val)
+# similar, not in the report
+try(bar[["NewCol"]] <- val)
 ## succeeded but gave corrupt result in 2.9.0
-
