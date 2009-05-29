@@ -33,8 +33,9 @@ xtfrm(x)
   \code{\link[survival]{Surv}} method sorts first on times and then on
   status code(s).
 
-  The default method will make use of \code{==}, \code{>}  and
-  \code{is.na} methods for the class of \code{x}, but might be rather
+  The default method will make use of \code{==} and \code{>} methods
+  for the class of \code{x[i]} (for integers \code{i}), and the
+  \code{is.na} method for the class of \code{x}, but might be rather
   slow when doing so.
 }
 \value{
