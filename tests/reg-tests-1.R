@@ -5719,3 +5719,13 @@ stopifnot(all.equal(cor.test(x, y, method="spearman", alternative="greater")$p.v
 ## median should work on POSIXt objects (it did in 2.8.0)
 median(rep(Sys.time(), 2))
 ## failed in 2.8.1, 2.9.0
+
+
+## repeated NA in dim() (PR#13729)
+L0 <- logical(0)
+try(dim(L0) <- c(1,NA,NA))
+stopifnot(is.null(dim(L0)))
+L1 <- logical(1)
+try(dim(L1) <- c(-1,-1))
+stopifnot(is.null(dim(L)))
+## dim was set in 2.9.0

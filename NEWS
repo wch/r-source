@@ -260,6 +260,10 @@ BUG FIXES
 	versions ignoring multiple dependencies, if the conditions are
 	known to be satisfied.
 
+    o	The test for setting dim() allowed a value with two or more
+	NAs to be set on a 0-length object.  (PR#13729)  Also, it
+	allowed an even number of negative values.
+
 
 
 
