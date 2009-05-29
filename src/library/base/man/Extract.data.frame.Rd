@@ -121,7 +121,9 @@
   specifying \code{drop = FALSE}.  To drop from a data frame to a list,
   \code{drop = TRUE} has to be specified explicitly.
 
-  Arguments other than \code{drop} and \code{exact} should not be named. 
+  Arguments other than \code{drop} and \code{exact} should not be named:
+  there is a warning if they are and the behaviour differs from the
+  description here. 
 }
 \value{
   For \code{[} a data frame, list or a single column (the latter two

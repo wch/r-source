@@ -89,9 +89,10 @@ NEW FEATURES
     o	weighted.mean() is now generic and has "Date", "POSIXct" and
 	"POSIXlt" methods.
 
-    o	It is now an error to name subscripts in data.frame methods
-	for [ and [[.  (Names are ignored in the default method, but
-	could have odd semantics for other methods.)
+    o	Name subscripts in data.frame methods for [ and [[ now gives a
+	warning.  (Names are ignored in the default method, but could
+	have odd semantics for other methods, and do for the
+	data.frame ones.)
 
     o	as.data.frame() has an "aovproj" method.  (Wish of PR#13505)
 
