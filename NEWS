@@ -150,6 +150,8 @@ NEW FEATURES
 	whole bundle: this allow bundles to be split and installations
 	updated.
 
+    o	nlminb() gives better non-convergence messages in some cases.
+
 
 DEPRECATED & DEFUNCT
 
@@ -267,7 +269,7 @@ BUG FIXES
     o	The test for setting dim() allowed a value with two or more
 	NAs to be set on a 0-length object.  (PR#13729)  Also, it
 	allowed an even number of negative values.
-	
+
     o	xtfrm(), rank(), sort() and order() did not always make use of
 	custom comparison methods specific to the class of elements
 	being sorted.

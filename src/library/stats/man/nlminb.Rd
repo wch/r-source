@@ -49,7 +49,7 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
   Any names of \code{start} are (as from \R 2.8.1) passed
   on to \code{objective} and where applicable, \code{gradient} and
   \code{hessian}.  The parameter vector will be coerced to double.
-  
+
   The PORT documentation is at
   \url{http://netlib.bell-labs.com/cm/cs/cstr/153.pdf}.
 }
@@ -146,9 +146,12 @@ flb <- function(x)
     { p <- length(x); sum(c(1, rep(4, p-1)) * (x - c(1, x[-p])^2)^2) }
 ## 25-dimensional box constrained
 ## par[24] is *not* at boundary
-nlminb(rep(3, 25), flb, 
+nlminb(rep(3, 25), flb,
           lower=rep(2, 25),
-          upper=rep(4, 25)) 
+          upper=rep(4, 25))
+## trying to use a too small tolerance:
+r <- nlminb(rep(3, 25), flb, control = list(rel.tol=1e-16))
+stopifnot(grepl("rel.tol", r$message))
 }
 \keyword{optimize}
 
