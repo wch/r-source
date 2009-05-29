@@ -1006,8 +1006,14 @@ SEXP dimgets(SEXP vec, SEXP val)
     if (ndim == 0)
 	error(_("length-0 dimension vector is invalid"));
     total = 1;
-    for (i = 0; i < ndim; i++)
+    for (i = 0; i < ndim; i++) {
+	/* need this test first as NA_INTEGER is < 0 */
+	if (INTEGER(val)[i] == NA_INTEGER)
+	    error(_("the dims contain missing values"));
+	if (INTEGER(val)[i] < 0)
+	    error(_("the dims contain negative values"));
 	total *= INTEGER(val)[i];
+    }
     if (total != len)
 	error(_("dims [product %d] do not match the length of object [%d]"), total, len);
     removeAttrib(vec, R_DimNamesSymbol);
