@@ -5729,3 +5729,11 @@ L1 <- logical(1)
 try(dim(L1) <- c(-1,-1))
 stopifnot(is.null(dim(L)))
 ## dim was set in 2.9.0
+
+
+## as.character(<numeric>)
+nx <- 0.3 + 2e-16 * -2:2
+stopifnot(identical("0.3", unique(as.character(nx))),
+          identical("0.3+0.3i", unique(as.character(nx*(1+1i)))))
+## the first gave ("0.300000000000000" "0.3") in R < 2.10.0
+

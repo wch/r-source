@@ -96,6 +96,10 @@ NEW FEATURES
 
     o	as.data.frame() has an "aovproj" method.  (Wish of PR#13505)
 
+    o	as.character(x) for numeric x no longer produces strings such as
+	"0.30", i.e., with trailing zeros.  This change also renders
+	levels construction in factor() more consistent.
+
 
 DEPRECATED & DEFUNCT
 
