@@ -99,7 +99,8 @@ win.graph <- function(width, height, pointsize)
     invisible(.External(Cdevga, "", old$width, old$height, old$pointsize,
                         FALSE, 1L, old$xpinch, old$ypinch, "white",
                         old$gamma, NA_integer_, NA_integer_, old$buffered,
-                        .PSenv, NA, old$restoreConsole, "", TRUE))
+                        .PSenv, NA, old$restoreConsole, "", TRUE,
+                        old$fillOddEven))
 }
 
 win.print <- function(width = 7, height = 7, pointsize = 12, printer = "",
@@ -108,7 +109,8 @@ win.print <- function(width = 7, height = 7, pointsize = 12, printer = "",
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, "white", 1,
                         NA_integer_, NA_integer_,
-                        FALSE, .PSenv, NA, restoreConsole, "", FALSE))
+                        FALSE, .PSenv, NA, restoreConsole, "", FALSE, 
+                        TRUE))
 
 win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12,
                          restoreConsole = TRUE)
@@ -119,7 +121,8 @@ win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12,
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, "white", 1,
                         NA_integer_, NA_integer_, FALSE, .PSenv, NA,
-                        restoreConsole, "", FALSE))
+                        restoreConsole, "", FALSE,
+                        TRUE))
 }
 
 png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
@@ -139,7 +142,7 @@ png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, bg, 1,
                         as.integer(res), NA_integer_, FALSE, .PSenv, NA,
-                        restoreConsole, "", FALSE))
+                        restoreConsole, "", FALSE, TRUE))
 }
 
 bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
@@ -159,7 +162,7 @@ bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, bg, 1,
                         as.integer(res), NA_integer_, FALSE, .PSenv, NA,
-                        restoreConsole, "", FALSE))
+                        restoreConsole, "", FALSE, TRUE))
 }
 
 jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
@@ -180,7 +183,7 @@ jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, bg, 1,
                         as.integer(res), NA_integer_, FALSE, .PSenv, NA,
-                        restoreConsole, "", FALSE))
+                        restoreConsole, "", FALSE, TRUE))
 }
 
 tiff <- function(filename = "Rplot%03d.tif", width = 480, height = 480,
@@ -204,7 +207,7 @@ tiff <- function(filename = "Rplot%03d.tif", width = 480, height = 480,
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, bg, 1,
                         as.integer(res), NA_integer_, FALSE, .PSenv, NA,
-                        restoreConsole, "", FALSE))
+                        restoreConsole, "", FALSE, TRUE))
 }
 
 bringToTop <- function(which = dev.cur(), stay = FALSE)
