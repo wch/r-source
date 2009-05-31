@@ -980,13 +980,14 @@ completeExtends <-    function(ClassDef, class2, extensionDef, where) {
                       where = where)
         }
     }
-    S3Class <- attr(ClassDef@prototype, ".S3Class")
-    if(!is.null(S3Class)) {
-      others <- c(ClassDef@className, names(exts))
-      others <- others[is.na(match(others, S3Class))]
-      if(length(others)>0)
-        .checkS3forClass(ClassDef@className, where, others)
-    }
+## TODO:  move these checks to a tool used by check & conditional on no .S3Class slot
+##     S3Class <- attr(ClassDef@prototype, ".S3Class")
+##     if(!is.null(S3Class)) {
+##       others <- c(ClassDef@className, names(exts))
+##       others <- others[is.na(match(others, S3Class))]
+##       if(length(others)>0)
+##         .checkS3forClass(ClassDef@className, where, others)
+##     }
     exts
 }
 
@@ -2187,11 +2188,11 @@ S3forS4Methods <- function(where, checkClasses = character()) {
 ## }
 
 ## a warning when a class is defined that extends classes with S3 methods.
-.checkS3forClass <- function(className, where, what = className) {
-  badMethods <- S3forS4Methods(where, what)
-  if(length(badMethods) > 0) {
-    msg <- paste("The apparent methods are ", paste('"',badMethods, '"', sep = "", collapse = ", "))
-    warning("Some of the superclasses in the definition of class \"",
-            className, "\" have apparent S3 methods.\n\nThese will be hidden by the S3 class that this class contains. (See ?Methods)\n\n", msg)
-  }
-}
+## .checkS3forClass <- function(className, where, what = className) {
+##   badMethods <- S3forS4Methods(where, what)
+##   if(length(badMethods) > 0) {
+##     msg <- paste("The apparent methods are ", paste('"',badMethods, '"', sep = "", collapse = ", "))
+##     warning("Some of the superclasses in the definition of class \"",
+##             className, "\" have apparent S3 methods.\n\nThese will be hidden by the S3 class that this class contains. (See ?Methods)\n\n", msg)
+##   }
+## }

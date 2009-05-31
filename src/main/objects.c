@@ -227,6 +227,26 @@ static int match_to_obj(SEXP arg, SEXP obj) {
 }
 #endif
 
+/* look up the class name in the methods package table of S3 classes
+   which should be explicitly converted when an S3 method is applied
+   to an object from an S4 subclass.
+*/
+static int isBasicClass(const char *ss) {
+    static SEXP s_S3table = 0;
+    if(!s_S3table) {
+      s_S3table = findVarInFrame3(R_MethodsNamespace, install(".S3MethodsClasses"), TRUE);
+      if(s_S3table == R_UnboundValue)
+	error(_("No .S3MethodsClass table, can't use S4 objects with S3 methods (methods package not attached?)"));
+	if (TYPEOF(s_S3table) == PROMSXP)  /* findVar... ignores lazy data */
+	    s_S3table = eval(s_S3table, R_MethodsNamespace);
+    }
+    if(s_S3table == R_UnboundValue)
+      return FALSE; /* too screwed up to do conversions */
+    return findVarInFrame3(s_S3table, install(ss), FALSE) != R_UnboundValue;
+}
+    
+    
+
 int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	      SEXP rho, SEXP callrho, SEXP defrho, SEXP *ans)
 {
@@ -263,7 +283,6 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	error(_("Invalid generic function in 'usemethod'"));
     }
 
-    S4toS3 = IS_S4_OBJECT(obj) ? 1 : 0;
     nprotect = 5;
     if (TYPEOF(op) == CLOSXP) {
 	formals = FORMALS(op);
@@ -283,6 +302,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
     PROTECT(newcall = duplicate(cptr->call));
 
     PROTECT(klass = R_data_class2(obj));
+    S4toS3 = IS_S4_OBJECT(obj);
 
     nclass = length(klass);
     for (i = 0; i < nclass; i++) {
@@ -309,7 +329,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	    UNPROTECT(1);
 	    defineVar(install(".GenericCallEnv"), callrho, newrho);
 	    defineVar(install(".GenericDefEnv"), defrho, newrho);
-	    if(S4toS3 && i > 0) {
+	    if(S4toS3 && i > 0 && isBasicClass(ss)) {
 	      SEXP S3Part; 
 	      S3Part = R_getS4DataSlot(obj, S4SXP);
 	      if(S3Part == R_NilValue && TYPEOF(obj) == S4SXP) /* could be type, e.g. "environment" */
@@ -326,7 +346,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 		    SET_PRVALUE(match_obj, obj); /* must have been eval'd */
 		  else /* not possible ?*/
 		    defineVar(TAG(FORMALS(sxp)), obj, newrho);
-	      } /* else, use the S4 object and S4 inheritance */
+	      } /* else, use the S4 object */
 	    }
 	    t = newcall;
 	    SETCAR(t, method);

@@ -52,6 +52,18 @@ setOldClass <- function(Classes, prototype = NULL,
     }
     prevClass <- "oldClass"
     S3Class <- character()  #will accumulate the S3 classes inherited
+    ## The table of S3 classes, used
+    ## to convert S4 objects in S3 method dispatch.
+    ## TODO:  should provide an optional argument to setOldClass()
+    ## to prevednt this conversion if it's not needed
+    if(!exists(".S3MethodsClasses", envir = where, inherits = FALSE)) {
+      S3table <- new.env()
+      assign(".S3MethodsClasses", S3table, envir = where)
+      message("creating .S3MethodsClasses in :")
+      print(where)
+      print(S3table)
+    }
+    else S3table <- get(".S3MethodsClasses", envir = where)
     for(cl in rev(Classes)) {
        S3Class <- c(cl, S3Class)
         if(isClass(cl, where)) {
@@ -83,6 +95,8 @@ setOldClass <- function(Classes, prototype = NULL,
             attr(clp, ".S3Class") <- S3Class
             def@prototype <- .notS4(clp)
             assignClassDef(cl, def, where = where)
+            ## add the class to the table of S3 classes
+            assign(cl, def, envir= S3table)
         }
        prevClass <- cl
     }

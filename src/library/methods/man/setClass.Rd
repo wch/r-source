@@ -11,7 +11,8 @@
 }
 \usage{
 setClass(Class, representation, prototype, contains=character(),
-         validity, access, where, version, sealed, package)
+         validity, access, where, version, sealed, package,
+         S3methods = FALSE)
 }
 \arguments{
   \item{Class}{character string name for the class.}
@@ -48,6 +49,18 @@ elements for superclasses, but the recommended style is to use the
   \item{package}{ an optional package name for the class.  By default
     (and usually) the name of the package in which the class definition is assigned.
   }
+  \item{S3methods}{if \code{TRUE}, S3 methods may be written for this
+      class. S4 object from the class and from subclasses of it will
+      dispatch the S3 method, assuming that no S4 method and no more
+      direct S3 method applies.  Writing S3 methods for S4 classes is
+      somewhat deprecated (see \link{Methods}), but if you do write
+      them, the class should be created with this argument
+      \code{TRUE}, so inheritance will work.  By default, the current
+      implementation takes no special action, so that methods will be
+      dispatched for this class but \emph{not} for subclasses.  Note
+      that future versions may revoke this and dispatch no S3 methods
+      other than the default unless \code{S3methods} is \code{TRUE}.
+    }
 }
 \section{Basic Use: Slots and Inheritance}{
 The two essential arguments, other than the class name are
