@@ -100,7 +100,7 @@ file.symlink(from, to)
 }
 #ifdef windows
 \note{
-  There is no guarantee that these fcuntions will handle Windows
+  There is no guarantee that these functions will handle Windows
   relative paths of the form \file{d:path}: try \file{d:./path}
   instead.  In particular, \file{d:} is not recognized as a directory.
 }
