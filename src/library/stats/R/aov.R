@@ -39,7 +39,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         fit$call <- Call
         return(fit)
     } else {
-        if(pmatch("weights", names(list(...)), 0L))
+        if(pmatch("weights", names(match.call()), 0L))
             stop("weights are not supported in a multistratum aov() fit")
         ##  Helmert contrasts can be helpful: do we want to force them?
         ##  this version does for the Error model.

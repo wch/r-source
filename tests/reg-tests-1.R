@@ -5737,3 +5737,10 @@ stopifnot(identical("0.3", unique(as.character(nx))),
           identical("0.3+0.3i", unique(as.character(nx*(1+1i)))))
 ## the first gave ("0.300000000000000" "0.3") in R < 2.10.0
 
+## aov evaluated a test in the wrong place ((PR#13733)
+DF <- data.frame(y = c(rnorm(10), rnorm(10, mean=3), rnorm(10, mean=6)),
+                 x = factor(rep(c("A", "B", "C"), c(10, 10, 10))),
+                 sub = factor(rep(1:10, 3)))
+## In 2.9.0, the following line raised an error because "x" cannot be found
+junk <- summary(aov(y ~ x + Error(sub/x), data=DF, subset=(x!="C")))
+## safety check added in 2.9.0 evaluated the call.
