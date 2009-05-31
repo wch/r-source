@@ -59,9 +59,6 @@ setOldClass <- function(Classes, prototype = NULL,
     if(!exists(".S3MethodsClasses", envir = where, inherits = FALSE)) {
       S3table <- new.env()
       assign(".S3MethodsClasses", S3table, envir = where)
-      message("creating .S3MethodsClasses in :")
-      print(where)
-      print(S3table)
     }
     else S3table <- get(".S3MethodsClasses", envir = where)
     for(cl in rev(Classes)) {
