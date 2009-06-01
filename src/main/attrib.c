@@ -612,6 +612,7 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
 
 static SEXP s_dot_S3Class = 0;
 
+#ifdef UNUSED
 static SEXP R_S4_extends_table = 0;
 
 static SEXP S4_extends(SEXP klass) {
@@ -638,6 +639,7 @@ static SEXP S4_extends(SEXP klass) {
     UNPROTECT(1);
     return(val);
 }
+#endif
 
 /* Version for S3-dispatch */
 SEXP attribute_hidden R_data_class2 (SEXP obj)
