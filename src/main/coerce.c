@@ -297,9 +297,7 @@ SEXP attribute_hidden StringFromInteger(int x, int *warn)
 
 static const char* dropTrailing0(char *s, char cdec)
 {
-    /* Note: Argument 's' is modified which can be unsafe, depending on how
-     * this is used.  It is ok however, in the context of filtering an
-     * Encode*() value into mkChar(): */
+    /* Note that  's'  is modified */
     char *p = s;
     for (p = s; *p; p++) {
 	if(*p == cdec) {
@@ -307,8 +305,9 @@ static const char* dropTrailing0(char *s, char cdec)
 	    while ('0' <= *p  &&  *p <= '9')
 		if(*(p++) != '0')
 		    replace = p;
-	    while((*(replace++) = *(p++)))
-		;
+	    if(replace != p)
+		while((*(replace++) = *(p++)))
+		    ;
 	    break;
 	}
     }
@@ -320,7 +319,11 @@ SEXP attribute_hidden StringFromReal(double x, int *warn)
     int w, d, e;
     formatReal(&x, 1, &w, &d, &e, 0);
     if (ISNA(x)) return NA_STRING;
-    else return mkChar(dropTrailing0((char *)EncodeReal(x, w, d, e, OutDec),
+    else
+	/* Note that we recast EncodeReal()'s value to possibly modify it
+	 * destructively; this is harmless here (in a sequential
+	 * environment), as mkChar() creates a copy */
+	return mkChar(dropTrailing0((char *)EncodeReal(x, w, d, e, OutDec),
 				     OutDec));
 }
 
