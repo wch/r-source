@@ -936,8 +936,7 @@ function(x, ...)
 
 ### * codocClasses
 
-codocClasses <-
-function(package, lib.loc = NULL)
+codocClasses <- function(package, lib.loc = NULL)
 {
     ## Compare the 'structure' of S4 classes in an installed package
     ## between code and documentation.
@@ -951,8 +950,7 @@ function(package, lib.loc = NULL)
     ## Currently, we only return the names of all classes checked.
     ## </NOTE>
 
-    bad_Rd_objects <- list()
-    class(bad_Rd_objects) <- "codocClasses"
+    bad_Rd_objects <- structure(NULL, class = "codocClasses")
 
     ## Argument handling.
     if(length(package) != 1L)
@@ -962,8 +960,7 @@ function(package, lib.loc = NULL)
         stop(gettextf("directory '%s' does not contain R code", dir),
              domain = NA)
     if(!file_test("-d", file.path(dir, "man")))
-        stop(gettextf("directory '%s' does not contain Rd sources",
-                      dir),
+        stop(gettextf("directory '%s' does not contain Rd sources", dir),
              domain = NA)
     is_base <- basename(dir) == "base"
 
@@ -978,6 +975,8 @@ function(package, lib.loc = NULL)
     S4_classes <- methods::getClasses(code_env)
     if(!length(S4_classes)) return(bad_Rd_objects)
 
+    sApply <- function(X, FUN, ...) ## fast and special case - only
+        unlist(lapply(X, FUN, ...), recursive=FALSE, use.names=FALSE)
     ## Build Rd data base.
     db <- Rd_db(package, lib.loc = dirname(dir))
     db <- lapply(db, Rd_pp)
@@ -985,41 +984,55 @@ function(package, lib.loc = NULL)
     ## Need some heuristics now.  When does an Rd object document just
     ## one S4 class so that we can compare (at least) the slot names?
     ## Try the following:
-    ## * \docType{} identical to "class";
-    ## * just one \alias{} (could also check whether it ends in
-    ##   "-class");
-    ## * a non-empty user-defined section 'Slots'.
+    ## 1) \docType{} identical to "class";
+    ## 2) either exactly one \alias{} or only one ending in "-class"
+    ## 3) a non-empty user-defined section 'Slots'.
 
     ## As going through the db to extract sections can take some time,
     ## we do the vectorized metadata computations first, and try to
     ## subscript whenever possible.
 
-    aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
-    idx <- (sapply(aliases, length) == 1L)
-    if(!any(idx)) return(bad_Rd_objects)
-    db <- db[idx]; aliases <- aliases[idx]
-    idx <- sapply(lapply(db, .get_Rd_metadata_from_Rd_lines, "docType"),
+    idx <- sApply(lapply(db, .get_Rd_metadata_from_Rd_lines, "docType"),
                   identical, "class")
     if(!any(idx)) return(bad_Rd_objects)
-    db <- db[idx]; aliases <- aliases[idx]
+    db <- db[idx]
+    stats <- c(n.S4classes = length(S4_classes), n.db = length(db))
+
+    aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
+    named_class <- lapply(aliases, grepl, pattern="-class$")
+    nClass <- sApply(named_class, sum)
+    oneAlias <- sApply(aliases, length) == 1L
+    idx <- oneAlias | nClass == 1L
+    if(!any(idx)) return(bad_Rd_objects)
+    db <- db[idx]
+    stats["n.cl"] <- length(db)
+
+    ## keep only the foo-class alias in case there was more than one:
+    multi <- idx & !oneAlias
+    aliases[multi] <-
+        mapply(`[`, aliases[multi], named_class[multi],
+               SIMPLIFY = FALSE, USE.NAMES = FALSE)
+    aliases <- unlist(aliases[idx], use.names = FALSE)
+
     ## Now collapse.
     db <- lapply(db, paste, collapse = "\n")
     Rd_slots <-
         .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "Slots", FALSE)
-    idx <- !sapply(Rd_slots, identical, character())
+    idx <- !sApply(Rd_slots, identical, character())
     if(!any(idx)) return(bad_Rd_objects)
-    db <- db[idx]
-    aliases <- unlist(aliases[idx])
-    Rd_slots <- Rd_slots[idx]
+    db <- db[idx]; aliases <- aliases[idx]; Rd_slots <- Rd_slots[idx]
+    stats["n.final"] <- length(db)
 
-    names(db) <- .get_Rd_names_from_Rd_db(db)
+    dbNames <- .get_Rd_names_from_Rd_db(db)
 
-    .get_slot_names_from_slot_section_text <- function(txt) {
+    slotNames_from_section_text <- function(txt) {
+        s.apply <- function(X, FUN, ...) # keeping 'names':
+            unlist(sapply(X, FUN, ..., simplify = FALSE))
         ## Get \describe (inside user-defined section 'Slots')
-        txt <- unlist(sapply(txt, get_Rd_section, "describe"))
+        txt <- s.apply(txt, get_Rd_section, "describe")
         ## Suppose this worked ...
         ## Get the \items inside \describe
-        txt <- unlist(sapply(txt, get_Rd_items))
+        txt <- s.apply(txt, get_Rd_items)
         if(!length(txt)) return(character())
         ## And now strip enclosing '\code{...}:'
         txt <- gsub("\\\\code\\{([^}]*)\\}:?", "\\1", as.character(txt))
@@ -1029,49 +1042,61 @@ function(package, lib.loc = NULL)
         txt
     }
 
-    S4_classes_checked <- character()
-    for(cl in S4_classes) {
-        idx <- which(utils:::topicName("class", cl) == aliases)
-        if(length(idx) == 1L) {
-            ## Add sanity checking later ...
-            S4_classes_checked <- c(S4_classes_checked, cl)
-            slots_in_code <-
-                sort(names(methods::slot(methods::getClass(cl, where =
-                                                           code_env),
-                                         "slots")))
-            slots_in_docs <-
-                sort(.get_slot_names_from_slot_section_text(Rd_slots[[idx]]))
-            if(!identical(slots_in_code, slots_in_docs)) {
-                bad_Rd_objects[[names(db)[idx]]] <-
-                    list(name = cl,
-                         code = slots_in_code,
-                         docs = slots_in_docs)
-            }
+    .inheritedSlotNames <- function(ext) {
+	supcl <- methods::.selectSuperClasses(ext)
+	unique(unlist(lapply(lapply(supcl, methods::getClassDef),
+			     methods::slotNames),
+		      use.names=FALSE))
+    }
+
+    S4topics <- sApply(S4_classes, utils:::topicName, type="class")
+    S4_checked <- S4_classes[has.a <- S4topics %in% aliases]
+    idx <- match(S4topics[has.a], aliases)
+    for(icl in seq_along(S4_checked)) {
+        cl <- S4_checked[icl]
+        cld <- methods::getClass(cl, where = code_env)
+        ii <- idx[icl]
+        ## Add sanity checking later ...
+        codeSlots <- sort(methods::slotNames(cld))
+        docSlots  <- sort(slotNames_from_section_text(Rd_slots[[ii]]))
+        superSlots <- .inheritedSlotNames(cld@contains)
+        if(length(superSlots)) ## allow '\dots' in docSlots
+            docSlots <- docSlots[docSlots != "\\dots"]
+## was if(!identical(slots_in_code, slots_in_docs)) {
+        if(!all(d.in.c <- docSlots %in% codeSlots) ||
+           !all(c.in.d <- (codeSlots %w/o% superSlots) %in% docSlots) ) {
+            bad_Rd_objects[[dbNames[ii]]] <-
+                list(name = cl,
+                     code = codeSlots,
+                     inherited = superSlots,
+                     docs = docSlots)
         }
     }
 
-    attr(bad_Rd_objects, "S4_classes_checked") <-
-        as.character(S4_classes_checked)
+    attr(bad_Rd_objects, "S4_classes_checked") <- S4_checked
+    attr(bad_Rd_objects, "stats") <- stats
     bad_Rd_objects
-}
+} ## end{ codocClasses }
 
-print.codocClasses <-
-function(x, ...)
+print.codocClasses <- function(x, ...)
 {
     if(!length(x))
         return(invisible(x))
-    format_args <- function(s) paste(s, collapse = " ")
+    capWord <- function(w) sub("\\b(\\w)", "\\U\\1", w, perl=TRUE)
+    wrapPart <- function(nam) {
+	if(length(O <- docObj[[nam]]))
+	    strwrap(sprintf("%s: %s", gettextf(capWord(nam)),
+			    paste(O, collapse = " ")),
+		    indent = 2L, exdent = 8L)
+    }
     for (docObj in names(x)) {
         writeLines(gettextf("S4 class codoc mismatches from documentation object '%s':",
                             docObj))
         docObj <- x[[docObj]]
         writeLines(c(gettextf("Slots for class '%s'", docObj[["name"]]),
-                     strwrap(gettextf("Code: %s",
-                                      format_args(docObj[["code"]])),
-                             indent = 2L, exdent = 8L),
-                     strwrap(gettextf("Docs: %s",
-                                      format_args(docObj[["docs"]])),
-                             indent = 2L, exdent = 8L)))
+		     wrapPart("code"),
+		     wrapPart("inherited"),
+		     wrapPart("docs")))
         writeLines("")
     }
     invisible(x)
@@ -1094,8 +1119,7 @@ function(package, lib.loc = NULL)
     ## Currently, we only return the names of all data frames checked.
     ## </NOTE>
 
-    bad_Rd_objects <- list()
-    class(bad_Rd_objects) <- "codocData"
+    bad_Rd_objects <- structure(NULL, class = "codocData")
 
     ## Argument handling.
     if(length(package) != 1L)

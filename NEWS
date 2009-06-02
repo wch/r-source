@@ -100,6 +100,12 @@ NEW FEATURES
 	"0.30", i.e., with trailing zeros.  This change also renders
 	levels construction in factor() more consistent.
 
+    o	codocClasses() which checks consistency of S4 class slots'
+	documentation, now does this in considerably more cases.  The
+	documentation of inherited slots (from superclasses) is now
+	optional.  This affects 'R CMD check <pkg>' when the package
+	defines S4 classes.
+
 
 DEPRECATED & DEFUNCT
 
