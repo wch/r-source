@@ -280,6 +280,9 @@ BUG FIXES
 	custom comparison methods specific to the class of elements
 	being sorted.
 
+    o	Increase NAMED value on seq value in for loop so loop code cannot
+	modify seq value.
+
 
 
 		CHANGES IN R VERSION 2.9.0
