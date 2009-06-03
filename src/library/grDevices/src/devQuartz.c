@@ -935,10 +935,16 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
            snapping rect with borders) don't work as well, because they have
            unwanted visual side-effects. */
         if (R_ALPHA(gc->fill) > 0 && R_ALPHA(gc->col) == 0) {
+	    /* store original values in case we need to go back */
+	    double ox0 = x0, ox1 = x1, oy0 = y0, oy1 = y1;
             x0 = (round(x0 * xd->scalex)) / xd->scalex;
             x1 = (round(x1 * xd->scalex)) / xd->scalex;
             y0 = (round(y0 * xd->scaley)) / xd->scaley;
             y1 = (round(y1 * xd->scaley)) / xd->scaley;
+	    /* work-around for PR#13744 - make sure the width or height
+	       does not drop to 0 because of aligning. */
+	    if (x0 == x1 && (ox0 != ox1)) x1 += ox1 - ox0;
+	    if (y0 == y1 && (oy0 != oy1)) y1 += oy1 - oy0;
         }
     }
     CGContextBeginPath(ctx);
