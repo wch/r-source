@@ -2395,3 +2395,9 @@ try(bar$NewCol <- val)
 # similar, not in the report
 try(bar[["NewCol"]] <- val)
 ## succeeded but gave corrupt result in 2.9.0
+
+## Printing NA_complex_
+m22 <- matrix(list(NA_complex_, 3, "A string", NA_complex_), 2,2)
+print(m22)
+print(m22, na.print="<missing value>")
+## used uninitialized variable in C, noticably Windows, for R <= 2.9.0

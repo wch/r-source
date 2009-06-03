@@ -286,6 +286,9 @@ BUG FIXES
     o	Prevent rectangles of size < 0.5 pixel from disappearing in
 	Quartz when using rastered backend (PR#13744)
 
+    o	printing _NA_complex_ had a low-level thinko; patch thanked to
+	Bill Dunlap.
+
 
 
 		CHANGES IN R VERSION 2.9.0
