@@ -300,13 +300,16 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	    case CPLXSXP:
 		if (LENGTH(tmp) == 1) {
 		    Rcomplex *x = COMPLEX(tmp);
-		    formatComplex(x, 1, &wr, &dr, &er, &wi, &di, &ei, 0);
 		    if (ISNA(x[0].r) || ISNA(x[0].i))
+			/* formatReal(NA) --> w=R_print.na_width, d=0, e=0 */
 			snprintf(pbuf, 115, "%s",
-				 EncodeReal(NA_REAL, w, 0, 0, OutDec));
-		    else
-			snprintf(pbuf, 115, "%s", EncodeComplex(x[0],
-			wr, dr, er, wi, di, ei, OutDec));
+				 EncodeReal(NA_REAL, R_print.na_width, 0, 0, OutDec));
+		    else {
+			formatComplex(x, 1, &wr, &dr, &er, &wi, &di, &ei, 0);
+			snprintf(pbuf, 115, "%s",
+				 EncodeComplex(x[0],
+					       wr, dr, er, wi, di, ei, OutDec));
+		    }
 		} else
 		snprintf(pbuf, 115, "Complex,%d", LENGTH(tmp));
 		break;
