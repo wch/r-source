@@ -794,55 +794,63 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
     
     /* Shell sort isn't stable, so add test on index */
     for (t = 0; incs[t] > hi-lo+1; t++);
-    switch (TYPEOF(key)) {
-    case LGLSXP:
-    case INTSXP:
-	if (decreasing) {
-#define less(a, b) (ix[a] < ix[b] || (ix[a] == ix[b] && a > b))
-	    sort2_with_index
-#undef less
-	} else {
-#define less(a, b) (ix[a] > ix[b] || (ix[a] == ix[b] && a > b))
-	    sort2_with_index
-#undef less
-	}
-	break;
-    case REALSXP:
-	if (decreasing) {
-#define less(a, b) (x[a] < x[b] || (x[a] == x[b] && a > b))
-	    sort2_with_index
-#undef less
-	} else {
-#define less(a, b) (x[a] > x[b] || (x[a] == x[b] && a > b))
-	    sort2_with_index
-#undef less
-	}
-	break;
-    case CPLXSXP:
-	if (decreasing) {
-#define less(a, b) (ccmp(cx[a], cx[b], 0) < 0 || (cx[a].r == cx[b].r && cx[a].i == cx[b].i && a > b))
-	    sort2_with_index
-#undef less
-	} else {
-#define less(a, b) (ccmp(cx[a], cx[b], 0) > 0 || (cx[a].r == cx[b].r && cx[a].i == cx[b].i && a > b))
-	    sort2_with_index
-#undef less
-	}
-	break;
-    case STRSXP:
-	if (decreasing)
-#define less(a, b) (c=Scollate(sx[a], sx[b]), c < 0 || (c == 0 && a > b))
-	    sort2_with_index
-#undef less
-	else
-#define less(a, b) (c=Scollate(sx[a], sx[b]), c > 0 || (c == 0 && a > b))
-	    sort2_with_index
-#undef less
-	break;
-    default:  /* only reached from do_rank */
+    
+    if (isObject(key) && !isNull(rho)) {
+/* only reached from do_rank */
 #define less(a, b) greater(a, b, key, nalast^decreasing, decreasing, rho)
-	sort2_with_index
+	    sort2_with_index
 #undef less
+    } else {
+	switch (TYPEOF(key)) {
+	case LGLSXP:
+	case INTSXP:
+	    if (decreasing) {
+#define less(a, b) (ix[a] < ix[b] || (ix[a] == ix[b] && a > b))
+		sort2_with_index
+#undef less
+	    } else {
+#define less(a, b) (ix[a] > ix[b] || (ix[a] == ix[b] && a > b))
+		sort2_with_index
+#undef less
+	    }
+	    break;
+	case REALSXP:
+	    if (decreasing) {
+#define less(a, b) (x[a] < x[b] || (x[a] == x[b] && a > b))
+		sort2_with_index
+#undef less
+	    } else {
+#define less(a, b) (x[a] > x[b] || (x[a] == x[b] && a > b))
+		sort2_with_index
+#undef less
+	    }
+	    break;
+	case CPLXSXP:
+	    if (decreasing) {
+#define less(a, b) (ccmp(cx[a], cx[b], 0) < 0 || (cx[a].r == cx[b].r && cx[a].i == cx[b].i && a > b))
+		sort2_with_index
+#undef less
+	    } else {
+#define less(a, b) (ccmp(cx[a], cx[b], 0) > 0 || (cx[a].r == cx[b].r && cx[a].i == cx[b].i && a > b))
+		sort2_with_index
+#undef less
+	    }
+	    break;
+	case STRSXP:
+	    if (decreasing)
+#define less(a, b) (c=Scollate(sx[a], sx[b]), c < 0 || (c == 0 && a > b))
+		sort2_with_index
+#undef less
+	    else
+#define less(a, b) (c=Scollate(sx[a], sx[b]), c > 0 || (c == 0 && a > b))
+		sort2_with_index
+#undef less
+	    break;
+    	default:  /* only reached from do_rank */
+#define less(a, b) greater(a, b, key, nalast^decreasing, decreasing, rho)
+	    sort2_with_index
+#undef less
+	}
     }
     if(isna) free(isna);
 }
