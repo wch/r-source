@@ -113,13 +113,17 @@ DEPRECATED & DEFUNCT
 	Extensions' for the steps needed to unbundle a bundle.
 
 
-UTILITIES
+INTERNATIONALIZATION
 
     o	There is some makefile support for adding/updating translations
 	in packages: see po/README and 'Writing R Extensions'.
 
+	There is support for the use of 'dngettext' for C-level
+	translations in packages: see 'Writing R Extensions'.
+
 
 BUG FIXES
+
 
 
 

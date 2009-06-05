@@ -1078,7 +1078,6 @@
  libintl_bindtextdomain
  libintl_dcigettext
  libintl_dcngettext
- libintl_dngettext
  libintl_gettext_extract_plural
  libintl_gettext_free_exp
  libintl_gettext_germanic_plural

@@ -2631,6 +2631,26 @@ for example
 error(_("'ord' must be a positive integer"));
 @end example
 
+If you want to use different messages for singular and plural forms, you
+need to add
+
+@example
+#ifndef ENABLE_NLS
+#define dngettext(pkg, String, StringP, N) (N > 1 ? StringP: String)
+#endif
+@end example
+
+@noindent
+and mark strings by
+
+@example
+dngettext(("@var{pkg}", @var{<singular string>}, @var{<plural string>}, n)
+@end example
+
+@noindent
+(This is only supported as from @R{} 2.10.0, and will not work on
+Windows for earlier versions of @R{}.)
+
 @item
 In the package's @file{src} directory run
 
