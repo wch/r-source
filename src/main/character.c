@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2009  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -433,9 +433,9 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef SUPPORT_MBCS
     if (fixed_opt || perl_opt) {
 	for (i = 0; i < tlen; i++)
-	if (getCharCE(STRING_ELT(tok, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	if (getCharCE(STRING_ELT(tok, i)) == CE_UTF8) use_UTF8 = TRUE;
 	for (i = 0; i < len; i++)
-	    if (getCharCE(STRING_ELT(x, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	    if (getCharCE(STRING_ELT(x, i)) == CE_UTF8) use_UTF8 = TRUE;
     }
     if (use_UTF8 && !fixed_opt && perl_opt) options = PCRE_UTF8;
 #endif
@@ -1071,7 +1071,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if ((fixed_opt || perl_opt) && !useBytes) {
 	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
 	for (i = 0; i < n; i++)
-	    if (getCharCE(STRING_ELT(vec, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	    if (getCharCE(STRING_ELT(vec, i)) == CE_UTF8) use_UTF8 = TRUE;
     }
     if (use_UTF8) {
 	cpat = translateCharUTF8(STRING_ELT(pat, 0));
@@ -1339,7 +1339,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
 	if (getCharCE(STRING_ELT(rep, 0)) == CE_UTF8) use_UTF8 = TRUE;
 	for (i = 0; i < n; i++)
-	    if (getCharCE(STRING_ELT(vec, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	    if (getCharCE(STRING_ELT(vec, i)) == CE_UTF8) use_UTF8 = TRUE;
     }
 
     if (use_UTF8) {
@@ -1553,7 +1553,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if ((fixed_opt || perl_opt) && !useBytes) {
 	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
 	for (i = 0; i < n; i++)
-	    if (getCharCE(STRING_ELT(text, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	    if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) use_UTF8 = TRUE;
     }
     if (use_UTF8) {
 	spat = translateCharUTF8(STRING_ELT(pat, 0));
@@ -1983,7 +1983,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (fixed_opt && !useBytes) {
 	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
 	for (i = 0; i < n; i++)
-	    if (getCharCE(STRING_ELT(text, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	    if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) use_UTF8 = TRUE;
     }
     if (use_UTF8) {
 	spat = translateCharUTF8(STRING_ELT(pat, 0));
