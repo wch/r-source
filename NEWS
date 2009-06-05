@@ -288,10 +288,16 @@ BUG FIXES
 	modify seq value.
 
     o	Prevent rectangles of size < 0.5 pixel from disappearing in
-	Quartz when using rastered backend (PR#13744)
+	Quartz when using rastered backend.  (PR#13744)
 
-    o	printing _NA_complex_ had a low-level thinko; patch thanked to
+    o	Printing _NA_complex_ had a low-level thinko; patch thanked to
 	Bill Dunlap.
+
+    o	CP1257 encoding for postscript/PDF has been corrected.  (PR#13736)
+
+    o	aov() with an error term was evaluating the ... arguments in
+	2.9.0 whilst checking their names, so could fail by evaluating
+	them in the wrong place.  (PR#13733)
 
 
 
