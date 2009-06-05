@@ -1,6 +1,6 @@
 % File src/library/stats/man/Poisson.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Poisson}
@@ -51,8 +51,8 @@ rpois(n, lambda)
   \eqn{p(x)} is computed using Loader's algorithm, see the reference in
   \code{\link{dbinom}}.
 
-  The quantile is left continuous: \code{qpois(q, lambda)} is the largest
-  integer \eqn{x} such that \eqn{P(X \le x) < q}.
+  The quantile is right continuous: \code{qpois(q, lambda)} is the smallest
+  integer \eqn{x} such that \eqn{P(X \le x) \ge q}.
 
   Setting \code{lower.tail = FALSE} allows to get much more precise
   results when the default, \code{lower.tail = TRUE} would return 1, see
