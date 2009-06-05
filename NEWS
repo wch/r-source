@@ -160,6 +160,11 @@ NEW FEATURES
 	whole bundle: this allow bundles to be split and installations
 	updated.
 
+    o	Changes to S4 and S3 method dispatch will support S4 class
+	inheritance for S3 methods, primitive and via UseMethod() and
+	do better on S3 inheritance per-instance for S4 methods.
+	See ?Methods and the paper referenced there.
+
     o	nlminb() gives better non-convergence messages in some cases.
 
 
@@ -229,10 +234,10 @@ BUG FIXES
 	"unregistered" S3 classes now work.
 
     o	srcref records produced by parse() and parse_Rd() did not record
-    	the encoding of the source file.  (Reported by Romain Francois.)
+	the encoding of the source file.  (Reported by Romain Francois.)
 
     o	The X11 version of View() was misbehaving in MBCS locales, and
- 	PgUp/PgDn now behave better, thanks to a patch from Ei-ji Nakama.
+	PgUp/PgDn now behave better, thanks to a patch from Ei-ji Nakama.
 
     o	R CMD check looked at the environment variable PDFLATEX, but
 	as from R 2.8.1 R CMD Rd2dvi used R_PDFLATEXCMD in
@@ -254,7 +259,7 @@ BUG FIXES
 	are of compatible dimensions.
 
     o	qbinom() now is accurate also in (large size, small prob)
-    	cases.  (PR#13711)
+	cases.  (PR#13711)
 
     o	The calculation of the Spearman p-value in cor.test() is
 	slightly more accurate in some cases.  (PR#13574)
@@ -290,7 +295,7 @@ BUG FIXES
     o	Prevent rectangles of size < 0.5 pixel from disappearing in
 	Quartz when using rastered backend.  (PR#13744)
 
-    o	Printing _NA_complex_ had a low-level thinko; patch thanked to
+    o	Printing _NA_complex_ had a low-level thinko; patch thanks to
 	Bill Dunlap.
 
     o	CP1257 encoding for postscript/PDF has been corrected.  (PR#13736)
