@@ -355,7 +355,8 @@ print.Arima <-
     if (length(x$coef)) {
         cat("Coefficients:\n")
         coef <- round(x$coef, digits = digits)
-        if (se && nrow(x$var.coef)) {
+        ## use NROW as if all coefs are fixed there are no var.coef's
+        if (se && NROW(x$var.coef)) {
             ses <- rep(0, length(coef))
             ses[x$mask] <- round(sqrt(diag(x$var.coef)), digits = digits)
             coef <- matrix(coef, 1L, dimnames = list(NULL, names(coef)))
