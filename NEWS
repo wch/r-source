@@ -304,6 +304,8 @@ BUG FIXES
 	2.9.0 whilst checking their names, so could fail by evaluating
 	them in the wrong place.  (PR#13733)
 
+    o	The print() method for arima() failed if all coefs were fixed.
+
 
 
 		CHANGES IN R VERSION 2.9.0
