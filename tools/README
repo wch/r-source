@@ -5,6 +5,8 @@ The files are as follows.
 
   config.guess
   config.sub
+	From http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD etc
+
   install-sh
   mdate-sh
   missing
