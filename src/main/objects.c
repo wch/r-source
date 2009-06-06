@@ -466,9 +466,27 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	findcontext(CTXT_RETURN, env, ans); /* does not return */
 	UNPROTECT(1);
     }
-    else
-	errorcall(call, _("no applicable method for \"%s\""),
-		  translateChar(STRING_ELT(generic, 0)));
+    else {
+	SEXP klass;
+	int nclass;
+	char cl[1000];
+	PROTECT(klass = R_data_class2(obj));
+	nclass = length(klass);
+	if (nclass == 1) 
+	    strcpy(cl, translateChar(STRING_ELT(klass, 0)));
+	else {
+	    int i;
+	    strcpy(cl, "c('");
+	    for (i = 0; i < nclass; i++) {
+		if (i > 0) strcat(cl, "', '");
+		strcat(cl, translateChar(STRING_ELT(klass, i)));
+	    }
+	    strcat(cl, "')");
+	}
+	errorcall(call, _("no applicable method for '%s' applied to an object of class \"%s\""),
+		  translateChar(STRING_ELT(generic, 0)), cl);
+	UNPROTECT(1); /* NOT Used */
+    }
     return R_NilValue; /* NOT Used */
 }
 
