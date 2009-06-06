@@ -231,7 +231,7 @@ static int match_to_obj(SEXP arg, SEXP obj) {
    which should be explicitly converted when an S3 method is applied
    to an object from an S4 subclass.
 */
-static int isBasicClass(const char *ss) {
+int isBasicClass(const char *ss) {
     static SEXP s_S3table = 0;
     if(!s_S3table) {
       s_S3table = findVarInFrame3(R_MethodsNamespace, install(".S3MethodsClasses"), TRUE);

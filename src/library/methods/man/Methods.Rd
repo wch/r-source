@@ -215,7 +215,12 @@ methods is the recommended approach.
 If the object has S3 inheritance, any other S4 superclasses are ignored for S3 methods: see the example
 below.
 If there is no S3 inheritance, S3 method selection will essentially
-resemble S4 selection for the same class.
+resemble S4 selection for the same class \emph{if} the call to
+\code{\link{setClass}} has included the argument \code{S3methods =
+  TRUE}. If not, the current behavior (R 2.9.1) is to select S3 methods
+defined for this class, but not for its subclasses.  (This behavior is
+largely for back compatibility; in future versions of R, S3 methods may be
+ignored for S4 classes unless \code{S3methods} is set.)
 
 
 Looking in the other direction, it remains true that S4 selection has no
@@ -546,24 +551,25 @@ stopifnot(identical(f3(mLt), f3.POSIXlt(mLt)))
 
 
 
-## An S4 class that does not contain a registered S3 class
-## selects S3 methods according to its S4 "finheritance"
+## An S4 class that does not contain a registered S3 class or object type
+## selects S3 methods according to its S4 "inheritance"
+## but only if the class definition requests this via S3methods=TRUE
 ## ( from version 2.9.1 on)
 
-setClass("classA", contains = "numeric", 
-   representation(realData = "numeric"))
+setClass("classA", contains = "numeric",
+   representation(realData = "numeric"), S3methods = TRUE)
 
-Math.classA <- function(x) {x <- x@realData; NextMethod()}
+Math.classA <- function(x) {(getFunction(.Generic))(x@realData)}
 
 x <- new("classA", log(1:10), realData = 1:10)
 
-abs(x) # 1:10, as intended
+stopifnot(identical(abs(x), 1:10))
 
 setClass("classB", contains = "classA")
 
 y <- new("classB", x)
 
-abs(y) # (version 2.9.0 or earlier gets the wrong answer)
+stopifnot(identical(abs(y), 1:10)) # (version 2.9.0 or earlier fails here)
 
 ## Note: with a class that tries to combine both S3 and S4 superclasses.
 ## The S3 inheritance is used and the S3 method for
