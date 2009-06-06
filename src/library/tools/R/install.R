@@ -990,6 +990,8 @@
             build_text <- FALSE
         } else if (a == "--no-html") {
             build_html <- FALSE
+        } else if (a == "--no-latex") {
+            build_latex <- FALSE
         } else if (a == "--no-example") {
             build_example <- FALSE
         } else if (a == "--no-chm") {
