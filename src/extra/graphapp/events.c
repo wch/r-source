@@ -23,7 +23,7 @@
    See the file COPYLIB.TXT for details.
 */
 
-/* Copyright (C) 2004	The R Foundation
+/* Copyright (C) 2004, 2009	The R Foundation
 
    Changes for R, Chris Jackson, 2004
    Handle find-and-replace modeless dialogs
@@ -347,19 +347,18 @@ static void handle_scroll(object obj, HWND hwnd, UINT message,
     int max_value = 100;
     int where = 0;
     int prev = 0;
+    int which = 0;
     /* we need to look at the recorded values */
     max_value = obj->max;
     size_shown = obj->size;
-    if (obj->kind != WindowObject) {
-	prev = where = GetScrollPos(hwnd, SB_CTL);
-    }
-    else if (message == WM_VSCROLL) {
-	prev = where = GetScrollPos(hwnd, SB_VERT);
-    } else if (message == WM_HSCROLL) {
-	prev = where = GetScrollPos(hwnd, SB_HORZ);
+    if (obj->kind != WindowObject) which = SB_CTL;
+    else if (message == WM_VSCROLL) which = SB_VERT;
+    else if (message == WM_HSCROLL) {
+        which = SB_HORZ;
 	max_value = obj->xmax;
 	size_shown = obj->xsize;
     }
+    prev = where = GetScrollPos(hwnd, which);
 
     /* next we look at wParam to see what happened */
     switch(LOWORD(wParam))
@@ -377,9 +376,18 @@ static void handle_scroll(object obj, HWND hwnd, UINT message,
     case SB_BOTTOM:		where = max_value;
 	break;
     case SB_THUMBPOSITION:
-    case SB_THUMBTRACK:
+    case SB_THUMBTRACK: 
 #ifdef WIN32
-	where = HIWORD(wParam);
+	{
+	    /* The message only contains a 16 bit position.  We need to query to get 32 bits. */
+	    SCROLLINFO si;
+	    si.cbSize = sizeof(SCROLLINFO);
+	    si.fMask = SIF_TRACKPOS;
+	    if (GetScrollInfo(hwnd, which, &si))
+		where = si.nTrackPos;
+	    else
+		where = HIWORD(wParam); /* Just in case this mask is not supported. Not sure when it arrived... */
+	}
 #else
 	where = LOWORD(lParam);
 #endif
@@ -390,14 +398,8 @@ static void handle_scroll(object obj, HWND hwnd, UINT message,
     if (prev == where)
 	return;
     /* now we reset the scrollbar's values */
-    if (obj->kind != WindowObject) {
-	SetScrollPos(hwnd, SB_CTL, where, 1);
-    }
-    else if (message == WM_VSCROLL) {
-	SetScrollPos(hwnd, SB_VERT, where, 1);
-    }
-    else if (message == WM_HSCROLL) {
-	SetScrollPos(hwnd, SB_HORZ, where, 1);
+    SetScrollPos(hwnd, which, where, 1);
+    if (message == WM_HSCROLL) {
 	where = -(where+1);
     }
     setvalue(obj, where);

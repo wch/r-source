@@ -57,6 +57,9 @@ BUG FIXES
     o	sprintf("%a") works better in some cases thanks to a patch to
 	trio from Ei-ji Nakama.
 
+    o	Scrolling controls (e.g. from View() and edit()) did not handle
+	large line counts well.
+
     
 
     		CHANGES IN R VERSION 2.9.0
