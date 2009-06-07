@@ -306,6 +306,8 @@ BUG FIXES
 
     o	The print() method for arima() failed if all coefs were fixed.
 
+    o	R CMD INSTALL --no-latex was not implemented in 2.9.0 (only).
+
 
 
 		CHANGES IN R VERSION 2.9.0
