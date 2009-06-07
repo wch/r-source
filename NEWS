@@ -106,6 +106,9 @@ NEW FEATURES
 	optional.  This affects 'R CMD check <pkg>' when the package
 	defines S4 classes.
 
+    o	codoc() now also checks S4 methods for code/documentation
+    	mismatches.
+
 
 DEPRECATED & DEFUNCT
 

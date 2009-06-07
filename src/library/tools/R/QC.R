@@ -502,7 +502,8 @@ function(package, dir, lib.loc = NULL,
         ## redefinitions obtained by methods::rematchDefinition().
         ## </NOTE>
         check_S4_methods <-
-            isTRUE(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")))
+            !identical(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")),
+                       FALSE)
         if(check_S4_methods) {
             get_formals_from_method_definition <- function(m)
                 formals(methods::unRematchDefinition(m))
