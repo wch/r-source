@@ -591,7 +591,7 @@ foreach my $pkg (@ARGV) {
 	if ($R_check_executables) {
 	    ## this is tailored to the FreeBSD/Linux file,
 	    ## see http://www.darwinsys.com/file/
-	    my $have_free_File = 0;
+	    my $have_free_file = 0;
 	    my $tmpfile = R_tempfile("file");
 	    if (!$WINDOWS) {
 		## version 4.21 writes to stdout, 4.23 to stderr
@@ -601,15 +601,22 @@ foreach my $pkg (@ARGV) {
 		my @lines = <FILE>;
 		close(FILE);
 		## a reasonable check -- it does not identify itself well
-		$have_free_file = 1 if grep(/^file-4/, @lines);
+		$have_free_file = 1 if grep(/^file-[45]/, @lines);
 	    }
 	    if ($have_free_file) {
 		$log->checking("for executable files");
 		my @exec_files = ();
 		sub find_execs {
 		    my $file_path = $File::Find::name;
-		    ## false positive
-		    return if $file_path =~ m+foreign/tests/datefactor.dta$+;
+		    ## False positives:
+		    ## * foreign/tests/datefactor.dta gives
+		    ##     setgid mc68020 pure executable not stripped
+		    return if $file_path =~
+			m+foreign/tests/datefactor.dta$+;
+		    ## * msProcess/inst/data2/*.txt give
+		    ##     setgid MS-DOS executable, MZ for MS-DOS
+		    return if $file_path =~
+			m+msProcess/inst/data2/.*.txt$+;
 		    my $file_name = basename($file_path);
 		    my $bare_path = $file_path;
 		    $bare_path =~ s+^$pkgdir/++;
@@ -638,6 +645,17 @@ foreach my $pkg (@ARGV) {
 		    @exec_files = ();
 		    foreach my $file (@exec_files0) {
 			push @exec_files, $file unless $bin{$file};
+		    }
+		}
+		if(($opt_install =~ /^check/) &&
+		   (-f &file_path($pkgdir, ".install_timestamp"))) {
+		    my $its = (-M &file_path($pkgdir,
+					     ".install_timestamp"));
+		    my @exec_files_in = @exec_files;
+		    @exec_files = ();
+		    foreach my $path (@exec_files_in) {
+			push @exec_files, $path unless
+			    ((-M &file_path($pkgdir, $path)) < $its);
 		    }
 		}
 		if(scalar(@exec_files) > 0) {
