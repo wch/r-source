@@ -128,9 +128,9 @@ as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...)
 }
 
 as.data.frame.default <- function(x, ...)
-    stop(gettextf("cannot coerce class \"%s\" into a data.frame", class(x)),
+    stop(gettextf("cannot coerce class %s into a data.frame",
+                  deparse(class(x))),
          domain = NA)
-
 
 ###  Here are methods ensuring that the arguments to "data.frame"
 ###  are in a form suitable for combining into a data frame.
