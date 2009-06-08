@@ -15,8 +15,8 @@
 #  http://www.r-project.org/Licenses/
 
 available.packages <-
-    function(contriburl = contrib.url(getOption("repos")), method,
-             fields = NULL, duplicates = FALSE)
+    function(contriburl = contrib.url(getOption("repos"), type), method,
+             fields = NULL, duplicates = FALSE, type = getOption("pkgType"))
 {
     requiredFields <-
         tools:::.get_standard_repository_db_fields()

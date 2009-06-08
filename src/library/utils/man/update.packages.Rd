@@ -25,8 +25,9 @@ update.packages(lib.loc = NULL, repos = getOption("repos"),
                 oldPkgs = NULL, \dots, checkBuilt = FALSE,
                 type = getOption("pkgType"))
 
-available.packages(contriburl = contrib.url(getOption("repos")),
-                   method, fields = NULL, duplicates = FALSE)
+available.packages(contriburl = contrib.url(getOption("repos"), type),
+                   method, fields = NULL, duplicates = FALSE,
+                   type = getOption("pkgType"))
 
 old.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),

@@ -43,8 +43,9 @@ NEW FEATURES
 	group (S3) methods for 'difftime', such as floor(), signif(),
 	abs(), etc.
 
-    o	For completeness, old.packages() allows 'type' to be specified
-	(you could always specify 'available' or 'contriburl').
+    o	For completeness, old.packages() and available.packages() allow
+	'type' to be specified (you could always specify 'available'
+	or 'contriburl').
 
     o	available.packages() by default only returns information on
 	the latest versions of packages whose version requirements are
