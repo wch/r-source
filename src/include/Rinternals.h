@@ -633,6 +633,7 @@ SEXP R_tryEval(SEXP, SEXP, int *);
 Rboolean Rf_isS4(SEXP);
 SEXP Rf_asS4(SEXP, Rboolean, int);
 SEXP Rf_S3Class(SEXP);
+int Rf_isBasicClass(const char *);
 
 typedef enum {
     CE_NATIVE = 0,
@@ -872,6 +873,7 @@ int R_system(const char *);
 #define inherits		Rf_inherits
 #define install			Rf_install
 #define isArray			Rf_isArray
+#define isBasicClass            Rf_isBasicClass
 #define isComplex		Rf_isComplex
 #define isEnvironment		Rf_isEnvironment
 #define isExpression		Rf_isExpression

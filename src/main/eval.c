@@ -2118,7 +2118,8 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     findmethod(lclass, group, generic, &lsxp, &lgr, &lmeth, &lwhich,
 	       lbuf, rho);
     PROTECT(lgr);
-    if(isFunction(lsxp) && IS_S4_OBJECT(CAR(args)) && lwhich > 0) {
+    if(isFunction(lsxp) && IS_S4_OBJECT(CAR(args)) && lwhich > 0
+       && isBasicClass(translateChar(STRING_ELT(lclass, lwhich)))) {
 	/* This and the similar test below implement the strategy
 	 for S3 methods selected for S4 objects.  See ?Methods */
         value = CAR(args);
@@ -2134,7 +2135,8 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     else
 	rwhich = 0;
 
-    if(isFunction(rsxp) && IS_S4_OBJECT(CADR(args)) && rwhich > 0) {
+    if(isFunction(rsxp) && IS_S4_OBJECT(CADR(args)) && rwhich > 0
+       && isBasicClass(translateChar(STRING_ELT(rclass, rwhich)))) {
         value = CADR(args);
 	if(NAMED(value)) SET_NAMED(value, 2);
 	value = R_getS4DataSlot(value, S4SXP);

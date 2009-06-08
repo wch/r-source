@@ -487,12 +487,19 @@
                    )
 
 .InitSpecialTypes <- function(where) {
+    if(!exists(".S3MethodsClasses", envir = where, inherits = FALSE)) {
+      S3table <- new.env()
+      assign(".S3MethodsClasses", S3table, envir = where)
+    }
+    else S3table <- get(".S3MethodsClasses", envir = where)
   for(cl in c("environment", "externalptr", "name", "NULL")) {
       ncl <- paste(".",cl, sep="")
       setClass(ncl, representation(.xData = cl), where = where)
       setIs(ncl, cl, coerce = function(from) from@.xData,
         replace = function(from, value){ from@.xData <- value; from},
         where = where)
+      ## these classes need explicit coercion for S3 methods
+      assign(cl, getClass(cl, where), envir = S3table)
     }
   setMethod("$<-", ".environment", function (x, name, value) {
     call <- sys.call()

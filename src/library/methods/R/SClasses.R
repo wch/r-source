@@ -19,7 +19,8 @@ setClass <-
     function(Class, representation = list(), prototype = NULL,
              contains = character(), validity = NULL, access = list(),
              where = topenv(parent.frame()), version = .newExternalptr(),
-             sealed = FALSE, package = getPackageName(where))
+             sealed = FALSE, package = getPackageName(where),
+             S3methods = FALSE)
 {
     oldDef <- getClassDef(Class, where)
     if(is(oldDef, "classRepresentation") && oldDef@sealed)
@@ -50,9 +51,7 @@ setClass <-
     oldDef <- getClassDef(Class, where)
     if(is(oldDef, "classRepresentation"))
       .uncacheClass(Class, oldDef)
-    if(length(superClasses) == 0L)
-        assignClassDef(Class, classDef, where)
-    else {
+    if(length(superClasses) > 0L) {
         sealed <- classDef@sealed
         classDef@sealed <- FALSE # to allow setIs to work anyway; will be reset later
         assignClassDef(Class, classDef, where)
@@ -82,10 +81,12 @@ setClass <-
         .checkRequiredGenerics(Class, classDef, where)
         if(sealed) {
             classDef@sealed <- TRUE
-            assignClassDef(Class, classDef, where)
         }
     }
-    Class
+    if(S3methods)
+      classDef <- .setS3MethodsOn(classDef)
+    assignClassDef(Class, classDef, where)
+     Class
 }
 
 representation <-
@@ -779,3 +780,20 @@ sealClass <- function(Class, where = topenv(parent.frame())) {
     assign(".requireCachedGenerics", gg, where)
   }
 }
+
+.setS3MethodsOn <- function(classDef) {
+    ext <- extends(classDef)
+    slots <- classDef@slots
+    if(is.na(match(".S3Class", names(slots)))) {
+        ## add the slot if it's not there
+        slots$.S3Class <- getClass("oldClass")@slots$.S3Class
+        classDef@slots <- slots
+    }
+    ## in any case give the prototype the full extends as .S3Class
+    proto <- classDef@prototype
+    if(is.null(proto)) # simple virtual class--unlikely but valid
+        proto <- defaultPrototype()
+    attr(proto, ".S3Class") <- ext
+    classDef@prototype <- proto
+    classDef
+  }

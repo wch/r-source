@@ -612,6 +612,7 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
 
 static SEXP s_dot_S3Class = 0;
 
+#ifdef UNUSED
 static SEXP R_S4_extends_table = 0;
 
 static SEXP S4_extends(SEXP klass) {
@@ -638,6 +639,7 @@ static SEXP S4_extends(SEXP klass) {
     UNPROTECT(1);
     return(val);
 }
+#endif
 
 /* Version for S3-dispatch */
 SEXP attribute_hidden R_data_class2 (SEXP obj)
@@ -653,11 +655,19 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
 	       JMC iii.9.09 */
   	    SEXP s3class = S3Class(obj);
 	    if(s3class != R_NilValue) {
-	        SEXP value; int i, n = length(s3class);
+	      SEXP value; int i, j = 0, n = length(s3class);
 		PROTECT(value =  allocVector(STRSXP, n+1));
-		SET_STRING_ELT(value, 0, STRING_ELT(klass, 0));
-		for(i=0; i<n; i++)
-		  SET_STRING_ELT(value, i+1, STRING_ELT(s3class, i));
+		if(STRING_ELT(value, 0) != STRING_ELT(klass, 0)) {
+		  /* always include the S4 class itself.  It would be
+		     cleaner NOT to do this & require the class to
+		     specify that it wants S3 methods for its own
+		     class. (see S3method= argument to setClass())
+		  */
+		  SET_STRING_ELT(value, 0, STRING_ELT(klass, 0));
+		  j++;
+		}
+		for(i=0; i<n; i++, j++)
+		  SET_STRING_ELT(value, j, STRING_ELT(s3class, i));
 		UNPROTECT(1);
 		return value;
 	    }
@@ -671,12 +681,12 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
 		return value; /* return c(class(obj), typeof(obj)) */
 	    }
 	    else
-	        return S4_extends(klass);
+	        return klass;
 	    }
 	else
-	    return(klass);
+	    return klass;
     }
-    else {
+      else { /* length(klass) == 0 */
 	SEXPTYPE t;
 	SEXP value, class0 = R_NilValue, dim = getAttrib(obj, R_DimSymbol);
 	int n = length(dim);
