@@ -50,9 +50,11 @@ elements for superclasses, but the recommended style is to use the
     (and usually) the name of the package in which the class definition is assigned.
   }
   \item{S3methods}{if \code{TRUE}, S3 methods may be written for this
-      class. S4 object from the class and from subclasses of it will
-      dispatch the S3 method, assuming that no S4 method and no more
-      direct S3 method applies.  Writing S3 methods for S4 classes is
+      class.  S3 generic functions and primitives will
+      dispatch an S3 method defined for this class, given an S4 object
+      from the class or from a subclass of it, provided no S4
+      method and no more 
+      direct S3 method is found.  Writing S3 methods for S4 classes is
       somewhat deprecated (see \link{Methods}), but if you do write
       them, the class should be created with this argument
       \code{TRUE}, so inheritance will work.  By default, the current

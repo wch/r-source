@@ -142,7 +142,8 @@ that is, a function \emph{f.class}, where \emph{f} is an S3 generic
 function and \emph{class} is the name of an S4 class, other than a
 registered S3 class.
 The first case is now supported and recommended, the second case is
-discouraged but works within the limits discussed below.
+discouraged, but occasionally needed (see section 4 of the paper in
+the references).
 
 The following rules define selection of an S3 method for an S4
 object.  S4 objects are defined internally by a bit in the C
@@ -164,63 +165,44 @@ exactly;
 the object has a slot \code{".S3Class"} and \emph{class} is selected
 by S3 inheritance, treating that slot as the S3 class of the object;
 
-
-\item 
-neither of the previous criteria applies, but \emph{class} 
-is the first element of the S4 superclasses of the object's class for
-which such an S3 method is found.
 }
+The second criterion will apply if either the S4 class contains an S3
+class or the argument \code{S3methods=TRUE} was given to
+\code{\link{setClass}} for the class of the object or for one of its
+superclasses.
 
-
-Examples shown below illustrate the rules.  The underlying motivation
-is as follows.
-
-The first rule just continues the matching of directly defined S3
-methods that has always applied.
-The other two rules define inheritance for S4 objects.
 
 If an S4 class extends an S3 class, and if no S4 methods take precedence, we expect that the
 correct S3 method for the inherited S3 class will be chosen.
 This will happen, so long as the S3 class has been registered by a
 call to \code{\link{setOldClass}}.
-If so, the object from the S4 class will inherit a special slot,
-\code{".S3Class"}, That will be used for S3 dispatch.  Effectively, this
+If so, the object from the S4 class will inherit a special slot
+that will be used as the class for S3 dispatch.  Effectively, this
 slot is a proxy for the class attribute expected by S3 dispatch.  It
 can even vary in its inheritance between objects, as happens with some
-S3 classes, such as \code{\link{POSIXt}}.
-The contents of that slot in the object are used as the class
-for S3 method selection and the object is converted to an S3 object
+S3 classes, such as \code{\link{POSIXt}}, if the replacement version
+of \code{\link{S3Class}} is used to set it.
+If the class so selected is one of the basic S3 classes,
+the object is converted to an S3 object
 with this vector as its class attribute.
-(In practice, only the existence of the slot in the object is tested, not that
-\code{"oldClass"} is a superclass.)
 
-
-The second nonstandard situation arises when an S3 method has been
+A second nonstandard situation arises when an S3 method has been
 explicitly written for an S4 class.
-This is generally not recommended because it confuses the two types of
-inheritance and can lead to undesired results (see below).
-In addition, versions of R through 2.9.0 did not recognize S4
-inheritance in dispatching S3 methods.  Subclasses of the S4 class
-would not then inherit the S3 method.  The example section shows this
-situation.  The version of \R{} accompanying this documentation
+Versions of R through 2.9.0 did not recognize S4
+inheritance in dispatching S3 methods, so that subclasses of the S4 class
+would not then inherit the S3 method.  The version of \R{} accompanying this documentation
 fixes this problem, to the extent practical, as follows.
-When an S4 object is encountered for S3 method
-selection and there is no S3 class defined for the object, then the S4 inheritance is used as the
-vector of classes for S3 method selection, equivalent to using
-\code{extends(class(x))}.
-The object is not modified when passed to the S3 method.
-
-Overall, the principle here is that inheriting S3 classes and their
-methods is the recommended approach.
-If the object has S3 inheritance, any other S4 superclasses are ignored for S3 methods: see the example
-below.
-If there is no S3 inheritance, S3 method selection will essentially
+S3 method selection will
 resemble S4 selection for the same class \emph{if} the call to
 \code{\link{setClass}} has included the argument \code{S3methods =
   TRUE}. If not, the current behavior (R 2.9.1) is to select S3 methods
-defined for this class, but not for its subclasses.  (This behavior is
-largely for back compatibility; in future versions of R, S3 methods may be
+defined for this class, but not for its subclasses  (largely for back compatibility; in future versions of R, S3 methods may be
 ignored for S4 classes unless \code{S3methods} is set.)
+The implementation uses the same special slot as above for inheriting
+from an S3 class.  Subclasses of a class set this way will inherit the
+same special slot and the same S3 method selection.
+It's even possible to set the slot in individual objects, as above,
+but the possibilities for confusion are serious.
 
 
 Looking in the other direction, it remains true that S4 selection has no

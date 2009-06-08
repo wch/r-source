@@ -23,12 +23,12 @@
   then be contained in (that is, superclasses of) regular S4 classes, allowing formal methods
   and slots to be added to the S3 behavior.  The function
   \code{S3Part} extracts or replaces 
-  the S3 part of such an object and \code{S3Class} extracts or
-  replaces the S3-style class.  Most computations that need to deal with the S3
-  aspects can coerce the objects automatically, without direct calls
-  to these functions.  The functions also work for classes that extend
-  basic vector or matrix object types.  See the details below.
-
+  the S3 part of such an object.
+  \code{S3Class} extracts or
+  replaces the S3-style class.  \code{S3Class} also applies to object
+  from an S4 class with \code{S3methods=TRUE} in the call to \code{\link{setClass}}.
+ 
+See the details below.
   Also discussed are S3 <-> S4 coercion; see the section
   \dQuote{S3 and S4 objects}
 }
@@ -68,7 +68,7 @@ slotsFromS3(object)
   the underlying S3 object.
         }
   \item{S3Class}{ The character vector to be stored as the S3 class
-      slot in the object returned.  Usually, and by default, retains
+      slot in the object.  Usually, and by default, retains
       the slot from \code{object}.
       }
 
@@ -82,7 +82,10 @@ slotsFromS3(object)
       S3 object of the right class as an argument to
       \code{\link{new}}.
 
-      For \code{S3Class<-}, the character vector to assign as the S3 class.
+      For \code{S3Class<-}, the character vector that will be used as
+      a proxy for \code{class(x)} in S3 method dispatch.  This
+      replacement function can be used to control S3 per-object method
+      selection.
     }
 
 
@@ -97,9 +100,12 @@ slotsFromS3(object)
   the corresponding S3 vector of class strings.
   The prototype of such
   a class has the value for this slot determined  by the argument to
-  \code{\link{setOldClass}}. 
+  \code{\link{setOldClass}}.
+  Other S4 classes will have the same slot if the argument
+  \code{S3methods = TRUE} is supplied to \code{\link{setClass}}; in
+  this case, the slot is set to the S4 inheritance of the class.
 
-  As a result, new S4 classes that extend (contain) such registered S3
+  New S4 classes that extend (contain) such
   classes also have the same slot, and by default the prototype has
   the value determined  by the \code{contains=} argument to
   \code{\link{setClass}}.
@@ -130,13 +136,12 @@ slotsFromS3(object)
 
   Because the contents of S3 class objects have no definition or
   guarantee, the computations involving S3 parts  do
-  \emph{not}| check for slot validity.  Slots are implemented
+  \emph{not} check for slot validity.  Slots are implemented
   internally in \R as attributes, which are copied when present in the
-  S3 part.  For this reason, grave problems can occur if an S4 class
+  S3 part.  Grave problems can occur if an S4 class
   extending an S3 class uses the name of an S3 attribute as the name
-  of an S4 slot.  It's tempting to \dQuote{promote} an attribute to a
-  slot, but the resulting confusion between slot and attribute is hard
-  to handle.
+  of an S4 slot, and S3 code sets the attribute to an object from an
+  invalid class according to the S4 definition.
 
   Frequently, \code{S3Part} can and should be avoided by simply
   coercing objects to the desired class; methods are automatically
@@ -162,10 +167,9 @@ slotsFromS3(object)
   returned is an S3 object.
 
 
-\code{S3Class}:  For an object from a class extending S3
-      classes, returns or sets the character vector of class(es) stored in
-  the object.  Note that  \code{S3Class} on any other object returns
-  the value of  \code{\link{class}}.
+\code{S3Class}:  Returns or sets the character vector of S3 class(es) stored in
+  the object, if the class has the corresponding \code{.S3Class} slot.
+  Currently, the function defaults to \code{\link{class}} otherwise.
 
 \code{isXS3Class}: Returns \code{TRUE} or \code{FALSE} according
     to whether the class defined by \code{ClassDef}
