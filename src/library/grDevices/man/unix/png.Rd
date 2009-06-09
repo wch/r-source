@@ -60,14 +60,16 @@ tiff(filename = "Rplot\%03d.tiff",
   \item{\dots}{for \code{type = "Xlib"} only, additional arguments to
     the underlying \code{\link{X11}} device, such as \code{gamma} and
     \code{fonts}.}
-  \item{type}{character string, one of \code{"Xlib"} (the only type
-    prior to \R 2.7.0) or \code{"quartz"} (some Mac OS X builds)
-    or \code{"cairo"} or \code{"cairo1"}.  The latter two will only be
-    available if the system was compiled with support for cairo --
-    otherwise \code{"Xlib"} will be used.  The default is set by
-    \code{\link{getOption}("bitmapType")} -- the \sQuote{out of the
-      box} default is \code{"quartz"} or \code{"cairo"} where available,
+  
+  \item{type}{character string, one of \code{"Xlib"} or \code{"quartz"}
+    (some Mac OS X builds) or \code{"cairo"} or (deprecated)
+    \code{"cairo1"}.  The latter two will only be available if the
+    system was compiled with support for cairo -- otherwise
+    \code{"Xlib"} will be used.  The default is set by
+    \code{\link{getOption}("bitmapType")} -- the \sQuote{out of the box}
+    default is \code{"quartz"} or \code{"cairo"} where available,
     otherwise \code{"Xlib"}.}
+  
   \item{antialias}{for \code{type = "cairo"}, giving the type of
     anti-aliasing (if any) to be used.  See \code{\link{X11}}.  The
     default is set by \code{\link{X11.options}}.}
@@ -117,11 +119,12 @@ tiff(filename = "Rplot\%03d.tiff",
   the page, and record a 24-bit RGB file otherwise (or a 32-bit RGBA
   file if \code{type = "cairo"} and non-opaque colours are used).
 
-  \code{png(type = "cairo1")} uses cairo directly to output the file --
-  the resolution is not recorded and the PNG format used is chosen by
-  cairo (and undocumented -- it is currently 32-bit RGBA, that is with
-  an alpha channel whether used or not).  It is included for use on
-  platforms with cairo 1.0 (where \code{type = "cairo"} is not available).
+  The deprecated \code{png(type = "cairo1")} uses cairo directly to
+  output the file -- the resolution is not recorded and the PNG format
+  used is chosen by cairo (and undocumented -- it is currently 32-bit
+  RGBA, that is with an alpha channel whether used or not).  It where
+  included for use on platforms with cairo 1.0 (where \code{type =
+  "cairo"} is not available).
 }
 
 \value{

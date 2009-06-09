@@ -123,10 +123,11 @@ png <- function(filename = "Rplot%03d.png",
     } else if (type == "cairo" && capabilities("cairo"))
         .Internal(cairo(filename, 2L, width, height, pointsize, bg,
 			res, antialias, 100L))
-    else if (type == "cairo1" && capabilities("cairo"))
+    else if (type == "cairo1" && capabilities("cairo")) {
+        warning("type = \"cairo1\" is deprecated")
         .Internal(cairo(filename, 5L, width, height, pointsize, bg,
 			res, antialias, 100L))
-    else
+    } else
         .Internal(X11(paste("png::", filename, sep=""),
                       width, height, pointsize, d$gamma,
                       d$colortype, d$maxcubesize, bg, bg, d$fonts, res,

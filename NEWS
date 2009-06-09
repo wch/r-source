@@ -177,6 +177,9 @@ DEPRECATED & DEFUNCT
     o	print.atomic() (defunct since 1.9.0) has been removed since it
 	caused confusion for an S4 class union of that name.
 
+    o	png(type="cairo1") is deprecated -- it was only needed for
+	platforms with 1.0 <= cairo < 1.2.
+
 
 BUG FIXES
 
