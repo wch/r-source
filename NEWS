@@ -119,6 +119,12 @@ DEPRECATED & DEFUNCT
     o	png(type="cairo1") is defunct: the value is no longer recognized.
 
 
+INSTALLATION
+
+    o	cairo >= 1.2 is now required (1.2.0 was released in July 2006)
+	for cairo-based graphics devices.
+
+
 INTERNATIONALIZATION
 
     o	There is some makefile support for adding/updating translations
