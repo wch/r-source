@@ -116,6 +116,8 @@ DEPRECATED & DEFUNCT
     o	Bundles of packages are deprecated.  See 'Writing R
 	Extensions' for the steps needed to unbundle a bundle.
 
+    o	png(type="cairo1") is defunct: the value is no longer recognized.
+
 
 INTERNATIONALIZATION
 

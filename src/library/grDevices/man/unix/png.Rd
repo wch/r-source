@@ -26,7 +26,7 @@ jpeg(filename = "Rplot\%03d.jpeg",
 png(filename = "Rplot\%03d.png",
     width = 480, height = 480, units = "px",
     pointsize = 12, bg = "white",  res = NA, \dots,
-    type = c("cairo", "Xlib", "cairo1", "quartz"), antialias)
+    type = c("cairo", "Xlib", "quartz"), antialias)
 
 tiff(filename = "Rplot\%03d.tiff",
      width = 480, height = 480, units = "px", pointsize = 12,
@@ -62,10 +62,9 @@ tiff(filename = "Rplot\%03d.tiff",
     \code{fonts}.}
   
   \item{type}{character string, one of \code{"Xlib"} or \code{"quartz"}
-    (some Mac OS X builds) or \code{"cairo"} or (deprecated)
-    \code{"cairo1"}.  The latter two will only be available if the
-    system was compiled with support for cairo -- otherwise
-    \code{"Xlib"} will be used.  The default is set by
+    (some Mac OS X builds) or \code{"cairo"}.  The latter will only be
+    available if the system was compiled with support for cairo --
+    otherwise \code{"Xlib"} will be used.  The default is set by
     \code{\link{getOption}("bitmapType")} -- the \sQuote{out of the box}
     default is \code{"quartz"} or \code{"cairo"} where available,
     otherwise \code{"Xlib"}.}
@@ -118,13 +117,6 @@ tiff(filename = "Rplot\%03d.tiff",
   \code{png} will use a palette if there are less than 256 colours on
   the page, and record a 24-bit RGB file otherwise (or a 32-bit RGBA
   file if \code{type = "cairo"} and non-opaque colours are used).
-
-  The deprecated \code{png(type = "cairo1")} uses cairo directly to
-  output the file -- the resolution is not recorded and the PNG format
-  used is chosen by cairo (and undocumented -- it is currently 32-bit
-  RGBA, that is with an alpha channel whether used or not).  It where
-  included for use on platforms with cairo 1.0 (where \code{type =
-  "cairo"} is not available).
 }
 
 \value{
