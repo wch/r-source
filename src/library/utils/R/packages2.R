@@ -423,6 +423,7 @@ install.packages <-
                 pkgs <- update[, 1L]
                 tss <- sub("\\.ts$", "", dir(".", pattern = "\\.ts$"))
                 failed <- pkgs[!pkgs %in% tss]
+		for (pkg in failed) system(paste("cat ", pkg, ".out", sep=""))
                 warning(gettextf("installation of one of more packages failed,\n  probably %s",
                                  paste(sQuote(failed), collapse = ", ")),
                         domain = NA)
