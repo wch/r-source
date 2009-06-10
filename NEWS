@@ -172,12 +172,13 @@ NEW FEATURES
 	whole bundle: this allow bundles to be split and installations
 	updated.
 
-    o	Changes to S4 and S3 method dispatch will support S4 class
-	inheritance for S3 methods, primitive and via UseMethod() and
-	do better on S3 inheritance per-instance for S4 methods.
-	See ?Methods and the paper referenced there.
-
     o	nlminb() gives better non-convergence messages in some cases.
+
+    o	S3 method dispatch will support S4 class inheritance for S3
+	methods, for primitives and via UseMethod(), if the argument
+	S3methods=TRUE is given to setClass().  S4 method dispatch
+	will use S3 per-object inheritance if S3Class() is set on the
+	object.  See ?Methods and the paper referenced there.
 
     o	R CMD INSTALL is more tolerant of (malformed) packages with a
 	'man' directory but no validly named .Rd files.
