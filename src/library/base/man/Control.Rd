@@ -73,13 +73,12 @@ next
   \code{if} returns the value of the expression evaluated, or
   \code{NULL} if none was (which may happen if there is no \code{else}).
 
-  \code{for}, \code{while} and \code{repeat} return the value of the
-  last expression evaluated (or \code{NULL} if none was), invisibly.
+  \code{for}, \code{while} and \code{repeat} return \code{NULL} invisibly.
   \code{for} sets \code{var} to the last used element of \code{seq},
   or to \code{NULL} if it was of length zero.
 
-  \code{break} and \code{next} have value \code{NULL}, although it would
-  be strange to look for a return value.
+  \code{break} and \code{next} do not return a value as they transfer
+  control within the loop.
 }
 
 \references{

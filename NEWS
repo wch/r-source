@@ -110,6 +110,11 @@ NEW FEATURES
     o	codoc() now also checks S4 methods for code/documentation
     	mismatches.
 
+    o	for(), while(), and repeat() loops  now always return NULL as their
+	(invisible) value.  This change was needed to address a reference
+	counting bug without creating performance penalties for some common
+	use cases.
+
 
 DEPRECATED & DEFUNCT
 
