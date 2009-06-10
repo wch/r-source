@@ -179,6 +179,9 @@ NEW FEATURES
 
     o	nlminb() gives better non-convergence messages in some cases.
 
+    o	R CMD INSTALL is more tolerant of (malformed) packages with a
+	'man' directory but no validly named .Rd files.
+
 
 DEPRECATED & DEFUNCT
 

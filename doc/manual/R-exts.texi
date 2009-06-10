@@ -611,6 +611,9 @@ an example.  Note that packages which use internal objects extensively
 should hide those objects in a name space, when they do not need to be
 documented (@pxref{Package name spaces}).
 
+Having a @file{man} directory containing no documentation files may give
+an installation error.
+
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @file{unix} or @file{windows}.
 

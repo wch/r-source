@@ -1685,7 +1685,7 @@
             sep = "", file = conn)
     }
 
-    chm_toc<- function(dir, pkg, M)
+    chm_toc <- function(dir, pkg, M)
     {
         conn <- file(file.path(dir, "chm", paste(pkg, ".toc", sep = "")), "wt")
         on.exit(close(conn))
@@ -1730,11 +1730,14 @@
     }
 
     mandir <- file.path(dir, "man")
-    if(!file_test("-d", mandir))
-        stop("there are no help pages in this package")
+    if(!file_test("-d", mandir)) {
+        warning("there are no help pages in this package")
+        return()
+    }
 
     ## This may well already have been done:
-    Rd <- if (file.exists(f <- file.path(outDir, "Meta", "Rd.rds"))) .readRDS(f)
+    Rd <- if (file.exists(f <- file.path(outDir, "Meta", "Rd.rds")))
+        .readRDS(f)
     else {
         ## or use list_files_with_type
         files <- Sys.glob(file.path(mandir, "*.[Rr]d"))
@@ -1744,6 +1747,11 @@
         ## suffix .Rd or .rd, according to 'Writing R Extensions'.
         OK <- grep("^[A-Za-z0-9]", basename(files))
         files <- files[OK]
+        if(!length(files)) {
+            warning("there is a 'man' dir but no help pages in this package",
+                    call. = FALSE)
+            return()
+        }
         Rdcontents(files)
     }
 
