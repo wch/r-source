@@ -40,6 +40,9 @@ NEW FEATURES
 	will use S3 per-object inheritance if S3Class() is set on the
 	object.  See ?Methods and the paper referenced there.
 
+    o	R CMD INSTALL is more tolerant of (malformed) packages with a
+	'man' directory but no validly named .Rd files.
+
 
 DEPRECATED & DEFUNCT
 

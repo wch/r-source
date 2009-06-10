@@ -129,7 +129,7 @@ function(db, verbose = FALSE)
         Rdeps2 <- Depends["R" == names(Depends)]
         names(Rdeps2) <- NULL
         if(verbose && !all(sapply(Rdeps2[-1], function(x)
-            		   x$op %in% c("<", "<=") 
+            		   x$op %in% c("<", "<=")
             		&& x$version >= package_version("2.7.0")))) {
             entries <- lapply(Rdeps2, function(x)
                 paste(lapply(x, as.character), collapse=""))
@@ -396,50 +396,52 @@ function(dir, outDir)
     packageName <- basename(outDir)
     ## </FIXME>
 
-    indices <- c(file.path("Meta", "Rd.rds"),
-                 file.path("Meta", "hsearch.rds"),
-                 "CONTENTS", "INDEX")
-    ## we want the date of the newest .Rd file we will install
     allRd <- list_files_with_type(docsDir, "docs")
-    newestRd <- max(file.info(allRd)$mtime)
-    ## these files need not exist, which gives NA.
-    upToDate <- file.info(file.path(outDir, indices))$mtime >= newestRd
-    if(file_test("-d", dataDir)
-       && length(dataFiles <- list.files(dataDir))) {
-        ## Note that the data index is computed from both the package's
-        ## Rd files and the data sets actually available.
-        newestData <- max(file.info(dataFiles)$mtime)
-        upToDate <- c(upToDate,
-              file.info(file.path(outDir, "Meta", "data.rds"))$mtime >=
-                        max(newestRd, newestData))
-    }
-    ## we want to proceed if any is NA.
-    if(all(upToDate %in% TRUE)) return(invisible())
+    ## some people have man dirs without any valid .Rd files
+    if(length(allRd)) {
+        ## we want the date of the newest .Rd file we will install
+        newestRd <- max(file.info(allRd)$mtime)
+        ## these files need not exist, which gives NA.
+        indices <- c(file.path("Meta", "Rd.rds"),
+                     file.path("Meta", "hsearch.rds"),
+                     "CONTENTS", "INDEX")
+        upToDate <- file.info(file.path(outDir, indices))$mtime >= newestRd
+        if(file_test("-d", dataDir)
+           && length(dataFiles <- list.files(dataDir))) {
+            ## Note that the data index is computed from both the package's
+            ## Rd files and the data sets actually available.
+            newestData <- max(file.info(dataFiles)$mtime)
+            upToDate <- c(upToDate,
+                          file.info(file.path(outDir, "Meta", "data.rds"))$mtime >=
+                          max(newestRd, newestData))
+        }
+        ## we want to proceed if any is NA.
+        if(all(upToDate %in% TRUE)) return(invisible())
 
-    contents <- Rdcontents(allRd)
+        contents <- Rdcontents(allRd)
 
-    .write_contents_as_RDS(contents,
-                           file.path(outDir, "Meta", "Rd.rds"))
+        .write_contents_as_RDS(contents,
+                               file.path(outDir, "Meta", "Rd.rds"))
 
-    defaultEncoding <- as.vector(.readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION["Encoding"])
-    if(is.na(defaultEncoding)) defaultEncoding <- NULL
-    .saveRDS(.build_hsearch_index(contents, packageName, defaultEncoding),
-             file.path(outDir, "Meta", "hsearch.rds"))
+        defaultEncoding <- as.vector(.readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION["Encoding"])
+        if(is.na(defaultEncoding)) defaultEncoding <- NULL
+        .saveRDS(.build_hsearch_index(contents, packageName, defaultEncoding),
+                 file.path(outDir, "Meta", "hsearch.rds"))
 
-    .write_contents_as_DCF(contents, packageName,
-                           file.path(outDir, "CONTENTS"))
+        .write_contents_as_DCF(contents, packageName,
+                               file.path(outDir, "CONTENTS"))
 
-    ## If there is no @file{INDEX} file in the package sources, we
-    ## build one.
-    ## <NOTE>
-    ## We currently do not also save this in RDS format, as we can
-    ## always do
-    ##   .build_Rd_index(.readRDS(file.path(outDir, "Meta", "Rd.rds"))
-    if(!file_test("-f", file.path(dir, "INDEX")))
-        writeLines(formatDL(.build_Rd_index(contents)),
-                   file.path(outDir, "INDEX"))
-    ## </NOTE>
-
+        ## If there is no @file{INDEX} file in the package sources, we
+        ## build one.
+        ## <NOTE>
+        ## We currently do not also save this in RDS format, as we can
+        ## always do
+        ##   .build_Rd_index(.readRDS(file.path(outDir, "Meta", "Rd.rds"))
+        if(!file_test("-f", file.path(dir, "INDEX")))
+            writeLines(formatDL(.build_Rd_index(contents)),
+                       file.path(outDir, "INDEX"))
+        ## </NOTE>
+    } else contents <- NULL
     if(file_test("-d", dataDir))
         .saveRDS(.build_data_index(dataDir, contents),
                  file.path(outDir, "Meta", "data.rds"))
