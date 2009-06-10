@@ -32,13 +32,13 @@ NEW FEATURES
 	whole bundle: this allow bundles to be split and installations
 	updated.
 
+    o	nlminb() gives better non-convergence messages in some cases.
+
     o	S3 method dispatch will support S4 class inheritance for S3
 	methods, for primitives and via UseMethod(), if the argument
 	S3methods=TRUE is given to setClass().  S4 method dispatch
 	will use S3 per-object inheritance if S3Class() is set on the
 	object.  See ?Methods and the paper referenced there.
-
-    o	nlminb() gives better non-convergence messages in some cases.
 
 
 DEPRECATED & DEFUNCT
