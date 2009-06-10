@@ -613,10 +613,10 @@ foreach my $pkg (@ARGV) {
 		    ##     setgid mc68020 pure executable not stripped
 		    return if $file_path =~
 			m+foreign/tests/datefactor.dta$+;
-		    ## * msProcess/inst/data2/*.txt give
+		    ## * msProcess/inst/data[12]/*.txt give
 		    ##     setgid MS-DOS executable, MZ for MS-DOS
 		    return if $file_path =~
-			m+msProcess/inst/data2/.*.txt$+;
+			m+msProcess/inst/data[12]/.*.txt$+;
 		    my $file_name = basename($file_path);
 		    my $bare_path = $file_path;
 		    $bare_path =~ s+^$pkgdir/++;
