@@ -1384,6 +1384,8 @@ causes control to return to the start of the loop.  The next iteration
 of the loop (if there is one) is then executed.  No statement below
 @code{next} in the current loop is evaluated.
 
+The value returned by a loop statement statement is always @code{NULL}
+and is returned invisibly.
 
 @node repeat, while, Looping, Control structures
 @subsection repeat
@@ -1416,9 +1418,7 @@ while ( @var{statement1} ) @var{statement2}
 @noindent
 where @var{statement1} is evaluated and if its value is @code{TRUE} then
 @var{statement2} is evaluated.  This process continues until
-@var{statement1} evaluates to @code{FALSE}.  If @var{statement2} is
-never evaluated then @code{while} returns @code{NULL} and otherwise it
-returns the value of the last evaluation of @var{statement2}.
+@var{statement1} evaluates to @code{FALSE}.
 
 @node for, switch, while, Control structures
 @subsection for
