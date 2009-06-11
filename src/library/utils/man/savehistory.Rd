@@ -1,6 +1,6 @@
 % File src/library/utils/man/savehistory.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{savehistory}
@@ -67,6 +67,12 @@ timestamp(stamp = date(),
   These variables are read at the time of saving, so can be altered
   within a session by the use of \code{\link{Sys.setenv}}.
 
+#ifdef unix
+  Note that \code{readline} history library save files with permission
+  \code{0600}, that is with read/write permission for the user and not
+  even read permission for any other account.
+#endif
+
   \code{history} shows only unique matching lines if \code{pattern} is
   supplied.
   
@@ -77,7 +83,8 @@ timestamp(stamp = date(),
 }
 \note{
   If you want to save the history at the end of (almost) every
-  interactive session, you can put a call to \code{savehistory()} in
+  interactive session (even those in which you do not save the
+  workspace), you can put a call to \code{savehistory()} in
   \code{\link{.Last}}.  See the examples.
 }
 \examples{\dontrun{
