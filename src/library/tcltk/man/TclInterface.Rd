@@ -241,7 +241,8 @@ tclRequire(package, warn = TRUE)
   
   Tcl packages can be loaded with \code{tclRequire}; it may be necessary
   to add the directory where they are found to the Tcl search path with
-  \code{addTclPath}.
+  \code{addTclPath}.  The return value is a class \code{"tclObj"} object
+  if it succeeds, or \code{FALSE} if it fails (when a warning is issued).
 }
 \note{ Strings containing unbalanced braces are currently not handled
   well in many circumstances.
