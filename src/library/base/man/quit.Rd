@@ -43,6 +43,16 @@ quit(save = "default", status = 0, runLast = TRUE)
     analogue, \code{.Last.sys()}, which is run after \code{.Last()}
     if \code{runLast} is true.
 
+    Exactly what happens at termination of an \R session depends on the
+    platform and GUI interface in use.  A typical sequence is to run
+    \code{.Last()} and \code{.Last.sys()} (unless \code{runLast} is
+    false), to save the workspace if requested (and in most cases also
+    to save the session history: see \code{\link{savehistory}}), then
+    run any finalizers (see \code{\link{reg.finalizer}}) that have been
+    set to be run on exit, close all open graphics devices, remove the
+    session temporary directory and print any remaining warnings
+    (e.g. from \code{.Last()} and device closure).
+
     Some error statuses are used by \R itself.  The default error
     handler for non-interactive use effectively calls \code{q("no", 1,
       FALSE)} and returns error code 1.  Error status 2 is used for \R
