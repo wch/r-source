@@ -62,7 +62,7 @@ next
 
   The \code{seq} in a \code{for} loop is evaluated at the start of
   the loop; changing it subsequently does not affect the loop. If
-  \code{seq} is \code{NULL} the body of the loop is skipped. Otherwise the
+  \code{seq} has length zero the body of the loop is skipped. Otherwise the
   variable \code{var} is assigned in turn the value of each element of
   \code{seq}. You can assign to \code{var} within the body of the loop,
   but this will not affect the next iteration. When the loop terminates,
