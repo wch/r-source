@@ -188,11 +188,14 @@ NEW FEATURES
     o	R CMD INSTALL is more tolerant of (malformed) packages with a
 	'man' directory but no validly named .Rd files.
 
+    o	R CMD check now reports where options are used that cause some
+	of the checks to be skipped.
+
 
 DEPRECATED & DEFUNCT
 
     o	print.atomic() (defunct since 1.9.0) has been removed since it
-	caused confusion for an S4 class union of that name.
+	caused confusion for an S4 class union "atomic".
 
     o	png(type="cairo1") is deprecated -- it was only needed for
 	platforms with 1.0 <= cairo < 1.2.
@@ -313,8 +316,8 @@ BUG FIXES
 	custom comparison methods specific to the class of elements
 	being sorted.
 
-    o	Increase NAMED value on seq value in for loop so loop code cannot
-	modify seq value.
+    o	Increase NAMED value on 'seq' value in for() loop so loop code
+	cannot modify 'seq' value.
 
     o	Prevent rectangles of size < 0.5 pixel from disappearing in
 	Quartz when using rastered backend.  (PR#13744)
