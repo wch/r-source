@@ -90,6 +90,7 @@ if($opt_install eq "fake") {
 }
 $opt_install = 0 if($opt_install eq "no");
 
+
 my $opt_ff_calls = 1;
 ## The neverending story ...
 ## For the time being, allow to turn this off by setting the environment
@@ -352,6 +353,17 @@ foreach my $pkg (@ARGV) {
     @out = R_runR("tools:::.find_charset()", "--slave --vanilla");
     $log->message("using session @out");
     $is_ascii = 1 if $out[0] =~ /ASCII$/;
+
+    ## report options used
+    my @opts;
+    push @opts,"--no-install" if !$opt_install;
+    push @opts,"--no-codoc" if !$opt_codoc;
+    push @opts,"--no-examples" if !$opt_examples;
+    push @opts,"--no-tests" if !$opt_tests;
+    push @opts,"--no-vignettes" if !$opt_vignettes;
+    push @opts,"--use-gct" if $opt_use_gct;
+    push @opts,"--use-valgrind" if $opt_use_valgrind;
+    $log->message("using options: " . join(" ", @opts)) if @opts;
 
     if(!$opt_library) {
 	$library = $pkgoutdir;
@@ -2013,67 +2025,71 @@ sub check_pkg {
     }
     ## Check for code/documentation mismatches.
 
-    if($opt_codoc && (-d "man")) {
+    if((-d "man")) {
 	$log->checking("for code/documentation mismatches");
 
-	my $any = 0;
+	if(!$opt_codoc) {
+	    $log->result("SKIPPED");
+	} else {
+	    my $any = 0;
 
-	## Check for code/documentation mismatches in functions.
-	if($haveR) {
-	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
+	    ## Check for code/documentation mismatches in functions.
+	    if($haveR) {
+		my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
+		if($opt_install) {
+		    $Rcmd .= "tools::codoc(package = \"${pkgname}\")\n";
+		}
+		else {
+		    $Rcmd .= "tools::codoc(dir = \"${pkgdir}\")\n";
+		}
+		my @out = R_runR($Rcmd, "${R_opts} --quiet",
+				 "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
+		@out = grep(!/^\>/, @out);
+		@out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+			    @out)
+		    if($R_check_suppress_RandR_message);
+		if(scalar(@out) > 0) {
+		    $any++;
+		    $log->warning();
+		    $log->print(join("\n", @out) . "\n");
+		}
+	    }
+
+	    ## Check for code/documentation mismatches in data sets.
 	    if($opt_install) {
-		$Rcmd .= "tools::codoc(package = \"${pkgname}\")\n";
+		my $Rcmd = "options(warn=1,warnEscapes=FALSE)\ntools::codocData(package = \"${pkgname}\")\n";
+		my @out = R_runR($Rcmd, "${R_opts} --quiet",
+				 "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
+		@out = grep(!/^\>/, @out);
+		@out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+			    @out)
+		    if($R_check_suppress_RandR_message);
+		if(scalar(@out) > 0) {
+		    $log->warning() unless($any);
+		    $any++;
+		    $log->print(join("\n", @out) . "\n");
+		}
 	    }
-	    else {
-		$Rcmd .= "tools::codoc(dir = \"${pkgdir}\")\n";
+
+	    ## Check for code/documentation mismatches in S4 classes.
+	    if($opt_install && $haveR) {
+		my $Rcmd = "options(warn=1,warnEscapes=FALSE)\ntools::codocClasses(package = \"${pkgname}\")\n";
+		my @out = R_runR($Rcmd, "${R_opts} --quiet",
+				 "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
+		@out = grep(!/^\>/, @out);
+		@out = grep(!/^Xlib: *extension "RANDR" missing on display/,
+			    @out)
+		    if($R_check_suppress_RandR_message);
+		if(scalar(@out) > 0) {
+		    $log->warning() unless($any);
+		    $any++;
+		    $log->print(join("\n", @out) . "\n");
+		}
 	    }
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
-	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Xlib: *extension "RANDR" missing on display/,
-			@out)
-		if($R_check_suppress_RandR_message);
-	    if(scalar(@out) > 0) {
-		$any++;
-		$log->warning();
-		$log->print(join("\n", @out) . "\n");
-	    }
+
+	    $log->result("OK") unless($any);
+
 	}
-
-	## Check for code/documentation mismatches in data sets.
-	if($opt_install) {
-	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\ntools::codocData(package = \"${pkgname}\")\n";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
-	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Xlib: *extension "RANDR" missing on display/,
-			@out)
-		if($R_check_suppress_RandR_message);
-	    if(scalar(@out) > 0) {
-		$log->warning() unless($any);
-		$any++;
-		$log->print(join("\n", @out) . "\n");
-	    }
-	}
-
-	## Check for code/documentation mismatches in S4 classes.
-	if($opt_install && $haveR) {
-	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\ntools::codocClasses(package = \"${pkgname}\")\n";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
-	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Xlib: *extension "RANDR" missing on display/,
-			@out)
-		if($R_check_suppress_RandR_message);
-	    if(scalar(@out) > 0) {
-		$log->warning() unless($any);
-		$any++;
-		$log->print(join("\n", @out) . "\n");
-	    }
-	}
-
-	$log->result("OK") unless($any);
-
     }
 
     ## Check Rd files, for consistency of \usage with \arguments (are
@@ -2292,158 +2308,167 @@ sub check_pkg {
     ## This setting applies to vignettes below too.
     ${R_opts} = ${R_opts}." -d valgrind" if $opt_use_valgrind;
 
-    if($opt_examples && (-d &file_path($library, $pkgname, "R-ex"))) {
+    ## this will be skipped if installation was
+    if((-d &file_path($library, $pkgname, "R-ex"))) {
 
 	$log->checking("examples");
-	
-	my $Rexdir = &file_path($library, $pkgname, "R-ex");
-	## $Rexdir might contain spaces (not on Windows, though)
-	$cmd = join(" ",
-		    ("(echo 'tools:::.createExdotR(\"${pkgname}\", \"${Rexdir}\")'",
-		     "| LC_ALL=C",
-		     &shell_quote_file_path(${R::Vars::R_EXE}),
-		     "--vanilla --slave)"
-		    ));
-	if(R_system($cmd)) {
-	    $log->error();
-	    $log->print("Running massageExamples to create " .
-			"'${pkgname}-Ex.R' failed.\n");
-	    exit(1);
-	}
+	if(!$opt_examples) {
+	    $log->result("SKIPPED");
+	} else {
+	    my $Rexdir = &file_path($library, $pkgname, "R-ex");
+	    ## $Rexdir might contain spaces (not on Windows, though)
+	    $cmd = join(" ",
+			("(echo 'tools:::.createExdotR(\"${pkgname}\", \"${Rexdir}\")'",
+			 "| LC_ALL=C",
+			 &shell_quote_file_path(${R::Vars::R_EXE}),
+			 "--vanilla --slave)"
+			));
+	    if(R_system($cmd)) {
+		$log->error();
+		$log->print("Running massageExamples to create " .
+			    "'${pkgname}-Ex.R' failed.\n");
+		exit(1);
+	    }
 
-	if($is_zipped) {
-	    unlink(&list_files_with_exts($Rexdir, "R"));
-	}
+	    if($is_zipped) {
+		unlink(&list_files_with_exts($Rexdir, "R"));
+	    }
 
-	my $enc = "";
-	if(defined($description->{"Encoding"})) {
-	    $enc = "--encoding " . $description->{"Encoding"};
-	    if ($is_ascii) {
-		print "\n* WARNING: ",
+	    my $enc = "";
+	    if(defined($description->{"Encoding"})) {
+		$enc = "--encoding " . $description->{"Encoding"};
+		if ($is_ascii) {
+		    print "\n* WARNING: ",
 		    "checking a package with encoding '",
 		    $description->{"Encoding"},
 		    "' in an ASCII locale.\n";
+		}
 	    }
-	}
-	if($opt_use_gct) {
-	    $cmd = join(" ",
-			("(echo 'gctorture(TRUE)';",
-			 "cat ${pkgname}-Ex.R) |",
-			 &shell_quote_file_path(${R::Vars::R_EXE}),
-			 "${R_opts}", $enc,
-			 "> ${pkgname}-Ex.Rout 2>&1"));
-	} else {
-	    $cmd = join(" ",
-			(&shell_quote_file_path(${R::Vars::R_EXE}),
-			 "${R_opts}", $enc,
-			 "< ${pkgname}-Ex.R",
-			 "> ${pkgname}-Ex.Rout 2>&1"));
-	}
-	if(R_system($cmd)) {
-	    $log->error();
-	    $log->print("Running examples in '${pkgname}-Ex.R' failed.\n");
-	    ## Try to spot the offending example right away.
-	    my $txt = join("\n", &read_lines("${pkgname}-Ex.Rout"));
-	    ## Look for the header section anchored by a subsequent call
-	    ## to flush(): needs to be kept in sync with the code in
-	    ## massageExamples (in testing.R).  Should perhaps also be more
-	    ## defensive about the prompt ...
-	    my @chunks = split(/(> \#\#\# \* [^\n]+\n> \n> flush)/, $txt);
-	    if(scalar(@chunks) > 2) {
-		$log->print("The error most likely occurred in:\n\n");
-		$log->print($chunks[$#chunks - 1]);
-		$log->print($chunks[$#chunks] . "\n");
+	    if($opt_use_gct) {
+		$cmd = join(" ",
+			    ("(echo 'gctorture(TRUE)';",
+			     "cat ${pkgname}-Ex.R) |",
+			     &shell_quote_file_path(${R::Vars::R_EXE}),
+			     "${R_opts}", $enc,
+			     "> ${pkgname}-Ex.Rout 2>&1"));
+	    } else {
+		$cmd = join(" ",
+			    (&shell_quote_file_path(${R::Vars::R_EXE}),
+			     "${R_opts}", $enc,
+			     "< ${pkgname}-Ex.R",
+			     "> ${pkgname}-Ex.Rout 2>&1"));
 	    }
-	    exit(1);
-	}
-	## Look at the output from running the examples.  For the time
-	## being, report warnings about use of deprecated functions, as
-	## the next release will make them defunct and hence using them
-	## an error.  Also warn about loading defunct base package stubs,
-	## as load special-casing for these will be removed eventually.
-	my @lines = &read_lines("${pkgname}-Ex.Rout");
-	my $any;
-	my @bad_lines;
-	@bad_lines = grep(/^Warning: .*is deprecated.$/, @lines);
-	if(scalar(@bad_lines) > 0) {
-	    $log->warning();
-	    $any++;
-	    $log->print("Found the following significant warnings:\n");
-	    $log->print("  " . join("\n  ", @bad_lines) . "\n");
-	    $log->print(wrap("", "",
-			     ("Deprecated functions may be defunct as",
-			      "soon as of the next release of R.\n",
-			      "See ?Deprecated.\n")));
-	}
-	$log->result("OK") unless($any);
-
-	## Try to compare results from running the examples to a saved
-	## previous version.
-	my $Rex_out_save =
-	    &file_path($pkgdir, "tests", "Examples",
-		       "${pkgname}-Ex.Rout.save");
-	if(-f $Rex_out_save) {
-	    $log->checking("differences from '${pkgname}-Ex.Rout' to '${pkgname}-Ex.Rout.save'");
-	    $cmd = join(" ",
-			(${R::Vars::R_CMD},
-			 "Rdiff",
-			 &shell_quote_file_path("${pkgname}-Ex.Rout"),
-			 &shell_quote_file_path("${Rex_out_save}"),
-			 "0"));
 	    if(R_system($cmd)) {
 		$log->error();
-		$log->print("Comparison failed.\n");
+		$log->print("Running examples in '${pkgname}-Ex.R' failed.\n");
+		## Try to spot the offending example right away.
+		my $txt = join("\n", &read_lines("${pkgname}-Ex.Rout"));
+		## Look for the header section anchored by a subsequent call
+		## to flush(): needs to be kept in sync with the code in
+		## massageExamples (in testing.R).  Should perhaps also be more
+		## defensive about the prompt ...
+		my @chunks = split(/(> \#\#\# \* [^\n]+\n> \n> flush)/, $txt);
+		if(scalar(@chunks) > 2) {
+		    $log->print("The error most likely occurred in:\n\n");
+		    $log->print($chunks[$#chunks - 1]);
+		    $log->print($chunks[$#chunks] . "\n");
+		}
 		exit(1);
 	    }
-	    $log->result("OK");
+	    ## Look at the output from running the examples.  For the time
+	    ## being, report warnings about use of deprecated functions, as
+	    ## the next release will make them defunct and hence using them
+	    ## an error.  Also warn about loading defunct base package stubs,
+	    ## as load special-casing for these will be removed eventually.
+	    my @lines = &read_lines("${pkgname}-Ex.Rout");
+	    my $any;
+	    my @bad_lines;
+	    @bad_lines = grep(/^Warning: .*is deprecated.$/, @lines);
+	    if(scalar(@bad_lines) > 0) {
+		$log->warning();
+		$any++;
+		$log->print("Found the following significant warnings:\n");
+		$log->print("  " . join("\n  ", @bad_lines) . "\n");
+		$log->print(wrap("", "",
+				 ("Deprecated functions may be defunct as",
+				  "soon as of the next release of R.\n",
+				  "See ?Deprecated.\n")));
+	    }
+	    $log->result("OK") unless($any);
+
+	    ## Try to compare results from running the examples to a saved
+	    ## previous version.
+	    my $Rex_out_save =
+		&file_path($pkgdir, "tests", "Examples",
+			   "${pkgname}-Ex.Rout.save");
+	    if(-f $Rex_out_save) {
+		$log->checking("differences from '${pkgname}-Ex.Rout' to '${pkgname}-Ex.Rout.save'");
+		$cmd = join(" ",
+			    (${R::Vars::R_CMD},
+			     "Rdiff",
+			     &shell_quote_file_path("${pkgname}-Ex.Rout"),
+			     &shell_quote_file_path("${Rex_out_save}"),
+			     "0"));
+		if(R_system($cmd)) {
+		    $log->error();
+		    $log->print("Comparison failed.\n");
+		    exit(1);
+		}
+		$log->result("OK");
+	    }
 	}
+    } elsif(-d &file_path($pkgdir, "man")) {
+	$log->checking("examples");
+	$log->result("SKIPPED");
     }
 
     ## Run the package-specific tests.
 
-    if($opt_install
-       && $opt_tests
-       && (-d &file_path($pkgdir, "tests"))
+    if((-d &file_path($pkgdir, "tests"))
        && &list_files(&file_path($pkgdir, "tests"))) {
 	$log->checking("tests");
-	my $testsrcdir = &file_path($pkgdir, "tests");
-	my $testdir = &file_path($pkgoutdir, "tests");
-	if(!(-d $testdir)) {
-	    mkdir($testdir, 0755)
-	      or die "Error: cannot create directory '$testdir'\n";
-	}
-	chdir($testdir);
-	dircopy($testsrcdir, ".");
-	if($opt_use_gct) {$extra = "use_gct = TRUE";} else {$extra = "";}
-	$cmd = join(" ",
-		    ("(echo 'tools:::.runPackageTestsR($extra)' |",
-		     &shell_quote_file_path(${R::Vars::R_EXE}),
-		     "--vanilla --slave)") );
-	if(R_system($cmd)) {
-	    $log->error();
-	    ## Don't just fail: try to log where the problem occurred.
-	    ## First, find the test which failed.
-	    my @bad_files = &list_files_with_exts($testdir,
-						  "Rout.fail");
-	    if(scalar(@bad_files) > 0) {
-		## Maybe there was an error without a failing test.
-		my $file = $bad_files[0];
-		## Read in output from the failed test and retain at
-		## most the last 13 lines (13? why not?).
-		my @lines = &read_lines($file);
-		my $to = $#{lines};
-		my $from = ($to >= 12) ? ($to - 12) : 0;
-		@lines = @lines[$from..$to];
-		$file =~ s/out\.fail//;
-		$file = &file_path("tests", basename($file));
-		$log->print("Running the tests in '$file' failed.\n");
-		$log->print("Last 13 lines of output:\n");
-		$log->print("  " . join("\n  ", @lines) . "\n");
+	if ($opt_install && $opt_tests) {
+	    my $testsrcdir = &file_path($pkgdir, "tests");
+	    my $testdir = &file_path($pkgoutdir, "tests");
+	    if(!(-d $testdir)) {
+		mkdir($testdir, 0755)
+		    or die "Error: cannot create directory '$testdir'\n";
 	    }
-	    exit(1);
+	    chdir($testdir);
+	    dircopy($testsrcdir, ".");
+	    if($opt_use_gct) {$extra = "use_gct = TRUE";} else {$extra = "";}
+	    $cmd = join(" ",
+			("(echo 'tools:::.runPackageTestsR($extra)' |",
+			 &shell_quote_file_path(${R::Vars::R_EXE}),
+			 "--vanilla --slave)") );
+	    if(R_system($cmd)) {
+		$log->error();
+		## Don't just fail: try to log where the problem occurred.
+		## First, find the test which failed.
+		my @bad_files = &list_files_with_exts($testdir,
+						      "Rout.fail");
+		if(scalar(@bad_files) > 0) {
+		    ## Maybe there was an error without a failing test.
+		    my $file = $bad_files[0];
+		    ## Read in output from the failed test and retain at
+		    ## most the last 13 lines (13? why not?).
+		    my @lines = &read_lines($file);
+		    my $to = $#{lines};
+		    my $from = ($to >= 12) ? ($to - 12) : 0;
+		    @lines = @lines[$from..$to];
+		    $file =~ s/out\.fail//;
+		    $file = &file_path("tests", basename($file));
+		    $log->print("Running the tests in '$file' failed.\n");
+		    $log->print("Last 13 lines of output:\n");
+		    $log->print("  " . join("\n  ", @lines) . "\n");
+		}
+		exit(1);
+	    }
+	    chdir($pkgoutdir);
+	    $log->result("OK");
+	} else {
+	    $log->result("SKIPPED");
 	}
-	chdir($pkgoutdir);
-	$log->result("OK");
     }
 
     ## Check package vignettes.
@@ -2516,6 +2541,9 @@ sub check_pkg {
 		$any++;
 		$log->print(join("\n", @out) . "\n");
 	    }
+	} else {
+	    $any++;
+	    $log->result("SKIPPED");
 	}
 
 	$log->result("OK") unless($any);
