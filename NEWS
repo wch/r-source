@@ -332,6 +332,9 @@ BUG FIXES
 
     o	R CMD INSTALL --no-latex was not implemented in 2.9.0 (only).
 
+    o	Added a needed PROTECT call in RunFinalizers to handle cases where
+	the routine is called recursively from a GC in a finalizer.
+
 
 
 		CHANGES IN R VERSION 2.9.0

@@ -1120,7 +1120,12 @@ static Rboolean RunFinalizers(void)
 		    R_weak_refs = next;
 		else
 		    SET_WEAKREF_NEXT(last, next);
+		/* The value of 'next' is protected to make is safe
+		   for thsis routine to be called recursively from a
+		   gc triggered by a finalizer. */
+		PROTECT(next);
 		R_RunWeakRefFinalizer(s);
+		UNPROTECT(1);
 	    }
 	    endcontext(&thiscontext);
 	    R_ToplevelContext = saveToplevelContext;
