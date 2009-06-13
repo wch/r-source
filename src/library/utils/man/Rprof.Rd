@@ -1,6 +1,6 @@
 % File src/library/utils/man/Rprof.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Rprof}
@@ -40,22 +40,33 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   Exactly what the time interval measures is subtle: it is time that the
   \R process is running and executing an \R command.  It is not however just
   CPU time, for if \code{readline()} is waiting for input, that counts
-  (on Windows, but not on Unix).
+  (on Windows, but not on a Unix-alike).
 
   Note that the timing interval cannot be too small, for the time spent
   in each profiling step is added to the interval.  What is feasible is
   machine-dependent, but 10ms seems as small as advisable on a 1GHz machine.
 #endif
 #ifdef unix
-  Note that the timing interval cannot be too small: once the timer goes
-  off, the information is not recorded until the next timing click
-  (probably in the range 1--10msecs).
+  How time is measured varies by platform: on a Unix-alike it is the CPU
+  time of the \R process, so for example excludes time when \R is waiting
+  for input or for processes run by \code{\link{system}} to return.
+  
+  Note that the timing interval cannot usefully be too small: once the
+  timer goes off, the information is not recorded until the next timing
+  click (probably in the range 1--10msecs).
 #endif
+
+  Functions will only be recorded in the profile log if they put a
+  context on the call stack (see \code{\link{sys.calls}}).  Some
+  \link{primitive} functions do not do so: specifcally those which are
+  of \link{type} \code{"special"} (see the \sQuote{R Internals} manual
+  for more details).
 }
 \note{
 #ifdef windows
   Using \code{R CMD Rprof} needs Windows Perl to be installed: this can
-  be installed from \code{Rtools.exe}.
+  be installed from \code{Rtools.exe}.  \code{\link{summaryRprof}} is an
+  alternative that does not use Perl.
 #endif
 #ifdef unix
   Profiling is not available on all platforms.  By default, it is
