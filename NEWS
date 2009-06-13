@@ -115,6 +115,8 @@ NEW FEATURES
 	counting bug without creating performance penalties for some common
 	use cases.
 
+    o	PCRE has been updated to version 7.9 (for bug fixes).
+
 
 DEPRECATED & DEFUNCT
 
