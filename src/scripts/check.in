@@ -363,7 +363,7 @@ foreach my $pkg (@ARGV) {
     push @opts,"--no-vignettes" if !$opt_vignettes;
     push @opts,"--use-gct" if $opt_use_gct;
     push @opts,"--use-valgrind" if $opt_use_valgrind;
-    $log->message("using options: " . join(" ", @opts)) if @opts;
+    $log->message("using options '" . join(" ", @opts) . "'") if @opts;
 
     if(!$opt_library) {
 	$library = $pkgoutdir;
