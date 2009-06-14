@@ -3120,7 +3120,7 @@ msgstr "argumento \"%s\" ausente, sem padrão"
 #: src/main/envir.c:1305
 #, c-format
 msgid "could not find function \"%s\""
-msgstr "não foi posssível encontrar a função \"%s\""
+msgstr "não foi possível encontrar a função \"%s\""
 
 #: src/main/envir.c:1328
 msgid "cannot assign values in the empty environment"
