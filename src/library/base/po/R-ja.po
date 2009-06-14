@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-27 13:50\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2009-03-31 13:18+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -226,7 +226,8 @@ msgstr " 'row.names' に欠損値があってはなりません "
 msgid "invalid 'dimnames' given for data frame"
 msgstr " データフレームに無効な 'dimnames' が与えられました "
 
-msgid "cannot coerce class \"%s\" into a data.frame"
+#, fuzzy
+msgid "cannot coerce class %s into a data.frame"
 msgstr " クラス \"%s\" はデータフレームに強制変換できません "
 
 msgid "invalid 'row.names', length %d for a data frame with %d rows"
@@ -271,7 +272,7 @@ msgid "row names were found from a short variable and have been discarded"
 msgstr " 列名は短い変数から見つけられ、捨て去られました "
 
 #, fuzzy
-msgid "named arguments other than 'drop' are not allowed"
+msgid "named arguments other than 'drop' are discouraged"
 msgstr " 'row.names' に欠損値があってはなりません "
 
 msgid "drop argument will be ignored"
@@ -280,11 +281,12 @@ msgstr " drop 引数は無視されます "
 msgid "undefined columns selected"
 msgstr " 未定義の列が選ばれました "
 
-msgid "named arguments other than 'exact' are not allowed"
-msgstr ""
+#, fuzzy
+msgid "named arguments other than 'exact' are discouraged"
+msgstr " 'row.names' に欠損値があってはなりません "
 
 #, fuzzy
-msgid "named arguments are not allowed"
+msgid "named arguments are not discouraged"
 msgstr " 重複した 'row.names' は許されません "
 
 msgid "rhs is the wrong length for indexing by a logical matrix"

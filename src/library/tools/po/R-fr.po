@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:34\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2009-03-29 22:45+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -100,18 +100,18 @@ msgstr "Slots de la classe '%s'"
 msgid "name"
 msgstr "nom"
 
-msgid "code"
-msgstr "code"
-
-msgid "docs"
-msgstr "docs"
-
 msgid "Data codoc mismatches from documentation object '%s':"
 msgstr ""
 "Erreurs 'codoc' de jeux de données dans la documentation de l'objet '%s' :"
 
 msgid "Variables in data frame '%s'"
 msgstr "Variables dans le tableau de données '%s'"
+
+msgid "code"
+msgstr "code"
+
+msgid "docs"
+msgstr "docs"
 
 msgid "Undocumented arguments in documentation object '%s'"
 msgstr "Arguments non documentés dans la documentation de l'objet '%s'"
@@ -824,6 +824,10 @@ msgstr "alias(es) répétitifs ignorés"
 
 msgid "in file"
 msgstr "dans le fichier"
+
+#, fuzzy
+msgid "there is a 'man' dir but no help pages in this package"
+msgstr "il n'y a pas de pages d'aide dans ce package"
 
 msgid "problem in converting"
 msgstr "problème lors de la conversion"

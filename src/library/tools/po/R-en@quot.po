@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-10 11:37\n"
-"PO-Revision-Date: 2009-05-10 11:37\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
+"PO-Revision-Date: 2009-06-14 08:14\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -113,17 +113,17 @@ msgstr "Slots for class ‘%s’"
 msgid "name"
 msgstr "name"
 
-msgid "code"
-msgstr "code"
-
-msgid "docs"
-msgstr "docs"
-
 msgid "Data codoc mismatches from documentation object '%s':"
 msgstr "Data codoc mismatches from documentation object '%s':"
 
 msgid "Variables in data frame '%s'"
 msgstr "Variables in data frame ‘%s’"
+
+msgid "code"
+msgstr "code"
+
+msgid "docs"
+msgstr "docs"
 
 msgid "Undocumented arguments in documentation object '%s'"
 msgstr "Undocumented arguments in documentation object ‘%s’"
@@ -815,6 +815,9 @@ msgstr "skipping repeated alias(es)"
 
 msgid "in file"
 msgstr "in file"
+
+msgid "there is a 'man' dir but no help pages in this package"
+msgstr "there is a ‘man’ dir but no help pages in this package"
 
 msgid "problem in converting"
 msgstr "problem in converting"

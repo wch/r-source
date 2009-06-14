@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-27 13:50\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -237,7 +237,8 @@ msgstr "'row.names' faltantes não são permitidos"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "'dimnames' inválidos para um data frame"
 
-msgid "cannot coerce class \"%s\" into a data.frame"
+#, fuzzy
+msgid "cannot coerce class %s into a data.frame"
 msgstr "não é possível fazer coerção de classe \"%s\" para data.frame"
 
 msgid "invalid 'row.names', length %d for a data frame with %d rows"
@@ -282,7 +283,7 @@ msgstr ""
 "nomes de linhas foram encontrados em uma variável curta e foram descartados"
 
 #, fuzzy
-msgid "named arguments other than 'drop' are not allowed"
+msgid "named arguments other than 'drop' are discouraged"
 msgstr "'row.names' faltantes não são permitidos"
 
 msgid "drop argument will be ignored"
@@ -291,11 +292,12 @@ msgstr "argumento 'drop' será ignorado"
 msgid "undefined columns selected"
 msgstr "colunas indefinidas selecionadas"
 
-msgid "named arguments other than 'exact' are not allowed"
-msgstr ""
+#, fuzzy
+msgid "named arguments other than 'exact' are discouraged"
+msgstr "'row.names' faltantes não são permitidos"
 
 #, fuzzy
-msgid "named arguments are not allowed"
+msgid "named arguments are not discouraged"
 msgstr "'row.names' duplicados não são permitidos"
 
 msgid "rhs is the wrong length for indexing by a logical matrix"

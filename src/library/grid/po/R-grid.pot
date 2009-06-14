@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-10 11:36\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -384,6 +384,9 @@ msgid "'Summary' function '%s' not meaningful for units"
 msgstr ""
 
 msgid "Zero arguments where at least one expected"
+msgstr ""
+
+msgid "Cannot mix signs of indices"
 msgstr ""
 
 msgid "Index out of bounds (unit subsetting)"

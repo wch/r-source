@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:34\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -95,17 +95,17 @@ msgstr "'%s'类别的槽"
 msgid "name"
 msgstr "名字"
 
-msgid "code"
-msgstr "编码"
-
-msgid "docs"
-msgstr "文件"
-
 msgid "Data codoc mismatches from documentation object '%s':"
 msgstr "使用手冊对象'%s'里的数据codoc配合错误:"
 
 msgid "Variables in data frame '%s'"
 msgstr "数据框'%s'里的变量"
+
+msgid "code"
+msgstr "编码"
+
+msgid "docs"
+msgstr "文件"
 
 msgid "Undocumented arguments in documentation object '%s'"
 msgstr "使用手冊对象'%s'有未公开的变元"
@@ -798,6 +798,9 @@ msgid "skipping repeated alias(es)"
 msgstr ""
 
 msgid "in file"
+msgstr ""
+
+msgid "there is a 'man' dir but no help pages in this package"
 msgstr ""
 
 msgid "problem in converting"

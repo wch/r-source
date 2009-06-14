@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-10 11:36\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -468,12 +468,6 @@ msgid "Argument abbreviate must be 0, 1, 2, or 3"
 msgstr ""
 
 msgid "Needed the supplied labels vector of length %n, got %n"
-msgstr ""
-
-msgid "Some of the superclasses in the definition of class \""
-msgstr ""
-
-msgid "\" have apparent S3 methods.\n\nThese will be hidden by the S3 class that this class contains. (See ?Methods)"
 msgstr ""
 
 msgid "the function being used as %s in making a generic function for \"%s\" is currently traced; the function used will have tracing removed"

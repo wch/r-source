@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:34\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2009-04-01 08:36+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -95,17 +95,17 @@ msgstr " クラス '%s' のためのスロット "
 msgid "name"
 msgstr " 名前 "
 
-msgid "code"
-msgstr " コード "
-
-msgid "docs"
-msgstr " ドキュメント "
-
 msgid "Data codoc mismatches from documentation object '%s':"
 msgstr " データ codoc はドキュメントオブジェクト '%s' とマッチしません: "
 
 msgid "Variables in data frame '%s'"
 msgstr " データ・フレーム '%s' 中の変数 "
+
+msgid "code"
+msgstr " コード "
+
+msgid "docs"
+msgstr " ドキュメント "
 
 msgid "Undocumented arguments in documentation object '%s'"
 msgstr " ドキュメントオブジェクト '%s' 中にドキュメントの無い引数 "
@@ -825,6 +825,10 @@ msgstr "重複したエイリアスをスキップ中"
 
 msgid "in file"
 msgstr " 以下のファイル中 "
+
+#, fuzzy
+msgid "there is a 'man' dir but no help pages in this package"
+msgstr "このパッケージにはヘルプ頁がありません "
 
 msgid "problem in converting"
 msgstr " 変換に問題 "

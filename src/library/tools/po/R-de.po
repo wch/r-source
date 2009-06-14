@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:34\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2009-03-26 14:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -96,17 +96,17 @@ msgstr "Slots für Klasse '%s'"
 msgid "name"
 msgstr "Name"
 
-msgid "code"
-msgstr "Code"
-
-msgid "docs"
-msgstr "Doku"
-
 msgid "Data codoc mismatches from documentation object '%s':"
 msgstr "Datendoku passt nicht zum Dokuobjekt '%s':"
 
 msgid "Variables in data frame '%s'"
 msgstr "Variablen im Dataframe '%s'"
+
+msgid "code"
+msgstr "Code"
+
+msgid "docs"
+msgstr "Doku"
 
 msgid "Undocumented arguments in documentation object '%s'"
 msgstr "Undokumentierte Argumente im Dokuobjekt '%s'"
@@ -804,6 +804,10 @@ msgstr "überspringe wiederholte(n) Alias(se)"
 
 msgid "in file"
 msgstr "in Datei"
+
+#, fuzzy
+msgid "there is a 'man' dir but no help pages in this package"
+msgstr "keine Hilfeseiten in diesem Paket"
 
 msgid "problem in converting"
 msgstr "Problem bei der Konvertierung"

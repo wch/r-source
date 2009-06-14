@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:34\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -93,12 +93,6 @@ msgstr ""
 msgid "name"
 msgstr ""
 
-msgid "code"
-msgstr ""
-
-msgid "docs"
-msgstr ""
-
 #, fuzzy
 msgid "Data codoc mismatches from documentation object '%s':"
 msgstr "파일 '%s'에서 인덱스 정보를 읽을수가 없습니다"
@@ -106,6 +100,12 @@ msgstr "파일 '%s'에서 인덱스 정보를 읽을수가 없습니다"
 #, fuzzy
 msgid "Variables in data frame '%s'"
 msgstr "'%s'를 작성할수가 없습니다"
+
+msgid "code"
+msgstr ""
+
+msgid "docs"
+msgstr ""
 
 #, fuzzy
 msgid "Undocumented arguments in documentation object '%s'"
@@ -809,6 +809,9 @@ msgid "skipping repeated alias(es)"
 msgstr ""
 
 msgid "in file"
+msgstr ""
+
+msgid "there is a 'man' dir but no help pages in this package"
 msgstr ""
 
 msgid "problem in converting"

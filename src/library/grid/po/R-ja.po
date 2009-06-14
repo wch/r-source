@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:31\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2009-03-31 20:58+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -411,6 +411,9 @@ msgstr " 'Summary' 関数 '%s' は単位(units)として意味をなしません
 
 msgid "Zero arguments where at least one expected"
 msgstr " 引数が 0 個ですが，少なくとも 1 つの引数が必要です "
+
+msgid "Cannot mix signs of indices"
+msgstr ""
 
 msgid "Index out of bounds (unit subsetting)"
 msgstr " 添え字が範囲を超えています(unit subsetting） "

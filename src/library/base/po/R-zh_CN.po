@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-27 13:50\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -230,7 +230,8 @@ msgstr "'row.names'里不允许有遗漏值"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "数据框的'dimnames'给得不对"
 
-msgid "cannot coerce class \"%s\" into a data.frame"
+#, fuzzy
+msgid "cannot coerce class %s into a data.frame"
 msgstr "不能把\"%s\"类别强迫变成数据框"
 
 msgid "invalid 'row.names', length %d for a data frame with %d rows"
@@ -273,7 +274,7 @@ msgid "row names were found from a short variable and have been discarded"
 msgstr "短变数里找到了行名，因此不用"
 
 #, fuzzy
-msgid "named arguments other than 'drop' are not allowed"
+msgid "named arguments other than 'drop' are discouraged"
 msgstr "'row.names'里不允许有遗漏值"
 
 msgid "drop argument will be ignored"
@@ -282,11 +283,12 @@ msgstr "忽略drop变元"
 msgid "undefined columns selected"
 msgstr "选择了未定义的列"
 
-msgid "named arguments other than 'exact' are not allowed"
-msgstr ""
+#, fuzzy
+msgid "named arguments other than 'exact' are discouraged"
+msgstr "'row.names'里不允许有遗漏值"
 
 #, fuzzy
-msgid "named arguments are not allowed"
+msgid "named arguments are not discouraged"
 msgstr "不允许有重复的'row.names'"
 
 msgid "rhs is the wrong length for indexing by a logical matrix"

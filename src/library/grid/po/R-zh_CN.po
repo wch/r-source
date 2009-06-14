@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:31\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -403,6 +403,9 @@ msgstr "'Summary'函数'%s'对这个单元没有意义"
 
 msgid "Zero arguments where at least one expected"
 msgstr "不能没有变元，至少需要有一个"
+
+msgid "Cannot mix signs of indices"
+msgstr ""
 
 msgid "Index out of bounds (unit subsetting)"
 msgstr "索引值出界(取单元子集时)"

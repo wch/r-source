@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:31\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2009-03-28 22:27-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -409,6 +409,9 @@ msgstr "Функция 'Summary' '%s' не имеет значения для единиц"
 
 msgid "Zero arguments where at least one expected"
 msgstr "Нет аргументов, ожидается хоть один"
+
+msgid "Cannot mix signs of indices"
+msgstr ""
 
 msgid "Index out of bounds (unit subsetting)"
 msgstr "Индекс за пределами (подмножество единиц)"

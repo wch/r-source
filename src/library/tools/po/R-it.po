@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:34\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -93,12 +93,6 @@ msgstr ""
 msgid "name"
 msgstr ""
 
-msgid "code"
-msgstr ""
-
-msgid "docs"
-msgstr ""
-
 #, fuzzy
 msgid "Data codoc mismatches from documentation object '%s':"
 msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
@@ -106,6 +100,12 @@ msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
 #, fuzzy
 msgid "Variables in data frame '%s'"
 msgstr "impossibile creare '%s'"
+
+msgid "code"
+msgstr ""
+
+msgid "docs"
+msgstr ""
 
 #, fuzzy
 msgid "Undocumented arguments in documentation object '%s'"
@@ -811,6 +811,9 @@ msgid "skipping repeated alias(es)"
 msgstr ""
 
 msgid "in file"
+msgstr ""
+
+msgid "there is a 'man' dir but no help pages in this package"
 msgstr ""
 
 msgid "problem in converting"

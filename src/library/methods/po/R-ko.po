@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:33\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -781,16 +781,6 @@ msgid "Argument abbreviate must be 0, 1, 2, or 3"
 msgstr ""
 
 msgid "Needed the supplied labels vector of length %n, got %n"
-msgstr ""
-
-#, fuzzy
-msgid "Some of the superclasses in the definition of class \""
-msgstr "지정된 위치의 클래스 \"%s\", %s,(s) 정의가 없습니다: %s"
-
-msgid ""
-"\" have apparent S3 methods.\n"
-"\n"
-"These will be hidden by the S3 class that this class contains. (See ?Methods)"
 msgstr ""
 
 #, fuzzy
@@ -1652,6 +1642,10 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "함수'%s'를 위한 메소드 signature으로, 클래스용 정의는 없습니다: %s"
+
+#, fuzzy
+#~ msgid "Some of the superclasses in the definition of class \""
+#~ msgstr "지정된 위치의 클래스 \"%s\", %s,(s) 정의가 없습니다: %s"
 
 #~ msgid "signature must be a vector of classes or an environment"
 #~ msgstr "기호는 클래스 또는 환경의 벡터가 아니면 되지 않습니다"

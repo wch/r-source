@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:34\n"
+"POT-Creation-Date: 2009-06-14 08:14\n"
 "PO-Revision-Date: 2009-03-28 23:43-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -98,17 +98,17 @@ msgstr "Слоты для класса '%s'"
 msgid "name"
 msgstr "имя"
 
-msgid "code"
-msgstr "код"
-
-msgid "docs"
-msgstr "документы"
-
 msgid "Data codoc mismatches from documentation object '%s':"
 msgstr "Несоответствия структуры данных в объекте документации '%s':"
 
 msgid "Variables in data frame '%s'"
 msgstr "переменные в таблице данных '%s'"
+
+msgid "code"
+msgstr "код"
+
+msgid "docs"
+msgstr "документы"
 
 msgid "Undocumented arguments in documentation object '%s'"
 msgstr "В объекте документации '%s' есть недокументированные аргументы "
@@ -807,6 +807,10 @@ msgstr "пропускаю повторяющиеся имена-ссылк(и)"
 
 msgid "in file"
 msgstr "в файле"
+
+#, fuzzy
+msgid "there is a 'man' dir but no help pages in this package"
+msgstr "в пакете нет файлов помощи"
 
 msgid "problem in converting"
 msgstr "проблема конвертирования"
