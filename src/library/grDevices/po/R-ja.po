@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-10 11:44\n"
+"POT-Creation-Date: 2009-06-14 08:28\n"
 "PO-Revision-Date: 2009-03-31 20:50+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -282,6 +282,9 @@ msgstr " 不正な 'filename' 引数です "
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr " 'res' は 'units = \"px\"' で無い限り指定される必要があります "
+
+msgid "type = \"cairo1\" is deprecated"
+msgstr ""
 
 msgid "invalid X11 font specification:"
 msgstr " 不正な X11 フォントの指定方法です "

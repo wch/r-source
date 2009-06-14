@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:27\n"
+"POT-Creation-Date: 2009-06-14 08:29\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -798,6 +798,9 @@ msgid "skipping repeated alias(es)"
 msgstr ""
 
 msgid "in file"
+msgstr ""
+
+msgid "there is a 'man' dir but no help pages in this package"
 msgstr ""
 
 msgid "problem in converting"

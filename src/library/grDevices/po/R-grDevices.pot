@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-10 11:44\n"
+"POT-Creation-Date: 2009-06-14 08:28\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -273,6 +273,9 @@ msgid "invalid 'filename'"
 msgstr ""
 
 msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr ""
+
+msgid "type = \"cairo1\" is deprecated"
 msgstr ""
 
 msgid "invalid X11 font specification:"

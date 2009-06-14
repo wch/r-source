@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-28 17:22\n"
+"POT-Creation-Date: 2009-06-14 08:28\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -663,46 +663,6 @@ msgid "Argument abbreviate must be 0, 1, 2, or 3"
 msgstr ""
 
 msgid "Needed the supplied labels vector of length %n, got %n"
-msgstr ""
-
-msgid ""
-"S3 methods written for S4 classes will fail inheritance!\n"
-"Package"
-msgstr ""
-
-msgid "apparently has"
-msgstr ""
-
-msgid "such methods  for the functions"
-msgstr ""
-
-#, fuzzy
-msgid "functions"
-msgstr "链结"
-
-msgid "Possible dangerous methods:"
-msgstr ""
-
-msgid "(Warnings generated once per package per session)"
-msgstr ""
-
-msgid "There are apparent S3 methods for class \""
-msgstr ""
-
-msgid ""
-"\"\n"
-"DANGER: any subclasses of this class will not inherit the methods"
-msgstr ""
-
-#, fuzzy
-msgid "Some of the superclasses in the definition of class \""
-msgstr "在定义\"%2$s\"里不存在母类别\"%1$s\"的定义"
-
-msgid ""
-"\" have apparent S3 methods.\n"
-"\n"
-"DANGER: the new class will not inherit these methods.\n"
-"Complain to the author of the superclass definitions."
 msgstr ""
 
 msgid ""
@@ -1437,6 +1397,14 @@ msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
+
+#, fuzzy
+#~ msgid "functions"
+#~ msgstr "链结"
+
+#, fuzzy
+#~ msgid "Some of the superclasses in the definition of class \""
+#~ msgstr "在定义\"%2$s\"里不存在母类别\"%1$s\"的定义"
 
 #~ msgid "signature must be a vector of classes or an environment"
 #~ msgstr "标记要么是个含类别的矢量，要么是个环境"

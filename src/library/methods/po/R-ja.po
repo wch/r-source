@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-28 17:22\n"
+"POT-Creation-Date: 2009-06-14 08:28\n"
 "PO-Revision-Date: 2009-03-31 20:47+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -772,52 +772,6 @@ msgstr " 引数の省略形は 0,1,2,3 のどれかでなければなりませ�
 
 msgid "Needed the supplied labels vector of length %n, got %n"
 msgstr "長さ %n のラベルベクトルを与える必要がありましたが、%n 個でした "
-
-msgid ""
-"S3 methods written for S4 classes will fail inheritance!\n"
-"Package"
-msgstr ""
-"S4 クラスに対して書かれた S3 メソッドが継承に失敗しました！ \n"
-"パッケージ"
-
-msgid "apparently has"
-msgstr " 見たところ以下を持ちます "
-
-msgid "such methods  for the functions"
-msgstr "この関数に対するそうしたメソッド "
-
-msgid "functions"
-msgstr "関数"
-
-msgid "Possible dangerous methods:"
-msgstr "危険な可能性のあるメソッド： "
-
-msgid "(Warnings generated once per package per session)"
-msgstr " (警告はパッケージ毎、セッション毎に一回出されます) "
-
-msgid "There are apparent S3 methods for class \""
-msgstr " 見たところ S3 メソッドが存在します、以下のクラス \" "
-
-msgid ""
-"\"\n"
-"DANGER: any subclasses of this class will not inherit the methods"
-msgstr ""
-" \" \n"
-"危険: このクラスのどんなサブクラスもメソッドを引き継がないでしょう. "
-
-msgid "Some of the superclasses in the definition of class \""
-msgstr "クラスの定義のスーパークラスのいくつか \" "
-
-msgid ""
-"\" have apparent S3 methods.\n"
-"\n"
-"DANGER: the new class will not inherit these methods.\n"
-"Complain to the author of the superclass definitions."
-msgstr ""
-" \" 見かけのS3方法を持ってください. \n"
-"\n"
-"危険: 新しいクラスはこれらのメソッドを引き継がないでしょう. \n"
-"スーパークラスの定義について作者に訴えてください. "
 
 msgid ""
 "the function being used as %s in making a generic function for \"%s\" is "
@@ -1661,6 +1615,52 @@ msgid_plural ""
 "in the method signature for function \"%s\" no definition for classes: %s"
 msgstr[0] ""
 " 関数 \"%s\" に対するメソッドシグネチャ中に、シグネチャ中の不正な引数名：% "
+
+#~ msgid ""
+#~ "S3 methods written for S4 classes will fail inheritance!\n"
+#~ "Package"
+#~ msgstr ""
+#~ "S4 クラスに対して書かれた S3 メソッドが継承に失敗しました！ \n"
+#~ "パッケージ"
+
+#~ msgid "apparently has"
+#~ msgstr " 見たところ以下を持ちます "
+
+#~ msgid "such methods  for the functions"
+#~ msgstr "この関数に対するそうしたメソッド "
+
+#~ msgid "functions"
+#~ msgstr "関数"
+
+#~ msgid "Possible dangerous methods:"
+#~ msgstr "危険な可能性のあるメソッド： "
+
+#~ msgid "(Warnings generated once per package per session)"
+#~ msgstr " (警告はパッケージ毎、セッション毎に一回出されます) "
+
+#~ msgid "There are apparent S3 methods for class \""
+#~ msgstr " 見たところ S3 メソッドが存在します、以下のクラス \" "
+
+#~ msgid ""
+#~ "\"\n"
+#~ "DANGER: any subclasses of this class will not inherit the methods"
+#~ msgstr ""
+#~ " \" \n"
+#~ "危険: このクラスのどんなサブクラスもメソッドを引き継がないでしょう. "
+
+#~ msgid "Some of the superclasses in the definition of class \""
+#~ msgstr "クラスの定義のスーパークラスのいくつか \" "
+
+#~ msgid ""
+#~ "\" have apparent S3 methods.\n"
+#~ "\n"
+#~ "DANGER: the new class will not inherit these methods.\n"
+#~ "Complain to the author of the superclass definitions."
+#~ msgstr ""
+#~ " \" 見かけのS3方法を持ってください. \n"
+#~ "\n"
+#~ "危険: 新しいクラスはこれらのメソッドを引き継がないでしょう. \n"
+#~ "スーパークラスの定義について作者に訴えてください. "
 
 #~ msgid "signature must be a vector of classes or an environment"
 #~ msgstr " シグネチャ(signature)はクラスのベクトルか環境でなければなりません "

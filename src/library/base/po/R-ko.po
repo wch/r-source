@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:25\n"
+"POT-Creation-Date: 2009-06-14 08:17\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -541,7 +541,11 @@ msgstr "'x' 정방 행렬이 아니면 되지 않습니다"
 msgid "determinant not currently defined for complex matrices"
 msgstr "행렬식은 현재 복소행열에는 정의 되어있지 않습니다"
 
-msgid "first argument is array, but not matrix."
+msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
+msgstr ""
+
+#, fuzzy
+msgid "'x' is an array, but not 1D."
 msgstr "1 인수는 배열입니다만, 행렬이 아닙니다"
 
 msgid "only matrix diagonals can be replaced"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:25+0000\n"
+"POT-Creation-Date: 2009-06-14 08:17+0100\n"
 "PO-Revision-Date: 2005-05-31 10:31+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -474,26 +474,26 @@ msgstr "pdf에 대해서 너무 긴 파일명입니다"
 msgid "no font could be found for family \"%s\""
 msgstr ""
 
-#: devQuartz.c:1172
+#: devQuartz.c:1178
 #, fuzzy
 msgid "invalid 'file' argument"
 msgstr "무효의 문자열 인수입니다"
 
-#: devQuartz.c:1200
+#: devQuartz.c:1206
 #, fuzzy
 msgid "invalid Quartz device size"
 msgstr "savePlot의 무효인 디비이스입니다"
 
-#: devQuartz.c:1228
+#: devQuartz.c:1234
 #, fuzzy
 msgid "Unable to create device description."
 msgstr "디바이스 PostSscript를 시작할수 없습니다"
 
-#: devQuartz.c:1278
+#: devQuartz.c:1284
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1364
+#: devQuartz.c:1370
 #, fuzzy
 msgid "Quartz device is not available on this platform"
 msgstr "Quartz 디바이스는 이 platform에서 이용 가능하지는 않습니다"

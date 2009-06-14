@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:25+0000\n"
+"POT-Creation-Date: 2009-06-14 08:17+0100\n"
 "PO-Revision-Date: 2009-03-30 11:13+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -68,12 +68,16 @@ msgstr "Fontmetrik für das Zeichen 0x%x unbekannt"
 msgid ""
 "invalid character (%04x) sent to 'PostScriptCIDMetricInfo' in a single-byte "
 "locale"
-msgstr "ungültiges Zeichen (%04x) an 'PostScriptCIDMetricInfo' in einer Ein-Byte-Lokalisierung gesendet"
+msgstr ""
+"ungültiges Zeichen (%04x) an 'PostScriptCIDMetricInfo' in einer Ein-Byte-"
+"Lokalisierung gesendet"
 
 #: devPS.c:928
 msgid ""
 "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
-msgstr "ungültiges Zeichen an 'PostScriptCIDMetricInfo' in einer Ein-Byte-Lokalisierung gesendet"
+msgstr ""
+"ungültiges Zeichen an 'PostScriptCIDMetricInfo' in einer Ein-Byte-"
+"Lokalisierung gesendet"
 
 #: devPS.c:1042
 msgid "failed to allocate CID font info"
@@ -118,7 +122,8 @@ msgstr "Ungültiger Zeichensatzname, oder mehr als einer"
 
 #: devPS.c:1643 devPS.c:1677
 msgid "font family not found in PostScript font database"
-msgstr "Zeichenstzfamilie in der PostScript-Zeichensatzdatenbank nicht gefunden"
+msgstr ""
+"Zeichenstzfamilie in der PostScript-Zeichensatzdatenbank nicht gefunden"
 
 #: devPS.c:1748 devPS.c:1827 devPS.c:1853
 msgid "font encoding not found in font database"
@@ -161,7 +166,9 @@ msgstr "Unzulässige Zeilenkappung"
 #: devPS.c:6930 devPS.c:6985
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
-msgstr "Versuch den unzulässigen Zeichensatz %d zu benutzen, nutze stattdessen Zeichensatz 1"
+msgstr ""
+"Versuch den unzulässigen Zeichensatz %d zu benutzen, nutze stattdessen "
+"Zeichensatz 1"
 
 #: devPS.c:3019
 msgid "only gray colors are allowed in this color model"
@@ -212,7 +219,9 @@ msgstr "ungültiger Seitentyp '%s' (postscript)"
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
-msgstr "Semi-Transparenz ist für dieses Gerät nicht unterstützt; nur eine Meldung pro Seite"
+msgstr ""
+"Semi-Transparenz ist für dieses Gerät nicht unterstützt; nur eine Meldung "
+"pro Seite"
 
 #: devPS.c:3576
 msgid "printing via file = \"\" is not implemented in this version"
@@ -388,7 +397,8 @@ msgstr "kann das 'pdf' Dateiargument '%s' nicht öffnen"
 
 #: devPS.c:6550
 msgid "unable to increase page limit: please shutdown the pdf device"
-msgstr "kann die Seitenbegrenzungen nicht anheben: bitte das PDF Gerät schliessen"
+msgstr ""
+"kann die Seitenbegrenzungen nicht anheben: bitte das PDF Gerät schliessen"
 
 #: devPS.c:6563
 #, c-format
@@ -451,23 +461,25 @@ msgstr "Name der Zeichensatzfamile zu lang"
 msgid "no font could be found for family \"%s\""
 msgstr "Für Familie \"%s\" konnte kein Zeichensatz gefunden werden"
 
-#: devQuartz.c:1172
+#: devQuartz.c:1178
 msgid "invalid 'file' argument"
 msgstr "unzulässiges 'file' Argument"
 
-#: devQuartz.c:1200
+#: devQuartz.c:1206
 msgid "invalid Quartz device size"
 msgstr "unzulässige Größe für Quartz-Gerät"
 
-#: devQuartz.c:1228
+#: devQuartz.c:1234
 msgid "Unable to create device description."
 msgstr "Kann keine Gerätebeschreibung erzeugen."
 
-#: devQuartz.c:1278
+#: devQuartz.c:1284
 msgid "Unable to create Quartz device target, given type may not be supported."
-msgstr "Kann das Quartz-Gerät als Ziel nicht erzeugen, angegebener Typ evtl. nicht unterstützt."
+msgstr ""
+"Kann das Quartz-Gerät als Ziel nicht erzeugen, angegebener Typ evtl. nicht "
+"unterstützt."
 
-#: devQuartz.c:1364
+#: devQuartz.c:1370
 msgid "Quartz device is not available on this platform"
 msgstr "Auf dieser Platform ist kein Quartz-Gerät verfügbar"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-28 17:22\n"
+"POT-Creation-Date: 2009-06-14 08:28\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -785,45 +785,6 @@ msgid "Needed the supplied labels vector of length %n, got %n"
 msgstr ""
 
 msgid ""
-"S3 methods written for S4 classes will fail inheritance!\n"
-"Package"
-msgstr ""
-
-msgid "apparently has"
-msgstr ""
-
-msgid "such methods  for the functions"
-msgstr ""
-
-msgid "functions"
-msgstr ""
-
-msgid "Possible dangerous methods:"
-msgstr ""
-
-msgid "(Warnings generated once per package per session)"
-msgstr ""
-
-msgid "There are apparent S3 methods for class \""
-msgstr ""
-
-msgid ""
-"\"\n"
-"DANGER: any subclasses of this class will not inherit the methods"
-msgstr ""
-
-#, fuzzy
-msgid "Some of the superclasses in the definition of class \""
-msgstr "classes de slot não definidas na definição de \"%s\": %s"
-
-msgid ""
-"\" have apparent S3 methods.\n"
-"\n"
-"DANGER: the new class will not inherit these methods.\n"
-"Complain to the author of the superclass definitions."
-msgstr ""
-
-msgid ""
 "the function being used as %s in making a generic function for \"%s\" is "
 "currently traced; the function used will have tracing removed"
 msgstr ""
@@ -1561,6 +1522,10 @@ msgstr[0] ""
 msgstr[1] ""
 "na assinatura do método da função '%s' nomes de argumentos inválidos na "
 "assinatura: %s"
+
+#, fuzzy
+#~ msgid "Some of the superclasses in the definition of class \""
+#~ msgstr "classes de slot não definidas na definição de \"%s\": %s"
 
 #~ msgid "signature must be a vector of classes or an environment"
 #~ msgstr "assinatura deve ser um vetor de classes ou um ambiente"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-28 17:22\n"
+"POT-Creation-Date: 2009-06-14 08:28\n"
 "PO-Revision-Date: 2009-03-28 23:15-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -772,52 +772,6 @@ msgstr "Сокращенный аргумент должен быть 0, 1, 2, или 3"
 
 msgid "Needed the supplied labels vector of length %n, got %n"
 msgstr "Нужны добавочные метки вектора длины %n, а получено %n"
-
-msgid ""
-"S3 methods written for S4 classes will fail inheritance!\n"
-"Package"
-msgstr ""
-"S3 методы, написанные для S4 классов, не смогут наследоваться!\n"
-"Пакет"
-
-msgid "apparently has"
-msgstr "очевидно имеет"
-
-msgid "such methods  for the functions"
-msgstr "такие методы для функций"
-
-msgid "functions"
-msgstr "функции"
-
-msgid "Possible dangerous methods:"
-msgstr "Возможные опасные методы:"
-
-msgid "(Warnings generated once per package per session)"
-msgstr "(Предупреждения выдаются одно на пакет на сессию)"
-
-msgid "There are apparent S3 methods for class \""
-msgstr "Есть очевидные S3 методы для класса \""
-
-msgid ""
-"\"\n"
-"DANGER: any subclasses of this class will not inherit the methods"
-msgstr ""
-"\"\n"
-"ОПАСНО: любой субкласс этого класса не будет наследовать методы"
-
-msgid "Some of the superclasses in the definition of class \""
-msgstr "Некоторые суперклассы в определении класса \""
-
-msgid ""
-"\" have apparent S3 methods.\n"
-"\n"
-"DANGER: the new class will not inherit these methods.\n"
-"Complain to the author of the superclass definitions."
-msgstr ""
-"\" имеет очевидные S3 методы.\n"
-"\n"
-"ОПАСНО: новый класс на будет наследовать эти методы.\n"
-"Пожалуйтесь автору определений суперкласса."
 
 msgid ""
 "the function being used as %s in making a generic function for \"%s\" is "
@@ -1660,6 +1614,52 @@ msgstr[1] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
 msgstr[2] ""
 "в идентификаторе метода для функции \"%s\" нет определения для классов: %s"
+
+#~ msgid ""
+#~ "S3 methods written for S4 classes will fail inheritance!\n"
+#~ "Package"
+#~ msgstr ""
+#~ "S3 методы, написанные для S4 классов, не смогут наследоваться!\n"
+#~ "Пакет"
+
+#~ msgid "apparently has"
+#~ msgstr "очевидно имеет"
+
+#~ msgid "such methods  for the functions"
+#~ msgstr "такие методы для функций"
+
+#~ msgid "functions"
+#~ msgstr "функции"
+
+#~ msgid "Possible dangerous methods:"
+#~ msgstr "Возможные опасные методы:"
+
+#~ msgid "(Warnings generated once per package per session)"
+#~ msgstr "(Предупреждения выдаются одно на пакет на сессию)"
+
+#~ msgid "There are apparent S3 methods for class \""
+#~ msgstr "Есть очевидные S3 методы для класса \""
+
+#~ msgid ""
+#~ "\"\n"
+#~ "DANGER: any subclasses of this class will not inherit the methods"
+#~ msgstr ""
+#~ "\"\n"
+#~ "ОПАСНО: любой субкласс этого класса не будет наследовать методы"
+
+#~ msgid "Some of the superclasses in the definition of class \""
+#~ msgstr "Некоторые суперклассы в определении класса \""
+
+#~ msgid ""
+#~ "\" have apparent S3 methods.\n"
+#~ "\n"
+#~ "DANGER: the new class will not inherit these methods.\n"
+#~ "Complain to the author of the superclass definitions."
+#~ msgstr ""
+#~ "\" имеет очевидные S3 методы.\n"
+#~ "\n"
+#~ "ОПАСНО: новый класс на будет наследовать эти методы.\n"
+#~ "Пожалуйтесь автору определений суперкласса."
 
 #~ msgid "signature must be a vector of classes or an environment"
 #~ msgstr "идентификатор должен быть вектором классов или окружением"

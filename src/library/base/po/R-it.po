@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:25\n"
+"POT-Creation-Date: 2009-06-14 08:17\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -555,7 +555,11 @@ msgstr "'x' deve essere una matrice quadrata"
 msgid "determinant not currently defined for complex matrices"
 msgstr "il deteminante di matrici complesse non è definito"
 
-msgid "first argument is array, but not matrix."
+msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
+msgstr ""
+
+#, fuzzy
+msgid "'x' is an array, but not 1D."
 msgstr "il primo argomento è un array, ma non una matrice"
 
 msgid "only matrix diagonals can be replaced"

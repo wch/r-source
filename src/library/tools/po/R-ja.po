@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:27\n"
+"POT-Creation-Date: 2009-06-14 08:29\n"
 "PO-Revision-Date: 2009-04-01 08:36+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -825,6 +825,10 @@ msgstr "重複したエイリアスをスキップ中"
 
 msgid "in file"
 msgstr " 以下のファイル中 "
+
+#, fuzzy
+msgid "there is a 'man' dir but no help pages in this package"
+msgstr "このパッケージにはヘルプ頁がありません "
 
 msgid "problem in converting"
 msgstr " 変換に問題 "

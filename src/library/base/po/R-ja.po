@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:25\n"
+"POT-Creation-Date: 2009-06-14 08:17\n"
 "PO-Revision-Date: 2009-03-31 13:18+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -534,7 +534,11 @@ msgstr " 'x' は正方行列でなければなりません "
 msgid "determinant not currently defined for complex matrices"
 msgstr " 行列式は現在複素行列には定義されていません "
 
-msgid "first argument is array, but not matrix."
+msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
+msgstr ""
+
+#, fuzzy
+msgid "'x' is an array, but not 1D."
 msgstr " 第一引数は配列ですが、行列ではありません "
 
 msgid "only matrix diagonals can be replaced"

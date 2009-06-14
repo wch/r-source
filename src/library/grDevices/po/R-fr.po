@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-10 11:44\n"
+"POT-Creation-Date: 2009-06-14 08:28\n"
 "PO-Revision-Date: 2009-03-29 21:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -288,6 +288,9 @@ msgstr "argument 'filename' incorrect"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' doit être spécifié à moins que 'units = \"px\""
+
+msgid "type = \"cairo1\" is deprecated"
+msgstr ""
 
 msgid "invalid X11 font specification:"
 msgstr "spécification de police X11 incorrecte :"
