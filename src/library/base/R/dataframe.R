@@ -922,7 +922,7 @@ data.frame <-
 "[[<-.data.frame"<- function(x, i, j, value)
 {
     if(!all(names(sys.call()) %in% c("", "value")))
-        warning("named arguments are iscouraged")
+        warning("named arguments are discouraged")
 
     cl <- oldClass(x)
     ## delete class: Version 3 idiom
