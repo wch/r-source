@@ -671,7 +671,7 @@ data.frame <-
 "[<-.data.frame" <- function(x, i, j, value)
 {
     if(!all(names(sys.call()) %in% c("", "value")))
-        warning("named arguments are not discouraged")
+        warning("named arguments are discouraged")
 
     nA <- nargs() # value is never missing, so 3 or 4.
     if(nA == 4L) { ## df[,] or df[i,] or df[, j] or df[i,j]
@@ -922,7 +922,7 @@ data.frame <-
 "[[<-.data.frame"<- function(x, i, j, value)
 {
     if(!all(names(sys.call()) %in% c("", "value")))
-        warning("named arguments are not discouraged")
+        warning("named arguments are iscouraged")
 
     cl <- oldClass(x)
     ## delete class: Version 3 idiom
