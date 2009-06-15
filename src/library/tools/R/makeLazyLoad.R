@@ -179,10 +179,12 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
         idx <- 0
         envs <- NULL
         enames <- character(0L)
-        find <- function(v, keys, vals)
+        find <- function(v, keys, vals) {
             for (i in seq_along(keys))
                 if (identical(v, keys[[i]]))
                     return(vals[i])
+	    NULL
+	}
         getname <- function(e) find(e, envs, enames)
         getenv <- function(n) find(n, enames, envs)
         insert <- function(e) {
