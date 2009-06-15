@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-06-02 r48703)
+R version 2.10.0 Under development (unstable) (2009-06-15 r48778)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6436,7 +6436,7 @@ sample estimates:
 > ## corrupt data frame, PR#13724
 > foo <- matrix(1:12, nrow = 3)
 > bar <- as.data.frame(foo)
-> val <- foo[foo[, 1] == 4, 4]
+> val <- integer(0)
 > try(bar$NewCol <- val)
 Error in `$<-.data.frame`(`*tmp*`, "NewCol", value = integer(0)) : 
   replacement has 0 rows, data has 3
@@ -6444,7 +6444,17 @@ Error in `$<-.data.frame`(`*tmp*`, "NewCol", value = integer(0)) :
 > try(bar[["NewCol"]] <- val)
 Error in `[[<-.data.frame`(`*tmp*`, "NewCol", value = integer(0)) : 
   replacement has 0 rows, data has 3
-> ## succeeded but gave corrupt result in 2.9.0
+> # [ ] is tricker, so just check the result is reasonable and prints
+> bar["NewCol"] <- val
+> bar[, "NewCol2"] <- val
+> bar[FALSE, "NewCol3"] <- val
+> bar
+  V1 V2 V3 V4 NewCol NewCol2 NewCol3
+1  1  4  7 10     NA      NA      NA
+2  2  5  8 11     NA      NA      NA
+3  3  6  9 12     NA      NA      NA
+> ## Succeeded but gave corrupt result in 2.9.0
+> 
 > 
 > ## Printing NA_complex_
 > m22 <- matrix(list(NA_complex_, 3, "A string", NA_complex_), 2,2)

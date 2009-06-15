@@ -143,6 +143,10 @@ INTERNATIONALIZATION
 
 BUG FIXES
 
+    o	Assigning an extra 0-length column to a data frame by
+    	DF[, "foo"] <- value now works in most cases (by filling with
+    	NAs) or fails.  (It used to give a corrupt data frame.)
+
 
 
 

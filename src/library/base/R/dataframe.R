@@ -673,7 +673,7 @@ data.frame <-
     if(!all(names(sys.call()) %in% c("", "value")))
         warning("named arguments are discouraged")
 
-    nA <- nargs() # value is never missing, so 3 or 4.
+    nA <- nargs() # 'value' is never missing, so 3 or 4.
     if(nA == 4L) { ## df[,] or df[i,] or df[, j] or df[i,j]
 	has.i <- !missing(i)
 	has.j <- !missing(j)
@@ -907,6 +907,9 @@ data.frame <-
     else if(p > 0L) for(jjj in p:1L) { # we might delete columns with NULL
 	jj <- jseq[jjj]
         v <- value[[ jvseq[[jjj]] ]]
+        ## This is consistent with the have.i case rather than with
+        ## [[<- and $<- (which throw an error).  But both are plausible.
+        if (nrows > 0L && !length(v)) length(v) <- nrows
 	x[[jj]] <- v
         if(!is.null(v) && is.atomic(x[[jj]])) names(x[[jj]]) <- NULL
     }

@@ -2390,11 +2390,17 @@ cor.test(c(1, 2, 3, 4, 5), c(8, 6, 7, 5, 3), method = "spearman",
 ## corrupt data frame, PR#13724
 foo <- matrix(1:12, nrow = 3)
 bar <- as.data.frame(foo)
-val <- foo[foo[, 1] == 4, 4]
+val <- integer(0)
 try(bar$NewCol <- val)
 # similar, not in the report
 try(bar[["NewCol"]] <- val)
-## succeeded but gave corrupt result in 2.9.0
+# [ ] is tricker, so just check the result is reasonable and prints
+bar["NewCol"] <- val
+bar[, "NewCol2"] <- val
+bar[FALSE, "NewCol3"] <- val
+bar
+## Succeeded but gave corrupt result in 2.9.0
+
 
 ## Printing NA_complex_
 m22 <- matrix(list(NA_complex_, 3, "A string", NA_complex_), 2,2)
