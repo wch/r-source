@@ -42,6 +42,7 @@ stopifnot <- function(...)
 	    stop(paste(ch, " is not ", if(length(r) > 1L)"all ", "TRUE", sep=''),
 		 call.= FALSE)
 	}
+    invisible()
 }
 
 warning <- function(..., call. = TRUE, immediate. = FALSE, domain = NULL)
