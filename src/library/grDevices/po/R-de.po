@@ -224,17 +224,14 @@ msgstr "lade Snapshot einer Version vor R-2.0.0"
 msgid "loading snapshot from different R version"
 msgstr "lade Snapshot einer anderen R Version"
 
-#, fuzzy
 msgid "'nbin' must be numeric of length 1 or 2"
-msgstr "'r' muss ein \"range\" sein, deshalb von Länge 2"
+msgstr "'nbin' muss nummerisch mit Länge 1 oder 2 sein"
 
-#, fuzzy
 msgid "'bandwidth' must be numeric"
-msgstr "RGB Matrix muss nummerisch sein"
+msgstr "'bandwidth' muss nummerisch sein"
 
-#, fuzzy
 msgid "'bandwidth' must be positive"
-msgstr "'bias' muss positiv sein"
+msgstr "'bandwidth' muss positiv sein"
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' muss ein \"range\" sein, deshalb von Länge 2"

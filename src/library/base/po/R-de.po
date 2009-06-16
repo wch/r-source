@@ -552,11 +552,10 @@ msgid "determinant not currently defined for complex matrices"
 msgstr "Determinante für komplexe Matrizen nicht definiert"
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
-msgstr ""
+msgstr "'nrow' oder 'ncol' können nicht angegeben werden, wenn 'x' eine Matrix ist"
 
-#, fuzzy
 msgid "'x' is an array, but not 1D."
-msgstr "erstes Argument ist ein Array, aber keine Matrix"
+msgstr "'x' ist ein Array, aber nicht eindimensional"
 
 msgid "only matrix diagonals can be replaced"
 msgstr "nur Matrixdiagonalen können ersetzt werden"

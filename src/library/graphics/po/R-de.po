@@ -351,7 +351,7 @@ msgid "'figs' must specify at least one screen"
 msgstr "'figs' muss zumindet einen Screen angeben"
 
 msgid "'nrpoints' should be numeric scalar with value >= 0."
-msgstr ""
+msgstr "'nrpoints' sollte ein numerischer Skalar >= 0 sein."
 
 msgid "a 2-way table has to be specified"
 msgstr "eine 2-Wege-Tafel muss angegeben werden"

@@ -1100,11 +1100,11 @@ msgstr "ungültiger Dimensionenvektor der Länge 0"
 
 #: src/main/attrib.c:1022
 msgid "the dims contain missing values"
-msgstr ""
+msgstr "das dims Argument enthält fehlende Werte"
 
 #: src/main/attrib.c:1024
 msgid "the dims contain negative values"
-msgstr ""
+msgstr "das dims Argument enthält negative Werte"
 
 #: src/main/attrib.c:1028
 #, c-format
@@ -3285,11 +3285,10 @@ msgid "Lost warning messages\n"
 msgstr "Warnmeldungen verloren\n"
 
 #: src/main/errors.c:457
-#, fuzzy
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
-msgstr[0] "Warnmeldungen verloren\n"
-msgstr[1] "Warnmeldungen verloren\n"
+msgstr[0] "Warnmeldung:\n"
+msgstr[1] "Warnmeldungen:\n"
 
 #: src/main/errors.c:518
 #, c-format
@@ -4508,7 +4507,7 @@ msgstr "unbrauchbare generische Definitionsumgebung"
 msgid ""
 "No .S3MethodsClass table, can't use S4 objects with S3 methods (methods "
 "package not attached?)"
-msgstr ""
+msgstr "Keine Tabelle .S3MethodsClass, kann keine S4 Objekte mit S3 Methoden nutzen (Paket methods nicht eingebunden?)"
 
 #: src/main/objects.c:263 src/main/objects.c:407
 msgid "'UseMethod' used in an inappropriate fashion"
@@ -6561,17 +6560,16 @@ msgstr "Datenlänge ist kein Vielfaches der Split-Variablen"
 #: src/main/sprintf.c:92
 #, c-format
 msgid "required resulting string length %d is > maximal %d"
-msgstr ""
+msgstr "die benötigte Ergebniszeichenkettenlänge %d ist länger als das Maximum %d"
 
 #: src/main/sprintf.c:100
-#, fuzzy
 msgid "'fmt' is not a character vector"
-msgstr "'fmt' ist kein nicht-leerer Charakter-Vektor"
+msgstr "'fmt' ist kein Charakter-Vektor"
 
 #: src/main/sprintf.c:105
-#, fuzzy, c-format
+#, c-format
 msgid "only %d arguments are allowed"
-msgstr "maximal 100 Argumente zugelassen"
+msgstr "nur %d Argumente zugelassen"
 
 #: src/main/sprintf.c:112
 #, fuzzy, c-format
@@ -6590,9 +6588,9 @@ msgid "'fmt' length exceeds maximal format length %d"
 msgstr "'fmt' Länge überschreitet maximale Formatlänge %d"
 
 #: src/main/sprintf.c:166
-#, fuzzy, c-format
+#, c-format
 msgid "unrecognised format specification '%s'"
-msgstr "ungültige Farbspezifikation '%s'"
+msgstr "unbekannte Formatspezifikation '%s'"
 
 #: src/main/sprintf.c:177 src/main/sprintf.c:183 src/main/sprintf.c:196
 #: src/main/sprintf.c:203
@@ -6610,9 +6608,8 @@ msgid "argument for '*' conversion specification must be a number"
 msgstr "Argument für `*' Konvertierung muss eine Zahl sein"
 
 #: src/main/sprintf.c:254
-#, fuzzy
 msgid "the '%*' constructed 'fmt2' length exceeds maximum of %d"
-msgstr "'fmt' Länge überschreitet maximale Formatlänge %d"
+msgstr "die mit '%*' konstruierte 'fmt2' Länge überschreitet das Maximum %d"
 
 #: src/main/sprintf.c:263
 msgid "coercion has changed vector length to 0"
@@ -6620,9 +6617,9 @@ msgstr "Umwandlung hat Länge des Vektors zu 0 gemacht"
 
 #: src/main/sprintf.c:329 src/main/sprintf.c:343 src/main/sprintf.c:357
 #: src/main/sprintf.c:392
-#, fuzzy, c-format
+#, c-format
 msgid "invalid format '%s'; %s"
-msgstr "ungültiger Wert für '%s'"
+msgstr "ungültiges Format '%s'; %s"
 
 #: src/main/sprintf.c:330
 #, c-format
@@ -6984,7 +6981,7 @@ msgstr "'duplicated' kann nur auf Vektoren angewendet werden"
 
 #: src/main/unique.c:458
 msgid "any_duplicated3(., <0-length incomp>)"
-msgstr ""
+msgstr "any_duplicated3(., <0-length incomp>)"
 
 #: src/main/unique.c:512
 #, c-format
@@ -7055,20 +7052,18 @@ msgid "invalid tag in name extraction"
 msgstr "ungültiger tag in Namensauswertung"
 
 #: src/main/util.c:425
-#, fuzzy, c-format
+#, c-format
 msgid "%d argument passed to .Internal(%s) which requires %d"
 msgid_plural "%d arguments passed to .Internal(%s) which requires %d"
-msgstr[0] "%d Argumente an 'atan' übergeben, das aber 1 braucht"
-msgstr[1] "%d Argumente an 'atan' übergeben, das aber 1 braucht"
+msgstr[0] "%d Argument an .Internal(%s) übergeben, welches %d benötigt"
+msgstr[1] "%d Argumente an .Internal(%s) übergeben, welches %d benötigt"
 
 #: src/main/util.c:431
-#, fuzzy, c-format
+#, c-format
 msgid "%d argument passed to '%s' which requires %d"
 msgid_plural "%d arguments passed to '%s' which requires %d"
-msgstr[0] ""
-"%d Argumente an '%s' üergeben, welches aber 1 oder 2 Argumente benötigt"
-msgstr[1] ""
-"%d Argumente an '%s' üergeben, welches aber 1 oder 2 Argumente benötigt"
+msgstr[0] "%d Argument an '%s' übergeben, welches %d benötigt"
+msgstr[1] "%d Argumente an '%s' übergeben, welches %d benötigt"
 
 #: src/main/util.c:443
 #, c-format

@@ -805,9 +805,8 @@ msgstr "überspringe wiederholte(n) Alias(se)"
 msgid "in file"
 msgstr "in Datei"
 
-#, fuzzy
 msgid "there is a 'man' dir but no help pages in this package"
-msgstr "keine Hilfeseiten in diesem Paket"
+msgstr "das 'man' Verzeichnis exisitert, aber es gibt keine Hilfeseiten in diesem Paket"
 
 msgid "problem in converting"
 msgstr "Problem bei der Konvertierung"
