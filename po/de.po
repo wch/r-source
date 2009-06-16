@@ -4507,7 +4507,9 @@ msgstr "unbrauchbare generische Definitionsumgebung"
 msgid ""
 "No .S3MethodsClass table, can't use S4 objects with S3 methods (methods "
 "package not attached?)"
-msgstr "Keine Tabelle .S3MethodsClass, kann keine S4 Objekte mit S3 Methoden nutzen (Paket methods nicht eingebunden?)"
+msgstr ""
+"Keine Tabelle .S3MethodsClass, kann keine S4 Objekte mit S3 Methoden nutzen "
+"(Paket methods nicht eingebunden?)"
 
 #: src/main/objects.c:263 src/main/objects.c:407
 msgid "'UseMethod' used in an inappropriate fashion"
@@ -6560,7 +6562,8 @@ msgstr "Datenlänge ist kein Vielfaches der Split-Variablen"
 #: src/main/sprintf.c:92
 #, c-format
 msgid "required resulting string length %d is > maximal %d"
-msgstr "die benötigte Ergebniszeichenkettenlänge %d ist länger als das Maximum %d"
+msgstr ""
+"die benötigte Ergebniszeichenkettenlänge %d ist länger als das Maximum %d"
 
 #: src/main/sprintf.c:100
 msgid "'fmt' is not a character vector"

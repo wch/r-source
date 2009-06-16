@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-06-16 12:48\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -288,7 +288,7 @@ msgid "named arguments other than 'exact' are discouraged"
 msgstr "'row.names'里不允许有遗漏值"
 
 #, fuzzy
-msgid "named arguments are not discouraged"
+msgid "named arguments are discouraged"
 msgstr "不允许有重复的'row.names'"
 
 msgid "rhs is the wrong length for indexing by a logical matrix"

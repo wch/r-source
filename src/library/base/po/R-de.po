@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-06-16 12:48\n"
 "PO-Revision-Date: 2009-03-20 11:23+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -290,7 +290,7 @@ msgid "named arguments other than 'exact' are discouraged"
 msgstr "fehlende Werte in 'row.names' nicht zulässig"
 
 #, fuzzy
-msgid "named arguments are not discouraged"
+msgid "named arguments are discouraged"
 msgstr "doppelte 'row.names' nicht zulässig"
 
 msgid "rhs is the wrong length for indexing by a logical matrix"
@@ -552,7 +552,8 @@ msgid "determinant not currently defined for complex matrices"
 msgstr "Determinante für komplexe Matrizen nicht definiert"
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
-msgstr "'nrow' oder 'ncol' können nicht angegeben werden, wenn 'x' eine Matrix ist"
+msgstr ""
+"'nrow' oder 'ncol' können nicht angegeben werden, wenn 'x' eine Matrix ist"
 
 msgid "'x' is an array, but not 1D."
 msgstr "'x' ist ein Array, aber nicht eindimensional"
