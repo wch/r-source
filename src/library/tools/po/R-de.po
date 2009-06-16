@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2008-2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.9.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-06-14 08:29\n"
-"PO-Revision-Date: 2009-03-26 14:59+0100\n"
+"PO-Revision-Date: 2009-06-16 11:08+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -805,9 +805,8 @@ msgstr "überspringe wiederholte(n) Alias(se)"
 msgid "in file"
 msgstr "in Datei"
 
-#, fuzzy
 msgid "there is a 'man' dir but no help pages in this package"
-msgstr "keine Hilfeseiten in diesem Paket"
+msgstr "das 'man' Verzeichnis exisitert, aber es gibt keine Hilfeseiten in diesem Paket"
 
 msgid "problem in converting"
 msgstr "Problem bei der Konvertierung"

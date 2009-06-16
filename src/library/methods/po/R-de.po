@@ -5,10 +5,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.9.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-06-14 08:28\n"
-"PO-Revision-Date: 2009-03-26 11:10+0100\n"
+"PO-Revision-Date: 2009-06-16 10:57+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -613,9 +613,8 @@ msgstr ""
 msgid "class \"%s\" extends an undefined class, \"%s\""
 msgstr "Klasse \"%s\" erweitert eine nicht definierte Klasse \"%s\""
 
-#, fuzzy
 msgid "'Class' must be a valid class definition or class"
-msgstr "'class1' muss der Name einer Klasse oder eine Klassendefinition sein"
+msgstr "'Class' muss  eine gültige Klassendefinition oder eine Klasse sein"
 
 msgid ""
 "trying to assign an object of class \"%s\" as the definition of class \"%s"
@@ -1473,13 +1472,10 @@ msgstr ""
 "Argument S4Class muss eine Klassendefinition sein; bekam ein Objekt aus "
 "Klasse \"%s\""
 
-#, fuzzy
 msgid ""
 "inconsistent old-style class information for \"%s\"; the class is defined "
 "but does not extend \"%s\""
-msgstr ""
-"inkonsistente Klasseninformation für \"%s\" im alten Stil (werden evtl. "
-"alten und neue Klassen vermischt?)"
+msgstr "inkonsistente Klasseninformation für \"%s\" im alten Stil; die Klasse ist defineirt, erweitert aber nicht \"%s\""
 
 msgid ""
 "The S3 class of the prototype, \"%s\", is undefined; only allowed when this "

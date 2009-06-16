@@ -5,10 +5,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.9.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-05-10 11:44\n"
-"PO-Revision-Date: 2009-03-20 14:27+0100\n"
+"PO-Revision-Date: 2009-06-16 10:49+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -351,7 +351,7 @@ msgid "'figs' must specify at least one screen"
 msgstr "'figs' muss zumindet einen Screen angeben"
 
 msgid "'nrpoints' should be numeric scalar with value >= 0."
-msgstr ""
+msgstr "'nrpoints' sollte ein numerischer Skalar >= 0 sein."
 
 msgid "a 2-way table has to be specified"
 msgstr "eine 2-Wege-Tafel muss angegeben werden"

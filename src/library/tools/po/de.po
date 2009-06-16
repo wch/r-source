@@ -6,10 +6,10 @@
 
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.9.0\n"
+"Project-Id-Version: R-2.9.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2007-08-22 12:25+0100\n"
-"PO-Revision-Date: 2009-03-26 12:04+0100\n"
+"PO-Revision-Date: 2009-06-16 11:06+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
