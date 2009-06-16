@@ -344,6 +344,9 @@ BUG FIXES
     o	Added a needed PROTECT call in RunFinalizers to handle cases where
 	the routine is called recursively from a GC in a finalizer.
 
+    o	Constructing error messages about unused arguments in calls to
+	closures no longer evaluates the arguments.
+
 
 
 		CHANGES IN R VERSION 2.9.0
