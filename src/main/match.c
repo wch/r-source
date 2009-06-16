@@ -355,9 +355,28 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 	    }
 
 	if(last != R_NilValue) {
+            /* show bad arguments in call without evaluating them */
+            SEXP unusedForError = R_NilValue, last = R_NilValue ;
+            for(b = unused ; b != R_NilValue ; b = CDR(b)) {
+                SEXP tagB = TAG(b) ;
+                SEXP carB = CAR(b) ;
+                if (TYPEOF(carB) == PROMSXP) {
+                    carB = PREXPR(carB) ;
+                }
+                if (last == R_NilValue) {
+                    PROTECT(last = CONS(carB, R_NilValue));
+                    SET_TAG(last, tagB);
+                    unusedForError = last ;
+                } else {
+                    SETCDR(last, CONS(carB, R_NilValue));
+                    last = CDR(last) ;
+                    SET_TAG(last, tagB);
+                }
+            }
 	    errorcall(R_GlobalContext->call,
 		      _("unused argument(s) %s"),
-		      CHAR(STRING_ELT(deparse1line(unused, 0), 0)) + 4);
+		      CHAR(STRING_ELT(deparse1line(unusedForError, 0), 0)) + 4);
+                      /* '+ 4' is to remove 'list' from 'list(badTag1,...)' */
 	}
     }
     UNPROTECT(1);
