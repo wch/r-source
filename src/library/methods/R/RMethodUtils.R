@@ -820,7 +820,8 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
           }
         }
     }
-  }
+    invisible(NULL) ## as some people call this at the end of functions
+}
 
 
 cacheGenericsMetaData <- function(f, fdef, attach = TRUE,
