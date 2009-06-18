@@ -1,6 +1,6 @@
 % File src/library/utils/man/RSiteSearch.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{RSiteSearch}
@@ -11,12 +11,12 @@
 }
 \description{
   Search for key words or phrases in the R-help mailing list
-  archives, or \R manuals and help pages, using the search engine at
-  \url{http://search.r-project.org} and view them in a web browser.
+  archives, help pages, vignettes or task views, using the search engine
+  at \url{http://search.r-project.org} and view them in a web browser.
 }
 \usage{
 RSiteSearch(string,
-            restrict = c("Rhelp02a", "functions", "docs"),
+            restrict = c("Rhelp08", "functions", "views"),
             format = c("normal", "short"),
             sortby = c("score", "date:late", "date:early",
                        "subject", "subject:descending",
@@ -29,11 +29,14 @@ RSiteSearch(string,
     searched as one entity, enclose all words in braces (see example).}
   \item{restrict}{a character vector, typically of length larger than one:
     What areas to search in:
-    \code{Rhelp02a} for R-help mailing list archive since 2002,
-    \code{Rhelp01} for mailing list archive before 2002,
-    \code{docs} for R manuals,
-    \code{functions} for help pages.
-    \code{R-devel} for R-devel mailing list.
+    \code{Rhelp08} for R-help mailing list archive from January 2008
+    \code{Rhelp02} for mailing list archive 2002-2007
+    \code{Rhelp01} for mailing list archive before 2002
+    \code{R-devel} for R-devel mailing list
+    \code{R-sig-mix} for R-devel mailing list    
+    \code{functions} for help pages
+    \code{views} for task views
+    \code{vignettes} for package vignettes
     Use \code{c()} to specify more than one.}
   \item{format}{\code{normal} or \code{short} (no excerpts); can be
     abbreviated.}
@@ -70,10 +73,10 @@ RSiteSearch(string,
 \examples{\donttest{ # need Internet connection
 RSiteSearch("{logistic regression}") # matches exact phrase
 Sys.sleep(5) # allow browser to open, take a quick look
-RSiteSearch("Baron Liaw", restrict = "Rhelp02a")
-## Search in R-devel archive and documents  (and store the query-string):
+RSiteSearch("Baron Liaw", restrict = "Rhelp02")
+## Search in R-devel archive and recent mail (and store the query-string):
 Sys.sleep(5)
-fullquery <- RSiteSearch("S4", restrict = c("R-dev", "docs"))
+fullquery <- RSiteSearch("S4", restrict = c("R-dev", "Rhelp08"))
 fullquery # a string of ~ 116 characters
 ## the latest purported bug reports, responses ...
 %% FIXME: "/bug/ and other reg.exp.s seem to fail

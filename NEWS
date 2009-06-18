@@ -157,7 +157,7 @@ BUG FIXES
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.9.0 patched
+		CHANGES IN R VERSION 2.9.1
 
 
 NEW FEATURES
@@ -196,6 +196,11 @@ NEW FEATURES
 
     o	R CMD check now reports where options are used that cause some
 	of the checks to be skipped.
+	
+    o	RSiteSearch has been updated to be consistent with the new
+	layout of the search site itself, which now includes separate
+	options for vignettes, views, and r-sig-mixed-models, as well
+	as changed names for r-help. (Contributed by Jonathan Baron.)
 
 
 DEPRECATED & DEFUNCT
