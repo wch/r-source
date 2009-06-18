@@ -758,6 +758,7 @@ dumpMethods <- function(f, file = "", signature = character(), methods,
         else
             dumpMethods(f, "", c(signature, what), el, where)
     }
+    invisible()
 }
 
 
@@ -1282,6 +1283,7 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
     objs <- objects(what, all=TRUE)
     for(f in objs)
         .cacheImplicitGeneric(f, get(f, envir = what))
+    NULL
 }
 
 
@@ -1360,10 +1362,11 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
 .ImplicitGroupMetaName <- ".__IGM__table"
 .MakeImplicitGroupMembers <- function(group, members, where) {
     if(!exists(.ImplicitGroupMetaName, where, inherits = FALSE))
-      assign(.ImplicitGroupMetaName, new.env(TRUE), where)
+        assign(.ImplicitGroupMetaName, new.env(TRUE), where)
     tbl <- get(.ImplicitGroupMetaName, where)
     for(what in members)
-      assign(what, as.list(group), envir = tbl)
+        assign(what, as.list(group), envir = tbl)
+    NULL
 }
 
 .getImplicitGroup <- function(name, where) {

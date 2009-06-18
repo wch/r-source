@@ -206,7 +206,7 @@
         cl <- as.character(class(object))
         S3Class <- object@.S3Class
         if(length(S3Class)) S3Class <- S3Class[[1L]]
-        else S3Class <- "oldClass" # or error?
+        else S3Class <- "oldClass"      # or error?
         cat("Object of class \"", cl, "\"\n", sep = "")
         print(S3Part(object, strict = TRUE))
         otherSlots <- slotNames(cl)
@@ -217,6 +217,7 @@
             show(slot(object, what))
             cat("\n")
         }
+        NULL
     }, where = envir)
    .initS3 <- function(.Object, ...) {
          if(nargs() < 2)

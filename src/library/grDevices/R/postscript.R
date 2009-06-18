@@ -264,7 +264,7 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
               onefile, old$pagecentre, old$print.it, old$command,
-              old$title, old$fonts, old$colormodel, old$useKerning, 
+              old$title, old$fonts, old$colormodel, old$useKerning,
               old$fillOddEven)
     # if .ps.prolog is searched for and fails, NULL got returned.
     invisible()
@@ -463,6 +463,7 @@ checkFontInUse <- function(names, fontDBname) {
         if (.Call(Type1FontInUse, i, isPDF(fontDBname))
             || .Call(CIDFontInUse, i, isPDF(fontDBname)))
             stop(gettextf("font %s already in use", i), domain = NA)
+    invisible()
 }
 
 setFonts <- function(fonts, fontNames, fontDBname) {

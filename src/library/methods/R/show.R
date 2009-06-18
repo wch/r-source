@@ -69,6 +69,7 @@ showDefault <- function(object, oldMethods = TRUE)
         ## NBB:  This relies on the delicate fact (as of version 1.7 at least)
         ## that print will NOT recursively call show if it gets more than one argument!
         print(object, useS4 = FALSE)
+    invisible() # documented return for show().
 }
 
 ## temporary definition of show, to become the default method

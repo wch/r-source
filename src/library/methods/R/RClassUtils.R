@@ -1163,6 +1163,7 @@ requireMethods <-
         environment(method) <- .GlobalEnv
         setMethod(f, signature, method, where = where)
     }
+    NULL
 }
 
 ## Construct an error message for an unsatisfied required method.
@@ -1859,6 +1860,7 @@ substituteFunctionArgs <-
             .cacheClass(what, subDef, FALSE, env)
         }
     }
+    NULL
 }
 
 ## alternative to .recacheSubclasses, only needed for non-unions
@@ -1899,6 +1901,7 @@ substituteFunctionArgs <-
             assignClassDef(what, subDef, cwhere, TRUE)
         }
     }
+    NULL
 }
 
 .removeSuperclassBackRefs <- function(Class, classDef, classWhere) {
@@ -1915,6 +1918,7 @@ substituteFunctionArgs <-
                                what, Class))
         }
     }
+    NULL
 }
 
 
@@ -1989,6 +1993,7 @@ substituteFunctionArgs <-
           }
         }
     }
+    NULL
 }
 
 .deleteSuperClass <- function(cdef, superclass) {

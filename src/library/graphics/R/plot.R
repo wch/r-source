@@ -213,6 +213,7 @@ function(formula, data = parent.frame(), ..., subset,
 	} else do.call(funname, c(list(y, ylab = ylab), dots))
     }
     else do.call("plot.data.frame", c(list(mf), dots))
+    invisible()
 }
 
 lines.formula <-
@@ -310,6 +311,7 @@ plot.new <- function()
         if(is.character(fun)) fun <- get(fun)
         try(fun())
     }
+    invisible()
 }
 
 frame <- plot.new

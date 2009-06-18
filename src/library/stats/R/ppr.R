@@ -182,6 +182,7 @@ plot.ppr <- function(x, ask, type="o", ...)
 	plot(obj$x[ord, i], obj$y[ord, i], type = type,
 	     xlab = paste("term", i), ylab = "", ...)
     }
+    invisible()
 }
 
 predict.ppr <- function(object, newdata, ...)

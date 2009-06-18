@@ -213,6 +213,7 @@ slotsFromS3 <- function(object) {
         setIs(Class1, cl, test = tfun, coerce = .oldCoerceFun,
               replace = .oldReplaceFun, where = where)
     }
+    NULL
 }
 
 isXS3Class <- function(classDef) {

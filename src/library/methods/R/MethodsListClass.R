@@ -34,7 +34,7 @@
     setClass("signature", representation("character", names = "character"), where = envir); clList <- c(clList, "signature")
 
     ## formal method definition for all but primitives
-    setClass("MethodDefinition", contains = "function", 
+    setClass("MethodDefinition", contains = "function",
              representation(target = "signature", defined = "signature", generic = "character"),
              where = envir); clList <- c(clList, "MethodDefinition")
     ## class for default methods made from ordinary functions
@@ -199,21 +199,22 @@
     ## show method for reports of method selection ambiguities; see MethodsTable.R
     setMethod("show", "MethodSelectionReport", where = envir,
               function(object) {
-                nreport <- length(object@target)
-                cat(gettextf("Reported %d ambiguous selections out of %d for function %s\n",nreport, length(object@allSelections), object@generic))
-                target <- object@target; selected = object@selected
-                candidates <- object@candidates; note <- object@note
-                for(i in seq(length = nreport)) {
-                  these <- candidates[[i]]; notei <- note[[i]]
-                  these <- these[is.na(match(these, selected[[i]]))]
-                  cat(gettextf(
-                               '%d: target "%s": chose "%s" (others: %s)',
-                               i,target[[i]], selected[[i]], paste('"', these, '"', sep="", collapse =", ")))
-                  if(nzchar(notei))
-                    cat(gettextf("\n    Notes: %s.\n", notei))
-                  else
-                    cat(".\n")
-                }
+                  nreport <- length(object@target)
+                  cat(gettextf("Reported %d ambiguous selections out of %d for function %s\n",nreport, length(object@allSelections), object@generic))
+                  target <- object@target; selected = object@selected
+                  candidates <- object@candidates; note <- object@note
+                  for(i in seq(length = nreport)) {
+                      these <- candidates[[i]]; notei <- note[[i]]
+                      these <- these[is.na(match(these, selected[[i]]))]
+                      cat(gettextf(
+                                   '%d: target "%s": chose "%s" (others: %s)',
+                                   i,target[[i]], selected[[i]], paste('"', these, '"', sep="", collapse =", ")))
+                      if(nzchar(notei))
+                          cat(gettextf("\n    Notes: %s.\n", notei))
+                      else
+                          cat(".\n")
+                  }
+                  NULL
               })
 
     setGeneric("cbind2", function(x, y) standardGeneric("cbind2"),
@@ -331,12 +332,12 @@
                   callGeneric()
               })
     setMethod("[", "nonStructure", where = where,
-                        function (x, i, j, ..., drop = TRUE) 
+                        function (x, i, j, ..., drop = TRUE)
                         {
                           value <- callNextMethod()
                           value@.Data
                         })
-     
+
 }
 
 

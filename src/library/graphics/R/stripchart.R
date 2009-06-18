@@ -96,6 +96,7 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	else points(x, y, col=col[(i - 1)%%length(col) + 1],
 		    pch=pch[(i - 1)%%length(pch) + 1], cex=cex)
     }
+    invisible()
 }
 
 stripchart.formula <-

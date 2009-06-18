@@ -95,6 +95,7 @@
       remove(list = what, envir = table)
     ## else warning?
   }
+  NULL
 }
 
 
@@ -194,6 +195,7 @@
       remove(list=what, envir = table)
     }
   }
+  NULL
 }
 
 ### the tag associated with a method signature.
@@ -621,6 +623,7 @@
                 .getMethodsTable(gpDef) # force initialization w. group methods
         }
     }
+    NULL
 }
 
 .updateMethodsInTable <- function(generic, where, attach) {
@@ -671,6 +674,7 @@
         for(what in direct)
           assign(what, get(what, envir = mtable), envir = allTable)
     }
+    NULL
 }
 
 ## In the following, consider separate "compute" and "print" functions/methods:

@@ -59,7 +59,7 @@ polygon <-
 
             cross <- halfplane[-1L] - halfplane[-length(halfplane)]
             does.cross <- cross != 0
-            if (!any(does.cross)) return(invisible(FALSE)) # nothing to draw?
+            if (!any(does.cross)) return() # nothing to draw?
 
             ## calculate where crossings occur
 
@@ -83,7 +83,7 @@ polygon <-
             ##   unequal numbers of left-to-right and right-to-left polygon
             ##   segments to get there.  if TRUE, an odd number of crossings.
             ##
-	 
+
 	    crossings <- cumsum(cross[does.cross][o])
 	    if (fillOddEven) crossings <- crossings %% 2
             drawline <- crossings != 0
@@ -113,7 +113,7 @@ polygon <-
 
             if (par("xlog") || par("ylog")) {
                 warning("cannot hatch with logarithmic scale active")
-                return(invisible(FALSE))
+                return()
             }
             usr <- par("usr"); pin <- par("pin")
 
