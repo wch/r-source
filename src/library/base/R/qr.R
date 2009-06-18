@@ -26,6 +26,8 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
     if(is.complex(x))
         return(structure(.Call("La_zgeqp3", x, PACKAGE = "base"), class="qr"))
     if(LAPACK) {
+        if(!is.double(x))
+            storage.mode(x) <- "double"
         res <- .Call("La_dgeqp3", x, PACKAGE = "base")
         if(!is.null(cn <- colnames(x)))
             colnames(res$qr) <- cn[res$pivot]
@@ -66,10 +68,12 @@ qr.coef <- function(qr, y)
     if (!im) y <- as.matrix(y)
     ny <- ncol(y)
     if (p == 0L) return( if (im) matrix(0, p, ny) else numeric(0L) )
+    ix <- if ( p > n ) c(seq_len(n), rep(NA, p - n)) else seq_len(p)
     if(is.complex(qr$qr)) {
 	if(!is.complex(y)) y[] <- as.complex(y)
 	coef <- matrix(NA_complex_, nrow = p, ncol = ny)
-	coef[qr$pivot,] <- .Call("qr_coef_cmplx", qr, y, PACKAGE = "base")[1:p,]
+	coef[qr$pivot,] <-
+            .Call("qr_coef_cmplx", qr, y, PACKAGE = "base")[ix, ]
 	return(if(im) coef else c(coef))
     }
     ## else {not complex} :
@@ -78,7 +82,7 @@ qr.coef <- function(qr, y)
         if(!is.double(y)) storage.mode(y) <- "double"
 	coef <- matrix(NA_real_, nrow = p, ncol = ny)
 	coef[qr$pivot,] <-
-            .Call("qr_coef_real", qr, y, PACKAGE = "base")[seq_len(p)]
+            .Call("qr_coef_real", qr, y, PACKAGE = "base")[ix,]
 	return(if(im) coef else c(coef))
     }
     if (k == 0L) return( if (im) matrix(NA, p, ny) else rep.int(NA, p))
