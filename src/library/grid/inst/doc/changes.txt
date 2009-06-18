@@ -6,6 +6,10 @@ Changes from grid_2.9.0 to grid_2.10.0:
 
 2.  Fixed bug in unit() indexing;  negative integer indices now work.
 
+3.  Modified behaviour of editGrob() and addGrob() so that they 
+    return the original grob if the specified gPath does not exist,
+    and issue a warning (if new argument 'warn' is TRUE).
+    
 
 Changes from grid_2.8.0 to grid_2.9.0:
 ------------------------------------

@@ -19,7 +19,7 @@ grid.edit(gPath, ..., strict = FALSE, grep = FALSE,
 grid.gedit(..., grep = TRUE, global = TRUE)
 
 editGrob(grob, gPath = NULL, ..., strict = FALSE, grep = FALSE,
-         global = FALSE) 
+         global = FALSE, warn = TRUE) 
 }
 \arguments{
   \item{grob}{A grob object.}
@@ -39,6 +39,8 @@ editGrob(grob, gPath = NULL, ..., strict = FALSE, grep = FALSE,
     just the first match of the \code{gPath}, or whether all matches
     should be affected.
   }
+  \item{warn}{A logical to indicate whether failing to find the
+    specified gPath should trigger an error.  }
   \item{allDevices}{ A boolean indicating whether all open devices
     should
     be searched for matches, or just the current device.
