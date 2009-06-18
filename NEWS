@@ -352,6 +352,12 @@ BUG FIXES
     o	Constructing error messages about unused arguments in calls to
 	closures no longer evaluates the arguments.
 
+    o   qr(x, LAPACK=TRUE) did not coerce integer x to numeric.
+
+    o   qr.coef() misbehaved in the LAPACK case with a matrix RHS, so
+        that solve(qr(x, LAPACK=TRUE)) gave wrong results. (Found by
+        Avraham Adler, PR#13762 by Ravi Varadhan.)
+
 
 
 		CHANGES IN R VERSION 2.9.0
