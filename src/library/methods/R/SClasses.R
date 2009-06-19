@@ -420,15 +420,31 @@ validObject <- function(object, test = FALSE, complete = FALSE)
     errors <- character()
     slotTypes <- classDef@slots
     slotNames <- names(slotTypes)
+    attrNames <- c(".Data", ".S3Class", names(attributes(object)))
+    if(any(is.na(match(slotNames, attrNames)))) {
+        badSlots <- is.na(match(slotNames, attrNames))
+        errors <- c(errors, paste("slots in class definition but not in object:", paste('"', slotNames[badSlots], '"', sep="", collapse = ", ")))
+        slotTypes <- slotTypes[!badSlots]
+        slotNames <- slotNames[!badSlots]
+    }
     for(i in seq_along(slotTypes)) {
 	classi <- slotTypes[[i]]
-	sloti <- slot(object, slotNames[[i]])
 	classDefi <- getClassDef(classi, where = where)
 	if(is.null(classDefi)) {
-	    errors <- c(errors, paste("class for slot \"", slotNames[[i]],
+	    errors <- c(errors, paste("undefined class for slot \"", slotNames[[i]],
 				      "\" (\"", classi, "\")", sep=""))
 	    next
 	}
+        namei <- slotNames[[i]]
+        switch(namei,
+               ## .S3Class for S3 objects (e.g., "factor") uses S3Class()
+               .S3Class = { sloti <- try(S3Class(object), silent = TRUE)},
+               sloti <- try(slot(object, namei), silent = TRUE)
+               )
+        if(inherits(sloti, "try-error")) {
+           errors <- c(errors, sloti)
+           next
+        }
 	## note that the use of possibleExtends is shared with checkSlotAssignment(), in case a
 	## future revision improves on it!
 	ok <- possibleExtends(class(sloti), classi, ClassDef2 = classDefi)

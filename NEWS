@@ -147,6 +147,8 @@ BUG FIXES
     	DF[, "foo"] <- value now works in most cases (by filling with
     	NAs) or fails.  (It used to give a corrupt data frame.)
 
+    o	validObject() avoids an error during evaluation in the case 
+        of various incorrect slot definitions.
 
 
 
