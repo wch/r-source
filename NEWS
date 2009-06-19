@@ -202,6 +202,10 @@ NEW FEATURES
 	options for vignettes, views, and r-sig-mixed-models, as well
 	as changed names for r-help. (Contributed by Jonathan Baron.)
 
+    o	That R CMD check makes use of a
+	<pkg>/tests/Examples/<pkg>-Ex.Rout.save file as a reference
+	result is now documented in 'Writing R Extensions'.
+
 
 DEPRECATED & DEFUNCT
 

@@ -726,6 +726,10 @@ copy as the working directory and with @code{R_LIBS} set to ensure that
 the copy of the package installed during testing will be found by
 @code{library(@var{pkg_name})}.
 
+If @file{tests} has a subdirectory @file{Examples} containing a file
+@code{@var{pkg}-Ex.Rout.save},  this is compared to the output file for
+running the examples when the latter are checked.
+
 Subdirectory @file{exec} could contain additional executables the package
 needs, typically scripts for interpreters such as the shell, Perl, or
 Tcl.  This mechanism is currently used only by a very few packages, and
@@ -1429,7 +1433,9 @@ correct use of @samp{$(BLAS_LIBS)}.
 @item
 The examples provided by the package's documentation are run.
 (@pxref{Writing R documentation files}, for information on using
-@code{\examples} to create executable example code.)
+@code{\examples} to create executable example code.)  If there is a file
+@file{tests/Examples/@var{pkg}-Ex-Rout.save}, the output of running the
+examples is compared to that file.
 
 Of course, released packages should be able to run at least their own
 examples.  Each example is run in a `clean' environment (so earlier
