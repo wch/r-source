@@ -57,6 +57,6 @@ testInstalledBasic(scope = c("basic", "devel", "both"))
 #endif
 }
 \value{
-  Invisbly \code{0L} for success, \code{1L} for failure.
+  Invisibly \code{0L} for success, \code{1L} for failure.
 }
 \keyword{utilities}

@@ -42,7 +42,7 @@ latex_canonical_encoding  <- function(encoding)
 }
 
 
-Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
+Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown", stages="render")
 {
     last_char <- ""
     of0 <- function(...) of1(paste(..., sep=""))
@@ -414,8 +414,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
     	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
     	    stopRd(table, "\\tabular format must be simple text")
-        content <- preprocessRd(content, defines)
-        tags <- attr(content, "RdTags")
+        tags <- RdTags(content)
         of0('\n\\Tabular{', format, '}{')
         for (i in seq_along(tags)) {
             switch(tags[i],
@@ -430,8 +429,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
         inList <- FALSE
         itemskip <- FALSE
 
-	blocks <- preprocessRd(blocks, defines)
-	tags <- attr(blocks, "RdTags")
+	tags <- RdTags(blocks)
 
 	for (i in seq_along(tags)) {
             block <- blocks[[i]]
@@ -575,18 +573,6 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
         }
     }
 
-    Rdfile <- "not known"
-
-    if (is.character(Rd)) {
-        Rdfile <- Rd
-        ## do it this way to get info in internal warnings
-        Rd <- eval(substitute(parse_Rd(f, encoding = enc),
-                              list(f = Rd, enc = encoding)))
-    } else if(inherits(Rd, "connection")) {
-        Rdfile <- summary(Rd)
-        Rd <- tools::parse_Rd(Rd, encoding = encoding)
-    }
-
     if (is.character(out)) {
         if(out == "") con <- stdout()
         else {
@@ -598,9 +584,9 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
     	out <- summary(con)$description
     }
 
-    ## Process top level ifdef's.
-    Rd <- preprocessRd(Rd, defines)
-    sections <- attr(Rd, "RdTags")
+    Rd <- prepare_Rd(Rd, encoding, defines, stages)
+    Rdfile <- attr(Rd, "Rdfile")
+    sections <- RdTags(Rd)
 
     ## Print initial comments
     ## for (i in seq_along(sections)) {
@@ -632,7 +618,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown")
     	stopRd(Rd[sections == "TEXT"][[bad[1L]]], "All text must be in a section")
 
     ## Drop all the parts that are not rendered
-    drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding", "\\Rdversion")
+    drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding", "\\Rdversion", "\\RdOpts")
     Rd <- Rd[!drop]
     sections <- sections[!drop]
 

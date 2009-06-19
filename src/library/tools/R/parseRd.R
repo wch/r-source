@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
-                     verbose = FALSE)
+                     verbose = FALSE, fragment = FALSE)
 {
     if(is.character(file)) {
         file0 <- file
@@ -70,7 +70,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     	srcfile <- srcfile(file0)
     basename <- basename(srcfile$filename)
     srcfile$encoding <- enc
-    .Internal(parse_Rd(tcon, srcfile, encoding, verbose, basename))
+    .Internal(parse_Rd(tcon, srcfile, encoding, verbose, basename, fragment))
 }
 
 print.Rd <- function(x, ...) {

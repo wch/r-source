@@ -25,7 +25,7 @@
 
 
 Rd2txt <-
-    function(Rd, out="", package = "", defines=.Platform$OS.type)
+    function(Rd, out="", package = "", defines=.Platform$OS.type, stages = "render")
 {
     WIDTH <- 72L
     HDR_WIDTH <- 70L
@@ -366,8 +366,7 @@ Rd2txt <-
     	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
     	    stopRd(table, "\\tabular format must be simple text")
-        content <- preprocessRd(content, defines)
-        tags <- attr(content, "RdTags")
+        tags <- RdTags(content)
         of0('\n\\Tabular{', format, '}{')
         for (i in seq_along(tags)) {
             switch(tags[i],
@@ -379,8 +378,7 @@ Rd2txt <-
     }
 
     writeCodeBlock <- function(blocks, blocktag) {
-        blocks <- preprocessRd(blocks, defines)
-	tags <- attr(blocks, "RdTags")
+	tags <- RdTags(blocks)
 
 	for (i in seq_along(tags)) {
             tag <- tags[i]
@@ -465,8 +463,7 @@ Rd2txt <-
     writeContent <- function(blocks, blocktag) {
         itemskip <- FALSE
 
-	blocks <- preprocessRd(blocks, defines)
-	tags <- attr(blocks, "RdTags")
+	tags <- RdTags(blocks)
 
 	for (i in seq_along(tags)) {
             tag <- tags[i]
@@ -516,24 +513,12 @@ Rd2txt <-
             Of(txt_sect(sectionTitles[tag]))
             writeCodeBlock(section, tag)
             Of(text)
-        } else {
+    	} else {
             Of(c(txt_sect(sectionTitles[tag]), ""))
             writeContent(section, tag)
             writePara()
             Of("")
         }
-    }
-
-    Rdfile <- "not known"
-
-    if (is.character(Rd)) {
-        Rdfile <- Rd
-        ## do it this way to get info in internal warnings
-        Rd <- eval(substitute(parse_Rd(f, encoding = enc),
-                              list(f = Rd, enc = encoding)))
-    } else if(inherits(Rd, "connection")) {
-        Rdfile <- summary(Rd)
-        Rd <- tools::parse_Rd(Rd, encoding = encoding)
     }
 
     if (is.character(out)) {
@@ -547,9 +532,9 @@ Rd2txt <-
     	out <- summary(con)$description
     }
 
-    ## Process top level ifdef's.
-    Rd <- preprocessRd(Rd, defines)
-    sections <- attr(Rd, "RdTags")
+    Rd <- prepare_Rd(Rd, encoding, defines, stages)
+    Rdfile <- attr(Rd, "Rdfile")
+    sections <- RdTags(Rd)
 
     version <- which(sections == "\\Rdversion")
     if (length(version) == 1L && as.numeric(version[[1L]]) < 2)
@@ -575,7 +560,7 @@ Rd2txt <-
 
     ## Drop all the parts that are not rendered
     drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding",
-                            "\\keyword", "\\alias", "\\Rdversion")
+                            "\\keyword", "\\alias", "\\Rdversion", "\\RdOpts")
     Rd <- Rd[!drop]
     sections <- sections[!drop]
 

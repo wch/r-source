@@ -116,7 +116,23 @@ NEW FEATURES
 	use cases.
 
     o	PCRE has been updated to version 7.9 (for bug fixes).
+    
+Rd HELP FILE CHANGES
 
+    o	An experimental tag \Sexpr has been added to Rd files, to
+	evaluate expressions at build, install, or render time.
+	(Currently render time evaluation is not supported.)
+
+    o	The parse_Rd() parser has been made more tolerant of coding
+	errors in Rd files:  now all syntax errors are reported as
+	warnings, and an attempt is made to continue parsing.
+	
+    o	parse_Rd() now has an argument fragment (default FALSE) to
+	accept small fragments of Rd files (so that \Sexpr can output
+	Rd code which is then parsed).
+	
+    o	There have been various bug fixes and code reorganization in
+        the Rd renderers Rd2HTML, Rd2latex, Rd2txt, and Rd2ex.
 
 DEPRECATED & DEFUNCT
 
