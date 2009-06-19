@@ -645,7 +645,7 @@
 #define HAVE_TCLTK 1
 
 /* Define this if libtiff is available. */
-/* #undef HAVE_TIFF */
+#define HAVE_TIFF 1
 
 /* Define to 1 if you have the <tiffio.h> header file. */
 /* #undef HAVE_TIFFIO_H */

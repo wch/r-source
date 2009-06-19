@@ -60,6 +60,9 @@ BUG FIXES
     o	Scrolling controls (e.g. from View() and edit()) did not handle
 	large line counts well.
 
+    o	capabilities("tiff") was incorrectly being reported as FALSE
+	(due to an error in the Windows-specific config.h file).
+
     
 
     		CHANGES IN R VERSION 2.9.0
