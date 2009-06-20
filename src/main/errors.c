@@ -1460,7 +1460,7 @@ static void vsignalWarning(SEXP call, const char *format, va_list ap)
 	PROTECT(qcall = LCONS(R_QuoteSymbol, LCONS(call, R_NilValue)));
 	PROTECT(hcall = LCONS(qcall, R_NilValue));
 	Rvsnprintf(buf, BUFSIZE - 1, format, ap);
-	hcall = LCONS(ScalarString(mkChar(buf)), hcall);
+	hcall = LCONS(mkString(buf), hcall);
 	PROTECT(hcall = LCONS(hooksym, hcall));
 	eval(hcall, R_GlobalEnv);
 	UNPROTECT(3);
@@ -1505,7 +1505,7 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 		PROTECT(qcall = LCONS(R_QuoteSymbol,
 				      LCONS(call, R_NilValue)));
 		PROTECT(hcall = LCONS(qcall, R_NilValue));
-		hcall = LCONS(ScalarString(mkChar(buf)), hcall);
+		hcall = LCONS(mkString(buf), hcall);
 		hcall = LCONS(ENTRY_HANDLER(entry), hcall);
 		PROTECT(hcall = LCONS(hooksym, hcall));
 		eval(hcall, R_GlobalEnv);
@@ -1641,11 +1641,11 @@ R_InsertRestartHandlers(RCNTXT *cptr, Rboolean browser)
     entry = mkHandlerEntry(klass, rho, R_RestartToken, rho, R_NilValue, TRUE);
     R_HandlerStack = CONS(entry, R_HandlerStack);
     UNPROTECT(1);
-    PROTECT(name = ScalarString(mkChar(browser ? "browser" : "tryRestart")));
+    PROTECT(name = mkString(browser ? "browser" : "tryRestart"));
     PROTECT(entry = allocVector(VECSXP, 2));
     PROTECT(SET_VECTOR_ELT(entry, 0, name));
     SET_VECTOR_ELT(entry, 1, R_MakeExternalPtr(cptr, R_NilValue, R_NilValue));
-    setAttrib(entry, R_ClassSymbol, ScalarString(mkChar("restart")));
+    setAttrib(entry, R_ClassSymbol, mkString("restart"));
     R_RestartStack = CONS(entry, R_RestartStack);
     UNPROTECT(3);
 }
@@ -1701,11 +1701,11 @@ SEXP attribute_hidden do_getRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (i == 1) {
 	/**** need to pre-allocate */
 	SEXP name, entry;
-	PROTECT(name = ScalarString(mkChar("abort")));
+	PROTECT(name = mkString("abort"));
 	entry = allocVector(VECSXP, 2);
 	SET_VECTOR_ELT(entry, 0, name);
 	SET_VECTOR_ELT(entry, 1, R_NilValue);
-	setAttrib(entry, R_ClassSymbol, ScalarString(mkChar("restart")));
+	setAttrib(entry, R_ClassSymbol, mkString("restart"));
 	UNPROTECT(1);
 	return entry;
     }
