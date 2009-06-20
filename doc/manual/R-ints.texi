@@ -2178,7 +2178,7 @@ internally generic except by reading the source code.
 The process of marking messages (errors, warnings etc) for translation
 in an @R{} package is described in 
 @ifset UseExternalXrefs
-@ref{Localization, , Localization, R-exts, Writing R Extensions},
+@ref{Internationalization, , Internationalization, R-exts, Writing R Extensions},
 @end ifset
 @ifclear UseExternalXrefs
 `Writing R Extensions',
