@@ -37,7 +37,7 @@ as.Date.factor <- function(x, ...) as.Date(as.character(x), ...)
 
 as.Date.character <- function(x, format="", ...)
 {
-    fromchar <- function(x) {
+    charToDate <- function(x) {
 	xx <- x[1L]
         if(is.na(xx)) {
             j <- 1L
@@ -50,7 +50,7 @@ as.Date.character <- function(x, format="", ...)
            ) return(strptime(x, f))
 	stop("character string is not in a standard unambiguous format")
     }
-    res <- if(missing(format)) fromchar(x) else strptime(x, format, tz="GMT")
+    res <- if(missing(format)) charToDate(x) else strptime(x, format, tz="GMT")
     as.Date(res)
 }
 
