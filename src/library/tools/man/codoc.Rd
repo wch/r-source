@@ -1,6 +1,6 @@
 % File src/library/tools/man/codoc.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{codoc}
@@ -104,7 +104,8 @@ codocData(package, lib.loc = NULL)
   \code{\link{undoc}}, \code{\link{QC}}
 }
 \section{Warning}{
-  Both \code{codocClasses} and \code{codocData} are still experimental.
-  Names, interfaces and values might change in future versions.
+  Both \code{codocClasses} and \code{codocData} are still somewhat
+  experimental.  Names, interfaces and values might change in future
+  versions.
 }
 \keyword{documentation}

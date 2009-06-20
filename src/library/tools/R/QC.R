@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-### * undoc
+### * undoc/F/out
 
 undoc <-
 function(package, dir, lib.loc = NULL)
