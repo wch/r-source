@@ -38,18 +38,23 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   \item{LINPACK}{logical.  If true and \code{z} is not complex, the
     Linpack routine \code{dtrco()} is called; otherwise the relevant
     Lapack routine is.}
-  \item{\dots}{further arguments passed to or from other methods.}
+  \item{\dots}{further arguments passed to or from other methods;
+    for \code{kappa.*()}, notably \code{LINPACK} when \code{norm} is not
+    \code{"2"}.}
 }
 \description{
   The condition number of a regular (square) matrix is the product of
   the \emph{norm} of the matrix and the norm of its inverse (or
   pseudo-inverse), and hence depends on the kind of matrix-norm.
 
-  \code{kappa()} computes an estimate of the 2-norm condition number of
-  a   matrix or of the \eqn{R} matrix of a  \eqn{QR} decomposition,
-  perhaps of a linear fit.  The 2-norm condition number can be shown to
-  be the ratio of the largest to the smallest \emph{non-zero} singular
-  value of the matrix.
+  \code{kappa()} computes by default (an estimate of) the 2-norm
+  condition number of a matrix or of the \eqn{R} matrix of a \eqn{QR}
+  decomposition, perhaps of a linear fit.  The 2-norm condition number
+  can be shown to be the ratio of the largest to the smallest
+  \emph{non-zero} singular value of the matrix.
+
+  \code{rcond()} computes an approximation of the \bold{r}eciprocal
+  \bold{cond}ition number, see the details.
 }
 \details{
   For \code{kappa()}, if \code{exact = FALSE} (the default) the
@@ -62,6 +67,9 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   calculate, and \code{rcond()} computes these \emph{\bold{r}eciprocal}
   condition numbers, also for complex matrices, using standard Lapack
   routines.
+
+  \code{kappa} and \code{rcond} are different interfaces to
+  \emph{partly} identical functionality.
 
   \code{kappa.tri} is an internal function called by \code{kappa.qr}.
 }
