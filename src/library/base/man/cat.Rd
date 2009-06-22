@@ -71,10 +71,10 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
   same field width for all elements.
 }
 \note{
-  Despite its name and earlier documentation, if any element of
-  \code{sep} contains a newline character, it is treated as a vector of
-  terminators rather than separators, an element being output after every vector
-  element (including the last).  Entries are recycled as needed.
+  If any element of \code{sep} contains a newline character, it is
+  treated as a vector of terminators rather than separators, an element
+  being output after every vector element \emph{and} a newline after the
+  last.  Entries are recycled as needed.
 }
 \value{
   None (invisible \code{NULL}).
