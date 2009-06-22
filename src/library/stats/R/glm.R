@@ -150,18 +150,15 @@ glm.fit <-
 
     ## get family functions:
     variance <- family$variance
-    dev.resids <- family$dev.resids
-    aic <- family$aic
-    linkinv <- family$linkinv
-    mu.eta <- family$mu.eta
+    linkinv  <- family$linkinv
     if (!is.function(variance) || !is.function(linkinv) )
 	stop("'family' argument seems not to be a valid family object")
-    valideta <- family$valideta
-    if (is.null(valideta))
-	valideta <- function(eta) TRUE
-    validmu <- family$validmu
-    if (is.null(validmu))
-	validmu <- function(mu) TRUE
+    dev.resids <- family$dev.resids
+    aic <- family$aic
+    mu.eta <- family$mu.eta
+    unless.null <- function(x, if.null) if(is.null(x)) if.null else x
+    valideta <- unless.null(family$valideta, function(eta) TRUE)
+    validmu  <- unless.null(family$validmu,  function(mu) TRUE)
     if(is.null(mustart)) {
         ## calculates mustart and may change y and weights and set n (!)
         eval(family$initialize)

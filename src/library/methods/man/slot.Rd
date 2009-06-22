@@ -35,50 +35,47 @@ getSlots(x)
 \arguments{
   \item{object}{An object from a formally defined class.}
   \item{name}{The name of the slot. The operator
-  takes a fixed name, which can be unquoted if it is syntactically a
-  name in the language.  A slot name can be any non-empty string, but
-  if the name is not made up of letters, numbers, and \code{.}, it
-  needs to be quoted (by backticks or single or double quotes).
+    takes a fixed name, which can be unquoted if it is syntactically a
+    name in the language.  A slot name can be any non-empty string, but
+    if the name is not made up of letters, numbers, and \code{.}, it
+    needs to be quoted (by backticks or single or double quotes).
 
-
-  In the case of the \code{slot} function, \code{name} can be any
-  expression that evaluates to a valid slot in the class definition.
-  Generally, the only reason to use the functional form rather than
-  the simpler operator is \emph{because} the slot name has to be computed.
-}
+    In the case of the \code{slot} function, \code{name} can be any
+    expression that evaluates to a valid slot in the class definition.
+    Generally, the only reason to use the functional form rather than
+    the simpler operator is \emph{because} the slot name has to be computed.
+  }
   \item{value}{A new value for the named slot.  The value must be
     valid for this slot in this object's class.}
-  \item{check}{In the replacement version of \code{slot}, a flag.  If \code{TRUE}, check the assigned value for validity
+  \item{check}{In the replacement version of \code{slot}, a flag.  If
+    \code{TRUE}, check the assigned value for validity
     as the value of this slot.  User's coded should not set this to
     \code{FALSE} in normal use, since the resulting object can be invalid.
   }
-
-  \item{x}{Either the name of a class or a class definition.
-    If given an argument that is neither a character string nor a
-    class definition, \code{slotNames} (only) uses \code{class(x)} instead.}
-
+  \item{x}{either the name of a class (as character string), or a class
+    definition.  If given an argument that is neither a character string
+    nor a class definition, \code{slotNames} (only) uses \code{class(x)}
+    instead.}
 }
 \value{
-The \code{"@"} operator and the \code{slot} function extract or
-  replace the formally defined slots for the object.  
+  The \code{"@"} operator and the \code{slot} function extract or
+  replace the formally defined slots for the object.
 
-Functions \code{slotNames} and \code{getSlots} return respectively the
-names of the slots and the classes associated with the slots in the
-specified class definition.  Except for its extended interpretation of
-\code{x} (above), \code{slotNames(x)} is just \code{names(getSlots(x))}.
+  Functions \code{slotNames} and \code{getSlots} return respectively the
+  names of the slots and the classes associated with the slots in the
+  specified class definition.  Except for its extended interpretation of
+  \code{x} (above), \code{slotNames(x)} is just \code{names(getSlots(x))}.
 }
 \details{
-  
+  The definition of the class specifies all slots directly and
+  indirectly defined for that class.  Each slot has a name and an
+  associated class.  Extracting a slot returns an object from that
+  class.  Setting a slot first coerces the value to the specified slot
+  and then stores it.
 
-  The definition of the class specifies all slots directly
-  and indirectly defined for that class.  Each slot has a name and an associated
-  class.  Extracting a slot returns an object from that class.  Setting
-  a slot first coerces the value to the specified slot and then stores
-  it.
-
-  Unlike general attributes, slots are not partially matched, and asking for (or
-  trying to set) a slot with an invalid name for that class generates an
-  error.
+  Unlike general attributes, slots are not partially matched, and asking
+  for (or trying to set) a slot with an invalid name for that class
+  generates an error.
 
   The \code{\link{@}} extraction operator and \code{slot}
   function themselves do no checking against the class definition,

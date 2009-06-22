@@ -33,14 +33,20 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
 	else
 	    predict(model, type = "terms", se.fit = se, terms = terms)
     n.tms <- ncol(tms <- as.matrix(if(se) terms$fit else terms))
+##     if(inherits(model, "gam")) {
+##         m.nms <- names(model$model)
+##         for(j in seq_along(model$smooth)) {
+##             sj <- model$smooth[[j]]
+##             names(model$model)[m.nms == sj[["term"]]] <- sj[["label"]]
+##         }
+##     }
     mf <- model.frame(model)
     if (is.null(data))
         data <- eval(model$call$data, envir)
     if (is.null(data))
         data <- mf
-    if (NROW(tms)<NROW(data)){
-        use.rows <- match(rownames(tms), rownames(data))
-      } else use.rows <- NULL
+    use.rows <- if (NROW(tms) < NROW(data))
+        match(rownames(tms), rownames(data)) ## else NULL
     nmt <- colnames(tms)
     cn <- parse(text = nmt)
     ## Defaults:
@@ -156,8 +162,9 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
             smooth(xx,pres[, i], lty = lty.smth,
                    cex = cex, pch = pch, col = col.res,
                    col.smooth = col.smth, span = span.smth)
-          } else
-          points(xx, pres[, i], cex = cex, pch = pch, col = col.res)
+          }
+          else
+              points(xx, pres[, i], cex = cex, pch = pch, col = col.res)
         }
 	if (rug) {
             n <- length(xx)

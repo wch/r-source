@@ -529,6 +529,7 @@ INLINE_FUN Rboolean isVectorizable(SEXP s)
 
 /* from gram.y */
 
+/* short cut for  ScalarString(mkChar(s)) : */
 INLINE_FUN SEXP mkString(const char *s)
 {
     SEXP t;

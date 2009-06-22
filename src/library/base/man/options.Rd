@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -29,10 +29,11 @@ getOption(x, default = NULL)
     Further, \code{options('name') == options()['name']}, see the example.
   }
   \item{x}{a character string holding an option name.}
-  \item{default}{if the specified option is not set in the options list, this value
-     is returned.  This facilitates retrieving an option and checking whether it is set and
-     setting it separately if not.}
-}
+
+  \item{default}{if the specified option is not set in the options list,
+     this value is returned.  This facilitates retrieving an option and
+     checking whether it is set and setting it separately if not.}
+ }
 \details{
   Invoking \code{options()} with no arguments returns a list with the
   current values of the options.  Note that not all options listed below
@@ -169,9 +170,9 @@ getOption(x, default = NULL)
     \item{\code{pager}:}{the command used for displaying text files by
       \code{\link{file.show}}.
 #ifdef unix
-      Defaults to \file{\var{\link[base:Rhome]{R_HOME}}/bin/pager}, which selects a pager
-      via the \env{PAGER} environment variable (and that usually
-      defaults to \code{less}).
+      Defaults to \file{\var{\link[base:Rhome]{R_HOME}}/bin/pager},
+      which selects a pager via the \env{PAGER} environment variable
+      (and that usually defaults to \code{less}).
 #endif
 #ifdef windows
       Defaults to \code{"internal"}, which uses a pager similar to the

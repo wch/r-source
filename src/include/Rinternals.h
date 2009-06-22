@@ -129,11 +129,11 @@ typedef enum {
     ANYSXP	= 18,	/* make "any" args work */
     VECSXP	= 19,	/* generic vectors */
     EXPRSXP	= 20,	/* expressions vectors */
-    BCODESXP    = 21,   /* byte code */
-    EXTPTRSXP   = 22,   /* external pointer */
-    WEAKREFSXP  = 23,   /* weak reference */
-    RAWSXP      = 24,   /* raw bytes */
-    S4SXP         = 25,   /* S4 non-vector */
+    BCODESXP	= 21,	/* byte code */
+    EXTPTRSXP	= 22,	/* external pointer */
+    WEAKREFSXP	= 23,	/* weak reference */
+    RAWSXP	= 24,	/* raw bytes */
+    S4SXP	= 25,	/* S4 non-vector */
 
     FUNSXP	= 99	/* Closure or Builtin */
 } SEXPTYPE;
