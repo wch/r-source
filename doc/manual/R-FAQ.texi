@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2009
-@set FAQ_DATE @value{FAQ_YEAR}-06-05
+@set FAQ_DATE @value{FAQ_YEAR}-06-22
 @set REL_YEAR 2009
 @set REL_MAJOR 2
 @set REL_MINOR 9
-@set REL_PATCHLEVEL 0
+@set REL_PATCHLEVEL 1
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -1940,6 +1940,8 @@ Level-dependent Cross-Validation Thresholding.
 Graphics device using cairographics library for creating high-quality
 PNG, PDF, SVG, PostScript output and interactive display devices such as
 X11.
+@item CalciOMatic
+Automatic calcium imaging analysis.
 @item CarbonEL
 Carbon Event Loop.
 @item CellularAutomaton
@@ -2018,6 +2020,8 @@ unequal variances and unequal sample sizes.
 @item Davies
 Functions for the Davies quantile function and the Generalized Lambda
 distribution.
+@item Deducer
+An intuitive graphical data analysis system for use with @strong{JGR}.
 @item Defaults
 Create global function defaults.
 @item Depela
@@ -2083,6 +2087,8 @@ nonparametric techniques.
 Data sets, functions and examples from the book ``The Elements of
 Statistical Learning: Data Mining, Inference, and Prediction'' by Trevor
 Hastie, Robert Tibshirani and Jerome Friedman (2001), Springer.
+@item EnQuireR
+Questionnaires.
 @item EngrExpt
 Data sets from the book ``Introductory Statistics for Engineering
 Experimentation'' by Peter Nelson, Marie Coffin and Karen Copeland
@@ -2276,6 +2282,9 @@ datasets, imputing missing values, advanced table making, variable
 clustering, character string manipulation, conversion of S objects to
 @LaTeX{} code, recoding variables, and bootstrap repeated measures
 analysis.
+@item HybridMC
+Implementation of the Hybrid Monte Carlo and Multipoint Hybrid Monte
+Carlo sampling techniques.
 @item HydroMe
 Estimation of soil hydraulic parameters from experimental data.
 @item HyperbolicDist
@@ -2489,11 +2498,8 @@ detailed prediction maps.
 @item MultEq
 Equivalence tests and simultaneous confidence intervals for multiple
 endpoints.
-@c <COMMENT>
-@c Archived on 2009-05-12 as requested by the maintainer.
-@c @item Multiclasstesting
-@c Performance of @math{N}-ary classification testing.
-@c </COMMENT>
+@item Multiclasstesting
+Performance of @math{N}-ary classification testing.
 @item NADA
 Methods described in ``Nondetects And Data Analysis: Statistics for
 Censored Environmental Data'' by Dennis R. Helsel, 2004, John Wiley and
@@ -2548,6 +2554,8 @@ maps and implements other GIS procedures.
 @item PBSmodelling
 Software to facilitate the design, testing, and operation of computer
 models.
+@item PCS
+Calculate the Probability of Correct Selection.
 @item PET
 Simulation and reconstruction of PET images.
 @item PHYLOGR
@@ -2625,6 +2633,9 @@ Code to examine Quantitative Risk Management concepts.
 Quantitative Psychology tools.
 @item R.cache
 Fast and light-weight caching of objects.
+@item R.filesets
+Easy handling of and access to files organized in structured
+directories.
 @item R.huge
 Methods for accessing huge amounts of data.
 @item R.matlab
@@ -2690,6 +2701,9 @@ Hidden Markov Model simulations and estimations.
 @item RII
 Estimation of the relative index of inequality for interval-censored
 data using natural cubic splines.
+@item RImageJ
+R bindings for the ImageJ Java based image processing and analysis
+platform.
 @item RItools
 Randomization inference tools.
 @item RJDBC
@@ -3007,6 +3021,8 @@ Shared Hotelling @math{T^2} test for small sample microarray
 experiments.
 @item SiZer
 Significant Zero crossings.
+@item SigWinR
+SigWin-detector implementation in R.
 @item SimComp
 Simultaneous Comparisons for multiple endpoints.
 @item SimHap
@@ -3163,8 +3179,11 @@ Reads in WIN pickfile and waveform files.
 Functions and datasets for the book ``Linear Mixed Models: A Practical
 Guide Using Statistical Software'' by B. West, K. Welch, and A. Galecki,
 2006, Chapman & Hall/CRC.
-@item WaveCGH
-Wavelet changepoint detection for array CGH.
+@c <COMMENT>
+@c Moved to the Archive on 2009-06-17 as requested by the maintainer.
+@c @item WaveCGH
+@c Wavelet changepoint detection for array CGH.
+@c </COMMENT>
 @item WeedMap
 Map of weed intensity.
 @item WhatIf
@@ -3279,6 +3298,10 @@ Archetypal analysis.
 Argos locations filter.
 @item arm
 Data Analysis using Regression and Multilevel/hierarchical models.
+@item aroma.apd
+A probe-level data file format used by @strong{aroma.affymetrix}.
+@item aroma.core
+Support package for @strong{aroma.affymetrix} et al.
 @item arrayImpute
 Missing imputation for microarray data.
 @item arrayMissPattern
@@ -3630,6 +3653,11 @@ Categorical Marginal Models.
 @item cmprsk
 Estimation, testing and regression modeling of subdistribution functions
 in competing risks.
+@item cmprskContin
+Continuous mark-specific relative risks for two groups.
+@item cmrutils
+Miscellaneous functions from the Center for the Mathematical Research,
+Stankin, Moskow.
 @item cobs99
 Constrained B-splines: outdated 1999 version.
 @item cobs
@@ -3784,6 +3812,9 @@ Dependent Mixture Models: fit latent (hidden) Markov models on mixed
 categorical and continuous (time series) data.
 @item depth
 Depth functions tools for multivariate analysis.
+@item descr
+Functions to describe weighted categorical variables, and to facilitate
+the character encoding conversion of objects.
 @item desirability
 Desirabiliy function optimization and ranking.
 @item dfcrm
@@ -3807,6 +3838,8 @@ Baseline identification and peak decomposition for x-ray
 diffractograms.
 @item diffusionMap
 Diffusion map method of data parametrization.
+@item digeR
+@acronym{GUI} for analyzing 2D DIGE data.
 @item digest
 Two functions for the creation of ``hash'' digests of arbitrary R
 objects using the md5 and sha-1 algorithms permitting easy comparison of
@@ -3815,6 +3848,8 @@ R language objects.
 Compute Hartigan's dip test statistic for unimodality.
 @item dirichlet
 Dirichlet model of consumer buying behavior for marketing research.
+@item dirmult
+Estimation of Dirichlet-Multinomial distribution.
 @item diseasemapping
 Calculate SMRs from population and case data.
 @item dispmod
@@ -3958,6 +3993,8 @@ right censored data.
 Empirical likelihood test (two-sample, censored data).
 @item emu
 Interface to the Emu speech database system.
+@item endogMNP
+Fitting Multinomial Probit Models with Endogenous selection.
 @item energy
 E-statistics (energy) tests for comparing distributions: multivariate
 normality, Poisson test, multivariate @math{k}-sample test for equal
@@ -4173,6 +4210,8 @@ differenced ARIMA(@math{p,d,q}) model (Haslett and Raftery, Applied
 Statistics, 1989).
 @item fractal
 Insightful fractal time series modeling and analysis.
+@item fractalrock
+Generate fractal time series with non-normal returns distribution.
 @item frailtypack
 Fit a shared gamma frailty model and Cox proportional hazards model
 using a Penalized Likelihood on the hazard function.
@@ -4202,6 +4241,8 @@ Frankel-Wei regression and structural change tools for estimating,
 testing, dating and monitoring (de facto) exchange rate regimes.
 @item g.data
 Create and maintain delayed-data packages (DDP's).
+@item gPdtest
+Bootstrap goodness-of-fit test for the generalized Pareto distribution.
 @item gRain
 Probability propagation in graphical independence networks.
 @item gRbase
@@ -4354,6 +4395,8 @@ intercept.
 Lasso and elastic-net regularized generalized linear models.
 @item glmpath
 L1 regularization path for Generalized Linear Models.
+@item glmulti
+GLM model selection and multimodel inference made easy.
 @item glpk
 Interface to the @acronym{GNU} Linear Programming Kit (GLPK).
 @item gmaps
@@ -4649,6 +4692,9 @@ Linear equations with Kronecker structure.
 @c @item km.ci
 @c Confidence intervals for the Kaplan-Meier estimator.
 @c </COMMENT>
+@item kmi
+Kaplan-Meier multiple imputation for the analysis of cumulative
+incidence functions in the competing risks setting.
 @item kml
 @math{K}-Means for Longitudinal data.
 @c <COMMENT>
@@ -4817,6 +4863,8 @@ bandwidth selection.
 Recursive partitioning of longitudinal data using mixed-effects models.
 @item longitudinal
 Analysis of multiple time course data.
+@item longitudinalData
+Tools for longitudinal data.
 @item longmemo
 Datasets and Functionality from the textbook ``Statistics for
 Long-Memory Processes'' by J. Beran, 1994, Chapman & Hall.
@@ -4875,6 +4923,8 @@ ESRI shapefiles.
 @item maptree
 Functions with example data for graphing and mapping models from
 hierarchical clustering and classification and regression trees.
+@item mar1s
+Multiplicative AR(1) with seasonal processes.
 @item marelac
 Datasets, constants, conversion factors, utilities for the marine and
 lacustrine sciences.
@@ -4890,6 +4940,8 @@ Tools for constructing and manipulating objects from a class of directed
 and undirected graphs.
 @item matlab
 Emulate MATLAB code using R.
+@item matrixStats
+Methods that apply to rows and columns of a matrix.
 @item matrixcalc
 Collection of functions for matrix differential calculus.
 @item maxLik
@@ -4940,6 +4992,8 @@ additive regression splines (MARS), adaptive back-fitting splines
 Maximum entropy bootstrap for time series.
 @item medAdherence
 Medication Adherence: commonly used definitions.
+@item mediation
+Causal mediation analysis.
 @item mefa
 Faunistic count data handling and reporting.
 @item meifly
@@ -5096,6 +5150,9 @@ Analysis of capture-recapture data.
 Inferences for ratios of coefficients in the general linear model.
 @item mrdrc
 Model-robust concentration-response analysis.
+@item mrt
+Data sets and functions for the book ``Modern Regression Techniques
+Using R'' by D. B. Wright and K. London, 2009, Sage Publications.
 @item msBreast
 Protein mass spectra dataset from a breast cancer study.
 @item msDilution
@@ -5397,6 +5454,8 @@ Modeling evolution in paleontological time-series.
 @c </COMMENT>
 @item paltran
 Functions for paleolimnology.
+@item pamm
+Power analysis for random effects in mixed models.
 @item pamr
 Pam: Prediction Analysis for Microarrays.
 @item pan
@@ -5523,6 +5582,8 @@ Regression (PCR).
 PLS analyses for genomics.
 @item plspm
 Partial Least Squares Path Modeling.
+@item plus
+Penalized Linear Unbiased Selection.
 @item plyr
 Tools for splitting, applying and combining data.
 @item pmg
@@ -5884,6 +5945,9 @@ Robust time series filters.
 @c </COMMENT>
 @item robust
 Insightful robust package.
+@item robustX
+eXperimental eXtraneous eXtraordinary @dots{} functionality for robust
+statistics.
 @item robustbase
 Basic Robust Statistics.
 @item rootSolve
@@ -6008,6 +6072,8 @@ Statistical Disclosure Control methods for the generation of public and
 scientific use files.
 @item sdcTable
 Statistical Disclosure Control for tabular data.
+@item sddpack
+SemiDiscrete Decomposition.
 @item sde
 Simulation and inference for Stochastic Differential Equations.
 @item sdtalt
@@ -6172,6 +6238,8 @@ SPArse Matrix algebra.
 @item sparseLDA
 Sparse Linear Discriminant Analysis for gaussians and mixture of
 gaussians models.
+@item spatcounts
+Fit spatial CAR count regression models using MCMC.
 @item spatclus
 Arbitrarily shaped multiple spatial cluster detection for case event
 data.
