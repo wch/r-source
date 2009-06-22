@@ -516,11 +516,22 @@ lsf.str <- function(pos = -1, envir, ...) {
     ls.str(pos=pos, envir=envir, mode = "function", ...)
 }
 
-print.ls_str <- function(x, max.level = 1, give.attr = FALSE, ...)
+print.ls_str <- function(x, max.level = 1, give.attr = FALSE,
+                         ..., digits = max(1, getOption("str")$digits.d))
 {
     E <- attr(x, "envir")
     stopifnot(is.environment(E))
     M <- attr(x, "mode")
+    args <- list(...)
+    if(length(args) && "digits.d" %in% names(args)) {
+        if(missing(digits))
+            digits <- args$digits.d
+        else
+            warning("'digits' and 'digits.d' are both specified and the latter is not used")
+        args$digits.d <- NULL
+    }
+    strargs <- c(list(max.level = max.level, give.attr = give.attr,
+                      digits = digits), args)
     for(nam in x) {
 	cat(nam, ": ")
 	## check missingness, e.g. inside debug(.) :
@@ -540,7 +551,7 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE, ...)
 	    else stop(o$message)
 	}
 	else
-	    str(o, max.level = max.level, give.attr = give.attr, ...)
+	    do.call(str, c(list(o), strargs))
     }
     invisible(x)
 }

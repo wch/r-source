@@ -1,6 +1,6 @@
 % File src/library/utils/man/ls_str.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ls.str}
@@ -11,7 +11,8 @@ ls.str(pos = -1, name, envir, all.names = FALSE,
 
 lsf.str(pos = -1, envir, \dots)
 
-\method{print}{ls_str}(x, max.level = 1, give.attr = FALSE, \dots)
+\method{print}{ls_str}(x, max.level = 1, give.attr = FALSE, \dots
+      digits = max(1, getOption("digits") - 4))
 }
 \alias{ls.str}
 \alias{lsf.str}
@@ -37,10 +38,11 @@ lsf.str(pos = -1, envir, \dots)
   \item{mode}{character specifying the \code{\link{mode}} of objects to
     consider.  Passed to \code{\link{exists}} and \code{\link{get}}.}
   \item{x}{an object of class \code{"ls_str"}.}
-  \item{\dots}{further arguments to pass.  and \code{lsf.str} passes
-    them to \code{ls.str} which passes them on to \code{\link{ls}}.
-    The (non-exported) print method \code{print.ls_str} passes them to
+  \item{\dots}{further arguments to pass.  \code{lsf.str} passes them to
+    \code{ls.str} which passes them on to \code{\link{ls}}.  The
+    (non-exported) print method \code{print.ls_str} passes them to
     \code{\link{str}}.}
+  \item{digits}{the number of significant digits to use for printing.}
 }
 \value{
   \code{ls.str} and \code{lsf.str} return an object of class
