@@ -5744,3 +5744,9 @@ DF <- data.frame(y = c(rnorm(10), rnorm(10, mean=3), rnorm(10, mean=6)),
 ## In 2.9.0, the following line raised an error because "x" cannot be found
 junk <- summary(aov(y ~ x + Error(sub/x), data=DF, subset=(x!="C")))
 ## safety check added in 2.9.0 evaluated the call.
+
+## for(var in seq) .. when seq is modified  "inside" :
+x <- c(1,2); s <- 0; for (i in x) { x[i+1] <- i + 42.5; s <- s + i }
+stopifnot(s == 3)
+## s was  44.5  in R <= 2.9.0
+
