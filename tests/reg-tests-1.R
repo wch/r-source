@@ -5750,3 +5750,8 @@ x <- c(1,2); s <- 0; for (i in x) { x[i+1] <- i + 42.5; s <- s + i }
 stopifnot(s == 3)
 ## s was  44.5  in R <= 2.9.0
 
+## ":" at the boundary
+M <- .Machine$integer.max
+s <- (M-2):(M+.1)
+stopifnot(is.integer(s), s-M == -2:0)
+## was "double" in R <= 2.9.1

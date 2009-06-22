@@ -171,6 +171,8 @@ BUG FIXES
     o	validObject() avoids an error during evaluation in the case
         of various incorrect slot definitions.
 
+    o	n:m  now returns <integer> in a few more boundary cases.
+
 
 
 	**************************************************

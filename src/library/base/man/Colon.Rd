@@ -31,9 +31,9 @@ from:to
 }
 \value{
   For numeric arguments, a numeric vector.  This will be of type
-  \code{\link{integer}} if \code{from} and \code{to} are both integers
-  and representable in the integer type, otherwise of type
-  \code{\link{numeric}}.
+  \code{\link{integer}} if \code{from} is integer-valued and the result
+  is representable in the integer type, otherwise of type
+  \code{"double"} (aka \code{\link{mode}} \code{"\link{numeric}"}).
 
   For factors, an unordered factor with levels labelled as \code{la:lb}
   and ordered lexicographically (that is, \code{lb} varies fastest).
@@ -46,10 +46,10 @@ from:to
 }
 \seealso{
   \code{\link{seq}}.
-  
+
   As an alternative to using \code{:} for factors, \code{\link{interaction}}.
-  
-  For \code{:} used in the formal representation of an interaction, see 
+
+  For \code{:} used in the formal representation of an interaction, see
   \code{\link{formula}}.
 }
 \examples{

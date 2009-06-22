@@ -93,14 +93,23 @@ static SEXP seq_colon(double n1, double n2, SEXP call)
     SEXP ans;
     Rboolean useInt;
 
-    in1 = (int)(n1);
-    useInt = (n1 == in1);
-    if (n1 <= INT_MIN || n2 <= INT_MIN || n1 > INT_MAX || n2 > INT_MAX)
-	useInt = FALSE;
     r = fabs(n2 - n1);
     if(r >= INT_MAX) errorcall(call,_("result would be too long a vector"));
 
     n = r + 1 + FLT_EPSILON;
+
+    in1 = (int)(n1);
+    useInt = (n1 == in1);
+    if(useInt) {
+	if(n1 <= INT_MIN || n1 > INT_MAX)
+	    useInt = FALSE;
+	else {
+	    /* r := " the effective 'to' "  of  from:to */
+	    r = n1 + ((n1 <= n2) ? n-1 : -(n-1));
+	    if(r <= INT_MIN || r > INT_MAX)
+		useInt = FALSE;
+	}
+    }
     if (useInt) {
 	ans = allocVector(INTSXP, n);
 	if (n1 <= n2)
