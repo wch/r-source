@@ -161,13 +161,13 @@ list("Artistic-2.0" =
        ),
 
      "CeCILL-2" =
-     c("CeCILL 2 (GNU GPL 2 compatible)",
-       "CeCILL-2.0"
+     c("CeCILL-2.0"
        ),
      
      "GPL" =
      c(## <FIXME>
        "'GPL'",
+       "GPL.",
        ## </FIXME>
        "GNU Public License",
        "Gnu GPL",
@@ -176,10 +176,7 @@ list("Artistic-2.0" =
        ),
      
      "GPL-2" =
-     c(## <FIXME>
-       "GPL vesion 2 or newer",       
-       ## </FIXME>
-       ## <NOTE>
+     c(## <NOTE>
        ## There is no GPL 2.0, see above.
        "GNU General Public License 2.0.",
        "GPL 2.0",
@@ -198,7 +195,6 @@ list("Artistic-2.0" =
        "GPL version 2 (June, 1991)",
        "GPL version 2.",
        "GPL2",
-       "GPL-2 http://www.r-project.org/Licenses/GPL-2",
        ## BioC:
        "GPL V2",
        "GPL, version 2"
@@ -208,6 +204,7 @@ list("Artistic-2.0" =
      c("GPL Version 3",
        "GPL version 3",
        "GNU General Public Licence (GPLv3)",
+       "GPL 3",
        "GPL v3"
        ),
 
@@ -215,17 +212,13 @@ list("Artistic-2.0" =
      c(## <NOTE>
        ## There is no GPL 2.0, see above.
        "GNU GPL v2.0 or greater",
-       "GNU Public Licence 2.0 or above at your convenience",
-       "GPL (Version 2.0 or later)",
        "GPL 2.0 or higher",
-       "GPL 2.0 or later",
        "GPL 2.0 or newer",
        "GPL version 2.0 or later",
        "GPL version 2.0 or newer",
        ## </NOTE>
        "GNU GPL (version 2 or later)",
        "GNU GPL (version 2 or later); see the file COPYING for details",
-       "GNU GPL Version 2 (or later)",
        "GNU GPL Version 2 or newer.",
        "GNU GPL version 2 or newer",
        "GNU General Public License version 2 or newer",
@@ -237,8 +230,8 @@ list("Artistic-2.0" =
        "GPL (version 2 or later)",
        "GPL (version 2 or later, see the included file GPL)",
        "GPL (version 2 or newer)",
-       "GPL 2 or above",
        "GPL 2 or later",
+       "GPL 2 or newer",
        "GPL version 2 or any later version",
        "GPL Version 2 or later",
        "GPL Version 2 or later.",
@@ -253,7 +246,6 @@ list("Artistic-2.0" =
        "GPL version 2 or newer.",
        "GPL version 2 or newer. http://www.gnu.org/copyleft/gpl.html",
        "GPL version 2, or, at your option, any newer version.",
-       "GPL (version 2 or later) See file LICENCE.",
        "GPL Version 2 (or later)",
        "GPL version 2 (or later)",
        "GPL version 2 or higher",
@@ -315,8 +307,11 @@ list("Artistic-2.0" =
        ),
      
      "LGPL (>= 2.1)" =
-     c("LGPL version 2.1 or newer (the releases)",
-       "LGPL version 2.1 or later"
+     c("LGPL version 2.1 or later"
+       ),
+
+     "LGPL (>= 3.0)" =
+     c("LGPL >=3"
        ),
 
      "X11" =
