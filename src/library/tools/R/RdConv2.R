@@ -87,8 +87,11 @@ mime_canonical_encoding <- function(encoding)
     encoding
 }
 
-RdTags <- function(Rd) 
-    sapply(Rd, function(element) attr(element, "Rd_tag"))
+RdTags <- function(Rd) {
+    res <- sapply(Rd, function(element) attr(element, "Rd_tag"))
+    if (!length(res)) res <- character(0)
+    res
+}
 
 isBlankRd <- function(x)
     length(grep("^[[:blank:]]*\n?$", x, perl = TRUE)) == length(x) # newline optional
@@ -285,30 +288,39 @@ processRdChunk <- function(code, stage, options, env) {
 
 processRdIfdefs <- function(blocks, defines)
 {
-    if (!is.list(blocks)) return(blocks)
-    tags <- RdTags(blocks)
-    i <- 1
-    while (i <= length(tags)) {
-        blocks[[i]] <- processRdIfdefs(blocks[[i]], defines)
-	if (tags[i] %in% c("#ifdef", "#ifndef")) {
-	    ifdef <- i
-	    target <- blocks[[ifdef]][[1L]][[1L]]
-	    # The target will have picked up some whitespace and a newline
-	    target <- gsub("[[:blank:][:cntrl:]]*", "", target)
-	    all <- seq_along(tags)
-	    before <- all[all < ifdef]
-	    after <- all[all > ifdef]
-
-	    if ((target %in% defines) == (tags[ifdef] == "#ifdef")) {
-		tags <- c(tags[before], RdTags(blocks[[ifdef]][[2L]]), tags[after])
-		blocks <- c(blocks[before], blocks[[ifdef]][[2L]], blocks[after])
-	    } else {
-	    	tags <- c(tags[before], tags[after])
-	    	blocks <- c(blocks[before], blocks[after])
+    recurse <- function(block) {
+        if (!is.null(tag <- attr(block, "Rd_tag"))) {
+	    if (tag %in% c("#ifdef", "#ifndef")) {
+		target <- block[[1L]][[1L]]
+		# The target will have picked up some whitespace and a newline
+		target <- gsub("[[:blank:][:cntrl:]]*", "", target)
+		if ((target %in% defines) == (tag == "#ifdef")) 
+		    block <- tagged(block[[2L]], "#expanded")
+		else 
+		    block <- structure(tagged(paste(tag, target, "not active"), "COMMENT"),
+		    		       srcref=attr(block, "srcref"))   		       
 	    }
-	} else i <- i + 1
-    }
-    blocks
+	}
+	if (is.list(block)) {
+	    i <- 1
+	    while (i <= length(block)) {
+	    	newval <- recurse(block[[i]])
+	    	newtag <- attr(newval, "Rd_tag")
+	    	if (!is.null(newtag) && newtag == "#expanded") { # ifdef has expanded.
+	    	    all <- seq_along(block)
+	    	    before <- all[all<i]
+	    	    after <- all[all>i]
+	    	    block <- tagged(c(block[before], newval, block[after]), tag)
+	    	} else {
+		    block[[i]] <- newval
+		    i <- i+1
+		}
+	    }
+	}
+	block
+    }  	
+    
+    recurse(blocks)
 }
 
 processRdSexprs <- function(block, stage, options=RweaveRdDefaults, env=new.env(parent=globalenv()))
