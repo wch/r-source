@@ -1,5 +1,6 @@
 Name,Country,City,URL,Host,Maintainer,OK,CountryCode
-Argentina,Argentina,Mendoza,http://mirror.cricyt.edu.ar/r/,"CONICET, Mendoza",informatica@lab.cricyt.edu.ar,1,ar
+"Argentina (Buenos Aires)",Argentina,"Buenos Aires",http://cran.patan.com.ar/,"Patan.com.ar, Buenos Aires",jknoll@patan.com.ar,1,ar
+"Argentina (Mendoza)",Argentina,Mendoza,http://mirror.cricyt.edu.ar/r/,"CONICET, Mendoza",informatica@lab.cricyt.edu.ar,1,ar
 Australia,Australia,Melbourne,http://cran.ms.unimelb.edu.au/,"University of Melbourne",cran@ms.unimelb.edu.au,1,au
 Austria,Austria,Wien,http://cran.at.r-project.org/,"Wirtschaftsuniversitaet Wien",CRAN@R-project.org,1,at
 Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Association",patrick@wessa.net,1,be
