@@ -11,7 +11,7 @@ ls.str(pos = -1, name, envir, all.names = FALSE,
 
 lsf.str(pos = -1, envir, \dots)
 
-\method{print}{ls_str}(x, max.level = 1, give.attr = FALSE, \dots
+\method{print}{ls_str}(x, max.level = 1, give.attr = FALSE, \dots,
       digits = max(1, getOption("digits") - 4))
 }
 \alias{ls.str}
