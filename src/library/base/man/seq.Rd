@@ -67,7 +67,7 @@ seq(length.out= )
 
   The fourth form generates the sequence \code{1, 2, \dots,
     length(along.with)}.  (\code{along.with} is usually abbreviated to
-  \code{along}, and \code{seq_along} is much faster.) 
+  \code{along}, and \code{seq_along} is much faster.)
 
   The fifth form generates the sequence \code{1, 2, \dots, length(from)}
   (as if argument \code{along.with} had been specified),
@@ -84,18 +84,21 @@ seq(length.out= )
   For \code{seq}(only), up to two of \code{from}, \code{to} and \code{by} can
   be supplied as complex values provided \code{length.out} or
   \code{along.with} is specified.
-  
+
   \code{seq.int}, \code{seq_along} and \code{seq.int} are
   \link{primitive}: the latter two ignore any argument name.
 }
 \value{
   Currently, the default method returns a result of type
-  \code{"integer"} if \code{from} is (numerically equal to an)
-  integer and, e.g., only \code{to} is specified, or also if only
-  \code{length} or only \code{along.with} is specified.  \strong{Note:}
-  this may change in the future and programmers should not rely on it.
+  \code{"integer"} (if it is representable as that and) if \code{from}
+  is (numerically equal to an) integer and, e.g., only \code{to} is
+  specified, or also if only \code{length} or only \code{along.with} is
+  specified.  \strong{Note:} this may change
+  %% well, for numeric from,   seq(from, to)  <==>  from:to
+  %% which will *not* change in returning integer (when from is integer-valued)
+  in the future and programmers should not rely on it.
   % MM: to specify all the conditions doesn't seem worth, nor should the
-  % code be changed just for docu.purposes; e.g. str(seq(from=1:1, to=8, by=3:3))
+  % code be changed just for docu.purposes; e.g. str(seq(from=1L, to=8, by=3L))
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
