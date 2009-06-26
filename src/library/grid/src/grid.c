@@ -641,7 +641,6 @@ SEXP L_downvppath(SEXP path, SEXP name, SEXP strict)
         error(_(msg));
     }
     return VECTOR_ELT(found, 0);    
-    return VECTOR_ELT(found, 0);    
 }
 
 /* This is similar to L_setviewport, except that it will NOT 
