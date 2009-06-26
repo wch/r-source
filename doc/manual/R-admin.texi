@@ -2583,9 +2583,10 @@ when building from source, and
 @node ACML, Goto BLAS, ATLAS, BLAS
 @subsubsection ACML
 
-For @cputype{x86_64} processors under Linux and Solaris 10 there is the
-AMD Core Math Library (ACML) @uref{http://www.amd.com/@/acml}.  For the
-@command{gcc} version we could use
+For @cputype{x86_64} ans @cputype{i686} processors under Linux and
+Solaris 10 there is the AMD Core Math Library (ACML)
+@uref{http://www.amd.com/@/acml}.  For the @command{gcc} version we
+could use
 
 @example
 --with-blas="-lacml"
@@ -2594,14 +2595,14 @@ AMD Core Math Library (ACML) @uref{http://www.amd.com/@/acml}.  For the
 @noindent
 if the appropriate library directory (such as
 @enindex LD_LIBRRARY_PATH
-@file{/opt/acml4.2.0/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.
+@file{/opt/acml4.3.0/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.
 For other compilers, see the ACML documentation.  There is a
 multithreaded Linux version of ACML available for @command{gfortran}
 which needs @command{gcc} >= 4.2.0 (or some RedHat versions of 4.1.x).
 To make use of this you will need something like
 
 @example
---with-blas="-L/opt/acml4.2.0/gfortran64_mp/lib -lacml_mp"
+--with-blas="-L/opt/acml4.3.0/gfortran64_mp/lib -lacml_mp"
 @end example
 
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
@@ -2750,7 +2751,8 @@ It is easy to change the BLAS without making to re-install @R{} and all
 the add-on packages, since all references to the BLAS go through
 @code{libRblas}, and that can be replaced.  Note though that any dynamic
 libraries the replacement links to will need to be found by the linker:
-this may need the library path to be changed in @file{etc/ldpaths}.
+this may need the library path to be changed in
+@file{@var{R_HOME}/etc/ldpaths}.
 @end itemize
 
 Another option to change the BLAS in use is to symlink a dynamic BLAS
@@ -2759,11 +2761,11 @@ For example, just
 
 @example
 mv @var{R_HOME}/lib/libRblas.so @var{R_HOME}/lib/libRblas.so.keep
-ln -s /opt/acml4.0.1/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
+ln -s /opt/acml4.3.0/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
 @end example
 
-will change the BLAS in use to multithreaded ACML.  A similar link
-works for recent versions of the Goto BLAS and for MKL (provided the
+will change the BLAS in use to multithreaded ACML.  A similar link works
+for recent versions of the Goto BLAS and perhaps for MKL (provided the
 appropriate @file{lib} directory is in the run-time library path or
 @command{ld.so} cache).
 
@@ -3685,12 +3687,12 @@ in @file{config.site} or on the @command{configure} command line.
 @subsection Solaris 10 and Open Solaris
 
 @R{} has been built successfully on Solaris 10 (both Sparc and
-@cputype{x86}) using @command{gcc}@tie{}3/@command{g77},
-@command{gcc}@tie{}4/@command{gfortran} and the (zero cost) Sun Studio
-(aka Ceres) 11/12 compilers.  Sun packages for @R{} are available from
-@uref{http://www.sunfreeware.com/} for both architectures.  (Recent Sun
-machines are Opterons (@cputype{x86-64}) rather than @cputype{x86}, but
-32-bit @cputype{x86} executables are the default.)
+@cputype{x86}) using @command{gcc}@tie{}4/@command{gfortran} and the
+(zero cost) Sun Studio (aka Ceres) 12 compilers.  Sun packages for @R{}
+are available from @uref{http://www.sunfreeware.com/} for both
+architectures, but have not been updated recently.  (Recent Sun machines
+are Opterons (@cputype{x86-64}) rather than @cputype{x86}, but 32-bit
+@cputype{x86} executables are the default.)
 
 There are also reports of success on OpenSolaris (aka Solaris Express
 Community Edition, and sometimes as Solaris 11) on @cputype{x86}.
@@ -3722,11 +3724,11 @@ from Sun.} do @emph{not} specify @option{-fast}, as this disables
 
 @c https://stat.ethz.ch/pipermail/r-devel/2009-March/052454.html
 @c and followups
-Jeff Long reported problems if @R{} is built as a shared library and
-@samp{libintl} was installed via @command{pkg-get}: in particular
-segfaults using @code{read.spss} from package @pkg{foreign}: this can be
-avoided by not building @R{} as a shared library or configuring with
-@option{--with-included-gettext}.
+@c Jeff Long reported problems if @R{} is built as a shared library and
+@c @samp{libintl} was installed via @command{pkg-get}: in particular
+@c segfaults using @code{read.spss} from package @pkg{foreign}: this can be
+@c avoided by not building @R{} as a shared library or configuring with
+@c @option{--with-included-gettext}.
 
 To compile for a 64-bit Sparc target with @command{gcc}@tie{}4 we used
 
@@ -3739,7 +3741,6 @@ LDFLAGS="-L/opt/csw/gcc4/lib/sparcv9 -L/opt/csw/lib/sparcv9"
 @end example
 
 @noindent
-replacing @samp{gfortran} with @samp{g77} for @command{gcc} 3.x.y.
 Note that paths such as @file{/opt/csw/gcc4/lib/sparcv9} may need to
 be in the
 @enindex LD_LIBRARY_PATH
@@ -3747,7 +3748,7 @@ be in the
 
 For the Sun Studio compilers a little juggling of paths was needed to
 ensure GNU @code{libiconv} is used rather than the Solaris @code{iconv}:
-we used
+at one time we used
 
 @example
 CC="cc -xc99"
@@ -3765,10 +3766,8 @@ SHLIB_CXXLDFLAGS="-G -lCstd"
 
 @noindent
 to ensure that the @code{libiconv} version of @file{iconv.h} was found.
-For a 64-bit target add @option{-xarch=v9} (or @code{v9b}, or
-@code{amd64}) to each of the compiler commands, or for Sun Studio 12 add
-@option{-m64}.  You can target specific Sparc architectures for (slightly)
-higher performance: Sun recommend
+For a 64-bit target add @option{-m64}.  You can target specific Sparc
+architectures for (slightly) higher performance: Sun recommend
 
 @example
 @r{32-bit:} -xtarget=ultra3 -xarch=v8plusa
@@ -3794,15 +3793,14 @@ SAFE_FFLAGS="-O5 -libmil -fstore"
 
 
 Building on @cputype{x86} with @command{gcc}@tie{}4 failed @command{make
-check} in the complex LAPACK tests: using Sun Studio 11 worked
+check} in the complex LAPACK tests: using Sun Studio 12 worked
 correctly.
 
 There is limited support for @cputype{x86_64} builds in the pre-built
 GNU software repositories, with 64-bit libraries (which are installed in
 @file{/opt/csw/lib/amd64} and so on) being scarce (and not including the
 @command{gcc} support libraries).  The Sun Studio compilers do support
-64-bit builds via @option{-xarch=amd64} (or, for version 12,
-@option{-m64}).
+64-bit builds via @option{-m64}.
 
 @cindex BLAS library
 @cindex LAPACK library
