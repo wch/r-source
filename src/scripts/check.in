@@ -50,6 +50,7 @@ my $opt_latex = 1;
 my $opt_use_gct = 0;
 my $opt_codoc = 1;
 my $opt_install = 1;
+my $spec_install = 0;
 my $opt_vignettes = 1;
 my $opt_use_valgrind = 0;
 my $opt_rcfile = "";		# Only set this if $ENV{"HOME"} is set.
@@ -76,6 +77,12 @@ GetOptions(@known_options) or usage();
 R_version("R add-on package checker", $version) if $opt_version;
 usage() if $opt_help;
 
+## record some of the options used.
+my @opts;
+push @opts,"--install=fake" if $opt_install eq "fake";
+push @opts,"--install=no" if $opt_install eq "no";
+push @opts,"--no-install" if $opt_no_install;
+
 $opt_clean = 0 if $opt_no_clean;
 $opt_examples = 0 if $opt_no_examples;
 $opt_tests = 0 if $opt_no_tests;
@@ -87,9 +94,10 @@ $opt_vignettes = 0 if $opt_no_vignettes;
 if($opt_install eq "fake") {
     ## If we fake installation, then we cannot *run* any code.
     $opt_examples = $opt_tests = $opt_vignettes = 0;
+    $spec_install = 1;
 }
 $opt_install = 0 if($opt_install eq "no");
-
+$spec_install = 1 if !$opt_install;
 
 my $opt_ff_calls = 1;
 ## The neverending story ...
@@ -355,15 +363,17 @@ foreach my $pkg (@ARGV) {
     $is_ascii = 1 if $out[0] =~ /ASCII$/;
 
     ## report options used
-    my @opts;
-    push @opts,"--no-install" if !$opt_install;
     push @opts,"--no-codoc" if !$opt_codoc;
-    push @opts,"--no-examples" if !$opt_examples;
-    push @opts,"--no-tests" if !$opt_tests;
-    push @opts,"--no-vignettes" if !$opt_vignettes;
+    push @opts,"--no-examples" if !$opt_examples && !$spec_install;
+    push @opts,"--no-tests" if !$opt_tests && !$spec_install;
+    push @opts,"--no-vignettes" if !$opt_vignettes && !$spec_install;
     push @opts,"--use-gct" if $opt_use_gct;
     push @opts,"--use-valgrind" if $opt_use_valgrind;
-    $log->message("using options '" . join(" ", @opts) . "'") if @opts;
+    if (@opts == 1) {
+	$log->message("using option '" . $opts[0] . "'");
+    } elsif (@opts) {
+	$log->message("using options '" . join(" ", @opts) . "'");
+    }
 
     if(!$opt_library) {
 	$library = $pkgoutdir;
