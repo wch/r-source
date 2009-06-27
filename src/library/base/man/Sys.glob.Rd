@@ -62,7 +62,7 @@ Sys.glob(paths, dirmark = FALSE)
 #endif
 #ifdef windows
   The \code{glob} system call is not part of Windows, and we supply an
-  emulation.
+  partial emulation.
 
   Wildcards are \code{*} (match zero or more characters) and \code{?} (match
   a single character).  If a filename starts with \code{.} this must be
