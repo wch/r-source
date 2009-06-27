@@ -10,7 +10,7 @@
   Function to do wildcard expansion (also known as \sQuote{globbing}) on
   file paths.
 
-  Platforms are not required to support this, but all knoen current \R
+  Platforms are not required to support this, but all known current \R
   platforms do.
 }
 \usage{
@@ -88,7 +88,8 @@ Sys.glob(paths, dirmark = FALSE)
 
   File paths in Windows are interpreted with separator \code{\\} or
   \code{/}.  Paths with a drive but relative (such as \code{c:foo\\bar})
-  are tricky, but an attempt is made to handle them correctly.
+  are tricky, but an attempt is made to handle them correctly.  No
+  attempt is made to handle UNC paths starting with a double backslash.
 #endif
 }
 \value{
