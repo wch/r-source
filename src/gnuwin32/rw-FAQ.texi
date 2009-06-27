@@ -552,10 +552,11 @@ for example @code{update.packages()} and the menu items on the Packages menu.
 We have had several reports of this, although they do work for us on
 @emph{all} of our machines.  There are two known possible fixes.
 
-(a) Use the alternative @file{internet2.dll} by starting R with the flag
-@option{--internet2} (@pxref{How do I install R for Windows?}) which uses
-the Internet Explorer internals (and so needs Internet Explorer 4 or
-later installed).  Note that this does not work with proxies that need
+(a) Use the alternative @file{internet2.dll} by starting R with the
+flag @option{--internet2} (@pxref{How do I install R for Windows?}) or
+calling @code{setInternet2(TRUE)}.  These cause R to use the Internet
+Explorer internals (and so need Internet Explorer 4 or later
+installed).  Note that this does not work with proxies that need
 authentication.
 
 (b) A proxy needs to be set up: see @code{?download.file}.  Here are two

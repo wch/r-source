@@ -74,3 +74,6 @@ shortPathName <- function(path) .Internal(shortPathName(path))
 readRegistry <-
     function(key, hive=c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"), maxdepth = 1)
     .Internal(readRegistry(key, match.arg(hive), maxdepth))
+    
+setInternet2 <- function(use = TRUE) 
+    .Internal(useInternet2(use))
