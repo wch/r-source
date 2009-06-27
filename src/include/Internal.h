@@ -81,6 +81,7 @@ SEXP do_writeClipboard(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winprogressbar(SEXP, SEXP, SEXP, SEXP);
 SEXP do_closewinprogressbar(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setwinprogressbar(SEXP, SEXP, SEXP, SEXP);
+SEXP do_setInternet2(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);

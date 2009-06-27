@@ -38,6 +38,17 @@ PACKAGE INSTALLATION
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.9.1 patched
+
+
+NEW FEATURES
+
+    o	The --internet2 command line option sets a flag internally;
+	that flag is now visible and controllable from R using the
+	setInternet2() function.
+
+
+
 		CHANGES IN R VERSION 2.9.1
 
 
