@@ -1020,13 +1020,15 @@ from a database for separate analysis.
 
 Traditionally there have been large (and expensive) commercial RDBMSs
 (@uref{http://www.informix.com, Informix}; @uref{http://www.oracle.com,
-Oracle}; @uref{http://www.sybase.com, Sybase}; IBM's DB/2; Microsoft
-@acronym{SQL} Server on Windows) and academic and small-system databases
-(such as MySQL, PostgreSQL, Microsoft Access, @dots{}), the former
-marked out by much greater emphasis on data security features.  The line
-is blurring, with the Open Source PostgreSQL having more and more
-high-end features, and `free' versions of Informix, Oracle and Sybase
-being made available on Linux.
+Oracle}; @uref{http://www.sybase.com, Sybase};
+@uref{http://www.ibm.com/db2, IBM's DB2};
+@uref{http://www.microsoft.com/SQL/default.mspx, Microsoft @acronym{SQL}
+Server} on Windows) and academic and small-system databases (such as
+MySQL, PostgreSQL, Microsoft Access, @dots{}), the former marked out by
+much greater emphasis on data security features.  The line is blurring,
+with the Open Source MySQL and PostgreSQL having more and more high-end
+features, and free `personal' versions of Informix, Oracle, DB2 and
+Sybase being made available.
 
 @cindex ODBC
 @cindex Open Database Connectivity
@@ -1178,7 +1180,7 @@ towards a unified `front-end' package @pkg{DBI}
 `back-end', the most developed of which is @pkg{RMySQL}.  Also on CRAN
 are the back-ends @pkg{ROracle}, @pkg{RPostgreSQL} and @pkg{RSQLite}
 (which works with the bundled DBMS @code{SQLite},
-@uref{http://www.hwaci.com/sw/sqlite}).
+@uref{http://www.sqlite.org}).
 
 Two earlier packages @pkg{RmSQL} and @pkg{RPgSQL} are now unsupported
 and in the archive area on CRAN: the BioConductor project has updated
@@ -1219,7 +1221,8 @@ object, and then a call to @code{dbConnect} opens a database connection
 which can subsequently be closed by a call to the generic function
 @code{dbDisconnect}.  Use @code{dbDriver("Oracle")},
 @code{dbdDriver("PostgreSQL")} or @code{dbDriver("SQLite")} with those
-DBMSs and @pkg{ROracle}, @pkg{PostgreSQL} or @pkg{RSQLite} respectively.
+DBMSs and packages @pkg{ROracle}, @pkg{PostgreSQL} or @pkg{RSQLite}
+respectively.
 
 @findex dbSendQuery
 @findex dbClearResult
@@ -1290,20 +1293,20 @@ Arkansas          8.8     190       50 19.5
 Package @pkg{RODBC} on @acronym{CRAN} provides an interface to database
 sources supporting an @acronym{ODBC} interface.  This is very widely
 available, and allows the same @R{} code to access different database
-systems.  @pkg{RODBC} runs on both Unix/Linux and Windows, and almost
-all database systems provide support for @acronym{ODBC}.  We have
-tested Microsoft SQL Server, Access, MySQL and PostgreSQL on Windows and
-MySQL, Oracle, PostgreSQL and SQLite on Linux.
+systems.  @pkg{RODBC} runs on Unix/Linux, Windows and Mac OS X, and
+almost all database systems provide support for @acronym{ODBC}.  We have
+tested Microsoft SQL Server, Access, MySQL, PostgreSQL, Oracle and IBM
+DB2 on Windows and MySQL, Oracle, PostgreSQL and SQLite on Linux.
 
 ODBC is a client-server system, and we have happily connected to a DBMS
 running on a Unix server from a Windows client, and @emph{vice versa}.
 
 On Windows ODBC support is normally installed, and current versions are
-available from @uref{http://www.microsoft.com/data/odbc/} as part of MDAC.
-On Unix/Linux you will need an @acronym{ODBC} Driver Manager such as
-unixODBC (@uref{http://www.unixODBC.org}) or iOBDC
-(@uref{http://www.iODBC.org}) and an installed driver for your database
-system.
+available from @uref{http://www.microsoft.com/data/odbc/} as part of
+MDAC.  On Unix/Linux you will need an @acronym{ODBC} Driver Manager such
+as unixODBC (@uref{http://www.unixODBC.org}) or iOBDC
+(@uref{http://www.iODBC.org}: this is pre-installed in Mac OS X) and an
+installed driver for your database system.
 
 @cindex Excel
 @findex .xls
@@ -1317,6 +1320,10 @@ of the drivers.)  There are versions for Excel 2007 and Access 2007 (go
 to @uref{http://download.microsoft.com}, and search for `Office ODBC',
 which will lead to @file{AccessDatabaseEngine.exe}), the `2007 Office
 System Driver'.
+
+On Mac OS X the Actual Technologies
+(@url{http://www.actualtechnologies.com/product_access.php}) drivers
+provide ODBC interfaces to Access databases and Excel spreadsheets.
 
 @findex odbcConnect
 @findex odbcDriverConnect
@@ -1366,8 +1373,7 @@ up in @file{~/.odbc.ini} under @code{unixODBC}.  Exactly the same code
 worked using MyODBC to access a MySQL database under Linux or Windows
 (where MySQL also maps names to lowercase).  Under Windows,
 @acronym{DSN}s are set up in the @acronym{ODBC} applet in the Control
-Panel (`Data Sources (ODBC)' in the `Administrative Tools' section on
-2000/XP).
+Panel (`Data Sources (ODBC)' in the `Administrative Tools' section).
 @cindex MySQL database system
 
 @smallexample
@@ -2137,21 +2143,28 @@ spreadsheet file (at least from Excel 97--2003, depending on your ODBC
 drivers: by calling @code{odbcConnect} directly versions back to Excel
 3.0 can be read).  The version @code{odbcConnectExcel2007} will read the
 Excel 2007 formats as well as earlier ones (provided the drivers are
-installed: @pxref{RODBC}).
+installed: @pxref{RODBC}).  Mac users can also use @pkg{RODBC} if they
+have a suitable driver (e.g.@: that from Actual Technologies).
 
-@c @findex xlsReadWrite
-@c Also only for Windows, the package @pkg{xlsReadWrite} has a function
-@c @code{read.xls} to read @file{.xls} files (based on a third-party
-@c non-Open Source Delphi component).
-
+@findex read.xls
 @code{Perl} users have contributed a module
 @code{OLE::SpreadSheet::ParseExcel} And a program @code{xls2csv.pl} to
 convert Excel 95--2003 spreadsheets to CSV files.  Package @pkg{gdata}
 provides a basic wrapper in its @code{read.xls} function.
 
+@findex xlsReadWrite
+Windows-only package @pkg{xlsReadWrite} from
+@uref{http://treetron.googlepages.com/} has a function @code{read.xls}
+to read @file{.xls} files (based on a third-party non-Open Source Delphi
+component).
+
+@findex dataframes2xls
+@findex WriteXLS
 Packages @pkg{dataframes2xls} and @pkg{WriteXLS} each contain a function
 to @emph{write} one or more data frames to an @file{.xls} file:, using
-Python and Perl respectively.
+Python and Perl respectively.  Another version of @code{write.xls} in
+available in package @pkg{xlsReadWrite}.
+
 
 @node References, Function and variable index, Reading Excel spreadsheets, Top
 @appendix References
