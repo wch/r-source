@@ -3286,6 +3286,7 @@ reports.
 @menu
 * X11 issues::                  
 * Linux::                       
+* FreeBSD::                     
 * Mac OS X::                    
 * Solaris::                     
 * HP-UX::                       
@@ -3384,7 +3385,7 @@ directory or elsewhere, for example,
 @end example
 
 
-@node Linux, Mac OS X, X11 issues, Platform notes
+@node Linux, FreeBSD, X11 issues, Platform notes
 @section Linux
 @cindex Linux
 
@@ -3520,6 +3521,8 @@ For some comments on building on an Itanium (@cputype{ia64}) Linux
 system with @command{gcc} or the Intel compilers see
 @uref{http://www.nakama.ne.jp/@/memo/@/ia64_linux/}.
 
+Others have reported success with version 10.0.
+
 
 @node PGI compilers, SunStudio compilers, Intel compilers, Linux
 @subsection PGI compilers
@@ -3585,7 +3588,19 @@ The resulting build of @R{} was not quite as fast as that built with
 @command{gcc}@tie{}4.3.2 at @samp{-O3}.
 
 
-@node Mac OS X, Solaris, Linux, Platform notes
+@node FreeBSD, Mac OS X, Linux, Platform notes
+@section FreeBSD
+@cindex FreeBSD
+
+Rainer Hurling has reported success on @cputype{x86_64} FreeBSD 7.2 (and
+on 6.x in the past).  Since Darwin (the base OS of Mac OS X) is based on
+FreeBSD we find testing on Darwin tends to pick up any potential
+problems on FreeBSD problems quite early.
+
+The native BSD @command{make} suffices to build @R{} but a number of
+packages require GMU @command{make}.
+
+@node Mac OS X, Solaris, FreeBSD, Platform notes
 @section Mac OS X
 @cindex Mac OS X
 
@@ -3658,11 +3673,12 @@ in @file{config.site} or on the @command{configure} command line.
 @cindex Solaris
 
 @R{} has been built successfully on Solaris 10 (both Sparc and
-@cputype{x86}) using @command{gcc}@tie{}4/@command{gfortran} and the
-(zero cost) Sun Studio (aka Ceres) 12 compilers.  Sun packages for @R{}
-are available from @uref{http://www.sunfreeware.com/} for both
+@cputype{x86}) using the (zero cost) Sun Studio (aka Ceres) 12
+compilers: there has been some sucess with
+@command{gcc}@tie{}4/@command{gfortran}, mainly on Sparc.  Sun packages
+for @R{} are available from @uref{http://www.sunfreeware.com/} for both
 architectures, but have not been updated recently.  (Recent Sun machines
-are Opterons (@cputype{x86-64}) rather than @cputype{x86}, but 32-bit
+are Opterons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
 @cputype{x86} executables are the default.)
 
 There are also reports of success on OpenSolaris (aka Solaris Express
@@ -3675,11 +3691,10 @@ path.
 
 Modern Solaris systems allow a large selection of Open Source software
 to be installed from @url{http://www.opencsw.org} (formerly
-@url{http://www.blastwave.org}) via @command{pkg-get}: a Sparc Solaris 10
-system came with @code{libreadline} and @code{libiconv} and a choice of
-@code{gcc3} and @code{gcc4} compilers, installed under @file{/opt/csw}.
-(You will need GNU @code{libiconv}: the Solaris version of @code{iconv}
-is not sufficiently powerful.)
+@url{http://www.blastwave.org}) via @command{pkg-get}, by default
+installed under @file{/opt/csw}.  You will need GNU @code{libiconv} and
+@code{readline} the Solaris version of @code{iconv} is not sufficiently
+powerful.
 
 If using @command{gcc}, do ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be ascertained from @command{gcc
@@ -3736,9 +3751,14 @@ SHLIB_CXXLDFLAGS="-G -lCstd"
 @end example
 
 @noindent
-to ensure that the @code{libiconv} version of @file{iconv.h} was found.
-For a 64-bit target add @option{-m64}.  You can target specific Sparc
-architectures for (slightly) higher performance: Sun recommend
+to ensure that the @code{libiconv} version of @file{iconv.h} was found,
+and later used self-compiled versions of libiconv and readline from
+@file{/usr/local} (replacing @file{/opt/csw} in the flags).  For a
+64-bit target add @option{-m64} and use something like
+@code{LDFLAGS=-L/opt/csw/lib/sparcv9} or
+@code{LDFLAGS=-L/usr/local/lib/amd64} as appropriate.  You can target
+specific Sparc architectures for (slightly) higher performance: Sun
+recommend
 
 @example
 @r{32-bit:} -xtarget=ultra3 -xarch=v8plusa
@@ -3751,7 +3771,7 @@ architectures for (slightly) higher performance: Sun recommend
 By default the Sun Studio compilers do not conform to the C99 standard
 (appendix F 8.9) on the return values of functions such as @code{log}:
 use @option{-xlibmieee} to ensure this.  Also, errors have been reported
-on @cputype{x86_64} if @option{-xc99} is omitted.
+on @cputype{amd64} if @option{-xc99} is omitted.
 
 On @cputype{x86} you will get marginally higher performance @emph{via}
 
@@ -3762,31 +3782,32 @@ CXXFLAGS="-xO5 -xlibmil -nofstore"
 SAFE_FFLAGS="-O5 -libmil -fstore"
 @end example
 
+There is limited support for @cputype{amd64} builds in the pre-built
+GNU software repositories, but @cputype{amd64} versions of @R{} have
+been built using the Sun Studio compilers.  Suitable versions of
+@code{libiconv} and @code{readline} have been used from
+@url{http://www.opencsw.org} and also built from the sources.
 
-Building on @cputype{x86} with @command{gcc}@tie{}4 failed @command{make
-check} in the complex LAPACK tests: using Sun Studio 12 worked
-correctly.
-
-There is limited support for @cputype{x86_64} builds in the pre-built
-GNU software repositories, with 64-bit libraries (which are installed in
-@file{/opt/csw/lib/amd64} and so on) being scarce (and not including the
-@command{gcc} support libraries).  The Sun Studio compilers do support
-64-bit builds via @option{-m64}.
+Tests with @command{gcc} on @cputype{x86} and @cputype{amd64} have been
+less successful: @cputype{x86} builds have failed on tests using complex
+arithmetic@footnote{these can often be resolved by turning off
+optimization}, whereas on @cputype{amd64} the builds have failed to
+complete in several different ways.
 
 @cindex BLAS library
 @cindex LAPACK library
 
-The Sun performance library @code{libsunperf} is available with the Sun
-Studio compilers.  If selected as a BLAS, it must also be selected as
-LAPACK via
+The Sun performance library @code{libsunperf} is available for use with
+the Sun Studio compilers.  If selected as a BLAS, it must also be
+selected as LAPACK via
 
 @example
 ./configure --with-blas=sunperf --with-lapack
 @end example
 
 @noindent
-However, our tests were none too successful: Sparc 64-bit builds
-crashed.
+However, our tests were none too successful: Sparc 64-bit builds crashed
+and @cputype{x86} builds failed in @code{example(bw.SJ)}.
 
 
 
@@ -3797,8 +3818,8 @@ crashed.
 There are no recent reports from HP-UX users.
 
 @c R-help 2007 Nov 1/2, and follow up to BDR Nov 6.
-Fan Long built @R{} 2.6.0 on HP-UX 11.23 on @cputype{ia64} using the
-native compilers via
+In late 2007 Fan Long built @R{} 2.6.0 on HP-UX 11.23 on @cputype{ia64}
+using the native compilers via
 
 @example
 CC=cc
