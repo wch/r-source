@@ -214,7 +214,9 @@ they are not portable, and a security risk if they are of the
 appropriate architecture.  @command{R CMD check} will warn about
 them@footnote{false positives are possible, but only one has been seen
 so far.} unless they are listed (one filepath per line) in a file
-@file{BinaryFiles} at the top level of the package or bundle.
+@file{BinaryFiles} at the top level of the package or bundle.  Note that
+CRAN will no longer accept submissions containing binary files even if they
+are listed.
 
 The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
@@ -1763,13 +1765,13 @@ spurious) send an explanatory note with your submission.
 
 When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to
-@uref{ftp://CRAN.R-project.org/incoming/} (note: use @samp{ftp} and not
+@uref{ftp://CRAN.R-project.org/incoming/} (note: use
+@samp{ftp}@footnote{for Windows users the simplest way may be to open
+that URL in Internet Explorer (which will view it as a folder) and then
+drag-and-drop the submission into that directory.} and not
 @samp{sftp} to connect to this server) and send a message to
 @email{CRAN@@R-project.org} about it.  The @acronym{CRAN} maintainers
 will run these tests before putting a submission in the main archive.
-
-Note that @acronym{CRAN} generally does not accept submissions of
-precompiled binaries due to security reasons.
 
 Note also that for running @LaTeX{}, the Debian GNU/Linux @acronym{CRAN}
 check systems use reasonably recent versions of the Debian texlive
@@ -1779,6 +1781,31 @@ the Windows @acronym{CRAN} server, a reasonably recent of MikTeX
 wanting to have their vignettes use @TeX{} packages or style files not
 (yet) included in these distributions should add the corresponding style
 files to the @file{inst/doc} subdirectory of their package.
+
+Note that @acronym{CRAN} does not accept submissions of precompiled
+binaries due to security concerns, and does not allow binary executables
+in packages.  Maintainers who need additional software for the Windows
+binaries of their packages on CRAN have three options
+@enumerate
+@item 
+To arrange for installation of the package to download the
+additional software from a URL, as e.g.@: package @pkg{(airo} does.
+
+@item
+To negotiate with Uwe Ligges to host the additional components on
+WinBuilder, and write a @file{configure.win} file to install them.
+There are many examples, e.g.@: package @pkg{rgdal}.
+
+@item
+To negotiate with Brian Ripley to host the package on CRAN extras, as
+was done for package @pkg{BRUGS}.
+@end enumerate
+
+@noindent
+Be aware that in all cases license requirements will need to be met so
+you may need to supply the sources for the additional components (and
+will if your package has a GPL-like license).
+
 
 @node Package name spaces, Writing portable packages, Submitting a package to CRAN, Creating R packages
 @section Package name spaces
