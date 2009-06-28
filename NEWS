@@ -173,7 +173,10 @@ BUG FIXES
 
     o	n:m  now returns <integer> in a few more boundary cases.
 
-
+    o   PrintValue no longer attempts to print attributes for CHARSXPs
+        as those attributes are used internally for the CHARSXP cache.
+        This fixes a segfault when calling Rf_PrintValue on a CHARSXP
+        from C code.
 
 	**************************************************
 	*						 *
