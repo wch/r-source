@@ -15,7 +15,7 @@ browser(text="", condition=NULL, expr=TRUE)
 }
 \arguments{
   \item{text}{a text string that can be retrieved once the browser is invoked.}
-  \item{condition}{a condition that can be retrieved once the browser is invoded.}
+  \item{condition}{a condition that can be retrieved once the browser is invoked.}
   \item{expr}{An expression, which if it evaluates to \code{TRUE} the
     debugger will invoked, otherwise control is returned directly.}
 }

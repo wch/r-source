@@ -33,7 +33,7 @@ diag(x) <- value
     argument it a square identity matrix of size given by the scalar.
     \item \code{x} is a vector, either of length at least 2 or there
     were further arguments.  This returns a matrix with the given
-    diagaonal and zero off-diagonal entries.
+    diagonal and zero off-diagonal entries.
   }
   It is an error to specify \code{nrow} or \code{ncol} in the first case.
 }

@@ -29,7 +29,7 @@ data.matrix(frame, rownames.force = NA)
   column which is not numeric (according to \code{\link{is.numeric}}) is
   converted by \code{\link{as.numeric}} or, for S4 objects,
   \code{\link{as}(, "numeric")}.  If all columns are integer (after
-  conversion) the result is an integer natrix, otherwise a numeric
+  conversion) the result is an integer matrix, otherwise a numeric
   (double) matrix.
 }
 \value{

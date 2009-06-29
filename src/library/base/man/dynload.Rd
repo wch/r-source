@@ -206,7 +206,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 \section{Warning}{
   Do not use \code{dyn.unload} on a DLL loaded by
   \code{\link{library.dynam}}: use \code{\link{library.dynam.unload}}.
-  This is needed for system houskeeping.
+  This is needed for system housekeeping.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
