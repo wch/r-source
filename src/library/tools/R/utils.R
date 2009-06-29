@@ -1156,7 +1156,7 @@ function(command, input = NULL)
     errfile <- tempfile("xshell")
     on.exit(unlink(c(outfile, errfile)))
     status <-if(.Platform$OS.type == "windows")
-        shell(sprintf("'%s' > %s 2> %s", command, outfile, errfile),
+        shell(sprintf("%s > %s 2> %s", command, outfile, errfile),
               input = input, shell = "cmd.exe")
     else system(sprintf("%s > %s 2> %s", command, outfile, errfile),
                 input = input)
