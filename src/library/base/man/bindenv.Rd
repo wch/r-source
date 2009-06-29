@@ -56,7 +56,7 @@ bindingIsActive(sym, env)
   be useful for making thread-safe versions of some system globals.
 }
 \value{
-  The \code{*isLocked} funtions return a length-one logical vector.  The
+  The \code{*isLocked} functions return a length-one logical vector.  The
   remaining functions return \code{NULL}, invisibly.
 }
 \examples{

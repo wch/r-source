@@ -42,7 +42,7 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
     default to \code{all}.  The component names can be abbreviated.
   }
   \item{useBytes}{logical. in a multibyte locale, should the comparison
-    be character-by-chracter (the default) or byte-by-byte.}
+    be character-by-character (the default) or byte-by-byte.}
 }
 \details{
   The Levenshtein edit distance is used as measure of approximateness:

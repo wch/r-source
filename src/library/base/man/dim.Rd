@@ -25,7 +25,7 @@ dim(x) <- value
 
   \code{dim} has a method for \code{\link{data.frame}}s, which returns
   the lengths of the \code{row.names} attribute of \code{x} and
-  of \code{x} (as the numbers of rows and columns respectitvely).
+  of \code{x} (as the numbers of rows and columns respectively).
   
   These functions are \link{primitive}, so argument names are ignored
   (but this might not be true of their methods).
