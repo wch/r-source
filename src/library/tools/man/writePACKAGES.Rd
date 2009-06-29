@@ -14,7 +14,7 @@
 write_PACKAGES(dir = ".", fields = NULL,
                type = c("source", "mac.binary", "win.binary"),
                verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
-               latestOnly = FALSE)
+               latestOnly = TRUE)
 }
 \arguments{
   \item{dir}{Character vector describing the location of the repository
@@ -46,6 +46,12 @@ write_PACKAGES(dir = ".", fields = NULL,
     available should only the latest version be included?}
 }
 \details{
+  Including non-latest versions of packages is only useful if they have
+  less constraining version requirements, so for example
+  \code{latestOnly = FALSE} could be used for a source repository when
+  \samp{foo\_1.0} depends on \samp{R >= 2.10.0} but \samp{foo\_0.9} is
+  available which depends on \samp{R >= 2.7.0}.
+  
   \code{type = "win.binary"} uses \code{\link{unz}} connections to read
   all \file{DESCRIPTION} files contained in the (zipped) binary packages
   for Windows in the given directory \code{dir}, and builds
@@ -75,7 +81,7 @@ write_PACKAGES(dir = ".", fields = NULL,
 \examples{
 \dontrun{
 write_PACKAGES("c:/myFolder/myRepository")  # on Windows
-write_PACKAGES("/pub/RWin/bin/windows/contrib/2.1",
+write_PACKAGES("/pub/RWin/bin/windows/contrib/2.9",
                type="win.binary")  # on Linux
 }}
 \keyword{file}
