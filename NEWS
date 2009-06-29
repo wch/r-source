@@ -187,6 +187,16 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.9.1 patched
+
+
+BUG FIXES
+
+    o	parse_Rd() still did not handle source reference encodings
+	properly.
+	
+
+
 		CHANGES IN R VERSION 2.9.1
 
 
