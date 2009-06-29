@@ -80,7 +80,7 @@ ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) -I$(srcdir)/.. $(CPPFLAGS) $(DEFS)
 
 all: Makefile inc static shared
 
-inc:
+inc: Makefile
 	(cd ../../include; $(MAKE) Rmath.h)
 
 ## can't run test, as that depends on OS-specific way to set library path.
@@ -94,10 +94,10 @@ Copy:
 	  test -f $${f} || $(LN_S) $(srcdir)/../$${f} . ; \
 	done
 
-static: Makefile ../../include/Rconfig.h Copy Makedeps
+static: inc ../../include/Rconfig.h Copy Makedeps
 	@$(MAKE) $(Rexeclibdir_LIBRARIES)
 
-shared: Makefile ../../include/Rconfig.h Copy Makedeps
+shared: inc ../../include/Rconfig.h Copy Makedeps
 	@$(MAKE) $(Rexeclibdir_LTLIBRARIES)
 
 ../../include/Rconfig.h:
@@ -106,7 +106,7 @@ shared: Makefile ../../include/Rconfig.h Copy Makedeps
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-Makedeps: Makefile ../../include/Rconfig.h
+Makedeps: Makefile Copy ../../include/Rconfig.h
 	@$(MAKE) $(DEPENDS)
 	@cat $(DEPENDS) | $(SED) -e 's/^\([^:]*\)\.o\([ 	]\)*:/\1.o \1.lo\2:/' >> Makefile
 	@touch $@
