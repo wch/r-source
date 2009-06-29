@@ -54,6 +54,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
         }
     } else {
     	enc <- encoding
+    	if (enc == "unknown") enc <- "native.enc"
     }
     ## The parser is fine with encodings in which ASCII bytes mean ASCII
     ## All known 8-bit encodings and UTF-8 meet that requirement
