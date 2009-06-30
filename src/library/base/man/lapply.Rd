@@ -1,6 +1,6 @@
 % File src/library/base/man/lapply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{lapply}
@@ -75,7 +75,7 @@ replicate(n, expr, simplify = TRUE)
   \code{n} for \code{replicate}).  If simplification occurs, the output
   type is determined from the highest type of the return values in the
   hierarchy NULL < raw < logical < integer < real < complex < character
-  < list < expression, after coercion of pairlists tolists.
+  < list < expression, after coercion of pairlists to lists.
 }
 \note{
   \code{sapply(*, simplify = FALSE, USE.NAMES = FALSE)} is

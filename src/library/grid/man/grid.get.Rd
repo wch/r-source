@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.get.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{grid.get}
@@ -22,7 +22,7 @@ getGrob(gTree, gPath, strict = FALSE, grep = FALSE, global = FALSE)
 \arguments{
   \item{gTree}{A gTree object.}
   \item{gPath}{ A gPath object. For \code{grid.get} this
-    specifyies a grob on the display list.  For \code{getGrob} this
+    specifies a grob on the display list.  For \code{getGrob} this
     specifies a descendant of the specified gTree. }
   \item{strict}{ A boolean indicating whether the gPath must be
     matched exactly. }

@@ -6,7 +6,7 @@
 \name{unzip}
 \alias{unzip}
 \title{
-  Extract or List Zip archines
+  Extract or List Zip archives
 }
 \description{
   Extract files from or list a zip archive.
@@ -29,7 +29,7 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
     ignore such files.  The equivalent of \command{unzip -o}.}
   
   \item{junkpaths}{If \code{TRUE}, use only the basename of the stored
-    filepath when extraxting.  The equivalent of \command{unzip -j}.}
+    filepath when extracting.  The equivalent of \command{unzip -j}.}
   
   \item{exdir}{The directory to extract files to (the equivalent of
     \code{unzip -d}).  It will be created if necessary.}

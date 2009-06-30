@@ -1,6 +1,6 @@
 % File src/library/utils/man/Sweave.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Sweave}
@@ -14,7 +14,7 @@
   \code{Sweave} provides a flexible framework for mixing text and S code
   for automatic report generation.  The basic idea is to replace the S
   code with its output, such that the final document only contains the
-  text and the output of the statistical anlysis. 
+  text and the output of the statistical analysis. 
 }
 \usage{
 Sweave(file, driver = RweaveLatex(),

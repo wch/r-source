@@ -58,7 +58,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
 
   Functions will only be recorded in the profile log if they put a
   context on the call stack (see \code{\link{sys.calls}}).  Some
-  \link{primitive} functions do not do so: specifcally those which are
+  \link{primitive} functions do not do so: specifically those which are
   of \link{type} \code{"special"} (see the \sQuote{R Internals} manual
   for more details).
 }

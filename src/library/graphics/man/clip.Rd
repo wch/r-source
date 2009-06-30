@@ -1,6 +1,6 @@
 % File src/library/graphics/man/clip.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008 R Core Development Team
+% Copyright 2008-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{clip}
@@ -13,7 +13,7 @@
 clip(x1, x2, y1, y2)
 }
 \arguments{
-  \item{x1, x2, y1, y2}{user coordinates of clipping rectange}
+  \item{x1, x2, y1, y2}{user coordinates of clipping rectangle}
 }
 \details{
   How the clipping rectangle is set depends on the setting of

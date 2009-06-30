@@ -1,6 +1,6 @@
 % File src/library/base/man/match.call.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{match.call}
@@ -37,7 +37,7 @@ match.call(definition = NULL, call = sys.call(sys.parent()),
 
     \item To pass most of the call to another function, often
     \code{model.frame}.  Here the common idiom is that
-    \code{expand.dots = FALSE} is used, and the \code{\dots} elememt
+    \code{expand.dots = FALSE} is used, and the \code{\dots} element
     of the matched call is removed.  An alternative is to
     explicitly select the arguments to be passed on, as is done in
     \code{lm}.

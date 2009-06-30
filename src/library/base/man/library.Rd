@@ -1,6 +1,6 @@
 % File src/library/base/man/library.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{library}
@@ -148,7 +148,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
   class \code{"libraryIQR"}, and for \code{library(help=)}, one of
   class \code{"packageInfo"}.
 
-  \code{require} returns (invisbly) a logical indicating whether the required
+  \code{require} returns (invisibly) a logical indicating whether the required
   package is available.
 }
 \section{Packages that require other packages}{

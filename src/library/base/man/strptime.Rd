@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -97,7 +97,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     \item{\code{\%m}}{Month as decimal number (01--12).}
     \item{\code{\%M}}{Minute as decimal number (00--59).}
     \item{\code{\%p}}{AM/PM indicator in the locale.  Used in
-      conjuction with \code{\%I} and \bold{not} with \code{\%H}.  An
+      conjunction with \code{\%I} and \bold{not} with \code{\%H}.  An
       empty string in some locales.}
     \item{\code{\%S}}{Second as decimal number (00--61), allowing for
       up to two leap-seconds (but POSIX-compliant OSes will ignore leap

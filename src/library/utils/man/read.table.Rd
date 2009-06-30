@@ -1,6 +1,6 @@
 % File src/library/utils/man/read.table.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{read.table}
@@ -193,7 +193,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   Empty input is an error unless \code{col.names} is specified, when a
   0-row data frame is returned: similarly giving just a header line if
   \code{header = TRUE} results in a 0-row data frame.  Note that
-  in either case tthe columns will logical unless \code{colClasses} was
+  in either case the columns will logical unless \code{colClasses} was
   supplied.
 
   Character strings in the result (including factor levels) will have a

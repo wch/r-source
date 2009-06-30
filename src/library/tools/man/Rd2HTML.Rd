@@ -87,7 +87,7 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
   \code{checkRd} returns \code{TRUE} if the file has no errors; it
   generates an R error otherwise.
 
-  \code{findHTMLlinks} returns a namesd character vector of relative
+  \code{findHTMLlinks} returns a named character vector of relative
   file paths, in the same package or in a package in the same library tree.
 }
 \author{

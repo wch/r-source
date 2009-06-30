@@ -36,7 +36,7 @@
   compile source code in packages.  It will generate suitable
   compilation commands for C, C++, ObjC(++) and Fortran sources: Fortran
   90/95 sources can also be used but it may not be possible to mix these
-  with other langauges (on most platforms it is possible to mix with C,
+  with other languages (on most platforms it is possible to mix with C,
   but mixing with C++ rarely works).
 
   Please consult section \sQuote{Creating shared objects} in the manual

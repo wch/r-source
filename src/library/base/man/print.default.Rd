@@ -70,7 +70,7 @@
   errors in the calculation of the number of significant digits and the
   decimal representation: these are likely for \code{digits >= 16}, and
   these possible errors are taken into account in
-  assessing the numher of significant digits to be printed in that case.
+  assessing the number of significant digits to be printed in that case.
 
   Whereas earlier versions of \R might have printed further digits for
   \code{digits >= 16} on some platforms, they were not necessarily reliable.

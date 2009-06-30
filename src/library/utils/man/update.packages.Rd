@@ -178,8 +178,8 @@ contrib.url(repos, type = getOption("pkgType"))
     This is sometimes used to perform additional operations at the end
     of the package installation in addition to removing intermediate files.
   }
-  \item{Ncpus}{The number of parallel processes to use for a parellel
-    install of source packages.  Values geater than one are supported
+  \item{Ncpus}{The number of parallel processes to use for a parallel
+    install of source packages.  Values greater than one are supported
     only if GNU \command{make} is in use (more precisely, if
     \command{make -j \var{Ncpus}} works).  Defaults to \code{1} is the
     option is unset.

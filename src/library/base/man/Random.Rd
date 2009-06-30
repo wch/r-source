@@ -1,6 +1,6 @@
 % File src/library/base/man/Random.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Random}
@@ -200,7 +200,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   Wadsworth & Brooks/Cole. (\code{set.seed}, storing in \code{.Random.seed}.)
 
   Box, G. E. P. and Muller, M. E. (1958) A note on the generation of normal
-  random deviates. \emph{Annals of Mathmatical Statistics} \bold{29},
+  random deviates. \emph{Annals of Mathematical Statistics} \bold{29},
   610--611.
 
   De Matteis, A. and Pagnutti, S. (1993)

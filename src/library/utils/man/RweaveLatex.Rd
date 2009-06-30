@@ -1,6 +1,6 @@
 % File src/library/utils/man/RweaveLatex.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{RweaveLatex}
@@ -101,7 +101,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     \item{pdf:}{logical (\code{TRUE}), indicating whether PDF figures should be
       generated. Ignored if \code{fig = FALSE}.}
     \item{pdf.version, pdf.encoding:}{passed to \code{\link{pdf}} to set
-      the version and encoding.  Defaults taken fron \code{pdf.options()}.}
+      the version and encoding.  Defaults taken from \code{pdf.options()}.}
     \item{width:}{numeric (6), width of figures in inches.}
     \item{height:}{numeric (6), height of figures in inches.}
     \item{expand:}{logical (\code{TRUE}).  Expand references to other chunks

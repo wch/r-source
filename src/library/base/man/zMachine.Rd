@@ -1,6 +1,6 @@
 % File src/library/base/man/zMachine.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{.Machine}
@@ -88,7 +88,7 @@
 }
 \details{
   The algorithm is based on Cody's (1988) subroutine MACHAR.  As almost
-  all current inplements of \R use 32-bit integers and IEC 60059
+  all current implementations of \R use 32-bit integers and IEC 60059
   floating-point (double precision) arithmetic, most of these values are
   the same for almost all \R builds.
 
