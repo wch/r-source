@@ -1,6 +1,6 @@
 % File src/library/datasets/man/UCBAdmissions.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{UCBAdmissions}
@@ -39,7 +39,7 @@
 
   This data set can also be used for illustrating methods for graphical
   display of categorical data, such as the general-purpose mosaic plot
-  or the ourfold display for 2-by-2-by-\eqn{k} tables.  See the
+  or the fourfold display for 2-by-2-by-\eqn{k} tables.  See the
   home page of Michael Friendly
   (\url{http://www.math.yorku.ca/SCS/friendly.html}) for further
   information.

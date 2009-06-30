@@ -1,6 +1,6 @@
 % File src/library/stats/man/plot.stepfun.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{plot.stepfun}
@@ -26,7 +26,7 @@
   \item{x}{an \R object inheriting from \code{"stepfun"}.}
   \item{xval}{numeric vector of abscissa values at which to evaluate
     \code{x}.  Defaults to \code{\link{knots}(x)} restricted to \code{xlim}.}
-  \item{xlim, ylim}{limits for the plot repion: see
+  \item{xlim, ylim}{limits for the plot region: see
     \code{\link{plot.window}}.  Both have sensible defaults defaults if
     omitted.}
   \item{xlab, ylab}{labels for x and y axis.}

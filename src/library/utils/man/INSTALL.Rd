@@ -18,7 +18,7 @@
     accepted in the form \samp{--library=lib}.}
   \item{options}{a space-separated list of options through which in
     particular the process for building the help files can be controlled.
-    Most ptions should only be given once, and paths including spaces should
+    Most options should only be given once, and paths including spaces should
     be quoted.  Use \code{R CMD INSTALL --help} for the full current
     list of options.}
 }

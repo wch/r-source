@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/png.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -89,7 +89,7 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
   However, as there is only partial support for transparency in the
   graphics toolkit used, if there is a transparent background
   semi-transparent colours are painted onto a slightly off-white
-  background and hence the pixels are opague.
+  background and hence the pixels are opaque.
 
   Not all PNG viewers render files with transparency correctly.
 }

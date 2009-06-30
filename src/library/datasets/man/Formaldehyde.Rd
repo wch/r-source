@@ -1,6 +1,6 @@
 % File src/library/datasets/man/Formaldehyde.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Formaldehyde}
@@ -10,7 +10,7 @@
 \description{
   These data are from a chemical experiment to prepare a standard curve
   for the determination of formaldehyde by the addition of chromatropic
-  acid and concentrated sulpuric acid and the reading of the resulting
+  acid and concentrated sulphuric acid and the reading of the resulting
   purple color on a spectrophotometer.
 }
 \usage{Formaldehyde}
