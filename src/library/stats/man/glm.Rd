@@ -1,6 +1,6 @@
 % File src/library/stats/man/glm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{glm}
@@ -150,7 +150,7 @@ glm.fit(x, y, weights = rep(1, nobs),
 
   \code{glm.fit} is the workhorse function: it is not normally called
   directly but can be more efficient where the response vector and
-  design mattrix have already been calculated.
+  design matrix have already been calculated.
 
   If more than one of \code{etastart}, \code{start} and \code{mustart}
   is specified, the first in the list will be used.  It is often

@@ -34,7 +34,7 @@ as.Date(x, \ldots)
   \item{x}{An object to be converted.}
   \item{format}{A character string.  If not specified, it will try
     \code{"\%Y-\%m-\%d"} then \code{"\%Y/\%m/\%d"} on the first
-    non-\code{NA} element, and give an error if neitherworks .}
+    non-\code{NA} element, and give an error if neither works.}
   \item{origin}{a Date object, or something which can be coerced by
     \code{as.Date(origin, \dots)} to such an object.}
   \item{\dots}{Further arguments to be passed from or to other methods,

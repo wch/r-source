@@ -1,6 +1,6 @@
 % File src/library/utils/man/localeToCharset.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{localeToCharset}
@@ -26,7 +26,7 @@ localeToCharset(locale = Sys.getlocale("LC_CTYPE"))
   The final component gives the codepage, and this defines the encoding.
 #endif
 #ifdef unix
-  Locale names are normaly like \code{es_MX.iso88591}.  If final
+  Locale names are normally like \code{es_MX.iso88591}.  If final
   component indicates an encoding and it is not \code{utf8} we just need
   to look up the equivalent encoding name.  Otherwise, the language
   (here \code{es}) is used to choose a primary or fallback encoding.

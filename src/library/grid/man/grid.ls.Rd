@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.ls.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{grid.ls}
@@ -85,7 +85,7 @@ grobPathListing(x, ...)
   for working programmatically with the list of grob and viewport
   names, or for writing a new display function for the listing.
 
-  The latter is a more complex heiararchical object (list of lists),
+  The latter is a more complex heirarchical object (list of lists),
   but it does contain more detailed information so may be of use for
   more advanced customisations.
 }

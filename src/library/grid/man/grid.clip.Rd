@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.clip.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{grid.clip}
@@ -25,7 +25,7 @@ clipGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   \item{height}{A numeric vector or unit object specifying height.}
   \item{just}{The justification of the clip rectangle
     relative to its (x, y) location.  If there are two values, the first
-    value specifes horizontal justification and the second value specifies
+    value specifies horizontal justification and the second value specifies
     vertical justification.  Possible string values are: \code{"left"},
     \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
     and \code{"top"}.  For numeric values, 0 means left alignment

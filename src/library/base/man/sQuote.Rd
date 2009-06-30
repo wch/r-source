@@ -1,6 +1,6 @@
 % File src/library/base/man/sQuote.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sQuote}
@@ -62,8 +62,8 @@ dQuote(x)
   example some have directional single quotes but not directional double
   quotes.
 #ifdef windows
-  This is particularly truoblesome in Windows \sQuote{Command Prompt}
-  windows, which by default are setup to run in the so-called OEM
+  This is particularly troublesome in Windows \sQuote{Command Prompt}
+  windows, which by default are set up to run in the so-called OEM
   codepage, which in most locales uses a different encoding from
   Windows.  Further, if the codepage is changed (with \code{chcp.exe},
   e.g. to 1252 in a Western European language), the default raster fonts

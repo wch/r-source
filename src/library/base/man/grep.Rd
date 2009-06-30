@@ -65,7 +65,7 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   \item{useBytes}{logical.  If \code{TRUE} the matching is done
     byte-by-byte rather than character-by-character.  See
     \sQuote{Details}.}
-  \item{invert}{logicaL.  If \code{TRUE} return indices or values for
+  \item{invert}{logical.  If \code{TRUE} return indices or values for
          elements that do \emph{not} match.}
   \item{replacement}{a replacement for matched pattern in \code{sub} and
     \code{gsub}.  Coerced to character if possible.  For \code{fixed =

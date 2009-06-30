@@ -174,7 +174,7 @@ de(\dots, Modes = list(), Names = NULL)
 #ifdef windows
   50 characters (and by the window width).
   
-  The intitial size of the data editor window is taken from the default
+  The initial size of the data editor window is taken from the default
   dimensions of a pager (see \code{\link{Rconsole}}), but adjusted
   downwards to show a whole number of rows and columns.
 #endif

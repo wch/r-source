@@ -1,6 +1,6 @@
 % File src/library/base/man/library.dynam.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{library.dynam}
@@ -39,7 +39,7 @@ library.dynam.unload(chname, libpath,
     \code{\link{options}}.}
   \item{file.ext}{the extension (including \samp{.} if used) to append
     to the file name to specify the library to be loaded.  This defaults
-    to the appropriate value for the operatingsystem.}
+    to the appropriate value for the operating system.}
   \item{\dots}{additional arguments needed by some libraries that
     are passed to the call to \code{\link{dyn.load}} to control
     how the library and its dependencies are loaded.}

@@ -1,3 +1,8 @@
+% File src/library/tools/man/testInstalledPackage.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2009 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{testInstalledPackage}
 \alias{testInstalledPackage}
 \alias{testInstalledPackages}
@@ -32,7 +37,7 @@ testInstalledBasic(scope = c("basic", "devel", "both"))
   These tests depend on having the package example files installed (which
   is the default).  If package-specific tests are found in a
   \file{tests} directory they can be tested: these are not
-  installed by default, but wlll be if
+  installed by default, but will be if
   \command{R CMD INSTALL --install-tests} was used.  Finally, the \R
   code in any vignettes can be extracted and tested.
 

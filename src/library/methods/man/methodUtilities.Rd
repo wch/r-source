@@ -1,6 +1,6 @@
 % File src/library/methods/man/methodUtilities.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{methodUtilities}
@@ -90,7 +90,10 @@ methodSignatureMatrix(object, sigSlots = c("target", "defined"))
       calling this function should turn dispatch back on again.
     }
   \item{\code{methodSignatureMatrix}:}{
-        Returns a matrix with the contents of the specified slots as rows.  The slots should be named character strings of the same length.  Basically used to turn the signatures of a \code{"MethodDefinition"} objectg into a matrix for printing.
+      Returns a matrix with the contents of the specified slots as
+      rows.  The slots should be named character strings of the same
+      length.  Basically used to turn the signatures of a
+      \code{"MethodDefinition"} object into a matrix for printing.
     }
   }
 }

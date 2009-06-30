@@ -1,6 +1,6 @@
 % File src/library/utils/man/setRepositories.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{setRepositories}
@@ -37,7 +37,7 @@ setRepositories(graphics = getOption("menu.graphics"), ind = NULL)
   \code{options("repos")} plus those marked as default in the
   list of known repositories.
 
-  The list of repositiories offered depends on the setting of option
+  The list of repositories offered depends on the setting of option
   \code{"pkgType"} as some repositories only offer a subset of types
   (e.g. only source packages or not Mac OS X binary packages).
 

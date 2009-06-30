@@ -36,7 +36,7 @@ simulate(object, nsim, seed, \dots)
 
   For the \code{"lm"} method, the result is a data frame with an
   attribute \code{"seed"} containing the \code{seed} argument if not
-  \code{NULL} with \code{"kind"} attributs the vaue of
+  \code{NULL} with \code{"kind"} attributes the value of
   \code{as.list(\link{RNGkind}())}, otherwise (the default) the value of
   \code{\link{.Random.seed}} before the simulation was started.
 }
@@ -69,12 +69,12 @@ simulate(object, nsim, seed, \dots)
   basic shape parameter, since dispersion is inversely proportional to
   shape.
 
-  For an inverse gauasian GLM the model assumed is \eqn{IG(\mu_i,
+  For an inverse gaussian GLM the model assumed is \eqn{IG(\mu_i,
   \lambda w_i)} (see
   \url{http://en.wikipedia.org/wiki/Inverse_Gaussian_distribution})
   where \eqn{lambda} is estimated by the inverse of the dispersion
   estimate for the fit.  The variance is \eqn{\mu_i^3/(\lambda w_i)} and
-  hence inversely proprortional to the prior weights.  The simulation is
+  hence inversely proportional to the prior weights.  The simulation is
   done by function \code{\link[SuppDists]{rinvGaussian}} from the
   \pkg{SuppDists} package, which must be installed.
 }

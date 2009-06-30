@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.HoltWinters.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{predict.HoltWinters}
@@ -30,9 +30,9 @@
 }
 \references{
   C. C. Holt (1957)
-  Forecasting seasonals and trends by exponentially weighted
+  Forecasting trends and seasonals by exponentially weighted
   moving averages,
-  ONR Research Memorandum, Carnigie Institute 52.
+  \emph{ONR Research Memorandum, Carnegie Institute of Technology} \bold{52}.
   
   P. R. Winters (1960)
   Forecasting sales by exponentially weighted moving averages,

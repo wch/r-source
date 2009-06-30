@@ -1,6 +1,6 @@
 % File src/library/stats/man/decompose.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{decompose}
@@ -37,7 +37,7 @@ decompose(x, type = c("additive", "multiplicative"), filter = NULL)
   the seasonal figure is computed by averaging, for each time unit,
   over all periods. The seasonal figure is then centered.
   Finally, the error component is determined by
-  removing trend and seasonal figure (recycled as needed) from the orginal
+  removing trend and seasonal figure (recycled as needed) from the original
   time series.
 }
 \note{

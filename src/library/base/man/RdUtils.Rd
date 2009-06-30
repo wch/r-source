@@ -1,6 +1,6 @@
 % File src/library/base/man/RdUtils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{RdUtils}
@@ -46,7 +46,7 @@
   \env{R_PAPERSIZE} (default \code{a4}, ) and \env{xdvi} (the DVI
   previewer, default \code{open} (use file associations)),
 #endif
-  and \env{R_PDFVIEWER} (the PDF previwer).  (Valid values for
+  and \env{R_PDFVIEWER} (the PDF previewer).  (Valid values for
   \env{R_PAPERSIZE} are \code{a4}, \code{letter}, \code{legal} and
   \code{executive}.)
 
