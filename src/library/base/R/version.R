@@ -239,20 +239,31 @@ function(e1, e2)
 Summary.numeric_version <-
 function(..., na.rm)
 {
-    ok <- switch(.Generic, max = , min = TRUE, FALSE)
+    ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if(!ok)
         stop(.Generic, " not defined for numeric_version objects")
     x <- list(...)
     x <- do.call("c", lapply(x, as.numeric_version))
-    ## <FIXME> which.max/min automatically remove NAs
-    switch(.Generic,
-           max = x[which.max(.encode_numeric_version(x))],
-           min = x[which.min(.encode_numeric_version(x))])
+    v <- .encode_numeric_version(x)
+    if(!na.rm && length(pos <- which(is.na(v)))) {
+        y <- x[pos[1L]]
+        if(as.character(.Generic) == "range")
+            c(y, y)
+        else
+            y
+    }
+    else
+        switch(.Generic,
+               max = x[which.max(v)],
+               min = x[which.min(v)],
+               range = x[c(which.min(v), which.max(v))])
 }
 
 as.character.numeric_version <-
 function(x, ...)
-    as.character(unlist(lapply(x, paste, collapse = ".")))
+    ifelse(as.numeric(sapply(x, length)) > 0,
+           as.character(unlist(lapply(x, paste, collapse = "."))),
+           NA_character_)
 
 as.data.frame.numeric_version <- as.data.frame.vector
 
@@ -288,7 +299,8 @@ function(x)
 print.numeric_version <-
 function(x, ...)
 {
-    print(noquote(sQuote(as.character(x))), ...)
+    y <- as.character(x)
+    print(noquote(ifelse(is.na(y), NA_character_, sQuote(y))), ...)
     invisible(x)
 }
 
