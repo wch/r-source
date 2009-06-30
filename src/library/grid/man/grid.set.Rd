@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.set.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{grid.set}
@@ -20,7 +20,7 @@ setGrob(gTree, gPath, newGrob, strict = FALSE, grep = FALSE)
 \arguments{
   \item{gTree}{A gTree object.}
   \item{gPath}{ A gPath object. For \code{grid.set} this
-    specifyies a grob on the display list.  For \code{setGrob} this
+    specifies a grob on the display list.  For \code{setGrob} this
     specifies a descendant of the specified gTree. }
   \item{newGrob}{ A grob object. }
   \item{strict}{ A boolean indicating whether the gPath must be

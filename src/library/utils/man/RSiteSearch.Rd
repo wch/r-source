@@ -59,7 +59,7 @@ RSiteSearch(string,
   This function is designed to work with the search site at
   \url{http://search.r-project.org}, and depends on that site
   continuing to be made available (thanks to Jonathan Baron and the
-  School of Arts and Sciences of the University of Pennslyvania).
+  School of Arts and Sciences of the University of Pennsylvania).
 
   Unique partial matches will work for all arguments.  Each new
   browser window will stay open unless you close it.

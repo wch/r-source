@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/quartz.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{quartz}
@@ -101,7 +101,7 @@ quartz.options(\dots, reset = FALSE)
   (without a format) to give a title to a PDF file.
 
   Calling \code{quartz()} sets \code{\link{.Device}} to \code{"quartz"}
-  for on-scren devices and to \code{"quartz_off_screen"} otherwise.
+  for on-screen devices and to \code{"quartz_off_screen"} otherwise.
 }
 \section{Conventions}{
   This section describes the implementation of the conventions for

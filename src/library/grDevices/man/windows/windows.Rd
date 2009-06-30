@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/windows.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{windows}
@@ -107,7 +107,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \code{xpinch} and \code{ypinch}, most conveniently \emph{via}
   \code{\link{windows.options}}.  For example, a 13.3 inch 1280x800
   screen (a typical laptop display) was reported as 96 dpi even though
-  it is phyiscally about 114 dpi.
+  it is physically about 114 dpi.
 
   If the \code{filename} is omitted (or specified as \code{""} for a
   \code{win.metafile} device), the output is copied to the clipboard

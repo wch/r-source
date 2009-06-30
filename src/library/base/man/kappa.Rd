@@ -1,6 +1,6 @@
 % File src/library/base/man/kappa.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Copyright 2008 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -27,7 +27,7 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   \item{z,x}{A matrix or a the result of \code{\link{qr}} or a fit from a class
     inheriting from \code{"lm"}.}
   \item{exact}{logical. Should the result be exact?}
-  \item{norm}{character string, specifying the matrix norm wrt to which
+  \item{norm}{character string, specifying the matrix norm with respect to which
     the condition number is to be computed.  \code{"O"}, the default,
     means the \bold{O}ne- or 1-norm.  The (currently only) other
     possible value is \code{"I"} for the infinity norm.}

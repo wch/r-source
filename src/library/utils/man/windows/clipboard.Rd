@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/clipboard.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{clipboard}
@@ -35,7 +35,7 @@ writeClipboard(str, format = 1)
   CF_TEXT	 \tab 	1  \tab Text in the machine's locale\cr
   CF_BITMAP	 \tab 	2  \tab \cr
   CF_METAFILEPICT \tab	3  \tab Metafile picture\cr
-  CF_SYLK	 \tab 	4  \tab Sumbolic link\cr
+  CF_SYLK	 \tab 	4  \tab Symbolic link\cr
   CF_DIF	 \tab 	5  \tab Data Interchange Fornat\cr
   CF_TIFF	 \tab 	6  \tab Tagged-Image File Format\cr
   CF_OEMTEXT	 \tab 	7  \tab Text in the OEM codepage\cr

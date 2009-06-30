@@ -1,6 +1,6 @@
 % File src/library/utils/man/edit.data.frame.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{edit.data.frame}
@@ -17,7 +17,7 @@
 \method{edit}{matrix}(name, edit.row.names = !is.null(dn[[1]]), \dots)
 }
 \arguments{
-  \item{name}{A data frame or (numeric, logical or characer) matrix.}
+  \item{name}{A data frame or (numeric, logical or character) matrix.}
   \item{factor.mode}{How to handle factors (as integers or using
     character levels) in a data frame.}
   \item{edit.row.names}{logical. Show the row names (if they exist) be

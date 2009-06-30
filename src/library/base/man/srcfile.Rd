@@ -81,8 +81,8 @@ srcref(srcfile, lloc)
   \code{<srcref: "file" chars 1:1 to 2:10>} will be returned instead,
   indicating the \code{line:column} ranges of the first and last character.
 
-  Lists of srcref objects may be attached to expressions as the
-  \code{"srcref"} attribute.  (The list of srcref objects should be the same
+  Lists of \code{srcref} objects may be attached to expressions as the
+  \code{"srcref"} attribute.  (The list of \code{srcref} objects should be the same
   length as the expression.)  By default, expressions are printed by
   \code{\link{print.default}} using the associated \code{srcref}.  To
   see deparsed code instead, call \code{\link{print}} with argument
