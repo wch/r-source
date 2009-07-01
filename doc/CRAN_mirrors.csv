@@ -29,6 +29,7 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 "Italy (Padua)",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua",cran@stat.unipd.it,1,it
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","elio.mineo@dssm.unipa.it, alf@dssm.unipa.it",0,it
 "Japan (Aizu)",Japan,Aizu,ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN,"University of Aizu",,1,jp
+"Japan (Hyogo)",Japan,Hyogo,http://essrc.hyogo-u.ac.jp/cran/,"Hyogo University of Teacher Education",essrc-cran@hyogo-u.ac.jp,1,jp
 "Japan (Tokyo)",Japan,Tokyo,ftp://ftp.ecc.u-tokyo.ac.jp/CRAN/,"University of Tokyo","Teru KAMOGASHIRA <teru@sodan.ecc.u-tokyo.ac.jp>",1,jp
 "Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",,1,jp
 Korea,Korea,Seoul,http://bibs.snu.ac.kr/R/,"Seoul National University","SungGON Yi <skonmeme@gmail.com>",1,kr
@@ -39,7 +40,7 @@ Mexico,Mexico,Cuernavaca,http://www2.uaem.mx/r-mirror/,"Universidad Autonoma del
 Norway,Norway,Bergen,http://cran.ii.uib.no/,"University of Bergen",webmaster@ii.uib.no,1,no
 "Poland (Oswiecim)",Poland,Oswiecim,http://piotrkosoft.net/pub/mirrors/CRAN/,"Piotrkosoft - Data Storage Center","Piotr Maluty <piotr.maluty@gmail.com>",1,pl
 "Poland (Wroclaw)",Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Paweł Netzel <netzel@meteo.uni.wroc.pl>",1,pl
-Portugal,Portugal,Porto,http://cran.pt.r-project.org/,"Universidade do Porto",neacm@fe.up.pt,0,pt
+Portugal,Portugal,Porto,http://cran.pt.r-project.org/,"Universidade do Porto",neacm@fe.up.pt,1,pt
 Russia,Russia,Moscow,http://cran.gis-lab.info/,GIS-Lab.info,sim@gis-lab.info,1,ru
 "Singapore 1",Singapore,Singapore,http://cran.bic.nus.edu.sg/,"National University of Singapore",sysadmin@bic.nus.edu.sg,1,sg
 "Singapore 2",Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University of Singapore","Zhang Rong <ccezr@nus.edu.sg>",1,sg
