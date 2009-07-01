@@ -83,10 +83,12 @@ glm.fit(x, y, weights = rep(1, nobs),
   \item{model}{a logical value indicating whether \emph{model frame}
     should be included as a component of the returned value.}
 
-  \item{method}{the method to be used in fitting the model.
-    The default method \code{"glm.fit"} uses iteratively reweighted
-    least squares (IWLS).  The only current alternative is
-    \code{"model.frame"} which returns the model frame and does no fitting.}
+  \item{method}{the method to be used in fitting the model.  The default
+    method \code{"glm.fit"} uses iteratively reweighted least squares
+    (IWLS), and \code{"model.frame"} which returns the model frame and
+    does no fitting. User-supplied fitting functions can be supplied
+    either as a function or a character string naming a function, with a
+    function which takes the same arguments as \code{glm.fit}.}
 
   \item{x, y}{For \code{glm}:
     logical values indicating whether the response vector and model

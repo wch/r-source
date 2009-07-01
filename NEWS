@@ -122,6 +122,12 @@ NEW FEATURES
     o	The print() method for ls.str() results now obeys an optional
 	'digits' argument.
 
+    o	The 'method' argument of glm() now allows user-contributed methods.
+
+    o	install.packages(NULL) now lists packages only once even if they
+    	occur is more than one repository (as the latest compatible
+    	version of those available will always be downloaded).
+
 
 Rd HELP FILE CHANGES
 
@@ -133,7 +139,7 @@ Rd HELP FILE CHANGES
 	errors in Rd files:  now all syntax errors are reported as
 	warnings, and an attempt is made to continue parsing.
 
-    o	parse_Rd() now has an argument fragment (default FALSE) to
+    o	parse_Rd() now has an argument 'fragment' (default FALSE) to
 	accept small fragments of Rd files (so that \Sexpr can output
 	Rd code which is then parsed).
 

@@ -207,6 +207,9 @@ install.packages <-
 	    a <- explode_bundles(available)
 	    pkgs <- implode_bundles(SelectList(a, multiple = TRUE,
 					       title = "Packages"))
+            ## avoid duplicate entries in menus, since the latest will
+            ## be picked up
+            pkgs <- unique(pkgs)
 	}
 	if(!length(pkgs)) stop("no packages were specified")
     }
