@@ -1767,11 +1767,12 @@ When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to
 @uref{ftp://CRAN.R-project.org/incoming/} (note: use
 @samp{ftp}@footnote{for Windows users the simplest way may be to open
-that URL in Internet Explorer (which will view it as a folder) and then
-drag-and-drop the submission into that directory.} and not
-@samp{sftp} to connect to this server) and send a message to
-@email{CRAN@@R-project.org} about it.  The @acronym{CRAN} maintainers
-will run these tests before putting a submission in the main archive.
+that URL in Internet Explorer and (depending on the version) follow the
+instructions to view it as a folder, then copy the submission to the
+folder.} and not @samp{sftp} to connect to this server) and send a
+message to @email{CRAN@@R-project.org} about it.  The @acronym{CRAN}
+maintainers will run these tests before putting a submission in the main
+archive.
 
 Note also that for running @LaTeX{}, the Debian GNU/Linux @acronym{CRAN}
 check systems use reasonably recent versions of the Debian texlive
