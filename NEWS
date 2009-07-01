@@ -128,6 +128,9 @@ NEW FEATURES
     	occur is more than one repository (as the latest compatible
     	version of those available will always be downloaded).
 
+    o   More general reorder.default() replaces functionality of
+        reorder.factor() and reorder.character().
+
 
 Rd HELP FILE CHANGES
 

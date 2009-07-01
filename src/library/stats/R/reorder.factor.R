@@ -14,8 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-reorder.character <- 
-reorder.factor <- function(x, X, FUN = mean, ..., order = is.ordered(x))
+reorder.default <- function(x, X, FUN = mean, ..., order = is.ordered(x))
 {
     scores <- tapply(X, x, FUN, ...)
     ans <- (if (order) ordered else factor)(x, levels = names(sort(scores)))

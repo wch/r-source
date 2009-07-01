@@ -3,31 +3,29 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
-\name{reorder.factor}
+\name{reorder.default}
 \alias{reorder}
-\alias{reorder.factor}
-\alias{reorder.character}
+\alias{reorder.default}
 \title{Reorder Levels of a Factor}
 \description{
-  \code{reorder} is a generic function.  Its \code{"factor"} method
-  reorders the levels of a factor depending on values of a second
-  variable, usually numeric.  The \code{"character"} method is a
-  convenient alias.
+  \code{reorder} is a generic function.  The \code{"default"} method
+  treats its first argument as a categorical variable, and reorders its
+  levels based on the values of a second variable, usually numeric.  
 }
 
 \usage{
 reorder(x, \dots)
 
-\method{reorder}{factor}(x, X, FUN = mean, \dots,
+\method{reorder}{default}(x, X, FUN = mean, \dots,
         order = is.ordered(x))
 
-\method{reorder}{character}(x, X, FUN = mean, \dots,
-        order = is.ordered(x))
 }
 \arguments{
   \item{x}{
-    a character vector or factor (possibly ordered) or whose levels will
-    be reordered.
+    An atomic vector, usually a factor (possibly ordered).  The vector
+    is treated as a categorical variable whose levels will be reordered.
+    If \code{x} is not a factor, its unique values will be used as
+    the implicit levels.
   }
   \item{X}{ a vector of the same length as \code{x}, whose subset
     of values for each unique level of \code{x} determines the
@@ -48,7 +46,7 @@ reorder(x, \dots)
   \code{order}), with the order of the levels determined by
   \code{FUN} applied to \code{X} grouped by \code{x}.  The
   levels are ordered such that the values returned by \code{FUN}
-  are in increasing order.
+  are in increasing order.  Empty levels will be dropped. 
 
   Additionally, the values of \code{FUN} applied to the subsets of
   \code{X} (in the original order of the levels of \code{x}) is returned
