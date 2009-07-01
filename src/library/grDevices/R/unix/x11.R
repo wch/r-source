@@ -105,7 +105,7 @@ png <- function(filename = "Rplot%03d.png",
     height <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     new <- list(...)
     if(missing(type)) type <- getOption("bitmapType")
     type <- match.arg(type)
@@ -144,7 +144,7 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
     height <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     new <- list(...)
     if(!missing(type)) new$type <- match.arg(type)
     antialiases <- get("antialiases", envir = .X11env)
@@ -181,7 +181,7 @@ tiff <- function(filename = "Rplot%03d.tiff",
     height <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     new <- list(...)
     type <- if(!missing(type)) match.arg(type) else getOption("bitmapType")
     antialiases <- get("antialiases", envir = .X11env)
@@ -218,7 +218,7 @@ bmp <- function(filename = "Rplot%03d.bmp",
     height <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     new <- list(...)
     type <- if(!missing(type)) match.arg(type) else getOption("bitmapType")
     antialiases <- get("antialiases", envir = .X11env)
