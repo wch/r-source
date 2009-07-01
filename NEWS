@@ -124,10 +124,6 @@ NEW FEATURES
 
     o	The 'method' argument of glm() now allows user-contributed methods.
 
-    o	install.packages(NULL) now lists packages only once even if they
-    	occur is more than one repository (as the latest compatible
-    	version of those available will always be downloaded).
-
     o   More general reorder.default() replaces functionality of
         reorder.factor() and reorder.character().
 
@@ -197,6 +193,13 @@ BUG FIXES
 
 
 		CHANGES IN R VERSION 2.9.1 patched
+
+
+NEW FEATURES
+
+    o	install.packages(NULL) now lists packages only once even if they
+    	occur is more than one repository (as the latest compatible
+    	version of those available will always be downloaded).
 
 
 BUG FIXES
