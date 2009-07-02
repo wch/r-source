@@ -198,7 +198,7 @@ BUG FIXES
 NEW FEATURES
 
     o	install.packages(NULL) now lists packages only once even if they
-    	occur is more than one repository (as the latest compatible
+    	occur in more than one repository (as the latest compatible
     	version of those available will always be downloaded).
 
 
