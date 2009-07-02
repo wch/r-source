@@ -184,6 +184,10 @@ BUG FIXES
         as those attributes are used internally for the CHARSXP cache.
         This fixes a segfault when calling Rf_PrintValue on a CHARSXP
         from C code.
+    
+    o   PDF graphics output was producing TWO instances of anything
+        drawn with the symbol font face. (Report from Baptiste Auguie.)
+
 
 	**************************************************
 	*						 *
