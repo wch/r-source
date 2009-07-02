@@ -790,7 +790,7 @@ cd tests
 @noindent
 and other useful targets are @code{test-BasePackages} and
 @code{test-Recommended} to the run tests of the standard and
-recommmended packages (if installed) respectively.
+recommended packages (if installed) respectively.
 
 This re-runs all the tests relevant to the installed @R{} (including for
 example code in the package vignettes), but not for example the ones
@@ -1206,7 +1206,7 @@ It is also possible to build an installer for use with Microsoft
 Installer.  This is intended for use by sysadmins doing automated
 installs, and is not recommended for casual use.
 
-It makes use of the Windows Installer XML (WiX) toolkit (wersion 2.0)
+It makes use of the Windows Installer XML (WiX) toolkit (version 2.0)
 available from @uref{http://wix.sourceforge.net/}.  (This needs the .NET
 1.1 framework installed: it ran on a vanilla Windows XP SP2
 machine. Unfortunately the file format has been changed within the same
@@ -2590,7 +2590,7 @@ could use
 
 @noindent
 if the appropriate library directory (such as
-@enindex LD_LIBRRARY_PATH
+@enindex LD_LIBRARY_PATH
 @file{/opt/acml4.3.0/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.
 For other compilers, see the ACML documentation.  There is a
 multithreaded Linux version of ACML available for @command{gfortran}
@@ -2650,7 +2650,7 @@ and run-time library support. Some examples of linking to MKL using this
 layered model are given below. These examples are for GCC compilers on
 @cputype{x86_64}.  The choice of interface layer is important on
 @cputype{x86_64} since the Intel Fortran compiler returns complex
-values differently from the GNU fortran compiler. You must therefore
+values differently from the GNU Fortran compiler. You must therefore
 use the interface layer that matches your compiler (@code{mkl_intel*}
 or @code{mkl_gf*}).
 
@@ -3674,7 +3674,7 @@ in @file{config.site} or on the @command{configure} command line.
 
 @R{} has been built successfully on Solaris 10 (both Sparc and
 @cputype{x86}) using the (zero cost) Sun Studio (aka Ceres) 12
-compilers: there has been some sucess with
+compilers: there has been some success with
 @command{gcc}@tie{}4/@command{gfortran}, mainly on Sparc.  Sun packages
 for @R{} are available from @uref{http://www.sunfreeware.com/} for both
 architectures, but have not been updated recently.  (Recent Sun machines
@@ -4391,10 +4391,10 @@ which MinGW compilers were released in August 2007.  The
 of @code{4.2.1} of the MinGW port of @command{gcc} from
 @uref{http://sourceforge.net/@/project/@/showfiles.php?@/group_id=2435}.
 
-If you would like to install your own copy, we recommed downloading from
-the URL above, as the download links from @uref{http://www.mingw.org/}
-have led to obsolete versions. See the notes on
-@uref{http://www.murdoch-sutherland.com/@/Rtools/} for updates.
+If you would like to install your own copy, we recommend downloading
+from the URL above, as the download links from
+@uref{http://www.mingw.org/} have led to obsolete versions. See the
+notes on @uref{http://www.murdoch-sutherland.com/@/Rtools/} for updates.
 
 @c There may be an installer in the `Current' section, which can be used
 @c if it gives the @samp{Candidate} compilers (@code{gcc-3.4.5}).  (If
