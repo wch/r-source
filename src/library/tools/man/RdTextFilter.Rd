@@ -1,0 +1,63 @@
+\name{RdTextFilter}
+\Rdversion{1.1}
+\alias{RdTextFilter}
+\title{
+Select text in an Rd file.
+}
+\description{
+This function blanks out all non-text in an Rd file, 
+for spell checking or other uses.
+}
+\usage{
+RdTextFilter(ifile, encoding = "unknown", drop = character(0), keep = character(0))
+}
+\arguments{
+  \item{ifile}{
+An input file specified as a filename or connection, or an \code{"Rd"} object
+from \code{\link[tools]{parse_Rd}}.
+}
+  \item{encoding}{
+An encoding name to pass to \code{\link[tools]{parse_Rd}}.
+}
+  \item{drop}{
+Additional sections of the Rd to drop.
+}
+  \item{keep}{
+Sections of the Rd file to keep.
+}
+}
+\details{
+This function parses the Rd file, then walks through it, element by element.
+Items with tag \code{"TEXT"} are kept in the same position as they appeared in the
+original file, while other parts of the file are replaced with blanks, so 
+a spell checker such as \code{\link{aspell}} can check only the text and report
+the position in the original file.
+
+By default, the tags \code{c("\\docType", "\\encoding", "\\keyword",
+"\\email", "\\file", "\\linkS4class", "\\pkg", "\\var", "\\method",
+"\\S3method", "\\S4method", "\\link")} are skipped.  Additional tags
+can be skipped by listing them in the \code{drop} argument; listing
+tags in the \code{keep} argument will stop them from being skipped.
+It is also possible to \code{keep} any of the \code{c("RCODE", "COMMENT",
+"VERB")} tags, which correspond to R-like code, comments, and verbatim
+text respectively, or to drop \code{"TEXT"}.
+
+}
+\value{
+A character vector which if written to a file, one element per line, would 
+duplicate the text elements of the original Rd file.
+}
+\author{
+Duncan Murdoch
+}
+%% \note{
+%% An attempt is made to merge text elements into single words when markup is used
+%% to highlight part, e.g. \verb{\link{attr}ibute} would be written as \verb{      attribute}.
+%% }
+
+\seealso{
+  \code{\link[utils]{aspell}}, for which this is an acceptable
+  \code{filter}.
+}
+\keyword{ utilities }
+\keyword{ documentation }
