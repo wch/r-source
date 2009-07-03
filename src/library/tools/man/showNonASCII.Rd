@@ -20,7 +20,7 @@ showNonASCII(x)
   This was originally written to help detect non-portable text in
   files in packages.
 
-  It prints all lines of the files which contain non-ACII characters,
+  It prints all lines of the files which contain non-ASCII characters,
   preceded by the line number and with non-ASCII bytes highlighted
   \emph{via} \code{\link{iconv}(sub = "byte")}.
 }
