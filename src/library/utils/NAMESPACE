@@ -27,7 +27,7 @@ export("?", CRAN.packages, Rprof,Rprofmem, RShowDoc, RSiteSearch,
        toLatex, type.convert, unstack, unzip, update.packageStatus,
        update.packages, upgrade, url.show, vi, vignette, write.csv,
        write.csv2, write.socket, write.table, wsbrowser, xedit, xemacs,
-       zip.file.extract, rtags)
+       zip.file.extract, rtags, aspell)
 
 export(txtProgressBar, getTxtProgressBar, setTxtProgressBar)
 
@@ -51,6 +51,7 @@ S3method(head, "function")
 S3method(head, matrix)
 S3method(head, ftable)
 S3method(head, table)
+S3method(print, "aspell")
 S3method(print, citation)
 S3method(print, Bibtex)
 S3method(print, citationList)
