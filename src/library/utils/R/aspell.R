@@ -154,3 +154,4 @@ function(x, sort = TRUE, verbose = FALSE, ...)
 
 aspell_filter_db <- new.env()
 aspell_filter_db$Rd <- tools::RdTextFilter
+aspell_filter_db$Sweave <- tools::SweaveTeXFilter

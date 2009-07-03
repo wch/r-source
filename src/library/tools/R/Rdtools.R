@@ -1,6 +1,6 @@
 
 RdTextFilter <-
-function(ifile, encoding = "unknown",
+function(ifile, encoding = "unknown", keepSpacing = TRUE,
          drop = character(0), keep = character(0))
 {
     if (inherits(ifile, "Rd")) p <- ifile
@@ -58,9 +58,9 @@ function(ifile, encoding = "unknown",
 	TEXT = {
 	    if (prevline < firstline) {
 		prevcol <<- 0
-		cat(rep("\n", firstline-prevline))
+		cat(rep("\n", if (keepSpacing) firstline-prevline else 1))
 	    }
-	    cat(rep(" ", firstcol - prevcol - 1), sep="")
+	    if (keepSpacing) cat(rep(" ", firstcol - prevcol - 1), sep="")
 	    x <- as.character(srcref) # go back to original form
 	    if (encoding != "") Encoding(x) <- encoding
 	    cat(x,sep="")

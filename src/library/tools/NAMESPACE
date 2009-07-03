@@ -14,7 +14,7 @@ export("Rd2HTML", "Rd2ex", "Rd2latex", "Rd2txt", "Rdindex",
        "encoded_text_to_latex", "charset_to_Unicode", "Adobe_glyphs",
        "checkNEWS", "readNEWS", "dependsOnPkgs", "Rdiff",
        "testInstalledBasic", "testInstalledPackage",
-       "testInstalledPackages", "RdTextFilter")
+       "testInstalledPackages", "RdTextFilter", "SweaveTeXFilter")
 
 export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
 

@@ -8,7 +8,7 @@
 aspell(files, filter, control = list(), encoding = "unknown")
 }
 \arguments{
-  \item{files}{a character vector with the name of files to be checked.}
+  \item{files}{a character vector with the names of files to be checked.}
   \item{filter}{an optional filter for processing the files before spell
     checking, given as either a function (with formals \code{ifile} and
     \code{encoding}), or a character string specifying a built-in
@@ -25,11 +25,28 @@ aspell(files, filter, control = list(), encoding = "unknown")
   on obtaining Aspell, and available dictionaries.
   
   Currently, \code{"Rd"}, corresponding to
-  \code{\link[tools]{RdTextFilter}} from package \pkg{tools} is the only
-  available built-in filter.
+  \code{\link[tools]{RdTextFilter}}, and \code{"Sweave"}, corresponding
+  to \code{\link[tools]{SweaveTeXFilter}} are the only
+  available built-in filters.
 }
 \value{
   A data frame inheriting from \code{aspell} (which has a useful print
   method) with the information about possibly mis-spelled words.
+}
+\examples{
+\dontrun{
+# To check all Rd files in a directory, skipping the \references sections
+files <- Sys.glob("*.Rd")
+aspell(files, filter=list("Rd", drop="\\references"))
+
+# To check all Sweave files 
+files <- Sys.glob(c("*.Rnw", "*.Snw", "*.rnw", "*.snw"))
+aspell(files, filter="Sweave", control="--mode=tex")
+
+# To check all Texinfo files
+files <- Sys.glob("*.texi")
+aspell(files, control="--mode=texinfo")
+
+}
 }
 \keyword{utilities}
