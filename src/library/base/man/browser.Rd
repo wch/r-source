@@ -28,7 +28,8 @@ browser(text="", condition=NULL, expr=TRUE)
   allow helper programs (e.g. external debuggers) to insert specific
   values here, so that the specific call to browser (perhaps its location
   in a source file) can be identified and special processing can be
-  achieved.
+  achieved.  The values can be retrieved by calling \code{\link{browserText}}
+  and \code{\link{browserCondition}}.
 
   The purpose of the \code{expr} argument is to allow for the illusion
   of conditional debugging. It is an illusion, because execution is
@@ -47,8 +48,6 @@ browser(text="", condition=NULL, expr=TRUE)
     \item{\code{cont}}{synonym for \code{c}.}
     \item{\code{n}}{enter the step-through debugger. This changes the
       meaning of \code{c}: see the documentation for \code{\link{debug}}.}
-    \item{\code{gettext}}{retrieve the text string provided as an argument.}
-    \item{\code{getcondition}}{retrieve the condition provided as an argument.}
     \item{\code{where}}{print a stack trace of all active function calls.}
     \item{\code{Q}}{exit the browser and the current evaluation and
       return to the top-level prompt.}
@@ -77,6 +76,7 @@ browser(text="", condition=NULL, expr=TRUE)
 \seealso{
   \code{\link{debug}}, and
   \code{\link{traceback}} for the stack on error.
+  \code{\link{browserText}} for how to retrieve the text and condition.
 }
 \keyword{programming}
 \keyword{environment}
