@@ -240,7 +240,7 @@ Rd2txt <-
         text <- trim(text)
         text <- txt_eqn(text)
         nc <- nchar(text)
-        pad <- paste(rep.int(" ", indent + (WIDTH - nc) %/% 2L), collapse = "")
+        pad <- paste(rep.int(" ", max(indent + (WIDTH - nc) %/% 2L,0)), collapse = "")
         Of(paste("\n", pad, text, "\n", sep = ""))
         text <<- ""
         nch <<- 0L
@@ -591,7 +591,7 @@ Rd2txt <-
         right <- "R Documentation"
         if(encoding != "unknown")
             right <- paste(right, "(", encoding, ")", sep="")
-        pad <- HDR_WIDTH - nchar(left, "w") - nchar(mid, "w") - nchar(right, "w")
+        pad <- max(HDR_WIDTH - nchar(left, "w") - nchar(mid, "w") - nchar(right, "w"), 0)
         pad0 <- pad %/% 2L
         pad1 <- paste(rep.int(" ", pad0), collapse = "")
         pad2 <- paste(rep.int(" ", pad - pad0), collapse = "")
