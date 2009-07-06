@@ -190,13 +190,6 @@ BUG FIXES
 
     o	n:m  now returns <integer> in a few more boundary cases.
 
-    o   PrintValue no longer attempts to print attributes for CHARSXPs
-        as those attributes are used internally for the CHARSXP cache.
-        This fixes a segfault when calling Rf_PrintValue on a CHARSXP
-        from C code.
-    
-    o   PDF graphics output was producing TWO instances of anything
-        drawn with the symbol font face. (Report from Baptiste Auguie.)
 
 
 	**************************************************
@@ -220,7 +213,15 @@ BUG FIXES
 
     o	parse_Rd() still did not handle source reference encodings
 	properly.
-	
+
+    o   PrintValue no longer attempts to print attributes for CHARSXPs
+        as those attributes are used internally for the CHARSXP cache.
+        This fixes a segfault when calling Rf_PrintValue on a CHARSXP
+        from C code.
+
+    o   PDF graphics output was producing TWO instances of anything
+        drawn with the symbol font face. (Report from Baptiste Auguie.)
+
 
 
 		CHANGES IN R VERSION 2.9.1
