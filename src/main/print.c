@@ -645,7 +645,8 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 	Rprintf("<CHARSXP: ");
 	Rprintf("%s", EncodeString(s, 0, '"', Rprt_adj_left));
 	Rprintf(">\n");
-	break;
+        return; /* skip attribute printing for CHARSXP; they are used */
+                /* in managing the CHARSXP cache. */
     case EXPRSXP:
 	PrintExpression(s);
 	break;
