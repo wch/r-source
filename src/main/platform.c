@@ -1733,7 +1733,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     int i = 0;
-#ifdef Unix
+#if defined Unix && !defined HAVE_WORKING_CAIRO
 # ifdef HAVE_X11
     int X11 = NA_LOGICAL;
 # else
@@ -1852,12 +1852,9 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     i++;
 
+/* always true as from R 2.10.0 */
     SET_STRING_ELT(ansnames, i, mkChar("iconv"));
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
     LOGICAL(ans)[i++] = TRUE;
-#else
-    LOGICAL(ans)[i++] = FALSE;
-#endif
 
     SET_STRING_ELT(ansnames, i, mkChar("NLS"));
 #ifdef ENABLE_NLS

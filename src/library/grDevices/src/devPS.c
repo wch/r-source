@@ -39,9 +39,7 @@ typedef unsigned int rcolor;
 static void mbcsToSbcs(const char *in, char *out, const char *encoding, int enc);
 #endif
 
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
 #include <R_ext/Riconv.h>
-#endif
 
 #include <Rmath.h>		/* for rround */
 #define R_USE_PROTOTYPES 1
@@ -5096,9 +5094,7 @@ static void XFig_Text(double x, double y, const char *str,
     int fontnum, style = gc->fontface;
     double size = floor(gc->cex * gc->ps + 0.5);
     const char *str1 = str;
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
     char *buf;
-#endif
 
     if(style < 1 || style > 5) {
 	warning(_("attempt to use invalid font %d replaced by font 1"), style);
@@ -5129,7 +5125,6 @@ static void XFig_Text(double x, double y, const char *str,
 		(int)(16.667*XFig_StrWidth(str, gc, dd) +0.5));
 	fprintf(fp, "%d %d ", (int)x, (int)y);
 	if(strcmp(pd->encoding, "none") != 0) {
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
 	    /* reencode the text */
 	    void *cd;
 	    const char *i_buf; char *o_buf;
@@ -5153,9 +5148,6 @@ static void XFig_Text(double x, double y, const char *str,
 			    pd->encoding);
 		else str1 = buf;
 	    }
-#else
-	    warning(_("re-encoding is not possible on this system"));
-#endif
 	}
 	XF_WriteString(fp, str1);
 	fprintf(fp, "\\001\n");

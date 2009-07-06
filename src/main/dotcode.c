@@ -38,9 +38,7 @@
 #include <R_ext/GraphicsEngine.h> /* needed for GEDevDesc in do_Externalgr */
 
 #include <R_ext/RConverters.h>
-#ifdef HAVE_ICONV
 #include <R_ext/Riconv.h>
-#endif
 
 #ifndef max
 #define max(a, b) ((a > b)?(a):(b))
@@ -391,7 +389,6 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	} else {
 	    cptr = (char**)R_alloc(n, sizeof(char*));
 	    if(strlen(encname)) {
-#ifdef HAVE_ICONV
 		char *outbuf;
 		const char *inbuf;
 		size_t inb, outb, outb0, res;
@@ -417,12 +414,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 		    *outbuf = '\0';
 		}
 		Riconv_close(obj);
-	    } else
-#else
-		warning(_("re-encoding is not supported on this system"));
-	    }
-#endif
-	    {
+	    } else {
 		for (i = 0 ; i < n ; i++) {
 		    const char *ss = translateChar(STRING_ELT(s, i));
 		    l = strlen(ss);
@@ -520,7 +512,6 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 	    PROTECT(s = allocVector(type, n));
 	    cptr = (char**)p;
 	    if(strlen(encname)) {
-#ifdef HAVE_ICONV
 		const char *inbuf;
 		char *outbuf, *p;
 		size_t inb, outb, outb0, res;
@@ -546,12 +537,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 		    SET_STRING_ELT(s, i, mkChar(p));
 		}
 		Riconv_close(obj);
-	    } else
-#else
-		warning(_("re-encoding is not supported on this system"));
-	    }
-#endif
-	    {
+	    } else {
 		for(i = 0 ; i < n ; i++)
 		    SET_STRING_ELT(s, i, mkChar(cptr[i]));
 	    }

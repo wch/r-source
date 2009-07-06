@@ -304,8 +304,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	    warning(_("printing of extremely long output is truncated"));
 	    res = BUFSIZE;
     }
-#endif
-#ifdef HAVE_ICONV
+#endif /* HAVE_VA_COPY */
     if(con->outconv) { /* translate the buffer */
 	char outbuf[BUFSIZE+1], *ob;
 	const char *ib = b;
@@ -329,7 +328,6 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	} while(again && inb > 0);  /* it seems some iconv signal -1 on
 				       zero-length input */
     } else
-#endif /* HAVE_VA_COPY */
 	con->write(b, 1, res, con);
 #ifdef HAVE_VA_COPY
     if(usedRalloc) vmaxset(vmax);
