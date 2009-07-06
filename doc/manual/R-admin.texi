@@ -292,12 +292,11 @@ make check
 @noindent
 Failures are not necessarily problems as they might be caused by missing
 functionality,@footnote{for example, if you configured @R{} with
-@option{--without-iconv} or @option{--without-recommended}.} but you
-should look carefully at any reported discrepancies.  (Some non-fatal
-errors are expected in locales that do not support Latin-1, in
-particular in true @code{C} locales and non-UTF-8 non-European locales.)
-A failure in @file{tests/ok-errors.R} may indicate inadequate resource
-limits (@pxref{Running R}).
+@option{--without-recommended}.} but you should look carefully at any
+reported discrepancies.  (Some non-fatal errors are expected in locales
+that do not support Latin-1, in particular in true @code{C} locales and
+non-UTF-8 non-European locales.)  A failure in @file{tests/ok-errors.R}
+may indicate inadequate resource limits (@pxref{Running R}).
 
 More comprehensive testing can be done by
 
@@ -2276,21 +2275,14 @@ available from any @acronym{GNU} mirror: version 4.2 or later is
 needed for all the features to be enabled.  Otherwise you will need to
 configure with @option{--with-readline=no} (or equivalent).
 
-The use of multi-byte characters, conversion between encodings
-(including for translated messages) and the @R{} @code{iconv} function
-depend on having the system @code{iconv} function: this is part of
-recent versions of @code{glibc} and many Unixes.  You can also install
-@acronym{GNU} @code{libiconv} (which is not the same as that in
-@code{glibc}), possibly as a plug-in replacement: see
-@uref{http://www.gnu.org/@/software/@/libiconv/}.  Note that the @R{}
+A suitably comprehensive @code{iconv} function is essential.  The @R{}
 usage requires @code{iconv} to be able to translate between
 @code{"latin1"} and @code{"UTF-8"}, to recognize @code{""} as the
 current encoding and to translate to and from the Unicode wide-character
-formats @code{"UCS-[24][BL]E"} --- this is not true of most commercial
-Unixes.  This is regarded as essential from @R{} 2.5.0: if you do not
-have it will need to configure with @option{--without-iconv} (or
-equivalent), and @command{make check} (and other checks) are likely to
-fail.
+formats @code{"UCS-[24][BL]E"} --- this is true for @code{glibc} but not
+of most commercial Unixes.  However, you can make use of @acronym{GNU}
+@code{libiconv} (possibly as a plug-in replacement: see
+@uref{http://www.gnu.org/@/software/@/libiconv/}.
 
 Perl version 5.8.0 or later, available via
 @uref{http://www.perl.com/CPAN/}, is essential.

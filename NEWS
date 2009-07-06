@@ -164,7 +164,10 @@ DEPRECATED & DEFUNCT
 INSTALLATION
 
     o	cairo >= 1.2 is now required (1.2.0 was released in July 2006)
-	for cairo-based graphics devices.
+	for cairo-based graphics devices (which remain optional).
+
+    o	A suitable iconv() is now required: support for
+	--without-iconv has been withdrawn (it was deprecated in R 2.5.0).
 
 
 INTERNATIONALIZATION

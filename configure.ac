@@ -407,12 +407,6 @@ AC_ARG_WITH([recommended-packages],
 [R_ARG_USE(recommended_packages)],
 [use_recommended_packages=yes])
 
-## Iconv.
-AC_ARG_WITH([iconv],
-[AS_HELP_STRING([--with-iconv],[use iconv library @<:@yes@:>@])],
-[R_ARG_USE(iconv)],
-[use_iconv=yes])
-
 ## ICU
 AC_ARG_WITH([ICU],
 [AS_HELP_STRING([--with-ICU],[use ICU library @<:@yes@:>@])],
@@ -1954,21 +1948,18 @@ AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 ### * Checks for system services.
 
 ## iconv headers and function.
-if test "${use_iconv}" = yes; then
-  R_ICONV
-  if test "$r_cv_iconv_latin1" != yes; then
-    AC_MSG_ERROR([--with-iconv=yes (default) and a suitable iconv is not available])
-  fi
-else
-    AC_MSG_WARN([--with-iconv=no is deprecated and will be withdrawn shortly])
-fi
-
-## support for MBCS
+R_ICONV
+## on Windows we supply iconv ourselves
 case "${host_os}" in
   mingw*)
     r_cv_iconv_latin1=yes
     ;;
 esac
+if test "$r_cv_iconv_latin1" != yes; then
+  AC_MSG_ERROR([a suitable iconv is not available])
+fi
+
+## support for MBCS
 R_MBCS
 
 ## support for ICU
@@ -2549,9 +2540,6 @@ if test "${have_jpeg}" = yes; then
 fi
 if test "${have_tiff}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [TIFF], [, ])
-fi
-if test "${r_cv_iconv_latin1}" = yes; then
-  R_SH_VAR_ADD(r_capabilities, [iconv], [, ])
 fi
 if test "${want_mbcs_support}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [MBCS], [, ])
