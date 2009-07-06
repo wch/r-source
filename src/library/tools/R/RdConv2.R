@@ -385,6 +385,8 @@ Rd2HTML <-
     of0 <- function(...) writeLines(paste(..., sep=""), con, sep ="")
     of1 <- function(text) writeLines(text, con, sep = "")
 
+    pendingClose <- pendingOpen <- character(0)  # Used for infix methods
+
     nlinks <- 0L
 ### These correspond to HTML wrappers
     HTMLTags <- c("\\bold"="B",
@@ -480,6 +482,15 @@ Rd2HTML <-
         paths[paths != ""]
     }
 
+    checkInfixMethod <- function(blocks) {
+    	# Is this a method which needs special formatting?
+    	if ( length(blocks) == 1 && RdTags(blocks) == "TEXT" &&
+    	     blocks[[1]] %in% c("[","[[","$") ) {
+    	    pendingOpen <<- blocks[[1]]
+    	    return(TRUE)
+    	} else return(FALSE)
+    }
+    	
     ## FIXME: depends on CHM or not
     ## Cross-packages CHM links are of the form
     ## <a onclick="findlink('stats', 'weighted.mean.html')" style="text-decoration: underline; color: blue; cursor: hand">weighted.mean</a>
@@ -595,7 +606,7 @@ Rd2HTML <-
                "\\testonly" = {}, # do nothing
                "\\method" =,
                "\\S3method" = {
-                   ## FIXME: special methods for [ [<- and operators
+                   ## FIXME: special methods for operators
                    class <- as.character(block[[2L]])
                    if (class == "default")
                        of1('## Default S3 method:\n')
@@ -604,13 +615,15 @@ Rd2HTML <-
                        writeContent(block[[2L]], tag)
                        of1("':\n")
                    }
-                   writeContent(block[[1L]], tag)
+                   if (!checkInfixMethod(block[[1L]]))
+                       writeContent(block[[1L]], tag)
                },
                "\\S4method" = {
                    of1("## S4 method for signature '")
                    writeContent(block[[2L]], tag)
                    of1("':\n")
-                   writeContent(block[[1L]], tag)
+                   if (!checkInfixMethod(block[[1L]]))
+                       writeContent(block[[1L]], tag)
                },
                "\\tabular" = writeTabular(block),
                stopRd(block, "Tag ", tag, " not recognized.")
@@ -672,6 +685,26 @@ Rd2HTML <-
 	for (i in seq_along(tags)) {
             tag <- tags[i]
             block <- blocks[[i]]
+            if (length(pendingOpen)) { # Handle $, [ or [[ methods
+            	if (tag == "RCODE" &&
+            	    length(grep("^\\(", block))) {
+            	    block <- sub("^\\(", "", block)
+            	    arg1 <- sub("[,)[:space:]].*", "", block)
+            	    block <- sub(paste(arg1, "[[:space:]]*,[[:space:]]*", sep=""), "", block)
+            	    of0(arg1, pendingOpen)
+            	    if (pendingOpen == "$")
+            	    	pendingClose <<- ""
+            	    else
+            	    	pendingClose <<- chartr("[", "]", pendingOpen)
+            	} else of0("`", pendingOpen, "`")
+            	pendingOpen <<- character(0)
+            }
+            if (length(pendingClose) && tag == "RCODE" 
+                && length(grep("\\)", block))) { # Finish it off...
+            	of0(sub("\\).*", "", block), pendingClose)
+            	block <- sub("[^)]*\\)", "", block)
+            	pendingClose <<- character(0)
+            }
             switch(tag,
             "\\item" = {
     	    	if (!inlist) {
@@ -723,7 +756,7 @@ Rd2HTML <-
                         txt <- gsub("^ ", "", as.character(block), perl = TRUE)
                         of1(txt)
                     } else writeBlock(block, tag, blocktag) # should not happen
-                } else writeBlock(block, tag, blocktag)
+                } else writeBlock(block, tag, blocktag) 
     	    })
 	}
 	if (inlist)
