@@ -1929,6 +1929,13 @@
     function(dir, outDir, OS = .Platform$OS.type,
              types = c("txt", "html", "latex", "example"))
 {
+    showtype <- function() {                
+    	if (!shown) {	
+    	    cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), sep="")
+            shown <<- TRUE
+        }
+        cat(type, rep(" ", 8-nchar(type)), sep="")
+    }
     dirname <- c("help", "html", "latex", "R-ex")
     ext <- c("", ".html", ".tex", ".R")
     names(dirname) <- names(ext) <- c("txt", "html", "latex", "example")
@@ -1955,21 +1962,20 @@
     cmd <- paste(R.home(), "/bin/Rdconv -t ", sep = "")
 
     ## FIXME: perl version cleans up non-matching converted files
-    types <- "txt"
     cat("\n   converting help for package ", sQuote(pkg), "\n", sep="")
     if(TRUE) {
         ## FIXME: add this lib to lib.loc?
         Links <- if ("html" %in% types) findHTMLlinks(outDir) else ""
         for (f in files) {
             bf <-  sub("\\.[Rr]d","", basename(f))
+            shown <- FALSE
             Rd <- tools::parse_Rd(f)
             if ("txt" %in% types) {
                 type <- "txt"
                 ff <- file.path(outDir, dirname[type],
                                 paste(bf, ext[type], sep = ""))
                 if(!file.exists(ff) || file_test("-nt", f, ff)) {
-                    cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "txt\n",
-                        sep = "")
+                    showtype()
                     res <- try(Rd2txt(Rd, ff, package = pkg))
                     if(inherits(res, "try-error")) unlink(ff)
                 }
@@ -1979,8 +1985,7 @@
                 ff <- file.path(outDir, dirname[type],
                                 paste(bf, ext[type], sep = ""))
                 if(!file.exists(ff) || file_test("-nt", f, ff)) {
-                    cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "html\n",
-                        sep = "")
+                    showtype()
                     res <- try(Rd2HTML(Rd, ff, package = pkg, Links = Links))
                     if(inherits(res, "try-error")) unlink(ff)
                 }
@@ -1990,8 +1995,7 @@
                 ff <- file.path(outDir, dirname[type],
                                 paste(bf, ext[type], sep = ""))
                 if(!file.exists(ff) || file_test("-nt", f, ff)) {
-                    cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "latex\n",
-                        sep = "")
+                    showtype()
                     res <- try(Rd2latex(Rd, ff))
                     if(inherits(res, "try-error")) unlink(ff)
                 }
@@ -2002,11 +2006,11 @@
                                 paste(bf, ext[type], sep = ""))
                 if(!file.exists(ff) || file_test("-nt", f, ff)) {
                     Rd2ex(Rd, ff)
-                    if (file.exists(ff))
-                        cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), "example\n",
-                            sep = "")
+                    if (file.exists(ff)) 
+                    	showtype()
                 }
             }
+            if (shown) cat("\n")
         }
     }
     else {
