@@ -1942,9 +1942,9 @@
         }
         cat(type, rep(" ", 8-nchar(type)), sep="")
     }
-    dirname <- c("help", "html", "latex", "R-ex")
-    ext <- c("", ".html", ".tex", ".R")
-    names(dirname) <- names(ext) <- c("txt", "html", "latex", "example")
+    dirname <- c("help", "html", "latex", "R-ex", "chm")
+    ext <- c("", ".html", ".tex", ".R", ".html")
+    names(dirname) <- names(ext) <- c("txt", "html", "latex", "example", "chm")
     mandir <- file.path(dir, "man")
     if(!file_test("-d", mandir))
         stop("there are no help pages in this package")
@@ -2005,6 +2005,16 @@
                     res <- try(Rd2latex(Rd, ff))
                     if(inherits(res, "try-error")) unlink(ff)
                 }
+            }
+            if("chm" %in% types) {
+            	type <- "chm"
+            	ff <- file.path(dir, dirname[type],
+            			paste(bf, ext[type], sep=""))
+            	if(!file.exists(ff) || file_test("-nt", f, ff)) {
+            	    showtype()
+            	    res <- try(Rd2HTML(Rd, ff, package=pkg, Links=Links, CHM=TRUE))
+            	    if(inherits(res, "try-error")) unlink(ff)
+            	}
             }
             if ("example" %in% types) {
                 type <- "example"
