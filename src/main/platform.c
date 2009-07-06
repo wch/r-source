@@ -1733,7 +1733,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     int i = 0;
-#if defined Unix && !defined HAVE_WORKING_CAIRO
+#ifdef Unix
 # ifdef HAVE_X11
     int X11 = NA_LOGICAL;
 # else
