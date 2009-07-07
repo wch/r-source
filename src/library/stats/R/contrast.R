@@ -68,14 +68,19 @@ contrasts <-
     x
 }
 
+.sparse.array <- function(x, dim, dimnames)
+    Matrix::Matrix(x, nrow=dim[1], ncol=dim[2],
+		   dimnames=dimnames, sparse=TRUE)
+
 contr.helmert <-
-    function (n, contrasts=TRUE)
+    function (n, contrasts=TRUE, sparse=FALSE)
 {
     if (length(n) <= 1) {
 	if(is.numeric(n) && length(n) == 1 && n > 1) levels <- 1L:n
 	else stop("not enough degrees of freedom to define contrasts")
     } else levels <- n
     lenglev <- length(levels)
+    if(sparse) array <- .sparse.array
     if (contrasts) {
 	cont <- array(-1, c(lenglev, lenglev-1L), list(levels, NULL))
 	cont[col(cont) <= row(cont) - 2] <- 0
@@ -88,7 +93,7 @@ contr.helmert <-
 }
 
 contr.treatment <-
-    function(n, base = 1, contrasts = TRUE)
+    function(n, base = 1, contrasts = TRUE, sparse = FALSE)
 {
     if(is.numeric(n) && length(n) == 1) {
 	if(n > 1) levs <- 1L:n
@@ -97,6 +102,7 @@ contr.treatment <-
 	levs <- n
 	n <- length(n)
     }
+    if(sparse) array <- .sparse.array
     contr <- array(0, c(n, n), list(levs, levs))
     diag(contr) <- 1
     if(contrasts) {
@@ -111,7 +117,7 @@ contr.treatment <-
 }
 
 contr.sum <-
-    function (n, contrasts=TRUE)
+    function (n, contrasts=TRUE, sparse=FALSE)
 {
     if (length(n) <= 1) {
 	if (is.numeric(n) && length(n) == 1 && n > 1)
@@ -119,6 +125,7 @@ contr.sum <-
 	else stop("not enough degrees of freedom to define contrasts")
     } else levels <- n
     lenglev <- length(levels)
+    if(sparse) array <- .sparse.array
     if (contrasts) {
 	cont <- array(0, c(lenglev, lenglev - 1L), list(levels, NULL))
 	cont[col(cont) == row(cont)] <- 1
@@ -130,9 +137,9 @@ contr.sum <-
     cont
 }
 
-contr.SAS <- function(n, contrasts = TRUE)
+contr.SAS <- function(n, contrasts = TRUE, sparse=FALSE)
 {
     contr.treatment(n,
                     base = if (is.numeric(n) && length(n) == 1) n else length(n),
-                    contrasts)
+                    contrasts, sparse=sparse)
 }

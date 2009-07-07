@@ -134,8 +134,12 @@ NEW FEATURES
 	to the tools package to provide support for aspell() or other
 	spell checkers.
 
-    o	contr.sum() etc gain an argument 'sparse = FALSE' which allows
-	sparse matrices to be returned, using package 'Matrix'.
+    o	xtabs() with the new option 'sparse = TRUE' now returns a sparse
+	Matrix, using package 'Matrix'.
+
+    o	contr.sum() etc gain an argument 'sparse' which allows sparse
+	matrices to be returned.
+
 
 
 Rd HELP FILE CHANGES

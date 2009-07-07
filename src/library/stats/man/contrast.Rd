@@ -14,16 +14,18 @@
   Return a matrix of contrasts.
 }
 \usage{
-contr.helmert(n, contrasts = TRUE)
-contr.poly(n, scores = 1:n, contrasts = TRUE)
-contr.sum(n, contrasts = TRUE)
-contr.treatment(n, base = 1, contrasts = TRUE)
-contr.SAS(n, contrasts = TRUE)
+contr.helmert(n, contrasts = TRUE, sparse = FALSE)
+contr.poly(n, scores = 1:n, contrasts = TRUE, sparse = FALSE)
+contr.sum(n, contrasts = TRUE, sparse = FALSE)
+contr.treatment(n, base = 1, contrasts = TRUE, sparse = FALSE)
+contr.SAS(n, contrasts = TRUE, sparse = FALSE)
 }
 \arguments{
   \item{n}{a vector of levels for a factor, or the number of levels.}
   \item{contrasts}{a logical indicating whether contrasts should be
     computed.}
+  \item{sparse}{logical indicating if the result should be sparse,
+    using \code{\link[Matrix]{Matrix}} from package \pkg{Matrix}.}
   \item{scores}{the set of values over which orthogonal polynomials are
     to be computed.}
   \item{base}{an integer specifying which group is considered the
@@ -83,8 +85,10 @@ contr.helmert(4, contrasts = FALSE) # just the 4 x 4 identity matrix
 (cT <- contr.treatment(5))
 all(crossprod(cT) == diag(4)) # TRUE: even orthonormal
 
-(cT. <- contr.SAS(5))
+cT. <- contr.SAS(5)
 all(crossprod(cT.) == diag(4))# TRUE
+(cS. <- contr.SAS(5, sparse = TRUE))
+all(cT. == cS.)
 
 (cP <- contr.poly(3)) # Linear and Quadratic
 zapsmall(crossprod(cP), digits=15) # orthonormal up to fuzz
