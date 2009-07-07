@@ -1785,6 +1785,9 @@
     }
     desc <- read.dcf(file.path(outDir, "DESCRIPTION"))[1,]
     ## drop internal entries
+    if (CHM) {
+    	CHMinternals <- M[M[, 4], ]
+    }
     M <- M[!M[, 4], ]
     if(desc["Package"] %in% c("base", "graphics", "stats", "utils")) {
         for(pass in 1:2) {
@@ -1893,12 +1896,12 @@
     if(CHM) writeLines('</body></html>', chmcon)
     if(CHM) {
         chm_toc(dir, desc["Package"], M)
-        .write_CHM_hhp(dir, desc["Package"])
+        .write_CHM_hhp(dir, desc["Package"], CHMinternals)
     }
 }
 
 ## dir is the package top-level directory
-.write_CHM_hhp <- function(dir, pkg)
+.write_CHM_hhp <- function(dir, pkg, internals)
 {
     if(missing(pkg)) pkg <- basename(dir)
     d <- file.path(dir, "chm")
@@ -1914,8 +1917,11 @@
                      "Full-text search=Yes\n",
                      "Full text search stop list file=..\\..\\..\\gnuwin32\\help\\R.stp\n",
                      "Title=R Help for package ", pkg, "\n",
-                     "\n\n[FILES]", sep = ""), con)
-    writeLines(dir(d, pattern = "\\.html$"), con)
+                     "\n\n[FILES]\n", 
+                     "00Index.html\n", sep = ""), con)
+    # Most files are linked from the index; internals are not, so need to be listed.
+    if (nrow(internals))
+    	writeLines(paste(unique(internals$File), ".html", sep=""), con)
 }
 
 .convertRdfiles <-
