@@ -11,13 +11,23 @@ PKGDIR = ../../library
 RLIB = $(RHOME)/library
 
 BUILD_HELP=R_HOME=$(RHOME) $(PERL) $(RHOME)/share/perl/build-help.pl -os=windows
+R_EXE=$(R_HOME)/bin/Rterm.exe
 
 ## HELPTYPES is set in src/library/Makefile
-help-%:
+ifndef USE_NEW_HELP
+help-%:	
 	@if test -d $(PKGDIR)/$*/man ; then \
 	   $(BUILD_HELP) $(HELPTYPES) $(PKGDIR)/$* $(RLIB) $(RLIB)/$* $* ; \
 	fi
+else
+help-%:	
+	@if test -d $(PKGDIR)/$*/man ; then \
+	   echo Using parse_Rd tools for $(HELPTYPES)... ; \
+	   echo "tools:::.convertRdfiles(\"$(PKGDIR)/$*\", \"$(RLIB)/$*\",types=strsplit(\" $(HELPTYPES)\", \" *-\")[[1]][-1])" | LC_ALL=C $(R_EXE) --slave --vanilla || exit 1; \
+	fi
+endif
 
+ifndef USE_NEW_HELP
 chm-%: ziponlyhelp-%
 	@if test -d $(PKGDIR)/$*/man ; then \
 	  if ! test -d $(PKGDIR)/$*/chm ; then \
@@ -32,6 +42,22 @@ chm-%: ziponlyhelp-%
 	    echo CHM compile failed:  HTML Help Workshop not installed? ; \
 	  fi; \
 	fi
+else
+chm-%: ziponlyhelp-%
+	@if test -d $(PKGDIR)/$*/man ; then \
+	  if ! test -d $(PKGDIR)/$*/chm ; then \
+	    echo "tools:::.convertRdfiles(\"$(PKGDIR)/$*\", \"$(RLIB)/$*\",types=\"chm\")" | LC_ALL=C $(R_EXE) --slave --vanilla ; \
+	  fi; \
+	  $(MAKE) --no-print-directory -C $(PKGDIR)/$*/chm \
+	    -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm ; \
+	  if test -f $(PKGDIR)/$*/chm/$*.chm ; then \
+	    $(MKDIR) -p $(RLIB)/$*/chtml ;\
+	    $(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIB)/$*/chtml ; \
+	  else \
+	    echo CHM compile failed:  HTML Help Workshop not installed? ; \
+	  fi; \
+	fi
+endif
 
 ziponlyhelp-%:
 	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
