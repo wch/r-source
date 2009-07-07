@@ -14,25 +14,25 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-xtabs <- function(formula = ~., data = parent.frame(), subset,
+xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 		  na.action, exclude = c(NA, NaN), drop.unused.levels = FALSE)
 {
-    if(missing(formula) && missing(data))
-        stop("must supply either 'formula' or 'data'")
+    if (missing(formula) && missing(data))
+	stop("must supply either 'formula' or 'data'")
     if(!missing(formula)){
-        ## We need to coerce the formula argument now, but model.frame
-        ## will coerce the original version later.
-        formula <- as.formula(formula)
-        if(!inherits(formula, "formula"))
-            stop("'formula' missing or incorrect")
+	## We need to coerce the formula argument now, but model.frame
+	## will coerce the original version later.
+	formula <- as.formula(formula)
+	if (!inherits(formula, "formula"))
+	    stop("'formula' missing or incorrect")
     }
-    if(any(attr(terms(formula, data=data), "order") > 1))
+    if (any(attr(terms(formula, data = data), "order") > 1))
 	stop("interactions are not allowed")
     m <- match.call(expand.dots = FALSE)
-    if(is.matrix(eval(m$data, parent.frame())))
+    if (is.matrix(eval(m$data, parent.frame())))
 	m$data <- as.data.frame(data)
-    m$... <- m$exclude <- m$drop.unused.levels <- NULL
-    m[[1L]] <- as.name("model.frame")
+    m$... <- m$exclude <- m$drop.unused.levels <- m$sparse <- NULL
+    m[[1]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
     if(length(formula) == 2) {
 	by <- mf
@@ -47,21 +47,41 @@ xtabs <- function(formula = ~., data = parent.frame(), subset,
 	if(!is.factor(u)) u <- factor(u, exclude = exclude)
 	u[ , drop = drop.unused.levels]
     })
-    x <-
-	if(is.null(y))
-	    do.call("table", by)
-	else if(NCOL(y) == 1)
-	    tapply(y, by, sum)
-	else {
-	    z <- lapply(as.data.frame(y), tapply, by, sum)
-	    array(unlist(z),
-		  dim = c(dim(z[[1L]]), length(z)),
-		  dimnames = c(dimnames(z[[1L]]), list(names(z))))
-	}
-    x[is.na(x)] <- 0
-    class(x) <- c("xtabs", "table")
-    attr(x, "call") <- match.call()
-    x
+    if(!sparse) { ## identical to stats::xtabs
+	x <-
+	    if(is.null(y))
+		do.call("table", by)
+	    else if(NCOL(y) == 1)
+		tapply(y, by, sum)
+	    else {
+		z <- lapply(as.data.frame(y), tapply, by, sum)
+		array(unlist(z),
+		      dim = c(dim(z[[1]]), length(z)),
+		      dimnames = c(dimnames(z[[1]]), list(names(z))))
+	    }
+	x[is.na(x)] <- 0
+	class(x) <- c("xtabs", "table")
+	attr(x, "call") <- match.call()
+	x
+
+    } else { ## sparse
+	if (length(by) != 2)
+	    stop("xtabs(*, sparse=TRUE) applies only to two-way tables")
+	rows <- by[[1]]
+	cols <- by[[2]]
+	rl <- levels(rows)
+	cl <- levels(cols)
+	if (is.null(y))
+	    y <- rep.int(1, length(rows))
+	if(all("Matrix" != loadedNamespaces()))
+	    loadNamespace("Matrix")
+	as(new("dgTMatrix",
+	       i = as.integer(rows) - 1L,
+	       j = as.integer(cols) - 1L,
+	       x = as.double(y),
+	       Dim = c(length(rl), length(cl)),
+	       Dimnames = list(rl, cl)), "CsparseMatrix")
+    }
 }
 
 print.xtabs <- function(x, ...)

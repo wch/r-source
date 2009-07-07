@@ -126,13 +126,16 @@ NEW FEATURES
 
     o   More general reorder.default() replaces functionality of
         reorder.factor() and reorder.character().
-        
+
     o	The function aspell() has been added to provide an interface to
-    	the Aspell spell-checker.  
-    	
+    	the Aspell spell-checker.
+
     o	Filters RdTextFilter() and SweaveTeXFilter() have been added
 	to the tools package to provide support for aspell() or other
 	spell checkers.
+
+    o	contr.sum() etc gain an argument 'sparse = FALSE' which allows
+	sparse matrices to be returned, using package 'Matrix'.
 
 
 Rd HELP FILE CHANGES
