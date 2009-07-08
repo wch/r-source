@@ -2571,7 +2571,7 @@ when building from source, and
 @node ACML, Goto BLAS, ATLAS, BLAS
 @subsubsection ACML
 
-For @cputype{x86_64} ans @cputype{i686} processors under Linux and
+For @cputype{x86_64} and @cputype{i686} processors under Linux and
 Solaris 10 there is the AMD Core Math Library (ACML)
 @uref{http://www.amd.com/@/acml}.  For the @command{gcc} version we
 could use
@@ -3061,10 +3061,9 @@ path to a shell, e.g. @file{/usr/local/bin/bash}).
 @findex make
 
 To compile @R{}, you will most likely find it easiest to use GNU
-@command{make}.  On Solaris 2.6/7/8 in particular, you need a version of
-@acronym{GNU} @command{make} different from 3.77; 3.79.1 and later work
-fine, as does the Sun @command{make}.  The native @command{make} is
-reported to fail on SGI Irix 6.5 and Alpha/OSF1 (aka Tru64).
+@command{make}, although the Sun @command{make} works on Solaris.  The
+native @command{make} has been reported to fail on SGI Irix 6.5 and
+Alpha/OSF1 (aka Tru64).
 
 To build in a separate directory you need a @command{make} that uses the
 @code{VPATH} variable, for example @acronym{GNU} @command{make}, or Sun
@@ -3700,30 +3699,6 @@ When using the Sun compilers@footnote{including @command{gcc} for Sparc
 from Sun.} do @emph{not} specify @option{-fast}, as this disables
 @acronym{IEEE} arithmetic and @command{make check} will fail.
 
-@c https://stat.ethz.ch/pipermail/r-devel/2009-March/052454.html
-@c and followups
-@c Jeff Long reported problems if @R{} is built as a shared library and
-@c @samp{libintl} was installed via @command{pkg-get}: in particular
-@c segfaults using @code{read.spss} from package @pkg{foreign}: this can be
-@c avoided by not building @R{} as a shared library or configuring with
-@c @option{--with-included-gettext}.
-
-To compile for a 64-bit Sparc target with @command{gcc}@tie{}4 we used
-
-@example
-CC="gcc -m64"
-F77="gfortran -m64"
-CXX="g++ -m64"
-FC="gfortran -m64"
-LDFLAGS="-L/opt/csw/gcc4/lib/sparcv9 -L/opt/csw/lib/sparcv9"
-@end example
-
-@noindent
-Note that paths such as @file{/opt/csw/gcc4/lib/sparcv9} may need to
-be in the
-@enindex LD_LIBRARY_PATH
-@env{LD_LIBRARY_PATH} during configuration.
-
 For the Sun Studio compilers a little juggling of paths was needed to
 ensure GNU @code{libiconv} is used rather than the Solaris @code{iconv}:
 at one time we used
@@ -3744,9 +3719,9 @@ SHLIB_CXXLDFLAGS="-G -lCstd"
 
 @noindent
 to ensure that the @code{libiconv} version of @file{iconv.h} was found,
-and later used self-compiled versions of libiconv and readline from
-@file{/usr/local} (replacing @file{/opt/csw} in the flags).  For a
-64-bit target add @option{-m64} and use something like
+and later used self-compiled versions of @code{libiconv} and
+@code{readline} from @file{/usr/local} (replacing @file{/opt/csw} in the
+flags).  For a 64-bit target add @option{-m64} and use something like
 @code{LDFLAGS=-L/opt/csw/lib/sparcv9} or
 @code{LDFLAGS=-L/usr/local/lib/amd64} as appropriate.  You can target
 specific Sparc architectures for (slightly) higher performance: Sun
@@ -3780,6 +3755,35 @@ been built using the Sun Studio compilers.  Suitable versions of
 @code{libiconv} and @code{readline} have been used from
 @url{http://www.opencsw.org} and also built from the sources.
 
+Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4 
+(@command{gcc}@tie{}4.3.3 but @command{gfortran}@tie{}4.0.2) needed
+
+@example
+CPPFLAGS=-I/opt/csw/include
+FPICFLAGS=-fPIC
+FCPICFLAGS=-fPIC
+LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib"
+@end example
+
+@noindent
+and for a 64-bit Sparc target
+@example
+CC="gcc -m64"
+CPPFLAGS=-I/opt/csw/include
+F77="gfortran -m64"
+FPICFLAGS=-fPIC
+CXX="g++ -m64"
+FC="gfortran -m64"
+FCPICFLAGS=-fPIC
+LDFLAGS="-L/opt/csw/gcc4/lib/sparcv9 -L/opt/csw/lib/sparcv9"
+@end example
+
+@noindent
+Note that paths such as @file{/opt/csw/gcc4/lib/sparcv9} may need to
+be in the
+@enindex LD_LIBRARY_PATH
+@env{LD_LIBRARY_PATH} during configuration.
+
 Tests with @command{gcc} on @cputype{x86} and @cputype{amd64} have been
 less successful: @cputype{x86} builds have failed on tests using complex
 arithmetic@footnote{these can often be resolved by turning off
@@ -3798,7 +3802,8 @@ selected as LAPACK via
 @end example
 
 @noindent
-However, our tests were none too successful: Sparc 64-bit builds crashed
+However, our tests were none too successful.  Sparc 32-bit builds
+worked, but 64-bit Sparc builds failed in @code{example(eigen)},
 and @cputype{x86} builds failed in @code{example(bw.SJ)}.
 
 
