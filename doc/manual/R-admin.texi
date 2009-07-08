@@ -3434,8 +3434,8 @@ LIBnn=lib
 is specified.
 
 There are known problems with several early versions of
-@command{gcc}@tie{}4, but @command{gcc}@tie{}4.1.0 have been tested
-extensively.
+@command{gcc}@tie{}4, but @command{gcc}@tie{}4.1.0 and later have been
+tested extensively.
 
 To build a 64-bit version of @R{} on @cputype{ppc64} (also known as
 @cputype{powerpc64}) with @command{gcc}@tie{}4.1.1, Ei-ji Nakama used
@@ -3450,7 +3450,7 @@ FFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
 @end example
 
 @noindent
-the additional flags being needed to problems linking against
+the additional flags being needed to resolve problems linking against
 @file{libnmath.a} and when linking @R{} as a shared library.
 
 @menu
@@ -3589,30 +3589,31 @@ FreeBSD we find testing on Darwin tends to pick up any potential
 problems on FreeBSD problems quite early.
 
 The native BSD @command{make} suffices to build @R{} but a number of
-packages require GMU @command{make}.
+packages require GNU @command{make}.  (The BSD version is
+@command{bsdmake} on Darwin.)
 
 @node Mac OS X, Solaris, FreeBSD, Platform notes
 @section Mac OS X
 @cindex Mac OS X
 
 You can build @R{} as a Unix application on Mac OS X using the Apple
-Developer Tools (`Xcode') and @command{g77} or @command{gfortran}.  You
-will also need to install an X sub-system or configure with
-@option{--without-x}.  The X window manager is part of the standard Mac
-OS X distribution since Mac OS X version 10.3 (Panther), but it is
-typically not pre-installed prior to 10.5 (Leopard).
+Developer Tools (`Xcode') and @command{gfortran}.  You will also need to
+install an X sub-system or configure with @option{--without-x}.  The X
+window manager is part of the standard Mac OS X distribution since Mac
+OS X version 10.3 (Panther), but it is typically not pre-installed prior
+to 10.5 (Leopard).
 
 For more information on how to find these tools please read the
 @uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac
 OS X @acronym{FAQ}}.
 
-If you use the X window manager and prefer @code{Terminal.app} to
-@code{xterm}, you should be aware that @R{}, like many Unix tools, uses
-@enindex DISPLAY
-the existence of a @env{DISPLAY} environment variable to determine
-whether an X system is running.  This affects the default graphics
-device for the command-line version of R and the behaviour of the
-@code{png} and @code{jpeg} devices.
+@c If you use the X window manager and prefer @code{Terminal.app} to
+@c @code{xterm}, you should be aware that @R{}, like many Unix tools, uses
+@c @enindex DISPLAY
+@c the existence of a @env{DISPLAY} environment variable to determine
+@c whether an X system is running.  This affects the default graphics
+@c device for the command-line version of R and the behaviour of the
+@c @code{png} and @code{jpeg} devices.
 
 
 @cindex BLAS library
@@ -3684,7 +3685,7 @@ Modern Solaris systems allow a large selection of Open Source software
 to be installed from @url{http://www.opencsw.org} (formerly
 @url{http://www.blastwave.org}) via @command{pkg-get}, by default
 installed under @file{/opt/csw}.  You will need GNU @code{libiconv} and
-@code{readline} the Solaris version of @code{iconv} is not sufficiently
+@code{readline}: the Solaris version of @code{iconv} is not sufficiently
 powerful.
 
 If using @command{gcc}, do ensure that the compiler was compiled for the
@@ -3723,9 +3724,15 @@ and later used self-compiled versions of @code{libiconv} and
 @code{readline} from @file{/usr/local} (replacing @file{/opt/csw} in the
 flags).  For a 64-bit target add @option{-m64} and use something like
 @code{LDFLAGS=-L/opt/csw/lib/sparcv9} or
-@code{LDFLAGS=-L/usr/local/lib/amd64} as appropriate.  You can target
-specific Sparc architectures for (slightly) higher performance: Sun
-recommend
+@code{LDFLAGS=-L/usr/local/lib/amd64} as appropriate.  
+
+By default the Sun Studio compilers do not conform to the C99 standard
+(appendix F 8.9) on the return values of functions such as @code{log}:
+use @option{-xlibmieee} to ensure this.  Also, errors have been reported
+on @cputype{amd64} if @option{-xc99} is omitted.
+
+You can target specific Sparc architectures for (slightly) higher
+performance: Sun recommend
 
 @example
 @r{32-bit:} -xtarget=ultra3 -xarch=v8plusa
@@ -3735,11 +3742,6 @@ recommend
 @noindent
 (in @code{CFLAGS} etc.) as a good compromise for recent Sparc chipsets.
 
-By default the Sun Studio compilers do not conform to the C99 standard
-(appendix F 8.9) on the return values of functions such as @code{log}:
-use @option{-xlibmieee} to ensure this.  Also, errors have been reported
-on @cputype{amd64} if @option{-xc99} is omitted.
-
 On @cputype{x86} you will get marginally higher performance @emph{via}
 
 @example
@@ -3748,12 +3750,6 @@ FFLAGS="-O5 -libmil -nofstore"
 CXXFLAGS="-xO5 -xlibmil -nofstore"
 SAFE_FFLAGS="-O5 -libmil -fstore"
 @end example
-
-There is limited support for @cputype{amd64} builds in the pre-built
-GNU software repositories, but @cputype{amd64} versions of @R{} have
-been built using the Sun Studio compilers.  Suitable versions of
-@code{libiconv} and @code{readline} have been used from
-@url{http://www.opencsw.org} and also built from the sources.
 
 Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4 
 (@command{gcc}@tie{}4.3.3 but @command{gfortran}@tie{}4.0.2) needed
