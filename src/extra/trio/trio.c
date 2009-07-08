@@ -1910,7 +1910,7 @@ TRIO_ARGS5((type, format, parameters, arglist, argarray),
   
   while (format[offset])
     {
-      trio_parameter_t parameter = {};
+      trio_parameter_t parameter;
       int status;
 
 #if defined(TRIO_COMPILER_SUPPORTS_MULTIBYTE)
