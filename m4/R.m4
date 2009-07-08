@@ -3303,9 +3303,14 @@ int main () {
   ]])], [r_cv_iconv_latin1=yes], [r_cv_iconv_latin1=no],
     [r_cv_iconv_latin1=yes])])
 
-  if test "$r_cv_iconv_latin1" = yes; then
-    AC_DEFINE(ICONV_LATIN1, 1,
-	      [Define if `iconv' accepts "UTF-8", "latin1" and "UCS-*".])
+  ## on Windows we supply iconv ourselves
+  case "${host_os}" in
+    mingw*)
+      r_cv_iconv_latin1=yes
+      ;;
+  esac
+  if test "$r_cv_iconv_latin1" != yes; then
+    AC_MSG_ERROR([a suitable iconv is essential])
   fi
 fi
 ## if the iconv we are using was in libiconv we have already included -liconv

@@ -39007,12 +39007,16 @@ fi
 { echo "$as_me:$LINENO: result: $r_cv_iconv_latin1" >&5
 echo "${ECHO_T}$r_cv_iconv_latin1" >&6; }
 
-  if test "$r_cv_iconv_latin1" = yes; then
-
-cat >>confdefs.h <<\_ACEOF
-#define ICONV_LATIN1 1
-_ACEOF
-
+  ## on Windows we supply iconv ourselves
+  case "${host_os}" in
+    mingw*)
+      r_cv_iconv_latin1=yes
+      ;;
+  esac
+  if test "$r_cv_iconv_latin1" != yes; then
+    { { echo "$as_me:$LINENO: error: a suitable iconv is essential" >&5
+echo "$as_me: error: a suitable iconv is essential" >&2;}
+   { (exit 1); exit 1; }; }
   fi
 fi
 { echo "$as_me:$LINENO: checking for iconvlist" >&5
@@ -39090,17 +39094,6 @@ _ACEOF
 
 fi
 
-## on Windows we supply iconv ourselves
-case "${host_os}" in
-  mingw*)
-    r_cv_iconv_latin1=yes
-    ;;
-esac
-if test "$r_cv_iconv_latin1" != yes; then
-  { { echo "$as_me:$LINENO: error: a suitable iconv is not available" >&5
-echo "$as_me: error: a suitable iconv is not available" >&2;}
-   { (exit 1); exit 1; }; }
-fi
 
 ## support for MBCS
 
@@ -48058,11 +48051,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48061: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48054: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:48065: \$? = $ac_status" >&5
+   echo "$as_me:48058: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -48157,11 +48150,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48160: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48153: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:48164: \$? = $ac_status" >&5
+   echo "$as_me:48157: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -48209,11 +48202,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48212: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48205: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:48216: \$? = $ac_status" >&5
+   echo "$as_me:48209: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -58415,11 +58408,6 @@ cat >>confdefs.h <<\_ACEOF
 #define HAVE_TIMES 1
 _ACEOF
 
-
-cat >>confdefs.h <<\_ACEOF
-#define ICONV_LATIN1 1
-_ACEOF
-
     want_R_profiling=yes
 
 cat >>confdefs.h <<\_ACEOF
@@ -62061,6 +62049,15 @@ else
   r_external_libs="${r_external_libs}${separator}LAPACK(${r_lapack})"
 fi
 fi
+if test "${use_ICU}" = yes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_external_libs}"; then
+  r_external_libs="ICU"
+else
+  r_external_libs="${r_external_libs}${separator}ICU"
+fi
+fi
 r_capabilities=
 if test "${have_png}" = yes; then
   separator=", "
@@ -62114,15 +62111,6 @@ if test -z "${r_capabilities}"; then
   r_capabilities="cairo"
 else
   r_capabilities="${r_capabilities}${separator}cairo"
-fi
-fi
-if test "${use_ICU}" = yes; then
-  separator=", "
-test -z "${separator}" && separator=" "
-if test -z "${r_capabilities}"; then
-  r_capabilities="ICU"
-else
-  r_capabilities="${r_capabilities}${separator}ICU"
 fi
 fi
 r_options=

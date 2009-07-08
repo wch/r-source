@@ -1949,15 +1949,6 @@ AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 
 ## iconv headers and function.
 R_ICONV
-## on Windows we supply iconv ourselves
-case "${host_os}" in
-  mingw*)
-    r_cv_iconv_latin1=yes
-    ;;
-esac
-if test "$r_cv_iconv_latin1" != yes; then
-  AC_MSG_ERROR([a suitable iconv is not available])
-fi
 
 ## support for MBCS
 R_MBCS
@@ -2376,8 +2367,6 @@ case "${host_os}" in
     AC_DEFINE(HAVE_TCLTK, 1, [Define if you have the Tcl/Tk headers and 
                               libraries and want Tcl/Tk support to be built.] )
     AC_DEFINE(HAVE_TIMES, 1, [Define to 1 if you have the `times' function.])
-    AC_DEFINE(ICONV_LATIN1, 1, [Define if `iconv' accepts "UTF-8", "latin1" 
-                                and "UCS-*".])
     want_R_profiling=yes
     AC_DEFINE(R_PROFILING, 1, [Define this to enable R-level profiling.])
     AC_DEFINE(SUPPORT_LIBXML, 1, [Define if you provide support for the libxml
@@ -2531,6 +2520,9 @@ if test "${acx_lapack_ok}" = "yes"; then
   esac
   R_SH_VAR_ADD(r_external_libs, [LAPACK(${r_lapack})], [, ])
 fi
+if test "${use_ICU}" = yes; then
+  R_SH_VAR_ADD(r_external_libs, [ICU], [, ])
+fi
 r_capabilities=
 if test "${have_png}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [PNG], [, ])
@@ -2549,9 +2541,6 @@ if test "${USE_NLS}" = yes; then
 fi
 if test "${r_cv_cairo_works}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [cairo], [, ])
-fi
-if test "${use_ICU}" = yes; then
-  R_SH_VAR_ADD(r_capabilities, [ICU], [, ])
 fi
 r_options=
 if test "${want_R_framework}" = yes; then

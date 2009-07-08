@@ -775,9 +775,6 @@
 /* Define as const if the declaration of iconv() needs const. */
 #define ICONV_CONST const
 
-/* Define if `iconv' accepts "UTF-8", "latin1" and "UCS-*". */
-#define ICONV_LATIN1 1
-
 /* Define if you have IEEE 754 floating point arithmetic. */
 #define IEEE_754 1
 
