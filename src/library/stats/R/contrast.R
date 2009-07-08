@@ -76,10 +76,10 @@ contr.helmert <-
     function (n, contrasts=TRUE, sparse=FALSE)
 {
     if (length(n) <= 1) {
-	if(is.numeric(n) && length(n) == 1 && n > 1) levels <- 1L:n
+	if(is.numeric(n) && length(n) == 1 && n > 1) levels <- seq_len(n)
 	else stop("not enough degrees of freedom to define contrasts")
     } else levels <- n
-    lenglev <- length(levels)
+    lenglev <- length(levels <- as.character(levels))
     if(sparse) array <- .sparse.array
     if (contrasts) {
 	cont <- array(-1, c(lenglev, lenglev-1L), list(levels, NULL))
@@ -96,14 +96,15 @@ contr.treatment <-
     function(n, base = 1, contrasts = TRUE, sparse = FALSE)
 {
     if(is.numeric(n) && length(n) == 1) {
-	if(n > 1) levs <- 1L:n
+	if(n > 1) levels <- as.character(seq_len(n))
 	else stop("not enough degrees of freedom to define contrasts")
     } else {
-	levs <- n
+	levels <- as.character(n)
 	n <- length(n)
     }
+
     if(sparse) array <- .sparse.array
-    contr <- array(0, c(n, n), list(levs, levs))
+    contr <- array(0, c(n, n), list(levels, levels))
     diag(contr) <- 1
     if(contrasts) {
 	if(n < 2)
@@ -121,10 +122,10 @@ contr.sum <-
 {
     if (length(n) <= 1) {
 	if (is.numeric(n) && length(n) == 1 && n > 1)
-	    levels <- 1L:n
+	    levels <- seq_len(n)
 	else stop("not enough degrees of freedom to define contrasts")
     } else levels <- n
-    lenglev <- length(levels)
+    lenglev <- length(levels <- as.character(levels))
     if(sparse) array <- .sparse.array
     if (contrasts) {
 	cont <- array(0, c(lenglev, lenglev - 1L), list(levels, NULL))

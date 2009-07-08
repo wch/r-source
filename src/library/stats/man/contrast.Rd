@@ -87,8 +87,8 @@ all(crossprod(cT) == diag(4)) # TRUE: even orthonormal
 
 cT. <- contr.SAS(5)
 all(crossprod(cT.) == diag(4))# TRUE
-#(cS. <- contr.SAS(5, sparse = TRUE))
-#all(cT. == cS.)
+(cS. <- contr.SAS(5, sparse = TRUE))
+all(cT. == cS.)
 
 (cP <- contr.poly(3)) # Linear and Quadratic
 zapsmall(crossprod(cP), digits=15) # orthonormal up to fuzz
