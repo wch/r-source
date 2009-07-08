@@ -41,8 +41,8 @@
    */
 /* #undef HAVE_ALLOCA_H */
 
-/* Define if you have the Aqua headers and libraries, and want the Aqua GUI to
-   be built. */
+/* Define if you have the Aqua headers and libraries, and want the Aqua GUI
+   components and quartz() device to be built. */
 /* #undef HAVE_AQUA */
 
 /* Define to 1 if you have the `argz_count' function. */
@@ -74,6 +74,9 @@
 
 /* Define to 1 if the compiler understands __builtin_expect. */
 #define HAVE_BUILTIN_EXPECT 1
+
+/* Define to 1 if you have the <bzlib.h> header file. */
+/* #undef HAVE_BZLIB_H */
 
 /* Define this if you have support for C99 complex types. */
 #define HAVE_C99_COMPLEX 1
@@ -373,6 +376,9 @@
 /* Define to 1 if you have the `dl' library (-ldl). */
 /* #undef HAVE_LIBDL */
 
+/* Define to 1 if you have the `icucore' library (-licucore). */
+/* #undef HAVE_LIBICUCORE */
+
 /* Define to 1 if you have the `m' library (-lm). */
 #define HAVE_LIBM 1
 
@@ -488,10 +494,10 @@
 #define HAVE_POSIX_SETJMP 1
 
 /* Define if the <pthread.h> defines PTHREAD_MUTEX_RECURSIVE. */
-#define HAVE_PTHREAD_MUTEX_RECURSIVE 1
+/* #undef HAVE_PTHREAD_MUTEX_RECURSIVE */
 
 /* Define if the POSIX multithreading library has read/write locks. */
-#define HAVE_PTHREAD_RWLOCK 1
+/* #undef HAVE_PTHREAD_RWLOCK */
 
 /* Define to 1 if you have the `putenv' function. */
 #define HAVE_PUTENV 1
@@ -919,6 +925,12 @@
 /* Define if your rint() is broken on your system. Apparently needed on HPUX.
    */
 /* #undef USE_BUILTIN_RINT */
+
+/* Define to use ICU for collation. */
+/* #undef USE_ICU */
+
+/* Define to use Apple's ICU. */
+/* #undef USE_ICU_APPLE */
 
 /* Define if the POSIX multithreading library can be used. */
 /* #undef USE_POSIX_THREADS */
