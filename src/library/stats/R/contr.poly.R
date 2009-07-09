@@ -14,8 +14,11 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-contr.poly <- function (n, scores = 1L:n, contrasts = TRUE)
+contr.poly <- function (n, scores = 1:n, contrasts = TRUE, sparse = FALSE)
 {
+## sparse.model.matrix() may call this one with sparse=TRUE anyway ..
+##     if(sparse)
+## 	stop("orthogonal polynomial contrasts cannot be sparse")
     make.poly <- function(n, scores)
     {
 	y <- scores - mean(scores)
@@ -30,7 +33,7 @@ contr.poly <- function (n, scores = 1L:n, contrasts = TRUE)
 	Z
     }
 
-    if (is.numeric(n) && length(n) == 1) levs <- 1L:n
+    if (is.numeric(n) && length(n) == 1) levs <- seq_len(n)
     else {
 	levs <- n
 	n <- length(levs)
@@ -45,9 +48,10 @@ contr.poly <- function (n, scores = 1L:n, contrasts = TRUE)
     if (!is.numeric(scores) || anyDuplicated(scores))
         stop("'scores' must all be different numbers")
     contr <- make.poly(n, scores)
+    if(sparse) contr <- as(contr, "sparseMatrix")
     if (contrasts) {
 	dn <- colnames(contr)
-	dn[2:min(4,n)] <- c(".L", ".Q", ".C")[1L:min(3, n-1)]
+	dn[2:min(4,n)] <- c(".L", ".Q", ".C")[1:min(3, n-1)]
 	colnames(contr) <- dn
 	contr[, -1, drop = FALSE]
     }

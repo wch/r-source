@@ -68,6 +68,8 @@ contrasts <-
     x
 }
 
+## contr.poly() is in contr.poly.R
+
 .sparse.array <- function(x, dim, dimnames)
     Matrix::Matrix(x, nrow=dim[1], ncol=dim[2],
 		   dimnames=dimnames, sparse=TRUE)

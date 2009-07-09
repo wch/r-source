@@ -9,7 +9,7 @@
 \alias{contr.sum}
 \alias{contr.treatment}
 \alias{contr.SAS}
-\title{Contrast Matrices}
+\title{(Possibly Sparse) Contrast Matrices}
 \description{
   Return a matrix of contrasts.
 }
@@ -56,6 +56,11 @@ contr.SAS(n, contrasts = TRUE, sparse = FALSE)
   the base level to be the last level of the factor.  The coefficients
   produced when using these contrasts should be equivalent to those
   produced by many (but not all) SAS procedures.
+
+  For consistency, \code{sparse} is an argument to all contrast
+  functions, however \code{sparse = TRUE} for \code{contr.poly}
+  is typically nonsense, and also is rarely sensical for
+  \code{contr.helmert}.
 }
 \value{
   A matrix with \code{n} rows and \code{k} columns, with \code{k=n-1} if
