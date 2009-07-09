@@ -85,7 +85,7 @@ seq(length.out= )
   be supplied as complex values provided \code{length.out} or
   \code{along.with} is specified.
 
-  \code{seq.int}, \code{seq_along} and \code{seq.int} are
+  \code{seq.int}, \code{seq_along} and \code{seq_len} are
   \link{primitive}: the latter two ignore any argument name.
 }
 \value{
