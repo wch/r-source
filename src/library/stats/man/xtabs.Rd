@@ -99,17 +99,19 @@ ftable(xtabs(breaks ~ wool + tension + replicate, data = warpbreaks))
 
 ### ---- Sparse Examples ----
 
-## similar to "nlme"s  'ergoStool' :
-d.ergo <- data.frame(Type = paste("T", rep(1:4, 9*4), sep=""),
-                     Subj = gl(9,4, 36*4))
-xtabs(~ Type + Subj, data=d.ergo) # 4 replicates each
-set.seed(15) # a subset of cases:
-xtabs(~ Type + Subj, data=d.ergo[sample(36, 10),], sparse=TRUE)
+if(require("Matrix")) {
+ ## similar to "nlme"s  'ergoStool' :
+ d.ergo <- data.frame(Type = paste("T", rep(1:4, 9*4), sep=""),
+		      Subj = gl(9,4, 36*4))
+ print(xtabs(~ Type + Subj, data=d.ergo)) # 4 replicates each
+ set.seed(15) # a subset of cases:
+ print(xtabs(~ Type + Subj, data=d.ergo[sample(36, 10),], sparse=TRUE))
 
-## Hypothetical two level setup:
-inner <- factor(sample(letters[1:25], 100, replace = TRUE))
-inout <- factor(sample(LETTERS[1:5], 25, replace = TRUE))
-fr <- data.frame(inner = inner, outer = inout[as.integer(inner)])
-xtabs(~ inner + outer, fr, sparse = TRUE)
+ ## Hypothetical two level setup:
+ inner <- factor(sample(letters[1:25], 100, replace = TRUE))
+ inout <- factor(sample(LETTERS[1:5], 25, replace = TRUE))
+ fr <- data.frame(inner = inner, outer = inout[as.integer(inner)])
+ print(xtabs(~ inner + outer, fr, sparse = TRUE))
+}% only if Matrix is available
 }
 \keyword{category}
