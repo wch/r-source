@@ -169,7 +169,7 @@ Rd2txt <-
             Sys.getlocale("LC_CTYPE") != "C") {
             text <- gsub("``", "\x93", text, fixed = TRUE)
             text <- gsub("''", "\x94", text, fixed = TRUE)
-            text <- gsub("`([^']+)'", "\x93\\1\x94", text)
+            text <- gsub("`([^']+)'", "\x91\\1\x92", text)
             text <- gsub("`", "'", text, fixed = TRUE)
         } else {
             text <- gsub("(``|'')", '"', text)
@@ -228,7 +228,7 @@ Rd2txt <-
             blankLine(0)
             putf('## End(Not run)\n')
         } else {
-            putf('## Not run:\n')
+            putf('## Not run: ')
             writeCodeBlock(block, tag)
             blankLine(0)
         }
