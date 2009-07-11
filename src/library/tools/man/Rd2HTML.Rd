@@ -88,7 +88,7 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
 }
 \value{
   \code{Rd2*} are executed mainly for the side effect of writing the
-  converted help page.  Its value is the name of that page.
+  converted help page.  Their value is the name of that page.
   
   \code{checkRd} returns \code{TRUE} if the file has no errors; it
   generates an R error otherwise.
