@@ -281,7 +281,7 @@ processRdChunk <- function(code, stage, options, env) {
 	    res <- lapply(as.list(res), function(x) tagged(x, "VERB"))
 	    res <- tagged(res, "\\verb")
 	} else res <- tagged("", "COMMENT")
-    } else res <- tagged("", "COMMENT")
+    } else res <- code
     attr(res, "srcref") <- srcref
     res
 }
