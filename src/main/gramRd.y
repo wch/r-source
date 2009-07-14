@@ -147,11 +147,17 @@ static int 	mkComment(int);
 
 /* Recent bison has <> to represent all of the destructors below, but we don't assume it */
 
+/* I think we need to list everything here which occurs before the last item in a
+   pattern, just in case the last item is unmatched and we need to back out.  But
+   it is safe to list more, so we do. */
+
 %destructor { UNPROTECT_PTR($$); } SECTIONHEADER RSECTIONHEADER
 VSECTIONHEADER SECTIONHEADER2 RCODEMACRO SEXPR LATEXMACRO VERBMACRO
 OPTMACRO ESCAPE LISTSECTION ITEMIZE DESCRIPTION NOITEM LATEXMACRO2
 VERBMACRO2 IFDEF ENDIF TEXT RCODE VERB COMMENT UNKNOWN STARTFILE
-STARTFRAGMENT
+STARTFRAGMENT goLatexLike goRLike goRLike2 goOption goVerbatim
+goVerbatim1 goVerbatim2 goItem0 goItem2 LatexArg RLikeArg2 
+VerbatimArg1 VerbatimArg2 IfDefTarget ArgItems Option
 
 %%
 
