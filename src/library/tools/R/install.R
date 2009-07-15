@@ -825,18 +825,22 @@
                     starsmsg(paste0(stars, "*"),
                              "installing help indices")
                     .writePkgIndices(pkg_dir, instdir, CHM = build_chm)
-                    cmd <- paste("perl",
-                                 shQuote(file.path(R.home("share"), "perl",
-                                                   "build-help.pl")),
-                                 paste(build_help_opts, collapse=" "),
-                                 shQuote(pkg_dir),
-                                 shQuote(lib),
-                                 shQuote(instdir),
-                                 pkg_name)
-                    if (debug) message("about to run ", sQuote(cmd))
-                    res <- system(cmd)
-                    if (res)
-                        pkgerrmsg("building help failed", pkg_name)
+                    if (Sys.getenv("USE_NEW_HELP") != "") {
+                        .convertRdfiles(pkg_dir, instdir, types=build_help_types)
+                    } else {
+			cmd <- paste("perl",
+				     shQuote(file.path(R.home("share"), "perl",
+						       "build-help.pl")),
+				     paste(build_help_opts, collapse=" "),
+				     shQuote(pkg_dir),
+				     shQuote(lib),
+				     shQuote(instdir),
+				     pkg_name)
+			if (debug) message("about to run ", sQuote(cmd))
+			res <- system(cmd)
+			if (res)
+			    pkgerrmsg("building help failed", pkg_name)
+		    }
                     if (use_zip_help &&
                         (WINDOWS ||
                          (nzchar(Sys.getenv("R_UNZIPCMD")) &&
@@ -1163,23 +1167,36 @@
             message("\n*** 'hhc.exe' not found: not building CHM help\n")
         }
     }
+    
+    if (Sys.getenv("USE_NEW_HELP") != "") {
+	build_help_types <- character(0)
+	if (build_text) build_help_types <- c(build_help_types, "txt")
+	if (build_html) build_help_types <- c(build_help_types, "html")
+	if (build_latex) build_help_types <- c(build_help_types, "latex")
+	if (build_example) build_help_types <- c(build_help_types, "example")
+	if (build_chm) build_help_types <- c(build_help_types, "chm")
+	build_help <- length(build_help_types) > 0L
 
-    build_help_opts <- character(0)
-    if (build_text) build_help_opts <- c(build_help_opts, "--txt")
-    if (build_html) build_help_opts <- c(build_help_opts, "--html")
-    if (build_latex) build_help_opts <- c(build_help_opts, "--latex")
-    if (build_example) build_help_opts <- c(build_help_opts, "--example")
-    if (build_chm) build_help_opts <- c(build_help_opts, "--chm")
-    build_help <- length(build_help_opts) > 0L
-    if (build_help && debug) build_help_opts <- c("--debug", build_help_opts)
-    if (build_help && WINDOWS)
-        build_help_opts <- c("--os=windows", build_help_opts)
+	if (debug)
+	    starsmsg(stars, "build_help_types=", paste(build_help_types, collapse=" "))
+    } else {
+	build_help_opts <- character(0)
+	if (build_text) build_help_opts <- c(build_help_opts, "--txt")
+	if (build_html) build_help_opts <- c(build_help_opts, "--html")
+	if (build_latex) build_help_opts <- c(build_help_opts, "--latex")
+	if (build_example) build_help_opts <- c(build_help_opts, "--example")
+	if (build_chm) build_help_opts <- c(build_help_opts, "--chm")
+	build_help <- length(build_help_opts) > 0L
+	if (build_help && debug) build_help_opts <- c("--debug", build_help_opts)
+	if (build_help && WINDOWS)
+	    build_help_opts <- c("--os=windows", build_help_opts)
 
-    if (debug)
-        starsmsg(stars, "build_help_opts=", paste(build_help_opts, collapse=" "))
+	if (debug)
+	    starsmsg(stars, "build_help_opts=", paste(build_help_opts, collapse=" "))
 
-    if (build_help)
-        .setPERL()
+	if (build_help)
+	    .setPERL()
+    }
 
     if (debug)
         starsmsg(stars, "DBG: R CMD INSTALL' now doing do_install")
