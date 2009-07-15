@@ -21,6 +21,10 @@ NEW FEATURES
     o	windows() now has a parameter fillOddEven (default TRUE),
 	which controls the mode used for polygon fills of self-
 	intersecting shapes.
+	
+    o	Windows binary builds of R-devel have USE_NEW_HELP defined for
+	the base and recommended packages, so they make use of the new
+	dynamic help system.  See ?tools::Rd2HTML.
     	
     	
 PACKAGE INSTALLATION

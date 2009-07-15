@@ -62,6 +62,7 @@ ifeq ($(strip $(USE_CHM)),TRUE)
 	  $(ECHO) "------ Installing help for package $${pkg}"; \
 	  $(MAKE) --no-print-directory -C ../gnuwin32/help -s RHOME=$(RHOME) \
 	    HELPTYPES='-txt -html -latex -example -chm' \
+	    USE_NEW_HELP=T \
 	    chm-$${pkg} || exit 1; \
 	done
 else
