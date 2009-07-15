@@ -67,16 +67,18 @@ help-indices:
 	  $(ECHO) "tools:::.writePkgIndices(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(R_EXE) || exit 1; \
 	done
 
-Rdfiles-new:
+ifdef USE_NEW_HELP
+Rdfiles:
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(R_EXE) || exit 1; \
 	done
-
+else
 ## NB this is called from tests/Examples/Makefile with the make variables set.
 Rdfiles:
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(R_CMD_BUILD_HELP) $(R_CMD_BUILD_HELP_OPTS) $(srcdir)/$${pkg}; \
 	done
+endif
 
 base-test:
 	rm -f $(top_builddir)/library/base/html/*

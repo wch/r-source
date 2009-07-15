@@ -13,9 +13,10 @@
 \alias{findHTMLlinks}
 \title{ Work with an Rd object }
 \description{
-  These experimental functions take the output of the
+  These functions take the output of the
   \code{\link{parse_Rd}} function and check it or produce a help
-  page from it.  Their interfaces (and existence!) are subject to
+  page from it.  As they are mainly intended for internal
+  use, their interfaces are subject to
   change.
 }
 \usage{
@@ -44,7 +45,7 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
   \item{defines}{ string(s) to use in \code{"#ifdef"} tests. }
   \item{encoding}{ encoding to use if the file does not specify one. }
   \item{stages}{ at which stage (\code{"build"}, \code{"install"}, or
-    \code{"render"} should \\Sexpr macros be executed?} 
+    \code{"render"} should \\Sexpr macros be executed? See the notes below.} 
   \item{Links}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{findHTMLlinks}.}
   \item{CHM}{logical: prepare HTML suitable for Compiled HTML?} 
@@ -57,16 +58,15 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
     to scan: the default indicates \code{\link{.libPaths}()}.}
 }
 \details{
-  The \code{Rd2HTML} converter is still in development, and currently
-  has the following known deficiencies:
-  \itemize{
-    \item \code{"\\enc"} is not supported.
-    \item Error messages are not as informative as they could be.  Often
-    using \code{parse_Rd(\dots, verbose = TRUE)} will give a better idea
-    of what is wrong.
-    \item Formatting is not always optimal.
-  }
-
+ 
+  The \code{Rd2*} functions convert man pages:  
+  \code{Rd2HTML} produces HTML (or compiled HTML, for Windows), 
+  \code{Rd2txt} produces plain text, \code{Rd2latex} produces
+  LaTeX input.  
+  
+  The converters are still in development, and may still make some errors
+  in rendering.
+  
   \code{Rd2ex} extracts the examples in the format used by
   \code{\link{example}} and \R utilities.  it reproduces the previous
   version up to
@@ -75,8 +75,15 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
     to be done.
     \item Small improvements in layout.
   }
+  
+  \code{checkRd} makes consistency checks on an Rd file, confirming that required
+  sections are present, etc.
+  
+  Each of the above functions accepts a filename for an Rd file, and will 
+  use \code{\link{parse_Rd}} to parse it before applying the conversions or checks.
 
-  \code{findHTMLlinks} uses in decreasing priority
+  \code{findHTMLlinks} tries to resolve links from one man page to another.  It
+  uses in decreasing priority
   \itemize{
     \item The package in \code{pkgDir}: this is used when converting
     HTML help for that package.
@@ -86,9 +93,43 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
     library tree.
   }
 }
-\value{
-  \code{Rd2*} are executed mainly for the side effect of writing the
-  converted help page.  Their value is the name of that page.
+\note{
+
+The \\Sexpr macro is a new addition to Rd files.  It includes R code
+that will be executed at one of three times:  build time (when a
+package's source code is built into a tarball, not yet implemented),
+install time (when the package code is compiled and installed, or
+compiled and built into a binary package), and render time (when the
+man page is converted to a readable format). Depending on the output
+format, render time may be the same as install time.
+
+Currently only text format man pages render when displayed, all other
+formats render when installed, and in all cases, handling of \\Sexpr macros needs
+to be enabled during the build of R (by defining the \code{USE_NEW_HELP}
+environment variable).  If not enabled, the macro will show, rather
+than the result of evaluating the R code.
+
+For example, this man page was:
+\enumerate{
+\item built on 
+\Sexpr[stage=build]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")},
+\item installed on 
+\Sexpr[stage=install]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")}, and
+\item rendered on 
+\Sexpr[stage=render]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")}.
+}
+Because build-time execution is not yet supported, the first of these will
+display as a macro; the other two may or may not, 
+depending on the build of \R.  (Note that escapes, e.g. for \samp{\%}, 
+that are necessary in the source
+code are not currently reproduced in this display.) 
+} 
+
+\value{ 
+
+The \code{Rd2*} functions are
+executed mainly for the side effect of writing the converted help
+page.  Their value is the name of the output page.
   
   \code{checkRd} returns \code{TRUE} if the file has no errors; it
   generates an R error otherwise.
@@ -105,13 +146,20 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
 }
 \examples{
 \donttest{
+# Simulate an install and rendering of this page in HTML and text format:
+
 toolsRd <- Rd_db("tools")
 con <- textConnection(toolsRd[[grep("Rd2HTML.Rd", names(toolsRd))]], "rt")
 outfile <- paste(tempfile(), ".html", sep="")
-browseURL(Rd2HTML(con, outfile, package="tools"))
+browseURL(Rd2HTML(con, outfile, package="tools", stages=c("install", "render")))
 close(con)
- 
-con <- textConnection(toolsRd[["Rd2HTML.Rd"]], "rt")
+
+con <- textConnection(toolsRd[[grep("Rd2HTML.Rd", names(toolsRd))]], "rt")
+outfile <- paste(tempfile(), ".txt", sep="")
+file.show(Rd2txt(con, outfile, package="tools", stages=c("install", "render")))
+close(con)
+
+con <- textConnection(toolsRd[[grep("Rd2HTML.Rd", names(toolsRd))]], "rt")
 checkRd(con) # A stricter test than Rd2HTML uses
 close(con)
 }

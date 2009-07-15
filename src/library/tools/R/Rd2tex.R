@@ -359,6 +359,14 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown", 
                    of1("\\end{alltt}\n")
                    inPre <<- FALSE
                },
+               "\\Sexpr"= { of1("\\begin{verbatim}\n\\Sexpr")  # This is only here if processing didn't get it...
+	       	            option <- attr(block, "Rd_option")
+	       	            if (!is.null(option)) of0("[", option, "]")
+	       	            of1("\\{")
+	       	            writeContent(block, tag)
+	       	            of1("\\}\n\\end{verbatim}\n")
+	       	          },
+
                "\\verb"= writeWrapped(tag, block),
                "\\special"= writeContent(block, tag), ## FIXME, verbatim?
                "\\linkS4class" =,

@@ -234,16 +234,16 @@ Rd2txt <-
         }
     }
 
-    writeQ <- function(block, tag)
+    writeQ <- function(block, tag, quote=tag)
     {
         if (.Platform$OS.type == "windows" && Sys.getlocale("LC_CTYPE") != "C") {
-            if (tag == "\\sQuote") {
+            if (quote == "\\sQuote") {
                 put("\x91"); writeContent(block, tag); put("\x92")
             } else {
                 put("\x93"); writeContent(block, tag); put("\x94")
             }
         } else {
-            if (tag == "\\sQuote") {
+            if (quote == "\\sQuote") {
                 put("'"); writeContent(block, tag); put("'")
             } else {
                 put("\""); writeContent(block,tag); put("\"")
@@ -277,23 +277,28 @@ Rd2txt <-
                    indent <<- indent0
                    enumItem <<- enumItem0
                },
-               ## FIXME: why not use smart quotes?
+               "\\code"=,
                "\\command"=,
                "\\env"=,
                "\\file"=,
                "\\kbd"=,
                "\\option"=,
                "\\pkg"=,
-               "\\samp" = { put("'"); writeContent(block, tag); put("'")},
+               "\\samp" = writeQ(block, tag, quote="\\sQuote"),
                "\\email"=  put("<email: ", as.character(block), ">"),
                 "\\url"= put("<URL: ", as.character(block), ">"),
+               "\\Sexpr"= { put("\\Sexpr")  # This is only here if processing didn't get it...
+               		    option <- attr(block, "Rd_option")
+               		    if (!is.null(option)) put("[", option, "]")
+               		    put("{")
+                            writeContent(block, tag)
+                            put("}")
+                          },
                "\\acronym" =,
                "\\cite"=,
                "\\dfn"= ,
                "\\special" = ,
                "\\var" = writeContent(block, tag),
-
-               "\\code" = { put("'"); writeContent(block, tag); put("'")},
 
                "\\bold"=,
                "\\strong"= {

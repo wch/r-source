@@ -1943,7 +1943,7 @@
         cat(type, rep(" ", 8-nchar(type)), sep="")
     }
     dirname <- c("help", "html", "latex", "R-ex", "chm")
-    ext <- c("", ".html", ".tex", ".R", ".html")
+    ext <- c(".rds", ".html", ".tex", ".R", ".html")
     names(dirname) <- names(ext) <- c("txt", "html", "latex", "example", "chm")
     mandir <- file.path(dir, "man")
     if(!file_test("-d", mandir))
@@ -1975,14 +1975,14 @@
         for (f in files) {
             bf <-  sub("\\.[Rr]d","", basename(f))
             shown <- FALSE
-            Rd <- tools::parse_Rd(f)
+            Rd <- prepare_Rd(f, defines = .Platform$OS.type, stages="install")
             if ("txt" %in% types) {
                 type <- "txt"
                 ff <- file.path(outDir, dirname[type],
                                 paste(bf, ext[type], sep = ""))
                 if(!file.exists(ff) || file_test("-nt", f, ff)) {
                     showtype()
-                    res <- try(Rd2txt(Rd, ff, package = pkg))
+                    res <- try(.saveRDS(Rd, ff))
                     if(inherits(res, "try-error")) unlink(ff)
                 }
             }
