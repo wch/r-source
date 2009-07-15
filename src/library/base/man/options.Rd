@@ -119,7 +119,7 @@ getOption(x, default = NULL)
       that case.  The functions \code{\link{dump.frames}} and
       \code{\link{recover}} provide alternatives that allow post-mortem
       debugging.  Note that these need to specified as e.g.
-      \code{options=utils::recover} in startup files such as
+      \code{options(error=utils::recover)} in startup files such as
       \file{\link{.Rprofile}}.}
 
     \item{\code{expressions}:}{sets a limit on the number of nested
