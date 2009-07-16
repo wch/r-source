@@ -55,10 +55,10 @@ LibExtern int	 R_NaInt;	/* NA_INTEGER:= INT_MIN currently */
 int R_IsNA(double);		/* True for R's NA only */
 int R_IsNaN(double);		/* True for special NaN, *not* for NA */
 int R_finite(double);		/* True if none of NA, NaN, +/-Inf */
-
 #define ISNA(x)	       R_IsNA(x)
-/* True for *both* NA and NaN.
-   NOTE: some systems do not return 1 for TRUE. 
+
+/* ISNAN(): True for *both* NA and NaN.
+   NOTE: some systems do not return 1 for TRUE.
    Also note that C++ math headers specifically undefine
    isnan if it is a macro (it is on OS X and in C99),
    hence the workaround.  This code also appears in Rmath.h
