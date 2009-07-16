@@ -31,7 +31,15 @@ checkNEWS(file = file.path(R.home(), "NEWS"))
 \code{readNEWS()} reads a NEWS file; \code{checkNEWS()} checks for common
 errors in formatting.  Currently it detects an incorrect number of spaces before
 the \code{"o"} item marker.
+
+If non-ASCII characters are needed, the NEWS file may be encoded in
+UTF-8 with a byte-order mark (BOM) at the beginning, which
+\code{readNEWS()} will recognize.  Other encodings will display
+incorrectly on some systems.  However, BOMs are discouraged on many
+systems and not all editors recognize them, so NEWS files should
+normally be written in ASCII.
 }
+
 \value{
   \code{readNEWS()} returns an (S3) object of class \code{"newsTree"}; effectively
   a \code{\link{list}} of lists which is a tree of NEWS entries.

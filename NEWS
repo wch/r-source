@@ -139,6 +139,10 @@ NEW FEATURES
 
     o	contr.sum() etc gain an argument 'sparse' which allows sparse
 	matrices to be returned.
+	
+    o	readNEWS() will recognize a UTF-8 byte-order mark (BOM) in the
+	NEWS file. However, it is safer to use only ASCII code there
+	because not all editors recognize BOMs.
 
 
 
