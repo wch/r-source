@@ -30,7 +30,7 @@ BUG FIXES
         drawn with the symbol font face. (Report from Baptiste Auguie.)
         
     o	length(x) <- newval could cause memory corruption. (Reported
-        by Hervé Pagès in PR#13837)
+        by Herve Pages in PR#13837)
 
 
 
