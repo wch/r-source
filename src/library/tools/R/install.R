@@ -1769,7 +1769,9 @@
                     call. = FALSE)
             return()
         }
-        Rdcontents(files)
+        Rd <- Rdcontents(files)
+        .saveRDS(Rd, file.path(outDir, "Meta", "Rd.rds"))
+        Rd
     }
 
     topics <- Rd$Aliases
