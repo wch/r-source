@@ -1,6 +1,6 @@
 % File src/library/base/man/backsolve.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{backsolve}
@@ -9,7 +9,11 @@
 \title{Solve an Upper or Lower Triangular System}
 \description{
   Solves a system of linear equations where the coefficient matrix is
-  upper or lower triangular.
+  upper (or \sQuote{right}, \sQuote{R}) or lower (\sQuote{left},
+  \sQuote{L}) triangular.
+
+  \cr \code{x <- backsolve   (R, b)} solves \eqn{R x = b}, and
+  \cr \code{x <- forwardsolve(L, b)} solves \eqn{L x = b}, respectively.
 }
 \usage{
    backsolve(r, x, k=ncol(r), upper.tri=TRUE, transpose=FALSE)
@@ -32,6 +36,9 @@ forwardsolve(l, x, k=ncol(l), upper.tri=FALSE, transpose=FALSE)
 \value{
   The solution of the triangular system.  The result will be a vector if
   \code{x} is a vector and a matrix if \code{x} is a matrix.
+
+  Note that \code{forwardsolve(L, b)} is just a wrapper for
+  \code{backsolve(L, b, upper.tri=FALSE)}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
