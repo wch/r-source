@@ -10,10 +10,10 @@
 \description{
   Solves a system of linear equations where the coefficient matrix is
   upper (or \sQuote{right}, \sQuote{R}) or lower (\sQuote{left},
-  \sQuote{L}) triangular.
+  \sQuote{L}) triangular.\cr 
 
-  \cr \code{x <- backsolve   (R, b)} solves \eqn{R x = b}, and
-  \cr \code{x <- forwardsolve(L, b)} solves \eqn{L x = b}, respectively.
+  \code{x <- backsolve   (R, b)} solves \eqn{R x = b}, and\cr
+  \code{x <- forwardsolve(L, b)} solves \eqn{L x = b}, respectively.
 }
 \usage{
    backsolve(r, x, k=ncol(r), upper.tri=TRUE, transpose=FALSE)
