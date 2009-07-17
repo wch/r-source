@@ -124,11 +124,11 @@ NEW FEATURES
 
     o	The 'method' argument of glm() now allows user-contributed methods.
 
-    o   More general reorder.default() replaces functionality of
-        reorder.factor() and reorder.character().
+    o	More general reorder.default() replaces functionality of
+	reorder.factor() and reorder.character().
 
     o	The function aspell() has been added to provide an interface to
-    	the Aspell spell-checker.
+	the Aspell spell-checker.
 
     o	Filters RdTextFilter() and SweaveTeXFilter() have been added
 	to the tools package to provide support for aspell() or other
@@ -139,11 +139,12 @@ NEW FEATURES
 
     o	contr.sum() etc gain an argument 'sparse' which allows sparse
 	matrices to be returned.
-	
+
     o	readNEWS() will recognize a UTF-8 byte-order mark (BOM) in the
 	NEWS file. However, it is safer to use only ASCII code there
 	because not all editors recognize BOMs.
 
+    o	new inheritedSlotNames() utility for S4 class programming.
 
 
 Rd HELP FILE CHANGES
@@ -164,7 +165,7 @@ Rd HELP FILE CHANGES
 	Rd code which is then parsed).
 
     o	There have been various bug fixes and code reorganization in
-        the Rd renderers Rd2HTML, Rd2latex, Rd2txt, and Rd2ex.
+	the Rd renderers Rd2HTML, Rd2latex, Rd2txt, and Rd2ex.
 
 
 DEPRECATED & DEFUNCT
@@ -196,11 +197,11 @@ INTERNATIONALIZATION
 BUG FIXES
 
     o	Assigning an extra 0-length column to a data frame by
-    	DF[, "foo"] <- value now works in most cases (by filling with
-    	NAs) or fails.  (It used to give a corrupt data frame.)
+	DF[, "foo"] <- value now works in most cases (by filling with
+	NAs) or fails.	(It used to give a corrupt data frame.)
 
     o	validObject() avoids an error during evaluation in the case
-        of various incorrect slot definitions.
+	of various incorrect slot definitions.
 
     o	n:m  now returns <integer> in a few more boundary cases.
 
@@ -219,8 +220,8 @@ BUG FIXES
 NEW FEATURES
 
     o	install.packages(NULL) now lists packages only once even if they
-    	occur in more than one repository (as the latest compatible
-    	version of those available will always be downloaded).
+	occur in more than one repository (as the latest compatible
+	version of those available will always be downloaded).
 
 
 BUG FIXES
@@ -228,14 +229,14 @@ BUG FIXES
     o	parse_Rd() still did not handle source reference encodings
 	properly.
 
-    o   PrintValue no longer attempts to print attributes for CHARSXPs
-        as those attributes are used internally for the CHARSXP cache.
-        This fixes a segfault when calling Rf_PrintValue on a CHARSXP
-        from C code.
+    o	PrintValue no longer attempts to print attributes for CHARSXPs
+	as those attributes are used internally for the CHARSXP cache.
+	This fixes a segfault when calling Rf_PrintValue on a CHARSXP
+	from C code.
 
-    o   PDF graphics output was producing TWO instances of anything
-        drawn with the symbol font face. (Report from Baptiste Auguie.)
-        
+    o	PDF graphics output was producing TWO instances of anything
+	drawn with the symbol font face. (Report from Baptiste Auguie.)
+
     o	length(x) <- newval and grep() could cause memory corruption.
 	(PR#13837.)
 

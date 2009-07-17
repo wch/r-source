@@ -344,14 +344,16 @@ completeClassDefinition <-
 getAllSuperClasses <-
   ## Get the names of all the classes that this class definition extends.
   ##
-  ## A utility function used to complete a class definition.  It returns all the
-  ## superclasses reachable from this class, in depth-first order (which is the order
-  ## used for matching methods); that is, the first direct superclass followed by all its
-  ## superclasses, then the next, etc.  (The order is relevant only in the case that
-  ## some of the superclasses have multiple inheritance.)
+  ## A utility function used to complete a class definition.  It
+  ## returns all the superclasses reachable from this class, in
+  ## depth-first order (which is the order used for matching methods);
+  ## that is, the first direct superclass followed by all its
+  ## superclasses, then the next, etc.  (The order is relevant only in
+  ## the case that some of the superclasses have multiple inheritance.)
   ##
-  ## The list of superclasses is stored in the extends property of the session metadata.
-  ## User code should not need to call getAllSuperClasses directly; instead, use getClass()@contains
+  ## The list of superclasses is stored in the extends property of the
+  ## session metadata.  User code should not need to call
+  ## getAllSuperClasses directly; instead, use getClass()@contains
   ## (which will complete the definition if necessary).
   function(ClassDef, simpleOnly = TRUE) {
     temp <- superClassDepth(ClassDef, simpleOnly = simpleOnly)
@@ -377,7 +379,8 @@ superClassDepth <-
     immediate <- names(ext)
     notSoFar <- is.na(match(immediate, soFar))
     immediate <- immediate[notSoFar]
-    super <- list(label = immediate, depth = rep.int(1, length(immediate)), ext = ext)
+    super <- list(label = immediate, depth = rep.int(1, length(immediate)),
+                  ext = ext)
     for(i in seq_along(immediate)) {
         what <- immediate[[i]]
         if(!is.na(match(what, soFar)))
@@ -450,6 +453,17 @@ selectSuperClasses <-
     if(namesOnly) names(ext) else ext
 }
 
+inheritedSlotNames <- function(Class, where = topenv(parent.frame()))
+{
+    ext <- if(isClassDef(Class))
+        Class@contains
+    else if(isClass(Class, where = where))
+        getClass(Class, where = where)@contains
+    supcl <- .selectSuperClasses(ext) ## maybe  simpleOnly = FALSE or use as argument?
+    unique(unlist(lapply(lapply(supcl, getClassDef), slotNames), use.names=FALSE))
+    ## or just the non-simplified part (*with* names):
+    ##     lapply(sapply(supcl, getClassDef, simplify=FALSE), slotNames)
+}
 
 
 isVirtualClass <-
@@ -1184,10 +1198,7 @@ requireMethods <-
 }
 
 getSlots <- function(x) {
-    if(isClassDef(x))
-        classDef <- x
-    else
-        classDef <- getClass(x)
+    classDef <- if(isClassDef(x)) x else getClass(x)
     props <- classDef@slots
     value <- as.character(props)
     names(value) <- names(props)
