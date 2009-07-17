@@ -93,12 +93,19 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown", 
     ## FIXME: what other substitutions do we need?
     texify <- function(x) {
         if(inEqn) return(ltxeqn(x))
+        # Need to be careful to handle backslash, so do it in three steps.
+        # First, mark all the ones in the original text, but don't add
+        # any other special chars
+        x <- gsub("\\", "\\bsl", x, fixed = TRUE)
+        # Second, escape other things, introducing more backslashes
         x <- gsub("([&$%_#])", "\\\\\\1", x)
         ## pretty has braces in text.
         x <- gsub("{", "\\{", x, fixed = TRUE)
         x <- gsub("}", "\\}", x, fixed = TRUE)
         x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
         x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
+        # Third, add the terminal braces to the backslash
+        x <- gsub("\\bsl", "\\bsl{}", x, fixed = TRUE)
         x
     }
 
@@ -310,20 +317,21 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown", 
                TEXT = of1(addParaBreaks(texify(block), blocktag)),
                COMMENT = {},
                LIST = writeContent(block, tag),
-               "\\describe"= {
-                   of1("\\describe{")
+               "\\describe"= { # Avoid the Rd.sty \describe, \Enumerate and \Itemize:
+               		       # They don't support verbatim arguments, which we might need.
+                   of1("\\begin{description}\n")
                    writeContent(block, tag)
-                   of1("}")
+                   of1("\n\\end{description}\n")
                },
                "\\enumerate"={
-                   of1("\\Enumerate{")
+                   of1("\\begin{enumerate}\n")
                    writeContent(block, tag)
-                   of1("}")
+                   of1("\n\\end{enumerate}\n")
                },
                "\\itemize"= {
-                   of1("\\Itemize{")
+                   of1("\\begin{itemize}\n")
                    writeContent(block, tag)
-                   of1("}")
+                   of1("\n\\end{itemize}\n")
                },
                ## Verbatim-like
                "\\command"=,

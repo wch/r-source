@@ -104,7 +104,7 @@ In addition to containing other S4 classes, a class definition can
 contain either an S3 class (see the next section) or a built-in R pseudo-class---one
 of the \R
 object types or one of the special \R pseudo-classes \code{"matrix"} and
-\code{"array}. 
+\code{"array"}.
 A class can contain at most one of the object types, directly or indirectly.
 When it does, that contained class determines the \dQuote{data part}
 of the class.
@@ -150,7 +150,7 @@ method that sets the data part.
 Note that, in the current implementation, the interpretation of the
 \code{".Data"} pseudo-slot includes all of the object types above, as
 well as the special pseudo-classes \code{"matrix"} and
-\code{"array}, which \R treats internally as if they were object types
+\code{"array"}, which \R treats internally as if they were object types
 (they have no explicit class and \code{\link{is.object}} returns
 \code{FALSE} for such objects).
 Some of this implementation is still experimental, so a wise policy is

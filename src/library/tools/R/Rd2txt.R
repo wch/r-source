@@ -399,28 +399,32 @@ Rd2txt <-
         cols <- max(sapply(entries, function(e) e$col))
         widths <- rep(0, cols)
         lines <- rep(1, rows)
-        firstline <- c(1, 1+cumsum(lines))
-        result <- matrix("", sum(lines), cols)
-        for (i in seq_len(cols))
-            result[,i] <- blanks(widths[i])
         for (i in seq_along(entries)) {
             e <- entries[[i]]
+            while(length(e$text) && !nzchar(e$text[length(e$text)])) {
+            	e$text <- e$text[-length(e$text)]
+            	entries[[i]] <- e
+            }
             if (any(nzchar(e$text)))
             	widths[e$col] <- max(widths[e$col], max(nchar(e$text)))
             lines[e$row] <- max(lines[e$row], length(e$text))
         }
+        result <- matrix("", sum(lines), cols)
+        for (i in seq_len(cols))
+            result[,i] <- blanks(widths[i])        
+        firstline <- c(1, 1+cumsum(lines))
         for (i in seq_along(entries)) {
             e <- entries[[i]]
-            text <- format(e$text, justify=formats[e$col], width=widths[e$col]+2)
+            text <- format(e$text, justify=formats[e$col], width=widths[e$col])
             for (j in seq_along(text)) 
             	result[firstline[e$row]+j-1, e$col] <- text[j]
         }
         blankLine()
         indent0 <- indent
-        indent <<- indent+2
-        for (i in seq_len(rows)) {
+        indent <<- indent+1
+        for (i in seq_len(nrow(result))) {
             for (j in seq_len(cols))
-            	putf(result[i,j])
+            	putf(" ", result[i,j], " ")
             putf("\n")
         }
         blankLine()    
