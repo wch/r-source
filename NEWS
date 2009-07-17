@@ -238,7 +238,10 @@ BUG FIXES
 	drawn with the symbol font face. (Report from Baptiste Auguie.)
 
     o	length(x) <- newval and grep() could cause memory corruption.
-	(PR#13837.)
+	(PR#13837)
+	
+    o	If model.matrix() was given too large a model, it could crash
+        R. (PR#13838, fix found by Olaf Mersmann.)
 
 
 
