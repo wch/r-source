@@ -29,8 +29,8 @@ BUG FIXES
     o   PDF graphics output was producing TWO instances of anything
         drawn with the symbol font face. (Report from Baptiste Auguie.)
         
-    o	length(x) <- newval could cause memory corruption. (Reported
-        by Herve Pages in PR#13837)
+    o	length(x) <- newval and grep() could cause memory corruption.
+	(PR#13837.)
 
 
 

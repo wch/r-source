@@ -1165,7 +1165,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (value_opt) {
 	SEXP nmold = getAttrib(vec, R_NamesSymbol), nm;
-	ans = allocVector(STRSXP, nmatches);
+	PROTECT(ans = allocVector(STRSXP, nmatches));
 	for (i = 0, j = 0; i < n ; i++)
 	    if (invert ^ LOGICAL(ind)[i])
 		SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
@@ -1177,6 +1177,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 		    SET_STRING_ELT(nm, j++, STRING_ELT(nmold, i));
 	    setAttrib(ans, R_NamesSymbol, nm);
 	}
+	UNPROTECT(1);
     } else {
 	ans = allocVector(INTSXP, nmatches);
 	j = 0;
