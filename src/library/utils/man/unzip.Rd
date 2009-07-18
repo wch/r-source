@@ -16,8 +16,8 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
        junkpaths = FALSE, exdir = ".")
 }
 \arguments{
-  \item{zipfile}{The pathname of the xip file: tilde expansion (see
-    \code{\link{path.expand}} will be performed.}
+  \item{zipfile}{The pathname of the zip file: tilde expansion (see
+    \code{\link{path.expand}}) will be performed.}
 
   \item{files}{A character vector of recorded filepaths to be extracted:
     the default is to extract all files.}
