@@ -5755,3 +5755,17 @@ M <- .Machine$integer.max
 s <- (M-2):(M+.1)
 stopifnot(is.integer(s), s-M == -2:0)
 ## was "double" in R <= 2.9.1
+
+## too many columns model.matrix()
+dd <- as.data.frame(sapply(1:40, function(i) gl(2, 100)))
+(f <- as.formula(paste("~ - 1 + ", paste(names(dd), collapse = ":"), sep = "")))
+e <- tryCatch(X <- model.matrix(f, data = dd), error=function(e)e)
+stopifnot(inherits(e, "error"))
+## seg.faulted in R <= 2.9.1
+
+## seq_along( <obj> )
+x <- structure(list(a = 1, value = 1:7), class = "FOO")
+length.FOO <- function(x) length(x$value)
+stopifnot(identical(seq_len(length(x)),
+		    seq_along(x)))
+## used C-internal non-dispatching length() in R <= 2.9.1

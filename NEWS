@@ -239,9 +239,12 @@ BUG FIXES
 
     o	length(x) <- newval and grep() could cause memory corruption.
 	(PR#13837)
-	
+
     o	If model.matrix() was given too large a model, it could crash
         R. (PR#13838, fix found by Olaf Mersmann.)
+
+    o	seq_along(x) is now equivalent to seq_len(length(x)); previously it
+	was not, when x had a "surprising" length() method.
 
 
 
