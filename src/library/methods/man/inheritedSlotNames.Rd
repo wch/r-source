@@ -42,9 +42,13 @@ if(require("Matrix")) {
 
   print( inheritedSlotNames(cl) ) # *all* six slots are inherited
 }
+% currently, don't do this when running all examples: classes remain
+% cached anyway :
+if(interactive()) {
 ## detach package we've attached above:
 for(n in rev(which(is.na(match(search(), .srch)))))
     detach(pos = n)
+}
 }
 \keyword{classes}
 \keyword{methods}
