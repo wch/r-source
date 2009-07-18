@@ -32,6 +32,9 @@ character vector of slot names, or \code{\link{NULL}}.
 .srch <- search()
 library(stats4)
 inheritedSlotNames("mle")
+
+%% this is not run currently, as it makes later examples fail:
+\dontrun{
 if(require("Matrix")) {
   print( inheritedSlotNames("Matrix") ) # NULL
   ## whereas
@@ -44,11 +47,10 @@ if(require("Matrix")) {
 }
 % currently, don't do this when running all examples: classes remain
 % cached anyway :
-if(interactive()) {
 ## detach package we've attached above:
 for(n in rev(which(is.na(match(search(), .srch)))))
     detach(pos = n)
-}
+}% end{dontrun}
 }
 \keyword{classes}
 \keyword{methods}
