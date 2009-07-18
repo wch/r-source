@@ -35,6 +35,9 @@ BUG FIXES
     o	If model.matrix() was given too large a model, it could crash
         R. (PR#13838, fix found by Olaf Mersmann.)
 
+    o	gzcon() (used by load()) would re-open an open connection,
+    	leaking a file handle each time. (PR#13841)
+
 
 
 		CHANGES IN R VERSION 2.9.1
