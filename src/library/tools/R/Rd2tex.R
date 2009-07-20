@@ -47,11 +47,11 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown", 
     last_char <- ""
     of0 <- function(...) of1(paste(..., sep=""))
     of1 <- function(text) {
-        Encoding(text) <- "unknown"
-        writeLines(text, con, sep = "")
-        ## FIXME: this depends on a single-byte locale
+    	# FIXME:  this doesn't get the encoding right on output.
         nc <- nchar(text)
         last_char <<- substr(text, nc, nc)
+        Encoding(text) <- "unknown"
+        writeLines(text, con, sep = "")
     }
 
     trim <- function(x) {
