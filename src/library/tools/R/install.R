@@ -1987,7 +1987,7 @@
     cmd <- paste(R.home(), "/bin/Rdconv -t ", sep = "")
 
     ## FIXME: perl version cleans up non-matching converted files
-    cat("\n   converting help for package ", sQuote(pkg), "\n", sep="")
+    cat("  converting help for package ", sQuote(pkg), "\n", sep="")
     if(TRUE) {
         ## FIXME: add this lib to lib.loc?
         Links <- if ("html" %in% types) findHTMLlinks(outDir) else ""
