@@ -18,7 +18,7 @@
 
 massageExamples <- function(pkg, files, outFile = stdout())
 {
-    if(utils::file_test("-d", files[1]))
+    if(file_test("-d", files[1]))
         files <- sort(Sys.glob(file.path(files, "*.R")))
 
     if(is.character(outFile)) {

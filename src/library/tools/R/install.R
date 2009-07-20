@@ -128,7 +128,7 @@
                 .file_append_ensuring_LFs(file.path(R.home("doc"), "html", "search", "index.txt"),
                                                   Sys.glob(file.path(R.home(), "library", "*", "CONTENTS")))
                 if (build_help && identical(Sys.getenv("NO_PERL5"), "false"))
-                    tools::unix.packages.html(.Library, docdir = R.home("doc"))
+                    unix.packages.html(.Library, docdir = R.home("doc"))
 
             }
         }

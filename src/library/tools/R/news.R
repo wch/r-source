@@ -39,7 +39,7 @@ function(package, lib.loc = NULL, format = NULL, reader = NULL)
     files <- file.path(dir,
                        c("NEWS",
                          file.path("inst", "NEWS")))
-    nfile <- files[utils::file_test("-f", files)][1L]
+    nfile <- files[file_test("-f", files)][1L]
 
     if(is.na(nfile)) return(invisible())
     ## Return NULL for now, no message that there is no NEWS or
@@ -72,7 +72,7 @@ function(file)
         ## This should now contain the DESCRIPTION file.
         encoding <-
             if(file.exists(dfile <- file.path(dir, "DESCRIPTION")))
-                tools:::.read_description(dfile)["Encoding"]
+                .read_description(dfile)["Encoding"]
             else
                 NA
         if(!is.na(encoding))

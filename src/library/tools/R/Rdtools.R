@@ -106,8 +106,8 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
 	    }
 	})
     }
-    capture.output({
+    .eval_with_capture({
     	show(p)
     	cat("\n")
-    })
+    })$output
 }
