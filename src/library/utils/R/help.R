@@ -193,7 +193,8 @@ function(x, ...)
             bfile <- paste(file, ".rds", sep="")
             zfile <- suppressWarnings(zip.file.extract(bfile, "Rhelp.zip"))
             if(file.exists(zfile)) {
-            	# The new system with man pages stored in parsed form as .rds files
+            	## The new system with man pages stored in parsed form
+                ## as .rds files.
                 path <- dirname(file)
                 dirpath <- dirname(path)
                 pkgname <- basename(dirpath)
@@ -202,7 +203,8 @@ function(x, ...)
                           title = gettextf("R Help on '%s'", topic),
                           delete.file = TRUE,
                           pager = attr(x, "pager"))
-                unlink(zfile)
+                if(zfile != bfile)
+                    unlink(zfile)
             } else {
             	# Fallback to the old system with man pages stored as plain text
             	zfile <- zip.file.extract(file, "Rhelp.zip")
