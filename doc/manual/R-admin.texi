@@ -1322,8 +1322,8 @@ make prefix=/where/you/want/R.framework/to/go install
 @noindent
 (the @file{R.framework} directory should not be included in the path).
 
-For compatibility with the CRAN distribution you may need to specify
-@option{--with-included-gettext} to avoid linking against a
+For compatibility with the @acronym{CRAN} distribution you may need to
+specify @option{--with-included-gettext} to avoid linking against a
 @samp{libintl} dynamic library you may have available, for example in
 @file{/usr/local/lib}.
 
@@ -1586,12 +1586,12 @@ the building service offered at @uref{http://win-builder.r-project.org/}.
 
 On Mac OS X @code{install.packages} works as it does on other Unix-like
 systems, but there is an additional type @code{mac.binary} (the default
-in the CRAN distribution) that can be passed to @code{install.packages}
-in order to download and install binary packages from a suitable
-repository, and is the default for CRAN builds of R.  These Macintosh
-binary package files have the extension @samp{tgz}.  The @R{} GUI
-provides for installation of either binary or source packages, from
-@acronym{CRAN} or local files.
+in the @acronym{CRAN} distribution) that can be passed to
+@code{install.packages} in order to download and install binary packages
+from a suitable repository, and is the default for @acronym{CRAN} builds
+of R.  These Macintosh binary package files have the extension
+@samp{tgz}.  The @R{} GUI provides for installation of either binary or
+source packages, from @acronym{CRAN} or local files.
 
 @node Customizing package compilation,  , Mac OS X packages, Installing packages
 @subsection Customizing package compilation
@@ -1672,8 +1672,8 @@ whole bundle).
 @cindex Repositories
 
 Utilities such as @code{install.packages} can be pointed at any
-CRAN-style repository, and @R{} users may want to set up their own.  The
-`base' of a repository is a URL such as
+@acronym{CRAN}-style repository, and @R{} users may want to set up their
+own.  The `base' of a repository is a URL such as
 @uref{http://www.omegahat.org/R/}: this must be an URL scheme that
 @code{download.packages} supports (which also includes @samp{ftp://} and
 @samp{file://}).  Under that base URL there should be directory trees
@@ -2065,7 +2065,7 @@ an entry point
 @noindent
 to set its seeds).
 
-The facilties to change the normal random number generator are
+The facilities to change the normal random number generator are
 available through the constant N01_kind. This takes values
 from the enumeration type
 
@@ -2093,7 +2093,7 @@ typedef enum @{
 @section Unix
 
 If @R{} has not already be made in the directory tree,
-@command{configure} must tbe run as described in the main build
+@command{configure} must be run as described in the main build
 instructions.
 
 Then

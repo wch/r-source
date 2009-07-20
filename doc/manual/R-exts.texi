@@ -215,8 +215,8 @@ appropriate architecture.  @command{R CMD check} will warn about
 them@footnote{false positives are possible, but only one has been seen
 so far.} unless they are listed (one filepath per line) in a file
 @file{BinaryFiles} at the top level of the package or bundle.  Note that
-CRAN will no longer accept submissions containing binary files even if they
-are listed.
+@acronym{CRAN} will no longer accept submissions containing binary files
+even if they are listed.
 
 The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
@@ -748,7 +748,7 @@ Package bundles were deprecated in @R{} 2.10.0 and support for
 installing them will be removed in @R{} 2.11.0.
 
 Unbundling a package bundle is straightforward: just replace the
-@file{DESCRIPTION.in} file of each package by a suitbale
+@file{DESCRIPTION.in} file of each package by a suitable
 @file{DESCRIPTION} file and distribute the individual packages (e.g.@:
 @emph{via} tarballs created by @command{R CMD build})).  The installed
 @file{DESCRIPTION} files provide a good starting point, but the
@@ -1018,7 +1018,8 @@ This can be useful in conjunction with implicit rules to allow other
 types of source code to be compiled and included in the shared object.
 Also, as from @R{} 2.9.0 setting an empty value for @samp{OBJECTS} will
 prevent the shared object / DLL from being made (possibly useful in
-conjuction with an @code{all} target as described in the next paragraph).
+conjunction with an @code{all} target as described in the next
+paragraph).
 
 Note that @file{Makevars} should not normally contain targets, as it is
 included before the default makefile and @command{make} is called with
@@ -1051,7 +1052,7 @@ slamc.o: slamc.f
 
 @noindent
 (since the other macros are all empty on that platform, and R's internal
-blas is not used).  Note that the first target in @file{Makevars} will
+BLAS is not used).  Note that the first target in @file{Makevars} will
 be called on a Unix-alike, and target @samp{all} on Windows (but the
 latter will change in as from @R 2.10.0).
 
@@ -1071,8 +1072,8 @@ mylibs:
 @noindent
 Be careful to create all the necessary dependencies, as there is a no
 guarantee that the dependencies of @code{all} will be run in a
-particular order (and some of the CRAN build machines use multiple CPUs
-and parallel makes).
+particular order (and some of the @acronym{CRAN} build machines use
+multiple CPUs and parallel makes).
 
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
 or @file{Makevars.win}: this will be used by @command{R CMD build}.
@@ -1375,8 +1376,8 @@ To allow a @file{configure} script to generate suitable files, files
 ending in @samp{.in} will be allowed in the @file{R} directory.
 
 A warning is given for directory names that look like @R{} package check
-directories -- many packages have been submitted to CRAN containing
-these.
+directories -- many packages have been submitted to @acronym{CRAN}
+containing these.
 
 @item
 The @R{} files are checked for syntax errors.  Bytes which are
@@ -1492,7 +1493,7 @@ packages from their sources (for example, for subsequent release).
 Prior to actually building the package in the standard gzipped tar file
 format, a few diagnostic checks and cleanups are performed.  In
 particular, it is tested whether object indices exist and can be assumed
-to be up-to-date, and C, C++ and FORTRAN source files and relvant make
+to be up-to-date, and C, C++ and FORTRAN source files and relevant make
 files are tested and converted to LF line-endings if necessary.
 
 Run-time checks whether the package works correctly should be performed
@@ -1556,7 +1557,7 @@ files for building source packages (which is the default), as well as
 the Windows toolset (see the ``R Installation and Administration''
 manual).  You may need to set @env{TMPDIR} to point to a suitable
 writeable directory with a path not containing spaces -- use forward
-slashes for the separators.   Also, the directory needs to be on a
+slashes for the separators.  Also, the directory needs to be on a
 case-honouring file system (some network-mounted file systems are not).
 @end quotation
 
@@ -1776,17 +1777,17 @@ archive.
 
 Note also that for running @LaTeX{}, the Debian GNU/Linux @acronym{CRAN}
 check systems use reasonably recent versions of the Debian texlive
-distribution (@uref{http://packages.debian.org/de/sid/texlive}); for
-the Windows @acronym{CRAN} server, a reasonably recent of MikTeX
-(including all packages available for MikTeX) is employed.  Developers
-wanting to have their vignettes use @TeX{} packages or style files not
-(yet) included in these distributions should add the corresponding style
-files to the @file{inst/doc} subdirectory of their package.
+distribution (@uref{http://packages.debian.org/de/sid/texlive}); for the
+Windows @acronym{CRAN} server, a reasonably recent of MikTeX (including
+all packages available for MikTeX) is employed.  Developers wanting to
+have their vignettes use @TeX{} packages or style files not (yet)
+included in these distributions should add the corresponding style files
+to the @file{inst/doc} subdirectory of their package.
 
 Note that @acronym{CRAN} does not accept submissions of precompiled
 binaries due to security concerns, and does not allow binary executables
 in packages.  Maintainers who need additional software for the Windows
-binaries of their packages on CRAN have three options
+binaries of their packages on @acronym{CRAN} have three options
 @enumerate
 @item 
 To arrange for installation of the package to download the
@@ -1798,8 +1799,8 @@ WinBuilder, and write a @file{configure.win} file to install them.
 There are many examples, e.g.@: package @pkg{rgdal}.
 
 @item
-To negotiate with Brian Ripley to host the package on CRAN extras, as
-was done for package @pkg{BRUGS}.
+To negotiate with Brian Ripley to host the package on @acronym{CRAN}
+extras, as was done for package @pkg{BRUGS}.
 @end enumerate
 
 @noindent
@@ -2901,10 +2902,10 @@ of which need write permission in the @R{} installation tree.
 
 This is a rather general mechanism, designed for adding new front-ends
 such as the former @pkg{gnomeGUI} package (see the @samp{Archve} area on
-CRAN).  If a @file{configure} file is found in the top-level directory
-of the package it is executed, and then if a @code{Makefile} is found
-(often generated by @file{configure}), @code{make} is called.  If
-@code{R CMD INSTALL --clean} is used @code{make clean} is called.  No
+@acronym{CRAN}).  If a @file{configure} file is found in the top-level
+directory of the package it is executed, and then if a @code{Makefile}
+is found (often generated by @file{configure}), @code{make} is called.
+If @code{R CMD INSTALL --clean} is used @code{make clean} is called.  No
 other action is taken.
 
 @code{R CMD build} can package up this type of extension, but @code{R
@@ -3772,12 +3773,12 @@ There are two other forms of optional argument specified as
 refer to not-yet-installed packages (but there the @HTML{} help system
 will resolve the link at run time) or in the normally undesirable event
 that more than one package offers help on a topic@footnote{a common
-example in CRAN packages is @code{\link[mgcv]@{gam@}}.} (in which case
-the present package has precedence so this is only needed to refer to
-other packages).  They are only in used in (C)HTML help (and not for
-hyperlinks in @LaTeX{} conversions of help pages), and link to the file
-rather than the topic (since there is no way to know which topics are in
-which files in an uninstalled package).
+example in @acronym{CRAN} packages is @code{\link[mgcv]@{gam@}}.} (in
+which case the present package has precedence so this is only needed to
+refer to other packages).  They are only in used in (C)HTML help (and
+not for hyperlinks in @LaTeX{} conversions of help pages), and link to
+the file rather than the topic (since there is no way to know which
+topics are in which files in an uninstalled package).
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation files
 @section Mathematics
@@ -4077,7 +4078,7 @@ documentation files (usually with extension @samp{.Snw} or @samp{.Rnw}):
 @code{R CMD Stangle} is use to extract the @R{} code fragments.
 
 The exact usage and a detailed list of available options for all of
-thesw commands can be obtained by running @code{R CMD @var{command}
+these commands can be obtained by running @code{R CMD @var{command}
 --help}, e.g., @kbd{R CMD Rdconv --help}.  All available commands can be
 listed using @kbd{R --help} (or @kbd{Rcmd --help} under Windows).
 
@@ -4216,7 +4217,7 @@ differences from version 1.1 include
 Unmatched right braces are an error, not just a warning.
 
 @item
-No space is allowed bewteen the first and second arguments of a macro
+No space is allowed between the first and second arguments of a macro
 such as @code{\item}.
 
 @item
@@ -4435,8 +4436,8 @@ useful to compare profiling code immediately after a call to @code{gc()}
 with a profiling run without a preceding call to @code{gc}.
 
 More detailed analysis of the output can be achieved by the tools in the
-CRAN packages @pkg{proftools} and @pkg{prof}: in particular these allow
-call graphs to be studied.
+@acronym{CRAN} packages @pkg{proftools} and @pkg{prof}: in particular
+these allow call graphs to be studied.
 
 @node Profiling R code for memory use, Profiling compiled code, Profiling R code for speed, Tidying and profiling R code
 @section Profiling R code for memory use
@@ -4719,9 +4720,10 @@ which is a GUI version) and @command{Shark} (see
 This chapter covers the debugging of @R{} extensions, starting with the
 ways to get useful error information and moving on to how to deal with
 errors that crash @R{}.  For those who prefer other styles there are
-contributed packages such as @pkg{debug} on CRAN (described in an
-article in @uref{http://cran.r-project.org/doc/Rnews/Rnews_2003-3.pdf,
-R-News 3/3}).  (There are notes from 2002 provided by Roger Peng at
+contributed packages such as @pkg{debug} on @acronym{CRAN} (described in
+an article in
+@uref{http://cran.r-project.org/doc/Rnews/Rnews_2003-3.pdf, R-News
+3/3}).  (There are notes from 2002 provided by Roger Peng at
 @uref{http://www.biostat.jhsph.edu/~rpeng/docs/R-debug-tools.pdf} which
 provide complementary examples to those given here.)
 
@@ -5209,7 +5211,7 @@ is 0, 1, or 2.  Level 0 is the default and does not add any anything.
 Level 1 will detect use of uninitialised memory and has little impact on
 speed. Level 2 will detect many other memory use bugs but makes @R{}
 much slower when running under @code{valgrind}.  Using this in
-conjuction with @code{gctorture} can be even more effective (and even
+conjunction with @code{gctorture} can be even more effective (and even
 slower).
 
 An example of @code{valgrind} output is
@@ -6032,8 +6034,8 @@ compiled code can be found).
 This then arranges that the @file{include} directories in the installed
 linked-to packages are added to the include paths for C and C++ code.
 
-A CRAN example of the use of this mechanism is package @pkg{lme4}, which
-links to @pkg{Matrix}.
+A @acronym{CRAN} example of the use of this mechanism is package
+@pkg{lme4}, which links to @pkg{Matrix}.
 
 @node Creating shared objects, Interfacing C++ code, Registering native routines, System and foreign language interfaces
 @section Creating shared objects
@@ -6141,7 +6143,7 @@ Under Windows you can supply an exports definitions file called
 @file{@var{dllname}-win.def}: otherwise all entry points in objects (but
 not libraries) supplied to @code{R CMD SHLIB} will be exported from the
 DLL.  An example is @file{stats-win.def} for the @pkg{stats} package: a
-CRAN example in package @pkg{fastICA}.
+@acronym{CRAN} example in package @pkg{fastICA}.
 
 If you feel tempted to read the source code and subvert these
 mechanisms, please resist.  Far too much developer time has been wasted
@@ -6275,7 +6277,7 @@ they include C++ system headers).  It may not be possible to include
 some @R{} headers as they in turn include C header files that may cause
 conflicts---if this happens, define @samp{NO_C_HEADERS} before including
 the @R{} headers, and include C++ versions (such as @samp{cmath}) of the
-appropriate headers yourself before the @R{} heders.
+appropriate headers yourself before the @R{} headers.
 
 @node Fortran I/O, Linking to other packages, Interfacing C++ code, System and foreign language interfaces
 @section Fortran I/O
@@ -6321,11 +6323,11 @@ backwards-compatible.
 
 It is possible to link a shared object in package @pkg{packA} to a
 library provided by package @pkg{packB} under limited circumstances
-on a Unix-alke OS.  There are severe portability issues, so this is not
+on a Unix-alike OS.  There are severe portability issues, so this is not
 recommended for a distributed package.
 
 This is easiest if @pkg{packB} provides a static library
-@file{packB/libs/libpackB.a}.  (This will need to be comiled with
+@file{packB/libs/libpackB.a}.  (This will need to be compiled with
 @code{PIC} flags on platforms where it matters.)  Then as the code from
 package @pkg{packB} is incorporated when package @pkg{packA} is
 installed, we only need to find the static library at install time for
@@ -8191,8 +8193,8 @@ A toy example of the use of weak references can be found at
 @uref{http://www.stat.uiowa.edu/~luke/R/references/weakfinex.html,
 @code{www.@/stat.@/uiowa.@/edu/@/~luke/@/R/references/@/weakfinex.html}},
 but that is used to add finalizers to external pointers which can now be
-done more directly.  At the time of writing no CRAN or Bioconductor
-package uses weak references.
+done more directly.  At the time of writing no @acronym{CRAN} or
+Bioconductor package uses weak references.
 
 
 @menu
@@ -9970,10 +9972,10 @@ There are a number of ways to build front-ends to @R{}: we take this to
 mean a GUI or other application that has the ability to submit commands
 to @R{} and perhaps to receive results back (not necessarily in a text
 format).  There are other routes besides those described here, for
-example the package @pkg{Rserve} (from CRAN, see also
+example the package @pkg{Rserve} (from @acronym{CRAN}, see also
 @uref{http://www.rforge.net/Rserve/}) and connections to Java in
 @samp{SJava} (see @uref{http://www.omegahat.org/RSJava/} and @samp{JRI},
-part of the @pkg{rJava} package on CRAN).
+part of the @pkg{rJava} package on @acronym{CRAN}).
 
 @menu
 * Embedding R under Unix-alikes::  
@@ -9994,8 +9996,8 @@ be used in a very similar way.
 
 The command-line @R{} front-end, @file{@var{R_HOME}/bin/exec/R} is one
 such example, and the former @acronym{GNOME} (see package @pkg{gnomeGUI}
-on CRAN's @samp{Archive} area) and Mac OS X consoles are others.  The
-source for @file{@var{R_HOME}/bin/exec/R} is in file
+on @acronym{CRAN}'s @samp{Archive} area) and Mac OS X consoles are
+others.  The source for @file{@var{R_HOME}/bin/exec/R} is in file
 @file{src/main/Rmain.c} and is very simple
 
 @example
@@ -10157,7 +10159,7 @@ pkg-config --libs --static libR
 @node Setting R callbacks, Registering symbols, Compiling against the R library, Embedding R under Unix-alikes
 @subsection Setting R callbacks
 
-For Unix-alkes there is a public header file @file{Rinterface.h} that
+For Unix-alikes there is a public header file @file{Rinterface.h} that
 makes it possible to change the standard callbacks used by @R{} in a
 documented way.  This defines pointers (if @code{R_INTERFACE_PTRS} is
 defined)
@@ -10472,7 +10474,7 @@ These will be set@footnote{at least on platforms where the values are
 available, that is having @code{getrlimit} and on Linux or having
 @code{sysctl} supporting @code{KERN_USRSTACK}, including FreeBSD and
 Mac OS X.} when @code{Rf_initialize_R} is called, to values appropriate to
-the main thread.  Stack-checking can be disabled by seting
+the main thread.  Stack-checking can be disabled by setting
 @code{R_CStackLimit = (uintptr_t)-1}, but it is better to if possible
 set appropriate values.  (What these are and how to determine them are
 OS-specific, and the stack size limit may differ for secondary threads.
@@ -10515,12 +10517,13 @@ currently available that interface directly with @R{} and provide a
 @itemize
 @item
 There is a (D)COM server called @code{StatConnector} written by Thomas
-Baier available on CRAN
+Baier available on @acronym{CRAN}
 (@uref{http://@/cran.r-project.org/@/other-software.html}) which works
 with @file{Rproxy.dll} (in the @R{} distribution) and @file{R.dll} to
 support transfer of data to and from @R{} and remote execution of R
-commands, as well as embedding of an @R{} graphics window.  The @pkg{rcom}
-package on CRAN provides a (D)COM server in a running @R{} session.
+commands, as well as embedding of an @R{} graphics window.  The
+@pkg{rcom} package on @acronym{CRAN} provides a (D)COM server in a
+running @R{} session.
 
 @item
 Another (D)COM server, @code{RDCOMServer}, is available from
@@ -10535,7 +10538,7 @@ The @code{R} DLL is mainly written in C and has @code{_cdecl} entry
 points.  Calling it directly will be tricky except from C code (or C++
 with a little care).
 
-There is a version of the Unix interface callng 
+There is a version of the Unix interface calling 
 
 @example
 int Rf_initEmbeddedR(int ac, char **av);

@@ -353,7 +353,7 @@ data and code.
 A description of the facilities of the @pkg{XML} package is outside the
 scope of this document: see the package's Web page at
 @uref{http://www.omegahat.org/RSXML} for details and examples.  Package
-@pkg{StatDataML} on CRAN is one example building on @pkg{XML}.
+@pkg{StatDataML} on @acronym{CRAN} is one example building on @pkg{XML}.
 
 
 @node Spreadsheet-like data, Importing from other statistical systems, Introduction, Top
@@ -906,9 +906,9 @@ Alpha platform can also be read).  It should be possible to read data
 dumps from S-PLUS 5.x and later written with @code{data.dump(oldStyle=T)}.
 
 If you have access to S-PLUS, it is usually more reliable to @code{dump}
-the object(s) in S-PLUS and @code{source} the dumpfile in @R{}.  For
+the object(s) in S-PLUS and @code{source} the dump file in @R{}.  For
 S-PLUS 5.x and 6.x you may need to use @code{dump(..., oldStyle=T)}, and
-to read in very large objects it may be preferable to use the dumpfile
+to read in very large objects it may be preferable to use the dump file
 as a batch script rather than use the @code{source} function.
 
 @cindex SPSS
@@ -1183,15 +1183,15 @@ data frame or in pieces (usually as groups of rows).
 
 All except @pkg{RODBC} are tied to one DBMS, but work is in progress
 towards a unified `front-end' package @pkg{DBI}
-(@uref{http://developer.r-project.org/db}) in conjuction with a
-`back-end', the most developed of which is @pkg{RMySQL}.  Also on CRAN
-are the back-ends @pkg{ROracle}, @pkg{RPostgreSQL} and @pkg{RSQLite}
-(which works with the bundled DBMS @code{SQLite},
+(@uref{http://developer.r-project.org/db}) in conjunction with a
+`back-end', the most developed of which is @pkg{RMySQL}.  Also on
+@acronym{CRAN} are the back-ends @pkg{ROracle}, @pkg{RPostgreSQL} and
+@pkg{RSQLite} (which works with the bundled DBMS @code{SQLite},
 @uref{http://www.sqlite.org}).
 
 Two earlier packages @pkg{RmSQL} and @pkg{RPgSQL} are now unsupported
-and in the archive area on CRAN: the BioConductor project has updated
-@pkg{RdbiPgSQL} (formerly on CRAN).  @pkg{PL/R}
+and in the archive area on @acronym{CRAN}: the BioConductor project has updated
+@pkg{RdbiPgSQL} (formerly on @acronym{CRAN}).  @pkg{PL/R}
 (@uref{http://www.joeconway.com/plr/,
 @code{http://@/www.joeconway.com/@/plr/}}) is a project to embed R into
 PostgreSQL.
