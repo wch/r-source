@@ -937,7 +937,8 @@ function(x, ...)
 
 ### * codocClasses
 
-codocClasses <- function(package, lib.loc = NULL)
+codocClasses <-
+function(package, lib.loc = NULL)
 {
     ## Compare the 'structure' of S4 classes in an installed package
     ## between code and documentation.
@@ -1079,7 +1080,8 @@ codocClasses <- function(package, lib.loc = NULL)
     bad_Rd_objects
 } ## end{ codocClasses }
 
-print.codocClasses <- function(x, ...)
+print.codocClasses <-
+function(x, ...)
 {
     if(!length(x))
         return(invisible(x))
@@ -2459,7 +2461,8 @@ function(x, ...)
 
 ## changed in 2.3.0 to refer to a source dir.
 
-.check_package_depends <- function(dir)
+.check_package_depends <-
+function(dir)
 {
     if(length(dir) != 1L)
         stop("argument 'package' must be of length 1")
@@ -3716,7 +3719,8 @@ function(pkgDir)
               class = "check_package_datasets")
 }
 
-print.check_package_datasets <- function(x, ...)
+print.check_package_datasets <-
+function(x, ...)
 {
     ## not sQuote as we have mucked about with locales.
     iconv0 <- function(x, ...)
@@ -3989,7 +3993,8 @@ function(x, ...)
 ### * .check_package_code_shlib
 
 .check_package_code_shlib <-
-function(dir) {
+function(dir)
+{
     ## <NOTE>
     ## This is very similar to what happens with checkTnF() etc.
     ## We should really have a more general-purpose tree walker.
@@ -4504,9 +4509,9 @@ function(dir)
 .check_citation <-
 function(cfile)
 {
-    cfile <- tools::file_path_as_absolute(cfile)
+    cfile <- file_path_as_absolute(cfile)
     meta <- if(basename(dir <- dirname(cfile)) == "inst")
-        as.list(tools:::.get_package_metadata(dirname(dir)))
+        as.list(.get_package_metadata(dirname(dir)))
     else
         NULL
     out <- tryCatch(suppressMessages(readCitationFile(cfile, meta)),

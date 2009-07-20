@@ -76,6 +76,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
 
 print.Rd <- function(x, ...) {
     cat(as.character.Rd(x), sep="", collapse="")
+    invisible(x)
 }
 
 as.character.Rd <- function(x, ...) {

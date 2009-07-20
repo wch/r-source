@@ -374,7 +374,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## Do not have texi2dvi
         ## Needed at least on Windows except for MiKTeX
         ## Note that this does not do anything about running quietly,
-        ## nor cleaning, but it probably not used much anymore.
+        ## nor cleaning, but is probably not used much anymore.
 
         texfile <- shQuote(file)
         base <- file_path_sans_ext(file)
@@ -923,7 +923,6 @@ function(package, lib.loc)
         .try_quietly({
             pos <- match(paste("package", package, sep = ":"), search())
             if(!is.na(pos)) {
-                ## if(package == "methods") return()
                 detach(pos = pos,
                        unload = ! package %in% c("tcltk", "tools"))
             }
@@ -944,7 +943,8 @@ function(type = c("code", "data", "demo", "docs", "vignette"))
            ## Keep in sync with the order given in base's data.Rd.
            data = c("R", "r",
                     "RData", "rdata", "rda",
-                    "tab", "txt", "TXT", "csv", "CSV"),
+                    "tab", "txt", "TXT",
+                    "csv", "CSV"),
            demo = c("R", "r"),
            docs = c("Rd", "rd", "Rd.gz", "rd.gz"),
            vignette = c(outer(c("R", "r", "S", "s"), c("nw", "tex"),
