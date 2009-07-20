@@ -25,9 +25,10 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
     x <- as.matrix(x)
     if(is.complex(x))
         return(structure(.Call("La_zgeqp3", x, PACKAGE = "base"), class="qr"))
+    ## otherwise :
+    if(!is.double(x))
+	storage.mode(x) <- "double"
     if(LAPACK) {
-        if(!is.double(x))
-            storage.mode(x) <- "double"
         res <- .Call("La_dgeqp3", x, PACKAGE = "base")
         if(!is.null(cn <- colnames(x)))
             colnames(res$qr) <- cn[res$pivot]
@@ -38,8 +39,6 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
 
     p <- ncol(x) # guaranteed to be integer
     n <- nrow(x)
-    if(!is.double(x))
-	storage.mode(x) <- "double"
     res <- .Fortran("dqrdc2",
 	     qr=x,
 	     n,
