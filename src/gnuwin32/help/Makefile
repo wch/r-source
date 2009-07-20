@@ -11,7 +11,7 @@ PKGDIR = ../../library
 RLIB = $(RHOME)/library
 
 BUILD_HELP=R_HOME=$(RHOME) $(PERL) $(RHOME)/share/perl/build-help.pl -os=windows
-R_EXE=$(R_HOME)/bin/Rterm.exe
+R_EXE=$(RHOME)/bin/Rterm.exe
 
 ## HELPTYPES is set in src/library/Makefile
 ifndef USE_NEW_HELP
