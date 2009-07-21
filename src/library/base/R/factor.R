@@ -18,12 +18,15 @@ factor <- function(x = character(), levels, labels=levels,
                    exclude = NA, ordered = is.ordered(x))
 {
     exclude <- as.vector(exclude, typeof(x))
-    ind <- sort.list(x) # or ?  order(x) which more (too ?) tolerant
     nx <- names(x)
+    if (missing(levels)) {
+	y <- unique(x)
+	ind <- sort.list(y) # or possibly order(x) which is more (too ?) tolerant
+	y <- as.character(y)
+	levels <- unique(y[ind])
+    }
     force(ordered)
     x <- as.character(x)
-    if(missing(levels)) # get unique levels ordered by the original values
-	levels <- unique(x[ind])
     levels <- levels[is.na(match(levels, exclude))]
     f <- match(x, levels)
     if(!is.null(nx))
