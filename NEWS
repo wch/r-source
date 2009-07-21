@@ -20,7 +20,7 @@ NEW FEATURES
 	John Brzustowski.  (PR#13647/8)
 
     o	plot() methods for "stepfun" and hence "ecdf" no longer plot
-	points by default for n >= 10000.
+	points by default for n >= 1000.
 
     o	[g]sub(*, perl=TRUE) now also supports '\E' in order to *end*
 	\U and \L case changes, thanks to a patch from Bill Dunlap.
@@ -146,7 +146,7 @@ NEW FEATURES
 
     o	new inheritedSlotNames() utility for S4 class programming.
 
-    o   tabulate now allows NAs to pass through (and be ignored)
+    o	tabulate now allows NAs to pass through (and be ignored).
 
 
 Rd HELP FILE CHANGES
@@ -247,7 +247,7 @@ BUG FIXES
 
     o	seq_along(x) is now equivalent to seq_len(length(x)); previously it
 	was not, when x had a "surprising" length() method.
-	
+
     o	gzcon() (used by load()) would re-open an open connection,
     	leaking a file handle each time. (PR#13841)
 

@@ -97,7 +97,7 @@ summary.stepfun <- function(object, ...)
 plot.stepfun <-
     function(x, xval, xlim, ylim = range(c(y,Fn.kn)),
 	     xlab = "x", ylab = "f(x)", main = NULL,
-	     add = FALSE, verticals = TRUE, do.points = (n <= 10000),
+	     add = FALSE, verticals = TRUE, do.points = (n < 1000),
 	     pch = par("pch"), col = par("col"),
              col.points = col, cex.points = par("cex"),
 	     col.hor = col, col.vert = col,
