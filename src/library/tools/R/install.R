@@ -1454,6 +1454,7 @@
                  asChapter = FALSE, extraDirs = extraDirs,
                  internals = internals)
     else {
+    	USE_NEW_HELP <- nchar(Sys.getenv("USE_NEW_HELP")) > 0L
         files <- strsplit(files, "[[:space:]]+")[[1]]
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
@@ -1473,7 +1474,10 @@
             }
             out <-  file.path(latexdir, sub("\\.[Rr]d",".tex", basename(f)))
             ## people have file names with quotes in them.
-            system(paste(cmd,"-o", shQuote(out), shQuote(f)))
+            if (USE_NEW_HELP)
+            	Rd2latex(f, out, encoding=encoding)
+            else
+            	system(paste(cmd,"-o", shQuote(out), shQuote(f)))
             writeLines(readLines(out), outfile)
         }
     }
@@ -1516,12 +1520,16 @@
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
         message("Converting Rd files to LaTeX ...")
+        USE_NEW_HELP <- nchar(Sys.getenv("USE_NEW_HELP")) > 0L        	
         cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
                      encoding, sep="")
         for(f in files) {
             cat("  ", basename(f), "\n", sep="")
             out <-  sub("\\.[Rr]d",".tex", basename(f))
-            system(paste(cmd,"-o", shQuote(file.path(latexdir, out)),
+            if (USE_NEW_HELP)
+	       	Rd2latex(f, file.path(latexdir, out), encoding=encoding)
+	    else
+                system(paste(cmd,"-o", shQuote(file.path(latexdir, out)),
                          shQuote(f)))
         }
     }
