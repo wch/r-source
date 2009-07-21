@@ -204,6 +204,10 @@
 \def\@sampx#1{{\normalfont\texttt{#1}}\egroup'}
 \let\option=\samp
 
+% This is a workaround for the old Rdconv to handle \Sexpr by echoing it
+% Rd2latex() should never let \Sexpr through to here.
+\newcommand\Sexpr[2][]{\texttt{\bsl Sexpr[#1]\{#2\}}}
+
 \newcommand{\var}[1]{{\normalfont\textsl{#1}}}
 
 \newcommand{\dfn}[1]{\textsl{#1}}
