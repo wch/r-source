@@ -67,8 +67,10 @@ transform_S4_method  <- function(x)
 # translation of Utils.pm function of the same name, plus "unknown"
 mime_canonical_encoding <- function(encoding)
 {
+    encoding[encoding %in% c("", "unknown")] <- localeToCharset()[1]
     encoding <- tolower(encoding)
     encoding <- sub("iso_8859-([0-9]+)", "iso-8859-\\1", encoding)
+    encoding <- sub("iso8859-([0-9]+)", "iso-8859-\\1", encoding)
     encoding[encoding == "latin1"] <-  "iso-8859-1"
     encoding[encoding == "latin2"] <-  "iso-8859-2"
     encoding[encoding == "latin3"] <-  "iso-8859-3"
@@ -83,7 +85,6 @@ mime_canonical_encoding <- function(encoding)
     encoding[encoding == "latin-9"] <- "iso-8859-15"
     encoding[encoding == "latin10"] <- "iso-8859-16"
     encoding[encoding == "utf8"] <-    "utf-8"
-    encoding[encoding == "unknown"] <- "iso-8859-1"
     encoding
 }
 
@@ -378,8 +379,8 @@ sectionTitles <-
 ## FIXME: better to really use XHTML
 Rd2HTML <-
     function(Rd, out = "", package = "", defines = .Platform$OS.type,
-             encoding = "unknown", Links = NULL, CHM = FALSE, 
-             stages = "render")
+             Links = NULL, CHM = FALSE, 
+             stages = "render", outputEncoding = "", ...)
 {
     of <- function(...) writeLines(paste(...), con, sep = '')
     of0 <- function(...) writeLines(paste(..., sep=""), con, sep ="")
@@ -802,9 +803,14 @@ Rd2HTML <-
     }
 
     if (is.character(out)) {
-        if(out == "") con <- stdout()
-        else {
-	    con <- file(out, "w")
+        if(out == "") {
+            con <- stdout()
+            if (outputEncoding != "") {
+            	warning('outputEncoding changed to "" on stdout')
+            	outputEncoding <- ""
+            }
+        } else {
+	    con <- file(out, "w", encoding=outputEncoding)
 	    on.exit(close(con))
 	}
     } else {
@@ -812,7 +818,7 @@ Rd2HTML <-
     	out <- summary(con)$description
     }
     
-    Rd <- prepare_Rd(Rd, encoding, defines, stages) 
+    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...) 
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
 
@@ -821,16 +827,6 @@ Rd2HTML <-
     	warning("Rd2HTML is designed for Rd version 2 or higher.")
     else if (length(version) > 1L)
     	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
-
-    enc <- which(sections == "\\encoding")
-    if (length(enc)) {
-    	if (length(enc) > 1L)
-    	    stopRd(Rd[[enc[2L]]], "Only one \\encoding declaration is allowed")
-    	encoding <- Rd[[enc]]
-    	if (!identical(RdTags(encoding), "TEXT"))
-    	    stopRd(encoding, "Encoding must be plain text")
-    	encoding <- encoding[[1L]]
-    }
 
     ## Give error for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]), perl = TRUE )))
@@ -870,7 +866,7 @@ Rd2HTML <-
     of1(title)
     of0('</title>\n',
         '<meta http-equiv="Content-Type" content="text/html; charset=',
-        mime_canonical_encoding(encoding),
+        mime_canonical_encoding(outputEncoding),
         '">\n')
     if(CHM) {
         of0('<link rel="stylesheet" type="text/css" href="Rchm.css">\n',
@@ -918,9 +914,8 @@ Rd2HTML <-
     return(out)
 }
 
-checkRd <-
-    function(Rd, defines=.Platform$OS.type, encoding = "unknown",
-             unknownOK = FALSE, listOK = TRUE, stages = "install")
+checkRd <- function(Rd, defines=.Platform$OS.type, stages="render", 
+                    unknownOK = TRUE, listOK = TRUE, ...)
 {
     checkWrapped <- function(tag, block) {
     	checkContent(block, tag)
@@ -1083,7 +1078,7 @@ checkRd <-
     	    stopRd(Rd[[which[2L]]], "Only one ", tag, " is allowed")
     }
 
-    Rd <- prepare_Rd(Rd, encoding, defines, stages)
+    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
 
@@ -1129,7 +1124,7 @@ checkRd <-
 }
 
 Rd2ex <-
-    function(Rd, out="", defines=.Platform$OS.type, encoding = "unknown", stages="render")
+    function(Rd, out="", defines=.Platform$OS.type, stages="render", outputEncoding="", ...)
 {
     of0 <- function(...) writeLines(paste(..., sep=""), con, sep ="")
     of1 <- function(text) writeLines(text, con, sep = "")
@@ -1198,18 +1193,23 @@ Rd2ex <-
         }
     }
 
-    Rd <- prepare_Rd(Rd, encoding, defines, stages)
+    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
 
     where <- which(sections == "\\examples")
     if(length(where)) {
-        if (is.character(out)) {
-            if(out == "") con <- stdout()
-            else {
-                con <- file(out, "w")
-                on.exit(close(con))
-            }
+	if (is.character(out)) {
+	    if(out == "") {
+		con <- stdout()
+		if (outputEncoding != "") {
+		    warning('outputEncoding changed to "" on stdout')
+		    outputEncoding <- ""
+		}
+	    } else {
+		con <- file(out, "w", encoding = outputEncoding)
+		on.exit(close(con))
+	    }
         } else {
             con <- out
             out <- summary(con)$description

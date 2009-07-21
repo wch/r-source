@@ -44,34 +44,25 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
         enc <- enc[1L]
         enc <- sub("^\\\\encoding\\{([^}]*)\\}.*", "\\1", enc)
         if(verbose) message("found encoding ", enc)
-        if(enc %in% c("UTF-8", "utf-8", "utf8")) {
+        if(enc %in% c("UTF-8", "utf-8", "utf8")) 
             encoding <- "UTF-8"
-        } else if(enc == "latin1") {
+        else
             encoding <- enc
-        } else {
-            if(encoding == "unknown") encoding <- "UTF-8"
-            lines <- iconv(lines, enc, encoding, sub = "byte")
-        }
-    } else {
-    	enc <- encoding
-    	if (enc == "unknown") enc <- "native.enc"
     }
-    ## The parser is fine with encodings in which ASCII bytes mean ASCII
-    ## All known 8-bit encodings and UTF-8 meet that requirement
-    l10n <- l10n_info()
-    if(encoding == "unknown" && l10n[["MBCS"]] && !l10n[["UTF-8"]]) {
-        warning("non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8")
-        encoding <- "UTF-8"
-        lines <- iconv(lines, enc, encoding, sub = "byte")
-    }
-    tcon <- textConnection(lines)
-    on.exit(close(tcon))
     # the internal function must get some sort of srcfile
     if (!inherits(srcfile, "srcfile")) 
     	srcfile <- srcfile(file0)
     basename <- basename(srcfile$filename)
-    srcfile$encoding <- enc
-    .Internal(parse_Rd(tcon, srcfile, encoding, verbose, basename, fragment))
+    srcfile$encoding <- encoding
+    
+    if (encoding == "unknown") encoding <- ""
+    if (encoding != "UTF-8")
+    	lines <- iconv(lines, encoding, "UTF-8", sub = "byte")
+    
+    tcon <- textConnection(lines)
+    on.exit(close(tcon))
+
+    .Internal(parse_Rd(tcon, srcfile, "UTF-8", verbose, basename, fragment))
 }
 
 print.Rd <- function(x, ...) {

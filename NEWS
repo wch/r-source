@@ -165,6 +165,11 @@ Rd HELP FILE CHANGES
     o	parse_Rd() now has an argument 'fragment' (default FALSE) to
 	accept small fragments of Rd files (so that \Sexpr can output
 	Rd code which is then parsed).
+	
+    o	parse_Rd() now always converts its input to UTF-8.  The Rd2*
+	rendering functions have a new parameter, 'outputEncoding',
+	which controls how their output is encoded: by default in
+	the local encoding.
 
     o	There have been various bug fixes and code reorganization in
 	the Rd renderers Rd2HTML, Rd2latex, Rd2txt, and Rd2ex.

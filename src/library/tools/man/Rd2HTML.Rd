@@ -21,31 +21,29 @@
 }
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
-        encoding = "unknown", Links = NULL, CHM = FALSE,
-        stages = "render")
+             Links = NULL, CHM = FALSE, 
+             stages = "render", outputEncoding = "", ...)
 
-Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type, 
-         stages = "render")
+Rd2txt(Rd, out="", package = "", defines=.Platform$OS.type, stages = "render", 
+             outputEncoding = "", ...)
 
-Rd2latex(Rd, out = "", defines = .Platform$OS.type, encoding = "unknown",
-         stages = "render")
+Rd2latex(Rd, out="", defines=.Platform$OS.type, stages="render",
+		     outputEncoding = "", ...)
 
-Rd2ex(Rd, out = "", defines = .Platform$OS.type, encoding = "unknown",
-	 stages = "render")
+Rd2ex(Rd, out="", defines=.Platform$OS.type, stages="render", outputEncoding="", ...)
 
-checkRd(Rd, defines = .Platform$OS.type, encoding = "unknown",
-        unknownOK = FALSE, listOK = TRUE, stages = "install")
+checkRd(Rd, defines=.Platform$OS.type, stages="render", unknownOK = TRUE, listOK = TRUE, ...)
 
 findHTMLlinks(pkgDir = "", lib.loc = NULL)
 }
 \arguments{
-  \item{Rd}{ the \code{Rd} object. }
+  \item{Rd}{ a filename or \code{Rd} object to use as input. }
   \item{out}{ a filename or connection object to which to write the output. }
   \item{package}{ the package to list in the output. }
   \item{defines}{ string(s) to use in \code{"#ifdef"} tests. }
-  \item{encoding}{ encoding to use if the file does not specify one. }
   \item{stages}{ at which stage (\code{"build"}, \code{"install"}, or
-    \code{"render"} should \\Sexpr macros be executed? See the notes below.} 
+    \code{"render"} should \\Sexpr macros be executed? See the notes below.}
+  \item{outputEncoding}{ which character encoding should be used for the output file? }
   \item{Links}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{findHTMLlinks}.}
   \item{CHM}{logical: prepare HTML suitable for Compiled HTML?} 
@@ -53,6 +51,8 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
     \code{FALSE}, otherwise warnings. }
   \item{listOK}{ unnecessary non-empty braces (e.g. around text, not
     as an argument) are treated as errors if \code{FALSE}, otherwise warnings. }
+  \item{...}{ additional parameters to pass to \code{\link{parse_Rd}} when
+    \code{Rd} is a filename. }
   \item{pkgDir}{The top-level directory of an installed package.}
   \item{lib.loc}{character vector describing the location of \R library trees
     to scan: the default indicates \code{\link{.libPaths}()}.}
@@ -62,7 +62,9 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
   The \code{Rd2*} functions convert man pages:  
   \code{Rd2HTML} produces HTML (or compiled HTML, for Windows), 
   \code{Rd2txt} produces plain text, \code{Rd2latex} produces
-  LaTeX input.  
+  LaTeX input.  By default, \code{outputEncoding} is set to \code{""}
+  and the native character encoding (shown by \code{\link{localeToCharset}})
+  is used.
   
   The converters are still in development, and may still make some errors
   in rendering.

@@ -23,6 +23,7 @@ latex_canonical_encoding  <- function(encoding)
 {
     encoding <- tolower(encoding)
     encoding <- sub("iso_8859-([0-9]+)", "iso-8859-\\1", encoding)
+    encoding <- sub("iso8859-([0-9]+)", "iso-8859-\\1", encoding)
 
     encoding[encoding == "iso-8859-1"] <-  "latin1"
     encoding[encoding == "iso-8859-2"] <-  "latin2"
@@ -31,7 +32,7 @@ latex_canonical_encoding  <- function(encoding)
     encoding[encoding == "iso-8859-5"] <-  "cyrillic"
     encoding[encoding == "iso-8859-6"] <-  "arabic"
     encoding[encoding == "iso-8859-7"] <-  "greek"
-    encoding[encoding == "iso-8859-1"] <-  "hebrew"
+    encoding[encoding == "iso-8859-8"] <-  "hebrew"
     encoding[encoding == "iso-8859-9"] <-  "latin5"
     encoding[encoding == "iso-8859-10"] <-  "latin6"
     encoding[encoding == "iso-8859-14"] <-  "latin8"
@@ -42,7 +43,8 @@ latex_canonical_encoding  <- function(encoding)
 }
 
 
-Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown", stages="render")
+Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
+		     outputEncoding = "", ...)
 {
     last_char <- ""
     of0 <- function(...) of1(paste(..., sep=""))
@@ -386,8 +388,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown", 
                "\\donttest" = writeContent(block, tag),
                "\\dontrun"= writeDR(block, tag),
                "\\enc" = {
-                   txt <- as.character(if(encoding !=" unknown") block[[1L]] else block[[2L]])
-                   Encoding(txt) <- "unkownn"
+                   txt <- as.character(block[[1L]])
                    of1(txt)
                } ,
                "\\eqn" =,
@@ -529,7 +530,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown", 
                                   of1("\\item ")
                                   itemskip <- TRUE
                               })
-                       itemskup <- TRUE
+                       itemskip <- TRUE
                    },
                { # default
                    if (inList && !(tag == "TEXT" && isBlankRd(block))) {
@@ -590,9 +591,14 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown", 
     }
 
     if (is.character(out)) {
-        if(out == "") con <- stdout()
-        else {
-	    con <- file(out, "w")
+        if(out == "") {
+            con <- stdout()
+            if (outputEncoding != "") {
+            	warning('outputEncoding changed to "" on stdout')
+            	outputEncoding <- ""
+            }
+        } else {
+	    con <- file(out, "w", encoding = outputEncoding)
 	    on.exit(close(con))
 	}
     } else {
@@ -600,7 +606,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown", 
     	out <- summary(con)$description
     }
 
-    Rd <- prepare_Rd(Rd, encoding, defines, stages)
+    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
 
@@ -616,18 +622,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, encoding="unknown", 
     else if (length(version) > 1L)
     	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
 
-    enc <- which(sections == "\\encoding")
-    if (length(enc)) {
-    	if (length(enc) > 1L)
-    	    stopRd(Rd[[enc[2L]]], "Only one \\encoding declaration is allowed")
-    	encoding <- Rd[[enc]]
-    	if (!identical(RdTags(encoding), "TEXT"))
-    	    stopRd(encoding, "Encoding must be plain text")
-    	encoding <- trim(encoding[[1L]])
-        if (encoding != "unknown") {
-            of0("\\inputencoding{", latex_canonical_encoding(encoding), "}\n")
-        }
-    }
+    if (outputEncoding != "") 
+    	of0("\\inputencoding{", latex_canonical_encoding(outputEncoding), "}\n")
 
     ## Give error for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]), perl = TRUE )))

@@ -15,7 +15,8 @@
 #  http://www.r-project.org/Licenses/
 
 Rd2txt <-
-    function(Rd, out="", package = "", defines=.Platform$OS.type, stages = "render")
+    function(Rd, out="", package = "", defines=.Platform$OS.type, stages = "render", 
+             outputEncoding = "", ...)
 {
     WIDTH <- 72L
     HDR_WIDTH <- 70L
@@ -63,18 +64,19 @@ Rd2txt <-
     	result
     }
     
-    putw <- function(...)  add_to_buffer(paste(..., collapse="", sep=""), wrap=TRUE)
+    wrap <- function(doWrap=TRUE) {
+	if (doWrap != wrapping) {
+	    flushBuffer()
+	    wrapping <<- doWrap
+	}    
+    }
     
-    putf <- function(...)  add_to_buffer(paste(..., collapse="", sep=""), wrap=FALSE)
+    putw <- function(...)  { wrap(TRUE); put(...) }
     
-    put <- function(...)  add_to_buffer(paste(..., collapse="", sep=""), wrap=wrapping)
+    putf <- function(...)  { wrap(FALSE); put(...) }
     
-    add_to_buffer <- function(txt, wrap) {
-	if (wrap != wrapping) {
-	    writeBuffer()
-	    wrapping <<- wrap
-	}
-        txt <- as.character(txt)
+    put <- function(...) {
+        txt <- paste(..., collapse="", sep="")
         trail <- length(grep("\n$", txt)) > 0L
         # Convert newlines
         txt <- strsplit(txt, "\n")[[1]]
@@ -94,55 +96,45 @@ Rd2txt <-
         else buffer <<- txt
         linestart <<- trail
     }
-    
-    writeBuffer <- function() {
-    	if (wrapping) writeWrapped()
-    	else writeFixed()
-    }
-    
-    writeWrapped <- function() {
-    	if (!length(buffer)) return()
-    	
-    	if (keepFirstIndent) {
-    	    first <- nchar(sub("[^ ].*", "", buffer[1]))
-    	    keepFirstIndent <<- FALSE
-    	} else
-	    first <- indent
-    	
-    	buffer <<- c(buffer, "")  # Add an extra blank sentinel
-    	blanks <- grep("^[[:space:]]*$", buffer)
-    	result <- character(0)
-    	start <- 1
-    	for (i in seq_along(blanks)) {
-    	    if (blanks[i] > start) {
-    	    	result <- c(result, strwrap(paste(buffer[start:(blanks[i]-1)], collapse=" "), 
-    	    	                            indent=first, exdent=indent))
-    	    	first <- indent
-    	    }
-    	    result <- c(result, buffer[blanks[i]])
-    	    start <- blanks[i]+1
-    	}
-    	buffer <<- result[-length(result)] # remove the sentinel
-    	flush_buffer()
-    }
-    
-    blanks <- function(n) {
-    	if (n) paste(rep(" ", n), collapse="")
-    	else ""
-    }
-    
-    writeFixed <- function() {
-    	if (!length(buffer)) return()
-    	if (keepFirstIndent) {
-    	    if (length(buffer) > 1)
-    	    	buffer[-1] <<- paste(blanks(indent), buffer[-1], sep="")
-    	    keepFirstIndent <- FALSE
-    	} else 
-    	    buffer <<- paste(blanks(indent), buffer, sep="")
-    	flush_buffer()
-    }
 
-    flush_buffer <- function() { 
+    blanks <- function(n) {
+	if (n) paste(rep(" ", n), collapse="")
+	else ""
+    }
+    
+    flushBuffer <- function() {
+    	if (!length(buffer)) return()
+    	
+    	if (wrapping) {
+	    if (keepFirstIndent) {
+		first <- nchar(sub("[^ ].*", "", buffer[1]))
+		keepFirstIndent <<- FALSE
+	    } else
+		first <- indent
+
+	    buffer <<- c(buffer, "")  # Add an extra blank sentinel
+	    blankLines <- grep("^[[:space:]]*$", buffer)
+	    result <- character(0)
+	    start <- 1
+	    for (i in seq_along(blankLines)) {
+		if (blankLines[i] > start) {
+		    result <- c(result, strwrap(paste(buffer[start:(blankLines[i]-1)], collapse=" "), 
+						indent=first, exdent=indent))
+		    first <- indent
+		}
+		result <- c(result, buffer[blankLines[i]])
+		start <- blankLines[i]+1
+	    }
+	    buffer <<- result[-length(result)] # remove the sentinel
+	} else {  # Not wrapping
+	    if (keepFirstIndent) {
+		if (length(buffer) > 1)
+		    buffer[-1] <<- paste(blanks(indent), buffer[-1], sep="")
+		keepFirstIndent <- FALSE
+	    } else 
+		buffer <<- paste(blanks(indent), buffer, sep="")
+	}
+
     	if (length(buffer)) 
     	    writeLines(buffer, con)
     	buffer <<- character(0)
@@ -205,10 +197,10 @@ Rd2txt <-
     blankLine <- function(n=1) {
     	while (length(buffer) && length(grep("^[[:blank:]]*$", buffer[length(buffer)])))
     	    buffer <<- buffer[-length(buffer)]
-	writeBuffer()
+	flushBuffer()
 	if (n > haveBlanks) {
 	    buffer <<- rep("", n-haveBlanks)
-	    writeBuffer()
+	    flushBuffer()
 	}
 	haveBlanks <<- n
 	dropBlank <<- TRUE
@@ -598,9 +590,14 @@ Rd2txt <-
     }
 
     if (is.character(out)) {
-        if(out == "") con <- stdout()
-        else {
-	    con <- file(out, "w")
+        if(out == "") {
+            con <- stdout()
+            if (outputEncoding != "") {
+            	warning('outputEncoding changed to "" on stdout')
+            	outputEncoding <- ""
+            }
+        } else {
+	    con <- file(out, "w", encoding = outputEncoding)
 	    on.exit(close(con))
 	}
     } else {
@@ -608,7 +605,7 @@ Rd2txt <-
     	out <- summary(con)$description
     }
 
-    Rd <- prepare_Rd(Rd, encoding, defines, stages)
+    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
     sections <- RdTags(Rd)
 
     version <- which(sections == "\\Rdversion")
@@ -616,18 +613,6 @@ Rd2txt <-
     	warning("Rd2HTML is designed for Rd version 2 or higher.")
     else if (length(version) > 1L)
     	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
-
-    enc <- which(sections == "\\encoding")
-    if (length(enc)) {
-    	if (length(enc) > 1L)
-    	    stopRd(Rd[[enc[2L]]], "Only one \\encoding declaration is allowed")
-    	encoding <- Rd[[enc]]
-    	if (!identical(RdTags(encoding), "TEXT"))
-    	    stopRd(encoding, "Encoding must be plain text")
-    	encoding <- trim(encoding[[1L]])
-        if (encoding != "unknown")
-            encoding <- latex_canonical_encoding(encoding)
-    }
 
     ## Give error for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]), perl = TRUE )))
