@@ -146,6 +146,8 @@ NEW FEATURES
 
     o	new inheritedSlotNames() utility for S4 class programming.
 
+    o   tabulate now allows NAs to pass through (and be ignored)
+
 
 Rd HELP FILE CHANGES
 
