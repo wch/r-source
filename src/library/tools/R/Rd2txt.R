@@ -610,7 +610,7 @@ Rd2txt <-
 
     version <- which(sections == "\\Rdversion")
     if (length(version) == 1L && as.numeric(version[[1L]]) < 2)
-    	warning("Rd2HTML is designed for Rd version 2 or higher.")
+    	warning("Rd2txt is designed for Rd version 2 or higher.")
     else if (length(version) > 1L)
     	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
 
