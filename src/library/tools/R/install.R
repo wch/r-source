@@ -1999,61 +1999,90 @@
     if(TRUE) {
         ## FIXME: add this lib to lib.loc?
         Links <- if ("html" %in% types) findHTMLlinks(outDir) else ""
+
+        .make_message <- function(e, kind) {
+            msg <- conditionMessage(e)
+            call <- conditionCall(e)
+            if(is.null(call))
+                sprintf("%s: %s", kind, msg)
+            else
+                sprintf("%s in %s:\n %s", deparse(call)[1L], kind, msg)
+        }
+
+        .whandler <- function(e) {
+            .messages <<- c(.messages, .make_message(e, "Warning"))
+        }
+        .ehandler <- function(e) {
+            .messages <<- c(.messages, .make_message(e, "Error"))
+            unlink(ff)
+        }
+        ## .convert_if_needed <- function(ff, expr) {
+        ##     if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
+        ##         showtype()
+        ##         tryCatch(expr, warning = .whandler, error = .ehandler)
+        ##     }
+        ## }
+        .convert <- function(expr)
+            tryCatch(expr, warning = .whandler, error = .ehandler)
+
         for (f in files) {
             bf <-  sub("\\.[Rr]d","", basename(f))
             shown <- FALSE
-            Rd <- prepare_Rd(f, defines = .Platform$OS.type, stages="install")
+            Rd <- prepare_Rd(f, defines = .Platform$OS.type,
+                             stages="install")
+            .messages <- character()
             if ("txt" %in% types) {
                 type <- "txt"
                 ff <- file.path(outDir, dirname[type],
                                 paste(bf, ext[type], sep = ""))
-                if(!file.exists(ff) || file_test("-nt", f, ff)) {
+                if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
                     showtype()
-                    res <- try(.saveRDS(Rd, ff))
-                    if(inherits(res, "try-error")) unlink(ff)
+                    .convert(.saveRDS(Rd, ff))
                 }
             }
             if("html" %in% types) {
                 type <- "html"
                 ff <- file.path(outDir, dirname[type],
                                 paste(bf, ext[type], sep = ""))
-                if(!file.exists(ff) || file_test("-nt", f, ff)) {
+                if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
                     showtype()
-                    res <- try(Rd2HTML(Rd, ff, package = pkg, Links = Links))
-                    if(inherits(res, "try-error")) unlink(ff)
+                    .convert(Rd2HTML(Rd, ff, package = pkg,
+                                     Links = Links))
                 }
             }
             if ("latex" %in% types) {
                 type <- "latex"
                 ff <- file.path(outDir, dirname[type],
                                 paste(bf, ext[type], sep = ""))
-                if(!file.exists(ff) || file_test("-nt", f, ff)) {
+                if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
                     showtype()
-                    res <- try(Rd2latex(Rd, ff))
-                    if(inherits(res, "try-error")) unlink(ff)
+                    .convert(Rd2latex(Rd, ff))
                 }
             }
             if("chm" %in% types) {
             	type <- "chm"
             	ff <- file.path(dir, dirname[type],
             			paste(bf, ext[type], sep=""))
-            	if(!file.exists(ff) || file_test("-nt", f, ff)) {
-            	    showtype()
-            	    res <- try(Rd2HTML(Rd, ff, package=pkg, Links=Links, CHM=TRUE))
-            	    if(inherits(res, "try-error")) unlink(ff)
-            	}
+                if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
+                    showtype()
+                    .convert(Rd2HTML(Rd, ff, package = pkg,
+                                     Links = Links, CHM = TRUE))
+                }
             }
             if ("example" %in% types) {
                 type <- "example"
                 ff <- file.path(outDir, dirname[type],
                                 paste(bf, ext[type], sep = ""))
-                if(!file.exists(ff) || file_test("-nt", f, ff)) {
-                    Rd2ex(Rd, ff)
-                    if (file.exists(ff)) 
-                    	showtype()
+                if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
+                    .convert(Rd2ex(Rd, ff))
+                    if(file_test("-f", ff))
+                        showtype()
                 }
             }
-            if (shown) cat("\n")
+            if(shown) {
+                cat("\n")
+                if(length(.messages)) writeLines(.messages)
+            }
         }
     }
     else {
