@@ -289,21 +289,22 @@ as made available via @uref{http://@/www.r-project.org/@/Licenses/} and
 contained in subdirectory @file{share/licenses} of the R source or home
 directory.
 @item
-The names of abbreviations of free or open software licenses as
-contained in the license data base in file
-@file{share/licenses/license.db} in the R source or home directory,
-possibly (for versioned licenses) followed by a version restriction of
-the form @samp{(@var{op} @var{v})} with @var{op} one of the comparison
-operators @samp{<}, @samp{<=}, @samp{>}, @samp{>=}, @samp{==}, or
-@samp{!=} and @var{v} a numeric version specification (strings of
-non-negative integers separated by @samp{.}), possibly combined via
-@samp{,} (see below for an example).  For versioned licenses, one can
-also specify the name followed by the version, or combine an existing
-abbreviation and the version with a @samp{-}.  Further free (see
+The names of abbreviations of free or open source software (FOSS, e.g.,
+@uref{http://en.wikipedia.org/wiki/FOSS}) licenses as contained in the
+license data base in file @file{share/licenses/license.db} in the R
+source or home directory, possibly (for versioned licenses) followed by
+a version restriction of the form @samp{(@var{op} @var{v})} with
+@var{op} one of the comparison operators @samp{<}, @samp{<=}, @samp{>},
+@samp{>=}, @samp{==}, or @samp{!=} and @var{v} a numeric version
+specification (strings of non-negative integers separated by @samp{.}),
+possibly combined via @samp{,} (see below for an example).  For
+versioned licenses, one can also specify the name followed by the
+version, or combine an existing abbreviation and the version with a
+@samp{-}.  Further free (see
 @uref{http://@/www.fsf.org/@/licenses/@/license-list.html}) or open
 software (see
-@uref{http://@/www.opensource.org/@/licenses/@/bsd-license.php}) licenses
-will be added to this data base if necessary.
+@uref{http://@/www.opensource.org/@/licenses/@/bsd-license.php})
+licenses will be added to this data base if necessary.
 @item
 One of the strings @samp{file LICENSE} or @samp{file LICENCE} referring
 to a file named @file{LICENSE} or @file{LICENCE} in the package (source
@@ -312,12 +313,19 @@ and installation) top-level directory.
 The string @samp{Unlimited}, meaning that there no are restrictions on
 distribution or use other than those imposed by relevant laws.
 @end itemize
+If a package license @emph{extends} a base FOSS license (e.g., using
+GPL-3 or AGPL-3 with an attribution clause), the extension should be
+placed in file @file{LICENSE} (or @file{LICENCE}), and the string
+@samp{+ file LICENSE} (or @samp{+ file LICENCE}, respectively) should be
+appended to the corresponding individual license specification.
+
 Examples for standardized specifications include
 @example
 License: GPL-2
 License: GPL (>= 2) | BSD
 License: LGPL (>= 2.0, < 3) | Mozilla Public License
 License: GPL-2 | file LICENCE
+License: Artistic-1.0 | AGPL-3 + file LICENSE
 @end example
 Please note in particular that ``Public domain'' is not a valid license.
 It is very important that you include this information!  Otherwise, it
@@ -508,7 +516,10 @@ the package documentation is not in English: this should be a
 comma-separated list of 2-letter ISO 639-1
 (@uref{http://en.@/wikipedia.@/org/wiki/ISO_639-1}) or 3-letter ISO
 639-3 (@uref{http://en.@/wikipedia.@/org/wiki/ISO_639-3}) language
-codes.
+codes, or standard (not private use or grandfathered) IETF language tags
+as currently defined by RFC 4646
+(@uref{http://tools.ietf.org/html/rfc4646}, see also
+@uref{http://en.wikipedia.org/wiki/IETF_language_tag}).
 
 
 @node The INDEX file, Package subdirectories, The DESCRIPTION file, Package structure
