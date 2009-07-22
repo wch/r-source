@@ -1084,7 +1084,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
 
     version <- which(sections == "\\Rdversion")
     if (length(version) == 1L && as.numeric(version[[1L]]) < 2)
-    	warning("Rd2HTML is designed for Rd version 2 or higher.")
+    	warning("checkRd is designed for Rd version 2 or higher.")
     else if (length(version) > 1L)
     	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
 
@@ -1265,62 +1265,36 @@ findHTMLlinks <- function(pkgDir = "", lib.loc = NULL)
     ## The standard packages
     ## along lib.loc.
 
-    getTopics <- function(info)
-    {
-        topics <- info$Aliases
-        lens <- sapply(topics, length)
-        data.frame(Topic = unlist(topics),
-                   File = rep.int(info$File, lens),
-                   stringsAsFactors = FALSE)
+    get_links <- function(p) {
+        if(file.exists(f <- file.path(p, "Meta", "Rd.rds"))) {
+            info <- .readRDS(f)
+            topics <- info$Aliases
+            lens <- sapply(topics, length)
+            structure(file.path("../..", basename(p), "html",
+                                rep.int(info$File, lens)),
+                      names = unlist(topics))
+        } else character()
     }
-
+    
     if(is.null(lib.loc)) lib.loc <- .libPaths()
-    nlinks <- 10000L; used <- 0L
-    Links <- character(nlinks)
-    names(Links) <- rep("", nlinks)
-    addLink <- function(names, links, p)
-    {
-        m  <- length(names)
-        names <- names
-        if (m == 0L) return
-        if(used+m > nlinks) {
-            nnlink <- length(Links) + 1000L
-            new <- character(nnlink); names(new) <- rep("", nnlink)
-            new[1L:(length(Links) + m)] <- c(Links, links)
-            names(new)[1L:(length(Links)+m)] <- c(names(Links), names)
-            Links <<- new
-        } else {
-            Links[used + (1:m)] <<- links
-            names(Links)[used + (1:m)] <<- names
-        }
-        used <<- used + m
-    }
-    for (lib in rev(lib.loc))
-        for (p in rev(dir(lib))) {
-            f <- file.path(lib, p, "Meta", "Rd.rds")
-            if (file.exists(f)) {
-                info <- getTopics(.readRDS(f))
 
-                addLink(info$Topic, file.path("../..", p, "html", info$File))
-            }
-        }
-    for (p in c("base", "utils", "graphics", "grDevices", "stats",
-                "datasets", "methods")) {
-        f <- file.path(.Library, p, "Meta", "Rd.rds")
-        if (file.exists(f)) {
-            info <- getTopics(.readRDS(f))
-            addLink(info$Topic, file.path("../..", p, "html", info$File))
-        }
-    }
-    if(nzchar(pkgDir)) {
-        f <- file.path(pkgDir, "Meta", "Rd.rds")
-        if (file.exists(f)) {
-            info <- getTopics(.readRDS(f))
-            addLink(info$Topic, info$File)
-        }
-    }
+    Links <- list()
+    for(lib in rev(lib.loc))
+        Links <- c(Links,
+                   lapply(rev(dir(lib, full.names = TRUE)), get_links))
+    Links <- c(Links,
+               lapply(file.path(.Library,
+                                c("base", "utils", "graphics",
+                                  "grDevices", "stats", "datasets",
+                                  "methods")),
+                      get_links))
+    if(nzchar(pkgDir))
+        Links <- c(Links, list(get_links(pkgDir)))
+    Links <- unlist(Links)
+    
     ## now latest names are newest, so
     Links <- rev(Links)
     Links <- Links[!duplicated(names(Links))]
     gsub("[Rr]d$", "html", Links)
 }
+
