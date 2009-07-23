@@ -35,11 +35,16 @@
 ## for more information.
 ## </NOTE>
 
-re_anchor <- function(s)
+re_anchor <-
+function(s)
     if(length(s)) paste("^", s, "$", sep = "") else character()
-re_group <- function(s)
+
+re_group <-
+function(s)
     if(length(s)) paste("(", s, ")", sep = "") else character()
-re_or <- function(s, group = TRUE) {
+
+re_or <-
+function(s, group = TRUE) {
     if(!length(s))
         character()
     else if(group)

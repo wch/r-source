@@ -89,7 +89,7 @@ mime_canonical_encoding <- function(encoding)
 }
 
 RdTags <- function(Rd) {
-    res <- sapply(Rd, function(element) attr(element, "Rd_tag"))
+    res <- sapply(Rd, attr, "Rd_tag")
     if (!length(res)) res <- character(0)
     res
 }
