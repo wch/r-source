@@ -80,6 +80,9 @@
 
 int Rf_envlength(SEXP rho);
 
+/* TODO: a  Length(.) {say} which is  length() + dispatch (S3 + S4) if needed
+         for one approach, see do_seq_along() in ../main/seq.c
+*/
 INLINE_FUN R_len_t length(SEXP s)
 {
     int i;
@@ -524,6 +527,30 @@ INLINE_FUN Rboolean isVectorizable(SEXP s)
 	return TRUE;
     }
     else return FALSE;
+}
+
+
+/**
+ * Create a named vector of type TYP
+ *
+ * @param TYP a vector SEXP type (e.g. REALSXP)
+ * @param names names of list elements with null string appended
+ *
+ * @return (pointer to a) named vector of type TYP
+ */
+INLINE_FUN SEXP R_make_named(int TYP, const char **names)
+{
+    SEXP ans, nms;
+    int i, n;
+
+    for (n = 0; strlen(names[n]) > 0; n++) {}
+    ans = PROTECT(allocVector(TYP, n));
+    nms = PROTECT(allocVector(STRSXP, n));
+    for (i = 0; i < n; i++)
+	SET_STRING_ELT(nms, i, mkChar(names[i]));
+    setAttrib(ans, R_NamesSymbol, nms);
+    UNPROTECT(2);
+    return ans;
 }
 
 

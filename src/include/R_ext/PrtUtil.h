@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2002    Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1998-2009    Robert Gentleman, Ross Ihaka
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -41,6 +41,7 @@
 #define printIntegerVector Rf_printIntegerVector
 #define printRealVector    Rf_printRealVector
 #define printComplexVector Rf_printComplexVector
+/* #define dropTrailing0      Rf_dropTrailing0 */
 
 #ifdef  __cplusplus
 extern "C" {
@@ -57,6 +58,7 @@ const char *EncodeLogical(int, int);
 const char *EncodeInteger(int, int);
 const char *EncodeReal(double, int, int, int, char);
 const char *EncodeComplex(Rcomplex, int, int, int, int, int, int, char);
+/* const char* dropTrailing0(const char *, char); */
 
 /* Printing */
 void VectorIndex(int, int);
