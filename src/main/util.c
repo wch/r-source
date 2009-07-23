@@ -621,7 +621,7 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
     }
 
-    UNPROTECT(2);
+    UNPROTECT(1);
     return ans;
 }
 
