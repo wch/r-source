@@ -552,6 +552,7 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nx = 0, ny = 0, i, j, k, nans = 0, nx_lone = 0, ny_lone = 0;
     int all_x = 0, all_y = 0, ll = 0/* "= 0" : for -Wall */;
     int *ix, *iy, tmp, nnx, nny, i0, j0;
+    const char *nms[] = {"xi", "yi", "x.alone", "y.alone", ""};
 
     checkArity(op, args);
     xi = CAR(args);
@@ -589,7 +590,8 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
     /* 2. allocate and store result components */
-    PROTECT(ans = allocVector(VECSXP, 4));
+
+    PROTECT(ans = R_make_named(VECSXP, nms));
     ansx = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 0, ansx);
     ansy = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 1, ansy);
 
@@ -619,12 +621,6 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
     }
 
-    PROTECT(ansnames = allocVector(STRSXP, 4));
-    SET_STRING_ELT(ansnames, 0, mkChar("xi"));
-    SET_STRING_ELT(ansnames, 1, mkChar("yi"));
-    SET_STRING_ELT(ansnames, 2, mkChar("x.alone"));
-    SET_STRING_ELT(ansnames, 3, mkChar("y.alone"));
-    setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;
 }
@@ -1061,7 +1057,7 @@ utf8toucs(wchar_t *wc, const char *s)
     }
 }
 
-size_t 
+size_t
 utf8towcs(wchar_t *wc, const char *s, size_t n)
 {
     int m, res = 0;
@@ -1554,15 +1550,15 @@ typedef enum {
 typedef UColAttributeValue UCollationStrength;
 
 typedef enum {
-      UCOL_FRENCH_COLLATION, 
-      UCOL_ALTERNATE_HANDLING, 
-      UCOL_CASE_FIRST, 
+      UCOL_FRENCH_COLLATION,
+      UCOL_ALTERNATE_HANDLING,
+      UCOL_CASE_FIRST,
       UCOL_CASE_LEVEL,
-      UCOL_NORMALIZATION_MODE, 
+      UCOL_NORMALIZATION_MODE,
       UCOL_DECOMPOSITION_MODE = UCOL_NORMALIZATION_MODE,
       UCOL_STRENGTH,
       UCOL_HIRAGANA_QUATERNARY_MODE,
-      UCOL_NUMERIC_COLLATION, 
+      UCOL_NUMERIC_COLLATION,
       UCOL_ATTRIBUTE_COUNT
 } UColAttribute;
 
@@ -1579,7 +1575,7 @@ typedef struct UCharIterator {
 
 UCollator* ucol_open(const char *loc, UErrorCode *status);
 void ucol_close(UCollator *coll);
-void ucol_setAttribute(UCollator *coll, UColAttribute attr, 
+void ucol_setAttribute(UCollator *coll, UColAttribute attr,
 		       UColAttributeValue value, UErrorCode *status);
 void ucol_setStrength(UCollator *coll, UCollationStrength strength);
 UCollationResult ucol_strcollIter(const UCollator *coll,
@@ -1627,13 +1623,13 @@ static const struct {
     { "hiragana_quaternary", UCOL_HIRAGANA_QUATERNARY_MODE },
     { NULL,  0 }
 };
-    
+
 
 SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x;
     UErrorCode  status = U_ZERO_ERROR;
-    
+
     for (; args != R_NilValue; args = CDR(args)) {
 	const char *this = CHAR(PRINTNAME(TAG(args)));
 	const char *s;
@@ -1665,7 +1661,7 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ucol_setStrength(collator, val);
 	    } else if (collator && at >= 0 && val >= 0) {
 		ucol_setAttribute(collator, at, val, &status);
-		if (U_FAILURE(status)) 
+		if (U_FAILURE(status))
 		    error("failed to set ICU collator attribute");
 	    }
 	}
@@ -1694,10 +1690,10 @@ int Scollate(SEXP a, SEXP b)
     }
     if (collator == NULL)
 	return strcoll(translateChar(a), translateChar(b));
-    
+
     uiter_setUTF8(&aIter, as, len1);
     uiter_setUTF8(&bIter, bs, len2);
-    result = ucol_strcollIter(collator, &aIter, &bIter, &status);   
+    result = ucol_strcollIter(collator, &aIter, &bIter, &status);
     if (U_FAILURE(status)) error("could not collate");
     return result;
 }

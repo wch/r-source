@@ -62,22 +62,16 @@ static SEXP
 ConvInfoMsg(char* msg, int iter, int whystop, double fac,
 	    double minFac, int maxIter, double convNew)
 {
-    SEXP ans, rnames;
-
-    PROTECT(ans = allocVector(VECSXP, 5));
-    setAttrib(ans, R_NamesSymbol, rnames = allocVector(STRSXP, 5));
+    const char *nms[] = {"isConv", "finIter", "finTol", 
+			 "stopCode", "stopMessage",  ""};
+    SEXP ans;
+    PROTECT(ans = R_make_named(VECSXP, nms));
 
     SET_VECTOR_ELT(ans, 0, ScalarLogical(whystop == 0)); /* isConv */
     SET_VECTOR_ELT(ans, 1, ScalarInteger(iter));	 /* finIter */
     SET_VECTOR_ELT(ans, 2, ScalarReal   (convNew));	 /* finTol */
     SET_VECTOR_ELT(ans, 3, ScalarInteger(whystop));      /* stopCode */
     SET_VECTOR_ELT(ans, 4, mkString(msg));               /* stopMessage */
-
-    SET_STRING_ELT(rnames, 0, mkChar("isConv"));
-    SET_STRING_ELT(rnames, 1, mkChar("finIter"));
-    SET_STRING_ELT(rnames, 2, mkChar("finTol"));
-    SET_STRING_ELT(rnames, 3, mkChar("stopCode"));
-    SET_STRING_ELT(rnames, 4, mkChar("stopMessage"));
 
     UNPROTECT(1);
     return ans;

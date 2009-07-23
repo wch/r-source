@@ -6,7 +6,7 @@ C Output from Public domain Ratfor, version 1.0
 C Purpose :
 C       Compute smoothing spline for smoothing parameter lambda
 C       and compute one of three `criteria' (OCV , GCV , "df match").
-C See comments in ./sbart.f from which this is called
+C See comments in ./sbart.c from which this is called
 
       integer n,nk,icrit,ld4,ldnk,info
       DOUBLE precision penalt,dofoff,x(n),y(n),w(n),ssw,

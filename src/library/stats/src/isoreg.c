@@ -26,24 +26,17 @@ SEXP R_isoreg(SEXP y)
 {
     int n = LENGTH(y), i, ip, known, n_ip;
     double tmp, slope;
-    SEXP yc, yf, iKnots, ans, anames;
+    SEXP yc, yf, iKnots, ans;
+    const char *anms[] = {"y", "yc", "yf", "iKnots", ""};
 
     /* unneeded: y = coerceVector(y, REALSXP); */
 
-    /* nicer way to populate a named list ? */
-    PROTECT(ans = allocVector(VECSXP, 4));/* list(.) with all */
+    PROTECT(ans = R_make_named(VECSXP, anms));
+
     SET_VECTOR_ELT(ans, 0, y = y);
     SET_VECTOR_ELT(ans, 1, yc = allocVector(REALSXP, n+1));
     SET_VECTOR_ELT(ans, 2, yf = allocVector(REALSXP, n));
     SET_VECTOR_ELT(ans, 3, iKnots= allocVector(INTSXP, n));
-
-    PROTECT(anames = allocVector(STRSXP, 4));
-    SET_STRING_ELT(anames, 0, mkChar("y"));
-    SET_STRING_ELT(anames, 1, mkChar("yc"));
-    SET_STRING_ELT(anames, 2, mkChar("yf"));
-    SET_STRING_ELT(anames, 3, mkChar("iKnots"));
-    setAttrib(ans, R_NamesSymbol, anames);
-    UNPROTECT(1);
 
     /* yc := cumsum(0,y) */
     REAL(yc)[0] = 0.;
