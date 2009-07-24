@@ -444,6 +444,7 @@ static void process_request(httpd_conn_t *c) {
 		    fsz = ftell(f);
 		    fseek(f, 0, SEEK_SET);
 		    sprintf(buf, "\r\nContent-length: %ld\r\n\r\n", fsz);
+		    send_response(c->sock, buf, strlen(buf));
 		    if (c->method != METHOD_HEAD) {
 			fbuf = (char*) malloc(32768);
 			while (fsz > 0 && !feof(f)) {
@@ -648,6 +649,9 @@ static void worker_input_handler(void *data) {
 		}
 	    }
 	}
+	/* we end here if we processed a buffer of exactly one line */
+	c->line_pos = 0;
+	return;	
     } else if (c->part == PART_BODY && c->body) { /* BODY  - this branch always returns */
 	DBG(printf("BODY: body_pos=%d, content_length=%d\n", c->body_pos, c->content_length));
 	n = recv(c->sock, c->body + c->body_pos, c->content_length - c->body_pos, 0);
