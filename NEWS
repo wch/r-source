@@ -212,6 +212,9 @@ BUG FIXES
 
     o	n:m  now returns <integer> in a few more boundary cases.
 
+    o   outlier symbols drawn by boxplot() now obey the 'outlwd' 
+        argument.  Reported by Jurgen Kluge.
+
 
 
 	**************************************************

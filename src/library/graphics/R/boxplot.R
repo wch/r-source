@@ -167,6 +167,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 			   rep(x + wid * outwex, nout), out,
 			   lty = outlty[i], lwd = outlwd[i], col = outcol[i])
 		xypoints(rep.int(x, nout), out, pch = outpch[i],
+                         lwd = outlwd[i],
 			 cex = outcex[i], col = outcol[i], bg = outbg[i])
 	    }
 
