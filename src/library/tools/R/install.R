@@ -815,11 +815,22 @@
 
             if (dir.exists("man")) {
                 starsmsg(stars, "help")
-                res <- try(.install_package_man_sources(".", instdir))
-                if (inherits(res, "try-error"))
-                    pkgerrmsg("installing man sources failed", pkg_name)
-                Sys.chmod(file.path(instdir, "man",
-                                    paste0(pkg_name, ".Rd.gz")), "644")
+                if(Sys.getenv("USE_NEW_HELP") != "") {
+                    tryCatch(.install_package_Rd_objects(".", instdir),
+                             error = function(e)
+                             pkgerrmsg("installing Rd objects failed",
+                                       pkg_name))
+                    Sys.chmod(file.path(instdir, "man",
+                                        paste0(pkg_name, ".rds")),
+                              "644")
+                } else {
+                    res <- try(.install_package_man_sources(".", instdir))
+                    if (inherits(res, "try-error"))
+                        pkgerrmsg("installing man sources failed", pkg_name)
+                    Sys.chmod(file.path(instdir, "man",
+                                        paste0(pkg_name, ".Rd.gz")),
+                              "644")
+                } 
                 ## 'Maybe build preformatted help pages ...'
                 if (build_help) {
                     starsmsg(paste0(stars, "*"),
@@ -1472,7 +1483,7 @@
                 if(any(grepl("\\\\keyword\\{\\s*internal\\s*\\}",
                          lines, perl = TRUE))) next
             }
-            out <-  file.path(latexdir, sub("\\.[Rr]d",".tex", basename(f)))
+            out <-  file.path(latexdir, sub("\\.[Rr]d$", ".tex", basename(f)))
             ## people have file names with quotes in them.
             if (USE_NEW_HELP)
             	Rd2latex(f, out, encoding=encoding)
@@ -1525,7 +1536,7 @@
                      encoding, sep="")
         for(f in files) {
             cat("  ", basename(f), "\n", sep="")
-            out <-  sub("\\.[Rr]d",".tex", basename(f))
+            out <-  sub("\\.[Rr]d$", ".tex", basename(f))
             if (USE_NEW_HELP)
 	       	Rd2latex(f, file.path(latexdir, out), encoding=encoding)
 	    else
@@ -1585,10 +1596,16 @@
 
 ..Rdnewer <- function(dir, file, OS = .Platform$OS.type)
 {
-    ## Test whether any Rd file in the 'man' and 'man/$OS' subdirectories of
-    ## directory DIR is newer than a given FILE.  Return 0 if such a file is
-    ## found (i.e., in the case of 'success'), and 1 otherwise, so that the
-    ## return value can be used for shell 'if' tests.
+    ## Test whether any Rd file in the 'man' and 'man/$OS'
+    ## subdirectories of directory DIR is newer than a given FILE.
+    ## Return 0 if such a file is found (i.e., in the case of
+    ## 'success'), and 1 otherwise, so that the return value can be used
+    ## for shell 'if' tests.
+
+    ## <NOTE>
+    ## For now only used for the R sources (/doc/manual/Makefile.in)
+    ## hence no need to also look for Rd files with '.rd' extension.
+    ## </NOTE>
 
     if (!file.exists(file)) return(0L)
     age <- file.info(file)$mtime
@@ -1646,7 +1663,7 @@
                     " in file ", basename(f))
         aliases <- aliases[!dups]
         topics <- c(topics, aliases)
-        fff <- sub("\\.[Rr]d",  "", basename(f))
+        fff <- sub("\\.[Rr]d$", "", basename(f))
         ff <- c(ff, rep(fff, length(aliases)))
     }
     outman <- file.path(outDir, "help")
@@ -2026,7 +2043,7 @@
             tryCatch(expr, warning = .whandler, error = .ehandler)
 
         for (f in files) {
-            bf <-  sub("\\.[Rr]d","", basename(f))
+            bf <-  sub("\\.[Rr]d$", "", basename(f))
             shown <- FALSE
             Rd <- prepare_Rd(f, defines = .Platform$OS.type,
                              stages="install")
@@ -2090,7 +2107,7 @@
 
         for (f in files) {
             Links <- findHTMLlinks(outDir)
-            bf <-  sub("\\.[Rr]d","", basename(f))
+            bf <-  sub("\\.[Rr]d$", "", basename(f))
             need <- character()
             for(type in types) {
                 ff <- file.path(outDir, dirname[type],

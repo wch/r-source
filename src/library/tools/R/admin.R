@@ -669,7 +669,8 @@ function(dir, packages)
 
 ### * .convert_examples
 
-.convert_examples <- function(infile, outfile, encoding)
+.convert_examples <-
+function(infile, outfile, encoding)
 {
     ## convert infile from encoding to current, if possible
     if(capabilities("iconv") && l10n_info()[["MBCS"]]) {
@@ -683,7 +684,8 @@ function(dir, packages)
 
 ### * .install_package_man_sources
 
-.install_package_man_sources <- function(dir, outDir)
+.install_package_man_sources <-
+function(dir, outDir)
 {
     mandir <- file.path(dir, "man")
     if(!file_test("-d", mandir)) return()
@@ -705,9 +707,31 @@ function(dir, packages)
     close(con)
 }
 
+### * .install_package_Rd_objects
+
+.install_package_Rd_objects <-
+function(dir, outDir)
+{
+    mandir <- file.path(dir, "man")
+    if(!file_test("-d", mandir)) return()
+    manfiles <- list_files_with_type(mandir, "docs")
+    if(!length(manfiles)) return()
+    manOutDir <- file.path(outDir, "man")
+    if(!file_test("-d", manOutDir)) dir.create(manOutDir)
+    db_file <- file.path(manOutDir,
+                         paste(basename(outDir), ".rds", sep = ""))
+    ## Avoid (costly) rebuilding if not needed.
+    if(!file_test("-f", db_file) ||
+       !all(file_test("-nt", db_file, manfiles))) {
+        db <- Rd_db(dir = dir)
+        .saveRDS(db, db_file)
+    }
+}
+
 ### * .install_package_demos
 
-.install_package_demos <- function(dir, outDir)
+.install_package_demos <-
+function(dir, outDir)
 {
     ## NB: we no longer install 00Index
     demodir <- file.path(dir, "demo")
@@ -722,7 +746,8 @@ function(dir, packages)
 
 ### * .find_cinclude_paths
 
-.find_cinclude_paths <- function(pkgs, lib.loc = NULL, file = NULL)
+.find_cinclude_paths <-
+function(pkgs, lib.loc = NULL, file = NULL)
 {
     ## given a character string of comma-separated package names,
     ## find where the packages are installed and generate
