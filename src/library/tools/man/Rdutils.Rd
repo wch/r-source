@@ -28,13 +28,13 @@ Rd_parse(file, text = NULL)
     Elements are treated as if they were lines of a file.}
 }
 \details{
-  \code{Rd_db} builds a simple database of all Rd sources in a
-  package, as a list of character vectors with the lines of the Rd files
-  in the package.  This is particularly useful for working on installed
-  packages, where the individual Rd files in the sources are no longer
-  available.
+  \code{Rd_db} builds a simple database of all Rd objects in a package,
+  as a list of the results of running \code{\link{parse_Rd}} on the Rd
+  source files in the package and processing platform conditionals.
 
-  \code{Rd_parse} is a simple top-level Rd parser/analyzer.  It returns
+  \code{Rd_parse} is a simple legacy top-level Rd parser/analyzer which
+  is now deprecated in favor of the full \code{\link{parse_Rd}} parser.
+  It returns
   a list with components
   \describe{
     \item{\code{meta}}{a list containing the Rd metadata (aliases,
@@ -53,22 +53,21 @@ Rd_parse(file, text = NULL)
   analyzed.
 }
 \section{Warning}{
-  These functions are still experimental.  Names, interfaces and values
-  might change in future versions.
+  \code{Rd_db} is still experimental.  Names, interface and value might
+  change in future versions.
+
+  \code{Rd_parse} is deprecated in favor of \code{\link{parse_Rd}}.
 }
 \seealso{
-  \code{\link{parse_Rd}}, an experimental parser.
+  \code{\link{parse_Rd}}
 }
 \examples{
 ## Build the Rd db for the (installed) base package.
 db <- Rd_db("base")
-## Run Rd_parse on all entries in the Rd db.
-db <- lapply(db, function(txt) Rd_parse(text = txt))
-## Extract the metadata.
-meta <- lapply(db, "[[", "meta")
 
-## Keyword metadata per Rd file.
-keywords <- lapply(meta, "[[", "keywords")
+## Keyword metadata per Rd object.
+keywords <-
+    lapply(db, tools:::.get_Rd_metadata_from_Rd_object, "keyword")
 ## Tabulate the keyword entries.
 kw_table <- sort(table(unlist(keywords)))
 ## The 5 most frequent ones:
@@ -77,7 +76,8 @@ rev(kw_table)[1 : 5]
 kw_table[kw_table == 1]
 
 ## Concept metadata per Rd file.
-concepts <- lapply(meta, "[[", "concepts")
+concepts <-
+    lapply(db, tools:::.get_Rd_metadata_from_Rd_object, "concept")
 ## How many files already have \concept metadata?
 sum(sapply(concepts, length) > 0)
 ## How many concept entries altogether?

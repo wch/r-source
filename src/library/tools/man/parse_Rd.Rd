@@ -34,9 +34,10 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
   writing, this is not identical to the rules used by older tools:  it
   is somewhat stricter.  
   
-  As from \R 2.10.0, \code{parse_Rd} generates a warning for each parse error,
-  and attempts to continue parsing.  In order to continue, it is generally necessary
-  to drop some parts of the file, so such warnings should not be ignored.
+  As from \R 2.10.0, \code{parse_Rd} generates a warning for each parse
+  error, and attempts to continue parsing.  In order to continue, it is
+  generally necessary to drop some parts of the file, so such warnings
+  should not be ignored.
   
 }
 \value{
@@ -57,14 +58,8 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
 \seealso{
   \code{\link{Rd2HTML}}.
   
-  \code{\link{Rd_parse}}, the function used for parsing 
-  Rd files by \command{R CMD check}.
-}
-\examples{
-baseRd <- Rd_db("base")
-con <- textConnection(baseRd[[1]], "rt")
-parse_Rd(con)
-close(con)
+  \code{\link{Rd_parse}}, the legacy function currently still used for
+  parsing Rd files by \command{R CMD check}.
 }
 \keyword{utilities}
 \keyword{documentation}

@@ -130,15 +130,6 @@ function(lines)
 Rdinfo <-
 function(file)
 {
-    ## <NOTE>
-    ## This is based on the Perl code in R::Rd::info().
-    ## It seems that matches for aliases and keywords are only single
-    ## line.  Hence, as we get the lines from @code{Rd_pp()}, we get
-    ## aliases and keywords directly from them before collapsing them to
-    ## one string (which also allows us to avoid looping as in the Perl
-    ## code).
-    ## </NOTE>
-
     if(is.character(file)) {
         file <- file(file)
         on.exit(close(file))
@@ -146,21 +137,19 @@ function(file)
     if(!inherits(file, "connection"))
         stop("argument 'file' must be a character string or connection")
 
-    lines <- Rd_pp(.read_Rd_lines_quietly(file))
+    Rd <- prepare_Rd(file, defines = .Platform$OS.type)
 
-    aliases <- .get_Rd_metadata_from_Rd_lines(lines, "alias")
-    concepts <- .get_Rd_metadata_from_Rd_lines(lines, "concept")
-    keywords <- .get_Rd_metadata_from_Rd_lines(lines, "keyword")
+    aliases <- .get_Rd_metadata_from_Rd_object(Rd, "alias")
+    concepts <- .get_Rd_metadata_from_Rd_object(Rd, "concept")
+    keywords <- .get_Rd_metadata_from_Rd_object(Rd, "keyword")
 
     ## Could be none or more than one ... argh.
     Rd_type <-
-        c(.get_Rd_metadata_from_Rd_lines(lines, "docType"), "")[1L]
+        c(.get_Rd_metadata_from_Rd_object(Rd, "docType"), "")[1L]
     encoding <-
-        c(.get_Rd_metadata_from_Rd_lines(lines, "encoding"), "")[1L]
+        c(.get_Rd_metadata_from_Rd_object(Rd, "encoding"), "")[1L]
 
-    txt <- paste(lines, collapse = "\n")
-
-    Rd_name <- .get_Rd_name(txt)
+    Rd_name <- .get_Rd_name(Rd)
     if(!length(Rd_name)) {
         msg <-
             c(gettextf("missing/empty \\name field in '%s'",
@@ -170,7 +159,7 @@ function(file)
         stop(paste(msg, collapse = "\n"), domain = NA)
     }
 
-    Rd_title <- .get_Rd_title(txt)
+    Rd_title <- .get_Rd_title(Rd)
     if(!length(Rd_title)) {
         msg <-
             c(gettextf("missing/empty \\title field in '%s'",
@@ -194,7 +183,7 @@ function(RdFiles)
 
     RdFiles <- path.expand(RdFiles[file_test("-f", RdFiles)])
 
-    if(length(RdFiles) == 0L) {
+    if(!length(RdFiles)) {
         out <- data.frame(File = character(),
                           Name = character(),
                           Type = character(),
@@ -390,8 +379,13 @@ Rd_db <-
 function(package, dir, lib.loc = NULL)
 {
     ## Build an Rd 'data base' from an installed package or the unpacked
-    ## package sources as a list containing the 'raw' R documentation
-    ## objects obtained via readLines().
+    ## package sources as a list containing the parsed Rd objects.
+
+    ## <NOTE>
+    ## We actually also process platform conditionals.
+    ## If this was to be changed, we could also need to arrange that Rd
+    ## objects in *all* platform specific subdirectories are included.
+    ## </NOTE>
 
     ## Argument handling.
     if(!missing(package)) {
@@ -403,16 +397,24 @@ function(package, dir, lib.loc = NULL)
         if(!file_test("-d", docs_dir))
             stop(gettextf("directory '%s' does not contain Rd objects", dir),
                  domain = NA)
-        docs_files <- list_files_with_type(docs_dir, "docs")
-        db <- list()
-        for(f in docs_files) {
-            valid_lines <- lines <- .read_Rd_lines_quietly(f)
-            valid_lines[is.na(nchar(lines, "c", TRUE))] <- ""
-            eof_pos <- grep("^\\\\eof$", valid_lines)
-            db <- c(db, split(lines[-eof_pos],
-                              rep(seq_along(eof_pos),
-                                  times = diff(c(0, eof_pos)))[-eof_pos]))
-        }
+        ## For an installed package, we can either have an old-style
+        ##   man/package.Rd.gz
+        ## file with suitable concatenated Rd sources, or a new-style
+        ##   man/package.rds
+        ## file with a list of the parsed (and platform processed, see
+        ## above) Rd objects.
+        db_file <- file.path(docs_dir, sprintf("%s.rds", package))
+        if(file_test("-f", db_file))
+            return(.readRDS(db_file))
+        db_file <- file.path(docs_dir, sprintf("%s.Rd.gz", package))
+        if(file_test("-f", db_file)) {
+            lines <- .read_Rd_lines_quietly(db_file)
+            eof_pos <-
+                grep("^\\\\eof$", lines, perl = TRUE, useBytes = TRUE)
+            db <- split(lines[-eof_pos],
+                        rep(seq_along(eof_pos),
+                            times = diff(c(0, eof_pos)))[-eof_pos])
+        } else return(list())
         ## If this was installed using a recent enough version of R CMD
         ## INSTALL, information on source file names is available, and
         ## we use it for the names of the Rd db.  Otherwise, remove the
@@ -424,6 +426,26 @@ function(package, dir, lib.loc = NULL)
                 sub("^% --- Source file: (.+) ---$", "\\1", paths)
             else
                 NULL
+        ## Determine package encoding.
+        encoding <- .get_package_metadata(dir, TRUE)["Encoding"]
+        if(is.na(encoding)) encoding <- "unknown"
+        ## <FIXME>
+        ## Change back to
+        ##   db <- lapply(db, prepare_Rd_from_Rd_lines,
+        ##                encoding = encoding,
+        ##                defines = .Platform$OS.type,
+        ##                stages = "install")
+        ## when we no longer need the Rd sources ...
+        ## </FIXME>
+        db <- Map(function(x, y) structure(x, source = y),
+                  lapply(db, prepare_Rd_from_Rd_lines,
+                         encoding = encoding,
+                         defines = .Platform$OS.type,
+                         stages = "install"),
+                  if(encoding != "unknown")
+                      Map(c, db, sprintf("\\encoding{%s}", encoding))
+                  else
+                      db)
     }
     else {
         if(missing(dir))
@@ -439,26 +461,39 @@ function(package, dir, lib.loc = NULL)
             stop(gettextf("directory '%s' does not contain Rd sources", dir),
                  domain = NA)
         docs_files <- list_files_with_type(docs_dir, "docs")
+        encoding <- .get_package_metadata(dir, FALSE)["Encoding"]
+        if(is.na(encoding)) encoding <- "unknown"
+        ## <FIXME>
+        ## Change back to
+        ##   db <- lapply(docs_files, prepare_Rd,
+        ##                encoding = encoding, 
+        ##                defines = .Platform$OS.type,
+        ##                stages = "install")
+        ## when we no longer need the Rd sources ...
+        ## </FIXME>
         db <- lapply(docs_files, .read_Rd_lines_quietly)
+        db <- Map(function(x, y) structure(x, source = y),
+                  lapply(docs_files, prepare_Rd,
+                     encoding = encoding, 
+                     defines = .Platform$OS.type,
+                     stages = "install"),
+                  if(encoding != "unknown")
+                      Map(c, db, sprintf("\\encoding{%s}", encoding))
+                  else
+                      db)
         names(db) <- docs_files
     }
 
-    ## Add package encoding metadata if available and not override by
-    ## Rd \encoding entries.
-    encoding <-
-        .get_package_metadata(dir, !missing(package))["Encoding"]
-    ## Should we catch cases where (non-installed) packages have no
-    ## DESCRIPTION or DESCRIPTION.in files (then really they cannot be
-    ## packages ...)?
-    if(!is.na(encoding)) {
-        ## For simplicity, always add a package \encoding entry at the
-        ## end (so that an explicit \encoding entry in an Rd file always
-        ## takes precedence.
-        db <- Map(c, db, sprintf("\\encoding{%s}", encoding))
-        ## (As we want mapply(SIMPLIFY = FALSE, USE.NAMES = TRUE).)
-    }
-
     db
+
+}
+
+prepare_Rd_from_Rd_lines <-
+function(x, ...)
+{
+    con <- textConnection(x, "rt")
+    on.exit(close(con))
+    prepare_Rd(con, ...)
 }
 
 ### * Rd_parse
@@ -613,8 +648,7 @@ function(package, dir, lib.loc = NULL)
     else {
         if(file_test("-d", file.path(dir, "man"))) {
             db <- Rd_db(dir = dir)
-            db <- lapply(db, Rd_pp)
-            aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
+            aliases <- lapply(db, .get_Rd_metadata_from_Rd_object, "alias")
             if(length(aliases))
                 sort(unique(unlist(aliases, use.names = FALSE)))
             else character()
@@ -633,8 +667,15 @@ function(package, dir, lib.loc = NULL)
         Rd_db(package, lib.loc = lib.loc)
     else
         Rd_db(dir = dir)
-    db <- lapply(db, function(f) paste(Rd_pp(f), collapse = "\n"))
+    ## <FIXME Rd2>
+    ## Move to new-style code ...
+    ## Does not work:
+    ##   db <- lapply(db, paste, collapse = "")
+    db <- lapply(db,
+                 function(f)
+                 paste(Rd_pp(attr(f, "source")), collapse = "\n"))
     lapply(db, .get_Rd_xrefs)
+    ## </FIXME>
 }
 
 ### * get_Rd_section
@@ -749,6 +790,18 @@ function(lines, kind) {
     lines
 }
 
+### * .get_Rd_metadata_from_Rd_object
+
+.get_Rd_metadata_from_Rd_object <-
+function(x, kind)
+{
+    x <- x[RdTags(x) == sprintf("\\%s", kind)]
+    if(!length(x))
+        character()
+    else
+        .strip_whitespace(sapply(x, as.character))
+}
+
 ### * .get_Rd_argument_names
 
 .get_Rd_argument_names <-
@@ -770,6 +823,16 @@ function(txt)
 .get_Rd_name <-
 function(txt)
 {
+    ## <FIXME Rd2>
+    ## Currently, prepare_Rd() does not return Rd objects.
+    ##   if(inherits(txt, "Rd")) {
+    if(inherits(txt, "Rd") || is.list(txt)) {
+    ## </FIXME>
+        if(length(out <- txt[RdTags(txt) == "\\name"]))
+            return(as.character(out[[1L]]))
+        else
+            return(character())
+    }
     start <- regexpr("\\\\name\\{[[:space:]]*([^}]+)[[:space:]]*\\}", txt)
     if(start == -1L) return(character())
     Rd_name <- gsub("[[:space:]]+", " ",
@@ -784,6 +847,17 @@ function(txt)
 .get_Rd_title <-
 function(txt)
 {
+    ## <FIXME Rd2>
+    ## Currently, prepare_Rd() does not return Rd objects.
+    ##   if(inherits(txt, "Rd")) {
+    if(inherits(txt, "Rd") || is.list(txt)) {
+    ## </FIXME>
+        if(length(out <- txt[RdTags(txt) == "\\title"]))
+            return(.strip_whitespace(paste(as.character(out[[1L]]),
+                                           collapse = "")))
+        else
+            return(character())
+    }
     start <- regexpr("\\\\title\\{[[:space:]]*([^}]+)[[:space:]]*\\}", txt)
     if(start == -1L) return(character())
     Rd_title <- gsub("[[:space:]]+", " ",

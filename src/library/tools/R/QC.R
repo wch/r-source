@@ -557,7 +557,13 @@ function(package, dir, lib.loc = NULL,
     else
         Rd_db(dir = dir)
 
-    db <- lapply(db, function(f) paste(Rd_pp(f), collapse = "\n"))
+    ## *****************************************************************
+    ## <FIXME Rd2>
+    ## Does not work:
+    ##   db <- lapply(db, paste, collapse = "")
+    db <- lapply(db,
+                 function(f)
+                 paste(Rd_pp(attr(f, "source")), collapse = "\n"))
     names(db) <- db_names <- .get_Rd_names_from_Rd_db(db)
 
     ## pkg-defunct.Rd is not expected to list arguments
@@ -569,6 +575,8 @@ function(package, dir, lib.loc = NULL,
         .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
     db_synopses <-
         .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "synopsis")
+    ## </FIXME>
+    ## *****************************************************************
     ind <- sapply(db_synopses, length) > 0L
     db_usage_texts[ind] <- db_synopses[ind]
     with_synopsis <- as.character(db_names[ind])
@@ -981,7 +989,6 @@ function(package, lib.loc = NULL)
         unlist(lapply(X, FUN, ...), recursive=FALSE, use.names=FALSE)
     ## Build Rd data base.
     db <- Rd_db(package, lib.loc = dirname(dir))
-    db <- lapply(db, Rd_pp)
 
     ## Need some heuristics now.  When does an Rd object document just
     ## one S4 class so that we can compare (at least) the slot names?
@@ -994,13 +1001,13 @@ function(package, lib.loc = NULL)
     ## we do the vectorized metadata computations first, and try to
     ## subscript whenever possible.
 
-    idx <- sApply(lapply(db, .get_Rd_metadata_from_Rd_lines, "docType"),
+    idx <- sApply(lapply(db, .get_Rd_metadata_from_Rd_object, "docType"),
                   identical, "class")
     if(!any(idx)) return(bad_Rd_objects)
     db <- db[idx]
     stats <- c(n.S4classes = length(S4_classes), n.db = length(db))
 
-    aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
+    aliases <- lapply(db, .get_Rd_metadata_from_Rd_object, "alias")
     named_class <- lapply(aliases, grepl, pattern="-class$")
     nClass <- sApply(named_class, sum)
     oneAlias <- sApply(aliases, length) == 1L
@@ -1016,8 +1023,14 @@ function(package, lib.loc = NULL)
                SIMPLIFY = FALSE, USE.NAMES = FALSE)
     aliases <- unlist(aliases[idx], use.names = FALSE)
 
+    ## *****************************************************************
+    ## <FIXME Rd2>
     ## Now collapse.
-    db <- lapply(db, paste, collapse = "\n")
+    ## Does not work:
+    ##   db <- lapply(db, paste, collapse = "")
+    db <- lapply(db,
+                 function(f)
+                 paste(Rd_pp(attr(f, "source")), collapse = "\n"))
     Rd_slots <-
         .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "Slots", FALSE)
     idx <- !sApply(Rd_slots, identical, character())
@@ -1061,6 +1074,8 @@ function(package, lib.loc = NULL)
         ## Add sanity checking later ...
         codeSlots <- sort(methods::slotNames(cld))
         docSlots  <- sort(slotNames_from_section_text(Rd_slots[[ii]]))
+    ## </FIXME>
+    ## *****************************************************************        
         superSlots <- .inheritedSlotNames(cld@contains)
         if(length(superSlots)) ## allow '\dots' in docSlots
             docSlots <- docSlots[docSlots != "\\dots"]
@@ -1146,7 +1161,6 @@ function(package, lib.loc = NULL)
 
     ## Build Rd data base.
     db <- Rd_db(package, lib.loc = dirname(dir))
-    db <- lapply(db, Rd_pp)
 
     ## Need some heuristics now.  When does an Rd object document a
     ## data.frame (could add support for other classes later) variable
@@ -1161,12 +1175,19 @@ function(package, lib.loc = NULL)
     ## As going through the db to extract sections can take some time,
     ## we do the vectorized metadata computations first, and try to
     ## subscript whenever possible.
-    aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
-    idx <- sapply(aliases, length) == 1
+    aliases <- lapply(db, .get_Rd_metadata_from_Rd_object, "alias")
+    idx <- sapply(aliases, length) == 1L
     if(!any(idx)) return(bad_Rd_objects)
     db <- db[idx]; aliases <- aliases[idx]
+
+    ## *****************************************************************
+    ## <FIXME Rd2>
     ## Now collapse.
-    db <- lapply(db, paste, collapse = "\n")
+    ## Does not work:
+    ##   db <- lapply(db, paste, collapse = "")
+    db <- lapply(db,
+                 function(f)
+                 paste(Rd_pp(attr(f, "source")), collapse = "\n"))
     names(db) <- .get_Rd_names_from_Rd_db(db)
 
     .get_data_frame_var_names_from_Rd_text <- function(txt) {
@@ -1195,7 +1216,11 @@ function(package, lib.loc = NULL)
     }
 
     Rd_var_names <-
-        .apply_Rd_filter_to_Rd_db(db, .get_data_frame_var_names_from_Rd_text)
+        .apply_Rd_filter_to_Rd_db(db,
+                                  .get_data_frame_var_names_from_Rd_text)
+    ## </FIXME>
+    ## *****************************************************************
+    
     idx <- (sapply(Rd_var_names, length) > 0L)
     if(!length(idx)) return(bad_Rd_objects)
     aliases <- unlist(aliases[idx])
@@ -1310,12 +1335,17 @@ function(package, dir, lib.loc = NULL)
     else
         Rd_db(dir = dir)
 
-    db <- lapply(db, Rd_pp)
-    ## Do vectorized computations for metadata first.
-    db_aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
-    db_keywords <- lapply(db, .get_Rd_metadata_from_Rd_lines, "keyword")
+    db_aliases <- lapply(db, .get_Rd_metadata_from_Rd_object, "alias")
+    db_keywords <- lapply(db, .get_Rd_metadata_from_Rd_object, "keyword")
+
+    ## *****************************************************************
+    ## <FIXME Rd2>
     ## Now collapse.
-    db <- lapply(db, paste, collapse = "\n")
+    ## Does not work:
+    ##   db <- lapply(db, paste, collapse = "")
+    db <- lapply(db,
+                 function(f)
+                 paste(Rd_pp(attr(f, "source")), collapse = "\n"))
     db_names <- .get_Rd_names_from_Rd_db(db)
     names(db) <- names(db_aliases) <- db_names
 
@@ -1337,6 +1367,8 @@ function(package, dir, lib.loc = NULL)
 
     db_argument_names <-
         .apply_Rd_filter_to_Rd_db(db, .get_Rd_argument_names)
+    ## <FIXME>
+    ## *****************************************************************
 
     functions_to_be_ignored <-
         .functions_to_be_ignored_from_usage(basename(dir))
@@ -1677,7 +1709,13 @@ function(package, dir, lib.loc = NULL)
     else
         Rd_db(dir = dir)
 
-    db <- lapply(db, function(f) paste(Rd_pp(f), collapse = "\n"))
+    ## *****************************************************************
+    ## <FIXME Rd2>
+    ## Does not work:
+    ##   db <- lapply(db, paste, collapse = "")
+    db <- lapply(db,
+                 function(f)
+                 paste(Rd_pp(attr(f, "source")), collapse = "\n"))
     names(db) <- db_names <- .get_Rd_names_from_Rd_db(db)
 
     ## Ignore pkg-deprecated.Rd and pkg-defunct.Rd.
@@ -1688,7 +1726,10 @@ function(package, dir, lib.loc = NULL)
 
     db_usage_texts <-
         .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
-    db_usages <- lapply(db_usage_texts, .parse_usage_as_much_as_possible)
+    db_usages <- lapply(db_usage_texts,
+                        .parse_usage_as_much_as_possible)
+    ## </FIXME>
+    ## *****************************************************************    
     ind <- unlist(lapply(db_usages,
                          function(x) !is.null(attr(x, "bad_lines"))))
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
@@ -2426,9 +2467,15 @@ function(package, dir, file, lib.loc = NULL)
         }
     }
     for(file in docs_files) {
+        ## <FIXME Rd2>
+        ## Does not work:
+        ##   txt <- paste(prepare_Rd(file, defines = .Platform$OS.type),
+        ##                collapse = "")
+        ## Also, should this do any stage expansion?
         txt <- paste(Rd_pp(.read_Rd_lines_quietly(file)),
                      collapse = "\n")
         txt <- .get_Rd_example_code(txt)
+        ## </FIXME>
         exprs <- find_TnF_in_code(file, txt)
         if(length(exprs)) {
             exprs <- list(exprs)
@@ -4397,7 +4444,7 @@ function(dir)
     if(!file_test("-d", file.path(dir, "man"))) return(NULL)
     sapply(Rd_db(dir = dir),
            function(s) {
-               .get_Rd_example_code(paste(Rd_pp(s), collapse = "\n"))
+               .get_Rd_example_code(paste(s, collapse = ""))
            })
 }
 

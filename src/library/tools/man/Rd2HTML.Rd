@@ -148,22 +148,18 @@ page.  Their value is the name of the output page.
 }
 \examples{
 \donttest{
-# Simulate an install and rendering of this page in HTML and text format:
+## Simulate an install and rendering of this page in HTML and text format:
 
 toolsRd <- Rd_db("tools")
-con <- textConnection(toolsRd[[grep("Rd2HTML.Rd", names(toolsRd))]], "rt")
+Rd <- toolsRd[[grep("Rd2HTML.Rd", names(toolsRd))]]
+
 outfile <- paste(tempfile(), ".html", sep="")
-browseURL(Rd2HTML(con, outfile, package="tools", stages=c("install", "render")))
-close(con)
+browseURL(Rd2HTML(Rd, outfile, package="tools", stages=c("install", "render")))
 
-con <- textConnection(toolsRd[[grep("Rd2HTML.Rd", names(toolsRd))]], "rt")
 outfile <- paste(tempfile(), ".txt", sep="")
-file.show(Rd2txt(con, outfile, package="tools", stages=c("install", "render")))
-close(con)
+file.show(Rd2txt(Rd, outfile, package="tools", stages=c("install", "render")))
 
-con <- textConnection(toolsRd[[grep("Rd2HTML.Rd", names(toolsRd))]], "rt")
 checkRd(con) # A stricter test than Rd2HTML uses
-close(con)
 }
 }
 \keyword{ documentation }
