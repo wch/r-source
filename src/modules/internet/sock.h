@@ -58,3 +58,6 @@ int R_SockConnect(int port, char *host);
 int R_SockClose(int sockp);
 int R_SockRead(int sockp, void *buf, int maxlen, int blocking);
 int R_SockWrite(int sockp, const void *buf, int len);
+
+/* from Rhttpd.c */
+int in_R_HTTPDCreate(const char *ip, int port);

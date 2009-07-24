@@ -26,6 +26,7 @@ typedef void   (*R_SockReadRoutine)(int *sockp, char **buf, int *maxlen);
 typedef void   (*R_SockWriteRoutine)(int *sockp, char **buf, int *start, int *end, int *len);
 typedef int    (*R_SockSelectRoutine)(int nsock, int *insockfd, int *ready, int *write, double timeout);
 
+typedef int    (*R_HTTPDCreateRoutine)(const char *ip, int port);
 
 typedef struct {
     R_DownloadRoutine download;
@@ -49,6 +50,7 @@ typedef struct {
     R_SockWriteRoutine    sockwrite;
     R_SockSelectRoutine   sockselect;
 
+    R_HTTPDCreateRoutine  HTTPDCreate;
 } R_InternetRoutines;
 
 R_InternetRoutines *R_setInternetRoutines(R_InternetRoutines *routines);
