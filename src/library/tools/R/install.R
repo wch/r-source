@@ -830,7 +830,7 @@
                     Sys.chmod(file.path(instdir, "man",
                                         paste0(pkg_name, ".Rd.gz")),
                               "644")
-                } 
+                }
                 ## 'Maybe build preformatted help pages ...'
                 if (build_help) {
                     starsmsg(paste0(stars, "*"),
@@ -934,7 +934,6 @@
 
     options(showErrorCalls=FALSE)
     pkgs <- character(0)
-    lib <- ""
     if(is.null(args)) {
         args <- commandArgs(TRUE)
         ## it seems that splits on spaces, so try harder.
@@ -970,6 +969,7 @@
     shargs <- character(0)
     multiarch <- TRUE
     install_tests <- FALSE
+    get_user_libPaths <- FALSE
 
     while(length(args)) {
         a <- args[1]
@@ -1041,6 +1041,8 @@
             multiarch <- FALSE
         } else if (a == "--install-tests") {
             install_tests <- TRUE
+        } else if (a == "--maybe-get-user-libPaths") {
+            get_user_libPaths <- TRUE
         } else if (a == "--build") {
             if (WINDOWS) zip_up <- TRUE else tar_up <- TRUE
         } else if (substr(a, 1, 1) == "-") {
@@ -1118,7 +1120,13 @@
         stop("ERROR: no packages specified", call.=FALSE)
 
     if (!nzchar(lib)) {
-        lib <- .libPaths()[1]
+        if(get_user_libPaths) { ## need .libPaths()[1] *after* the site- and user-initialization
+	    lib <- system(paste(R.home("bin/Rscript"),
+				"-e 'cat(.libPaths()[1])'"),
+			  intern = TRUE)
+        }
+        else
+            lib <- .libPaths()[1]
         starsmsg(stars, "installing to library ", sQuote(lib))
     } else {
         lib0 <- lib <- path.expand(lib)
@@ -1178,7 +1186,7 @@
             message("\n*** 'hhc.exe' not found: not building CHM help\n")
         }
     }
-    
+
     if (Sys.getenv("USE_NEW_HELP") != "") {
 	build_help_types <- character(0)
 	if (build_text) build_help_types <- c(build_help_types, "txt")
@@ -1487,7 +1495,7 @@
             out <-  file.path(latexdir, sub("\\.[Rr]d$", ".tex", basename(f)))
             ## people have file names with quotes in them.
             if (USE_NEW_HELP)
-            	latexEncodings <- c(latexEncodings, 
+            	latexEncodings <- c(latexEncodings,
             	                    attr(Rd2latex(f, out, encoding=encoding),
             	                         "latexEncoding"))
             else
@@ -1537,7 +1545,7 @@
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
         message("Converting Rd files to LaTeX ...")
-        USE_NEW_HELP <- nchar(Sys.getenv("USE_NEW_HELP")) > 0L 
+        USE_NEW_HELP <- nchar(Sys.getenv("USE_NEW_HELP")) > 0L
         cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
                      encoding, sep="")
         for(f in files) {
@@ -1596,7 +1604,7 @@
 
     if(asChapter)
         cat("\\clearpage\n", file = outcon)
-        
+
     latexEncodings
 }
 
@@ -1969,7 +1977,7 @@
                      "Full-text search=Yes\n",
                      "Full text search stop list file=..\\..\\..\\gnuwin32\\help\\R.stp\n",
                      "Title=R Help for package ", pkg, "\n",
-                     "\n\n[FILES]\n", 
+                     "\n\n[FILES]\n",
                      "00Index.html\n", sep = ""), con)
     # Most files are linked from the index; internals are not, so need to be listed.
     if (nrow(internals))
@@ -1989,8 +1997,8 @@
     function(dir, outDir, OS = .Platform$OS.type,
              types = c("txt", "html", "latex", "example"))
 {
-    showtype <- function() {                
-    	if (!shown) {	
+    showtype <- function() {
+    	if (!shown) {
     	    cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), sep="")
             shown <<- TRUE
         }
@@ -2112,7 +2120,7 @@
             }
         }
     }
-    else {
+    else { ## no longer used
         .setPERL()
 
         for (f in files) {
@@ -2328,7 +2336,7 @@
 	    lines <- readLines(outfile)
 	cyrillic <- if(nzchar(Sys.getenv("_R_CYRILLIC_TEX_"))) "utf8" %in% encs else FALSE
 	encs <- paste(encs, "latin1", collapse=",", sep=",")
-	
+
 	if (!cyrillic) {
 	    lines[lines == setEncoding] <-
 		paste("\\usepackage[", encs, "]{inputenc}", sep = "")
@@ -2340,6 +2348,6 @@
 	}
 	writeLines(lines, outfile)
     }
-	
+
     invisible(NULL)
 }
