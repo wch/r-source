@@ -58,7 +58,9 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     if (encoding == "unknown") encoding <- ""
     if (encoding != "UTF-8")
     	lines <- iconv(lines, encoding, "UTF-8", sub = "byte")
-    
+    # In a Latin1 locale, the textConnection will recode everything to Latin1,
+    # so mark it as unknown
+    Encoding(lines) <- "unknown"
     tcon <- textConnection(lines)
     on.exit(close(tcon))
 

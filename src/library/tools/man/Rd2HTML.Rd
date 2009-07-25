@@ -22,13 +22,13 @@
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
              Links = NULL, CHM = FALSE, 
-             stages = "render", outputEncoding = "", ...)
+             stages = "render", outputEncoding = "UTF-8", ...)
 
 Rd2txt(Rd, out="", package = "", defines=.Platform$OS.type, stages = "render", 
              outputEncoding = "", ...)
 
 Rd2latex(Rd, out="", defines=.Platform$OS.type, stages="render",
-		     outputEncoding = "", ...)
+		     outputEncoding = "latin1", ...)
 
 Rd2ex(Rd, out="", defines=.Platform$OS.type, stages="render", outputEncoding="", ...)
 
@@ -43,7 +43,7 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
   \item{defines}{ string(s) to use in \code{"#ifdef"} tests. }
   \item{stages}{ at which stage (\code{"build"}, \code{"install"}, or
     \code{"render"} should \\Sexpr macros be executed? See the notes below.}
-  \item{outputEncoding}{ which character encoding should be used for the output file? }
+  \item{outputEncoding}{ see the \sQuote{Encodings} section below.}
   \item{Links}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{findHTMLlinks}.}
   \item{CHM}{logical: prepare HTML suitable for Compiled HTML?} 
@@ -53,7 +53,7 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
     as an argument) are treated as errors if \code{FALSE}, otherwise warnings. }
   \item{...}{ additional parameters to pass to \code{\link{parse_Rd}} when
     \code{Rd} is a filename. }
-  \item{pkgDir}{The top-level directory of an installed package.}
+  \item{pkgDir}{the top-level directory of an installed package.}
   \item{lib.loc}{character vector describing the location of \R library trees
     to scan: the default indicates \code{\link{.libPaths}()}.}
 }
@@ -95,6 +95,26 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
     library tree.
   }
 }
+\section{Encodings}{
+
+Rd files are normally intended to be rendered on a wide variety of systems,
+so care must be taken in the encoding of non-ASCII characters.  In general,
+any such encoding should be declared using the \samp{\encoding} section
+for there to be any hope of correct rendering.  Avoid exotic encodings unless
+absolutely necessary:  all input will be translated to UTF-8, and the 
+quality of such translations is poor on some older systems.
+
+For output, the \code{outputEncoding} variable will be used.
+\code{outputEncoding=""} will choose the native encoding for the
+current system.  The \code{Rd2latex} function is an exception to this
+rule, because LaTeX systems vary considerably in their ability to
+handle encodings.  If an input file contains an \samp{\encoding}
+section, \code{Rd2latex} will use that as the output encoding as well.
+Unfortunately, on some older systems the conversion to UTF-8 and back
+is not perfect, and some characters may not be rendered properly.
+
+}
+
 \note{
 
 The \\Sexpr macro is a new addition to Rd files.  It includes R code
@@ -129,15 +149,17 @@ code are not currently reproduced in this display.)
 
 \value{ 
 
-The \code{Rd2*} functions are
-executed mainly for the side effect of writing the converted help
-page.  Their value is the name of the output page.
+The \code{Rd2*} functions are executed mainly for the side effect of
+writing the converted help page.  Their value is the name of the
+output page.  For \code{Rd2latex}, the output name is given an
+attribute \code{"latexEncoding"} giving the encoding of the file in a
+form suitable for use with the LaTeX \samp{\inputenc} package.
   
-  \code{checkRd} returns \code{TRUE} if the file has no errors; it
-  generates an R error otherwise.
+\code{checkRd} returns \code{TRUE} if the file has no errors; it
+generates an R error otherwise.
 
-  \code{findHTMLlinks} returns a named character vector of relative
-  file paths, in the same package or in a package in the same library tree.
+\code{findHTMLlinks} returns a named character vector of relative
+file paths, in the same package or in a package in the same library tree.
 }
 \author{
   Duncan Murdoch, Brian Ripley

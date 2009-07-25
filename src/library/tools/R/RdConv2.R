@@ -380,7 +380,7 @@ sectionTitles <-
 Rd2HTML <-
     function(Rd, out = "", package = "", defines = .Platform$OS.type,
              Links = NULL, CHM = FALSE, 
-             stages = "render", outputEncoding = "", ...)
+             stages = "render", outputEncoding = "UTF-8", ...)
 {
     of <- function(...) writeLines(paste(...), con, sep = '')
     of0 <- function(...) writeLines(paste(..., sep=""), con, sep ="")

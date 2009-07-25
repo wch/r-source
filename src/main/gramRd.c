@@ -2692,7 +2692,7 @@ static int xxgetc(void)
     	xxbyteno++;
     }
     /* only advance column for 1st byte in UTF-8 */
-    if (0x80 <= (unsigned char)c && (unsigned char)c <= 0xBF && known_to_be_utf8) 
+    if (0x80 <= (unsigned char)c && (unsigned char)c <= 0xBF)
     	xxcolno--;
 
     if (c == '\t') xxcolno = ((xxcolno + 6) & ~7) + 1;
@@ -2741,10 +2741,7 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
 static SEXP mkString2(const char *s, int len)
 {
     SEXP t;
-    cetype_t enc = CE_NATIVE;
-
-    if(known_to_be_latin1) enc= CE_LATIN1;
-    else if(known_to_be_utf8) enc = CE_UTF8;
+    cetype_t enc = CE_UTF8;
 
     PROTECT(t = allocVector(STRSXP, 1));
     SET_STRING_ELT(t, 0, mkCharLenCE(s, len, enc));
@@ -3514,8 +3511,7 @@ SEXP attribute_hidden do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s = R_NilValue, source;
     Rconnection con;
-    Rboolean wasopen, old_latin1=known_to_be_latin1,
-	old_utf8=known_to_be_utf8, fragment;
+    Rboolean wasopen, fragment;
     int ifile;
     const char *encoding;
     ParseStatus status;
@@ -3536,9 +3532,6 @@ SEXP attribute_hidden do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("invalid '%s' value"), "encoding");
     encoding = CHAR(STRING_ELT(CAR(args), 0)); /* ASCII */ args = CDR(args);
-    known_to_be_latin1 = known_to_be_utf8 = FALSE;
-    if(streql(encoding, "latin1")) known_to_be_latin1 = TRUE;
-    if(streql(encoding, "UTF-8"))  known_to_be_utf8 = TRUE;
     if(!isLogical(CAR(args)) || LENGTH(CAR(args)) != 1)
     	error(_("invalid '%s' value"), "verbose");
     xxDebugTokens = asInteger(CAR(args));		args = CDR(args);
@@ -3559,8 +3552,6 @@ SEXP attribute_hidden do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (status != PARSE_OK) parseError(call, R_ParseError);
     }
     else error(_("invalid Rd file"));
-    known_to_be_latin1 = old_latin1;
-    known_to_be_utf8 = old_utf8;
     return s;
 }
 

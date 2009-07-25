@@ -21,6 +21,7 @@
 
 latex_canonical_encoding  <- function(encoding)
 {
+    if (encoding == "") encoding <- localeToCharset()[1]
     encoding <- tolower(encoding)
     encoding <- sub("iso_8859-([0-9]+)", "iso-8859-\\1", encoding)
     encoding <- sub("iso8859-([0-9]+)", "iso-8859-\\1", encoding)
@@ -44,15 +45,14 @@ latex_canonical_encoding  <- function(encoding)
 
 
 Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
-		     outputEncoding = "", ...)
+		     outputEncoding = "latin1", ...)
 {
     last_char <- ""
     of0 <- function(...) of1(paste(..., sep=""))
     of1 <- function(text) {
-    	# FIXME:  this doesn't get the encoding right on output.
         nc <- nchar(text)
         last_char <<- substr(text, nc, nc)
-        Encoding(text) <- "unknown"
+
         writeLines(text, con, sep = "")
     }
 
@@ -590,6 +590,26 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         }
     }
 
+    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
+    Rdfile <- attr(Rd, "Rdfile")
+    sections <- RdTags(Rd)
+
+    ## Print initial comments
+    ## for (i in seq_along(sections)) {
+    ## 	if (sections[i] != "COMMENT") break
+    ##	writeComment(Rd[[i]])
+    ##}
+
+    version <- which(sections == "\\Rdversion")
+    if (length(version) == 1L && as.numeric(Rd[[version]][[1L]]) < 2)
+    	warning("Rd2latex is designed for Rd version 2 or higher.")
+    else if (length(version) > 1L)
+    	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
+
+    enc <- which(sections == "\\encoding")
+    if (length(enc))
+	outputEncoding <- as.character(Rd[[enc[1L]]][[1L]])
+
     if (is.character(out)) {
         if(out == "") {
             con <- stdout()
@@ -605,25 +625,9 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     	con <- out
     	out <- summary(con)$description
     }
-
-    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
-    Rdfile <- attr(Rd, "Rdfile")
-    sections <- RdTags(Rd)
-
-    ## Print initial comments
-    ## for (i in seq_along(sections)) {
-    ## 	if (sections[i] != "COMMENT") break
-    ##	writeComment(Rd[[i]])
-    ##}
-
-    version <- which(sections == "\\Rdversion")
-    if (length(version) == 1L && as.numeric(version[[1L]]) < 2)
-    	warning("Rd2latex is designed for Rd version 2 or higher.")
-    else if (length(version) > 1L)
-    	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
-
-    if (outputEncoding != "") 
-    	of0("\\inputencoding{", latex_canonical_encoding(outputEncoding), "}\n")
+    
+    latexEncoding <- latex_canonical_encoding(outputEncoding)
+    of0("\\inputencoding{", latexEncoding, "}\n")
 
     ## Give error for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]), perl = TRUE )))
@@ -667,5 +671,5 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     for (i in seq_along(sections)[-(1:2)])
         writeSection(Rd[[i]], sections[i])
 
-    out
+    structure(out, latexEncoding=latexEncoding)
 }

@@ -1461,7 +1461,7 @@
              extraDirs = NULL, internals = FALSE)
 {
     if(file_test("-d", files))
-        .pkg2tex(files, outfile, encoding = encoding, append = append,
+        latexEncodings <- .pkg2tex(files, outfile, encoding = encoding, append = append,
                  asChapter = FALSE, extraDirs = extraDirs,
                  internals = internals)
     else {
@@ -1476,6 +1476,7 @@
             outfile <- file(outfile, if(append) "at" else "wt")
             on.exit(close(outfile))
         }
+        latexEncodings <- character(0)
         for(f in files) {
             cat("  ", basename(f), "\n", sep="")
             if(!internals) {
@@ -1486,11 +1487,14 @@
             out <-  file.path(latexdir, sub("\\.[Rr]d$", ".tex", basename(f)))
             ## people have file names with quotes in them.
             if (USE_NEW_HELP)
-            	Rd2latex(f, out, encoding=encoding)
+            	latexEncodings <- c(latexEncodings, 
+            	                    attr(Rd2latex(f, out, encoding=encoding),
+            	                         "latexEncoding"))
             else
             	system(paste(cmd,"-o", shQuote(out), shQuote(f)))
             writeLines(readLines(out), outfile)
         }
+        unique(latexEncodings)
     }
 }
 
@@ -1512,6 +1516,8 @@
     if (missing(outfile))
         outfile <- paste(basename(pkgdir), "-pkg.tex", sep="")
 
+    latexEncodings <- character(0) # Record any encodings used in the output
+
     ## First check for a latex dir.
     ## If it does not exist, guess this is a source package.
     latexdir <- file.path(pkgdir, "latex")
@@ -1531,14 +1537,16 @@
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
         message("Converting Rd files to LaTeX ...")
-        USE_NEW_HELP <- nchar(Sys.getenv("USE_NEW_HELP")) > 0L        	
+        USE_NEW_HELP <- nchar(Sys.getenv("USE_NEW_HELP")) > 0L 
         cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
                      encoding, sep="")
         for(f in files) {
             cat("  ", basename(f), "\n", sep="")
             out <-  sub("\\.[Rr]d$", ".tex", basename(f))
             if (USE_NEW_HELP)
-	       	Rd2latex(f, file.path(latexdir, out), encoding=encoding)
+	       	latexEncodings <- c(latexEncodings,
+	       	                    attr(Rd2latex(f, file.path(latexdir, out), encoding=encoding),
+	       	                         "latexEncoding"))
 	    else
                 system(paste(cmd,"-o", shQuote(file.path(latexdir, out)),
                          shQuote(f)))
@@ -1588,6 +1596,8 @@
 
     if(asChapter)
         cat("\\clearpage\n", file = outcon)
+        
+    latexEncodings
 }
 
 ## replacement for tools/Rdnewer.pl
@@ -2179,7 +2189,9 @@
 
     ## %in% and others cause problems for some page layouts.
     if (basename(pkgdir) == "base") index <- "false"
-    out <- file(of <- tempfile(), "wt")
+    # Write directly to the final location.  Encodings may mean we need
+    # to make edits, but for most files one pass should be enough.
+    out <- file(outfile, "wt")
     if (!nzchar(enc)) enc <- "unknown"
     description <- description == "true"
     only_meta <- only_meta == "true"
@@ -2201,8 +2213,8 @@
         "\\usepackage[", Sys.getenv("R_RD4DVI", "ae"), "]{Rd}\n",
         sep = "", file = out)
     if(index) writeLines("\\usepackage{makeidx}", out)
-    writeLines(c("\\usepackage[@ENC@]{inputenc}",
-                 "@CYRILLIC_SUPPORT@",
+    setEncoding <- "\\usepackage[latin1]{inputenc} % @SET ENCODING@"
+    writeLines(c(setEncoding,
                  "\\makeindex{}",
                  "\\begin{document}"), out)
     if(is_bundle == "no") {
@@ -2260,6 +2272,7 @@
         "\\Rdcontents{\\R{} topics documented:}"
     } else ""
 
+    latexEncodings <- character(0)
     if (is_bundle == "no") {
         ## if this looks like a package with no man pages, skip body
         if(file.exists(file.path(pkgdir, "DESCRIPTION")) &&
@@ -2267,7 +2280,7 @@
              file_test("-d", file.path(pkgdir, "latex")))) only_meta <- TRUE
         if(!only_meta) {
             if(nzchar(toc)) writeLines(toc, out)
-            .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
+            latexEncodings <- .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
                          extraDirs = OSdir, internals = internals)
         }
     } else {
@@ -2285,9 +2298,9 @@
                 file.exists(f <- file.path(pkgdir, p, "DESCRIPTION.in")))
                 .DESCRIPTION_to_latex(f, out)
             if(!only_meta)
-                .pkg2tex(file.path(pkgdir, p), out, encoding = enc,
+                latexEncodings <- c(latexEncodings, .pkg2tex(file.path(pkgdir, p), out, encoding = enc,
                          append = TRUE, asChapter = FALSE,
-                         internals = internals)
+                         internals = internals))
             writeLines("\\clearpage{}", out)
         }
         writeLines("\\cleardoublepage{}", out)
@@ -2298,33 +2311,26 @@
     writeLines("\\end{document}", out)
     close(out)
 
-    ## Look for encodings
+    ## Fix up encodings
     ## FIXME cyrillic probably only works with times, not ae.
-    lines <- readLines(of)
-    encs <- lines[grepl('^\\\\inputencoding', lines)]
-    encs <- unique(sub("^\\\\inputencoding\\{(.*)\\}", "\\1", encs))
-    encs <- paste(encs, collapse=",")
-    utf8 <- if(nzchar(Sys.getenv("_R_CYRILLIC_TEX_"))) "utf8" %in% encs else FALSE
-    if (!nzchar(encs)) {
-        lines <- lines[! lines %in%
-                       c("\\usepackage[@ENC@]{inputenc}",
-                         "@CYRILLIC_SUPPORT@")]
-    } else if (!utf8) {
-        lines[lines == "\\usepackage[@ENC@]{inputenc}"] <-
-            paste("\\usepackage[", encs, "]{inputenc}", sep = "")
-        lines <- lines[lines != "@CYRILLIC_SUPPORT@"]
-    } else {
-        lines[lines == "\\usepackage[@ENC@]{inputenc}"] <-
-            paste("\\usepackage[", encs, "]{inputenc}", sep = "")
-        lines[lines == "@CYRILLIC_SUPPORT@"] <-
-            "\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}"
+    latexEncodings <- unique(latexEncodings)
+    encs <- latexEncodings[latexEncodings != "latin1"]
+    if (length(encs)) {
+	lines <- readLines(outfile)
+	cyrillic <- if(nzchar(Sys.getenv("_R_CYRILLIC_TEX_"))) "utf8" %in% encs else FALSE
+	encs <- paste(encs, "latin1", collapse=",", sep=",")
+	
+	if (!cyrillic) {
+	    lines[lines == setEncoding] <-
+		paste("\\usepackage[", encs, "]{inputenc}", sep = "")
+	} else {
+	    lines[lines == setEncoding] <-
+		paste(
+"\\usepackage[", encs, "]{inputenc}
+\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}", sep = "")
+	}
+	writeLines(lines, outfile)
     }
-
-    if(is.character(outfile)) {
-        out <- file(outfile, "at")
-        on.exit(close(out))
-    } else out <- outfile
-    writeLines(lines, out)
-
+	
     invisible(NULL)
 }
