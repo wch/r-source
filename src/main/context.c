@@ -493,7 +493,7 @@ int countContexts(int ctxttype, int browser) {
         if( cptr->callflag == ctxttype ) 
             n++;
         else if( browser ) {
-           if(cptr->callflag & CTXT_FUNCTION && DEBUG(cptr->cloenv) )
+           if(cptr->callflag & CTXT_FUNCTION && RDEBUG(cptr->cloenv) )
               n++;
         }
         cptr = cptr->nextcontext;
@@ -560,7 +560,7 @@ SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
         if( !(cptr->callflag & CTXT_FUNCTION) )
            error(_("not that many functions on the call stack"));
         else
-           SET_DEBUG(cptr->cloenv, 1);
+           SET_RDEBUG(cptr->cloenv, 1);
         break;
     }
     return(rval);

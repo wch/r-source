@@ -999,16 +999,16 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
     if (isSymbol(CExpr)) {
 	const char *expr = CHAR(PRINTNAME(CExpr));
 	if (!strcmp(expr, "n")) {
-	    SET_DEBUG(rho, 1);
+	    SET_RDEBUG(rho, 1);
 	    rval = 1;
 	}
 	if (!strcmp(expr, "c")) {
 	    rval = 1;
-	    SET_DEBUG(rho, 0);
+	    SET_RDEBUG(rho, 0);
 	}
 	if (!strcmp(expr, "cont")) {
 	    rval = 1;
-	    SET_DEBUG(rho, 0);
+	    SET_RDEBUG(rho, 0);
 	}
 	if (!strcmp(expr, "Q")) {
 
@@ -1021,13 +1021,13 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	    R_run_onexits(R_ToplevelContext);
 
 	    /* this is really dynamic state that should be managed as such */
-	    SET_DEBUG(rho, 0); /*PR#1721*/
+	    SET_RDEBUG(rho, 0); /*PR#1721*/
 
 	    jump_to_toplevel();
 	}
 	if (!strcmp(expr, "where")) {
 	    printwhere();
-	    /* SET_DEBUG(rho, 1); */
+	    /* SET_RDEBUG(rho, 1); */
 	    rval = 2;
 	}
     }
@@ -1141,7 +1141,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     saveToplevelContext = R_ToplevelContext;
     saveGlobalContext = R_GlobalContext;
 
-    if (!DEBUG(rho)) {
+    if (!RDEBUG(rho)) {
 	cptr = R_GlobalContext;
 	while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->callflag )
 	    cptr = cptr->nextcontext;

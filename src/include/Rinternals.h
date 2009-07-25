@@ -245,12 +245,12 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define MARK(x)		((x)->sxpinfo.mark)
 #define TYPEOF(x)	((x)->sxpinfo.type)
 #define NAMED(x)	((x)->sxpinfo.named)
-#define TRACE(x)	((x)->sxpinfo.trace)
+#define RTRACE(x)	((x)->sxpinfo.trace)
 #define LEVELS(x)	((x)->sxpinfo.gp)
 #define SET_OBJECT(x,v)	(((x)->sxpinfo.obj)=(v))
 #define SET_TYPEOF(x,v)	(((x)->sxpinfo.type)=(v))
 #define SET_NAMED(x,v)	(((x)->sxpinfo.named)=(v))
-#define SET_TRACE(x,v)	(((x)->sxpinfo.trace)=(v))
+#define SET_RTRACE(x,v)	(((x)->sxpinfo.trace)=(v))
 #define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=(v))
 
 /* S4 object bit, set by R_do_new_object for all new() calls */
@@ -306,10 +306,10 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define FORMALS(x)	((x)->u.closxp.formals)
 #define BODY(x)		((x)->u.closxp.body)
 #define CLOENV(x)	((x)->u.closxp.env)
-#define DEBUG(x)	((x)->sxpinfo.debug)
-#define SET_DEBUG(x,v)	(((x)->sxpinfo.debug)=(v))
-#define STEP(x)		((x)->sxpinfo.spare)
-#define SET_STEP(x,v)	(((x)->sxpinfo.spare)=(v))
+#define RDEBUG(x)	((x)->sxpinfo.debug)
+#define SET_RDEBUG(x,v)	(((x)->sxpinfo.debug)=(v))
+#define RSTEP(x)	((x)->sxpinfo.spare)
+#define SET_RSTEP(x,v)	(((x)->sxpinfo.spare)=(v))
 
 /* Symbol Access Macros */
 #define PRINTNAME(x)	((x)->u.symsxp.pname)
@@ -419,12 +419,12 @@ SEXP SETCAD4R(SEXP e, SEXP y);
 SEXP (FORMALS)(SEXP x);
 SEXP (BODY)(SEXP x);
 SEXP (CLOENV)(SEXP x);
-int  (DEBUG)(SEXP x);
-int  (STEP)(SEXP x);
-int  (TRACE)(SEXP x);
-void (SET_DEBUG)(SEXP x, int v);
-void (SET_STEP)(SEXP x, int v);
-void (SET_TRACE)(SEXP x, int v);
+int  (RDEBUG)(SEXP x);
+int  (RSTEP)(SEXP x);
+int  (RTRACE)(SEXP x);
+void (SET_RDEBUG)(SEXP x, int v);
+void (SET_RSTEP)(SEXP x, int v);
+void (SET_RTRACE)(SEXP x, int v);
 void SET_FORMALS(SEXP x, SEXP v);
 void SET_BODY(SEXP x, SEXP v);
 void SET_CLOENV(SEXP x, SEXP v);

@@ -2565,7 +2565,7 @@ int (OBJECT)(SEXP x) { return OBJECT(x); }
 int (MARK)(SEXP x) { return MARK(x); }
 int (TYPEOF)(SEXP x) { return TYPEOF(x); }
 int (NAMED)(SEXP x) { return NAMED(x); }
-int (TRACE)(SEXP x) { return TRACE(x); }
+int (RTRACE)(SEXP x) { return RTRACE(x); }
 int (LEVELS)(SEXP x) { return LEVELS(x); }
 
 void (SET_ATTRIB)(SEXP x, SEXP v) {
@@ -2578,7 +2578,7 @@ void (SET_ATTRIB)(SEXP x, SEXP v) {
 void (SET_OBJECT)(SEXP x, int v) { SET_OBJECT(x, v); }
 void (SET_TYPEOF)(SEXP x, int v) { SET_TYPEOF(x, v); }
 void (SET_NAMED)(SEXP x, int v) { SET_NAMED(x, v); }
-void (SET_TRACE)(SEXP x, int v) { SET_TRACE(x, v); }
+void (SET_RTRACE)(SEXP x, int v) { SET_RTRACE(x, v); }
 int (SETLEVELS)(SEXP x, int v) { return SETLEVELS(x, v); }
 void DUPLICATE_ATTRIB(SEXP to, SEXP from) {
     SET_ATTRIB(to, duplicate(ATTRIB(from)));
@@ -2787,14 +2787,14 @@ void (SET_MISSING)(SEXP x, int v) { SET_MISSING(x, v); }
 SEXP (FORMALS)(SEXP x) { return FORMALS(x); }
 SEXP (BODY)(SEXP x) { return BODY(x); }
 SEXP (CLOENV)(SEXP x) { return CLOENV(x); }
-int (DEBUG)(SEXP x) { return DEBUG(x); }
-int (STEP)(SEXP x) { return STEP(x); }
+int (RDEBUG)(SEXP x) { return RDEBUG(x); }
+int (RSTEP)(SEXP x) { return RSTEP(x); }
 
 void (SET_FORMALS)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); FORMALS(x) = v; }
 void (SET_BODY)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); BODY(x) = v; }
 void (SET_CLOENV)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); CLOENV(x) = v; }
-void (SET_DEBUG)(SEXP x, int v) { SET_DEBUG(x, v); }
-void (SET_STEP)(SEXP x, int v) { SET_STEP(x, v); }
+void (SET_RDEBUG)(SEXP x, int v) { SET_RDEBUG(x, v); }
+void (SET_RSTEP)(SEXP x, int v) { SET_RSTEP(x, v); }
 
 /* Primitive Accessors */
 attribute_hidden int (PRIMOFFSET)(SEXP x) { return PRIMOFFSET(x); }
