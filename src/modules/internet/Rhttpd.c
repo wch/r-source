@@ -227,6 +227,8 @@ static void finalize_worker(httpd_conn_t *c) {
     }
 }
 
+/* adds a worker to the worker list and returns 0. If the list is full, the worker is finalized and returns -1.
+ * note that we don't need locking, because add_worker is guaranteed to be called by the same thread (server thread). */
 static int add_worker(httpd_conn_t *c) {
     unsigned int i = 0;
     for (; i < MAX_WORKERS; i++)
@@ -245,6 +247,7 @@ static int add_worker(httpd_conn_t *c) {
     return -1;
 }
 
+/* finalize worker, remove it from the list and free the memory. If the worker is owned by a thread, it is not finalized and the THREAD_DISPOSE flag is set instead. */
 static void remove_worker(httpd_conn_t *c) {
     unsigned int i = 0;
     if (!c) return;
@@ -383,7 +386,7 @@ static void process_request(httpd_conn_t *c) {
 	/* the result is expected to have one of the following forms:
 	 * a) character vector of length 1 => error (possibly from try), will create 500 response
 	 * b) list(payload[, content-type[, headers[, status code]]])
-	 *    payload: can be a character vector of length one or a raw vector
+	 *    payload: can be a character vector of length one or a raw vector. if the character vector is named "file" then the content of a file of that name is the payload
 	 *    content-type: must be a character vector of length one or NULL (if present, else default is "text/html")
 	 *    headers: must be a character vector - the elements will have CRLF appended and neither Content-type nor Content-length may be used
 	 *    status code: must be an integer if present (default is 200) */
@@ -398,23 +401,25 @@ static void process_request(httpd_conn_t *c) {
 	    UNPROTECT(3);
 	    return;
 	}
-	if (TYPEOF(x) == VECSXP && LENGTH(x) > 0) {
+
+	if (TYPEOF(x) == VECSXP && LENGTH(x) > 0) { /* a list (generic vector) can be a real payload */
+	    SEXP xNames = getAttrib(x, R_NamesSymbol);
 	    if (LENGTH(x) > 1) {
-		SEXP sCT = VECTOR_ELT(x, 1);
+		SEXP sCT = VECTOR_ELT(x, 1); /* second element is content type if present */
 		if (TYPEOF(sCT) == STRSXP && LENGTH(sCT) > 0)
 		    ct = CHAR(STRING_ELT(sCT, 0));
-		if (LENGTH(x) > 2) {
+		if (LENGTH(x) > 2) { /* third element is headers vector */
 		    sHeaders = VECTOR_ELT(x, 2);
 		    if (TYPEOF(sHeaders) != STRSXP)
 			sHeaders = R_NilValue;
-		    if (LENGTH(x) > 3)
+		    if (LENGTH(x) > 3) /* fourth element is HTTP code */
 			code = asInteger(VECTOR_ELT(x, 3));
 		}
 	    }
 	    y = VECTOR_ELT(x, 0);
 	    if (TYPEOF(y) == STRSXP && LENGTH(y) > 0) {
 		char buf[64];
-		const char *cs = CHAR(STRING_ELT(y, 0));
+		const char *cs = CHAR(STRING_ELT(y, 0)), *fn = 0;
 		if (code == 200)
 		    send_response(c->sock, "HTTP/1.1 200 OK\r\nContent-type: ", 31);
 		else {
@@ -430,8 +435,13 @@ static void process_request(httpd_conn_t *c) {
 			send_response(c->sock, hs, strlen(hs));
 		    }
 		}
-		if (LENGTH(y) > 1 && !strcmp(cs, "*FILE*")) { /* special content - a file */
-		    const char *fn = CHAR(STRING_ELT(y, 1));
+		/* special content - a file: either list(file="") or list(c("*FILE*", "")) - the latter will go away */
+		if (TYPEOF(xNames) == STRSXP && LENGTH(xNames) > 0 &&
+		    !strcmp(CHAR(STRING_ELT(xNames, 0)), "file"))
+		    fn = cs;
+		if (LENGTH(y) > 1 && !strcmp(cs, "*FILE*"))
+		    fn = CHAR(STRING_ELT(y, 1));
+		if (fn) {
 		    char *fbuf;
 		    FILE *f = fopen(fn, "rb");
 		    long fsz = 0;
@@ -450,6 +460,7 @@ static void process_request(httpd_conn_t *c) {
 			while (fsz > 0 && !feof(f)) {
 			    int rd = (fsz > 32768) ? 32768 : fsz;
 			    if (fread(fbuf, 1, rd, f) != rd) {
+				free(fbuf);
 				UNPROTECT(3);
 				c->attr |= CONNECTION_CLOSE;
 				return;
@@ -457,6 +468,7 @@ static void process_request(httpd_conn_t *c) {
 			    send_response(c->sock, fbuf, rd);
 			    fsz -= rd;
 			}
+			free(fbuf);
 		    }
 		    fclose(f);
 		    UNPROTECT(3);
