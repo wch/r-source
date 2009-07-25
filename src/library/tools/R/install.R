@@ -2311,12 +2311,21 @@
     writeLines("\\end{document}", out)
     close(out)
 
+    USE_NEW_HELP <- nchar(Sys.getenv("USE_NEW_HELP")) > 0L
+    if (!USE_NEW_HELP) {
+	## Look for encodings
+	lines <- readLines(outfile)
+	latexEncodings <- lines[grepl('^\\\\inputencoding', lines)]
+	latexEncodings <- sub("^\\\\inputencoding\\{(.*)\\}", "\\1", latexEncodings)
+    }
+    
     ## Fix up encodings
     ## FIXME cyrillic probably only works with times, not ae.
     latexEncodings <- unique(latexEncodings)
     encs <- latexEncodings[latexEncodings != "latin1"]
     if (length(encs)) {
-	lines <- readLines(outfile)
+    	if (USE_NEW_HELP)
+	    lines <- readLines(outfile)
 	cyrillic <- if(nzchar(Sys.getenv("_R_CYRILLIC_TEX_"))) "utf8" %in% encs else FALSE
 	encs <- paste(encs, "latin1", collapse=",", sep=",")
 	
