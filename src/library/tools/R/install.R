@@ -2041,7 +2041,7 @@
             if(is.null(call))
                 sprintf("%s: %s", kind, msg)
             else
-                sprintf("%s in %s:\n %s", deparse(call)[1L], kind, msg)
+                sprintf("%s in %s:\n %s", kind, deparse(call)[1L], msg)
         }
 
         .whandler <- function(e) {
