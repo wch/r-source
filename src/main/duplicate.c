@@ -114,11 +114,11 @@ SEXP duplicate(SEXP s){
 #endif
     t = duplicate1(s);
 #ifdef R_MEMORY_PROFILING
-    if (TRACE(s) && !(TYPEOF(s) == CLOSXP || TYPEOF(s) == BUILTINSXP ||
+    if (RTRACE(s) && !(TYPEOF(s) == CLOSXP || TYPEOF(s) == BUILTINSXP ||
 		      TYPEOF(s) == SPECIALSXP || TYPEOF(s) == PROMSXP ||
 		      TYPEOF(s) == ENVSXP)){
 	    memtrace_report(s,t);
-	    SET_TRACE(t,1);
+	    SET_RTRACE(t,1);
     }
 #endif
     return t;
