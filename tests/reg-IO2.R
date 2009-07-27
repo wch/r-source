@@ -102,12 +102,10 @@ read.table("test.dat", comment.char = "%")
 unlink("test.dat")
 
 ## test on Windows Unicode file
-if(capabilities("iconv")) {
-    con <- file(file.path(Sys.getenv("SRCDIR"), "WinUnicode.dat"),
-                encoding="UCS-2LE")
-    print(scan(con, 0, quiet=TRUE))
-    close(con)
-} else print(1:8)
+con <- file(file.path(Sys.getenv("SRCDIR"), "WinUnicode.dat"),
+            encoding="UCS-2LE")
+scan(con, 0, quiet=TRUE)
+close(con)
 
 ## tests of allowEscape
 x <- "1 2 3 \\ab\\c"

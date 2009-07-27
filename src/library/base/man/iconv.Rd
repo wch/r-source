@@ -30,12 +30,12 @@ iconvlist()
 }
 
 \details{
-  The names of encodings and which ones are available (and indeed, if
-  any are) is platform-dependent.  On all systems that support
-  \code{iconv} you can use \code{""} for the encoding of the current
-  locale, as well as \code{"latin1"} and \code{"UTF-8"}.  On most
-  systems (including those using \code{glibc} or \code{libinconv}, Mac
-  OS X and Windows) case is ignored when specifying an encoding.
+  The names of encodings and which ones are available are
+  platform-dependent.  On all systems you can use \code{""} for the
+  encoding of the current locale, as well as \code{"latin1"} and
+  \code{"UTF-8"}.  On most systems (including those using \code{glibc}
+  or \code{libiconv}, Mac OS X and Windows) case is ignored when
+  specifying an encoding.
 
 #ifdef unix
   On many platforms \code{iconvlist} provides an alphabetical list of
@@ -69,10 +69,6 @@ iconvlist()
   The elements of the result have a declared encoding if \code{from} is
   \code{"latin1"} or \code{"UTF-8"}, or if \code{from = ""} and the
   current locale's encoding is detected as Latin-1 or UTF-8.
-}
-\note{
-  Not all platforms support these functions, although almost all
-  support \code{iconv}.  See also \code{\link{capabilities}("iconv")}.
 }
 \seealso{
   \code{\link{localeToCharset}}, \code{\link{file}}. 

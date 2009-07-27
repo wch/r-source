@@ -1,6 +1,6 @@
 
-R version 2.6.0 Under development (unstable) (2007-07-31 r42375)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.10.0 Under development (unstable) (2009-07-26 r48999)
+Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -121,10 +121,10 @@ Error in read.table("foo6", header = TRUE, fill = TRUE) :
 +     "3 1 2 3 NA TRUE def\n",
 +     sep = "", file = "foo7")
 > (res <- read.table("foo7"))
-   A   B       C  D     E    F
-1  1 1.1  1.1+0i NA FALSE  abc
-2 NA  NA      NA NA    NA <NA>
-3  1 2.0  3.0+0i NA  TRUE  def
+   A   B      C  D     E    F
+1  1 1.1 1.1+0i NA FALSE  abc
+2 NA  NA     NA NA    NA <NA>
+3  1 2.0 3.0+0i NA  TRUE  def
 > sapply(res, typeof)
         A         B         C         D         E         F 
 "integer"  "double" "complex" "logical" "logical" "integer" 
@@ -134,10 +134,10 @@ Error in read.table("foo6", header = TRUE, fill = TRUE) :
 > (res2 <- read.table("foo7",
 +                     colClasses = c("character", rep("numeric", 2),
 +                     "complex", "integer", "logical", "character")))
-   A   B       C  D     E    F
-1  1 1.1  1.1+0i NA FALSE  abc
-2 NA  NA      NA NA    NA <NA>
-3  1 2.0  3.0+0i NA  TRUE  def
+   A   B      C  D     E    F
+1  1 1.1 1.1+0i NA FALSE  abc
+2 NA  NA     NA NA    NA <NA>
+3  1 2.0 3.0+0i NA  TRUE  def
 > sapply(res2, typeof)
           A           B           C           D           E           F 
    "double"    "double"   "complex"   "integer"   "logical" "character" 
@@ -207,13 +207,11 @@ logical(0)
 > unlink("test.dat")
 > 
 > ## test on Windows Unicode file
-> if(capabilities("iconv")) {
-+     con <- file(file.path(Sys.getenv("SRCDIR"), "WinUnicode.dat"),
-+                 encoding="UCS-2LE")
-+     print(scan(con, 0, quiet=TRUE))
-+     close(con)
-+ } else print(1:8)
+> con <- file(file.path(Sys.getenv("SRCDIR"), "WinUnicode.dat"),
++             encoding="UCS-2LE")
+> scan(con, 0, quiet=TRUE)
 [1] 1 2 3 4 5 6 7 8
+> close(con)
 > 
 > ## tests of allowEscape
 > x <- "1 2 3 \\ab\\c"

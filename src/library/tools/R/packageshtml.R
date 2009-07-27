@@ -86,16 +86,7 @@ unix.packages.html <-
         warning("cannot create HTML package index")
         return(FALSE)
     }
-    ## First we need to fathom out what encoding to use.
-    ## For now we assume that if we have iconv then UTF-8 is OK.
-    ## It is OK if cross-building.
-    useUTF8 <- capabilities("iconv")
-    if(useUTF8)
-        file.append(f.tg, file.path(docdir, "html",
-                                    "packages-head-utf8.html"))
-    else
-        file.append(f.tg, file.path(docdir, "html",
-                                    "packages-head.html"))
+    file.append(f.tg, file.path(docdir, "html", "packages-head-utf8.html"))
     out <- file(f.tg, open="a")
     for (lib in lib.loc) {
         pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
@@ -113,7 +104,7 @@ unix.packages.html <-
         for (i in pg) {
             title <- utils::packageDescription(i, lib.loc = lib,
                                                fields = "Title",
-                                        encoding = ifelse(useUTF8,"UTF-8",""))
+                                               encoding = "UTF-8")
             if (is.na(title)) title <- "-- Title is missing --"
             cat('<tr align="left" valign="top">\n',
                 '<td width="25%"><a href="', lib0, '/', i,

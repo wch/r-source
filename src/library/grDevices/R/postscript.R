@@ -176,7 +176,7 @@ guessEncoding <- function(family)
                             "KOI8-R" = "KOI8-R.enc",
                             "KOI8-U" = "KOI8-U.enc",
                             "ISOLatin1.enc")
-                 else if(lc[1L] == "UTF-8" && capabilities("iconv"))
+                 else if(lc[1L] == "UTF-8")
                      switch(lc[2L],
                             "ISO8859-1" = "ISOLatin1.enc", # what about Euro?
                             "ISO8859-2" = "ISOLatin2.enc",

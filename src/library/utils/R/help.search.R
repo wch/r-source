@@ -238,8 +238,7 @@ help.search <-
 		      sep = "/")
 	}
 	## And maybe re-encode ...
-	if(!identical(Sys.getlocale("LC_CTYPE"), "C")
-           && capabilities("iconv")) {
+	if(!identical(Sys.getlocale("LC_CTYPE"), "C")) {
 	    if(verbose) message("reencoding ...", appendLF=FALSE)
 	    encoding <- db$Base[, "Encoding"]
 	    IDs_to_iconv <- db$Base[encoding != "", "ID"]
@@ -259,7 +258,7 @@ help.search <-
 	    unlist(sapply(db,
 			  function(u)
 			  u[rowSums(is.na(nchar(u, "c", TRUE))) > 0, "ID"]))
-	if(length(bad_IDs) && capabilities("iconv")) { ## try latin1
+	if(length(bad_IDs)) { ## try latin1
             for(i in seq_along(db)) {
                 ind <- db[[i]][, "ID"] %in% bad_IDs
                 db[[i]][ind, ] <- iconv(db[[i]][ind, ], "latin1", "")

@@ -2529,8 +2529,8 @@ environment variable.  The default is equivalent to setting
 
 @noindent
 (which is appropriate for a system based on @code{glibc}) except if the
-current locale is UTF-8 and @samp{iconv} is available, when the
-package code is translated to UTF-8 for syntax checking.
+current locale is UTF-8 when the package code is translated to UTF-8 for
+syntax checking.
 
 
 @node Diagnostic messages, Internationalization, Writing portable packages, Creating R packages
@@ -5657,14 +5657,12 @@ name space, the shared object loaded by the first (if any)
 @code{useDynLib} directive will be used.)
 
 For @code{.C} and @code{.Fortran} you can specify an @code{ENCODING}
-argument: this requests that (unless @code{DUP = FALSE}) character vectors
-be re-encoded to the requested encoding before being passed in, and
-re-encoded from the requested encoding when passed back.  Note that
+argument: this requests that (unless @code{DUP = FALSE}) character
+vectors be re-encoded to the requested encoding before being passed in,
+and re-encoded from the requested encoding when passed back.  Note that
 encoding names are not standardized, and not all @R{} builds support
-re-encoding. (The argument is ignored with a warning if re-encoding is
-not supported at all: @R{} code can test for this @emph{via}
-@code{capabilities("iconv")}.)  But this can be useful to allow code to
-work in a UTF-8 locale by specifying @code{ENCODING = "latin1"}.
+re-encoding.  But this can be useful to allow code to work in a UTF-8
+locale by specifying @code{ENCODING = "latin1"}.
 
 Note that the compiled code should not return anything except through
 its arguments: C functions should be of type @code{void} and FORTRAN
@@ -8303,11 +8301,6 @@ translation is almost always possible (whereas only a few languages can
 be represented in the encoding of the current locale unless that is
 UTF-8).
 
-@R{} can be built without @code{iconv} (although this is very much
-discouraged) in which case these functions exist but do no translation:
-such a build of @R{} is in any case not suitable for handling
-non-@acronym{ASCII} data.
-
 @findex getCharCE
 @findex mkCharCE
 As from @R{} 2.7.0 there is a public interface to the encoding marked on
@@ -9493,21 +9486,10 @@ this is defined.
 @section Re-encoding
 
 @R{} has its own C-level interface to the encoding conversion
-capabilities provided by @code{iconv}, for the following reasons
-
-@itemize @bullet
-@item
-These wrapper routines do error-handling when no usable implementation
-of @code{iconv} was available at configure time.
-
-@item
-Under Windows they arrange to load the @file{iconv.dll} at first use.
-
-@item
-There are incompatibilities between the declarations in different
-implementations of @code{iconv}.
-
-@end itemize
+capabilities provided by @code{iconv} because there are
+incompatibilities between the declarations in different implementations
+of @code{iconv} (and before @R{} 2.10.0 they provided a dummy interface
+when @code{iconv} was not supported).
 
 These are declared in header file @file{R_ext/Riconv.h}.
 

@@ -29,8 +29,7 @@ function(lines)
         .get_Rd_metadata_from_Rd_lines(lines[!is.na(nchar(lines, "c", TRUE))],
                                        "encoding")
     if(length(encoding)) {
-        if((Sys.getlocale("LC_CTYPE") != "C")
-           && capabilities("iconv")) {
+        if((Sys.getlocale("LC_CTYPE") != "C")) {
             encoding <- encoding[1L]     # Just making sure ...
             if(.is_ASCII(encoding)) {
                 if (!tolower(encoding) %in% c("latin1", "latin2", "utf-8"))
@@ -49,12 +48,7 @@ function(lines)
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin1.
-        if(capabilities("iconv"))
-            lines <- iconv(lines, "latin1", "")
-        else
-            stop("Found invalid multi-byte character data.", "\n",
-                 "Cannot re-encode because iconv is not available.", "\n",
-                 "Try running R in a single-byte locale.")
+        lines <- iconv(lines, "latin1", "")
     }
 
     ## Strip Rd first.
@@ -466,7 +460,7 @@ function(package, dir, lib.loc = NULL)
         ## <FIXME>
         ## Change back to
         ##   db <- lapply(docs_files, prepare_Rd,
-        ##                encoding = encoding, 
+        ##                encoding = encoding,
         ##                defines = .Platform$OS.type,
         ##                stages = "install")
         ## when we no longer need the Rd sources ...
@@ -474,7 +468,7 @@ function(package, dir, lib.loc = NULL)
         db <- lapply(docs_files, .read_Rd_lines_quietly)
         db <- Map(function(x, y) structure(x, source = y),
                   lapply(docs_files, prepare_Rd,
-                     encoding = encoding, 
+                     encoding = encoding,
                      defines = .Platform$OS.type,
                      stages = "install"),
                   if(encoding != "unknown")

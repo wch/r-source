@@ -51,27 +51,25 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
     from_file <- FALSE
     srcfile <- NULL
     if(is.character(file)) {
-        if(capabilities("iconv")) {
-            if(identical(encoding, "unknown")) {
-                enc <- utils::localeToCharset()
-                encoding <- enc[length(enc)]
-            } else enc <- encoding
-            if(length(enc) > 1L) {
-                encoding <- NA
-                owarn <- options("warn"); options(warn = 2)
-                for(e in enc) {
-                    if(is.na(e)) next
-                    zz <- file(file, encoding = e)
-                    res <- try(readLines(zz), silent = TRUE)
-                    close(zz)
-                    if(!inherits(res, "try-error")) { encoding <- e; break }
-                }
-                options(owarn)
+        if(identical(encoding, "unknown")) {
+            enc <- utils::localeToCharset()
+            encoding <- enc[length(enc)]
+        } else enc <- encoding
+        if(length(enc) > 1L) {
+            encoding <- NA
+            owarn <- options("warn"); options(warn = 2)
+            for(e in enc) {
+                if(is.na(e)) next
+                zz <- file(file, encoding = e)
+                res <- try(readLines(zz), silent = TRUE)
+                close(zz)
+                if(!inherits(res, "try-error")) { encoding <- e; break }
             }
-            if(is.na(encoding))
-                stop("unable to find a plausible encoding")
-            if(verbose) cat("encoding =", dQuote(encoding), "chosen\n")
+            options(owarn)
         }
+        if(is.na(encoding))
+            stop("unable to find a plausible encoding")
+        if(verbose) cat("encoding =", dQuote(encoding), "chosen\n")
         if(file == "") file <- stdin()
         else {
             if (isTRUE(keep.source))

@@ -1075,7 +1075,7 @@ function(package, lib.loc = NULL)
         codeSlots <- sort(methods::slotNames(cld))
         docSlots  <- sort(slotNames_from_section_text(Rd_slots[[ii]]))
     ## </FIXME>
-    ## *****************************************************************        
+    ## *****************************************************************
         superSlots <- .inheritedSlotNames(cld@contains)
         if(length(superSlots)) ## allow '\dots' in docSlots
             docSlots <- docSlots[docSlots != "\\dots"]
@@ -1220,7 +1220,7 @@ function(package, lib.loc = NULL)
                                   .get_data_frame_var_names_from_Rd_text)
     ## </FIXME>
     ## *****************************************************************
-    
+
     idx <- (sapply(Rd_var_names, length) > 0L)
     if(!length(idx)) return(bad_Rd_objects)
     aliases <- unlist(aliases[idx])
@@ -1729,7 +1729,7 @@ function(package, dir, lib.loc = NULL)
     db_usages <- lapply(db_usage_texts,
                         .parse_usage_as_much_as_possible)
     ## </FIXME>
-    ## *****************************************************************    
+    ## *****************************************************************
     ind <- unlist(lapply(db_usages,
                          function(x) !is.null(attr(x, "bad_lines"))))
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
@@ -3087,8 +3087,7 @@ function(dfile)
     ## Determine encoding and re-encode if necessary and possible.
     if("Encoding" %in% names(db)) {
         encoding <- db["Encoding"]
-        if((! Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))
-           && capabilities("iconv"))
+        if((! Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX")))
             db <- iconv(db, encoding, "")
     }
     else if(!all(.is_ISO_8859(db))) {
@@ -3101,13 +3100,7 @@ function(dfile)
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin1.
-        if(capabilities("iconv"))
-            db <- iconv(db, "latin1", "")
-        else
-            stop("Found invalid multi-byte character data.", "\n",
-                 "Cannot re-encode because iconv is not available.", "\n",
-                 "Try running R in a single-byte locale.")
-
+        db <- iconv(db, "latin1", "")
     }
 
     ## Mandatory entries in DESCRIPTION:
@@ -3770,17 +3763,12 @@ print.check_package_datasets <-
 function(x, ...)
 {
     ## not sQuote as we have mucked about with locales.
-    iconv0 <- function(x, ...)
-        paste("'", if(capabilities("iconv")) iconv(x, ...) else x, "'", sep="")
+    iconv0 <- function(x, ...) paste("'", iconv(x, ...), "'", sep="")
 
-    if(n <- length(x$latin1)) {
+    if(n <- length(x$latin1))
         cat(sprintf("Note: found %d marked Latin-1 string(s)\n", n))
-        # cat(iconv0(x$latin1, "latin1", "ASCII", sub="byte"), sep="  ", fill=70)
-    }
-    if(n <- length(x$utf8)) {
+    if(n <- length(x$utf8))
         cat(sprintf("Note: found %d marked UTF-8 string(s)\n", n))
-        # cat(iconv0(x$utf8, "UTF-8", "ASCII", sub="byte"), sep="  ", fill=70)
-    }
     if(n <- length(x$unknown)) {
         cat("Warning: found non-ASCII string(s)\n")
         cat(iconv0(x$unknown, "", "ASCII", sub="byte"), sep="  ", fill=70)
@@ -3959,7 +3947,7 @@ function(dir)
                 else
                     Sys.setlocale("LC_CTYPE", "C")
 
-            } else if(l10n_info()[["UTF-8"]] && capabilities("iconv")) {
+            } else if(l10n_info()[["UTF-8"]]) {
                 ## the hope is that the conversion to UTF-8 works and
                 ## so we can validly test the code in the current locale.
             } else {

@@ -94,12 +94,8 @@ make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
             warning("cannot create HTML search index")
             return(FALSE)
         }
-        ## First we need to fathom out what encoding to use.
-        ## For now we assume that if we have iconv then UTF-8 is OK.
-        useUTF8 <- capabilities("iconv")
-        file.append(f.tg, file.path(R.home("doc"), "html",
-                                    if(useUTF8) "packages-head-utf8.html"
-                                    else "packages-head.html"))
+        file.append(f.tg,
+                    file.path(R.home("doc"), "html", "packages-head-utf8.html"))
         out <- file(f.tg, open="a")
         search <- file(searchindex, open="w")
     }

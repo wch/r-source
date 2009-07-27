@@ -36,7 +36,7 @@ file.show <-
     nfiles <- length(files)
     if(nfiles == 0)
         return(invisible(NULL))
-    if(!is.na(encoding) && encoding != "" && capabilities("iconv")) {
+    if(!is.na(encoding) && encoding != "") {
         for(i in seq_along(files)) {
             f <- files[i]
             tf <- tempfile()

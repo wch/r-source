@@ -296,9 +296,7 @@ function(dir, outDir)
     enc <- as.vector(db["Encoding"])
     need_enc <- !is.na(enc) # Encoding was specified
     ## assume that if locale is 'C' we can used 8-bit encodings unchanged.
-    if(need_enc && capabilities("iconv") &&
-       !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))
-       ) {
+    if(need_enc && !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
         ## syntax check: see below
         op <- options(encoding = enc, showErrorCalls=FALSE)
         on.exit(options(op))
@@ -673,7 +671,7 @@ function(dir, packages)
 function(infile, outfile, encoding)
 {
     ## convert infile from encoding to current, if possible
-    if(capabilities("iconv") && l10n_info()[["MBCS"]]) {
+    if(l10n_info()[["MBCS"]]) {
         text <- iconv(readLines(infile), encoding, "")
         if(any(is.na(text)))
             stop("invalid input", domain = NA)
