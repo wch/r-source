@@ -99,7 +99,7 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
 
 Rd files are normally intended to be rendered on a wide variety of systems,
 so care must be taken in the encoding of non-ASCII characters.  In general,
-any such encoding should be declared using the \samp{\encoding} section
+any such encoding should be declared using the \samp{encoding} section
 for there to be any hope of correct rendering.  Avoid exotic encodings unless
 absolutely necessary:  all input will be translated to UTF-8, and the 
 quality of such translations is poor on some older systems.
@@ -108,7 +108,7 @@ For output, the \code{outputEncoding} variable will be used.
 \code{outputEncoding=""} will choose the native encoding for the
 current system.  The \code{Rd2latex} function is an exception to this
 rule, because LaTeX systems vary considerably in their ability to
-handle encodings.  If an input file contains an \samp{\encoding}
+handle encodings.  If an input file contains an \samp{encoding}
 section, \code{Rd2latex} will use that as the output encoding as well.
 Unfortunately, on some older systems the conversion to UTF-8 and back
 is not perfect, and some characters may not be rendered properly.
