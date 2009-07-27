@@ -1812,7 +1812,7 @@
                     call. = FALSE)
             return()
         }
-        Rd <- Rdcontents(files)
+        Rd <- Rd_contents(files)
         .saveRDS(Rd, file.path(outDir, "Meta", "Rd.rds"))
         Rd
     }
@@ -2039,26 +2039,21 @@
             msg <- conditionMessage(e)
             call <- conditionCall(e)
             if(is.null(call))
-                sprintf("%s: %s", kind, msg)
+                sprintf("%s:  %s", kind, msg)
             else
-                sprintf("%s in %s:\n %s", kind, deparse(call)[1L], msg)
+                sprintf("%s in %s:\n  %s", kind, deparse(call)[1L], msg)
         }
-
         .whandler <- function(e) {
             .messages <<- c(.messages, .make_message(e, "Warning"))
+            invokeRestart("muffleWarning")
         }
         .ehandler <- function(e) {
             .messages <<- c(.messages, .make_message(e, "Error"))
             unlink(ff)
         }
-        ## .convert_if_needed <- function(ff, expr) {
-        ##     if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
-        ##         showtype()
-        ##         tryCatch(expr, warning = .whandler, error = .ehandler)
-        ##     }
-        ## }
         .convert <- function(expr)
-            tryCatch(expr, warning = .whandler, error = .ehandler)
+            withCallingHandlers(tryCatch(expr, error = .ehandler),
+                                warning = .whandler)
 
         for (f in files) {
             bf <-  sub("\\.[Rr]d$", "", basename(f))

@@ -564,7 +564,7 @@ function(package, dir, lib.loc = NULL,
     db <- lapply(db,
                  function(f)
                  paste(Rd_pp(attr(f, "source")), collapse = "\n"))
-    names(db) <- db_names <- .get_Rd_names_from_Rd_db(db)
+    names(db) <- db_names <- .Rd_get_names_from_Rd_db(db)
 
     ## pkg-defunct.Rd is not expected to list arguments
     ind <- db_names %in% paste(package_name, "defunct", sep="-")
@@ -572,9 +572,13 @@ function(package, dir, lib.loc = NULL,
     db_names <- db_names[!ind]
 
     db_usage_texts <-
-        .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
+        .apply_Rd_filter_to_Rd_db(db,
+                                  .Rd_get_section_from_Rd_text,
+                                  "usage")
     db_synopses <-
-        .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "synopsis")
+        .apply_Rd_filter_to_Rd_db(db,
+                                  .Rd_get_section_from_Rd_text,
+                                  "synopsis")
     ## </FIXME>
     ## *****************************************************************
     ind <- sapply(db_synopses, length) > 0L
@@ -1001,13 +1005,13 @@ function(package, lib.loc = NULL)
     ## we do the vectorized metadata computations first, and try to
     ## subscript whenever possible.
 
-    idx <- sApply(lapply(db, .get_Rd_metadata_from_Rd_object, "docType"),
+    idx <- sApply(lapply(db, .Rd_get_metadata, "docType"),
                   identical, "class")
     if(!any(idx)) return(bad_Rd_objects)
     db <- db[idx]
     stats <- c(n.S4classes = length(S4_classes), n.db = length(db))
 
-    aliases <- lapply(db, .get_Rd_metadata_from_Rd_object, "alias")
+    aliases <- lapply(db, .Rd_get_metadata, "alias")
     named_class <- lapply(aliases, grepl, pattern="-class$")
     nClass <- sApply(named_class, sum)
     oneAlias <- sApply(aliases, length) == 1L
@@ -1032,22 +1036,24 @@ function(package, lib.loc = NULL)
                  function(f)
                  paste(Rd_pp(attr(f, "source")), collapse = "\n"))
     Rd_slots <-
-        .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "Slots", FALSE)
+        .apply_Rd_filter_to_Rd_db(db,
+                                  .Rd_get_section_from_Rd_text,
+                                  "Slots", FALSE)
     idx <- !sApply(Rd_slots, identical, character())
     if(!any(idx)) return(bad_Rd_objects)
     db <- db[idx]; aliases <- aliases[idx]; Rd_slots <- Rd_slots[idx]
     stats["n.final"] <- length(db)
 
-    dbNames <- .get_Rd_names_from_Rd_db(db)
+    dbNames <- .Rd_get_names_from_Rd_db(db)
 
     slotNames_from_section_text <- function(txt) {
         s.apply <- function(X, FUN, ...) # keeping 'names':
             unlist(sapply(X, FUN, ..., simplify = FALSE))
         ## Get \describe (inside user-defined section 'Slots')
-        txt <- s.apply(txt, get_Rd_section, "describe")
+        txt <- s.apply(txt, .Rd_get_section_from_Rd_text, "describe")
         ## Suppose this worked ...
         ## Get the \items inside \describe
-        txt <- s.apply(txt, get_Rd_items)
+        txt <- s.apply(txt, .Rd_get_items_from_Rd_text)
         if(!length(txt)) return(character())
         ## And now strip enclosing '\code{...}:'
         txt <- gsub("\\\\code\\{([^}]*)\\}:?", "\\1", as.character(txt))
@@ -1175,7 +1181,7 @@ function(package, lib.loc = NULL)
     ## As going through the db to extract sections can take some time,
     ## we do the vectorized metadata computations first, and try to
     ## subscript whenever possible.
-    aliases <- lapply(db, .get_Rd_metadata_from_Rd_object, "alias")
+    aliases <- lapply(db, .Rd_get_metadata, "alias")
     idx <- sapply(aliases, length) == 1L
     if(!any(idx)) return(bad_Rd_objects)
     db <- db[idx]; aliases <- aliases[idx]
@@ -1188,20 +1194,20 @@ function(package, lib.loc = NULL)
     db <- lapply(db,
                  function(f)
                  paste(Rd_pp(attr(f, "source")), collapse = "\n"))
-    names(db) <- .get_Rd_names_from_Rd_db(db)
+    names(db) <- .Rd_get_names_from_Rd_db(db)
 
     .get_data_frame_var_names_from_Rd_text <- function(txt) {
-        txt <- get_Rd_section(txt, "format")
+        txt <- .Rd_get_section_from_Rd_text(txt, "format")
         ## Was there just one \format section?
         if(length(txt) != 1L) return(character())
         ## What did it start with?
         if(!length(grep("^[ \n\t]*(A|This) data frame", txt)))
             return(character())
         ## Get \describe inside \format
-        txt <- get_Rd_section(txt, "describe")
+        txt <- .Rd_get_section_from_Rd_text(txt, "describe")
         ## Suppose this worked ...
         ## Get the \items inside \describe
-        txt <- unlist(sapply(txt, get_Rd_items))
+        txt <- unlist(sapply(txt, .Rd_get_items_from_Rd_text))
         if(!length(txt)) return(character())
         txt <- gsub("(.*):$", "\\1", as.character(txt))
         txt <- gsub("\\\\code\\{(.*)\\}:?", "\\1", txt)
@@ -1335,8 +1341,8 @@ function(package, dir, lib.loc = NULL)
     else
         Rd_db(dir = dir)
 
-    db_aliases <- lapply(db, .get_Rd_metadata_from_Rd_object, "alias")
-    db_keywords <- lapply(db, .get_Rd_metadata_from_Rd_object, "keyword")
+    db_aliases <- lapply(db, .Rd_get_metadata, "alias")
+    db_keywords <- lapply(db, .Rd_get_metadata, "keyword")
 
     ## *****************************************************************
     ## <FIXME Rd2>
@@ -1346,11 +1352,13 @@ function(package, dir, lib.loc = NULL)
     db <- lapply(db,
                  function(f)
                  paste(Rd_pp(attr(f, "source")), collapse = "\n"))
-    db_names <- .get_Rd_names_from_Rd_db(db)
+    db_names <- .Rd_get_names_from_Rd_db(db)
     names(db) <- names(db_aliases) <- db_names
 
     db_usage_texts <-
-        .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
+        .apply_Rd_filter_to_Rd_db(db,
+                                  .Rd_get_section_from_Rd_text,
+                                  "usage")
     db_usages <- lapply(db_usage_texts, .parse_usage_as_much_as_possible)
     ind <- as.logical(sapply(db_usages,
                              function(x) !is.null(attr(x, "bad_lines"))))
@@ -1366,7 +1374,8 @@ function(package, dir, lib.loc = NULL)
     }
 
     db_argument_names <-
-        .apply_Rd_filter_to_Rd_db(db, .get_Rd_argument_names)
+        .apply_Rd_filter_to_Rd_db(db,
+                                  .Rd_get_argument_names_from_Rd_text)
     ## <FIXME>
     ## *****************************************************************
 
@@ -1716,7 +1725,7 @@ function(package, dir, lib.loc = NULL)
     db <- lapply(db,
                  function(f)
                  paste(Rd_pp(attr(f, "source")), collapse = "\n"))
-    names(db) <- db_names <- .get_Rd_names_from_Rd_db(db)
+    names(db) <- db_names <- .Rd_get_names_from_Rd_db(db)
 
     ## Ignore pkg-deprecated.Rd and pkg-defunct.Rd.
     ind <- db_names %in% paste(package_name, c("deprecated", "defunct"),
@@ -1725,7 +1734,9 @@ function(package, dir, lib.loc = NULL)
     db_names <- db_names[!ind]
 
     db_usage_texts <-
-        .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
+        .apply_Rd_filter_to_Rd_db(db,
+                                  .Rd_get_section_from_Rd_text,
+                                  "usage")
     db_usages <- lapply(db_usage_texts,
                         .parse_usage_as_much_as_possible)
     ## </FIXME>
@@ -2474,7 +2485,7 @@ function(package, dir, file, lib.loc = NULL)
         ## Also, should this do any stage expansion?
         txt <- paste(Rd_pp(.read_Rd_lines_quietly(file)),
                      collapse = "\n")
-        txt <- .get_Rd_example_code(txt)
+        txt <- .Rd_get_example_code_from_Rd_text(txt)
         ## </FIXME>
         exprs <- find_TnF_in_code(file, txt)
         if(length(exprs)) {
@@ -4430,10 +4441,12 @@ function(dir)
 function(dir)
 {
     if(!file_test("-d", file.path(dir, "man"))) return(NULL)
+    ## <FIXME Rd2>
     sapply(Rd_db(dir = dir),
            function(s) {
-               .get_Rd_example_code(paste(s, collapse = ""))
+               .Rd_get_example_code_from_Rd_text(paste(s, collapse = ""))
            })
+    ## <FIXME>
 }
 
 print.check_T_and_F <-
@@ -4909,7 +4922,8 @@ function(txt)
     if(!length(txt)) return(expression())
     txt <- gsub("\\\\l?dots", "...", txt)
     txt <- gsub("\\%", "%", txt, fixed = TRUE)
-    txt <- .Rd_transform_command(txt, "special", function(u) NULL)
+    txt <- .Rd_transform_command_in_Rd_text(txt, "special",
+                                            function(u) NULL)
     txt <- .dquote_method_markup(txt, .S3_method_markup_regexp)
     txt <- .dquote_method_markup(txt, .S4_method_markup_regexp)
     ## Transform <<see below>> style markup so that we can catch and

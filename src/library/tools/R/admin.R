@@ -416,18 +416,18 @@ function(dir, outDir)
         ## we want to proceed if any is NA.
         if(all(upToDate %in% TRUE)) return(invisible())
 
-        contents <- Rdcontents(allRd)
+        contents <- Rd_contents(allRd)
 
-        .write_contents_as_RDS(contents,
-                               file.path(outDir, "Meta", "Rd.rds"))
+        .write_Rd_contents_as_RDS(contents,
+                                  file.path(outDir, "Meta", "Rd.rds"))
 
         defaultEncoding <- as.vector(.readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION["Encoding"])
         if(is.na(defaultEncoding)) defaultEncoding <- NULL
         .saveRDS(.build_hsearch_index(contents, packageName, defaultEncoding),
                  file.path(outDir, "Meta", "hsearch.rds"))
 
-        .write_contents_as_DCF(contents, packageName,
-                               file.path(outDir, "CONTENTS"))
+        .write_Rd_contents_as_DCF(contents, packageName,
+                                  file.path(outDir, "CONTENTS"))
 
         ## If there is no @file{INDEX} file in the package sources, we
         ## build one.

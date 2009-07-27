@@ -37,8 +37,9 @@ function(dataDir, contents)
     ## We could also have an interface like
     ##   .build_data_index(dir, contents = NULL)
     ## where @code{dir} is the path to a package's root source dir and
-    ## contents is Rdcontents(list_files_with_type(file.path(dir, "man"),
-    ## "docs")).
+    ## contents is
+    ##    Rd_contents(list_files_with_type(file.path(dir, "man"),
+    ##                                     "docs")).
     ## </NOTE>
 
     if(!file_test("-d", dataDir))

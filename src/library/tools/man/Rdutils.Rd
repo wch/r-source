@@ -66,8 +66,7 @@ Rd_parse(file, text = NULL)
 db <- Rd_db("base")
 
 ## Keyword metadata per Rd object.
-keywords <-
-    lapply(db, tools:::.get_Rd_metadata_from_Rd_object, "keyword")
+keywords <- lapply(db, tools:::.Rd_get_metadata, "keyword")
 ## Tabulate the keyword entries.
 kw_table <- sort(table(unlist(keywords)))
 ## The 5 most frequent ones:
@@ -76,8 +75,7 @@ rev(kw_table)[1 : 5]
 kw_table[kw_table == 1]
 
 ## Concept metadata per Rd file.
-concepts <-
-    lapply(db, tools:::.get_Rd_metadata_from_Rd_object, "concept")
+concepts <- lapply(db, tools:::.Rd_get_metadata, "concept")
 ## How many files already have \concept metadata?
 sum(sapply(concepts, length) > 0)
 ## How many concept entries altogether?
