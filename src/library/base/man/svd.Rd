@@ -1,6 +1,6 @@
 % File src/library/base/man/svd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{svd}
@@ -13,7 +13,8 @@ svd(x, nu = min(n, p), nv = min(n, p), LINPACK = FALSE)
 La.svd(x, nu = min(n, p), nv = min(n, p))
 }
 \arguments{
-  \item{x}{a real or complex matrix whose SVD decomposition is to be computed.}
+  \item{x}{a numeric, logical or complex matrix whose SVD decomposition
+    is to be computed.}
   \item{nu}{the number of left  singular vectors to be computed.
     This must between \code{0} and \code{n = nrow(x)}.}
   \item{nv}{the number of right singular vectors to be computed.
@@ -32,7 +33,7 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   the LAPACK routines DGESDD and ZGESVD; \code{svd(LINPACK = TRUE)}
   provides an interface to the LINPACK routine DSVDC, purely for
   backwards compatibility.
-  
+
   Computing the singular vectors is the slow part for large matrices.
   The computation will be more efficient if \code{nu <= min(n, p)} and
   \code{nv <= min(n, p)}, and even more efficient if one or both are zero.

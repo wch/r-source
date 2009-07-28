@@ -41,11 +41,10 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     if (n != ncol(x)) stop("non-square matrix in 'eigen'")
 
     complex.x <- is.complex(x)
-    if(!complex.x && !is.numeric(x))
-        stop("numeric or complex values required in 'eigen'")
-    if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
+    if(!complex.x && !is.double(x))
+	storage.mode(x) <- "double"
+    if (!all(is.finite(x))) stop("infinite or missing values in 'x'")
 
-    if(is.numeric(x)) storage.mode(x) <- "double"
     if(missing(symmetric)) symmetric <- isSymmetric.matrix(x)
 
     if (!EISPACK) {

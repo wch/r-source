@@ -1,4 +1,4 @@
-			Dear Emacs, please make this -*-Text-*- mode!
+
 	**************************************************
 	*						 *
 	*	       2.10 SERIES NEWS			 *
@@ -151,6 +151,13 @@ NEW FEATURES
     o   if debug is called on an S3 generic function then all methods
         are debugged as well.
 
+    o	outlier symbols drawn by boxplot() now obey the 'outlwd'
+	argument.  Reported by Jurgen Kluge.
+
+    o	svd(x) and eigen(x) now behave analogously to qr(x), in also
+	accepting logical matrices x.
+
+
 
 Rd HELP FILE CHANGES
 
@@ -168,7 +175,7 @@ Rd HELP FILE CHANGES
     o	parse_Rd() now has an argument 'fragment' (default FALSE) to
 	accept small fragments of Rd files (so that \Sexpr can output
 	Rd code which is then parsed).
-	
+
     o	parse_Rd() now always converts its input to UTF-8.  The Rd2*
 	rendering functions have a new parameter, 'outputEncoding',
 	which controls how their output is encoded: by default in
@@ -214,9 +221,6 @@ BUG FIXES
 	of various incorrect slot definitions.
 
     o	n:m  now returns <integer> in a few more boundary cases.
-
-    o   outlier symbols drawn by boxplot() now obey the 'outlwd' 
-        argument.  Reported by Jurgen Kluge.
 
 
 

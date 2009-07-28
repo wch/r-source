@@ -1,6 +1,6 @@
 % File src/library/base/man/eigen.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{eigen}
@@ -22,7 +22,8 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     \R < 1.7.0)?}
 }
 \description{
-  Computes eigenvalues and eigenvectors of real or complex matrices.
+  Computes eigenvalues and eigenvectors of real (double, integer,
+  logical) or complex matrices.
 }
 \details{
   By default \code{eigen} uses the LAPACK routines DSYEVR,
