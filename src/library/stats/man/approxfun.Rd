@@ -35,12 +35,13 @@ approxfun(x, y = NULL,       method="linear",
   \item{yright}{the value to be returned when input \code{x} values are
     greater than \code{max(x)}. The default is defined by the value
     of \code{rule} given below.}
-  \item{rule}{an integer describing how interpolation is to take place
-    outside the interval [\code{min(x)}, \code{max(x)}].
+  \item{rule}{an integer (of length 1 or 2) describing how interpolation
+    is to take place outside the interval [\code{min(x)}, \code{max(x)}].
     If \code{rule} is \code{1} then \code{NA}s are returned for such
     points and if it is \code{2}, the value at the closest data extreme
-    is used.}
-  \item{f}{For \code{method="constant"} a number between 0 and 1
+    is used.  Use, e.g., \code{rule = 2:1}, if the left and right side
+    extrapolation should differ.}
+  \item{f}{for \code{method="constant"} a number between 0 and 1
     inclusive, indicating a compromise between left- and
     right-continuous step functions. If \code{y0} and \code{y1} are the
     values to the left and right of the point then the value is
@@ -92,10 +93,13 @@ points(approx(x, y), col = 2, pch = "*")
 points(approx(x, y, method = "constant"), col = 4, pch = "*")
 
 f <- approxfun(x, y)
-curve(f(x), 0, 10, col = "green")
+curve(f(x), 0, 11, col = "green2")
 points(x, y)
 is.function(fc <- approxfun(x, y, method = "const")) # TRUE
 curve(fc(x), 0, 10, col = "darkblue", add = TRUE)
+## different extrapolation on left and right side :
+plot(approxfun(x, y, rule = 2:1), 0, 11,
+     col = "tomato", add = TRUE, lty = 3, lwd = 2)
 
 ## Show treatment of 'ties' :
 

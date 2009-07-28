@@ -12,8 +12,14 @@
 NEW FEATURES
 
     o	install.packages(NULL) now lists packages only once even if they
-    	occur in more than one repository (as the latest compatible
-    	version of those available will always be downloaded).
+	occur in more than one repository (as the latest compatible
+	version of those available will always be downloaded).
+
+    o	approxfun() and approx() now accept a 'rule' of length two, for
+	easy specification of different interpolation rules on left and
+	right.
+	They also no longer segfault for invalid zero-length specification
+	of 'yleft, 'yright', or 'f'.
 
 
 BUG FIXES
@@ -21,22 +27,25 @@ BUG FIXES
     o	parse_Rd() still did not handle source reference encodings
 	properly.
 
-    o   PrintValue no longer attempts to print attributes for CHARSXPs
-        as those attributes are used internally for the CHARSXP cache.
-        This fixes a segfault when calling Rf_PrintValue on a CHARSXP
-        from C code.
+    o	PrintValue no longer attempts to print attributes for CHARSXPs
+	as those attributes are used internally for the CHARSXP cache.
+	This fixes a segfault when calling Rf_PrintValue on a CHARSXP
+	from C code.
 
-    o   PDF graphics output was producing TWO instances of anything
-        drawn with the symbol font face. (Report from Baptiste Auguie.)
-        
+    o	PDF graphics output was producing TWO instances of anything
+	drawn with the symbol font face. (Report from Baptiste Auguie.)
+
     o	length(x) <- newval and grep() could cause memory corruption.
 	(PR#13837)
-	
+
     o	If model.matrix() was given too large a model, it could crash
-        R. (PR#13838, fix found by Olaf Mersmann.)
+	R. (PR#13838, fix found by Olaf Mersmann.)
+
+    o	seq_along(x) is now equivalent to seq_len(length(x)); previously it
+	was not, when x had a "surprising" length() method.
 
     o	gzcon() (used by load()) would re-open an open connection,
-    	leaking a file handle each time. (PR#13841)
+	leaking a file handle each time. (PR#13841)
 
 
 

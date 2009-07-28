@@ -26,6 +26,8 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
     method <- pmatch(method, c("linear", "constant"))
     if (is.na(method))
 	stop("invalid interpolation method")
+    stopifnot(is.numeric(rule), (lenR <- length(rule)) >= 1, lenR <= 2)
+    if(lenR == 1) rule <- rule[c(1,1)]
     if(any(na <- is.na(x) | is.na(y))) {
 	ok <- !na
 	x <- x[ok]
@@ -50,10 +52,12 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
 	    stop("need at least two non-NA values to interpolate")
 	if(nx == 0) stop("zero non-NA points")
     }
+
     if (missing(yleft))
-	yleft <- if (rule == 1) NA else y[1L]
+	yleft <- if (rule[1] == 1) NA else y[1L]
     if (missing(yright))
-	yright <- if (rule == 1) NA else y[length(y)]
+	yright <- if (rule[2] == 1) NA else y[length(y)]
+    stopifnot(length(yleft) == 1, length(yright) == 1, length(f) == 1)
     if (missing(xout)) {
 	if (n <= 0)
 	    stop("'approx' requires n >= 1")
@@ -76,6 +80,8 @@ approxfun <- function(x, y = NULL, method = "linear",
     method <- pmatch(method, c("linear", "constant"))
     if (is.na(method))
 	stop("invalid interpolation method")
+    stopifnot(is.numeric(rule), (lenR <- length(rule)) >= 1, lenR <= 2)
+    if(lenR == 1) rule <- rule[c(1,1)]
     if(any(o <- is.na(x) | is.na(y))) {
 	o <- !o
 	x <- x[o]
@@ -102,10 +108,11 @@ approxfun <- function(x, y = NULL, method = "linear",
 	if(n == 0) stop("zero non-NA points")
     }
     if (missing(yleft))
-	yleft <- if(rule == 1) NA else y[1L]
+	yleft <- if (rule[1] == 1) NA else y[1L]
     if (missing(yright))
-	yright <- if(rule == 1) NA else y[length(y)]
+	yright <- if (rule[2] == 1) NA else y[length(y)]
     force(f)
+    stopifnot(length(yleft) == 1, length(yright) == 1, length(f) == 1)
     rm(o, rule, ties)
     function(v) .C("R_approx", as.double(x), as.double(y), as.integer(n),
 		   xout = as.double(v), as.integer(length(v)),
