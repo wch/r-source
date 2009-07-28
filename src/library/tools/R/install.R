@@ -816,16 +816,15 @@
             if (dir.exists("man")) {
                 starsmsg(stars, "help")
                 if(Sys.getenv("USE_NEW_HELP") != "") {
-                    tryCatch(.install_package_Rd_objects(".", instdir),
-                             error = function(e)
-                             pkgerrmsg("installing Rd objects failed",
-                                       pkg_name))
+                    res <- try(.install_package_Rd_objects(".", instdir))
+                    if(inherits(res, "try-error"))
+                        pkgerrmsg("installing Rd objects failed", pkg_name)
                     Sys.chmod(file.path(instdir, "man",
                                         paste0(pkg_name, ".rds")),
                               "644")
                 } else {
                     res <- try(.install_package_man_sources(".", instdir))
-                    if (inherits(res, "try-error"))
+                    if(inherits(res, "try-error"))
                         pkgerrmsg("installing man sources failed", pkg_name)
                     Sys.chmod(file.path(instdir, "man",
                                         paste0(pkg_name, ".Rd.gz")),
