@@ -313,6 +313,8 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	method = install(buf);
 	sxp = R_LookupMethod(method, rho, callrho, defrho);
 	if (isFunction(sxp)) {
+            if( RDEBUG(op) || RSTEP(op) )
+                SET_RSTEP(sxp, 1);
 	    defineVar(install(".Generic"), mkString(generic), newrho);
 	    if (i > 0) {
 	        int ii;
@@ -363,6 +365,8 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
     method = install(buf);
     sxp = R_LookupMethod(method, rho, callrho, defrho);
     if (isFunction(sxp)) {
+        if( RDEBUG(op) || RSTEP(op) )
+            SET_RSTEP(sxp, 1);
 	defineVar(install(".Generic"), mkString(generic), newrho);
 	defineVar(install(".Class"), R_NilValue, newrho);
 	PROTECT(t = mkString(buf));

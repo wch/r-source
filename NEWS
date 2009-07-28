@@ -148,6 +148,9 @@ NEW FEATURES
 
     o	tabulate now allows NAs to pass through (and be ignored).
 
+    o   if debug is called on an S3 generic function then all methods
+        are debugged as well.
+
 
 Rd HELP FILE CHANGES
 
