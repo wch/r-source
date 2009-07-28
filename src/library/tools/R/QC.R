@@ -4594,31 +4594,21 @@ function(x)
 ## based using gregexpr(re, txt), massaging the matches and merging with
 ## the non-matched parts.
 
-## <FIXME Rd2>
-## Remove old-style code eventually ...
 .dquote_method_markup <-
-function(txt, re, old = FALSE)
+function(txt, re)
 {
     out <- ""
     while((ipos <- regexpr(re, txt)) > -1L) {
         epos <- ipos + attr(ipos, "match.length") - 1L
         str <- substring(txt, ipos, epos)
         str <- sub("\"", "\\\"", str, fixed = TRUE)
-        str <- if(old) {
-            ## parse_usage_as_much_as_possible will turn \\\\ into \\ in
-            ## old style mode ...
-            sub("\\", "\\\\\\\\", str, fixed = TRUE)
-        } else {
-            sub("\\", "\\\\", str, fixed = TRUE)
-        }
-        
+        str <- sub("\\", "\\\\", str, fixed = TRUE)
         out <- sprintf("%s%s\"%s\"", out,
                        substring(txt, 1L, ipos - 1L), str)
         txt <- substring(txt, epos + 1L)
     }
     paste(out, txt, sep = "")
 }
-## </FIXME>
 
 ### ** .functions_to_be_ignored_from_usage
 
@@ -4862,27 +4852,17 @@ function(txt)
 function(x)
 {
     if(!length(x)) return(expression())
+    ## Drop specials and comments.
+    txt <- .Rd_deparse(.Rd_drop_nodes_with_tags(x,
+                                                c("\\special",
+                                                  "COMMENT")),
+                       tag = FALSE)
     ## <FIXME Rd2>
-    ## Remove old-style code eventually ...
-    was_Rd_text <- is.character(x)
-    if(was_Rd_text) {
-        txt <- .Rd_transform_command_in_Rd_text(x, "special",
-                                                function(u) NULL)
-        txt <- gsub("\\%", "%", txt, fixed = TRUE)
-        txt <- gsub("\\\\l?dots", "...", txt)
-    } else {
-        ## Drop specials and comments.
-        txt <- .Rd_deparse(.Rd_drop_nodes_with_tags(x,
-                                                    c("\\special",
-                                                      "COMMENT")),
-                           tag = FALSE)
-        ## <FIXME Rd2>
-        ## Currently, \dots deparses as \dots{}.
-        txt <- gsub("\\\\l?dots(\\{\\})?", "...", txt)
-        ## </FIXME>
-    }
-    txt <- .dquote_method_markup(txt, .S3_method_markup_regexp, was_Rd_text)
-    txt <- .dquote_method_markup(txt, .S4_method_markup_regexp, was_Rd_text)
+    ## Currently, \dots deparses as \dots{}.
+    txt <- gsub("\\\\l?dots(\\{\\})?", "...", txt)
+    ## </FIXME>
+    txt <- .dquote_method_markup(txt, .S3_method_markup_regexp)
+    txt <- .dquote_method_markup(txt, .S4_method_markup_regexp)
     ## Transform <<see below>> style markup so that we can catch and
     ## throw it, rather than "basically ignore" it by putting it in the
     ## bad_lines attribute.
@@ -4894,27 +4874,14 @@ function(x)
     txt <- gsub("\\{", "{", txt, fixed = TRUE)
     txt <- gsub("\\}", "}", txt, fixed = TRUE)
     ## </FIXME>
-    if(was_Rd_text) {
-        ## now any valid escape by \ is
-        ##   \a \b \f \n \r \t \u \U \v \x       \\ or \octal
-        ## (has \' \" missing ...)
-        txt <- gsub("(^|[^\\])\\\\\\\\($|[^abfnrtuUvx0-9\\])",
-                    "\\1<unescaped bksl>\\2", txt)
-        ## and since this may overlap, try again
-        txt <- gsub("(^|[^\\])\\\\\\\\($|[^abfnrtuUvx0-9\\])",
-                    "\\1<unescaped bksl>\\2", txt)
-        txt <- gsub("\\\\", "\\", txt, fixed = TRUE)
-    } else {
-        ## now any valid escape by \ is
-        ##   \a \b \f \n \r \t \u \U \v \x \' \" \\ or \octal 
-        txt <- gsub("(^|[^\\])\\\\($|[^abfnrtuUvx0-9'\"\\])",
-                    "\\1<unescaped bksl>\\2", txt)
-        ## and since this may overlap, try again
-        txt <- gsub("(^|[^\\])\\\\($|[^abfnrtuUvx0-9'\"\\])",
-                    "\\1<unescaped bksl>\\2", txt)
-    }
-    ## </FIXME>
-     .parse_text_as_much_as_possible(txt)
+    ## now any valid escape by \ is
+    ##   \a \b \f \n \r \t \u \U \v \x \' \" \\ or \octal 
+    txt <- gsub("(^|[^\\])\\\\($|[^abfnrtuUvx0-9'\"\\])",
+                "\\1<unescaped bksl>\\2", txt)
+    ## and since this may overlap, try again
+    txt <- gsub("(^|[^\\])\\\\($|[^abfnrtuUvx0-9'\"\\])",
+                "\\1<unescaped bksl>\\2", txt)
+    .parse_text_as_much_as_possible(txt)
 }
 
 ### ** .pretty_print

@@ -569,10 +569,6 @@ function(x)
 .Rd_get_name <-
 function(x)
 {
-    ## <FIXME Rd2>
-    if(is.character(x))
-        return(.Rd_get_name_from_Rd_text(x))
-    ## </FIXME>
     x <- .Rd_get_section(x, "name")
     ## The name should really be plain text, so as.character() should be
     ## fine as well ...
@@ -587,10 +583,6 @@ function(x)
 .Rd_get_title <-
 function(x)
 {
-    ## <FIXME Rd2>
-    if(is.character(x))
-        return(.Rd_get_title_from_Rd_text(x))
-    ## </FIXME>
     x <- .Rd_get_section(x, "title")
     if(length(x))
         .strip_whitespace(.Rd_deparse(x, tag = FALSE, drop = "COMMENT"))
