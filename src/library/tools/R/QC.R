@@ -557,33 +557,6 @@ function(package, dir, lib.loc = NULL,
     else
         Rd_db(dir = dir)
 
-    ## *****************************************************************
-    ## <FIXME Rd2>
-    if(FALSE) {
-    ## Does not work:
-    ##   db <- lapply(db, paste, collapse = "")
-    db <- lapply(db,
-                 function(f)
-                 paste(Rd_pp(attr(f, "source")), collapse = "\n"))
-    names(db) <- db_names <- .Rd_get_names_from_Rd_db(db)
-
-    ## pkg-defunct.Rd is not expected to list arguments
-    ind <- db_names %in% paste(package_name, "defunct", sep="-")
-    db <- db[!ind]
-    db_names <- db_names[!ind]
-
-    db_usage_texts <-
-        .apply_Rd_filter_to_Rd_db(db,
-                                  .Rd_get_section_from_Rd_text,
-                                  "usage")
-    db_synopses <-
-        .apply_Rd_filter_to_Rd_db(db,
-                                  .Rd_get_section_from_Rd_text,
-                                  "synopsis")
-    }
-    ## </FIXME>
-    ## *****************************************************************
-
     names(db) <- db_names <- .Rd_get_names_from_Rd_db(db)
 
     ## pkg-defunct.Rd is not expected to list arguments
@@ -1038,45 +1011,6 @@ function(package, lib.loc = NULL)
                SIMPLIFY = FALSE, USE.NAMES = FALSE)
     aliases <- unlist(aliases[idx], use.names = FALSE)
 
-    ## *****************************************************************
-    ## <FIXME Rd2>
-    if(FALSE) {
-    ## Now collapse.
-    ## Does not work:
-    ##   db <- lapply(db, paste, collapse = "")
-    db <- lapply(db,
-                 function(f)
-                 paste(Rd_pp(attr(f, "source")), collapse = "\n"))
-    Rd_slots <-
-        .apply_Rd_filter_to_Rd_db(db,
-                                  .Rd_get_section_from_Rd_text,
-                                  "Slots", FALSE)
-    idx <- !sApply(Rd_slots, identical, character())
-    if(!any(idx)) return(bad_Rd_objects)
-    db <- db[idx]; aliases <- aliases[idx]; Rd_slots <- Rd_slots[idx]
-    stats["n.final"] <- length(db)
-
-    dbNames <- .Rd_get_names_from_Rd_db(db)
-
-    .get_slot_names_from_Rd_text <- function(txt) {
-        s.apply <- function(X, FUN, ...) # keeping 'names':
-            unlist(sapply(X, FUN, ..., simplify = FALSE))
-        ## Get \describe (inside user-defined section 'Slots')
-        txt <- s.apply(txt, .Rd_get_section_from_Rd_text, "describe")
-        ## Suppose this worked ...
-        ## Get the \items inside \describe
-        txt <- s.apply(txt, .Rd_get_items_from_Rd_text)
-        if(!length(txt)) return(character())
-        ## And now strip enclosing '\code{...}:'
-        txt <- gsub("\\\\code\\{([^}]*)\\}:?", "\\1", as.character(txt))
-        txt <- unlist(strsplit(txt, ", *"))
-        .strip_whitespace(txt)
-    }
-
-    }
-    ## </FIXME>
-    ## *****************************************************************
-
     Rd_slots <- lapply(db, .Rd_get_section, "Slots", FALSE)
     idx <- sapply(Rd_slots, length) > 0L
     if(!any(idx)) return(bad_Rd_objects)
@@ -1225,47 +1159,6 @@ function(package, lib.loc = NULL)
     db <- db[idx]
     aliases <- aliases[idx]
 
-    ## *****************************************************************
-    ## <FIXME Rd2>
-    if(FALSE) {
-    ## Now collapse.
-    ## Does not work:
-    ##   db <- lapply(db, paste, collapse = "")
-    db <- lapply(db,
-                 function(f)
-                 paste(Rd_pp(attr(f, "source")), collapse = "\n"))
-    names(db) <- .Rd_get_names_from_Rd_db(db)
-
-    .get_data_frame_var_names_from_Rd_text <- function(txt) {
-        txt <- .Rd_get_section_from_Rd_text(txt, "format")
-        ## Was there just one format section?
-        if(length(txt) != 1L) return(character())
-        ## What did the format section start with?
-        if(!length(grep("^[ \n\t]*(A|This) data frame", txt)))
-            return(character())
-        ## Get \describe inside \format
-        txt <- .Rd_get_section_from_Rd_text(txt, "describe")
-        ## Suppose this worked ...
-        ## Get the \items inside \describe
-        txt <- unlist(sapply(txt, .Rd_get_items_from_Rd_text))
-        if(!length(txt)) return(character())
-        txt <- gsub("(.*):$", "\\1", as.character(txt))
-        txt <- gsub("\\\\code\\{(.*)\\}:?", "\\1", txt)
-        ## Argh.  Of course, variable names can have a '_', which needs
-        ## to be escaped if not in \code{}, and the prompt() default is
-        ## not to put variable names inside \code{}.
-        txt <- gsub("\\\\_", "_", txt)
-        txt <- unlist(strsplit(txt, ", *"))
-        .strip_whitespace(txt)
-    }
-
-    Rd_var_names <-
-        .apply_Rd_filter_to_Rd_db(db,
-                                  .get_data_frame_var_names_from_Rd_text)
-    }
-    ## </FIXME>
-    ## *****************************************************************
-
     names(db) <- .Rd_get_names_from_Rd_db(db)
 
     .get_data_frame_var_names <- function(x) {
@@ -1413,43 +1306,6 @@ function(package, dir, lib.loc = NULL)
 
     db_aliases <- lapply(db, .Rd_get_metadata, "alias")
     db_keywords <- lapply(db, .Rd_get_metadata, "keyword")
-
-    ## *****************************************************************
-    ## <FIXME Rd2>
-    if(FALSE) {
-    ## Now collapse.
-    ## Does not work:
-    ##   db <- lapply(db, paste, collapse = "")
-    db <- lapply(db,
-                 function(f)
-                 paste(Rd_pp(attr(f, "source")), collapse = "\n"))
-    db_names <- .Rd_get_names_from_Rd_db(db)
-    names(db) <- names(db_aliases) <- db_names
-
-    db_usage_texts <-
-        .apply_Rd_filter_to_Rd_db(db,
-                                  .Rd_get_section_from_Rd_text,
-                                  "usage")
-    db_usages <- lapply(db_usage_texts, .parse_usage_as_much_as_possible)
-    ind <- as.logical(sapply(db_usages,
-                             function(x) !is.null(attr(x, "bad_lines"))))
-    bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
-
-    ## Exclude internal objects from further computations.
-    ind <- sapply(db_keywords,
-                  function(x) length(grep("^ *internal *$", x)) > 0L )
-    if(any(ind)) {                      # exclude them
-        db <- db[!ind]
-        db_names <- db_names[!ind]
-        db_aliases <- db_aliases[!ind]
-    }
-
-    db_argument_names <-
-        .apply_Rd_filter_to_Rd_db(db,
-                                  .Rd_get_argument_names_from_Rd_text)
-    }
-    ## <FIXME>
-    ## *****************************************************************
 
     db_names <- .Rd_get_names_from_Rd_db(db)
     names(db) <- names(db_aliases) <- db_names
@@ -1813,13 +1669,6 @@ function(package, dir, lib.loc = NULL)
     else
         Rd_db(dir = dir)
 
-    ## *****************************************************************
-    ## <FIXME Rd2>
-    ## Does not work:
-    ##   db <- lapply(db, paste, collapse = "")
-    ## db <- lapply(db,
-    ##              function(f)
-    ##              paste(Rd_pp(attr(f, "source")), collapse = "\n"))
     names(db) <- db_names <- .Rd_get_names_from_Rd_db(db)
 
     ## Ignore pkg-deprecated.Rd and pkg-defunct.Rd.
@@ -1828,20 +1677,12 @@ function(package, dir, lib.loc = NULL)
     db <- db[!ind]
     db_names <- db_names[!ind]
 
-    ## db_usage_texts <-
-    ##     .apply_Rd_filter_to_Rd_db(db,
-    ##                               .Rd_get_section_from_Rd_text,
-    ##                               "usage")
-    ## db_usages <- lapply(db_usage_texts,
-    ##                     .parse_usage_as_much_as_possible)
     db_usages <-
         lapply(db,
                function(Rd) {
                    Rd <- .Rd_get_section(Rd, "usage")
                    .parse_usage_as_much_as_possible(Rd)
                })
-    ## </FIXME>
-    ## *****************************************************************
     ind <- as.logical(sapply(db_usages,
                              function(x) !is.null(attr(x, "bad_lines"))))
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
@@ -2579,13 +2420,10 @@ function(package, dir, file, lib.loc = NULL)
         }
     }
     for(file in docs_files) {
-        ## <FIXME Rd2>
         Rd <- prepare_Rd(file, defines = .Platform$OS.type)
+        ## <FIXME Rd2>
         ## Should this do any stage expansion?
         txt <- .Rd_get_example_code(Rd)
-        ## txt <- paste(Rd_pp(.read_Rd_lines_quietly(file)),
-        ##              collapse = "\n")
-        ## txt <- .Rd_get_example_code_from_Rd_text(txt)
         ## </FIXME>
         exprs <- find_TnF_in_code(file, txt)
         if(length(exprs)) {

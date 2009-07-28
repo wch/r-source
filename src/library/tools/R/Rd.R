@@ -438,15 +438,7 @@ function(package, dir, lib.loc = NULL)
         Rd_db(package, lib.loc = lib.loc)
     else
         Rd_db(dir = dir)
-    ## <FIXME Rd2>
-    ## Move to new-style code ...
-    ## Does not work:
-    ##   db <- lapply(db, paste, collapse = "")
-    db <- lapply(db,
-                 function(f)
-                 paste(Rd_pp(attr(f, "source")), collapse = "\n"))
-    lapply(db, .Rd_get_xrefs_from_Rd_text)
-    ## </FIXME>
+    lapply(db, .Rd_get_xrefs)
 }
 
 ### * .Rd_get_metadata
