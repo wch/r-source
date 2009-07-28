@@ -21,10 +21,10 @@
 }
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
-             Links = NULL, CHM = FALSE, 
+             Links = NULL, CHM = FALSE,
              stages = "render", outputEncoding = "UTF-8", ...)
 
-Rd2txt(Rd, out="", package = "", defines=.Platform$OS.type, stages = "render", 
+Rd2txt(Rd, out="", package = "", defines=.Platform$OS.type, stages = "render",
              outputEncoding = "", ...)
 
 Rd2latex(Rd, out="", defines=.Platform$OS.type, stages="render",
@@ -46,7 +46,7 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
   \item{outputEncoding}{ see the \sQuote{Encodings} section below.}
   \item{Links}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{findHTMLlinks}.}
-  \item{CHM}{logical: prepare HTML suitable for Compiled HTML?} 
+  \item{CHM}{logical: prepare HTML suitable for Compiled HTML?}
   \item{unknownOK}{ unrecognized macros are treated as errors if
     \code{FALSE}, otherwise warnings. }
   \item{listOK}{ unnecessary non-empty braces (e.g. around text, not
@@ -58,17 +58,17 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
     to scan: the default indicates \code{\link{.libPaths}()}.}
 }
 \details{
- 
-  The \code{Rd2*} functions convert man pages:  
-  \code{Rd2HTML} produces HTML (or compiled HTML, for Windows), 
+
+  The \code{Rd2*} functions convert man pages:
+  \code{Rd2HTML} produces HTML (or compiled HTML, for Windows),
   \code{Rd2txt} produces plain text, \code{Rd2latex} produces
   LaTeX input.  By default, \code{outputEncoding} is set to \code{""}
   and the native character encoding (shown by \code{\link{localeToCharset}})
   is used.
-  
+
   The converters are still in development, and may still make some errors
   in rendering.
-  
+
   \code{Rd2ex} extracts the examples in the format used by
   \code{\link{example}} and \R utilities.  it reproduces the previous
   version up to
@@ -77,11 +77,11 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
     to be done.
     \item Small improvements in layout.
   }
-  
+
   \code{checkRd} makes consistency checks on an Rd file, confirming that required
   sections are present, etc.
-  
-  Each of the above functions accepts a filename for an Rd file, and will 
+
+  Each of the above functions accepts a filename for an Rd file, and will
   use \code{\link{parse_Rd}} to parse it before applying the conversions or checks.
 
   \code{findHTMLlinks} tries to resolve links from one man page to another.  It
@@ -101,7 +101,7 @@ Rd files are normally intended to be rendered on a wide variety of systems,
 so care must be taken in the encoding of non-ASCII characters.  In general,
 any such encoding should be declared using the \samp{encoding} section
 for there to be any hope of correct rendering.  Avoid exotic encodings unless
-absolutely necessary:  all input will be translated to UTF-8, and the 
+absolutely necessary:  all input will be translated to UTF-8, and the
 quality of such translations is poor on some older systems.
 
 For output, the \code{outputEncoding} variable will be used.
@@ -133,28 +133,28 @@ than the result of evaluating the R code.
 
 For example, this man page was:
 \enumerate{
-\item built on 
+\item built on
 \Sexpr[stage=build]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")},
-\item installed on 
+\item installed on
 \Sexpr[stage=install]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")}, and
-\item rendered on 
+\item rendered on
 \Sexpr[stage=render]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")}.
 }
 Because build-time execution is not yet supported, the first of these will
-display as a macro; the other two may or may not, 
-depending on the build of \R.  (Note that escapes, e.g. for \samp{\%}, 
+display as a macro; the other two may or may not,
+depending on the build of \R.  (Note that escapes, e.g. for \samp{\%},
 that are necessary in the source
-code are not currently reproduced in this display.) 
-} 
+code are not currently reproduced in this display.)
+}
 
-\value{ 
+\value{
 
 The \code{Rd2*} functions are executed mainly for the side effect of
 writing the converted help page.  Their value is the name of the
 output page.  For \code{Rd2latex}, the output name is given an
 attribute \code{"latexEncoding"} giving the encoding of the file in a
-form suitable for use with the LaTeX \samp{\inputenc} package.
-  
+form suitable for use with the LaTeX \samp{inputenc} package.
+
 \code{checkRd} returns \code{TRUE} if the file has no errors; it
 generates an R error otherwise.
 
