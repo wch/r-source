@@ -61,6 +61,9 @@ smoothScatter(x, y = NULL, nbin = 128, bandwidth,
   \code{\link[grDevices]{densCols}} which uses the same smoothing
   computations and \code{\link[grDevices]{blues9}} in package
   \pkg{grDevices}.
+
+  \code{\link[stats]{scatter.smooth}} adds a \code{\link{loess}}
+  regression smoother to a scatter plot.
 }
 \author{Florian Hahne at FHCRC, originally}
 \examples{

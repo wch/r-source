@@ -28,7 +28,7 @@ loess.smooth(x, y, span = 2/3, degree = 1,
   \item{span}{smoothness parameter for \code{loess}.}
   \item{degree}{degree of local polynomial used.}
   \item{family}{if \code{"gaussian"} fitting is by least-squares, and if
-    \code{family="symmetric"} a re-descending M estimator is used.} 
+    \code{family="symmetric"} a re-descending M estimator is used.}
   \item{xlab}{label for x axis.}
   \item{ylab}{label for y axis.}
   \item{ylim}{the y limits of the plot.}
@@ -48,7 +48,10 @@ loess.smooth(x, y, span = 2/3, degree = 1,
   grid of evaluation points) and \code{y} (the smoothed values at the
   grid points).
 }
-\seealso{\code{\link{loess}}}
+\seealso{\code{\link{loess}};
+  \code{\link[graphics]{smoothScatter}} for scatter plots with smoothed
+  \emph{density} color representation.
+}
 \examples{
 require(graphics)
 
