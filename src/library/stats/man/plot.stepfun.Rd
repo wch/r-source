@@ -12,9 +12,9 @@
   objects and utility for plotting piecewise constant functions.
 }
 \usage{
-\method{plot}{stepfun}(x, xval, xlim, ylim,
+\method{plot}{stepfun}(x, xval, xlim, ylim = range(c(y,Fn.kn)),
      xlab = "x", ylab = "f(x)", main = NULL,
-     add = FALSE, verticals = TRUE, do.points = (n <= 10000),
+     add = FALSE, verticals = TRUE, do.points = (n < 1000),
      pch = par("pch"), col = par("col"),
      col.points = col, cex.points = par("cex"),
      col.hor = col, col.vert = col,
@@ -27,8 +27,7 @@
   \item{xval}{numeric vector of abscissa values at which to evaluate
     \code{x}.  Defaults to \code{\link{knots}(x)} restricted to \code{xlim}.}
   \item{xlim, ylim}{limits for the plot region: see
-    \code{\link{plot.window}}.  Both have sensible defaults defaults if
-    omitted.}
+    \code{\link{plot.window}}.  Both have sensible defaults if omitted.}
   \item{xlab, ylab}{labels for x and y axis.}
   \item{main}{main title.}
   \item{add}{logical; if \code{TRUE} only \emph{add} to an existing plot.}
