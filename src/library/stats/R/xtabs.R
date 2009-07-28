@@ -67,14 +67,15 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
     } else { ## sparse
 	if (length(by) != 2)
 	    stop("xtabs(*, sparse=TRUE) applies only to two-way tables")
+        ## loadNamespace(.) is very quick, once it *is* loaded:
+	if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
+            stop("xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed")
 	rows <- by[[1]]
 	cols <- by[[2]]
 	rl <- levels(rows)
 	cl <- levels(cols)
 	if (is.null(y))
 	    y <- rep.int(1, length(rows))
-	if(all("Matrix" != loadedNamespaces()))
-	    loadNamespace("Matrix")
 	as(new("dgTMatrix",
 	       i = as.integer(rows) - 1L,
 	       j = as.integer(cols) - 1L,

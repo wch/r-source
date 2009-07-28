@@ -11,12 +11,15 @@
   Set and view the contrasts associated with a factor.
 }
 \usage{
-contrasts(x, contrasts = TRUE)
+contrasts(x, contrasts = TRUE, sparse = FALSE)
 contrasts(x, how.many) <- value
 }
 \arguments{
   \item{x}{a factor or a logical variable.}
   \item{contrasts}{logical.  See \sQuote{Details}.}
+  \item{sparse}{logical indicating if the result should be sparse
+    (of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}), using
+    package \pkg{Matrix}.}
   \item{how.many}{How many contrasts should be made. Defaults to one
     less than the number of levels of \code{x}.  This need not be the
     same as the number of columns of \code{value}.}

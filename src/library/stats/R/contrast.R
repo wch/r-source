@@ -14,8 +14,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-contrasts <-
-    function (x, contrasts = TRUE)
+
+## This is also called from C : do_model_matrix() { ../../../main/model.c }:
+contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
 {
     if (is.logical(x)) x <- factor(x, levels=c(FALSE, TRUE))
     if (!is.factor(x))
@@ -23,13 +24,13 @@ contrasts <-
     if(!contrasts)
         return(structure(diag(nlevels(x)), dimnames=list(levels(x), levels(x))))
     ctr <- attr(x, "contrasts")
-    if (is.null(ctr)) {
-        ctrname <- getOption("contrasts")[[if (is.ordered(x)) 2 else 1]]
-	ctr <- get(ctrname, mode="function", envir=parent.frame())(levels(x), contrasts = contrasts)
-	dimnames(ctr) <- list(levels(x), dimnames(ctr)[[2L]])
+    if ((NL <- is.null(ctr)) || is.character(ctr)) {
+	if(NL) ctr <- getOption("contrasts")[[if (is.ordered(x)) 2 else 1]]
+	ctr <- get(ctr, mode="function", envir=parent.frame())(
+					 levels(x), # => rownames
+                                         contrasts = contrasts,
+					 sparse = sparse)
     }
-    else if (is.character(ctr))
-	ctr <- get(ctr, mode="function", envir=parent.frame())(levels(x), contrasts = contrasts)
     #if(ncol(ctr)==1) dimnames(ctr) <- list(dimnames(ctr)[[1L]], "")
     ctr
 }
@@ -70,9 +71,13 @@ contrasts <-
 
 ## contr.poly() is in contr.poly.R
 
-.sparse.array <- function(x, dim, dimnames)
-    Matrix::Matrix(x, nrow=dim[1], ncol=dim[2],
-		   dimnames=dimnames, sparse=TRUE)
+.sparse.array <- function(x, dim, dimnames) {
+    ## loadNamespace(.) is very quick, once it *is* loaded:
+    if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
+        stop("contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed")
+    dim <- as.integer(dim)
+    new("dgCMatrix", Dim = dim, p = rep.int(0L, dim[2]+1L), Dimnames = dimnames)
+}
 
 contr.helmert <-
     function (n, contrasts=TRUE, sparse=FALSE)
