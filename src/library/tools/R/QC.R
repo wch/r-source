@@ -559,6 +559,7 @@ function(package, dir, lib.loc = NULL,
 
     ## *****************************************************************
     ## <FIXME Rd2>
+    if(FALSE) {
     ## Does not work:
     ##   db <- lapply(db, paste, collapse = "")
     db <- lapply(db,
@@ -579,15 +580,25 @@ function(package, dir, lib.loc = NULL,
         .apply_Rd_filter_to_Rd_db(db,
                                   .Rd_get_section_from_Rd_text,
                                   "synopsis")
+    }
     ## </FIXME>
     ## *****************************************************************
+
+    names(db) <- db_names <- .Rd_get_names_from_Rd_db(db)
+
+    ## pkg-defunct.Rd is not expected to list arguments
+    ind <- db_names %in% paste(package_name, "defunct", sep="-")
+    db <- db[!ind]
+    db_names <- db_names[!ind]
+
+    db_usages <- lapply(db, .Rd_get_section, "usage")
+    db_synopses <- lapply(db, .Rd_get_section, "synopsis")
     ind <- sapply(db_synopses, length) > 0L
-    db_usage_texts[ind] <- db_synopses[ind]
+    db_usages[ind] <- db_synopses[ind]
     with_synopsis <- as.character(db_names[ind])
-    db_usages <- lapply(db_usage_texts, .parse_usage_as_much_as_possible)
-    ## just in case this is empty
-    ind <- unlist(lapply(db_usages,
-                         function(x) !is.null(attr(x, "bad_lines"))))
+    db_usages <- lapply(db_usages, .parse_usage_as_much_as_possible)
+    ind <- as.logical(sapply(db_usages,
+                             function(x) !is.null(attr(x, "bad_lines"))))
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
     ## <FIXME>
@@ -1029,6 +1040,7 @@ function(package, lib.loc = NULL)
 
     ## *****************************************************************
     ## <FIXME Rd2>
+    if(FALSE) {
     ## Now collapse.
     ## Does not work:
     ##   db <- lapply(db, paste, collapse = "")
@@ -1046,7 +1058,7 @@ function(package, lib.loc = NULL)
 
     dbNames <- .Rd_get_names_from_Rd_db(db)
 
-    slotNames_from_section_text <- function(txt) {
+    .get_slot_names_from_Rd_text <- function(txt) {
         s.apply <- function(X, FUN, ...) # keeping 'names':
             unlist(sapply(X, FUN, ..., simplify = FALSE))
         ## Get \describe (inside user-defined section 'Slots')
@@ -1058,11 +1070,38 @@ function(package, lib.loc = NULL)
         ## And now strip enclosing '\code{...}:'
         txt <- gsub("\\\\code\\{([^}]*)\\}:?", "\\1", as.character(txt))
         txt <- unlist(strsplit(txt, ", *"))
-        txt <- sub("^[[:space:]]+", "", txt)
-        txt <- sub("[[:space:]]+$", "", txt)
-        txt
+        .strip_whitespace(txt)
     }
 
+    }
+    ## </FIXME>
+    ## *****************************************************************
+
+    Rd_slots <- lapply(db, .Rd_get_section, "Slots", FALSE)
+    idx <- sapply(Rd_slots, length) > 0L
+    if(!any(idx)) return(bad_Rd_objects)
+    db <- db[idx]; aliases <- aliases[idx]; Rd_slots <- Rd_slots[idx]
+    stats["n.final"] <- length(db)
+
+    db_names <- .Rd_get_names_from_Rd_db(db)
+
+    .get_slot_names <- function(x) {
+        ## Get \describe (inside user-defined section 'Slots'):
+        ## Should this allow for several \describe blocks?
+        x <- .Rd_get_section(x, "describe")
+        ## Get the \item tags inside \describe.
+        txt <- .Rd_get_item_tags(x)
+        if(!length(txt)) return(character())
+        ## <FIXME Rd2>
+        ## Currently, \dots deparses as \dots{}.
+        txt <- gsub("\\\\l?dots(\\{\\})?", "...", txt)
+        ## </FIXME>
+        ## And now strip enclosing '\code{...}:'
+        txt <- gsub("\\\\code\\{([^}]*)\\}:?", "\\1", as.character(txt))
+        txt <- unlist(strsplit(txt, ", *"))
+        .strip_whitespace(txt)
+    }
+    
     .inheritedSlotNames <- function(ext) {
 	supcl <- methods::.selectSuperClasses(ext)
 	unique(unlist(lapply(lapply(supcl, methods::getClassDef),
@@ -1079,16 +1118,15 @@ function(package, lib.loc = NULL)
         ii <- idx[icl]
         ## Add sanity checking later ...
         codeSlots <- sort(methods::slotNames(cld))
-        docSlots  <- sort(slotNames_from_section_text(Rd_slots[[ii]]))
-    ## </FIXME>
-    ## *****************************************************************
+        docSlots  <- sort(.get_slot_names(Rd_slots[[ii]]))
         superSlots <- .inheritedSlotNames(cld@contains)
         if(length(superSlots)) ## allow '\dots' in docSlots
-            docSlots <- docSlots[docSlots != "\\dots"]
-## was if(!identical(slots_in_code, slots_in_docs)) {
+            docSlots <-
+                docSlots[is.na(match(docSlots, c("...", "\\dots")))]
+        ## was if(!identical(slots_in_code, slots_in_docs)) {
         if(!all(d.in.c <- docSlots %in% codeSlots) ||
            !all(c.in.d <- (codeSlots %w/o% superSlots) %in% docSlots) ) {
-            bad_Rd_objects[[dbNames[ii]]] <-
+            bad_Rd_objects[[db_names[ii]]] <-
                 list(name = cl,
                      code = codeSlots,
                      inherited = superSlots,
@@ -1184,10 +1222,12 @@ function(package, lib.loc = NULL)
     aliases <- lapply(db, .Rd_get_metadata, "alias")
     idx <- sapply(aliases, length) == 1L
     if(!any(idx)) return(bad_Rd_objects)
-    db <- db[idx]; aliases <- aliases[idx]
+    db <- db[idx]
+    aliases <- aliases[idx]
 
     ## *****************************************************************
     ## <FIXME Rd2>
+    if(FALSE) {
     ## Now collapse.
     ## Does not work:
     ##   db <- lapply(db, paste, collapse = "")
@@ -1198,9 +1238,9 @@ function(package, lib.loc = NULL)
 
     .get_data_frame_var_names_from_Rd_text <- function(txt) {
         txt <- .Rd_get_section_from_Rd_text(txt, "format")
-        ## Was there just one \format section?
+        ## Was there just one format section?
         if(length(txt) != 1L) return(character())
-        ## What did it start with?
+        ## What did the format section start with?
         if(!length(grep("^[ \n\t]*(A|This) data frame", txt)))
             return(character())
         ## Get \describe inside \format
@@ -1216,17 +1256,47 @@ function(package, lib.loc = NULL)
         ## not to put variable names inside \code{}.
         txt <- gsub("\\\\_", "_", txt)
         txt <- unlist(strsplit(txt, ", *"))
-        txt <- sub("^[[:space:]]+", "", txt)
-        txt <- sub("[[:space:]]+$", "", txt)
-        txt
+        .strip_whitespace(txt)
     }
 
     Rd_var_names <-
         .apply_Rd_filter_to_Rd_db(db,
                                   .get_data_frame_var_names_from_Rd_text)
+    }
     ## </FIXME>
     ## *****************************************************************
 
+    names(db) <- .Rd_get_names_from_Rd_db(db)
+
+    .get_data_frame_var_names <- function(x) {
+        ## Make sure that there is exactly one format section:
+        ## using .Rd_get_section() would get the first one.
+        x <- x[RdTags(x) == "\\format"]
+        if(length(x) != 1L) return(character())
+        ## Drop comments.
+        x <- .Rd_drop_nodes_with_tags(x[[1L]], "COMMENT")
+        ## What did the format section start with?
+        if(!grepl("^[ \n\t]*(A|This) data frame",
+                  .Rd_deparse(x, tag = FALSE)))
+            return(character())
+        ## Get \describe inside \format.
+        ## Should this allow for several \describe blocks?
+        x <- .Rd_get_section(x, "describe")
+        ## Get the \item tags inside \describe.
+        txt <- .Rd_get_item_tags(x)
+        if(!length(txt)) return(character())
+        txt <- gsub("(.*):$", "\\1", as.character(txt))
+        txt <- gsub("\\\\code\\{(.*)\\}:?", "\\1", txt)
+        ## Argh.  Of course, variable names can have a '_', which needs
+        ## to be escaped if not in \code{}, and the prompt() default is
+        ## not to put variable names inside \code{}.
+        txt <- gsub("\\\\_", "_", txt)
+        txt <- unlist(strsplit(txt, ", *"))
+        .strip_whitespace(txt)
+    }
+
+    Rd_var_names <- lapply(db, .get_data_frame_var_names)
+    
     idx <- (sapply(Rd_var_names, length) > 0L)
     if(!length(idx)) return(bad_Rd_objects)
     aliases <- unlist(aliases[idx])
@@ -1346,6 +1416,7 @@ function(package, dir, lib.loc = NULL)
 
     ## *****************************************************************
     ## <FIXME Rd2>
+    if(FALSE) {
     ## Now collapse.
     ## Does not work:
     ##   db <- lapply(db, paste, collapse = "")
@@ -1376,8 +1447,32 @@ function(package, dir, lib.loc = NULL)
     db_argument_names <-
         .apply_Rd_filter_to_Rd_db(db,
                                   .Rd_get_argument_names_from_Rd_text)
+    }
     ## <FIXME>
     ## *****************************************************************
+
+    db_names <- .Rd_get_names_from_Rd_db(db)
+    names(db) <- names(db_aliases) <- db_names
+
+    db_usages <- lapply(db, .Rd_get_section, "usage")
+    ## We traditionally also use the usage "texts" for some sanity
+    ## checking ...
+    db_usage_texts <- lapply(db_usages, .Rd_deparse, drop = "COMMENT")
+    db_usages <- lapply(db_usages, .parse_usage_as_much_as_possible)
+    ind <- as.logical(sapply(db_usages,
+                             function(x) !is.null(attr(x, "bad_lines"))))
+    bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
+
+    ## Exclude internal objects from further computations.
+    ind <- sapply(db_keywords,
+                  function(x) length(grep("^ *internal *$", x)) > 0L )
+    if(any(ind)) {                      # exclude them
+        db <- db[!ind]
+        db_names <- db_names[!ind]
+        db_aliases <- db_aliases[!ind]
+    }
+
+    db_argument_names <- lapply(db, .Rd_get_argument_names)
 
     functions_to_be_ignored <-
         .functions_to_be_ignored_from_usage(basename(dir))
@@ -1449,7 +1544,7 @@ function(package, dir, lib.loc = NULL)
             bad_args <- character()
             ## In the case of 'over-documented' arguments, try to be
             ## defensive and reduce to arguments which either are not
-            ## syntactically valid names of do not match the \usage text
+            ## syntactically valid names or do not match the \usage text
             ## (modulo word boundaries).
             bad <- !grepl("^[[:alnum:]._]+$",
                           arg_names_in_arg_list_missing_in_usage)
@@ -1722,9 +1817,9 @@ function(package, dir, lib.loc = NULL)
     ## <FIXME Rd2>
     ## Does not work:
     ##   db <- lapply(db, paste, collapse = "")
-    db <- lapply(db,
-                 function(f)
-                 paste(Rd_pp(attr(f, "source")), collapse = "\n"))
+    ## db <- lapply(db,
+    ##              function(f)
+    ##              paste(Rd_pp(attr(f, "source")), collapse = "\n"))
     names(db) <- db_names <- .Rd_get_names_from_Rd_db(db)
 
     ## Ignore pkg-deprecated.Rd and pkg-defunct.Rd.
@@ -1733,16 +1828,22 @@ function(package, dir, lib.loc = NULL)
     db <- db[!ind]
     db_names <- db_names[!ind]
 
-    db_usage_texts <-
-        .apply_Rd_filter_to_Rd_db(db,
-                                  .Rd_get_section_from_Rd_text,
-                                  "usage")
-    db_usages <- lapply(db_usage_texts,
-                        .parse_usage_as_much_as_possible)
+    ## db_usage_texts <-
+    ##     .apply_Rd_filter_to_Rd_db(db,
+    ##                               .Rd_get_section_from_Rd_text,
+    ##                               "usage")
+    ## db_usages <- lapply(db_usage_texts,
+    ##                     .parse_usage_as_much_as_possible)
+    db_usages <-
+        lapply(db,
+               function(Rd) {
+                   Rd <- .Rd_get_section(Rd, "usage")
+                   .parse_usage_as_much_as_possible(Rd)
+               })
     ## </FIXME>
     ## *****************************************************************
-    ind <- unlist(lapply(db_usages,
-                         function(x) !is.null(attr(x, "bad_lines"))))
+    ind <- as.logical(sapply(db_usages,
+                             function(x) !is.null(attr(x, "bad_lines"))))
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
     bad_doc_objects <- list()
@@ -2479,13 +2580,12 @@ function(package, dir, file, lib.loc = NULL)
     }
     for(file in docs_files) {
         ## <FIXME Rd2>
-        ## Does not work:
-        ##   txt <- paste(prepare_Rd(file, defines = .Platform$OS.type),
-        ##                collapse = "")
-        ## Also, should this do any stage expansion?
-        txt <- paste(Rd_pp(.read_Rd_lines_quietly(file)),
-                     collapse = "\n")
-        txt <- .Rd_get_example_code_from_Rd_text(txt)
+        Rd <- prepare_Rd(file, defines = .Platform$OS.type)
+        ## Should this do any stage expansion?
+        txt <- .Rd_get_example_code(Rd)
+        ## txt <- paste(Rd_pp(.read_Rd_lines_quietly(file)),
+        ##              collapse = "\n")
+        ## txt <- .Rd_get_example_code_from_Rd_text(txt)
         ## </FIXME>
         exprs <- find_TnF_in_code(file, txt)
         if(length(exprs)) {
@@ -4441,12 +4541,7 @@ function(dir)
 function(dir)
 {
     if(!file_test("-d", file.path(dir, "man"))) return(NULL)
-    ## <FIXME Rd2>
-    sapply(Rd_db(dir = dir),
-           function(s) {
-               .Rd_get_example_code_from_Rd_text(paste(s, collapse = ""))
-           })
-    ## <FIXME>
+    sapply(Rd_db(dir = dir), .Rd_get_example_code)
 }
 
 print.check_T_and_F <-
@@ -4661,22 +4756,31 @@ function(x)
 ## based using gregexpr(re, txt), massaging the matches and merging with
 ## the non-matched parts.
 
+## <FIXME Rd2>
+## Remove old-style code eventually ...
 .dquote_method_markup <-
-function(txt, re)
+function(txt, re, old = FALSE)
 {
     out <- ""
     while((ipos <- regexpr(re, txt)) > -1L) {
         epos <- ipos + attr(ipos, "match.length") - 1L
         str <- substring(txt, ipos, epos)
         str <- sub("\"", "\\\"", str, fixed = TRUE)
-        ## parse_usage_as_much_as_possible will turn \\\\ into \\
-        str <- sub("\\", "\\\\\\\\", str, fixed = TRUE)
+        str <- if(old) {
+            ## parse_usage_as_much_as_possible will turn \\\\ into \\ in
+            ## old style mode ...
+            sub("\\", "\\\\\\\\", str, fixed = TRUE)
+        } else {
+            sub("\\", "\\\\", str, fixed = TRUE)
+        }
+        
         out <- sprintf("%s%s\"%s\"", out,
                        substring(txt, 1L, ipos - 1L), str)
         txt <- substring(txt, epos + 1L)
     }
     paste(out, txt, sep = "")
 }
+## </FIXME>
 
 ### ** .functions_to_be_ignored_from_usage
 
@@ -4917,30 +5021,61 @@ function(txt)
 ### ** .parse_usage_as_much_as_possible
 
 .parse_usage_as_much_as_possible <-
-function(txt)
+function(x)
 {
-    if(!length(txt)) return(expression())
-    txt <- gsub("\\\\l?dots", "...", txt)
-    txt <- gsub("\\%", "%", txt, fixed = TRUE)
-    txt <- .Rd_transform_command_in_Rd_text(txt, "special",
-                                            function(u) NULL)
-    txt <- .dquote_method_markup(txt, .S3_method_markup_regexp)
-    txt <- .dquote_method_markup(txt, .S4_method_markup_regexp)
+    if(!length(x)) return(expression())
+    ## <FIXME Rd2>
+    ## Remove old-style code eventually ...
+    was_Rd_text <- is.character(x)
+    if(was_Rd_text) {
+        txt <- .Rd_transform_command_in_Rd_text(x, "special",
+                                                function(u) NULL)
+        txt <- gsub("\\%", "%", txt, fixed = TRUE)
+        txt <- gsub("\\\\l?dots", "...", txt)
+    } else {
+        ## Drop specials and comments.
+        txt <- .Rd_deparse(.Rd_drop_nodes_with_tags(x,
+                                                    c("\\special",
+                                                      "COMMENT")),
+                           tag = FALSE)
+        ## <FIXME Rd2>
+        ## Currently, \dots deparses as \dots{}.
+        txt <- gsub("\\\\l?dots(\\{\\})?", "...", txt)
+        ## </FIXME>
+    }
+    txt <- .dquote_method_markup(txt, .S3_method_markup_regexp, was_Rd_text)
+    txt <- .dquote_method_markup(txt, .S4_method_markup_regexp, was_Rd_text)
     ## Transform <<see below>> style markup so that we can catch and
     ## throw it, rather than "basically ignore" it by putting it in the
     ## bad_lines attribute.
     txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
     ## \usage is only 'verbatim-like'
-    ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage
+    ## <FIXME>
+    ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage.
+    ## But why should it use the backslash escape?
     txt <- gsub("\\{", "{", txt, fixed = TRUE)
     txt <- gsub("\\}", "}", txt, fixed = TRUE)
-    ## now any valid escape by \ is \a \b \f 'n \r \t \u \U \v \x or \octal
-    txt <- gsub("(^|[^\\])\\\\\\\\($|[^abfnrtuUvx0-9\\])",
-                "\\1<unescaped bksl>\\2", txt)
-    ## and since this may overlap, try again
-    txt <- gsub("(^|[^\\])\\\\\\\\($|[^abfnrtuUvx0-9\\])",
-                "\\1<unescaped bksl>\\2", txt)
-    txt <- gsub("\\\\", "\\", txt, fixed = TRUE)
+    ## </FIXME>
+    if(was_Rd_text) {
+        ## now any valid escape by \ is
+        ##   \a \b \f \n \r \t \u \U \v \x       \\ or \octal
+        ## (has \' \" missing ...)
+        txt <- gsub("(^|[^\\])\\\\\\\\($|[^abfnrtuUvx0-9\\])",
+                    "\\1<unescaped bksl>\\2", txt)
+        ## and since this may overlap, try again
+        txt <- gsub("(^|[^\\])\\\\\\\\($|[^abfnrtuUvx0-9\\])",
+                    "\\1<unescaped bksl>\\2", txt)
+        txt <- gsub("\\\\", "\\", txt, fixed = TRUE)
+    } else {
+        ## now any valid escape by \ is
+        ##   \a \b \f \n \r \t \u \U \v \x \' \" \\ or \octal 
+        txt <- gsub("(^|[^\\])\\\\($|[^abfnrtuUvx0-9'\"\\])",
+                    "\\1<unescaped bksl>\\2", txt)
+        ## and since this may overlap, try again
+        txt <- gsub("(^|[^\\])\\\\($|[^abfnrtuUvx0-9'\"\\])",
+                    "\\1<unescaped bksl>\\2", txt)
+    }
+    ## </FIXME>
      .parse_text_as_much_as_possible(txt)
 }
 
