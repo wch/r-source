@@ -823,8 +823,15 @@ Rd2HTML <-
     sections <- RdTags(Rd)
 
     version <- which(sections == "\\Rdversion")
-    if (length(version) == 1L && as.numeric(version[[1L]]) < 2)
-    	warning("Rd2HTML is designed for Rd version 2 or higher.")
+    if (length(version) == 1L && as.numeric(Rd[[version]][[1L]]) < 2) {
+        ## <FIXME>
+        ## Should we unconditionally warn (or notify using message())?
+        ## CRAN currently (2009-07-28) has more than 250 \Rdversion{1.1}
+        ## packages ...
+        if(identical(getOption("verbose"), TRUE))
+            warning("checkRd is designed for Rd version 2 or higher.")
+        ## </FIXME>
+    }
     else if (length(version) > 1L)
     	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
 
@@ -1083,8 +1090,15 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     sections <- RdTags(Rd)
 
     version <- which(sections == "\\Rdversion")
-    if (length(version) == 1L && as.numeric(version[[1L]]) < 2)
-    	warning("checkRd is designed for Rd version 2 or higher.")
+    if (length(version) == 1L && as.numeric(Rd[[version]][[1L]]) < 2) {
+        ## <FIXME>
+        ## Should we unconditionally warn (or notify using message())?
+        ## CRAN currently (2009-07-28) has more than 250 \Rdversion{1.1}
+        ## packages ...
+        if(identical(getOption("verbose"), TRUE))
+            warning("checkRd is designed for Rd version 2 or higher.")
+        ## </FIXME>
+    }
     else if (length(version) > 1L)
     	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
 
