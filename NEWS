@@ -240,6 +240,12 @@ NEW FEATURES
 	occur in more than one repository (as the latest compatible
 	version of those available will always be downloaded).
 
+    o	approxfun() and approx() now accept a 'rule' of length two, for
+	easy specification of different interpolation rules on left and
+	right.
+	They also no longer segfault for invalid zero-length specification
+	of 'yleft, 'yright', or 'f'.
+
 
 BUG FIXES
 
