@@ -591,7 +591,7 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* 2. allocate and store result components */
 
-    PROTECT(ans = R_make_named(VECSXP, nms));
+    PROTECT(ans = mkNamed(VECSXP, nms));
     ansx = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 0, ansx);
     ansy = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 1, ansy);
 

@@ -534,14 +534,14 @@ INLINE_FUN Rboolean isVectorizable(SEXP s)
  * Create a named vector of type TYP
  *
  * @example const char *nms[] = {"xi", "yi", "zi", ""};
- *          R_make_named(VECSXP, nms);  =~= R  list(xi=, yi=, zi=)
+ *          mkNamed(VECSXP, nms);  =~= R  list(xi=, yi=, zi=)
  *
  * @param TYP a vector SEXP type (e.g. REALSXP)
  * @param names names of list elements with null string appended
  *
  * @return (pointer to a) named vector of type TYP
  */
-INLINE_FUN SEXP R_make_named(int TYP, const char **names)
+INLINE_FUN SEXP mkNamed(int TYP, const char **names)
 {
     SEXP ans, nms;
     int i, n;

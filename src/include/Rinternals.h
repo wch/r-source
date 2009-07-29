@@ -939,6 +939,7 @@ int R_system(const char *);
 #define mkCharCE		Rf_mkCharCE
 #define mkCharLen		Rf_mkCharLen
 #define mkCharLenCE		Rf_mkCharLenCE
+#define mkNamed			Rf_mkNamed
 #define mkString		Rf_mkString
 #define namesgets		Rf_namesgets
 #define ncols			Rf_ncols
@@ -1023,7 +1024,7 @@ SEXP	 Rf_list2(SEXP, SEXP);
 SEXP	 Rf_list3(SEXP, SEXP, SEXP);
 SEXP	 Rf_list4(SEXP, SEXP, SEXP, SEXP);
 SEXP	 Rf_listAppend(SEXP, SEXP);
-SEXP	 R_make_named(int, const char **);
+SEXP	 Rf_mkNamed(int, const char **);
 SEXP	 Rf_mkString(const char *);
 int	 Rf_nlevels(SEXP);
 SEXP	 Rf_ScalarComplex(Rcomplex);

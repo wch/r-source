@@ -62,10 +62,10 @@ static SEXP
 ConvInfoMsg(char* msg, int iter, int whystop, double fac,
 	    double minFac, int maxIter, double convNew)
 {
-    const char *nms[] = {"isConv", "finIter", "finTol", 
+    const char *nms[] = {"isConv", "finIter", "finTol",
 			 "stopCode", "stopMessage",  ""};
     SEXP ans;
-    PROTECT(ans = R_make_named(VECSXP, nms));
+    PROTECT(ans = mkNamed(VECSXP, nms));
 
     SET_VECTOR_ELT(ans, 0, ScalarLogical(whystop == 0)); /* isConv */
     SET_VECTOR_ELT(ans, 1, ScalarInteger(iter));	 /* finIter */
