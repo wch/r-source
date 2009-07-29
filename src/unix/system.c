@@ -169,7 +169,7 @@ int Rf_initialize_R(int ac, char **av)
 	int nm[2] = {CTL_KERN, KERN_USRSTACK};
 	void * base;
 	size_t len = sizeof(void *);
-	int r = sysctl(nm, 2, &base, &len, NULL, 0);
+	(void) sysctl(nm, 2, &base, &len, NULL, 0);
 	R_CStackStart = (uintptr_t) base;
     }
 #else
