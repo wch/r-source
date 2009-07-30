@@ -39,7 +39,7 @@ contr.SAS(n, contrasts = TRUE, sparse = FALSE)
   a factor with \code{n} levels.  The returned value contains the
   computed contrasts.  If the argument \code{contrasts} is \code{FALSE}
   a square indicator matrix (the dummy coding) is returned \bold{except}
-  for \code{contr.poly} (which include the 0-degree, i.e. constant,
+  for \code{contr.poly} (which includes the 0-degree, i.e. constant,
   polynomial when \code{contrasts = FALSE}).
 
   \code{cont.helmert} returns Helmert contrasts, which contrast the
@@ -58,9 +58,9 @@ contr.SAS(n, contrasts = TRUE, sparse = FALSE)
   produced when using these contrasts should be equivalent to those
   produced by many (but not all) SAS procedures.
 
-  For consistency, \code{sparse} is an argument to all contrast
+  For consistency, \code{sparse} is an argument to all these contrast
   functions, however \code{sparse = TRUE} for \code{contr.poly}
-  is typically nonsense, and also is rarely sensical for
+  is typically pointless and is rarely useful for
   \code{contr.helmert}.
 }
 \value{

@@ -21,10 +21,11 @@ model.matrix(object, \dots)
     method, a model formula or terms object.}
   \item{data}{a data frame created with \code{\link{model.frame}}.  If
     another sort of object, \code{model.frame} is called first.}
-  \item{contrasts.arg}{A list, whose entries are contrasts suitable for
-    input to the \code{\link{contrasts}} replacement function and
-    whose names are the names of columns of \code{data} containing
-    \code{\link{factor}}s.}
+  \item{contrasts.arg}{A list, whose entries are values (numeric
+    matrices or character strings naming functions) to be used
+    as replacement values for the \code{\link{contrasts}}
+    replacement function and whose names are the names of
+    columns of \code{data} containing \code{\link{factor}}s.}   
   \item{xlev}{to be used as argument of \code{\link{model.frame}} if
     \code{data} has no \code{"terms"} attribute.}
   \item{\dots}{further arguments passed to or from other methods.}
