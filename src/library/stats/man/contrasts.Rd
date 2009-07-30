@@ -36,7 +36,9 @@ contrasts(x, how.many) <- value
   \code{contrasts} attribute set.  Otherwise if \code{contrasts = TRUE}
   it is passed to a contrasts function such as
   \code{\link{contr.treatment}} and if \code{contrasts = FALSE}
-  an identity matrix is returned.
+  an identity matrix is returned.  Suitable functions have a first
+  argument which is the character vector of levels and a named argument
+  \code{contrasts} (always called with \code{contrasts = TRUE}).
 
   If \code{value} supplies more than \code{how.many} contrasts, the
   first \code{how.many} are used.  If too few are supplied, a suitable
