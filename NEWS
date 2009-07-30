@@ -147,23 +147,23 @@ NEW FEATURES
 	NEWS file. However, it is safer to use only ASCII code there
 	because not all editors recognize BOMs.
 
-    o	new inheritedSlotNames() utility for S4 class programming.
+    o	New utility function inheritedSlotNames() for S4 class programming.
 
-    o	tabulate now allows NAs to pass through (and be ignored).
+    o	tabulate() now allows NAs to pass through (and be ignored).
 
-    o   if debug is called on an S3 generic function then all methods
+    o	If debug() is called on an S3 generic function then all methods
         are debugged as well.
 
-    o	outlier symbols drawn by boxplot() now obey the 'outlwd'
+    o	Outlier symbols drawn by boxplot() now obey the 'outlwd'
 	argument.  Reported by Jurgen Kluge.
 
-    o	svd(x) and eigen(x) now behave analogously to qr(x), in also
+    o	svd(x) and eigen(x) now behave analogously to qr(x) in
 	accepting logical matrices x.
 
     o	[Experimental]  File NEWS is now in UTF-8, and has a BOM
 	(often invisible) on the first line, and Emacs local variables
-	set for UTF-8 at the end.  [RShowDoc("NEWS") does not yet
-	handle this.]
+	set for UTF-8 at the end.  RShowDoc("NEWS") should display
+	this correctly, given suitable fonts.
 
 
 Rd HELP FILE CHANGES

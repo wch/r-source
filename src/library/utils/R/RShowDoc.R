@@ -76,7 +76,16 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
                       what, package), domain = NA)
     }
     if(what == "FAQ") what <- "R-FAQ"
-    if(what %in% c("NEWS", "COPYING")) {
+    if(what == "NEWS") {
+        ## This is in UTF-8 and has a BOM on the first line
+        path <- file.path(R.home(), what)
+        tf <- tempfile()
+        tmp <- readLines(path)
+        tmp[1] <- ""
+        writeLines(tmp, tf)
+        file.show(tf, delete.file = TRUE, encoding = "UTF-8")
+        return(invisible(path))
+    } else if(what == "COPYING") {
         path <- file.path(R.home(), what)
         file.show(path)
         return(invisible(path))
