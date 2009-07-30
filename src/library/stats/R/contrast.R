@@ -26,12 +26,12 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
     ctr <- attr(x, "contrasts")
     if ((NL <- is.null(ctr)) || is.character(ctr)) {
 	if(NL) ctr <- getOption("contrasts")[[if (is.ordered(x)) 2 else 1]]
-	ctr <- get(ctr, mode="function", envir=parent.frame())(
-					 levels(x), # => rownames
-                                         contrasts = contrasts,
-					 sparse = sparse)
+	ctrfn <- get(ctr, mode="function", envir=parent.frame())
+	useSparse <- isTRUE(sparse) && "sparse" %in% names(as.list(args(ctrfn)))
+        ctr <- if(useSparse)
+            ctrfn(levels(x), contrasts = contrasts, sparse = sparse)
+        else ctrfn(levels(x), contrasts = contrasts)
     }
-    #if(ncol(ctr)==1) dimnames(ctr) <- list(dimnames(ctr)[[1L]], "")
     ctr
 }
 
