@@ -26,7 +26,8 @@ dataentry <- function (data, modes)
 
 View <- function (x, title)
 {
-    if(missing(title)) title <- paste("Data:", deparse(substitute(x)))
+    ## could multi-line deparse with maliciously-designed inputs
+    if(missing(title)) title <- paste("Data:", deparse(substitute(x))[1])
     as.num.or.char <- function(x)
     {
         if (is.character(x)) x
