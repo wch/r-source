@@ -140,6 +140,9 @@ NEW FEATURES
     o	contr.sum() etc gain an argument 'sparse' which allows sparse
 	matrices to be returned.
 
+	contrasts() also gains a 'sparse' argument which it passes to the
+	actual contrast function if that has a formal argument 'sparse'.
+
     o	readNEWS() will recognize a UTF-8 byte-order mark (BOM) in the
 	NEWS file. However, it is safer to use only ASCII code there
 	because not all editors recognize BOMs.
@@ -3341,7 +3344,7 @@ BUG FIXES
     o	strptime() crashed under certain locales on Mac OS X.
 
     o	gregexpr() no longer segfaults when "" is given as the search
-	pattern.  Thanks to Hervé Pàges for the bug report.
+	pattern.  Thanks to Hervé Pagès for the bug report.
 
     o	matplot(x, *) with default 'pch' did not plot columns from column
 	number 37 on (because the default pch was NA for those). (PR#10676)
@@ -3983,7 +3986,7 @@ C-LEVEL FACILITIES
     o 	CHAR() now returns (const char *) since CHARSXPs should no
 	longer be modified in place.  This change allows compilers to
 	warn or error about improper modification.  Thanks to Hervé
-	Pàges for the suggestion.
+	Pagès for the suggestion.
 
     o	acopy_string is a (provisional) new helper function that
 	copies character data and returns a pointer to memory

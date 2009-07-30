@@ -27,7 +27,12 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
     if ((NL <- is.null(ctr)) || is.character(ctr)) {
 	if(NL) ctr <- getOption("contrasts")[[if (is.ordered(x)) 2L else 1L]]
 	ctrfn <- get(ctr, mode="function", envir=parent.frame())
-	useSparse <- isTRUE(sparse) && "sparse" %in% names(as.list(args(ctrfn)))
+	if(useSparse <- isTRUE(sparse)) {
+	    if(!(useSparse <- any("sparse" == names(formals(ctrfn)))))
+		warning(sprintf(
+		"contrast function '%s' does not yet support 'sparse = TRUE'",
+				ctr))
+	}
         ctr <- if(useSparse)
             ctrfn(levels(x), contrasts = contrasts, sparse = sparse)
         else ctrfn(levels(x), contrasts = contrasts)
