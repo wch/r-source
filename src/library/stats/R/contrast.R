@@ -21,8 +21,11 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
     if (is.logical(x)) x <- factor(x, levels=c(FALSE, TRUE))
     if (!is.factor(x))
 	stop("contrasts apply only to factors")
-    if(!contrasts)
-        return(structure(diag(nlevels(x)), dimnames=list(levels(x), levels(x))))
+    if(!contrasts) {
+        dn <- list(levels(x), levels(x))
+        return(if(sparse) .sparse.diag(nlevels(x), dimnames=dn)
+               else structure(diag(nlevels(x)), dimnames=dn))
+    }
     ctr <- attr(x, "contrasts")
     if ((NL <- is.null(ctr)) || is.character(ctr)) {
 	if(NL) ctr <- getOption("contrasts")[[if (is.ordered(x)) 2L else 1L]]
@@ -83,6 +86,12 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
     dim <- as.integer(dim)
     new("dgCMatrix", Dim = dim, p = rep.int(0L, dim[2L]+1L), Dimnames = dimnames)
 }
+.sparse.diag <- function(n, dimnames) {
+    if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
+        stop("contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed")
+    n <- as.integer(n)
+    new("ddiMatrix", diag = "U", Dim = c(n,n), Dimnames = dimnames)
+}
 
 contr.helmert <-
     function (n, contrasts = TRUE, sparse = FALSE)
@@ -121,7 +130,7 @@ contr.treatment <-
     if(contrasts) {
 	if(n < 2L)
 	    stop(gettextf("contrasts not defined for %d degrees of freedom",
-                          n - 1L), domain = NA)
+                          n - 1L), domcain = NA)
 	if (base < 1L | base > n)
 	    stop("baseline group number out of range")
 	contr <- contr[, -base, drop = FALSE]
