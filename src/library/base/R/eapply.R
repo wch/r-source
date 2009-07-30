@@ -14,8 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-eapply <- function (env, FUN, ..., all.names = FALSE)
+eapply <- function (env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)
 {
     FUN <- match.fun(FUN)
-    .Internal(eapply(env, FUN, all.names))
+    .Internal(eapply(env, FUN, all.names, USE.NAMES))
 }

@@ -157,6 +157,9 @@ NEW FEATURES
     o	svd(x) and eigen(x) now behave analogously to qr(x), in also
 	accepting logical matrices x.
 
+    o	eapply() now also obeys a new optional 'USE.NAMES' argument
+	(analogously to sapply()).
+
 
 
 Rd HELP FILE CHANGES
