@@ -25,7 +25,7 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
         return(structure(diag(nlevels(x)), dimnames=list(levels(x), levels(x))))
     ctr <- attr(x, "contrasts")
     if ((NL <- is.null(ctr)) || is.character(ctr)) {
-	if(NL) ctr <- getOption("contrasts")[[if (is.ordered(x)) 2 else 1]]
+	if(NL) ctr <- getOption("contrasts")[[if (is.ordered(x)) 2L else 1L]]
 	ctrfn <- get(ctr, mode="function", envir=parent.frame())
 	useSparse <- isTRUE(sparse) && "sparse" %in% names(as.list(args(ctrfn)))
         ctr <- if(useSparse)
@@ -41,7 +41,7 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
     if (is.logical(x)) x <- factor(x, levels=c(FALSE, TRUE))
     if(!is.factor(x))
 	stop("contrasts apply only to factors")
-    if(nlevels(x) < 2)
+    if(nlevels(x) < 2L)
         stop("contrasts can be applied only to factors with 2 or more levels")
     if(is.function(value)) value <- value(nlevels(x))
     if(is.numeric(value)) {
@@ -49,13 +49,13 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
 	nlevs <- nlevels(x)
 	if(nrow(value) != nlevs)
 	    stop("wrong number of contrast matrix rows")
-	n1 <- if(missing(how.many)) nlevs - 1 else how.many
+	n1 <- if(missing(how.many)) nlevs - 1L else how.many
 	nc <- ncol(value)
 	rownames(value) <- levels(x)
 	if(nc  < n1) {
 	    cm <- qr(cbind(1,value))
 	    if(cm$rank != nc+1) stop("singular contrast matrix")
-	    cm <- qr.qy(cm, diag(nlevs))[,2:nlevs]
+	    cm <- qr.qy(cm, diag(nlevs))[, 2L:nlevs]
 	    cm[,1L:nc] <- value
 	    dimnames(cm) <- list(levels(x),NULL)
 	    if(!is.null(nmcol <- dimnames(value)[[2L]]))
@@ -76,22 +76,22 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
     if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
         stop("contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed")
     dim <- as.integer(dim)
-    new("dgCMatrix", Dim = dim, p = rep.int(0L, dim[2]+1L), Dimnames = dimnames)
+    new("dgCMatrix", Dim = dim, p = rep.int(0L, dim[2L]+1L), Dimnames = dimnames)
 }
 
 contr.helmert <-
-    function (n, contrasts=TRUE, sparse=FALSE)
+    function (n, contrasts = TRUE, sparse = FALSE)
 {
-    if (length(n) <= 1) {
-	if(is.numeric(n) && length(n) == 1 && n > 1) levels <- seq_len(n)
+    if (length(n) <= 1L) {
+	if(is.numeric(n) && length(n) == 1L && n > 1L) levels <- seq_len(n)
 	else stop("not enough degrees of freedom to define contrasts")
     } else levels <- n
     lenglev <- length(levels <- as.character(levels))
     if(sparse) array <- .sparse.array
     if (contrasts) {
 	cont <- array(-1, c(lenglev, lenglev-1L), list(levels, NULL))
-	cont[col(cont) <= row(cont) - 2] <- 0
-	cont[col(cont) == row(cont) - 1] <- 1L:(lenglev-1)
+	cont[col(cont) <= row(cont) - 2L] <- 0
+	cont[col(cont) == row(cont) - 1L] <- 1L:(lenglev-1L)
     } else {
 	cont <- array(0, c(lenglev, lenglev), list(levels, levels))
 	cont[col(cont) == row(cont)] <- 1
@@ -102,8 +102,8 @@ contr.helmert <-
 contr.treatment <-
     function(n, base = 1, contrasts = TRUE, sparse = FALSE)
 {
-    if(is.numeric(n) && length(n) == 1) {
-	if(n > 1) levels <- as.character(seq_len(n))
+    if(is.numeric(n) && length(n) == 1L) {
+	if(n > 1L) levels <- as.character(seq_len(n))
 	else stop("not enough degrees of freedom to define contrasts")
     } else {
 	levels <- as.character(n)
@@ -114,10 +114,10 @@ contr.treatment <-
     contr <- array(0, c(n, n), list(levels, levels))
     diag(contr) <- 1
     if(contrasts) {
-	if(n < 2)
+	if(n < 2L)
 	    stop(gettextf("contrasts not defined for %d degrees of freedom",
-                          n - 1), domain = NA)
-	if (base < 1 | base > n)
+                          n - 1L), domain = NA)
+	if (base < 1L | base > n)
 	    stop("baseline group number out of range")
 	contr <- contr[, -base, drop = FALSE]
     }
@@ -125,10 +125,10 @@ contr.treatment <-
 }
 
 contr.sum <-
-    function (n, contrasts=TRUE, sparse=FALSE)
+    function (n, contrasts = TRUE, sparse = FALSE)
 {
-    if (length(n) <= 1) {
-	if (is.numeric(n) && length(n) == 1 && n > 1)
+    if (length(n) <= 1L) {
+	if (is.numeric(n) && length(n) == 1L && n > 1L)
 	    levels <- seq_len(n)
 	else stop("not enough degrees of freedom to define contrasts")
     } else levels <- n
@@ -145,7 +145,7 @@ contr.sum <-
     cont
 }
 
-contr.SAS <- function(n, contrasts = TRUE, sparse=FALSE)
+contr.SAS <- function(n, contrasts = TRUE, sparse = FALSE)
 {
     contr.treatment(n,
                     base = if (is.numeric(n) && length(n) == 1) n else length(n),
