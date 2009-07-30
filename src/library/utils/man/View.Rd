@@ -15,7 +15,8 @@ View(x, title)
 \arguments{
   \item{x}{an \R object which can be coerced to a data frame with
     non-zero numbers of rows and columns.}
-  \item{title}{title for viewer window.  Defaults to name of \code{x}.}
+  \item{title}{title for viewer window.  Defaults to name of \code{x}
+    prefixed by \code{Data:}.}
 }
 \details{
   Object \code{x} is coerced (if possible) to a data frame, and all
@@ -37,8 +38,7 @@ View(x, title)
 
   The array of cells can be navigated \emph{via} the scrollbars and
   by the cursor keys, Home, End, Page Up and Page Down.
-  
-  
+
   The initial size of the data viewer window is taken from the default
   dimensions of a pager (see \code{\link{Rconsole}}), but adjusted
   downwards to show a whole number of rows and columns.  
