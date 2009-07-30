@@ -159,7 +159,8 @@ NEW FEATURES
 
     o	[Experimental]  File NEWS is now in UTF-8, and has a BOM
 	(often invisible) on the first line, and Emacs local variables
-	set for UTF-8 at the end.
+	set for UTF-8 at the end.  [RShowDoc("NEWS") does not yet
+	handle this.]
 
 
 Rd HELP FILE CHANGES
