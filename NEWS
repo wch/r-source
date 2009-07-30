@@ -155,7 +155,7 @@ NEW FEATURES
         are debugged as well.
 
     o	Outlier symbols drawn by boxplot() now obey the 'outlwd'
-	argument.  Reported by Jurgen Kluge.
+	argument.  Reported by Jürgen Kluge.
 
     o	svd(x) and eigen(x) now behave analogously to qr(x) in
 	accepting logical matrices x.
@@ -401,7 +401,7 @@ BUG FIXES
 	"unregistered" S3 classes now work.
 
     o	srcref records produced by parse() and parse_Rd() did not record
-	the encoding of the source file.  (Reported by Romain Francois.)
+	the encoding of the source file.  (Reported by Romain François.)
 
     o	The X11 version of View() was misbehaving in MBCS locales, and
 	PgUp/PgDn now behave better, thanks to a patch from Ei-ji Nakama.
@@ -1669,7 +1669,7 @@ NEW FEATURES
 	Unicode) for collation, enabled by configure option --with-ICU
 	on a Unix-alike and by a setting in MkRules on Windows.
 	Function icuSetCollate() allows the collation rules (including
-	the locale) to be tuned.  [Experimental]
+	the locale) to be tuned.
 
     o	If S4 method dispatch is on and S4 objects are found as
 	attributes, show() rather than print() is used to print the
@@ -3465,7 +3465,7 @@ BUG FIXES
 	Antonio, Fabio di Narzo.
 
     o	reshape() got column names out of sync with contents in some
-	cases; found by Antonio, Fabio Di Narzo.
+	cases; found by Antonio Fabio Di Narzo.
 
     o	ar(x) for short 'x' (i.e. length <= 10) could fail because the
 	default 'order.max' was >= length(x) which is non-sensical.
@@ -7149,10 +7149,10 @@ NEW FEATURES
     o	On suitably equipped Unix-alike systems, segfaults, illegal
 	operations and bus errors are caught and there is a simple
 	error-handler which gives the user some choice as to what to
-	do in interactive use. [Experimental.]
+	do in interactive use.
 
 	On Windows access violations and illegal instructions are
-	caught with a simple error handler.  [Experimental.]
+	caught with a simple error handler.
 
     o	Tracebacks now include calls such as .C/.Fortran/.Call, which
 	will help if errors occur in R code evaluated by compiled code
