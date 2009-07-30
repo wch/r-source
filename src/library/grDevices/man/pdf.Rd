@@ -129,7 +129,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{pdf} writes uncompressed PDF.  It is primarily intended for
   producing PDF graphics for inclusion in other documents, and
   PDF-includers such as \code{pdftex} are usually able to handle
-  compression.
+  compression: there are a large number of PDF compression utilities
+  such as \samp{pdftk}.
 
   The PDF produced is fairly simple, with each page being represented
   as a single stream.  The \R graphics model does not distinguish
