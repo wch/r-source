@@ -33,6 +33,11 @@ aspell(files, filter, control = list(), encoding = "unknown")
   A data frame inheriting from \code{aspell} (which has a useful print
   method) with the information about possibly mis-spelled words.
 }
+\seealso{
+  Package \pkg{Aspell} on Omegahat
+  (\url{http://www.omegahat.org/Aspell}) for a fine-grained R interface
+  to the Aspell library.
+}
 \examples{
 \dontrun{
 # To check all Rd files in a directory, skipping the \references sections
