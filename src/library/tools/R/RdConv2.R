@@ -360,7 +360,7 @@ prepare_Rd <- function(Rd, encoding="unknown", defines=NULL, stages=NULL, option
     for (stage in c("install", "render"))
     	if (stage %in% stages)
     	    Rd <- processRdSexprs(Rd, stage, options)
-    structure(Rd, Rdfile=Rdfile)
+    structure(Rd, Rdfile=Rdfile, class = "Rd")
 }
 
 sectionOrder <- c("\\title"=1, "\\name"=2, "\\alias"=2.1, "\\keyword"=2.2,
