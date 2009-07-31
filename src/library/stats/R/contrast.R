@@ -153,7 +153,7 @@ contr.sum <- function (n, contrasts = TRUE, sparse = FALSE)
     levels <- as.character(levels)
     cont <- .Diag(levels, sparse=sparse)
     if (contrasts) {
-        cont <- cont[, -length(levels)]
+        cont <- cont[, -length(levels), drop = FALSE]
         cont[length(levels), ] <- -1
     }
     cont
