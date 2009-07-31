@@ -1167,7 +1167,7 @@ function(package, lib.loc = NULL)
         x <- x[RdTags(x) == "\\format"]
         if(length(x) != 1L) return(character())
         ## Drop comments.
-        x <- .Rd_drop_nodes_with_tags(x[[1L]], "COMMENT")
+        x <- .Rd_drop_comments(x[[1L]])
         ## What did the format section start with?
         if(!grepl("^[ \n\t]*(A|This) data frame",
                   .Rd_deparse(x, tag = FALSE)))
@@ -1313,7 +1313,9 @@ function(package, dir, lib.loc = NULL)
     db_usages <- lapply(db, .Rd_get_section, "usage")
     ## We traditionally also use the usage "texts" for some sanity
     ## checking ...
-    db_usage_texts <- lapply(db_usages, .Rd_deparse, drop = "COMMENT")
+    db_usage_texts <-
+        lapply(db_usages,
+               function(e) .Rd_deparse(.Rd_drop_comments(e)))
     db_usages <- lapply(db_usages, .parse_usage_as_much_as_possible)
     ind <- as.logical(sapply(db_usages,
                              function(x) !is.null(attr(x, "bad_lines"))))
@@ -4853,9 +4855,8 @@ function(x)
 {
     if(!length(x)) return(expression())
     ## Drop specials and comments.
-    txt <- .Rd_deparse(.Rd_drop_nodes_with_tags(x,
-                                                c("\\special",
-                                                  "COMMENT")),
+    x <- .Rd_drop_comments(x)
+    txt <- .Rd_deparse(.Rd_drop_nodes_with_tags(x, "\\special"),
                        tag = FALSE)
     ## <FIXME Rd2>
     ## Currently, \dots deparses as \dots{}.

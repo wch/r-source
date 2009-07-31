@@ -458,18 +458,20 @@ function(x, kind)
 .Rd_get_section <-
 function(x, which, predefined = TRUE)
 {
-    x <- if(predefined)
-        x[RdTags(x) == paste("\\", which, sep = "")]
+    if(predefined)
+        x <- x[RdTags(x) == paste("\\", which, sep = "")]
     else {
         ## User-defined sections are parsed into lists of length 2, with
-        ## the elements the title and the body, respectively.  Section
-        ## titles should really contain no Rd markup, but might they
-        ## contain Rd comments?
-        ind <- ((RdTags(x) == "\\section") &
-                (sapply(x,
-                        function(e)
-                        .Rd_deparse(e[[1L]], drop = "COMMENT") == which)))
-        lapply(x[ind], `[[`, 2L)
+        ## the elements the title and the body, respectively.
+        ## <FIXME>
+        ## Section titles should really contain no Rd markup, but might
+        ## they contain Rd comments?
+        ## </FIXME>
+        x <- x[RdTags(x) == "\\section"]
+        if(length(x)) {
+            ind <- sapply(x, function(e) .Rd_deparse(e[[1L]])) == which
+            x <- lapply(x[ind], `[[`, 2L)
+        }
     }
     if(!length(x)) x else structure(x[[1L]], class = "Rd")
 }
@@ -477,19 +479,44 @@ function(x, which, predefined = TRUE)
 ### * .Rd_deparse
 
 .Rd_deparse <-
-function(x, tag = TRUE, drop = character())
+function(x, tag = TRUE)
 {
     ## <NOTE>
     ## This should eventually get an option controlling whether to
     ## escape Rd special characters as needed (thus providing valid Rd)
     ## or not.
+    ## It might also be useful to have an option for dropping comments.
     ## </NOTE>
-    if(length(drop))
-        x <- .Rd_drop_nodes_with_tags(x, drop)
     if(!tag)
         attr(x, "Rd_tag") <- "Rd"
     paste(as.character.Rd(x), collapse = "")
 }
+
+### * .Rd_drop_comments
+
+.Rd_drop_comments <-
+function(x)
+{
+    ## Parsed Rd comments include the final newline, so when "dropping"
+    ## comments we actually need to replace them by newline text nodes.
+    ## <FIXME>
+    ## This is not quite right: e.g., for comments inside \usage, we
+    ## should really get RCODE and not TEXT nodes.
+    ## </FIXME>
+    recurse <- function(e) {
+        if(is.list(e)) {
+            pos <- which(RdTags(e) == "COMMENT")
+            if(length(pos))
+                e[pos] <- rep.int(list(structure("\n",
+                                                 Rd_tag = "TEXT")),
+                                  length(pos))
+            structure(lapply(e, recurse), Rd_tag = attr(e, "Rd_tag"))
+        }
+        else
+            e
+    }
+    recurse(x)
+}    
 
 ### * .Rd_drop_nodes_with_tags
 
@@ -529,11 +556,13 @@ function(x)
 function(x)
 {
     ## Extract two-arg \item tags at top level ... non-recursive.
-    out <- lapply(x[RdTags(x) == "\\item"],
-                  function(e) {
-                      if(length(e) == 2L)
-                          .Rd_deparse(e[[1L]], drop = "COMMENT")
-                  })
+    ## <FIXME>
+    ## Might \item tags contain comments?
+    ## </FIXME>
+
+    x <- x[RdTags(x) == "\\item"]
+    out <- lapply(x[sapply(x, length) == 2L],
+                  function(e) .Rd_deparse(e[[1L]]))
     as.character(unlist(out))
 }
 
@@ -544,20 +573,22 @@ function(x)
 {
     x <- .Rd_get_section(x, "examples")
     if(!length(x)) return(character())
-    
+
     ## Need to remove everything inside \dontrun (and drop comments),
     ## and "undefine" \dontshow and \testonly (which is achieved by
     ## changing the Rd tag to "Rd").
+
+    x <- .Rd_drop_comments(x)
 
     recurse <- function(e) {
         if(!is.null(tag <- attr(e, "Rd_tag"))
            && tag %in% c("\\dontshow", "\\testonly"))
             attr(e, "Rd_tag") <- "Rd"
-        if(is.list(e))
-            structure(lapply(e[is.na(match(RdTags(e),
-                                           c("\\dontrun", "COMMENT")))],
+        if(is.list(e)) {
+            structure(lapply(e[is.na(match(RdTags(e), "\\dontrun"))],
                              recurse),
                       Rd_tag = attr(e, "Rd_tag"))
+        }
         else e
     }
 
@@ -572,8 +603,11 @@ function(x)
     x <- .Rd_get_section(x, "name")
     ## The name should really be plain text, so as.character() should be
     ## fine as well ...
+    ## <FIXME>
+    ## Might names contain comments?
+    ## </FIXME>
     if(length(x))
-        .strip_whitespace(.Rd_deparse(x, tag = FALSE, drop = "COMMENT"))        
+        .strip_whitespace(.Rd_deparse(x, tag = FALSE))
     else
         character()
 }
@@ -585,7 +619,8 @@ function(x)
 {
     x <- .Rd_get_section(x, "title")
     if(length(x))
-        .strip_whitespace(.Rd_deparse(x, tag = FALSE, drop = "COMMENT"))
+        .strip_whitespace(.Rd_deparse(.Rd_drop_comments(x),
+                                      tag = FALSE))
     else
         character()
 }
