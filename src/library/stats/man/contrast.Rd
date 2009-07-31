@@ -1,6 +1,6 @@
 % File src/library/stats/man/contrast.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{contrast}
@@ -84,21 +84,15 @@ contr.SAS(n, contrasts = TRUE, sparse = FALSE)
 }
 \examples{
 (cH <- contr.helmert(4))
-apply(cH, 2,sum) # column sums are 0!
+apply(cH, 2,sum) # column sums are 0
 crossprod(cH) # diagonal -- columns are orthogonal
 contr.helmert(4, contrasts = FALSE) # just the 4 x 4 identity matrix
 
 (cT <- contr.treatment(5))
 all(crossprod(cT) == diag(4)) # TRUE: even orthonormal
 
-cT. <- contr.SAS(5)
-all(crossprod(cT.) == diag(4))# TRUE
-if(require("Matrix")) {
-  print(cS. <- contr.SAS(5, sparse = TRUE))
-  stopifnot(all(cT. == cS.),
-	    all(contr.helmert(5, sparse = TRUE) ==
-		contr.helmert(5)))
-}
+(cT. <- contr.SAS(5))
+all(crossprod(cT.) == diag(4)) # TRUE
 
 (cP <- contr.poly(3)) # Linear and Quadratic
 zapsmall(crossprod(cP), digits=15) # orthonormal up to fuzz

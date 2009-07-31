@@ -100,3 +100,11 @@ npk.aov <- aov(yield ~ block + N * P + K, npk)
 foo <- proj(npk.aov)
 cbind(npk, foo)
 ## failed in R < 2.10.0
+
+
+if(require("Matrix")) {
+  print(cS. <- contr.SAS(5, sparse = TRUE))
+  stopifnot(all(contr.SAS(5) == cS.),
+	    all(contr.helmert(5, sparse = TRUE) ==
+		contr.helmert(5)))
+}
