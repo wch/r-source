@@ -20,8 +20,8 @@ checkMD5sums(package, dir)
 \details{
   The file \file{MD5} which is created is in a format which can be
   checked by \code{md5sum -c MD5} if a suitable command-line version of
-  \code{md5sum} is available.  (One is supplied in the bundle at
-  \url{http://www.murdoch-sutherland.com/Rtools/tools.zip}.)
+  \code{md5sum} is available.  (For Windows, one is supplied in the
+  bundle at \url{http://www.murdoch-sutherland.com/Rtools/tools.zip}.)
 
   If \code{dir} is missing, an installed package of name \code{package}
   is searched for.

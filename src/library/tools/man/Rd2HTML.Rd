@@ -21,18 +21,20 @@
 }
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
-             Links = NULL, CHM = FALSE,
-             stages = "render", outputEncoding = "UTF-8", ...)
+        Links = NULL, CHM = FALSE,
+        stages = "render", outputEncoding = "UTF-8", ...)
 
-Rd2txt(Rd, out="", package = "", defines=.Platform$OS.type, stages = "render",
-             outputEncoding = "", ...)
+Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
+       stages = "render", outputEncoding = "", ...)
 
-Rd2latex(Rd, out="", defines=.Platform$OS.type, stages="render",
-		     outputEncoding = "latin1", ...)
+Rd2latex(Rd, out = "", defines = .Platform$OS.type,
+         stages="render", outputEncoding = "latin1", ...)
 
-Rd2ex(Rd, out="", defines=.Platform$OS.type, stages="render", outputEncoding="", ...)
+Rd2ex(Rd, out = "", defines = .Platform$OS.type,
+      stages="render", outputEncoding="", ...)
 
-checkRd(Rd, defines=.Platform$OS.type, stages="render", unknownOK = TRUE, listOK = TRUE, ...)
+checkRd(Rd, defines = .Platform$OS.type, stages = "render",
+        unknownOK = TRUE, listOK = TRUE, ...)
 
 findHTMLlinks(pkgDir = "", lib.loc = NULL)
 }

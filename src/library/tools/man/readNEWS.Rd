@@ -8,7 +8,7 @@
 \alias{checkNEWS}
 \title{Read R's NEWS file or a similar one}
 \description{
-  Read \R's NEWS file or a similarly formatted one.
+  Read \R's \file{NEWS} file or a similarly formatted one.
   This is an experimental feature, new in R 2.4.0
   and may change in several ways.
 }
