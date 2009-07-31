@@ -352,7 +352,6 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                ## latex-like
                "\\acronym" =,
                "\\bold"=,
-               "\\cite"=,
                "\\dfn"=,
                "\\dQuote"=,
                "\\email"=,
@@ -360,8 +359,10 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\file" =,
                "\\pkg" =,
                "\\sQuote" =,
-                "\\strong"=,
-                "\\var" = writePass(block, tag),
+               "\\strong"=,
+               "\\var" = writePass(block, tag),
+               ## \cite needs to be mapped to \Cite
+               "\\cite"= writePass(block, "\\Cite"),
                "\\preformatted"= {
                    inPre <<- TRUE
                    of1("\\begin{alltt}")
