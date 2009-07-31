@@ -56,9 +56,16 @@ setClass <-
         classDef@sealed <- FALSE # to allow setIs to work anyway; will be reset later
         assignClassDef(Class, classDef, where)
         badContains <- character()
-        for(class2 in superClasses)
+        for(class2 in superClasses) {
             if(is(try(setIs(Class, class2, classDef = classDef, where = where)), "try-error"))
                 badContains <- c(badContains, class2)
+            else { # update class definition
+                classDef <- getClassDef(Class, where = where)
+                if(is.null(classDef))
+                  stop(gettextf('Internal error: definiition of class "%s" not properly assigned', Class),
+                       domain = NA)
+            }
+          }
         if(length(badContains)) {
             msg <- paste(dQuote(badContains), collapse = ", ")
             if(is(try(removeClass(Class, where)), "try-error"))
@@ -74,10 +81,8 @@ setClass <-
                 stop(gettextf("error in contained classes (%s) for class \"%s\"; previous definition restored to \"%s\"",
                               msg, Class, getPackageName(where)), domain = NA)
         }
-        classDef <- getClassDef(Class, where = where) # updated with superclasses
-        if(is.null(classDef))
-          stop(gettextf('Internal error: definiition of class "%s" not properly assigned', Class),
-               domain = NA)
+        if(length(attr(classDef@contains, "conflicts")) > 0)
+          .reportSuperclassConflicts(Class, classDef@contains, where)
         .checkRequiredGenerics(Class, classDef, where)
         if(sealed) {
             classDef@sealed <- TRUE
