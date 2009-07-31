@@ -952,7 +952,7 @@ completeExtends <-    function(ClassDef, class2, extensionDef, where) {
             break
         }
     }
-    exts <- .walkClassGraph(ClassDef, "contains", where)
+    exts <- .walkClassGraph(ClassDef, "contains", where, attr(ext, "conflicts"))
     if(length(exts)) {
 ##         ## sort the extends information by depth (required for method dispatch)
 ##         superClassNames <- getAllSuperClasses(ClassDef, FALSE)
@@ -1022,7 +1022,8 @@ completeSubclasses <-
 
 
 ## utility function to walk the graph of super- or sub-class relationships
-.walkClassGraph <-  function(ClassDef, slotName, where)
+## in order to incorporate indirect relationships
+.walkClassGraph <-  function(ClassDef, slotName, where,  conflicts = character())
 {
     ext <- slot(ClassDef, slotName)
     if(length(ext) == 0)
@@ -1031,11 +1032,15 @@ completeSubclasses <-
     ## the super- vs sub-class is identified by the slotName
     superClassCase <- identical(slotName, "contains")
     what <- names(ext)
-    for(i in seq_along(ext)) {
+    for(i in seq_along(ext)) { # note that this loops only over the original ext
         by <- what[[i]]
         if(isClass(by, where = where)) {
             byDef <- getClass(by, where = where)
             exti <-  slot(byDef, slotName)
+            coni <- attr(exti, "conflicts") # .resolveSuperclasses makes this
+            if(superClassCase && length(coni) > 0) {
+                conflicts <- unique(c(conflicts, coni))
+              }
             ## add in those classes not already known to be super/subclasses
             exti <- exti[is.na(match(names(exti), what))]
             if(length(exti)) {
@@ -1081,44 +1086,78 @@ completeSubclasses <-
     ## require superclasses to be sorted by distance
     distOrder <- sort.list(sapply(ext, function(x)x@distance))
     ext <- ext[distOrder]
-    if(superClassCase && any(duplicated(what))) {
-        ext <- .resolveSuperclasses(ClassDef, ext, where)
-    }
+    if(superClassCase && (anyDuplicated(what) || length(conflicts) > 0))
+        ext <- .resolveSuperclasses(ClassDef, ext, where, conflicts)
     ext
 }
 
-.resolveSuperclasses <- function(classDef, ext, where, verbose = identical(getOption("showResolveSuperclasses"), TRUE)) {
+.reportSuperclassConflicts <- function(className, ext, where) {
     what <- names(ext)
-    dups <- unique(what[duplicated(what)])
+    conflicts <- character()
+    for(i in seq_along(ext)) {
+        by <- what[[i]]
+        ## report only the direct superclass from which inconsistencies are inherited
+        if(identical(ext[[i]]@distance, 1) && isClass(by, where = where)) {
+            byDef <- getClass(by, where = where)
+            exti <-  byDef@contains
+            coni <- attr(exti, "conflicts") # .resolveSuperclasses makes this
+            if( length(coni) > 0) {
+                warning(gettextf("Class \"%s\" is inheriting an inconsistent superclass structure from class \"%s\", inconsistent with %s", className, by, paste('"', coni, '"', sep = "", collapse = ", ")),
+                        domain = NA)
+                conflicts <- unique(c(conflicts, coni))
+              }
+          }
+      }
+          newconflicts <- attr(ext, "conflicts")
+        if(length(newconflicts) > length(conflicts))
+          warning(gettextf("unable to find a consistent ordering of superclasses for class \"%s\": order chosen is inconsistent with the superclasses of %s",
+                           className,
+                           paste('"', setdiff(newconflicts, conflicts), '"',
+                                 sep = "", collapse = ", ")),
+                  domain = NA)
+        }
+
+
+.resolveSuperclasses <- function(classDef, ext, where, conflicts = character()) {
+  what <- names(ext)
+  dups <- unique(what[duplicated(what)])
+  if(length(dups) > 0) {
     ## First, eliminate all conditional relations, which never override non-conditional
     affected <- match(what, dups, 0) > 0
     conditionals <- integer()
     for(j in seq_along(what)[affected])
-        if(is(ext[[j]], "conditionalExtension")) conditionals <- c(conditionals, j)
+      if(is(ext[[j]], "conditionalExtension")) conditionals <- c(conditionals, j)
     retain <- rep(TRUE, length(what))
     if(length(conditionals) > 0) {
-        retain[conditionals] <- FALSE
-        what2 <- what[retain]
-        dups <- unique(what2[duplicated(what2)])
-        if(length(dups) == 0) {
-            ##  eliminating conditonal relations removed duplicates
-            return(ext)
-        }
-        ## else, go on with conditionals eliminated from retain
+      retain[conditionals] <- FALSE
+      what2 <- what[retain]
+      dups <- unique(what2[duplicated(what2)])
+      if(length(dups) == 0) {
+        ##  eliminating conditonal relations removed duplicates
+        if(length(conflicts) > 0)
+          attr(ext, "conflicts") <- unique(c(conflicts, attr(ext, "conflicts")))
+        return(ext)
+      }
+      ## else, go on with conditionals eliminated from retain
     }
-    directSupers <- names(classDef@contains)
+    directSupers <- sapply(classDef@contains, function(x) identical(x@distance, 1))
+    directSupers <- unique(names(classDef@contains[directSupers]))
     subNames <- lapply(directSupers, function(x) if(isClass(x)) extends(x) else x)
     names(subNames) <- directSupers
     retain = .choosePos(c(classDef@className, what),
       subNames)
     if(is.list(retain)) {
-        score <- retain[[2]]
-        retain <- retain[[1]]
-        warning(gettextf("None of the orderings of the superclasses of class \"%s\" is consistent with the superclass ordering of  its direct superclasses; using an ordering which conflicts with %s",
-                         classDef@className, paste('"', score, '"', sep="", collapse=", ")),
-                domain = NA)
+      score <- retain[[2]]
+      conflicts <- unique(c(conflicts, score))
+      retain <- retain[[1]]
     }
-    ext[retain]
+    ext <- ext[retain]
+  } # else, may have inherited some conflicts, which will be copied to the contains list.
+  ## FUTURE NOTE (7/09):  For now, we are using an attribute for conflicts,
+  ## rather than promoting the ext list to a new class, which may be desirable
+  ## if other code comes to depend on the conflicts information.
+  attr(ext, "conflicts") <- unique(c(conflicts, attr(ext, "conflicts")))
+  ext
 }
 
 classMetaName <-
