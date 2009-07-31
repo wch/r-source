@@ -105,6 +105,10 @@ cbind(npk, foo)
 if(require("Matrix")) {
   print(cS. <- contr.SAS(5, sparse = TRUE))
   stopifnot(all(contr.SAS(5) == cS.),
-	    all(contr.helmert(5, sparse = TRUE) ==
-		contr.helmert(5)))
+	    all(contr.helmert(5, sparse = TRUE) == contr.helmert(5)))
 }
+
+## regression tests for dimnames (broken on 2009-07-31)
+contr.sum(4)
+contr.helmert(4)
+contr.sum(2) # needed drop=FALSE at one point.

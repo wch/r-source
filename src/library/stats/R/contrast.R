@@ -113,6 +113,7 @@ contr.helmert <-
 	cont <- array(-1, c(n, n-1L), list(levels, NULL))
 	cont[col(cont) <= row(cont) - 2L] <- 0
 	cont[col(cont) == row(cont) - 1L] <- seq_len(n-1L)
+        colnames(cont) <- NULL
         if(sparse) .asSparse(cont) else cont
     }
     else
@@ -155,6 +156,7 @@ contr.sum <- function (n, contrasts = TRUE, sparse = FALSE)
     if (contrasts) {
         cont <- cont[, -length(levels), drop = FALSE]
         cont[length(levels), ] <- -1
+        colnames(cont) <- NULL
     }
     cont
 }
