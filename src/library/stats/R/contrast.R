@@ -31,8 +31,8 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
 	if(useSparse <- isTRUE(sparse)) {
 	    if(!(useSparse <- any("sparse" == names(formals(ctrfn)))))
 		warning(sprintf(
-		"contrast function '%s' does not yet support 'sparse = TRUE'",
-				ctr))
+		"contrast function '%s' does not support 'sparse = TRUE'",
+				ctr), domain = NA)
 	}
         ctr <- if(useSparse)
             ctrfn(levels(x), contrasts = contrasts, sparse = sparse)
@@ -86,9 +86,8 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
 	if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
 	    stop("contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed")
 	new("ddiMatrix", diag = "U", Dim = d, Dimnames = dn)
-    } else {
+    } else
 	array(c(rep.int(c(1, numeric(n)), n-1L), 1), d, dn)
-    }
 }
 
 .asSparse <- function(m) {
@@ -114,8 +113,7 @@ contr.helmert <-
 	cont <- array(-1, c(n, n-1L), list(levels, NULL))
 	cont[col(cont) <= row(cont) - 2L] <- 0
 	cont[col(cont) == row(cont) - 1L] <- seq_len(n-1L)
-        if(sparse) cont <- .asSparse(cont)
-        cont
+        if(sparse) .asSparse(cont) else cont
     }
     else
         .Diag(levels, sparse=sparse)
@@ -136,7 +134,7 @@ contr.treatment <-
     if(contrasts) {
 	if(n < 2L)
 	    stop(gettextf("contrasts not defined for %d degrees of freedom",
-                          n - 1L), domcain = NA)
+                          n - 1L), domain = NA)
 	if (base < 1L | base > n)
 	    stop("baseline group number out of range")
 	contr <- contr[, -base, drop = FALSE]
@@ -144,8 +142,7 @@ contr.treatment <-
     contr
 }
 
-contr.sum <-
-    function (n, contrasts = TRUE, sparse = FALSE)
+contr.sum <- function (n, contrasts = TRUE, sparse = FALSE)
 {
     if (length(n) <= 1L) {
 	if (is.numeric(n) && length(n) == 1L && n > 1L)
@@ -156,7 +153,8 @@ contr.sum <-
     levels <- as.character(levels)
     cont <- .Diag(levels, sparse=sparse)
     if (contrasts) {
-	cont[length(levels), ] <- -1
+        cont <- cont[, -length(levels)]
+        cont[length(levels), ] <- -1
     }
     cont
 }
