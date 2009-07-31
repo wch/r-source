@@ -95,7 +95,9 @@ cT. <- contr.SAS(5)
 all(crossprod(cT.) == diag(4))# TRUE
 if(require("Matrix")) {
   print(cS. <- contr.SAS(5, sparse = TRUE))
-  stopifnot(all(cT. == cS.))
+  stopifnot(all(cT. == cS.),
+	    all(contr.helmert(5, sparse = TRUE) ==
+		contr.helmert(5)))
 }
 
 (cP <- contr.poly(3)) # Linear and Quadratic

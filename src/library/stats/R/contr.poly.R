@@ -48,7 +48,7 @@ contr.poly <- function (n, scores = 1:n, contrasts = TRUE, sparse = FALSE)
     if (!is.numeric(scores) || anyDuplicated(scores))
         stop("'scores' must all be different numbers")
     contr <- make.poly(n, scores)
-    if(sparse) contr <- as(contr, "sparseMatrix")
+    if(sparse) contr <- .asSparse(contr)
     if (contrasts) {
 	dn <- colnames(contr)
 	dn[2:min(4,n)] <- c(".L", ".Q", ".C")[1:min(3, n-1)]

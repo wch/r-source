@@ -21,11 +21,9 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
     if (is.logical(x)) x <- factor(x, levels=c(FALSE, TRUE))
     if (!is.factor(x))
 	stop("contrasts apply only to factors")
-    if(!contrasts) {
-        dn <- list(levels(x), levels(x))
-        return(if(sparse) .sparse.diag(nlevels(x), dimnames=dn)
-               else structure(diag(nlevels(x)), dimnames=dn))
-    }
+    if(!contrasts)
+        return(.Diag(levels(x), sparse=sparse))
+
     ctr <- attr(x, "contrasts")
     if ((NL <- is.null(ctr)) || is.character(ctr)) {
 	if(NL) ctr <- getOption("contrasts")[[if (is.ordered(x)) 2L else 1L]]
@@ -77,21 +75,30 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
     x
 }
 
-## contr.poly() is in contr.poly.R
 
-.sparse.array <- function(x, dim, dimnames) {
-    ## loadNamespace(.) is very quick, once it *is* loaded:
-    if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
-        stop("contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed")
-    dim <- as.integer(dim)
-    new("dgCMatrix", Dim = dim, p = rep.int(0L, dim[2L]+1L), Dimnames = dimnames)
+## a fast version of diag(n, .) / sparse-Diagonal() + dimnames
+.Diag <- function(nms, sparse) {
+    ## no error checking here
+    n <- as.integer(length(nms))
+    d <- c(n,n)
+    dn <- list(nms, nms)
+    if(sparse) {
+	if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
+	    stop("contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed")
+	new("ddiMatrix", diag = "U", Dim = d, Dimnames = dn)
+    } else {
+	array(c(rep.int(c(1, numeric(n)), n-1L), 1), d, dn)
+    }
 }
-.sparse.diag <- function(n, dimnames) {
+
+.asSparse <- function(m) {
+    ## ensure helpful error message when Matrix is missing:
     if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
-        stop("contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed")
-    n <- as.integer(n)
-    new("ddiMatrix", diag = "U", Dim = c(n,n), Dimnames = dimnames)
+	stop("contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed")
+    as(m, "sparseMatrix")
 }
+
+## contr.poly() is in ./contr.poly.R
 
 contr.helmert <-
     function (n, contrasts = TRUE, sparse = FALSE)
@@ -100,17 +107,18 @@ contr.helmert <-
 	if(is.numeric(n) && length(n) == 1L && n > 1L) levels <- seq_len(n)
 	else stop("not enough degrees of freedom to define contrasts")
     } else levels <- n
-    lenglev <- length(levels <- as.character(levels))
-    if(sparse) array <- .sparse.array
+    levels <- as.character(levels)
+
     if (contrasts) {
-	cont <- array(-1, c(lenglev, lenglev-1L), list(levels, NULL))
+        n <- length(levels)
+	cont <- array(-1, c(n, n-1L), list(levels, NULL))
 	cont[col(cont) <= row(cont) - 2L] <- 0
-	cont[col(cont) == row(cont) - 1L] <- 1L:(lenglev-1L)
-    } else {
-	cont <- array(0, c(lenglev, lenglev), list(levels, levels))
-	cont[col(cont) == row(cont)] <- 1
+	cont[col(cont) == row(cont) - 1L] <- seq_len(n-1L)
+        if(sparse) cont <- .asSparse(cont)
+        cont
     }
-    cont
+    else
+        .Diag(levels, sparse=sparse)
 }
 
 contr.treatment <-
@@ -124,9 +132,7 @@ contr.treatment <-
 	n <- length(n)
     }
 
-    if(sparse) array <- .sparse.array
-    contr <- array(0, c(n, n), list(levels, levels))
-    diag(contr) <- 1
+    contr <- .Diag(levels, sparse=sparse)
     if(contrasts) {
 	if(n < 2L)
 	    stop(gettextf("contrasts not defined for %d degrees of freedom",
@@ -146,15 +152,11 @@ contr.sum <-
 	    levels <- seq_len(n)
 	else stop("not enough degrees of freedom to define contrasts")
     } else levels <- n
-    lenglev <- length(levels <- as.character(levels))
-    if(sparse) array <- .sparse.array
+
+    levels <- as.character(levels)
+    cont <- .Diag(levels, sparse=sparse)
     if (contrasts) {
-	cont <- array(0, c(lenglev, lenglev - 1L), list(levels, NULL))
-	cont[col(cont) == row(cont)] <- 1
-	cont[lenglev, ] <- -1
-    } else {
-	cont <- array(0, c(lenglev, lenglev), list(levels, levels))
-	cont[col(cont) == row(cont)] <- 1
+	cont[length(levels), ] <- -1
     }
     cont
 }
@@ -163,5 +165,5 @@ contr.SAS <- function(n, contrasts = TRUE, sparse = FALSE)
 {
     contr.treatment(n,
                     base = if (is.numeric(n) && length(n) == 1) n else length(n),
-                    contrasts, sparse=sparse)
+                    contrasts=contrasts, sparse=sparse)
 }
