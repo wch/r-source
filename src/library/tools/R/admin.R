@@ -416,7 +416,18 @@ function(dir, outDir)
         ## we want to proceed if any is NA.
         if(all(upToDate %in% TRUE)) return(invisible())
 
-        contents <- Rd_contents(allRd)
+        ## <FIXME>
+        ## Get rid of suppressWarnings() when USE_NEW_HELP becomes the
+        ## default.
+        ## Rd objects should already have been installed.
+        db <- tryCatch(suppressWarnings(Rd_db(basename(outDir),
+                                              lib.loc = dirname(outDir))),
+                       error = function(e) NULL)
+        ## If not, we build the Rd db from the sources:
+        if(is.null(db))
+            db <- suppressWarnings(.build_Rd_db(dir, allRd))
+        ## </FIXME>
+        contents <- Rd_contents(db)
 
         .write_Rd_contents_as_RDS(contents,
                                   file.path(outDir, "Meta", "Rd.rds"))
@@ -727,7 +738,7 @@ function(dir, outDir)
     ## </FIXME>
     if(!file_test("-f", db_file) ||
        !all(file_test("-nt", db_file, manfiles))) {
-       db <- .build_Rd_db(dir, manfiles, db_file)
+       db <- .build_Rd_db(dir, manfiles, db_file = db_file)
        .saveRDS(db, db_file)
    }
 }

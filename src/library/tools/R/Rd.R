@@ -17,16 +17,27 @@
 ### * Rd_info
 
 Rd_info <-
-function(file)
+function(file, encoding = "unknown")
 {
-    if(is.character(file)) {
-        file <- file(file)
-        on.exit(close(file))
-    }
-    if(!inherits(file, "connection"))
-        stop("argument 'file' must be a character string or connection")
+    ## <FIXME>
+    ## This used to work only for a given Rd file.
+    ## We now also allow for passing a parsed Rd object.
+    ## Is the Rd file case still needed?
 
-    Rd <- prepare_Rd(file, defines = .Platform$OS.type)
+    if(inherits(file, "Rd")) {
+        Rd <- file
+        description <- attr(attr(Rd, "srcref"), "srcfile")$filename
+    } else {
+        if(is.character(file)) {
+            file <- file(file)
+            on.exit(close(file))
+        }
+        if(!inherits(file, "connection"))
+            stop("argument 'file' must be a character string or connection")
+        description <- summary(file)$description
+        Rd <- prepare_Rd(file, encoding = encoding,
+                         defines = .Platform$OS.type)
+    }
 
     aliases <- .Rd_get_metadata(Rd, "alias")
     concepts <- .Rd_get_metadata(Rd, "concept")
@@ -40,7 +51,7 @@ function(file)
     if(!length(Rd_name)) {
         msg <-
             c(gettextf("missing/empty \\name field in '%s'",
-                       summary(file)$description),
+                       description),
               gettext("Rd files must have a non-empty \\name."),
               gettext("See chapter 'Writing R documentation' in manual 'Writing R Extensions'."))
         stop(paste(msg, collapse = "\n"), domain = NA)
@@ -50,7 +61,7 @@ function(file)
     if(!length(Rd_title)) {
         msg <-
             c(gettextf("missing/empty \\title field in '%s'",
-                       summary(file)$description),
+                       description),
               gettext("Rd files must have a non-empty \\title."),
               gettext("See chapter 'Writing R documentation' in manual 'Writing R Extensions'."))
         stop(paste(msg, collapse = "\n"), domain = NA)
@@ -64,13 +75,19 @@ function(file)
 ### * Rd_contents
 
 Rd_contents <-
-function(files)
+function(db)
 {
-    ## Compute contents db from Rd files.
+    ## Compute contents db from Rd db.
+    
+    ## <FIXME>
+    ## This used to work on a list of Rd file paths.
+    ## Legacy code:
+    if(inherits(db, "character"))
+        db <- .build_Rd_db(files = db)
+    ## But should we really keep this?
+    ## </FIXME>
 
-    files <- path.expand(files[file_test("-f", files)])
-
-    if(!length(files)) {
+    if(!length(db)) {
         out <- data.frame(File = character(),
                           Name = character(),
                           Type = character(),
@@ -85,34 +102,15 @@ function(files)
 
     entries <- c("Name", "Type", "Title", "Aliases", "Concepts",
                  "Keywords", "Encoding")
-    contents <- vector("list", length(files) * length(entries))
-    dim(contents) <- c(length(files), length(entries))
-    for(i in seq_along(files)) {
-        contents[i, ] <- Rd_info(files[i])
+    contents <- vector("list", length(db) * length(entries))
+    dim(contents) <- c(length(db), length(entries))
+    for(i in seq_along(db)) {
+        contents[i, ] <- Rd_info(db[[i]])
     }
     colnames(contents) <- entries
 
-    ## Although R-exts says about the Rd title slot that
-    ## <QUOTE>
-    ##   This should be capitalized, not end in a period, and not use
-    ##   any markup (which would cause problems for hypertext search).
-    ## </QUOTE>
-    ## some Rd files have LaTeX-style markup, including
-    ## * LaTeX-style single and double quotation
-    ## * Medium and punctuation dashes
-    ## * Escaped ampersand.
-    ## Hence we try getting rid of these ...
-    title <- unlist(contents[ , "Title"])
-    title <- gsub("(``|'')", "\"", title)
-    title <- gsub("`", "'", title)
-    title <- gsub("([[:alnum:]])--([[:alnum:]])", "\\1-\\2", title)
-    title <- gsub("\\\\&", "&", title)
-    title <- gsub("---", "--", title)
-    ## Also remove leading and trailing whitespace.
-    title <- sub("^[[:space:]]+", "", title)
-    title <- sub("[[:space:]]+$", "", title)
-
-    out <- data.frame(File = basename(files),
+    title <- .Rd_format_title(unlist(contents[ , "Title"]))
+    out <- data.frame(File = basename(names(db)),
                       Name = unlist(contents[ , "Name"]),
                       Type = unlist(contents[ , "Type"]),
                       Title = title,
@@ -363,12 +361,15 @@ function(x, ...)
 }
 
 .build_Rd_db <-
-function(dir, files = NULL, db_file = NULL)
+function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL)
 {
-    if(is.null(files))
-        files <- list_files_with_type(file.path(dir, "man"), "docs")
-    encoding <- .get_package_metadata(dir, FALSE)["Encoding"]
-    if(is.na(encoding)) encoding <- "unknown"
+    if(!is.null(dir)) {
+        if(is.null(files))
+            files <- list_files_with_type(file.path(dir, "man"), "docs")
+        encoding <- .get_package_metadata(dir, FALSE)["Encoding"]
+        if(is.na(encoding)) encoding <- "unknown"
+    } else if(is.null(files))
+        stop("you must specify 'dir' or 'files'")
 
     .fetch_Rd_object <- function(f) {
         Rd <- prepare_Rd(f,
@@ -706,6 +707,30 @@ function(db)
         }
     }
     unlist(Rd_names)
+}
+
+### * .Rd_format_title
+
+.Rd_format_title <-
+function(x)
+{
+    ## Although R-exts says about the Rd title slot that
+    ## <QUOTE>
+    ##   This should be capitalized, not end in a period, and not use
+    ##   any markup (which would cause problems for hypertext search).
+    ## </QUOTE>
+    ## some Rd files have LaTeX-style markup, including
+    ## * LaTeX-style single and double quotation
+    ## * Medium and punctuation dashes
+    ## * Escaped ampersand.
+    ## Hence we try getting rid of these ...
+    x <- gsub("(``|'')", "\"", x)
+    x <- gsub("`", "'", x)
+    x <- gsub("([[:alnum:]])--([[:alnum:]])", "\\1-\\2", x)
+    x <- gsub("\\\\&", "&", x)
+    x <- gsub("---", "--", x)
+    ## Also remove leading and trailing whitespace.
+    .strip_whitespace(x)
 }
 
 ### * Old-style code.

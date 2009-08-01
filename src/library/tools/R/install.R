@@ -1798,20 +1798,24 @@
     Rd <- if (file.exists(f <- file.path(outDir, "Meta", "Rd.rds")))
         .readRDS(f)
     else {
-        ## or use list_files_with_type
-        files <- Sys.glob(file.path(mandir, "*.[Rr]d"))
-        if(file_test("-d", f <- file.path(mandir, OS)))
-            files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
-        ## Should only process files starting with [A-Za-z0-9] and with
-        ## suffix .Rd or .rd, according to 'Writing R Extensions'.
-        OK <- grep("^[A-Za-z0-9]", basename(files))
-        files <- files[OK]
-        if(!length(files)) {
+        ## Keep this in sync with .install_package_Rd_indices().
+        ## <FIXME>
+        ## Get rid of suppressWarnings() when USE_NEW_HELP becomes the
+        ## default.
+        ## Rd objects should already have been installed.
+        db <- tryCatch(suppressWarnings(Rd_db(basename(outDir),
+                                              lib.loc = dirname(outDir))),
+                       error = function(e) NULL)
+        ## If not, we build the Rd db from the sources:
+        if(is.null(db))
+            db <- suppressWarnings(Rd_db(dir = dir))
+        ## </FIXME>
+        if(!length(db)) {
             warning("there is a 'man' dir but no help pages in this package",
                     call. = FALSE)
             return()
         }
-        Rd <- Rd_contents(files)
+        Rd <- Rd_contents(db)
         .saveRDS(Rd, file.path(outDir, "Meta", "Rd.rds"))
         Rd
     }
@@ -2015,28 +2019,29 @@
         stop("there are no help pages in this package")
     desc <- .readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION
     pkg <- desc["Package"]
-    ver <- desc["Version"]
-    enc <- desc["encoding"]
-    if(is.na(enc)) enc <- "unknown"
-
-    ## or use list_files_with_type
-    files <- Sys.glob(file.path(mandir, "*.[Rr]d"))
-    if(file_test("-d", f <- file.path(mandir, OS)))
-        files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
-    ## Should only process files starting with [A-Za-z0-9] and with
-    ## suffix .Rd or .rd, according to 'Writing R Extensions'.
-    OK <- grep("^[A-Za-z0-9]", basename(files))
-    files <- files[OK]
 
     for(type in types)
-        dir.create(file.path(outDir, dirname[type]), showWarnings = FALSE)
-    cmd <- paste(R.home(), "/bin/Rdconv -t ", sep = "")
+        dir.create(file.path(outDir, dirname[type]),
+                   showWarnings = FALSE)
 
-    ## FIXME: perl version cleans up non-matching converted files
     cat("  converting help for package ", sQuote(pkg), "\n", sep="")
+
     if(TRUE) {
+
+        ## FIXME: perl version cleans up non-matching converted files
+        
         ## FIXME: add this lib to lib.loc?
         Links <- if ("html" %in% types) findHTMLlinks(outDir) else ""
+
+        ## Rd objects should already have been installed.
+        db <- tryCatch(Rd_db(basename(outDir),
+                             lib.loc = dirname(outDir)),
+                       error = function(e) NULL)
+        ## If not, we build the Rd db from the sources:
+        if(is.null(db))
+            db <- Rd_db(dir = dir)
+
+        files <- names(db)
 
         .make_message <- function(e, kind) {
             msg <- conditionMessage(e)
@@ -2063,11 +2068,10 @@
             withCallingHandlers(tryCatch(expr, error = .ehandler),
                                 warning = .whandler)
 
-        for (f in files) {
-            bf <-  sub("\\.[Rr]d$", "", basename(f))
+        for(f in files) {
             shown <- FALSE
-            Rd <- prepare_Rd(f, defines = .Platform$OS.type,
-                             stages="install")
+            Rd <- db[[f]]
+            bf <- sub("\\.[Rr]d$", "", basename(f))
             .messages <- character()
             if ("txt" %in% types) {
                 type <- "txt"
@@ -2124,6 +2128,11 @@
         }
     }
     else { ## no longer used
+        ver <- desc["Version"]
+        enc <- desc["encoding"]
+        if(is.na(enc)) enc <- "unknown"
+        cmd <- paste(R.home(), "/bin/Rdconv -t ", sep = "")
+        
         .setPERL()
 
         for (f in files) {
