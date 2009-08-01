@@ -719,11 +719,17 @@ function(dir, outDir)
     db_file <- file.path(manOutDir,
                          paste(basename(outDir), ".rds", sep = ""))
     ## Avoid (costly) rebuilding if not needed.
+    ## <FIXME>
+    ## This is not quite right, and .install_package_Rd_indices() has
+    ## the same problem: we need to update if an Rd file was *removed*,
+    ## but cannot detect this by comparing timestamps of exisiting
+    ## files.
+    ## </FIXME>
     if(!file_test("-f", db_file) ||
        !all(file_test("-nt", db_file, manfiles))) {
-        db <- Rd_db(dir = dir)
-        .saveRDS(db, db_file)
-    }
+       db <- .build_Rd_db(dir, manfiles, db_file)
+       .saveRDS(db, db_file)
+   }
 }
 
 ### * .install_package_demos

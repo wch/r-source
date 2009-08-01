@@ -347,28 +347,7 @@ function(package, dir, lib.loc = NULL)
         if(!file_test("-d", docs_dir))
             stop(gettextf("directory '%s' does not contain Rd sources", dir),
                  domain = NA)
-        docs_files <- list_files_with_type(docs_dir, "docs")
-        encoding <- .get_package_metadata(dir, FALSE)["Encoding"]
-        if(is.na(encoding)) encoding <- "unknown"
-        ## <FIXME>
-        ## Change back to
-        ##   db <- lapply(docs_files, prepare_Rd,
-        ##                encoding = encoding,
-        ##                defines = .Platform$OS.type,
-        ##                stages = "install")
-        ## when we no longer need the Rd sources ...
-        ## </FIXME>
-        db <- lapply(docs_files, .read_Rd_lines_quietly)
-        db <- Map(function(x, y) structure(x, source = y),
-                  lapply(docs_files, prepare_Rd,
-                     encoding = encoding,
-                     defines = .Platform$OS.type,
-                     stages = "install"),
-                  if(encoding != "unknown")
-                      Map(c, db, sprintf("\\encoding{%s}", encoding))
-                  else
-                      db)
-        names(db) <- docs_files
+        db <- .build_Rd_db(dir)
     }
 
     db
@@ -381,6 +360,55 @@ function(x, ...)
     con <- textConnection(x, "rt")
     on.exit(close(con))
     prepare_Rd(con, ...)
+}
+
+.build_Rd_db <-
+function(dir, files = NULL, db_file = NULL)
+{
+    if(is.null(files))
+        files <- list_files_with_type(file.path(dir, "man"), "docs")
+    encoding <- .get_package_metadata(dir, FALSE)["Encoding"]
+    if(is.na(encoding)) encoding <- "unknown"
+
+    .fetch_Rd_object <- function(f) {
+        Rd <- prepare_Rd(f,
+                         encoding = encoding,
+                         defines = .Platform$OS.type,
+                         stages = "install")
+        ## <FIXME>
+        ## Remove when we no longer need/want the Rd sources ...
+        lines <- .read_Rd_lines_quietly(f)
+        if(encoding != "unknown")
+            lines <- c(lines, sprintf("\\encoding{%s}", encoding))
+        attr(Rd, "source") <- lines
+        ## </FIXME>
+        Rd
+    }
+
+    if(!is.null(db_file) && file_test("-f", db_file)) {
+        db <- .readRDS(db_file)
+        db_names <- names(db)
+        ## Files in the db in need of updating:
+        ind <- (files %in% db_names) & file_test("-nt", files, db_file)
+        if(any(ind))
+            db[files[ind]] <- lapply(files[ind], .fetch_Rd_object)
+        ## Files not in the db:
+        ind <- !(files %in% db_names)
+        if(any(ind)) {
+            db1 <- lapply(files[ind], .fetch_Rd_object)
+            names(db1) <- files[ind]
+            db <- c(db, db1)
+        }
+        ## Db elements missing from files:
+        ind <- !(db_names %in% files)
+        if(any(ind))
+            db <- db[!ind]
+    } else {
+        db <- lapply(files, .fetch_Rd_object)
+        names(db) <- files
+    }
+
+    db
 }
 
 ### * Rd_aliases
