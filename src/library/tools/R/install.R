@@ -1998,10 +1998,14 @@
 {
     showtype <- function() {
     	if (!shown) {
-    	    cat("    ", bf, rep(" ", max(0, 30-nchar(bf))), sep="")
+            nc <- nchar(bf)
+            if(nc < 28L)
+                cat("    ", bf, rep(" ", 30L - nc), sep = "")
+            else
+                cat("    ", bf, "\n", rep(" ", 34L), sep = "")
             shown <<- TRUE
         }
-        cat(type, rep(" ", 8-nchar(type)), sep="")
+        cat(type, rep(" ", 8L - nchar(type)), sep="")
     }
     dirname <- c("help", "html", "latex", "R-ex", "chm")
     ext <- c(".rds", ".html", ".tex", ".R", ".html")
@@ -2036,18 +2040,23 @@
 
         .make_message <- function(e, kind) {
             msg <- conditionMessage(e)
-            call <- conditionCall(e)
-            if(is.null(call))
-                sprintf("%s:  %s", kind, msg)
-            else
-                sprintf("%s in %s:\n  %s", kind, deparse(call)[1L], msg)
+            ## <FIXME>
+            ## For now, never show the call, so that the messages fit
+            ## more smoothly into the installation log.
+            ##   call <- conditionCall(e)
+            ##   if(is.null(call))
+            ##       sprintf("%s: %s", kind, msg)
+            ##   else
+            ##       sprintf("%s in %s:\n  %s", kind, deparse(call)[1L], msg)
+            sprintf("Rd %s: %s", kind, msg)
+            ## </FIXME>
         }
         .whandler <- function(e) {
-            .messages <<- c(.messages, .make_message(e, "Warning"))
+            .messages <<- c(.messages, .make_message(e, "warning"))
             invokeRestart("muffleWarning")
         }
         .ehandler <- function(e) {
-            .messages <<- c(.messages, .make_message(e, "Error"))
+            .messages <<- c(.messages, .make_message(e, "error"))
             unlink(ff)
         }
         .convert <- function(expr)
@@ -2314,12 +2323,12 @@
     close(out)
 
     USE_NEW_HELP <- nchar(Sys.getenv("USE_NEW_HELP")) > 0L
-    if (!USE_NEW_HELP) {
+###FIXME    if (!USE_NEW_HELP) {
 	## Look for encodings
 	lines <- readLines(outfile)
 	latexEncodings <- lines[grepl('^\\\\inputencoding', lines)]
 	latexEncodings <- sub("^\\\\inputencoding\\{(.*)\\}", "\\1", latexEncodings)
-    }
+###FIXME    }
     
     ## Fix up encodings
     ## FIXME cyrillic probably only works with times, not ae.

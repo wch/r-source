@@ -852,6 +852,11 @@ foreach my $pkg (@ARGV) {
 		    my $warn_re =
 			"(" . join("|", ("^WARNING:",
 					 "^Warning:",
+					 ## <FIXME>
+					 ## New style Rd conversion
+					 ## which may even show errors:
+					 "^Rd (warning|error): ",
+					 ## </FIXME>
 					 ": warning: .*ISO C",
 					 ": warning: implicit declaration of function",
 					 ": warning: .* discards qualifiers from pointer target type",
