@@ -416,7 +416,7 @@ function(dir, outDir)
         ## we want to proceed if any is NA.
         if(all(upToDate %in% TRUE)) return(invisible())
 
-        ## <FIXME>
+        ## <FIXME USE_NEW_HELP>
         ## Get rid of suppressWarnings() when USE_NEW_HELP becomes the
         ## default.
         ## Rd objects should already have been installed.

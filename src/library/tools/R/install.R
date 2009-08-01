@@ -816,7 +816,22 @@
             if (dir.exists("man")) {
                 starsmsg(stars, "help")
                 if(Sys.getenv("USE_NEW_HELP") != "") {
-                    res <- try(.install_package_Rd_objects(".", instdir))
+                    ## Turn
+                    ##   Warning in parse_Rd(......)
+                    ## warnings into warnings without the call so that
+                    ## they can be picked up by R CMD check.
+                    .whandler <- function(e) {
+                        call <- conditionCall(e)
+                        if(!is.null(call) && grepl("^parse_Rd",
+                                                   deparse(call))) {
+                            warning(conditionMessage(e), call. = FALSE)
+                            invokeRestart("muffleWarning")
+                        } else e
+                    }                        
+                    res <-
+                        try(withCallingHandlers(.install_package_Rd_objects(".",
+                                                                            instdir),
+                                                warning = .whandler))
                     if(inherits(res, "try-error"))
                         pkgerrmsg("installing Rd objects failed", pkg_name)
                     Sys.chmod(file.path(instdir, "man",
@@ -1799,7 +1814,7 @@
         .readRDS(f)
     else {
         ## Keep this in sync with .install_package_Rd_indices().
-        ## <FIXME>
+        ## <FIXME USE_NEW_HELP>
         ## Get rid of suppressWarnings() when USE_NEW_HELP becomes the
         ## default.
         ## Rd objects should already have been installed.
@@ -1996,9 +2011,10 @@
 	Sys.setenv(PERLLIB = pperl(Sys.getenv("PERLLIB")))
 }
 
+### * .convertRdfiles
+
 .convertRdfiles <-
-    function(dir, outDir, OS = .Platform$OS.type,
-             types = c("txt", "html", "latex", "example"))
+function(dir, outDir, types = c("txt", "html", "latex", "example"))
 {
     showtype <- function() {
     	if (!shown) {
@@ -2011,6 +2027,7 @@
         }
         cat(type, rep(" ", 8L - nchar(type)), sep="")
     }
+    
     dirname <- c("help", "html", "latex", "R-ex", "chm")
     ext <- c(".rds", ".html", ".tex", ".R", ".html")
     names(dirname) <- names(ext) <- c("txt", "html", "latex", "example", "chm")
@@ -2043,36 +2060,20 @@
 
         files <- names(db)
 
-        .make_message <- function(e, kind) {
-            msg <- conditionMessage(e)
-            ## <FIXME>
-            ## For now, never show the call, so that the messages fit
-            ## more smoothly into the installation log.
-            ##   call <- conditionCall(e)
-            ##   if(is.null(call))
-            ##       sprintf("%s: %s", kind, msg)
-            ##   else
-            ##       sprintf("%s in %s:\n  %s", kind, deparse(call)[1L], msg)
-            sprintf("Rd %s: %s", kind, msg)
-            ## </FIXME>
-        }
-        .whandler <- function(e) {
-            .messages <<- c(.messages, .make_message(e, "warning"))
-            invokeRestart("muffleWarning")
-        }
-        .ehandler <- function(e) {
-            .messages <<- c(.messages, .make_message(e, "error"))
-            unlink(ff)
-        }
+        .whandler <- .make_Rd_whandler(invokeRestart("muffleWarning"))
+        .ehandler <- .make_Rd_ehandler(unlink(ff))
         .convert <- function(expr)
             withCallingHandlers(tryCatch(expr, error = .ehandler),
                                 warning = .whandler)
 
         for(f in files) {
-            shown <- FALSE
             Rd <- db[[f]]
             bf <- sub("\\.[Rr]d$", "", basename(f))
-            .messages <- character()
+
+            shown <- FALSE
+            environment(.ehandler)$.messages <- character()
+            environment(.whandler)$.messages <- character()            
+
             if ("txt" %in% types) {
                 type <- "txt"
                 ff <- file.path(outDir, dirname[type],
@@ -2123,7 +2124,10 @@
             }
             if(shown) {
                 cat("\n")
-                if(length(.messages)) writeLines(.messages)
+                if(length(.messages <-
+                          c(environment(.ehandler)$.messages,
+                            environment(.whandler)$.messages)))
+                    writeLines(unique(.messages))
             }
         }
     }
@@ -2164,7 +2168,10 @@
     }
 }
 
-.makeDllRes <- function(name="", version = "0.0")
+### * .makeDllRes
+
+.makeDllRes <-
+function(name="", version = "0.0")
 {
     if (file.exists(f <- "../DESCRIPTION") ||
         file.exists(f <- "../../DESCRIPTION")) {
@@ -2200,10 +2207,13 @@
                  'END'))
 }
 
-.Rd2dvi <- function(pkgdir, outfile, is_bundle, title, batch = FALSE,
-                    description = TRUE, only_meta = FALSE,
-                    enc = "unknown", files_or_dir, OSdir,
-                    internals = "no", index = "true")
+### * .Rd2dvi
+
+.Rd2dvi <-
+function(pkgdir, outfile, is_bundle, title, batch = FALSE,
+         description = TRUE, only_meta = FALSE,
+         enc = "unknown", files_or_dir, OSdir,
+         internals = "no", index = "true")
 {
     # print(match.call())
 
@@ -2363,3 +2373,34 @@
 
     invisible(NULL)
 }
+
+### * .make_Rd_ehandler
+
+.make_Rd_ehandler <-
+function(expr = NULL)
+{
+    .messages <- character()
+    function(e) {
+        if(!is.null(expr)) on.exit(expr)
+        .messages <<- c(.messages,
+                        paste("Rd error:", conditionMessage(e)))
+    }
+}
+
+### * .make_Rd_whandler
+
+.make_Rd_whandler <-
+function(expr = NULL)
+{
+    .messages <- character()
+    function(e) {
+        if(!is.null(expr)) on.exit(expr)
+        .messages <<- c(.messages,
+                        paste("Rd warning:", conditionMessage(e)))
+    }
+}
+
+### Local variables: ***
+### mode: outline-minor ***
+### outline-regexp: "### [*]+" ***
+### End: ***
