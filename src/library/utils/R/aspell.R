@@ -25,7 +25,7 @@ function(files, filter, control = list(), encoding = "unknown")
         stop("Invalid 'filter' argument.")
 
     ## No special expansion of control argument for now.
-    control <- paste(shQuote(as.character(control)), collapse = " ")
+    control <- paste(as.character(control), collapse = " ")
 
     encoding <- rep(encoding, length.out = length(files))
     
