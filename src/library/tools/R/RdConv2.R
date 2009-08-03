@@ -1279,31 +1279,17 @@ findHTMLlinks <- function(pkgDir = "", lib.loc = NULL)
     ## The standard packages
     ## along lib.loc.
 
-    get_links <- function(p) {
-        if(file.exists(f <- file.path(p, "Meta", "Rd.rds"))) {
-            info <- .readRDS(f)
-            topics <- info$Aliases
-            lens <- sapply(topics, length)
-            structure(file.path("../..", basename(p), "html",
-                                rep.int(info$File, lens)),
-                      names = unlist(topics))
-        } else character()
-    }
-    
     if(is.null(lib.loc)) lib.loc <- .libPaths()
 
-    Links <- list()
-    for(lib in rev(lib.loc))
-        Links <- c(Links,
-                   lapply(rev(dir(lib, full.names = TRUE)), get_links))
-    Links <- c(Links,
+    Links <- lapply(rev(lib.loc), .find_HTML_links_in_library)
+    Links <- c(Links, 
                lapply(file.path(.Library,
                                 c("base", "utils", "graphics",
                                   "grDevices", "stats", "datasets",
                                   "methods")),
-                      get_links))
+                      .find_HTML_links_in_package))
     if(nzchar(pkgDir))
-        Links <- c(Links, list(get_links(pkgDir)))
+        Links <- c(Links, list(.find_HTML_links_in_package(pkgDir)))
     Links <- unlist(Links)
     
     ## now latest names are newest, so
@@ -1312,3 +1298,31 @@ findHTMLlinks <- function(pkgDir = "", lib.loc = NULL)
     gsub("[Rr]d$", "html", Links)
 }
 
+.find_HTML_links_in_package <-
+function(dir)
+{
+    if(file_test("-f", f <- file.path(dir, "Meta", "links.rds")))
+        .readRDS(f)
+    else if(file_test("-f", f <- file.path(dir, "Meta", "Rd.rds")))
+        .build_links_index(.readRDS(f), basename(dir))
+    else character()
+}
+
+.find_HTML_links_in_library <-
+function(dir)
+{
+    if(file_test("-f", f <- file.path(dir, ".Meta", "links.rds")))
+        .readRDS(f)
+    else
+        .build_library_links_index(dir)
+}
+
+.build_library_links_index <-
+function(dir)
+{
+    unlist(lapply(rev(dir(dir, full.names = TRUE)),
+                  .find_HTML_links_in_package))
+}
+
+
+                 

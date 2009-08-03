@@ -402,6 +402,7 @@ function(dir, outDir)
         ## these files need not exist, which gives NA.
         indices <- c(file.path("Meta", "Rd.rds"),
                      file.path("Meta", "hsearch.rds"),
+                     file.path("Meta", "links.rds"),
                      "CONTENTS", "INDEX")
         upToDate <- file.info(file.path(outDir, indices))$mtime >= newestRd
         if(file_test("-d", dataDir)
@@ -436,6 +437,9 @@ function(dir, outDir)
         if(is.na(defaultEncoding)) defaultEncoding <- NULL
         .saveRDS(.build_hsearch_index(contents, packageName, defaultEncoding),
                  file.path(outDir, "Meta", "hsearch.rds"))
+
+        .saveRDS(.build_links_index(contents, packageName),
+                 file.path(outDir, "Meta", "links.rds"))
 
         .write_Rd_contents_as_DCF(contents, packageName,
                                   file.path(outDir, "CONTENTS"))
@@ -755,7 +759,8 @@ function(dir, outDir)
     if(!length(demofiles)) return()
     demoOutDir <- file.path(outDir, "demo")
     if(!file_test("-d", demoOutDir)) dir.create(demoOutDir)
-    file.copy(file.path(demodir, demofiles), demoOutDir)
+    file.copy(file.path(demodir, demofiles), demoOutDir,
+              overwrite = TRUE)
 }
 
 

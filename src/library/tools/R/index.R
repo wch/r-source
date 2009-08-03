@@ -239,8 +239,19 @@ function(contents, packageName, defaultEncoding = NULL)
     list(dbBase, dbAliases, dbKeywords, dbConcepts)
 }
 
+### * .build_links_index
 
-### Local variables: ***
+.build_links_index <-
+function(contents, package)
+{
+    aliases <- contents$Aliases
+    lens <- sapply(aliases, length)
+    structure(file.path("../..", package, "html",
+                        rep.int(contents$File, lens)),
+              names = unlist(aliases))
+}
+
+
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
 ### End: ***
