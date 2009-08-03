@@ -175,13 +175,12 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
     newformula <- reformulate(newformula, resp)
     environment(newformula)<-environment(termobj)
     terms(newformula, specials = names(attr(termobj, "specials")))
-
 }
 
 
 terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 			  neg.out = TRUE, keep.order = FALSE,
-                         simplify = FALSE, ..., allowDotAsName = FALSE)
+                          simplify = FALSE, ..., allowDotAsName = FALSE)
 {
     fixFormulaObject <- function(object) {
         Terms <- terms(object)
@@ -195,13 +194,13 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
             tmp2 <- as.character(attr(Terms, "variables"))[-1L]
             tmp <- c(tmp, tmp2[ind])
         }
-	form <- formula(object)
-	lhs <- if(length(form) > 2L)
-            paste(deparse(form[[2L]], backtick=TRUE), collapse="")
-        ## else NULL is implicit
 	rhs <- if(length(tmp)) paste(tmp, collapse = " + ") else "1"
 	if(!attr(terms(object), "intercept")) rhs <- paste(rhs, "- 1")
-	formula(paste(lhs, "~", rhs))
+        if(length(form <- formula(object)) > 2L) {
+            res <- formula(paste("lhs ~", rhs))
+            res[[2L]] <- form[[2L]]
+            res
+        } else formula(paste("~", rhs))
     }
 
     if (!is.null(data) && !is.environment(data) && !is.data.frame(data))
