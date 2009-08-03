@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-06-15 r48778)
+R version 2.10.0 Under development (unstable) (2009-08-01 r49053)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6467,4 +6467,12 @@ Error in `[[<-.data.frame`(`*tmp*`, "NewCol", value = integer(0)) :
 [1,] <missing value> "A string"     
 [2,] 3               <missing value>
 > ## used uninitialized variable in C, noticably Windows, for R <= 2.9.0
+> 
+> 
+> ## non-standard variable names in update etc
+> ## never guaranteed to work, requested by Sundar Dorai-Raj in
+> ## https://stat.ethz.ch/pipermail/r-devel/2009-July/054184.html
+> update(`a: b` ~ x, ~ . + y)
+`a: b` ~ x + y
+> ## 2.9.1 dropped backticks
 > 

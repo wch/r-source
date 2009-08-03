@@ -165,6 +165,10 @@ NEW FEATURES
 	set for UTF-8 at the end.  RShowDoc("NEWS") should display
 	this correctly, given suitable fonts.
 
+    o	term.formula(simplify = TRUE) now deparse with backtick=TRUE
+    	and so preserves non-standard variables such as `a: b`
+    	(requested by Sundar Dorai-Raj).
+
 
 Rd HELP FILE CHANGES
 
@@ -328,7 +332,7 @@ NEW FEATURES
 	as changed names for r-help. (Contributed by Jonathan Baron.)
 
     o	That R CMD check makes use of a
-	<pkg>/tests/Examples/<pkg>-Ex.Rout.save file as a reference
+	<pkg>/scripts/Examples/<pkg>-Ex.Rout.save file as a reference
 	result is now documented in 'Writing R Extensions'.
 
 

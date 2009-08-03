@@ -2407,3 +2407,10 @@ m22 <- matrix(list(NA_complex_, 3, "A string", NA_complex_), 2,2)
 print(m22)
 print(m22, na.print="<missing value>")
 ## used uninitialized variable in C, noticably Windows, for R <= 2.9.0
+
+
+## non-standard variable names in update etc
+## never guaranteed to work, requested by Sundar Dorai-Raj in
+## https://stat.ethz.ch/pipermail/r-devel/2009-July/054184.html
+update(`a: b` ~ x, ~ . + y)
+## 2.9.1 dropped backticks
