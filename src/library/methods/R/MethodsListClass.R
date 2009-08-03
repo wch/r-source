@@ -203,7 +203,7 @@
                   cat(gettextf("Reported %d ambiguous selections out of %d for function %s\n",nreport, length(object@allSelections), object@generic))
                   target <- object@target; selected = object@selected
                   candidates <- object@candidates; note <- object@note
-                  for(i in seq(length = nreport)) {
+                  for(i in seq_len(nreport)) {
                       these <- candidates[[i]]; notei <- note[[i]]
                       these <- these[is.na(match(these, selected[[i]]))]
                       cat(gettextf(

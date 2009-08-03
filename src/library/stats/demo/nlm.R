@@ -15,8 +15,8 @@ f <- function(x) {
 }
 
 ## explore surface {at x3 = 0}
-x <- seq(-1, 2, length=50)
-y <- seq(-1, 1, length=50)
+x <- seq(-1, 2, length.out=50)
+y <- seq(-1, 1, length.out=50)
 z <- apply(as.matrix(expand.grid(x, y)), 1, function(x) f(c(x, 0)))
 contour(x, y, matrix(log10(z), 50, 50))
 str(nlm.f <- nlm(f, c(-1,0,0), hessian = TRUE))
@@ -36,8 +36,8 @@ fx <- function(x)
     x1 <- x[,1]; x2 <- x[,2]
     100*(x2 - x1*x1)^2 + (1-x1)^2
 }
-x <- seq(-2, 2, length=100)
-y <- seq(-0.5, 1.5, length=100)
+x <- seq(-2, 2, length.out=100)
+y <- seq(-0.5, 1.5, length.out=100)
 z <- fx(expand.grid(x, y))
 op <- par(mfrow = c(2,1), mar = 0.1 + c(3,3,0,0))
 contour(x, y, matrix(log10(z), length(x)))
@@ -47,7 +47,7 @@ points(rbind(nlm.f2$estim[1:2]), col = "red", pch = 20)
 
 ## Zoom in :
 rect(0.9, 0.9, 1.1, 1.1, border = "orange", lwd = 2)
-x <- y <- seq(0.9, 1.1, length=100)
+x <- y <- seq(0.9, 1.1, length.out=100)
 z <- fx(expand.grid(x, y))
 contour(x, y, matrix(log10(z), length(x)))
 mtext("zoomed in");box(col = "orange")

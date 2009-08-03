@@ -1177,7 +1177,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
       ok <- match(colnames(sigs), "from", 0) > 0
     else
       ok <- rep(TRUE, ncol(sigs))
-    for(j in seq(length = ncol(sigs))) {
+    for(j in seq_len(ncol(sigs))) {
       classesj <-unique(sigs[,j])
       .undefClasses <- character()
       subclasses <- .relevantClasses(classesj, !virtual, where, ok[[j]])
@@ -1211,7 +1211,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
        && ncol(signatures) <= length(f@signature)) {
       ## turn signatures back into a list
       siglist <- vector("list", nrow(signatures))
-      for(i in seq(length = nrow(signatures)))
+      for(i in seq_len(nrow(signatures)))
         siglist[[i]] <- signatures[i,]
       signatures <- siglist
   }
