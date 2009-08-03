@@ -60,6 +60,7 @@ coplot <-
     }
     bad.formula <- function() stop("invalid conditioning formula")
     bad.lengths <- function() stop("incompatible variable lengths")
+    getOp <- function(call) deparse(call[[1L]], backtick=FALSE)[[1L]]
 
     ## parse and check the formula
 
@@ -68,12 +69,10 @@ coplot <-
 	bad.formula()
     y <- deparen(formula[[2L]])
     rhs <- deparen(formula[[3L]])
-    if (deparse(rhs[[1L]])[1L] != "|")
-	bad.formula()
+    if (getOp(rhs) != "|") bad.formula()
     x <- deparen(rhs[[2L]])
     rhs <- deparen(rhs[[3L]])
-    if (is.language(rhs) && !is.name(rhs)
-	&& (deparse(rhs[[1L]])[1L] == "*" || deparse(rhs[[1L]])[1L] == "+")) {
+    if (is.language(rhs) && !is.name(rhs) && getOp(rhs) %in%  c("*", "+")) {
 	have.b <- TRUE
 	a <- deparen(rhs[[2L]])
 	b <- deparen(rhs[[3L]])
