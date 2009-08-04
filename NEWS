@@ -169,6 +169,9 @@ NEW FEATURES
     	so preserves non-standard responses such as `a: b` (requested
     	by Sundar Dorai-Raj).
 
+    o	New function news() for building and querying R or package news
+	information.
+
 
 Rd HELP FILE CHANGES
 
