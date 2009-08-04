@@ -112,8 +112,8 @@ static void complex_div(Rcomplex *c, Rcomplex *a, Rcomplex *b)
 /* "export" this (to be API) : */
 void R_cpow_n(Rcomplex *r, Rcomplex *x, int k) {
     if(k == 0) {
-	r->r = x->r;
-	r->i = x->i;
+	r->r = 1.;
+	r->i = 0.;
     } else if(k < 0) {
 	Rcomplex h;
 	R_cpow_n(r, x, -k);
@@ -188,7 +188,7 @@ static void complex_pow(Rcomplex *r, Rcomplex *a, Rcomplex *b)
 /* "export" this (to be API) : */
 double complex R_cpow_n(double complex X, int k) {
     if(k == 0)
-	return X;
+	return (double complex) 1.;
     else if(k < 0)
 	return 1. / R_cpow_n(X, -k);
     else {/* k > 0 */
