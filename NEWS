@@ -237,6 +237,9 @@ BUG FIXES
 	other code attempted to ensure that non-zero values had a
 	non-zero representation.
 
+    o	z^n for integer n and complex z or (numeric z and 2 < |n| <= 256) is now
+	more accurate, notably in the complex case (when |n| <= 65536).
+
 
 
 

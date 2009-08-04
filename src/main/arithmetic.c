@@ -197,7 +197,19 @@ double R_pow(double x, double y) /* = x ^ y */
 	else if(y < 0) return(R_PosInf);
 	else return(y); /* NA or NaN, we assert */
     }
-    if (R_FINITE(x) && R_FINITE(y))
+    if (R_FINITE(x) && R_FINITE(y)) {
+	int n = (int)y;
+	if(abs(n) <= 256 && y == n) { /* x ^ n -- as in R_pow_di() below */
+	    /* 256 = 2^10 -- a somewhat wild guess */
+	    double xn = 1.0;
+	    if (n < 0) { n = -n; x = 1/x; }
+	    for(;;) {
+		if(n & 01) xn *= x;
+		if(n >>= 1) x *= x; else break;
+	    }
+	    return xn;
+	}
+	else {
 /* work around a bug in May 2007 snapshots of gcc pre-4.3.0, also
    present in the release version.  If compiled with, say, -g -O3
    on x86_64 Linux this compiles to a call to sqrtsd and gives
@@ -205,10 +217,12 @@ double R_pow(double x, double y) /* = x ^ y */
    example(pbirthday) will fail.
  */
 #if __GNUC__ == 4 && __GNUC_MINOR__ >= 3
-	return (y == 2.0) ? x*x : pow(x, y);
+	    return pow(x, y);
 #else
-	return (y == 2.0) ? x*x : ((y == 0.5) ? sqrt(x) : pow(x, y));
+	    return ((y == 0.5) ? sqrt(x) : pow(x, y));
 #endif
+	}
+    }
     if (ISNAN(x) || ISNAN(y))
 	return(x + y);
     if(!R_FINITE(x)) {
