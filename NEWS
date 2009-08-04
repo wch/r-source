@@ -1,4 +1,4 @@
-﻿
+
 	**************************************************
 	*						 *
 	*	       2.10 SERIES NEWS			 *
@@ -165,7 +165,7 @@ NEW FEATURES
 	set for UTF-8 at the end.  RShowDoc("NEWS") should display
 	this correctly, given suitable fonts.
 
-    o	term.formula(simplify = TRUE) now does not deparse the LHS and
+    o	terms.formula(simplify = TRUE) now does not deparse the LHS and
     	so preserves non-standard responses such as `a: b` (requested
     	by Sundar Dorai-Raj).
 
