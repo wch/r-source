@@ -27,7 +27,7 @@ export("?", CRAN.packages, Rprof,Rprofmem, RShowDoc, RSiteSearch,
        toLatex, type.convert, unstack, unzip, update.packageStatus,
        update.packages, upgrade, url.show, vi, vignette, write.csv,
        write.csv2, write.socket, write.table, wsbrowser, xedit, xemacs,
-       zip.file.extract, rtags, aspell)
+       zip.file.extract, rtags, aspell, news)
 
 export(txtProgressBar, getTxtProgressBar, setTxtProgressBar)
 

@@ -180,9 +180,23 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
     }
 
     iS <- c(iS, nl+1L) # such that  iS[i] : (iS[i+1]-1)  makes sense
-    for(i in seq_along(series))
-	series[[i]] <- parseSeries(ll[(iS[i]+ 1L) : (iS[i+1] - 1L)],
-				   ver = names(series)[i])
+    ## At least for 'keepAll', we need to get rid of the whole series
+    ## header (could also do this in general, of course):
+    if(chop == "keepAll") {
+        hl <- grep(sprintf("^\t%s",
+                           paste(rep.int("\\*", 30), collapse = "")),
+                   ll)
+        for(i in seq_along(series))
+            series[[i]] <-
+                parseSeries(ll[(hl[2L * i] + 1L) :
+                               (hl[2L * i + 1L] - 1L)],
+                            ver = names(series)[i])
+    } else {
+        for(i in seq_along(series))
+            series[[i]] <-
+                parseSeries(ll[(iS[i] + 1L) : (iS[i+1] - 1L)],
+                            ver = names(series)[i])
+    }
     attr(series, "call") <- cl
     class(series) <- "newsTree"
     series

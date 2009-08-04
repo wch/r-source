@@ -8,15 +8,20 @@ function()
         cbind(rep.int(names(e), sapply(e, length)),
               unlist(lapply(e,
                             function(s) {
-                                ## Could also remove leading white space
-                                ## and trailing blank lines.
-                                lapply(s, paste, collapse = "\n")
+                                ## Also remove leading white space and
+                                ## trailing blank lines.
+                                lapply(s,
+                                       function(e)
+                                           sub("[[:space:]]*$", "",
+                                               paste(sub("^ ", "", e),
+                                                     collapse = "\n")))
                             }),
                             use.names = FALSE))
     db <- lapply(Reduce(c, db), flatten)
     db <- do.call(rbind, Map(cbind, names(db), db))
     ## Squeeze in an empty date column.
-    .make_news_db(cbind(db[, 1L], NA_character_, db[, -1L]))
+    .make_news_db(cbind(db[, 1L], NA_character_, db[, -1L]),
+                  logical(nrow(db)))
 }
 
 .build_news_db <-
