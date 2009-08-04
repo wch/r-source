@@ -233,6 +233,10 @@ BUG FIXES
 
     o	n:m  now returns <integer> in a few more boundary cases.
 
+    o	The 'zap.ind' argument to printCoefmat() did not usually work as
+	other code attempted to ensure that non-zero values had a
+	non-zero representation.
+
 
 
 

@@ -107,11 +107,20 @@ printCoefmat <-
     if(length(tst.ind))
 	Cf[, tst.ind]<- format(round(xm[, tst.ind], digits = dig.tst),
                                digits = digits)
-    if(length(zap.ind))
-	Cf[, zap.ind]<- format(zapsmall(xm[,zap.ind], digits = digits),
-                               digits = digits)
+    ## This is wrong in two ways:
+    # 1) zapsmall needs to be applied column-by-column
+    # 2) Cf became zero, xm, not, so this was undone.
+    # however, it relies on the grouping of columns for format()
+    #if(length(zap.ind))
+    #	Cf[, zap.ind]<- format(zapsmall(xm[,zap.ind], digits = digits),
+    #                           digits = digits)
+    if(length(zap.ind)) {
+        xm[, zap.ind] <- zapsmall(xm[,zap.ind], digits)
+    	Cf[, zap.ind]<- format(xm[,zap.ind], digits = digits)
+    }
+    ## really this should be column-by-column, but that's a large change
     if(any(r.ind <- !((1L:nc) %in%
-                      c(cs.ind, tst.ind, zap.ind, if(has.Pvalue)nc))))
+                      c(cs.ind, tst.ind, zap.ind, if(has.Pvalue) nc))))
 	Cf[, r.ind] <- format(xm[, r.ind], digits=digits)
     okP <- if(has.Pvalue) ok[, -nc] else ok
     ## we need to find out where Cf is zero.  We can't use as.numeric
