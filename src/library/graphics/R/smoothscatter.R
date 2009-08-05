@@ -17,7 +17,7 @@ smoothScatter <- function(x, y=NULL, nbin=128, bandwidth,
     ylab <- if (is.null(ylab)) xy$ylab else ylab
 
     ## eliminate non-finite (incl. NA) values
-    x <- cbind(xy$x, xy$y)[ is.finite(xy$x) & is.finite(xy$y), ]
+    x <- cbind(xy$x, xy$y)[ is.finite(xy$x) & is.finite(xy$y), , drop = FALSE]
 
     ## xlim and ylim
     if(!missing(xlim)) {
