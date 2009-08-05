@@ -298,6 +298,12 @@ BUG FIXES
     	leaking a file descriptor each time. (PR#13841)
 
 
+    o	print.anova() failed to recognize the column labelled
+    	P(>|Chi|) from a Poisson/binomial GLM anova as a p-value
+    	column in order to format it appropriately (and as a
+    	consequence it gave no significance stars).
+
+
 
 		CHANGES IN R VERSION 2.9.1
 
