@@ -754,6 +754,10 @@ SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     if (DispatchOrEval(call, op, "names<-", args, env, &ans, 0, 1))
 	return(ans);
+    /* Special case: removing non-existent names, to avoid a copy */
+    if (CADR(args) == R_NilValue && 
+	getAttrib(CAR(args), R_NamesSymbol) == R_NilValue)
+	return CAR(args);
     PROTECT(args = ans);
     if (NAMED(CAR(args)) == 2)
 	SETCAR(args, duplicate(CAR(args)));
