@@ -1,12 +1,12 @@
 ### Tests of complex arithemetic.
 
+Meps <- .Machine$double.eps
 ## complex
 z <- 0i ^ (-3:3)
 stopifnot(Re(z) == 0 ^ (-3:3))
 set.seed(123)
 z <- complex(real = rnorm(100), imag = rnorm(100))
-stopifnot(Mod ( 1 -  sin(z) / ( (exp(1i*z)-exp(-1i*z))/(2*1i) ))
-	  < 20 * .Machine$double.eps)
+stopifnot(Mod ( 1 -  sin(z) / ( (exp(1i*z)-exp(-1i*z))/(2*1i) )) < 20 * Meps)
 ## end of moved from complex.Rd
 
 
@@ -15,13 +15,16 @@ a <- -4:12
 m <- outer(a +0i, b <- seq(-.5,2, by=.5), "^")
 dimnames(m) <- list(paste(a), "^" = sapply(b,format))
 round(m,3)
-
+stopifnot(m[,as.character(0:2)] == cbind(1,a,a*a),
+                                        # latter were only approximate
+          all.equal(unname(m[,"0.5"]),
+                    sqrt(abs(a))*ifelse(a < 0, 1i, 1),
+                    tol= 20*Meps))
 ## fft():
 for(n in 1:30) cat("\nn=",n,":", round(fft(1:n), 8),"\n")
 
 
 ## Complex Trig.:
-Meps <- .Machine$double.eps
 abs(Im(cos(acos(1i))) -	 1) < 2*Meps
 abs(Im(sin(asin(1i))) -	 1) < 2*Meps
 ##P (1 - Im(sin(asin(Ii))))/Meps
@@ -44,7 +47,7 @@ all(abs(Isi-1) < 100* Meps)
 
 
 ## polyroot():
-all(abs(1 + polyroot(choose(8, 0:8))) < 1e-10)# maybe smaller..
+stopifnot(abs(1 + polyroot(choose(8, 0:8))) < 1e-10)# maybe smaller..
 
 
 ## PR#7781

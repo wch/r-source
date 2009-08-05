@@ -1,6 +1,6 @@
 
-R version 2.6.0 Under development (unstable) (2007-06-23 r42031)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.10.0 Under development (unstable) (2009-08-04 r49064)
+Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -17,13 +17,13 @@ Type 'q()' to quit R.
 
 > ### Tests of complex arithemetic.
 > 
+> Meps <- .Machine$double.eps
 > ## complex
 > z <- 0i ^ (-3:3)
 > stopifnot(Re(z) == 0 ^ (-3:3))
 > set.seed(123)
 > z <- complex(real = rnorm(100), imag = rnorm(100))
-> stopifnot(Mod ( 1 -  sin(z) / ( (exp(1i*z)-exp(-1i*z))/(2*1i) ))
-+ 	  < 20 * .Machine$double.eps)
+> stopifnot(Mod ( 1 -  sin(z) / ( (exp(1i*z)-exp(-1i*z))/(2*1i) )) < 20 * Meps)
 > ## end of moved from complex.Rd
 > 
 > 
@@ -51,7 +51,11 @@ Type 'q()' to quit R.
   10 0.316+0.000i 1+0i 3.162+0.000i 10+0i 31.623+0.000i 100+0i
   11 0.302+0.000i 1+0i 3.317+0.000i 11+0i 36.483+0.000i 121+0i
   12 0.289+0.000i 1+0i 3.464+0.000i 12+0i 41.569+0.000i 144+0i
-> 
+> stopifnot(m[,as.character(0:2)] == cbind(1,a,a*a),
++                                         # latter were only approximate
++           all.equal(unname(m[,"0.5"]),
++                     sqrt(abs(a))*ifelse(a < 0, 1i, 1),
++                     tol= 20*Meps))
 > ## fft():
 > for(n in 1:30) cat("\nn=",n,":", round(fft(1:n), 8),"\n")
 
@@ -117,7 +121,6 @@ n= 30 : 465+0i -15+142.7155i -15+70.56945i -15+46.16525i -15+33.69055i -15+25.98
 > 
 > 
 > ## Complex Trig.:
-> Meps <- .Machine$double.eps
 > abs(Im(cos(acos(1i))) -	 1) < 2*Meps
 [1] TRUE
 > abs(Im(sin(asin(1i))) -	 1) < 2*Meps
@@ -148,8 +151,7 @@ n= 30 : 465+0i -15+142.7155i -15+70.56945i -15+46.16525i -15+33.69055i -15+25.98
 > 
 > 
 > ## polyroot():
-> all(abs(1 + polyroot(choose(8, 0:8))) < 1e-10)# maybe smaller..
-[1] TRUE
+> stopifnot(abs(1 + polyroot(choose(8, 0:8))) < 1e-10)# maybe smaller..
 > 
 > 
 > ## PR#7781
