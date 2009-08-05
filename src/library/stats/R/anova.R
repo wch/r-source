@@ -158,7 +158,7 @@ print.anova <- function(x, digits = max(getOption("digits") - 2, 3),
 	cat(heading, sep = "\n")
     nc <- dim(x)[2L]
     if(is.null(cn <- colnames(x))) stop("'anova' object must have colnames")
-    has.P <- substr(cn[nc],1,3) == "Pr(" # P-value as last column
+    has.P <- grepl("^(P|Pr)\\(", cn[nc]) # P-value as last column
     zap.i <- 1L:(if(has.P) nc-1 else nc)
     i <- which(substr(cn,2,7) == " value")
     i <- c(i, which(!is.na(match(cn, c("F", "Cp", "Chisq")))))

@@ -50,6 +50,12 @@ BUG FIXES
     o	The checks for inconsistent inheritance reported by setClass()
         now detect inconsistent superclasses and give better warning messages.
 
+    o	print.anova() failed to recognize the column labelled
+    	P(>|Chi|) from a Poisson/binomial GLM anova as a p-value
+    	column in order to format it appropriately (and as a
+    	consequence it gave no significance stars).
+
+
 
 		CHANGES IN R VERSION 2.9.1
 
