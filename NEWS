@@ -178,6 +178,10 @@ NEW FEATURES
     o	factor(NULL) now returns the same as factor(''[0]) instead of an
 	error, and table(NULL) consequently does analogously.
 
+    o	as.data.frame.vector() (and its copies) is slightly faster
+	by avoiding a copy if there are no names (following a
+	suggestion of Tim Hesterburg).
+
 
 Rd HELP FILE CHANGES
 

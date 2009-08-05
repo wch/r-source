@@ -190,7 +190,7 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...,
 		!anyDuplicated(row.names)) {}
 	else row.names <- .set_row_names(nrows)
     }
-    names(x) <- NULL # remove names as from 2.0.0
+    if(!is.null(names(x))) names(x) <- NULL # remove names as from 2.0.0
     value <- list(x)
     if(!optional) names(value) <- nm
     attr(value, "row.names") <- row.names
