@@ -175,6 +175,9 @@ NEW FEATURES
     o	z^n for integer n and complex z or (numeric z and 2 < |n| <= 256) is
 	more accurate now, notably in the complex case (if |n| <= 65536).
 
+    o	factor(NULL) now returns the same as factor(''[0]) instead of an
+	error, and table(NULL) consequently does analogously.
+
 
 Rd HELP FILE CHANGES
 

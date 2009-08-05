@@ -17,7 +17,7 @@
 factor <- function(x = character(), levels, labels=levels,
                    exclude = NA, ordered = is.ordered(x))
 {
-    exclude <- as.vector(exclude, typeof(x))
+    if(is.null(x)) x <- character()
     nx <- names(x)
     if (missing(levels)) {
 	y <- unique(x)
@@ -26,6 +26,7 @@ factor <- function(x = character(), levels, labels=levels,
 	levels <- unique(y[ind])
     }
     force(ordered)
+    exclude <- as.vector(exclude, typeof(x))# may result in NA
     x <- as.character(x)
     levels <- levels[is.na(match(levels, exclude))]
     f <- match(x, levels)

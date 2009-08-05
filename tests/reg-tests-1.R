@@ -5769,3 +5769,7 @@ length.FOO <- function(x) length(x$value)
 stopifnot(identical(seq_len(length(x)),
 		    seq_along(x)))
 ## used C-internal non-dispatching length() in R <= 2.9.1
+
+## factor(NULL)
+stopifnot(identical(factor(), factor(NULL)))
+## gave an error from R ~1.3.0 to 2.9.1
