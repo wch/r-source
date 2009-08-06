@@ -10,9 +10,11 @@ Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Associat
 "Brazil (SP 2)",Brazil,Piracicaba,http://brieger.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba",aafgarci@esalq.usp.br,1,br
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","Brad McNeney <mcneney@sfu.ca>",1,ca
 "Canada (ON)",Canada,Toronto,http://probability.ca/cran/,"University of Toronto","Jeffrey S. Rosenthal <jeff at math.toronto.edu>",1,ca
+"Canada (QC)",Canada,Montreal,http://cran.parentinginformed.com/,"iWeb, Montreal","James Miller <jmiller@parentinginformed.com>",1,ca
 Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana@mat.puc.cl>",1,cl
 "China (Beijing)",China,Bejing,http://ftp.ctex.org/mirrors/CRAN/,CTEX.ORG,"Aloft Wu <aloft@ctex.org>",1,cn
 "China (Hong Kong)",China,"Hong Kong",http://mirrors.geoexpat.com/cran/,GeoExpat.Com,shri@geoexpat.com,1,cn
+Colombia,Colombia,Bogota,http://www.laqee.unal.edu.co/CRAN/,"National University of Colombia","Ernesto Parra Rincon <eparrar@unal.edu.co>",1,co
 Croatia,Croatia,Zagreb,http://imago.irb.hr/r/,"Rudjer Boskovic Institute",matko.bosnjak@irb.hr,1,hr
 Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirror@dotsrc.org,1,dk
 "France (Toulouse)",France,Toulouse,http://cran.fr.r-project.org/,"CICT, Toulouse","David Allouche <allouche@tlse.toulouse.inra.fr>",1,fr
@@ -66,5 +68,6 @@ Thailand,Thailand,Bangkok,http://mirror.kapook.com/cran/,"Kapook.com, Bangkok",t
 "USA (PA 2)",USA,Pittsburgh,http://cran.mirrors.hoobly.com,"Hoobly Classifieds, Pittsburgh, PA","Peter Grigor <pgrigor@hoobly.com>",1,us
 "USA (TN)",USA,Knoxville,http://mira.sunsite.utk.edu/CRAN/,"University of Tennessee, Knoxville, TN","Michael Campfield <campfieldm@sworps.tennessee.edu>",1,us
 "USA (TX 1)",USA,"San Antonio",http://www.revolution-computing.com/cran/,"Revolution Computing, San Antonio, TX","David Smith <david@revolution-computing.com>",1,us
-"USA (TX 2)",USA,Dallas,http://www.cyberuse.com/cran,"CyberUse.com, Dallas, TX",help@cyberuse.com,1,us
+"USA (TX 2)",USA,Dallas,http://www.cyberuse.com/cran/,"CyberUse.com, Dallas, TX",help@cyberuse.com,1,us
+"USA (TX 3)",USA,Houston,http://cran.sixsigmaonline.org/,"sixsigmaonline.org, Houston, TX",gosixsigma@gmail.com,1,us
 "USA (WA)",USA,Seattle,http://cran.fhcrc.org/,"Fred Hutchinson Cancer Research Center, Seattle, WA",sfalcon@fhcrc.org,1,us
