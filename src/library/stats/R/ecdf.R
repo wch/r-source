@@ -38,10 +38,10 @@ print.ecdf <- function (x, digits= getOption("digits") - 2, ...)
     cat("Empirical CDF \nCall: ")
     print(attr(x, "call"), ...)
     n <- length(xx <- eval(expression(x), envir = environment(x)))
-    i1 <- 1L:min(3,n)
-    i2 <- if(n >= 4) max(4,n-1):n else integer(0L)
+    i1 <- 1L:min(3L,n)
+    i2 <- if(n >= 4L) max(4L,n-1L):n else integer(0L)
     cat(" x[1:",n,"] = ", numform(xx[i1]),
-	if(n>3) ", ", if(n>5) " ..., ", numform(xx[i2]), "\n", sep = "")
+	if(n>3L) ", ", if(n>5L) " ..., ", numform(xx[i2]), "\n", sep = "")
     invisible(x)
 }
 

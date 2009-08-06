@@ -29,7 +29,7 @@ contr.poly <- function (n, scores = 1:n, contrasts = TRUE, sparse = FALSE)
 	raw <- qr.qy(QR, z)
 	Z <- sweep(raw, 2L, apply(raw, 2L, function(x) sqrt(sum(x^2))), "/",
 		   check.margin=FALSE)
-	colnames(Z) <- paste("^", 1L:n - 1, sep="")
+	colnames(Z) <- paste("^", 1L:n - 1L, sep="")
 	Z
     }
 
@@ -101,7 +101,7 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE)
         norm2 <- colSums(raw^2)
         alpha <- (colSums(x*raw^2)/norm2 + xbar)[1L:degree]
         Z <- raw / rep(sqrt(norm2), each = length(x))
-        colnames(Z) <- 1L:n - 1
+        colnames(Z) <- 1L:n - 1L
         Z <- Z[, -1, drop = FALSE]
         attr(Z, "degree") <- 1L:degree
         attr(Z, "coefs") <- list(alpha = alpha, norm2 = c(1, norm2))

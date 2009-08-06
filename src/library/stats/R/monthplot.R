@@ -34,7 +34,7 @@ monthplot.ts <-
     if (is.null(labels)) {
         if (missing(phase)) {
             f <- frequency(x)
-            if (f == 4) labels <- paste("Q", 1L:4, sep = "")
+            if (f == 4) labels <- paste("Q", 1L:4L, sep = "")
             else if (f == 12)
                 labels <- c("J", "F", "M", "A", "M", "J", "J",
                   "A", "S", "O", "N", "D")

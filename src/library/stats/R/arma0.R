@@ -81,7 +81,7 @@ arima0 <- function(x, order = c(0, 0, 0),
        || seasonal$period == 0) seasonal$period <- frequency(x)
     arma <- c(order[-2], seasonal$order[-2], seasonal$period,
               order[2L], seasonal$order[2L])
-    narma <- sum(arma[1L:4])
+    narma <- sum(arma[1L:4L])
     if(d <- order[2L]) x <- diff(x, 1, d)
     if(d <- seasonal$order[2L]) x <- diff(x, seasonal$period, d)
     xtsp <- tsp(x)
@@ -280,7 +280,7 @@ predict.arima0 <-
     n <- length(data)
     arma <- object$arma
     coefs <- object$coef
-    narma <- sum(arma[1L:4])
+    narma <- sum(arma[1L:4L])
     if(length(coefs) > narma) {
         if(names(coefs)[narma+1] == "intercept") {
             xreg <- cbind(intercept = rep(1, n), xreg)
@@ -297,7 +297,7 @@ predict.arima0 <-
             warning("MA part of model is not invertible")
     }
     if(arma[4L] > 0) {
-        ma <- coefs[sum(arma[1L:3]) + 1L:arma[4L]]
+        ma <- coefs[sum(arma[1L:3L]) + 1L:arma[4L]]
         if(any(Mod(polyroot(c(1, ma))) < 1))
             warning("seasonal MA part of model is not invertible")
     }

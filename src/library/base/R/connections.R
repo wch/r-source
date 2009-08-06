@@ -174,7 +174,7 @@ closeAllConnections <- function()
     if(i > 0L) sink(stderr(), type = "message")
     # now unwind the sink diversion stack.
     n <- sink.number()
-    if(n > 0L) for(i in 1L:n) sink()
+    if(n > 0L) for(i in seq_len(n)) sink()
     # get all the open connections.
     set <- getAllConnections()
     set <- set[set > 2L]

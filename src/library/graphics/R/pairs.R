@@ -106,7 +106,7 @@ function (x, labels, panel = points, ...,
     opar <- par(mfrow = c(nc, nc), mar = rep.int(gap/2, 4), oma = oma)
     on.exit(par(opar))
 
-    for (i in if(row1attop) 1L:nc else nc:1)
+    for (i in if(row1attop) 1L:nc else nc:1L)
         for (j in 1L:nc) {
             localPlot(x[, j], x[, i], xlab = "", ylab = "",
                       axes = FALSE, type = "n", ...)

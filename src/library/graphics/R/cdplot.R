@@ -93,13 +93,13 @@ function(x, y,
     ## setup return value
     rval <- list()
 
-    for(i in 1L:(ny-1)) {
-        dxi <- stats::density(x[y %in% levels(y)[1L:i]], bw = dx$bw, n = n,
+    for(i in seq_len(ny-1L)) {
+        dxi <- stats::density(x[y %in% levels(y)[seq_len(i)]], bw = dx$bw, n = n,
                               from = min(dx$x), to = max(dx$x), ...)
         y1[i,] <- dxi$y/dx$y * yprop[i]
         rval[[i]] <- stats::approxfun(x1, y1[i,], rule = 2)
     }
-    names(rval) <- levels(y)[1L:(ny-1)]
+    names(rval) <- levels(y)[seq_len(ny-1L)]
 
     ## use known ranges
     y1 <- rbind(0, y1, 1)
@@ -117,16 +117,16 @@ function(x, y,
     if(plot) {
         plot(0, 0, xlim = xlim, ylim = ylim, type = "n", axes = FALSE,
              xaxs = "i", yaxs = "i", xlab = xlab, ylab = ylab, main = main)
-        for(i in 1L:(NROW(y1)-1))
+        for(i in seq_len(NROW(y1)-1))
             polygon(c(x1, rev(x1)), c(y1[i+1,], rev(y1[i,])), col = col[i],
                     border = border)
         axis(1)
 
-        equidist <- any(diff(y1[,1]) < tol.ylab)
+        equidist <- any(diff(y1[,1L]) < tol.ylab)
         if(equidist)
             axis(2, at = seq.int(1/(2*ny), 1-1/(2*ny), by = 1/ny), labels = yaxlabels, tick = FALSE)
         else
-            axis(2, at = (y1[-1,1] + y1[-NROW(y1), 1])/2, labels = yaxlabels, tick = FALSE)
+            axis(2, at = (y1[-1L,1L] + y1[-NROW(y1), 1L])/2, labels = yaxlabels, tick = FALSE)
         axis(4)
         box()
     }

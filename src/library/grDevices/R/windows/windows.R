@@ -109,7 +109,7 @@ win.print <- function(width = 7, height = 7, pointsize = 12, printer = "",
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, "white", 1,
                         NA_integer_, NA_integer_,
-                        FALSE, .PSenv, NA, restoreConsole, "", FALSE, 
+                        FALSE, .PSenv, NA, restoreConsole, "", FALSE,
                         TRUE))
 
 win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12,
@@ -260,9 +260,9 @@ print.SavedPlots <- function(x, ...)
     }
     cat("Saved Plots from R version 1.4.0 or later\n\n")
     cat("  Contains", x[[2L]], "out of a maximum", x[[3L]], "plots\n")
-    lens <- sapply(x[[5]], length)[1L:x[[2L]]]
+    lens <- sapply(x[[5L]], length)[1L:x[[2L]]]
     cat("  #plot calls are", paste(lens, collapse=", "), "\n")
-    cat("  Current position is plot", 1 + x[[4L]], "\n")
+    cat("  Current position is plot", 1L + x[[4L]], "\n")
     invisible(x)
 }
 

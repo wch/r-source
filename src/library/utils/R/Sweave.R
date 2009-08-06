@@ -555,7 +555,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 
                     if(options$results=="verbatim"){
                         cat("\n\\end{Soutput}\n", file=chunkout, append=TRUE)
-                        linesout[thisline + 1L:2] <- srcline
+                        linesout[thisline + 1L:2L] <- srcline
                         thisline <- thisline + 2L
                     }
                 }

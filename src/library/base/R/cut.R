@@ -41,13 +41,13 @@ cut.default <-
 	    if(ok) paste(if(right)"(" else "[",
 			 ch.br[-nb], ",", ch.br[-1L],
 			 if(right)"]" else ")", sep='')
-	    else paste("Range", 1L:(nb - 1L),sep="_")
+	    else paste("Range", seq_len(nb - 1L), sep="_")
         if (ok && include.lowest) {
             if (right)
                 substr(labels[1L], 1L, 1L) <- "[" # was "("
             else
-                substring(labels[nb-1],
-                          nchar(labels[nb-1], "c")) <- "]" # was ")"
+                substring(labels[nb-1L],
+                          nchar(labels[nb-1L], "c")) <- "]" # was ")"
         }
     } else if (is.logical(labels) && !labels)
         codes.only <- TRUE

@@ -18,7 +18,7 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
 {
     mat <- missing(at) || is.null(at)
     if(!mat) x <- as.POSIXct(at) else x <- as.POSIXct(x)
-    range <- par("usr")[if(side %%2) 1L:2 else 3:4]
+    range <- par("usr")[if(side %%2) 1L:2L else 3L:4L]
     ## find out the scale involved
     d <- range[2L] - range[1L]
     z <- c(range, x[is.finite(x)])
@@ -189,7 +189,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
             } else {
                 maxx <- max(x, na.rm = TRUE)
                 breaks <- seq.int(start, maxx + incr, breaks)
-                breaks <- breaks[1L:(1+max(which(breaks < maxx)))]
+                breaks <- breaks[seq_len(1L+max(which(breaks < maxx)))]
             }
         }
         else stop("invalid specification of 'breaks'")
@@ -227,7 +227,7 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
 {
     mat <- missing(at) || is.null(at)
     if(!mat) x <- as.Date(at) else x <- as.Date(x)
-    range <- par("usr")[if(side %%2) 1L:2 else 3:4]
+    range <- par("usr")[if(side %%2) 1L:2L else 3:4L]
     range[1L] <- ceiling(range[1L])
     range[2L] <- floor(range[2L])
     ## find out the scale involved

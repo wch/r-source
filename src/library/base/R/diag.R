@@ -26,7 +26,7 @@ diag <- function(x = 1, nrow, ncol)
         y <- c(x)[1L + 0L:(m - 1L) * (dim(x)[1L] + 1L)]
         nms <- dimnames(x)
         if (is.list(nms) && !any(sapply(nms, is.null)) &&
-            identical((nm <- nms[[1L]][1L:m]), nms[[2L]][1L:m]))
+            identical((nm <- nms[[1L]][seq_len(m)]), nms[[2L]][seq_len(m)]))
             names(y) <- nm
         return(y)
     }

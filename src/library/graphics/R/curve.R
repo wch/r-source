@@ -30,7 +30,7 @@ curve <- function(expr, from=NULL, to=NULL, n=101, add=FALSE, type="l",
     }
     if (is.null(xlim))
 	delayedAssign("lims",
-		  {pu <- par("usr")[1L:2]
+		  {pu <- par("usr")[1L:2L]
 		   if(par("xaxs") == "r") pu <- extendrange(pu, f = -1/27)
 		   if(par("xlog")) 10^pu else pu })
     else lims <- xlim

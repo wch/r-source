@@ -76,7 +76,7 @@ biplot.default <-
     invisible()
 }
 
-biplot.princomp <- function(x, choices = 1L:2, scale = 1, pc.biplot=FALSE, ...)
+biplot.princomp <- function(x, choices = 1L:2L, scale = 1, pc.biplot=FALSE, ...)
 {
     if(length(choices) != 2) stop("length of choices must be 2")
     if(!length(scores <- x$scores))
@@ -93,7 +93,7 @@ biplot.princomp <- function(x, choices = 1L:2, scale = 1, pc.biplot=FALSE, ...)
     invisible()
 }
 
-biplot.prcomp <- function(x, choices = 1L:2, scale = 1, pc.biplot=FALSE, ...)
+biplot.prcomp <- function(x, choices = 1L:2L, scale = 1, pc.biplot=FALSE, ...)
 {
     if(length(choices) != 2) stop("length of choices must be 2")
     if(!length(scores <- x$x))

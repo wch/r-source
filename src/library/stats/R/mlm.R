@@ -286,15 +286,15 @@ anova.mlm <-
             for(i in 1L:nmodels) {
                 s2 <- Tr(solve(Psi,T %*% ss[[i]] %*% t(T)))/pp/df[i]
                 Fval <- s2/sph$sigma
-                stats[i,1L:3] <- abs(c(Fval, df[i]*pp, df.res*pp))
+                stats[i,1L:3L] <- abs(c(Fval, df[i]*pp, df.res*pp))
             }
-            stats[,4] <- pf(stats[,1], stats[,2], stats[,3], lower.tail=FALSE)
-            stats[,5] <- pf(stats[,1],
-                            stats[,2]*sph$GG.eps, stats[,3]*sph$GG.eps,
+            stats[,4] <- pf(stats[,1L], stats[,2L], stats[,3L], lower.tail=FALSE)
+            stats[,5] <- pf(stats[,1L],
+                            stats[,2L]*sph$GG.eps, stats[,3L]*sph$GG.eps,
                             lower.tail=FALSE)
-            stats[,6] <- pf(stats[,1],
-                            stats[,2]*min(1,sph$HF.eps),
-                            stats[,3]*min(1,sph$HF.eps),
+            stats[,6] <- pf(stats[,1L],
+                            stats[,2L]*min(1,sph$HF.eps),
+                            stats[,3L]*min(1,sph$HF.eps),
                             lower.tail=FALSE)
         } else {
 
@@ -320,7 +320,7 @@ anova.mlm <-
                 eigs[i, ] <- Re(eigen(qr.coef(rss.qr,
                                               (T %*% ss[[i]] %*% t(T)) * scm),
                                       symmetric = FALSE)$values)
-                stats[i, 1L:4] <-
+                stats[i, 1L:4L] <-
                     switch(test,
                            "Pillai" = Pillai(eigs[i,  ],
                            df[i], df.res),
@@ -330,11 +330,10 @@ anova.mlm <-
                            df[i], df.res),
                            "Roy" = Roy(eigs[i,  ],
                            df[i], df.res))
-                ok <- stats[, 2] >= 0 & stats[, 3] > 0 & stats[, 4] > 0
+                ok <- stats[, 2L] >= 0 & stats[, 3L] > 0 & stats[, 4L] > 0
                 ok <- !is.na(ok) & ok
-                stats[ok, 5] <- pf(stats[ok, 2], stats[ok, 3], stats[ok, 4],
+                stats[ok, 5L] <- pf(stats[ok, 2], stats[ok, 3L], stats[ok, 4L],
                                    lower.tail = FALSE)
-
             }
 
         }

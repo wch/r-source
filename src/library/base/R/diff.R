@@ -16,7 +16,7 @@
 
 diff <- function(x, ...) UseMethod("diff")
 
-diff.default <- function(x, lag = 1, differences = 1, ...)
+diff.default <- function(x, lag = 1L, differences = 1L, ...)
 {
     ismat <- is.matrix(x)
     xlen <- if(ismat) dim(x)[1L] else length(x)
@@ -26,14 +26,14 @@ diff.default <- function(x, lag = 1, differences = 1, ...)
     if (lag * differences >= xlen)
 	return(x[0]) # empty of proper mode
     r <- unclass(x)  # don't want class-specific subset methods
-    i1 <- -1L:-lag
+    i1 <- -seq_len(lag)
     if (ismat)
-	for (i in 1L:differences)
+	for (i in seq_len(differences))
 	    r <- r[i1, , drop = FALSE] -
-                r[-nrow(r):-(nrow(r)-lag+1), , drop = FALSE]
+                r[-nrow(r):-(nrow(r)-lag+1L), , drop = FALSE]
     else
-        for (i in 1L:differences)
-            r <- r[i1] - r[-length(r):-(length(r)-lag+1)]
+        for (i in seq_len(differences))
+            r <- r[i1] - r[-length(r):-(length(r)-lag+1L)]
     class(r) <- oldClass(x)
     r
 }

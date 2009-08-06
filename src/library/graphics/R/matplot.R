@@ -61,7 +61,7 @@ matplot <- function(x, y, type = "p",
 
     type <- str2vec(type)
     if(is.null(pch)) {
-	pch <- c(1L:9, 0, letters, LETTERS)
+	pch <- c(1L:9L, 0L, letters, LETTERS)
 	if(k > length(pch))
 	    warning("default 'pch' is smaller than number of columns and hence recycled")
     } else if(is.character(pch))
@@ -87,7 +87,7 @@ matplot <- function(x, y, type = "p",
     if(length(col) < k) col <- rep(col, length.out = k)
     if(length(bg) < k)	bg  <- rep(bg,	length.out = k)
     if(length(cex) < k) cex <- rep(cex, length.out = k)
-    ii <- 1L:k
+    ii <- seq_len(k)
     if(!add) {
 	ii <- ii[-1L]
 	plot(x[,1],y[,1], type=type[1L], xlab=xlab, ylab=ylab,

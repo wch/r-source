@@ -32,12 +32,12 @@ which <- function(x, arr.ind = FALSE)
                      dimnames =
                      list(dimnames(x)[[1L]][wh],
                           if(rank == 2L) c("row", "col")# for matrices
-                          else paste("dim", 1L:rank, sep="")))
+                          else paste("dim", seq_len(rank), sep="")))
         if(rank >= 2L) {
             denom <- 1L
             for (i in 2L:rank) {
-                denom <- denom * dl[i-1]
-                nextd1 <- wh1 %/% denom# (next dim of elements) - 1
+                denom <- denom * dl[i-1L]
+                nextd1 <- wh1 %/% denom # (next dim of elements) - 1
                 wh[,i] <- 1L + nextd1 %% dl[i]
             }
         }

@@ -57,7 +57,7 @@ function(x)
 file_test <-
 function(op, x, y)
 {
-    ## Provide shell-style '-f', '-d', '-x', '-nt' and '-ot' tests. 
+    ## Provide shell-style '-f', '-d', '-x', '-nt' and '-ot' tests.
     ## Note that file.exists() only tests existence ('test -e' on some
     ## systems), and that our '-f' tests for existence and not being a
     ## directory (the GNU variant tests for being a regular file).
@@ -394,7 +394,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             stop(gettextf("unable to run %s on '%s'", latex, file), domain = NA)
         nmiss <- length(grep("^LaTeX Warning:.*Citation.*undefined",
                              readLines(paste(base, ".log", sep = ""))))
-        for(iter in 1L:10) { ## safety check
+        for(iter in 1L:10L) { ## safety check
             ## This might fail as the citations have been included in the Rnw
             if(nmiss) system(paste(shQuote(bibtex), shQuote(base)))
             nmiss_prev <- nmiss
