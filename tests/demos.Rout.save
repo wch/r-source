@@ -1,5 +1,5 @@
 
-R version 2.9.0 Under development (unstable) (2009-02-26 r48012)
+R version 2.10.0 Under development (unstable) (2009-08-06 r49077)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1043,7 +1043,7 @@ flld.c+                plot.axes = {})
 > ## (1) The Obligatory Mathematical surface.
 > ##     Rotated sinc function.
 > 
-> x <- seq(-10, 10, length = 50)
+> x <- seq(-10, 10, length.out = 50)
 
 > y <- x
 
@@ -1095,7 +1095,7 @@ flld.c+                plot.axes = {})
 
 > y <- c(min(y) - 1e-10, y, max(y) + 1e-10)
 
-> fill <- matrix("green3", nr = nrow(z)-1, nc = ncol(z)-1)
+> fill <- matrix("green3", nrow = nrow(z)-1, ncol = ncol(z)-1)
 
 > fill[ , i2 <- c(1,ncol(fill))] <- "gray"
 
@@ -1130,7 +1130,8 @@ flld.c+                plot.axes = {})
 +            volcano[-87,-1] + volcano[-87,-61]  ## / 4
 
 > fcol[-i1,-i2] <-
-+     terrain.colors(20)[cut(zi, stats::quantile(zi, seq(0,1, len = 21)),
++     terrain.colors(20)[cut(zi,
++                            stats::quantile(zi, seq(0,1, length.out = 21)),
 +                            include.lowest = TRUE)]
 
 > persp(x, y, 2*z, theta = 110, phi = 40, col = fcol, scale = FALSE,
@@ -1456,5 +1457,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.358 0.061 1.419 0 0 
+Time elapsed:  2.503 0.134 2.668 0 0 
 > 
