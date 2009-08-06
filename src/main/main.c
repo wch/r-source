@@ -1077,19 +1077,19 @@ static SEXP matchargs(SEXP args)
 	    if( mt == 0 ) {
 		nmatch++; pos[i] = 1; mt = 1; 
 		SETCAR(argList, CAR(tmp));
-	    } else error(_("duplicate text argument"));
+	    } else error(_("duplicate '%s' argument"), "text");
 	}
 	if(TAG(tmp) == csym) {
 	    if( mc == 0 ) {
 		nmatch++; pos[i] = 1; mc = 1;
 		SETCADR(argList, CAR(tmp));
-	    } else error(_("duplicate condition argument"));
+	    } else error(_("duplicate '%s' argument"), "condition");
 	}
 	if(TAG(tmp) == esym) {
 	    if( me == 0 ) {
 		nmatch++; pos[i] = 1; me = 1;
 		SETCADDR(argList, CAR(tmp));
-	    } else error(_("duplicate expr argument"));
+	    } else error(_("duplicate '%s' argument"), "expr");
 	    tmp = CDR(tmp);
 	}
     }
