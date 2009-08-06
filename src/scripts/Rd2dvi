@@ -34,7 +34,8 @@ Options:
       --debug		turn on shell debugging (set -x)
       --no-clean	do not remove created temporary files
       --no-preview	do not preview generated DVI file
-      --encoding=enc    use 'enc' as the default encoding
+      --encoding=enc    use 'enc' as the default input encoding
+      --outputEncoding=outenc use 'outenc' as the default output encoding
       --os=NAME		use OS subdir 'NAME' (unix or windows)
       --OS=NAME		the same as '--os'
   -o, --output=FILE	write output to FILE
@@ -66,6 +67,7 @@ out_ext="dvi"
 output=""
 verbose=false
 enc=unknown
+outenc=latin1
 index=true
 description=true
 internals=no
@@ -130,6 +132,8 @@ while test -n "${1}"; do
       OSdir=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     --encoding=*)
       enc=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
+    --outputEncoding=*)
+      outenc=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     --build-dir=*)
       build_dir=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     -V|--verbose)
@@ -205,7 +209,7 @@ mkdir ${build_dir}
 
 echo "tools:::.Rd2dvi(\"${1}\",  \"${build_dir}/Rd2.tex\", \"$is_bundle\", \
 \"$title\", \"$batch\", \"$description\", \"$only_meta\",\
-\"$enc\", \"${dir-$@}\", \"OSdir\", \"$internals\", \"$index\")" \
+\"$enc\", \"$outenc\", \"${dir-$@}\", \"OSdir\", \"$internals\", \"$index\")" \
   | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla || exit 1
 
 ## <FIXME>

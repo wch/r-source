@@ -272,7 +272,7 @@ processRdChunk <- function(code, stage, options, env) {
 	if (options$results == "rd") {
 	    res <- err   # The last value of the chunk
 	    tmpcon <- file()
-	    writeLines(res, tmpcon)
+	    writeLinesUTF8(res, tmpcon, "UTF-8")
 	    res <- tagged(parse_Rd(tmpcon, fragment=TRUE), "LIST")
 	    close(tmpcon)
 	    res <- prepare_Rd(res, defines = .Platform$OS.type, options=options)
@@ -294,7 +294,7 @@ processRdIfdefs <- function(blocks, defines)
 	    if (tag %in% c("#ifdef", "#ifndef")) {
 		target <- block[[1L]][[1L]]
 		# The target will have picked up some whitespace and a newline
-		target <- gsub("[[:blank:][:cntrl:]]*", "", target)
+		target <- gsubUTF8("[[:blank:][:cntrl:]]*", "", target)
 		if ((target %in% defines) == (tag == "#ifdef"))
 		    block <- tagged(block[[2L]], "#expanded")
 		else
@@ -375,6 +375,27 @@ sectionTitles <-
       "\\note"="Note", "\\section"="section", "\\author"="Author(s)",
       "\\references"="References", "\\source"="Source",
       "\\seealso"="See Also", "\\examples"="Examples", "\\value"="Value")
+      
+## gsub in some locales (e.g. C) gets confused by UTF-8 characters.
+## This wrapper strips and replaces the encoding marker on x.  It'll
+## only work if the pattern and replacement are pure ascii, and x
+## is UTF-8, as it is for text in Rd objects
+
+gsubUTF8 <- function(pattern, replacement, x, ...) {
+    Encoding(x) <- "unknown"
+    x <- gsub(pattern, replacement, x, ...)
+    Encoding(x) <- "UTF-8"
+    x
+}
+
+## writeLines re-encodes strings to the local encoding.  Avoid that...
+
+writeLinesUTF8 <- function(x, con, outputEncoding, ...) {
+    if (outputEncoding != "UTF-8")
+	x <- iconv(x, "UTF-8", outputEncoding)
+    ## Encoding(x) <- "unknown" # not necessary?  
+    writeLines(x, con, useBytes=TRUE, ...)
+}
 
 ## FIXME: better to really use XHTML
 Rd2HTML <-
@@ -382,9 +403,9 @@ Rd2HTML <-
              Links = NULL, CHM = FALSE,
              stages = "render", outputEncoding = "UTF-8", ...)
 {
-    of <- function(...) writeLines(paste(...), con, sep = '')
-    of0 <- function(...) writeLines(paste(..., sep=""), con, sep ="")
-    of1 <- function(text) writeLines(text, con, sep = "")
+    of <- function(...) writeLinesUTF8(paste(...), con, outputEncoding, sep = "")
+    of0 <- function(...) writeLinesUTF8(paste(..., sep=""), con, outputEncoding, sep = "")
+    of1 <- function(text) writeLinesUTF8(text, con, outputEncoding, sep = "")
 
     pendingClose <- pendingOpen <- character(0)  # Used for infix methods
 
@@ -435,13 +456,16 @@ Rd2HTML <-
     addParaBreaks <- function(x, tag) {
         start <- attr(x, "srcref")[2L] # FIXME: what if no srcref?, start col
 	if (isBlankLineRd(x)) "</p>\n<p>\n"
-	else if(start == 1) gsub("^\\s+", "", x, perl = TRUE)
+	else if(start == 1) gsubUTF8("^\\s+", "", x, perl = TRUE)
         else x
     }
 
     ## FIXME: what other substitutions do we need?
     ## possibly quotes if the parser had left alone -- NA.Rd
+    
+    
     htmlify <- function(x) {
+    	Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
 	x <- gsub("&", "&amp;", x, fixed = TRUE)
 	x <- gsub("---", "&mdash;", x, fixed = TRUE)
 	x <- gsub("--", "&ndash;", x, fixed = TRUE)
@@ -450,23 +474,30 @@ Rd2HTML <-
         x <- gsub("`([^']+)'", "&lsquo;\\1&rsquo;", x, perl=TRUE)
 	x <- gsub("`", "'", x, fixed = TRUE)
 	x <- gsub("<", "&lt;", x, fixed = TRUE)
-	gsub(">", "&gt;", x, fixed = TRUE)
+	x <- gsub(">", "&gt;", x, fixed = TRUE)
+	Encoding(x) <- "UTF-8"
+	x
     }
     vhtmlify <- function(x) { # code version
+    	Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here    
 	x <- gsub("&", "&amp;", x, fixed = TRUE)
 	x <- gsub("<", "&lt;", x, fixed = TRUE)
-	gsub(">", "&gt;", x, fixed = TRUE)
+	x <- gsub(">", "&gt;", x, fixed = TRUE)
+	Encoding(x) <- "UTF-8"
+	x
     }
 
     HTMLeqn <- function(x)
     {
         x <- htmlify(x)
         ## historical escapes for math
+    	Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here            
         x <- gsub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilaon)", "&\\1;", x)
         x <- gsub("\\\\left\\(", "(", x)
         x <- gsub("\\\\right", "\\)", x)
         x <- gsub("\\le", "&lt;=", x)
         x <- gsub("\\ge", "&gt;=", x)
+        Encoding(x) <- "UTF-8"
         x
     }
 
@@ -522,10 +553,12 @@ Rd2HTML <-
     }
 
     writeComment <- function(txt) {
+       	Encoding(txt) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here    
        	txt <- sub("^%", "", txt, fixed = TRUE)
        	txt <- sub("\n", "", txt)
        	txt <- gsub("--", "- - ", txt, fixed = TRUE)
        	txt <- gsub(">", "&gt;", txt, fixed = TRUE)
+       	Encoding(txt) <- "UTF-8"
 	of("<!-- ", txt, " -->\n")
     }
 
@@ -761,7 +794,7 @@ Rd2HTML <-
                     ## The next item must be TEXT, and start with a space.
                     itemskip <- FALSE
                     if (tag == "TEXT") {
-                        txt <- gsub("^ ", "", as.character(block), perl = TRUE)
+                        txt <- gsubUTF8("^ ", "", as.character(block), perl = TRUE)
                         of1(txt)
                     } else writeBlock(block, tag, blocktag) # should not happen
                 } else writeBlock(block, tag, blocktag)
@@ -805,12 +838,8 @@ Rd2HTML <-
     if (is.character(out)) {
         if(out == "") {
             con <- stdout()
-            if (outputEncoding != "") {
-            	warning('outputEncoding changed to "" on stdout')
-            	outputEncoding <- ""
-            }
         } else {
-	    con <- file(out, "w", encoding=outputEncoding)
+	    con <- file(out, "wt")
 	    on.exit(close(con))
 	}
     } else {
@@ -901,7 +930,7 @@ Rd2HTML <-
 
     if (CHM) {
         if (nlinks > 0)
-            writeLines(paste('',
+            writeLinesUTF8(paste('',
                              '<script Language="JScript">',
                              'function findlink(pkg, fn) {',
                              'var Y, link;',
@@ -909,7 +938,7 @@ Rd2HTML <-
                              'link = location.href.substring(0, Y);',
                              'link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;',
                              'location.href = link;', '}', '</script>',
-                             sep = '\n'), con)
+                             sep = '\n'), con, outputEncoding)
     }
     if (package != "") {
     	version <- paste('Package <em>', package,
@@ -1140,8 +1169,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
 Rd2ex <-
     function(Rd, out="", defines=.Platform$OS.type, stages="render", outputEncoding="", ...)
 {
-    of0 <- function(...) writeLines(paste(..., sep=""), con, sep ="")
-    of1 <- function(text) writeLines(text, con, sep = "")
+    of0 <- function(...) writeLinesUTF8(paste(..., sep=""), con, outputEncoding, sep ="")
+    of1 <- function(text) writeLinesUTF8(text, con, outputEncoding, sep = "")
 
     wr <- function(x) {
         x <- remap(x)
@@ -1149,12 +1178,13 @@ Rd2ex <-
     }
     remap <- function(x) {
         ## \link, \var are untouched in comments: e.g. is.R
+        Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here    
         x <- gsub("\\\\(link|var)\\{([^}]+)\\}", "\\2", x, perl = TRUE)
         ## FIXME not valid in perl: use lookbehind instead.
         x <- gsub("(^|[^\\])\\\\([%{])", "\\1\\2", x)
         x <- gsub("\\\\(l|)dots", "...", x, perl = TRUE)
-        ## Want to leave file bytes unchanged
-        Encoding(x) <- "unknown"
+        ## FIXME:  Previously said "Want to leave file bytes unchanged"
+        Encoding(x) <- "UTF-8"
         x
     }
 
@@ -1165,10 +1195,10 @@ Rd2ex <-
             ## There are fancy rules here if not followed by \n
             of1("## Don't show: ")
             if (!length(grep("^\n", x[[1L]], perl = TRUE)))
-                writeLines("", con)
+                writeLinesUTF8("", con, outputEncoding)
             for(i in seq_along(x)) render(x[[i]], prefix)
             if (!length(grep("\n$", x[[length(x)]], perl = TRUE)))
-                writeLines("", con)
+                writeLinesUTF8("", con, outputEncoding)
             of1("## End Don't show")
         } else if (tag  == "\\dontrun") {
             ## Special case for one line.
@@ -1178,27 +1208,27 @@ Rd2ex <-
             } else {
                 of1("## Not run: ")
                 if (!length(grep("^\n", x[[1L]], perl = TRUE))) {
-                    writeLines("", con)
+                    writeLinesUTF8("", con, outputEncoding)
                     render(x[[1L]], paste("##D", prefix))
                 } else render(x[[1L]], prefix)
                 for(i in 2:length(x)) render(x[[i]], paste("##D", prefix))
                 if (!length(grep("\n$", x[[length(x)]], perl = TRUE)))
-                    writeLines("", con)
+                    writeLinesUTF8("", con, outputEncoding)
                 of1("## End(Not run)")
             }
         } else if (tag  == "\\donttest") {
             of1("## No test: ")
             if (!length(grep("^\n", x[[1L]], perl = TRUE)))
-                writeLines("", con)
+                writeLinesUTF8("", con, outputEncoding)
             for(i in seq_along(x)) render(x[[i]], prefix)
             if (!length(grep("\n$", x[[length(x)]], perl = TRUE)))
-                writeLines("", con)
+                writeLinesUTF8("", con, outputEncoding)
             of1("## End(No test)")
         } else if (tag == "COMMENT") {
             ## % can escape a whole line (e.g. beavers.Rd) or
             ## be trailing when we want a NL
             ## This is not right (leaading spaces?) but it may do
-            if(attr(x, "srcref")[2L] > 1) writeLines("", con)
+            if(attr(x, "srcref")[2L] > 1) writeLinesUTF8("", con, outputEncoding)
         } else if (tag %in% c("\\dots", "\\ldots")) {
             of1("...")
         } else {
@@ -1216,12 +1246,8 @@ Rd2ex <-
 	if (is.character(out)) {
 	    if(out == "") {
 		con <- stdout()
-		if (outputEncoding != "") {
-		    warning('outputEncoding changed to "" on stdout')
-		    outputEncoding <- ""
-		}
 	    } else {
-		con <- file(out, "w", encoding = outputEncoding)
+		con <- file(out, "wt")
 		on.exit(close(con))
 	    }
         } else {
@@ -1248,7 +1274,7 @@ Rd2ex <-
             title <- paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
                            collapse=" ")
             ## FIXME: more?
-            title <- gsub("(---|--)", "-", title, perl =  TRUE)
+            title <- gsubUTF8("(---|--)", "-", title, perl =  TRUE)
         } else title <- "No title found"
         of0(wr(paste("Title: ", title, sep='')), "\n")
         aliasblks <- sections == "\\alias"
@@ -1261,10 +1287,10 @@ Rd2ex <-
         keyblks <- sections == "\\keyword"
         if (any(keyblks)) {
             keys <- unlist(Rd[keyblks])
-            keys <- gsub("^\\s+", "", keys, perl = TRUE)
+            keys <- gsubUTF8("^\\s+", "", keys, perl = TRUE)
             of0(wr(paste("Keywords: ", paste(keys, collapse=" "), sep="")), "\n")
         }
-        writeLines(c("", "### ** Examples"), con)
+        writeLinesUTF8(c("", "### ** Examples"), con, outputEncoding)
         ex <- Rd[[ where[1L] ]]
         for (i in seq_along(ex)) render(ex[[i]])
         of1("\n\n\n")

@@ -52,8 +52,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     of1 <- function(text) {
         nc <- nchar(text)
         last_char <<- substr(text, nc, nc)
-
-        writeLines(text, con, sep = "")
+        writeLinesUTF8(text, con, outputEncoding, sep = "")
     }
 
     trim <- function(x) {
@@ -83,18 +82,19 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     addParaBreaks <- function(x, tag) {
         start <- attr(x, "srcref")[2L]
         if (isBlankLineRd(x)) "\n"
-	else if (start == 1) gsub("^\\s+", "", x, perl = TRUE)
+	else if (start == 1) gsubUTF8("^\\s+", "", x, perl = TRUE)
         else x
     }
 
     ltxeqn <- function(x) {
-#        gsub("([{}%])", "\\\\\\1", x)
+#        gsubUTF8("([{}%])", "\\\\\\1", x)
         x
     }
 
     ## FIXME: what other substitutions do we need?
     texify <- function(x) {
         if(inEqn) return(ltxeqn(x))
+        Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         # Need to be careful to handle backslash, so do it in three steps.
         # First, mark all the ones in the original text, but don't add
         # any other special chars
@@ -108,6 +108,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
         # Third, add the terminal braces to the backslash
         x <- gsub("\\bsl", "\\bsl{}", x, fixed = TRUE)
+        Encoding(x) <- "UTF-8"
         x
     }
 
@@ -117,6 +118,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     ## inCodeBlock is in alltt, where only \ { } have their usual meaning
     vtexify <- function(x) {
         if(inEqn) return(ltxeqn(x))
+        Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         x <- gsub("\\\\[l]+dots", "...", as.character(x))
         ## unescape (should not be escaped: but see kappa.Rd)
         x <- gsub("\\\\([$^&~_#])", "\\1", x)
@@ -125,27 +127,26 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             ## to be escaped in earlier versions (e.g. Paren.Rd, body.tex).
             ## So fix up for now
             x <- sub('"\\{"', '"{"', x, fixed = TRUE)
-            return(x)
-        }
-        if (inPre) {
+        } else if (inPre) {
             x <- gsub("(?<!\\\\)\\{", "\\\\{", x, perl= TRUE)
             x <- gsub("(?<!\\\\)}", "\\\\}", x, perl= TRUE)
-            return(x)
+        } else {
+            BSL = '@BSL@';
+            x <- gsub("\\", BSL, x, fixed = TRUE)
+            x <- gsub("(?<!\\\\)\\{", "\\\\{", x, perl= TRUE)
+            x <- gsub("(?<!\\\\)}", "\\\\}", x, perl= TRUE)
+            x <- gsub("(?<!\\\\)([&$%_#])", "\\\\\\1", x, perl= TRUE)
+            x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
+            x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
+            x <- gsub(BSL, "\\bsl{}", x, fixed = TRUE)
+            ## avoid conversion to guillemets
+            x <- gsub("<<", "<{}<", x, fixed = TRUE)
+            x <- gsub(">>", ">{}>", x, fixed = TRUE)
+            x <- gsub(",,", ",{},", x, fixed = TRUE) # ,, is a ligature in the ae font.
+            x <- gsub("\\\\bsl{}var\\\\{([^}]+)\\\\}", "\\\\var{\\1}", x, perl = TRUE)
         }
-        BSL = '@BSL@';
-        x <- gsub("\\", BSL, x, fixed = TRUE)
-        x <- gsub("(?<!\\\\)\\{", "\\\\{", x, perl= TRUE)
-        x <- gsub("(?<!\\\\)}", "\\\\}", x, perl= TRUE)
-        x <- gsub("(?<!\\\\)([&$%_#])", "\\\\\\1", x, perl= TRUE)
-        x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
-        x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
-        x <- gsub(BSL, "\\bsl{}", x, fixed = TRUE)
-        ## avoid conversion to guillemets
-        x <- gsub("<<", "<{}<", x, fixed = TRUE)
-        x <- gsub(">>", ">{}>", x, fixed = TRUE)
-        x <- gsub(",,", ",{},", x, fixed = TRUE) # ,, is a ligature in the ae font.
-        x <- gsub("\\\\bsl{}var\\\\{([^}]+)\\\\}", "\\\\var{\\1}", x, perl = TRUE)
-        x
+        Encoding(x) <- "UTF-8"
+	x
     }
 
     ## FIXME only used for \verb, not right yet
@@ -199,15 +200,18 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
     ltxstriptitle <- function(x)
     {
+        Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         x <- gsub("\\R", "\\R{}", x, fixed = TRUE)
         x <- gsub("(?<!\\\\)([&$%_#])", "\\\\\\1", x, perl= TRUE)
         x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
         x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
+        Encoding(x) <- "UTF-8"
         x
     }
 
     latex_escape_name <- function(x)
     {
+        Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         x <- gsub("([$#~_&])", "\\\\\\1", x) #- escape them
         x <- gsub("{", "\\textbraceleft{}", x, fixed = TRUE)
         x <- gsub("|", "\\textbraceright{}", x, fixed = TRUE)
@@ -218,11 +222,13 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         ## avoid conversion to guillemets
         x <- gsub("<<", "<{}<", x, fixed = TRUE)
         x <- gsub(">>", ">{}>", x, fixed = TRUE)
+        Encoding(x) <- "UTF-8"
         x
     }
 
     latex_link_trans0 <- function(x)
     {
+        Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         x <- gsub("\\\\Rdash", ".Rdash.", x, perl=TRUE)
         x <- gsub("-", ".Rdash.", x, perl=TRUE)
         x <- gsub("\\\\_", ".Rul.", x, perl=TRUE)
@@ -242,6 +248,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         x <- gsub("\\\\\\\\", ".Rbl.", x, perl=TRUE)
         x <- gsub("\\{", ".Rlbrace.", x, perl=TRUE)
         x <- gsub("\\}", ".Rrbrace.", x, perl=TRUE)
+        Encoding(x) <- "UTF-8"
         x
     }
 
@@ -249,7 +256,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     {
         BSL = '@BSL@';
         LATEX_SPECIAL = '$^&~_#'
-
+        Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         if(grepl(LATEX_SPECIAL, x)) {
             x <- gsub("\\\\\\\\", BSL, x)
             ## unescape (should not be escaped)
@@ -265,18 +272,22 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         x <- gsub(">>", ">{}>", x, fixed = TRUE)
         x <- gsub(",,", ",{},", x, fixed = TRUE) # ,, is a ligature in the ae font.
         x <- gsub("\\\\bsl{}var\\\\{([^}]+)\\\\}", "\\var{\\1}", x)
+        Encoding(x) <- "UTF-8"
         x
 }
 
     latex_link_trans <- function(x)
     {
+        Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         x <- gsub("<-\\.", "<\\Rdash.", x)
         x <- gsub("<-$", "<\\Rdash", x)
+        Encoding(x) <- "UTF-8"
         x
     }
 
     latex_code_alias <- function(x)
     {
+        Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         ## FIXME do better
         x <- gsub("{", "\\{", x, fixed = TRUE)
         x <- gsub("}", "\\}", x, fixed = TRUE)
@@ -285,14 +296,16 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
         x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
         x <- gsub("<-", "<\\Rdash", x, fixed = TRUE)
-        gsub("([!|])", '"\\1', x, perl = TRUE)
+        x <- gsub("([!|])", '"\\1', x, perl = TRUE)
+        Encoding(x) <- "UTF-8"
+        x
     }
 
     latex_code_aliasAA <- function(x)
     {
         x <- latex_code_trans(x)
         x <- latex_link_trans(x)
-        gsub("\\\\([!|])", '"\\1', x, perl = TRUE)
+        gsubUTF8("\\\\([!|])", '"\\1', x, perl = TRUE)
     }
 
     currentAlias <- NA_character_
@@ -542,7 +555,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                        ## The next item must be TEXT, and start with a space.
                        itemskip <- FALSE
                        if (tag == "TEXT") {
-                           txt <- gsub("^ ", "", as.character(block), perl = TRUE)
+                           txt <- gsubUTF8("^ ", "", as.character(block), perl = TRUE)
                            of1(txt)
                        } else writeBlock(block, tag, blocktag) # should not happen
                    } else writeBlock(block, tag, blocktag)
@@ -621,12 +634,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     if (is.character(out)) {
         if(out == "") {
             con <- stdout()
-            if (outputEncoding != "") {
-            	warning('outputEncoding changed to "" on stdout')
-            	outputEncoding <- ""
-            }
         } else {
-	    con <- file(out, "w", encoding = outputEncoding)
+	    con <- file(out, "wt")
 	    on.exit(close(con))
 	}
     } else {

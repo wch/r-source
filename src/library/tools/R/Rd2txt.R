@@ -135,8 +135,7 @@ Rd2txt <-
 		buffer <<- paste(blanks(indent), buffer, sep="")
 	}
 
-    	if (length(buffer)) 
-    	    writeLines(buffer, con)
+    	if (length(buffer)) writeLinesUTF8(buffer, con, outputEncoding)
     	buffer <<- character(0)
     	linestart <<- TRUE
     }
@@ -149,14 +148,17 @@ Rd2txt <-
     }
 
     striptitle <- function(text) {
+        Encoding(text) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         text <- gsub("\\", "", text, fixed = TRUE)
         text <- gsub("---", "_", text, fixed = TRUE)
         text <- gsub("--", "-", text, fixed = TRUE)
+        Encoding(text) <- "UTF-8"
         text
     }
 
     txt_striptitle <- function(text) {
         text <- striptitle(text)
+        Encoding(text) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         if (.Platform$OS.type == "windows" &&
             Sys.getlocale("LC_CTYPE") != "C") {
             text <- gsub("``", "\x93", text, fixed = TRUE)
@@ -167,6 +169,7 @@ Rd2txt <-
             text <- gsub("(``|'')", '"', text)
             text <- gsub("`", "'", text, fixed = TRUE)
         }
+        Encoding(text) <- "UTF-8"
         text
     }
 
@@ -180,16 +183,18 @@ Rd2txt <-
     }
 
     unescape <- function(x) {
-        x <- gsub("(---|--)", "-", x)
+        x <- gsubUTF8("(---|--)", "-", x)
         x
     }
 
     writeCode <- function(x) {
         txt <- as.character(x)
         if(inEqn) txt <- txt_eqn(txt)
+        Encoding(txt) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         txt <- gsub('"\\{"', '"{"', txt, fixed = TRUE)
         ## \dots gets left in noquote.Rd
         txt <- gsub("\\dots",  "....", txt, fixed = TRUE)
+        Encoding(txt) <- "UTF-8"
         put(txt)
     }
 
@@ -207,9 +212,11 @@ Rd2txt <-
     }
     
     txt_eqn <- function(x) {
+        Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         x <- gsub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilaon|psi)", "\\1", x)
         x <- gsub("\\\\(bold|strong|emph|var)\\{([^}]*)\\}", "\\2", x)
         x <- gsub("\\\\(ode|samp)\\{([^}]*)\\}", "'\\2'", x)
+        Encoding(x) <- "UTF-8"
         x
     }
 
@@ -552,7 +559,7 @@ Rd2txt <-
                        ## The next item must be TEXT, and start with a space.
                        itemskip <- FALSE
                        if (tag == "TEXT") {
-                           txt <- gsub("^ ", "", as.character(block), perl = TRUE)
+                           txt <- gsubUTF8("^ ", "", as.character(block), perl = TRUE)
                            put(txt)
                        } else writeBlock(block, tag, blocktag) # should not happen
                    } else writeBlock(block, tag, blocktag)
@@ -592,12 +599,8 @@ Rd2txt <-
     if (is.character(out)) {
         if(out == "") {
             con <- stdout()
-            if (outputEncoding != "") {
-            	warning('outputEncoding changed to "" on stdout')
-            	outputEncoding <- ""
-            }
         } else {
-	    con <- file(out, "w", encoding = outputEncoding)
+	    con <- file(out, "wt")
 	    on.exit(close(con))
 	}
     } else {
@@ -644,7 +647,7 @@ Rd2txt <-
     ## remove empty lines, leading and trailing whitespace, \n
     title <- trim(paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
                         collapse=" "))
-    title <- gsub("\n", "", title, fixed = TRUE)
+    title <- gsubUTF8("\n", "", title, fixed = TRUE)
 
     name <- Rd[[2L]]
     tags <- RdTags(name)

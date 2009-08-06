@@ -1479,7 +1479,7 @@
 }
 
 .Rdfiles2tex <-
-    function(files, outfile, encoding = "unknown", append = FALSE,
+    function(files, outfile, encoding = "unknown", outputEncoding = "latin1", append = FALSE,
              extraDirs = NULL, internals = FALSE)
 {
     if(file_test("-d", files))
@@ -1510,7 +1510,7 @@
             ## people have file names with quotes in them.
             if (USE_NEW_HELP)
             	latexEncodings <- c(latexEncodings,
-            	                    attr(Rd2latex(f, out, encoding=encoding),
+            	                    attr(Rd2latex(f, out, encoding=encoding, outputEncoding=outputEncoding),
             	                         "latexEncoding"))
             else
             	system(paste(cmd,"-o", shQuote(out), shQuote(f)))
@@ -1523,7 +1523,7 @@
 ## replacement for tools/pkg2tex.pl, and more
 .pkg2tex <-
     function(pkgdir, outfile, internals = FALSE, asChapter = TRUE,
-             encoding = "unknown", extraDirs = NULL, append = FALSE)
+             encoding = "unknown", outputEncoding = "latin1", extraDirs = NULL, append = FALSE)
 {
     re <- function(x)
     {
@@ -1597,8 +1597,9 @@
         cat("\n\\chapter{The \\texttt{", basename(pkgdir), "} package}\n",
             sep = "", file = outcon)
     topics <- rep.int("", length(files)); names(topics) <- files
+    scanForEncoding <- !length(latexEncodings)
     for (f in files) {
-        lines <- readLines(f)
+        lines <- readLines(f)  # This reads as "unknown", no re-encoding done
         hd <- grep("^\\\\HeaderA", lines, value = TRUE)
         if (!length(hd)) {
             warning("file ", sQuote(f), " lacks a header: skipping")
@@ -1608,6 +1609,11 @@
         if(!internals &&
            any(grepl("\\\\keyword\\{\\s*internal\\s*\\}", lines, perl = TRUE)))
             next
+        if (scanForEncoding) {
+	    enc <- lines[grepl('^\\\\inputencoding', lines)]
+	    latexEncodings <- c(latexEncodings, 
+	                        sub("^\\\\inputencoding\\{(.*)\\}", "\\1", enc))
+	}
         topics[f] <- this
     }
 
@@ -2212,7 +2218,7 @@ function(name="", version = "0.0")
 .Rd2dvi <-
 function(pkgdir, outfile, is_bundle, title, batch = FALSE,
          description = TRUE, only_meta = FALSE,
-         enc = "unknown", files_or_dir, OSdir,
+         enc = "unknown", outputEncoding = "latin1", files_or_dir, OSdir,
          internals = "no", index = "true")
 {
     # print(match.call())
@@ -2233,7 +2239,10 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
         desc <- read.dcf(f)[1,]
         if(enc == "unknown") {
             pkg_enc <- desc["Encoding"]
-            if (!is.na(pkg_enc)) enc <- pkg_enc
+            if (!is.na(pkg_enc)) {
+            	enc <- pkg_enc
+            	outputEncoding <- pkg_enc
+            }
         }
     }
 
@@ -2243,7 +2252,7 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
         "\\usepackage[", Sys.getenv("R_RD4DVI", "ae"), "]{Rd}\n",
         sep = "", file = out)
     if(index) writeLines("\\usepackage{makeidx}", out)
-    setEncoding <- "\\usepackage[latin1]{inputenc} % @SET ENCODING@"
+    setEncoding <- paste("\\usepackage[", outputEncoding, "]{inputenc} % @SET ENCODING@", sep="")
     writeLines(c(setEncoding,
                  "\\makeindex{}",
                  "\\begin{document}"), out)
@@ -2262,7 +2271,7 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
                     subj1 <- if (length(files) > 1) " etc." else ""
                     subj <- paste("\\file{", pkgdir, "}", subj1, sep = "")
                 }
-                subJ <- gsub("[_$]", "\\\\1", subj)
+                subj <- gsub("[_$]", "\\\\1", subj)
                 title <- paste("\\R{} documentation}} \\par\\bigskip{{\\Large of", subj)
             }
         }
@@ -2342,22 +2351,23 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
     close(out)
 
     USE_NEW_HELP <- nchar(Sys.getenv("USE_NEW_HELP")) > 0L
-###FIXME    if (!USE_NEW_HELP) {
+    if (!USE_NEW_HELP) {
 	## Look for encodings
 	lines <- readLines(outfile)
 	latexEncodings <- lines[grepl('^\\\\inputencoding', lines)]
 	latexEncodings <- sub("^\\\\inputencoding\\{(.*)\\}", "\\1", latexEncodings)
-###FIXME    }
+    }
     
     ## Fix up encodings
     ## FIXME cyrillic probably only works with times, not ae.
-    latexEncodings <- unique(latexEncodings)
-    encs <- latexEncodings[latexEncodings != "latin1"]
-    if (length(encs)) {
+    latexEncodings <- unique(latexEncodings)	
+    cyrillic <- if(nzchar(Sys.getenv("_R_CYRILLIC_TEX_"))) "utf8" %in% latexEncodings else FALSE
+    latex_outputEncoding <- latex_canonical_encoding(outputEncoding)
+    encs <- latexEncodings[latexEncodings != latex_outputEncoding]
+    if (length(encs) || cyrillic) {
     	if (USE_NEW_HELP)
 	    lines <- readLines(outfile)
-	cyrillic <- if(nzchar(Sys.getenv("_R_CYRILLIC_TEX_"))) "utf8" %in% encs else FALSE
-	encs <- paste(encs, "latin1", collapse=",", sep=",")
+	encs <- paste(encs, latex_outputEncoding, collapse=",", sep=",")
 
 	if (!cyrillic) {
 	    lines[lines == setEncoding] <-
