@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-08-01 r49053)
+R version 2.10.0 Under development (unstable) (2009-08-05 r49069)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1027,9 +1027,9 @@ Step:  AIC=71.35
 cbind(X, M) ~ M.user + Temp + M.user:Temp
 
               Df Deviance    AIC
-<none>              5.656 71.354
-- M.user:Temp  1    8.444 72.142
-+ Soft         2    5.495 75.193
+<none>             5.6560 71.354
+- M.user:Temp  1   8.4440 72.142
++ Soft         2   5.4952 75.193
 
 Call:  glm(formula = cbind(X, M) ~ M.user + Temp + M.user:Temp, family = binomial,      data = detg1) 
 
@@ -1509,10 +1509,10 @@ Single term deletions
 Model:
 Fr ~ (Hair + Eye + Sex)^2
          Df Deviance    AIC
-<none>          6.76 191.64
-Hair:Eye  9   156.68 323.56
-Hair:Sex  3    18.33 197.21
-Eye:Sex   3    11.76 190.64
+<none>         6.761 191.64
+Hair:Eye  9  156.678 323.56
+Hair:Sex  3   18.327 197.21
+Eye:Sex   3   11.764 190.64
 > ## broken around 1.2.1 it seems.
 > 
 > 
@@ -2250,20 +2250,20 @@ Start:  AIC=26.94
 y ~ x1 + x2 + x3 + x4
 
        Df Sum of Sq    RSS    AIC
-- x3    1     0.109 47.973 24.974
-- x4    1     0.247 48.111 25.011
-- x2    1     2.972 50.836 25.728
+- x3    1    0.1091 47.973 24.974
+- x4    1    0.2470 48.111 25.011
+- x2    1    2.9725 50.836 25.728
 <none>              47.864 26.944
-- x1    1    25.951 73.815 30.576
+- x1    1   25.9509 73.815 30.576
 
 Step:  AIC=24.97
 y ~ x1 + x2 + x4
 
        Df Sum of Sq    RSS    AIC
-<none>               47.97  24.97
-- x4    1      9.93  57.90  25.42
-- x2    1     26.79  74.76  28.74
-- x1    1    820.91 868.88  60.63
+<none>               47.97 24.974
+- x4    1      9.93  57.90 25.420
+- x2    1     26.79  74.76 28.742
+- x1    1    820.91 868.88 60.629
 
 Call:
 lm(formula = y ~ x1 + x2 + x4, data = d2)
@@ -2573,8 +2573,8 @@ Residual standard error: 0.5235 on 10 degrees of freedom
 Analysis of Variance Table
 
 Response: y
-          Df  Sum Sq Mean Sq F value Pr(>F)
-Residuals 10 2.74036 0.27404               
+          Df Sum Sq Mean Sq F value Pr(>F)
+Residuals 10 2.7404 0.27404               
 > predict(fit)
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
@@ -2671,8 +2671,8 @@ Residual standard error: 0.5235 on 10 degrees of freedom
 Analysis of Variance Table
 
 Response: y
-          Df  Sum Sq Mean Sq F value Pr(>F)
-Residuals 10 2.74036 0.27404               
+          Df Sum Sq Mean Sq F value Pr(>F)
+Residuals 10 2.7404 0.27404               
 > predict(fit)
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
@@ -2876,7 +2876,7 @@ Terms added sequentially (first to last)
 
      Df Deviance Resid. Df Resid. Dev
 NULL                    10     2.7404
-x     0   0.0000        10     2.7404
+x     0        0        10     2.7404
 > predict(fit)
  1  2  3  4  5  6  7  8  9 10 
  0  0  0  0  0  0  0  0  0  0 
@@ -3715,8 +3715,8 @@ f1     2 483.96  241.98
 f1:f2  4 869.69  217.42
 
 Error: Within
-          Df  Sum Sq Mean Sq F value Pr(>F)
-Residuals 42 29204.1   695.3               
+          Df Sum Sq Mean Sq F value Pr(>F)
+Residuals 42  29204  695.34               
 > sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f2+f1)), data=sample.df)
 Warning message:
 In aov(dep.variable ~ f1 * f2 + Error(subject/(f2 + f1)), data = sample.df) :
@@ -3770,8 +3770,8 @@ f1     2 483.96  241.98
 f1:f2  4 869.69  217.42
 
 Error: Within
-          Df  Sum Sq Mean Sq F value Pr(>F)
-Residuals 42 29204.1   695.3               
+          Df Sum Sq Mean Sq F value Pr(>F)
+Residuals 42  29204  695.34               
 > ## failed in 1.8.1
 > 
 > 
@@ -4423,9 +4423,9 @@ Single term deletions
 
 Model:
 y ~ x
-       Df Sum of Sq     RSS     AIC
-<none>              20.1913  5.1555
-x       1    1.4798 21.6711  4.4993
+       Df Sum of Sq    RSS    AIC
+<none>              20.191 5.1555
+x       1    1.4798 21.671 4.4993
 > res <-  try(stats:::drop1.default(fit))
 Error in stats:::drop1.default(fit) : 
   number of rows in use has changed: remove missing values?
@@ -4435,9 +4435,9 @@ Single term additions
 
 Model:
 y ~ x
-       Df Sum of Sq     RSS     AIC
-<none>              17.6049  3.6005
-x2      1    0.0117 17.5931  5.5885
+       Df Sum of Sq    RSS    AIC
+<none>              17.605 3.6005
+x2      1  0.011746 17.593 5.5885
 Warning message:
 In add1.lm(fit, ~. + x2) : using the 18/19 rows from a combined fit
 > res <-  try(stats:::add1.default(fit, ~ . +x2))
@@ -4645,9 +4645,9 @@ Single term additions
 
 Model:
 y ~ 1
-       Df Sum of Sq     RSS     AIC
-<none>               6.3161 -2.5948
-z       1    0.0003  6.3158 -0.5953
+       Df  Sum of Sq    RSS      AIC
+<none>               6.3161 -2.59479
+z       1 0.00029765 6.3158 -0.59526
 > anova(lm1, lm2)
 Analysis of Variance Table
 
@@ -4663,17 +4663,17 @@ Single term additions
 
 Model:
 y ~ 1
-       Df Sum of Sq    RSS    AIC
-<none>              89.130 23.875
-z       1    82.814  6.316 -0.595
+       Df Sum of Sq    RSS     AIC
+<none>              89.130 23.8751
+z       1    82.814  6.316 -0.5953
 > drop1(lm2)
 Single term deletions
 
 Model:
 y ~ z
-       Df Sum of Sq    RSS    AIC
-<none>               6.316 -0.595
-z       1    82.814 89.130 23.875
+       Df Sum of Sq    RSS     AIC
+<none>               6.316 -0.5953
+z       1    82.814 89.130 23.8751
 > ## Last two ignored the offset in 2.1.1
 > 
 > 

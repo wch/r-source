@@ -250,6 +250,13 @@ BUG FIXES
 	other code attempted to ensure that non-zero values had a
 	non-zero representation.
 
+    o	printCoefmat() formatted groups of columns together, not just
+    	the cs.ind group but also the zap.ind group and a residual
+    	group.  It now formats all columns except the cs.ind group
+    	separately (and zaps the zap.ind group column-by-column).  The
+    	main effect will be see in the output from print.anova, as
+    	this grouped SS-like columns in the zap.ind group.
+
 
 
 

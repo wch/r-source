@@ -1,6 +1,6 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-17 r41606)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.10.0 Under development (unstable) (2009-08-05 r49069)
+Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -113,9 +113,9 @@ Influence measures of
 Analysis of Variance Table
 
 Response: weight
-           Df  Sum Sq Mean Sq F value  Pr(>F)
-depression  1 158.408 158.408  5.4302 0.05259
-Residuals   7 204.202  29.172                
+           Df Sum Sq Mean Sq F value  Pr(>F)
+depression  1 158.41 158.408  5.4302 0.05259
+Residuals   7 204.20  29.172                
 [1] TRUE
 > 
 > 

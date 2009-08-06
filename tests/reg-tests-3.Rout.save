@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-07-31 r49039)
+R version 2.10.0 Under development (unstable) (2009-08-05 r49069)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -523,10 +523,10 @@ Single term deletions
 
 Model:
 time ~ 0 + dist + climb
-       Df Sum of Sq    RSS    AIC
-<none>              442.22  92.78
-dist    1    330.92 773.14 110.33
-climb   1      9.73 451.95  91.54
+       Df Sum of Sq    RSS     AIC
+<none>              442.22  92.776
+dist    1    330.92 773.14 110.329
+climb   1      9.73 451.95  91.538
 Single term deletions
 
 Model:
@@ -540,8 +540,8 @@ Single term deletions
 Model:
 time/dist ~ 1 + I(climb/dist)
               Df Sum of Sq    RSS    AIC
-<none>                     442.22  92.78
-I(climb/dist)  1      9.73 451.95  91.54
+<none>                     442.22 92.776
+I(climb/dist)  1    9.7331 451.95 91.538
 > ## quoted unweighted RSS etc in 2.2.1
 > 
 > 
