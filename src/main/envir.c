@@ -2687,7 +2687,7 @@ static SEXP pos2env(int pos, SEXP call)
     RCNTXT *cptr;
 
     if (pos == NA_INTEGER || pos < -1 || pos == 0) {
-	errorcall(call, R_MSG_IA);
+	errorcall(call, _("invalid '%s' argument"), "pos");
 	env = call;/* just for -Wall */
     }
     else if (pos == -1) {
@@ -2701,14 +2701,14 @@ static SEXP pos2env(int pos, SEXP call)
 
 	env = cptr->sysparent;
 	if (R_GlobalEnv != R_NilValue && env == R_NilValue)
-	    errorcall(call, R_MSG_IA);
+	    errorcall(call, _("invalid '%s' argument"), "pos");
     }
     else {
 	for (env = R_GlobalEnv; env != R_EmptyEnv && pos > 1;
 	     env = ENCLOS(env))
 	    pos--;
 	if (pos != 1)
-	    errorcall(call, R_MSG_IA);
+	    errorcall(call, _("invalid '%s' argument"), "pos");
     }
     return env;
 }

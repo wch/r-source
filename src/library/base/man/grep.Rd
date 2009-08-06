@@ -47,7 +47,9 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   \item{pattern}{character string containing a \link{regular expression}
     (or character string for \code{fixed = TRUE}) to be matched
     in the given character vector.  Coerced by
-    \code{\link{as.character}} to a character string if possible.}
+    \code{\link{as.character}} to a character string if possible.  If a
+    character vector of length 2 or more is supplied, the first element
+    is used with a warning.}
   \item{x, text}{a character vector where matches are sought, or an
     object which can be coerced by \code{as.character} to a character vector.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
@@ -73,7 +75,9 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
     \code{"\\9"} to parenthesized subexpressions of \code{pattern}.  For
     \code{perl = TRUE} only, it can also contain \code{"\\U"} or
     \code{"\\L"} to convert the rest of the replacement to upper or
-    lower case, or \code{"\\E"} to end such case conversion.
+    lower case, or \code{"\\E"} to end such case conversion.  If a
+    character vector of length 2 or more is supplied, the first element
+    is used with a warning.
   }
 }
 \details{

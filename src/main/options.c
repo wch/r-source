@@ -563,7 +563,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else { /* querying arg */
 	    const char *tag;
 	    if (!isString(argi) || LENGTH(argi) <= 0)
-		error(R_MSG_IA);
+		error(_("invalid argument"));
 	    tag = CHAR(STRING_ELT(argi, 0));
 	    if (streql(tag, "par.ask.default")) {
 		error(_("\"par.ask.default\" has been replaced by \"device.ask.default\""));

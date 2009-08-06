@@ -32,6 +32,9 @@
 # undef __LIBM_PRIVATE
 #endif
 
+#define R_MSG_NA	_("NaNs produced")
+#define R_MSG_NONNUM_MATH _("Non-numeric argument to mathematical function")
+
 #include <Rmath.h>
 extern double Rf_gamma_cody(double);
 

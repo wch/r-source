@@ -24,6 +24,8 @@
 #endif
 
 #include <Defn.h> /*-- Maybe modularize into own Coerce.h ..*/
+#define R_MSG_mode	_("invalid 'mode' argument")
+#define R_MSG_list_vec	_("applies only to lists and vectors")
 #include <Rmath.h>
 #include <Print.h>
 
@@ -2151,7 +2153,7 @@ SEXP attribute_hidden do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
        better error message.
      */
     if (!isString(rfun) || length(rfun) != 1)
-	errorcall_return(call, R_MSG_A1_char);
+	errorcall_return(call, _("first argument must be a character string"));
     PROTECT(rfun = install(translateChar(STRING_ELT(rfun, 0))));
     PROTECT(evargs = duplicate(CDR(args)));
     for (rest = evargs; rest != R_NilValue; rest = CDR(rest))
@@ -2181,7 +2183,7 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'what' must be a character string or a function"));
 
     if (!isNull(args) && !isNewList(args))
-	error(R_MSG_A2_list);
+	error(_("'args' must be a list"));
 
     if (!isEnvironment(envir))
 	error(_("'envir' must be an environment"));

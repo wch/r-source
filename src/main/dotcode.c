@@ -732,16 +732,16 @@ SEXP attribute_hidden do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
     if (nargs > 3) error(_("too many arguments"));
 
     if(!isValidString(CAR(args)))
-	error(R_MSG_IA);
+	error(_("invalid '%s' argument"), "symbol");
     sym = translateChar(STRING_ELT(CAR(args), 0));
     if(nargs >= 2) {
 	if(!isValidString(CADR(args)))
-	    error(R_MSG_IA);
+	    error(_("invalid '%s' argument"), "PACKAGE");
 	pkg = translateChar(STRING_ELT(CADR(args), 0));
     }
     if(nargs >= 3) {
 	if(!isValidString(CADDR(args)))
-	    error(R_MSG_IA);
+	    error(_("invalid '%s' argument"), "type");
 	type = CHAR(STRING_ELT(CADDR(args), 0)); /* ASCII */
 	if(strcmp(type, "C") == 0) symbol.type = R_C_SYM;
 	else if(strcmp(type, "Fortran") == 0) symbol.type = R_FORTRAN_SYM;

@@ -21,29 +21,9 @@
 #ifndef ERRORMSG_H
 #define ERRORMSG_H
 
-
-	/*-- Error Message Strings --- 1st step to i18n --- --*/
-
-/*-- FIXME: Rather use and extend the ErrorDB[] and WarningDB[] in
- *-- =====  ../main/errors.c ! (MM, who did the following in
- *				the first place ...) */
-
-#define R_MSG_NA	_("NaNs produced")
-
-#define R_MSG_NONNUM_MATH _("Non-numeric argument to mathematical function")
-
-#define R_MSG_IA   _("invalid argument")
-
-#define R_MSG_A1_char _("first argument must be a character string")
-#define R_MSG_A1_list _("first argument must be a list")
-#define R_MSG_A2_char _("second argument must be a character string")
-#define R_MSG_A2_list _("second argument must be a list")
-
+/* Used in ../main/sub*.c */
 #define R_MSG_subs_o_b	_("subscript out of bounds")
 #define R_MSG_ob_nonsub _("object of type '%s' is not subsettable")
-#define R_MSG_mode	_("invalid 'mode' argument")
-#define R_MSG_type	_("invalid 'type' (%s) of argument")
-#define R_MSG_list_vec	_("applies only to lists and vectors")
 
 /*---- Packaged Error & Warning Messages ---- 
  *---- ================================= ----*/

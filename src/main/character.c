@@ -1050,7 +1050,10 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	useBytes = 0;
     }
 
-    if (length(pat) < 1) error(R_MSG_IA);
+    if (!isString(pat) || length(pat) < 1)
+	error(_("invalid '%s' argument"), "pattern");
+    if (length(pat) > 1)
+	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
 
     n = length(vec);
     if (STRING_ELT(pat, 0) == NA_STRING) {
@@ -1323,7 +1326,14 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	useBytes = 0;
     }
 
-    if (length(pat) < 1 || length(rep) < 1) error(R_MSG_IA);
+    if (!isString(pat) || length(pat) < 1)
+	error(_("invalid '%s' argument"), "pattern");
+    if (length(pat) > 1)
+	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
+    if (!isString(rep) || length(rep) < 1)
+	error(_("invalid '%s' argument"), "replacement");
+    if (length(rep) > 1)
+	warning(_("argument '%s' has length > 1 and only the first element will be used"), "replacement");
 
     n = LENGTH(vec);
     if (STRING_ELT(pat, 0) == NA_STRING) {
@@ -1546,9 +1556,10 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     /* allow 'text' to be zero-length from 2.3.1 */
-    if (length(pat) < 1) error(R_MSG_IA);
-    if ( STRING_ELT(pat,0) == NA_STRING)
-	error(R_MSG_IA);
+    if (!isString(pat) || length(pat) < 1 || STRING_ELT(pat,0) == NA_STRING)
+	error(_("invalid '%s' argument"), "pattern");
+    if (length(pat) > 1)
+	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
 
     n = LENGTH(text);
     if ((fixed_opt || perl_opt) && !useBytes) {
@@ -1971,10 +1982,12 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	useBytes = 0;
     }
 
-    if (length(pat) < 1 || length(text) < 1)
-	error(R_MSG_IA);
-    if ( STRING_ELT(pat,0) == NA_STRING)
-	error(R_MSG_IA);
+    if (!isString(text) || length(text) < 1)
+	error(_("invalid '%s' argument"), "text");
+    if (!isString(pat) || length(pat) < 1 || STRING_ELT(pat,0) == NA_STRING)
+	error(_("invalid '%s' argument"), "pattern");
+    if (length(pat) > 1)
+	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
 
     if (perl_opt && !fixed_opt)
 	return do_gpregexpr(pat, text, igcase_opt, useBytes);
@@ -2393,15 +2406,15 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     _new = CAR(args); args = CDR(args);
     x = CAR(args);
     n = LENGTH(x);
-    if (!isString(old) || (length(old) < 1) ||
-	!isString(_new) || (length(_new) < 1) ||
-	!isString(x) )
-	error(R_MSG_IA);
-
-    if (STRING_ELT(old,0) == NA_STRING ||
-	STRING_ELT(_new,0) == NA_STRING) {
-	error(_("invalid (NA) arguments."));
-    }
+    if (!isString(old) || length(old) < 1 || STRING_ELT(old, 0) == NA_STRING)
+	error(_("invalid '%s' argument"), "old");
+    if (length(old) > 1)
+	warning(_("argument '%s' has length > 1 and only the first element will be used"), "old");
+    if (!isString(_new) || length(_new) < 1 || STRING_ELT(_new, 0) == NA_STRING)
+	error(_("invalid '%s' argument"), "new");
+    if (length(_new) > 1)
+	warning(_("argument '%s' has length > 1 and only the first element will be used"), "new");
+    if (!isString(x)) error("invalid '%s' argument", "x");
 
 #ifdef SUPPORT_MBCS
 #if defined(Win32) || defined(__STDC_ISO_10646__)
@@ -2639,7 +2652,11 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (value_opt == NA_INTEGER) value_opt = 0;
     if (useBytes == NA_INTEGER) useBytes = 0;
 
-    if (!isString(pat) || length(pat) < 1 || !isString(vec)) error(R_MSG_IA);
+    if (!isString(pat) || length(pat) < 1)
+	error(_("invalid '%s' argument"), "pattern");
+    if (length(pat) > 1)
+	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pat");
+    if (!isString(vec)) error(_("invalid '%s' argument"), "x");
 
     /* Create search pattern object. */
     str = translateChar(STRING_ELT(pat, 0));

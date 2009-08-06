@@ -1,6 +1,6 @@
 % File src/library/base/man/chartr.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{chartr}
@@ -23,8 +23,11 @@ casefold(x, upper = FALSE)
   \item{x}{a character vector, or an object that can be coerced to
     character by \code{\link{as.character}}.}
   \item{old}{a character string specifying the characters to be
-    translated.}
-  \item{new}{a character string specifying the translations.}
+    translated. If a character vector of length 2 or more is supplied,
+    the first element is used with a warning.}
+  \item{new}{a character string specifying the translations. If a
+    character vector of length 2 or more is supplied, the first element
+    is used with a warning.}
   \item{upper}{logical: translate to upper or lower case?.}
 }
 \details{
