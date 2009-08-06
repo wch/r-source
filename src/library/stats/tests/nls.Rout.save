@@ -1,5 +1,5 @@
 
-R version 2.9.0 Under development (unstable) (2009-02-22 r47979)
+R version 2.10.0 Under development (unstable) (2009-08-06 r49081)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -230,8 +230,8 @@ Analysis of Variance Table
 Model 1: density ~ Asym/(1 + exp((xmid - log(conc))))
 Model 2: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
   Res.Df Res.Sum Sq Df  Sum Sq F value Pr(>F)
-1     14    0.01855                          
-2     13    0.01643  1 0.00212    1.68   0.22
+1     14     0.0186                          
+2     13     0.0164  1 0.00212    1.68   0.22
 > 
 > ## and without using weights
 > fm3 <- nls(~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))/scal))),
@@ -266,8 +266,8 @@ Analysis of Variance Table
 Model 1: 0 ~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc)))))
 Model 2: 0 ~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))/scal)))
   Res.Df Res.Sum Sq Df  Sum Sq F value Pr(>F)
-1     14    0.01855                          
-2     13    0.01643  1 0.00212    1.68   0.22
+1     14     0.0186                          
+2     13     0.0164  1 0.00212    1.68   0.22
 > 
 > ## using conditional linearity
 > fm4 <- nls(density ~ 1/(1 + exp((xmid - log(conc))/scal)),
@@ -303,8 +303,8 @@ Analysis of Variance Table
 Model 1: density ~ 1/(1 + exp((xmid - log(conc))))
 Model 2: density ~ 1/(1 + exp((xmid - log(conc))/scal))
   Res.Df Res.Sum Sq Df  Sum Sq F value Pr(>F)
-1     14    0.01855                          
-2     13    0.01643  1 0.00212    1.68   0.22
+1     14     0.0186                          
+2     13     0.0164  1 0.00212    1.68   0.22
 > 
 > ## using 'port'
 > fm5 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
@@ -682,5 +682,5 @@ Error in nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 > stopifnot(inherits(fit, "try-error"))
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  2.928 0.011 2.94 0 0 
+Time elapsed:  4.043 0.028 4.073 0 0 
 > 
