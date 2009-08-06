@@ -33,7 +33,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
             tmp <- match(tmp, varnames)
             margin[[k]] <- tmp
         }
-        conf[1L:length(tmp), k] <- tmp
+        conf[seq_along(tmp), k] <- tmp
         nmar <- nmar + prod(dtab[tmp])
     }
 

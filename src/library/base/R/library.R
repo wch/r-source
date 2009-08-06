@@ -681,7 +681,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
     if(length(package) == 0L) return(character(0L))
     s <- search()
     searchpaths <-
-        lapply(1L:length(s), function(i) attr(as.environment(i), "path"))
+        lapply(seq_along(s), function(i) attr(as.environment(i), "path"))
     searchpaths[[length(s)]] <- system.file()
     pkgs <- paste("package", package, sep = ":")
     pos <- match(pkgs, s)

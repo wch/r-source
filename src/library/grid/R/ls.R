@@ -675,7 +675,7 @@ pathListing <- function(x, gvpSep=" | ", gAlign=TRUE) {
 
     if (!inherits(x, "flatGridListing"))
         stop("Invalid listing")
-    vpListings <- (1L:length(x$name)) %in% grep("^vp", x$type)
+    vpListings <- seq_along(x$name) %in% grep("^vp", x$type)
     paths <- x$vpPath
     maxLen <- max(nchar(paths))
     # Only if viewport listings

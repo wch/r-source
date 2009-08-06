@@ -28,10 +28,10 @@ monthplot(x, \dots)
 \method{monthplot}{ts}(x, labels = NULL, times = time(x), phase = cycle(x),
              ylab = deparse(substitute(x)), \dots)
 
-\method{monthplot}{default}(x, labels = 1:12,
+\method{monthplot}{default}(x, labels = 1L:12L,
           ylab = deparse(substitute(x)),
-          times = 1:length(x),
-          phase = (times - 1)\%\%length(labels) + 1, base = mean,
+          times = seq_along(x),
+          phase = (times - 1L)\%\%length(labels) + 1L, base = mean,
           axes = TRUE, type = c("l", "h"), box = TRUE,
           add = FALSE, \dots)
 }

@@ -27,7 +27,7 @@ seq.default <-
     }
     if(!missing(along.with)) {
 	length.out <- length(along.with)
-	if(One) return(if(length.out) 1L:length.out else integer(0L))
+	if(One) return(if(length.out) seq_len(length.out) else integer(0L))
     }
     else if(!missing(length.out))
 	length.out <- ceiling(length.out)
@@ -59,7 +59,7 @@ seq.default <-
 	stop("length must be non-negative number")
     else if(length.out == 0L)
 	integer(0L)
-    else if (One) 1L:length.out
+    else if (One) seq_len(length.out)
     else if(missing(by)) {
 	# if(from == to || length.out < 2) by <- 1
 	if(missing(to))
@@ -69,8 +69,8 @@ seq.default <-
 	if(length.out > 2L)
 	    if(from == to)
 		rep.int(from, length.out)
-	    else as.vector(c(from, from + (1L:(length.out - 2L)) * by, to))
-	else as.vector(c(from, to))[1L:length.out]
+	    else as.vector(c(from, from + seq_len(length.out - 2L) * by, to))
+	else as.vector(c(from, to))[seq_len(length.out)]
     }
     else if(missing(to))
 	from + (0L:(length.out - 1L)) * by

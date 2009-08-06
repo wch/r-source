@@ -1,12 +1,12 @@
 % File src/library/stats/man/prop.trend.test.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{prop.trend.test}
 \title{Test for trend in proportions}
 \usage{
-prop.trend.test(x, n, score = 1:length(x))
+prop.trend.test(x, n, score = seq_along(x))
 }
 \alias{prop.trend.test}
 \arguments{

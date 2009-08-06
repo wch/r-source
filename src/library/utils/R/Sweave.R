@@ -162,7 +162,7 @@ SweaveReadFile <- function(file, syntax)
             if(any(ifile==file)){
                 stop(paste(gettextf("recursive Sweave input '%s' in stack",
                                     ifile),
-                           paste("\n         ", 1L:length(file), ": ",
+                           paste("\n         ", seq_len(file), ": ",
                                  rev(file), collapse="")),
                  domain = NA)
             }
@@ -173,7 +173,7 @@ SweaveReadFile <- function(file, syntax)
             else if(pos==length(text))
                 text <- c(text[-pos], itext)
             else
-                text <- c(text[1L:(pos-1L)], itext, text[(pos+1L):length(text)])
+                text <- c(text[seq_len(pos-1L)], itext, text[(pos+1L):length(text)])
         }
     }
 
@@ -286,7 +286,7 @@ SweaveParseOptions <- function(text, defaults=list(), check=NULL)
 
     options <- defaults
 
-    for(k in 1L:length(x))
+    for(k in seq_along(x))
         options[[ x[[k]][1L] ]] <- x[[k]][2L]
 
     if(!is.null(options[["label"]]) && !is.null(options[["engine"]]))
@@ -448,7 +448,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 	  else
 	    lastshown <- srcline - 1L
 	  thisline <- 0
-          for(nce in 1L:length(chunkexps))
+          for(nce in seq_along(chunkexps))
             {
                 ce <- chunkexps[[nce]]
                 if (nce <= length(srcrefs) && !is.null(srcref <- srcrefs[[nce]])) {
@@ -493,7 +493,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                     if (length(dce) > leading)
                     	cat("\n", paste(getOption("continue"), dce[-(1L:leading)], sep="", collapse="\n"),
                     	    file=chunkout, append=TRUE, sep="")
-		    linesout[thisline + 1L:length(dce)] <- srcline
+		    linesout[thisline + seq_along(dce)] <- srcline
 		    thisline <- thisline + length(dce)
                 }
 

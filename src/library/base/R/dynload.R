@@ -145,12 +145,12 @@ function(x, ...)
                 d[[id]] <<- rep("", n)
                 names <- sapply(x[[id]], function(x) x$name)
                 if(length(names))
-                    d[[id]][1L:length(names)] <<- names
+                    d[[id]][seq_along(names)] <<- names
 
                 d[[paste(id, "numParameters")]] <<- rep("", n)
                 names <- sapply(x[[id]], function(x) x$numParameters)
                 if(length(names))
-                    d[[paste(id, "numParameters")]][1L:length(names)] <<- names
+                    d[[paste(id, "numParameters")]][seq_along(names)] <<- names
              })
     print(as.data.frame(d), ...)
     invisible(x)

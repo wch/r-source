@@ -23,7 +23,7 @@ pie <-
     if (!is.numeric(x) || any(is.na(x) | x < 0))
 	stop("'x' values must be positive.")
     if (is.null(labels))
-	labels <- as.character(1L:length(x))
+	labels <- as.character(seq_along(x))
     else labels <- as.graphicsAnnot(labels)
     x <- c(0, cumsum(x)/sum(x))
     dx <- diff(x)

@@ -39,7 +39,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 	    dim.field <- paste("length:", lg)
 	else{
 	    dim.field <- "dim:"
-	    for(i in 1L:length(objdim))
+	    for(i in seq_along(objdim))
 		dim.field <- paste(dim.field,objdim[i])
 	    if(is.matrix(obj))
 		md <- "matrix"
@@ -122,7 +122,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 			dim.field.l <- paste("length:", length(obj.nms[[i]]))
 		    else{
 			dim.field.l <- "dim:"
-			for(j in 1L:length(objdim.l))
+			for(j in seq_along(objdim.l))
 			    dim.field.l <- paste(dim.field.l,objdim.l[i])
 		    }
 		    ##cat("    objname:",nm[i],", type=",md.l,",",dim.field.l,"\n")

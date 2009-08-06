@@ -141,7 +141,7 @@ validGP <- function(gpars) {
       else {
         temp.char <- as.character(gpars$fontface)
         temp.num <- integer(length(temp.char))
-        for (i in 1L:length(temp.char))
+        for (i in seq_along(temp.char))
           temp.num[i] <- switch(temp.char[i],
                                 plain=1,
                                 italic=3,

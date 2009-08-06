@@ -227,7 +227,7 @@ polygon <-
         ## process multiple polygons separated by NAs
 
         start <- 1
-        ends <- c((1L:length(xy$x))[is.na(xy$x) | is.na(xy$y)], length(xy$x) + 1)
+        ends <- c(seq_along(xy$x)[is.na(xy$x) | is.na(xy$y)], length(xy$x) + 1)
 
         num.polygons <- length(ends)
         col <- rep(col, length.out = num.polygons)

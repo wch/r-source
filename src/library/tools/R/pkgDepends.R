@@ -197,7 +197,7 @@ foundDepends <- function(depMtrx, contriburl=getOption("repos")) {
                                  BIOC = getOption("BIOC")))
 
 
-    for (j in 1L:length(contriburl)) {
+    for (j in seq_along(contriburl)) {
         cur <- character()
         cran <- utils::available.packages(contriburl=contriburl[j])
 

@@ -407,7 +407,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
     RSS <- numeric(ns)
     y <- object$residuals + object$fitted.values
     ## predict(object) applies na.action where na.exclude results in too long
-    na.coef <- (1L:length(object$coefficients))[!is.na(object$coefficients)]
+    na.coef <- seq_along(object$coefficients)[!is.na(object$coefficients)]
     for(i in 1L:ns) {
 	ii <- seq_along(asgn)[asgn == ndrop[i]]
 	jj <- setdiff(if(all.cols) seq(ncol(x)) else na.coef, ii)
@@ -489,7 +489,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         y <- model.response(model.frame(object))
         if(!is.factor(y)) storage.mode(y) <- "double"
     }
-#    na.coef <- (1L:length(object$coefficients))[!is.na(object$coefficients)]
+#    na.coef <- seq_along(object$coefficients)[!is.na(object$coefficients)]
     wt <- object$prior.weights
     if(is.null(wt)) wt <- rep.int(1, n)
     for(i in 1L:ns) {

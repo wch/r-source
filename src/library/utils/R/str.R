@@ -45,7 +45,7 @@ str.POSIXt <- function(object, ...) {
     cl <- oldClass(object)
     ## be careful to be fast for large object:
     n <- length(object)
-    if(n >= 1000) object <- object[1L:1000]
+    if(n >= 1000L) object <- object[seq_len(1000L)]
 
     give.length <- TRUE ## default
     ## use 'give.length' when specified, else default = give.head
@@ -208,7 +208,7 @@ str.default <-
 		    else { max.ncnam <- max(nchar(nam.ob, type="w"))
 			   format(nam.ob, width = max.ncnam, justify="left")
 		       }
-		for(i in 1L:le) {
+		for(i in seq_len(le)) {
 		    cat(indent.str, comp.str, nam.ob[i], ":", sep="")
 		    envir <- # pass envir for 'promise' components:
 			if(typeof(object[[i]]) == "promise") {
@@ -308,7 +308,7 @@ str.default <-
 		lenl <- cumsum(3 + (nchar(lev.att, type="w") - 2))# level space
 		ml <- if(nl <= 1 || lenl[nl] <= 13)
 		    nl else which(lenl > 13)[1L]
-		lev.att <- maybe_truncate(lev.att[1L:ml])
+		lev.att <- maybe_truncate(lev.att[seq_len(ml)])
 ##		if((d <- lenl[ml] - if(ml>1)18 else 14) >= 3)# truncate last
 ##		    lev.att[ml] <-
 ##			P0(substring(lev.att[ml],1, nchar(lev.att[ml])-d), "..")
@@ -452,7 +452,7 @@ str.default <-
 	if(char.like) {
 	    ## if object is very long, drop the rest which won't be used anyway:
 	    max.len <- max(100, width %/% 3 + 1, if(!missing(vec.len)) vec.len)
-	    if(le > max.len) object <- object[1L:max.len]
+	    if(le > max.len) object <- object[seq_len(max.len)]
 	    encObj <- encodeString(object, quote= '"', na.encode= FALSE)
 					#O: encodeString(object)
 	    v.len <-
@@ -463,7 +463,7 @@ str.default <-
 		else round(v.len)
 	    ile <- min(le, v.len)
 	    if(ile >= 1) ## truncate if LONG char:
-		object <- maybe_truncate(encObj[1L:ile])
+		object <- maybe_truncate(encObj[seq_len(ile)])
 					#O: encodeString(object, quote= '"', na.encode= FALSE)
 	    formObj <- function(x) paste(as.character(x), collapse=" ")
 	}
@@ -477,7 +477,7 @@ str.default <-
 	}
 
 	cat(if(give.head) P0(str1, " "),
-	    formObj(if(ile >= 1) object[1L:ile] else if(v.len > 0) object),
+	    formObj(if(ile >= 1) object[seq_len(ile)] else if(v.len > 0) object),
 	    if(le > v.len) " ...", "\n", sep="")
 
     } ## else (not function nor list)----------------------------------------

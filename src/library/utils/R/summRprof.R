@@ -74,7 +74,7 @@ summaryRprof<-function(filename = "Rprof.out", chunksize = 5000,
        new.utable <- table(newuniques)
        new.ftable <- table(factor(newfirsts, levels = names(new.utable)))
        if (memory == "both")
-           new.umem <- rowsum(memcounts[rep.int(1L:length(memcounts), ulen)], newuniques)
+           new.umem <- rowsum(memcounts[rep.int(seq_along(memcounts), ulen)], newuniques)
 
        fcounts <- rowsum( c(as.vector(new.ftable), fcounts),
                          c(names(new.ftable), fnames) )
@@ -148,7 +148,7 @@ Rprof_memory_summary <- function(filename, chunksize = 5000,
        firsts <- c(firsts, newfirsts)
 
        if (!aggregate && length(label)){
-           for(i in 1L:length(label)){
+           for(i in seq_along(label)){
 
                if (label[i] == 1)
                    labels[[i]] <- c(labels[[i]], newfirsts)

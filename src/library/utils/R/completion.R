@@ -35,10 +35,10 @@
 
 ### Note: sprintf seems faster than paste based on naive benchmarking:
 
-## > system.time(for (i in 1L:100000) sprintf("foo%sbar%d", letters[1L:26], 1L:26) )
+## > system.time(for (i in 1L:100000L) sprintf("foo%sbar%d", letters, 1L:26L) )
 ##            user          system           total   user.children system.children
 ##           4.796           0.088           4.887           0.000           0.000
-## > system.time(for (i in 1L:100000) paste("foo", letters[1L:26], "bar", 1L:26) )
+## > system.time(for (i in 1L:100000L) paste("foo", letters, "bar", 1L:26L) )
 ##            user          system           total   user.children system.children
 ##           8.300           0.028           8.336           0.000           0.000
 

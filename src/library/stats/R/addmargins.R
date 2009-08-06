@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 addmargins <-
-    function(A, margin = 1L:length(dim(A)), FUN = sum, quiet = FALSE)
+    function(A, margin = seq_along(dim(A)), FUN = sum, quiet = FALSE)
 {
 ### The workhorse for this margin-expansion is the function
 ### expand.one, which is defined and called at the bottom.

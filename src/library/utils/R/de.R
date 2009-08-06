@@ -50,7 +50,7 @@ de.setup <- function(ilist, list.names, incols)
 	k <- k+1L
 	if( is.list(telt) ) {
 	    y <- names(telt)
-	    for( j in 1L:length(telt) ) {
+	    for( j in seq_along(telt) ) {
 		ivec[[i]] <- telt[[j]]
 		if( is.null(y) || y[j]=="" )
 		    inames[[i]] <- paste("var", i, sep="")

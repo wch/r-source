@@ -43,7 +43,7 @@ URLdecode <- function(URL)
             out <- c(out, x[i])
             i <- i + 1L
         } else {
-            y <- as.integer(x[i+1L:2])
+            y <- as.integer(x[i + 1L:2L])
             y[y > 96L] <- y[y > 96L] - 32L # a-f -> A-F
             y[y > 57L] <- y[y > 57L] - 7L  # A-F
             y <- sum((y - 48L) * c(16L, 1L))

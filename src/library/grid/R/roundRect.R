@@ -99,7 +99,7 @@ rrpoints <- function(x) {
 drawDetails.roundrect <- function(x, recording) {
     boundary <- rrpoints(x)
     grid.Call.graphics("L_polygon", boundary$x, boundary$y,
-                       list(as.integer(1L:length(boundary$x))))
+                       list(as.integer(seq_along(boundary$x))))
 }
 
 xDetails.roundrect <- function(x, theta) {

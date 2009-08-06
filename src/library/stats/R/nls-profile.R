@@ -60,15 +60,15 @@ profiler.nls <- function(fitted, ...)
                      }
                      if(!missing(varying)) {
                          if(is.numeric(varying)) {
-                             if(!all(varying %in% (1L:length(fittedPars))))
-                                 stop("'varying' must be in 1L:length(pars)")
-                             varying <- !((1L:length(fittedPars)) %in% varying)
+                             if(!all(varying %in% seq_along(fittedPars)))
+                                 stop("'varying' must be in seq_along(pars)")
+                             varying <- !((seq_along(fittedPars)) %in% varying)
                          } else if(is.logical(varying)) {
                              if(length(varying) != length(fittedPars))
                                  stop("'varying' has wrong length")
                          } else if(is.character(varying)) {
                              if(!all(varying %in% names(fittedPars)))
-                                 stop("'varying' must be in 1L:length(pars)")
+                                 stop("'varying' must be in seq_along(pars)")
                              varying <- !(names(fittedPars) %in% varying)
                          } else stop("'varying' must be logical, integer or character")
                          assign("defaultVary", varying, envir = thisEnv)

@@ -127,7 +127,7 @@ delete.response <- function (termobj)
         if(length(a$offset))
             a$offset <- ifelse(a$offset > y, a$offset-1, a$offset)
         if(length(a$specials))
-            for(i in 1L:length(a$specials)) {
+            for(i in seq_along(a$specials)) {
                 b <- a$specials[[i]]
                 a$specials[[i]] <- ifelse(b > y, b-1, b)
             }

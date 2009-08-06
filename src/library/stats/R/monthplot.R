@@ -46,10 +46,10 @@ monthplot.ts <-
 }
 
 monthplot.default <-
-    function (x, labels = 1L:12,
+    function (x, labels = 1L:12L,
               ylab = deparse(substitute(x)),
-              times = 1L:length(x),
-              phase = (times - 1)%%length(labels) + 1, base = mean,
+              times = seq_along(x),
+              phase = (times - 1L)%%length(labels) + 1L, base = mean,
               axes = TRUE, type = c("l", "h"), box = TRUE, add = FALSE, ...)
 {
     dots <- list(...); nmdots <- names(dots)

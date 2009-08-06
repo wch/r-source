@@ -72,7 +72,7 @@ function (x,
 
         ## level & intercept
         dat <- na.omit(st$trend)
-        m   <- lm(dat ~ c(1L:length(dat)))
+        m   <- lm(dat ~ seq_along(dat))
 
         if (is.null(l.start)) l.start <- as.vector(coef(m)[1L])
         if (is.null(b.start)) b.start <- as.vector(coef(m)[2L])

@@ -138,7 +138,7 @@ RweaveRdDefaults <- list(
     results="text",
     strip.white="true",
     stage="install")
-    
+
 RweaveRdOptions <- function(options)
 {
 
@@ -201,9 +201,9 @@ processRdChunk <- function(code, stage, options, env) {
     options <- utils:::SweaveParseOptions(opts, options, RweaveRdOptions)
     if (stage == options$stage) {
         #  The code below is very similar to RWeaveLatexRuncode, but simplified
-        
+
         # Results as a character vector for now; convert to list later
-        res <- character(0)  
+        res <- character(0)
         code <- code[RdTags(code) != "COMMENT"]
 	chunkexps <- try(parse(text=code), silent=TRUE)
 	if (inherits(chunkexps, "try-error")) stopRd(code, chunkexps)
@@ -218,7 +218,7 @@ processRdChunk <- function(code, stage, options, env) {
 	lastshown <- 0L
 	thisline <- 0
 	err <- NULL
-	for(nce in 1L:length(chunkexps))
+	for(nce in seq_along(chunkexps))
 	{
 	    ce <- chunkexps[[nce]]
 	    if (nce <= length(srcrefs) && !is.null(srcref <- srcrefs[[nce]])) {
@@ -276,7 +276,7 @@ processRdChunk <- function(code, stage, options, env) {
 	    res <- tagged(parse_Rd(tmpcon, fragment=TRUE), "LIST")
 	    close(tmpcon)
 	    res <- prepare_Rd(res, defines = .Platform$OS.type, options=options)
-	} else if (options$results == "text") 
+	} else if (options$results == "text")
 	    res <- tagged(err, "TEXT")
 	else if (length(res)) {
 	    res <- lapply(as.list(res), function(x) tagged(x, "VERB"))
@@ -295,11 +295,11 @@ processRdIfdefs <- function(blocks, defines)
 		target <- block[[1L]][[1L]]
 		# The target will have picked up some whitespace and a newline
 		target <- gsub("[[:blank:][:cntrl:]]*", "", target)
-		if ((target %in% defines) == (tag == "#ifdef")) 
+		if ((target %in% defines) == (tag == "#ifdef"))
 		    block <- tagged(block[[2L]], "#expanded")
-		else 
+		else
 		    block <- structure(tagged(paste(tag, target, "not active"), "COMMENT"),
-		    		       srcref=attr(block, "srcref"))   		       
+		    		       srcref=attr(block, "srcref"))
 	    }
 	}
 	if (is.list(block)) {
@@ -319,8 +319,8 @@ processRdIfdefs <- function(blocks, defines)
 	    }
 	}
 	block
-    }  	
-    
+    }
+
     recurse(blocks)
 }
 
@@ -329,14 +329,14 @@ processRdSexprs <- function(block, stage, options=RweaveRdDefaults, env=new.env(
     recurse <- function(block) {
         if (is.list(block)) {
             if (!is.null(tag <- attr(block, "Rd_tag"))) {
-        	if (tag == "\\Sexpr")   
+        	if (tag == "\\Sexpr")
             	    block <- processRdChunk(block, stage, options, env)
-            	else if (tag == "\\RdOpts") 
+            	else if (tag == "\\RdOpts")
     	    	    options <<- utils:::SweaveParseOptions(block, options, RweaveRdOptions)
     	    }
 	    for (i in seq_along(block))
 		block[[i]] <- recurse(block[[i]])
-	}    
+	}
 	block
     }
     recurse(block)
@@ -379,7 +379,7 @@ sectionTitles <-
 ## FIXME: better to really use XHTML
 Rd2HTML <-
     function(Rd, out = "", package = "", defines = .Platform$OS.type,
-             Links = NULL, CHM = FALSE, 
+             Links = NULL, CHM = FALSE,
              stages = "render", outputEncoding = "UTF-8", ...)
 {
     of <- function(...) writeLines(paste(...), con, sep = '')
@@ -491,7 +491,7 @@ Rd2HTML <-
     	    return(TRUE)
     	} else return(FALSE)
     }
-    	
+
     ## FIXME: depends on CHM or not
     ## Cross-packages CHM links are of the form
     ## <a onclick="findlink('stats', 'weighted.mean.html')" style="text-decoration: underline; color: blue; cursor: hand">weighted.mean</a>
@@ -707,7 +707,7 @@ Rd2HTML <-
             	} else of0("`", pendingOpen, "`")
             	pendingOpen <<- character(0)
             }
-            if (length(pendingClose) && tag == "RCODE" 
+            if (length(pendingClose) && tag == "RCODE"
                 && length(grep("\\)", block))) { # Finish it off...
             	of0(sub("\\).*", "", block), pendingClose)
             	block <- sub("[^)]*\\)", "", block)
@@ -764,7 +764,7 @@ Rd2HTML <-
                         txt <- gsub("^ ", "", as.character(block), perl = TRUE)
                         of1(txt)
                     } else writeBlock(block, tag, blocktag) # should not happen
-                } else writeBlock(block, tag, blocktag) 
+                } else writeBlock(block, tag, blocktag)
     	    })
 	}
 	if (inlist)
@@ -817,8 +817,8 @@ Rd2HTML <-
     	con <- out
     	out <- summary(con)$description
     }
-    
-    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...) 
+
+    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
 
@@ -912,7 +912,7 @@ Rd2HTML <-
                              sep = '\n'), con)
     }
     if (package != "") {
-    	version <- paste('Package <em>', package, 
+    	version <- paste('Package <em>', package,
     	                 '</em> version ', packageDescription(package, fields="Version"), ' ', sep='')
     } else version <- ''
     of0('\n',
@@ -921,7 +921,7 @@ Rd2HTML <-
     return(out)
 }
 
-checkRd <- function(Rd, defines=.Platform$OS.type, stages="render", 
+checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                     unknownOK = TRUE, listOK = TRUE, ...)
 {
     checkWrapped <- function(tag, block) {
@@ -1112,7 +1112,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     }
 
     dt <- which(sections == "\\docType")
-    docTypes <- character(length(dt))   
+    docTypes <- character(length(dt))
     if (length(dt)) {
         for (i in dt) {
             docType <- Rd[[i]]
@@ -1282,7 +1282,7 @@ findHTMLlinks <- function(pkgDir = "", lib.loc = NULL)
     if(is.null(lib.loc)) lib.loc <- .libPaths()
 
     Links <- lapply(rev(lib.loc), .find_HTML_links_in_library)
-    Links <- c(Links, 
+    Links <- c(Links,
                lapply(file.path(.Library,
                                 c("base", "utils", "graphics",
                                   "grDevices", "stats", "datasets",
@@ -1291,7 +1291,7 @@ findHTMLlinks <- function(pkgDir = "", lib.loc = NULL)
     if(nzchar(pkgDir))
         Links <- c(Links, list(.find_HTML_links_in_package(pkgDir)))
     Links <- unlist(Links)
-    
+
     ## now latest names are newest, so
     Links <- rev(Links)
     Links <- Links[!duplicated(names(Links))]
@@ -1325,4 +1325,4 @@ function(dir)
 }
 
 
-                 
+

@@ -45,7 +45,7 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
         if(!is.null(which))
             stop("specify exactly one of 'which' and 'x'")
         which <- x
-        for(n in 1L:length(x))
+        for(n in seq_along(x))
             which[n] <- max(which(m<x[n]))
     }
     else
@@ -59,7 +59,7 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
     border <- rep(border, length.out = length(which))
 
     retval <- list()
-    for(n in 1L:length(which)){
+    for(n in seq_along(which)) {
         rect(m[which[n]]+0.66, par("usr")[3L],
              m[which[n]+1]+0.33, mean(rev(tree$height)[(k-1):k]),
              border = border[n])

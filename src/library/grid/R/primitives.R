@@ -230,7 +230,7 @@ validDetails.polyline <- function(x) {
 drawDetails.polyline <- function(x, recording=TRUE) {
     if (is.null(x$id) && is.null(x$id.lengths))
         grid.Call.graphics("L_lines", x$x, x$y,
-                           list(as.integer(1L:length(x$x))),
+                           list(as.integer(seq_along(x$x))),
                            x$arrow)
     else {
         if (is.null(x$id)) {
@@ -240,7 +240,7 @@ drawDetails.polyline <- function(x, recording=TRUE) {
             n <- length(unique(x$id))
             id <- x$id
         }
-        index <- split(as.integer(1L:length(x$x)), id)
+        index <- split(as.integer(seq_along(x$x)), id)
         grid.Call.graphics("L_lines", x$x, x$y, index, x$arrow)
     }
 }
@@ -578,7 +578,7 @@ validDetails.polygon <- function(x) {
 drawDetails.polygon <- function(x, recording=TRUE) {
   if (is.null(x$id) && is.null(x$id.lengths))
     grid.Call.graphics("L_polygon", x$x, x$y,
-                       list(as.integer(1L:length(x$x))))
+                       list(as.integer(seq_along(x$x))))
   else {
     if (is.null(x$id)) {
       n <- length(x$id.lengths)
@@ -587,7 +587,7 @@ drawDetails.polygon <- function(x, recording=TRUE) {
       n <- length(unique(x$id))
       id <- x$id
     }
-    index <- split(as.integer(1L:length(x$x)), id)
+    index <- split(as.integer(seq_along(x$x)), id)
     grid.Call.graphics("L_polygon", x$x, x$y, index)
   }
 }
@@ -690,7 +690,7 @@ validDetails.xspline <- function(x) {
 
 xsplineIndex <- function(x) {
   if (is.null(x$id) && is.null(x$id.lengths))
-      list(as.integer(1L:length(x$x)))
+      list(as.integer(seq_along(x$x)))
   else {
     if (is.null(x$id)) {
       n <- length(x$id.lengths)
@@ -699,7 +699,7 @@ xsplineIndex <- function(x) {
       n <- length(unique(x$id))
       id <- x$id
     }
-    split(as.integer(1L:length(x$x)), id)
+    split(as.integer(seq_along(x$x)), id)
   }
 }
 
@@ -728,7 +728,7 @@ yDetails.xspline <- function(x, theta) {
 
 widthDetails.xspline <- function(x) {
   bounds <- grid.Call("L_xsplineBounds", x$x, x$y, x$shape, x$open, x$arrow,
-                      x$repEnds, list(as.integer(1L:length(x$x))), 0)
+                      x$repEnds, list(as.integer(seq_along(x$x))), 0)
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -737,7 +737,7 @@ widthDetails.xspline <- function(x) {
 
 heightDetails.xspline <- function(x) {
   bounds <- grid.Call("L_xsplineBounds", x$x, x$y, x$shape, x$open, x$arrow,
-                      x$repEnds, list(as.integer(1L:length(x$x))), 0)
+                      x$repEnds, list(as.integer(seq_along(x$x))), 0)
   if (is.null(bounds))
     unit(0, "inches")
   else

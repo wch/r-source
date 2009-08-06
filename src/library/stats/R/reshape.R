@@ -89,7 +89,7 @@ reshape <-
         if (is.null(v.names))
             v.names <- unlist(lapply(varying,function(x) x[1L]))
 
-        for(i in 1L:length(v.names))
+        for(i in seq_along(v.names))
             d[, v.names[i]] <- data[, varying[[i]][1L] ]
 
         if (!(idvar %in% names(data)))
@@ -109,7 +109,7 @@ reshape <-
 
         for(i in 2:length(times)) {
             d[,timevar] <- times[i]
-            for(j in 1L:length(v.names))
+            for(j in seq_along(v.names))
                 d[ ,v.names[j]] <- data[ ,varying[[j]][i]]
 
             if (is.null(new.row.names))

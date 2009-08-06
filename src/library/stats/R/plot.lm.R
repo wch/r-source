@@ -294,7 +294,7 @@ function (x, which = c(1L:3,5), ## was which = 1L:4,
 	usr <- par("usr")
 	xmax <- usr[2L]
 	ymax <- usr[4L]
-	for(i in 1L:length(bval)) {
+	for(i in seq_along(bval)) {
 	    bi2 <- bval[i]^2
 	    if(ymax > bi2*xmax) {
 		xi <- xmax + strwidth(" ")/3

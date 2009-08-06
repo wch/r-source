@@ -193,7 +193,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
             tmp <- as.matrix(c(ssp, format(rdf)))
             if(length(ss) > 1L) {
                 rn <- colnames(x$fitted.values)
-                if(is.null(rn)) rn <- paste("resp", 1L:length(ss))
+                if(is.null(rn)) rn <- paste("resp", seq_along(ss))
             } else rn <- "Sum of Squares"
             dimnames(tmp) <- list(c(rn, "Deg. of Freedom"), "Residuals")
             print(tmp, quote = FALSE, right = TRUE)

@@ -96,7 +96,7 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
     remove <- function(which)
     {
         if(is.character(which)) {
-            tmp <- (1L:length(handlers))[!is.na(match(which, names(handlers)))]
+            tmp <- seq_along(handlers)[!is.na(match(which, names(handlers)))]
             if(length(tmp))
                 stop(gettextf("no such element '%s'", which), domain = NA)
             which <- tmp

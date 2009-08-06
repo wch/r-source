@@ -825,7 +825,7 @@ effects.lm <- function(object, set.sign = FALSE, ...)
 	    r <- 1L:dim(dd)[1L]
 	    eff[r,  ] <- sign(dd) * abs(eff[r,	])
 	} else {
-	    r <- 1L:length(dd)
+	    r <- seq_along(dd)
 	    eff[r] <- sign(dd) * abs(eff[r])
 	}
     }
