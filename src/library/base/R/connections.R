@@ -29,13 +29,13 @@ readLines <- function(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
 }
 
 
-writeLines <- function(text, con = stdout(), sep = "\n")
+writeLines <- function(text, con = stdout(), sep = "\n", useBytes = FALSE)
 {
     if(is.character(con)) {
         con <- file(con, "w")
         on.exit(close(con))
     }
-    invisible(.Internal(writeLines(text, con, sep)))
+    invisible(.Internal(writeLines(text, con, sep, useBytes)))
 }
 
 open <- function(con, ...)
@@ -199,7 +199,8 @@ readBin <- function(con, what, n = 1L, size = NA_integer_, signed = TRUE,
 }
 
 writeBin <-
-    function(object, con, size = NA_integer_, endian = .Platform$endian)
+    function(object, con, size = NA_integer_, endian = .Platform$endian,
+             useBytes = FALSE)
 {
     swap <- endian != .Platform$endian
     if(!is.vector(object) || mode(object) == "list")
@@ -208,7 +209,7 @@ writeBin <-
         con <- file(con, "wb")
         on.exit(close(con))
     }
-    .Internal(writeBin(object, con, size, swap))
+    .Internal(writeBin(object, con, size, swap, useBytes))
 }
 
 readChar <- function(con, nchars, useBytes = FALSE)
@@ -221,7 +222,7 @@ readChar <- function(con, nchars, useBytes = FALSE)
 }
 
 writeChar <- function(object, con, nchars = nchar(object, type="chars"),
-                      eos = "")
+                      eos = "", useBytes = FALSE)
 {
     if(!is.character(object))
         stop("can only write character objects")
@@ -229,7 +230,7 @@ writeChar <- function(object, con, nchars = nchar(object, type="chars"),
         con <- file(con, "wb")
         on.exit(close(con))
     }
-    .Internal(writeChar(object, con, as.integer(nchars), eos))
+    .Internal(writeChar(object, con, as.integer(nchars), eos, useBytes))
 }
 
 gzcon <- function(con, level = 6, allowNonCompressed = TRUE)

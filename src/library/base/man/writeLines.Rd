@@ -1,6 +1,6 @@
 % File src/library/base/man/writeLines.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{writeLines}
@@ -10,13 +10,16 @@
   Write text lines to a connection.
 }
 \usage{
-writeLines(text, con = stdout(), sep = "\n")
+writeLines(text, con = stdout(), sep = "\n", useBytes = TRUE)
 }
 \arguments{
   \item{text}{A character vector}
   \item{con}{A connection object or a character string.}
   \item{sep}{character. A string to be written to the connection after
     each line of text.}
+  \item{useBytes}{logical.  If true character strings with marked
+    encodings are written byte-by-byte: if false they are converted to
+    the current encoding.} 
 }
 \details{
   If the \code{con} is a character string, the function calls

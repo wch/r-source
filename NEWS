@@ -180,7 +180,12 @@ NEW FEATURES
 
     o	as.data.frame.vector() (and its copies) is slightly faster
 	by avoiding a copy if there are no names (following a
-	suggestion of Tim Hesterburg).
+	suggestion of Tim Hesterberg).
+
+    o	writeLines(), writeBin() and writeChar() have a new argument
+	'useBytes'. If false, character strings with marked encodings
+	are translated to the current locale (as before) but if true
+	they are written byte-by-byte.
 
 
 Rd HELP FILE CHANGES
