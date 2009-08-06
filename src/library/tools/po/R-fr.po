@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: 2009-03-29 22:45+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -270,16 +270,6 @@ msgstr "Fichiers Rd avec alias '%s' dupliqué :"
 msgid "Rd files with empty sections:"
 msgstr "Fichiers Rd avec des sections vides :"
 
-msgid "Found invalid multi-byte character data."
-msgstr "Des chaînes de caractères multi-octets incorrectes sont détectées"
-
-msgid "Cannot re-encode because iconv is not available."
-msgstr "Impossible de réencoder parce qu'iconv n'est pas disponible"
-
-msgid "Try running R in a single-byte locale."
-msgstr ""
-"Tentative d'exécution de R dans un environnement linguistique à simple octet."
-
 msgid "Malformed package name"
 msgstr "Nom de package mal orthographié"
 
@@ -436,12 +426,6 @@ msgstr "Des fonctions génériques sans méthodes associées dans"
 msgid ":"
 msgstr " :"
 
-msgid "argument 'lines' must be a character vector"
-msgstr "l'argument 'lines' doit être un vecteur de chaînes de caractères"
-
-msgid "encoding '%s' is not portable"
-msgstr "l'encodage '%s' n'est pas portable"
-
 msgid "argument 'file' must be a character string or connection"
 msgstr "l'argument 'file' doit être une chaîne de caractères ou une connexion"
 
@@ -468,6 +452,24 @@ msgstr ""
 
 msgid "directory '%s' does not contain Rd objects"
 msgstr "le répertoire '%s' ne contient aucun objet Rd"
+
+#, fuzzy
+msgid "you must specify 'dir' or 'files'"
+msgstr "vous devez spécifier 'package', 'dir' ou 'file'"
+
+msgid "cannot deal with Rd objects with missing/empty names"
+msgstr ""
+"impossible de travailler avec des objets Rd dont les noms sont manquants ou "
+"vides"
+
+msgid "missing/empty \\name field in Rd file(s)"
+msgstr "champ \\name manquant ou vide dans le(s) fichier(s) Rd"
+
+msgid "argument 'lines' must be a character vector"
+msgstr "l'argument 'lines' doit être un vecteur de chaînes de caractères"
+
+msgid "encoding '%s' is not portable"
+msgstr "l'encodage '%s' n'est pas portable"
 
 msgid "unterminated section '%s'"
 msgstr "section non terminée '%s'"
@@ -503,19 +505,19 @@ msgstr "Erreurs de syntaxe Rd détectées"
 msgid "Syntax error in documentation object '%s':"
 msgstr "Erreur de syntaxe dans la documentation de l'objet '%s' :"
 
-msgid "cannot deal with Rd objects with missing/empty names"
-msgstr ""
-"impossible de travailler avec des objets Rd dont les noms sont manquants ou "
-"vides"
-
-msgid "missing/empty \\name field in Rd file(s)"
-msgstr "champ \\name manquant ou vide dans le(s) fichier(s) Rd"
-
 msgid "should not get here"
 msgstr "ne devrait pas être là"
 
-msgid "Rd2HTML is designed for Rd version 2 or higher."
+#, fuzzy
+msgid "checkRd is designed for Rd version 2 or higher."
 msgstr "Rd2HTML est conçu pour des Rd version 2 ou plus."
+
+msgid "outputEncoding changed to \"\" on stdout"
+msgstr ""
+
+#, fuzzy
+msgid "invalid value for '%s' : %s"
+msgstr "Pointeur de fichier licence incorrect : %s"
 
 msgid "more than one \\examples section, using the first"
 msgstr "plus d'une section \\example, utilisation de la première"
@@ -865,6 +867,11 @@ msgstr "le package ne contient pas de code R"
 msgid "package seems to be using lazy loading already"
 msgstr "le package semble déjà utiliser le chargement partiel"
 
+msgid ""
+"Cannot process chunk/lines:\n"
+"%s"
+msgstr ""
+
 msgid "cannot update HTML package index"
 msgstr "impossible de mettre à jour l'index HTML du package"
 
@@ -880,10 +887,6 @@ msgstr "lignes \\encoding multiples dans le fichier "
 
 msgid "found encoding"
 msgstr "encodage trouvé"
-
-msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
-msgstr ""
-"localisations multi-octets non UTF-8 non supportées -- réencodage en UTF-8"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "l'argument 'pkg' doit être de longueur 1"
@@ -1006,9 +1009,6 @@ msgstr "le test '%s' n'est pas disponible"
 msgid "no or more than one match"
 msgstr "soit aucune, soit plus d'une correspondance"
 
-msgid "'iconv' is required"
-msgstr "'iconv' est requis"
-
 msgid "argument 'x' must be a character vector"
 msgstr "l'argument 'x' doit être un vecteur de chaînes de caractères"
 
@@ -1082,6 +1082,24 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
 msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
+
+#~ msgid "Found invalid multi-byte character data."
+#~ msgstr "Des chaînes de caractères multi-octets incorrectes sont détectées"
+
+#~ msgid "Cannot re-encode because iconv is not available."
+#~ msgstr "Impossible de réencoder parce qu'iconv n'est pas disponible"
+
+#~ msgid "Try running R in a single-byte locale."
+#~ msgstr ""
+#~ "Tentative d'exécution de R dans un environnement linguistique à simple "
+#~ "octet."
+
+#~ msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
+#~ msgstr ""
+#~ "localisations multi-octets non UTF-8 non supportées -- réencodage en UTF-8"
+
+#~ msgid "'iconv' is required"
+#~ msgstr "'iconv' est requis"
 
 #~ msgid "Verifiable as open source: %s"
 #~ msgstr "Vérifiable comme Open Source : %s"

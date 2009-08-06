@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:34\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: 2009-03-26 11:28+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -43,15 +43,6 @@ msgstr "keine Sweave-Datei namens '%s' gefunden"
 
 msgid "%d Sweave files for basename '%s' found:"
 msgstr "%d Sweave Dateien für Basisnamen '%s' gefunden:"
-
-msgid "Found invalid multi-byte character data."
-msgstr "Unzulässige multibyte Zeichenkettendaten gefunden"
-
-msgid "Cannot re-encode because 'iconv' is not available."
-msgstr "Kann nicht rekodieren, da 'iconv' nicht verfügbar."
-
-msgid "Try running R in a single-byte locale."
-msgstr "Versuchen Sie R in einer single-byte Lokalisierung auszuführen"
 
 msgid "more than one syntax specification found, using the first one"
 msgstr "mehr als eine Syntaxspezifikation gefunden, benutze die erste"
@@ -92,6 +83,15 @@ msgstr "Elemente von 'what' nach dem ersten werden ignoriert"
 
 msgid "%d occurrences in %s"
 msgstr "%d Vorkommen in %s"
+
+#, fuzzy
+msgid "Invalid 'filter' argument."
+msgstr "unzulässiges 'x' Argument"
+
+msgid ""
+"Running aspell failed with diagnostics:\n"
+"%s"
+msgstr ""
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -420,6 +420,10 @@ msgstr "menu() kann nicht nicht-interaktiv genutzt werden"
 
 msgid "Enter an item from the menu, or 0 to exit"
 msgstr "Geben Sie Menüpunkt ein oder 0 zum Abbruch"
+
+#, fuzzy
+msgid "invalid query"
+msgstr "unzulässiges Format"
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr ""
@@ -830,6 +834,9 @@ msgstr "'object' hat keine gültigen levels()"
 msgid "'str.default': 'le' is NA"
 msgstr "'str.default': 'le' is NA"
 
+msgid "'digits' and 'digits.d' are both specified and the latter is not used"
+msgstr ""
+
 msgid "profile does not contain memory information"
 msgstr "Profil einthält keine Speicherinformation"
 
@@ -1035,6 +1042,15 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "Paket '%s' wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete '%s' werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "Found invalid multi-byte character data."
+#~ msgstr "Unzulässige multibyte Zeichenkettendaten gefunden"
+
+#~ msgid "Cannot re-encode because 'iconv' is not available."
+#~ msgstr "Kann nicht rekodieren, da 'iconv' nicht verfügbar."
+
+#~ msgid "Try running R in a single-byte locale."
+#~ msgstr "Versuchen Sie R in einer single-byte Lokalisierung auszuführen"
 
 #~ msgid "bundle '%s' is incompletely installed"
 #~ msgstr "Bundel '%s' ist nicht vollständig installiert"

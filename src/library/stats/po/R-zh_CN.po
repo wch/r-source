@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-27 13:51\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -511,6 +511,9 @@ msgstr "奇异对比矩阵"
 msgid "numeric contrasts or contrast name expected"
 msgstr "需要数值对比或对比的名字"
 
+msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgstr ""
+
 msgid "not enough degrees of freedom to define contrasts"
 msgstr "设定对比的自由度不够"
 
@@ -955,7 +958,12 @@ msgstr "没有'col.vars'值或它设定得不对"
 msgid "'family' not recognized"
 msgstr "'family'设定得不对"
 
-msgid "invalid 'method':"
+#, fuzzy
+msgid "invalid 'method': %s"
+msgstr "'method'有错:"
+
+#, fuzzy
+msgid "invalid 'method'"
 msgstr "'method'有错:"
 
 msgid "'weights' must be a numeric vector"
@@ -2220,6 +2228,12 @@ msgstr "有零时无法計算精確的置信区间"
 
 msgid "must supply either 'formula' or 'data'"
 msgstr "至少要提供'formula'和'data'中间的一个"
+
+msgid "xtabs(*, sparse=TRUE) applies only to two-way tables"
+msgstr ""
+
+msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgstr ""
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr "无法拟合渐近迴歸模型，因为相互不同的输入值太少"

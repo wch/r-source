@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-16 12:48\n"
+"POT-Creation-Date: 2009-08-06 09:09\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -590,9 +590,6 @@ msgstr "零乘零的矩阵"
 msgid "non-square matrix in 'eigen'"
 msgstr "eigen里的矩阵不是正方形的"
 
-msgid "numeric or complex values required in 'eigen'"
-msgstr "'eigen'必需用数值或复数值"
-
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'eigen'里'ch'回覆了代码%d"
 
@@ -727,6 +724,9 @@ msgstr "匹配位距的組成部分不存在，因此忽略不计"
 
 msgid "'max.distance' components must be non-negative"
 msgstr "'max.distance'的组成部分不能有负值"
+
+msgid "norm '%s' currently always uses exact = FALSE"
+msgstr ""
 
 msgid "triangular matrix should be square"
 msgstr "三角矩阵必需的正方形的"
@@ -1372,9 +1372,6 @@ msgstr "'x'和'y'的长度必需一致"
 msgid "incorrect values of 'indent' and 'width'"
 msgstr "'indent'和'width'的值有错"
 
-msgid "argument to 'svd' must be numeric"
-msgstr "'svd'的变元必需是数值"
-
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv'的值必需为零或为ncol(x)"
 
@@ -1550,6 +1547,12 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "numeric or complex values required in 'eigen'"
+#~ msgstr "'eigen'必需用数值或复数值"
+
+#~ msgid "argument to 'svd' must be numeric"
+#~ msgstr "'svd'的变元必需是数值"
 
 #~ msgid "package '%s' has been merged into '%s'"
 #~ msgstr "程辑包'%s'已经被合并到'%s'"

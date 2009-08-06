@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-08-06 09:09\n"
 "PO-Revision-Date: 2009-03-29 21:35+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -227,6 +227,9 @@ msgstr "Seul un 'grob' peut être ajouté à un 'gTree'"
 msgid "It is only valid to add a child to a 'gTree'"
 msgstr "Seul l'ajout d'un noeud enfant est autorisé pour un objet 'gTree'"
 
+msgid "'gPath' (%s) not found"
+msgstr "'gPath' (%s) introuvable"
+
 msgid "It is only valid to remove a child from a 'gTree'"
 msgstr ""
 "Seul l'élimination d'un noeud enfant est autorisée dans un objet 'gTree'"
@@ -247,9 +250,6 @@ msgstr "Le nouveau 'grob' doit avoir le même nom que l'ancien 'grob'"
 
 msgid "Slot '%s' not found"
 msgstr "Slot '%s' introuvable"
-
-msgid "'gPath' (%s) not found"
-msgstr "'gPath' (%s) introuvable"
 
 msgid "gPath (%s) not found"
 msgstr "gPath (%s) introuvable"

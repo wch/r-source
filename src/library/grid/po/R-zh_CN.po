@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-08-06 09:09\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -214,6 +214,9 @@ msgstr "对'gTree'只能加'grob'这样的值数"
 msgid "It is only valid to add a child to a 'gTree'"
 msgstr "给'gTree'只能加子值"
 
+msgid "'gPath' (%s) not found"
+msgstr "不存在'gPath'(%s)"
+
 msgid "It is only valid to remove a child from a 'gTree'"
 msgstr "只能从'gTree'那儿删除子值"
 
@@ -231,9 +234,6 @@ msgstr "新的'grob'值必需等于旧的'grob'值"
 
 msgid "Slot '%s' not found"
 msgstr "没有'%s'这样的槽"
-
-msgid "'gPath' (%s) not found"
-msgstr "不存在'gPath'(%s)"
 
 msgid "gPath (%s) not found"
 msgstr "gPath(%s)不存在"

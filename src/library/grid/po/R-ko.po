@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-08-06 09:09\n"
 "PO-Revision-Date: 2005-05-25 16:34+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -220,6 +220,9 @@ msgstr "'grob'를 'gTree'에 추가하는 것만이 유효합니다"
 msgid "It is only valid to add a child to a 'gTree'"
 msgstr "'gTree'를 'child'에 추가하는 것만이 유효합니다"
 
+msgid "'gPath' (%s) not found"
+msgstr "'gPath'(%s)가 검색되지 않습니다"
+
 msgid "It is only valid to remove a child from a 'gTree'"
 msgstr "child를 'gTree'로부터 제거하는 것만이 유효합니다"
 
@@ -237,9 +240,6 @@ msgstr "새로운 'grob'는 오래된 'grob'와 동일 이름이 아니면 되�
 
 msgid "Slot '%s' not found"
 msgstr "Slot '%s'가 검색되지 않습니다"
-
-msgid "'gPath' (%s) not found"
-msgstr "'gPath'(%s)가 검색되지 않습니다"
 
 msgid "gPath (%s) not found"
 msgstr "'gPath(%s)가 검색되지 않습니다"

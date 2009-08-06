@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: 2009-04-01 08:36+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -268,15 +268,6 @@ msgstr " 重複するエイリアス '%s' を持ったRdファイル： "
 msgid "Rd files with empty sections:"
 msgstr " 空のセクションを含む Rd ファイル： "
 
-msgid "Found invalid multi-byte character data."
-msgstr " 不正なマルチバイト文字データが見つかりました "
-
-msgid "Cannot re-encode because iconv is not available."
-msgstr " iconvは利用出来ませんので再びエンコードすることは出来ません． "
-
-msgid "Try running R in a single-byte locale."
-msgstr " 単バイトロケール中でRを動作させてみてください "
-
 msgid "Malformed package name"
 msgstr " 奇矯なパッケージ名です "
 
@@ -434,12 +425,6 @@ msgstr "メソッドを伴わない Generics があります "
 msgid ":"
 msgstr " ： "
 
-msgid "argument 'lines' must be a character vector"
-msgstr " 引数 'lines' は文字列ベクトルでなければなりません "
-
-msgid "encoding '%s' is not portable"
-msgstr " エンコーディング '%s' は移植出来ません "
-
 msgid "argument 'file' must be a character string or connection"
 msgstr " 引数 'file' は文字列ベクトルかコネクションでなければなりません "
 
@@ -469,6 +454,24 @@ msgstr " 引数 'outFile' は文字列ベクトルかコネクションでなけ
 
 msgid "directory '%s' does not contain Rd objects"
 msgstr " ディレクトリ '%s' は Rd オブジェクトを含んでいません "
+
+#, fuzzy
+msgid "you must specify 'dir' or 'files'"
+msgstr " 'package', 'dir' もしくは 'file' を指定しなければなりません "
+
+msgid "cannot deal with Rd objects with missing/empty names"
+msgstr " 欠損もしくは空の名前を持つ Rd オブジェクトは扱えません "
+
+msgid "missing/empty \\name field in Rd file(s)"
+msgstr ""
+" Rd ファイル中に欠損もしくは空の  \n"
+" ame 欄 "
+
+msgid "argument 'lines' must be a character vector"
+msgstr " 引数 'lines' は文字列ベクトルでなければなりません "
+
+msgid "encoding '%s' is not portable"
+msgstr " エンコーディング '%s' は移植出来ません "
 
 msgid "unterminated section '%s'"
 msgstr " セクション '%s' は未完です "
@@ -503,19 +506,19 @@ msgstr " Rd 構文エラーが見つかりました "
 msgid "Syntax error in documentation object '%s':"
 msgstr " ドキュメンテーション・オブジェクト '%s' 中の構文エラー： "
 
-msgid "cannot deal with Rd objects with missing/empty names"
-msgstr " 欠損もしくは空の名前を持つ Rd オブジェクトは扱えません "
-
-msgid "missing/empty \\name field in Rd file(s)"
-msgstr ""
-" Rd ファイル中に欠損もしくは空の  \n"
-" ame 欄 "
-
 msgid "should not get here"
 msgstr "ここに到達すべきではありません "
 
-msgid "Rd2HTML is designed for Rd version 2 or higher."
+#, fuzzy
+msgid "checkRd is designed for Rd version 2 or higher."
 msgstr "Rd2HTML は Rdのバージョン2以降で使われるように設計されています "
+
+msgid "outputEncoding changed to \"\" on stdout"
+msgstr ""
+
+#, fuzzy
+msgid "invalid value for '%s' : %s"
+msgstr " 不正なライセンスファイルのポインタ: %s "
 
 msgid "more than one \\examples section, using the first"
 msgstr " 2つ以上の\\examples節があります、1番目を用います "
@@ -867,6 +870,11 @@ msgstr " パッケージにRコードが含まれていません "
 msgid "package seems to be using lazy loading already"
 msgstr " パッケージは既に遅延読み込みを使用しているように見えます "
 
+msgid ""
+"Cannot process chunk/lines:\n"
+"%s"
+msgstr ""
+
 msgid "cannot update HTML package index"
 msgstr " HTMLパッケージのインデックスをアップデートすることが出来ません "
 
@@ -881,11 +889,6 @@ msgstr " 以下のファイル中に重複した \\encoding 行 "
 
 msgid "found encoding"
 msgstr " 見つけられたエンコーディング"
-
-msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
-msgstr ""
-"UTF-8 でない多バイトロケールはサポートされていません -- UTF-8 に再エンコー"
-"ディングします "
 
 msgid "argument 'pkg' must be of length 1"
 msgstr " 引数 'pkg' は長さ1でなければなりません "
@@ -1006,9 +1009,6 @@ msgstr " テスト '%s' は利用出来ません "
 msgid "no or more than one match"
 msgstr " 0か複数のマッチ "
 
-msgid "'iconv' is required"
-msgstr " 'iconv'が必要です "
-
 msgid "argument 'x' must be a character vector"
 msgstr " 引数 'x' は文字型ベクトルでなければいけません "
 
@@ -1071,6 +1071,23 @@ msgstr[0] ""
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
+
+#~ msgid "Found invalid multi-byte character data."
+#~ msgstr " 不正なマルチバイト文字データが見つかりました "
+
+#~ msgid "Cannot re-encode because iconv is not available."
+#~ msgstr " iconvは利用出来ませんので再びエンコードすることは出来ません． "
+
+#~ msgid "Try running R in a single-byte locale."
+#~ msgstr " 単バイトロケール中でRを動作させてみてください "
+
+#~ msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
+#~ msgstr ""
+#~ "UTF-8 でない多バイトロケールはサポートされていません -- UTF-8 に再エンコー"
+#~ "ディングします "
+
+#~ msgid "'iconv' is required"
+#~ msgstr " 'iconv'が必要です "
 
 #~ msgid "Verifiable as open source: %s"
 #~ msgstr "オープンソースとして確認されています: %s "

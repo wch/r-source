@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-16 12:48\n"
+"POT-Creation-Date: 2009-08-06 09:09\n"
 "PO-Revision-Date: 2009-03-28 18:25+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -600,9 +600,6 @@ msgstr "0 x 0 матрица"
 msgid "non-square matrix in 'eigen'"
 msgstr "неквадратная матрица в 'eigen'"
 
-msgid "numeric or complex values required in 'eigen'"
-msgstr "'eigen' требует числовых или комплексных значений"
-
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'ch' возвратил код %d в 'eigen'"
 
@@ -736,6 +733,9 @@ msgstr "компоненты расстояния с неизвестным соответствием пропущены"
 
 msgid "'max.distance' components must be non-negative"
 msgstr "компоненты 'max.distance' должны быть неотрицательными"
+
+msgid "norm '%s' currently always uses exact = FALSE"
+msgstr ""
 
 msgid "triangular matrix should be square"
 msgstr "треугольная матрица должна быть квадратной"
@@ -1388,9 +1388,6 @@ msgstr "'x' и 'y' должны иметь одинаковую длину"
 msgid "incorrect values of 'indent' and 'width'"
 msgstr "неправильные значения 'indent' и 'width'"
 
-msgid "argument to 'svd' must be numeric"
-msgstr "аргумент для 'svd' должен быть числовым"
-
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv' должен быть 0 или ncol(x)"
 
@@ -1583,6 +1580,12 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "numeric or complex values required in 'eigen'"
+#~ msgstr "'eigen' требует числовых или комплексных значений"
+
+#~ msgid "argument to 'svd' must be numeric"
+#~ msgstr "аргумент для 'svd' должен быть числовым"
 
 #~ msgid "package '%s' has been merged into '%s'"
 #~ msgstr "пакет '%s' был слит с '%s'"

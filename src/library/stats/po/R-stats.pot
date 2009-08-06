@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-27 13:51\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -497,6 +497,9 @@ msgstr ""
 msgid "numeric contrasts or contrast name expected"
 msgstr ""
 
+msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgstr ""
+
 msgid "not enough degrees of freedom to define contrasts"
 msgstr ""
 
@@ -929,7 +932,10 @@ msgstr ""
 msgid "'family' not recognized"
 msgstr ""
 
-msgid "invalid 'method':"
+msgid "invalid 'method': %s"
+msgstr ""
+
+msgid "invalid 'method'"
 msgstr ""
 
 msgid "'weights' must be a numeric vector"
@@ -2154,6 +2160,12 @@ msgid "cannot compute exact confidence interval with zeroes"
 msgstr ""
 
 msgid "must supply either 'formula' or 'data'"
+msgstr ""
+
+msgid "xtabs(*, sparse=TRUE) applies only to two-way tables"
+msgstr ""
+
+msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
 msgstr ""
 
 msgid "too few distinct input values to fit an asymptotic regression model"

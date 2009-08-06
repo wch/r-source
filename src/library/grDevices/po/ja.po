@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14+0100\n"
+"POT-Creation-Date: 2009-08-06 09:09+0100\n"
 "PO-Revision-Date: 2009-03-31 20:52+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -22,50 +22,50 @@ msgstr ""
 msgid "unable to start NULL device"
 msgstr " Null デバイスは開始できません "
 
-#: devPS.c:578
+#: devPS.c:576
 #, c-format
 msgid "afm file '%s' could not be opened"
 msgstr " afm ファイル '%s' を開くことができませんでした "
 
-#: devPS.c:611
+#: devPS.c:609
 msgid "FontBBox could not be parsed"
 msgstr " FontBBox を構文解析できませんでした "
 
-#: devPS.c:619
+#: devPS.c:617
 msgid "CharInfo could not be parsed"
 msgstr " CharInfo を構文解析できませんでした "
 
-#: devPS.c:649
+#: devPS.c:647
 msgid "unknown AFM entity encountered"
 msgstr " 未知の AFM 項目に出会いました "
 
-#: devPS.c:773 devPS.c:776 devPS.c:4271 devPS.c:7105 devPicTeX.c:503
+#: devPS.c:771 devPS.c:774 devPS.c:4269 devPS.c:7098 devPicTeX.c:503
 #: devPicTeX.c:505
 #, c-format
 msgid "invalid string in '%s'"
 msgstr " '%s' 中に不正な文字列 "
 
-#: devPS.c:808
+#: devPS.c:806
 #, c-format
 msgid "font width unknown for character 0x%x"
 msgstr " 文字 0x%x に対する文字幅がわかりません "
 
-#: devPS.c:869
+#: devPS.c:867
 #, c-format
 msgid "unknown encoding '%s' in 'PostScriptMetricInfo'"
 msgstr " 'PostScriptMetricInfo' 中に未知のエンコーディング '%s' "
 
-#: devPS.c:885 devPS.c:897
+#: devPS.c:883 devPS.c:895
 #, c-format
 msgid "font metrics unknown for Unicode character U+%04x"
 msgstr " Unicode　文字　U+%04x に対するフォントメトリックスが未知です "
 
-#: devPS.c:905
+#: devPS.c:903
 #, c-format
 msgid "font metrics unknown for character 0x%x"
 msgstr " 文字　0x%x に対するフォントメトリックスが未知です "
 
-#: devPS.c:920
+#: devPS.c:918
 #, c-format
 msgid ""
 "invalid character (%04x) sent to 'PostScriptCIDMetricInfo' in a single-byte "
@@ -74,150 +74,150 @@ msgstr ""
 " 一バイトロケールに於いて 'PostScriptCIDMetricInfo' に不正な文字(%04x)が送ら"
 "れました "
 
-#: devPS.c:928
+#: devPS.c:926
 msgid ""
 "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
 msgstr ""
 " 一バイトロケールに於いて 'PostScriptCIDMetricInfo' に不正な文字が送られまし"
 "た "
 
-#: devPS.c:1042
+#: devPS.c:1040
 msgid "failed to allocate CID font info"
 msgstr " CID フォント情報を割り当てることができませんでした "
 
-#: devPS.c:1057
+#: devPS.c:1055
 msgid "failed to allocate Type 1 font info"
 msgstr " Type 1 フォント情報を割り当てることができませんでした "
 
-#: devPS.c:1077
+#: devPS.c:1075
 msgid "failed to allocate encoding info"
 msgstr " エンコーディング情報を割り当てることができませんでした "
 
-#: devPS.c:1095
+#: devPS.c:1093
 msgid "failed to allocate CID font family"
 msgstr " CID フォントファミリを割り当てることができませんでした "
 
-#: devPS.c:1108
+#: devPS.c:1106
 msgid "failed to allocate Type 1 font family"
 msgstr " Type 1 フォント情報を割り当てることができませんでした "
 
-#: devPS.c:1147 devPS.c:1158
+#: devPS.c:1145 devPS.c:1156
 msgid "failed to allocate font list"
 msgstr " フォントリストを割り当てることができませんでした "
 
-#: devPS.c:1209
+#: devPS.c:1207
 msgid "failed to allocated encoding list"
 msgstr " エンコーディングリストを割り当てることができませんでした "
 
-#: devPS.c:1357
+#: devPS.c:1355
 msgid "truncated string which was too long for copy"
 msgstr " コピーするには長すぎた文字列を切り詰めました "
 
-#: devPS.c:1397
+#: devPS.c:1395
 #, c-format
 msgid "failed to load encoding file '%s'"
 msgstr " エンコーディングファイル '%s' をロードできませんでした "
 
-#: devPS.c:1490 devPS.c:1523
+#: devPS.c:1488 devPS.c:1521
 msgid "Invalid font name or more than one font name"
 msgstr " 一つもしくは複数のフォント名が不正です "
 
-#: devPS.c:1643 devPS.c:1677
+#: devPS.c:1641 devPS.c:1675
 msgid "font family not found in PostScript font database"
 msgstr ""
 " ポストスクリプトフォントのデータベースにフォントファミリが見付かりません "
 
-#: devPS.c:1748 devPS.c:1827 devPS.c:1853
+#: devPS.c:1746 devPS.c:1825 devPS.c:1851
 msgid "font encoding not found in font database"
 msgstr " フォントのデータベースにフォントのエンコーディングが見付かりません "
 
-#: devPS.c:1774 devPS.c:1800
+#: devPS.c:1772 devPS.c:1798
 msgid "font CMap not found in font database"
 msgstr " フォントのデータベースに CMap フォントが見付かりません "
 
-#: devPS.c:1991 devPS.c:2070 devPS.c:2138
+#: devPS.c:1989 devPS.c:2068 devPS.c:2136
 #, c-format
 msgid "cannot load afm file '%s'"
 msgstr " afm ファイル '%s' をロードできませんでした "
 
-#: devPS.c:2430
+#: devPS.c:2428
 msgid "Corrupt loaded encodings;  encoding not recorded"
 msgstr ""
 " ロードされたエンコーディングが破損しています；　　エンコーディングは記録され"
 "ませんでした "
 
-#: devPS.c:2441
+#: devPS.c:2439
 msgid "Failed to record device encoding"
 msgstr " デバイスのエンコーディングを記録することに失敗しました "
 
-#: devPS.c:2611
+#: devPS.c:2609
 msgid "Object .ps.prolog is not a character vector"
 msgstr " オブジェクト .ps.prolog は文字列ベクトルではありません "
 
-#: devPS.c:2665 devPS.c:5991 devWindows.c:717
+#: devPS.c:2663 devPS.c:5983 devWindows.c:717
 msgid "Invalid line end"
 msgstr " 行末が不正です "
 
-#: devPS.c:2684 devPS.c:6010 devWindows.c:730
+#: devPS.c:2682 devPS.c:6002 devWindows.c:730
 msgid "Invalid line join"
 msgstr " 行のつながりが不正です "
 
-#: devPS.c:2692
+#: devPS.c:2690
 msgid "Invalid line mitre"
 msgstr " 不正な line mitre です "
 
-#: devPS.c:2890 devPS.c:3796 devPS.c:4055 devPS.c:4083 devPS.c:5104
-#: devPS.c:6946 devPS.c:7001
+#: devPS.c:2888 devPS.c:3794 devPS.c:4053 devPS.c:4081 devPS.c:5100
+#: devPS.c:6938 devPS.c:6993
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr " 不正なフォント %d を使おうとしましたが、フォント 1 で置き換えました "
 
-#: devPS.c:3020
+#: devPS.c:3018
 msgid "only gray colors are allowed in this color model"
 msgstr " この色モデルではグレイ色だけが可能です "
 
-#: devPS.c:3101
+#: devPS.c:3099
 msgid "filename too long in postscript"
 msgstr " ファイル名がポストスクリプトでは長すぎます "
 
-#: devPS.c:3122 devPS.c:5482
+#: devPS.c:3120 devPS.c:5474
 msgid "encoding path is too long"
 msgstr " エンコーディングのパスが長すぎます "
 
-#: devPS.c:3137 devPS.c:4628
+#: devPS.c:3135 devPS.c:4626
 msgid "failed to load encoding"
 msgstr " エンコーディングのロードに失敗しました "
 
-#: devPS.c:3180 devPS.c:3243 devPS.c:5541 devPS.c:5596 devPS.c:6827
+#: devPS.c:3178 devPS.c:3241 devPS.c:5533 devPS.c:5588 devPS.c:6819
 msgid "Invalid font type"
 msgstr " 不正なフォントタイプです "
 
-#: devPS.c:3205 devPS.c:5564
+#: devPS.c:3203 devPS.c:5556
 msgid "Failed to initialise default PostScript font"
 msgstr " 既定のポストスクリプトフォントの初期化に失敗しました "
 
-#: devPS.c:3275 devPS.c:5623
+#: devPS.c:3273 devPS.c:5615
 msgid "Failed to initialise additional PostScript fonts"
 msgstr " 追加のポストスクリプトフォントの初期化に失敗しました "
 
-#: devPS.c:3296
+#: devPS.c:3294
 msgid "invalid foreground/background color (postscript)"
 msgstr " 不正な前景/背景色 (ポストスクリプト) "
 
-#: devPS.c:3306
+#: devPS.c:3304
 msgid "'command' is too long"
 msgstr " 'command' が長すぎます "
 
-#: devPS.c:3310
+#: devPS.c:3308
 msgid "postscript(print.it=TRUE) used with an empty print command"
 msgstr " postscript(print.it=TRUE)　が空の描画命令とともに使われました "
 
-#: devPS.c:3363
+#: devPS.c:3361
 #, c-format
 msgid "invalid page type '%s' (postscript)"
 msgstr " 不正なページ '%s'  (ポストスクリプト) "
 
-#: devPS.c:3487 devPS.c:4431 devWindows.c:2270
+#: devPS.c:3485 devPS.c:4429 devWindows.c:2270
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -225,25 +225,25 @@ msgstr ""
 "半透過機能はこのデバイスではサポートされていません：ページ毎に一度だけレポー"
 "トされます "
 
-#: devPS.c:3578
+#: devPS.c:3576
 msgid "printing via file = \"\" is not implemented in this version"
 msgstr " file = \"\" による描画はこのバージョンでは実装されていません "
 
-#: devPS.c:3586 devPS.c:3599
+#: devPS.c:3584 devPS.c:3597
 #, c-format
 msgid "cannot open 'postscript' pipe to '%s'"
 msgstr " '%s' に対する 'postscript' パイプを開くことができません "
 
-#: devPS.c:3592
+#: devPS.c:3590
 msgid "file = \"|cmd\" is not implemented in this version"
 msgstr " file = \"|cmd\" はこのバージョンでは実装されていません "
 
-#: devPS.c:3610
+#: devPS.c:3608
 #, c-format
 msgid "cannot open 'postscript' file argument '%s'"
 msgstr " 'postscript' ファイル引数 '%s'　を開くことができません　 "
 
-#: devPS.c:3734 devPS.c:3749
+#: devPS.c:3732 devPS.c:3747
 #, c-format
 msgid ""
 "error from postscript() in running:\n"
@@ -252,159 +252,155 @@ msgstr ""
 " 実行中の postscript() からのエラー: \n"
 " %s "
 
-#: devPS.c:3784
+#: devPS.c:3782
 #, c-format
 msgid "CID family '%s' not included in PostScript device"
 msgstr " ポストスクリプトデバイス中に CID ファミリ '%s' は含まれていません "
 
-#: devPS.c:3802 devPS.c:3813 devPS.c:4062 devPS.c:4093 devPS.c:4210
+#: devPS.c:3800 devPS.c:3811 devPS.c:4060 devPS.c:4091 devPS.c:4208
 #, c-format
 msgid "family '%s' not included in PostScript device"
 msgstr " ポストスクリプトデバイス中にフォントファミリ '%s' は含まれていません "
 
-#: devPS.c:4151
+#: devPS.c:4149
 #, c-format
 msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr " 'mbcsToSbcs' 中に未知のエンコーディング '%s' があります "
 
-#: devPS.c:4160
+#: devPS.c:4158
 #, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
 msgstr " 'mbcsToSbcs' 中の '%s' で変換に失敗: <%02x>をドットで置き換えました "
 
-#: devPS.c:4239
+#: devPS.c:4237
 #, c-format
 msgid "failed open converter to encoding '%s'"
 msgstr " エンコーディング '%s' へのコンバータを開けませんでした "
 
-#: devPS.c:4257 devPS.c:5152 devPS.c:7091
+#: devPS.c:4255 devPS.c:5147 devPS.c:7084
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr " テキストをエンコーディング '%s' に変換することに失敗しました "
 
-#: devPS.c:4445
+#: devPS.c:4443
 msgid "run out of colors in xfig()"
 msgstr " xfig() 中で色数が多すぎました "
 
-#: devPS.c:4474
+#: devPS.c:4472
 #, c-format
 msgid "unimplemented line texture %08x: using Dash-double-dotted"
 msgstr " 実装されていない線種 %08x: Dash-double-dotted を使います "
 
-#: devPS.c:4544
+#: devPS.c:4542
 #, c-format
 msgid "unknown postscript font family '%s', using Helvetica"
 msgstr ""
 " 未知のポストスクリプトフォントファミリ　'%s' です。Helvetica を使います "
 
-#: devPS.c:4585
+#: devPS.c:4583
 msgid "filename too long in xfig"
 msgstr " xfig でファイル名が長すぎます "
 
-#: devPS.c:4613
+#: devPS.c:4611
 msgid "invalid foreground/background color (xfig)"
 msgstr " 不正な前景/背景色です (xfig) "
 
-#: devPS.c:4646
+#: devPS.c:4644
 msgid "Only Type 1 fonts supported for XFig"
 msgstr " XFig に対しては Type 1 フォントだけがサポートされています "
 
-#: devPS.c:4659
+#: devPS.c:4657
 msgid "Failed to initialise default XFig font"
 msgstr " 既定の XFig フォントの初期化に失敗しました "
 
-#: devPS.c:4696
+#: devPS.c:4694
 #, c-format
 msgid "invalid page type '%s' (xfig)"
 msgstr " 不正なページタイプ '%s' (xfig) "
 
-#: devPS.c:4704
+#: devPS.c:4702
 #, c-format
 msgid "xfig(%s, onefile=FALSE) will only return the last plot"
 msgstr " xfig(%s, onefile=FALSE) は最後のプロットだけを返します "
 
-#: devPS.c:4817
+#: devPS.c:4815
 msgid "empty file name"
 msgstr " ファイル名がありません "
 
-#: devPS.c:4876 devPS.c:4928
+#: devPS.c:4874 devPS.c:4926
 msgid "write failed"
 msgstr " 書き込みに失敗しました "
 
-#: devPS.c:5141
+#: devPS.c:5136
 #, c-format
 msgid "unable to use encoding '%s'"
 msgstr " エンコーディング '%s' を使うことができません "
 
-#: devPS.c:5157
-msgid "re-encoding is not possible on this system"
-msgstr " このシステムでは再エンコーディングは不可能です "
-
-#: devPS.c:5397
+#: devPS.c:5389
 msgid "Corrupt loaded encodings;  font not added"
 msgstr ""
 " ロードされたエンコーディングが破損しています；　　フォントは追加されません "
 
-#: devPS.c:5406
+#: devPS.c:5398
 msgid "Failed to record device encoding; font not added"
 msgstr ""
 " デバイスエンコーディングの記録に失敗しました；　フォントは追加されません "
 
-#: devPS.c:5441
+#: devPS.c:5433
 msgid "filename too long in pdf"
 msgstr " pdf に対するファイル名が長すぎます "
 
-#: devPS.c:5456
+#: devPS.c:5448
 msgid "cannot allocate pd->pos"
 msgstr " pd->pos　を割り当てられません "
 
-#: devPS.c:5461
+#: devPS.c:5453
 msgid "cannot allocate pd->pageobj"
 msgstr " pd->pagebj　を割り当てられません "
 
-#: devPS.c:5498
+#: devPS.c:5490
 msgid "failed to load default encoding"
 msgstr " 既定のエンコーディングのロードに失敗しました "
 
-#: devPS.c:5694
+#: devPS.c:5686
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr " 不正なペーパサイズ '%s' (pdf) "
 
-#: devPS.c:5724
+#: devPS.c:5716
 msgid "invalid foreground/background color (pdf)"
 msgstr " 不正な前景/背景色 (pdf) "
 
-#: devPS.c:5860
+#: devPS.c:5852
 msgid "Invalid alpha value in PDF"
 msgstr " PDF 中に不正なアルファ値 "
 
-#: devPS.c:5885
+#: devPS.c:5877
 msgid "increasing the PDF version to 1.4"
 msgstr " PDF のバージョンを 1.4 に更新 "
 
-#: devPS.c:5928 devPS.c:5966
+#: devPS.c:5920 devPS.c:5958
 msgid "unknown 'colormodel', using 'rgb'"
 msgstr "未知の 'colormodel', 'rggb' を使います "
 
-#: devPS.c:6323
+#: devPS.c:6315
 msgid "Corrupt encodings in PDF device"
 msgstr " PDF デバイス中に破損したエンコーディング "
 
-#: devPS.c:6404
+#: devPS.c:6396
 msgid "increasing the PDF version to 1.3"
 msgstr " PDF のバージョンを 1.3 に更新 "
 
-#: devPS.c:6502
+#: devPS.c:6494
 #, c-format
 msgid "cannot open 'pdf' file argument '%s'"
 msgstr " 'pdf\" ファイル引数 '%s' を開くことができません "
 
-#: devPS.c:6558
+#: devPS.c:6550
 msgid "unable to increase page limit: please shutdown the pdf device"
 msgstr " ページの上限を増やすことができません： pdf デバイスを閉じてください "
 
-#: devPS.c:6571
+#: devPS.c:6563
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -413,44 +409,44 @@ msgstr ""
 " 'pdf\" ファイル引数 '%s' を開くことができません \n"
 " PDF デバイスを閉じてください "
 
-#: devPS.c:6852 devPS.c:7231 devPS.c:7276
+#: devPS.c:6844 devPS.c:7224 devPS.c:7269
 msgid "Failed to find or load PDF font"
 msgstr " PDF フォントが見付からないかロードできませんでした "
 
-#: devPS.c:7044 devPS.c:7188
+#: devPS.c:7037 devPS.c:7181
 msgid "Failed to find or load PDF CID font"
 msgstr " PDF CID フォントが見付からないかロードできませんでした "
 
-#: devPS.c:7309
+#: devPS.c:7302
 msgid "CID fonts are not supported on this platform"
 msgstr "CID フォントはこのプラットフォームではサポートされていません "
 
-#: devPS.c:7422 devPS.c:7426 devPS.c:7583 devPS.c:7587
+#: devPS.c:7415 devPS.c:7419 devPS.c:7576 devPS.c:7580
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr " %s 中に不正な 'family' パラメータ "
 
-#: devPS.c:7444 devPS.c:7599
+#: devPS.c:7437 devPS.c:7592
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr " %s 中に不正な 'fonts' パラメータ "
 
-#: devPS.c:7450 devPS.c:7609 devWindows.c:3264 devWindows.c:3268
+#: devPS.c:7443 devPS.c:7602 devWindows.c:3264 devWindows.c:3268
 #: devWindows.c:3276 devWindows.c:3287 devWindows.c:3293 devWindows.c:3300
 #: devWindows.c:3307
 #, c-format
 msgid "invalid value of '%s'"
 msgstr " '%s' の値が不正です "
 
-#: devPS.c:7463
+#: devPS.c:7456
 msgid "unable to start device PostScript"
 msgstr " ポストスクリプトデバイスを開始できませんでした "
 
-#: devPS.c:7530
+#: devPS.c:7523
 msgid "unable to start device xfig"
 msgstr " xfig デバイスを開始できませんでした "
 
-#: devPS.c:7623
+#: devPS.c:7616
 msgid "unable to start device pdf"
 msgstr " pdf デバイスを開始できませんでした "
 
@@ -650,6 +646,9 @@ msgstr ""
 #, c-format
 msgid "cannot open file '%s'"
 msgstr " ファイル '%s' を開けません "
+
+#~ msgid "re-encoding is not possible on this system"
+#~ msgstr " このシステムでは再エンコーディングは不可能です "
 
 #~ msgid "invalid value of 'record' in devWindows"
 #~ msgstr " devWindows 中の 'record' の値が不正です "

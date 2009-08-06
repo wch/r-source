@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -265,15 +265,6 @@ msgstr ""
 msgid "Rd files with empty sections:"
 msgstr "Rd 파일은 비어 있는 \\\\title를 가지고 있어야만 합니다"
 
-msgid "Found invalid multi-byte character data."
-msgstr "무효의 다중 바이트 문자 데이타를 검색해냈습니다"
-
-msgid "Cannot re-encode because iconv is not available."
-msgstr "iconv가 이용 가능하지 않기 때문에 re-encode할수가 없습니다"
-
-msgid "Try running R in a single-byte locale."
-msgstr "단일 바이트 locale의 R를 실행해 주십시오"
-
 msgid "Malformed package name"
 msgstr ""
 
@@ -424,13 +415,6 @@ msgstr ""
 msgid ":"
 msgstr ""
 
-msgid "argument 'lines' must be a character vector"
-msgstr "인수'lines'는 문자 벡터이어야만 합니다"
-
-#, fuzzy
-msgid "encoding '%s' is not portable"
-msgstr "test '%s'는 이용 가능하지 않습니다"
-
 msgid "argument 'file' must be a character string or connection"
 msgstr "인수'file'는 문자열 또는 connection이어야만 합니다"
 
@@ -456,6 +440,23 @@ msgstr "인수'outFile'는 문자열 또는 connection이어야만 합니다"
 
 msgid "directory '%s' does not contain Rd objects"
 msgstr "디렉토리 '%s'는 Rd 오브젝트를 포함하고 있지 않습니다"
+
+#, fuzzy
+msgid "you must specify 'dir' or 'files'"
+msgstr "'package' ,'dir' 또는 'file'를 지정하지 않으면 되지 않습니다"
+
+msgid "cannot deal with Rd objects with missing/empty names"
+msgstr "실패 또는 비어있는 이름을 구성된 Rd 오브젝트에 대처할 수가 없다"
+
+msgid "missing/empty \\name field in Rd file(s)"
+msgstr "Rd 파일에서 실패한 필드 또는 비어 있는 필드가 있습니다"
+
+msgid "argument 'lines' must be a character vector"
+msgstr "인수'lines'는 문자 벡터이어야만 합니다"
+
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr "test '%s'는 이용 가능하지 않습니다"
 
 msgid "unterminated section '%s'"
 msgstr "'%s'의 section를 무한했습니다"
@@ -492,16 +493,16 @@ msgstr "Rd 구문 에러가 검색되어졌습니다"
 msgid "Syntax error in documentation object '%s':"
 msgstr "파일 '%s'에서 인덱스 정보를 읽을수가 없습니다"
 
-msgid "cannot deal with Rd objects with missing/empty names"
-msgstr "실패 또는 비어있는 이름을 구성된 Rd 오브젝트에 대처할 수가 없다"
-
-msgid "missing/empty \\name field in Rd file(s)"
-msgstr "Rd 파일에서 실패한 필드 또는 비어 있는 필드가 있습니다"
-
 msgid "should not get here"
 msgstr ""
 
-msgid "Rd2HTML is designed for Rd version 2 or higher."
+msgid "checkRd is designed for Rd version 2 or higher."
+msgstr ""
+
+msgid "outputEncoding changed to \"\" on stdout"
+msgstr ""
+
+msgid "invalid value for '%s' : %s"
 msgstr ""
 
 msgid "more than one \\examples section, using the first"
@@ -852,6 +853,11 @@ msgstr "패키지는 R code를 포함하지 않습니다"
 msgid "package seems to be using lazy loading already"
 msgstr "패키지는 이미 로드 하는것을 사용하고 있는 것처럼 보입니다"
 
+msgid ""
+"Cannot process chunk/lines:\n"
+"%s"
+msgstr ""
+
 #, fuzzy
 msgid "cannot update HTML package index"
 msgstr "source은 code로 패키지 할수가 없습니다"
@@ -867,9 +873,6 @@ msgid "multiple \\encoding lines in file"
 msgstr ""
 
 msgid "found encoding"
-msgstr ""
-
-msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
 msgstr ""
 
 msgid "argument 'pkg' must be of length 1"
@@ -993,9 +996,6 @@ msgstr "test '%s'는 이용 가능하지 않습니다"
 msgid "no or more than one match"
 msgstr "하나를 넘어가는 match이 없습니다"
 
-msgid "'iconv' is required"
-msgstr ""
-
 msgid "argument 'x' must be a character vector"
 msgstr "인수 'x'는 문자 벡터이어야만 합니다"
 
@@ -1061,6 +1061,15 @@ msgstr[0] ""
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ""
+
+#~ msgid "Found invalid multi-byte character data."
+#~ msgstr "무효의 다중 바이트 문자 데이타를 검색해냈습니다"
+
+#~ msgid "Cannot re-encode because iconv is not available."
+#~ msgstr "iconv가 이용 가능하지 않기 때문에 re-encode할수가 없습니다"
+
+#~ msgid "Try running R in a single-byte locale."
+#~ msgstr "단일 바이트 locale의 R를 실행해 주십시오"
 
 #, fuzzy
 #~ msgid "--- running texi2dvi on vignettes"

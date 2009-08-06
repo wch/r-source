@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
-"PO-Revision-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
+"PO-Revision-Date: 2009-08-06 09:10\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -272,15 +272,6 @@ msgstr "Rd files with duplicated alias '%s':"
 msgid "Rd files with empty sections:"
 msgstr "Rd files with empty sections:"
 
-msgid "Found invalid multi-byte character data."
-msgstr "Found invalid multi-byte character data."
-
-msgid "Cannot re-encode because iconv is not available."
-msgstr "Cannot re-encode because iconv is not available."
-
-msgid "Try running R in a single-byte locale."
-msgstr "Try running R in a single-byte locale."
-
 msgid "Malformed package name"
 msgstr "Malformed package name"
 
@@ -435,12 +426,6 @@ msgstr "Generics without methods in"
 msgid ":"
 msgstr ":"
 
-msgid "argument 'lines' must be a character vector"
-msgstr "argument ‘lines’ must be a character vector"
-
-msgid "encoding '%s' is not portable"
-msgstr "encoding ‘%s’ is not portable"
-
 msgid "argument 'file' must be a character string or connection"
 msgstr "argument ‘file’ must be a character string or connection"
 
@@ -465,6 +450,21 @@ msgstr "argument ‘outFile’ must be a character string or connection"
 
 msgid "directory '%s' does not contain Rd objects"
 msgstr "directory ‘%s’ does not contain Rd objects"
+
+msgid "you must specify 'dir' or 'files'"
+msgstr "you must specify ‘dir’ or ‘files’"
+
+msgid "cannot deal with Rd objects with missing/empty names"
+msgstr "cannot deal with Rd objects with missing/empty names"
+
+msgid "missing/empty \\name field in Rd file(s)"
+msgstr "missing/empty \\name field in Rd file(s)"
+
+msgid "argument 'lines' must be a character vector"
+msgstr "argument ‘lines’ must be a character vector"
+
+msgid "encoding '%s' is not portable"
+msgstr "encoding ‘%s’ is not portable"
 
 msgid "unterminated section '%s'"
 msgstr "unterminated section ‘%s’"
@@ -499,17 +499,17 @@ msgstr "Rd syntax errors found"
 msgid "Syntax error in documentation object '%s':"
 msgstr "Syntax error in documentation object '%s':"
 
-msgid "cannot deal with Rd objects with missing/empty names"
-msgstr "cannot deal with Rd objects with missing/empty names"
-
-msgid "missing/empty \\name field in Rd file(s)"
-msgstr "missing/empty \\name field in Rd file(s)"
-
 msgid "should not get here"
 msgstr "should not get here"
 
-msgid "Rd2HTML is designed for Rd version 2 or higher."
-msgstr "Rd2HTML is designed for Rd version 2 or higher."
+msgid "checkRd is designed for Rd version 2 or higher."
+msgstr "checkRd is designed for Rd version 2 or higher."
+
+msgid "outputEncoding changed to \"\" on stdout"
+msgstr "outputEncoding changed to \"\" on stdout"
+
+msgid "invalid value for '%s' : %s"
+msgstr "invalid value for ‘%s’ : %s"
 
 msgid "more than one \\examples section, using the first"
 msgstr "more than one \\examples section, using the first"
@@ -855,6 +855,13 @@ msgstr "package contains no R code"
 msgid "package seems to be using lazy loading already"
 msgstr "package seems to be using lazy loading already"
 
+msgid ""
+"Cannot process chunk/lines:\n"
+"%s"
+msgstr ""
+"Cannot process chunk/lines:\n"
+"%s"
+
 msgid "cannot update HTML package index"
 msgstr "cannot update HTML package index"
 
@@ -869,9 +876,6 @@ msgstr "multiple \\encoding lines in file"
 
 msgid "found encoding"
 msgstr "found encoding"
-
-msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
-msgstr "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "argument ‘pkg’ must be of length 1"
@@ -989,9 +993,6 @@ msgstr "test ‘%s’ is not available"
 
 msgid "no or more than one match"
 msgstr "no or more than one match"
-
-msgid "'iconv' is required"
-msgstr "‘iconv’ is required"
 
 msgid "argument 'x' must be a character vector"
 msgstr "argument ‘x’ must be a character vector"

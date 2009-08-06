@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: 2009-03-28 23:43-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -262,15 +262,6 @@ msgstr "Rd-файлы с двойным псевдонимом '%s':"
 msgid "Rd files with empty sections:"
 msgstr "Rd-файлы с пустыми разделами:"
 
-msgid "Found invalid multi-byte character data."
-msgstr "Найдены неправильные многобайтные данные."
-
-msgid "Cannot re-encode because iconv is not available."
-msgstr "Не могу перекодировать, потому что недоступен 'iconv'."
-
-msgid "Try running R in a single-byte locale."
-msgstr "Попытка запустить R на однобайтной локали."
-
 msgid "Malformed package name"
 msgstr "Плохое имя пакета"
 
@@ -427,12 +418,6 @@ msgstr "Общие функции без методов в"
 msgid ":"
 msgstr ":"
 
-msgid "argument 'lines' must be a character vector"
-msgstr "аргумент 'lines' должен быть текстовым вектором"
-
-msgid "encoding '%s' is not portable"
-msgstr "кодировка '%s' не переносима"
-
 msgid "argument 'file' must be a character string or connection"
 msgstr "аргумент 'file' должен быть текстовой строкой  или соединением"
 
@@ -457,6 +442,22 @@ msgstr "аргумент 'outFile' должен быть текстовой строкой или соединением"
 
 msgid "directory '%s' does not contain Rd objects"
 msgstr "папка '%s' не содержит Rd-объектов"
+
+#, fuzzy
+msgid "you must specify 'dir' or 'files'"
+msgstr "Вы должны задать 'package', 'dir' или 'file'"
+
+msgid "cannot deal with Rd objects with missing/empty names"
+msgstr "не могу работать с Rd-объектами в пропущенными/пустыми именами"
+
+msgid "missing/empty \\name field in Rd file(s)"
+msgstr "пропущенное/пустое поле \\имя Rd-файлы"
+
+msgid "argument 'lines' must be a character vector"
+msgstr "аргумент 'lines' должен быть текстовым вектором"
+
+msgid "encoding '%s' is not portable"
+msgstr "кодировка '%s' не переносима"
 
 msgid "unterminated section '%s'"
 msgstr "незаконченный раздел '%s'"
@@ -491,17 +492,19 @@ msgstr "В Rd найдена ошибка синтаксиса"
 msgid "Syntax error in documentation object '%s':"
 msgstr "Синтаксическая ошибка в объекте документации '%s':"
 
-msgid "cannot deal with Rd objects with missing/empty names"
-msgstr "не могу работать с Rd-объектами в пропущенными/пустыми именами"
-
-msgid "missing/empty \\name field in Rd file(s)"
-msgstr "пропущенное/пустое поле \\имя Rd-файлы"
-
 msgid "should not get here"
 msgstr "сюда не должно дойти"
 
-msgid "Rd2HTML is designed for Rd version 2 or higher."
+#, fuzzy
+msgid "checkRd is designed for Rd version 2 or higher."
 msgstr "Rd2HTML разработан для Rd версии 2 или выше."
+
+msgid "outputEncoding changed to \"\" on stdout"
+msgstr ""
+
+#, fuzzy
+msgid "invalid value for '%s' : %s"
+msgstr "Неправильные указатели файла лицензии: %s"
 
 msgid "more than one \\examples section, using the first"
 msgstr "более чем одна \\секция примеров, использую первую"
@@ -848,6 +851,11 @@ msgstr "пакет не содержит кода R"
 msgid "package seems to be using lazy loading already"
 msgstr "кажется, пакет уже использует ленивую загрузку данных"
 
+msgid ""
+"Cannot process chunk/lines:\n"
+"%s"
+msgstr ""
+
 msgid "cannot update HTML package index"
 msgstr "не могу обновить HTML-индекс пакетов"
 
@@ -862,9 +870,6 @@ msgstr "несколько \\строк кодировок в файле"
 
 msgid "found encoding"
 msgstr "найдена кодировка"
-
-msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
-msgstr "не-UTF-8 многобайтные локали не поддерживаются -- перекодирую в UTF-8"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "аргумент 'pkg' должен быть единичной длины"
@@ -983,9 +988,6 @@ msgstr "тест '%s' недоступен"
 msgid "no or more than one match"
 msgstr "нет или более одного соответствия"
 
-msgid "'iconv' is required"
-msgstr "требуется 'iconv'"
-
 msgid "argument 'x' must be a character vector"
 msgstr "аргумент 'x' должен быть текстовым вектором"
 
@@ -1057,6 +1059,22 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Найден вызов .Internal call в следующей функции:"
 msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
 msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
+
+#~ msgid "Found invalid multi-byte character data."
+#~ msgstr "Найдены неправильные многобайтные данные."
+
+#~ msgid "Cannot re-encode because iconv is not available."
+#~ msgstr "Не могу перекодировать, потому что недоступен 'iconv'."
+
+#~ msgid "Try running R in a single-byte locale."
+#~ msgstr "Попытка запустить R на однобайтной локали."
+
+#~ msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
+#~ msgstr ""
+#~ "не-UTF-8 многобайтные локали не поддерживаются -- перекодирую в UTF-8"
+
+#~ msgid "'iconv' is required"
+#~ msgstr "требуется 'iconv'"
 
 #~ msgid "Verifiable as open source: %s"
 #~ msgstr "Поддается проверке как open source: %s"

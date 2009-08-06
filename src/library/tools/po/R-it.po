@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -267,15 +267,6 @@ msgstr ""
 msgid "Rd files with empty sections:"
 msgstr "I file Rd devono avere \\title non vuoto."
 
-msgid "Found invalid multi-byte character data."
-msgstr "Trovato dati multi-byte carattere non validi."
-
-msgid "Cannot re-encode because iconv is not available."
-msgstr "Non posso ricodificare perché iconv non è disponbile"
-
-msgid "Try running R in a single-byte locale."
-msgstr "Prova ed eseguire R in un locale single-byte"
-
 msgid "Malformed package name"
 msgstr ""
 
@@ -426,13 +417,6 @@ msgstr ""
 msgid ":"
 msgstr ""
 
-msgid "argument 'lines' must be a character vector"
-msgstr "argomento 'lines' deve essere un vettore carattere"
-
-#, fuzzy
-msgid "encoding '%s' is not portable"
-msgstr "il test '%s' non è disponibile"
-
 msgid "argument 'file' must be a character string or connection"
 msgstr ""
 "argomento 'file' deve essere una stringa di caratteri o una connessione"
@@ -460,6 +444,23 @@ msgstr ""
 
 msgid "directory '%s' does not contain Rd objects"
 msgstr "la directory '%s' non contiene oggetti Rd"
+
+#, fuzzy
+msgid "you must specify 'dir' or 'files'"
+msgstr "specificare 'package', 'dir' o 'file'"
+
+msgid "cannot deal with Rd objects with missing/empty names"
+msgstr "non posso lavorare con oggetti Rd con nomi mancanti/vuoti"
+
+msgid "missing/empty \\name field in Rd file(s)"
+msgstr "campo \\name mancante/vuoto nei file Rd"
+
+msgid "argument 'lines' must be a character vector"
+msgstr "argomento 'lines' deve essere un vettore carattere"
+
+#, fuzzy
+msgid "encoding '%s' is not portable"
+msgstr "il test '%s' non è disponibile"
 
 msgid "unterminated section '%s'"
 msgstr "sezione '%s' non conclusa"
@@ -496,16 +497,16 @@ msgstr "Trovati errori di sintassi Rd"
 msgid "Syntax error in documentation object '%s':"
 msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
 
-msgid "cannot deal with Rd objects with missing/empty names"
-msgstr "non posso lavorare con oggetti Rd con nomi mancanti/vuoti"
-
-msgid "missing/empty \\name field in Rd file(s)"
-msgstr "campo \\name mancante/vuoto nei file Rd"
-
 msgid "should not get here"
 msgstr ""
 
-msgid "Rd2HTML is designed for Rd version 2 or higher."
+msgid "checkRd is designed for Rd version 2 or higher."
+msgstr ""
+
+msgid "outputEncoding changed to \"\" on stdout"
+msgstr ""
+
+msgid "invalid value for '%s' : %s"
 msgstr ""
 
 msgid "more than one \\examples section, using the first"
@@ -853,6 +854,11 @@ msgstr "il pacchetto non contiene codice R"
 msgid "package seems to be using lazy loading already"
 msgstr "il pacchetto sembra usare già il lazy loading"
 
+msgid ""
+"Cannot process chunk/lines:\n"
+"%s"
+msgstr ""
+
 #, fuzzy
 msgid "cannot update HTML package index"
 msgstr "impossibile leggere codice sorgente del pacchetto"
@@ -868,9 +874,6 @@ msgid "multiple \\encoding lines in file"
 msgstr ""
 
 msgid "found encoding"
-msgstr ""
-
-msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
 msgstr ""
 
 msgid "argument 'pkg' must be of length 1"
@@ -995,9 +998,6 @@ msgstr "il test '%s' non è disponibile"
 msgid "no or more than one match"
 msgstr "non più di una corrispondenza"
 
-msgid "'iconv' is required"
-msgstr ""
-
 msgid "argument 'x' must be a character vector"
 msgstr "l'argomento 'x' deve essere un vettore carattere"
 
@@ -1067,6 +1067,15 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "Found invalid multi-byte character data."
+#~ msgstr "Trovato dati multi-byte carattere non validi."
+
+#~ msgid "Cannot re-encode because iconv is not available."
+#~ msgstr "Non posso ricodificare perché iconv non è disponbile"
+
+#~ msgid "Try running R in a single-byte locale."
+#~ msgstr "Prova ed eseguire R in un locale single-byte"
 
 #, fuzzy
 #~ msgid "--- running texi2dvi on vignettes"

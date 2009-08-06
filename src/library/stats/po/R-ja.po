@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-27 13:51\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: 2009-03-31 20:57+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -515,6 +515,9 @@ msgstr " 特異な対比行列です "
 msgid "numeric contrasts or contrast name expected"
 msgstr " 数値対比か対比名が期待されています "
 
+msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgstr ""
+
 msgid "not enough degrees of freedom to define contrasts"
 msgstr " 対比を定義するために十分な自由度ではありません "
 
@@ -978,7 +981,12 @@ msgstr " 'col.vars' が無いか不正確です "
 msgid "'family' not recognized"
 msgstr " 'family' が確認できません "
 
-msgid "invalid 'method':"
+#, fuzzy
+msgid "invalid 'method': %s"
+msgstr " 無効な 'method' です: "
+
+#, fuzzy
+msgid "invalid 'method'"
 msgstr " 無効な 'method' です: "
 
 msgid "'weights' must be a numeric vector"
@@ -2260,6 +2268,12 @@ msgstr " ゼロ値のため、正確な信頼区間を計算することがで�
 
 msgid "must supply either 'formula' or 'data'"
 msgstr " 'formula' か 'data' のどちらかを与えなければなりません "
+
+msgid "xtabs(*, sparse=TRUE) applies only to two-way tables"
+msgstr ""
+
+msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgstr ""
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr " 漸近回帰モデルの当てはめで、異なる入力値が少なすぎます "

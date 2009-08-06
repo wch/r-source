@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:34\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: 2009-03-28 16:30+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -49,15 +49,6 @@ msgstr "Sweave-файл с именем '%s' не найден"
 
 msgid "%d Sweave files for basename '%s' found:"
 msgstr "%d Sweave-файлов с базовым именем '%s' найдено:"
-
-msgid "Found invalid multi-byte character data."
-msgstr "Найдены неправильные многобайтные текстовые данные."
-
-msgid "Cannot re-encode because 'iconv' is not available."
-msgstr "Не могу перекодировать, потому что 'iconv' недоступен."
-
-msgid "Try running R in a single-byte locale."
-msgstr "Попробуйте запустить R на однобайтной локали."
 
 msgid "more than one syntax specification found, using the first one"
 msgstr "найдено более одного указания на синтаксис, использую первое"
@@ -98,6 +89,15 @@ msgstr "элементы 'what' после первого будут пропущены"
 
 msgid "%d occurrences in %s"
 msgstr "%d вхождений в %s"
+
+#, fuzzy
+msgid "Invalid 'filter' argument."
+msgstr "неправильный аргумент 'x'"
+
+msgid ""
+"Running aspell failed with diagnostics:\n"
+"%s"
+msgstr ""
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -423,6 +423,10 @@ msgstr "menu() нельзя использовать неинтерактивно"
 
 msgid "Enter an item from the menu, or 0 to exit"
 msgstr "Введите пункт из меню или 0 для выхода"
+
+#, fuzzy
+msgid "invalid query"
+msgstr "неправильный формат"
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr ""
@@ -834,6 +838,9 @@ msgstr "'object' не имеет правильных levels()"
 msgid "'str.default': 'le' is NA"
 msgstr "'str.default': 'le' -- это NA"
 
+msgid "'digits' and 'digits.d' are both specified and the latter is not used"
+msgstr ""
+
 msgid "profile does not contain memory information"
 msgstr "профиль не содержит информации о памяти"
 
@@ -1047,6 +1054,15 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "Found invalid multi-byte character data."
+#~ msgstr "Найдены неправильные многобайтные текстовые данные."
+
+#~ msgid "Cannot re-encode because 'iconv' is not available."
+#~ msgstr "Не могу перекодировать, потому что 'iconv' недоступен."
+
+#~ msgid "Try running R in a single-byte locale."
+#~ msgstr "Попробуйте запустить R на однобайтной локали."
 
 #~ msgid "bundle '%s' is incompletely installed"
 #~ msgstr "связка пакетов '%s' установлена не полностью"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-08-06 09:09\n"
 "PO-Revision-Date: 2009-03-28 22:27-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -220,6 +220,9 @@ msgstr "Правильно лишь добавлять 'grob' к 'gTree'"
 msgid "It is only valid to add a child to a 'gTree'"
 msgstr "Правильно лишь добавлять 'child' к 'gTree'"
 
+msgid "'gPath' (%s) not found"
+msgstr "'gPath' (%s) не найден"
+
 msgid "It is only valid to remove a child from a 'gTree'"
 msgstr "Правильно лишь удалять 'child' из 'gTree'"
 
@@ -237,9 +240,6 @@ msgstr "Новый 'grob' должен иметь то же имя, как и старый 'grob'"
 
 msgid "Slot '%s' not found"
 msgstr "Слот '%s' не найден"
-
-msgid "'gPath' (%s) not found"
-msgstr "'gPath' (%s) не найден"
 
 msgid "gPath (%s) not found"
 msgstr "gPath (%s) не найден"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:34\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: 2009-03-31 21:07+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -39,15 +39,6 @@ msgstr " 名前が '%s' の Sweave ファイルはありません "
 
 msgid "%d Sweave files for basename '%s' found:"
 msgstr " %d 個の Sweve ファイルが基本名 '%s' に対して見付かりました: "
-
-msgid "Found invalid multi-byte character data."
-msgstr " 不正な多倍長文字データがありました。 "
-
-msgid "Cannot re-encode because 'iconv' is not available."
-msgstr " 'iconv' が利用できないので再エンコーディング出来ません "
-
-msgid "Try running R in a single-byte locale."
-msgstr " 1 バイトロケールで R を実行します "
 
 msgid "more than one syntax specification found, using the first one"
 msgstr " 複数の構文指定が見付かりました。最初のものを使います "
@@ -88,6 +79,15 @@ msgstr " 'what' の要素の最初のもの以降は無視されます "
 
 msgid "%d occurrences in %s"
 msgstr " %d 回 %s 中に起きました "
+
+#, fuzzy
+msgid "Invalid 'filter' argument."
+msgstr " 不正な 'x' 引数 "
+
+msgid ""
+"Running aspell failed with diagnostics:\n"
+"%s"
+msgstr ""
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -423,6 +423,10 @@ msgstr " menu() は対話的にしか使用できません "
 
 msgid "Enter an item from the menu, or 0 to exit"
 msgstr " メニューから項目を入力するか、0 を入力して終了して下さい "
+
+#, fuzzy
+msgid "invalid query"
+msgstr " 不正な書式 "
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr " '%s' は形式的な総称的関数です；S3 メソッドは見付かりそうもありません "
@@ -850,6 +854,9 @@ msgstr " 'object' は有効な levels() を持ちません "
 msgid "'str.default': 'le' is NA"
 msgstr " 'str.default': 'le' が NA です "
 
+msgid "'digits' and 'digits.d' are both specified and the latter is not used"
+msgstr ""
+
 msgid "profile does not contain memory information"
 msgstr " プロファイルはメモリ情報を含んでいません "
 
@@ -1048,6 +1055,15 @@ msgstr[0] " 'lib' の要素 '%s'' は書き込み可能なディレクトリで�
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "Found invalid multi-byte character data."
+#~ msgstr " 不正な多倍長文字データがありました。 "
+
+#~ msgid "Cannot re-encode because 'iconv' is not available."
+#~ msgstr " 'iconv' が利用できないので再エンコーディング出来ません "
+
+#~ msgid "Try running R in a single-byte locale."
+#~ msgstr " 1 バイトロケールで R を実行します "
 
 #~ msgid "bundle '%s' is incompletely installed"
 #~ msgstr " バンドル '%s' のインストールが不完全です "

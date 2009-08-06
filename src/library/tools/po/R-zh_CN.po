@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -255,15 +255,6 @@ msgstr "Rd文件不能有重复的别名'%s':"
 msgid "Rd files with empty sections:"
 msgstr "Rd文件内有空的段:"
 
-msgid "Found invalid multi-byte character data."
-msgstr "遇到了错误多字节字符数据."
-
-msgid "Cannot re-encode because iconv is not available."
-msgstr "无法重新编码，因为找不到iconv这个程序."
-
-msgid "Try running R in a single-byte locale."
-msgstr "请调用单字节本地化的R."
-
 msgid "Malformed package name"
 msgstr "畸形程辑包名"
 
@@ -415,12 +406,6 @@ msgstr "没有方法的同属函数在"
 msgid ":"
 msgstr "："
 
-msgid "argument 'lines' must be a character vector"
-msgstr "变元'lines'必需是字符矢量"
-
-msgid "encoding '%s' is not portable"
-msgstr "非便携编码'%s' "
-
 msgid "argument 'file' must be a character string or connection"
 msgstr "变元'document'必需是字符串或联结"
 
@@ -444,6 +429,22 @@ msgstr "变元'outfile'必需是字符串或联结"
 
 msgid "directory '%s' does not contain Rd objects"
 msgstr "目录'%s'没有Rd对象"
+
+#, fuzzy
+msgid "you must specify 'dir' or 'files'"
+msgstr "你必需设定'package', 'dir'或'file'三个中的一个"
+
+msgid "cannot deal with Rd objects with missing/empty names"
+msgstr "无法使用缺少或有空白名字的Rd对象"
+
+msgid "missing/empty \\name field in Rd file(s)"
+msgstr "Rd文件里缺少或有空白的\\name域"
+
+msgid "argument 'lines' must be a character vector"
+msgstr "变元'lines'必需是字符矢量"
+
+msgid "encoding '%s' is not portable"
+msgstr "非便携编码'%s' "
 
 msgid "unterminated section '%s'"
 msgstr "'%s'这一段没有结局"
@@ -478,17 +479,18 @@ msgstr "Rd语法错误于"
 msgid "Syntax error in documentation object '%s':"
 msgstr "使用手冊对象'%s'里主语法错误:"
 
-msgid "cannot deal with Rd objects with missing/empty names"
-msgstr "无法使用缺少或有空白名字的Rd对象"
-
-msgid "missing/empty \\name field in Rd file(s)"
-msgstr "Rd文件里缺少或有空白的\\name域"
-
 msgid "should not get here"
 msgstr ""
 
-msgid "Rd2HTML is designed for Rd version 2 or higher."
+msgid "checkRd is designed for Rd version 2 or higher."
 msgstr ""
+
+msgid "outputEncoding changed to \"\" on stdout"
+msgstr ""
+
+#, fuzzy
+msgid "invalid value for '%s' : %s"
+msgstr "执照文件指示器无效：%s"
 
 msgid "more than one \\examples section, using the first"
 msgstr ""
@@ -839,6 +841,11 @@ msgstr "程辑包没有包含任何R编码"
 msgid "package seems to be using lazy loading already"
 msgstr "程辑包已经使用延迟加载了"
 
+msgid ""
+"Cannot process chunk/lines:\n"
+"%s"
+msgstr ""
+
 msgid "cannot update HTML package index"
 msgstr "无法更新HTML程辑包索引"
 
@@ -854,9 +861,6 @@ msgstr ""
 #, fuzzy
 msgid "found encoding"
 msgstr "没有这种编码"
-
-msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
-msgstr ""
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "变元'pkg'的长度必需是一"
@@ -977,9 +981,6 @@ msgstr "不存在'%s'这个测试"
 msgid "no or more than one match"
 msgstr "没有成对的，或多于一双"
 
-msgid "'iconv' is required"
-msgstr "需要'iconv'"
-
 msgid "argument 'x' must be a character vector"
 msgstr "变元'x'必需是字符矢量"
 
@@ -1042,6 +1043,18 @@ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "在下面的函数里遇到了有可能是全局的T或F值:"
+
+#~ msgid "Found invalid multi-byte character data."
+#~ msgstr "遇到了错误多字节字符数据."
+
+#~ msgid "Cannot re-encode because iconv is not available."
+#~ msgstr "无法重新编码，因为找不到iconv这个程序."
+
+#~ msgid "Try running R in a single-byte locale."
+#~ msgstr "请调用单字节本地化的R."
+
+#~ msgid "'iconv' is required"
+#~ msgstr "需要'iconv'"
 
 #~ msgid "Verifiable as open source: %s"
 #~ msgstr "可验证开放源码：%s"

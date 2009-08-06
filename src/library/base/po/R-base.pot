@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-16 12:48\n"
+"POT-Creation-Date: 2009-08-06 09:09\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -560,9 +560,6 @@ msgstr ""
 msgid "non-square matrix in 'eigen'"
 msgstr ""
 
-msgid "numeric or complex values required in 'eigen'"
-msgstr ""
-
 msgid "'ch' returned code %d in 'eigen'"
 msgstr ""
 
@@ -693,6 +690,9 @@ msgid "unknown match distance components ignored"
 msgstr ""
 
 msgid "'max.distance' components must be non-negative"
+msgstr ""
+
+msgid "norm '%s' currently always uses exact = FALSE"
 msgstr ""
 
 msgid "triangular matrix should be square"
@@ -1317,9 +1317,6 @@ msgid "'x' and 'y' must have the same length"
 msgstr ""
 
 msgid "incorrect values of 'indent' and 'width'"
-msgstr ""
-
-msgid "argument to 'svd' must be numeric"
 msgstr ""
 
 msgid "'nv' must be 0 or ncol(x)"

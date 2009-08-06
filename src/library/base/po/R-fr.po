@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-16 12:48\n"
+"POT-Creation-Date: 2009-08-06 09:09\n"
 "PO-Revision-Date: 2009-03-29 21:29+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -623,9 +623,6 @@ msgstr "matrice 0 x 0"
 msgid "non-square matrix in 'eigen'"
 msgstr "la matrice n'est pas carrée dans 'eigen'"
 
-msgid "numeric or complex values required in 'eigen'"
-msgstr "valeurs numériques ou complexes nécessaires dans 'eigen'"
-
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'ch' a renvoyé le code %d dans 'eigen'"
 
@@ -763,6 +760,9 @@ msgstr "composantes de distance sans correspondance ignorées"
 
 msgid "'max.distance' components must be non-negative"
 msgstr "les composantes 'max.distance' ne peuvent être négatives"
+
+msgid "norm '%s' currently always uses exact = FALSE"
+msgstr ""
 
 msgid "triangular matrix should be square"
 msgstr "la matrice triangulaire doit être carrée"
@@ -1431,9 +1431,6 @@ msgstr "'x' et 'y' doivent avoir la même longueur"
 msgid "incorrect values of 'indent' and 'width'"
 msgstr "valeurs incorrectes de 'indent' et 'width'"
 
-msgid "argument to 'svd' must be numeric"
-msgstr "l'argument pour 'svd' doit être numérique"
-
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv' doit être 0 ou ncol(x)"
 
@@ -1619,6 +1616,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "numeric or complex values required in 'eigen'"
+#~ msgstr "valeurs numériques ou complexes nécessaires dans 'eigen'"
+
+#~ msgid "argument to 'svd' must be numeric"
+#~ msgstr "l'argument pour 'svd' doit être numérique"
 
 #~ msgid "package '%s' has been merged into '%s'"
 #~ msgstr "le package '%s' a été fusionné avec '%s'"

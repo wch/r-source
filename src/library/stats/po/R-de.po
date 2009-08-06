@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-27 13:51\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: 2009-03-26 11:24+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -26,7 +26,8 @@ msgid "object not interpretable as a factor"
 msgstr "Objekt kann nicht als Faktor interpretiert  werden"
 
 msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)."
-msgstr "kann kein Modell ohne Level anpassen ('alpha' darf nicht 0 oder FALSE sein)."
+msgstr ""
+"kann kein Modell ohne Level anpassen ('alpha' darf nicht 0 oder FALSE sein)."
 
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
 msgstr "'alpha', 'beta' und 'gamma' müssen im Einheitsintervall liegen"
@@ -520,6 +521,9 @@ msgstr "singläre Kontrastmatrix"
 msgid "numeric contrasts or contrast name expected"
 msgstr "numerische Kontraste oder ein Kontrastname erwartet"
 
+msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgstr ""
+
 msgid "not enough degrees of freedom to define contrasts"
 msgstr "zu wenig Freiheitsgrade, um Kontraste zu definieren"
 
@@ -979,7 +983,12 @@ msgstr "'col.vars' fehlt oder falsch"
 msgid "'family' not recognized"
 msgstr "'family' nicht erkannt"
 
-msgid "invalid 'method':"
+#, fuzzy
+msgid "invalid 'method': %s"
+msgstr "unzulässige 'method'"
+
+#, fuzzy
+msgid "invalid 'method'"
 msgstr "unzulässige 'method'"
 
 msgid "'weights' must be a numeric vector"
@@ -2275,6 +2284,12 @@ msgstr "kann das exakte Konfidenzinterval bei Nullen nicht berechnen"
 
 msgid "must supply either 'formula' or 'data'"
 msgstr "entweder 'formula' oder 'data' müssen angegeben werden"
+
+msgid "xtabs(*, sparse=TRUE) applies only to two-way tables"
+msgstr ""
+
+msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgstr ""
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr ""

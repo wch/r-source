@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-08-06 09:09\n"
 "PO-Revision-Date: 2009-03-31 20:58+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -217,6 +217,9 @@ msgstr " 'grob' を 'gTree' に加えることだけが有効です "
 msgid "It is only valid to add a child to a 'gTree'"
 msgstr " child を 'gTree' に加えることだけが有効です "
 
+msgid "'gPath' (%s) not found"
+msgstr " 'gPath'(%s) が見つかりません "
+
 msgid "It is only valid to remove a child from a 'gTree'"
 msgstr " child を 'gTree' から取り払うことだけが有効です "
 
@@ -234,9 +237,6 @@ msgstr " 新しい 'grob' は古い 'grob' と同じ名前でなければなり�
 
 msgid "Slot '%s' not found"
 msgstr " スロット '%s' が見つかりません "
-
-msgid "'gPath' (%s) not found"
-msgstr " 'gPath'(%s) が見つかりません "
 
 msgid "gPath (%s) not found"
 msgstr " gPath(%s) が見つかりません "

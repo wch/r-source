@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-16 12:48\n"
+"POT-Creation-Date: 2009-08-06 09:09\n"
 "PO-Revision-Date: 2009-03-31 13:18+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -600,9 +600,6 @@ msgstr " 0 x 0 行列です "
 msgid "non-square matrix in 'eigen'"
 msgstr " 'eigen' に非正方行列が与えられました "
 
-msgid "numeric or complex values required in 'eigen'"
-msgstr " 'eigen' には数値か複素数値が必要です "
-
 msgid "'ch' returned code %d in 'eigen'"
 msgstr " 'eigen' で 'ch' がコード %d を返しました "
 
@@ -739,6 +736,9 @@ msgstr " 未知の一致距離成分は無視されました "
 
 msgid "'max.distance' components must be non-negative"
 msgstr " 'max.distance' 成分は非負でなければなりません "
+
+msgid "norm '%s' currently always uses exact = FALSE"
+msgstr ""
 
 msgid "triangular matrix should be square"
 msgstr " 三角行列は正方行列であるべきです "
@@ -1410,9 +1410,6 @@ msgstr " 'x' と 'y' は同じ長さを持たなければなりません "
 msgid "incorrect values of 'indent' and 'width'"
 msgstr " 'indent' と 'width' に対する値が不正です "
 
-msgid "argument to 'svd' must be numeric"
-msgstr " 'svd' への引数は数値でなければなりません "
-
 msgid "'nv' must be 0 or ncol(x)"
 msgstr " 'nv' は 0 か ncol(x) でなければなりません "
 
@@ -1589,6 +1586,12 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "numeric or complex values required in 'eigen'"
+#~ msgstr " 'eigen' には数値か複素数値が必要です "
+
+#~ msgid "argument to 'svd' must be numeric"
+#~ msgstr " 'svd' への引数は数値でなければなりません "
 
 #~ msgid "package '%s' has been merged into '%s'"
 #~ msgstr " パッケージ '%s' は '%s' に併合されました "

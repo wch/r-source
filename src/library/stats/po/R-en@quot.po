@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-27 13:51\n"
-"PO-Revision-Date: 2009-05-27 13:51\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
+"PO-Revision-Date: 2009-08-06 09:10\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -528,6 +528,9 @@ msgstr "singular contrast matrix"
 msgid "numeric contrasts or contrast name expected"
 msgstr "numeric contrasts or contrast name expected"
 
+msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgstr "contr*(.., sparse=TRUE) needs package “Matrix” correctly installed"
+
 msgid "not enough degrees of freedom to define contrasts"
 msgstr "not enough degrees of freedom to define contrasts"
 
@@ -976,8 +979,11 @@ msgstr "‘col.vars’ missing or incorrect"
 msgid "'family' not recognized"
 msgstr "‘family’ not recognized"
 
-msgid "invalid 'method':"
-msgstr "invalid 'method':"
+msgid "invalid 'method': %s"
+msgstr "invalid 'method': %s"
+
+msgid "invalid 'method'"
+msgstr "invalid ‘method’"
 
 msgid "'weights' must be a numeric vector"
 msgstr "‘weights’ must be a numeric vector"
@@ -2245,6 +2251,12 @@ msgstr "cannot compute exact confidence interval with zeroes"
 
 msgid "must supply either 'formula' or 'data'"
 msgstr "must supply either ‘formula’ or ‘data’"
+
+msgid "xtabs(*, sparse=TRUE) applies only to two-way tables"
+msgstr "xtabs(*, sparse=TRUE) applies only to two-way tables"
+
+msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgstr "xtabs(*, sparse=TRUE) needs package “Matrix” correctly installed"
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr "too few distinct input values to fit an asymptotic regression model"

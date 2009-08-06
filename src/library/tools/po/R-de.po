@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:14\n"
+"POT-Creation-Date: 2009-08-06 09:10\n"
 "PO-Revision-Date: 2009-03-26 14:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -256,15 +256,6 @@ msgstr "Rd-Dateien mit doppeltem Alias '%s':"
 msgid "Rd files with empty sections:"
 msgstr "Rd-Dateien mit leeren Abschnitten:"
 
-msgid "Found invalid multi-byte character data."
-msgstr "Unzulässige multi-byte Zeichenkettendaten gefunden"
-
-msgid "Cannot re-encode because iconv is not available."
-msgstr "kann nicht rekodieren, da iconv nicht verfügbar"
-
-msgid "Try running R in a single-byte locale."
-msgstr "Versuchen sie R in eine Lokalisierung mit 1-Byte-Zeichen auszuführen"
-
 msgid "Malformed package name"
 msgstr "ungeeigneter Paketname"
 
@@ -423,12 +414,6 @@ msgstr "Generische Funktionen ohne Methoden in"
 msgid ":"
 msgstr ":"
 
-msgid "argument 'lines' must be a character vector"
-msgstr "Argument 'lines' muss ein Charaktervektor sein"
-
-msgid "encoding '%s' is not portable"
-msgstr "Kodierung '%s' ist nicht portabel"
-
 msgid "argument 'file' must be a character string or connection"
 msgstr "Argument 'file' muss eine Zeichenkette oder eine Verbindung sein"
 
@@ -453,6 +438,22 @@ msgstr "Argument 'outFile' muss eine Zeichenkette oder eine Verbindung sein"
 
 msgid "directory '%s' does not contain Rd objects"
 msgstr "Verzeichnis '%s' enthält keine Rd-Objekte"
+
+#, fuzzy
+msgid "you must specify 'dir' or 'files'"
+msgstr "sie müssen 'package', 'dir' oder 'file' angeben"
+
+msgid "cannot deal with Rd objects with missing/empty names"
+msgstr "kann mit Rd Objekten mit fehlendem bzw. leerem Namen nicht umgehen"
+
+msgid "missing/empty \\name field in Rd file(s)"
+msgstr "fehlendes bzw. leeres \\name Feld in Rd Datei(en)"
+
+msgid "argument 'lines' must be a character vector"
+msgstr "Argument 'lines' muss ein Charaktervektor sein"
+
+msgid "encoding '%s' is not portable"
+msgstr "Kodierung '%s' ist nicht portabel"
 
 msgid "unterminated section '%s'"
 msgstr "unbeendeter Abschnitt '%s'"
@@ -487,17 +488,19 @@ msgstr "Rd Syntaxfehler aufgetreten"
 msgid "Syntax error in documentation object '%s':"
 msgstr "Syntaxfehler im Dokuobjekt '%s':"
 
-msgid "cannot deal with Rd objects with missing/empty names"
-msgstr "kann mit Rd Objekten mit fehlendem bzw. leerem Namen nicht umgehen"
-
-msgid "missing/empty \\name field in Rd file(s)"
-msgstr "fehlendes bzw. leeres \\name Feld in Rd Datei(en)"
-
 msgid "should not get here"
 msgstr "sollte nicht hierher kommen"
 
-msgid "Rd2HTML is designed for Rd version 2 or higher."
+#, fuzzy
+msgid "checkRd is designed for Rd version 2 or higher."
 msgstr "Rd2HTML ist für Rd in Version 2 oder später entworfen"
+
+msgid "outputEncoding changed to \"\" on stdout"
+msgstr ""
+
+#, fuzzy
+msgid "invalid value for '%s' : %s"
+msgstr "Ungültiger Verweis auf Lizenzdatei: %s"
 
 msgid "more than one \\examples section, using the first"
 msgstr "mehr als eine \\examples section, benutze die erste"
@@ -806,7 +809,9 @@ msgid "in file"
 msgstr "in Datei"
 
 msgid "there is a 'man' dir but no help pages in this package"
-msgstr "das 'man' Verzeichnis exisitert, aber es gibt keine Hilfeseiten in diesem Paket"
+msgstr ""
+"das 'man' Verzeichnis exisitert, aber es gibt keine Hilfeseiten in diesem "
+"Paket"
 
 msgid "problem in converting"
 msgstr "Problem bei der Konvertierung"
@@ -844,6 +849,11 @@ msgstr "Paket enthält keinen R Code"
 msgid "package seems to be using lazy loading already"
 msgstr "Paket nutzt lazy loading anscheinend bereits"
 
+msgid ""
+"Cannot process chunk/lines:\n"
+"%s"
+msgstr ""
+
 msgid "cannot update HTML package index"
 msgstr "kann HTML Paketindex nicht aktualisieren"
 
@@ -858,11 +868,6 @@ msgstr "mehrere \\encoding Zeilen in der Datei"
 
 msgid "found encoding"
 msgstr "gefundene Kodierung"
-
-msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
-msgstr ""
-"Mehrbyte Lokalisierungen außer UTF-8 werden nicht unterstützt -- rekodiere "
-"nach UTF-8"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "Argument 'pkg' muss Länge 1 haben"
@@ -984,9 +989,6 @@ msgstr "Test '%s' nicht verfügbar"
 msgid "no or more than one match"
 msgstr "keine oder mehr als eine Übereinstimmung"
 
-msgid "'iconv' is required"
-msgstr "'iconv' wird benötigt"
-
 msgid "argument 'x' must be a character vector"
 msgstr "Argument 'x' muss ein Charaktervektor sein"
 
@@ -1053,6 +1055,24 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
 msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
+
+#~ msgid "Found invalid multi-byte character data."
+#~ msgstr "Unzulässige multi-byte Zeichenkettendaten gefunden"
+
+#~ msgid "Cannot re-encode because iconv is not available."
+#~ msgstr "kann nicht rekodieren, da iconv nicht verfügbar"
+
+#~ msgid "Try running R in a single-byte locale."
+#~ msgstr ""
+#~ "Versuchen sie R in eine Lokalisierung mit 1-Byte-Zeichen auszuführen"
+
+#~ msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
+#~ msgstr ""
+#~ "Mehrbyte Lokalisierungen außer UTF-8 werden nicht unterstützt -- "
+#~ "rekodiere nach UTF-8"
+
+#~ msgid "'iconv' is required"
+#~ msgstr "'iconv' wird benötigt"
 
 #~ msgid "Verifiable as open source: %s"
 #~ msgstr "Verifizierbar als Open Source: %s"
