@@ -1448,7 +1448,7 @@ correct use of @samp{$(BLAS_LIBS)}.
 The examples provided by the package's documentation are run.
 (@pxref{Writing R documentation files}, for information on using
 @code{\examples} to create executable example code.)  If there is a file
-@file{tests/Examples/@var{pkg}-Ex-Rout.save}, the output of running the
+@file{tests/Examples/@var{pkg}-Ex.Rout.save}, the output of running the
 examples is compared to that file.
 
 Of course, released packages should be able to run at least their own
