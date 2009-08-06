@@ -1,6 +1,6 @@
 
-R version 2.8.0 Under development (unstable) (2008-04-29 r45545)
-Copyright (C) 2008 The R Foundation for Statistical Computing
+R version 2.10.0 Under development (unstable) (2009-08-06 r49077)
+Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -371,6 +371,7 @@ In as.dist.default(x) : non-square matrix
 [1] TRUE
 > res <- try(as.factor( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.factor(res))
+[1] TRUE
 > res <- try(as.function( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.function(res))
 > res <- try(as.integer( x ), silent = TRUE)
@@ -397,6 +398,7 @@ In as.dist.default(x) : non-square matrix
 [1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ordered(res))
+[1] TRUE
 > res <- try(as.package_version( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.package_version(res))
 [1] TRUE
@@ -465,6 +467,7 @@ Error: x is not TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.factor(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.function( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.function(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -511,6 +514,7 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ordered(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.package_version( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.package_version(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -588,6 +592,7 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.factor( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.factor( f )))
+[1] TRUE
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
 > f <- try(as.hexmode( x ), silent = TRUE)
@@ -618,6 +623,7 @@ Error: x is not TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.octmode( f )))
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
+[1] TRUE
 > f <- try(as.package_version( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.package_version( f )))
 [1] TRUE
