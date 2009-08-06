@@ -1,6 +1,6 @@
 % File src/library/base/man/seq.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{seq}
@@ -89,16 +89,18 @@ seq(length.out= )
   \link{primitive}: the latter two ignore any argument name.
 }
 \value{
-  Currently, the default method returns a result of type
-  \code{"integer"} (if it is representable as that and) if \code{from}
-  is (numerically equal to an) integer and, e.g., only \code{to} is
-  specified, or also if only \code{length} or only \code{along.with} is
-  specified.  \strong{Note:} this may change
+  Currently, \code{seq.int} and the default method of \code{seq}
+  return a result of type \code{"integer"} (if it is representable as
+  that and) if \code{from} is (numerically equal to an) integer and,
+  e.g., only \code{to} is specified, or also if only \code{length} or
+  only \code{along.with} is specified.  \strong{Note:} this may change
+  in the future and programmers should not rely on it.
   %% well, for numeric from,   seq(from, to)  <==>  from:to
   %% which will *not* change in returning integer (when from is integer-valued)
-  in the future and programmers should not rely on it.
   % MM: to specify all the conditions doesn't seem worth, nor should the
   % code be changed just for docu.purposes; e.g. str(seq(from=1L, to=8, by=3L))
+  
+  \code{seq_along} and \code{seq_length} always return an integer vector.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
