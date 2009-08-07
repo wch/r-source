@@ -325,7 +325,7 @@ BUG FIXES
     o	A missing PROTECT caused rare segfaults during calls to
     	load().  (PR#13880, fix found by Bill Dunlap.)
 
-    o	gsub(fixed=TRUE) in a non-UTF-8 locale with a marked UTF-8 input
+    o	gsub() in a non-UTF-8 locale with a marked UTF-8 input
 	could in rare circumstances overrun a buffer and so segfault.
 
 
