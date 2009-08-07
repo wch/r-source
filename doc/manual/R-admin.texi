@@ -3456,7 +3456,7 @@ the additional flags being needed to resolve problems linking against
 @menu
 * Intel compilers::             
 * PGI compilers::               
-* SunStudio compilers::         
+* Sun Studio compilers::        
 @end menu
 
 @node Intel compilers, PGI compilers, Linux, Linux
@@ -3515,7 +3515,7 @@ system with @command{gcc} or the Intel compilers see
 Others have reported success with version 10.0.
 
 
-@node PGI compilers, SunStudio compilers, Intel compilers, Linux
+@node PGI compilers, Sun Studio compilers, Intel compilers, Linux
 @subsection PGI compilers
 
 Jennifer Lai used the Portland Group compilers on @cputype{x86_64} to
@@ -3544,10 +3544,10 @@ compliance to IEC60659.  Also,
 @uref{http://@/www.amd.com/@/us-en/@/assets/@/content_type/@/DownloadableAssets/@/dwamd_PGI_nov603.pdf}
 suggests that @option{-pc64} may be desirable.
 
-@node SunStudio compilers,  , PGI compilers, Linux
-@subsection SunStudio compilers
+@node Sun Studio compilers,  , PGI compilers, Linux
+@subsection Sun Studio compilers
 
-Brian Ripley tested the SunStudio 12 (aka Sun Ceres) compilers
+Brian Ripley tested the Sun Studio 12 (aka Sun Ceres) compilers
 (@uref{http://developers.sun.com/@/sunstudio/@/index.jsp}) on
 @cputype{x86_64} Linux with
 
