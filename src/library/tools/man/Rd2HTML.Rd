@@ -28,10 +28,10 @@ Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
        stages = "render", outputEncoding = "", ...)
 
 Rd2latex(Rd, out = "", defines = .Platform$OS.type,
-         stages="render", outputEncoding = "latin1", ...)
+         stages = "render", outputEncoding = "latin1", ...)
 
 Rd2ex(Rd, out = "", defines = .Platform$OS.type,
-      stages="render", outputEncoding="", ...)
+      stages = "render", outputEncoding = "UTF-8", ...)
 
 checkRd(Rd, defines = .Platform$OS.type, stages = "render",
         unknownOK = TRUE, listOK = TRUE, ...)
@@ -80,11 +80,12 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
     \item Small improvements in layout.
   }
 
-  \code{checkRd} makes consistency checks on an Rd file, confirming that required
-  sections are present, etc.
+  \code{checkRd} makes consistency checks on an Rd file, confirming that
+  required sections are present, etc.
 
-  Each of the above functions accepts a filename for an Rd file, and will
-  use \code{\link{parse_Rd}} to parse it before applying the conversions or checks.
+  Each of the above functions accepts a filename for an Rd file, and
+  will use \code{\link{parse_Rd}} to parse it before applying the
+  conversions or checks.
 
   \code{findHTMLlinks} tries to resolve links from one man page to another.  It
   uses in decreasing priority
@@ -98,40 +99,39 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
   }
 }
 \section{Encodings}{
+  Rd files are normally intended to be rendered on a wide variety of
+  systems, so care must be taken in the encoding of non-ASCII
+  characters.  In general, any such encoding should be declared using
+  the \samp{encoding} section for there to be any hope of correct
+  rendering.  Avoid exotic encodings unless absolutely necessary: all
+  input will be translated to UTF-8, and the quality of such
+  translations is poor on some older systems.
 
-Rd files are normally intended to be rendered on a wide variety of systems,
-so care must be taken in the encoding of non-ASCII characters.  In general,
-any such encoding should be declared using the \samp{encoding} section
-for there to be any hope of correct rendering.  Avoid exotic encodings unless
-absolutely necessary:  all input will be translated to UTF-8, and the
-quality of such translations is poor on some older systems.
-
-For output, the \code{outputEncoding} variable will be used.
-\code{outputEncoding=""} will choose the native encoding for the
-current system.  The \code{Rd2latex} function is an exception to this
-rule, because LaTeX systems vary considerably in their ability to
-handle encodings.  If an input file contains an \samp{encoding}
-section, \code{Rd2latex} will use that as the output encoding as well.
-Unfortunately, on some older systems the conversion to UTF-8 and back
-is not perfect, and some characters may not be rendered properly.
-
+  For output, the \code{outputEncoding} variable will be used:
+  \code{outputEncoding=""} will choose the native encoding for the
+  current system.  The \code{Rd2latex} function is an exception to this
+  rule, because LaTeX installations vary considerably in their ability
+  to handle encodings.  If an input file contains an \samp{encoding}
+  section, \code{Rd2latex} will use that as the output encoding as well.
+  Unfortunately, on some older LaTeX installations the conversion to
+  UTF-8 and back is not perfect, and some characters may not be rendered
+  properly.
 }
 
 \note{
+  The \\Sexpr macro is a new addition to Rd files.  It includes \R code
+  that will be executed at one of three times:  build time (when a
+  package's source code is built into a tarball, not yet implemented),
+  install time (when the package code is compiled and installed, or
+  compiled and built into a binary package), and render time (when the
+  man page is converted to a readable format). Depending on the output
+  format, render time may be the same as install time.
 
-The \\Sexpr macro is a new addition to Rd files.  It includes R code
-that will be executed at one of three times:  build time (when a
-package's source code is built into a tarball, not yet implemented),
-install time (when the package code is compiled and installed, or
-compiled and built into a binary package), and render time (when the
-man page is converted to a readable format). Depending on the output
-format, render time may be the same as install time.
-
-Currently only text format man pages render when displayed, all other
-formats render when installed, and in all cases, handling of \\Sexpr macros needs
-to be enabled during the build of R (by defining the \code{USE_NEW_HELP}
-environment variable).  If not enabled, the macro will show, rather
-than the result of evaluating the R code.
+  Currently only text format man pages render when displayed, all other
+  formats render when installed, and in all cases, handling of \\Sexpr
+  macros needs to be enabled during the build of R (by defining the
+  \code{USE_NEW_HELP} environment variable).  If not enabled, the macro
+  will show, rather than the result of evaluating the R code.
 
 For example, this man page was:
 \enumerate{
@@ -170,8 +170,7 @@ file paths, in the same package or in a package in the same library tree.
 \seealso{
   \code{\link{parse_Rd}}
 }
-\examples{
-\donttest{
+\examples{\donttest{
 ## Simulate an install and rendering of this page in HTML and text format:
 
 toolsRd <- Rd_db("tools")
@@ -184,6 +183,5 @@ outfile <- paste(tempfile(), ".txt", sep="")
 file.show(Rd2txt(Rd, outfile, package="tools", stages=c("install", "render")))
 
 checkRd(con) # A stricter test than Rd2HTML uses
-}
-}
+}}
 \keyword{ documentation }
