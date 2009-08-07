@@ -187,6 +187,9 @@ NEW FEATURES
 	are translated to the current locale (as before) but if true
 	they are written byte-by-byte.
 
+    o	iconv() has a new argument 'mark' which can be used (by
+	experts) to suppress the declaration of encodings.
+
 
 Rd HELP FILE CHANGES
 

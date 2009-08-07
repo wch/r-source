@@ -13,7 +13,7 @@
   encodings: the \sQuote{i} stands for \sQuote{internationalization}.
 }
 \usage{
-iconv(x, from ="", to = "", sub = NA)
+iconv(x, from ="", to = "", sub = NA, mark = TRUE)
 
 iconvlist()
 }
@@ -27,6 +27,7 @@ iconvlist()
     any non-convertible bytes in the input.  (This would normally be a
     single character, but can be more.)  If \code{"byte"}, the indication is
     \code{"<xx>"} with the hex code of the byte.}
+  \item{mark}{logical, for expert use.  Should encodings be marked?}
 }
 
 \details{
@@ -89,9 +90,10 @@ iconvlist()
   A character vector of the same length and the same attributes as
   \code{x} (after conversion).
 
-  The elements of the result have a declared encoding if \code{from} is
-  \code{"latin1"} or \code{"UTF-8"}, or if \code{from = ""} and the
-  current locale's encoding is detected as Latin-1 or UTF-8.
+  If \code{mark = TRUE} (the default) the elements of the result have a
+  declared encoding if \code{from} is \code{"latin1"} or \code{"UTF-8"},
+  or if \code{from = ""} and the current locale's encoding is detected
+  as Latin-1 or UTF-8.
 }
 \seealso{
   \code{\link{localeToCharset}}, \code{\link{file}}. 
