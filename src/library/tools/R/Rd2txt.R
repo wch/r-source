@@ -15,13 +15,13 @@
 #  http://www.r-project.org/Licenses/
 
 Rd2txt <-
-    function(Rd, out="", package = "", defines=.Platform$OS.type, stages = "render", 
+    function(Rd, out="", package = "", defines=.Platform$OS.type, stages = "render",
              outputEncoding = "", ...)
 {
     WIDTH <- 72L
     HDR_WIDTH <- 70L
 
-    ## we need to keep track of where we are.    
+    ## we need to keep track of where we are.
     buffer <- character(0)	# Buffer not yet written to con
     				# Newlines have been processed, each line in buffer is
     				# treated as a separate input line (but may be wrapped before output)
@@ -33,10 +33,10 @@ Rd2txt <-
     haveBlanks <- 0		# How many blank lines have just been written?
     enumItem <- 0		# Last enumeration item number
     inEqn <- FALSE		# Should we do edits needed in an eqn?
-    
+
     startCapture <- function() {
     	save <- list(buffer=buffer, linestart=linestart, indent=indent, wrapping=wrapping,
-    	             keepFirstIndent=keepFirstIndent, dropBlank=dropBlank, haveBlanks=haveBlanks, 
+    	             keepFirstIndent=keepFirstIndent, dropBlank=dropBlank, haveBlanks=haveBlanks,
     	             enumItem=enumItem, inEqn=inEqn)
     	buffer <<- character(0)
     	linestart <<- TRUE
@@ -49,7 +49,7 @@ Rd2txt <-
     	inEqn <<- FALSE
     	save
     }
-    
+
     endCapture <- function(saved) {
     	result <- buffer
     	buffer <<- saved$buffer
@@ -63,31 +63,31 @@ Rd2txt <-
     	inEqn <<- saved$inEqn
     	result
     }
-    
+
     wrap <- function(doWrap=TRUE) {
 	if (doWrap != wrapping) {
 	    flushBuffer()
 	    wrapping <<- doWrap
-	}    
+	}
     }
-    
+
     putw <- function(...)  { wrap(TRUE); put(...) }
-    
+
     putf <- function(...)  { wrap(FALSE); put(...) }
-    
+
     put <- function(...) {
         txt <- paste(..., collapse="", sep="")
-        trail <- length(grep("\n$", txt)) > 0L
+        trail <- grepl("\n$", txt)
         # Convert newlines
         txt <- strsplit(txt, "\n")[[1]]
         if (dropBlank) {
-            while(length(txt) && length(grep("^[[:space:]]*$",txt[1])))
+            while(length(txt) && grepl("^[[:space:]]*$",txt[1]))
             	txt <- txt[-1]
             if (length(txt)) dropBlank <<- FALSE
         }
         if(!length(txt)) return()
         haveBlanks <<- 0
-	    
+
         if (linestart) buffer <<- c(buffer, txt)
         else if (length(buffer)) {
             buffer[length(buffer)] <<- paste(buffer[length(buffer)], txt[1], sep="")
@@ -101,10 +101,10 @@ Rd2txt <-
 	if (n) paste(rep(" ", n), collapse="")
 	else ""
     }
-    
+
     flushBuffer <- function() {
     	if (!length(buffer)) return()
-    	
+
     	if (wrapping) {
 	    if (keepFirstIndent) {
 		first <- nchar(sub("[^ ].*", "", buffer[1]))
@@ -118,7 +118,7 @@ Rd2txt <-
 	    start <- 1
 	    for (i in seq_along(blankLines)) {
 		if (blankLines[i] > start) {
-		    result <- c(result, strwrap(paste(buffer[start:(blankLines[i]-1)], collapse=" "), 
+		    result <- c(result, strwrap(paste(buffer[start:(blankLines[i]-1)], collapse=" "),
 						indent=first, exdent=indent))
 		    first <- indent
 		}
@@ -131,7 +131,7 @@ Rd2txt <-
 		if (length(buffer) > 1)
 		    buffer[-1] <<- paste(blanks(indent), buffer[-1], sep="")
 		keepFirstIndent <- FALSE
-	    } else 
+	    } else
 		buffer <<- paste(blanks(indent), buffer, sep="")
 	}
 
@@ -139,7 +139,7 @@ Rd2txt <-
     	buffer <<- character(0)
     	linestart <<- TRUE
     }
-    
+
     encoding <- "unknown"
 
     trim <- function(x) {
@@ -200,7 +200,7 @@ Rd2txt <-
 
     # This function strips pending blank lines, then adds n new ones.
     blankLine <- function(n=1) {
-    	while (length(buffer) && length(grep("^[[:blank:]]*$", buffer[length(buffer)])))
+    	while (length(buffer) && grepl("^[[:blank:]]*$", buffer[length(buffer)]))
     	    buffer <<- buffer[-length(buffer)]
 	flushBuffer()
 	if (n > haveBlanks) {
@@ -210,7 +210,7 @@ Rd2txt <-
 	haveBlanks <<- n
 	dropBlank <<- TRUE
     }
-    
+
     txt_eqn <- function(x) {
         Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         x <- gsub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilaon|psi)", "\\1", x)
@@ -364,26 +364,26 @@ Rd2txt <-
         save <- startCapture()
         dropBlank <<- TRUE
         newEntry <- function() {
-            entries <<- c(entries, list(list(text=trim(endCapture(save)), 
+            entries <<- c(entries, list(list(text=trim(endCapture(save)),
 	                   	             row=row, col=col)))
             save <<- startCapture()
             dropBlank <<- TRUE
         }
         for (i in seq_along(tags)) {
             switch(tags[i],
-                  "\\tab" = { 
+                  "\\tab" = {
                   	newEntry()
                    	col <- col + 1
                    	if (col > length(formats))
                    	    stopRd(content[[i]], sprintf("too many columns for format '%s'", table[[1L]]))
                    },
-                   "\\cr" = { 
+                   "\\cr" = {
                    	newEntry()
                    	row <- row + 1
 			col <- 1 },
-                   { 
+                   {
                    	writeBlock(content[[i]], tags[i], "\\tabular")
-                   	
+
                    })
         }
         newEntry()
@@ -410,12 +410,12 @@ Rd2txt <-
         }
         result <- matrix("", sum(lines), cols)
         for (i in seq_len(cols))
-            result[,i] <- blanks(widths[i])        
+            result[,i] <- blanks(widths[i])
         firstline <- c(1, 1+cumsum(lines))
         for (i in seq_along(entries)) {
             e <- entries[[i]]
             text <- format(e$text, justify=formats[e$col], width=widths[e$col])
-            for (j in seq_along(text)) 
+            for (j in seq_along(text))
             	result[firstline[e$row]+j-1, e$col] <- text[j]
         }
         blankLine()
@@ -426,7 +426,7 @@ Rd2txt <-
             	putf(" ", result[i,j], " ")
             putf("\n")
         }
-        blankLine()    
+        blankLine()
         indent <<- indent0
     }
 
@@ -513,7 +513,7 @@ Rd2txt <-
                    )
         }
     }
-    
+
     writeContent <- function(blocks, blocktag) {
         itemskip <- FALSE
 	tags <- RdTags(blocks)
@@ -670,7 +670,7 @@ Rd2txt <-
 
     putf(txt_header(txt_striptitle(title)))
     blankLine()
-    
+
     for (i in seq_along(sections)[-(1:2)])
         writeSection(Rd[[i]], sections[i])
 
