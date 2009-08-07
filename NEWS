@@ -219,6 +219,11 @@ Rd HELP FILE CHANGES
     o	There have been various bug fixes and code reorganization in
 	the Rd renderers Rd2HTML, Rd2latex, Rd2txt, and Rd2ex.
 
+	All example files are now created with ASCII or UTF-8
+	encoding, and the encoding is only marked in the file if there
+	is any non-UTF-8 code (previously it was marked if the help
+	file had non-ASCII contents, possibly in other sections).
+
 
 DEPRECATED & DEFUNCT
 
