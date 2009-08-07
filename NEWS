@@ -190,6 +190,9 @@ NEW FEATURES
     o	iconv() has a new argument 'mark' which can be used (by
 	experts) to suppress the declaration of encodings.
 
+    o	grep() and friends now use useBytes=TRUE to inhibit the
+ 	translation of inputs with marked encodings.
+
 
 Rd HELP FILE CHANGES
 

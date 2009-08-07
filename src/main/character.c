@@ -1076,7 +1076,10 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < n; i++)
 	    if (getCharCE(STRING_ELT(vec, i)) == CE_UTF8) use_UTF8 = TRUE;
     }
-    if (use_UTF8) {
+    if (useBytes) {
+	cpat = CHAR(STRING_ELT(pat, 0));
+	ienc = CE_NATIVE;	
+    } else if (use_UTF8) {
 	cpat = translateCharUTF8(STRING_ELT(pat, 0));
 	ienc = CE_UTF8;
     } else {
@@ -1132,9 +1135,11 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	LOGICAL(ind)[i] = 0;
 	if (STRING_ELT(vec, i) != NA_STRING) {
 	    const char *s;
-	    if (use_UTF8) {
+	    if (useBytes)
+		s = CHAR(STRING_ELT(vec, i));
+	    else if (use_UTF8)
 		s = translateCharUTF8(STRING_ELT(vec, i));
-	    } else {
+	    else {
 		s = translateChar(STRING_ELT(vec, i));
 #ifdef SUPPORT_MBCS
 		if (!useBytes && mbcslocale && !mbcsValid(s)) {
@@ -1353,7 +1358,10 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (getCharCE(STRING_ELT(vec, i)) == CE_UTF8) use_UTF8 = TRUE;
     }
 
-    if (use_UTF8) {
+    if (useBytes) {
+	spat = CHAR(STRING_ELT(pat, 0));
+	srep = CHAR(STRING_ELT(rep, 0));	
+    } else if (use_UTF8) {
 	spat = translateCharUTF8(STRING_ELT(pat, 0));
 	srep = translateCharUTF8(STRING_ELT(rep, 0));
     } else {
@@ -1403,7 +1411,9 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* end NA handling */
 	offset = 0;
 	nmatch = 0;
-	if (use_UTF8)
+	if (useBytes)
+	    s = CHAR(STRING_ELT(vec, i));
+	else if (use_UTF8)
 	    s = translateCharUTF8(STRING_ELT(vec, i));
 	else
 	    s = translateChar(STRING_ELT(vec, i));
@@ -1473,7 +1483,9 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else {
 		offset = 0;
 		nmatch = 0;
-		if(use_UTF8)
+		if (useBytes)
+		    s = CHAR(STRING_ELT(vec, i));
+		else if (use_UTF8)
 		    s = translateCharUTF8(STRING_ELT(vec, i));
 		else
 		    s = translateChar(STRING_ELT(vec, i));
@@ -1569,7 +1581,10 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < n; i++)
 	    if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) use_UTF8 = TRUE;
     }
-    if (use_UTF8) {
+    if (useBytes) {
+	spat = CHAR(STRING_ELT(pat, 0));
+	ienc = CE_NATIVE;
+    } else if (use_UTF8) {
 	spat = translateCharUTF8(STRING_ELT(pat, 0));
 	ienc = CE_UTF8;
     } else {
@@ -1627,7 +1642,9 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (STRING_ELT(text, i) == NA_STRING) {
 	    INTEGER(matchlen)[i] = INTEGER(ans)[i] = NA_INTEGER;
 	} else {
-	    if (ienc == CE_UTF8)
+	    if (useBytes)
+		s = CHAR(STRING_ELT(text, i));
+	    else if (ienc == CE_UTF8)
 		s = translateCharUTF8(STRING_ELT(text, i));
 	    else
 		s = translateChar(STRING_ELT(text, i));
@@ -2001,7 +2018,10 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < n; i++)
 	    if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) use_UTF8 = TRUE;
     }
-    if (use_UTF8) {
+    if (useBytes) {
+	spat = CHAR(STRING_ELT(pat, 0));
+	ienc = CE_NATIVE;	
+    } else if (use_UTF8) {
 	spat = translateCharUTF8(STRING_ELT(pat, 0));
 	ienc = CE_UTF8;
     } else {
@@ -2028,7 +2048,9 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (STRING_ELT(text, i) == NA_STRING) {
 	    PROTECT(ans = gregexpr_NAInputAns());
 	} else {
-	    if (use_UTF8)
+	    if (useBytes)
+		s = CHAR(STRING_ELT(text, i));
+	    else if (use_UTF8)
 		s = translateCharUTF8(STRING_ELT(text, i));
 	    else
 		s = translateChar(STRING_ELT(text, i));

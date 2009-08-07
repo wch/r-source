@@ -102,7 +102,8 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   \code{useBytes} is only used if \code{fixed = TRUE} or \code{perl = TRUE}.
   Its main effect is to avoid errors/warnings about invalid inputs and
   spurious matches, but for \code{regexpr} it changes the interpretation
-  of the output.
+  of the output.  As from \R 2.10.0 it inhibits the conversion of inputs
+  with marked encodings.
 
   PCRE only supports caseless matching for a non-ASCII pattern in a
   UTF-8 locale (and not for \code{useBytes = TRUE} in any locale).
