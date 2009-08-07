@@ -45,7 +45,7 @@ BUG FIXES
 	was not, when x had a "surprising" length() method.
 
     o	gzcon() (used by load()) would re-open an open connection,
-	leaking a file handle each time. (PR#13841)
+    	leaking a file descriptor each time. (PR#13841)
 
     o	The checks for inconsistent inheritance reported by setClass()
         now detect inconsistent superclasses and give better warning messages.
@@ -54,6 +54,9 @@ BUG FIXES
     	P(>|Chi|) from a Poisson/binomial GLM anova as a p-value
     	column in order to format it appropriately (and as a
     	consequence it gave no significance stars).
+    	
+    o	A missing PROTECT caused rare segfaults during calls to
+    	load().  (PR#13880, fix found by Bill Dunlap.)
 
 
 
