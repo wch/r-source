@@ -1,4 +1,4 @@
-
+﻿
 	**************************************************
 	*						 *
 	*	       2.10 SERIES NEWS			 *
@@ -155,7 +155,7 @@ NEW FEATURES
         are debugged as well.
 
     o	Outlier symbols drawn by boxplot() now obey the 'outlwd'
-	argument.  Reported by Jürgen Kluge.
+	argument.  Reported by JÃ¼rgen Kluge.
 
     o	svd(x) and eigen(x) now behave analogously to qr(x) in
 	accepting logical matrices x.
@@ -313,11 +313,13 @@ BUG FIXES
     o	gzcon() (used by load()) would re-open an open connection,
     	leaking a file descriptor each time. (PR#13841)
 
-
     o	print.anova() failed to recognize the column labelled
     	P(>|Chi|) from a Poisson/binomial GLM anova as a p-value
     	column in order to format it appropriately (and as a
     	consequence it gave no significance stars).
+    	
+    o	A missing PROTECT caused rare segfaults during calls to
+    	load().  (PR#13880, fix found by Bill Dunlap.)
 
 
 
@@ -440,7 +442,7 @@ BUG FIXES
 	"unregistered" S3 classes now work.
 
     o	srcref records produced by parse() and parse_Rd() did not record
-	the encoding of the source file.  (Reported by Romain François.)
+	the encoding of the source file.  (Reported by Romain FranÃ§ois.)
 
     o	The X11 version of View() was misbehaving in MBCS locales, and
 	PgUp/PgDn now behave better, thanks to a patch from Ei-ji Nakama.
@@ -3383,7 +3385,7 @@ BUG FIXES
     o	strptime() crashed under certain locales on Mac OS X.
 
     o	gregexpr() no longer segfaults when "" is given as the search
-	pattern.  Thanks to Hervé Pagès for the bug report.
+	pattern.  Thanks to HervÃ© PagÃ¨s for the bug report.
 
     o	matplot(x, *) with default 'pch' did not plot columns from column
 	number 37 on (because the default pch was NA for those). (PR#10676)
@@ -4024,8 +4026,8 @@ C-LEVEL FACILITIES
 
     o 	CHAR() now returns (const char *) since CHARSXPs should no
 	longer be modified in place.  This change allows compilers to
-	warn or error about improper modification.  Thanks to Hervé
-	Pagès for the suggestion.
+	warn or error about improper modification.  Thanks to HervÃ©
+	PagÃ¨s for the suggestion.
 
     o	acopy_string is a (provisional) new helper function that
 	copies character data and returns a pointer to memory
