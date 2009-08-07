@@ -287,7 +287,8 @@ NEW FEATURES
     o	approxfun() and approx() now accept a 'rule' of length two, for
 	easy specification of different interpolation rules on left and
 	right.
-	They also no longer segfault for invalid zero-length specification
+
+	They no longer segfault for invalid zero-length specification
 	of 'yleft, 'yright', or 'f'.
 
 
@@ -323,6 +324,9 @@ BUG FIXES
     	
     o	A missing PROTECT caused rare segfaults during calls to
     	load().  (PR#13880, fix found by Bill Dunlap.)
+
+    o	gsub(fixed=TRUE) in a non-UTF-8 locale with a marked UTF-8 input
+	could in rare circumstances overrun a buffer and so segfault.
 
 
 
