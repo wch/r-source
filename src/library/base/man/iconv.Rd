@@ -1,6 +1,6 @@
 % File src/library/base/man/iconv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{iconv}
@@ -31,19 +31,17 @@ iconvlist()
 
 \details{
   The names of encodings and which ones are available are
-  platform-dependent.  On all systems you can use \code{""} for the
-  encoding of the current locale, as well as \code{"latin1"} and
-  \code{"UTF-8"}.  On most systems (including those using \code{glibc}
-  or \code{libiconv}, Mac OS X and Windows) case is ignored when
-  specifying an encoding.
+  platform-dependent.  All \R platforms support \code{""} (for the
+  encoding of the current locale), \code{"latin1"} and \code{"UTF-8"}.
+  Generally case is ignored when specifying an encoding.
 
 #ifdef unix
   On many platforms \code{iconvlist} provides an alphabetical list of
   the supported encodings.  On others, the information is on the man
-  page for \code{iconv(5)} or elsewhere in the man pages (and beware
+  page for \code{iconv(5)} or elsewhere in the man pages (but beware
   that the system command \code{iconv} may not support the same set of
-  encodings as the C functions \R calls).
-  Unfortunately, the names are rarely common across platforms.
+  encodings as the C functions \R calls).  Unfortunately, the names are
+  rarely common across platforms.
 #endif
 #ifdef windows
   \code{iconvlist} provides an alphabetical list of the supported encodings.
@@ -62,6 +60,31 @@ iconvlist()
 
   \code{"UTF8"} will be accepted as meaning the (more correct) \code{"UTF-8"}.
 }
+
+\section{Implementation Details}{
+  \code{iconv} was optional before \R 2.10.0, but it absence was
+  deprecated in \R 2.5.0.
+
+  There are three main implementations of \code{iconv} in use.
+  \samp{glibc} (as used on Linux) contains one.  Several platforms
+  supply GNU \samp{libiconv}, including Mac OS X and Cygwin.  On Windows
+  we use a version of Yukihiro Nakadaira's \samp{win\_iconv}, which is
+  based on Windows' codepages (but \samp{libiconv} can be used by
+  swapping a DLL).  All three have \code{iconvlist}, ignore case in
+  encoding names and support \code{//TRANSLIT} (but with different
+  results).
+
+  Most commercial Unixes contain an implemetation of \code{iconv} but
+  none we have encountered have supported the encoding names we need:
+  the \dQuote{R Installation and Administration Manual} recommends
+  installing \samp{libiconv} on Solaris and AIX, for example.
+
+  There are other implementations, e.g. NetBSD uses one from the Citrus
+  project (which does not support \code{//TRANSLIT}) and there is an
+  older FreeBSD port (\samp{libiconv} is usually used there): it has not
+  been reported whether or not these work with \R.
+}
+
 \value{
   A character vector of the same length and the same attributes as
   \code{x} (after conversion).
@@ -73,7 +96,7 @@ iconvlist()
 \seealso{
   \code{\link{localeToCharset}}, \code{\link{file}}. 
 }
-\examples{\donttest{
+\examples{
 ## not all systems have iconvlist
 try(utils::head(iconvlist(), n = 50))
 
@@ -102,6 +125,6 @@ Encoding(x) <- "latin1"
 x
 try(iconv(x, "latin1", "ASCII//TRANSLIT"))  # platform-dependent
 iconv(x, "latin1", "ASCII", sub="byte")
-}}
+}
 \keyword{ character }
 \keyword{ utilities }

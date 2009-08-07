@@ -25,9 +25,7 @@ writeChar(object, con, nchars = nchar(object, type="chars"),
     missing.}
   \item{useBytes}{logical: For \code{readChar}, should \code{nchars} be
     regarded as a number of bytes not characters in a multi-byte
-    locale?  For \code{writeChar}, if  true character strings with
-    marked encodings are written byte-by-byte: if false they are
-    converted to the current encoding.} 
+    locale?  For \code{writeChar}, see \code{\link{writeLines}}.} 
   \item{object}{A character vector to be written to the connection, at
     least as long as \code{nchars}.}
   \item{eos}{\sQuote{end of string}: character string .  The terminator

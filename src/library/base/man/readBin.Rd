@@ -37,9 +37,7 @@ writeBin(object, con, size = NA_integer_,
     target system for the file.  Using \code{"swap"} will force swapping
     endian-ness.}
   \item{object}{An \R object to be written to the connection.}
-  \item{useBytes}{logical.  If true character strings with marked
-    encodings are written byte-by-byte: if false they are converted to
-    the current encoding.} 
+  \item{useBytes}{See \code{\link{writeLines}}.} 
 }
 \details{
   If \code{con} is a character string, the functions call
