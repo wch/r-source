@@ -161,9 +161,9 @@ Rd2txt <-
         Encoding(text) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         if (FALSE && .Platform$OS.type == "windows" &&  ## FIXME:  directional quotes are not currently working
             Sys.getlocale("LC_CTYPE") != "C") {
-            text <- gsub("``", "\u0093", text, fixed = TRUE)
-            text <- gsub("''", "\u0094", text, fixed = TRUE)
-            text <- gsub("`([^']+)'", "\u0091\\1\u0092", text)
+#            text <- gsub("``", "\u0093", text, fixed = TRUE)
+#            text <- gsub("''", "\u0094", text, fixed = TRUE)
+#            text <- gsub("`([^']+)'", "\u0091\\1\u0092", text)
             text <- gsub("`", "'", text, fixed = TRUE)
         } else {
             text <- gsub("(``|'')", '"', text)
@@ -238,9 +238,9 @@ Rd2txt <-
         if (FALSE && .Platform$OS.type == "windows" && Sys.getlocale("LC_CTYPE") != "C") {
             ## FIXME directional quotes are not currently working
             if (quote == "\\sQuote") {
-                put("\u0091"); writeContent(block, tag); put("\u0092")
+#                put("\u0091"); writeContent(block, tag); put("\u0092")
             } else {
-                put("\u0093"); writeContent(block, tag); put("\u0094")
+#                put("\u0093"); writeContent(block, tag); put("\u0094")
             }
         } else {
             if (quote == "\\sQuote") {
