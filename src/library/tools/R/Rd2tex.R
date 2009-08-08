@@ -414,9 +414,10 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\R" = of0(tag, "{}"),
                "\\donttest" = writeContent(block, tag),
                "\\dontrun"= writeDR(block, tag),
-               "\\enc" = {
-                   txt <- as.character(block[[1L]])
-                   of1(txt)
+               "\\enc" = { # some people put more things in \enc than a word.
+                   writeContent(block, tag)
+                   ##txt <- as.character(block[[1L]])
+                   ##of1(txt)
                } ,
                "\\eqn" =,
                "\\deqn" = {

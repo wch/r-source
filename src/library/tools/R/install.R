@@ -827,7 +827,7 @@
                             warning(conditionMessage(e), call. = FALSE)
                             invokeRestart("muffleWarning")
                         } else e
-                    }                        
+                    }
                     res <-
                         try(withCallingHandlers(.install_package_Rd_objects(".",
                                                                             instdir),
@@ -1611,7 +1611,7 @@
             next
         if (scanForEncoding) {
 	    enc <- lines[grepl('^\\\\inputencoding', lines)]
-	    latexEncodings <- c(latexEncodings, 
+	    latexEncodings <- c(latexEncodings,
 	                        sub("^\\\\inputencoding\\{(.*)\\}", "\\1", enc))
 	}
         topics[f] <- this
@@ -2033,7 +2033,7 @@ function(dir, outDir, types = c("txt", "html", "latex", "example"))
         }
         cat(type, rep(" ", 8L - nchar(type)), sep="")
     }
-    
+
     dirname <- c("help", "html", "latex", "R-ex", "chm")
     ext <- c(".rds", ".html", ".tex", ".R", ".html")
     names(dirname) <- names(ext) <- c("txt", "html", "latex", "example", "chm")
@@ -2052,7 +2052,7 @@ function(dir, outDir, types = c("txt", "html", "latex", "example"))
     if(TRUE) {
 
         ## FIXME: perl version cleans up non-matching converted files
-        
+
         ## FIXME: add this lib to lib.loc?
         Links <- if ("html" %in% types) findHTMLlinks(outDir) else ""
 
@@ -2078,7 +2078,7 @@ function(dir, outDir, types = c("txt", "html", "latex", "example"))
 
             shown <- FALSE
             environment(.ehandler)$.messages <- character()
-            environment(.whandler)$.messages <- character()            
+            environment(.whandler)$.messages <- character()
 
             if ("txt" %in% types) {
                 type <- "txt"
@@ -2142,7 +2142,7 @@ function(dir, outDir, types = c("txt", "html", "latex", "example"))
         enc <- desc["encoding"]
         if(is.na(enc)) enc <- "unknown"
         cmd <- paste(R.home(), "/bin/Rdconv -t ", sep = "")
-        
+
         .setPERL()
 
         for (f in files) {
@@ -2252,7 +2252,8 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
         "\\usepackage[", Sys.getenv("R_RD4DVI", "ae"), "]{Rd}\n",
         sep = "", file = out)
     if(index) writeLines("\\usepackage{makeidx}", out)
-    setEncoding <- paste("\\usepackage[", outputEncoding, "]{inputenc} % @SET ENCODING@", sep="")
+    ## this needs to be canonical, e.g. 'utf8'
+    setEncoding <- paste("\\usepackage[", latex_canonical_encoding(outputEncoding), "]{inputenc} % @SET ENCODING@", sep="")
     writeLines(c(setEncoding,
                  "\\makeindex{}",
                  "\\begin{document}"), out)
@@ -2357,10 +2358,10 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
 	latexEncodings <- lines[grepl('^\\\\inputencoding', lines)]
 	latexEncodings <- sub("^\\\\inputencoding\\{(.*)\\}", "\\1", latexEncodings)
     }
-    
+
     ## Fix up encodings
     ## FIXME cyrillic probably only works with times, not ae.
-    latexEncodings <- unique(latexEncodings)	
+    latexEncodings <- unique(latexEncodings)
     cyrillic <- if(nzchar(Sys.getenv("_R_CYRILLIC_TEX_"))) "utf8" %in% latexEncodings else FALSE
     latex_outputEncoding <- latex_canonical_encoding(outputEncoding)
     encs <- latexEncodings[latexEncodings != latex_outputEncoding]
