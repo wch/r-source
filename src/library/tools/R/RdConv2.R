@@ -614,7 +614,8 @@ Rd2HTML <-
                "\\link" = writeLink(tag, block),
                "\\email" = of0('<a href="mailto:', block[[1L]], '">', htmlify(block[[1L]]), '</a>'),
                ## FIXME: encode, not htmlify
-               "\\url" = of0('<a href="', block[[1L]], '">', block[[1L]], '</a>'),
+               ## watch out for empty URLs (TeachingDemos has one)
+               "\\url" = if(length(block)) of0('<a href="', block[[1L]], '">', block[[1L]], '</a>'),
                "\\Sexpr"= { of1("\\Sexpr")  # This is only here if processing didn't get it...
 	                    option <- attr(block, "Rd_option")
 	                    if (!is.null(option)) of0("[", option, "]")
