@@ -115,9 +115,10 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     ## Use something like gsub("(?<!\\\\)x", "a", x, perl= TRUE)
 
     ## version for RCODE and VERB
-    ## inCodeBlock is in alltt, where only \ { } have their usual meaning
+    ## inCodeBlock/inPre is in alltt, where only \ { } have their usual meaning
     vtexify <- function(x) {
         if(inEqn) return(ltxeqn(x))
+        # cat(sprintf("vtexify: '%s'\n", x))
         Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         x <- gsub("\\\\[l]+dots", "...", as.character(x))
         ## unescape (should not be escaped: but see kappa.Rd)
@@ -128,6 +129,11 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             ## So fix up for now
             x <- sub('"\\{"', '"{"', x, fixed = TRUE)
         } else if (inPre) {
+            BSL = '@BSL@';
+            ## escape any odd \, e.g. \n
+            x <- gsub("\\\\", BSL, x, fixed = TRUE) # change even ones
+            x <- gsub("\\", "\\\\", x, fixed = TRUE) # change odd ones
+            x <- gsub(BSL, "\\\\", x, fixed = TRUE) # change back
             x <- gsub("(?<!\\\\)\\{", "\\\\{", x, perl= TRUE)
             x <- gsub("(?<!\\\\)}", "\\\\}", x, perl= TRUE)
         } else {
@@ -563,7 +569,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                        itemskip <- FALSE
                        if (tag == "TEXT") {
                            txt <- gsubUTF8("^ ", "", as.character(block), perl = TRUE)
-                           of1(txt)
+                           of1(texify(txt))
                        } else writeBlock(block, tag, blocktag) # should not happen
                    } else writeBlock(block, tag, blocktag)
                })
