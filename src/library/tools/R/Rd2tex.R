@@ -178,7 +178,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     ## could be more complicated, e.g. force.Rd
     writeLink <- function(tag, block) {
         parts <- get_link(block, tag)
-        of0("\\LinkA{", latex_escape_name(parts$topic), "}{",
+        of0("\\LinkA{", latex_escape_link(parts$topic), "}{",
             latex_link_trans0(parts$dest), "}")
     }
 
@@ -224,6 +224,13 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         x <- gsub(">>", ">{}>", x, fixed = TRUE)
         Encoding(x) <- "UTF-8"
         x
+    }
+
+    latex_escape_link <- function(x)
+    {
+        ## _ is already escaped
+        x <- gsub("\\_", "_", x, fixed = TRUE)
+        latex_escape_name(x)
     }
 
     latex_link_trans0 <- function(x)
@@ -642,7 +649,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     	con <- out
     	out <- summary(con)$description
     }
-    
+
     latexEncoding <- latex_canonical_encoding(outputEncoding)
     of0("\\inputencoding{", latexEncoding, "}\n")
 
