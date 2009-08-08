@@ -485,7 +485,10 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                    "\\S3method" = {
                        class <- as.character(block[[2L]])
                        generic <- as.character(block[[1L]])
-                       if (generic %in% c("[", "[[", "$")) {
+                       ## R.huge has
+                       ## \method{[}{FileMatrix}(this, i, j, drop=FALSE)
+                       if (length(blocks) > 2L &&
+                           generic %in% c("[", "[[", "$")) {
                            ## need to assemble the call
                            j <- i + 1
                            txt <- ""

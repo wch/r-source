@@ -612,7 +612,8 @@ Rd2HTML <-
                "\\special"= writeContent(block, tag), ## FIXME, verbatim?
                "\\linkS4class" =,
                "\\link" = writeLink(tag, block),
-               "\\email" = of0('<a href="mailto:', block[[1L]], '">', htmlify(block[[1L]]), '</a>'),
+               ## cwhmisc has an empty \\email
+               "\\email" = if(length(block)) of0('<a href="mailto:', block[[1L]], '">', htmlify(block[[1L]]), '</a>'),
                ## FIXME: encode, not htmlify
                ## watch out for empty URLs (TeachingDemos has one)
                "\\url" = if(length(block)) of0('<a href="', block[[1L]], '">', block[[1L]], '</a>'),
