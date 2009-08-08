@@ -477,7 +477,10 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
 	for (i in seq_along(tags)) {
             block <- blocks[[i]]
-            switch(tag <- attr(block, "Rd_tag"),
+            tag <- attr(block, "Rd_tag")
+            ## this should not be null, but it might be in a erroneous Rd file
+            if(!is.null(tag))
+            switch(tag,
                    "\\method" =,
                    "\\S3method" = {
                        class <- as.character(block[[2L]])
