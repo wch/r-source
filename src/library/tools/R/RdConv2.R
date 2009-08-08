@@ -1254,6 +1254,7 @@ Rd2ex <-
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
 
+    ## FIXME should we skip empty \examples sections?
     where <- which(sections == "\\examples")
     if(length(where)) {
 	if (is.character(out)) {
@@ -1271,8 +1272,9 @@ Rd2ex <-
         if(length(which) > 1L)
             warning("more than one \\examples section, using the first")
         ex <- Rd[[ where[1L] ]]
-        ## So we need to output an encoding?
-        if(any(Encoding(unlist(ex)) != "unknown")) {
+        exl <- unlist(ex)
+        ## Do we need to output an encoding?
+        if(length(exl) && any(Encoding(exl) != "unknown")) {
             if(any(f <- sections == "\\encoding")) {
                 encoding <- unlist(Rd[[which(f)]])[1L]
                 ## FIXME: which should win here?
@@ -1308,9 +1310,13 @@ Rd2ex <-
         }
         keyblks <- sections == "\\keyword"
         if (any(keyblks)) {
+            ## some people have only empty keyword blocks.
             keys <- unlist(Rd[keyblks])
-            keys <- gsubUTF8("^\\s+", "", keys, perl = TRUE)
-            of0(wr(paste("Keywords: ", paste(keys, collapse=" "), sep="")), "\n")
+            if(length(keys)) {
+                keys <- gsubUTF8("^\\s+", "", keys, perl = TRUE)
+                of0(wr(paste("Keywords: ",
+                             paste(keys, collapse=" "), sep="")), "\n")
+            }
         }
         writeLinesUTF8(c("", "### ** Examples"), con, outputEncoding)
         for (i in seq_along(ex)) render(ex[[i]])
