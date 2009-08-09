@@ -3235,7 +3235,7 @@ contains
 @group
 \usage@{
 \method@{[@}@{factor@}(x, \dots, drop = FALSE)
-\method@{[[@}@{factor@}(x, i)
+\method@{[[@}@{factor@}(x, \dots)
 \method@{[@}@{factor@}(x, \dots) <- value
 @}
 @end group
@@ -3251,7 +3251,7 @@ Usage:
      ## S3 method for class 'factor':
      x[..., drop = FALSE]
      ## S3 method for class 'factor':
-     x[[i]]
+     x[[...]]
      ## S3 replacement method for class 'factor':
      x[...] <- value
 @end group
@@ -3294,11 +3294,11 @@ form
 
 @noindent
 for each component of the list returned.  Optional text may
-precede@footnote{Text between or after list items will be discarded:
-this may change in future versions of the Rd format.} this list (see for
-example the help for @code{rle}).  Note that @code{\value} is implicitly
-a @code{\describe} environment, so that environment should not be used
-for listing components, just individual @code{\item@{@}@{@}} entries.
+precede@footnote{Text between or after list items was discarded prior to
+@R{} 2.10.0, and is discouraged.}  this list (see for example the help
+for @code{rle}).  Note that @code{\value} is implicitly a
+@code{\describe} environment, so that environment should not be used for
+listing components, just individual @code{\item@{@}@{@}} entries.
 
 @item \references@{@dots{}@}
 @findex \references
@@ -3332,9 +3332,8 @@ addresses, or @code{\url@{@}} for web pointers.
 @findex \seealso
 Pointers to related @R{} objects, using @code{\code@{\link@{...@}@}} to
 refer to them (@code{\code} is the correct markup for @R{} object names,
-and @code{\link}
-produces hyperlinks in output formats which support this.  @xref{Marking
-text}, and @ref{Cross-references}).
+and @code{\link} produces hyperlinks in output formats which support
+this.  @xref{Marking text}, and @ref{Cross-references}).
 
 @findex \examples
 @item \examples@{@dots{}@}
@@ -3380,14 +3379,13 @@ number generation (for example, @code{x <- rnorm(100)}), or by using
 standard data sets listed by @code{data()} (see @code{?data} for more
 info).
 
-Finally, there is @code{\donttest}, used (at the beginning@footnote{@R{}
-2.9.0 and later allow leading whitespace.} of af a
-separate line) to mark code that should be run by @code{examples()} but
-not by @code{R CMD check}.  This should be needed only occasionally but
-can be used for code which might fail in circumstances that are hard to
-test for, for example in some locales.  (Use e.g. @code{capabilities()}
-to test for features needed in the examples wherever possible, and you
-can also use @code{try()} or @code{trycatch()}.)
+Finally, there is @code{\donttest}, used (at the beginning of a separate
+line) to mark code that should be run by @code{examples()} but not by
+@code{R CMD check}.  This should be needed only occasionally but can be
+used for code which might fail in circumstances that are hard to test
+for, for example in some locales.  (Use e.g. @code{capabilities()} to
+test for features needed in the examples wherever possible, and you can
+also use @code{try()} or @code{trycatch()}.)
 
 @findex \keyword
 @item \keyword@{@var{key}@}
@@ -3417,8 +3415,8 @@ which can be filled in with information.
 @subsection Documenting data sets
 
 The structure of Rd files which document @R{} data sets is slightly
-different.  Whereas sections such as @code{\arguments} and @code{\value}
-are not needed, the format and source of the data should be explained.
+different.  Sections such as @code{\arguments} and @code{\value} are not
+needed but the format and source of the data should be explained.
 
 As an example, let us look at @file{src/library/datasets/man/rivers.Rd}
 which documents the standard @R{} data set @code{rivers}.
@@ -3584,8 +3582,8 @@ For example
 @noindent
 For consistency with the pre-assigned sections, the section name (the
 first argument to @code{\section}) should be capitalized (but not all
-upper case).  Note that there is no whitespace between the first and
-second braced expressions (it is allowed in Rd version 1.1 and later).
+upper case).  Wwhitespace between the first and second braced
+expressions is allowed as from @R 2.10.0.
 
 Note that additional named sections are always inserted at a fixed
 position in the output (before @code{\note}, @code{\seealso} and the
@@ -3617,7 +3615,7 @@ Set @var{text} in @b{bold} font if possible.
 @itemx \dQuote@{@var{text}@}
 @findex \dQuote
 Portably single or double quote @var{text} (without hard-wiring the
-quotation marks).
+characters used for quotation marks).
 @end table
 
 The following logical markup commands are available for indicating
@@ -3648,6 +3646,11 @@ type from computer output.
 @item \samp@{@var{text}@}
 @findex \samp
 Indicate text that is a literal example of a sequence of characters.
+
+@item \verb@{@var{text}@}
+@findex \verb
+Indicate text that is a literal example of a sequence of characters,
+with no interpretation of e.g.@: @code{\var}.
 
 @item \pkg@{@var{package_name}@}
 @findex \pkg
@@ -3878,9 +3881,8 @@ itself.  Use
 for the dots in function argument lists @samp{@dots{}}, and
 @code{\ldots}
 @findex \ldots
-for ellipsis dots in ordinary text.  In the current Rd version 1.1 these
-can optionally be followed by @code{@{@}}, and it is recommended that
-they are unless followed by whitespace.
+for ellipsis dots in ordinary text.  These can be followed by
+@code{@{@}}, and should be they are unless followed by whitespace.
 
 After a @samp{%}, you can put your own comments regarding the help text.
 The rest of the line will be completely disregarded, normally.
@@ -3895,8 +3897,8 @@ examples section in the file @file{Paren.Rd} for an example.}
 for backslash and needs to be when there two or more adjacent
 backslashes).  Inside the verbatim-like commands (@code{\usage},
 @code{\code}, @code{\preformatted} and @code{\examples}), no other
-characters are special.  As from @R{} 2.9.0, all of @samp{% @{ @} \}
-should be escaped in non-verbatim-like text.
+characters are special.  All of @samp{% @{ @} \} should be escaped in
+non-verbatim-like text.
 
 @findex \enc
 Text which might need to be represented differently in different
@@ -3904,7 +3906,8 @@ encodings should be marked by @code{\enc}, e.g.@:
 @code{\enc@{J@"oreskog@}@{Joreskog@}} (with no whitespace between the
 braces) where the first argument will be used where encodings are
 allowed and the second should be @acronym{ASCII} (and is used for e.g.@:
-the text conversion).
+the text conversion).  (This is intended to be used for indvidual words,
+not whole sentences or paragraphs.)
 
 @node Indices, Platform-specific sections, Insertions, Writing R documentation files
 @section Indices
@@ -4103,7 +4106,10 @@ Rd2dvi} also the tools to build packages from source as described in the
 @section Back-compatibility issues
 
 Packages that are intended to work with earlier versions of @R{} need to
-be written in a rather stricter dialect, and some notes follow.
+be written in a different dialect, and some notes follow.  @R{} 2.10.0
+processes Rd files as version 2 (as described here); @R{} 2.9.@var{x}
+assumed files were version 1 (unnumbered) unless they were declared to
+be version 1.1; @R{} 2.8.1 and earlier used version 1 (unnumbered)
 
 Some package authors have included arbitrary pieces of @LaTeX{}
 mathematical notation into text descriptions, e.g.@: @samp{$\mu$g} and
@@ -4115,7 +4121,7 @@ not in the examples given), use @code{\eqn}.
 @menu
 * Changes in version 1.1::      
 * Unnumbered versions::         
-* Planned changes::             
+* Changes in R 2.10.0::         
 @end menu
 
 @node Changes in version 1.1, Unnumbered versions, Back-compatibility issues, Back-compatibility issues
@@ -4145,12 +4151,12 @@ Whitespace is allowed between the first and second arguments of
 Interpretation of @samp{\Alpha} etc is no longer done.
 @end itemize
 
-@node Unnumbered versions, Planned changes, Changes in version 1.1, Back-compatibility issues
+@node Unnumbered versions, Changes in R 2.10.0, Changes in version 1.1, Back-compatibility issues
 @subsection Unnumbered versions
 
-In version 1.0 @samp{$} needs to be escaped by backslash in ``regular''
-text (not verbatim-like, not in the first argument of @code{\eqn},
-@dots{}), and @samp{#}, @samp{_} and @samp{&} can be.
+Prior to version 1.1, @samp{$} needs to be escaped by backslash in
+``regular'' text (not verbatim-like, not in the first argument of
+@code{\eqn}, @dots{}), and @samp{#}, @samp{_} and @samp{&} can be.
 
 For historical reasons, the @TeX{}/@LaTeX{} commands @code{\alpha},
 @code{\Alpha}, @code{\beta}, @code{\Gamma}, @code{\epsilon},
@@ -4167,6 +4173,8 @@ as @code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
 and @samp{|} could only be used safely in math mode, i.e., within the
 first argument of @code{\eqn} or @code{\deqn}.
 
+@samp{\R}, @samp{\dots} and @samp{\ldots} were not followed by
+@samp{@{~@}}
 
 Versions of @R{} prior to 2.8.1 failed to process correctly
 constructions such as
@@ -4200,27 +4208,11 @@ quite a few package writers have ignored this.  As from @R{} 2.8.1 this
 is detected, and the @code{\itemize} command (but not its contents)
 removed, with a warning.
 
-@node Planned changes,  , Unnumbered versions, Back-compatibility issues
-@subsection Planned changes
+@node Changes in R 2.10.0,  , Unnumbered versions, Back-compatibility issues
+@subsection Changes in R 2.10.0
 
-It is planned in due course to convert @file{.Rd} files in @R{} (rather
-than in Perl).  As a first step, a parser function @code{parse_Rd} is
-available in package @pkg{tools} as from @R{} 2.9.0, and this can be run
-over a package's help files as part of @command{R CMD check} by setting
-the environment variable @env{_R_CHECK_RD_PARSE_} to @samp{TRUE} (which
-is currently the default).  Sometimes the reported error is actually the
-result of a previous error, and running
-
-@example
-tools::parse_Rd(@var{filename}, verbose = TRUE)
-@end example
-
-@noindent
-will give a more comprehensive view of the problems.
-
-@code{parse_Rd} is still under development, but targets a stricter
-version of the Rd format which will become version 2.  Current
-differences from version 1.1 include
+We now convert @file{.Rd} files in @R{} (rather than in Perl).
+Differences from version 1.1 include
 
 @itemize
 
@@ -4228,15 +4220,16 @@ differences from version 1.1 include
 Unmatched right braces are an error, not just a warning.
 
 @item
-No space is allowed between the first and second arguments of a macro
-such as @code{\item}.
+No whitespace is allowed between the first and second arguments of a macro
+such as @code{\item} --- files parse with a warning but may not be
+converted correctly.
 
 @item
 @code{\code} is intended @emph{only} for @R{} code, and as such its
 argument must be syntactically valid once macros such as @code{\link}
 and @code{\var} have been substituted.  This means that quotes must
-balance.  Use @code{\samp} or @code{\kbd} for code snippets and code in
-other languages.
+balance.  Use @code{\verb} (only in this version) or @code{\samp} or
+@code{\kbd} for code snippets and code in other languages.
 
 @c @item
 @c @code{\examples} is intended for valid @R{} code even within
