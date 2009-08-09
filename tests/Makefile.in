@@ -39,7 +39,8 @@ MK = $(MAKE)
 
 
 all-basic-tests = Examples Specific Reg Internet
-all-devel-tests = Docs IsAs Random Demo Rd Primitive Regexp Segfault \
+## remove 'Rd' for now
+all-devel-tests = Docs IsAs Random Demo Primitive Regexp Segfault \
    Standalone Packages
 
 all check test-all-basics test-all-devel: Makefile $(srcdir)/Makefile.common
