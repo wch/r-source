@@ -760,6 +760,7 @@ foreach my $pkg (@ARGV) {
 		     !(-t STDIN && -t STDOUT));
 		my $INSTALL_opts = $opt_install_args;
 		$INSTALL_opts = "--fake" if($opt_install eq "fake");
+		$INSTALL_opts = "$INSTALL_OPTS" .  " --latex";
 		my $cmd;
 		if($WINDOWS) {
 		    ## avoid some quoting hell

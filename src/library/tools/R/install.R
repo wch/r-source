@@ -1983,10 +1983,10 @@ function(dir, outDir, types = c("txt", "html", "example"))
     showtype <- function(type) {
     	if (!shown) {
             nc <- nchar(bf)
-            if(nc < 28L)
-                cat("    ", bf, rep(" ", 30L - nc), sep = "")
+            if(nc < 38L)
+                cat("    ", bf, rep(" ", 40L - nc), sep = "")
             else
-                cat("    ", bf, "\n", rep(" ", 34L), sep = "")
+                cat("    ", bf, "\n", rep(" ", 44L), sep = "")
             shown <<- TRUE
         }
         ## 'example' is always last, so 5+space
