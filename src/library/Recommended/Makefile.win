@@ -26,7 +26,7 @@ stamp-recommended: $(OBJECTS)
 	@touch $@
 
 ## need to allow parallel installs, modulo dependencies below
-INSTALL_OPTS=--pkglock --auto-zip --install-tests
+INSTALL_OPTS=--pkglock --install-tests
 
 ifneq ($(strip $(USE_CHM)),TRUE)
 INSTALL_OPTS+=--no-chm
@@ -40,7 +40,7 @@ RCMD = ../../../bin/Rcmd
 .tgz.ts:
 	@echo
 	@echo "----- installing recommended package" `basename $< .tgz`
-	$(RCMD) INSTALL $(INSTALL_OPTS) -l $(RHOME)/library `basename $< .tgz`_*.tar.gz
+	@$(RCMD) INSTALL $(INSTALL_OPTS) -l $(RHOME)/library `basename $< .tgz`_*.tar.gz
 	@touch $@
 
 clean:

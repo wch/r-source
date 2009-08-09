@@ -64,19 +64,15 @@ rpackageindices:
 rpackagehelp: rpackageindices
 ifeq ($(strip $(USE_CHM)),TRUE)
 	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO); \
-	  $(ECHO) "------ Installing help for package $${pkg}"; \
 	  $(MAKE) --no-print-directory -C ../gnuwin32/help -s RHOME=$(RHOME) \
-	    HELPTYPES='-txt -html -latex -example -chm' \
+	    HELPTYPES='txt html latex example chm' \
 	    chm-$${pkg} || exit 1; \
 	done
 else
 	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO); \
-	  $(ECHO) "------ Installing help for package $${pkg}"; \
 	  $(MAKE) --no-print-directory -C ../gnuwin32/help -s RHOME=$(RHOME) \
-	    HELPTYPES='-txt -html -latex -example' \
-	    ziponlyhelp-$${pkg} || exit 1; \
+	    HELPTYPES='txt html latex example' \
+	    help-$${pkg} || exit 1; \
 	done
 endif
 

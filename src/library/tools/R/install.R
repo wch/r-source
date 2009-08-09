@@ -1937,7 +1937,7 @@
     }
 }
 
-## dir is the package top-level directory
+## dir is the package top-level source directory
 .write_CHM_hhp <- function(dir, pkg, internals)
 {
     if(missing(pkg)) pkg <- basename(dir)
@@ -1961,21 +1961,12 @@
     	writeLines(paste(unique(internals$File), ".html", sep=""), con)
 }
 
-.setPERL <- function() {
-    pperl <- function(lib) paste(file.path(R.home("share"), "perl"), lib,
-				 sep = .Platform$path.sep)
-    if (nzchar(perllib <- Sys.getenv("PERL5LIB")))
-	Sys.setenv(PERL5LIB = pperl(perllib))
-    else
-	Sys.setenv(PERLLIB = pperl(Sys.getenv("PERLLIB")))
-}
-
 ### * .convertRdfiles
 
 .convertRdfiles <-
 function(dir, outDir, types = c("txt", "html", "latex", "example"))
 {
-    showtype <- function() {
+    showtype <- function(type) {
     	if (!shown) {
             nc <- nchar(bf)
             if(nc < 28L)
@@ -1984,7 +1975,8 @@ function(dir, outDir, types = c("txt", "html", "latex", "example"))
                 cat("    ", bf, "\n", rep(" ", 34L), sep = "")
             shown <<- TRUE
         }
-        cat(type, rep(" ", 8L - nchar(type)), sep="")
+        ## 'example' is always last, so 5+space
+        cat(type, rep(" ", 6L - nchar(type)), sep="")
     }
 
     dirname <- c("help", "html", "latex", "R-ex", "chm")
@@ -1997,132 +1989,90 @@ function(dir, outDir, types = c("txt", "html", "latex", "example"))
     pkg <- desc["Package"]
 
     for(type in types)
-        dir.create(file.path(outDir, dirname[type]),
-                   showWarnings = FALSE)
+        if(type != "chm")
+            dir.create(file.path(outDir, dirname[type]), showWarnings = FALSE)
 
     cat("  converting help for package ", sQuote(pkg), "\n", sep="")
 
-    if(TRUE) {
+    ## FIXME: perl version cleaned up non-matching converted files
 
-        ## FIXME: perl version cleans up non-matching converted files
+    ## FIXME: add this lib to lib.loc?
+    Links <- if ("html" %in% types) findHTMLlinks(outDir) else ""
 
-        ## FIXME: add this lib to lib.loc?
-        Links <- if ("html" %in% types) findHTMLlinks(outDir) else ""
+    ## Rd objects should already have been installed.
+    db <- tryCatch(Rd_db(basename(outDir), lib.loc = dirname(outDir)),
+                   error = function(e) NULL)
+    ## If not, we build the Rd db from the sources:
+    if(is.null(db)) db <- Rd_db(dir = dir)
 
-        ## Rd objects should already have been installed.
-        db <- tryCatch(Rd_db(basename(outDir),
-                             lib.loc = dirname(outDir)),
-                       error = function(e) NULL)
-        ## If not, we build the Rd db from the sources:
-        if(is.null(db))
-            db <- Rd_db(dir = dir)
+    files <- names(db)
 
-        files <- names(db)
+    .whandler <- .make_Rd_whandler(invokeRestart("muffleWarning"))
+    .ehandler <- .make_Rd_ehandler(unlink(ff))
+    .convert <- function(expr)
+        withCallingHandlers(tryCatch(expr, error = .ehandler),
+                            warning = .whandler)
 
-        .whandler <- .make_Rd_whandler(invokeRestart("muffleWarning"))
-        .ehandler <- .make_Rd_ehandler(unlink(ff))
-        .convert <- function(expr)
-            withCallingHandlers(tryCatch(expr, error = .ehandler),
-                                warning = .whandler)
+    for(f in files) {
+        Rd <- db[[f]]
+        bf <- sub("\\.[Rr]d$", "", basename(f))
 
-        for(f in files) {
-            Rd <- db[[f]]
-            bf <- sub("\\.[Rr]d$", "", basename(f))
+        shown <- FALSE
+        environment(.ehandler)$.messages <- character()
+        environment(.whandler)$.messages <- character()
 
-            shown <- FALSE
-            environment(.ehandler)$.messages <- character()
-            environment(.whandler)$.messages <- character()
-
-            if ("txt" %in% types) {
-                type <- "txt"
-                ff <- file.path(outDir, dirname[type],
-                                paste(bf, ext[type], sep = ""))
-                if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
-                    showtype()
-                    .convert(.saveRDS(Rd, ff))
-                }
-            }
-            if("html" %in% types) {
-                type <- "html"
-                ff <- file.path(outDir, dirname[type],
-                                paste(bf, ext[type], sep = ""))
-                if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
-                    showtype()
-                    .convert(Rd2HTML(Rd, ff, package = pkg,
-                                     Links = Links))
-                }
-            }
-            if ("latex" %in% types) {
-                type <- "latex"
-                ff <- file.path(outDir, dirname[type],
-                                paste(bf, ext[type], sep = ""))
-                if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
-                    showtype()
-                    .convert(Rd2latex(Rd, ff))
-                }
-            }
-            if("chm" %in% types) {
-            	type <- "chm"
-            	ff <- file.path(dir, dirname[type],
-            			paste(bf, ext[type], sep=""))
-                if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
-                    showtype()
-                    .convert(Rd2HTML(Rd, ff, package = pkg,
-                                     Links = Links, CHM = TRUE))
-                }
-            }
-            if ("example" %in% types) {
-                type <- "example"
-                ff <- file.path(outDir, dirname[type],
-                                paste(bf, ext[type], sep = ""))
-                if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
-                    .convert(Rd2ex(Rd, ff))
-                    if(file_test("-f", ff))
-                        showtype()
-                }
-            }
-            if(shown) {
-                cat("\n")
-                if(length(.messages <-
-                          c(environment(.ehandler)$.messages,
-                            environment(.whandler)$.messages)))
-                    writeLines(unique(.messages))
+        if ("txt" %in% types) {
+            type <- "txt"
+            ff <- file.path(outDir, dirname[type],
+                            paste(bf, ext[type], sep = ""))
+            if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
+                showtype("rds")
+                .convert(.saveRDS(Rd, ff))
             }
         }
-    }
-    else { ## no longer used
-        ver <- desc["Version"]
-        enc <- desc["encoding"]
-        if(is.na(enc)) enc <- "unknown"
-        cmd <- paste(R.home(), "/bin/Rdconv -t ", sep = "")
-
-        .setPERL()
-
-        for (f in files) {
-            Links <- findHTMLlinks(outDir)
-            bf <-  sub("\\.[Rr]d$", "", basename(f))
-            need <- character()
-            for(type in types) {
-                ff <- file.path(outDir, dirname[type],
-                                paste(bf, ext[type], sep = ""))
-                if(!file.exists(ff) || file_test("-nt", f, ff)) {
-                    this <- paste(cmd, type, " -o ", ff, " --package=", pkg,
-                                  " --version=", ver,
-                                  " --encoding=", enc,
-                                  " ", f, sep="")
-                    ##print(this)
-                    res <- system(this)
-                    if(res) {
-                        stop("problem in converting ", bf)
-                    }
-                    if(file.exists(ff)) need <- c(need, type)
-                }
+        if("html" %in% types) {
+            type <- "html"
+            ff <- file.path(outDir, dirname[type],
+                            paste(bf, ext[type], sep = ""))
+            if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
+                showtype("html")
+                .convert(Rd2HTML(Rd, ff, package = pkg, Links = Links))
             }
-            if(length(need)) {
-                cat("    ", bf, rep(" ", max(0, 30-nchar(bf))),
-                    paste(need, collapse=" \t"),
-                    "\n",sep="")
+        }
+        if ("latex" %in% types) {
+            type <- "latex"
+            ff <- file.path(outDir, dirname[type],
+                            paste(bf, ext[type], sep = ""))
+            if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
+                showtype(type)
+                .convert(Rd2latex(Rd, ff))
             }
+        }
+        if("chm" %in% types) {
+            type <- "chm"
+            ff <- file.path(dir, dirname[type],
+                            paste(bf, ext[type], sep=""))
+            if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
+                showtype(type)
+                .convert(Rd2HTML(Rd, ff, package = pkg,
+                                 Links = Links, CHM = TRUE))
+            }
+        }
+        if ("example" %in% types) {
+            type <- "example"
+            ff <- file.path(outDir, dirname[type],
+                            paste(bf, ext[type], sep = ""))
+            if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
+                .convert(Rd2ex(Rd, ff))
+                if(file_test("-f", ff)) showtype(type)
+            }
+        }
+        if(shown) {
+            cat("\n")
+            if(length(.messages <-
+                      c(environment(.ehandler)$.messages,
+                        environment(.whandler)$.messages)))
+                writeLines(unique(.messages))
         }
     }
 }

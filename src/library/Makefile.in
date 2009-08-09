@@ -28,7 +28,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 ## beware there is a bootstrapping problem here: tools uses tools to
 ## dump its namespace. So it works initially, but not to update.
 ## When base is made we need to use 'date' to set the timestamp,
-## so we remake it before dumpung the DESCRIPTION files.
+## so we remake it before dumping the DESCRIPTION files.
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@for pkg in profile $(R_PKGS_BASE); do \
