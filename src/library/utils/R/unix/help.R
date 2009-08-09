@@ -53,14 +53,10 @@ function(file, topic)
 {
     con <- tempfile()
     on.exit(unlink(con))
-    cat("\\documentclass[",
-        getOption("papersize"),
-        "paper]{article}",
-        "\n",
-        "\\usepackage[",
-        Sys.getenv("R_RD4DVI"),
-        "]{Rd}",
-        "\n",
+    cat("\\documentclass[", getOption("papersize"), "paper]{article}\n",
+        "\\usepackage[", Sys.getenv("R_RD4DVI"), "]{Rd}\n",
+        ## FIXME: look in the file to check this is right
+        "\\usepackage[latin1]{inputenc}\n",
         "\\InputIfFileExists{Rhelp.cfg}{}{}\n",
         "\\begin{document}\n",
         file = con, sep = "")
