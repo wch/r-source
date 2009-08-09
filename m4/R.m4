@@ -3408,7 +3408,7 @@ AC_DEFUN([R_C99_COMPLEX],
     for ac_func in cexp clog csqrt cpow ccos csin ctan cacos casin catan \
 	 	   ccosh csinh ctanh cacosh casinh catanh
     do
-      R_CHECK_DECL($ac_func, , [r_cv_c99_complex=no], [#include<complex.h>])dnl
+      R_CHECK_DECL($ac_func, , [r_cv_c99_complex=no], [#include<complex.h>])
     done
   fi
   dnl Now check if the representation is the same as Rcomplex
@@ -3480,7 +3480,7 @@ AC_DEFUN([R_CHECK_FUNCS],
 for ac_func in $1
 do
 R_CHECK_DECL($ac_func,
-             [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_$ac_func]), 1)], , [$2])dnl
+             [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_$ac_func]), 1)], , [$2])
 done
 ])# R_CHECK_FUNCS
 
