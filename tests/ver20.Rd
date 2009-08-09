@@ -19,7 +19,7 @@
   
   In code, all that needs to be escaped is percent, backslash and unpaired
   braces: \code{\% \\ \{}. Unescaped: \code{$ # _ ^ ~ < > |}, and as a
-  pair, \code{{...}}.  If we escape: \code{ \a \b \_ \# \$ \& \{ \} \\ }
+  pair, \code{{...}}.  If we escape: \code{ \_ \# \$ \& \{ \} \\ }
   And some backslashes: \code{\ \\ \\\ \\\\} should
   give zero, one, one, two backslashes.
 
@@ -54,7 +54,5 @@
 }
 
 \examples{
-Code such as \code{foo} inside \\examples iused to be garbled.
-
 "\\\\r\\\\n"
 }

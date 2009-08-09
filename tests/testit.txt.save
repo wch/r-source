@@ -1,19 +1,20 @@
 testit                package:unknown                R Documentation
 
-
+_A_n _R_d _R_e_g_r_e_s_s_i_o_n _T_e_s_t
 
 _U_s_a_g_e:
 
      \x \y %{}
 
      foo(x, y)
-     a link
 
 _D_e_t_a_i_l_s:
 
-     Escaped backslash '\x'. Unescaped backslash '\y'.
+     Escaped backslash '\x'.
 
      '%{}'
+
+     a link
 
      var in text.
 
@@ -21,7 +22,6 @@ _D_e_t_a_i_l_s:
 
 
        Escaped backslash \x.
-       Unescaped backslash \y.
 
        %{}
 
@@ -33,8 +33,6 @@ _D_e_t_a_i_l_s:
 _E_x_a_m_p_l_e_s:
 
      \x
-     \y
      %{}
-     a link
      foo(x, y)
 

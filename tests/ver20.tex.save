@@ -1,31 +1,35 @@
 \HeaderA{ver11}{Johnson \& Johnson,  \$ \_  \##\# \textasciicircum{} \textasciitilde{}}{ver11}
+\begin{Description}\relax
+This is the description
+\end{Description}
+%
 \begin{Arguments}
 \begin{ldescription}
 \item[\code{foo}] item 1
 \item[\code{bar}] space, the item 2
-Warning: invalid whitespace before brace in file 'ver10.Rd' at ' \item{bah} {newline, then item 3}'
 \item[\code{bah}] newline, then item 3
 \end{ldescription}
 \end{Arguments}
+%
 \begin{Details}\relax
-\R{} \R{} \bsl{}R \Alpha\beta\Gamma
+\R{} \R{} \bsl{}R \eqn{\Alpha\beta\Gamma}{}
 
 In code, all that needs to be escaped is percent, backslash and unpaired
 braces: \code{\% \bsl{} \{}. Unescaped: \code{\$ \# \_ \textasciicircum{} \textasciitilde{} < > |}, and as a
-pair, \code{\{...\}}.  If we escape: \code{ \bsl{}a \bsl{}b \_ \# \$ \& \{ \} \bsl{} }
+pair, \code{\{...\}}.  If we escape: \code{ \_ \# \$ \& \{ \} \bsl{} }
 And some backslashes: \code{\bsl{} \bsl{} \bsl{}\bsl{} \bsl{}\bsl{}} should
 give zero, one, one, two backslashes.
 
 How about \ (that is backslash space) in text?
 
-Elsewhere, \{ \} \% \bsl{} need to be escaped, but not $ \# \_ \textasciicircum{} \textasciitilde{} \textless{} \textgreater{} \textbar{} .
-Let's try that again in \code{\bsl{}samp}: \samp{ \{ \} \% \bsl{} $ \# \_ \textasciicircum{} \textasciitilde{} \textless{} \textgreater{} \textbar{}}.
+Elsewhere, \{ \} \% \bsl{} need to be escaped, but not \$ \# \_ \textasciicircum{} \textasciitilde{} \textless{} \textgreater{} \textbar{} .
+Let's try that again in \code{\bsl{}samp}: \samp{ \{ \} \% \bsl{} \$ \# \_ \textasciicircum{} \textasciitilde{} \textless{} \textgreater{} \textbar{}}.
 And if we do escape: \$ \# \_ , and with three backslashes, \bsl{}\bsl{}\#.
 
 \deqn{a < b > c | d, x^y}{}
 \deqn{\$k > \#k, x_y, x\_y}{}
 
-group-weighting from $[N\_iP\_i(1-P\_i)]$
+group-weighting from \$[N\_iP\_i(1-P\_i)]\$
 
 \begin{alltt}
     \% a
@@ -35,21 +39,18 @@ group-weighting from $[N\_iP\_i(1-P\_i)]$
     \bsl{}\{
 \end{alltt}
 \end{Details}
+%
 \begin{Section}{URLs and emails}
 URLs need to be verbatim:  \url{testit ~^_$#<>|}.
 
 Markus Kuhn, \dQuote{ASCII and Unicode quotation marks}.
 \url{http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html}
 
-An escape is needed in \email{Micah\_Altman@harvard.edu} in \R{} \textless{} 2.9.0
+No escape is needed in \email{Micah\_Altman@harvard.edu}
 \end{Section}
+%
 \begin{Examples}
 \begin{ExampleCode}
-Warning: \code inside \examples in file 'ver10.Rd'
-
-Code such as \code{foo} inside \examples iused to be garbled.
-
 "\\r\\n"
 \end{ExampleCode}
 \end{Examples}
-

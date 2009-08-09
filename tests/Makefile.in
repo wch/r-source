@@ -21,9 +21,8 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.common \
 	$(INSTFILES) gct-foot.R reg-win.R \
 	testit.Rd testit.txt.save testit.html.save \
-	testit.tex.save testit-Ex.R.save ver20.Rd \
-	ver10.Rd ver10.txt.save ver10.html.save ver10.tex.save ver10-Ex.R.save \
-	ver11.Rd ver11.txt.save ver11.html.save ver11.tex.save ver11-Ex.R.save \
+	testit.tex.save testit-Ex.R.save \
+	ver20.Rd ver20.txt.save ver20.html.save ver20.tex.save ver20-Ex.R.save \
 	R-intro.Rout.save
 
 SUBDIRS = Embedding Examples Native
@@ -79,8 +78,7 @@ clean:
 	  R-exts.* R-intro.R R-intro.Rout \
 	  FALSE* .R .tex mirrors.html PACKAGES*
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R
-	-@rm -f ver10.txt ver10.html ver10.tex ver10-Ex.R
-	-@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R
+	-@rm -f ver20.txt ver20.html ver20.tex ver20-Ex.R
 	-@rm -rf anRpackage myTst* myLib
 distclean: clean
 	-@for d in $(SUBDIRS); do \

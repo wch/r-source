@@ -216,32 +216,24 @@ test-Segfault:
 	-@rm -f data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots* PACKAGES PACKAGES.gz FALSE-package.Rd FALSE.* ./-Ex.R
 
 
-test-Rd: $(srcdir)/testit.Rd $(srcdir)/ver10.Rd $(srcdir)/ver11.Rd
+test-Rd: $(srcdir)/testit.Rd $(srcdir)/ver20.Rd
 	@$(ECHO) "testing Rd conversion"
 	@$(RDCONV) -t txt $(srcdir)/testit.Rd > testit.txt
-	@diff -bw testit.txt $(srcdir)/testit.txt.save
+	-@diff -bw testit.txt $(srcdir)/testit.txt.save
 	@$(RDCONV) -t html $(srcdir)/testit.Rd > testit.html
-	@diff -bw testit.html $(srcdir)/testit.html.save
+	-@diff -bw testit.html $(srcdir)/testit.html.save
 	@$(RDCONV) -t latex $(srcdir)/testit.Rd > testit.tex
-	@diff -bw testit.tex $(srcdir)/testit.tex.save
+	-@diff -bw testit.tex $(srcdir)/testit.tex.save
 	@$(RDCONV) -t example $(srcdir)/testit.Rd > testit-Ex.R
 	@diff -bw testit-Ex.R $(srcdir)/testit-Ex.R.save
-	@$(RDCONV) -t txt $(srcdir)/ver11.Rd > ver11.txt
-	@diff -bw ver11.txt $(srcdir)/ver11.txt.save
-	@$(RDCONV) -t html $(srcdir)/ver11.Rd > ver11.html
-	@diff -bw ver11.html $(srcdir)/ver11.html.save
-	@$(RDCONV) -t latex $(srcdir)/ver11.Rd > ver11.tex
-	@diff -bw ver11.tex $(srcdir)/ver11.tex.save
-	@$(RDCONV) -t example $(srcdir)/ver11.Rd > ver11-Ex.R
-	@diff -bw ver11-Ex.R $(srcdir)/ver11-Ex.R.save
-	@$(RDCONV) -t txt $(srcdir)/ver10.Rd > ver10.txt 2>&1
-	@diff -bw ver10.txt $(srcdir)/ver10.txt.save
-	@$(RDCONV) -t html $(srcdir)/ver10.Rd > ver10.html 2>&1
-	@diff -bw ver10.html $(srcdir)/ver10.html.save
-	@$(RDCONV) -t latex $(srcdir)/ver10.Rd > ver10.tex 2>&1
-	@diff -bw ver10.tex $(srcdir)/ver10.tex.save
-	@$(RDCONV) -t example $(srcdir)/ver10.Rd > ver10-Ex.R
-	@diff -bw ver10-Ex.R $(srcdir)/ver10-Ex.R.save
+	@$(RDCONV) -t txt $(srcdir)/ver20.Rd > ver20.txt
+	-@diff -bw ver20.txt $(srcdir)/ver20.txt.save
+	@$(RDCONV) -t html $(srcdir)/ver20.Rd > ver20.html
+	-@diff -bw ver20.html $(srcdir)/ver20.html.save
+	@$(RDCONV) -t latex $(srcdir)/ver20.Rd > ver20.tex
+	-@diff -bw ver20.tex $(srcdir)/ver20.tex.save
+	@$(RDCONV) -t example $(srcdir)/ver20.Rd > ver20-Ex.R
+	-@diff -bw ver20-Ex.R $(srcdir)/ver20-Ex.R.save
 
 test-DocFiles:
 	@$(ECHO) "checking Rd usage sections"
