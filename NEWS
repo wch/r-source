@@ -62,6 +62,8 @@ BUG FIXES
     o	gsub() in a non-UTF-8 locale with a marked UTF-8 input
 	could in rare circumstances overrun a buffer and so segfault.
 
+    o	R CMD Rdconv --version was not working correctly.
+
 
 
 		CHANGES IN R VERSION 2.9.1

@@ -45,7 +45,7 @@ $OSdir = $R::Vars::OSTYPE;
 
 my @knownoptions = ("debug|d", "type|t:s", "h|help", "v|version",
 		    "o|output:s", "os|OS=s" => \$OSdir, "encoding=s",
-		    "package=s", "version=s");
+		    "package=s");
 GetOptions (@knownoptions) || &usage();
 &R_version($name, $version) if $opt_v;
 &usage() if $opt_h;
@@ -105,7 +105,6 @@ Options:
   -t, --type=TYPE	convert to format TYPE
   --encoding=enc        use 'enc' as the default encoding
   --package=pkg         use 'pkg' as the package name
-  --version=version     use 'version' as the package version
   -o, --output=OUT	use 'OUT' as the output file
       --os=NAME		use OS subdir 'NAME' (unix or windows)
       --OS=NAME		the same as '--os'
