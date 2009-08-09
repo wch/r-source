@@ -1976,7 +1976,7 @@ function(dir, outDir, types = c("txt", "html", "latex", "example"))
             shown <<- TRUE
         }
         ## 'example' is always last, so 5+space
-        cat(type, rep(" ", 6L - nchar(type)), sep="")
+        cat(type, rep(" ", max(0L, 6L - nchar(type))), sep="")
     }
 
     dirname <- c("help", "html", "latex", "R-ex", "chm")
