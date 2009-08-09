@@ -11,11 +11,11 @@ subdir = src/scripts
 include $(top_builddir)/Makeconf
 
 ## don't add '#! R_SHELL' for scripts intend to be run by 'R CMD script'
-SCRIPTS_S = BATCH COMPILE INSTALL LINK REMOVE Rd2dvi Rd2txt \
+SCRIPTS_S = BATCH COMPILE INSTALL LINK REMOVE Rd2dvi Rd2txt Rdconv \
   SHLIB Stangle Sweave config javareconf rtags
 ## <NOTE>
 ## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.
-SCRIPTS_B_IN = Rcmd.in Rdconv.in Rdiff.in Rprof.in Sd2Rd.in \
+SCRIPTS_B_IN = Rcmd.in Rdiff.in Rprof.in Sd2Rd.in \
   build.in check.in f77_f2c.in mkinstalldirs.in pager.in
 SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 ## </NOTE>
@@ -40,8 +40,6 @@ R: $(SCRIPTS_B) R.fe
 ## rules ('%:%.in') are not portable, and some versions of Make do not
 ## allow separated dependencies for single suffix rules.
 Rcmd: $(srcdir)/Rcmd.in $(top_builddir)/config.status
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-Rdconv: $(srcdir)/Rdconv.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 Rdiff: $(srcdir)/Rdiff.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@

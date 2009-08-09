@@ -2448,7 +2448,6 @@ AC_CONFIG_FILES(
   src/scripts/Makefile
   src/scripts/R.sh
   src/scripts/Rcmd
-  src/scripts/Rdconv
   src/scripts/Rdiff
   src/scripts/Rprof
   src/scripts/Sd2Rd

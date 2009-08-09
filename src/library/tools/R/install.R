@@ -2215,17 +2215,17 @@ function(name="", version = "0.0")
                       outputEncoding = enc)
            },
            "html" = {
-               if (nzchar(enc)) enc <- "UTF-8"
+               if (!nzchar(enc)) enc <- "UTF-8"
                Rd2HTML(files, out, package = pkg, defines = os,
                        outputEncoding = enc)
            },
            "latex" = {
-               if (nzchar(enc)) enc <- "latin1"
+               if (!nzchar(enc)) enc <- "latin1"
                Rd2latex(files, out, defines = os,
                         outputEncoding = enc)
            },
            "example" = {
-               if (nzchar(enc)) enc <- "UTF-8"
+               if (!nzchar(enc)) enc <- "UTF-8"
                Rd2ex(files, out, defines=os, outputEncoding=enc)
            },
            stop("no 'type' specified", call. = FALSE))
