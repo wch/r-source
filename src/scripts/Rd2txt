@@ -5,13 +5,13 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="Rd2txt: ${R_VERSION} (r${version})
 
-Copyright (C) 2000 The R Core Development Team.
+Copyright (C) 2000-9 The R Core Development Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
 usage="Usage: R CMD Rd2txt [options] file
 
-Generate plain text output from the Rd source specified by file.
+Generate plain text output on stdout from the Rd source specified by 'file'.
 
 Options:
   -h, --help		print short help message and exit
@@ -26,7 +26,8 @@ case "${1}" in
     echo "${version}"; exit 0 ;;
 esac
 
-exec ${R_HOME}/bin/Rdconv -t txt "${1}"
+echo "invisible(tools::Rd2txt(\"$1\"))" \
+| R_DEFAULT_PACKAGES=NULL "${R_HOME}/bin/R"  --no-restore --slave --args
 
 ### Local Variables: ***
 ### mode: sh ***

@@ -2116,6 +2116,122 @@ function(name="", version = "0.0")
                  'END'))
 }
 
+### * .Rdconv
+
+## replacement R code for Perl-based R CMD Rdconv
+
+.Rdconv <- function(args = NULL)
+{
+    Usage <- function() {
+        cat("Usage: R CMD Rdconv [options] FILE",
+            "",
+            "Convert R documentation in FILE to other formats such as plain text,",
+            "HTML or LaTeX.",
+            "",
+            "Options:",
+            "  -h, --help		print short help message and exit",
+            "  -v, --version		print version info and exit",
+            "  -t, --type=TYPE	convert to format TYPE",
+            "  --encoding=enc        use 'enc' as the output encoding",
+            "  --package=pkg         use 'pkg' as the package name",
+            "  -o, --output=OUT	use 'OUT' as the output file",
+            "      --os=NAME		assume OS 'NAME' (unix or windows)",
+            "      --OS=NAME		the same as '--os'",
+            "",
+            "Possible format specifications are 'txt' (plain text), 'html', 'latex',",
+            "and 'example' (extract R code in the examples).",
+            "",
+            "The default is to send output to stdout, which is also given by '-o -'.",
+            "Using '-o \"\"' will choose an output filename by removing a '.Rd'",
+            "extension from FILE and adding a suitable extension.",
+            "",
+            "Report bugs to <r-bugs@r-project.org>.", sep = "\n")
+    }
+
+    options(showErrorCalls=FALSE)
+    files <- character(0)
+    type <- "unknown"
+    enc <- ""
+    pkg <- ""
+    out <- NULL
+    os <- ""
+
+    if(is.null(args)) {
+        args <- commandArgs(TRUE)
+        ## it seems that splits on spaces, so try harder.
+        args <- paste(args, collapse=" ")
+        args <- strsplit(args,'nextArg', fixed = TRUE)[[1]][-1]
+    }
+
+    while(length(args)) {
+        a <- args[1]
+        if (a %in% c("-h", "--help")) {
+            Usage()
+            q("no", runLast = FALSE)
+        }
+        else if (a %in% c("-v", "--version")) {
+            cat("Rdconv: ",
+                R.version[["major"]], ".",  R.version[["minor"]],
+                " (r", R.version[["svn rev"]], ")\n", sep = "")
+            cat("",
+                "Copyright (C) 1997-2009 The R Core Development Team.",
+                "This is free software; see the GNU General Public License version 2",
+                "or later for copying conditions.  There is NO warranty.",
+                sep="\n")
+            q("no", runLast = FALSE)
+        } else if (a == "-t") {
+            if (length(args) >= 2) {type <- args[2]; args <- args[-1]}
+            else stop("-t option without value", call. = FALSE)
+        } else if (substr(a, 1, 7) == "--type=") {
+            type <- substr(a, 8, 1000)
+        } else if (substr(a, 1, 10) == "--encoding=") {
+            enc <- substr(a, 11, 1000)
+        } else if (substr(a, 1, 10) == "--package=") {
+            pkg <- substr(a, 11, 1000)
+        } else if (a == "-o") {
+            if (length(args) >= 2) {out <- args[2]; args <- args[-1]}
+            else stop("-o option without value", call. = FALSE)
+        } else if (substr(a, 1, 9) == "--output=") {
+            out <- substr(a, 10, 1000)
+        } else if (substr(a, 1, 5) %in% c("--os=", "--OS=")) {
+            os <- substr(a, 6, 1000)
+        } else if (substr(a, 1, 1) == "-") {
+            message("Warning: unknown option ", sQuote(a))
+        } else files <- c(files, a)
+        args <- args[-1]
+    }
+    if (length(files) != 1L)
+        stop("exactly one Rd file must be specified", call. = FALSE)
+    if (is.character(out) && !nzchar(out)) {
+        ## choose out from filename
+        bf <- sub("\\.[Rr]d$", "", file)
+        exts <- c(txt=".txt", html=".html", latex=".tex", exmaple=".R")
+        out <- paste(bf,  exts[type], sep = "")
+    } else if (is.null(out)) out <- ""
+    if (!nzchar(os)) os <- .Platform$OS.type
+    switch(type,
+           "txt" = {
+               Rd2txt(files, out, package=pkg, defines=os,
+                      outputEncoding = enc)
+           },
+           "html" = {
+               if (nzchar(enc)) enc <- "UTF-8"
+               Rd2HTML(files, out, package = pkg, defines = os,
+                       outputEncoding = enc)
+           },
+           "latex" = {
+               if (nzchar(enc)) enc <- "latin1"
+               Rd2latex(files, out, defines = os,
+                        outputEncoding = enc)
+           },
+           "example" = {
+               if (nzchar(enc)) enc <- "UTF-8"
+               Rd2ex(files, out, defines=os, outputEncoding=enc)
+           },
+           stop("no 'type' specified", call. = FALSE))
+    invisible()
+}
+
 ### * .Rd2dvi
 
 .Rd2dvi <-
