@@ -89,10 +89,9 @@
             "  -l, --library=LIB	install packages to library tree LIB",
             "      --no-configure    do not use the package's configure script",
             "      --no-docs		do not build and install documentation",
-            "      --no-text		do not build text help",
             "      --no-html		do not build HTML help",
-            "      --no-latex      	do not build LaTeX help",
-            "      --no-example   	do not install R code for help examples",
+            "      --latex      	install LaTeX help",
+            "      --no-example   	        do not install R code for help examples",
             "      --use-zip-data	collect data files in zip archive",
             "      --use-zip-help	collect help and examples into zip archives",
             "      --use-zip		combine '--use-zip-data' and '--use-zip-help'",
@@ -941,7 +940,7 @@
     debug <- FALSE
     build_text <- TRUE
     build_html <- TRUE
-    build_latex <- TRUE
+    build_latex <- FALSE
     build_example <- TRUE
     build_chm <- WINDOWS
     use_configure <- TRUE
@@ -987,18 +986,14 @@
             shargs <- c(shargs, "--preclean")
         } else if (a %in% c("-d", "--debug")) {
             debug <- TRUE
-        } else if (a == "--with-package-versions") {
-            stop("Use of --with-package-versions is defunct", call. = FALSE)
         } else if (a == "--no-configure") {
             use_configure <- FALSE
         } else if (a == "--no-docs") {
             build_text <- build_html <- build_latex <- build_example <- build_chm <- FALSE
-        } else if (a == "--no-text") {
-            build_text <- FALSE
         } else if (a == "--no-html") {
             build_html <- FALSE
-        } else if (a == "--no-latex") {
-            build_latex <- FALSE
+        } else if (a == "--latex") {
+            build_latex <- TRUE
         } else if (a == "--no-example") {
             build_example <- FALSE
         } else if (a == "--no-chm") {
@@ -1166,7 +1161,7 @@
         use_configure <- FALSE
         build_text <- TRUE
         build_html <- FALSE
-        build_latex <- TRUE
+        build_latex <- FALSE
         build_example <- FALSE
         build_chm <- FALSE
     }
@@ -1498,33 +1493,52 @@
     latexEncodings <- character(0) # Record any encodings used in the output
 
     ## First check for a latex dir.
+    ## Second guess is this is a >= 2.10.0 package with stored .rds files.
     ## If it does not exist, guess this is a source package.
     latexdir <- file.path(pkgdir, "latex")
     if (!file_test("-d", latexdir)) {
-        files <- Sys.glob(file.path(pkgdir, "*.[Rr]d"))
-        if (!length(files)) {
-            ## is this a source package?  That has man/*.Rd files.
-            files <- Sys.glob(file.path(pkgdir, "man", "*.[Rr]d"))
-            if (!length(files))
-                stop("this package does not have either a ", sQuote("latex"),
-                 " or a ", sQuote("man"), " directory")
-            if (is.null(extraDirs)) extraDirs <- .Platform$OS.type
-            for(e in extraDirs)
-                files <- c(files,
-                           Sys.glob(file.path(pkgdir, "man", e, "*.[Rr]d")))
-        }
-        latexdir <- tempfile("ltx")
-        dir.create(latexdir)
-        message("Converting Rd files to LaTeX ...")
-        cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
-                     encoding, sep="")
-        for(f in files) {
-            cat("  ", basename(f), "\n", sep="")
-            out <-  sub("\\.[Rr]d$", ".tex", basename(f))
-            latexEncodings <- c(latexEncodings,
-                                attr(Rd2latex(f, file.path(latexdir, out),
-                                              encoding=encoding),
-                                     "latexEncoding"))
+        Rdsfiles <- Sys.glob(file.path(pkgdir, "help/*.rds"))
+        if(length(Rdsfiles)) {
+            ## So convert them
+            latexdir <- tempfile("ltx")
+            dir.create(latexdir)
+            message("Converting parsed Rd files to LaTeX ...")
+            for(f in Rdsfiles) {
+                cat("  ", basename(f), "\n", sep="")
+                out <-  sub("\\.rds$", ".tex", basename(f))
+                latexEncodings <- c(latexEncodings,
+                                    attr(Rd2latex(.readRDS(f),
+                                                  file.path(latexdir, out),
+                                                  encoding=encoding),
+                                         "latexEncoding"))
+            }
+        } else {
+            files <- Sys.glob(file.path(pkgdir, "*.[Rr]d"))
+            if (!length(files)) {
+                ## is this a source package?  That has man/*.Rd files.
+                files <- Sys.glob(file.path(pkgdir, "man", "*.[Rr]d"))
+                if (!length(files))
+                    stop("this package does not have either a ", sQuote("latex"),
+                         " or a (source) ", sQuote("man"), " directory",
+                         domain=NA)
+                if (is.null(extraDirs)) extraDirs <- .Platform$OS.type
+                for(e in extraDirs)
+                    files <- c(files,
+                               Sys.glob(file.path(pkgdir, "man", e, "*.[Rr]d")))
+            }
+            latexdir <- tempfile("ltx")
+            dir.create(latexdir)
+            message("Converting Rd files to LaTeX ...")
+            cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
+                         encoding, sep="")
+            for(f in files) {
+                cat("  ", basename(f), "\n", sep="")
+                out <-  sub("\\.[Rr]d$", ".tex", basename(f))
+                latexEncodings <- c(latexEncodings,
+                                    attr(Rd2latex(f, file.path(latexdir, out),
+                                                  encoding=encoding),
+                                         "latexEncoding"))
+            }
         }
     }
     ## they might be zipped up
@@ -1578,7 +1592,7 @@
     if(asChapter)
         cat("\\clearpage\n", file = outcon)
 
-    latexEncodings
+    invisible(latexEncodings)
 }
 
 ## replacement for tools/Rdnewer.pl
@@ -1964,7 +1978,7 @@
 ### * .convertRdfiles
 
 .convertRdfiles <-
-function(dir, outDir, types = c("txt", "html", "latex", "example"))
+function(dir, outDir, types = c("txt", "html", "example"))
 {
     showtype <- function(type) {
     	if (!shown) {

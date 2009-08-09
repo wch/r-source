@@ -17,16 +17,18 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	- Packages that were installed by R-devel after 2009-08-09
 	  should not be used with earlier versions of R, and some
 	  aspects of package help will be missing if there are so
-	  used.  (Currently text help, but eventually latex help and
-	  the runable examples.)
+	  used.  (Currently text and latex help, eventually also
+	  the run-able examples.)
 
-	- Text help is converted 'on demand': this will soon apply to
-	  latex help and examples.
+	- Text help, latex help and examples for packages installed
+          under the new system is converted on-demand from stored
+          parsed Rd files.  (Conversions stored in earlier
+          installations are still used.)
 
 	The converters are still being polished and produce incorrect
 	latex or HTML conersions for ca 20 packages.  However, they
-	correct fewer errors in the inputs and most errors are the
-	result of errors in package sources.
+	correct fewer errors in the inputs and most errors seen have
+	been the result of errors in package sources.
 
 
 NEW FEATURES

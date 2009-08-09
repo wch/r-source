@@ -166,31 +166,33 @@ testInstalledPackage <-
     owd <- setwd(outDir)
     on.exit(setwd(owd))
 
-    if (1 %in% types && file_test("-d", exdir)) {
+    if (1 %in% types) { # && file_test("-d", exdir)) {
         message("\nCollecting examples for package ", sQuote(pkg))
-        Rfile <- .createExdotR(pkg, exdir)
-        outfile <- paste(pkg, "-Ex.Rout", sep = "")
-        failfile <- paste(outfile, "fail", sep = "." )
-        savefile <- paste(outfile, "prev", sep = "." )
-        if (file.exists(outfile)) file.rename(outfile, savefile)
-        unlink(failfile)
-        message("Running examples in package ", sQuote(pkg))
-        ## Create as .fail in case this R session gets killed
-        cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
-                     "CMD BATCH --vanilla --no-timing",
-                     shQuote(Rfile), shQuote(failfile))
-        if (.Platform$OS.type == "windows") Sys.setenv(R_LIBS="")
-        else cmd =paste("R_LIBS=", cmd)
-        res <- system(cmd)
-        if (res) return(invisible(1L)) else file.rename(failfile, outfile)
+        Rfile <- .createExdotR(pkg, pkgdir)
+        if (length(Rfile)) {
+            outfile <- paste(pkg, "-Ex.Rout", sep = "")
+            failfile <- paste(outfile, "fail", sep = "." )
+            savefile <- paste(outfile, "prev", sep = "." )
+            if (file.exists(outfile)) file.rename(outfile, savefile)
+            unlink(failfile)
+            message("Running examples in package ", sQuote(pkg))
+            ## Create as .fail in case this R session gets killed
+            cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
+                         "CMD BATCH --vanilla --no-timing",
+                         shQuote(Rfile), shQuote(failfile))
+            if (.Platform$OS.type == "windows") Sys.setenv(R_LIBS="")
+            else cmd <- paste("R_LIBS=", cmd)
+            res <- system(cmd)
+            if (res) return(invisible(1L)) else file.rename(failfile, outfile)
 
-        savefile <- paste(outfile, "prev", sep = "." )
-        if (file.exists(savefile)) {
-            message("  Comparing ", sQuote(outfile), " to ",
-                    sQuote(basename(savefile)), " ...", appendLF = FALSE)
-            res <- Rdiff(outfile, savefile)
-            if (!res) message(" OK")
-        }
+            savefile <- paste(outfile, "prev", sep = "." )
+            if (file.exists(savefile)) {
+                message("  Comparing ", sQuote(outfile), " to ",
+                        sQuote(basename(savefile)), " ...", appendLF = FALSE)
+                res <- Rdiff(outfile, savefile)
+                if (!res) message(" OK")
+            }
+        } else warning("no examples found")
     }
 
     ## FIXME merge with code in .runPackageTests
@@ -281,7 +283,7 @@ testInstalledPackage <-
     Rinfiles <- dir(".", pattern="\\.Rin$")
     for(f in Rinfiles) {
         Rfile <- sub("\\.Rin$", ".R", f)
-        message("  Creating ", sQuote(Rfile))
+        message("  Creating ", sQuote(Rfile), domain = NA)
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                      "CMD BATCH --no-timing --vanilla --slave", f)
         if (system(cmd))
@@ -298,16 +300,42 @@ testInstalledPackage <-
     return(nfail)
 }
 
-.createExdotR <- function(pkg, exdir)
+.createExdotR <- function(pkg, pkgdir)
 {
     Rfile <- paste(pkg, "-Ex.R", sep = "")
     ## might be zipped:
-    if (file.exists(fzip <- file.path(exdir, "Rex.zip"))) {
-        files <- tempfile()
-        unzip(fzip, exdir = files)
-        # system(paste("unzip -q", fzip, "-d", files))
-    } else files <- exdir
-    massageExamples(pkg, files, Rfile)
+    exdir <- file.path(pkgdir, "R-ex")
+    if (file_test("-d", exdir)) {
+        if (file.exists(fzip <- file.path(exdir, "Rex.zip"))) {
+            filedir <- tempfile()
+            unzip(fzip, exdir = filedir)
+            on.exit(unlink(filedir, recursive = TRUE))
+        } else filedir <- exdir
+    } else {
+        message("  Converting from parsed Rd files ",
+                appendLF = FALSE, domain = NA)
+        files <- Sys.glob(file.path(pkgdir, "help", "*.rds"))
+        if (!length(files)) {
+            message("no parsed files found")
+            return(invisible(NULL))
+        }
+        filedir <- tempfile()
+        dir.create(filedir)
+        on.exit(unlink(filedir, recursive = TRUE))
+        cnt <- 0L
+        nf <- length(files)
+        REP <- ifelse(nf > 50L, 10L, 1L)
+        for(f in files) {
+            Rd2ex(.readRDS(f),
+                  file.path(filedir, sub("rds$", "R", basename(f))))
+            cnt <- cnt + 1L
+            if(cnt %% REP == 0L) message(".", appendLF = FALSE, domain = NA)
+        }
+        message()
+        nof <- length(Sys.glob(file.path(filedir, "*.R")))
+        if(!nof) return(invisible(NULL))
+    }
+    massageExamples(pkg, filedir, Rfile)
     invisible(Rfile)
 }
 

@@ -2324,16 +2324,19 @@ sub check_pkg {
     ${R_opts} = ${R_opts}." -d valgrind" if $opt_use_valgrind;
 
     ## this will be skipped if installation was
-    if((-d &file_path($library, $pkgname, "R-ex"))) {
+    ## FIXME: packages with help pages but no examples will fail
+    if( (-d &file_path($library, $pkgname, "R-ex"))
+       || (-d &file_path($library, $pkgname, "help"))) {
 
 	$log->checking("examples");
 	if(!$opt_examples) {
 	    $log->result("SKIPPED");
 	} else {
+	    my $pkgdir = &file_path($library, $pkgname);
 	    my $Rexdir = &file_path($library, $pkgname, "R-ex");
 	    ## $Rexdir might contain spaces (not on Windows, though)
 	    $cmd = join(" ",
-			("(echo 'tools:::.createExdotR(\"${pkgname}\", \"${Rexdir}\")'",
+			("(echo 'tools:::.createExdotR(\"${pkgname}\", \"${pkgdir}\")'",
 			 "| LC_ALL=C",
 			 &shell_quote_file_path(${R::Vars::R_EXE}),
 			 "--vanilla --slave)"

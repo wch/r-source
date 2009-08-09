@@ -232,27 +232,20 @@ function(x, ...)
             if(file.exists(zfile)) {
                 .show_help_on_topic_offline(zfile, topic)
                 ok <- TRUE
-            } else if(interactive()) {
+            } else {
                 ## look for stored Rd files
                 path <- dirname(file) # .../pkg/latex
                 dirpath <- dirname(path)
-                pkgname <- basename(dirpath) # versioning? ...
-                Rdpath <- file.path(dirpath, "man",
-                                    paste(pkgname, "Rd.gz", sep="."))
-                if(file.exists(Rdpath)) {
-                    ans <- readline("No latex file is available: shall I try to create it? (y/n) ")
-                    if (substr(ans, 1L, 1L) == "y") {
-                        lines <- tools:::extract_Rd_file(Rdpath, topic)
-                        tf <- tempfile("Rd")
-                        tf2 <- tempfile("Rlatex")
-                        writeLines(lines, tf)
-                        cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
-                                     "CMD Rdconv -t latex", tf, ">", tf2)
-                        res <- system(cmd)
-                        if(res) stop("problems running R CMD Rdconv")
-                        .show_help_on_topic_offline(tf2, topic)
-                        ok <- TRUE
-                    }
+                pkgname <- basename(dirpath)
+                Rdspath <- file.path(dirpath, "help",
+                                     paste(topic, "rds", sep="."))
+                if(file.exists(Rdspath)) {
+                    message("on-demand Rd conversion for ", topic)
+                    Rd <- .readRDS(Rdspath)
+                    tf2 <- tempfile("Rlatex")
+                    tools::Rd2latex(Rd, tf2)
+                    .show_help_on_topic_offline(tf2, topic)
+                    ok <- TRUE
                 }
             }
             if(!ok)
