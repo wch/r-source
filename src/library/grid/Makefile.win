@@ -12,7 +12,6 @@ RHOME = ../../../..
 pkg = grid
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
-RdSRC = $(srcdir)/man/*.Rd
 
 R_EXE = $(top_builddir)/bin/Rterm.exe --vanilla --slave
 
@@ -26,7 +25,7 @@ USE_NLS =yes
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR mkdesc instfiles mkpo mkman
+	@$(MAKE) -f Makefile.win mkR mkdesc instfiles mkpo
 	@$(MAKE) -f Makefile.win mksrc-win
 	@$(MAKE) -f Makefile.win mklazy
 

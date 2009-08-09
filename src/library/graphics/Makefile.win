@@ -19,12 +19,11 @@ R_GZIPCMD = gzip
 USE_NLS =yes
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
-RdSRC = $(srcdir)/man/*.Rd
 
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR mkdesc mkdemos mkpo mkman 
+	@$(MAKE) -f Makefile.win mkR mkdesc mkdemos mkpo
 	@$(MAKE) -f Makefile.win mklazy
 
 

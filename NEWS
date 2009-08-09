@@ -9,6 +9,26 @@
 		CHANGES IN R VERSION 2.10.0
 
 
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o	Package help is now converted from Rd by the R-based converters
+	that were first introduced in 2.9.0.  This means
+
+	- Packages that were installed by R-devel after 2009-08-09
+	  should not be used with earlier versions of R, and some
+	  aspects of package help will be missing if there are so
+	  used.  (Currently text help, but eventually latex help and
+	  the runable examples.)
+
+	- Text help is converted 'on demand': this will soon apply to
+	  latex help and examples.
+
+	The converters are still being polished and produce incorrect
+	latex or HTML conersions for ca 20 packages.  However, they
+	correct fewer errors in the inputs and most errors are the
+	result of errors in package sources.
+
+
 NEW FEATURES
 
     o	polygon(), pdf() and postscript() now have a parameter
@@ -199,9 +219,7 @@ Rd HELP FILE CHANGES
     o	An experimental tag \Sexpr has been added to Rd files, to
 	evaluate expressions at build, install, or render time.
 	Currently install time and render time evaluation are
-	supported but not used in base or contributed packages unless
-	the environment variable USE_NEW_HELP is set during
-	installation.
+	supported.
 
     o	The parse_Rd() parser has been made more tolerant of coding
 	errors in Rd files:  now all syntax errors are reported as
@@ -219,7 +237,7 @@ Rd HELP FILE CHANGES
     o	There have been various bug fixes and code reorganization in
 	the Rd renderers Rd2HTML, Rd2latex, Rd2txt, and Rd2ex.
 
-	All example files are now created with ASCII or UTF-8
+	All example files are now created with either ASCII or UTF-8
 	encoding, and the encoding is only marked in the file if there
 	is any non-UTF-8 code (previously it was marked if the help
 	file had non-ASCII contents, possibly in other sections).

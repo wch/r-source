@@ -18,7 +18,6 @@ pkg = utils
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
-RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd
 INSTDIRS = Sweave misc
 
 .PHONY: iconvlist
@@ -26,7 +25,7 @@ INSTDIRS = Sweave misc
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR mkdesc mkpo mkman instdirs iconvlist
+	@$(MAKE) mkR mkdesc mkpo instdirs iconvlist
 	@$(MAKE) mklazy
 
 iconvlist: $(top_builddir)/library/$(pkg)/iconvlist

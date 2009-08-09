@@ -15,15 +15,6 @@ DISTFILES = Makefile.in Makefile.win eof_file
 
 SUBDIRS = profile $(R_PKGS_BASE) Recommended
 
-## <NOTE>
-## Need to use R CMD to ensure that R_HOME is set (or do this ourselves).
-## Need to go through Rcmd rather than just call $(PERL) to ensure that
-## PERL5LIB/PERLLIB are set appropriately (or do this ourselves).
-## See e.g. @file{src/gnuwin32/help/Makefile}.
-R_CMD_BUILD_HELP = $(top_builddir)/bin/R CMD perl $(top_srcdir)/share/perl/build-help.pl
-## </NOTE>
-R_CMD_BUILD_HELP_OPTS =
-
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 PDFLATEX = @PDFLATEX@
@@ -55,9 +46,7 @@ R:
 
 ## do metadata before help indices
 docs:
-ifdef USE_NEW_HELP
 	@$(MAKE) Rdobjects
-endif
 	@$(MAKE) metadata
 	@$(ECHO) "building all R documentation indices"
 	@$(MAKE) help-indices
@@ -78,28 +67,10 @@ help-indices:
 	  $(ECHO) "tools:::.writePkgIndices(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(R_EXE) || exit 1; \
 	done
 
-ifdef USE_NEW_HELP
 Rdfiles:
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(R_EXE) || exit 1; \
 	done
-else
-## NB this is called from tests/Examples/Makefile with the make variables set.
-Rdfiles:
-	@for pkg in $(R_PKGS_BASE); do \
-	  $(R_CMD_BUILD_HELP) $(R_CMD_BUILD_HELP_OPTS) $(srcdir)/$${pkg}; \
-	done
-endif
-
-base-test:
-	rm -f $(top_builddir)/library/base/html/*
-	rm -f $(top_builddir)/library/base/R-ex/*
-	$(R_CMD_BUILD_HELP) --html --example $(srcdir)/base
-base-new:
-	rm -f $(top_builddir)/library/base/html/*
-	rm -f $(top_builddir)/library/base/R-ex/*
-	@$(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/base\", \"$(top_builddir)/library/base\")" | LC_ALL=C $(R_EXE)
-
 
 vignettes:
 	@if test "$(PDFLATEX)" = false; then \
@@ -122,20 +93,6 @@ metadata:
 	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) > /dev/null
 	@cat $(top_builddir)/library/*/CONTENTS \
 	  > $(top_builddir)/doc/html/search/index.txt
-
-help:
-	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--txt"
-
-html:
-	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--html"
-	@$(ECHO) "tools:::unix.packages.html(.Library)" | \
-	  R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" >/dev/null
-
-latex:
-	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--latex"
-
-examples:
-	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--example"
 
 install: installdirs
 	@$(ECHO) "installing packages ..."

@@ -16,14 +16,13 @@ DISTFILES = DESCRIPTION.in Makefile.in Makefile.win
 pkg = datasets
 
 RSRC = $(srcdir)/R/zzz.R
-RdSRC = $(srcdir)/man/*.Rd
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR mkdesc mkman
+	@$(MAKE) mkR mkdesc
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data
 	@for f in $(srcdir)/data/*; do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \

@@ -10,7 +10,6 @@ top_builddir = ../../..
 pkg = datasets
 
 RSRC = $(srcdir)/R/zzz.R
-RdSRC = $(srcdir)/man/*.Rd
 
 R_EXE = $(top_builddir)/bin/Rterm.exe --vanilla --slave
 
@@ -24,7 +23,7 @@ USE_NLS =yes
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR mkdesc mkman
+	@$(MAKE) -f Makefile.win mkR mkdesc
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data
 	@for f in $(srcdir)/data/*; do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \

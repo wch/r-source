@@ -38,14 +38,12 @@ R:
 	  $(top_builddir)/library
 	@gzip -9f ../../library/grDevices/afm/*.afm
 	@cp -p ../library/datasets/data/morley.tab ../../library/datasets/data
-ifdef USE_NEW_HELP
 	@for pkg in $(R_PKGS_BASE); do \
 	  if test -d $(srcdir)/$${pkg}/man; then \
 	    $(ECHO) "tools:::.install_package_Rd_objects('$(srcdir)/$${pkg}', '$(top_builddir)/library/$${pkg}')" | \
 	      R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null; \
 	  fi; \
 	done
-endif	
 	@$(ECHO) "building/updating package metadata ..."
 	@$(ECHO) "tools:::.vinstall_package_indices(\"$(srcdir)\", \"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
 	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) > /dev/null
@@ -70,7 +68,6 @@ ifeq ($(strip $(USE_CHM)),TRUE)
 	  $(ECHO) "------ Installing help for package $${pkg}"; \
 	  $(MAKE) --no-print-directory -C ../gnuwin32/help -s RHOME=$(RHOME) \
 	    HELPTYPES='-txt -html -latex -example -chm' \
-	    USE_NEW_HELP=T \
 	    chm-$${pkg} || exit 1; \
 	done
 else

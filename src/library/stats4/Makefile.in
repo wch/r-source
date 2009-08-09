@@ -15,14 +15,12 @@ DISTFILES = DESCRIPTION.in Makefile.in Makefile.win NAMESPACE
 
 pkg = stats4
 
-RdSRC = $(srcdir)/man/*.Rd
-
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR2 mkdesc mkpo mkman
+	@$(MAKE) mkR2 mkdesc mkpo
 	@$(MAKE) Rfiles
 
 

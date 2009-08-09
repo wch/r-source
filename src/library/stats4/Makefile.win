@@ -11,8 +11,6 @@ RHOME = ../../../..
 
 pkg = stats4
 
-RdSRC = $(srcdir)/man/*.Rd
-
 R_EXE = $(top_builddir)/bin/Rterm.exe --vanilla --slave
 
 ECHO = echo
@@ -25,7 +23,7 @@ USE_NLS =yes
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR2 mkdesc mkpo mkman
+	@$(MAKE) -f Makefile.win mkR2 mkdesc mkpo
 	@$(MAKE) -f Makefile.win Rfiles
 
 

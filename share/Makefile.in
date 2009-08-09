@@ -68,9 +68,6 @@ install-sources: installdirs
 	    $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/perl/$${d}"; \
 	  done; \
 	done
-	@for f in $(srcdir)/perl/*.pl; do \
-	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/perl"; \
-	done
 	@for f in $(srcdir)/sh/*.sh; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/sh"; \
 	done

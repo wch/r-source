@@ -815,7 +815,7 @@
 
             if (dir.exists("man")) {
                 starsmsg(stars, "help")
-                if(Sys.getenv("USE_NEW_HELP") != "") {
+                {
                     ## Turn
                     ##   Warning in parse_Rd(......)
                     ## warnings into warnings without the call so that
@@ -837,35 +837,13 @@
                     Sys.chmod(file.path(instdir, "man",
                                         paste0(pkg_name, ".rds")),
                               "644")
-                } else {
-                    res <- try(.install_package_man_sources(".", instdir))
-                    if(inherits(res, "try-error"))
-                        pkgerrmsg("installing man sources failed", pkg_name)
-                    Sys.chmod(file.path(instdir, "man",
-                                        paste0(pkg_name, ".Rd.gz")),
-                              "644")
                 }
                 ## 'Maybe build preformatted help pages ...'
                 if (build_help) {
                     starsmsg(paste0(stars, "*"),
                              "installing help indices")
                     .writePkgIndices(pkg_dir, instdir, CHM = build_chm)
-                    if (Sys.getenv("USE_NEW_HELP") != "") {
-                        .convertRdfiles(pkg_dir, instdir, types=build_help_types)
-                    } else {
-			cmd <- paste("perl",
-				     shQuote(file.path(R.home("share"), "perl",
-						       "build-help.pl")),
-				     paste(build_help_opts, collapse=" "),
-				     shQuote(pkg_dir),
-				     shQuote(lib),
-				     shQuote(instdir),
-				     pkg_name)
-			if (debug) message("about to run ", sQuote(cmd))
-			res <- system(cmd)
-			if (res)
-			    pkgerrmsg("building help failed", pkg_name)
-		    }
+                    .convertRdfiles(pkg_dir, instdir, types=build_help_types)
                     if (use_zip_help &&
                         (WINDOWS ||
                          (nzchar(Sys.getenv("R_UNZIPCMD")) &&
@@ -1201,35 +1179,17 @@
         }
     }
 
-    if (Sys.getenv("USE_NEW_HELP") != "") {
-	build_help_types <- character(0)
-	if (build_text) build_help_types <- c(build_help_types, "txt")
-	if (build_html) build_help_types <- c(build_help_types, "html")
-	if (build_latex) build_help_types <- c(build_help_types, "latex")
-	if (build_example) build_help_types <- c(build_help_types, "example")
-	if (build_chm) build_help_types <- c(build_help_types, "chm")
-	build_help <- length(build_help_types) > 0L
+    build_help_types <- character(0)
+    if (build_text) build_help_types <- c(build_help_types, "txt")
+    if (build_html) build_help_types <- c(build_help_types, "html")
+    if (build_latex) build_help_types <- c(build_help_types, "latex")
+    if (build_example) build_help_types <- c(build_help_types, "example")
+    if (build_chm) build_help_types <- c(build_help_types, "chm")
+    build_help <- length(build_help_types) > 0L
 
-	if (debug)
-	    starsmsg(stars, "build_help_types=", paste(build_help_types, collapse=" "))
-    } else {
-	build_help_opts <- character(0)
-	if (build_text) build_help_opts <- c(build_help_opts, "--txt")
-	if (build_html) build_help_opts <- c(build_help_opts, "--html")
-	if (build_latex) build_help_opts <- c(build_help_opts, "--latex")
-	if (build_example) build_help_opts <- c(build_help_opts, "--example")
-	if (build_chm) build_help_opts <- c(build_help_opts, "--chm")
-	build_help <- length(build_help_opts) > 0L
-	if (build_help && debug) build_help_opts <- c("--debug", build_help_opts)
-	if (build_help && WINDOWS)
-	    build_help_opts <- c("--os=windows", build_help_opts)
-
-	if (debug)
-	    starsmsg(stars, "build_help_opts=", paste(build_help_opts, collapse=" "))
-
-	if (build_help)
-	    .setPERL()
-    }
+    if (debug)
+        starsmsg(stars, "build_help_types=",
+                 paste(build_help_types, collapse=" "))
 
     if (debug)
         starsmsg(stars, "DBG: R CMD INSTALL' now doing do_install")
@@ -1487,7 +1447,6 @@
                  asChapter = FALSE, extraDirs = extraDirs,
                  internals = internals)
     else {
-    	USE_NEW_HELP <- nchar(Sys.getenv("USE_NEW_HELP")) > 0L
         files <- strsplit(files, "[[:space:]]+")[[1]]
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
@@ -1508,12 +1467,10 @@
             }
             out <-  file.path(latexdir, sub("\\.[Rr]d$", ".tex", basename(f)))
             ## people have file names with quotes in them.
-            if (USE_NEW_HELP)
-            	latexEncodings <- c(latexEncodings,
-            	                    attr(Rd2latex(f, out, encoding=encoding, outputEncoding=outputEncoding),
-            	                         "latexEncoding"))
-            else
-            	system(paste(cmd,"-o", shQuote(out), shQuote(f)))
+            latexEncodings <- c(latexEncodings,
+                                attr(Rd2latex(f, out, encoding=encoding,
+                                              outputEncoding=outputEncoding),
+                                     "latexEncoding"))
             writeLines(readLines(out), outfile)
         }
         unique(latexEncodings)
@@ -1559,19 +1516,15 @@
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
         message("Converting Rd files to LaTeX ...")
-        USE_NEW_HELP <- nchar(Sys.getenv("USE_NEW_HELP")) > 0L
         cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
                      encoding, sep="")
         for(f in files) {
             cat("  ", basename(f), "\n", sep="")
             out <-  sub("\\.[Rr]d$", ".tex", basename(f))
-            if (USE_NEW_HELP)
-	       	latexEncodings <- c(latexEncodings,
-	       	                    attr(Rd2latex(f, file.path(latexdir, out), encoding=encoding),
-	       	                         "latexEncoding"))
-	    else
-                system(paste(cmd,"-o", shQuote(file.path(latexdir, out)),
-                         shQuote(f)))
+            latexEncodings <- c(latexEncodings,
+                                attr(Rd2latex(f, file.path(latexdir, out),
+                                              encoding=encoding),
+                                     "latexEncoding"))
         }
     }
     ## they might be zipped up
@@ -2351,14 +2304,6 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
     writeLines("\\end{document}", out)
     close(out)
 
-    USE_NEW_HELP <- nchar(Sys.getenv("USE_NEW_HELP")) > 0L
-    if (!USE_NEW_HELP) {
-	## Look for encodings
-	lines <- readLines(outfile)
-	latexEncodings <- lines[grepl('^\\\\inputencoding', lines)]
-	latexEncodings <- sub("^\\\\inputencoding\\{(.*)\\}", "\\1", latexEncodings)
-    }
-
     ## Fix up encodings
     ## FIXME cyrillic probably only works with times, not ae.
     latexEncodings <- unique(latexEncodings)
@@ -2366,8 +2311,7 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
     latex_outputEncoding <- latex_canonical_encoding(outputEncoding)
     encs <- latexEncodings[latexEncodings != latex_outputEncoding]
     if (length(encs) || cyrillic) {
-    	if (USE_NEW_HELP)
-	    lines <- readLines(outfile)
+        lines <- readLines(outfile)
 	encs <- paste(encs, latex_outputEncoding, collapse=",", sep=",")
 
 	if (!cyrillic) {

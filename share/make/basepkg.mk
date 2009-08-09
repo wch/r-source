@@ -82,32 +82,6 @@ mklazy:
 	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 
-ifdef USE_NEW_HELP
-mkman:
-## This does not work because when mkman is called for base, there is no
-## tools package yet.  Hence, install Rd objects at the library level when
-## using the new approach.
-##	@if test -d $(srcdir)/man; then \
-##	  $(ECHO) "tools:::.install_package_Rd_objects('$(srcdir)', '$(top_builddir)/library/$(pkg)')" | \
-##	    R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null; \
-##	fi
-else
-## needs RdSRC defined
-mkman:
-	@if test -d $(srcdir)/man; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
-	  (f=$${TMPDIR:-/tmp}/R$$$$; \
-	    for rdfile in $(RdSRC); do \
-	      $(ECHO) "% --- Source file: $${rdfile} ---"; \
-            cat $${rdfile} $(top_srcdir)/src/library/eof_file; \
-	    done >> $${f}; \
-            $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
-              $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
-            rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
-            $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
-	fi
-endif
-
 mkpo:
 	@if test -d $(srcdir)/inst/po; then \
 	  if test "$(USE_NLS)" = "yes"; then \
