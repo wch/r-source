@@ -178,8 +178,6 @@ Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types:
 Name: "devel"; Description: "Source Package Installation Files"; Types: user full custom
 Name: "libdocs"; Description: "Docs for Packages grid and survival"; Types: user full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
-Name: "latex"; Description: "Latex Help Files"; Types: full custom
-Name: "Rd"; Description: "Source Files for Help Pages"; Types: full custom
 Name: "tests"; Description: "Test files"; Types: full custom
 
 
