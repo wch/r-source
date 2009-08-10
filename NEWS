@@ -25,10 +25,9 @@ SIGNIFICANT USER-VISIBLE CHANGES
           parsed Rd files.  (Conversions stored in earlier
           installations are still used.)
 
-	The converters are still being polished and produce incorrect
-	latex or HTML conersions for ca 20 packages.  However, they
-	correct fewer errors in the inputs and most errors seen have
-	been the result of errors in package sources.
+	The converters are still being polished; but almost all errors
+	in packages are previously undetected/corrected errors in the
+	package sources or changes in the Rd dialect..
 
 
 NEW FEATURES
