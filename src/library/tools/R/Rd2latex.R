@@ -120,7 +120,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         if(inEqn) return(ltxeqn(x))
         # cat(sprintf("vtexify: '%s'\n", x))
         Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
-        x <- gsub("\\\\[l]+dots", "...", as.character(x))
+        x <- gsub("\\\\[l]{0,1}dots", "...", as.character(x))
         ## unescape (should not be escaped: but see kappa.Rd)
         x <- gsub("\\\\([$^&~_#])", "\\1", x)
         if (inCodeBlock) {
@@ -130,13 +130,16 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             x <- sub('"\\{"', '"{"', x, fixed = TRUE)
         } else if (inPre) {
             BSL = '@BSL@';
-            x <- gsub("\\dots", "...", x, fixed = TRUE)
+            #x <- gsub("\\dots", "...", x, fixed = TRUE)
             ## escape any odd \, e.g. \n
             x <- gsub("\\\\", BSL, x, fixed = TRUE) # change even ones
             x <- gsub("\\", "\\\\", x, fixed = TRUE) # change odd ones
             x <- gsub(BSL, "\\\\", x, fixed = TRUE) # change back
             x <- gsub("(?<!\\\\)\\{", "\\\\{", x, perl= TRUE)
             x <- gsub("(?<!\\\\)}", "\\\\}", x, perl= TRUE)
+            ## need to preserve \var
+            x <- gsub("\\\\\\\\var\\\\\\{([^\\\\]*)\\\\}",
+                      "\\\\var{\\1}", x, perl= TRUE)
         } else {
             BSL = '@BSL@';
             x <- gsub("\\", BSL, x, fixed = TRUE)
@@ -387,7 +390,9 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\pkg" =,
                "\\sQuote" =,
                "\\strong"=,
-               "\\var" = writePass(block, tag),
+               "\\var" =
+                   if (inCodeBlock) writeContent(block, tag)
+                   else writePass(block, tag),
                ## \cite needs to be mapped to \Cite
                "\\cite"= writePass(block, "\\Cite"),
                "\\preformatted"= {
@@ -492,7 +497,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                        if (length(blocks) > 2L &&
                            generic %in% c("[", "[[", "$")) {
                            ## need to assemble the call
-                           j <- i + 1
+                           j <- i + 1L
                            txt <- ""
                            repeat {
                                this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
@@ -505,7 +510,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                                    res <- try(parse(text = paste("a", txt)))
                                    if(!inherits(res, "try-error")) break
                                }
-                               j <- j + 1
+                               j <- j + 1L
                            }
                            #print(txt)
                            txt <- sub("\\(([^,]*),\\s*", "\\1@generic@", txt)
@@ -523,7 +528,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                                of1("## S3 method for class '")
                            writeContent(block[[2L]], tag)
                            of1("':\n")
-                           blocks[[i+1]] <- structure(txt, Rd_tag = "RCODE")
+                           blocks[[i+1L]] <- structure(txt, Rd_tag = "RCODE")
                        } else {
                            if (class == "default")
                                of1('## Default S3 method:\n')
@@ -531,7 +536,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                                of1("## S3 replacement method for class '")
                                writeContent(block[[2L]], tag)
                                of1("':\n")
-                           }else {
+                           } else {
                                of1("## S3 method for class '")
                                writeContent(block[[2L]], tag)
                                of1("':\n")
@@ -567,6 +572,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                               })
                        itemskip <- TRUE
                    },
+                   "\\cr" = of1("\\\\{}"), ## might be followed by [
                { # default
                    if (inList && !(tag == "TEXT" && isBlankRd(block))) {
                        of1("\\end{ldescription}\n")

@@ -1,4 +1,4 @@
-#  File src/library/tools/R/Rd2tex.R
+#  File src/library/tools/R/Rd2txt.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -431,12 +431,13 @@ Rd2txt <-
         indent <<- indent0
     }
 
-    writeCodeBlock <- function(blocks, blocktag) {
+    writeCodeBlock <- function(blocks, blocktag)
+    {
     	tags <- RdTags(blocks)
 
 	for (i in seq_along(tags)) {
-            tag <- tags[i]
             block <- blocks[[i]]
+            tag <- attr(block, "Rd_tag")
             switch(tag,
                    "\\method" =,
                    "\\S3method" = {
@@ -444,7 +445,7 @@ Rd2txt <-
                        generic <- as.character(block[[1L]])
                        if (generic %in% c("[", "[[", "$")) {
                            ## need to assemble the call
-                           j <- i + 1
+                           j <- i + 1L
                            txt <- ""
                            repeat {
                                this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
@@ -457,7 +458,7 @@ Rd2txt <-
                                    res <- try(parse(text = paste("a", txt)))
                                    if(!inherits(res, "try-error")) break
                                }
-                               j <- j + 1
+                               j <- j + 1L
                            }
                            #print(txt)
                            txt <- sub("\\(([^,]*),\\s*", "\\1@generic@", txt)
@@ -475,7 +476,7 @@ Rd2txt <-
                                putf("## S3 method for class '")
                            writeCodeBlock(block[[2L]], tag)
                            putf("':\n")
-                           blocks[[i+1]] <- structure(txt, Rd_tag = "RCODE")
+                           blocks[[i+1L]] <- structure(txt, Rd_tag = "RCODE")
                        } else {
                            if (class == "default")
                                putf('## Default S3 method:\n')
@@ -483,14 +484,14 @@ Rd2txt <-
                                putf("## S3 replacement method for class '")
                                writeCodeBlock(block[[2L]], tag)
                                putf("':\n")
-                           }else {
+                           } else {
                                putf("## S3 method for class '")
                                writeCodeBlock(block[[2L]], tag)
                                putf("':\n")
                            }
                            writeCodeBlock(block[[1L]], tag)
                        }
-                   },
+                  },
                    "\\special" =,
                    UNKNOWN =,
                    VERB =,
