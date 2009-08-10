@@ -185,7 +185,6 @@ list("Artistic-2.0" =
      
      "GPL" =
      c(## <FIXME>
-       "'GPL'",
        "GPL.",
        ## </FIXME>
        "GNU Public License",
@@ -237,7 +236,6 @@ list("Artistic-2.0" =
        ## </NOTE>
        "GNU GPL (version 2 or later)",
        "GNU GPL (version 2 or later); see the file COPYING for details",
-       "GNU GPL Version 2 or newer.",
        "GNU GPL version 2 or newer",
        "GNU General Public License version 2 or newer",
        "GPL version 2 or later",
