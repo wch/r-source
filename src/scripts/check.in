@@ -2333,11 +2333,11 @@ sub check_pkg {
 	if(!$opt_examples) {
 	    $log->result("SKIPPED");
 	} else {
-	    my $pkgdir = &file_path($library, $pkgname);
+	    my $topdir = &file_path($library, $pkgname);
 	    my $Rexdir = &file_path($library, $pkgname, "R-ex");
 	    ## $Rexdir might contain spaces (not on Windows, though)
 	    $cmd = join(" ",
-			("(echo 'tools:::.createExdotR(\"${pkgname}\", \"${pkgdir}\")'",
+			("(echo 'tools:::.createExdotR(\"${pkgname}\", \"${topdir}\")'",
 			 "| LC_ALL=C",
 			 &shell_quote_file_path(${R::Vars::R_EXE}),
 			 "--vanilla --slave)"
