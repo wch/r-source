@@ -36,8 +36,7 @@ use Text::Tabs;
 	     read_lines
 	     shell_quote_file_path
 	     sQuote dQuote
-	     config_val_to_logical
-	     mime_canonical_encoding latex_canonical_encoding);
+	     config_val_to_logical) ;
 
 ### ********************************************************************
 
@@ -300,6 +299,7 @@ sub sQuote {
 
 ### * dQuote
 
+## unused
 sub dQuote {
     ## Double quote text.
     ## Currently does not work for lists.
@@ -318,47 +318,6 @@ sub config_val_to_logical {
     }
     carp "Warning: cannot coerce '$val' to logical";
 }
-
-### * canonical_encoding
-
-## use preferred MIME encoding, not IANA registered name
-sub mime_canonical_encoding {
-    my $encoding = lc($_[0]);
-    if(/iso_8859-([0-9]+)/) {$encoding = "iso-8859-$1";}
-    $encoding = "iso-8859-1"  if $encoding eq "latin1";
-    $encoding = "iso-8859-2"  if $encoding eq "latin2";
-    $encoding = "iso-8859-3"  if $encoding eq "latin3";
-    $encoding = "iso-8859-4"  if $encoding eq "latin4";
-    $encoding = "iso-8859-5"  if $encoding eq "cyrillic";
-    $encoding = "iso-8859-6"  if $encoding eq "arabic";
-    $encoding = "iso-8859-7"  if $encoding eq "greek";
-    $encoding = "iso-8859-8"  if $encoding eq "hebrew";
-    $encoding = "iso-8859-9"  if $encoding eq "latin5";
-    $encoding = "iso-8859-10" if $encoding eq "latin6";
-    $encoding = "iso-8859-14" if $encoding eq "latin8";
-    $encoding = "iso-8859-15" if $encoding eq "latin-9";
-    $encoding = "iso-8859-16" if $encoding eq "latin10";
-    $encoding = "utf-8"       if $encoding eq "utf8";
-    return $encoding;
-}
-
-sub latex_canonical_encoding {
-    my $encoding = lc($_[0]);
-    if(/iso_8859-([0-9]+)/) {$encoding = "iso-8859-$1";}
-    $encoding = "latin1"  if $encoding eq "iso-8859-1";
-    $encoding = "latin2"  if $encoding eq "iso-8859-2";
-    $encoding = "latin3"  if $encoding eq "iso-8859-3";
-    $encoding = "latin4"  if $encoding eq "iso-8859-4";
-    $encoding = "latin5"  if $encoding eq "iso-8859-9";
-    $encoding = "latin6"  if $encoding eq "iso-8859-10";
-    $encoding = "latin8"  if $encoding eq "iso-8859-14";
-    $encoding = "latin9"  if $encoding eq "latin-9";
-    $encoding = "latin9"  if $encoding eq "iso-8859-15";
-    $encoding = "latin10" if $encoding eq "iso-8859-16";
-    $encoding = "utf8"    if $encoding eq "utf-8";
-    return $encoding;
-}
-
 
 
 ### * Non-exported functions
@@ -386,22 +345,6 @@ sub get_exclude_patterns {
 			    );
     ## </NOTE>
     @exclude_patterns;
-}
-
-sub text2latex {
-    s/\\/\\textbackslash{}/g;
-    s/([\{\}_\$\^\&\#])/\\$1/g;
-    s/>/\\textgreater{}/g;
-    s/</\\textless{}/g;
-    s/\~/\\textasciitilde{}/g;
-    $_;
-}
-
-sub text2html {
-    s/&/&amp;/g;
-    s/>/&gt;/g;
-    s/</&lt;/g;
-    $_;
 }
 
 ## This is currently shared between build and check.
