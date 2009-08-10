@@ -324,7 +324,9 @@ processRdIfdefs <- function(blocks, defines)
     recurse(blocks)
 }
 
-processRdSexprs <- function(block, stage, options=RweaveRdDefaults, env=new.env(parent=globalenv()))
+processRdSexprs <-
+    function(block, stage, options = RweaveRdDefaults,
+             env = new.env(parent=globalenv()))
 {
     recurse <- function(block) {
         if (is.list(block)) {
@@ -342,7 +344,10 @@ processRdSexprs <- function(block, stage, options=RweaveRdDefaults, env=new.env(
     recurse(block)
 }
 
-prepare_Rd <- function(Rd, encoding="unknown", defines=NULL, stages=NULL, options=RweaveRdDefaults) {
+prepare_Rd <-
+    function(Rd, encoding = "unknown", defines = NULL, stages = NULL,
+             options = RweaveRdDefaults)
+{
     Rdfile <- "not known"
     if (is.character(Rd)) {
         Rdfile <- Rd
