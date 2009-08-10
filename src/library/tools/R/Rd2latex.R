@@ -118,7 +118,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     ## inCodeBlock/inPre is in alltt, where only \ { } have their usual meaning
     vtexify <- function(x) {
         if(inEqn) return(ltxeqn(x))
-        # cat(sprintf("vtexify: '%s'\n", x))
+        ## cat(sprintf("vtexify: '%s'\n", x))
         Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         x <- gsub("\\\\[l]{0,1}dots", "...", as.character(x))
         ## unescape (should not be escaped: but see kappa.Rd)
@@ -141,6 +141,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             x <- gsub("\\\\\\\\var\\\\\\{([^\\\\]*)\\\\}",
                       "\\\\var{\\1}", x, perl= TRUE)
         } else {
+            ## cat(sprintf("\nvtexify in: '%s'\n", x))
             BSL = '@BSL@';
             x <- gsub("\\", BSL, x, fixed = TRUE)
             x <- gsub("(?<!\\\\)\\{", "\\\\{", x, perl= TRUE)
@@ -154,6 +155,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             x <- gsub(">>", ">{}>", x, fixed = TRUE)
             x <- gsub(",,", ",{},", x, fixed = TRUE) # ,, is a ligature in the ae font.
             x <- gsub("\\\\bsl{}var\\\\{([^}]+)\\\\}", "\\\\var{\\1}", x, perl = TRUE)
+            ## cat(sprintf("\nvtexify out: '%s'\n", x))
         }
         Encoding(x) <- "UTF-8"
 	x
@@ -421,7 +423,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\donttest" = writeContent(block, tag),
                "\\dontrun"= writeDR(block, tag),
                "\\enc" = { # some people put more things in \enc than a word.
-                   writeContent(block, tag)
+                   writeContent(block[[1L]], tag)
                    ##txt <- as.character(block[[1L]])
                    ##of1(txt)
                } ,
@@ -626,6 +628,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             if(!is.na(extra)) of0("\n\\begin{", extra, "}")
             if(tag %in% c("\\usage", "\\examples")) inCodeBlock <<- TRUE
             writeSectionInner(section, tag)
+ 	    inCodeBlock <<- FALSE
             if(!is.na(extra)) of0("\\end{", extra, "}\n")
             of0("\\end{", title, "}\n")
         }
