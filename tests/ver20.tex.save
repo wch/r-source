@@ -1,4 +1,6 @@
-\HeaderA{ver11}{Johnson \& Johnson,  \$ \_  \##\# \textasciicircum{} \textasciitilde{}}{ver11}
+\inputencoding{latin1}
+\HeaderA{ver11}{Johnson \& Johnson,  \$ \_  \#\#\# \textasciicircum{} \textasciitilde{}}{ver11}
+%
 \begin{Description}\relax
 This is the description
 \end{Description}
@@ -37,7 +39,8 @@ group-weighting from \$[N\_iP\_i(1-P\_i)]\$
     \bsl{}\% c
     \{
     \bsl{}\{
-\end{alltt}
+  \end{alltt}
+
 \end{Details}
 %
 \begin{Section}{URLs and emails}

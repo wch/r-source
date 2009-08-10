@@ -25,6 +25,8 @@ foo(\var{x}, \var{y})
   var in \var{text}.
   
   foo(\var{x}, \var{y}).
+  
+  From gap: pedtodot.Rd -- n=split(m,par,"\034")
   }
 }
 \examples{

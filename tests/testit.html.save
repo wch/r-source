@@ -42,6 +42,8 @@ var in <VAR>text</VAR>.
   var in <VAR>text</VAR>.
   
   foo(<VAR>x</VAR>, <VAR>y</VAR>).
+  
+  From gap: pedtodot.Rd -- n=split(m,par,"\034")
 </pre>
 </p>
 

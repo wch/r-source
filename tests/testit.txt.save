@@ -29,6 +29,8 @@ _D_e_t_a_i_l_s:
 
        foo(x, y).
 
+       From gap: pedtodot.Rd -- n=split(m,par,"\034")
+
 
 _E_x_a_m_p_l_e_s:
 
