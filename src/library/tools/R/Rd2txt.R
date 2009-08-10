@@ -79,7 +79,7 @@ Rd2txt <-
         txt <- paste(..., collapse="", sep="")
         trail <- grepl("\n$", txt)
         # Convert newlines
-        txt <- strsplit(txt, "\n")[[1]]
+        txt <- strsplit(txt, "\n", fixed=TRUE)[[1]]
         if (dropBlank) {
             while(length(txt) && grepl("^[[:space:]]*$",txt[1]))
             	txt <- txt[-1]
@@ -163,7 +163,7 @@ Rd2txt <-
             Sys.getlocale("LC_CTYPE") != "C") {
             text <- gsub("``", LDQM, text, fixed = TRUE)
             text <- gsub("''", RDQM, text, fixed = TRUE)
-            text <- gsub("`([^']+)'", paste(LSQM, "\\1", RSQM), text)
+            text <- gsub("`([^']+)'", paste(LSQM, "\\1", RSQM, sep=""), text)
             text <- gsub("`", "'", text, fixed = TRUE)
         } else {
             text <- gsub("(``|'')", '"', text)
@@ -176,7 +176,7 @@ Rd2txt <-
     ## underline via backspacing
     txt_header <- function(header) {
         header <- paste(strwrap(header, WIDTH), collapse="\n")
-        letters <- strsplit(header, "")[[1L]]
+        letters <- strsplit(header, "", fixed=TRUE)[[1L]]
         isaln <- grep("[[:alnum:]]", letters)
         letters[isaln] <- paste("_\b", letters[isaln], sep="")
         paste(letters, collapse = "")
@@ -234,10 +234,10 @@ Rd2txt <-
     }
     
     if (.Platform$OS.type == "windows") { # On Windows, Unicode literals are translated to local code page
-    	LSQM <- iconv("\u2018", "", "UTF-8")
-    	RSQM <- iconv("\u2019", "", "UTF-8")
-    	LDQM <- iconv("\u201c", "", "UTF-8")
-    	RDQM <- iconv("\u201d", "", "UTF-8")
+    	LSQM <- intToUtf8("0x2018") # Left single quote
+    	RSQM <- intToUtf8("0x2019") # Right single quote
+    	LDQM <- intToUtf8("0x201c") # Left double quote
+    	RDQM <- intToUtf8("0x201d") # Right double quote
     }
 
     writeQ <- function(block, tag, quote=tag)
@@ -363,7 +363,7 @@ Rd2txt <-
     	content <- table[[2L]]
     	if (length(formats) != 1 || RdTags(formats) != "TEXT")
     	    stopRd(table, "\\tabular format must be simple text")
-    	formats <- strsplit(formats[[1]], "")[[1]]
+    	formats <- strsplit(formats[[1]], "", fixed=TRUE)[[1]]
         tags <- RdTags(content)
         entries <- list()
         row <- 1

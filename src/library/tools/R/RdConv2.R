@@ -690,7 +690,7 @@ Rd2HTML <-
     	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
     	    stopRd(table, "\\tabular format must be simple text")
-    	format <- strsplit(format[[1L]], "")[[1L]]
+    	format <- strsplit(format[[1L]], "", fixed=TRUE)[[1L]]
     	if (!all(format %in% c("l", "c", "r")))
     	    stopRd(table, "Unrecognized \\tabular format: ", table[[1L]][[1L]])
         format <- c(l="left", c="center", r="right")[format]
@@ -1050,7 +1050,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
     	    stopRd(table, "\\tabular format must be simple text")
-    	format <- strsplit(format[[1L]], "")[[1L]]
+    	format <- strsplit(format[[1L]], "", fixed=TRUE)[[1L]]
     	if (!all(format %in% c("l", "c", "r")))
     	    stopRd(table, "Unrecognized \\tabular format: ", table[[1L]][[1L]])
         tags <- RdTags(content)
