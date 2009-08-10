@@ -171,10 +171,11 @@ file paths, in the same package or in a package in the same library tree.
   \code{\link{parse_Rd}}
 }
 \examples{\donttest{
+
+\dontrun{
 ## Simulate an install and rendering of this page in HTML and text format:
 
-toolsRd <- Rd_db("tools")
-Rd <- toolsRd[[grep("Rd2HTML.Rd", names(toolsRd))]]
+Rd <- file.path("src/library/tools/Rd2HTML.Rd")
 
 outfile <- paste(tempfile(), ".html", sep="")
 browseURL(Rd2HTML(Rd, outfile, package="tools", stages=c("install", "render")))
@@ -183,5 +184,5 @@ outfile <- paste(tempfile(), ".txt", sep="")
 file.show(Rd2txt(Rd, outfile, package="tools", stages=c("install", "render")))
 
 checkRd(con) # A stricter test than Rd2HTML uses
-}}
+}}}
 \keyword{ documentation }

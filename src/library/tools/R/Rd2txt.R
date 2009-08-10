@@ -159,11 +159,11 @@ Rd2txt <-
     txt_striptitle <- function(text) {
         text <- striptitle(text)
         Encoding(text) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
-        if (FALSE && .Platform$OS.type == "windows" &&  ## FIXME:  directional quotes are not currently working
+        if (.Platform$OS.type == "windows" &&  
             Sys.getlocale("LC_CTYPE") != "C") {
-#            text <- gsub("``", "\u0093", text, fixed = TRUE)
-#            text <- gsub("''", "\u0094", text, fixed = TRUE)
-#            text <- gsub("`([^']+)'", "\u0091\\1\u0092", text)
+            text <- gsub("``", LDQM, text, fixed = TRUE)
+            text <- gsub("''", RDQM, text, fixed = TRUE)
+            text <- gsub("`([^']+)'", paste(LSQM, "\\1", RSQM), text)
             text <- gsub("`", "'", text, fixed = TRUE)
         } else {
             text <- gsub("(``|'')", '"', text)
@@ -232,15 +232,21 @@ Rd2txt <-
             blankLine(0)
         }
     }
+    
+    if (.Platform$OS.type == "windows") { # On Windows, Unicode literals are translated to local code page
+    	LSQM <- iconv("\u2018", "", "UTF-8")
+    	RSQM <- iconv("\u2019", "", "UTF-8")
+    	LDQM <- iconv("\u201c", "", "UTF-8")
+    	RDQM <- iconv("\u201d", "", "UTF-8")
+    }
 
     writeQ <- function(block, tag, quote=tag)
     {
-        if (FALSE && .Platform$OS.type == "windows" && Sys.getlocale("LC_CTYPE") != "C") {
-            ## FIXME directional quotes are not currently working
+        if (.Platform$OS.type == "windows" && Sys.getlocale("LC_CTYPE") != "C") {
             if (quote == "\\sQuote") {
-#                put("\u0091"); writeContent(block, tag); put("\u0092")
+                put(LSQM); writeContent(block, tag); put(RSQM)
             } else {
-#                put("\u0093"); writeContent(block, tag); put("\u0094")
+                put(LDQM); writeContent(block, tag); put(RDQM)
             }
         } else {
             if (quote == "\\sQuote") {
