@@ -28,10 +28,7 @@ use Getopt::Long;
 use IO::File;
 use R::Dcf;
 use R::Logfile;
-use R::Rd;
 use R::Utils;
-use R::Vars;
-use Text::DelimMatch;
 use Text::Wrap;
 
 ## Don't buffer output.
