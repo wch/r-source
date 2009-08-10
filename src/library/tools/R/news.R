@@ -180,7 +180,7 @@ function(file)
             list(entries =
                  sapply(split(lines, cumsum(ind)),
                         function(s)
-                        sub(ire, "", .collapse(sub("^\t*", "", s)))
+                        sub(ire, "", .collapse(sub("^\t?", "", s)))
                         ),
                  header = header,
                  chunk = chunk,
@@ -255,6 +255,19 @@ function(file)
     }
 
     out <- do.call(rbind, lapply(out, finisher))
+
+    ## Try to remove a common 'exdent' from the entries.
+    entries <- out[, 4L]
+    exdent <-
+        unlist(lapply(gregexpr("\n *", entries), attr, "match.length"))
+    exdent <- exdent[exdent > 1L]
+    if(length(exdent)) {
+        out[, 4L] <-
+            gsub(sprintf("\n%s",
+                         paste(rep.int(" ", min(exdent) - 1L),
+                               collapse = "")),
+                 "\n", entries)
+    }
 
     .make_news_db(out[, -5L, drop = FALSE], as.logical(out[, 5L]))
 }
