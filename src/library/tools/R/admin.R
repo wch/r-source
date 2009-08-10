@@ -811,7 +811,7 @@ function(dir, packages)
             pmeta <- .canonicalize_metadata(pmeta)
             ## Need to merge dependency fields in *both* metadata.
             fields_to_merge <-
-                c("Depends", "Imports", "Suggests", "Enhances")
+                c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
             fields <- intersect(intersect(names(bmeta), fields_to_merge),
                                 intersect(names(pmeta), fields_to_merge))
             if(length(fields)) {

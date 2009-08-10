@@ -665,7 +665,8 @@ function(dir, installed = FALSE)
 ### ** .get_requires_from_package_db
 
 .get_requires_from_package_db <-
-function(db, category = c("Depends", "Imports", "Suggests", "Enhances"))
+function(db,
+         category = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")) 
 {
     category <- match.arg(category)
     if(category %in% names(db)) {
@@ -683,7 +684,8 @@ function(db, category = c("Depends", "Imports", "Suggests", "Enhances"))
 ### ** .get_requires_with_version_from_package_db
 
 .get_requires_with_version_from_package_db <-
-function(db, category = c("Depends", "Imports", "Suggests", "Enhances"))
+function(db,
+         category = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances"))
 {
     category <- match.arg(category)
     if(category %in% names(db)) {
@@ -804,8 +806,10 @@ local({
 
 .get_standard_repository_db_fields <-
 function()
-    c("Package", "Version", "Priority", "Bundle", "Contains",
-      "Depends", "Imports", "Suggests", "Enhances", "OS_type")
+    c("Package", "Version", "Priority",
+      "Bundle", "Contains",
+      "Depends", "Imports", "LinkingTo", "Suggests", "Enhances",
+      "OS_type", "License")
 
 ### ** .is_ASCII
 

@@ -781,7 +781,7 @@ compareVersion <- function(a, b)
 }
 
 .make_dependency_list <-
-function(pkgs, available, dependencies = c("Depends", "Imports"))
+function(pkgs, available, dependencies = c("Depends", "Imports", "LinkingTo"))
 {
     ## given a character vector of packages,
     ## return a named list of character vectors of their dependencies

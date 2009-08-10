@@ -48,6 +48,13 @@ function(dir = ".", fields = NULL,
             desc[bundle, "Package"] <- desc[bundle, "Bundle"]
             if(latestOnly) desc <- utils:::.remove_stale_dups(desc)
 
+            ## Standardize licenses or replace by NA.
+            license_info <- analyze_licenses(desc[, "License"])
+            desc[, "License"] <-
+                ifelse(license_info$is_standardizable,
+                       license_info$standardization,
+                       NA)
+
             ## Writing PACKAGES file from matrix desc linewise in order to
             ## omit NA entries appropriately:
             for(i in seq_len(nrow(desc))){
@@ -185,7 +192,7 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
 
 dependsOnPkgs <-
 function(pkgs,
-         dependencies = c("Depends", "Imports"),
+         dependencies = c("Depends", "Imports", "LinkingTo"),
          recursive = TRUE,
          lib.loc = NULL,
          installed = installed.packages(lib.loc, fields = "Enhances"))

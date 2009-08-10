@@ -113,13 +113,14 @@ contrib.url(repos, type = getOption("pkgType"))
     packages on which these packages depend/suggest/import
     (and so on recursively).  Not used if \code{repos = NULL}.
     Can also be a character vector, a subset of
-    \code{c("Depends", "Imports", "Suggests", "Enhances")}.
+    \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
 
     Only supported if \code{lib} is of length one (or missing),
     so it is unambiguous where to install the dependent packages.
 
-    The default, \code{NA}, means \code{c("Depends", "Imports")} if
-    \code{lib} is unambiguous, and \code{FALSE} otherwise.
+    The default, \code{NA}, means
+    \code{c("Depends", "Imports", "LinkingTo")}
+    if \code{lib} is unambiguous, and \code{FALSE} otherwise.
   }
   \item{configure.args}{(not Windows) a character vector or a named list.
     If a character vector with no names is supplied, the elements are
@@ -297,12 +298,15 @@ contrib.url(repos, type = getOption("pkgType"))
 #endif
 }
 \value{
-  For \code{available.packages}, a matrix
-  with one row per package/bundle, row names the package names and
-  column names \code{"Package"}, \code{"Version"}, \code{"Priority"},
-  \code{"Bundle"}, \code{"Depends"}, \code{"Imports"}, \code{"Suggests"}
-  \code{"Contains"} and \code{"Repository"}.  Additional columns can
-  be specified using the \code{fields} argument.
+  For \code{available.packages}, a matrix   with one row per
+  package/bundle, row names the package names and 
+  column names
+  \code{"Package"}, \code{"Version"}, \code{"Priority"},
+  \code{"Bundle"}, \code{"Contains"},
+  \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
+  \code{"Suggests"}, \code{"Enhances"},
+  \code{"OS_type"}, \code{"License"} and \code{"Repository"}.
+  Additional columns can be specified using the \code{fields} argument.
 
   For \code{old.packages}, \code{NULL} or a matrix with one row per
   package/bundle, row names the package names and column names

@@ -3099,7 +3099,7 @@ function(dfile)
         out$bad_maintainer <- val
 
     ## Optional entries in DESCRIPTION:
-    ##   Depends/Suggests/Imports, Namespace, Priority.
+    ##   Depends/Suggests/Imports/Enhances, Namespace, Priority.
     ## These must be correct if present.
 
     val <- db[match(c("Depends", "Suggests", "Imports", "Enhances"),

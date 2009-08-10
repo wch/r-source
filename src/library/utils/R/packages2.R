@@ -19,11 +19,11 @@ getDependencies <-
 {
     oneLib <- length(lib) == 1L
     if(is.logical(dependencies) && is.na(dependencies))
-        dependencies <- c("Depends", "Imports")
-    depends <- is.character(dependencies) ||
-    (is.logical(dependencies) && dependencies)
+        dependencies <- c("Depends", "Imports", "LinkingTo")
+    depends <-
+        is.character(dependencies) || (is.logical(dependencies) && dependencies)
     if(depends && is.logical(dependencies))
-        dependencies <-  c("Depends", "Imports", "Suggests")
+        dependencies <-  c("Depends", "Imports", "LinkingTo", "Suggests")
     if(depends && !oneLib) {
         warning("Do not know which element of 'lib' to install dependencies into\nskipping dependencies")
         depends <- FALSE
@@ -112,7 +112,7 @@ install.packages <-
         clean <- "--clean"
     if(is.logical(dependencies) && is.na(dependencies))
         dependencies <- if(!missing(lib) && length(lib) > 1L) FALSE
-        else c("Depends", "Imports")
+        else c("Depends", "Imports", "LinkingTo")
 
     ## Compute the configuration arguments for a given package.
     ## If configure.args is an unnamed character vector, use that.
