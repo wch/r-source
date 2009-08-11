@@ -12,7 +12,8 @@ foo(\var{x}, \var{y})
 
   \code{\%\{\}}
   
-  \link{a link}
+  \link{a link} and one to a known destination:
+  \link[stats]{weighted.mean}
   
   var in \var{text}.
   

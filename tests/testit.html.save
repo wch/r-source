@@ -27,7 +27,8 @@ Escaped backslash <code>\x</code>.
 <code>%{}</code>
 </p>
 <p>
-<a href="../../../doc/html/search/SearchObject.html?a link">a link</a>
+<a href="../../../doc/html/search/SearchObject.html?a link">a link</a> and one to a known destination:
+<a href="../../stats/html/weighted.mean.html">weighted.mean</a>
 </p>
 <p>
 var in <VAR>text</VAR>.

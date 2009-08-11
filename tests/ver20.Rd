@@ -15,7 +15,7 @@
 }
 
 \details{
-  \R \R{} \\R \eqn{\Alpha\beta\Gamma}
+  \R \R{} \\R \eqn{\alpha\beta\Gamma}
   
   In code, all that needs to be escaped is percent, backslash and unpaired
   braces: \code{\% \\ \{}. Unescaped: \code{$ # _ ^ ~ < > |}, and as a

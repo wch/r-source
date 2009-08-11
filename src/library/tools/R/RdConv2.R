@@ -535,32 +535,51 @@ Rd2HTML <-
     	} else return(FALSE)
     }
 
-    ## FIXME: depends on CHM or not
-    ## Cross-packages CHM links are of the form
-    ## <a onclick="findlink('stats', 'weighted.mean.html')" style="text-decoration: underline; color: blue; cursor: hand">weighted.mean</a>
     writeLink <- function(tag, block) {
 	parts <- get_link(block, tag)
 
+        writeHref <- function() {
+            of0('<a href="', htmlfile, '">')
+            writeContent(block, tag)
+            of1('</a>')
+        }
+
     	if (is.null(parts$targetfile)) {
             topic <- parts$dest
-            htmlfile <- paste(topic, ".html", sep = "") ## pro tem
-            ## should be <a href=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/a>/s; where $argkey is the topic and $arg the HTMLiied version.
-            ## htmltfile <- paste("../../../doc/html/search\/SearchObject.html?", parts%dest, sep= "")
+            htmlfile  <- NA_character_
             if (!is.null(Links)) {
                 tmp <- Links[topic]
-                if (is.na(tmp)) {
-                    warnRd(block, Rdfile, "missing link ", sQuote(topic))
-                } else htmlfile <- tmp
+                if (!is.na(tmp)) htmlfile <- tmp
             }
-    	} else if (is.null(parts$pkg) || parts$pkg == package)
+            if (is.na(htmlfile)) {
+                ## FIXME for CHM?
+                ## 'should be <a href="../../../doc/html/search/SearchObject.html?$argkey">$arg<\/a>/s; where $argkey is the topic and $arg the HTMLified version.'
+                warnRd(block, Rdfile, "missing link ", sQuote(topic))
+                htmlfile <- paste("../../../doc/html/search/SearchObject.html?",
+                                   parts$dest, sep= "")
+            }
+            writeHref()
+    	} else if (is.null(parts$pkg) || parts$pkg == package) {
     	    htmlfile <- paste(parts$targetfile, ".html", sep="")
-    	else
-    	    htmlfile <- paste("../../", parts$pkg, "/html/",
-                              parts$targetfile, ".html", sep="")
+            writeHref()
+    	} else {
+            if(CHM) {
+                ## Cross-packages CHM links are of the form
+                ## <a onclick="findlink('stats', 'weighted.mean.html')" style="text-decoration: underline; color: blue; cursor: hand">weighted.mean</a>
+                htmlfile <- paste("findlink('", parts$pkg, "', '",
+                                  parts$targetfile, ".html", "')",
+                                  sep="")
+                of0('<a onclick="', htmlfile,
+                    '" style="text-decoration: underline; color: blue; cursor: hand">')
+                writeContent(block, tag)
+                of1('</a>')
+            } else {
+                htmlfile <- paste("../../", parts$pkg, "/html/",
+                                  parts$targetfile, ".html", sep="")
+                writeHref()
+            }
+        }
 
-    	of0('<a href="', htmlfile, '">')
-    	writeContent(block, tag)
-    	of1('</a>')
         nlinks <<- nlinks + 1L
     }
 

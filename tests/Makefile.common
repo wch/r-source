@@ -221,7 +221,7 @@ test-Rd: $(srcdir)/testit.Rd $(srcdir)/ver20.Rd
 	@$(RDCONV) -t txt $(srcdir)/testit.Rd > testit.txt
 	@diff -bw testit.txt $(srcdir)/testit.txt.save
 	@$(RDCONV) -t html $(srcdir)/testit.Rd > testit.html
-	-@diff -bw testit.html $(srcdir)/testit.html.save
+	@diff -bw testit.html $(srcdir)/testit.html.save
 	@$(RDCONV) -t latex $(srcdir)/testit.Rd > testit.tex
 	@diff -bw testit.tex $(srcdir)/testit.tex.save
 	@$(RDCONV) -t example $(srcdir)/testit.Rd > testit-Ex.R

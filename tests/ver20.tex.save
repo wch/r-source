@@ -14,7 +14,7 @@ This is the description
 \end{Arguments}
 %
 \begin{Details}\relax
-\R{} \R{} \bsl{}R \eqn{\Alpha\beta\Gamma}{}
+\R{} \R{} \bsl{}R \eqn{\alpha\beta\Gamma}{}
 
 In code, all that needs to be escaped is percent, backslash and unpaired
 braces: \code{\% \bsl{} \{}. Unescaped: \code{\$ \# \_ \textasciicircum{} \textasciitilde{} < > |}, and as a
@@ -34,7 +34,7 @@ And if we do escape: \bsl{}\$ \bsl{}\# \bsl{}\_ , and with three backslashes, \b
 group-weighting from \$[N\_iP\_i(1-P\_i)]\$
 
 \begin{alltt}
-    \% a
+    % a
     \bsl{}
     \bsl{}\% c
     \{

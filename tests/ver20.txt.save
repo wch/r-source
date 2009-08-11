@@ -14,7 +14,7 @@ _A_r_g_u_m_e_n_t_s:
 
 _D_e_t_a_i_l_s:
 
-     R R \R AlphabetaGamma
+     R R \R alphabetaGamma
   
      In code, all that needs to be escaped is percent, backslash and
      unpaired braces: '% \ {'. Unescaped: '$ # _ ^ ~ < > |', and as a
