@@ -1,6 +1,6 @@
 % File src/library/base/man/rawConversion.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 2004-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{rawConversion}
@@ -44,9 +44,12 @@ packBits(x, type = c("raw", "integer"))
   with a warning.)  In either case it is possible to create a result
   which is invalid in a multibyte locale, e.g. one using UTF-8.
 
+  \code{rawShift(x,n)} shift the bits in \code{x} by \code{n} positions
+  to the right, see the argument \code{n}, above.
+
   \code{rawToBits} returns a raw vector of 8 times the length of a raw
   vector with entries 0 or 1.  \code{intToBits} returns a raw vector
-  of 32 times the length of an integer vector with entries 0 or 1. 
+  of 32 times the length of an integer vector with entries 0 or 1.
   (Non-integral numeric values are truncated to integers.) In
   both cases the unpacking is least-significant bit first.
 
@@ -80,5 +83,16 @@ rawShift(y, 1)
 rawShift(y, -2)
 
 rawToBits(y)
+
+showBits <- function(r) stats::symnum(as.logical(rawToBits(r)))
+
+z <- as.raw(5)
+z ; showBits(z)
+showBits(rawShift(z, 1)) # shift to right
+showBits(rawShift(z, 2))
+showBits(z)
+showBits(rawShift(z, -1)) # shift to left
+showBits(rawShift(z, -2)) # ..
+showBits(rawShift(z, -3)) # shifted off entirely
 }
 \keyword{classes}
