@@ -220,6 +220,11 @@ NEW FEATURES
     o	Standardized DESCRIPTION 'License' specs are now available for
     	package management computations.
 
+    o	"\uxxxx" escapes can now be parsed to a UTF-8 encoded string
+	even in non-UTF-8 locales (this has been implemented on
+	Windows since R 2.7.0).  (Use of \uxxxx escapes requires MBCS
+	support.)
+
 
 Rd HELP FILE CHANGES
 

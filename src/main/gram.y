@@ -1904,9 +1904,7 @@ static int NumericValue(int c)
    string.  Needs wide-char support.
 */
 #ifdef SUPPORT_MBCS
-# ifdef Win32
-#  define USE_UTF8_IF_POSSIBLE
-# endif
+# define USE_UTF8_IF_POSSIBLE
 #endif
 
 #ifdef USE_UTF8_IF_POSSIBLE
@@ -2103,10 +2101,17 @@ static int StringValue(int c, Rboolean forSymbol)
 		}
 		res = ucstomb(buff, val);
 		if((int)res <= 0) {
-		    if(delim)
-			error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
-		    else
-			error(_("invalid \\Uxxxxxxxx sequence (line %d)"), xxlineno);
+#ifdef USE_UTF8_IF_POSSIBLE
+		    if(!forSymbol) {
+			use_wcs = TRUE;
+		    } else
+#endif
+		    {
+			if(delim)
+			    error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
+			else
+			    error(_("invalid \\Uxxxxxxxx sequence (line %d)"), xxlineno);
+		    }
 		}
 		for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
 		WTEXT_PUSH(val);
@@ -2182,7 +2187,7 @@ static int StringValue(int c, Rboolean forSymbol)
 	    wchar_t wc;
 	    char s[2] = " ";
 	    s[0] = c;
-	    mbrtowc(&wc, s, 1, NULL);
+	    mbrtowc(&wc, s, 2, NULL);
 	    WTEXT_PUSH(wc);
 	}
 #endif
