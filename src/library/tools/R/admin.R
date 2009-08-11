@@ -417,17 +417,11 @@ function(dir, outDir)
         ## we want to proceed if any is NA.
         if(all(upToDate %in% TRUE)) return(invisible())
 
-        ## <FIXME USE_NEW_HELP>
-        ## Get rid of suppressWarnings() when USE_NEW_HELP becomes the
-        ## default.
         ## Rd objects should already have been installed.
-        db <- tryCatch(suppressWarnings(Rd_db(basename(outDir),
-                                              lib.loc = dirname(outDir))),
+        db <- tryCatch(Rd_db(basename(outDir), lib.loc = dirname(outDir)),
                        error = function(e) NULL)
         ## If not, we build the Rd db from the sources:
-        if(is.null(db))
-            db <- suppressWarnings(.build_Rd_db(dir, allRd))
-        ## </FIXME>
+        if(is.null(db)) db <- .build_Rd_db(dir, allRd)
         contents <- Rd_contents(db)
 
         .write_Rd_contents_as_RDS(contents,

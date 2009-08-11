@@ -33,8 +33,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     lines[lines == "\\non_function{}"] <- ""
     ## extract the encoding if marked in the file:
     ## do this in two steps to minimize warnings in MBCS locales
-    ## Note this is required to be on a line by itself,
-    ## although the author of 'resper' can't RTFM.
+    ## Note this is required to be on a line by itself.
     enc <- grep("\\encoding{", lines, fixed = TRUE, useBytes=TRUE)
     enc <- grep("^\\\\encoding\\{([^}]*)\\}.*", lines[enc], value=TRUE)
     if(length(enc)) {
@@ -44,7 +43,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
         enc <- enc[1L]
         enc <- sub("^\\\\encoding\\{([^}]*)\\}.*", "\\1", enc)
         if(verbose) message("found encoding ", enc)
-        if(enc %in% c("UTF-8", "utf-8", "utf8")) 
+        if(enc %in% c("UTF-8", "utf-8", "utf8"))
             encoding <- "UTF-8"
         else
             encoding <- enc
@@ -52,7 +51,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     if (encoding == "unknown") encoding <- ""
 
     ## the internal function must get some sort of srcfile
-    if (!inherits(srcfile, "srcfile")) 
+    if (!inherits(srcfile, "srcfile"))
     	srcfile <- srcfile(file0)
     basename <- basename(srcfile$filename)
     srcfile$encoding <- encoding
@@ -74,7 +73,7 @@ print.Rd <- function(x, ...) {
 }
 
 as.character.Rd <- function(x, ...) {
-    TWOARG <- c("\\section", "\\item", "\\enc", "\\method", "\\S3method", 
+    TWOARG <- c("\\section", "\\item", "\\enc", "\\method", "\\S3method",
                 "\\S4method", "\\tabular", "\\deqn", "\\eqn")
     pr <- function(x) {
         tag <- attr(x, "Rd_tag")
@@ -93,7 +92,7 @@ as.character.Rd <- function(x, ...) {
     	    	for (i in seq_along(x)) result <- c(result, pr(x[[i]]))
     	    } else {
     	    	result <- tag
-    	    	if (!is.null(option <- attr(x, "Rd_option"))) 
+    	    	if (!is.null(option <- attr(x, "Rd_option")))
     	    	    result <- c(result, "[", pr(option), "]")
     	    	result <- c(result, "{")
     	    	for (i in seq_along(x)) result <- c(result, pr(x[[i]]))

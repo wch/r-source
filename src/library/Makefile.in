@@ -44,7 +44,7 @@ R:
 	@$(INSTALL_DATA) $(top_srcdir)/doc/html/R.css \
 	  $(top_builddir)/library
 
-## do metadata before help indices
+## do Rdobjects before metadata before help indices
 docs:
 	@$(MAKE) Rdobjects
 	@$(MAKE) metadata
@@ -54,19 +54,24 @@ docs:
 	@$(MAKE) Rdfiles
 	@touch stamp-docs
 
+## FIXME: do this in parallel
 Rdobjects:
+	@$(ECHO) $(ECHO_N) "installing parsed Rd files for$(ECHO_C)"
 	@for pkg in $(R_PKGS_BASE); do \
 	  if test -d $(srcdir)/$${pkg}/man; then \
+	    $(ECHO) $(ECHO_N) " $${pkg}$(ECHO_C)"; \
 	    $(ECHO) "tools:::.install_package_Rd_objects('$(srcdir)/$${pkg}', '$(top_builddir)/library/$${pkg}')" | \
 	    R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null; \
 	  fi; \
 	done
+	@$(ECHO)
 
 help-indices:
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(ECHO) "tools:::.writePkgIndices(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(R_EXE) || exit 1; \
 	done
 
+## FIXME: do this in parallel (but avoid interleaving output)
 Rdfiles:
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(R_EXE) || exit 1; \

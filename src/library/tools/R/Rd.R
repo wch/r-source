@@ -78,7 +78,7 @@ Rd_contents <-
 function(db)
 {
     ## Compute contents db from Rd db.
-    
+
     ## <FIXME>
     ## This used to work on a list of Rd file paths.
     ## Legacy code:
@@ -371,22 +371,27 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL)
     } else if(is.null(files))
         stop("you must specify 'dir' or 'files'")
 
+    add_sources <- nzchar(Sys.getenv("R_RD_SOURCE_ATTRS"))
     .fetch_Rd_object <- function(f) {
+        ## This calls parse_Rd
         Rd <- prepare_Rd(f,
                          encoding = encoding,
                          defines = .Platform$OS.type,
                          stages = "install")
-        ## <FIXME>
-        ## Remove when we no longer need/want the Rd sources ...
-        lines <- .read_Rd_lines_quietly(f)
-        if(encoding != "unknown")
-            lines <- c(lines, sprintf("\\encoding{%s}", encoding))
-        attr(Rd, "source") <- lines
-        ## </FIXME>
+        if (add_sources) {
+            ## <FIXME>
+            ## Remove when we no longer need/want the Rd sources ...
+            lines <- .read_Rd_lines_quietly(f)
+            if(encoding != "unknown")
+                lines <- c(lines, sprintf("\\encoding{%s}", encoding))
+            attr(Rd, "source") <- lines
+            ## </FIXME>
+        }
         Rd
     }
 
     if(!is.null(db_file) && file_test("-f", db_file)) {
+        ## message("updating database of parsed Rd files")
         db <- .readRDS(db_file)
         db_names <- names(db)
         ## Files in the db in need of updating:
@@ -405,6 +410,7 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL)
         if(any(ind))
             db <- db[!ind]
     } else {
+        ## message("building database of parsed Rd files")
         db <- lapply(files, .fetch_Rd_object)
         names(db) <- files
     }
@@ -545,7 +551,7 @@ function(x)
             e
     }
     recurse(x)
-}    
+}
 
 ### * .Rd_drop_nodes_with_tags
 
@@ -560,7 +566,7 @@ function(x, tags)
             e
     }
     recurse(x)
-}    
+}
 
 ### * .Rd_get_argument_names
 
@@ -675,7 +681,7 @@ function(x)
     lapply(x, recurse)
     dimnames(out) <- list(NULL, c("Target", "Anchor"))
     out
-}    
+}
 
 ### * .Rd_get_names_from_Rd_db
 

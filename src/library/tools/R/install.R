@@ -1507,7 +1507,8 @@
                 latexEncodings <- c(latexEncodings,
                                     attr(Rd2latex(.readRDS(f),
                                                   file.path(latexdir, out),
-                                                  encoding=encoding),
+                                                  encoding = encoding,
+                                                  defines = NULL),
                                          "latexEncoding"))
             }
         } else {
@@ -1785,17 +1786,11 @@
         .readRDS(f)
     else {
         ## Keep this in sync with .install_package_Rd_indices().
-        ## <FIXME USE_NEW_HELP>
-        ## Get rid of suppressWarnings() when USE_NEW_HELP becomes the
-        ## default.
         ## Rd objects should already have been installed.
-        db <- tryCatch(suppressWarnings(Rd_db(basename(outDir),
-                                              lib.loc = dirname(outDir))),
+        db <- tryCatch(Rd_db(basename(outDir), lib.loc = dirname(outDir)),
                        error = function(e) NULL)
         ## If not, we build the Rd db from the sources:
-        if(is.null(db))
-            db <- suppressWarnings(Rd_db(dir = dir))
-        ## </FIXME>
+        if(is.null(db)) db <- Rd_db(dir = dir)
         if(!length(db)) {
             warning("there is a 'man' dir but no help pages in this package",
                     call. = FALSE)
@@ -2028,6 +2023,7 @@
 
     for(f in files) {
         Rd <- db[[f]]
+        attr(Rd, "source") <- NULL
         bf <- sub("\\.[Rr]d$", "", basename(f))
 
         shown <- FALSE
@@ -2048,8 +2044,11 @@
             ff <- file.path(outDir, dirname[type],
                             paste(bf, ext[type], sep = ""))
             if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
-                showtype("html")
-                .convert(Rd2HTML(Rd, ff, package = pkg, Links = Links))
+                showtype(type)
+                ## assume prepare_Rd was run when dumping the .rds
+                ## so use defines = NULL for speed
+                .convert(Rd2HTML(Rd, ff, package = pkg, defines = NULL,
+                                 Links = Links))
             }
         }
         if ("latex" %in% types) {
@@ -2058,7 +2057,7 @@
                             paste(bf, ext[type], sep = ""))
             if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
                 showtype(type)
-                .convert(Rd2latex(Rd, ff))
+                .convert(Rd2latex(Rd, ff, defines = NULL))
             }
         }
         if("chm" %in% types) {
@@ -2067,7 +2066,7 @@
                             paste(bf, ext[type], sep=""))
             if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
                 showtype(type)
-                .convert(Rd2HTML(Rd, ff, package = pkg,
+                .convert(Rd2HTML(Rd, ff, package = pkg, defines = NULL,
                                  Links = Links, CHM = TRUE))
             }
         }
@@ -2076,7 +2075,7 @@
             ff <- file.path(outDir, dirname[type],
                             paste(bf, ext[type], sep = ""))
             if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
-                .convert(Rd2ex(Rd, ff))
+                .convert(Rd2ex(Rd, ff, defines = NULL))
                 if(file_test("-f", ff)) showtype(type)
             }
         }
