@@ -1,5 +1,5 @@
 \inputencoding{latin1}
-\HeaderA{ver11}{Johnson \& Johnson,  \$ \_  \#\#\# \textasciicircum{} \textasciitilde{}}{ver11}
+\HeaderA{ver20}{Johnson \& Johnson,  \$ \_  \#\#\# \textasciicircum{} \textasciitilde{}}{ver20}
 %
 \begin{Description}\relax
 This is the description
@@ -20,13 +20,13 @@ In code, all that needs to be escaped is percent, backslash and unpaired
 braces: \code{\% \bsl{} \{}. Unescaped: \code{\$ \# \_ \textasciicircum{} \textasciitilde{} < > |}, and as a
 pair, \code{\{...\}}.  If we escape: \code{ \_ \# \$ \& \{ \} \bsl{} }
 And some backslashes: \code{\bsl{} \bsl{} \bsl{}\bsl{} \bsl{}\bsl{}} should
-give zero, one, one, two backslashes.
+give one, one, two, two backslashes.
 
-How about \ (that is backslash space) in text?
+How about \bsl{} (that is backslash space) in text?
 
-Elsewhere, \{ \} \% \bsl{} need to be escaped, but not \$ \# \_ \textasciicircum{} \textasciitilde{} \textless{} \textgreater{} \textbar{} .
-Let's try that again in \code{\bsl{}samp}: \samp{ \{ \} \% \bsl{} \$ \# \_ \textasciicircum{} \textasciitilde{} \textless{} \textgreater{} \textbar{}}.
-And if we do escape: \$ \# \_ , and with three backslashes, \bsl{}\bsl{}\#.
+Elsewhere, \{ \} \% \bsl{} need to be escaped, but not \$ \# \_ \textasciicircum{} \textasciitilde{} < > | .
+Let's try that again in \code{\bsl{}samp}: \samp{ \{ \} \% \bsl{} \$ \# \_ \textasciicircum{} \textasciitilde{} < > |}.
+And if we do escape: \bsl{}\$ \bsl{}\# \bsl{}\_ , and with three backslashes, \bsl{}\bsl{}\#.
 
 \deqn{a < b > c | d, x^y}{}
 \deqn{\$k > \#k, x_y, x\_y}{}

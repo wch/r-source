@@ -39,12 +39,12 @@ var in <VAR>text</VAR>.
 
   %{}
 
-  var in <VAR>text</VAR>.
+  var in \var{text}.
   
-  foo(<VAR>x</VAR>, <VAR>y</VAR>).
+  foo(\var{x}, \var{y}).
   
   From gap: pedtodot.Rd -- n=split(m,par,"\034")
-</pre>
+  </pre>
 </p>
 
 

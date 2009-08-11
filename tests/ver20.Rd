@@ -1,5 +1,5 @@
 % Test file for Rd version 1.1
-\name{ver11}
+\name{ver20}
 \Rdversion{1.1}
 
 \title{Johnson & Johnson,  $ _  ### ^ ~}
@@ -21,7 +21,7 @@
   braces: \code{\% \\ \{}. Unescaped: \code{$ # _ ^ ~ < > |}, and as a
   pair, \code{{...}}.  If we escape: \code{ \_ \# \$ \& \{ \} \\ }
   And some backslashes: \code{\ \\ \\\ \\\\} should
-  give zero, one, one, two backslashes.
+  give one, one, two, two backslashes.
 
   How about \ (that is backslash space) in text?
   

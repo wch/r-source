@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="../../R.css">
 </head><body>
 
-<table width="100%" summary="page for ver11 {}"><tr><td>ver11 {}</td><td align="right">R Documentation</td></tr></table>
+<table width="100%" summary="page for ver20 {}"><tr><td>ver20 {}</td><td align="right">R Documentation</td></tr></table>
 
 <h2>Johnson &amp; Johnson,  $ _  ### ^ ~</h2>
 
@@ -41,7 +41,7 @@ In code, all that needs to be escaped is percent, backslash and unpaired
 braces: <code>% \ {</code>. Unescaped: <code>$ # _ ^ ~ &lt; &gt; |</code>, and as a
 pair, <code>{...}</code>.  If we escape: <code> \_ \# \$ \&amp; { } \ </code>
 And some backslashes: <code>\ \ \\ \\</code> should
-give zero, one, one, two backslashes.
+give one, one, two, two backslashes.
 </p>
 <p>
 How about \ (that is backslash space) in text?
@@ -51,7 +51,10 @@ Elsewhere, { } % \ need to be escaped, but not $ # _ ^ ~ &lt; &gt; | .
 Let's try that again in <code>\samp</code>: <span class="samp"> { } % \ $ # _ ^ ~ &lt; &gt; |</span>.
 And if we do escape: \$ \# \_ , and with three backslashes, \\#.
 </p>
-<p align="center"><i>a &lt; b &gt; c | d, x^y</i></p><p align="center"><i>\$k &gt; \#k, x_y, x\_y</i></p>
+<p>
+</p><p align="center"><i>a &lt; b &gt; c | d, x^y</i></p><p>
+</p><p align="center"><i>\$k &gt; \#k, x_y, x\_y</i></p><p>
+</p>
 <p>
 group-weighting from $[N_iP_i(1-P_i)]$
 </p>
@@ -69,7 +72,7 @@ group-weighting from $[N_iP_i(1-P_i)]$
 <h3>URLs and emails</h3>
 
 <p>
-URLs need to be verbatim:  <a href="testit ~^_$#&lt;&gt;|">testit ~^_$#&lt;&gt;|</a>.
+URLs need to be verbatim:  <a href="testit ~^_$#<>|">testit ~^_$#<>|</a>.
 </p>
 <p>
 Markus Kuhn, &ldquo;ASCII and Unicode quotation marks&rdquo;.

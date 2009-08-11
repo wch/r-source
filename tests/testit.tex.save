@@ -1,6 +1,7 @@
 \inputencoding{latin1}
 \HeaderA{testit}{An Rd Regression Test}{testit}
-\aliasA{\{}{testit}{\.Rlbrace.}
+\aliasA{\{}{testit}{.Rlbrace.}
+%
 \begin{Usage}
 \begin{verbatim}
 \x \y %{}
@@ -8,6 +9,7 @@
 foo(x, y)
 \end{verbatim}
 \end{Usage}
+%
 \begin{Details}\relax
 Escaped backslash \code{\bsl{}x}.
 
@@ -21,15 +23,17 @@ var in \var{text}.
 \begin{alltt}
   Escaped backslash \bsl{}x.
 
-  \%\{\}
+  %\{\}
 
-  var in \var{text}.
+  var in \bsl{}var\{text\}.
   
-  foo(\var{x}, \var{y}).
+  foo(\bsl{}var\{x\}, \bsl{}var\{y\}).
   
   From gap: pedtodot.Rd -- n=split(m,par,"\bsl{}034")
-\end{alltt}
+  \end{alltt}
+
 \end{Details}
+%
 \begin{Examples}
 \begin{ExampleCode}
 \x
