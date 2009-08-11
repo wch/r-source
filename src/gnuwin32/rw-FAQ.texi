@@ -147,7 +147,7 @@ test on versions of Windows currently supported by Microsoft, mainly on
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
-takes up about 75Mb of disk space and a minimal one about 25Mb.
+takes up about 80Mb of disk space and a minimal one about 32Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
