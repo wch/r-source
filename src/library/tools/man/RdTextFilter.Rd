@@ -10,7 +10,7 @@ for spell checking or other uses.
 }
 \usage{
 RdTextFilter(ifile, encoding = "unknown", keepSpacing = TRUE,
-             drop = character(0), keep = character(0))
+             drop = character(), keep = character())
 }
 \arguments{
 \item{ifile}{
@@ -32,38 +32,37 @@ Sections of the Rd file to keep.
 }
 }
 \details{
-This function parses the Rd file, then walks through it, element by element.
-Items with tag \code{"TEXT"} are kept in the same position as they appeared in the
-original file, while other parts of the file are replaced with blanks, so 
-a spell checker such as \code{\link{aspell}} can check only the text and report
-the position in the original file.  (If \code{keepSpacing} is \code{FALSE},
-blank filling will not occur, and text will not be output in its original location.)
+  This function parses the Rd file, then walks through it, element by
+  element.  Items with tag \code{"TEXT"} are kept in the same position as
+  they appeared in the original file, while other parts of the file are
+  replaced with blanks, so a spell checker such as \code{\link{aspell}}
+  can check only the text and report the position in the original file.
+  (If \code{keepSpacing} is \code{FALSE}, blank filling will not occur,
+  and text will not be output in its original location.)
 
-By default, the tags \code{c("\\docType", "\\encoding", "\\keyword",
-"\\email", "\\file", "\\linkS4class", "\\pkg", "\\var", "\\method",
-"\\S3method", "\\S4method", "\\link")} are skipped.  Additional tags
-can be skipped by listing them in the \code{drop} argument; listing
-tags in the \code{keep} argument will stop them from being skipped.
-It is also possible to \code{keep} any of the \code{c("RCODE", "COMMENT",
-"VERB")} tags, which correspond to R-like code, comments, and verbatim
-text respectively, or to drop \code{"TEXT"}.
-
+  By default, the tags \code{c("\\docType", "\\encoding", "\\keyword",
+    "\\email", "\\file", "\\linkS4class", "\\pkg", "\\var", "\\method",
+    "\\S3method", "\\S4method", "\\link")} are skipped.  Additional tags
+  can be skipped by listing them in the \code{drop} argument; listing
+  tags in the \code{keep} argument will stop them from being skipped.
+  It is also possible to \code{keep} any of the \code{c("RCODE", "COMMENT",
+    "VERB")} tags, which correspond to R-like code, comments, and verbatim
+  text respectively, or to drop \code{"TEXT"}.
 }
 \value{
-A character vector which if written to a file, one element per line, would 
-duplicate the text elements of the original Rd file.
+  A character vector which if written to a file, one element per line, would 
+  duplicate the text elements of the original Rd file.
 }
 \author{
-Duncan Murdoch
+  Duncan Murdoch
 }
 \note{
-The filter attempts to merge text elements into single words when markup in
-the Rd file is used to highlight just the start of a word.
+  The filter attempts to merge text elements into single words when markup in
+  the Rd file is used to highlight just the start of a word.
 }
 
 \seealso{
-  \code{\link[utils]{aspell}}, for which this is an acceptable
-  \code{filter}.
+  \code{\link[utils]{aspell}}, for which this is an acceptable \code{filter}.
 }
 \keyword{ utilities }
 \keyword{ documentation }

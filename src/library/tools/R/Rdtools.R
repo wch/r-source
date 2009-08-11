@@ -1,54 +1,53 @@
 
 RdTextFilter <-
 function(ifile, encoding = "unknown", keepSpacing = TRUE,
-         drop = character(0), keep = character(0))
+         drop = character(), keep = character())
 {
     if (inherits(ifile, "Rd")) p <- ifile
-    else p <- parse_Rd(ifile, encoding=encoding)
+    else p <- parse_Rd(ifile, encoding = encoding)
     tags <- RdTags(p)
     if ("\\encoding" %in% tags) {
 	encoding <- p[[which(tags=="\\encoding")]][[1]]
-	if(encoding %in% c("UTF-8", "utf-8", "utf8")) 
-	    encoding <- "UTF-8"
+	if(encoding %in% c("UTF-8", "utf-8", "utf8")) encoding <- "UTF-8"
 	p <- parse_Rd(ifile, encoding=encoding)
-    } else 
+    } else
 	encoding <- ""
 
-    prevline <- 1
-    prevcol <- 0
-    
-    doPartialMarkup <- function(x, tags, i) { # handle things like \bold{pre}fix 
+    prevline <- 1L
+    prevcol <- 0L
+
+    doPartialMarkup <- function(x, tags, i) { # handle things like \bold{pre}fix
         result <- FALSE
     	if (i < length(tags)
-            && tags[i+1] == "TEXT"
-            && length(x[[i]]) == 1
+            && tags[i+1L] == "TEXT"
+            && length(x[[i]]) == 1L
             && tags[i] %in% c("\\bold", "\\emph", "\\strong", "\\link")
             && RdTags(x[[i]]) == "TEXT") {
-    	    text1 <- x[[i]][[1]]
+    	    text1 <- x[[i]][[1L]]
     	    if (length(grep("[^[:space:]]$", text1))) { # Ends in non-blank
-    	    	text2 <- x[[i+1]]
+    	    	text2 <- x[[i+1L]]
     	    	if (length(grep("^[^[:space:]]", text2))) { # Starts non-blank
     	    	    show(text1)
-    	    	    prevcol <<- prevcol+1 # Shift text2 left by one column
+    	    	    prevcol <<- prevcol+1L # Shift text2 left by one column
     	    	    saveline <- prevline
     	    	    show(text2)
     	    	    if (prevline == saveline)
-    	    	    	prevcol <<- prevcol-1
+    	    	    	prevcol <<- prevcol-1L
     		    result <- TRUE
     		}
     	    }
 	}
 	result
     }
-    	
+
     show <- function(x) {
 	srcref <- attr(x, "srcref")
-	firstline <- srcref[1]
-	firstbyte <- srcref[2]
-	lastline <- srcref[3]
-	lastbyte <- srcref[4]
-	firstcol <- srcref[5]
-	lastcol <- srcref[6]
+	firstline <- srcref[1L]
+	firstbyte <- srcref[2L]
+	lastline <- srcref[3L]
+	lastbyte <- srcref[4L]
+	firstcol <- srcref[5L]
+	lastcol <- srcref[6L]
 	tag <- attr(x, "Rd_tag")
 	if (is.null(tag)) tag <- "NULL"
 	if (tag %in% drop) tag <- "DROP"
@@ -57,13 +56,13 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
 	KEEP =,
 	TEXT = {
 	    if (prevline < firstline) {
-		prevcol <<- 0
-		cat(rep("\n", if (keepSpacing) firstline-prevline else 1))
+		prevcol <<- 0L
+		cat(rep("\n", if (keepSpacing) firstline-prevline else 1L))
 	    }
-	    if (keepSpacing) cat(rep(" ", firstcol - prevcol - 1), sep="")
+	    if (keepSpacing) cat(rep(" ", firstcol - prevcol - 1L), sep="")
 	    x <- as.character(srcref) # go back to original form
 	    if (encoding != "") Encoding(x) <- encoding
-	    cat(x,sep="")
+	    cat(x, sep = "")
 	    prevcol <<- lastcol
 	    prevline <<- lastline
 	},
@@ -80,28 +79,28 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
 	"\\S4method"=,
 	"\\link"=,
 	DROP = {},  # do nothing
-	
+
 	"\\tabular"=,
 	"#ifdef"=,
 	"#ifndef"={  # Ignore the first arg, process the second
-	    show(x[[2]])
+	    show(x[[2L]])
 	},
 	"\\item"={   # Ignore the first arg of a two-arg item
-	    if (length(x) == 2) show(x[[2]])
+	    if (length(x) == 2L) show(x[[2L]])
 	},
 	{	# default
 	    if (is.list(x)) {
              	tags <- RdTags(x)
-             	i <- 0
+             	i <- 0L
              	while (i < length(x)) {
-             	    i <- i + 1
+             	    i <- i + 1L
              	    if (doPartialMarkup(x, tags, i))
-             	    	i <- i + 1
+             	    	i <- i + 1L
              	    else
              		show(x[[i]])
              	}
-	    } else if (tag == "KEEPLIST") { 
-	    	attr(x, "Rd_tag") <- "KEEP" 
+	    } else if (tag == "KEEPLIST") {
+	    	attr(x, "Rd_tag") <- "KEEP"
 	    	show(x)
 	    }
 	})
