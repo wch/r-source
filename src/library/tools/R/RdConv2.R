@@ -1233,10 +1233,11 @@ Rd2ex <-
             ## There are fancy rules here if not followed by \n
             ## FIXME: do this better
             of1("## Don't show: ")
-            if (!grepl("^\n", x[[1L]], perl = TRUE))
+            if (!grepl("^\n", x[[1L]][1L], perl = TRUE))
                 writeLines("", con)
             for(i in seq_along(x)) render(x[[i]], prefix)
-            if (!grepl("\n$", x[[length(x)]], perl = TRUE))
+            last <- x[[length(x)]]
+            if (!grepl("\n$", last[length(last)], perl = TRUE))
                 writeLines("", con)
             of1("## End Don't show")
         } else if (tag  == "\\dontrun") {
@@ -1246,21 +1247,23 @@ Rd2ex <-
                 render(x[[1L]], prefix)
             } else {
                 of1("## Not run: ")
-                if (!grepl("^\n", x[[1L]], perl = TRUE)) {
+                if (!grepl("^\n", x[[1L]][1L], perl = TRUE)) {
                     writeLines("", con)
                     render(x[[1L]], paste("##D", prefix))
                 } else render(x[[1L]], prefix)
                 for(i in 2:length(x)) render(x[[i]], paste("##D", prefix))
-                if (!grepl("\n$", x[[length(x)]], perl = TRUE))
+                last <- x[[length(x)]]
+                if (!grepl("\n$", last[length(last)], perl = TRUE))
                     writeLines("", con)
                 of1("## End(Not run)")
             }
         } else if (tag  == "\\donttest") {
             of1("## No test: ")
-            if (!grepl("^\n", x[[1L]], perl = TRUE))
+            if (!grepl("^\n", x[[1L]][1L], perl = TRUE))
                 writeLines("", con)
             for(i in seq_along(x)) render(x[[i]], prefix)
-            if (!grepl("\n$", x[[length(x)]], perl = TRUE))
+            last <- x[[length(x)]]
+            if (!grepl("\n$", last[length(last)], perl = TRUE))
                 writeLines("", con)
             of1("## End(No test)")
         } else if (tag == "COMMENT") {
