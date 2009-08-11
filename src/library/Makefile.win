@@ -73,13 +73,13 @@ Rdfiles:
 ifeq ($(strip $(USE_CHM)),TRUE)
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(MAKE) --no-print-directory -C ../gnuwin32/help -s RHOME=$(RHOME) \
-	    HELPTYPES='rds html example chm' \
+	    HELPTYPES='rds html chm' \
 	    chm-$${pkg} || exit 1; \
 	done
 else
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(MAKE) --no-print-directory -C ../gnuwin32/help -s RHOME=$(RHOME) \
-	    HELPTYPES='rds html example' \
+	    HELPTYPES='rds html' \
 	    help-$${pkg} || exit 1; \
 	done
 endif

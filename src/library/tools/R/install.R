@@ -91,7 +91,7 @@
             "      --no-docs		do not build and install documentation",
             "      --no-html		do not build HTML help",
             "      --latex      	install LaTeX help",
-            "      --no-example   	        do not install R code for help examples",
+            "      --example   	        install R code for help examples",
             "      --use-zip-data	collect data files in zip archive",
             "      --use-zip-help	collect help and examples into zip archives",
             "      --use-zip		combine '--use-zip-data' and '--use-zip-help'",
@@ -941,7 +941,7 @@
     build_text <- TRUE
     build_html <- TRUE
     build_latex <- FALSE
-    build_example <- TRUE
+    build_example <- FALSE
     build_chm <- WINDOWS
     use_configure <- TRUE
     use_zip_data <- FALSE
@@ -994,8 +994,8 @@
             build_html <- FALSE
         } else if (a == "--latex") {
             build_latex <- TRUE
-        } else if (a == "--no-example") {
-            build_example <- FALSE
+        } else if (a == "--example") {
+            build_example <- TRUE
         } else if (a == "--no-chm") {
             build_chm <- FALSE
         } else if (a == "--use-zip") {
@@ -1495,14 +1495,38 @@
     ## If it does not exist, guess this is a source package.
     latexdir <- file.path(pkgdir, "latex")
     if (!file_test("-d", latexdir)) {
-        Rdsfiles <- Sys.glob(file.path(pkgdir, "help/*.rds"))
-        if(length(Rdsfiles)) {
+        Rdsfile <- Sys.glob(file.path(pkgdir, "man/*.rds"))
+        if(length(Rdsfile)) {
             ## So convert them
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
-            message("Converting parsed Rd files to LaTeX ...")
+            message("Converting file of parsed Rd's to LaTeX ",
+                    appendLF=FALSE, domain=NA)
+            Rd <- Rd_db(basename(pkgdir), lib.loc = dirname(pkgdir))
+            cnt <- 0L
+            for(f in names(Rd)) {
+                bf <- basename(f)
+                cnt <- cnt + 1L
+                if(cnt %% 10L == 0L) message(".", appendLF=FALSE, domain=NA)
+                out <-  sub("[Rr]d$", "tex", basename(f))
+                latexEncodings <- c(latexEncodings,
+                                    attr(Rd2latex(Rd[[f]],
+                                                  file.path(latexdir, out),
+                                                  encoding = encoding,
+                                                  defines = NULL),
+                                         "latexEncoding"))
+            }
+            message(domain=NA)
+        } else if(length(Rdsfiles <- Sys.glob(file.path(pkgdir, "help/*.rds")))) {
+            ## FIXME: should we keep this?
+            latexdir <- tempfile("ltx")
+            dir.create(latexdir)
+            message("Converting parsed Rd files to LaTeX ",
+                    appendLF=FALSE, domain=NA)
+            cnt <- 0L
             for(f in Rdsfiles) {
-                cat("  ", basename(f), "\n", sep="")
+                cnt <- cnt + 1L
+                if(cnt %% 10L == 0L) message(".", appendLF=FALSE, domain=NA)
                 out <-  sub("\\.rds$", ".tex", basename(f))
                 latexEncodings <- c(latexEncodings,
                                     attr(Rd2latex(.readRDS(f),
@@ -1511,6 +1535,7 @@
                                                   defines = NULL),
                                          "latexEncoding"))
             }
+            message(domain=NA)
         } else {
             files <- Sys.glob(file.path(pkgdir, "*.[Rr]d"))
             if (!length(files)) {
@@ -1972,7 +1997,7 @@
 
 ## possible types are "rds", "html", "chm", "latex", "example"
 .convertRdfiles <-
-    function(dir, outDir, types = c("rds", "html", "example"))
+    function(dir, outDir, types = c("rds", "html"))
 {
     showtype <- function(type) {
     	if (!shown) {

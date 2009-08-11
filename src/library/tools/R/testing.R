@@ -311,8 +311,31 @@ testInstalledPackage <-
             unzip(fzip, exdir = filedir)
             on.exit(unlink(filedir, recursive = TRUE))
         } else filedir <- exdir
+    } else if (file_test("-d", mandir <- file.path(pkgdir, "man"))) {
+        message("  Extracting from file of parsed Rd's ",
+                appendLF = FALSE, domain = NA)
+        db <- Rd_db(basename(pkgdir), lib.loc = dirname(pkgdir))
+        if (!length(db)) {
+            message("no parsed files found")
+            return(invisible(NULL))
+        }
+        files <- names(db)
+        filedir <- tempfile()
+        dir.create(filedir)
+        on.exit(unlink(filedir, recursive = TRUE))
+        cnt <- 0L
+        for(f in files) {
+            Rd2ex(db[[f]],
+                  file.path(filedir, sub("[Rr]d$", "R", basename(f))),
+                  defines = NULL)
+            cnt <- cnt + 1L
+            if(cnt %% 10L == 0L) message(".", appendLF = FALSE, domain = NA)
+        }
+        message()
+        nof <- length(Sys.glob(file.path(filedir, "*.R")))
+        if(!nof) return(invisible(NULL))
     } else {
-        message("  Converting from parsed Rd files ",
+        message("  Extracting from parsed Rd files ",
                 appendLF = FALSE, domain = NA)
         files <- Sys.glob(file.path(pkgdir, "help", "*.rds"))
         if (!length(files)) {
@@ -324,12 +347,12 @@ testInstalledPackage <-
         on.exit(unlink(filedir, recursive = TRUE))
         cnt <- 0L
         nf <- length(files)
-        REP <- ifelse(nf > 50L, 10L, 1L)
         for(f in files) {
             Rd2ex(.readRDS(f),
-                  file.path(filedir, sub("rds$", "R", basename(f))))
+                  file.path(filedir, sub("rds$", "R", basename(f))),
+                  defines = NULL)
             cnt <- cnt + 1L
-            if(cnt %% REP == 0L) message(".", appendLF = FALSE, domain = NA)
+            if(cnt %% 10L == 0L) message(".", appendLF = FALSE, domain = NA)
         }
         message()
         nof <- length(Sys.glob(file.path(filedir, "*.R")))
