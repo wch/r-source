@@ -371,23 +371,11 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL)
     } else if(is.null(files))
         stop("you must specify 'dir' or 'files'")
 
-    add_sources <- nzchar(Sys.getenv("R_RD_SOURCE_ATTRS"))
     .fetch_Rd_object <- function(f) {
         ## This calls parse_Rd
-        Rd <- prepare_Rd(f,
-                         encoding = encoding,
-                         defines = .Platform$OS.type,
-                         stages = "install")
-        if (add_sources) {
-            ## <FIXME>
-            ## Remove when we no longer need/want the Rd sources ...
-            lines <- .read_Rd_lines_quietly(f)
-            if(encoding != "unknown")
-                lines <- c(lines, sprintf("\\encoding{%s}", encoding))
-            attr(Rd, "source") <- lines
-            ## </FIXME>
-        }
-        Rd
+        prepare_Rd(f, encoding = encoding,
+                   defines = .Platform$OS.type,
+                   stages = "install")
     }
 
     if(!is.null(db_file) && file_test("-f", db_file)) {
