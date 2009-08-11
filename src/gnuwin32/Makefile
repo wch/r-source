@@ -8,7 +8,7 @@ all:
 	fi
 	@$(MAKE) --no-print-directory rbuild
 	@$(MAKE) --no-print-directory -C ../library -f Makefile.win all
-	@$(MAKE) --no-print-directory -C ../library -f Makefile.win rpackagehelp
+	@$(MAKE) --no-print-directory -C ../library -f Makefile.win docs
 	@$(MAKE) --no-print-directory htmldocs
 	@$(MAKE) --no-print-directory  -C ../../po -f Makefile.win
 
