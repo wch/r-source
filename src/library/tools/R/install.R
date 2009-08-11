@@ -1493,7 +1493,7 @@
     latexdir <- file.path(pkgdir, "latex")
     if (!file_test("-d", latexdir)) {
         ## FIXME needs test for RdDB as well.
-        if(file.exists("-d", file.path(pkgdir, "man"))) {
+        if(file_test("-d", file.path(pkgdir, "man"))) {
             ## So convert it
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
