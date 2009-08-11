@@ -1492,8 +1492,9 @@
     ## If it does not exist, guess this is a source package.
     latexdir <- file.path(pkgdir, "latex")
     if (!file_test("-d", latexdir)) {
-        ## FIXME needs test for RdDB as well.
-        if(file_test("-d", file.path(pkgdir, "man"))) {
+        ## FIXME needs test for RdDB as well/instead
+        Rdsfile <- Sys.glob(file.path(pkgdir, "man/*.rds"))
+        if(length(Rdsfile)) {
             ## So convert it
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
