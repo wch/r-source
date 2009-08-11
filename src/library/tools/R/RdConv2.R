@@ -557,8 +557,23 @@ Rd2HTML <-
                 warnRd(block, Rdfile, "missing link ", sQuote(topic))
                 htmlfile <- paste("../../../doc/html/search/SearchObject.html?",
                                    parts$dest, sep= "")
+                writeHref()
+            } else {
+                ## treat links in the same package specially -- needed for CHM
+                pkg_regexp <- paste("^../../", package, "/html/", sep = "")
+                if (grepl(pkg_regexp, htmlfile)) {
+                    htmlfile <- sub(pkg_regexp, "", htmlfile)
+                } else if (CHM) {
+                    otherpkg <- sub("^../../([^/]*).*", "\\1", htmlfile)
+                    htmlfile <- paste("findlink('", otherpkg, "', '",
+                                      basename(htmlfile), "')",
+                                      sep="")
+                    of0('<a onclick="', htmlfile,
+                        '" style="text-decoration: underline; color: blue; cursor: hand">')
+                    writeContent(block, tag)
+                    of1('</a>')
+                } else writeHref()
             }
-            writeHref()
     	} else if (is.null(parts$pkg) || parts$pkg == package) {
     	    htmlfile <- paste(parts$targetfile, ".html", sep="")
             writeHref()
