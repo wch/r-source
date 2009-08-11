@@ -842,7 +842,7 @@
                     starsmsg(paste0(stars, "*"),
                              "installing help indices")
                     .writePkgIndices(pkg_dir, instdir, CHM = build_chm)
-                    .convertRdfiles(pkg_dir, instdir, types=build_help_types)
+                    .convertRdfiles(pkg_dir, instdir, types = build_help_types)
                     if (use_zip_help &&
                         (WINDOWS ||
                          (nzchar(Sys.getenv("R_UNZIPCMD")) &&
@@ -1175,7 +1175,7 @@
     }
 
     build_help_types <- character(0)
-    if (build_text) build_help_types <- c(build_help_types, "txt")
+    if (build_text) build_help_types <- c(build_help_types, "rds")
     if (build_html) build_help_types <- c(build_help_types, "html")
     if (build_latex) build_help_types <- c(build_help_types, "latex")
     if (build_example) build_help_types <- c(build_help_types, "example")
@@ -1475,13 +1475,11 @@
 ## replacement for tools/pkg2tex.pl, and more
 .pkg2tex <-
     function(pkgdir, outfile, internals = FALSE, asChapter = TRUE,
-             encoding = "unknown", outputEncoding = "latin1", extraDirs = NULL, append = FALSE)
+             encoding = "unknown", outputEncoding = "latin1",
+             extraDirs = NULL, append = FALSE)
 {
-    re <- function(x)
-    {
-        ## sort order for topics, a little tricky
-        x[order(toupper(x), x)]
-    }
+    ## sort order for topics, a little tricky
+    re <- function(x) x[order(toupper(x), x)]
 
     ## given an installed package with a latex dir, make a single file
     ## for use in the refman.
@@ -1977,8 +1975,9 @@
 
 ### * .convertRdfiles
 
+## possible types are "rds", "html", "chm", "latex", "example"
 .convertRdfiles <-
-function(dir, outDir, types = c("txt", "html", "example"))
+    function(dir, outDir, types = c("rds", "html", "example"))
 {
     showtype <- function(type) {
     	if (!shown) {
@@ -1995,7 +1994,7 @@ function(dir, outDir, types = c("txt", "html", "example"))
 
     dirname <- c("help", "html", "latex", "R-ex", "chm")
     ext <- c(".rds", ".html", ".tex", ".R", ".html")
-    names(dirname) <- names(ext) <- c("txt", "html", "latex", "example", "chm")
+    names(dirname) <- names(ext) <- c("rds", "html", "latex", "example", "chm")
     mandir <- file.path(dir, "man")
     if(!file_test("-d", mandir))
         stop("there are no help pages in this package")
@@ -2035,8 +2034,8 @@ function(dir, outDir, types = c("txt", "html", "example"))
         environment(.ehandler)$.messages <- character()
         environment(.whandler)$.messages <- character()
 
-        if ("txt" %in% types) {
-            type <- "txt"
+        if ("rds" %in% types) {
+            type <- "rds"
             ff <- file.path(outDir, dirname[type],
                             paste(bf, ext[type], sep = ""))
             if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
