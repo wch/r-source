@@ -1,4 +1,4 @@
-
+﻿
 	**************************************************
 	*						 *
 	*	       2.10 SERIES NEWS			 *
@@ -244,6 +244,9 @@ Rd HELP FILE CHANGES
 	rendering functions have a new parameter, 'outputEncoding',
 	which controls how their output is encoded: by default in
 	the local encoding.
+	
+    o	parse_Rd() no longer includes the newline as part of a 
+        "%"-style comment.
 
     o	There have been various bug fixes and code reorganization in
 	the Rd renderers Rd2HTML, Rd2latex, Rd2txt, and Rd2ex.

@@ -1052,8 +1052,7 @@ static int mkComment(int c)
     do TEXT_PUSH(c);
     while ((c = xxgetc()) != '\n' && c != R_EOF);
     
-    if (c == R_EOF) xxungetc(c);
-    else TEXT_PUSH(c);
+    xxungetc(c);
     
     PROTECT(yylval = mkString2(stext,  bp - stext));
     if(stext != st0) free(stext);    
