@@ -311,9 +311,9 @@ testInstalledPackage <-
             unzip(fzip, exdir = filedir)
             on.exit(unlink(filedir, recursive = TRUE))
         } else filedir <- exdir
+        ## FIXME: next is not necessarily the right test.
     } else if (file_test("-d", mandir <- file.path(pkgdir, "man"))) {
-        message("  Extracting from file of parsed Rd's ",
-                appendLF = FALSE, domain = NA)
+        message("  Extracting from parsed Rd's ", appendLF = FALSE, domain = NA)
         db <- Rd_db(basename(pkgdir), lib.loc = dirname(pkgdir))
         if (!length(db)) {
             message("no parsed files found")
@@ -327,29 +327,6 @@ testInstalledPackage <-
         for(f in files) {
             Rd2ex(db[[f]],
                   file.path(filedir, sub("[Rr]d$", "R", basename(f))),
-                  defines = NULL)
-            cnt <- cnt + 1L
-            if(cnt %% 10L == 0L) message(".", appendLF = FALSE, domain = NA)
-        }
-        message()
-        nof <- length(Sys.glob(file.path(filedir, "*.R")))
-        if(!nof) return(invisible(NULL))
-    } else {
-        message("  Extracting from parsed Rd files ",
-                appendLF = FALSE, domain = NA)
-        files <- Sys.glob(file.path(pkgdir, "help", "*.rds"))
-        if (!length(files)) {
-            message("no parsed files found")
-            return(invisible(NULL))
-        }
-        filedir <- tempfile()
-        dir.create(filedir)
-        on.exit(unlink(filedir, recursive = TRUE))
-        cnt <- 0L
-        nf <- length(files)
-        for(f in files) {
-            Rd2ex(.readRDS(f),
-                  file.path(filedir, sub("rds$", "R", basename(f))),
                   defines = NULL)
             cnt <- cnt + 1L
             if(cnt %% 10L == 0L) message(".", appendLF = FALSE, domain = NA)

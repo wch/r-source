@@ -50,7 +50,7 @@ docs:
 	@touch stamp-docs
 
 Rdobjects:
-	@$(ECHO) -n "installing parsed Rd files for"
+	@$(ECHO) -n "installing parsed Rd:"
 	@for pkg in $(R_PKGS_BASE); do \
 	  if test -d $(srcdir)/$${pkg}/man; then \
 	    $(ECHO) -n " $${pkg}"; \
@@ -73,13 +73,13 @@ Rdfiles:
 ifeq ($(strip $(USE_CHM)),TRUE)
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(MAKE) --no-print-directory -C ../gnuwin32/help -s RHOME=$(RHOME) \
-	    HELPTYPES='rds html chm' \
+	    HELPTYPES='html chm' \
 	    chm-$${pkg} || exit 1; \
 	done
 else
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(MAKE) --no-print-directory -C ../gnuwin32/help -s RHOME=$(RHOME) \
-	    HELPTYPES='rds html' \
+	    HELPTYPES='html' \
 	    help-$${pkg} || exit 1; \
 	done
 endif

@@ -40,12 +40,17 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     lib <- dirname(packagePath)
     encoding <- NULL
     ## first step, on-demand conversion, then look for (possibly zipped) file
-    Rdsfile <- file.path(packagePath, "help", sub("R$", "rds", basename(file)))
-    if(file.exists(Rdsfile)) {
+    RdDB <- file.path(packagePath, "help", pkg)
+    if(file.exists(paste(RdDB, "rdx", sep="."))) {
         zfile <- tempfile("Rex")
         encoding <- "UTF-8"
         ## FIXME: use outputEncoding="" ?
         ## FUTURE: we already have the parsed file ....
+        tools::Rd2ex(tools:::fetchRdDB(RdDB, sub("\\.R$", "", basename(file))), zfile)
+    } else if(file.exists(Rdsfile <- file.path(packagePath, "help",
+                                               sub("R$", "rds", basename(file))))) {
+        zfile <- tempfile("Rex")
+        encoding <- "UTF-8"
         tools::Rd2ex(.readRDS(Rdsfile), zfile)
     } else
         zfile <- zip.file.extract(file, "Rex.zip")

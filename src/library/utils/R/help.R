@@ -190,40 +190,50 @@ function(x, ...)
             }
         }
         else if(type == "help") {
-            bfile <- paste(file, ".rds", sep="")
-            zfile <- suppressWarnings(zip.file.extract(bfile, "Rhelp.zip"))
-            if(file.exists(zfile)) {
-            	## The new system with man pages stored in parsed form
-                ## as .rds files.
-                path <- dirname(file)
-                dirpath <- dirname(path)
-                pkgname <- basename(dirpath)
-                temp <- tools::Rd2txt(.readRDS(zfile), out=tempfile(), package=pkgname)
+            path <- dirname(file)
+            dirpath <- dirname(path)
+            pkgname <- basename(dirpath)
+            RdDB <- file.path(path, pkgname)
+            if(file.exists(paste(RdDB, "rdx", sep="."))) {
+                temp <- tools::Rd2txt(tools:::fetchRdDB(RdDB, basename(file)),
+                                      out=tempfile("Rtxt"), package=pkgname)
                 file.show(temp,
                           title = gettextf("R Help on '%s'", topic),
                           delete.file = TRUE,
                           pager = attr(x, "pager"))
-                if(zfile != bfile)
-                    unlink(zfile)
             } else {
-            	# Fallback to the old system with man pages stored as plain text
-            	zfile <- zip.file.extract(file, "Rhelp.zip")
-            	if (file.exists(zfile)) {
-		    first <- readLines(zfile, n = 1L)
-		    enc <- if(length(grep("\\(.*\\)$", first)))
-			sub("[^(]*\\((.*)\\)$", "\\1", first) else ""
-		    if(enc == "utf8") enc <- "UTF-8"
-		    ## allow for 'smart' quotes on Windows, which work
-		    ## in all but CJK encodings
-		    if(.Platform$OS.type == "windows" && enc == ""
-		       && l10n_info()$codepage < 1000) enc <- "CP1252"
-		    file.show(zfile,
-			      title = gettextf("R Help on '%s'", topic),
-			      delete.file = (zfile != file),
-			      pager = attr(x, "pager"), encoding = enc)
-		} else
+                bfile <- paste(file, ".rds", sep="")
+                zfile <- suppressWarnings(zip.file.extract(bfile, "Rhelp.zip"))
+                if(file.exists(zfile)) {
+                    ## The new system with man pages stored in parsed form
+                    ## as .rds files.
+                    temp <- tools::Rd2txt(.readRDS(zfile), out=tempfile(), package=pkgname)
+                    file.show(temp,
+                              title = gettextf("R Help on '%s'", topic),
+                              delete.file = TRUE,
+                              pager = attr(x, "pager"))
+                    if(zfile != bfile)
+                        unlink(zfile)
+                } else {
+                                        # Fallback to the old system with man pages stored as plain text
+                    zfile <- zip.file.extract(file, "Rhelp.zip")
+                    if (file.exists(zfile)) {
+                        first <- readLines(zfile, n = 1L)
+                        enc <- if(length(grep("\\(.*\\)$", first)))
+                            sub("[^(]*\\((.*)\\)$", "\\1", first) else ""
+                        if(enc == "utf8") enc <- "UTF-8"
+                        ## allow for 'smart' quotes on Windows, which work
+                        ## in all but CJK encodings
+                        if(.Platform$OS.type == "windows" && enc == ""
+                           && l10n_info()$codepage < 1000) enc <- "CP1252"
+                        file.show(zfile,
+                                  title = gettextf("R Help on '%s'", topic),
+                                  delete.file = (zfile != file),
+                                  pager = attr(x, "pager"), encoding = enc)
+                    } else
 		    stop(gettextf("No text help for '%s' is available:\ncorresponding file is missing", topic), domain = NA)
-	    }
+                }
+            }
         }
         else if(type == "latex") {
             ok <- FALSE
@@ -237,13 +247,12 @@ function(x, ...)
                 path <- dirname(file) # .../pkg/latex
                 dirpath <- dirname(path)
                 pkgname <- basename(dirpath)
-                Rdspath <- file.path(dirpath, "help",
-                                     paste(topic, "rds", sep="."))
-                if(file.exists(Rdspath)) {
-                    message("on-demand Rd conversion for ", topic)
-                    Rd <- .readRDS(Rdspath)
+                RdDB <- file.path(dirpath, "help", pkgname)
+                if(file.exists(paste(RdDB, "rdx", sep="."))) {
+                    message("on-demand Rd conversion for ", sQuote(topic))
+                    key <- sub("\\.tex$", "", basename(file))
                     tf2 <- tempfile("Rlatex")
-                    tools::Rd2latex(Rd, tf2)
+                    tools::Rd2latex(tools:::fetchRdDB(RdDB, key), tf2)
                     .show_help_on_topic_offline(tf2, topic)
                     ok <- TRUE
                 }

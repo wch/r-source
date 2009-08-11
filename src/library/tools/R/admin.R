@@ -738,6 +738,11 @@ function(dir, outDir)
        !all(file_test("-nt", db_file, manfiles))) {
        db <- .build_Rd_db(dir, manfiles, db_file = db_file)
        .saveRDS(db, db_file)
+       helpdir <- file.path(outDir, "help")
+       dir.create(helpdir, FALSE)
+       db2 <- db
+       names(db2) <- sub("\\.[Rr]d", "", basename(names(db)))
+       makeLazyLoadDB(db2, file.path(helpdir, basename(outDir)))
    }
 }
 

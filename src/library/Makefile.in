@@ -56,7 +56,7 @@ docs:
 
 ## FIXME: do this in parallel
 Rdobjects:
-	@$(ECHO) $(ECHO_N) "installing parsed Rd files for$(ECHO_C)"
+	@$(ECHO) $(ECHO_N) "installing parsed Rd:$(ECHO_C)"
 	@for pkg in $(R_PKGS_BASE); do \
 	  if test -d $(srcdir)/$${pkg}/man; then \
 	    $(ECHO) $(ECHO_N) " $${pkg}$(ECHO_C)"; \

@@ -938,7 +938,6 @@
     clean <- FALSE
     preclean <- FALSE
     debug <- FALSE
-    build_text <- TRUE
     build_html <- TRUE
     build_latex <- FALSE
     build_example <- FALSE
@@ -989,7 +988,7 @@
         } else if (a == "--no-configure") {
             use_configure <- FALSE
         } else if (a == "--no-docs") {
-            build_text <- build_html <- build_latex <- build_example <- build_chm <- FALSE
+            build_html <- build_latex <- build_example <- build_chm <- FALSE
         } else if (a == "--no-html") {
             build_html <- FALSE
         } else if (a == "--latex") {
@@ -1159,7 +1158,6 @@
 
     if (fake) {
         use_configure <- FALSE
-        build_text <- TRUE
         build_html <- FALSE
         build_latex <- FALSE
         build_example <- FALSE
@@ -1175,7 +1173,6 @@
     }
 
     build_help_types <- character(0)
-    if (build_text) build_help_types <- c(build_help_types, "rds")
     if (build_html) build_help_types <- c(build_help_types, "html")
     if (build_latex) build_help_types <- c(build_help_types, "latex")
     if (build_example) build_help_types <- c(build_help_types, "example")
@@ -1495,12 +1492,12 @@
     ## If it does not exist, guess this is a source package.
     latexdir <- file.path(pkgdir, "latex")
     if (!file_test("-d", latexdir)) {
-        Rdsfile <- Sys.glob(file.path(pkgdir, "man/*.rds"))
-        if(length(Rdsfile)) {
-            ## So convert them
+        ## FIXME needs test for RdDB as well.
+        if(file.exists("-d", file.path(pkgdir, "man"))) {
+            ## So convert it
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
-            message("Converting file of parsed Rd's to LaTeX ",
+            message("Converting parsed Rd's to LaTeX ",
                     appendLF=FALSE, domain=NA)
             Rd <- Rd_db(basename(pkgdir), lib.loc = dirname(pkgdir))
             cnt <- 0L
@@ -1511,25 +1508,6 @@
                 out <-  sub("[Rr]d$", "tex", basename(f))
                 latexEncodings <- c(latexEncodings,
                                     attr(Rd2latex(Rd[[f]],
-                                                  file.path(latexdir, out),
-                                                  encoding = encoding,
-                                                  defines = NULL),
-                                         "latexEncoding"))
-            }
-            message(domain=NA)
-        } else if(length(Rdsfiles <- Sys.glob(file.path(pkgdir, "help/*.rds")))) {
-            ## FIXME: should we keep this?
-            latexdir <- tempfile("ltx")
-            dir.create(latexdir)
-            message("Converting parsed Rd files to LaTeX ",
-                    appendLF=FALSE, domain=NA)
-            cnt <- 0L
-            for(f in Rdsfiles) {
-                cnt <- cnt + 1L
-                if(cnt %% 10L == 0L) message(".", appendLF=FALSE, domain=NA)
-                out <-  sub("\\.rds$", ".tex", basename(f))
-                latexEncodings <- c(latexEncodings,
-                                    attr(Rd2latex(.readRDS(f),
                                                   file.path(latexdir, out),
                                                   encoding = encoding,
                                                   defines = NULL),
@@ -1997,7 +1975,7 @@
 
 ## possible types are "rds", "html", "chm", "latex", "example"
 .convertRdfiles <-
-    function(dir, outDir, types = c("rds", "html"))
+    function(dir, outDir, types = "html")
 {
     showtype <- function(type) {
     	if (!shown) {
