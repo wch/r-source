@@ -211,7 +211,7 @@ libRblas.dll.a:  ../extra/blas/Rblas.def
 
 CHTML:
 ifeq ($(strip $(USE_CHM)),TRUE)
-	$(MAKE) --no-print-directory -C ./help -f MkChmDll
+	$(MAKE) --no-print-directory -C ./help
 endif
 
 #                          ===== cleaning ======
