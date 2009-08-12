@@ -81,6 +81,7 @@ as.character.Rd <- function(x, ...) {
     tags  <- c(RCODE=1L, TEXT=2L,      VERB=3L,                  COMMENT=5L)
     state <- c(braceDepth=0L, inRString=0L)
     needBraces <- FALSE  # if next character is alphabetic, separate by braces.
+    inEqn <- 0L
     
     pr <- function(x, quoteBraces) { 
         tag <- attr(x, "Rd_tag")
@@ -93,7 +94,7 @@ as.character.Rd <- function(x, ...) {
     	        result <- character(0)
     	    	for (i in seq_along(x)) result <- c(result, pr(x[[i]], quoteBraces))
     	    } else if (length(grep("^#", tag))) {
-    	    	dep <- deparseRdElement(x[[1L]][[1L]], c(state, modes["LATEXLIKE"], 0L, as.integer(quoteBraces)))
+    	    	dep <- deparseRdElement(x[[1L]][[1L]], c(state, modes["LATEXLIKE"], inEqn, as.integer(quoteBraces)))
     	    	result <- c(tag, dep[[1L]])
     	    	state <<- savestate
     	    	for (i in seq_along(x[[2L]])) result <- c(result, pr(x[[2L]][[i]], quoteBraces))
@@ -106,10 +107,10 @@ as.character.Rd <- function(x, ...) {
     	    	for (i in seq_along(x)) result <- c(result, pr(x[[i]], quoteBraces))
     	    } else if (tag %in% EQN) {
     	    	result <- tag
-    	    	state[2] <<- 1L
+    	    	inEqn <<- 1L
     	    	result <- c(result, pr(x[[1]], quoteBraces))
+    	    	inEqn <<- 0L
     	    	if (length(x) > 1) {
-    	    	    state[2] <<- 0L
     	    	    result <- c(result, pr(x[[2]], quoteBraces))
     	    	}
     	    } else {
@@ -124,7 +125,7 @@ as.character.Rd <- function(x, ...) {
     	    	result <- pr(x, TRUE)
     	    state <<- savestate
     	} else {
-    	    dep <- deparseRdElement(as.character(x), c(state, tags[tag], 0L, as.integer(quoteBraces)))
+    	    dep <- deparseRdElement(as.character(x), c(state, tags[tag], inEqn, as.integer(quoteBraces)))
     	    result <- dep[[1]]
     	    if (needBraces) {
     	    	if (grepl("^[[:alpha:]]", result))
