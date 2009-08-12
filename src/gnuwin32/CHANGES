@@ -50,6 +50,11 @@ NEW FEATURES
     o	The --internet2 command line option sets a flag internally;
 	that flag is now visible and controllable from R using the
 	setInternet2() function.
+
+    o	file.access() proved unreliable on some network-mounted file
+	systems (probably a Samba issue), so it has been replaced in R
+	CMD INSTALL by a directory creation test.  (Reported by Simon
+	Urbanek and Ruth Ripley.)
 	
 	
 BUG FIXES
