@@ -520,21 +520,10 @@ function(x, tag = TRUE)
 .Rd_drop_comments <-
 function(x)
 {
-    ## Parsed Rd comments include the final newline, so when "dropping"
-    ## comments we actually need to replace them by newline text nodes.
-    ## <FIXME>
-    ## This is not quite right: e.g., for comments inside \usage, we
-    ## should really get RCODE and not TEXT nodes.
-    ## </FIXME>
     recurse <- function(e) {
-        if(is.list(e)) {
-            pos <- which(RdTags(e) == "COMMENT")
-            if(length(pos))
-                e[pos] <- rep.int(list(structure("\n",
-                                                 Rd_tag = "TEXT")),
-                                  length(pos))
-            structure(lapply(e, recurse), Rd_tag = attr(e, "Rd_tag"))
-        }
+        if(is.list(e))
+	    structure(lapply(e[RdTags(e) != "COMMENT"], recurse),
+		      Rd_tag = attr(e, "Rd_tag"))
         else
             e
     }
