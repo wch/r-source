@@ -1,4 +1,6 @@
-## Only ever called from src/library/Makefile and <pkg source>/chm
+#-*- Makefile -*-
+
+## Called from <pkg source>/chm
 
 HTM = $(filter-out 00Index.html, $(wildcard *.html))
 %.chm: $(HTM) Rchm.css logo.jpg
