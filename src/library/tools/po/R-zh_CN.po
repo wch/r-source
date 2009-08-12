@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-08-12 10:17\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -485,9 +485,6 @@ msgstr ""
 msgid "checkRd is designed for Rd version 2 or higher."
 msgstr ""
 
-msgid "outputEncoding changed to \"\" on stdout"
-msgstr ""
-
 #, fuzzy
 msgid "invalid value for '%s' : %s"
 msgstr "执照文件指示器无效：%s"
@@ -605,66 +602,15 @@ msgid "ERROR:"
 msgstr ""
 
 #, fuzzy
-msgid "for package"
-msgstr "畸形程辑包名"
-
-msgid "incorrect Contains metadata for bundle"
-msgstr ""
-
-#, fuzzy
-msgid ": there is no package '"
-msgstr "没有叫'%s'的程辑包"
-
-msgid "skipping installation of bundle"
-msgstr ""
-
-msgid "problem installing per-package DESCRIPTION files"
-msgstr ""
-
-#, fuzzy
-msgid "ERROR unable to create"
-msgstr "无法建立"
-
-#, fuzzy
 msgid "packaged installation of"
 msgstr "程辑包没有包含任何R编码"
 
 msgid "as"
 msgstr ""
 
-msgid ".gz"
-msgstr ""
-
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
 "Adminstration Manual'"
-msgstr ""
-
-msgid "about to run"
-msgstr ""
-
-msgid "R CMD SHLIB"
-msgstr ""
-
-msgid "Using auto-selected zip options '"
-msgstr ""
-
-msgid "--use-zip-data"
-msgstr ""
-
-msgid "--use-zip-help"
-msgstr ""
-
-msgid "**********************************************"
-msgstr ""
-
-msgid "WARNING: this package has a configure script"
-msgstr ""
-
-msgid "It probably needs manual configuration"
-msgstr ""
-
-msgid "configure command:"
 msgstr ""
 
 msgid ""
@@ -689,18 +635,6 @@ msgstr ""
 msgid "empty 'data' directory"
 msgstr ""
 
-msgid "use of file 'install.R' is no longer supported"
-msgstr ""
-
-msgid "use of file 'R_PROFILE.R' is no longer supported"
-msgstr ""
-
-msgid "field 'SaveImage' is defunct: please remove it"
-msgstr ""
-
-msgid "Use of --with-package-versions is defunct"
-msgstr ""
-
 msgid "--auto-zip' is for Windows only"
 msgstr ""
 
@@ -713,19 +647,6 @@ msgstr ""
 #, fuzzy
 msgid "cannot create temporary directory"
 msgstr "无法建立目录'%s'"
-
-#, fuzzy
-msgid "processing"
-msgstr "处理 '"
-
-msgid "a file"
-msgstr ""
-
-msgid "unknown package layout"
-msgstr ""
-
-msgid "a directory"
-msgstr ""
 
 #, fuzzy
 msgid "invalid package"
@@ -768,31 +689,6 @@ msgstr ""
 msgid "Converting Rd files to LaTeX ..."
 msgstr ""
 
-msgid "this package does not have either a"
-msgstr ""
-
-msgid "latex"
-msgstr ""
-
-msgid "or a"
-msgstr ""
-
-msgid "man"
-msgstr ""
-
-msgid "directory"
-msgstr ""
-
-#, fuzzy
-msgid "no validly-named files in the"
-msgstr "执照文件指示器无效：%s"
-
-msgid "file"
-msgstr ""
-
-msgid "lacks a header: skipping"
-msgstr ""
-
 msgid "there are no help pages in this package"
 msgstr ""
 
@@ -805,7 +701,13 @@ msgstr ""
 msgid "there is a 'man' dir but no help pages in this package"
 msgstr ""
 
-msgid "problem in converting"
+msgid "-t option without value"
+msgstr ""
+
+msgid "exactly one Rd file must be specified"
+msgstr ""
+
+msgid "no 'type' specified"
 msgstr ""
 
 msgid "Bundle package:"
@@ -883,6 +785,9 @@ msgstr "变元'file'必需是字符串或联结"
 msgid "unimplemented encoding"
 msgstr "还没有实现的编码"
 
+msgid "file"
+msgstr ""
+
 msgid "cannot be opened"
 msgstr ""
 
@@ -908,6 +813,9 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
+msgid "no examples found"
+msgstr ""
+
 msgid "Running specific tests for package"
 msgstr ""
 
@@ -917,13 +825,13 @@ msgstr ""
 msgid "Running vignettes for package"
 msgstr ""
 
-msgid "Creating"
-msgstr ""
-
 msgid "creation of"
 msgstr ""
 
 msgid "failed"
+msgstr ""
+
+msgid "no parsed files found"
 msgstr ""
 
 msgid "creating"
@@ -1043,24 +951,3 @@ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "在下面的函数里遇到了有可能是全局的T或F值:"
-
-#~ msgid "Found invalid multi-byte character data."
-#~ msgstr "遇到了错误多字节字符数据."
-
-#~ msgid "Cannot re-encode because iconv is not available."
-#~ msgstr "无法重新编码，因为找不到iconv这个程序."
-
-#~ msgid "Try running R in a single-byte locale."
-#~ msgstr "请调用单字节本地化的R."
-
-#~ msgid "'iconv' is required"
-#~ msgstr "需要'iconv'"
-
-#~ msgid "Verifiable as open source: %s"
-#~ msgstr "可验证开放源码：%s"
-
-#~ msgid "--- running texi2dvi on vignettes"
-#~ msgstr "---在标头上调用texi2dvi失败"
-
-#~ msgid "unable to run pdflatex on '%s'"
-#~ msgstr "无法在'%s'上调用pdflatex"

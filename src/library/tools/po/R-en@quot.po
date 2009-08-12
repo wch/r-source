@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
-"PO-Revision-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-08-12 10:17\n"
+"PO-Revision-Date: 2009-08-12 10:17\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -505,9 +505,6 @@ msgstr "should not get here"
 msgid "checkRd is designed for Rd version 2 or higher."
 msgstr "checkRd is designed for Rd version 2 or higher."
 
-msgid "outputEncoding changed to \"\" on stdout"
-msgstr "outputEncoding changed to \"\" on stdout"
-
 msgid "invalid value for '%s' : %s"
 msgstr "invalid value for ‘%s’ : %s"
 
@@ -624,32 +621,11 @@ msgstr "cannot read index information in file ‘%s’"
 msgid "ERROR:"
 msgstr "ERROR:"
 
-msgid "for package"
-msgstr "for package"
-
-msgid "incorrect Contains metadata for bundle"
-msgstr "incorrect Contains metadata for bundle"
-
-msgid ": there is no package '"
-msgstr ": there is no package '"
-
-msgid "skipping installation of bundle"
-msgstr "skipping installation of bundle"
-
-msgid "problem installing per-package DESCRIPTION files"
-msgstr "problem installing per-package DESCRIPTION files"
-
-msgid "ERROR unable to create"
-msgstr "ERROR unable to create"
-
 msgid "packaged installation of"
 msgstr "packaged installation of"
 
 msgid "as"
 msgstr "as"
-
-msgid ".gz"
-msgstr ".gz"
 
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
@@ -657,33 +633,6 @@ msgid ""
 msgstr ""
 "‘cleanup’ exists but is not executable -- see the ‘R Installation and "
 "Adminstration Manual’"
-
-msgid "about to run"
-msgstr "about to run"
-
-msgid "R CMD SHLIB"
-msgstr "R CMD SHLIB"
-
-msgid "Using auto-selected zip options '"
-msgstr "Using auto-selected zip options '"
-
-msgid "--use-zip-data"
-msgstr "--use-zip-data"
-
-msgid "--use-zip-help"
-msgstr "--use-zip-help"
-
-msgid "**********************************************"
-msgstr "**********************************************"
-
-msgid "WARNING: this package has a configure script"
-msgstr "WARNING: this package has a configure script"
-
-msgid "It probably needs manual configuration"
-msgstr "It probably needs manual configuration"
-
-msgid "configure command:"
-msgstr "configure command:"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -707,18 +656,6 @@ msgstr "no source files found"
 msgid "empty 'data' directory"
 msgstr "empty ‘data’ directory"
 
-msgid "use of file 'install.R' is no longer supported"
-msgstr "use of file ‘install.R’ is no longer supported"
-
-msgid "use of file 'R_PROFILE.R' is no longer supported"
-msgstr "use of file ‘R_PROFILE.R’ is no longer supported"
-
-msgid "field 'SaveImage' is defunct: please remove it"
-msgstr "field ‘SaveImage’ is defunct: please remove it"
-
-msgid "Use of --with-package-versions is defunct"
-msgstr "Use of --with-package-versions is defunct"
-
 msgid "--auto-zip' is for Windows only"
 msgstr "--auto-zip' is for Windows only"
 
@@ -730,18 +667,6 @@ msgstr "Warning: unknown option"
 
 msgid "cannot create temporary directory"
 msgstr "cannot create temporary directory"
-
-msgid "processing"
-msgstr "processing"
-
-msgid "a file"
-msgstr "a file"
-
-msgid "unknown package layout"
-msgstr "unknown package layout"
-
-msgid "a directory"
-msgstr "a directory"
 
 msgid "invalid package"
 msgstr "invalid package"
@@ -783,30 +708,6 @@ msgstr "-o option without value"
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Converting Rd files to LaTeX ..."
 
-msgid "this package does not have either a"
-msgstr "this package does not have either a"
-
-msgid "latex"
-msgstr "latex"
-
-msgid "or a"
-msgstr "or a"
-
-msgid "man"
-msgstr "man"
-
-msgid "directory"
-msgstr "directory"
-
-msgid "no validly-named files in the"
-msgstr "no validly-named files in the"
-
-msgid "file"
-msgstr "file"
-
-msgid "lacks a header: skipping"
-msgstr "lacks a header: skipping"
-
 msgid "there are no help pages in this package"
 msgstr "there are no help pages in this package"
 
@@ -819,8 +720,14 @@ msgstr "in file"
 msgid "there is a 'man' dir but no help pages in this package"
 msgstr "there is a ‘man’ dir but no help pages in this package"
 
-msgid "problem in converting"
-msgstr "problem in converting"
+msgid "-t option without value"
+msgstr "-t option without value"
+
+msgid "exactly one Rd file must be specified"
+msgstr "exactly one Rd file must be specified"
+
+msgid "no 'type' specified"
+msgstr "no ‘type’ specified"
 
 msgid "Bundle package:"
 msgstr "Bundle package:"
@@ -898,6 +805,9 @@ msgstr "‘file’ must be a character string or connection"
 msgid "unimplemented encoding"
 msgstr "unimplemented encoding"
 
+msgid "file"
+msgstr "file"
+
 msgid "cannot be opened"
 msgstr "cannot be opened"
 
@@ -922,6 +832,9 @@ msgstr "..."
 msgid "OK"
 msgstr "OK"
 
+msgid "no examples found"
+msgstr "no examples found"
+
 msgid "Running specific tests for package"
 msgstr "Running specific tests for package"
 
@@ -931,14 +844,14 @@ msgstr "Running"
 msgid "Running vignettes for package"
 msgstr "Running vignettes for package"
 
-msgid "Creating"
-msgstr "Creating"
-
 msgid "creation of"
 msgstr "creation of"
 
 msgid "failed"
 msgstr "failed"
+
+msgid "no parsed files found"
+msgstr "no parsed files found"
 
 msgid "creating"
 msgstr "creating"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-08-12 10:17\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -452,9 +452,6 @@ msgstr ""
 msgid "checkRd is designed for Rd version 2 or higher."
 msgstr ""
 
-msgid "outputEncoding changed to \"\" on stdout"
-msgstr ""
-
 msgid "invalid value for '%s' : %s"
 msgstr ""
 
@@ -554,6 +551,15 @@ msgstr ""
 msgid "cannot read index information in file '%s'"
 msgstr ""
 
+msgid "ERROR:"
+msgstr ""
+
+msgid "packaged installation of"
+msgstr ""
+
+msgid "as"
+msgstr ""
+
 msgid "'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'"
 msgstr ""
 
@@ -573,18 +579,6 @@ msgid "no source files found"
 msgstr ""
 
 msgid "empty 'data' directory"
-msgstr ""
-
-msgid "use of file 'install.R' is no longer supported"
-msgstr ""
-
-msgid "use of file 'R_PROFILE.R' is no longer supported"
-msgstr ""
-
-msgid "field 'SaveImage' is defunct: please remove it"
-msgstr ""
-
-msgid "Use of --with-package-versions is defunct"
 msgstr ""
 
 msgid "--auto-zip' is for Windows only"
@@ -635,14 +629,6 @@ msgstr ""
 msgid "Converting Rd files to LaTeX ..."
 msgstr ""
 
-
-
-msgid "file"
-msgstr ""
-
-msgid "lacks a header: skipping"
-msgstr ""
-
 msgid "there are no help pages in this package"
 msgstr ""
 
@@ -655,7 +641,13 @@ msgstr ""
 msgid "there is a 'man' dir but no help pages in this package"
 msgstr ""
 
-msgid "problem in converting"
+msgid "-t option without value"
+msgstr ""
+
+msgid "exactly one Rd file must be specified"
+msgstr ""
+
+msgid "no 'type' specified"
 msgstr ""
 
 msgid "Bundle package:"
@@ -730,6 +722,9 @@ msgstr ""
 msgid "unimplemented encoding"
 msgstr ""
 
+msgid "file"
+msgstr ""
+
 msgid "cannot be opened"
 msgstr ""
 
@@ -754,6 +749,9 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
+msgid "no examples found"
+msgstr ""
+
 msgid "Running specific tests for package"
 msgstr ""
 
@@ -763,13 +761,13 @@ msgstr ""
 msgid "Running vignettes for package"
 msgstr ""
 
-msgid "Creating"
-msgstr ""
-
 msgid "creation of"
 msgstr ""
 
 msgid "failed"
+msgstr ""
+
+msgid "no parsed files found"
 msgstr ""
 
 msgid "creating"

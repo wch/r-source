@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-08-12 10:17\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -499,9 +499,6 @@ msgstr ""
 msgid "checkRd is designed for Rd version 2 or higher."
 msgstr ""
 
-msgid "outputEncoding changed to \"\" on stdout"
-msgstr ""
-
 msgid "invalid value for '%s' : %s"
 msgstr ""
 
@@ -617,26 +614,6 @@ msgstr "파일 '%s'에서 인덱스 정보를 읽을 수 있지 않습니다"
 msgid "ERROR:"
 msgstr ""
 
-msgid "for package"
-msgstr ""
-
-msgid "incorrect Contains metadata for bundle"
-msgstr ""
-
-#, fuzzy
-msgid ": there is no package '"
-msgstr "'%s'라고 불리는 패키지는 없습니다"
-
-msgid "skipping installation of bundle"
-msgstr ""
-
-msgid "problem installing per-package DESCRIPTION files"
-msgstr ""
-
-#, fuzzy
-msgid "ERROR unable to create"
-msgstr "작성할수가 없습니다"
-
 #, fuzzy
 msgid "packaged installation of"
 msgstr "패키지는 R code를 포함하지 않습니다"
@@ -644,39 +621,9 @@ msgstr "패키지는 R code를 포함하지 않습니다"
 msgid "as"
 msgstr ""
 
-msgid ".gz"
-msgstr ""
-
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
 "Adminstration Manual'"
-msgstr ""
-
-msgid "about to run"
-msgstr ""
-
-msgid "R CMD SHLIB"
-msgstr ""
-
-msgid "Using auto-selected zip options '"
-msgstr ""
-
-msgid "--use-zip-data"
-msgstr ""
-
-msgid "--use-zip-help"
-msgstr ""
-
-msgid "**********************************************"
-msgstr ""
-
-msgid "WARNING: this package has a configure script"
-msgstr ""
-
-msgid "It probably needs manual configuration"
-msgstr ""
-
-msgid "configure command:"
 msgstr ""
 
 msgid ""
@@ -701,18 +648,6 @@ msgstr ""
 msgid "empty 'data' directory"
 msgstr ""
 
-msgid "use of file 'install.R' is no longer supported"
-msgstr ""
-
-msgid "use of file 'R_PROFILE.R' is no longer supported"
-msgstr ""
-
-msgid "field 'SaveImage' is defunct: please remove it"
-msgstr ""
-
-msgid "Use of --with-package-versions is defunct"
-msgstr ""
-
 msgid "--auto-zip' is for Windows only"
 msgstr ""
 
@@ -725,19 +660,6 @@ msgstr ""
 #, fuzzy
 msgid "cannot create temporary directory"
 msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
-
-#, fuzzy
-msgid "processing"
-msgstr "분석 '%s'"
-
-msgid "a file"
-msgstr ""
-
-msgid "unknown package layout"
-msgstr ""
-
-msgid "a directory"
-msgstr ""
 
 msgid "invalid package"
 msgstr ""
@@ -779,30 +701,6 @@ msgstr ""
 msgid "Converting Rd files to LaTeX ..."
 msgstr ""
 
-msgid "this package does not have either a"
-msgstr ""
-
-msgid "latex"
-msgstr ""
-
-msgid "or a"
-msgstr ""
-
-msgid "man"
-msgstr ""
-
-msgid "directory"
-msgstr ""
-
-msgid "no validly-named files in the"
-msgstr ""
-
-msgid "file"
-msgstr ""
-
-msgid "lacks a header: skipping"
-msgstr ""
-
 msgid "there are no help pages in this package"
 msgstr ""
 
@@ -815,7 +713,13 @@ msgstr ""
 msgid "there is a 'man' dir but no help pages in this package"
 msgstr ""
 
-msgid "problem in converting"
+msgid "-t option without value"
+msgstr ""
+
+msgid "exactly one Rd file must be specified"
+msgstr ""
+
+msgid "no 'type' specified"
 msgstr ""
 
 msgid "Bundle package:"
@@ -898,6 +802,9 @@ msgstr "인수'file'는 문자열 또는 connection이어야만 합니다"
 msgid "unimplemented encoding"
 msgstr ""
 
+msgid "file"
+msgstr ""
+
 msgid "cannot be opened"
 msgstr ""
 
@@ -923,6 +830,9 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
+msgid "no examples found"
+msgstr ""
+
 msgid "Running specific tests for package"
 msgstr ""
 
@@ -932,13 +842,13 @@ msgstr ""
 msgid "Running vignettes for package"
 msgstr ""
 
-msgid "Creating"
-msgstr ""
-
 msgid "creation of"
 msgstr ""
 
 msgid "failed"
+msgstr ""
+
+msgid "no parsed files found"
 msgstr ""
 
 msgid "creating"
@@ -1061,19 +971,3 @@ msgstr[0] ""
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ""
-
-#~ msgid "Found invalid multi-byte character data."
-#~ msgstr "무효의 다중 바이트 문자 데이타를 검색해냈습니다"
-
-#~ msgid "Cannot re-encode because iconv is not available."
-#~ msgstr "iconv가 이용 가능하지 않기 때문에 re-encode할수가 없습니다"
-
-#~ msgid "Try running R in a single-byte locale."
-#~ msgstr "단일 바이트 locale의 R를 실행해 주십시오"
-
-#, fuzzy
-#~ msgid "--- running texi2dvi on vignettes"
-#~ msgstr "'%s'에서 texi2dvi를 실행하는 것은 실패했습니다"
-
-#~ msgid "unable to run pdflatex on '%s'"
-#~ msgstr "'%s'에서 pdflatex를 실행할 수 없습니다"

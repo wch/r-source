@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-08-12 10:17\n"
 "PO-Revision-Date: 2009-03-26 14:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -495,9 +495,6 @@ msgstr "sollte nicht hierher kommen"
 msgid "checkRd is designed for Rd version 2 or higher."
 msgstr "Rd2HTML ist für Rd in Version 2 oder später entworfen"
 
-msgid "outputEncoding changed to \"\" on stdout"
-msgstr ""
-
 #, fuzzy
 msgid "invalid value for '%s' : %s"
 msgstr "Ungültiger Verweis auf Lizenzdatei: %s"
@@ -616,32 +613,11 @@ msgstr "kann die Indexinformation in Datei '%s' nicht lesen"
 msgid "ERROR:"
 msgstr "Fehler:"
 
-msgid "for package"
-msgstr "für Paket"
-
-msgid "incorrect Contains metadata for bundle"
-msgstr "inkorrekt enthält Metadaten für ein Bundle"
-
-msgid ": there is no package '"
-msgstr ": es gibt kein Paket '"
-
-msgid "skipping installation of bundle"
-msgstr "überspringe Installation des Bundles"
-
-msgid "problem installing per-package DESCRIPTION files"
-msgstr "Problem bei der Installation der DESCRPTION Dateien je Paket"
-
-msgid "ERROR unable to create"
-msgstr "Feher: kann nicht erzeugen"
-
 msgid "packaged installation of"
 msgstr "gepackte Installation von"
 
 msgid "as"
 msgstr "als"
-
-msgid ".gz"
-msgstr ".gz"
 
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
@@ -649,33 +625,6 @@ msgid ""
 msgstr ""
 "'cleanup'existiert, ist aber nicht ausführbar -- bitte im 'R Installation "
 "and Administration Manual' nachlesen"
-
-msgid "about to run"
-msgstr "gleich startet"
-
-msgid "R CMD SHLIB"
-msgstr "R CMD SHLIB"
-
-msgid "Using auto-selected zip options '"
-msgstr "Benutze automatisch gewählte zip Optionen"
-
-msgid "--use-zip-data"
-msgstr "--use-zip-data"
-
-msgid "--use-zip-help"
-msgstr "--use-zip-help"
-
-msgid "**********************************************"
-msgstr "**********************************************"
-
-msgid "WARNING: this package has a configure script"
-msgstr "Warnung: Dieses Paket hat ein configure Skript"
-
-msgid "It probably needs manual configuration"
-msgstr "Es benötigt wahrscheinlich manuelle Konfiguration"
-
-msgid "configure command:"
-msgstr "configure Kommando:"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -699,18 +648,6 @@ msgstr "kein Quellkode gefunden"
 msgid "empty 'data' directory"
 msgstr "leeres 'data' Verzeichnis"
 
-msgid "use of file 'install.R' is no longer supported"
-msgstr "Benutzung der Datei 'install.R' wird nicht mehr unterstützt"
-
-msgid "use of file 'R_PROFILE.R' is no longer supported"
-msgstr "Benutzung der Datei 'R_PROFILE.R' wird nicht mehr unterstütz"
-
-msgid "field 'SaveImage' is defunct: please remove it"
-msgstr "Das Feld 'SaveImage' ist veraltet: bitte entfernen"
-
-msgid "Use of --with-package-versions is defunct"
-msgstr "Benutzung von --with-package-versions ist veraltet"
-
 msgid "--auto-zip' is for Windows only"
 msgstr "'--auto-zip'ist nur für Windows"
 
@@ -722,18 +659,6 @@ msgstr "Warnung: unbekannte Option"
 
 msgid "cannot create temporary directory"
 msgstr "kann  temporäres Verzeichnis nicht erzeugen"
-
-msgid "processing"
-msgstr "Bearbeiten von'"
-
-msgid "a file"
-msgstr "eine Datei"
-
-msgid "unknown package layout"
-msgstr "unbekannter Paketaufbau"
-
-msgid "a directory"
-msgstr "ein Verzeichnis"
 
 msgid "invalid package"
 msgstr "ungültiges Paket"
@@ -775,30 +700,6 @@ msgstr "-o Option ohne Wert"
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Konvertiere RD Dateien nach LaTeX"
 
-msgid "this package does not have either a"
-msgstr "dieses Paket hat weder ein"
-
-msgid "latex"
-msgstr "latex"
-
-msgid "or a"
-msgstr "noch ein"
-
-msgid "man"
-msgstr "man"
-
-msgid "directory"
-msgstr "Verzeichnis"
-
-msgid "no validly-named files in the"
-msgstr "keine gültig benannten Dateien in"
-
-msgid "file"
-msgstr "Datei"
-
-msgid "lacks a header: skipping"
-msgstr "Kopf fehlt: überspringen"
-
 msgid "there are no help pages in this package"
 msgstr "keine Hilfeseiten in diesem Paket"
 
@@ -813,8 +714,16 @@ msgstr ""
 "das 'man' Verzeichnis exisitert, aber es gibt keine Hilfeseiten in diesem "
 "Paket"
 
-msgid "problem in converting"
-msgstr "Problem bei der Konvertierung"
+#, fuzzy
+msgid "-t option without value"
+msgstr "-l Option ohne Wert"
+
+msgid "exactly one Rd file must be specified"
+msgstr ""
+
+#, fuzzy
+msgid "no 'type' specified"
+msgstr "Fehler: keine Pakete angegeben"
 
 msgid "Bundle package:"
 msgstr "Paketbündel"
@@ -890,6 +799,9 @@ msgstr "Argument 'file' muss eine Zeichenkette oder eine Verbindung sein"
 msgid "unimplemented encoding"
 msgstr "nicht implementierte Kodierung"
 
+msgid "file"
+msgstr "Datei"
+
 msgid "cannot be opened"
 msgstr "kann nicht geöffnet werden"
 
@@ -914,6 +826,10 @@ msgstr "..."
 msgid "OK"
 msgstr "OK"
 
+#, fuzzy
+msgid "no examples found"
+msgstr "kein Quellkode gefunden"
+
 msgid "Running specific tests for package"
 msgstr "Ausführen spezifischer Tests für das Paket"
 
@@ -923,14 +839,15 @@ msgstr "Ausführen"
 msgid "Running vignettes for package"
 msgstr "Ausführen der Vignetten für das Paket"
 
-msgid "Creating"
-msgstr "Erzeugen"
-
 msgid "creation of"
 msgstr "Erzeugung von"
 
 msgid "failed"
 msgstr "fehlgeschlagen"
+
+#, fuzzy
+msgid "no parsed files found"
+msgstr "kein Quellkode gefunden"
 
 msgid "creating"
 msgstr "erzeugen"
@@ -1055,27 +972,3 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
 msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
-
-#~ msgid "Found invalid multi-byte character data."
-#~ msgstr "Unzulässige multi-byte Zeichenkettendaten gefunden"
-
-#~ msgid "Cannot re-encode because iconv is not available."
-#~ msgstr "kann nicht rekodieren, da iconv nicht verfügbar"
-
-#~ msgid "Try running R in a single-byte locale."
-#~ msgstr ""
-#~ "Versuchen sie R in eine Lokalisierung mit 1-Byte-Zeichen auszuführen"
-
-#~ msgid "non-UTF-8 multibyte locales are not supported -- reencoding to UTF-8"
-#~ msgstr ""
-#~ "Mehrbyte Lokalisierungen außer UTF-8 werden nicht unterstützt -- "
-#~ "rekodiere nach UTF-8"
-
-#~ msgid "'iconv' is required"
-#~ msgstr "'iconv' wird benötigt"
-
-#~ msgid "Verifiable as open source: %s"
-#~ msgstr "Verifizierbar als Open Source: %s"
-
-#~ msgid "--- running texi2dvi on vignettes"
-#~ msgstr "--- führe texi2dvi auf Vignetten aus"
