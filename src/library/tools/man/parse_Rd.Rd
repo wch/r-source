@@ -1,6 +1,6 @@
 % File src/library/tools/man/parse_Rd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008 R Core Development Team
+% Copyright 2008, 2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{parse_Rd}
@@ -9,8 +9,6 @@
 \description{
   This function reads an R documentation (Rd) file and parses it, for
   processing by other functions.
-
-  It is \bold{experimental}.
 }
 \usage{
 parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
@@ -28,29 +26,28 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
   Rd file, or a fragment.}
 }
 \details{
-  This experimental function parses Rd files according to the
-  specification given in
-  \url{http://developer.r-project.org/parseRd.pdf}.  At the current
-  writing, this is not identical to the rules used by older tools:  it
-  is somewhat stricter.  
+  This function parses Rd files according to the specification given
+  in \url{http://developer.r-project.org/parseRd.pdf}. This is not
+  identical to the rules used before version 2.10.x:  it is somewhat
+  stricter.
   
   As from \R 2.10.0, \code{parse_Rd} generates a warning for each parse
   error, and attempts to continue parsing.  In order to continue, it is
   generally necessary to drop some parts of the file, so such warnings
   should not be ignored.
-  
 }
 \value{
   An object of class \code{"Rd"}.  The internal format of this object is 
-  subject to change.
+  subject to change.  There are \code{as.character()} and \code{print()}
+  methods defined for the class.
   
-  At present files which are marked as Latin-1 or UTF-8 or where
-  \code{encoding} has one of those values result in text marked in the
-  encoding. In a non-UTF-8 MBCS locale the result will be marked as
-  UTF-8.  In all other cases files are assumed to be in the native encoding.
+  Files without a marked encoding are by default assumed to be in the
+  native encoding.  An alternate default can be set using the
+  \code{encoding} argument. All text in files is translated to the
+  UTF-8 encoding internally.
 }
 \section{Warning}{
-  This function is still experimental.  Names, interfaces and values
+  This function is still somewhat experimental.  Names, interfaces and values
   might change in future versions.
 }
 \references{ \url{http://developer.r-project.org/parseRd.pdf} }

@@ -27,6 +27,8 @@
 
 #include <Defn.h>
 #include "Parse.h"
+#define STRICT_R_HEADERS
+#include <R_ext/RS.h>           /* for R_chk_* allocation */
 
 #define DEBUGVALS 0		/* 1 causes detailed internal state output to R console */	
 #define DEBUGMODE 0		/* 1 causes Bison output of parse state, to stdout or stderr */
@@ -106,6 +108,7 @@ static char const yyunknown[] = "unknown macro"; /* our message, not bison's */
 #define LATEXLIKE 2
 #define VERBATIM 3
 #define INOPTION 4
+#define COMMENTMODE 5   /* only used in deparsing */
 
 static SEXP     SrcFile;  /* parse_Rd will *always* supply a srcfile */
 
@@ -1346,3 +1349,97 @@ SEXP attribute_hidden do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     else error(_("invalid Rd file"));
     return s;
 }
+
+/* "do_deparseRd" 
+
+ .Internal( deparseRd(element, state) )
+*/
+
+SEXP attribute_hidden do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP e, state, result;
+    int  outlen, *statevals, quoteBraces;
+    const char *c;
+    char *outbuf, *out, lookahead;
+    Rboolean escape;
+
+    checkArity(op, args);
+    
+    e = CAR(args);                       args = CDR(args);
+    if(!isString(e) || length(e) != 1) 
+    	error(_("deparseRd only supports deparsing character elements"));
+    e = STRING_ELT(e, 0);
+    
+    state = CAR(args);
+    if(!isInteger(state) || length(state) != 5) error(_("bad state"));
+    xxbraceDepth = INTEGER(state)[0];
+    xxinRString = INTEGER(state)[1];
+    xxmode = INTEGER(state)[2];
+    xxinEqn = INTEGER(state)[3];
+    quoteBraces = INTEGER(state)[4];
+    
+    
+    if (xxmode != LATEXLIKE && xxmode != RLIKE && xxmode != VERBATIM && xxmode != COMMENTMODE && xxmode != INOPTION)
+    	error(_("bad text mode in deparseRd"));
+    
+    for (c = CHAR(e), outlen=0; *c; c++) {
+    	outlen++;
+    	/* any special char might be escaped; the backslash might be tripled */
+    	if (*c == '{' || *c == '}' || *c == '%' || *c == '\\') outlen++;
+    	if (*c == '\\') outlen++; 
+    }
+    out = outbuf = R_chk_calloc(outlen+1, sizeof(char));
+    for (c = CHAR(e); *c; c++) {
+    	escape = FALSE;
+    	switch (*c) {
+    	case '\\':
+    	    if (xxinRString) {
+    	    	escape = TRUE;
+    	    	lookahead = *(c+1);
+    	    	if (xxinRString == lookahead) {
+    	    	    *out++ = '\\';
+    	    	    *out++ = '\\';
+    	    	    c++;
+    	    	}
+    	    	break;
+    	    }          /* fall through to % case for non-strings... */    
+    	case '%':
+    	    if (xxmode != COMMENTMODE && !xxinEqn)
+    	    	escape = TRUE;
+    	    break;
+    	case LBRACE:
+    	case RBRACE:
+    	    if (quoteBraces)
+    	    	escape = TRUE;
+    	    else if (!xxinRString && !xxinEqn && (xxmode == RLIKE || xxmode == VERBATIM)) {
+    	    	if (*c == LBRACE) xxbraceDepth++;
+    	    	else if (xxbraceDepth <= 0) escape = TRUE;
+    	    	else xxbraceDepth--;
+    	    }
+    	    break;
+    	case '\'':
+    	case '"':
+    	case '`':
+    	    if (xxmode == RLIKE) {
+    		if (xxinRString == *c) xxinRString = 0;
+    		else xxinRString = *c;
+    	    }
+    	    break;
+    	}
+    	if (escape)
+    	    *out++ = '\\';
+    	*out++ = *c;
+    }
+    *out = '\0';
+    PROTECT(result = allocVector(VECSXP, 2));
+    SET_VECTOR_ELT(result, 0, ScalarString(mkChar(outbuf)));
+    SET_VECTOR_ELT(result, 1, duplicate(state));
+    R_chk_free(outbuf);
+
+    statevals = INTEGER( VECTOR_ELT(result, 1) );
+    statevals[0] = xxbraceDepth;
+    statevals[1] = xxinRString;
+    UNPROTECT(1);
+    return result;
+}
+

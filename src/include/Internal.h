@@ -166,6 +166,7 @@ SEXP do_delayed(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dend(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dendwindow(SEXP, SEXP, SEXP, SEXP);
 SEXP do_deparse(SEXP, SEXP, SEXP, SEXP);
+SEXP do_deparseRd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_deriv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_detach(SEXP,SEXP,SEXP,SEXP);
 SEXP do_devcontrol(SEXP,SEXP,SEXP,SEXP);

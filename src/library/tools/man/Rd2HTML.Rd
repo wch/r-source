@@ -145,8 +145,8 @@ For example, this man page was:
 Because build-time execution is not yet supported, the first of these will
 display as a macro; the other two may or may not,
 depending on the build of \R.  (Note that escapes, e.g. for \samp{\%},
-that are necessary in the source
-code are not currently reproduced in this display.)
+may not be identical in this display, but the displayed Rd code should parse 
+to the same object.)
 }
 
 \value{
