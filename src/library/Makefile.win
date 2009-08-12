@@ -68,19 +68,26 @@ help-indices:
 	done
 	@$(ECHO)
 
+PKGDIR = .
+RLIB = $(RHOME)/library
 
 Rdfiles:
 ifeq ($(strip $(USE_CHM)),TRUE)
 	@for pkg in $(R_PKGS_BASE); do \
-	  $(MAKE) --no-print-directory -C ../gnuwin32/help -s RHOME=$(RHOME) \
-	    HELPTYPES='html chm' \
-	    chm-$${pkg} || exit 1; \
+	  $(ECHO) "tools:::.convertRdfiles(\"$${pkg}\", \"$(RLIB)/$${pkg}\", types=c('html', 'chm'))" | LC_ALL=C $(R_EXE) || exit 1; \
+	  $(MAKE) --no-print-directory -C $${pkg}/chm \
+	    -f $(RHOME)/src/gnuwin32/help/Makefile $${pkg}.chm RHOME=$(RHOME); \
+	  if test -f $${pkg}/chm/$${pkg}.chm ; then \
+	    $(MKDIR) -p $(RLIB)/$${pkg}/chtml ;\
+	    $(CP) $${pkg}/chm/$${pkg}.chm $(RLIB)/$${pkg}/chtml ; \
+	  else \
+	    echo CHM compile failed:  HTML Help Workshop not installed? ; \
+	    exit 1; \
+	  fi; \
 	done
 else
 	@for pkg in $(R_PKGS_BASE); do \
-	  $(MAKE) --no-print-directory -C ../gnuwin32/help -s RHOME=$(RHOME) \
-	    HELPTYPES='html' \
-	    help-$${pkg} || exit 1; \
+	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(R_EXE) || exit 1; \
 	done
 endif
 
