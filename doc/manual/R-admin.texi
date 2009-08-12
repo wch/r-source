@@ -4192,7 +4192,7 @@ and need the block removed @emph{via} the @emph{information bar}.  Also,
 we have seen cases in which the search results come up as a blank page:
 go back one page in the browser history to find the real results page.
 
-Apple's Safari 3.0.4 also works.
+Apple's Safari and Google's Chrome also work.
 
 @node Java Virtual Machines on Mac OS X,  , Java Virtual Machines on Windows, Enabling search in HTML help
 @section Java Virtual Machines on Mac OS X
