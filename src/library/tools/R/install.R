@@ -1109,7 +1109,19 @@
         lib <- getwd()
         setwd(cwd)
     }
-    if (!.file_test("-d", lib) || file.access(lib, 2L))
+    ok <- .file_test("-d", lib)
+    if (ok) {
+        if(WINDOWS) {
+            ## file.access is unreliable on Windows
+            ## the only known reliable way is to try it
+            fn <- file.path(lib, "_test_dir_")
+            unlink(fn, recursive = TRUE) # precaution
+            res <- try(dir.create(fn, showWarnings = FALSE))
+            if(inherits(res, "try-error") || !res) ok <- FALSE
+            else unlink(fn, recursive = TRUE)
+        } else ok <- file.access(lib, 2L) == 0
+    }
+    if(!ok)
         stop("ERROR: no permission to install to directory ",
              sQuote(lib), call. = FALSE)
 
@@ -1917,7 +1929,7 @@
                      "Full-text search=Yes\n",
                      "Full text search stop list file=..\\..\\..\\gnuwin32\\help\\R.stp\n",
                      "Title=R Help for package ", pkg, "\n",
-                     "\n\n[FILES]\n", 
+                     "\n\n[FILES]\n",
                      "00Index.html\n", sep = ""), con)
     # Most files are linked from the index; internals are not, so need to be listed.
     if (nrow(internals))
