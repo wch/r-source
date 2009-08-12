@@ -56,10 +56,8 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
 \references{ \url{http://developer.r-project.org/parseRd.pdf} }
 \author{ Duncan Murdoch }
 \seealso{
-  \code{\link{Rd2HTML}}.
-  
-  \code{\link{Rd_parse}}, the legacy function currently still used for
-  parsing Rd files by \command{R CMD check}.
+  \code{\link{Rd2HTML}} for the converters that use the output of
+  \code{parseRd}.
 }
 \keyword{utilities}
 \keyword{documentation}
