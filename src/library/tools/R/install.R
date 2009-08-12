@@ -1124,8 +1124,7 @@
         lib <- getwd()
         setwd(cwd)
     }
-    if (!dir.exists(lib) || file.access(lib, 2L))
-    ok <- .file_test("-d", lib)
+    ok <- dir.exists(lib)
     if (ok) {
         if(WINDOWS) {
             ## file.access is unreliable on Windows
