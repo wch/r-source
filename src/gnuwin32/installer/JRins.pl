@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2001-7 R Development Core Team
+# Copyright (C) 2001-9 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -176,7 +176,7 @@ Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom; Fl
 Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom; Flags: dontinheritcheck
 Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom; Flags: dontinheritcheck
 Name: "devel"; Description: "Source Package Installation Files"; Types: user full custom
-Name: "libdocs"; Description: "Docs for Packages grid and survival"; Types: user full custom
+Name: "libdocs"; Description: "Docs for Package grid"; Types: user full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "tests"; Description: "Test files"; Types: full custom
 
@@ -381,17 +381,20 @@ end;
 END
 
 my %develfiles=("doc\\html\\logo.jpg" => 1,
-		"README.packages" => 1,
-		"COPYING.LIB" => 1,
-		"bin\\INSTALL,sh" => 1,
+		"doc\\COPYING.LIB" => 1,
+		"bin\\INSTALL.sh" => 1,
 		"bin\\SHLIB.sh" => 1,
 		"bin\\build" => 1,
 		"bin\\check" => 1,
+		"bin\\config.sh" => 1,
 		"bin\\Rd2dvi.sh" => 1,
 		"bin\\Rd2txt.sh" => 1,
-		"bin\\Rdconv" => 1,
+		"bin\\Rdconv.sh" => 1,
 		"bin\\Rdiff.sh" => 1,
+		"bin\\Rprof" => 1,
 		"bin\\Sd2Rd" => 1,
+		"bin\\Stangle.sh" => 1,
+		"bin\\Sweave.sh" => 1,
 		"etc\\Makeconf" => 1);
 		
 $path="${SRCDIR}";chdir($path);
@@ -440,14 +443,10 @@ sub listFiles {
 	    $component = "manuals";
 	} elsif (m/^library\\[^\\]*\\latex/) {
 	    	$component = "latex";
-	} elsif (m/^library\\[^\\]*\\man/) {
-	    	$component = "Rd";
 	} elsif (m/^library\\[^\\]*\\tests/) {
 	    	$component = "tests";
 	} elsif (m/^tests/) {
 	    	$component = "tests";
-#	} elsif (m/^Tcl\\doc/) {
-#	    $component = "tcl/docs";
 	} elsif (m/^Tcl\\doc\\.*chm$/) {
 	    $component = "tcl/chm";
 	} elsif (m/^Tcl/) {
@@ -460,19 +459,17 @@ sub listFiles {
 		 || m/^share\\make/
 		 || m/^share\\perl/
 		 || m/^share\\R/
-		 || m/^share\\sh/
 		 || m/^share\\texmf/
-		 || m/^bin\\build/
-		 || m/^bin\\check/
-		 || m/^bin\\Rd2dvi.sh/
-		 || m/^bin\\Rdconv/
-		 || m/^bin\\Rdiff.sh/
-		 || m/^bin\\Rprof/
-		 || m/^bin\\Sd2Rd/
+# 		 || m/^bin\\build/
+# 		 || m/^bin\\check/
+# 		 || m/^bin\\Rd2dvi.sh/
+# 		 || m/^bin\\Rdconv/
+# 		 || m/^bin\\Rdiff.sh/
+# 		 || m/^bin\\Rprof/
+# 		 || m/^bin\\Sd2Rd/
 		 || m/^lib\\/) {
 	    $component = "devel";
-	} elsif (m/^library\\grid\\doc/
-		 || $_ eq "library\\survival\\survival.ps.gz") {
+	} elsif (m/^library\\grid\\doc/) {
 	    $component = "libdocs";
 	} elsif ($_ eq "modules\\iconv.dll") {
 	    $component = "main";

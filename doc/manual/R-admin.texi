@@ -1224,7 +1224,7 @@ make msi
 @end example
 
 @noindent
-which will results in a file of about 40Mb with a name like
+which will results in a file of about 52Mb with a name like
 @file{R-2.6.0-win32.msi}.  This can be double-clicked to be installed,
 but those who need it will know what to do with it.
 
