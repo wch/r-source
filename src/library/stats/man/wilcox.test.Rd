@@ -136,7 +136,7 @@ wilcox.test(x, \dots)
   \emph{Journal of the American Statistical Association}
   \bold{67}, 687--690.
 
-  Myles Hollander & Douglas A. Wolfe (1973),
+  Myles Hollander and Douglas A. Wolfe (1973),
   \emph{Nonparametric Statistical Methods.}
   New York: John Wiley & Sons.
   Pages 27--33 (one-sample), 68--75 (two-sample).\cr

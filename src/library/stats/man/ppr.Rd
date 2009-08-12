@@ -167,7 +167,7 @@ method functions.
   Laboratory for Computational Statistics, Stanford University Technical
   Report No. 1.
 
-  Venables, W. N. & Ripley, B. D. (2002)
+  Venables, W. N. and Ripley, B. D. (2002)
   \emph{Modern Applied Statistics with S.}  Springer.
 }
 \seealso{
