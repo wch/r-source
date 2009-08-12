@@ -43,15 +43,17 @@
   installed) and \env{xdvi} (the DVI previewer, default \code{xdvi}),
 #endif
 #ifdef windows
-  \env{R_PAPERSIZE} (default \code{a4}, ) and \env{xdvi} (the DVI
-  previewer, default \code{open} (use file associations)),
+  \env{R_PAPERSIZE} (default \code{a4}, valid values are \code{a4},
+  \code{letter}, \code{legal} and \code{executive}) and \env{xdvi} (the
+  DVI previewer, default \code{open} (use file associations)),
 #endif
   and \env{R_PDFVIEWER} (the PDF previewer).  (Valid values for
   \env{R_PAPERSIZE} are \code{a4}, \code{letter}, \code{legal} and
   \code{executive}.)
 
   \code{Sd2Rd} converts S (version 3 or 4) documentation formats to Rd
-  format: it is no longer much used and the results may need hand-tuning.
+  format: it is no longer much used and the results may need
+  hand-tuning.  (It requires Perl.)
 
   Use \code{R CMD foo --help} to obtain usage information on utility \code{foo}.
 }

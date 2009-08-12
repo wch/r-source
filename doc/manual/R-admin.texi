@@ -2287,6 +2287,14 @@ of most commercial Unixes.  However, you can make use of @acronym{GNU}
 Perl version 5.8.0 or later, available via
 @uref{http://www.perl.com/CPAN/}, is essential.
 
+@c This is insisted on by configure, so in that sense it is essential.
+@c However, the Perl scripts left are
+@c src/scripts: Rprof Sd2Rd build check
+@c tools: help2man.pl keywords2html.pl linkcheck.pl
+@c src/gnuwin32/fixed/rwver.pl
+@c src/gnuwin32/installer: JRins.pl WIXins.pl
+@c so on a Unix-alike it is only used to make some HTML pages.
+
 You will not be able to build most of the manuals unless you have
 @command{makeinfo} version 4.7 or later installed, and if not some of
 the @HTML{} manuals will be linked to @acronym{CRAN}.  (Version 4.6 is
@@ -4230,13 +4238,18 @@ See the subsections below for detailed descriptions.
 @itemize
 @item
 Perl (in @file{Rtools.exe})
+@c Current Perl scripts used on Windows are
+@c src/scripts: Rprof Sd2Rd build check
+@c src/gnuwin32/fixed/rwver.pl, used to make version.texi
+@c src/gnuwin32/installer: JRins.pl WIXins.pl
 @item
 The command line tools (in @file{Rtools.exe})
 @item
 The MinGW compilers (in @file{Rtools.exe})
 @end itemize
-For building simple packages containing data or @R{} source
-but no compiled code, only the first two of these are needed.
+For installing simple packages containing data or @R{} source
+but no compiled code, only the second of these are needed.
+Perl is essential to build @R{}, and needed to develop packages.
 
 A complete build of @R{} including compiled @HTML{} help files and
 PDF manuals, and producing the standalone installer 
@@ -4298,13 +4311,15 @@ path.
 @node Perl, The Microsoft HTML Help Workshop, The Windows toolset, The Windows toolset
 @section Perl
 
+Perl is needed to build @R{} and to use @command{R CMD
+build|check|Rprof}: it is no longer needed to install packages.
+
 You will need a Windows port of @code{perl5} (but only the basic
 functionality, not any of the third-party Win32 extensions).  The
-Vanilla Perl package is included in @file{Rtools.exe}. A more full-
-featured distribution is available from
-@uref{http://www.activestate.com/@/Products/@/ActivePerl/}, and this was
-used in releases of @R{} up to @R{} 2.5.1.  Alternatives are listed at
-@uref{http://win32.perl.org/}.
+Vanilla Perl (version 5.8.x) package is included in @file{Rtools.exe}. A
+more full- featured distribution is available from
+@uref{http://www.activestate.com/@/Products/@/ActivePerl/}: other
+alternatives are listed at @uref{http://win32.perl.org/}.
 
 @strong{Beware}: you do need a @emph{Windows} port and not the Cygwin
 one.  Users of 64-bit Windows can use a Win64 Perl (such as that from
