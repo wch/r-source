@@ -76,7 +76,7 @@ ifeq ($(strip $(USE_CHM)),TRUE)
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(ECHO) "tools:::.convertRdfiles(\"$${pkg}\", \"$(RLIB)/$${pkg}\", types=c('html', 'chm'))" | LC_ALL=C $(R_EXE) || exit 1; \
 	  $(MAKE) --no-print-directory -C $${pkg}/chm \
-	    -f $(RHOME)/src/gnuwin32/help/Makefile $${pkg}.chm RHOME=$(RHOME); \
+	    -f $(RHOME)/src/gnuwin32/help/MkChm $${pkg}.chm RHOME=$(RHOME); \
 	  if test -f $${pkg}/chm/$${pkg}.chm ; then \
 	    $(MKDIR) -p $(RLIB)/$${pkg}/chtml ;\
 	    $(CP) $${pkg}/chm/$${pkg}.chm $(RLIB)/$${pkg}/chtml ; \
