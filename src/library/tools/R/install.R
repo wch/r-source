@@ -91,10 +91,8 @@
             "      --no-docs		do not build and install documentation",
             "      --no-html		do not build HTML help",
             "      --latex      	install LaTeX help",
-            "      --example   	        install R code for help examples",
+            "      --example		install R code for help examples",
             "      --use-zip-data	collect data files in zip archive",
-            "      --use-zip-help	collect help and examples into zip archives",
-            "      --use-zip		combine '--use-zip-data' and '--use-zip-help'",
             "      --install-tests	install package-specific tests (if any)",
             "      --fake		do minimal install for testing purposes",
             "      --no-lock, --unsafe",
@@ -111,7 +109,7 @@
             "      --no-multiarch	build only the main architecture",
             "\nand on Windows only",
             "      --auto-zip	select whether to zip automatically",
-            "      --no-chm		do not build CHM help [disabled pro lem]",
+            "      --no-chm		do not build CHM help",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -197,7 +195,7 @@
 
     pkgerrmsg <- function(msg, pkg)
     {
-        message("ERROR: ", msg, " for package ", sQuote(pkg))
+        message("ERROR: ", msg, " for package ", sQuote(pkg), domain = NA)
         do_exit_on_error()
     }
 
@@ -217,9 +215,10 @@
                 } else {
                     warning("incorrect Contains metadata for bundle ",
                             sQuote(bundle_name),
-                            ": there is no package '", sQuote(p), call. = FALSE)
+                            ": there is no package '", sQuote(p),
+                            call. = FALSE, domain = NA)
                     warning("skipping installation of bundle ",
-                            sQuote(bundle_name), call. = FALSE)
+                            sQuote(bundle_name), call. = FALSE, domain = NA)
                     contains <- character()
                     break
                 }
@@ -233,7 +232,7 @@
                 res <- try(.vcreate_bundle_package_descriptions(pkg, paste(contains, collapse=" ")))
                 if (inherits(res, "try-error"))
                     warning("problem installing per-package DESCRIPTION files",
-                            call. = FALSE)
+                            call. = FALSE, domain = NA)
             }
             ## This cannot create a binary bundle, no top-level DESCRIPTION
             if (tar_up)
@@ -264,7 +263,8 @@
 
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
             if (!dir.exists(instdir)) {
-                message("ERROR unable to create ", sQuote(instdir))
+                message("ERROR: unable to create ", sQuote(instdir),
+                        domain = NA)
                 do_exit_on_error()
             }
 
@@ -301,7 +301,8 @@
                          paste(bundle_pkgs, collapse = " ")))
             system(paste(GZIP, "-9f", filepath))
             message("packaged installation of ",
-                    sQuote(bundle_name), " as ", filename, ".gz")
+                    sQuote(bundle_name), " as ", filename, ".gz",
+                    domain = NA)
             setwd(owd)
         }
 
@@ -411,7 +412,8 @@
         {
             args <- c(shargs, "-o", paste0(pkg_name, SHLIB_EXT), srcs)
             if (debug) message("about to run ",
-                               "R CMD SHLIB ", paste(args, collapse= " "))
+                               "R CMD SHLIB ", paste(args, collapse= " "),
+                               domain = NA)
             if (.shlib_internal(args) == 0L) {
                 shlib_install(instdir, arch)
                 return(FALSE)
@@ -511,13 +513,10 @@
                     this <- sub("\\.[a-zA-Z]+$", "", row.names(fi))
                     if(!anyDuplicated(this)) use_zip_data <- TRUE
                 }
+                if (use_zip_data)
+                     message("\n  Using auto-selected zip option ",
+                             sQuote("--use-zip-data"), "\n", domain = NA)
             }
-            if (dir.exists("man") &&
-                length(Sys.glob("man/*.Rd")) > 20) use_zip_help <- TRUE
-            message("\n  Using auto-selected zip options '",
-                    if (use_zip_data) "--use-zip-data ",
-                    if (use_zip_help) "--use-zip-help",
-                    "'\n")
         }
 
         if (use_configure) {
@@ -530,14 +529,15 @@
                             "   **********************************************\n",
                             "   WARNING: this package has a configure script\n",
                             "         It probably needs manual configuration\n",
-                            "   **********************************************\n\n")
+                            "   **********************************************\n\n", domain = NA)
             } else {
                 ## FIXME: should these be quoted?
                 if (.file_test("-x", "configure")) {
                     cmd <- paste(paste(configure_vars, collapse = " "),
                                  "./configure",
                                  paste(configure_args, collapse = " "))
-                    if (debug) message("configure command: ", sQuote(cmd))
+                    if (debug) message("configure command: ", sQuote(cmd),
+                                       domain = NA)
                     res <- system(cmd)
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 }  else if (file.exists("configure"))
@@ -777,21 +777,21 @@
 
             if (install_tests && dir.exists("tests") && !fake) {
                 starsmsg(stars, "tests")
-                ## system(paste0("cp -r tests " , shQuote(instdir)))
                 file.copy("tests", instdir, recursive = TRUE)
             }
 
             ## Defunct:
+            ## FIXME: remove these at some point
             if (file.exists("install.R"))
                 warning("use of file 'install.R' is no longer supported",
-                        call. = FALSE)
+                        call. = FALSE, domain = NA)
             if (file.exists("R_PROFILE.R"))
                 warning("use of file 'R_PROFILE.R' is no longer supported",
-                        call. = FALSE)
+                        call. = FALSE, domain = NA)
             value <- parse_description_field(desc, "SaveImage", default = NA)
             if (!is.na(value))
                 warning("field 'SaveImage' is defunct: please remove it",
-                        call. = FALSE)
+                        call. = FALSE, domain = NA)
 
 
             ## LazyLoading
@@ -813,6 +813,7 @@
             }
 
             if (dir.exists("man")) {
+                ## FIXME: this should not be done if --no-docs
                 starsmsg(stars, "help")
                 {
                     ## Turn
@@ -843,28 +844,6 @@
                              "installing help indices")
                     .writePkgIndices(pkg_dir, instdir, CHM = build_chm)
                     .convertRdfiles(pkg_dir, instdir, types = build_help_types)
-                    if (use_zip_help &&
-                        (WINDOWS ||
-                         (nzchar(Sys.getenv("R_UNZIPCMD")) &&
-                          nzchar(zip <- Sys.getenv("R_ZIPCMD")) ))) {
-                        owd <- setwd(instdir)
-                        if (dir.exists("R-ex")) {
-                            wd2 <- setwd("R-ex")
-                            system(paste(zip, " -q -m Rex *.R"))
-                            setwd(wd2)
-                        }
-                        if (dir.exists("help")) {
-                            wd2 <- setwd("help")
-                            system(paste(zip, " -q -m Rhelp * -x AnIndex"))
-                            setwd(wd2)
-                        }
-                        if (dir.exists("latex")) {
-                            wd2 <- setwd("latex")
-                            system(paste(zip, " -q -m Rhelp *.tex"))
-                            setwd(wd2)
-                        }
-                        setwd(owd)
-                    }
                     if (build_chm) {
                         if (dir.exists("chm")) {
                             owd <- setwd("chm")
@@ -944,7 +923,6 @@
     build_chm <- WINDOWS
     use_configure <- TRUE
     use_zip_data <- FALSE
-    use_zip_help <- FALSE
     auto_zip <- FALSE
     configure_args <- character(0)
     configure_vars <- character(0)
@@ -988,6 +966,7 @@
         } else if (a == "--no-configure") {
             use_configure <- FALSE
         } else if (a == "--no-docs") {
+            ## FIXME: should also disable parsing of Rd files
             build_html <- build_latex <- build_example <- build_chm <- FALSE
         } else if (a == "--no-html") {
             build_html <- FALSE
@@ -997,12 +976,8 @@
             build_example <- TRUE
         } else if (a == "--no-chm") {
             build_chm <- FALSE
-        } else if (a == "--use-zip") {
-            use_zip_data <- use_zip_help <- TRUE
         } else if (a == "--use-zipdata") {
             use_zip_data <- TRUE
-        } else if (a == "--use-ziphelp") {
-            use_zip_help <- TRUE
         } else if (a == "--auto-zip") {
             if (WINDOWS) auto_zip <- TRUE
             else warning("--auto-zip' is for Windows only", call. = FALSE)
@@ -1044,9 +1019,9 @@
     ## now unpack tarballs and do some basic checks
     allpkgs <- character(0)
     for(pkg in pkgs) {
-        if (debug) message("processing ", sQuote(pkg))
+        if (debug) message("processing ", sQuote(pkg), domain = NA)
         if (.file_test("-f", pkg)) {
-            if (debug) message("a file")
+            if (debug) message("a file", domain = NA)
             pkgname <- basename(pkg) # or bundle name
             ## Also allow for 'package.tgz' ...
             pkgname <- sub("\\.tgz$", "", pkgname)
@@ -1078,7 +1053,7 @@
                     starsmsg(stars, "looks like a binary bundle")
                     allpkgs <- c(allpkgs, tmpdir)
                 } else {
-                    message("unknown package layout")
+                    message("unknown package layout", domain = NA)
                     do_cleanup_tmpdir()
                     q("no", status = 1, runLast = FALSE)
                 }
@@ -1086,7 +1061,7 @@
                 allpkgs <- c(allpkgs, file.path(tmpdir, pkgname))
             } else errmsg("cannot extract package from ", sQuote(pkg))
         } else if (file.exists(file.path(pkg, "DESCRIPTION"))) {
-            if (debug) message("a directory")
+            if (debug) message("a directory", domain = NA)
             pkgname <- basename(pkg)
             allpkgs <- c(allpkgs, fullpath(pkg))
         } else {
@@ -1568,7 +1543,8 @@
     ## too strict.
     files <- dir(latexdir, pattern = "\\.tex$", full.names = TRUE)
     if (!length(files))
-        stop("no validly-named files in the ", sQuote("latex"), " directory")
+        stop("no validly-named files in the ", sQuote("latex"), " directory",
+             domain = NA)
 
     if(is.character(outfile)) {
         outcon <- file(outfile, if(append) "at" else "wt")
@@ -1584,7 +1560,8 @@
         lines <- readLines(f)  # This reads as "unknown", no re-encoding done
         hd <- grep("^\\\\HeaderA", lines, value = TRUE)
         if (!length(hd)) {
-            warning("file ", sQuote(f), " lacks a header: skipping")
+            warning("file ", sQuote(f), " lacks a header: skipping",
+                    domain = NA)
             next
         }
         this <- sub("\\\\HeaderA\\{\\s*([^}]*)\\}.*", "\\1", hd[1], perl = TRUE)
@@ -1986,9 +1963,8 @@
 
 ### * .convertRdfiles
 
-## possible types are "rds", "html", "chm", "latex", "example"
-.convertRdfiles <-
-    function(dir, outDir, types = "html")
+## possible types are "html", "chm", "latex", "example"
+.convertRdfiles <- function(dir, outDir, types = "html")
 {
     showtype <- function(type) {
     	if (!shown) {
@@ -2003,15 +1979,16 @@
         cat(type, rep(" ", max(0L, 6L - nchar(type))), sep="")
     }
 
-    dirname <- c("help", "html", "latex", "R-ex", "chm")
-    ext <- c(".rds", ".html", ".tex", ".R", ".html")
-    names(dirname) <- names(ext) <- c("rds", "html", "latex", "example", "chm")
+    dirname <- c("html", "latex", "R-ex", "chm")
+    ext <- c(".html", ".tex", ".R", ".html")
+    names(dirname) <- names(ext) <- c("html", "latex", "example", "chm")
     mandir <- file.path(dir, "man")
     if(!file_test("-d", mandir))
         stop("there are no help pages in this package")
     desc <- .readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION
     pkg <- desc["Package"]
 
+    ## CHM is built in the source tree
     for(type in types)
         if(type != "chm")
             dir.create(file.path(outDir, dirname[type]), showWarnings = FALSE)
@@ -2021,9 +1998,10 @@
     ## FIXME: perl version cleaned up non-matching converted files
 
     ## FIXME: add this lib to lib.loc?
+    ## FIXME: may be slow, so add a message?
     Links <- if ("html" %in% types) findHTMLlinks(outDir) else ""
 
-    ## Rd objects should already have been installed.
+    ## Rd objects may already have been installed.
     db <- tryCatch(Rd_db(basename(outDir), lib.loc = dirname(outDir)),
                    error = function(e) NULL)
     ## If not, we build the Rd db from the sources:
@@ -2046,15 +2024,6 @@
         environment(.ehandler)$.messages <- character()
         environment(.whandler)$.messages <- character()
 
-        if ("rds" %in% types) {
-            type <- "rds"
-            ff <- file.path(outDir, dirname[type],
-                            paste(bf, ext[type], sep = ""))
-            if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
-                showtype("rds")
-                .convert(.saveRDS(Rd, ff))
-            }
-        }
         if("html" %in% types) {
             type <- "html"
             ff <- file.path(outDir, dirname[type],

@@ -29,9 +29,11 @@ PACKAGE INSTALLATION
 	without a target, rather than target 'all'.  This is now the
 	same as on Unix, and was announced in the NEWS for 2.9.0.
 
-    o	Help in base and recommended packages is no longer zipped: it
-	makes little difference for parsed Rd files, and prebuilt
-	latex and examples files will be removed shortly.
+    o	Help in base and recommended packages is no longer zipped: text,
+	latex and examples files are now built when needed.
+
+	Options --use-zip and --use-zip-help in R CMD INSTALL are no
+	longer available and --auto-zip only zips data (or not).
 
 
 

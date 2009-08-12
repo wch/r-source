@@ -100,14 +100,12 @@
   (two names for the same option).
 #ifdef windows
   
-  On Windows it can be helpful to store text, latex and example code
-  files and data files in zip archives since many small files can take
-  up an inordinate amount of disc space.  This is controlled by the
-  options \option{--use-zip-help} and \option{--use-zip-data}, and
-  \option{--use-zip} which implies both.  CRAN binaries are produced by
-  \option{--auto-zip} which chooses to zip help if there are more than
-  20 help files, and data if the sources are more than 100Kb and there
-  are no files with names differing only by extension.
+  On Windows it can be helpful to store data files in zip archives since
+  many small files can take up an inordinate amount of disc space.  This
+  is controlled by the option \option{--use-zip-data}.  CRAN binaries
+  are produced by \option{--auto-zip} which chooses to zip data if the
+  sources are more than 100Kb and there are no files with names
+  differing only by extension.
 
   Option \option{--build} can be used to zip up the installed package or
   bundle for distribution: it implies \option{--auto-zip}.

@@ -554,64 +554,7 @@ msgstr ""
 msgid "cannot read index information in file '%s'"
 msgstr ""
 
-msgid "ERROR:"
-msgstr ""
-
-msgid "for package"
-msgstr ""
-
-msgid "incorrect Contains metadata for bundle"
-msgstr ""
-
-msgid ": there is no package '"
-msgstr ""
-
-msgid "skipping installation of bundle"
-msgstr ""
-
-msgid "problem installing per-package DESCRIPTION files"
-msgstr ""
-
-msgid "ERROR unable to create"
-msgstr ""
-
-msgid "packaged installation of"
-msgstr ""
-
-msgid "as"
-msgstr ""
-
-msgid ".gz"
-msgstr ""
-
 msgid "'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'"
-msgstr ""
-
-msgid "about to run"
-msgstr ""
-
-msgid "R CMD SHLIB"
-msgstr ""
-
-msgid "Using auto-selected zip options '"
-msgstr ""
-
-msgid "--use-zip-data"
-msgstr ""
-
-msgid "--use-zip-help"
-msgstr ""
-
-msgid "**********************************************"
-msgstr ""
-
-msgid "WARNING: this package has a configure script"
-msgstr ""
-
-msgid "It probably needs manual configuration"
-msgstr ""
-
-msgid "configure command:"
 msgstr ""
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
@@ -656,18 +599,6 @@ msgstr ""
 msgid "cannot create temporary directory"
 msgstr ""
 
-msgid "processing"
-msgstr ""
-
-msgid "a file"
-msgstr ""
-
-msgid "unknown package layout"
-msgstr ""
-
-msgid "a directory"
-msgstr ""
-
 msgid "invalid package"
 msgstr ""
 
@@ -704,23 +635,7 @@ msgstr ""
 msgid "Converting Rd files to LaTeX ..."
 msgstr ""
 
-msgid "this package does not have either a"
-msgstr ""
 
-msgid "latex"
-msgstr ""
-
-msgid "or a"
-msgstr ""
-
-msgid "man"
-msgstr ""
-
-msgid "directory"
-msgstr ""
-
-msgid "no validly-named files in the"
-msgstr ""
 
 msgid "file"
 msgstr ""
