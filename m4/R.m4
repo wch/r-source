@@ -138,8 +138,10 @@ fi
 
 ## _R_PROG_PERL_VERSION
 ## --------------------
+
 ## Building the R documentation system (Rdconv and friends) requires
 ## Perl version 5.8.0 or better.
+## [2.10.0: probably no longer true, but 5.8.0 is ancient now.]
 ## Set shell variable r_cv_prog_perl_v5 to 'yes' if a recent enough
 ## Perl is found, and to 'no' otherwise.
 AC_DEFUN([_R_PROG_PERL_VERSION],

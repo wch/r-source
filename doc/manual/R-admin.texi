@@ -1473,10 +1473,10 @@ library paths, separated by colons (semicolons on Windows).
 
 
 Packages may be distributed in source form or compiled binary form.
-Installing source packages requires that compilers and tools (including
-Perl 5.8.0 or later) be installed.  Binary packages are
-platform-specific and generally need no special tools to install, but
-see the documentation for your platform for details.
+Installing source packages requires that compilers and tools be
+installed.  Binary packages are platform-specific and generally need no
+special tools to install, but see the documentation for your platform
+for details.
 
 Note that you need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
@@ -3910,7 +3910,7 @@ acknowledged).
 
 It helps to describe the WU build environment first.  A small part of
 the software needed to build R and/or install packages is available
-directly from the AIX Installation DVDs, e.g., Java 6, X11, or Perl.
+directly from the AIX Installation DVDs, e.g., Java 6, X11, and Perl.
 Additional open source software (OSS) is packaged for AIX in @file{.rpm}
 files and available from both IBM's ``AIX Toolbox for Linux
 Applications''

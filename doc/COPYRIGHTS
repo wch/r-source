@@ -400,13 +400,6 @@ share/perl/File/Copy/Recursive.pm
    This library is free software; you can redistribute it and/or modify
    it under the same terms as Perl itself.
 
-
-share/perl/Text/Delimiter.pm
-
-   Copyright (C) Small Planet Software and Norman Walsh.
-   All rights reserved.  This program is free software; you can
-   redistribute it and/or modify it under the same terms as Perl itself.
-
 po/*.po
 src/library/*/po/*.po
 
