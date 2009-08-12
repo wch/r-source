@@ -63,7 +63,7 @@ kruskal.test(x, \dots)
   \item{data.name}{a character string giving the names of the data.}
 }
 \references{
-  Myles Hollander & Douglas A. Wolfe (1973),
+  Myles Hollander and Douglas A. Wolfe (1973),
   \emph{Nonparametric Statistical Methods.}
   New York: John Wiley & Sons.
   Pages 115--120.

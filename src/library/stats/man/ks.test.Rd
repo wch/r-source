@@ -86,7 +86,7 @@ ks.test(x, y, \dots,
   \item{data.name}{a character string giving the name(s) of the data.}
 }
 \references{
-  Z. W. Birnbaum & Fred H. Tingey (1951),
+  Z. W. Birnbaum and Fred H. Tingey (1951),
   One-sided confidence contours for probability distribution functions.
   \emph{The Annals of Mathematical Statistics}, \bold{22}/4, 592--596.
 
@@ -100,7 +100,7 @@ ks.test(x, y, \dots,
   \emph{Distribution theory for tests based on the sample distribution
     function}.  SIAM.
 
-  George Marsaglia, Wai Wan Tsang & Jingbo Wang (2003),
+  George Marsaglia, Wai Wan Tsang and Jingbo Wang (2003),
   Evaluating Kolmogorov's distribution.
   \emph{Journal of Statistical Software}, \bold{8}/18.
   \url{http://www.jstatsoft.org/v08/i18/}.
