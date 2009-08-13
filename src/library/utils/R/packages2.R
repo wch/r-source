@@ -316,6 +316,8 @@ install.packages <-
 
     ## we need to ensure that R CMD INSTALL runs with the same
     ## library trees as this session.
+    ## FIXME: At least on Windows, either run sub-R directly (to avoid sh)
+    ## or run the install in the current process.
     libpath <- .libPaths()
     libpath <- libpath[! libpath %in% .Library]
     if(length(libpath)) libpath <- paste(libpath, collapse=.Platform$path.sep)
@@ -367,7 +369,7 @@ install.packages <-
                                    contriburl = contriburl, method = method,
                                    type = "source", ...)
 
-    ## at this point pkgs may contain duplicates,
+    ## at this point 'pkgs' may contain duplicates,
     ## the same pkg in different libs
     if(length(foundpkgs)) {
         update <- unique(cbind(pkgs, lib))

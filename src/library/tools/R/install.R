@@ -16,20 +16,19 @@
 
 #### R based engine for  'R CMD INSTALL', 'R CMD SHLIB'
 ####
-#### NB: future 'R CMD Rdconv'  is in ./RdConv2.R
 
 ##' @param args
 
 ##' @return ...
 .install_packages <- function(args = NULL)
 {
-    ## calls system() on Windows for sh mv make zip perl hhc
+    ## calls system() on Windows for
+    ## sh (configure.win/cleanup.win) mv make zip hhc
 
     ## we don't want to load utils just for this
-    .file_test <- function(op, x, y) # 'y' is unused here
+    .file_test <- function(op, x)
         switch(op,
                "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
-               ## "-d":  90% of cases: use dir.exists() directly
                "-x" = (file.access(x, 1L) == 0L),
                stop(sprintf("test '%s' is not available", op), domain = NA))
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
@@ -849,6 +848,8 @@
                             owd <- setwd("chm")
                             file.copy(file.path(R.home(), "src/gnuwin32/help/Rchm.css"), ".")
                             file.copy(file.path(R.home("doc"), "html/logo.jpg"), ".")
+                            ## The following should fail gracefully if hhc is not installed.
+                            ## FIXME: give a warning at R level?
                             system(paste0("hhc ", pkg_name, ".hhp"))
                             ## always gives an error code
                             chm_file <- paste0(pkg_name, ".chm")
