@@ -1,4 +1,4 @@
-			Dear Emacs, please make this -*-Text-*- mode!
+
 	**************************************************
 	*						 *
 	*	       2.9 SERIES NEWS			 *
@@ -21,6 +21,12 @@ NEW FEATURES
 
 	They no longer segfault for invalid zero-length specification
 	of 'yleft, 'yright', or 'f'.
+
+
+DEPRECATED & DEFUNCT
+
+    o	R CMD Rd2txt is deprecated, and will be removed in 2.10.0.
+	(It is just a wrapper for R CMD Rdconv -t txt.)
 
 
 BUG FIXES
@@ -49,7 +55,8 @@ BUG FIXES
     	leaking a file descriptor each time. (PR#13841)
 
     o	The checks for inconsistent inheritance reported by setClass()
-        now detect inconsistent superclasses and give better warning messages.
+	now detect inconsistent superclasses and give better warning
+	messages.
 
     o	print.anova() failed to recognize the column labelled
     	P(>|Chi|) from a Poisson/binomial GLM anova as a p-value
@@ -1453,7 +1460,7 @@ NEW FEATURES
 	Unicode) for collation, enabled by configure option --with-ICU
 	on a Unix-alike and by a setting in MkRules on Windows.
 	Function icuSetCollate() allows the collation rules (including
-	the locale) to be tuned.  [Experimental]
+	the locale) to be tuned.
 
     o	If S4 method dispatch is on and S4 objects are found as
 	attributes, show() rather than print() is used to print the
@@ -3249,7 +3256,7 @@ BUG FIXES
 	Antonio, Fabio di Narzo.
 
     o	reshape() got column names out of sync with contents in some
-	cases; found by Antonio, Fabio Di Narzo.
+	cases; found by Antonio Fabio Di Narzo.
 
     o	ar(x) for short 'x' (i.e. length <= 10) could fail because the
 	default 'order.max' was >= length(x) which is non-sensical.
@@ -6933,10 +6940,10 @@ NEW FEATURES
     o	On suitably equipped Unix-alike systems, segfaults, illegal
 	operations and bus errors are caught and there is a simple
 	error-handler which gives the user some choice as to what to
-	do in interactive use. [Experimental.]
+	do in interactive use.
 
 	On Windows access violations and illegal instructions are
-	caught with a simple error handler.  [Experimental.]
+	caught with a simple error handler.
 
     o	Tracebacks now include calls such as .C/.Fortran/.Call, which
 	will help if errors occur in R code evaluated by compiled code
@@ -10189,3 +10196,8 @@ BUG FIXES
 	*	News of 1.0.0 and earlier is in file `OONEWS'	*
 	*							*
 	*********************************************************
+
+%%% Local Variables:
+%%% mode: text
+%%% coding: utf-8
+%%% End:
