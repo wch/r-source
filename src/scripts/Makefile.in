@@ -11,7 +11,7 @@ subdir = src/scripts
 include $(top_builddir)/Makeconf
 
 ## don't add '#! R_SHELL' for scripts intend to be run by 'R CMD script'
-SCRIPTS_S = BATCH COMPILE INSTALL LINK REMOVE Rd2dvi Rd2txt Rdconv \
+SCRIPTS_S = BATCH COMPILE INSTALL LINK REMOVE Rd2dvi Rdconv \
   SHLIB Stangle Sweave config javareconf rtags
 ## <NOTE>
 ## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.

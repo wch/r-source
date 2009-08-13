@@ -108,24 +108,6 @@ while(<tfile>) {
 }
 close tfile;
 
-
-# my %develfiles=("doc\\html\\logo.jpg" => 1,
-# 		"doc\\COPYING.LIB" => 1,
-# 		"bin\\INSTALL.sh" => 1,
-# 		"bin\\SHLIB.sh" => 1,
-# 		"bin\\build" => 1,
-# 		"bin\\check" => 1,
-# 		"bin\\config.sh" => 1,
-# 		"bin\\Rd2dvi.sh" => 1,
-# 		"bin\\Rd2txt.sh" => 1,
-# 		"bin\\Rdconv.sh" => 1,
-# 		"bin\\Rdiff.sh" => 1,
-# 		"bin\\Rprof" => 1,
-# 		"bin\\Sd2Rd" => 1,
-# 		"bin\\Stangle.sh" => 1,
-# 		"bin\\Sweave.sh" => 1,
-# 		"etc\\Makeconf" => 1);
-		
 $path="${SRCDIR}";chdir($path);
 my %main;
 

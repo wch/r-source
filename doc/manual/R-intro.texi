@@ -7048,8 +7048,6 @@ Convert Rd format to various other formats, including @HTML{}, Nroff,
 @LaTeX{}, plain text, and S documentation format.
 @item Rd2dvi
 Convert Rd format to DVI/PDF.
-@item Rd2txt
-Convert Rd format to text.
 @item Sd2Rd
 Convert S documentation to Rd format.
 @item config

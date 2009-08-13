@@ -3582,7 +3582,7 @@ For example
 @noindent
 For consistency with the pre-assigned sections, the section name (the
 first argument to @code{\section}) should be capitalized (but not all
-upper case).  Wwhitespace between the first and second braced
+upper case).  Whitespace between the first and second braced
 expressions is allowed as from @R 2.10.0.
 
 Note that additional named sections are always inserted at a fixed
@@ -4064,18 +4064,13 @@ other formats, or extract the executable examples for run-time testing.
 The currently supported conversions are to plain text, @HTML{} and
 @LaTeX{} as well as extraction of the examples.
 
-In addition to this low-level conversion tool, the @R{} distribution
-provides two user-level programs for processing Rd format.
-@findex R CMD Rd2txt
 @findex R CMD Rd2dvi
-@code{R CMD Rd2txt} produces ``pretty'' plain text output from an Rd
-file, and is particularly useful as a previewer when writing Rd format
-documentation within Emacs.  @code{R CMD Rd2dvi} generates DVI (or, if
-option @option{--pdf} is given, PDF) output from documentation in Rd
-files, which can be specified either explicitly or by the path to a
-directory with the sources of a package (or bundle).  In the latter
-case, a reference manual for all documented objects in the package is
-created, including the information in the @file{DESCRIPTION} files.
+@code{R CMD Rd2dvi} generates DVI (or, if option @option{--pdf} is
+given, PDF) output from documentation in Rd files, which can be
+specified either explicitly or by the path to a directory with the
+sources of a package (or bundle).  In the latter case, a reference
+manual for all documented objects in the package is created, including
+the information in the @file{DESCRIPTION} files.
 
 @findex R CMD Sd2Rd
 @code{R CMD Sd2Rd} converts @Sl{} version 3 documentation files

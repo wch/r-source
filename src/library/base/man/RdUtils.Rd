@@ -6,7 +6,6 @@
 \name{RdUtils}
 \Rdversion{1.1}
 \alias{Rdconv}
-\alias{Rd2txt}
 \alias{Rd2dvi}
 \alias{Sd2Rd}
 \title{Utilities for Processing Rd Files}
@@ -19,7 +18,6 @@
 
 \special{R CMD Rdconv [options] file}
 \special{R CMD Rd2dvi [options] files}
-\special{R CMD Rd2txt [options] file}
 \special{R CMD Sd2Rd [options] file}
 }
 \arguments{
@@ -35,9 +33,8 @@
   plain text, HTML and LaTeX formats are supported.  It can also extract
   the examples for run-time testing.
 
-  \code{Rd2dvi} and \code{Rd2txt} are user-level programs
-  for producing DVI/PDF output or pretty text output from Rd sources.
-  \code{Rd2dvi} will make use of environment variables
+  \code{Rd2dvi} is the user-level program for producing DVI/PDF output
+  from Rd sources.  It will make use of the environment variables
 #ifdef unix
   \env{R_PAPERSIZE} (set by \code{R CMD}, with a default set when \R was
   installed) and \env{xdvi} (the DVI previewer, default \code{xdvi}),

@@ -17,12 +17,12 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	- Packages that were installed by R-devel after 2009-08-09
 	  should not be used with earlier versions of R, and some
 	  aspects of package help will be missing if there are so
-	  used.  (Text and latex help and the the runnable examples.)
+	  used.  (Text and latex help and the runnable examples.)
 
 	- Text help, latex help and examples for packages installed
           under the new system is converted on-demand from stored
-          parsed Rd files.  (Conversions stored in earlier
-          installations are still used.)
+          parsed Rd files.  (Conversions stored in R < 2.10.0 are
+          used if no parsed Rd files are found.)
 
 	The converters are still being polished; but almost all errors
 	in packages are previously undetected/corrected errors in the
@@ -270,6 +270,8 @@ DEPRECATED & DEFUNCT
 	Extensions' for the steps needed to unbundle a bundle.
 
     o	png(type="cairo1") is defunct: the value is no longer recognized.
+
+    o	R CMD Rd2txt is defunct: use R CMD Rdconv -t txt or tools::Rd2txt().
 
 
 INSTALLATION
