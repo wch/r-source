@@ -328,7 +328,7 @@ BUG FIXES
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.9.1 patched
+		CHANGES IN R VERSION 2.9.2
 
 
 NEW FEATURES
@@ -392,6 +392,9 @@ BUG FIXES
 	could in rare circumstances overrun a buffer and so segfault.
 
     o	R CMD Rdconv --version was not working correctly.
+
+    o   Missing PROTECTs in nlm() caused "random" errors. (PR#13381 by
+        Adam D.I. Kramer, analysis and suggested fix by Bill Dunlap.)
 
 
 
