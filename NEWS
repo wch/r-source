@@ -258,6 +258,10 @@ Rd HELP FILE CHANGES
     o	print.Rd() now adds necessary escape characters so that
 	printing and re-parsing an Rd object should produce an
 	equivalent object.
+	
+    o	parse_Rd() was incorrectly handling multiple backslashes in
+    	R code strings, converting 4n+3 backslashes to 2n+1 instead
+    	of 2n+2.
 
 
 DEPRECATED & DEFUNCT

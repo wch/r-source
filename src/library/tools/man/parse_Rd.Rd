@@ -13,6 +13,8 @@
 \usage{
 parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
          fragment = FALSE)
+\method{print}{Rd}(x, deparse=FALSE, ...)
+\method{as.character}{Rd}(x, deparse=FALSE, ...)
 }
 \arguments{
   \item{file}{A filename or text-mode connection.  At present filenames
@@ -24,6 +26,9 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
     information should be printed.} 
   \item{fragment}{Logical indicating whether file represents a complete
   Rd file, or a fragment.}
+  \item{x}{An object of class Rd.}
+  \item{deparse}{If \code{TRUE}, attempt to reinstate the escape characters
+  so that the resulting characters will parse to the same object.}
 }
 \details{
   This function parses Rd files according to the specification given
@@ -37,9 +42,10 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
   should not be ignored.
 }
 \value{
-  An object of class \code{"Rd"}.  The internal format of this object is 
-  subject to change.  There are \code{as.character()} and \code{print()}
-  methods defined for the class.
+  \code{parse_Rd} returns an object of class \code{"Rd"}.  The
+  internal format of this object is subject to change.  The
+  \code{as.character()} and \code{print()} methods defined for the
+  class return character vectors and print them, respectively.
   
   Files without a marked encoding are by default assumed to be in the
   native encoding.  An alternate default can be set using the

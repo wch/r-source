@@ -1094,7 +1094,10 @@ static int mkCode(int c)
     	    	    	TEXT_PUSH(c);
     	    	    	c = lookahead;
     	    	    	escaped = 1;
-    	    	    } else xxungetc(lookahead);
+    	    	    } else {
+    	    	    	xxungetc(lookahead); /* put back the 4th char */
+    	    	    	xxungetc('\\');	     /* and the 3rd */
+    	    	    }
     	    	} else if (lookahead == xxinRString) { /* There could be one or two before this */
     	    	    TEXT_PUSH(c);
     	    	    c = lookahead;
@@ -1362,7 +1365,7 @@ SEXP attribute_hidden do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     int  outlen, *statevals, quoteBraces, inRComment;
     const char *c;
     char *outbuf, *out, lookahead;
-    Rboolean escape, escaped;
+    Rboolean escape;
 
     checkArity(op, args);
     
@@ -1386,27 +1389,19 @@ SEXP attribute_hidden do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     
     for (c = CHAR(e), outlen=0; *c; c++) {
     	outlen++;
-    	/* any special char might be escaped; the backslash might be tripled */
+    	/* any special char might be escaped */
     	if (*c == '{' || *c == '}' || *c == '%' || *c == '\\') outlen++;
-    	if (*c == '\\') outlen++; 
     }
     out = outbuf = R_chk_calloc(outlen+1, sizeof(char));
-    escaped = FALSE;
     inRComment = FALSE;
     for (c = CHAR(e); *c; c++) {
     	escape = FALSE;
-    	if (!escaped && xxmode != UNKNOWNMODE) {
+    	if (xxmode != UNKNOWNMODE) {
 	    switch (*c) {
 	    case '\\':
 		if (xxmode == RLIKE && xxinRString) {
 		    lookahead = *(c+1);
-		    if (lookahead == '\\') {  /* This is designed to emulate the weird handling of backslashes
-		    				 in R strings:  "\a", "\\a" and "\\\a" all get 
-		    				 converted to "\a".  Probably a bug?  FIXME */ 
-		        *out++ = '\\';
-			escape = TRUE;
-			escaped = TRUE;
-		    } else if (lookahead == xxinRString) 
+		    if (lookahead == '\\' || lookahead == xxinRString || lookahead == 'l') 
 		    	escape = TRUE;
 		    break;
 		}          /* fall through to % case for non-strings... */    
@@ -1441,7 +1436,7 @@ SEXP attribute_hidden do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
 	    	inRComment = FALSE;
 	    	break;
 	    }
-	} else escaped = FALSE;
+	}
     	if (escape)
     	    *out++ = '\\';
     	*out++ = *c;
