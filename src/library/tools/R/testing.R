@@ -300,7 +300,7 @@ testInstalledPackage <-
     return(nfail)
 }
 
-.createExdotR <- function(pkg, pkgdir)
+.createExdotR <- function(pkg, pkgdir, silent = FALSE)
 {
     Rfile <- paste(pkg, "-Ex.R", sep = "")
     ## might be zipped:
@@ -313,7 +313,8 @@ testInstalledPackage <-
         } else filedir <- exdir
         ## FIXME: next is not necessarily the right test.
     } else if (file_test("-d", mandir <- file.path(pkgdir, "man"))) {
-        message("  Extracting from parsed Rd's ", appendLF = FALSE, domain = NA)
+        if (!silent) message("  Extracting from parsed Rd's ",
+                             appendLF = FALSE, domain = NA)
         db <- Rd_db(basename(pkgdir), lib.loc = dirname(pkgdir))
         if (!length(db)) {
             message("no parsed files found")
@@ -329,9 +330,10 @@ testInstalledPackage <-
                   file.path(filedir, sub("[Rr]d$", "R", basename(f))),
                   defines = NULL)
             cnt <- cnt + 1L
-            if(cnt %% 10L == 0L) message(".", appendLF = FALSE, domain = NA)
+            if(!silent && cnt %% 10L == 0L)
+                message(".", appendLF = FALSE, domain = NA)
         }
-        message()
+        if (!silent) message()
         nof <- length(Sys.glob(file.path(filedir, "*.R")))
         if(!nof) return(invisible(NULL))
     }
