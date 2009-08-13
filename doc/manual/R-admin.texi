@@ -604,7 +604,8 @@ make install-pdf
 @noindent
 Once again, it is optional to specify @code{prefix}, @code{libdir} or
 @code{rhome} (the DVI and PDF manuals are installed under the @R{} home
-directory).
+directory).  (@command{make install-info} needs Perl installed if there
+is no command @command{install-info} on the system.)
 
 More precise control is possible.  For info, the setting used is that of
 @code{infodir} (default @samp{@var{prefix}/info}, set by configure
@@ -2376,7 +2377,7 @@ CMD Sd2Rd}.
 
 @c The Perl scripts left are
 @c src/scripts: Rprof Sd2Rd build check
-@c tools: help2man.pl keywords2html.pl
+@c tools: help2man.pl install-info.pl keywords2html.pl
 @c src/gnuwin32/fixed/rwver.pl
 @c src/gnuwin32/installer: JRins.pl WIXins.pl
 
