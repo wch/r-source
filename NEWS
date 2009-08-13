@@ -343,6 +343,12 @@ NEW FEATURES
 	of 'yleft, 'yright', or 'f'.
 
 
+DEPRECATED & DEFUNCT
+
+    o	R CMD Rd2txt is deprecated, and will be removed in 2.10.0.
+	(It is just a wrapper for R CMD Rdconv -t txt.)
+
+
 BUG FIXES
 
     o	parse_Rd() still did not handle source reference encodings
@@ -360,13 +366,17 @@ BUG FIXES
 	(PR#13837)
 
     o	If model.matrix() was given too large a model, it could crash
-        R. (PR#13838, fix found by Olaf Mersmann.)
+	R. (PR#13838, fix found by Olaf Mersmann.)
 
     o	seq_along(x) is now equivalent to seq_len(length(x)); previously it
 	was not, when x had a "surprising" length() method.
 
     o	gzcon() (used by load()) would re-open an open connection,
     	leaking a file descriptor each time. (PR#13841)
+
+    o	The checks for inconsistent inheritance reported by setClass()
+	now detect inconsistent superclasses and give better warning
+	messages.
 
     o	print.anova() failed to recognize the column labelled
     	P(>|Chi|) from a Poisson/binomial GLM anova as a p-value
@@ -378,6 +388,8 @@ BUG FIXES
 
     o	gsub() in a non-UTF-8 locale with a marked UTF-8 input
 	could in rare circumstances overrun a buffer and so segfault.
+
+    o	R CMD Rdconv --version was not working correctly.
 
 
 
@@ -427,7 +439,7 @@ NEW FEATURES
 	as changed names for r-help. (Contributed by Jonathan Baron.)
 
     o	That R CMD check makes use of a
-	<pkg>/scripts/Examples/<pkg>-Ex.Rout.save file as a reference
+	<pkg>/tests/Examples/<pkg>-Ex.Rout.save file as a reference
 	result is now documented in 'Writing R Extensions'.
 
 
