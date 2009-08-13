@@ -109,22 +109,22 @@ while(<tfile>) {
 close tfile;
 
 
-my %develfiles=("doc\\html\\logo.jpg" => 1,
-		"doc\\COPYING.LIB" => 1,
-		"bin\\INSTALL.sh" => 1,
-		"bin\\SHLIB.sh" => 1,
-		"bin\\build" => 1,
-		"bin\\check" => 1,
-		"bin\\config.sh" => 1,
-		"bin\\Rd2dvi.sh" => 1,
-		"bin\\Rd2txt.sh" => 1,
-		"bin\\Rdconv.sh" => 1,
-		"bin\\Rdiff.sh" => 1,
-		"bin\\Rprof" => 1,
-		"bin\\Sd2Rd" => 1,
-		"bin\\Stangle.sh" => 1,
-		"bin\\Sweave.sh" => 1,
-		"etc\\Makeconf" => 1);
+# my %develfiles=("doc\\html\\logo.jpg" => 1,
+# 		"doc\\COPYING.LIB" => 1,
+# 		"bin\\INSTALL.sh" => 1,
+# 		"bin\\SHLIB.sh" => 1,
+# 		"bin\\build" => 1,
+# 		"bin\\check" => 1,
+# 		"bin\\config.sh" => 1,
+# 		"bin\\Rd2dvi.sh" => 1,
+# 		"bin\\Rd2txt.sh" => 1,
+# 		"bin\\Rdconv.sh" => 1,
+# 		"bin\\Rdiff.sh" => 1,
+# 		"bin\\Rprof" => 1,
+# 		"bin\\Sd2Rd" => 1,
+# 		"bin\\Stangle.sh" => 1,
+# 		"bin\\Sweave.sh" => 1,
+# 		"etc\\Makeconf" => 1);
 		
 $path="${SRCDIR}";chdir($path);
 my %main;
@@ -277,19 +277,6 @@ foreach $n (sort values %refman) {
 print insfile <<END;
     </Feature>
 
-    <Feature Id="devel" Title="Source Package Installation Files"
-     Description="Source Package Installation Files" Level="1"
-     InstallDefault="local" AllowAdvertise="no" Display="expand">
-END
-
-foreach $n (sort values %devel) {
-    print insfile "      <ComponentRef Id='$n' />\n";
-}
-
-
-print insfile <<END;
-    </Feature>
-
     <Feature Id="libdocs" Title="Docs for Package grid" Description="Docs for Package grid" Level="1"
      InstallDefault="local" AllowAdvertise="no">
 END
@@ -383,8 +370,8 @@ sub listFiles {
 	if ($_ eq "bin\\Rchtml.dll" 
 	    || m/^library\\[^\\]*\\chtml/) {
 	    $component = "chtml";
-	#} elsif ($_ eq "doc\\html\\logo.jpg") {
-	#    $component = "html devel";
+# 	} elsif ($_ eq "doc\\html\\logo.jpg") {
+# 	    $component = "html devel";
 	} elsif ($_ eq "doc\\manual\\R-FAQ.html"
 		 || $_ eq "doc\\html\\rw-FAQ.html"
 		 || $_ eq "share\\texmf\\Sweave.sty") {
@@ -405,24 +392,17 @@ sub listFiles {
 	    	$component = "tests";
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
-	} elsif (exists($develfiles{$_})
-		 || m/^doc\\KEYWORDS/
-		 || m/^src\\gnuwin32/
-		 || m/^include/
-		 || m/^src\\library\\windlgs/
-		 || m/^share\\make/
-		 || m/^share\\perl/
-		 || m/^share\\R/
-		 || m/^share\\texmf/
-# 		 || m/^bin\\build/
-# 		 || m/^bin\\check/
-# 		 || m/^bin\\Rd2dvi.sh/
-# 		 || m/^bin\\Rdconv/
-# 		 || m/^bin\\Rdiff.sh/
-# 		 || m/^bin\\Rprof/
-# 		 || m/^bin\\Sd2Rd/
-		 || m/^lib\\/) {
-	    $component = "devel";
+# 	} elsif (exists($develfiles{$_})
+# 		 || m/^doc\\KEYWORDS/
+# 		 || m/^src\\gnuwin32/
+# 		 || m/^include/
+# 		 || m/^src\\library\\windlgs/
+# 		 || m/^share\\make/
+# 		 || m/^share\\perl/
+# 		 || m/^share\\R/
+# 		 || m/^share\\texmf/
+# 		 || m/^lib\\/) {
+# 	    $component = "devel";
 	} elsif (m/^library\\grid\\doc/) {
 	    $component = "libdocs";
 	} elsif ($_ eq "modules\\iconv.dll") {
@@ -437,7 +417,6 @@ sub listFiles {
 	s+\\+/+g;
 	$ncomp = $comp{$_};
 	$main{$_} = $ncomp if $component eq "main";
-	$devel{$_} = $ncomp if $component eq "devel";
 	$chtml{$_} = $ncomp if $component eq "chtml";
 	$html{$_} = $ncomp if $component eq "html";
 	$manuals{$_} = $ncomp if $component eq "manuals";

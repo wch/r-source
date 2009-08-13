@@ -219,7 +219,7 @@ set the default Start-menu group name
 set the initial list of components: Components are named @samp{main},
 @samp{chtml}, @samp{html}, @samp{html/help}, @samp{manuals},
 @samp{manuals/basic}, @samp{manuals/technical}, @samp{manuals/refman},
-@samp{libdocs}, @samp{devel}, @samp{tcl}, @samp{tcl/chm}, @samp{trans}
+@samp{libdocs}, @samp{tcl}, @samp{tcl/chm}, @samp{trans}
 and @code{tests}.
 @end table
 

@@ -1547,7 +1547,7 @@ this will be selected automatically if the name given is a single
 character vector by the argument @code{repos}: these can include a
 @acronym{CRAN} mirror, Bioconductor, Omegahat, local archives, local
 files, @dots{}).  Function @code{setRepositories()} can select amongst
-those the @R{} installation is aware of.
+those repositories that the @R{} installation is aware of.
 
 @node Windows packages, Mac OS X packages, Installing packages, Installing packages
 @subsection Windows
@@ -1569,13 +1569,11 @@ interface to @code{install.packages}, @code{update.packages} and
 @code{library}.
 
 @command{R CMD INSTALL} works in Windows to install source packages if
-you have the source-code package files (option ``Source Package
-Installation Files'' in the installer) and toolset (see @ref{The Windows
-toolset}) installed.  Installation of binary packages must be done by
-@code{install.packages}.   @command{R CMD INSTALL --help} will tell you
-the current options under Windows (which differ from those on a
-Unix-alike): in particular there is a choice of the types of
-documentation to be installed.
+you have set up the tools needed (see @ref{The Windows toolset}).
+Installation of binary packages must be done by @code{install.packages}.
+@command{R CMD INSTALL --help} will tell you the current options under
+Windows (which differ from those on a Unix-alike): in particular there
+is a choice of the types of documentation to be installed.
 
 If you have only a source package that is known to work with current
 @R{} and just want a binary Windows build of it, you could make use of
