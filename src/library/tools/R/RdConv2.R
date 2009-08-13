@@ -1225,11 +1225,12 @@ Rd2ex <-
     of1 <- function(text)
         writeLinesUTF8(text, con, outputEncoding, sep = "")
 
-    wr <- function(x) {
-        x <- remap(x)
-        paste("###", strwrap(x, 73, indent=1, exdent=3), sep="", collapse="\n")
-    }
+    wr <- function(x)
+        paste("###", strwrap(remap(x), 73, indent=1, exdent=3),
+              sep="", collapse="\n")
+
     remap <- function(x) {
+        if(!length(x)) return(x)
         ## \link, \var are untouched in comments: e.g. is.R
         Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         x <- gsub("\\\\(link|var)\\{([^}]+)\\}", "\\2", x, perl = TRUE)
