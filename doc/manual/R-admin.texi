@@ -790,7 +790,7 @@ cd tests
 @noindent
 and other useful targets are @code{test-BasePackages} and
 @code{test-Recommended} to the run tests of the standard and
-recommmended packages (if installed) respectively.
+recommended packages (if installed) respectively.
 
 This re-runs all the tests relevant to the installed @R{} (including for
 example code in the package vignettes), but not for example the ones
@@ -1206,7 +1206,7 @@ It is also possible to build an installer for use with Microsoft
 Installer.  This is intended for use by sysadmins doing automated
 installs, and is not recommended for casual use.
 
-It makes use of the Windows Installer XML (WiX) toolkit (wersion 2.0)
+It makes use of the Windows Installer XML (WiX) toolkit (version 2.0)
 available from @uref{http://wix.sourceforge.net/}.  (This needs the .NET
 1.1 framework installed: it ran on a vanilla Windows XP SP2
 machine. Unfortunately the file format has been changed within the same
@@ -1323,8 +1323,8 @@ make prefix=/where/you/want/R.framework/to/go install
 @noindent
 (the @file{R.framework} directory should not be included in the path).
 
-For compatibility with the CRAN distribution you may need to specify
-@option{--with-included-gettext} to avoid linking against a
+For compatibility with the @acronym{CRAN} distribution you may need to
+specify @option{--with-included-gettext} to avoid linking against a
 @samp{libintl} dynamic library you may have available, for example in
 @file{/usr/local/lib}.
 
@@ -1548,7 +1548,7 @@ this will be selected automatically if the name given is a single
 character vector by the argument @code{repos}: these can include a
 @acronym{CRAN} mirror, Bioconductor, Omegahat, local archives, local
 files, @dots{}).  Function @code{setRepositories()} can select amongst
-those the @R{} installation is aware of.
+those repositories that the @R{} installation is aware of.
 
 @node Windows packages, Mac OS X packages, Installing packages, Installing packages
 @subsection Windows
@@ -1587,12 +1587,12 @@ the building service offered at @uref{http://win-builder.r-project.org/}.
 
 On Mac OS X @code{install.packages} works as it does on other Unix-like
 systems, but there is an additional type @code{mac.binary} (the default
-in the CRAN distribution) that can be passed to @code{install.packages}
-in order to download and install binary packages from a suitable
-repository, and is the default for CRAN builds of R.  These Macintosh
-binary package files have the extension @samp{tgz}.  The @R{} GUI
-provides for installation of either binary or source packages, from
-@acronym{CRAN} or local files.
+in the @acronym{CRAN} distribution) that can be passed to
+@code{install.packages} in order to download and install binary packages
+from a suitable repository, and is the default for @acronym{CRAN} builds
+of R.  These Macintosh binary package files have the extension
+@samp{tgz}.  The @R{} GUI provides for installation of either binary or
+source packages, from @acronym{CRAN} or local files.
 
 @node Customizing package compilation,  , Mac OS X packages, Installing packages
 @subsection Customizing package compilation
@@ -1673,8 +1673,8 @@ whole bundle).
 @cindex Repositories
 
 Utilities such as @code{install.packages} can be pointed at any
-CRAN-style repository, and @R{} users may want to set up their own.  The
-`base' of a repository is a URL such as
+@acronym{CRAN}-style repository, and @R{} users may want to set up their
+own.  The `base' of a repository is a URL such as
 @uref{http://www.omegahat.org/R/}: this must be an URL scheme that
 @code{download.packages} supports (which also includes @samp{ftp://} and
 @samp{file://}).  Under that base URL there should be directory trees
@@ -2066,7 +2066,7 @@ an entry point
 @noindent
 to set its seeds).
 
-The facilties to change the normal random number generator are
+The facilities to change the normal random number generator are
 available through the constant N01_kind. This takes values
 from the enumeration type
 
@@ -2094,7 +2094,7 @@ typedef enum @{
 @section Unix
 
 If @R{} has not already be made in the directory tree,
-@command{configure} must tbe run as described in the main build
+@command{configure} must be run as described in the main build
 instructions.
 
 Then
@@ -2303,7 +2303,6 @@ of the manuals you will also need @file{texinfo.tex} installed (which is
 part of the GNU @samp{texinfo} distribution but is often made part of
 the @TeX{} package in re-distributions) as well as @command{texi2dvi}
 (part of the GNU @pkg{texinfo} distribution).
-
 
 @cindex Vignettes
 The DVI and PDF documentation and building vignettes needs @command{tex}
@@ -2593,7 +2592,7 @@ could use
 
 @noindent
 if the appropriate library directory (such as
-@enindex LD_LIBRRARY_PATH
+@enindex LD_LIBRARY_PATH
 @file{/opt/acml4.3.0/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.
 For other compilers, see the ACML documentation.  There is a
 multithreaded Linux version of ACML available for @command{gfortran}
@@ -2653,7 +2652,7 @@ and run-time library support. Some examples of linking to MKL using this
 layered model are given below. These examples are for GCC compilers on
 @cputype{x86_64}.  The choice of interface layer is important on
 @cputype{x86_64} since the Intel Fortran compiler returns complex
-values differently from the GNU fortran compiler. You must therefore
+values differently from the GNU Fortran compiler. You must therefore
 use the interface layer that matches your compiler (@code{mkl_intel*}
 or @code{mkl_gf*}).
 
@@ -3466,7 +3465,7 @@ the additional flags being needed to resolve problems linking against
 @menu
 * Intel compilers::             
 * PGI compilers::               
-* SunStudio compilers::         
+* Sun Studio compilers::        
 @end menu
 
 @node Intel compilers, PGI compilers, Linux, Linux
@@ -3525,7 +3524,7 @@ system with @command{gcc} or the Intel compilers see
 Others have reported success with version 10.0.
 
 
-@node PGI compilers, SunStudio compilers, Intel compilers, Linux
+@node PGI compilers, Sun Studio compilers, Intel compilers, Linux
 @subsection PGI compilers
 
 Jennifer Lai used the Portland Group compilers on @cputype{x86_64} to
@@ -3554,10 +3553,10 @@ compliance to IEC60659.  Also,
 @uref{http://@/www.amd.com/@/us-en/@/assets/@/content_type/@/DownloadableAssets/@/dwamd_PGI_nov603.pdf}
 suggests that @option{-pc64} may be desirable.
 
-@node SunStudio compilers,  , PGI compilers, Linux
-@subsection SunStudio compilers
+@node Sun Studio compilers,  , PGI compilers, Linux
+@subsection Sun Studio compilers
 
-Brian Ripley tested the SunStudio 12 (aka Sun Ceres) compilers
+Brian Ripley tested the Sun Studio 12 (aka Sun Ceres) compilers
 (@uref{http://developers.sun.com/@/sunstudio/@/index.jsp}) on
 @cputype{x86_64} Linux with
 
@@ -3685,7 +3684,7 @@ in @file{config.site} or on the @command{configure} command line.
 
 @R{} has been built successfully on Solaris 10 (both Sparc and
 @cputype{x86}) using the (zero cost) Sun Studio (aka Ceres) 12
-compilers: there has been some sucess with
+compilers: there has been some success with
 @command{gcc}@tie{}4/@command{gfortran}, mainly on Sparc.  Sun packages
 for @R{} are available from @uref{http://www.sunfreeware.com/} for both
 architectures, but have not been updated recently.  (Recent Sun machines
@@ -4225,7 +4224,7 @@ acknowledged).
 
 It helps to describe the WU build environment first.  A small part of
 the software needed to build R and/or install packages is available
-directly from the AIX Installation DVDs, e.g., Java 6, X11, or Perl.
+directly from the AIX Installation DVDs, e.g., Java 6, X11, and Perl.
 Additional open source software (OSS) is packaged for AIX in @file{.rpm}
 files and available from both IBM's ``AIX Toolbox for Linux
 Applications''
@@ -4460,7 +4459,8 @@ bug report is part of
 JRE and plugin can be installed: see
 @uref{http://www.fedorafaq.org/#java}.  (See also
 @uref{http://www.mjmwired.net/@/resources/@/mjm-fedora-f8.@/html#java},
-@uref{http://www.mjmwired.net/@/resources/@/mjm-fedora-f9.@/html#java} and
+@uref{http://www.mjmwired.net/@/resources/@/mjm-fedora-f9.@/html#java}
+and
 @uref{http://www.mjmwired.net/@/resources/@/mjm-fedora-f10.@/html#java}.)
 
 Older but still useful links are for Firefox/Mozilla,
@@ -4614,11 +4614,10 @@ path.
 
 You will need a Windows port of @code{perl5} (but only the basic
 functionality, not any of the third-party Win32 extensions).  The
-Vanilla Perl package is included in @file{Rtools.exe}. A more full-
-featured distribution is available from
-@uref{http://www.activestate.com/@/Products/@/ActivePerl/}, and this was
-used in releases of @R{} up to @R{} 2.5.1.  Alternatives are listed at
-@uref{http://win32.perl.org/}.
+Vanilla Perl (version 5.8.x) package is included in @file{Rtools.exe}. A
+more full- featured distribution is available from
+@uref{http://www.activestate.com/@/Products/@/ActivePerl/}: other
+alternatives are listed at @uref{http://win32.perl.org/}.
 
 @strong{Beware}: you do need a @emph{Windows} port and not the Cygwin
 one.  Users of 64-bit Windows can use a Win64 Perl (such as that from
@@ -4698,10 +4697,10 @@ which MinGW compilers were released in August 2007.  The
 of @code{4.2.1} of the MinGW port of @command{gcc} from
 @uref{http://sourceforge.net/@/project/@/showfiles.php?@/group_id=2435}.
 
-If you would like to install your own copy, we recommed downloading from
-the URL above, as the download links from @uref{http://www.mingw.org/}
-have led to obsolete versions. See the notes on
-@uref{http://www.murdoch-sutherland.com/@/Rtools/} for updates.
+If you would like to install your own copy, we recommend downloading
+from the URL above, as the download links from
+@uref{http://www.mingw.org/} have led to obsolete versions. See the
+notes on @uref{http://www.murdoch-sutherland.com/@/Rtools/} for updates.
 
 @c There may be an installer in the `Current' section, which can be used
 @c if it gives the @samp{Candidate} compilers (@code{gcc-3.4.5}).  (If

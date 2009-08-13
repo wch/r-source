@@ -2900,7 +2900,7 @@ data()
 @end example
 
 @noindent
-As from @R{} version 2.0.0 all the datasets suppied with @R{} are
+As from @R{} version 2.0.0 all the datasets supplied with @R{} are
 available directly by name.  However, many packages still use the
 earlier convention in which @code{data} was also used to load datasets
 into @R{}, for example

@@ -2324,7 +2324,7 @@ namespaces (normally) have the package namespace as their environment.
 @subsection Argument matching
 
 This subsection applies to closures but not to primitive functions.  The
-latter typicaly ignore tags and do positional matching, but their help
+latter typically ignore tags and do positional matching, but their help
 pages should be consulted for exceptions, which include @code{log},
 @code{round}, @code{signif}, @code{rep} and @code{seq.int}.
 
@@ -2628,7 +2628,7 @@ In this chapter we discuss how this general strategy has been
 implemented in @R{} and discuss some of the limitations within the
 current design.  One of the advantages that most object systems impart
 is greater consistency.  This is achieved via the rules that are checked
-by the compiler or interpretor.  Unfortunately because of the way that
+by the compiler or interpreter.  Unfortunately because of the way that
 the object system is incorporated into @R{} this advantage does not
 obtain.  Users are cautioned to use the object system in a
 straightforward manner.  While it is possible to perform some rather

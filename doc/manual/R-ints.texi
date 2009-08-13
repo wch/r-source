@@ -2937,7 +2937,7 @@ few drivers have support for this.} This is done by drawing on a further
 internal bitmap, @code{xd->bm2}, in the opaque version of the colour
 then alpha-blending that bitmap to @code{xd->bm}.  The alpha-blending
 routine is in a separate DLL, @file{msimg32.dll}, which is loaded on
-first use.@footnote{It is avaliable on Windows 2000 or later, and so had
+first use.@footnote{It is available on Windows 2000 or later, and so had
 to be optional in @R{} 2.6.0.}  As small a rectangular region as
 reasonably possible is alpha-blended (this is rectangle @code{r} in the
 code), but things like mitre joins make estimation of a tight bounding
