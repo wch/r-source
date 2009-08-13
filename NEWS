@@ -276,6 +276,9 @@ INSTALLATION
     o	A suitable iconv() is now required: support for
 	--without-iconv has been withdrawn (it was deprecated in R 2.5.0).
 
+    o	Perl is no longer 'essential'.  R can be built without it, but
+    	scripts R CMD build, check, Rprof and Sd2d require it.
+
 
 INTERNATIONALIZATION
 
@@ -295,7 +298,8 @@ BUG FIXES
     o	validObject() avoids an error during evaluation in the case
 	of various incorrect slot definitions.
 
-    o	n:m  now returns <integer> in a few more boundary cases.
+    o	n:m now returns a result of type "integer" in a few more
+	boundary cases.
 
     o	The 'zap.ind' argument to printCoefmat() did not usually work as
 	other code attempted to ensure that non-zero values had a

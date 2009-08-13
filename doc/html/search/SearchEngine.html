@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>R: Search Engine</title>
+<link rel="stylesheet" type="text/css" href="../R.css">
+
+<script language="JavaScript">
+<!-- 
+
+// searching is disabled until the applet is initialized
+enableSearch = false;
+
+function searchInIndex (searchTerm, searchDesc,
+                        searchKeywords, searchAliases)
+{
+  // if the applet is not initialized, ignore search results
+  if (enableSearch == false) {
+    return "";
+  }
+  line =        '<html><head>\n';
+  line = line + '<title>Search Results</title>\n';
+  line = line + '<link rel=stylesheet type="text/css" href="../R.css">';
+  line = line + '\n';
+
+  line = line + '<body>\n';
+
+  line = line + '<h1>Search Results</h1>\n';
+
+  // call the applet code!
+  line = line + document.SearchEngine.search (searchTerm,
+                                        searchDesc=="1",
+                                        searchKeywords=="1",
+                                        searchAliases=="1");
+
+  line = line + '</body>\n';
+
+  document.write (line);
+
+  // this makes it all work as expected, stops loading and after following
+  // a link the search results will be displayed again.
+  document.close ();
+  return "";
+}
+//-->
+
+</script>
+</head>
+
+<body onLoad='enableSearch=true;'>
+
+<h1>Search Engine <img class=toplogo src="../logo.jpg"></h1>
+
+<div align="center">
+<a href="../index.html"><img src="../up.jpg"
+alt="[Top]" width="30" height="30" border="0"></a>
+</div>
+
+<hr width="100%">
+
+<h2>Search</h2>
+
+<p>
+You can search for keywords, function and data names and text in help
+page titles.
+
+<p>
+<b>Usage:</b> Enter a string in the text field below and hit
+<code>RETURN</code>.
+
+<form name="f"
+     onSubmit="searchInIndex (document.f.SEARCHTERM.value,
+                              document.f.TITLES.checked,
+                              document.f.KEYWORDS.checked,
+                              document.f.ALIASES.checked);
+                              return false;">
+<INPUT TYPE=TEXT NAME="SEARCHTERM" SIZE=20 MAXLENGTH=256 VALUE="">
+<INPUT NAME="TITLES" TYPE=CHECKBOX CHECKED VALUE="1"> Help page titles
+<INPUT NAME="KEYWORDS" TYPE=CHECKBOX CHECKED VALUE="1"> Keywords
+<INPUT NAME="ALIASES" TYPE=CHECKBOX CHECKED VALUE="1"> Object names<br>
+<INPUT VALUE="Search" TYPE=SUBMIT>
+<INPUT VALUE="Reset" TYPE=RESET>
+</form>
+
+<br>
+
+<p> For search to work, you need Java installed and both Java and
+JavaScript enabled in your browser.<br> On the Mozilla/Netscape family
+of browsers you should see `Applet SearchEngine started' at the left
+edge of the status bar.  For help consult the
+<a href="../../manual/R-admin.html#Enabling-search-in-HTML-help">R Installation and Administration</a> manual.
+</p>
+
+<p> On some Mozilla-based browsers the links on the results page will
+become inactive if you return to it: to work around this you can open
+a link in a new tab or window.
+</p>
+
+
+<p> Even if this search does not work on your system, you can always use
+<samp>help.search</samp> at the R prompt.
+</p>
+
+<hr width="100%">
+
+<p>
+<h2>Keywords</h2>
+
+<p>
+<h3>Keywords by Topic</h3>
+
+
+<dl>
+<dt>  Basics</dt>
+<dd>
+ <ul><li><a href="javascript:searchInIndex('attribute', false, true, false);">attribute</a>:  Data Attributes</li>
+ <li><a href="javascript:searchInIndex('chron', false, true, false);">chron</a>:  Dates and Times</li>
+ <li><a href="javascript:searchInIndex('classes', false, true, false);">classes</a>:  Data Types (not OO)</li>
+  <ul><li><a href="javascript:searchInIndex('NA', false, true, false);">NA</a>:  Missing Values </li>
+  <li><a href="javascript:searchInIndex('category', false, true, false);">category</a>:  Categorical Data</li>
+  <li><a href="javascript:searchInIndex('character', false, true, false);">character</a>:  Character Data ("String") Operations</li>
+  <li><a href="javascript:searchInIndex('complex', false, true, false);">complex</a>:  Complex Numbers</li>
+ </ul>
+<li><a href="javascript:searchInIndex('data', false, true, false);">data</a>:  Environments, Scoping, Packages </li>
+ <li><a href="javascript:searchInIndex('datasets', false, true, false);">datasets</a>:  Datasets available by data() </li>
+ <li><a href="javascript:searchInIndex('list', false, true, false);">list</a>:  Lists</li>
+ <li><a href="javascript:searchInIndex('manip', false, true, false);">manip</a>:  Data Manipulation</li>
+ <li><a href="javascript:searchInIndex('package', false, true, false);">package</a>:  Package Summaries</li>
+ <li><a href="javascript:searchInIndex('sysdata', false, true, false);">sysdata</a>:  Basic System Variables </li>
+</ul></dd><p>
+<dt>  Graphics</dt>
+<dd>
+ <ul><li><a href="javascript:searchInIndex('aplot', false, true, false);">aplot</a>:  Add to Existing Plot / internal plot</li>
+ <li><a href="javascript:searchInIndex('color', false, true, false);">color</a>:  Color, Palettes etc</li>
+ <li><a href="javascript:searchInIndex('device', false, true, false);">device</a>:  Graphical Devices</li>
+ <li><a href="javascript:searchInIndex('dplot', false, true, false);">dplot</a>:  Computations Related to Plotting</li>
+ <li><a href="javascript:searchInIndex('dynamic', false, true, false);">dynamic</a>:  Dynamic Graphics</li>
+ <li><a href="javascript:searchInIndex('hplot', false, true, false);">hplot</a>:  High-Level Plots</li>
+ <li><a href="javascript:searchInIndex('iplot', false, true, false);">iplot</a>:  Interacting with Plots</li>
+</ul></dd><p>
+<dt>  MASS (the book) uses</dt>
+<dd>
+ <ul><li><a href="javascript:searchInIndex('classif', false, true, false);">classif</a>:  Classification </li>
+ <li><a href="javascript:searchInIndex('neural', false, true, false);">neural</a>:  Neural Networks </li>
+ <li><a href="javascript:searchInIndex('spatial', false, true, false);">spatial</a>:  Spatial Statistics </li>
+</ul></dd><p>
+<dt>  Mathematics</dt>
+<dd>
+ <ul><li><a href="javascript:searchInIndex('arith', false, true, false);">arith</a>:  Basic Arithmetic and Sorting	</li>
+ <li><a href="javascript:searchInIndex('array', false, true, false);">array</a>:  Matrices and Arrays</li>
+  <ul><li><a href="javascript:searchInIndex('algebra', false, true, false);">algebra</a>:  Linear Algebra</li>
+ </ul>
+<li><a href="javascript:searchInIndex('graphs', false, true, false);">graphs</a>:  Graphs (not graphics), i.e nodes&edges, e.g. dendrograms</li>
+ <li><a href="javascript:searchInIndex('logic', false, true, false);">logic</a>:  Logical Operators</li>
+ <li><a href="javascript:searchInIndex('math', false, true, false);">math</a>:  Mathematical Calculus etc </li>
+ <li><a href="javascript:searchInIndex('optimize', false, true, false);">optimize</a>:  Optimization</li>
+ <li><a href="javascript:searchInIndex('symbolmath', false, true, false);">symbolmath</a>:  "Symbolic Math", as polynomials, fractions</li>
+</ul></dd><p>
+<dt>  Programming, Input/Ouput, and Miscellaneous</dt>
+<dd>
+ <ul><li><a href="javascript:searchInIndex('IO', false, true, false);">IO</a>:   Input/output</li>
+  <ul><li><a href="javascript:searchInIndex('connection', false, true, false);">connection</a>:  Input/Output Connections</li>
+  <li><a href="javascript:searchInIndex('database', false, true, false);">database</a>:  Interfaces to databases</li>
+  <li><a href="javascript:searchInIndex('file', false, true, false);">file</a>:  Input/Output Files</li>
+ </ul>
+<li><a href="javascript:searchInIndex('debugging', false, true, false);">debugging</a>:  Debugging Tools</li>
+ <li><a href="javascript:searchInIndex('documentation', false, true, false);">documentation</a>:  Documentation</li>
+ <li><a href="javascript:searchInIndex('environment', false, true, false);">environment</a>:  Session Environment</li>
+ <li><a href="javascript:searchInIndex('error', false, true, false);">error</a>:  Error Handling</li>
+ <li><a href="javascript:searchInIndex('internal', false, true, false);">internal</a>:  Internal Objects (not part of API)</li>
+ <li><a href="javascript:searchInIndex('iteration', false, true, false);">iteration</a>:  Looping and Iteration</li>
+ <li><a href="javascript:searchInIndex('methods', false, true, false);">methods</a>:  Methods and Generic Functions</li>
+ <li><a href="javascript:searchInIndex('misc', false, true, false);">misc</a>:  Miscellaneous</li>
+ <li><a href="javascript:searchInIndex('print', false, true, false);">print</a>:  Printing</li>
+ <li><a href="javascript:searchInIndex('programming', false, true, false);">programming</a>:  Programming</li>
+  <ul><li><a href="javascript:searchInIndex('interface', false, true, false);">interface</a>:  Interfaces to Other Languages</li>
+ </ul>
+<li><a href="javascript:searchInIndex('utilities', false, true, false);">utilities</a>:  Utilities</li>
+</ul></dd><p>
+<dt>  Statistics</dt>
+<dd>
+ <ul><li><a href="javascript:searchInIndex('cluster', false, true, false);">cluster</a>:  Clustering</li>
+ <li><a href="javascript:searchInIndex('datagen', false, true, false);">datagen</a>:  Functions for generating data sets</li>
+ <li><a href="javascript:searchInIndex('design', false, true, false);">design</a>:  Designed Experiments</li>
+ <li><a href="javascript:searchInIndex('distribution', false, true, false);">distribution</a>:  Probability Distributions and Random Numbers</li>
+ <li><a href="javascript:searchInIndex('htest', false, true, false);">htest</a>:  Statistical Inference</li>
+ <li><a href="javascript:searchInIndex('models', false, true, false);">models</a>:  Statistical Models</li>
+  <ul><li><a href="javascript:searchInIndex('regression', false, true, false);">regression</a>:  Regression</li>
+   <ul><li><a href="javascript:searchInIndex('nonlinear', false, true, false);">nonlinear</a>:  Non-linear Regression </li>
+ </ul></ul>
+<li><a href="javascript:searchInIndex('multivariate', false, true, false);">multivariate</a>:  Multivariate Techniques</li>
+ <li><a href="javascript:searchInIndex('nonparametric', false, true, false);">nonparametric</a>:  Nonparametric Statistics </li>
+ <li><a href="javascript:searchInIndex('robust', false, true, false);">robust</a>:  Robust/Resistant Techniques</li>
+ <li><a href="javascript:searchInIndex('smooth', false, true, false);">smooth</a>:  Curve (and Surface) Smoothing</li>
+  <ul><li><a href="javascript:searchInIndex('loess', false, true, false);">loess</a>:  Loess Objects</li>
+ </ul>
+<li><a href="javascript:searchInIndex('survey', false, true, false);">survey</a>:  Complex survey samples</li>
+ <li><a href="javascript:searchInIndex('survival', false, true, false);">survival</a>:  Survival Analysis</li>
+ <li><a href="javascript:searchInIndex('tree', false, true, false);">tree</a>:  Regression and Classification Trees</li>
+ <li><a href="javascript:searchInIndex('ts', false, true, false);">ts</a>:  Time Series</li>
+ <li><a href="javascript:searchInIndex('univar', false, true, false);">univar</a>:  simple univariate statistics  </li>
+</ul></dd></dl>
+
+
+
+<applet
+    code=SearchEngine.class
+    name=SearchEngine
+    width=0
+    height=0 >
+    <param name="INDEXFILE" value="index.txt">
+</applet>
+
+</body>
+</html>
+

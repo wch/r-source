@@ -260,7 +260,7 @@ distclean: clean
 	$(RM) R.exp COPYRIGHTS
 	$(RM) ../../doc/html/search/index.txt ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
-	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
+	../../doc/html/rw-FAQ.html
 	$(RM) ../../etc/Makeconf ../../etc/Rconsole ../../etc/Rdevga \
 	../../etc/Rprofile.site ../../etc/rgb.txt ../../etc/Rcmd_environ \
 	../../tests/*.Rout ../../tests/*.Rout.fail

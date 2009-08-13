@@ -14,9 +14,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 INSTFILES = \
 	R.css \
 	left.jpg logo.jpg logosm.jpg right.jpg up.jpg \
-	about.html \
-	packages-head-utf8.html \
-	thanks.html
+	about.html packages-head-utf8.html thanks.html
 NON_SVN_INSTFILES = resources.html
 DISTFILES = Makefile.in $(INSTFILES) index-default.html
 SUBDIRS = search
@@ -49,10 +47,9 @@ svnonly:
 	  fi \
 	fi
 
+## NB, not used on Windows, replaced by src/gnuwin32/fixed/html/rwin.html
 index.html: FORCE
-	@$(PERL) $(top_srcdir)/tools/linkcheck.pl \
-	  $(srcdir)/index-default.html > $@ || \
-	  $(INSTALL_DATA) $(srcdir)/index-default.html $@
+	@$(INSTALL_DATA) $(srcdir)/index-default.html $@
 FORCE:
 
 install: svnonly install-message installdirs install-sources

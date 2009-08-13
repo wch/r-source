@@ -23,7 +23,7 @@ cp2bin: $(wildcard ./bin/*)
 	@unzip -oaq bins -d  $(R_HOME)
 	@$(RM) bins.zip
 
-fixhtml:  html/rwin.html $(R_HOME)/doc/html/search/SearchEngine.html
+fixhtml:  html/rwin.html
 	$(CP) -p html/rwin.html $(R_HOME)/doc/html/index.html
 	@$(ECHO) done > fixhtml
 
@@ -38,13 +38,3 @@ clean:
 	$(RM) *~ */*~ fixhtml fixbin fixetc fixshare
 
 distclean:
-
-$(R_HOME)/doc/html/search/SearchEngine.html: \
-  $(R_HOME)/doc/html/search/SearchEngine-head.html \
-  $(R_HOME)/doc/html/search/SearchEngine-foot.html \
-  $(R_HOME)/doc/KEYWORDS.db
-	(cd $(R_HOME)/doc; \
-	cat html/search/SearchEngine-head.html > html/search/SearchEngine.html; \
-	$(PERL) ../tools/keywords2html.pl KEYWORDS.db >> html/search/SearchEngine.html; \
-	cat html/search/SearchEngine-foot.html >> html/search/SearchEngine.html)
-

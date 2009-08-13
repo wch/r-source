@@ -19,14 +19,11 @@ SOURCES_JAVA = \
 	Tracer.java \
 	Value.java
 OBJECTS_JAVA = $(SOURCES_JAVA:.java=.class)
-INSTFILES = \
-	$(OBJECTS_JAVA) \
-	SearchEngine-foot.html \
-	SearchEngine-head.html \
-	SearchObject.html
-DISTFILES = Makefile.in $(SOURCES_JAVA) $(INSTFILES)
+INSTFILES = $(OBJECTS_JAVA) SearchEngine.html SearchObject.html
+DISTFILES = Makefile.in $(SOURCES_JAVA) $(INSTFILES) \
+        SearchEngine-foot.html SearchEngine-head.html
 
-OBJECTS = SearchEngine.html index.txt
+OBJECTS = index.txt
 
 CLEANFILES = $(OBJECTS)
 DISTCLEANFILES = Makefile
@@ -47,14 +44,16 @@ R: Makefile $(OBJECTS) @MAINTAINER_MODE_TRUE@ $(OBJECTS_JAVA)
 	  $(MAKE) rhome=$(top_builddir) install-sources; \
 	fi
 
-SearchEngine.html: \
+## maintainer-mode
+make-SearchEngine.html: \
   $(srcdir)/SearchEngine-head.html \
   $(srcdir)/SearchEngine-foot.html \
   $(top_srcdir)/doc/KEYWORDS.db
-	@cat $(srcdir)/SearchEngine-head.html > $@
+	@cat $(srcdir)/SearchEngine-head.html > $(srcdir)/SearchEngine.html
 	@-$(PERL) $(top_srcdir)/tools/keywords2html.pl \
-	  $(top_srcdir)/doc/KEYWORDS.db >> $@
-	@cat $(srcdir)/SearchEngine-foot.html >> $@
+	  $(top_srcdir)/doc/KEYWORDS.db >> $(srcdir)/SearchEngine.html
+	@cat $(srcdir)/SearchEngine-foot.html >> $(srcdir)/SearchEngine.html
+
 ## <NOTE>
 ## This is created via
 ##   (cd $(top_builddir)/src/library && make docs)

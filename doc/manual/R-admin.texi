@@ -2282,17 +2282,6 @@ of most commercial Unixes.  However, you can make use of @acronym{GNU}
 @code{libiconv} (possibly as a plug-in replacement: see
 @uref{http://www.gnu.org/@/software/@/libiconv/}.
 
-Perl version 5.8.0 or later, available via
-@uref{http://www.perl.com/CPAN/}, is essential.
-
-@c This is insisted on by configure, so in that sense it is essential.
-@c However, the Perl scripts left are
-@c src/scripts: Rprof Sd2Rd build check
-@c tools: help2man.pl keywords2html.pl linkcheck.pl
-@c src/gnuwin32/fixed/rwver.pl
-@c src/gnuwin32/installer: JRins.pl WIXins.pl
-@c so on a Unix-alike it is only used to make some HTML pages.
-
 You will not be able to build most of the manuals unless you have
 @command{makeinfo} version 4.7 or later installed, and if not some of
 the @HTML{} manuals will be linked to @acronym{CRAN}.  (Version 4.6 is
@@ -2302,7 +2291,6 @@ part of the GNU @samp{texinfo} distribution but is often made part of
 the @TeX{} package in re-distributions) as well as @command{texi2dvi}
 (part of the GNU @pkg{texinfo} distribution).
 
-
 @cindex Vignettes
 The DVI and PDF documentation and building vignettes needs @command{tex}
 and @command{latex}, or @command{pdftex} and @command{pdflatex}.
@@ -2310,7 +2298,6 @@ and @command{latex}, or @command{pdftex} and @command{pdflatex}.
 If you want to build from the R Subversion repository you need both
 @command{makeinfo} and @command{pdflatex}.
 @cindex Subversion
-
 
 @node Useful libraries and programs, Linear algebra, Essential programs, Essential and useful other programs under Unix
 @section Useful libraries and programs
@@ -2380,6 +2367,19 @@ is available as sources and as binary distributions for (at least) most
 Linux distributions, Solaris 9/10, AIX and Windows, usually as
 @code{libicu} or @code{icu4c}.  It will be used by default where
 available (including on Mac OS X >= 10.4).
+
+Code developers will need Perl version 5.8.0 or later, available via
+@uref{http://www.perl.com/CPAN/}.  This is use to package and check
+packages, for @command{R CMD Rprof}@footnote{for which the @R{} function
+@code{summmaryProf} is an alternative.} and the rarely used @command{R
+CMD Sd2Rd}.
+
+@c The Perl scripts left are
+@c src/scripts: Rprof Sd2Rd build check
+@c tools: help2man.pl keywords2html.pl
+@c src/gnuwin32/fixed/rwver.pl
+@c src/gnuwin32/installer: JRins.pl WIXins.pl
+
 
 @menu
 * Tcl/Tk::                      

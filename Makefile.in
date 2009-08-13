@@ -66,8 +66,9 @@ R: Makefile svnonly
 docs: R FORCE
 	-@(cd doc && $(MAKE) $@)
 	-@(cd src/library && $(MAKE) $@)
-help html latex examples: FORCE
-	-@(cd src/library && $(MAKE) $@)
+## no longer relevant
+#help html latex examples: FORCE
+#	-@(cd src/library && $(MAKE) $@)
 FORCE:
 
 stamp-recommended: R docs
