@@ -133,7 +133,6 @@ if test -n "${PERL}"; then
 fi
 if test "${r_cv_prog_perl_v5}" != yes; then
   AC_MSG_WARN([Using 'R CMD build|check|Rprof' requires Perl >= 5.8.0])
-else
   ## in case available at runtime: 'false' is an alternative
   PERL="/usr/bin/env perl"
 fi

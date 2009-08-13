@@ -3726,7 +3726,6 @@ fi
 if test "${r_cv_prog_perl_v5}" != yes; then
   { echo "$as_me:$LINENO: WARNING: Using 'R CMD build|check|Rprof' requires Perl >= 5.8.0" >&5
 echo "$as_me: WARNING: Using 'R CMD build|check|Rprof' requires Perl >= 5.8.0" >&2;}
-else
   ## in case available at runtime: 'false' is an alternative
   PERL="/usr/bin/env perl"
 fi
