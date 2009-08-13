@@ -109,6 +109,7 @@ static char const yyunknown[] = "unknown macro"; /* our message, not bison's */
 #define VERBATIM 3
 #define INOPTION 4
 #define COMMENTMODE 5   /* only used in deparsing */
+#define UNKNOWNMODE 6   /* ditto */
 
 static SEXP     SrcFile;  /* parse_Rd will *always* supply a srcfile */
 
@@ -1358,10 +1359,10 @@ SEXP attribute_hidden do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP e, state, result;
-    int  outlen, *statevals, quoteBraces;
+    int  outlen, *statevals, quoteBraces, inRComment;
     const char *c;
     char *outbuf, *out, lookahead;
-    Rboolean escape;
+    Rboolean escape, escaped;
 
     checkArity(op, args);
     
@@ -1379,8 +1380,9 @@ SEXP attribute_hidden do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     quoteBraces = INTEGER(state)[4];
     
     
-    if (xxmode != LATEXLIKE && xxmode != RLIKE && xxmode != VERBATIM && xxmode != COMMENTMODE && xxmode != INOPTION)
-    	error(_("bad text mode in deparseRd"));
+    if (xxmode != LATEXLIKE && xxmode != RLIKE && xxmode != VERBATIM && xxmode != COMMENTMODE 
+     && xxmode != INOPTION  && xxmode != UNKNOWNMODE)
+    	error(_("bad text mode %d in deparseRd"), xxmode);
     
     for (c = CHAR(e), outlen=0; *c; c++) {
     	outlen++;
@@ -1389,43 +1391,57 @@ SEXP attribute_hidden do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     	if (*c == '\\') outlen++; 
     }
     out = outbuf = R_chk_calloc(outlen+1, sizeof(char));
+    escaped = FALSE;
+    inRComment = FALSE;
     for (c = CHAR(e); *c; c++) {
     	escape = FALSE;
-    	switch (*c) {
-    	case '\\':
-    	    if (xxinRString) {
-    	    	escape = TRUE;
-    	    	lookahead = *(c+1);
-    	    	if (xxinRString == lookahead) {
-    	    	    *out++ = '\\';
-    	    	    *out++ = '\\';
-    	    	    c++;
-    	    	}
-    	    	break;
-    	    }          /* fall through to % case for non-strings... */    
-    	case '%':
-    	    if (xxmode != COMMENTMODE && !xxinEqn)
-    	    	escape = TRUE;
-    	    break;
-    	case LBRACE:
-    	case RBRACE:
-    	    if (quoteBraces)
-    	    	escape = TRUE;
-    	    else if (!xxinRString && !xxinEqn && (xxmode == RLIKE || xxmode == VERBATIM)) {
-    	    	if (*c == LBRACE) xxbraceDepth++;
-    	    	else if (xxbraceDepth <= 0) escape = TRUE;
-    	    	else xxbraceDepth--;
-    	    }
-    	    break;
-    	case '\'':
-    	case '"':
-    	case '`':
-    	    if (xxmode == RLIKE) {
-    		if (xxinRString == *c) xxinRString = 0;
-    		else xxinRString = *c;
-    	    }
-    	    break;
-    	}
+    	if (!escaped && xxmode != UNKNOWNMODE) {
+	    switch (*c) {
+	    case '\\':
+		if (xxmode == RLIKE && xxinRString) {
+		    lookahead = *(c+1);
+		    if (lookahead == '\\') {  /* This is designed to emulate the weird handling of backslashes
+		    				 in R strings:  "\a", "\\a" and "\\\a" all get 
+		    				 converted to "\a".  Probably a bug?  FIXME */ 
+		        *out++ = '\\';
+			escape = TRUE;
+			escaped = TRUE;
+		    } else if (lookahead == xxinRString) 
+		    	escape = TRUE;
+		    break;
+		}          /* fall through to % case for non-strings... */    
+	    case '%':
+		if (xxmode != COMMENTMODE && !xxinEqn)
+		    escape = TRUE;
+		break;
+	    case LBRACE:
+	    case RBRACE:
+		if (quoteBraces)
+		    escape = TRUE;
+		else if (!xxinRString && !xxinEqn && (xxmode == RLIKE || xxmode == VERBATIM)) {
+		    if (*c == LBRACE) xxbraceDepth++;
+		    else if (xxbraceDepth <= 0) escape = TRUE;
+		    else xxbraceDepth--;
+		}
+		break;
+	    case '\'':
+	    case '"':
+	    case '`':
+	    	if (xxmode == RLIKE) {
+		    if (xxinRString) {
+			if (xxinRString == *c) xxinRString = 0;
+		    } else if (!inRComment) xxinRString = *c;
+		}
+		break;
+	    case '#':
+	    	if (xxmode == RLIKE && !xxinRString) 
+	    	    inRComment = TRUE;
+	    	break;
+	    case '\n':
+	    	inRComment = FALSE;
+	    	break;
+	    }
+	} else escaped = FALSE;
     	if (escape)
     	    *out++ = '\\';
     	*out++ = *c;

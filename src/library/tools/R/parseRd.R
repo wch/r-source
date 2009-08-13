@@ -67,18 +67,18 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     .Internal(parse_Rd(tcon, srcfile, "UTF-8", verbose, basename, fragment))
 }
 
-print.Rd <- function(x, ...) {
-    cat(as.character.Rd(x), sep="", collapse="")
+print.Rd <- function(x, deparse=FALSE, ...) {
+    cat(as.character.Rd(x, deparse=deparse), sep="", collapse="")
     invisible(x)
 }
 
-as.character.Rd <- function(x, ...) {
+as.character.Rd <- function(x, deparse=FALSE, ...) {
     ZEROARG <- c("\\cr", "\\dots", "\\ldots", "\\R", "\\tab") # Only these cause trouble when {} is added
     TWOARG <- c("\\section", "\\item", "\\enc", "\\method", "\\S3method",
                 "\\S4method", "\\tabular")
     EQN <- c("\\deqn", "\\eqn")
-    modes <- c(RLIKE=1L, LATEXLIKE=2L, VERBATIM=3L, INOPTION=4L, COMMENTMODE=5L)
-    tags  <- c(RCODE=1L, TEXT=2L,      VERB=3L,                  COMMENT=5L)
+    modes <- c(RLIKE=1L, LATEXLIKE=2L, VERBATIM=3L, INOPTION=4L, COMMENTMODE=5L, UNKNOWNMODE=6L)
+    tags  <- c(RCODE=1L, TEXT=2L,      VERB=3L,                  COMMENT=5L,     UNKNOWN=6L)
     state <- c(braceDepth=0L, inRString=0L)
     needBraces <- FALSE  # if next character is alphabetic, separate by braces.
     inEqn <- 0L
@@ -94,9 +94,11 @@ as.character.Rd <- function(x, ...) {
     	        result <- character(0)
     	    	for (i in seq_along(x)) result <- c(result, pr(x[[i]], quoteBraces))
     	    } else if (length(grep("^#", tag))) {
-    	    	dep <- deparseRdElement(x[[1L]][[1L]], c(state, modes["LATEXLIKE"], inEqn, as.integer(quoteBraces)))
-    	    	result <- c(tag, dep[[1L]])
-    	    	state <<- savestate
+    	    	if (deparse) {
+    	    	    dep <- deparseRdElement(x[[1L]][[1L]], c(state, modes["LATEXLIKE"], inEqn, as.integer(quoteBraces)))
+    	    	    result <- c(tag, dep[[1L]])
+    	    	} else 
+    	    	    result <- c(tag, x[[1L]][[1L]])
     	    	for (i in seq_along(x[[2L]])) result <- c(result, pr(x[[2L]][[i]], quoteBraces))
     	    	result <- c(result, "#endif\n")
     	    } else if (tag %in% ZEROARG) {
@@ -125,14 +127,17 @@ as.character.Rd <- function(x, ...) {
     	    	result <- pr(x, TRUE)
     	    state <<- savestate
     	} else {
-    	    dep <- deparseRdElement(as.character(x), c(state, tags[tag], inEqn, as.integer(quoteBraces)))
-    	    result <- dep[[1]]
+    	    if (deparse) {
+    		dep <- deparseRdElement(as.character(x), c(state, tags[tag], inEqn, as.integer(quoteBraces)))
+    	    	result <- dep[[1]]
+    	    	state <<- dep[[2]][1:2]
+    	    } else 
+    	    	result <- as.character(x)
     	    if (needBraces) {
     	    	if (grepl("^[[:alpha:]]", result))
     	    	    result <- c("{}", result)
     	    	needBraces <<- FALSE
     	    }
-    	    state <<- dep[[2]][1:2]
         }
     	result
     }
@@ -141,4 +146,6 @@ as.character.Rd <- function(x, ...) {
     pr(x, quoteBraces = FALSE)
 }
 
-deparseRdElement <- function(element, state) .Internal(deparseRd(element, state))
+deparseRdElement <- function(element, state) {
+    .Internal(deparseRd(element, state))
+}
