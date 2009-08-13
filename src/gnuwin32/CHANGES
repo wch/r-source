@@ -36,6 +36,15 @@ PACKAGE INSTALLATION
 	longer available and --auto-zip only zips data (or not).
 
 
+INSTALLATION
+
+    o	The categories in the installers have been simplified.  Now the
+	files to support installation of source packages are always
+	installed (they were now only 0.7Mb), and there are no longer
+	categories 'latex' and 'Rd'.
+
+
+
 
 	**************************************************
 	*						 *
