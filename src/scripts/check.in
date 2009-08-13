@@ -999,7 +999,7 @@ foreach my $pkg (@ARGV) {
 		  $is_bundle, $description, $log, $is_base_pkg,
 		  $thispkg_subdirs);
 	my $instdir = &file_path($library, $pkgname);
-	if (-d &file_path($instdir, "latex")) {
+	if (-d &file_path($instdir, "help")) {
 	    check_pkg_manual($instdir, $description->{"Package"}, $log);
 	} else {
 	    check_pkg_manual($pkgdir, $description->{"Package"}, $log);
@@ -2325,19 +2325,14 @@ sub check_pkg {
     ${R_opts} = ${R_opts}." -d valgrind" if $opt_use_valgrind;
 
     ## this will be skipped if installation was
-    ## FIXME: packages with help pages but no examples will fail
-    if( (-d &file_path($library, $pkgname, "R-ex"))
-       || (-d &file_path($library, $pkgname, "help"))) {
-
+    if( -d &file_path($library, $pkgname, "help") ) {
 	$log->checking("examples");
 	if(!$opt_examples) {
 	    $log->result("SKIPPED");
 	} else {
 	    my $pkgtopdir = &file_path($library, $pkgname);
-	    my $Rexdir = &file_path($library, $pkgname, "R-ex");
-	    ## $Rexdir might contain spaces (not on Windows, though)
 	    $cmd = join(" ",
-			("(echo 'tools:::.createExdotR(\"${pkgname}\", \"${pkgtopdir}\")'",
+			("(echo 'tools:::.createExdotR(\"${pkgname}\", \"${pkgtopdir}\", silent = TRUE)'",
 			 "| LC_ALL=C",
 			 &shell_quote_file_path(${R::Vars::R_EXE}),
 			 "--vanilla --slave)"
@@ -2349,91 +2344,93 @@ sub check_pkg {
 		exit(1);
 	    }
 
-	    if($is_zipped) {
-		unlink(&list_files_with_exts($Rexdir, "R"));
-	    }
-
-	    my $enc = "";
-	    if(defined($description->{"Encoding"})) {
-		$enc = "--encoding " . $description->{"Encoding"};
-		if ($is_ascii) {
-		    print "\n* WARNING: ",
-		    "checking a package with encoding '",
-		    $description->{"Encoding"},
-		    "' in an ASCII locale.\n";
+	    ## It ran, but did it create any examples?
+	    if(-f "${pkgname}-Ex.R") {
+		my $enc = "";
+		if(defined($description->{"Encoding"})) {
+		    $enc = "--encoding " . $description->{"Encoding"};
+		    if ($is_ascii) {
+			print "\n* WARNING: ",
+			"checking a package with encoding '",
+			$description->{"Encoding"},
+			"' in an ASCII locale.\n";
+		    }
 		}
-	    }
-	    if($opt_use_gct) {
-		$cmd = join(" ",
-			    ("(echo 'gctorture(TRUE)';",
-			     "cat ${pkgname}-Ex.R) |",
-			     &shell_quote_file_path(${R::Vars::R_EXE}),
-			     "${R_opts}", $enc,
-			     "> ${pkgname}-Ex.Rout 2>&1"));
-	    } else {
-		$cmd = join(" ",
-			    (&shell_quote_file_path(${R::Vars::R_EXE}),
-			     "${R_opts}", $enc,
-			     "< ${pkgname}-Ex.R",
-			     "> ${pkgname}-Ex.Rout 2>&1"));
-	    }
-	    if(R_system($cmd)) {
-		$log->error();
-		$log->print("Running examples in '${pkgname}-Ex.R' failed.\n");
-		## Try to spot the offending example right away.
-		my $txt = join("\n", &read_lines("${pkgname}-Ex.Rout"));
-		## Look for the header section anchored by a subsequent call
-		## to flush(): needs to be kept in sync with the code in
-		## massageExamples (in testing.R).  Should perhaps also be more
-		## defensive about the prompt ...
-		my @chunks = split(/(> \#\#\# \* [^\n]+\n> \n> flush)/, $txt);
-		if(scalar(@chunks) > 2) {
-		    $log->print("The error most likely occurred in:\n\n");
-		    $log->print($chunks[$#chunks - 1]);
-		    $log->print($chunks[$#chunks] . "\n");
+		if($opt_use_gct) {
+		    $cmd = join(" ",
+				("(echo 'gctorture(TRUE)';",
+				 "cat ${pkgname}-Ex.R) |",
+				 &shell_quote_file_path(${R::Vars::R_EXE}),
+				 "${R_opts}", $enc,
+				 "> ${pkgname}-Ex.Rout 2>&1"));
+		} else {
+		    $cmd = join(" ",
+				(&shell_quote_file_path(${R::Vars::R_EXE}),
+				 "${R_opts}", $enc,
+				 "< ${pkgname}-Ex.R",
+				 "> ${pkgname}-Ex.Rout 2>&1"));
 		}
-		exit(1);
-	    }
-	    ## Look at the output from running the examples.  For the time
-	    ## being, report warnings about use of deprecated functions, as
-	    ## the next release will make them defunct and hence using them
-	    ## an error.  Also warn about loading defunct base package stubs,
-	    ## as load special-casing for these will be removed eventually.
-	    my @lines = &read_lines("${pkgname}-Ex.Rout");
-	    my $any;
-	    my @bad_lines;
-	    @bad_lines = grep(/^Warning: .*is deprecated.$/, @lines);
-	    if(scalar(@bad_lines) > 0) {
-		$log->warning();
-		$any++;
-		$log->print("Found the following significant warnings:\n");
-		$log->print("  " . join("\n  ", @bad_lines) . "\n");
-		$log->print(wrap("", "",
-				 ("Deprecated functions may be defunct as",
-				  "soon as of the next release of R.\n",
-				  "See ?Deprecated.\n")));
-	    }
-	    $log->result("OK") unless($any);
-
-	    ## Try to compare results from running the examples to a saved
-	    ## previous version.
-	    my $Rex_out_save =
-		&file_path($pkgdir, "tests", "Examples",
-			   "${pkgname}-Ex.Rout.save");
-	    if(-f $Rex_out_save) {
-		$log->checking("differences from '${pkgname}-Ex.Rout' to '${pkgname}-Ex.Rout.save'");
-		$cmd = join(" ",
-			    (${R::Vars::R_CMD},
-			     "Rdiff",
-			     &shell_quote_file_path("${pkgname}-Ex.Rout"),
-			     &shell_quote_file_path("${Rex_out_save}"),
-			     "0"));
 		if(R_system($cmd)) {
 		    $log->error();
-		    $log->print("Comparison failed.\n");
+		    $log->print("Running examples in '${pkgname}-Ex.R' failed.\n");
+		    ## Try to spot the offending example right away.
+		    my $txt = join("\n", &read_lines("${pkgname}-Ex.Rout"));
+		    ## Look for the header section anchored by a subsequent call
+		    ## to flush(): needs to be kept in sync with the code in
+		    ## massageExamples (in testing.R).  Should perhaps also be more
+		    ## defensive about the prompt ...
+		    my @chunks = split(/(> \#\#\# \* [^\n]+\n> \n> flush)/, $txt);
+		    if(scalar(@chunks) > 2) {
+			$log->print("The error most likely occurred in:\n\n");
+			$log->print($chunks[$#chunks - 1]);
+			$log->print($chunks[$#chunks] . "\n");
+		    }
 		    exit(1);
 		}
-		$log->result("OK");
+		## Look at the output from running the examples.  For the time
+		## being, report warnings about use of deprecated functions, as
+		## the next release will make them defunct and hence using them
+		## an error.  Also warn about loading defunct base package stubs,
+		## as load special-casing for these will be removed eventually.
+		my @lines = &read_lines("${pkgname}-Ex.Rout");
+		my $any;
+		my @bad_lines;
+		@bad_lines = grep(/^Warning: .*is deprecated.$/, @lines);
+		if(scalar(@bad_lines) > 0) {
+		    $log->warning();
+		    $any++;
+		    $log->print("Found the following significant warnings:\n");
+		    $log->print("  " . join("\n  ", @bad_lines) . "\n");
+		    $log->print(wrap("", "",
+				     ("Deprecated functions may be defunct as",
+				      "soon as of the next release of R.\n",
+				      "See ?Deprecated.\n")));
+		}
+		$log->result("OK") unless($any);
+
+		## Try to compare results from running the examples to a saved
+		## previous version.
+		my $Rex_out_save =
+		    &file_path($pkgdir, "tests", "Examples",
+			       "${pkgname}-Ex.Rout.save");
+		if(-f $Rex_out_save) {
+		    $log->checking("differences from '${pkgname}-Ex.Rout' to '${pkgname}-Ex.Rout.save'");
+		    $cmd = join(" ",
+				(${R::Vars::R_CMD},
+				 "Rdiff",
+				 &shell_quote_file_path("${pkgname}-Ex.Rout"),
+				 &shell_quote_file_path("${Rex_out_save}"),
+				 "0"));
+		    if(R_system($cmd)) {
+			$log->error();
+			$log->print("Comparison failed.\n");
+			exit(1);
+		    }
+		    $log->result("OK");
+		}
+	    } else {
+		## no examples found
+		$log->result("NONE");
 	    }
 	}
     } elsif(-d &file_path($pkgdir, "man")) {
@@ -2575,7 +2572,9 @@ sub check_pkg {
 sub check_pkg_manual {
     my ($pkgdir, $pkgname, $log) = @_;
     ## Run LaTeX on the manual, if there are man pages
-    if ((-d &file_path($pkgdir, "latex)")) ||
+    ## If it is installed with docs there is a 'help' dir
+    ## and for a source package, there is a 'man' dir
+    if ((-d &file_path($pkgdir, "help)")) ||
 	(-d &file_path($pkgdir, "man")) ) {
 	if($opt_latex && $HAVE_LATEX) {
 	    $topdir = $pkgdir;
