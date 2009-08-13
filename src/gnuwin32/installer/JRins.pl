@@ -176,7 +176,7 @@ Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom; Fl
 Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom; Flags: dontinheritcheck
 Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom; Flags: dontinheritcheck
 Name: "devel"; Description: "Source Package Installation Files"; Types: user full custom
-Name: "libdocs"; Description: "Docs for Packages grid and survival"; Types: user full custom
+Name: "libdocs"; Description: "Docs for Package grid"; Types: user full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "latex"; Description: "Latex Help Files"; Types: full custom
 Name: "Rd"; Description: "Source Files for Help Pages"; Types: full custom
