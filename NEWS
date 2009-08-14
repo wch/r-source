@@ -1,4 +1,4 @@
-﻿
+
 	**************************************************
 	*						 *
 	*	       2.10 SERIES NEWS			 *
@@ -190,8 +190,8 @@ NEW FEATURES
     o	New function news() for building and querying R or package news
 	information.
 
-    o	z^n for integer n and complex z or (numeric z and 2 < |n| <= 256) is
-	more accurate now, notably in the complex case (if |n| <= 65536).
+    o	z^n for integer n and complex z is more accurate now if
+	|n| <= 65536.
 
     o	factor(NULL) now returns the same as factor(''[0]) instead of an
 	error, and table(NULL) consequently does analogously.
@@ -241,8 +241,8 @@ Rd HELP FILE CHANGES
     o	parse_Rd() now always converts its input to UTF-8.  The Rd2*
 	rendering functions have a new parameter, 'outputEncoding',
 	which controls how their output is encoded.
-	
-    o	parse_Rd() no longer includes the newline as part of a 
+
+    o	parse_Rd() no longer includes the newline as part of a
         "%"-style comment.
 
     o	There have been various bug fixes and code reorganization in
@@ -252,11 +252,11 @@ Rd HELP FILE CHANGES
 	encoding, and the encoding is only marked in the file if there
 	is any non-UTF-8 code (previously it was marked if the help
 	file had non-ASCII contents, possibly in other sections).
-	
+
     o	print.Rd() now adds necessary escape characters so that
 	printing and re-parsing an Rd object should produce an
 	equivalent object.
-	
+
     o	parse_Rd() was incorrectly handling multiple backslashes in
     	R code strings, converting 4n+3 backslashes to 2n+1 instead
     	of 2n+2.
@@ -385,7 +385,7 @@ BUG FIXES
     	P(>|Chi|) from a Poisson/binomial GLM anova as a p-value
     	column in order to format it appropriately (and as a
     	consequence it gave no significance stars).
-    	
+
     o	A missing PROTECT caused rare segfaults during calls to
     	load().  (PR#13880, fix found by Bill Dunlap.)
 
