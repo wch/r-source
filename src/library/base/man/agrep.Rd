@@ -55,6 +55,10 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
   space it only supports the first 65536 characters of UTF-8 (where all
   the characters for human languages lie).  Note that it can be quite
   slow in UTF-8, and \code{useBytes = TRUE} will be much faster.
+  
+  How complex a match may be found can depend on the size of integers.
+  As from \R 2.9.2 this uses 64-bit integers where available (even on
+  32-bit platforms) to try to be consistent across platforms.
 }
 \value{
   Either a vector giving the indices of the elements that yielded a

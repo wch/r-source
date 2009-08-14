@@ -348,6 +348,10 @@ NEW FEATURES
 
     o	PCRE has been updated to version 7.9 (for bug fixes).
 
+    o	agrep() uses 64-bit ints where available on 32-bit platforms
+    	and so may do a better job with complex matches.
+	(E.g. PR#13789, which failed only on 32-bit systems.)
+
 
 DEPRECATED & DEFUNCT
 
