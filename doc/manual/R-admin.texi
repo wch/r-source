@@ -1226,7 +1226,7 @@ make msi
 
 @noindent
 which will results in a file of about 50Mb with a name like
-@file{R-2.9.0-win32.msi}.  This can be double-clicked to be installed,
+@file{R-2.9.2-win32.msi}.  This can be double-clicked to be installed,
 but those who need it will know what to do with it.
 
 Thanks to David del Campo (Dept of Statistics, University of Oxford)
