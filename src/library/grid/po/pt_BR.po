@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:26+0000\n"
+"POT-Creation-Date: 2009-08-14 10:47+0100\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -20,42 +20,42 @@ msgstr ""
 msgid "Cannot clip to rotated viewport"
 msgstr "Não é possível cortar sobre uma viewport rotacionada"
 
-#: grid.c:674 grid.c:679 grid.c:768 grid.c:773
+#: grid.c:673 grid.c:678 grid.c:767 grid.c:772
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr ""
 "Não é possível mostrar a viewport de nível máximo (saidas gráficas e grid "
 "misturadas?) "
 
-#: grid.c:953
+#: grid.c:952
 msgid "attempt to plot on null device"
 msgstr "tentativa de fazer um gráfico no dispositivo nulo"
 
-#: grid.c:1233
+#: grid.c:1232
 msgid "There is no layout defined"
 msgstr "Não há layout definido"
 
-#: grid.c:1453
+#: grid.c:1452
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr "Limite do polígono não encontrado (largura ou altura zero?)"
 
-#: grid.c:1462
+#: grid.c:1461
 msgid "Polygon edge not found"
 msgstr "Limite do polígono não encontrado"
 
-#: grid.c:1602
+#: grid.c:1601
 msgid "Require at least two points to draw arrow"
 msgstr "Pelo menos dois pontos são necessários para desenhar uma seta"
 
-#: grid.c:1916
+#: grid.c:1915
 msgid "Non-finite control point in Xspline"
 msgstr "Ponto de controle não-finito em Xspline"
 
-#: grid.c:3016
+#: grid.c:3015
 #, fuzzy
 msgid "invalid plotting symbol"
 msgstr "layout.pos.col inválido"
 
-#: grid.c:3102
+#: grid.c:3101
 msgid "Unable to clip to rotated rectangle"
 msgstr "Não é possível cortar sobre um retângulo rotacionado"
 

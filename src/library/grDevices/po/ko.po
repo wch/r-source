@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:17+0100\n"
+"POT-Creation-Date: 2009-08-14 10:47+0100\n"
 "PO-Revision-Date: 2005-05-31 10:31+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -39,7 +39,7 @@ msgstr "'%s' metafile 하는것을 작성할 수 없습니다"
 msgid "unknown AFM entity encountered"
 msgstr "충돌한 AFM entity를 알수가 없습니다 "
 
-#: devPS.c:773 devPS.c:776 devPS.c:4266 devPS.c:7089 devPicTeX.c:503
+#: devPS.c:773 devPS.c:776 devPS.c:4266 devPS.c:7090 devPicTeX.c:503
 #: devPicTeX.c:505
 #, fuzzy, c-format
 msgid "invalid string in '%s'"
@@ -282,7 +282,7 @@ msgstr ""
 msgid "failed open converter to encoding '%s'"
 msgstr "encode 파일을 적재하는데 실패되었습니다"
 
-#: devPS.c:4252 devPS.c:5147 devPS.c:7075
+#: devPS.c:4252 devPS.c:5147 devPS.c:7076
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr ""
@@ -420,38 +420,38 @@ msgstr ""
 "'pdf'파일 인수 '%s'를 열 수가 없습니다\n"
 " PDFdevice를 shut down 헤주십시오"
 
-#: devPS.c:6836 devPS.c:7215 devPS.c:7260
+#: devPS.c:6836 devPS.c:7216 devPS.c:7261
 msgid "Failed to find or load PDF font"
 msgstr "PDF font를 검색 또는 적재하는데 실패되었습니다"
 
-#: devPS.c:7028 devPS.c:7172
+#: devPS.c:7029 devPS.c:7173
 #, fuzzy
 msgid "Failed to find or load PDF CID font"
 msgstr "PDF font를 검색 또는 적재하는데 실패되었습니다"
 
-#: devPS.c:7293
+#: devPS.c:7294
 msgid "CID fonts are not supported on this platform"
 msgstr ""
 
-#: devPS.c:7401 devPS.c:7405 devPS.c:7557 devPS.c:7561
+#: devPS.c:7402 devPS.c:7406 devPS.c:7558 devPS.c:7562
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "%s 에서 무효의 'family' 파라미터 입니다"
 
-#: devPS.c:7426 devPS.c:7573
+#: devPS.c:7427 devPS.c:7574
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s에서 무효의 'fonts' 파라미터 입니다"
 
-#: devPS.c:7439
+#: devPS.c:7440
 msgid "unable to start device PostScript"
 msgstr "디바이스 PostSscript를 시작할수 없습니다"
 
-#: devPS.c:7506
+#: devPS.c:7507
 msgid "unable to start device xfig"
 msgstr "디바이스 xfig를 시작할수 없습니다"
 
-#: devPS.c:7593
+#: devPS.c:7594
 msgid "unable to start device pdf"
 msgstr "디바이스 pdf를 시작할수가 없습니다"
 

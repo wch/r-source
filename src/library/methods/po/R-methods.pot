@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-06-16 12:29\n"
+"POT-Creation-Date: 2009-08-14 10:48\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -419,7 +419,10 @@ msgstr ""
 msgid "the \"%s\" list for class \"%s\", includes an undefined class \"%s\""
 msgstr ""
 
-msgid "None of the orderings of the superclasses of class \"%s\" is consistent with the superclass ordering of  its direct superclasses; using an ordering which conflicts with %s"
+msgid "Class \"%s\" is inheriting an inconsistent superclass structure from class \"%s\", inconsistent with %s"
+msgstr ""
+
+msgid "unable to find a consistent ordering of superclasses for class \"%s\": order chosen is inconsistent with the superclasses of %s"
 msgstr ""
 
 msgid "\"class\" is a reserved slot name and cannot be redefined"
@@ -608,6 +611,9 @@ msgstr ""
 msgid "only arguments 'Class' and 'where' can be supplied when argument 'representation' is a 'classRepresentation' object"
 msgstr ""
 
+msgid "Internal error: definiition of class \"%s\" not properly assigned"
+msgstr ""
+
 msgid "error in contained classes (%s) for class \"%s\" and unable to remove definition from \"%s\""
 msgstr ""
 
@@ -618,9 +624,6 @@ msgid "error in contained classes (%s) for class \"%s\" and unable to restore pr
 msgstr ""
 
 msgid "error in contained classes (%s) for class \"%s\"; previous definition restored to \"%s\""
-msgstr ""
-
-msgid "Internal error: definiition of class \"%s\" not properly assigned"
 msgstr ""
 
 msgid "element %d of the representation was not a single character string"

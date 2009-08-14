@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:17+0100\n"
+"POT-Creation-Date: 2009-08-14 10:47+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -37,7 +37,7 @@ msgstr "无法对字符信息作句法分析"
 msgid "unknown AFM entity encountered"
 msgstr "遇到未知AFM值这个错误"
 
-#: devPS.c:773 devPS.c:776 devPS.c:4266 devPS.c:7089 devPicTeX.c:503
+#: devPS.c:773 devPS.c:776 devPS.c:4266 devPS.c:7090 devPicTeX.c:503
 #: devPicTeX.c:505
 #, c-format
 msgid "invalid string in '%s'"
@@ -266,7 +266,7 @@ msgstr "'mbcsToSbcs'里转换'%s'出错：<%02x>代替了dot"
 msgid "failed open converter to encoding '%s'"
 msgstr "编码'%s'时文字转换器出了错"
 
-#: devPS.c:4252 devPS.c:5147 devPS.c:7075
+#: devPS.c:4252 devPS.c:5147 devPS.c:7076
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "文字转换到编码'%s'时出了错"
@@ -399,37 +399,37 @@ msgstr ""
 "无法打开'pdf'文本变元'%s'\n"
 "  请关闭PDF装置"
 
-#: devPS.c:6836 devPS.c:7215 devPS.c:7260
+#: devPS.c:6836 devPS.c:7216 devPS.c:7261
 msgid "Failed to find or load PDF font"
 msgstr "没有能够找到和载入PDF字体"
 
-#: devPS.c:7028 devPS.c:7172
+#: devPS.c:7029 devPS.c:7173
 msgid "Failed to find or load PDF CID font"
 msgstr "没有能够找到和载入PDFCID字体"
 
-#: devPS.c:7293
+#: devPS.c:7294
 msgid "CID fonts are not supported on this platform"
 msgstr ""
 
-#: devPS.c:7401 devPS.c:7405 devPS.c:7557 devPS.c:7561
+#: devPS.c:7402 devPS.c:7406 devPS.c:7558 devPS.c:7562
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "%s里的'system'参数不对"
 
-#: devPS.c:7426 devPS.c:7573
+#: devPS.c:7427 devPS.c:7574
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s里的'fonts'参数不对"
 
-#: devPS.c:7439
+#: devPS.c:7440
 msgid "unable to start device PostScript"
 msgstr "无法启动PostScript装置"
 
-#: devPS.c:7506
+#: devPS.c:7507
 msgid "unable to start device xfig"
 msgstr "无法启动xfig装置"
 
-#: devPS.c:7593
+#: devPS.c:7594
 msgid "unable to start device pdf"
 msgstr "无法启动pdf装置"
 

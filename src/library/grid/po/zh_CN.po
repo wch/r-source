@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:26+0000\n"
+"POT-Creation-Date: 2009-08-14 10:47+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -20,39 +20,39 @@ msgstr ""
 msgid "Cannot clip to rotated viewport"
 msgstr "无法修剪到旋转了的視窗中"
 
-#: grid.c:674 grid.c:679 grid.c:768 grid.c:773
+#: grid.c:673 grid.c:678 grid.c:767 grid.c:772
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr "无法弹到最上层的視窗(栅格和图像输出有混合？)"
 
-#: grid.c:953
+#: grid.c:952
 msgid "attempt to plot on null device"
 msgstr "不能在无效装置上画图"
 
-#: grid.c:1233
+#: grid.c:1232
 msgid "There is no layout defined"
 msgstr "需要设定布局"
 
-#: grid.c:1453
+#: grid.c:1452
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr "找不到多边形的边(零宽度或是零高度？)"
 
-#: grid.c:1462
+#: grid.c:1461
 msgid "Polygon edge not found"
 msgstr "找不到多边形的边"
 
-#: grid.c:1602
+#: grid.c:1601
 msgid "Require at least two points to draw arrow"
 msgstr "至少需要两点才能画一个箭头"
 
-#: grid.c:1916
+#: grid.c:1915
 msgid "Non-finite control point in Xspline"
 msgstr "用Xspline时不能有无限值的控制点"
 
-#: grid.c:3016
+#: grid.c:3015
 msgid "invalid plotting symbol"
 msgstr "图画符号值不对"
 
-#: grid.c:3102
+#: grid.c:3101
 msgid "Unable to clip to rotated rectangle"
 msgstr "无法修剪到旋转了的长方形上"
 

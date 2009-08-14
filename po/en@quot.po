@@ -27,10 +27,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.1\n"
+"Project-Id-Version: R 2.9.2\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-06-14 08:10+0100\n"
-"PO-Revision-Date: 2009-06-14 08:10+0100\n"
+"POT-Creation-Date: 2009-08-14 10:44+0100\n"
+"PO-Revision-Date: 2009-08-14 10:44+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -139,9 +139,9 @@ msgstr "problem in displaying ‘%ls’"
 #: src/main/array.c:1174 src/main/array.c:1176 src/main/array.c:1177
 #: src/main/attrib.c:193 src/main/builtin.c:138 src/main/builtin.c:491
 #: src/main/builtin.c:507 src/main/builtin.c:685 src/main/character.c:105
-#: src/main/character.c:108 src/main/character.c:167 src/main/character.c:3098
-#: src/main/character.c:3102 src/main/character.c:3165
-#: src/main/character.c:3169 src/main/character.c:3231
+#: src/main/character.c:108 src/main/character.c:167 src/main/character.c:3101
+#: src/main/character.c:3105 src/main/character.c:3168
+#: src/main/character.c:3172 src/main/character.c:3234
 #: src/main/connections.c:918 src/main/connections.c:924
 #: src/main/connections.c:927 src/main/connections.c:931
 #: src/main/connections.c:1073 src/main/connections.c:1089
@@ -185,8 +185,8 @@ msgstr "problem in displaying ‘%ls’"
 #: src/main/envir.c:1839 src/main/envir.c:2055 src/main/envir.c:2176
 #: src/main/envir.c:2434 src/main/envir.c:2714 src/main/envir.c:3255
 #: src/main/eval.c:282 src/main/eval.c:1709 src/main/eval.c:1733
-#: src/main/eval.c:1737 src/main/memory.c:2945 src/main/model.c:1612
-#: src/main/model.c:1620 src/main/optim.c:225 src/main/paste.c:85
+#: src/main/eval.c:1737 src/main/memory.c:2945 src/main/model.c:1613
+#: src/main/model.c:1621 src/main/optim.c:225 src/main/paste.c:85
 #: src/main/paste.c:344 src/main/paste.c:351 src/main/paste.c:358
 #: src/main/paste.c:363 src/main/paste.c:368 src/main/paste.c:373
 #: src/main/paste.c:376 src/main/paste.c:384 src/main/paste.c:532
@@ -207,9 +207,9 @@ msgstr "problem in displaying ‘%ls’"
 #: src/main/print.c:175 src/main/print.c:181 src/main/print.c:203
 #: src/main/print.c:209 src/main/print.c:215 src/main/random.c:469
 #: src/main/random.c:473 src/main/random.c:477 src/main/saveload.c:1936
-#: src/main/saveload.c:1939 src/main/saveload.c:1942 src/main/saveload.c:2059
-#: src/main/saveload.c:2227 src/main/saveload.c:2232 src/main/saveload.c:2235
-#: src/main/saveload.c:2329 src/main/saveload.c:2379 src/main/scan.c:672
+#: src/main/saveload.c:1939 src/main/saveload.c:1942 src/main/saveload.c:2060
+#: src/main/saveload.c:2228 src/main/saveload.c:2233 src/main/saveload.c:2236
+#: src/main/saveload.c:2330 src/main/saveload.c:2380 src/main/scan.c:672
 #: src/main/scan.c:839 src/main/scan.c:852 src/main/scan.c:856
 #: src/main/scan.c:858 src/main/scan.c:869 src/main/scan.c:896
 #: src/main/scan.c:899 src/main/scan.c:952 src/main/scan.c:991
@@ -1265,8 +1265,8 @@ msgstr "vector size specified is too large"
 #: src/main/envir.c:2816 src/main/envir.c:2844 src/main/envir.c:2864
 #: src/main/envir.c:2886 src/main/envir.c:2920 src/main/envir.c:2940
 #: src/main/envir.c:3247 src/main/envir.c:3251 src/main/eval.c:3614
-#: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2055
-#: src/main/saveload.c:2326 src/main/saveload.c:2376 src/main/serialize.c:2232
+#: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2056
+#: src/main/saveload.c:2327 src/main/saveload.c:2377 src/main/serialize.c:2232
 msgid "use of NULL environment is defunct"
 msgstr "use of NULL environment is defunct"
 
@@ -1367,7 +1367,7 @@ msgid "'%s' requires a character vector"
 msgstr "‘%s’ requires a character vector"
 
 #: src/main/character.c:134 src/main/character.c:160 src/main/character.c:898
-#: src/main/character.c:2108
+#: src/main/character.c:2111
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "invalid multibyte string %d"
@@ -1386,28 +1386,28 @@ msgstr "replacing substrings in a non-character object"
 
 #: src/main/character.c:409 src/main/character.c:411 src/main/character.c:1043
 #: src/main/character.c:1045 src/main/character.c:1047
-#: src/main/character.c:1049 src/main/character.c:1315
-#: src/main/character.c:1317 src/main/character.c:1319
-#: src/main/character.c:1321 src/main/character.c:1537
-#: src/main/character.c:1539 src/main/character.c:1541
-#: src/main/character.c:1543 src/main/character.c:1963
-#: src/main/character.c:1965 src/main/character.c:1967
-#: src/main/character.c:1969
+#: src/main/character.c:1049 src/main/character.c:1316
+#: src/main/character.c:1318 src/main/character.c:1320
+#: src/main/character.c:1322 src/main/character.c:1540
+#: src/main/character.c:1542 src/main/character.c:1544
+#: src/main/character.c:1546 src/main/character.c:1966
+#: src/main/character.c:1968 src/main/character.c:1970
+#: src/main/character.c:1972
 #, c-format
 msgid "argument '%s' will be ignored"
 msgstr "argument ‘%s’ will be ignored"
 
-#: src/main/character.c:413 src/main/character.c:2056
+#: src/main/character.c:413 src/main/character.c:2059
 msgid "non-character argument"
 msgstr "non-character argument"
 
 #: src/main/character.c:421 src/main/character.c:1093
-#: src/main/character.c:1570 src/main/pcre.c:217 src/main/pcre.c:418
+#: src/main/character.c:1573 src/main/pcre.c:217 src/main/pcre.c:421
 msgid "perl = TRUE is only fully implemented in UTF-8 locales"
 msgstr "perl = TRUE is only fully implemented in UTF-8 locales"
 
 #: src/main/character.c:486 src/main/character.c:1111
-#: src/main/character.c:1592 src/main/pcre.c:235 src/main/pcre.c:434
+#: src/main/character.c:1595 src/main/pcre.c:235 src/main/pcre.c:437
 #, c-format
 msgid ""
 "PCRE pattern compilation error\n"
@@ -1424,7 +1424,7 @@ msgid "invalid split pattern '%s'"
 msgstr "invalid split pattern ‘%s’"
 
 #: src/main/character.c:492 src/main/character.c:1117
-#: src/main/character.c:1599 src/main/pcre.c:243 src/main/pcre.c:442
+#: src/main/character.c:1602 src/main/pcre.c:243 src/main/pcre.c:445
 #, c-format
 msgid ""
 "PCRE pattern study error\n"
@@ -1434,7 +1434,7 @@ msgstr ""
 "\t'%s'\n"
 
 #: src/main/character.c:515 src/main/character.c:1123
-#: src/main/character.c:1365 src/main/character.c:1605
+#: src/main/character.c:1366 src/main/character.c:1608
 #, c-format
 msgid "regcomp error:  '%s'"
 msgstr "regcomp error:  ‘%s’"
@@ -1451,8 +1451,8 @@ msgstr "abbreviate used with non-ASCII chars"
 msgid "non-character names"
 msgstr "non-character names"
 
-#: src/main/character.c:1087 src/main/character.c:1575 src/main/pcre.c:228
-#: src/main/pcre.c:423
+#: src/main/character.c:1087 src/main/character.c:1578 src/main/pcre.c:228
+#: src/main/pcre.c:426
 msgid ""
 "ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n"
 "  in UTF-8 locales only works caselessly for ASCII patterns"
@@ -1460,94 +1460,94 @@ msgstr ""
 "ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n"
 "  in UTF-8 locales only works caselessly for ASCII patterns"
 
-#: src/main/character.c:1102 src/main/character.c:1584
-#: src/main/character.c:2001 src/main/pcre.c:428
+#: src/main/character.c:1102 src/main/character.c:1587
+#: src/main/character.c:2004 src/main/pcre.c:431
 msgid "regular expression is invalid in this locale"
 msgstr "regular expression is invalid in this locale"
 
 #: src/main/character.c:1113 src/main/character.c:1124
-#: src/main/character.c:1366 src/main/character.c:1594
-#: src/main/character.c:1606 src/main/character.c:2004 src/main/pcre.c:237
-#: src/main/pcre.c:436
+#: src/main/character.c:1367 src/main/character.c:1597
+#: src/main/character.c:1609 src/main/character.c:2007 src/main/pcre.c:237
+#: src/main/pcre.c:439
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "invalid regular expression ‘%s’"
 
-#: src/main/character.c:1138 src/main/character.c:1622
-#: src/main/character.c:2021 src/main/pcre.c:262 src/main/pcre.c:468
+#: src/main/character.c:1138 src/main/character.c:1625
+#: src/main/character.c:2024 src/main/pcre.c:262 src/main/pcre.c:471
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "input string %d is invalid in this locale"
 
-#: src/main/character.c:1220 src/main/pcre.c:62
+#: src/main/character.c:1221 src/main/pcre.c:62
 #, c-format
 msgid "invalid backreference %d in regular expression"
 msgstr "invalid backreference %d in regular expression"
 
-#: src/main/character.c:1355 src/main/pcre.c:219
+#: src/main/character.c:1356 src/main/pcre.c:219
 msgid "'pattern' is invalid in this locale"
 msgstr "‘pattern’ is invalid in this locale"
 
-#: src/main/character.c:1357 src/main/pcre.c:221
+#: src/main/character.c:1358 src/main/pcre.c:221
 msgid "'replacement' is invalid in this locale"
 msgstr "‘replacement’ is invalid in this locale"
 
-#: src/main/character.c:1371
+#: src/main/character.c:1372
 msgid "zero-length pattern"
 msgstr "zero-length pattern"
 
-#: src/main/character.c:2163
+#: src/main/character.c:2166
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "decreasing range specification ('%lc-%lc')"
 
-#: src/main/character.c:2249
+#: src/main/character.c:2252
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "decreasing range specification ('%c-%c')"
 
-#: src/main/character.c:2402
+#: src/main/character.c:2405
 msgid "invalid (NA) arguments."
 msgstr "invalid (NA) arguments."
 
-#: src/main/character.c:2438
+#: src/main/character.c:2441
 msgid "invalid UTF-8 string 'old'"
 msgstr "invalid UTF-8 string ‘old’"
 
-#: src/main/character.c:2444
+#: src/main/character.c:2447
 msgid "invalid multibyte string 'old'"
 msgstr "invalid multibyte string ‘old’"
 
-#: src/main/character.c:2457
+#: src/main/character.c:2460
 msgid "invalid UTF-8 string 'new'"
 msgstr "invalid UTF-8 string ‘new’"
 
-#: src/main/character.c:2463
+#: src/main/character.c:2466
 msgid "invalid multibyte string 'new'"
 msgstr "invalid multibyte string ‘new’"
 
-#: src/main/character.c:2489 src/main/character.c:2577
+#: src/main/character.c:2492 src/main/character.c:2580
 msgid "'old' is longer than 'new'"
 msgstr "‘old’ is longer than ‘new’"
 
-#: src/main/character.c:2520
+#: src/main/character.c:2523
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "invalid input multibyte string %d"
 
-#: src/main/character.c:2672
+#: src/main/character.c:2675
 msgid "could not allocate memory for approximate matching"
 msgstr "could not allocate memory for approximate matching"
 
-#: src/main/character.c:2698 src/main/character.c:2710
+#: src/main/character.c:2701 src/main/character.c:2713
 msgid "could not perform case insensitive matching"
 msgstr "could not perform case insensitive matching"
 
-#: src/main/character.c:2762 src/main/character.c:2995
+#: src/main/character.c:2765 src/main/character.c:2998
 msgid "argument must be a character vector of length 1"
 msgstr "argument must be a character vector of length 1"
 
-#: src/main/character.c:2764 src/main/character.c:2997
+#: src/main/character.c:2767 src/main/character.c:3000
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1555,54 +1555,54 @@ msgstr ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
 
-#: src/main/character.c:2780 src/main/character.c:2811
-#: src/main/character.c:2832
+#: src/main/character.c:2783 src/main/character.c:2814
+#: src/main/character.c:2835
 msgid "argument 'x' must be a raw vector"
 msgstr "argument ‘x’ must be a raw vector"
 
-#: src/main/character.c:2783 src/main/character.c:3049
+#: src/main/character.c:2786 src/main/character.c:3052
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "argument ‘multiple’ must be TRUE or FALSE"
 
-#: src/main/character.c:2813
+#: src/main/character.c:2816
 msgid "argument 'shift' must be a small integer"
 msgstr "argument ‘shift’ must be a small integer"
 
-#: src/main/character.c:2851 src/main/character.c:3045
+#: src/main/character.c:2854 src/main/character.c:3048
 msgid "argument 'x' must be an integer vector"
 msgstr "argument ‘x’ must be an integer vector"
 
-#: src/main/character.c:2871
+#: src/main/character.c:2874
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "argument ‘x’ must be raw, integer or logical"
 
-#: src/main/character.c:2873
+#: src/main/character.c:2876
 msgid "argument 'type' must be a character string"
 msgstr "argument ‘type’ must be a character string"
 
-#: src/main/character.c:2877
+#: src/main/character.c:2880
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "argument ‘x’ must be a multiple of %d long"
 
-#: src/main/character.c:2890 src/main/character.c:2904
+#: src/main/character.c:2893 src/main/character.c:2907
 msgid "argument 'x' must not contain NAs"
 msgstr "argument ‘x’ must not contain NAs"
 
-#: src/main/character.c:3093
+#: src/main/character.c:3096
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() requires a character vector"
 
-#: src/main/character.c:3172
+#: src/main/character.c:3175
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "‘dirmark = TRUE’ is not supported on this platform"
 
-#: src/main/character.c:3184 src/main/character.c:3198
+#: src/main/character.c:3187 src/main/character.c:3201
 #: src/main/platform.c:1373 src/main/platform.c:1417
 msgid "internal out-of-memory condition"
 msgstr "internal out-of-memory condition"
 
-#: src/main/character.c:3194 src/main/platform.c:1413
+#: src/main/character.c:3197 src/main/platform.c:1413
 #, c-format
 msgid "read error on '%s'"
 msgstr "read error on ‘%s’"
@@ -1987,7 +1987,7 @@ msgstr ""
 #: src/main/connections.c:3401 src/main/connections.c:3713
 #: src/main/connections.c:3814 src/main/connections.c:4022
 #: src/main/connections.c:4321 src/main/dcf.c:51 src/main/deparse.c:302
-#: src/main/deparse.c:382 src/main/saveload.c:2238 src/main/saveload.c:2318
+#: src/main/deparse.c:382 src/main/saveload.c:2239 src/main/saveload.c:2319
 #: src/main/scan.c:913 src/main/scan.c:1026 src/main/scan.c:1527
 #: src/main/scan.c:1721 src/main/source.c:251
 msgid "cannot open the connection"
@@ -2182,7 +2182,7 @@ msgstr "Line longer than buffer size"
 #: src/main/connections.c:2922 src/main/connections.c:2936
 #: src/main/connections.c:3183 src/main/connections.c:3194
 #: src/main/connections.c:3697 src/main/connections.c:3717 src/main/dcf.c:48
-#: src/main/dcf.c:54 src/main/saveload.c:2314 src/main/scan.c:916
+#: src/main/dcf.c:54 src/main/saveload.c:2315 src/main/scan.c:916
 #: src/main/scan.c:920 src/main/scan.c:1029 src/main/scan.c:1033
 #: src/main/serialize.c:1645 src/main/source.c:254 src/main/source.c:257
 msgid "cannot read from this connection"
@@ -2209,7 +2209,7 @@ msgstr "incomplete string at end of file has been discarded"
 msgid "null terminator not found: breaking string at 10000 bytes"
 msgstr "null terminator not found: breaking string at 10000 bytes"
 
-#: src/main/connections.c:3164 src/main/saveload.c:2315
+#: src/main/connections.c:3164 src/main/saveload.c:2316
 msgid "can only read from a binary connection"
 msgstr "can only read from a binary connection"
 
@@ -2567,7 +2567,7 @@ msgstr "‘opts’ should be small non-negative integer"
 
 #: src/main/deparse.c:358 src/main/envir.c:1635 src/main/envir.c:1717
 #: src/main/eval.c:420 src/main/eval.c:876 src/main/eval.c:2673
-#: src/main/saveload.c:1964 src/main/saveload.c:2274 src/main/serialize.c:2250
+#: src/main/saveload.c:1964 src/main/saveload.c:2275 src/main/serialize.c:2250
 #, c-format
 msgid "object '%s' not found"
 msgstr "object ‘%s’ not found"
@@ -3673,7 +3673,7 @@ msgstr "unable to open ‘file’"
 msgid "'file' must be non-empty string"
 msgstr "‘file’ must be non-empty string"
 
-#: src/main/eval.c:3717 src/main/saveload.c:1930 src/main/saveload.c:2219
+#: src/main/eval.c:3717 src/main/saveload.c:1930 src/main/saveload.c:2220
 #: src/main/serialize.c:1786
 msgid "'ascii' must be logical"
 msgstr "‘ascii’ must be logical"
@@ -4000,15 +4000,25 @@ msgstr "Metric information not available for this device"
 msgid "internet routines cannot be accessed in module"
 msgstr "internet routines cannot be accessed in module"
 
-#: src/main/internet.c:99 src/main/internet.c:111 src/main/internet.c:123
-#: src/main/internet.c:134 src/main/internet.c:145 src/main/internet.c:156
-#: src/main/internet.c:165 src/main/internet.c:176 src/main/internet.c:187
+#: src/main/internet.c:99 src/main/internet.c:137 src/main/internet.c:149
+#: src/main/internet.c:160 src/main/internet.c:171 src/main/internet.c:182
+#: src/main/internet.c:191 src/main/internet.c:202 src/main/internet.c:213
 msgid "internet routines cannot be loaded"
 msgstr "internet routines cannot be loaded"
 
-#: src/main/internet.c:197 src/main/internet.c:207 src/main/internet.c:217
-#: src/main/internet.c:227 src/main/internet.c:237 src/main/internet.c:247
-#: src/main/internet.c:258
+#: src/main/internet.c:114 src/main/memory.c:2679 src/main/memory.c:2688
+#: src/main/memory.c:2699 src/main/memory.c:2712 src/main/memory.c:2728
+#: src/main/memory.c:2745
+msgid "bad value"
+msgstr "bad value"
+
+#: src/main/internet.c:120
+msgid "internet routines were already initialized"
+msgstr "internet routines were already initialized"
+
+#: src/main/internet.c:223 src/main/internet.c:233 src/main/internet.c:243
+#: src/main/internet.c:253 src/main/internet.c:263 src/main/internet.c:273
+#: src/main/internet.c:284
 msgid "socket routines cannot be loaded"
 msgstr "socket routines cannot be loaded"
 
@@ -4167,7 +4177,7 @@ msgstr "argument %d matches multiple formal arguments"
 msgid "partial argument match of '%s' to '%s'"
 msgstr "partial argument match of ‘%s’ to ‘%s’"
 
-#: src/main/match.c:359
+#: src/main/match.c:377
 #, c-format
 msgid "unused argument(s) %s"
 msgstr "unused argument(s) %s"
@@ -4274,11 +4284,6 @@ msgstr "Realloc could not re-allocate (size %d) memory"
 msgid "not safe to return vector pointer"
 msgstr "not safe to return vector pointer"
 
-#: src/main/memory.c:2679 src/main/memory.c:2688 src/main/memory.c:2699
-#: src/main/memory.c:2712 src/main/memory.c:2728 src/main/memory.c:2745
-msgid "bad value"
-msgstr "bad value"
-
 #: src/main/memory.c:2866
 msgid "memory profiling is not available on this system"
 msgstr "memory profiling is not available on this system"
@@ -4368,73 +4373,83 @@ msgstr "variable lengths differ (found for '%s')"
 msgid "invalid result from na.action"
 msgstr "invalid result from na.action"
 
-#: src/main/model.c:1631
+#: src/main/model.c:1632
 msgid "invalid model frame"
 msgstr "invalid model frame"
 
-#: src/main/model.c:1633
+#: src/main/model.c:1634
 msgid "do not know how many cases"
 msgstr "do not know how many cases"
 
-#: src/main/model.c:1656
+#: src/main/model.c:1657
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "variable lengths differ (found for variable %d)"
 
-#: src/main/model.c:1660 src/main/model.c:1667
+#: src/main/model.c:1661 src/main/model.c:1668
 #, c-format
 msgid "variable %d has no levels"
 msgstr "variable %d has no levels"
 
-#: src/main/model.c:1779
+#: src/main/model.c:1780
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "the response appeared on the right-hand side and was dropped"
 
-#: src/main/model.c:1811
+#: src/main/model.c:1800
+#, c-format
+msgid "term %d would require %.0g columns"
+msgstr "term %d would require %.0g columns"
+
+#: src/main/model.c:1804
+#, c-format
+msgid "matrix would require %.0g columns"
+msgstr "matrix would require %.0g columns"
+
+#: src/main/model.c:1815
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr "problem with term %d in model.matrix: no columns are assigned"
 
-#: src/main/model.c:1860 src/main/model.c:1865 src/main/model.c:1871
-#: src/main/model.c:1882 src/main/model.c:1888 src/main/model.c:1894
+#: src/main/model.c:1864 src/main/model.c:1869 src/main/model.c:1875
+#: src/main/model.c:1886 src/main/model.c:1892 src/main/model.c:1898
 msgid "term names will be truncated"
 msgstr "term names will be truncated"
 
-#: src/main/model.c:1874
+#: src/main/model.c:1878
 msgid "complex variables are not currently allowed in model matrices"
 msgstr "complex variables are not currently allowed in model matrices"
 
-#: src/main/model.c:1898
+#: src/main/model.c:1902
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "variables of type ‘%s’ are not allowed in model matrices"
 
-#: src/main/names.c:982
+#: src/main/names.c:983
 msgid "string argument required"
 msgstr "string argument required"
 
-#: src/main/names.c:990
+#: src/main/names.c:991
 msgid "no such primitive function"
 msgstr "no such primitive function"
 
-#: src/main/names.c:1105
+#: src/main/names.c:1106
 msgid "attempt to use zero-length variable name"
 msgstr "attempt to use zero-length variable name"
 
-#: src/main/names.c:1107
+#: src/main/names.c:1108
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "variable names are limited to %d bytes"
 
-#: src/main/names.c:1136
+#: src/main/names.c:1137
 msgid "invalid .Internal() argument"
 msgstr "invalid .Internal() argument"
 
-#: src/main/names.c:1139
+#: src/main/names.c:1140
 msgid "invalid internal function"
 msgstr "invalid internal function"
 
-#: src/main/names.c:1141
+#: src/main/names.c:1142
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "no internal function “%s”"
@@ -4756,7 +4771,7 @@ msgstr "NA/Inf replaced by maximum positive value"
 msgid "invalid function value in 'optimize'"
 msgstr "invalid function value in ‘optimize’"
 
-#: src/main/optimize.c:88 src/main/optimize.c:174 src/main/optimize.c:586
+#: src/main/optimize.c:88 src/main/optimize.c:174 src/main/optimize.c:587
 msgid "attempt to minimize non-function"
 msgstr "attempt to minimize non-function"
 
@@ -4781,75 +4796,75 @@ msgstr "NA value for ‘%s’ is not allowed"
 msgid "non-finite value supplied by 'nlm'"
 msgstr "non-finite value supplied by ‘nlm’"
 
-#: src/main/optimize.c:412
+#: src/main/optimize.c:413
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "invalid function value in ‘nlm’ optimizer"
 
-#: src/main/optimize.c:423 src/main/optimize.c:438
+#: src/main/optimize.c:424 src/main/optimize.c:439
 msgid "function value caching for optimization is seriously confused"
 msgstr "function value caching for optimization is seriously confused"
 
-#: src/main/optimize.c:453
+#: src/main/optimize.c:454
 msgid "numeric parameter expected"
 msgstr "numeric parameter expected"
 
-#: src/main/optimize.c:457
+#: src/main/optimize.c:458
 msgid "conflicting parameter lengths"
 msgstr "conflicting parameter lengths"
 
-#: src/main/optimize.c:461
+#: src/main/optimize.c:462
 msgid "invalid parameter length"
 msgstr "invalid parameter length"
 
-#: src/main/optimize.c:471 src/main/optimize.c:478
+#: src/main/optimize.c:472 src/main/optimize.c:479
 msgid "missing value in parameter"
 msgstr "missing value in parameter"
 
-#: src/main/optimize.c:483
+#: src/main/optimize.c:484
 msgid "invalid parameter type"
 msgstr "invalid parameter type"
 
-#: src/main/optimize.c:491
+#: src/main/optimize.c:492
 msgid "invalid NA value in parameter"
 msgstr "invalid NA value in parameter"
 
-#: src/main/optimize.c:501
+#: src/main/optimize.c:502
 msgid "non-positive number of parameters in nlm"
 msgstr "non-positive number of parameters in nlm"
 
-#: src/main/optimize.c:503
+#: src/main/optimize.c:504
 msgid "nlm is inefficient for 1-d problems"
 msgstr "nlm is inefficient for 1-d problems"
 
-#: src/main/optimize.c:505
+#: src/main/optimize.c:506
 msgid "invalid gradient tolerance in nlm"
 msgstr "invalid gradient tolerance in nlm"
 
-#: src/main/optimize.c:507
+#: src/main/optimize.c:508
 msgid "invalid iteration limit in nlm"
 msgstr "invalid iteration limit in nlm"
 
-#: src/main/optimize.c:509
+#: src/main/optimize.c:510
 msgid "minimization function has no good digits in nlm"
 msgstr "minimization function has no good digits in nlm"
 
-#: src/main/optimize.c:511
+#: src/main/optimize.c:512
 msgid "no analytic gradient to check in nlm!"
 msgstr "no analytic gradient to check in nlm!"
 
-#: src/main/optimize.c:513
+#: src/main/optimize.c:514
 msgid "no analytic Hessian to check in nlm!"
 msgstr "no analytic Hessian to check in nlm!"
 
-#: src/main/optimize.c:515
+#: src/main/optimize.c:516
 msgid "probable coding error in analytic gradient"
 msgstr "probable coding error in analytic gradient"
 
-#: src/main/optimize.c:517
+#: src/main/optimize.c:518
 msgid "probable coding error in analytic Hessian"
 msgstr "probable coding error in analytic Hessian"
 
-#: src/main/optimize.c:519
+#: src/main/optimize.c:520
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -4858,23 +4873,23 @@ msgstr ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
 
-#: src/main/optimize.c:530
+#: src/main/optimize.c:531
 msgid "Relative gradient close to zero.\n"
 msgstr "Relative gradient close to zero.\n"
 
-#: src/main/optimize.c:531 src/main/optimize.c:535
+#: src/main/optimize.c:532 src/main/optimize.c:536
 msgid "Current iterate is probably solution.\n"
 msgstr "Current iterate is probably solution.\n"
 
-#: src/main/optimize.c:534
+#: src/main/optimize.c:535
 msgid "Successive iterates within tolerance.\n"
 msgstr "Successive iterates within tolerance.\n"
 
-#: src/main/optimize.c:538
+#: src/main/optimize.c:539
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "Last global step failed to locate a point lower than x.\n"
 
-#: src/main/optimize.c:539
+#: src/main/optimize.c:540
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -4884,11 +4899,11 @@ msgstr ""
 "the function is too non-linear for this algorithm,\n"
 "or steptol is too large.\n"
 
-#: src/main/optimize.c:544
+#: src/main/optimize.c:545
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "Iteration limit exceeded.  Algorithm failed.\n"
 
-#: src/main/optimize.c:547
+#: src/main/optimize.c:548
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -4902,11 +4917,11 @@ msgstr ""
 "from above in some direction,\n"
 "or stepmx is too small.\n"
 
-#: src/main/optimize.c:666
+#: src/main/optimize.c:667
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr "hessian supplied is of the wrong length or mode, so ignored"
 
-#: src/main/optimize.c:670
+#: src/main/optimize.c:671
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "gradient supplied is of the wrong length or mode, so ignored"
 
@@ -5640,23 +5655,23 @@ msgstr "‘gap’ must be non-negative integer"
 msgid "invalid 'tryS4' internal argument"
 msgstr "invalid ‘tryS4’ internal argument"
 
-#: src/main/print.c:950
+#: src/main/print.c:951
 msgid "invalid character length in dblepr"
 msgstr "invalid character length in dblepr"
 
-#: src/main/print.c:968
+#: src/main/print.c:969
 msgid "invalid character length in intpr"
 msgstr "invalid character length in intpr"
 
-#: src/main/print.c:987
+#: src/main/print.c:988
 msgid "invalid character length in realpr"
 msgstr "invalid character length in realpr"
 
-#: src/main/print.c:997
+#: src/main/print.c:998
 msgid "memory allocation error in realpr"
 msgstr "memory allocation error in realpr"
 
-#: src/main/print.c:1013
+#: src/main/print.c:1014
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "BLAS/LAPACK routine ‘%6s’ gave error code %d"
@@ -5976,7 +5991,7 @@ msgid "bad restore file magic number (file may be corrupted) -- no data loaded"
 msgstr ""
 "bad restore file magic number (file may be corrupted) -- no data loaded"
 
-#: src/main/saveload.c:1926 src/main/saveload.c:2213
+#: src/main/saveload.c:1926 src/main/saveload.c:2214
 msgid "first argument must be a character vector"
 msgstr "first argument must be a character vector"
 
@@ -5984,7 +5999,7 @@ msgstr "first argument must be a character vector"
 msgid "not a valid named list"
 msgstr "not a valid named list"
 
-#: src/main/saveload.c:2005 src/main/saveload.c:2025
+#: src/main/saveload.c:2005 src/main/saveload.c:2026
 #, c-format
 msgid "'%s' looks like a pre-2.4.0 S4 object: please recreate it"
 msgstr "‘%s’ looks like a pre-2.4.0 S4 object: please recreate it"
@@ -5993,55 +6008,55 @@ msgstr "‘%s’ looks like a pre-2.4.0 S4 object: please recreate it"
 msgid "loaded data is not in pair list form"
 msgstr "loaded data is not in pair list form"
 
-#: src/main/saveload.c:2048
+#: src/main/saveload.c:2049
 msgid "first argument must be a file name"
 msgstr "first argument must be a file name"
 
-#: src/main/saveload.c:2064 src/unix/edit.c:122
+#: src/main/saveload.c:2065 src/unix/edit.c:122
 msgid "unable to open file"
 msgstr "unable to open file"
 
-#: src/main/saveload.c:2096 src/main/saveload.c:2122
+#: src/main/saveload.c:2097 src/main/saveload.c:2123
 msgid "XDR write failed"
 msgstr "XDR write failed"
 
-#: src/main/saveload.c:2109 src/main/saveload.c:2134
+#: src/main/saveload.c:2110 src/main/saveload.c:2135
 msgid "XDR read failed"
 msgstr "XDR read failed"
 
-#: src/main/saveload.c:2145
+#: src/main/saveload.c:2146
 #, c-format
 msgid "cannot save data -- unable to open '%s': %s"
 msgstr "cannot save data -- unable to open '%s': %s"
 
-#: src/main/saveload.c:2229 src/main/serialize.c:1798
+#: src/main/saveload.c:2230 src/main/serialize.c:1798
 #, c-format
 msgid "cannot save to connections in version %d format"
 msgstr "cannot save to connections in version %d format"
 
-#: src/main/saveload.c:2241
+#: src/main/saveload.c:2242
 msgid "connection not open for writing"
 msgstr "connection not open for writing"
 
-#: src/main/saveload.c:2250
+#: src/main/saveload.c:2251
 msgid "cannot save XDR format to a text-mode connection"
 msgstr "cannot save XDR format to a text-mode connection"
 
-#: src/main/saveload.c:2260 src/main/serialize.c:1713
+#: src/main/saveload.c:2261 src/main/serialize.c:1713
 #: src/main/serialize.c:1727 src/main/serialize.c:1847
 #: src/main/serialize.c:1869
 msgid "error writing to connection"
 msgstr "error writing to connection"
 
-#: src/main/saveload.c:2321
+#: src/main/saveload.c:2322
 msgid "connection not open for reading"
 msgstr "connection not open for reading"
 
-#: src/main/saveload.c:2334
+#: src/main/saveload.c:2335
 msgid "no input is available"
 msgstr "no input is available"
 
-#: src/main/saveload.c:2354
+#: src/main/saveload.c:2355
 msgid ""
 "the input does not start with a magic number compatible with loading from a "
 "connection"
@@ -6183,7 +6198,7 @@ msgstr "wrong sign in ‘by’ argument"
 msgid "'by' must be finite"
 msgstr "‘by’ must be finite"
 
-#: src/main/seq.c:621
+#: src/main/seq.c:631
 msgid "argument must be non-negative"
 msgstr "argument must be non-negative"
 
