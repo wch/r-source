@@ -656,13 +656,7 @@ Rd2HTML <-
                ## FIXME: encode, not htmlify
                ## watch out for empty URLs (TeachingDemos has one)
                "\\url" = if(length(block)) of0('<a href="', block[[1L]], '">', block[[1L]], '</a>'),
-               "\\Sexpr"= { of1("\\Sexpr")  # This is only here if processing didn't get it...
-	                    option <- attr(block, "Rd_option")
-	                    if (!is.null(option)) of0("[", option, "]")
-	                    of1("{")
-	                    writeContent(block, tag)
-	                    of1("}")
-	                  },
+               "\\Sexpr"= of0(as.character.Rd(block, deparse=TRUE)),
                "\\cr" =,
                "\\dots" =,
                "\\ldots" =,

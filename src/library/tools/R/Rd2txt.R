@@ -293,13 +293,7 @@ Rd2txt <-
                "\\samp" = writeQ(block, tag, quote="\\sQuote"),
                "\\email"=  put("<email: ", as.character(block), ">"),
                 "\\url"= put("<URL: ", as.character(block), ">"),
-               "\\Sexpr"= { put("\\Sexpr")  # This is only here if processing didn't get it...
-               		    option <- attr(block, "Rd_option")
-               		    if (!is.null(option)) put("[", option, "]")
-               		    put("{")
-                            writeContent(block, tag)
-                            put("}")
-                          },
+               "\\Sexpr"= put(as.character.Rd(block, deparse=TRUE)),
                "\\acronym" =,
                "\\cite"=,
                "\\dfn"= ,
