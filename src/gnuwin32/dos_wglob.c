@@ -203,6 +203,21 @@ dos_wglob(const wchar_t *pattern, int flags,
 	*bufnext++ = BG_SEP;
 	patnext += 2;
     }
+
+    /* Hack from Tony Plate to allow UNC network drive specification:
+     * Without this code, '\\' (i.e., literally two backslashes inpattern)
+     * at the beginning of a path is not recognized as a network drive,
+     * because the GLOB_QUOTE loop below changes the two backslashes to one.
+     * So, in the case where there are two but not three backslashes at
+     * the beginning of the path, transfer these to the output.
+     */
+    if (patnext == pattern && bufend - bufnext > 2 &&
+	pattern[0] == BG_SEP2 && pattern[1] == BG_SEP2 &&
+	pattern[2] != BG_SEP2) {
+	*bufnext += pattern[0];
+	*bufnext += pattern[1];
+	patnext += 2;
+    }
 #endif
 
     if (flags & GLOB_QUOTE) {

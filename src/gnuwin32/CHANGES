@@ -66,6 +66,10 @@ NEW FEATURES
 	systems (probably a Samba issue), so it has been replaced in R
 	CMD INSTALL by a directory creation test.  (Reported by Simon
 	Urbanek and Ruth Ripley.)
+
+    o 	Sys.glob() attempts to handle UNC paths starting with \\ (which
+	according to the globbing rules is escaped \), thanks to a patch
+	from Tony Plate.
 	
 	
 BUG FIXES

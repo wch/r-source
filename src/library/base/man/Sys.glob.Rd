@@ -88,8 +88,9 @@ Sys.glob(paths, dirmark = FALSE)
 
   File paths in Windows are interpreted with separator \code{\\} or
   \code{/}.  Paths with a drive but relative (such as \code{c:foo\\bar})
-  are tricky, but an attempt is made to handle them correctly.  No
-  attempt is made to handle UNC paths starting with a double backslash.
+  are tricky, but an attempt is made to handle them correctly.  As from
+  \R 2.9.2 an attempt is made to handle UNC paths starting with a double
+  backslash.
 #endif
 }
 \value{
