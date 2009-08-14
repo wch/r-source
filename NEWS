@@ -344,6 +344,10 @@ NEW FEATURES
 	They no longer segfault for invalid zero-length specification
 	of 'yleft, 'yright', or 'f'.
 
+    o	seq_along(x) is now equivalent to seq_len(length(x)) even where
+	length() has an S3/S4 method; previously it (intentionally)
+	always used the default method for length().
+
 
 DEPRECATED & DEFUNCT
 
@@ -356,10 +360,10 @@ BUG FIXES
     o	parse_Rd() still did not handle source reference encodings
 	properly.
 
-    o	PrintValue no longer attempts to print attributes for CHARSXPs
-	as those attributes are used internally for the CHARSXP cache.
-	This fixes a segfault when calling Rf_PrintValue on a CHARSXP
-	from C code.
+    o	The C utility function PrintValue no longer attempts to print
+	attributes for CHARSXPs as those attributes are used
+	internally for the CHARSXP cache.  This fixes a segfault when
+	calling Rf_PrintValue on a CHARSXP from C code.
 
     o	PDF graphics output was producing TWO instances of anything
 	drawn with the symbol font face. (Report from Baptiste Auguie.)
@@ -369,9 +373,6 @@ BUG FIXES
 
     o	If model.matrix() was given too large a model, it could crash
 	R. (PR#13838, fix found by Olaf Mersmann.)
-
-    o	seq_along(x) is now equivalent to seq_len(length(x)); previously it
-	was not, when x had a "surprising" length() method.
 
     o	gzcon() (used by load()) would re-open an open connection,
     	leaking a file descriptor each time. (PR#13841)
@@ -399,9 +400,9 @@ BUG FIXES
     o	Some extreme cases of pbeta(log.p = TRUE) are more accurate
 	(finite values < -700 rather than -Inf).  (PR#13786)
 
-	pbeta() now reports on more cases where the expansions lose
-	accuracy (the underlying TOMS708 C code was ignoring some of
-	these, including the PR#13786 example).
+	pbeta() now reports on more cases where the asymptotic
+	expansions lose accuracy (the underlying TOMS708 C code was
+	ignoring some of these, including the PR#13786 example).
 
 
 
