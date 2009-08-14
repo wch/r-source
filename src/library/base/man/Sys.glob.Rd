@@ -61,7 +61,7 @@ Sys.glob(paths, dirmark = FALSE)
   character class).
 #endif
 #ifdef windows
-  The \code{glob} system call is not part of Windows, and we supply an
+  The \code{glob} system call is not part of Windows, and we supply a
   partial emulation.
 
   Wildcards are \code{*} (match zero or more characters) and \code{?} (match
