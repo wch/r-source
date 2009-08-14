@@ -73,12 +73,12 @@ imagedir:
 #
 # files to make source packages
 	$(MKDIR) -p $(RPREFIX)/share \
-	  $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32 $(RPREFIX)/share/sh
+	  $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32 # $(RPREFIX)/share/sh
 	$(CP) $(R_HOME)/doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) $(R_HOME)/doc/KEYWORDS* $(RPREFIX)/doc
 	$(CP) -pr $(R_HOME)/include $(RPREFIX)
 	$(CP) -pr $(foreach i,$(SHARE_DIRS),$(R_HOME)/share/$i) $(RPREFIX)/share
-	$(CP) -p $(R_HOME)/share/sh/dcf.sh $(RPREFIX)/share/sh
+#	$(CP) -p $(R_HOME)/share/sh/dcf.sh $(RPREFIX)/share/sh
 # This is odd -- better to clean the copy
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library
