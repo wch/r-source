@@ -396,6 +396,13 @@ BUG FIXES
     o   Missing PROTECTs in nlm() caused "random" errors. (PR#13381 by
         Adam D.I. Kramer, analysis and suggested fix by Bill Dunlap.)
 
+    o	Some extreme cases of pbeta(log.p = TRUE) are more accurate
+	(finite values < -700 rather than -Inf).  (PR#13786)
+
+	pbeta() now reports on more cases where the expansions lose
+	accuracy (the underlying TOMS708 C code was ignoring some of
+	these, including the PR#13786 example).
+
 
 
 		CHANGES IN R VERSION 2.9.1
