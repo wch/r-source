@@ -1,5 +1,6 @@
 Name,Country,City,URL,Host,Maintainer,OK,CountryCode
-Argentina,Argentina,Mendoza,http://mirror.cricyt.edu.ar/r/,"CONICET, Mendoza",informatica@lab.cricyt.edu.ar,1,ar
+"Argentina (Buenos Aires)",Argentina,"Buenos Aires",http://cran.patan.com.ar/,"Patan.com.ar, Buenos Aires",jknoll@patan.com.ar,1,ar
+"Argentina (Mendoza)",Argentina,Mendoza,http://mirror.cricyt.edu.ar/r/,"CONICET, Mendoza",informatica@lab.cricyt.edu.ar,1,ar
 Australia,Australia,Melbourne,http://cran.ms.unimelb.edu.au/,"University of Melbourne",cran@ms.unimelb.edu.au,1,au
 Austria,Austria,Wien,http://cran.at.r-project.org/,"Wirtschaftsuniversitaet Wien",CRAN@R-project.org,1,at
 Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Association",patrick@wessa.net,1,be
@@ -9,8 +10,11 @@ Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Associat
 "Brazil (SP 2)",Brazil,Piracicaba,http://brieger.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba",aafgarci@esalq.usp.br,1,br
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","Brad McNeney <mcneney@sfu.ca>",1,ca
 "Canada (ON)",Canada,Toronto,http://probability.ca/cran/,"University of Toronto","Jeffrey S. Rosenthal <jeff at math.toronto.edu>",1,ca
+"Canada (QC)",Canada,Montreal,http://cran.parentinginformed.com/,"iWeb, Montreal","James Miller <jmiller@parentinginformed.com>",1,ca
 Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana@mat.puc.cl>",1,cl
-China,China,"Hong Kong",http://mirrors.geoexpat.com/cran/,GeoExpat.Com,shri@geoexpat.com,1,cn
+"China (Beijing)",China,Bejing,http://ftp.ctex.org/mirrors/CRAN/,CTEX.ORG,"Aloft Wu <aloft@ctex.org>",1,cn
+"China (Hong Kong)",China,"Hong Kong",http://mirrors.geoexpat.com/cran/,GeoExpat.Com,shri@geoexpat.com,1,cn
+Colombia,Colombia,Bogota,http://www.laqee.unal.edu.co/CRAN/,"National University of Colombia","Ernesto Parra Rincon <eparrar@unal.edu.co>",1,co
 Croatia,Croatia,Zagreb,http://imago.irb.hr/r/,"Rudjer Boskovic Institute",matko.bosnjak@irb.hr,1,hr
 Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirror@dotsrc.org,1,dk
 "France (Toulouse)",France,Toulouse,http://cran.fr.r-project.org/,"CICT, Toulouse","David Allouche <allouche@tlse.toulouse.inra.fr>",1,fr
@@ -18,13 +22,16 @@ Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirr
 "France (Paris)",France,Paris,http://cran.miroir-francais.fr/,"Miroir-Francais, Paris","Kurt LeClerc <kurt@miroir-francais.fr>",1,fr
 "Germany (Berlin)",Germany,Berlin,http://mirrors.softliste.de/cran/,"Softliste.de, Berlin",docko@docko.sk,1,de
 "Germany (Goettingen)",Germany,Goettingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Goettingen","Eberhard Moenkeberg <emoenke@gwdg.de>",1,de
+"Germany (Hannover)",Germany,Hannover,http://cran.mirroring.de,"Opensource Mirror Project",admin@mirroring.de,1,de
 "Germany (Muenchen)",Germany,Muenchen,http://cran.rakanu.com/,"Rakanu.com, Muenchen","Carsten Zedler <info@rakanu.com>",1,de
+"Germany (Wiesbaden)",Germany,Wiesbaden,http://ftp.yalwa.org/cran/,"Yalwa GmbH, Wiesbaden",webmaster@yalwa.com,1,de
 Iran,Iran,Mashhad,http://cran.um.ac.ir/,"Ferdowsi University of Mashhad","Majid Sarmad <sarmad@um.ac.ir>",1,ir
 Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet, Dublin","Brian McArdle <brian.mcardle@heanet.ie>",1,ie
 "Italy (Milano)",Italy,Milano,http://rm.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano",mirror-service@garr.it,1,it
 "Italy (Padua)",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua",cran@stat.unipd.it,1,it
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","elio.mineo@dssm.unipa.it, alf@dssm.unipa.it",1,it
 "Japan (Aizu)",Japan,Aizu,ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN,"University of Aizu",,1,jp
+"Japan (Hyogo)",Japan,Hyogo,http://essrc.hyogo-u.ac.jp/cran/,"Hyogo University of Teacher Education",essrc-cran@hyogo-u.ac.jp,1,jp
 "Japan (Tokyo)",Japan,Tokyo,ftp://ftp.ecc.u-tokyo.ac.jp/CRAN/,"University of Tokyo","Teru KAMOGASHIRA <teru@sodan.ecc.u-tokyo.ac.jp>",1,jp
 "Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",,1,jp
 Korea,Korea,Seoul,http://bibs.snu.ac.kr/R/,"Seoul National University","SungGON Yi <skonmeme@gmail.com>",1,kr
@@ -40,7 +47,6 @@ Russia,Russia,Moscow,http://cran.gis-lab.info/,GIS-Lab.info,sim@gis-lab.info,1,r
 "Singapore 1",Singapore,Singapore,http://cran.bic.nus.edu.sg/,"National University of Singapore",sysadmin@bic.nus.edu.sg,1,sg
 "Singapore 2",Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University of Singapore","Zhang Rong <ccezr@nus.edu.sg>",1,sg
 Slovakia,Slovakia,Bratislava,http://cran.fyxm.net/,"FYXM.net, Bratislava",docko@docko.sk,1,sk
-"Slovenia (Ljubljana)",Slovenia,Ljubljana,http://www.wsection.com/cran/,"Wsection.com, Ljubljana",info@wsection.com,1,si
 "South Africa","South Africa",Grahamstown,http://cran.za.r-project.org/,"Rhodes University","Jeremy Baxter <J.Baxter at ru.ac.za>",1,za
 "Spain (Madrid)",Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias@rediris.es>",1,es
 Sweden,Sweden,Uppsala,http://ftp.sunet.se/pub/lang/CRAN/,"Swedish University Computer Network, Uppsala","Goran Brostrom <gb@stat.umu.se>",1,se
@@ -48,17 +54,20 @@ Switzerland,Switzerland,Zuerich,http://cran.ch.r-project.org/,"ETH Zuerich",Mart
 "Taiwan (Taichung)",Taiwan,Taichung,http://cran.cs.pu.edu.tw/,"Providence University, Taichung",hcchang@cs.pu.edu.tw,1,tw
 "Taiwan (Taipeh)",Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan@infor.org>",1,tw
 Thailand,Thailand,Bangkok,http://mirror.kapook.com/cran/,"Kapook.com, Bangkok",thawachchai@bunditcenter.com,1,th
-Turkey,Turkey,Kahramanmaras,http://www.kahramanmaras.bel.tr/cran/,"Kahramanmaras City Municipality",ismail@kahramanmaras.bel.tr,1,tr
 "UK (Bristol)",UK,Bristol,http://cran.uk.r-project.org/,"University of Bristol","Guy Nason <G.P.Nason@bristol.ac.uk>",1,uk
+"USA (AZ)",USA,Scottsdale,http://cran.opensourceresources.org/,opensourceresources.org,mike.winslow1@gmail.com,1,us
 "USA (CA 1)",USA,Berkeley,http://cran.cnr.Berkeley.edu,"University of California, Berkeley, CA",casterln@nature.berkeley.edu,1,us
 "USA (CA 2)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA","Jose Hales-Garcia <jose@stat.ucla.edu>",1,us
 "USA (IA)",USA,Ames,http://streaming.stat.iastate.edu/CRAN/,"Iowa State University, Ames, IA","Ted Peterson <cpterson@iastate.edu>",1,us
+"USA (MD)",USA,Bethesda,http://watson.nci.nih.gov/cran_mirror/,"National Cancer Institute, Bethesda, MD","Sean Davis <sdavis2@mail.nih.gov>",1,us
 "USA (MI)",USA,Houghton,http://cran.mtu.edu/,"Michigan Technological University, Houghton, MI","Robert Froese <froese@mtu.edu>",1,us
 "USA (MO)",USA,"St. Louis",http://cran.wustl.edu/,"Washington University, St. Louis, MO",admartin@wustl.edu,1,us
 "USA (NC)",USA,"Chapel Hill",http://www.ibiblio.org/pub/languages/R/CRAN/,"University of North Carolina, Chapel Hill, NC","""Nancy C. Wilson"" <nancy@metalab.unc.edu>",1,us
 "USA (OH)",USA,Cleveland,http://cran.case.edu/,"Case Western Reserve University, Cleveland, OH","""Alberto H. Santana"" <ahs4@case.edu>",1,us
 "USA (PA 1)",USA,Pittsburgh,http://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA",,1,us
 "USA (PA 2)",USA,Pittsburgh,http://cran.mirrors.hoobly.com,"Hoobly Classifieds, Pittsburgh, PA","Peter Grigor <pgrigor@hoobly.com>",1,us
+"USA (TN)",USA,Knoxville,http://mira.sunsite.utk.edu/CRAN/,"University of Tennessee, Knoxville, TN","Michael Campfield <campfieldm@sworps.tennessee.edu>",1,us
 "USA (TX 1)",USA,"San Antonio",http://www.revolution-computing.com/cran/,"Revolution Computing, San Antonio, TX","David Smith <david@revolution-computing.com>",1,us
-"USA (TX 2)",USA,Dallas,http://www.cyberuse.com/cran,"CyberUse.com, Dallas, TX",help@cyberuse.com,1,us
+"USA (TX 2)",USA,Dallas,http://www.cyberuse.com/cran/,"CyberUse.com, Dallas, TX",help@cyberuse.com,1,us
+"USA (TX 3)",USA,Houston,http://cran.sixsigmaonline.org/,"sixsigmaonline.org, Houston, TX",gosixsigma@gmail.com,1,us
 "USA (WA)",USA,Seattle,http://cran.fhcrc.org/,"Fred Hutchinson Cancer Research Center, Seattle, WA",sfalcon@fhcrc.org,1,us
