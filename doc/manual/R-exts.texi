@@ -218,7 +218,7 @@ so far.} unless they are listed (one filepath per line) in a file
 @acronym{CRAN} will no longer accept submissions containing binary files
 even if they are listed.
 
-The @R{} function @code{package.skeleton} can help to create the
+The @R{} function @code{package.skeleton} can create the
 structure for a new package: see its help page for details.
 
 @menu
@@ -3008,11 +3008,12 @@ between developers and/or interested useRs.
 @section Rd format
 
 @R{} objects are documented in files written in ``@R{} documentation''
-(Rd) format, a simple markup language closely resembling (La)@TeX{},
-which can be processed into a variety of formats, including @LaTeX{},
-@HTML{} and plain text.  The translation is carried out by the script
-@command{Rdconv} in @file{@var{R_HOME}/bin} and by the installation
-scripts for packages.
+(Rd) format, a simple markup language much of which closely resembles
+(La)@TeX{}, which can be processed into a variety of formats,
+including @LaTeX{}, @HTML{} and plain text.  The translation is
+carried out by functions in the @pkg{tools} package called by the
+script @command{Rdconv} in @file{@var{R_HOME}/bin} and by the
+installation scripts for packages.
 
 @c 1225 just prior to 2.9.0
 The @R{} distribution contains more than 1200 such files which can be
@@ -3020,13 +3021,14 @@ found in the @file{src/library/@var{pkg}/man} directories of the @R{}
 source tree, where @var{pkg} stands for one of the standard packages
 which are included in the @R{} distribution.
 
-As an example, let us look at the file
+As an example, let us look at a simplified version of 
 @file{src/library/base/man/load.Rd} which documents the @R{} function
 @code{load}.
 
 @quotation
 @cartouche
 @smallexample
+@% File src/library/base/man/load.Rd
 \name@{load@}
 \Rdversion@{1.1@}
 \alias@{load@}
@@ -3070,18 +3072,53 @@ function's arguments and return value, as in the above example).
 Finally, there is a footer with keyword information.  The header is
 mandatory.
 
-See the @uref{http://developer.r-project.org/Rds.html, ``Guidelines for Rd
-files''} for guidelines for writing documentation in Rd format which
-should be useful for package writers.
+See the @uref{http://developer.r-project.org/Rds.html, ``Guidelines
+for Rd files''} for guidelines for writing documentation in Rd format
+which should be useful for package writers. 
+@findex prompt 
+The @R{}
+generic function @code{prompt} is used to construct a bare-bones Rd
+file ready for manual editing.  Methods are defined for documenting
+functions (which fill in the proper function and argument names) and
+data frames.  There are also functions @code{promptData},
+@code{promptPackage}, @code{promptClass}, and @code{promptMethods} for
+other types of Rd file.
 
-Note that there have been a number of changes to the Rd format over the
-years, which can be important if a package is intended to be used with
-earlier versions of @R{}.  The @code{\Rdversion@{@}} block was
-introduced in @R{} 2.9.0 to allow help files to identify the version
-they follow: files without such a block are implicitly version 1.0.
-New files created by e.g.@: @code{prompt} in @R{} 2.9.0 and later are
-marked as version 1.1.  See @ref{Back-compatibility issues} for notes on
-earlier versions of the Rd format.
+The general syntax of Rd files is summarized below.  For a detailed
+technical discussion of current Rd syntax, see
+@uref{http://developer.r-project.org/parseRd.pdf, ``Parsing Rd
+files''}.  Note that there have been a number of changes to the Rd
+format over the years, which can be important if a package is intended
+to be used with earlier versions of @R{}.    The @code{\Rdversion@{@}}
+block was introduced in @R{} 2.9.0 to allow help files to identify the
+version they follow: files without such a block are implicitly assumed
+to be in the current version. New files created by e.g.@:
+@code{prompt} in @R{} 2.9.0 and later are marked as version 1.1.  See
+@ref{Back-compatibility issues} for notes on earlier versions of the
+Rd format.
+
+As of @R{} 2.10.0, the syntax of Rd files consists of three types of
+text input.  The most common is @LaTeX{}-like, with the backslash used
+as a prefix on markup (e.g. @code{\name}, @code{\Rdversion}), and braces
+used to indicate arguments (e.g. @code{@{load@}}, @code{@{1.1@}}.  The
+second type is @R{}-like, intended for @R{} code, but allowing some
+embedded macros.  The least common type is verbatim text, where no
+markup is processed. Each macro defines the input type for its
+argument.  For example, the file initially uses @LaTeX{}-like syntax,
+and this is also used in the @code{\description} section, but the
+@code{\usage} section uses @R{}-like syntax, and the @code{\alias}
+macro uses verbatim syntax.  Comments run from a percent symbol @code{@%}
+to the end of the line in all types of text (as on the first line
+of the @code{load} example).
+
+Because backslashes, braces and percent symbols have special meaning,
+to enter them into text sometimes requires escapes using a backslash.
+Thus a percent symbol can be entered into
+text using @code{\@%}.  Generally balanced braces do not need to be
+escaped, but percent symbols always do.  For the complete list of
+macros and rules for escapes, see the 
+@uref{http://developer.r- project.org/parseRd.pdf, ``Parsing Rd
+files''} document.
 
 @menu
 * Documenting functions::       
@@ -3161,9 +3198,8 @@ shortened, the file probably tries to document too much at once.)
 @item \usage@{@var{fun}(@var{arg1}, @var{arg2}, @dots{})@}
 @findex \usage
 One or more lines showing the synopsis of the function(s) and variables
-documented in the file.  These are set in typewriter font.  This is a
-verbatim-like command, and a few characters need to be escaped
-(@pxref{Insertions}).
+documented in the file.  These are set in typewriter font.  This is an
+@R{}-like command.
 
 The usage information specified should match the function definition
 @emph{exactly} (such that automatic checking for consistency between
@@ -3269,10 +3305,10 @@ Description of the function's arguments, using an entry of the form
 \item@{@var{arg_i}@}@{@var{Description of arg_i}.@}
 @end example
 
-@noindent
-for each element of the argument list.  There may be optional text
-before and after these entries.  (Note that there is no whitespace
-between the three parts of the entry.)
+@noindent for each element of the argument list.  (Note that there is
+no whitespace between the three parts of the entry.) There may be
+optional text outside the @code{\item} entries, for example to give
+general information about groups of parameters.  
 
 
 @item \details@{@dots{}@}
@@ -3337,11 +3373,9 @@ this.  @xref{Marking text}, and @ref{Cross-references}).
 
 @findex \examples
 @item \examples@{@dots{}@}
-Examples of how to use the function.  These are set as formatted in
-typewriter font: see @ref{Insertions} for when characters need to be
-escaped.  (Markup @code{\link} and @code{\var} will be interpreted, but
-no other.)  Code in this section is run by @code{example()} unless
-marked otherwise (see below).
+Examples of how to use the function.  Code in this section is set 
+in typewriter font without reformatting and is run by
+@code{example()} unless marked otherwise (see below).
 
 Examples are not only useful for documentation purposes, but also
 provide test code used for diagnostic checking of @R{} code.  By
@@ -3354,7 +3388,10 @@ for text that should only be shown, but not run, and
 @findex \dontshow
 for extra commands for testing that should not be shown to users, but
 will be run by @code{example()}.  (Previously this was called
-@code{\testonly}, and that is still accepted.)
+@code{\testonly}, and that is still accepted.)  
+
+Text inside @code{\dontrun@{@}} is verbatim, but the other parts
+of the @code{\examples} section are @R{}-like text.
 
 For example,
 
@@ -3372,7 +3409,7 @@ special facilities (such as Internet access or write permission to
 specific directories).  Text included in @code{\dontrun} is indicated by
 comments in the processed help files: it need not be valid @R{} code but
 the escapes must still be used for @code{%}, @code{\} and unpaired
-braces.
+braces as in other verbatim text.
 
 Data needed for making the examples executable can be obtained by random
 number generation (for example, @code{x <- rnorm(100)}), or by using
@@ -3393,7 +3430,7 @@ Each @code{\keyword} entry should specify one of the standard keywords
 as listed in file @file{KEYWORDS} in the R documentation directory
 (default @file{@var{R_HOME}/doc}).  Use e.g.@:
 @code{file.show(file.path(R.home("doc"), "KEYWORDS"))} to inspect the
-standard keywords from within R.  There can be more than @code{\keyword}
+standard keywords from within R.  There can be more than one @code{\keyword}
 entry if the @R{} object being documented falls into more than one
 category.
 
@@ -3404,12 +3441,6 @@ help page, but @code{foo} is excluded from several object indices, like
 the alphabetical list of objects in the @HTML{} help system.
 @end table
 
-@findex prompt
-The @R{} function @code{prompt} facilitates the construction of files
-documenting @R{} objects.  If @code{foo} is an @R{} function, then
-@kbd{prompt(foo)} produces file @file{foo.Rd} which already contains
-the proper function and argument names of @code{foo}, and a structure
-which can be filled in with information.
 
 @node Documenting data sets, Documenting S4 classes and methods, Documenting functions, Rd format
 @subsection Documenting data sets
@@ -3478,7 +3509,8 @@ The @code{\keyword} entry is always @samp{datasets}.
 @end itemize
 
 If @code{@var{bar}} is a data frame, documenting it as a data set can
-be initiated via @kbd{prompt(@var{bar})}.
+be initiated via @code{prompt(@var{bar})}.  Otherwise, the @code{promptData}
+function may be used.
 
 @node Documenting S4 classes and methods, Documenting packages, Documenting data sets, Rd format
 @subsection Documenting S4 classes and methods
@@ -3583,7 +3615,7 @@ For example
 For consistency with the pre-assigned sections, the section name (the
 first argument to @code{\section}) should be capitalized (but not all
 upper case).  Whitespace between the first and second braced
-expressions is allowed as from @R 2.10.0.
+expressions is not allowed as from @R 2.10.0.
 
 Note that additional named sections are always inserted at a fixed
 position in the output (before @code{\note}, @code{\seealso} and the
@@ -3618,51 +3650,57 @@ Portably single or double quote @var{text} (without hard-wiring the
 characters used for quotation marks).
 @end table
 
+Each of the above commands takes @LaTeX-like input, so other macros
+may be nested within the text.
+
 The following logical markup commands are available for indicating
-specific kinds of text.  `Literal' is not to be taken as meaning
-`verbatim', and some characters will need to be escaped
+specific kinds of text.  Except as noted, these take verbatim
+text input, and so other macros may not be nested within.  
+Some characters will need to be escaped
 (@pxref{Insertions}).
 
 @table @code
 @item \code@{@var{text}@}
 @findex \code
 Indicate text that is a literal example of a piece of an @R{} program,
-e.g., a fragment of @R{} code or the name of an @R{} object, using
-@code{typewriter} font if possible.  The only markup interpreted inside
-@code{\code} is @code{\link} and @code{\var}.
+e.g., a fragment of @R{} code or the name of an @R{} object.  Text is 
+entered in @R{}-like syntax, and displayed using
+@code{typewriter} font if possible. 
 
 @item \preformatted@{@var{text}@}
 @findex \preformatted
-Indicate text that is a literal example of a piece of a program, using
+Indicate text that is a literal example of a piece of a program.  Text
+is displayed using
 @code{typewriter} font if possible.  Formatting, e.g.@: line breaks, is
-preserved.  The closing brace should be on a line by itself.
+preserved.  
 
 @item \kbd@{@var{keyboard-characters}@}
 @findex \kbd
 Indicate keyboard input, using @kbd{slanted typewriter} font if
 possible, so users can distinguish the characters they are supposed to
-type from computer output.
+type from computer output.  Text is entered verbatim.
 
 @item \samp@{@var{text}@}
 @findex \samp
-Indicate text that is a literal example of a sequence of characters.
+Indicate text that is a literal example of a sequence of characters,
+entered verbatim.  No wrapping or reformatting will occur.
 
 @item \verb@{@var{text}@}
 @findex \verb
 Indicate text that is a literal example of a sequence of characters,
-with no interpretation of e.g.@: @code{\var}.
+with no interpretation of e.g.@: @code{\var}, but which will be 
+included within word-wrapped text.
 
 @item \pkg@{@var{package_name}@}
 @findex \pkg
-Indicate the name of an @R{} package.
+Indicate the name of an @R{} package.  Text is @LaTeX{}-like.
 
 @item \file@{@var{file_name}@}
 @findex \file
-Indicate the name of a file.  Note that backlash is one of the
-characters which needs to be escaped.
+Indicate the name of a file.  Text is @LaTeX{}-like, so backslash needs to be escaped.
 @item \email@{@var{email_address}@}
 @findex \email
-Indicate an electronic mail address.
+Indicate an electronic mail address.  Text is @LaTeX{}-like.
 @item \url@{@var{uniform_resource_locator}@}
 @findex \url
 Indicate a uniform resource locator (@acronym{URL}) for the World Wide
@@ -3673,7 +3711,7 @@ Web.
 Indicate a metasyntactic variable.  In some cases this will be rendered
 distinctly, e.g.@: in italic, but not in all@footnote{Currently it is
 rendered differently only in HTML conversions, and latex conversion
-outside @samp{\usage} and @samp{\examples} environments.}.
+outside @samp{\usage} and @samp{\examples} environments.}.  Text is @LaTeX{}-like.
 @item \env@{@var{environment_variable}@}
 @findex \env
 Indicate an environment variable.
@@ -3685,19 +3723,16 @@ Indicate a command-line option.
 Indicate the name of a command.
 @item \dfn@{@var{term}@}
 @findex \dfn
-Indicate the introductory or defining use of a term.
+Indicate the introductory or defining use of a term. Text is @LaTeX{}-like.
 @item \cite@{@var{reference}@}
 @findex \cite
 Indicate a reference without a direct cross-reference via @code{\link}
-(@pxref{Cross-references}), such as the name of a book.
+(@pxref{Cross-references}), such as the name of a book. Text is @LaTeX{}-like.
 @item \acronym@{@var{acronym}@}
 @findex \acronym
 Indicate an acronym (an abbreviation written in all capital letters),
-such as @acronym{GNU}.
+such as @acronym{GNU}. Text is @LaTeX{}-like.
 @end table
-
-Note that unless explicitly stated otherwise, special characters
-(@pxref{Insertions}) must be escaped inside the above markup commands.
 
 
 @node Lists and tables, Cross-references, Marking text, Writing R documentation files
@@ -3808,7 +3843,7 @@ online help.  To this end, the two commands
 is used for ``inline'' formulae (corresponding to @TeX{}'s
 @code{$@dots{}$}, @code{\deqn} gives ``displayed equations'' (as in
 @LaTeX{}'s @code{displaymath} environment, or @TeX{}'s
-@code{$$@dots{}$$}).
+@code{$$@dots{}$$}).  Both arguments are treated as verbatim text.
 
 Both commands can also be used as @code{\eqn@{@var{latexascii}@}} (only
 @emph{one} argument) which then is used for both @var{latex} and
@@ -3882,10 +3917,10 @@ for the dots in function argument lists @samp{@dots{}}, and
 @code{\ldots}
 @findex \ldots
 for ellipsis dots in ordinary text.  These can be followed by
-@code{@{@}}, and should be they are unless followed by whitespace.
+@code{@{@}}, and should be unless followed by whitespace.
 
-After a @samp{%}, you can put your own comments regarding the help text.
-The rest of the line will be completely disregarded, normally.
+After an unescaped @samp{%}, you can put your own comments regarding the help text.
+The rest of the line will be completely disregarded.
 Therefore, you can also use it to make part of the ``help'' invisible.
 
 You can produce a backslash (@samp{\}) by escaping it by another
@@ -3893,12 +3928,14 @@ backslash.  (Note that @code{\cr} is used for generating line breaks.)
 
 The ``comment'' character @samp{%} and unpaired braces@footnote{See the
 examples section in the file @file{Paren.Rd} for an example.}
-@emph{always} need to be escaped by @samp{\}, and @samp{\\} can be used
+@emph{almost always} need to be escaped by @samp{\}, and @samp{\\} can be used
 for backslash and needs to be when there two or more adjacent
-backslashes).  Inside the verbatim-like commands (@code{\usage},
-@code{\code}, @code{\preformatted} and @code{\examples}), no other
-characters are special.  All of @samp{% @{ @} \} should be escaped in
-non-verbatim-like text.
+backslashes).  In @R{}-like code literal strings are slightly
+more forgiving; see @uref{http://developer.r- project.org/parseRd.pdf, ``Parsing Rd
+files''} for details.
+
+All of @samp{% @{ @} \} should be escaped in
+@LaTeX{}-like text.
 
 @findex \enc
 Text which might need to be represented differently in different
@@ -3977,7 +4014,7 @@ or
 for OS-specific inclusion or exclusion.  Such blocks should not be
 nested, and should be entirely within a block (that, is between the
 opening and closing brace of a section or item), or at top-level contain
-a complete section.
+one or more complete sections.
 
 If the differences between platforms are extensive or the @R{} objects
 documented are only relevant to one platform, platform-specific Rd files
@@ -3995,12 +4032,10 @@ specify the encoding if it is not @acronym{ASCII}.  (The
 @code{\encoding@{@}} directive must be on a line by itself, and in
 particular one containing no non-@acronym{ASCII} characters.  As from
 @R{} 2.6.0 the encoding declared in the @file{DESCRIPTION} file will
-be used if none is declared in the file.)  This is used when creating
-the header of the @HTML{} conversion (if not present, for
-back-compatibility the processing to @HTML{} assumes that the file is
-in Latin-1 (ISO-8859-1)) and to add comments to the text and examples
-conversions.  It is also used to indicate to @LaTeX{} how to process
-the file (see below).
+be used if none is declared in the file.)  This is for input:  internally,
+the Rd files are converted to the UTF-8 encoding.  It is
+also used for output in the case of @LaTeX{} conversions, while HTML
+is output in UTF-8 and text is output in the local encoding.
 
 Wherever possible, avoid non-@acronym{ASCII} chars in Rd files, and
 even symbols such as @samp{<}, @samp{>}, @samp{$}, @samp{^}, @samp{&},
@@ -4043,7 +4078,7 @@ it might for example use
 later.  Also, the use of Cyrillic characters in @samp{UTF-8} appears to
 also need @samp{\usepackage[T2A]@{fontenc@}}, and @command{R CMD Rd2dvi}
 includes this conditionally on the file @file{t2aenc.def} being present
-and @env{_R_CYRILLIC_TEX_} being set.)
+and environment variable @env{_R_CYRILLIC_TEX_} being set.)
 
 Note that this mechanism works best with Latin letters and for example
 the copyright symbol may be rendered as a subscript and the plus--minus
@@ -4056,7 +4091,7 @@ symbol cannot be used in text.
 @cindex Processing Rd format
 
 There are several commands to process Rd files from the system command
-line.  All of these need Perl to be installed.
+line.  Currently only one of these (@code{R CMD Sd2Rd}) uses Perl.
 
 @findex R CMD Rdconv
 Using @code{R CMD Rdconv} one can convert @R{} documentation format to
@@ -4195,8 +4230,9 @@ two-argument commands, e.g.
 had always been an error.  However, prior to @R{} 2.9.0 this error was
 not looked for and resulted in incorrect output (often by omitting
 entirely the text for the item, sometimes with a warning).  
-@R{} 2.9.0 and later detect and fixup most cases of this error, with a
-warning unless the file is declared as version 1.1 or later.
+@R{} 2.9.0 detected and fixed most cases of this error, with a
+warning unless the file was declared as version 1.1 or later.  As of @R{} 2.10.0,
+it is an error.
 
 A @code{\value} block is implicitly a @code{\itemize} environment, but
 quite a few package writers have ignored this.  As from @R{} 2.8.1 this
@@ -4230,11 +4266,6 @@ balance.  Use @code{\verb} (only in this version) or @code{\samp} or
 @c @code{\examples} is intended for valid @R{} code even within
 @c @code{\dontrun} sections, which must have @code{%} escaped and balancing
 @c quotes.
-
-@item
-Zero-argument macros such as @samp{\R}, @samp{\dots} and @samp{\ldots}
-should be followed by whitespace or @samp{@{@}}: they are no longer
-recognized if followed by a digit.
 
 @end itemize
 
