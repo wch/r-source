@@ -270,8 +270,9 @@ dnl AC_DEFUN([AM_DISABLE_STATIC], [])
 m4_define([_LT_ENABLE_FAST_INSTALL],
 [m4_define([_LT_ENABLE_FAST_INSTALL_DEFAULT], [m4_if($1, no, no, yes)])dnl
 AC_ARG_ENABLE([fast-install],
-    [AS_HELP_STRING([--enable-fast-install@<:@=PKGS@:>@],
-    [optimize for fast installation @<:@default=]_LT_ENABLE_FAST_INSTALL_DEFAULT[@:>@])],
+dnl     [AS_HELP_STRING([--enable-fast-install@<:@=PKGS@:>@],
+dnl     [optimize for fast installation @<:@default=]_LT_ENABLE_FAST_INSTALL_DEFAULT[@:>@])],
+    ,
     [p=${PACKAGE-default}
     case $enableval in
     yes) enable_fast_install=yes ;;

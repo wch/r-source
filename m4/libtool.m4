@@ -1903,7 +1903,7 @@ _LT_TAGDECL([compiler_c_o], [lt_cv_prog_compiler_c_o], [1],
 # ----------------------------------
 # Check to see if we can do hard links to lock some files if needed
 m4_defun([_LT_COMPILER_FILE_LOCKS],
-[m4_require([_LT_ENABLE_LOCK])dnl
+[dnl m4_require([_LT_ENABLE_LOCK])dnl
 m4_require([_LT_FILEUTILS_DEFAULTS])dnl
 _LT_COMPILER_C_O([$1])
 
@@ -2818,11 +2818,11 @@ AC_REQUIRE([AC_CANONICAL_BUILD])dnl
 m4_require([_LT_DECL_SED])dnl
 m4_require([_LT_DECL_EGREP])dnl
 
-AC_ARG_WITH([gnu-ld],
-    [AS_HELP_STRING([--with-gnu-ld],
-	[assume the C compiler uses GNU ld @<:@default=no@:>@])],
-    [test "$withval" = no || with_gnu_ld=yes],
-    [with_gnu_ld=no])dnl
+dnl AC_ARG_WITH([gnu-ld],
+dnl     [AS_HELP_STRING([--with-gnu-ld],
+dnl 	[assume the C compiler uses GNU ld @<:@default=no@:>@])],
+dnl     [test "$withval" = no || with_gnu_ld=yes],
+dnl     [with_gnu_ld=no])dnl
 
 ac_prog=ld
 if test "$GCC" = yes; then

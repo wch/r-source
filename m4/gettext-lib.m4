@@ -25,7 +25,7 @@ with_gnu_ld=$acl_cv_prog_gnu_ld
 dnl From libtool-1.4. Sets the variable LD.
 AC_DEFUN([AC_LIB_PROG_LD],
 [AC_ARG_WITH(gnu-ld,
-    [AS_HELP_STRING([--with-gnu-ld],
+     [AS_HELP_STRING([--with-gnu-ld],
 	[assume the C compiler uses GNU ld @<:@default=no@:>@])],
 test "$withval" = no || with_gnu_ld=yes, with_gnu_ld=no)
 AC_REQUIRE([AC_PROG_CC])dnl
@@ -127,7 +127,7 @@ dnl augments the CPPFLAGS variable.
 AC_DEFUN([AC_LIB_LINKFLAGS],
 [
   AC_REQUIRE([AC_LIB_PREPARE_PREFIX])
-  AC_REQUIRE([AC_LIB_RPATH])
+dnl  AC_REQUIRE([AC_LIB_RPATH])
   define([Name],[translit([$1],[./-], [___])])
   define([NAME],[translit([$1],[abcdefghijklmnopqrstuvwxyz./-],
                                [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
@@ -161,7 +161,7 @@ dnl HAVE_LIB${NAME}=no and LIB${NAME} and LTLIB${NAME} to empty.
 AC_DEFUN([AC_LIB_HAVE_LINKFLAGS],
 [
   AC_REQUIRE([AC_LIB_PREPARE_PREFIX])
-  AC_REQUIRE([AC_LIB_RPATH])
+dnl  AC_REQUIRE([AC_LIB_RPATH])
   define([Name],[translit([$1],[./-], [___])])
   define([NAME],[translit([$1],[abcdefghijklmnopqrstuvwxyz./-],
                                [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
@@ -210,7 +210,7 @@ AC_DEFUN([AC_LIB_RPATH],
   dnl Tell automake >= 1.10 to complain if config.rpath is missing.
   m4_ifdef([AC_REQUIRE_AUX_FILE], [AC_REQUIRE_AUX_FILE([config.rpath])])
   AC_REQUIRE([AC_PROG_CC])                dnl we use $CC, $GCC, $LDFLAGS
-  AC_REQUIRE([AC_LIB_PROG_LD])            dnl we use $LD, $with_gnu_ld
+dnl  AC_REQUIRE([AC_LIB_PROG_LD])            dnl we use $LD, $with_gnu_ld
   AC_REQUIRE([AC_CANONICAL_HOST])         dnl we use $host
   AC_REQUIRE([AC_CONFIG_AUX_DIR_DEFAULT]) dnl we use $ac_aux_dir
   AC_CACHE_CHECK([for shared library run path origin], acl_cv_rpath, [
@@ -228,9 +228,9 @@ AC_DEFUN([AC_LIB_RPATH],
   hardcode_direct="$acl_cv_hardcode_direct"
   hardcode_minus_L="$acl_cv_hardcode_minus_L"
   dnl Determine whether the user wants rpath handling at all.
-  AC_ARG_ENABLE(rpath,
-    [  --disable-rpath         do not hardcode runtime library paths],
-    :, enable_rpath=yes)
+dnl   AC_ARG_ENABLE(rpath,
+dnl     [  --disable-rpath         do not hardcode runtime library paths],
+dnl     :, enable_rpath=yes)
 ])
 
 dnl AC_LIB_LINKFLAGS_BODY(name [, dependencies]) searches for libname and

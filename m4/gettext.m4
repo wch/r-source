@@ -1083,9 +1083,10 @@ AC_DEFUN([gl_LOCK_EARLY_BODY],
   AC_REQUIRE([AC_GNU_SOURCE]) dnl needed for pthread_rwlock_t on glibc systems
   dnl Check for multithreading.
   AC_ARG_ENABLE(threads,
-AC_HELP_STRING([--enable-threads={posix|solaris|pth|win32}], [specify multithreading API])
-AC_HELP_STRING([--disable-threads], [build without multithread safety]),
-    [gl_use_threads=$enableval],
+dnl AC_HELP_STRING([--enable-threads={posix|solaris|pth|win32}], [specify multithreading API])
+dnl AC_HELP_STRING([--disable-threads], [build without multithread safety]),
+dnl    [gl_use_threads=$enableval],
+    ,
     [case "$host_os" in
        dnl Disable multithreading by default on OSF/1, because it interferes
        dnl with fork()/exec(): When msgexec is linked with -lpthread, its child
