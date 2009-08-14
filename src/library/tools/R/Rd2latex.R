@@ -717,5 +717,5 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     for (i in seq_along(sections)[-(1:2)])
         writeSection(Rd[[i]], sections[i])
 
-    structure(out, latexEncoding=latexEncoding)
+    invisible(structure(out, latexEncoding = latexEncoding))
 }

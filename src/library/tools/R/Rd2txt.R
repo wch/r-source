@@ -22,7 +22,7 @@ Rd2txt <-
     HDR_WIDTH <- 70L
 
     ## we need to keep track of where we are.
-    buffer <- character(0)	# Buffer not yet written to con
+    buffer <- character()	# Buffer not yet written to con
     				# Newlines have been processed, each line in buffer is
     				# treated as a separate input line (but may be wrapped before output)
     linestart <- TRUE		# At start of line?
@@ -30,22 +30,23 @@ Rd2txt <-
     wrapping <- TRUE		# Do word wrap?
     keepFirstIndent <- FALSE	# Keep first line indent?
     dropBlank <- FALSE		# Drop initial blank lines?
-    haveBlanks <- 0		# How many blank lines have just been written?
-    enumItem <- 0		# Last enumeration item number
+    haveBlanks <- 0L		# How many blank lines have just been written?
+    enumItem <- 0L		# Last enumeration item number
     inEqn <- FALSE		# Should we do edits needed in an eqn?
 
     startCapture <- function() {
-    	save <- list(buffer=buffer, linestart=linestart, indent=indent, wrapping=wrapping,
-    	             keepFirstIndent=keepFirstIndent, dropBlank=dropBlank, haveBlanks=haveBlanks,
-    	             enumItem=enumItem, inEqn=inEqn)
-    	buffer <<- character(0)
+    	save <- list(buffer=buffer, linestart=linestart, indent=indent,
+                     wrapping=wrapping, keepFirstIndent=keepFirstIndent,
+                     dropBlank=dropBlank, haveBlanks=haveBlanks,
+                     enumItem=enumItem, inEqn=inEqn)
+    	buffer <<- character()
     	linestart <<- TRUE
     	indent <<- 0L
     	wrapping <<- TRUE
     	keepFirstIndent <<- FALSE
     	dropBlank <<- FALSE
-    	haveBlanks <<- 0
-    	enumItem <<- 0
+    	haveBlanks <<- 0L
+    	enumItem <<- 0L
     	inEqn <<- FALSE
     	save
     }
@@ -64,12 +65,8 @@ Rd2txt <-
     	result
     }
 
-    wrap <- function(doWrap=TRUE) {
-	if (doWrap != wrapping) {
-	    flushBuffer()
-	    wrapping <<- doWrap
-	}
-    }
+    wrap <- function(doWrap = TRUE)
+	if (doWrap != wrapping) { flushBuffer(); wrapping <<- doWrap }
 
     putw <- function(...)  { wrap(TRUE); put(...) }
 
@@ -90,17 +87,16 @@ Rd2txt <-
 
         if (linestart) buffer <<- c(buffer, txt)
         else if (length(buffer)) {
-            buffer[length(buffer)] <<- paste(buffer[length(buffer)], txt[1], sep="")
-            buffer <<- c(buffer, txt[-1])
+            buffer[length(buffer)] <<-
+                paste(buffer[length(buffer)], txt[1L], sep="")
+            buffer <<- c(buffer, txt[-1L])
         }
         else buffer <<- txt
         linestart <<- trail
     }
 
-    blanks <- function(n) {
-	if (n) paste(rep(" ", n), collapse="")
-	else ""
-    }
+    blanks <- function(n)
+	if (n) paste(rep(" ", n), collapse="") else ""
 
     flushBuffer <- function() {
     	if (!length(buffer)) return()
@@ -114,29 +110,31 @@ Rd2txt <-
 
 	    buffer <<- c(buffer, "")  # Add an extra blank sentinel
 	    blankLines <- grep("^[[:space:]]*$", buffer)
-	    result <- character(0)
-	    start <- 1
+	    result <- character()
+	    start <- 1L
 	    for (i in seq_along(blankLines)) {
 		if (blankLines[i] > start) {
-		    result <- c(result, strwrap(paste(buffer[start:(blankLines[i]-1)], collapse=" "),
-						indent=first, exdent=indent))
+		    result <- c(result,
+                                strwrap(paste(buffer[start:(blankLines[i]-1L)],
+                                              collapse = " "),
+                                        indent=first, exdent=indent))
 		    first <- indent
 		}
 		result <- c(result, buffer[blankLines[i]])
-		start <- blankLines[i]+1
+		start <- blankLines[i]+1L
 	    }
 	    buffer <<- result[-length(result)] # remove the sentinel
 	} else {  # Not wrapping
 	    if (keepFirstIndent) {
-		if (length(buffer) > 1)
-		    buffer[-1] <<- paste(blanks(indent), buffer[-1], sep="")
+		if (length(buffer) > 1L)
+		    buffer[-1L] <<- paste(blanks(indent), buffer[-1L], sep="")
 		keepFirstIndent <- FALSE
 	    } else
 		buffer <<- paste(blanks(indent), buffer, sep="")
 	}
 
     	if (length(buffer)) writeLinesUTF8(buffer, con, outputEncoding)
-    	buffer <<- character(0)
+    	buffer <<- character()
     	linestart <<- TRUE
     }
 
@@ -159,7 +157,7 @@ Rd2txt <-
     txt_striptitle <- function(text) {
         text <- striptitle(text)
         Encoding(text) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
-        if (.Platform$OS.type == "windows" &&  
+        if (.Platform$OS.type == "windows" &&
             Sys.getlocale("LC_CTYPE") != "C") {
             text <- gsub("``", LDQM, text, fixed = TRUE)
             text <- gsub("''", RDQM, text, fixed = TRUE)
@@ -199,12 +197,13 @@ Rd2txt <-
     }
 
     # This function strips pending blank lines, then adds n new ones.
-    blankLine <- function(n=1) {
-    	while (length(buffer) && grepl("^[[:blank:]]*$", buffer[length(buffer)]))
+    blankLine <- function(n = 1L) {
+    	while (length(buffer) &&
+               grepl("^[[:blank:]]*$", buffer[length(buffer)]))
     	    buffer <<- buffer[-length(buffer)]
 	flushBuffer()
 	if (n > haveBlanks) {
-	    buffer <<- rep("", n-haveBlanks)
+	    buffer <<- rep("", n - haveBlanks)
 	    flushBuffer()
 	}
 	haveBlanks <<- n
@@ -224,16 +223,17 @@ Rd2txt <-
         if (length(block) > 1L) {
             putf('## Not run:\n')
             writeCodeBlock(block, tag)
-            blankLine(0)
+            blankLine(0L)
             putf('## End(Not run)\n')
         } else {
             putf('## Not run: ')
             writeCodeBlock(block, tag)
-            blankLine(0)
+            blankLine(0L)
         }
     }
-    
-    if (.Platform$OS.type == "windows") { # On Windows, Unicode literals are translated to local code page
+
+    if (.Platform$OS.type == "windows") {
+        ## On Windows, Unicode literals are translated to local code page
     	LSQM <- intToUtf8("0x2018") # Left single quote
     	RSQM <- intToUtf8("0x2019") # Right single quote
     	LDQM <- intToUtf8("0x201c") # Left double quote
@@ -242,7 +242,8 @@ Rd2txt <-
 
     writeQ <- function(block, tag, quote=tag)
     {
-        if (.Platform$OS.type == "windows" && Sys.getlocale("LC_CTYPE") != "C") {
+        if (.Platform$OS.type == "windows"
+            && Sys.getlocale("LC_CTYPE") != "C") {
             if (quote == "\\sQuote") {
                 put(LSQM); writeContent(block, tag); put(RSQM)
             } else {
@@ -265,18 +266,18 @@ Rd2txt <-
                TEXT = putw(unescape(block)),
                LIST =,
                COMMENT = {},
-               "\\describe"={
-               	   blankLine(0)
+               "\\describe" = {
+               	   blankLine(0L)
                    writeContent(block, tag)
                    blankLine()
                },
                "\\itemize"=,
-               "\\enumerate"={
-               	   blankLine(0)
+               "\\enumerate"= {
+               	   blankLine(0L)
                    enumItem0 <- enumItem
-                   enumItem <<- 0
+                   enumItem <<- 0L
                    indent0 <- indent
-                   indent <<- max(10, indent+4)
+                   indent <<- max(10L, indent+4L)
                    dropBlank <<- TRUE
                    writeContent(block, tag)
                    blankLine()
@@ -355,13 +356,13 @@ Rd2txt <-
     writeTabular <- function(table) {
     	formats <- table[[1L]]
     	content <- table[[2L]]
-    	if (length(formats) != 1 || RdTags(formats) != "TEXT")
+    	if (length(formats) != 1L || RdTags(formats) != "TEXT")
     	    stopRd(table, "\\tabular format must be simple text")
-    	formats <- strsplit(formats[[1]], "", fixed=TRUE)[[1]]
+    	formats <- strsplit(formats[[1L]], "", fixed = TRUE)[[1L]]
         tags <- RdTags(content)
         entries <- list()
-        row <- 1
-        col <- 1
+        row <- 1L
+        col <- 1L
         save <- startCapture()
         dropBlank <<- TRUE
         newEntry <- function() {
@@ -376,29 +377,31 @@ Rd2txt <-
                   	newEntry()
                    	col <- col + 1
                    	if (col > length(formats))
-                   	    stopRd(content[[i]], sprintf("too many columns for format '%s'", table[[1L]]))
+                   	    stopRd(content[[i]],
+                                   sprintf("too many columns for format '%s'",
+                                           table[[1L]]))
                    },
                    "\\cr" = {
                    	newEntry()
-                   	row <- row + 1
-			col <- 1 },
-                   {
-                   	writeBlock(content[[i]], tags[i], "\\tabular")
-
-                   })
+                   	row <- row + 1L
+			col <- 1L
+                    },
+                   writeBlock(content[[i]], tags[i], "\\tabular")
+                   )
         }
         newEntry()
         endCapture(save)
         entries <- with(entries[[length(entries)]],
-        	    { if (!length(text) && col == 1)
-              	 	  entries[-length(entries)]
-              	      else
-              	      	  entries
+        	    {
+                        if (!length(text) && col == 1L)
+                            entries[-length(entries)]
+                        else
+                            entries
                     })
         rows <- entries[[length(entries)]]$row
         cols <- max(sapply(entries, function(e) e$col))
-        widths <- rep(0, cols)
-        lines <- rep(1, rows)
+        widths <- rep(0L, cols)
+        lines <- rep(1L, rows)
         for (i in seq_along(entries)) {
             e <- entries[[i]]
             while(length(e$text) && !nzchar(e$text[length(e$text)])) {
@@ -411,17 +414,17 @@ Rd2txt <-
         }
         result <- matrix("", sum(lines), cols)
         for (i in seq_len(cols))
-            result[,i] <- blanks(widths[i])
-        firstline <- c(1, 1+cumsum(lines))
+            result[, i] <- blanks(widths[i])
+        firstline <- c(1L, 1L+cumsum(lines))
         for (i in seq_along(entries)) {
             e <- entries[[i]]
             text <- format(e$text, justify=formats[e$col], width=widths[e$col])
             for (j in seq_along(text))
-            	result[firstline[e$row]+j-1, e$col] <- text[j]
+            	result[firstline[e$row] + j - 1L, e$col] <- text[j]
         }
         blankLine()
         indent0 <- indent
-        indent <<- indent+1
+        indent <<- indent + 1L
         for (i in seq_len(nrow(result))) {
             for (j in seq_len(cols))
             	putf(" ", result[i,j], " ")
@@ -460,7 +463,6 @@ Rd2txt <-
                                }
                                j <- j + 1L
                            }
-                           #print(txt)
                            txt <- sub("\\(([^,]*),\\s*", "\\1@generic@", txt)
                            txt <- sub("@generic@", generic, txt, fixed = TRUE)
                            if (generic == "[")
@@ -469,7 +471,6 @@ Rd2txt <-
                                txt <- sub(")([^)]*)$", "]]\\1", txt)
                            else if (generic == "$")
                                txt <- sub(")([^)]*)$", "\\1", txt)
-                           #print(txt)
                            if (grepl("<-\\s*value", txt))
                                putf("## S3 replacement method for class '")
                            else
@@ -535,11 +536,12 @@ Rd2txt <-
                                   writeContent(block[[1L]], tag)
                                   DLlab <- endCapture(save)
                                   indent0 <- indent
-                                  indent <<- max(10, indent+4)
+                                  indent <<- max(10L, indent + 4L)
                                   keepFirstIndent <<- TRUE
-                                  putw(format(paste(DLlab, ": ", sep=""), justify="right", width=indent))
+                                  putw(format(paste(DLlab, ": ", sep=""),
+                                              justify="right", width=indent))
                                   writeContent(block[[2L]], tag)
-			  	  blankLine(0)
+			  	  blankLine(0L)
                                   indent <<- indent0
                               },
                               "\\itemize" =,
@@ -549,10 +551,11 @@ Rd2txt <-
                               	  if (blocktag == "\\itemize")
                               	      label <- "* "
                               	  else {
-                              	      enumItem <<- enumItem + 1
+                              	      enumItem <<- enumItem + 1L
                               	      label <- paste(enumItem, ". ", sep="")
                               	  }
-                              	  putw(format(label, justify="right", width=indent))
+                              	  putw(format(label, justify="right",
+                                              width=indent))
                               })
                        itemskip <- TRUE
                    },
@@ -561,7 +564,8 @@ Rd2txt <-
                        ## The next item must be TEXT, and start with a space.
                        itemskip <- FALSE
                        if (tag == "TEXT") {
-                           txt <- gsubUTF8("^ ", "", as.character(block), perl = TRUE)
+                           txt <- gsubUTF8("^ ", "", as.character(block),
+                                           perl = TRUE)
                            put(txt)
                        } else writeBlock(block, tag, blocktag) # should not happen
                    } else writeBlock(block, tag, blocktag)
@@ -570,7 +574,7 @@ Rd2txt <-
     }
 
     writeSection <- function(section, tag) {
-    	blankLine(0)
+    	blankLine(0L)
         indent <<- 5L
         keepFirstIndent <<- TRUE
         if (tag == "\\section") {
@@ -676,6 +680,6 @@ Rd2txt <-
     for (i in seq_along(sections)[-(1:2)])
         writeSection(Rd[[i]], sections[i])
 
-    blankLine(0)
-    out
+    blankLine(0L)
+    invisible(out)
 }
