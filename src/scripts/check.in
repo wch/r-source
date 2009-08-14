@@ -759,7 +759,7 @@ foreach my $pkg (@ARGV) {
 		     $R_check_use_install_log ||
 		     !(-t STDIN && -t STDOUT));
 		my $INSTALL_opts = $opt_install_args;
-		$INSTALL_opts = "$INSTALL_OPTS" .  " --latex --example";
+		$INSTALL_opts = "$INSTALL_OPTS" .  " --latex";
 		$INSTALL_opts = "--fake" if($opt_install eq "fake");
 		my $cmd;
 		if($WINDOWS) {
