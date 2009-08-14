@@ -43,7 +43,8 @@ double pbeta_raw(double x, double pin, double qin, int lower_tail, int log_p)
     double x1 = 0.5 - x + 0.5, w, wc;
     int ierr;
     bratio(pin, qin, x, x1, &w, &wc, &ierr, log_p); /* -> ./toms708.c */
-    if(ierr)
+    /* ierr = 8 is about inaccuracy in extreme cases */
+    if(ierr && (ierr != 8 || log_p) )
 	MATHLIB_WARNING(_("pbeta_raw() -> bratio() gave error code %d"), ierr);
     return lower_tail ? w : wc;
 } /* pbeta_raw() */
