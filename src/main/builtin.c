@@ -311,8 +311,8 @@ SEXP attribute_hidden do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( hash ) {
 	args = CDR(args);
 	PROTECT(size = coerceVector(CAR(args), INTSXP));
-	if (INTEGER(size)[0] == NA_INTEGER || INTEGER(size)[0] <= 0)
-	    error(_("'size' must be a positive integer"));
+	if (INTEGER(size)[0] == NA_INTEGER)
+	    INTEGER(size)[0] = 0; /* so it will use the internal default */
 	ans = R_NewHashedEnv(enclos, size);
 	UNPROTECT(1);
     } else

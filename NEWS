@@ -408,6 +408,9 @@ BUG FIXES
 	expansions lose accuracy (the underlying TOMS708 C code was
 	ignoring some of these, including the PR#13786 example).
 
+    o	new.env(hash = TRUE, size = NA)	 now works, the way it has been
+	documented to for a long time.
+
 
 
 		CHANGES IN R VERSION 2.9.1
