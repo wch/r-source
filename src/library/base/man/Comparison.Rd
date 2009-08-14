@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Comparison}
-\Rdversion{1.1}
 \alias{<}
 \alias{<=}
 \alias{==}

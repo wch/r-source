@@ -1,5 +1,4 @@
 \name{selectSuperClasses}
-\Rdversion{1.1}
 \alias{selectSuperClasses}
 \alias{.selectSuperClasses}
 \title{Super Classes (of Specific Kinds) of a Class}

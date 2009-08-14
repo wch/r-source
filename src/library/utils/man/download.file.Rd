@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{download.file}
-\Rdversion{1.1}
 \alias{download.file}
 \concept{proxy}
 \concept{ftp}

@@ -1,5 +1,4 @@
 \name{SweaveTeXFilter}
-\Rdversion{1.1}
 \alias{SweaveTeXFilter}
 \title{
 Strip R code out of Sweave file

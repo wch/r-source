@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{embedFonts}
-\Rdversion{1.1}
 \alias{embedFonts}
 \concept{encoding}
 \title{Embed Fonts in PostScript and PDF}

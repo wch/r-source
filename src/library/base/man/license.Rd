@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{license}
-\Rdversion{1.1}
 \title{The R License Terms}
 \alias{license}
 \alias{licence}

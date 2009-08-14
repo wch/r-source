@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Rscript}
-\Rdversion{1.1}
 \alias{Rscript}
 \title{Scripting Front-End for R}
 \description{

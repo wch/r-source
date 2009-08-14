@@ -1,5 +1,4 @@
 \name{RdTextFilter}
-\Rdversion{1.1}
 \alias{RdTextFilter}
 \title{
 Select text in an Rd file.

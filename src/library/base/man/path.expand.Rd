@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{path.expand}
-\Rdversion{1.1}
 \alias{path.expand}
 \title{Expand File Paths}
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{options}
-\Rdversion{1.1}
 \alias{options}
 \alias{.Options}
 \alias{getOption}

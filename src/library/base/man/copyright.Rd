@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{copyright}
-\Rdversion{1.1}
 \title{Copyrights of Files Used to Build R}
 \alias{copyright}
 \alias{copyrights}

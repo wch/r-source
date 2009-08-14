@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{RShowDoc}
-\Rdversion{1.1}
 \alias{RShowDoc}
 \title{Show R Manuals and Other Documentation}
 \description{

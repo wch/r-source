@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Random.user}
-\Rdversion{1.1}
 \title{User-supplied Random Number Generation}
 \alias{Random.user}
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{setRepositories}
-\Rdversion{1.1}
 \alias{setRepositories}
 \title{Select Package Repositories}
 \description{

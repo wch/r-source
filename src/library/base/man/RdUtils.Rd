@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{RdUtils}
-\Rdversion{1.1}
 \alias{Rdconv}
 \alias{Rd2dvi}
 \alias{Sd2Rd}

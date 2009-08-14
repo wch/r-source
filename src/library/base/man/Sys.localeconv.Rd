@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{localeconv}
-\Rdversion{1.1}
 \alias{localeconv}
 \alias{Sys.localeconv}
 \title{Find Details of the Numerical and Monetary Representations

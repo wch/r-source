@@ -1,5 +1,4 @@
 \name{showViewport}
-\Rdversion{1.1}
 \alias{showViewport}
 \title{
   Display grid viewports.

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{help}
-\Rdversion{1.1}
 \alias{help}
 \alias{?}
 \title{Documentation}

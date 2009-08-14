@@ -5,7 +5,6 @@
 
 \name{tk_choose.dir}
 \alias{tk_choose.dir}
-\Rdversion{1.1}
 \title{Choose a Folder Interactively}
 \description{
   Use a Tk widget to choose a directory interactively.

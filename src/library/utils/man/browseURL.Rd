@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{browseURL}
-\Rdversion{1.1}
 \alias{browseURL}
 \title{Load URL into a WWW Browser}
 \description{

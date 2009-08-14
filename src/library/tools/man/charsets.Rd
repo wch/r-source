@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{charsets}
-\Rdversion{1.1}
 \alias{Adobe_glyphs}
 \alias{charset_to_Unicode}
 \docType{data}

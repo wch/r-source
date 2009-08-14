@@ -1,5 +1,4 @@
 \name{browserText}
-\Rdversion{1.1}
 \alias{browserText}
 \alias{browserCondition}
 \alias{browserSetDebug}

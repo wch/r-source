@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{postscript}
-\Rdversion{1.1}
 \alias{postscript}
 \alias{.ps.prolog}
 \concept{encoding}

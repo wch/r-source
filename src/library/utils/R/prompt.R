@@ -101,7 +101,7 @@ function(object, filename = NULL, name = NULL,
 
     Rdtxt <-
         list(name = paste0("\\name{", name, "}"),
-             version = "\\Rdversion{1.1}",
+#             version = "\\Rdversion{1.1}",
              aliases = c(paste0("\\alias{", name, "}"),
              paste("%- Also NEED an '\\alias' for EACH other topic",
                    "documented here.")),
@@ -273,7 +273,7 @@ function(object, filename = NULL, name = NULL)
 
     Rdtxt <-
         list(name = paste0("\\name{", name, "}"),
-             version = "\\Rdversion{1.1}",
+#             version = "\\Rdversion{1.1}",
              aliases = paste0("\\alias{", name, "}"),
              docType = "\\docType{data}",
              title = "\\title{\n%%   ~~ data name/kind ... ~~\n}",
@@ -336,7 +336,7 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
 
     Rdtxt <-
     	    list(name = paste0("\\name{", name, "}"),
-                 version = "\\Rdversion{1.1}",
+#                 version = "\\Rdversion{1.1}",
     	         aliases = paste0("\\alias{", name, "}"),
     	         docType = "\\docType{package}",
     	         title = c("\\title{", "}"),

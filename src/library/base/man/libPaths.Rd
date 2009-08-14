@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{libPaths}
-\Rdversion{1.1}
 \title{Search Paths for Packages}
 \alias{.Library}
 \alias{.Library.site}

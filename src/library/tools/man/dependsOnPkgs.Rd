@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{dependsOnPkgs}
-\Rdversion{1.1}
 \alias{dependsOnPkgs}
 \title{Find Reverse Dependencies}
 \description{

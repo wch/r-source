@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{.Script}
-\Rdversion{1.1}
 \title{Scripting Language Interface}
 \alias{.Script}
 \description{

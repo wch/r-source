@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{texi2dvi}
-\Rdversion{1.1}
 \alias{texi2dvi}
 \title{Compile LaTeX Files}
 \description{

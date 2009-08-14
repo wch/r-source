@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{contourLines}
-\Rdversion{1.1}
 \alias{contourLines}
 \title{Calculate Contour Lines}
 \description{

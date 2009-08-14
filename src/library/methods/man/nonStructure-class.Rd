@@ -1,5 +1,4 @@
 \name{nonStructure-class}
-\Rdversion{1.1}
 \docType{class}
 \alias{nonStructure-class}
 \alias{Math,nonStructure-method}

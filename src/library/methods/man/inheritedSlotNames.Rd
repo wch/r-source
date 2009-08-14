@@ -1,5 +1,4 @@
 \name{inheritedSlotNames}
-\Rdversion{1.1}
 \alias{inheritedSlotNames}
 \title{Names of Slots Inherited From a Super Class}
 \description{

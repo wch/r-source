@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{INSTALL}
-\Rdversion{1.1}
 \alias{INSTALL}
 \title{Install Add-on Packages}
 \description{Utility for installing add-on packages.}

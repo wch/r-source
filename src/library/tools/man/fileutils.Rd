@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{fileutils}
-\Rdversion{1.1}
 \alias{file_path_as_absolute}
 \alias{file_path_sans_ext}
 \alias{list_files_with_exts}

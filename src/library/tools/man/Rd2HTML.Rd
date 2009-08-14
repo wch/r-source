@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Rd2HTML}
-\Rdversion{1.1}
 \alias{Rd2txt}
 \alias{Rd2HTML}
 \alias{Rd2ex}
