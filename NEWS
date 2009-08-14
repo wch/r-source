@@ -137,8 +137,6 @@ NEW FEATURES
 	counting bug without creating performance penalties for some common
 	use cases.
 
-    o	PCRE has been updated to version 7.9 (for bug fixes).
-
     o	The print() method for ls.str() results now obeys an optional
 	'digits' argument.
 
@@ -347,6 +345,8 @@ NEW FEATURES
     o	seq_along(x) is now equivalent to seq_len(length(x)) even where
 	length() has an S3/S4 method; previously it (intentionally)
 	always used the default method for length().
+
+    o	PCRE has been updated to version 7.9 (for bug fixes).
 
 
 DEPRECATED & DEFUNCT
