@@ -151,8 +151,8 @@ to the same object.)
 \value{
 
 The \code{Rd2*} functions are executed mainly for the side effect of
-writing the converted help page.  Their value is the name of the
-output page.  For \code{Rd2latex}, the output name is given an
+writing the converted help page.  Their value is the name of the output
+file (invisibly).  For \code{Rd2latex}, the output name is given an
 attribute \code{"latexEncoding"} giving the encoding of the file in a
 form suitable for use with the LaTeX \samp{inputenc} package.
 
