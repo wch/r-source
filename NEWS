@@ -411,6 +411,9 @@ BUG FIXES
     o	new.env(hash = TRUE, size = NA)	 now works, the way it has been
 	documented to for a long time.
 
+    o	tcltk::tk_choose.files(multi = TRUE) produces better-formatted
+	output with filenames containing spaces.  (PR#13875)
+
 
 
 		CHANGES IN R VERSION 2.9.1
