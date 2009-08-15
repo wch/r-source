@@ -118,49 +118,44 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
 }
 
 \note{
-  The \\Sexpr macro is a new addition to Rd files.  It includes \R code
-  that will be executed at one of three times:  build time (when a
-  package's source code is built into a tarball, not yet implemented),
-  install time (when the package code is compiled and installed, or
-  compiled and built into a binary package), and render time (when the
-  man page is converted to a readable format). Depending on the output
-  format, render time may be the same as install time.
+  The \samp{\\Sexpr} macro is a new addition to Rd files.  It includes
+  \R code that will be executed at one of three times: \emph{build} time
+  (when a package's source code is built into a tarball, not yet
+  implemented), \emph{install} time (when the package is installed or
+  built into a binary package), and \emph{render} time (when the man
+  page is converted to a readable format).
 
-  Currently only text format man pages render when displayed, all other
-  formats render when installed, and in all cases, handling of \\Sexpr
-  macros needs to be enabled during the build of R (by defining the
-  \code{USE_NEW_HELP} environment variable).  If not enabled, the macro
-  will show, rather than the result of evaluating the R code.
+  Currently only text format man pages render when displayed; all other
+  formats render when installed.
 
-For example, this man page was:
-\enumerate{
-\item built on
-\Sexpr[stage=build]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")},
-\item installed on
-\Sexpr[stage=install]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")}, and
-\item rendered on
-\Sexpr[stage=render]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")}.
-}
-Because build-time execution is not yet supported, the first of these will
-display as a macro; the other two may or may not,
-depending on the build of \R.  (Note that escapes, e.g. for \samp{\%},
-may not be identical in this display, but the displayed Rd code should parse 
-to the same object.)
+  For example, this man page was:
+  \enumerate{
+    \item built on
+    \Sexpr[stage=build]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")},
+    \item installed on
+    \Sexpr[stage=install]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")}, and
+    \item rendered on
+    \Sexpr[stage=render]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")}.
+  }
+  Because build-time execution is not yet supported, the first of these
+  will display as a macro; the other two may or may not, depending on the
+  build of \R.  (Note that escapes, e.g. for \samp{\%}, may not be
+  identical in this display, but the displayed Rd code should parse to the
+  same object.)
 }
 
 \value{
+  The \code{Rd2*} functions are executed mainly for the side effect of
+  writing the converted help page.  Their value is the name of the output
+  file (invisibly).  For \code{Rd2latex}, the output name is given an
+  attribute \code{"latexEncoding"} giving the encoding of the file in a
+  form suitable for use with the LaTeX \samp{inputenc} package.
 
-The \code{Rd2*} functions are executed mainly for the side effect of
-writing the converted help page.  Their value is the name of the output
-file (invisibly).  For \code{Rd2latex}, the output name is given an
-attribute \code{"latexEncoding"} giving the encoding of the file in a
-form suitable for use with the LaTeX \samp{inputenc} package.
+  \code{checkRd} returns \code{TRUE} if the file has no errors; it
+  generates an R error otherwise.
 
-\code{checkRd} returns \code{TRUE} if the file has no errors; it
-generates an R error otherwise.
-
-\code{findHTMLlinks} returns a named character vector of relative
-file paths, in the same package or in a package in the same library tree.
+  \code{findHTMLlinks} returns a named character vector of relative
+  file paths, in the same package or in a package in the same library tree.
 }
 \author{
   Duncan Murdoch, Brian Ripley
