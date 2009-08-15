@@ -905,10 +905,10 @@ Rd2HTML <-
     else if (length(version) > 1L)
     	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
 
-    ## Give error for nonblank text outside a section
+    ## Give warning (pro tem) for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]",
                            unlist(Rd[sections == "TEXT"]), perl = TRUE )))
-    	stopRd(Rd[sections == "TEXT"][[bad[1L]]],
+    	warnRd(Rd[sections == "TEXT"][[bad[1L]]],
                "All text must be in a section")
 
     ## Drop all the parts that are not rendered

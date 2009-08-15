@@ -675,9 +675,11 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     latexEncoding <- latex_canonical_encoding(outputEncoding)
     of0("\\inputencoding{", latexEncoding, "}\n")
 
-    ## Give error for nonblank text outside a section
-    if (length(bad <- grep("[^[:blank:][:cntrl:]]", unlist(Rd[sections == "TEXT"]), perl = TRUE )))
-    	stopRd(Rd[sections == "TEXT"][[bad[1L]]], "All text must be in a section")
+    ## Give warning(pro tem) for nonblank text outside a section
+    if (length(bad <- grep("[^[:blank:][:cntrl:]]",
+                           unlist(Rd[sections == "TEXT"]), perl = TRUE )))
+    	warnRd(Rd[sections == "TEXT"][[bad[1L]]],
+               "All text must be in a section")
 
     ## Drop all the parts that are not rendered
     drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding", "\\Rdversion", "\\RdOpts")
