@@ -3028,9 +3028,8 @@ As an example, let us look at a simplified version of
 @quotation
 @cartouche
 @smallexample
-@% File src/library/base/man/load.Rd
+% File src/library/base/man/load.Rd
 \name@{load@}
-\Rdversion@{1.1@}
 \alias@{load@}
 \title@{Reload Saved Datasets@}
 \description@{
@@ -3107,18 +3106,17 @@ markup is processed. Each macro defines the input type for its
 argument.  For example, the file initially uses @LaTeX{}-like syntax,
 and this is also used in the @code{\description} section, but the
 @code{\usage} section uses @R{}-like syntax, and the @code{\alias}
-macro uses verbatim syntax.  Comments run from a percent symbol @code{@%}
+macro uses verbatim syntax.  Comments run from a percent symbol @code{%}
 to the end of the line in all types of text (as on the first line
 of the @code{load} example).
 
-Because backslashes, braces and percent symbols have special meaning,
-to enter them into text sometimes requires escapes using a backslash.
-Thus a percent symbol can be entered into
-text using @code{\@%}.  Generally balanced braces do not need to be
-escaped, but percent symbols always do.  For the complete list of
-macros and rules for escapes, see the 
-@uref{http://developer.r- project.org/parseRd.pdf, ``Parsing Rd
-files''} document.
+Because backslashes, braces and percent symbols have special meaning, to
+enter them into text sometimes requires escapes using a backslash.  Thus
+a percent symbol can be entered into text using @code{%}.  Generally
+balanced braces do not need to be escaped, but percent symbols always
+do.  For the complete list of macros and rules for escapes, see the
+@uref{http://developer.r- project.org/parseRd.pdf, ``Parsing Rd files''}
+document.
 
 @menu
 * Documenting functions::       
@@ -3650,7 +3648,7 @@ Portably single or double quote @var{text} (without hard-wiring the
 characters used for quotation marks).
 @end table
 
-Each of the above commands takes @LaTeX-like input, so other macros
+Each of the above commands takes @LaTeX{}-like input, so other macros
 may be nested within the text.
 
 The following logical markup commands are available for indicating
