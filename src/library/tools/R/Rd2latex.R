@@ -504,7 +504,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                                this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
                                               "\\dots" = "...",
                                               RCODE = as.character(blocks[[j]]),
-                                              stop(tg, " should not get here"))
+                                              stopRd(block, sprintf("invalid markup '%s' in %s", tg, tag)))
                                txt <- paste(txt, this, sep = "")
                                blocks[[j]] <- structure("", Rd_tag = "COMMENT")
                                if(grepl("\n$", txt)) {

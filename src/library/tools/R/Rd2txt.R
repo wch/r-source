@@ -454,8 +454,8 @@ Rd2txt <-
                                this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
                                               "\\dots" = "...",
                                               RCODE = as.character(blocks[[j]]),
-                                              stop(tg, " should not get here"))
-                               txt <- paste(txt, this, sep = "")
+                                              stopRd(block, sprintf("invalid markup '%s' in %s", tg, tag)))
+                              txt <- paste(txt, this, sep = "")
                                blocks[[j]] <- structure("", Rd_tag = "COMMENT")
                                if(grepl("\n$", txt)) {
                                    res <- try(parse(text = paste("a", txt)))
