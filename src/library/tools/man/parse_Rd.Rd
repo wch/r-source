@@ -5,6 +5,8 @@
 
 \name{parse_Rd}
 \alias{parse_Rd}
+\alias{print.parse_Rd}
+\alias{as.character..parse_Rd}
 \title{ Parse an Rd file }
 \description{
   This function reads an R documentation (Rd) file and parses it, for
@@ -13,8 +15,8 @@
 \usage{
 parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
          fragment = FALSE)
-\method{print}{Rd}(x, deparse=FALSE, ...)
-\method{as.character}{Rd}(x, deparse=FALSE, ...)
+\method{print}{Rd}(x, deparse = FALSE, \dots)
+\method{as.character}{Rd}(x, deparse = FALSE, \dots)
 }
 \arguments{
   \item{file}{A filename or text-mode connection.  At present filenames
@@ -28,7 +30,8 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
   Rd file, or a fragment.}
   \item{x}{An object of class Rd.}
   \item{deparse}{If \code{TRUE}, attempt to reinstate the escape characters
-  so that the resulting characters will parse to the same object.}
+    so that the resulting characters will parse to the same object.}
+  \item{\dots}{Further arguments to be passed to or from other methods.}
 }
 \details{
   This function parses Rd files according to the specification given
