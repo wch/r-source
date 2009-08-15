@@ -2015,7 +2015,7 @@
     .ehandler <- function(e) {
         message("") # force newline
         unlink(ff)
-        stop(conditionMessage(e)), domain = NA, call. = FALSE)
+        stop(conditionMessage(e), domain = NA, call. = FALSE)
     }
     .convert <- function(expr)
         withCallingHandlers(tryCatch(expr, error = .ehandler),
