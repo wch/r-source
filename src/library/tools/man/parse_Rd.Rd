@@ -34,13 +34,13 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
   \item{\dots}{Further arguments to be passed to or from other methods.}
 }
 \details{
-  This function parses Rd files according to the specification given
-  in \url{http://developer.r-project.org/parseRd.pdf}. This is not
-  identical to the rules used before version 2.10.x:  it is somewhat
+  This function parses \file{Rd} files according to the specification given
+  in \url{http://developer.r-project.org/parseRd.pdf}.  This is not
+  identical to the rules used before version 2.10.x: it is somewhat
   stricter.
   
   As from \R 2.10.0, \code{parse_Rd} generates a warning for each parse
-  error, and attempts to continue parsing.  In order to continue, it is
+  error and attempts to continue parsing.  In order to continue, it is
   generally necessary to drop some parts of the file, so such warnings
   should not be ignored.
 }
@@ -52,12 +52,8 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
   
   Files without a marked encoding are by default assumed to be in the
   native encoding.  An alternate default can be set using the
-  \code{encoding} argument. All text in files is translated to the
-  UTF-8 encoding internally.
-}
-\section{Warning}{
-  This function is still somewhat experimental.  Names, interfaces and values
-  might change in future versions.
+  \code{encoding} argument.  All text in files is translated to the
+  UTF-8 encoding in the parsed object.
 }
 \references{ \url{http://developer.r-project.org/parseRd.pdf} }
 \author{ Duncan Murdoch }

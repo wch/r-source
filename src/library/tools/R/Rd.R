@@ -279,15 +279,21 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         docs_dir <- file.path(dir, "man")
-        if(!file_test("-d", docs_dir))
-            stop(gettextf("directory '%s' does not contain Rd objects", dir),
-                 domain = NA)
-        ## For an installed package, we can either have an old-style
-        ##   man/package.Rd.gz
-        ## file with suitable concatenated Rd sources, or a new-style
-        ##   man/package.rds
-        ## file with a list of the parsed (and platform processed, see
+        ## For an installed package, we might have
+        ##
+        ## 1) pre-2.10.0-style  man/package.Rd.gz
+        ## file with suitable concatenated Rd sources,
+        ##
+        ## 2) either  man/package.rds or help/package.rd[bx]
+        ## with a list of the parsed (and platform processed, see
         ## above) Rd objects.
+        db_file <- file.path(dir, "help", package)
+        if(file_test("-f", paste(db_file, "rdx", sep="."))) {
+            db <- fetchRdDB(db_file)
+            pathfile <- file.path(dir, "help", "paths.rds")
+            if(file.exists(pathfile)) names(db) <- .readRDS(pathfile)
+            return(db)
+        }
         db_file <- file.path(docs_dir, sprintf("%s.rds", package))
         if(file_test("-f", db_file))
             return(.readRDS(db_file))
@@ -299,7 +305,10 @@ function(package, dir, lib.loc = NULL)
             db <- split(lines[-eof_pos],
                         rep(seq_along(eof_pos),
                             times = diff(c(0, eof_pos)))[-eof_pos])
-        } else return(list())
+        } else
+            stop(gettextf("directory '%s' does not contain Rd objects", dir),
+                 domain = NA)
+
         ## If this was installed using a recent enough version of R CMD
         ## INSTALL, information on source file names is available, and
         ## we use it for the names of the Rd db.  Otherwise, remove the
@@ -380,10 +389,17 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL)
 
     if(!is.null(db_file) && file_test("-f", db_file)) {
         ## message("updating database of parsed Rd files")
-        db <- .readRDS(db_file)
-        db_names <- names(db)
+        if(grepl("\\.rds$", db_file)) {
+            ## FIXME early-2.10.0 style, remove in due course
+            db <- .readRDS(db_file)
+            db_names <- names(db)
+        } else {
+            db <- fetchRdDB(sub("\\.rdx$", "", db_file))
+            db_names <- .readRDS(file.path(dirname(db_file), "paths.rds"))
+        }
         ## Files in the db in need of updating:
         ind <- (files %in% db_names) & file_test("-nt", files, db_file)
+        print(files[ind])
         if(any(ind))
             db[files[ind]] <- lapply(files[ind], .fetch_Rd_object)
         ## Files not in the db:

@@ -833,9 +833,6 @@
                                                 warning = .whandler))
                     if(inherits(res, "try-error"))
                         pkgerrmsg("installing Rd objects failed", pkg_name)
-                    Sys.chmod(file.path(instdir, "man",
-                                        paste0(pkg_name, ".rds")),
-                              "644")
                 }
                 ## 'Maybe build preformatted help pages ...'
                 if (build_help) {
@@ -1796,6 +1793,7 @@
     }
 
     topics <- Rd$Aliases
+    if(!length(topics)) stop("no topics found")
     lens <- sapply(topics, length)
     files <- sub("\\.[Rr]d$", "", Rd$File)
     internal <- sapply(Rd$Keywords, function(x) "internal" %in% x)

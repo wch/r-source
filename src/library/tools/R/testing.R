@@ -311,23 +311,24 @@ testInstalledPackage <-
             unzip(fzip, exdir = filedir)
             on.exit(unlink(filedir, recursive = TRUE))
         } else filedir <- exdir
-        ## FIXME: next is not necessarily the right test.
-    } else if (file_test("-d", mandir <- file.path(pkgdir, "man"))) {
-        if (!silent) message("  Extracting from parsed Rd's ",
-                             appendLF = FALSE, domain = NA)
+    } else {
         db <- Rd_db(basename(pkgdir), lib.loc = dirname(pkgdir))
         if (!length(db)) {
             message("no parsed files found")
             return(invisible(NULL))
         }
+        if (!silent) message("  Extracting from parsed Rd's ",
+                             appendLF = FALSE, domain = NA)
         files <- names(db)
         filedir <- tempfile()
         dir.create(filedir)
         on.exit(unlink(filedir, recursive = TRUE))
         cnt <- 0L
         for(f in files) {
+            ## names are 'fullpath.Rd' if from 'man' dir, 'topic' if from RdDB
+            nm <- sub("\\.[Rr]d$", "", basename(f))
             Rd2ex(db[[f]],
-                  file.path(filedir, sub("[Rr]d$", "R", basename(f))),
+                  file.path(filedir, paste(nm, "R", sep = ".")),
                   defines = NULL)
             cnt <- cnt + 1L
             if(!silent && cnt %% 10L == 0L)

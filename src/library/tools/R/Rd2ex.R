@@ -149,7 +149,8 @@ Rd2ex <-
             aliases <- unlist(Rd[aliasblks])
             sp <- grep(" ", aliases, fixed = TRUE)
             aliases[sp] <- paste("'", aliases[sp], "'", sep = "")
-            of0(wr(paste("Aliases: ", paste(aliases, collapse=" "), sep="")), "\n")
+            of0(wr(paste("Aliases: ", paste(aliases, collapse=" "), sep="")),
+                "\n")
         }
         keyblks <- sections == "\\keyword"
         if (any(keyblks)) {

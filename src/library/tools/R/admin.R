@@ -723,27 +723,22 @@ function(dir, outDir)
     if(!file_test("-d", mandir)) return()
     manfiles <- list_files_with_type(mandir, "docs")
     if(!length(manfiles)) return()
-    manOutDir <- file.path(outDir, "man")
-    if(!file_test("-d", manOutDir)) dir.create(manOutDir)
+    manOutDir <- file.path(outDir, "help")
+    dir.create(manOutDir, FALSE)
     db_file <- file.path(manOutDir,
-                         paste(basename(outDir), ".rds", sep = ""))
+                         paste(basename(outDir), ".rdx", sep = ""))
     ## Avoid (costly) rebuilding if not needed.
-    ## <FIXME>
-    ## This is not quite right, and .install_package_Rd_indices() has
-    ## the same problem: we need to update if an Rd file was *removed*,
-    ## but cannot detect this by comparing timestamps of exisiting
-    ## files.
-    ## </FIXME>
+    ## Actually, it seems no more costly than these tests, which it also does
+    pathsFile <- file.path(manOutDir, "paths.rds")
     if(!file_test("-f", db_file) ||
+       !identical(sort(manfiles), sort(.readRDS(pathsFile))) ||
        !all(file_test("-nt", db_file, manfiles))) {
-       db <- .build_Rd_db(dir, manfiles, db_file = db_file)
-       .saveRDS(db, db_file)
-       helpdir <- file.path(outDir, "help")
-       dir.create(helpdir, FALSE)
-       db2 <- db
-       names(db2) <- sub("\\.[Rr]d", "", basename(names(db)))
-       makeLazyLoadDB(db2, file.path(helpdir, basename(outDir)))
-   }
+        db <- .build_Rd_db(dir, manfiles, db_file = db_file)
+        nm <- names(db)
+        .saveRDS(nm, pathsFile)
+        names(db) <- sub("\\.[Rr]d", "", basename(nm))
+        makeLazyLoadDB(db, file.path(manOutDir, basename(outDir)))
+    }
 }
 
 ### * .install_package_demos

@@ -14,6 +14,12 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+.haveRds <- function(dir)
+{
+    if (file_test("-d", file.path(dir, "man"))) return(TRUE)
+    length(Sys.glob(file.path(dir, "help", "*rdx"))) > 0L
+}
+
 ### * undoc/F/out
 
 undoc <-
@@ -325,10 +331,8 @@ function(package, dir, lib.loc = NULL,
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
-        docs_dir <- file.path(dir, "man")
-        if(!file_test("-d", docs_dir))
-            stop(gettextf("directory '%s' does not contain Rd sources",
-                          dir),
+        if(!.haveRds(dir))
+            stop(gettextf("directory '%s' does not contain Rd sources", dir),
                  domain = NA)
         is_base <- basename(dir) == "base"
 
@@ -370,10 +374,8 @@ function(package, dir, lib.loc = NULL,
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
-        docs_dir <- file.path(dir, "man")
-        if(!file_test("-d", docs_dir))
-            stop(gettextf("directory '%s' does not contain Rd sources",
-                          dir),
+        if(!.haveRds(dir))
+            stop(gettextf("directory '%s' does not contain Rd sources", dir),
                  domain = NA)
         package_name <- basename(dir)
         is_base <- package_name == "base"
@@ -957,7 +959,7 @@ function(package, lib.loc = NULL)
     if(!file_test("-d", file.path(dir, "R")))
         stop(gettextf("directory '%s' does not contain R code", dir),
              domain = NA)
-    if(!file_test("-d", file.path(dir, "man")))
+    if(!.haveRds(dir))
         stop(gettextf("directory '%s' does not contain Rd sources", dir),
              domain = NA)
     is_base <- basename(dir) == "base"
@@ -1035,7 +1037,7 @@ function(package, lib.loc = NULL)
         txt <- unlist(strsplit(txt, ", *"))
         .strip_whitespace(txt)
     }
-    
+
     .inheritedSlotNames <- function(ext) {
 	supcl <- methods::.selectSuperClasses(ext)
 	unique(unlist(lapply(lapply(supcl, methods::getClassDef),
@@ -1122,9 +1124,10 @@ function(package, lib.loc = NULL)
         stop("argument 'package' must be of length 1")
 
     dir <- .find.package(package, lib.loc)
-    if(!file_test("-d", file.path(dir, "man")))
-       stop(gettextf("directory '%s' does not contain Rd sources", dir),
-            domain = NA)
+
+    ## Build Rd data base.
+    db <- Rd_db(package, lib.loc = dirname(dir))
+
     is_base <- basename(dir) == "base"
     has_namespace <- !is_base && packageHasNamespace(package, dirname(dir))
 
@@ -1137,8 +1140,6 @@ function(package, lib.loc = NULL)
     ## Could check here whether the package has any variables or data
     ## sets (and return if not).
 
-    ## Build Rd data base.
-    db <- Rd_db(package, lib.loc = dirname(dir))
 
     ## Need some heuristics now.  When does an Rd object document a
     ## data.frame (could add support for other classes later) variable
@@ -1189,7 +1190,7 @@ function(package, lib.loc = NULL)
     }
 
     Rd_var_names <- lapply(db, .get_data_frame_var_names)
-    
+
     idx <- (sapply(Rd_var_names, length) > 0L)
     if(!length(idx)) return(bad_Rd_objects)
     aliases <- unlist(aliases[idx])
@@ -1292,12 +1293,6 @@ function(package, dir, lib.loc = NULL)
         else
             dir <- file_path_as_absolute(dir)
     }
-
-    docs_dir <- file.path(dir, "man")
-    if(!file_test("-d", docs_dir))
-        stop(gettextf("directory '%s' does not contain Rd sources",
-                      dir),
-             domain = NA)
 
     db <- if(!missing(package))
         Rd_db(package, lib.loc = dirname(dir))
@@ -1533,10 +1528,8 @@ function(package, dir, lib.loc = NULL)
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
-        docs_dir <- file.path(dir, "man")
-        if(!file_test("-d", docs_dir))
-            stop(gettextf("directory '%s' does not contain Rd sources",
-                          dir),
+        if(!.haveRds(dir))
+            stop(gettextf("directory '%s' does not contain Rd sources", dir),
                  domain = NA)
         package_name <- package
         is_base <- package_name == "base"
@@ -1572,10 +1565,8 @@ function(package, dir, lib.loc = NULL)
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
-        docs_dir <- file.path(dir, "man")
-        if(!file_test("-d", docs_dir))
-            stop(gettextf("directory '%s' does not contain Rd sources",
-                          dir),
+        if(!.haveRds(dir))
+            stop(gettextf("directory '%s' does not contain Rd sources", dir),
                  domain = NA)
         package_name <- basename(dir)
         is_base <- package_name == "base"
@@ -4876,7 +4867,7 @@ function(x)
     txt <- gsub("\\}", "}", txt, fixed = TRUE)
     ## </FIXME>
     ## now any valid escape by \ is
-    ##   \a \b \f \n \r \t \u \U \v \x \' \" \\ or \octal 
+    ##   \a \b \f \n \r \t \u \U \v \x \' \" \\ or \octal
     txt <- gsub("(^|[^\\])\\\\($|[^abfnrtuUvx0-9'\"\\])",
                 "\\1<unescaped bksl>\\2", txt)
     ## and since this may overlap, try again
