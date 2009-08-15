@@ -1430,7 +1430,7 @@
         files <- strsplit(files, "[[:space:]]+")[[1]]
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
-         message("Converting Rd files to LaTeX ...")
+        message("Converting Rd files to LaTeX ...")
         cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
                      encoding, sep="")
         if (is.character(outfile)) {
@@ -2011,7 +2011,12 @@
     files <- names(db)
 
     .whandler <- .make_Rd_whandler(invokeRestart("muffleWarning"))
-    .ehandler <- .make_Rd_ehandler(unlink(ff))
+    ## .ehandler <- .make_Rd_ehandler(unlink(ff))
+    .ehandler <- function(e) {
+        message("") # force newline
+        unlink(ff)
+        stop(conditionMessage(e)), domain = NA, call. = FALSE)
+    }
     .convert <- function(expr)
         withCallingHandlers(tryCatch(expr, error = .ehandler),
                             warning = .whandler)
