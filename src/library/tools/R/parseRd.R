@@ -43,10 +43,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
         enc <- enc[1L]
         enc <- sub("^\\\\encoding\\{([^}]*)\\}.*", "\\1", enc)
         if(verbose) message("found encoding ", enc)
-        if(enc %in% c("UTF-8", "utf-8", "utf8"))
-            encoding <- "UTF-8"
-        else
-            encoding <- enc
+        encoding <- if(enc %in% c("UTF-8", "utf-8", "utf8")) "UTF-8" else enc
     }
     if (encoding == "unknown") encoding <- ""
 
@@ -58,6 +55,9 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
 
     if (encoding != "UTF-8")
     	lines <- iconv(lines, encoding, "UTF-8", sub = "byte")
+
+    ## FIXME: textConnection is inefficient
+
     ## In a Latin1 locale, the textConnection will recode everything to
     ## Latin1, so mark it as unknown
     Encoding(lines) <- "unknown"
@@ -67,12 +67,14 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     .Internal(parse_Rd(tcon, srcfile, "UTF-8", verbose, basename, fragment))
 }
 
-print.Rd <- function(x, deparse=FALSE, ...) {
+print.Rd <- function(x, deparse=FALSE, ...)
+{
     cat(as.character.Rd(x, deparse=deparse), sep="", collapse="")
     invisible(x)
 }
 
-as.character.Rd <- function(x, deparse=FALSE, ...) {
+as.character.Rd <- function(x, deparse=FALSE, ...)
+{
     ZEROARG <- c("\\cr", "\\dots", "\\ldots", "\\R", "\\tab") # Only these cause trouble when {} is added
     TWOARG <- c("\\section", "\\item", "\\enc", "\\method", "\\S3method",
                 "\\S4method", "\\tabular")
@@ -82,8 +84,8 @@ as.character.Rd <- function(x, deparse=FALSE, ...) {
     state <- c(braceDepth=0L, inRString=0L)
     needBraces <- FALSE  # if next character is alphabetic, separate by braces.
     inEqn <- 0L
-    
-    pr <- function(x, quoteBraces) { 
+
+    pr <- function(x, quoteBraces) {
         tag <- attr(x, "Rd_tag")
         if (is.null(tag) || tag == "LIST") tag <- ""
     	if (is.list(x)) {
@@ -91,61 +93,64 @@ as.character.Rd <- function(x, deparse=FALSE, ...) {
     	    state <<- c(0L, 0L)
     	    needBraces <<- FALSE
     	    if (tag == "Rd") { # a whole file
-    	        result <- character(0)
-    	    	for (i in seq_along(x)) result <- c(result, pr(x[[i]], quoteBraces))
+    	        result <- character()
+    	    	for (i in seq_along(x))
+                    result <- c(result, pr(x[[i]], quoteBraces))
     	    } else if (length(grep("^#", tag))) {
     	    	if (deparse) {
-    	    	    dep <- deparseRdElement(x[[1L]][[1L]], c(state, modes["LATEXLIKE"], inEqn, as.integer(quoteBraces)))
+    	    	    dep <- deparseRdElement(x[[1L]][[1L]],
+                                            c(state, modes["LATEXLIKE"],
+                                              inEqn,
+                                              as.integer(quoteBraces)))
     	    	    result <- c(tag, dep[[1L]])
-    	    	} else 
+    	    	} else
     	    	    result <- c(tag, x[[1L]][[1L]])
-    	    	for (i in seq_along(x[[2L]])) result <- c(result, pr(x[[2L]][[i]], quoteBraces))
+    	    	for (i in seq_along(x[[2L]]))
+                    result <- c(result, pr(x[[2L]][[i]], quoteBraces))
     	    	result <- c(result, "#endif\n")
     	    } else if (tag %in% ZEROARG) {
-    	    	result <- tag   
+    	    	result <- tag
     	    	needBraces <<- TRUE
     	    } else if (tag %in% TWOARG) {
     	    	result <- tag
-    	    	for (i in seq_along(x)) result <- c(result, pr(x[[i]], quoteBraces))
+    	    	for (i in seq_along(x))
+                    result <- c(result, pr(x[[i]], quoteBraces))
     	    } else if (tag %in% EQN) {
     	    	result <- tag
     	    	inEqn <<- 1L
     	    	result <- c(result, pr(x[[1]], quoteBraces))
     	    	inEqn <<- 0L
-    	    	if (length(x) > 1) {
+    	    	if (length(x) > 1L)
     	    	    result <- c(result, pr(x[[2]], quoteBraces))
-    	    	}
     	    } else {
     	    	result <- tag
     	    	if (!is.null(option <- attr(x, "Rd_option")))
     	    	    result <- c(result, "[", pr(option, quoteBraces), "]")
     	    	result <- c(result, "{")
-    	    	for (i in seq_along(x)) result <- c(result, pr(x[[i]], quoteBraces))
+    	    	for (i in seq_along(x))
+                    result <- c(result, pr(x[[i]], quoteBraces))
     	    	result <- c(result, "}")
     	    }
-    	    if (state[1])  # If braces didn't match within the list, try again, quoting them 
+    	    if (state[1L])  # If braces didn't match within the list, try again, quoting them
     	    	result <- pr(x, TRUE)
     	    state <<- savestate
     	} else {
     	    if (deparse) {
     		dep <- deparseRdElement(as.character(x), c(state, tags[tag], inEqn, as.integer(quoteBraces)))
-    	    	result <- dep[[1]]
-    	    	state <<- dep[[2]][1:2]
-    	    } else 
+    	    	result <- dep[[1L]]
+    	    	state <<- dep[[2L]][1L:2L]
+    	    } else
     	    	result <- as.character(x)
     	    if (needBraces) {
-    	    	if (grepl("^[[:alpha:]]", result))
-    	    	    result <- c("{}", result)
+    	    	if (grepl("^[[:alpha:]]", result)) result <- c("{}", result)
     	    	needBraces <<- FALSE
     	    }
         }
     	result
     }
-    if (is.null(attr(x, "Rd_tag")))
-    	attr(x, "Rd_tag") <- "Rd"
+    if (is.null(attr(x, "Rd_tag"))) attr(x, "Rd_tag") <- "Rd"
     pr(x, quoteBraces = FALSE)
 }
 
-deparseRdElement <- function(element, state) {
+deparseRdElement <- function(element, state)
     .Internal(deparseRd(element, state))
-}
