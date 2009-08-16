@@ -137,7 +137,7 @@ png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
     height <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     invisible(.External(Cdevga, paste("png:", filename, sep=""),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, bg, 1,
@@ -157,7 +157,7 @@ bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
     height <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     invisible(.External(Cdevga, paste("bmp:", filename, sep=""),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, bg, 1,
@@ -200,7 +200,7 @@ tiff <- function(filename = "Rplot%03d.tif", width = 480, height = 480,
     height <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     comp <- switch( match.arg(compression),
                    "none" = 1, "rle" = 2, "lzw" = 5, "jpeg" = 7, "zip" = 8)
     invisible(.External(Cdevga, paste("tiff:", comp, ":", filename, sep=""),

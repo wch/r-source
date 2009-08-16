@@ -66,7 +66,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 			double height, double pointsize,
 			Rboolean recording, int resize, int bg, int canvas,
 			double gamma, int xpos, int ypos, Rboolean buffered,
-			SEXP psenv, Rboolean restoreConsole, 
+			SEXP psenv, Rboolean restoreConsole,
 			const char *title, Rboolean clickToConfirm,
 			Rboolean fillOddEven);
 
@@ -105,7 +105,7 @@ static rgb GArgb(int color, double gamma)
 
 	/********************************************************/
 	/* This device driver has been documented so that it be	*/
-	/* used as a template for new drivers 			*/
+	/* used as a template for new drivers			*/
 	/********************************************************/
 
 #define MM_PER_INCH	25.4	/* mm -> inch conversion */
@@ -123,11 +123,11 @@ static drawing _d;
 
 #define SF 20  /* scrollbar resolution */
 
-        /********************************************************/
+	/********************************************************/
 	/* Each driver can have its own device-specic graphical */
 	/* parameters and resources.  these should be wrapped	*/
 	/* in a structure (gadesc in devWindows.h)              */
-	/* and attached to the overall device description via 	*/
+	/* and attached to the overall device description via	*/
 	/* the dd->deviceSpecific pointer			*/
 	/* NOTE that there are generic graphical parameters	*/
 	/* which must be set by the device driver, but are	*/
@@ -176,13 +176,13 @@ static void GA_Timer(gadesc *xd)
 }
 
 	/********************************************************/
-	/* There are a number of actions that every device 	*/
+	/* There are a number of actions that every device	*/
 	/* driver is expected to perform (even if, in some	*/
-	/* cases it does nothing - just so long as it doesn't 	*/
+	/* cases it does nothing - just so long as it doesn't	*/
 	/* crash !).  this is how the graphics engine interacts */
-	/* with each device. Each action will be documented 	*/
-	/* individually. 					*/
-	/* hooks for these actions must be set up when the 	*/
+	/* with each device. Each action will be documented	*/
+	/* individually.					*/
+	/* hooks for these actions must be set up when the	*/
 	/* device is first created				*/
 	/********************************************************/
 
@@ -234,7 +234,7 @@ static Rboolean GA_NewFrameConfirm(pDevDesc);
 
 
 	/********************************************************/
-	/* end of list of required device driver actions 	*/
+	/* end of list of required device driver actions	*/
 	/********************************************************/
 
 	/* Support Routines */
@@ -289,9 +289,9 @@ static void SaveAsWin(pDevDesc dd, const char *display,
 					GE_INCHES, gdd),
 		       ((gadesc*) dd->deviceSpecific)->basefontsize,
 		       0, 1, White, White, 1, NA_INTEGER, NA_INTEGER, FALSE,
-		       R_GlobalEnv, restoreConsole, "", FALSE, 
+		       R_GlobalEnv, restoreConsole, "", FALSE,
 		       ((gadesc*) dd->deviceSpecific)->fillOddEven))
-        PrivateCopyDevice(dd, ndd, display);
+	PrivateCopyDevice(dd, ndd, display);
 }
 
 static void init_PS_PDF(void)
@@ -328,7 +328,7 @@ static void SaveAsPostscript(pDevDesc dd, const char *fn)
 
     if(strchr(fn, '%')) error(_("'%%' is not allowed in file name"));
 
-    /* need to initialize PS/PDF font database: 
+    /* need to initialize PS/PDF font database:
        also sets .PostScript.Options */
     init_PS_PDF();
     /* Set default values and pad with zeroes ... */
@@ -350,7 +350,7 @@ static void SaveAsPostscript(pDevDesc dd, const char *fn)
 	    if(!strcmp("paper", CHAR(STRING_ELT(names, i)))) {
 		strncpy(paper, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
 		done += 1;
-		if(strcmp("paper", "default") == 0) 
+		if(strcmp("paper", "default") == 0)
 		    strncpy(paper, "special", 255);
 	    }
 	    if(!strcmp("bg", CHAR(STRING_ELT(names, i)))) {
@@ -364,13 +364,13 @@ static void SaveAsPostscript(pDevDesc dd, const char *fn)
 	}
     }
     if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, encoding,
-                       bg, fg,
+		       bg, fg,
 		       fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 				       GE_INCHES, gdd),
 		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 		       (double)0, ((gadesc*) dd->deviceSpecific)->basefontsize,
-		       0, 1, 0, "", "R Graphics Output", R_NilValue, "rgb", 
+		       0, 1, 0, "", "R Graphics Output", R_NilValue, "rgb",
 		       TRUE, xd->fillOddEven))
 	/* horizontal=F, onefile=F, pagecentre=T, print.it=F */
 	PrivateCopyDevice(dd, ndd, "postscript");
@@ -425,13 +425,13 @@ static void SaveAsPDF(pDevDesc dd, const char *fn)
 	}
     }
     if (PDFDeviceDriver(ndd, fn, "special", family, afmpaths, encoding,
-                        bg, fg,
+			bg, fg,
 			fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 			fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					 GE_INCHES, gdd),
 			((gadesc*) dd->deviceSpecific)->basefontsize,
-			1, 0, "R Graphics Output", R_NilValue, 1, 4, 
+			1, 0, "R Graphics Output", R_NilValue, 1, 4,
 			"rgb", TRUE, TRUE, xd->fillOddEven))
 	PrivateCopyDevice(dd, ndd, "PDF");
 }
@@ -594,17 +594,19 @@ static char* translateFontFamily(const char* family) {
 
 static void SetFont(pGEcontext gc, double rot, gadesc *xd)
 {
-    int size = gc->cex * gc->ps + 0.5, face = gc->fontface, usePoints;
+    int size, face = gc->fontface, usePoints;
     char* fontfamily;
+    double fs = gc->cex * gc->ps;
 
     usePoints = xd->kind <= METAFILE;
-    
-    if (face < 1 || face > fontnum)
-	face = 1;
+    if (!usePoints && xd->res_dpi > 0) fs *= xd->res_dpi/72.0;
+    size = fs + 0.5;
+
+    if (face < 1 || face > fontnum) face = 1;
     if (size < SMALLEST) size = SMALLEST;
     if (size != xd->fontsize || face != xd->fontface ||
 	 rot != xd->fontangle || strcmp(gc->fontfamily, xd->fontfamily)) {
-        if(xd->font) del(xd->font); 
+	if(xd->font) del(xd->font);
 	doevent();
 	/*
 	 * If specify family = "", get family from face via Rdevga
@@ -621,19 +623,19 @@ static void SetFont(pGEcontext gc, double rot, gadesc *xd)
 				fontfamily, fontstyle[face - 1],
 				size, rot, usePoints);
 	} else {
-            xd->font = gnewfont(xd->gawin,
+	    xd->font = gnewfont(xd->gawin,
 				fontname[face - 1], fontstyle[face - 1],
 				size, rot, usePoints);
 	}
 	if (xd->font) {
-            strcpy(xd->fontfamily, gc->fontfamily);	
+	    strcpy(xd->fontfamily, gc->fontfamily);
 	    xd->fontface = face;
 	    xd->fontsize = size;
 	    xd->fontangle = rot;
 	} else {
 	    /* Fallback: set Arial */
 	    if (face > 4) face = 1;
-            xd->font = gnewfont(xd->gawin,
+	    xd->font = gnewfont(xd->gawin,
 				"Arial", fontstyle[face - 1],
 				size, rot, usePoints);
 	    if (!xd->font)
@@ -805,9 +807,9 @@ static void HelpMouseClick(window w, int button, point pt)
 	    xd->clicked = 2;
 	if (dd->gettingEvent) {
 	    xd->eventResult = doMouseEvent(xd->eventRho, dd, meMouseDown,
-	    			button, pt.x, pt.y);
-            if (xd->buffered) SHOW;
-        }
+				button, pt.x, pt.y);
+	    if (xd->buffered) SHOW;
+	}
     }
 }
 
@@ -820,7 +822,7 @@ static void HelpMouseMove(window w, int button, point pt)
 
 	if (dd->gettingEvent) {
 	    xd->eventResult = doMouseEvent(xd->eventRho, dd, meMouseMove,
-	    			button, pt.x, pt.y);
+				button, pt.x, pt.y);
 	    if (xd->buffered) SHOW;
 	}
     }
@@ -835,7 +837,7 @@ static void HelpMouseUp(window w, int button, point pt)
 
 	if (dd->gettingEvent) {
 	    xd->eventResult = doMouseEvent(xd->eventRho, dd, meMouseUp,
-	    			button, pt.x, pt.y);
+				button, pt.x, pt.y);
 	    if (xd->buffered) SHOW;
 	}
     }
@@ -976,12 +978,12 @@ static void grpopupact(control m)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if (ismdi())
-    	disable(xd->grmenustayontop);
+	disable(xd->grmenustayontop);
     else {
-    	if (isTopmost(xd->gawin))
-     	    check(xd->grmenustayontop);
-    	else
-    	    uncheck(xd->grmenustayontop);
+	if (isTopmost(xd->gawin))
+	    check(xd->grmenustayontop);
+	else
+	    uncheck(xd->grmenustayontop);
     }
 }
 
@@ -1004,15 +1006,15 @@ static void grpopupact(control m)
 #define pCURRENTgp  (INTEGER(VECTOR_ELT(pCURRENT, 1)))
 #define pCURRENTsnapshot (VECTOR_ELT(pCURRENT, 0))
 #define pCHECK      if ((TYPEOF(vDL)!=VECSXP)||\
-                       (TYPEOF(VECTOR_ELT(vDL, 0))!=INTSXP) ||\
-                       (LENGTH(VECTOR_ELT(vDL, 0))!=1) ||\
-                       (pMAGIC != PLOTHISTORYMAGIC)) {\
-                       R_ShowMessage(_("plot history seems corrupted"));\
-                       return;}
+		       (TYPEOF(VECTOR_ELT(vDL, 0))!=INTSXP) ||\
+		       (LENGTH(VECTOR_ELT(vDL, 0))!=1) ||\
+		       (pMAGIC != PLOTHISTORYMAGIC)) {\
+		       R_ShowMessage(_("plot history seems corrupted"));\
+		       return;}
 #define pMOVE(a) {pCURRENTPOS+=a;\
-                  if(pCURRENTPOS<0) pCURRENTPOS=0;\
-                  if(pCURRENTPOS>pNUMPLOTS-1) pCURRENTPOS=pNUMPLOTS-1;\
-                  Replay(dd,vDL);SETDL;}
+		  if(pCURRENTPOS<0) pCURRENTPOS=0;\
+		  if(pCURRENTPOS>pNUMPLOTS-1) pCURRENTPOS=pNUMPLOTS-1;\
+		  Replay(dd,vDL);SETDL;}
 #define pEXIST ((vDL!=R_UnboundValue) && (vDL!=R_NilValue))
 #define pMUSTEXIST if(!pEXIST){R_ShowMessage(_("no plot history!"));return;}
 
@@ -1281,9 +1283,9 @@ static void CHelpKeyIn(control w, int key)
     R_KeyName keyname;
 
     if (dd->gettingEvent) {
-    	keyname = getKeyName(key);
-    	if (keyname > knUNKNOWN) {
-    	    xd->eventResult = doKeybd(xd->eventRho, dd, keyname, NULL);
+	keyname = getKeyName(key);
+	if (keyname > knUNKNOWN) {
+	    xd->eventResult = doKeybd(xd->eventRho, dd, keyname, NULL);
 	    if (xd->buffered) SHOW;
 	}
     } else {
@@ -1318,8 +1320,8 @@ static void NHelpKeyIn(control w, int key)
 	if (0 < key && key < 32) {
 	    strcpy(keyname, "ctrl- ");
 	    keyname[5] = (char) (key + 'A' - 1);
-    	} else {
-    	    keyname[0] = (char) key;
+	} else {
+	    keyname[0] = (char) key;
 	    keyname[1] = '\0';
 	}
 	xd->eventResult = doKeybd(xd->eventRho, dd, knUNKNOWN, keyname);
@@ -1403,16 +1405,16 @@ static void mbarf(control m)
 }
 
 
-        /********************************************************/
-	/* device_Open is not usually called directly by the 	*/
-	/* graphics engine;  it is usually only called from 	*/
+	/********************************************************/
+	/* device_Open is not usually called directly by the	*/
+	/* graphics engine;  it is usually only called from	*/
 	/* the device-driver entry point.			*/
 	/* this function should set up all of the device-	*/
 	/* specific resources for a new device			*/
 	/* this function is given a new	structure for device-	*/
-	/* specific information AND it must FREE the structure 	*/
+	/* specific information AND it must FREE the structure	*/
 	/* if anything goes seriously wrong			*/
-	/* NOTE that it is perfectly acceptable for this 	*/
+	/* NOTE that it is perfectly acceptable for this	*/
 	/* function to set generic graphics parameters too	*/
 	/* (i.e., override the generic parameter settings	*/
 	/* which GInit sets up) all at the author's own risk	*/
@@ -1712,8 +1714,8 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
     xd->xshift = xd->yshift = 0;
     xd->npage = 0;
     xd->fp = NULL; /* not all devices (e.g. TIFF) use the file pointer, but SaveAsBitmap
-                      looks at it */
-    
+		      looks at it */
+
     if (!dsp[0]) {
 	if (!setupScreenDevice(dd, xd, w, h, recording, resize, xpos, ypos))
 	    return FALSE;
@@ -1729,7 +1731,7 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
     } else if (!strncmp(dsp, "png:", 4) || !strncmp(dsp,"bmp:", 4)) {
 	xd->res_dpi = (xpos == NA_INTEGER) ? 0 : xpos;
 	xd->bg = dd->startfill = canvascolor;
-        xd->kind = (dsp[0]=='p') ? PNG : BMP;
+	xd->kind = (dsp[0]=='p') ? PNG : BMP;
 	if(strlen(dsp+4) >= 512) error(_("filename too long in %s() call"),
 				       (dsp[0]=='p') ? "png" : "bmp");
 	strcpy(xd->filename, dsp+4);
@@ -1763,10 +1765,10 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	}
 	xd->have_alpha = TRUE;
     } else if (!strncmp(dsp, "jpeg:", 5)) {
-        char *p = strchr(&dsp[5], ':');
+	char *p = strchr(&dsp[5], ':');
 	xd->res_dpi = (xpos == NA_INTEGER) ? 0 : xpos;
 	xd->bg = dd->startfill = canvascolor;
-        xd->kind = JPEG;
+	xd->kind = JPEG;
 	if (!p) return FALSE;
 	if (!Load_Rbitmap_Dll()) {
 	    warning(_("Unable to load Rbitmap.dll"));
@@ -1797,10 +1799,10 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	}
 	xd->have_alpha = TRUE;
     } else if (!strncmp(dsp, "tiff:", 5)) {
-        char *p = strchr(&dsp[5], ':');
+	char *p = strchr(&dsp[5], ':');
 	xd->res_dpi = (xpos == NA_INTEGER) ? 0 : xpos;
 	xd->bg = dd->startfill = canvascolor;
-        xd->kind = TIFF;
+	xd->kind = TIFF;
 	if (!p) return FALSE;
 	if (!Load_Rbitmap_Dll()) {
 	    warning(_("Unable to load Rbitmap.dll"));
@@ -1877,7 +1879,7 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	/********************************************************/
 	/* device_StrWidth should return the width of the given */
 	/* string in DEVICE units (GStrWidth is responsible for */
-	/* converting from DEVICE to whatever units the user 	*/
+	/* converting from DEVICE to whatever units the user	*/
 	/* asked for						*/
 	/********************************************************/
 
@@ -1908,7 +1910,7 @@ static double GA_StrWidth_UTF8(const char *str,
 }
 
 	/********************************************************/
-	/* device_MetricInfo should return height, depth, and 	*/
+	/* device_MetricInfo should return height, depth, and	*/
 	/* width information for the given character in DEVICE	*/
 	/* units (GMetricInfo does the necessary conversions)	*/
 	/* This is used for formatting mathematical expressions	*/
@@ -1929,8 +1931,8 @@ static void GA_MetricInfo(int c,
     int   a, d, w;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     Rboolean Unicode = mbcslocale;
-    
-    if (c < 0) { Unicode = TRUE; c = -c; } 
+
+    if (c < 0) { Unicode = TRUE; c = -c; }
     SetFont(gc, 0.0, xd);
     if(Unicode && gc->fontface != 5 && c > 127)
 	gwcharmetric(xd->gawin, xd->font, c, &a, &d, &w);
@@ -1949,8 +1951,8 @@ static void GA_MetricInfo(int c,
 }
 
 	/********************************************************/
-	/* device_Clip is given the left, right, bottom, and 	*/
-	/* top of a rectangle (in DEVICE coordinates).  it 	*/
+	/* device_Clip is given the left, right, bottom, and	*/
+	/* top of a rectangle (in DEVICE coordinates).  it	*/
 	/* should have the side-effect that subsequent output	*/
 	/* is clipped to the given rectangle			*/
 	/********************************************************/
@@ -1967,9 +1969,9 @@ static void GA_Clip(double x0, double x1, double y0, double y1, pDevDesc dd)
 }
 
 	/********************************************************/
-	/* device_Resize is called whenever the device is 	*/
-	/* resized.  the function must update the GPar 		*/
-	/* parameters (left, right, bottom, and top) for the 	*/
+	/* device_Resize is called whenever the device is	*/
+	/* resized.  the function must update the GPar		*/
+	/* parameters (left, right, bottom, and top) for the	*/
 	/* new device size					*/
 	/* this is not usually called directly by the graphics	*/
 	/* engine because the detection of device resizes	*/
@@ -2121,7 +2123,7 @@ static void GA_NewPage(const pGEcontext gc,
 	SaveAsBitmap(dd, xd->res_dpi);
     }
     if (xd->kind == SCREEN) {
-        if(xd->buffered) SHOW;
+	if(xd->buffered) SHOW;
 	if (xd->recording && xd->needsave)
 	    AddtoPlotHistory(desc2GEDesc(dd)->savedSnapshot, 0);
 	if (xd->replaying)
@@ -2136,8 +2138,8 @@ static void GA_NewPage(const pGEcontext gc,
 	if(alpha  == 0) xd->bgcolor = xd->canvascolor;
 	else {
 	    xd->bgcolor = GArgb(xd->bg, gc->gamma);
-	    if(alpha < 255) 
-		xd->bgcolor = (alpha * xd->bgcolor + 
+	    if(alpha < 255)
+		xd->bgcolor = (alpha * xd->bgcolor +
 			       (255-alpha) * xd->canvascolor)/255;
 	}
     }
@@ -2168,7 +2170,7 @@ static void deleteGraphMenus(int devnum)
 
 	/********************************************************/
 	/* device_Close is called when the device is killed	*/
-	/* this function is responsible for destroying any 	*/
+	/* this function is responsible for destroying any	*/
 	/* device-specific resources that were created in	*/
 	/* device_Open and for FREEing the device-specific	*/
 	/* parameters structure					*/
@@ -2198,8 +2200,8 @@ static void GA_Close(pDevDesc dd)
 	/* If this is the active device and buffered, shut updates off */
 	if (xd == GA_xd) GA_xd = NULL;
 	deleteGraphMenus(ndevNumber(dd) + 1);
-	
-    } else if ((xd->kind == PNG) || (xd->kind == JPEG) 
+
+    } else if ((xd->kind == PNG) || (xd->kind == JPEG)
 	       || (xd->kind == BMP) || (xd->kind == TIFF)) {
 	SaveAsBitmap(dd, xd->res_dpi);
     }
@@ -2217,10 +2219,10 @@ static void GA_Close(pDevDesc dd)
 }
 
 	/********************************************************/
-	/* device_Activate is called when a device becomes the 	*/
+	/* device_Activate is called when a device becomes the	*/
 	/* active device.  in this case it is used to change the*/
-	/* title of a window to indicate the active status of 	*/
-	/* the device to the user.  not all device types will 	*/
+	/* title of a window to indicate the active status of	*/
+	/* the device to the user.  not all device types will	*/
 	/* do anything						*/
 	/********************************************************/
 
@@ -2243,7 +2245,7 @@ static void GA_Activate(pDevDesc dd)
 
 	/********************************************************/
 	/* device_Deactivate is called when a device becomes	*/
-	/* inactive.  in this case it is used to change the 	*/
+	/* inactive.  in this case it is used to change the	*/
 	/* title of a window to indicate the inactive status of */
 	/* the device to the user.  not all device types will	*/
 	/* do anything						*/
@@ -2276,13 +2278,13 @@ static void GA_Deactivate(pDevDesc dd)
 
 
 	/********************************************************/
-	/* device_Rect should have the side-effect that a 	*/
-	/* rectangle is drawn with the given locations for its 	*/
+	/* device_Rect should have the side-effect that a	*/
+	/* rectangle is drawn with the given locations for its	*/
 	/* opposite corners.  the border of the rectangle	*/
 	/* should be in the given "fg" colour and the rectangle	*/
 	/* should be filled with the given "bg" colour		*/
 	/* if "fg" is NA_INTEGER then no border should be drawn */
-	/* if "bg" is NA_INTEGER then the rectangle should not 	*/
+	/* if "bg" is NA_INTEGER then the rectangle should not	*/
 	/* be filled						*/
 	/* the locations are in an arbitrary coordinate system	*/
 	/* and this function is responsible for converting the	*/
@@ -2373,7 +2375,7 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 	/* if "col" is NA_INTEGER then no border should be drawn*/
 	/* if "border" is NA_INTEGER then the circle should not */
 	/* be filled						*/
-	/* the location is in arbitrary coordinates and the 	*/
+	/* the location is in arbitrary coordinates and the	*/
 	/* function is responsible for converting this to	*/
 	/* DEVICE coordinates.  the radius is given in DEVICE	*/
 	/* coordinates						*/
@@ -2532,14 +2534,14 @@ static void GA_Polyline(int n, double *x, double *y,
 }
 
 	/********************************************************/
-	/* device_Polygon should have the side-effect that a 	*/
+	/* device_Polygon should have the side-effect that a	*/
 	/* polygon is drawn using the given x and y values	*/
-	/* the polygon border should be drawn in the "fg" 	*/
+	/* the polygon border should be drawn in the "fg"	*/
 	/* colour and filled with the "bg" colour		*/
 	/* if "fg" is NA_INTEGER don't draw the border		*/
 	/* if "bg" is NA_INTEGER don't fill the polygon		*/
-	/* the x and y values are in arbitrary coordinates and 	*/
-	/* the function is responsible for converting them to 	*/
+	/* the x and y values are in arbitrary coordinates and	*/
+	/* the function is responsible for converting them to	*/
 	/* DEVICE coordinates using GConvert			*/
 	/********************************************************/
 
@@ -2572,10 +2574,10 @@ static void GA_Polygon(int n, double *x, double *y,
     r.y = my0; r.height = my1 - my0;
 
     if (xd->doSetPolyFill && xd->fillOddEven == FALSE) {
-    	DRAW(gsetpolyfillmode(_d, 0));
-    	xd->doSetPolyFill = FALSE;  /* Only set it once */
+	DRAW(gsetpolyfillmode(_d, 0));
+	xd->doSetPolyFill = FALSE;  /* Only set it once */
     }
-    
+
     SetColor(gc->fill, gc->gamma, xd);
     if (R_OPAQUE(gc->fill)) {
 	DRAW(gfillpolygon(_d, xd->fgcolor, points, n));
@@ -2609,7 +2611,7 @@ static void GA_Polygon(int n, double *x, double *y,
 
 
 	/********************************************************/
-	/* device_Text should have the side-effect that the 	*/
+	/* device_Text should have the side-effect that the	*/
 	/* given text is drawn at the given location		*/
 	/* the text should be rotated according to rot (degrees)*/
 	/* the location is in an arbitrary coordinate system	*/
@@ -2637,12 +2639,12 @@ static void GA_Text0(double x, double y, const char *str, int enc,
     if (R_OPAQUE(gc->col)) {
 	if(gc->fontface != 5) {
 	    /* As from 2.7.0 can use Unicode always */
-	    wchar_t *wc; 
+	    wchar_t *wc;
 	    int n = strlen(str), cnt;
 	    wc = alloca((n+1) * sizeof(wchar_t)); /* only need terminator to
 						     debug */
 	    R_CheckStack();
-	    cnt = (enc == CE_UTF8) ?  
+	    cnt = (enc == CE_UTF8) ?
 		Rf_utf8towcs(wc, str, n+1): mbstowcs(wc, str, n);
 	    /* These macros need to be wrapped in braces */
 	    DRAW(gwdrawstr1(_d, xd->font, xd->fgcolor, pt(x, y),
@@ -2653,18 +2655,18 @@ static void GA_Text0(double x, double y, const char *str, int enc,
     } else if(R_ALPHA(gc->col) > 0) {
 	/*  it is too hard to get a correct bounding box */
 	if(xd->have_alpha) {
-	    rect r = xd->clip; 
+	    rect r = xd->clip;
 	    r = getregion(xd);
 	    gsetcliprect(xd->bm, xd->clip);
 	    gcopy(xd->bm2, xd->bm, r);
 	    if(gc->fontface != 5) {
-		wchar_t *wc; 
+		wchar_t *wc;
 		int n = strlen(str), cnt;
 		wc = alloca((n+1) * sizeof(wchar_t));
 		R_CheckStack();
-		cnt = (enc == CE_UTF8) ?  
+		cnt = (enc == CE_UTF8) ?
 		    Rf_utf8towcs(wc, str, n+1): mbstowcs(wc, str, n);
-		gwdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), 
+		gwdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y),
 			   wc, cnt, hadj);
 	    } else
 		gdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), str, hadj);
@@ -2739,7 +2741,7 @@ static Rboolean GA_Locator(double *x, double *y, pDevDesc dd)
 
     /* set up a context which will clean up if there's an error */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
-	         R_NilValue, R_NilValue);
+		 R_NilValue, R_NilValue);
     cntxt.cend = &donelocator;
     cntxt.cenddata = xd;
     xd->cntxt = &cntxt;
@@ -2749,7 +2751,7 @@ static Rboolean GA_Locator(double *x, double *y, pDevDesc dd)
 
     while (!xd->clicked) {
 	SH;
-        if (!peekevent()) WaitMessage();
+	if (!peekevent()) WaitMessage();
 	R_ProcessEvents();
     }
 
@@ -2768,7 +2770,7 @@ static Rboolean GA_Locator(double *x, double *y, pDevDesc dd)
 }
 
 	/********************************************************/
-	/* device_Mode is called whenever the graphics engine 	*/
+	/* device_Mode is called whenever the graphics engine	*/
 	/* starts drawing (mode=1) or stops drawing (mode=0)	*/
 	/* the device is not required to do anything		*/
 	/********************************************************/
@@ -2780,8 +2782,8 @@ static void GA_Mode(int mode, pDevDesc dd)
 
 
 	/********************************************************/
-	/* the device-driver entry point is given a device 	*/
-	/* description structure that it must set up.  this 	*/
+	/* the device-driver entry point is given a device	*/
+	/* description structure that it must set up.  this	*/
 	/* involves several important jobs ...			*/
 	/* (1) it must ALLOCATE a new device-specific parameters*/
 	/* structure and FREE that structure if anything goes	*/
@@ -2791,7 +2793,7 @@ static void GA_Mode(int mode, pDevDesc dd)
 	/* resources or parameters)				*/
 	/* (2) it must initialise the device-specific resources */
 	/* and parameters (mostly done by calling device_Open)	*/
-	/* (3) it must initialise the generic graphical 	*/
+	/* (3) it must initialise the generic graphical	*/
 	/* parameters that are not initialised by GInit (because*/
 	/* only the device knows what values they should have)	*/
 	/* see Graphics.h for the official list of these	*/
@@ -2799,13 +2801,13 @@ static void GA_Mode(int mode, pDevDesc dd)
 	/* have already been initialised by GInit (although you	*/
 	/* should know what you are doing if you do this)	*/
 	/* (5) it must attach the device-specific parameters	*/
-        /* structure to the device description structure	*/
+	/* structure to the device description structure	*/
 	/* e.g., dd->deviceSpecific = (void *) xd;		*/
-	/* (6) it must FREE the overall device description if 	*/
+	/* (6) it must FREE the overall device description if	*/
 	/* it wants to bail out to the top-level		*/
-	/* the graphics engine is responsible for allocating 	*/
+	/* the graphics engine is responsible for allocating	*/
 	/* the device description and freeing it in most cases	*/
-	/* but if the device driver freaks out it needs to do 	*/
+	/* but if the device driver freaks out it needs to do	*/
 	/* the clean-up itself					*/
 	/********************************************************/
 
@@ -2887,7 +2889,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     dd->newFrameConfirm = clickToConfirm ? GA_NewFrameConfirm : NULL;
     dd->hasTextUTF8 = TRUE;
     dd->strWidthUTF8 = GA_StrWidth_UTF8;
-    dd->textUTF8 = GA_Text_UTF8;    
+    dd->textUTF8 = GA_Text_UTF8;
     dd->useRotatedTextInContour = TRUE;
     xd->cntxt = NULL;
 
@@ -2906,8 +2908,8 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 	xd->origHeight = dd->bottom = ih;
     }
 
-    if (xd->kind > METAFILE && xd->res_dpi > 0) ps *= xd->res_dpi/72.0;
     dd->startps = ps * xd->rescale_factor;
+    if (xd->kind > METAFILE && xd->res_dpi > 0) ps *= xd->res_dpi/72.0;
 
     if (xd->kind <= METAFILE) {
 	/* it is 12 *point*, not 12 pixel */
@@ -2943,7 +2945,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     } else {
 	dd->ipr[0] = dd->ipr[1] = 1.0/72.0;
     }
-    
+
 
     /* Device capabilities */
     dd->canClip= TRUE;
@@ -3001,14 +3003,14 @@ SEXP savePlot(SEXP args)
     if(!strcmp(tp, "png")) {
 	SaveAsPng(dd, fn);
     } else if (!strcmp(tp,"bmp")) {
-        SaveAsBmp(dd,fn);
+	SaveAsBmp(dd,fn);
     } else if (!strcmp(tp,"tiff")) {
-        SaveAsTiff(dd,fn);
+	SaveAsTiff(dd,fn);
     } else if(!strcmp(tp, "jpeg") || !strcmp(tp,"jpg")) {
       /*Default quality suggested in libjpeg*/
-        SaveAsJpeg(dd, 75, fn);
+	SaveAsJpeg(dd, 75, fn);
     } else if(!strcmp(tp, "tiff") || !strcmp(tp,"tif")) {
-        SaveAsTiff(dd, fn);
+	SaveAsTiff(dd, fn);
     } else if (!strcmp(tp, "wmf") || !strcmp(tp, "emf")) {
 	if(strlen(fn) > 512) {
 	    askok(G_("file path selected is too long: only 512 bytes are allowed"));
@@ -3305,7 +3307,7 @@ SEXP devga(SEXP args)
     fillOddEven = asLogical(CAR(args));
     if (fillOddEven == NA_LOGICAL)
 	error(_("invalid value of '%s'"), "fillOddEven");
-    
+
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
@@ -3372,7 +3374,7 @@ static Rboolean GA_NewFrameConfirm(pDevDesc dev)
     dev->onExit = GA_onExit;  /* install callback for cleanup */
     while (!xd->clicked && !xd->enterkey) {
 	SH;
-        if (!peekevent()) WaitMessage();
+	if (!peekevent()) WaitMessage();
 	R_ProcessEvents(); /* May not return if user interrupts */
     }
     dev->onExit(dev);
@@ -3405,7 +3407,7 @@ static SEXP GA_getEvent(SEXP eventRho, const char* prompt)
     dd->dev->onExit = GA_onExit;  /* install callback for cleanup */
     while (!xd->eventResult || xd->eventResult == R_NilValue) {
 	SH;
-        if (!peekevent()) WaitMessage();
+	if (!peekevent()) WaitMessage();
 	R_ProcessEvents(); /* May not return if user interrupts */
     }
     dd->dev->onExit(dd->dev);
