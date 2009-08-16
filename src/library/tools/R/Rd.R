@@ -399,7 +399,6 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL)
         }
         ## Files in the db in need of updating:
         ind <- (files %in% db_names) & file_test("-nt", files, db_file)
-        print(files[ind])
         if(any(ind))
             db[files[ind]] <- lapply(files[ind], .fetch_Rd_object)
         ## Files not in the db:
