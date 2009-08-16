@@ -2574,8 +2574,8 @@ sub check_pkg_manual {
     ## Run LaTeX on the manual, if there are man pages
     ## If it is installed with docs there is a 'help' dir
     ## and for a source package, there is a 'man' dir
-    if ((-d &file_path($pkgdir, "help)")) ||
-	(-d &file_path($pkgdir, "man")) ) {
+    if ( (-d &file_path($pkgdir, "help")) ||
+	 (-d &file_path($pkgdir, "man")) ) {
 	if($opt_latex && $HAVE_LATEX) {
 	    $topdir = $pkgdir;
 	    my $Rd2dvi_opts = "--batch --no-preview";
