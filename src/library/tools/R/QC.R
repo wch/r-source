@@ -17,7 +17,8 @@
 .haveRds <- function(dir)
 {
     if (file_test("-d", file.path(dir, "man"))) return(TRUE)
-    length(Sys.glob(file.path(dir, "help", "*rdx"))) > 0L
+    file.exists((file.path(dir, "help", "paths.rds")))
+    ## length(Sys.glob(file.path(dir, "help", "*rdx"))) > 0L
 }
 
 ### * undoc/F/out

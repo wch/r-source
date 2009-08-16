@@ -395,7 +395,8 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL)
             db_names <- names(db)
         } else {
             db <- fetchRdDB(sub("\\.rdx$", "", db_file))
-            db_names <- .readRDS(file.path(dirname(db_file), "paths.rds"))
+            db_names <- names(db) <-
+                .readRDS(file.path(dirname(db_file), "paths.rds"))
         }
         ## Files in the db in need of updating:
         ind <- (files %in% db_names) & file_test("-nt", files, db_file)
